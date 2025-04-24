@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C04E7C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 09:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89B0FC369D7
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 09:51:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7tDu-0007aJ-EK; Thu, 24 Apr 2025 05:50:26 -0400
+	id 1u7tEV-0000CU-PU; Thu, 24 Apr 2025 05:51:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7tDs-0007W5-8I
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:50:24 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7tEU-0000BG-CQ
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:51:02 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7tDp-0002tx-HB
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:50:23 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3912fdddf8fso1327337f8f.1
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 02:50:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7tES-0002wq-EQ
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:51:02 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-39c14016868so736549f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 02:50:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745488218; x=1746093018; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745488258; x=1746093058; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=U/IxSYn3XdAWmDi2s6aY1jPBFUSDraEBur2+gJweeXw=;
- b=XYK3An6/MHkULINCvV7cS906bG5DtF5S4vKxAyIz3PiRJxdlSEgQFlxdzwdVReXXWm
- DsnFLl7wjOH9Ht2Ffhl1Nk6vIgFuUZkz8OYS6faysNhp3yRcmVbs70NM/6FQTFUkytUC
- mptnCCNKKIPL7NbfcR+Uf0uR1bfMxnx6vSsKntLhNSflkchBakQ2PFIi5UFrdhF9zloL
- 9dwT5SE71pY2FIDQmMw6Us5GqMCqD1rjnyrciEVj/ognmuXPMKywotxy1Qfas+JBEIOY
- v7utnjCE9n4djUV5JfLOy6qy1xVLi1hMCLxF978lcUemj6TGnQndheBhkG/BZ4T+DeJz
- K02Q==
+ bh=YsXZIYaRmo2+Zyqhkbaujh4Q38THW6hETikCJQhi8mY=;
+ b=iVKHhnXOPp7N0HF5Apd+fiwNJDuu3HawmD7zswJohPsa8XQsI/6B/ByRxvFbWQ9zcy
+ epQdiwgBtKvqg+HNwQATFP83qxLA602FjpxdlHa/oPDjcG2EhUTFHLKT8zTIGiDlmDz3
+ WG+fp+SqmvYeSHepbfmOJjfYiiWqxzcz79Ey2bDgV4ll+pqejYxldxZ5KdlfRCoADQx7
+ dzjcfx3lgZZZ37XFlDapJ4JOzrPqb3OeGo8RDpf1+od+Cfgb3Nsp0owEHoRGcFx1R+mi
+ bC2Dmf3wZuQop2EivKxk6VjBeJ09nHI/KUyLVJxdVZH1azcs0joI9Mo6MQ4O/s4qcyxv
+ IF4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745488218; x=1746093018;
+ d=1e100.net; s=20230601; t=1745488258; x=1746093058;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=U/IxSYn3XdAWmDi2s6aY1jPBFUSDraEBur2+gJweeXw=;
- b=u9RjaB5Vn30Iefqz5Ub/WqayuoFxCiKZSr1JlHDDhVrZuVeHoPAffY6D5rjcx14cpn
- 6krfqLSJY652vLnNam55XSLC0w0om00xAWErZxi0GnEYXO8lBvHAfefLIzoCf6jqXCUg
- 8r90kw6lLys3+8hhR/0ode+S4pZbsRgagw3oIeDbHVU17CRKS7gBjxa64h1C1V3DNjEX
- NJGmm2g8qPd8iVUk4Hv8X/klHctBT3ukwYmNgYueCQaaTaBgUmDAzTl22X2U844PlNX/
- GNv+ngHFPSXFBDt47cm1/kr5Cdr4DQ1f0+HYk+WpIgvKo3paAtIvLytqX+TnH+IwyqX5
- XylA==
-X-Gm-Message-State: AOJu0Yxdo+ff6MtvKKsmpznP3aVjFZzPd0scmCYduVzpE5cYhwS6BNV6
- IzjA2vqZU7repEXiqw3qZF/JeaSRKQ9x9gLERwVifKwRBKzvUIRBsexxoKR22gFH+kr8+6D19/2
- 1
-X-Gm-Gg: ASbGncvPJh7hrwBh0mYQ0l94RByVa5Uxw8KH8a8Rt4CGBA9YozOWXiGKIjI9UWD6JaZ
- us+/UtKpxLvgaj8/C3YQ4GCeCHm6qGZ7AENwZ+C5mh2g5wrRqkmKVNzC81i9p0XWCADaX8u3vN4
- u05bfolsWkxzWW8cZxF0GXZ32yFsm19WzvbM1oQuMEW5S0vMP5m0jlSvFPh612mwZfx73cs8iuU
- yfIaV1qcqlD/vxW3J+5nTeMRBo5mB/oNo0AGI/QHeLXwD4yplbL0a+XIYCKYT2/sn0wBdFIbjUk
- puWrmyCgCtlsfQVBGDRf9bLqzYUSdcZt/oHH5qliSuzIPfDEGi+G5DCIbB90sSjVLjN1useWh38
- JLeZKHhrH0zTqEKEK7ABT6b1a
-X-Google-Smtp-Source: AGHT+IGt2x/BXfLenJOu/ixpYqiOd1SKhhvyBgpa3NxZ7H5cmk9C3jAkV6aI1X7W40NBeryXEbrQCw==
-X-Received: by 2002:adf:f58a:0:b0:39c:30f7:b6ad with SMTP id
- ffacd0b85a97d-3a06d674aa8mr1268759f8f.18.1745488218462; 
- Thu, 24 Apr 2025 02:50:18 -0700 (PDT)
+ bh=YsXZIYaRmo2+Zyqhkbaujh4Q38THW6hETikCJQhi8mY=;
+ b=qVdJBXGTDHrbgT50KX1QpwzJe8dtxCf4dL/Im2NliAUnCp/TwfySkTho5nhdGJK6Z0
+ vOLc8O4BgAlJdSRlQeGP7OBSWBHugU3K6bNYCR23OWa0abpdQi+bv/rACl7mUE4hd0Gp
+ HAjafXmGlq0nWXzMHrtuaCPDEtlbk05weg+p2GmQI+VuBbuJki4vQGQfIRLl7YsMKBpi
+ 3W8xhnm3ldquPWPc+mEvYBizw0MCDAEhZea2qNnAMfA4TYW04WCmJUgstOnMzark11TA
+ 1/TcrpEDoLFJ6BrNZNNCKVIaV/op61Az5BYjezH28NWmqpcSA47tEfJNTqX0nlRbOiqG
+ L7Aw==
+X-Gm-Message-State: AOJu0YzyWuWmQHrxqUIjSzQ9RHB7kKJ4/mKQOI3YkbJkmlfQPQbx8+kI
+ WkmjqF+LclYEcjymkJ0PIs22pHVPM4i3Eex5QxZAPRF88eImaFuecmTGHdXjG3El4k806F3X0vm
+ Q
+X-Gm-Gg: ASbGncs0+pydYfIFXc8Jb93GXYZ5+ygIfvl8qmbsGG5s7oFe226bCjoZje5ogEXf7UT
+ 5VbU75KLq5JNtVKkLmhwpzRM0emFlAXYwq//n/wPuraZTggtcJAV2ntryeDXapo/5hPMhPcoAU9
+ AdiEvEbwyoVY6pf7kR0jebxqvUJS7MEjn9FBN3FuuGpjqDvn9ExnCBdF/yOxVS4tH3CIw0arD4a
+ Op6Bf9Wp4kJ5SWRbW4AYkShyiSdX47L2ng+hI9a4zCzmLRQ+a5gZaX8yXMO6pASo0/MDOvzogc4
+ 9q33iqz9rVoY8anjlSBvYNYBK02R+0498eBAEHhsUKvVbgGidAo7AxCVjkMlN9x/nHeHUmK6dDx
+ RYX4bYRCMeLpypw==
+X-Google-Smtp-Source: AGHT+IHAZiuzoSH6MM1swwFuD5jWs322oqZxsZXJhz90ISBIJd7gJswfcXxaop6KqnrqoxG9Sk2e3Q==
+X-Received: by 2002:a05:6000:2212:b0:39c:266c:12a5 with SMTP id
+ ffacd0b85a97d-3a06cf56518mr1663951f8f.13.1745488257770; 
+ Thu, 24 Apr 2025 02:50:57 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a06d54ea37sm1525358f8f.90.2025.04.24.02.50.17
+ ffacd0b85a97d-3a06d54ea37sm1527445f8f.90.2025.04.24.02.50.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Apr 2025 02:50:17 -0700 (PDT)
-Message-ID: <f9ba5a20-ca41-49b7-9813-d8695138af77@linaro.org>
-Date: Thu, 24 Apr 2025 11:50:16 +0200
+ Thu, 24 Apr 2025 02:50:57 -0700 (PDT)
+Message-ID: <6b685fec-d024-45ab-b723-1fdf345c65e2@linaro.org>
+Date: Thu, 24 Apr 2025 11:50:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/13] target/riscv: Include missing
- 'accel/tcg/getpc.h' in csr.c
+Subject: Re: [PATCH v2 12/13] accel/tcg: Extract probe API out of
+ 'exec/exec-all.h'
 To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv <qemu-riscv@nongnu.org>
+ Paolo Bonzini <pbonzini@redhat.com>
 References: <20250424094653.35932-1-philmd@linaro.org>
- <20250424094653.35932-8-philmd@linaro.org>
+ <20250424094653.35932-13-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250424094653.35932-8-philmd@linaro.org>
+In-Reply-To: <20250424094653.35932-13-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,32 +103,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+qemu-riscv list
-
 On 24/4/25 11:46, Philippe Mathieu-Daudé wrote:
-> "accel/tcg/getpc.h" is pulled in indirectly. Include it
-> explicitly to avoid when refactoring unrelated headers:
+> Declare probe methods in "accel/tcg/probe.h" to emphasize
+> they are specific to TCG accelerator.
 > 
->    target/riscv/csr.c:2117:25: error: call to undeclared function 'GETPC' [-Wimplicit-function-declaration]
->     2117 |     if ((val & RVC) && (GETPC() & ~3) != 0) {
->          |                         ^
+> target/arm/ptw.c is the only non-TCG specific file, its
+> call to the probe API is already guarded within CONFIG_TCG
+> checks.
 > 
+
+Forgot to include:
+
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/riscv/csr.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index c52c87faaea..13086438552 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -28,6 +28,7 @@
->   #include "exec/cputlb.h"
->   #include "exec/tb-flush.h"
->   #include "exec/icount.h"
-> +#include "accel/tcg/getpc.h"
->   #include "qemu/guest-random.h"
->   #include "qapi/error.h"
->   #include <stdbool.h>
+>   include/accel/tcg/probe.h            | 110 +++++++++++++++++++++++++++
+>   include/exec/exec-all.h              | 100 ------------------------
+>   target/hexagon/mmvec/macros.h        |   1 +
+>   accel/tcg/cputlb.c                   |   1 +
+>   accel/tcg/user-exec.c                |   1 +
+>   semihosting/uaccess.c                |   1 +
+>   target/arm/helper.c                  |   1 +
+>   target/arm/ptw.c                     |   3 +
+>   target/arm/tcg/helper-a64.c          |   1 +
+>   target/arm/tcg/mte_helper.c          |   1 +
+>   target/arm/tcg/op_helper.c           |   1 +
+>   target/arm/tcg/sve_helper.c          |   1 +
+>   target/hexagon/op_helper.c           |   1 +
+>   target/hppa/mem_helper.c             |   1 +
+>   target/hppa/op_helper.c              |   1 +
+>   target/i386/tcg/access.c             |   1 +
+>   target/i386/tcg/seg_helper.c         |   1 +
+>   target/i386/tcg/system/excp_helper.c |   1 +
+>   target/mips/tcg/msa_helper.c         |   1 +
+>   target/ppc/mem_helper.c              |   1 +
+>   target/riscv/op_helper.c             |   1 +
+>   target/riscv/vector_helper.c         |   1 +
+>   target/s390x/tcg/mem_helper.c        |   1 +
+>   target/xtensa/mmu_helper.c           |   1 +
+>   24 files changed, 134 insertions(+), 100 deletions(-)
+>   create mode 100644 include/accel/tcg/probe.h
 
 
