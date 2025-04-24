@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D964AC369CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 00:49:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63AB6C369D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 00:50:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7kmd-00058D-OT; Wed, 23 Apr 2025 20:49:43 -0400
+	id 1u7kmj-0005Cb-Ux; Wed, 23 Apr 2025 20:49:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kmb-00057o-TY
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:49:41 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1u7kmf-00059E-GS
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:49:45 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kmZ-0004I6-Us
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:49:41 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-736bfa487c3so300626b3a.1
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:49:37 -0700 (PDT)
+ id 1u7kmd-0004JB-NV
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:49:45 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7398d65476eso358761b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:49:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745455776; x=1746060576; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745455782; x=1746060582; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cWNW8eV1ZyPSVnus8GAP7nXIvpDAS5XtdbvHuSNPFs4=;
- b=DuywlF9+K67nwe5vufjfOZQbfHJ/5TfffewQfZePOoCVWg7qQl1gYirJYWRJzLRPMR
- EJTQ59Nf6GT8OkCLFey5TS2WLlDNCPToEFDJW5H69JhnlXhDJMCErqdy03fSvWUxgy3C
- BHdLcHQkfqdX7F3A0LfTznIJFme9thgX/maDzETe9Ba+1/YKBsiYVE/ULmEMh32hoPm7
- F6WvN/qeXs6+Yk4aB6uMG0LfMYqFZQHJaqVonRXk2g09uc5wedJB0/E9R5H8fT+oSfMM
- sVtNubjO+bRaSQgozhTW7E0Xlk8PmAbZ7AUD030JnOGkDrIkhALVGWotetL1rXQfj0aL
- 4bEg==
+ bh=lG5GR1LgS5q2ZsGX0HNw3y+WcVPJJCWNVDcD2UvIEdE=;
+ b=kFcCHicqp+EIxKgTkwIgdBJ/16mmxjlXn3vFYmdpEq72n0YDYFmvN7k0HfCivsIBK8
+ 1J1jddVkJilQ8PmOgDldHOq8yxcLNloJfAtyyF80fLw0yLt48qkOnyzsWVA887plSA7F
+ HntbsXiJv7Fcd0iTmfwH8xg3bi9OeoXPDIAAA44cbHa04hUF6vSO66DP7dHC3V++h0ZB
+ eYpAomXMdscqM47dB9uLUVjPtRzw1ZHyZXNGUGwdPo4GwOqg7Zm4juNdVFrgoG5J/nh2
+ cZCzZbjHZrFDiD9NjJgG5c0ZZu1quKdiMlC3uZKccM5OXj7eKkGV4aKZRu0Gsj9bWvX7
+ U6zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745455776; x=1746060576;
+ d=1e100.net; s=20230601; t=1745455782; x=1746060582;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cWNW8eV1ZyPSVnus8GAP7nXIvpDAS5XtdbvHuSNPFs4=;
- b=Mmqdlkk1AE37ID4m6MEKb9Kzha9VbGWm6pqQf76kdcP4fXDthFIqhGvHkih1kLmcM0
- RaWFjqb7tWutXzPyE8lg5WLTNpnIG31l0zTx4SnZGmYF1w0DhCs0nHqcwuEhDvbUYb2R
- dnVSj924sNnOuAMT2WCm9jTdcSNra1k1uf3Rj+JXMnNB4fVCA1mws0+Kd+RYni80J1Ys
- qDW9TecAFEWmAdwVK4b9YV7yhSjjgwAoHH7e0i5KHZUyOgmtGvn/H7+kR9iC9HDY9x89
- 7Ms/jUNtxAR86r6KyqEJ89mEGGlqz26EShqmwDMq4yZ6LTUUu3R3l048Z+WvUDiK2NCl
- s1uA==
-X-Gm-Message-State: AOJu0Yz+k5g1UH55QfuIM3ZLxXjxhh1L0pMWyP8q6Mz04Wn2UmOpzY7g
- ReSSnn3SmpNWuZEaLal46J/2SXd9ENT7oXW6p4Vc3rN2a2bbXtnA6dr7Ggle4XZxaSPpQFckMCC
- Q
-X-Gm-Gg: ASbGncvT3iyD8eHBA+37Ez5mDmSHSOzZswWkTxGBI6zPyy6FeVH6I3zHD/xfvRKwn5Y
- Fl/MdwbIGXo5ADmbvNK0oBzu5PqZl2rLt4JN17yy3n0FKXPiwuajSyk4okLqwNoL00BrdOtO6pr
- kuDOZqW32AR4nDvHOoh3VoITJR4fo+Y5U91xgvg2qZg/zlNGLA9xcnc+Lczwg5anUVXKI+MUZdb
- iV966CCR4Hr3bvYheXjPYnwOcKl1Cr7GagmjTz95ruXxOht7+FMd4RMCKQisTa7dgZbdbw1q+CA
- mXAlhJdVDnDt1MNgrNbwPmCxBSHCHTqfqjRXzEOIstDCi41mji3lKh3AkJCDvmEa5E9fYLu2B+W
- ARqrh8bR7BQ==
-X-Google-Smtp-Source: AGHT+IGXpXUTFHq7zXiZ/umt1sqTyTgJQPRq6GNie69jRK59AFQofvnC9YlEhhe7848oFQ0SRheoDQ==
-X-Received: by 2002:a05:6a00:a8a:b0:730:9946:5973 with SMTP id
- d2e1a72fcca58-73e245bb0bamr898131b3a.5.1745455775941; 
- Wed, 23 Apr 2025 17:49:35 -0700 (PDT)
+ bh=lG5GR1LgS5q2ZsGX0HNw3y+WcVPJJCWNVDcD2UvIEdE=;
+ b=HP4SxvmRoPrp3WLgDzfPLdJ0sx1eaTfuh14MDgM0RimhuO/f0hWABSEZRi7akgokpu
+ IbJyEch34ccVxT1p9Xwr4USZW5sXRXZi1uSAO6YxnZbFZSMQMuQBlee9Nhr7axXYcA1p
+ JVAYO6tt47jwhQdk9idgkNF7fDjNkpYZUKscCzsM/mq6EKqXapZ6kuiIzZd9+5rqBVsB
+ 8r0IzvjZleMeHKv0ZM7U/40GrZGRX6bFQUymaDS4UTWFzY74bhF7yv5Ebemh/7Jlm/tD
+ anpBR6pZjN5enf7DmQ8MSt6MRvdh3YMvnXv3at8yif8Hl8RS77SchHBa0Z0LmDAq0ZoX
+ L8Ng==
+X-Gm-Message-State: AOJu0Yw+DsR3GwHcyZ2+lJoebaTzr8M7UOI5tCNjH1X4w29SYySgDGAe
+ nOm8EPVE+npgRc5ZSWL/3XSqeuYBbcIXUoASmHJE67C+QMF7rL3bN+IJw40Q+YoIKOYNjQo+WL8
+ o
+X-Gm-Gg: ASbGnctCHEdzj/ochVno4i3xXYOAmmqWcMgP03Kz4Vt3WU0Y2bvJPJthxGRRSeGUMCc
+ M1rU6jo04o0NjXCak30i65yaDX/DMhOYq8EWOqgwtZ1fauRsgv/ncHFlnZkaliE0klqatvwkUuF
+ Fc2UHQYghh3xlZUJi1/MByTmqRGSTdz8b/30oEJna9t/1FDoxoGYay3nQSx2pl4QvK0Ug207JJh
+ AIOn5XI5b/dvAoCjPsSWF00pDoexynQbPcIOFcDejcPANoQjKThHq3GF/V5ICFcDrgHFRC3NgNt
+ o1+uT9kdSAzYIBCyN06UrkO5hc87zfXLDO1T+Hs7NuhSv3gI7Z4O79UTbzuNSIxjVu9/33nbnx0
+ =
+X-Google-Smtp-Source: AGHT+IGWFpHQGDViRSLddcs/Ypk4doGwQIru/oB50uM9dW4lwm9026L6YvbYIx1KXY/j8ktyx4h7iQ==
+X-Received: by 2002:aa7:8a04:0:b0:736:aea8:c9b7 with SMTP id
+ d2e1a72fcca58-73e267b8980mr580394b3a.2.1745455782140; 
+ Wed, 23 Apr 2025 17:49:42 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25a9a0f1sm207344b3a.137.2025.04.23.17.49.35
+ d2e1a72fcca58-73e25a9a0f1sm207344b3a.137.2025.04.23.17.49.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 17:49:35 -0700 (PDT)
+ Wed, 23 Apr 2025 17:49:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 001/148] exec/tswap: target code can use TARGET_BIG_ENDIAN
- instead of target_words_bigendian()
-Date: Wed, 23 Apr 2025 17:47:06 -0700
-Message-ID: <20250424004934.598783-2-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 010/148] system/kvm: make kvm_flush_coalesced_mmio_buffer()
+ accessible for common code
+Date: Wed, 23 Apr 2025 17:47:15 -0700
+Message-ID: <20250424004934.598783-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
 References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,52 +103,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This function is used by system/physmem.c will be turn into common code
+in next commit.
+
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250317183417.285700-2-pierrick.bouvier@linaro.org>
+Message-ID: <20250317183417.285700-11-pierrick.bouvier@linaro.org>
 ---
- include/exec/tswap.h | 11 ++++++-----
- cpu-target.c         |  1 +
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ include/system/kvm.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/exec/tswap.h b/include/exec/tswap.h
-index ecd4faef01..2683da0adb 100644
---- a/include/exec/tswap.h
-+++ b/include/exec/tswap.h
-@@ -13,13 +13,14 @@
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index ab17c09a55..21da3b8b05 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -210,11 +210,11 @@ bool kvm_arm_supports_user_irq(void);
+ int kvm_on_sigbus_vcpu(CPUState *cpu, int code, void *addr);
+ int kvm_on_sigbus(int code, void *addr);
+ 
++void kvm_flush_coalesced_mmio_buffer(void);
++
+ #ifdef COMPILING_PER_TARGET
+ #include "cpu.h"
+ 
+-void kvm_flush_coalesced_mmio_buffer(void);
+-
  /**
-  * target_words_bigendian:
-  * Returns true if the (default) endianness of the target is big endian,
-- * false otherwise. Note that in target-specific code, you can use
-- * TARGET_BIG_ENDIAN directly instead. On the other hand, common
-- * code should normally never need to know about the endianness of the
-- * target, so please do *not* use this function unless you know very well
-- * what you are doing!
-+ * false otherwise. Common code should normally never need to know about the
-+ * endianness of the target, so please do *not* use this function unless you
-+ * know very well what you are doing!
-  */
- bool target_words_bigendian(void);
-+#ifdef COMPILING_PER_TARGET
-+#define target_words_bigendian()  TARGET_BIG_ENDIAN
-+#endif
- 
- /*
-  * If we're in target-specific code, we can hard-code the swapping
-diff --git a/cpu-target.c b/cpu-target.c
-index cae77374b3..519b0f8900 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -155,6 +155,7 @@ void cpu_abort(CPUState *cpu, const char *fmt, ...)
-     abort();
- }
- 
-+#undef target_words_bigendian
- bool target_words_bigendian(void)
- {
-     return TARGET_BIG_ENDIAN;
+  * kvm_update_guest_debug(): ensure KVM debug structures updated
+  * @cs: the CPUState for this cpu
 -- 
 2.43.0
 
