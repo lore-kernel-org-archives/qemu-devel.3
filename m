@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4209BC369D5
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 22:23:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C83C369D7
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 22:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u84yF-0008C5-KO; Thu, 24 Apr 2025 18:23:03 -0400
+	id 1u84xY-0004ts-DQ; Thu, 24 Apr 2025 18:22:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u84yE-00085U-Cl
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 18:23:02 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u84xW-0004o3-ED
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 18:22:18 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u84yC-00017m-Lk
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 18:23:02 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-39efc1365e4so795679f8f.1
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 15:23:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u84xU-00010o-Kq
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 18:22:18 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-227cf12df27so15582815ad.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 15:22:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745533379; x=1746138179; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uWC7ZUuhMJjjntdzJpmYnoIJKuGi0kxenHJ2eaOicnY=;
- b=fZi/TxeApOHecixa5JPQAWJmYPVErpzkTcuPN+wu4Pw2PIP3JHSyvMLI+7iCsIPDNT
- T6sJZQnvvqsvINN8+M8JdrW6BxwdRNYkqmuA1YZtQtTFzmWpPEYAtaXLR41XkugKwQHU
- iUzymzJsWpHOidNiT9uwv1m2LPJvZsbG3gbmr6IOzFeBiW3+hCYdYFQIQQ1FUAr4QH8E
- A/FyWi7T9Zdni3XJupz5rbYEIoNhD00JCBdLzug1ICcB9ej9ZIgxc7d6UIlXH04U24nK
- TVqcaqsxqj4xZP2DOVgvoqX9DJQRGriLJFy1oTaKKq3DUZdkMx35nqtpB4jRG+cGY3kJ
- nZ/g==
+ d=linaro.org; s=google; t=1745533335; x=1746138135; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=in7ycEaQX4319N33+Vm62vX461QLG8559UsiXNL2yRs=;
+ b=l653YYYK/doFIjxT7pzND0jHhNzHxZ36dVEizrElzwG7Nfr2czHyLsrM9c++elcHGV
+ EqipIfWGQrnhC11mOwl9ND703rTVyfA6Z88krqHWAAXeFLN1SRy3g84lAdFdOoQ6s2cx
+ u32nrA5V+TGHIzzolaIa4UCgXp/ouxuhVIz9ta49LMviZY6EVSzZtddz4394tC1yM1Mm
+ 6OTdnur0zKnksM3S7iY+067jLIwcmKysRTLRH7ETGPms3oRpgu6Gmfv99NJgKWAPVmDY
+ JHqBjttHnpKWpWAwR/VC4ilibL65rAFJv3BREIeRDMpSWNgpBuG0GdwjCPOUxTF/u14m
+ FtSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745533379; x=1746138179;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=uWC7ZUuhMJjjntdzJpmYnoIJKuGi0kxenHJ2eaOicnY=;
- b=bGbw6Q5MGFVSr+5va0sfR00qoDMRSIxYvrjvtjfZmD0szZRmAIVv0wYn/c06HEG77/
- W0kDKGWd284if/fIv45BoWrkG4ySB5T17/LA5nj6YpWvDaCSBCQ90XcKGq8Da+Xphu3F
- 4XjQzaMzVoN4xm8Zht2nqvJhjyoCN1aCXZTrcC5QQqtGuHvzf8P3Rz++4FbE5vxEmwAM
- RCS1+Ggn2UzgeQfkDlhaoXWysZmWO9DOvOHBFOsl0IlPBMJrHiBMjyayoRbTC2KTnMQf
- oSpvlcVlP+IN4uy0VyyyE4PsjdgOcsDuw5Ke4Rrprab3wdnWG22YUwFvye9/dguVeg0a
- S8wg==
+ d=1e100.net; s=20230601; t=1745533335; x=1746138135;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=in7ycEaQX4319N33+Vm62vX461QLG8559UsiXNL2yRs=;
+ b=ZgGeCH+PpQ1oNfS+vqBxum9aAgJb+zSR1qaaZxlpkE2urmdXh4fKXBiD0xcblV/VTV
+ UKDxF1Ctawn5nPKXdu9oPdFnT0Ur06ITOLiMaNdYgAlOa7Dkh64Y2/SMMOzuPO4UV9vA
+ XPOU2yj/vgouqdfUGF9+ljFb/Qr0vHl50vZnW92THnXRMO7DqTsXt0OYrCX2fRTyX6tr
+ /HyVXgBnGJ2J2ORF6GqFxrDSVjEammo4dKBu8j+BrHwjRD4vNLGdJ4e1tHzKlBOZeLIt
+ NBhgBjHWniUtIzvSM+chsFWjCsHANfO2C2kt/nll0Us9bfy44lvqlRTUp+Qfhyh7o53d
+ 7VNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWnkADF9ZwoGx0CBJstMjZxiHIyCYaUtOMjCBOpwG2Jejjn3W076nz+L8vnx4G7i64q6psMoeAa5mAD@nongnu.org
-X-Gm-Message-State: AOJu0YxrmzqMZF93x50qROpghvku5nH6dU3/KvVEdbdQc7f07JiW0gJe
- av61QniMqjycX+5PeYb4hfFxnYgSDISB6RSQE1rThxTlA+5fSYV35V8AYdV5qBA=
-X-Gm-Gg: ASbGncsLIBnEywOi/T1CYRn/awJdjLJqVNVKp1YzaW2dvwC0nnHwykhcKjmen73qZMK
- Jz2mOm7WGp3w7Tg3weLaM32z8RJDsfF7BkqrTKleZtVaEqe95jFxcXnhJDwYZF9ujDBQA8T/HpG
- fgSyezaSLAXNZ7OYJtWt8v4cv//HcmRpyEabByCSDVuFDTS/R28voqwHKtWoO10+atohj6xOjeP
- 8IXjkihWETWxarWiOaLr/7wF5obxgLAMGJiw4bWWnylpAg2/rYPO37cNgbVCX71gtkCcaErwIl3
- 8j3zl23DcMyDxpnrNQe0I5j5u79O4yMDDoTQQAqqEN1PyI7y2OgE71fJ61ke2gx064t8FaWuZSO
- 67YndodAex1N+dMY=
-X-Google-Smtp-Source: AGHT+IGeFB8JAIjFP6RryB7dOMilJYq94c3FNs1OB30CFf6I295IInGHZi18IZaprXm2M/V+OdoNFw==
-X-Received: by 2002:a05:6000:4011:b0:39c:dfa:e1bb with SMTP id
- ffacd0b85a97d-3a06cfa8319mr3247397f8f.42.1745533379197; 
- Thu, 24 Apr 2025 15:22:59 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073c8cc74sm531999f8f.11.2025.04.24.15.22.58
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 24 Apr 2025 15:22:58 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH v5 21/21] hw/arm/virt: Get default CPU type at runtime
-Date: Fri, 25 Apr 2025 00:21:12 +0200
-Message-ID: <20250424222112.36194-22-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250424222112.36194-1-philmd@linaro.org>
-References: <20250424222112.36194-1-philmd@linaro.org>
+ AJvYcCU3n4vS5ovKO/JBurVZFVrNDwTVKDSH7MTe/FxMGSfjFIYtFaUBbh8B2SSl3PzbIPTMdNz1msdMAJiK@nongnu.org
+X-Gm-Message-State: AOJu0Yy5zJ+qbF7qv8JnSPwZlPXoJaPt/bex5V4+ssf0ZfP2E23cKO5G
+ j6oe5FeRJb3y/dAnYusVcxebPCOp3nAlNeeL9dEWqXQGIGFP3faLL7OsFum7XR4=
+X-Gm-Gg: ASbGncupkAN9GcEBy5SaOg/Ta/KyTHgaSNN1GCdUZ4pxnj4vFh3zC45bynZaFz+iAeU
+ yVqSPinbrTri/QIKCuPz7Rvm/v9i+iN+oGse1BoaEI1RpEQllFmXy1wSnnil/oPxIP/yakgqYF7
+ ICpiXS5ZuglD/y5Vwa3O2EHexqu9E6yXoircUYQd8eK66uGCbA4T8goUu1YjGGc6R2SmTjAVGlG
+ 2y3IujlfgCesHRpadArKTWRHkHgnuOsocE7aFK88kgk+sBf2GoEinU/4+65W0JpV7h7j+Bshtui
+ MuGrusHdkZ3yNcAbaiSdWGpAM9QpDkUhcSmNbs4PUZ1aIUDgFd+q/w==
+X-Google-Smtp-Source: AGHT+IGefSXTK3qrUDtnIVZrpLU0Ie54Z0mqzP2zXB5Tj3FT6JZWf8FIlfjJTQv1xkYwZwjQc942oA==
+X-Received: by 2002:a17:903:320b:b0:223:5187:a886 with SMTP id
+ d9443c01a7336-22db49724d8mr54941435ad.22.1745533335203; 
+ Thu, 24 Apr 2025 15:22:15 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22db4dbde17sm18927165ad.83.2025.04.24.15.22.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Apr 2025 15:22:14 -0700 (PDT)
+Message-ID: <c758f0a3-3228-498f-a2d2-e829b53cba58@linaro.org>
+Date: Thu, 24 Apr 2025 15:22:13 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, stefanha@redhat.com,
+ Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
+ berrange@redhat.com, peter.maydell@linaro.org, thuth@redhat.com,
+ jsnow@redhat.com, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+ <b0d553d0-be66-40cb-8fde-1b1554720db8@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <b0d553d0-be66-40cb-8fde-1b1554720db8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,64 +108,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer MachineClass::get_default_cpu_type() over
-MachineClass::default_cpu_type to get CPU type,
-evaluating TCG availability at runtime calling
-tcg_enabled().
+On 4/24/25 13:43, Philippe Mathieu-Daudé wrote:
+> What about function name clashes? I.e.:
+> 
+> 389 ##
+> 390 # @query-cpu-definitions:
+> 391 #
+> 392 # Return a list of supported virtual CPU definitions
+> 393 #
+> 394 # Returns: a list of CpuDefinitionInfo
+> 395 #
+> 396 # Since: 1.2
+> 397 ##
+> 398 { 'command': 'query-cpu-definitions', 'returns': ['CpuDefinitionInfo'],
+> 399   'if': { 'any': [ 'TARGET_PPC',
+> 400                    'TARGET_ARM',
+> 401                    'TARGET_I386',
+> 402                    'TARGET_S390X',
+> 403                    'TARGET_MIPS',
+> 404                    'TARGET_LOONGARCH64',
+> 405                    'TARGET_RISCV' ] } }
+> 
+> $ git grep qmp.query.cpu.definitions
+> target/arm/arm-qmp-cmds.c:238:CpuDefinitionInfoList
+> *qmp_query_cpu_definitions(Error **errp)
+> target/i386/cpu.c:6418:CpuDefinitionInfoList
+> *qmp_query_cpu_definitions(Error **errp)
+> target/loongarch/loongarch-qmp-cmds.c:30:CpuDefinitionInfoList
+> *qmp_query_cpu_definitions(Error **errp)
+> target/mips/system/mips-qmp-cmds.c:28:CpuDefinitionInfoList
+> *qmp_query_cpu_definitions(Error **errp)
+> target/ppc/ppc-qmp-cmds.c:192:CpuDefinitionInfoList
+> *qmp_query_cpu_definitions(Error **errp)
+> target/riscv/riscv-qmp-cmds.c:56:CpuDefinitionInfoList
+> *qmp_query_cpu_definitions(Error **errp)
+> target/s390x/cpu_models_system.c:85:CpuDefinitionInfoList
+> *qmp_query_cpu_definitions(Error **errp)
+> 
+> Prepend target name to these functions and dispatch generated code?
 
-It's worth noting that this is a behavior change:
+In general, either we'll:
+- unify implementations
+- create a dispatcher function (based on TargetInfo target_arch()) + 
+renaming existing symbols with suffix _{arch}
+- we'll create a specific interface for the concerned symbol if needed
 
-- Previously only
+In this case, given the implementations that are very similar, maybe we 
+can unify them in a single function using
+target_info()->target_cpu_type().
 
-  ./configure --disable-tcg --enable-kvm
-  ./qemu-system-aarch64 -M virt -accel kvm
-
-  would default to 'max' and
-
-  ./configure --enable-tcg --enable-kvm
-  ./qemu-system-aarch64 -M virt -accel kvm
-
-  would default to 'cortex-a15'.
-
-- Afterward, -accel kvm will always default to 'max'.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- hw/arm/virt.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 566afa4c978..b59cc90bd36 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3127,6 +3127,12 @@ static int virt_hvf_get_physical_address_range(MachineState *ms)
-     return requested_ipa_size;
- }
- 
-+static const char *virt_get_default_cpu_type(const MachineState *ms)
-+{
-+    return tcg_enabled() ? ARM_CPU_TYPE_NAME("cortex-a15")
-+                         : ARM_CPU_TYPE_NAME("max");
-+}
-+
- static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
- {
-     GPtrArray *vct = g_ptr_array_new_with_free_func(g_free);
-@@ -3184,11 +3190,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-     mc->minimum_page_bits = 12;
-     mc->possible_cpu_arch_ids = virt_possible_cpu_arch_ids;
-     mc->cpu_index_to_instance_props = virt_cpu_index_to_props;
--#ifdef CONFIG_TCG
--    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-a15");
--#else
--    mc->default_cpu_type = ARM_CPU_TYPE_NAME("max");
--#endif
-+    mc->get_default_cpu_type = virt_get_default_cpu_type;
-     mc->get_valid_cpu_types = virt_get_valid_cpu_types;
-     mc->get_default_cpu_node_id = virt_get_default_cpu_node_id;
-     mc->kvm_type = virt_kvm_type;
--- 
-2.47.1
-
+It's not a problem at the moment, and not directly related to QAPI 
+generated code. We'll have to deal with symbol clashes when we have 
+deduplicated all compilation units. QAPI code generator does not have to 
+solve this.
 
