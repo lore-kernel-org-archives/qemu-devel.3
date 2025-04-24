@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F0E6C369D5
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 21:02:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F7CFC369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 21:08:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u83hm-000373-B8; Thu, 24 Apr 2025 17:01:58 -0400
+	id 1u83np-0005Iz-E0; Thu, 24 Apr 2025 17:08:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u83hc-00033m-JH
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 17:01:54 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1u83nn-0005Ik-Kr
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 17:08:11 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u83hZ-0000UA-Mp
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 17:01:46 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-736a7e126c7so1513313b3a.3
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 14:01:44 -0700 (PDT)
+ id 1u83nm-0001HM-0w
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 17:08:11 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-736aaeed234so1389259b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 14:08:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745528503; x=1746133303; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745528888; x=1746133688; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mC5mET4uLYjhDaXp53Ol0DTEjz0Yxq8K22g6MPL+v6g=;
- b=qIlb+HWBNzyG+5Hwm7tLU2wKyBcfqA01BOTlBcllLHJKgydrnNWaVnKGCVPgZ6g4hB
- t/RRXjut1rZM5YB2Vx/CUeFIbN/2Uzyu8ZPXbiqmU5tcxgXjRt9Q4xbXnSzVAu3kYTEa
- rfzr4FfFC/Tbl90fXgLpAaHbzOlLJEj6lplDbkwMQGFAlxjU92Vq9U3xqkyaIqfwk6jh
- W58HllfuEySf1SGP8naTigPSONDxjYCLy/TxxxJKGLmv8xoPm8SU56un3GIOepw2Txng
- SdJPahB1ImKUhx7JCAxsIA8q2U08ZBPYWZk8NuNEWNeDn1Qcl/JdC//DR6HGpfiGcAsU
- uuZw==
+ bh=cunkuODgn6HcMGmVcEuAy0+e4wvI2wOirg1YE4LADAc=;
+ b=GldeAnqWPj+6QWQC4IO/McnOtrNBKePP5q4Fdd8pNsvweOejuAFZoAB4kBmNQGgzHj
+ JeYq3Evr7T1Srn9fGHzsJVNKMu6ELbaGNJYjxZZFG0MUypzR/e2F3mxN2116WHOUXo2y
+ 2eB2dPPkV1AhWqhuAzIKMmRlLZrwXrKbUMkVVyA8Md+qUeTaGNeQn63UmduI/RVZKYtd
+ EhpXyDWdl7aUePb46FSdupvokWJj2wH2QdvCfXaosXi2FEIaK69jwAzy4v1C8wJWQcSL
+ nNba2n2w/8moyIgeHNlqbuArmDOwHB9Dsc4dR6VflnWFOAr69hZ4e92wmIQ9/89NS0Kj
+ Gq5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745528503; x=1746133303;
+ d=1e100.net; s=20230601; t=1745528888; x=1746133688;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mC5mET4uLYjhDaXp53Ol0DTEjz0Yxq8K22g6MPL+v6g=;
- b=v7TsFaRjW2D3TSCd+0pYLSrIoc03pfhm3Ro+GwQ26rebdiqBMbr2x8rPFn9PmfwmIe
- HT0WJWqBcKEmpfJ+gihU4dWmYLsjYMdUVDvF+EtxdN/KcepLPqCPYVzmUKGbiWBC44ZH
- 4GyvOgxdwmWrdVtvUe6K0mQbmXi46W+FbOsM2xYFpPIJKPBbUaf0AlBFpKz6VZ1iSHKq
- 7s7o47qr2C/sfyQVijHu8kGJQSi2LKm0hRfxcyLPu8tzBiODu0ysgR5lCCgHk9gwKhx0
- 7dPq7PJKmiHvipSEoawAYDVHowfEUAhT9uzJjG2conGlsDRhB1kytWyLLm2P6fECeNJh
- S7Cg==
+ bh=cunkuODgn6HcMGmVcEuAy0+e4wvI2wOirg1YE4LADAc=;
+ b=rLqLlVHhuGfisKNntGtQI91jYa4+2JLcy8wbzp7roWQ5tOLgOxczwvDI7MFkZnVK7M
+ HivuuvzJPBoQxaU6C5eZETG//mZjNBpa5DqqXdZG6K27dDuV3l0t8JXAx1yWxukDooMz
+ dkDFc8+lrSIF62VD9+FoXd/3UPeB1etjqCrVCa1ma6B8dpGrh9/WhjSZCrF7Lfs+hdyc
+ 8vPfb8xX6sjdjg0uIuKnPczD/pBhz+FbR/F1y6mIWhlcNX9KhM7bmajjjumIpoHO9VdW
+ rYsZRHUyJtE8YEipKlrqVWfnST6/+ll+DWfim8Lks/AjY8MAzUdONSReXixgD9y0hVon
+ wuTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUG/S9clEf+4fNdRZUhrEMNs9C1TMgjUseftlcEWjvIMZftUbX+pIJkAPVBLVvtnzvuqMf9hgAYwV4L@nongnu.org
-X-Gm-Message-State: AOJu0YywIRyjXite0ra1jyQGWXu0ZtqaW3zUIWpatCoMI6hkOfIEoWJ8
- L0myS2fcH+KQu8rZNd+36D7BIyekIjNfPLcyUcPyyh+q3KYBQIlJ/ZM9hz///R8=
-X-Gm-Gg: ASbGncuG/1ZgYuEaq3UkvqFbi1zk3R1wnRK/B0wK/QT1czL+Kj5B3QbOIvmcfdefe7H
- ZdFIKmo3t55Rc96nO/HKICWgwgZbWaUn29qnI2cZHvrkic+JOJKsqlOZ5y9t71+JMhOH2YI9Vh4
- kVBFTyUoi1eyWq8qzjZV6ReJRBElixJ7XUrzV4F8W07TJVT6z0eRWCQw1C0+Pf+A8cvyxPt5qsG
- sKPcOTT8+ooWxJqMNApmoQFCeIaguUQA/0oGCVkt6VOgsHyKIvYeWLfw7cRuZIphnjsKtUmjowV
- ROzYxlRMXZ6tlwgb1pLllMnXQLxrSCtkSY6CCp4LRd+4+3ybS7FInVKP1FSn2jlEtfrhVUvbkEi
- MQWJRuxzLXPzS1BgbZQ==
-X-Google-Smtp-Source: AGHT+IGopFHwevDxSGC4cCmhyW0nJkiVmSwGZC/6S6tJDm25uSa2zjwaB9ZQbNnxVEy6KxiJ2VpZSA==
-X-Received: by 2002:a05:6a00:2e9d:b0:736:ab1e:b1ab with SMTP id
- d2e1a72fcca58-73e32d6571amr1591296b3a.0.1745528503598; 
- Thu, 24 Apr 2025 14:01:43 -0700 (PDT)
+ AJvYcCX2bDIhjaedGEi70Oe0oNM60Mv0pUcwNLoVKQ0M2PjWstiKtUeg6wPu8Hsjys1PPjoZXrQFkZhc1ikC@nongnu.org
+X-Gm-Message-State: AOJu0Yw7ju+r1N4CV1JLI/KZBpetSza4/fp6VYvEapCUwHpgoZ6Se4KV
+ oUuXw9xzUn+LvM/jX4U+4jM4WP+L+saygvfxcfpm9YlbuQnKIUPvu4O5l6oMgDg=
+X-Gm-Gg: ASbGncuIdNBUg9auYut9KHaHVrv+gW2CVodS6VIaHYndUpp/yShjlEyyh8H9U0Qu7GU
+ KBzSUqSbEV715mkEvU4h8hCQljvsseSxx22XCxv6Pm0qb1A5nkIYlZWGbOrHs5ecPhHUbAuUSE3
+ Uxp6jUY2dw6oOM0MMJtJUTAkTKoKffVVfecpfxX5hGeftNlZGYvDF/v5uAb4reNCIQqJXFt4p96
+ 3XVf/IuzeamCxj+XLBNcQWfrCUywdQz91ZNO/iyQiQtsdvlIoaKVoKqeUiM/k84sOlNKbxLa76h
+ 1qOTpz39TDZA3aaTBNLdJGhtiO5rD3nNGSMNaiaiqS9Upiy9kJVQgXqg4gjSInT41M3Cxk6hofj
+ wiM4aAzvwXfU4kwkUGA==
+X-Google-Smtp-Source: AGHT+IFrunSy9gWZEUK8t6N8sTPdNQDEL2j5yBTWFpN3srrnf6jTooPXxT0Cf+9Lqt2H4qOAfeTrCQ==
+X-Received: by 2002:a05:6a00:328f:b0:736:a7e3:d4ab with SMTP id
+ d2e1a72fcca58-73e32f5df9cmr1434964b3a.5.1745528888354; 
+ Thu, 24 Apr 2025 14:08:08 -0700 (PDT)
 Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25964e38sm1879371b3a.75.2025.04.24.14.01.43
+ d2e1a72fcca58-73e25a6a409sm1874447b3a.117.2025.04.24.14.08.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Apr 2025 14:01:43 -0700 (PDT)
-Message-ID: <431dce61-4cdb-4bf6-98f8-d2ac714a1ab6@linaro.org>
-Date: Thu, 24 Apr 2025 14:01:41 -0700
+ Thu, 24 Apr 2025 14:08:07 -0700 (PDT)
+Message-ID: <bd559b67-3c57-4ea7-a938-8fa7ce5c5fd3@linaro.org>
+Date: Thu, 24 Apr 2025 14:08:06 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/13] target/riscv: Include missing
- 'accel/tcg/getpc.h' in csr.c
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-riscv <qemu-riscv@nongnu.org>
-References: <20250424094653.35932-1-philmd@linaro.org>
- <20250424094653.35932-8-philmd@linaro.org>
- <9f71ab55-523e-4720-aa1b-2b3271038df5@nutanix.com>
- <ebd88b93-3752-4e18-b5c0-78e3b4a4b8e2@linaro.org>
+Subject: Re: [RFC PATCH 3/3] qapi: make all generated files common
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: stefanha@redhat.com, Michael Roth <michael.roth@amd.com>,
+ pbonzini@redhat.com, berrange@redhat.com, peter.maydell@linaro.org,
+ thuth@redhat.com, jsnow@redhat.com, philmd@linaro.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+ <20250424183350.1798746-4-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <ebd88b93-3752-4e18-b5c0-78e3b4a4b8e2@linaro.org>
+In-Reply-To: <20250424183350.1798746-4-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,51 +108,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/25 13:13, Philippe Mathieu-Daudé wrote:
-> On 24/4/25 12:14, Mark Cave-Ayland wrote:
->> On 24/04/2025 10:46, Philippe Mathieu-Daudé wrote:
->>
->>> "accel/tcg/getpc.h" is pulled in indirectly. Include it
->>> explicitly to avoid when refactoring unrelated headers:
->>>
->>>    target/riscv/csr.c:2117:25: error: call to undeclared function 'GETPC' [-Wimplicit- 
->>> function-declaration]
->>>     2117 |     if ((val & RVC) && (GETPC() & ~3) != 0) {
->>>          |                         ^
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   target/riscv/csr.c | 1 +
->>>   1 file changed, 1 insertion(+)
->>>
->>> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
->>> index c52c87faaea..13086438552 100644
->>> --- a/target/riscv/csr.c
->>> +++ b/target/riscv/csr.c
->>> @@ -28,6 +28,7 @@
->>>   #include "exec/cputlb.h"
->>>   #include "exec/tb-flush.h"
->>>   #include "exec/icount.h"
->>> +#include "accel/tcg/getpc.h"
->>>   #include "qemu/guest-random.h"
->>>   #include "qapi/error.h"
->>>   #include <stdbool.h>
->>
->> I'm mildly curious as to why the target needs to include accel/tcg/ getpc.h directly as 
->> it's almost a requirement for TCG
+On 4/24/25 11:33, Pierrick Bouvier wrote:
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   qapi/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Indeed. There is a TODO around, added upon introduction in
-> commit f18637cd611 ("RISC-V: Add misa runtime write support"):
-> 
-> 2113     /*
-> 2114      * Suppress 'C' if next instruction is not aligned
-> 2115      * TODO: this should check next_pc
-> 2116      */
-> 2117     if ((val & RVC) && (GETPC() & ~3) != 0) {
-> 2118         val &= ~RVC;
-> 2119     }
+> diff --git a/qapi/meson.build b/qapi/meson.build
+> index ba9380d3f03..58ca8caee12 100644
+> --- a/qapi/meson.build
+> +++ b/qapi/meson.build
+> @@ -144,7 +144,7 @@ foreach output : qapi_specific_outputs + qapi_nonmodule_outputs
+>     if output.endswith('.trace-events')
+>       qapi_trace_events += qapi_files[i]
+>     endif
+> -  specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: qapi_files[i])
+> +  system_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: qapi_files[i])
 
-Yes, I've sent mail about this bug at least twice.
+You no longer need the conditional by moving to system_ss.
 
 r~
 
