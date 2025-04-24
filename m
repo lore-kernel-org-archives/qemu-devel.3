@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7806CC369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 20:26:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDB3EC369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 20:26:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u837V-0008Cd-Av; Thu, 24 Apr 2025 16:24:30 -0400
+	id 1u837p-0008HH-QS; Thu, 24 Apr 2025 16:24:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u837P-0008Bx-9p
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:24:24 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u837h-0008F3-FQ
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:24:43 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u837N-0004yz-0T
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:24:22 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43cf58eea0fso6871755e9.0
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 13:24:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u837f-00050Q-Rm
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:24:41 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-39c13fa05ebso988866f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 13:24:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745526259; x=1746131059; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745526278; x=1746131078; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=E3lVw6KIn3D7NgOMBRI5zDO2652ucdToVqyJMqAEbX4=;
- b=nEcnab2IpQFDa3A6+v12Xf/nTLAUTA2SmBFiQHocFfimEfXwvPZ13Dxms6C/X2Vt1n
- MlI/VAtMpwKH+nOP+eQSIHtkyyXKUIw0E3PlGLaLq/G022N7Mjd+LlVmAxFYAh7Yxxnm
- t7XUta6wOB12KueQ2wJd6jM97MG6caX/G2xQ2diQZVAi7RBt/mhW/pKghGEQ4hGGj66c
- TWtgiVjP3938uY6nB41i/UsGJSqU2by+TlcQtV6sJenaL8zneKWjzfBVcKqNZ7bKvViD
- wsEiWuk1IuI4BrviRaSlYfnJjj0sm/YBmry8erULO3u64OFb5uWxEyyCFnj4ZmUFEwDb
- zEpw==
+ bh=3spF3BHyP+3nJq+PBnSsTeYKhoBB0RsO1qRS6M0pmcw=;
+ b=MUfkEqIB7lPXGeP90ULAWyHvcSHQ9yJQur14O2b8oATemj21VJ3F7El1oFm8ps821r
+ 0N0pYVq69lRB8px9WLCcVyXOeTG8RbqyG0d6tpnYcILM2wym7ZGuc2m2txB5GguEOyVv
+ FhtOrpWLFALjuXPH64NcINplm1luYWffa7Cz+XegSuL24zlG29eM52LLFFIq5hTgjQl9
+ uLYCneLI2GpcfR+6CCfWXHvnmMZkRQJx3oJlZg1DZkA3FQQvEzIcsIopMzoFusw6F1oF
+ eOP565x5LhVCf08EPSetAuJ0nEq0c5Fov1LEuNOlb1MYHil8SUUmrt5VyW6Gk4jEQRBw
+ y9eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745526259; x=1746131059;
+ d=1e100.net; s=20230601; t=1745526278; x=1746131078;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E3lVw6KIn3D7NgOMBRI5zDO2652ucdToVqyJMqAEbX4=;
- b=LUkZWd86o0+8UbV6LXZchWp8A/eEfOc3fT4depYacFX5xzqD6o9tsqD8ZoC4/IDnic
- as5Ly3g8O1DCu1jZtXaAbbWBtnY/tdArvpcZP7fdd3NwTypTChuVhJf2Hyebe/Q7v/+f
- vs5HSpEC6eYIreWwnrMdlyOGqKt5E3vzchGJEM3SY+b1zgOZ/YTmhLlZPLn4b4D9WBIM
- lAUepGnd3qWGzvXUzf6FP4vTGOZdQrO2QJSNw5PzbpBLniqTYMZ/KpFpEnnPF3/wRRpM
- VdqTSSIVbSLRYwXs8oqgUdXn45FzZwyKiKGNDcpsgujcgOED+PPtHhkuXwpEQxpdFX+I
- i/hw==
+ bh=3spF3BHyP+3nJq+PBnSsTeYKhoBB0RsO1qRS6M0pmcw=;
+ b=V8gFD0xh4kQ9bEjaR2Azn8QXExOOdwfsRmQ6xGCrde3Sol+4gsHyPz49aX82PvPlIG
+ yzBdazMwcpS4YXTfm9vKAmvU3JPcDHZ0zZU18mhlzOG4U5Knf5/B9t+9ry6Qi3On3wO0
+ UK2dNRHkJ3t7PvJ5EKrPYZP7UAl8VNz59Vgc7TlCcPyuovkMUgCz0u1iL1sZGePbIRjk
+ 9lcBDn4tehUGS8MpuHexvcu/b4ZhZjfa07Z7rIayyTdcNoB4DCmTb475nb1xULQNQB5m
+ hOYPewx4HK7z4yPnWhBNCqG/WBC7cywFi8nWHgn2Mkz6DiTUc+VlD9BA7GuyPn3HOa+p
+ Ykdg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX75ApQ94JYMQhMh1OyrgDtRA/hpm8cUqVstxmdp2DIh6BYP9DkpnjRwlr3rmAKl5KPaA4NkYDXABZp@nongnu.org
-X-Gm-Message-State: AOJu0YxUxXCbmGjs7YtcJFXehxjUvfmS95Vpyzfmb/0Wh6+fAyDfyDvU
- k+4pN+D4rC5vM9wWPH5qQ6iqL96wmnmiYiXbGC8pYCiiJGzCa/tPMG87U4pfb2s=
-X-Gm-Gg: ASbGncu5H79gPYNqYkr8llzociXv2jfS+K856LZOdEnnIoFWf9b2gASU8qe5gCibs01
- 3EsVcWhqyl47pL6tUj2pk9O5rFYs/pKKszWvxiKU1XBdE3Pa3iZtKFao3QBM70NELHH1tZbc01I
- Xle6EeG996wgonGXTbzMldbh/iwr5GY0nwdxKcpG/OjR6DKnL7Sl6pyWQfk+E/gYZB1hc6VmbY0
- juzFhL+6/CUFlvsco74Kh/bkAUyT6PIsQ/TOmrO4j1coPYBftlo4Dcylee3VXVKsXm4wK2guzXt
- S+capeouNqiwLnEjPfWdDXsDlBcW1SWB5nRn5HLPWMj6unPEl69vkPZaKgB1kco7iCL2IECeb6o
- Z6v9HRd+WYOUSjeQ=
-X-Google-Smtp-Source: AGHT+IEz9b+gcPjY9cJkB/xLgeEZGP8GawUo1yGz/gmAVrGjKW101y29AV4vHQti8FafaQk3+7McnQ==
-X-Received: by 2002:a05:600c:3496:b0:43b:cc42:c54f with SMTP id
- 5b1f17b1804b1-4409bd18487mr40783235e9.14.1745526259237; 
- Thu, 24 Apr 2025 13:24:19 -0700 (PDT)
+ AJvYcCV82L8jR9zJRzlRvHQI8BJfX+Mc2FDNtL+k5hFvgn5YV97XSzTSmLkbQtI/csKsLY+PVozyUhr22NK3@nongnu.org
+X-Gm-Message-State: AOJu0YwbvArH856/rSKmPlyxodtHx1EstW73ew//ajwjN/Fu9GVRGcxL
+ Ewtp7VCMiJ28iSQpDJ42fM9/C6Wgcpj66WfIhLityP0trgKacK9fqMOwJ7c5oBI=
+X-Gm-Gg: ASbGncuKzEazuMoVsunJ+5uvCcrn1MqfPmwl1HGyNOASmK8N/5aX99AFUnY0f9eRu9e
+ XHw3jlUU4OaZLmMk+h11PNmLDVVma4oO5OSpRJn8NebR+K0p63sAvdYZOHg4q8sLjob0bQ75qvL
+ I1CwfG05ppZcuHTW3NWG8Wjo3FGHpidB3KEM5+7XaV6HpkDNv7IkIS+BuiKjEk6jBcPRgfcgxx5
+ /unZQxAezh3EUPRCRqBwEa5VcccwppP6BF2PsvVp0owg25/JOiJBjM9egFM9rIGl7SY+ySIKSXj
+ mywCzHhzz63542QQgxhdRRBgaQrxYveENrI+5nGNcfcA3FxJqMmm9BD8vxeacB7R8NJ1NOBf8nk
+ hS4u1hUnckByOmKg=
+X-Google-Smtp-Source: AGHT+IGN41rx+j8FPCY2AB3k/b8jhhgwUr9ZrqH8IdWXic8w0wKm80U35kHbxyVu5WsozwYASHkzLQ==
+X-Received: by 2002:a5d:64e3:0:b0:39a:c9d9:877b with SMTP id
+ ffacd0b85a97d-3a072aa6a1dmr625584f8f.27.1745526278019; 
+ Thu, 24 Apr 2025 13:24:38 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-440a530324dsm833685e9.10.2025.04.24.13.24.18
+ ffacd0b85a97d-3a073c8cd7fsm297607f8f.1.2025.04.24.13.24.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 24 Apr 2025 13:24:18 -0700 (PDT)
+ Thu, 24 Apr 2025 13:24:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 01/13] accel/tcg: Use vaddr for walk_memory_regions callback
-Date: Thu, 24 Apr 2025 22:24:00 +0200
-Message-ID: <20250424202412.91612-2-philmd@linaro.org>
+Subject: [PATCH v3 05/13] include/exec: Move tb_invalidate_phys_range to
+ translation-block.h
+Date: Thu, 24 Apr 2025 22:24:04 +0200
+Message-ID: <20250424202412.91612-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250424202412.91612-1-philmd@linaro.org>
 References: <20250424202412.91612-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,151 +106,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Use vaddr instead of target_ulong.  At the same time,
-use int instead of unsigned long for flags, to match
-page_set_flags().
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250424011918.599958-13-richard.henderson@linaro.org>
+Message-ID: <20250424011918.599958-15-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/user/page-protection.h |  5 ++---
- accel/tcg/user-exec.c          | 10 +++++-----
- linux-user/elfload.c           | 19 +++++++++----------
- linux-user/syscall.c           |  8 ++++----
- 4 files changed, 20 insertions(+), 22 deletions(-)
+ include/exec/exec-all.h          | 5 -----
+ include/exec/translation-block.h | 4 ++++
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/include/user/page-protection.h b/include/user/page-protection.h
-index 1de72e31e68..8f0b769b134 100644
---- a/include/user/page-protection.h
-+++ b/include/user/page-protection.h
-@@ -14,6 +14,7 @@
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index c46255e66ef..4c5ad98c6a9 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -23,7 +23,6 @@
+ #include "exec/hwaddr.h"
+ #include "exec/memattrs.h"
+ #include "exec/mmu-access-type.h"
+-#include "exec/translation-block.h"
+ #include "exec/vaddr.h"
  
- #include "cpu-param.h"
- #include "exec/target_long.h"
-+#include "exec/vaddr.h"
- #include "exec/translation-block.h"
+ #if defined(CONFIG_TCG)
+@@ -123,10 +122,6 @@ int probe_access_full_mmu(CPUArchState *env, vaddr addr, int size,
+ #endif /* !CONFIG_USER_ONLY */
+ #endif /* CONFIG_TCG */
  
- int page_unprotect(CPUState *cpu, tb_page_addr_t address, uintptr_t pc);
-@@ -88,9 +89,7 @@ target_ulong page_find_range_empty(target_ulong min, target_ulong max,
- __attribute__((returns_nonnull))
- void *page_get_target_data(target_ulong address);
- 
--typedef int (*walk_memory_regions_fn)(void *, target_ulong,
--                                      target_ulong, unsigned long);
+-/* TranslationBlock invalidate API */
+-void tb_invalidate_phys_range(CPUState *cpu, tb_page_addr_t start,
+-                              tb_page_addr_t last);
 -
-+typedef int (*walk_memory_regions_fn)(void *, vaddr, vaddr, int);
- int walk_memory_regions(void *, walk_memory_regions_fn);
+ #if !defined(CONFIG_USER_ONLY)
  
- void page_dump(FILE *f);
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 17e3be337f5..25d86567e70 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -199,13 +199,13 @@ int walk_memory_regions(void *priv, walk_memory_regions_fn fn)
-     return rc;
+ /**
+diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
+index 8b8e730561d..cdce399ebab 100644
+--- a/include/exec/translation-block.h
++++ b/include/exec/translation-block.h
+@@ -207,4 +207,8 @@ static inline void tb_set_page_addr1(TranslationBlock *tb,
+ #endif
  }
  
--static int dump_region(void *priv, target_ulong start,
--                       target_ulong end, unsigned long prot)
-+static int dump_region(void *opaque, vaddr start, vaddr end, int prot)
- {
--    FILE *f = (FILE *)priv;
-+    FILE *f = opaque;
- 
--    fprintf(f, TARGET_FMT_lx"-"TARGET_FMT_lx" "TARGET_FMT_lx" %c%c%c\n",
--            start, end, end - start,
-+    fprintf(f, TARGET_ABI_FMT_ptr "-" TARGET_ABI_FMT_ptr
-+            " " TARGET_ABI_FMT_ptr " %c%c%c\n",
-+            (abi_ptr)start, (abi_ptr)end, (abi_ptr)(end - start),
-             ((prot & PAGE_READ) ? 'r' : '-'),
-             ((prot & PAGE_WRITE) ? 'w' : '-'),
-             ((prot & PAGE_EXEC) ? 'x' : '-'));
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 7519b6bcda3..e281745e485 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -4044,8 +4044,7 @@ static inline void bswap_note(struct elf_note *en) { }
- /*
-  * Calculate file (dump) size of given memory region.
-  */
--static size_t vma_dump_size(target_ulong start, target_ulong end,
--                            unsigned long flags)
-+static size_t vma_dump_size(vaddr start, vaddr end, int flags)
- {
-     /* The area must be readable. */
-     if (!(flags & PAGE_READ)) {
-@@ -4238,8 +4237,8 @@ static int dump_write(int fd, const void *ptr, size_t size)
-     return (0);
- }
- 
--static int wmr_page_unprotect_regions(void *opaque, target_ulong start,
--                                      target_ulong end, unsigned long flags)
-+static int wmr_page_unprotect_regions(void *opaque, vaddr start,
-+                                      vaddr end, int flags)
- {
-     if ((flags & (PAGE_WRITE | PAGE_WRITE_ORG)) == PAGE_WRITE_ORG) {
-         size_t step = MAX(TARGET_PAGE_SIZE, qemu_real_host_page_size());
-@@ -4260,8 +4259,8 @@ typedef struct {
-     size_t size;
- } CountAndSizeRegions;
- 
--static int wmr_count_and_size_regions(void *opaque, target_ulong start,
--                                      target_ulong end, unsigned long flags)
-+static int wmr_count_and_size_regions(void *opaque, vaddr start,
-+                                      vaddr end, int flags)
- {
-     CountAndSizeRegions *css = opaque;
- 
-@@ -4275,8 +4274,8 @@ typedef struct {
-     off_t offset;
- } FillRegionPhdr;
- 
--static int wmr_fill_region_phdr(void *opaque, target_ulong start,
--                                target_ulong end, unsigned long flags)
-+static int wmr_fill_region_phdr(void *opaque, vaddr start,
-+                                vaddr end, int flags)
- {
-     FillRegionPhdr *d = opaque;
-     struct elf_phdr *phdr = d->phdr;
-@@ -4298,8 +4297,8 @@ static int wmr_fill_region_phdr(void *opaque, target_ulong start,
-     return 0;
- }
- 
--static int wmr_write_region(void *opaque, target_ulong start,
--                            target_ulong end, unsigned long flags)
-+static int wmr_write_region(void *opaque, vaddr start,
-+                            vaddr end, int flags)
- {
-     int fd = *(int *)opaque;
-     size_t size = vma_dump_size(start, end, flags);
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 5826ac3adbb..23b901b7133 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8135,8 +8135,8 @@ static void open_self_maps_4(const struct open_self_maps_data *d,
-  * Callback for walk_memory_regions, when read_self_maps() fails.
-  * Proceed without the benefit of host /proc/self/maps cross-check.
-  */
--static int open_self_maps_3(void *opaque, target_ulong guest_start,
--                            target_ulong guest_end, unsigned long flags)
-+static int open_self_maps_3(void *opaque, vaddr guest_start,
-+                            vaddr guest_end, int flags)
- {
-     static const MapInfo mi = { .is_priv = true };
- 
-@@ -8147,8 +8147,8 @@ static int open_self_maps_3(void *opaque, target_ulong guest_start,
- /*
-  * Callback for walk_memory_regions, when read_self_maps() succeeds.
-  */
--static int open_self_maps_2(void *opaque, target_ulong guest_start,
--                            target_ulong guest_end, unsigned long flags)
-+static int open_self_maps_2(void *opaque, vaddr guest_start,
-+                            vaddr guest_end, int flags)
- {
-     const struct open_self_maps_data *d = opaque;
-     uintptr_t host_start = (uintptr_t)g2h_untagged(guest_start);
++/* TranslationBlock invalidate API */
++void tb_invalidate_phys_range(CPUState *cpu, tb_page_addr_t start,
++                              tb_page_addr_t last);
++
+ #endif /* EXEC_TRANSLATION_BLOCK_H */
 -- 
 2.47.1
 
