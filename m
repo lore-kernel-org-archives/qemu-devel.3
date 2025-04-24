@@ -4,52 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C58D7C369D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 07:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32109C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 07:54:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7rNQ-0001Qw-8i; Thu, 24 Apr 2025 03:52:08 -0400
+	id 1u7rPf-00066a-4o; Thu, 24 Apr 2025 03:54:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u7rNO-0001QX-Mj; Thu, 24 Apr 2025 03:52:06 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7rPd-00066Q-UJ
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 03:54:26 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u7rNN-0006ez-3j; Thu, 24 Apr 2025 03:52:06 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 24 Apr
- 2025 15:51:37 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Thu, 24 Apr 2025 15:51:37 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <nabihestefan@google.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
- <clg@redhat.com>
-Subject: [PATCH v6 6/6] docs/system/arm/aspeed: Support vbootrom for AST2700
-Date: Thu, 24 Apr 2025 15:51:34 +0800
-Message-ID: <20250424075135.3715128-7-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250424075135.3715128-1-jamin_lin@aspeedtech.com>
-References: <20250424075135.3715128-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7rPc-0006vP-20
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 03:54:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745481264; x=1777017264;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=uh2RyeMH6MjQsOJfpZlnPDAGaChJ3wjA6eoytmR8ggM=;
+ b=LciydTwJQXb0huMl9ZO3k2QGdRNnpg0lMGpFOr4szQtkK8tLbe/fU3U7
+ GZbUzGMRi8e8DQv51XwXOgRhPsY7y5BWuk92pUiwLVUF8TRjcZzstQjOR
+ 5GhK9IiYSEHFUrr6DWLzHMy8DdEz1xpsA9Esuc4p6aeHE0EYO1Gz++Zb+
+ GLUUM18pKnXJ3d021cLn2FLLbuav6P/emozlWm3Um8DLcOFdvq480dzTz
+ arga+sLUAy0dl5wdzbDVgxtPBVM+1+E1tQvYEo6Z3nNpNzLgHpiAnE5rn
+ xb8iGQ3JChJ21/gbae4mPv3YmcMXYS0/EPJx7PxVEs/d/xX5Txu6p7aTp w==;
+X-CSE-ConnectionGUID: rAk9N+Q0RmW51OLEFX1JFg==
+X-CSE-MsgGUID: yV2dgOxcRaW2pybg/09TgA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11412"; a="47195634"
+X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="47195634"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Apr 2025 00:54:20 -0700
+X-CSE-ConnectionGUID: 15tzpQGwQV2yswp7wjkEnw==
+X-CSE-MsgGUID: X+tVTFriQ667o0bdxJfNIA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="137396598"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa003.jf.intel.com with ESMTP; 24 Apr 2025 00:54:19 -0700
+Date: Thu, 24 Apr 2025 16:15:14 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: Re: [PATCH v8 17/55] i386/tdvf: Introduce function to parse TDVF
+ metadata
+Message-ID: <aAnzEhX+8gXgngfl@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-18-xiaoyao.li@intel.com>
+ <Z-0o0sYJcnqI23aX@redhat.com>
+ <f311a233-0238-4bcd-8481-0829d6bc1eda@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f311a233-0238-4bcd-8481-0829d6bc1eda@intel.com>
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,70 +89,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Using the vbootrom image support and the boot ROM binary is
-now passed via the -bios option, using the image located in
-pc-bios/ast27x0_bootrom.bin.
+> > struct field names starting with an initial capital is
+> > not the usual QEMU code style. Can this be all initial
+> > lowercase, with capital just for word separation.
+> 
+> I think Isaku used such names because they are defined in TDVF Design Guide
+> spec[1].
+> 
+> QEMU's internal data structure for metadata are below, which follows QEMU
+> coding style.
+> 
+> 	typedef struct TdxFirmwareEntry {
+> 	    uint32_t data_offset;
+> 	    uint32_t data_len;
+> 	    uint64_t address;
+> 	    uint64_t size;
+> 	    uint32_t type;
+> 	    uint32_t attributes;
+> 	} TdxFirmwareEntry;
+> 
+> 	typedef struct TdxFirmware {
+> 	    uint32_t nr_entries;
+> 	    TdxFirmwareEntry *entries;
+> 	} TdxFirmware;
+> 
+> So if no strong preference, I would keep it as-is that the raw struct read
+> from TDVF keeps the name convention of TDVF Design Guide spec and internal
+> data struct uses QEMU's convention.
+> 
+> [1] https://cdrdv2.intel.com/v1/dl/getContent/733585
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Nabih Estefan <nabihestefan@google.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- docs/system/arm/aspeed.rst | 29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
-
-diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-index 08a33b7008..014545f444 100644
---- a/docs/system/arm/aspeed.rst
-+++ b/docs/system/arm/aspeed.rst
-@@ -306,7 +306,14 @@ Images can be downloaded from the ASPEED Forked OpenBMC GitHub release repositor
- Booting the ast2700-evb machine
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
--Boot the AST2700 machine from the flash image, use an MTD drive :
-+Boot the AST2700 machine from the flash image.
-+
-+There are two supported methods for booting the AST2700 machine with a flash image:
-+
-+Manual boot using ``-device loader``:
-+
-+It causes all 4 CPU cores to start execution from address ``0x430000000``, which
-+corresponds to the BL31 image load address.
- 
- .. code-block:: bash
- 
-@@ -326,6 +333,26 @@ Boot the AST2700 machine from the flash image, use an MTD drive :
-        -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
-        -nographic
- 
-+Boot using a virtual boot ROM (``-bios``):
-+
-+If users do not specify the ``-bios option``, QEMU will attempt to load the
-+default vbootrom image ``ast27x0_bootrom.bin`` from either the current working
-+directory or the ``pc-bios`` directory within the QEMU source tree.
-+
-+.. code-block:: bash
-+
-+  $ qemu-system-aarch64 -M ast2700-evb \
-+      -drive file=image-bmc,format=raw,if=mtd \
-+      -nographic
-+
-+The ``-bios`` option allows users to specify a custom path for the vbootrom
-+image to be loaded during boot. This will load the vbootrom image from the
-+specified path in the ${HOME} directory.
-+
-+.. code-block:: bash
-+
-+  -bios ${HOME}/ast27x0_bootrom.bin
-+
- Aspeed minibmc family boards (``ast1030-evb``)
- ==================================================================
- 
--- 
-2.43.0
+Or you can add a simple comemnt about "the raw struct read from TDVF
+keeps the name convention of TDVF Design Guide spec", to remind other
+people that there is no need to clean up the style here. I have no
+objections; up to you.
 
 
