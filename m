@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21EDCC369CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 00:38:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C3C6C369CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 00:39:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7kbA-0007cI-N3; Wed, 23 Apr 2025 20:37:52 -0400
+	id 1u7kcS-0008GD-Si; Wed, 23 Apr 2025 20:39:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u7kb7-0007aC-QE
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:37:49 -0400
-Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
+ id 1u7kcR-0008G5-8W
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:39:11 -0400
+Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u7kb6-0002zg-23
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:37:49 -0400
-Received: by mail-vk1-xa2c.google.com with SMTP id
- 71dfb90a1353d-524038ba657so501999e0c.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:37:47 -0700 (PDT)
+ id 1u7kcP-00033t-DO
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:39:10 -0400
+Received: by mail-vk1-xa2a.google.com with SMTP id
+ 71dfb90a1353d-524168b16d3so421816e0c.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745455067; x=1746059867; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745455148; x=1746059948; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fkjBuB8AeiCsmeJ8RMZSOxlDq9z+T77V4eYvgTWVP6w=;
- b=jfgFI2NaEF2PVUfc67iPEGwfoQvkz4EG+HfyJB3B5i6F+1ZwajRsFXGUabDW4DKij9
- 324RPPmZXnSTCJWNiOtSUAc1xA1A5wx2TG90FaonfFIr6fLbHHlu+3eYAErx9id0laAR
- YFRssUCg25iAHLofvzwuh8rQAa+cFNfjaadOK7FxwOw8JSr0iyCaP673fdWiE1WkIVOF
- krOECCxOEQPzPYH+zqgRf4ALs2d6IzDYZQz1i06Z+Y8EWpDN+teonYikCnmxtshdKLUp
- J5eAI4tvTjm9ovmy5C2uFFQr2ADoyUi0x0fCxeYEHpvUluGmYaDpNhb5HswiblX0/cTG
- woyg==
+ bh=yR8hKFT/n8M/XD6tkvtxBIJDS+jFN61Tv+RwkNbh5Zs=;
+ b=SaY6SrCpNzGQBTKqBfTSZTpIZhx6lXlmQTXUXc6KStNXeYa0YGG8xlpInR2/M/6qK0
+ ISDo55evHnpS4YEIYg+74Vb0njOKw2cBRpsnyk9Eh1Azen0LpDrpJ8fvnQA7p1iRy+U6
+ pkF9sdK1Yc0oLaKFyGy2k8xhlXt9GzJ8DeYlvjZP/Odq8ksk5EL3ITqgLJJYcGG1Yhcl
+ x2b1xdD0E/hoauciLIMv8ynFyZE0htrZp9FieuLm7BR2KoTd3qvlCiPvTj1RR6bkPGlE
+ c99mc8cqrK8ulsA7SuS7yt/Ujm/xVu4uYVL8xnv94+PZ0nov4xihcK5DvJEx1byC0gky
+ INUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745455067; x=1746059867;
+ d=1e100.net; s=20230601; t=1745455148; x=1746059948;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fkjBuB8AeiCsmeJ8RMZSOxlDq9z+T77V4eYvgTWVP6w=;
- b=dQf3TmXa0T96mdmZo50/1U/QAoTh/N2R1J66O6kPezWOJl4qeOAmREstBjiwvHMVDz
- qQj73PYr/k10H1W612YCMGVGggCpfkiXb2wxx/OfuuXI5eGbiVG2a0kkxr1/pPamsdk5
- VsvFZDJjSxQ/wYcJVlz1yxT1etLIsJhYoW0/yBhloBAsCa6RolGHdOEvJfX0H7CEPhZt
- R4Wkh3AQfS0qzQNo286zUmXuj5+rTzkrcxLIx+3MTqRXhfs4M+twvXlRtZbY15scH7T1
- NEwtv4tas83QuP94zLgVkoFhepDxDepLiX6U4gydzBTOo3c6Sd2Utg/q+lTrG4KZudN0
- 184w==
-X-Gm-Message-State: AOJu0Yzofs92J+JGMGYExQoJybi4Zar/Sh6h4okZk9mDGgX38B+YoxSw
- UX/dU0+QwAGOrgrCxWsxEp7IXgPPvtdqVsNmIZltIZjOjH3u5+Hvv0O4CXZfWNaNDZRAK7vHbB4
- gugyounIIXiX0nbhUYaQ1HVN5XxA=
-X-Gm-Gg: ASbGnculJ87gAbjPImiHc7LcTgxGxWS11TYG+WJNUQEr2UZqejY8/87lCHThJCz4DEI
- fSWy6uYCOuAPDk3/2/kJuM3I8lXN4mGjMZGEYeWUujMr2kWNmZ/HG0xBQuGCbkM5sy+KqpPWe9U
- 5cCVgVk1lV4kVjMXUshTJV/DTG8RSdjDEiWSGqGBmWjMAc25c0ojAk
-X-Google-Smtp-Source: AGHT+IGJbsTvBSKHNR4Tw/8tWapU9QTujJFg4eEKXgeH2mnLFYGOIulpnITX//+Jcxl/5NSSwTvu731FAoyaqESRqUs=
-X-Received: by 2002:a05:6122:2004:b0:527:b7a3:dda8 with SMTP id
- 71dfb90a1353d-52a79dda3ddmr247298e0c.7.1745455066932; Wed, 23 Apr 2025
- 17:37:46 -0700 (PDT)
+ bh=yR8hKFT/n8M/XD6tkvtxBIJDS+jFN61Tv+RwkNbh5Zs=;
+ b=g7FNoUx/NWeWruvP1S+Z6CaFnqBmL21eXAwZlnlNIQWinp6sl6vWxCmvC1U4uAKAFM
+ G6tvmGvZBxoqPSw0ULK9WHteAYXhmeDDiKB5DJos0CeFg9J2RuVqwmzMp40EBzBkrkKy
+ ue8K8sMg5PV8aqqoRit0QW2zvquwmyuvOkb44/5IXSHIf3CQf5p6Jwze31uN1g5g3NXN
+ 2Y9e/3UP6u50ekh+yb33Qwfl7/b8aZUqm1hBchaJk33mqxTo48n5gz7cH0fk/4jrwNvA
+ 2cwAFgeAv+Kt0RhTVOWFZuWVTUROBpdGKOSdY+/778o1Zf0zJzHU14n+59/zh778SOaz
+ +5eg==
+X-Gm-Message-State: AOJu0YxuLuyJCN/FVPjnflFW1FNrlNz1Gw+H1wBDCPbnU0/9FAPyFGIr
+ r4C+sEjH5IuOd+af7yMt/HDUfb1zuqOXkWwaFXDs99hT/QL7oXASt8iH9mZasr6uUQNY7dowcPZ
+ aRlAvs3PPcKVR9Fdss2nkia8vEAOuFQ==
+X-Gm-Gg: ASbGncv79kwxkPDZ6xE1YpzSnNtELWiqb72Abv3pA2rxkchqix6WVHMlcjhS9kG7p6K
+ YybAN4yRmV4vJ8xDsqk5+GM80y7OztcoBKXMFn5/+05sLixfeTawPemWcTcoD+U3EYrf+YIz/d5
+ kKW95AStqy3nWfol4k4zurA2/UklZIl1ov4GHCDzZgmnROGLtJVmqb
+X-Google-Smtp-Source: AGHT+IFIyuFM9gv7zfpL+Dg4WQVf9j5El3J7Xt5PVUNG5Ztb/g40c+Eet5A5XECjM084RE/8YMvdtXBD9rdEDzaMPgg=
+X-Received: by 2002:a05:6102:3e06:b0:4bb:c24b:b61a with SMTP id
+ ada2fe7eead31-4d38ebe8f51mr1111323137.19.1745455148198; Wed, 23 Apr 2025
+ 17:39:08 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250406070254.274797-1-pbonzini@redhat.com>
- <20250406070254.274797-24-pbonzini@redhat.com>
-In-Reply-To: <20250406070254.274797-24-pbonzini@redhat.com>
+ <20250406070254.274797-25-pbonzini@redhat.com>
+In-Reply-To: <20250406070254.274797-25-pbonzini@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 24 Apr 2025 10:37:21 +1000
-X-Gm-Features: ATxdqUHa95z4NHnAN8xsbxzJs-Rtoh-7gpaZDXz-xVDDM1fFQlDnmf1beM4f5Gc
-Message-ID: <CAKmqyKOREH8oFsFuFY+paufYcP8t3DHRoMQ5XfTseFkHmBXMFg@mail.gmail.com>
-Subject: Re: [PATCH 23/27] target/riscv: convert TT C906 to RISCVCPUDef
+Date: Thu, 24 Apr 2025 10:38:42 +1000
+X-Gm-Features: ATxdqUFc2yf2nJ2Y-B9xLrurUfYdhLrVHsFagP_Ps6n8ACU-zMCIxT7YJh7_dxU
+Message-ID: <CAKmqyKMaCLN22hZVFHvozUpBQwsGtTk==LR2gVAW5rZvBK+sHw@mail.gmail.com>
+Subject: Re: [PATCH 24/27] target/riscv: convert TT Ascalon to RISCVCPUDef
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2a;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -95,7 +95,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Apr 6, 2025 at 5:03=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
+On Sun, Apr 6, 2025 at 5:04=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
 wrote:
 >
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
@@ -105,92 +105,157 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.c | 61 +++++++++++++++++++++-------------------------
->  1 file changed, 28 insertions(+), 33 deletions(-)
+>  target/riscv/cpu.c | 127 +++++++++++++++++++++------------------------
+>  1 file changed, 60 insertions(+), 67 deletions(-)
 >
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 9669e9822b2..45bed28ea8a 100644
+> index 45bed28ea8a..616d89be17e 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -500,38 +500,6 @@ static void riscv_register_custom_csrs(RISCVCPU *cpu=
-, const RISCVCSR *csr_list)
+> @@ -540,72 +540,6 @@ static void rv64_veyron_v1_cpu_init(Object *obj)
 >  #endif
+>  }
 >
->  #if defined(TARGET_RISCV64)
-> -static void rv64_thead_c906_cpu_init(Object *obj)
+> -/* Tenstorrent Ascalon */
+> -static void rv64_tt_ascalon_cpu_init(Object *obj)
 > -{
 > -    CPURISCVState *env =3D &RISCV_CPU(obj)->env;
 > -    RISCVCPU *cpu =3D RISCV_CPU(obj);
 > -
-> -    riscv_cpu_set_misa_ext(env, RVG | RVC | RVS | RVU);
-> -    env->priv_ver =3D PRIV_VERSION_1_11_0;
+> -    riscv_cpu_set_misa_ext(env, RVG | RVC | RVS | RVU | RVH | RVV);
+> -    env->priv_ver =3D PRIV_VERSION_1_13_0;
 > -
-> -    cpu->cfg.ext_zfa =3D true;
-> -    cpu->cfg.ext_zfh =3D true;
+> -    /* Enable ISA extensions */
 > -    cpu->cfg.mmu =3D true;
-> -    cpu->cfg.ext_xtheadba =3D true;
-> -    cpu->cfg.ext_xtheadbb =3D true;
-> -    cpu->cfg.ext_xtheadbs =3D true;
-> -    cpu->cfg.ext_xtheadcmo =3D true;
-> -    cpu->cfg.ext_xtheadcondmov =3D true;
-> -    cpu->cfg.ext_xtheadfmemidx =3D true;
-> -    cpu->cfg.ext_xtheadmac =3D true;
-> -    cpu->cfg.ext_xtheadmemidx =3D true;
-> -    cpu->cfg.ext_xtheadmempair =3D true;
-> -    cpu->cfg.ext_xtheadsync =3D true;
-> -
-> -    cpu->cfg.mvendorid =3D THEAD_VENDOR_ID;
-> -#ifndef CONFIG_USER_ONLY
-> -    set_satp_mode_max_supported(cpu, VM_1_10_SV39);
-> -    riscv_register_custom_csrs(cpu, th_csr_list);
-> -#endif
-> -
-> -    /* inherited from parent obj via riscv_cpu_init() */
+> -    cpu->cfg.vlenb =3D 256 >> 3;
+> -    cpu->cfg.elen =3D 64;
+> -    cpu->env.vext_ver =3D VEXT_VERSION_1_00_0;
+> -    cpu->cfg.rvv_ma_all_1s =3D true;
+> -    cpu->cfg.rvv_ta_all_1s =3D true;
+> -    cpu->cfg.misa_w =3D true;
 > -    cpu->cfg.pmp =3D true;
+> -    cpu->cfg.cbom_blocksize =3D 64;
+> -    cpu->cfg.cbop_blocksize =3D 64;
+> -    cpu->cfg.cboz_blocksize =3D 64;
+> -    cpu->cfg.ext_zic64b =3D true;
+> -    cpu->cfg.ext_zicbom =3D true;
+> -    cpu->cfg.ext_zicbop =3D true;
+> -    cpu->cfg.ext_zicboz =3D true;
+> -    cpu->cfg.ext_zicntr =3D true;
+> -    cpu->cfg.ext_zicond =3D true;
+> -    cpu->cfg.ext_zicsr =3D true;
+> -    cpu->cfg.ext_zifencei =3D true;
+> -    cpu->cfg.ext_zihintntl =3D true;
+> -    cpu->cfg.ext_zihintpause =3D true;
+> -    cpu->cfg.ext_zihpm =3D true;
+> -    cpu->cfg.ext_zimop =3D true;
+> -    cpu->cfg.ext_zawrs =3D true;
+> -    cpu->cfg.ext_zfa =3D true;
+> -    cpu->cfg.ext_zfbfmin =3D true;
+> -    cpu->cfg.ext_zfh =3D true;
+> -    cpu->cfg.ext_zfhmin =3D true;
+> -    cpu->cfg.ext_zcb =3D true;
+> -    cpu->cfg.ext_zcmop =3D true;
+> -    cpu->cfg.ext_zba =3D true;
+> -    cpu->cfg.ext_zbb =3D true;
+> -    cpu->cfg.ext_zbs =3D true;
+> -    cpu->cfg.ext_zkt =3D true;
+> -    cpu->cfg.ext_zvbb =3D true;
+> -    cpu->cfg.ext_zvbc =3D true;
+> -    cpu->cfg.ext_zvfbfmin =3D true;
+> -    cpu->cfg.ext_zvfbfwma =3D true;
+> -    cpu->cfg.ext_zvfh =3D true;
+> -    cpu->cfg.ext_zvfhmin =3D true;
+> -    cpu->cfg.ext_zvkng =3D true;
+> -    cpu->cfg.ext_smaia =3D true;
+> -    cpu->cfg.ext_smstateen =3D true;
+> -    cpu->cfg.ext_ssaia =3D true;
+> -    cpu->cfg.ext_sscofpmf =3D true;
+> -    cpu->cfg.ext_sstc =3D true;
+> -    cpu->cfg.ext_svade =3D true;
+> -    cpu->cfg.ext_svinval =3D true;
+> -    cpu->cfg.ext_svnapot =3D true;
+> -    cpu->cfg.ext_svpbmt =3D true;
+> -
+> -#ifndef CONFIG_USER_ONLY
+> -    set_satp_mode_max_supported(cpu, VM_1_10_SV57);
+> -#endif
 > -}
 > -
->  static void rv64_veyron_v1_cpu_init(Object *obj)
+>  static void rv64_xiangshan_nanhu_cpu_init(Object *obj)
 >  {
 >      CPURISCVState *env =3D &RISCV_CPU(obj)->env;
-> @@ -3221,7 +3189,34 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->          .misa_mxl_max =3D MXL_RV64,
+> @@ -3217,7 +3151,66 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>  #endif
 >      ),
 >
-> -    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_THEAD_C906, MXL_RV64,  rv64_thead_c=
-906_cpu_init),
-> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C906, TYPE_RISCV_VENDOR_CPU,
+> -    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_TT_ASCALON, MXL_RV64,  rv64_tt_asca=
+lon_cpu_init),
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_TT_ASCALON, TYPE_RISCV_VENDOR_CPU,
 > +        .misa_mxl_max =3D MXL_RV64,
-> +        .misa_ext =3D RVG | RVC | RVS | RVU,
-> +        .priv_spec =3D PRIV_VERSION_1_11_0,
+> +        .misa_ext =3D RVG | RVC | RVS | RVU | RVH | RVV,
+> +        .priv_spec =3D PRIV_VERSION_1_13_0,
+> +        .vext_spec =3D VEXT_VERSION_1_00_0,
 > +
-> +        .cfg.ext_zfa =3D true,
-> +        .cfg.ext_zfh =3D true,
+> +        /* ISA extensions */
 > +        .cfg.mmu =3D true,
-> +        .cfg.ext_xtheadba =3D true,
-> +        .cfg.ext_xtheadbb =3D true,
-> +        .cfg.ext_xtheadbs =3D true,
-> +        .cfg.ext_xtheadcmo =3D true,
-> +        .cfg.ext_xtheadcondmov =3D true,
-> +        .cfg.ext_xtheadfmemidx =3D true,
-> +        .cfg.ext_xtheadmac =3D true,
-> +        .cfg.ext_xtheadmemidx =3D true,
-> +        .cfg.ext_xtheadmempair =3D true,
-> +        .cfg.ext_xtheadsync =3D true,
+> +        .cfg.vlenb =3D 256 >> 3,
+> +        .cfg.elen =3D 64,
+> +        .cfg.rvv_ma_all_1s =3D true,
+> +        .cfg.rvv_ta_all_1s =3D true,
+> +        .cfg.misa_w =3D true,
 > +        .cfg.pmp =3D true,
+> +        .cfg.cbom_blocksize =3D 64,
+> +        .cfg.cbop_blocksize =3D 64,
+> +        .cfg.cboz_blocksize =3D 64,
+> +        .cfg.ext_zic64b =3D true,
+> +        .cfg.ext_zicbom =3D true,
+> +        .cfg.ext_zicbop =3D true,
+> +        .cfg.ext_zicboz =3D true,
+> +        .cfg.ext_zicntr =3D true,
+> +        .cfg.ext_zicond =3D true,
+> +        .cfg.ext_zicsr =3D true,
+> +        .cfg.ext_zifencei =3D true,
+> +        .cfg.ext_zihintntl =3D true,
+> +        .cfg.ext_zihintpause =3D true,
+> +        .cfg.ext_zihpm =3D true,
+> +        .cfg.ext_zimop =3D true,
+> +        .cfg.ext_zawrs =3D true,
+> +        .cfg.ext_zfa =3D true,
+> +        .cfg.ext_zfbfmin =3D true,
+> +        .cfg.ext_zfh =3D true,
+> +        .cfg.ext_zfhmin =3D true,
+> +        .cfg.ext_zcb =3D true,
+> +        .cfg.ext_zcmop =3D true,
+> +        .cfg.ext_zba =3D true,
+> +        .cfg.ext_zbb =3D true,
+> +        .cfg.ext_zbs =3D true,
+> +        .cfg.ext_zkt =3D true,
+> +        .cfg.ext_zvbb =3D true,
+> +        .cfg.ext_zvbc =3D true,
+> +        .cfg.ext_zvfbfmin =3D true,
+> +        .cfg.ext_zvfbfwma =3D true,
+> +        .cfg.ext_zvfh =3D true,
+> +        .cfg.ext_zvfhmin =3D true,
+> +        .cfg.ext_zvkng =3D true,
+> +        .cfg.ext_smaia =3D true,
+> +        .cfg.ext_smstateen =3D true,
+> +        .cfg.ext_ssaia =3D true,
+> +        .cfg.ext_sscofpmf =3D true,
+> +        .cfg.ext_sstc =3D true,
+> +        .cfg.ext_svade =3D true,
+> +        .cfg.ext_svinval =3D true,
+> +        .cfg.ext_svnapot =3D true,
+> +        .cfg.ext_svpbmt =3D true,
 > +
-> +        .cfg.mvendorid =3D THEAD_VENDOR_ID,
-> +
-> +        .cfg.max_satp_mode =3D VM_1_10_SV39,
-> +#ifndef CONFIG_USER_ONLY
-> +        .custom_csrs =3D th_csr_list,
-> +#endif
+> +        .cfg.max_satp_mode =3D VM_1_10_SV57,
 > +    ),
 > +
->      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_TT_ASCALON, MXL_RV64,  rv64_tt_asca=
-lon_cpu_init),
 >      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_VEYRON_V1,  MXL_RV64,  rv64_veyron_=
 v1_cpu_init),
 >      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU,
+>                                                   MXL_RV64, rv64_xiangsha=
+n_nanhu_cpu_init),
 > --
 > 2.49.0
 >
