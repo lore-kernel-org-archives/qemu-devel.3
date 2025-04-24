@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 539FBC369CB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D066C369D3
 	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:31:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7lH2-0005vm-IL; Wed, 23 Apr 2025 21:21:08 -0400
+	id 1u7l0V-0003LN-RG; Wed, 23 Apr 2025 21:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7lFT-0002lW-5o
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:19:33 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1u7kwz-0005Wl-5N
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:00:25 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7lFR-0007AQ-19
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:19:30 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7399838db7fso526023b3a.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 18:19:28 -0700 (PDT)
+ id 1u7kwt-0005XC-V2
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:00:24 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-73bf5aa95e7so372361b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 18:00:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745457567; x=1746062367; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745456418; x=1746061218; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AJHxgd8xUq6D1KvcEBjRZYTNQLKHnzsXGPORpScz2Ns=;
- b=ZqmH19/LZyeCd4I6n9mryrc5rvycjFMJqmmbN0Ioe9T6gi6qKBy0iJnVCJYGCMs1Qp
- +Q78caisfS+TK3zeg0SRoDJCaOgykrbAGIjDamf3qUrux+/At4LVcbmc1rvtrT9vT9ez
- 4pxJBb/XZOWSvNPjRKHdv6CgqRkcttcbgQJjfdiP6rtD/UnsNnhEXQsqTzQx7sfVSYGK
- 5yZwscj4MbeMnWo3anutHkxndikDogQn8bN2ciUxnoIfHOd/dYod25vqmoAaqi6Re3sY
- L2oiydDs+GOkM9uuiVfcBdxRTUVx3xHvfAf7PT+omnoWCFZXclaGCbowN8MZFZEkojwm
- +zHg==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7VXEDUlPkpIMjb0Jt+mGuDdJy2bXxmmNFXU1sXIXZA4=;
+ b=B5hnbVZ4rGdEq8Gqve76Rt/gtItWKv3I/e1LvIRMNZDax0AW3WI6bzFMogiMgvqAOw
+ Idl8AVtIo/yT2eHxzoPezNW8w2ua12I+x11MX6EQEMusLCZ0/nwdGzO9e+FLzJ66HN9c
+ Yld6AgiNEn1MnUOwsw2n9g+5suHg9IqNQAWF/X9Llzt2CxKcNng9A/FXsDyqjJ54Kkwl
+ kBMmZMEjebdnL+ONrn2qkTgVIsg98c5V9LHQbtJ4NifhhRamqSvIh9e4ruDQ5oyJnFxm
+ EtsEnVoUL5+xDLWlLDNpcJqzusLofpNl9Og4jxbxrY9m0I9tvAsu18N3SRCIx0ydMEpL
+ efIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745457567; x=1746062367;
+ d=1e100.net; s=20230601; t=1745456418; x=1746061218;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AJHxgd8xUq6D1KvcEBjRZYTNQLKHnzsXGPORpScz2Ns=;
- b=SKXU82FyS18607kB1YavD+S2zkowB/B9TiJc6B89112EFTln2vg55Ps3e6f86CVEkG
- 5NT8e2gtCxKqc0EYc7l17xDZotDtS8GAN2PWmCxnSEPxmEKV9FDPm16yKriDU7sYyHEs
- Uz1kB8gD+D+dknOF+5j2usON3borcHeSeOLPiZzTabfhICeVKvx82foU2o3wjsSVpFLI
- Gx4OutRg5xmOvFNZd5VI3Pd6Y6QLQCMbGHUx16LtQzncNjhtwPfcyA2dEPMoo6gB0EBa
- AmGhh2dcg2fk3xFj4QWvBP+HeQJcDeXgm1Lm+9KOZ0txWQ+x+RODw/f+X9prMhnpTsfN
- ABrQ==
-X-Gm-Message-State: AOJu0YwRLozouL+pEUcHVJx2ZlPNxDnHxqGAOvAVovkRw+Vv0uFzbsn/
- pUe8Dy6p/U64Y2l/ov6bQZiySQJVC9sLjt5D+s6SSYcg5CXNdBFAHk0hU3GCwk3qo2I7b6po68W
- U
-X-Gm-Gg: ASbGncudiO9WqiUmuyQMlEbJC9QJqWWRhlNUQady4UiIPOevhxlxAQp7Mfs9+fAzELp
- TrlL4/gq5EgmWMkbHZK5DSUW8qEOdqkBYpQdMqY4aV80KHFmsi89uBibcczpXPOvrPMFi5VHiLP
- wBY3sEtkSgT165EQNpZ6ZX2RWxSI3jy909ig7mHrfGKRras7vt4uSmOf3iifmm5qRjmRA/Jh+Lt
- /VwHBZjoLlTKpySeECJZXwNrCT34odp10JidvP0jj/uc0dSxfFrRH2LGE3NApqaE0RTNglW8nrF
- mimsA7lgKR/xIpcF9+Lgkfk49Rj9mm/+If2loYTLQHPBgrl6+Uow/uuBxUjgKc82ZL+18caDcP2
- WqkE1d/37BQ==
-X-Google-Smtp-Source: AGHT+IER3+eZHOaBdOBMVaG6qFbNCTB07MsFku2h/slloBF8PLIzVip7O+FNiHqf2b3e1UD9bK5XGQ==
-X-Received: by 2002:a05:6a00:1306:b0:73e:2367:c914 with SMTP id
- d2e1a72fcca58-73e2680bccfmr587033b3a.7.1745457567079; 
- Wed, 23 Apr 2025 18:19:27 -0700 (PDT)
+ bh=7VXEDUlPkpIMjb0Jt+mGuDdJy2bXxmmNFXU1sXIXZA4=;
+ b=NkFZK3aO1DW//kSvv6RJNpp25gVDM01lmt8MTNG+wCGHNlMtbqwEFjexqBPpftkgBX
+ cqUTtL8IzdTYw7GqreSjswYPBzQX1yiiVyMU/Dj/VYij7gDOqKCcchpPl3fKiR2F7zzZ
+ vMBij4SSjKENkSUYs/nDR9K4MPoNjaFOE7uBOUn1yZ/3YGWOS8JL3tP9mMjychzCpfeR
+ +tdzybIVhHaXrui/OjT2pTpToexscdPED4I8Nj9UawlszVIXzSTYTtS89p/YpBSunIrY
+ b9IGbsZQBZ+QHnlST3t0uA9VcNw86pLK9QVAjTz00kti01ge4TdCDUl9+ocKR5sNyIyt
+ YcUA==
+X-Gm-Message-State: AOJu0YycQVECBjpur/a2+KayIbwTw1/SKZ6ntv1z9JrBZSFVkzwKfNzD
+ 7+9jL/4ui3xkxY7qdb4vblUqjgoPVKIskHYpjpUR8xkhK+wDAOw/aLbDiSVlyjHpap59GfXVWV5
+ w
+X-Gm-Gg: ASbGncuxvRaZ8eLCCJmAoSgaXv7Z0bOGDrc2orFg1sUf42SjReB15f3JiK2lzRV2561
+ 8Y1C58uidUT0Lu6b7MAvr6te3xEyDUr0GJDovnYyRbcqv1owQ/TdcJxNKB/fBh7L3t6KtrexYuu
+ B5xfNCPBhcxo2QAeLg9DPRbHPyGax6QnWFPXFuZKnM+HOkXtX5+xYNCIjcRhP/UxDepQCqe/pGm
+ x+pRFl2UNjM8GVGNCXuDPeRpcVCqkKFV2KrMobMPdH8QkEjIqxJhR+rKUOkSsnhaGiDPo6PMbXC
+ uF8X42zazMKTQg9a2EDf5LotDojK9cSwlHohT2UcmGgO+Ukpt54pW49EBON5vqSeXNMGAZX79+g
+ yH7SeW/aAog==
+X-Google-Smtp-Source: AGHT+IHkOaBFQruQJSDGJ2wBueEvZS2olxBHIMXm7aAjOhUYH+VRPoNtDuyK8HZESwEsk/gc0ng/Uw==
+X-Received: by 2002:a05:6a20:c70e:b0:1f5:57d0:7014 with SMTP id
+ adf61e73a8af0-20444f23718mr934259637.25.1745456418182; 
+ Wed, 23 Apr 2025 18:00:18 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25912ef0sm244079b3a.10.2025.04.23.18.19.26
- for <qemu-devel@nongnu.org>
+ 41be03b00d2f7-b15f76f45c7sm129259a12.16.2025.04.23.18.00.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 18:19:26 -0700 (PDT)
+ Wed, 23 Apr 2025 18:00:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 12/15] accel/tcg: Use vaddr for walk_memory_regions callback
-Date: Wed, 23 Apr 2025 18:19:15 -0700
-Message-ID: <20250424011918.599958-13-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 140/148] tcg: Move cpu_req_mo() macro to target-agnostic
+ 'backend-ldst.h'
+Date: Wed, 23 Apr 2025 17:49:25 -0700
+Message-ID: <20250424004934.598783-141-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250424011918.599958-1-richard.henderson@linaro.org>
-References: <20250424011918.599958-1-richard.henderson@linaro.org>
+In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
+References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,140 +102,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use vaddr instead of target_ulong.  At the same time,
-use int instead of unsigned long for flags, to match
-page_set_flags().
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/user/page-protection.h |  4 +---
- accel/tcg/user-exec.c          | 10 +++++-----
- linux-user/elfload.c           | 19 +++++++++----------
- linux-user/syscall.c           |  8 ++++----
- 4 files changed, 19 insertions(+), 22 deletions(-)
+ accel/tcg/backend-ldst.h    | 41 +++++++++++++++++++++++++++++++++++++
+ accel/tcg/internal-target.h | 28 -------------------------
+ accel/tcg/cputlb.c          |  1 +
+ accel/tcg/user-exec.c       |  1 +
+ 4 files changed, 43 insertions(+), 28 deletions(-)
+ create mode 100644 accel/tcg/backend-ldst.h
 
-diff --git a/include/user/page-protection.h b/include/user/page-protection.h
-index 1de72e31e6..55aa05ce24 100644
---- a/include/user/page-protection.h
-+++ b/include/user/page-protection.h
-@@ -88,9 +88,7 @@ target_ulong page_find_range_empty(target_ulong min, target_ulong max,
- __attribute__((returns_nonnull))
- void *page_get_target_data(target_ulong address);
+diff --git a/accel/tcg/backend-ldst.h b/accel/tcg/backend-ldst.h
+new file mode 100644
+index 0000000000..9c3a407a5a
+--- /dev/null
++++ b/accel/tcg/backend-ldst.h
+@@ -0,0 +1,41 @@
++/*
++ * Internal memory barrier helpers for QEMU (target agnostic)
++ *
++ *  Copyright (c) 2003 Fabrice Bellard
++ *
++ * SPDX-License-Identifier: LGPL-2.1-or-later
++ */
++
++#ifndef ACCEL_TCG_BACKEND_LDST_H
++#define ACCEL_TCG_BACKEND_LDST_H
++
++#include "tcg-target-mo.h"
++
++/**
++ * tcg_req_mo:
++ * @guest_mo: Guest default memory order
++ * @type: TCGBar
++ *
++ * Filter @type to the barrier that is required for the guest
++ * memory ordering vs the host memory ordering.  A non-zero
++ * result indicates that some barrier is required.
++ */
++#define tcg_req_mo(guest_mo, type) \
++    ((type) & guest_mo & ~TCG_TARGET_DEFAULT_MO)
++
++/**
++ * cpu_req_mo:
++ * @cpu: CPUState
++ * @type: TCGBar
++ *
++ * If tcg_req_mo indicates a barrier for @type is required
++ * for the guest memory model, issue a host memory barrier.
++ */
++#define cpu_req_mo(cpu, type)     \
++    do {                          \
++        if (tcg_req_mo(cpu->cc->tcg_ops->guest_default_memory_order, type)) { \
++            smp_mb();             \
++        }                         \
++    } while (0)
++
++#endif
+diff --git a/accel/tcg/internal-target.h b/accel/tcg/internal-target.h
+index f5a3fd7e40..9a9cef3140 100644
+--- a/accel/tcg/internal-target.h
++++ b/accel/tcg/internal-target.h
+@@ -13,7 +13,6 @@
+ #include "exec/exec-all.h"
+ #include "exec/translation-block.h"
+ #include "tb-internal.h"
+-#include "tcg-target-mo.h"
+ #include "exec/mmap-lock.h"
  
--typedef int (*walk_memory_regions_fn)(void *, target_ulong,
--                                      target_ulong, unsigned long);
+ /*
+@@ -44,31 +43,4 @@ void page_table_config_init(void);
+ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
+ #endif /* CONFIG_USER_ONLY */
+ 
+-/**
+- * tcg_req_mo:
+- * @guest_mo: Guest default memory order
+- * @type: TCGBar
+- *
+- * Filter @type to the barrier that is required for the guest
+- * memory ordering vs the host memory ordering.  A non-zero
+- * result indicates that some barrier is required.
+- */
+-#define tcg_req_mo(guest_mo, type) \
+-    ((type) & guest_mo & ~TCG_TARGET_DEFAULT_MO)
 -
-+typedef int (*walk_memory_regions_fn)(void *, vaddr, vaddr, int);
- int walk_memory_regions(void *, walk_memory_regions_fn);
+-/**
+- * cpu_req_mo:
+- * @cpu: CPUState
+- * @type: TCGBar
+- *
+- * If tcg_req_mo indicates a barrier for @type is required
+- * for the guest memory model, issue a host memory barrier.
+- */
+-#define cpu_req_mo(cpu, type)     \
+-    do {                          \
+-        if (tcg_req_mo(cpu->cc->tcg_ops->guest_default_memory_order, type)) { \
+-            smp_mb();             \
+-        }                         \
+-    } while (0)
+-
+ #endif /* ACCEL_TCG_INTERNAL_H */
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 35b1ff03a5..d9fb68d719 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -48,6 +48,7 @@
+ #include "qemu/plugin-memory.h"
+ #endif
+ #include "tcg/tcg-ldst.h"
++#include "backend-ldst.h"
  
- void page_dump(FILE *f);
+ 
+ /* DEBUG defines, enable DEBUG_TLB_LOG to log to the CPU_LOG_MMU target */
 diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 17e3be337f..25d86567e7 100644
+index 3f4d682446..5eef8e7f18 100644
 --- a/accel/tcg/user-exec.c
 +++ b/accel/tcg/user-exec.c
-@@ -199,13 +199,13 @@ int walk_memory_regions(void *priv, walk_memory_regions_fn fn)
-     return rc;
- }
- 
--static int dump_region(void *priv, target_ulong start,
--                       target_ulong end, unsigned long prot)
-+static int dump_region(void *opaque, vaddr start, vaddr end, int prot)
- {
--    FILE *f = (FILE *)priv;
-+    FILE *f = opaque;
- 
--    fprintf(f, TARGET_FMT_lx"-"TARGET_FMT_lx" "TARGET_FMT_lx" %c%c%c\n",
--            start, end, end - start,
-+    fprintf(f, TARGET_ABI_FMT_ptr "-" TARGET_ABI_FMT_ptr
-+            " " TARGET_ABI_FMT_ptr " %c%c%c\n",
-+            (abi_ptr)start, (abi_ptr)end, (abi_ptr)(end - start),
-             ((prot & PAGE_READ) ? 'r' : '-'),
-             ((prot & PAGE_WRITE) ? 'w' : '-'),
-             ((prot & PAGE_EXEC) ? 'x' : '-'));
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 7519b6bcda..e281745e48 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -4044,8 +4044,7 @@ static inline void bswap_note(struct elf_note *en) { }
- /*
-  * Calculate file (dump) size of given memory region.
-  */
--static size_t vma_dump_size(target_ulong start, target_ulong end,
--                            unsigned long flags)
-+static size_t vma_dump_size(vaddr start, vaddr end, int flags)
- {
-     /* The area must be readable. */
-     if (!(flags & PAGE_READ)) {
-@@ -4238,8 +4237,8 @@ static int dump_write(int fd, const void *ptr, size_t size)
-     return (0);
- }
- 
--static int wmr_page_unprotect_regions(void *opaque, target_ulong start,
--                                      target_ulong end, unsigned long flags)
-+static int wmr_page_unprotect_regions(void *opaque, vaddr start,
-+                                      vaddr end, int flags)
- {
-     if ((flags & (PAGE_WRITE | PAGE_WRITE_ORG)) == PAGE_WRITE_ORG) {
-         size_t step = MAX(TARGET_PAGE_SIZE, qemu_real_host_page_size());
-@@ -4260,8 +4259,8 @@ typedef struct {
-     size_t size;
- } CountAndSizeRegions;
- 
--static int wmr_count_and_size_regions(void *opaque, target_ulong start,
--                                      target_ulong end, unsigned long flags)
-+static int wmr_count_and_size_regions(void *opaque, vaddr start,
-+                                      vaddr end, int flags)
- {
-     CountAndSizeRegions *css = opaque;
- 
-@@ -4275,8 +4274,8 @@ typedef struct {
-     off_t offset;
- } FillRegionPhdr;
- 
--static int wmr_fill_region_phdr(void *opaque, target_ulong start,
--                                target_ulong end, unsigned long flags)
-+static int wmr_fill_region_phdr(void *opaque, vaddr start,
-+                                vaddr end, int flags)
- {
-     FillRegionPhdr *d = opaque;
-     struct elf_phdr *phdr = d->phdr;
-@@ -4298,8 +4297,8 @@ static int wmr_fill_region_phdr(void *opaque, target_ulong start,
-     return 0;
- }
- 
--static int wmr_write_region(void *opaque, target_ulong start,
--                            target_ulong end, unsigned long flags)
-+static int wmr_write_region(void *opaque, vaddr start,
-+                            vaddr end, int flags)
- {
-     int fd = *(int *)opaque;
-     size_t size = vma_dump_size(start, end, flags);
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 5826ac3adb..23b901b713 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8135,8 +8135,8 @@ static void open_self_maps_4(const struct open_self_maps_data *d,
-  * Callback for walk_memory_regions, when read_self_maps() fails.
-  * Proceed without the benefit of host /proc/self/maps cross-check.
-  */
--static int open_self_maps_3(void *opaque, target_ulong guest_start,
--                            target_ulong guest_end, unsigned long flags)
-+static int open_self_maps_3(void *opaque, vaddr guest_start,
-+                            vaddr guest_end, int flags)
- {
-     static const MapInfo mi = { .is_priv = true };
- 
-@@ -8147,8 +8147,8 @@ static int open_self_maps_3(void *opaque, target_ulong guest_start,
- /*
-  * Callback for walk_memory_regions, when read_self_maps() succeeds.
-  */
--static int open_self_maps_2(void *opaque, target_ulong guest_start,
--                            target_ulong guest_end, unsigned long flags)
-+static int open_self_maps_2(void *opaque, vaddr guest_start,
-+                            vaddr guest_end, int flags)
- {
-     const struct open_self_maps_data *d = opaque;
-     uintptr_t host_start = (uintptr_t)g2h_untagged(guest_start);
+@@ -37,6 +37,7 @@
+ #include "qemu/int128.h"
+ #include "trace.h"
+ #include "tcg/tcg-ldst.h"
++#include "backend-ldst.h"
+ #include "internal-common.h"
+ #include "internal-target.h"
+ #include "tb-internal.h"
 -- 
 2.43.0
 
