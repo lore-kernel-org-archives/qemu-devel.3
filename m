@@ -4,110 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABB11C369CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:40:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83B79C369CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7lZW-00049I-0Z; Wed, 23 Apr 2025 21:40:14 -0400
+	id 1u7la7-0004W1-AA; Wed, 23 Apr 2025 21:40:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1u7lZP-000479-4m; Wed, 23 Apr 2025 21:40:07 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1u7lZK-000160-Gm; Wed, 23 Apr 2025 21:40:06 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53NGsASv024462;
- Thu, 24 Apr 2025 01:39:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=j4JsxA
- ffBu0RszYAfx0kwyslAKZQnkt6QG2eR/FNy64=; b=aRHXvj1kQIe3dTDnaPfplH
- TfPExO6G9lOrlJRIW8Ha+BeQkfF2PWRFUThPGx/+vPFy9MFZkaOXWwY+gbE/FlqO
- 1QJzdi4fF5fOwyRs1edFNvI86fEna3XLOv7NU6aBJQCrJ9/NkFlkqqc4QPljwPOT
- 9PJ4mwICeTXo+TVXm3b9HRdh5/Y7gSoVANMghA/MNQiatrMxYbHKocU3jCac/lPq
- Lupn1uV8oT45HON1yACYYzZnmSrtm4b/bgCpU6naZ62R0EkcoJOfTyWD0SGpc2J0
- GVrd0DreemiWwO+AGq1n3UAVu9bXUI8IDfCol7DPoPW9Y3R1l9FE6Pug5Bopn85g
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 466x4jv15h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Apr 2025 01:39:58 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53NMRUv2008601;
- Thu, 24 Apr 2025 01:39:58 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 466jfxp09s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Apr 2025 01:39:58 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53O1dum825690612
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 24 Apr 2025 01:39:56 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2AA9258058;
- Thu, 24 Apr 2025 01:39:56 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 26D4058057;
- Thu, 24 Apr 2025 01:39:55 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.182.41]) by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 24 Apr 2025 01:39:55 +0000 (GMT)
-Message-ID: <3c215d78c44fb3b0572b2e8c67e3826aef8d8b0b.camel@linux.ibm.com>
-Subject: Re: [PATCH v6 6/7] linux-header: update-linux-header script changes
-From: Eric Farman <farman@linux.ibm.com>
-To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
- jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
- alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com,
- akrowiak@linux.ibm.com
-In-Reply-To: <20250423214506.72728-7-rreyes@linux.ibm.com>
-References: <20250423214506.72728-1-rreyes@linux.ibm.com>
- <20250423214506.72728-7-rreyes@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1u7lZz-0004J4-Ey
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:40:43 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1u7lZu-0001Js-OB
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:40:42 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8CxqmqQlgloGgDFAA--.725S3;
+ Thu, 24 Apr 2025 09:40:32 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowMDxu8SMlgloYMCSAA--.37167S3;
+ Thu, 24 Apr 2025 09:40:30 +0800 (CST)
+Subject: Re: [PATCH v4 3/3] target/loongarch: Guard 64-bit-only insn
+ translation with TRANS64 macro
+To: bibo mao <maobibo@loongson.cn>, WANG Rui <wangrui@loongson.cn>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
+ <philmd@linaro.org>, qemu@hev.cc,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250418082103.447780-1-wangrui@loongson.cn>
+ <20250418082103.447780-4-wangrui@loongson.cn>
+ <56cfe883-2de5-43f6-67db-a05d88a010e9@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <a395f6aa-c623-ba7d-2952-5b7249144ba8@loongson.cn>
+Date: Thu, 24 Apr 2025 09:43:06 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Date: Wed, 23 Apr 2025 21:04:07 -0400
-User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=eJ4TjGp1 c=1 sm=1 tr=0 ts=6809966e cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VnNF1IyMAAAA:8 a=V2FlQnaG_eUonHtXfN4A:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: ZXOySPnjGwz2zPKKa_Yh1NQq66nEKGV3
-X-Proofpoint-ORIG-GUID: ZXOySPnjGwz2zPKKa_Yh1NQq66nEKGV3
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI0MDAwOCBTYWx0ZWRfX4K2EcU0SqBRN
- sq9mrOCxK8XnXNJ3D7f7Jf/ok6515d+xpdWVodYkJ9Dckd/T62FocNsRpviCudX4SVwAI/6qHo9
- pGnA65Tz4xRi0of5cjWGG2B9OP/85OQqYoYJTHGW15dfaFLPIwjGib/BewKnQ4ay7a7hd/tFBZE
- h3mYibFbOJdsIhzF2VUvErxanq9ovQewocgMOpHKLhcP01vr8WMFp+xw8J9rWTrzxD4s4s6fp62
- nbIr8gkJsS4Dc2yeBa+slsFeur78or8U41KPl8toqAjALPczlqN5IS5ILwKjhSaLMlHiR1Ak5HZ
- 2bu1kS0ZYWiIZIeNuxzm/BExZtkzswYFohcV7vzgLqFR4xRqyPfRFIRLAP077PDB7Bo9XeFLExA
- jWUyHXO0c+IL+tPl4W/zupqgbZCRQdIBqoNpo8kU1m5/gNSeUUZ+TEV4ovLQp6CGr410a8VP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.680,FMLib:17.12.80.40
- definitions=2025-04-24_01,2025-04-22_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015
- bulkscore=0 adultscore=0 mlxscore=0 phishscore=0 priorityscore=1501
- spamscore=0 mlxlogscore=975 suspectscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504240008
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+In-Reply-To: <56cfe883-2de5-43f6-67db-a05d88a010e9@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowMDxu8SMlgloYMCSAA--.37167S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9fXoW3CF43AryUKr1fAF1fXrWUAwc_yoW8Xr13Zo
+ WfWF4UJr4xX3ZI9rZ0yryktr9Ivr4xAa98J3yUJw1UWFykZa1j934rC34qvay3Z3ykGFWU
+ Wr4Sgas3ta9xXrn7l-sFpf9Il3svdjkaLaAFLSUrUUUUbb8apTn2vfkv8UJUUUU8wcxFpf
+ 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
+ UjIYCTnIWjp_UUUY77kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
+ 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUGVWUXwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
+ Y2AK021l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14
+ v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8r9N3UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.765,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,33 +86,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2025-04-23 at 17:45 -0400, Rorie Reyes wrote:
-> Kernel commit 8a14 changed from using ASSEMBLY to ASSEMBLER
+在 2025/4/18 下午4:45, bibo mao 写道:
+>
+>
+> On 2025/4/18 下午4:21, WANG Rui wrote:
+>> This patch replaces uses of the generic TRANS macro with TRANS64 for
+>> instructions that are only valid when 64-bit support is available.
+>>
+>> This improves correctness and avoids potential assertion failures or
+>> undefined behavior during translation on 32-bit-only configurations.
+>>
+>> Signed-off-by: WANG Rui <wangrui@loongson.cn>
+>> ---
+>>   .../tcg/insn_trans/trans_atomic.c.inc         | 36 +++++++++----------
+>>   .../tcg/insn_trans/trans_extra.c.inc          |  8 +++--
+>>   .../tcg/insn_trans/trans_privileged.c.inc     |  4 +--
+>>   .../tcg/insn_trans/trans_shift.c.inc          |  4 +--
+>>   .../loongarch/tcg/insn_trans/trans_vec.c.inc  | 16 ++++-----
+>>   target/loongarch/translate.h                  |  4 +++
+>>   6 files changed, 40 insertions(+), 32 deletions(-)
+>>
+>> diff --git a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc 
+>> b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
+>> index 3d70d75941..77eeedbc42 100644
+>> --- a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
+>> +++ b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
+>> @@ -74,38 +74,38 @@ TRANS(sc_w, ALL, gen_sc, MO_TESL)
+>>   TRANS(ll_d, 64, gen_ll, MO_TEUQ)
+>>   TRANS(sc_d, 64, gen_sc, MO_TEUQ)
+>>   TRANS(amswap_w, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TESL)
+>> -TRANS(amswap_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
+>> +TRANS64(amswap_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
+>>   TRANS(amadd_w, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TESL)
+>> -TRANS(amadd_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
+>> +TRANS64(amadd_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
+>>   TRANS(amand_w, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TESL)
+>> -TRANS(amand_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
+>> +TRANS64(amand_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
+>>   TRANS(amor_w, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TESL)
+>> -TRANS(amor_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
+>> +TRANS64(amor_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
+>>   TRANS(amxor_w, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TESL)
+>> -TRANS(amxor_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
+>> +TRANS64(amxor_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
+>>   TRANS(ammax_w, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TESL)
+>> -TRANS(ammax_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
+>> +TRANS64(ammax_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
+>>   TRANS(ammin_w, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TESL)
+>> -TRANS(ammin_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
+>> +TRANS64(ammin_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
+>>   TRANS(ammax_wu, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TESL)
+>> -TRANS(ammax_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
+>> +TRANS64(ammax_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
+>>   TRANS(ammin_wu, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TESL)
+>> -TRANS(ammin_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
+>> +TRANS64(ammin_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
+>>   TRANS(amswap_db_w, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TESL)
+>> -TRANS(amswap_db_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
+>> +TRANS64(amswap_db_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
+>>   TRANS(amadd_db_w, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TESL)
+>> -TRANS(amadd_db_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
+>> +TRANS64(amadd_db_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
+>>   TRANS(amand_db_w, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TESL)
+>> -TRANS(amand_db_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
+>> +TRANS64(amand_db_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
+>>   TRANS(amor_db_w, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TESL)
+>> -TRANS(amor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
+>> +TRANS64(amor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
+>>   TRANS(amxor_db_w, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TESL)
+>> -TRANS(amxor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
+>> +TRANS64(amxor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
+>>   TRANS(ammax_db_w, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TESL)
+>> -TRANS(ammax_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
+>> +TRANS64(ammax_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
+>>   TRANS(ammin_db_w, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TESL)
+>> -TRANS(ammin_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
+>> +TRANS64(ammin_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
+>>   TRANS(ammax_db_wu, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TESL)
+>> -TRANS(ammax_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
+>> +TRANS64(ammax_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, 
+>> MO_TEUQ)
+>>   TRANS(ammin_db_wu, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TESL)
+>> -TRANS(ammin_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
+>> +TRANS64(ammin_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, 
+>> MO_TEUQ)
+>> diff --git a/target/loongarch/tcg/insn_trans/trans_extra.c.inc 
+>> b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+>> index eda3d6e561..298a80cff5 100644
+>> --- a/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+>> +++ b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+>> @@ -69,6 +69,10 @@ static bool trans_rdtimeh_w(DisasContext *ctx, 
+>> arg_rdtimeh_w *a)
+>>     static bool trans_rdtime_d(DisasContext *ctx, arg_rdtime_d *a)
+>>   {
+>> +    if (!avail_64(ctx)) {
+>> +        return false;
+>> +    }
+>> +
+>>       return gen_rdtime(ctx, a, 0, 0);
+>>   }
+>>   @@ -100,8 +104,8 @@ static bool gen_crc(DisasContext *ctx, arg_rrr *a,
+>>   TRANS(crc_w_b_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(1))
+>>   TRANS(crc_w_h_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(2))
+>>   TRANS(crc_w_w_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(4))
+>> -TRANS(crc_w_d_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(8))
+>> +TRANS64(crc_w_d_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(8))
+>>   TRANS(crcc_w_b_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(1))
+>>   TRANS(crcc_w_h_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(2))
+>>   TRANS(crcc_w_w_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(4))
+>> -TRANS(crcc_w_d_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(8))
+>> +TRANS64(crcc_w_d_w, CRC, gen_crc, gen_helper_crc32c, 
+>> tcg_constant_tl(8))
+>> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc 
+>> b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+>> index ecbfe23b63..34cfab8879 100644
+>> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+>> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+>> @@ -233,11 +233,11 @@ static bool gen_iocsrwr(DisasContext *ctx, 
+>> arg_rr *a,
+>>   TRANS(iocsrrd_b, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_b)
+>>   TRANS(iocsrrd_h, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_h)
+>>   TRANS(iocsrrd_w, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_w)
+>> -TRANS(iocsrrd_d, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_d)
+>> +TRANS64(iocsrrd_d, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_d)
+>>   TRANS(iocsrwr_b, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_b)
+>>   TRANS(iocsrwr_h, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_h)
+>>   TRANS(iocsrwr_w, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_w)
+>> -TRANS(iocsrwr_d, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_d)
+>> +TRANS64(iocsrwr_d, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_d)
+>>     static void check_mmu_idx(DisasContext *ctx)
+>>   {
+>> diff --git a/target/loongarch/tcg/insn_trans/trans_shift.c.inc 
+>> b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
+>> index 377307785a..136c4c8455 100644
+>> --- a/target/loongarch/tcg/insn_trans/trans_shift.c.inc
+>> +++ b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
+>> @@ -78,7 +78,7 @@ TRANS(sra_w, ALL, gen_rrr, EXT_SIGN, EXT_NONE, 
+>> EXT_SIGN, gen_sra_w)
+>>   TRANS(sll_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_sll_d)
+>>   TRANS(srl_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_srl_d)
+>>   TRANS(sra_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_sra_d)
+>> -TRANS(rotr_w, 64, gen_rrr, EXT_ZERO, EXT_NONE, EXT_SIGN, gen_rotr_w)
+>> +TRANS(rotr_w, ALL, gen_rrr, EXT_ZERO, EXT_NONE, EXT_SIGN, gen_rotr_w)
+>>   TRANS(rotr_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_rotr_d)
+>>   TRANS(slli_w, ALL, gen_rri_c, EXT_NONE, EXT_SIGN, tcg_gen_shli_tl)
+>>   TRANS(slli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shli_tl)
+>> @@ -86,5 +86,5 @@ TRANS(srli_w, ALL, gen_rri_c, EXT_ZERO, EXT_SIGN, 
+>> tcg_gen_shri_tl)
+>>   TRANS(srli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shri_tl)
+>>   TRANS(srai_w, ALL, gen_rri_c, EXT_NONE, EXT_NONE, gen_sari_w)
+>>   TRANS(srai_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_sari_tl)
+>> -TRANS(rotri_w, 64, gen_rri_v, EXT_NONE, EXT_NONE, gen_rotr_w)
+>> +TRANS(rotri_w, ALL, gen_rri_v, EXT_NONE, EXT_NONE, gen_rotr_w)
+>>   TRANS(rotri_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_rotri_tl)
+> The modification looks good to me.
+>
+>> diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc 
+>> b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+>> index dff92772ad..a6f5b346bb 100644
+>> --- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+>> +++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+>> @@ -4853,9 +4853,9 @@ static bool gen_g2x(DisasContext *ctx, arg_vr_i 
+>> *a, MemOp mop,
+>>   TRANS(vinsgr2vr_b, LSX, gen_g2v, MO_8, tcg_gen_st8_i64)
+>>   TRANS(vinsgr2vr_h, LSX, gen_g2v, MO_16, tcg_gen_st16_i64)
+>>   TRANS(vinsgr2vr_w, LSX, gen_g2v, MO_32, tcg_gen_st32_i64)
+>> -TRANS(vinsgr2vr_d, LSX, gen_g2v, MO_64, tcg_gen_st_i64)
+>> +TRANS64(vinsgr2vr_d, LSX, gen_g2v, MO_64, tcg_gen_st_i64)
+>>   TRANS(xvinsgr2vr_w, LASX, gen_g2x, MO_32, tcg_gen_st32_i64)
+>> -TRANS(xvinsgr2vr_d, LASX, gen_g2x, MO_64, tcg_gen_st_i64)
+>> +TRANS64(xvinsgr2vr_d, LASX, gen_g2x, MO_64, tcg_gen_st_i64)
+> This looks good, only that I do not know whether it is necessary.
+> Can you conclude that LSX/LASX means that 64 bit is supported also?
+>
+> Song, what is your option?
+>
+I think LSX/LASX is enough
 
-Kernel commit 8a141be3233a ("x86/headers: Replace __ASSEMBLY__ with __ASSEM=
-BLER__ in UAPI headers")
+Hi , WANG Rui
+why only these XXX_d vec instructions need  TRANS64?
 
-> Updated the update-linux-header script to match
->=20
-> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
-> ---
->  scripts/update-linux-headers.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-heade=
-rs.sh
-> index 8913e4fb99..b43b8ef75a 100755
-> --- a/scripts/update-linux-headers.sh
-> +++ b/scripts/update-linux-headers.sh
-> @@ -177,7 +177,7 @@ EOF
-> =20
->          # Remove everything except the macros from bootparam.h avoiding =
-the
->          # unnecessary import of several video/ist/etc headers
-> -        sed -e '/__ASSEMBLY__/,/__ASSEMBLY__/d' \
-> +        sed -e '/__ASSEMBLER__/,/__ASSEMBLER__/d' \
->                 "$hdrdir/include/asm/bootparam.h" > "$hdrdir/bootparam.h"
->          cp_portable "$hdrdir/bootparam.h" \
->                      "$output/include/standard-headers/asm-$arch"
+I just pick up patch1, 2 to loongarch-next .
+
+Thanks.
+Song Gao
+> Regards
+> Bibo Mao
+>>     static bool gen_v2g_vl(DisasContext *ctx, arg_rv_i *a, uint32_t 
+>> oprsz, MemOp mop,
+>>                          void (*func)(TCGv, TCGv_ptr, tcg_target_long))
+>> @@ -4886,15 +4886,15 @@ static bool gen_x2g(DisasContext *ctx, 
+>> arg_rv_i *a, MemOp mop,
+>>   TRANS(vpickve2gr_b, LSX, gen_v2g, MO_8, tcg_gen_ld8s_i64)
+>>   TRANS(vpickve2gr_h, LSX, gen_v2g, MO_16, tcg_gen_ld16s_i64)
+>>   TRANS(vpickve2gr_w, LSX, gen_v2g, MO_32, tcg_gen_ld32s_i64)
+>> -TRANS(vpickve2gr_d, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
+>> +TRANS64(vpickve2gr_d, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
+>>   TRANS(vpickve2gr_bu, LSX, gen_v2g, MO_8, tcg_gen_ld8u_i64)
+>>   TRANS(vpickve2gr_hu, LSX, gen_v2g, MO_16, tcg_gen_ld16u_i64)
+>>   TRANS(vpickve2gr_wu, LSX, gen_v2g, MO_32, tcg_gen_ld32u_i64)
+>> -TRANS(vpickve2gr_du, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
+>> +TRANS64(vpickve2gr_du, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
+>>   TRANS(xvpickve2gr_w, LASX, gen_x2g, MO_32, tcg_gen_ld32s_i64)
+>> -TRANS(xvpickve2gr_d, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
+>> +TRANS64(xvpickve2gr_d, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
+>>   TRANS(xvpickve2gr_wu, LASX, gen_x2g, MO_32, tcg_gen_ld32u_i64)
+>> -TRANS(xvpickve2gr_du, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
+>> +TRANS64(xvpickve2gr_du, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
+>>     static bool gvec_dup_vl(DisasContext *ctx, arg_vr *a,
+>>                           uint32_t oprsz, MemOp mop)
+>> @@ -4923,11 +4923,11 @@ static bool gvec_dupx(DisasContext *ctx, 
+>> arg_vr *a, MemOp mop)
+>>   TRANS(vreplgr2vr_b, LSX, gvec_dup, MO_8)
+>>   TRANS(vreplgr2vr_h, LSX, gvec_dup, MO_16)
+>>   TRANS(vreplgr2vr_w, LSX, gvec_dup, MO_32)
+>> -TRANS(vreplgr2vr_d, LSX, gvec_dup, MO_64)
+>> +TRANS64(vreplgr2vr_d, LSX, gvec_dup, MO_64)
+>>   TRANS(xvreplgr2vr_b, LASX, gvec_dupx, MO_8)
+>>   TRANS(xvreplgr2vr_h, LASX, gvec_dupx, MO_16)
+>>   TRANS(xvreplgr2vr_w, LASX, gvec_dupx, MO_32)
+>> -TRANS(xvreplgr2vr_d, LASX, gvec_dupx, MO_64)
+>> +TRANS64(xvreplgr2vr_d, LASX, gvec_dupx, MO_64)
+>>     static bool trans_vreplvei_b(DisasContext *ctx, arg_vv_i *a)
+>>   {
+>> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
+>> index 018dc5eb17..bbe015ba57 100644
+>> --- a/target/loongarch/translate.h
+>> +++ b/target/loongarch/translate.h
+>> @@ -14,6 +14,10 @@
+>>       static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>>       { return avail_##AVAIL(ctx) && FUNC(ctx, a, __VA_ARGS__); }
+>>   +#define TRANS64(NAME, AVAIL, FUNC, ...) \
+>> +    static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +    { return avail_64(ctx) && avail_##AVAIL(ctx) && FUNC(ctx, a, 
+>> __VA_ARGS__); }
+>> +
+>>   #define avail_ALL(C)   true
+>>   #define avail_64(C)    (FIELD_EX32((C)->cpucfg1, CPUCFG1, ARCH) == \
+>>                           CPUCFG1_ARCH_LA64)
+>>
 
 
