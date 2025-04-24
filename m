@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D1C5C369D1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C891C369AB
 	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 19:08:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u81vO-0007Ba-Ks; Thu, 24 Apr 2025 15:07:54 -0400
+	id 1u81vK-0007A3-7S; Thu, 24 Apr 2025 15:07:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u81vJ-0007A2-Bq
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:07:49 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1u81vI-00079i-2x
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:07:48 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u81vG-0004Cm-GD
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:07:49 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-736b0c68092so1199021b3a.0
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 12:07:46 -0700 (PDT)
+ id 1u81vF-0004Ce-Vm
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:07:47 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-b170c99aa49so161409a12.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 12:07:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745521665; x=1746126465; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=TP4Q9rzJluVzd5O9r6CuXRojocrwY/XR62UryJPD5ts=;
- b=nmzjbLQrd8hD29rAdryMv/B0L0CYQ/Fz9E6H2XuttoLWKhQqXsgmyRt1Vk8tYa6lO0
- +hCjZFYbzxSro098/OQwveqUILPt1bcQekWDDm1Sdef6SViWVaMXPXBRX0qkndS2NUMK
- vrvssmhIJvxrAKwHlEY6yEz1T2e7z853yEYV2HCnkDwMgnzpzYuQmA1wlvLK5PFMK6g5
- J3+PmvXMCTNKEFvn6A987H+l7BaAfTcjk7sUtGpM3PjfxF+jywqMZBIV2wWgQaXVPh1X
- b7g3Nzg/XA7XFoXAUkCRM7d6GDUFbuDOIWxZ/ZeyFnfzSrodyzzmPao6emz0SXLdCgBh
- MyoA==
+ d=linaro.org; s=google; t=1745521664; x=1746126464; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HJ9sPyximszoDA396q//Z4bBOWFO0sGUqs8F8G0y3aw=;
+ b=xkRDOu2x0jDE5UrDDMv5SFU31izN5nDQx7cJN51WmpP/r3gWs58TjfnHziU8shzIwO
+ wuRuspHo74mN22OgNOV6zofKo/tavarBDK0b32fHcF2N76ZzpsRXL+vDTVJ/izJFiDzD
+ rjXjXfpxI9MVHQrsHo/oa6UF3PVo0jUUtVQ9/rBrHuelP2a/oQy9GuOfEiwqyZEEYNTm
+ hvD2eeYsObe+3+cEKntKnts9BEYEf2Wy5so5AmZfUk8nT7YpjxxH03KUn0eH78oPRUW9
+ 6T23cL0ApavThNu/ycXq9ZxIJwD5bsAXpFc+wCXERZzg3r7ppRUKHvDthFB6YCfSVY7W
+ ggnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745521665; x=1746126465;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TP4Q9rzJluVzd5O9r6CuXRojocrwY/XR62UryJPD5ts=;
- b=AEeBp8ljsVxuEvsI+cjpOCsd1zm/hqWCDrF8JBpDZWdfaKZlWzAiC99KcIsCYzVS8w
- rzJGlZX+vo0P2ZGPm52BZTo2OgPCs8HtNNLMAc7eeeAGfI4irjHl0/oCedyw4Bs6jw7G
- 3UxEqR36urHHfdqj/wrwVm/5W7dJ+hKPYcrn9mgJJRroKb73RCOYe/O3tf6177Q8FT9X
- /F4sDTaTa6+0Hg241RWYsJT59gJCVIJZn7W/CHlyvf2b1eo4LGTYSyLTrTTXIE/nAtx4
- Y/aoqbbwVDdx7+dLe+3S+Gl37W2xTLs/TuiJBFIco5puNiAlwDX0YclpqTQ5gUl+/OFa
- YB+Q==
-X-Gm-Message-State: AOJu0Yyj+VsQhDvdSVGnHK0rEta5VCwGYWKWDi+eHz2cJI5KUbvDySX8
- 5PE/S8W4r55TtA7yKsDVOskB4TTPKUhA6q+1yAmP+Gmz+eNNTl7BqgqPlXIZS26p4jL/CgPqaNq
- o
-X-Gm-Gg: ASbGncsLJrKGZPhPEplxMEgahXtrGjnytmN3K2fFiqYvbmOeEhU6S6/uTJKhB5SSnfp
- +Yx3Gghml7TYX1kPb4RwzxwA/1U2NNICLUiVwNVJv02bjdriXrQHK1CRn1cKDdPp246oblZysuO
- 8S9bRpYDq3NTVyXCMkS5WdXo9yMdCOQfYLoxEqQ375hEE+O/aYUt1ksgm2UPl2UlX2QNKrKoePj
- 8TrvycR0PZmkhV96Y59GIt7YnAZSpQZFA86OCKEZTXC0AqdsXxaa+oER1BYNyg3WfbRpu2PXBvA
- gIKfBKUlE2cg+sYCaLPrlxvat1iVdpiLkt/IalXlXvDsZQfX83MvZeZXouKc05hMwat9wn1Q8n8
- =
-X-Google-Smtp-Source: AGHT+IEdIGgHbX2zmkaB5N/zgRiO4SAMETDbLzKQGFDOA0fNveCUbyiuG+LsXzM8lHe9vZnGQpgjAw==
-X-Received: by 2002:a05:6a00:3e20:b0:736:a6e0:e66d with SMTP id
- d2e1a72fcca58-73e245ddadfmr5059117b3a.6.1745521662988; 
- Thu, 24 Apr 2025 12:07:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1745521664; x=1746126464;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HJ9sPyximszoDA396q//Z4bBOWFO0sGUqs8F8G0y3aw=;
+ b=M9w1Ixez35tUrIhJfVFsAUjCCbdvu9EKNb1HRVjWuDJr6jsCAT2ifUT7xwiM4uLOiI
+ XTNSNeDw2KJao9eH2EhYftTRGbQRS2gqMUq+NWBlUpIpEzu7y7XcwgVgkH90Vg3oS4K7
+ 9ByNK6eJD2HIlGR0g3pt2Ih/8uMRJ5Y7SzoIViDqeCKvbyFaNAfD3/B+NdeIH4pgf1CV
+ b3n/zcayBF3dd2x8MxOc1+9y8Z8htsM0fGeNo0wuxaORwBG1xaegQB+/buL8mbrtQ/Bv
+ fhLobUEDU7Ec+4yK2sYNpiYxZpzOyn2sMZNKGGEbUw0R4szmdVVZMZoFDUvPz0+XWhF7
+ N4hg==
+X-Gm-Message-State: AOJu0YzCAmhnX1yyMrnkAY1UQxgkBC9mvsJdoL81JIJqjlhPyI6Kt8qR
+ OK602RehS07vuwX9gExBAtxTS+oDYmBp5nK21N8XDlfrmW/AnQXg5LCXHsQZpR+9NnR9XqEGK1+
+ 6
+X-Gm-Gg: ASbGncvecO4tZg6rPP8KratbsFUNVYiOsFE/Q+PJRQaVPiUS3P4kmq+CRPpRpnrjK4k
+ 9o7saAzFSKVekJGRDi7wVJFWwHCQrJdCELUJOb5gyFyXigUOEy5NAYx9woaMdxrPiE1zCywyajw
+ 6z+e1dU2gQDGlFST6WV6nYXdXKQOoI4zF0HTqSYuCvyjreNYMthhNciXvKRj2aJxiJT7DFhAsNJ
+ w4wiFn5EzBgFEO5XokQNAM6uIU6F4PNfISv4gNp9uSPmjcty96DePrgesproNDWTYMUL+L7M/1/
+ lHvFMYdmMV19KgnWh64n1ulCA6iDPAdzD9wGCRMVcw+ZlTY0dtAJxF9FKcHovxgwooXnLVu5uNY
+ oP7ipDzEXlg==
+X-Google-Smtp-Source: AGHT+IF9WH/RsFX2Pgg77X3ZiWfECy4e7uQHDGBEdMwaI8VIKk+DA1ThqaISpUq2CL80JYhhbqimfg==
+X-Received: by 2002:a05:6a21:3102:b0:1fe:90c5:7cfb with SMTP id
+ adf61e73a8af0-20444f2e8c0mr5734733637.27.1745521663982; 
+ Thu, 24 Apr 2025 12:07:43 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e259134d5sm1846463b3a.19.2025.04.24.12.07.42
+ d2e1a72fcca58-73e259134d5sm1846463b3a.19.2025.04.24.12.07.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Apr 2025 12:07:42 -0700 (PDT)
+ Thu, 24 Apr 2025 12:07:43 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: git@xen0n.name
-Subject: [PATCH 0/2] tcg/loongarch64: constraint fix and improvement
-Date: Thu, 24 Apr 2025 12:07:39 -0700
-Message-ID: <20250424190741.738515-1-richard.henderson@linaro.org>
+Subject: [PATCH 1/2] tcg/loongarch64: Fix vec_val computation in
+ tcg_target_const_match
+Date: Thu, 24 Apr 2025 12:07:40 -0700
+Message-ID: <20250424190741.738515-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250424190741.738515-1-richard.henderson@linaro.org>
+References: <20250424190741.738515-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,18 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix an assertion failure in sextract64 which shows up in make check.
-While in the area, improve the constraint match for VCMP.
+Only use vece for a vector constant.  This avoids an assertion
+failure in sextract64 when vece contains garbage.
 
-r~
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/loongarch64/tcg-target.c.inc | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-Richard Henderson (2):
-  tcg/loongarch64: Fix vec_val computation in tcg_target_const_match
-  tcg/loongarch64: Improve constraints for TCG_CT_CONST_VCMP
-
- tcg/loongarch64/tcg-target.c.inc | 48 ++++++++++++++++++--------------
- 1 file changed, 27 insertions(+), 21 deletions(-)
-
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index cbd7642b58..740b7c264d 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -211,12 +211,14 @@ static bool tcg_target_const_match(int64_t val, int ct,
+     if ((ct & TCG_CT_CONST_WSZ) && val == (type == TCG_TYPE_I32 ? 32 : 64)) {
+         return true;
+     }
+-    int64_t vec_val = sextract64(val, 0, 8 << vece);
+-    if ((ct & TCG_CT_CONST_VCMP) && -0x10 <= vec_val && vec_val <= 0x1f) {
+-        return true;
+-    }
+-    if ((ct & TCG_CT_CONST_VADD) && -0x1f <= vec_val && vec_val <= 0x1f) {
+-        return true;
++    if (ct & (TCG_CT_CONST_VCMP | TCG_CT_CONST_VADD)) {
++        int64_t vec_val = sextract64(val, 0, 8 << vece);
++        if ((ct & TCG_CT_CONST_VCMP) && -0x10 <= vec_val && vec_val <= 0x1f) {
++            return true;
++        }
++        if ((ct & TCG_CT_CONST_VADD) && -0x1f <= vec_val && vec_val <= 0x1f) {
++            return true;
++        }
+     }
+     return false;
+ }
 -- 
 2.43.0
 
