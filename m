@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F1B1C369D7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F92C369D3
 	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:04:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7krM-0003bm-Li; Wed, 23 Apr 2025 20:54:37 -0400
+	id 1u7ksU-0000QI-Sv; Wed, 23 Apr 2025 20:55:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kqU-00012J-W5
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:43 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1u7kqX-000159-KP
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:46 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kq4-0004ha-V6
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:18 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-7376dd56f8fso501829b3a.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:53:16 -0700 (PDT)
+ id 1u7kq8-0004iQ-Vp
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:22 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-73bf1cef6ceso387139b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:53:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745455995; x=1746060795; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745455999; x=1746060799; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VhN0H72crR7ocnAMdx8d6CUFaK0puwv/7eMWfuXv8/4=;
- b=x2uMZTaQxBoeJT61Z+HtZeci5nfU2KAv5qU4uGZXsmtZfib8zy2b4EZvpZGP1UYdv7
- BRUBdugw8HE4Ie9z7zlUCsbuSM0Z2KwjGgGOIfAOs6jYs8+0gYxyl2UxayEsYZDBwRd7
- WzzfJFEhTVNzZ3Yr0ncizhLrVftW/lztKCfI3unEPS2+Mkpnaj2Dm1+Rqjz4/XgcPJL9
- KYIsp+yv7nszc7vw+K5g1INLbYAGUNeUAcUDdbgwRTyPGXIlWuJ3FtkfpcD9/fOM8zzB
- pAmovEXOZ7XJr8vnYDOLeu0VgLiFuN7UHYSFV2WpZJkWFssYhQ03dtA8BisehyGyG3hr
- VQ1Q==
+ bh=kEc/3fiG4iISK/71vr3crINCUz3P6fX9ye3zEIs07n0=;
+ b=P/ZyKyj4lM40oaQW1jiMLaKOPr38Z2xLR2tL5RvmBO6W1gbNCoy2JJ0dm+/3LnsM8N
+ SKwMCRfHjnwBUwI9czbhCM6fekAv5OVtrpc5YZChxLrUQE+gGacwh1i5IZ+FPQFhdXtB
+ JI0ge8cZWqbgaTvVKAT987Pi/m43QyJge6ZYLK1RR/2EFKBlnyNX8XIkz941FcUuuksM
+ AXPDDru0GaWo9VTN05QilhkLRzMa08+yu3/3MHd0MLNpvYqWj5DQ1ZzavfR4SUh1XqnZ
+ dj0Q7GRQJcPh9SqfBvWKIHLKFDmfseOYCMOI/zVzWnnl+5TkowMn5wUwvZqIbjl/kpVP
+ MUVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745455995; x=1746060795;
+ d=1e100.net; s=20230601; t=1745455999; x=1746060799;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VhN0H72crR7ocnAMdx8d6CUFaK0puwv/7eMWfuXv8/4=;
- b=n/eM1GxRYdBTOdI6SJoXJ59eGeVWXu9xMDLDR9DtcA7+rRKPzZAGhxs4zSHXZa9uRc
- GBhnCHtNFC9iTScqFs2BSX3fTqqeZQitG4+tLYVlDfo9+uUTJfQ0K81BISJBIzKveR6o
- swbaMhXm4mOlxNrcIRwcmNTD+MS53RZpiFySXmiPgk0VhlFc1wq3WHLDFyutIT8TXF1v
- xtgbXXmuyQEkJR76Muf7TTWPQzRoQMRymkOx1ipltbfm4qUewt+OveuvxHExCsM/ueiL
- t8uRc5zuyA8KAgIl03d05Q8Lg7A6ufmCvQKYbOBQLCylQQmQfV3+MDnk0xsHHnRJxs4I
- e00A==
-X-Gm-Message-State: AOJu0YyyPZg3LPv5HbUntwpdftCMzbeo5kVeTZoi+ZlDG1twf7ZaO9HM
- rOfw31BnopmjI9U/cOiRs3sty/ytJtdqF8oqVXoWRt029CuQ3CLOfu6pEWFW9dNsVbVlTOghvnx
- J
-X-Gm-Gg: ASbGncvyGEkMUuPCV5y8NqZldmH9mq9f4OwwSlZSEtHIULqFVEizCh0lvR1MKzfwgw5
- iRBEzgvd6FNpNrAZGDbs9C0UTqmZWFleou8rCfUafiBsDClU97DfJ3lHDLT1Nl2wSNnoZuJL34v
- ZkOrUZW+OzxHF/+LnfFw5ynyZuj8KExqu6chWKgSrG4JEabpyBNzPT0yyohfet/cQoQXrUO/8cv
- 2xu19/vhE04lY3xnJEPm0vZE0oD1WdnzfGvA1jZ2pXKWe+TyHNm1uw0M1GxaF7lMugb7KU+Gc7b
- GTiux+co2jV0NcoLP9/L9YMU/bTPI0ufebGYzWnJ4+yOgKBp3o6D831qwtqlN3xKdeim+qVBWBI
+ bh=kEc/3fiG4iISK/71vr3crINCUz3P6fX9ye3zEIs07n0=;
+ b=BUmz3y1wDpJxk9yeVMm9Qot2zh4oFwwbt8t1KRsRzA7aWZxe8Lp3DvdbGUADc942xS
+ UaZgvWespiA8CmpizMlmDn7hnqpUkvBuxAqoF+NFfotm4vUny+ccGyXBpdWt96xsEvPZ
+ yLiWrF5JtCfWg5dr2OqG8thnxhbH39KPB0OviLcR/rll2CimGHwb9nejB0fFkIicki5S
+ TzPLKbgZlOQFr3ekv2RrR8KdUQOPzqciBsqehQmssmRLI92ai8WryNbgvvQB4py9UJ78
+ 0HidtGSFOuJKQy765NWY7EIDX1a8Deh2gKAtXdxxqnxpst4SkY587I2bn6ADGm5fccz6
+ +Ptg==
+X-Gm-Message-State: AOJu0Yz3Uij8GCyNU7YQis5cPQ8z+2+yQaSp4WjMSk63NojOw/qkYJx/
+ /eBnXS0z9vWmoGOtdziUflkRUuWaUsTSYafvxBfVwyETcZbwu3ayjgU31hi3mUI8eBNLgYqjgKP
+ Q
+X-Gm-Gg: ASbGncuAv4Gj93H4kUPZS9mK273QIKvMzZ7jByAiylxFGVWqCwV0TLTDuR8ySDWU276
+ /gBAqJSQdvXfzOoQWF18VimFkrffL2knaE2DYZmIZy2LCcvrGdASAmLH5zizuLmhLcTkTxFP1t4
+ km9xGJf0uB0nViQ1FQRjY1R/0vQUf/nQQXJOL/D4VBPMxi7mCAgYw30XIwYUdEXIgbgY7wjkWD5
+ MOUzEEOKVAh5DwP6tV5aAzMUIxsrnO8QTgKD08AbfPw3HVrRJy9PqcGe8etSdOytUp8o/tdcZ+B
+ pV/9jiepaDQqXQPRmDKq8OBfjXNw9wfEQqzk+uYE+eQnkF10yR2APGol0ra22W4wrXiZTWyDhCk
  =
-X-Google-Smtp-Source: AGHT+IHq8uNwrmHtJ21X0KbThzF6CQDrvxQpIGCXMVsDYWU0rnbTyuJKEE1shBYX+rgdpW8xFu5FRg==
-X-Received: by 2002:a05:6a00:3018:b0:736:4e02:c543 with SMTP id
- d2e1a72fcca58-73e245e3bc0mr1045774b3a.9.1745455995646; 
- Wed, 23 Apr 2025 17:53:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkuGdxoc7VS2BLhl1jXF1r3PYobYqoCASrJRNi6lyOOuMP1GVmYtAt7afME1NfFaC8cxLHDA==
+X-Received: by 2002:a05:6a20:e18a:b0:201:4061:bd94 with SMTP id
+ adf61e73a8af0-20444ebdf33mr839092637.19.1745455999327; 
+ Wed, 23 Apr 2025 17:53:19 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25a6a971sm209353b3a.103.2025.04.23.17.53.15
+ d2e1a72fcca58-73e25a6a971sm209353b3a.103.2025.04.23.17.53.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 17:53:15 -0700 (PDT)
+ Wed, 23 Apr 2025 17:53:19 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 051/148] plugins: Move api.c, core.c to libuser_ss, libsystem_ss
-Date: Wed, 23 Apr 2025 17:47:56 -0700
-Message-ID: <20250424004934.598783-52-richard.henderson@linaro.org>
+Subject: [PULL 057/148] include/exec: Protect icount_enabled from poisoned
+ symbols
+Date: Wed, 23 Apr 2025 17:48:02 -0700
+Message-ID: <20250424004934.598783-58-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
 References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,28 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Headers used by these files require CONFIG_USER_ONLY.
-
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- plugins/meson.build | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/exec/icount.h | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/plugins/meson.build b/plugins/meson.build
-index 3be8245a69..5383c7b88b 100644
---- a/plugins/meson.build
-+++ b/plugins/meson.build
-@@ -61,5 +61,8 @@ endif
- user_ss.add(files('user.c', 'api-user.c'))
- system_ss.add(files('system.c', 'api-system.c'))
+diff --git a/include/exec/icount.h b/include/exec/icount.h
+index 4964987ae4..7a26b40084 100644
+--- a/include/exec/icount.h
++++ b/include/exec/icount.h
+@@ -22,13 +22,21 @@ typedef enum {
+     ICOUNT_ADAPTATIVE,
+ } ICountMode;
  
--common_ss.add(files('loader.c', 'api.c', 'core.c'))
-+libuser_ss.add(files('api.c', 'core.c'))
-+libsystem_ss.add(files('api.c', 'core.c'))
+-#if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
++#ifdef CONFIG_TCG
+ extern ICountMode use_icount;
+ #define icount_enabled() (use_icount)
+ #else
+ #define icount_enabled() ICOUNT_DISABLED
+ #endif
+ 
++/* Protect the CONFIG_USER_ONLY test vs poisoning. */
++#if defined(COMPILING_PER_TARGET) || defined(COMPILING_SYSTEM_VS_USER)
++# ifdef CONFIG_USER_ONLY
++#  undef  icount_enabled
++#  define icount_enabled() ICOUNT_DISABLED
++# endif
++#endif
 +
-+common_ss.add(files('loader.c'))
- 
+ /*
+  * Update the icount with the executed instructions. Called by
+  * cpus-tcg vCPU thread so the main-loop can see time has moved forward.
 -- 
 2.43.0
 
