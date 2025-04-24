@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 245AAC369CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 00:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A560C369CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 00:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7koV-000737-7s; Wed, 23 Apr 2025 20:51:41 -0400
+	id 1u7krc-0005GR-LT; Wed, 23 Apr 2025 20:54:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kn7-0005es-1T
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:50:20 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1u7kqX-00015p-Sg
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:46 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kmz-0004Wg-3z
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:50:09 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-736b98acaadso365419b3a.1
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:50:04 -0700 (PDT)
+ id 1u7kqN-0004lp-1W
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:36 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-7399a2dc13fso535207b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:53:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745455803; x=1746060603; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745456014; x=1746060814; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6NBZn3i6oWCdtplZB4PrRd/eK1p4Gk3cW81nmsPJsCg=;
- b=dr3wX1gVocwd5ee9764p7TBdLZfjNd8QHL+3Otdyc0kwzcWyJamLVVofuBdBdHBy7Q
- 8VA6QKzrLni8Pf3fyyzK3kPKHTkqNyvIDM6lYc1WTeXqTdvWVdKsqn5u7pCuZYckErkg
- reHxC8ZLPPWvQuHpdw1bM0g19tsTAv7uKDvQJSEdHz89W7mUvno/UHqByM5aetPsuKkX
- aJQ+qCV39VKuHvpQuYdosVHi4hOBX51GMTSRX7sOyEU+2MYBOEJCAcE9/h1/aOFiCQIa
- FCbuBmAylypr1uuOlS+pOam0SFIcXesSK0RyCoRoHlo6LkcOkNYe+IBgRZdok1C66H76
- bo0g==
+ bh=HFv25Ex4Z7rH8n6+d4m5k/9OCPtpQ36hSXK/gOJIqjc=;
+ b=FwDIVFucvmK8vUOrACvsAgoKHCo3VQWiMktmOEVyWBZyzFjqytvZk8ZY32UKisTZ+n
+ B3N4ljho39RKsdM1Q0xAOMcXAnTrYIWgJ+GRIAD3zNhyPPwNnnpyLKIRqWUjDI/BJ1dl
+ NQ19BnYK7nKXK6KdVa4soZphjyN5e7NdyFku5VaAntu1UXI2xiF0/BT5DpV109Z57wgq
+ 4KQZcxXcclyEWyVRjMrLtNNODTUfbM5yz5W18gewdN8HSMUcmoPvc+hg/ebvVOXW2iVw
+ iD8ulK+o9WURqaw0cIR4bB5ziqTjGBgwvQRJxu+tfeaAmhSacp3DN2l3iSf0XGYQPgeY
+ rYpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745455803; x=1746060603;
+ d=1e100.net; s=20230601; t=1745456014; x=1746060814;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6NBZn3i6oWCdtplZB4PrRd/eK1p4Gk3cW81nmsPJsCg=;
- b=hE7yNNYifOTtUE2s4VQ3MbFqdsL/DrhQ6/d5t/eRtOO/SwZl596bkHQAtz3pnEjXUD
- fsDzByDTh2ylk1R65Uv94GaRu83/QmWZEvp3HcByRO36dLMmReHzAPpWHN/o1gSjWVI8
- A2qgYeIMB+Wj5XJk5rK+aZN/5wQz4GWIdNwbDCVyMHs+DNL2TlSizqw6VeDzY7ojD/7e
- bN9Nujle17lSKzX0z4maHIMZSesdIuuVlcpLsBeVc0t/7sdTBZlCTLVtKRxLn4Sc/vg9
- zLvjFRGZC6af6U8UGhIVLcLccGCy354IyI9ZXgVNBX27Dwdm4PzeJs8LhivJAHfx3hbE
- N/cw==
-X-Gm-Message-State: AOJu0YwP8VmioSaUpRpR6UYPb9cNhubrhtWzCr/3ucbQ38B9QfGCcl9z
- 1BJCPO1NHM/2bVJF7H/tC38+co5iBsn1TmnnB66hdxk3zCsm2iYMPdLyjPCj/49XGmYdHcHshdq
- c
-X-Gm-Gg: ASbGncuAkPsT21eM5c9FzuOGucPqMvG74nEzZblqq5bJVaL/MHmSpW73c0ZW/Qr6X3w
- EkDGH8GVALDNL5y7qABfxd5+hRAPKM8G4V1goG0o/+H09rGbWnT9lF7nP4TtihmsVcqkUSta35J
- fvLns9ZuThiss+F6wDJfR+6uO5/yPdFisDK3lnHiiMx6tPrexBwEKtYeh8j5BP4Ne9VD/i3zfC4
- 6TopZQZ6fGB+RqHeiB3OnKZVEx5D3VGU+muVB/Wcu1G8RPJcUxVO6F42oXnxEgL+9RR3rreXjkl
- BcXwUtr/DA9AbShtR5gAPkXBH3jUknVMxw11oquhfvGy8GeaM4T5kqG8DYEhWmI6J8zAST8i2X0
- =
-X-Google-Smtp-Source: AGHT+IH3kKA/YsodYw9JGvPNrPIkl2JRaVnjIEzZ7px49gIbj6DhXfzsIRkX5k8lGR2OiG2ukx4vNQ==
-X-Received: by 2002:a05:6a00:80d:b0:736:34ff:be7 with SMTP id
- d2e1a72fcca58-73e24acafe4mr923782b3a.15.1745455803502; 
- Wed, 23 Apr 2025 17:50:03 -0700 (PDT)
+ bh=HFv25Ex4Z7rH8n6+d4m5k/9OCPtpQ36hSXK/gOJIqjc=;
+ b=JlNk5fT2SyOiVQLYtVBNw9sJNdM7g66D4g71KkTwE7hhk7TYhOdgHXnCrtjtUFQ6OP
+ 98zuao0YJVfO1M0WMRWlW/z0kf5ox49ojVuD/A9crmnazzna714dU2bMZvp/jfIerOOl
+ Fg4aHdDEj6slzNBjlS6mGdKcuPGgXt6lj23pWhMiGJemyKlSA3iD7a0TMB5Nfjeg0hlg
+ L2OPz/7CnIr8ibfKlDibTJ/zAJOZwXLyvgCz/yLVTTJWcxkymfk1+sabPk5C90HthATm
+ LQBlgMgnRA1wVEGO7ayjKJ5ZN21Fuw3bHu0EDXEejBord3H1kK32x6tc2lIwx3hd9LvR
+ aUig==
+X-Gm-Message-State: AOJu0Ywrolu0GYJQYJPu4DRZuCk/gfYdecnZjuHkirw8ZSm7a86Ssdh6
+ mqqTpaNSPzimEz3Vmn5pJ0m5o8vQzUwOBgawlXPkSrMguCPHJEphNGSJR4qdZn5jgt167hrja/U
+ 2
+X-Gm-Gg: ASbGncuqvqwA2pAH5GoXTMmQwxkwwidloDyJbia5yWGgP0+b178fON7iZmUhRdYbAU7
+ MnrvdQwmabJT2PS2+a94T59m7Q1XdNN8+pQSl7XXlroHJ1vClkqjGGy5CtQcGEv2iW2I8tyvcex
+ 5GzJTZH2XA87++szRbhX3igvqgb6BaU490X8nwggGPygKo+eKH1/78JWsdQph/MBaVVfja2HUG+
+ 4nY0b+iunCo5m5argzMYOQHfiv9Hl2Apge3re5suK5JqLTmDr4Rff0+d1IgXZ2vV0yj55lAY3Gx
+ Ju2j4KPH3Yi/qm6O8/Ubbn7d4IlcYGdmJNeuV7GzAOD8Ix14iFDGFHnbU7i1PV0CksKspsVGBV6
+ lHyqycSEW5g==
+X-Google-Smtp-Source: AGHT+IEGop4SoCOz/049mLW7ZPIc6Dt3sRNG/fuSJoFUN4C0A7kqrWy4eQxURjYMLC9fnbe2/8fpXA==
+X-Received: by 2002:a05:6a00:9287:b0:736:546c:eb69 with SMTP id
+ d2e1a72fcca58-73e245e3df6mr932620b3a.9.1745456013530; 
+ Wed, 23 Apr 2025 17:53:33 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25a9a0f1sm207344b3a.137.2025.04.23.17.50.03
+ d2e1a72fcca58-73e25a6a971sm209353b3a.103.2025.04.23.17.53.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 17:50:03 -0700 (PDT)
+ Wed, 23 Apr 2025 17:53:33 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 038/148] include/system: Move exec/ramblock.h to
- system/ramblock.h
-Date: Wed, 23 Apr 2025 17:47:43 -0700
-Message-ID: <20250424004934.598783-39-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 079/148] target/i386: Restrict cpu_mmu_index_kernel() to TCG
+Date: Wed, 23 Apr 2025 17:48:24 -0700
+Message-ID: <20250424004934.598783-80-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
 References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,283 +101,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the existing includes with sed.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Move cpu_mmu_index_kernel() to seg_helper.c.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250401080938.32278-9-philmd@linaro.org>
 ---
- include/system/ram_addr.h           | 2 +-
- include/{exec => system}/ramblock.h | 9 ++++-----
- hw/display/virtio-gpu-udmabuf.c     | 2 +-
- hw/hyperv/hv-balloon.c              | 2 +-
- hw/virtio/vhost-user.c              | 2 +-
- migration/dirtyrate.c               | 2 +-
- migration/file.c                    | 2 +-
- migration/multifd-nocomp.c          | 2 +-
- migration/multifd-qatzip.c          | 2 +-
- migration/multifd-qpl.c             | 2 +-
- migration/multifd-uadk.c            | 2 +-
- migration/multifd-zero-page.c       | 2 +-
- migration/multifd-zlib.c            | 2 +-
- migration/multifd-zstd.c            | 2 +-
- migration/multifd.c                 | 2 +-
- migration/postcopy-ram.c            | 2 +-
- tests/qtest/fuzz/generic_fuzz.c     | 2 +-
- MAINTAINERS                         | 2 +-
- 18 files changed, 21 insertions(+), 22 deletions(-)
- rename include/{exec => system}/ramblock.h (96%)
+ target/i386/cpu.h            |  1 -
+ target/i386/tcg/seg_helper.h |  4 ++++
+ target/i386/cpu.c            | 16 ----------------
+ target/i386/tcg/seg_helper.c | 16 ++++++++++++++++
+ 4 files changed, 20 insertions(+), 17 deletions(-)
 
-diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
-index 3b81c3091f..b4e4425acb 100644
---- a/include/system/ram_addr.h
-+++ b/include/system/ram_addr.h
-@@ -23,7 +23,7 @@
- #include "system/tcg.h"
- #include "exec/cputlb.h"
- #include "exec/ramlist.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "exec/exec-all.h"
- #include "system/memory.h"
- #include "exec/target_page.h"
-diff --git a/include/exec/ramblock.h b/include/system/ramblock.h
-similarity index 96%
-rename from include/exec/ramblock.h
-rename to include/system/ramblock.h
-index 64484cd821..d8a116ba99 100644
---- a/include/exec/ramblock.h
-+++ b/include/system/ramblock.h
-@@ -16,11 +16,10 @@
-  * The functions declared here will be removed soon.
-  */
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 119efc6c60..c9f39e99d3 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2598,7 +2598,6 @@ static inline bool is_mmu_index_32(int mmu_index)
+ }
  
--#ifndef QEMU_EXEC_RAMBLOCK_H
--#define QEMU_EXEC_RAMBLOCK_H
-+#ifndef SYSTEM_RAMBLOCK_H
-+#define SYSTEM_RAMBLOCK_H
+ int x86_mmu_index_pl(CPUX86State *env, unsigned pl);
+-int cpu_mmu_index_kernel(CPUX86State *env);
  
--#ifndef CONFIG_USER_ONLY
--#include "cpu-common.h"
-+#include "exec/cpu-common.h"
- #include "qemu/rcu.h"
- #include "exec/ramlist.h"
+ #define CC_DST  (env->cc_dst)
+ #define CC_SRC  (env->cc_src)
+diff --git a/target/i386/tcg/seg_helper.h b/target/i386/tcg/seg_helper.h
+index 6b8606cd6d..ea98e1a98e 100644
+--- a/target/i386/tcg/seg_helper.h
++++ b/target/i386/tcg/seg_helper.h
+@@ -20,6 +20,8 @@
+ #ifndef SEG_HELPER_H
+ #define SEG_HELPER_H
  
-@@ -91,5 +90,5 @@ struct RAMBlock {
-      */
-     ram_addr_t postcopy_length;
- };
--#endif
++#include "cpu.h"
 +
+ //#define DEBUG_PCALL
+ 
+ #ifdef DEBUG_PCALL
+@@ -31,6 +33,8 @@
+ # define LOG_PCALL_STATE(cpu) do { } while (0)
  #endif
-diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-udmabuf.c
-index 85ca23cb32..0510577475 100644
---- a/hw/display/virtio-gpu-udmabuf.c
-+++ b/hw/display/virtio-gpu-udmabuf.c
-@@ -19,7 +19,7 @@
- #include "hw/virtio/virtio-gpu.h"
- #include "hw/virtio/virtio-gpu-pixman.h"
- #include "trace.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "system/hostmem.h"
- #include <sys/ioctl.h>
- #include <linux/memfd.h>
-diff --git a/hw/hyperv/hv-balloon.c b/hw/hyperv/hv-balloon.c
-index 0b1da723c8..acabff2c4a 100644
---- a/hw/hyperv/hv-balloon.c
-+++ b/hw/hyperv/hv-balloon.c
-@@ -12,7 +12,7 @@
  
- #include "system/address-spaces.h"
- #include "exec/cpu-common.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "hw/boards.h"
- #include "hw/hyperv/dynmem-proto.h"
- #include "hw/hyperv/hv-balloon.h"
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 267b612587..48561d3c74 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -28,7 +28,7 @@
- #include "system/cryptodev.h"
- #include "migration/postcopy-ram.h"
- #include "trace.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
++int cpu_mmu_index_kernel(CPUX86State *env);
++
+ /*
+  * TODO: Convert callers to compute cpu_mmu_index_kernel once
+  * and use *_mmuidx_ra directly.
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index c596e2174d..fd85663833 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -8681,22 +8681,6 @@ static int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
+     return x86_mmu_index_pl(env, env->hflags & HF_CPL_MASK);
+ }
  
- #include <sys/ioctl.h>
- #include <sys/socket.h>
-diff --git a/migration/dirtyrate.c b/migration/dirtyrate.c
-index 09caf92f87..986624c79a 100644
---- a/migration/dirtyrate.c
-+++ b/migration/dirtyrate.c
-@@ -14,7 +14,7 @@
- #include "qemu/error-report.h"
- #include "hw/core/cpu.h"
- #include "qapi/error.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "exec/target_page.h"
- #include "qemu/rcu_queue.h"
- #include "qemu/main-loop.h"
-diff --git a/migration/file.c b/migration/file.c
-index 7f11e26f5c..bb8031e3c7 100644
---- a/migration/file.c
-+++ b/migration/file.c
-@@ -6,7 +6,7 @@
-  */
+-static int x86_mmu_index_kernel_pl(CPUX86State *env, unsigned pl)
+-{
+-    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 0 : 1;
+-    int mmu_index_base =
+-        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
+-        (pl < 3 && (env->eflags & AC_MASK)
+-         ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX);
+-
+-    return mmu_index_base + mmu_index_32;
+-}
+-
+-int cpu_mmu_index_kernel(CPUX86State *env)
+-{
+-    return x86_mmu_index_kernel_pl(env, env->hflags & HF_CPL_MASK);
+-}
+-
+ static void x86_disas_set_info(CPUState *cs, disassemble_info *info)
+ {
+     X86CPU *cpu = X86_CPU(cs);
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 71962113fb..f4370202fe 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -128,6 +128,22 @@ int get_pg_mode(CPUX86State *env)
+     return pg_mode;
+ }
  
- #include "qemu/osdep.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index ffe75256c9..94f248e8a2 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -11,7 +11,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "exec/target_page.h"
- #include "file.h"
- #include "migration-stats.h"
-diff --git a/migration/multifd-qatzip.c b/migration/multifd-qatzip.c
-index 6a0e989fae..7419e5dc0d 100644
---- a/migration/multifd-qatzip.c
-+++ b/migration/multifd-qatzip.c
-@@ -13,7 +13,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qapi/qapi-types-migration.h"
-diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
-index 88e2344af2..52902eb00c 100644
---- a/migration/multifd-qpl.c
-+++ b/migration/multifd-qpl.c
-@@ -14,7 +14,7 @@
- #include "qemu/module.h"
- #include "qapi/error.h"
- #include "qapi/qapi-types-migration.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "multifd.h"
- #include "qpl/qpl.h"
- 
-diff --git a/migration/multifd-uadk.c b/migration/multifd-uadk.c
-index 6895c1f65a..fd7cd9b5e8 100644
---- a/migration/multifd-uadk.c
-+++ b/migration/multifd-uadk.c
-@@ -13,7 +13,7 @@
- #include "qemu/osdep.h"
- #include "qemu/module.h"
- #include "qapi/error.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "migration.h"
- #include "multifd.h"
- #include "options.h"
-diff --git a/migration/multifd-zero-page.c b/migration/multifd-zero-page.c
-index f1e988a959..dbc1184921 100644
---- a/migration/multifd-zero-page.c
-+++ b/migration/multifd-zero-page.c
-@@ -12,7 +12,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/cutils.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "migration.h"
- #include "migration-stats.h"
- #include "multifd.h"
-diff --git a/migration/multifd-zlib.c b/migration/multifd-zlib.c
-index 8cf8a26bb4..8820b2a787 100644
---- a/migration/multifd-zlib.c
-+++ b/migration/multifd-zlib.c
-@@ -13,7 +13,7 @@
- #include "qemu/osdep.h"
- #include <zlib.h>
- #include "qemu/rcu.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "exec/target_page.h"
- #include "qapi/error.h"
- #include "migration.h"
-diff --git a/migration/multifd-zstd.c b/migration/multifd-zstd.c
-index abed140855..3c2dcf76b0 100644
---- a/migration/multifd-zstd.c
-+++ b/migration/multifd-zstd.c
-@@ -13,7 +13,7 @@
- #include "qemu/osdep.h"
- #include <zstd.h>
- #include "qemu/rcu.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "exec/target_page.h"
- #include "qapi/error.h"
- #include "migration.h"
-diff --git a/migration/multifd.c b/migration/multifd.c
-index dfb5189f0e..86c83e43c0 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -16,7 +16,7 @@
- #include "qemu/rcu.h"
- #include "exec/target_page.h"
- #include "system/system.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "file.h"
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 5d3edfcfec..995614b38c 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -31,7 +31,7 @@
- #include "qemu/error-report.h"
- #include "trace.h"
- #include "hw/boards.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "socket.h"
- #include "yank_functions.h"
- #include "tls.h"
-diff --git a/tests/qtest/fuzz/generic_fuzz.c b/tests/qtest/fuzz/generic_fuzz.c
-index 239be9372d..507de74806 100644
---- a/tests/qtest/fuzz/generic_fuzz.c
-+++ b/tests/qtest/fuzz/generic_fuzz.c
-@@ -21,7 +21,7 @@
- #include "fuzz.h"
- #include "string.h"
- #include "system/memory.h"
--#include "exec/ramblock.h"
-+#include "system/ramblock.h"
- #include "hw/qdev-core.h"
- #include "hw/pci/pci.h"
- #include "hw/pci/pci_device.h"
-diff --git a/MAINTAINERS b/MAINTAINERS
-index b1ac3ff7d2..ba885010c5 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3122,7 +3122,7 @@ F: include/system/ioport.h
- F: include/exec/memop.h
- F: include/system/memory.h
- F: include/system/ram_addr.h
--F: include/exec/ramblock.h
-+F: include/system/ramblock.h
- F: include/system/memory_mapping.h
- F: system/dma-helpers.c
- F: system/ioport.c
++static int x86_mmu_index_kernel_pl(CPUX86State *env, unsigned pl)
++{
++    int mmu_index_32 = (env->hflags & HF_LMA_MASK) ? 0 : 1;
++    int mmu_index_base =
++        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
++        (pl < 3 && (env->eflags & AC_MASK)
++         ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX);
++
++    return mmu_index_base + mmu_index_32;
++}
++
++int cpu_mmu_index_kernel(CPUX86State *env)
++{
++    return x86_mmu_index_kernel_pl(env, env->hflags & HF_CPL_MASK);
++}
++
+ /* return non zero if error */
+ static inline int load_segment_ra(CPUX86State *env, uint32_t *e1_ptr,
+                                uint32_t *e2_ptr, int selector,
 -- 
 2.43.0
 
