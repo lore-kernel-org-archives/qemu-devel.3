@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D8FAC369D7
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 00:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72006C369CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 00:56:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7kp9-0008CP-CV; Wed, 23 Apr 2025 20:52:19 -0400
+	id 1u7kru-0006vA-RS; Wed, 23 Apr 2025 20:55:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kn0-0005b4-GF
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:50:08 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1u7kqX-00015Y-QK
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:46 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kmu-0004NG-8L
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:50:06 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-7398d65476eso358855b3a.1
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:49:59 -0700 (PDT)
+ id 1u7kqD-0004jQ-B8
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:26 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-739525d4e12so358367b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:53:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745455799; x=1746060599; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745456004; x=1746060804; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6RZv4stV/SvG8IKjkEcJ2d9gwvNpfIIefKf42fhrHvc=;
- b=dXGFWDD94EiCU9mtFKhhnFB43DVQHLooSvV/PKWqTd4ZZu3yd/5XkVH3eDi6ZhfC1H
- vPHNuGgu2yBC1QzNaMtkWZeoLwMYnGzxB2M7gzpex7qhxIlOqeQHV9/4apVbd9nc1sFE
- TcUOsM3olSx0k4IJ448CBrrcVB/bkRrg138HSgwh/5AgbDf60LTQNFtW0GMUm1bZZEe1
- wgy0tiFiRKWgg/3bmPsOHFac91U9Ec1eSiN7XIyHV1SKFoauGIxCfgahgVix4r/QfoWK
- 0dOujTrKn6GnK8ZW5QPOVYxkk3VzyPVqMgxxnmdPYV/paP/mw1iAztY+NBSi3J39gzuJ
- erwQ==
+ bh=DaiqXvx8en6VCToTimGXoyGSBAmucTN+awgeSbs/f3M=;
+ b=S6l6K39Z0q4Y89w4InfOGK/o2uKD6gH5ezX23jC5KFUsXZd+j/kZifShOr53jWRHh3
+ T/epGCixYgqq4mCHtQWuvPaxr45yXoel419k573V8g/BLupcZvAOiAE2fAqayFNAHuLB
+ uHI3SmmN+4fwboxLPw4466ybLjTdTvM/AzjjA7XLkI49/gqo2v1RScSmTXE25CFZEbT2
+ UZNxZSKIQHR01k4fnafHzrbajvn10Or8K4mKcodwI3k6dI9ZNWOHV5wey4e68DbCGZl7
+ 3Qaa/LY3UH2QcRvORsehbIJW581zBEren4vdFiB7BkH/zvUHy81nVKWHUY/dzwDEJQlh
+ bgoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745455799; x=1746060599;
+ d=1e100.net; s=20230601; t=1745456004; x=1746060804;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6RZv4stV/SvG8IKjkEcJ2d9gwvNpfIIefKf42fhrHvc=;
- b=QICLVipMwpS8xmmViGAfKunU/2bJW8bh0e7tJgDUj6N9u5gUOGUzxP7cp3lq9NunPZ
- z8EcSNVobSW9bLbw+JSCwqZPpFSfyD6R+nsgm4oUhK/7uys6fJ3giwgz8kz/6WXO1ZSZ
- /tSOwUMBH1yoDFNxi8G6wclYOP9jjIYiPemTferA13ubc0QDM8nK3dh3sNQYu51l2r9e
- 4s880fDXR+oFq6Y78EoVrK3OfLebtbBiidHc+foynogDL+SNC0Qh3RZRlA9DfnhaFfi2
- jD3vbyjZYc9BN5B57UHj5WMrAAfNJK2yK000FOhZCy01jCd0vMLfTwDLsqJ0ZkH9K9dH
- ELpw==
-X-Gm-Message-State: AOJu0YxAiiV58je3AaX9O+tfS8dcQCESGAWWYrkusNnJFg8xyOYJrn1/
- YeAhd8lX7cIhI25/ZjPdjcCVoqAtXEHoym01Kb7BuZ1OPi5vw3nsSC+vX9LX/4KLDR5CfoqPZOv
- Y
-X-Gm-Gg: ASbGncvFkwxcMkKYNCce2ql45nXIeJTlY+vzDje2rHFieYXLz55io/pNBEVjCETi/D6
- UZOblzeTN2ZnzQQo10hOEmxJVF65ia49yoG05SmVWhHgattPGceb8l+5cr/CciVe/rXZMy4misM
- BoWXK3i0oKvfwkhaF9PlfWdybWG3NMys2bX1+o1UzIHM+q05kh4hL0Au/v87AwqnobgD3OGXvtR
- WiJ9JgkqwgCZmx4yqxWTJj2oW9wMmEpatP6xT4kUByw3tIORx1w6q4u4etsTm2CgfrUS+/nl7HT
- LykW8L6x4qNT94Tv6oSUf18FKjFCSiYzechuD8CRk64wODrycmgvpjFKhkwVODlFQxf/6tyPPdU
+ bh=DaiqXvx8en6VCToTimGXoyGSBAmucTN+awgeSbs/f3M=;
+ b=saYJD0O34tqKTE0F+gKYvxFK4rQa3E7/HRtPUzDn5ztGsff3iI8qhrqRKdHBGvRW9C
+ T6r+kYoVL5RSpxt9ANDhj3LkE8ey39utPPBYL45s0Daa5ULUuGePrksV1UJ7VSNA4kKL
+ dPiJ+3FpxGlkvHGpM77aInHgPVAwpMTwXyfy3YkAhiyDQLxEcwv+2jwyJX9TwCR8lPMT
+ idZHrpvQRzP19gz8wqlLgrY+NS+cVy1yr30JjjINmivBObS7xXdaEsBooOi1/GT1xLO7
+ t2YLEl+d4L3PiV9utzvHiS8bRE5P8gukrXY4lXN2j4Wxf1Mv2ZbdGxBTgNppQp7vfZlY
+ tUJQ==
+X-Gm-Message-State: AOJu0YwW1UoLQkheHmoSvtKtQWI2xKVOypkP/WG+4p8VBHOTmfNeN47T
+ ui2Iv0K3UDWbXVldXMPJqjGga2yg9EfPZGFIgEThJGEYI8XpCyzjiVDsRIYRc3oGn0Wc7HVpxP8
+ G
+X-Gm-Gg: ASbGncsRj/Xkt0iHWVIpG+IAatJT2NweJTKTlWSIaqLgY9Hdn42jOiNhXbDMaqaCnXE
+ J+IdhEf0rtJ5pwwAxA6x9uDuPoDjDJnXRGnW5OJ4HFkfeGFWz68qfYWSilhNNKY4seKEoGlkQml
+ fbezmd+vXhiDqe5t1+VjWUiOpaWUSUvEPYShA7JKC3SZf1JcTi2Yfy7UXz4dLXmxYVSCpGxdgap
+ UjermOd0DWkvealMOJgwlnR53mmNa0MHMeo/TJRL472UrBU59zWondSAbZMZSQaVrTdxMGMYQNy
+ /8ncGvc9Ox/SIfFruRRVdCnYDoSfTPoQBr64CDKdoDLk2oAEDYrhuSGuBvNRyuxIo+i/pMT1yp4
  =
-X-Google-Smtp-Source: AGHT+IHiDqmHRpgEKuiEKr4rUc+soxoeMLfonKSMpfFPK1OXdpnKNsINki1ftCo3M8wWD3KlXkc5lA==
-X-Received: by 2002:a05:6a00:3213:b0:736:4c3d:2cba with SMTP id
- d2e1a72fcca58-73e2689e0f1mr451239b3a.9.1745455798655; 
- Wed, 23 Apr 2025 17:49:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IERMB1wGQM+Yp3acw8m6YcGImStLuJyyS4qxoxIrgago7BnuwSD/vzihVfc2aRFS3EakzrTZw==
+X-Received: by 2002:a05:6a21:69c:b0:1ee:c8e7:203c with SMTP id
+ adf61e73a8af0-20444ebefb6mr916079637.24.1745456003870; 
+ Wed, 23 Apr 2025 17:53:23 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25a9a0f1sm207344b3a.137.2025.04.23.17.49.58
+ d2e1a72fcca58-73e25a6a971sm209353b3a.103.2025.04.23.17.53.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 17:49:58 -0700 (PDT)
+ Wed, 23 Apr 2025 17:53:23 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 031/148] accel/tcg: Implement translator_ld*_end
-Date: Wed, 23 Apr 2025 17:47:36 -0700
-Message-ID: <20250424004934.598783-32-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 064/148] accel/tcg: Pass CPUTLBEntryFull to
+ tlb_reset_dirty_range_locked
+Date: Wed, 23 Apr 2025 17:48:09 -0700
+Message-ID: <20250424004934.598783-65-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
 References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,179 +103,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new family of translator load functions which take
-an absolute endianness value in the form of MO_BE/MO_LE.
-Expand the other translator_ld* functions on top of this.
-Remove exec/tswap.h from translator.c.
+While we're renaming things, don't modify addr; save it for
+reuse in the qatomic_set.  Compute the host address into a
+new local variable.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/exec/translator.h | 49 ++++++++++++++++++++++++---------------
- accel/tcg/translator.c    | 26 +++++++++++++++------
- 2 files changed, 49 insertions(+), 26 deletions(-)
+ accel/tcg/cputlb.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/include/exec/translator.h b/include/exec/translator.h
-index 205dd85bba..3c32655569 100644
---- a/include/exec/translator.h
-+++ b/include/exec/translator.h
-@@ -18,7 +18,7 @@
-  * member in your target-specific DisasContext.
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 10090067f7..5df98d93d0 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -882,18 +882,16 @@ void tlb_unprotect_code(ram_addr_t ram_addr)
+  *
+  * Called with tlb_c.lock held.
   */
- 
--#include "qemu/bswap.h"
-+#include "exec/memop.h"
- #include "exec/vaddr.h"
- 
- /**
-@@ -181,42 +181,53 @@ bool translator_io_start(DisasContextBase *db);
-  */
- 
- uint8_t translator_ldub(CPUArchState *env, DisasContextBase *db, vaddr pc);
--uint16_t translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc);
--uint32_t translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc);
--uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc);
-+uint16_t translator_lduw_end(CPUArchState *env, DisasContextBase *db,
-+                             vaddr pc, MemOp endian);
-+uint32_t translator_ldl_end(CPUArchState *env, DisasContextBase *db,
-+                            vaddr pc, MemOp endian);
-+uint64_t translator_ldq_end(CPUArchState *env, DisasContextBase *db,
-+                            vaddr pc, MemOp endian);
-+
-+#ifdef COMPILING_PER_TARGET
-+static inline uint16_t
-+translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
-+{
-+    return translator_lduw_end(env, db, pc, MO_TE);
-+}
-+
-+static inline uint32_t
-+translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
-+{
-+    return translator_ldl_end(env, db, pc, MO_TE);
-+}
-+
-+static inline uint64_t
-+translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
-+{
-+    return translator_ldq_end(env, db, pc, MO_TE);
-+}
- 
- static inline uint16_t
- translator_lduw_swap(CPUArchState *env, DisasContextBase *db,
-                      vaddr pc, bool do_swap)
+-static void tlb_reset_dirty_range_locked(CPUTLBEntry *tlb_entry,
++static void tlb_reset_dirty_range_locked(CPUTLBEntryFull *full, CPUTLBEntry *ent,
+                                          uintptr_t start, uintptr_t length)
  {
--    uint16_t ret = translator_lduw(env, db, pc);
--    if (do_swap) {
--        ret = bswap16(ret);
--    }
--    return ret;
-+    return translator_lduw_end(env, db, pc, MO_TE ^ (do_swap * MO_BSWAP));
- }
+-    uintptr_t addr = tlb_entry->addr_write;
++    const uintptr_t addr = ent->addr_write;
  
- static inline uint32_t
- translator_ldl_swap(CPUArchState *env, DisasContextBase *db,
-                     vaddr pc, bool do_swap)
- {
--    uint32_t ret = translator_ldl(env, db, pc);
--    if (do_swap) {
--        ret = bswap32(ret);
--    }
--    return ret;
-+    return translator_ldl_end(env, db, pc, MO_TE ^ (do_swap * MO_BSWAP));
- }
- 
- static inline uint64_t
- translator_ldq_swap(CPUArchState *env, DisasContextBase *db,
-                     vaddr pc, bool do_swap)
- {
--    uint64_t ret = translator_ldq(env, db, pc);
--    if (do_swap) {
--        ret = bswap64(ret);
--    }
--    return ret;
-+    return translator_ldq_end(env, db, pc, MO_TE ^ (do_swap * MO_BSWAP));
- }
-+#endif /* COMPILING_PER_TARGET */
- 
- /**
-  * translator_fake_ld - fake instruction load
-diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
-index 4c320ab9c3..2ab081b95f 100644
---- a/accel/tcg/translator.c
-+++ b/accel/tcg/translator.c
-@@ -8,6 +8,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/bswap.h"
- #include "qemu/log.h"
- #include "qemu/error-report.h"
- #include "exec/exec-all.h"
-@@ -15,7 +16,6 @@
- #include "accel/tcg/cpu-mmu-index.h"
- #include "exec/translator.h"
- #include "exec/plugin-gen.h"
--#include "exec/tswap.h"
- #include "tcg/tcg-op-common.h"
- #include "internal-target.h"
- #include "disas/disas.h"
-@@ -468,7 +468,8 @@ uint8_t translator_ldub(CPUArchState *env, DisasContextBase *db, vaddr pc)
-     return val;
- }
- 
--uint16_t translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
-+uint16_t translator_lduw_end(CPUArchState *env, DisasContextBase *db,
-+                             vaddr pc, MemOp endian)
- {
-     uint16_t val;
- 
-@@ -477,10 +478,14 @@ uint16_t translator_lduw(CPUArchState *env, DisasContextBase *db, vaddr pc)
-         val = cpu_ldw_code_mmu(env, pc, oi, 0);
-         record_save(db, pc, &val, sizeof(val));
+     if ((addr & (TLB_INVALID_MASK | TLB_MMIO |
+                  TLB_DISCARD_WRITE | TLB_NOTDIRTY)) == 0) {
+-        addr &= TARGET_PAGE_MASK;
+-        addr += tlb_entry->addend;
+-        if ((addr - start) < length) {
+-            qatomic_set(&tlb_entry->addr_write,
+-                        tlb_entry->addr_write | TLB_NOTDIRTY);
++        uintptr_t host = (addr & TARGET_PAGE_MASK) + ent->addend;
++        if ((host - start) < length) {
++            qatomic_set(&ent->addr_write, addr | TLB_NOTDIRTY);
+         }
      }
--    return tswap16(val);
-+    if (endian & MO_BSWAP) {
-+        val = bswap16(val);
-+    }
-+    return val;
  }
+@@ -918,16 +916,18 @@ void tlb_reset_dirty(CPUState *cpu, uintptr_t start, uintptr_t length)
  
--uint32_t translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
-+uint32_t translator_ldl_end(CPUArchState *env, DisasContextBase *db,
-+                            vaddr pc, MemOp endian)
- {
-     uint32_t val;
+     qemu_spin_lock(&cpu->neg.tlb.c.lock);
+     for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
++        CPUTLBDesc *desc = &cpu->neg.tlb.d[mmu_idx];
++        CPUTLBDescFast *fast = &cpu->neg.tlb.f[mmu_idx];
++        unsigned int n = tlb_n_entries(fast);
+         unsigned int i;
+-        unsigned int n = tlb_n_entries(&cpu->neg.tlb.f[mmu_idx]);
  
-@@ -489,10 +494,14 @@ uint32_t translator_ldl(CPUArchState *env, DisasContextBase *db, vaddr pc)
-         val = cpu_ldl_code_mmu(env, pc, oi, 0);
-         record_save(db, pc, &val, sizeof(val));
+         for (i = 0; i < n; i++) {
+-            tlb_reset_dirty_range_locked(&cpu->neg.tlb.f[mmu_idx].table[i],
++            tlb_reset_dirty_range_locked(&desc->fulltlb[i], &fast->table[i],
+                                          start, length);
+         }
+ 
+         for (i = 0; i < CPU_VTLB_SIZE; i++) {
+-            tlb_reset_dirty_range_locked(&cpu->neg.tlb.d[mmu_idx].vtable[i],
++            tlb_reset_dirty_range_locked(&desc->vfulltlb[i], &desc->vtable[i],
+                                          start, length);
+         }
      }
--    return tswap32(val);
-+    if (endian & MO_BSWAP) {
-+        val = bswap32(val);
-+    }
-+    return val;
- }
- 
--uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
-+uint64_t translator_ldq_end(CPUArchState *env, DisasContextBase *db,
-+                            vaddr pc, MemOp endian)
- {
-     uint64_t val;
- 
-@@ -501,7 +510,10 @@ uint64_t translator_ldq(CPUArchState *env, DisasContextBase *db, vaddr pc)
-         val = cpu_ldq_code_mmu(env, pc, oi, 0);
-         record_save(db, pc, &val, sizeof(val));
-     }
--    return tswap64(val);
-+    if (endian & MO_BSWAP) {
-+        val = bswap64(val);
-+    }
-+    return val;
- }
- 
- void translator_fake_ld(DisasContextBase *db, const void *data, size_t len)
 -- 
 2.43.0
 
