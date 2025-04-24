@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44D0AC369D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 00:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 059B8C369CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 00:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7knn-0006ET-RB; Wed, 23 Apr 2025 20:50:56 -0400
+	id 1u7kmh-0005BB-T4; Wed, 23 Apr 2025 20:49:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kmu-0005Or-Br
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:50:04 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1u7kmd-00058F-Gw
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:49:43 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kms-0004Ml-C1
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:49:59 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-73bf1cef6ceso385227b3a.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:49:57 -0700 (PDT)
+ id 1u7kma-0004IM-9q
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:49:43 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-736a7e126c7so335560b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:49:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745455797; x=1746060597; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745455778; x=1746060578; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+VfuDyBOkc/7EHQm2vvPTUefKvEeqjpVe/tI2ANIcRc=;
- b=N/2zq7aV8tIAFvxXd5X9WwtO+3Nyz4Omu1kDQ/GGcv36AN/TSuP9Zj7jnlSYA6C2d3
- 2NXI2LgmW0zqYBkqwCb81u4zGiUKLr+ic9YXzA0WHXAYs5IAMQJzyL/pQauTk27vaVUR
- bpxbDpnt/mhJ4zOOLzzGvLIwmWfHIvwqMUygwSL3siEWQ7vSM7dN7Nz+Pr7SoqXlXoH2
- GrAHG0MLe44UKorWd1xxYC6nmraAcqNd2XdEmgGSqlUSHcqbKuXpbitv0GwSAEqr+ogS
- 7eH/E/1G7sbYU2l2zKZ9ACXc5XtHQjpIETElTm11gas7NyrLA4v3te0KGKlvHucLvGBB
- Krhg==
+ bh=Et4hQDU8RZtHQwmfM7FlJplHHpRKrDTsE1B1A29z6gQ=;
+ b=nkmCO/hjwltwx4W4bQxIyNBDzWdn+RYxGpprm6qGsAUvdG/GR5CrZ0CLvwF2Zq3ANX
+ g34ZmI5EAdbsBpBlbc7SvHJtOGcn5MEjaCpFcj/QFxGqim6R/KQDWGaURQtTC/Gfsr7y
+ iiFFcAF/Yy4nnPUK7dQu37Me1hMOOG1ociMJEGJ14UzdIfzhwoyEFu8TbXAYr+OseVcN
+ biffyl7+l2CAPqkw5+g1dNT2K8Nf0s9++iy5BjnVjO1C/97GLzDVRzzdkqdL9GCZBUzV
+ 2y+HG3AoP8WAH91pxxx766zr3P/Tla4NqT2e97hUmkOvQxrf4dLMFX+jRo0uj1ZYD/4t
+ JiTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745455797; x=1746060597;
+ d=1e100.net; s=20230601; t=1745455778; x=1746060578;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+VfuDyBOkc/7EHQm2vvPTUefKvEeqjpVe/tI2ANIcRc=;
- b=oFo5RqUqNhlx5bVFMIJTq/EJwLttqAXvYStIZetaSi3bgpvoTs5u/sC7EkFCLUigH1
- 4AMWln4YmphhjzjZwPEqzk+exkn/h7JE7Q9NSErZpSKnlJaeH5/9nY9Knsef2Iuy38AR
- l4SEj8VC6jPHdJghBvTdB6AaaiYEAFFHmI9HBEG2lbmETL6oMQrdrCc295dUNx6TzPIs
- MjEXpdVaDGZ9qq6v1kYdU9sVZJPUXwl0697nx85SK9Yabdql3etkLb7sa7zBEvQNJNJ9
- zeRWur0+vLFpxzCV8ba1QDYLZFxJ9KYMmdjLd5voxDz9w4/7GJDtRTNUpB+Makc7XFTH
- HN8Q==
-X-Gm-Message-State: AOJu0YzWVwswM8BVJhlSeev9TKxPxdQXRDARU2yV4RvJHLI+mDvCQBMR
- 86PBEpc9tINOYNNZ33HGLX1apzFV6VxGQYlpyafO5zuQ+cpGQhCfZHR2pgxR2txn+OHQdDCzDT7
+ bh=Et4hQDU8RZtHQwmfM7FlJplHHpRKrDTsE1B1A29z6gQ=;
+ b=I1qEh4m4xD9H3PDws/nmDZg7n7Gv1m97BgkO7eaX0sTX02AFp2wSL2+H5shjTedZ/Q
+ 4La8zpkBL1mItxI48lW6QQv0xIDlWRV94K7L2CQM+HfqVJ2OZ9KMD1NbQyJGvL+vHsFg
+ sxKboLPMc1aT94RO9dlUwbhH5QTd4hPMUTfJN6EzX9WNU/Fa8hi0eEkAoWwZjJi6GwdG
+ H9ayxma+JHlF2byTBn8ADV4Q9Jo3EE0E0RxWKSF3fUj7Y7XXBFe/7HqYZkpMF49ivoCG
+ gkRn0synHdUZTrryAnC8r8D/zTIGNfW7UXfnf8ICMvkyIJ0+sKx9Rut2mlQj01+Ef+nP
+ m12w==
+X-Gm-Message-State: AOJu0YxnrHf1Ezo4OphRZjgup7RwxUorNZhrgKZZ66kHwl3FroJ6zp3E
+ zLPkOOc1CUAVsThF8ix2FU0RIkpgKRPR68MrNHrqoPVmsUJnK0RsFAP7cMPNfK9ksVJO95Ze5+b
  z
-X-Gm-Gg: ASbGncty/iHYrWS8RGq3qcTBcdoXlO+B74AcLpsd4anVnxCtU1QYyc4yNlQma+7F0n8
- 8Il5yh7OjVOyfozWVPZCV4HpWt4IvE6Yxv+flSMlJNNA4bYK5vTO89P8LCHMhHVpkuq0zy8U9DU
- gTWVfeq81aF4TcdtaeUpdWB/qbR/uRbISXf+3b4rs9S+kClcseWICtacqG4H9qOzf6r/zb5mWor
- GoUJgp4JZyNLEwPV3Ipd0ho/54fDouFe59cy3D2oZ+87mkwSdBg58jD2SPrzEE0/UMziqU1fsjU
- 1ywIKZFYeVjeYFxLg+mAmtjvrfNEHkIZ9/lQG4n07XdO8y0zsB+6QtaN24vW9qWPAcy8EJlJpTg
+X-Gm-Gg: ASbGncvngB6AiIrb3sAGHizYscNI15NChWEQn6TYrbLL6GmEbMRBFZ7Jgwj+Vd05Uc2
+ upxCGeMuNmAU6g8h+c4PBWOm/aEzzGIYuo9I9iplnCtAtwr1XUECt6k7D8oHFuobb69iv7hwG3Y
+ MbGZjLpvzSAPOkfxq9xiGvrVmOFVkTz0iPsdbC4fMdjys8/wG+ZiaqYqladGe0jlksFwMf1JClD
+ KQdsMyXGbRJdAL/gmAF93SkUA/iSKzym4FtWEdsmR/kM4mRXY0+P19BM5rnrLA1BFkT6NQEu/FZ
+ mk+YV8dHFK1WoWj2JaP0//RPUiFaSHGFPuJQdj0o7xdhvb/xpYls5qBxprOyIk9aa9XgjjsefPY
  =
-X-Google-Smtp-Source: AGHT+IFzGLThPCFqSWJTWRXuJQK+YZabpOe8R3W+fzUkfgIU1g0euhiAQErsyQCgF+iZJeIuP81zCQ==
-X-Received: by 2002:a05:6a20:394d:b0:1f5:8f65:a6f5 with SMTP id
- adf61e73a8af0-20444f22e85mr860203637.30.1745455796800; 
- Wed, 23 Apr 2025 17:49:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHuqMjok47LKjI6hsF61nNqiVAeOpZRdZoTJ3Tet/WEPA2NkZRALEfDA08fqRRe4nyX3R92Dw==
+X-Received: by 2002:a05:6a00:4485:b0:736:ab1e:b1ab with SMTP id
+ d2e1a72fcca58-73e23ca5b8dmr1031887b3a.0.1745455778619; 
+ Wed, 23 Apr 2025 17:49:38 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25a9a0f1sm207344b3a.137.2025.04.23.17.49.56
+ d2e1a72fcca58-73e25a9a0f1sm207344b3a.137.2025.04.23.17.49.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 17:49:56 -0700 (PDT)
+ Wed, 23 Apr 2025 17:49:38 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 028/148] include/exec: Inline *_code memory operations
-Date: Wed, 23 Apr 2025 17:47:33 -0700
-Message-ID: <20250424004934.598783-29-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 005/148] exec/memory.h: make devend_memop "target defines"
+ agnostic
+Date: Wed, 23 Apr 2025 17:47:10 -0700
+Message-ID: <20250424004934.598783-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
 References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,150 +103,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These need to be per-target for 'abi_ptr' and endianness.
-These expand inline to the *_mmu api with a lookup of the
-target's cpu_mmu_index() and ra == 0.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Will allow to make system/memory.c common later.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250317183417.285700-6-pierrick.bouvier@linaro.org>
 ---
- include/exec/cpu_ldst.h | 31 +++++++++++++++++++++++++++----
- accel/tcg/cputlb.c      | 28 ----------------------------
- accel/tcg/user-exec.c   | 40 ----------------------------------------
- 3 files changed, 27 insertions(+), 72 deletions(-)
+ include/exec/memory.h | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
-index 0054508eda..77dc5ac61c 100644
---- a/include/exec/cpu_ldst.h
-+++ b/include/exec/cpu_ldst.h
-@@ -473,10 +473,33 @@ cpu_stq_le_data(CPUArchState *env, abi_ptr addr, uint64_t val)
- # define cpu_stq_mmuidx_ra    cpu_stq_le_mmuidx_ra
- #endif
+diff --git a/include/exec/memory.h b/include/exec/memory.h
+index cc5915033c..577f473446 100644
+--- a/include/exec/memory.h
++++ b/include/exec/memory.h
+@@ -3138,25 +3138,17 @@ address_space_write_cached(MemoryRegionCache *cache, hwaddr addr,
+ MemTxResult address_space_set(AddressSpace *as, hwaddr addr,
+                               uint8_t c, hwaddr len, MemTxAttrs attrs);
  
--uint32_t cpu_ldub_code(CPUArchState *env, abi_ptr addr);
--uint32_t cpu_lduw_code(CPUArchState *env, abi_ptr addr);
--uint32_t cpu_ldl_code(CPUArchState *env, abi_ptr addr);
--uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr addr);
-+static inline uint32_t cpu_ldub_code(CPUArchState *env, abi_ptr addr)
-+{
-+    CPUState *cs = env_cpu(env);
-+    MemOpIdx oi = make_memop_idx(MO_UB, cpu_mmu_index(cs, true));
-+    return cpu_ldb_code_mmu(env, addr, oi, 0);
-+}
-+
-+static inline uint32_t cpu_lduw_code(CPUArchState *env, abi_ptr addr)
-+{
-+    CPUState *cs = env_cpu(env);
-+    MemOpIdx oi = make_memop_idx(MO_TEUW, cpu_mmu_index(cs, true));
-+    return cpu_ldw_code_mmu(env, addr, oi, 0);
-+}
-+
-+static inline uint32_t cpu_ldl_code(CPUArchState *env, abi_ptr addr)
-+{
-+    CPUState *cs = env_cpu(env);
-+    MemOpIdx oi = make_memop_idx(MO_TEUL, cpu_mmu_index(cs, true));
-+    return cpu_ldl_code_mmu(env, addr, oi, 0);
-+}
-+
-+static inline uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr addr)
-+{
-+    CPUState *cs = env_cpu(env);
-+    MemOpIdx oi = make_memop_idx(MO_TEUQ, cpu_mmu_index(cs, true));
-+    return cpu_ldq_code_mmu(env, addr, oi, 0);
-+}
- 
- /**
-  * tlb_vaddr_to_host:
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index b03998f926..2817c9dbdd 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -2897,34 +2897,6 @@ static void do_st16_mmu(CPUState *cpu, vaddr addr, Int128 val,
- 
- /* Code access functions.  */
- 
--uint32_t cpu_ldub_code(CPUArchState *env, abi_ptr addr)
--{
--    CPUState *cs = env_cpu(env);
--    MemOpIdx oi = make_memop_idx(MO_UB, cpu_mmu_index(cs, true));
--    return do_ld1_mmu(cs, addr, oi, 0, MMU_INST_FETCH);
--}
--
--uint32_t cpu_lduw_code(CPUArchState *env, abi_ptr addr)
--{
--    CPUState *cs = env_cpu(env);
--    MemOpIdx oi = make_memop_idx(MO_TEUW, cpu_mmu_index(cs, true));
--    return do_ld2_mmu(cs, addr, oi, 0, MMU_INST_FETCH);
--}
--
--uint32_t cpu_ldl_code(CPUArchState *env, abi_ptr addr)
--{
--    CPUState *cs = env_cpu(env);
--    MemOpIdx oi = make_memop_idx(MO_TEUL, cpu_mmu_index(cs, true));
--    return do_ld4_mmu(cs, addr, oi, 0, MMU_INST_FETCH);
--}
--
--uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr addr)
--{
--    CPUState *cs = env_cpu(env);
--    MemOpIdx oi = make_memop_idx(MO_TEUQ, cpu_mmu_index(cs, true));
--    return do_ld8_mmu(cs, addr, oi, 0, MMU_INST_FETCH);
--}
--
- uint8_t cpu_ldb_code_mmu(CPUArchState *env, vaddr addr,
-                          MemOpIdx oi, uintptr_t retaddr)
+-#ifdef COMPILING_PER_TARGET
+ /* enum device_endian to MemOp.  */
+ static inline MemOp devend_memop(enum device_endian end)
  {
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index dec17435c5..ebc7c3ecf5 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -1214,46 +1214,6 @@ static void do_st16_mmu(CPUState *cpu, vaddr addr, Int128 val,
-     clear_helper_retaddr();
+     QEMU_BUILD_BUG_ON(DEVICE_HOST_ENDIAN != DEVICE_LITTLE_ENDIAN &&
+                       DEVICE_HOST_ENDIAN != DEVICE_BIG_ENDIAN);
+ 
+-#if HOST_BIG_ENDIAN != TARGET_BIG_ENDIAN
+-    /* Swap if non-host endianness or native (target) endianness */
+-    return (end == DEVICE_HOST_ENDIAN) ? 0 : MO_BSWAP;
+-#else
+-    const int non_host_endianness =
+-        DEVICE_LITTLE_ENDIAN ^ DEVICE_BIG_ENDIAN ^ DEVICE_HOST_ENDIAN;
+-
+-    /* In this case, native (target) endianness needs no swap.  */
+-    return (end == non_host_endianness) ? MO_BSWAP : 0;
+-#endif
++    bool big_endian = (end == DEVICE_NATIVE_ENDIAN
++                       ? target_words_bigendian()
++                       : end == DEVICE_BIG_ENDIAN);
++    return big_endian ? MO_BE : MO_LE;
  }
+-#endif /* COMPILING_PER_TARGET */
  
--uint32_t cpu_ldub_code(CPUArchState *env, abi_ptr ptr)
--{
--    uint32_t ret;
--
--    set_helper_retaddr(1);
--    ret = ldub_p(g2h_untagged(ptr));
--    clear_helper_retaddr();
--    return ret;
--}
--
--uint32_t cpu_lduw_code(CPUArchState *env, abi_ptr ptr)
--{
--    uint32_t ret;
--
--    set_helper_retaddr(1);
--    ret = lduw_p(g2h_untagged(ptr));
--    clear_helper_retaddr();
--    return ret;
--}
--
--uint32_t cpu_ldl_code(CPUArchState *env, abi_ptr ptr)
--{
--    uint32_t ret;
--
--    set_helper_retaddr(1);
--    ret = ldl_p(g2h_untagged(ptr));
--    clear_helper_retaddr();
--    return ret;
--}
--
--uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr ptr)
--{
--    uint64_t ret;
--
--    set_helper_retaddr(1);
--    ret = ldq_p(g2h_untagged(ptr));
--    clear_helper_retaddr();
--    return ret;
--}
--
- uint8_t cpu_ldb_code_mmu(CPUArchState *env, vaddr addr,
-                          MemOpIdx oi, uintptr_t ra)
- {
+ /*
+  * Inhibit technologies that require discarding of pages in RAM blocks, e.g.,
 -- 
 2.43.0
 
