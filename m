@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62359C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 20:25:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE0CBC369D5
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 20:25:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u837l-0008Ey-OR; Thu, 24 Apr 2025 16:24:45 -0400
+	id 1u838D-0000LA-FO; Thu, 24 Apr 2025 16:25:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u837X-0008DE-W5
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:24:33 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8386-0008V0-Gx
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:25:06 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u837W-0004za-Co
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:24:31 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43cf05f0c3eso10637915e9.0
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 13:24:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8384-00052C-Cs
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:25:06 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43d04dc73b7so13304675e9.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 13:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745526268; x=1746131068; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745526302; x=1746131102; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ddcO3MH/wvfN8le+HNpO9SiipEJHLq56ZFRiij0VC60=;
- b=lAOvFslaf00f9nFc0JlWmm/ZQZ0+gYXD0tnWD4T0FX9fLfQv/XsF/ZxE4E/Dyysrsr
- rmuGf/QFDMPyfRcFBMmCrGVeATJiAMB0TarEfp1IquzhU4fnUhqIdaB/BPvZolQtVgPS
- qu5txQJCc6zethSDaaM4A9mfNPcXa7KVD+AFQ4/qrm6tGOgzyMZpDVL/VDTB64DeVSYt
- XEHS39y4LqadM6QcIz107QIL+24MbUKrKF5fU94N9MDhCMVMvtrdtaCFS2ZhWw29BYpq
- mAuyFsbJ02szYFbZyr3+x9x8nhSEff0Fh491+6XtkTWl6l2V2qbtfScl8H7QdZRuzA1n
- Gn3w==
+ bh=3ZaZUiVtvhip+YjUPzbukhiUty3aZRnPrZlaJVYneow=;
+ b=l+AdB8HclIJLhxMv4eS5VDnF3VoSN689AljGoi6MUnHhtG5kaNcHX0UdCBK3HjPoqv
+ EGIATutv6sJNSy5sH6Wl7zSTsF0E91eu5hkXf/RRQCOYbJWA71v0c3hCyqZE//dAbRAc
+ HunPzEzQK6THvyZeWRatVcXwApRr6m0gdaQ1t63ldgj9o0bVjLfVaQQqYxKJqeQt+gaT
+ CXaycBWQVyhAZpDLnYBIYLmQm+mbeJ5QCcSbce/ZIH7kxcI2GmIv9cdpCQzJpxCI2+CV
+ lYvNYaMxy+Y6RH12oR+6qose6rnLkH3ZOfyua6MhrqdkyO/XWP3gX80gZS5BfLLlwlOA
+ iZIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745526268; x=1746131068;
+ d=1e100.net; s=20230601; t=1745526302; x=1746131102;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ddcO3MH/wvfN8le+HNpO9SiipEJHLq56ZFRiij0VC60=;
- b=Ta38ZTz4R0Q2txdGZJc9DGdN+eDPvt3Dg+UVUsaO/Bho5DjSJJBJ5g34z5gZf7IIK8
- ZgsxyU5BggN+76NetEFk5WZCvvJ1Iwt+4f7aO5fY/Puv19Y1EEJSJunYlpB2GnAvcCJJ
- FQqCZ7eA89JZPlmWG0JVBi09sCC4WSUinxsyfzDmTgS1Xd4vuHMnmHa9L1CkBIf7VOvj
- nYPFLn1qoY5lMfYP2gClp2sGXpO8IB8ABqSMCtnYSPGoSYUE4+j7c7i9niLSbPeD9uto
- 52kFFRjeiZW9VRIelhAdwSE6muBbOHfQD9oKWnBRLez1uLzndt5CzdjeA+FfI0/o6EDC
- XfLA==
+ bh=3ZaZUiVtvhip+YjUPzbukhiUty3aZRnPrZlaJVYneow=;
+ b=UKhVG4ktq7lRMRGHjSJGVXa8z648Hf3BXPWW2TlCa4q7lgtGejbr9gOXeKNWAfwsWy
+ 1Kkq7hjXfHay8ypOGiEu+o3BTv5oPxBMkHVBIG/IzGFDSHzJtIwzAoFNbblQs29z2M0N
+ KrrTljMlTafPXI8K4FgJT0hMdR4hN9e/UdwqRPkORmXjB6f8CWAcA6jrcGbT1H2P0bGn
+ xNaBLAudpNE/GD4S3NGn34OIf4HxJVRyrJhUMX2XalqdGrONP+5DDs4P+IhqPkBlZtlD
+ ZY/gqmgR0DmHvadtlRxZFIIBA3wfygi3zUL7PhWPNFVxacOoQqq+bX8ZpWpcBY2ecfHa
+ bDrQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWnFnD5TYdRQq5LE3MXv1rpCTKe1W4f8f0+bv4musnIqWgIrjQrWGDEWiIt5iADP6bk2t/64su8BH2H@nongnu.org
-X-Gm-Message-State: AOJu0YwXA5WzX1a5TPThrbZ1JL9YSyBB+CdU1xrzWt0uJ9dcBopzXO6w
- TkGhBt6HfTiMrHcmx4YWGDOyc2GRYN7GU5pDkygStz2IuuQc67W0yZ5jSfRhKL9yMOjJcBJrHZB
- x
-X-Gm-Gg: ASbGncuK/CqsZvPx4AdQXlf7HW61fUMhBt3QCH21fDAUT6xIZR2IwReJhxn3O79QDSr
- QTG9+1cKYaNJlbOa6aN2fOEU/HAInWHQr02PxSDvVCREeIthDxKK2WhOooWv9glqWY1LB80ppWn
- NDgY2SrM4zJ5iUy+vEQanO+V5z2esc9nTSCJHixsD8gP9BEUPD3QVtZTt8PSxsjGW+uAfsdg47F
- vKrrndUs7WkcYidi2LvU8JCloYyP33Y4LB2w931o4/9XzgQMsV4yGtmsEDX6pkHZviqXaPG0+mp
- 2YzRqW7WrxTF+3sDI6VrOlR203elakR4beDvljps1eBzxZfYDU8LnvoZxeFJJ/65HmwDoiIR3zd
- X69WLZO64D5bPXYNJjGVfszZcBA==
-X-Google-Smtp-Source: AGHT+IFnGxfr/sr4kkMJfRBriFTUG64cuc12dSB7Iz5BQGnZ/6vb3aIvFhYPNj4Zyhozk5U2/eWg0Q==
-X-Received: by 2002:a05:600c:8710:b0:43e:afca:808f with SMTP id
- 5b1f17b1804b1-440a31a409bmr9219915e9.31.1745526268450; 
- Thu, 24 Apr 2025 13:24:28 -0700 (PDT)
+ AJvYcCUfzkNSmZ2c1SNyLSs1ro6S/8oC/TxweadfKwvYLaGJcxERD1uZtUvomc5Z/hoLDss5O5m31jexiZqA@nongnu.org
+X-Gm-Message-State: AOJu0Yz9WAG4u+FRkUSfAdscaoj6/CgVGpT/S1mnMtPaDk4SgiMDf54G
+ vh9RE7PJwF5OsPMADSiDPPBhtsTaPUZ2fj1uoQdVbh+LHE7dZzN/My8RaRk7BDU=
+X-Gm-Gg: ASbGncucNY2sd/mKfb/zoeGEF+WMS5KU9bt6hAToOi/+gwTYSZrFg0hvHW+87DnEX1C
+ OdZ02zv8AjU0t74b0Fmf3pVZYucBnVmfrp0p63pAWjJOtBDTKYHJkHE+42jG2uIBoTOfexUjcif
+ Zssz8mh3Py4Z+4urZwzL7HunBsfIEz+UIwDoBgUKk8iXyIZhozPeAzJKE7vTAG4xgStYwmkh13/
+ CeX2vaE9byNc80uY67fNAvWS9PFutXlvevdyEWDc2CxgbpLgNtdAaCm/J7SwCtCE8h8KubZAjDO
+ At6lhCu7/gJK/EJSNdOTeVcBtBdcWGf8pXddmgrhnA23b1OgR13ZLlW8THBkSnBVtDozK42GEcY
+ R/GcNhjWVc1w0Dso=
+X-Google-Smtp-Source: AGHT+IGtXw0XNrjlq7CWdnIXxs1DRrxI/a7YfhBBL17hb7NGrgIn0LtM9TXpOzmNpa7pBkWIcIG25A==
+X-Received: by 2002:a05:600c:510e:b0:43c:fee3:2bce with SMTP id
+ 5b1f17b1804b1-440a3173a9fmr5815295e9.26.1745526302531; 
+ Thu, 24 Apr 2025 13:25:02 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4409d2ac26dsm32728515e9.21.2025.04.24.13.24.27
+ 5b1f17b1804b1-440a538f691sm622195e9.37.2025.04.24.13.25.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 24 Apr 2025 13:24:27 -0700 (PDT)
+ Thu, 24 Apr 2025 13:25:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>,
 	qemu-devel@nongnu.org
@@ -72,18 +71,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: [PATCH v3 03/13] accel/tcg: Correct list of included headers in
- tcg-stub.c
-Date: Thu, 24 Apr 2025 22:24:02 +0200
-Message-ID: <20250424202412.91612-4-philmd@linaro.org>
+Subject: [PATCH v3 10/13] physmem: Move TCG IOTLB methods around
+Date: Thu, 24 Apr 2025 22:24:09 +0200
+Message-ID: <20250424202412.91612-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250424202412.91612-1-philmd@linaro.org>
 References: <20250424202412.91612-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,36 +104,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In commit 3549118b498 we moved cpu_loop_exit*() declarations to
-"exec/cpu-common.h" but neglected to update tcg-stub.c. We missed
-it because "exec/cpu-common.h" is indirectly pulled in via
-"exec/exec-all.h" -> "exec/translation-block.h". Include it
-directly instead of the not necessary "exec/exec-all.h".
+The next commit will restrict TCG specific code in physmem.c
+using some #ifdef'ry. In order to keep it simple, move
+iotlb_to_section() and memory_region_section_get_iotlb()
+around close together.
 
-Commit bb6cf6f0168 ("accel/tcg: Factor tcg_cpu_reset_hold() out")
-removed the need for "exec/tb-flush.h", so remote it too.
-
-Fixes: 3549118b498 ("exec: Move cpu_loop_foo() functions to 'cpu-common.h'")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- accel/stubs/tcg-stub.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ system/physmem.c | 50 ++++++++++++++++++++++++------------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/accel/stubs/tcg-stub.c b/accel/stubs/tcg-stub.c
-index b2b9881bdfb..3b76b8b17c1 100644
---- a/accel/stubs/tcg-stub.c
-+++ b/accel/stubs/tcg-stub.c
-@@ -11,8 +11,7 @@
-  */
+diff --git a/system/physmem.c b/system/physmem.c
+index 637f2d85324..ccbeae241c4 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -746,6 +746,31 @@ translate_fail:
+     return &d->map.sections[PHYS_SECTION_UNASSIGNED];
+ }
  
- #include "qemu/osdep.h"
--#include "exec/tb-flush.h"
--#include "exec/exec-all.h"
-+#include "exec/cpu-common.h"
- 
- G_NORETURN void cpu_loop_exit(CPUState *cpu)
++MemoryRegionSection *iotlb_to_section(CPUState *cpu,
++                                      hwaddr index, MemTxAttrs attrs)
++{
++    int asidx = cpu_asidx_from_attrs(cpu, attrs);
++    CPUAddressSpace *cpuas = &cpu->cpu_ases[asidx];
++    AddressSpaceDispatch *d = cpuas->memory_dispatch;
++    int section_index = index & ~TARGET_PAGE_MASK;
++    MemoryRegionSection *ret;
++
++    assert(section_index < d->map.sections_nb);
++    ret = d->map.sections + section_index;
++    assert(ret->mr);
++    assert(ret->mr->ops);
++
++    return ret;
++}
++
++/* Called from RCU critical section */
++hwaddr memory_region_section_get_iotlb(CPUState *cpu,
++                                       MemoryRegionSection *section)
++{
++    AddressSpaceDispatch *d = flatview_to_dispatch(section->fv);
++    return section - d->map.sections;
++}
++
+ void cpu_address_space_init(CPUState *cpu, int asidx,
+                             const char *prefix, MemoryRegion *mr)
  {
+@@ -1002,14 +1027,6 @@ bool cpu_physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
+     return false;
+ }
+ 
+-/* Called from RCU critical section */
+-hwaddr memory_region_section_get_iotlb(CPUState *cpu,
+-                                       MemoryRegionSection *section)
+-{
+-    AddressSpaceDispatch *d = flatview_to_dispatch(section->fv);
+-    return section - d->map.sections;
+-}
+-
+ static int subpage_register(subpage_t *mmio, uint32_t start, uint32_t end,
+                             uint16_t section);
+ static subpage_t *subpage_init(FlatView *fv, hwaddr base);
+@@ -2669,23 +2686,6 @@ static uint16_t dummy_section(PhysPageMap *map, FlatView *fv, MemoryRegion *mr)
+     return phys_section_add(map, &section);
+ }
+ 
+-MemoryRegionSection *iotlb_to_section(CPUState *cpu,
+-                                      hwaddr index, MemTxAttrs attrs)
+-{
+-    int asidx = cpu_asidx_from_attrs(cpu, attrs);
+-    CPUAddressSpace *cpuas = &cpu->cpu_ases[asidx];
+-    AddressSpaceDispatch *d = cpuas->memory_dispatch;
+-    int section_index = index & ~TARGET_PAGE_MASK;
+-    MemoryRegionSection *ret;
+-
+-    assert(section_index < d->map.sections_nb);
+-    ret = d->map.sections + section_index;
+-    assert(ret->mr);
+-    assert(ret->mr->ops);
+-
+-    return ret;
+-}
+-
+ static void io_mem_init(void)
+ {
+     memory_region_init_io(&io_mem_unassigned, NULL, &unassigned_mem_ops, NULL,
 -- 
 2.47.1
 
