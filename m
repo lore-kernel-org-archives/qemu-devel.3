@@ -4,111 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB228C369D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 11:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AC30C369D1
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 11:11:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7uT9-0001Wt-8p; Thu, 24 Apr 2025 07:10:16 -0400
+	id 1u7uTf-0001dN-0P; Thu, 24 Apr 2025 07:10:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1u7uT6-0001WB-ID
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 07:10:12 -0400
-Received: from fhigh-a4-smtp.messagingengine.com ([103.168.172.155])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1u7uTd-0001d7-QG
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 07:10:45 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1u7uT3-00030z-ML
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 07:10:12 -0400
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal
- [10.202.2.46])
- by mailfhigh.phl.internal (Postfix) with ESMTP id 8737411402CC;
- Thu, 24 Apr 2025 07:10:06 -0400 (EDT)
-Received: from phl-imap-12 ([10.202.2.86])
- by phl-compute-06.internal (MEProxy); Thu, 24 Apr 2025 07:10:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1745493006;
- x=1745579406; bh=g5rDVS+7jyN1e95FDisPewqAYrozrdACMW3cvM4+IwI=; b=
- OAWrR1yafQ3Gq463KbOVaNoO1yIV5+9ySEZIM0DwNWX0GxRd98c+HfpzhJKxv9pk
- St4Zia0xCtEGqKGkGlEzf9D26+4zRCG61/PB3GOPv9/DZdmMwiNoakocirjDM8Q4
- ui1ivjJ6OG6lsvXzgJ4qTsFhyNca4XNIkPBkjRQ4PFmXLYQeU0QM17kZg+dIYTcL
- /+Fw7pyZ//B8ecgibktgrABTIWcMlInaoEkABaiAkZxZljjn1r884VigEIMO5A5/
- V6sc6L/wSdimv4FtXKu60oXAyCM0Y5ibGU98SA5Ngn841icwmSEbDZgCYNIiss7Z
- Sfh04ISFktE0LnmIet86zg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745493006; x=
- 1745579406; bh=g5rDVS+7jyN1e95FDisPewqAYrozrdACMW3cvM4+IwI=; b=W
- xPf1/U2nbC0llruwFnpcufz3vzi+Xae/mbLYdLZV3I55QNLh/BmCjxnMIx1OQnQx
- nPp837duPAUJ4WKCFPjvp5VCGjqd5wYE7BWE0oMTs+Rk/rmK0u8IveplmiZCCRuH
- t6MBsiIy93slshkuJRNukGORfrDWw97IV740pFb3XO0UiFRMU/ZU/JDAz9Hp8F0i
- rjKbehBsPtRcBShbnU3ffaI1uiIBwY+6jelIZx4Syy9E44sf8glDg3OVYaOZpoKQ
- yEkfzVYz2pPHwokng3R8yZmqbpk2Tuv6Ym7m/jUxIHiBkcv+pM746UTx1mr7Lx82
- kG0RK/agRMao6TMcR1spA==
-X-ME-Sender: <xms:DRwKaAjaIFfN8ki6eM8b7920rmEg2odDUJfm1kWKHEydnQjslj5lOw>
- <xme:DRwKaJAhNtSy2Jq0K0llP4fI1SnrYzSryd51fX9LbVfPCl2DcljJHLTBNlh3OSxqg
- gYSDaGa3_g4_ZRug8c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeelfeduucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
- pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
- gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertder
- tdejnecuhfhrohhmpedflfhirgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghngh
- esfhhlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepjeehfeduvddtgffgvdff
- keethefhlefgvdevvdekuefffeekheehgeevhfevteejnecuvehluhhsthgvrhfuihiivg
- eptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihg
- ohgrthdrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtg
- hpthhtohepqhgvmhhusehhvghvrdgttgdprhgtphhtthhopehphhhilhhmugeslhhinhgr
- rhhordhorhhgpdhrtghpthhtoheprhhitghhrghrugdrhhgvnhguvghrshhonheslhhinh
- grrhhordhorhhgpdhrtghpthhtohepghgrohhsohhngheslhhoohhnghhsohhnrdgtnhdp
- rhgtphhtthhopehmrghosghisghosehlohhonhhgshhonhdrtghnpdhrtghpthhtohepfi
- grnhhgrhhuiheslhhoohhnghhsohhnrdgtnhdprhgtphhtthhopehqvghmuhdquggvvhgv
- lhesnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:DRwKaIECVMXh7s_gfCgkt3u4gC46UxoFnbowNm5g7B45rKG84_6--g>
- <xmx:DRwKaBRj1PB0N98qPiGcs-0nbxi0j-3COGdMr5GXwgQfiW2K0Z-u7A>
- <xmx:DRwKaNzrJUbUaCPQoM8fq9-fgQVYmN6ZgidnICzQON6NYZJY3B0tFA>
- <xmx:DRwKaP6ww6cGQAXnlQHiaHxJvgR6SJbTUbiglIGlCOc1uGybaoVn_w>
- <xmx:DhwKaFR0wBbp5NFCo9TZzVOxizJQIP5kO9_Y1Ci0-J9frs7Fdyh6uR5_>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id B45341C20067; Thu, 24 Apr 2025 07:10:05 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1u7uTb-000332-Cy
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 07:10:45 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZjtSW3nd1z6K9hq;
+ Thu, 24 Apr 2025 19:06:03 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 29B151402EF;
+ Thu, 24 Apr 2025 19:10:40 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 24 Apr
+ 2025 13:10:39 +0200
+Date: Thu, 24 Apr 2025 12:10:38 +0100
+To: <anisa.su887@gmail.com>
+CC: <qemu-devel@nongnu.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
+ <linux-cxl@vger.kernel.org>, Anisa Su <anisa.su@samsung.com>
+Subject: Re: [PATCH 7/9] cxl-mailbox-utils: 0x5603 - FMAPI Get DC Region
+ Extent Lists
+Message-ID: <20250424121038.0000379d@huawei.com>
+In-Reply-To: <20250317164204.2299371-8-anisa.su887@gmail.com>
+References: <20250317164204.2299371-1-anisa.su887@gmail.com>
+ <20250317164204.2299371-8-anisa.su887@gmail.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-X-ThreadId: T892dc7da7e43a30d
-Date: Thu, 24 Apr 2025 12:09:45 +0100
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: "WANG Rui" <wangrui@loongson.cn>, "Bibo Mao" <maobibo@loongson.cn>
-Cc: gaosong <gaosong@loongson.cn>, "QEMU devel" <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, qemu@hev.cc,
- "Richard Henderson" <richard.henderson@linaro.org>
-Message-Id: <30b01dca-b24f-4317-9c86-985bf0d4d569@app.fastmail.com>
-In-Reply-To: <CAHirt9g8JcGhycVcw7-u6iaNPFonZhHY1kQGK+R7G2icFPQabA@mail.gmail.com>
-References: <20250418082103.447780-1-wangrui@loongson.cn>
- <20250418082103.447780-4-wangrui@loongson.cn>
- <56cfe883-2de5-43f6-67db-a05d88a010e9@loongson.cn>
- <a395f6aa-c623-ba7d-2952-5b7249144ba8@loongson.cn>
- <CAHirt9gZEoTi4dnf69Pe0ZWAxFfn3La0=tcGESoATn1WaF4etg@mail.gmail.com>
- <446f7813-4d26-91c7-0baa-098b5c5eb2b0@loongson.cn>
- <CAHirt9jbrmTWgRHBYZAN2t_tzF9CJ86Z_=9XxPpkQYbj7WTqzw@mail.gmail.com>
- <806baf17-7d22-0d5e-f4a4-22f5ecd36ac0@loongson.cn>
- <CAHirt9g8JcGhycVcw7-u6iaNPFonZhHY1kQGK+R7G2icFPQabA@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] target/loongarch: Guard 64-bit-only insn
- translation with TRANS64 macro
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=103.168.172.155;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-a4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,56 +68,150 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 17 Mar 2025 16:31:34 +0000
+anisa.su887@gmail.com wrote:
+
+> From: Anisa Su <anisa.su@samsung.com>
+> 
+> FM DCD Management command 0x5603 implemented per CXL r3.2 Spec Section 7.6.7.6.4
+> Very similar to previously implemented command 0x4801.
+> 
+> Signed-off-by: Anisa Su <anisa.su@samsung.com>
+> ---
+>  hw/cxl/cxl-mailbox-utils.c | 84 ++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 84 insertions(+)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 51ead2b152..77cf0fdb15 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -126,6 +126,7 @@ enum {
+>          #define GET_DCD_INFO 0x0
+>          #define GET_HOST_DC_REGION_CONFIG 0x1
+>          #define SET_DC_REGION_CONFIG 0x2
+> +        #define GET_DC_REGION_EXTENT_LIST 0x3
+>  };
+>  
+>  /* CCI Message Format CXL r3.1 Figure 7-19 */
+> @@ -3587,6 +3588,87 @@ static CXLRetCode cmd_fm_set_dc_region_config(const struct cxl_cmd *cmd,
+>      return CXL_MBOX_SUCCESS;
+>  }
+>  
+> +/*
+> + * CXL r3.2 section 7.6.7.6.4 Get DC Region Extent Lists (Opcode 5603h)
+
+Single line comment fine here.
+
+> + */
+> +static CXLRetCode cmd_fm_get_dc_region_extent_list(const struct cxl_cmd *cmd,
+> +                                                   uint8_t *payload_in,
+> +                                                   size_t len_in,
+> +                                                   uint8_t *payload_out,
+> +                                                   size_t *len_out,
+> +                                                   CXLCCI *cci)
+> +{
+> +    struct {
+> +        uint16_t host_id;
+> +        uint8_t rsvd[2];
+> +        uint32_t extent_cnt;
+> +        uint32_t start_extent_id;
+> +    } QEMU_PACKED *in = (void *)payload_in;
+> +    struct {
+> +        uint16_t host_id;
+> +        uint8_t rsvd[2];
+> +        uint32_t start_extent_id;
+> +        uint32_t extents_returned;
+> +        uint32_t total_extents;
+> +        uint32_t list_generation_num;
+> +        uint8_t rsvd2[4];
+> +        CXLDCExtentRaw records[];
+> +    } QEMU_PACKED *out = (void *)payload_out;
+> +    QEMU_BUILD_BUG_ON(sizeof(*in) != 0xc);
+> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> +    CXLDCExtent *ent;
+> +    CXLDCExtentRaw *out_rec;
+> +    uint16_t record_count = 0, record_done = 0, i = 0;
+> +    uint16_t out_pl_len, max_size;
+> +
+> +    if (ct3d->dc.num_regions == 0) {
+
+As in previous.
+
+> +        return CXL_MBOX_UNSUPPORTED;
+> +    }
+> +
+> +    if (in->host_id != 0) {
+> +        return CXL_MBOX_INVALID_INPUT;
+> +    }
+> +
+> +    if (in->start_extent_id > ct3d->dc.total_extent_count) {
+> +        return CXL_MBOX_INVALID_INPUT;
+> +    }
+> +
+> +    record_count = MIN(in->extent_cnt,
+> +                       ct3d->dc.total_extent_count - in->start_extent_id);
+> +    max_size = CXL_MAILBOX_MAX_PAYLOAD_SIZE - sizeof(*out);
+> +    record_count = MIN(record_count, max_size / sizeof(out->records[0]));
+> +    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
+> +
+> +    stw_le_p(&out->host_id, in->host_id);
+> +    stl_le_p(&out->start_extent_id, in->start_extent_id);
+> +    stl_le_p(&out->extents_returned, record_count);
+> +    stl_le_p(&out->total_extents, ct3d->dc.total_extent_count);
+> +    stl_le_p(&out->list_generation_num, ct3d->dc.ext_list_gen_seq);
+> +
+> +    if (record_count > 0) {
+> +        out_rec = &out->records[record_done];
+
+Given this isn't in the loop, record_done is always 0, so maybe just
+use that here?
+Or maybe drag that into the loop and...
+
+> +
+> +        QTAILQ_FOREACH(ent, &ct3d->dc.extents, node) {
+> +            if (i++ < in->start_extent_id) {
+> +                continue;
+> +            }
+> +            stq_le_p(&out_rec->start_dpa, ent->start_dpa);
+> +            stq_le_p(&out_rec->len, ent->len);
+> +            memcpy(&out_rec->tag, ent->tag, 0x10);
+> +            stw_le_p(&out_rec->shared_seq, ent->shared_seq);
+> +
+> +            record_done++;
+> +            out_rec++;
+
+Then no need to increment out_rec here.
+
+> +            if (record_done == record_count) {
+> +                break;
+> +            }
+> +        }
+> +    }
+> +
+> +    *len_out = out_pl_len;
+> +    return CXL_MBOX_SUCCESS;
+> +}
+> +
+>  static const struct cxl_cmd cxl_cmd_set[256][256] = {
+>      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
+>          cmd_infostat_bg_op_abort, 0, 0 },
+> @@ -3720,6 +3802,8 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+>           CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
+>           CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
+>           CXL_MBOX_IMMEDIATE_DATA_CHANGE)},
+> +    [FMAPI_DCD_MGMT][GET_DC_REGION_EXTENT_LIST] = { "GET_DC_REGION_EXTENT_LIST",
+> +        cmd_fm_get_dc_region_extent_list, 12, 0},
+
+space before }
 
 
-=E5=9C=A82025=E5=B9=B44=E6=9C=8824=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=
-=8D=885:28=EF=BC=8CWANG Rui=E5=86=99=E9=81=93=EF=BC=9A
-[...]
->>
->> Hardware manual from official public website should be published at
->> first, and SW follows this, rather than informal HW with FPGA version=
- only.
->
-> I agree with your point - the ISA specification should come first, and
-> software should follow. That=E2=80=99s exactly why I think it's meanin=
-gful to
-> handle this case properly in QEMU now.
->
-> According to the latest version of the LoongArch ISA specification
-> that I have access to, LSX and LASX are explicitly allowed to be
-> implemented on LA32, with only a few instructions restricted to LA64
-> due to 64-bit GPR transfers. So the idea of supporting LSX/LASX on a
-> 32-bit target isn't based on any private or unofficial hardware - it=E2=
-=80=99s
-> aligned with what's permitted by the official spec.
->
-> From this perspective, what we're doing in QEMU is not following any
-> informal implementation, but rather respecting and staying compatible
-> with the ISA as officially defined.
+>  };
+>  
+>  /*
 
-I second this. Anything combination permitted by ISA specification should
-be emulated by QEMU, not only the thing implemented by Loongson hardware
-currently. That can actually reduce software maintenance burden by catch=
-ing
-issues beforehand.
-
-Bear in mind that LoongArch is an open specification, which means other
-implementer are free to do whatever they want permitted by ISA spec.
-
-Thanks
-
->
-> Anyway, thanks for the discussion - good to hear different perspective=
-s on this.
->
-> Regards,
-> Rui
->
-
-
---=20
-- Jiaxun
 
