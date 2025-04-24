@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ECF3C369CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:20:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01774C369CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:20:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7kyY-0008H5-Fp; Wed, 23 Apr 2025 21:02:03 -0400
+	id 1u7kw6-0003GO-I1; Wed, 23 Apr 2025 20:59:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kwy-0005RJ-0M
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:00:24 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1u7ktX-0005uL-Fi
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:56:53 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kwv-0005Xc-Hn
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:00:23 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-225477548e1so5257455ad.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 18:00:20 -0700 (PDT)
+ id 1u7ktV-00056Y-JF
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:56:51 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-736b34a71a1so465128b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:56:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745456420; x=1746061220; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745456208; x=1746061008; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Lgi2ZSVQ13wT2MCsVR2Sol/xGooWiIWNyPhzHZZ9Q0k=;
- b=GbpJShh0m2EcKxP93T2QMBBw0ykBmXncUd3Kg7bRHYkUWA79yowu6rGVyDc0+hSG+8
- BRg5nD1wZW+LO55JMQ6u6lBNlI8fMzvmwZeK7Pw7mzfNPu31yZrsi78Sl4NNqGpzs0yM
- wxkGQ8OsTRX7165a8Zr9Xm90QsmIMQ1PpdujCRf65Y8IlHD9xWafCguFrRZ5MOlGsZke
- wBRlT05x4KOryn4UZb1JSKkqrc1LEP5i3WRQGruxLkU8mSURa2tegujbnHoDFPun05Zk
- u7N7F+9FMiKP0mkJ/PVO2cBBGdnlc2Li7ar4dF6ldsOj487yCf1IeRdDhZQoJeA//9SA
- dvDw==
+ bh=2WoakTEoTh5W+Edqv/m7cqa7TN4j7HTie5YrJRYbIMU=;
+ b=seyH1gVKy5vzE/OlWmJxQ8KRoUIVeDACDqtjeD5YeekRsaAi3mnNAiSXkB4i6rVbU6
+ jo8m7cdAB/iX44ZFIjKmmjWPmoz451tVHHs9b8CTAvSDYUMTJpE/G8akULl6uFemOhc+
+ nFsugiV9/T8rPTKY9OJRzkb9UptavdolwYvMMTfOHW89980ohmGYRcOSZ+3L09AOCfy9
+ mMqnQFKk98fEMgepAWIIlwhHOFv27llkOwp62it2YorpTVfxhXFg0gzggDsoHbldohig
+ 07e1BzqKHiW7FmXfTOYQleMHKuT44gE1UwJJaZefxR8/zyYS5r0ZQoOxLlwUjvvbbdVW
+ JCag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745456420; x=1746061220;
+ d=1e100.net; s=20230601; t=1745456208; x=1746061008;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Lgi2ZSVQ13wT2MCsVR2Sol/xGooWiIWNyPhzHZZ9Q0k=;
- b=Xdzd36it2mFWqSW3NMJIy7JA+WoDNUpaoaIGzFNBV2LSEJgmcoSWpsB1EUqgTWixTC
- i1uYQLfKagzcOqPZqww97VCMrPe3A6lPYuRq6Pc1e/ryeS1UZHHmW8uKgxzhslBpgjId
- vwyrf+p60dPGqzPgyRW1+x6G+oMHdHyhpy8u3RQutVJwRrNK1tWNpWk8wez6FNh34qXW
- Juo9U11XynZK3UYHaVbx2HAs/TbTsrbOLFE77CPmOX5bwwehcPyxMoOLmQTOeYfBe0yL
- FiCu+iFcshMS4zcaNwqFHNf6yVJ/0Mkgao1GGg1MZjOMowffeZ+FVgWNPJIqmrLeeeJO
- DCaw==
-X-Gm-Message-State: AOJu0YxZcawVCsS7Ezl9fNMGckVQKtZijVUPza2FsQHLF6r0PuuDUIly
- fMAMz82Y5tU9A5JjfOu9sxIvsdMyqqlcGkdpmMacENovgzzyCDRGQA9n8OM1hQamJPFjcvyfc7r
- j
-X-Gm-Gg: ASbGnct2J7hNX4xALuiYSOOujInH7sZmCbO4HuJfwREzMn2F1W8HQFwW2qNvCnAo/jK
- +6p1Bh83/7uufKTZaqoMK/PsAF+SFSKC1ISR118jrHbilq5pNB7S6EBvTRkOLUphObO9pw7CM58
- 0PXzyiaO1rikt3eGyOCO8VyvQRspW3eaWF+CRJSqmaSSTuf3/cB9tUrXpaodBzrwl2gHPuef/WG
- qLaPuR5NjezsHSzhqzW/0b4IbC+fhHinjg2kjrkJAMLquX6XtybcxjfhzXheSuHvWHHPMRNvg2E
- xJPHvr0cjYK6robM5J2XwdaOIwO0vdlAZKh/7FEP32AW5UkYxYYHiZDay1aKKJdnSqTEKmkCfWg
- =
-X-Google-Smtp-Source: AGHT+IHuDc5L+5hvxr2AI4pEt+z4f67wa6Fv/nuA9rIADwSDhJ1mc8Xq15USSdXK0xNXougF4gsM2A==
-X-Received: by 2002:a17:903:230a:b0:21f:4649:fd49 with SMTP id
- d9443c01a7336-22db3db67dcmr7906825ad.49.1745456419748; 
- Wed, 23 Apr 2025 18:00:19 -0700 (PDT)
+ bh=2WoakTEoTh5W+Edqv/m7cqa7TN4j7HTie5YrJRYbIMU=;
+ b=I7TTekuts1kttTzI0oMDZADL95y8D2kEQl5EOTMpECulrd4SJz7I08+NZuhBA4dOLk
+ lKx0auLQNHgH4XhB3Wjkm9+C98F6szICc+b7E+lIJGS4bKabuQ8MlXbuaLP+kXCD7NrM
+ KNTeMU1fuDpod2ZMFP5+96t1B1i8I99kKh4U4iSx9EOcP+RT7YgIvkNeWHWo9Bm68SEP
+ 6EbiFYcfiTAsG3gxQ8soW9DzP3IUR5NiJh4DZRq5qM/1vuQgmQt6WY1KkHG0msvwXyr9
+ H8r3nZr+uByYyoY4dfBLkxHN5O4+GQbTM0qoVZ6vTMEegnFAvYiw1zoN7BRg5QhglqB1
+ JgJQ==
+X-Gm-Message-State: AOJu0YwptTCkdC0t44qfl1+5xpZ8HFTlQNqHX+tb4xDWvuZ+x9TuAKKP
+ eumlf59+xcFiXyw3eFLNP/OOlsW71kfEhEoOlRaggkaBQLAB4ZwYFLJV0SNHZ8fPeL7AqPdfXfy
+ +
+X-Gm-Gg: ASbGncvBSnQsRbU4pmLOlfQO4EpefmzGrTMSwgt+qaozc5LHgk+JopyGMfedr6gqEiW
+ 7+HLJTlqkCXCiZ41nytJd+s3iHkHaI4+oU0DgPH3rCY1KRPEawpgAl6YWn4DH4VmEF7173Xm7Hh
+ z6szdkPsfOVqywnjB53x1vdjxe/DEv/YtIC5K+Nb/elCfQpm2V7Ho2VW+8JVfj+bdDf1HBN/yjW
+ PTU8XyuLSOAa8ed+ivKJOqRA5M14QkPYgNLw542PBeyCLp/+4HMrjud1XX+6cBwYq+P+F90PV0L
+ 0uNZjOLkZpRZ5NCwylh6BsDprr9xp7s7FgWxNytdvU3kiwhht3TtBZ4UgaZfqLkQ4qo2qjIjOdU
+ 0MR2guazHbg==
+X-Google-Smtp-Source: AGHT+IE2dpOp7GxtEeMH4fe2lu+qKwfBunALNGa/lbVM8NCSuCjrauP8TbYg08V/2gjMwPmDUa4iLg==
+X-Received: by 2002:a05:6a21:6d8d:b0:1f3:47d6:aa05 with SMTP id
+ adf61e73a8af0-20444d275ccmr1038104637.0.1745456207751; 
+ Wed, 23 Apr 2025 17:56:47 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b15f76f45c7sm129259a12.16.2025.04.23.18.00.19
+ 41be03b00d2f7-b15fa907fcdsm119775a12.54.2025.04.23.17.56.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 18:00:19 -0700 (PDT)
+ Wed, 23 Apr 2025 17:56:47 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 142/148] tcg: Move qemu_tcg_mttcg_enabled() to 'system/tcg.h'
-Date: Wed, 23 Apr 2025 17:49:27 -0700
-Message-ID: <20250424004934.598783-143-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 099/148] page-vary: Move and rename qemu_target_page_bits_min
+Date: Wed, 23 Apr 2025 17:48:44 -0700
+Message-ID: <20250424004934.598783-100-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
 References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,129 +100,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Rename to migration_legacy_page_bits, to make it clear that
+we cannot change the value without causing a migration break.
+Move to page-vary.h and page-vary-target.c.
+Define via TARGET_PAGE_BITS if not TARGET_PAGE_BITS_VARY.
 
-qemu_tcg_mttcg_enabled() is specific to 1/ TCG and
-2/ system emulation. Move the prototype declaration
-to "system/tcg.h", reducing 'mttcg_enabled' variable
-scope.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250403220420.78937-17-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/core/cpu.h      |  9 ---------
- include/system/tcg.h       |  8 ++++++++
- accel/tcg/tcg-all.c        | 17 ++++++++++++++---
- target/riscv/tcg/tcg-cpu.c |  1 +
- 4 files changed, 23 insertions(+), 12 deletions(-)
+ include/exec/page-vary.h   | 9 +++++++++
+ include/exec/target_page.h | 1 -
+ migration/savevm.c         | 6 +++---
+ page-target.c              | 5 -----
+ page-vary-target.c         | 9 +++++++++
+ 5 files changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 10b6b25b34..c8d6abff19 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -594,15 +594,6 @@ extern CPUTailQ cpus_queue;
- 
- extern __thread CPUState *current_cpu;
- 
--/**
-- * qemu_tcg_mttcg_enabled:
-- * Check whether we are running MultiThread TCG or not.
-- *
-- * Returns: %true if we are in MTTCG mode %false otherwise.
-- */
--extern bool mttcg_enabled;
--#define qemu_tcg_mttcg_enabled() (mttcg_enabled)
--
- /**
-  * cpu_paging_enabled:
-  * @cpu: The CPU whose state is to be inspected.
-diff --git a/include/system/tcg.h b/include/system/tcg.h
-index 73229648c6..7622dcea30 100644
---- a/include/system/tcg.h
-+++ b/include/system/tcg.h
-@@ -17,4 +17,12 @@ extern bool tcg_allowed;
- #define tcg_enabled() 0
- #endif
+diff --git a/include/exec/page-vary.h b/include/exec/page-vary.h
+index 54ddde308a..101c25911c 100644
+--- a/include/exec/page-vary.h
++++ b/include/exec/page-vary.h
+@@ -49,4 +49,13 @@ bool set_preferred_target_page_bits(int bits);
+  */
+ void finalize_target_page_bits(void);
  
 +/**
-+ * qemu_tcg_mttcg_enabled:
-+ * Check whether we are running MultiThread TCG or not.
++ * migration_legacy_page_bits
 + *
-+ * Returns: %true if we are in MTTCG mode %false otherwise.
++ * For migration compatibility with qemu v2.9, prior to the introduction
++ * of the configuration/target-page-bits section, return the value of
++ * TARGET_PAGE_BITS that the target had then.
 + */
-+bool qemu_tcg_mttcg_enabled(void);
++int migration_legacy_page_bits(void);
 +
- #endif
-diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
-index 3efc7350eb..bb759cec07 100644
---- a/accel/tcg/tcg-all.c
-+++ b/accel/tcg/tcg-all.c
-@@ -38,6 +38,7 @@
- #include "hw/qdev-core.h"
- #else
- #include "hw/boards.h"
-+#include "system/tcg.h"
- #endif
- #include "internal-common.h"
- #include "cpu-param.h"
-@@ -58,6 +59,17 @@ typedef struct TCGState TCGState;
- DECLARE_INSTANCE_CHECKER(TCGState, TCG_STATE,
-                          TYPE_TCG_ACCEL)
- 
-+#ifndef CONFIG_USER_ONLY
-+
-+static bool mttcg_enabled;
-+
-+bool qemu_tcg_mttcg_enabled(void)
-+{
-+    return mttcg_enabled;
-+}
-+
-+#endif /* !CONFIG_USER_ONLY */
-+
- /*
-  * We default to false if we know other options have been enabled
-  * which are currently incompatible with MTTCG. Otherwise when each
-@@ -97,7 +109,6 @@ static void tcg_accel_instance_init(Object *obj)
- #endif
+ #endif /* EXEC_PAGE_VARY_H */
+diff --git a/include/exec/target_page.h b/include/exec/target_page.h
+index 8e89e5cbe6..e4bd7f7767 100644
+--- a/include/exec/target_page.h
++++ b/include/exec/target_page.h
+@@ -63,7 +63,6 @@ static inline int qemu_target_page_bits(void)
+     return TARGET_PAGE_BITS;
  }
  
--bool mttcg_enabled;
- bool one_insn_per_tb;
+-int qemu_target_page_bits_min(void);
+ size_t qemu_target_pages_to_MiB(size_t pages);
  
- static int tcg_init_machine(MachineState *ms)
-@@ -106,14 +117,14 @@ static int tcg_init_machine(MachineState *ms)
-     unsigned max_threads = 1;
- 
-     tcg_allowed = true;
--    mttcg_enabled = s->mttcg_enabled;
- 
-     page_init();
-     tb_htable_init();
- 
- #ifndef CONFIG_USER_ONLY
--    if (mttcg_enabled) {
-+    if (s->mttcg_enabled) {
-         max_threads = ms->smp.max_cpus;
-+        mttcg_enabled = true;
-     }
  #endif
-     tcg_init(s->tb_size * MiB, s->splitwx_enabled, max_threads);
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 50e81b2e52..88f7cdb887 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -36,6 +36,7 @@
- #include "tcg/tcg.h"
- #ifndef CONFIG_USER_ONLY
- #include "hw/boards.h"
-+#include "system/tcg.h"
- #endif
+diff --git a/migration/savevm.c b/migration/savevm.c
+index c33200a33f..0c12e373b4 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -50,6 +50,7 @@
+ #include "system/cpus.h"
+ #include "system/memory.h"
+ #include "exec/target_page.h"
++#include "exec/page-vary.h"
+ #include "trace.h"
+ #include "qemu/iov.h"
+ #include "qemu/job.h"
+@@ -339,7 +340,7 @@ static int configuration_pre_load(void *opaque)
+      * predates the variable-target-page-bits support and is using the
+      * minimum possible value for this CPU.
+      */
+-    state->target_page_bits = qemu_target_page_bits_min();
++    state->target_page_bits = migration_legacy_page_bits();
+     return 0;
+ }
  
- /* Hash that stores user set extensions */
+@@ -462,8 +463,7 @@ static const VMStateInfo vmstate_info_capability = {
+  */
+ static bool vmstate_target_page_bits_needed(void *opaque)
+ {
+-    return qemu_target_page_bits()
+-        > qemu_target_page_bits_min();
++    return qemu_target_page_bits() > migration_legacy_page_bits();
+ }
+ 
+ static const VMStateDescription vmstate_target_page_bits = {
+diff --git a/page-target.c b/page-target.c
+index 321e43d06f..8fcd5443b5 100644
+--- a/page-target.c
++++ b/page-target.c
+@@ -9,11 +9,6 @@
+ #include "qemu/osdep.h"
+ #include "exec/target_page.h"
+ 
+-int qemu_target_page_bits_min(void)
+-{
+-    return TARGET_PAGE_BITS_MIN;
+-}
+-
+ /* Convert target pages to MiB (2**20). */
+ size_t qemu_target_pages_to_MiB(size_t pages)
+ {
+diff --git a/page-vary-target.c b/page-vary-target.c
+index 84ddeb7c26..6251d948cf 100644
+--- a/page-vary-target.c
++++ b/page-vary-target.c
+@@ -23,6 +23,15 @@
+ #include "exec/page-vary.h"
+ #include "exec/target_page.h"
+ 
++int migration_legacy_page_bits(void)
++{
++#ifdef TARGET_PAGE_BITS_VARY
++    return TARGET_PAGE_BITS_MIN;
++#else
++    return TARGET_PAGE_BITS;
++#endif
++}
++
+ bool set_preferred_target_page_bits(int bits)
+ {
+ #ifdef TARGET_PAGE_BITS_VARY
 -- 
 2.43.0
 
