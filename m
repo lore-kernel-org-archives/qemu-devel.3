@@ -4,56 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 673EAC369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 11:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB228C369D1
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 11:10:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7uPN-0000bk-Lc; Thu, 24 Apr 2025 07:06:22 -0400
+	id 1u7uT9-0001Wt-8p; Thu, 24 Apr 2025 07:10:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1u7uP9-0000ad-4Y
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 07:06:08 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1u7uT6-0001WB-ID
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 07:10:12 -0400
+Received: from fhigh-a4-smtp.messagingengine.com ([103.168.172.155])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1u7uP6-0002c1-7D
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 07:06:06 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZjtQR292lz6L5dG;
- Thu, 24 Apr 2025 19:04:15 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 7D661140146;
- Thu, 24 Apr 2025 19:06:01 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 24 Apr
- 2025 13:06:01 +0200
-Date: Thu, 24 Apr 2025 12:05:59 +0100
-To: <anisa.su887@gmail.com>
-CC: <qemu-devel@nongnu.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
- <linux-cxl@vger.kernel.org>, Anisa Su <anisa.su@samsung.com>
-Subject: Re: [PATCH 6/9] cxl-mailbox-utils: 0x5602 - FMAPI Set DC Region Config
-Message-ID: <20250424120559.00001699@huawei.com>
-In-Reply-To: <20250317164204.2299371-7-anisa.su887@gmail.com>
-References: <20250317164204.2299371-1-anisa.su887@gmail.com>
- <20250317164204.2299371-7-anisa.su887@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1u7uT3-00030z-ML
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 07:10:12 -0400
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal
+ [10.202.2.46])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id 8737411402CC;
+ Thu, 24 Apr 2025 07:10:06 -0400 (EDT)
+Received: from phl-imap-12 ([10.202.2.86])
+ by phl-compute-06.internal (MEProxy); Thu, 24 Apr 2025 07:10:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm1; t=1745493006;
+ x=1745579406; bh=g5rDVS+7jyN1e95FDisPewqAYrozrdACMW3cvM4+IwI=; b=
+ OAWrR1yafQ3Gq463KbOVaNoO1yIV5+9ySEZIM0DwNWX0GxRd98c+HfpzhJKxv9pk
+ St4Zia0xCtEGqKGkGlEzf9D26+4zRCG61/PB3GOPv9/DZdmMwiNoakocirjDM8Q4
+ ui1ivjJ6OG6lsvXzgJ4qTsFhyNca4XNIkPBkjRQ4PFmXLYQeU0QM17kZg+dIYTcL
+ /+Fw7pyZ//B8ecgibktgrABTIWcMlInaoEkABaiAkZxZljjn1r884VigEIMO5A5/
+ V6sc6L/wSdimv4FtXKu60oXAyCM0Y5ibGU98SA5Ngn841icwmSEbDZgCYNIiss7Z
+ Sfh04ISFktE0LnmIet86zg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745493006; x=
+ 1745579406; bh=g5rDVS+7jyN1e95FDisPewqAYrozrdACMW3cvM4+IwI=; b=W
+ xPf1/U2nbC0llruwFnpcufz3vzi+Xae/mbLYdLZV3I55QNLh/BmCjxnMIx1OQnQx
+ nPp837duPAUJ4WKCFPjvp5VCGjqd5wYE7BWE0oMTs+Rk/rmK0u8IveplmiZCCRuH
+ t6MBsiIy93slshkuJRNukGORfrDWw97IV740pFb3XO0UiFRMU/ZU/JDAz9Hp8F0i
+ rjKbehBsPtRcBShbnU3ffaI1uiIBwY+6jelIZx4Syy9E44sf8glDg3OVYaOZpoKQ
+ yEkfzVYz2pPHwokng3R8yZmqbpk2Tuv6Ym7m/jUxIHiBkcv+pM746UTx1mr7Lx82
+ kG0RK/agRMao6TMcR1spA==
+X-ME-Sender: <xms:DRwKaAjaIFfN8ki6eM8b7920rmEg2odDUJfm1kWKHEydnQjslj5lOw>
+ <xme:DRwKaJAhNtSy2Jq0K0llP4fI1SnrYzSryd51fX9LbVfPCl2DcljJHLTBNlh3OSxqg
+ gYSDaGa3_g4_ZRug8c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeelfeduucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+ pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+ gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertder
+ tdejnecuhfhrohhmpedflfhirgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghngh
+ esfhhlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepjeehfeduvddtgffgvdff
+ keethefhlefgvdevvdekuefffeekheehgeevhfevteejnecuvehluhhsthgvrhfuihiivg
+ eptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihg
+ ohgrthdrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtg
+ hpthhtohepqhgvmhhusehhvghvrdgttgdprhgtphhtthhopehphhhilhhmugeslhhinhgr
+ rhhordhorhhgpdhrtghpthhtoheprhhitghhrghrugdrhhgvnhguvghrshhonheslhhinh
+ grrhhordhorhhgpdhrtghpthhtohepghgrohhsohhngheslhhoohhnghhsohhnrdgtnhdp
+ rhgtphhtthhopehmrghosghisghosehlohhonhhgshhonhdrtghnpdhrtghpthhtohepfi
+ grnhhgrhhuiheslhhoohhnghhsohhnrdgtnhdprhgtphhtthhopehqvghmuhdquggvvhgv
+ lhesnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:DRwKaIECVMXh7s_gfCgkt3u4gC46UxoFnbowNm5g7B45rKG84_6--g>
+ <xmx:DRwKaBRj1PB0N98qPiGcs-0nbxi0j-3COGdMr5GXwgQfiW2K0Z-u7A>
+ <xmx:DRwKaNzrJUbUaCPQoM8fq9-fgQVYmN6ZgidnICzQON6NYZJY3B0tFA>
+ <xmx:DRwKaP6ww6cGQAXnlQHiaHxJvgR6SJbTUbiglIGlCOc1uGybaoVn_w>
+ <xmx:DhwKaFR0wBbp5NFCo9TZzVOxizJQIP5kO9_Y1Ci0-J9frs7Fdyh6uR5_>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id B45341C20067; Thu, 24 Apr 2025 07:10:05 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-ThreadId: T892dc7da7e43a30d
+Date: Thu, 24 Apr 2025 12:09:45 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: "WANG Rui" <wangrui@loongson.cn>, "Bibo Mao" <maobibo@loongson.cn>
+Cc: gaosong <gaosong@loongson.cn>, "QEMU devel" <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, qemu@hev.cc,
+ "Richard Henderson" <richard.henderson@linaro.org>
+Message-Id: <30b01dca-b24f-4317-9c86-985bf0d4d569@app.fastmail.com>
+In-Reply-To: <CAHirt9g8JcGhycVcw7-u6iaNPFonZhHY1kQGK+R7G2icFPQabA@mail.gmail.com>
+References: <20250418082103.447780-1-wangrui@loongson.cn>
+ <20250418082103.447780-4-wangrui@loongson.cn>
+ <56cfe883-2de5-43f6-67db-a05d88a010e9@loongson.cn>
+ <a395f6aa-c623-ba7d-2952-5b7249144ba8@loongson.cn>
+ <CAHirt9gZEoTi4dnf69Pe0ZWAxFfn3La0=tcGESoATn1WaF4etg@mail.gmail.com>
+ <446f7813-4d26-91c7-0baa-098b5c5eb2b0@loongson.cn>
+ <CAHirt9jbrmTWgRHBYZAN2t_tzF9CJ86Z_=9XxPpkQYbj7WTqzw@mail.gmail.com>
+ <806baf17-7d22-0d5e-f4a4-22f5ecd36ac0@loongson.cn>
+ <CAHirt9g8JcGhycVcw7-u6iaNPFonZhHY1kQGK+R7G2icFPQabA@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] target/loongarch: Guard 64-bit-only insn
+ translation with TRANS64 macro
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=103.168.172.155;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-a4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,198 +122,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 17 Mar 2025 16:31:33 +0000
-anisa.su887@gmail.com wrote:
-
-> From: Anisa Su <anisa.su@samsung.com>
-> 
-> FM DCD Management command 0x5602 implemented per CXL r3.2 Spec Section 7.6.7.6.3
-> 
-> Signed-off-by: Anisa Su <anisa.su@samsung.com>
-> ---
->  hw/cxl/cxl-mailbox-utils.c   | 100 +++++++++++++++++++++++++++++++++++
->  hw/mem/cxl_type3.c           |   2 +-
->  include/hw/cxl/cxl_device.h  |   3 ++
->  include/hw/cxl/cxl_mailbox.h |   6 +++
->  4 files changed, 110 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 4bb51bf3e8..51ead2b152 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -125,6 +125,7 @@ enum {
->      FMAPI_DCD_MGMT = 0x56,
->          #define GET_DCD_INFO 0x0
->          #define GET_HOST_DC_REGION_CONFIG 0x1
-> +        #define SET_DC_REGION_CONFIG 0x2
->  };
->  
->  /* CCI Message Format CXL r3.1 Figure 7-19 */
-> @@ -3494,6 +3495,98 @@ static CXLRetCode cmd_fm_get_host_dc_region_config(const struct cxl_cmd *cmd,
->      return CXL_MBOX_SUCCESS;
->  }
->  
-> +static void cxl_mbox_dc_event_create_record_hdr(CXLType3Dev *ct3d,
-> +                                                CXLEventRecordHdr *hdr)
-> +{
-> +    /*
-> +     * CXL r3.1 section 8.2.9.2.1.6: Dynamic Capacity Event Record
-> +     *
-> +     * All Dynamic Capacity event records shall set the Event Record Severity
-> +     * field in the Common Event Record Format to Informational Event. All
-> +     * Dynamic Capacity related events shall be logged in the Dynamic Capacity
-> +     * Event Log.
-> +     */
-> +    uint8_t flags = 1 << CXL_EVENT_TYPE_INFO;
-> +
-> +    st24_le_p(&hdr->flags, flags);
-> +    hdr->length = sizeof(struct CXLEventDynamicCapacity);
-> +    memcpy(&hdr->id, &dynamic_capacity_uuid, sizeof(hdr->id));
-> +    stq_le_p(&hdr->timestamp, cxl_device_get_timestamp(&ct3d->cxl_dstate));
-> +}
-> +
-> +/*
-> + * CXL r3.2 section 7.6.7.6.3: Set Host DC Region Configuration (Opcode 5602)
-> + */
-> +static CXLRetCode cmd_fm_set_dc_region_config(const struct cxl_cmd *cmd,
-> +                                              uint8_t *payload_in,
-> +                                              size_t len_in,
-> +                                              uint8_t *payload_out,
-> +                                              size_t *len_out,
-> +                                              CXLCCI *cci)
-> +{
-> +    struct {
-> +        uint8_t reg_id;
-> +        uint8_t rsvd[3];
-> +        uint64_t block_sz;
-> +        uint8_t flags;
-> +        uint8_t rsvd2[3];
-> +    } QEMU_PACKED *in;
-
-= (void *)payload_in;
-
-> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> +    CXLEventDynamicCapacity dcEvent = {};
-> +    CXLDCRegion *region;
-> +
-> +    if (ct3d->dc.num_regions == 0) {
-
-As before. I don't think we need to check this.
-
-> +        return CXL_MBOX_UNSUPPORTED;
-> +    }
-> +
-> +    /*
-> +     * TODO: Fail with CXL_MBOX_INVALID_SECURITY_STATE if
-> +     * device has been locked
-> +     */
-> +
-> +    in = (void *)payload_in;
-> +    region = &ct3d->dc.regions[in->reg_id];
-> +
-> +    /*
-> +     * TODO: Fail if sanitize bit doesn't match current config and "the device
-> +     * does not support reconfiguration of the Sanitize on Release setting."
-> +     * Currently not reconfigurable, so always fail if sanitize bit
-> +     * doesn't match.
-> +     */
-> +    if ((in->flags & 1) != (region->flags & 1)) {
-> +        return CXL_MBOX_UNSUPPORTED;
-> +    }
-> +
-> +    if (in->reg_id >= DCD_MAX_NUM_REGION) {
-> +        return CXL_MBOX_UNSUPPORTED;
-> +    }
-> +
-> +    /* Check that no extents are in the region being reconfigured */
-> +    if (!bitmap_empty(region->blk_bitmap, region->len / region->block_size)) {
-> +        return CXL_MBOX_UNSUPPORTED;
-> +    }
-> +
-> +    /* Free bitmap and create new one for new block size. */
-Maybe need locking if we enable extent creation on a different CCI
-to this one.  That's only going to happen in fairly complex setups however..
 
 
-> +    g_free(region->blk_bitmap);
-> +    region->blk_bitmap = bitmap_new(region->len / in->block_sz);
-> +
-> +    /* Create event record and insert into event log */
-> +    cxl_mbox_dc_event_create_record_hdr(ct3d, &dcEvent.hdr);
-> +    dcEvent.type = DC_EVENT_REGION_CONFIG_UPDATED;
-> +    /* FIXME: for now, validity flag is cleared */
-Given we are just saying we don't know how many tags are available that
-is presumably valid?
+=E5=9C=A82025=E5=B9=B44=E6=9C=8824=E6=97=A5=E5=91=A8=E5=9B=9B =E4=B8=8A=E5=
+=8D=885:28=EF=BC=8CWANG Rui=E5=86=99=E9=81=93=EF=BC=9A
+[...]
+>>
+>> Hardware manual from official public website should be published at
+>> first, and SW follows this, rather than informal HW with FPGA version=
+ only.
+>
+> I agree with your point - the ISA specification should come first, and
+> software should follow. That=E2=80=99s exactly why I think it's meanin=
+gful to
+> handle this case properly in QEMU now.
+>
+> According to the latest version of the LoongArch ISA specification
+> that I have access to, LSX and LASX are explicitly allowed to be
+> implemented on LA32, with only a few instructions restricted to LA64
+> due to 64-bit GPR transfers. So the idea of supporting LSX/LASX on a
+> 32-bit target isn't based on any private or unofficial hardware - it=E2=
+=80=99s
+> aligned with what's permitted by the official spec.
+>
+> From this perspective, what we're doing in QEMU is not following any
+> informal implementation, but rather respecting and staying compatible
+> with the ISA as officially defined.
 
-> +    dcEvent.validity_flags = 0;
-> +    /* FIXME: Currently only support 1 host */
+I second this. Anything combination permitted by ISA specification should
+be emulated by QEMU, not only the thing implemented by Loongson hardware
+currently. That can actually reduce software maintenance burden by catch=
+ing
+issues beforehand.
 
-Not a fixme, a fact of life :)
+Bear in mind that LoongArch is an open specification, which means other
+implementer are free to do whatever they want permitted by ISA spec.
 
-> +    dcEvent.host_id = 0;
-> +    dcEvent.updated_region_id = in->reg_id;
-> +
-> +    if (cxl_event_insert(&ct3d->cxl_dstate,
-> +                        CXL_EVENT_TYPE_DYNAMIC_CAP,
-> +                        (CXLEventRecordRaw *)&dcEvent)) {
-> +        cxl_event_irq_assert(ct3d);
-> +    }
-> +    return CXL_MBOX_SUCCESS;
-> +}
-> +
->  static const struct cxl_cmd cxl_cmd_set[256][256] = {
->      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
->          cmd_infostat_bg_op_abort, 0, 0 },
-> @@ -3620,6 +3713,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
->          cmd_fm_get_dcd_info, 0, 0},
->      [FMAPI_DCD_MGMT][GET_HOST_DC_REGION_CONFIG] = { "GET_HOST_DC_REGION_CONFIG",
->          cmd_fm_get_host_dc_region_config, 4, 0},
-> +    [FMAPI_DCD_MGMT][SET_DC_REGION_CONFIG] = { "SET_DC_REGION_CONFIG",
-> +        cmd_fm_set_dc_region_config, 16,
-> +        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
-> +         CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
-> +         CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
-> +         CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
-> +         CXL_MBOX_IMMEDIATE_DATA_CHANGE)},
+Thanks
 
-Space.
+>
+> Anyway, thanks for the discussion - good to hear different perspective=
+s on this.
+>
+> Regards,
+> Rui
+>
 
->  };
->  
->  /*
 
-> diff --git a/include/hw/cxl/cxl_mailbox.h b/include/hw/cxl/cxl_mailbox.h
-> index 8e1c7c5f15..820c411cbb 100644
-> --- a/include/hw/cxl/cxl_mailbox.h
-> +++ b/include/hw/cxl/cxl_mailbox.h
-> @@ -8,6 +8,7 @@
->  #ifndef CXL_MAILBOX_H
->  #define CXL_MAILBOX_H
->  
-> +#define CXL_MBOX_CONFIG_CHANGE_COLD_RESET (1)
->  #define CXL_MBOX_IMMEDIATE_CONFIG_CHANGE (1 << 1)
->  #define CXL_MBOX_IMMEDIATE_DATA_CHANGE (1 << 2)
->  #define CXL_MBOX_IMMEDIATE_POLICY_CHANGE (1 << 3)
-> @@ -15,6 +16,11 @@
->  #define CXL_MBOX_SECURITY_STATE_CHANGE (1 << 5)
->  #define CXL_MBOX_BACKGROUND_OPERATION (1 << 6)
->  #define CXL_MBOX_BACKGROUND_OPERATION_ABORT (1 << 7)
-> +#define CXL_MBOX_SECONDARY_MBOX_SUPPORTED (1 << 8)
-> +#define CXL_MBOX_REQUEST_ABORT_BACKGROUND_OP_SUPPORTED (1 << 9)
-> +#define CXL_MBOX_CEL_10_TO_11_VALID (1 << 10)
-> +#define CXL_MBOX_CONFIG_CHANGE_CONV_RESET (1 << 11)
-> +#define CXL_MBOX_CONFIG_CHANGE_CXL_RESET (1 << 12)
-
-Are there any other commands that need updating to include the
-more detailed stuff these flags adds around resets?
-
->  
->  #define CXL_LOG_CAP_CLEAR_SUPPORTED (1 << 0)
->  #define CXL_LOG_CAP_POPULATE_SUPPORTED (1 << 1)
-
+--=20
+- Jiaxun
 
