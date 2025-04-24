@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2726C369D3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAE94C369CB
 	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:26:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7lFu-0003TF-GB; Wed, 23 Apr 2025 21:19:59 -0400
+	id 1u7kuI-00072b-D9; Wed, 23 Apr 2025 20:57:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7lFQ-0002es-Dz
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:19:29 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1u7ktV-0005pc-TA
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:56:52 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7lFL-00078y-TR
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:19:27 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7399838db7fso525973b3a.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 18:19:23 -0700 (PDT)
+ id 1u7ktS-000567-HJ
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:56:49 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-22928d629faso4316585ad.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:56:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745457562; x=1746062362; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745456205; x=1746061005; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+AhSAw0yISu1j2mAPNZj8JIUUEWW3orS97qT0s5kocY=;
- b=EWdxRNf9KM20uTq8gXydcsWsLIWdkVy+fBz9K6op+Q/Sjx4SzziJcZXXxE/udVS11d
- MyugfSPzpT4a7ggMXif03jzgAc/fo959Siq0nmVY1/DP2LQ6S5nqSN1LlEiW7zDK2vLf
- os+7YgVjfMPEOEQOU4fJso1WQ74l7YhhzASOO1L2kX8vP4tuDk/YJUSgGR6BqRKdl3lj
- bHNYRS51ntxiYqZnZcs3KPpX1zXrVIb6ytIYvUdNO6GxdD542oer5Ug9MpbDSTSkH6qy
- LOqMBLvmInytgZ97nSse+L5GtGw7pQnZuZrTM715VGhQJg/RsWyig3/n+B6T1MtOBq9+
- zaRw==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sWIZdxiQwNCWQMc8BJaWdVB87by5vfdybCIjbCIrMGM=;
+ b=bwt/inqLk23cNdHk7CBS4p+U9AMmmcHhyQu+Uq8dzxUcTBeRUXKTmS2EDSZRhSGxQ2
+ tx6m+UiJCMGdbQrN8wAvZdFYrXFsVVbpyNK9K3FF4iP9FTuvoF9qitNOoIGBA8T0imIL
+ yTs6ly48oaKmh9qaUHTgISi98x8ZMTXh+3NL8InrYUkCMlDAon6zw7mpFN1x5YNE/fCb
+ jJDAXIw3PuMqDzUxST0llGIn5SYkVysZp4z2vM9Jtd95Wh9eMEM3FYD9TbkDDKbXNlme
+ soTw6csEMsGagn5DTOz2tZz1UrZ40L/cIfYWHsgikQDqU96NqPNb7SzBlKDoLMehyxy4
+ WBHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745457562; x=1746062362;
+ d=1e100.net; s=20230601; t=1745456205; x=1746061005;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+AhSAw0yISu1j2mAPNZj8JIUUEWW3orS97qT0s5kocY=;
- b=BSSnzvryJPUXNtnoGWh7UP/CHzGluoemEUJWBXeb+4f6FOh20dcMAZTdKasw3AnXTf
- K3L+hO0P5AoaJ3rkVLAFTjjmRadlCjovMfwRus2RwcFDCc7hXgY+6bENHBn0AuL0i9mR
- V+V3rZMVuoWNMyxDKHEXg2x5yvOxK3pz2ELvqJvjo9bmN4ceima2pANNR6wW9yXMTU9X
- kdMI0l0EABQtMtq4exxYqR1mpWbi8pe/xocc4ikNzceyju3X3WkbnLha2oYyVXwVIW7b
- M21FODA9RX8XajklYepNL9rOsZ/x/s9kXw3tPRvLP1puFt+x3sXXewnuPDfqiaCtmtka
- Mg5A==
-X-Gm-Message-State: AOJu0YxN54O6tFxLMzIqgQaw9wC/fbHw2ydcf84nAJOnc1LA4yItIFpf
- r1TgVzQYkcshtgjMknGI9/lpE+j3nhxn+to23xkbrnXdyvHgj1jLuQXN/+qyw3h4SpkMUVvzh9L
- u
-X-Gm-Gg: ASbGnctW/6NrBOQANq+EfCuFG57Y/p3wxOgYK+rIfSU5CchYFJrGHdwFpmqcjKAk+ga
- ALzJxy/TM0zB/UD+OlawrYjZAjn1DiQt5nrmejiLKKZnudqMIwxSPABmTqr7Ag4s/nFY9e8buig
- mCzolC/TZuMt2aFzWb1nVzPaJGucomtVMNHDQXn8NvCGNE+PfdSl4RMTXjCu3E+9IRxThUtCFXW
- 4jA4tQcuxTFKOmSdjPOujN+Klpyvml7JFagm97iBmbMzFNeOqNguuTqxpt0JyaLC8BK6AJ9Km9F
- tPkRNiQqugPuOa9KarNyTSiqM40SGnkpeuXHB258x3UKKS1+/JRwlIIFilYpGQbhElo0po4Ysoa
- KVaR+Xv57dA==
-X-Google-Smtp-Source: AGHT+IG0+XOYeLml61p6d8wfvVV3mUhUPGrV89/ZpYefGfRfmkRJgQ7573RcKo/Z/lZaKpVFcwnwBQ==
-X-Received: by 2002:a05:6a00:e1b:b0:736:b3cb:5db with SMTP id
- d2e1a72fcca58-73e268ee7b6mr704357b3a.11.1745457562190; 
- Wed, 23 Apr 2025 18:19:22 -0700 (PDT)
+ bh=sWIZdxiQwNCWQMc8BJaWdVB87by5vfdybCIjbCIrMGM=;
+ b=pp06mnhAJAFpxy1r1h25Vhkuyu7eIBDZy4YcYi1MYHAJZ4zqZz8Z2j3t19/5dJtIlO
+ iOfTV6kTq2gBtMpIUWJTfd9FDlvkvTkE7Y3a5F0uHnh3DIZrCaA0axL57W4xM4/QHNS9
+ my27s4+4SszYn+aIDvYImHH/E++T679HuQdI4EKOGHFurG978QsYBUpqBjpUfSZlbTlR
+ KE7TGFXheVU8Zs6zAC+KU+7vUW9NNX4EzccsQMtXATvxDmzfEqpMtrUjlzEeljjNUjxF
+ SWUM8WklGX4aUkpsAT6WubXgmPJLF5uCKTFNTQJyUitHY7LQWjOdxrSFjnUkaVQmhWEE
+ OsIw==
+X-Gm-Message-State: AOJu0Yz4PQskAJzXDPK3o2el2dUM5ndb1jJYhQ18wucCzebrtX+74LYb
+ qcolphAVsm3vDAxft58wYz4B6YexslCszlUYIm2FPjj1Que//dV9VhLN96rq2uPvzUimc2RxA+n
+ z
+X-Gm-Gg: ASbGncv6A7JkzWw3mHzCltlbJxHWgktW2uJswDRyV+XI4ezDWpCIraAOFVhP+JHHGkc
+ M0sCdgjS5ulUb0EhL+pfU0xQ1xrxmiTNz7PjdAp6XMNy2V+uDMSR7OAVc4jvY0PO9ddgzWahGxI
+ 8A2u30jRn4UmcOmMJG5GfBudma5+OoC6pGKm6In2fH8jfa1MHa8lOEkWxSJU5sZ1uVo043jjCN/
+ OX6X6bmjKqQrBdxh65kuxMc28N6TBi1jyLjwmbQtJRbaSnqmthdGCmq6feOW5Yo2/KnUFnB5XTv
+ xYMznKvMjGVGP4MfxPZH8/2Iw5kyFajANtPNK9uh8PSmh5vxvzscful94Zj2gggfkN74l+GeDN8
+ =
+X-Google-Smtp-Source: AGHT+IGIioqYHNkrDkvG6Qtva/t11YQxMHj762xJqHIJj4pULWvZrglRU2mx4hv0MBZJNLcvCWTo0w==
+X-Received: by 2002:a17:903:19e3:b0:223:fabd:4f99 with SMTP id
+ d9443c01a7336-22db3bbb17emr9192145ad.5.1745456204606; 
+ Wed, 23 Apr 2025 17:56:44 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25912ef0sm244079b3a.10.2025.04.23.18.19.21
- for <qemu-devel@nongnu.org>
+ 41be03b00d2f7-b15fa907fcdsm119775a12.54.2025.04.23.17.56.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 18:19:21 -0700 (PDT)
+ Wed, 23 Apr 2025 17:56:44 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 04/15] accel/tcg: Merge tb_invalidate_phys_range{__locked}
-Date: Wed, 23 Apr 2025 18:19:07 -0700
-Message-ID: <20250424011918.599958-5-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 095/148] hw/core/cpu: Remove CPUClass::mmu_index()
+Date: Wed, 23 Apr 2025 17:48:40 -0700
+Message-ID: <20250424004934.598783-96-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250424011918.599958-1-richard.henderson@linaro.org>
-References: <20250424011918.599958-1-richard.henderson@linaro.org>
+In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
+References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,68 +101,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Merge tb_invalidate_phys_page_fast__locked into its
-only caller, tb_invalidate_phys_range_fast.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+All targets have been converted to TCGCPUOps::mmu_index(),
+remove the now unused CPUClass::mmu_index().
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20250401080938.32278-24-philmd@linaro.org>
 ---
- accel/tcg/tb-maint.c | 36 +++++++++++-------------------------
- 1 file changed, 11 insertions(+), 25 deletions(-)
+ include/accel/tcg/cpu-mmu-index.h | 4 +---
+ include/hw/core/cpu.h             | 2 --
+ accel/tcg/cpu-exec.c              | 1 +
+ 3 files changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
-index e8a465c9ac..67a2570b4c 100644
---- a/accel/tcg/tb-maint.c
-+++ b/accel/tcg/tb-maint.c
-@@ -1203,38 +1203,24 @@ void tb_invalidate_phys_range(tb_page_addr_t start, tb_page_addr_t last)
-     page_collection_unlock(pages);
+diff --git a/include/accel/tcg/cpu-mmu-index.h b/include/accel/tcg/cpu-mmu-index.h
+index f1ca385d3c..e681a90844 100644
+--- a/include/accel/tcg/cpu-mmu-index.h
++++ b/include/accel/tcg/cpu-mmu-index.h
+@@ -34,9 +34,7 @@ static inline int cpu_mmu_index(CPUState *cs, bool ifetch)
+ # endif
+ #endif
+ 
+-    const TCGCPUOps *tcg_ops = cs->cc->tcg_ops;
+-    int ret = tcg_ops->mmu_index ? tcg_ops->mmu_index(cs, ifetch)
+-                                 : cs->cc->mmu_index(cs, ifetch);
++    int ret = cs->cc->tcg_ops->mmu_index(cs, ifetch);
+     tcg_debug_assert(ret >= 0 && ret < NB_MMU_MODES);
+     return ret;
  }
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 29f6419050..28bd27b8ed 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -104,7 +104,6 @@ struct SysemuCPUOps;
+  *                 instantiatable CPU type.
+  * @parse_features: Callback to parse command line arguments.
+  * @reset_dump_flags: #CPUDumpFlags to use for reset logging.
+- * @mmu_index: Callback for choosing softmmu mmu index.
+  * @memory_rw_debug: Callback for GDB memory access.
+  * @dump_state: Callback for dumping state.
+  * @query_cpu_fast:
+@@ -151,7 +150,6 @@ struct CPUClass {
+     ObjectClass *(*class_by_name)(const char *cpu_model);
+     void (*parse_features)(const char *typename, char *str, Error **errp);
  
--/*
-- * Call with all @pages in the range [@start, @start + len[ locked.
-- */
--static void tb_invalidate_phys_page_fast__locked(struct page_collection *pages,
--                                                 tb_page_addr_t start,
--                                                 unsigned len, uintptr_t ra)
--{
--    PageDesc *p;
--
--    p = page_find(start >> TARGET_PAGE_BITS);
--    if (!p) {
--        return;
--    }
--
--    assert_page_locked(p);
--    tb_invalidate_phys_page_range__locked(NULL, pages, p, start, start + len - 1, ra);
--}
--
- /*
-  * len must be <= 8 and start must be a multiple of len.
-  * Called via softmmu_template.h when code areas are written to with
-  * iothread mutex not held.
-  */
--void tb_invalidate_phys_range_fast(ram_addr_t ram_addr,
--                                   unsigned size,
--                                   uintptr_t retaddr)
-+void tb_invalidate_phys_range_fast(ram_addr_t start,
-+                                   unsigned len, uintptr_t ra)
- {
--    struct page_collection *pages;
-+    PageDesc *p = page_find(start >> TARGET_PAGE_BITS);
- 
--    pages = page_collection_lock(ram_addr, ram_addr + size - 1);
--    tb_invalidate_phys_page_fast__locked(pages, ram_addr, size, retaddr);
--    page_collection_unlock(pages);
-+    if (p) {
-+        ram_addr_t last = start + len - 1;
-+        struct page_collection *pages = page_collection_lock(start, last);
-+
-+        tb_invalidate_phys_page_range__locked(NULL, pages, p,
-+                                              start, last, ra);
-+        page_collection_unlock(pages);
-+    }
- }
- 
- #endif /* CONFIG_USER_ONLY */
+-    int (*mmu_index)(CPUState *cpu, bool ifetch);
+     int (*memory_rw_debug)(CPUState *cpu, vaddr addr,
+                            uint8_t *buf, size_t len, bool is_write);
+     void (*dump_state)(CPUState *cpu, FILE *, int flags);
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 034c2ded6b..9e15105533 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -1075,6 +1075,7 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
+         assert(tcg_ops->cpu_exec_interrupt);
+ #endif /* !CONFIG_USER_ONLY */
+         assert(tcg_ops->translate_code);
++        assert(tcg_ops->mmu_index);
+         tcg_ops->initialize();
+         tcg_target_initialized = true;
+     }
 -- 
 2.43.0
 
