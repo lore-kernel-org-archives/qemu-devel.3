@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7228C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 06:46:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF579C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 06:47:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7qLf-0000Ba-El; Thu, 24 Apr 2025 02:46:15 -0400
+	id 1u7qMG-0000Ho-4K; Thu, 24 Apr 2025 02:46:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7qLR-0000Ac-NN
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:46:08 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7qME-0000HM-Kz
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:46:50 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7qLM-00005m-5y
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:46:00 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-39c30d9085aso428014f8f.1
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 23:45:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7qMB-00007h-HI
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:46:49 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-39c1ee0fd43so538622f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 23:46:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745477151; x=1746081951; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745477206; x=1746082006; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=8QYqANi18GY4DNuNW9kOaKzavwrJxkTAKBhkEEIPG3E=;
- b=k58Wczs7IPSCwiFsEhY8F5kogppX8ucKTBJUOiWLNsqCCL5fZJexsc+iL9DOTs9go/
- zj++MJrYBw5sUynFUTeJLOJMBDC0u14SGE7kLQArAj7qt4cWP41W1WzXI6I70UwAQmT3
- xm3vOS3CB/4OYBuavEDj0tkzLVCPxfGaNkA+Vi/bKWdpnugiTt0mrS7O80EsGDC6QODL
- j7DFQIBEarip/EsEAeS7HUvSHHqWLqTtaxNRXOfZXDuCAFLQKqlIy7K+VWZF229zI7gC
- SBsgp6JNBRxurOjSLeEQ1N2AnlGaCT9k1r2r0WKb6AdNsLzxhgw25cHzcMHlx+Z2FTm3
- HEZg==
+ bh=ayUlrntd8YogjAz6aievzR1bhk1Rtq5sOfM23w1iP2Q=;
+ b=epIwihQ8OI9UNYRQGehxqbVYAYjRkiOw2hW1tWBFqcE7PvaSB29I5yP5BDPHL+BwG+
+ 9RxYssabrtDKTJA+0y1xGrdRxHHu0xIqrV301aSM+OUzSlxFdzCK11aceoaev3KU55UW
+ 1zlIvGj0ub7Avuxzw6m4wAYFEvFjtyFAecZCWGius9uEhZNdYbojfaISscbFYXBD41D6
+ 3ueHrvL+SD9IJnaCJoq6lXOeNenFMMUMq885WziaPAyyp9FWDiayj5Yj6dU0WopVBcib
+ gmg93EuGYi6l9c4Nfr6cUK0dpR16g02VRk9coTY0SzYWaLbNouudXZ2YEIdIsMDr5h8x
+ iQrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745477151; x=1746081951;
+ d=1e100.net; s=20230601; t=1745477206; x=1746082006;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8QYqANi18GY4DNuNW9kOaKzavwrJxkTAKBhkEEIPG3E=;
- b=Y916pFIVo2o/EwFgeMpSPNpnaeDChmgEPTDDxOAyfcIBjeAkVNlb9WRgGYuLA2wUCY
- Wg0t8dOnjhbZIUsicEldj0pLbn1wfxdw6YSK83a691048iLkgyTA92FnrO51CpPISZ/7
- hyjofceMRnuU/Blza/bzppYa2zt4Yw1mnGlWjFRQ04HkLCm4nsOQAyS8RzOMfZ+jBcGZ
- FpltKNPdT0AM/6hcIKYiCqTZTn58NeJ0Pn/Mb9opIT1kWoeW5Iau/Otx65hgHV6zCH+O
- Y0AAIqXxHYCtQP2sUjAbxCajbkV3uPHkROngkxvExbCwcBvXDC1pkDq4qOfHyUZ/o6C/
- mtSg==
+ bh=ayUlrntd8YogjAz6aievzR1bhk1Rtq5sOfM23w1iP2Q=;
+ b=FuJPxOTQA5MJW7rwaJFHm/Uq2CNW2IJPzcTjsLlYdr2n9pqiAYPWNsMDDl2hmS5ttI
+ fOA0KskhY3CJJfVMH3xPS9tapybYq48e2SHCF2Vh41s2N1mOW8Z1+1/CaS/kO0epv2/+
+ Hhp5m56PGCTQdcvmbQyMiFUXog9uvkB70Or4VmnfoKBdYK2hv06eNQTnUSeORNx7XpRN
+ W5GCNEtbkqW7CQHDRsQNtz7QyWqwM55sAUDpX3UUcdzMSlxWm0xG4qk+m4m91RDIXL1V
+ xktswlQQtpqtUclLn41HZHFy+ks+nZQLU0ZxVPrZPUkC0SRmq95/ENXRsNoCsqYtQjZh
+ N5lA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXbTOWPPX60KeKIS4lzbQxQO5dzvZmnNd7rE83YItIBIymYFc5JH9u7cVgIkZ7B/kYbSYNxr+jooZ4d@nongnu.org
-X-Gm-Message-State: AOJu0YxHPrVZF8Bb5Dz+NzGOm5quS+IqdZ2md89uJXJU8wBvVms/WPOc
- nteM4wchTYqTNG9VGofQZVlrShdxcs+HnvlsKeiby8NNTS9Tj+41v3nyqrb20KY=
-X-Gm-Gg: ASbGncth5ej5kLi0Pw94AaqhkRm9yuVmCJI5s6sWF3WfPXHptDtEaCi158PWzKs7anj
- bhQ/9hDW0nEClwGg7Fb7v7ureeeazW+wz8Lbsfo3A16AhTxn8I0mhIqOZQzTpz8UecM4NUzkCdL
- srSxVWC0zOtSUjGP5MnLzmJSjzNU37ee5G+QwYHSuVyXChOf5EycTvpdZ+RhV8xN/pF6ge7W8A2
- iJSlC6DgyNNLSMm1GJHe9a448XTSJQgnwRIV8zArtPmMD3NOMA6FzroS+DRN9vi6h7gIfKuayK7
- Go6GcGA7wMIIJiGEER8CHCh2oaHj28Ll0gC4J2XKcTQxbu3tjNpQkm/XLFbE0UR48wh9BiCmxz1
- VWut7VxiYJa4O8g==
-X-Google-Smtp-Source: AGHT+IHEjm92bLbmu73ADmX2Hb9uWFarEktK8AK1NYqPxwZo1L9Fkil+hh20Tsw01DN2SU3PD2GQuw==
-X-Received: by 2002:a05:6000:4013:b0:391:1222:b444 with SMTP id
- ffacd0b85a97d-3a06cf56420mr1040718f8f.20.1745477151051; 
- Wed, 23 Apr 2025 23:45:51 -0700 (PDT)
+ AJvYcCWzR06zpmOSOPAWGqMS/ibUNXFl330JEPEP01h6pz0jlp77gDnWnzDDeDl01si+RAfZB1P2Mr/PCjrx@nongnu.org
+X-Gm-Message-State: AOJu0YyF4xEzHZdwIRZFghnJOZNTEEIka5dHXkwl/u4wkJzDXw0YMXW4
+ x7/q4lBZcKjabZ3Ybv9g1p0iz0yZMNx2btQUHb6HOXfGONtzDLeL3xASpMuF8PQi/1Wi22owoNu
+ d
+X-Gm-Gg: ASbGncvKqvpzl0QdDqAmLk+nnVsKripygbGvg0z90QeLfreGw0K0r1URvqXBa3swDT6
+ a7YZJ+rs15Hn3Wy48pej72S/u5IJ0okRNxXJRDA5wO6HybX0KkygOZnmZ7K2S703XAE7JjrD6wD
+ RiP4b3jCsgz4/DfiKCG/eXexdTaI73R/8lkGPr9t+QaxZXpHO4+xI9YGwTXLr+pNsAP9FkMPbAH
+ IGRyUuP+AaQhSJBDd6mbTahSU7Hd5niwWcksETqg7Uj0LzNyyBLGoIGzbvCCzTrJ3xEVExk/e51
+ f6DP2ksWZ1BYCzxJdwUVT2mDiNxGqS352IoKKBod7i/hFB7TGGxsgPODiwxl5ObS4ZEPG2D5hgP
+ qfhOKC2qgHCWm1A==
+X-Google-Smtp-Source: AGHT+IEhm9qbPavkKl45aKPN3JrxYNoVc9W/TJS2rnLjuCxUtogaZc/AbqrWYfoYLH4G0wSzil5VmQ==
+X-Received: by 2002:a5d:5983:0:b0:39b:fa24:950a with SMTP id
+ ffacd0b85a97d-3a06cfa9e95mr813448f8f.36.1745477205956; 
+ Wed, 23 Apr 2025 23:46:45 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a06d4a8070sm1036870f8f.18.2025.04.23.23.45.49
+ ffacd0b85a97d-3a06d4a812bsm1052911f8f.17.2025.04.23.23.46.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 23:45:49 -0700 (PDT)
-Message-ID: <7e5e459e-2385-4d13-a562-082091d4e56f@linaro.org>
-Date: Thu, 24 Apr 2025 08:45:48 +0200
+ Wed, 23 Apr 2025 23:46:45 -0700 (PDT)
+Message-ID: <b37f8073-bde2-4da4-a159-9cd01eab91dc@linaro.org>
+Date: Thu, 24 Apr 2025 08:46:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] meson: Share common C source prefixes
+Subject: Re: [PATCH 4/4] meson: Use osdep_prefix for strchrnul()
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -76,14 +77,14 @@ Cc: Eric Blake <eblake@redhat.com>,
  <berrange@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  devel@daynix.com
 References: <20250424-buildsys-v1-0-97655e3b25d7@daynix.com>
- <20250424-buildsys-v1-3-97655e3b25d7@daynix.com>
+ <20250424-buildsys-v1-4-97655e3b25d7@daynix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250424-buildsys-v1-3-97655e3b25d7@daynix.com>
+In-Reply-To: <20250424-buildsys-v1-4-97655e3b25d7@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,21 +108,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 24/4/25 06:50, Akihiko Odaki wrote:
-> gnu_source_prefix defines _GNU_SOURCE for compiler object functions.
-> The definition is universally available in the code base.
-> 
-> docs/devel/style.rst also says that the "qemu/osdep.h" header is
-> always included, so files included in the file is also universally
-> available in the code base.
-> 
-> Rename gnu_source_prefix to osdep_prefix, and add #include directives
-> that are referred by the users of gnu_source_prefix and contained in
-> qemu/osdep.h to safely de-duplicate #include directives.
+> macOS SDK may have the symbol of strchrnul(), but it is actually
+> available only on macOS 15.4 or later and that fact is codified in
+> string.h. Include the header file using osdep_prefix to check if the
+> function is available on the deployment target.
 > 
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->   meson.build | 68 +++++++++++++++++++++++++++++--------------------------------
->   1 file changed, 32 insertions(+), 36 deletions(-)
+>   meson.build | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
