@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72006C369CB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9840C369D3
 	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 00:56:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7kru-0006vA-RS; Wed, 23 Apr 2025 20:55:11 -0400
+	id 1u7krI-0003BM-SX; Wed, 23 Apr 2025 20:54:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kqX-00015Y-QK
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:46 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1u7kqM-0000zH-CP
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:35 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kqD-0004jQ-B8
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:26 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-739525d4e12so358367b3a.3
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:53:24 -0700 (PDT)
+ id 1u7kpx-0004gO-4o
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:10 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-736a72220edso415134b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:53:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745456004; x=1746060804; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745455988; x=1746060788; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DaiqXvx8en6VCToTimGXoyGSBAmucTN+awgeSbs/f3M=;
- b=S6l6K39Z0q4Y89w4InfOGK/o2uKD6gH5ezX23jC5KFUsXZd+j/kZifShOr53jWRHh3
- T/epGCixYgqq4mCHtQWuvPaxr45yXoel419k573V8g/BLupcZvAOiAE2fAqayFNAHuLB
- uHI3SmmN+4fwboxLPw4466ybLjTdTvM/AzjjA7XLkI49/gqo2v1RScSmTXE25CFZEbT2
- UZNxZSKIQHR01k4fnafHzrbajvn10Or8K4mKcodwI3k6dI9ZNWOHV5wey4e68DbCGZl7
- 3Qaa/LY3UH2QcRvORsehbIJW581zBEren4vdFiB7BkH/zvUHy81nVKWHUY/dzwDEJQlh
- bgoQ==
+ bh=N6nKQxahRgvoQ25bOMs68Tp8XymmfstjwW7LOMn9si4=;
+ b=Q4LTzMptcTMC8eChhS3SzBqdJ2WnGLOy1Ht7Ipc/1PdXbcnUxzt1f/WBdxUyCEv4WU
+ nMF5HsGu+xOh98PPG5VUeNrFB7omAROPtcgVq8dxiBB+iB2PgBimXwyY9jpHopUz9ub0
+ fUMtRGuoblAfkAKQKy42ElVJ0ZL/VpaL5njqwEeba1j8qFjbjQWLRLco1Zhs2pgg8051
+ Leb2/m9Y6Od78Is/L70ary4ev3gJYXtx4QzgPLUPM/kl4HB7DtaZGt8d3XX0Br/ilUus
+ jWWirqGI+b0A/CRcmmPGXJtiOXa60de33zhTkPbYYz0X7LyGTLDy+PlhhHZtlIMGD4G7
+ BryQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745456004; x=1746060804;
+ d=1e100.net; s=20230601; t=1745455988; x=1746060788;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DaiqXvx8en6VCToTimGXoyGSBAmucTN+awgeSbs/f3M=;
- b=saYJD0O34tqKTE0F+gKYvxFK4rQa3E7/HRtPUzDn5ztGsff3iI8qhrqRKdHBGvRW9C
- T6r+kYoVL5RSpxt9ANDhj3LkE8ey39utPPBYL45s0Daa5ULUuGePrksV1UJ7VSNA4kKL
- dPiJ+3FpxGlkvHGpM77aInHgPVAwpMTwXyfy3YkAhiyDQLxEcwv+2jwyJX9TwCR8lPMT
- idZHrpvQRzP19gz8wqlLgrY+NS+cVy1yr30JjjINmivBObS7xXdaEsBooOi1/GT1xLO7
- t2YLEl+d4L3PiV9utzvHiS8bRE5P8gukrXY4lXN2j4Wxf1Mv2ZbdGxBTgNppQp7vfZlY
- tUJQ==
-X-Gm-Message-State: AOJu0YwW1UoLQkheHmoSvtKtQWI2xKVOypkP/WG+4p8VBHOTmfNeN47T
- ui2Iv0K3UDWbXVldXMPJqjGga2yg9EfPZGFIgEThJGEYI8XpCyzjiVDsRIYRc3oGn0Wc7HVpxP8
- G
-X-Gm-Gg: ASbGncsRj/Xkt0iHWVIpG+IAatJT2NweJTKTlWSIaqLgY9Hdn42jOiNhXbDMaqaCnXE
- J+IdhEf0rtJ5pwwAxA6x9uDuPoDjDJnXRGnW5OJ4HFkfeGFWz68qfYWSilhNNKY4seKEoGlkQml
- fbezmd+vXhiDqe5t1+VjWUiOpaWUSUvEPYShA7JKC3SZf1JcTi2Yfy7UXz4dLXmxYVSCpGxdgap
- UjermOd0DWkvealMOJgwlnR53mmNa0MHMeo/TJRL472UrBU59zWondSAbZMZSQaVrTdxMGMYQNy
- /8ncGvc9Ox/SIfFruRRVdCnYDoSfTPoQBr64CDKdoDLk2oAEDYrhuSGuBvNRyuxIo+i/pMT1yp4
+ bh=N6nKQxahRgvoQ25bOMs68Tp8XymmfstjwW7LOMn9si4=;
+ b=lPaq933OO47Nf3wuNPtA9Cd5pVgbiRiVXDQ56mIIzFCyffaG9AvHklu0tEMKjwS3/4
+ g41Mkn0j4GrYLk5Q19DVCulplO0z0j3pi/UnMzburevhYPUG+3uL+74SJxrJ4vM9LMuV
+ IAtd2lhyVnyNGku3OmmkHZLOvNyPtgqyzPa8EUfGLZldB5aio3LtuuNrG4cXHG0Xr1lj
+ UvaqYDxlzSWWU1KkW3JrhETRYSWgzqgUS3WWirT+8DKjHw2UguW0moLcZgME9gkLsxQA
+ Z224+nRFNtsBB8+9ilfYP54BFl2s1V9wld7CdUA5miyQtkX0l2h3yecyzOUkQcRRXHCL
+ NT3g==
+X-Gm-Message-State: AOJu0Yz6CMO9Dz/bBLUUgsNMteE92mOqya/266nNQz14ZiZo6XkzkuqQ
+ Sl2zAkLDxfaVu+hPHU3nGXtLqLsg8IyShSvr2UE6LsSnXQ6KWzd0K73gXZUqsD4ZXItKzAZ7npy
+ D
+X-Gm-Gg: ASbGncuVE2ItmpIYByE+dZaEQappNFUARGj6rT8vVDZv8gToP8VWqB/dc+arQOnAET7
+ BiePyEa50Lyc5XJs9XNYdavGxGY9Sl9lAG3BEGxTbEmtKsr1AdhcJIwDrnhovddgiFOXwyhBjxa
+ r3NPnvkXGEYt4ZZqf6mSVMXr+hcHRHEQil5q8GvjPuOHtpIc4KxPHjbQtdA2+N+StwZw+H1p4ne
+ e3HNpcx1fq2RPtpr23oaV+PkOeSZPt3LKe/QqcXGfRdsPQ2lzpHeiP8yxpNjPe6AFuU+pCDwIHR
+ Ei1xeW7Ri+JXgQP9eZrHahiLqTvUOiZa5SlGG6JtgesCUOyMHBzUvLxeRbUrSrWrFArIREMkRf0
  =
-X-Google-Smtp-Source: AGHT+IERMB1wGQM+Yp3acw8m6YcGImStLuJyyS4qxoxIrgago7BnuwSD/vzihVfc2aRFS3EakzrTZw==
-X-Received: by 2002:a05:6a21:69c:b0:1ee:c8e7:203c with SMTP id
- adf61e73a8af0-20444ebefb6mr916079637.24.1745456003870; 
- Wed, 23 Apr 2025 17:53:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG8piHOtP9b8wbzNTy13Lc68DZaMD6ViCjpKUY8yOjrMa+jXPAFnlfxjFW31SqdMb8+SlSH0g==
+X-Received: by 2002:a05:6a00:843:b0:736:4644:86ee with SMTP id
+ d2e1a72fcca58-73e2463558cmr955239b3a.14.1745455987824; 
+ Wed, 23 Apr 2025 17:53:07 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25a6a971sm209353b3a.103.2025.04.23.17.53.23
+ d2e1a72fcca58-73e25a6a971sm209353b3a.103.2025.04.23.17.53.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 17:53:23 -0700 (PDT)
+ Wed, 23 Apr 2025 17:53:07 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 064/148] accel/tcg: Pass CPUTLBEntryFull to
- tlb_reset_dirty_range_locked
-Date: Wed, 23 Apr 2025 17:48:09 -0700
-Message-ID: <20250424004934.598783-65-richard.henderson@linaro.org>
+Subject: [PULL 044/148] target/mips: Restrict semihosting tests to system mode
+Date: Wed, 23 Apr 2025 17:47:49 -0700
+Message-ID: <20250424004934.598783-45-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
 References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,66 +102,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While we're renaming things, don't modify addr; save it for
-reuse in the qatomic_set.  Compute the host address into a
-new local variable.
+We do not set CONFIG_SEMIHOSTING in
+configs/targets/mips*-linux-user.mak.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cputlb.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ target/mips/cpu.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 10090067f7..5df98d93d0 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -882,18 +882,16 @@ void tlb_unprotect_code(ram_addr_t ram_addr)
-  *
-  * Called with tlb_c.lock held.
-  */
--static void tlb_reset_dirty_range_locked(CPUTLBEntry *tlb_entry,
-+static void tlb_reset_dirty_range_locked(CPUTLBEntryFull *full, CPUTLBEntry *ent,
-                                          uintptr_t start, uintptr_t length)
- {
--    uintptr_t addr = tlb_entry->addr_write;
-+    const uintptr_t addr = ent->addr_write;
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index b207106dd7..47df563e12 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -32,8 +32,10 @@
+ #include "exec/exec-all.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-clock.h"
+-#include "semihosting/semihost.h"
+ #include "fpu_helper.h"
++#ifndef CONFIG_USER_ONLY
++#include "semihosting/semihost.h"
++#endif
  
-     if ((addr & (TLB_INVALID_MASK | TLB_MMIO |
-                  TLB_DISCARD_WRITE | TLB_NOTDIRTY)) == 0) {
--        addr &= TARGET_PAGE_MASK;
--        addr += tlb_entry->addend;
--        if ((addr - start) < length) {
--            qatomic_set(&tlb_entry->addr_write,
--                        tlb_entry->addr_write | TLB_NOTDIRTY);
-+        uintptr_t host = (addr & TARGET_PAGE_MASK) + ent->addend;
-+        if ((host - start) < length) {
-+            qatomic_set(&ent->addr_write, addr | TLB_NOTDIRTY);
-         }
+ const char regnames[32][3] = {
+     "r0", "at", "v0", "v1", "a0", "a1", "a2", "a3",
+@@ -415,12 +417,11 @@ static void mips_cpu_reset_hold(Object *obj, ResetType type)
+     restore_pamask(env);
+     cs->exception_index = EXCP_NONE;
+ 
++#ifndef CONFIG_USER_ONLY
+     if (semihosting_get_argc()) {
+         /* UHI interface can be used to obtain argc and argv */
+         env->active_tc.gpr[4] = -1;
      }
- }
-@@ -918,16 +916,18 @@ void tlb_reset_dirty(CPUState *cpu, uintptr_t start, uintptr_t length)
- 
-     qemu_spin_lock(&cpu->neg.tlb.c.lock);
-     for (mmu_idx = 0; mmu_idx < NB_MMU_MODES; mmu_idx++) {
-+        CPUTLBDesc *desc = &cpu->neg.tlb.d[mmu_idx];
-+        CPUTLBDescFast *fast = &cpu->neg.tlb.f[mmu_idx];
-+        unsigned int n = tlb_n_entries(fast);
-         unsigned int i;
--        unsigned int n = tlb_n_entries(&cpu->neg.tlb.f[mmu_idx]);
- 
-         for (i = 0; i < n; i++) {
--            tlb_reset_dirty_range_locked(&cpu->neg.tlb.f[mmu_idx].table[i],
-+            tlb_reset_dirty_range_locked(&desc->fulltlb[i], &fast->table[i],
-                                          start, length);
-         }
- 
-         for (i = 0; i < CPU_VTLB_SIZE; i++) {
--            tlb_reset_dirty_range_locked(&cpu->neg.tlb.d[mmu_idx].vtable[i],
-+            tlb_reset_dirty_range_locked(&desc->vfulltlb[i], &desc->vtable[i],
-                                          start, length);
-         }
+-
+-#ifndef CONFIG_USER_ONLY
+     if (kvm_enabled()) {
+         kvm_mips_reset_vcpu(cpu);
      }
 -- 
 2.43.0
