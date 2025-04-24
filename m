@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2319EC369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 20:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C40BC369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 20:55:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u83ZK-0007m1-9i; Thu, 24 Apr 2025 16:53:15 -0400
+	id 1u83bP-0000Ey-RY; Thu, 24 Apr 2025 16:55:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u83ZH-0007lJ-KP
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:53:11 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u83bN-0000EH-Qm
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:55:21 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u83ZG-000856-1S
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:53:11 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43cf680d351so16086665e9.0
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 13:53:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u83bM-0008S7-50
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:55:21 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43cfe574976so11013255e9.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 13:55:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745527988; x=1746132788; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745528118; x=1746132918; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5ASBBnIM+JvTdvlbys0J94u5zglYl4KJNYKLn6kQ5z4=;
- b=qmvTxHeGD2Rxf0oqJ+eW02OdTWdqdorJT+KJr7ETSBka24dA1urssQn4etbXZXCLUY
- Ji9VqLyZLI5Kbcd+sIXY79ywqVuPo5HtnhiydyHtpdcuRsj8EcBXwzH+zwn+GXUTNSWV
- nKprtB7BSSIKt0JsJYJIa+eG0vG3M1GiMxVp/JRArxny90I2WT5N77JWOGnJsRqIMGHs
- rBbUtoc5lJBY7IJHjUWXW9Ieh9qwxRpzz4yJodzl35IveAkglAnK8Oxd2P9TJCcexsVb
- 6E4NxxUxukkZuaSdplctVEzZ2HhzIXBEHazNfR5wM/8TuCmeqO7BfCWwKdiVlonWfnNH
- 1mXw==
+ bh=BXal+zfAOvNFqXjsxCmEjhqqHx+MtMpv8FYAQTrrfds=;
+ b=iN8ejvC4G4SCYGfBGakVyAkpSlYwqTf3aIKdDbXgUq3C2QN96hot9g0ElIdSM/Sp6R
+ oQIqeZrNVcNsvi51nIOQhpbqSZ8v8AQ04Wojt8Nbwmm19Y7G+nFANuPnb9vsY8BgSFgM
+ Zzku2GiHkO7eEejhDBqxr+gcAjwxKxTDHiTP7AlA13/cQoasEG6FPkpBqHMMQVrXOlWI
+ 0Qvy63UjrquvW0CCSiTgXJ4qcBHBrwtTO/BlxqfOpQLpWAvmOfSL458L4oIXqFJ8pt3v
+ mDPk86rZxP1/CjU7KOhy44x9puYrMityEqQqulaAIPIybAptSke3/iNPq8CjDeMA2//g
+ deJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745527988; x=1746132788;
+ d=1e100.net; s=20230601; t=1745528118; x=1746132918;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5ASBBnIM+JvTdvlbys0J94u5zglYl4KJNYKLn6kQ5z4=;
- b=eVxyP3GIH4dhAmAFFxBR0yRXlxo6VZuHyrf6hAQ/s5ZcGA8U9VeE3Q1HoMhLOiTduF
- yL9WI0gMQtd3p9rUi8OxMjCI4uK22iIFn+XqQQtabaBD+YYTnmj1Q8DJRdw9ZxqbyzYf
- MozOKHR3pBvs/4Rm1PzIvSjvQbIMsE+GXk9WKIn8XUIhfeJ19p0VJ1gPByGmrrDXva8f
- bIcXrVjNdjVsv503mqff94jIUih29c5DjZ7tJJsBEEADkoW87zNtvrvyz6Gb9lzSYunE
- TwIhWRx6LxVveDw9MEEI4qasSUxZP0ysQj3LVIkdhB+Vf1TVj62S/Mm3OFLepuxwNxQ6
- cXOA==
+ bh=BXal+zfAOvNFqXjsxCmEjhqqHx+MtMpv8FYAQTrrfds=;
+ b=avcTOSx75chpV7oPk8Lt/bIw7Oa1GRJFzJUGm3nc8tOBv0V4hmO/28Z5CPG+5xeN5n
+ MtnnC2x45rOdewnNflB88qUKRJYqOuUeyc8DyS2FOmpyyU8BTsopFhwhIMb8JmiuYIoE
+ AOu5bTOtkqKr/bM1XlUxiI/gZk1yhO8v2Yv0Jr45KCqO/9JAyLZ6uHQkOEVM45wdNBk+
+ EL8ylGTqQhXU6MBT2LoW7kwB0HzqFoYXBIJ0glLv5vjjHJ2ERv/vT4GDhDh/bsoWuAlk
+ OBQZ2K7Gu462TsZpJtXbkwvqArx1ocbctJSZVsXZF+lYI/9gS95wSFzo3o6rRB0WccZF
+ uY5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWpaLD1tivd+TFcn8sxq+1WumT1wL0Lp9e2ee1FzvaZn+FUKkPS+jqWXnTcnwRylVR7q2FK+raWcvCi@nongnu.org
-X-Gm-Message-State: AOJu0Ywa5EpPrHeohXlBkba3PiY+N9uYggyS+BSEFd8WemteoE7gvs0G
- 0Wv7bOqQkiBowdKiie+FwxiXzPXNoMzkSKuxDc8cIVDgFffA6BBn0fYRvtd0kwA=
-X-Gm-Gg: ASbGnctoWXqe4mUO9bj1C6ysZvUHcJq3mZbWc3jKSqgfygPBYM+nBU40Zhy7BwA5tWZ
- S/UOO0S5i43RGacGorQkUUQEhbza4X3G519j33F0GUsGXGPg5KGug4t4ifH591XOqlH2pUoIjcy
- XaoMFuJH+yKsIUF8ogX1iy9fkZP7I2U1BkhnkjayzRIo5ZRqR2vYK/45Z0JtUTndFCcVVbRbo/O
- Y7tG/fcbsUDCD6i+g7g5stLMXNS416oJn6zr/T47sjzhJsrN7Hneep6QiB5bmv59meZJ4sKj841
- 1HMqiqisbpb2g8oFN3jd98XNgmpvrIOJCq0wuzMXCFPjb1aPMwiPoFFhUppE5Ax9py7ulDm0jr0
- 9Of1Luaqpb6IpdEPYHzw=
-X-Google-Smtp-Source: AGHT+IGxqOjNbppitLfZ2BJSkEW1UdBbVodqqk6N82DsRpYxISOW37bJOYQuRqctNz3LFf6K8k8JeQ==
-X-Received: by 2002:a05:600c:3d11:b0:439:873a:1114 with SMTP id
- 5b1f17b1804b1-4409c4773b0mr33657075e9.6.1745527988021; 
- Thu, 24 Apr 2025 13:53:08 -0700 (PDT)
+ AJvYcCU56ewjhAiq+M/h9jJfHyRrzLYs13i1JT+NI615dQtrW0v8g+p52wGvsn+cxv1z8APOtxK3tkgfuIJE@nongnu.org
+X-Gm-Message-State: AOJu0Yz7nYoQRKEp+eHIVo0WT4rCBABOhuAJHzgokidOXN34nB+g4/We
+ WuOsZ7WT/Cwd0r2bdjeS7VP4I08w4rxuZyn1JEILWGQ/kYruUxjYJhrzPKMZFZo=
+X-Gm-Gg: ASbGncukoBMIc3YmEdVL2AeTLR3SndDu3gAeagtANCqQ6J5TjC68m24zrE/jf4rPQnv
+ 16aJxqVZSM8G5pgX5WFEFhCSh/UsnJkvEueW3ivZIXNFXc/SlSNRwepqdD5DFLrhkdDGwEBuzS+
+ GkxeDIWpFk6XHCQBndzIBxIpnFbwAtO417cg6yZd+zNJVx/DnfDYO5KRLF3ECsC4Y/KMWlFzGGH
+ uAZ1kpc9qdvVnGCXP5RBKWxZmxCsc6luChavZbEoSP7ekVoSNKiQWR+fFXmugFJUsuHEsjGhGDp
+ UMTmS/H6wFFyiN9gBWRwQDffGN+9F4kTRGyp82NyIMDHPvg12ztX7oBJczPPNjn2eqlfnmZhBEn
+ QpcDLl/abYob1t+stj00=
+X-Google-Smtp-Source: AGHT+IH3ivIKQcd+vdHX0M5BVxbBaks42sfNY4uV7K/DLvLCojH/BLcKd2WZrfofssI0muwK5IVBxA==
+X-Received: by 2002:a05:6000:4305:b0:39f:eb7:37e1 with SMTP id
+ ffacd0b85a97d-3a06cecf04amr3505678f8f.0.1745528118510; 
+ Thu, 24 Apr 2025 13:55:18 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4409d2aab65sm33071215e9.17.2025.04.24.13.53.07
+ ffacd0b85a97d-3a073e5c7d1sm294309f8f.83.2025.04.24.13.55.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Apr 2025 13:53:07 -0700 (PDT)
-Message-ID: <ca665cd1-e060-4920-8d20-872c4de2e84a@linaro.org>
-Date: Thu, 24 Apr 2025 22:53:06 +0200
+ Thu, 24 Apr 2025 13:55:17 -0700 (PDT)
+Message-ID: <3b402b46-76d6-482d-964b-cd0051439df8@linaro.org>
+Date: Thu, 24 Apr 2025 22:55:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] tcg/loongarch64: Fix vec_val computation in
- tcg_target_const_match
+Subject: Re: [PATCH 2/2] tcg/loongarch64: Improve constraints for
+ TCG_CT_CONST_VCMP
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: git@xen0n.name
 References: <20250424190741.738515-1-richard.henderson@linaro.org>
- <20250424190741.738515-2-richard.henderson@linaro.org>
+ <20250424190741.738515-3-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250424190741.738515-2-richard.henderson@linaro.org>
+In-Reply-To: <20250424190741.738515-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,13 +104,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 24/4/25 21:07, Richard Henderson wrote:
-> Only use vece for a vector constant.  This avoids an assertion
-> failure in sextract64 when vece contains garbage.
+> Use the TCGCond given to tcg_target_const_match to exactly match
+> the supported constant.  Adjust the code generation to assume this
+> has been done -- recall that encode_*_insn contain assertions that
+> the constants are valid.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   tcg/loongarch64/tcg-target.c.inc | 14 ++++++++------
->   1 file changed, 8 insertions(+), 6 deletions(-)
+>   tcg/loongarch64/tcg-target.c.inc | 38 ++++++++++++++++++--------------
+>   1 file changed, 21 insertions(+), 17 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
