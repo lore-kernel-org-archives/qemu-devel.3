@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96825C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 07:52:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D71CC369D1
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 07:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7rNI-0001My-Ti; Thu, 24 Apr 2025 03:52:00 -0400
+	id 1u7rNB-0001Jc-2c; Thu, 24 Apr 2025 03:51:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u7rNG-0001MR-T0; Thu, 24 Apr 2025 03:51:58 -0400
+ id 1u7rNA-0001JQ-FD; Thu, 24 Apr 2025 03:51:52 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u7rNF-0006ez-4e; Thu, 24 Apr 2025 03:51:58 -0400
+ id 1u7rN4-0006ez-Eo; Thu, 24 Apr 2025 03:51:52 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 24 Apr
- 2025 15:51:37 +0800
+ 2025 15:51:36 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Thu, 24 Apr 2025 15:51:37 +0800
+ Transport; Thu, 24 Apr 2025 15:51:36 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -32,10 +32,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <nabihestefan@google.com>
-Subject: [PATCH v6 3/6] hw/arm/aspeed: Add support for loading vbootrom image
- via "-bios"
-Date: Thu, 24 Apr 2025 15:51:31 +0800
-Message-ID: <20250424075135.3715128-4-jamin_lin@aspeedtech.com>
+Subject: [PATCH v6 1/6] hw/arm/aspeed_ast27x0 Introduce vbootrom memory region
+Date: Thu, 24 Apr 2025 15:51:29 +0800
+Message-ID: <20250424075135.3715128-2-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250424075135.3715128-1-jamin_lin@aspeedtech.com>
 References: <20250424075135.3715128-1-jamin_lin@aspeedtech.com>
@@ -67,117 +66,69 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce "aspeed_load_vbootrom()" to support loading a virtual boot ROM image
-into the vbootrom memory region, using the "-bios" command-line option.
+Introduce a new vbootrom memory region. The region is mapped at address
+"0x00000000" and has a size of 128KB, identical to the SRAM region size.
+This memory region is intended for loading a vbootrom image file as part of the
+boot process.
 
-Introduce a new "vbootrom" field in the AspeedMachineClass to indicate whether
-a machine supports the virtual boot ROM region.
-
-Set this field to true by default for the AST2700-A0 and AST2700-A1 EVB
-machines.
+The vbootrom registered in the SoC's address space using the ASPEED_DEV_VBOOTROM
+index.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 Reviewed-by: Nabih Estefan <nabihestefan@google.com>
 Tested-by: Nabih Estefan <nabihestefan@google.com>
 ---
- include/hw/arm/aspeed.h |  1 +
- hw/arm/aspeed.c         | 36 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 37 insertions(+)
+ include/hw/arm/aspeed_soc.h | 2 ++
+ hw/arm/aspeed_ast27x0.c     | 9 +++++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/include/hw/arm/aspeed.h b/include/hw/arm/aspeed.h
-index 9cae45a1c9..973277bea6 100644
---- a/include/hw/arm/aspeed.h
-+++ b/include/hw/arm/aspeed.h
-@@ -40,6 +40,7 @@ struct AspeedMachineClass {
-     void (*i2c_init)(AspeedMachineState *bmc);
-     uint32_t uart_default;
-     bool sdhci_wp_inverted;
-+    bool vbootrom;
- };
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index f069d17d16..b4b23d693d 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -59,6 +59,7 @@ struct AspeedSoCState {
+     MemoryRegion sram;
+     MemoryRegion spi_boot_container;
+     MemoryRegion spi_boot;
++    MemoryRegion vbootrom;
+     AddressSpace dram_as;
+     AspeedRtcState rtc;
+     AspeedTimerCtrlState timerctrl;
+@@ -169,6 +170,7 @@ struct AspeedSoCClass {
+ const char *aspeed_soc_cpu_type(AspeedSoCClass *sc);
  
+ enum {
++    ASPEED_DEV_VBOOTROM,
+     ASPEED_DEV_SPI_BOOT,
+     ASPEED_DEV_IOMEM,
+     ASPEED_DEV_UART0,
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index b05ed75ff4..968dfa5526 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -24,6 +24,7 @@
+ #include "qemu/log.h"
  
-diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
-index 82f42582fa..32846bd088 100644
---- a/hw/arm/aspeed.c
-+++ b/hw/arm/aspeed.c
-@@ -27,6 +27,7 @@
- #include "system/reset.h"
- #include "hw/loader.h"
- #include "qemu/error-report.h"
-+#include "qemu/datadir.h"
- #include "qemu/units.h"
- #include "hw/qdev-clock.h"
- #include "system/system.h"
-@@ -305,6 +306,33 @@ static void aspeed_install_boot_rom(AspeedMachineState *bmc, BlockBackend *blk,
-                    rom_size, &error_abort);
- }
+ static const hwaddr aspeed_soc_ast2700_memmap[] = {
++    [ASPEED_DEV_VBOOTROM]  =  0x00000000,
+     [ASPEED_DEV_SRAM]      =  0x10000000,
+     [ASPEED_DEV_HACE]      =  0x12070000,
+     [ASPEED_DEV_EMMC]      =  0x12090000,
+@@ -657,6 +658,14 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     memory_region_add_subregion(s->memory,
+                                 sc->memmap[ASPEED_DEV_SRAM], &s->sram);
  
-+#define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
-+
-+/*
-+ * This function locates the vbootrom image file specified via the command line
-+ * using the -bios option. It loads the specified image into the vbootrom
-+ * memory region and handles errors if the file cannot be found or loaded.
-+ */
-+static void aspeed_load_vbootrom(AspeedMachineState *bmc, const char *bios_name,
-+                                 Error **errp)
-+{
-+    g_autofree char *filename = NULL;
-+    AspeedSoCState *soc = bmc->soc;
-+    int ret;
-+
-+    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-+    if (!filename) {
-+        error_setg(errp, "Could not find vbootrom image '%s'", bios_name);
++    /* VBOOTROM */
++    if (!memory_region_init_ram(&s->vbootrom, OBJECT(s), "aspeed.vbootrom",
++                                0x20000, errp)) {
 +        return;
 +    }
++    memory_region_add_subregion(s->memory,
++                                sc->memmap[ASPEED_DEV_VBOOTROM], &s->vbootrom);
 +
-+    ret = load_image_mr(filename, &soc->vbootrom);
-+    if (ret < 0) {
-+        error_setg(errp, "Failed to load vbootrom image '%s'", bios_name);
-+        return;
-+    }
-+}
-+
- void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
-                                       unsigned int count, int unit0)
- {
-@@ -380,6 +408,7 @@ static void aspeed_machine_init(MachineState *machine)
-     AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(machine);
-     AspeedSoCClass *sc;
-     int i;
-+    const char *bios_name = NULL;
-     DriveInfo *emmc0 = NULL;
-     bool boot_emmc;
- 
-@@ -482,6 +511,11 @@ static void aspeed_machine_init(MachineState *machine)
-         }
-     }
- 
-+    if (amc->vbootrom) {
-+        bios_name = machine->firmware ?: VBOOTROM_FILE_NAME;
-+        aspeed_load_vbootrom(bmc, bios_name, &error_abort);
-+    }
-+
-     arm_load_kernel(ARM_CPU(first_cpu), machine, &aspeed_board_binfo);
- }
- 
-@@ -1689,6 +1723,7 @@ static void aspeed_machine_ast2700a0_evb_class_init(ObjectClass *oc, void *data)
-     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
-     amc->uart_default = ASPEED_DEV_UART12;
-     amc->i2c_init  = ast2700_evb_i2c_init;
-+    amc->vbootrom = true;
-     mc->auto_create_sdcard = true;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
-@@ -1709,6 +1744,7 @@ static void aspeed_machine_ast2700a1_evb_class_init(ObjectClass *oc, void *data)
-     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
-     amc->uart_default = ASPEED_DEV_UART12;
-     amc->i2c_init  = ast2700_evb_i2c_init;
-+    amc->vbootrom = true;
-     mc->auto_create_sdcard = true;
-     mc->default_ram_size = 1 * GiB;
-     aspeed_machine_class_init_cpus_defaults(mc);
+     /* SCU */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
+         return;
 -- 
 2.43.0
 
