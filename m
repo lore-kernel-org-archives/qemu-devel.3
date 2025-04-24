@@ -4,71 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36DE0C369D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 08:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B8D9C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 08:19:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7rUc-0001J6-Ea; Thu, 24 Apr 2025 03:59:34 -0400
+	id 1u7rmV-0007ml-HO; Thu, 24 Apr 2025 04:18:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u7rUX-0001HB-NU
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 03:59:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1u7rmO-0007lz-93; Thu, 24 Apr 2025 04:17:57 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u7rUU-0007XQ-Fo
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 03:59:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745481564;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WHfteXiEbJ/UnkcjEIKyYx7qjgvjyi/nDUEC2y7+Xz0=;
- b=HXVCOITwEEI1kUeohX2syUzZqwtC1u+xte8A7vfja/YToGSU8GpE1wdDQcAjxX5DCf5rfu
- hLE1XgOwkER5iZ2wXNXfHiGbYeOm0F2qEPmEYEytUmsYS0aZ4oZo4S6neXeDelkwNLFmZt
- IlsPb+YEvTdI33nlVGcnab0OTb9iF18=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-327-PvdjmhCyONymFaGdz77PZA-1; Thu,
- 24 Apr 2025 03:59:21 -0400
-X-MC-Unique: PvdjmhCyONymFaGdz77PZA-1
-X-Mimecast-MFC-AGG-ID: PvdjmhCyONymFaGdz77PZA_1745481560
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0499019560AE; Thu, 24 Apr 2025 07:59:20 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.5])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7F1EE180045B; Thu, 24 Apr 2025 07:59:19 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id F14C921E661A; Thu, 24 Apr 2025 09:59:16 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Richard Henderson <richard.henderson@linaro.org>,
- Corey Minyard <cminyard@mvista.com>
-Subject: [PULL 3/3] cleanup: Drop pointless label at end of function
-Date: Thu, 24 Apr 2025 09:59:16 +0200
-Message-ID: <20250424075916.1522767-4-armbru@redhat.com>
-In-Reply-To: <20250424075916.1522767-1-armbru@redhat.com>
-References: <20250424075916.1522767-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1u7rmK-0001Le-Dg; Thu, 24 Apr 2025 04:17:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745482673; x=1777018673;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=mtYa619WJaIjkVS6EBoexqG+IimlWzorRTe7Wk42SY4=;
+ b=d2a/2wvtlKillwQEwBUXLugpprFZTAoxWciuFs8WW9H1raccZyNGtMEN
+ CpJ3HD8lGTYiHrhtkYUV+qr8opqaYFFKKx5XgL66hS0FLNTP/RxrZEZnj
+ lYdR0UToaE5MOsArAoDP4GJXN7MebG0Nwk2fN6JWBmZIo1J5/IulRVsls
+ EWgV22eQCYyK2Hfhjd7Iy2AqFNHDGPLnEJlu+GupzRkm73o2wJ1jU60i/
+ Fd/hpNxqS/EAFvqWUZkx2FBYT4lZEdJueybsVCUK4B9GUPcKIMlsy/VP6
+ 23foyVGE+dtaa44uFP2YQLzaNoEBugMHKulNAOXZ+2wXHy1a1QrUUdOOQ Q==;
+X-CSE-ConnectionGUID: u0TeNiAuSOuxvnnxufLkAQ==
+X-CSE-MsgGUID: THXnQG8YQ1e6beHETpSfoQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11412"; a="57751488"
+X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="57751488"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Apr 2025 01:17:46 -0700
+X-CSE-ConnectionGUID: H5wE5xOYT8y6Safq7OTS6g==
+X-CSE-MsgGUID: 48Uunm39R1qZjQcrQ1tj/Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="163526100"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.245.128])
+ ([10.124.245.128])
+ by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Apr 2025 01:17:37 -0700
+Message-ID: <c800f523-2b1e-4f0a-b553-eb5a717e617b@linux.intel.com>
+Date: Thu, 24 Apr 2025 16:17:33 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
-X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] i386/kvm: Support fixed counter in KVM PMU filter
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Marcelo Tosatti
+ <mtosatti@redhat.com>, Shaoqin Huang <shahuang@redhat.com>,
+ Eric Auger <eauger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>
+References: <20250409082649.14733-1-zhao1.liu@intel.com>
+ <20250409082649.14733-6-zhao1.liu@intel.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <20250409082649.14733-6-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=192.198.163.11;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,136 +92,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Acked-by: Corey Minyard <cminyard@mvista.com>
-Message-ID: <20250407082643.2310002-4-armbru@redhat.com>
----
- hw/ipmi/ipmi_bmc_extern.c | 4 +---
- hw/ipmi/ipmi_bmc_sim.c    | 7 ++-----
- hw/ipmi/ipmi_bt.c         | 7 +++----
- hw/ipmi/ipmi_kcs.c        | 3 +--
- 4 files changed, 7 insertions(+), 14 deletions(-)
 
-diff --git a/hw/ipmi/ipmi_bmc_extern.c b/hw/ipmi/ipmi_bmc_extern.c
-index 22cb9b590b..e563214390 100644
---- a/hw/ipmi/ipmi_bmc_extern.c
-+++ b/hw/ipmi/ipmi_bmc_extern.c
-@@ -213,7 +213,7 @@ static void ipmi_bmc_extern_handle_command(IPMIBmc *b,
-         rsp[2] = err;
-         ibe->waiting_rsp = false;
-         k->handle_rsp(s, msg_id, rsp, 3);
--        goto out;
-+        return;
-     }
- 
-     addchar(ibe, msg_id);
-@@ -228,8 +228,6 @@ static void ipmi_bmc_extern_handle_command(IPMIBmc *b,
- 
-     /* Start the transmit */
-     continue_send(ibe);
--
-- out:
- }
- 
- static void handle_hw_op(IPMIBmcExtern *ibe, unsigned char hw_op)
-diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
-index c6a85e8cd1..41fe6835a7 100644
---- a/hw/ipmi/ipmi_bmc_sim.c
-+++ b/hw/ipmi/ipmi_bmc_sim.c
-@@ -465,13 +465,12 @@ void ipmi_bmc_gen_event(IPMIBmc *b, uint8_t *evt, bool log)
-     }
- 
-     if (ibs->msg_flags & IPMI_BMC_MSG_FLAG_EVT_BUF_FULL) {
--        goto out;
-+        return;
-     }
- 
-     memcpy(ibs->evtbuf, evt, 16);
-     ibs->msg_flags |= IPMI_BMC_MSG_FLAG_EVT_BUF_FULL;
-     k->set_atn(s, 1, attn_irq_enabled(ibs));
-- out:
- }
- static void gen_event(IPMIBmcSim *ibs, unsigned int sens_num, uint8_t deassert,
-                       uint8_t evd1, uint8_t evd2, uint8_t evd3)
-@@ -996,7 +995,7 @@ static void get_msg(IPMIBmcSim *ibs,
- 
-     if (QTAILQ_EMPTY(&ibs->rcvbufs)) {
-         rsp_buffer_set_error(rsp, 0x80); /* Queue empty */
--        goto out;
-+        return;
-     }
-     rsp_buffer_push(rsp, 0); /* Channel 0 */
-     msg = QTAILQ_FIRST(&ibs->rcvbufs);
-@@ -1011,8 +1010,6 @@ static void get_msg(IPMIBmcSim *ibs,
-         ibs->msg_flags &= ~IPMI_BMC_MSG_FLAG_RCV_MSG_QUEUE;
-         k->set_atn(s, attn_set(ibs), attn_irq_enabled(ibs));
-     }
--
--out:
- }
- 
- static unsigned char
-diff --git a/hw/ipmi/ipmi_bt.c b/hw/ipmi/ipmi_bt.c
-index 5cf12c59a8..e01d02fe52 100644
---- a/hw/ipmi/ipmi_bt.c
-+++ b/hw/ipmi/ipmi_bt.c
-@@ -98,14 +98,14 @@ static void ipmi_bt_handle_event(IPMIInterface *ii)
-     IPMIBT *ib = iic->get_backend_data(ii);
- 
-     if (ib->inlen < 4) {
--        goto out;
-+        return;
-     }
-     /* Note that overruns are handled by handle_command */
-     if (ib->inmsg[0] != (ib->inlen - 1)) {
-         /* Length mismatch, just ignore. */
-         IPMI_BT_SET_BBUSY(ib->control_reg, 1);
-         ib->inlen = 0;
--        goto out;
-+        return;
-     }
-     if ((ib->inmsg[1] == (IPMI_NETFN_APP << 2)) &&
-                         (ib->inmsg[3] == IPMI_CMD_GET_BT_INTF_CAP)) {
-@@ -136,7 +136,7 @@ static void ipmi_bt_handle_event(IPMIInterface *ii)
-             IPMI_BT_SET_B2H_IRQ(ib->mask_reg, 1);
-             ipmi_bt_raise_irq(ib);
-         }
--        goto out;
-+        return;
-     }
-     ib->waiting_seq = ib->inmsg[2];
-     ib->inmsg[2] = ib->inmsg[1];
-@@ -145,7 +145,6 @@ static void ipmi_bt_handle_event(IPMIInterface *ii)
-         bk->handle_command(ib->bmc, ib->inmsg + 2, ib->inlen - 2,
-                            sizeof(ib->inmsg), ib->waiting_rsp);
-     }
-- out:
- }
- 
- static void ipmi_bt_handle_rsp(IPMIInterface *ii, uint8_t msg_id,
-diff --git a/hw/ipmi/ipmi_kcs.c b/hw/ipmi/ipmi_kcs.c
-index ae549fb864..d5cfe6c068 100644
---- a/hw/ipmi/ipmi_kcs.c
-+++ b/hw/ipmi/ipmi_kcs.c
-@@ -168,7 +168,7 @@ static void ipmi_kcs_handle_event(IPMIInterface *ii)
-             ik->outpos = 0;
-             bk->handle_command(ik->bmc, ik->inmsg, ik->inlen, sizeof(ik->inmsg),
-                                ik->waiting_rsp);
--            goto out_noibf;
-+            return;
-         } else if (ik->cmd_reg == IPMI_KCS_WRITE_END_CMD) {
-             ik->cmd_reg = -1;
-             ik->write_end = 1;
-@@ -197,7 +197,6 @@ static void ipmi_kcs_handle_event(IPMIInterface *ii)
-     ik->cmd_reg = -1;
-     ik->data_in_reg = -1;
-     IPMI_KCS_SET_IBF(ik->status_reg, 0);
-- out_noibf:
- }
- 
- static void ipmi_kcs_handle_rsp(IPMIInterface *ii, uint8_t msg_id,
--- 
-2.48.1
+On 4/9/2025 4:26 PM, Zhao Liu wrote:
+> KVM_SET_PMU_EVENT_FILTER of x86 KVM allows user to configure x86 fixed
+> function counters by a bitmap.
+>
+> Add the support of x86-fixed-counter in kvm-pmu-filter object and handle
+> this in i386 kvm codes.
+>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> Tested-by: Yi Lai <yi1.lai@intel.com>
+> ---
+> Changes since RFC v2:
+>  * Drop KVMPMUX86FixedCounter structure and use uint32_t to represent
+>    bitmap in QAPI directly.
+>  * Add Tested-by from Yi.
+>  * Add documentation in qemu-options.hx.
+>  * Bump up the supported QAPI version to v10.1.
+>
+> Changes since RFC v1:
+>  * Make "action" as a global (per filter object) item, not a per-counter
+>    parameter. (Dapeng)
+>  * Bump up the supported QAPI version to v10.0.
+> ---
+>  accel/kvm/kvm-pmu.c      | 31 +++++++++++++++++++++++++++++++
+>  include/system/kvm-pmu.h |  5 ++++-
+>  qapi/kvm.json            |  6 +++++-
+>  qemu-options.hx          |  6 +++++-
+>  target/i386/kvm/kvm.c    | 39 ++++++++++++++++++++++++---------------
+>  5 files changed, 69 insertions(+), 18 deletions(-)
+>
+> diff --git a/accel/kvm/kvm-pmu.c b/accel/kvm/kvm-pmu.c
+> index 9205907d1779..509d69d9c515 100644
+> --- a/accel/kvm/kvm-pmu.c
+> +++ b/accel/kvm/kvm-pmu.c
+> @@ -101,6 +101,29 @@ fail:
+>      qapi_free_KvmPmuFilterEventList(head);
+>  }
+>  
+> +static void kvm_pmu_filter_get_fixed_counter(Object *obj, Visitor *v,
+> +                                             const char *name, void *opaque,
+> +                                             Error **errp)
+> +{
+> +    KVMPMUFilter *filter = KVM_PMU_FILTER(obj);
+> +
+> +    visit_type_uint32(v, name, &filter->x86_fixed_counter, errp);
+> +}
+> +
+> +static void kvm_pmu_filter_set_fixed_counter(Object *obj, Visitor *v,
+> +                                             const char *name, void *opaque,
+> +                                             Error **errp)
+> +{
+> +    KVMPMUFilter *filter = KVM_PMU_FILTER(obj);
+> +    uint32_t counter;
+> +
+> +    if (!visit_type_uint32(v, name, &counter, errp)) {
+> +        return;
+> +    }
+> +
+> +    filter->x86_fixed_counter = counter;
+> +}
+> +
+>  static void kvm_pmu_filter_class_init(ObjectClass *oc, void *data)
+>  {
+>      object_class_property_add_enum(oc, "action", "KvmPmuFilterAction",
+> @@ -116,6 +139,14 @@ static void kvm_pmu_filter_class_init(ObjectClass *oc, void *data)
+>                                NULL, NULL);
+>      object_class_property_set_description(oc, "events",
+>                                            "KVM PMU event list");
+> +
+> +    object_class_property_add(oc, "x86-fixed-counter", "uint32_t",
+> +                              kvm_pmu_filter_get_fixed_counter,
+> +                              kvm_pmu_filter_set_fixed_counter,
+> +                              NULL, NULL);
+> +    object_class_property_set_description(oc, "x86-fixed-counter",
+> +                                          "Enablement bitmap of "
+> +                                          "x86 PMU fixed counter");
+>  }
+>  
+>  static void kvm_pmu_filter_instance_init(Object *obj)
+> diff --git a/include/system/kvm-pmu.h b/include/system/kvm-pmu.h
+> index 6abc0d037aee..5238b2b4dcc7 100644
+> --- a/include/system/kvm-pmu.h
+> +++ b/include/system/kvm-pmu.h
+> @@ -19,10 +19,12 @@ OBJECT_DECLARE_SIMPLE_TYPE(KVMPMUFilter, KVM_PMU_FILTER)
+>  
+>  /**
+>   * KVMPMUFilter:
+> - * @action: action that KVM PMU filter will take for selected PMU events.
+> + * @action: action that KVM PMU filter will take for selected PMU events
+> + *    and counters.
 
+Maybe more accurate "fixed counters".
+
+
+>   * @nevents: number of PMU event entries listed in @events
+>   * @events: list of PMU event entries.  A PMU event entry may represent one
+>   *    event or multiple events due to its format.
+> + * @x86_fixed_counter: bitmap of x86 fixed counter.
+>   */
+>  struct KVMPMUFilter {
+>      Object parent_obj;
+> @@ -30,6 +32,7 @@ struct KVMPMUFilter {
+>      KvmPmuFilterAction action;
+>      uint32_t nevents;
+>      KvmPmuFilterEventList *events;
+> +    uint32_t x86_fixed_counter;
+>  };
+>  
+>  /*
+> diff --git a/qapi/kvm.json b/qapi/kvm.json
+> index 1b523e058731..5374c8340e5a 100644
+> --- a/qapi/kvm.json
+> +++ b/qapi/kvm.json
+> @@ -115,7 +115,10 @@
+>  #
+>  # Properties of KVM PMU Filter.
+>  #
+> -# @action: action that KVM PMU filter will take for selected PMU events.
+> +# @action: action that KVM PMU filter will take for selected PMU events
+> +#     and counters.
+> +#
+> +# @x86-fixed-counter: enablement bitmap of x86 fixed counters.
+>  #
+>  # @events: list of selected PMU events.
+>  #
+> @@ -123,4 +126,5 @@
+>  ##
+>  { 'struct': 'KvmPmuFilterProperties',
+>    'data': { 'action': 'KvmPmuFilterAction',
+> +            '*x86-fixed-counter': 'uint32',
+>              '*events': ['KvmPmuFilterEvent'] } }
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index bb89198971e0..eadfb69c8876 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -6150,7 +6150,7 @@ SRST
+>  
+>              (qemu) qom-set /objects/iothread1 poll-max-ns 100000
+>  
+> -    ``-object '{"qom-type":"kvm-pmu-filter","id":id,"action":action,"events":[entry_list]}'``
+> +    ``-object '{"qom-type":"kvm-pmu-filter","id":id,"x86-fixed-counter":bitmap,"action":action,"events":[entry_list]}'``
+>          Create a kvm-pmu-filter object that configures KVM to filter
+>          selected PMU events for Guest.
+>  
+> @@ -6165,6 +6165,10 @@ SRST
+>          will be denied, while all other events can be accessed normally
+>          in the Guest.
+>  
+> +        The ``x86-fixed-counter`` parameter sets a bitmap of x86 fixed
+> +        counters, and ``action`` will also take effect on the selected
+> +        fixed counters.
+> +
+>          The ``events`` parameter accepts a list of PMU event entries in
+>          JSON format. Event entries, based on different encoding formats,
+>          have the following types:
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 8786501e9c7e..8b916dbb5d6f 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -6016,19 +6016,25 @@ static int kvm_install_pmu_event_filter(KVMState *s)
+>          g_assert_not_reached();
+>      }
+>  
+> -    kvm_filter->flags = filter->events->value->format ==
+> -                        KVM_PMU_EVENT_FORMAT_X86_MASKED_ENTRY ?
+> -                        KVM_PMU_EVENT_FLAG_MASKED_EVENTS : 0;
+> -
+> -    if (kvm_filter->flags == KVM_PMU_EVENT_FLAG_MASKED_EVENTS &&
+> -        !kvm_vm_check_extension(s, KVM_CAP_PMU_EVENT_MASKED_EVENTS)) {
+> -        error_report("Masked entry format of PMU event "
+> -                     "is not supported by Host.");
+> -        goto fail;
+> +    if (filter->x86_fixed_counter) {
+> +        kvm_filter->fixed_counter_bitmap = filter->x86_fixed_counter;
+>      }
+>  
+> -    if (!kvm_config_pmu_event(filter, kvm_filter)) {
+> -        goto fail;
+> +    if (filter->nevents) {
+> +        kvm_filter->flags = filter->events->value->format ==
+> +                            KVM_PMU_EVENT_FORMAT_X86_MASKED_ENTRY ?
+> +                            KVM_PMU_EVENT_FLAG_MASKED_EVENTS : 0;
+> +
+> +        if (kvm_filter->flags == KVM_PMU_EVENT_FLAG_MASKED_EVENTS &&
+> +            !kvm_vm_check_extension(s, KVM_CAP_PMU_EVENT_MASKED_EVENTS)) {
+> +            error_report("Masked entry format of PMU event "
+> +                         "is not supported by Host.");
+> +            goto fail;
+> +        }
+> +
+> +        if (!kvm_config_pmu_event(filter, kvm_filter)) {
+> +            goto fail;
+> +        }
+>      }
+>  
+>      ret = kvm_vm_ioctl(s, KVM_SET_PMU_EVENT_FILTER, kvm_filter);
+> @@ -6656,16 +6662,19 @@ static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
+>      KvmPmuFilterEventList *events = filter->events;
+>      uint32_t base_flag;
+>  
+> -    if (!filter->nevents) {
+> +    if (!filter->x86_fixed_counter && !filter->nevents) {
+>          error_setg(errp,
+>                     "Empty KVM PMU filter.");
+>          return;
+>      }
+>  
+>      /* Pick the first event's flag as the base one. */
+> -    base_flag = events->value->format ==
+> -                KVM_PMU_EVENT_FORMAT_X86_MASKED_ENTRY ?
+> -                KVM_PMU_EVENT_FLAG_MASKED_EVENTS : 0;
+> +    base_flag = 0;
+> +    if (filter->nevents &&
+> +        events->value->format == KVM_PMU_EVENT_FORMAT_X86_MASKED_ENTRY) {
+> +        base_flag = KVM_PMU_EVENT_FLAG_MASKED_EVENTS;
+> +    }
+> +
+>      while (events) {
+>          KvmPmuFilterEvent *event = events->value;
+>          uint32_t flag;
 
