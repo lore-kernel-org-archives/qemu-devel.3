@@ -4,86 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F49C369D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 08:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8A6FC369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 08:27:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7rpN-0001TQ-Db; Thu, 24 Apr 2025 04:21:01 -0400
+	id 1u7ruX-0003QI-Pd; Thu, 24 Apr 2025 04:26:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1u7rpK-0001Su-1b
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 04:20:58 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1u7rpG-0001n8-T6
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 04:20:57 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4394a823036so6668765e9.0
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 01:20:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1745482851; x=1746087651; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ytGDBpv1pt6SUN7d+5+FAkGcFAfGT6omdrFsqWjZC+U=;
- b=HO1Y8pUAuZIlefLu3lW1YJ+kwOnNtgBQyXkZJdwEOnlYmR6bZPp2HiWuq6/n/b9BtT
- KLYClBMiS48543gQrhM+wtLahm1GfO6ymMaM5NrG1qwPay+u5GvBaovfRggylwd4JAPf
- lR8uqzKVLir2G8FLBZ/mh0c8+X4+dVLXWVsqboRcTxT4YMcveJ+CiQtZ5YSnEugmiVpN
- yfGFOASKoV7tMpGHeAfdF3esHa9/ybL8iXOxnGtXHUQswrj463qiyEVoG3F9xalfoHzu
- 911FZJPCBK44ZWbib/ulZDetrN1wR+OOTAOZgOuuxiZN4n1qJVWgqnDJXJLrCWHNTX3F
- 4u3g==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7ruO-0003OO-Q1
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 04:26:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u7ruJ-0002IO-48
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 04:26:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745483163;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=T/GqnyPXA9kMIyzWsFT0j04yOPwpDInT0nGe3psUzCQ=;
+ b=BeifbLjZi0g3t4SY1ygkIJHAijp5oR1bFV4CCbd//im0QlZ1lDfP9SPCqfstrKGQPtGzmJ
+ 4N9qLJIzQfBvpb1iEm5GREcAQ8i6apxeZWMLBFQFXf5AU8D4ImBYZTTZqdzTjvfrI78T05
+ MzOq6xyk9uwjEo1qUHsH8N4SMlW2eg0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-128-qcg6mVuQP4qvugiG6SeG2A-1; Thu, 24 Apr 2025 04:26:01 -0400
+X-MC-Unique: qcg6mVuQP4qvugiG6SeG2A-1
+X-Mimecast-MFC-AGG-ID: qcg6mVuQP4qvugiG6SeG2A_1745483160
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43cfda30a3cso3743555e9.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 01:26:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745482851; x=1746087651;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ytGDBpv1pt6SUN7d+5+FAkGcFAfGT6omdrFsqWjZC+U=;
- b=B+50aIya2Hm0Fko++mv13wNr5NzdbR+huF+T0KHvmnwCEUOriOQ1I0e/ZMLfbXCkbQ
- YgBPuVI2u59MV3N969v+j9H/S6KeHdskLuuZF0vo1uyNeOe2wYUJT1+2k8lDwS3a4rpQ
- KYn54cNHKZyiGXFoUVzc9abLjWPX9Lbj6gRzJ27Mv9/EgcF3G4gl+wHWRpT/hgnzOqCQ
- v37Jb+zQ06M1o9QmKht64itHDcJqI6NhVwA3+FhBZNyFYZQjkyIs+MAUVkt2uPLTm130
- QNzJFp2kRFac2AHIibyrEGPz5mnOyWA69KAL3Va6N+XtqPgBTXVBo6nF7gHzGewFxUSE
- R7oA==
-X-Gm-Message-State: AOJu0YwalCt/m1275nKw7m6Tdqy5REcxHEFEpdQ6rcoUy4YMY0frpoCq
- QE8++GnkgODYsRkRkHb0oluWtrO6kzYuX8vK9jgacAnzR6GKxbMR8g9YrWsgZos=
-X-Gm-Gg: ASbGncuVWUlfCOnXM3PsfFyZdDzM+f06O8jTYlfz6y9U1kXT6q+mLI8hZsin5vgnJaK
- 5mSdRvN3M+4YAQBZYwQkSoYVCZJgIyfzXztARa3822e/R7RhagjQ+x7FtIiz7CDKC+8qa+ueGg4
- SLkh3i9Cmof4MkOtC9SEP6Hcx5Bvu6X+WjvJOuCqEg2ftOHCFXXRU0/PO3Q5hOS1YjR1feTvbJl
- W8bwG5HxK+FJN9z9IrGDBe3sV/7S+Ty3p9XUuSRu/x5BiiRm+eQy3BuH4O0B73jItm7u132VCbR
- s5VWze7UzBrmF91S2hYZFosiLvNc
-X-Google-Smtp-Source: AGHT+IFlEpPyy0nmcW6ED6vjaCCnHKIbcWbPwHBz63xcqFQAViW/rhuZ6OVSiG/QeWdySasLr4x2Yw==
-X-Received: by 2002:a05:600c:4e07:b0:439:9b2a:1b2f with SMTP id
- 5b1f17b1804b1-4409bcfa390mr16332575e9.3.1745482851025; 
- Thu, 24 Apr 2025 01:20:51 -0700 (PDT)
-Received: from localhost ([2a02:8308:a00c:e200::f716])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4409d2d88cdsm10638865e9.25.2025.04.24.01.20.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Apr 2025 01:20:50 -0700 (PDT)
-Date: Thu, 24 Apr 2025 10:20:49 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
-Subject: Re: [PATCH 2/2] hw/riscv/virt.c: change default CPU to 'max'
-Message-ID: <20250424-6351b8780f6887b09c2c655f@orel>
-References: <20250404152750.332791-1-dbarboza@ventanamicro.com>
- <20250404152750.332791-3-dbarboza@ventanamicro.com>
+ d=1e100.net; s=20230601; t=1745483160; x=1746087960;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=T/GqnyPXA9kMIyzWsFT0j04yOPwpDInT0nGe3psUzCQ=;
+ b=hWIcLDFH/PkB0x9oIPUfP7soSie+wHMS/MS7sGBu27ZVceUtgchvilBln7l3AQzKo2
+ EQ7YyXTKg8etyA2fUy+F6+VX0k1QCyJxaeIleqd69/WRvjEt76kQXKtvzzV7bRNhycJ3
+ 6HnOeRBdt+xsPfirq1yrxP4/AHau5l14+Y24oSy++WTY27rnvI6TfpVypUxWEn7m/AUC
+ A1H06hLb2dEY3sYC7p9pF34BHsizKlfoCJQ5G23GnQ1TrxarSfnfSZ0P8DKsgzhNoQn9
+ 0ybpG9PLMihkQZ91tbqSXUwkxhGmP4sXscdM5rieCqYdkPsechZhkln1YMF44joz6b1I
+ COFw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXu/v3Zz51gCyEpcPPRvTi2FruzZKGNMFTgw4+qfCZLOBR/M2DrWChf7Vb6CH2B8T99v0BpODMRkPq+@nongnu.org
+X-Gm-Message-State: AOJu0YxRu31M1b4g7BqglBcs/vxWxaI9g7JPnyurhZvd1SlBa3WzBfNn
+ zCTLO7C/SktjeU4uxegmBiVqrBDI5tudFvyUeVKt3yTwcXQl2QHvafCZeb5iMZmF/Le1KW/5Tct
+ WfDc+XzKRgkv9dT8HJHIp4JcNKbZbMyW2hgbQPlFzE9IcTsOT5USV
+X-Gm-Gg: ASbGncuryg8163BhvAnTC32y9B+w7niuVkH+WF/XOPZRBAK7WTwcE/9TjmhQhhkyLi6
+ wv5mpaOCTGhKfJQjnFNl5gYfhQCdBqVeMD903Tl9AerEMGRgTfPgGhlOzYqvGWSfdobmLNWBw2/
+ Udd4wJZbDEWYjXhA0YvdFTsx6lPa7Kceo03bdbrMvlJSk1Rd3ajT6d9tsqJNGwUO2/RCk4udu/k
+ 9ikaGyNsi5E/3ZcSXK8Cs9GNq931lbrH9vzoUtHfM5Q4V69UkVqOrCTepyn2H3oTH/jtaflvQ+o
+ CTpnXLP5wDcT3ES3lc/LI5UOs4wgb8DgOUl/ZnIVyty4nQ==
+X-Received: by 2002:a05:600c:3d0c:b0:43d:224:86b5 with SMTP id
+ 5b1f17b1804b1-4409bcfb42cmr15512465e9.4.1745483160315; 
+ Thu, 24 Apr 2025 01:26:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFKhjonNZ5FVeA82yDtHWdT0A0yVemREopNXNO1K4YM7gr9QSb2JaabT5cpmN8jghZp/fyvww==
+X-Received: by 2002:a05:600c:3d0c:b0:43d:224:86b5 with SMTP id
+ 5b1f17b1804b1-4409bcfb42cmr15512275e9.4.1745483159975; 
+ Thu, 24 Apr 2025 01:25:59 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-43-178-177.web.vodafone.de.
+ [109.43.178.177]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4409d2b77f9sm10956845e9.25.2025.04.24.01.25.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Apr 2025 01:25:59 -0700 (PDT)
+Message-ID: <2d6dead5-f56c-43cf-b7d1-9567fef99616@redhat.com>
+Date: Thu, 24 Apr 2025 10:25:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250404152750.332791-3-dbarboza@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 1/2] target/ppc: Big-core scratch register fix
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+References: <20250408124550.40485-1-npiggin@gmail.com>
+ <20250408124550.40485-2-npiggin@gmail.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250408124550.40485-2-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,51 +155,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 04, 2025 at 12:27:50PM -0300, Daniel Henrique Barboza wrote:
-> In [1], minute 44, we have a hint from a Canonical kernel developer that
-> the next Ubuntu LTS will be RVA23 compliant. If this really comes to
-> pass, the 'virt' CPU won't run it by default - we'll need to either use
-> 'rva23s64' or 'max' CPUs instead because rv64 is not RVA23 compliant.
-> Other distros will follow suit eventually, given that RISC-V profiles
-> provides the most stable ABI to build a distro in the RISC-V land.
+On 08/04/2025 14.45, Nicholas Piggin wrote:
+> The per-core SCRATCH0-7 registers are shared between big cores, which
+> was missed in the big-core implementation. It is difficult to model
+> well with the big-core == 2xPnvCore scheme we moved to, this fix
+> uses the even PnvCore to store the scrach data.
 > 
-> This exposes a long standing issue with the current rv64 CPU: it doesn't
-> represent anything in particular. Extensions were added in it as time
-> went by and we ended up with a CPU that has a random set of extensions.
+> Also remove a stray log message that came in with the same patch that
+> introduced patch.
 > 
-> Changing the default 'virt' CPU to 'max' gives users a guarantee that
-> the board will always run with the latest features/profile available in
-> QEMU, which is the intention of most regular users. Using 'max' as
-> default CPU is done by other QEMU archs like aarch64 so we'll be more
-> compatible with everyone else.
-> 
-> Note that this change does not affect existing scripts that are using
-> the rv64 CPU, e.g. a command line like "-cpu rv64,v=true" will work the
-> same after this patch.
-> 
-> [1] https://fosdem.org/2025/schedule/event/fosdem-2025-6031-risc-v-hardware-where-are-we-/
-> 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Fixes: c26504afd5f5c ("ppc/pnv: Add a big-core mode that joins two regular cores")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->  hw/riscv/virt.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/ppc/misc_helper.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index c9d255d8a8..ff7a122bef 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -1920,7 +1920,7 @@ static void virt_machine_class_init(ObjectClass *oc, void *data)
->      mc->desc = "RISC-V VirtIO board";
->      mc->init = virt_machine_init;
->      mc->max_cpus = VIRT_CPUS_MAX;
-> -    mc->default_cpu_type = TYPE_RISCV_CPU_BASE;
-> +    mc->default_cpu_type = TYPE_RISCV_CPU_MAX;
->      mc->block_default_type = IF_VIRTIO;
->      mc->no_cdrom = 1;
->      mc->pci_allow_0_address = true;
-> -- 
-> 2.49.0
->
+> diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+> index 2d9512c116..46ae454afd 100644
+> --- a/target/ppc/misc_helper.c
+> +++ b/target/ppc/misc_helper.c
+> @@ -332,6 +332,10 @@ target_ulong helper_load_sprd(CPUPPCState *env)
+>       PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
+>       target_ulong sprc = env->spr[SPR_POWER_SPRC];
+>   
+> +    if (pc->big_core) {
+> +        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
+> +    }
+> +
+>       switch (sprc & 0x3e0) {
+>       case 0: /* SCRATCH0-3 */
+>       case 1: /* SCRATCH4-7 */
+> @@ -368,6 +372,10 @@ void helper_store_sprd(CPUPPCState *env, target_ulong val)
+>       PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
+>       int nr;
+>   
+> +    if (pc->big_core) {
+> +        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
+> +    }
+> +
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+  Hi Nicholas,
+
+this patch breaks compilation when QEMU has been configured with 
+"--without-default-devices" :
+
+FAILED: qemu-system-ppc64
+cc -m64 @qemu-system-ppc64.rsp
+/usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in 
+function `helper_load_sprd':
+.../qemu/target/ppc/misc_helper.c:336:(.text+0xcab): undefined reference to 
+`pnv_chip_find_core'
+/usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in 
+function `helper_store_sprd':
+.../qemu/target/ppc/misc_helper.c:376:(.text+0xda3): undefined reference to 
+`pnv_chip_find_core'
+collect2: error: ld returned 1 exit status
+
+Could you please have a look?
+
+  Thanks,
+   Thomas
+
 
