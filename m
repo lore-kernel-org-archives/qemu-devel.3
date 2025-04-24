@@ -4,68 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB3D0C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 06:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3DD6C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 06:38:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7qCZ-0004ot-In; Thu, 24 Apr 2025 02:36:51 -0400
+	id 1u7qDR-0005Z5-BE; Thu, 24 Apr 2025 02:37:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7qCV-0004nj-6b
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:36:47 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1u7qDP-0005Yk-Mb
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:37:44 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u7qCR-00078e-R6
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:36:46 -0400
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1u7qDN-0007OW-Uy
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:37:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745476604; x=1777012604;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=N/1BTUctU2lb6VBk1Oib3IvM00J9hBOuNikf/9LtMQ4=;
- b=F9P5pmnx1GH7xB6tzAEbK6Qqwqs64moY8t4ANVFO4Fn+HhTfMPvVmolO
- ao/ncN/d4/Ic88HU5li/cH+i6fTik/obAi8IPZUQh3YpCUfRb5EDcJuCX
- 48J9JdzqTV0gsJy7ZjSidcu+3cmtqyFaZhXLXY3EevXw4AX/lhDDxmEcX
- cD+UjRJgsnZC5jUB2z4fMnavVNSujtdIc/8fTNDwX6qXDpfhXngwYWeWg
- gpVxqDl/+7G7wua5cJJPyspOvXfeNy+TUoByQaKC3V1/hlRAdYqyN54oT
- FSDDO86Rph0k0Y4jAtVZ0jDNQWYEp6uOgtgon21Ff4D8WT7TdISdgSge5 Q==;
-X-CSE-ConnectionGUID: ATgD0X4NQIOOJiDkJAE48Q==
-X-CSE-MsgGUID: NuCzeEMMTDWxZhVoCQxkHg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11412"; a="46977821"
-X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="46977821"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 23 Apr 2025 23:36:42 -0700
-X-CSE-ConnectionGUID: XojoAA55T+emk4kqIX2xaA==
-X-CSE-MsgGUID: ZM7pO4HHRjeXITCKypZmig==
+ t=1745476662; x=1777012662;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=052CSqqUsncSHlJwaSuZqbyQYDfJIFStG0WEIrI4/Yg=;
+ b=bUs9GtS8jPYQ+V7+xdqEf1v4/khAQbjdwpK/2hULOpN3xNhAa+b0LqpO
+ fFy2Sr0JAGWFw8iQ3LZZR7x1f1M+HwPv5hAIzWT0p+maC5xVlpeKZVFAe
+ bylq+Bn7WlhKJ2y9v05BN7S37fV4xqxyEzwoDlM5MYyxP+XpZY/te/7DN
+ 1PHjfTSPz0e5LB/iRIj5mJmA8RFBtu55/tI/sjzEzSZ8B84V20fWHeeiu
+ lHwxH9uOtHC9beeE/piDlTxNzhPlbZFbekOa25Ke3u1ucgYIwWXjTX/4m
+ VHQN0WgvwkvLFXOtHZPDdvzh7tF43+rtYg4iWrwSaro30AWxr42aMvTmp w==;
+X-CSE-ConnectionGUID: Xj4JKDKORdaOlMAUjiVEKw==
+X-CSE-MsgGUID: 1MvteIXBT4ykzAOSDOzslw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11412"; a="58086045"
+X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="58086045"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Apr 2025 23:37:39 -0700
+X-CSE-ConnectionGUID: qZ1eD5mHTMappuG81xJ/2Q==
+X-CSE-MsgGUID: xvGMOIaTTX+BEfzR6Tfacg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="155756304"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa002.fm.intel.com with ESMTP; 23 Apr 2025 23:36:38 -0700
-Date: Thu, 24 Apr 2025 14:57:33 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-Cc: Babu Moger <babu.moger@amd.com>, Ewan Hai <ewanhai-oc@zhaoxin.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Tejus GK <tejus.gk@nutanix.com>,
- Jason Zeng <jason.zeng@intel.com>,
- Manish Mishra <manish.mishra@nutanix.com>,
- Tao Su <tao1.su@intel.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [RFC 00/10] i386/cpu: Cache CPUID fixup, Intel cache model &
- topo CPUID enhencement
-Message-ID: <aAng3b6hSiZw9MzP@intel.com>
-References: <20250423114702.1529340-1-zhao1.liu@intel.com>
+X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="132831435"
+Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
+ by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 23 Apr 2025 23:37:36 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ nicolinc@nvidia.com, joao.m.martins@oracle.com, steven.sistare@oracle.com,
+ yi.l.liu@intel.com, chao.p.peng@intel.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH] vfio: Register/unregister container for CPR only once for
+ each container
+Date: Thu, 24 Apr 2025 14:33:55 +0800
+Message-Id: <20250424063355.3855174-1-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250423114702.1529340-1-zhao1.liu@intel.com>
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.13;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -46
 X-Spam_score: -4.7
 X-Spam_bar: ----
@@ -89,48 +84,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 23, 2025 at 07:46:52PM +0800, Zhao Liu wrote:
-> Date: Wed, 23 Apr 2025 19:46:52 +0800
-> From: Zhao Liu <zhao1.liu@intel.com>
-> Subject: [RFC 00/10] i386/cpu: Cache CPUID fixup, Intel cache model & topo
->  CPUID enhencement
-> X-Mailer: git-send-email 2.34.1
-> 
-> Hi all,
-> 
-> (Since patches 1 and 2 involve changes to x86 vendors other than Intel,
-> I have also cc'd friends from AMD and Zhaoxin.)
-> 
-> These are the ones I was going to clean up a long time ago:
->  * Fixup CPUID 0x80000005 & 0x80000006 for Intel (and Zhaoxin now).
->  * Add cache model for Intel CPUs.
->  * Enable 0x1f CPUID leaf for specific Intel CPUs, which already have
->    this leaf on host by default.
-> 
-> Overall, the enhancements to the Intel CPU models are still based on
-> feedback received over time, for a long time...
-> 
-> I'll introduce my changes one by one in the order of importance as I
-> see it. (The doc update is missing in this version.)
-> 
-> 
-> Intel Cache Model
-> =================
-> 
-> AMD has supports cache model for a long time. And this feature strats
-> from the Eduardo's idea [1].
-> 
-> Unfortunately, Intel does not support this, and I have received some
-> feedback (from Tejus on mail list [2] and kvm forum, and from Jason).
+vfio_cpr_register_container and vfio_cpr_unregister_container are container
+scoped function. Calling them for each device attaching/detaching would
+corrupt CPR reboot notifier list, i.e., when two VFIO devices are attached
+to same container and have same notifier registered twice.
 
-I need to add more background:
+Fixes: d9fa4223b30a ("vfio: register container for cpr")
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+btw: untested as I have no env with two migration capable devices,
+     appreciate if someone have env to help test, thanks
 
-the legacy "host-cache-info" is becoming failing... On SRF, we have
-observed that it cannot accurately identify cache topology, so we have
-to use "smp-cache" to set the cache topology.
+ hw/vfio/iommufd.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-However, once "host-cache-info" is disabled, we lose the cache info
-that matches the real silicon... Therefore, we can only add the cache
-model for the named CPU model.
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index f24054a6a5..b2f72dc8c3 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -416,6 +416,7 @@ static void iommufd_cdev_container_destroy(VFIOIOMMUFDContainer *container)
+     if (!QLIST_EMPTY(&bcontainer->device_list)) {
+         return;
+     }
++    vfio_cpr_unregister_container(bcontainer);
+     vfio_listener_unregister(bcontainer);
+     iommufd_backend_free_id(container->be, container->ioas_id);
+     object_unref(container);
+@@ -561,6 +562,10 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+         goto err_listener_register;
+     }
+ 
++    if (!vfio_cpr_register_container(bcontainer, errp)) {
++        goto err_listener_register;
++    }
++
+     bcontainer->initialized = true;
+ 
+ found_container:
+@@ -570,13 +575,9 @@ found_container:
+         goto err_listener_register;
+     }
+ 
+-    if (!vfio_cpr_register_container(bcontainer, errp)) {
+-        goto err_listener_register;
+-    }
+-
+     if (!vfio_device_hiod_create_and_realize(vbasedev,
+                      TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO, errp)) {
+-        goto err_hiod_realize;
++        goto err_listener_register;
+     }
+ 
+     /*
+@@ -600,8 +601,6 @@ found_container:
+                                    vbasedev->num_regions, vbasedev->flags);
+     return true;
+ 
+-err_hiod_realize:
+-    vfio_cpr_unregister_container(bcontainer);
+ err_listener_register:
+     iommufd_cdev_ram_block_discard_disable(false);
+ err_discard_disable:
+@@ -632,7 +631,6 @@ static void iommufd_cdev_detach(VFIODevice *vbasedev)
+     }
+ 
+     object_unref(vbasedev->hiod);
+-    vfio_cpr_unregister_container(bcontainer);
+     iommufd_cdev_detach_container(vbasedev, container);
+     iommufd_cdev_container_destroy(container);
+     vfio_address_space_put(space);
+-- 
+2.34.1
 
 
