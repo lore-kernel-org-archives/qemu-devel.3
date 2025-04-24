@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 579E4C369D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 09:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C0CC369D1
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 09:50:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7tAn-0007YX-8P; Thu, 24 Apr 2025 05:47:13 -0400
+	id 1u7tDc-0006yL-M6; Thu, 24 Apr 2025 05:50:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7tAe-0007WE-LI
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:47:05 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1u7tDZ-0006pt-EI
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:50:05 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7tAc-0002YR-Jo
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:47:04 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-39efc1365e4so368275f8f.1
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 02:47:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1u7tDW-0002gC-AU
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:50:05 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-3012a0c8496so641256a91.2
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 02:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745488020; x=1746092820; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=E3lVw6KIn3D7NgOMBRI5zDO2652ucdToVqyJMqAEbX4=;
- b=LO7zEWLJvVtjHKL0ymERPQbHviZOBLX4NXN+PlNHYfa1cMX32ot8aGoYyPUtno9q3K
- OxnYLTk5HSlSYsgWntF8pb4xWTUeLOz+ewfbGi1yV6Z3BFOXmkdswhApn3LWUBy6ErVQ
- 253uJo1f2+dxdL/UhOflMVulsp1vBg2sPlyO2sWWkRiRbLjxKiLIEKseymNcgR7EN4LS
- kkocb+/+kMMEPzJ8ksjKkXE3zMIQRQONoPigK+TfDkIeY28z85pMFd1Kkpxix3l9k0+E
- FOdNUTm+b6xMHDe7Qt/lHG7xSX0cQ5Lq1dmEOGdEpaKjYaR80/W6bTFxIkbuv24Ma3Xw
- YQgg==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1745488200; x=1746093000;
+ darn=nongnu.org; 
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rUPPROkU4RBV4RhAwljvTt8Qn8uFPYHRFG0fSZAQZpg=;
+ b=geEd12Jou9fpSQnqkm2klrC6GPKuCyG7t7U+8tFD6FP+fWtwGOHc8e2mAFt9e8tnL2
+ s7GpTBeYNFfyQ2wjuQyA1J8Z4bDQQ0t0Y5m7JA+LWkVJQBdzG97GTkdPmJeI1JNAqqIY
+ 38mH8jZjRbYGOscXI0Qis6TIZjVS1RP7yGM8htgT5kGEP3Gy4L4TTvveKy6j6FQRXlc4
+ Uaee0ThGbBSp57wGrHIa+6jArXKjJzjuT2kKpBEjrrdaYQJ9yba9u64telVH7GuftomV
+ rNP1Q1N5CQDuj1NOLCe2VKrTRy1/41aW+g2fNLthrpwWLGvA8kebjN3rMOaJMIPI+0W0
+ 6ZOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745488020; x=1746092820;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=E3lVw6KIn3D7NgOMBRI5zDO2652ucdToVqyJMqAEbX4=;
- b=Lw0r42VSqzUVMqkSIBmHoKFnnCZGhqAGhz18pw4UQg2rbCuSl+VTTEOy8U0GnEVVF2
- EzRLBcgOnmnGOlB8vDes7eZNfDp7kllJH+CiRj0wytpTkrYnoelAGmTQnFkaIxCL4vCc
- +o0p8ZLwkkWYIxgYfNRyvKCKMhSfDenpzpjKV3lWnBAtuRPeDgK5QXW0R6HjCZRkj8A1
- bshKqBOydpFgUKucyrbtvR+OCM0n4OK67BS3SON9+I3vWpPPSJCa21Z2yJzlhjuxVIfV
- 9qi4yoiHmr4AOvK4BgaIPGKL3y6Dp/KxuNjFgwFHIOC+2mioGoTU97D82yszasZXYaI2
- dBBA==
-X-Gm-Message-State: AOJu0Yw59LfdQCkU37nO8KiuXQJvVthV4JaiEs7Za62PaFskAzHBNiXn
- CtElizN87tPUxXZ2LtvAydeBkTZVX7oncwsR5PXetRM4nepr8HW+2Kk4oVxcDj9sOnK9pDXlGFz
- T
-X-Gm-Gg: ASbGncvhi7WIa/uMVaKKIss0EDPPEzyDrAg9+dr1Y5WDctD3nSEPsD8qE2oQmKVBEp/
- 1HStOVpL4YQm/T6CnVYXTfYpHUxgAp9HILHb4hB/qAeW/58OjMD3mf/stNtwWwXG+PRNawiq1ZS
- dYBkpPXmlKnlAqHI1+OVwIJhVU9XgLq/KAJULnxew7JlOypn3rFu5HXoL7QTDGLd4j6Dk3AX3TL
- 259YSnf0iNkw4DYpvFZC2yjNU37IReAydzxFBWCtjc8keRHg7exIwlBLRMIC/WXwcx3tFyz38eJ
- 5IqplVpujxbtCwJ4IAExJzhc+4R4QNN9Ok5/wINIWurmPcM3o2sOsO3RxD9fewCvB+VhENDubrW
- Tmnvn9Iofil/XUZAwuXCl
-X-Google-Smtp-Source: AGHT+IF+oHwXYMRIxHw9avi8J3TubSpFtsC76No60lXwv1b4iv66vl4y591LdlxNA7c6cpreOe3E2w==
-X-Received: by 2002:a5d:6dac:0:b0:391:4999:776c with SMTP id
- ffacd0b85a97d-3a06cfa854bmr1551620f8f.40.1745488020527; 
- Thu, 24 Apr 2025 02:47:00 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a06d532aa9sm1535181f8f.68.2025.04.24.02.46.59
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 24 Apr 2025 02:46:59 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org,
-	Richard Henderson <richard.henderson@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 01/13] accel/tcg: Use vaddr for walk_memory_regions callback
-Date: Thu, 24 Apr 2025 11:46:41 +0200
-Message-ID: <20250424094653.35932-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250424094653.35932-1-philmd@linaro.org>
-References: <20250424094653.35932-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1745488200; x=1746093000;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rUPPROkU4RBV4RhAwljvTt8Qn8uFPYHRFG0fSZAQZpg=;
+ b=e69RUoOSfRsEBrXutLl2jfOnAuxfjvNNQZE2SeGNq+dfn3h8P/oaTBShjK0mn+bCrc
+ bBmjKq1dgAWIo7QveCb+g9OQIu2/LQIRQQaqohfVM90gZTPBO7Up/aPUhcB8ZcdX4mcI
+ YxDPulGIrx8n2+N/zbXtbzRZgaIg8+o53SEUAwprF0yR+8A3EmNbbBJ5nERt2EOPoEzR
+ EaEN3HWt9VAv3OlIwEKoDv8zBK3UzEjTqP0v+61oATwyBeXMeu/ZJ5vCYzcTdMirCQcT
+ H9wJAcm9+SJ8v917ToNP3nwcbfnPFCFRUiK86cdWbc8jUrYWTRP/8OVeX8RCOGKm7VGX
+ Qm6w==
+X-Gm-Message-State: AOJu0YzToJxfmCKsXI5r5D706mdQJHBB7W+il3GyaWY4rNeRc8ibhnTU
+ Bn1Zef/1mvmgBA/E4YFhu5sQg5EUAiBqmMM9WgHgaf1lOVLXk6QvSPGA8SX4VBg=
+X-Gm-Gg: ASbGnctBhGiI8TGjB1LDfJQx4Y93TmPsyOShZRQkrM923jDqfX4Y9sJHyKUGDryhe0m
+ 3ImgRyse5Is19CkmMdc3ymQLqwGVqpUk1wn0VlPxtLqZ3oEl/oku3uiciCbrvAXfVIT09yoQjOr
+ xnFFL35qu1obzaXIqbomWGslgYfw0vn++7Z3IXkt+SIo6MM+X3p5WgB0XORhQ6DLBu7lO74yeop
+ 8v/gGM2XPes2g/nEBicSh8IAYQ/fXAtotiEXTS1cJIZpsyTT12n6oJROLtiqZxspkWisI9on8YG
+ +Lolry8WlJ332BjHNIVKDn6DcBG7edSJfLzbG+V+l7JX
+X-Google-Smtp-Source: AGHT+IGxwpPnRamyVkoVWm0YukFQ9BHNdtz9HQKbcT5ZN72qiA7Dg5moz5fo8PKY+xV1eKo3+qYslg==
+X-Received: by 2002:a17:90b:5445:b0:305:2d27:7cb0 with SMTP id
+ 98e67ed59e1d1-309ed29ce8bmr2898375a91.21.1745488200258; 
+ Thu, 24 Apr 2025 02:50:00 -0700 (PDT)
+Received: from localhost ([157.82.205.213])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 98e67ed59e1d1-309ef0612b1sm897602a91.11.2025.04.24.02.49.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Apr 2025 02:49:59 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Thu, 24 Apr 2025 18:49:57 +0900
+Subject: [PATCH v2] virtio-net: Copy received packet to buffer
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250424-reapply-v2-1-d0ba763ac782@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAEQJCmgC/2XMSwrDIBSF4a2EO67FR6K0o+yjZBB8NBdaFS0SC
+ e69NtMO/8PhOyDbhDbDfTgg2YIZg+/BLwPobfVPS9D0Bk75REcuSLJrjK9KpGBKTmw0Shro75i
+ sw/2UHkvvDfMnpHrChf3Wf6Mwwoh0o9OCcnWjcjZr9bhfdXjD0lr7Apwe84qfAAAA
+X-Change-ID: 20250423-reapply-63176514d76d
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, 
+ Antoine Damhet <adamhet@scaleway.com>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.15-dev-edae6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,154 +102,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Commit e28fbd1c525d ("Revert "virtio-net: Copy received header to
+buffer"") reverted commit 7987d2be5a8b, which attempted to remove the
+need to patch the (const) input buffer.
 
-Use vaddr instead of target_ulong.  At the same time,
-use int instead of unsigned long for flags, to match
-page_set_flags().
+Achieve the original goal by copying the header or the entire packet to
+a writable buffer as necessary. Copy the virtio-net header when patching
+it. Copy the entire packet when filling the UDP checksum as required by
+net_checksum_calculate().
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250424011918.599958-13-richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- include/user/page-protection.h |  5 ++---
- accel/tcg/user-exec.c          | 10 +++++-----
- linux-user/elfload.c           | 19 +++++++++----------
- linux-user/syscall.c           |  8 ++++----
- 4 files changed, 20 insertions(+), 22 deletions(-)
+Supersedes: <20250405-mtu-v1-1-08c5910fa6fd@daynix.com>
+("[PATCH] virtio-net: Copy all for dhclient workaround")
 
-diff --git a/include/user/page-protection.h b/include/user/page-protection.h
-index 1de72e31e68..8f0b769b134 100644
---- a/include/user/page-protection.h
-+++ b/include/user/page-protection.h
-@@ -14,6 +14,7 @@
- 
- #include "cpu-param.h"
- #include "exec/target_long.h"
-+#include "exec/vaddr.h"
- #include "exec/translation-block.h"
- 
- int page_unprotect(CPUState *cpu, tb_page_addr_t address, uintptr_t pc);
-@@ -88,9 +89,7 @@ target_ulong page_find_range_empty(target_ulong min, target_ulong max,
- __attribute__((returns_nonnull))
- void *page_get_target_data(target_ulong address);
- 
--typedef int (*walk_memory_regions_fn)(void *, target_ulong,
--                                      target_ulong, unsigned long);
--
-+typedef int (*walk_memory_regions_fn)(void *, vaddr, vaddr, int);
- int walk_memory_regions(void *, walk_memory_regions_fn);
- 
- void page_dump(FILE *f);
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 17e3be337f5..25d86567e70 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -199,13 +199,13 @@ int walk_memory_regions(void *priv, walk_memory_regions_fn fn)
-     return rc;
+This reapplies commit 7987d2be5a8b ("virtio-net: Copy all for dhclient
+workaround"), which was reverted by commit e28fbd1c525d ("Revert
+"virtio-net: Copy received header to buffer""), with a fix in the
+superseded patch. It also renames identifiers according to the
+discussion with Antoine Damhet.
+---
+Changes in v2:
+- Rewrote the message avoiding archeology as suggested by
+  Michael S. Tsirkin.
+- Link to v1: https://lore.kernel.org/qemu-devel/20250423-reapply-v1-1-6f4fc3027906@daynix.com
+---
+ hw/net/virtio-net.c | 91 ++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 48 insertions(+), 43 deletions(-)
+
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index bd37651dabb0..f1688e0b2536 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1687,6 +1687,11 @@ static void virtio_net_hdr_swap(VirtIODevice *vdev, struct virtio_net_hdr *hdr)
+     virtio_tswap16s(vdev, &hdr->csum_offset);
  }
  
--static int dump_region(void *priv, target_ulong start,
--                       target_ulong end, unsigned long prot)
-+static int dump_region(void *opaque, vaddr start, vaddr end, int prot)
- {
--    FILE *f = (FILE *)priv;
-+    FILE *f = opaque;
- 
--    fprintf(f, TARGET_FMT_lx"-"TARGET_FMT_lx" "TARGET_FMT_lx" %c%c%c\n",
--            start, end, end - start,
-+    fprintf(f, TARGET_ABI_FMT_ptr "-" TARGET_ABI_FMT_ptr
-+            " " TARGET_ABI_FMT_ptr " %c%c%c\n",
-+            (abi_ptr)start, (abi_ptr)end, (abi_ptr)(end - start),
-             ((prot & PAGE_READ) ? 'r' : '-'),
-             ((prot & PAGE_WRITE) ? 'w' : '-'),
-             ((prot & PAGE_EXEC) ? 'x' : '-'));
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 7519b6bcda3..e281745e485 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -4044,8 +4044,7 @@ static inline void bswap_note(struct elf_note *en) { }
- /*
-  * Calculate file (dump) size of given memory region.
++typedef struct PacketPrefix {
++    struct virtio_net_hdr_v1_hash virtio_net;
++    uint8_t payload[1500];
++} PacketPrefix;
++
+ /* dhclient uses AF_PACKET but doesn't pass auxdata to the kernel so
+  * it never finds out that the packets don't have valid checksums.  This
+  * causes dhclient to get upset.  Fedora's carried a patch for ages to
+@@ -1701,42 +1706,46 @@ static void virtio_net_hdr_swap(VirtIODevice *vdev, struct virtio_net_hdr *hdr)
+  * we should provide a mechanism to disable it to avoid polluting the host
+  * cache.
   */
--static size_t vma_dump_size(target_ulong start, target_ulong end,
--                            unsigned long flags)
-+static size_t vma_dump_size(vaddr start, vaddr end, int flags)
+-static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
+-                                        uint8_t *buf, size_t size)
++static void work_around_broken_dhclient(struct PacketPrefix *prefix,
++                                        size_t *prefix_len, const uint8_t *buf,
++                                        size_t buf_size, size_t *buf_offset)
  {
-     /* The area must be readable. */
-     if (!(flags & PAGE_READ)) {
-@@ -4238,8 +4237,8 @@ static int dump_write(int fd, const void *ptr, size_t size)
-     return (0);
+     size_t csum_size = ETH_HLEN + sizeof(struct ip_header) +
+                        sizeof(struct udp_header);
++    uint8_t *payload = (uint8_t *)prefix + *prefix_len;
++
++    buf += *buf_offset;
++    buf_size -= *buf_offset;
+ 
+-    if ((hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
+-        (size >= csum_size && size < 1500) && /* normal sized MTU */
++    if ((prefix->virtio_net.hdr.flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
++        (buf_size >= csum_size && buf_size < sizeof(prefix->payload)) && /* normal sized MTU */
+         (buf[12] == 0x08 && buf[13] == 0x00) && /* ethertype == IPv4 */
+         (buf[23] == 17) && /* ip.protocol == UDP */
+         (buf[34] == 0 && buf[35] == 67)) { /* udp.srcport == bootps */
+-        net_checksum_calculate(buf, size, CSUM_UDP);
+-        hdr->flags &= ~VIRTIO_NET_HDR_F_NEEDS_CSUM;
++        memcpy(payload, buf, buf_size);
++        net_checksum_calculate(payload, buf_size, CSUM_UDP);
++        prefix->virtio_net.hdr.flags &= ~VIRTIO_NET_HDR_F_NEEDS_CSUM;
++        *prefix_len += buf_size;
++        *buf_offset += buf_size;
+     }
  }
  
--static int wmr_page_unprotect_regions(void *opaque, target_ulong start,
--                                      target_ulong end, unsigned long flags)
-+static int wmr_page_unprotect_regions(void *opaque, vaddr start,
-+                                      vaddr end, int flags)
+-static void receive_header(VirtIONet *n, const struct iovec *iov, int iov_cnt,
+-                           const void *buf, size_t size)
++static size_t receive_prefix(VirtIONet *n, PacketPrefix *prefix,
++                             const void *buf, size_t buf_size,
++                             size_t *buf_offset)
  {
-     if ((flags & (PAGE_WRITE | PAGE_WRITE_ORG)) == PAGE_WRITE_ORG) {
-         size_t step = MAX(TARGET_PAGE_SIZE, qemu_real_host_page_size());
-@@ -4260,8 +4259,8 @@ typedef struct {
-     size_t size;
- } CountAndSizeRegions;
+-    if (n->has_vnet_hdr) {
+-        /* FIXME this cast is evil */
+-        void *wbuf = (void *)buf;
+-        work_around_broken_dhclient(wbuf, wbuf + n->host_hdr_len,
+-                                    size - n->host_hdr_len);
++    size_t prefix_len = n->guest_hdr_len;
  
--static int wmr_count_and_size_regions(void *opaque, target_ulong start,
--                                      target_ulong end, unsigned long flags)
-+static int wmr_count_and_size_regions(void *opaque, vaddr start,
-+                                      vaddr end, int flags)
- {
-     CountAndSizeRegions *css = opaque;
- 
-@@ -4275,8 +4274,8 @@ typedef struct {
-     off_t offset;
- } FillRegionPhdr;
- 
--static int wmr_fill_region_phdr(void *opaque, target_ulong start,
--                                target_ulong end, unsigned long flags)
-+static int wmr_fill_region_phdr(void *opaque, vaddr start,
-+                                vaddr end, int flags)
- {
-     FillRegionPhdr *d = opaque;
-     struct elf_phdr *phdr = d->phdr;
-@@ -4298,8 +4297,8 @@ static int wmr_fill_region_phdr(void *opaque, target_ulong start,
-     return 0;
+-        if (n->needs_vnet_hdr_swap) {
+-            virtio_net_hdr_swap(VIRTIO_DEVICE(n), wbuf);
+-        }
+-        iov_from_buf(iov, iov_cnt, 0, buf, sizeof(struct virtio_net_hdr));
+-    } else {
+-        struct virtio_net_hdr hdr = {
+-            .flags = 0,
+-            .gso_type = VIRTIO_NET_HDR_GSO_NONE
+-        };
+-        iov_from_buf(iov, iov_cnt, 0, &hdr, sizeof hdr);
++    memcpy(prefix, buf, sizeof(struct virtio_net_hdr));
++
++    *buf_offset = n->host_hdr_len;
++    work_around_broken_dhclient(prefix, &prefix_len, buf, buf_size, buf_offset);
++
++    if (n->needs_vnet_hdr_swap) {
++        virtio_net_hdr_swap(VIRTIO_DEVICE(n), (struct virtio_net_hdr *)prefix);
+     }
++
++    return prefix_len;
  }
  
--static int wmr_write_region(void *opaque, target_ulong start,
--                            target_ulong end, unsigned long flags)
-+static int wmr_write_region(void *opaque, vaddr start,
-+                            vaddr end, int flags)
- {
-     int fd = *(int *)opaque;
-     size_t size = vma_dump_size(start, end, flags);
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 5826ac3adbb..23b901b7133 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8135,8 +8135,8 @@ static void open_self_maps_4(const struct open_self_maps_data *d,
-  * Callback for walk_memory_regions, when read_self_maps() fails.
-  * Proceed without the benefit of host /proc/self/maps cross-check.
-  */
--static int open_self_maps_3(void *opaque, target_ulong guest_start,
--                            target_ulong guest_end, unsigned long flags)
-+static int open_self_maps_3(void *opaque, vaddr guest_start,
-+                            vaddr guest_end, int flags)
- {
-     static const MapInfo mi = { .is_priv = true };
+ static int receive_filter(VirtIONet *n, const uint8_t *buf, int size)
+@@ -1913,15 +1922,15 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+     VirtQueueElement *elems[VIRTQUEUE_MAX_SIZE];
+     size_t lens[VIRTQUEUE_MAX_SIZE];
+     struct iovec mhdr_sg[VIRTQUEUE_MAX_SIZE];
+-    struct virtio_net_hdr_v1_hash extra_hdr;
++    PacketPrefix prefix;
+     unsigned mhdr_cnt = 0;
+     size_t offset, i, guest_offset, j;
+     ssize_t err;
  
-@@ -8147,8 +8147,8 @@ static int open_self_maps_3(void *opaque, target_ulong guest_start,
- /*
-  * Callback for walk_memory_regions, when read_self_maps() succeeds.
-  */
--static int open_self_maps_2(void *opaque, target_ulong guest_start,
--                            target_ulong guest_end, unsigned long flags)
-+static int open_self_maps_2(void *opaque, vaddr guest_start,
-+                            vaddr guest_end, int flags)
- {
-     const struct open_self_maps_data *d = opaque;
-     uintptr_t host_start = (uintptr_t)g2h_untagged(guest_start);
+-    memset(&extra_hdr, 0, sizeof(extra_hdr));
++    memset(&prefix.virtio_net, 0, sizeof(prefix.virtio_net));
+ 
+     if (n->rss_data.enabled && n->rss_data.enabled_software_rss) {
+-        int index = virtio_net_process_rss(nc, buf, size, &extra_hdr);
++        int index = virtio_net_process_rss(nc, buf, size, &prefix.virtio_net);
+         if (index >= 0) {
+             nc = qemu_get_subqueue(n->nic, index % n->curr_queue_pairs);
+         }
+@@ -1986,23 +1995,19 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+             if (n->mergeable_rx_bufs) {
+                 mhdr_cnt = iov_copy(mhdr_sg, ARRAY_SIZE(mhdr_sg),
+                                     sg, elem->in_num,
+-                                    offsetof(typeof(extra_hdr), hdr.num_buffers),
+-                                    sizeof(extra_hdr.hdr.num_buffers));
++                                    offsetof(typeof(prefix),
++                                             virtio_net.hdr.num_buffers),
++                                    sizeof(prefix.virtio_net.hdr.num_buffers));
+             } else {
+-                extra_hdr.hdr.num_buffers = cpu_to_le16(1);
++                prefix.virtio_net.hdr.num_buffers = cpu_to_le16(1);
+             }
+ 
+-            receive_header(n, sg, elem->in_num, buf, size);
+-            if (n->rss_data.populate_hash) {
+-                offset = offsetof(typeof(extra_hdr), hash_value);
+-                iov_from_buf(sg, elem->in_num, offset,
+-                             (char *)&extra_hdr + offset,
+-                             sizeof(extra_hdr.hash_value) +
+-                             sizeof(extra_hdr.hash_report));
+-            }
+-            offset = n->host_hdr_len;
+-            total += n->guest_hdr_len;
+-            guest_offset = n->guest_hdr_len;
++            guest_offset = n->has_vnet_hdr ?
++                           receive_prefix(n, &prefix, buf, size, &offset) :
++                           n->guest_hdr_len;
++
++            iov_from_buf(sg, elem->in_num, 0, &prefix, guest_offset);
++            total += guest_offset;
+         } else {
+             guest_offset = 0;
+         }
+@@ -2028,11 +2033,11 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+     }
+ 
+     if (mhdr_cnt) {
+-        virtio_stw_p(vdev, &extra_hdr.hdr.num_buffers, i);
++        virtio_stw_p(vdev, &prefix.virtio_net.hdr.num_buffers, i);
+         iov_from_buf(mhdr_sg, mhdr_cnt,
+                      0,
+-                     &extra_hdr.hdr.num_buffers,
+-                     sizeof extra_hdr.hdr.num_buffers);
++                     &prefix.virtio_net.hdr.num_buffers,
++                     sizeof prefix.virtio_net.hdr.num_buffers);
+     }
+ 
+     for (j = 0; j < i; j++) {
+
+---
+base-commit: 1da8f3a3c53b604edfe0d55e475102640490549e
+change-id: 20250423-reapply-63176514d76d
+
+Best regards,
 -- 
-2.47.1
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
