@@ -4,55 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7332C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 09:51:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EA44C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 09:51:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7tEZ-0000FA-Pn; Thu, 24 Apr 2025 05:51:07 -0400
+	id 1u7tF2-0000i5-SR; Thu, 24 Apr 2025 05:51:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1u7tEW-0000DF-8w
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:51:04 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1u7tET-0002wL-Jv
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:51:03 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxaWp8CQpoVjzFAA--.1182S3;
- Thu, 24 Apr 2025 17:50:52 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMCx_cZ8CQpoIFeTAA--.43713S2;
- Thu, 24 Apr 2025 17:50:52 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com, peter.maydell@linaro.org,
- --cc=richard.henderson@linaro.org, Bibo Mao <maobibo@loongson.cn>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/13] target/loongarch: Move definition of TCG specified
- function to tcg directory
-Date: Thu, 24 Apr 2025 17:28:46 +0800
-Message-Id: <20250424092849.3985437-1-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20250424023317.3980755-1-gaosong@loongson.cn>
-References: <20250424023317.3980755-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1u7tEq-0000Qq-AS; Thu, 24 Apr 2025 05:51:25 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1u7tEn-0002zR-Vo; Thu, 24 Apr 2025 05:51:24 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-acb415dd8faso122142266b.2; 
+ Thu, 24 Apr 2025 02:51:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=jms.id.au; s=google; t=1745488280; x=1746093080; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=pdeNaUx0YAovtOzfXHmWEHPybZDJQR7lFOpaCZFQHY8=;
+ b=EhCCZoMs9olvZhdmrN1KVi/v1G37AtAsZMQ121zIcAKXko9+nHnkArbRSasAo+mtUz
+ lfNvqaeZihT2kVX1RIBE05k5JCiSWjM/Hc4WQpozBCBQNh4xFB5fHzqTujcu9isQLA1o
+ v70B5JRbDHsbijrYNzNyNR+WJGHkUTjTiEEdg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745488280; x=1746093080;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pdeNaUx0YAovtOzfXHmWEHPybZDJQR7lFOpaCZFQHY8=;
+ b=a7i5/sTTDhEmd2LpBNpbrN+VR+9BNmzZpqehppR7t59hrUyVagDdF30FEOUdnZLOBf
+ RUg3mkit/TntcYyxgnay4Ba9fo8UXmfFcJnmhhu81LTzpOpCjuaJfE+DWXk1SidCtJaW
+ b573xoMVJolGeEvbf+6Ofd+aoD2rC9xaByb8R7QabOs3ITzhytJvt/Vz90PlPUcyJGJa
+ 6uQJnvQBYm/qGGifngImC68DXWEUo7NEiOLS10gZEv20K103TpotXYqzEHsErOQAyE8Q
+ xfKU7XsnzDWbssIRO/hL6O9aeuGDtWnaS36LLiGy742d1JHi0GPAGGZtTOYgzpa5XiQY
+ Clrw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXWaoTmHWiL+OYCrnyCQmCa9CK0gM0ScAFTIb/Ddc94ADM1csYhIj7RAEg5IA/w1I635fMP8UojpPR3@nongnu.org
+X-Gm-Message-State: AOJu0Yzs3mNEkyjh+PZFLPbAVcQbAIonA6RCx1e4eZ55Munf6YKMyH+h
+ lELP/pGiZ/6c1mGwiEmrmAfFJEyu7thvToZ+yCdqF82VLyA10aEb1yDNGy4X6raxIMXUtHSPvPh
+ 7aW2zaURwaB4zbQtyu1l4VUaEo+w=
+X-Gm-Gg: ASbGncsHX4K5/yxs4CUHABPUPBHIj7ylQon6XkTMQvnIftlhoM05QyTPvJTmXV1l81R
+ yX+2dGhJi2TMbNoGV0cK9sihHjQzSQcOUPi9X3Td9+W7bV0OOJ+/71/1fbc1lgmJtKKNonXcM3P
+ TO0ZPqAEDC3yO0tecbbaWp
+X-Google-Smtp-Source: AGHT+IGeGeI5B4njJvBnvhpWzw62TQbOREO9QrxTlivOjDfHnr6bBFeJvIxr56gwQVbSHb6mvz5Kc0KWeqasAA3qxao=
+X-Received: by 2002:a17:907:9725:b0:acb:32c5:43ff with SMTP id
+ a640c23a62f3a-ace56e46911mr178563366b.0.1745488279475; Thu, 24 Apr 2025
+ 02:51:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCx_cZ8CQpoIFeTAA--.43713S2
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250423110630.2249904-1-dbarboza@ventanamicro.com>
+ <20250423110630.2249904-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20250423110630.2249904-2-dbarboza@ventanamicro.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 24 Apr 2025 19:21:06 +0930
+X-Gm-Features: ATxdqUHtJzJ95Jbgzlb4Xd2a-JkMSb4SegQ8o2JTaQo_y25P2qXH9w_e8vDgOhM
+Message-ID: <CACPK8XfF74wHqdBBz=qPLefAD8pKT-0C8e=kfFtTeMH+teF-7A@mail.gmail.com>
+Subject: Re: [PATCH 1/9] hw/riscv/virt.c: enforce s->memmap use in
+ machine_init()
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=joel.stan@gmail.com; helo=mail-ej1-x629.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,65 +92,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+On Wed, 23 Apr 2025 at 20:37, Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> Throughout the code we're accessing the board memmap, most of the time,
+> by accessing it statically via 'virt_memmap'. This static map is also
+> assigned in the machine state in s->memmap.
+>
+> We're also passing it as a variable to some fdt functions, which is
+> unorthodox since we can spare a function argument by accessing it
+> statically or via the machine state.
+>
+> All the current forms are valid but not all of the are scalable. In the
+> future we will version this board, and then all this code will need
+> rework because it should point to the updated memmap. In this case,
+> we'll want to assign the adequate versioned memmap once during init,
+> in s->memmap like it is being done today, and the rest of the code
+> will access the updated map via s->memmap.
 
-Function loongarch_cpu_tlb_fill() only works in TCG mode, move its
-definition from header file internals.h to file tcg/tcg_loongarch.h
+I was writing a patch for a machine and came across the same
+inconsistencies. Nice clean up.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20250423080417.3739809-10-maobibo@loongson.cn>
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- target/loongarch/cpu.c               | 1 +
- target/loongarch/internals.h         | 5 -----
- target/loongarch/tcg/tcg_loongarch.h | 4 ++++
- 3 files changed, 5 insertions(+), 5 deletions(-)
+Some of the device initlisation code could be refactored out to be
+shared by other machines within the riscv directory. Related, parts of
+the device tree creation could belong to the model, instead of to the
+machine, as the properties are a property (!) of the device.
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index ea1665e270..bf3d592574 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -32,6 +32,7 @@
- #include "exec/cpu_ldst.h"
- #include "tcg/tcg.h"
- #endif
-+#include "tcg/tcg_loongarch.h"
- 
- const char * const regnames[32] = {
-     "r0", "r1", "r2", "r3", "r4", "r5", "r6", "r7",
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index 3a079feb1d..a7384b0d31 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -61,11 +61,6 @@ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-                                uint64_t *dir_width, target_ulong level);
- hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
- 
--#ifdef CONFIG_TCG
--bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
--                            MMUAccessType access_type, int mmu_idx,
--                            bool probe, uintptr_t retaddr);
--#endif
- #endif /* !CONFIG_USER_ONLY */
- 
- uint64_t read_fcc(CPULoongArchState *env);
-diff --git a/target/loongarch/tcg/tcg_loongarch.h b/target/loongarch/tcg/tcg_loongarch.h
-index b29427d981..fd4e116022 100644
---- a/target/loongarch/tcg/tcg_loongarch.h
-+++ b/target/loongarch/tcg/tcg_loongarch.h
-@@ -10,6 +10,10 @@
- 
- void loongarch_csr_translate_init(void);
- 
-+bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-+                            MMUAccessType access_type, int mmu_idx,
-+                            bool probe, uintptr_t retaddr);
-+
- int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr *physical,
-                                 int *prot, target_ulong address,
-                                 MMUAccessType access_type, int mmu_idx);
--- 
-2.34.1
+With that in mind we should consider passing the eg. fdt pointer and
+the MemMap pointer instead of machine state, where practical.
 
+> We're also enforcing the pattern of using s->memmap instead of assigning
+> it to a temp variable 'memmap'. Code is copy/pasted around all the time
+> and being consistent is important.
+
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+
+Cheers,
+
+Joel
 
