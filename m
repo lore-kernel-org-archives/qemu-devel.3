@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB31AC369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 06:51:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00AF9C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 06:55:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7qQD-0003QW-1m; Thu, 24 Apr 2025 02:50:57 -0400
+	id 1u7qTw-0004VV-Ba; Thu, 24 Apr 2025 02:54:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7qQA-0003Q9-Q6
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:50:55 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7qTu-0004VI-I6
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:54:46 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7qQ9-0000cW-2Z
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:50:54 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43cfe574976so3909435e9.1
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 23:50:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7qTs-0000w2-Rp
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 02:54:46 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43cec5cd73bso2876085e9.3
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 23:54:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745477451; x=1746082251; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745477683; x=1746082483; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TjgDewITqQzSvr7spidvPTauWdF0QZmMDWy3kEJPNts=;
- b=FQmjwGBlARBFK2r/7ISzSQ0e4ohs7mQNHqOuph+/OuvWfIn9D1OcHHph1gyK+I8zYp
- wH6kkcY+dJX9pD47lnmnNrSPG8huFgatwfyXlNm8X6fYLDq+qIChfwLvFOmGCXjgQy64
- FcI+u82Q8l19AmdlHwUm8j+uxAkaUv3SMoN7KoR4XjqCQte+UVAbBwSyoTDhaBVeXgjF
- aKWjt3gAVQxcmSGH7hhYQRdrfzevE55G1Y4LC4ug1Jek2dRiVrqraBwCvZWRQo6vR5hr
- 19w8IfpO3hj9c1xm3QTy0GH8Di3jq8tQ3JGCgzOQE023uJ4gAsvoGSLqQiwHvP07QDLq
- PB4Q==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=LJqDqb3zgt+C4ZQ5uifmY2LyBhUT60Z8PlWqzA1UJcs=;
+ b=b5ty3Y9X8fdKiYjb3J1aG8dAuYl2q5kue47je0/lf94iy/SmDZhqS8hGgrvNWlYJFe
+ u+UthMYcCEm21JUHOHaFyGGSx9TZ8rb4XfoFpJ0CBlTqqu3eJ2Y7+dPN6zN1sH99ft6V
+ iGBcCmvoFTyDkmM6QjuRHzSe4XK51Ofo+n1utV6NHSL5SqzdsYjO7gQpH0QM07enPEOl
+ f3ppVqN4J1I3Uk7GFnNvERdfXPbPoawOnPjJdsXPWJAquYWAe98NOp6MnBLhDZ4lfUmx
+ hI02wJjoF7q4pUa4r89u8ThBr+OCQgKXC1GregrAoHr37ZYRUrhDfMIeZEW88qMf+GSU
+ oHnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745477451; x=1746082251;
+ d=1e100.net; s=20230601; t=1745477683; x=1746082483;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TjgDewITqQzSvr7spidvPTauWdF0QZmMDWy3kEJPNts=;
- b=vnfXXnGeY+Dfeu7uWgpjGvU2NxCB+6H8QVRoxBZFgiRiLOYL22Vze3fe1pbYfTihc4
- VQplu8n09eZ4J2vantT70tSqgNdjOc7ZYYxEwOUojkgkYhauhxCh0NWu0t0200TWU8Bt
- KQlSTQhG4NlrhlznCjzQVzK3SHDAq8ygO3pKoluts16VoeaxVho8H6kTDX4vWiSOoI1A
- i5D2R3pl7MYy6P5HZVf1MqWxprjcO0bfKHLxYuCdjYRjXt04w2ZOi82XCGMP+xPJPAgR
- yiP/V3yOZr3iKP4v2R35ZGzx0ltNs3d1xiTJx1FOFW1+ZHtjF/kypqxpWqXw5CUihFK8
- 1xPQ==
+ bh=LJqDqb3zgt+C4ZQ5uifmY2LyBhUT60Z8PlWqzA1UJcs=;
+ b=JBqG+EPqHbak18nKR9qmM445Cyg15jgLQB7zFp6fcObCxj7HyhY8z57j8ZL5r4hjT2
+ yXuS5DgX2BC6ZevYWZM6Vp4CrGnbjdHIx1KpoD7orS34bYenIz/u4BYbKpqaDYEcTeth
+ y0fXhIwlScToJ/lPyhGaUsjDcaW02iR4eWggo2tvBhJ7CM5HWZo+H/9kfJCDMbHSijlF
+ ZHPkwN46Cp+NR6A6sXnITMyqH745itji/ToSEHaEP17/Iy/HfZQr/8SI1uMcv4cib/Cr
+ k2qM0/5T0lSe669DV/lyMU4rgeK+D8ndWvSS1fXkHrfLN+nFL4oGGVqvFZwDj04bRLYM
+ k7cQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV77eOGhw2c8uVu5pfdBS/9E+zcrC+jDez7k7RqXB03kkfe+MD/W06xRycgNK0supIkZWEes3hNN6B3@nongnu.org
-X-Gm-Message-State: AOJu0Yzvd2JJ1ChSRMKwoHG3ptoeSSEcb00nt8Vct+sq/KzN8pyZZ1zC
- h6McPdJO/RH6b+zGdUuQ6pILpPN3tUJUPDzYUL9QGXCvrkVsThBssqHdCD9TiyU=
-X-Gm-Gg: ASbGncvrg0CcYFcMsD+AIc8VM6573idHkAoGdKV2qi8XQ731JeuuU1gMIiOdgj9Y6iU
- TGxcc8WnYTzZQG/ASe9sGs5281xVxgfa/ujhHRvEqdvDVLlbkn555UY8hqQmV15Oez6OkfGzQE8
- GmB95mKTGSHoydow1LRbIbcQTAAWCuFCNvkdeh3iHb1qriALBJjAydtb3623Yw4ButgYYlyO3hJ
- hqowKyIuXRu7G0iKQSeq39ufCGGwupELCZwj7z2gy6C2R+n0UCczUZjZsYRuLxeqEtf4tgn8z71
- wMa/mMs7UD6eBVuH2PSTrotX+lFQehKZH2PZ2A2tATnzpHgKRlyCpQ0F3paRllsti0wi9kw94VB
- 3bDMsidzOoYXMvQ==
-X-Google-Smtp-Source: AGHT+IHsVcdH7PNiqJ81lsPxc4HKS0lQRc+JVfAzJopUVLvaS7jFE+/Bz8s6hVAtjn3QHtZ/hwKWSA==
-X-Received: by 2002:a05:600c:1547:b0:43d:7588:66a5 with SMTP id
- 5b1f17b1804b1-4409bd8de81mr11768045e9.31.1745477451058; 
- Wed, 23 Apr 2025 23:50:51 -0700 (PDT)
+ AJvYcCXt0rIxVKOMaE2lLLNmmmeP8pSIm0ph6SwcNYIWPvXbOLcSsZtzob3FyDgWtL6LHGFb5qNRfcgjV4Hg@nongnu.org
+X-Gm-Message-State: AOJu0Yw3uaaCV84Oc+zBPjxTaVDira05rPKQRW3ULmyTNGwpwnhGul5h
+ eMJOUMu8eKWYV5pS1fwzFhwMYfwfkT19tUjRjlrFSCvCov9IgesZ39TVK6t57sk=
+X-Gm-Gg: ASbGnctL3OshQ4UgNG6m7NpyEnR3Z+vrK/Oibe/0oMPBtwFHsLIIyRapBph2LbabzCU
+ qhs4QelO0OdEDrlIj8ZTBFeBIphRMoijfTmHRb28GCFp5Ow5UmwLEHGX5pU0bQwApteM8GvoWh/
+ WEfJGa0I8bIA565Iay+2Qm1YJifPfG4A4IcWa5AeiDTJpYX+tfTBJqDZtU3wfYHZTAVvZhrOhog
+ J5ZF8i0KJGkEG9Iy7/ZRhYvMVFCbyCsAO9fsLP4E237cAVnSx1Bms95EgTVgrdm/4zslmA13MIk
+ bsjCMCv3t69AZzYJq32Eu0fuU3t0bEv/FBQMJet1B/piGR41eCSOTJlPHJH/Xk7WznWowGj5N+8
+ l017i9crAsxynbA==
+X-Google-Smtp-Source: AGHT+IHheP7cK+bS4Er53rQda1CTPIrVcU1j3GQ9mQQYXLKm4B8hLgvwb6YbzN8IKc04xe3AaiJcQg==
+X-Received: by 2002:a05:600c:1c91:b0:43d:5ec:b2f4 with SMTP id
+ 5b1f17b1804b1-4409bd18185mr12678575e9.10.1745477682860; 
+ Wed, 23 Apr 2025 23:54:42 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4408c7cfcabsm43004705e9.0.2025.04.23.23.50.49
+ 5b1f17b1804b1-4409d2bec50sm8251835e9.33.2025.04.23.23.54.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 23 Apr 2025 23:50:50 -0700 (PDT)
-Message-ID: <40c52afe-dbeb-427e-9f88-ac848e9c38a7@linaro.org>
-Date: Thu, 24 Apr 2025 08:50:48 +0200
+ Wed, 23 Apr 2025 23:54:42 -0700 (PDT)
+Message-ID: <87d5270d-6c90-48a5-a973-a647a67e6c20@linaro.org>
+Date: Thu, 24 Apr 2025 08:54:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] meson: Remove CONFIG_STATX and CONFIG_STATX_MNT_ID
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- devel@daynix.com
-References: <20250424-buildsys-v1-0-97655e3b25d7@daynix.com>
- <20250424-buildsys-v1-2-97655e3b25d7@daynix.com>
+Subject: Re: [PATCH 03/15] accel/tcg: Add CPUState arg to
+ tb_invalidate_phys_page_range__locked
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250424011918.599958-1-richard.henderson@linaro.org>
+ <20250424011918.599958-4-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250424-buildsys-v1-2-97655e3b25d7@daynix.com>
+In-Reply-To: <20250424011918.599958-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,18 +102,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/4/25 06:50, Akihiko Odaki wrote:
-> CONFIG_STATX and CONFIG_STATX_MNT_ID are not used since commit
-> 8ab5e8a503b5 ("virtiofsd: Remove build and docs glue").
+On 24/4/25 03:19, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   accel/tcg/tb-maint.c | 9 ++++++---
+>   1 file changed, 6 insertions(+), 3 deletions(-)
+> 
+> diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+> index 714dcaedc9..e8a465c9ac 100644
+> --- a/accel/tcg/tb-maint.c
+> +++ b/accel/tcg/tb-maint.c
+> @@ -1100,9 +1100,12 @@ bool tb_invalidate_phys_page_unwind(CPUState *cpu, tb_page_addr_t addr,
+>   /*
+>    * @p must be non-NULL.
+>    * Call with all @pages locked.
+> + * If cpu may be NULL outside of a cpu context.  In which case,
 
-since commit e0dc2631ec4 ("virtiofsd: Remove source"), otherwise:
+s/If cpu/@cpu/ ?
+
+> + * precise_smc need not be detected.
+>    */
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->   meson.build | 10 ----------
->   1 file changed, 10 deletions(-)
 
 
