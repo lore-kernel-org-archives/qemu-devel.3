@@ -4,173 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E8B0C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 04:02:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A4E0C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 04:12:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7nmB-0000eo-7e; Thu, 24 Apr 2025 00:01:27 -0400
+	id 1u7nwb-0003yC-N8; Thu, 24 Apr 2025 00:12:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u7nm9-0000eJ-Gx; Thu, 24 Apr 2025 00:01:25 -0400
-Received: from mail-eastasiaazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c400::3] helo=HK3PR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1u7nm7-0006vo-HZ; Thu, 24 Apr 2025 00:01:25 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sMlUYk45sG5uKFLD16wGr8DF9s6U+okLspRTenlxmdl9i8rOZQq+Ccn3QXekjZlSeFShq/L8KVILENZCj/2dodQTkzxGSH+0FQsbxt4WRvLAAC8BqTwEbdKF63tr1xPE/wdHtLACgajs4A+0CWdwgOIIpkMue3m6ZJpN8H8TVNpTQiEWo9m0X0Yhr/NYicwe5sA4hU3LJOewW3Rgc7vQIXEp+Rgy1WINTME4+k6ByL8lypDnGrs4bFwj8XvRFyb0y9KFaGzjGD+q3/xvXD0C4Vjwf1+dtATkV8u6l4WH8uRxNcwZIzKMmEtb/ZAB8LiMHKAfio3r3djI9yAeTWPm0A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6DhM89U3kN8qzo5OLarnKjLkagVTCJPTgWkG1vo2nBE=;
- b=ZDhdvEzw0nE1eqiPrtXNoLlLLM7V9bGfm4mrOpPjJlFDol/Rzck5hEEYcNJfBxll0KoRVzUSTCgDRb4utasRfz69C8DVa3Ib5MNSHpIdXmBhuuJZRvTVWsVEP9+Nl7zKA/Sa/2OAy+NEoYNg0BpONQSBNAqJxwkq5xfTGmiJrCoExWEfxcCLuDnEauqzB2joczBMEIbKS79kiK8ELEoylfEyr12pUtjszwBTXgwXkhsT6GjWWS6VXfjGO3SB9CZXYG4IUXjBh1Jn8qQcHTFWsrFw9XmecPlF4sGfNoWayqey4bhvPvaWh7kYNtaUjgjx8INzDmwPx3cJbEzbIwMnTQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6DhM89U3kN8qzo5OLarnKjLkagVTCJPTgWkG1vo2nBE=;
- b=XkZHffGbljArikDWII3qfjT7e83g26k1TXLqd8mplIj+/v65cKxd5r43s9q9GbyLKT8sL/5sC+qFL6tu5UathxNGc6+AfezjX5H/Q/faAQ3jOFyORZC3b1EkVIuYjPcoJ2aDO2HbuLTjkvyjMDLrBbzhUy4mopQf+DRRLgDUkg33Alh7xBjcifkOMdsa+mT982VBZoiLIYE3bmRnqRP1KJjb6d/Y+BHrhVGrHlM9RhEw6YTowEvC6MaT6VamRvtkugBHMafwerWHaJtix8A2JrTr5F8qyQ4dKNJlgX9Kv678+nXfb4xLV1OTApk/+ZmuF519k23NX/XJ9X0LWVeERw==
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
- TY0PR06MB5443.apcprd06.prod.outlook.com (2603:1096:400:32c::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.23; Thu, 24 Apr
- 2025 04:01:15 +0000
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56%4]) with mapi id 15.20.8655.033; Thu, 24 Apr 2025
- 04:01:15 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, "nabihestefan@google.com"
- <nabihestefan@google.com>
-Subject: RE: [PATCH v5 06/11] hw/arm/aspeed: Add support for loading vbootrom
- image via "-bios"
-Thread-Topic: [PATCH v5 06/11] hw/arm/aspeed: Add support for loading vbootrom
- image via "-bios"
-Thread-Index: AQHbtCCxh9qo/IFpL0G9004JIiaFOrOw+naAgAE4H4A=
-Date: Thu, 24 Apr 2025 04:01:15 +0000
-Message-ID: <SI2PR06MB50410B86FC1B8D69DD56ECA6FC852@SI2PR06MB5041.apcprd06.prod.outlook.com>
-References: <20250423072350.541742-1-jamin_lin@aspeedtech.com>
- <20250423072350.541742-7-jamin_lin@aspeedtech.com>
- <5503c8b7-1b42-4a36-a768-33bdd61b8bfc@kaod.org>
-In-Reply-To: <5503c8b7-1b42-4a36-a768-33bdd61b8bfc@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|TY0PR06MB5443:EE_
-x-ms-office365-filtering-correlation-id: db36ac95-fe67-4702-c2b8-08dd82e4a8e2
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700018;
-x-microsoft-antispam-message-info: =?utf-8?B?NE5oUkpUWEZjc1BkNGR2cGY3bUdPUTRMSndhSTFNTTV2aSswakpKNkhqQzYv?=
- =?utf-8?B?bDByUlFqb0lidmcxRDlPdnVuSWV5Mlk4MHRUZEFocy9tcUVNdWRzdktqVWZQ?=
- =?utf-8?B?NUhBMFduM3dOc0I2NmVob1ZnRTEyUEZ3TUc1NDB4YnJPdERsTTJZZ09XWGpY?=
- =?utf-8?B?VW96dTk4SmdheDdZS2ZKK0E0TTBJYTFNUWwyRHdObCt4T2ZwSWc0TlE5ZW5U?=
- =?utf-8?B?ZWY0aVl3R1lEa3VZY0U5RlpOODJHTjU4R3R4cFovZk1GeGhtWXBXRUhNVGtC?=
- =?utf-8?B?WWM0YXIycWRVZHBtbW5yd3hJOE43dUpNaG4rK3VkQWNJaENZS29HQlpOZ01F?=
- =?utf-8?B?VXZJTHRCbmQzZjcyRjR0V0tkLzEzb1JxQWx2L0xXNmxJUk5MRk1GWUJ5RlBS?=
- =?utf-8?B?djVXdTJvdnl5b2VKUmxOMXl5WkM2eGthcFBmQW5jcDhxRFppNklYT2w5R1Y5?=
- =?utf-8?B?VFNDaldqN1prR2J6OXRwblN5cG9PVEpzdmphWDg3YlMxdnRNVXR5WEI3Z0Q1?=
- =?utf-8?B?dGJCbmFRaU0xVkxyYVBYU3E1c21ER2VCdHNDdTdoQ0ZWYloxNGN1K01HS05w?=
- =?utf-8?B?MDFqTHBRZnl1eHY5aGxyWjgzWDNCV256L2Y2TVBHNDFJV29lbTEzRmsrcDFw?=
- =?utf-8?B?QjNoT3ZrSGpweDJWb2pXcHd6M2I2d0t6Zy9yTTNIdUhBc05DWGFtVEhHcW5a?=
- =?utf-8?B?Q0xpT25xcDBNa1hNcGdGb052aWVzUnUwVFVNSUxIL3ZReFdoZEdlaW5iNFlE?=
- =?utf-8?B?RW82NUx4VXdGTDg3eGJ2RXlkRGZJZXBjQXRoMHF3K0xld0pkRjArMGRXQTA2?=
- =?utf-8?B?TXM5RUFSdFZiKzIrelpVVUFZZDV0RHRCYmRhTzgraTY1dkNRb2QwdGhTLzRy?=
- =?utf-8?B?MkdtUkpudWRtR1Vwa0NVNWVVZVFsc3BHeDhjeGdTWCtMaDRua3JTNTNRczhZ?=
- =?utf-8?B?anI5aDhIeUl6OVEzUGVDY2VVS3RFVGEveklLazk3N2V1SnpnS1RsTXZBZXIr?=
- =?utf-8?B?S2JaV3VFbjhvSGlGRitmTE44WTR2VFh2T0ZBZS9sY3dGSzc4bFhGTGIzMHpk?=
- =?utf-8?B?U01mQW1hRzBrMWhHT3pMVXEzbkU1QTdJWFplclNkcTBvRzlqdHdEOU5IQmRI?=
- =?utf-8?B?ZFFkR3hEK2pUZDlBb2NxTU16RWFtbTFoaDFvRTdXUmxzMHZMcmVnN0NxcWdQ?=
- =?utf-8?B?eXhGS21QaTVza05NL2xIU3ozeHd6aVloaElIQ2U3UWYxRGZQbzlvM0xuZUxj?=
- =?utf-8?B?THpUYkJuNjlpbm94OXdxMUpCYnRKZjRCVHArd0JNM2RVZ1NFb3FwM1VMdDBB?=
- =?utf-8?B?WU1tYkpwUzlLenBsMWI4a3hzdGpVblpLMHV6c3NobVdLSFAxdGE2S3VwWmcz?=
- =?utf-8?B?M0I5M1RPa01YS0cvK1M2TS9RT3pGYytRNzMyWnNEb3JJK3N1VGpjazdHRFYr?=
- =?utf-8?B?bnFNREN1a1lyeGF2RkhTemVFS0hPUUc0Y3B6U2RISmduZGtlbE5sZkViYS9p?=
- =?utf-8?B?akRYaFJjWExXbzYyRHBLZjA0aEVvV2gzRVh1ZmtOWlBqYVlRRHBoVmQyN2JK?=
- =?utf-8?B?THhXbXBoUElmY1pxWmJKK0IrdFdQeDBrWTBpSWpaRWx3VnpwZ0crWDg5cHNR?=
- =?utf-8?B?YXBDWCtOQlQ2Tjl1YzQxM2ljWngxdGUwT2ZiOUlRR1hkenM3ajVYOHNmYm50?=
- =?utf-8?B?SUFzTXFwVDYxUG1EczJjV08rOGYxckIrd2ZwRG5XRzNvZWwycXBZditpNEt5?=
- =?utf-8?B?WnN3V3lWVGJEUFRNSitNK0J0bkFXSW5KRTZjdnN4dFlZbVU5NDR4RFlMeC90?=
- =?utf-8?B?aVpQcytRTHZJdFZXWVFMM25SSFowanR5eW9yeWpDNnBkT3ZPTXhiZTJQbld3?=
- =?utf-8?B?M0JLTnUrcjFhYXY1WFVkTmpqcXU5c0pWSnN1R3pyS0p4aGs5T1RNUUJpc2l4?=
- =?utf-8?B?NmRMY1JGOFV3elRicithQ1JFWWNwMnpKbFZUMVpJTTlJRlY0aXhUb3Q3eEtK?=
- =?utf-8?B?MEtDeVAzUGpRPT0=?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(366016)(376014)(1800799024)(38070700018); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?MmRyOE1rK3czYjQ2UmhCVzdEV29wck8vUXdMRkN3ZnR0b3V3Tm9SMVpjRCtQ?=
- =?utf-8?B?T0FyVWdQMHR0OTFGR3hvVVZxaCtWVjVNOG5wU3N2MjFQRzZCYWJXc0pQUEVM?=
- =?utf-8?B?N2o5ejFwOHh6Sk9jeVJ6djNDSHpGMnUyUjdCQlZSbmhOdlZLczM3ZGZ3RnJV?=
- =?utf-8?B?RUxVVjJsaVA5UFpZeFAxSXBkVlJZbngydE9BYTNVaU0wTmFOT3dIV1JQa3hD?=
- =?utf-8?B?TWIzUE1GV2pLK0piWUhhcE9BUXl0UE8raDlUaWNiWTFudklPTm5vY25OOGt4?=
- =?utf-8?B?Z2VtN3lrQ0pMd0puVnlxVmhYRTlBM1RJTDlDRUZCRFRVajdpKzA5YWdpQ244?=
- =?utf-8?B?Q2FGd3dvbnF0Q3B1L3lzTmVLczM2bHRuVE8yRzdEdlN0TCt5N0xENmZraVRp?=
- =?utf-8?B?TklMUFBneFdCTmFvOFpIeDNOL0NiMFJtNGZmMyt5bW0yRExNeGFqZ1NaY1Jn?=
- =?utf-8?B?RnFpbHB6VjhtZUs3bVNJTnBXa3pVeERBZ2ZzY1pZMUV4SWsxVnI0R2c3cjVh?=
- =?utf-8?B?Y09jMVNXNUI0a2FtZ2NBaHhnTndtRVJVSUhvRXB4QUhySEJKdmlCL2lYdERw?=
- =?utf-8?B?cTJ1N0ZqdVpvK1hIb3hCampnTk01b3Y4UGFLN3FXbTBGelNITWdzZGNIeXhi?=
- =?utf-8?B?K3dzQ1o3RjQ1STFjS1crWUYvZW1qUlphU0poNEF4NE1nUmZ4TjNjUDBzbXhZ?=
- =?utf-8?B?YmpoL0VTY0I0cE5qRHRvTkRqd0NXeGx6c1FSZDc3M3FKbHZwekRhZ1VpT1hM?=
- =?utf-8?B?NjZNWDlyMU9wc0tNSXVLOHI1bThML2MyNnBGWU9ZY1ZoelJ2d1JvdGx3T2RY?=
- =?utf-8?B?TTFVaUpPbSswKzcySUVSRVpVd0RBekRvQ2xreER4eUR4b3dsVy9KYWR0L21X?=
- =?utf-8?B?am9oSFVJb3k4R2FpWXFEMVhmbzdzSUNnZ1pGUlZnR0NXVDJlWVVvNUkvSy9C?=
- =?utf-8?B?N3ZYSS84UEZmZitFcDQwUFczQmRRcDR1c0M1ZmRyQ05jSGYvYmRLU3N6L2Q4?=
- =?utf-8?B?bE5Rd2lRWFNRZG5iT3lhcUd6MVhZSk9tcEIxRlBLZUc5c0Y4RUFoUE92MVdD?=
- =?utf-8?B?clNWUlZEOWI4L2hOYnJKY3QvNzU4cEppdDZVeDZZd01nMmtJZUhpclh4cmxT?=
- =?utf-8?B?UldDSXd0ZjBrMGdPb2U4elZFWStNMFBhdU5LL01LTUdUSnIyYURUMkhDcG9t?=
- =?utf-8?B?NUxlLy8rd2JvNlpYV1kwcE5VcXMvRlEycElRUWxPZVAzMXEyZCtDN2ttMUFT?=
- =?utf-8?B?N0xSR3B3bUN0Tzd2WXUwVlJPUi9uVEJVNTlSWXFYY05mNmNZN3pleW00NitS?=
- =?utf-8?B?ZjZZZHVHMzRtWTk5cXlWa2h0OEk0c2ZERVcwNVJOR3ZyNWp1L0xRK2pHWkVl?=
- =?utf-8?B?eFRuVFBmNGJsNU8zRWlWbHgzSjI1c01FWS9JVm93WWdsZ2diNHR6ZEZjdjNn?=
- =?utf-8?B?UFZvREMyQ21QM2dGOXVTS1lZby9NcUNBalk3SW9va29xQUJ5MGVOcGNGM25E?=
- =?utf-8?B?RStCWi9LbnBkQUpiVHpvTUcwd01tSDIxczcwVFpjMlBTaDhlTWFRZmFORFhF?=
- =?utf-8?B?Y2grVjlrRmxCZWFSTnBaMFNQQ3hsK0NIZzFQMDNsRklwQ1VHU1NlT051dkN1?=
- =?utf-8?B?a25oZ2hLSDFta2dVOUY5Q3oybEtTM0xuZzRMbHZyOXZoWTQxZUZNTklIT1Jt?=
- =?utf-8?B?ZmVWdnlvWFY1TWxZWWJNaXhpQVFmYWh6MWUwY2tHeUNIOGVYUzM3bi8zZ2x1?=
- =?utf-8?B?ajEzZU1mSXRmeFY1UWRVZFRrejFEeWFNenJXcnNwNjIrNmJzem50MHJzRE5a?=
- =?utf-8?B?UjA4cmRCWW9tM3lXOFdlb3dMN3RUdkFvdll2dXQvOHlIMzRqbUNoSDUwam45?=
- =?utf-8?B?Q0xlbTZ5QjBoRnQvZ291dVRiTERaaUIvZFZHMUF6TStWdTVVSkdRRFNWTHJq?=
- =?utf-8?B?VFZWV3BieUhHMzFxYTcvc3pQdWRKOWpHaUdnMzl3cTFtRXlMWElveis0OWhG?=
- =?utf-8?B?MUp3ZkFqOUY1L1R5dWRCb1FZV2xQcWZVTXI0dENDK2pEWHNNbUFVOGIwTVl1?=
- =?utf-8?B?c2I4bGJRcGFyK3habE4rNTdnZWxYbzZyNDdMQUsvOVY4SXVvQzQ4Ymg3TXNr?=
- =?utf-8?Q?XjrqzqlMV75mhyvNxGC2lnC2d?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1u7nwY-0003xz-4w
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 00:12:10 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1u7nwU-0007v1-9w
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 00:12:09 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8CxG6wDugloDQ_FAA--.32198S3;
+ Thu, 24 Apr 2025 12:11:47 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCxrhsAugloMuqSAA--.53303S3;
+ Thu, 24 Apr 2025 12:11:46 +0800 (CST)
+Subject: Re: [PATCH v4 3/3] target/loongarch: Guard 64-bit-only insn
+ translation with TRANS64 macro
+To: WANG Rui <wangrui@loongson.cn>
+Cc: gaosong <gaosong@loongson.cn>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>, qemu@hev.cc,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250418082103.447780-1-wangrui@loongson.cn>
+ <20250418082103.447780-4-wangrui@loongson.cn>
+ <56cfe883-2de5-43f6-67db-a05d88a010e9@loongson.cn>
+ <a395f6aa-c623-ba7d-2952-5b7249144ba8@loongson.cn>
+ <CAHirt9gZEoTi4dnf69Pe0ZWAxFfn3La0=tcGESoATn1WaF4etg@mail.gmail.com>
+ <446f7813-4d26-91c7-0baa-098b5c5eb2b0@loongson.cn>
+ <CAHirt9jbrmTWgRHBYZAN2t_tzF9CJ86Z_=9XxPpkQYbj7WTqzw@mail.gmail.com>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <806baf17-7d22-0d5e-f4a4-22f5ecd36ac0@loongson.cn>
+Date: Thu, 24 Apr 2025 12:10:41 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: db36ac95-fe67-4702-c2b8-08dd82e4a8e2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Apr 2025 04:01:15.3719 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: TwL8lG4QdrNTr/EAltBizxrcN29Yz8KchV+oyt88PLDOoCvaJkwavzmgIpEj07QGYn42lapJYwqbjM0/m2CGB9o806xwIs6GRUlqn5ZIm6Q=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB5443
-Received-SPF: pass client-ip=2a01:111:f403:c400::3;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=HK3PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <CAHirt9jbrmTWgRHBYZAN2t_tzF9CJ86Z_=9XxPpkQYbj7WTqzw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMCxrhsAugloMuqSAA--.53303S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9fXoW3trW3GFWfuryxZr1DtF1rXwc_yoW8Cr1xWo
+ WrXF47JF1xJ3s8urW5K34kt34qvw1xAas8J3yUJw1UuF9Yq3Wjkw1rCw1DZay3uFWDAFyU
+ Wr4fG3Z5Aa13Xwn7l-sFpf9Il3svdjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8wcxFpf
+ 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
+ UjIYCTnIWjp_UUUY77kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
+ 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUGVWUXwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
+ Y2AK021l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14
+ v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1EksDUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.765,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -186,62 +90,327 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ2VkcmljLA0KDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjUgMDYvMTFdIGh3L2FybS9hc3Bl
-ZWQ6IEFkZCBzdXBwb3J0IGZvciBsb2FkaW5nDQo+IHZib290cm9tIGltYWdlIHZpYSAiLWJpb3Mi
-DQo+IA0KPiBPbiA0LzIzLzI1IDA5OjIzLCBKYW1pbiBMaW4gd3JvdGU6DQo+ID4gSW50cm9kdWNl
-ICJhc3BlZWRfbG9hZF92Ym9vdHJvbSgpIiB0byBzdXBwb3J0IGxvYWRpbmcgYSB2aXJ0dWFsIGJv
-b3QNCj4gPiBST00gaW1hZ2UgaW50byB0aGUgdmJvb3Ryb20gbWVtb3J5IHJlZ2lvbiwgdXNpbmcg
-dGhlICItYmlvcyINCj4gY29tbWFuZC1saW5lIG9wdGlvbi4NCj4gPg0KPiA+IFNpZ25lZC1vZmYt
-Ynk6IEphbWluIExpbiA8amFtaW5fbGluQGFzcGVlZHRlY2guY29tPg0KPiA+IFJldmlld2VkLWJ5
-OiBOYWJpaCBFc3RlZmFuIDxuYWJpaGVzdGVmYW5AZ29vZ2xlLmNvbT4NCj4gPiBUZXN0ZWQtYnk6
-IE5hYmloIEVzdGVmYW4gPG5hYmloZXN0ZWZhbkBnb29nbGUuY29tPg0KPiA+IC0tLQ0KPiA+ICAg
-aHcvYXJtL2FzcGVlZC5jIHwgMzUgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysN
-Cj4gPiAgIDEgZmlsZSBjaGFuZ2VkLCAzNSBpbnNlcnRpb25zKCspDQo+ID4NCj4gPiBkaWZmIC0t
-Z2l0IGEvaHcvYXJtL2FzcGVlZC5jIGIvaHcvYXJtL2FzcGVlZC5jIGluZGV4DQo+ID4gYjcwYTEy
-MGU2Mi4uYjU4MzFlZjRjMSAxMDA2NDQNCj4gPiAtLS0gYS9ody9hcm0vYXNwZWVkLmMNCj4gPiAr
-KysgYi9ody9hcm0vYXNwZWVkLmMNCj4gPiBAQCAtMjcsNiArMjcsNyBAQA0KPiA+ICAgI2luY2x1
-ZGUgInN5c3RlbS9yZXNldC5oIg0KPiA+ICAgI2luY2x1ZGUgImh3L2xvYWRlci5oIg0KPiA+ICAg
-I2luY2x1ZGUgInFlbXUvZXJyb3ItcmVwb3J0LmgiDQo+ID4gKyNpbmNsdWRlICJxZW11L2RhdGFk
-aXIuaCINCj4gPiAgICNpbmNsdWRlICJxZW11L3VuaXRzLmgiDQo+ID4gICAjaW5jbHVkZSAiaHcv
-cWRldi1jbG9jay5oIg0KPiA+ICAgI2luY2x1ZGUgInN5c3RlbS9zeXN0ZW0uaCINCj4gPiBAQCAt
-MzA1LDYgKzMwNiwzNSBAQCBzdGF0aWMgdm9pZA0KPiBhc3BlZWRfaW5zdGFsbF9ib290X3JvbShB
-c3BlZWRNYWNoaW5lU3RhdGUgKmJtYywgQmxvY2tCYWNrZW5kICpibGssDQo+ID4gICAgICAgICAg
-ICAgICAgICAgICAgcm9tX3NpemUsICZlcnJvcl9hYm9ydCk7DQo+ID4gICB9DQo+ID4NCj4gPiAr
-I2RlZmluZSBWQk9PVFJPTV9GSUxFX05BTUUgICJhc3QyN3gwX2Jvb3Ryb20uYmluIg0KPiA+ICsN
-Cj4gPiArLyoNCj4gPiArICogVGhpcyBmdW5jdGlvbiBsb2NhdGVzIHRoZSB2Ym9vdHJvbSBpbWFn
-ZSBmaWxlIHNwZWNpZmllZCB2aWEgdGhlDQo+ID4gK2NvbW1hbmQgbGluZQ0KPiA+ICsgKiB1c2lu
-ZyB0aGUgLWJpb3Mgb3B0aW9uLiBJdCBsb2FkcyB0aGUgc3BlY2lmaWVkIGltYWdlIGludG8gdGhl
-DQo+ID4gK3Zib290cm9tDQo+ID4gKyAqIG1lbW9yeSByZWdpb24gYW5kIGhhbmRsZXMgZXJyb3Jz
-IGlmIHRoZSBmaWxlIGNhbm5vdCBiZSBmb3VuZCBvciBsb2FkZWQuDQo+ID4gKyAqLw0KPiA+ICtz
-dGF0aWMgdm9pZCBhc3BlZWRfbG9hZF92Ym9vdHJvbShNYWNoaW5lU3RhdGUgKm1hY2hpbmUsIHVp
-bnQ2NF90DQo+ID4gK3JvbV9zaXplLA0KPiANCj4gcm9tX3NpemUgaXMgdW51c2VkLg0KPiANCj4g
-PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgRXJyb3IgKiplcnJwKSB7DQo+ID4g
-KyAgICBBc3BlZWRNYWNoaW5lU3RhdGUgKmJtYyA9IEFTUEVFRF9NQUNISU5FKG1hY2hpbmUpOw0K
-PiA+ICsgICAgY29uc3QgY2hhciAqYmlvc19uYW1lID0gbWFjaGluZS0+ZmlybXdhcmUgPzoNCj4g
-VkJPT1RST01fRklMRV9OQU1FOw0KPiANCj4gSSB3b3VsZCBjaGFuZ2UgdGhlIHByb3RvdHlwZSBv
-ZiBhc3BlZWRfbG9hZF92Ym9vdHJvbSB0bzoNCj4gDQo+IHZvaWQgYXNwZWVkX2xvYWRfdmJvb3Ry
-b20oQXNwZWVkTWFjaGluZVN0YXRlICpibWMsIGNvbnN0IGNoYXINCj4gKmJpb3NfbmFtZSwNCj4g
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgRXJyb3IgKiplcnJwKQ0KPiANClRoYW5rcyBmb3Ig
-cmV2aWV3IGFuZCBzdWdnZXN0aW9uLg0KV2lsbCByZXZpc2UgaXQNCkphbWluDQo+IA0KPiBUaGFu
-a3MsDQo+IA0KPiBDLg0KPiANCj4gDQo+IA0KPiANCj4gPiArICAgIGdfYXV0b2ZyZWUgY2hhciAq
-ZmlsZW5hbWUgPSBOVUxMOw0KPiA+ICsgICAgQXNwZWVkU29DU3RhdGUgKnNvYyA9IGJtYy0+c29j
-Ow0KPiA+ICsgICAgaW50IHJldDsNCj4gPiArDQo+ID4gKyAgICBmaWxlbmFtZSA9IHFlbXVfZmlu
-ZF9maWxlKFFFTVVfRklMRV9UWVBFX0JJT1MsIGJpb3NfbmFtZSk7DQo+ID4gKyAgICBpZiAoIWZp
-bGVuYW1lKSB7DQo+ID4gKyAgICAgICAgZXJyb3Jfc2V0ZyhlcnJwLCAiQ291bGQgbm90IGZpbmQg
-dmJvb3Ryb20gaW1hZ2UgJyVzJyIsDQo+IGJpb3NfbmFtZSk7DQo+ID4gKyAgICAgICAgcmV0dXJu
-Ow0KPiA+ICsgICAgfQ0KPiA+ICsNCj4gPiArICAgIHJldCA9IGxvYWRfaW1hZ2VfbXIoZmlsZW5h
-bWUsICZzb2MtPnZib290cm9tKTsNCj4gPiArICAgIGlmIChyZXQgPCAwKSB7DQo+ID4gKyAgICAg
-ICAgZXJyb3Jfc2V0ZyhlcnJwLCAiRmFpbGVkIHRvIGxvYWQgdmJvb3Ryb20gaW1hZ2UgJyVzJyIs
-DQo+IGJpb3NfbmFtZSk7DQo+ID4gKyAgICAgICAgcmV0dXJuOw0KPiA+ICsgICAgfQ0KPiA+ICt9
-DQo+ID4gKw0KPiA+ICAgdm9pZCBhc3BlZWRfYm9hcmRfaW5pdF9mbGFzaGVzKEFzcGVlZFNNQ1N0
-YXRlICpzLCBjb25zdCBjaGFyDQo+ICpmbGFzaHR5cGUsDQo+ID4gICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIHVuc2lnbmVkIGludCBjb3VudCwgaW50DQo+IHVuaXQwKQ0K
-PiA+ICAgew0KPiA+IEBAIC00ODMsNiArNTEzLDExIEBAIHN0YXRpYyB2b2lkIGFzcGVlZF9tYWNo
-aW5lX2luaXQoTWFjaGluZVN0YXRlDQo+ICptYWNoaW5lKQ0KPiA+ICAgICAgICAgICB9DQo+ID4g
-ICAgICAgfQ0KPiA+DQo+ID4gKyAgICBpZiAoYW1jLT52Ym9vdHJvbSkgew0KPiA+ICsgICAgICAg
-IHJvbV9zaXplID0gbWVtb3J5X3JlZ2lvbl9zaXplKCZibWMtPnNvYy0+dmJvb3Ryb20pOw0KPiA+
-ICsgICAgICAgIGFzcGVlZF9sb2FkX3Zib290cm9tKG1hY2hpbmUsIHJvbV9zaXplLCAmZXJyb3Jf
-YWJvcnQpOw0KPiA+ICsgICAgfQ0KPiA+ICsNCj4gPiAgICAgICBhcm1fbG9hZF9rZXJuZWwoQVJN
-X0NQVShmaXJzdF9jcHUpLCBtYWNoaW5lLA0KPiAmYXNwZWVkX2JvYXJkX2JpbmZvKTsNCj4gPiAg
-IH0NCj4gPg0KDQo=
+
+
+On 2025/4/24 上午10:59, WANG Rui wrote:
+> Hi Bibo,
+> 
+> On Thu, Apr 24, 2025 at 10:32 AM bibo mao <maobibo@loongson.cn> wrote:
+>>
+>>
+>>
+>> On 2025/4/24 上午10:11, WANG Rui wrote:
+>>> Hi Song,
+>>>
+>>> On Thu, Apr 24, 2025 at 9:40 AM gaosong <gaosong@loongson.cn> wrote:
+>>>>
+>>>> 在 2025/4/18 下午4:45, bibo mao 写道:
+>>>>>
+>>>>>
+>>>>> On 2025/4/18 下午4:21, WANG Rui wrote:
+>>>>>> This patch replaces uses of the generic TRANS macro with TRANS64 for
+>>>>>> instructions that are only valid when 64-bit support is available.
+>>>>>>
+>>>>>> This improves correctness and avoids potential assertion failures or
+>>>>>> undefined behavior during translation on 32-bit-only configurations.
+>>>>>>
+>>>>>> Signed-off-by: WANG Rui <wangrui@loongson.cn>
+>>>>>> ---
+>>>>>>     .../tcg/insn_trans/trans_atomic.c.inc         | 36 +++++++++----------
+>>>>>>     .../tcg/insn_trans/trans_extra.c.inc          |  8 +++--
+>>>>>>     .../tcg/insn_trans/trans_privileged.c.inc     |  4 +--
+>>>>>>     .../tcg/insn_trans/trans_shift.c.inc          |  4 +--
+>>>>>>     .../loongarch/tcg/insn_trans/trans_vec.c.inc  | 16 ++++-----
+>>>>>>     target/loongarch/translate.h                  |  4 +++
+>>>>>>     6 files changed, 40 insertions(+), 32 deletions(-)
+>>>>>>
+>>>>>> diff --git a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
+>>>>>> b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
+>>>>>> index 3d70d75941..77eeedbc42 100644
+>>>>>> --- a/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
+>>>>>> +++ b/target/loongarch/tcg/insn_trans/trans_atomic.c.inc
+>>>>>> @@ -74,38 +74,38 @@ TRANS(sc_w, ALL, gen_sc, MO_TESL)
+>>>>>>     TRANS(ll_d, 64, gen_ll, MO_TEUQ)
+>>>>>>     TRANS(sc_d, 64, gen_sc, MO_TEUQ)
+>>>>>>     TRANS(amswap_w, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TESL)
+>>>>>> -TRANS(amswap_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
+>>>>>> +TRANS64(amswap_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
+>>>>>>     TRANS(amadd_w, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TESL)
+>>>>>> -TRANS(amadd_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
+>>>>>> +TRANS64(amadd_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
+>>>>>>     TRANS(amand_w, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TESL)
+>>>>>> -TRANS(amand_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
+>>>>>> +TRANS64(amand_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
+>>>>>>     TRANS(amor_w, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TESL)
+>>>>>> -TRANS(amor_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
+>>>>>> +TRANS64(amor_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
+>>>>>>     TRANS(amxor_w, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TESL)
+>>>>>> -TRANS(amxor_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
+>>>>>> +TRANS64(amxor_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
+>>>>>>     TRANS(ammax_w, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TESL)
+>>>>>> -TRANS(ammax_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
+>>>>>> +TRANS64(ammax_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
+>>>>>>     TRANS(ammin_w, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TESL)
+>>>>>> -TRANS(ammin_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
+>>>>>> +TRANS64(ammin_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
+>>>>>>     TRANS(ammax_wu, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TESL)
+>>>>>> -TRANS(ammax_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
+>>>>>> +TRANS64(ammax_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
+>>>>>>     TRANS(ammin_wu, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TESL)
+>>>>>> -TRANS(ammin_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
+>>>>>> +TRANS64(ammin_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
+>>>>>>     TRANS(amswap_db_w, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TESL)
+>>>>>> -TRANS(amswap_db_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
+>>>>>> +TRANS64(amswap_db_d, LAM, gen_am, tcg_gen_atomic_xchg_tl, MO_TEUQ)
+>>>>>>     TRANS(amadd_db_w, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TESL)
+>>>>>> -TRANS(amadd_db_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
+>>>>>> +TRANS64(amadd_db_d, LAM, gen_am, tcg_gen_atomic_fetch_add_tl, MO_TEUQ)
+>>>>>>     TRANS(amand_db_w, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TESL)
+>>>>>> -TRANS(amand_db_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
+>>>>>> +TRANS64(amand_db_d, LAM, gen_am, tcg_gen_atomic_fetch_and_tl, MO_TEUQ)
+>>>>>>     TRANS(amor_db_w, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TESL)
+>>>>>> -TRANS(amor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
+>>>>>> +TRANS64(amor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_or_tl, MO_TEUQ)
+>>>>>>     TRANS(amxor_db_w, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TESL)
+>>>>>> -TRANS(amxor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
+>>>>>> +TRANS64(amxor_db_d, LAM, gen_am, tcg_gen_atomic_fetch_xor_tl, MO_TEUQ)
+>>>>>>     TRANS(ammax_db_w, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TESL)
+>>>>>> -TRANS(ammax_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
+>>>>>> +TRANS64(ammax_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smax_tl, MO_TEUQ)
+>>>>>>     TRANS(ammin_db_w, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TESL)
+>>>>>> -TRANS(ammin_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
+>>>>>> +TRANS64(ammin_db_d, LAM, gen_am, tcg_gen_atomic_fetch_smin_tl, MO_TEUQ)
+>>>>>>     TRANS(ammax_db_wu, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TESL)
+>>>>>> -TRANS(ammax_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl, MO_TEUQ)
+>>>>>> +TRANS64(ammax_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umax_tl,
+>>>>>> MO_TEUQ)
+>>>>>>     TRANS(ammin_db_wu, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TESL)
+>>>>>> -TRANS(ammin_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl, MO_TEUQ)
+>>>>>> +TRANS64(ammin_db_du, LAM, gen_am, tcg_gen_atomic_fetch_umin_tl,
+>>>>>> MO_TEUQ)
+>>>>>> diff --git a/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+>>>>>> b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+>>>>>> index eda3d6e561..298a80cff5 100644
+>>>>>> --- a/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+>>>>>> +++ b/target/loongarch/tcg/insn_trans/trans_extra.c.inc
+>>>>>> @@ -69,6 +69,10 @@ static bool trans_rdtimeh_w(DisasContext *ctx,
+>>>>>> arg_rdtimeh_w *a)
+>>>>>>       static bool trans_rdtime_d(DisasContext *ctx, arg_rdtime_d *a)
+>>>>>>     {
+>>>>>> +    if (!avail_64(ctx)) {
+>>>>>> +        return false;
+>>>>>> +    }
+>>>>>> +
+>>>>>>         return gen_rdtime(ctx, a, 0, 0);
+>>>>>>     }
+>>>>>>     @@ -100,8 +104,8 @@ static bool gen_crc(DisasContext *ctx, arg_rrr *a,
+>>>>>>     TRANS(crc_w_b_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(1))
+>>>>>>     TRANS(crc_w_h_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(2))
+>>>>>>     TRANS(crc_w_w_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(4))
+>>>>>> -TRANS(crc_w_d_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(8))
+>>>>>> +TRANS64(crc_w_d_w, CRC, gen_crc, gen_helper_crc32, tcg_constant_tl(8))
+>>>>>>     TRANS(crcc_w_b_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(1))
+>>>>>>     TRANS(crcc_w_h_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(2))
+>>>>>>     TRANS(crcc_w_w_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(4))
+>>>>>> -TRANS(crcc_w_d_w, CRC, gen_crc, gen_helper_crc32c, tcg_constant_tl(8))
+>>>>>> +TRANS64(crcc_w_d_w, CRC, gen_crc, gen_helper_crc32c,
+>>>>>> tcg_constant_tl(8))
+>>>>>> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+>>>>>> b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+>>>>>> index ecbfe23b63..34cfab8879 100644
+>>>>>> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+>>>>>> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
+>>>>>> @@ -233,11 +233,11 @@ static bool gen_iocsrwr(DisasContext *ctx,
+>>>>>> arg_rr *a,
+>>>>>>     TRANS(iocsrrd_b, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_b)
+>>>>>>     TRANS(iocsrrd_h, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_h)
+>>>>>>     TRANS(iocsrrd_w, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_w)
+>>>>>> -TRANS(iocsrrd_d, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_d)
+>>>>>> +TRANS64(iocsrrd_d, IOCSR, gen_iocsrrd, gen_helper_iocsrrd_d)
+>>>>>>     TRANS(iocsrwr_b, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_b)
+>>>>>>     TRANS(iocsrwr_h, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_h)
+>>>>>>     TRANS(iocsrwr_w, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_w)
+>>>>>> -TRANS(iocsrwr_d, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_d)
+>>>>>> +TRANS64(iocsrwr_d, IOCSR, gen_iocsrwr, gen_helper_iocsrwr_d)
+>>>>>>       static void check_mmu_idx(DisasContext *ctx)
+>>>>>>     {
+>>>>>> diff --git a/target/loongarch/tcg/insn_trans/trans_shift.c.inc
+>>>>>> b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
+>>>>>> index 377307785a..136c4c8455 100644
+>>>>>> --- a/target/loongarch/tcg/insn_trans/trans_shift.c.inc
+>>>>>> +++ b/target/loongarch/tcg/insn_trans/trans_shift.c.inc
+>>>>>> @@ -78,7 +78,7 @@ TRANS(sra_w, ALL, gen_rrr, EXT_SIGN, EXT_NONE,
+>>>>>> EXT_SIGN, gen_sra_w)
+>>>>>>     TRANS(sll_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_sll_d)
+>>>>>>     TRANS(srl_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_srl_d)
+>>>>>>     TRANS(sra_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_sra_d)
+>>>>>> -TRANS(rotr_w, 64, gen_rrr, EXT_ZERO, EXT_NONE, EXT_SIGN, gen_rotr_w)
+>>>>>> +TRANS(rotr_w, ALL, gen_rrr, EXT_ZERO, EXT_NONE, EXT_SIGN, gen_rotr_w)
+>>>>>>     TRANS(rotr_d, 64, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_rotr_d)
+>>>>>>     TRANS(slli_w, ALL, gen_rri_c, EXT_NONE, EXT_SIGN, tcg_gen_shli_tl)
+>>>>>>     TRANS(slli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shli_tl)
+>>>>>> @@ -86,5 +86,5 @@ TRANS(srli_w, ALL, gen_rri_c, EXT_ZERO, EXT_SIGN,
+>>>>>> tcg_gen_shri_tl)
+>>>>>>     TRANS(srli_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_shri_tl)
+>>>>>>     TRANS(srai_w, ALL, gen_rri_c, EXT_NONE, EXT_NONE, gen_sari_w)
+>>>>>>     TRANS(srai_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_sari_tl)
+>>>>>> -TRANS(rotri_w, 64, gen_rri_v, EXT_NONE, EXT_NONE, gen_rotr_w)
+>>>>>> +TRANS(rotri_w, ALL, gen_rri_v, EXT_NONE, EXT_NONE, gen_rotr_w)
+>>>>>>     TRANS(rotri_d, 64, gen_rri_c, EXT_NONE, EXT_NONE, tcg_gen_rotri_tl)
+>>>>> The modification looks good to me.
+>>>>>
+>>>>>> diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+>>>>>> b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+>>>>>> index dff92772ad..a6f5b346bb 100644
+>>>>>> --- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+>>>>>> +++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+>>>>>> @@ -4853,9 +4853,9 @@ static bool gen_g2x(DisasContext *ctx, arg_vr_i
+>>>>>> *a, MemOp mop,
+>>>>>>     TRANS(vinsgr2vr_b, LSX, gen_g2v, MO_8, tcg_gen_st8_i64)
+>>>>>>     TRANS(vinsgr2vr_h, LSX, gen_g2v, MO_16, tcg_gen_st16_i64)
+>>>>>>     TRANS(vinsgr2vr_w, LSX, gen_g2v, MO_32, tcg_gen_st32_i64)
+>>>>>> -TRANS(vinsgr2vr_d, LSX, gen_g2v, MO_64, tcg_gen_st_i64)
+>>>>>> +TRANS64(vinsgr2vr_d, LSX, gen_g2v, MO_64, tcg_gen_st_i64)
+>>>>>>     TRANS(xvinsgr2vr_w, LASX, gen_g2x, MO_32, tcg_gen_st32_i64)
+>>>>>> -TRANS(xvinsgr2vr_d, LASX, gen_g2x, MO_64, tcg_gen_st_i64)
+>>>>>> +TRANS64(xvinsgr2vr_d, LASX, gen_g2x, MO_64, tcg_gen_st_i64)
+>>>>> This looks good, only that I do not know whether it is necessary.
+>>>>> Can you conclude that LSX/LASX means that 64 bit is supported also?
+>>>>>
+>>>>> Song, what is your option?
+>>>>>
+>>>> I think LSX/LASX is enough
+>>>>
+>>>> Hi , WANG Rui
+>>>> why only these XXX_d vec instructions need  TRANS64?
+>>>
+>>> As far as I know, although there are currently no LoongArch 32-bit
+>>> implementations that support LSX or LASX, the ISA itself does not
+>>> explicitly forbid such a combination. In other words, LSX/LASX is not
+>>> inherently tied to a 64-bit base architecture.
+>> I do not know. it will be better chip guys can give us the answer. LSX
+>> is 128bit vector instruction, LASX is 256bit vector instruction, I do
+>> not know how chip guys skip 64bit support and design another LSX/LASX
+>> instruction.
+> 
+> Actually, this point is clarified in the LoongArch Reference Manual --
+> Volume II. According to the first section of the document:
+> 
+> The implementation of LSX or LASX is independent of whether the base
+> architecture is LA32 or LA64. Except for a small number of
+> instructions that transfer 64-bit data between general-purpose and
+> vector registers -- which are only required on LA64 -- all other
+> vector extension instructions can be implemented on either LA32 or
+> LA64 processors.
+> 
+>>
+>>> Given this, I chose to mark certain vector instructions --
+>>> specifically those that access general-purpose registers using 64-bit
+>>> data width (such as the _d variants) -- as requiring TRANS64. This
+>>> ensures the backedn correctly handles them in case LSX/LASX support
+>>> apperars on a 32-bit target in the future.
+>> If LSX/LASX support will be added 32-bit target, we need indicator
+>> showing its capability firstly, and then add partial LSX/LASX support,
+>> rather than do it now.
+>>
+>> We are SW developers, rather than chip designers -:)
+> 
+> You're absolutely right -- we're not chip designers -:) But in a way,
+> what we're doing with software is building a machine that simulates
+> the ISA. With just a few dozen lines of code, we can easily create a
+> 32-bit virtual CPU that supports vector features. This kind of setup
+> is already happening in practice, especially for developers using QEMU
+> to validate 32-bit system software stacks.
+> 
+> That's why I believe it's worthwhile to introduce the necessary
+> constraints now, to prevent certain vector instructions -- those that
+> implicitly rely on 64-bit GPR access -- from silently working in
+It will cause dozen of compatible issues. It is impossible that people 
+write FPGA version and require SW following this, it is private SW even 
+if there is.
+
+Hardware manual from official public website should be published at 
+first, and SW follows this, rather than informal HW with FPGA version only.
+
+Regards
+Bibo Mao
+> environments where they shouldn't. This patch aims to ensure
+> correctness and consistency in such simulated or future scenarios.
+> 
+> Regards,
+> Rui
+> 
+>>
+>> Regards
+>> Bibo Mao
+>>>
+>>> Let me know if you have other suggestions or if I misunderstood somehing.
+>>>
+>>> Regards,
+>>> Rui
+>>>
+>>>>
+>>>> I just pick up patch1, 2 to loongarch-next .
+>>>>
+>>>> Thanks.
+>>>> Song Gao
+>>>>> Regards
+>>>>> Bibo Mao
+>>>>>>       static bool gen_v2g_vl(DisasContext *ctx, arg_rv_i *a, uint32_t
+>>>>>> oprsz, MemOp mop,
+>>>>>>                            void (*func)(TCGv, TCGv_ptr, tcg_target_long))
+>>>>>> @@ -4886,15 +4886,15 @@ static bool gen_x2g(DisasContext *ctx,
+>>>>>> arg_rv_i *a, MemOp mop,
+>>>>>>     TRANS(vpickve2gr_b, LSX, gen_v2g, MO_8, tcg_gen_ld8s_i64)
+>>>>>>     TRANS(vpickve2gr_h, LSX, gen_v2g, MO_16, tcg_gen_ld16s_i64)
+>>>>>>     TRANS(vpickve2gr_w, LSX, gen_v2g, MO_32, tcg_gen_ld32s_i64)
+>>>>>> -TRANS(vpickve2gr_d, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
+>>>>>> +TRANS64(vpickve2gr_d, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
+>>>>>>     TRANS(vpickve2gr_bu, LSX, gen_v2g, MO_8, tcg_gen_ld8u_i64)
+>>>>>>     TRANS(vpickve2gr_hu, LSX, gen_v2g, MO_16, tcg_gen_ld16u_i64)
+>>>>>>     TRANS(vpickve2gr_wu, LSX, gen_v2g, MO_32, tcg_gen_ld32u_i64)
+>>>>>> -TRANS(vpickve2gr_du, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
+>>>>>> +TRANS64(vpickve2gr_du, LSX, gen_v2g, MO_64, tcg_gen_ld_i64)
+>>>>>>     TRANS(xvpickve2gr_w, LASX, gen_x2g, MO_32, tcg_gen_ld32s_i64)
+>>>>>> -TRANS(xvpickve2gr_d, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
+>>>>>> +TRANS64(xvpickve2gr_d, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
+>>>>>>     TRANS(xvpickve2gr_wu, LASX, gen_x2g, MO_32, tcg_gen_ld32u_i64)
+>>>>>> -TRANS(xvpickve2gr_du, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
+>>>>>> +TRANS64(xvpickve2gr_du, LASX, gen_x2g, MO_64, tcg_gen_ld_i64)
+>>>>>>       static bool gvec_dup_vl(DisasContext *ctx, arg_vr *a,
+>>>>>>                             uint32_t oprsz, MemOp mop)
+>>>>>> @@ -4923,11 +4923,11 @@ static bool gvec_dupx(DisasContext *ctx,
+>>>>>> arg_vr *a, MemOp mop)
+>>>>>>     TRANS(vreplgr2vr_b, LSX, gvec_dup, MO_8)
+>>>>>>     TRANS(vreplgr2vr_h, LSX, gvec_dup, MO_16)
+>>>>>>     TRANS(vreplgr2vr_w, LSX, gvec_dup, MO_32)
+>>>>>> -TRANS(vreplgr2vr_d, LSX, gvec_dup, MO_64)
+>>>>>> +TRANS64(vreplgr2vr_d, LSX, gvec_dup, MO_64)
+>>>>>>     TRANS(xvreplgr2vr_b, LASX, gvec_dupx, MO_8)
+>>>>>>     TRANS(xvreplgr2vr_h, LASX, gvec_dupx, MO_16)
+>>>>>>     TRANS(xvreplgr2vr_w, LASX, gvec_dupx, MO_32)
+>>>>>> -TRANS(xvreplgr2vr_d, LASX, gvec_dupx, MO_64)
+>>>>>> +TRANS64(xvreplgr2vr_d, LASX, gvec_dupx, MO_64)
+>>>>>>       static bool trans_vreplvei_b(DisasContext *ctx, arg_vv_i *a)
+>>>>>>     {
+>>>>>> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
+>>>>>> index 018dc5eb17..bbe015ba57 100644
+>>>>>> --- a/target/loongarch/translate.h
+>>>>>> +++ b/target/loongarch/translate.h
+>>>>>> @@ -14,6 +14,10 @@
+>>>>>>         static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>>>>>>         { return avail_##AVAIL(ctx) && FUNC(ctx, a, __VA_ARGS__); }
+>>>>>>     +#define TRANS64(NAME, AVAIL, FUNC, ...) \
+>>>>>> +    static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>>>>>> +    { return avail_64(ctx) && avail_##AVAIL(ctx) && FUNC(ctx, a,
+>>>>>> __VA_ARGS__); }
+>>>>>> +
+>>>>>>     #define avail_ALL(C)   true
+>>>>>>     #define avail_64(C)    (FIELD_EX32((C)->cpucfg1, CPUCFG1, ARCH) == \
+>>>>>>                             CPUCFG1_ARCH_LA64)
+>>>>>>
+>>>>
+>>
+> 
+
 
