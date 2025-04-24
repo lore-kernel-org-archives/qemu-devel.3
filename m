@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BBAFC369CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:03:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F16EC369CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:04:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7kri-0005o8-CL; Wed, 23 Apr 2025 20:54:58 -0400
+	id 1u7kro-0006LN-Nf; Wed, 23 Apr 2025 20:55:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kqX-00015Z-TZ
+ id 1u7kqX-00015O-Mx
  for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:46 -0400
 Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kqE-0004jd-Pi
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:28 -0400
+ id 1u7kq9-0004iY-V2
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:23 -0400
 Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7369ce5d323so304564b3a.1
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:53:25 -0700 (PDT)
+ d2e1a72fcca58-739b3fe7ce8so396922b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:53:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745456004; x=1746060804; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745456000; x=1746060800; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xJajZrSf8/i/8ZotN5EXGfyCyGYwpY5Ucs7xI6zZ2dk=;
- b=rkumZSy7tMX3PUlp6NZy9RYDVsAwvfbJhcoJ6AzeyD+LqyGL3Sg4Re6GDcjaMJB5cA
- l6QXLAfBtmgeHOZ0PqEDwdzpjMg+xKi3GLwQ3HiQNFlNigqy9iOnkaz4KtLq6jsEUww+
- jOiDtPB9eFX+U8OJxbLy0tHp3IxaKZ82kdFid2dscoYZO72tOXQQ3oZWNPF587cx1Ohc
- MxCvIY5CUeKZCkh35i7lyCoucRoksOHKCdoxpgyuOGdLelQ80oCHTCZQ4OQ+ddQcOx64
- apXsP6kjbWk4LWoLIoTjrhDHLqU8xiZTZaHjeF+okORO2ajsgDrjj/5ZOOSVW809XWOD
- A2rQ==
+ bh=nr7dQ2xZvL2F3PC/UuWtMxSETtioG4RgNm5kcrKHZNI=;
+ b=s1CKhxNxoPpLUyOiCcY4S2ZwP0lD5VJGHpaGnkKC3dlNM/LYaDjTnqqLxWfBrMXoyU
+ e1TjXoWwaYpC8STmiJQ1wFjFhlO9hQ6nbM/c0v5z3/adwRGA0kx1eGyP358YBZXmRuDc
+ TWqG8TYirNi128MWT8OXY00WQZwWWvHkT68e2eFpX8/IwQIOIswlhmG3+Kx0cZmzwD4j
+ ADxUD37jiBJ4YxW5DH6fnUqvTzCuBUg0QpeI29s/L0lxz/6OXKWs+WVfy3vdfuOA5OiM
+ YLQqsxL7A4o5wn+jwb+HLMKmCBNdQGceNWZYMT2d9WJ8OMlS6Xav2GZFm3l980s/4FsM
+ 2Dew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745456004; x=1746060804;
+ d=1e100.net; s=20230601; t=1745456000; x=1746060800;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xJajZrSf8/i/8ZotN5EXGfyCyGYwpY5Ucs7xI6zZ2dk=;
- b=DZh3Hp7aWGakOaPkS4YUMx9EcpcEUPNBhQXxYaK1lScEGeh/Bdq7OauUw1iTwHfKRH
- BqQ0LS3s68v60VroD5gS6LQJRkXJgJBdr/EHqD1ir3l3AkQ0lP4IoQyqstQjgPVwPH/m
- nAnu/j8I7glNwvLC6mcZimwjnSaNEgU70KYKAWBgLPINg8cqq5fkoCAbVEcnaHWIarBT
- 2fuMvbQ1X/H2pdBL5s79NCdQHbZ1b1ti7qAiVOTmhIkNewKGJfHByAAa6HQ0ov2Dbc+j
- 8Bak4g7e9UtICj1/xdLoFCQIhkuWaBqOTKHMkQnFOAdrGBXq58tehmGjoL5fXImVuHZI
- ofTA==
-X-Gm-Message-State: AOJu0Yzbfzud/H01skRvF+Q3K/RtP3oNPIo56ATJELjpeTBsYYgeHiPR
- O5q10LFzx7RH7YBYOvOtLOLW6Gsc4BEht3G8iycBH4XTpStwaWqVawbHdvzCfnh5mZ+YBrWuP4f
- n
-X-Gm-Gg: ASbGncuBAaDfWRhggaH6FPwDQiGoVyPJ+dHQGOqNnpbMjzuxcJU7X59ySuzNCqGZe7Z
- sfC2Mz4LhCoFqfgtvKiGvw9It27qYGPPET0/8sm0JqMO6fudJKdFCALctKTCqB9f3irc+IE9aMc
- cKkn+ZtG1WsnmZfKlg75E/AFS/0VW7C3L7nDGlMFB/grdibawUrR1gQOESZjoouJocZvtQYoMso
- 0v1EwMGbtEtO/kJcwh8HoPcmrnbXKarXcRc1CxI8utkxCFf1pArB2NEhiQiQmu8wXBpMFP/QWYg
- GbS6weJqpMgwDKjTHzwSMGU2EQRorSVPcWzIdcw9sPcTmp+U0tXw3odL9kh/Bivi5JoZBM435X4
+ bh=nr7dQ2xZvL2F3PC/UuWtMxSETtioG4RgNm5kcrKHZNI=;
+ b=o0u7mOM98e2RjTAJ9pZXjIjdZ1PtI2jgT9mSsjkbxZx97vlu+tPxVhhcZ+DuloMOuX
+ PTRE+x0qkTWnhAh3mkxbUjunk3dDkcnFJaNjlIDARmVjrjSDKV0TJ62kWXzde2Xx1yNp
+ J51IKofWccHACXsJZURQ1t9d36pHxfLSdel1/V2b54ojK8ZLZ7bxwk0MYasLbNvPQKIQ
+ kvFYLkDnOlb/SNRj3iIjpA2NewhVGlKd9YvrCf6F9cp7zD9XJgRASFDdVpvr6w8Gxw4M
+ jWWF9x92UUJS32kRNtsMxTXRAuslutttlqcsufua0Q+07TKHrQOMZde/0HIBmbbQXU05
+ 3kUA==
+X-Gm-Message-State: AOJu0YzrqbluyYKyr+8ugg0NeLo37zO2l5LkyspDS1oOo8nSe3TyTYQg
+ 1hv41MNC4DfzJ0F7eK4LOhmM5qFROVjCg9GJnGEGF4VJblV6RZHoIzOoSYcLnYODswgD2ehwvDu
+ 1
+X-Gm-Gg: ASbGncsrWA5cZGOrBdlsb43b28HObiguevoV2WqALOfGWdcsvVKWE+RZqiJ4VNOmMXr
+ BWOMQCJXyHulpbSflGbPfNVwk+uScntnKV2FkAO7VYauJg7lHKfbKSeUvaSu7xL29OAevfj9UaM
+ nycjVGxtYsSUdYdxHBWktqXcbAo4EHFMwrLMW5TTa7DmJ6rGsDw91KcwjKQjGNBM9TB9z0TAEZl
+ lSYmjkgLNgKnNaPK7mU52uLKCBq3Ph+gj8kvEkc+YdGY4EQxXf6ExyvpAGT41xA6ZH2D6ADRaSV
+ yWdnIj2boxxUcCOQ+xBPNg5kTfG53l9Y78tuc1DXNyIdL1dHpE+mMdE5x2i7RvnsIITBJuO59AI
  =
-X-Google-Smtp-Source: AGHT+IHJOnbO4msPmWcyIumD8YtMBX29Dmb39+6o/DrL3c0RAnOgdPsLCE0o6k4FEjWmFe6fB3Aa8Q==
-X-Received: by 2002:a05:6a00:3cc4:b0:739:50c0:b3fe with SMTP id
- d2e1a72fcca58-73e2461c8a7mr1224827b3a.8.1745456004476; 
- Wed, 23 Apr 2025 17:53:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGRTJsXRrngSQE1HeWd3Vju3UMiKhQzgxcYdzKE0by1P+zikvtUSaSYeQoaYud1zZ0AoiQ9oQ==
+X-Received: by 2002:a05:6a00:4b08:b0:736:476b:fcd3 with SMTP id
+ d2e1a72fcca58-73e24b0c0a3mr1161545b3a.24.1745455999991; 
+ Wed, 23 Apr 2025 17:53:19 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25a6a971sm209353b3a.103.2025.04.23.17.53.24
+ d2e1a72fcca58-73e25a6a971sm209353b3a.103.2025.04.23.17.53.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 17:53:24 -0700 (PDT)
+ Wed, 23 Apr 2025 17:53:19 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 065/148] accel/tcg: Rebuild full flags in
- tlb_reset_dirty_range_locked
-Date: Wed, 23 Apr 2025 17:48:10 -0700
-Message-ID: <20250424004934.598783-66-richard.henderson@linaro.org>
+Subject: [PULL 058/148] include/system: Remove ifndef CONFIG_USER_ONLY in
+ qtest.h
+Date: Wed, 23 Apr 2025 17:48:03 -0700
+Message-ID: <20250424004934.598783-59-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
 References: <20250424004934.598783-1-richard.henderson@linaro.org>
@@ -101,31 +101,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Undo the split between inline and slow flags before masking.
+This is include/system, so CONFIG_USER_ONLY will never be true.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cputlb.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/system/qtest.h | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 5df98d93d0..28c47d4872 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -886,9 +886,10 @@ static void tlb_reset_dirty_range_locked(CPUTLBEntryFull *full, CPUTLBEntry *ent
-                                          uintptr_t start, uintptr_t length)
- {
-     const uintptr_t addr = ent->addr_write;
-+    int flags = addr | full->slow_flags[MMU_DATA_STORE];
+diff --git a/include/system/qtest.h b/include/system/qtest.h
+index 6ddddc501b..84b1f8c6ee 100644
+--- a/include/system/qtest.h
++++ b/include/system/qtest.h
+@@ -23,7 +23,6 @@ static inline bool qtest_enabled(void)
+     return qtest_allowed;
+ }
  
--    if ((addr & (TLB_INVALID_MASK | TLB_MMIO |
--                 TLB_DISCARD_WRITE | TLB_NOTDIRTY)) == 0) {
-+    flags &= TLB_INVALID_MASK | TLB_MMIO | TLB_DISCARD_WRITE | TLB_NOTDIRTY;
-+    if (flags == 0) {
-         uintptr_t host = (addr & TARGET_PAGE_MASK) + ent->addend;
-         if ((host - start) < length) {
-             qatomic_set(&ent->addr_write, addr | TLB_NOTDIRTY);
+-#ifndef CONFIG_USER_ONLY
+ void G_GNUC_PRINTF(2, 3) qtest_sendf(CharBackend *chr, const char *fmt, ...);
+ void qtest_set_command_cb(bool (*pc_cb)(CharBackend *chr, gchar **words));
+ bool qtest_driver(void);
+@@ -33,6 +32,5 @@ void qtest_server_init(const char *qtest_chrdev, const char *qtest_log, Error **
+ void qtest_server_set_send_handler(void (*send)(void *, const char *),
+                                  void *opaque);
+ void qtest_server_inproc_recv(void *opaque, const char *buf);
+-#endif
+ 
+ #endif
 -- 
 2.43.0
 
