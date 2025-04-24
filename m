@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A71FC369D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24A36C369D7
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:32:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7lGO-0003vC-OG; Wed, 23 Apr 2025 21:20:29 -0400
+	id 1u7ksx-0002qu-Ha; Wed, 23 Apr 2025 20:56:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7lFR-0002i4-Cv
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:19:30 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1u7kqV-00012p-Tw
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:44 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7lFO-00079c-7W
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:19:28 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-73bf5aa95e7so382384b3a.1
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 18:19:25 -0700 (PDT)
+ id 1u7kq5-0004hi-Pv
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:19 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-7399a2dc13fso534986b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:53:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745457565; x=1746062365; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745455996; x=1746060796; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JhhILi6kCl6QHk3rZPaZJbYqQ/dafTh8uv7kqMAXi2E=;
- b=eIXQcSiSNwn2JhGfNF+ROGiFl7miMq6PSoMcPX1RrTMWs/K/LwJD3O2P5asHo5HIex
- eYZ8MNao0klwda83QxXjEn4bB0VdRQlCF25mi+FkOXylnVWdBCWHAu+uNWjwBmIkcdg4
- M6l7p2TLTitV1xiWo+pj7IOmHUOZrHDdVcnkHBtY3OXk9ygCoc9Jxd1vTopt5M/Zlftq
- gzrmQ1EpYXlxPsHq6x5algak92/gyd2NEKxfcajoThwWfUvRulepJvzSCDmejh7+4CNV
- NprJVGX9yWbmjk5BBaspwnmzb2bJnVIGP4VKrdbZ3t7vo0wwW+HHT2mp5GhVNZWlmUEt
- t85Q==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=irulUe5yhLpB5KcHQZP5AkpEiKTl4QGB2IoJogi1FPE=;
+ b=ilx/+zakCpZJ8o7t2mseXRnx0GNzCmwe0TRyA09K24MScAyt3zL3ijHgHbPQ6K39yv
+ 0inBhOpgc4IqVuwtJjtkq6XkREh6JSh8sUBZLVKQDpVuJq0DP4/bL+4JWdvH8qq5uC8r
+ wMYFUZrdiSX0N8vTnOkU0qO1K+cwIyDvHODm7Crb/K4gC38TJsW0PRpC20rselkyTM1O
+ uOY3Ff9chlOF0H5zuCC869nBLk4mtTjymY8HjwoC+EpVQxtaH6l5gNGuL7iMeOi+ehZ5
+ /1iBjDVRtfQQ8pP2Gpw+bwkrsJ8ivAAt11uYGVpXDPMULa1E/PzPPBoRv89//gR+JYWO
+ fGGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745457565; x=1746062365;
+ d=1e100.net; s=20230601; t=1745455996; x=1746060796;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JhhILi6kCl6QHk3rZPaZJbYqQ/dafTh8uv7kqMAXi2E=;
- b=XK76tW9v34PCidFRhQJlS4YpZ0IGPMwUzOxLizkyzXtRGMS4nER72Mf+s26uaDFkTC
- AKv23ZPA7k1pQrpDVF8m/Dgnx6gGmlAXSu1kYg4l07pfKh3kxz5bOaYikApldoQGnfux
- M/Ep+FMr9lalskXaABoUp/b7+C8kyTd6JwnA5kRbhYumqtZSHRKxuIjU+7RZ5YXAdQG5
- /wlH8Acnfel1IEOmcjLVECRZe498GG2jEr9+x53ZuAl5Rit9RkyAWIXWnRvsf4NfmEYA
- v9dIIPbjcXzvBc7R+AdiYaSSXa28ppR6NUuSpTZP/QCjbplk1scl9pKdjfKDmCFmPMj8
- 7q1g==
-X-Gm-Message-State: AOJu0YwBjOG4/bHp6GknzpJEmzRLCbRq0kTPmqgsL8nsTEE08p7wWLQd
- 4zaYnQ/AzaYRKi6wI6rO/z7DWZ1MhADXfWPgE76n8kH1P6XHUaWSGwPkhPUl4fbVGPyGX6rC0Gx
- t
-X-Gm-Gg: ASbGncswz4MpnPL2/2J84i6CyPm3ir23TKciegtdeC0YkVQJIdH/Uw2rXGRsBTQL7lw
- YfEtl4S6gudF813xqlsX/Id2TUGFqN9CbQJtMp2oAAtjgmdqACJ/Zv5vWkSfC9pPSdiJNZsumkX
- o9t2Mf7bPZJoSqLlQByMGSmOnnu3WAnI4y8nv1TnPYI0YxQpiblDcbn5oVRQmr/NKm5ch7VOGUa
- 9S7el1b6OVm22iEHy5zGDS7U3WDwNJf44ki8vLXdoYz+4knn1U0pISsWtaEEqy3Qch5T+zT6Fj1
- jPQHG+ZHhuCuJ+9e7mseh+oSGY0Cv3GVGJu9ekufPqrmILVc/0FgOHgX73h/s55M1KEvuQ0kv8Y
+ bh=irulUe5yhLpB5KcHQZP5AkpEiKTl4QGB2IoJogi1FPE=;
+ b=QTf/xe1+RRnBOaZL1OqWaEUA6Sct8nsYZao51BN5p0+aHFsO1TrAChFW2Ut/ruKJ8U
+ AjCeSFEez/Hx15sFQLkfb3t1XsD8KmQEq8Xzap78xKqj8EM+4SJObxYw00CBsTKCAUlT
+ Z3lcSPZ166/mSgouq6KoPOeQ81HhBorWXa96C/tHgPBlEAOd2wfa5L4KFQD/G5BJA0EW
+ kR5vM7jjfmec3hzEX5LBpt6h7jT4xBEAYXv0HzxxU11pOzIYfENlwOu+vawjVNjhzjWR
+ 0skj5hm1VgWPUAc8MW0irvcjD6+9GlxDQNscB4rX2KfmP6Hjaeeph7hK+1M4Am+D7l7C
+ ohOA==
+X-Gm-Message-State: AOJu0Yyz9FRZBdbOFK9EP9aqId1KSmkqQPW2pIi80g/Lw/yS0hzxffUQ
+ 4Mrsg7x5H41oSZzVSs4ezGLyanrhroQ93AxKs7m7qfnkDYx7rFwKnxWjkJZlDsTi76SSi2ejIf/
+ u
+X-Gm-Gg: ASbGncuY9+TlLQ5p5XHGxGPMhGHkdf9ET2OPC/wXkxjb+x+vP/DQDgJDxQN/RUAUius
+ 0Yda+CIY/QBTjQOEHNzZMHfPFZsNjL8upwPt6teIAgveWKnO/QakcYxrFkUrvFz3fa9PC87epes
+ jv/mBgDH6ec866D4+l5v2+zAAmuu5Y22WjmHzXqWRgQ6L02yrnIcaNjrKLmSJJ33/4kkuqwpSA+
+ IrhCGbj12hNqEIfEfhfdjY6WcuXycltJxQZc8UGlWW9RsP8CNJfjF2iwsS6hmteRukqaUQ4i0uH
+ W9r6612dAaovqoOaYBqdlhdlXTGbuEX2daur2odB+TvEl5jSvKkgDwGdvr32TokuKvdPJFWvo6c
  =
-X-Google-Smtp-Source: AGHT+IEbm3rotnea/g+7em2IQXJmJth92d/NknR4nMT4uPw0WmXL9wwC6p5clcgQ9gqp7AsrPUU89A==
-X-Received: by 2002:a05:6a00:1410:b0:739:4723:c4d7 with SMTP id
- d2e1a72fcca58-73e24cfa1d7mr1135199b3a.22.1745457564653; 
- Wed, 23 Apr 2025 18:19:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHcnrpOOKFss680HXG5zP0moiyTOk6QU9N+v/AWTDhiz8zjjTTd5IueQbT4HqYQvpduYN9WNA==
+X-Received: by 2002:a05:6a00:2448:b0:736:53f2:87bc with SMTP id
+ d2e1a72fcca58-73e24633529mr1040160b3a.13.1745455996276; 
+ Wed, 23 Apr 2025 17:53:16 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25912ef0sm244079b3a.10.2025.04.23.18.19.24
- for <qemu-devel@nongnu.org>
+ d2e1a72fcca58-73e25a6a971sm209353b3a.103.2025.04.23.17.53.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 18:19:24 -0700 (PDT)
+ Wed, 23 Apr 2025 17:53:15 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 08/15] accel/tcg: Simplify CPU_TLB_DYN_MAX_BITS
-Date: Wed, 23 Apr 2025 18:19:11 -0700
-Message-ID: <20250424011918.599958-9-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 052/148] include/exec: Drop ifndef CONFIG_USER_ONLY from
+ cpu-common.h
+Date: Wed, 23 Apr 2025 17:47:57 -0700
+Message-ID: <20250424004934.598783-53-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250424011918.599958-1-richard.henderson@linaro.org>
-References: <20250424011918.599958-1-richard.henderson@linaro.org>
+In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
+References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,49 +101,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stop taking TARGET_VIRT_ADDR_SPACE_BITS into account.
+We were hiding a number of declarations from user-only,
+although it hurts nothing to allow them.
 
-Since we currently bound CPU_TLB_DYN_MAX_BITS to 22,
-the new bound with a 4k page size is 20, which isn't
-so different.
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/tlb-bounds.h | 21 +--------------------
- 1 file changed, 1 insertion(+), 20 deletions(-)
+ include/exec/cpu-common.h | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/accel/tcg/tlb-bounds.h b/accel/tcg/tlb-bounds.h
-index efd34d4793..f83d9ac9ee 100644
---- a/accel/tcg/tlb-bounds.h
-+++ b/accel/tcg/tlb-bounds.h
-@@ -7,26 +7,7 @@
- #define ACCEL_TCG_TLB_BOUNDS_H
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index be032e1a49..9b83fd7ac8 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -9,9 +9,7 @@
+ #define CPU_COMMON_H
  
- #define CPU_TLB_DYN_MIN_BITS 6
-+#define CPU_TLB_DYN_MAX_BITS (32 - TARGET_PAGE_BITS)
- #define CPU_TLB_DYN_DEFAULT_BITS 8
+ #include "exec/vaddr.h"
+-#ifndef CONFIG_USER_ONLY
+ #include "exec/hwaddr.h"
+-#endif
+ #include "hw/core/cpu.h"
+ #include "tcg/debug-assert.h"
+ #include "exec/page-protection.h"
+@@ -40,8 +38,6 @@ int cpu_get_free_index(void);
+ void tcg_iommu_init_notifier_list(CPUState *cpu);
+ void tcg_iommu_free_notifier_list(CPUState *cpu);
  
--# if HOST_LONG_BITS == 32
--/* Make sure we do not require a double-word shift for the TLB load */
--#  define CPU_TLB_DYN_MAX_BITS (32 - TARGET_PAGE_BITS)
--# else /* HOST_LONG_BITS == 64 */
--/*
-- * Assuming TARGET_PAGE_BITS==12, with 2**22 entries we can cover 2**(22+12) ==
-- * 2**34 == 16G of address space. This is roughly what one would expect a
-- * TLB to cover in a modern (as of 2018) x86_64 CPU. For instance, Intel
-- * Skylake's Level-2 STLB has 16 1G entries.
-- * Also, make sure we do not size the TLB past the guest's address space.
-- */
--#  ifdef TARGET_PAGE_BITS_VARY
--#   define CPU_TLB_DYN_MAX_BITS                                  \
--    MIN(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
--#  else
--#   define CPU_TLB_DYN_MAX_BITS                                  \
--    MIN_CONST(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
--#  endif
--# endif
+-#if !defined(CONFIG_USER_ONLY)
 -
- #endif /* ACCEL_TCG_TLB_BOUNDS_H */
+ enum device_endian {
+     DEVICE_NATIVE_ENDIAN,
+     DEVICE_BIG_ENDIAN,
+@@ -176,8 +172,6 @@ int ram_block_discard_range(RAMBlock *rb, uint64_t start, size_t length);
+ int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
+                                         size_t length);
+ 
+-#endif
+-
+ /* Returns: 0 on success, -1 on error */
+ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+                         void *ptr, size_t len, bool is_write);
 -- 
 2.43.0
 
