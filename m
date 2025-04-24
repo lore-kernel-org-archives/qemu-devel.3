@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0678C369C2
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 14:52:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B289EC369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 15:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7xvq-0006PM-3t; Thu, 24 Apr 2025 10:52:06 -0400
+	id 1u7yHE-0005Zs-1G; Thu, 24 Apr 2025 11:14:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u7xvn-0006Ox-F2
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 10:52:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7yH9-0005Yx-4Q; Thu, 24 Apr 2025 11:14:07 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1u7xvl-0005VA-37
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 10:52:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745506317;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=eEjmOsavbEQB9cIZuNAdhrPx4QXVln7SI1lDRcBIlv4=;
- b=Ghj/udShszEEqSQBZHNq9egODCMcVWAW/vCaFm0y4Qnpl9/NmR4sVsd40nwA0L3x7UchBK
- xieKXj76zq1iNva0VchY9f10ff3LboQbHUZ57uiEpmhd0vP38l5TIh+l4jgeIgzwqZOukN
- 3kftuCetqBObB2+L6LkGRktfZ2H7lV0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-271-dKrXM_x8NeuAeYD08ycEyA-1; Thu,
- 24 Apr 2025 10:51:55 -0400
-X-MC-Unique: dKrXM_x8NeuAeYD08ycEyA-1
-X-Mimecast-MFC-AGG-ID: dKrXM_x8NeuAeYD08ycEyA_1745506314
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC1DB180036E; Thu, 24 Apr 2025 14:51:53 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.253])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 211C4195608D; Thu, 24 Apr 2025 14:51:52 +0000 (UTC)
-Date: Thu, 24 Apr 2025 10:51:51 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: lma <lma@suse.de>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: A question about how to calculate the "Maximum transfer length"
- in case of its absence in the Block Limits VPD device response from the
- hardware
-Message-ID: <20250424145151.GA399725@fedora>
-References: <20db3af2ece22f598b54a47ec350b466@suse.de>
- <20250418153456.GA128796@fedora>
- <81accb5693785748c476bf34eb18a0ba@suse.de>
- <20250423132405.GA333580@fedora>
- <32c2072d6fc017786f4d6ef0dd681ae7@suse.de>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u7yH5-0008FA-J3; Thu, 24 Apr 2025 11:14:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745507644; x=1777043644;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=wVEPg+cfudgIjOoKZg2o4CMPdWU7kLCH8cmSYnxtedE=;
+ b=D7lxzN8cxB5Bd3W+oTGqsiQmHzupg98G/pZRGYYUBlUwgVxUfgyGYZ4S
+ nksCS3Qj6559+Qra9glKqKgB7j/H0KLMXaj6vNG1bQPS/NiLWdBqtKc/i
+ k6m4GtYGSOPgVR0bVM8unvISorQFb8KV5LrfQjotGlrjilDeORpvDXMaJ
+ YDtOJ0aKs1xKJJ1eBH3vyqdOKYZWa1aNcy1izy1J0REA5ZCak8qSfucNF
+ Bu2/BipfRz6F7vBVC8QuJ6SApAYPTss4WslFDnF46+olguBQgZtXZ4J0D
+ WQnWsLE5XpAdmkqvLh9F8EkxGCtLVW+Y9W4FPsv6MlK/uHXMp+MojVi5A g==;
+X-CSE-ConnectionGUID: US5vRjLuQG2Qte5gk6E+AA==
+X-CSE-MsgGUID: goQskQYYSi2nkuW6a8Qp3g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11413"; a="46862390"
+X-IronPort-AV: E=Sophos;i="6.15,236,1739865600"; d="scan'208";a="46862390"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Apr 2025 08:13:58 -0700
+X-CSE-ConnectionGUID: DtSyRNrSQXisMdzPRaLvTQ==
+X-CSE-MsgGUID: ACKkrOv0RtyU64ls1gCrQw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,236,1739865600"; d="scan'208";a="169860765"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa001.jf.intel.com with ESMTP; 24 Apr 2025 08:13:54 -0700
+Date: Thu, 24 Apr 2025 23:34:49 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Shaoqin Huang <shahuang@redhat.com>, Eric Auger <eauger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>
+Subject: Re: [PATCH 1/5] qapi/qom: Introduce kvm-pmu-filter object
+Message-ID: <aApaGdY/kawZIp8N@intel.com>
+References: <20250409082649.14733-1-zhao1.liu@intel.com>
+ <20250409082649.14733-2-zhao1.liu@intel.com>
+ <87tt6d4usx.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="khwX8Szt+2sR4RDJ"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <32c2072d6fc017786f4d6ef0dd681ae7@suse.de>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.84,
+In-Reply-To: <87tt6d4usx.fsf@pond.sub.org>
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -51
+X-Spam_score: -5.2
+X-Spam_bar: -----
+X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.84,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,254 +92,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+> > diff --git a/qapi/kvm.json b/qapi/kvm.json
+> > new file mode 100644
+> > index 000000000000..1861d86a9726
+> > --- /dev/null
+> > +++ b/qapi/kvm.json
+> > @@ -0,0 +1,84 @@
+> > +# -*- Mode: Python -*-
+> > +# vim: filetype=python
+> > +#
+> > +# Copyright (C) 2025 Intel Corporation.
+> > +#
+> > +# Author: Zhao Liu <zhao1.liu@intel.com>
+> > +#
+> > +# SPDX-License-Identifier: GPL-2.0-or-later
+> > +
+> > +##
+> > +# == KVM
+> > +##
+> 
+> There's KVM-specific stuff elsewhere in the schema.  Some if of it
+> should probably be moved here.  Can you have a look?  This is not a
+> demand; it's fine if you can't.  If you can: separate patch preceding
+> this one to create kvm.json and move stuff there.
 
---khwX8Szt+2sR4RDJ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Sure! That's what I should have done, and I'll be back to follow up on
+this discussion when I get something new.
 
-On Wed, Apr 23, 2025 at 10:07:48PM +0800, lma wrote:
-> =E5=9C=A8 2025-04-23 21:24=EF=BC=8CStefan Hajnoczi =E5=86=99=E9=81=93=EF=
-=BC=9A
-> > On Wed, Apr 23, 2025 at 05:47:44PM +0800, lma wrote:
-> > > =E5=9C=A8 2025-04-18 23:34=EF=BC=8CStefan Hajnoczi =E5=86=99=E9=81=93=
-=EF=BC=9A
-> > > > On Thu, Apr 17, 2025 at 07:27:26PM +0800, lma wrote:
-> > > > > Hi all,
-> > > > >
-> > > > > In case of SCSI passthrough, If the Block Limits VPD device respo=
-nse
-> > > > > is
-> > > > > absent from hardware, QEMU handles it.
-> > > > >
-> > > > > There are several variables involved in this process as follows:
-> > > > > * The bl.max_transfer
-> > > > > * The bl.max_iov that is associated with IOV_MAX.
-> > > > > * The bl.max_hw_iov that is associated with the max_segments sysfs
-> > > > > setting
-> > > > > for the relevant block device on the host.
-> > > > > * The bl.max_hw_transfer that is associated with the BLKSECTGET
-> > > > > ioctl, in
-> > > > > other words related to the current max_sectors_kb sysfs setting o=
-f the
-> > > > > relevant block device on the host.
-> > > > >
-> > > > > Then take the smallest value and return it as the result of "Maxi=
-mum
-> > > > > transfer length" after relevant calculation, See:
-> > > > > static uint64_t calculate_max_transfer(SCSIDevice *s)
-> > > > > {
-> > > > >     uint64_t max_transfer =3D blk_get_max_hw_transfer(s->conf.blk=
-);
-> > > > >     uint32_t max_iov =3D blk_get_max_hw_iov(s->conf.blk);
-> > > > >
-> > > > >     assert(max_transfer);
-> > > > >     max_transfer =3D MIN_NON_ZERO(max_transfer,
-> > > > >                                 max_iov * qemu_real_host_page_siz=
-e());
-> > > > >
-> > > > >     return max_transfer / s->blocksize;
-> > > > > }
-> > > > >
-> > > > >
-> > > > > However, due to the limitation of IOV_MAX, no matter how powerful
-> > > > > the host
-> > > > > scsi hardware is, the "Maximum transfer length" that qemu emulates
-> > > > > in bl vpd
-> > > > > page is capped at 8192 sectors in case of 4kb page size and 512 b=
-ytes
-> > > > > logical block size.
-> > > > > For example=EF=BC=9A
-> > > > > host:~ # sg_vpd -p bl /dev/sda
-> > > > > Block limits VPD page (SBC)
-> > > > >   ......
-> > > > >   Maximum transfer length: 0 blocks [not reported]
-> > > > >   ......
-> > > > >
-> > > > >
-> > > > > host:~ # cat /sys/class/block/sda/queue/max_sectors_kb
-> > > > > 16384
-> > > > >
-> > > > > host:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
-> > > > > 32767
-> > > > >
-> > > > > host:~ # cat /sys/class/block/sda/queue/max_segments
-> > > > > 4096
-> > > > >
-> > > > >
-> > > > > Expected:
-> > > > > guest:~ # sg_vpd -p bl /dev/sda
-> > > > > Block limits VPD page (SBC)
-> > > > >   ......
-> > > > >   Maximum transfer length: 0x8000
-> > > > >   ......
-> > > > >
-> > > > > guest:~ # cat /sys/class/block/sda/queue/max_sectors_kb
-> > > > > 16384
-> > > > >
-> > > > > guest:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
-> > > > > 32767
-> > > > >
-> > > > >
-> > > > > Actual:
-> > > > > guest:~ # sg_vpd -p bl /dev/sda
-> > > > > Block limits VPD page (SBC)
-> > > > >   ......
-> > > > >   Maximum transfer length: 0x2000
-> > > > >   ......
-> > > > >
-> > > > > guest:~ # cat /sys/class/block/sda/queue/max_sectors_kb
-> > > > > 4096
-> > > > >
-> > > > > guest:~ # cat /sys/class/block/sda/queue/max_hw_sectors_kb
-> > > > > 32767
-> > > > >
-> > > > >
-> > > > > It seems the current design logic is not able to fully utilize the
-> > > > > performance of the scsi hardware. I have two questions:
-> > > > > 1. I'm curious that is it reasonable to drop the logic about IOV_=
-MAX
-> > > > > limitation, directly use the return value of BLKSECTGET as the ma=
-ximum
-> > > > > transfer length when QEMU emulates the block limit page of scsi v=
-pd?
-> > > > >    If we doing so, we will have maximum transfer length in the gu=
-est
-> > > > > that is
-> > > > > consistent with the capabilities of the host hardware=E3=80=82
-> > > > >
-> > > > > 2. Besides, Assume I set a value(eg: 8192 in kb) to max_sectors_kb
-> > > > > in guest
-> > > > > which doesn't exceed the capabilities of the host hardware(eg: 16=
-384
-> > > > > in kb)
-> > > > > but exceeds the limit(eg: 4096 in kb) caused by IOV_MAX,
-> > > > >    Any risks in readv()/writev() of raw-posix?
-> > > >
-> > > > Not a definitive answer, but just something to encourage discussion:
-> > > >
-> > > > In theory IOV_MAX should not be factored into the Block Limits VPD =
-page
-> > > > Maximum Transfer Length field because there is already a HBA limit =
-on
-> > > > the maximum number of segments. For example, virtio-scsi has a seg_=
-max
-> > > > Configuration Space field that guest drivers honor independently of
-> > > > Maximum Transfer Length.
-> > > >
-> > > > However, I can imagine why MAX_IOV needs to be factored in:
-> > > >
-> > > > 1. The maximum number of segments might be hardcoded in guest drive=
-rs
-> > > >    for some SCSI HBAs and QEMU has no way of exposing MAX_IOV to the
-> > > >    guest in that case.
-> > > >
-> > > > 2. Guest physical RAM addresses translate to host virtual memory. T=
-hat
-> > > >    means 1 segment as seen by the guest might actually require mult=
-iple
-> > > >    physical DMA segments on the host. A conservative calculation th=
-at
-> > > >    assumes the worst-case 1 iovec per 4 KB memory page prevents the
-> > > >    host maximum segments limit (note this is not the Maximum Transf=
-er
-> > > >    Length limit!) from being exceeded.
-> > > >
-> > > > So there seem to be at least two problems here. If you relax the
-> > > > calculation there will be corner cases that break because the guest=
- can
-> > > > send too many segments.
-> > > >
-> > > > Stefan
-> > >=20
-> > > The maximum allowed value for
-> > > /sys/class/block/<GUEST_DEV>/queue/max_sectors_kb in guest os depends
-> > > on the smaller of below two items in guest os:
-> > > the "maximum transfer length of block limits VPD page"
-> > > and
-> > > the "/sys/class/block/<GUEST_DEV>/queue/max_hw_sectors_kb".
-> > >=20
-> > >=20
-> > > The "seg_max Configuration Space field" in hw/scsi/virtio-scsi.c:
-> > > static const Property virtio_scsi_properties[] =3D {
-> > >     ...
-> > >     DEFINE_PROP_UINT32("max_sectors", VirtIOSCSI,
-> > > parent_obj.conf.max_sectors,
-> > >                                                   0xFFFF),
-> > >     ...
-> > > };
-> > >=20
-> > > This field determines the value of max_hw_sectors_kb in sysfs in guest
-> > > os, Eg: In case of Logical block size 512 bytes, 0xFFFF sectors means:
-> > > max_hw_sectors_kb =3D 0xFFFF/2 =3D 32767, I believe many users will k=
-eep
-> > > this default value when using virtio-scsi, rather than customizing it.
-> > >=20
-> > > But by the current design and affected by IOV_MAX, the upper limit of
-> > > /sys/class/block/<GUEST_DEV>/queue/max_sectors_kb is 4096 for SCSI
-> > > passthrough scenario in case of 4kb page size and 512 bytes logical
-> > > block size. Therefore, the gap between the upper limit of
-> > > max_sectors_kb
-> > > and the max_hw_sectors_kb is very large.
-> > >=20
-> > > I think this design logic is a bit strange.
-> >=20
-> > Unless you can think of a different correct way to report block limits
-> > for scsi-generic devices, then I think we're stuck with the sub-optimal
-> > conservative value.
-> >=20
-> > By the way, scsi-disk.c's scsi-block and scsi-hd devices are less
-> > restrictive because the host is able to split requests. Splitting is not
-> > possible for SCSI passthrough requests since they could be
-> > vendor-specific requests and the host does not have enough information
-> > to split them.
-> >=20
-> > Can you use -device scsi-block instead of -device scsi-generic? That
-> > would solve this problem.
->=20
-> Well, unfortunately, that's exactly where I ran into the problem with
-> the restriction=E2=80=8C on maximum transfer length with the scsi-block, =
-I've
-> never used the scsi-generic.
-> Eg:
-> ......
-> -device
-> '{"driver":"virtio-scsi-pci","id":"scsi0","bus":"pci.7","addr":"0x0"}' \
-> -blockdev '{"driver":"host_device","filename":"/dev/sda","node-name":\
-> "libvirt-2-storage","read-only":false}' \
-> -device
-> '{"driver":"scsi-block","bus":"scsi0.0","channel":0,"scsi-id":0,"lun":0,\
-> "drive":"libvirt-2-storage","id":"scsi0-0-0-0"}' \
-> ......
+> > +
+> > +##
+> > +# === PMU stuff (KVM related)
+> 
+> The KVM subsection contains just this subsubsection.  Awkward.  Can we
+> do without this subsubsection now?  We can always add it later, when we
+> have enough KVM stuff to warrant structuring it into subsubsections.
 
-Ah, scsi-blk uses scsi_generic_req_ops for INQUIRY commands.
+Thanks! I agree. As I commit to do above, if I find others about KVM,
+we can add this subsection you suggested below :-).
 
-It comes down to whether scsi-block handles all commands that transfer
-logical blocks (READ/WRITE/etc) without issuing the SG_IO ioctl, then
-it's safe to increase the Optimal and Maximum Transfer Length fields to
-the same value as scsi-disk.
+> If we decide we want it:
+> 
+>    # === KVM performance monitor unit (PMU)
 
-It's possible that a vendor-specific command transfers logical blocks
-and honors Maximum Transfer Length, so then it would not be safe to make
-this change. But I'm not sure...
+Good name.
 
-Stefan
+> > +##
+> > +
+> > +##
+> > +# @KvmPmuFilterAction:
+> > +#
+> > +# Actions that KVM PMU filter supports.
+> > +#
+> > +# @deny: disable the PMU event/counter in KVM PMU filter.
+> > +#
+> > +# @allow: enable the PMU event/counter in KVM PMU filter.
+> > +#
+> > +# Since 10.1
+> > +##
+> > +{ 'enum': 'KvmPmuFilterAction',
+> > +  'data': ['allow', 'deny'] }
+> > +
+> > +##
+> > +# @KvmPmuEventFormat:
+> 
+> Maybe KvmPmuFilterEventFormat?  Or is that too long?
 
---khwX8Szt+2sR4RDJ
-Content-Type: application/pgp-signature; name=signature.asc
+For another 2 formats: 'x86-select-umask' and 'x86-masked-entry', their
+enum value names already have 7 words:
 
------BEGIN PGP SIGNATURE-----
+ - KVM_PMU_EVENT_FORMAT_X86_SELECT_UMASK
+ - KVM_PMU_EVENT_FORMAT_X86_MASKED_ENTRY
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgKUAcACgkQnKSrs4Gr
-c8hSEggAiP5Dun3qVi7Il8LbBQLSSZN7g7n3c4pGSN5wsOB/KZAwg7nTxdHWFesS
-9aRdD5Hri3JyMVoeFYXkhkeAphq46jkJCGGCqzafsILBknRXxq6I8BKLGWtdiGlh
-4Y2OvLavZTDLt128eYKQAl1ZMFreCvux5RCV6fSkhP96uTn4YnXp/rm1ndq59ZOO
-Qqi57IsIEn9VPCr5nOOyagFobmDXfw9d0C9De+yr47St4jAf7t5HY5yUMTDZHCCi
-xx8HYyACryPTpSHsnsBarZ4cx7qmkZPdJIt70QivpdoFMu9oHCtytesaNd9oyy0S
-WGv5VWIC8yMv9b+Msyyp+kV3JIBa3g==
-=hnwR
------END PGP SIGNATURE-----
+With "Filter" in name,
 
---khwX8Szt+2sR4RDJ--
+ - KVM_PMU_FILTER_EVENT_FORMAT_X86_SELECT_UMASK
+ - KVM_PMU_FILTER_EVENT_FORMAT_X86_MASKED_ENTRY
+
+Look still okay. I'll rename it.
+
+> > +#
+> > +# Encoding formats of PMU event that QEMU/KVM supports.
+> > +#
+> > +# @raw: the encoded event code that KVM can directly consume.
+> 
+> Suggest
+> 
+>    # @raw: raw KVM PMU event code.
+
+Concise. I agree.
+
+> > +#
+> > +# Since 10.1
+> > +##
+> > +{ 'enum': 'KvmPmuEventFormat',
+> > +  'data': ['raw'] }
+> > +
+> > +##
+> > +# @KvmPmuRawEvent:
+> 
+> Maybe KvmPmuFilterEventRaw?  Or is that too long?
+
+KvmPmuFilterEventRaw is fine (not too long).
+
+> > +#
+> > +# Raw PMU event code.
+> > +#
+> > +# @code: the raw value that has been encoded, and QEMU could deliver
+> > +#     to KVM directly.
+> 
+> Suggest
+> 
+>    ##
+>    # @KvmPmuRawEvent
+>    #
+>    # @code: raw KVM PMU event code, to be passed verbatim to KVM.
+
+Thanks for polishing it up, it looks much better.
+
+> > +#
+> > +# Since 10.1
+> > +##
+> > +{ 'struct': 'KvmPmuRawEvent',
+> > +  'data': { 'code': 'uint64' } }
+> > +
+> > +##
+> > +# @KvmPmuFilterEvent:
+> > +#
+> > +# PMU event filtered by KVM.
+> 
+> Suggest
+> 
+>    # A KVM PMU event specification.
+
+Sure.
+
+> > +#
+> > +# @format: PMU event format.
+> > +#
+> > +# Since 10.1
+> > +##
+> > +{ 'union': 'KvmPmuFilterEvent',
+> > +  'base': { 'format': 'KvmPmuEventFormat' },
+> > +  'discriminator': 'format',
+> > +  'data': { 'raw': 'KvmPmuRawEvent' } }
+> > +
+> > +##
+> > +# @KvmPmuFilterProperties:
+> > +#
+> > +# Properties of KVM PMU Filter.
+> > +#
+> > +# @action: action that KVM PMU filter will take for selected PMU events.
+> > +#
+> > +# @events: list of selected PMU events.
+> 
+> Here's my try:
+> 
+>    # Properties of kvm-pmu-filter objects.  A kvm-pmu-filter object
+>    # restricts the guest's access to the PMU with either an allowlist or
+>    # a denylist.
+>    #
+>    # @action: whether @events is an allowlist or a denylist.
+>    #
+>    # @events: list of KVM PMU event specifications.
+
+Thank you very much! Your description is very accurate.
+
+Regards,
+Zhao
 
 
