@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EA13C369D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:16:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42055C369CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:16:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7kua-0007ei-Fi; Wed, 23 Apr 2025 20:57:57 -0400
+	id 1u7kvy-000330-9b; Wed, 23 Apr 2025 20:59:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7ktL-0005Zj-PA
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:56:39 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1u7ktl-00068r-5r
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:57:08 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7ktI-00053r-Tm
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:56:39 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-7399838db7fso512401b3a.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:56:36 -0700 (PDT)
+ id 1u7kth-00059y-Dw
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:57:04 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-736c3e7b390so371207b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:57:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745456195; x=1746060995; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745456220; x=1746061020; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LNFmdxDxWM3CJyEBqzg4trONxoTdvHt+45glS8i3gj0=;
- b=diHCX95sE8T1ce9NAW8FSJOUzskMja6JVrbwgwgtnFhYxc+uvzkTQra2N4YowSrteh
- Jk04MY0YuEAUH86GVZZK8w8RQx7Q/vOUQ0MfAG9mMwT81dXyycngS/A3ZPmx4T9P65RJ
- 2/rrHM+B0tseRI4HA2gD23gciniDlt+MWZEBs4cWLIEh8+xvn25GsqHQQsR/7XHXUsRC
- /FM3xZl5TIIpxby3pL42HgGApkUdXE3yekLw8tlpsPSXJPzPR7jz4kUhH/AWxIAtyzfV
- XWCL4tbN67hTFORhsIBFSXY8f+L9c+va7d0vUXG8p9dBu3pB9l+POpm+HZUzUFul3q8E
- XO9Q==
+ bh=hyzHc3eX2pZAMrT5P/TXvsGD8d5rYU2E84wns2dz+CQ=;
+ b=cngk6n/JfaZLLyKI1zHqugNGu6mtJdocYayHtMyrsyzvrCWaHdBhX3mpE7X3zvjhf1
+ RsXJq2i0HxFRnB+gZ3cjnIRLwvmtfTCv6uJN0V/OCrCAcLzzlvvX2QKq44k94zwraADw
+ j3+IRaCsvINQ9PGhumMCcaIwN511VRggr01fmPDDkqsEkZ9QvqTqcPKIC6ecMkzuYi8n
+ 9VNcSx5m++ZqLx2auEW3SCSFFg/l73w6ZxJvCni7sKgCIb7aH0ImAQpVlKwa5qktJby7
+ u8V1O+mhvKwEkgGH5gPq61Bsujm9g92rPlZx+Qu/eSVtNZjCbPS7kQ9OkbTX0B+sJfMr
+ 9saQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745456195; x=1746060995;
+ d=1e100.net; s=20230601; t=1745456220; x=1746061020;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LNFmdxDxWM3CJyEBqzg4trONxoTdvHt+45glS8i3gj0=;
- b=JlnI6YIp916H/24nWSbvxndII9G5Tr+J9ziDGhF91LCcdc3ADQEKsjZDkdDBujzwQk
- irZ3k1Ia5nIzUFpl1m79gIoqNdtJUSiaL+bzqFmXTc7bBxUj3tD0xvyWfJZIjrsMXPOI
- Tcw4kXbVG0adhf1FDRRH7EogbHmwduehybFh0F+sKWCLOMBsBHmLhn9QwT6ieV5oJaZg
- I5NHTHc+Izto/xl/BiMT8AsvTtTUpUl7WGh2GgWpwvHdyLE1ebPqo1UHb5O12CZD/3jZ
- lx2bXEVxoVUv4/AHmPweecFNKo/LwlReS1wE6q45t8sdypDwBr3WzR+50zQFK5Fi3JU6
- wk2A==
-X-Gm-Message-State: AOJu0YzvoSI/fcFJaIlZiVtLHrAekRClBT1Lh7T5DaDArY68DOSLzzvk
- DIgegyGq7za++yQKtTmA83oYQVCMECSE1efQNdntyaioAzxk6AhI94HHbldOaLtU4ciy/Tg04JF
- D
-X-Gm-Gg: ASbGnctUxv51AeiYzBGBoFANcajK5pdRwPVkgFrF0nkydnFolZ65amMXcBEFqxbFFch
- XpbPZjGQtj+jiOPCylXcmf/QbIJ2mXu5L8AFUBb+2+CizlQom6riGLCqlTkMNSBIVjR4u/nWw37
- OmfNugpMn11mTglB77o6qXY5IuSCrYZeppcPe3lLjpS7jq/LvAjvtNHJSJvDgp0KRidPoDXS8ff
- kv5MuitbzAKM0Aosucg3lv2Ubo6gZVwvOog/IYi5kK4EVxdLJbjg68wXUYQiA12uC+Bz3IVLg9J
- jEEpm7D3mEbtfbegTEVX6Wo+oQJd5a6Qd1GJO0554+mJr0OBCPb7hMO+ECKKxvElY+4vTGd+pBI
- =
-X-Google-Smtp-Source: AGHT+IH9UfEysyuFx2rogEDXuLp7me2ad97DPO5ySSKps3JhZmAEEHDsD1Xy0dwnxe6IUDlB7wn83Q==
-X-Received: by 2002:a05:6a21:204:b0:1f3:1ba1:266a with SMTP id
- adf61e73a8af0-20445af2509mr477405637.0.1745456194685; 
- Wed, 23 Apr 2025 17:56:34 -0700 (PDT)
+ bh=hyzHc3eX2pZAMrT5P/TXvsGD8d5rYU2E84wns2dz+CQ=;
+ b=p9uIb5zs2fkY1SzUVDUfU51vDnaCfJaBBUUh001SUeBY5mgLo0LJoxpvSM6cyaSc6N
+ rU85xqlyMDpKmgrZvUAm9DGOcImGc2T+IFfGn61e0Y4bTXpznx7U842t9TzGTTw1LTOW
+ VpoVQYA6m/ZvM3zVijL/jMUVMp8+gPaDmLu2PF+FzcY5v/5YGYZIseTGRj8H9tRuHkJz
+ ng9yEoCiIhueX6gzzEL+ZNaUaOjQ+QtvaGNTnKBd/H6YTbfU5jvbEelHuH+HUiirv7iw
+ KPc3q7PHZwdlMSIhUTA/4kZIM86L6yfltsOtzuh0mAp+N79XAS2hHRlk9wLTw7RockPH
+ e3Vw==
+X-Gm-Message-State: AOJu0YyyprlYF/jswBjsJ3o3zzOgMII3VxReMaQ8CSPqY4qTS9yxn/vn
+ Gkxko+d25gs75cXfYKXEnA3AGRwVhKr+M+nR9nQzZgctxi9FQXkoyPThwUy4ZZTHDTBmDc8UYaI
+ N
+X-Gm-Gg: ASbGncuMZE+hJ1YAokha+aPCMlWaERWiyev2pWCehufB8MfLs6iaqv+I8xC7NEqlqTu
+ J9+/vcMYM9SPlWxBE+aIoWhx3Rkhhar1arDZJyamj3fDprueBQPXcQtSQdBsjtS9WRH8nBUJq2v
+ HjRUfv4TZu9AzVLiUvRDQILgh8x4T7mKu/5pSVe/P0ionCOq879LeCH+DfhD1oOHJgLqjtGatvY
+ dp/zJieO3IVj8eBVnllb0iiW8Llmt8qQTtETlUTwUzAYX1FSa+kOA+/Gu9Jecxme+8guhcezYIp
+ GaiCmFcuD0Q0kGjUHgXrKVhhj7UtnfmmTrW9BqkBtbWI5ozAwhUg2q8xuV1gyl0FlDYmY3+CnJM
+ fzPrDiFVy4A==
+X-Google-Smtp-Source: AGHT+IFJjoErT8TVs1vau/YnUeQZjXPO5B9wQUnJu8q+PrgZ5U0f0ceM55JuAK4R4eGM4bM9eMd6gQ==
+X-Received: by 2002:a05:6a20:c906:b0:1fb:e271:82e2 with SMTP id
+ adf61e73a8af0-20444ee7ff5mr793375637.11.1745456220111; 
+ Wed, 23 Apr 2025 17:57:00 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b15fa907fcdsm119775a12.54.2025.04.23.17.56.34
+ 41be03b00d2f7-b15fa907fcdsm119775a12.54.2025.04.23.17.56.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 17:56:34 -0700 (PDT)
+ Wed, 23 Apr 2025 17:56:59 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 080/148] target/i386: Restrict SoftMMU mmu_index() to TCG
-Date: Wed, 23 Apr 2025 17:48:25 -0700
-Message-ID: <20250424004934.598783-81-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 118/148] target/arm/cpu: remove inline stubs for aarch32
+ emulation
+Date: Wed, 23 Apr 2025 17:49:03 -0700
+Message-ID: <20250424004934.598783-119-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
 References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,131 +101,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Move x86_cpu_mmu_index() to tcg-cpu.c, convert
-CPUClass::mmu_index() to TCGCPUOps::mmu_index().
+Directly condition associated calls in target/arm/helper.c for now.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250401080938.32278-10-philmd@linaro.org>
+Message-ID: <20250325045915.994760-23-pierrick.bouvier@linaro.org>
 ---
- target/i386/cpu.h            |  2 --
- target/i386/tcg/tcg-cpu.h    |  2 ++
- target/i386/cpu.c            | 18 ------------------
- target/i386/tcg/seg_helper.c |  1 +
- target/i386/tcg/tcg-cpu.c    | 18 ++++++++++++++++++
- 5 files changed, 21 insertions(+), 20 deletions(-)
+ target/arm/cpu.h    | 8 --------
+ target/arm/helper.c | 6 ++++++
+ 2 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index c9f39e99d3..0ad67fe0fd 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2597,8 +2597,6 @@ static inline bool is_mmu_index_32(int mmu_index)
-     return mmu_index & 1;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index b1c3e46326..c1a0faed3a 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1222,7 +1222,6 @@ int arm_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cs,
+  */
+ void arm_emulate_firmware_reset(CPUState *cpustate, int target_el);
+ 
+-#ifdef TARGET_AARCH64
+ int aarch64_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+ int aarch64_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
+ void aarch64_sve_narrow_vq(CPUARMState *env, unsigned vq);
+@@ -1254,13 +1253,6 @@ static inline uint64_t *sve_bswap64(uint64_t *dst, uint64_t *src, int nr)
+ #endif
  }
  
--int x86_mmu_index_pl(CPUX86State *env, unsigned pl);
+-#else
+-static inline void aarch64_sve_narrow_vq(CPUARMState *env, unsigned vq) { }
+-static inline void aarch64_sve_change_el(CPUARMState *env, int o,
+-                                         int n, bool a)
+-{ }
+-#endif
 -
- #define CC_DST  (env->cc_dst)
- #define CC_SRC  (env->cc_src)
- #define CC_SRC2 (env->cc_src2)
-diff --git a/target/i386/tcg/tcg-cpu.h b/target/i386/tcg/tcg-cpu.h
-index 53a8494455..7580f8afb4 100644
---- a/target/i386/tcg/tcg-cpu.h
-+++ b/target/i386/tcg/tcg-cpu.h
-@@ -78,4 +78,6 @@ QEMU_BUILD_BUG_ON(offsetof(X86XSaveArea, pkru_state) != XSAVE_PKRU_OFFSET);
+ void aarch64_sync_32_to_64(CPUARMState *env);
+ void aarch64_sync_64_to_32(CPUARMState *env);
  
- bool tcg_cpu_realizefn(CPUState *cs, Error **errp);
- 
-+int x86_mmu_index_pl(CPUX86State *env, unsigned pl);
-+
- #endif /* TCG_CPU_H */
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index fd85663833..57f62cc869 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -8664,23 +8664,6 @@ static bool x86_cpu_has_work(CPUState *cs)
- }
- #endif /* !CONFIG_USER_ONLY */
- 
--int x86_mmu_index_pl(CPUX86State *env, unsigned pl)
--{
--    int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 0 : 1;
--    int mmu_index_base =
--        pl == 3 ? MMU_USER64_IDX :
--        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
--        (env->eflags & AC_MASK) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
--
--    return mmu_index_base + mmu_index_32;
--}
--
--static int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
--{
--    CPUX86State *env = cpu_env(cs);
--    return x86_mmu_index_pl(env, env->hflags & HF_CPL_MASK);
--}
--
- static void x86_disas_set_info(CPUState *cs, disassemble_info *info)
- {
-     X86CPU *cpu = X86_CPU(cs);
-@@ -8922,7 +8905,6 @@ static void x86_cpu_common_class_init(ObjectClass *oc, void *data)
- 
-     cc->class_by_name = x86_cpu_class_by_name;
-     cc->parse_features = x86_cpu_parse_featurestr;
--    cc->mmu_index = x86_cpu_mmu_index;
-     cc->dump_state = x86_cpu_dump_state;
-     cc->set_pc = x86_cpu_set_pc;
-     cc->get_pc = x86_cpu_get_pc;
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index f4370202fe..9dfbc4208c 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -28,6 +28,7 @@
- #include "helper-tcg.h"
- #include "seg_helper.h"
- #include "access.h"
-+#include "tcg-cpu.h"
- 
- #ifdef TARGET_X86_64
- #define SET_ESP(val, sp_mask)                                   \
-diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
-index b8aff825ee..818653ee6d 100644
---- a/target/i386/tcg/tcg-cpu.c
-+++ b/target/i386/tcg/tcg-cpu.c
-@@ -94,6 +94,23 @@ static void x86_restore_state_to_opc(CPUState *cs,
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index becbbbd0d8..7fb6e88630 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6563,7 +6563,9 @@ static void zcr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+      */
+     new_len = sve_vqm1_for_el(env, cur_el);
+     if (new_len < old_len) {
++#ifdef TARGET_AARCH64
+         aarch64_sve_narrow_vq(env, new_len + 1);
++#endif
      }
  }
  
-+int x86_mmu_index_pl(CPUX86State *env, unsigned pl)
-+{
-+    int mmu_index_32 = (env->hflags & HF_CS64_MASK) ? 0 : 1;
-+    int mmu_index_base =
-+        pl == 3 ? MMU_USER64_IDX :
-+        !(env->hflags & HF_SMAP_MASK) ? MMU_KNOSMAP64_IDX :
-+        (env->eflags & AC_MASK) ? MMU_KNOSMAP64_IDX : MMU_KSMAP64_IDX;
-+
-+    return mmu_index_base + mmu_index_32;
-+}
-+
-+static int x86_cpu_mmu_index(CPUState *cs, bool ifetch)
-+{
-+    CPUX86State *env = cpu_env(cs);
-+    return x86_mmu_index_pl(env, env->hflags & HF_CPL_MASK);
-+}
-+
- #ifndef CONFIG_USER_ONLY
- static bool x86_debug_check_breakpoint(CPUState *cs)
- {
-@@ -112,6 +129,7 @@ static const TCGCPUOps x86_tcg_ops = {
-     .translate_code = x86_translate_code,
-     .synchronize_from_tb = x86_cpu_synchronize_from_tb,
-     .restore_state_to_opc = x86_restore_state_to_opc,
-+    .mmu_index = x86_cpu_mmu_index,
-     .cpu_exec_enter = x86_cpu_exec_enter,
-     .cpu_exec_exit = x86_cpu_exec_exit,
- #ifdef CONFIG_USER_ONLY
+@@ -10628,7 +10630,9 @@ static void arm_cpu_do_interrupt_aarch64(CPUState *cs)
+          * Note that new_el can never be 0.  If cur_el is 0, then
+          * el0_a64 is is_a64(), else el0_a64 is ignored.
+          */
++#ifdef TARGET_AARCH64
+         aarch64_sve_change_el(env, cur_el, new_el, is_a64(env));
++#endif
+     }
+ 
+     if (cur_el < new_el) {
+@@ -11640,7 +11644,9 @@ void aarch64_sve_change_el(CPUARMState *env, int old_el,
+ 
+     /* When changing vector length, clear inaccessible state.  */
+     if (new_len < old_len) {
++#ifdef TARGET_AARCH64
+         aarch64_sve_narrow_vq(env, new_len + 1);
++#endif
+     }
+ }
+ #endif
 -- 
 2.43.0
 
