@@ -4,150 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C516C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 17:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1948BC369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 17:22:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u80C8-0003yH-WB; Thu, 24 Apr 2025 13:17:05 -0400
+	id 1u80Go-0005XD-VP; Thu, 24 Apr 2025 13:21:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u80C7-0003xV-NF
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 13:17:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u80C5-00077l-I9
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 13:17:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745515019;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UC1UveAKKGicirbpFhccldLCkxZ1Q17qWiVaEMJhKfM=;
- b=J1hIjk9fyjj4HwTlDhQL25/4pzHdnXRxqAQMRSid3AcvGHRRh+sOasMjPDcnaweeWa7Hvt
- 07IDET/2JJDqQxiH49gIkxvrrlKU8KUEKrQwBC6nsHX1YGf5jwTPlNHwE3FeobU2DBfStn
- musGVJ0UCJHz37rHds/smcK5xu6M9ns=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-94-CtElRxK2PC6DSfEWxSuwTA-1; Thu, 24 Apr 2025 13:16:56 -0400
-X-MC-Unique: CtElRxK2PC6DSfEWxSuwTA-1
-X-Mimecast-MFC-AGG-ID: CtElRxK2PC6DSfEWxSuwTA_1745515016
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43d5ca7c86aso7153435e9.0
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 10:16:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u80Gb-0005Vi-A6
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 13:21:42 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u80GZ-0007sm-5l
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 13:21:41 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2295d78b433so15798915ad.2
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 10:21:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745515297; x=1746120097; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4BQ5bxXGz7ozA/B2d3oI47M2ZMNNOQURnDzigwlTCPs=;
+ b=PXj4LZb9gdG8FWna2swdG87f3SKDrYj0+e1yjmdG54G6SdoW0yrGXa+XTsZWJitQ6+
+ Sl4eKnheSjbYKX2xrdIa7tObmX04PqyacWydd8Lex4rfuiHkX6jZiExaafbi8nWkX+w1
+ 8B0dIIJQBwbIwH5UuQ9scTlIINNF3/fa/3i5Tka+QD9zAhg41eVcLWWfVtJP8sNjv6yC
+ ZDvqCRlGE/H132y8CvBpUGL+0yD72EGIGbgzc5BzIXugUcActlQ6Ug9pBD8+x481n0tJ
+ JKPNyhcO4vx9OCacShwPISv9XNIp2whZTBKJXDy2f6YVafln4tlVbygkdJUlpUrEShzN
+ LOIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745515015; x=1746119815;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UC1UveAKKGicirbpFhccldLCkxZ1Q17qWiVaEMJhKfM=;
- b=JxIWOI9OcGvAsYzjrcJVFP8VFQFHKBw7KBhBaBRrKgC9+5rQoHt44BXFKZrzC1Muxp
- /IQAzaXHjSCPzmoIsDsyTfADEDlmtF6/Cn07LoiwN1iWvIETZBIi27E/7JFqUjL48mQN
- pXsfKjCXGTOXXkMsSm1MknsmLzXAYedhJjlhiodwktqGIylM9XY2vgU8lLo3uMSxew35
- Lp+6JB7jTYUNuv2ZW4jOFrj2+oRthMXfKt2wSzNP4JlIMmmRaRZJFKCN8YISLkzvBXba
- DYiy42CJc6xuRV1yZv0UCafcB+zHWGmajqmZ1b8TrnRyHoH7aEjJKEl2148kbGGFJibk
- NeJQ==
-X-Gm-Message-State: AOJu0YwxunUYj4AC3xOr8UmDZQ62ggqxjFhweYSf1vk0sAMrbdLNnrEV
- TtNB6HF3+lXscMjLtIznD7ZaP6Sz4AyWf0guGNj+Z0rzZEayB+Y8l3T3K2kIkUwivBLLTRPBmRB
- fFPdYbRIkPKlX4ctTqx1hgIzfTpBZcJKKZ5QrE/7prcPK6DxsBZ/3
-X-Gm-Gg: ASbGncvel2Frcw6cbUbovHpOTcfK3EOjDH0ybEwxlyHfoZw0ck0fMN9W65FSoTEIJPo
- RU7QEtnv0/9wjEbdJtniMf8krr1RQdpnH1T/z6Yg9vdbCuQyFQMjOfr86WDOJhLxSDnesehZOYy
- 6XEN+tehj10+E8G5ewhP5hrS4ujfdRgWFj3yOxOiDiM4qOTciSC9dwQuz2sLs7jXdcrWT9tdXG5
- TFUES1i4yax12k9pXhoqVphk1RLFjyDqRGxVaLmLY7daDyfsFgwaSK+02XC5H//NlXT2xsMOiCC
- RgJEnP+VCCU7JEU6vbu9VBcajWnGwyJT04uDOzwI64Uzv/w=
-X-Received: by 2002:a05:6000:420b:b0:391:4873:7940 with SMTP id
- ffacd0b85a97d-3a06cfb22c3mr2667648f8f.54.1745515015509; 
- Thu, 24 Apr 2025 10:16:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEC8J7yi2JtxgMRg7ofz6ERnnJthlleUXXmS7vqRct+TWm9qO9y+LugQGllWyx5iBBbOePYXA==
-X-Received: by 2002:a05:6000:420b:b0:391:4873:7940 with SMTP id
- ffacd0b85a97d-3a06cfb22c3mr2667613f8f.54.1745515015100; 
- Thu, 24 Apr 2025 10:16:55 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:165:d60:38c8:6df5:c9ca:a366?
- ([2a01:e0a:165:d60:38c8:6df5:c9ca:a366])
+ d=1e100.net; s=20230601; t=1745515297; x=1746120097;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4BQ5bxXGz7ozA/B2d3oI47M2ZMNNOQURnDzigwlTCPs=;
+ b=U7LloJI+dSOYnSUVe6EbI+7sSIFeuGUvbLhMg1gva5Q4k5udgtIhM9tHdd9+83iIKs
+ V0s4+nl/N5q+FObMux4CBHoIhRJK1fLynqtwgHucwSDmmy8Rxm008V3nMYl4f9wChMX8
+ O+n2vRSZOBFBOrc8znfsKV+7arBYBu8Q9ZR7ceGkOxAGwN4o8/C20MH8GZ9OQ5LJ229S
+ PtiC3YVxN8rmZ3wsl1CuX3AetsFggM9O9EygNwvGntNXBVN+axnPLBcU8AcNwZ5YuaAr
+ ycUSXMb4mjrJdTspCel/di2yXJZV9ByL76XNTBlGUICaM3fcOMOd6plM5JL7Zb9PsNSd
+ Enxw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWFPVGxN0bNKBz+y2p6l1BY5eZCWdIVoi2NHLkU3ILujGhMHb+Zwfl4fT4MwQbEeDpS3zUC3+onkjOP@nongnu.org
+X-Gm-Message-State: AOJu0YwsYT7DKGhtpR/g7VWWH+B9nb18sc/ZbZLbd2lBkbdROfm9cQzi
+ vgiLfVWvU289hgsMpUaXVy9heud+8PPs0yxqgxb52r5ET8BiG1uEZNqVu4PiXyE=
+X-Gm-Gg: ASbGncudPOs/gXQRql4foLB23lYAXVotISYo8vtFSORN/9LX72PeiAFOurJXsxJU66N
+ SFnvXPfYPE90DwOmJwQ40w0s85/P5GnrySJlt81d2U+P4a7b6sEZpZhLK0VRw8Iyhp/IY/uDLvg
+ ly5G14CSMcp5he2EjcK3r1AcKRUtWe3tqN4c87r0rD+D262rbfGqm6Cw3HZ0hLSlQ4v2LAhBnf4
+ iS//OACFElblZBDhm9Ux+OtoFuQDJTKIxFcX3Nt3p4/hwxepKu8JGKUh3Qgq+aH5DzGeyveMBN1
+ pga3x6OyhA8lvkq3m7OnlamEN4sAcszf9Er6yep7iAV/+XqTwmP30+67infH4qwp90QFvFeQeM9
+ erPtMKVE=
+X-Google-Smtp-Source: AGHT+IF89llR1qZkeJRMGrvGSmWqs2GKhwXilsMQZLaO7faQyoMAXIU7MU/6eXYLJ+4lyttbkih3Lw==
+X-Received: by 2002:a17:902:f606:b0:224:c47:cb7 with SMTP id
+ d9443c01a7336-22dbd350b7fmr5073965ad.0.1745515297020; 
+ Thu, 24 Apr 2025 10:21:37 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4409d2a1544sm29170825e9.11.2025.04.24.10.16.53
+ d9443c01a7336-22db510272csm16199205ad.177.2025.04.24.10.21.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Apr 2025 10:16:54 -0700 (PDT)
-Message-ID: <a8906e2c-220d-49d5-89c7-b59df9335a4b@redhat.com>
-Date: Thu, 24 Apr 2025 19:16:52 +0200
+ Thu, 24 Apr 2025 10:21:36 -0700 (PDT)
+Message-ID: <c38a3c62-636f-452e-9474-7aacdcd4c0f7@linaro.org>
+Date: Thu, 24 Apr 2025 10:21:34 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/14] vfio: specify VFIO_DMA_UNMAP_FLAG_ALL to callback
-To: John Levon <levon@movementarian.org>
-Cc: qemu-devel@nongnu.org, Tony Krowiak <akrowiak@linux.ibm.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, qemu-s390x@nongnu.org,
- Tomita Moeko <tomitamoeko@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>
-References: <20250409134814.478903-1-john.levon@nutanix.com>
- <20250409134814.478903-8-john.levon@nutanix.com>
- <3cc6ed06-7ee4-42f4-a09e-03d8fe922537@redhat.com>
- <aAkgqXP1NjCfwKbG@movementarian.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <aAkgqXP1NjCfwKbG@movementarian.org>
+Subject: Re: [PATCH v2 12/13] accel/tcg: Extract probe API out of
+ 'exec/exec-all.h'
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250424094653.35932-1-philmd@linaro.org>
+ <20250424094653.35932-13-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250424094653.35932-13-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.84,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,78 +107,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/23/25 19:17, John Levon wrote:
-> On Wed, Apr 23, 2025 at 07:01:23PM +0200, Cédric Le Goater wrote:
-> 
->> On 4/9/25 15:48, John Levon wrote:
->>> Use the new flags parameter to indicate when we want to unmap
->>> everything; no functional change is intended.
->>
->> I find these changes confusing. Most likely there are not well presented
->> or I am missing something. Some more below.
-> 
-> I don't see any way to further break up the change unfortunately.
-> 
->>> +/*
->>> + * DMA - Mapping and unmapping for the "type1" IOMMU interface used on x86
->>> + */
->>> +static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
->>> +                                 hwaddr iova, ram_addr_t size,
->>> +                                 IOMMUTLBEntry *iotlb, int flags)
->>> +{
->>> +    int ret;
->>> +
->>> +    if ((flags & ~(VFIO_DMA_UNMAP_FLAG_ALL)) != 0) {
->>
->> VFIO_DMA_UNMAP_FLAG_ALL is a kernel uapi flag. It should be used only with
->> the corresponding ioctl(VFIO_IOMMU_UNMAP_DMA) and not internally between
->> QEMU routines.
-> 
-> Happy to use a different define for the flags if you like, but surely it's
-> better to have a flags field so it's extendable and it's always clear what the
-> meaning is? Problem with a boolean is you just see "true" or "false" in the
-> caller and have no real idea what it means until you look it up.
-> 
->> I think adding a 'bool unmap_all' paremeter to vfio_legacy_dma_unmap() would
->> make more sense.
-> 
-> Having said that I'm OK with going back to just a simple boolean if you'd really
-> prefer.
+On 4/24/25 02:46, Philippe Mathieu-Daudé wrote:
+> +++ b/include/accel/tcg/probe.h
+> @@ -0,0 +1,110 @@
+> +/*
+> + * Probe guest virtual addresses for access permissions.
+> + *
+> + * Copyright (c) 2003 Fabrice Bellard
+> + * SPDX-License-Identifier: LGPL-2.1-or-later
+> + */
+> +#ifndef ACCEL_TCG_PROBE_H
+> +#define ACCEL_TCG_PROBE_H
+> +
+> +#ifndef CONFIG_TCG
+> +#error Can only include this header with TCG
+> +#endif
 
-yes. VFIO_DMA_UNMAP_FLAG_ALL is a kernel interface and we don't
-need more than one flag today.
+Please don't add these.
+All these do is force extra #ifdefs in the users.
 
->>>            }
->>> -        ret = vfio_container_dma_unmap(bcontainer, iova,
->>> -                                       int128_get64(llsize), NULL, 0);
->>> +        ret = vfio_container_dma_unmap(bcontainer, iova, int128_get64(llsize),
->>> +                                       NULL, flags);
->>
->> Why not unmap the halves here instead of in the backends ?
-> 
-> The whole point of the change is that right now the generic listener.c code has
-> a workaround that is specific to one particular backend.
+As another example, this patch set produces
 
-It's due to the ARM IO space size AFAICT.
-
-> vfio-user doesn't have
-> any need to unmap in halves and in fact *has* to pass an "unmap all" flag.
-
-OK. So this flag is a vfio-user requirement. Why can't we call
-vfio_container_dma_unmap() twice from vfio_listener_region_del() ?
+https://gitlab.com/rth7680/qemu/-/jobs/9819262393
+https://gitlab.com/rth7680/qemu/-/jobs/9819262193
 
 
-Thanks,
+aarch64-linux-gnu-gcc -Ilibqemu-aarch64-softmmu.a.p -I. -I.. -Itarget/arm -I../target/arm 
+-Iqapi -Itrace -Iui -Iui/shader -I/usr/include/glib-2.0 
+-I/usr/lib/aarch64-linux-gnu/glib-2.0/include -fdiagnostics-color=auto -Wall -Winvalid-pch 
+-Werror -std=gnu11 -O2 -g -Wempty-body -Wendif-labels -Wexpansion-to-defined 
+-Wformat-security -Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=2 -Winit-self 
+-Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs -Wold-style-declaration 
+-Wold-style-definition -Wredundant-decls -Wshadow=local -Wstrict-prototypes -Wtype-limits 
+-Wundef -Wvla -Wwrite-strings -Wno-missing-include-dirs -Wno-psabi 
+-Wno-shift-negative-value -isystem /builds/rth7680/qemu/linux-headers -isystem 
+linux-headers -iquote . -iquote /builds/rth7680/qemu -iquote /builds/rth7680/qemu/include 
+-iquote /builds/rth7680/qemu/host/include/aarch64 -iquote 
+/builds/rth7680/qemu/host/include/generic -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 
+-D_LARGEFILE_SOURCE -fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-init=zero 
+-fzero-call-used-regs=used-gpr -fPIE -isystem../linux-headers -isystemlinux-headers 
+-DCOMPILING_PER_TARGET '-DCONFIG_TARGET="aarch64-softmmu-config-target.h"' 
+'-DCONFIG_DEVICES="aarch64-softmmu-config-devices.h"' -MD -MQ 
+libqemu-aarch64-softmmu.a.p/target_arm_debug_helper.c.o -MF 
+libqemu-aarch64-softmmu.a.p/target_arm_debug_helper.c.o.d -o 
+libqemu-aarch64-softmmu.a.p/target_arm_debug_helper.c.o -c ../target/arm/debug_helper.c
+In file included from /builds/rth7680/qemu/include/exec/helper-proto-common.h:16,
+                  from /builds/rth7680/qemu/include/exec/helper-proto.h:10,
+                  from ../target/arm/debug_helper.c:14:
+/builds/rth7680/qemu/include/accel/tcg/getpc.h:12:2: error: #error Can only include this 
+header with TCG
+    12 | #error Can only include this header with TCG
+       |  ^~~~~
 
-C.
 
-
-
-> In theory, neither does vfio if the flag is supported, but I dropped that patch
-> as I couldn't figure out a clean way to use it WRT the dirty tracking code.
->
-> regards
-> john
-> 
-
+r~
 
