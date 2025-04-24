@@ -4,79 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B8D9C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 08:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03603C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 08:20:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7rmV-0007ml-HO; Thu, 24 Apr 2025 04:18:03 -0400
+	id 1u7rnn-0008Di-Us; Thu, 24 Apr 2025 04:19:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1u7rmO-0007lz-93; Thu, 24 Apr 2025 04:17:57 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
- id 1u7rmK-0001Le-Dg; Thu, 24 Apr 2025 04:17:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745482673; x=1777018673;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=mtYa619WJaIjkVS6EBoexqG+IimlWzorRTe7Wk42SY4=;
- b=d2a/2wvtlKillwQEwBUXLugpprFZTAoxWciuFs8WW9H1raccZyNGtMEN
- CpJ3HD8lGTYiHrhtkYUV+qr8opqaYFFKKx5XgL66hS0FLNTP/RxrZEZnj
- lYdR0UToaE5MOsArAoDP4GJXN7MebG0Nwk2fN6JWBmZIo1J5/IulRVsls
- EWgV22eQCYyK2Hfhjd7Iy2AqFNHDGPLnEJlu+GupzRkm73o2wJ1jU60i/
- Fd/hpNxqS/EAFvqWUZkx2FBYT4lZEdJueybsVCUK4B9GUPcKIMlsy/VP6
- 23foyVGE+dtaa44uFP2YQLzaNoEBugMHKulNAOXZ+2wXHy1a1QrUUdOOQ Q==;
-X-CSE-ConnectionGUID: u0TeNiAuSOuxvnnxufLkAQ==
-X-CSE-MsgGUID: THXnQG8YQ1e6beHETpSfoQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11412"; a="57751488"
-X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="57751488"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2025 01:17:46 -0700
-X-CSE-ConnectionGUID: H5wE5xOYT8y6Safq7OTS6g==
-X-CSE-MsgGUID: 48Uunm39R1qZjQcrQ1tj/Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,235,1739865600"; d="scan'208";a="163526100"
-Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.245.128])
- ([10.124.245.128])
- by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2025 01:17:37 -0700
-Message-ID: <c800f523-2b1e-4f0a-b553-eb5a717e617b@linux.intel.com>
-Date: Thu, 24 Apr 2025 16:17:33 +0800
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1u7rnm-0008DJ-C7
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 04:19:22 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1u7rnk-0001PD-9W
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 04:19:21 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43cf0d787eeso7423905e9.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 01:19:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1745482758; x=1746087558; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=+1QqK4SKf6guRfgcOnlG5x/BzIBC5P5X5as31OIbj7k=;
+ b=BmEtvFqUnhnLub6oVuCQMDo1aTr3Ol5pLn9ow8wyNyf/7OPr57bx2J7nnda/rZRVdb
+ LyWsU7nqyscGj3ZkcuqlBT5aroS4ipJYHT6CPDPstHt1IZ2GmvkOPahq98SsduNp69Cf
+ FKV2t7GesCsguOBdN6fT8XP6k3lHIJ3Uin8b7c3avcpwJaeMBh3wo4NKJUQSNADT6+37
+ 1VmC62U4UpOpQBKjvk2kt/ZHqlhk0/rF468mao6eZX34lVSTcjNMT1xnYPf79Em8xOE8
+ EvCU06A+2N7RA2z4oOK/MQQl8mXteXGXgBcp3v0DUGOP5puitBHjyXunRLeLiS+/LuPd
+ aH8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745482758; x=1746087558;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+1QqK4SKf6guRfgcOnlG5x/BzIBC5P5X5as31OIbj7k=;
+ b=XO6bTa2hvhaNwJ+hj/VyLF6zqpbKBe8LkOpXiSaNnUpGGbmffct/KDDBvPb65gr1fe
+ UGKztGjFW6fDpl23Uox3YiyU4lEwIC9jmIUSY0o/Bcjix3W89BD7NOY+yTCOlHMNvlOL
+ vfBgLuDKhBSjZDzwzQ8rH66sdL7QY10/7lLQ8izDSl6XdE6y5/b9gDUG10y9Mve+tNLl
+ 6swajarN8O88bbRed7xiGkU68eA1ijvGdHv9sMscP6oYqer6JEnZi68/tzd/pdP31xsG
+ 6kktoMhgAN9fvAioV1kpPec6k9Qph0d6opyZmS7irlo2OaF0zA5foiARWcZn33Ya1Asd
+ V7Ig==
+X-Gm-Message-State: AOJu0YwHzYPiT2pEsZk/+J86KaP/owRw6cIUHyXhIT0UVStWG85yO/Mr
+ iu/hplw3Ah+8+K7Pn1AUXnlXngf8SX4AH/TlAWJBg6YKQQDYlI0DyLsF1zaecus=
+X-Gm-Gg: ASbGncvFNv9wTEOHUo1O1fKr/pHi87jaHFglfYd1po5aMxCAFqRrGE/v0nuekMxY/hL
+ V9vKrUdW1v/L416Q6s/XbnPofV27YIkV64l5IH/shVvRlzpS5+d/Hh22eICzezODkQBQqIlyQtd
+ p5dkPaLvt3oVcTO7Hw2QLbmZXjFBrNuOzfJej6cW7gLHiDh1yuTRJny8YgEeOcYhE3bSL8feNTk
+ Xh6ac4WuYWtd4yIiB8W9cKHCpTvjNtfui+THIlWrl0Q5JG1eCjXKR9FIYVl+xgFyVtnMD3n8ty9
+ 9h+ev01A/jGoUDeCcTQYHHw4QdBEEegZI1hpdFQ=
+X-Google-Smtp-Source: AGHT+IHqP5o3lBSERpKKsqD4kvcgfqMsNXq70A+b8ZolIDYsjWPWrYH3bZny3+sWUXZbYqPfJDSOZw==
+X-Received: by 2002:a05:600c:1d02:b0:43d:738:4a9 with SMTP id
+ 5b1f17b1804b1-4409bdae980mr14514245e9.27.1745482757653; 
+ Thu, 24 Apr 2025 01:19:17 -0700 (PDT)
+Received: from localhost ([2a02:8308:a00c:e200::f716])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a06d4bc3c8sm1257348f8f.34.2025.04.24.01.19.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Apr 2025 01:19:17 -0700 (PDT)
+Date: Thu, 24 Apr 2025 10:19:16 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
+ abologna@redhat.com
+Subject: Re: [PATCH 4/7] target/riscv/kvm: add kvm_csr_cfgs[]
+Message-ID: <20250424-f2728ec04e66fdbb602fed90@orel>
+References: <20250417124839.1870494-1-dbarboza@ventanamicro.com>
+ <20250417124839.1870494-5-dbarboza@ventanamicro.com>
+ <20250423-9623c5901480c9e7be10d9e5@orel>
+ <6f1cfe50-3261-4121-8b5b-6f69456f1257@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] i386/kvm: Support fixed counter in KVM PMU filter
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Marcelo Tosatti
- <mtosatti@redhat.com>, Shaoqin Huang <shahuang@redhat.com>,
- Eric Auger <eauger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>
-References: <20250409082649.14733-1-zhao1.liu@intel.com>
- <20250409082649.14733-6-zhao1.liu@intel.com>
-Content-Language: en-US
-From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
-In-Reply-To: <20250409082649.14733-6-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=192.198.163.11;
- envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6f1cfe50-3261-4121-8b5b-6f69456f1257@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,224 +102,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Apr 23, 2025 at 04:45:29PM -0300, Daniel Henrique Barboza wrote:
+> 
+> 
+> On 4/23/25 12:15 PM, Andrew Jones wrote:
+...
+> >   if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint32_t)) {
+> >       kvm_cpu_csr_set_u32(cpu, csr_cfg, reg);
+> >   } else if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint64_t)) {
+> >       kvm_cpu_csr_set_u64(cpu, csr_cfg, reg);
+> >   } else {
+> >       uh, oh...
+> >   }
+> 
+> The idea with this logic is to handle the cases where there is a mismatch
+> between the size of the KVM reg and the size of the flag we're using to
+> store it. All CSR regs are of size target_ulong but not all CPURISCVState
+> flags we're using are target_ulong. We're not storing the size of the KVM
+> CSR, we're storing the flag size.
+> 
+> E.g:
+> 
+> KVM_CSR_CFG("sstatus", mstatus, sizeof(uint64_t), RISCV_CSR_REG(sstatus)),
+> 
+> For a 32 bit CPU we're writing a 32 bit ulong sstatus into the 64 bit mstatus
+> field. If we assume that they're the same size we'll be read/writing a 32 bit val
+> inside a 64 bit field, i.e. we'll be reading/writing the upper words only.
 
-On 4/9/2025 4:26 PM, Zhao Liu wrote:
-> KVM_SET_PMU_EVENT_FILTER of x86 KVM allows user to configure x86 fixed
-> function counters by a bitmap.
->
-> Add the support of x86-fixed-counter in kvm-pmu-filter object and handle
-> this in i386 kvm codes.
->
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> Tested-by: Yi Lai <yi1.lai@intel.com>
-> ---
-> Changes since RFC v2:
->  * Drop KVMPMUX86FixedCounter structure and use uint32_t to represent
->    bitmap in QAPI directly.
->  * Add Tested-by from Yi.
->  * Add documentation in qemu-options.hx.
->  * Bump up the supported QAPI version to v10.1.
->
-> Changes since RFC v1:
->  * Make "action" as a global (per filter object) item, not a per-counter
->    parameter. (Dapeng)
->  * Bump up the supported QAPI version to v10.0.
-> ---
->  accel/kvm/kvm-pmu.c      | 31 +++++++++++++++++++++++++++++++
->  include/system/kvm-pmu.h |  5 ++++-
->  qapi/kvm.json            |  6 +++++-
->  qemu-options.hx          |  6 +++++-
->  target/i386/kvm/kvm.c    | 39 ++++++++++++++++++++++++---------------
->  5 files changed, 69 insertions(+), 18 deletions(-)
->
-> diff --git a/accel/kvm/kvm-pmu.c b/accel/kvm/kvm-pmu.c
-> index 9205907d1779..509d69d9c515 100644
-> --- a/accel/kvm/kvm-pmu.c
-> +++ b/accel/kvm/kvm-pmu.c
-> @@ -101,6 +101,29 @@ fail:
->      qapi_free_KvmPmuFilterEventList(head);
->  }
->  
-> +static void kvm_pmu_filter_get_fixed_counter(Object *obj, Visitor *v,
-> +                                             const char *name, void *opaque,
-> +                                             Error **errp)
-> +{
-> +    KVMPMUFilter *filter = KVM_PMU_FILTER(obj);
-> +
-> +    visit_type_uint32(v, name, &filter->x86_fixed_counter, errp);
-> +}
-> +
-> +static void kvm_pmu_filter_set_fixed_counter(Object *obj, Visitor *v,
-> +                                             const char *name, void *opaque,
-> +                                             Error **errp)
-> +{
-> +    KVMPMUFilter *filter = KVM_PMU_FILTER(obj);
-> +    uint32_t counter;
-> +
-> +    if (!visit_type_uint32(v, name, &counter, errp)) {
-> +        return;
-> +    }
-> +
-> +    filter->x86_fixed_counter = counter;
-> +}
-> +
->  static void kvm_pmu_filter_class_init(ObjectClass *oc, void *data)
->  {
->      object_class_property_add_enum(oc, "action", "KvmPmuFilterAction",
-> @@ -116,6 +139,14 @@ static void kvm_pmu_filter_class_init(ObjectClass *oc, void *data)
->                                NULL, NULL);
->      object_class_property_set_description(oc, "events",
->                                            "KVM PMU event list");
-> +
-> +    object_class_property_add(oc, "x86-fixed-counter", "uint32_t",
-> +                              kvm_pmu_filter_get_fixed_counter,
-> +                              kvm_pmu_filter_set_fixed_counter,
-> +                              NULL, NULL);
-> +    object_class_property_set_description(oc, "x86-fixed-counter",
-> +                                          "Enablement bitmap of "
-> +                                          "x86 PMU fixed counter");
->  }
->  
->  static void kvm_pmu_filter_instance_init(Object *obj)
-> diff --git a/include/system/kvm-pmu.h b/include/system/kvm-pmu.h
-> index 6abc0d037aee..5238b2b4dcc7 100644
-> --- a/include/system/kvm-pmu.h
-> +++ b/include/system/kvm-pmu.h
-> @@ -19,10 +19,12 @@ OBJECT_DECLARE_SIMPLE_TYPE(KVMPMUFilter, KVM_PMU_FILTER)
->  
->  /**
->   * KVMPMUFilter:
-> - * @action: action that KVM PMU filter will take for selected PMU events.
-> + * @action: action that KVM PMU filter will take for selected PMU events
-> + *    and counters.
+Hmm. I don't think this should be a problem since we're writing the field
+offset, which is the low word. A problem may be that we don't clear the
+upper word with the write, but it should have been initialized to zero and
+never touched.
 
-Maybe more accurate "fixed counters".
+> 
+> In theory this would be ok if we always read/write the same way but it can be
+> a nuisance when trying to debug the value inside CPURISCVState.
+> 
+> One may argue whether we should change the type of these fields to match what
+> Linux/ISA expect of them. Not sure how much work that is.
 
+It shouldn't be a problem to use wider fields, we just need to ensure our
+framework will be able to write the upper words when necessary, i.e. when
+there's an *H counterpart CSR that needs to be written there or when the
+upper word should be zeroed out.
 
->   * @nevents: number of PMU event entries listed in @events
->   * @events: list of PMU event entries.  A PMU event entry may represent one
->   *    event or multiple events due to its format.
-> + * @x86_fixed_counter: bitmap of x86 fixed counter.
->   */
->  struct KVMPMUFilter {
->      Object parent_obj;
-> @@ -30,6 +32,7 @@ struct KVMPMUFilter {
->      KvmPmuFilterAction action;
->      uint32_t nevents;
->      KvmPmuFilterEventList *events;
-> +    uint32_t x86_fixed_counter;
->  };
->  
->  /*
-> diff --git a/qapi/kvm.json b/qapi/kvm.json
-> index 1b523e058731..5374c8340e5a 100644
-> --- a/qapi/kvm.json
-> +++ b/qapi/kvm.json
-> @@ -115,7 +115,10 @@
->  #
->  # Properties of KVM PMU Filter.
->  #
-> -# @action: action that KVM PMU filter will take for selected PMU events.
-> +# @action: action that KVM PMU filter will take for selected PMU events
-> +#     and counters.
-> +#
-> +# @x86-fixed-counter: enablement bitmap of x86 fixed counters.
->  #
->  # @events: list of selected PMU events.
->  #
-> @@ -123,4 +126,5 @@
->  ##
->  { 'struct': 'KvmPmuFilterProperties',
->    'data': { 'action': 'KvmPmuFilterAction',
-> +            '*x86-fixed-counter': 'uint32',
->              '*events': ['KvmPmuFilterEvent'] } }
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index bb89198971e0..eadfb69c8876 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -6150,7 +6150,7 @@ SRST
->  
->              (qemu) qom-set /objects/iothread1 poll-max-ns 100000
->  
-> -    ``-object '{"qom-type":"kvm-pmu-filter","id":id,"action":action,"events":[entry_list]}'``
-> +    ``-object '{"qom-type":"kvm-pmu-filter","id":id,"x86-fixed-counter":bitmap,"action":action,"events":[entry_list]}'``
->          Create a kvm-pmu-filter object that configures KVM to filter
->          selected PMU events for Guest.
->  
-> @@ -6165,6 +6165,10 @@ SRST
->          will be denied, while all other events can be accessed normally
->          in the Guest.
->  
-> +        The ``x86-fixed-counter`` parameter sets a bitmap of x86 fixed
-> +        counters, and ``action`` will also take effect on the selected
-> +        fixed counters.
-> +
->          The ``events`` parameter accepts a list of PMU event entries in
->          JSON format. Event entries, based on different encoding formats,
->          have the following types:
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 8786501e9c7e..8b916dbb5d6f 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -6016,19 +6016,25 @@ static int kvm_install_pmu_event_filter(KVMState *s)
->          g_assert_not_reached();
->      }
->  
-> -    kvm_filter->flags = filter->events->value->format ==
-> -                        KVM_PMU_EVENT_FORMAT_X86_MASKED_ENTRY ?
-> -                        KVM_PMU_EVENT_FLAG_MASKED_EVENTS : 0;
-> -
-> -    if (kvm_filter->flags == KVM_PMU_EVENT_FLAG_MASKED_EVENTS &&
-> -        !kvm_vm_check_extension(s, KVM_CAP_PMU_EVENT_MASKED_EVENTS)) {
-> -        error_report("Masked entry format of PMU event "
-> -                     "is not supported by Host.");
-> -        goto fail;
-> +    if (filter->x86_fixed_counter) {
-> +        kvm_filter->fixed_counter_bitmap = filter->x86_fixed_counter;
->      }
->  
-> -    if (!kvm_config_pmu_event(filter, kvm_filter)) {
-> -        goto fail;
-> +    if (filter->nevents) {
-> +        kvm_filter->flags = filter->events->value->format ==
-> +                            KVM_PMU_EVENT_FORMAT_X86_MASKED_ENTRY ?
-> +                            KVM_PMU_EVENT_FLAG_MASKED_EVENTS : 0;
-> +
-> +        if (kvm_filter->flags == KVM_PMU_EVENT_FLAG_MASKED_EVENTS &&
-> +            !kvm_vm_check_extension(s, KVM_CAP_PMU_EVENT_MASKED_EVENTS)) {
-> +            error_report("Masked entry format of PMU event "
-> +                         "is not supported by Host.");
-> +            goto fail;
-> +        }
-> +
-> +        if (!kvm_config_pmu_event(filter, kvm_filter)) {
-> +            goto fail;
-> +        }
->      }
->  
->      ret = kvm_vm_ioctl(s, KVM_SET_PMU_EVENT_FILTER, kvm_filter);
-> @@ -6656,16 +6662,19 @@ static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
->      KvmPmuFilterEventList *events = filter->events;
->      uint32_t base_flag;
->  
-> -    if (!filter->nevents) {
-> +    if (!filter->x86_fixed_counter && !filter->nevents) {
->          error_setg(errp,
->                     "Empty KVM PMU filter.");
->          return;
->      }
->  
->      /* Pick the first event's flag as the base one. */
-> -    base_flag = events->value->format ==
-> -                KVM_PMU_EVENT_FORMAT_X86_MASKED_ENTRY ?
-> -                KVM_PMU_EVENT_FLAG_MASKED_EVENTS : 0;
-> +    base_flag = 0;
-> +    if (filter->nevents &&
-> +        events->value->format == KVM_PMU_EVENT_FORMAT_X86_MASKED_ENTRY) {
-> +        base_flag = KVM_PMU_EVENT_FLAG_MASKED_EVENTS;
-> +    }
-> +
->      while (events) {
->          KvmPmuFilterEvent *event = events->value;
->          uint32_t flag;
+> 
+> 
+> scounteren is a more serious case because we're writing an ulong KVM reg into
+> a 32 bit field:
+
+Sigh... it is a problem to use narrower fields... KVM should have defined
+that as a __u32.
+
+> 
+>     KVM_CSR_CFG("scounteren", scounteren, sizeof(uint32_t),
+>                 RISCV_CSR_REG(scounteren)),
+> 
+> struct CPUArchState {
+>     target_ulong gpr[32];
+>     (...)
+>     uint32_t scounteren;
+>     uint32_t mcounteren;
+>     (...)
+> 
+> 
+> Perhaps it's a good idea to change this CPURISCVState field to ulong before
+> adding support for the scouteren KVM CSR.
+
+Yes, I think we have to now. QEMU's fields need to have widths >= what
+KVM says the register sizes are and we should write the amount of bytes
+that KVM says we should write (even if we know it's wrong, like in the
+case of scounteren). We'll just have to ignore the upper word that
+shouldn't be there.
+
+Thanks,
+drew
 
