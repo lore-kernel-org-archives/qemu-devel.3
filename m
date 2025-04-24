@@ -4,58 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AC30C369D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 11:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF0AAC369D1
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 11:21:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7uTf-0001dN-0P; Thu, 24 Apr 2025 07:10:47 -0400
+	id 1u7ud4-0003jo-8F; Thu, 24 Apr 2025 07:20:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1u7uTd-0001d7-QG
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 07:10:45 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u7ud1-0003j8-06
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 07:20:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1u7uTb-000332-Cy
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 07:10:45 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZjtSW3nd1z6K9hq;
- Thu, 24 Apr 2025 19:06:03 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 29B151402EF;
- Thu, 24 Apr 2025 19:10:40 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 24 Apr
- 2025 13:10:39 +0200
-Date: Thu, 24 Apr 2025 12:10:38 +0100
-To: <anisa.su887@gmail.com>
-CC: <qemu-devel@nongnu.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
- <linux-cxl@vger.kernel.org>, Anisa Su <anisa.su@samsung.com>
-Subject: Re: [PATCH 7/9] cxl-mailbox-utils: 0x5603 - FMAPI Get DC Region
- Extent Lists
-Message-ID: <20250424121038.0000379d@huawei.com>
-In-Reply-To: <20250317164204.2299371-8-anisa.su887@gmail.com>
-References: <20250317164204.2299371-1-anisa.su887@gmail.com>
- <20250317164204.2299371-8-anisa.su887@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1u7ucw-00045A-PU
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 07:20:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745493620;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Cmuvjoq0X1/YlD062oHnGeecfdfeh4rSoZWm/Iwgn9w=;
+ b=PsS0GrXSAJ0LZi/o7HlCQdST5eh1kd0LCnMfbMClmLvWz6RMJmyw2gC4fEt2ejCu1DRUga
+ 9SHq9Tj5FN0bciEQZ/HsnVid4Y9vUvFHYzBemD6xeLwuutY10eUar02qMPZWu0e5hfL58L
+ n5pLaI3USZ3q8Vb34irzGLyKrKgEgfU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-689-v5KRvS3WPmSSs9WA-kSr5g-1; Thu, 24 Apr 2025 07:20:18 -0400
+X-MC-Unique: v5KRvS3WPmSSs9WA-kSr5g-1
+X-Mimecast-MFC-AGG-ID: v5KRvS3WPmSSs9WA-kSr5g_1745493617
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43d4d15058dso6231415e9.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 04:20:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745493617; x=1746098417;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Cmuvjoq0X1/YlD062oHnGeecfdfeh4rSoZWm/Iwgn9w=;
+ b=AuIa/DuahRwzr0WTpRrjQxE2tTQKtIEzA4+Y1TW4sMGVKySoDb2cmPFKP9Xmn+zg0f
+ cB/2dFhbH4Fp74aXoJBJSI+9VsHKBhgApAwUmLb66l0XYUzbQ/EHRXfSsawSyGbLcZ3T
+ tCp1p3e8Ztx5JwWOT7mtrnXnIyhdOGxv+Wg5fuMmsnc3+J9h12fK5FhGqPcFX5Enhwol
+ SAabD1kl/7srhFO+lLkDWrFQ4RlwonA9LgmX4ZtpOqSD6w/7wcpfrraexORLcJ8eS7uX
+ 2mlNEB3RW9G44UYmfQgUBv7IuCT434nM3WntYtE/gvSN8tIKSOYqCwcJQrO4wQKUFg9P
+ USLQ==
+X-Gm-Message-State: AOJu0YxGocULKRp1wk070MgDcmQOz4mHUUNtl0TcGg4X/8PiPyAFtz68
+ JrFn2OjjLiXYiRpFgdwK4rxlijARLlf/Bv0w9cIHoGIjWf2DortkrKIRhIVuXVNr6Ym4iCK0MWc
+ 26k2I8gwczZtNxA2CrZ9UbF36glmLrZNZCWz32At0O8QjmapN1vJc
+X-Gm-Gg: ASbGncsgsXwcavPfM5+6KCZ2CNucjuc4g2/bDFwpIdHHuB/kpFE4F3dNBicKI6DFpct
+ iHYjVzus2alkjHOM+ev34pqbkJfft/I6hUkfgC45dKOuR8Bk6AFHhZ7V5HcwZTRqPOjpSDJUGMw
+ z4tbewjijYtsQNRvFJ6dvnJa/ewCKjXEP3U2YjKDwWRLcQPNwr/g43RQvGLnr0KPnxxW5/kS0W8
+ fs6SNsPxLZe+4x3RFu/0GGdmvWds7Oyd4W11bZlAeRJskPUdoBo/cV0tgeLduEAaBJ3/0954ycj
+ 4Yp5Bw==
+X-Received: by 2002:a05:6000:2212:b0:391:4bcb:828f with SMTP id
+ ffacd0b85a97d-3a06cf56404mr1964119f8f.14.1745493616893; 
+ Thu, 24 Apr 2025 04:20:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH6lhghdLBlaC/L7efaRhutRrCiB/CHJ9uTxVKOVsudJmhvJyrXlNBYrn7x4X5iEw33Of1oyw==
+X-Received: by 2002:a05:6000:2212:b0:391:4bcb:828f with SMTP id
+ ffacd0b85a97d-3a06cf56404mr1964091f8f.14.1745493616417; 
+ Thu, 24 Apr 2025 04:20:16 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a06d4aee19sm1802983f8f.31.2025.04.24.04.20.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Apr 2025 04:20:15 -0700 (PDT)
+Date: Thu, 24 Apr 2025 07:20:13 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ Antoine Damhet <adamhet@scaleway.com>
+Subject: Re: [PATCH v2] virtio-net: Copy received packet to buffer
+Message-ID: <20250424071930-mutt-send-email-mst@kernel.org>
+References: <20250424-reapply-v2-1-d0ba763ac782@daynix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250424-reapply-v2-1-d0ba763ac782@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.84,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,150 +102,205 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 17 Mar 2025 16:31:34 +0000
-anisa.su887@gmail.com wrote:
+On Thu, Apr 24, 2025 at 06:49:57PM +0900, Akihiko Odaki wrote:
+> Commit e28fbd1c525d ("Revert "virtio-net: Copy received header to
+> buffer"") reverted commit 7987d2be5a8b, which attempted to remove the
+> need to patch the (const) input buffer.
+> 
+> Achieve the original goal by copying the header or the entire packet to
+> a writable buffer as necessary. Copy the virtio-net header when patching
+> it. Copy the entire packet when filling the UDP checksum as required by
+> net_checksum_calculate().
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-> From: Anisa Su <anisa.su@samsung.com>
-> 
-> FM DCD Management command 0x5603 implemented per CXL r3.2 Spec Section 7.6.7.6.4
-> Very similar to previously implemented command 0x4801.
-> 
-> Signed-off-by: Anisa Su <anisa.su@samsung.com>
+Thank you. Given the original has caused some much trouble,
+could you pls document in more detail what is the problem
+being solved here?
+Thanks!
+
 > ---
->  hw/cxl/cxl-mailbox-utils.c | 84 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 84 insertions(+)
+> Supersedes: <20250405-mtu-v1-1-08c5910fa6fd@daynix.com>
+> ("[PATCH] virtio-net: Copy all for dhclient workaround")
 > 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 51ead2b152..77cf0fdb15 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -126,6 +126,7 @@ enum {
->          #define GET_DCD_INFO 0x0
->          #define GET_HOST_DC_REGION_CONFIG 0x1
->          #define SET_DC_REGION_CONFIG 0x2
-> +        #define GET_DC_REGION_EXTENT_LIST 0x3
->  };
->  
->  /* CCI Message Format CXL r3.1 Figure 7-19 */
-> @@ -3587,6 +3588,87 @@ static CXLRetCode cmd_fm_set_dc_region_config(const struct cxl_cmd *cmd,
->      return CXL_MBOX_SUCCESS;
+> This reapplies commit 7987d2be5a8b ("virtio-net: Copy all for dhclient
+> workaround"), which was reverted by commit e28fbd1c525d ("Revert
+> "virtio-net: Copy received header to buffer""), with a fix in the
+> superseded patch. It also renames identifiers according to the
+> discussion with Antoine Damhet.
+> ---
+> Changes in v2:
+> - Rewrote the message avoiding archeology as suggested by
+>   Michael S. Tsirkin.
+> - Link to v1: https://lore.kernel.org/qemu-devel/20250423-reapply-v1-1-6f4fc3027906@daynix.com
+> ---
+>  hw/net/virtio-net.c | 91 ++++++++++++++++++++++++++++-------------------------
+>  1 file changed, 48 insertions(+), 43 deletions(-)
+> 
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index bd37651dabb0..f1688e0b2536 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -1687,6 +1687,11 @@ static void virtio_net_hdr_swap(VirtIODevice *vdev, struct virtio_net_hdr *hdr)
+>      virtio_tswap16s(vdev, &hdr->csum_offset);
 >  }
 >  
-> +/*
-> + * CXL r3.2 section 7.6.7.6.4 Get DC Region Extent Lists (Opcode 5603h)
-
-Single line comment fine here.
-
-> + */
-> +static CXLRetCode cmd_fm_get_dc_region_extent_list(const struct cxl_cmd *cmd,
-> +                                                   uint8_t *payload_in,
-> +                                                   size_t len_in,
-> +                                                   uint8_t *payload_out,
-> +                                                   size_t *len_out,
-> +                                                   CXLCCI *cci)
-> +{
-> +    struct {
-> +        uint16_t host_id;
-> +        uint8_t rsvd[2];
-> +        uint32_t extent_cnt;
-> +        uint32_t start_extent_id;
-> +    } QEMU_PACKED *in = (void *)payload_in;
-> +    struct {
-> +        uint16_t host_id;
-> +        uint8_t rsvd[2];
-> +        uint32_t start_extent_id;
-> +        uint32_t extents_returned;
-> +        uint32_t total_extents;
-> +        uint32_t list_generation_num;
-> +        uint8_t rsvd2[4];
-> +        CXLDCExtentRaw records[];
-> +    } QEMU_PACKED *out = (void *)payload_out;
-> +    QEMU_BUILD_BUG_ON(sizeof(*in) != 0xc);
-> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> +    CXLDCExtent *ent;
-> +    CXLDCExtentRaw *out_rec;
-> +    uint16_t record_count = 0, record_done = 0, i = 0;
-> +    uint16_t out_pl_len, max_size;
+> +typedef struct PacketPrefix {
+> +    struct virtio_net_hdr_v1_hash virtio_net;
+> +    uint8_t payload[1500];
+> +} PacketPrefix;
 > +
-> +    if (ct3d->dc.num_regions == 0) {
-
-As in previous.
-
-> +        return CXL_MBOX_UNSUPPORTED;
-> +    }
+>  /* dhclient uses AF_PACKET but doesn't pass auxdata to the kernel so
+>   * it never finds out that the packets don't have valid checksums.  This
+>   * causes dhclient to get upset.  Fedora's carried a patch for ages to
+> @@ -1701,42 +1706,46 @@ static void virtio_net_hdr_swap(VirtIODevice *vdev, struct virtio_net_hdr *hdr)
+>   * we should provide a mechanism to disable it to avoid polluting the host
+>   * cache.
+>   */
+> -static void work_around_broken_dhclient(struct virtio_net_hdr *hdr,
+> -                                        uint8_t *buf, size_t size)
+> +static void work_around_broken_dhclient(struct PacketPrefix *prefix,
+> +                                        size_t *prefix_len, const uint8_t *buf,
+> +                                        size_t buf_size, size_t *buf_offset)
+>  {
+>      size_t csum_size = ETH_HLEN + sizeof(struct ip_header) +
+>                         sizeof(struct udp_header);
+> +    uint8_t *payload = (uint8_t *)prefix + *prefix_len;
 > +
-> +    if (in->host_id != 0) {
-> +        return CXL_MBOX_INVALID_INPUT;
-> +    }
-> +
-> +    if (in->start_extent_id > ct3d->dc.total_extent_count) {
-> +        return CXL_MBOX_INVALID_INPUT;
-> +    }
-> +
-> +    record_count = MIN(in->extent_cnt,
-> +                       ct3d->dc.total_extent_count - in->start_extent_id);
-> +    max_size = CXL_MAILBOX_MAX_PAYLOAD_SIZE - sizeof(*out);
-> +    record_count = MIN(record_count, max_size / sizeof(out->records[0]));
-> +    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
-> +
-> +    stw_le_p(&out->host_id, in->host_id);
-> +    stl_le_p(&out->start_extent_id, in->start_extent_id);
-> +    stl_le_p(&out->extents_returned, record_count);
-> +    stl_le_p(&out->total_extents, ct3d->dc.total_extent_count);
-> +    stl_le_p(&out->list_generation_num, ct3d->dc.ext_list_gen_seq);
-> +
-> +    if (record_count > 0) {
-> +        out_rec = &out->records[record_done];
-
-Given this isn't in the loop, record_done is always 0, so maybe just
-use that here?
-Or maybe drag that into the loop and...
-
-> +
-> +        QTAILQ_FOREACH(ent, &ct3d->dc.extents, node) {
-> +            if (i++ < in->start_extent_id) {
-> +                continue;
-> +            }
-> +            stq_le_p(&out_rec->start_dpa, ent->start_dpa);
-> +            stq_le_p(&out_rec->len, ent->len);
-> +            memcpy(&out_rec->tag, ent->tag, 0x10);
-> +            stw_le_p(&out_rec->shared_seq, ent->shared_seq);
-> +
-> +            record_done++;
-> +            out_rec++;
-
-Then no need to increment out_rec here.
-
-> +            if (record_done == record_count) {
-> +                break;
-> +            }
-> +        }
-> +    }
-> +
-> +    *len_out = out_pl_len;
-> +    return CXL_MBOX_SUCCESS;
-> +}
-> +
->  static const struct cxl_cmd cxl_cmd_set[256][256] = {
->      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
->          cmd_infostat_bg_op_abort, 0, 0 },
-> @@ -3720,6 +3802,8 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
->           CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
->           CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
->           CXL_MBOX_IMMEDIATE_DATA_CHANGE)},
-> +    [FMAPI_DCD_MGMT][GET_DC_REGION_EXTENT_LIST] = { "GET_DC_REGION_EXTENT_LIST",
-> +        cmd_fm_get_dc_region_extent_list, 12, 0},
-
-space before }
-
-
->  };
+> +    buf += *buf_offset;
+> +    buf_size -= *buf_offset;
 >  
->  /*
+> -    if ((hdr->flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
+> -        (size >= csum_size && size < 1500) && /* normal sized MTU */
+> +    if ((prefix->virtio_net.hdr.flags & VIRTIO_NET_HDR_F_NEEDS_CSUM) && /* missing csum */
+> +        (buf_size >= csum_size && buf_size < sizeof(prefix->payload)) && /* normal sized MTU */
+>          (buf[12] == 0x08 && buf[13] == 0x00) && /* ethertype == IPv4 */
+>          (buf[23] == 17) && /* ip.protocol == UDP */
+>          (buf[34] == 0 && buf[35] == 67)) { /* udp.srcport == bootps */
+> -        net_checksum_calculate(buf, size, CSUM_UDP);
+> -        hdr->flags &= ~VIRTIO_NET_HDR_F_NEEDS_CSUM;
+> +        memcpy(payload, buf, buf_size);
+> +        net_checksum_calculate(payload, buf_size, CSUM_UDP);
+> +        prefix->virtio_net.hdr.flags &= ~VIRTIO_NET_HDR_F_NEEDS_CSUM;
+> +        *prefix_len += buf_size;
+> +        *buf_offset += buf_size;
+>      }
+>  }
+>  
+> -static void receive_header(VirtIONet *n, const struct iovec *iov, int iov_cnt,
+> -                           const void *buf, size_t size)
+> +static size_t receive_prefix(VirtIONet *n, PacketPrefix *prefix,
+> +                             const void *buf, size_t buf_size,
+> +                             size_t *buf_offset)
+>  {
+> -    if (n->has_vnet_hdr) {
+> -        /* FIXME this cast is evil */
+> -        void *wbuf = (void *)buf;
+> -        work_around_broken_dhclient(wbuf, wbuf + n->host_hdr_len,
+> -                                    size - n->host_hdr_len);
+> +    size_t prefix_len = n->guest_hdr_len;
+>  
+> -        if (n->needs_vnet_hdr_swap) {
+> -            virtio_net_hdr_swap(VIRTIO_DEVICE(n), wbuf);
+> -        }
+> -        iov_from_buf(iov, iov_cnt, 0, buf, sizeof(struct virtio_net_hdr));
+> -    } else {
+> -        struct virtio_net_hdr hdr = {
+> -            .flags = 0,
+> -            .gso_type = VIRTIO_NET_HDR_GSO_NONE
+> -        };
+> -        iov_from_buf(iov, iov_cnt, 0, &hdr, sizeof hdr);
+> +    memcpy(prefix, buf, sizeof(struct virtio_net_hdr));
+> +
+> +    *buf_offset = n->host_hdr_len;
+> +    work_around_broken_dhclient(prefix, &prefix_len, buf, buf_size, buf_offset);
+> +
+> +    if (n->needs_vnet_hdr_swap) {
+> +        virtio_net_hdr_swap(VIRTIO_DEVICE(n), (struct virtio_net_hdr *)prefix);
+>      }
+> +
+> +    return prefix_len;
+>  }
+>  
+>  static int receive_filter(VirtIONet *n, const uint8_t *buf, int size)
+> @@ -1913,15 +1922,15 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+>      VirtQueueElement *elems[VIRTQUEUE_MAX_SIZE];
+>      size_t lens[VIRTQUEUE_MAX_SIZE];
+>      struct iovec mhdr_sg[VIRTQUEUE_MAX_SIZE];
+> -    struct virtio_net_hdr_v1_hash extra_hdr;
+> +    PacketPrefix prefix;
+>      unsigned mhdr_cnt = 0;
+>      size_t offset, i, guest_offset, j;
+>      ssize_t err;
+>  
+> -    memset(&extra_hdr, 0, sizeof(extra_hdr));
+> +    memset(&prefix.virtio_net, 0, sizeof(prefix.virtio_net));
+>  
+>      if (n->rss_data.enabled && n->rss_data.enabled_software_rss) {
+> -        int index = virtio_net_process_rss(nc, buf, size, &extra_hdr);
+> +        int index = virtio_net_process_rss(nc, buf, size, &prefix.virtio_net);
+>          if (index >= 0) {
+>              nc = qemu_get_subqueue(n->nic, index % n->curr_queue_pairs);
+>          }
+> @@ -1986,23 +1995,19 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+>              if (n->mergeable_rx_bufs) {
+>                  mhdr_cnt = iov_copy(mhdr_sg, ARRAY_SIZE(mhdr_sg),
+>                                      sg, elem->in_num,
+> -                                    offsetof(typeof(extra_hdr), hdr.num_buffers),
+> -                                    sizeof(extra_hdr.hdr.num_buffers));
+> +                                    offsetof(typeof(prefix),
+> +                                             virtio_net.hdr.num_buffers),
+> +                                    sizeof(prefix.virtio_net.hdr.num_buffers));
+>              } else {
+> -                extra_hdr.hdr.num_buffers = cpu_to_le16(1);
+> +                prefix.virtio_net.hdr.num_buffers = cpu_to_le16(1);
+>              }
+>  
+> -            receive_header(n, sg, elem->in_num, buf, size);
+> -            if (n->rss_data.populate_hash) {
+> -                offset = offsetof(typeof(extra_hdr), hash_value);
+> -                iov_from_buf(sg, elem->in_num, offset,
+> -                             (char *)&extra_hdr + offset,
+> -                             sizeof(extra_hdr.hash_value) +
+> -                             sizeof(extra_hdr.hash_report));
+> -            }
+> -            offset = n->host_hdr_len;
+> -            total += n->guest_hdr_len;
+> -            guest_offset = n->guest_hdr_len;
+> +            guest_offset = n->has_vnet_hdr ?
+> +                           receive_prefix(n, &prefix, buf, size, &offset) :
+> +                           n->guest_hdr_len;
+> +
+> +            iov_from_buf(sg, elem->in_num, 0, &prefix, guest_offset);
+> +            total += guest_offset;
+>          } else {
+>              guest_offset = 0;
+>          }
+> @@ -2028,11 +2033,11 @@ static ssize_t virtio_net_receive_rcu(NetClientState *nc, const uint8_t *buf,
+>      }
+>  
+>      if (mhdr_cnt) {
+> -        virtio_stw_p(vdev, &extra_hdr.hdr.num_buffers, i);
+> +        virtio_stw_p(vdev, &prefix.virtio_net.hdr.num_buffers, i);
+>          iov_from_buf(mhdr_sg, mhdr_cnt,
+>                       0,
+> -                     &extra_hdr.hdr.num_buffers,
+> -                     sizeof extra_hdr.hdr.num_buffers);
+> +                     &prefix.virtio_net.hdr.num_buffers,
+> +                     sizeof prefix.virtio_net.hdr.num_buffers);
+>      }
+>  
+>      for (j = 0; j < i; j++) {
+> 
+> ---
+> base-commit: 1da8f3a3c53b604edfe0d55e475102640490549e
+> change-id: 20250423-reapply-63176514d76d
+> 
+> Best regards,
+> -- 
+> Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
