@@ -4,90 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89B0FC369D7
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 09:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7332C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 09:51:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7tEV-0000CU-PU; Thu, 24 Apr 2025 05:51:03 -0400
+	id 1u7tEZ-0000FA-Pn; Thu, 24 Apr 2025 05:51:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7tEU-0000BG-CQ
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:51:02 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7tES-0002wq-EQ
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:51:02 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-39c14016868so736549f8f.1
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 02:50:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745488258; x=1746093058; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YsXZIYaRmo2+Zyqhkbaujh4Q38THW6hETikCJQhi8mY=;
- b=iVKHhnXOPp7N0HF5Apd+fiwNJDuu3HawmD7zswJohPsa8XQsI/6B/ByRxvFbWQ9zcy
- epQdiwgBtKvqg+HNwQATFP83qxLA602FjpxdlHa/oPDjcG2EhUTFHLKT8zTIGiDlmDz3
- WG+fp+SqmvYeSHepbfmOJjfYiiWqxzcz79Ey2bDgV4ll+pqejYxldxZ5KdlfRCoADQx7
- dzjcfx3lgZZZ37XFlDapJ4JOzrPqb3OeGo8RDpf1+od+Cfgb3Nsp0owEHoRGcFx1R+mi
- bC2Dmf3wZuQop2EivKxk6VjBeJ09nHI/KUyLVJxdVZH1azcs0joI9Mo6MQ4O/s4qcyxv
- IF4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745488258; x=1746093058;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YsXZIYaRmo2+Zyqhkbaujh4Q38THW6hETikCJQhi8mY=;
- b=qVdJBXGTDHrbgT50KX1QpwzJe8dtxCf4dL/Im2NliAUnCp/TwfySkTho5nhdGJK6Z0
- vOLc8O4BgAlJdSRlQeGP7OBSWBHugU3K6bNYCR23OWa0abpdQi+bv/rACl7mUE4hd0Gp
- HAjafXmGlq0nWXzMHrtuaCPDEtlbk05weg+p2GmQI+VuBbuJki4vQGQfIRLl7YsMKBpi
- 3W8xhnm3ldquPWPc+mEvYBizw0MCDAEhZea2qNnAMfA4TYW04WCmJUgstOnMzark11TA
- 1/TcrpEDoLFJ6BrNZNNCKVIaV/op61Az5BYjezH28NWmqpcSA47tEfJNTqX0nlRbOiqG
- L7Aw==
-X-Gm-Message-State: AOJu0YzyWuWmQHrxqUIjSzQ9RHB7kKJ4/mKQOI3YkbJkmlfQPQbx8+kI
- WkmjqF+LclYEcjymkJ0PIs22pHVPM4i3Eex5QxZAPRF88eImaFuecmTGHdXjG3El4k806F3X0vm
- Q
-X-Gm-Gg: ASbGncs0+pydYfIFXc8Jb93GXYZ5+ygIfvl8qmbsGG5s7oFe226bCjoZje5ogEXf7UT
- 5VbU75KLq5JNtVKkLmhwpzRM0emFlAXYwq//n/wPuraZTggtcJAV2ntryeDXapo/5hPMhPcoAU9
- AdiEvEbwyoVY6pf7kR0jebxqvUJS7MEjn9FBN3FuuGpjqDvn9ExnCBdF/yOxVS4tH3CIw0arD4a
- Op6Bf9Wp4kJ5SWRbW4AYkShyiSdX47L2ng+hI9a4zCzmLRQ+a5gZaX8yXMO6pASo0/MDOvzogc4
- 9q33iqz9rVoY8anjlSBvYNYBK02R+0498eBAEHhsUKvVbgGidAo7AxCVjkMlN9x/nHeHUmK6dDx
- RYX4bYRCMeLpypw==
-X-Google-Smtp-Source: AGHT+IHAZiuzoSH6MM1swwFuD5jWs322oqZxsZXJhz90ISBIJd7gJswfcXxaop6KqnrqoxG9Sk2e3Q==
-X-Received: by 2002:a05:6000:2212:b0:39c:266c:12a5 with SMTP id
- ffacd0b85a97d-3a06cf56518mr1663951f8f.13.1745488257770; 
- Thu, 24 Apr 2025 02:50:57 -0700 (PDT)
-Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a06d54ea37sm1527445f8f.90.2025.04.24.02.50.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Apr 2025 02:50:57 -0700 (PDT)
-Message-ID: <6b685fec-d024-45ab-b723-1fdf345c65e2@linaro.org>
-Date: Thu, 24 Apr 2025 11:50:56 +0200
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1u7tEW-0000DF-8w
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:51:04 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1u7tET-0002wL-Jv
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:51:03 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8CxaWp8CQpoVjzFAA--.1182S3;
+ Thu, 24 Apr 2025 17:50:52 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowMCx_cZ8CQpoIFeTAA--.43713S2;
+ Thu, 24 Apr 2025 17:50:52 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: stefanha@gmail.com, peter.maydell@linaro.org,
+ --cc=richard.henderson@linaro.org, Bibo Mao <maobibo@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 10/13] target/loongarch: Move definition of TCG specified
+ function to tcg directory
+Date: Thu, 24 Apr 2025 17:28:46 +0800
+Message-Id: <20250424092849.3985437-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20250424023317.3980755-1-gaosong@loongson.cn>
+References: <20250424023317.3980755-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/13] accel/tcg: Extract probe API out of
- 'exec/exec-all.h'
-To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250424094653.35932-1-philmd@linaro.org>
- <20250424094653.35932-13-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250424094653.35932-13-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowMCx_cZ8CQpoIFeTAA--.43713S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,46 +68,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/4/25 11:46, Philippe Mathieu-Daudé wrote:
-> Declare probe methods in "accel/tcg/probe.h" to emphasize
-> they are specific to TCG accelerator.
-> 
-> target/arm/ptw.c is the only non-TCG specific file, its
-> call to the probe API is already guarded within CONFIG_TCG
-> checks.
-> 
+From: Bibo Mao <maobibo@loongson.cn>
 
-Forgot to include:
+Function loongarch_cpu_tlb_fill() only works in TCG mode, move its
+definition from header file internals.h to file tcg/tcg_loongarch.h
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20250423080417.3739809-10-maobibo@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/cpu.c               | 1 +
+ target/loongarch/internals.h         | 5 -----
+ target/loongarch/tcg/tcg_loongarch.h | 4 ++++
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/accel/tcg/probe.h            | 110 +++++++++++++++++++++++++++
->   include/exec/exec-all.h              | 100 ------------------------
->   target/hexagon/mmvec/macros.h        |   1 +
->   accel/tcg/cputlb.c                   |   1 +
->   accel/tcg/user-exec.c                |   1 +
->   semihosting/uaccess.c                |   1 +
->   target/arm/helper.c                  |   1 +
->   target/arm/ptw.c                     |   3 +
->   target/arm/tcg/helper-a64.c          |   1 +
->   target/arm/tcg/mte_helper.c          |   1 +
->   target/arm/tcg/op_helper.c           |   1 +
->   target/arm/tcg/sve_helper.c          |   1 +
->   target/hexagon/op_helper.c           |   1 +
->   target/hppa/mem_helper.c             |   1 +
->   target/hppa/op_helper.c              |   1 +
->   target/i386/tcg/access.c             |   1 +
->   target/i386/tcg/seg_helper.c         |   1 +
->   target/i386/tcg/system/excp_helper.c |   1 +
->   target/mips/tcg/msa_helper.c         |   1 +
->   target/ppc/mem_helper.c              |   1 +
->   target/riscv/op_helper.c             |   1 +
->   target/riscv/vector_helper.c         |   1 +
->   target/s390x/tcg/mem_helper.c        |   1 +
->   target/xtensa/mmu_helper.c           |   1 +
->   24 files changed, 134 insertions(+), 100 deletions(-)
->   create mode 100644 include/accel/tcg/probe.h
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index ea1665e270..bf3d592574 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -32,6 +32,7 @@
+ #include "exec/cpu_ldst.h"
+ #include "tcg/tcg.h"
+ #endif
++#include "tcg/tcg_loongarch.h"
+ 
+ const char * const regnames[32] = {
+     "r0", "r1", "r2", "r3", "r4", "r5", "r6", "r7",
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index 3a079feb1d..a7384b0d31 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -61,11 +61,6 @@ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+                                uint64_t *dir_width, target_ulong level);
+ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+ 
+-#ifdef CONFIG_TCG
+-bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+-                            MMUAccessType access_type, int mmu_idx,
+-                            bool probe, uintptr_t retaddr);
+-#endif
+ #endif /* !CONFIG_USER_ONLY */
+ 
+ uint64_t read_fcc(CPULoongArchState *env);
+diff --git a/target/loongarch/tcg/tcg_loongarch.h b/target/loongarch/tcg/tcg_loongarch.h
+index b29427d981..fd4e116022 100644
+--- a/target/loongarch/tcg/tcg_loongarch.h
++++ b/target/loongarch/tcg/tcg_loongarch.h
+@@ -10,6 +10,10 @@
+ 
+ void loongarch_csr_translate_init(void);
+ 
++bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
++                            MMUAccessType access_type, int mmu_idx,
++                            bool probe, uintptr_t retaddr);
++
+ int loongarch_get_addr_from_tlb(CPULoongArchState *env, hwaddr *physical,
+                                 int *prot, target_ulong address,
+                                 MMUAccessType access_type, int mmu_idx);
+-- 
+2.34.1
 
 
