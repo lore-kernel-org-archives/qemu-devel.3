@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B995C369CB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2ABEC369D8
 	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 00:59:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7krT-0004KD-RK; Wed, 23 Apr 2025 20:54:43 -0400
+	id 1u7ktd-0005oM-Cs; Wed, 23 Apr 2025 20:56:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kqB-0000y7-Ne
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:25 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1u7ktM-0005bh-29
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:56:40 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kpu-0004g6-Ke
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:53:08 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7399a2dc13fso534844b3a.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:53:06 -0700 (PDT)
+ id 1u7ktJ-000542-QH
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:56:39 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-73712952e1cso396431b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:56:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745455985; x=1746060785; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745456196; x=1746060996; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1b+/2Cx7hhPD9NBA8Adtti5AvmLRjcSTlsgUHFgyOs4=;
- b=Ix2gjNOdWkuh01aPKTvOS2Z0zcMkdSzXc+lfqkfdbvdKHQXV8FmGMAe1E1oILY0VnI
- z8WhJYy/lWgpVups8VEnI9FMGaZzi4fH0AZDZOIJwUqma/7RY5YMht4MGj7XQlryDu8b
- bgtCSHb8fL+8AXEYSjJelOLgQmS3B5uzruQNSa00mkULMX8zIIPYEw1CVUPYdHRLCXcA
- 7fHQhcXGwxwpX+ots3kmKluKMvD2ecz8qZAQEJUr5ZTdHoR2TE9y2rEoNfrC/HsqNSEM
- mAv9f+Kph6ySnllqy/+uXUHgDWrl/HNx1VxHbomatJwaN+eMycxfL6pSTKaIyPe/RS0y
- +6VQ==
+ bh=I0+phgtXpTHu4kCbYiaq4DT5v48KX8xhY8CEe+xz2e0=;
+ b=hxUZikZ8YAUWDnqCvH5c4nOdOqrvRevkrycP34nOmtsPMGZQcNYNVYUdnOC32HgKWB
+ IAq9IjRox1u7pIpqsowfk4o3GEwoaSx75l/ckAgRSJnZ15ZvfABiLNub9XitTX1AvF+d
+ wY1yrnesaROoDZ6FVQOclNvqYFbG6fx6V4byBJ1GaX47L4EaZmgr79AmVNmhKQIGg621
+ ud8vcfgT1p0L2fAMkXiGEJZfsuOAuCXiMWWGy6s3bl8yr81ZphxAG/YcRg46glaLaQ78
+ Zk+PwPdzzIM5Pl1ppI8cR2U/pYttDaF7MRfIA/Z9wDHt1rEAkQNkRXxOgog3f7ywZZSN
+ 65UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745455985; x=1746060785;
+ d=1e100.net; s=20230601; t=1745456196; x=1746060996;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1b+/2Cx7hhPD9NBA8Adtti5AvmLRjcSTlsgUHFgyOs4=;
- b=Wx8fZQ2hs06caG7uY7WIYen9/X/3zObEkQRpQnAI480fgiFqyZ47PiO3BHqlM1N2Rk
- n74v6QIeLbs5W9Xi6EhQoU7JZr/AbrzldEZtNgTJZ8SuiOqo1B6tejUUP7nitO6+6TBf
- nPbJ3dh9LYgntg1VS1mz+uiHe6sE614qXtGkbN9Iq4hSkJnGhBzhmQuLfOXA3DjCpp+x
- 7cziDFuYK4lVPkGJAqrbwhNj6gQuPpqREAf2KHOB8kgZUOvA6yH//84xkjP7wAULyQGL
- vU8CYfZji9GiPVjBfjZpbDS73vLjf7T1/hyyyKaqjpC80vDkRVukGvEdUDKsvajkG0u3
- jf5g==
-X-Gm-Message-State: AOJu0YzQ1lf86EzTHbUBun8yvCbMd2yAjYtOoByWTKPl1Nd9OFbnzOcm
- ul3veXHmhS/NNyQECUXZLKIDfwfpI/sptpGE68XETwZAL2cf3PRi18w7hiJtRvnP5MrOCDd8k5O
- G
-X-Gm-Gg: ASbGncu7gRrGyWHZky8IbwpGiLHUVP3qsdWyoUpgfFit6RjLXZy7Dt2lmfan9oT9CvK
- TRdmk3mf0KbeuHbyr7Ql7EplrwJQmCbIg6OWWIcQg10oPIFbt3PlKY6d8YNXlMXl5aeNkGJy5jj
- gO5/Zeh+1JwgbXOihBCDjyja2kz+55ddlIlLpICRNZLkIJGu7FeJ9FhstDlhLVFw4NEfhjhHmoq
- TbVa2uWJNvn+OLHh539bxXDwieg94wayRltGw894/ZQ0M2KRcQ0360/T7zSpGBcH7lyVPs8k80r
- hXO3XB3P4AS9dlod74HaiaD8BUvn6OIK3skBD8ltysAiwgKRHQKlGFObweBqHgkHmpaNOFw2RXY
+ bh=I0+phgtXpTHu4kCbYiaq4DT5v48KX8xhY8CEe+xz2e0=;
+ b=Zai8prwz7WubjaHZJQCN4sQgve3PTXK2RXZHwos7jOvFTtOWSpUyaGCfxRaiIgP+c2
+ nzJNc411Or7227zKMvSZAaDOhIs6uq3zsGWtwLspM/7QqMvUKAMn/U94f/oYcvNeYgsy
+ bQqT9tk//9xhTtKHmhLo6rGE3CIn861WxGuX8nyh1DQ5HSyN3tTT7LuO1IhV22JxPi4H
+ LeBD8VS3EtgIsTQ39PBo1ETYDfegEWvRyGJkjHKLQuqI3uTDJTkAyvvXjZ4311qtXjG9
+ 71HPF57BjkxYUxQa2GrNwiy4kn+hRcwC0msuHZ9I/L7VAbOthH7Lskbp/SMj0hxaZxu6
+ 7knw==
+X-Gm-Message-State: AOJu0Yw4J2ImvbGzrJ7BpC2Mmau7RkpKeJ7vdcFhpzoCgoJpUYLDOhph
+ mzl5xzrJD97e6L8TpYouHXWIdl9TV68ACT5pNc62S1WB4aM7qDJQn+6Hm0pJBEQN87VJJgQqEhL
+ F
+X-Gm-Gg: ASbGncuDcBcOeoyQYVWUV+4zKqxTpnoiJT0+vqNGuzpc3VhcN8y3NGZC6pADzRh7DeF
+ hS3vn7uMJU0lR1gj5GyH80Icy1CCQEInuxar3gYoMyHfaIzjNmMcFnqkjUNt2nKKMYyIHUjdzG7
+ xzb52r/R6cEM688Ko2l0RZJUGWSLycPQEoAkP1RGXFhGLdMm2Eo5wGnSYhVQw8UFJX+KghJN8ra
+ epcqioLtyKTChb3zRELLuzYjKyRZgG6hiDD9htSklrz9UbW9E29ISXDi/0KHgYqgK0/nZlAjEwf
+ TDWnE+fxLnQ5AQe3KNKnQ0QAAWkMxg1ubAuyAJKDxL9M3DiTml5r1Cie0Z0HMdMdgS5OomZxWy8
  =
-X-Google-Smtp-Source: AGHT+IGcKPYjDstA5l0z91VdGhy46j3mAcy3uyFLwAzI/uaSzZ+sWxWrUlnbg7C+KenUADd5LrfZ+Q==
-X-Received: by 2002:a05:6a20:9d8e:b0:1f5:58b9:6d9b with SMTP id
- adf61e73a8af0-20444f003bbmr835763637.12.1745455985162; 
- Wed, 23 Apr 2025 17:53:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGLQi9lkuLe811EoIRurFLIZsGq+Un/jvpvGFhO2EtWJXgCDxoyr0PHASiBHpFtet2+vj8/hg==
+X-Received: by 2002:a05:6a21:33a3:b0:1f5:59e5:8adb with SMTP id
+ adf61e73a8af0-20444d1f250mr899488637.0.1745456195960; 
+ Wed, 23 Apr 2025 17:56:35 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25a6a971sm209353b3a.103.2025.04.23.17.53.04
+ 41be03b00d2f7-b15fa907fcdsm119775a12.54.2025.04.23.17.56.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 17:53:04 -0700 (PDT)
+ Wed, 23 Apr 2025 17:56:35 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>
-Subject: [PULL 040/148] exec: Restrict memory-internal.h to system/
-Date: Wed, 23 Apr 2025 17:47:45 -0700
-Message-ID: <20250424004934.598783-41-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 082/148] target/m68k: Restrict SoftMMU mmu_index() to TCG
+Date: Wed, 23 Apr 2025 17:48:27 -0700
+Message-ID: <20250424004934.598783-83-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
 References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,101 +103,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Only file units within the system/ directory need access to
-"memory-internal.h". Restrict its scope by moving it there.
-
-The comment from commit 9d70618c684 ("memory-internal.h:
-Remove obsolete claim that header is obsolete") is now obsolete,
-remove it.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250317161329.40300-3-philmd@linaro.org>
+Message-ID: <20250401080938.32278-12-philmd@linaro.org>
 ---
- {include/exec => system}/memory-internal.h | 6 ------
- system/memory.c                            | 4 ++--
- system/physmem.c                           | 3 ++-
- MAINTAINERS                                | 2 +-
- 4 files changed, 5 insertions(+), 10 deletions(-)
- rename {include/exec => system}/memory-internal.h (88%)
+ target/m68k/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/exec/memory-internal.h b/system/memory-internal.h
-similarity index 88%
-rename from include/exec/memory-internal.h
-rename to system/memory-internal.h
-index c75178a3d6..085e81a9fe 100644
---- a/include/exec/memory-internal.h
-+++ b/system/memory-internal.h
-@@ -11,12 +11,6 @@
-  *
-  */
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index 0065e1c1ca..4409d8941c 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -592,6 +592,7 @@ static const TCGCPUOps m68k_tcg_ops = {
+     .initialize = m68k_tcg_init,
+     .translate_code = m68k_translate_code,
+     .restore_state_to_opc = m68k_restore_state_to_opc,
++    .mmu_index = m68k_cpu_mmu_index,
  
--/*
-- * This header is for use by exec.c, memory.c and accel/tcg/cputlb.c ONLY,
-- * for declarations which are shared between the memory subsystem's
-- * internals and the TCG TLB code. Do not include it from elsewhere.
-- */
--
- #ifndef MEMORY_INTERNAL_H
- #define MEMORY_INTERNAL_H
+ #ifndef CONFIG_USER_ONLY
+     .tlb_fill = m68k_cpu_tlb_fill,
+@@ -615,7 +616,6 @@ static void m68k_cpu_class_init(ObjectClass *c, void *data)
+                                        &mcc->parent_phases);
  
-diff --git a/system/memory.c b/system/memory.c
-index 6a5d853071..7e2f16f4e9 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -24,8 +24,6 @@
- #include "qemu/qemu-print.h"
- #include "qom/object.h"
- #include "trace.h"
--
--#include "exec/memory-internal.h"
- #include "system/ram_addr.h"
- #include "system/kvm.h"
- #include "system/runstate.h"
-@@ -35,6 +33,8 @@
- #include "migration/vmstate.h"
- #include "system/address-spaces.h"
- 
-+#include "memory-internal.h"
-+
- //#define DEBUG_UNASSIGNED
- 
- static unsigned memory_region_transaction_depth;
-diff --git a/system/physmem.c b/system/physmem.c
-index 307d0764b6..16cf557d1a 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -66,7 +66,6 @@
- #include "qemu/main-loop.h"
- #include "system/replay.h"
- 
--#include "exec/memory-internal.h"
- #include "system/ram_addr.h"
- 
- #include "qemu/pmem.h"
-@@ -88,6 +87,8 @@
- #include <daxctl/libdaxctl.h>
- #endif
- 
-+#include "memory-internal.h"
-+
- //#define DEBUG_SUBPAGE
- 
- /* ram_list is read under rcu_read_lock()/rcu_read_unlock().  Writes
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ba885010c5..661a47db5a 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3129,7 +3129,7 @@ F: system/ioport.c
- F: system/memory.c
- F: system/memory_mapping.c
- F: system/physmem.c
--F: include/exec/memory-internal.h
-+F: system/memory-internal.h
- F: scripts/coccinelle/memory-region-housekeeping.cocci
- 
- Memory devices
+     cc->class_by_name = m68k_cpu_class_by_name;
+-    cc->mmu_index = m68k_cpu_mmu_index;
+     cc->dump_state = m68k_cpu_dump_state;
+     cc->set_pc = m68k_cpu_set_pc;
+     cc->get_pc = m68k_cpu_get_pc;
 -- 
 2.43.0
 
