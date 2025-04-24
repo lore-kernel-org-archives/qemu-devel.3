@@ -4,86 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 269C5C369D5
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 18:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D1C5C369D1
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 19:08:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u81gM-0001Qn-T2; Thu, 24 Apr 2025 14:52:22 -0400
+	id 1u81vO-0007Ba-Ks; Thu, 24 Apr 2025 15:07:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u81gK-0001QY-Cr
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 14:52:20 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u81vJ-0007A2-Bq
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:07:49 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u81gI-0001W7-5m
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 14:52:20 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2279915e06eso16065315ad.1
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 11:52:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u81vG-0004Cm-GD
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:07:49 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-736b0c68092so1199021b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 12:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745520736; x=1746125536; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W7J+XZ12y7IV2YYEDm2b2D8ir2IvQ8lU8fLnbf9o9OM=;
- b=ooy25s7UELWLYKKqjRxbWjxYrPgm0U587sUPC9VW+U4NdT79ttd9ZEYM1pjRKvuNH/
- s8dp4/qV9YGvTV3NGsz1Ic0jiy6E2dWRBqHKc1Kq8L6Nn/8KCId9cMs3eKPSa+HSdTcq
- DW7V6/JRXm/Pao+Pfp69imaLeUI1HizXuu/mJ2hyxMvG7oN8ms6UjqRDg5V/kSS0ofAE
- AGX6MHZf5k73x1c9tLmcf9dR8ADqVo5f1l59qZqwK35LW4VpPDEwCGjilnjf4WXBTpS6
- TpWD3wStzsbsMkES/39lRBs0ovDa/fuPyEg9yO3d8fJZ5Hu0XL3oiW/z/vHmShe3ypo/
- D3Mg==
+ d=linaro.org; s=google; t=1745521665; x=1746126465; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=TP4Q9rzJluVzd5O9r6CuXRojocrwY/XR62UryJPD5ts=;
+ b=nmzjbLQrd8hD29rAdryMv/B0L0CYQ/Fz9E6H2XuttoLWKhQqXsgmyRt1Vk8tYa6lO0
+ +hCjZFYbzxSro098/OQwveqUILPt1bcQekWDDm1Sdef6SViWVaMXPXBRX0qkndS2NUMK
+ vrvssmhIJvxrAKwHlEY6yEz1T2e7z853yEYV2HCnkDwMgnzpzYuQmA1wlvLK5PFMK6g5
+ J3+PmvXMCTNKEFvn6A987H+l7BaAfTcjk7sUtGpM3PjfxF+jywqMZBIV2wWgQaXVPh1X
+ b7g3Nzg/XA7XFoXAUkCRM7d6GDUFbuDOIWxZ/ZeyFnfzSrodyzzmPao6emz0SXLdCgBh
+ MyoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745520736; x=1746125536;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=W7J+XZ12y7IV2YYEDm2b2D8ir2IvQ8lU8fLnbf9o9OM=;
- b=lnWycC6cF1Ev3frcoW7DF3X/8lUYpNl8bFWU62KaYsHRfwXSknAg8c2vfB5nViahVT
- eUU9LHaGc2z/OTcYr9MjhcE3vesJrI+RSKiyFMejaagJ9lQSNb+d0ci8eac2GGsVadX/
- mfd4rpjW03l9EIa04qPpWyVJtIVIg/XHGqR0+XebF+JumNvGcqSBoucLoL8f0nLzljtG
- eLe+Px8ULmOipTIJyAlPKHAqERbdORO5HhkQSDfyYNTEeb1PQs8qfpqOnfIDA82tGNYL
- 0y0siGl+Rz8+QqsxEqnatIOD9VwMjb9GfDV3ZNVBUN7HSPNd244Cp3T/zuX1/fPLUISb
- 2Ing==
-X-Gm-Message-State: AOJu0YxTLa31O9sMP2P255ARzWf+XZ7Qsb9fWYJrbkl/oUJj9t1NXWIs
- cuAE0DlqF2Cz9DutVfF75RybMfm7LE1/jbD0fvHKhv7HedKQBvQyeDRL5ONR/ipuMRoIzMbdyfJ
- SKnE=
-X-Gm-Gg: ASbGncuG01YEdekPSjdt4Ir0sNoYHRmfR386YF9Sl4CaBekYWDBl4fJv3kygW3Wt4kA
- sm/O5Swhq9vjePLf3Iv1rp3UtI1edoA1ZwWqb7rOu2bYZR7GowZ/XGmufWvgD0guGBOvVnhDCg3
- MIZQnJHvYANOEeTEKEX/sL1H3yMHvoDtQTHWdVVWPHiGLmaqcS5fPHJFNU2WS+Mn2F2C/MAC1Tr
- VCxPTC8cVWjSkdv2RvVz1Tzrf+WbirgqAgfg34ID6RCzzIiUKRjzD7k1I1roW+pUM701ANZ0xiI
- +apg6fDZlTS3/PR7CgU7Gb5EvwChPvsgeoU+4FR5EQhn8HSXOa+Hlw==
-X-Google-Smtp-Source: AGHT+IFgHmiG7mbG/qfN0p/QNMDydYGP3AHQllGEMJ+OmLF6dbr/0ClhMcu/ALEuPhwP6cZVwrVw3w==
-X-Received: by 2002:a17:902:c40c:b0:21f:ba77:c45e with SMTP id
- d9443c01a7336-22dbd47cbcbmr6815875ad.45.1745520736052; 
- Thu, 24 Apr 2025 11:52:16 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ d=1e100.net; s=20230601; t=1745521665; x=1746126465;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TP4Q9rzJluVzd5O9r6CuXRojocrwY/XR62UryJPD5ts=;
+ b=AEeBp8ljsVxuEvsI+cjpOCsd1zm/hqWCDrF8JBpDZWdfaKZlWzAiC99KcIsCYzVS8w
+ rzJGlZX+vo0P2ZGPm52BZTo2OgPCs8HtNNLMAc7eeeAGfI4irjHl0/oCedyw4Bs6jw7G
+ 3UxEqR36urHHfdqj/wrwVm/5W7dJ+hKPYcrn9mgJJRroKb73RCOYe/O3tf6177Q8FT9X
+ /F4sDTaTa6+0Hg241RWYsJT59gJCVIJZn7W/CHlyvf2b1eo4LGTYSyLTrTTXIE/nAtx4
+ Y/aoqbbwVDdx7+dLe+3S+Gl37W2xTLs/TuiJBFIco5puNiAlwDX0YclpqTQ5gUl+/OFa
+ YB+Q==
+X-Gm-Message-State: AOJu0Yyj+VsQhDvdSVGnHK0rEta5VCwGYWKWDi+eHz2cJI5KUbvDySX8
+ 5PE/S8W4r55TtA7yKsDVOskB4TTPKUhA6q+1yAmP+Gmz+eNNTl7BqgqPlXIZS26p4jL/CgPqaNq
+ o
+X-Gm-Gg: ASbGncsLJrKGZPhPEplxMEgahXtrGjnytmN3K2fFiqYvbmOeEhU6S6/uTJKhB5SSnfp
+ +Yx3Gghml7TYX1kPb4RwzxwA/1U2NNICLUiVwNVJv02bjdriXrQHK1CRn1cKDdPp246oblZysuO
+ 8S9bRpYDq3NTVyXCMkS5WdXo9yMdCOQfYLoxEqQ375hEE+O/aYUt1ksgm2UPl2UlX2QNKrKoePj
+ 8TrvycR0PZmkhV96Y59GIt7YnAZSpQZFA86OCKEZTXC0AqdsXxaa+oER1BYNyg3WfbRpu2PXBvA
+ gIKfBKUlE2cg+sYCaLPrlxvat1iVdpiLkt/IalXlXvDsZQfX83MvZeZXouKc05hMwat9wn1Q8n8
+ =
+X-Google-Smtp-Source: AGHT+IEdIGgHbX2zmkaB5N/zgRiO4SAMETDbLzKQGFDOA0fNveCUbyiuG+LsXzM8lHe9vZnGQpgjAw==
+X-Received: by 2002:a05:6a00:3e20:b0:736:a6e0:e66d with SMTP id
+ d2e1a72fcca58-73e245ddadfmr5059117b3a.6.1745521662988; 
+ Thu, 24 Apr 2025 12:07:42 -0700 (PDT)
+Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b15f7ec3121sm1562164a12.32.2025.04.24.11.52.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Apr 2025 11:52:15 -0700 (PDT)
-Message-ID: <adc6588a-b8c2-496e-a897-fc73c75d1713@linaro.org>
-Date: Thu, 24 Apr 2025 11:52:14 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/3] qapi: add weak stubs for target specific commands
+ d2e1a72fcca58-73e259134d5sm1846463b3a.19.2025.04.24.12.07.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Apr 2025 12:07:42 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, stefanha@redhat.com,
- Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
- berrange@redhat.com, peter.maydell@linaro.org, thuth@redhat.com,
- jsnow@redhat.com, philmd@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Markus Armbruster <armbru@redhat.com>
-References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
- <20250424183350.1798746-2-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250424183350.1798746-2-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+Cc: git@xen0n.name
+Subject: [PATCH 0/2] tcg/loongarch64: constraint fix and improvement
+Date: Thu, 24 Apr 2025 12:07:39 -0700
+Message-ID: <20250424190741.738515-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,19 +97,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/25 11:33, Pierrick Bouvier wrote:
-> We are about to expose various target specific commands for all targets,
-> so we need to stub not implemented qmp_* functions.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   qapi/commands-weak-stubs.c | 38 ++++++++++++++++++++++++++++++++++++++
->   qapi/meson.build           |  3 +++
->   2 files changed, 41 insertions(+)
->   create mode 100644 qapi/commands-weak-stubs.c
-> 
+Fix an assertion failure in sextract64 which shows up in make check.
+While in the area, improve the constraint match for VCMP.
 
-It seems that MinGW does not support weak symbols without any strong 
-definition. Thus, we'll need to implement various stubs file and 
-conditionally add them in meson.build depending on TARGET_{arch} value.
+r~
+
+Richard Henderson (2):
+  tcg/loongarch64: Fix vec_val computation in tcg_target_const_match
+  tcg/loongarch64: Improve constraints for TCG_CT_CONST_VCMP
+
+ tcg/loongarch64/tcg-target.c.inc | 48 ++++++++++++++++++--------------
+ 1 file changed, 27 insertions(+), 21 deletions(-)
+
+-- 
+2.43.0
+
 
