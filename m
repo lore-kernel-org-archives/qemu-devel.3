@@ -4,78 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A122C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 10:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E02DC369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 10:48:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7u6O-0006hp-Jy; Thu, 24 Apr 2025 06:46:44 -0400
+	id 1u7u7X-0007Qn-Iw; Thu, 24 Apr 2025 06:47:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u7u6L-0006gb-R3; Thu, 24 Apr 2025 06:46:41 -0400
-Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
+ id 1u7u7V-0007QJ-Dj; Thu, 24 Apr 2025 06:47:53 -0400
+Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u7u6K-0000Ss-9b; Thu, 24 Apr 2025 06:46:41 -0400
-Received: by mail-vk1-xa2c.google.com with SMTP id
- 71dfb90a1353d-5259327a937so379613e0c.0; 
- Thu, 24 Apr 2025 03:46:39 -0700 (PDT)
+ id 1u7u7P-0000YJ-4P; Thu, 24 Apr 2025 06:47:53 -0400
+Received: by mail-ua1-x932.google.com with SMTP id
+ a1e0cc1a2514c-86d69774081so423026241.0; 
+ Thu, 24 Apr 2025 03:47:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745491598; x=1746096398; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745491664; x=1746096464; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gldqhwn3bY2EToG0EOitYqvu7nz9n7/zxEWI+oKUUR0=;
- b=PXJJvaKXwyASQQtOKdYVRFtnIih2f0R3mPTtYInd9B/QssiWPIQaQEWOE6tUqUb4ia
- Am+yUachzvBGiL9lwEKZREwrw+bsFoDZvoikr2rdnv37145pw8rAb161wFqznCwZcwNr
- SRbN+K/u4ncuj2C1QvlEChN+RxCkWaqdEqzUFi4pXU0ybPQLktEuSJfImMOKJCDCv6G4
- fABV397ptu6f8eA3/TTQEWMSyi6IBo7bwapSMey8lp38CfdxgxEKQ8YeWCRkk4qzF9Ya
- JDrmwjnOFN6LAHyITFz/qLtUwSSadU+PWmYNamlGV39CCSVTzvt6yyoLPmPLKe/RK6QK
- D8Wg==
+ bh=AcdLTDZKdD21fz88Km10UC4/+wQCjjJ76rvL4NQUY98=;
+ b=dadTPDRaab7WZl4772jfCL6lfv+o+9EkD3ipqKsb900930FdQ12DbMfDCBAMs/1VwU
+ lZ+GXpSF5At/ZIe+wKAo+rXNQE9ZANtmTHzHHYbGtIUn06cuv7dbAUtrWbOywtuyA6qt
+ EeFrcDjJxCziYwoyyON8deVfeHZJNUrIGWH1HvhLjlIMeHci1r0iPtbRuE4VZkEgEA/n
+ uQ4wz4eMbZbJwx77QBXmaRgE2SqUpq7JQOVMtrKGgVFOv0Oa7p1FZrj1C5CNg7xRC01H
+ Bl/gd6c20X6YPZ7ytsLT41q+7fIVnlBITd90r4IH69Ol/oh5Qg/geNjsq3oODLCB6Hlh
+ qeSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745491598; x=1746096398;
+ d=1e100.net; s=20230601; t=1745491664; x=1746096464;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gldqhwn3bY2EToG0EOitYqvu7nz9n7/zxEWI+oKUUR0=;
- b=fpHD3fDIC+5oGIWWfY4nrvUTcINd+0JJG4MQ3L8l0AuWbe3hZCz7OiATcaN2Ting+N
- 6r3itbiDofz9omI1WWTKAMtFYDRm/5e/TC3CJKNJTidCPd76cuTp0J26xUlzXc/VSNNB
- zWC88HIinu+ZVXknUsPEbhp+f+GHNzJgdqGqdMc6u9VDA7Sjv9Et1lGwwVroN90YPVhZ
- WeDXEo7k774rgTObraar8a3QEIK3YCyrdVV9WTHDvOKV8YnkCZ1saEDg1mNx7wkrnJGs
- YuTE300HRzlBxcFbEGbGX1XjGTZunCnVgjgpmRfuRhGHjkCwm5bGh9qPUodbYxT3NHf1
- Da+A==
+ bh=AcdLTDZKdD21fz88Km10UC4/+wQCjjJ76rvL4NQUY98=;
+ b=Uo+Q2kLRPCgoVcD4X7TfXtlfiDSc3JO/v6YtY2aRyHcyRuPcb5sf2kCVVeFBjg2EDS
+ D1iuO9l1pmkgjhEGVHPdPSacwbHFfnCxg7xJ454m30o3aUR8TxpeYMGTY2gA6HSe9pDr
+ eSmcjMZyYJGrq28SHeNE/yK1IHrz2F1eg24ejtZmSVEtSJE5x0My0sVPUpQpB0xsB8QM
+ KK+oiudmt9kp+RcH9Mv629rqMKonwHxeAiH9gkKeda8prHKOguR/euGQj5ZteDXhgYTq
+ IwEPD1A72bA+6/tKxNTmJ0hBB4eKJ+NySjvBT9GuXtZ3Di/0W6D6Z8pr1ttoAZyTKZcf
+ hjFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZWJWHDlpat4U50iyGEprmi+vw2eB2UTeqVonZKKVZ1AEEBtwP/vVn6IN54nMpz4eqRcCnIjcDzgPO@nongnu.org
-X-Gm-Message-State: AOJu0YwSR8v5dotBPsMC8SV37BfPADACKV7gu1jQOpS7fSXoxkFwa8ST
- W3qVcoSUscVjPRb3pBG45JqXVJ5DlniSjV7kh3cOxnX1hd0GGXp1iXF3b15obK/8VBanPZsL+7t
- b1um77wRveJ0bcOg3ThmrKRVLnrCbmQ==
-X-Gm-Gg: ASbGncuhF2yUdyfFIdpijFdqc6ldkCXVlzOx3ciFfBLfdZa9Z0WkKq5CCaiMOYvc0o1
- xizxNyHyHlriz7zLh1OEAQmOMh/Qd/zkofq+fa6F6+zsHZFkNnBYTLZElzc/kou8Lh06SCZpgK0
- H7yN1ZIkdaQm9f13sE+1xyDvAbv+PqdyYcbzxgb5BLVCCusTD/H5Vs
-X-Google-Smtp-Source: AGHT+IGm4vvSRPGyC9cT40Io+kT2Cj0SK/DeZFBcoN+1XPUBTZPFsMVSIz0I9dWyVsPnslLSC5DOfzyKxfQ5U3ZtJzE=
-X-Received: by 2002:a05:6102:32d6:b0:4bb:e5bf:9c7d with SMTP id
- ada2fe7eead31-4d38eef371cmr1394107137.17.1745491598355; Thu, 24 Apr 2025
- 03:46:38 -0700 (PDT)
+ AJvYcCVD2TOPF9/y+lGyAOXBEgFuLxVr36v/15vjjT8di5vN3Kpif2oBWCQPnVkelW5TW3zYxjknp0m16LCI@nongnu.org
+X-Gm-Message-State: AOJu0YzhEV5obQDQhaYXZsfbIrK3VjQZyInOwtMjONMbQnG3dwoUd3GY
+ y4XhmgBIDqUTqNgRIChc3qNiygERCGWKcvtqCB1f12L9Hw+fiJPZyW2uf0bMWXfBckbSIcU4ooP
+ y3QDrBaziN888PlFYTHGwCmil3O0=
+X-Gm-Gg: ASbGncsrHf13JE1v61O8mptCFsXcck6RV+i/eHY//FIQBX02pE5bS7lnsHqJ/kTBRs1
+ Cu+1uo5G6XB6gfkfRWxS2JVXI+4Z1s/Ng1f3D/sB2Aq/jlRFZgKqQllz09A8EA4ghMRsC6qBPh7
+ mxJN9qpWc6Xiw2JB2SJGgLFsuKh2uOx783MYSEehb1qA4G1/ymQEsc
+X-Google-Smtp-Source: AGHT+IGalIyOdsHHTd1mamzQkl0iIv12aetniSOVUnpCVkCTQTnUCTD5RdxTgpiVdSslnqPm7RTiN0Wwx3j+apii50E=
+X-Received: by 2002:a05:6102:f06:b0:4c8:55b8:6fad with SMTP id
+ ada2fe7eead31-4d38eef41d9mr1420374137.17.1745491664006; Thu, 24 Apr 2025
+ 03:47:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250414213006.3509058-1-antonb@tenstorrent.com>
-In-Reply-To: <20250414213006.3509058-1-antonb@tenstorrent.com>
+References: <20250422024752.2060289-1-alistair.francis@wdc.com>
+In-Reply-To: <20250422024752.2060289-1-alistair.francis@wdc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 24 Apr 2025 20:46:11 +1000
-X-Gm-Features: ATxdqUGexc-e8l4RG7Ysm8-aRz0gco60SWEVCcAx7Wk89Ezjvm7u21FnuNOIfUE
-Message-ID: <CAKmqyKN=5AHRkf_20pBWv+F_Jv4Fbj6qrHHsovO5x=PJDteu3A@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Fix vslidedown with rvv_ta_all_1s
-To: Anton Blanchard <antonb@tenstorrent.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Date: Thu, 24 Apr 2025 20:47:18 +1000
+X-Gm-Features: ATxdqUHaGKxq2l_wpOZ335bVIqAK5wt2dOYqbba8vqZP6HEWs6NnNpwjOUXsgTg
+Message-ID: <CAKmqyKP0CJpum7ffKvoZnJeDUigzvi-FM0YTAj4o3hgnoB5_9g@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Add common-user/host/riscv to RISC-V section
+To: palmer@dabbelt.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, uwu@icenowy.me
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::932;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x932.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,13 +95,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 15, 2025 at 7:31=E2=80=AFAM Anton Blanchard <antonb@tenstorrent=
+On Tue, Apr 22, 2025 at 12:48=E2=80=AFPM Alistair Francis <alistair23@gmail=
 .com> wrote:
 >
-> vslidedown always zeroes elements past vl, where it should use the
-> tail policy.
->
-> Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 
 Thanks!
 
@@ -114,43 +107,22 @@ Applied to riscv-to-apply.next
 Alistair
 
 > ---
->  target/riscv/vector_helper.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+>  MAINTAINERS | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 67b3bafebb..1012d38c8a 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -5113,9 +5113,11 @@ void HELPER(NAME)(void *vd, void *v0, target_ulong=
- s1, void *vs2,         \
->      }                                                                   =
-  \
->                                                                          =
-  \
->      for (i =3D i_max; i < vl; ++i) {                                    =
-    \
-> -        if (vm || vext_elem_mask(v0, i)) {                              =
-  \
-> -            *((ETYPE *)vd + H(i)) =3D 0;                                =
-    \
-> +        if (!vm && !vext_elem_mask(v0, i)) {                            =
-  \
-> +            vext_set_elems_1s(vd, vma, i * esz, (i + 1) * esz);         =
-  \
-> +            continue;                                                   =
-  \
->          }                                                               =
-  \
-> +        *((ETYPE *)vd + H(i)) =3D 0;                                    =
-    \
->      }                                                                   =
-  \
->                                                                          =
-  \
->      env->vstart =3D 0;                                                  =
-    \
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index d54b5578f8..d1551d9cc6 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -328,6 +328,7 @@ F: include/hw/char/riscv_htif.h
+>  F: include/hw/riscv/
+>  F: linux-user/host/riscv32/
+>  F: linux-user/host/riscv64/
+> +F: common-user/host/riscv*
+>  F: tests/functional/test_riscv*
+>  F: tests/tcg/riscv64/
+>
 > --
-> 2.34.1
->
+> 2.49.0
 >
 
