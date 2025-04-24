@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C4EC369D7
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 21:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F78CC369D5
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 21:09:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u83op-0005uP-Nk; Thu, 24 Apr 2025 17:09:15 -0400
+	id 1u83oz-0005wg-SF; Thu, 24 Apr 2025 17:09:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1u83oo-0005u4-Az
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 17:09:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1u83ox-0005wK-Lq
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 17:09:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1u83om-0001JU-8b
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 17:09:14 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1u83ov-0001KO-Or
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 17:09:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745528950;
+ s=mimecast20190719; t=1745528961;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=MxZ9FyOe7rfygB/wxEgtbSDiwTekgP4auzau0fDN3QU=;
- b=ZZFI6W2pJkhQ4RLCqMS6nhEIZil7M+LR5Ts7k+aDy6KfX2jPl6+mZqB90XDTCP2UBCnjFA
- Ns8xSNdX0M8aNIWRW9M3jt80Vx3ia2GB7uU9KFXGeh4q40i8TiqAAm96wu0yNf6G6Zy9dd
- EaSIqGfuaGO0gkGpKmsU+hon/MYSOT4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=a7KDP7cJJ7YwUFLjBcHPdXdi/y3nSKSycoGJYh7h388=;
+ b=JJbXHiND441oHr5OxVUjpRPL6pjn2byYisjvXD8/ACGmJEexIAI4nVviafrRyTBhrPcmXc
+ 5crEtmwpLl+lLrPnRN5EMaRhJiT8IkH1xOxDqcZWFrUzwisdGj+94L9O/6BUwoRwM6N9De
+ O8pvOIK/9XSY+hCDSe/EQA/MgybE0Vg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-538-_hJmMjMvP-27A0NQ1XL6Rg-1; Thu,
- 24 Apr 2025 17:09:08 -0400
-X-MC-Unique: _hJmMjMvP-27A0NQ1XL6Rg-1
-X-Mimecast-MFC-AGG-ID: _hJmMjMvP-27A0NQ1XL6Rg_1745528947
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-223-o2_W9g01MQebRgDRngPmqg-1; Thu,
+ 24 Apr 2025 17:09:17 -0400
+X-MC-Unique: o2_W9g01MQebRgDRngPmqg-1
+X-Mimecast-MFC-AGG-ID: o2_W9g01MQebRgDRngPmqg_1745528956
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4F9B31800374; Thu, 24 Apr 2025 21:09:07 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A2DD81955DDA; Thu, 24 Apr 2025 21:09:16 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.13])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AEFBC30001A2; Thu, 24 Apr 2025 21:09:05 +0000 (UTC)
+ id 7746E30001A2; Thu, 24 Apr 2025 21:09:14 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Cleber Rosa <crosa@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 0/6] python: add QAPI and qapidoc et al to python linter
- tests
-Date: Thu, 24 Apr 2025 17:08:58 -0400
-Message-ID: <20250424210904.2505114-1-jsnow@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH v3 4/6] python: add qapi static analysis tests
+Date: Thu, 24 Apr 2025 17:09:02 -0400
+Message-ID: <20250424210904.2505114-5-jsnow@redhat.com>
+In-Reply-To: <20250424210904.2505114-1-jsnow@redhat.com>
+References: <20250424210904.2505114-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -82,60 +83,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hiya, this series turns on automated linting for scripts/qapi,=0D
-docs/sphinx/qapidoc.py and docs/sphinx/qapi_domain.py.=0D
-=0D
-This includes flake8/isort/pylint/mypy for scripts/qapi, but omits mypy=0D
-from the Sphinx plugins owing to my inability to strictly type the=0D
-extensions given the wide versions of Sphinx we actually support.=0D
-=0D
-Though I have been using black in my own development, I have not yet=0D
-enabled it anywhere automatically. Maybe soon.=0D
-=0D
-NOTE: the latest Fedora image doesn't have Python38 anymore; this series=0D
-does not address that. A more substantial fix for testing will be=0D
-forthcoming.=0D
-=0D
-V3:=0D
- - Folded in Markus's commit to clean up setup.cfg.=0D
-=0D
-V2:=0D
- - Mostly commit message updates based on Markus's's's review.=0D
-=0D
-John Snow (5):=0D
-  qapi: Add some pylint ignores=0D
-  docs/qapidoc: linting fixes=0D
-  python: update missing dependencies from minreqs=0D
-  python: add qapi static analysis tests=0D
-  qapi: delete un-needed python static analysis configs=0D
-=0D
-Markus Armbruster (1):=0D
-  python: Drop redundant warn_unused_configs =3D True=0D
-=0D
- docs/sphinx/qapi_domain.py  | 25 ++++++++++++++-----------=0D
- docs/sphinx/qapidoc.py      |  5 +++--=0D
- python/setup.cfg            |  2 +-=0D
- python/tests/minreqs.txt    | 25 +++++++++++++++++++++++++=0D
- python/tests/qapi-flake8.sh |  4 ++++=0D
- python/tests/qapi-isort.sh  |  6 ++++++=0D
- python/tests/qapi-mypy.sh   |  2 ++=0D
- python/tests/qapi-pylint.sh |  6 ++++++=0D
- scripts/qapi/.flake8        |  3 ---=0D
- scripts/qapi/.isort.cfg     |  7 -------=0D
- scripts/qapi/backend.py     |  2 ++=0D
- scripts/qapi/mypy.ini       |  4 ----=0D
- scripts/qapi/pylintrc       |  1 +=0D
- 13 files changed, 64 insertions(+), 28 deletions(-)=0D
- create mode 100755 python/tests/qapi-flake8.sh=0D
- create mode 100755 python/tests/qapi-isort.sh=0D
- create mode 100755 python/tests/qapi-mypy.sh=0D
- create mode 100755 python/tests/qapi-pylint.sh=0D
- delete mode 100644 scripts/qapi/.flake8=0D
- delete mode 100644 scripts/qapi/.isort.cfg=0D
- delete mode 100644 scripts/qapi/mypy.ini=0D
-=0D
--- =0D
-2.48.1=0D
-=0D
+Update the python tests to also check QAPI and the QAPI Sphinx
+extensions. The docs/sphinx/qapidoc_legacy.py file is not included in
+these checks, as it is destined for removal soon. mypy is also not
+called on the QAPI Sphinx extensions, owing to difficulties supporting
+Sphinx 3.x - 8.x while maintaining static type checking support. mypy
+*is* called on all of the QAPI tools themselves, though.
+
+flake8, isort and mypy use the tool configuration from the existing
+python directory (in setup.cfg). pylint continues to use the special
+configuration located in scripts/qapi/ - that configuration is more
+permissive. If we wish to unify the two configurations, that's a
+separate series and a discussion for a later date.
+
+The list of pylint ignores is also updated, owing again to the wide
+window of pylint version support: newer versions require pragmas to
+occasionally silence the "too many positional arguments" warning, but
+older versions do not have such a warning category and will instead yelp
+about an unrecognized option. Silence that warning, too.
+
+As a result of this patch, one would be able to run any of the following
+tests locally from the qemu.git/python directory and have it cover the
+QAPI tooling as well. All of the following options run the python tests,
+static analysis tests, and linter checks; but with different
+combinations of dependencies and interpreters.
+
+- "make check-minreqs" Run tests specifically under our oldest supported
+  Python and our oldest supported dependencies. This is the test that
+  runs on GitLab as "check-python-minreqs". This helps ensure we do not
+  regress support on older platforms accidentally.
+
+- "make check-tox" Runs the tests under the newest supported
+  dependencies, but under each supported version of Python in turn. At
+  time of writing, this is Python 3.8 to 3.13 inclusive. This test helps
+  catch bleeding-edge problems before they become problems for developer
+  workstations. This is the GitLab test "check-python-tox" and is an
+  optionally run, may-fail test due to the unpredictable nature of new
+  dependencies being released into the ecosystem that may cause
+  regressions.
+
+- "make check-dev" Runs the tests under the newest supported
+  dependencies using whatever version of Python the user happens to have
+  installed. This is a quick convenience check that does not map to any
+  particular GitLab test.
+
+  (Note! check-dev may be busted on Fedora 41 and bleeding edge versions
+  of setuptools. That's unrelated to this patch and I'll address it
+  separately and soon. Thank you for your patience, --mgmt)
+
+Finally, finally, finally: this means that QAPI tooling will be linted
+and type-checked from the GitLab pipelines.
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ python/setup.cfg            |  1 +
+ python/tests/minreqs.txt    | 21 +++++++++++++++++++++
+ python/tests/qapi-flake8.sh |  4 ++++
+ python/tests/qapi-isort.sh  |  6 ++++++
+ python/tests/qapi-mypy.sh   |  2 ++
+ python/tests/qapi-pylint.sh |  6 ++++++
+ scripts/qapi/pylintrc       |  1 +
+ 7 files changed, 41 insertions(+)
+ create mode 100755 python/tests/qapi-flake8.sh
+ create mode 100755 python/tests/qapi-isort.sh
+ create mode 100755 python/tests/qapi-mypy.sh
+ create mode 100755 python/tests/qapi-pylint.sh
+
+diff --git a/python/setup.cfg b/python/setup.cfg
+index cf5af7e6641..84d8a1fd30d 100644
+--- a/python/setup.cfg
++++ b/python/setup.cfg
+@@ -47,6 +47,7 @@ devel =
+     urwid >= 2.1.2
+     urwid-readline >= 0.13
+     Pygments >= 2.9.0
++    sphinx >= 3.4.3
+ 
+ # Provides qom-fuse functionality
+ fuse =
+diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
+index 19c0f5e4c50..94928936d44 100644
+--- a/python/tests/minreqs.txt
++++ b/python/tests/minreqs.txt
+@@ -11,6 +11,9 @@
+ # When adding new dependencies, pin the very oldest non-yanked version
+ # on PyPI that allows the test suite to pass.
+ 
++# Dependencies for qapidoc/qapi_domain et al
++sphinx==3.4.3
++
+ # Dependencies for the TUI addon (Required for successful linting)
+ urwid==2.1.2
+ urwid-readline==0.13
+@@ -49,3 +52,21 @@ platformdirs==2.2.0
+ toml==0.10.0
+ tomlkit==0.10.1
+ wrapt==1.14.0
++
++# Transitive sphinx dependencies
++Jinja2==2.7
++MarkupSafe==1.1.0
++alabaster==0.7.1
++babel==1.3
++docutils==0.12
++imagesize==0.5.0
++packaging==14.0
++pytz==2011b0
++requests==2.5.0
++snowballstemmer==1.1
++sphinxcontrib-applehelp==1.0.0
++sphinxcontrib-devhelp==1.0.0
++sphinxcontrib-htmlhelp==1.0.0
++sphinxcontrib-jsmath==1.0.0
++sphinxcontrib-qthelp==1.0.0
++sphinxcontrib-serializinghtml==1.0.0
+diff --git a/python/tests/qapi-flake8.sh b/python/tests/qapi-flake8.sh
+new file mode 100755
+index 00000000000..7b5983d64a9
+--- /dev/null
++++ b/python/tests/qapi-flake8.sh
+@@ -0,0 +1,4 @@
++#!/bin/sh -e
++python3 -m flake8 ../scripts/qapi/ \
++        ../docs/sphinx/qapidoc.py \
++        ../docs/sphinx/qapi_domain.py
+diff --git a/python/tests/qapi-isort.sh b/python/tests/qapi-isort.sh
+new file mode 100755
+index 00000000000..f31f12d3425
+--- /dev/null
++++ b/python/tests/qapi-isort.sh
+@@ -0,0 +1,6 @@
++#!/bin/sh -e
++python3 -m isort --sp . -c ../scripts/qapi/
++# Force isort to recognize "compat" as a local module and not third-party
++python3 -m isort --sp . -c -p compat -p qapidoc_legacy \
++        ../docs/sphinx/qapi_domain.py \
++        ../docs/sphinx/qapidoc.py
+diff --git a/python/tests/qapi-mypy.sh b/python/tests/qapi-mypy.sh
+new file mode 100755
+index 00000000000..377b29b873b
+--- /dev/null
++++ b/python/tests/qapi-mypy.sh
+@@ -0,0 +1,2 @@
++#!/bin/sh -e
++python3 -m mypy ../scripts/qapi
+diff --git a/python/tests/qapi-pylint.sh b/python/tests/qapi-pylint.sh
+new file mode 100755
+index 00000000000..f4bb7a5a795
+--- /dev/null
++++ b/python/tests/qapi-pylint.sh
+@@ -0,0 +1,6 @@
++#!/bin/sh -e
++SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m pylint \
++                                --rcfile=../scripts/qapi/pylintrc \
++                                ../scripts/qapi/ \
++                                ../docs/sphinx/qapidoc.py \
++                                ../docs/sphinx/qapi_domain.py
+diff --git a/scripts/qapi/pylintrc b/scripts/qapi/pylintrc
+index d24eece7411..e16283ada3d 100644
+--- a/scripts/qapi/pylintrc
++++ b/scripts/qapi/pylintrc
+@@ -19,6 +19,7 @@ disable=consider-using-f-string,
+         too-many-instance-attributes,
+         too-many-positional-arguments,
+         too-many-statements,
++        unknown-option-value,
+         useless-option-value,
+ 
+ [REPORTS]
+-- 
+2.48.1
 
 
