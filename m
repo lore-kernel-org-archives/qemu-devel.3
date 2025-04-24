@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D29EC369D8
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 16:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03047C369C2
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 16:09:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7z5r-00029D-E8; Thu, 24 Apr 2025 12:06:31 -0400
+	id 1u7z7q-0002zH-2o; Thu, 24 Apr 2025 12:08:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7z5o-00028r-Q0
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 12:06:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7z7m-0002yr-A2
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 12:08:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7z5l-0006ee-JI
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 12:06:28 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u7z7j-0006lJ-KG
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 12:08:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745510782;
+ s=mimecast20190719; t=1745510906;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=YzNkTPMC4elLV1mmZdU6w0j/VBZPOj9ULGu0EDe+j+c=;
- b=ebk5vyDkLv0HqDfq34k2kSbcKxaWhCr5QB7tf41Ll+Y4tBvjumgbiENXTTRHKRlPqtPU8V
- nbXFFbfuR3W4UGABT+ZhdiEba/5bUeJYbXMEpSBunrsFOeOF9MBB5hN76DznIbC2kHXlYh
- PhFcWmLXqa7WwjzWB5D4Z20H7Sd/yQA=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uxh3arU7RGpN/kXNJ3gRkC+SVrilTPjK5M+VQZj6H38=;
+ b=GwJ/PK2T+RhUg+cRsvIir3F3zuAfowRkwbw/O8uNmWvc8wAcjGxTCHNEECbEmGIiIW80ZW
+ MRvXRcHqDqGwfBmeU1+1uPsC22acLyZ/nXPyG23F+VQcKNsd/2k17eYgA4Fap08NohsMJq
+ 3IAnL6gkhUEPPzDPCDTG2jp+a7ZnIdc=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-wqJwq8ceN-eSZWevPfLldQ-1; Thu, 24 Apr 2025 12:06:21 -0400
-X-MC-Unique: wqJwq8ceN-eSZWevPfLldQ-1
-X-Mimecast-MFC-AGG-ID: wqJwq8ceN-eSZWevPfLldQ_1745510780
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43e9a3d2977so9042685e9.1
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 09:06:21 -0700 (PDT)
+ us-mta-127-BSil8UXsODGURUXGof0WYw-1; Thu, 24 Apr 2025 12:08:24 -0400
+X-MC-Unique: BSil8UXsODGURUXGof0WYw-1
+X-Mimecast-MFC-AGG-ID: BSil8UXsODGURUXGof0WYw_1745510903
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-39c184b20a2so485811f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 09:08:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745510780; x=1746115580;
+ d=1e100.net; s=20230601; t=1745510903; x=1746115703;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YzNkTPMC4elLV1mmZdU6w0j/VBZPOj9ULGu0EDe+j+c=;
- b=wPiT0n6xuOyclr9bw/karzL6Ic7kZy1teK27t3ttwGw8tU2CQxxJ65Y9ZyGFr8YJXl
- x2RhfPLf07mR/SWRlQW9rRDbgh48FKBNh+Zy9cEHWNIkB3TRM+98QdSuh0MzcoNwMCEr
- DcvHq/ImodCEDvL3pZ+Wg3hdBJwSbGl10CYWBOyF34GW/wwU9FWID3fLhMCauICES6XC
- HbWLBovS4gVRETonlrGmYNjmZNPVcIXC59wYSIJSp1F4FIzGLW4pHSN5F90AAzBZ17OO
- eZPU2Sw4MDWB3XlIkBZgY2PNtlYBJ+QUVjbjK+j26G14U/iav1Kccy2yY2tgS/ZfmwUo
- +KbQ==
+ bh=uxh3arU7RGpN/kXNJ3gRkC+SVrilTPjK5M+VQZj6H38=;
+ b=qsqEq+xcNJ+lTh/LDPXbGzMzOZKYYRK/faNHaAc6/dO4m+ie0O2YpjYjX4LfkPojfL
+ A82dBNIKm+b1X8pfzHky1HkCdvm7lf03VvveoBm6q3uPZAy8LC+WUigF6bQf5L7ATwjg
+ DB4MpYcQZbVCU1HV4YlEmLsYryVAo8zptRAq/lEplXH0eNIH+24xYIe/3ZFwDZ7081hU
+ jxIykAzYra1YqGL+C1y65MqbSfqj6RDYmuz35wp6EJYnr81JmARh0koPmmI+iNkrGQi3
+ 0vpO9CA99wKP3SwMtX3FIfsYqpQuxP4YPYkMe65UmXE9XNPSjkDZ2LbeRIsj6JSn+Sb3
+ wpIg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUHvNyIjZQr1iIEptSw1IAtHqfe/DuGdKVEo+onQ4PanTeTinZK/bPqSuftLBLc2p3BF4/MlvVT9s0Z@nongnu.org
-X-Gm-Message-State: AOJu0YzU+jO0haUxF/0baIqzzrMcmzybvnOM3l+94FHvkxCk9qgMLIQ2
- 6L4wikbW0zE9AlirmCKZ90/9TxLJkUq2A839PfUQZdp1mL41cUVRQqLzZzlq4GYRC3al710mqZa
- M5EBeLwqmk6LaQ2Fi79tUoVeDj14kML9r5ZJMEwrkWgy1QX71lCjV
-X-Gm-Gg: ASbGnctZS9oJx8PR2tV+9hqKTPl94ZEm9sLxq847mNnm/6JHy+47owZUB2MSfBGrW7g
- vvHYo24Itby1YRd+njpFF594/tUsVkjqn6Ge9tuvh/PT5W/75bPR+O/nc72N7Bc6ghDAU+6sjkO
- A6BMEzVIR/CnVHJ+8PgH8mDxderTLdg8Ume3q4w2VERuYEFREiUAiNtu/rDb6/taLifWZ62QTeJ
- o477Pc7qCTLoFgdbd8qxGu3tN7+Vpt/jD0EN5W2CxCuoAPEuS4BhTupxaj+YdC0dsa36If5d38V
- nkSmjb6Vvs/ZL8uPwuJv2yQVPS3heZi9YKE64gAXGiLQiSs=
-X-Received: by 2002:a05:600c:b94:b0:43c:ec97:75db with SMTP id
- 5b1f17b1804b1-440a310855emr720945e9.11.1745510779661; 
- Thu, 24 Apr 2025 09:06:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF52aVH9nLHbTjMy+F1ByUDlpU+2nCKDV2ig+OqTGSGOjF2XdF9Xr992CBb/vrx0iJ8Ohd9Yw==
-X-Received: by 2002:a05:600c:b94:b0:43c:ec97:75db with SMTP id
- 5b1f17b1804b1-440a310855emr720055e9.11.1745510778956; 
- Thu, 24 Apr 2025 09:06:18 -0700 (PDT)
+ AJvYcCWlv2ejzZqw4OgjKSgimRxNRx6jXIj6ORZ3NubydFpQJQlli4P/lbg2gB2+OHiBqNHovPoC4oZtnp+E@nongnu.org
+X-Gm-Message-State: AOJu0YzeRd+zF94fgVYFJM9VCWqHfMnH1b/q2kl8+ZJgux9NGauDllM+
+ DRdv9zCo3UJZrDW+9IHQ+hgcKD36TDUa5vWb/yCnKFOUWkJGN4v7AhSNoecq3juwIZCTDGkg4CF
+ qMZouw98/4Dv0OrNoCi1l1RQRT1r9ASq2ACtBsQ5Y06aznRgijawW
+X-Gm-Gg: ASbGncsbXk8WaTuydQCEdyCOdAWLAZs2awaTf3Onr51Th1W0RdqkfiO/AbdigDgeqBQ
+ YZ12KIxJQ+FCFC8SSCzHslcdLW85CD+8TcdD+Qh5m64akX9Emv87zC1An47c3sJsiotu8fuTA7k
+ 6zMpAFcS+vJxBaNUXldxs6ZOkmDzLu7zu461FbZxsJTFSuv87tFJSc7Bl9Hxwt0oiEgRqG2JcTu
+ s6FQ7JSq2pobx+A7oDlSFtUasVJfYuam8JV3SwV0paBGTQyGnsqudKIGhgeFSigHM6LSPOE6lMx
+ XgSUSwbao+nHiMT1TMQfgiss293gf4sz33zLADJxNrWAqaI=
+X-Received: by 2002:a05:6000:2281:b0:38f:3c01:fb1f with SMTP id
+ ffacd0b85a97d-3a06cf62451mr2645656f8f.30.1745510903235; 
+ Thu, 24 Apr 2025 09:08:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFgT/gUdDtBb6BtSxyopp7uAxRQKc2+wvEbUQKWBO88LTdeG8G9AfXNEsdmzvU8hLXRMTsq1Q==
+X-Received: by 2002:a05:6000:2281:b0:38f:3c01:fb1f with SMTP id
+ ffacd0b85a97d-3a06cf62451mr2645590f8f.30.1745510902628; 
+ Thu, 24 Apr 2025 09:08:22 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:165:d60:38c8:6df5:c9ca:a366?
  ([2a01:e0a:165:d60:38c8:6df5:c9ca:a366])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-440a11e52cbsm9691565e9.2.2025.04.24.09.06.17
+ ffacd0b85a97d-3a06d4c4b13sm2607996f8f.54.2025.04.24.09.08.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Apr 2025 09:06:18 -0700 (PDT)
-Message-ID: <2a3403c1-be3e-45fd-b837-86915483f4e1@redhat.com>
-Date: Thu, 24 Apr 2025 18:06:16 +0200
+ Thu, 24 Apr 2025 09:08:22 -0700 (PDT)
+Message-ID: <1eb29556-a03d-48c2-91d0-b4934b226e51@redhat.com>
+Date: Thu, 24 Apr 2025 18:08:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/14] vfio: add vfio_pci_config_space_read/write()
+Subject: Re: [PATCH 12/14] vfio: add region info cache
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
 Cc: Tony Krowiak <akrowiak@linux.ibm.com>,
  Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
@@ -87,9 +87,12 @@ Cc: Tony Krowiak <akrowiak@linux.ibm.com>,
  Tomita Moeko <tomitamoeko@gmail.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
 References: <20250409134814.478903-1-john.levon@nutanix.com>
- <20250409134814.478903-12-john.levon@nutanix.com>
+ <20250409134814.478903-13-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -135,10 +138,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250409134814.478903-12-john.levon@nutanix.com>
+In-Reply-To: <20250409134814.478903-13-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -147,7 +150,7 @@ X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.84,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -164,288 +167,276 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/9/25 15:48, John Levon wrote:
-> Add these helpers that access config space and return an -errno style
-> return.
+> Instead of requesting region information on demand with
+> VFIO_DEVICE_GET_REGION_INFO, maintain a cache: this will become
+> necessary for performance for vfio-user, where this call becomes a
+> message over the control socket, so is of higher overhead than the
+> traditional path.
 > 
-> Signed-off-by: John Levon <john.levon@nutanix.com>
-> ---
->   hw/vfio/pci.c | 134 ++++++++++++++++++++++++++++++++++----------------
->   1 file changed, 91 insertions(+), 43 deletions(-)
-> 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index ddeee33aa9..c3842d2f8d 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -964,6 +964,28 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
->       }
->   }
->   
-> +/* "Raw" read of underlying config space. */
-> +static int vfio_pci_config_space_read(VFIOPCIDevice *vdev, off_t offset,
-> +                                      uint32_t size, void *data)
-> +{
-> +    ssize_t ret;
-> +
-> +    ret = pread(vdev->vbasedev.fd, data, size, vdev->config_offset + offset);
-> +
-> +    return ret < 0 ? -errno : (int)ret;
-> +}
-> +
-> +/* "Raw" write of underlying config space. */
-> +static int vfio_pci_config_space_write(VFIOPCIDevice *vdev, off_t offset,
-> +                                       uint32_t size, void *data)
-> +{
-> +    ssize_t ret;
-> +
-> +    ret = pwrite(vdev->vbasedev.fd, data, size, vdev->config_offset + offset);
-> +
-> +    return ret < 0 ? -errno : (int)ret;
-> +}
-> +
->   static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
->   {
->       VFIOPCIDevice *vdev = opaque;
-> @@ -1016,10 +1038,9 @@ static const MemoryRegionOps vfio_rom_ops = {
->   
->   static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
->   {
-> +    VFIODevice *vbasedev = &vdev->vbasedev;
->       uint32_t orig, size = cpu_to_le32((uint32_t)PCI_ROM_ADDRESS_MASK);
-> -    off_t offset = vdev->config_offset + PCI_ROM_ADDRESS;
->       char *name;
-> -    int fd = vdev->vbasedev.fd;
->   
->       if (vdev->pdev.romfile || !vdev->pdev.rom_bar) {
->           /* Since pci handles romfile, just print a message and return */
-> @@ -1036,11 +1057,12 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
->        * Use the same size ROM BAR as the physical device.  The contents
->        * will get filled in later when the guest tries to read it.
->        */
-> -    if (pread(fd, &orig, 4, offset) != 4 ||
-> -        pwrite(fd, &size, 4, offset) != 4 ||
-> -        pread(fd, &size, 4, offset) != 4 ||
-> -        pwrite(fd, &orig, 4, offset) != 4) {
-> -        error_report("%s(%s) failed: %m", __func__, vdev->vbasedev.name);
-> +    if (vfio_pci_config_space_read(vdev, PCI_ROM_ADDRESS, 4, &orig) != 4 ||
-> +        vfio_pci_config_space_write(vdev, PCI_ROM_ADDRESS, 4, &size) != 4 ||
-> +        vfio_pci_config_space_read(vdev, PCI_ROM_ADDRESS, 4, &size) != 4 ||
-> +        vfio_pci_config_space_write(vdev, PCI_ROM_ADDRESS, 4, &orig) != 4) {
-> +
-> +        error_report("%s(%s) ROM access failed", __func__, vbasedev->name);
->           return;
->       }
->   
-> @@ -1220,6 +1242,7 @@ static void vfio_sub_page_bar_update_mapping(PCIDevice *pdev, int bar)
->   uint32_t vfio_pci_read_config(PCIDevice *pdev, uint32_t addr, int len)
->   {
->       VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-> +    VFIODevice *vbasedev = &vdev->vbasedev;
->       uint32_t emu_bits = 0, emu_val = 0, phys_val = 0, val;
->   
->       memcpy(&emu_bits, vdev->emulated_config_bits + addr, len);
-> @@ -1232,12 +1255,13 @@ uint32_t vfio_pci_read_config(PCIDevice *pdev, uint32_t addr, int len)
->       if (~emu_bits & (0xffffffffU >> (32 - len * 8))) {
->           ssize_t ret;
->   
-> -        ret = pread(vdev->vbasedev.fd, &phys_val, len,
-> -                    vdev->config_offset + addr);
-> +        ret = vfio_pci_config_space_read(vdev, addr, len, &phys_val);
->           if (ret != len) {
-> -            error_report("%s(%s, 0x%x, 0x%x) failed: %m",
-> -                         __func__, vdev->vbasedev.name, addr, len);
-> -            return -errno;
-> +            const char *err = ret < 0 ? strerror(-ret) : "short read";
-
-These "short read/write" messages, here and below, are a bit invasive
-in the code but they are interesting to keep. I wonder if we could
-improve readability with some helper.
+> We will also need it to generalize region accesses, as that means we
+> can't use ->config_offset for configuration space accesses, but must
+> look up the region offset (if relevant) each time.
 
 
-
-> +
-> +            error_report("%s(%s, 0x%x, 0x%x) failed: %s",
-> +                         __func__, vbasedev->name, addr, len, err);
-> +            return -1;
-
--1 (all ones) seems more correct than returning -errno as before.
-
->           }
->           phys_val = le32_to_cpu(phys_val);
->       }
-> @@ -1253,15 +1277,19 @@ void vfio_pci_write_config(PCIDevice *pdev,
->                              uint32_t addr, uint32_t val, int len)
->   {
->       VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
-> +    VFIODevice *vbasedev = &vdev->vbasedev;
->       uint32_t val_le = cpu_to_le32(val);
-> +    int ret;
->   
->       trace_vfio_pci_write_config(vdev->vbasedev.name, addr, val, len);
->   
->       /* Write everything to VFIO, let it filter out what we can't write */
-> -    if (pwrite(vdev->vbasedev.fd, &val_le, len, vdev->config_offset + addr)
-> -                != len) {
-> -        error_report("%s(%s, 0x%x, 0x%x, 0x%x) failed: %m",
-> -                     __func__, vdev->vbasedev.name, addr, val, len);
-> +    ret = vfio_pci_config_space_write(vdev, addr, len, &val_le);
-> +    if (ret != len) {
-> +        const char *err = ret < 0 ? strerror(-ret) : "short write";
-> +
-> +        error_report("%s(%s, 0x%x, 0x%x, 0x%x) failed: %s",
-> +                     __func__, vbasedev->name, addr, val, len, err);
->       }
->   
->       /* MSI/MSI-X Enabling/Disabling */
-> @@ -1349,9 +1377,12 @@ static bool vfio_msi_setup(VFIOPCIDevice *vdev, int pos, Error **errp)
->       int ret, entries;
->       Error *err = NULL;
->   
-> -    if (pread(vdev->vbasedev.fd, &ctrl, sizeof(ctrl),
-> -              vdev->config_offset + pos + PCI_CAP_FLAGS) != sizeof(ctrl)) {
-> -        error_setg_errno(errp, errno, "failed reading MSI PCI_CAP_FLAGS");
-> +    ret = vfio_pci_config_space_read(vdev, pos + PCI_CAP_FLAGS,
-> +                                     sizeof(ctrl), &ctrl);
-> +    if (ret != sizeof(ctrl)) {
-> +        const char *errmsg = ret < 0 ? strerror(-ret) : "short read";
-> +
-> +        error_setg(errp, "failed reading MSI PCI_CAP_FLAGS: %s", errmsg);
->           return false;
->       }
->       ctrl = le16_to_cpu(ctrl);
-> @@ -1558,30 +1589,39 @@ static bool vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
->       uint8_t pos;
->       uint16_t ctrl;
->       uint32_t table, pba;
-> -    int ret, fd = vdev->vbasedev.fd;
->       struct vfio_irq_info irq_info;
->       VFIOMSIXInfo *msix;
-> +    int ret;
->   
->       pos = pci_find_capability(&vdev->pdev, PCI_CAP_ID_MSIX);
->       if (!pos) {
->           return true;
->       }
->   
-> -    if (pread(fd, &ctrl, sizeof(ctrl),
-> -              vdev->config_offset + pos + PCI_MSIX_FLAGS) != sizeof(ctrl)) {
-> -        error_setg_errno(errp, errno, "failed to read PCI MSIX FLAGS");
-> +    ret = vfio_pci_config_space_read(vdev, pos + PCI_MSIX_FLAGS,
-> +                                     sizeof(ctrl), &ctrl);
-> +    if (ret != sizeof(ctrl)) {
-> +        const char *err = ret < 0 ? strerror(-ret) : "short read";
-> +
-> +        error_setg(errp, "failed to read PCI MSIX FLAGS: %s", err);
->           return false;
->       }
->   
-> -    if (pread(fd, &table, sizeof(table),
-> -              vdev->config_offset + pos + PCI_MSIX_TABLE) != sizeof(table)) {
-> -        error_setg_errno(errp, errno, "failed to read PCI MSIX TABLE");
-> +    ret = vfio_pci_config_space_read(vdev, pos + PCI_MSIX_TABLE,
-> +                                     sizeof(table), &table);
-> +    if (ret != sizeof(table)) {
-> +        const char *err = ret < 0 ? strerror(-ret) : "short read";
-> +
-> +        error_setg(errp, "failed to read PCI MSIX TABLE: %s", err);
->           return false;
->       }
->   
-> -    if (pread(fd, &pba, sizeof(pba),
-> -              vdev->config_offset + pos + PCI_MSIX_PBA) != sizeof(pba)) {
-> -        error_setg_errno(errp, errno, "failed to read PCI MSIX PBA");
-> +    ret = vfio_pci_config_space_read(vdev, pos + PCI_MSIX_PBA,
-> +                                     sizeof(pba), &pba);
-> +    if (ret != sizeof(pba)) {
-> +        const char *err = ret < 0 ? strerror(-ret) : "short read";
-> +
-> +        error_setg(errp, "failed to read PCI MSIX PBA: %s", err);
->           return false;
->       }
->   
-> @@ -1741,10 +1781,12 @@ static void vfio_bar_prepare(VFIOPCIDevice *vdev, int nr)
->       }
->   
->       /* Determine what type of BAR this is for registration */
-> -    ret = pread(vdev->vbasedev.fd, &pci_bar, sizeof(pci_bar),
-> -                vdev->config_offset + PCI_BASE_ADDRESS_0 + (4 * nr));
-> +    ret = vfio_pci_config_space_read(vdev, PCI_BASE_ADDRESS_0 + (4 * nr),
-> +                                     sizeof(pci_bar), &pci_bar);
->       if (ret != sizeof(pci_bar)) {
-> -        error_report("vfio: Failed to read BAR %d (%m)", nr);
-> +        const char *err =  ret < 0 ? strerror(-ret) : "short read";
-> +
-> +        error_report("vfio: Failed to read BAR %d: %s", nr, err);
->           return;
->       }
->   
-> @@ -2448,21 +2490,25 @@ void vfio_pci_pre_reset(VFIOPCIDevice *vdev)
->   
->   void vfio_pci_post_reset(VFIOPCIDevice *vdev)
->   {
-> +    VFIODevice *vbasedev = &vdev->vbasedev;
->       Error *err = NULL;
-> -    int nr;
-> +    int ret, nr;
->   
->       if (!vfio_intx_enable(vdev, &err)) {
->           error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
->       }
->   
->       for (nr = 0; nr < PCI_NUM_REGIONS - 1; ++nr) {
-> -        off_t addr = vdev->config_offset + PCI_BASE_ADDRESS_0 + (4 * nr);
-> +        off_t addr = PCI_BASE_ADDRESS_0 + (4 * nr);
->           uint32_t val = 0;
->           uint32_t len = sizeof(val);
->   
-> -        if (pwrite(vdev->vbasedev.fd, &val, len, addr) != len) {
-> -            error_report("%s(%s) reset bar %d failed: %m", __func__,
-> -                         vdev->vbasedev.name, nr);
-> +        ret = vfio_pci_config_space_write(vdev, addr, len, &val);
-> +        if (ret != len) {
-> +            const char *errmsg = ret < 0 ? strerror(-ret) : "short write";
-> +
-> +            error_report("%s(%s) reset bar %d failed: %s", __func__,
-> +                         vbasedev->name, nr, errmsg);
->           }
->       }
->   
-> @@ -3099,6 +3145,7 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->       int i, ret;
->       char uuid[UUID_STR_LEN];
->       g_autofree char *name = NULL;
-> +    size_t config_space_size;
-
-why not use uint32_t ?
-
+This change is an optimization for vfio-user. I would prefer to keep it
+for after enabling vfio-user.
 
 Thanks,
 
 C.
 
 
+
+> Originally-by: John Johnson <john.g.johnson@oracle.com>
+> Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+> Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+> Signed-off-by: John Levon <john.levon@nutanix.com>
+> ---
+>   hw/vfio/ccw.c                 |  5 -----
+>   hw/vfio/container.c           | 10 ++++++++++
+>   hw/vfio/device.c              | 31 +++++++++++++++++++++++++++----
+>   hw/vfio/igd.c                 |  8 ++++----
+>   hw/vfio/pci.c                 |  6 +++---
+>   hw/vfio/region.c              |  2 +-
+>   include/hw/vfio/vfio-device.h |  1 +
+>   7 files changed, 46 insertions(+), 17 deletions(-)
+> 
+> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+> index dac8769925..14dee7cd19 100644
+> --- a/hw/vfio/ccw.c
+> +++ b/hw/vfio/ccw.c
+> @@ -504,7 +504,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
 >   
->       if (vbasedev->fd < 0 && !vbasedev->sysfsdev) {
->           if (!(~vdev->host.domain || ~vdev->host.bus ||
-> @@ -3153,13 +3200,14 @@ static void vfio_realize(PCIDevice *pdev, Error **errp)
->           goto error;
+>       vcdev->io_region_offset = info->offset;
+>       vcdev->io_region = g_malloc0(info->size);
+> -    g_free(info);
+>   
+>       /* check for the optional async command region */
+>       ret = vfio_device_get_region_info_type(vdev, VFIO_REGION_TYPE_CCW,
+> @@ -517,7 +516,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
+>           }
+>           vcdev->async_cmd_region_offset = info->offset;
+>           vcdev->async_cmd_region = g_malloc0(info->size);
+> -        g_free(info);
 >       }
 >   
-> +    config_space_size = MIN(pci_config_size(&vdev->pdev), vdev->config_size);
+>       ret = vfio_device_get_region_info_type(vdev, VFIO_REGION_TYPE_CCW,
+> @@ -530,7 +528,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
+>           }
+>           vcdev->schib_region_offset = info->offset;
+>           vcdev->schib_region = g_malloc(info->size);
+> -        g_free(info);
+>       }
+>   
+>       ret = vfio_device_get_region_info_type(vdev, VFIO_REGION_TYPE_CCW,
+> @@ -544,7 +541,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
+>           }
+>           vcdev->crw_region_offset = info->offset;
+>           vcdev->crw_region = g_malloc(info->size);
+> -        g_free(info);
+>       }
+>   
+>       return true;
+> @@ -554,7 +550,6 @@ out_err:
+>       g_free(vcdev->schib_region);
+>       g_free(vcdev->async_cmd_region);
+>       g_free(vcdev->io_region);
+> -    g_free(info);
+>       return false;
+>   }
+>   
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 37b1217fd8..61333d7fc4 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -857,6 +857,16 @@ static bool vfio_device_get(VFIOGroup *group, const char *name,
+>   
+>   static void vfio_device_put(VFIODevice *vbasedev)
+>   {
+> +    if (vbasedev->reginfo != NULL) {
+> +        int i;
 > +
->       /* Get a copy of config space */
-> -    ret = pread(vbasedev->fd, vdev->pdev.config,
-> -                MIN(pci_config_size(&vdev->pdev), vdev->config_size),
-> -                vdev->config_offset);
-> -    if (ret < (int)MIN(pci_config_size(&vdev->pdev), vdev->config_size)) {
-> -        ret = ret < 0 ? -errno : -EFAULT;
-> -        error_setg_errno(errp, -ret, "failed to read device config space");
-> +    ret = vfio_pci_config_space_read(vdev, 0, config_space_size,
-> +                                     vdev->pdev.config);
-> +    if (ret < (int)config_space_size) {
-> +        ret = ret < 0 ? -ret : EFAULT;
-> +        error_setg_errno(errp, ret, "failed to read device config space");
->           goto error;
+> +        for (i = 0; i < vbasedev->num_regions; i++) {
+> +            g_free(vbasedev->reginfo[i]);
+> +        }
+> +        g_free(vbasedev->reginfo);
+> +        vbasedev->reginfo = NULL;
+> +    }
+> +
+>       if (!vbasedev->group) {
+>           return;
+>       }
+> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> index 2966171118..102fa5a9b4 100644
+> --- a/hw/vfio/device.c
+> +++ b/hw/vfio/device.c
+> @@ -205,6 +205,17 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
+>   {
+>       size_t argsz = sizeof(struct vfio_region_info);
+>   
+> +    /* create region info cache */
+> +    if (vbasedev->reginfo == NULL) {
+> +        vbasedev->reginfo = g_new0(struct vfio_region_info *,
+> +                                   vbasedev->num_regions);
+> +    }
+> +    /* check cache */
+> +    if (vbasedev->reginfo[index] != NULL) {
+> +        *info = vbasedev->reginfo[index];
+> +        return 0;
+> +    }
+> +
+>       *info = g_malloc0(argsz);
+>   
+>       (*info)->index = index;
+> @@ -224,6 +235,9 @@ retry:
+>           goto retry;
 >       }
 >   
+> +    /* fill cache */
+> +    vbasedev->reginfo[index] = *info;
+> +
+>       return 0;
+>   }
+>   
+> @@ -242,7 +256,6 @@ int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
+>   
+>           hdr = vfio_get_region_info_cap(*info, VFIO_REGION_INFO_CAP_TYPE);
+>           if (!hdr) {
+> -            g_free(*info);
+>               continue;
+>           }
+>   
+> @@ -254,8 +267,6 @@ int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
+>           if (cap_type->type == type && cap_type->subtype == subtype) {
+>               return 0;
+>           }
+> -
+> -        g_free(*info);
+>       }
+>   
+>       *info = NULL;
+> @@ -264,7 +275,7 @@ int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
+>   
+>   bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type)
+>   {
+> -    g_autofree struct vfio_region_info *info = NULL;
+> +    struct vfio_region_info *info = NULL;
+>       bool ret = false;
+>   
+>       if (!vfio_device_get_region_info(vbasedev, region, &info)) {
+> @@ -427,6 +438,16 @@ void vfio_device_detach(VFIODevice *vbasedev)
+>       VFIO_IOMMU_GET_CLASS(vbasedev->bcontainer)->detach_device(vbasedev);
+>   }
+>   
+> +static void vfio_device_get_all_region_info(VFIODevice *vbasedev)
+> +{
+> +    struct vfio_region_info *info;
+> +    int i;
+> +
+> +    for (i = 0; i < vbasedev->num_regions; i++) {
+> +        vfio_device_get_region_info(vbasedev, i, &info);
+> +    }
+> +}
+> +
+>   void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
+>                            struct vfio_device_info *info)
+>   {
+> @@ -439,4 +460,6 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
+>       QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
+>   
+>       QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
+> +
+> +    vfio_device_get_all_region_info(vbasedev);
+>   }
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index e1cba16399..d70da1ce38 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -198,7 +198,7 @@ static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
+>   
+>   static bool vfio_pci_igd_setup_opregion(VFIOPCIDevice *vdev, Error **errp)
+>   {
+> -    g_autofree struct vfio_region_info *opregion = NULL;
+> +    struct vfio_region_info *opregion = NULL;
+>       int ret;
+>   
+>       /* Hotplugging is not supported for opregion access */
+> @@ -361,8 +361,8 @@ static int vfio_pci_igd_lpc_init(VFIOPCIDevice *vdev,
+>   
+>   static bool vfio_pci_igd_setup_lpc_bridge(VFIOPCIDevice *vdev, Error **errp)
+>   {
+> -    g_autofree struct vfio_region_info *host = NULL;
+> -    g_autofree struct vfio_region_info *lpc = NULL;
+> +    struct vfio_region_info *host = NULL;
+> +    struct vfio_region_info *lpc = NULL;
+>       PCIDevice *lpc_bridge;
+>       int ret;
+>   
+> @@ -526,7 +526,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>            * - OpRegion
+>            * - Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
+>            */
+> -        g_autofree struct vfio_region_info *rom = NULL;
+> +        struct vfio_region_info *rom = NULL;
+>   
+>           legacy_mode_enabled = true;
+>           info_report("IGD legacy mode enabled, "
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index c3842d2f8d..b40d5abdfd 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -882,8 +882,8 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
+>   
+>   static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>   {
+> -    g_autofree struct vfio_region_info *reg_info = NULL;
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+> +    struct vfio_region_info *reg_info = NULL;
+>       uint64_t size;
+>       off_t off = 0;
+>       ssize_t bytes;
+> @@ -2721,7 +2721,7 @@ static VFIODeviceOps vfio_pci_ops = {
+>   bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+>   {
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+> -    g_autofree struct vfio_region_info *reg_info = NULL;
+> +    struct vfio_region_info *reg_info = NULL;
+>       int ret;
+>   
+>       ret = vfio_device_get_region_info(vbasedev, VFIO_PCI_VGA_REGION_INDEX, &reg_info);
+> @@ -2786,7 +2786,7 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+>   static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+>   {
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+> -    g_autofree struct vfio_region_info *reg_info = NULL;
+> +    struct vfio_region_info *reg_info = NULL;
+>       struct vfio_irq_info irq_info;
+>       int i, ret = -1;
+>   
+> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+> index 04bf9eb098..ef2630cac3 100644
+> --- a/hw/vfio/region.c
+> +++ b/hw/vfio/region.c
+> @@ -182,7 +182,7 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+>   int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
+>                         int index, const char *name)
+>   {
+> -    g_autofree struct vfio_region_info *info = NULL;
+> +    struct vfio_region_info *info = NULL;
+>       int ret;
+>   
+>       ret = vfio_device_get_region_info(vbasedev, index, &info);
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index 9522a09c48..967b07cd89 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -81,6 +81,7 @@ typedef struct VFIODevice {
+>       IOMMUFDBackend *iommufd;
+>       VFIOIOASHwpt *hwpt;
+>       QLIST_ENTRY(VFIODevice) hwpt_next;
+> +    struct vfio_region_info **reginfo;
+>   } VFIODevice;
+>   
+>   struct VFIODeviceOps {
 
 
