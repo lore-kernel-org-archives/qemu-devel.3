@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9FAFC369CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:17:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B046C369CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7l01-0001qK-W2; Wed, 23 Apr 2025 21:03:34 -0400
+	id 1u7kp5-0007q3-JP; Wed, 23 Apr 2025 20:52:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kwx-0005NU-4e
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:00:23 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1u7kn7-0005eu-2b
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:50:20 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7kwt-0005X0-G4
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:00:22 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-227cf12df27so4477775ad.0
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 18:00:18 -0700 (PDT)
+ id 1u7kmy-0004Oy-MY
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:50:08 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-73bf1cef6ceso385272b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:50:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745456418; x=1746061218; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745455802; x=1746060602; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YYHQtuGiuymmjGUHHCn+9yiZGa5qUf/qG4Dwvjes2M8=;
- b=O5lodMG43LHt9/X35bJWJldUAh2wJbNPuASSPjjqJ/L+0vblyGdRW+PaHU70Vxff7w
- uMoHdDZh/0ZOiXz+/xuqKtV3BnpBlvIh/c5Hqt0cQ9z1H84g8F7Qri70PUFJE5d4Icx0
- 3EThze7i7bPmD7pLPllMs1RclAD9s3yK3L5550F/N7iotilnSFERJvICzRrzFIw+hY98
- 1M0vn7PApt6akAFiVVSr0mVWN3oHGcPz2are/45JHYTloMlGMKix7DLefTZWrfal3/7Y
- 8yQwN0o0CPGV3/MQe8aaEEViQQuXdECxwRrVrq3XTXTXiDkuvGCBXYlAuAgTuL7KTeGV
- G9Kw==
+ bh=lLjtkdVg3jxGT84stBTwdpl7UMQktBniBef0Jy8HlE4=;
+ b=CHnVEVBZObq5Wy+O3h/zlmtOoov+ScVcCGh/1yLvKpipiRHW8a7j+PwHH6i2PODhzR
+ g3nzroKqYRXh4tFEfAYMm1AsGsPVSWanidfIwiz8h9H7Z1FRZW1CKtGKp24zeaU7cD4T
+ /9+xWx5xbu78YLHnC3BRj7SQfKa+TH08rVKcePMMhzCs7WHdRiqPsum+Yqca/7XQF98i
+ uv350TSS358qf/GmJk+kADJvLXDGTV5cCdT8SawQo7iA6WOkAgrMVmdjsEux+wgWq8mM
+ vqnrrYsJvyaNJNp6ilJNGFCZlaA0vthSKbCmMeI5Jd0yFBMHBfQ557+wQEGIOappb5Oi
+ iiJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745456418; x=1746061218;
+ d=1e100.net; s=20230601; t=1745455802; x=1746060602;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YYHQtuGiuymmjGUHHCn+9yiZGa5qUf/qG4Dwvjes2M8=;
- b=V8CDmJ40OEY1rRamk1l/snjfdhfxLEMDFfeWmcKC68kRcA/uZrHvY0a4Ar56oqIfje
- 7kwvuGo0lXDxL5xixP9AMuWUbV33fQeNYz60m1ulaFUv+65mw4N67iGwmCfes3gBjNLq
- UCKRNK+pPVWdYuBWN9T8+OkdiP4anaE/v+QkGTD01PVnpq3QiLMwfRcg4ZBRjQuujYGe
- xQRMFfdbzsdz2v03bAg+BycGUHC+Qj+LwXObblWhkvOgFB39VSx94XmIXC7ysnPZeDET
- IOdIkE/gr4MKv2pH8mgw2782IwvsyRsuqOVdezb42GTO7MioGp8TpL21VeXU3bFk2Aar
- jsHQ==
-X-Gm-Message-State: AOJu0Yw7OW8nodp7KKqt4WE57pBWd2ONGgwdr3+WQCcSJvSxfSeoiVal
- NVLYfxncZ+lHELvFFin9H/L9m2iSAiFiInz2UYpMYnGBJMnzPg7B6vGGyOEYapqglNLn2B6yCm8
- C
-X-Gm-Gg: ASbGncumruVm5dq+qNLR4x31lZ5xx7H8VpaQY0XESvZ/0OB42Bsg7VOlyHfR71CVQuT
- eMQDZZtGGCLgP0IOGYFpLqI7HPhvAcziP3+mNU0/0zBFFA3qAMczeeLE1Rue0etDEU1f7r5kMQW
- iUhpPnsFqz/g7qhiB41old2zs+qWRiA0PEAj76FwuKqRGWxq8Yi9R2e/Gvje//B3IV4TSavkYcY
- 4ktFSUpKDoRl+mYXrrti4IMgNHSFT/UGBI97opjld9b/HwsVa0Zxr98g7RZZw6VYOZWBWmrWd5C
- KP8Ki4AZZT4JxeR+xhm6uyFKv6DJwNoKlsDvfXV3aazpkdQsjJ25DArRY2X2GOor8hkYV43/hGo
+ bh=lLjtkdVg3jxGT84stBTwdpl7UMQktBniBef0Jy8HlE4=;
+ b=JTuyf/TcBwk9UK1blsqrCVPWIOT7TsxwFcPrTRCplxFzjqFnAxF4sYelND2PMoxV9Z
+ gaw6PINq8h6IX745g62M0VBULTxiC7DxBwbCWk3TEAMHSfnGlvVlptF4XEt97m/d53wD
+ W7LlYCR1tEBmxo9fhPcnqvONLYIeInad83IF0jw4gl0+l8Pp7zk2uH/gxs1wL9rq69bp
+ JSysRtwzSaz4aa33wkBMLgCCwF1QGNWoUkRjn6PzZnJByWpUAJDYD8atXE0WmfD+EO9W
+ 7xDSBm60ZZE4oxLC8CkOzX2iL6H7B0G5ggQwOqiBlYXBahBcRkQWWqVdWerZLQgK+4pJ
+ 2/Yw==
+X-Gm-Message-State: AOJu0Yx/55TckfOt37txhdry/Fbb8cKkPCMMEetXskhhN4IwXqYclOnb
+ mtjNclErC84aVbMR2TWt7Qj6mzEFGH6/C/SrikqWf2b8OXe3T1nTDl4QDPGmwJwv/VcswLMNKwm
+ 5
+X-Gm-Gg: ASbGncsdGGmsEfhPVg/iRuw42f+p/EYU8Cry35dPVPp4cIEyIdOr2abJ90XZ/C0mrqi
+ uNjuqfgH00lLtb8603e3FRD46aMXtpAvNmqOGi9zsmeXVmhSbrJ24k2V+CXi+XUKlSYC2HWACeX
+ XXQAe8r8uvQSsNPXLq61Z/TWLgbqf6Qvp8kGvv3VOtfcFw00dc7lhRyj0JlyzU1eszNi5C4FC66
+ 1XnWf/Dww6KcIul7ax8pGuLXhzFeHOKB7h1frtXmsHqhTEAP+9MV3II64RJHcaPQviZQ9J2kDZ7
+ r8/cVk4Dwpew/4HJFtjvNWC+HK5xikviNAIPnOWjTSM3fkMCDDCnaeoEfJT5Tx2Ln3k30DiJW0M
  =
-X-Google-Smtp-Source: AGHT+IGZ23QaY8yUMgG62C2GUnty7bhSdFzAjjiFkONtqlJhf+yx4p5xG+r6h02aodvZNgGg/04tLg==
-X-Received: by 2002:a17:903:1b03:b0:223:807f:7f92 with SMTP id
- d9443c01a7336-22db4983516mr5422885ad.20.1745456417486; 
- Wed, 23 Apr 2025 18:00:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEyBmFFFYYs8pP55izjXbFQEvpqmDuLln4mDOmyHCgwN/2o2MVpBpqhKxsF8DjdAV00FWi1bw==
+X-Received: by 2002:a05:6a20:e18a:b0:201:4061:bd94 with SMTP id
+ adf61e73a8af0-20444ebdf33mr828001637.19.1745455802142; 
+ Wed, 23 Apr 2025 17:50:02 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b15f76f45c7sm129259a12.16.2025.04.23.18.00.16
+ d2e1a72fcca58-73e25a9a0f1sm207344b3a.137.2025.04.23.17.50.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 18:00:17 -0700 (PDT)
+ Wed, 23 Apr 2025 17:50:01 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 139/148] tcg: Remove the TCG_GUEST_DEFAULT_MO definition
- globally
-Date: Wed, 23 Apr 2025 17:49:24 -0700
-Message-ID: <20250424004934.598783-140-richard.henderson@linaro.org>
+Subject: [PULL 036/148] include/system: Move exec/ioport.h to system/ioport.h
+Date: Wed, 23 Apr 2025 17:47:41 -0700
+Message-ID: <20250424004934.598783-37-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
 References: <20250424004934.598783-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,628 +102,240 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Convert the existing includes with sed.
 
-By directly using TCGCPUOps::guest_default_memory_order,
-we don't need the TCG_GUEST_DEFAULT_MO definition anymore.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/alpha/cpu-param.h        |  3 ---
- target/arm/cpu-param.h          |  3 ---
- target/avr/cpu-param.h          |  2 --
- target/hexagon/cpu-param.h      |  3 ---
- target/hppa/cpu-param.h         |  8 --------
- target/i386/cpu-param.h         |  3 ---
- target/loongarch/cpu-param.h    |  2 --
- target/m68k/cpu-param.h         |  3 ---
- target/microblaze/cpu-param.h   |  3 ---
- target/mips/cpu-param.h         |  2 --
- target/openrisc/cpu-param.h     |  2 --
- target/ppc/cpu-param.h          |  2 --
- target/riscv/cpu-param.h        |  2 --
- target/rx/cpu-param.h           |  3 ---
- target/s390x/cpu-param.h        |  6 ------
- target/sh4/cpu-param.h          |  3 ---
- target/sparc/cpu-param.h        | 23 -----------------------
- target/tricore/cpu-param.h      |  3 ---
- target/xtensa/cpu-param.h       |  3 ---
- target/alpha/cpu.c              |  3 ++-
- target/arm/cpu.c                |  3 ++-
- target/arm/tcg/cpu-v7m.c        |  3 ++-
- target/avr/cpu.c                |  2 +-
- target/hexagon/cpu.c            |  3 ++-
- target/hppa/cpu.c               |  8 +++++++-
- target/i386/tcg/tcg-cpu.c       |  5 ++++-
- target/loongarch/cpu.c          |  2 +-
- target/m68k/cpu.c               |  3 ++-
- target/microblaze/cpu.c         |  3 ++-
- target/mips/cpu.c               |  2 +-
- target/openrisc/cpu.c           |  2 +-
- target/ppc/cpu_init.c           |  2 +-
- target/riscv/tcg/tcg-cpu.c      |  2 +-
- target/rx/cpu.c                 |  3 ++-
- target/s390x/cpu.c              |  6 +++++-
- target/sh4/cpu.c                |  3 ++-
- target/sparc/cpu.c              | 23 ++++++++++++++++++++++-
- target/tricore/cpu.c            |  3 ++-
- target/xtensa/cpu.c             |  3 ++-
- docs/devel/multi-thread-tcg.rst |  4 ++--
- 40 files changed, 66 insertions(+), 101 deletions(-)
+ hw/display/vga_int.h              | 2 +-
+ include/hw/char/parallel-isa.h    | 2 +-
+ include/hw/dma/i8257.h            | 2 +-
+ include/hw/ide/ide-bus.h          | 2 +-
+ include/hw/isa/isa.h              | 2 +-
+ include/{exec => system}/ioport.h | 6 ++----
+ hw/block/fdc-isa.c                | 2 +-
+ monitor/hmp-cmds.c                | 2 +-
+ system/ioport.c                   | 2 +-
+ system/physmem.c                  | 2 +-
+ system/qtest.c                    | 2 +-
+ target/i386/nvmm/nvmm-all.c       | 2 +-
+ target/i386/whpx/whpx-all.c       | 2 +-
+ tests/qtest/fuzz/qtest_wrappers.c | 2 +-
+ MAINTAINERS                       | 2 +-
+ 15 files changed, 16 insertions(+), 18 deletions(-)
+ rename include/{exec => system}/ioport.h (97%)
 
-diff --git a/target/alpha/cpu-param.h b/target/alpha/cpu-param.h
-index dd44feb179..a799f42db3 100644
---- a/target/alpha/cpu-param.h
-+++ b/target/alpha/cpu-param.h
-@@ -26,7 +26,4 @@
+diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
+index 60ad26e03e..747b5cc6cf 100644
+--- a/hw/display/vga_int.h
++++ b/hw/display/vga_int.h
+@@ -26,7 +26,7 @@
+ #define HW_VGA_INT_H
  
- #define TARGET_INSN_START_EXTRA_WORDS 0
+ #include "ui/console.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "system/memory.h"
  
--/* Alpha processors have a weak memory model */
--#define TCG_GUEST_DEFAULT_MO      (0)
--
- #endif
-diff --git a/target/arm/cpu-param.h b/target/arm/cpu-param.h
-index 2cee4be693..5c5bc8a009 100644
---- a/target/arm/cpu-param.h
-+++ b/target/arm/cpu-param.h
-@@ -44,7 +44,4 @@
-  */
- #define TARGET_INSN_START_EXTRA_WORDS 2
+ #include "hw/display/bochs-vbe.h"
+diff --git a/include/hw/char/parallel-isa.h b/include/hw/char/parallel-isa.h
+index 5284b2ffec..3edaf9dbe4 100644
+--- a/include/hw/char/parallel-isa.h
++++ b/include/hw/char/parallel-isa.h
+@@ -12,7 +12,7 @@
  
--/* ARM processors have a weak memory model */
--#define TCG_GUEST_DEFAULT_MO      (0)
--
- #endif
-diff --git a/target/avr/cpu-param.h b/target/avr/cpu-param.h
-index 9d37848d97..f74bfc2580 100644
---- a/target/avr/cpu-param.h
-+++ b/target/avr/cpu-param.h
-@@ -27,6 +27,4 @@
+ #include "parallel.h"
  
- #define TARGET_INSN_START_EXTRA_WORDS 0
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "hw/isa/isa.h"
+ #include "qom/object.h"
  
--#define TCG_GUEST_DEFAULT_MO 0
--
- #endif
-diff --git a/target/hexagon/cpu-param.h b/target/hexagon/cpu-param.h
-index 7cc63a01d4..635d509e74 100644
---- a/target/hexagon/cpu-param.h
-+++ b/target/hexagon/cpu-param.h
-@@ -25,7 +25,4 @@
+diff --git a/include/hw/dma/i8257.h b/include/hw/dma/i8257.h
+index 4342e4a91e..33b6286d5a 100644
+--- a/include/hw/dma/i8257.h
++++ b/include/hw/dma/i8257.h
+@@ -2,7 +2,7 @@
+ #define HW_I8257_H
  
- #define TARGET_INSN_START_EXTRA_WORDS 0
+ #include "hw/isa/isa.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "qom/object.h"
  
--/* MTTCG not yet supported: require strict ordering */
--#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
--
- #endif
-diff --git a/target/hppa/cpu-param.h b/target/hppa/cpu-param.h
-index 68ed84e84a..9bf7ac76d0 100644
---- a/target/hppa/cpu-param.h
-+++ b/target/hppa/cpu-param.h
-@@ -21,12 +21,4 @@
+ #define TYPE_I8257 "i8257"
+diff --git a/include/hw/ide/ide-bus.h b/include/hw/ide/ide-bus.h
+index 4841a7dcd6..121b455fcd 100644
+--- a/include/hw/ide/ide-bus.h
++++ b/include/hw/ide/ide-bus.h
+@@ -1,7 +1,7 @@
+ #ifndef HW_IDE_BUS_H
+ #define HW_IDE_BUS_H
  
- #define TARGET_INSN_START_EXTRA_WORDS 2
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "hw/ide/ide-dev.h"
+ #include "hw/ide/ide-dma.h"
  
--/* PA-RISC 1.x processors have a strong memory model.  */
--/*
-- * ??? While we do not yet implement PA-RISC 2.0, those processors have
-- * a weak memory model, but with TLB bits that force ordering on a per-page
-- * basis.  It's probably easier to fall back to a strong memory model.
-- */
--#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
--
- #endif
-diff --git a/target/i386/cpu-param.h b/target/i386/cpu-param.h
-index 0c8efce861..ebb844bcc8 100644
---- a/target/i386/cpu-param.h
-+++ b/target/i386/cpu-param.h
-@@ -24,7 +24,4 @@
+diff --git a/include/hw/isa/isa.h b/include/hw/isa/isa.h
+index 1d852011b3..a82c5f1004 100644
+--- a/include/hw/isa/isa.h
++++ b/include/hw/isa/isa.h
+@@ -4,7 +4,7 @@
+ /* ISA bus */
  
- #define TARGET_INSN_START_EXTRA_WORDS 1
+ #include "system/memory.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "hw/qdev-core.h"
+ #include "qom/object.h"
  
--/* The x86 has a strong memory model with some store-after-load re-ordering */
--#define TCG_GUEST_DEFAULT_MO      (TCG_MO_ALL & ~TCG_MO_ST_LD)
--
- #endif
-diff --git a/target/loongarch/cpu-param.h b/target/loongarch/cpu-param.h
-index dbe414bb35..58cc45a377 100644
---- a/target/loongarch/cpu-param.h
-+++ b/target/loongarch/cpu-param.h
-@@ -15,6 +15,4 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 0
- 
--#define TCG_GUEST_DEFAULT_MO (0)
--
- #endif
-diff --git a/target/m68k/cpu-param.h b/target/m68k/cpu-param.h
-index 10a8d74bfa..256a2b5f8b 100644
---- a/target/m68k/cpu-param.h
-+++ b/target/m68k/cpu-param.h
-@@ -19,7 +19,4 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 1
- 
--/* MTTCG not yet supported: require strict ordering */
--#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
--
- #endif
-diff --git a/target/microblaze/cpu-param.h b/target/microblaze/cpu-param.h
-index 5d55e0e3c4..e0a3794513 100644
---- a/target/microblaze/cpu-param.h
-+++ b/target/microblaze/cpu-param.h
-@@ -29,7 +29,4 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 1
- 
--/* MicroBlaze is always in-order. */
--#define TCG_GUEST_DEFAULT_MO  TCG_MO_ALL
--
- #endif
-diff --git a/target/mips/cpu-param.h b/target/mips/cpu-param.h
-index 99ca8d1684..58f450827f 100644
---- a/target/mips/cpu-param.h
-+++ b/target/mips/cpu-param.h
-@@ -22,6 +22,4 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 2
- 
--#define TCG_GUEST_DEFAULT_MO (0)
--
- #endif
-diff --git a/target/openrisc/cpu-param.h b/target/openrisc/cpu-param.h
-index 7ea0ecb55a..b4f57bbe69 100644
---- a/target/openrisc/cpu-param.h
-+++ b/target/openrisc/cpu-param.h
-@@ -14,6 +14,4 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 1
- 
--#define TCG_GUEST_DEFAULT_MO (0)
--
- #endif
-diff --git a/target/ppc/cpu-param.h b/target/ppc/cpu-param.h
-index d0651d2ac8..e4ed9080ee 100644
---- a/target/ppc/cpu-param.h
-+++ b/target/ppc/cpu-param.h
-@@ -39,6 +39,4 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 0
- 
--#define TCG_GUEST_DEFAULT_MO 0
--
- #endif
-diff --git a/target/riscv/cpu-param.h b/target/riscv/cpu-param.h
-index ff4ba81965..cfdc67c258 100644
---- a/target/riscv/cpu-param.h
-+++ b/target/riscv/cpu-param.h
-@@ -34,6 +34,4 @@
-  *  - M mode HLV/HLVX/HSV 0b111
+diff --git a/include/exec/ioport.h b/include/system/ioport.h
+similarity index 97%
+rename from include/exec/ioport.h
+rename to include/system/ioport.h
+index ecea3575bc..780ea5a676 100644
+--- a/include/exec/ioport.h
++++ b/include/system/ioport.h
+@@ -21,8 +21,8 @@
+  * IO ports API
   */
  
--#define TCG_GUEST_DEFAULT_MO 0
--
- #endif
-diff --git a/target/rx/cpu-param.h b/target/rx/cpu-param.h
-index fe39a77ca3..84934f3bca 100644
---- a/target/rx/cpu-param.h
-+++ b/target/rx/cpu-param.h
-@@ -26,7 +26,4 @@
+-#ifndef IOPORT_H
+-#define IOPORT_H
++#ifndef SYSTEM_IOPORT_H
++#define SYSTEM_IOPORT_H
  
- #define TARGET_INSN_START_EXTRA_WORDS 0
+ #include "system/memory.h"
  
--/* MTTCG not yet supported: require strict ordering */
--#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
--
- #endif
-diff --git a/target/s390x/cpu-param.h b/target/s390x/cpu-param.h
-index a8a4377f4f..abfae3bedf 100644
---- a/target/s390x/cpu-param.h
-+++ b/target/s390x/cpu-param.h
-@@ -14,10 +14,4 @@
+@@ -39,9 +39,7 @@ typedef struct MemoryRegionPortio {
  
- #define TARGET_INSN_START_EXTRA_WORDS 2
+ #define PORTIO_END_OF_LIST() { }
  
--/*
-- * The z/Architecture has a strong memory model with some
-- * store-after-load re-ordering.
-- */
--#define TCG_GUEST_DEFAULT_MO      (TCG_MO_ALL & ~TCG_MO_ST_LD)
--
- #endif
-diff --git a/target/sh4/cpu-param.h b/target/sh4/cpu-param.h
-index acdf239749..f328715ee8 100644
---- a/target/sh4/cpu-param.h
-+++ b/target/sh4/cpu-param.h
-@@ -18,7 +18,4 @@
+-#ifndef CONFIG_USER_ONLY
+ extern const MemoryRegionOps unassigned_io_ops;
+-#endif
  
- #define TARGET_INSN_START_EXTRA_WORDS 1
+ void cpu_outb(uint32_t addr, uint8_t val);
+ void cpu_outw(uint32_t addr, uint16_t val);
+diff --git a/hw/block/fdc-isa.c b/hw/block/fdc-isa.c
+index a10c24aab1..561cfa47c1 100644
+--- a/hw/block/fdc-isa.c
++++ b/hw/block/fdc-isa.c
+@@ -42,7 +42,7 @@
+ #include "system/block-backend.h"
+ #include "system/blockdev.h"
+ #include "system/system.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "qemu/log.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/module.h"
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index 8ddcdd76c1..74a0f56566 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -15,7 +15,7 @@
  
--/* MTTCG not yet supported: require strict ordering */
--#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
--
- #endif
-diff --git a/target/sparc/cpu-param.h b/target/sparc/cpu-param.h
-index 62d47b804b..45eea9d6ba 100644
---- a/target/sparc/cpu-param.h
-+++ b/target/sparc/cpu-param.h
-@@ -23,27 +23,4 @@
+ #include "qemu/osdep.h"
+ #include "system/address-spaces.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "exec/gdbstub.h"
+ #include "gdbstub/enums.h"
+ #include "monitor/hmp.h"
+diff --git a/system/ioport.c b/system/ioport.c
+index 5300716464..4f96e9119f 100644
+--- a/system/ioport.c
++++ b/system/ioport.c
+@@ -26,7 +26,7 @@
+  */
  
- #define TARGET_INSN_START_EXTRA_WORDS 1
+ #include "qemu/osdep.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "system/memory.h"
+ #include "system/address-spaces.h"
+ #include "trace.h"
+diff --git a/system/physmem.c b/system/physmem.c
+index e61fea41b5..234e489199 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -51,7 +51,7 @@
+ #include "qemu/memalign.h"
+ #include "qemu/memfd.h"
+ #include "system/memory.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "system/dma.h"
+ #include "system/hostmem.h"
+ #include "system/hw_accel.h"
+diff --git a/system/qtest.c b/system/qtest.c
+index 5407289154..523a047995 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -16,7 +16,7 @@
+ #include "system/qtest.h"
+ #include "system/runstate.h"
+ #include "chardev/char-fe.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "system/memory.h"
+ #include "exec/tswap.h"
+ #include "hw/qdev-core.h"
+diff --git a/target/i386/nvmm/nvmm-all.c b/target/i386/nvmm/nvmm-all.c
+index 91f0e32366..17394d073d 100644
+--- a/target/i386/nvmm/nvmm-all.c
++++ b/target/i386/nvmm/nvmm-all.c
+@@ -10,7 +10,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "system/address-spaces.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "qemu/accel.h"
+ #include "system/nvmm.h"
+ #include "system/cpus.h"
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index d58cb11cee..b64852e13e 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -11,7 +11,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "system/address-spaces.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
+ #include "gdbstub/helpers.h"
+ #include "qemu/accel.h"
+ #include "system/whpx.h"
+diff --git a/tests/qtest/fuzz/qtest_wrappers.c b/tests/qtest/fuzz/qtest_wrappers.c
+index 0580f8df86..d7adcbe3fd 100644
+--- a/tests/qtest/fuzz/qtest_wrappers.c
++++ b/tests/qtest/fuzz/qtest_wrappers.c
+@@ -13,7 +13,7 @@
  
--/*
-- * From Oracle SPARC Architecture 2015:
-- *
-- *   Compatibility notes: The PSO memory model described in SPARC V8 and
-- *   SPARC V9 compatibility architecture specifications was never implemented
-- *   in a SPARC V9 implementation and is not included in the Oracle SPARC
-- *   Architecture specification.
-- *
-- *   The RMO memory model described in the SPARC V9 specification was
-- *   implemented in some non-Sun SPARC V9 implementations, but is not
-- *   directly supported in Oracle SPARC Architecture 2015 implementations.
-- *
-- * Therefore always use TSO in QEMU.
-- *
-- * D.5 Specification of Partial Store Order (PSO)
-- *   ... [loads] are followed by an implied MEMBAR #LoadLoad | #LoadStore.
-- *
-- * D.6 Specification of Total Store Order (TSO)
-- *   ... PSO with the additional requirement that all [stores] are followed
-- *   by an implied MEMBAR #StoreStore.
-- */
--#define TCG_GUEST_DEFAULT_MO  (TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST)
--
- #endif
-diff --git a/target/tricore/cpu-param.h b/target/tricore/cpu-param.h
-index 45fde756b6..eb33a67c41 100644
---- a/target/tricore/cpu-param.h
-+++ b/target/tricore/cpu-param.h
-@@ -14,7 +14,4 @@
+ #include "qemu/osdep.h"
+ #include "hw/core/cpu.h"
+-#include "exec/ioport.h"
++#include "system/ioport.h"
  
- #define TARGET_INSN_START_EXTRA_WORDS 0
+ #include "fuzz.h"
  
--/* MTTCG not yet supported: require strict ordering */
--#define TCG_GUEST_DEFAULT_MO        TCG_MO_ALL
--
- #endif
-diff --git a/target/xtensa/cpu-param.h b/target/xtensa/cpu-param.h
-index e7cb747aaa..7a0c22c900 100644
---- a/target/xtensa/cpu-param.h
-+++ b/target/xtensa/cpu-param.h
-@@ -18,7 +18,4 @@
- 
- #define TARGET_INSN_START_EXTRA_WORDS 0
- 
--/* Xtensa processors have a weak memory model */
--#define TCG_GUEST_DEFAULT_MO      (0)
--
- #endif
-diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
-index 6f931117a2..eeaf3a81c1 100644
---- a/target/alpha/cpu.c
-+++ b/target/alpha/cpu.c
-@@ -235,7 +235,8 @@ static const struct SysemuCPUOps alpha_sysemu_ops = {
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps alpha_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /* Alpha processors have a weak memory model */
-+    .guest_default_memory_order = 0,
- 
-     .initialize = alpha_translate_init,
-     .translate_code = alpha_translate_code,
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 3f20e258fd..3e9760b551 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2671,7 +2671,8 @@ static const struct SysemuCPUOps arm_sysemu_ops = {
- 
- #ifdef CONFIG_TCG
- static const TCGCPUOps arm_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /* ARM processors have a weak memory model */
-+    .guest_default_memory_order = 0,
- 
-     .initialize = arm_translate_init,
-     .translate_code = arm_translate_code,
-diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
-index 4553fe9de0..89d4e4b4a2 100644
---- a/target/arm/tcg/cpu-v7m.c
-+++ b/target/arm/tcg/cpu-v7m.c
-@@ -232,7 +232,8 @@ static void cortex_m55_initfn(Object *obj)
- }
- 
- static const TCGCPUOps arm_v7m_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /* ARM processors have a weak memory model */
-+    .guest_default_memory_order = 0,
- 
-     .initialize = arm_translate_init,
-     .translate_code = arm_translate_code,
-diff --git a/target/avr/cpu.c b/target/avr/cpu.c
-index 67918684fa..8f79cf4c08 100644
---- a/target/avr/cpu.c
-+++ b/target/avr/cpu.c
-@@ -224,7 +224,7 @@ static const struct SysemuCPUOps avr_sysemu_ops = {
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps avr_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    .guest_default_memory_order = 0,
-     .initialize = avr_cpu_tcg_init,
-     .translate_code = avr_cpu_translate_code,
-     .synchronize_from_tb = avr_cpu_synchronize_from_tb,
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index b12e0dccd0..3d14e5cc6a 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -325,7 +325,8 @@ static void hexagon_cpu_init(Object *obj)
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps hexagon_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /* MTTCG not yet supported: require strict ordering */
-+    .guest_default_memory_order = TCG_MO_ALL,
-     .initialize = hexagon_translate_init,
-     .translate_code = hexagon_translate_code,
-     .synchronize_from_tb = hexagon_cpu_synchronize_from_tb,
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index ac4560febe..dfbd933056 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -253,7 +253,13 @@ static const struct SysemuCPUOps hppa_sysemu_ops = {
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps hppa_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /* PA-RISC 1.x processors have a strong memory model.  */
-+    /*
-+     * ??? While we do not yet implement PA-RISC 2.0, those processors have
-+     * a weak memory model, but with TLB bits that force ordering on a per-page
-+     * basis.  It's probably easier to fall back to a strong memory model.
-+     */
-+    .guest_default_memory_order = TCG_MO_ALL,
- 
-     .initialize = hppa_translate_init,
-     .translate_code = hppa_translate_code,
-diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
-index 3e1b315340..d941df0956 100644
---- a/target/i386/tcg/tcg-cpu.c
-+++ b/target/i386/tcg/tcg-cpu.c
-@@ -125,7 +125,10 @@ static bool x86_debug_check_breakpoint(CPUState *cs)
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps x86_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /*
-+     * The x86 has a strong memory model with some store-after-load re-ordering
-+     */
-+    .guest_default_memory_order = TCG_MO_ALL & ~TCG_MO_ST_LD,
-     .initialize = tcg_x86_init,
-     .translate_code = x86_translate_code,
-     .synchronize_from_tb = x86_cpu_synchronize_from_tb,
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index ee74509a66..f5b8ef29ab 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -864,7 +864,7 @@ static void loongarch_cpu_dump_state(CPUState *cs, FILE *f, int flags)
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps loongarch_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    .guest_default_memory_order = 0,
- 
-     .initialize = loongarch_translate_init,
-     .translate_code = loongarch_translate_code,
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index bfde9b8594..b2d8c8f1de 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -589,7 +589,8 @@ static const struct SysemuCPUOps m68k_sysemu_ops = {
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps m68k_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /* MTTCG not yet supported: require strict ordering */
-+    .guest_default_memory_order = TCG_MO_ALL,
- 
-     .initialize = m68k_tcg_init,
-     .translate_code = m68k_translate_code,
-diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-index e46863574c..4efba0dddb 100644
---- a/target/microblaze/cpu.c
-+++ b/target/microblaze/cpu.c
-@@ -427,7 +427,8 @@ static const struct SysemuCPUOps mb_sysemu_ops = {
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps mb_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /* MicroBlaze is always in-order. */
-+    .guest_default_memory_order = TCG_MO_ALL,
- 
-     .initialize = mb_tcg_init,
-     .translate_code = mb_translate_code,
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index 67a8550cc1..2ae7ba4407 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -551,7 +551,7 @@ static int mips_cpu_mmu_index(CPUState *cs, bool ifunc)
- }
- 
- static const TCGCPUOps mips_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    .guest_default_memory_order = 0,
- 
-     .initialize = mips_tcg_init,
-     .translate_code = mips_translate_code,
-diff --git a/target/openrisc/cpu.c b/target/openrisc/cpu.c
-index e62c698a40..87fe779042 100644
---- a/target/openrisc/cpu.c
-+++ b/target/openrisc/cpu.c
-@@ -243,7 +243,7 @@ static const struct SysemuCPUOps openrisc_sysemu_ops = {
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps openrisc_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    .guest_default_memory_order = 0,
- 
-     .initialize = openrisc_translate_init,
-     .translate_code = openrisc_translate_code,
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 1cf18e0dae..9ba775971a 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7479,7 +7479,7 @@ static const struct SysemuCPUOps ppc_sysemu_ops = {
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps ppc_tcg_ops = {
--  .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+  .guest_default_memory_order = 0,
-   .initialize = ppc_translate_init,
-   .translate_code = ppc_translate_code,
-   .restore_state_to_opc = ppc_restore_state_to_opc,
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index ded2d68ad7..50e81b2e52 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -140,7 +140,7 @@ static void riscv_restore_state_to_opc(CPUState *cs,
- }
- 
- static const TCGCPUOps riscv_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    .guest_default_memory_order = 0,
- 
-     .initialize = riscv_translate_init,
-     .translate_code = riscv_translate_code,
-diff --git a/target/rx/cpu.c b/target/rx/cpu.c
-index d7eac551fd..f073fe8fc9 100644
---- a/target/rx/cpu.c
-+++ b/target/rx/cpu.c
-@@ -204,7 +204,8 @@ static const struct SysemuCPUOps rx_sysemu_ops = {
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps rx_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /* MTTCG not yet supported: require strict ordering */
-+    .guest_default_memory_order = TCG_MO_ALL,
- 
-     .initialize = rx_translate_init,
-     .translate_code = rx_translate_code,
-diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
-index f232d82fa3..1e101b5afe 100644
---- a/target/s390x/cpu.c
-+++ b/target/s390x/cpu.c
-@@ -345,7 +345,11 @@ void cpu_get_tb_cpu_state(CPUS390XState *env, vaddr *pc,
- }
- 
- static const TCGCPUOps s390_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /*
-+     * The z/Architecture has a strong memory model with some
-+     * store-after-load re-ordering.
-+     */
-+    .guest_default_memory_order = TCG_MO_ALL & ~TCG_MO_ST_LD,
- 
-     .initialize = s390x_translate_init,
-     .translate_code = s390x_translate_code,
-diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
-index 29f4be7ba9..7a05301c6f 100644
---- a/target/sh4/cpu.c
-+++ b/target/sh4/cpu.c
-@@ -262,7 +262,8 @@ static const struct SysemuCPUOps sh4_sysemu_ops = {
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps superh_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /* MTTCG not yet supported: require strict ordering */
-+    .guest_default_memory_order = TCG_MO_ALL,
- 
-     .initialize = sh4_translate_init,
-     .translate_code = sh4_translate_code,
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index ef04efcb18..56d9417ae3 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -1001,7 +1001,28 @@ static const struct SysemuCPUOps sparc_sysemu_ops = {
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps sparc_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /*
-+     * From Oracle SPARC Architecture 2015:
-+     *
-+     *   Compatibility notes: The PSO memory model described in SPARC V8 and
-+     *   SPARC V9 compatibility architecture specifications was never
-+     *   implemented in a SPARC V9 implementation and is not included in the
-+     *   Oracle SPARC Architecture specification.
-+     *
-+     *   The RMO memory model described in the SPARC V9 specification was
-+     *   implemented in some non-Sun SPARC V9 implementations, but is not
-+     *   directly supported in Oracle SPARC Architecture 2015 implementations.
-+     *
-+     * Therefore always use TSO in QEMU.
-+     *
-+     * D.5 Specification of Partial Store Order (PSO)
-+     *   ... [loads] are followed by an implied MEMBAR #LoadLoad | #LoadStore.
-+     *
-+     * D.6 Specification of Total Store Order (TSO)
-+     *   ... PSO with the additional requirement that all [stores] are followed
-+     *   by an implied MEMBAR #StoreStore.
-+     */
-+    .guest_default_memory_order = TCG_MO_LD_LD | TCG_MO_LD_ST | TCG_MO_ST_ST,
- 
-     .initialize = sparc_tcg_init,
-     .translate_code = sparc_translate_code,
-diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
-index 3bf399335a..c68954b409 100644
---- a/target/tricore/cpu.c
-+++ b/target/tricore/cpu.c
-@@ -172,7 +172,8 @@ static const struct SysemuCPUOps tricore_sysemu_ops = {
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps tricore_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /* MTTCG not yet supported: require strict ordering */
-+    .guest_default_memory_order = TCG_MO_ALL,
-     .initialize = tricore_tcg_init,
-     .translate_code = tricore_translate_code,
-     .synchronize_from_tb = tricore_cpu_synchronize_from_tb,
-diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
-index 2347106495..2cbf4e3010 100644
---- a/target/xtensa/cpu.c
-+++ b/target/xtensa/cpu.c
-@@ -232,7 +232,8 @@ static const struct SysemuCPUOps xtensa_sysemu_ops = {
- #include "accel/tcg/cpu-ops.h"
- 
- static const TCGCPUOps xtensa_tcg_ops = {
--    .guest_default_memory_order = TCG_GUEST_DEFAULT_MO,
-+    /* Xtensa processors have a weak memory model */
-+    .guest_default_memory_order = 0,
- 
-     .initialize = xtensa_translate_init,
-     .translate_code = xtensa_translate_code,
-diff --git a/docs/devel/multi-thread-tcg.rst b/docs/devel/multi-thread-tcg.rst
-index b0f473961d..14a2a9dc7b 100644
---- a/docs/devel/multi-thread-tcg.rst
-+++ b/docs/devel/multi-thread-tcg.rst
-@@ -28,8 +28,8 @@ vCPU Scheduling
- We introduce a new running mode where each vCPU will run on its own
- user-space thread. This is enabled by default for all FE/BE
- combinations where the host memory model is able to accommodate the
--guest (TCG_GUEST_DEFAULT_MO & ~TCG_TARGET_DEFAULT_MO is zero) and the
--guest has had the required work done to support this safely
-+guest (TCGCPUOps::guest_default_memory_order & ~TCG_TARGET_DEFAULT_MO is zero)
-+and the guest has had the required work done to support this safely
- (TARGET_SUPPORTS_MTTCG).
- 
- System emulation will fall back to the original round robin approach
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 5d391cfaa7..9a96cc1b5e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3118,7 +3118,7 @@ M: Peter Xu <peterx@redhat.com>
+ M: David Hildenbrand <david@redhat.com>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ S: Supported
+-F: include/exec/ioport.h
++F: include/system/ioport.h
+ F: include/exec/memop.h
+ F: include/system/memory.h
+ F: include/exec/ram_addr.h
 -- 
 2.43.0
 
