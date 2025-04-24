@@ -4,80 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C918BC369C2
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 18:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23C3BC369D1
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 18:35:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u810K-0005FJ-Fv; Thu, 24 Apr 2025 14:08:56 -0400
+	id 1u81Og-0003dL-D6; Thu, 24 Apr 2025 14:34:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u810H-0005B5-OP
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 14:08:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u810E-0004Ri-HO
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 14:08:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745518128;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=paT5S8UD1OBkn3kxBHkk2HQ6lRr9G8I86jTkuWfZ2SA=;
- b=VLMh9XnH3iRvsaclnfmnNrNCoflsPwAGl7F+N41UDmrabe8SFoFenb2gcSeGq/fn/yOeg3
- ewn62QzNP2LPlAVMpz0VqybXtBghKILZJpvT4ITxpmz99vCEnGbE+oQ6IpHXAnsFPyro1N
- WMFzX0f+XrHwe7RFUpg4iFZytbcwwLY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-1SL-qsotO2WryBUipnQiBA-1; Thu,
- 24 Apr 2025 14:08:45 -0400
-X-MC-Unique: 1SL-qsotO2WryBUipnQiBA-1
-X-Mimecast-MFC-AGG-ID: 1SL-qsotO2WryBUipnQiBA_1745518124
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0191119560B0; Thu, 24 Apr 2025 18:08:42 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.59])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C61F1800378; Thu, 24 Apr 2025 18:08:37 +0000 (UTC)
-Date: Thu, 24 Apr 2025 13:08:34 -0500
-From: Eric Blake <eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u81Ob-0003b9-L6
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 14:34:01 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u81OY-0007lw-DJ
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 14:34:01 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-224019ad9edso19739765ad.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 11:33:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745519637; x=1746124437; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dV6kNi0FTww4zMCdoDaGt2FwS66xHIgmhnvrrJm5V+4=;
+ b=Cwt5BvMakLvRUHwbN3GlTDRL8CF/1R7+N/WSD2FMEoihs/GnT6TZ7dmr5uIUn2FgAO
+ ccIIS+qS7IBRm/sygLIvfNFt9QbZrTiiZw/HGiBBvrEl6NZ9QHy0wVtsAQZYYm2FXr9J
+ oU1hxKBelCr/ub7rJFZ1KdMztuwEeo+I8oyKLuQk4+b3D1nkVwJUQ4G20eWFM2WdXKpj
+ tDQY6o9S6/Xm815zkRgkZ+uRbDkIy8wXEijFVTkPXvasv2SD9C8v8nLR8YKrhzrTQsZ0
+ FXyOSPa+j3TiZwV5HCBdBB5vmaPAmfa3vMJ+BclXjGOTZOSJqE+NJ/v+G4Tm62vKOGah
+ jMgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745519637; x=1746124437;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dV6kNi0FTww4zMCdoDaGt2FwS66xHIgmhnvrrJm5V+4=;
+ b=mIG/FeO8fqVgFXMqjRc1nP/PxCNFGXkez+BDkuGABwUkJdx70fYx2s+ulJj+CzJU6w
+ lTo++/BQtypzkhMH2qchlSQ/dLeVCFo31EAJ6QUbiOXJb033hX14dx4NSOj7AuLn50jU
+ ruUAK3fJ2DZM4sGta/2ZF5cSPh9QowhW1Vdn6t3oO0x690LnEBSFvmge5W12kDxj4RPP
+ SzgFq1w/4N7oGECwKy9zg0QqsCEpaJpGmn4Gh5qJvHIDYmgItsWSLpy0Vi7YRgzF0DcM
+ jmuTmkkqA5Ihh7jEtz9fa/I7ZpjK+49u1oLgePnjOjO9SEiEhEmSBIWb0dVwK/GHB4dT
+ LM2A==
+X-Gm-Message-State: AOJu0YzWHmPXw4/KSh0hyTOUHDFvW0SK0ieijVsqCTaOc5gPX3lIWaYW
+ lotRsVRRDq/YhQxP8+B7HD21w8O1rkCYytMUSUyag35joqnk1CG7/TbK/U6Cf/jJ2lxBhtL4gld
+ GwiU=
+X-Gm-Gg: ASbGncuoO0H1HqYYNDN+3lrns0UrY1DDhp3klX0doIewbCLcu41+LNRLvpQI6snzRwN
+ n5Oepi2WPzLS+uHvWMA9WkDw0vTv00zBuXooRSrql5Mx/SvCnteqz98t8eRoKLp7YBWGbZHmMev
+ 5RjCQA2CKxbH/vSmMv/BAQn2kHYQJVp4u0humrAQ1J9LXsuTEh4S/CSk2yU6ioeHvM6H+e4KqRT
+ NadnxgmGPduTlEfZS5jV3G8+ORmjIDGA+tXDY7a7tu610rkFGG2/IY7jQMXkTd/btJ5zfrOVfzJ
+ epbIMQptph+4n/Pv4BaWWzE3F3gkHuqgirQm32FG
+X-Google-Smtp-Source: AGHT+IEzUs1louzJohwSFH4e03wH3XbbRR/VRvrfHsB4wYl/+UMnCm3H2bWK2Jzk4E0q7TlVAQStYQ==
+X-Received: by 2002:a17:902:ea09:b0:224:1609:a747 with SMTP id
+ d9443c01a7336-22db3c33fbbmr48896735ad.31.1745519636852; 
+ Thu, 24 Apr 2025 11:33:56 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b15fa80fbaasm1544157a12.49.2025.04.24.11.33.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 24 Apr 2025 11:33:56 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, stefanha@redhat.com, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- John Snow <jsnow@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Fam Zheng <fam@euphon.net>, 
- Ronnie Sahlberg <ronniesahlberg@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Lieven <pl@dlhnet.de>, 
- "Denis V. Lunev" <den@openvz.org>, Alberto Garcia <berto@igalia.com>, 
- Ilya Dryomov <idryomov@gmail.com>, Stefan Weil <sw@weilnetz.de>, 
- "open list:GLUSTER" <integration@gluster.org>
-Subject: Re: [PATCH v2.5 01/11] block: Expand block status mode from bool to
- flags
-Message-ID: <abnvlaphunplpfo25dk7cqpxzkay72gvonunm4tiuddsynxiou@zhmmjny2nzht>
-References: <20250417184133.105746-13-eblake@redhat.com>
- <20250418215412.404558-3-eblake@redhat.com>
+Cc: richard.henderson@linaro.org, stefanha@redhat.com,
+ Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
+ berrange@redhat.com, peter.maydell@linaro.org, thuth@redhat.com,
+ jsnow@redhat.com, philmd@linaro.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [RFC PATCH 1/3] qapi: add weak stubs for target specific commands
+Date: Thu, 24 Apr 2025 11:33:48 -0700
+Message-Id: <20250424183350.1798746-2-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250418215412.404558-3-eblake@redhat.com>
-User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.84,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,52 +104,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 18, 2025 at 04:52:46PM -0500, Eric Blake wrote:
-> This patch is purely mechanical, changing bool want_zero into an
-> unsigned int for bitwise-or of flags.  As of this patch, all
-> implementations are unchanged (the old want_zero==true is now
-> mode==BDRV_WANT_PRECISE which is a superset of BDRV_WANT_ZERO); but
-> the callers in io.c that used to pass want_zero==false are now
-> prepared for future driver changes that can now distinguish bewteen
-> BDRV_WANT_ZERO vs. BDRV_WANT_ALLOCATED.  The next patch will actually
-> change the file-posix driver along those lines, now that we have
-> more-specific hints.
-> 
-> As for the background why this patch is useful: right now, the
-> file-posix driver recognizes that if allocation is being queried, the
-> entire image can be reported as allocated (there is no backing file to
-> refer to) - but this throws away information on whether the entire
-> image reads as zero (trivially true if lseek(SEEK_HOLE) at offset 0
-> returns -ENXIO, a bit more complicated to prove if the raw file was
-> created with 'qemu-img create' since we intentionally allocate a small
-> chunk of all-zero data to help with alignment probing).  Later patches
-> will add a generic algorithm for seeing if an entire file reads as
-> zeroes.
-> 
-> Signed-off-by: Eric Blake <eblake@redhat.com>
-> ---
-> 
-> In response to Stefan's ask for what it would look like as a bitmask
-> of flags instead of an enum.  Only the first two patches of the series
-> change.
+We are about to expose various target specific commands for all targets,
+so we need to stub not implemented qmp_* functions.
 
-> +++ b/block/io.c
-> @@ -2364,10 +2364,8 @@ int bdrv_flush_all(void)
->   * Drivers not implementing the functionality are assumed to not support
->   * backing files, hence all their sectors are reported as allocated.
->   *
-> - * If 'want_zero' is true, the caller is querying for mapping
-> - * purposes, with a focus on valid BDRV_BLOCK_OFFSET_VALID, _DATA, and
-> - * _ZERO where possible; otherwise, the result favors larger 'pnum',
-> - * with a focus on accurate BDRV_BLOCK_ALLOCATED.
-> + * 'mode' serves as a hint as to which results are favored; see enum
-> + * BlockStatusMode for details of the supported modes.
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ qapi/commands-weak-stubs.c | 38 ++++++++++++++++++++++++++++++++++++++
+ qapi/meson.build           |  3 +++
+ 2 files changed, 41 insertions(+)
+ create mode 100644 qapi/commands-weak-stubs.c
 
-Stale comment applicable to v2 but not v2.5; will fix for v3.
-
+diff --git a/qapi/commands-weak-stubs.c b/qapi/commands-weak-stubs.c
+new file mode 100644
+index 00000000000..9734263c32e
+--- /dev/null
++++ b/qapi/commands-weak-stubs.c
+@@ -0,0 +1,38 @@
++/*
++ * Weak symbols for target specific commands
++ *
++ * Copyright Linaro, 2025
++ *
++ * This work is licensed under the terms of the GNU LGPL, version 2.1 or later.
++ * See the COPYING.LIB file in the top-level directory.
++ *
++ */
++
++#include "qemu/osdep.h"
++#include <glib.h>
++
++#define NOT_REACHABLE(symbol)                                                  \
++void __attribute__((weak)) symbol(void);                                       \
++void __attribute__((weak)) symbol(void) { g_assert_not_reached(); }
++
++#define WEAK_STUB(command)                                                     \
++NOT_REACHABLE(qmp_marshal_##command)                                           \
++NOT_REACHABLE(qmp_##command)
++
++WEAK_STUB(query_cpu_model_comparison);
++WEAK_STUB(query_cpu_model_baseline);
++WEAK_STUB(set_cpu_topology);
++WEAK_STUB(query_s390x_cpu_polarization);
++WEAK_STUB(rtc_reset_reinjection);
++WEAK_STUB(query_sev);
++WEAK_STUB(query_sev_launch_measure);
++WEAK_STUB(query_sev_capabilities);
++WEAK_STUB(sev_inject_launch_secret);
++WEAK_STUB(query_sev_attestation_report);
++WEAK_STUB(query_sgx);
++WEAK_STUB(query_sgx_capabilities);
++WEAK_STUB(xen_event_list);
++WEAK_STUB(xen_event_inject);
++WEAK_STUB(query_cpu_model_expansion);
++WEAK_STUB(query_cpu_definitions);
++WEAK_STUB(query_gic_capabilities);
+diff --git a/qapi/meson.build b/qapi/meson.build
+index eadde4db307..ba9380d3f03 100644
+--- a/qapi/meson.build
++++ b/qapi/meson.build
+@@ -147,3 +147,6 @@ foreach output : qapi_specific_outputs + qapi_nonmodule_outputs
+   specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: qapi_files[i])
+   i = i + 1
+ endforeach
++
++system_ss.add(when: 'CONFIG_SYSTEM_ONLY',
++              if_true: files('commands-weak-stubs.c'))
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.39.5
 
 
