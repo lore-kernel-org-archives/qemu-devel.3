@@ -4,76 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D37CC369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 09:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FD03C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 09:45:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7t5r-0005Ts-LZ; Thu, 24 Apr 2025 05:42:07 -0400
+	id 1u7t94-0006ON-Mj; Thu, 24 Apr 2025 05:45:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1u7t5p-0005TK-7Z; Thu, 24 Apr 2025 05:42:05 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7t92-0006O3-VW
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:45:25 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1u7t5n-00024m-C4; Thu, 24 Apr 2025 05:42:04 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-ac6ed4ab410so131384066b.1; 
- Thu, 24 Apr 2025 02:42:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7t91-0002TA-9P
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:45:24 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43d04ea9d9aso3139655e9.3
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 02:45:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1745487720; x=1746092520; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JBgcF66bAes2tdC/cppNINK64ZI/vVeNg3Xt/eFhDXs=;
- b=R5KdbQVPK9JVbH+gyCNVCmalRSMMahWEdihfcFF9EZUoLEfYRkR/W9RCvqW6WR8mg7
- rxR5NLeh7yY1HWbGGsHdhkIwcTQdPBiO41Y1kTUSM+9fKUiNMdqxeoOJsyybqO/qH99a
- OsxS3fWpFBeGbpPNMsWfQoWZhblWkUaubTW38=
+ d=linaro.org; s=google; t=1745487921; x=1746092721; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YzpELu0s5GVees9f/wR8bk5mSi5nRLFcy/Gxi3CKgi8=;
+ b=l8fg/SFEP1F4dBprATsTv/vf3a0EyIf3WRDyZOXWPAg5tatM4oMumkMDrbJfaL77DT
+ g/Y/dNpopOWUivFjeJkrDP76gpHu94nbTzk+lSFjPrlFgVrrc6KSjI8sFTkqwi6gGQXW
+ sv/h9m48UXVyYHryyn+VriXSRLgSLw375ybJsjBDf2/3Eh5i42KZE8l9YAaj4aku+E0Q
+ q/BS+L4WhwRuaEnP0grMsn8nsbUbj45yQDI+dpPp/f5OBvOVyNe/gfYDs2Qi4z+g7S66
+ o/AdG1SqI9wAr5K5S3jsP6e72YCLQ2UqM1SwJL3dXfH8wkCBdx+dP3aOWUyavIFTy5V9
+ qfsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745487720; x=1746092520;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JBgcF66bAes2tdC/cppNINK64ZI/vVeNg3Xt/eFhDXs=;
- b=M5IcWICZ2LaNC1iZyxOj0U2mAOJ44cXxXqoUD5YR2rPrc47WlxBrktgnNhxVInpH34
- 4BChw2ln5iGgd61/085jn3nyf1yc37NPXECiJNFYJWZuxQPPxgGM1etLmrRJQ5xcb5LJ
- 4XsoKbqN5iLzY71YHkrpgVgwmSD6aWRFNkwNyRMO5zg8mxhAi3s1Z0uHUTY0WPFwQJy5
- 6/JJtsOREEaWJSMIplPXupSpvXoDHB10o2Agcz/oRTVr/C3BIj0591V14BUX/TrvDWoA
- QGbe0NqYavHhD0rdHjwFBJrAkqdDBLNOSGbyPctQFeWuhxKQbUfY8D0ajK/WZ1oLonG3
- dxEQ==
+ d=1e100.net; s=20230601; t=1745487921; x=1746092721;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YzpELu0s5GVees9f/wR8bk5mSi5nRLFcy/Gxi3CKgi8=;
+ b=VomnPGSsrKVuYU4Wq+WhZSLwnJk5poTpFvFwKfqVcOkqBdECv1+bgK1Vc6XJGSRa+i
+ SVacBEt5nwUXIcFfhhFcPcPeApoA3+jvu7HjbdlUHCvgB0EeqWAZXHz3r4pzvhzmNkgf
+ Gdw/N86eCDLsFyxYJrdeuWgC3xem5BUiy2rmShW069j5ML/5/zXvCqJG2K8aSI+hRYQ7
+ lrcrDSz3kZm19xRvT1glCQWC6a/l9OlwC7VUr6IXVtI/2YkM481VyXcNin0wwkPgJj3+
+ oqK2cDoUhMzPUBmqjZsMkxF3ACHN0cQetDmktWMh73pcld8rUOy7JPsQd36jxslmTdB7
+ IuvA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUJW0JPWeC7cPjSDvWZztTZvB9p1jFWJ1XHzfXQnHg3aLltg0jyhK/hz4dDOLYQlQPzDOo+fE1CzDTD@nongnu.org
-X-Gm-Message-State: AOJu0YzzF+oTN8UVtfCbn2ZZFmqE8EMqACSPvUEn1DljiMqH6Sk5E/iQ
- BGbxsbk9wiJEBkIEkw30geH34xYomhiA2hzBC/580gkfOfiN/iJVnB5+tXMzG3xkea9LpN+4gXC
- Cb8/rv//1n7DJZi6m8pf2XyXXhHHpBiFv
-X-Gm-Gg: ASbGncu41q2yQW/7Mq0DpmrdxYEK31EyPbQSgwqgL2WRKu+rJeBwrMr/QcEunzjk4cL
- BiwYFFCg7NAqYq3/Y/Jaa3msfA2wZpQ06qW8m5Wreh3WYGx5IjxBQ1Jy+766YYUea3N7tfyJWE8
- cbUkMmw4AMnaS64btgo0W6
-X-Google-Smtp-Source: AGHT+IFW/6xZKY6SZvyON9tDvosbGBxLEd7NPvWo1i2z+GH7bL8TfVF6jl3GL2ZZrUTt/8oV8sMAVTIr5wCtBnkdu1k=
-X-Received: by 2002:a17:907:9717:b0:ac7:971b:ffd with SMTP id
- a640c23a62f3a-ace570e7e04mr196665366b.10.1745487720236; Thu, 24 Apr 2025
- 02:42:00 -0700 (PDT)
+ AJvYcCWASz1vuAik/gdQoUz5lD76tfTQP9tbLzP66AXeG/LaFvPXy9NA0sKrwdZ5EP2d7dgLAT7HlNN2ui33@nongnu.org
+X-Gm-Message-State: AOJu0Yyis9FvGnZDmBRXjCd4kmHAziz/CfuuieLIXh+S1Nbk50b9EYy7
+ +Yu/2IVULpdYfokopATuiiu8z/GXP9gd5B1d5jzu+P9FBmEaYH/OjPDxVH1tkAI=
+X-Gm-Gg: ASbGncu2IOdM8VsFhlbHtj9+taXSty6GHshSauQTBdsCpz7TYaA/LHgf8rv73bCgqZv
+ qutKzEiRNFH23EjqLSkMlNYbaxjefDk4upmhcsEDWdqYcBYZs1bSiz4g6O8eZxQn8/H21fJtNAe
+ VFNgrk/Cuzk9iFEaOdSFdgdcg6Nfegr86clftTOpCbB16Batms8Cg0ZpHgFUV28jysqXr2VrEGD
+ os+HZUvZxkx6097/MGBDyYH8WHe1xGXkCyssWOIghgqc+nU7KVOtWmpsk1va7S/Ng1cIE637RVW
+ lP2yHhlw8bZp3+ex93omcb+F6UWuHvvHY0zhWXeBeleMSw++cD2U+F4vJb8qSmImeYrsD+LB4vo
+ vvB1CW0Hurf+YGA==
+X-Google-Smtp-Source: AGHT+IGan+37u5SADb6soRFj9z37vpM1/o8/D2GcotlylOvkSNWuO9WjyQhuG64MnjHbsQrzL3se2A==
+X-Received: by 2002:a05:600c:1f0c:b0:43d:fa5d:9315 with SMTP id
+ 5b1f17b1804b1-4409bdaafb1mr16343925e9.33.1745487920708; 
+ Thu, 24 Apr 2025 02:45:20 -0700 (PDT)
+Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4409d2a2f3csm14089455e9.11.2025.04.24.02.45.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Apr 2025 02:45:19 -0700 (PDT)
+Message-ID: <2838b73d-6d03-4846-b953-5b1318a62844@linaro.org>
+Date: Thu, 24 Apr 2025 11:45:19 +0200
 MIME-Version: 1.0
-References: <20250423110630.2249904-1-dbarboza@ventanamicro.com>
- <20250423110630.2249904-10-dbarboza@ventanamicro.com>
-In-Reply-To: <20250423110630.2249904-10-dbarboza@ventanamicro.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 24 Apr 2025 19:11:47 +0930
-X-Gm-Features: ATxdqUE8YufjUrf9n9XYZpp_BLp_ngoi5NYffiCfmTYWZCXkBTFHhlcDnw3BBNY
-Message-ID: <CACPK8Xei9L_82YV7+wPmTacEh2MNLFticOEny_6kSM9miCAt2w@mail.gmail.com>
-Subject: Re: [PATCH 9/9] hw/riscv/virt.c: remove 'long' casts in fmt strings
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=joel.stan@gmail.com; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 14/15] include/exec: Move tb_invalidate_phys_range to
+ translation-block.h
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250424011918.599958-1-richard.henderson@linaro.org>
+ <20250424011918.599958-15-richard.henderson@linaro.org>
+ <d48bfcaa-5d98-41cf-9ab0-829ba5f8bdd7@linaro.org>
+ <35f49ccb-05fc-4143-9af1-c4a43e83d293@linaro.org>
+ <52a40a95-97cb-47fd-8cf7-05dbfbde2601@linaro.org>
+Content-Language: en-US
+In-Reply-To: <52a40a95-97cb-47fd-8cf7-05dbfbde2601@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,34 +105,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 23 Apr 2025 at 20:39, Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> We can avoid the 'long' casts by using PRIx64 and HWADDR_PRIx on the fmt
-> strings for uint64_t and hwaddr types.
->
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+On 24/4/25 09:48, Philippe Mathieu-Daudé wrote:
+> On 24/4/25 09:36, Philippe Mathieu-Daudé wrote:
+>> On 24/4/25 09:33, Philippe Mathieu-Daudé wrote:
+>>> On 24/4/25 03:19, Richard Henderson wrote:
+>>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>>> ---
+>>>>   include/exec/exec-all.h          | 4 ----
+>>>>   include/exec/translation-block.h | 4 ++++
+>>>>   2 files changed, 4 insertions(+), 4 deletions(-)
+>>>>
+>>>> diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+>>>> index 24383b6aba..90986152df 100644
+>>>> --- a/include/exec/exec-all.h
+>>>> +++ b/include/exec/exec-all.h
+>>>> @@ -120,10 +120,6 @@ int probe_access_full_mmu(CPUArchState *env, 
+>>>> vaddr addr, int size,
+>>>>   #endif /* !CONFIG_USER_ONLY */
+>>>>   #endif /* CONFIG_TCG */
+>>>> -/* TranslationBlock invalidate API */
+>>>> -void tb_invalidate_phys_range(CPUState *cpu, tb_page_addr_t start,
+>>>> -                              tb_page_addr_t last);
+>>>> -
+>>>>   #if !defined(CONFIG_USER_ONLY)
+>>>
+>>> We don't need to include "exec/translation-block.h" anymore, please 
+>>> remove it.
+>>
+>> To squash:
+>>
+>> -- >8 --
+>> diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+>> index 90986152df3..4c5ad98c6a9 100644
+>> --- a/include/exec/exec-all.h
+>> +++ b/include/exec/exec-all.h
+>> @@ -22,4 +22,6 @@
+>>
+>> +#include "exec/hwaddr.h"
+>> +#include "exec/memattrs.h"
+>>   #include "exec/mmu-access-type.h"
+>> -#include "exec/translation-block.h"
+>> +#include "exec/vaddr.h"
+>>
+>> ---
+>>
+> 
+> and because "exec/translation-block.h" includes "exec/cpu-common.h":
+> 
+> -- >8 --
+> diff --git a/accel/stubs/tcg-stub.c b/accel/stubs/tcg-stub.c
+> index b2b9881bdfb..3b76b8b17c1 100644
+> --- a/accel/stubs/tcg-stub.c
+> +++ b/accel/stubs/tcg-stub.c
+> @@ -13,4 +13,3 @@
+>   #include "qemu/osdep.h"
+> -#include "exec/tb-flush.h"
+> -#include "exec/exec-all.h"
+> +#include "exec/cpu-common.h"
+> 
 > ---
->  hw/riscv/virt.c | 29 +++++++++++++++--------------
->  1 file changed, 15 insertions(+), 14 deletions(-)
->
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 036a0a9bfb..075c035f25 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -309,7 +309,7 @@ static void create_fdt_socket_memory(RISCVVirtState *s, int socket)
->
->      addr = s->memmap[VIRT_DRAM].base + riscv_socket_mem_offset(ms, socket);
->      size = riscv_socket_mem_size(ms, socket);
-> -    mem_name = g_strdup_printf("/memory@%lx", (long)addr);
-> +    mem_name = g_strdup_printf("/memory@%"PRIx64, addr);
 
-I wondered why this wasn't a HWADDR_PRIx.
-
-addr (and NodeInfo::node_mem?) could be a hwaddr? That would make
-everything more consistent.
-
-Cheers,
-
-Joel
+FYI I'll repost this patch updated as v2.
 
