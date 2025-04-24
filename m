@@ -4,82 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F44CC369D7
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 10:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 816C5C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 10:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7uAS-0000W8-GE; Thu, 24 Apr 2025 06:50:56 -0400
+	id 1u7uDI-0001N4-Um; Thu, 24 Apr 2025 06:53:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u7uA2-0000Tk-Jm; Thu, 24 Apr 2025 06:50:33 -0400
-Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u7uA0-0000u2-FH; Thu, 24 Apr 2025 06:50:30 -0400
-Received: by mail-ua1-x936.google.com with SMTP id
- a1e0cc1a2514c-86dc3482b3dso2279108241.0; 
- Thu, 24 Apr 2025 03:50:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745491827; x=1746096627; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R7AlI3C+LjjGhHkNYleiXqOdDuGD5iVehVUi/xQsgYQ=;
- b=H7gifleQnXbUCHHqkaPwC7aN7J+AaG4gs3ZkR9ZXRU5gUiw2Sahmmcn3gukG4wnLn+
- sCKgrT61Y761/5Z2lny2/54r5hQlH7cR+5G+7C4B0Gr8rgWsxhRoU7XVRqOnHgdLQrjZ
- ca/B/d8Yw1Rxm1ktv+QnV6cHTtuewMnqlDWB4SI4cn0oLjLBrJSTiOLNvQ75gqC2dZ3v
- 6UXgxKu6Ha53hw5CkscEeROCMZ2lVGnYYERJwykkVN5jv7/bkGwfr9HUL9SSb3rUb2Hk
- 2DiTnQh4tLKz3pgMCImY5PCZmW8EI3pJ9gvE/HPeNESfaCTNrTgc3g9GUIT0gc46PgxB
- URmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745491827; x=1746096627;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=R7AlI3C+LjjGhHkNYleiXqOdDuGD5iVehVUi/xQsgYQ=;
- b=JRfe8cM2vfA72cuJGBYivtqkjCq3LW261lrbI4tP9eXJUAcT7hM1GDRRhB4ZIbFDvy
- Vzlp3BMllsTRxOPIHHDYNM32ALrXT6RnrdxcUL4H9g0wh/Hb9kuYfMo6vQbKqbpHD/ly
- wr8qTp2oV5ZtqnnbtgIhugAseCEAE3b33gD8rf/7pQO/9aD5SZ8OgTSVtmMVr0j9qSK8
- NO6LfNapCMHlxQbqpzOAspCD7g0CKtQNoxNNEd3kdpeGORsiqbtGx6/MHpGh93BRjWNs
- QECZj2RF/Qx2HRt5vkbg8sZO80wF4DcUGI6Itr7bfec28Grz3Gqbn5F2so5EBLlp35GH
- 9UuA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVC4MAz7A1wXYf82SmDPk12mHcVBZehp6nP6za2AsZYSGm91IOGseTyjuBTL2w/sC8PzkDDIwHiSCnX@nongnu.org
-X-Gm-Message-State: AOJu0Ywqpe00WWAwx6uQBGIXsvE9Pdqh2bCni7qh4N8+uWX80R9ygIVF
- V+wrZMhhyW+DRZExR1OwaoSu6sI6Ntw5LRupizReWGmeud52buHxkgJHLrS0qbJ/GRHiYhBe1tu
- goB6dRX4wk6IlOONm7fwHMSH7QrM=
-X-Gm-Gg: ASbGncvAHXVtOjpCI0RSZsH+99Q2FUr82mCx5LRCQq1H/8wURP1+f6+qp/UpJ+FMV+Z
- AkpFmvhDEl2upk5lsbYMYZkPWFpXNVQWRHFxNlUcvf1B3torJK968tmeB7eamgCly9NrwGJnI8w
- e7eW5KtN2Zg0sCbspUADsiw+MjXO9UcY+jbpVugdQfeN+/PsjAvmWK
-X-Google-Smtp-Source: AGHT+IEpNZqTQEK1e/kOtUwWtmwhUNa5dxy15CFlXjOzN5JlDNNkaPdso5+S/iWpqboVtEdYX2PfiuPJwPz7VR5Sqz8=
-X-Received: by 2002:a05:6102:161e:b0:4c3:64c0:8b14 with SMTP id
- ada2fe7eead31-4d3c73f1c0amr831771137.3.1745491826535; Thu, 24 Apr 2025
- 03:50:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1u7uDF-0001MX-UQ
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 06:53:50 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1u7uDD-00018o-2a
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 06:53:49 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Zjt5R5Sgxz6M4Qg;
+ Thu, 24 Apr 2025 18:49:31 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 6E48D1400DB;
+ Thu, 24 Apr 2025 18:53:42 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 24 Apr
+ 2025 12:53:38 +0200
+Date: Thu, 24 Apr 2025 11:53:37 +0100
+To: <anisa.su887@gmail.com>
+CC: <qemu-devel@nongnu.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
+ <linux-cxl@vger.kernel.org>, Anisa Su <anisa.su@samsung.com>
+Subject: Re: [PATCH 4/9] cxl-mailbox-utils: 0x5601 - FMAPI Get Host Region
+ Config
+Message-ID: <20250424115337.00006768@huawei.com>
+In-Reply-To: <20250317164204.2299371-5-anisa.su887@gmail.com>
+References: <20250317164204.2299371-1-anisa.su887@gmail.com>
+ <20250317164204.2299371-5-anisa.su887@gmail.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20250408022121.173531-1-huangborong@bosc.ac.cn>
-In-Reply-To: <20250408022121.173531-1-huangborong@bosc.ac.cn>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 24 Apr 2025 20:49:59 +1000
-X-Gm-Features: ATxdqUG_-rriHUqaJ_R8HY3BeswBWj6YDhMGoIY9Ad4qjWkw4XiBhUurVUYlvUo
-Message-ID: <CAKmqyKOwbLJrRTkVrGO8+Kd-5SAEj1GU7ToytB8b66b_gbADHg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] target/riscv: Add BOSC's Xiangshan Kunminghu CPU
-To: Huang Borong <huangborong@bosc.ac.cn>
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
- liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- qemu-devel@nongnu.org, wangran@bosc.ac.cn
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x936.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,156 +68,175 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 8, 2025 at 12:23=E2=80=AFPM Huang Borong <huangborong@bosc.ac.c=
-n> wrote:
->
-> Add a CPU entry for the Xiangshan Kunminghu CPU, an open-source,
-> high-performance RISC-V processor. More details can be found at:
-> https://github.com/OpenXiangShan/XiangShan
->
-> Note: The ISA extensions supported by the Xiangshan Kunminghu CPU are
-> categorized based on four RISC-V specifications: Volume I: Unprivileged
-> Architecture, Volume II: Privileged Architecture, AIA, and RVA23. The
-> extensions within each category are organized according to the chapter
-> order in the specifications.
->
-> Signed-off-by: Yu Hu <huyu@bosc.ac.cn>
-> Signed-off-by: Ran Wang <wangran@bosc.ac.cn>
-> Signed-off-by: Borong Huang <huangborong@bosc.ac.cn>
+On Mon, 17 Mar 2025 16:31:31 +0000
+anisa.su887@gmail.com wrote:
+
+> From: Anisa Su <anisa.su@samsung.com>
+> 
+> FM DCD Management command 0x5601 implemented per CXL r3.2 Spec Section 7.6.7.6.2
+> 
+> Signed-off-by: Anisa Su <anisa.su@samsung.com>
+Hi Anisa,
+
+Just a few trivial things in here.
+
 > ---
->  target/riscv/cpu-qom.h |  1 +
->  target/riscv/cpu.c     | 72 ++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 73 insertions(+)
->
-> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-> index 4cfdb74891..f2908939e7 100644
-> --- a/target/riscv/cpu-qom.h
-> +++ b/target/riscv/cpu-qom.h
-> @@ -53,6 +53,7 @@
->  #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
->  #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon"=
-)
->  #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-n=
-anhu")
-> +#define TYPE_RISCV_CPU_XIANGSHAN_KMH    RISCV_CPU_TYPE_NAME("xiangshan-k=
-unminghu")
->  #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
->
->  OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 09ded6829a..a076d9dc0c 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -697,6 +697,76 @@ static void rv64_xiangshan_nanhu_cpu_init(Object *ob=
-j)
->  #endif
+>  hw/cxl/cxl-mailbox-utils.c | 97 ++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 97 insertions(+)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index e9991fd1a7..4bb51bf3e8 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -124,6 +124,7 @@ enum {
+>          #define GET_MHD_INFO 0x0
+>      FMAPI_DCD_MGMT = 0x56,
+>          #define GET_DCD_INFO 0x0
+> +        #define GET_HOST_DC_REGION_CONFIG 0x1
+>  };
+>  
+>  /* CCI Message Format CXL r3.1 Figure 7-19 */
+> @@ -3399,6 +3400,100 @@ static CXLRetCode cmd_fm_get_dcd_info(const struct cxl_cmd *cmd,
+>      return CXL_MBOX_SUCCESS;
 >  }
->
-> +static void rv64_xiangshan_kmh_cpu_init(Object *obj)
+>  
+> +/*
+> + * CXL r3.2 section 7.6.7.6.2: Get Host DC Region Configuration (Opcode 5601h)
+> + */
+> +static CXLRetCode cmd_fm_get_host_dc_region_config(const struct cxl_cmd *cmd,
+> +                                                   uint8_t *payload_in,
+> +                                                   size_t len_in,
+> +                                                   uint8_t *payload_out,
+> +                                                   size_t *len_out,
+> +                                                   CXLCCI *cci)
 > +{
-> +    CPURISCVState *env =3D &RISCV_CPU(obj)->env;
-> +    RISCVCPU *cpu =3D RISCV_CPU(obj);
+> +    struct {
+> +        uint16_t host_id;
+> +        uint8_t region_cnt;
+> +        uint8_t start_rid;
+> +    } QEMU_PACKED *in;
+
+= (void *)payload_in;
+
+> +    struct {
+> +        uint16_t host_id;
+> +        uint8_t num_regions;
+> +        uint8_t regions_returned;
+> +        struct {
+> +            uint64_t base;
+> +            uint64_t decode_len;
+> +            uint64_t region_len;
+> +            uint64_t block_size;
+> +            uint8_t dsmas_flags;
+> +            uint8_t rsvd1[3];
+> +            uint8_t sanitize;
+> +            uint8_t rsvd2[3];
+> +        } QEMU_PACKED records[];
+> +    } QEMU_PACKED *out;
+
+= (void *)payload_out;
+
+> +    struct {
+> +        uint32_t num_extents_supported;
+> +        uint32_t num_extents_available;
+> +        uint32_t num_tags_supported;
+> +        uint32_t num_tags_available;
+> +    } QEMU_PACKED *extra_out;
+> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> +    uint16_t record_count, out_pl_len, i;
+> +    uint8_t start_rid;
 > +
-> +    riscv_cpu_set_misa_ext(env, RVG | RVC | RVB | RVS | RVU | RVH | RVV)=
-;
-> +    env->priv_ver =3D PRIV_VERSION_1_13_0;
+> +    if (ct3d->dc.num_regions == 0) {
+
+As in earlier patch - we don't register these commands
+at all unless num_regions > 0 so probably don't need this
+check.
+
+> +        return CXL_MBOX_UNSUPPORTED;
+> +    }
 > +
-> +    /* Enable ISA extensions */
-> +    cpu->cfg.mmu =3D true;
-> +    cpu->cfg.pmp =3D true;
+> +    in = (void *)payload_in;
+> +    if (in->start_rid >= ct3d->dc.num_regions) {
+> +        return CXL_MBOX_INVALID_INPUT;
+> +    }
 > +
+> +    start_rid = in->start_rid;
+
+The saving in characters for having the local variable doesn't seem
+worthwhile to me.  I'd just in->start_rid where ever you need it.
+
+> +    record_count = MIN(ct3d->dc.num_regions - start_rid, in->region_cnt);
+> +
+> +    out = (void *)payload_out;
+> +    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
+> +
+> +    extra_out = (void *)(out) + out_pl_len;
+
+Do we need the brackets around out?
+
+> +    out_pl_len += sizeof(*extra_out);
+> +
+> +    assert(*len_out <= CXL_MAILBOX_MAX_PAYLOAD_SIZE);
+> +
+> +    /* TODO: For now, fix host id to be 0 */
+> +    stw_le_p(&out->host_id, 0);
+> +    out->num_regions = ct3d->dc.num_regions;
+> +    out->regions_returned = record_count;
+> +
+> +    for (i = 0; i < record_count; i++) {
+> +        stq_le_p(&out->records[i].base,
+> +                 ct3d->dc.regions[start_rid + i].base);
+> +        stq_le_p(&out->records[i].decode_len,
+> +                 ct3d->dc.regions[start_rid + i].decode_len /
+> +                 CXL_CAPACITY_MULTIPLIER);
+> +        stq_le_p(&out->records[i].region_len,
+> +                 ct3d->dc.regions[start_rid + i].len);
+> +        stq_le_p(&out->records[i].block_size,
+> +                 ct3d->dc.regions[start_rid + i].block_size);
+> +        out->records[i].dsmas_flags =
+> +            ct3d->dc.regions[start_rid + i].dsmas_flags;
+
+As in previous patch. I'd build this here from specific booleans
+as the relationship to the dmsas flags isn't defined that tightly.
+
+
+> +        out->records[i].sanitize = 0;
+> +    }
 > +    /*
-> +     * The RISC-V Instruction Set Manual: Volume I
-> +     * Unprivileged Architecture
+> +     * TODO: Assign values once extents and tags are introduced
+> +     * to use.
 > +     */
-> +    cpu->cfg.ext_zicntr =3D true;
-> +    cpu->cfg.ext_zihpm =3D true;
-> +    cpu->cfg.ext_zihintntl =3D true;
-> +    cpu->cfg.ext_zihintpause =3D true;
-> +    cpu->cfg.ext_zimop =3D true;
-> +    cpu->cfg.ext_zcmop =3D true;
-> +    cpu->cfg.ext_zicond =3D true;
-> +    cpu->cfg.ext_zawrs =3D true;
-> +    cpu->cfg.ext_zacas =3D true;
-> +    cpu->cfg.ext_zfh =3D true;
-> +    cpu->cfg.ext_zfa =3D true;
-> +    cpu->cfg.ext_zcb =3D true;
-> +    cpu->cfg.ext_zbc =3D true;
-> +    cpu->cfg.ext_zvfh =3D true;
-> +    cpu->cfg.ext_zkn =3D true;
-> +    cpu->cfg.ext_zks =3D true;
-> +    cpu->cfg.ext_zkt =3D true;
-> +    cpu->cfg.ext_zvbb =3D true;
-> +    cpu->cfg.ext_zvkt =3D true;
+> +    stl_le_p(&extra_out->num_extents_supported, CXL_NUM_EXTENTS_SUPPORTED);
+> +    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED -
+> +             ct3d->dc.total_extent_count);
+> +    stl_le_p(&extra_out->num_tags_supported, CXL_NUM_TAGS_SUPPORTED);
+> +    stl_le_p(&extra_out->num_tags_available, CXL_NUM_TAGS_SUPPORTED);
 > +
-> +    /*
-> +     * The RISC-V Instruction Set Manual: Volume II
-> +     * Privileged Architecture
-> +     */
-> +    cpu->cfg.ext_smstateen =3D true;
-> +    cpu->cfg.ext_smcsrind =3D true;
-> +    cpu->cfg.ext_sscsrind =3D true;
-> +    cpu->cfg.ext_svnapot =3D true;
-> +    cpu->cfg.ext_svpbmt =3D true;
-> +    cpu->cfg.ext_svinval =3D true;
-> +    cpu->cfg.ext_sstc =3D true;
-> +    cpu->cfg.ext_sscofpmf =3D true;
-> +    cpu->cfg.ext_ssdbltrp =3D true;
-> +    cpu->cfg.ext_ssnpm =3D true;
-> +    cpu->cfg.ext_smnpm =3D true;
-> +    cpu->cfg.ext_smmpm =3D true;
-> +    cpu->cfg.ext_sspm =3D true;
-> +    cpu->cfg.ext_supm =3D true;
+> +    *len_out = out_pl_len;
 > +
-> +    /* The RISC-V Advanced Interrupt Architecture */
-> +    cpu->cfg.ext_smaia =3D true;
-> +    cpu->cfg.ext_ssaia =3D true;
-> +
-> +    /* RVA23 Profiles */
-> +    cpu->cfg.ext_zicbom =3D true;
-> +    cpu->cfg.ext_zicbop =3D true;
-> +    cpu->cfg.ext_zicboz =3D true;
-> +    cpu->cfg.ext_svade =3D true;
-> +
-> +#ifndef CONFIG_USER_ONLY
-> +    set_satp_mode_max_supported(cpu, VM_1_10_SV48);
-> +#endif
+> +    return CXL_MBOX_SUCCESS;
 > +}
 > +
+>  static const struct cxl_cmd cxl_cmd_set[256][256] = {
+>      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
+>          cmd_infostat_bg_op_abort, 0, 0 },
+> @@ -3523,6 +3618,8 @@ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
+>  static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+>      [FMAPI_DCD_MGMT][GET_DCD_INFO] = { "GET_DCD_INFO",
+>          cmd_fm_get_dcd_info, 0, 0},
+> +    [FMAPI_DCD_MGMT][GET_HOST_DC_REGION_CONFIG] = { "GET_HOST_DC_REGION_CONFIG",
+> +        cmd_fm_get_host_dc_region_config, 4, 0},
+Space before }
 
-Sorry about this, but we just merged a new way of defining CPU types.
-Can you please rebase on
-https://github.com/alistair23/qemu/tree/riscv-to-apply.next to use the
-new macros? It shouldn't be much work, just a little restructuring.
+Check for any other instances of this in the rest of the series.
 
-When sending a new version can you also include a cover letter [1]
+>  };
+>  
+>  /*
 
-1: https://www.qemu.org/docs/master/devel/submitting-a-patch.html#include-a=
--meaningful-cover-letter
-
-Alistair
-
->  #ifdef CONFIG_TCG
->  static void rv128_base_cpu_init(Object *obj)
->  {
-> @@ -3261,6 +3331,8 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_VEYRON_V1,  MXL_RV64,  rv64_veyron_=
-v1_cpu_init),
->      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU,
->                                                   MXL_RV64, rv64_xiangsha=
-n_nanhu_cpu_init),
-> +    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_KMH,
-> +                                                 MXL_RV64,  rv64_xiangsh=
-an_kmh_cpu_init),
->  #ifdef CONFIG_TCG
->      DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE128,   MXL_RV128, rv128_base_c=
-pu_init),
->  #endif /* CONFIG_TCG */
-> --
-> 2.34.1
->
->
 
