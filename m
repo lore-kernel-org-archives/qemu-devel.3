@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64337C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 22:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18EEFC369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 22:46:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u85Ij-0007ye-Jf; Thu, 24 Apr 2025 18:44:13 -0400
+	id 1u85KB-0000eH-5k; Thu, 24 Apr 2025 18:45:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u85Ih-0007xq-L0
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 18:44:11 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u85K5-0000dr-EO
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 18:45:39 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u85Ig-0003NE-1U
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 18:44:11 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-22da3b26532so15818225ad.0
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 15:44:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u85K3-0003fS-Rf
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 18:45:37 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43cf628cb14so20701175e9.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 15:45:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745534648; x=1746139448; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1745534734; x=1746139534; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=rQyDHhkjA658UuKEvQ7B6SS/XyrYuPQZsyvOCKVGiNY=;
- b=TbA6zJlUGjZkdbMWcspSm6x0pM1fAM/ENBfRVWj91QC6TT4QEdRc4S5QxzuXi7q6w5
- LyrJ8PLj4/WskizYZpZzCQcdPSDwbqnKlyUyctzZBpE8sPmYoD7Y8pZbOKmliIWtXyBG
- 8pKGA1EovZZ7yf5JZ1J3Ab6fQQ2izRj3FA+ykDODeA2HxnFEVwzy5+gwa0Z1EVRQn8O3
- 0J0pqDVPD161I0GTxEem+QRu1+y22WJpIsSWk2Q72qxRoxobBauXVoRXVEdyqW7Qr44p
- eSTAxPZchXoOXSTGXAKrb24EmOtLEtLrKP/GfPegPoNYgY2ZQmf4QNyOTBOVtIzKFsqY
- TEDA==
+ bh=a23LylhXPo5J2+R6wCgy8Oo8RQAHxtHJHLsuyq6Plyo=;
+ b=ye6gg5YH9PDLTXfZifviZyIhusfA1vw+Qy5kxcu4QemxfJCiSqdKxqA2oXUMHVpnRW
+ FsKjYJGENIu9jvPTvtbVwifZr+R8aBsf7xHg4VQmaFzsLcNuXAZLjvQMFtB4mJH8Fqz5
+ v9dQIKlLcXDG/d3LQk6ggpSC8zDNyaKIfu2xO5xJcZpNGUTNOgzk3gZw4tIR52fe/eI6
+ ZYN/YJvCI+lASIjx4dHHJoWGuZVBTU1OmpJJ90zVI+kJPkEilZms2CqUEr2xMuownBDQ
+ 1eRhzhVBZTGmIe55h/inylQx0Vjs4xcv2grI9EqqMFtGt4mGMyOQu3p1WWOT00P/Sz2w
+ mORA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745534648; x=1746139448;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1745534734; x=1746139534;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rQyDHhkjA658UuKEvQ7B6SS/XyrYuPQZsyvOCKVGiNY=;
- b=JZKckw5I6jIwInHnOgyfhL/lRA61yMDeej30Z01GAHMC4/7IhDjpfc0iYkaSWYwefu
- gVhzTPOn2WqxBJ2US//nnC9bM6NGfkBVQ0pd5NeMUEmgEscLkh7cuexrwNwLmyMavbPo
- uuYUdb11ysG544VbCw5MgtaQY8V3XNYtov5N3/cGAhJQL7liHF9JUpKsx7WD0zSG7iKT
- QCCglmuqlNG3xccrT9tMO3jc5+a+NqLdP1nd2uQrodDwwCXapM8LoTox8CfdM8W7lh3V
- gwikLIadQHYihU/p9WukayZH/csGfdim0busdyY2T2iy034V4HYvRVg5o8BGouNf0KRy
- u5Iw==
+ bh=a23LylhXPo5J2+R6wCgy8Oo8RQAHxtHJHLsuyq6Plyo=;
+ b=s70kYa5JagyrSPhqtp7LQFUa73vJ3dmaWd0Et/16dTxHvv9JURl1Q/IajJdbWQKd4x
+ y+gzkxXSBR0O9X8iZqzw6bNEI3zR2+26e/nx5qo3o+PYDWctfrxs2tioIve1eDQkaWhT
+ v+hD4nN3ofC5T9P5oaQjxOBgol8qZ9Gq7Cx9tLntrVaejXJfRQTYgV+6xVF5IBb6k0UZ
+ IV3BBrALmkduC+9gmK12T5jDdkYpzXK3EAYZLK1wrNj7VmK+Txzw7DnSPDsjYjWQcwuv
+ ra7TiBTilL85+Wr6kQkWfKIFx4j5DKms+i4Ux4RE2OYHzdshSgGms0P0oV9L7IUQkKcH
+ cIrQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVvC3Yd7SOAcj7qXY7UlHmTPZMBWdX/Fo4lbIGubudJm30OeA691FJZSblJhtItFDsvrX/rnNl8Rcuk@nongnu.org
-X-Gm-Message-State: AOJu0Ywn7psqeG+9dmqZv/wNmevMUBNkTmt4ufO07XevjBqEHBvsMHTl
- psE+cfRbmOahepizb8mP1YAwyU1pKCHDQgEEeg1ZMsbH3NJVD2qmD1xhQkLpfcM=
-X-Gm-Gg: ASbGncvDIIbittOm2l3i8SHyG32CqqGk4RtlmoSNgFVIHArPRI7UOwtYaWs8c8MjpkV
- 1cOyxtxrA2Pe44rC8yBLRMA9KXx2mW4H3w6gs9lf4x2pX254LSblazJuuVtqpDxcr8jh8XbDqau
- fbHj1jNDZe0YVwrCgmeumOTu0S+t6Mlh1uc7hP5G3RIVU+puoiQSg/eeV9z3esJWTqhyLC+EyzC
- Gn5ElzE8CLm7kn6Ar9fw9IXyx9YLaDLuuJgfVUm8D43N/IHMD1SVenqhykDzi2/7Bjn/qvpE3AI
- SHOX0JWLjbtImab+B8b7m/eHk2EfsD5tM4m3iQ4eR1mZa9sG/g5jKg==
-X-Google-Smtp-Source: AGHT+IFOZy+cHRuuI/fEq6UiARqVdgDj7ub9DgTN9Hbg4i/0KB5u4LYK+hPORriZzG8fbaSpjcJSjw==
-X-Received: by 2002:a17:902:ce0f:b0:223:50f0:b97 with SMTP id
- d9443c01a7336-22dbf742de5mr553275ad.52.1745534648690; 
- Thu, 24 Apr 2025 15:44:08 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db5221a82sm19002895ad.257.2025.04.24.15.44.08
+ AJvYcCUiaOJ46ABPV0AcXr5zyjA8LBymk9KN0Cysikifldk9hsWxgI4zuiOlUJ/GOUi9iX0VJIX/Ar4T4S6b@nongnu.org
+X-Gm-Message-State: AOJu0YyHosbPnFnfrNw6nHsw6uiDOZKrgiFBwHweKYaWGTqeA7n04nfA
+ DrRbKXKjTZSOt3UzxcBAu9KI8db/aAqh/9GMy4nhJgy9zMCWEpgmGT1CtwEgkn4cap0jrhcNAvW
+ n
+X-Gm-Gg: ASbGncsBbqwSCDlsW9L4hW3xkbFmDo6buBoyfUTnAOQsv6IvKwTasi88xTcEtUuz9wv
+ nXk2/IX4Y889nsrwtH4zgIIsQ71ruxFx3KHZwhmNPvBI/Hvuab7BVaRju4bEsf6sk+7ZMAlXXSO
+ w7GTt9Wipal92lC2H4TDfPr9WEaDgicEpalLgHUp26DasVNmJzgSW2jwPQSeraM8kcdvsNZ1YpP
+ +trYvOFipUd41x2UoHkfiMDzA6aMWop722p/nyyFF0EWTGLH1XTT8MDFp03kwbwQQH9VaqyUflx
+ 2HGjabusanv1QrMFacQsKje4YOAheeib06ZGm8ut/tVmxf1JgtcipabbjRhVHMpDJSK2dRq/lq+
+ 5t6dEMRiss3ultQkhFD0=
+X-Google-Smtp-Source: AGHT+IHZsg7YqvaEtDrIr0YmcAORkNFOqhtqaQbnmEC4gXzA0JUU6IGiULorbSTcsGcy/uCHHJYO9g==
+X-Received: by 2002:a05:6000:1868:b0:39f:cd2:1fa1 with SMTP id
+ ffacd0b85a97d-3a074cdb94bmr8843f8f.3.1745534733799; 
+ Thu, 24 Apr 2025 15:45:33 -0700 (PDT)
+Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a073ca4e50sm575002f8f.30.2025.04.24.15.45.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 24 Apr 2025 15:44:08 -0700 (PDT)
-Message-ID: <0ef787a9-99ef-4900-b765-475be82d0cd2@linaro.org>
-Date: Thu, 24 Apr 2025 15:44:07 -0700
+ Thu, 24 Apr 2025 15:45:33 -0700 (PDT)
+Message-ID: <ef72c90a-530e-4a29-b7cf-4bb06886f043@linaro.org>
+Date: Fri, 25 Apr 2025 00:45:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v5 07/21] hw/boards: Introduce
- DEFINE_MACHINE_WITH_INTERFACES() macro
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [RFC PATCH v5 08/21] hw/arm: Add DEFINE_MACHINE_[ARM_]AARCH64()
+ macros
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  Anton Johansson <anjo@rev.ng>
 References: <20250424222112.36194-1-philmd@linaro.org>
- <20250424222112.36194-8-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250424222112.36194-8-philmd@linaro.org>
+ <20250424222112.36194-9-philmd@linaro.org>
+ <b9d5b3fa-44bd-4ecd-ab71-9085ffee3717@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <b9d5b3fa-44bd-4ecd-ab71-9085ffee3717@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,15 +107,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/25 15:20, Philippe Mathieu-Daudé wrote:
-> DEFINE_MACHINE_WITH_INTERFACES() is similar to DEFINE_MACHINE()
-> but allows to pass a InterfaceInfo[] pointer.
+On 25/4/25 00:35, Pierrick Bouvier wrote:
+> On 4/24/25 15:20, Philippe Mathieu-Daudé wrote:
+>> A machine defined with the DEFINE_MACHINE_ARM_AARCH64() macro
+>> will be available on qemu-system-arm and qemu-system-aarch64
+>> binaries.
+>>
+>> One defined with DEFINE_MACHINE_AARCH64() will only be available
+>> in the qemu-system-aarch64 binary.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/hw/arm/machines-qom.h | 13 +++++++++++++
+>>   target/arm/machine.c          | 12 ++++++++++++
+>>   2 files changed, 25 insertions(+)
+>>
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/hw/boards.h | 6 +++++-
->   1 file changed, 5 insertions(+), 1 deletion(-)
->
+> I won't block this change as we need to move on, but I still consider we 
+> do a bad compromise between code readability/grepability, to avoid a 
+> code size increase of +0.0005%.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+I know, I'm just trying to keep moving while keeping everybody happy
+(there was no further update on your v4 comments).
+
+> Anyway, we can always change that later when adding a second architecture.
+
+I expect this to not change for (current) homogeneous machines.
+Heterogeneous machines won't use these fixed arrays; there I
+expect compound literals to be more useful.
+
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
+Thanks!
 
