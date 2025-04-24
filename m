@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FF9C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 09:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1BD5C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 09:48:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7tBP-0008OM-0g; Thu, 24 Apr 2025 05:47:51 -0400
+	id 1u7tBE-000836-7J; Thu, 24 Apr 2025 05:47:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7tBK-0008G6-D0
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:47:47 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7tBA-0007zP-R7
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:47:37 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7tBI-0002bD-Fe
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:47:46 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3913958ebf2so621052f8f.3
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 02:47:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u7tB9-0002at-4h
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:47:36 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-39c0e0bc733so674713f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 02:47:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745488062; x=1746092862; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745488053; x=1746092853; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=twrcSo4HetcJ/tOp7Scc/UtSqix7ipI/uTd3T2r+yek=;
- b=KQj4a+9165+0WLJK0amhTnlftVdqs8UhMSFFrpLbtNEJQF3ZakBUqjlWy1NjQonJlX
- 5shD0YPsnmbVNhPEy7SPoQu9D6jftItLui+lKLVQ9l55b5Eq27XpcQ1is8nSVG/hygo9
- LOM045BPJelje3kO9WljPEfRVz7VBGV4V31ej+IvVtkhPQ/PnZA4MV9JsItJYxcbrsPI
- cg4Epxpz/VeJ3r0RtJZw8NcGw93smClt415urEHBMc7JUSJdCLBuyom4J7Urfj/3V9Yf
- AdLlgm39LUeVtC/RYiv+U7M7VcvnqB/M4UMJ5JOzufjeuZ9h2HnGwldAi0RNtvi9nPKl
- 61dQ==
+ bh=J4J0VMJ6GfvwPK+ehChCjxy21KDTNZZmDYppJFi+hTg=;
+ b=H1KiyEGFkmqo+c9nDMQZx6uDHS+qSZJpXk2DV0id6h9pylbAAsiqTQpH60psywygLH
+ QpmyGbG/rFaW1NIelgKvDoge1DatiKmEIGqndLFkGrs26EJ8+GyEK1PJ2fbO2vqYx/yE
+ WNitpny42D7LsCMHx4bu+EdAlUp9jtjyMiQeV8GcMBDtZgNH1W1IhXwnZfutEBRcWfek
+ ni9l17eEmkrvEzAaMoliT41gUiMKbGS5ChLqiKMkFPfhFifbLaquSxZ8GZny3p/HWUed
+ OLxTguX3RL6NvhXoa0TdLCKHKNJyPlHCWdJbR+bnFJt46BTp2r5jPYAXOLYi4SaunSbd
+ rkig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745488062; x=1746092862;
+ d=1e100.net; s=20230601; t=1745488053; x=1746092853;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=twrcSo4HetcJ/tOp7Scc/UtSqix7ipI/uTd3T2r+yek=;
- b=VvEo197YVQfr5O0JsdWAIvjrd1XmG+wtdOrHtTsRe2pcieGvsC7Pm2BegxWFj3JI0i
- qcf/TmB38xNCOb0gb1Z+RjgFAW7ihv54qUwwi/dOIFDeyydXSg1PE0sO8ACXgtnekUhs
- HIsZHSqfomrAxCAY78k1HoJSXW1dS7j8jqBaG+UQXcKaMFtViQg+bPhbK9WMSCrYNax7
- lmCkJzxY+tRyWFVLK5cw1K6GEN6Y/uCOai6PvR4C48o+QsX74DhvlSijNCHNuqVS8ypb
- sHJyb+6ll/b1iv/hn9tv0G6i5rb4C2NveBrdKcWwpbP5x2npKXxW4o2DB2mkhPGAC3wt
- YaMQ==
-X-Gm-Message-State: AOJu0YzsHK6SCZYPQSXF/nDgU8MHj2ygdGNT2+W/HX63y+12AvH7Hgx3
- 5Id2S/8Rm8LldXL10qrf4bXEDtKZmAQJM8ni+jiBcgZZHRFnaYjeL6pQAeS3/yK4kIzWv6g+0at
- n
-X-Gm-Gg: ASbGncui/ClNjJlR1keS6sJFx+1IoLK6U/ifZpCX3xG2LdudVWGH2J5NTWKxEXZnIhU
- te9BsI4hfLi1FFbXAQMqZFnErVWr/XLnBAY4zU8iFrKfJmg+6Fz2xsv844W6LCQS6QIPFnFO1mK
- en57nLx8XYSAcSoUaLdlBxz5NS9SAU2NH/gdsPOW47fWcHlgDZWNt5JoaBZ9x21ADwqw2TncOih
- GrOYYhsvmCyqDfqvVeumJbg/+UddKQ9bjQtFpT5GHW225QgY7JDj+kkOPR3jMtwJJ09VtRMAYIz
- rv3eUD/GA872kuDCWR23EIU9u8lohHvBr0XPxqOSTX1aYlfWPZR/4LBQ82XuOs7B99/GTB/zwX8
- hT1RuCkFp0KjN9MDIv9Jg
-X-Google-Smtp-Source: AGHT+IHHoEMdE9fsofO98GV+L04/+tSEzxG9XNZ+9y5vjxgGsCY6KW4O2Y/8GTqXJpQJ1QhCA9yP1Q==
-X-Received: by 2002:a05:6000:1ace:b0:39d:8153:fde5 with SMTP id
- ffacd0b85a97d-3a06cf5f447mr1483441f8f.24.1745488062263; 
- Thu, 24 Apr 2025 02:47:42 -0700 (PDT)
+ bh=J4J0VMJ6GfvwPK+ehChCjxy21KDTNZZmDYppJFi+hTg=;
+ b=InZi8lzMLT32px+T6qbHl/sNgEScLHfxRAW+SNZnzM+4nHXGD9dITJuCquRVFl8ScK
+ iOAQ3V3IUza8emLUOazb3Z9WgczHQCxDnI+Asgvbm+NYp0jMft2yjbCzrti9qGJ6eIjS
+ PzTpn5XGiadE9N5gNpa2um7UOWx83xAFzxuWYFWBxC2YwhNwtac7oiplpAaECvlyW8k9
+ guTo2Kh7sgZaBDiVfgBzS5q28llWQUQC6FEsO8VQYdHYyxP1vyvbTNKHz8ARbUisonBW
+ AUNiowE9n9HfL552tzodVk5XgI803OB//rkBe6Z9wU9d+Gzg5d+6QchcpIPNx3BJF2MS
+ q8Aw==
+X-Gm-Message-State: AOJu0Yy1Udhk67+FmoYana7Bg+76jF5Ztt1IFtldKSnP7bEuhq2oxnAB
+ mM60yaalQokuPyGsu7iC+7iM1MuuhSl8BgXy6pObxKHwQ7gEVy9xRxxCR9Fb5GOYpy2XaEOrKX8
+ 1
+X-Gm-Gg: ASbGncv4MftpskZQPJm+IsgkI8nnYJGqqunAi4E8r1331mesmgGjacbrZHfQNWMLymU
+ Rwx8dT6SUG7juqLhHPWeWAvSMFSuDqoUj66dHb3IiGQKsqKSRZptcGWnqTMBn5uDGs+6ZqnZjD3
+ GdfgqScoOntWXNh24UnRySHRn6KGgP9YuBWRvxvNvsP/8976ZE5bgJgj4Kl4GV/Dp/T6rnjcytQ
+ OMDtaMrn4wtuo1vSJD0a+COJ//qrrBsEez4FUnPEGjTwYd51brh1UbAQvKUeZ39DiP/xY/Je0RE
+ uyJrGFr11g/h+ylQNRFP9uX20En0tFFYh+fUH+PrSR5j/O6/AWLchomvcRiRqX7jVpX2yx/bZoM
+ FubHn1OCyAuTT3AolVtnlY+aL20gcjII=
+X-Google-Smtp-Source: AGHT+IE7CAQ+GrbTpu76I4sL5k581SWd2SReA43pqozmu9K6SWlw+XwRclvoLBgxzDhBrJ9APbPW1g==
+X-Received: by 2002:a05:6000:22c6:b0:39e:e438:8e32 with SMTP id
+ ffacd0b85a97d-3a06cfc5d0bmr1187599f8f.55.1745488053012; 
+ Thu, 24 Apr 2025 02:47:33 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a06d54f157sm1538517f8f.98.2025.04.24.02.47.41
+ 5b1f17b1804b1-4409d2a2386sm14204155e9.14.2025.04.24.02.47.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 24 Apr 2025 02:47:41 -0700 (PDT)
+ Thu, 24 Apr 2025 02:47:32 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 10/13] physmem: Move TCG IOMMU methods around
-Date: Thu, 24 Apr 2025 11:46:50 +0200
-Message-ID: <20250424094653.35932-11-philmd@linaro.org>
+Subject: [PATCH v2 08/13] target/hexagon: Include missing 'accel/tcg/getpc.h'
+Date: Thu, 24 Apr 2025 11:46:48 +0200
+Message-ID: <20250424094653.35932-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250424094653.35932-1-philmd@linaro.org>
 References: <20250424094653.35932-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,92 +102,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The next commit will restrict TCG specific code in physmem.c
-using some #ifdef'ry. In order to keep it simple, move
-iotlb_to_section() and memory_region_section_get_iotlb()
-around close together.
+Since the macros.h headers call GETPC(), they need to
+include "accel/tcg/getpc.h", which defines it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- system/physmem.c | 50 ++++++++++++++++++++++++------------------------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ target/hexagon/macros.h       | 1 +
+ target/hexagon/mmvec/macros.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 637f2d85324..ccbeae241c4 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -746,6 +746,31 @@ translate_fail:
-     return &d->map.sections[PHYS_SECTION_UNASSIGNED];
- }
+diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
+index ee3d4c88e7b..6f82277a415 100644
+--- a/target/hexagon/macros.h
++++ b/target/hexagon/macros.h
+@@ -21,6 +21,7 @@
+ #include "cpu.h"
+ #include "hex_regs.h"
+ #include "reg_fields.h"
++#include "accel/tcg/getpc.h"
  
-+MemoryRegionSection *iotlb_to_section(CPUState *cpu,
-+                                      hwaddr index, MemTxAttrs attrs)
-+{
-+    int asidx = cpu_asidx_from_attrs(cpu, attrs);
-+    CPUAddressSpace *cpuas = &cpu->cpu_ases[asidx];
-+    AddressSpaceDispatch *d = cpuas->memory_dispatch;
-+    int section_index = index & ~TARGET_PAGE_MASK;
-+    MemoryRegionSection *ret;
-+
-+    assert(section_index < d->map.sections_nb);
-+    ret = d->map.sections + section_index;
-+    assert(ret->mr);
-+    assert(ret->mr->ops);
-+
-+    return ret;
-+}
-+
-+/* Called from RCU critical section */
-+hwaddr memory_region_section_get_iotlb(CPUState *cpu,
-+                                       MemoryRegionSection *section)
-+{
-+    AddressSpaceDispatch *d = flatview_to_dispatch(section->fv);
-+    return section - d->map.sections;
-+}
-+
- void cpu_address_space_init(CPUState *cpu, int asidx,
-                             const char *prefix, MemoryRegion *mr)
- {
-@@ -1002,14 +1027,6 @@ bool cpu_physical_memory_snapshot_get_dirty(DirtyBitmapSnapshot *snap,
-     return false;
- }
+ #define GET_FIELD(FIELD, REGIN) \
+     fEXTRACTU_BITS(REGIN, reg_field_info[FIELD].width, \
+diff --git a/target/hexagon/mmvec/macros.h b/target/hexagon/mmvec/macros.h
+index bcd4a1e8973..c1a88392c05 100644
+--- a/target/hexagon/mmvec/macros.h
++++ b/target/hexagon/mmvec/macros.h
+@@ -21,6 +21,7 @@
+ #include "qemu/host-utils.h"
+ #include "arch.h"
+ #include "mmvec/system_ext_mmvec.h"
++#include "accel/tcg/getpc.h"
  
--/* Called from RCU critical section */
--hwaddr memory_region_section_get_iotlb(CPUState *cpu,
--                                       MemoryRegionSection *section)
--{
--    AddressSpaceDispatch *d = flatview_to_dispatch(section->fv);
--    return section - d->map.sections;
--}
--
- static int subpage_register(subpage_t *mmio, uint32_t start, uint32_t end,
-                             uint16_t section);
- static subpage_t *subpage_init(FlatView *fv, hwaddr base);
-@@ -2669,23 +2686,6 @@ static uint16_t dummy_section(PhysPageMap *map, FlatView *fv, MemoryRegion *mr)
-     return phys_section_add(map, &section);
- }
- 
--MemoryRegionSection *iotlb_to_section(CPUState *cpu,
--                                      hwaddr index, MemTxAttrs attrs)
--{
--    int asidx = cpu_asidx_from_attrs(cpu, attrs);
--    CPUAddressSpace *cpuas = &cpu->cpu_ases[asidx];
--    AddressSpaceDispatch *d = cpuas->memory_dispatch;
--    int section_index = index & ~TARGET_PAGE_MASK;
--    MemoryRegionSection *ret;
--
--    assert(section_index < d->map.sections_nb);
--    ret = d->map.sections + section_index;
--    assert(ret->mr);
--    assert(ret->mr->ops);
--
--    return ret;
--}
--
- static void io_mem_init(void)
- {
-     memory_region_init_io(&io_mem_unassigned, NULL, &unassigned_mem_ops, NULL,
+ #ifndef QEMU_GENERATE
+ #define VdV      (*(MMVector *restrict)(VdV_void))
 -- 
 2.47.1
 
