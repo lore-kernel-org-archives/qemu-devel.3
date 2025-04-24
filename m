@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 653A8C369CB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:25:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D17D6C369CB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 01:26:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7kwZ-0004HX-PK; Wed, 23 Apr 2025 20:59:59 -0400
+	id 1u7lFq-0003LB-0o; Wed, 23 Apr 2025 21:19:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7ktk-00067M-4F
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:57:05 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1u7lFU-0002pM-Lf
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:19:35 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u7ktf-00058j-CD
- for qemu-devel@nongnu.org; Wed, 23 Apr 2025 20:57:01 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7390d21bb1cso354500b3a.2
- for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 17:56:56 -0700 (PDT)
+ id 1u7lFS-0007BB-Qv
+ for qemu-devel@nongnu.org; Wed, 23 Apr 2025 21:19:32 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-736e52948ebso472487b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 23 Apr 2025 18:19:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745456215; x=1746061015; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745457569; x=1746062369; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pt+LZtoU87+6j1M/e/OdowMEVlWGi1rJeK+HxXV2Kqg=;
- b=ktgCGyQumR6vm0AxNGWcQ22kzh7DiXHnnxw9a/dfNwIscxenOJhp9dfMwNKSwZkFFv
- Y39Z4siBcSwIbRrNQ+ra0DrcCLliaMbxQXHUb2hrdD2x5oGvao2sj1PBmxLXfdvEmmTi
- xJ9ey5XmnlDZlw3XF3BT0Hu8H9Yc6iBZWDwXiKWFJgLOTqQedbGvJ1VEBmcD5OnY7gN+
- 7bOG/kQKiASudXolV+2xBlfkFC83g0ndY535bkqRlZzIiYEBmGfK/JOfGRn6NzE0VA11
- 4H+CpnhJ26Mc7OhOwFpCJwKuZYj8BW3sq3LjBCS+U+oxKxm7dbGdbwDxGzJdXIzlGT/T
- fdHw==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=LvS1n+qlS73FdHFx8FlT1NvgH8GPjz2T857j7hIsMgE=;
+ b=Le0CXtO7ZSS99h/jSYnyJARfse+VkCRNhtDQin/ayT6zpmvyB029Rvy2wmn8Yt2p/d
+ 4n11KPV++Pe3NTfuBCdO/sZ+kuaAXpM6sN0/Y42KeTXciF5IyXwECokSORdwt3jSOqQv
+ +Pk5UlQ55/1yBBM88mDdSiCdWawHcAHwfhv6sv3EMLrFSnvotfXx/3Ex8o7RzNkGcpPm
+ Q0rfEeAwnKmqSETknf4dBiMoQv9v1pelDbuyoYEX83dZF/FT9BJYWJX/6TDGyut5Fqlz
+ Ojt2B7ulDg1+0mVVNcZ6zDWPkIP8dVUaSCZaHiDT1HVK70ERFtTFUQa7zOgyQI9XE/y3
+ GHKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745456215; x=1746061015;
+ d=1e100.net; s=20230601; t=1745457569; x=1746062369;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pt+LZtoU87+6j1M/e/OdowMEVlWGi1rJeK+HxXV2Kqg=;
- b=b+JTiZ2XgynhH63E+TNR6IjTOZD+U4dcUWBpOqHqNcylWXJTryQPKXL5OSrhXUWM25
- u6F03bnSx46t8UwlYq/z1nGRsi+AehBaWv4ED3p78nt546FEMEKszntaphGUBlMctvee
- HRVP6ZykP09pwIlJFGn2FqYE/vAPDMALYJP37OgePH3rrGVS+fCkkUXezE+fVlV1n44o
- QpDzhVkeua4NleTr9HX6h7aRbZnbDJqd+M0d1nGxcM6prXwtB5pnd5bCELpNS9g6VDGh
- dny3ApBAVcKtYgKAqZJQ+qOcRIG1DwxGSiakvo6StCXRQPZc7R7qTbb4Ag7B0tak6XO/
- gp6g==
-X-Gm-Message-State: AOJu0Ywded0PVL1ieqcsSW6/O1MKIWQVAeEHSDWS9nOMP+9jb4cYCJpe
- AriH88+nrjfHQRupJ3js/xdV9IaB+F2QWUdPa41ko0vtb2j51C6UkOWLZGzoYfebjZwOVPPb2J0
- v
-X-Gm-Gg: ASbGncva7W0eVB2fK2oD1h8xQNS98a+ND52H2NsNjMUnWVhEg/Zp3eeE9n8Llt44Awd
- lyjwBpOnRcwfWTOtKb/UV1turI8HD+0JVi/3WpadY0dOtqnbjutGSYZ4TSdjXnQVOQOrjYcMH3S
- vWcgvoxoZS5NICcJAVW4sOpdit/ZyBejhrji/D9pH5UIe3tvitwquaYYe/cBHF4mf7mItgVsjoJ
- w9lP4AgrucWUW6vb0+4UA6QORpt5yMQmflEzY4ilQ98IDVfAUanrJnpCoPq9N4vxZE4ku4qp7Nf
- RbguRGy8R6Xy0CwHFHtOU8mZZEoeSop6qPZRkmcgVWUKQ+1UAn3FfuhCbgJzhEHqsWCL20lUZx3
- reXcmtCfxFA==
-X-Google-Smtp-Source: AGHT+IFf1vZG+MREa78y2983EYQw02+l2V2gKCtyP+5nrwrCU06smrA5H9i3yav2m8YLfaZmEOZk2Q==
-X-Received: by 2002:a05:6a20:d493:b0:1f5:87ea:2a10 with SMTP id
- adf61e73a8af0-20444e7008bmr789020637.9.1745456215547; 
- Wed, 23 Apr 2025 17:56:55 -0700 (PDT)
+ bh=LvS1n+qlS73FdHFx8FlT1NvgH8GPjz2T857j7hIsMgE=;
+ b=LkdKANbi4o+rQdZCPEFkL6GmoH8hrBT5qnIMghfYMUc9O1C/LVlOTTlHVsPy7zktIo
+ oFwFpaGn0yFSYstjQ7WDQ0kJIlQ7yxh7cnUj0HCQFqcS88qg5c/QuLDNAxU8aFwSj3r2
+ vnjzfr7LVc3e8uoxC8qYOd9x3XgIQQElDntOqDebZWNX0Px/ixTA4yZnK5zTNMXoJzU9
+ LbFaotpyXvufvYN+D1HRm1M9i+9O2rBf47ItYk7BapqpOV9USZkgtmlDQkOylW+tcwCl
+ q4k3b7QsGE5YSIbKYQNxqseuPYvNG0KAaoQSDlyqfbviuLLTff3/mzXM3Egz8sflnmA+
+ nhYA==
+X-Gm-Message-State: AOJu0YwWCj2EV2wzo1r10oC7m8/tm7D2T+z+4ph7d7dMKNakiLXHCloE
+ C5e7nuFXFmumGLMNOG6UeEIvT/JR6Qf7Ha7u60y/HAsU17c4wjWoxnrZUq6iUDIxJX7hvGtWgGr
+ Y
+X-Gm-Gg: ASbGncvHDIsSe9AWRys1b6jjZpDC5PxhNTfrunOsLQe0khrIvODLsazTim+HuA8DSaO
+ 3Lk3mTY7nkUp2+nLHqYYTO+fho2VQzSsRe4RIyKpBG38LHQtHt+0LLmjrhk9FNEncxgc7KDgkUw
+ PYS/frj9KykxGcM8yXuWCok5TopACFOQmS2TOCE9AnvGA2hNERJ0WMpKp9yHiCociKTadMtq+G6
+ kVZ1kxZyDl2sTTQx8iTKgBtmslpIvITZd7vDv7eE1DiUFWQFdk/SQmA+ESBAyqgzyUVRIYwxBv0
+ 6Wz70613CyApDzQi3LchDR9ukKbmRVqOxvLDWBu2MdhuGe6nJWSo4FFytJ2v4/fxGAEBT/q35/M
+ =
+X-Google-Smtp-Source: AGHT+IE4W/f9ZtqEvJvGk3pKsHmem/x+QfesC/hXE1eIiy4QB2eKNK1AatJUOG+ajhW+IFVecNpCDg==
+X-Received: by 2002:a05:6a21:516:b0:1fd:e9c8:b8c3 with SMTP id
+ adf61e73a8af0-20444f8b15fmr878044637.26.1745457569049; 
+ Wed, 23 Apr 2025 18:19:29 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b15fa907fcdsm119775a12.54.2025.04.23.17.56.55
+ d2e1a72fcca58-73e25912ef0sm244079b3a.10.2025.04.23.18.19.28
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 17:56:55 -0700 (PDT)
+ Wed, 23 Apr 2025 18:19:28 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 111/148] exec/cpu-all: transfer exec/cpu-common include to
- cpu.h headers
-Date: Wed, 23 Apr 2025 17:48:56 -0700
-Message-ID: <20250424004934.598783-112-richard.henderson@linaro.org>
+Subject: [PATCH 15/15] accel/tcg: Compile tb-maint.c twice
+Date: Wed, 23 Apr 2025 18:19:18 -0700
+Message-ID: <20250424011918.599958-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250424004934.598783-1-richard.henderson@linaro.org>
-References: <20250424004934.598783-1-richard.henderson@linaro.org>
+In-Reply-To: <20250424011918.599958-1-richard.henderson@linaro.org>
+References: <20250424011918.599958-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,302 +99,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250325045915.994760-15-pierrick.bouvier@linaro.org>
 ---
- include/exec/cpu-all.h  | 1 -
- include/exec/cpu_ldst.h | 1 +
- target/alpha/cpu.h      | 1 +
- target/arm/cpu.h        | 1 +
- target/avr/cpu.h        | 1 +
- target/hexagon/cpu.h    | 1 +
- target/hppa/cpu.h       | 1 +
- target/i386/cpu.h       | 1 +
- target/loongarch/cpu.h  | 1 +
- target/m68k/cpu.h       | 1 +
- target/microblaze/cpu.h | 1 +
- target/mips/cpu.h       | 1 +
- target/openrisc/cpu.h   | 1 +
- target/ppc/cpu.h        | 1 +
- target/riscv/cpu.h      | 1 +
- target/rx/cpu.h         | 1 +
- target/s390x/cpu.h      | 1 +
- target/sh4/cpu.h        | 1 +
- target/sparc/cpu.h      | 1 +
- target/tricore/cpu.h    | 1 +
- target/xtensa/cpu.h     | 1 +
- cpu-target.c            | 1 +
- 22 files changed, 21 insertions(+), 1 deletion(-)
+ accel/tcg/tb-hash.h   | 3 +--
+ accel/tcg/tb-maint.c  | 2 --
+ accel/tcg/meson.build | 2 +-
+ 3 files changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index e7c8b8672f..5122fdbee3 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -19,7 +19,6 @@
- #ifndef CPU_ALL_H
- #define CPU_ALL_H
+diff --git a/accel/tcg/tb-hash.h b/accel/tcg/tb-hash.h
+index 3bc5042d9d..f7b159f04c 100644
+--- a/accel/tcg/tb-hash.h
++++ b/accel/tcg/tb-hash.h
+@@ -20,8 +20,7 @@
+ #ifndef EXEC_TB_HASH_H
+ #define EXEC_TB_HASH_H
  
--#include "exec/cpu-common.h"
- #include "hw/core/cpu.h"
- #include "exec/cpu-defs.h"
- 
-diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
-index 77dc5ac61c..63847f6e61 100644
---- a/include/exec/cpu_ldst.h
-+++ b/include/exec/cpu_ldst.h
-@@ -66,6 +66,7 @@
- #error Can only include this header with TCG
- #endif
- 
-+#include "exec/cpu-common.h"
- #include "exec/cpu-ldst-common.h"
- #include "accel/tcg/cpu-mmu-index.h"
- #include "exec/abi_ptr.h"
-diff --git a/target/alpha/cpu.h b/target/alpha/cpu.h
-index 42788a6a0b..fb1d63527e 100644
---- a/target/alpha/cpu.h
-+++ b/target/alpha/cpu.h
-@@ -21,6 +21,7 @@
- #define ALPHA_CPU_H
- 
- #include "cpu-qom.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "qemu/cpu-float.h"
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 958a921490..ee92476814 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -24,6 +24,7 @@
- #include "qemu/cpu-float.h"
- #include "hw/registerfields.h"
- #include "cpu-qom.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "exec/gdbstub.h"
-diff --git a/target/avr/cpu.h b/target/avr/cpu.h
-index c2cc2daa66..a0fb40141a 100644
---- a/target/avr/cpu.h
-+++ b/target/avr/cpu.h
-@@ -22,6 +22,7 @@
- #define QEMU_AVR_CPU_H
- 
- #include "cpu-qom.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "system/memory.h"
-diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-index f78c8f9c2a..e4fc35b112 100644
---- a/target/hexagon/cpu.h
-+++ b/target/hexagon/cpu.h
-@@ -21,6 +21,7 @@
- #include "fpu/softfloat-types.h"
- 
- #include "cpu-qom.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "hex_regs.h"
- #include "mmvec/mmvec.h"
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index dab58c227f..4e72ab025b 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -21,6 +21,7 @@
- #define HPPA_CPU_H
- 
- #include "cpu-qom.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "system/memory.h"
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 778dfd9637..02ea87347a 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -23,6 +23,7 @@
- #include "system/tcg.h"
- #include "cpu-qom.h"
- #include "kvm/hyperv-proto.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "exec/memop.h"
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index a924aa01d7..69117c602a 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -9,6 +9,7 @@
- #define LOONGARCH_CPU_H
- 
- #include "qemu/int128.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "fpu/softfloat-types.h"
-diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
-index 451644a05a..5347fbe397 100644
---- a/target/m68k/cpu.h
-+++ b/target/m68k/cpu.h
-@@ -21,6 +21,7 @@
- #ifndef M68K_CPU_H
- #define M68K_CPU_H
- 
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "qemu/cpu-float.h"
-diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
-index d29681abed..90d820b90c 100644
---- a/target/microblaze/cpu.h
-+++ b/target/microblaze/cpu.h
-@@ -21,6 +21,7 @@
- #define MICROBLAZE_CPU_H
- 
- #include "cpu-qom.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "qemu/cpu-float.h"
- #include "exec/cpu-interrupt.h"
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index 29362498ec..79f8041ced 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -2,6 +2,7 @@
- #define MIPS_CPU_H
- 
- #include "cpu-qom.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/openrisc/cpu.h b/target/openrisc/cpu.h
-index c153823b62..f16a070ef6 100644
---- a/target/openrisc/cpu.h
-+++ b/target/openrisc/cpu.h
-@@ -21,6 +21,7 @@
- #define OPENRISC_CPU_H
- 
- #include "cpu-qom.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "fpu/softfloat-types.h"
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 7489ba9564..aa5df47bda 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -22,6 +22,7 @@
- 
- #include "qemu/int128.h"
- #include "qemu/cpu-float.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "cpu-qom.h"
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 556eda57e9..14a6779b4c 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -23,6 +23,7 @@
- #include "hw/core/cpu.h"
- #include "hw/registerfields.h"
- #include "hw/qdev-properties.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "exec/gdbstub.h"
-diff --git a/target/rx/cpu.h b/target/rx/cpu.h
-index 5f2fcb6656..e2ec78835e 100644
---- a/target/rx/cpu.h
-+++ b/target/rx/cpu.h
-@@ -23,6 +23,7 @@
- #include "hw/registerfields.h"
- #include "cpu-qom.h"
- 
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "qemu/cpu-float.h"
-diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
-index 0a32ad4c61..83d01d5c4e 100644
---- a/target/s390x/cpu.h
-+++ b/target/s390x/cpu.h
-@@ -27,6 +27,7 @@
- 
- #include "cpu-qom.h"
- #include "cpu_models.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "qemu/cpu-float.h"
-diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
-index 18557d8c38..7581f5eecb 100644
---- a/target/sh4/cpu.h
-+++ b/target/sh4/cpu.h
-@@ -21,6 +21,7 @@
- #define SH4_CPU_H
- 
- #include "cpu-qom.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "qemu/cpu-float.h"
-diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index c0aab69b61..b87351a666 100644
---- a/target/sparc/cpu.h
-+++ b/target/sparc/cpu.h
-@@ -3,6 +3,7 @@
- 
- #include "qemu/bswap.h"
- #include "cpu-qom.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "qemu/cpu-float.h"
-diff --git a/target/tricore/cpu.h b/target/tricore/cpu.h
-index cf9dbc6df8..abb9cba136 100644
---- a/target/tricore/cpu.h
-+++ b/target/tricore/cpu.h
-@@ -22,6 +22,7 @@
- 
- #include "cpu-qom.h"
- #include "hw/registerfields.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "qemu/cpu-float.h"
- #include "tricore-defs.h"
-diff --git a/target/xtensa/cpu.h b/target/xtensa/cpu.h
-index 6684631478..c5d2042de1 100644
---- a/target/xtensa/cpu.h
-+++ b/target/xtensa/cpu.h
-@@ -30,6 +30,7 @@
- 
- #include "cpu-qom.h"
- #include "qemu/cpu-float.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
- #include "hw/clock.h"
-diff --git a/cpu-target.c b/cpu-target.c
-index 7f3b244ed1..14cd623bff 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -24,6 +24,7 @@
- #include "qemu/qemu-print.h"
- #include "system/accel-ops.h"
- #include "system/cpus.h"
-+#include "exec/cpu-common.h"
- #include "exec/tswap.h"
- #include "exec/replay-core.h"
+-#include "exec/cpu-defs.h"
+-#include "exec/exec-all.h"
++#include "exec/vaddr.h"
+ #include "exec/target_page.h"
+ #include "exec/translation-block.h"
+ #include "qemu/xxhash.h"
+diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+index cf12a28eab..512dae93bd 100644
+--- a/accel/tcg/tb-maint.c
++++ b/accel/tcg/tb-maint.c
+@@ -20,10 +20,8 @@
+ #include "qemu/osdep.h"
+ #include "qemu/interval-tree.h"
+ #include "qemu/qtree.h"
+-#include "cpu.h"
+ #include "exec/cputlb.h"
  #include "exec/log.h"
+-#include "exec/exec-all.h"
+ #include "exec/page-protection.h"
+ #include "exec/mmap-lock.h"
+ #include "exec/tb-flush.h"
+diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
+index 047afa49a2..3f7b127130 100644
+--- a/accel/tcg/meson.build
++++ b/accel/tcg/meson.build
+@@ -8,6 +8,7 @@ tcg_ss.add(files(
+   'cpu-exec-common.c',
+   'tcg-runtime.c',
+   'tcg-runtime-gvec.c',
++  'tb-maint.c',
+   'translator.c',
+ ))
+ if get_option('plugins')
+@@ -21,7 +22,6 @@ tcg_specific_ss = ss.source_set()
+ tcg_specific_ss.add(files(
+   'tcg-all.c',
+   'cpu-exec.c',
+-  'tb-maint.c',
+   'translate-all.c',
+ ))
+ tcg_specific_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user-exec.c'))
 -- 
 2.43.0
 
