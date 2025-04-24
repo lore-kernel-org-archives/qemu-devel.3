@@ -4,81 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56515C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 19:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88791C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 20:10:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u82Zi-0003Il-9N; Thu, 24 Apr 2025 15:49:34 -0400
+	id 1u82tP-0004vK-P5; Thu, 24 Apr 2025 16:09:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u82ZS-0003Fu-4j
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:49:19 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u82tM-0004ul-Uy
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:09:53 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u82ZP-0001Oy-JA
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 15:49:17 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-39ee682e0ddso981290f8f.1
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 12:49:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u82tL-0003dU-6G
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 16:09:52 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-39c13fa05ebso982818f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 13:09:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745524152; x=1746128952; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zUd7Mrc/+E/RovgnI7dK3dVHrdmGl00mXa1YhnjRtP0=;
- b=NcWyIHvyn0k1fNVghkECPweJkDyk9+vDxUUhRvleGJkgHDcFXf7HplGnynEWSh/1YM
- 4DGRGfUSsVVO1EGWmSp0N5HRqgiRATnoiHFrv5p2HkUJElZXnByxa75df9w+XnTgOkFs
- HjKmA/6seaQ4ZicnfKVo9n2uvLyZxAtsbC6wfTJXtj4Q74gFSYAXtEXr7FOTRJnugP0y
- oN9m1lS6lH/CAiVLiGx+aq2zRzQFhCoqt34OBL1Mf0jXGsax/wIbfAzLgh4VgRIv//xm
- gm0hb3aBw1ZsCremt0Sac67Ztr72mHX2NKGRgtxucsGaCWTX2HToUvzzLhv59OxBZkPE
- AYSQ==
+ d=linaro.org; s=google; t=1745525389; x=1746130189; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=8+rQlfvyCtBXX1W6IWD6rC8OR4JopBwGxSZONYKSWOQ=;
+ b=vDEofP9749Z4IZ7Zt969NCkmzqeOTccvTJvE0/d5ntv2WspRlyB8mAPAOzlQ6WCa42
+ 1OHDD1mdd8LiecsIRO22s/oEXsQz5TfFVZSqkl4IvVIhTAMq2PtPqQFtITQO4IyzUeWf
+ gLtfaGMoL52zh6UU1XEDmoPdjYpOYcC7GkEdyLe7+Se8oQInRU7KeQC3oVmdVoM723mf
+ WD9F3QZYE2jORVMaYDiIY/ENJmVChsMnWATxyPFofvkNoaKxNt1n9GH2/EzgTikRjksE
+ PKLss0R1NEiyOPveIyBEX/fyC4HV4yy2cYUZ+T7Kp0No/7P58xIJRy5NQc98T6QxzWcZ
+ TXZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745524152; x=1746128952;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zUd7Mrc/+E/RovgnI7dK3dVHrdmGl00mXa1YhnjRtP0=;
- b=gzU1Dswb96xfBJMgK7H9UHJQCv3hrAbpg5mu5qDRWy0x2vw6X+UOw9aKYOvN+3Vz5/
- FrrgZNENvvJBmeERxlJHKSvEQpRhRZ35BY83LrOu6a92+kOVZmj4sob2sSg7McN3ZOSt
- BcLhIt6NFoN+WMLV6kydIpY81nVmS6JfaG3wLm83awUAPxjWLO004qqqFc5gTAm62hXG
- eOuSt0+3KbuKjKxzzhk80mQpoURgyN0TgpISdsrSBg0Ah1xsSB1DtAMU6JbujFPivEon
- /asjRSP4jO2Jfs4tZ1ESFhjSpfwbjx57TBTBQglKKSDVOblW6kMZoA/G9GcVmUhkwMDP
- hVjA==
-X-Gm-Message-State: AOJu0YzfOOIfOyw3ntlY0ja5DIg5FN4GCsAoIBZAqaWL3lT03Gw5x918
- L5T1bw3wYKg/hpz7Ngqr2Fql2OhAY9VMjFUDnLfmnhOC9rB7JksFVZK1sIgBPXa1zzFyA8jvSlA
- g
-X-Gm-Gg: ASbGncuQr1CQTswlGv+DxyjbzgMooKEKwnhey/yBFTKxSQNQJDOHhGQb7GoYvI/ezNt
- 6HXvJYcfKgN1puaUt+ktaTW35TXoLvleEYp1upCIkocgPmTeAtk25WnuvW9lRRplKFzY5mzFZ4z
- G3/MIMcaYj2MdlSvQ33F0xXiaKqifk3oUR9DFixyqjUUOzHoTci/dnsEkEBqJMneOow5vn0fLaS
- PgHqtSWZRxqrV/7Fa3gisT70kD/xV/0VHlFzYSRQrhnqUR1CMHRyTpvPLC8gqucrtY0kDjel6Yv
- 6r6tvbW+PG91/j2+9x1zpPyw16dfG8SQhik6B2cwRnqh00sG1dH/FP6qLPlqJ48o0/CiO1oriiM
- cyivdzZdcOcFwk0U=
-X-Google-Smtp-Source: AGHT+IHOoE4sLSqdhiVZjogxJV9oQfLbLPK6smUy//53WGnXLckJQVes4qHnCDKtTdmfkxkj6tK5yw==
-X-Received: by 2002:a5d:64e3:0:b0:39a:c9d9:877b with SMTP id
- ffacd0b85a97d-3a072aa6a1dmr554002f8f.27.1745524152381; 
- Thu, 24 Apr 2025 12:49:12 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1745525389; x=1746130189;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8+rQlfvyCtBXX1W6IWD6rC8OR4JopBwGxSZONYKSWOQ=;
+ b=HcEOSUQD8P23Toil1h6v9M6gjVCE3H5Ksw98pYI4HRdEHWuLa9FvAKLvtXpHD0uWgg
+ p4UHdgP2y8nXnjUJ+TvwsRxe6TPU7Jz+aOn11+o4MrHFgxG21hwGbtqQRCEJKK99CjQx
+ XrfpF/GawefoDxEa85WM1QPPEk/42zEdawxjVuatpP93pr+K8ZrQVVIIXMhSE31eOXEB
+ oLo76Z14+06F45A/wElvaV5YKtYni9baywOLl94o3BtvwhdhdKR/EpLJ+xD+5BjmS4rf
+ AW4qUuFQCsL64AubnszgUF/xZh0lehFQq46sNkaSaSbVXK5ZYm+XWlOZizlZUgcYz1/A
+ lB/g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXpZyBlOfYsstdBltnRzHUZZwcEnoD/O6tzOqER1nlgm2uwvRy6pNj6EXmzNulhiNYQMWTvbamKWppG@nongnu.org
+X-Gm-Message-State: AOJu0YxAW695Mb3mY5xuiVlTUcycaz3V9q8fxE/50nD530ATYZHj3F9A
+ GtPAgdvXHW07w4gWQPfZiIKAp85VEbTUL66pqMKN3GPCXwAzYH+hCFEaoY2RFyg=
+X-Gm-Gg: ASbGnct8SiBQkosi7u+iiz+NPJmMnHBb+BuysCLwAhIjxrpKZXIzDgz2OdF3m9ONFjf
+ MpeqHiaeCid7xEnl/haMcS+l5xPXHPUFjv52ldqH+/BZin/x26JBaM4kbSaKxrCuJflEXVNxd0Q
+ 0FLOjqcjTSg7IX7zelk9c7GIltYJVk63Fek+wBah/koVbaiHha4N9BjAeCY/6xTKP8OIopZLn9a
+ zjk22jATc+3NsLT5FK51vWs2q6g5d+5/7btQtPv4xJ1ZVWmOHS5hQb91vdBXAncR9Nv/b5ny9Yw
+ C2ytYVgX6eBv9Szl2YSNH2myk6LuKZ5ohIRvdL+kHepttZzmUOYMQyVoH/t3MwNyNT4EmqwTf65
+ yDIYoohno
+X-Google-Smtp-Source: AGHT+IGqVn8fF/JkTOfyXjK88uCjfmmOJA3NCp7N5SLeHhIFsn/XXOknKQDr/kalzO25vYp4un6bHQ==
+X-Received: by 2002:a5d:5846:0:b0:391:4674:b10f with SMTP id
+ ffacd0b85a97d-3a072b6072dmr528074f8f.36.1745525389091; 
+ Thu, 24 Apr 2025 13:09:49 -0700 (PDT)
+Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073ca52e5sm227174f8f.36.2025.04.24.12.49.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 24 Apr 2025 12:49:11 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 1/6] hw/misc/edu: Convert type_init() -> DEFINE_TYPES()
-Date: Thu, 24 Apr 2025 21:49:00 +0200
-Message-ID: <20250424194905.82506-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250424194905.82506-1-philmd@linaro.org>
-References: <20250424194905.82506-1-philmd@linaro.org>
+ ffacd0b85a97d-3a073cc199fsm260510f8f.55.2025.04.24.13.09.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Apr 2025 13:09:48 -0700 (PDT)
+Message-ID: <8f01607b-289b-4187-b383-f79972aca7ce@linaro.org>
+Date: Thu, 24 Apr 2025 22:09:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 09/13] accel/tcg: Include 'accel/tcg/getpc.h' in
+ 'exec/helper-proto'
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250424094653.35932-1-philmd@linaro.org>
+ <20250424094653.35932-10-philmd@linaro.org>
+ <d05a791e-c520-44c7-8bd6-c1159a759710@nutanix.com>
+ <36df6d73-951f-45e0-b8cc-c79c675d1636@linaro.org>
+Content-Language: en-US
+In-Reply-To: <36df6d73-951f-45e0-b8cc-c79c675d1636@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,53 +107,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer DEFINE_TYPES() macro over type_init() to register
-QOM types.
+On 24/4/25 13:23, Philippe Mathieu-Daudé wrote:
+> On 24/4/25 12:21, Mark Cave-Ayland wrote:
+>> On 24/04/2025 10:46, Philippe Mathieu-Daudé wrote:
+>>
+>>> Most files including "exec/helper-proto.h" call GETPC().
+>>> Include it there (in the common part) instead of the
+>>> unspecific "exec/exec-all.h" header.
+>>
+>> Aha!
+>>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>   include/exec/exec-all.h            | 1 -
+>>>   include/exec/helper-proto-common.h | 2 ++
+>>>   accel/tcg/translate-all.c          | 1 +
+>>>   3 files changed, 3 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+>>> index 4c5ad98c6a9..816274bf905 100644
+>>> --- a/include/exec/exec-all.h
+>>> +++ b/include/exec/exec-all.h
+>>> @@ -26,7 +26,6 @@
+>>>   #include "exec/vaddr.h"
+>>>   #if defined(CONFIG_TCG)
+>>> -#include "accel/tcg/getpc.h"
+>>>   /**
+>>>    * probe_access:
+>>> diff --git a/include/exec/helper-proto-common.h b/include/exec/ 
+>>> helper- proto-common.h
+>>> index 16782ef46c8..76e6c25becb 100644
+>>> --- a/include/exec/helper-proto-common.h
+>>> +++ b/include/exec/helper-proto-common.h
+>>> @@ -13,4 +13,6 @@
+>>>   #include "exec/helper-proto.h.inc"
+>>>   #undef  HELPER_H
+>>> +#include "accel/tcg/getpc.h"
+>>> +
+>>>   #endif /* HELPER_PROTO_COMMON_H */
+>>> diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+>>> index 38819a507b2..0408e2522a8 100644
+>>> --- a/accel/tcg/translate-all.c
+>>> +++ b/accel/tcg/translate-all.c
+>>> @@ -61,6 +61,7 @@
+>>>   #include "system/tcg.h"
+>>>   #include "qapi/error.h"
+>>>   #include "accel/tcg/cpu-ops.h"
+>>> +#include "accel/tcg/getpc.h"
+>>>   #include "tb-jmp-cache.h"
+>>>   #include "tb-hash.h"
+>>>   #include "tb-context.h"
+>>
+>> Moving accel/tcg/getpc.h to a more commonly used TCG header seems like 
+>> the right idea, but then shouldn't that mean the direct includes from 
+>> targets added in the previous commits can now be removed?
 
-Initialize the .interfaces struct field as compound literal
-casted to InterfaceInfo type like the rest of our code base.
+The files from the previous patch don't include "exec/helper-proto*.h".
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/misc/edu.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
-
-diff --git a/hw/misc/edu.c b/hw/misc/edu.c
-index 504178b4a22..5723ef0ed13 100644
---- a/hw/misc/edu.c
-+++ b/hw/misc/edu.c
-@@ -429,21 +429,18 @@ static void edu_class_init(ObjectClass *class, void *data)
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
- }
- 
--static void pci_edu_register_types(void)
--{
--    static InterfaceInfo interfaces[] = {
--        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
--        { },
--    };
--    static const TypeInfo edu_info = {
-+static const TypeInfo edu_types[] = {
-+    {
-         .name          = TYPE_PCI_EDU_DEVICE,
-         .parent        = TYPE_PCI_DEVICE,
-         .instance_size = sizeof(EduState),
-         .instance_init = edu_instance_init,
-         .class_init    = edu_class_init,
--        .interfaces = interfaces,
--    };
-+        .interfaces    = (InterfaceInfo[]) {
-+            { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-+            { },
-+        },
-+    }
-+};
- 
--    type_register_static(&edu_info);
--}
--type_init(pci_edu_register_types)
-+DEFINE_TYPES(edu_types)
--- 
-2.47.1
+> $ git grep -l exec/helper-proto $(git grep -l accel/tcg/getpc.h)
+> accel/tcg/tcg-runtime.c
+> target/avr/helper.c
+> 
+> OK, I'll remove it from these 2 files.
 
 
