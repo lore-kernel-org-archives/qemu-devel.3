@@ -4,64 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E4DDC369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 17:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C516C369AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 17:18:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u806F-00021O-Qt; Thu, 24 Apr 2025 13:10:59 -0400
+	id 1u80C8-0003yH-WB; Thu, 24 Apr 2025 13:17:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u806D-000212-EW
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 13:10:57 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u80C7-0003xV-NF
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 13:17:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u806A-0006Mr-FA
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 13:10:57 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u80C5-00077l-I9
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 13:17:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745514653;
+ s=mimecast20190719; t=1745515019;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8I905gfmerzKfeKgDSgOdWFxZ6UdgQHVlvcCk859z/g=;
- b=OOaAqYqrJch+ZcDK8Nv27SWLqn+eQbn8IX7benY294QuL5J7xJBsRQJPaVo+d2MnwyR9DJ
- q/MYKrcTLTFIFkYoGtv6dSjK596ZlRc60O9YNA70Ljs9P5f7VQNM1PS6LmZooGbkbTj3TV
- p06kXNLn4llpVZLm7yrxBSx0RNr0nz8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-14-u5oTL53mMgakezb-w2o40w-1; Thu,
- 24 Apr 2025 13:10:48 -0400
-X-MC-Unique: u5oTL53mMgakezb-w2o40w-1
-X-Mimecast-MFC-AGG-ID: u5oTL53mMgakezb-w2o40w_1745514647
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CDA141800ECB; Thu, 24 Apr 2025 17:10:45 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.59])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4DAB230001AB; Thu, 24 Apr 2025 17:10:42 +0000 (UTC)
-Date: Thu, 24 Apr 2025 12:10:39 -0500
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, vsementsov@yandex-team.ru, 
- John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v2 07/11] mirror: Skip pre-zeroing destination if it is
- already zero
-Message-ID: <7wbypgzhbogcqgsz726o5njcrwd5tb6vqppmu2cwhqlay6cxsy@el4osy3wp4w6>
-References: <20250417184133.105746-13-eblake@redhat.com>
- <20250417184133.105746-20-eblake@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=UC1UveAKKGicirbpFhccldLCkxZ1Q17qWiVaEMJhKfM=;
+ b=J1hIjk9fyjj4HwTlDhQL25/4pzHdnXRxqAQMRSid3AcvGHRRh+sOasMjPDcnaweeWa7Hvt
+ 07IDET/2JJDqQxiH49gIkxvrrlKU8KUEKrQwBC6nsHX1YGf5jwTPlNHwE3FeobU2DBfStn
+ musGVJ0UCJHz37rHds/smcK5xu6M9ns=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-94-CtElRxK2PC6DSfEWxSuwTA-1; Thu, 24 Apr 2025 13:16:56 -0400
+X-MC-Unique: CtElRxK2PC6DSfEWxSuwTA-1
+X-Mimecast-MFC-AGG-ID: CtElRxK2PC6DSfEWxSuwTA_1745515016
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43d5ca7c86aso7153435e9.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 10:16:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745515015; x=1746119815;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UC1UveAKKGicirbpFhccldLCkxZ1Q17qWiVaEMJhKfM=;
+ b=JxIWOI9OcGvAsYzjrcJVFP8VFQFHKBw7KBhBaBRrKgC9+5rQoHt44BXFKZrzC1Muxp
+ /IQAzaXHjSCPzmoIsDsyTfADEDlmtF6/Cn07LoiwN1iWvIETZBIi27E/7JFqUjL48mQN
+ pXsfKjCXGTOXXkMsSm1MknsmLzXAYedhJjlhiodwktqGIylM9XY2vgU8lLo3uMSxew35
+ Lp+6JB7jTYUNuv2ZW4jOFrj2+oRthMXfKt2wSzNP4JlIMmmRaRZJFKCN8YISLkzvBXba
+ DYiy42CJc6xuRV1yZv0UCafcB+zHWGmajqmZ1b8TrnRyHoH7aEjJKEl2148kbGGFJibk
+ NeJQ==
+X-Gm-Message-State: AOJu0YwxunUYj4AC3xOr8UmDZQ62ggqxjFhweYSf1vk0sAMrbdLNnrEV
+ TtNB6HF3+lXscMjLtIznD7ZaP6Sz4AyWf0guGNj+Z0rzZEayB+Y8l3T3K2kIkUwivBLLTRPBmRB
+ fFPdYbRIkPKlX4ctTqx1hgIzfTpBZcJKKZ5QrE/7prcPK6DxsBZ/3
+X-Gm-Gg: ASbGncvel2Frcw6cbUbovHpOTcfK3EOjDH0ybEwxlyHfoZw0ck0fMN9W65FSoTEIJPo
+ RU7QEtnv0/9wjEbdJtniMf8krr1RQdpnH1T/z6Yg9vdbCuQyFQMjOfr86WDOJhLxSDnesehZOYy
+ 6XEN+tehj10+E8G5ewhP5hrS4ujfdRgWFj3yOxOiDiM4qOTciSC9dwQuz2sLs7jXdcrWT9tdXG5
+ TFUES1i4yax12k9pXhoqVphk1RLFjyDqRGxVaLmLY7daDyfsFgwaSK+02XC5H//NlXT2xsMOiCC
+ RgJEnP+VCCU7JEU6vbu9VBcajWnGwyJT04uDOzwI64Uzv/w=
+X-Received: by 2002:a05:6000:420b:b0:391:4873:7940 with SMTP id
+ ffacd0b85a97d-3a06cfb22c3mr2667648f8f.54.1745515015509; 
+ Thu, 24 Apr 2025 10:16:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEC8J7yi2JtxgMRg7ofz6ERnnJthlleUXXmS7vqRct+TWm9qO9y+LugQGllWyx5iBBbOePYXA==
+X-Received: by 2002:a05:6000:420b:b0:391:4873:7940 with SMTP id
+ ffacd0b85a97d-3a06cfb22c3mr2667613f8f.54.1745515015100; 
+ Thu, 24 Apr 2025 10:16:55 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:165:d60:38c8:6df5:c9ca:a366?
+ ([2a01:e0a:165:d60:38c8:6df5:c9ca:a366])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4409d2a1544sm29170825e9.11.2025.04.24.10.16.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Apr 2025 10:16:54 -0700 (PDT)
+Message-ID: <a8906e2c-220d-49d5-89c7-b59df9335a4b@redhat.com>
+Date: Thu, 24 Apr 2025 19:16:52 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250417184133.105746-20-eblake@redhat.com>
-User-Agent: NeoMutt/20250404
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/14] vfio: specify VFIO_DMA_UNMAP_FLAG_ALL to callback
+To: John Levon <levon@movementarian.org>
+Cc: qemu-devel@nongnu.org, Tony Krowiak <akrowiak@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>, qemu-s390x@nongnu.org,
+ Tomita Moeko <tomitamoeko@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>
+References: <20250409134814.478903-1-john.levon@nutanix.com>
+ <20250409134814.478903-8-john.levon@nutanix.com>
+ <3cc6ed06-7ee4-42f4-a09e-03d8fe922537@redhat.com>
+ <aAkgqXP1NjCfwKbG@movementarian.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <aAkgqXP1NjCfwKbG@movementarian.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -86,45 +163,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 17, 2025 at 01:39:12PM -0500, Eric Blake wrote:
-> When doing a sync=full mirroring, QMP drive-mirror requests full
-> zeroing if it did not just create the destination, and blockdev-mirror
-> requests full zeroing unconditionally.  This is because during a full
-> sync, we must ensure that the portions of the disk that are not
-> otherwise touched by the source still read as zero upon completion.
+On 4/23/25 19:17, John Levon wrote:
+> On Wed, Apr 23, 2025 at 07:01:23PM +0200, Cédric Le Goater wrote:
 > 
-> However, in mirror_dirty_init(), we were blindly assuming that if the
-> destination allows punching holes, we should pre-zero the entire
-> image; and if it does not allow punching holes, then treat the entire
-> source as dirty rather than mirroring just the allocated portions of
-> the source.  Without the ability to punch holes, this results in the
-> destination file being fully allocated; and even when punching holes
-> is supported, it causes duplicate I/O to the portions of the
-> destination corresponding to chunks of the source that are allocated
-> but read as zero.
+>> On 4/9/25 15:48, John Levon wrote:
+>>> Use the new flags parameter to indicate when we want to unmap
+>>> everything; no functional change is intended.
+>>
+>> I find these changes confusing. Most likely there are not well presented
+>> or I am missing something. Some more below.
 > 
-> Smarter is to avoid the pre-zeroing pass over the destination if it
-> can be proved the destination already reads as zero.  Note that a
-> later patch will then further improve things to skip writing to the
-> destination for parts of the image where the source is zero; but even
-> with just this patch, it is possible to see a difference for any BDS
-> that can quickly report that it already reads as zero.
+> I don't see any way to further break up the change unfortunately.
+> 
+>>> +/*
+>>> + * DMA - Mapping and unmapping for the "type1" IOMMU interface used on x86
+>>> + */
+>>> +static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+>>> +                                 hwaddr iova, ram_addr_t size,
+>>> +                                 IOMMUTLBEntry *iotlb, int flags)
+>>> +{
+>>> +    int ret;
+>>> +
+>>> +    if ((flags & ~(VFIO_DMA_UNMAP_FLAG_ALL)) != 0) {
+>>
+>> VFIO_DMA_UNMAP_FLAG_ALL is a kernel uapi flag. It should be used only with
+>> the corresponding ioctl(VFIO_IOMMU_UNMAP_DMA) and not internally between
+>> QEMU routines.
+> 
+> Happy to use a different define for the flags if you like, but surely it's
+> better to have a flags field so it's extendable and it's always clear what the
+> meaning is? Problem with a boolean is you just see "true" or "false" in the
+> caller and have no real idea what it means until you look it up.
+> 
+>> I think adding a 'bool unmap_all' paremeter to vfio_legacy_dma_unmap() would
+>> make more sense.
+> 
+> Having said that I'm OK with going back to just a simple boolean if you'd really
+> prefer.
 
-Hmm.  When the destination reads as all zeroes, but is not (yet)
-sparse, and the user has opened the destination image with
-"discard":"unmap" and "detect-zeroes":"unmap", then pre-patch this
-would sparsify the destination, but post-patch it leaves the
-destination allocated.
+yes. VFIO_DMA_UNMAP_FLAG_ALL is a kernel interface and we don't
+need more than one flag today.
 
-When "detect-zeroes" is at its default of 'off', or even at 'on'
-(which says optimize zero writes, but don't worry about punching
-holes), that's not a problem.  But when "detect-zeroes" is at 'unamp',
-this is a regression in behavior.  I'll see if I can quickly adjust
-that in v3.
+>>>            }
+>>> -        ret = vfio_container_dma_unmap(bcontainer, iova,
+>>> -                                       int128_get64(llsize), NULL, 0);
+>>> +        ret = vfio_container_dma_unmap(bcontainer, iova, int128_get64(llsize),
+>>> +                                       NULL, flags);
+>>
+>> Why not unmap the halves here instead of in the backends ?
+> 
+> The whole point of the change is that right now the generic listener.c code has
+> a workaround that is specific to one particular backend.
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+It's due to the ARM IO space size AFAICT.
+
+> vfio-user doesn't have
+> any need to unmap in halves and in fact *has* to pass an "unmap all" flag.
+
+OK. So this flag is a vfio-user requirement. Why can't we call
+vfio_container_dma_unmap() twice from vfio_listener_region_del() ?
+
+
+Thanks,
+
+C.
+
+
+
+> In theory, neither does vfio if the flag is supported, but I dropped that patch
+> as I couldn't figure out a clean way to use it WRT the dirty tracking code.
+>
+> regards
+> john
+> 
 
 
