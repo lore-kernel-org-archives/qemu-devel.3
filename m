@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED894C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 09:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED46CC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 09:25:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8FGz-0001rK-21; Fri, 25 Apr 2025 05:23:05 -0400
+	id 1u8FIr-0002g8-AF; Fri, 25 Apr 2025 05:25:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u8FGw-0001qK-20
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:23:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u8FIo-0002fY-Sd
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:24:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u8FGo-0007Kt-Ap
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:23:01 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u8FIn-0007Rf-1S
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:24:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745572964;
+ s=mimecast20190719; t=1745573094;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=DsRuvTUVTwnEUInjB2BrfHHnctFdRsvMZG3mqrQa8oM=;
- b=avGzhQPafzFc1+m34qQHq0cYIG/SwwgGNdyPlKk0hLr3BtYkx3CosTbS5WTgIzNtDlI5UT
- 7kvZYa48e4f6DLxNwQizwI+btiKrR1JpUcCAVACGtzd0KVQ51wpU3NRXxED5+H/yP+o42G
- +1k1E4fzSj4dqPE2/gFU15IjWUGrm9g=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+SVSxrDY9usPF+nh2YsD+NxEqirQp5jCaply9kzINU8=;
+ b=Rvv3PuHuL8MXTUQ0R1WpPRHwgcla5oWSpG/Wr61ETulXmSgy1S6+MosPxU+3aEgIZ1swv0
+ gKdyuYlHl9YbS1CbWbOUsK9V7scI3D9GjTAiR9faSv2wobLFeruLaBsHYGWDS4qvR3cZSR
+ H5iW2N7pNaWe1d5vghRNXUPLIl3/IHk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-26-JzDBygBaOjW0C4A_GLH3Tw-1; Fri, 25 Apr 2025 05:22:41 -0400
-X-MC-Unique: JzDBygBaOjW0C4A_GLH3Tw-1
-X-Mimecast-MFC-AGG-ID: JzDBygBaOjW0C4A_GLH3Tw_1745572960
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43cf3168b87so9528655e9.2
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 02:22:41 -0700 (PDT)
+ us-mta-343-GDlAct7zPSSYjVbLCJoLBA-1; Fri, 25 Apr 2025 05:24:52 -0400
+X-MC-Unique: GDlAct7zPSSYjVbLCJoLBA-1
+X-Mimecast-MFC-AGG-ID: GDlAct7zPSSYjVbLCJoLBA_1745573092
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43cf5196c25so9792365e9.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 02:24:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745572960; x=1746177760;
+ d=1e100.net; s=20230601; t=1745573092; x=1746177892;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=DsRuvTUVTwnEUInjB2BrfHHnctFdRsvMZG3mqrQa8oM=;
- b=NnSHzLdjEo0PjfHIc+QCBtw5yx6cF00Uol+nnJNABvIz/oQMJTTsy8EKF9RJhEEhC5
- tzav65NwNYLvNIoV3oR1Mf5V3vJeWUX4ww3zZ/FBSIeQzAduU2F4jxqAM/wjL7ZjS3XD
- B0G6CJfe8iDqDzOfVdux/cnC4rOac5wwKy6U4s44Fq8pHejTtL5ocztl6fveF0yFbCVe
- rsl9P+TBSwaMFZdckZScJrguGKcyZPQwfVLqUUQ5hMyYJR0PKdUekHhn5ON4PAeHIfSN
- BW7e1PL7eM+dihp9I8hW8KA1ST2BUwhQ0ux2NhGhShCEfbCW9Sefv5HZTWs8XIcX9WM7
- aMrw==
+ bh=+SVSxrDY9usPF+nh2YsD+NxEqirQp5jCaply9kzINU8=;
+ b=NCQCaTW1L5pDy8NawvIzszYHK7TX1JlNC7rIeb0m/mvl+ChR3TvixSl2m2AUp/+IuM
+ J3KcscC/3yd1kPfvERVqYopKDGfHcBiegG82qQbzUQGwLavia5wspShGak0oQrIhEIQ+
+ TJwTOoa/1PtO2c2pV+p6VYG3gH0hvTKHIsa8E/1IviHzR88qqjsTCkWL01SzXRl2r8jL
+ fQbYuSM2Nlfk7HtLdnzy1zmFYApo38yEk60ZvndY5agIsianrZEtUS6yDuMgsi3J/AIV
+ 4+B8Lgiqmd1m6kMscL7fy0xMkAiYNlKyBE7abP7NRjzOoT2eVkcp91Utt9V4H8v1f56b
+ vCaw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWdz+EI50Ldi+FTGuNWv378o4MV+Mwl/1ULDKXn5rTzCaLOhyo9FTQ3QynXV9MK498tmVer4SYmLMJ7@nongnu.org
-X-Gm-Message-State: AOJu0YyE/izAhYZ/u4kZiXLik82qlm4jTsOge6hZdgaC4KyFulQdPK4/
- PPEhQFGpsanS7cihwa5XDtrz5JbWizxFhwPZ2vW+aatRimf6YEUiK1WsXPvcNX5wp68/5IGR0Zo
- VcbQsGHLh0zd0PR0rOCtxX9IMdfBJm8BYVm6ak3fuSt6G2vOBRreW
-X-Gm-Gg: ASbGnct6oNTKkoTTA1AmaNXqA1MRU/AisnBTTkeZBpmnsyp/26tl//5hUgGCMgEh2VV
- 88k5ddCci3VKfcSuN2IE58XqodgT2iNhwOE9qp/j4S/CmelC+EBwh7Og2fBBww3IWgvdMTcuflU
- mfj3OLrW+Ury+EhQKCZpU0S9dFO6m0PfoPzrep4QH2jcvfV8tI8MHnb/9DCZSDzYTW7P5t7xbu7
- VKQvNOvTO6ejspIi0K6SHQ2SJPE0XNWNHGoR4gYRvxgritWLp3HjeBmvLku2mtKAn0ejgTtpZCk
- yd1A3srdidLXXWo0jz4LJCMnj4XpHTD1Cd07Hdg9aFGasg==
-X-Received: by 2002:a05:600c:3b92:b0:43b:cb12:ba6d with SMTP id
- 5b1f17b1804b1-440a65ba1fdmr13920245e9.3.1745572960405; 
- Fri, 25 Apr 2025 02:22:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFo65dsMFdWl2eqbGPkeP+bbTAWUliwkncWYoCy4ebK0jyBo/FsdgOyu+zfyGwRnJ2PKU+g5A==
-X-Received: by 2002:a05:600c:3b92:b0:43b:cb12:ba6d with SMTP id
- 5b1f17b1804b1-440a65ba1fdmr13920045e9.3.1745572960061; 
- Fri, 25 Apr 2025 02:22:40 -0700 (PDT)
+ AJvYcCUi7z3Ws5CACtRSVg6OoSftz4KUPH+Bxmo/r7mrHXhxWWzmCEKljHC6C531JLzrG3FQqIhCPnUzGiKA@nongnu.org
+X-Gm-Message-State: AOJu0Yx1eEiAdxhXrDLmtkhwk2i4BHqrHTW1Wysz4R98dNPL86czbC3R
+ GgV5BFhr6OLObUx8K93ImoNeYrnpRLtOOy8pB+N9UZ8uYjRs4Nzf53rjjykac95PQD7JaTrOS86
+ zB3UcmeFa6CDZT1H/yf0RaVJLYbgKOVq+b10o+D9iEP3PhB6aGeVhYKt1Hwbyg6E=
+X-Gm-Gg: ASbGncsVa/RYsUjU1gVi0LgLmO5wHomIKQC7PA52BfwQPCmt9SfD2T2tIyJo4tezKkl
+ bnieuYisxpbiR2I8iIoVT1v3PPr7UhL9oz5HhEoAeP21oUNIcq8W1WAOJdQpT4WUvu/FI0ABr0D
+ UiR1twxYp/nESZg0SOTUfeD1deFeH+um96dfWWi6tUtn6KIrC/RCxcYMOjujDFs8YVpFr380BGf
+ ozj0VTlQji0si1CgU5u30wsMrEShos4oEM2FWeFGwEmNio9EnBY0JTTyHKW0AmFQUv57tRdINPN
+ vpMSTPo56wqECZDTpBP8UowmgYNvzw1XI5Axm3+j9BlakQ==
+X-Received: by 2002:a05:600c:1c91:b0:43c:f050:fed3 with SMTP id
+ 5b1f17b1804b1-440a65dedfcmr13399095e9.11.1745573091749; 
+ Fri, 25 Apr 2025 02:24:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFvPkWuK51XO5l8m6s2eBi9FK7QCOD3qW5hbwbczl+u5/s+wcc0EIZwuOMs9AghLCgoiZORsw==
+X-Received: by 2002:a05:600c:1c91:b0:43c:f050:fed3 with SMTP id
+ 5b1f17b1804b1-440a65dedfcmr13398935e9.11.1745573091362; 
+ Fri, 25 Apr 2025 02:24:51 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-43-178-177.web.vodafone.de.
  [109.43.178.177]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073cbedb9sm1764327f8f.44.2025.04.25.02.22.39
+ 5b1f17b1804b1-4409d2a1dc3sm49688565e9.13.2025.04.25.02.24.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 02:22:39 -0700 (PDT)
-Message-ID: <a80e2c09-41c1-4c1b-9524-60ad5d2d038d@redhat.com>
-Date: Fri, 25 Apr 2025 11:22:38 +0200
+ Fri, 25 Apr 2025 02:24:51 -0700 (PDT)
+Message-ID: <fe17213a-388e-463a-a2f0-4977c5e86197@redhat.com>
+Date: Fri, 25 Apr 2025 11:24:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/3] block/nvme: Use host PCI MMIO API
-To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, stefanha@redhat.com, mjrosato@linux.ibm.com,
- schnelle@linux.ibm.com, philmd@linaro.org, kwolf@redhat.com,
- hreitz@redhat.com, fam@euphon.net
+Subject: Re: [PATCH v5 0/3] Enable QEMU NVMe userspace driver on s390x
+To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org,
+ Alex Williamson <alex.williamson@redhat.com>
+Cc: stefanha@redhat.com, mjrosato@linux.ibm.com, schnelle@linux.ibm.com,
+ philmd@linaro.org, kwolf@redhat.com, hreitz@redhat.com, fam@euphon.net
 References: <20250417173801.827-1-alifm@linux.ibm.com>
- <20250417173801.827-4-alifm@linux.ibm.com>
+ <15457df6-11fd-41d4-9cb1-14e4473c1866@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,10 +127,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250417173801.827-4-alifm@linux.ibm.com>
+In-Reply-To: <15457df6-11fd-41d4-9cb1-14e4473c1866@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -155,18 +155,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/04/2025 19.38, Farhan Ali wrote:
-> Use the host PCI MMIO functions to read/write
-> to NVMe registers, rather than directly accessing
-> them.
+On 24/04/2025 18.24, Farhan Ali wrote:
+> Hi Alex,
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-> ---
->   block/nvme.c | 41 +++++++++++++++++++++++------------------
->   1 file changed, 23 insertions(+), 18 deletions(-)
+> Polite ping. Please let me know if there are any concerns with this version 
+> of the patches.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I assumed that Stefan would pick the patches up for the nvme/block tree, but 
+I can also take them through the s390x tree instead if that's preferred.
+But please address/comment on the nits that I found first.
+
+  Thanks,
+   Thomas
 
 
