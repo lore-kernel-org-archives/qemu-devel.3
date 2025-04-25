@@ -4,88 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C04C369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 23:30:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2E34C369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 00:18:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u85zx-0003D8-EZ; Thu, 24 Apr 2025 19:28:54 -0400
+	id 1u86kc-00073O-TE; Thu, 24 Apr 2025 20:17:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u85zs-0003BR-DY
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 19:28:49 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u85zq-00087z-NK
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 19:28:48 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-73bf5aa95e7so1511835b3a.1
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 16:28:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745537325; x=1746142125; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SiYnJ44kk9NCrgcaAGeA1Z13fMIq5NQl+K06XxiBL1A=;
- b=B8MPjdhcS0IbsDW9r9FPFdCnzGqK6nWq09SvZgAHrU7KctMi3mhV2WdsDuMnqIDl+e
- 9pfj3uJENky+7hAPuYgAnQEsPzECk9J3MGGjOaQ0rRZKLvzLj2yPrD43O89+icSqOkje
- omh8wB4izHKxifSFK+WXCCeH0LfvFPE2aP76wv8FQN6g3Bvx4yQpEEA6gcwQKuAuQV8F
- 5djgGhurG7h37fJ7m/mY0Vz7PaACYmp5tvgmsSIUtDYYo9fotnL88Px2AU9kwH8aj6vC
- 1IWvAibkjXksgviGFQLQAMBLHDwwId+XzhuTXahZnamUEdl/7pRV4GYkYw+UZgojfQbO
- 4Ghg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745537325; x=1746142125;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SiYnJ44kk9NCrgcaAGeA1Z13fMIq5NQl+K06XxiBL1A=;
- b=M9ZYVfoKqSBPVExlYTiU5HuP2HEviGpEGnizHTKVh0CwGQ0h/UwfGYRaLFXYPRrdzV
- RnNnmLITY6UJBfbX4HnImvaBh9/fPwe6OUGPXF2hXgPpm+4GmdhgNznVoB1f83bzqUid
- VIIXuTxmh6A+szqtS890oU16cdMmoNR5uyXriktgMv8PbNKaEnDkUXl30GFqJ0iy8FUp
- 3r2JGnC3g9HgoENZPICXX/7MCVWtfOkSuoQH2jUlbmmyN5OZr9Pt18/KaSKvRx8LT1Wo
- d2nW0icnE7TDagkcnc8eE2wIAube9Af5NjxsE/qrqyV8Yx9WeEnvmSELbkWKeK4QXTtC
- RK+g==
-X-Gm-Message-State: AOJu0YxDpTDh8xwaUk6Jew+BLOJBwLi1YtAVEbMpvtLmNR+cCvb5jqX0
- giOAbiuNSBu3N7+IY/+D3riH2JxE1rpezJlcM8AWsP5tQn8ib8yoG7gKZt1gGJciL/1cquFAUa0
- hmhw=
-X-Gm-Gg: ASbGnctgSiXUk6xKIQnQXl39okXWgTY2Mc6l903OdZh0mA7iotcgrUM9H/fttoK9Lo9
- m0PMOGzM2B967ts7av51m3Rne1dwW6LkfoF6WskPr6SGb9dyNf44ouBRmXMpnIOaJbWI3rnHz3Z
- LOR7PiL8YH3R/QhSzjPIiPswcXhNSdNj0XhzsZ+c8oZIuE1Ue8Wu1UfpRECjQ6GrcwAk6vVOfC7
- iM9ULk+99IebpyfqW6QFNTD7ghO3SBg9TKlKJhRpkOgX89i/Hipb1Gt1J9KPvsPvQHvE5mEvLcZ
- uYFsqCCbV54IaQ71403K0crxIkUO317MeKlaMxQh
-X-Google-Smtp-Source: AGHT+IFxSHqiCOGNaPFpL5Pz9zgvzRwj53s2AvZo4vsG82hlX+g5LdHj7uN9QSJDob8FWejArOc0/A==
-X-Received: by 2002:a05:6a00:21c6:b0:73e:359:acf4 with SMTP id
- d2e1a72fcca58-73fc7866454mr191129b3a.0.1745537325420; 
- Thu, 24 Apr 2025 16:28:45 -0700 (PDT)
-Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25accfbesm2044318b3a.177.2025.04.24.16.28.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Apr 2025 16:28:45 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Marcelo Tosatti <mtosatti@redhat.com>, alex.bennee@linaro.org,
- kvm@vger.kernel.org, philmd@linaro.org, manos.pitsidianakis@linaro.org,
- pierrick.bouvier@linaro.org, richard.henderson@linaro.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-Subject: [PATCH v5 8/8] hw/hyperv/hyperv: common compilation unit
-Date: Thu, 24 Apr 2025 16:28:29 -0700
-Message-Id: <20250424232829.141163-9-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250424232829.141163-1-pierrick.bouvier@linaro.org>
-References: <20250424232829.141163-1-pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u86ka-00072u-9r
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 20:17:04 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u86kX-0004iL-Hv
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 20:17:04 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B44C955D22F;
+ Fri, 25 Apr 2025 02:16:56 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id gG_Di_tbSrhb; Fri, 25 Apr 2025 02:16:54 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id B845555D236; Fri, 25 Apr 2025 02:16:54 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B5EC1745683;
+ Fri, 25 Apr 2025 02:16:54 +0200 (CEST)
+Date: Fri, 25 Apr 2025 02:16:54 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
+ Anton Johansson <anjo@rev.ng>
+Subject: Re: [RFC PATCH v5 08/21] hw/arm: Add DEFINE_MACHINE_[ARM_]AARCH64()
+ macros
+In-Reply-To: <20250424222112.36194-9-philmd@linaro.org>
+Message-ID: <1332b395-1e3e-2be7-83f2-15f2d89b0449@eik.bme.hu>
+References: <20250424222112.36194-1-philmd@linaro.org>
+ <20250424222112.36194-9-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ BOUNDARY="3866299591-815259812-1745539818=:88121"
+Content-ID: <94c413dc-bb31-6529-1f58-a38bb48a9afb@eik.bme.hu>
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,44 +71,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- hw/hyperv/hyperv.c    | 3 ++-
- hw/hyperv/meson.build | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-index 8f193fd0bdf..1197a403efc 100644
---- a/hw/hyperv/hyperv.c
-+++ b/hw/hyperv/hyperv.c
-@@ -13,6 +13,8 @@
- #include "qapi/error.h"
- #include "system/address-spaces.h"
- #include "system/memory.h"
-+#include "exec/target_page.h"
-+#include "linux/kvm.h"
- #include "system/kvm.h"
- #include "qemu/bitops.h"
- #include "qemu/error-report.h"
-@@ -23,7 +25,6 @@
- #include "hw/hyperv/hyperv.h"
- #include "qom/object.h"
- #include "target/i386/kvm/hyperv-proto.h"
--#include "target/i386/cpu.h"
- #include "exec/target_page.h"
- 
- struct SynICState {
-diff --git a/hw/hyperv/meson.build b/hw/hyperv/meson.build
-index ef5a596c8ab..d1cf781f049 100644
---- a/hw/hyperv/meson.build
-+++ b/hw/hyperv/meson.build
-@@ -1,4 +1,4 @@
--specific_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'))
-+system_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'))
- system_ss.add(when: 'CONFIG_HYPERV_TESTDEV', if_true: files('hyperv_testdev.c'))
- system_ss.add(when: 'CONFIG_VMBUS', if_true: files('vmbus.c'))
- system_ss.add(when: 'CONFIG_SYNDBG', if_true: files('syndbg.c'))
--- 
-2.39.5
+--3866299591-815259812-1745539818=:88121
+Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 8BIT
+Content-ID: <b215bd93-e49f-1f88-7dd8-600358c682ec@eik.bme.hu>
 
+On Fri, 25 Apr 2025, Philippe Mathieu-Daudé wrote:
+> A machine defined with the DEFINE_MACHINE_ARM_AARCH64() macro
+> will be available on qemu-system-arm and qemu-system-aarch64
+> binaries.
+>
+> One defined with DEFINE_MACHINE_AARCH64() will only be available
+> in the qemu-system-aarch64 binary.
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> include/hw/arm/machines-qom.h | 13 +++++++++++++
+> target/arm/machine.c          | 12 ++++++++++++
+> 2 files changed, 25 insertions(+)
+>
+> diff --git a/include/hw/arm/machines-qom.h b/include/hw/arm/machines-qom.h
+> index a17225f5f92..6277ee986d9 100644
+> --- a/include/hw/arm/machines-qom.h
+> +++ b/include/hw/arm/machines-qom.h
+> @@ -9,10 +9,23 @@
+> #ifndef HW_ARM_MACHINES_QOM_H
+> #define HW_ARM_MACHINES_QOM_H
+>
+> +#include "hw/boards.h"
+> +
+> #define TYPE_TARGET_ARM_MACHINE \
+>         "target-info-arm-machine"
+>
+> #define TYPE_TARGET_AARCH64_MACHINE \
+>         "target-info-aarch64-machine"
+>
+> +extern InterfaceInfo arm_aarch64_machine_interfaces[];
+> +extern InterfaceInfo aarch64_machine_interfaces[];
+> +
+> +#define DEFINE_MACHINE_ARM_AARCH64(namestr, machine_initfn) \
+> +        DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, \
+> +                                       arm_aarch64_machine_interfaces)
+> +
+> +#define DEFINE_MACHINE_AARCH64(namestr, machine_initfn) \
+> +        DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, \
+> +                                       aarch64_machine_interfaces)
+> +
+> #endif
+> diff --git a/target/arm/machine.c b/target/arm/machine.c
+> index 978249fb71b..193c7a9cff0 100644
+> --- a/target/arm/machine.c
+> +++ b/target/arm/machine.c
+> @@ -8,6 +8,7 @@
+> #include "cpu-features.h"
+> #include "migration/cpu.h"
+> #include "target/arm/gtimer.h"
+> +#include "hw/arm/machines-qom.h"
+>
+> static bool vfp_needed(void *opaque)
+> {
+> @@ -1111,3 +1112,14 @@ const VMStateDescription vmstate_arm_cpu = {
+>         NULL
+>     }
+> };
+> +
+> +InterfaceInfo arm_aarch64_machine_interfaces[] = {
+> +    { TYPE_TARGET_ARM_MACHINE },
+> +    { TYPE_TARGET_AARCH64_MACHINE },
+> +    { }
+> +};
+> +
+> +InterfaceInfo aarch64_machine_interfaces[] = {
+> +    { TYPE_TARGET_AARCH64_MACHINE },
+> +    { }
+> +};
+
+Why do you need these? If you define DEFINE_MACHINE_WITH_INTERFACES as 
+OBJECT_DEFINE_TYPE_WITH_INTERFACES then you can write:
+
+DEFINE_MACHINE_WITH_INTERFACES(name, initfn, { TYPE_TARGET_ARM_MACHINE },
+     { TYPE_TARGET_AARCH64_MACHINE }, { })
+
+and no more macros needed. Ideally those places that are now blown up 
+should use DEFINE_MACHINE too. Maybe they don't yet because the parent
+type  is hardcoded so we should really have
+
+DEFINE_MACHINE_EXTENDED(name, parent, initfn, interfaces...)
+
+and remove more bolier plate that way?
+
+Regards,
+BALATON Zoltan
+--3866299591-815259812-1745539818=:88121--
 
