@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B088C369D1
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 09:58:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C943C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 10:00:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Fod-0003u3-76; Fri, 25 Apr 2025 05:57:51 -0400
+	id 1u8Fqq-0005Bl-Hu; Fri, 25 Apr 2025 06:00:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Foa-0003se-3W
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:57:48 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Fqo-0005At-T6
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:00:07 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8FoY-0002QZ-CL
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:57:47 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-43d2d952eb1so14369695e9.1
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 02:57:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Fqm-0002pr-Ho
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:00:06 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43cef035a3bso13860445e9.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 03:00:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745575064; x=1746179864; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745575203; x=1746180003; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9CBYES/TQdgD4AD2jofFLpQ1DEqU4oUjs9Z1wTIW/Gg=;
- b=sOG8Gxi84dMaa9vLuCO/DzgC/BbB/j1telO3hPLg8R5n4eUDYjnYhqTXnEBTVwVu7x
- 6r21BZANxvoDBhUDr7v6AIjHrvfaLjeJJt78vpi7yuRlL86Bp3ucfax+5p8Yauxpk+Mg
- 5PWjmyQ5dujnPlvGOyPrJ4Mvy00iYEqKMDdwY4ZA+ehKwMKuMhXGgt45FssVaXVLQK9f
- Z3HZDT/RdRq6VBNwLCz0Xd9QozcInr68txa9HehpCHK2TgxOfevfi71tTab4gIdM0zZR
- aWsjjVhcun943e3ZctFVgPPRQhfA1zeOoBh2cZx2P4YJMWypeX0Z1gXoDNvpFvB28Ujy
- JIVg==
+ bh=jxdmkHEq0pFQGxDjTDaZiXSaDwdSP8VoH1JzK7bL3tM=;
+ b=d+QjrmFInkyZYLtKNiqtqeOWRkgjxIimSBV5EcEuaWREcok64a/lHApl9vY+hJsKlf
+ G8cSTHuNsw8Jw9rddhsLZnGP75eVbqwZLf5giSiPVhRoluosUNoy464qYluFYDViXCOm
+ 1ehhUtOfYONcRIs67919VsG67C5CADUVHG0EVP9u6iv0Fdvy32eg2Tc9skt7eUpyr8BS
+ j4/zxu/TTt8I1G0PzV98l4eIbLJNyaEPn8atoR5Q2BkVpvqnoMvNqf7hhE+r/UMsFuS4
+ LJBb5ypvsAw0vbkfnlxnq051fGEikrgxmR5eITa6Nbl6xWmc2GVU4QOwoOVqdto6U0Zr
+ kpuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745575064; x=1746179864;
+ d=1e100.net; s=20230601; t=1745575203; x=1746180003;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9CBYES/TQdgD4AD2jofFLpQ1DEqU4oUjs9Z1wTIW/Gg=;
- b=dJoAbauPrMIAm+lowUTxm1RdkVr7pL1wUarwDJBYyKsatNvWrjOQdGm7nnt99J9IkH
- xneWtXBoHDI9OZfTA7y0Fx6Q4hsHg9ZX7pDktC1XhZiA6iG7i8vL65xxSHlS0Q3CfZwU
- ti6Pc8/KKhcZa9vNvwP+ntHe9JpwsvU8kcQnuHJ4MADLappbQWj+7k2/cPNcgKf1oPlb
- 80aC/QFvMtOPoMvldxdu3IyMi1Anqifxgg8pkhb+ZZbqp9VJs2dq7GOr3QNuLHR/Eo49
- TWsRD7smFQOxDpQa+GxovJ/11HuwJUN6poSUqPUIgrBwuqqG0i+eLgPmOrT6wa7vREHR
- WSIQ==
+ bh=jxdmkHEq0pFQGxDjTDaZiXSaDwdSP8VoH1JzK7bL3tM=;
+ b=tbeV2I+X3bH2XYYDGQrXXRnTJsmi3A7dM1UbRI2sGuZpZ+IfCzV9hyRWcAHKP4ni2w
+ ZEGYG1PTkSUp+jL8j9ciiZidATpc79MxWWBxTaJf/f1bLPc8KBiI/nsRFkLO0R5Tqa3e
+ AFXdg2T7vxi97jviM1C8sio+i+Qc2/BQIgl3hvo7JBnD2r95O8kazLGZ2w/oQThhohBT
+ JiTq19oCaFqnzUk544wrdG0utKc4QbOAVl/ZgNyu5euUohi5EEReLCF6GeDMP4A+Z+MN
+ NgAdPwNq/4AJ0QhMRy1rVlF+4E35HzKhelyPESOIUITN6NhzroBq+agP6msl/Bz7h3LB
+ RQ5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWdoU1yZiMuwe3Dk52W67jA7WlQDOB1eRESeFEev/vHEhk0fC4GCrdqoYn8G793/pUMOupzAJy0TB3L@nongnu.org
-X-Gm-Message-State: AOJu0YznCpNNZ3FbmWPxigpVA70HMpwEzPiW0XtWqmLifusyV9dqxKaP
- bup4wrxqpCua7XNQw98dZpJqyTRwwDcMi/pcTf041IWUp7P2c9eoNSBSEFLPlfofH8OhYlj7xSu
- t
-X-Gm-Gg: ASbGnctC7MmZLNFmYn1hnb8HVm70QCsaMliWBsG7SO7iNxsI+L/Rs5MJdGnuf6cZcJl
- VJG1+20uqXyPa9kYBXR7JMB7OMmQZdM2nSliC37MFSWP6QRuQyjO4kopUj+ufT16i4ifLt8KVLZ
- zMubiafzpA+Ktm1Y3dKN04OZ9XC/HW54N6Y7LQB0HzMBoMojEL9ghEtH5Q4Lr5xpfiz1u+pXjlv
- uF2N8Q0gS/j1ZuHKzoieA7yMqT/V+d+59/Vh0oSLEXfI4PheuajF+Wh3S7+pJi3xn6BomCN5Y84
- jEm81yPcbEUcHYgJstomeTzCrEBGuQK1fq0zHNJWXi0DS3knLfDy7liFH6w3A2oR/NFkO6WN6QI
- 3sc2Z/xI7KayyDg==
-X-Google-Smtp-Source: AGHT+IHHH4xPdtw41jIgYjPb7B0vRg52nB2Ft+C3qgS1y1Uygam5YCoWkNj51So3I5CCfLqbDNWl+A==
-X-Received: by 2002:a05:600c:1395:b0:43d:94:2d1e with SMTP id
- 5b1f17b1804b1-440a65ed5e6mr15924525e9.13.1745575063924; 
- Fri, 25 Apr 2025 02:57:43 -0700 (PDT)
+ AJvYcCVa33C8Bw2yhFz1S40chaJHUE3LM6Ykn/zZU2MBtmIHjnUyA8CypyMzWjCFqHoc7uiMLOnSkMWZItGx@nongnu.org
+X-Gm-Message-State: AOJu0YzrcYLs492eaNhiHNm6gEUzpS5OxxQQ9cQNKGzgZcoTwL3OuBSF
+ GMQcqmARv54DYDJ0lVmvUvzrKDmHCFLuu+8hR1cL6k2j2uvwlFuq0EZu/sy3DYg=
+X-Gm-Gg: ASbGncu5uYEqqA/nQXdgH0VrD2ZPg7YHxg/+mxKI1Oo/ZtsCJbjks/tfVOrKnVNtJvm
+ cE60U9BMqF2B95cRXH2roWO13ur7jQJUyKVp5vsCnAiNBKVnRZ2QYjDknNgFnllSiul0TEPOymX
+ 8B5hBzX+FDGJv7+80OJR2Ng5H3J4/JVDrjAN3ovRpTJXvL30UQxOufvj9i+Vj5svfXwKLxeGclB
+ +4oKDKRHtymlJnpqPuUjJjUiKGEwXfmRhLScG0LClKrES+PeDxVzxMv1jCbA/xR+Ex2b/LUYGS2
+ tf3b3JBo7Wz+CtLXQkjYXw3ot1wfvG7KMu2n/Vtk3qGPeOLjzEtnD8f/Er5i84oHYSmAosm4oE4
+ m+ncDfSVpjtrJdA==
+X-Google-Smtp-Source: AGHT+IG5kOb23QnP7zoG7jSNMxnY+XHcDOw/3vWB9yhmNzAimCOjeNvn8IHq2TKeLvC7EmD+cMdkOg==
+X-Received: by 2002:a05:600c:c8d:b0:43d:9d5:474d with SMTP id
+ 5b1f17b1804b1-440a63470c6mr15520275e9.0.1745575202707; 
+ Fri, 25 Apr 2025 03:00:02 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-440a5303c15sm19118325e9.11.2025.04.25.02.57.43
+ 5b1f17b1804b1-4409d2ac27dsm51270175e9.22.2025.04.25.02.59.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 02:57:43 -0700 (PDT)
-Message-ID: <b1ac7812-ac9b-4bcc-a04e-93dd43fbec51@linaro.org>
-Date: Fri, 25 Apr 2025 11:57:42 +0200
+ Fri, 25 Apr 2025 03:00:01 -0700 (PDT)
+Message-ID: <747b53e3-2913-4a51-95d0-1a8b67de2d4a@linaro.org>
+Date: Fri, 25 Apr 2025 11:59:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/16] hw/intc/loongarch_pch: Set version information
- at initial stage
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250324093730.3683378-1-maobibo@loongson.cn>
- <20250324093730.3683378-5-maobibo@loongson.cn>
+Subject: Re: [PATCH v5 0/3] Enable QEMU NVMe userspace driver on s390x
+To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: stefanha@redhat.com, mjrosato@linux.ibm.com, schnelle@linux.ibm.com,
+ kwolf@redhat.com, hreitz@redhat.com, thuth@redhat.com, fam@euphon.net
+References: <20250417173801.827-1-alifm@linux.ibm.com>
+ <15457df6-11fd-41d4-9cb1-14e4473c1866@linux.ibm.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250324093730.3683378-5-maobibo@loongson.cn>
+In-Reply-To: <15457df6-11fd-41d4-9cb1-14e4473c1866@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,57 +105,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/3/25 10:37, Bibo Mao wrote:
-> Register PCH_PIC_INT_ID constains version and supported irq number
-> information, and it is read only register. The detailed value can
-> be set at initial stage, rather than read callback.
+On 24/4/25 18:24, Farhan Ali wrote:
+> Hi Alex,
+
+Cc'ing Cédric as co-maintainer with Alex.
+
 > 
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   hw/intc/loongarch_pch_pic.c            | 17 ++++++++++-------
->   include/hw/intc/loongarch_pic_common.h | 17 +++++++++++++++--
->   2 files changed, 25 insertions(+), 9 deletions(-)
-
-
-> diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
-> index ef6edc15bf..fb848da4b8 100644
-> --- a/include/hw/intc/loongarch_pic_common.h
-> +++ b/include/hw/intc/loongarch_pic_common.h
-> @@ -10,9 +10,9 @@
->   #include "hw/pci-host/ls7a.h"
->   #include "hw/sysbus.h"
->   
-> -#define PCH_PIC_INT_ID_VAL              0x7000000UL
-> -#define PCH_PIC_INT_ID_VER              0x1UL
->   #define PCH_PIC_INT_ID                  0x00
-> +#define  PCH_PIC_INT_ID_VAL             0x7
-> +#define  PCH_PIC_INT_ID_VER             0x1
->   #define PCH_PIC_INT_MASK                0x20
->   #define PCH_PIC_HTMSI_EN                0x40
->   #define PCH_PIC_INT_EDGE                0x60
-> @@ -30,10 +30,23 @@
->   OBJECT_DECLARE_TYPE(LoongArchPICCommonState,
->                       LoongArchPICCommonClass, LOONGARCH_PIC_COMMON)
->   
-> +union LoongArchPIC_ID {
-> +    struct {
-> +        uint64_t _reserved_0:24;
-> +        uint64_t id:8;
-
-Why not use:
-
-            uint8_t _reserved_0[3];
-            uint8_t id;
-
-Otherwise see commit ecbf3567e21 ("docs/devel/style: add a section about
-bitfield, and disallow them for packed structures"), this might give
-troubles on Windows or big-endian hosts such s390x.
-
-> +        uint64_t version:8;
-> +        uint64_t _reserved_1:8;
-> +        uint64_t irq_num:8;
-> +        uint64_t _reserved_2:8;
- > +    } QEMU_PACKED desc;> +    uint64_t data;
-> +};
+> Polite ping. Please let me know if there are any concerns with this 
+> version of the patches.
+> 
+> Thanks
+> 
+> Farhan
+> 
+> On 4/17/2025 10:37 AM, Farhan Ali wrote:
+>> Hi,
+>>
+>> Recently on s390x we have enabled mmap support for vfio-pci devices [1].
+>> This allows us to take advantage and use userspace drivers on s390x. 
+>> However,
+>> on s390x we have special instructions for MMIO access. Starting with z15
+>> (and newer platforms) we have new PCI Memory I/O (MIO) instructions which
+>> operate on virtually mapped PCI memory spaces, and can be used from 
+>> userspace.
+>> On older platforms we would fallback to using existing system calls 
+>> for MMIO access.
+>>
+>> This patch series introduces support the PCI MIO instructions, and 
+>> enables s390x
+>> support for the userspace NVMe driver on s390x. I would appreciate any 
+>> review/feedback
+>> on the patches.
+>>
+>> Thanks
+>> Farhan
+>>
+>> [1] https://lore.kernel.org/linux-s390/20250226-vfio_pci_mmap-v7-0- 
+>> c5c0f1d26efd@linux.ibm.com/
+>>
+>> ChangeLog
+>> ---------
+>> v4 series https://lore.kernel.org/qemu-devel/20250414213616.2675-1- 
+>> alifm@linux.ibm.com/
+>> v4 -> v5
+>>      - Fixup typo in PCI MMIO API (patch 2).
+>>
+>> v3 series https://lore.kernel.org/qemu-devel/20250401172246.2688-1- 
+>> alifm@linux.ibm.com/
+>> v3 -> v4
+>>      - Use generic ld/st functions for non s390x PCI access suggested 
+>> by Alex (patch 2).
+>>      - Removed R-b for patch 2 as the host PCI MMIO access API changed 
+>> for non-s390x.
+>>      Would appreciate review on this again.
+>>
+>> v2 series https://mail.gnu.org/archive/html/qemu-devel/2025-03/ 
+>> msg06847.html
+>> v2 -> v3
+>>      - Update the PCI MMIO APIs to reflect that its PCI MMIO access on 
+>> host
+>> as suggested by Stefan(patch 2)
+>>      - Move s390x ifdef check to s390x_pci_mmio.h as suggested by 
+>> Philippe (patch 1)
+>>      - Add R-bs for the respective patches.
+>>
+>> v1 series https://mail.gnu.org/archive/html/qemu-devel/2025-03/ 
+>> msg06596.html
+>> v1 -> v2
+>>      - Add 8 and 16 bit reads/writes for completeness (patch 1)
+>>      - Introduce new QEMU PCI MMIO read/write API as suggested by 
+>> Stefan (patch 2)
+>>      - Update NVMe userspace driver to use QEMU PCI MMIO functions 
+>> (patch 3)
+>>
+>>
+>> Farhan Ali (3):
+>>    util: Add functions for s390x mmio read/write
+>>    include: Add a header to define host PCI MMIO functions
+>>    block/nvme: Use host PCI MMIO API
+>>
+>>   block/nvme.c                  |  41 +++++-----
+>>   include/qemu/host-pci-mmio.h  | 141 ++++++++++++++++++++++++++++++++
+>>   include/qemu/s390x_pci_mmio.h |  24 ++++++
+>>   util/meson.build              |   2 +
+>>   util/s390x_pci_mmio.c         | 148 ++++++++++++++++++++++++++++++++++
+>>   5 files changed, 338 insertions(+), 18 deletions(-)
+>>   create mode 100644 include/qemu/host-pci-mmio.h
+>>   create mode 100644 include/qemu/s390x_pci_mmio.h
+>>   create mode 100644 util/s390x_pci_mmio.c
+>>
 
 
