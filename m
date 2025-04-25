@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF84C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 09:54:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B088C369D1
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 09:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Fk8-0002Um-A0; Fri, 25 Apr 2025 05:53:12 -0400
+	id 1u8Fod-0003u3-76; Fri, 25 Apr 2025 05:57:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Fk4-0002Ty-OC
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:53:09 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Foa-0003se-3W
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:57:48 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Fk2-0001yr-Vh
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:53:08 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3914aba1ce4so1533801f8f.2
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 02:53:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8FoY-0002QZ-CL
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:57:47 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43d2d952eb1so14369695e9.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 02:57:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745574784; x=1746179584; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745575064; x=1746179864; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oCIFc9Ywm0AmaVntvVN1+juG/a3jixQnZLK3MkEjkm4=;
- b=kSouVUMOot5Zj39yk0LfLkjUXupHvsl294SM5+kdqvq6iLVrJZ4KEHEqplzO3gqlbb
- ouq12+ZEfilZ8RLEeMUaGJd81rOiytxv7x+cxBNcRdQM0byH7dfr3jJteLM3DRoC5Bvz
- xGwsZ+MG0uc5MDvG17F5yt+Te9TTnQWUQcciabCAF5gbDvQcvYdRobChmn8I/GJvF2xN
- KVEw76sTAiH6J9Q8GaxGX7hA1VLNanYdNwgT9prOB35URjtbKVGvoDgsTvfKfbRACaHM
- cmXC/4rqbdqB0XCSBc7c7eDRvuoYt1NP/iepWpHzDpFz45FlogyltYFdaOM/+B1Q+Z92
- Z53g==
+ bh=9CBYES/TQdgD4AD2jofFLpQ1DEqU4oUjs9Z1wTIW/Gg=;
+ b=sOG8Gxi84dMaa9vLuCO/DzgC/BbB/j1telO3hPLg8R5n4eUDYjnYhqTXnEBTVwVu7x
+ 6r21BZANxvoDBhUDr7v6AIjHrvfaLjeJJt78vpi7yuRlL86Bp3ucfax+5p8Yauxpk+Mg
+ 5PWjmyQ5dujnPlvGOyPrJ4Mvy00iYEqKMDdwY4ZA+ehKwMKuMhXGgt45FssVaXVLQK9f
+ Z3HZDT/RdRq6VBNwLCz0Xd9QozcInr68txa9HehpCHK2TgxOfevfi71tTab4gIdM0zZR
+ aWsjjVhcun943e3ZctFVgPPRQhfA1zeOoBh2cZx2P4YJMWypeX0Z1gXoDNvpFvB28Ujy
+ JIVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745574784; x=1746179584;
+ d=1e100.net; s=20230601; t=1745575064; x=1746179864;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oCIFc9Ywm0AmaVntvVN1+juG/a3jixQnZLK3MkEjkm4=;
- b=Iv4zPYFJeVlJ7vLw0XrnU5MbIdssesovKxpF9YjHwK4p9hjoEEGtldFDa65KMGMScZ
- xg3R5OGAdT7U7QOq1b9rWzy5VWDsCi/ZPSLrLUBa8DgCb3SoBx0r7tcPs7Q92lTU5d45
- TXZVzGx6y5hz5NVx3UIN+1hAkvixIO6racmOxNPcUBofyAQmVBP6/MIp0YrcQ1ScvkMn
- CHuPpkAhqsH19fj2nZ3qASaWrVp1BRKx6lSjhz4fMb6IFLp7Oz9d1wckcHx8NgYxf3je
- eVuvsq0LfTjL0NlRj28y1p1SUisc/jORRoqPGZaRUHJCbVKUVGS12oou0lQov7ZRiGHb
- TFrQ==
+ bh=9CBYES/TQdgD4AD2jofFLpQ1DEqU4oUjs9Z1wTIW/Gg=;
+ b=dJoAbauPrMIAm+lowUTxm1RdkVr7pL1wUarwDJBYyKsatNvWrjOQdGm7nnt99J9IkH
+ xneWtXBoHDI9OZfTA7y0Fx6Q4hsHg9ZX7pDktC1XhZiA6iG7i8vL65xxSHlS0Q3CfZwU
+ ti6Pc8/KKhcZa9vNvwP+ntHe9JpwsvU8kcQnuHJ4MADLappbQWj+7k2/cPNcgKf1oPlb
+ 80aC/QFvMtOPoMvldxdu3IyMi1Anqifxgg8pkhb+ZZbqp9VJs2dq7GOr3QNuLHR/Eo49
+ TWsRD7smFQOxDpQa+GxovJ/11HuwJUN6poSUqPUIgrBwuqqG0i+eLgPmOrT6wa7vREHR
+ WSIQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZGAb+gF9xZi/CIBUMYjdT+yixKMFmpJ83YUgvji0bDkzkjEWC8c8I8Rx/tRU3TqIpZ7FK++fpY4gI@nongnu.org
-X-Gm-Message-State: AOJu0YwX0W40BuZ+DIck0Y2od+BkYBk2YOpHL4i94UtBkGolweG1QhEe
- 4TzmypK1RhIo3JJ4feMCIDaSBueRgGBgf086kaDihsyXcsR+HnXv3Sq+uBEJ4lI=
-X-Gm-Gg: ASbGncuNQ9bf2zQz2cOQAB3WO63DJxPKGBYk9mF2Xrfp3SHbweDcWkzFKAnYHYfzvD9
- lhpoCcan1cD8W9LhwS6yZAXtbOPoGxwbvB/EsfK/ycohnTvGzppciQCY5uUOUyKf85W5SbOjhRR
- HSJD+ZuidZsgXi6DWw6whl3k4kZCc9jEqk+QNFN/ADojbztTxXIuti7W7bPHvYgF2O+yLuNaviL
- JeCeA2iFmKQA7CNEjSej0pbsiBBtBdEzb5YvbaYq0QVJlJ5S0cyFRBc4YEq9yXzvB/6v2cpgHLh
- /M3H3i13XjsPPZ581tXsgzeoFj12NzbyBqciB/PkxZOT0qovw6B7nmaijStAagrsvDQm3EHsOOT
- OLfvk93WdBEvc3w==
-X-Google-Smtp-Source: AGHT+IG95+POenL5gKJwS9slJpt7SxpswHKyyx89IsPDwhTXRxfUHh00LpewklDXgGcsHBUbli+wLg==
-X-Received: by 2002:a05:6000:22c6:b0:391:3406:b4e1 with SMTP id
- ffacd0b85a97d-3a074e2e253mr1240336f8f.15.1745574784367; 
- Fri, 25 Apr 2025 02:53:04 -0700 (PDT)
+ AJvYcCWdoU1yZiMuwe3Dk52W67jA7WlQDOB1eRESeFEev/vHEhk0fC4GCrdqoYn8G793/pUMOupzAJy0TB3L@nongnu.org
+X-Gm-Message-State: AOJu0YznCpNNZ3FbmWPxigpVA70HMpwEzPiW0XtWqmLifusyV9dqxKaP
+ bup4wrxqpCua7XNQw98dZpJqyTRwwDcMi/pcTf041IWUp7P2c9eoNSBSEFLPlfofH8OhYlj7xSu
+ t
+X-Gm-Gg: ASbGnctC7MmZLNFmYn1hnb8HVm70QCsaMliWBsG7SO7iNxsI+L/Rs5MJdGnuf6cZcJl
+ VJG1+20uqXyPa9kYBXR7JMB7OMmQZdM2nSliC37MFSWP6QRuQyjO4kopUj+ufT16i4ifLt8KVLZ
+ zMubiafzpA+Ktm1Y3dKN04OZ9XC/HW54N6Y7LQB0HzMBoMojEL9ghEtH5Q4Lr5xpfiz1u+pXjlv
+ uF2N8Q0gS/j1ZuHKzoieA7yMqT/V+d+59/Vh0oSLEXfI4PheuajF+Wh3S7+pJi3xn6BomCN5Y84
+ jEm81yPcbEUcHYgJstomeTzCrEBGuQK1fq0zHNJWXi0DS3knLfDy7liFH6w3A2oR/NFkO6WN6QI
+ 3sc2Z/xI7KayyDg==
+X-Google-Smtp-Source: AGHT+IHHH4xPdtw41jIgYjPb7B0vRg52nB2Ft+C3qgS1y1Uygam5YCoWkNj51So3I5CCfLqbDNWl+A==
+X-Received: by 2002:a05:600c:1395:b0:43d:94:2d1e with SMTP id
+ 5b1f17b1804b1-440a65ed5e6mr15924525e9.13.1745575063924; 
+ Fri, 25 Apr 2025 02:57:43 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073e5c7d1sm1804282f8f.83.2025.04.25.02.53.03
+ 5b1f17b1804b1-440a5303c15sm19118325e9.11.2025.04.25.02.57.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 02:53:03 -0700 (PDT)
-Message-ID: <25215587-3a6b-4206-92be-16ae25e4853c@linaro.org>
-Date: Fri, 25 Apr 2025 11:53:03 +0200
+ Fri, 25 Apr 2025 02:57:43 -0700 (PDT)
+Message-ID: <b1ac7812-ac9b-4bcc-a04e-93dd43fbec51@linaro.org>
+Date: Fri, 25 Apr 2025 11:57:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/16] hw/intc/loongarch_pch: Use generic read callback
- for iomem32_low region
+Subject: Re: [PATCH v2 04/16] hw/intc/loongarch_pch: Set version information
+ at initial stage
 To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250324093730.3683378-1-maobibo@loongson.cn>
- <20250324093730.3683378-8-maobibo@loongson.cn>
+ <20250324093730.3683378-5-maobibo@loongson.cn>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250324093730.3683378-8-maobibo@loongson.cn>
+In-Reply-To: <20250324093730.3683378-5-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,90 +107,56 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 24/3/25 10:37, Bibo Mao wrote:
-> For memory region iomem32_low, generic read callback is used.
+> Register PCH_PIC_INT_ID constains version and supported irq number
+> information, and it is read only register. The detailed value can
+> be set at initial stage, rather than read callback.
 > 
 > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   hw/intc/loongarch_pch_pic.c | 71 +++++++++++++++++++++++++------------
->   1 file changed, 48 insertions(+), 23 deletions(-)
-> 
-> diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-> index 10b4231464..b495bd3a4d 100644
-> --- a/hw/intc/loongarch_pch_pic.c
-> +++ b/hw/intc/loongarch_pch_pic.c
-> @@ -7,6 +7,7 @@
->   
->   #include "qemu/osdep.h"
->   #include "qemu/bitops.h"
-> +#include "qemu/log.h"
->   #include "hw/irq.h"
->   #include "hw/intc/loongarch_pch_pic.h"
->   #include "trace.h"
-> @@ -71,47 +72,71 @@ static void pch_pic_irq_handler(void *opaque, int irq, int level)
->       pch_pic_update_irq(s, mask, level);
->   }
->   
-> -static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
-> -                                            unsigned size)
-> +static uint64_t pch_pic_read(void *opaque, hwaddr addr, uint64_t field_mask)
->   {
->       LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
->       uint64_t val = 0;
-> +    uint32_t offset = addr & 7;
->   
->       switch (addr) {
-> -    case PCH_PIC_INT_ID:
-> -        val = s->id.data & UINT_MAX;
-> +    case PCH_PIC_INT_ID ... PCH_PIC_INT_ID + 7:
-> +        val = s->id.data;
->           break;
-> -    case PCH_PIC_INT_ID + 4:
-> -        val = s->id.data >> 32;
-> +    case PCH_PIC_INT_MASK ... PCH_PIC_INT_MASK + 7:
-> +        val = s->int_mask;
->           break;
-> -    case PCH_PIC_INT_MASK:
-> -        val = (uint32_t)s->int_mask;
-> +    case PCH_PIC_INT_EDGE ... PCH_PIC_INT_EDGE + 7:
-> +        val = s->intedge;
->           break;
-> -    case PCH_PIC_INT_MASK + 4:
-> -        val = s->int_mask >> 32;
-> +    case PCH_PIC_HTMSI_EN ... PCH_PIC_HTMSI_EN + 7:
-> +        val = s->htmsi_en;
->           break;
-> -    case PCH_PIC_INT_EDGE:
-> -        val = (uint32_t)s->intedge;
-> +    case PCH_PIC_AUTO_CTRL0 ... PCH_PIC_AUTO_CTRL0 + 7:
-> +    case PCH_PIC_AUTO_CTRL1 ... PCH_PIC_AUTO_CTRL1 + 7:
-> +        /* PCH PIC connect to EXTIOI always, discard auto_ctrl access */
->           break;
-> -    case PCH_PIC_INT_EDGE + 4:
-> -        val = s->intedge >> 32;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "pch_pic_read: Bad address 0x%"PRIx64"\n", addr);
->           break;
-> -    case PCH_PIC_HTMSI_EN:
-> -        val = (uint32_t)s->htmsi_en;
-> +    }
-> +
-> +    return (val >> (offset * 8)) & field_mask;
+>   hw/intc/loongarch_pch_pic.c            | 17 ++++++++++-------
+>   include/hw/intc/loongarch_pic_common.h | 17 +++++++++++++++--
+>   2 files changed, 25 insertions(+), 9 deletions(-)
 
-Maybe you want to simplify from a different angle:
 
---- a/hw/intc/loongarch_pch_pic.c
-+++ b/hw/intc/loongarch_pch_pic.c
-@@ -320,8 +320,7 @@ static const MemoryRegionOps 
-loongarch_pch_pic_reg32_low_ops = {
-          .max_access_size = 8,
-      },
-      .impl = {
--        .min_access_size = 4,
--        .max_access_size = 4,
-+        .min_access_size = 8,
-      },
-      .endianness = DEVICE_LITTLE_ENDIAN,
-  };
+> diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
+> index ef6edc15bf..fb848da4b8 100644
+> --- a/include/hw/intc/loongarch_pic_common.h
+> +++ b/include/hw/intc/loongarch_pic_common.h
+> @@ -10,9 +10,9 @@
+>   #include "hw/pci-host/ls7a.h"
+>   #include "hw/sysbus.h"
+>   
+> -#define PCH_PIC_INT_ID_VAL              0x7000000UL
+> -#define PCH_PIC_INT_ID_VER              0x1UL
+>   #define PCH_PIC_INT_ID                  0x00
+> +#define  PCH_PIC_INT_ID_VAL             0x7
+> +#define  PCH_PIC_INT_ID_VER             0x1
+>   #define PCH_PIC_INT_MASK                0x20
+>   #define PCH_PIC_HTMSI_EN                0x40
+>   #define PCH_PIC_INT_EDGE                0x60
+> @@ -30,10 +30,23 @@
+>   OBJECT_DECLARE_TYPE(LoongArchPICCommonState,
+>                       LoongArchPICCommonClass, LOONGARCH_PIC_COMMON)
+>   
+> +union LoongArchPIC_ID {
+> +    struct {
+> +        uint64_t _reserved_0:24;
+> +        uint64_t id:8;
+
+Why not use:
+
+            uint8_t _reserved_0[3];
+            uint8_t id;
+
+Otherwise see commit ecbf3567e21 ("docs/devel/style: add a section about
+bitfield, and disallow them for packed structures"), this might give
+troubles on Windows or big-endian hosts such s390x.
+
+> +        uint64_t version:8;
+> +        uint64_t _reserved_1:8;
+> +        uint64_t irq_num:8;
+> +        uint64_t _reserved_2:8;
+ > +    } QEMU_PACKED desc;> +    uint64_t data;
+> +};
 
 
