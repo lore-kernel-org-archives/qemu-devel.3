@@ -4,59 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9A54C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 19:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB3C0C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 19:27:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Ogs-0000uR-3B; Fri, 25 Apr 2025 15:26:26 -0400
+	id 1u8Oi8-0002Dc-Lp; Fri, 25 Apr 2025 15:27:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1u8Ogq-0000tu-Eh; Fri, 25 Apr 2025 15:26:24 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1u8Ogo-0004y6-BW; Fri, 25 Apr 2025 15:26:24 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id C985E4AB4E;
- Fri, 25 Apr 2025 19:26:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA96C4CEE9;
- Fri, 25 Apr 2025 19:26:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1745609176;
- bh=ljStjEoWpGm0WSufAWVVtJm5j+hefQcxjnFFyz8KcgY=;
- h=Date:From:To:cc:Subject:In-Reply-To:References:From;
- b=LT2WHXiS7x8kST+KvpcKjeiIby/zhVutCJErxMt2Nx3QNr/im8x+w5hNtSiFxOitR
- 5nX08cmWlZByoviT0y0fLkCTX60zymkAZ8vwFjUGRTezuITKMquwyRqlArkhooIIGt
- tD3fgbdZReKcl/dhoFyc3jEIVUkzAjb2wifF4KCAO95k4HGCk7LixKfYp0kQ4oJ6++
- fGgSjcDM979WERKy6tMbyWii80uTCARx96GqnESgkwOe7AER9zg+5NIXIfkJ11Xd77
- eIiRvLYng5rLc5AutyprwjIGPUGsNYwtWohvrIWDAC1GkbRTkER57dIzhWmnOUnBVL
- wDGcJVSSHGoAQ==
-Date: Fri, 25 Apr 2025 12:26:14 -0700 (PDT)
-From: Stefano Stabellini <sstabellini@kernel.org>
-X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, sstabellini@kernel.org, 
- anthony@xenproject.org, paul@xen.org, edgar.iglesias@amd.com, 
- xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v1 1/1] xen: mapcache: Split mapcache_grants by ro and rw
-In-Reply-To: <20250425143156.204452-2-edgar.iglesias@gmail.com>
-Message-ID: <alpine.DEB.2.22.394.2504251225270.785180@ubuntu-linux-20-04-desktop>
-References: <20250425143156.204452-1-edgar.iglesias@gmail.com>
- <20250425143156.204452-2-edgar.iglesias@gmail.com>
-User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u8Oi7-0002Ba-2O
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 15:27:43 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u8Oi5-00058D-Cz
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 15:27:42 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-223fd89d036so35049435ad.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 12:27:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745609259; x=1746214059; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mhoKuIaCQkkQpnxjJQhzZ05uLMMjrR1geTp+dV9bCG4=;
+ b=n8rnTlYRmB+6AWZ1+0fisbnlFIGi8QLaCXu7XGDS4whlBwUqlSD6ZJ43lDJT8P/NAq
+ OeldaYkfTrolICa6v6hofzN/pziXK0jvmtLbjbGf79v1sUPucyrqMB+A4QpBcNZGadui
+ r8huPwoWxbQBhvVCBBtfql81cKyt7wn5r42eGJp4numjsV93yHjYBSYgnpY48gOctAqj
+ 7HAuOUP+6Fyt5Szlr1p/rpKdIOPKobU96yR6rQiCZjCjuRxOTG75kjTTG5DlyofU2uq8
+ /rM75PW30g+2qCYqe9VSZhGMLFY/tLFFefcRkszerSF6Ims9wfi9d7zal+Dev8+c//Gb
+ W9Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745609259; x=1746214059;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mhoKuIaCQkkQpnxjJQhzZ05uLMMjrR1geTp+dV9bCG4=;
+ b=RO0rsWn8qCxYto+7/PhABt/6cNL/uIXLfUj4IVwL1bXdGqVw1PDLOby/TbwA69CIfZ
+ kn/GWLxjk5KFiPdUDYxW8Itig+3oTVnMaQh9Rtgetq8Vv/f3RCQ/GDWL6J8mC5ClvY/0
+ TNtH58j6esCJRQxwh3bsYpAeGTp1iFQG0H0JwbMIiNyeHiMgFFUv7plG7aybcZIJMDpX
+ NCJYiWHPS6q6S+g7WX4lANHmJoBX1VJVloW+7veB4iz5E6H5ebCWUYFCUb5dsl6lbbi8
+ aFv1lHZUsx385trrpFFnfGAyBtbPMQpdJC32cwih1xK0w4YVKvGBPBqrEW6pf7r3GkQZ
+ u1xg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNwLf337+br1w7GuOEqsay4nSnN5UXULd/llJOaCSHhhpYWUfzqfPFxSKwAqSSC1/X5lUn5NQiURDC@nongnu.org
+X-Gm-Message-State: AOJu0YzQKXb1JoaquN6tL+nzqwhr0wLxCpRgMMDx8GAOvvQMKPAcpPXQ
+ 8qF8ETspx8XC23a+tYfowmXUq0RIwLhaCzC4/+zK0JdaZddce/tspUFv27Q8kBZTNmsyZSqbgBD
+ 98z5ecA==
+X-Gm-Gg: ASbGncsGthzqw9C3WErYKNQdLmp+ZHeLrWc9ZRNLjNG0vAB6A0W6OD5B7f56XJtbtfc
+ b+EoRk02tp6XPkQmfDdywAzLARxmCkUxPhAu4AKuJ4mpZcmXVqr6izXkQ+yN2QQUvbxom5WQRhK
+ Z8PZBA278RuqFSGDZGEcjr9j8bJThgiV0E+SbW8buxLJTWJZsrjWj1ly3MMgFQ6UWujYUzbGM2i
+ 1wSyh1fUxLkv9dk1I4PEuDo+p234Yb61jJZZRbKtKTBwZ0rIEr4/B9eg2t21HQCMcPuXRCx3yc2
+ A1OQzVQkBFGdHlWoFCHyLFuCUbImmr+HXXJA3VwPJbN87aD4QJh0c2JqfmovhR5v
+X-Google-Smtp-Source: AGHT+IHtODwhhCPQat6aGJ9xOBzP+/oMSGL6zyNqrc9uoYl6XZ5s0ORuKNt8+OcLzV5/267N4necYQ==
+X-Received: by 2002:a17:902:ef47:b0:21f:4b01:b978 with SMTP id
+ d9443c01a7336-22dc6a54a44mr12558955ad.36.1745609259005; 
+ Fri, 25 Apr 2025 12:27:39 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b15faded690sm3281835a12.71.2025.04.25.12.27.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Apr 2025 12:27:38 -0700 (PDT)
+Message-ID: <08e4546a-0236-4950-820c-7ff08159335d@linaro.org>
+Date: Fri, 25 Apr 2025 12:27:37 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=172.234.252.31;
- envelope-from=sstabellini@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/15] accel/tcg: Add CPUState argument to page_unprotect
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250424011918.599958-1-richard.henderson@linaro.org>
+ <20250424011918.599958-2-richard.henderson@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250424011918.599958-2-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.314,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,94 +104,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 25 Apr 2025, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+On 4/23/25 18:19, Richard Henderson wrote:
+> In the next patch, page_unprotect will need to pass
+> the CPUState to tb_invalidate_phys_page_unwind.
 > 
-> Today, we don't track write-abiliy in the cache, if a user
-> requests a readable mapping followed by a writeable mapping
-> on the same page, the second lookup will incorrectly hit
-> the readable entry.
-> 
-> Split mapcache_grants by ro and rw access. Grants will now
-> have separate ways in the cache depending on writeability.
-> 
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-
-
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  hw/xen/xen-mapcache.c | 26 +++++++++++++++++++-------
->  1 file changed, 19 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-> index 2c8f861fdb..e31d379702 100644
-> --- a/hw/xen/xen-mapcache.c
-> +++ b/hw/xen/xen-mapcache.c
-> @@ -75,7 +75,8 @@ typedef struct MapCache {
->  } MapCache;
->  
->  static MapCache *mapcache;
-> -static MapCache *mapcache_grants;
-> +static MapCache *mapcache_grants_ro;
-> +static MapCache *mapcache_grants_rw;
->  static xengnttab_handle *xen_region_gnttabdev;
->  
->  static inline void mapcache_lock(MapCache *mc)
-> @@ -176,9 +177,12 @@ void xen_map_cache_init(phys_offset_to_gaddr_t f, void *opaque)
->       * Grant mappings must use XC_PAGE_SIZE granularity since we can't
->       * map anything beyond the number of pages granted to us.
->       */
-> -    mapcache_grants = xen_map_cache_init_single(f, opaque,
-> -                                                XC_PAGE_SHIFT,
-> -                                                max_mcache_size);
-> +    mapcache_grants_ro = xen_map_cache_init_single(f, opaque,
-> +                                                   XC_PAGE_SHIFT,
-> +                                                   max_mcache_size);
-> +    mapcache_grants_rw = xen_map_cache_init_single(f, opaque,
-> +                                                   XC_PAGE_SHIFT,
-> +                                                   max_mcache_size);
->  
->      setrlimit(RLIMIT_AS, &rlimit_as);
->  }
-> @@ -456,9 +460,13 @@ uint8_t *xen_map_cache(MemoryRegion *mr,
->                         bool is_write)
->  {
->      bool grant = xen_mr_is_grants(mr);
-> -    MapCache *mc = grant ? mapcache_grants : mapcache;
-> +    MapCache *mc = mapcache;
->      uint8_t *p;
->  
-> +    if (grant) {
-> +        mc = is_write ? mapcache_grants_rw : mapcache_grants_ro;
-> +    }
-> +
->      if (grant && !lock) {
->          /*
->           * Grants are only supported via address_space_map(). Anything
-> @@ -523,7 +531,10 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
->  
->      addr = xen_ram_addr_from_mapcache_single(mapcache, ptr);
->      if (addr == RAM_ADDR_INVALID) {
-> -        addr = xen_ram_addr_from_mapcache_single(mapcache_grants, ptr);
-> +        addr = xen_ram_addr_from_mapcache_single(mapcache_grants_ro, ptr);
-> +    }
-> +    if (addr == RAM_ADDR_INVALID) {
-> +        addr = xen_ram_addr_from_mapcache_single(mapcache_grants_rw, ptr);
->      }
->  
->      return addr;
-> @@ -626,7 +637,8 @@ static void xen_invalidate_map_cache_entry_single(MapCache *mc, uint8_t *buffer)
->  static void xen_invalidate_map_cache_entry_all(uint8_t *buffer)
->  {
->      xen_invalidate_map_cache_entry_single(mapcache, buffer);
-> -    xen_invalidate_map_cache_entry_single(mapcache_grants, buffer);
-> +    xen_invalidate_map_cache_entry_single(mapcache_grants_ro, buffer);
-> +    xen_invalidate_map_cache_entry_single(mapcache_grants_rw, buffer);
->  }
->  
->  static void xen_invalidate_map_cache_entry_bh(void *opaque)
-> -- 
-> 2.43.0
-> 
+>   include/user/page-protection.h | 2 +-
+>   accel/tcg/user-exec.c          | 8 +++++---
+>   linux-user/elfload.c           | 2 +-
+>   3 files changed, 7 insertions(+), 5 deletions(-)
+>
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
 
