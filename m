@@ -4,87 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5696AC369D1
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 08:58:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AC5CC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 09:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Esd-0008Gy-H0; Fri, 25 Apr 2025 04:57:59 -0400
+	id 1u8Evz-0001fw-LB; Fri, 25 Apr 2025 05:01:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u8EsY-0008F1-Df; Fri, 25 Apr 2025 04:57:50 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u8Evp-0001e9-AU
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:01:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u8EsV-0004Lf-Au; Fri, 25 Apr 2025 04:57:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745571467; x=1777107467;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=mcEr0zmSiDOPEt70TYU6E6B7dOkZJjNKNUv16j9oVcE=;
- b=gzJzqx9urLiWY7IF+T7VZB1QYy7yKnyIrd+9yW9gv44b0kGPhxqmGybJ
- +oXA7hRe3W/p8yKwBOGlEFxlKejUVqefFmiMSoqskazHUt3NEt8ef0qQ+
- 6aHrs80p+BEf6jAoBoOixhDPfzLycDDJ7Jx//Ouu8czfP5ObCd42RMEMj
- qe/mlCdUwsm8rdwg2Pf9s4uYzSCnbseDXQXoHYvpYrs3Q9+onUgNMEug+
- AF12JPh3oqkgNqzkZa03d893vVzgGQtWqZIMMpxVekQI8exYbkwAunHWV
- x2r1QyXmanXSlXuqD3EuhUFoX7qTrM4Z01Df+ePM2uQx4rfG7HBwVjWQe Q==;
-X-CSE-ConnectionGUID: IwSWVHI9RG2I35TwnBtCTg==
-X-CSE-MsgGUID: h1loQsGDTrq39tAMSSeo0A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11413"; a="58598709"
-X-IronPort-AV: E=Sophos;i="6.15,238,1739865600"; d="scan'208";a="58598709"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Apr 2025 01:57:43 -0700
-X-CSE-ConnectionGUID: GO8FEL63QBeQRXrZ2LqRRQ==
-X-CSE-MsgGUID: gdGUVTFQQaa54FHx4mG1AA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,238,1739865600"; d="scan'208";a="132847488"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 25 Apr 2025 01:57:33 -0700
-Date: Fri, 25 Apr 2025 17:18:28 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- pbonzini@redhat.com, mtosatti@redhat.com, sandipan.das@amd.com,
- babu.moger@amd.com, likexu@tencent.com, like.xu.linux@gmail.com,
- groug@kaod.org, khorenko@virtuozzo.com,
- alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
- davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
- dapeng1.mi@linux.intel.com, joe.jin@oracle.com,
- peter.maydell@linaro.org, gaosong@loongson.cn,
- chenhuacai@kernel.org, philmd@linaro.org, aurelien@aurel32.net,
- jiaxun.yang@flygoat.com, arikalo@gmail.com, npiggin@gmail.com,
- danielhb413@gmail.com, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
- thuth@redhat.com, flavra@baylibre.com, ewanhai-oc@zhaoxin.com,
- ewanhai@zhaoxin.com, cobechen@zhaoxin.com, louisqi@zhaoxin.com,
- liamni@zhaoxin.com, frankzhu@zhaoxin.com, silviazhao@zhaoxin.com,
- kraxel@redhat.com, berrange@redhat.com
-Subject: Re: [PATCH v4 09/11] target/i386/kvm: reset AMD PMU registers during
- VM reset
-Message-ID: <aAtTZLZR7IRhdOUC@intel.com>
-References: <20250416215306.32426-1-dongli.zhang@oracle.com>
- <20250416215306.32426-10-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u8Evi-0004mL-Lz
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:01:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745571664;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=sZlf4Ki0ILTf7DSzPCwsaG6Mz5kWBOKsa24PqXYPLp4=;
+ b=OTV1XpvzkxBsk0b3F4aN0X+FMFOEPGdSajf+bYTcZjp4LqvoJRDBCwQamiK+OawiWKPFhw
+ ApJnC10K7AlpvGBAgMhA7tlQEQKB1heFh8HMqaRkzqUCpY9LcOf4WoBr4lxbCZPkQ78fLG
+ Wq6/3FDvfTbJCwaNigDzVaErhJ6wrPA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-632-zO8kBoWzO9eA4uccVyjP0A-1; Fri, 25 Apr 2025 05:01:02 -0400
+X-MC-Unique: zO8kBoWzO9eA4uccVyjP0A-1
+X-Mimecast-MFC-AGG-ID: zO8kBoWzO9eA4uccVyjP0A_1745571661
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43cec217977so10219955e9.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 02:01:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745571661; x=1746176461;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sZlf4Ki0ILTf7DSzPCwsaG6Mz5kWBOKsa24PqXYPLp4=;
+ b=rcwzDb3oHMdepz67qC5qvSbhA9B1e8LVsC6GhovgB4/glsZsCOyog9f96JO6tpvGw8
+ 7m+vlNCx5kcaHzQIvxsovNRvdzgP+NzwQ1WUwQ23KoiTQcUYImNlWS8CDSMZNGWxhlKv
+ CAh3bEw/fSn189L5riu9Cosxiq0RddslF0/HUrEBFkIzOaIYwMrObQteoDTVzyq4wyQo
+ Qv8HVZ0UPJz3fMvwxurD8sFfRPSLXScIFqVFgENChaWyKiigCVfm4GlRvdl6ccDdXwb9
+ sbiPGh+d0pnkb9oTdX+KU7xMJ2MW6hufLWubgH/lX0vT8KOHwgTqNtFs02PLe8QD3l81
+ Yihw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW2GmE+HL5C4YYtPJHr4rK9ted0bxCae99MZB9CHwgDbm6xPwzzUEE3CTaYmVC8K9LcHHzKwXIMv1/h@nongnu.org
+X-Gm-Message-State: AOJu0Ywgh5q+qK27lZ51XI26ycx82Ji8q7aexjvF2KJmdTvxVH2HnEQx
+ Ap4Vw9gzoxEzos7YJ9K8KDcSPgEoGubvl50zx3SSPpwGe5EmKCO3nj81jRdi7q7fNc2m8Uei2vt
+ EiwRSw9poOB6I6TcA1KsZ51Fue/h0HnZW7AHhGgvFDJgdjIMBjO0X
+X-Gm-Gg: ASbGncuCjDLRzDuh1R9CkEpXgi+29cGX/kopMalof5JwitmOVWBzk46s/KsUAV4OjOD
+ w4cfV5eYsqGTt0UEzR3kkVUD09ZLEi9iHGj7Qe2nVeWqD1DuoHyTUGUT3QFR4g6QL1TbXWqGChQ
+ mrVO4BaRPI0JxpaEiCMvvMWXGGVhdH0XFWET9LHoJnoSoY0syNIbrxjkXAyKHOyUdNblChBDglI
+ o6xi+6orw9SuvVGiT0pLaT5b1kZGv/qbswaALwxzqduMSSxrGvRdYGKv45v+XqoJNFmG/LQvKDt
+ PJQsy6feDkOBtwZ7wSxcfTV2syjzQoMGAULEbDedXsJ++w==
+X-Received: by 2002:a05:600c:1988:b0:440:9b1a:cd78 with SMTP id
+ 5b1f17b1804b1-440a65dc984mr15081505e9.10.1745571661366; 
+ Fri, 25 Apr 2025 02:01:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGr6ff6dbji0vLJXcEu0BsBPZIa4+SO722Ss84DP8ZsJPwPJaY5i+hyUfnJh0a5pOkYrfd29Q==
+X-Received: by 2002:a05:600c:1988:b0:440:9b1a:cd78 with SMTP id
+ 5b1f17b1804b1-440a65dc984mr15080975e9.10.1745571660904; 
+ Fri, 25 Apr 2025 02:01:00 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-43-178-177.web.vodafone.de.
+ [109.43.178.177]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4409d2e01bdsm51047535e9.38.2025.04.25.02.00.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Apr 2025 02:01:00 -0700 (PDT)
+Message-ID: <06f9244c-671c-4215-9d20-7bb69194fae6@redhat.com>
+Date: Fri, 25 Apr 2025 11:00:58 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250416215306.32426-10-dongli.zhang@oracle.com>
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.84,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/3] util: Add functions for s390x mmio read/write
+To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, stefanha@redhat.com, mjrosato@linux.ibm.com,
+ schnelle@linux.ibm.com, philmd@linaro.org, kwolf@redhat.com,
+ hreitz@redhat.com, fam@euphon.net
+References: <20250417173801.827-1-alifm@linux.ibm.com>
+ <20250417173801.827-2-alifm@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250417173801.827-2-alifm@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.84,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,77 +155,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 16, 2025 at 02:52:34PM -0700, Dongli Zhang wrote:
-> Date: Wed, 16 Apr 2025 14:52:34 -0700
-> From: Dongli Zhang <dongli.zhang@oracle.com>
-> Subject: [PATCH v4 09/11] target/i386/kvm: reset AMD PMU registers during
->  VM reset
-> X-Mailer: git-send-email 2.43.5
+On 17/04/2025 19.37, Farhan Ali wrote:
+> Starting with z15 (or newer) we can execute mmio
+> instructions from userspace. On older platforms
+> where we don't have these instructions available
+> we can fallback to using system calls to access
+> the PCI mapped resources.
 > 
-> QEMU uses the kvm_get_msrs() function to save Intel PMU registers from KVM
-> and kvm_put_msrs() to restore them to KVM. However, there is no support for
-> AMD PMU registers. Currently, pmu_version and num_pmu_gp_counters are
-> initialized based on cpuid(0xa), which does not apply to AMD processors.
-> For AMD CPUs, prior to PerfMonV2, the number of general-purpose registers
-> is determined based on the CPU version.
+> This patch adds helper functions for mmio reads
+> and writes for s390x.
 > 
-> To address this issue, we need to add support for AMD PMU registers.
-> Without this support, the following problems can arise:
-> 
-> 1. If the VM is reset (e.g., via QEMU system_reset or VM kdump/kexec) while
-> running "perf top", the PMU registers are not disabled properly.
-> 
-> 2. Despite x86_cpu_reset() resetting many registers to zero, kvm_put_msrs()
-> does not handle AMD PMU registers, causing some PMU events to remain
-> enabled in KVM.
-> 
-> 3. The KVM kvm_pmc_speculative_in_use() function consistently returns true,
-> preventing the reclamation of these events. Consequently, the
-> kvm_pmc->perf_event remains active.
-> 
-> 4. After a reboot, the VM kernel may report the following error:
-> 
-> [    0.092011] Performance Events: Fam17h+ core perfctr, Broken BIOS detected, complain to your hardware vendor.
-> [    0.092023] [Firmware Bug]: the BIOS has corrupted hw-PMU resources (MSR c0010200 is 530076)
-> 
-> 5. In the worst case, the active kvm_pmc->perf_event may inject unknown
-> NMIs randomly into the VM kernel:
-> 
-> [...] Uhhuh. NMI received for unknown reason 30 on CPU 0.
-> 
-> To resolve these issues, we propose resetting AMD PMU registers during the
-> VM reset process.
-> 
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+> Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
 > ---
-> Changed since v1:
->   - Modify "MSR_K7_EVNTSEL0 + 3" and "MSR_K7_PERFCTR0 + 3" by using
->     AMD64_NUM_COUNTERS (suggested by Sandipan Das).
->   - Use "AMD64_NUM_COUNTERS_CORE * 2 - 1", not "MSR_F15H_PERF_CTL0 + 0xb".
->     (suggested by Sandipan Das).
->   - Switch back to "-pmu" instead of using a global "pmu-cap-disabled".
->   - Don't initialize PMU info if kvm.enable_pmu=N.
-> Changed since v2:
->   - Remove 'static' from host_cpuid_vendorX.
->   - Change has_pmu_version to pmu_version.
->   - Use object_property_get_int() to get CPU family.
->   - Use cpuid_find_entry() instead of cpu_x86_cpuid().
->   - Send error log when host and guest are from different vendors.
->   - Move "if (!cpu->enable_pmu)" to begin of function. Add comments to
->     reminder developers.
->   - Add support to Zhaoxin. Change is_same_vendor() to
->     is_host_compat_vendor().
->   - Didn't add Reviewed-by from Sandipan because the change isn't minor.
-> Changed since v3:
->   - Use host_cpu_vendor_fms() from Zhao's patch.
->   - Check AMD directly makes the "compat" rule clear.
->   - Add comment to MAX_GP_COUNTERS.
->   - Skip PMU info initialization if !kvm_pmu_disabled.
+>   include/qemu/s390x_pci_mmio.h |  24 ++++++
+>   util/meson.build              |   2 +
+>   util/s390x_pci_mmio.c         | 148 ++++++++++++++++++++++++++++++++++
+>   3 files changed, 174 insertions(+)
+>   create mode 100644 include/qemu/s390x_pci_mmio.h
+>   create mode 100644 util/s390x_pci_mmio.c
 > 
->  target/i386/cpu.h     |  12 +++
->  target/i386/kvm/kvm.c | 175 +++++++++++++++++++++++++++++++++++++++++-
->  2 files changed, 183 insertions(+), 4 deletions(-)
+> diff --git a/include/qemu/s390x_pci_mmio.h b/include/qemu/s390x_pci_mmio.h
+> new file mode 100644
+> index 0000000000..c5f63ecefa
+> --- /dev/null
+> +++ b/include/qemu/s390x_pci_mmio.h
+> @@ -0,0 +1,24 @@
+> +/*
+> + * s390x PCI MMIO definitions
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Farhan Ali <alifm@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +#ifndef S390X_PCI_MMIO_H
+> +#define S390X_PCI_MMIO_H
+> +
+> +#ifdef __s390x__
+> +uint8_t s390x_pci_mmio_read_8(const void *ioaddr);
+> +uint16_t s390x_pci_mmio_read_16(const void *ioaddr);
+> +uint32_t s390x_pci_mmio_read_32(const void *ioaddr);
+> +uint64_t s390x_pci_mmio_read_64(const void *ioaddr);
+> +
+> +void s390x_pci_mmio_write_8(void *ioaddr, uint8_t val);
+> +void s390x_pci_mmio_write_16(void *ioaddr, uint16_t val);
+> +void s390x_pci_mmio_write_32(void *ioaddr, uint32_t val);
+> +void s390x_pci_mmio_write_64(void *ioaddr, uint64_t val);
+> +#endif /* __s390x__ */
+> +
+> +#endif /* S390X_PCI_MMIO_H */
+> diff --git a/util/meson.build b/util/meson.build
+> index 780b5977a8..acb21592f9 100644
+> --- a/util/meson.build
+> +++ b/util/meson.build
+> @@ -131,4 +131,6 @@ elif cpu in ['ppc', 'ppc64']
+>     util_ss.add(files('cpuinfo-ppc.c'))
+>   elif cpu in ['riscv32', 'riscv64']
+>     util_ss.add(files('cpuinfo-riscv.c'))
+> +elif cpu == 's390x'
+> +  util_ss.add(files('s390x_pci_mmio.c'))
+>   endif
+> diff --git a/util/s390x_pci_mmio.c b/util/s390x_pci_mmio.c
+> new file mode 100644
+> index 0000000000..820458a026
+> --- /dev/null
+> +++ b/util/s390x_pci_mmio.c
+> @@ -0,0 +1,148 @@
+> +/*
+> + * s390x PCI MMIO definitions
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Farhan Ali <alifm@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include <unistd.h>
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+unistd.h is already included by osdep.h, so you don't have to include it 
+again here.
+
+> +#include <sys/syscall.h>
+> +#include "qemu/s390x_pci_mmio.h"
+> +#include "elf.h"
+> +
+> +union register_pair {
+> +    unsigned __int128 pair;
+> +    struct {
+> +        uint64_t even;
+> +        uint64_t odd;
+> +    };
+> +};
+> +
+> +static bool is_mio_supported;
+> +
+> +static __attribute__((constructor)) void check_is_mio_supported(void)
+> +{
+> +    is_mio_supported = !!(qemu_getauxval(AT_HWCAP) & HWCAP_S390_PCI_MIO);
+> +}
+> +
+> +static uint64_t s390x_pcilgi(const void *ioaddr, size_t len)
+> +{
+> +    union register_pair ioaddr_len = { .even = (uint64_t)ioaddr,
+> +                                       .odd = len };
+> +    uint64_t val;
+> +    int cc;
+> +
+> +    asm volatile(
+> +        /* pcilgi */
+> +        ".insn   rre,0xb9d60000,%[val],%[ioaddr_len]\n"
+> +        "ipm     %[cc]\n"
+> +        "srl     %[cc],28\n"
+> +        : [cc] "=d"(cc), [val] "=d"(val),
+> +        [ioaddr_len] "+&d"(ioaddr_len.pair) :: "cc");
+
+Do we need the "&" modifier here? ... at least the kernel does not seem to 
+use it ...
+
+> +
+> +    if (cc) {
+> +        val = -1ULL;
+> +    }
+> +
+> +    return val;
+> +}
+> +
+> +static void s390x_pcistgi(void *ioaddr, uint64_t val, size_t len)
+> +{
+> +    union register_pair ioaddr_len = {.even = (uint64_t)ioaddr, .odd = len};
+> +
+> +    asm volatile (
+> +        /* pcistgi */
+> +        ".insn   rre,0xb9d40000,%[val],%[ioaddr_len]\n"
+> +        : [ioaddr_len] "+&d" (ioaddr_len.pair)
+
+dito
+
+> +        : [val] "d" (val)
+> +        : "cc", "memory");
+> +}
+...
+> +void s390x_pci_mmio_write_64(void *ioaddr, uint64_t val)
+> +{
+> +    if (is_mio_supported) {
+> +        s390x_pcistgi(ioaddr, val, sizeof(val));
+> +    } else {
+> +        syscall(__NR_s390_pci_mmio_write, ioaddr, &val, sizeof(val));
+> +    }
+> +}
+> +
+
+FWIW, "git am" complains about "new blank line at EOF" here.
+
+Apart from these nits, the patch looks sane to me.
+
+  Thomas
 
 
