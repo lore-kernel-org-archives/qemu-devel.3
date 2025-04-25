@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B95C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:25:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3586CC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:29:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Ktd-0001eR-R6; Fri, 25 Apr 2025 11:23:21 -0400
+	id 1u8KzB-00004t-5Z; Fri, 25 Apr 2025 11:29:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u8Ktc-0001dE-5p
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:23:20 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Kz4-0008Va-IE
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:29:00 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u8KtZ-0002p0-Fw
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:23:19 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-af523f4511fso2284078a12.0
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:23:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Kyy-0003V2-LU
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:28:56 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-39c1ef4ae3aso1550846f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:28:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745594595; x=1746199395; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745594930; x=1746199730; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DFIjN5FugvOLKOwxhVcNRX7EfVOZPbGYkwA/+pKFgdA=;
- b=oOeCT9xFE3Eq5oxqEdjHH4jqrIZUsaWlxl1zXzFGDxtyiXdNk0b5RD20mzqkZiDVrV
- 2V9VCsC/Pv+TwgA0IQM8KCAV4wxj53ZQXLpNDG3bha7xiO1QudCqlj7X2vMmVUxyrNIg
- GTUW5dp3VlrlseHjHh2suKvr8liLCynXPpdol++hIUFSuwnp8JhEegMfANqYhIIFnESa
- ahCcxmPBKDvLJ71cyk2STd1k/Dn4vIecscgkjKw0EizOAUJdykQcxIV8phERBHYtGNNO
- 8fGJLdmXGbQ9kotBg295lRf5Oooi17M5Khm57dcQLa0y5YcXxweDuUcRT+xduUuwtndK
- CfwQ==
+ bh=VXDlaJ/y5+AB626PahfOyufXZGYE0bZzreOJUWUIl6s=;
+ b=qp8w+IbY9RjzyqHX31q4X+Oh3siDOPrEmZwE7x8u5eIR2f2KMlUZbZ5pPo9vkVKUec
+ KPnwIxINBpAcW37jQGeE42wdYYUWcKRWZPsYhmQpGYflVse27PKWwcWWxUVLuLyWVFC4
+ E0WIYFuGLM+n3dWr/eBCJn+z+VCVabvYzHDRWI/pX45qzWxa0dWN0xGilsfgRpRctHLV
+ n4bEuemcmU8ZMmenCloVC/TM76d1ENfWZjhJuu+ZAlunT8eLtO0XBV3iA/0QWDG2+9Ik
+ b01+UBpUhA2vtMyOjizFNofwL4Z1qtl4aswZ7sRHECA6qZK8cpTZzLi7D67QDWycChfv
+ VLZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745594595; x=1746199395;
+ d=1e100.net; s=20230601; t=1745594930; x=1746199730;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DFIjN5FugvOLKOwxhVcNRX7EfVOZPbGYkwA/+pKFgdA=;
- b=Q4g0aA9rxs2IefNOuhYRSIyuZJuApDjNFgAB5gE9zz93uyHqzLrJND5O39KfixrTEg
- bMBl/hOMlHcMWD3T4B2tx/slIS8RPRjR6S2JdJfYKKKgKmoa+VDBquMlsn2AuxngvePz
- jaCV82QIvDRMwi9Uvu0P8JOiWf+7lZsvM+xZqnp4+5kq/rkjU5PYVDv3drBDbl9+xYdj
- YEFeYJVV1dAMY6+if2fpMfUIFhjRY9LPIhbUBtelDMwPPkfJCEsn9HwiYlN8c0KbXzK/
- zdcjAljamV5yZaIT+SE8fslDK/wBNuyuQIdpqYigjbxllhOPoFmEzdpEtLFpRIFRVS2Z
- 4o/w==
-X-Gm-Message-State: AOJu0YyIMDF5TsO9QkzJN3+DtV2KwoysvShv+NrjqMCet5maLyOL29TR
- SqF/BwryQjQeFx36ZJ5APsUdV1btA2FSCb4m/+JcZIx5Ee5xzO2far6BBsOchEIsyw6I4SwL7kG
- k
-X-Gm-Gg: ASbGncvO6eCj0e+gXRL8nyM+bYu4QGJgYG3MD9oZ4w5SopYHpzG2LgOIbPjKewXs7l9
- +9BX5toaWFXxDrHUWS5WqCUqOpHOByxSZZ2n3Teau5nz3ladYZDZ5+tDeVcBzUVWhqei70UNxrp
- 56s7iw6SXRb/2G9/ozmKZtkMm3CpNu7T9c9hVBKtObGlVGpxSRyn/hgvOF0M/6l9UmCCxsWxf/K
- 1opUDSY4GRcgZoroqJyfds3a5R+te1h1cB8TjarMFCoPy3oQMqyolrK82OdS8vWBOYf7kZsIeXC
- st/mZ3mHiARF8UkSfoI6l9ehaQnJKu186/Sr/Pg6hrwBGhjpTaWJeuNddLHjY0+b6Tkv1s/uizo
- =
-X-Google-Smtp-Source: AGHT+IEpk8B8DIMRg7LZdaT1jRwYovqQYpTETxvBjIOWMDh0QZoc/IHxM4cPzs8We/hqxH1VxC0xDg==
-X-Received: by 2002:a05:6a21:920b:b0:1f5:8655:3287 with SMTP id
- adf61e73a8af0-2045b9f6f37mr4592429637.40.1745594595499; 
- Fri, 25 Apr 2025 08:23:15 -0700 (PDT)
-Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25a6a49esm3390466b3a.106.2025.04.25.08.23.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Apr 2025 08:23:15 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
+ bh=VXDlaJ/y5+AB626PahfOyufXZGYE0bZzreOJUWUIl6s=;
+ b=fadW8ijGu5k/HCsWiwOcD+4sRkPvoIjvgqqB/OSGc+sw43zYX5HCpNdMfzDBRQHlNn
+ 4Wv3wJgfr0WGfEaCy/ZUmYoENRZ/moF3f+5EDE9MO5WWdGfw54g3BvNUAwpL2hqwMsqD
+ 5x6nV8GcGDAgPTqVc8B9eCdV8Q44iiQ0pEEvHaEQ1zxVr0ENsyk0T0dzQmEXfDUnuL20
+ CjoZh133JXvYyTboc1YBHGovTMejSwGcgF47hnmyJvakcGcnjzzgFdhDGNMJv6NbMale
+ MvTaCgA5yMqz86J3dVq3j+Zkb39f9l44KAv9CHBn0BDtM+aEHAz18VxARoP0PKfzS6Ss
+ TvNw==
+X-Gm-Message-State: AOJu0Yxvq09T4vcRx0MFASU8m/2ujPmk8hZ3aAuN8lkIBT+71xEQHwZn
+ WYVT1/OTy4VNIvREz3rsnY26yQLrCVC6STX1bE3a4NNit4DeRQ/sw6gWYN2Ij/Ag9Ui2A7L/Y+2
+ m
+X-Gm-Gg: ASbGncv90oPhR1GAnsj/t4iYjI+hUPenlmQoIYo2+wNrWlIMSJfMiq0YeZvOKdGAddl
+ TgZHbhvzFofLMIDEYmkXoNi4GvtqpKbd7QIhn5aLDx2pHQ+0TM9dwDSqfz63GJjWCa2oMmHcUGb
+ hNbZyTsMoYpTi38m32/xjO3wgw9bkoCXTDgTacXXKyedJNx9AIZtHRgur1rNnRftT5eGFZud8kO
+ qCckYj7Jhv6wXdGWqYgbzk42Kb1/VKmMgs8OG5X8IOYU8Voe1awTGV0ISu0lAlPVEH5w2FYAbRa
+ tNnd+uhaOaep8jSBSIqq9KCwI/lpVxAPXnTov6D5KfZGSXs0uYV1CxFhUxLEPr415P1fys6junL
+ uEFHr+/rPqq6R+iQ=
+X-Google-Smtp-Source: AGHT+IGuM0knQkVw8XzzGVZpgt8rIu9NYRCmKmWX9YrYibqlEmHNPAc778F70b9jaO3cOFrzAz1J8g==
+X-Received: by 2002:a5d:5f45:0:b0:391:b93:c971 with SMTP id
+ ffacd0b85a97d-3a06d6ccbf1mr5994837f8f.20.1745594929848; 
+ Fri, 25 Apr 2025 08:28:49 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a073e5cffasm2673833f8f.96.2025.04.25.08.28.49
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 25 Apr 2025 08:28:49 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, dbarboza@ventanamicro.com
-Subject: [PATCH 3/7] target/riscv: Pass ra to riscv_csrrw_do128
-Date: Fri, 25 Apr 2025 08:23:07 -0700
-Message-ID: <20250425152311.804338-4-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250425152311.804338-1-richard.henderson@linaro.org>
-References: <20250425152311.804338-1-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
+Subject: [PULL 01/58] target/hexagon: Explode MO_TExx -> MO_TE | MO_xx
+Date: Fri, 25 Apr 2025 17:27:45 +0200
+Message-ID: <20250425152843.69638-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
+References: <20250425152843.69638-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,53 +100,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/riscv/csr.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+Extract the implicit MO_TE definition in order to replace
+it in the next commit.
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index e9c2f95b6e..d62d1aaaee 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -5588,7 +5588,7 @@ RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
- static RISCVException riscv_csrrw_do128(CPURISCVState *env, int csrno,
-                                         Int128 *ret_value,
-                                         Int128 new_value,
--                                        Int128 write_mask)
-+                                        Int128 write_mask, uintptr_t ra)
+Mechanical change using:
+
+  $ for n in UW UL UQ UO SW SL SQ; do \
+      sed -i -e "s/MO_TE$n/MO_TE | MO_$n/" \
+           $(git grep -l MO_TE$n target/hexagon); \
+    done
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
+Message-Id: <20250312103238.99981-2-philmd@linaro.org>
+---
+ target/hexagon/macros.h    | 10 +++++-----
+ target/hexagon/genptr.c    |  8 ++++----
+ target/hexagon/translate.c |  6 +++---
+ 3 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
+index ee3d4c88e7b..57825efa55d 100644
+--- a/target/hexagon/macros.h
++++ b/target/hexagon/macros.h
+@@ -115,27 +115,27 @@
+ #define MEM_LOAD2s(DST, VA) \
+     do { \
+         CHECK_NOSHUF(VA, 2); \
+-        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_TESW); \
++        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_TE | MO_SW); \
+     } while (0)
+ #define MEM_LOAD2u(DST, VA) \
+     do { \
+         CHECK_NOSHUF(VA, 2); \
+-        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_TEUW); \
++        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_TE | MO_UW); \
+     } while (0)
+ #define MEM_LOAD4s(DST, VA) \
+     do { \
+         CHECK_NOSHUF(VA, 4); \
+-        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_TESL); \
++        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_TE | MO_SL); \
+     } while (0)
+ #define MEM_LOAD4u(DST, VA) \
+     do { \
+         CHECK_NOSHUF(VA, 4); \
+-        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_TEUL); \
++        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_TE | MO_UL); \
+     } while (0)
+ #define MEM_LOAD8u(DST, VA) \
+     do { \
+         CHECK_NOSHUF(VA, 8); \
+-        tcg_gen_qemu_ld_i64(DST, VA, ctx->mem_idx, MO_TEUQ); \
++        tcg_gen_qemu_ld_i64(DST, VA, ctx->mem_idx, MO_TE | MO_UQ); \
+     } while (0)
+ 
+ #define MEM_STORE1_FUNC(X) \
+diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
+index 2c5e15cfcf6..561e93c9fd4 100644
+--- a/target/hexagon/genptr.c
++++ b/target/hexagon/genptr.c
+@@ -329,14 +329,14 @@ void gen_set_byte_i64(int N, TCGv_i64 result, TCGv src)
+ 
+ static inline void gen_load_locked4u(TCGv dest, TCGv vaddr, int mem_index)
  {
-     RISCVException ret;
-     Int128 old_value;
-@@ -5610,7 +5610,7 @@ static RISCVException riscv_csrrw_do128(CPURISCVState *env, int csrno,
-             }
-         } else if (csr_ops[csrno].write) {
-             /* avoids having to write wrappers for all registers */
--            ret = csr_ops[csrno].write(env, csrno, int128_getlo(new_value), 0);
-+            ret = csr_ops[csrno].write(env, csrno, int128_getlo(new_value), ra);
-             if (ret != RISCV_EXCP_NONE) {
-                 return ret;
-             }
-@@ -5637,7 +5637,7 @@ RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
+-    tcg_gen_qemu_ld_tl(dest, vaddr, mem_index, MO_TEUL);
++    tcg_gen_qemu_ld_tl(dest, vaddr, mem_index, MO_TE | MO_UL);
+     tcg_gen_mov_tl(hex_llsc_addr, vaddr);
+     tcg_gen_mov_tl(hex_llsc_val, dest);
+ }
  
-     if (csr_ops[csrno].read128) {
-         return riscv_csrrw_do128(env, csrno, ret_value,
--                                 int128_zero(), int128_zero());
-+                                 int128_zero(), int128_zero(), 0);
+ static inline void gen_load_locked8u(TCGv_i64 dest, TCGv vaddr, int mem_index)
+ {
+-    tcg_gen_qemu_ld_i64(dest, vaddr, mem_index, MO_TEUQ);
++    tcg_gen_qemu_ld_i64(dest, vaddr, mem_index, MO_TE | MO_UQ);
+     tcg_gen_mov_tl(hex_llsc_addr, vaddr);
+     tcg_gen_mov_i64(hex_llsc_val_i64, dest);
+ }
+@@ -756,7 +756,7 @@ static void gen_load_frame(DisasContext *ctx, TCGv_i64 frame, TCGv EA)
+ {
+     Insn *insn = ctx->insn;  /* Needed for CHECK_NOSHUF */
+     CHECK_NOSHUF(EA, 8);
+-    tcg_gen_qemu_ld_i64(frame, EA, ctx->mem_idx, MO_TEUQ);
++    tcg_gen_qemu_ld_i64(frame, EA, ctx->mem_idx, MO_TE | MO_UQ);
+ }
+ 
+ #ifndef CONFIG_HEXAGON_IDEF_PARSER
+@@ -1230,7 +1230,7 @@ static void gen_vreg_load(DisasContext *ctx, intptr_t dstoff, TCGv src,
+         tcg_gen_andi_tl(src, src, ~((int32_t)sizeof(MMVector) - 1));
      }
- 
-     /*
-@@ -5667,7 +5667,8 @@ RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
+     for (int i = 0; i < sizeof(MMVector) / 8; i++) {
+-        tcg_gen_qemu_ld_i64(tmp, src, ctx->mem_idx, MO_TEUQ);
++        tcg_gen_qemu_ld_i64(tmp, src, ctx->mem_idx, MO_TE | MO_UQ);
+         tcg_gen_addi_tl(src, src, 8);
+         tcg_gen_st_i64(tmp, tcg_env, dstoff + i * 8);
      }
- 
-     if (csr_ops[csrno].read128) {
--        return riscv_csrrw_do128(env, csrno, ret_value, new_value, write_mask);
-+        return riscv_csrrw_do128(env, csrno, ret_value,
-+                                 new_value, write_mask, 0);
-     }
- 
-     /*
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+index dd26801e647..0109f31e19f 100644
+--- a/target/hexagon/translate.c
++++ b/target/hexagon/translate.c
+@@ -656,17 +656,17 @@ void process_store(DisasContext *ctx, int slot_num)
+         case 2:
+             tcg_gen_qemu_st_tl(hex_store_val32[slot_num],
+                                hex_store_addr[slot_num],
+-                               ctx->mem_idx, MO_TEUW);
++                               ctx->mem_idx, MO_TE | MO_UW);
+             break;
+         case 4:
+             tcg_gen_qemu_st_tl(hex_store_val32[slot_num],
+                                hex_store_addr[slot_num],
+-                               ctx->mem_idx, MO_TEUL);
++                               ctx->mem_idx, MO_TE | MO_UL);
+             break;
+         case 8:
+             tcg_gen_qemu_st_i64(hex_store_val64[slot_num],
+                                 hex_store_addr[slot_num],
+-                                ctx->mem_idx, MO_TEUQ);
++                                ctx->mem_idx, MO_TE | MO_UQ);
+             break;
+         default:
+             {
 -- 
-2.43.0
+2.47.1
 
 
