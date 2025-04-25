@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA03DC369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 16:22:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9AC6C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 16:25:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8LnW-0006gx-F2; Fri, 25 Apr 2025 12:21:06 -0400
+	id 1u8Lqf-0000PP-KG; Fri, 25 Apr 2025 12:24:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1u8LnV-0006gD-2K; Fri, 25 Apr 2025 12:21:05 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1u8LqX-0000N2-Rx; Fri, 25 Apr 2025 12:24:14 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1u8LnT-0002pT-FQ; Fri, 25 Apr 2025 12:21:04 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3914aba1ce4so1892805f8f.2; 
- Fri, 25 Apr 2025 09:21:02 -0700 (PDT)
+ id 1u8LqW-0003AI-5S; Fri, 25 Apr 2025 12:24:13 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3914aba1ce4so1895377f8f.2; 
+ Fri, 25 Apr 2025 09:24:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745598061; x=1746202861; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745598248; x=1746203048; darn=nongnu.org;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=gduuq9AA6XvtvZByzzwErUG8FM90r6CEbZhkOsLgA+M=;
- b=d02DcdJN8X/ju2JoHf3DCN9uULClLRdEIZZi4baMpwzWqKnuENyjsHTKRI/PDe4Q1j
- 7fD+P940GvdgMzn7rA29A/zOr3IMTIl5HTodZcLUZlSmlaWXUW4XUudRKN0Pt7z0RWg8
- KWE2k31jmXaCdP1Lu0qLzpiRTxWLfvGVW8QMsaGsYx28VJ8NhFvbf76tpqhXvsyFdcXg
- ++mWHdXFPrESp4hmbYE0uXErEcK6qPNGwlPwLmdUuoUwJJnrMVw/MyHDhlkf2Rt9Qdem
- pBKOFta0G6YfgVUpWhb7maXFTdHEPITxzBCLfRFi/zelOqkl2A4jD9HaL9Ie4oA7ex5d
- KsQA==
+ bh=8PLyfEvjyuDmWYpO9e/icQaEaKHYCDJzYOLujjraZMA=;
+ b=BFOS50hOG13h9OAA+nEEGJUeom73vgIHHLNVoNOPoOARR4cUouhtgryc3GVEYyT2YB
+ shOgpyHWIsVrxupKOhNPTWgAukFR5+lEtuabTr/X2s+Xtc/kdUsFS/J2t4Sy9QE/JZh9
+ TYrkpG+6OQOSDa63pce2CpXTrVl0WVq+WBusihMvTk0PSuRi1dIsjIpiI4HB/sANuYL2
+ hWVL8wert+PYTMZZFP2oybG/LzzBv1ze9P9GZNsxibcWJWgVbAZEj/qIcMNvYNDGR4OD
+ a9dnOA4F0Q/6F4lxIGjq9iY0RSJg/6EZ8Pau20pi4EDCTucMIO9PLmZ4PHMkwtza9VVl
+ 17vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745598061; x=1746202861;
+ d=1e100.net; s=20230601; t=1745598248; x=1746203048;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gduuq9AA6XvtvZByzzwErUG8FM90r6CEbZhkOsLgA+M=;
- b=wvLsK09fR6+kPDJ6Yvdh8gyVjwSOmPGHQTI/5yJb9hB1X2bV/Tb5R1mEN3K00+DZN2
- MQPMmLeQ9NKOEsifTvV+gtxPV6Vk6pSEqmx7BhXl8N3PMlhXDrhuYz1BcG+0K8dt3RNu
- 8AjDn/A6ZDoNnHhLW8DcevPXMwKEaI4xpD3bP2pbptYtoTxkQUa1FtqPUcCG+wMTLrGQ
- Y/3AHcnw1J56P0SZsgBu6z41k+g4+BFmqwF6/Qv76k3uHFB0jVueA+B03odhdRSzjTsm
- 5ZgTem6wAZ5K8SP8DlRJ4WX+wgVvhAQB3TGj9ZqUc7wmO8xbAE69j15JyfIKSCVC3h8h
- WtKQ==
+ bh=8PLyfEvjyuDmWYpO9e/icQaEaKHYCDJzYOLujjraZMA=;
+ b=YnDP+HkQPmdtYnLuJe8wFAVwWh5u2Dws+qdvbqSFbosrlKEwWdrlS9ihoocX2J19uI
+ g1qEojlToTNqp5nmlOdftoucqE5XtCW6BmrLj5z/v3hdiZOcvxGg87XvyvAvN515d/pE
+ lqO3RAmBl6qZBU7HSnUsbsFYebmwPKKj3YTcYaqvdsHpGayPnZJjod+tAElv2sMreov2
+ 4nhaWloyw6R6DTqhmb4UtRk+7QLZr6B8Ti+5KCUNdXXgUYwb9R9ALSDAjHrJzjSk/HUv
+ mNVkM3h3lHvaLIEy9FHqHwKO/MkPwHrYfkaViIJBx9F3oaeTk3DMKdRhtxH8aq0YUFRD
+ /T1A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWitLMXPUFKnyaUcb0lE7Lob9eDNjqKticBrLqurYZ0uVeL6VseiHxnM+3Br+5VWp/CJ42sXT0yhQ==@nongnu.org
-X-Gm-Message-State: AOJu0YznjyJOSfwU1OvCWrpyT+7baaiWr4DTGAGQwW231rOqsNJiPNY/
- 0Ttwmb13vKRObfwjNsyPlxOpxelQGmW0lr60YGAQ65BnwDcQO1cf
-X-Gm-Gg: ASbGncv4Sszf5la6ffMBtVrrkP0BIqQgj/nk5776+EC8YGP6+i1v0+XwH2i6Gi/G1Z8
- h0+9T9kH9kuCC533vU1SkGGgNOxbh+Hjy57F2Dq1g7uDtBZeMYy+dWwu3cVb7Vq0VlR2aViKgD0
- QObr9zhK7VhtOypa2eRN9PxFgJ1gLTe+nkueAVFqDMs4lDQuF2yKX6HMSI4LrQCemR4zXck9FO6
- /EZj58lqnpEAQUTqDBeMEhAbd7ZI6mv2MRerk/flBVYpf3K36ljSeAInp62TZKFix1tCabgaA79
- H83Bh/CIqUdft8Y4B0hJhX++J/9nvmGgyaiOlxSZhWICWhQRkPnE3QjxahGwYErVYffNT2SJLDo
- ALTb32oBk/529
-X-Google-Smtp-Source: AGHT+IEm6SwFhQlv4rq2mB3ahMIxM8xA1zAGAF+Knor5RsanKNCOH+Wsu4QG7OkOkZFv5WuvICbf1g==
-X-Received: by 2002:a05:6000:401e:b0:38f:2413:2622 with SMTP id
- ffacd0b85a97d-3a074f3981amr2546482f8f.47.1745598060786; 
- Fri, 25 Apr 2025 09:21:00 -0700 (PDT)
+ AJvYcCV1kCJxHSY5WLzNaecoH7Gyuw0NAiRrKt/+Pi0QDzhnDjNGTNwIiLtYmMJUHRif3ReNP1CK1ipzIQ==@nongnu.org
+X-Gm-Message-State: AOJu0YxgTGxroOwmuepHVVl6L9DzKSqfVIM1EMeZDvsOregm/bKfDSKm
+ RiOdiWx8i5v2sVoNm+M1R+RcBWxd08Xb5cuwnjjUBWjB/jiFPX8k
+X-Gm-Gg: ASbGncu5+XWL2JWRmn4P36eGgWl7t4rH9+fqKajK1x5yAAGhbAYUkNr05zeCub4ulm+
+ VzOuVVjpFP5PVcp+5dckAOBT9GQTGP+gtYznCi59q6YQCY4FUV9hEvgQxpFmyYBc1RudIDJD+G+
+ hDTvZYRS/LztzWxJWptiUULAoseAbcUFkGHSRvF9rbZQzdNrzevLil7+d7jrfVguqvfzfAnOZdR
+ gPX5g/Z1VE79TcVUr0q5shS9/fGo319mRPdsC7IjnkeVZgNuxYcfoDYjI8h64gkK7dc8Qe83t6q
+ arlCVyk/nIWjovVr/xttreyECyj4kQ54d2ZUlh9KOEn23O6exR6N/cx2o7BfVZczTbCe5tHIosd
+ g268Wt+BcV3fw
+X-Google-Smtp-Source: AGHT+IEcCb5HRZGXGuucBbM5QeBCV6qgyguxW5iUBby+mzpKC94QBgNUdY4MnKGL6eIbtCz9A2166w==
+X-Received: by 2002:a05:6000:178b:b0:39c:1f10:d294 with SMTP id
+ ffacd0b85a97d-3a074e419f2mr2455177f8f.26.1745598248314; 
+ Fri, 25 Apr 2025 09:24:08 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-440a52f8861sm30553135e9.6.2025.04.25.09.21.00
+ ffacd0b85a97d-3a073ca52e5sm2872985f8f.36.2025.04.25.09.24.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Apr 2025 09:21:00 -0700 (PDT)
-Date: Fri, 25 Apr 2025 18:20:59 +0200
+ Fri, 25 Apr 2025 09:24:07 -0700 (PDT)
+Date: Fri, 25 Apr 2025 18:24:07 +0200
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: Corvin =?iso-8859-1?Q?K=F6hne?= <corvin.koehne@gmail.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
@@ -74,18 +74,18 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Alistair Francis <alistair@alistair23.me>,
  Corvin =?iso-8859-1?Q?K=F6hne?= <c.koehne@beckhoff.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 06/21] hw/dma/zynq-devcfg: Simulate dummy PL reset
-Message-ID: <aAu2a1V4D_5JZf7n@zapote>
+Subject: Re: [PATCH 07/21] hw/dma/zynq-devcfg: Indicate power-up status of PL
+Message-ID: <aAu3J7Xyr-aSWKcK@zapote>
 References: <20250318130817.119636-1-corvin.koehne@gmail.com>
- <20250318130817.119636-7-corvin.koehne@gmail.com>
+ <20250318130817.119636-8-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250318130817.119636-7-corvin.koehne@gmail.com>
+In-Reply-To: <20250318130817.119636-8-corvin.koehne@gmail.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,66 +108,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 18, 2025 at 02:07:57PM +0100, Corvin Kˆhne wrote:
+On Tue, Mar 18, 2025 at 02:07:58PM +0100, Corvin Kˆhne wrote:
 > From: YannickV <Y.Vossen@beckhoff.com>
 > 
-> Setting PCFG_PROG_B should reset the PL. After a reset PCFG_INIT
-> should indicate that the reset is finished successfully.
+> It is assumed, that the programmable logic (PL) is always powered
+> during emulation. Therefor the PCFG_POR_B bit in the MCTRL register
+> is set.
 > 
-> In order to add a MMIO-Device as part of the PL in the Zynq, the
-> reset logic must succeed. The PCFG_INIT flag is now set when the
-> PL reset is triggered by PCFG_PROG_B. Indicating the reset was
-> successful.
+> This commit is necessary for the Beckhoff CX7200 board emulation
+> that has a FPGA implemented in the PL.
 > 
 > Signed-off-by: Yannick Voﬂen <y.vossen@beckhoff.com>
 > ---
->  hw/dma/xlnx-zynq-devcfg.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  hw/dma/xlnx-zynq-devcfg.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-> index 611a57b4d4..c44b802b22 100644
+> index c44b802b22..c595d090fa 100644
 > --- a/hw/dma/xlnx-zynq-devcfg.c
 > +++ b/hw/dma/xlnx-zynq-devcfg.c
-> @@ -49,6 +49,7 @@
->  
->  REG32(CTRL, 0x00)
->      FIELD(CTRL,     FORCE_RST,          31,  1) /* Not supported, wr ignored */
-> +    FIELD(CTRL,     PCFG_PROG_B,        30,  1)
->      FIELD(CTRL,     PCAP_PR,            27,  1) /* Forced to 0 on bad unlock */
->      FIELD(CTRL,     PCAP_MODE,          26,  1)
->      FIELD(CTRL,     MULTIBOOT_EN,       24,  1)
-> @@ -116,6 +117,7 @@ REG32(STATUS, 0x14)
->      FIELD(STATUS,   PSS_GTS_USR_B,      11,  1)
->      FIELD(STATUS,   PSS_FST_CFG_B,      10,  1)
->      FIELD(STATUS,   PSS_CFG_RESET_B,     5,  1)
-> +    FIELD(STATUS,   PCFG_INIT,           4,  1)
->  
->  REG32(DMA_SRC_ADDR, 0x18)
->  REG32(DMA_DST_ADDR, 0x1C)
-> @@ -209,6 +211,14 @@ static uint64_t r_ctrl_pre_write(RegisterInfo *reg, uint64_t val)
->              val |= lock_ctrl_map[i] & s->regs[R_CTRL];
->          }
->      }
-> +
-> +    uint32_t pcfg_prog_b = FIELD_EX32(val, CTRL, PCFG_PROG_B);
+> @@ -339,7 +339,7 @@ static const RegisterAccessInfo xlnx_zynq_devcfg_regs_info[] = {
+>         /* Silicon 3.0 for version field, the mysterious reserved bit 23
+>          * and QEMU platform identifier.
+>          */
+> -       .reset = 0x2 << R_MCTRL_PS_VERSION_SHIFT | 1 << 23 | R_MCTRL_QEMU_MASK,
+> +       .reset = 0x2 << R_MCTRL_PS_VERSION_SHIFT | 1 << 23 | 1 << R_MCTRL_PCFG_POR_B_SHIFT | R_MCTRL_QEMU_MASK,
 
-The declaration of pcfg_prog_b shouldn't be in the middle of a block.
-Since PCFG_PROG_B is a single bit, better to use bool.
-Or just skip the variable all together and do:
-
-    if (FIELD_EX32(val, CTRL, PCFG_PROG_B)) {
+This line is too long, ./scripts/checkpatch will complain.
+You can use R_MCTRL_PCFG_POR_B_MASK here instead of the shift.
 
 
 
-> +    if (pcfg_prog_b) {
-> +        s->regs[R_STATUS] |= R_STATUS_PCFG_INIT_MASK;
-> +    } else {
-> +        s->regs[R_STATUS] &= ~R_STATUS_PCFG_INIT_MASK;
-> +    }
-> +
->      return val;
->  }
->  
+
+>         .ro = ~R_MCTRL_INT_PCAP_LPBK_MASK,
+>         .rsvd = 0x00f00303,
+>      },
 > -- 
 > 2.49.0
 > 
