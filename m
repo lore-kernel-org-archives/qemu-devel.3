@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81CD5C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:36:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11122C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:36:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8L3K-0002k3-5J; Fri, 25 Apr 2025 11:33:28 -0400
+	id 1u8L1N-0003WH-Ds; Fri, 25 Apr 2025 11:31:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L32-0002OI-Qs
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:33:06 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L0h-0001Zy-Ls
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:30:47 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L30-0004Eb-Oe
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:33:04 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-39c1ef4ae3aso1553749f8f.1
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:33:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L0e-0003vT-Tt
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:30:38 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43cfa7e7f54so16128385e9.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:30:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745595180; x=1746199980; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745595035; x=1746199835; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HzI8gGipoVaB4EVnZUPvSAO/vYv62G6fw3dAAJKjSvM=;
- b=W8g9+65DsXLVr2O7HZbxiAksre2ohk0VuF2R3X+LwpYmgNkhy+XoyxwVl2SuoNY40r
- mOIGY/T/Ex3wyrUIYeU8PNIM8NPsTWwHo/7MlOWmGZNHACkJsBtpTemlJewxsD2DPgJ8
- hKnfnWpbAudMf7micv6vi18ecvVzhGfO343WlCXW1QKwQJ1TudTxoi9ILzRX4Z+D2C9g
- M/o/XcXEd/+oVpPs+TQa14d93rM+0+rLHQcbhfyUdRK+cSH6KqtDdGPNYsyBM9pF0lNp
- uW4jcvEqZheAxIF6j8Bl1XOHgfHe3xPv8Wxygyaak7NpARi5TQy5meRtOQ4+ALZHJP2h
- Jr+w==
+ bh=15v8jL3LCLtXh+M75p16dlGPvBB3CQJEUK4JwbtboS4=;
+ b=bf08L0VZcfvhlHwFZX/ytTYcvLkPX6K4HEC/OGeAHLu0Yxh3Jpm9Uv2Bq3dlMwnDRm
+ VP/pEHuRILdF05mB7XIrI+E1bcuM7EydkbpBH7OGnhDbhlIvyc3dQx82XdMMqdqiOrZp
+ 8O9Fs3ZMXD0Z7ROXM4lQtzA8lbX6Uk2xGFQeO8EyNCs4VitmUciyjs5d9b6pnKSggtEZ
+ uXQod0UdPAyFtc4CbwR3YsTBLX/zh837LjvRwtFfYvm2pjZADEECcvC9FgeAuhinhiQf
+ mSAqu1vTHQIx91cQFkMtBBu3DaLTtWDI+s6/sNyGl52tna79H6E3Yq/v7MfCuLHPq4kr
+ Qd9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745595180; x=1746199980;
+ d=1e100.net; s=20230601; t=1745595035; x=1746199835;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HzI8gGipoVaB4EVnZUPvSAO/vYv62G6fw3dAAJKjSvM=;
- b=mwIZgD09X3niOewZR7Xk8hV5yL39Xmi/lPC3QowaX9kAT8yNvtrBBIMHaYWwungoH4
- QCSLUjZ2t6oIVS78KVsOIyzVP2AQZK65LaxDtcmuvUE5eiWAWgQXrA+Tm0dubpCwEefi
- WM6ceka5CZSYpmFwzaen/rAib1fwVnfwwItPRO7FgZwKWn/SCWvNe2J4jdey3H66S60p
- fhZ1d27Tk6FFLMQ7baAavTVJAqbW3EYiDpNnnkpe7xVWJj767DQdMiowzQJomQjHHb3H
- IEdpb9sjlzg5nzQhFlgaDFkmp70wPBrI/H1WHegHJONjKcPMMDQPdFIFUxKp7Cn4WsRc
- hx7A==
-X-Gm-Message-State: AOJu0YxuD2VvqTXr0QSqmMePC9qFx+ImLEL3QRglqGzS9EE+hL5NrLB5
- vh/ZvhgnD/zKoAjXp5tTwGri6ZlrDPv8VHCg0bCbXxAUPH5FACKtoyEMQ7iWSjd1PbbEIdpWmb4
- 5
-X-Gm-Gg: ASbGncu81vfPOjHDij2NATyJ6a6xlFt0MWMMIEYZpmotTFjVSTbHcBXUaJ6fd2bruJd
- hoShxIM/gcAZZy+SNnFd7lioyi2VuseorpcXKh2ESXh39Gck2Ildu9sVPsw3xvz2OVznXdeGE4s
- G4e5/rqeU/iYktb7nDIdsd89Spw00BDTuCSKfMvyqya97uf4ItYovh3/vz4JBlVyWotlNhnwmAs
- DqsLm5yKXmmsuUtR+kCC9B3BFHH4KplbbWmVrJHWlklJGWEISV8KRFSzBsHQm5nIYjTrk6zexH8
- 8N3fJmExtdk0D2lRDlgiyWjrFmLdO8UeQdxgp2eh78C3og5HJVk14livVRwKQYJ0YCcy4R7Ig63
- rbe4jrDS2kQ4c2rus+uS2zzzKKA==
-X-Google-Smtp-Source: AGHT+IHpK54WLHi3opyzqgov9RjP6R3E1Ei3AE6BgML9vyhrpqpnsPNXDaRueN8GkZPJyFtRBTPhwA==
-X-Received: by 2002:a05:6000:2211:b0:38a:4184:14ec with SMTP id
- ffacd0b85a97d-3a074cdb972mr2462517f8f.1.1745595180483; 
- Fri, 25 Apr 2025 08:33:00 -0700 (PDT)
+ bh=15v8jL3LCLtXh+M75p16dlGPvBB3CQJEUK4JwbtboS4=;
+ b=Tq01QitopuYvA6Py3h8PwYW5ezf8Kn1R0h4jHouz1QQUhRDlX+cfwTTnv+tIqV+MyH
+ UgzZglQ+PjqKIj3VNCQ1N/TRuphW4YYKH4vEsR4PkBuUko/i65oSal9GBjcdCrn9hot0
+ RDd9GEK+mf67/zSq7+dEueE50/k5n9837OcyiWOLykUzikvhJO1Iv9rD6QtmNaiQs8Uv
+ lLwJh9Xv6i4TWq77GYYInOVezAPm04hZTj9JBQp5HUVNppY/wtL76vLxu5M49iLG3RCI
+ 1yKKxXoFU6hROcwovkews2GUdYsdf8UVLdMvTkqQg4JsseVZVwgdcnyUc6n90iDnXYWO
+ 4OUA==
+X-Gm-Message-State: AOJu0YyW3C243pV54t8Cyokji7HcQl9Oa49EVrxcrPbc41WJC1LHQGO5
+ WDJbgut3DVlnjFD7XSlmwcXQwdQUDa5LEtfOhLRFYxeKEPCCDN34MhZ6uV0pVIAe2O9iF/xdfZk
+ l
+X-Gm-Gg: ASbGncuBy6BDUDeMV7hNXdW8hLWS2POVD6acur4Oa1yQpakcQx7jgiWuyEX8D/Lpu3J
+ Y+SSYpKEUrRlo15bgY0SjfKPWcKclBJx6P8prYXmkgLQfh8xFNMX1mz3hIrCFz/BbzDWXa/HTM9
+ Jxf1nOTx7swwh140e0/kS46jL80AP4k5LXaYSvNoczI2xZEaPOV47fu8kvyIfhS5Ofe48axZq/Z
+ Twj1YHwb2zSXqFuX5Z326Ml2l85fZHfpZ1LVqFWzv5RZy1nlA/g1ZRrgDScAAfY6cgvJ44Dezpi
+ VFwz8d7hV1gYpXjuewEgmBhKQZnKM4xxzTckfGQOI5myS5UWzlXlti26IoItmU3cqadFGraXtwT
+ seEj3eu1jS9bA/K8=
+X-Google-Smtp-Source: AGHT+IH8SQHrkH0J2Ql8/NM4ppcaYbEctWS7ChLrkvx/JqhaEMY2tl5PTdT1IwEx2OdXrjW/U6u0wQ==
+X-Received: by 2002:a05:600c:4691:b0:43b:c7f0:6173 with SMTP id
+ 5b1f17b1804b1-440a65cde53mr22838965e9.4.1745595035009; 
+ Fri, 25 Apr 2025 08:30:35 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073ca5debsm2715870f8f.38.2025.04.25.08.32.59
+ ffacd0b85a97d-3a073c8c968sm2636951f8f.8.2025.04.25.08.30.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 08:33:00 -0700 (PDT)
+ Fri, 25 Apr 2025 08:30:34 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 52/58] cpus: Replace CPU_RESOLVING_TYPE -> target_cpu_type()
-Date: Fri, 25 Apr 2025 17:28:36 +0200
-Message-ID: <20250425152843.69638-53-philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 22/58] target/arm: Handle gdb_core_xml_file in TYPE_ARM_CPU
+Date: Fri, 25 Apr 2025 17:28:06 +0200
+Message-ID: <20250425152843.69638-23-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
 References: <20250425152843.69638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,124 +100,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the target-specific CPU_RESOLVING_TYPE definition
-by a call to the target-agnostic target_cpu_type() runtime
-helper.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Since the big "cpu.h" is not required anymore in tcg-all.c,
-remove it, using the tinier "cpu-param.h" header.
+Instead of having the TYPE_AARCH64_CPU subclass set
+CPUClass:gdb_core_xml_file to a different value from that that
+TYPE_ARM_CPU uses, implement the gdb_get_core_xml_file method in the
+TYPE_ARM_CPU class to return either the AArch64 or AArch32 XML file
+name.
 
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250317142819.900029-5-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20250417165430.58213-3-philmd@linaro.org>
 ---
- accel/accel-target.c | 6 ++++--
- accel/tcg/tcg-all.c  | 5 +++--
- cpu-target.c         | 7 ++++---
- 3 files changed, 11 insertions(+), 7 deletions(-)
+ target/arm/cpu.c         | 16 +++++++++++++++-
+ target/arm/cpu64.c       |  1 -
+ target/arm/tcg/cpu-v7m.c |  1 -
+ 3 files changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/accel/accel-target.c b/accel/accel-target.c
-index 33a539b4cbb..08d4e450bde 100644
---- a/accel/accel-target.c
-+++ b/accel/accel-target.c
-@@ -25,6 +25,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/accel.h"
-+#include "qemu/target-info.h"
- 
- #include "cpu.h"
- #include "accel/accel-cpu-target.h"
-@@ -88,17 +89,18 @@ static void accel_init_cpu_interfaces(AccelClass *ac)
-     const char *ac_name; /* AccelClass name */
-     char *acc_name;      /* AccelCPUClass name */
-     ObjectClass *acc;    /* AccelCPUClass */
-+    const char *cpu_resolving_type = target_cpu_type();
- 
-     ac_name = object_class_get_name(OBJECT_CLASS(ac));
-     g_assert(ac_name != NULL);
- 
--    acc_name = g_strdup_printf("%s-%s", ac_name, CPU_RESOLVING_TYPE);
-+    acc_name = g_strdup_printf("%s-%s", ac_name, cpu_resolving_type);
-     acc = object_class_by_name(acc_name);
-     g_free(acc_name);
- 
-     if (acc) {
-         object_class_foreach(accel_init_cpu_int_aux,
--                             CPU_RESOLVING_TYPE, false, acc);
-+                             cpu_resolving_type, false, acc);
-     }
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index bed0e58f3c0..5e951675c60 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2658,6 +2658,20 @@ static const gchar *arm_gdb_arch_name(CPUState *cs)
+     return "arm";
  }
  
-diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
-index 40d73649796..0ce34ac912c 100644
---- a/accel/tcg/tcg-all.c
-+++ b/accel/tcg/tcg-all.c
-@@ -35,6 +35,7 @@
- #include "qapi/qapi-types-common.h"
- #include "qapi/qapi-builtin-visit.h"
- #include "qemu/units.h"
-+#include "qemu/target-info.h"
- #if defined(CONFIG_USER_ONLY)
- #include "hw/qdev-core.h"
- #else
-@@ -43,7 +44,7 @@
- #endif
- #include "accel/tcg/cpu-ops.h"
- #include "internal-common.h"
--#include "cpu.h"
-+#include "cpu-param.h"
- 
- 
- struct TCGState {
-@@ -89,7 +90,7 @@ static int tcg_init_machine(MachineState *ms)
-     unsigned max_threads = 1;
- 
++static const char *arm_gdb_get_core_xml_file(CPUState *cs)
++{
++    ARMCPU *cpu = ARM_CPU(cs);
++    CPUARMState *env = &cpu->env;
++
++    if (arm_gdbstub_is_aarch64(cpu)) {
++        return "aarch64-core.xml";
++    }
++    if (arm_feature(env, ARM_FEATURE_M)) {
++        return "arm-m-profile.xml";
++    }
++    return "arm-core.xml";
++}
++
  #ifndef CONFIG_USER_ONLY
--    CPUClass *cc = CPU_CLASS(object_class_by_name(CPU_RESOLVING_TYPE));
-+    CPUClass *cc = CPU_CLASS(object_class_by_name(target_cpu_type()));
-     bool mttcg_supported = cc->tcg_ops->mttcg_supported;
+ #include "hw/core/sysemu-cpu-ops.h"
  
-     switch (s->mttcg_enabled) {
-diff --git a/cpu-target.c b/cpu-target.c
-index d68cbab5da9..c2dd590d48a 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -22,6 +22,7 @@
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qemu/qemu-print.h"
-+#include "qemu/target-info.h"
- #include "system/accel-ops.h"
- #include "system/cpus.h"
- #include "exec/cpu-common.h"
-@@ -37,7 +38,7 @@ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
+@@ -2727,6 +2741,7 @@ static void arm_cpu_class_init(ObjectClass *oc, const void *data)
+     cc->sysemu_ops = &arm_sysemu_ops;
+ #endif
+     cc->gdb_arch_name = arm_gdb_arch_name;
++    cc->gdb_get_core_xml_file = arm_gdb_get_core_xml_file;
+     cc->gdb_stop_before_watchpoint = true;
+     cc->disas_set_info = arm_disas_set_info;
  
- char *cpu_model_from_type(const char *typename)
- {
--    const char *suffix = "-" CPU_RESOLVING_TYPE;
-+    g_autofree char *suffix = g_strdup_printf("-%s", target_cpu_type());
+@@ -2749,7 +2764,6 @@ static void cpu_register_class_init(ObjectClass *oc, const void *data)
+     CPUClass *cc = CPU_CLASS(acc);
  
-     if (!object_class_by_name(typename)) {
-         return NULL;
-@@ -63,7 +64,7 @@ const char *parse_cpu_option(const char *cpu_option)
-         exit(1);
+     acc->info = data;
+-    cc->gdb_core_xml_file = "arm-core.xml";
+     if (acc->info->deprecation_note) {
+         cc->deprecation_note = acc->info->deprecation_note;
      }
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index fbb7e7b3d64..5135ef63cb2 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -819,7 +819,6 @@ static void aarch64_cpu_class_init(ObjectClass *oc, const void *data)
  
--    oc = cpu_class_by_name(CPU_RESOLVING_TYPE, model_pieces[0]);
-+    oc = cpu_class_by_name(target_cpu_type(), model_pieces[0]);
-     if (oc == NULL) {
-         error_report("unable to find CPU model '%s'", model_pieces[0]);
-         g_strfreev(model_pieces);
-@@ -92,7 +93,7 @@ static void cpu_list_entry(gpointer data, gpointer user_data)
+     cc->gdb_read_register = aarch64_cpu_gdb_read_register;
+     cc->gdb_write_register = aarch64_cpu_gdb_write_register;
+-    cc->gdb_core_xml_file = "aarch64-core.xml";
  
- void list_cpus(void)
- {
--    CPUClass *cc = CPU_CLASS(object_class_by_name(CPU_RESOLVING_TYPE));
-+    CPUClass *cc = CPU_CLASS(object_class_by_name(target_cpu_type()));
+     object_class_property_add_bool(oc, "aarch64", aarch64_cpu_get_aarch64,
+                                    aarch64_cpu_set_aarch64);
+diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+index 7426aac0dc4..b34b6578574 100644
+--- a/target/arm/tcg/cpu-v7m.c
++++ b/target/arm/tcg/cpu-v7m.c
+@@ -266,7 +266,6 @@ static void arm_v7m_class_init(ObjectClass *oc, const void *data)
  
-     if (cc->list_cpus) {
-         cc->list_cpus();
+     acc->info = data;
+     cc->tcg_ops = &arm_v7m_tcg_ops;
+-    cc->gdb_core_xml_file = "arm-m-profile.xml";
+ }
+ 
+ static const ARMCPUInfo arm_v7m_cpus[] = {
 -- 
 2.47.1
 
