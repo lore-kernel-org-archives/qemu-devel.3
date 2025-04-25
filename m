@@ -4,90 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76086C369D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 22:40:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECA37C369D5
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 22:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8RYn-0008HG-7l; Fri, 25 Apr 2025 18:30:17 -0400
+	id 1u8RXZ-0004lj-H8; Fri, 25 Apr 2025 18:29:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8RYI-0007gn-Bp
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:29:46 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8RXP-0004Z0-IO
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:28:52 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8RYF-0005Nh-AH
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:29:44 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43cf0d787eeso31655975e9.3
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 15:29:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8RXN-0005HS-RP
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:28:51 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-39c266c2dd5so2876647f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 15:28:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745620181; x=1746224981; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745620128; x=1746224928; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Cf4+/CdYwzijGRSgVX4J5vw4Y/4lSgoERhZ/aiXDoVc=;
- b=iLuVByuPZgQRWo9KfnGjGAI0Yk8irTGBS+wThDeiYAtrlz/PlrdIFVSpLnUhVn5axt
- Nzi4YfOaNkp5e1lPbTQ6X+IERbJy9ujVC+cKJerAOM4cPG40+3R3FvLdg4mONuqCPvBv
- gSfp9D7fAWSyBZELFye6qf3AUdtSgbQ9/bD/XifZl9AU7pLeZMKkyayEsSScA/Wuf8Xg
- +xbo8eQwh0tNlLOsqWcyv4iUO89os40E1RtjEI7U+5+U68SzxJbEDACp6riqcKhz/RP6
- weYMQ1AqOrJWL1/AvqguTAXa2y1sVoZbGFJxrW37Z8Xqb77WgEqgJvWhdy1D099B0Pjh
- Jm6g==
+ bh=9K2adlDERUKAGQusZJV0eZ+4nBvLz6xU1dC/kv9W3+8=;
+ b=Op5JyjHFAQgnYsDN7843aFLVMo9UQN1KxE8UQJzpcmh63HePVoMBz64YpqP88LqyQy
+ WK1kF5An3XL1Icyz9cHX2anQGhMdeJp1ERZBiRcrf3WFBl2ehsGzuw6kQNFFp+ygcg7H
+ gcctM7EygxikoQOhyS61jRTT8daoFO2EHi370Ya3/sOm2LkauupdH2ZdLWEMPkz/zs6Y
+ lPjaA/UlKS5qERgauTb/3d8eq/h/KBKMC9y9NcxdkLIenLuyA1rQPYtlVM0jzJaO2vbU
+ yxVl3HgNpy06h6ytBluka6oPzOLatlrFZUbxWJa2L15zoR8SDerduZWDoV5S9FHebzyh
+ IBWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745620181; x=1746224981;
+ d=1e100.net; s=20230601; t=1745620128; x=1746224928;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Cf4+/CdYwzijGRSgVX4J5vw4Y/4lSgoERhZ/aiXDoVc=;
- b=neNYVzBeuyYCx1/3bFvsFdiD3H6N2MOh7wbETOgAiSN9P0pirIuFeQnvmedRmMtbnn
- J3hVJNZwcOfAkoLjzz2M+NIZovans8eVP5RopNpr3md+dlxBBx+CLe8yqzqd9qx36C+D
- BzhgHEf7Q1ShYXl2JoahN34OtSmUmvBTJ1u88AjudjoHYtK6ruANX5rzKYrw1Hr4YZEB
- wrGwysCrXPVyNfQfY9Ao69UyzDGOIPZGnge8ekO06F9nlijY2NifvaCpJVSDBaUZUhWv
- b3ZfPPuA8xLgGCJu8GH3/oOU8B7LbJzGfkfhPuNy9A8+85rlpOAK99n7sRm0G/JlhAB7
- jXMw==
+ bh=9K2adlDERUKAGQusZJV0eZ+4nBvLz6xU1dC/kv9W3+8=;
+ b=McTTeiTkldvjNFCmpQhtw3qrkqUrB1nEJlTZwmP/bNiRhAXzMa7jFlwOVr2XdBro2k
+ FXdaS3Y1mMFfifa1zu1EOg4ux1cF/YchitzUAnelvfefXIFyvNWQ85XtHjZ7MHvYjxLE
+ 9aBzWmfnyGfM7lGYEDKMHele/ouhDcTpZ+oGNtCS+m0ti6tZXNMZBB0q8S4f5I5ESM3T
+ ApAwipOK5rGfgmhDeKAGohCiRd8U3gGnspCw6JnWeroi8xw8SWYtMy1sv/EVsf6g7Jt3
+ R3nAKAu2SsDFeubuXZHzg8fWo/hJI3+lqC+ZUzXwE2SwDR4Of+fGkffTTZE7ewAQg7oV
+ N61w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUPgK70bLc69SyyCrfURPi3XLmOkXOwOo0h2F0R2pgmpIbZd7PKBeZEXbFDCGeNjh0CNJ7vGJB4Ge0C@nongnu.org
-X-Gm-Message-State: AOJu0YxjSXq3lYeNorOu5Vghd+/ip8KxUBp9GvGHv3ahWzQHQkjY8I1i
- TWmth5FYA79TprdT1x+1Ct3ybgT+5rvzx9FVHOs2LnJ55h208YBSJg+O0t4yVy1Jn6gRH2eTFiV
- Q
-X-Gm-Gg: ASbGncuudGX1+jwRoijovqsxe+D3CVscuhh4ly3qmcFmP0rIaMRipbVDRmfrkv5HLtE
- Pd3oemLEuub2oHM6nnkEoyQxhXCdOdxb4cB8nO5Tbp0NzQ4hSIR3k0F4/tE+MP1cs4VcZ/labIc
- a/Vo+210gOABi8LzGbAtWLMDa15PzGSElhQGes/Z09WQgV0NQ/YHWeA7OW2LawIVLUEOCJDjBUt
- cK3XhhgcHPa72LwhoVBiKUtr3OrJPGOjn4GepB/xSRGU6vSgJE6tnXtGRTI3MqS3S3K8LWS9jvV
- gXbytWGmjrMTK8wXb/Cl0ng+yWxv2hchbTvnCg/uqqkXjceWrondTvEJaVpym0SAq+60eRtu3Gr
- xK1jgDU2A
-X-Google-Smtp-Source: AGHT+IGl8GUtc9+3VQ5ZmZKcYC2znXkgv2+3ZwCUhP9TAPp6umWEzQIyQPH2gK2115+WuEH3xBI3NQ==
-X-Received: by 2002:a05:600c:3111:b0:43c:ee3f:2c3 with SMTP id
- 5b1f17b1804b1-440a64c179emr33010265e9.7.1745620181609; 
- Fri, 25 Apr 2025 15:29:41 -0700 (PDT)
+ AJvYcCXIhHv79kK1FYNQh6zVY79lokHdGmkjNfOGai0jEZGIxewkNutWSGbFRCMojd/7IykLkNzsS0WC2aKs@nongnu.org
+X-Gm-Message-State: AOJu0YwippAXnjW5JmGy/AiDR/u+r4fFXjp5rrAvLj5gDHXrYfTH5Joq
+ dqOOdOO2h1pirJnDH6Ss7RJChNSiamy/m6a4LISn7hucOREE+387NcJnw4Vo5aA=
+X-Gm-Gg: ASbGncuByqhipPtkJvk7VIE7+SaSvWVt84HcpFhuPPNYx6c8hUF5AZViGUeWg/0/e8P
+ 7DtVGEHjO9LWauPu6/zLffyhzZGnuLjHOTAQb/h8MG8IK4K6S6LlFYhHtOyLnGuOo+TDgJe2zrU
+ 8U40BRZqbOcxFgVUDZbWhC9rdBlkyITttGQj4/Z7FL84NW3z1d8v10YPEW10uiPIKUiUime1sXC
+ q4g3/5gViwbePgDCCMo9hLj7WAuuAvu0+36+ojGb/51XfOTqJPzrxNMeT69iEDHF7TEZJrGWG1i
+ VMW601qeeRQ8dXP2jcypAHeEdFuUg45M6xUR912DYy0DgQ46PydDKLuUDQwmsBvWwWSYPxplxAS
+ hcJq0Ar+e
+X-Google-Smtp-Source: AGHT+IHUJknV4Da3OUOLrrhpzlSCOsZ9tfeizxbaArg6FSLBJXujPAek2/IG/4mh31a5IEcGHULw+A==
+X-Received: by 2002:a05:6000:18a2:b0:391:3d12:9afa with SMTP id
+ ffacd0b85a97d-3a074e2f0a0mr3135119f8f.21.1745620127876; 
+ Fri, 25 Apr 2025 15:28:47 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4409d2ad112sm69845665e9.24.2025.04.25.15.29.40
+ ffacd0b85a97d-3a073c8d67esm3611709f8f.17.2025.04.25.15.28.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 15:29:40 -0700 (PDT)
-Message-ID: <d7aa9804-0c74-4394-b147-2e32c72b4d32@linaro.org>
-Date: Sat, 26 Apr 2025 00:29:39 +0200
+ Fri, 25 Apr 2025 15:28:46 -0700 (PDT)
+Message-ID: <14432b9f-d1a9-444c-9372-90541cf1de04@linaro.org>
+Date: Sat, 26 Apr 2025 00:28:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] target/riscv: Pass ra to riscv_csrrw_do128
+Subject: Re: [PATCH 1/7] target/riscv: Pass ra to riscv_csr_write_fn
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, dbarboza@ventanamicro.com
 References: <20250425152311.804338-1-richard.henderson@linaro.org>
- <20250425152311.804338-4-richard.henderson@linaro.org>
+ <20250425152311.804338-2-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250425152311.804338-4-richard.henderson@linaro.org>
+In-Reply-To: <20250425152311.804338-2-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,8 +105,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 25/4/25 17:23, Richard Henderson wrote:
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/riscv/csr.c | 9 +++++----
->   1 file changed, 5 insertions(+), 4 deletions(-)
+>   target/riscv/cpu.h |   3 +-
+>   target/riscv/csr.c | 226 +++++++++++++++++++++++----------------------
+>   2 files changed, 118 insertions(+), 111 deletions(-)
+> 
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 167909c89b..4d41a66d72 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -841,7 +841,8 @@ typedef RISCVException (*riscv_csr_predicate_fn)(CPURISCVState *env,
+>   typedef RISCVException (*riscv_csr_read_fn)(CPURISCVState *env, int csrno,
+>                                               target_ulong *ret_value);
+>   typedef RISCVException (*riscv_csr_write_fn)(CPURISCVState *env, int csrno,
+> -                                             target_ulong new_value);
+> +                                             target_ulong new_value,
+> +                                             uintptr_t ra);
+>   typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
+>                                             target_ulong *ret_value,
+>                                             target_ulong new_value,
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index c52c87faae..6f1f69eba6 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -830,13 +830,15 @@ static RISCVException seed(CPURISCVState *env, int csrno)
+>   }
+>   
+>   /* zicfiss CSR_SSP read and write */
+> -static int read_ssp(CPURISCVState *env, int csrno, target_ulong *val)
+> +static RISCVException read_ssp(CPURISCVState *env, int csrno,
+> +                               target_ulong *val)
+>   {
+>       *val = env->ssp;
+>       return RISCV_EXCP_NONE;
+>   }
+>   
+> -static int write_ssp(CPURISCVState *env, int csrno, target_ulong val)
+> +static RISCVException write_ssp(CPURISCVState *env, int csrno,
+> +                                target_ulong val, uintptr_t ra)
+
+I like the RISCVException type correction.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
