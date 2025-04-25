@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 101AFC369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:29:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28114C369D3
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:30:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8KzA-00004s-Uo; Fri, 25 Apr 2025 11:29:05 -0400
+	id 1u8Kzf-0000GC-GJ; Fri, 25 Apr 2025 11:29:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Kz6-0008Vh-Ce
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:29:01 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Kzc-0000FJ-7d
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:29:33 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Kz4-0003VW-5K
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:28:59 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-39ee623fe64so2317847f8f.1
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:28:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Kza-0003Yy-FQ
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:29:31 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43cf034d4abso22786915e9.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:29:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745594934; x=1746199734; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745594968; x=1746199768; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PL/pbGmcKwmMY894OfAIyHx+t+LYIl3S64i+vmGdXH8=;
- b=NFZ3xqdgmKivUZA4pnbOqH2sQYGiOi+mcYjTayhZUPmDHwyue54ulSG2YKx3X6MhoX
- XdgkZn1LhleRT1QyGO12CSvmBzVkuT/gpRSNeJwRoF85XlF+oQ8iwAYUUTb2eD4Lf09H
- vHXUc0KdrAdWChv8IcOtmI8nfpeM8Gq51b02m+rI35Ml9HKDo//rmTs32YEKOakLMZTB
- 7ZQN8VcE/2iVnsutFJCASumy5VL/xtIcK4r2nS5aTQQS31iTLEepvL3bwzoVqTR4IAsL
- ZX/4wiKmEwk21aFX+s5frf7Jcri1ZvH/oXBAUcj0iSrzUl+B7hry+owUQ6ZTGXEkFdwF
- IQ3w==
+ bh=t8k0AAfziCombWBxMnYqzVC+KQuFL76YNid+OWSCgv8=;
+ b=uJUiN2j1PDuy+efAgjMGKRD9vo/G3bfxMyN8KwP1QhM42cwduzAWGveCoGPWWZ/X0t
+ vgqhVjSpPi5QfIBbviHrZHazlIUzqxto1htlQYai+V0rPSI9avBO5SjMAtG6WAqL3zsc
+ dm05DlUjJWq9pxPIHXFedhzf3RKxcAg8Kyra01Q+tBzXTKYPi3Ds5ym4RVRl1AOo0Gac
+ vm/d0XvO1508yF9qoTSAY6tExqwt+Oqt8knIwELI0FIzE+R8su0bIxKVfWxL/wlgxbzo
+ 7m9ac6Nwa1470b2RFYT5QsHPDwjrOz9BwmVZX6EtPwkMVVOZ8vgWlJJVLvfyUE7o1qFA
+ 1FDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745594934; x=1746199734;
+ d=1e100.net; s=20230601; t=1745594968; x=1746199768;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PL/pbGmcKwmMY894OfAIyHx+t+LYIl3S64i+vmGdXH8=;
- b=eO6nR7a4LhLeo5Cl+KBuFlmCW4XR5ZEle6rJLsrFESjRwXA4pLFAxy9TBl6E7A+OcQ
- aopZXKOWXz7eOkxgruBT1ep9y14vP2X3hf9BGIQL2fUYvpM+c80LELODsaaqoxO8mxcY
- EcrnE8FP2ckhjP7L1XcOfMkiRjWrdzaQdWmVuxOatOp31SFKiANI5BcF5mtQoviX+T73
- 4Qwi2j/gHUrkJ1wHzZK1u0JaeZniBuTqUln7t6thve2pSUCrn5udxFkDvi7rMd/Z9stR
- xHjRnass+bzCvQIJSD6eXSM29ZeuTXdprOVXf9SvTWt90ZesX6ieaebEghkdSy+A5l2n
- y1Vg==
-X-Gm-Message-State: AOJu0YyGYzlUoavCFXeuDla1KPw2LJ9yWrxBQfsQ35l/jt2At83xGIMN
- Ixci2onEbveDzKwTbHhHQq2l5EUOVpnd4cQ0jH4m9vi+zu33rvdXU9lBTUFTMO66aTIZSCMH0Mb
- +
-X-Gm-Gg: ASbGncsTTl9ip/liSy+wUvHOQqtsmrYFVYiDla00XXW2YfgGYIfZ/s4nmIt++jDzDE5
- QAQewkRsPEDpNuzatyWJ1hWdEoBPkGOcR8g81Vr3FSTqd/gcEQSK5ndUFh7m5qjjddua4qH70fO
- 3pW/kLywAzp0QxbpGi6l4EBoWipf4GTmnRCOpcko4TLRCnUJw+R5xZpKKpKlTd1SiYjWLhUn5eM
- qSNyOJRSDuk+XwmK4zSWI1lTnXV44054oARj817IftsBnKhzZYg7WJiCms/A7Rdl5Qz40XtoduD
- 85xqJ7FCTG9gqpTJsyin5ysFx1jt+1PVp7vwXcjw5D5NNYYCTy6KNoYzvyrhsQD+jOoC5ARs8+V
- MycOy7JOvhEmFctc=
-X-Google-Smtp-Source: AGHT+IFWpYI4HWRMkfZ/svNt5BuW6MjT5oBIz0p4ALdt7rd80rUQ2XCA0j/rUkB60LMCyQMUd4rQtw==
-X-Received: by 2002:a5d:6d8e:0:b0:399:6d53:68d9 with SMTP id
- ffacd0b85a97d-3a074f10912mr2505813f8f.38.1745594934506; 
- Fri, 25 Apr 2025 08:28:54 -0700 (PDT)
+ bh=t8k0AAfziCombWBxMnYqzVC+KQuFL76YNid+OWSCgv8=;
+ b=FmwR80MyvpFUPNzATs+qsNs2MOmNfNc5/ONeM421vJVP08hT6l4S1u9Ro5fUOxi2a3
+ TMN+RaP85Zza7YTSmQ2mKUqOYbzcx+H/A1e/qLVopf8TzCVrfB80FCZdR/ZBfrnlJits
+ XKvbUPLNo6PscbyqTyPza8yckyB+t5SRVtd7QVMruoD3xwyMGbODVA3HKdhqWS53aOlg
+ ckbrV9mwzJ/RtNmcmqoWVgOSyUxsTIb2H3+8c2pA8/uyDSKYVottNMjFLj6Yas1Y9KSV
+ yB7jbwgxGHYMrsS5hxPUI/KdqlcJ1e7ZVefc7a5feqVYMseFVgvl/TzXU3ufTbAhpTA6
+ u6Gw==
+X-Gm-Message-State: AOJu0YwWRDvKQU1yAfGhFDia1Da1fkk9L/FUcquH9O100Z6muIksM5DN
+ MoucwzVQ647iv3KfCY/7YSlwvzCV7p+T0hNfkjLNOtHr0Q7DlpOnzB5T+80bL5tMUXSKv/82evH
+ m
+X-Gm-Gg: ASbGncsCvE7ckAJWE0qBrQXCuxBhUKJUeXaG050Vb8EgH6yUo5rv9YFYCNvRVZvyAjj
+ 1llE5jvTR6HVlEXCezNUIAKEXeZSomOCTvZOYpsI6Gu7xC9KWQ2KiedKMOl+fdLgLQNB81EKKRt
+ uTx+t9Qs6mb26sJd+yF5CDTOsUUvIi6q3lL2rR5Lxuup1r1PYAr4UVQ9PFDVZDeytT8bbyVMi5g
+ zrVal0MHZOg34pSsHoRbLk++ns8lhrsE4Vo6GAmPTDH1kGWInR4UANx6PBjuxnleFLRyjIGHIIa
+ s7VMB7QjQFrJv3hcCiUbQnKrFmR1lRf5oUF1LHswCDTGjU/mYMQrS/VXRS9Uj3IYHwLMdZqZpTP
+ cYzfjK54TWnCBa10=
+X-Google-Smtp-Source: AGHT+IFz7Dmk1Q35CZnGUj4v6qhlSM1pncCBRIbvDFsC+0X+/rrphLxBOiGcKKUlrjoSYqlIBbLphQ==
+X-Received: by 2002:a05:6000:4006:b0:39f:91:4444 with SMTP id
+ ffacd0b85a97d-3a074e1da79mr2399310f8f.16.1745594968528; 
+ Fri, 25 Apr 2025 08:29:28 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073ca42cdsm2627729f8f.22.2025.04.25.08.28.53
+ 5b1f17b1804b1-440a5310a1csm28161565e9.20.2025.04.25.08.29.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 08:28:54 -0700 (PDT)
+ Fri, 25 Apr 2025 08:29:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: [PULL 02/58] target/hexagon: Replace MO_TE -> MO_LE
-Date: Fri, 25 Apr 2025 17:27:46 +0200
-Message-ID: <20250425152843.69638-3-philmd@linaro.org>
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 09/58] cpus: Remove #ifdef check on cpu_list definition
+Date: Fri, 25 Apr 2025 17:27:53 +0200
+Message-ID: <20250425152843.69638-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
 References: <20250425152843.69638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,134 +102,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We only build the Hexagon target using little endianness order.
-The MO_TE definition always expands to MO_LE. Use the latter to
-simplify.
+Since we removed all definitions of cpu_list, the #ifdef
+check is always true. Remove it, inlining cpu_list().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20250312103238.99981-3-philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-Id: <20250324185837.46506-7-philmd@linaro.org>
 ---
- target/hexagon/macros.h                     | 10 +++++-----
- target/hexagon/genptr.c                     |  8 ++++----
- target/hexagon/idef-parser/parser-helpers.c |  2 +-
- target/hexagon/translate.c                  |  6 +++---
- 4 files changed, 13 insertions(+), 13 deletions(-)
+ cpu-target.c | 19 ++++++-------------
+ 1 file changed, 6 insertions(+), 13 deletions(-)
 
-diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
-index 57825efa55d..e5eb31e6711 100644
---- a/target/hexagon/macros.h
-+++ b/target/hexagon/macros.h
-@@ -115,27 +115,27 @@
- #define MEM_LOAD2s(DST, VA) \
-     do { \
-         CHECK_NOSHUF(VA, 2); \
--        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_TE | MO_SW); \
-+        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_LE | MO_SW); \
-     } while (0)
- #define MEM_LOAD2u(DST, VA) \
-     do { \
-         CHECK_NOSHUF(VA, 2); \
--        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_TE | MO_UW); \
-+        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_LE | MO_UW); \
-     } while (0)
- #define MEM_LOAD4s(DST, VA) \
-     do { \
-         CHECK_NOSHUF(VA, 4); \
--        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_TE | MO_SL); \
-+        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_LE | MO_SL); \
-     } while (0)
- #define MEM_LOAD4u(DST, VA) \
-     do { \
-         CHECK_NOSHUF(VA, 4); \
--        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_TE | MO_UL); \
-+        tcg_gen_qemu_ld_tl(DST, VA, ctx->mem_idx, MO_LE | MO_UL); \
-     } while (0)
- #define MEM_LOAD8u(DST, VA) \
-     do { \
-         CHECK_NOSHUF(VA, 8); \
--        tcg_gen_qemu_ld_i64(DST, VA, ctx->mem_idx, MO_TE | MO_UQ); \
-+        tcg_gen_qemu_ld_i64(DST, VA, ctx->mem_idx, MO_LE | MO_UQ); \
-     } while (0)
+diff --git a/cpu-target.c b/cpu-target.c
+index d139a18f5b1..c99d208a7c4 100644
+--- a/cpu-target.c
++++ b/cpu-target.c
+@@ -77,7 +77,6 @@ const char *parse_cpu_option(const char *cpu_option)
+     return cpu_type;
+ }
  
- #define MEM_STORE1_FUNC(X) \
-diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
-index 561e93c9fd4..08fc5413de7 100644
---- a/target/hexagon/genptr.c
-+++ b/target/hexagon/genptr.c
-@@ -329,14 +329,14 @@ void gen_set_byte_i64(int N, TCGv_i64 result, TCGv src)
- 
- static inline void gen_load_locked4u(TCGv dest, TCGv vaddr, int mem_index)
+-#ifndef cpu_list
+ static void cpu_list_entry(gpointer data, gpointer user_data)
  {
--    tcg_gen_qemu_ld_tl(dest, vaddr, mem_index, MO_TE | MO_UL);
-+    tcg_gen_qemu_ld_tl(dest, vaddr, mem_index, MO_LE | MO_UL);
-     tcg_gen_mov_tl(hex_llsc_addr, vaddr);
-     tcg_gen_mov_tl(hex_llsc_val, dest);
+     CPUClass *cc = CPU_CLASS(OBJECT_CLASS(data));
+@@ -91,17 +90,6 @@ static void cpu_list_entry(gpointer data, gpointer user_data)
+     }
  }
  
- static inline void gen_load_locked8u(TCGv_i64 dest, TCGv vaddr, int mem_index)
+-static void cpu_list(void)
+-{
+-    GSList *list;
+-
+-    list = object_class_get_list_sorted(TYPE_CPU, false);
+-    qemu_printf("Available CPUs:\n");
+-    g_slist_foreach(list, cpu_list_entry, NULL);
+-    g_slist_free(list);
+-}
+-#endif
+-
+ void list_cpus(void)
  {
--    tcg_gen_qemu_ld_i64(dest, vaddr, mem_index, MO_TE | MO_UQ);
-+    tcg_gen_qemu_ld_i64(dest, vaddr, mem_index, MO_LE | MO_UQ);
-     tcg_gen_mov_tl(hex_llsc_addr, vaddr);
-     tcg_gen_mov_i64(hex_llsc_val_i64, dest);
- }
-@@ -756,7 +756,7 @@ static void gen_load_frame(DisasContext *ctx, TCGv_i64 frame, TCGv EA)
- {
-     Insn *insn = ctx->insn;  /* Needed for CHECK_NOSHUF */
-     CHECK_NOSHUF(EA, 8);
--    tcg_gen_qemu_ld_i64(frame, EA, ctx->mem_idx, MO_TE | MO_UQ);
-+    tcg_gen_qemu_ld_i64(frame, EA, ctx->mem_idx, MO_LE | MO_UQ);
- }
- 
- #ifndef CONFIG_HEXAGON_IDEF_PARSER
-@@ -1230,7 +1230,7 @@ static void gen_vreg_load(DisasContext *ctx, intptr_t dstoff, TCGv src,
-         tcg_gen_andi_tl(src, src, ~((int32_t)sizeof(MMVector) - 1));
+     CPUClass *cc = CPU_CLASS(object_class_by_name(CPU_RESOLVING_TYPE));
+@@ -109,7 +97,12 @@ void list_cpus(void)
+     if (cc->list_cpus) {
+         cc->list_cpus();
+     } else {
+-        cpu_list();
++        GSList *list;
++
++        list = object_class_get_list_sorted(TYPE_CPU, false);
++        qemu_printf("Available CPUs:\n");
++        g_slist_foreach(list, cpu_list_entry, NULL);
++        g_slist_free(list);
      }
-     for (int i = 0; i < sizeof(MMVector) / 8; i++) {
--        tcg_gen_qemu_ld_i64(tmp, src, ctx->mem_idx, MO_TE | MO_UQ);
-+        tcg_gen_qemu_ld_i64(tmp, src, ctx->mem_idx, MO_LE | MO_UQ);
-         tcg_gen_addi_tl(src, src, 8);
-         tcg_gen_st_i64(tmp, tcg_env, dstoff + i * 8);
-     }
-diff --git a/target/hexagon/idef-parser/parser-helpers.c b/target/hexagon/idef-parser/parser-helpers.c
-index a7dcd85fe43..542af8d0a65 100644
---- a/target/hexagon/idef-parser/parser-helpers.c
-+++ b/target/hexagon/idef-parser/parser-helpers.c
-@@ -1761,7 +1761,7 @@ void gen_load(Context *c, YYLTYPE *locp, HexValue *width,
-     if (signedness == SIGNED) {
-         OUT(c, locp, " | MO_SIGN");
-     }
--    OUT(c, locp, " | MO_TE);\n");
-+    OUT(c, locp, " | MO_LE);\n");
  }
  
- void gen_store(Context *c, YYLTYPE *locp, HexValue *width, HexValue *ea,
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
-index 0109f31e19f..02fd40c160f 100644
---- a/target/hexagon/translate.c
-+++ b/target/hexagon/translate.c
-@@ -656,17 +656,17 @@ void process_store(DisasContext *ctx, int slot_num)
-         case 2:
-             tcg_gen_qemu_st_tl(hex_store_val32[slot_num],
-                                hex_store_addr[slot_num],
--                               ctx->mem_idx, MO_TE | MO_UW);
-+                               ctx->mem_idx, MO_LE | MO_UW);
-             break;
-         case 4:
-             tcg_gen_qemu_st_tl(hex_store_val32[slot_num],
-                                hex_store_addr[slot_num],
--                               ctx->mem_idx, MO_TE | MO_UL);
-+                               ctx->mem_idx, MO_LE | MO_UL);
-             break;
-         case 8:
-             tcg_gen_qemu_st_i64(hex_store_val64[slot_num],
-                                 hex_store_addr[slot_num],
--                                ctx->mem_idx, MO_TE | MO_UQ);
-+                                ctx->mem_idx, MO_LE | MO_UQ);
-             break;
-         default:
-             {
 -- 
 2.47.1
 
