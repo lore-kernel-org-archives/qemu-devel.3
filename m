@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AC5CC369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 09:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF744C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 09:18:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Evz-0001fw-LB; Fri, 25 Apr 2025 05:01:23 -0400
+	id 1u8FBX-0005vS-C6; Fri, 25 Apr 2025 05:17:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u8Evp-0001e9-AU
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:01:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u8FBV-0005ui-PK
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:17:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u8Evi-0004mL-Lz
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:01:11 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u8FBR-0006rP-Do
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:17:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745571664;
+ s=mimecast20190719; t=1745572639;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sZlf4Ki0ILTf7DSzPCwsaG6Mz5kWBOKsa24PqXYPLp4=;
- b=OTV1XpvzkxBsk0b3F4aN0X+FMFOEPGdSajf+bYTcZjp4LqvoJRDBCwQamiK+OawiWKPFhw
- ApJnC10K7AlpvGBAgMhA7tlQEQKB1heFh8HMqaRkzqUCpY9LcOf4WoBr4lxbCZPkQ78fLG
- Wq6/3FDvfTbJCwaNigDzVaErhJ6wrPA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7O6uTca/+r5QI4AIONjB9wp9gfg/4SplKOIlMqXO/0A=;
+ b=jBDivObmm4pStB57Hpqkqtd8bjyFBlCVyPfpmWxjArS9DeNhGguNNOYHjGx5Jp8SYrfy2q
+ rWzQGUDeTUpR7HVq2XPbG1LjKqMnsw8z6zsNDD+476s6Is+VfkonHvSCmT24yS0ARpeff6
+ dT7z7mSsfh7ihsIcE2R1s6WZ+FYZDZI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-zO8kBoWzO9eA4uccVyjP0A-1; Fri, 25 Apr 2025 05:01:02 -0400
-X-MC-Unique: zO8kBoWzO9eA4uccVyjP0A-1
-X-Mimecast-MFC-AGG-ID: zO8kBoWzO9eA4uccVyjP0A_1745571661
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43cec217977so10219955e9.0
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 02:01:02 -0700 (PDT)
+ us-mta-687-ytWc31L5OPWHkAs-LPz6DA-1; Fri, 25 Apr 2025 05:17:18 -0400
+X-MC-Unique: ytWc31L5OPWHkAs-LPz6DA-1
+X-Mimecast-MFC-AGG-ID: ytWc31L5OPWHkAs-LPz6DA_1745572637
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-39ee57e254aso967209f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 02:17:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745571661; x=1746176461;
+ d=1e100.net; s=20230601; t=1745572637; x=1746177437;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sZlf4Ki0ILTf7DSzPCwsaG6Mz5kWBOKsa24PqXYPLp4=;
- b=rcwzDb3oHMdepz67qC5qvSbhA9B1e8LVsC6GhovgB4/glsZsCOyog9f96JO6tpvGw8
- 7m+vlNCx5kcaHzQIvxsovNRvdzgP+NzwQ1WUwQ23KoiTQcUYImNlWS8CDSMZNGWxhlKv
- CAh3bEw/fSn189L5riu9Cosxiq0RddslF0/HUrEBFkIzOaIYwMrObQteoDTVzyq4wyQo
- Qv8HVZ0UPJz3fMvwxurD8sFfRPSLXScIFqVFgENChaWyKiigCVfm4GlRvdl6ccDdXwb9
- sbiPGh+d0pnkb9oTdX+KU7xMJ2MW6hufLWubgH/lX0vT8KOHwgTqNtFs02PLe8QD3l81
- Yihw==
+ bh=7O6uTca/+r5QI4AIONjB9wp9gfg/4SplKOIlMqXO/0A=;
+ b=OeSRdstgwQ9xJ/GIHv1hU4g0Ne8ZSX1txa02LyJcRKrfoSBLvch4mzYs/aPL3hwSZE
+ +zH+yvMzwTGrbUE3X9MXeXyPRA7xGK2iabejEPuTu8oY2oTpnlN8ZiisMD9lteI3mPP1
+ X1rQuiNlc9lVh3ZHz575txPM9CW97M04SPDyOLiAZ7KP/hyP6u6CueWdM/DT2yLzRK4f
+ UNyfew6HMXcDKy3/ujwj77JBbw6amhtzsygzUn7uNJn3xU7Wd6QGas9eXcTWyDMMnYhu
+ N/mqA9kOXx2QNG0HMAWLNGtlTUB7PRnGMMqDzLGU5OZIYCk83ux+KTEIGJWmp22Vol88
+ ciEQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW2GmE+HL5C4YYtPJHr4rK9ted0bxCae99MZB9CHwgDbm6xPwzzUEE3CTaYmVC8K9LcHHzKwXIMv1/h@nongnu.org
-X-Gm-Message-State: AOJu0Ywgh5q+qK27lZ51XI26ycx82Ji8q7aexjvF2KJmdTvxVH2HnEQx
- Ap4Vw9gzoxEzos7YJ9K8KDcSPgEoGubvl50zx3SSPpwGe5EmKCO3nj81jRdi7q7fNc2m8Uei2vt
- EiwRSw9poOB6I6TcA1KsZ51Fue/h0HnZW7AHhGgvFDJgdjIMBjO0X
-X-Gm-Gg: ASbGncuCjDLRzDuh1R9CkEpXgi+29cGX/kopMalof5JwitmOVWBzk46s/KsUAV4OjOD
- w4cfV5eYsqGTt0UEzR3kkVUD09ZLEi9iHGj7Qe2nVeWqD1DuoHyTUGUT3QFR4g6QL1TbXWqGChQ
- mrVO4BaRPI0JxpaEiCMvvMWXGGVhdH0XFWET9LHoJnoSoY0syNIbrxjkXAyKHOyUdNblChBDglI
- o6xi+6orw9SuvVGiT0pLaT5b1kZGv/qbswaALwxzqduMSSxrGvRdYGKv45v+XqoJNFmG/LQvKDt
- PJQsy6feDkOBtwZ7wSxcfTV2syjzQoMGAULEbDedXsJ++w==
-X-Received: by 2002:a05:600c:1988:b0:440:9b1a:cd78 with SMTP id
- 5b1f17b1804b1-440a65dc984mr15081505e9.10.1745571661366; 
- Fri, 25 Apr 2025 02:01:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGr6ff6dbji0vLJXcEu0BsBPZIa4+SO722Ss84DP8ZsJPwPJaY5i+hyUfnJh0a5pOkYrfd29Q==
-X-Received: by 2002:a05:600c:1988:b0:440:9b1a:cd78 with SMTP id
- 5b1f17b1804b1-440a65dc984mr15080975e9.10.1745571660904; 
- Fri, 25 Apr 2025 02:01:00 -0700 (PDT)
+ AJvYcCUN58cLpq+KURuxrWhBkt/xCgewDzk08AQKMc4Vs4Oi0UGw9RT0f8QQmmM0fhiXInPxwbKGurC5M3zG@nongnu.org
+X-Gm-Message-State: AOJu0Ywiy6XMHiSQ8HoTN33hncPyIEJK2t12hkIv9huOAbcW0erbrKhh
+ tLVP/d8JuApeIZ6xP2A+VDShhK+AKvHYEzkbUGNdP3zmb1IIX/En9w9YMPqJM+EjN1eMpYtDL+D
+ Rh6kAW+PtBpctZ4mJZrBmOmr4HYBkbXR19DJEtpv/6Spmhp2ipnkw
+X-Gm-Gg: ASbGncskoprxU1QlzeRMrCMhF2I+qV7nIRh8HBi22jY1mOR/nQsK/kqXSP1v5qn4+p4
+ ajEdQbBpA9jtyYFMKEpW5uzm2WVxMyRGQI8HJF56Ln3RaTp4wfVRZ7eFQndKUcUSwvi6EX3jhSE
+ jV0rqhbKJHQjEYhNQSzvL8p+JsRryG+X2snMEQcr0izURwsmtwojKQGUeR4jzK/AyKj3H6S+KcH
+ rksOTzetd135wDdHuY+R9eT+FsQItKAjf4bP5AnqSH+GJMXHlM0Io1xZHtLPIwSKhMcU7NxAByk
+ RRvA6TKtt8giH6sevfo84D6BOJYGJre7Onoj1H1NIldNBA==
+X-Received: by 2002:a5d:5986:0:b0:39e:e588:672f with SMTP id
+ ffacd0b85a97d-3a074f854aamr1260772f8f.55.1745572637203; 
+ Fri, 25 Apr 2025 02:17:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IECKQzntTP30uyuxB6xEgPxj45RqgS0QVy0tbzIaaez78F+BAM1qnBeElpDtcz56F3TCah9aw==
+X-Received: by 2002:a5d:5986:0:b0:39e:e588:672f with SMTP id
+ ffacd0b85a97d-3a074f854aamr1260744f8f.55.1745572636838; 
+ Fri, 25 Apr 2025 02:17:16 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-43-178-177.web.vodafone.de.
  [109.43.178.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4409d2e01bdsm51047535e9.38.2025.04.25.02.00.59
+ ffacd0b85a97d-3a073e5c6a0sm1721190f8f.86.2025.04.25.02.17.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 02:01:00 -0700 (PDT)
-Message-ID: <06f9244c-671c-4215-9d20-7bb69194fae6@redhat.com>
-Date: Fri, 25 Apr 2025 11:00:58 +0200
+ Fri, 25 Apr 2025 02:17:16 -0700 (PDT)
+Message-ID: <8decd67b-f1f7-4dcb-b2d5-519ea907e317@redhat.com>
+Date: Fri, 25 Apr 2025 11:17:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/3] util: Add functions for s390x mmio read/write
+Subject: Re: [PATCH v5 2/3] include: Add a header to define host PCI MMIO
+ functions
 To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, stefanha@redhat.com, mjrosato@linux.ibm.com,
  schnelle@linux.ibm.com, philmd@linaro.org, kwolf@redhat.com,
  hreitz@redhat.com, fam@euphon.net
 References: <20250417173801.827-1-alifm@linux.ibm.com>
- <20250417173801.827-2-alifm@linux.ibm.com>
+ <20250417173801.827-3-alifm@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,10 +128,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250417173801.827-2-alifm@linux.ibm.com>
+In-Reply-To: <20250417173801.827-3-alifm@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -155,76 +156,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/04/2025 19.37, Farhan Ali wrote:
-> Starting with z15 (or newer) we can execute mmio
-> instructions from userspace. On older platforms
-> where we don't have these instructions available
-> we can fallback to using system calls to access
-> the PCI mapped resources.
+On 17/04/2025 19.38, Farhan Ali wrote:
+> Add a generic API for host PCI MMIO reads/writes
+> (e.g. Linux VFIO BAR accesses). The functions access
+> little endian memory and returns the result in
+> host cpu endianness.
 > 
-> This patch adds helper functions for mmio reads
-> and writes for s390x.
-> 
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
 > Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
 > ---
->   include/qemu/s390x_pci_mmio.h |  24 ++++++
->   util/meson.build              |   2 +
->   util/s390x_pci_mmio.c         | 148 ++++++++++++++++++++++++++++++++++
->   3 files changed, 174 insertions(+)
->   create mode 100644 include/qemu/s390x_pci_mmio.h
->   create mode 100644 util/s390x_pci_mmio.c
+>   include/qemu/host-pci-mmio.h | 141 +++++++++++++++++++++++++++++++++++
+>   1 file changed, 141 insertions(+)
+>   create mode 100644 include/qemu/host-pci-mmio.h
 > 
-> diff --git a/include/qemu/s390x_pci_mmio.h b/include/qemu/s390x_pci_mmio.h
+> diff --git a/include/qemu/host-pci-mmio.h b/include/qemu/host-pci-mmio.h
 > new file mode 100644
-> index 0000000000..c5f63ecefa
+> index 0000000000..c93f77dcd4
 > --- /dev/null
-> +++ b/include/qemu/s390x_pci_mmio.h
-> @@ -0,0 +1,24 @@
+> +++ b/include/qemu/host-pci-mmio.h
+> @@ -0,0 +1,141 @@
 > +/*
-> + * s390x PCI MMIO definitions
-> + *
-> + * Copyright 2025 IBM Corp.
-> + * Author(s): Farhan Ali <alifm@linux.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#ifndef S390X_PCI_MMIO_H
-> +#define S390X_PCI_MMIO_H
-> +
-> +#ifdef __s390x__
-> +uint8_t s390x_pci_mmio_read_8(const void *ioaddr);
-> +uint16_t s390x_pci_mmio_read_16(const void *ioaddr);
-> +uint32_t s390x_pci_mmio_read_32(const void *ioaddr);
-> +uint64_t s390x_pci_mmio_read_64(const void *ioaddr);
-> +
-> +void s390x_pci_mmio_write_8(void *ioaddr, uint8_t val);
-> +void s390x_pci_mmio_write_16(void *ioaddr, uint16_t val);
-> +void s390x_pci_mmio_write_32(void *ioaddr, uint32_t val);
-> +void s390x_pci_mmio_write_64(void *ioaddr, uint64_t val);
-> +#endif /* __s390x__ */
-> +
-> +#endif /* S390X_PCI_MMIO_H */
-> diff --git a/util/meson.build b/util/meson.build
-> index 780b5977a8..acb21592f9 100644
-> --- a/util/meson.build
-> +++ b/util/meson.build
-> @@ -131,4 +131,6 @@ elif cpu in ['ppc', 'ppc64']
->     util_ss.add(files('cpuinfo-ppc.c'))
->   elif cpu in ['riscv32', 'riscv64']
->     util_ss.add(files('cpuinfo-riscv.c'))
-> +elif cpu == 's390x'
-> +  util_ss.add(files('s390x_pci_mmio.c'))
->   endif
-> diff --git a/util/s390x_pci_mmio.c b/util/s390x_pci_mmio.c
-> new file mode 100644
-> index 0000000000..820458a026
-> --- /dev/null
-> +++ b/util/s390x_pci_mmio.c
-> @@ -0,0 +1,148 @@
-> +/*
-> + * s390x PCI MMIO definitions
+> + * API for host PCI MMIO accesses (e.g. Linux VFIO BARs)
 > + *
 > + * Copyright 2025 IBM Corp.
 > + * Author(s): Farhan Ali <alifm@linux.ibm.com>
@@ -232,85 +183,160 @@ On 17/04/2025 19.37, Farhan Ali wrote:
 > + * SPDX-License-Identifier: GPL-2.0-or-later
 > + */
 > +
-> +#include "qemu/osdep.h"
-> +#include <unistd.h>
-
-unistd.h is already included by osdep.h, so you don't have to include it 
-again here.
-
-> +#include <sys/syscall.h>
+> +#ifndef HOST_PCI_MMIO_H
+> +#define HOST_PCI_MMIO_H
+> +
+> +#include "qemu/bswap.h"
 > +#include "qemu/s390x_pci_mmio.h"
-> +#include "elf.h"
 > +
-> +union register_pair {
-> +    unsigned __int128 pair;
-> +    struct {
-> +        uint64_t even;
-> +        uint64_t odd;
-> +    };
-> +};
 > +
-> +static bool is_mio_supported;
-> +
-> +static __attribute__((constructor)) void check_is_mio_supported(void)
+
+Cosmetic nit: It's more common in QEMU to only use one empty line instead of 
+two.
+
+> +static inline uint8_t host_pci_ldub_p(const void *ioaddr)
 > +{
-> +    is_mio_supported = !!(qemu_getauxval(AT_HWCAP) & HWCAP_S390_PCI_MIO);
+> +    uint8_t ret = 0;
+> +#ifdef __s390x__
+> +    ret = s390x_pci_mmio_read_8(ioaddr);
+> +#else
+> +    ret = ldub_p(ioaddr);
+> +#endif
+> +
+> +    return ret;
 > +}
 > +
-> +static uint64_t s390x_pcilgi(const void *ioaddr, size_t len)
+> +static inline uint16_t host_pci_lduw_le_p(const void *ioaddr)
 > +{
-> +    union register_pair ioaddr_len = { .even = (uint64_t)ioaddr,
-> +                                       .odd = len };
-> +    uint64_t val;
-> +    int cc;
+> +    uint16_t ret = 0;
+> +#ifdef __s390x__
+> +    ret = le16_to_cpu(s390x_pci_mmio_read_16(ioaddr));
+> +#else
+> +    ret = lduw_le_p(ioaddr);
+> +#endif
 > +
-> +    asm volatile(
-> +        /* pcilgi */
-> +        ".insn   rre,0xb9d60000,%[val],%[ioaddr_len]\n"
-> +        "ipm     %[cc]\n"
-> +        "srl     %[cc],28\n"
-> +        : [cc] "=d"(cc), [val] "=d"(val),
-> +        [ioaddr_len] "+&d"(ioaddr_len.pair) :: "cc");
-
-Do we need the "&" modifier here? ... at least the kernel does not seem to 
-use it ...
-
-> +
-> +    if (cc) {
-> +        val = -1ULL;
-> +    }
-> +
-> +    return val;
+> +    return ret;
 > +}
 > +
-> +static void s390x_pcistgi(void *ioaddr, uint64_t val, size_t len)
+> +static inline uint32_t host_pci_ldl_le_p(const void *ioaddr)
 > +{
-> +    union register_pair ioaddr_len = {.even = (uint64_t)ioaddr, .odd = len};
+> +    uint32_t ret = 0;
+> +#ifdef __s390x__
+> +    ret = le32_to_cpu(s390x_pci_mmio_read_32(ioaddr));
+> +#else
+> +    ret = (uint32_t)ldl_le_p(ioaddr);
+
+This is the only spot where you used a cast. Is it necessary, or could it be 
+omitted?
+
+> +#endif
 > +
-> +    asm volatile (
-> +        /* pcistgi */
-> +        ".insn   rre,0xb9d40000,%[val],%[ioaddr_len]\n"
-> +        : [ioaddr_len] "+&d" (ioaddr_len.pair)
+> +    return ret;
+> +}
+> +
+> +static inline uint64_t host_pci_ldq_le_p(const void *ioaddr)
+> +{
+> +    uint64_t ret = 0;
+> +#ifdef __s390x__
+> +    ret = le64_to_cpu(s390x_pci_mmio_read_64(ioaddr));
+> +#else
+> +    ret = ldq_le_p(ioaddr);
+> +#endif
+> +
+> +    return ret;
+> +}
+> +
+> +static inline void host_pci_stb_le_p(void *ioaddr, uint8_t val)
+> +{
+> +
+
+Remove the empty line, please.
+
+> +#ifdef __s390x__
+> +    s390x_pci_mmio_write_8(ioaddr, val);
+> +#else
+> +    stb_p(ioaddr, val);
+> +#endif
+> +}
+> +
+> +static inline void host_pci_stw_le_p(void *ioaddr, uint16_t val)
+> +{
+> +
+
+dito.
+
+> +#ifdef __s390x__
+> +    s390x_pci_mmio_write_16(ioaddr, cpu_to_le16(val));
+> +#else
+> +    stw_le_p(ioaddr, val);
+> +#endif
+> +}
+> +
+> +static inline void host_pci_stl_le_p(void *ioaddr, uint32_t val)
+> +{
+> +
+
+dito.
+
+> +#ifdef __s390x__
+> +    s390x_pci_mmio_write_32(ioaddr, cpu_to_le32(val));
+> +#else
+> +    stl_le_p(ioaddr, val);
+> +#endif
+> +}
+> +
+> +static inline void host_pci_stq_le_p(void *ioaddr, uint64_t val)
+> +{
+> +
 
 dito
 
-> +        : [val] "d" (val)
-> +        : "cc", "memory");
+> +#ifdef __s390x__
+> +    s390x_pci_mmio_write_64(ioaddr, cpu_to_le64(val));
+> +#else
+> +    stq_le_p(ioaddr, val);
+> +#endif
 > +}
-...
-> +void s390x_pci_mmio_write_64(void *ioaddr, uint64_t val)
+> +
+> +static inline uint64_t host_pci_ldn_le_p(const void *ioaddr, int sz)
 > +{
-> +    if (is_mio_supported) {
-> +        s390x_pcistgi(ioaddr, val, sizeof(val));
-> +    } else {
-> +        syscall(__NR_s390_pci_mmio_write, ioaddr, &val, sizeof(val));
+> +    switch (sz) {
+> +    case 1:
+> +        return host_pci_ldub_p(ioaddr);
+> +    case 2:
+> +        return host_pci_lduw_le_p(ioaddr);
+> +    case 4:
+> +        return host_pci_ldl_le_p(ioaddr);
+> +    case 8:
+> +        return host_pci_ldq_le_p(ioaddr);
+> +    default:
+> +        g_assert_not_reached();
 > +    }
 > +}
 > +
+> +static inline void host_pci_stn_le_p(void *ioaddr, int sz, uint64_t v)
+> +{
+> +    switch (sz) {
+> +    case 1:
+> +        host_pci_stb_le_p(ioaddr, v);
+> +        break;
+> +    case 2:
+> +        host_pci_stw_le_p(ioaddr, v);
+> +        break;
+> +    case 4:
+> +        host_pci_stl_le_p(ioaddr, v);
+> +        break;
+> +    case 8:
+> +        host_pci_stq_le_p(ioaddr, v);
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +}
+> +
+> +#endif
 
-FWIW, "git am" complains about "new blank line at EOF" here.
-
-Apart from these nits, the patch looks sane to me.
+Apart from the nits, patch looks good to me.
 
   Thomas
 
