@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57302C369D3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92EAEC369D8
 	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:40:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8L3Y-0002qE-LG; Fri, 25 Apr 2025 11:33:39 -0400
+	id 1u8L2R-0008J6-5z; Fri, 25 Apr 2025 11:32:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L2t-0001dP-E4
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:32:55 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L28-00072l-Ut
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:32:09 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L2r-0004D2-K2
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:32:55 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-39efc1365e4so1201389f8f.1
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:32:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L25-00047e-Ss
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:32:08 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43edecbfb46so16114045e9.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:32:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745595171; x=1746199971; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745595123; x=1746199923; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5LxRNMlVfoq/xLHs+1YnVYUs29an33zqnfwHUeMoXn4=;
- b=pFH9c2Fw1dekRwF25pDju0ABzqSupGzHVVlF/IzgijMQiD+4Crv7EBV/enVME8S4tn
- XRNL/4e3jVdutZg6hcxseATEAIB9MepVFWYnbOByvMYPifqoXKocWAFWv7xCPcZb8mxK
- g/XqbDC2hdTomjZOK0qeFcX3ve00e9JL6FMitW/TXc0pZUFlZB2vlzcsk/Z9luiVFjky
- 558+E2urqDxpqOT9SQwBp3tTczDG0QEBN1FH4UKIf56B+MwOgFY7MPZzQklaUHR98yZd
- KhDyFy9gGqu0l89oxfzNTEHny3Kvb2f/odc1coi90esElY/O5q/Zcu2QdnJo2NzfyqPs
- ofqw==
+ bh=bbFk5T/Gx2RWDfL/8OYFT9numZ3eK39ufVSLHy/LkBY=;
+ b=bCaVA4ZiSXabzNzP8I/NsEVXtdtCxEGhwS1KvVFyzQgIoIErNO5FO/r7xA99yGSjLv
+ /dYhxCf69OqR5DqHCRCdeN7vWrV26yZ1q51HiNywVXk1vHM3UCCEKip6fKJGw8HlTP/x
+ NVt3BpIHL9xwNnqvTEZ9dM24XPZbuyOReart+//aiXYFL1qkXHOmOQ/wWPqB1g4a6jvP
+ 3b4oupQUwiUP6Ob6c2DbJEIgs1zzbIoCJuOFQF5cSHIW2kLZBHCrKn3fSdq1yav+goiF
+ moNs9XmBBBLZFQI9+6p7PrKHiJ1oVmXs2ti3MIdMRtfgjQ8HYaAZQXwPoHa4yVjKk2nS
+ DIZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745595171; x=1746199971;
+ d=1e100.net; s=20230601; t=1745595123; x=1746199923;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5LxRNMlVfoq/xLHs+1YnVYUs29an33zqnfwHUeMoXn4=;
- b=nFelEJZAlTt4aemasn46IaXSSbXBnWxC+gHUm4PusZdTAJoL+OKIO+oI4BZAI1+j11
- FDHl6kVBtO7x3MMFGYDGYrZGfOnM4uqC5u/oa+YhxgHKRgZCItMztAEYltdeeIhaxLV3
- MvSfIQIMvNUBIvP5dmQftrCS7mnQULEclpGUYuQwQmxfeuv5YDf5ZjzdoJI24aOR/uAR
- Q0BeGTCtR3+UGug4f2sZRNG7YRgWiqt79wvCyZ+m71OstF8YxtDvW7O+mfLxEofb5aTb
- HSVFj1plDM4GdDN63hjw6QAmzfPuD66jvLU9udIwCLgYqV2EjynUG+dJ1OUMXepfjCXY
- lajg==
-X-Gm-Message-State: AOJu0Yx4U78Qc4QOujG0rBx+k7f9t7G4+/zjvX3BTD1xpHkcpwH+wL5m
- RTpJmoAujh/cXQUFMVoW6doF33PTnw04kWTUxfxJx9RmO5d9OT0YUiAhVoH3ElMztsvEao/IQ/k
+ bh=bbFk5T/Gx2RWDfL/8OYFT9numZ3eK39ufVSLHy/LkBY=;
+ b=ZhPQWGoKgrDVt8PoFGHUa8Y61K9dNJfgGe0gpAXTaVxQehTzkWnTEa6hDtvOg7Iqbv
+ zAUzGHdNimJlBdS0h4HrffrwH86eep1Z9maGyrsevt+hp19wb8+SgeuZp9BPEp4XVucq
+ OsJIO43PHDpCCPypaVGmf7XlPWOSmEeT7srjxSy3JyNfDmW734l1DMstS4KY7JEvwtfB
+ 7bW5p1XD+B3b8ULhN0JSRV5vbN2M1BBf+B/z7OirjRAjzTJc3uEkNPkDcrHsh3UnH4tV
+ 9cc0Wab3OWZ2DvQvicKTOsIABz0iWXg1Jf/CNEREXM3Kg7HEvKCzhoCL8MZPunhjVU23
+ pERQ==
+X-Gm-Message-State: AOJu0YwWB/ffoLqdW0t4nhPRJiPCyxPcoCbP8CYrli0kenr6KQ9l8tEF
+ RhmySGaIZo9o62OyoPmv0sfFLEGWlyO5I1yGbn5tfSYeDiMXeeN8y3H6C8ER/gcjLyFGegdt4Nr
  0
-X-Gm-Gg: ASbGncuvjz6lv56081YmY814pe0AnhSLi4Gcx0vVTD1WUKRLqk5u5Vx3IS5YrVQvBlO
- vsUkb8toJ8NYkgc8v2dDoNwCosydZv9g2GlySALPXjCPwnIxo9qvy7DoSHKqNFo8IYqVeCgoZMG
- 4zCAAoKGCPr5598qfpzRwLsW+9BGHCIVDBFQub3FKPGPhRZyq5UYOOAOMxHmR8fgQr3r0iIjBe4
- AvVN22ZcVXpx6iELDnvQggcGGj8btX7HAJLIzDLp/8TdpvOrOAUJf+2W3K5+30t93gTmVoYUXb6
- 9QuWkK7jWcCKh3gKge5wungjXLQ0amAuRCtRZlbRa6H3/cJph44wmhBlXpOKL4aE8nQiSAjA7ht
- mBp/kmHu0wS8xTKAolLoFDSmv9w==
-X-Google-Smtp-Source: AGHT+IH3O/+X0r+KoZgu2SHZgErRj2XLtWbjNCNFjeWB/oebMu7qmxcLe7kASZGDTq194d91lBXlhA==
-X-Received: by 2002:a5d:64ee:0:b0:3a0:6b91:fefc with SMTP id
- ffacd0b85a97d-3a074f7e3dbmr2172971f8f.50.1745595171160; 
- Fri, 25 Apr 2025 08:32:51 -0700 (PDT)
+X-Gm-Gg: ASbGncu0vO2cqQOUVxnxdbtICITtQhFLnaHlrQAL1mL1UphgLilhUM9t2v1926vwlZn
+ MtTED/fJY5cQdia4TTVyZdmK4f8WcM6u8AwaemL1kkG4AfE2RNtWemujKM9/YOx9nFnFEXkKSv4
+ Jem/DCjq5PFS/C2QdbvtM3I6tJ9mSOmshbAodAF76EThFdjQAnwCSRPR80DOLoI+0m/wfPYoyJy
+ maRkwvRqUGFHeMuYHX3tNGP3/m/lNC00Il8CYrpunekCEfcixMlg5fFdpkEwmAOAgT3DAZVhw+w
+ gvwWgQEMPFbLaPVgQZzMpgQd8iTB+bdw1SynSS8TN96UAuHyS/frFcT/yvf1L2AoSKQ7AV9XVYw
+ WHCbRmjeAkB8POFM=
+X-Google-Smtp-Source: AGHT+IFAprrNEoVYN9Y7KeboHnKCfngfv0yNbo5SV1cksQNE593lFogn8o6CMm6Cr3v16jro2BpuBw==
+X-Received: by 2002:a05:600c:a41:b0:43c:eeee:b706 with SMTP id
+ 5b1f17b1804b1-440a6698266mr21912505e9.24.1745595123372; 
+ Fri, 25 Apr 2025 08:32:03 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4409d2e00e3sm61672295e9.34.2025.04.25.08.32.50
+ 5b1f17b1804b1-440a52f8794sm29256445e9.1.2025.04.25.08.32.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 08:32:50 -0700 (PDT)
+ Fri, 25 Apr 2025 08:32:02 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 50/58] qapi: Rename TargetInfo structure as QemuTargetInfo
-Date: Fri, 25 Apr 2025 17:28:34 +0200
-Message-ID: <20250425152843.69638-51-philmd@linaro.org>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 40/58] meson: Use osdep_prefix for strchrnul()
+Date: Fri, 25 Apr 2025 17:28:24 +0200
+Message-ID: <20250425152843.69638-41-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
 References: <20250425152843.69638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,75 +100,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QAPI-generated 'TargetInfo' structure name is only used
-in a single file. We want to heavily use another structure
-similarly named. Rename the QAPI one, since structure names
-are not part of the public API.
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+macOS SDK may have the symbol of strchrnul(), but it is actually
+available only on macOS 15.4 or later and that fact is codified in
+string.h. Include the header file using osdep_prefix to check if the
+function is available on the deployment target.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250424-buildsys-v1-4-97655e3b25d7@daynix.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-Id: <20250422145502.70770-2-philmd@linaro.org>
 ---
- qapi/machine.json          | 10 +++++-----
- hw/core/machine-qmp-cmds.c |  4 ++--
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ meson.build | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index a9ff8076317..c8feb9fe17b 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -275,15 +275,15 @@
- { 'command': 'query-current-machine', 'returns': 'CurrentMachineParams' }
+diff --git a/meson.build b/meson.build
+index d93dbde194f..c736a6f4c4b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2193,6 +2193,7 @@ osdep_prefix = '''
+   #include <stddef.h>
+   #include <sys/types.h>
  
- ##
--# @TargetInfo:
-+# @QemuTargetInfo:
- #
--# Information describing the QEMU target.
-+# Information on the target configuration built into the QEMU binary.
- #
- # @arch: the target architecture
- #
- # Since: 1.2
- ##
--{ 'struct': 'TargetInfo',
-+{ 'struct': 'QemuTargetInfo',
-   'data': { 'arch': 'SysEmuTarget' } }
- 
- ##
-@@ -291,11 +291,11 @@
- #
- # Return information about the target for this QEMU
- #
--# Returns: TargetInfo
-+# Returns: QemuTargetInfo
- #
- # Since: 1.2
- ##
--{ 'command': 'query-target', 'returns': 'TargetInfo' }
-+{ 'command': 'query-target', 'returns': 'QemuTargetInfo' }
- 
- ##
- # @UuidInfo:
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index 9447e345b3c..a5e635152dc 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -134,9 +134,9 @@ CurrentMachineParams *qmp_query_current_machine(Error **errp)
-     return params;
- }
- 
--TargetInfo *qmp_query_target(Error **errp)
-+QemuTargetInfo *qmp_query_target(Error **errp)
- {
--    TargetInfo *info = g_malloc0(sizeof(*info));
-+    QemuTargetInfo *info = g_malloc0(sizeof(*info));
- 
-     info->arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
-                                  &error_abort);
++  #include <string.h>
+   #include <limits.h>
+   /* Put unistd.h before time.h as that triggers localtime_r/gmtime_r
+    * function availability on recentish Mingw-w64 platforms. */
+@@ -2657,7 +2658,7 @@ config_host_data.set('HAVE_GETIFADDRS', cc.has_function('getifaddrs'))
+ config_host_data.set('HAVE_GLIB_WITH_SLICE_ALLOCATOR', glib_has_gslice)
+ config_host_data.set('HAVE_GLIB_WITH_ALIGNED_ALLOC', glib_has_aligned_alloc)
+ config_host_data.set('HAVE_OPENPTY', cc.has_function('openpty', dependencies: util))
+-config_host_data.set('HAVE_STRCHRNUL', cc.has_function('strchrnul'))
++config_host_data.set('HAVE_STRCHRNUL', cc.has_function('strchrnul', prefix: osdep_prefix))
+ config_host_data.set('HAVE_SYSTEM_FUNCTION', cc.has_function('system', prefix: '#include <stdlib.h>'))
+ if rbd.found()
+   config_host_data.set('HAVE_RBD_NAMESPACE_EXISTS',
 -- 
 2.47.1
 
