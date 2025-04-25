@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA640C369D3
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:34:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE0A6C369D3
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:34:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8L1C-0002ak-7D; Fri, 25 Apr 2025 11:31:10 -0400
+	id 1u8L24-0006Y1-3q; Fri, 25 Apr 2025 11:32:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L0c-0001X5-Nn
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:30:43 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L1u-0005hs-V7
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:31:55 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L0a-0003uP-9P
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:30:33 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43cf848528aso16829025e9.2
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:30:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L1r-00045Y-LJ
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:31:54 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-39ee682e0ddso1557630f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:31:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745595030; x=1746199830; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745595109; x=1746199909; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Jvs44ehSMS7vr5Ngp7xi3bJceK1a1pBELdrshQJvya0=;
- b=xOxYV4byykdUB/31gInDlyo79quNgSyGvIWHGw6LeY7NgG6jTaM0HJ+5iRDdtTM9RF
- m8+6dO477Tvnq37jksU7/wdzKtF2glyX48BZrM5zFTpUWjw50Z2Oaeav2wN56++Bm5ot
- QJYOOYx7Qd0Z6AHYAEUFPSytCq83dJjpVzwdq39FN+DozEaCqF7PSYB6d7uB0a8Z4uZQ
- wOnuN3lAhcNT3+5NYNMHO+NDwf3rIMRLyztppJRyjSbVhVkzkxKpevv1cKg7eDpfHesw
- QCmsJEnUFZmlJVqGMuS277sCORHPQWnMVGXe5bHjHLdlfML8UTt/l0qSHLErT0vTATPG
- 56vQ==
+ bh=B/dNYV9pYXgt9CiWoeZ7raRRHnU5OLtbyz8NfKzKm4I=;
+ b=y5klToHBqO74zvWovmtCbfqS1Fh8keIHhNzUmyNTL6DG8OXUm3d03kmBJywT42DArn
+ AYNeHicra56230vUbNy02KAKp+thQ9+r/bgYFlXWVOvJFcpJASHMBJtcLNDFH5i7ifvO
+ zbqspZTKl4tjUb+cu3vkJ+zo75vKKojNYJ8NOE3bRxOSU2MxwNsQjuL1Xu+OvCPdepNX
+ mQBGfX9QwepX2DUigHKGCGAov08qcRCt0eMunMQfvW7fpCPWLdT01a+aKvx1nU1mZNXb
+ ic62DcSeSEfVDkKYzj8dERCmCwDXdWhlTVDtFpP9W71LfDkII5fd/SR+2zMZA7nr5vr/
+ V0VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745595030; x=1746199830;
+ d=1e100.net; s=20230601; t=1745595109; x=1746199909;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Jvs44ehSMS7vr5Ngp7xi3bJceK1a1pBELdrshQJvya0=;
- b=Kvv1OvaU+FxDJSswOX9XYKdEeKsI9Za+xUbf3DsrXQBkSkpRpwsl2Wsl2WF7RbOWFm
- VQ2NnsN15bjGwDBZQ9rXnjScit/qnWfoR4xbXw9Pt6828rDWg4S9eciEwA3+mXaDQdlE
- 8oQZJfcqwpjRFby/OTUH+eh8k860Vm0lRCIRiXd9gR+S7HL8xCkfRhc39y95ZoZyC9U8
- Oay1aVxIz5gWlw6Kom1yM5rp4kH77r9MsrXa2iS5po3BcPK8+7FaKtL0MToYzVovmP8x
- dFr4xttWTKSDY4jB7Otp9qYPGJkWAd56lqTwPTdZrKVY9ZPE0wUrWthFnnesm830TSE/
- AohQ==
-X-Gm-Message-State: AOJu0YzU8z83H70m+PoyQGqat2V+OW/nZh2W82GMXR7XR6F+4yGfo9PN
- n6cwF5/0GuLX0u3HhgTRfN09CUynuGdu1LbAPoB02xoteOyuAptc43luY8gXiKpbEkfiKU/A072
- Q
-X-Gm-Gg: ASbGncvOeOT5UChLKEzvBN92qiWld+kNXwsKcWeyNczKQp1yYBunX02pBKmBTXoGqqm
- 44OdtI9k7dDJqeBLSikt8W98ByuPrzkdQVnaKpqbwokKgLm5dAYek5W1hp90A1EvLDWP2kWtP00
- JSZPsoku1EFXfpCo3yVUHxqoCL+5QvSVz1hmZwy6hLtQ2/kqDXtw1SPG68sL1g5CT4fVvknd73q
- Ql8Mg/qjlG2vjSEWWNn+V9cLMssV5umk8aNZI0oxSnJtP2w4mptgzLhyRyixnOzoQaRE2tS1NIV
- xmfTbXMQUk7kfBugdGcgU3SuL/lLft2N5pdpEMP5JWpJPa4Mvc+eLUi0SHwl6ULrkAr3Z/GrZ0H
- SZXemDv7/WlnVl4Q=
-X-Google-Smtp-Source: AGHT+IH+Ngl9OZstdsZLuLUTczfqV5MXeo7jPlYtHmwfzO9QDr2VUhA/NNC0yPEUcSulmeAcOs39iw==
-X-Received: by 2002:a05:600c:3d8b:b0:440:6852:5b31 with SMTP id
- 5b1f17b1804b1-440a65d8109mr31817015e9.10.1745595030141; 
- Fri, 25 Apr 2025 08:30:30 -0700 (PDT)
+ bh=B/dNYV9pYXgt9CiWoeZ7raRRHnU5OLtbyz8NfKzKm4I=;
+ b=sDpU66c10V7j8Rda1VDIVW+sd40LZx/Cw+Pzgpdmd80I3gN7fg3MCAuOOckV0BEl8m
+ 7et+wn+hpG3DMpT14Fn2R6g2NxUm8IJ/I0Ikhp79cSSDd+QysgfHMIswkHEu4YMo0ETJ
+ 1QFdKhW2C6zv/VtRBnm1Bc49vp+FQBL2nZBE7JAz+EU9J6Bk7fhGriBOR6hs+Wc3MCxa
+ hkBj6i1daxM6gBHEsDhSNPY8Qj9VdJ1NF1/pPhlozrhJVvOd6Drsivr5dHANO3JJCtk2
+ 6c51LClZlwr28t8okDWcmg0D1bngNa8xx5D2ebsAs3Pz/ns2P3QtDP+ZuZ+aaBLrWQJ8
+ q2eA==
+X-Gm-Message-State: AOJu0YzhwmxNo0Mu84Yvcy6GgObzbCrLPOYIPXNpkpwigjLTK6FIYz+C
+ 5FF+zKDRveTlARvGJTcZCEtXRZixGXDCDk51+y+t0kswQiOVJztRQFY7aKn1bf8L+ajyqDGH7ls
+ h
+X-Gm-Gg: ASbGncuenjyu245Cr6/uJDDVwAvJH7pHwaDiwHkFzWjNa9eJm1B6VSjtN7O3Vrx/AJa
+ rFWcoguSWa02EoRGVUIaGFmN4ITifHdi1w9fgZL+aN5sNG7Gq52z/5BgXjl8fesAg4PwFn1o/0P
+ aY/mW7i018yoxmoQdcB1p0Sf7EYwlfob/qRPCnSMFlcegsm/zTmFD+y+Jvc6PkJeJYopqyLzwmz
+ lGCnDwf3zkV/n8NYr/UFfzGo63sxwwwyCXnLI2xkSF6435w68zyXNyV5040+jEKB2Q0+IQVErqV
+ ns74VYhRaxdQXcNA8dWQKYOgmBDmTNmn7dVq8AOMygfGBUL1QRwNS5MsUTzlzTfsdACNUO3Jlv+
+ CsWk8Iw1kkz33fLM=
+X-Google-Smtp-Source: AGHT+IGuToGSGwRyMea8QELQzjNXUIW94RTo6/+DqZv4j/S5O5Is0r4Ymz5/+IP4eWXMLUzDchaC/A==
+X-Received: by 2002:a05:6000:144b:b0:39a:ca04:3dff with SMTP id
+ ffacd0b85a97d-3a074f14606mr2560482f8f.40.1745595109125; 
+ Fri, 25 Apr 2025 08:31:49 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-440a536a1ddsm28165085e9.30.2025.04.25.08.30.28
+ 5b1f17b1804b1-4409d1e19e1sm60449215e9.0.2025.04.25.08.31.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 08:30:29 -0700 (PDT)
+ Fri, 25 Apr 2025 08:31:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-stable@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 21/58] target/arm: Handle AArch64 in TYPE_ARM_CPU gdb_arch_name
-Date: Fri, 25 Apr 2025 17:28:05 +0200
-Message-ID: <20250425152843.69638-22-philmd@linaro.org>
+Subject: [PULL 37/58] meson: Use has_header_symbol() to check getcpu()
+Date: Fri, 25 Apr 2025 17:28:21 +0200
+Message-ID: <20250425152843.69638-38-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
 References: <20250425152843.69638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,84 +100,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Instead of having the TYPE_AARCH64_CPU subclass set
-CPUClass::gdb_arch_name to a different function, make the
-TYPE_ARM_CPU implementation of the method handle AArch64.
+The use of gnu_source_prefix in the detection of getcpu() was
+ineffective because the header file that declares getcpu() when
+_GNU_SOURCE is defined was not included. Pass sched.h to
+has_header_symbol() so that the existence of the declaration will be
+properly checked.
 
-For the moment we make the "is this AArch64?" function test "is the
-CPU of TYPE_AARCH64_CPU?", so that this produces no behavioural
-change.  When we've moved all the gdbstub related methods across to
-the base class, we will be able to change this to be "does the CPU
-have the ARM_FEATURE_AARCH64 feature?".
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250317142819.900029-4-peter.maydell@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250424-buildsys-v1-1-97655e3b25d7@daynix.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/internals.h | 6 ++++++
- target/arm/cpu.c       | 3 +++
- target/arm/cpu64.c     | 6 ------
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ meson.build | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index d24acdd672e..08f4bd16791 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1826,6 +1826,12 @@ void aarch64_add_pauth_properties(Object *obj);
- void aarch64_add_sve_properties(Object *obj);
- void aarch64_add_sme_properties(Object *obj);
- 
-+/* Return true if the gdbstub is presenting an AArch64 CPU */
-+static inline bool arm_gdbstub_is_aarch64(ARMCPU *cpu)
-+{
-+    return object_dynamic_cast(OBJECT(cpu), TYPE_AARCH64_CPU);
-+}
-+
- /* Read the CONTROL register as the MRS instruction would. */
- uint32_t arm_v7m_mrs_control(CPUARMState *env, uint32_t secure);
- 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 00577f97eb6..bed0e58f3c0 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2649,6 +2649,9 @@ static const gchar *arm_gdb_arch_name(CPUState *cs)
-     ARMCPU *cpu = ARM_CPU(cs);
-     CPUARMState *env = &cpu->env;
- 
-+    if (arm_gdbstub_is_aarch64(cpu)) {
-+        return "aarch64";
-+    }
-     if (arm_feature(env, ARM_FEATURE_IWMMXT)) {
-         return "iwmmxt";
-     }
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index eaf5705cdc2..fbb7e7b3d64 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -813,11 +813,6 @@ static void aarch64_cpu_finalizefn(Object *obj)
- {
- }
- 
--static const gchar *aarch64_gdb_arch_name(CPUState *cs)
--{
--    return "aarch64";
--}
--
- static void aarch64_cpu_class_init(ObjectClass *oc, const void *data)
- {
-     CPUClass *cc = CPU_CLASS(oc);
-@@ -825,7 +820,6 @@ static void aarch64_cpu_class_init(ObjectClass *oc, const void *data)
-     cc->gdb_read_register = aarch64_cpu_gdb_read_register;
-     cc->gdb_write_register = aarch64_cpu_gdb_write_register;
-     cc->gdb_core_xml_file = "aarch64-core.xml";
--    cc->gdb_arch_name = aarch64_gdb_arch_name;
- 
-     object_class_property_add_bool(oc, "aarch64", aarch64_cpu_get_aarch64,
-                                    aarch64_cpu_set_aarch64);
+diff --git a/meson.build b/meson.build
+index bcb9d39a387..f77a9ce569e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2635,7 +2635,6 @@ config_host_data.set('CONFIG_CLOCK_ADJTIME', cc.has_function('clock_adjtime'))
+ config_host_data.set('CONFIG_DUP3', cc.has_function('dup3'))
+ config_host_data.set('CONFIG_FALLOCATE', cc.has_function('fallocate'))
+ config_host_data.set('CONFIG_POSIX_FALLOCATE', cc.has_function('posix_fallocate'))
+-config_host_data.set('CONFIG_GETCPU', cc.has_function('getcpu', prefix: gnu_source_prefix))
+ config_host_data.set('CONFIG_SCHED_GETCPU', cc.has_function('sched_getcpu', prefix: '#include <sched.h>'))
+ # Note that we need to specify prefix: here to avoid incorrectly
+ # thinking that Windows has posix_memalign()
+@@ -2713,6 +2712,8 @@ config_host_data.set('CONFIG_FALLOCATE_ZERO_RANGE',
+ config_host_data.set('CONFIG_FIEMAP',
+                      cc.has_header('linux/fiemap.h') and
+                      cc.has_header_symbol('linux/fs.h', 'FS_IOC_FIEMAP'))
++config_host_data.set('CONFIG_GETCPU',
++                     cc.has_header_symbol('sched.h', 'getcpu', prefix: gnu_source_prefix))
+ config_host_data.set('CONFIG_GETRANDOM',
+                      cc.has_function('getrandom') and
+                      cc.has_header_symbol('sys/random.h', 'GRND_NONBLOCK'))
 -- 
 2.47.1
 
