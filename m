@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAAADC369D1
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 08:50:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D09BC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 08:50:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8EjV-0003gV-9h; Fri, 25 Apr 2025 04:48:29 -0400
+	id 1u8Ejy-0005lm-0i; Fri, 25 Apr 2025 04:48:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u8EjI-0003SD-GK
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 04:48:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u8Ejo-00059t-EJ
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 04:48:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u8EjF-0003Gl-AB
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 04:48:16 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u8Ejm-0003Jk-HK
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 04:48:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745570892;
+ s=mimecast20190719; t=1745570925;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pQVWhSfaqWAu3DCFHgrvYVX+zy0oRE6ifscy5BtoQ4w=;
- b=Og3aStNlcqur4P/ASJaYqCymF5NX3Os6yHJPLuadG2EIklgiJW3fnXmkPXUQmLA2Lw4U2C
- reaBb/Kuif9In+ag4MyiKx9ME2QT9D8JJ/gHom0hwzMVRnoUwecwf5JFNTL2QJMVbar8tE
- yzbBpUhkoGJkJ2tRWVTKmLyOsQVgfOA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=BeEHvgTujRyP2uqhL8UIZGBsnNlIiYNTWTNvyxVvK90=;
+ b=TYLukyJ3o+DEqYS8KMlvI24fWHaMeaKd/mKdclDOboArDc3aM1IZV8MM19NHeQwdEEP349
+ 5PJF0VTW0bu0VrZnA14tbBjxI1P64v8x+iJeohnZW0Pqofmw503JC2LIzNtn5ykGGcNBwI
+ I6hiPPGNx78ov4UC16FiOw9WdMGFRS0=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-433-KXVbt05CN9qTUkzfyq6g8Q-1; Fri,
- 25 Apr 2025 04:48:09 -0400
-X-MC-Unique: KXVbt05CN9qTUkzfyq6g8Q-1
-X-Mimecast-MFC-AGG-ID: KXVbt05CN9qTUkzfyq6g8Q_1745570888
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-346-qQYZm39iNPmxT23JwRPCaA-1; Fri,
+ 25 Apr 2025 04:48:43 -0400
+X-MC-Unique: qQYZm39iNPmxT23JwRPCaA-1
+X-Mimecast-MFC-AGG-ID: qQYZm39iNPmxT23JwRPCaA_1745570922
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A5EC180034E; Fri, 25 Apr 2025 08:48:08 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 42D8B1956089; Fri, 25 Apr 2025 08:48:42 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.33.65])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3B68130001A2; Fri, 25 Apr 2025 08:48:05 +0000 (UTC)
+ id E302230002C7; Fri, 25 Apr 2025 08:48:38 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- John Levon <john.levon@nutanix.com>
-Subject: [PULL 23/50] vfio: Move vfio_get_device_info() to helpers.c
-Date: Fri, 25 Apr 2025 10:46:16 +0200
-Message-ID: <20250425084644.102196-24-clg@redhat.com>
+ John Levon <john.levon@nutanix.com>, Avihai Horon <avihaih@nvidia.com>
+Subject: [PULL 34/50] vfio: Rename vfio_devices_all_device_dirty_tracking()
+Date: Fri, 25 Apr 2025 10:46:27 +0200
+Message-ID: <20250425084644.102196-35-clg@redhat.com>
 In-Reply-To: <20250425084644.102196-1-clg@redhat.com>
 References: <20250425084644.102196-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -85,115 +84,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vfio_get_device_info() is a low level routine. Move it with the other
-helpers.
+Use the prefix 'vfio_container_devices_' to reflect the routine simply
+loops over the container's device list.
 
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: John Levon <john.levon@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20250318095415.670319-19-clg@redhat.com
-Link: https://lore.kernel.org/qemu-devel/20250326075122.1299361-20-clg@redhat.com
+Reviewed-by: Avihai Horon <avihaih@nvidia.com>
+Link: https://lore.kernel.org/qemu-devel/20250326075122.1299361-31-clg@redhat.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/vfio-helpers.h        |  1 +
- include/hw/vfio/vfio-common.h |  1 -
- hw/vfio/common.c              | 24 ------------------------
- hw/vfio/helpers.c             | 24 ++++++++++++++++++++++++
- 4 files changed, 25 insertions(+), 25 deletions(-)
+ include/hw/vfio/vfio-container-base.h | 3 ++-
+ hw/vfio/common.c                      | 4 ++--
+ hw/vfio/container-base.c              | 5 +++--
+ hw/vfio/container.c                   | 2 +-
+ 4 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/hw/vfio/vfio-helpers.h b/hw/vfio/vfio-helpers.h
-index 5d91e33d27be1bdd8eb9b3ce74c39a4ac1991adc..dbcb68bbb0e12607f5ccf15f114530966c2cbcb2 100644
---- a/hw/vfio/vfio-helpers.h
-+++ b/hw/vfio/vfio-helpers.h
-@@ -25,6 +25,7 @@ bool vfio_get_info_dma_avail(struct vfio_iommu_type1_info *info,
- #endif
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index 9b33e71f59bba1f3cbe10c307172422ca4e4c2ce..395ace02e488519aba77ca401737f0b319d9a512 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -91,7 +91,8 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+                                            bool start, Error **errp);
+ bool vfio_container_dirty_tracking_is_started(
+     const VFIOContainerBase *bcontainer);
+-bool vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer);
++bool vfio_container_devices_dirty_tracking_is_supported(
++    const VFIOContainerBase *bcontainer);
+ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+                           uint64_t size, ram_addr_t ram_addr, Error **errp);
  
- int vfio_bitmap_alloc(VFIOBitmap *vbmap, hwaddr size);
-+struct vfio_device_info *vfio_get_device_info(int fd);
- 
- int vfio_kvm_device_add_fd(int fd, Error **errp);
- int vfio_kvm_device_del_fd(int fd, Error **errp);
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index 442ec287d799538e1d3669a6c470960cce5459a0..dca7a6a4b3dcc583eb430b8cf9380a007623ec26 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -122,7 +122,6 @@ bool vfio_set_irq_signaling(VFIODevice *vbasedev, int index, int subindex,
-                             int action, int fd, Error **errp);
- 
- void vfio_reset_handler(void *opaque);
--struct vfio_device_info *vfio_get_device_info(int fd);
- bool vfio_device_is_mdev(VFIODevice *vbasedev);
- bool vfio_device_hiod_realize(VFIODevice *vbasedev, Error **errp);
- bool vfio_attach_device(char *name, VFIODevice *vbasedev,
 diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 2b3af051cc46118799b882a9a8e3ae96e556952b..f80c0ef229c867070593f6a6f53e7ea1a701cf41 100644
+index 89b7a71385abfff888c5208a6b4c588b4217716a..5a7327979d2cc83221384577398aa1276578ac26 100644
 --- a/hw/vfio/common.c
 +++ b/hw/vfio/common.c
-@@ -1333,30 +1333,6 @@ void vfio_reset_handler(void *opaque)
-     }
+@@ -935,7 +935,7 @@ static bool vfio_listener_log_global_start(MemoryListener *listener,
+                                                  listener);
+     bool ret;
+ 
+-    if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
++    if (vfio_container_devices_dirty_tracking_is_supported(bcontainer)) {
+         ret = vfio_devices_dma_logging_start(bcontainer, errp);
+     } else {
+         ret = vfio_container_set_dirty_page_tracking(bcontainer, true, errp) == 0;
+@@ -954,7 +954,7 @@ static void vfio_listener_log_global_stop(MemoryListener *listener)
+     Error *local_err = NULL;
+     int ret = 0;
+ 
+-    if (vfio_devices_all_device_dirty_tracking(bcontainer)) {
++    if (vfio_container_devices_dirty_tracking_is_supported(bcontainer)) {
+         vfio_devices_dma_logging_stop(bcontainer);
+     } else {
+         ret = vfio_container_set_dirty_page_tracking(bcontainer, false,
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index 1beba37a7739d76630c3e7db16a8d04926cb1aee..2627908e3fdbf1a43b86293a3f379baf88cef5ef 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -162,7 +162,8 @@ bool vfio_container_dirty_tracking_is_started(
+            bcontainer->dirty_pages_started;
  }
  
--struct vfio_device_info *vfio_get_device_info(int fd)
--{
--    struct vfio_device_info *info;
--    uint32_t argsz = sizeof(*info);
--
--    info = g_malloc0(argsz);
--
--retry:
--    info->argsz = argsz;
--
--    if (ioctl(fd, VFIO_DEVICE_GET_INFO, info)) {
--        g_free(info);
--        return NULL;
--    }
--
--    if (info->argsz > argsz) {
--        argsz = info->argsz;
--        info = g_realloc(info, argsz);
--        goto retry;
--    }
--
--    return info;
--}
--
- bool vfio_attach_device(char *name, VFIODevice *vbasedev,
-                         AddressSpace *as, Error **errp)
+-bool vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer)
++bool vfio_container_devices_dirty_tracking_is_supported(
++    const VFIOContainerBase *bcontainer)
  {
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index e6b75baa805241b4df28769338b15a6fe9b99501..b7f75b47af3a5d066eb518903831214df6c3755a 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -312,6 +312,30 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
-     return 0;
- }
+     VFIODevice *vbasedev;
  
-+struct vfio_device_info *vfio_get_device_info(int fd)
-+{
-+    struct vfio_device_info *info;
-+    uint32_t argsz = sizeof(*info);
-+
-+    info = g_malloc0(argsz);
-+
-+retry:
-+    info->argsz = argsz;
-+
-+    if (ioctl(fd, VFIO_DEVICE_GET_INFO, info)) {
-+        g_free(info);
-+        return NULL;
-+    }
-+
-+    if (info->argsz > argsz) {
-+        argsz = info->argsz;
-+        info = g_realloc(info, argsz);
-+        goto retry;
-+    }
-+
-+    return info;
-+}
-+
- int vfio_get_dev_region_info(VFIODevice *vbasedev, uint32_t type,
-                              uint32_t subtype, struct vfio_region_info **info)
+@@ -240,7 +241,7 @@ int vfio_get_dirty_bitmap(const VFIOContainerBase *bcontainer, uint64_t iova,
+                           uint64_t size, ram_addr_t ram_addr, Error **errp)
  {
+     bool all_device_dirty_tracking =
+-        vfio_devices_all_device_dirty_tracking(bcontainer);
++        vfio_container_devices_dirty_tracking_is_supported(bcontainer);
+     uint64_t dirty_pages;
+     VFIOBitmap vbmap;
+     int ret;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index e8cd9271365e4b2f55fac9ec402c292607f7fc1d..8e4a2cae037edd6d454582c8ebeb14b210463fc2 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -138,7 +138,7 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+     Error *local_err = NULL;
+ 
+     if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
+-        if (!vfio_devices_all_device_dirty_tracking(bcontainer) &&
++        if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
+             bcontainer->dirty_pages_supported) {
+             return vfio_dma_unmap_bitmap(container, iova, size, iotlb);
+         }
 -- 
 2.49.0
 
