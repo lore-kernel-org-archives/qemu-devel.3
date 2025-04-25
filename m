@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E80EC369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 22:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9089CC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 22:26:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8RAH-000293-9P; Fri, 25 Apr 2025 18:04:57 -0400
+	id 1u8RCD-0008BI-2V; Fri, 25 Apr 2025 18:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u8R7a-0004ui-Br
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:02:10 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1u8RAo-0003bI-9U
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:05:32 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u8R7S-0001JY-OP
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:02:09 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-b061a06f127so1944144a12.2
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 15:02:02 -0700 (PDT)
+ id 1u8RAl-0001pk-LN
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:05:29 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-7376dd56f60so2134657b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 15:05:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745618521; x=1746223321; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745618726; x=1746223526; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GiJ2SMandm8T2ScUuoEfW7GuA8BDd5L1ZrDyS3HLPBY=;
- b=FN9PwvHL8SbPGCcforF2+WVHNFePEPjaDoZRyBMZhxSy1+uLGuzeZMOXv6M6O8U04Z
- 51YDsaX+I8Fqwv/VJsYCIlN8IW8ojm99MfmxxPSYK+AkW8AIAmIIFhBXeBTx4MB3IZfU
- JebSIS0Nnomp6GDJZ6m3K3B35ElLam19widS4EriEUmRvxA27phy0AKDvCLafZDY0MJ5
- aDr1dmgwE8ug7RDn75udt7TqY9HvMOhXSypMtx5TBYC684NR2AeNtIPJFqUt6FibKCwJ
- ESwLrqOQp37t2hTjDTi5Qdl3lc7bFdznkgjvyknGoMqQaeEcKz+oTXU+wSQsxMya4d+C
- Y5Fg==
+ bh=bOWCeKNlLhAgVYEVI4tqJhLjqQCbsv0AzZbbO08r8rw=;
+ b=ARFYhvdgs1x68REt1B+n9Zs5ZYalXDGmfXFEvAAcwNYSIHXv5x5Kip9LpQuROrgAua
+ kztA0V3f2Q+ytuM35UxEN8LkN0ITdrHbXFKMlHeI9FaunUyN1g9ReUfUnkn3MT7tisPr
+ OFDFMdU2JPaLPCkDOkykdMmTrKw8NT08r7lG/rbi5/GBemmNiR5gDZ2J93i5JyjBnVvP
+ DiJDJp99SytlGAvd8cPg7nqVMqx4iSXJwhfhljxYMe3vt9YrJxlvN9N2sg9ZmciVQaWj
+ /A2T5NVz9h9pt95hyjQE5vf4JZVBIe6ACD88pqCVhC2wtWLnJ0w4EB+zt5svgvGux1Es
+ Q6PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745618521; x=1746223321;
+ d=1e100.net; s=20230601; t=1745618726; x=1746223526;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GiJ2SMandm8T2ScUuoEfW7GuA8BDd5L1ZrDyS3HLPBY=;
- b=T6uJbGRXczZfZ55MrepPAJwHxvwsEd0QhfxViUozrwfx6DIE3pe0rCa3HyElhmmkNJ
- NWFessiuc07eiPOaFb+OElkgOF8z9bc005i7Z8N6Pvf/cgH76K38o6Hd4llF6qn7wnzI
- tc/a90aS9QNs+JPML4qOOEYvllOOL8qThE1oB8M1EQ+vOObhvQlHuEh1wDFZMa0KjW9a
- rC4zRd1Ag1k32g9RhU9BrOUKzmKnM/wx13V5I6p8iZZb7R3qqkgX3ik/KZjWL/cXfcsv
- Rp+xxBOR9O9kuaUzdGaPO0S4c7vqOnoZQUdbwuWmj+KPXPpFoYITq1olkyBqPYVB8R86
- zshg==
-X-Gm-Message-State: AOJu0YzTgcfnrJFW6e9q0X12TLU1WWInOKIXvq+4kt44J2n0CEBfZ2U9
- LeJpf6YmbSY1xjcXFg8IydXULdIvLncFm87OwV/+KBRMd+VU8e+9Z1C6+mYTLH5j3PIBc3b0/2h
- s
-X-Gm-Gg: ASbGncvhSDfvY6PPXzJTbaH4pmJT9R8y/upVoToA2bAyt2anCzxnIOSwByvoZaStvm6
- PCImQ1lvB7pLuI8gxOznR0FLpZ5Zdt1VMEWduTudx+JweP2f6AAvRsYAzA7XgJjM5csKPhfxahU
- I0lCB3E3N3lPXeEID6LNxYy9HEl0mSB6GQ/Gs4tXao2zqA9ido4PEtUzlN9yTuC/z4KwTnSDmnk
- stqIeDZ7yeAON44ToqqXLHXlzjYrIq66iBoMB4tIz8oDX5B7Cr74J85Kv5ffXRLva8bzjliaa2e
- FWheEhMiVsEPDs+IyHVItKSiov56wyfEh7ptwCkMIr4hzuM6dCh5K3T+JQCWbqHnjdXQau8cwzU
+ bh=bOWCeKNlLhAgVYEVI4tqJhLjqQCbsv0AzZbbO08r8rw=;
+ b=k0TfDjiMIOnA5l7gcLP78vpjN84JlfA1yIt3WfCsszlPLQt3v45wyOYpcnjGUgDWrV
+ OKeMOF0U8GvFzgfbLu+Jk2DbaouFkzDbdrf1XLs9H2q3HUEXVSJ6bKQ+xNgRFcSjLLSW
+ va0IqQ13U/4VEV47gfls1YumzbS7axMgLJnrJypUIqc3s29ujcj7Lo0C8KW2QzzJwNxA
+ QBD9XDDWu/Id29lZQgrH3vj0BDvvD2MPHQEaU6tuBg4/tHCleQo2zGQt8sDYg4wRunQO
+ Wn/c91UGkr2hba1BQATHn1cBLsP4I5temGswuthVmWAZQoH/chlWZFVpiBYbsqIc27g0
+ 3GJQ==
+X-Gm-Message-State: AOJu0Yzt0k9c11dsaYwqjG0wW5W/5JCjpO/+FwGe/J50R4+m3sGDwXUE
+ vQG10dkh4Lj7rsskkaLVexStES/R/I+AX0UynTWgIVsarEGX+ofOvQ9qgLbQxlf/NtKfJZLYjJZ
+ O
+X-Gm-Gg: ASbGncsUQ+VgJyMbpclVCRpUqW0aZSfZYlzTMjUOYQs0+/pnhgdDEUjEPLCdiOfu8Bm
+ yvK3V8jWv9y6ng14o4EIPGmpOeu0ZaWN1/djftRouzCSCnyvgAw/2lav3NYhlPe2PEaNvAZcO8A
+ sglKT2If+JDnKibgFL21oDIJa80ckpECAnN7YsJlvPK15oMt45cg6m/rLFE4bVnJM1fvsbPkq+k
+ Ve5MJVHlSU4DUUJHpJKXCyHsi4S+kXbGmCuACBptBAR4rUhz669TZg5dPHqISdw2Qky0WRq6vJI
+ 1q89miljpDj/DRfkPL3TME7RyKlSBoimV2mkkyIEX/ljDPBYx3WPQ5XcKCfvezOR4JmrhDA8kcc
  =
-X-Google-Smtp-Source: AGHT+IEMl+hdvvrF4lI8USlxEml7jLQ5UC28UdLHJ/4KcwLXrjqWXGIoiL6wiiD4eFvfywn593+Z0Q==
-X-Received: by 2002:a17:90b:1f89:b0:2f8:b2c:5ef3 with SMTP id
- 98e67ed59e1d1-309f7da6b69mr7124514a91.14.1745618520864; 
- Fri, 25 Apr 2025 15:02:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFyx0uSmctGyPocRt1NUp94H1j+vwzkAtkpUyfuIANclqYyYqnATwnkHedk1gxMk7vi4WeuBQ==
+X-Received: by 2002:a05:6a00:1817:b0:73f:1c49:90f3 with SMTP id
+ d2e1a72fcca58-73fd73c806emr4393370b3a.11.1745618726103; 
+ Fri, 25 Apr 2025 15:05:26 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-309f7765c88sm2212961a91.28.2025.04.25.15.02.00
+ d2e1a72fcca58-73e25a6a49esm3796573b3a.106.2025.04.25.15.05.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Apr 2025 15:02:00 -0700 (PDT)
+ Fri, 25 Apr 2025 15:05:25 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 085/159] tcg: Merge INDEX_op_movcond_{i32,i64}
-Date: Fri, 25 Apr 2025 14:53:39 -0700
-Message-ID: <20250425215454.886111-86-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 122/159] tcg: Use sub carry opcodes to expand sub2
+Date: Fri, 25 Apr 2025 14:54:16 -0700
+Message-ID: <20250425215454.886111-123-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250425215454.886111-1-richard.henderson@linaro.org>
 References: <20250425215454.886111-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,198 +100,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/tcg-opc.h    |  3 +--
- tcg/optimize.c           |  2 +-
- tcg/tcg-op.c             |  4 ++--
- tcg/tcg.c                | 15 +++++----------
- tcg/tci.c                |  4 ++--
- docs/devel/tcg-ops.rst   |  2 +-
- tcg/tci/tcg-target.c.inc |  2 +-
- 7 files changed, 13 insertions(+), 19 deletions(-)
+ tcg/tcg-op.c | 29 +++++++++++++++++++++++++++--
+ 1 file changed, 27 insertions(+), 2 deletions(-)
 
-diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
-index d40ca001c2..5e085607d5 100644
---- a/include/tcg/tcg-opc.h
-+++ b/include/tcg/tcg-opc.h
-@@ -51,6 +51,7 @@ DEF(divs2, 2, 3, 0, TCG_OPF_INT)
- DEF(divu, 1, 2, 0, TCG_OPF_INT)
- DEF(divu2, 2, 3, 0, TCG_OPF_INT)
- DEF(eqv, 1, 2, 0, TCG_OPF_INT)
-+DEF(movcond, 1, 4, 1, TCG_OPF_INT)
- DEF(mul, 1, 2, 0, TCG_OPF_INT)
- DEF(muls2, 2, 2, 0, TCG_OPF_INT)
- DEF(mulsh, 1, 2, 0, TCG_OPF_INT)
-@@ -74,7 +75,6 @@ DEF(shr, 1, 2, 0, TCG_OPF_INT)
- DEF(sub, 1, 2, 0, TCG_OPF_INT)
- DEF(xor, 1, 2, 0, TCG_OPF_INT)
- 
--DEF(movcond_i32, 1, 4, 1, 0)
- /* load/store */
- DEF(ld8u_i32, 1, 1, 1, 0)
- DEF(ld8s_i32, 1, 1, 1, 0)
-@@ -98,7 +98,6 @@ DEF(setcond2_i32, 1, 4, 1, 0)
- DEF(bswap16_i32, 1, 1, 1, 0)
- DEF(bswap32_i32, 1, 1, 1, 0)
- 
--DEF(movcond_i64, 1, 4, 1, 0)
- /* load/store */
- DEF(ld8u_i64, 1, 1, 1, 0)
- DEF(ld8s_i64, 1, 1, 1, 0)
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index d0cb4588ed..54606388cc 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2943,7 +2943,7 @@ void tcg_optimize(TCGContext *s)
-         case INDEX_op_mov_vec:
-             done = fold_mov(&ctx, op);
-             break;
--        CASE_OP_32_64(movcond):
-+        case INDEX_op_movcond:
-             done = fold_movcond(&ctx, op);
-             break;
-         case INDEX_op_mul:
 diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
-index 041ca95f0d..3527952c66 100644
+index f17ec658fb..447b0ebacd 100644
 --- a/tcg/tcg-op.c
 +++ b/tcg/tcg-op.c
-@@ -1095,7 +1095,7 @@ void tcg_gen_movcond_i32(TCGCond cond, TCGv_i32 ret, TCGv_i32 c1,
-     } else if (cond == TCG_COND_NEVER) {
-         tcg_gen_mov_i32(ret, v2);
-     } else {
--        tcg_gen_op6i_i32(INDEX_op_movcond_i32, ret, c1, c2, v1, v2, cond);
-+        tcg_gen_op6i_i32(INDEX_op_movcond, ret, c1, c2, v1, v2, cond);
-     }
- }
- 
-@@ -2799,7 +2799,7 @@ void tcg_gen_movcond_i64(TCGCond cond, TCGv_i64 ret, TCGv_i64 c1,
-     } else if (cond == TCG_COND_NEVER) {
-         tcg_gen_mov_i64(ret, v2);
-     } else if (TCG_TARGET_REG_BITS == 64) {
--        tcg_gen_op6i_i64(INDEX_op_movcond_i64, ret, c1, c2, v1, v2, cond);
-+        tcg_gen_op6i_i64(INDEX_op_movcond, ret, c1, c2, v1, v2, cond);
+@@ -1126,7 +1126,13 @@ void tcg_gen_add2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 al,
+ void tcg_gen_sub2_i32(TCGv_i32 rl, TCGv_i32 rh, TCGv_i32 al,
+                       TCGv_i32 ah, TCGv_i32 bl, TCGv_i32 bh)
+ {
+-    if (TCG_TARGET_HAS_sub2_i32) {
++    if (tcg_op_supported(INDEX_op_subbi, TCG_TYPE_I32, 0)) {
++        TCGv_i32 t0 = tcg_temp_ebb_new_i32();
++        tcg_gen_op3_i32(INDEX_op_subbo, t0, al, bl);
++        tcg_gen_op3_i32(INDEX_op_subbi, rh, ah, bh);
++        tcg_gen_mov_i32(rl, t0);
++        tcg_temp_free_i32(t0);
++    } else if (TCG_TARGET_HAS_sub2_i32) {
+         tcg_gen_op6_i32(INDEX_op_sub2_i32, rl, rh, al, ah, bl, bh);
      } else {
          TCGv_i32 t0 = tcg_temp_ebb_new_i32();
-         TCGv_i32 zero = tcg_constant_i32(0);
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index ba81a67e28..3f57f6aafd 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -1064,8 +1064,7 @@ static const TCGOutOp * const all_outop[NB_OPS] = {
-     OUTOP(INDEX_op_divs2, TCGOutOpDivRem, outop_divs2),
-     OUTOP(INDEX_op_divu2, TCGOutOpDivRem, outop_divu2),
-     OUTOP(INDEX_op_eqv, TCGOutOpBinary, outop_eqv),
--    OUTOP(INDEX_op_movcond_i32, TCGOutOpMovcond, outop_movcond),
--    OUTOP(INDEX_op_movcond_i64, TCGOutOpMovcond, outop_movcond),
-+    OUTOP(INDEX_op_movcond, TCGOutOpMovcond, outop_movcond),
-     OUTOP(INDEX_op_mul, TCGOutOpBinary, outop_mul),
-     OUTOP(INDEX_op_muls2, TCGOutOpMul2, outop_muls2),
-     OUTOP(INDEX_op_mulsh, TCGOutOpBinary, outop_mulsh),
-@@ -2292,13 +2291,13 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_and:
-     case INDEX_op_brcond:
-     case INDEX_op_mov:
-+    case INDEX_op_movcond:
-     case INDEX_op_negsetcond:
-     case INDEX_op_or:
-     case INDEX_op_setcond:
-     case INDEX_op_xor:
-         return has_type;
- 
--    case INDEX_op_movcond_i32:
-     case INDEX_op_ld8u_i32:
-     case INDEX_op_ld8s_i32:
-     case INDEX_op_ld16u_i32:
-@@ -2327,7 +2326,6 @@ bool tcg_op_supported(TCGOpcode op, TCGType type, unsigned flags)
-     case INDEX_op_setcond2_i32:
-         return TCG_TARGET_REG_BITS == 32;
- 
--    case INDEX_op_movcond_i64:
-     case INDEX_op_ld8u_i64:
-     case INDEX_op_ld8s_i64:
-     case INDEX_op_ld16u_i64:
-@@ -2879,10 +2877,9 @@ void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
-             case INDEX_op_brcond:
-             case INDEX_op_setcond:
-             case INDEX_op_negsetcond:
--            case INDEX_op_movcond_i32:
-+            case INDEX_op_movcond:
-             case INDEX_op_brcond2_i32:
-             case INDEX_op_setcond2_i32:
--            case INDEX_op_movcond_i64:
-             case INDEX_op_cmp_vec:
-             case INDEX_op_cmpsel_vec:
-                 if (op->args[k] < ARRAY_SIZE(cond_name)
-@@ -5082,8 +5079,7 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
-     case INDEX_op_brcond2_i32:
-         op_cond = op->args[4];
-         break;
--    case INDEX_op_movcond_i32:
--    case INDEX_op_movcond_i64:
-+    case INDEX_op_movcond:
-     case INDEX_op_setcond2_i32:
-     case INDEX_op_cmpsel_vec:
-         op_cond = op->args[5];
-@@ -5513,8 +5509,7 @@ static void tcg_reg_alloc_op(TCGContext *s, const TCGOp *op)
-         }
-         break;
- 
--    case INDEX_op_movcond_i32:
--    case INDEX_op_movcond_i64:
-+    case INDEX_op_movcond:
-         {
-             const TCGOutOpMovcond *out = &outop_movcond;
-             TCGCond cond = new_args[5];
-diff --git a/tcg/tci.c b/tcg/tci.c
-index aef0023dc6..9c3f58242e 100644
---- a/tcg/tci.c
-+++ b/tcg/tci.c
-@@ -450,7 +450,7 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
-             tci_args_rrrc(insn, &r0, &r1, &r2, &condition);
-             regs[r0] = tci_compare64(regs[r1], regs[r2], condition);
-             break;
--        case INDEX_op_movcond_i64:
-+        case INDEX_op_movcond:
-             tci_args_rrrrrc(insn, &r0, &r1, &r2, &r3, &r4, &condition);
-             tmp32 = tci_compare64(regs[r1], regs[r2], condition);
-             regs[r0] = regs[tmp32 ? r3 : r4];
-@@ -1075,7 +1075,7 @@ int print_insn_tci(bfd_vma addr, disassemble_info *info)
-         break;
- 
-     case INDEX_op_tci_movcond32:
--    case INDEX_op_movcond_i64:
-+    case INDEX_op_movcond:
-     case INDEX_op_setcond2_i32:
-         tci_args_rrrrrc(insn, &r0, &r1, &r2, &r3, &r4, &c);
-         info->fprintf_func(info->stream, "%-12s  %s, %s, %s, %s, %s, %s",
-diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
-index 18f02c5122..26dc3bad49 100644
---- a/docs/devel/tcg-ops.rst
-+++ b/docs/devel/tcg-ops.rst
-@@ -511,7 +511,7 @@ Conditional moves
-        |
-        | Set *dest* to -1 if (*t1* *cond* *t2*) is true, otherwise set to 0.
- 
--   * - movcond_i32/i64 *dest*, *c1*, *c2*, *v1*, *v2*, *cond*
-+   * - movcond *dest*, *c1*, *c2*, *v1*, *v2*, *cond*
- 
-      - | *dest* = (*c1* *cond* *c2* ? *v1* : *v2*)
-        |
-diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
-index 79f9219187..99a5744ab4 100644
---- a/tcg/tci/tcg-target.c.inc
-+++ b/tcg/tci/tcg-target.c.inc
-@@ -976,7 +976,7 @@ static void tgen_movcond(TCGContext *s, TCGType type, TCGCond cond,
+@@ -2865,7 +2871,26 @@ void tcg_gen_add2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 al,
+ void tcg_gen_sub2_i64(TCGv_i64 rl, TCGv_i64 rh, TCGv_i64 al,
+                       TCGv_i64 ah, TCGv_i64 bl, TCGv_i64 bh)
  {
-     TCGOpcode opc = (type == TCG_TYPE_I32
-                      ? INDEX_op_tci_movcond32
--                     : INDEX_op_movcond_i64);
-+                     : INDEX_op_movcond);
-     tcg_out_op_rrrrrc(s, opc, ret, c1, c2, vt, vf, cond);
- }
- 
+-    if (TCG_TARGET_HAS_sub2_i64) {
++    if (tcg_op_supported(INDEX_op_subbi, TCG_TYPE_REG, 0)) {
++        TCGv_i64 t0 = tcg_temp_ebb_new_i64();
++
++        if (TCG_TARGET_REG_BITS == 32) {
++            tcg_gen_op3_i32(INDEX_op_subbo, TCGV_LOW(t0),
++                            TCGV_LOW(al), TCGV_LOW(bl));
++            tcg_gen_op3_i32(INDEX_op_subbio, TCGV_HIGH(t0),
++                            TCGV_HIGH(al), TCGV_HIGH(bl));
++            tcg_gen_op3_i32(INDEX_op_subbio, TCGV_LOW(rh),
++                            TCGV_LOW(ah), TCGV_LOW(bh));
++            tcg_gen_op3_i32(INDEX_op_subbi, TCGV_HIGH(rh),
++                            TCGV_HIGH(ah), TCGV_HIGH(bh));
++        } else {
++            tcg_gen_op3_i64(INDEX_op_subbo, t0, al, bl);
++            tcg_gen_op3_i64(INDEX_op_subbi, rh, ah, bh);
++        }
++
++        tcg_gen_mov_i64(rl, t0);
++        tcg_temp_free_i64(t0);
++    } else if (TCG_TARGET_HAS_sub2_i64) {
+         tcg_gen_op6_i64(INDEX_op_sub2_i64, rl, rh, al, ah, bl, bh);
+     } else {
+         TCGv_i64 t0 = tcg_temp_ebb_new_i64();
 -- 
 2.43.0
 
