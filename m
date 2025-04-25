@@ -4,91 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFBD4C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 10:35:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B236C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 10:39:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8GOx-0000mW-Qn; Fri, 25 Apr 2025 06:35:24 -0400
+	id 1u8GSO-00022t-0j; Fri, 25 Apr 2025 06:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8GOw-0000mF-Bd
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:35:22 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8GSL-00021c-HV
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:38:53 -0400
 Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8GOt-0007vD-M3
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:35:21 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8GSK-0008GQ-2U
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:38:53 -0400
 Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43cf0d787eeso23580135e9.3
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 03:35:18 -0700 (PDT)
+ 5b1f17b1804b1-43ed8d32a95so18084635e9.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 03:38:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745577317; x=1746182117; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kA0W8cd4KB8E87d1e/uyPkx8dl85yv1pXirIFdrdRs4=;
- b=uWrGFTR7GACL0lzklY90G+nqpJcF5QEHFmX3A/+Nwpdskvv3FJ0WNcB262nsVrDbP4
- gxIBQl4RnLsqGQjdtgzgrhz2y8oA8nOJpuNMPESiYD5CWj/mhUljhfXxZHDv+awHd6Mg
- eiB7kBK6/1P1MeEw12hmmt3ySNsK7dFeU2OBQiEPb4q1V6kiBaPLmGe6+6iZ6jNWhZXA
- 1j8IDEyJHNcK6fqzsUNq+9e5Ebt1E97lNXW3NGOxP00lEwIRIchoymXVv3Ml3U93YyUw
- A/TFGm6c2P0ca68b2RZj8NFMpJfaGSaWBMai98g9iYGKcpDKqqj3igFnGXiUnvSkMfQW
- 4NOw==
+ d=linaro.org; s=google; t=1745577530; x=1746182330; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=9Pa3Q3oVD0zw97T/wAZga0Gi89pjN5UGaKdAtcjAuTY=;
+ b=ozfXpXFcCLCwVQOpdEvub9A9Yfjj7hzYNIlaQBqb04qp6aGPC2Pfq7N1p69RbjpdxE
+ 3mOFsYFyw62lriNXWHEDgGGIvEQEOA88RHcKzzraEBCB7G9yTGqB4+Ub+1h62F++oxSc
+ U5HkXF+ogeiGFB+tj4s+AqWRqqmNzwLgGmgm3q1wpvhFKifstudeHyuPdryduz0hNkYE
+ 5eUtD5ciNw1Kf1949PIVl1LYnlO98udQy1Il52E/Dp4eBdaZLGr8oGe0uHAVtjRAlv04
+ cdibR3bdQgJODUllcvFgMn7f9hHrKK7jw9PC8fy8QYbzxKF1kp+WNlhoa2mIdumViYhs
+ AwgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745577317; x=1746182117;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1745577530; x=1746182330;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kA0W8cd4KB8E87d1e/uyPkx8dl85yv1pXirIFdrdRs4=;
- b=WyWytiwc9WmAOV/u6WFipDi2F9O4PDrLpkvY7Z24ZHM5RlATQh5sGZ3+1QW2GhLpZa
- Oxj5Q0buvXFSC9nN3ngmlqCLE6efJjMem35FYDKkBaR26j30Sk9p5B9O8GVS0qjAoFPd
- 6tO0k8TW6NVQzLPmIssbCo3ctrV5JsMeSPdfLn2ilLx9tJ7jZeMM7SXLkzGIY5MvJiOf
- Up3axv+VGIB68oNI4YHnQReen8vss1jciSeVazeaB6KLj+MRrZBnntB7j3ZdQ9Rcv9+b
- qfmUmifPHu7VcLq2w5xAPYEZLgfaBG3ZVsr/OaxcyhDpLnsvNqauPhBFNMZs9bJgNZwJ
- VHsQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWehCkGgKbWc7R1oJKK3mXXbwybdVTHfA+VgjTCNATbbrtKK1xQk556Ep+QZWtLkIZm15w+qx+p5q+4@nongnu.org
-X-Gm-Message-State: AOJu0YyLSjGaSRMEAoZKLo6/OJl+pKVelT6oIUPs+ZDEKepj9oOIRCEw
- Uei0L/dZUB8aCetJQTYU4olGr9IcE6aNLXnMbB8B1vTnBYm+OIuA/+04QvpVFvc=
-X-Gm-Gg: ASbGncsj8eNZSKR9f1Vqjz19I8TNAdFrbQTgewbVa7VfELOj85IZtLewr1wWT262T2c
- k6Woe9z43lQC7FGSdp2+m3rPywvllp17aZFruJ+u7BQ3c2YN57mf3v5JeUBCV+6YvRi5M/yEwfW
- q47Zd/nH7Gdxs0ggqBTDxvNHNmMR7eg820YOoVh/84x5r6+f6kOcj0SzuaMjDeulPwqPFFPywIf
- Rg7wVodnQyxNwBDU9B6/492qnF15jNf1Rt12kcqwx2khR5MBVD9/N/sSG3JkFZWR8DhwjGRBBaO
- 4QwiBxAO7AzBSmMQU9iRIgXn645XjBMeM1GrCDZ3YjVSCwVbyMExRG8hCei7L/U61DH/VeUiBJT
- ZyXFQKaVh
-X-Google-Smtp-Source: AGHT+IGIumkJchFpnhxDOvoTMJn12J1D7niYkd5KDfOajooMuqxtsNhZGAxrQuS7jdm7hB+3Fb8ALQ==
-X-Received: by 2002:a05:6000:1a88:b0:39d:724f:a8a0 with SMTP id
- ffacd0b85a97d-3a074fae1damr1251690f8f.58.1745577317346; 
- Fri, 25 Apr 2025 03:35:17 -0700 (PDT)
+ bh=9Pa3Q3oVD0zw97T/wAZga0Gi89pjN5UGaKdAtcjAuTY=;
+ b=Qh6JQ6pKtVLNRFfHB9vc/Te/A19hqSJyF0AROtivnu0AfsypeCYFEaw06Fsudq9+/c
+ fx2mx5wD7l3J3iKXFsOjpkJ8Ds23igIGcQXex1PzOdX7Au2fchRl78rIvw31aPBBKMma
+ V3oMCSAedysALjOeemFo1DIEa5eAD20+0Fq05zRXsnHqEWRQDcg7541q+bfWf8WbKPMj
+ vvA08fHhEDkxMjehza4TlUf9d57s3LR7q9e8yQy+tO0gB1J6puyVfmgRoY9gANdmXBMn
+ xXXYu6R+MJiXca4NdVWPiWrq0If/LdoSziblyMtCWRlYT67cD9RHoBhRf1sZatdmfk6L
+ wqZg==
+X-Gm-Message-State: AOJu0YyoQm9w4pDmQNl1NXUHPpchBnk5eSE1XqLkPfFHdEOuZDzAWyBM
+ LnyJV5Krpn7EwtU4vHrDwdhJ3zt/14syhbfSxGDaFdA7WZX+Dfc0KcKtT8w1149g6SMDM57A5Cb
+ O
+X-Gm-Gg: ASbGnctYOlJcNAwslLS9n+91P7Ks2DIPwwzvCjLmJVZo0DgAZCZL7atnVqrM3FKpB5p
+ EGKGUP0s7HoZzmLr34dTC6dbkPJ9SuBkgTRkBP7ORkpsp6NRHC4Yy3Pf9LmUyyAFKw9cw8fxAq1
+ PKwgOCTcujqopNGcVu1NfSBSYGrGjttVSjdLc+ygQC2eMXH9HQ7Fq33jKUavs65+MTDm9abkYhx
+ tHNmAL5geEO+9420iN+6TLiEQlGaOwGVf2BX/V7bt28710a8A643UulqXQcEJt2JQqxvejQPb0v
+ VSVOHTagzCii4RIrvQ7Bl38OT0/8obtY9fM8bi5v1xkssJKe2WU7ADnaBaAM85w+euhaMQNFR4Y
+ /wdDYdUER
+X-Google-Smtp-Source: AGHT+IEKrjYIKxksJRQfLQHJ0pEfYC/s/4udSei6Q+vzFXcjsqCUBOSG787xBiYKUas1yq3zSOWwZg==
+X-Received: by 2002:a05:600c:34ce:b0:43d:fa58:81d3 with SMTP id
+ 5b1f17b1804b1-440a66b0803mr13561225e9.32.1745577530171; 
+ Fri, 25 Apr 2025 03:38:50 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073c8c7a4sm2030455f8f.14.2025.04.25.03.35.16
+ ffacd0b85a97d-3a073ca4e50sm2029388f8f.30.2025.04.25.03.38.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 03:35:16 -0700 (PDT)
-Message-ID: <fa6f20a9-3d7a-4c2d-94e5-c20dbaf4303e@linaro.org>
-Date: Fri, 25 Apr 2025 12:35:15 +0200
+ Fri, 25 Apr 2025 03:38:49 -0700 (PDT)
+Message-ID: <2e956c43-450d-4c18-af89-80808494258c@linaro.org>
+Date: Fri, 25 Apr 2025 12:38:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] qapi/qom: Introduce kvm-pmu-filter object
-To: Zhao Liu <zhao1.liu@intel.com>, Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Michael Roth <michael.roth@amd.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcelo Tosatti <mtosatti@redhat.com>, Shaoqin Huang <shahuang@redhat.com>,
- Eric Auger <eauger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>,
- Alexander Graf <agraf@csgraf.de>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250409082649.14733-1-zhao1.liu@intel.com>
- <20250409082649.14733-2-zhao1.liu@intel.com> <878qo8yu5u.fsf@pond.sub.org>
- <Z/iUiEXZj52CbduB@intel.com> <87frifxqgk.fsf@pond.sub.org>
- <Z/i3+l3uQ3dTjnHT@intel.com> <87fri8o70b.fsf@pond.sub.org>
- <aAnbLhBXMFAxE2vT@intel.com>
-Content-Language: en-US
+Subject: Re: [PATCH v4 0/6] hw/ppc: Remove tswap() calls
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aAnbLhBXMFAxE2vT@intel.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+References: <20241220213103.6314-1-philmd@linaro.org>
+ <2568d2ea-8437-43ef-9d34-1fc1f2ae6242@linaro.org>
+ <a40b4790-27bb-4da9-9472-238768cdca44@linaro.org>
+Content-Language: en-US
+In-Reply-To: <a40b4790-27bb-4da9-9472-238768cdca44@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
@@ -115,92 +106,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhao,
+On 6/3/25 16:23, Philippe Mathieu-Daudé wrote:
+> ping
 
-On 24/4/25 08:33, Zhao Liu wrote:
-> Hi Markus,
-> 
->>> This is for security purposes, and can restrict Guest users from
->>> accessing certain sensitive hardware information on the Host via perf or
->>> PMU counter.
->>>
->>> When a PMU event is blocked by KVM, Guest users can't get the
->>> corresponding event count via perf/PMU counter.
->>>
->>> EMM, if ‘system’ refers to the QEMU part, then QEMU is responsible
->>> for checking the format and passing the list to KVM.
->>>
->>> Thanks,
->>> Zhao
->>
->> This helped some, thanks.  To make sure I got it:
->>
->> KVM can restrict the guest's access to the PMU.  This is either a
->> whitelist (guest can access exactly what's on this list), or a blacklist
->> (guest can access exactly what's not this list).
-> 
-> Yes! The "action" field controls if it's a "whitelist" (allow) or
-> "blacklist" (deny).
-> 
-> And "access" means Guest could get the event count, if "no access", then
-> Guest would get nothing.
-> 
-> For example, if we set a the whitelist ony for the event (select: 0xc4,
-> umask: 0) in QEMU:
-> 
-> pmu='{"qom-type":"kvm-pmu-filter","id":"f0","action":"allow","events":[{"format":"x86-select-umask","select":196,"umask":0}]}'
-> 
-> then in Guest, this command tries to get count of 2 events:
-> 
-> perf stat -e cpu/event=0xc4,name=branches/,cpu/event=0xc5,name=branch-misses/ sleep 1
-> 
-> Since another event (select: 0xc5, umask: 0) is not on whitelist, its
-> "access" is blocked by KVM, so user would get the result like:
-> 
->   Performance counter stats for 'sleep 1':
-> 
->              348709      branches
->                   0      branch-misses
-> 
->         1.015962921 seconds time elapsed
-> 
->         0.000000000 seconds user
->         0.015195000 seconds sys
-> 
-> The "allowed" event has the normal output, and the result of "denied"
-> event is zero.
-> 
->> QEMU's kvm-pmu-filter object provides an interface to this KVM feature.
-> 
-> Yes!
-> 
->> KVM takes "raw" list entries: an entry is a number, and the number's
->> meaning depends on the architecture.
-> 
-> Yes, and meaning also depends on format. masked-entry format has special
-> meaning (with a flag).
-> 
->> The kvm-pmu-filter object can take such entries, and passes them to
->> straight to KVM.
->>
->> On x86, we commonly use two slightly higher level formats: select &
->> umask, and masked.  The kvm-pmu-filter object can take entries in either
->> format, and maps them to "raw".
->>
->> Correct?
-> 
-> Yes, Markus, you're right! (And sorry for late reply.)
-> 
-> And "raw" format as a lower level format can be used for other arches
-> (e.g., ARM).
+Merged as c894bdf78b3..c2ac9f4c297, thanks!
 
-Since you provide the ability to use a raw format, are we sure other
-accelerators will never be interested in such PMU filtering?
-
-I'm pretty sure HVF could benefit of it (whether we implement it there
-is another story).
-
-What do you think about adding this as a generic accelerator feature.
-If a particular accel doesn't support it and we ask to filter, we simply
-report an error.
+>>> Remove the tswap() calls on ePAPR, and convert
+>>> them to big-endian LD/ST API on sPAPR.
 
