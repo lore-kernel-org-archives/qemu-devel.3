@@ -4,92 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FE70C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 14:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52903C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 14:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8KGL-0006jN-Gn; Fri, 25 Apr 2025 10:42:46 -0400
+	id 1u8KGr-0006tk-M2; Fri, 25 Apr 2025 10:43:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8KGF-0006gf-LV
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 10:42:40 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8KGD-0006G3-Nd
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 10:42:39 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-39c266c1389so1674318f8f.1
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 07:42:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745592155; x=1746196955; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:cc:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WlA1P3UYiP5nqEUfWorUtHT++/4e9WdbRP9cK6FMuUk=;
- b=R+mVybW0rTUReWqf2P2WvigzUELjf5Sp+OTER0FnNcRVVpH/3OyZE04pAsQjhJxUrj
- lidMoUg2G1oz6AyurCGWULspbeZW+9zo0QxH3csDxh0lhCnkaOmqHzloQvnFB+kyLVMo
- 2PYy0gTDxYG7xQYgpGDizqqlZlIdWeicnricI3GvJbjCQa75NT7+If4MK92CpHPQs/uU
- g5lDmVr8hBQ9AQgJeSBaUu0oQap/C8eRTZ27LcE8ZYAY6NPT5QUSzQkukfYp6qjkBgvR
- 4g4bVF8M/IOlo3dhrfCBappzQhYYFboVRBQg+jP+X98rb0nStY3S5kEGmtnlElO/NmXT
- 1jXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745592155; x=1746196955;
- h=content-transfer-encoding:in-reply-to:cc:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WlA1P3UYiP5nqEUfWorUtHT++/4e9WdbRP9cK6FMuUk=;
- b=HQK5zS8OZSLcFRBv6UxB4diBUb+RxYTBz/AtmqzzT7e9KBk4ub2uaFVE+i/x/wrjBo
- L4ArD79xNjruEC2LbyuGyXjmWxkpR1k+MGYaxwX3hC6/oCGKXsckzu1Fj24iZIlZyJE0
- ndmPKxbhYUaSQTmifAIIoinRw7EbVZbyjsYVFf1XClFhC8D2uEGeK+4aYyjBfaec7PiX
- mCbdXZr7nQ4srb0DpYG8fIlOcWRf1Nl8pT3nqlPykuTxvrZfZpzjB5BJXprOcByCR5z9
- CaRupfvYqOIKT/Xha8qEBeq/FV65udYM4XIHA61Addy4Clq3lWZeZDkFLVGyC6WYEN4U
- ogOw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXaWE2f2Ai+enQGUH9SE3WyLV9j4fcfl8TV08204CIfqGAdEdKj63ADc205vD4XUM394LpsJluE3hTG@nongnu.org
-X-Gm-Message-State: AOJu0YxeAHenka/PbxG+3jHlZXvYucbUmlgaiqJ01FraoBWJKP0wO/2E
- txqcbNuI3RAgyS/ISoNe4cGEw/aPw+hA0/ECSoehfIc6XZr5IBG4A2t4iwalWiU=
-X-Gm-Gg: ASbGncuiOAY8lXyvpIi0D5E5z42tt3acnNiCi1YsJq0Rl9fJz/4gKo5WBcdw5SQSVMB
- tH+VaMgMWS/ss7DrcuLBpgpxtaAZ1N86Jw8JpT3dfa7L7/3vaozfPJ6TwO+4LMO8lLg0lLVXdlI
- IfGk5MHIbDHerXUjM6YklyjkIOy7f7uts4RQ8/ZaxZ4WMmtbTstE01tul/uZ/y88txgcG31kFK6
- PE7W1oaeY27s1nC6PzHhH8oM05yrThWvtDMfIxoznx4Z4tM9wYUrxN7WKBxKO+tQXU5PLTcn/A+
- Z7ihLD5ReXDTfEQShYmIbBuYGswWl6Px692rMV3EE3YyE6MkPUevn+7rUjnA6ASn4/0H29mgmd4
- PlZvmv+E/LmprsH2BR7M=
-X-Google-Smtp-Source: AGHT+IFD+Tgcw+N2OZdydhTGME0xCuO5L6z7HZ4zFveTRLvgao2+spK6go/9aqM1WoC0+B+fZp2JUA==
-X-Received: by 2002:a05:6000:40ce:b0:391:4674:b136 with SMTP id
- ffacd0b85a97d-3a074e3cfc1mr1917795f8f.29.1745592154971; 
- Fri, 25 Apr 2025 07:42:34 -0700 (PDT)
-Received: from [192.168.69.226] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073cbedc4sm2502026f8f.47.2025.04.25.07.42.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 07:42:34 -0700 (PDT)
-Message-ID: <ca432cc8-31a6-4b22-81e7-4c620a9f199f@linaro.org>
-Date: Fri, 25 Apr 2025 16:42:33 +0200
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u8KGo-0006t8-W9
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 10:43:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u8KGi-0006M0-7h
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 10:43:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745592184;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=f12rdVTm4LTEtIPQBcA5gNprqcbubUfKXV49fLf41XU=;
+ b=YI/8kpIWAyjFMSrEjVtel85Bci/Ci77xrCoHc5elQ9NGkB9CZq4OQNeG7zsH1l3LVojPG6
+ J/YFmS8EWFqAa5aWDjDYzHd1OfquyNcUlD6Nn57O7ctgYWZv1AVf+KI1Jc4qAyS2ErVFO1
+ BL+hOYaPwvFc55XEuxh40UMnSWYAkMo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-tF1TF1n-PW6xtHFW9rAZLQ-1; Fri,
+ 25 Apr 2025 10:43:00 -0400
+X-MC-Unique: tF1TF1n-PW6xtHFW9rAZLQ-1
+X-Mimecast-MFC-AGG-ID: tF1TF1n-PW6xtHFW9rAZLQ_1745592179
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 211C51800368; Fri, 25 Apr 2025 14:42:59 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.183])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E7E97180047F; Fri, 25 Apr 2025 14:42:55 +0000 (UTC)
+Date: Fri, 25 Apr 2025 16:42:53 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH v4 0/2] block: discard alignment fixes
+Message-ID: <aAufbVJQvQMoH89X@redhat.com>
+References: <20250417150528.76470-1-stefanha@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 6/9] target/arm: Present AArch64 gdbstub based on
- ARM_FEATURE_AARCH64
-To: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250317142819.900029-1-peter.maydell@linaro.org>
- <20250317142819.900029-7-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
-In-Reply-To: <20250317142819.900029-7-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250417150528.76470-1-stefanha@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.314,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,87 +82,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
-
-On 17/3/25 15:28, Peter Maydell wrote:
-> Currently we provide an AArch64 gdbstub for CPUs which are
-> TYPE_AARCH64_CPU, and an AArch32 gdbstub for those which are only
-> TYPE_ARM_CPU.  This mostly does the right thing, except in the
-> corner case of KVM with -cpu host,aarch64=off.  That produces a CPU
-> which is TYPE_AARCH64_CPU but which has ARM_FEATURE_AARCH64 removed
-> and which to the guest is in AArch32 mode.
+Am 17.04.2025 um 17:05 hat Stefan Hajnoczi geschrieben:
+> v4:
+> - Mention -EINVAL in bdrv_co_pdiscard() comment [Kevin]
+> v3:
+> - Refine error handling when pdiscard_alignment is not a multiple of request_alignment [Hanna]
+> v2:
+> - Fix inverted logic in alignment check [Qing Wang]
 > 
-> Now we have moved all the handling of AArch64-vs-AArch32 gdbstub
-> behaviour into TYPE_ARM_CPU we can change the condition we use for
-> whether to select the AArch64 gdbstub to look at ARM_FEATURE_AARCH64.
-> This will mean that we now correctly provide an AArch32 gdbstub for
-> aarch64=off CPUs.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/arm/internals.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/arm/internals.h b/target/arm/internals.h
-> index a14c269fa5a..a18d87fa28b 100644
-> --- a/target/arm/internals.h
-> +++ b/target/arm/internals.h
-> @@ -1694,7 +1694,7 @@ void aarch64_add_sme_properties(Object *obj);
->   /* Return true if the gdbstub is presenting an AArch64 CPU */
->   static inline bool arm_gdbstub_is_aarch64(ARMCPU *cpu)
->   {
-> -    return object_dynamic_cast(OBJECT(cpu), TYPE_AARCH64_CPU);
-> +    return arm_feature(&cpu->env, ARM_FEATURE_AARCH64);
+> Two discard alignment issues were identified in
+> https://issues.redhat.com/browse/RHEL-86032:
+> 1. pdiscard_alignment is not populated for host_device in file-posix.c.
+> 2. Misaligned head/tail discard requests are not skipped when file-posix.c
+>    returns -EINVAL. This causes an undesired pause when guests are configured
+>    with werror=stop.
 
-Unfortunately this doesn't work well: while a Aarch64 CPU is of type
-TYPE_AARCH64_CPU right after being instantiated (not yet QOM realized),
-the features are only finalized during arm_cpu_instance_init():
+Thanks, applied to the block branch.
 
-static void arm_cpu_instance_init(Object *obj)
-{
-     ARMCPUClass *acc = ARM_CPU_GET_CLASS(obj);
+Kevin
 
-     acc->info->initfn(obj);
-     arm_cpu_post_init(obj);
-}
-
-void arm_cpu_post_init(Object *obj)
-{
-     ARMCPU *cpu = ARM_CPU(obj);
-
-     /*
-      * Some features imply others. Figure this out now, because we
-      * are going to look at the feature bits in deciding which
-      * properties to add.
-      */
-     arm_cpu_propagate_feature_implications(cpu);
-     ...
-}
-
-The GDB feature checks are done earlier:
-
-   object_init_with_type
-    -> cpu_common_initfn
-        -> gdb_init_cpu
-           -> gdb_get_core_xml_file
-              -> arm_gdb_get_core_xml_file
-                 -> arm_gdbstub_is_aarch64
-
-At this point the feature set is empty, triggering the
-assertion in gdb_find_static_feature():
-
-$ ./build/qemu-aarch64 build/tests/tcg/aarch64-linux-user/semihosting
-**
-ERROR:../../gdbstub/gdbstub.c:494:gdb_find_static_feature: code should 
-not be reached
-Bail out! ERROR:../../gdbstub/gdbstub.c:494:gdb_find_static_feature: 
-code should not be reached
-Aborted (core dumped)
-
-I suppose gdb_init_cpu() needs more splitting work. For now I'll drop
-this patches 5+ from my queue.
-
-Regards,
-
-Phil.
 
