@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 048F3C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 20:37:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F75C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 20:40:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Pn1-0003xs-G9; Fri, 25 Apr 2025 16:36:51 -0400
+	id 1u8Ppz-0005G2-Fg; Fri, 25 Apr 2025 16:39:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u8Pmu-0003sr-9z
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 16:36:44 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1u8Ppy-0005Fd-9p
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 16:39:54 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u8Pmr-0007Sz-W4
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 16:36:43 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-af523f4511fso2625089a12.0
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 13:36:41 -0700 (PDT)
+ id 1u8Ppw-0007f1-H0
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 16:39:54 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-73bf5aa95e7so2469647b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 13:39:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745613400; x=1746218200; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745613591; x=1746218391; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PIvnADDgZPqdVYJoRwC5S7bBqToOWbXlOkLzaAs9yQo=;
- b=JS/eLxJPkFZI3V2LWsmfdPDm4syko1MW3Ms2XXi+ma5W1/J1Alyu1FGsrg4xSMRH8A
- 1yxTjPhfolu/Cvz1cdX7ifzqTn1OyxK122ZcFKY6i6tuWVaqfiIBAajBKjDmzGf/jgg+
- SuAN9STwzj2//9CIg2POIW583VvNuZjYITL5elR17gSvsPy28A9/QXuNazi5VzwEZN8g
- ch6UITSg/zBUTkvKw0V8RB6NzYmXphgBRLCwYEm0GvEj//ZWnn9Kuo55hMDlzXn7lyzf
- P/Pa3eEl2Ji/hnTxljyP8YqLuXwdd9Q5btXcqId834Vocx19fpaZwmgHKJpn3yHdcncz
- VMAA==
+ bh=q9u2eoLswASmcq2xubil6640JsrFqzaCMKFKNu72eC0=;
+ b=rFkNAlUXMWeoA5S1rKi8NKGiSjSXPRuE8mlKNTTOX0TBP4+fDMVXNdZ6RaR7Wx6hBi
+ K0xu4fZmgOd5kl269oTLr/MXh5m+V+5b51mKPPMs246DlD3WBn8r1vls1IXN6CmDXt+K
+ IPW3H+OmsmewQOqMRk//5SgjSOhWA/cVpScWDMQ9z4+SfuZirApdZPMTtuPrguYNy0cJ
+ uv/lTwndByjiOgYr8GUU8OkLo2bVY40XRwb25K+OxhzwM92uxm5ntf50sCxmjUeb8rGo
+ THEyl5jyL0fDU7uW7a4RXkyst9j+r6QmIyzEv1V5FY7zWLImc8WdicVxq/tOkTD937Or
+ mv8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745613400; x=1746218200;
+ d=1e100.net; s=20230601; t=1745613591; x=1746218391;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PIvnADDgZPqdVYJoRwC5S7bBqToOWbXlOkLzaAs9yQo=;
- b=WUQEoKnrdD76nb+/ZR83uLO4LGvVBI1zz2lmhzuWeGzAHaLGsIhwhxnm+BTCC9JFer
- p5WwhkfTROTRAiCqND5/UoZ6CiucAAKvz1cTMaUnTbvRlfdBOIJwYh1BbfiaxrSrmCjH
- PWImXqHkPjccDy1VPzaGQUBqiw1TrsUFLwpgrdLvhR9KoCzUP2JSmKD7qCNnsxn50368
- AMLLQHUefvxGxkbWbCu7bWMwDoheNspvgpGCZEx6PfY2Edw99/Mo+EMOHywtIori3sBV
- RfimYvOkZwVbpk42ySoRw2t0KZ6Wn/QtAwcHHwnzXTedjpRpB6Hcwc1/FxpFQ8eBo0iH
- lZlQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVj9nyHDG6vleQnys5fIznT4udrWsQ6ueK9xZNhr/Jrh4ajWVghRJ9aCL5n/cgYp7WxMRAC4ugG3Je/@nongnu.org
-X-Gm-Message-State: AOJu0YwiIBEwYfLIVKcVt6IkXpcVQpQJmuSjKTOfDzlc818c3eUFjJYH
- Zl7WyGlwd5zqAKfdsv4c3gE9vCHe950cEwayAcd5eHVXhcCWngMR6pxFEUI963X8PI3bEl/m+5b
- mgNk=
-X-Gm-Gg: ASbGncujVXCGNsnxRALpSXbfHbOEVCKGCVQsuIuyEl9p9m3OPcuJNCEKs6crDNgc3W7
- mopyfjI8b7X8iF4u/2dLw7DgWJYhCzaKHRIUQ+CG2SZPYDGWIpUlBonKTaT2wYeMxSfCSO+vqdb
- 0W8bkfjJONs8fOk6WAfZ+xLN6VWNhjgdc8A9QRNEaVv8tvckhGr2WELBACxFxQletDnHUuHd4cf
- 6OQ83weFCMwOCXTOethuvYA/+Y84QF+KsWxiBg9g3zc9U74BzS/ceVY+LAYEpiySk3FjaSoo6Wn
- YdOOXlYIgWSmkVohpRihDPIxiyZm4RthoSY4VCdKB2gBqcl4Gx8LSg==
-X-Google-Smtp-Source: AGHT+IEAmKORhbF0xXIIcmytu5IJX9MKQ/LE3bnHssC764AfB4jL9698jNZwJJ3jI/4jgKXsJuCmkQ==
-X-Received: by 2002:a17:90b:2710:b0:2ee:fa0c:cebc with SMTP id
- 98e67ed59e1d1-309f7df2f9fmr5513148a91.20.1745613400043; 
- Fri, 25 Apr 2025 13:36:40 -0700 (PDT)
+ bh=q9u2eoLswASmcq2xubil6640JsrFqzaCMKFKNu72eC0=;
+ b=mHVu/JQEnbBZEsZf4loinoE6YFoS2XyLhuMZp4YBy5fip6E83p73Q9WFwVM0vOB1fW
+ FMShgMvVZolaxcyqKJgVk8O4RGhIyIwHy5SDh3iuaU5DpMRjdgvjqu/9f0/Oxd2IUKSR
+ dnqyg3ricGRHnfVBFWreloWQ2eftlxaePSsY+GFklncTF/Up6naFfEvj4VQ4xxxYBARB
+ y4G53OVAMv57IqkB3NPMZV3FDTYPK5vdRvJewSSoXGmAsTfuBife8/6NE1ZS+XKpzyNP
+ 9wzHOByqBeXyQ49p/CYOx+1nERmw1U3EsHwcrtYR6hRYyk4n/mhk2bx4hzznrlp3GH+w
+ 00gg==
+X-Gm-Message-State: AOJu0YwLvYXNDrwS5LOlmkBYw593eDury2xKu11s/xEASyv4oZMDgogg
+ eHStAF3La71YV1HYOqB7EULUqDHQnd7QBv6+/rTOrH9n0me8mCc/ACM0AGi4Sxk=
+X-Gm-Gg: ASbGnctr2QOW+bDvMBajUU5AEpcg4fTCx610X0v3mLVHJ/zA7TBOo85T+2QDVfvukBI
+ bMJfZs4R2pWKzRayCgrtuIQo8XZweSmizWijrsbGPVsgf5M1aq8u+Dq3dBRcCxQWjbIkwveI1ft
+ Z1wMWThQUOH+XuqMozYseiXERAS5/mbm+cXLOgzTCAoftiwuoPcD1tijiOwfW+p7AGhTRZMPgEa
+ vNGdDY/QkXgN15SnUoeTlP77rlFDWqAk4CFwl0+fupKB6do1jdb0J/Q+VveKM+L8s0V+Dh8z60V
+ li6YzavrnEAKrPtXK59tAgktOBx0OVHVObjqwnQqR3gZ08brWVXrgA==
+X-Google-Smtp-Source: AGHT+IHK5yI/buzQOZOOJmcEQL0NHageFWvYageHRmcIsDkwuCBzYDY4l1Zoimv0F0ULiZ6pwV2gDQ==
+X-Received: by 2002:a05:6a00:3e12:b0:736:32d2:aa82 with SMTP id
+ d2e1a72fcca58-73fd8e548b8mr4646752b3a.23.1745613590990; 
+ Fri, 25 Apr 2025 13:39:50 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-309f7752a03sm2123248a91.18.2025.04.25.13.36.39
+ d2e1a72fcca58-73e2593f4c4sm3660838b3a.37.2025.04.25.13.39.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 13:36:39 -0700 (PDT)
-Message-ID: <033d94c7-ac74-4a44-87ae-aeac964afd10@linaro.org>
-Date: Fri, 25 Apr 2025 13:36:39 -0700
+ Fri, 25 Apr 2025 13:39:50 -0700 (PDT)
+Message-ID: <65639a73-c6d7-472f-8788-69341f93760d@linaro.org>
+Date: Fri, 25 Apr 2025 13:39:49 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v5 08/21] hw/arm: Add DEFINE_MACHINE_[ARM_]AARCH64()
- macros
+Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, Anton Johansson <anjo@rev.ng>
-References: <20250424222112.36194-1-philmd@linaro.org>
- <20250424222112.36194-9-philmd@linaro.org>
- <1332b395-1e3e-2be7-83f2-15f2d89b0449@eik.bme.hu>
- <51f3a96b-9c7a-4242-a822-145d68e068d9@linaro.org>
- <f84a52af-aecf-5235-7971-689580ffb71f@eik.bme.hu>
- <29f67d66-9eef-493a-9d96-99240ca25a14@linaro.org>
- <75b7e110-9293-32b2-64c8-26eabaace8b7@eik.bme.hu>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, stefanha@redhat.com, 
+ Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
+ peter.maydell@linaro.org, thuth@redhat.com, jsnow@redhat.com,
+ philmd@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+ <aAs6Q2GiBUbUCc2I@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <75b7e110-9293-32b2-64c8-26eabaace8b7@eik.bme.hu>
+In-Reply-To: <aAs6Q2GiBUbUCc2I@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,183 +105,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/25/25 13:29, BALATON Zoltan wrote:
-> On Fri, 25 Apr 2025, Pierrick Bouvier wrote:
->> On 4/25/25 02:43, BALATON Zoltan wrote:
->>> On Thu, 24 Apr 2025, Pierrick Bouvier wrote:
->>>> On 4/24/25 17:16, BALATON Zoltan wrote:
->>>>> On Fri, 25 Apr 2025, Philippe Mathieu-Daudé wrote:
->>>>>> A machine defined with the DEFINE_MACHINE_ARM_AARCH64() macro
->>>>>> will be available on qemu-system-arm and qemu-system-aarch64
->>>>>> binaries.
->>>>>>
->>>>>> One defined with DEFINE_MACHINE_AARCH64() will only be available
->>>>>> in the qemu-system-aarch64 binary.
->>>>>>
->>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>> ---
->>>>>> include/hw/arm/machines-qom.h | 13 +++++++++++++
->>>>>> target/arm/machine.c          | 12 ++++++++++++
->>>>>> 2 files changed, 25 insertions(+)
->>>>>>
->>>>>> diff --git a/include/hw/arm/machines-qom.h
->>>>>> b/include/hw/arm/machines-qom.h
->>>>>> index a17225f5f92..6277ee986d9 100644
->>>>>> --- a/include/hw/arm/machines-qom.h
->>>>>> +++ b/include/hw/arm/machines-qom.h
->>>>>> @@ -9,10 +9,23 @@
->>>>>> #ifndef HW_ARM_MACHINES_QOM_H
->>>>>> #define HW_ARM_MACHINES_QOM_H
->>>>>>
->>>>>> +#include "hw/boards.h"
->>>>>> +
->>>>>> #define TYPE_TARGET_ARM_MACHINE \
->>>>>>            "target-info-arm-machine"
->>>>>>
->>>>>> #define TYPE_TARGET_AARCH64_MACHINE \
->>>>>>            "target-info-aarch64-machine"
->>>>>>
->>>>>> +extern InterfaceInfo arm_aarch64_machine_interfaces[];
->>>>>> +extern InterfaceInfo aarch64_machine_interfaces[];
->>>>>> +
->>>>>> +#define DEFINE_MACHINE_ARM_AARCH64(namestr, machine_initfn) \
->>>>>> +        DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, \
->>>>>> +                                       arm_aarch64_machine_interfaces)
->>>>>> +
->>>>>> +#define DEFINE_MACHINE_AARCH64(namestr, machine_initfn) \
->>>>>> +        DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, \
->>>>>> +                                       aarch64_machine_interfaces)
->>>>>> +
->>>>>> #endif
->>>>>> diff --git a/target/arm/machine.c b/target/arm/machine.c
->>>>>> index 978249fb71b..193c7a9cff0 100644
->>>>>> --- a/target/arm/machine.c
->>>>>> +++ b/target/arm/machine.c
->>>>>> @@ -8,6 +8,7 @@
->>>>>> #include "cpu-features.h"
->>>>>> #include "migration/cpu.h"
->>>>>> #include "target/arm/gtimer.h"
->>>>>> +#include "hw/arm/machines-qom.h"
->>>>>>
->>>>>> static bool vfp_needed(void *opaque)
->>>>>> {
->>>>>> @@ -1111,3 +1112,14 @@ const VMStateDescription vmstate_arm_cpu = {
->>>>>>            NULL
->>>>>>        }
->>>>>> };
->>>>>> +
->>>>>> +InterfaceInfo arm_aarch64_machine_interfaces[] = {
->>>>>> +    { TYPE_TARGET_ARM_MACHINE },
->>>>>> +    { TYPE_TARGET_AARCH64_MACHINE },
->>>>>> +    { }
->>>>>> +};
->>>>>> +
->>>>>> +InterfaceInfo aarch64_machine_interfaces[] = {
->>>>>> +    { TYPE_TARGET_AARCH64_MACHINE },
->>>>>> +    { }
->>>>>> +};
->>>>>
->>>>> Why do you need these? If you define DEFINE_MACHINE_WITH_INTERFACES as
->>>>> OBJECT_DEFINE_TYPE_WITH_INTERFACES then you can write:
->>>>>
->>>>
->>>> This was requested in v4 by Richard to remove anonymous array duplication
->>>> in
->>>> .data.
->>>>
->>>>> DEFINE_MACHINE_WITH_INTERFACES(name, initfn, { TYPE_TARGET_ARM_MACHINE },
->>>>>         { TYPE_TARGET_AARCH64_MACHINE }, { })
->>>>>
->>>>> and no more macros needed. Ideally those places that are now blown up
->>>>> should use DEFINE_MACHINE too. Maybe they don't yet because the parent
->>>>> type  is hardcoded so we should really have
->>>>>
->>>>
->>>> Not sure what you mean by "no more macros needed".
->>>
->>> No other specialised macros needed for each machine type other than
->>> DEFINE_MACHINE_WITH_INTERFACES or DEFINE_MACHINE_EXTENDED. So I suggested
->>> to keep DEFINE_MACHINE by making it more general so it can cover the new
->>> uses instead of bringing back the boiler plate and losing the clarity
->>> hinding these behind the macros.
->>>
+On 4/25/25 00:35, Daniel P. Berrangé wrote:
+> On Thu, Apr 24, 2025 at 11:33:47AM -0700, Pierrick Bouvier wrote:
+>> Feedback
+>> ========
 >>
->> This is exactly what we have in this series.
->> Patch 7 introduces DEFINE_MACHINE_WITH_INTERFACES.
->> I guess Philippe chose a new name to avoid modifying all existing
->> DEFINE_MACHINE, and I think it's understandable, as we want those changes to
->> impact hw/arm only first. That said, it would be very easy to refactor/modify
->> later, so it's not a big deal.
+>> The goal of this series is to be spark a conversation around following topics:
 >>
->> This patch introduces DEFINE_MACHINE_ARM_AARCH64 and DEFINE_MACHINE_AARCH64.
->>
->> Is the problem with those specialized DEFINE_MACHINE_{ARM, AARCH64}
->> definition?
->> If yes, and if you prefer an explicit DEFINE_MACHINE_WITH_INTERFACES(...,
->> arm_aarch64_machine_interfaces), I'm sure Philippe would be open to make such
->> a change to satisfy reviews.
->>
->> Let's just try to decide something, and move on.
->>
->>>> arm_aarch64_machine_interfaces or aarch64_machine_interfaces are arrays
->>>> (defined only once), which are passed as a parameter to
->>>> DEFINE_MACHINE_WITH_INTERFACES, or manually set with ".interfaces =".
->>>
->>> Look at how OBJECT_DEFINE_TYPE_WITH_INTERFACES is defined.
->>>
->>
->> This macro is not used for any machine definition so far, and DEFINE_MACHINE
->> is the "standard" macro used, at least the one most commonly used in the
->> codebase. So it makes sense to simply expand the latter.
+>> - Would you be open to such an approach? (expose all code, and restrict commands
+>>    registered at runtime only for specific targets)
 > 
-> I was referring to that as an example how a DEFINE_MACHINE_WITH_INTERFACES
-> should work not suggesting to use OBJECT_DEFINE_TYPE_WITH_INTERFACES.
+> QMP defines a public API between QEMU and external mgmt apps, and personally I
+> like the idea that the API exposed is identical across all binaries and thus
+> the API becomes independent of the impl choice of combined vs separate binaries,.
+>
+>> - Are there unexpected consequences for libvirt or other consumers to expose
+>>    more definitions than what we have now?
 > 
->>>>> DEFINE_MACHINE_EXTENDED(name, parent, initfn, interfaces...)
->>>>>
->>>>> and remove more bolier plate that way?
->>>>>
->>>>
->>>> Could you can share a concrete example of what you expect, with the new
->>>> macros to add, and how to use them for a given board?
->>>
->>> I tried to do that in this message you replied to.
->>>
->>
->> If you refer to "DEFINE_MACHINE_EXTENDED(name, parent, initfn,
->> interfaces...)", this is almost exactly what patch 7 is introducing with
->> DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, ifaces).
-> 
-> The difference is that OBJECT_DEFINE_TYPE_WITH_INTERFACES takes a list of
-> interfaces and defines the array itself and you pass the array which is
-> limiting as you then need to define a lot of arrays to pass to your macro
-> instead of only passing the elements and let it define tha array.
-> 
-> I just want to see instead of
-> 
-> static const TypeInfo machine_types[] = {
-> ...lots of boiler plate code here
-> };
-> 
-> something like
-> 
-> DEFINE_MACHINE_EXTENDED(machine1, TYPE_WHATEVER_MACHINE, {INTERFACE1}, {INTERFACE2}, {})
-> DEFINE_MACHINE_EXTENDED(machine2, TYPE_OTHER_MACHINE, {INTERFACE1}, {INTERFACE3}, {})
-> DEFINE_MACHINE_EXTENDED(machine3, TYPE_THIRD_MACHINE, {INTERFACE1}, {})
+> QEMU used the selective hiding of commands in the QMP schema as a mechanism
+> to allow mgmt apps to probe for supported features. We need to check usage
+> of each QMP API feature that's behind a TARGET_* condition and identify
+> which libvirt uses as a feature probe, then come up with a strategy for how
+> best to handle each case in libvirt in future. We might need some additional
+> runtime mechanism to probe for certain things, but we won't know until we
+> look at things in more detail.
 >
 
-Ok, I understand better.
+Could we consider to hide the concerned commands from introspection 
+related commands as well? The same way we prevent those commands to be 
+registered, we can probably prevent them from being visible for libvirt.
+The code would still be there, and compiled once, but based on runtime 
+target_X() value, it would not appear in introspected schema.
 
-It was my point as well on v4, that introducing those symbols is less 
-readable and less scalable, for a negligible benefit in terms of code 
-size, which was the primary concern.
-We can always reconsider this later, especially when adding another 
-architecture to single binary, it's not a problem and something set in 
-stone.
+I'm not sure how all this is implemented from QAPI code generator, maybe 
+it's hard to do something like this, if we build the schema at compile 
+time for instance.
 
-Would you be ok if we proceed with the current version, knowing those 
-limitations, for now?
-  > Regards,
-> BALATON Zoltan
+>> - Would you recommend another approach instead? I experimented with having per
+>>    target generated files, but we still need to expose quite a lot in headers, so
+>>    my opinion is that it's much more complicated for zero benefit. As well, the
+>>    code size impact is more than negligible, so the simpler, the better.
+> 
+> IMHO it is unfortunate that the API we currently expose has a dependency on
+> a specific impl choice that mgmt apps are expected to rely on for feature
+> probing. An ideal API design is not so closely coupled to impl choice
+> (separate vs combined binaries), and would expose enough functionality
+> such that mgmt apps continue to work regardless of the impl choices.
+> 
 
+At this point, do we know which kind of "feature" gets probed? Is it 
+only the list of commands available, or is there probes based on 
+enum/struct definition?
+If yes, the latter seems to be a wrong way to identify a target, when it 
+could simply use query-target.
+
+> We thought the conditionals were a good thing when we first designed QMP
+> this way. We ended up using two distinct classes of conditionals, one
+> reflecting build time features and one reflecting which target binary is
+> used. I don't think we fully contemplated the implications that the latter
+> set of conditionals would have on our ability to change our impl approach
+> in future. I think the proposal here is taking us in a good direction
+> given what we now know.
+>
+
+Thanks for considering an alternative way given the new needs, that's 
+appreciated.
+
+Would that possible to get some help from people from libvirt or QAPI 
+developers for this?
+
+> With regards,
+> Daniel
+
+Thanks,
+Pierrick
 
