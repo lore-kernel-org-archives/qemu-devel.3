@@ -4,86 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1DA4C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 07:59:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4C95C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 08:00:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Dy8-0003RQ-Re; Fri, 25 Apr 2025 03:59:34 -0400
+	id 1u8Dz1-0003s3-QQ; Fri, 25 Apr 2025 04:00:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u8Dy0-0003QR-RQ
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 03:59:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u8Dyc-0003jp-TU
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 04:00:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u8Dxy-000600-JO
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 03:59:24 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u8DyV-00063e-G6
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 04:00:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745567961;
+ s=mimecast20190719; t=1745567994;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mqbPXVO1zwWYvpIBcEKFb912KkcaSLq7+3V0iOYLWQk=;
- b=Cmr8CCAj8WMCHyDL6xTyu5w6oRBZU9i0BGdKquPZvIHxPqQk8XRYytiS20aG5zWC2M+hXc
- KVlp4wpZ9YDHz7Gd2qL9RyjP/CBRQyT3teibG1lTDxhQRQTE8DWtLfpzgFTqnQ8Ulcs5Id
- Kmr2hzhTA8DclZ8P9fsjsM/C0EzVBxA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/xfgKUgN1P4+ut2TtJRTae9Hux6WGWMdzq+xPSpOUG0=;
+ b=GSoV7f7kP8AsnZBq2SkU4WykXAMZVfIXqagy85roE5pkg7uqx2xteRQ+xPOl0RXBCDAjFk
+ 5OYTA6pO/W9pxbdAseHaFZRdOcicwUmBiSWEFCWUOKKLgARB/q192KhOGEG6ELuTuLyZFL
+ NTj5GE3Gqbu+bc+s6dRnCawBJHvO3CE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-azbI-7_6NAy3UtOCMbttZg-1; Fri, 25 Apr 2025 03:59:18 -0400
-X-MC-Unique: azbI-7_6NAy3UtOCMbttZg-1
-X-Mimecast-MFC-AGG-ID: azbI-7_6NAy3UtOCMbttZg_1745567957
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-39c184b20a2so754832f8f.1
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 00:59:18 -0700 (PDT)
+ us-mta-608-1IpFAuLMPZCews_O-L9k-w-1; Fri, 25 Apr 2025 03:59:52 -0400
+X-MC-Unique: 1IpFAuLMPZCews_O-L9k-w-1
+X-Mimecast-MFC-AGG-ID: 1IpFAuLMPZCews_O-L9k-w_1745567991
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43cfda30a3cso10268015e9.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 00:59:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745567957; x=1746172757;
+ d=1e100.net; s=20230601; t=1745567990; x=1746172790;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mqbPXVO1zwWYvpIBcEKFb912KkcaSLq7+3V0iOYLWQk=;
- b=XupcyHvL1mWWiLMNw//y9QiEbIWD2wOLgwJO00g5S8Ul+nY+RD3jI/nNEEZczEjib1
- v6tmlKmDslL7Kxa9ClspNhrMB/D1N5Taa1EmJmydBt2Z+//ZwuQZHiIdK6EdynzwHB3x
- dFvk2K8NiPdD20xNXeHYjfQjmN6hvtfgyINQ3Wbb2h0elWqn+DRx2/+1NWw+vDN+OuOR
- Sk/vImGnFeLaSG4O+aOvVPXpJ33ikwVNVs/nQngkUTQcxv5Zlh0A7R2oMZXhmmP4JC3e
- G2bQGxLanluuIjavAHAV0+amRyJzcCO+vB4Z+kv9J8niEVl1gJXJP+cskP53SX3OZvtt
- qWpA==
+ bh=/xfgKUgN1P4+ut2TtJRTae9Hux6WGWMdzq+xPSpOUG0=;
+ b=FUH+Ze8WmFZ0FCY+YhtGMGYaOJwtBY7RTwe4SpJtpb1VxXbcE+lBc1jYbZSGYMHzaw
+ /PsRC4WRNYJxfrEgvr4JtWTW0L5r9me5r2lINHo+7Du4Vh2yg4kKkHHj0DeIJczv3+aH
+ IAFllNbkYZKp0kj1afFGanMD2cbY+ynw69i6ltnyf4bDmoTa/I4pabE4bar4t6hOpWaY
+ yXL1mK2jNMW9mvPeIt07akKYltvUdi1mHOsangu0YgJZ6b9Z3GGbK8+yrDDSIMiHO5ze
+ EXa+xVwOkq3VfTCjcEOvtMUIh5YYDajRgurZfKv23/eGOwo6/DYaCm5Wt50PAW4RDFBG
+ h6Xg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVi7UZ8WJ/5FyKhsWATgS0EdCucseFd2eE5U1IvZR0LVdFUXCL22EmrAh8nLTGBPC362Y0rzttv7awo@nongnu.org
-X-Gm-Message-State: AOJu0Yx5PZLWR6utox+L1ZvxcKG6rkNpVBm0APOEQ+Y9uLS/Cj47nxUy
- L1kY3e9jL9YhDU7InlTfJvCcHxHpegubaE9478Zx2+ORaW29GNNYkiauadtzws8Id70dGOqcNoG
- VSMCu4GU9I4yHDkaJd9PFJMCxontusMiy7acYBmUVInCEmmYOlxqh
-X-Gm-Gg: ASbGncsXc/BFWp5ebWi5XVKRCMBKyHpRnSefrVXfaTk2tfvSTUIXqBMyWVRUlLXf21q
- GrHPrLNa9HnCYlmhcgiD9AdBx+fCRTaEwG3D/nFIUmBR0Mnr023vxCKw2WJd3k1OaDzFZUwyEnM
- ddGWvCGU6XqJAcxyLFXZ8UGVFEnHVSMdeRfUIGIxdNPhlhbwl+jy32DQ8zt6BzGslM6nIjtmhJW
- rp8dEXUSs0tXTZjpEAK6zXP7ZJlRzbpomIiXHZ94mihVq8La1vw/y6KjqEnBgXSeQZyKtngeB7r
- abmf9WZRdHhW2PLvbRgbgTLYmMk+uVRiQ6ffS40JFbM7UGI=
-X-Received: by 2002:a5d:47ad:0:b0:390:f9d0:5e4 with SMTP id
- ffacd0b85a97d-3a074e1f808mr937948f8f.21.1745567957076; 
- Fri, 25 Apr 2025 00:59:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFgdM1QlxZSDH8OZOTT3cW8jNSAx9R0NrszX4CNjm7X370PZZgvbxVi7gGJgigxIJHIkYgdRA==
-X-Received: by 2002:a5d:47ad:0:b0:390:f9d0:5e4 with SMTP id
- ffacd0b85a97d-3a074e1f808mr937933f8f.21.1745567956789; 
- Fri, 25 Apr 2025 00:59:16 -0700 (PDT)
+ AJvYcCWq0R5Tv7iDUN8XUpIGdJazUnI/N6+cw6YN7wlWvvEGP904qEKiH3hJ6DIMcCojQdIGeg0sAmTVfBR/@nongnu.org
+X-Gm-Message-State: AOJu0YzwO4fSquZUIl8ivJ8Eehv7xhELz5liTomvIHKG/L1YNg+KzCcg
+ rVOkkCK8h+JNkq9cYGbmRyUPCJzMHXm39yXx38QYRN7lQTu01afTQdLlSzaDpDblnuO6WoOYvTT
+ sKJG48WuIctUAJykGVdIdm8DGuWMoA4D2NGiMaRS0yVjhAbZy3KeR
+X-Gm-Gg: ASbGncs/6/x6fcAZrZeoXT2vh6yT/SNi+OvT6w2xrtgvkWor9UgvGZ4sdMmUHx2naON
+ VIYsdd1iHOWKWoa65rCLFwaicQFPacNzv34YPCFA5WMglHjFARJrvgXz1IhiC+7iFJRoDLLfnrc
+ j4MRNXt1lDpzsl2Xdu9xEnYBhNVjRW+KwqGpHJ7ZCkARBD8v1SXxTTE3jybkfDm2Zx1KuJdPcOW
+ aKQxyNiyGDYs6gMpGpccsokcIZpLl9tXiD4lvMBj+FyC08y7K6p1w2oReSSfexq2Ku7Q/POWm+T
+ OyhV2XiaSU61e4lz/Nx5JxleTGaghDmJ85HZbTJiDJPrmuA=
+X-Received: by 2002:a05:6000:248a:b0:391:49f6:dad4 with SMTP id
+ ffacd0b85a97d-3a074f3aa1fmr889306f8f.41.1745567990555; 
+ Fri, 25 Apr 2025 00:59:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdvOazJv4ApAt3lTPEHSqgpTzAVKfE55eTQalUVa7ybpq2GyOXbpt6ROk0vDsu5vrUKITX5g==
+X-Received: by 2002:a05:6000:248a:b0:391:49f6:dad4 with SMTP id
+ ffacd0b85a97d-3a074f3aa1fmr889284f8f.41.1745567990131; 
+ Fri, 25 Apr 2025 00:59:50 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:165:d60:38c8:6df5:c9ca:a366?
  ([2a01:e0a:165:d60:38c8:6df5:c9ca:a366])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073ca5debsm1589096f8f.38.2025.04.25.00.59.15
+ ffacd0b85a97d-3a073c8d1a5sm1630953f8f.13.2025.04.25.00.59.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 00:59:16 -0700 (PDT)
-Message-ID: <a697798e-8ce6-47da-8d77-7615486e672c@redhat.com>
-Date: Fri, 25 Apr 2025 09:59:15 +0200
+ Fri, 25 Apr 2025 00:59:49 -0700 (PDT)
+Message-ID: <9960fee7-3261-49aa-9174-a683a2345e94@redhat.com>
+Date: Fri, 25 Apr 2025 09:59:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio: Register/unregister container for CPR only once for
- each container
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, steven.sistare@oracle.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20250424063355.3855174-1-zhenzhong.duan@intel.com>
+Subject: Re: [PATCH 00/14] vfio: preparation for vfio-user
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: Tony Krowiak <akrowiak@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>, qemu-s390x@nongnu.org,
+ Tomita Moeko <tomitamoeko@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>
+References: <20250409134814.478903-1-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -129,10 +134,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250424063355.3855174-1-zhenzhong.duan@intel.com>
+In-Reply-To: <20250409134814.478903-1-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -141,7 +146,7 @@ X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.84,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,24 +162,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/25 08:33, Zhenzhong Duan wrote:
-> vfio_cpr_register_container and vfio_cpr_unregister_container are container
-> scoped function. Calling them for each device attaching/detaching would
-> corrupt CPR reboot notifier list, i.e., when two VFIO devices are attached
-> to same container and have same notifier registered twice.
+On 4/9/25 15:48, John Levon wrote:
+> Hi, this series is based on Cédric Le Goater's vfio cleanup series:
+> https://github.com/legoater/qemu/commits/vfio-10.1
 > 
-> Fixes: d9fa4223b30a ("vfio: register container for cpr")
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
-> btw: untested as I have no env with two migration capable devices,
->       appreciate if someone have env to help test, thanks
+> The series contains patches to vfio to prepare for the vfio-user
+> implementation. A previous version of these patches can be found at
+> https://lore.kernel.org/all/7dd34008-e0f1-4eed-a77e-55b1f68fbe69@redhat.com/T/
+> ("[PATCH v8 00/28] vfio-user client"); roughly corresponding to patches 1-10.
 > 
->   hw/vfio/iommufd.c | 14 ++++++--------
->   1 file changed, 6 insertions(+), 8 deletions(-)
+> Please see that series for justification and context.
+> 
+> The following changes have been made since the previous series:
+> 
+>   - rebased on top of vfio-10.1 cleanup series
+>   - split unmap all patch into two, fixed some nits, dropped unmap all detection
+>   - fix two vfio_interrupt_setup() cleanup bugs
+>   - various renames as per review
+>   - new vfio_device_get_irq_info()
+>   - split out device ops patch into smaller chunks
+>   - region cache renames for clarity
+>   - commit author corrected for several patches
+> 
+> thanks
+> john
+> 
+> John Levon (14):
+>    vfio: refactor out vfio_interrupt_setup()
+>    vfio: refactor out vfio_pci_config_setup()
+>    vfio: add vfio_prepare_device()
+>    vfio: add vfio_attach_device_by_iommu_type()
+>    vfio/container: pass listener_begin/commit callbacks
+>    vfio: add flags parameter to DMA unmap callback
+>    vfio: specify VFIO_DMA_UNMAP_FLAG_ALL to callback
+>    vfio: add vfio-pci-base class
+>    vfio: add vfio_device_get_irq_info() helper
+>    vfio: consistently handle return value for helpers
+>    vfio: add vfio_pci_config_space_read/write()
+>    vfio: add region info cache
+>    vfio: add device IO ops vector
+>    vfio/container: pass MemoryRegion to DMA operations
+> 
+>   hw/vfio/ap.c                          |  21 +-
+>   hw/vfio/ccw.c                         |  27 +-
+>   hw/vfio/container-base.c              |  14 +-
+>   hw/vfio/container.c                   |  74 ++-
+>   hw/vfio/device.c                      | 178 ++++++-
+>   hw/vfio/igd.c                         |   8 +-
+>   hw/vfio/iommufd.c                     |  35 +-
+>   hw/vfio/listener.c                    |  82 ++--
+>   hw/vfio/pci.c                         | 672 +++++++++++++++-----------
+>   hw/vfio/pci.h                         |  12 +-
+>   hw/vfio/platform.c                    |   8 +-
+>   hw/vfio/region.c                      |  19 +-
+>   hw/virtio/vhost-vdpa.c                |   2 +-
+>   include/exec/memory.h                 |   4 +-
+>   include/hw/vfio/vfio-container-base.h |  10 +-
+>   include/hw/vfio/vfio-device.h         |  34 +-
+>   system/memory.c                       |   7 +-
+>   17 files changed, 784 insertions(+), 423 deletions(-)
+> 
 
-
-
-Applied to vfio-next.
+Applied patch 1,2 to vfio-next.
 
 Thanks,
 
