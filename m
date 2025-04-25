@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88760C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:34:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17779C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8L1I-00034d-DS; Fri, 25 Apr 2025 11:31:16 -0400
+	id 1u8L3l-0003Sv-Gc; Fri, 25 Apr 2025 11:33:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L0Z-0001T6-2V
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:30:35 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L30-0002Gv-4P
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:33:06 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L0U-0003tj-VM
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:30:29 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43cfba466b2so23068165e9.3
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:30:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L2x-0004Dh-SR
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:33:01 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3914aba1ce4so1851372f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:32:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745595024; x=1746199824; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745595176; x=1746199976; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ex/E2xCBWHEai+sxwrZADL0ldrbpBVfhX+RO14sMF64=;
- b=KCci/5Z3h1ztVEMlH4dR6oAA4vHYuNNcduP8cY7DNAbZSdXJQGVHfzhEv/LsSjOg1V
- eRw6htDcKd09U6s3gLicMoQucQJiTlinu9HcOnzjVj7kvhWl2Uj/pe/Y+xWhrPuRJIhN
- ako7VsEo9On5jcXtfzaDU9pJx+Z8D2anP1K7v12j6WVFmyMpBrtRNqQUnIofQY+uWh12
- w1hjEqrzdz3dAVBvBjWK0Ws3aBoVnGCRZVjtgy+zs5qAbnebZakEt9UDxd5FiF/UQIO8
- LIqIZnGsZl5GLe7ojzMA0eeZZFWQt8wsMANDr5CZIwPgXTKMYjYcZkUPTLbYQ1Au1ah4
- qm9Q==
+ bh=zUdfoAicTmAVMZSDJ0CeHB42H/1jrXgR0Zf2khN7jvw=;
+ b=x6ZtimFddQgknVtSK7LxnkfCfr4A/oBiJ7n6KNbyEEKoj9Y/m1sQJONegkA2Log0X5
+ ML2agV0MiU+A7cuetBop5l0bElvk1h+NpZVlYX2w526z+oVGqYP7rAPV9HSb6YPg/2E/
+ 1wkRrH0Ph8HRJnmqeTWiYtPBm/xHUcvEscBrJSLBFdaKAq3tVc37n6PeXkDJGdnGvZTZ
+ k4n7/AxqZKQv5yLZ3lPknEkzMjrsfMUBZ9Gbq9OGnxzLXBV+UVFMhw9xWLLk1b3jv83Q
+ 6Ca4lXJXx9dt9MJCV7VEK9qbS5/E7BtYtrivaRfjHgvUfq4alr/4zEMUaI4cdIjccEQC
+ +QvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745595024; x=1746199824;
+ d=1e100.net; s=20230601; t=1745595176; x=1746199976;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ex/E2xCBWHEai+sxwrZADL0ldrbpBVfhX+RO14sMF64=;
- b=JuFg/KQDkKH26KypswM8bn/ROS/5gN5/l8rrokcC3dgs3ETKlglKT+qGGem37p7duO
- ekaEF2fo2kspfCpYbPqf1VR1oaXvfO+xx37krspgpOK/kLwTzQ+2SNk36fFtxHLpxl4q
- WzVH0b+Jm3M9zp8zF63FCgL4Y1rNUZvKeylLjzbpZX+7YWCyvjZQfzH+Goj71iXchwFw
- Wm74VXhIzJLvdlZdLUAoVXkCuiaGL2gwzS0KIGUC2r5nN7AR17oiA+zxfuWGVhoZzv+Z
- N6qI/+ZTcX33VTDjdmz8rAOunQ1n6ueJz/Zbzg0H7y/88gQku3S0yDA4nNnfLERc2zuz
- DscA==
-X-Gm-Message-State: AOJu0Yw/e2huXnMK7bS2C3XMYYzUfHVSLPRA7L2V0Y/AThZXvlUUsAE3
- gZjThMb9OJPsHSAE6vacykc3L3ijk0qoXE3lVV+l3/utULWNsN/Df48VqA951og48uNboqSbh1s
- Y
-X-Gm-Gg: ASbGncsycTm4sGBZaHyXPdJJAtmSO5GHcfavcElulVOix2U8ErIdSM4tv5/2rffnm35
- PZrt7FnUoRdE80EKoe6ta5FZC+PQeP3G2SDVJg8Tom5cz8YAARv4xUpHMt7srpTyhcDtiq4lcVy
- XyAQ2z2Hhoj+J3CdTp7EmBle9Sm0oAgT6T6jXSiOnePJN7WC07v8UdMY01axLFxy5U3b+lGzxqU
- NP/5Ew1uS9Wyu9grAqJgfKmDNImH0kWxGapy6hTgwiGCingbEkWpHdgif7bhJqaO1DeFt2W49ju
- JAkM6P/eSWcvL5zkvcry5E0m7zb5Li81HpEqk4Jgfgqlt8ALGTEOFyrpqXaaqi0frNglU7Zkgkd
- vKAtagzhAJFZzzFk=
-X-Google-Smtp-Source: AGHT+IFx7YnImKhTUyO79AuicihCgTHhfMnGZGp/CzHOlE9MFoosudDeKbFExWd+FWV6pB5k3BtloQ==
-X-Received: by 2002:a05:600c:1e0b:b0:439:9424:1b70 with SMTP id
- 5b1f17b1804b1-440a66ad403mr27267835e9.30.1745595024433; 
- Fri, 25 Apr 2025 08:30:24 -0700 (PDT)
+ bh=zUdfoAicTmAVMZSDJ0CeHB42H/1jrXgR0Zf2khN7jvw=;
+ b=XRD5xJH1Ot97u18UirjwHz1rhwX9ZmD5F0p9cxvrdCukDyBTmO+oHEF44i//P9Hf+Q
+ zHonuUXdCYFBKHLHi9M7FbYv7RFWsB3CArkNKR2TSuhcevgEQhXu7ok8zG7Amh2ZAaYY
+ vIOAuD92mzhBCmVAY/EI4G8BK32xTMwFNH1dK4VaE2w4lrMqCCm7xiFujVtu2pADW3sc
+ tRT8nUA0jeaX0sfW3S6NoVkawtphz3wUlIWnsd+O/MRFrFfj5aCDfNiyg/rhTPtjY2O5
+ 8s7JQGH42pgEq5K8SPGXFr7PI4sGFGBFuEc50JjT744VGjj7HRPi3bSubdYYitcUF0sr
+ gG/g==
+X-Gm-Message-State: AOJu0YzNtzR0odjAn2rRrmOjLh7V+8JAoCfyqmDP+G6jb2acg9zB9qgF
+ Ibr598dcfnbLmoPzDn2HhD1B7m2Tng9ETpmHOYj79R8yqQ/OhWuFowOTscQtGBWoTrYsg73S4Jn
+ G
+X-Gm-Gg: ASbGncvqxlWWg+MkSvated02R4wPRpNZRuCTZjwMhUy8B2+PIYe0Yw+UAWRIO7j653N
+ TSULrWUOsPEX/LyE0xjDz62WPHqN6no2Ii6uv6fIRiBvu6zSSZGRO70UspKIj4iKnV7S3V4eBDb
+ fu69qTdueh/KR3GWvV2PWS/jlRUzYUBKL4eTRvhV5ZPEHiWzvde6GiM8C89r9TxYgZSocBXUTUR
+ FBStVHrTPFwnyDMynG7HLvd8XMK7Ofku3kZDBGX6O9x6gw5UHf61gaTGALAQy1/3Vn36zrmgr6d
+ v3CZvoDBYYsErfxmesl8m2b7IiqcSZd0GnVVVyUkpMdmwt1M4rjgwhIy+d6kd0obUCZ1YgrmU4f
+ 4JZlLxuRvA4WnYDY=
+X-Google-Smtp-Source: AGHT+IFLZ0yorphPVTOaMhju8600nJZ8wvnR8ncyK5T9gyEr+WzpnY7rrwkdSvRdQx1IZ45bQntRyQ==
+X-Received: by 2002:a5d:5986:0:b0:391:1923:5a91 with SMTP id
+ ffacd0b85a97d-3a074f7f5b7mr2553259f8f.55.1745595175789; 
+ Fri, 25 Apr 2025 08:32:55 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073e47307sm2673782f8f.65.2025.04.25.08.30.23
+ ffacd0b85a97d-3a073e6daa0sm2599220f8f.101.2025.04.25.08.32.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 08:30:23 -0700 (PDT)
+ Fri, 25 Apr 2025 08:32:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 20/58] gdbstub: Allow gdb_core_xml_file to be set at runtime
-Date: Fri, 25 Apr 2025 17:28:04 +0200
-Message-ID: <20250425152843.69638-21-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 51/58] qemu: Introduce target_cpu_type()
+Date: Fri, 25 Apr 2025 17:28:35 +0200
+Message-ID: <20250425152843.69638-52-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
 References: <20250425152843.69638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,105 +100,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+Introduce the target_cpu_type() helper to access the
+CPU_RESOLVING_TYPE target-specific definition from
+target-agnostic code.
 
-Currently the CPUClass:gdb_core_xml_file setting is a simple 'const
-char *' which the CPU class must set to a fixed string.  Allow the
-CPU class to instead set a new method gdb_get_core_xml_file() which
-returns this string.
-
-This will allow Arm CPUs to use different XML files for AArch32 vs
-AArch64 without having to have an extra AArch64-specific class type
-purely to give somewhere to set cc->gdb_core_xml_file differently.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250317142819.900029-3-peter.maydell@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20250417165430.58213-2-philmd@linaro.org>
 ---
- include/hw/core/cpu.h |  5 +++++
- gdbstub/gdbstub.c     | 23 +++++++++++++++++++----
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ MAINTAINERS                |  2 ++
+ meson.build                |  2 ++
+ include/qemu/target-info.h | 19 +++++++++++++++++++
+ target-info-stub.c         | 16 ++++++++++++++++
+ 4 files changed, 39 insertions(+)
+ create mode 100644 include/qemu/target-info.h
+ create mode 100644 target-info-stub.c
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 6ea246514ea..2a02d4f0789 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -131,6 +131,10 @@ struct SysemuCPUOps;
-  * @gdb_num_core_regs: Number of core registers accessible to GDB or 0 to infer
-  *                     from @gdb_core_xml_file.
-  * @gdb_core_xml_file: File name for core registers GDB XML description.
-+ * @gdb_get_core_xml_file: Optional callback that returns the file name for
-+ * the core registers GDB XML description. The returned value is expected to
-+ * be a simple constant string: the caller will not g_free() it. If this
-+ * is NULL then @gdb_core_xml_file will be used instead.
-  * @gdb_stop_before_watchpoint: Indicates whether GDB expects the CPU to stop
-  *           before the insn which triggers a watchpoint rather than after it.
-  * @gdb_arch_name: Optional callback that returns the architecture name known
-@@ -166,6 +170,7 @@ struct CPUClass {
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d82d962f1a4..28b1e9ba443 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -496,6 +496,7 @@ F: include/exec/cpu*.h
+ F: include/exec/exec-all.h
+ F: include/exec/target_long.h
+ F: include/qemu/accel.h
++F: include/qemu/target-info*.h
+ F: include/system/accel-*.h
+ F: include/system/cpus.h
+ F: include/accel/accel-cpu-target.h
+@@ -504,6 +505,7 @@ F: accel/Makefile.objs
+ F: accel/stubs/Makefile.objs
+ F: cpu-common.c
+ F: cpu-target.c
++F: target-info*.c
+ F: system/cpus.c
  
-     const char *gdb_core_xml_file;
-     const gchar * (*gdb_arch_name)(CPUState *cpu);
-+    const char * (*gdb_get_core_xml_file)(CPUState *cpu);
+ Apple Silicon HVF CPUs
+diff --git a/meson.build b/meson.build
+index c736a6f4c4b..185c2fb0d1b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3795,6 +3795,8 @@ endif
+ common_ss.add(pagevary)
+ specific_ss.add(files('page-target.c', 'page-vary-target.c'))
  
-     void (*disas_set_info)(CPUState *cpu, disassemble_info *info);
- 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 282e13e163f..565f6b33a90 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -565,15 +565,30 @@ static void gdb_register_feature(CPUState *cpu, int base_reg,
-     g_array_append_val(cpu->gdb_regs, s);
- }
- 
-+static const char *gdb_get_core_xml_file(CPUState *cpu)
++specific_ss.add(files('target-info-stub.c'))
++
+ subdir('backends')
+ subdir('disas')
+ subdir('migration')
+diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+new file mode 100644
+index 00000000000..b4cc4888cac
+--- /dev/null
++++ b/include/qemu/target-info.h
+@@ -0,0 +1,19 @@
++/*
++ * QEMU target info API
++ *
++ *  Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef QEMU_TARGET_INFO_H
++#define QEMU_TARGET_INFO_H
++
++/**
++ * target_cpu_type:
++ *
++ * Returns: target CPU base QOM type name (i.e. TYPE_X86_CPU).
++ */
++const char *target_cpu_type(void);
++
++#endif
+diff --git a/target-info-stub.c b/target-info-stub.c
+new file mode 100644
+index 00000000000..e5d2195e896
+--- /dev/null
++++ b/target-info-stub.c
+@@ -0,0 +1,16 @@
++/*
++ * QEMU target info stubs (target specific)
++ *
++ *  Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/target-info.h"
++#include "cpu.h"
++
++const char *target_cpu_type(void)
 +{
-+    CPUClass *cc = cpu->cc;
-+
-+    /*
-+     * The CPU class can provide the XML filename via a method,
-+     * or as a simple fixed string field.
-+     */
-+    if (cc->gdb_get_core_xml_file) {
-+        return cc->gdb_get_core_xml_file(cpu);
-+    }
-+    return cc->gdb_core_xml_file;
++    return CPU_RESOLVING_TYPE;
 +}
-+
- void gdb_init_cpu(CPUState *cpu)
- {
-     CPUClass *cc = cpu->cc;
-     const GDBFeature *feature;
-+    const char *xmlfile = gdb_get_core_xml_file(cpu);
- 
-     cpu->gdb_regs = g_array_new(false, false, sizeof(GDBRegisterState));
- 
--    if (cc->gdb_core_xml_file) {
--        feature = gdb_find_static_feature(cc->gdb_core_xml_file);
-+    if (xmlfile) {
-+        feature = gdb_find_static_feature(xmlfile);
-         gdb_register_feature(cpu, 0,
-                              cc->gdb_read_register, cc->gdb_write_register,
-                              feature);
-@@ -1644,7 +1659,7 @@ void gdb_extend_qsupported_features(char *qflags)
- static void handle_query_supported(GArray *params, void *user_ctx)
- {
-     g_string_printf(gdbserver_state.str_buf, "PacketSize=%x", MAX_PACKET_LENGTH);
--    if (first_cpu->cc->gdb_core_xml_file) {
-+    if (gdb_get_core_xml_file(first_cpu)) {
-         g_string_append(gdbserver_state.str_buf, ";qXfer:features:read+");
-     }
- 
-@@ -1701,7 +1716,7 @@ static void handle_query_xfer_features(GArray *params, void *user_ctx)
-     }
- 
-     process = gdb_get_cpu_process(gdbserver_state.g_cpu);
--    if (!gdbserver_state.g_cpu->cc->gdb_core_xml_file) {
-+    if (!gdb_get_core_xml_file(gdbserver_state.g_cpu)) {
-         gdb_put_packet("");
-         return;
-     }
 -- 
 2.47.1
 
