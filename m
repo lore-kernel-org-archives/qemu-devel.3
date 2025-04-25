@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9B6BC369D5
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 22:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9C6FC369D1
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 22:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8REM-0002u1-C4; Fri, 25 Apr 2025 18:09:11 -0400
+	id 1u8Raj-0001io-8c; Fri, 25 Apr 2025 18:32:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u8RAz-0003iR-IG
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:05:45 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8RaE-0001HB-9S
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:31:49 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u8RAx-0001st-Pv
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:05:41 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-736c1138ae5so2758857b3a.3
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 15:05:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8RaA-0005iC-H7
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:31:45 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4394a823036so25792945e9.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 15:31:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745618738; x=1746223538; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BrBCsIJgWKGCpaAsMFDooeM8W+Z2wqYDVyB0/xDhg7c=;
- b=BVr2N3XRFRAWz+zavJ8cT6qgBFmM+WmYrKeBhIriwRLImqYGCUGIEJDEKLEAUO3tDP
- H/4hTPvWPyjYCdxHGhiMh3dBhuTOtb+oiirFC7TypErn+i5IDLlYW+jvakcCSICMH6uD
- CZSMTauITWm1s/dNvSrW8WKIx8IMkWkpe4Gk77OOKFnm4O5SPmgCAeXjki6hiV5YGLW+
- 0u4mfN78XlyhvTOgLWi4e6o1P5L1DTU/G0C93v6cuzKDOhKuEDM8lDWfEcFp5TfCLG2V
- x1rQ4Pl5i3Drh24t9sU94NL/SYpDdlC1QimLYEfWQbN88KSquIjeAj7z4W0AnNi99/XW
- j2Vg==
+ d=linaro.org; s=google; t=1745620301; x=1746225101; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GbVWYqdOhsJLdKAjXd9ZwdSHKBlxNhT6Rk799iOQMHA=;
+ b=tQRXLqEFO+OfWkXhPZHpSeDgJoZ43Kk/8bHM1GUCcPkkpLkXkMD7yRS23RMJz1ouYM
+ hoAEdsE3G5GSPkI6sfUWhUJtMAJ9Zp6fmP5a9/NRl7YwO9ljPvSoCNcHV85jHixbZd+C
+ 6DfuaIp4xGJmBIUyTBXq3xyXKjOdFHg3/lDs16Fxj6gVT+Ct6jb6T5V94IdKc7IpAmiM
+ pnT3g783gUdwsP5cXiRCgkUfusp6DUtHBN3A7p1vu8Sx4WCBDpLuZVG8tUIqVefDdbE0
+ S3aOHI8Vq8ooTy4/eG0gMFNeXsNy/UNAuI7mKj7icPln0ZMKVtY4BD5QuGYyZM5Dkli+
+ M0vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745618738; x=1746223538;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BrBCsIJgWKGCpaAsMFDooeM8W+Z2wqYDVyB0/xDhg7c=;
- b=QeBVn98oapHQHh6ep0/j/kn6rLnIoMsazs99PXh2luym6ESl6JsLpCogBd/gl3tTjE
- 9A3+zwlCnS4zY8jP79IX4Tkxu/TJZjWXb0uQUZff4IY/q6UDrH7xyskMc2MZmNFANnOJ
- rn7Qhy2xx89dLJxhPVuUukxgZ2HBI869xrnRe8oFkEq2OCDGFmwmLRSXcJPWVCsLHoMC
- KxEM778Yg4fZ5AbXPM2jBHx0XNE3LYru2rKVqYjkJXRGAcOJuRQ7TiHmPspOWDEGxqXt
- Shdtq8SUnn0JqbB8GuFDD9vj3X8/ncPYTfgUej3FogjHHHVTikYigp7uwLHizfaRUF75
- VXow==
-X-Gm-Message-State: AOJu0YxCAcagzVrzHOGpU23bJ99QRNqKXiwWkcFrjpGqYoLv2Z3puyyn
- QtGloHf0h1mNZUVRAjkkmqgGs8/sFMv5ci/DRm3FVE+ONV+g++wRY9F0/6W730BxQjVK8QWM03h
- S
-X-Gm-Gg: ASbGncslmjPjW6KfPSwmx/xoQlI9Iy/jHjzbQKhgTiQlRvdURq1/HofdLJpPzvVl/A6
- gsAg36VtpAb7T/Wj9K7uMVGvwLc3VvxonrIEeNLF4VJEkSOjV4jURmJSwMFDvAnVG/2WPF82PjJ
- pPc0j7aXfitaGQL+MwQvfLkJCV2GcLO67nHV6vGKaofpiHcWhtk1j6iFcN7Vbzn1p7l2WQvQtnA
- +NMdnZa8sxpZ8MMsKh6IZJKqEr6uD2XShtOWLESzdOO2ZSyeP6yzH5bzhTfX2rJptnFGTuvRPHo
- OajGHPjo34CFEnb2kDPuKDfKraEauH0Cuoux0kuoh9mfuOu6rVv9fzpw01rL3m7hVPTSd4oXUAc
- =
-X-Google-Smtp-Source: AGHT+IG9MhhbG3uv8kQVqCa8lzMoI0Q/AuxP+L59yu47jFpHjBMvL7zjrs40NJXFCq3Ik/Dv5ssTBQ==
-X-Received: by 2002:a05:6a00:1481:b0:736:42a8:a742 with SMTP id
- d2e1a72fcca58-73ff72e237amr1363009b3a.11.1745618738400; 
- Fri, 25 Apr 2025 15:05:38 -0700 (PDT)
-Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25a6a49esm3796573b3a.106.2025.04.25.15.05.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Apr 2025 15:05:38 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 140/159] tcg/s390x: Add TCG_CT_CONST_N32
-Date: Fri, 25 Apr 2025 14:54:34 -0700
-Message-ID: <20250425215454.886111-141-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250425215454.886111-1-richard.henderson@linaro.org>
-References: <20250425215454.886111-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1745620301; x=1746225101;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GbVWYqdOhsJLdKAjXd9ZwdSHKBlxNhT6Rk799iOQMHA=;
+ b=WlCS6M7+/y99xo12DK6jCyX74JUonZR/Us+YI5HZryGm+sFOz5SozNcDnCe0MRC87U
+ W2I0Ozply1hcoxBivZ7wvcSvMAh0OXAFf/Xv8i/xDOh035tQ/b4YzQWrnP5CZCDDeM8O
+ JC0HGyHpVlKMSbqDNMRO2MpaNceetO7NZIZw8NjqwHkXzYxIrptzQTUv5Ra0LGdIkzlQ
+ X0gRZnKcPQI0cpxKP0Lp+K0uvzVMTGe3dwDkA9I++1stavA/nWbehk2dO4IDzBfsYEOV
+ mJNQddrU+Tv3YXtYwtMHg9jylgbmHOrSZ+pMIbA5XuP2j9q7G7RcV8xya2MN/lIeNLt2
+ QY+Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXao4AYmSeRLjmVwhJtRAn2jCrvMf/YGA/KyOjAtvrEVwWs7eC05ngySJT54t5VobZ+W1kWjSpYoBwv@nongnu.org
+X-Gm-Message-State: AOJu0YwMBjZ3INeToEjJ+7ATmSSfU4TIQr5amvQvEHl+rh+jpYIbLCS2
+ 816Mg/uyAl48sGbLCAPtLfC/cfsBu7DS/xolUJ/Kko/wlYomlGz9tYSt5KW47lFO8eQdu7LMJrg
+ /
+X-Gm-Gg: ASbGncutTBc9Rt8iJOGRNvjOplrFNpBKjQVdVc+38QCEljrPgB9PBWHDpdem7pk82Rr
+ mbl0sLqwdS7Pe/V5gFnyNOnj2Fw2rgKV1xFCvObx3lzMqwWx2OT1ktr3JwXbtbWsO0S9UH6Kljs
+ 5tjXSZlJuA6lKZxJGa51cIFXbGMAjZ9bqmDwrW0pDjQYFnwECSh9cqviJ1dqyLUnASdtTsenCMq
+ 7dUbnZi1rjI8GDifZ/1Pv71BMmuTjFEIZjCMhfOgUWmqfse8FyMw2tmMhU+jU2MjSJ198XagCNW
+ 1NY3zrcJTmrdpAmHUuJ75AEEyKD+SPMURVL892bpazZHytie9hzRfNb2QtI/58Hmx9Hb8Lv/DW2
+ Vo30uXCXv
+X-Google-Smtp-Source: AGHT+IHHb+GnRcXoRanCuJ43ZASoW1XboK9LCsPuLA8Fc7R2WhIQZ4l3NKA0BqITCdgZj0YGIpZhzw==
+X-Received: by 2002:a05:600c:1e1c:b0:43c:fb8e:aec0 with SMTP id
+ 5b1f17b1804b1-440a64c16c3mr35887685e9.1.1745620300921; 
+ Fri, 25 Apr 2025 15:31:40 -0700 (PDT)
+Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-440a5311403sm38015725e9.23.2025.04.25.15.31.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Apr 2025 15:31:39 -0700 (PDT)
+Message-ID: <2b0975a2-ac4c-43ad-953c-40debad1b71d@linaro.org>
+Date: Sat, 26 Apr 2025 00:31:39 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/7] target/riscv: Pass ra to riscv_csrrw
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, dbarboza@ventanamicro.com
+References: <20250425152311.804338-1-richard.henderson@linaro.org>
+ <20250425152311.804338-5-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250425152311.804338-5-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,73 +103,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We were using S32 | U32 for add2/sub2.  But the ALGFI and SLGFI
-insns that implement this both have uint32_t immediates.
-This makes the composite range balanced and
-enables use of -0xffffffff ... -0x80000001.
+On 25/4/25 17:23, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/riscv/cpu.h       | 8 ++++----
+>   hw/riscv/riscv_hart.c    | 2 +-
+>   target/riscv/csr.c       | 8 ++++----
+>   target/riscv/op_helper.c | 4 ++--
+>   4 files changed, 11 insertions(+), 11 deletions(-)
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/s390x/tcg-target-con-set.h | 2 +-
- tcg/s390x/tcg-target-con-str.h | 1 +
- tcg/s390x/tcg-target.c.inc     | 8 ++++++--
- 3 files changed, 8 insertions(+), 3 deletions(-)
-
-diff --git a/tcg/s390x/tcg-target-con-set.h b/tcg/s390x/tcg-target-con-set.h
-index 78f06e3e52..f5d3878070 100644
---- a/tcg/s390x/tcg-target-con-set.h
-+++ b/tcg/s390x/tcg-target-con-set.h
-@@ -44,4 +44,4 @@ C_O2_I2(o, m, 0, r)
- C_O2_I2(o, m, r, r)
- C_O2_I3(o, m, 0, 1, r)
- C_N1_O1_I4(r, r, 0, 1, ri, r)
--C_N1_O1_I4(r, r, 0, 1, rJU, r)
-+C_N1_O1_I4(r, r, 0, 1, rUV, r)
-diff --git a/tcg/s390x/tcg-target-con-str.h b/tcg/s390x/tcg-target-con-str.h
-index 3e574e0662..636a38a168 100644
---- a/tcg/s390x/tcg-target-con-str.h
-+++ b/tcg/s390x/tcg-target-con-str.h
-@@ -24,4 +24,5 @@ CONST('M', TCG_CT_CONST_M1)
- CONST('N', TCG_CT_CONST_INV)
- CONST('R', TCG_CT_CONST_INVRISBG)
- CONST('U', TCG_CT_CONST_U32)
-+CONST('V', TCG_CT_CONST_N32)
- CONST('Z', TCG_CT_CONST_ZERO)
-diff --git a/tcg/s390x/tcg-target.c.inc b/tcg/s390x/tcg-target.c.inc
-index e262876614..9b28083945 100644
---- a/tcg/s390x/tcg-target.c.inc
-+++ b/tcg/s390x/tcg-target.c.inc
-@@ -43,6 +43,7 @@
- #define TCG_CT_CONST_INVRISBG   (1 << 14)
- #define TCG_CT_CONST_CMP        (1 << 15)
- #define TCG_CT_CONST_M1         (1 << 16)
-+#define TCG_CT_CONST_N32        (1 << 17)
- 
- #define ALL_GENERAL_REGS     MAKE_64BIT_MASK(0, 16)
- #define ALL_VECTOR_REGS      MAKE_64BIT_MASK(32, 32)
-@@ -613,7 +614,10 @@ static bool tcg_target_const_match(int64_t val, int ct,
-     if ((ct & TCG_CT_CONST_S32) && val == (int32_t)val) {
-         return true;
-     }
--    if ((ct & TCG_CT_CONST_U32) && val == (uint32_t)val) {
-+    if ((ct & TCG_CT_CONST_U32) && uval <= UINT32_MAX) {
-+        return true;
-+    }
-+    if ((ct & TCG_CT_CONST_N32) && -uval <= UINT32_MAX) {
-         return true;
-     }
-     if ((ct & TCG_CT_CONST_S16) && val == (int16_t)val) {
-@@ -3548,7 +3552,7 @@ tcg_target_op_def(TCGOpcode op, TCGType type, unsigned flags)
- 
-     case INDEX_op_add2_i64:
-     case INDEX_op_sub2_i64:
--        return C_N1_O1_I4(r, r, 0, 1, rJU, r);
-+        return C_N1_O1_I4(r, r, 0, 1, rUV, r);
- 
-     case INDEX_op_st_vec:
-         return C_O0_I2(v, r);
--- 
-2.43.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
