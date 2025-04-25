@@ -4,96 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D177CC369D3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9694C369C2
 	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:53:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8LLV-0000EY-BX; Fri, 25 Apr 2025 11:52:09 -0400
+	id 1u8LLM-0000B2-Hq; Fri, 25 Apr 2025 11:52:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1u8LLS-0000DI-9o; Fri, 25 Apr 2025 11:52:06 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1u8LLQ-0006pL-AQ; Fri, 25 Apr 2025 11:52:05 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-54e7216aaccso2112839e87.1; 
- Fri, 25 Apr 2025 08:52:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745596322; x=1746201122; darn=nongnu.org;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:message-id:subject:cc
- :to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=7c8bi+tYxGd3uDu+5jaT9Zf7rx1GDd9V54uFLw7R+Qs=;
- b=gVBkAr5kQAP+7g3ur3sT7zkUrkXgi9/mQpCTITGOvMWRGYQh3KnDR0C3Ols2ODjT0Y
- NyNGlQ5xy+0bTBSdKHMtvd8178gbB9IMsnr33pb9MhS9E1cNfuZAykuOOoygatb+73Ax
- rmG/WEbQZ5yBDktThFffnMYBhn2utM9UHO0GZjbHp2FePReNVCCHKbIJRrjiLsBVkghx
- qhhNOHKoqyBngymj1auBoCdYONyc69d9s6Dw4gI9iledRIO517+AZNu41VdZ5uvuziuG
- nDm8QkmmX3G8DkmuuspYpzYrqOjkoHXrooPbFxJjC0Ik2RgoJAoV7PPTeNhS9m6jV+C+
- pjPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745596322; x=1746201122;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:message-id:subject:cc
- :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7c8bi+tYxGd3uDu+5jaT9Zf7rx1GDd9V54uFLw7R+Qs=;
- b=nNbumotPBoPDXSN2FopskoHn/tt/L7t9idMoxN3MNKbU6ejm7usOd1oBrXb25z3TRy
- 8ARZSl6kCKkWcqFb3Bk/VgBGC7EDTbJfRzTePypgCW/apt5QryA7z6wz11QhdolVKiAA
- Ar8yUV8duFA3WxVgTMVxSw12HChszj6UlFGjlybhF1WcK7vaa4cTJZ7tEjK0JlD/x56B
- F+qBpYfIWsneO7bbplrIfrrhutFmHhf7WVrL9wj/za4pCnt3naGyM0T4lEhmOqPxDOt7
- jGntGD0BRT7G+tvRl+D1/DGgvL1AVxZ4tYrAsUbaCIE+41Rxlsia0oco69k3IZo5HA0v
- WRsQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWj5+UQZJyb1do/rLi3QYdl3EKiwceu1QIVTS0B78LHxnKe09LXqiR1fpwOSHPmzhbrFCxJaNTUeQ==@nongnu.org
-X-Gm-Message-State: AOJu0YxAsLk+QGlt2gX8mmVVq+humMwHRt4c6GlHdzQwI9Ql7ke1Im80
- JdIm1bFryF0oTkn4vDB2eWKZMx/3eyd+Uvm7/3ci2gQCIgXJnVZw
-X-Gm-Gg: ASbGncv2kGtSaeBKQlpFx4dOareCUB3Oi8MOtHzO5vKrYaiuxddbUNtbgYoEIMlEg9s
- COjZ57G5IPpHT/FGnjkv9LrxuAGumiwWsVRuRDhTu5xT1PYvhb5yNQ7CTkjPhsfvjtM6E3dRynf
- 2UCYH3BH7omdjZFZkBvEaIHAfrKhBkTvPjHyuTD6tNT5hPT7tyqwRt7CPQ+g3fv+LN4scY3G0t2
- VPUk/FMYk64pXIxn6i+Jalg0FbwzwEMc5IUUtFBKBBFyhzCgqri855Om1Y/DIz6sHGznTX6u719
- u4i5ECQqP6ObVAP1+ZpbwyloYzy616Zl116b8fq29JGDhDkhm+0IkJIaPwxM5Lmq/TvxxIyYGoP
- GYxXKNtiLBjq9
-X-Google-Smtp-Source: AGHT+IEBhHvhYlRd/AFuPOojwnovkQU99ip8b1orQYqHZZjfeTjtjdpUdISwOqzPlh2adZSjayNi/Q==
-X-Received: by 2002:a05:6512:b0b:b0:549:4b8c:a118 with SMTP id
- 2adb3069b0e04-54e8cbd53b2mr1046741e87.17.1745596321671; 
- Fri, 25 Apr 2025 08:52:01 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-54e7ccb803fsm642112e87.228.2025.04.25.08.52.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Apr 2025 08:52:01 -0700 (PDT)
-Date: Fri, 25 Apr 2025 17:52:00 +0200
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: Corvin =?iso-8859-1?Q?K=F6hne?= <corvin.koehne@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Yannick =?iso-8859-1?Q?Vo=DFen?= <y.vossen@beckhoff.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>,
- Corvin =?iso-8859-1?Q?K=F6hne?= <c.koehne@beckhoff.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 04/21] hw/arm/zynq-devcfg: Prevent unintended unlock
- during initialization
-Message-ID: <aAuvoFjhS0VEtpqq@zapote>
-References: <20250318130817.119636-1-corvin.koehne@gmail.com>
- <20250318130817.119636-5-corvin.koehne@gmail.com>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u8LLL-0000Ai-4D
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:51:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u8LLJ-0006oX-9S
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:51:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745596315;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FTZ2JP4hQXUKgj1BfU93LzX8rtG6D8UDEI/AHD5EmOU=;
+ b=jL4hcxXafSb95SDLkTVNgQ/fqRXFOUaKvHY2+un6BZBa2v+BOawr78yRh/G0vzVfU1L++l
+ q8NQw/8i2mqen0OMKKxd04UKBX1DameQDXq4HDZkRPTUk1VOpnEKWP2eQYscWKf4eCJ8Or
+ c2Fg58Z0wM8NeXyr5hZE/isGlTcYdco=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-501-HsznaBy8P_K_NJNLMhDoYg-1; Fri,
+ 25 Apr 2025 11:51:51 -0400
+X-MC-Unique: HsznaBy8P_K_NJNLMhDoYg-1
+X-Mimecast-MFC-AGG-ID: HsznaBy8P_K_NJNLMhDoYg_1745596310
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 565A11800570; Fri, 25 Apr 2025 15:51:49 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.225.183])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3FB481956095; Fri, 25 Apr 2025 15:51:45 +0000 (UTC)
+Date: Fri, 25 Apr 2025 17:51:43 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Aarushi Mehta <mehta.aaru20@gmail.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, surajshirvankar@gmail.com,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>
+Subject: Re: [PATCH 1/3] aio-posix: treat io_uring setup failure as fatal
+Message-ID: <aAuvjznKfL1qg2J7@redhat.com>
+References: <20250401142721.280287-1-stefanha@redhat.com>
+ <20250401142721.280287-2-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250318130817.119636-5-corvin.koehne@gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20250401142721.280287-2-stefanha@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.314,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,76 +85,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 18, 2025 at 02:07:55PM +0100, Corvin Kˆhne wrote:
-> From: YannickV <Y.Vossen@beckhoff.com>
+Am 01.04.2025 um 16:27 hat Stefan Hajnoczi geschrieben:
+> In the early days of io_uring it was possible for io_uring_setup(2) to
+> fail due to exhausting RLIMIT_MEMLOCK. QEMU's solution was to fall back
+> to epoll(7) or ppoll(2) when io_uring could not be used in an
+> AioContext.
 > 
-> During the emulation startup, all registers are reset, which triggers the
-> `r_unlock_post_write` function with a value of 0. This led to an
-> unintended memory access disable, making the devcfg unusable.
+> Nowadays io_uring memory is accounted differently so io_uring_setup(2)
+> won't fail. Treat failure as a fatal error. Keep it simple: io_uring is
+> available if and only if CONFIG_LINUX_IO_URING is defined.
 > 
-> To address this, a property 'is_initialized' is introduced. It is set
-> to false during reset and updated to true once the initialization is
-> complete. The unlock function is simply ignored while 'is_initialized'
-> is false.
+> Upcoming features that rely on io_uring won't need to handle the case
+> where a subset of AioContexts lacks io_uring. This will simplify the
+> aio_add_sqe() API introduced in the next commit.
 > 
-> I have no idea how this ever worked. Nevertheless, this restores the
-> correct behavior.
-> 
-> Signed-off-by: Yannick Voﬂen <y.vossen@beckhoff.com>
-> ---
->  hw/dma/xlnx-zynq-devcfg.c         | 6 +++++-
->  include/hw/dma/xlnx-zynq-devcfg.h | 2 ++
->  2 files changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-> index b838c1c0d0..03b5280228 100644
-> --- a/hw/dma/xlnx-zynq-devcfg.c
-> +++ b/hw/dma/xlnx-zynq-devcfg.c
-> @@ -143,9 +143,11 @@ static void xlnx_zynq_devcfg_reset(DeviceState *dev)
->      XlnxZynqDevcfg *s = XLNX_ZYNQ_DEVCFG(dev);
->      int i;
->  
-> +    s->is_initialized = false;
->      for (i = 0; i < XLNX_ZYNQ_DEVCFG_R_MAX; ++i) {
->          register_reset(&s->regs_info[i]);
->      }
-> +    s->is_initialized = true;
->  }
->  
->  static void xlnx_zynq_devcfg_dma_go(XlnxZynqDevcfg *s)
-> @@ -221,7 +223,9 @@ static void r_unlock_post_write(RegisterInfo *reg, uint64_t val)
->  {
->      XlnxZynqDevcfg *s = XLNX_ZYNQ_DEVCFG(reg->opaque);
->      const char *device_prefix = object_get_typename(OBJECT(s));
-> -
-> +    if (!s->is_initialized) {
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 
+While making failure to set up io_uring for an AioContext a hard error
+feels fine to me, I feel a bit uneasy about having fatal errors like
+this in functions that aren't only called during startup. This function
+is also called when adding an iothread object at runtime. The failure
+mode that I would expect there is that object-add returns an error, not
+that the whole QEMU process exits.
 
-I think you can use device_is_in_reset(DEVICE(s))
-and get rid of is_initialized alltogether?
+Kevin
 
-
-
-
-> +        return;
-> +    }
->      if (val == R_UNLOCK_MAGIC) {
->          DB_PRINT("successful unlock\n");
->          s->regs[R_CTRL] |= R_CTRL_PCAP_PR_MASK;
-> diff --git a/include/hw/dma/xlnx-zynq-devcfg.h b/include/hw/dma/xlnx-zynq-devcfg.h
-> index e4cf085d70..2ab054e598 100644
-> --- a/include/hw/dma/xlnx-zynq-devcfg.h
-> +++ b/include/hw/dma/xlnx-zynq-devcfg.h
-> @@ -55,6 +55,8 @@ struct XlnxZynqDevcfg {
->      XlnxZynqDevcfgDMACmd dma_cmd_fifo[XLNX_ZYNQ_DEVCFG_DMA_CMD_FIFO_LEN];
->      uint8_t dma_cmd_fifo_num;
->  
-> +    bool is_initialized;
-> +
->      uint32_t regs[XLNX_ZYNQ_DEVCFG_R_MAX];
->      RegisterInfo regs_info[XLNX_ZYNQ_DEVCFG_R_MAX];
->  };
-> -- 
-> 2.49.0
-> 
 
