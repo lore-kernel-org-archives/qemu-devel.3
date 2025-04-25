@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4090AC369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:32:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30ACCC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8L2A-000736-Al; Fri, 25 Apr 2025 11:32:11 -0400
+	id 1u8KzL-000077-Oh; Fri, 25 Apr 2025 11:29:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L1z-00067V-Bc
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:31:59 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8KzC-00005K-94
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:29:09 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L1w-000464-72
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:31:58 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43cebe06e9eso17118545e9.3
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:31:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Kz8-0003W0-1L
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:29:05 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43cf257158fso14449885e9.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:29:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745595114; x=1746199914; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745594940; x=1746199740; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Bn8ZwlSg8DF1L5LTUuHBCXKlF5X/HcHey9e05VeENiM=;
- b=CWz+dmRDvO6Xnf0yWkkoBvU7/adWxJfWICSOBFFa/5ZLvGYk9LoQv8uJJDw1w4TChW
- cLtbXvnNm47um5+EMCmLoFypOHcjlhbtxGzpSQi3GZpuqSZ7AFRR/lB+BIJALzyu+8+4
- x5/gW7ma/BzE6Gi+io2ylronuKTF6y8cMrWQVL+HCXchR0MJwGasY5CLGgc2aCbBsyYN
- 98+2gxOIM4JA/OeH8haOxo5aVc/Lr7HFktjcAF1w2tVtDdNB/r31aWvWPViHrPbK+R2K
- 559I1wbFKBId+3JOVlEbTWlrgKDuTTCrsbrz2/x51W2/akaV4bM2uKDIfr9EXd5ynDYx
- iQBg==
+ bh=sdo7Xbgn21HSVu7ZHUjvfQORqZjCBRL3kE4FdFeU+do=;
+ b=LT7UY9bvP3P4ggBczaNNlywrZsIj9XcadshZDStVE1s9YxKaV+uiIRsuuMdHDfnsBF
+ neCY79ZHlbkb3EO6IzQMmc8+9CN9UbawX3yL+Zm+xHq3g9+8UGG748WSolk9CaZ9aDDM
+ dLG2oJhxhPfAY5y0O/i/jWvlx7GArvHfxMxKwX9HR5RPrwL8r9PV++OVhfaR+P1TY6PM
+ ePzrezklKVuLtvXydurDeFwog8ih2D6bC1UNntWKueMnUi87DYC6p3rDskutoi3qWOni
+ 92vmo+i0ldRjNu+UXwMCCVnkxNTRD9tEyeVX9XIgQreYx0n86LQn250LX3w1EZBy7ugJ
+ jITQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745595114; x=1746199914;
+ d=1e100.net; s=20230601; t=1745594940; x=1746199740;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Bn8ZwlSg8DF1L5LTUuHBCXKlF5X/HcHey9e05VeENiM=;
- b=NjnwCibXAQDmOzC8QCcAd8K8vjRQJ0B8K6fKtToZbswdIkw6jocUdGS6p+8/4zsHF5
- KYdLfe6s+536y/cEg3+g5tyEZzjEzFrqkDWKhSPzckiUopCeZ8sO5vRwZ0Gp+PgSG/oh
- 4WZW4nZxP2TMjJ4siY+OR5TGLa5uayAeVV7G99VChopF5TeU8LnjoFdmOIT5a3M3ozBl
- 3Mlqrejh6iOK3XY9A5OQQyJCq2jB4UNmM7AupiecKxii3DoyQSVvWLkilrnanSU4ZCLG
- Wkq0A7DfKWUnpAbh5Yps4vIvtAkrRJ18xlRV5b/P3+XvOLZ2DJWlzX8P6bYPYPNCXBrf
- MW6A==
-X-Gm-Message-State: AOJu0YxG2z5uocUgPN+KMdS77BlpdHoz7gRfDT1UM2Il1u14ByctcRfU
- TTP1N8d1GMfOGAhADX1ggdbXni8rWS+ehb59alLl+0NAbjc9BrL6rLc5LZJwVhFlLSD64MIZpDQ
- N
-X-Gm-Gg: ASbGnctAPBxny7h8n+JGFsDg+3s1N44Dv5q53NW/A3wq8w/ipBCixHpuCS+GEWi1DvN
- j+LoUBDkNsCDGUoFidcv8Ees1bbYt5EZjciLfwVpQmGIBuS2XrDpzGOsnIupHwPCSxu7+OGaNxY
- bEnX/9L0F3MPoRGif5hQm64dQVnRvZJEokyPYf9gxkyFqAmlny0jkfK0twIEAHLerK0DuU1RUbY
- wJ9P6zGwiK2XPaYiZw0UoEWxcj0lA5v8jlmD9dJuxnnZpDyuUECgkziMJCbNv+PfC/j4dvpYCB1
- 958ejEWimzfoemzjk+1vJsnzDM1HttZk4xGTrLEqQElLD9/3623dcaikz2SID7la9dF8NPD9+AZ
- 9Pl6pvB48+JS+qEo=
-X-Google-Smtp-Source: AGHT+IHr0/PNK30nFOlUIPGSBYhibii8vvP5pDNoKKzYU9WZ3cLOu1ogqPFHe1ZuKrgHEjPMKyEL6w==
-X-Received: by 2002:a05:600c:3484:b0:440:6a79:6df0 with SMTP id
- 5b1f17b1804b1-440a66973c7mr23499305e9.22.1745595113843; 
- Fri, 25 Apr 2025 08:31:53 -0700 (PDT)
+ bh=sdo7Xbgn21HSVu7ZHUjvfQORqZjCBRL3kE4FdFeU+do=;
+ b=XhVnwH286A2z4yWIvMxx3/xBmCJpjzLMvhv8J9fieStDTODzQKcS1aoYeikQPkcrEH
+ TyVQnEznRlqm1nmJ24YaSQgaCjk3821L8M8xddzMJTdWwbVxzTeO5VusSeB+juK9qMSk
+ LaWA/5zOo7GrRdcGU2BPxbHknUaaOQHT1m7u8vZaWsBXzzFWe2sRMEE9XRzqSpjsDo5t
+ TPra5npyunsZRarY3qPNql4kNYAGYDd2IZWDwT75clLOURpLIJEYBwY8m8aNa1EPLU/p
+ h/1T0VCjQizuIjoQwGwH1muAss8ruvuI0TFh6MVKGWqAFio4eGuceMn2lABRX2j0H7dY
+ Xj/g==
+X-Gm-Message-State: AOJu0YxJy3jymIXyJ+Gy1nZ+bObrX80cs8CScBuifUeyoE7DIo+wqFQU
+ a6uJ8ht3lvz6L6MhBuyM/LlTIPF4Oqbhvj4KUT/WSPszCxKZJktHOOvt7A7HzzlqQjMg6acn/Si
+ x
+X-Gm-Gg: ASbGncvyWyPhnw64BRJUs7yrEi/zZnWdoEMRIKiI4tESly3YEHFNxdOLHcuy/V+AuLl
+ v+L1fI0x6FKJnKlx5QmfsewiRN4ogsXUHFbSWOz2/nuqbT43vYnAyLxHgK4gmY+Y8U9NmhE8hhf
+ 9rNwZ43+3KWo4D9q3M9DuQKQGtT3FIMGxEKG89RvFzXHVy19WoA6p859Yl4Jsuc1rXP3HLvSPNM
+ j1hW8AcubqH+d9I7jpp03f2ZH7DI+d5hQ40pe7jo49PlMyIukJ1/RoM5Yuso2PhxVK3ZUwgsQt8
+ RIuECZqGLAa5uhM6VS3VgAxfKZfRIoSHUiW0x0kdzeJmrlG64/yM8uzt74HYtzdwHQdAmJXg60d
+ I4lwwyjinJh6qADw=
+X-Google-Smtp-Source: AGHT+IHg5Cp0m8cXlJu7JskjOYRYdEajE/BwUaL2LvwaHg+COkXiScEQ8GtxDwWPSszLA2FuAHmfGA==
+X-Received: by 2002:a05:600c:46c5:b0:43c:f332:703a with SMTP id
+ 5b1f17b1804b1-440a66ab4cemr27817715e9.31.1745594939978; 
+ Fri, 25 Apr 2025 08:28:59 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-440a5303c15sm28045965e9.11.2025.04.25.08.31.53
+ 5b1f17b1804b1-440a53870f9sm27851985e9.33.2025.04.25.08.28.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 08:31:53 -0700 (PDT)
+ Fri, 25 Apr 2025 08:28:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 38/58] meson: Remove CONFIG_STATX and CONFIG_STATX_MNT_ID
-Date: Fri, 25 Apr 2025 17:28:22 +0200
-Message-ID: <20250425152843.69638-39-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 03/58] target/i386: Replace MO_TE* -> MO_LE*
+Date: Fri, 25 Apr 2025 17:27:47 +0200
+Message-ID: <20250425152843.69638-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
 References: <20250425152843.69638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,49 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+The x86 architecture is only implemented as little-endian.
+The MO_TE definition always expands to MO_LE.
 
-CONFIG_STATX and CONFIG_STATX_MNT_ID are not used since commit
-e0dc2631ec4 ("virtiofsd: Remove source").
+Replace:
+ - MO_TEUQ -> MO_LEUQ
+ - MO_TE   -> MO_LE
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250424-buildsys-v1-2-97655e3b25d7@daynix.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20250312142124.15138-1-philmd@linaro.org>
 ---
- meson.build | 10 ----------
- 1 file changed, 10 deletions(-)
+ target/i386/tcg/emit.c.inc | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index f77a9ce569e..35dcec8ce5c 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2191,14 +2191,6 @@ gnu_source_prefix = '''
-   #endif
- '''
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 4e09e96fc13..ca6bc2ea82f 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1813,7 +1813,7 @@ static void gen_CMPXCHG(DisasContext *s, X86DecodedInsn *decode)
+ static void gen_CMPXCHG16B(DisasContext *s, X86DecodedInsn *decode)
+ {
+ #ifdef TARGET_X86_64
+-    MemOp mop = MO_TE | MO_128 | MO_ALIGN;
++    MemOp mop = MO_LE | MO_128 | MO_ALIGN;
+     TCGv_i64 t0, t1;
+     TCGv_i128 cmp, val;
  
--# Check whether the glibc provides STATX_BASIC_STATS
--
--has_statx = cc.has_header_symbol('sys/stat.h', 'STATX_BASIC_STATS', prefix: gnu_source_prefix)
--
--# Check whether statx() provides mount ID information
--
--has_statx_mnt_id = cc.has_header_symbol('sys/stat.h', 'STATX_MNT_ID', prefix: gnu_source_prefix)
--
- have_vhost_user_blk_server = get_option('vhost_user_blk_server') \
-   .require(host_os == 'linux',
-            error_message: 'vhost_user_blk_server requires linux') \
-@@ -2560,8 +2552,6 @@ config_host_data.set('CONFIG_CRYPTO_SM3', crypto_sm3.found())
- config_host_data.set('CONFIG_HOGWEED', hogweed.found())
- config_host_data.set('CONFIG_QEMU_PRIVATE_XTS', xts == 'private')
- config_host_data.set('CONFIG_MALLOC_TRIM', has_malloc_trim)
--config_host_data.set('CONFIG_STATX', has_statx)
--config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
- config_host_data.set('CONFIG_ZSTD', zstd.found())
- config_host_data.set('CONFIG_QPL', qpl.found())
- config_host_data.set('CONFIG_UADK', uadk.found())
+@@ -1870,10 +1870,10 @@ static void gen_CMPXCHG8B(DisasContext *s, X86DecodedInsn *decode)
+ 
+     /* Only require atomic with LOCK; non-parallel handled in generator. */
+     if (s->prefix & PREFIX_LOCK) {
+-        tcg_gen_atomic_cmpxchg_i64(old, s->A0, cmp, val, s->mem_index, MO_TEUQ);
++        tcg_gen_atomic_cmpxchg_i64(old, s->A0, cmp, val, s->mem_index, MO_LEUQ);
+     } else {
+         tcg_gen_nonatomic_cmpxchg_i64(old, s->A0, cmp, val,
+-                                      s->mem_index, MO_TEUQ);
++                                      s->mem_index, MO_LEUQ);
+     }
+ 
+     /* Compute the required value of Z. */
 -- 
 2.47.1
 
