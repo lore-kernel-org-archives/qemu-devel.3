@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 929DEC369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:41:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECBB9C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:41:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8L3o-0003Wd-1i; Fri, 25 Apr 2025 11:33:52 -0400
+	id 1u8L3u-00046b-6L; Fri, 25 Apr 2025 11:33:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L36-0002Up-VU
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:33:11 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L3B-0002Vn-KG
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:33:13 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L34-0004Fs-Vt
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:33:08 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-39ac56756f6so2344476f8f.2
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:33:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L39-0004Ge-Pm
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:33:13 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-43ed8d32a95so21201565e9.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:33:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745595185; x=1746199985; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745595190; x=1746199990; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sqk7e3dGx7CJXFSaqvVkA1/+tCz7O32ERJEBzKdBZF4=;
- b=CKodLjK5o3NbXUzCx2CVVEwDSc/NW8O+oNLpJenbalOprF+AF31YbJRYQJDF638l6u
- j340oTvdnByAEIE4OW7PwpqlF1nYICgJYu+MEthJ9geFtdjCYiHLzIx9tamtn/UGHJHH
- brYjGgLRnBWV0fUNdHT51jtnhVMXuiEbWnKaEs4DIiZ7j2AYcWSV/VLJw56LcbCIBZbz
- 454jZG5bQncaPz6L4LPe7v7hRUrD4aY5cFl5g15ATHELvkFYZ2LrW9MTC7nJ64L8PXIp
- 5JRhAPBaQvCtKovRxejlEsS0VGCpgn9glGrvelLKLI7b5ygHCsQyUvG+xoQQH9hj/Wkx
- lqjw==
+ bh=um1U7VZovIFSphiSpmsIW+FJvR3FqN2d19kIPb19NrA=;
+ b=qX50dJilHUh8nlUBTmUQ7VFR/Gso+ok80UyoN1X9cWUuZPxn6I7VGjkDQR5IseiclL
+ vhmcYeUL9cWWEnsT3qsTBREdK+QEML//QS4azVMWXFYjUCm049Sw3DD45fsfQ5mwWeBj
+ Q/gcnwVOeA1MEm7zXwjfAPpB78JESXKxkia4/2nxD0GHdILRkKe7VFDEbaEjNX1ZcnQB
+ QMBKTvfeaA6u4aZuXCUpOvc6Zl4ejyiSDcjw4oiMTnBRgrKskOE7LdYwhO4FrH8OgAnz
+ F1j0fWYs7tBYwTys1c5Wxtpy0jbyQ1BvHOVjM3KqfoBXkMyVRrv02mOg/2h6ew7XycZF
+ i79A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745595185; x=1746199985;
+ d=1e100.net; s=20230601; t=1745595190; x=1746199990;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sqk7e3dGx7CJXFSaqvVkA1/+tCz7O32ERJEBzKdBZF4=;
- b=ou/GWUKq6Vyg13SJ+v84CPG4LOFJHa85mQlDWb3bh9V7/4xennkzqN/XKG/i8hC8Jn
- 9Ic6U2fE2hZMzRS8Y6LpCUK4ruZttOsFKcZPC8Wpmx5DCu2USUf6FWk8uJ7yEnIIoWge
- fRWYezmPqSBAot/eekSf0v67ahC7Mimjdg3dUM1UI3sWDA/3EKEOv7tljNswEJrD98Ud
- P0wfm9cPdErXUTFE2L2pixExwqudtrjKAe9iKL39O7QqZrPxy9JxMDZ1izC2v+Usc6PN
- rapN4wMpx72a/VoS/2lxt7I0RxCImruizVyULY1nMpfl862Nca+mhRzsf4KcOGkgg/BL
- DaJg==
-X-Gm-Message-State: AOJu0YwpqNHQY0nsAxrDGSUfQdN79JbKeKOQPLzVXC9268BqmtEtXhLI
- Aa/KJsTg36j/RUi2CDYLBzEArjG3+uB9dhqUHhof+ChEGt9Fbi4kxJz2fd6Lz10U7+qav+Tclkz
- 1
-X-Gm-Gg: ASbGncsSb48+YLyke/QR5hLW+8+AkFgEVMVMYkwGLOvEPoWF9d6lB6SmO0jwf8k2DHA
- 4m7Db3+H+EYdKWI6x6v3elQD36DXY+lyC3J9ZZ8IHIh7UufTY8lSW70G3zxh/ozHEZOOsA/5ji3
- C6EswDbzufzyxkNsv/X3QHfUQ3UlG6yESCkmTJHLPOS/O0/R+19bqqXFcXIKH/esUtSXbYt/OKw
- vq626N5eY+qjMgWhyajlN04lsx2Em4kjJgEzrJU/y/PN+Ura93RaR63oTbVNVkEqmYB/hvR1J9r
- 8B3r7mr6ZrWh4qCKWnyVs9M7SKhYVb6rBBEN4OqgpWWPdXHobHTjZ16rftgGjQAprrs+NGSWqT7
- V7N5+wGF7pBOt7Ww=
-X-Google-Smtp-Source: AGHT+IEy32pHnY6WfjyACYZvGapVH6DVXR50TOaDPLmeuEY6OsAik/TeWla/IEiCPYcPhm0V9dbTMw==
-X-Received: by 2002:adf:e0c5:0:b0:39e:cbcf:9dad with SMTP id
- ffacd0b85a97d-3a074e1eb8emr2086938f8f.20.1745595185165; 
- Fri, 25 Apr 2025 08:33:05 -0700 (PDT)
+ bh=um1U7VZovIFSphiSpmsIW+FJvR3FqN2d19kIPb19NrA=;
+ b=EOx4OdMEbN1tAdy6o/juRKjFXMV6oh3UnJrsQmL1/7n1WpUVG0DXjfVegvHiwnWyIc
+ 9nNF6pXbMaE4y+ghn7W8IZhP+MOyQVsraDGWXrjdOJw5w8yyOc3nmmX/BAEZ8pvQc1ow
+ cMcJY9Grc2vDB3J5/wISiKtVYdnJoYfGLb2LGcgV/YBWaLSaGkSffmK0QYtr+pqRXKYe
+ QOdlcOpFAglnC2Xcbj8ZVwT/bU0xgIN2pY5IS0N5yvE/WQx7xw3i+Lyz7g8cpGO6dcXM
+ VlDjft9vSzd48qYREupUyTtTgHj80brsoBeBdjZ0qKpz+fCzwPyhPd96tgxde7kITke/
+ X1+Q==
+X-Gm-Message-State: AOJu0Ywuok27DVLzDLfuqrpccCzMvOKy7P+V2+y2YVmD4z+9GUQOzaHA
+ 0MWKP973XJ+uB5VmM86bkCRd3TFeYpOMEpRXxcNtd/CXx5NA5iNXmdZK6cw7h2PfIr6UnI8e9WL
+ U
+X-Gm-Gg: ASbGnct9k05PKtaPM/CM09WL32oPIophojAJUXhZdy9jHMqH2WPvN2f5tPm3yWr0EQJ
+ tC7VTf3FHIx6Z+aU2ubCD/s7gu8qcCsXdA9SoL6NkVt/w9LViLT6H9TIGwiSr7323A9HiuOHGqF
+ HcrB0sfAyuAk81DoWlwxZPMsAT61M53UwdAEplGq6XdIz8ZYtpfFZwfA57x4I060OZHbw0bv/zf
+ f12FFpS8GlB3guqfxzjZJUrBkjgr/zh5qvfiCazkFxYuMZGa+6TiZm0fJd0MkSTlDYgOfzgGvZX
+ UhmH0e/zMpG4xKbIy5JduHecAA+HZdxgl/A2VG1IHsWac4zf2l0qz/qY6RTmNPOIl1tA2/7hbde
+ nRBq99Qm/2BDy6cI=
+X-Google-Smtp-Source: AGHT+IFdGFnICaMAp2Be97vJq4ET9ZKFGDOcDtEAMVJ+yBIHUYs5NRFKHk3Qzn2aCGR93xd5QPO1Lw==
+X-Received: by 2002:a05:600c:34ce:b0:43d:fa58:81d3 with SMTP id
+ 5b1f17b1804b1-440a66b0803mr22777335e9.32.1745595189857; 
+ Fri, 25 Apr 2025 08:33:09 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073ca5debsm2716105f8f.38.2025.04.25.08.33.04
+ ffacd0b85a97d-3a073ca56d5sm2699304f8f.32.2025.04.25.08.33.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 08:33:04 -0700 (PDT)
+ Fri, 25 Apr 2025 08:33:09 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 53/58] cpus: Move target-agnostic methods out of cpu-target.c
-Date: Fri, 25 Apr 2025 17:28:37 +0200
-Message-ID: <20250425152843.69638-54-philmd@linaro.org>
+Subject: [PULL 54/58] accel: Implement accel_init_ops_interfaces() for both
+ system/user mode
+Date: Fri, 25 Apr 2025 17:28:38 +0200
+Message-ID: <20250425152843.69638-55-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
 References: <20250425152843.69638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,221 +101,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Various methods of cpu-target.c don't use any target-specific
-knowledge at all and can be built once in the target-agnostic
-cpu-common.c file.
+We want to build more common code, moving objects from meson's
+specific_ss[] set to common_ss[]. Since the CONFIG_USER_ONLY
+definitions isn't applied on the common_ss[] set, it is simpler
+to add an empty accel_init_ops_interfaces() stub on user emulation,
+removing any CONFIG_USER_ONLY use in accel-target.c.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20250417165430.58213-4-philmd@linaro.org>
+Message-Id: <20250417165430.58213-5-philmd@linaro.org>
 ---
- cpu-target.c         | 77 +-------------------------------------------
- hw/core/cpu-common.c | 74 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 75 insertions(+), 76 deletions(-)
+ MAINTAINERS                                |  2 +-
+ accel/{accel-system.h => accel-internal.h} |  8 ++++----
+ accel/accel-system.c                       |  4 ++--
+ accel/accel-target.c                       | 10 ++--------
+ accel/accel-user.c                         |  6 ++++++
+ 5 files changed, 15 insertions(+), 15 deletions(-)
+ rename accel/{accel-system.h => accel-internal.h} (56%)
 
-diff --git a/cpu-target.c b/cpu-target.c
-index c2dd590d48a..b5645ff0dbb 100644
---- a/cpu-target.c
-+++ b/cpu-target.c
-@@ -19,94 +19,19 @@
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 28b1e9ba443..07711cfd381 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -500,7 +500,7 @@ F: include/qemu/target-info*.h
+ F: include/system/accel-*.h
+ F: include/system/cpus.h
+ F: include/accel/accel-cpu-target.h
+-F: accel/accel-*.c
++F: accel/accel-*.?
+ F: accel/Makefile.objs
+ F: accel/stubs/Makefile.objs
+ F: cpu-common.c
+diff --git a/accel/accel-system.h b/accel/accel-internal.h
+similarity index 56%
+rename from accel/accel-system.h
+rename to accel/accel-internal.h
+index 2d37c73c97b..03426aa21ee 100644
+--- a/accel/accel-system.h
++++ b/accel/accel-internal.h
+@@ -1,5 +1,5 @@
+ /*
+- * QEMU System Emulation accel internal functions
++ * QEMU accel internal functions
+  *
+  * Copyright 2021 SUSE LLC
+  *
+@@ -7,9 +7,9 @@
+  * See the COPYING file in the top-level directory.
+  */
  
- #include "qemu/osdep.h"
- #include "cpu.h"
--#include "qapi/error.h"
--#include "qemu/error-report.h"
--#include "qemu/qemu-print.h"
--#include "qemu/target-info.h"
+-#ifndef ACCEL_SYSTEM_H
+-#define ACCEL_SYSTEM_H
++#ifndef ACCEL_INTERNAL_H
++#define ACCEL_INTERNAL_H
+ 
+-void accel_system_init_ops_interfaces(AccelClass *ac);
++void accel_init_ops_interfaces(AccelClass *ac);
+ 
+ #endif /* ACCEL_SYSTEM_H */
+diff --git a/accel/accel-system.c b/accel/accel-system.c
+index 5df49fbe831..a0f562ae9ff 100644
+--- a/accel/accel-system.c
++++ b/accel/accel-system.c
+@@ -29,7 +29,7 @@
  #include "system/accel-ops.h"
  #include "system/cpus.h"
- #include "exec/cpu-common.h"
- #include "exec/tswap.h"
- #include "exec/replay-core.h"
- #include "exec/log.h"
--#include "accel/accel-cpu-target.h"
-+#include "hw/core/cpu.h"
- #include "trace/trace-root.h"
+ #include "qemu/error-report.h"
+-#include "accel-system.h"
++#include "accel-internal.h"
  
- /* Validate correct placement of CPUArchState. */
- QEMU_BUILD_BUG_ON(offsetof(ArchCPU, parent_obj) != 0);
- QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
- 
--char *cpu_model_from_type(const char *typename)
--{
--    g_autofree char *suffix = g_strdup_printf("-%s", target_cpu_type());
--
--    if (!object_class_by_name(typename)) {
--        return NULL;
--    }
--
--    if (g_str_has_suffix(typename, suffix)) {
--        return g_strndup(typename, strlen(typename) - strlen(suffix));
--    }
--
--    return g_strdup(typename);
--}
--
--const char *parse_cpu_option(const char *cpu_option)
--{
--    ObjectClass *oc;
--    CPUClass *cc;
--    gchar **model_pieces;
--    const char *cpu_type;
--
--    model_pieces = g_strsplit(cpu_option, ",", 2);
--    if (!model_pieces[0]) {
--        error_report("-cpu option cannot be empty");
--        exit(1);
--    }
--
--    oc = cpu_class_by_name(target_cpu_type(), model_pieces[0]);
--    if (oc == NULL) {
--        error_report("unable to find CPU model '%s'", model_pieces[0]);
--        g_strfreev(model_pieces);
--        exit(EXIT_FAILURE);
--    }
--
--    cpu_type = object_class_get_name(oc);
--    cc = CPU_CLASS(oc);
--    cc->parse_features(cpu_type, model_pieces[1], &error_fatal);
--    g_strfreev(model_pieces);
--    return cpu_type;
--}
--
--static void cpu_list_entry(gpointer data, gpointer user_data)
--{
--    CPUClass *cc = CPU_CLASS(OBJECT_CLASS(data));
--    const char *typename = object_class_get_name(OBJECT_CLASS(data));
--    g_autofree char *model = cpu_model_from_type(typename);
--
--    if (cc->deprecation_note) {
--        qemu_printf("  %s (deprecated)\n", model);
--    } else {
--        qemu_printf("  %s\n", model);
--    }
--}
--
--void list_cpus(void)
--{
--    CPUClass *cc = CPU_CLASS(object_class_by_name(target_cpu_type()));
--
--    if (cc->list_cpus) {
--        cc->list_cpus();
--    } else {
--        GSList *list;
--
--        list = object_class_get_list_sorted(TYPE_CPU, false);
--        qemu_printf("Available CPUs:\n");
--        g_slist_foreach(list, cpu_list_entry, NULL);
--        g_slist_free(list);
--    }
--}
--
- /* enable or disable single step mode. EXCP_DEBUG is returned by the
-    CPU loop after each instruction */
- void cpu_single_step(CPUState *cpu, int enabled)
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 1fb6ea38922..92c40b6bf83 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -25,6 +25,9 @@
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
- #include "qemu/lockcnt.h"
-+#include "qemu/error-report.h"
-+#include "qemu/qemu-print.h"
-+#include "qemu/target-info.h"
- #include "exec/log.h"
- #include "exec/gdbstub.h"
- #include "system/tcg.h"
-@@ -152,6 +155,21 @@ ObjectClass *cpu_class_by_name(const char *typename, const char *cpu_model)
-     return NULL;
- }
- 
-+char *cpu_model_from_type(const char *typename)
-+{
-+    g_autofree char *suffix = g_strdup_printf("-%s", target_cpu_type());
-+
-+    if (!object_class_by_name(typename)) {
-+        return NULL;
-+    }
-+
-+    if (g_str_has_suffix(typename, suffix)) {
-+        return g_strndup(typename, strlen(typename) - strlen(suffix));
-+    }
-+
-+    return g_strdup(typename);
-+}
-+
- static void cpu_common_parse_features(const char *typename, char *features,
-                                       Error **errp)
+ int accel_init_machine(AccelState *accel, MachineState *ms)
  {
-@@ -183,6 +201,33 @@ static void cpu_common_parse_features(const char *typename, char *features,
-     }
+@@ -63,7 +63,7 @@ void accel_setup_post(MachineState *ms)
  }
  
-+const char *parse_cpu_option(const char *cpu_option)
-+{
-+    ObjectClass *oc;
-+    CPUClass *cc;
-+    gchar **model_pieces;
-+    const char *cpu_type;
-+
-+    model_pieces = g_strsplit(cpu_option, ",", 2);
-+    if (!model_pieces[0]) {
-+        error_report("-cpu option cannot be empty");
-+        exit(1);
-+    }
-+
-+    oc = cpu_class_by_name(target_cpu_type(), model_pieces[0]);
-+    if (oc == NULL) {
-+        error_report("unable to find CPU model '%s'", model_pieces[0]);
-+        g_strfreev(model_pieces);
-+        exit(EXIT_FAILURE);
-+    }
-+
-+    cpu_type = object_class_get_name(oc);
-+    cc = CPU_CLASS(oc);
-+    cc->parse_features(cpu_type, model_pieces[1], &error_fatal);
-+    g_strfreev(model_pieces);
-+    return cpu_type;
-+}
-+
- bool cpu_exec_realizefn(CPUState *cpu, Error **errp)
+ /* initialize the arch-independent accel operation interfaces */
+-void accel_system_init_ops_interfaces(AccelClass *ac)
++void accel_init_ops_interfaces(AccelClass *ac)
  {
-     if (!accel_cpu_common_realize(cpu, errp)) {
-@@ -359,3 +404,32 @@ static void cpu_register_types(void)
+     const char *ac_name;
+     char *ops_name;
+diff --git a/accel/accel-target.c b/accel/accel-target.c
+index 08d4e450bde..7f3bbf31a8b 100644
+--- a/accel/accel-target.c
++++ b/accel/accel-target.c
+@@ -29,10 +29,7 @@
+ 
+ #include "cpu.h"
+ #include "accel/accel-cpu-target.h"
+-
+-#ifndef CONFIG_USER_ONLY
+-#include "accel-system.h"
+-#endif /* !CONFIG_USER_ONLY */
++#include "accel-internal.h"
+ 
+ static const TypeInfo accel_type = {
+     .name = TYPE_ACCEL,
+@@ -106,10 +103,7 @@ static void accel_init_cpu_interfaces(AccelClass *ac)
+ 
+ void accel_init_interfaces(AccelClass *ac)
+ {
+-#ifndef CONFIG_USER_ONLY
+-    accel_system_init_ops_interfaces(ac);
+-#endif /* !CONFIG_USER_ONLY */
+-
++    accel_init_ops_interfaces(ac);
+     accel_init_cpu_interfaces(ac);
  }
  
- type_init(cpu_register_types)
+diff --git a/accel/accel-user.c b/accel/accel-user.c
+index 22b6a1a1a89..7d192306a65 100644
+--- a/accel/accel-user.c
++++ b/accel/accel-user.c
+@@ -9,6 +9,12 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/accel.h"
++#include "accel-internal.h"
 +
-+static void cpu_list_entry(gpointer data, gpointer user_data)
++void accel_init_ops_interfaces(AccelClass *ac)
 +{
-+    CPUClass *cc = CPU_CLASS(OBJECT_CLASS(data));
-+    const char *typename = object_class_get_name(OBJECT_CLASS(data));
-+    g_autofree char *model = cpu_model_from_type(typename);
-+
-+    if (cc->deprecation_note) {
-+        qemu_printf("  %s (deprecated)\n", model);
-+    } else {
-+        qemu_printf("  %s\n", model);
-+    }
++    /* nothing */
 +}
-+
-+void list_cpus(void)
-+{
-+    CPUClass *cc = CPU_CLASS(object_class_by_name(target_cpu_type()));
-+
-+    if (cc->list_cpus) {
-+        cc->list_cpus();
-+    } else {
-+        GSList *list;
-+
-+        list = object_class_get_list_sorted(TYPE_CPU, false);
-+        qemu_printf("Available CPUs:\n");
-+        g_slist_foreach(list, cpu_list_entry, NULL);
-+        g_slist_free(list);
-+    }
-+}
+ 
+ AccelState *current_accel(void)
+ {
 -- 
 2.47.1
 
