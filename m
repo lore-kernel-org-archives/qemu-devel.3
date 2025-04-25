@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D9F3C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:31:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1154DC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:31:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8KzP-00008V-Ac; Fri, 25 Apr 2025 11:29:19 -0400
+	id 1u8L19-0002NF-8y; Fri, 25 Apr 2025 11:31:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8KzK-00007A-Ih
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:29:15 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L0J-0001Ci-0k
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:30:19 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8KzH-0003Wt-G8
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:29:14 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43ce70f9afbso19504445e9.0
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:29:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L0G-0003qr-1a
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:30:14 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-39149bccb69so2122045f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:30:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745594949; x=1746199749; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745595010; x=1746199810; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X8jl8hB9zMqvOgbv5oC21KdNuLlcY3iJS3hENETS5RE=;
- b=sxFnocQMQ1/0s22SBF3EmA1LaISrE2l4i9183L+zmn7UZca0svqY4bqaB/d7xM+Q0W
- 6OLyxRtL6rcQ5SmKa34h3W8ABc3TLD6GqWbQz1tMe0mwoXri4b1TkL7d5x4m8nhvLYqG
- y2B671tIhqPqnHYMnfZ8N0GbCR+Kk7JbXjV7grT+JTh1aFBThULnFIbjCi6OkIaYiWJf
- fmJxcgnyhgJMyobphAchSak4uOzGocx7wVvcnOqYkmKXNi3/m/ABw1L8e+nACx8UifdZ
- 6Qt24y+AcZKt9sYxqOWBmhcvpkDEbPRqAEAjaGo3ISOUuzO9FtdaP+Q5Ku+NYZcA6OXX
- Idxw==
+ bh=3qyqAgsMl7PwKWyQcrXSb+jM1udTOnFyOaVgMp4zBvY=;
+ b=KV6B8rSfGFSckNH6VrIs3Ind4k75HVPyf2KBvkwhzVZ9Khl7XkFmuy7q7AG8oH5Wh+
+ nvpZ+2iO/4TAzH/KcPjh0cUkca2FqB9x2FsXKka1mVkfC2VM7klEYsP5OHNFzzaKPuVr
+ +1MTNy2JRiIIEEviEUIVwhNOfjb94X/i9pKlKi6E6cEVG+gFfLZmIUGk3IN7Vd8zIsEU
+ 1Bm8hUKjAHRn/I7AvdppXbPH5PrNfnzbEn9nBDZYdw2GmtxyHGqHg5Cf9veiNxQhw2DW
+ 8zYR0OoSntSNGuahusaTzRoyLmStsseMpq7Ii5Te8ym6S4wfVvIeBamEGNgyPDKHQwfu
+ ViIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745594949; x=1746199749;
+ d=1e100.net; s=20230601; t=1745595010; x=1746199810;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=X8jl8hB9zMqvOgbv5oC21KdNuLlcY3iJS3hENETS5RE=;
- b=IFcwEuL57Vcn1NFxfn/5ruAZqOvUYgrEuhNFTrSH9q3UaDLXYI/wDhYJcVt44XsTU/
- gvNlutAT75iqvvNpjEfZrcGYuYzIMBSCaZF63gUOZRF/mXa5HYCD3q7WQy0eKqPJruCZ
- NQPdSht5ySksnk9SSttoGdKtekUUBDzL/OoRIi3gkUM/FxXHwd12gXtpDCOv/Xh7uPFf
- Kk75UVHxeccJrXprly66DfdqcsLwLRyw/Fdqw1L1WYXnfpqGLryz5HHLPANeTgSFWYQs
- 4mopObOu+Cw6NNuUtqtk/fmeQWcXQ9cDJLa0F0+fpjxWSLovrieF5xEYCcm5HA6Umi7a
- CZrQ==
-X-Gm-Message-State: AOJu0YxugyH8ckkeIjzsknapm7OrP0S6EPbrZDuiPOkd9WiOqUyTN7L3
- H/eLbewR5bnUm4JfFnYrg2rJP1VlyhYqJQ+CfU+rSPqg+YV2s9EnLWjtkUaziuuxXAsoZkaPm5f
- G
-X-Gm-Gg: ASbGncsrHkejR8zNs3ZXuzOXuTxp1hr6vS1ult6hvBZdC4Wcurr1qvIygBqj9VTLI6x
- 0tuWxyQQrLiK00TJ34sIRsrDdac34e5VKdWhC9oxb+cJ98qXcS6jJd+OaVm0/8pIsAn36veCVWz
- Y+UBGTamU51wkmmBqjWFnQ2003B1ZErfGAuMPk4oWYzdrmTNUXe4t+zo7pPnS2GKGMSkHhH9fKk
- EetVs7GcumaEzYncPKjmfFdYDBqfko9+iT391ifaPGmG9ZgFKqrr7ZdiaEM4xZAFCJxX8mDhav7
- g7op3HUetBotBIAelMT4LqvqNepq0zp8vm6/tdHCxegJTtNYfocp3k/5XoSPLo/CSsUqG3PzhkU
- dOptyv/FQOAszr5w=
-X-Google-Smtp-Source: AGHT+IHOW9Vd4u/X9xRjc2m5GQCS/ApbZi6+31HM0P0Q3Dl6EJ/2wE53jMBwH2FAlmDH/WKnLa5/PA==
-X-Received: by 2002:a05:6000:144f:b0:391:13d6:c9f0 with SMTP id
- ffacd0b85a97d-3a074f2ef6dmr2717698f8f.47.1745594949437; 
- Fri, 25 Apr 2025 08:29:09 -0700 (PDT)
+ bh=3qyqAgsMl7PwKWyQcrXSb+jM1udTOnFyOaVgMp4zBvY=;
+ b=XRb6tH1K2BLqU957b1wK3l18dPRhSTq8ZvpB11LdwIedtGzgq5J88/q07VHulp2LJE
+ nnozCw4pAnWNRoqK5RMo8DeH7ZOyBQqq+t8ysQx8/NcZAX+A7/kHyhApkZtuKKuBqEg9
+ dbqecYcSPgjtmax14u0SWa0dFtwLJZC2efjXY/VSIJDyOO7MJ7XfCspfqPENDB3Adj1n
+ rBD4QLuzuGYROBDQFvKCuRGfdjt62e5DQtjrL7r4lPeG02qRm8XGgC2bn+KxKD8Ed+Gb
+ tHkzq32b+NPcCCaSQU4fPS68A8KrgN9Xs+8Ff8QLNASyCPgJh5yxuJfCKcf+UWclB5wo
+ TmQQ==
+X-Gm-Message-State: AOJu0YydCT83JfrWW45nMw3ikPi8YJATnP1gMVIH14da4nVJKo8RmHeb
+ SflMGVP9bakDgKLJuyKDOq/C56bmidfQ6DDHVs0nRaZRF7MyDgdOsP0hMUmHAsBORBSOgQJ5Iyn
+ D
+X-Gm-Gg: ASbGncs3R8AUxaokj48b04TS5gAIaFtV3mvdpOyzooAxFJOa5GnqCj4U7HdK7JHNzL1
+ s/fJs/HHsa3CDfQtBoQVpsNeOR3bvL/xFJFdyHxFoNH5wdQOPwv61mCgTA2Z7oWxFYj89ZRS5L5
+ koVUzGTfu67sR9rPVw4ROvBlo4thCjyzA/MCQ5O1fnMvFRpJdYe2j9d4z3XJTZahMQ1yb2MSJN6
+ JuDo1GWolrjBRsyfwdMpMXMld4ZjuUveyMPdvlLGEH5UF1bzWYUkcPSrAeojIs0/ptJtFKdY4R6
+ eKAqF8AxeOjwRJ/dgx6UtoTgEzY6dLSLeE3EzRYrSLehaaAbGFQupoSEqBZ/U8P08DPjo785m9K
+ HDfKnD2HONn7a+dA=
+X-Google-Smtp-Source: AGHT+IFGgfjhMIceIRMETrVtVvUK2GXRueWko3puHURh4iS+jphNtzxesL33N7+irgZIIvvc4dsusA==
+X-Received: by 2002:a5d:47ad:0:b0:39c:11c0:eba1 with SMTP id
+ ffacd0b85a97d-3a074e0e19bmr2178441f8f.12.1745595009892; 
+ Fri, 25 Apr 2025 08:30:09 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073ca42cdsm2628191f8f.22.2025.04.25.08.29.08
+ ffacd0b85a97d-3a073c8c973sm2682620f8f.5.2025.04.25.08.30.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 08:29:08 -0700 (PDT)
+ Fri, 25 Apr 2025 08:30:09 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 05/58] target/i386: Register CPUClass:list_cpus
-Date: Fri, 25 Apr 2025 17:27:49 +0200
-Message-ID: <20250425152843.69638-6-philmd@linaro.org>
+Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 17/58] qom/object: Fix type conflict of GLib function pointers
+Date: Fri, 25 Apr 2025 17:28:01 +0200
+Message-ID: <20250425152843.69638-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
 References: <20250425152843.69638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,61 +100,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register x86_cpu_list() as CPUClass:list_cpus callback.
-Reduce its scope and remove the cpu_list definition.
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 
+On Emscripten, function pointer casts can result in runtime failures due to
+strict function signature checks. This affects the use of g_list_sort and
+g_slist_sort, which internally perform function pointer casts that are not
+supported by Emscripten. To avoid these issues, g_list_sort_with_data and
+g_slist_sort_with_data should be used instead, as they do not rely on
+function pointer casting.
+
+Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <8ca13f4e2b9eba9d1f6030b0afb442a24330e463.1745295397.git.ktokunaga.mail@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-Id: <20250324185837.46506-3-philmd@linaro.org>
 ---
- target/i386/cpu.h | 3 ---
- target/i386/cpu.c | 3 ++-
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ qom/object.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 9866595cd0e..54bf9639f19 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2365,7 +2365,6 @@ int x86_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
- int x86_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
- void x86_cpu_gdb_init(CPUState *cs);
- 
--void x86_cpu_list(void);
- int cpu_x86_support_mca_broadcast(CPUX86State *env);
- 
- #ifndef CONFIG_USER_ONLY
-@@ -2559,8 +2558,6 @@ uint64_t cpu_get_tsc(CPUX86State *env);
- #define TARGET_DEFAULT_CPU_TYPE X86_CPU_TYPE_NAME("qemu32")
- #endif
- 
--#define cpu_list x86_cpu_list
--
- /* MMU modes definitions */
- #define MMU_KSMAP64_IDX    0
- #define MMU_KSMAP32_IDX    1
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 1f970aa4daa..955295fe798 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6319,7 +6319,7 @@ static void x86_cpu_list_entry(gpointer data, gpointer user_data)
+diff --git a/qom/object.c b/qom/object.c
+index 425ee2f0ee8..664f0f24ae8 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1191,7 +1191,7 @@ GSList *object_class_get_list(const char *implements_type,
+     return list;
  }
  
- /* list available CPU models and flags */
--void x86_cpu_list(void)
-+static void x86_cpu_list(void)
+-static gint object_class_cmp(gconstpointer a, gconstpointer b)
++static gint object_class_cmp(gconstpointer a, gconstpointer b, gpointer d)
  {
-     int i, j;
-     GSList *list;
-@@ -8905,6 +8905,7 @@ static void x86_cpu_common_class_init(ObjectClass *oc, void *data)
-     cc->reset_dump_flags = CPU_DUMP_FPU | CPU_DUMP_CCOP;
+     return strcasecmp(object_class_get_name((ObjectClass *)a),
+                       object_class_get_name((ObjectClass *)b));
+@@ -1200,8 +1200,9 @@ static gint object_class_cmp(gconstpointer a, gconstpointer b)
+ GSList *object_class_get_list_sorted(const char *implements_type,
+                                      bool include_abstract)
+ {
+-    return g_slist_sort(object_class_get_list(implements_type, include_abstract),
+-                        object_class_cmp);
++    return g_slist_sort_with_data(
++        object_class_get_list(implements_type, include_abstract),
++        object_class_cmp, NULL);
+ }
  
-     cc->class_by_name = x86_cpu_class_by_name;
-+    cc->list_cpus = x86_cpu_list;
-     cc->parse_features = x86_cpu_parse_featurestr;
-     cc->dump_state = x86_cpu_dump_state;
-     cc->set_pc = x86_cpu_set_pc;
+ Object *object_ref(void *objptr)
 -- 
 2.47.1
 
