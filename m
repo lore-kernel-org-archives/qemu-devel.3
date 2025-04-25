@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9113EC369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 21:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D40C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 21:35:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8QfO-0007XC-Ay; Fri, 25 Apr 2025 17:33:03 -0400
+	id 1u8Qgf-0000Rh-FM; Fri, 25 Apr 2025 17:34:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1u8QfB-0007GT-Eh; Fri, 25 Apr 2025 17:32:49 -0400
+ id 1u8Qfj-0007pu-K3; Fri, 25 Apr 2025 17:33:23 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1u8Qf9-0005oH-2N; Fri, 25 Apr 2025 17:32:49 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53PLC3mW003795;
- Fri, 25 Apr 2025 21:32:02 GMT
+ id 1u8Qfg-0005sA-Jc; Fri, 25 Apr 2025 17:33:23 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53PL1wKm004902;
+ Fri, 25 Apr 2025 21:32:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=PxAKD5hMNySQzMooDjeSQTqKahL0Pqv/8JZulcUK5wM=; b=
- Pu//aB+UB7CxgydyZGF4YmjPPfwNpSe4Ybf3fS2Oq3YCeo1gyVJXplWvUMWli+Ix
- rReW2ekSjpVHy5uUQeUrWiLI070k7S/C6Ad5P2BTBvIneFmlqjEmd6oEeTtRDEWQ
- m7MPkMAxMN+z4djmgB1aUto/VGUJ/2BxQplB4abSgBdQXQPkxp+G65c2EYp8pMI/
- U1d7SzJc3TSNMptjkqpc76FWbc2D2s61EjuB/Q5Y7j3f6IFGow72vBg3ZrF/ySaF
- 08hloSXzwULpeeHHkDSDfapIuaiB+HqJsvmEJVixhOHYsdnE6fSST6bZgcrKGkwg
- yw98d4C0zn9AH+uxs8CXzw==
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=corp-2023-11-20; bh=u33Z8
+ CD6mVAqNgkQiyrinHTr5bH/OZP7baIy6hB1Pl8=; b=SEdJKL/GebNIUzxhCsePD
+ AsmIqsP0uFZQ/8ejMAXVSZDxY2DL2JX1sBXPMwPcfOhTG8Jkcb+7nbh2B8J0IJSX
+ 1g94/NpGv79jf89gWsertEiT8ho+CZUxbEX9Pc5t+qkbvpgpzQ7OAGAmOKFerZvs
+ TonWpYH1V7GLzkDVcvfkpfIgW97F0UKTgC+4uVi9FQRhPcVgv6gITMxXM2LPPUrG
+ CvIsy6X7T6RioPyYjEzgP6+K1aMitEfSYe1CJt5wfWQCVa9Q3VEZr6i9Lniw6P8O
+ zEAAIXViNqyPfCQimsgE83tsUPuZp/ghdGQyzvAE/PjCgNwZOK1iRUT+NmspyipM
+ g==
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 468j3hg4g0-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 468hxvg943-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 25 Apr 2025 21:31:59 +0000 (GMT)
+ Fri, 25 Apr 2025 21:32:47 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 53PL0WVr031074; Fri, 25 Apr 2025 21:31:48 GMT
+ with ESMTP id 53PL0WVt031074; Fri, 25 Apr 2025 21:31:58 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 466k095v6d-1
+ 466k095va8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 25 Apr 2025 21:31:48 +0000
+ Fri, 25 Apr 2025 21:31:58 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53PLVdAb039597;
- Fri, 25 Apr 2025 21:31:47 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 53PLVdAj039597;
+ Fri, 25 Apr 2025 21:31:57 GMT
 Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 466k095v2d-4; Fri, 25 Apr 2025 21:31:47 +0000
+ 466k095v2d-8; Fri, 25 Apr 2025 21:31:57 +0000
 From: Dongli Zhang <dongli.zhang@oracle.com>
 To: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
  qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org
@@ -72,14 +72,13 @@ Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
  cobechen@zhaoxin.com, louisqi@zhaoxin.com, liamni@zhaoxin.com,
  frankzhu@zhaoxin.com, silviazhao@zhaoxin.com, kraxel@redhat.com,
  berrange@redhat.com
-Subject: [PATCH v5 03/10] kvm: Introduce kvm_arch_pre_create_vcpu()
-Date: Fri, 25 Apr 2025 14:30:00 -0700
-Message-ID: <20250425213037.8137-4-dongli.zhang@oracle.com>
+Subject: [PATCH v5 07/10] target/i386/kvm: query kvm.enable_pmu parameter
+Date: Fri, 25 Apr 2025 14:30:04 -0700
+Message-ID: <20250425213037.8137-8-dongli.zhang@oracle.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250425213037.8137-1-dongli.zhang@oracle.com>
 References: <20250425213037.8137-1-dongli.zhang@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
@@ -89,15 +88,15 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
  spamscore=0 malwarescore=0 mlxlogscore=999 suspectscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2504070000
  definitions=main-2504250154
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDE1NSBTYWx0ZWRfX3mzYmjMKBEjQ
- CanfJLEA6CQiNV3QHYoKa8usZzZZwX0Fow7BQprAg9H2doifLNAV0+cGj4dCwQMmsBKEFOJRZCl
- lxPUabjZ7daObbWntiLXqhiYtnnNjavhi0C+BENBt5P9rWg5QKOXon3hgFh0WrHilimsed4DUPb
- clS6rmEUsz1euENe0KXI8xBk9q2eSd/HTzyG0Tc+lVZMGlehK7UqAAP/WDLqC/U5IYy+m746myK
- yN+TbtKilclN4uk18XytYtvUi+DoG8kwrGN48kQl01Khu6pX9tDarp2Muym+AfX1N8V6DAoIrEe
- Ok83w1Pw7RouDvhYZpTe5x9SAg42qJ2e/G7kHrSwaWoU2Wzq2czf8gjPToJbJ7zu3QTxrZm0vLN
- TDBIrNSH
-X-Proofpoint-ORIG-GUID: dL7z13vLjb6orcDn7R80kKUL18_qEKrz
-X-Proofpoint-GUID: dL7z13vLjb6orcDn7R80kKUL18_qEKrz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDE1NSBTYWx0ZWRfX+fmK7Dbc9FJ4
+ 266sRUwAXc5z8X3dG8uqewEe9mZWkF/AXomZB79ZYw6JyLwPlYlSjHfBsvRt63IAubqQXlsZ4z8
+ zf3zolFY9rEqIU/bmwK+Sdl3JezRrEs6HrmeLc96+bnPCVRvokRPJfNtkHKKU/WblbfzTjFJeCL
+ 2BqXm8vy7YPZFkF/3d2Usgr7QVMJsvVRJg51LOJyT4a+2IzW7PPPWPhuKT0TRNDQP/HuzkMXB58
+ /kiuNh0lhKdFmrYF273IOS0TToSytfwEs0Xxf46jzj3/BX+xwN0mIHUP2cRPznbN6uXpu7ACtSl
+ zNBtbZ33D51ySsleggbRoeNPjjFd3G2mrVWaDFTBgl4b5S+vKN9ajj1Z9K5RNileDpEXS2DQxMR
+ 0zYje8Ng
+X-Proofpoint-GUID: 1dgnmEaHaWOopUc8p2B73hhTQtRWMfyc
+X-Proofpoint-ORIG-GUID: 1dgnmEaHaWOopUc8p2B73hhTQtRWMfyc
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -32
@@ -123,179 +122,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+When PMU is enabled in QEMU, there is a chance that PMU virtualization is
+completely disabled by the KVM module parameter kvm.enable_pmu=N.
 
-Introduce kvm_arch_pre_create_vcpu(), to perform arch-dependent
-work prior to create any vcpu. This is for i386 TDX because it needs
-call TDX_INIT_VM before creating any vcpu.
+The kvm.enable_pmu parameter is introduced since Linux v5.17.
+Its permission is 0444. It does not change until a reload of the KVM
+module.
 
-The specific implementation of i386 will be added in the future patch.
+Read the kvm.enable_pmu value from the module sysfs to give a chance to
+provide more information about vPMU enablement.
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
 Changed since v2:
-  - Add my Signed-off-by.
+  - Rework the code flow following Zhao's suggestion.
+  - Return error when:
+    (*kvm_enable_pmu == 'N' && X86_CPU(cpu)->enable_pmu)
 Changed since v3:
-  - Pick new reviewed version from:
-https://lore.kernel.org/all/20250401130205.2198253-8-xiaoyao.li@intel.com/
-    I have fixed the typo as suggested by Daniel.
-  - Keep Zhao's review.
+  - Re-split the cases into enable_pmu and !enable_pmu, following Zhao's
+    suggestion.
+  - Rework the commit messages.
+  - Bring back global static variable 'kvm_pmu_disabled' from v2.
+Changed since v4:
+  - Add Reviewed-by from Zhao.
 
- accel/kvm/kvm-all.c        | 5 +++++
- include/system/kvm.h       | 1 +
- target/arm/kvm.c           | 5 +++++
- target/i386/kvm/kvm.c      | 5 +++++
- target/loongarch/kvm/kvm.c | 4 ++++
- target/mips/kvm.c          | 5 +++++
- target/ppc/kvm.c           | 5 +++++
- target/riscv/kvm/kvm-cpu.c | 5 +++++
- target/s390x/kvm/kvm.c     | 5 +++++
- 9 files changed, 40 insertions(+)
+ target/i386/kvm/kvm.c | 61 +++++++++++++++++++++++++++++++------------
+ 1 file changed, 44 insertions(+), 17 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index cba9c78d2f..c7f021006f 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -544,6 +544,11 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
- 
-     trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
- 
-+    ret = kvm_arch_pre_create_vcpu(cpu, errp);
-+    if (ret < 0) {
-+        goto err;
-+    }
-+
-     ret = kvm_create_vcpu(cpu);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret,
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 18811cad6f..b1ec34d765 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -374,6 +374,7 @@ int kvm_arch_get_default_type(MachineState *ms);
- 
- int kvm_arch_init(MachineState *ms, KVMState *s);
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp);
- int kvm_arch_init_vcpu(CPUState *cpu);
- int kvm_arch_destroy_vcpu(CPUState *cpu);
- 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 97de8c7e93..d53ac64bf1 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -1874,6 +1874,11 @@ static int kvm_arm_sve_set_vls(ARMCPU *cpu)
- 
- #define ARM_CPU_ID_MPIDR       3, 0, 0, 0, 5
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     int ret;
 diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index c9a3c02e3e..7cd418b59d 100644
+index a3c9324d6c..a173b345b9 100644
 --- a/target/i386/kvm/kvm.c
 +++ b/target/i386/kvm/kvm.c
-@@ -2052,6 +2052,11 @@ full:
-     abort();
- }
+@@ -185,6 +185,10 @@ static int has_triple_fault_event;
+ static bool has_msr_mcg_ext_ctl;
  
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     struct {
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 1bda570482..c66bdd5302 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -1071,7 +1071,11 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
-             env->pv_features |= BIT(KVM_FEATURE_VIRT_EXTIOI);
+ static int pmu_cap;
++/*
++ * Read from /sys/module/kvm/parameters/enable_pmu.
++ */
++static bool kvm_pmu_disabled;
+ 
+ static struct kvm_cpuid2 *cpuid_cache;
+ static struct kvm_cpuid2 *hv_cpuid_cache;
+@@ -2042,23 +2046,30 @@ int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
+     if (first) {
+         first = false;
+ 
+-        /*
+-         * Since Linux v5.18, KVM provides a VM-level capability to easily
+-         * disable PMUs; however, QEMU has been providing PMU property per
+-         * CPU since v1.6. In order to accommodate both, have to configure
+-         * the VM-level capability here.
+-         *
+-         * KVM_PMU_CAP_DISABLE doesn't change the PMU
+-         * behavior on Intel platform because current "pmu" property works
+-         * as expected.
+-         */
+-        if ((pmu_cap & KVM_PMU_CAP_DISABLE) && !X86_CPU(cpu)->enable_pmu) {
+-            ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
+-                                    KVM_PMU_CAP_DISABLE);
+-            if (ret < 0) {
+-                error_setg_errno(errp, -ret,
+-                                 "Failed to set KVM_PMU_CAP_DISABLE");
+-                return ret;
++        if (X86_CPU(cpu)->enable_pmu) {
++            if (kvm_pmu_disabled) {
++                warn_report("Failed to enable PMU since "
++                            "KVM's enable_pmu parameter is disabled");
++            }
++        } else {
++            /*
++             * Since Linux v5.18, KVM provides a VM-level capability to easily
++             * disable PMUs; however, QEMU has been providing PMU property per
++             * CPU since v1.6. In order to accommodate both, have to configure
++             * the VM-level capability here.
++             *
++             * KVM_PMU_CAP_DISABLE doesn't change the PMU
++             * behavior on Intel platform because current "pmu" property works
++             * as expected.
++             */
++            if (pmu_cap & KVM_PMU_CAP_DISABLE) {
++                ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_PMU_CAPABILITY, 0,
++                                        KVM_PMU_CAP_DISABLE);
++                if (ret < 0) {
++                    error_setg_errno(errp, -ret,
++                                     "Failed to set KVM_PMU_CAP_DISABLE");
++                    return ret;
++                }
+             }
          }
      }
-+    return 0;
-+}
+@@ -3253,6 +3264,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+     int ret;
+     struct utsname utsname;
+     Error *local_err = NULL;
++    g_autofree char *kvm_enable_pmu;
  
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
+     /*
+      * Initialize SEV context, if required
+@@ -3398,6 +3410,21 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+ 
+     pmu_cap = kvm_check_extension(s, KVM_CAP_PMU_CAPABILITY);
+ 
++    /*
++     * The enable_pmu parameter is introduced since Linux v5.17,
++     * give a chance to provide more information about vPMU
++     * enablement.
++     *
++     * The kvm.enable_pmu's permission is 0444. It does not change
++     * until a reload of the KVM module.
++     */
++    if (g_file_get_contents("/sys/module/kvm/parameters/enable_pmu",
++                            &kvm_enable_pmu, NULL, NULL)) {
++        if (*kvm_enable_pmu == 'N') {
++            kvm_pmu_disabled = true;
++        }
++    }
++
      return 0;
  }
  
-diff --git a/target/mips/kvm.c b/target/mips/kvm.c
-index d67b7c1a8e..ec53acb51a 100644
---- a/target/mips/kvm.c
-+++ b/target/mips/kvm.c
-@@ -61,6 +61,11 @@ int kvm_arch_irqchip_create(KVMState *s)
-     return 0;
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     CPUMIPSState *env = cpu_env(cs);
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 3fe54798c6..21dec9b4da 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -479,6 +479,11 @@ static void kvmppc_hw_debug_points_init(CPUPPCState *cenv)
-     }
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 5315134e08..cdeee58484 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1383,6 +1383,11 @@ static int kvm_vcpu_enable_sbi_dbcn(RISCVCPU *cpu, CPUState *cs)
-     return kvm_set_one_reg(cs, kvm_sbi_dbcn.kvm_reg_id, &reg);
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     int ret = 0;
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index b9f1422197..8946f5a806 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -404,6 +404,11 @@ unsigned long kvm_arch_vcpu_id(CPUState *cpu)
-     return cpu->cpu_index;
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     unsigned int max_cpus = MACHINE(qdev_get_machine())->smp.max_cpus;
 -- 
 2.39.3
 
