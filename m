@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A761C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 12:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02566C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 12:58:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Ia2-00010n-RX; Fri, 25 Apr 2025 08:54:59 -0400
+	id 1u8IcY-00029J-Al; Fri, 25 Apr 2025 08:57:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1u8IZx-00010F-Vw
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:54:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1u8IcW-00028E-0G
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:57:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1u8IZv-0007mO-UG
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:54:53 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1u8IcU-00088Q-8d
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:57:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745585689;
+ s=mimecast20190719; t=1745585849;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qanu2gT01TsqxsN6xnJ0bpKNS+Yc0ZbR4TJGQSzNeQ0=;
- b=EcIYruM6W6Qm6PzAGLe88lIpojyYNnUeaG1D42n8Gcr8cTZBcBp3XCn+moZk2KdxCqucAG
- ILTKqUPQVAPZyvWdOvC3C8WIItGTQLzOBxyLcdZJEg+m1ECNPtwVj0kh08Vg2+djY3N7+n
- k3/RcrUJXTIQCFXLVIH1yc6qFgfcRSc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=h58LUJy8iPHhq/L+pCKUO6w/IzaNql/KMsgP3+Af0xI=;
+ b=V12ich0cMUnH+1OGQkZmkqWgTVNCnquOx3nnYSEyP2UEILj0ozkgtPgnyZS8qgI1JARqGT
+ ll9Im5ZeS7Molx5rj+K8zu7Xf9wC8QIPZrdQ05QpdRPOW7caTQmDavkUX7ReeII0KVBJ+F
+ 2C0+V6nUSL3jzRE/RFUXtY/0JiRHNf8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-zijNkL2wOxmKhqcZlTvYhA-1; Fri, 25 Apr 2025 08:54:47 -0400
-X-MC-Unique: zijNkL2wOxmKhqcZlTvYhA-1
-X-Mimecast-MFC-AGG-ID: zijNkL2wOxmKhqcZlTvYhA_1745585686
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43ced8c2eb7so14524975e9.1
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 05:54:47 -0700 (PDT)
+ us-mta-402-X5neUcDtNxSCs0B32YLbGA-1; Fri, 25 Apr 2025 08:57:26 -0400
+X-MC-Unique: X5neUcDtNxSCs0B32YLbGA-1
+X-Mimecast-MFC-AGG-ID: X5neUcDtNxSCs0B32YLbGA_1745585846
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43d209dc2d3so11165095e9.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 05:57:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745585686; x=1746190486;
+ d=1e100.net; s=20230601; t=1745585845; x=1746190645;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=qanu2gT01TsqxsN6xnJ0bpKNS+Yc0ZbR4TJGQSzNeQ0=;
- b=vlXEwBS9r86DGPSrioGLdePKv2RZuev0bBpsjY1XtcCsXAepSckTsFSZ51lHNMBnQF
- JhdlBslBe+biUa7XNzU7+R1v09/aE9jL4UpFpOQc/3SDiKzW234skBfEmg5kTh02JZxU
- GEd3752XxMFbcJLcyMw3QeNpyaOJksShsryKXAzTxMuzq0Dhx5l7gl03eWq5hZuk+gz/
- s7Z7pEAo3VHPeeC/JZ+KNM4pg9UOddtVtKhQitKEe3H+GgRiD1cNO3KPl9GvTpvDpnWV
- pkrM/7D4tNwQ/KcByCIeaKRL0WxC5RNJXFKASMgkRMk88Tv2dLMim9cCjFPfUtArf2xd
- I2cw==
-X-Gm-Message-State: AOJu0YxIhq0fuxs8ouBsR+UtXGI+4+Fq5Rw82WSDm0amYWAkXePU74W3
- 60A9/WZCxNV6cvWOXSDLedtDOeCQsKUfdlkJ+2kOt1ujMHckrPUdMS7uf322at4ypPc64Y91VaI
- Cjh6mtMjRKcUVtd8xWSGxkq6WNKi0iX/9zDWwWWP0twVtoJfUUe2B
-X-Gm-Gg: ASbGncvmo11x5m4LqotOfoU5yxTkiNbx7e9PHs0J3RKB9i/BAuWONPh17lmkUjjVXF7
- djiKteKMsD0T49cccRlsECtbGTPkne5C93jARn6BOPZWZGIrWTAwSYObp2SbP48Hqcvg1uXM/dc
- rn410HZ4euQukjx7DfKRNKXod6FeA0xL1RMl553A3OfJTGlTZ5bj+XX//uL5EEPWIDUYccGWZ0r
- +xiO7s7V0zdmyoIAtY9jvByKU39HzAVE5ZWhaCDch9uQkBEddOA7DYl8n5a7fKF7xxhIDMSug/a
- ONIFJKO4WxRnVe4OIo4XWl8D/j/zSssItoRm82M/7sqY8eP3xOoHQHCHm2/LbS2qkMuQCGjnKmP
- arVQBKNa+CV5uRznEX/9dgBPB8lZ/Eoo+UPFW
-X-Received: by 2002:a05:600c:34ca:b0:43e:a7c9:8d2b with SMTP id
- 5b1f17b1804b1-440a66aaf1bmr18907925e9.24.1745585686532; 
- Fri, 25 Apr 2025 05:54:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHfpFH/Lot6K/PHIT5IH6k4Nij/gtpQAAvJoVMIMGNiKEo8FBpt8p/VDb0e5UHsoLU9n6xluQ==
-X-Received: by 2002:a05:600c:34ca:b0:43e:a7c9:8d2b with SMTP id
- 5b1f17b1804b1-440a66aaf1bmr18907645e9.24.1745585686157; 
- Fri, 25 Apr 2025 05:54:46 -0700 (PDT)
+ bh=h58LUJy8iPHhq/L+pCKUO6w/IzaNql/KMsgP3+Af0xI=;
+ b=iKkxSaMXzgNk3gCkoAD1uF8JvX4PC+XpxOY+gbI3mycYw93Xo76xOO7nuacGK/gx9f
+ 74h5LR+NlcAVrY7Jlii+HsGHW38qsLfrrOzIaOvSfDLj5n+LvvH7ryPuFuaVWyoPfb1V
+ yQJvcVhJi8BxZ4iIYwRmbIm0FcTEb75n55CaubLbKHhHprgCwMOdtn2i6dLZrF5ZM7nm
+ Y/I3ZL5I5STT+t3y4+RWtau6wSaDYPnbVXUEUzgsnnac1FYAPbPZ7kWcURoWtRsXmOQI
+ gjQOWnZIddlQaqWrEeLH+V7dse4MpTVbcmA8oIwCeNGMyOzebMWMi4l5frIddzezVNHy
+ 9iqg==
+X-Gm-Message-State: AOJu0YylsMiHwQyoIStrllxD11BjwOs9dXavcr/DlB1z3RL0j5HKe2k6
+ JCKQcdVvjgaGl3rWEpgXE6h/xqPGcK715rXtW2VQrgas0oNh0I9TsZJ0gDbS0LHm+ij1bC6hfBt
+ R7WtG3qfSpiifZCEzsRvYm5BDpnY0u0Bie3L5nOOdFP3sZ9NHOYIK
+X-Gm-Gg: ASbGncuk7jsmmCtxA+iJ8rIypnZDOjm0d63NG3VFfN6y9zWJHFynH+yx9uWhvjYGJHU
+ TMW1dqbIA5z5ajyVXWjWxZN8RefJPF3aGxP5Hzw0sN1HFJYu1xYy1EGKrmmjhh69k+2MdjBxS4l
+ g0dqs4jLFsP6b3IjKWrHpAtbdWvnny5KfI5Tbl4Qb975vZLkVumRLdcjAcxyOCBa96LrKwUAZNv
+ 4riocs8ow703uItnvVueFmBj2RvMOCswFuRahMYwBdHFlX63svP2GCUiwZiCTkNv096raaipWFH
+ gg+n9M7w4bbuWNadoBoNaopcmauftRoNFI4f2j+Y+toN/H26YWCcmkfuV7yecgtKSOrgM8kSDYk
+ iUlcIFUxlRa6XJdG/OjzdI8DaUcpMV13CUIqO
+X-Received: by 2002:a05:600c:45c9:b0:43d:1840:a13f with SMTP id
+ 5b1f17b1804b1-440a66abe3cmr15855775e9.25.1745585845707; 
+ Fri, 25 Apr 2025 05:57:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH0LzIglHJlELu8r0G8MLIQmarOZdUGha0s1cwmSQ6ozpqVfMzGl9LqN4UpbjYikq29TWTJow==
+X-Received: by 2002:a05:600c:45c9:b0:43d:1840:a13f with SMTP id
+ 5b1f17b1804b1-440a66abe3cmr15855615e9.25.1745585845394; 
+ Fri, 25 Apr 2025 05:57:25 -0700 (PDT)
 Received: from ?IPV6:2003:cb:c70f:6900:6c56:80f8:c14:6d2a?
  (p200300cbc70f69006c5680f80c146d2a.dip0.t-ipconnect.de.
  [2003:cb:c70f:6900:6c56:80f8:c14:6d2a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-440a536a1e8sm24453705e9.28.2025.04.25.05.54.45
+ 5b1f17b1804b1-440a538f9c6sm24019705e9.39.2025.04.25.05.57.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 05:54:45 -0700 (PDT)
-Message-ID: <9820c103-7274-444d-90ad-f2c128f34ff1@redhat.com>
-Date: Fri, 25 Apr 2025 14:54:44 +0200
+ Fri, 25 Apr 2025 05:57:24 -0700 (PDT)
+Message-ID: <5ab45e5c-93cd-4053-8c26-253d27176fab@redhat.com>
+Date: Fri, 25 Apr 2025 14:57:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 04/13] memory: Introduce generic state change parent
- class for RamDiscardManager
+Subject: Re: [PATCH v4 05/13] memory: Introduce PrivateSharedManager Interface
+ as child of GenericStateManager
 To: Chenyi Qiang <chenyi.qiang@intel.com>, Alexey Kardashevskiy
  <aik@amd.com>, Peter Xu <peterx@redhat.com>,
  Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -89,12 +89,7 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
  Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
 References: <20250407074939.18657-1-chenyi.qiang@intel.com>
- <20250407074939.18657-5-chenyi.qiang@intel.com>
- <402e0db2-b1af-4629-a651-79d71feffeec@amd.com>
- <04e6ce1f-1159-4bf3-b078-fd338a669647@intel.com>
- <25f8159e-638d-446f-8f87-a14647b3eb7b@amd.com>
- <cfffa220-60f8-424c-ab67-e112953109c6@intel.com>
- <fd658f30-bd28-4155-8889-deda782c56eb@intel.com>
+ <20250407074939.18657-6-chenyi.qiang@intel.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -142,10 +137,10 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <fd658f30-bd28-4155-8889-deda782c56eb@intel.com>
+In-Reply-To: <20250407074939.18657-6-chenyi.qiang@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -170,168 +165,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.04.25 05:32, Chenyi Qiang wrote:
+On 07.04.25 09:49, Chenyi Qiang wrote:
+> To manage the private and shared RAM states in confidential VMs,
+> introduce a new class of PrivateShareManager as a child of
+> GenericStateManager, which inherits the six interface callbacks. With a
+> different interface type, it can be distinguished from the
+> RamDiscardManager object and provide the flexibility for addressing
+> specific requirements of confidential VMs in the future.
 > 
-> 
-> On 4/10/2025 9:44 AM, Chenyi Qiang wrote:
->>
->>
->> On 4/10/2025 8:11 AM, Alexey Kardashevskiy wrote:
->>>
->>>
->>> On 9/4/25 22:57, Chenyi Qiang wrote:
->>>>
->>>>
->>>> On 4/9/2025 5:56 PM, Alexey Kardashevskiy wrote:
->>>>>
->>>>>
->>>>> On 7/4/25 17:49, Chenyi Qiang wrote:
->>>>>> RamDiscardManager is an interface used by virtio-mem to adjust VFIO
->>>>>> mappings in relation to VM page assignment. It manages the state of
->>>>>> populated and discard for the RAM. To accommodate future scnarios for
->>>>>> managing RAM states, such as private and shared states in confidential
->>>>>> VMs, the existing RamDiscardManager interface needs to be generalized.
->>>>>>
->>>>>> Introduce a parent class, GenericStateManager, to manage a pair of
->>>>>
->>>>> "GenericState" is the same as "State" really. Call it RamStateManager.
->>>>
->>>> OK to me.
->>>
->>> Sorry, nah. "Generic" would mean "machine" in QEMU.
->>
->> OK, anyway, I can rename to RamStateManager if we follow this direction.
->>
->>>
->>>
->>>>>
->>>>>
->>>>>> opposite states with RamDiscardManager as its child. The changes
->>>>>> include
->>>>>> - Define a new abstract class GenericStateChange.
->>>>>> - Extract six callbacks into GenericStateChangeClass and allow the
->>>>>> child
->>>>>>      classes to inherit them.
->>>>>> - Modify RamDiscardManager-related helpers to use GenericStateManager
->>>>>>      ones.
->>>>>> - Define a generic StatChangeListener to extract fields from
->>>>>
->>>>> "e" missing in StateChangeListener.
->>>>
->>>> Fixed. Thanks.
->>>>
->>>>>
->>>>>>      RamDiscardManager listener which allows future listeners to
->>>>>> embed it
->>>>>>      and avoid duplication.
->>>>>> - Change the users of RamDiscardManager (virtio-mem, migration,
->>>>>> etc.) to
->>>>>>      switch to use GenericStateChange helpers.
->>>>>>
->>>>>> It can provide a more flexible and resuable framework for RAM state
->>>>>> management, facilitating future enhancements and use cases.
->>>>>
->>>>> I fail to see how new interface helps with this. RamDiscardManager
->>>>> manipulates populated/discarded. It would make sense may be if the new
->>>>> class had more bits per page, say private/shared/discarded but it does
->>>>> not. And PrivateSharedManager cannot coexist with RamDiscard. imho this
->>>>> is going in a wrong direction.
->>>>
->>>> I think we have two questions here:
->>>>
->>>> 1. whether we should define an abstract parent class and distinguish the
->>>> RamDiscardManager and PrivateSharedManager?
->>>
->>> If it is 1 bit per page with the meaning "1 == populated == shared",
->>> then no, one class will do.
->>
->> Not restrict to 1 bit per page. As mentioned in questions 2, the parent
->> class can be more generic, e.g. only including
->> register/unregister_listener().
->>
->> Like in this way:
->>
->> The parent class:
->>
->> struct StateChangeListener {
->>      MemoryRegionSection *section;
->> }
->>
->> struct RamStateManagerClass {
->>      void (*register_listener)();
->>      void (*unregister_listener)();
->> }
->>
->> The child class:
->>
->> 1. RamDiscardManager
->>
->> struct RamDiscardListener {
->>      StateChangeListener scl;
->>      NotifyPopulate notify_populate;
->>      NotifyDiscard notify_discard;
->>      bool double_discard_supported;
->>
->>      QLIST_ENTRY(RamDiscardListener) next;
->> }
->>
->> struct RamDiscardManagerClass {
->>      RamStateManagerClass parent_class;
->>      uint64_t (*get_min_granularity)();
->>      bool (*is_populate)();
->>      bool (*replay_populate)();
->>      bool (*replay_discard)();
->> }
->>
->> 2. PrivateSharedManager (or other name like ConfidentialRamManager?)
->>
->> struct PrivateSharedListener {
->>      StateChangeListener scl;
->>      NotifyShared notify_shared;
->>      NotifyPrivate notify_private;
->>      int priority;
->>
->>      QLIST_ENTRY(PrivateSharedListener) next;
->> }
->>
->> struct PrivateSharedManagerClass {
->>      RamStateManagerClass parent_class;
->>      uint64_t (*get_min_granularity)();
->>      bool (*is_shared)();
->>      // No need to define replay_private/replay_shared as no use case at
->> present.
->> }
->>
->> In the future, if we want to manage three states, we can only extend
->> PrivateSharedManagerClass/PrivateSharedListener.
-> 
-> Hi Alexey & David,
-> 
-> Any thoughts on this proposal?
+> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+> ---
 
-Thinking about how to reasonable make virtio-mem and guest_memdfd work 
-in the future together, I don't think such an abstraction might 
-necessarily help. (see my other mails)
+See my other mail, likely this is going into the wrong direction.
 
-In the end we populate/discard, how to merge that information from 
-multiple sources (or maintain it in a single object) is TBD.
+If we want to abstract more into a RamStateManager, then it would have 
+to have two two sets of states, and allow for registering a provider for 
+each of the states.
 
-virtio-mem has a bitmap that is usually 1 bit per block (e.g., 2 MiB). 
-guest_memfd has a bitmap that is usually 1 bit per page.
+It would then merge these informations.
 
-Maybe a GuestRamStateManager would store both separately if requested. 
-virtio-mem would register itself with it, and guest_memfd would register 
-itself with that.
+But the private vs. shared provider and the plugged vs. unplugged 
+provider would not be a subclass of the RamStateManager.
 
-GuestRamStateManager would then implement the logic of merging both 
-information (shared vs. private, plugged vs. unplugged).
+They would have a different interface.
 
-But that needs more thought: essentially, the virtio-mem bitmap would 
-move to the GuestRamStateManager.
-
-OFC, we would only want the bitmaps and the manager if there is an 
-actual provider for it (e.g., virtio-mem for the plugged part, 
-guest_memfd for the cc part).
+(e.g., RamDiscardStateProvider vs. RamPrivateStateProvider)
 
 -- 
 Cheers,
