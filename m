@@ -4,108 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D023AC369D1
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 14:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCAA4C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 14:32:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8JkX-00055Z-31; Fri, 25 Apr 2025 10:09:54 -0400
+	id 1u8K5F-0001h7-Ha; Fri, 25 Apr 2025 10:31:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hca@linux.ibm.com>) id 1u8JkR-00053B-9Y
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 10:09:47 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <seiden@linux.ibm.com>)
+ id 1u8K5A-0001gD-M1; Fri, 25 Apr 2025 10:31:13 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hca@linux.ibm.com>) id 1u8JkP-0008VK-65
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 10:09:46 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53PArN4m030598;
- Fri, 25 Apr 2025 14:09:36 GMT
+ (Exim 4.90_1) (envelope-from <seiden@linux.ibm.com>)
+ id 1u8K58-0003Yr-CM; Fri, 25 Apr 2025 10:31:12 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53PA41es026461;
+ Fri, 25 Apr 2025 14:30:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=ZCM7TQA3cDdr3KkKsTkqp1Obp+4s9k
- F6CRkIIG1bx2A=; b=LNb1VMDPEP3dpB9G9oM0rFHFTu8OrQcWBF8tZrUXxb/+4B
- tMraCMsfzoDMTVoe3ruOQWGMcsGGGEgZ1D7eNL1WlZOrrTl1SRXbmq9+YkexA6EL
- vIFyqNxAq00mVWpmFt9RjKVQxFXYaYBOkHV/PAibSMTMqQycrwooBcsoVLAd1k4n
- AIYOvtWJQPYz/8g7z51VeaXuDDf/Qad3iGm2iraPtI+AC75J7aBb+p4axvRaeDDd
- ns/V3l39R2aYPYGKbNWqsgSZmrb7ZCnGwoBM8hrxIPJVIJ0BJnNBVWcKwC93+JS4
- kb15avnVgxhi2sZfkghuYAX9I1W152mhiHWyE1qA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 467y90u7cj-1
+ :references:subject:to; s=pp1; bh=GoUoHZi/HP0QEXV0jU7oEFcHl0nqTa
+ 8aRsWZBhVoMwA=; b=aHZfHj4aSpYoV73sR1hjhJEU8IizrsPbTDtMh557ZIsF3V
+ 6uGCPWoBtdF5qqDJoy+ef8mmuK+3CuxNYD1HiiyYkfCa0NoUekMvbMmBX78ZfY5X
+ 7K8lsRaJpz4SLbIyjYZ2k7+BKuYb7TQ6XnYPgR17wMgfMiZenrhP5MttYHaHgl6r
+ MEcOhLMYIETano6EUby+0zD+OfYQkE9Jm57yrSe7zQ2WFpanvlLwV7FtSX0EEf+/
+ xb7zctOl4Q+PiswCUBvAc8K5ABcNjFe3t+DjAjLVT/Wvs4OvYU8YS88KC8Z+kzUU
+ V/EBZUnQXOO2m1PXVHisuF6TPNvIhJ/5gnbHak3g==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4688ajs5uy-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 25 Apr 2025 14:09:35 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53PD6CnU001318;
- Fri, 25 Apr 2025 14:09:35 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 466jfy5h38-1
+ Fri, 25 Apr 2025 14:30:54 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53PC4U1U008666;
+ Fri, 25 Apr 2025 14:30:53 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 466jfxwm98-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 25 Apr 2025 14:09:35 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53PE9VlL24117834
+ Fri, 25 Apr 2025 14:30:53 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53PEUnes32702776
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 25 Apr 2025 14:09:31 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 465A82004D;
- Fri, 25 Apr 2025 14:09:31 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C71D92004B;
- Fri, 25 Apr 2025 14:09:30 +0000 (GMT)
-Received: from osiris (unknown [9.111.13.86])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 25 Apr 2025 14:09:30 +0000 (GMT)
-Date: Fri, 25 Apr 2025 16:09:29 +0200
-From: Heiko Carstens <hca@linux.ibm.com>
-To: Niklas Schnelle <schnelle@linux.ibm.com>
-Cc: Thomas Huth <thuth@redhat.com>, Farhan Ali <alifm@linux.ibm.com>,
- qemu-devel@nongnu.org, alex.williamson@redhat.com, stefanha@redhat.com,
- mjrosato@linux.ibm.com, philmd@linaro.org, kwolf@redhat.com,
- hreitz@redhat.com, fam@euphon.net
-Subject: Re: [PATCH v5 1/3] util: Add functions for s390x mmio read/write
-Message-ID: <20250425140929.7180Fdb-hca@linux.ibm.com>
-References: <20250417173801.827-1-alifm@linux.ibm.com>
- <20250417173801.827-2-alifm@linux.ibm.com>
- <06f9244c-671c-4215-9d20-7bb69194fae6@redhat.com>
- <aae585ad4d9884e204ff1f153f4d1be5453b284a.camel@linux.ibm.com>
+ Fri, 25 Apr 2025 14:30:49 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B75D320043;
+ Fri, 25 Apr 2025 14:30:49 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4990A20040;
+ Fri, 25 Apr 2025 14:30:49 +0000 (GMT)
+Received: from osiris (unknown [9.111.72.247])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 25 Apr 2025 14:30:49 +0000 (GMT)
+Date: Fri, 25 Apr 2025 16:30:47 +0200
+From: Steffen Eiden <seiden@linux.ibm.com>
+To: Gautam Gala <ggala@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, Janosch Frank <frankja@linux.ibm.com>
+Subject: Re: [PATCH v5 3/3] target/s390x: Return UVC cmd code, RC and RRC
+ value when DIAG 308 Subcode 10 fails to enter secure mode
+Message-ID: <20250425143047.632151-E-seiden@linux.ibm.com>
+References: <20250423080915.1048123-1-ggala@linux.ibm.com>
+ <20250423080915.1048123-4-ggala@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aae585ad4d9884e204ff1f153f4d1be5453b284a.camel@linux.ibm.com>
+In-Reply-To: <20250423080915.1048123-4-ggala@linux.ibm.com>
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=aZRhnQot c=1 sm=1 tr=0 ts=680b979f cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=RASPwGoQohVzQn-ICVUA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDEwMCBTYWx0ZWRfXxjhk/iPyTcvK
+ +TMcZw67woHtEaWBd0SxrpVvZJax/O4daEqC7EBC2ST9cbxYo/DF1Mu4Hyl9yUvxa3wBNpwtA/u
+ UQ5SJ2zSlxfYgICU70QqbbhLTMjnDGQTQMXY22htxOBFsmZnTH97fdEL2QaCO1lYANsihEf8i5d
+ CV9sQ46B+bSiA+a55Ygb1l3eYdxKGyGMjTxsvFZ099/0PWsVhq8uHO9Hknz2Y5XkzANxQWQl13j
+ jVcn6Nzi79nzytwZoaswVECIf4zpdXiu+tEA16OZf7F/6Syq//oU43F7p8/lnY+peKLINeQZ3DC
+ J7ycnCoya49dCZkXuWczeP60y0z5tB7FmkDLPo79jVwKF09dkudZRTL36ezZZrNWJtBrXMjKt/O
+ 2BQINj7rVjyONH6da93Ga4kbFBpSc6SYG8ij6JWf86KGLNghipeaolnF+E80G/TcIh2FrDVn
+X-Authority-Analysis: v=2.4 cv=F8xXdrhN c=1 sm=1 tr=0 ts=680b9c9e cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=VnNF1IyMAAAA:8 a=HLircMxoZoq3qCPMhvQA:9
  a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: CsPJY9RCwawA00jXUpyDOsV-03Pz85LR
-X-Proofpoint-ORIG-GUID: CsPJY9RCwawA00jXUpyDOsV-03Pz85LR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDEwMCBTYWx0ZWRfXxLpRJi4bw5ZJ
- ttChqsdtfMQhavw22VYevgmVI/eMAZD9L6FCC9IkA8f5Ho3lx7RtZx1M/l6tXNM9isO3K2eVYVr
- gk6M3wvJLm4rc9apjmeYnZvQ+Mj3dnmPjQxjdi9BL8Aikqn0lg06R4ou+CHY9B93Mdd4SQzZ4u1
- DQPzVK3XEjQwdr+eYiOld9Ws8ORLqQgiktDMUbgAoG/hmfQmAAkx4rq7uUKuJQNDudFOBkr7kFA
- BZfNSZYGxPpwdDQrbMGD22l+gdx9CNZVtHLO1LenarGtaYOprJw29Vg7xrgBg/F5QqHmUfMQg2h
- 3JcXOCIljoTSYwbkRmZmLh+2M5uk7oClvOgPsCs+ZutdtoonPzuQqKNlJEJnpcQdpbuvrZ8RQIT
- usy1bV5sw4csqgrmDXhpRCrRBk5avmaf6+Bgf0s/ADlsP5PazMTajGmDuqB7x369+6XJ7Wxk
+X-Proofpoint-GUID: TSAun840M3rFWj9bKPoGaDXQdsdCPdMa
+X-Proofpoint-ORIG-GUID: TSAun840M3rFWj9bKPoGaDXQdsdCPdMa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-04-25_04,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 priorityscore=1501
- clxscore=1011 mlxlogscore=433 impostorscore=0 mlxscore=0 malwarescore=0
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504250100
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=hca@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+X-Proofpoint-Spam-Details: rule=outbound_spam_definite policy=outbound
+ score=100 phishscore=0
+ impostorscore=0 mlxscore=100 priorityscore=1501 lowpriorityscore=0
+ mlxlogscore=-999 malwarescore=0 clxscore=1015 bulkscore=0 adultscore=0
+ spamscore=100 suspectscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2504070000 definitions=main-2504250100
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=seiden@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,32 +120,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 25, 2025 at 12:29:35PM +0200, Niklas Schnelle wrote:
-> On Fri, 2025-04-25 at 11:00 +0200, Thomas Huth wrote:
-> > On 17/04/2025 19.37, Farhan Ali wrote:
-> > > +    asm volatile(
-> > > +        /* pcilgi */
-> > > +        ".insn   rre,0xb9d60000,%[val],%[ioaddr_len]\n"
-> > > +        "ipm     %[cc]\n"
-> > > +        "srl     %[cc],28\n"
-> > > +        : [cc] "=d"(cc), [val] "=d"(val),
-> > > +        [ioaddr_len] "+&d"(ioaddr_len.pair) :: "cc");
-> > 
-> > Do we need the "&" modifier here? ... at least the kernel does not seem to 
-> > use it ...
+On Wed, Apr 23, 2025 at 10:09:15AM +0200, Gautam Gala wrote:
+> Extend DIAG308 subcode 10 to return the UVC RC, RRC and command code
+> in bit positions 32-47, 16-31, and 0-15 of register R1 + 1 if the
+> function does not complete successfully (in addition to the
+> previously returned diag response code in bit position 47-63).
 > 
-> From my understanding it's not strictly needed, but I also used it in
-> the rdma-core user-space code where I had pointed Farhan. I looked at
 
-It is not needed, since all inputs are consumed before to any output
-is written to.
+Reviewed-by: Steffen Eiden <seiden@linux.ibm.com>
 
-> > > +    asm volatile (
-> > > +        /* pcistgi */
-> > > +        ".insn   rre,0xb9d40000,%[val],%[ioaddr_len]\n"
-> > > +        : [ioaddr_len] "+&d" (ioaddr_len.pair)
-> > 
-> > dito
-
-Same here, it is not needed.
+> Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+> Signed-off-by: Gautam Gala <ggala@linux.ibm.com>
+> ---
+>  hw/s390x/ipl.c             | 11 ++++----
+>  hw/s390x/ipl.h             |  6 +++--
+>  hw/s390x/s390-virtio-ccw.c | 14 ++++++-----
+>  target/s390x/kvm/pv.c      | 51 +++++++++++++++++++++++++++-----------
+>  target/s390x/kvm/pv.h      | 26 +++++++++++++------
+>  5 files changed, 73 insertions(+), 35 deletions(-)
+> 
 
