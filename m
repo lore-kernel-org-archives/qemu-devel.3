@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07515C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D177CC369D3
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:53:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8LHN-0006FM-5j; Fri, 25 Apr 2025 11:47:53 -0400
+	id 1u8LLV-0000EY-BX; Fri, 25 Apr 2025 11:52:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1u8LHI-0006AT-SG; Fri, 25 Apr 2025 11:47:48 -0400
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
+ id 1u8LLS-0000DI-9o; Fri, 25 Apr 2025 11:52:06 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1u8LHG-0006Es-Ms; Fri, 25 Apr 2025 11:47:48 -0400
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-54d98aa5981so2881958e87.0; 
- Fri, 25 Apr 2025 08:47:45 -0700 (PDT)
+ id 1u8LLQ-0006pL-AQ; Fri, 25 Apr 2025 11:52:05 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-54e7216aaccso2112839e87.1; 
+ Fri, 25 Apr 2025 08:52:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745596064; x=1746200864; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745596322; x=1746201122; darn=nongnu.org;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=TD0OKDcCaiAswy6HglxZHt8Day9EbdbBZOq4RAiN9EM=;
- b=P1ewB57g9pkv2PW2xGfOI9D/tlW+ptmYfHWk7r6FYF/6GqbxDRSiyr6bZXZi4pt92O
- NdREP1a7mT/TNVXkLOmc/C3/JDAb3LTm/0z+8t+eXCQyfdHvXXMKZ2hePQjbEkSE8FHn
- XU2mzUJi4Tp5BTQPLq8cL+lxTuhscfjEZG5584OsvbS4JuFAgWwEJc94Ml/l1K4qdqvB
- 5JX2um52iBV2TCboQBkN5ewq7ULiTRmPAGGrKTlNyLUuXAWeb2Fu82Y9LZgWra7lDqwp
- yv1Xb8sd7UzwqJr0dmTIGH8bj3fZjvZTGNH7LQUutzp6LoCbUudlJ3+OMxaurZZjApOM
- ZudA==
+ bh=7c8bi+tYxGd3uDu+5jaT9Zf7rx1GDd9V54uFLw7R+Qs=;
+ b=gVBkAr5kQAP+7g3ur3sT7zkUrkXgi9/mQpCTITGOvMWRGYQh3KnDR0C3Ols2ODjT0Y
+ NyNGlQ5xy+0bTBSdKHMtvd8178gbB9IMsnr33pb9MhS9E1cNfuZAykuOOoygatb+73Ax
+ rmG/WEbQZ5yBDktThFffnMYBhn2utM9UHO0GZjbHp2FePReNVCCHKbIJRrjiLsBVkghx
+ qhhNOHKoqyBngymj1auBoCdYONyc69d9s6Dw4gI9iledRIO517+AZNu41VdZ5uvuziuG
+ nDm8QkmmX3G8DkmuuspYpzYrqOjkoHXrooPbFxJjC0Ik2RgoJAoV7PPTeNhS9m6jV+C+
+ pjPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745596064; x=1746200864;
+ d=1e100.net; s=20230601; t=1745596322; x=1746201122;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=TD0OKDcCaiAswy6HglxZHt8Day9EbdbBZOq4RAiN9EM=;
- b=qyh+BiHqQNARMCk4q4vgiDQ2WmGVyklLw95tBUcFI0muKWZmUwoopawcPvnmvDwtIV
- 6oeA8HCRCnKzK+cMsFDQt1L+004oYyIf1hF/fGMr6sY86ojlJuGnLPyB8iY20agevTE3
- vyB2w1xwyVgQTUd/JJExQtsfyfVHnZ+1JxyncYDH/9d9K2O79g/iUqBkxeQ2moskyR26
- t9T7KeCw60Mn3z0+9si8UrWuGRlFi65uck7hWjrWTj8VbdUMtjrVi3CDL3q9mbriYqf4
- hV370xnFzc1xdvIWufil2fKXQ/8FrolFT0jrgRlUcpJptpbY+pFu0WV2fQdjfZQrkRui
- YTQw==
+ bh=7c8bi+tYxGd3uDu+5jaT9Zf7rx1GDd9V54uFLw7R+Qs=;
+ b=nNbumotPBoPDXSN2FopskoHn/tt/L7t9idMoxN3MNKbU6ejm7usOd1oBrXb25z3TRy
+ 8ARZSl6kCKkWcqFb3Bk/VgBGC7EDTbJfRzTePypgCW/apt5QryA7z6wz11QhdolVKiAA
+ Ar8yUV8duFA3WxVgTMVxSw12HChszj6UlFGjlybhF1WcK7vaa4cTJZ7tEjK0JlD/x56B
+ F+qBpYfIWsneO7bbplrIfrrhutFmHhf7WVrL9wj/za4pCnt3naGyM0T4lEhmOqPxDOt7
+ jGntGD0BRT7G+tvRl+D1/DGgvL1AVxZ4tYrAsUbaCIE+41Rxlsia0oco69k3IZo5HA0v
+ WRsQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVfl2gewXtwZRTCAqVqNg8ljiKMVoBZ7NJ+Pv5HU0LPWCd7qEANcaORmXKs0/UEB0B8jOllnWVniA==@nongnu.org
-X-Gm-Message-State: AOJu0YyLB4HDlDLRPdXFH4luG4+ybR8qP8ZeRd1RwiQQpfo7YPcqRBsB
- SM4z7OtgY/m2naLcV2AEprnIeR3yApW1F1cgEJ0oVjB4J0kMO+I0SBUh+Qb2KZQ=
-X-Gm-Gg: ASbGncv24qGYjKgPk7y8BxLqyU6E3pt662iFgzSO/9iRTcziRfhL+dvKg3UTZb6QCrR
- I0xl4PHUKoLJ262L0xTxWghN5AGS+bCPKgjW0ydSn7yq7XRqdDqerw0fndDw/0QTzr+RbwQ74YB
- qpdnTK1M1PqmND+O3HzdmOJQHRabmVcL0DBHsvf697kFwcxFl20D/SnA/DNg7/oQ++NLVA3XCdu
- Mv5ZZGoObJ9gw2rjfg9kuWXHA92WCryhPOPFN7UbwY0sSGc0/YQVwYl4/I8aivom0sJVEdgJW+o
- tjPshGdpXMKWAeWTcGD6kQI6je75mX7XjHvkOCzWbGyZJ9vKHZQaw2GMyA0CnZnFANDnbKcDxpa
- 84OW0zKr0tSn6
-X-Google-Smtp-Source: AGHT+IHfO/TxQjVV7dTwV40UfnAL9Ojygn6suTaY4cJ8LWkNZJvbJtBolkoXTfHZBzXVuRQ1UNmElg==
-X-Received: by 2002:a05:6512:2344:b0:545:154:52b0 with SMTP id
- 2adb3069b0e04-54e8cbce6dcmr948694e87.22.1745596063488; 
- Fri, 25 Apr 2025 08:47:43 -0700 (PDT)
+ AJvYcCWj5+UQZJyb1do/rLi3QYdl3EKiwceu1QIVTS0B78LHxnKe09LXqiR1fpwOSHPmzhbrFCxJaNTUeQ==@nongnu.org
+X-Gm-Message-State: AOJu0YxAsLk+QGlt2gX8mmVVq+humMwHRt4c6GlHdzQwI9Ql7ke1Im80
+ JdIm1bFryF0oTkn4vDB2eWKZMx/3eyd+Uvm7/3ci2gQCIgXJnVZw
+X-Gm-Gg: ASbGncv2kGtSaeBKQlpFx4dOareCUB3Oi8MOtHzO5vKrYaiuxddbUNtbgYoEIMlEg9s
+ COjZ57G5IPpHT/FGnjkv9LrxuAGumiwWsVRuRDhTu5xT1PYvhb5yNQ7CTkjPhsfvjtM6E3dRynf
+ 2UCYH3BH7omdjZFZkBvEaIHAfrKhBkTvPjHyuTD6tNT5hPT7tyqwRt7CPQ+g3fv+LN4scY3G0t2
+ VPUk/FMYk64pXIxn6i+Jalg0FbwzwEMc5IUUtFBKBBFyhzCgqri855Om1Y/DIz6sHGznTX6u719
+ u4i5ECQqP6ObVAP1+ZpbwyloYzy616Zl116b8fq29JGDhDkhm+0IkJIaPwxM5Lmq/TvxxIyYGoP
+ GYxXKNtiLBjq9
+X-Google-Smtp-Source: AGHT+IEBhHvhYlRd/AFuPOojwnovkQU99ip8b1orQYqHZZjfeTjtjdpUdISwOqzPlh2adZSjayNi/Q==
+X-Received: by 2002:a05:6512:b0b:b0:549:4b8c:a118 with SMTP id
+ 2adb3069b0e04-54e8cbd53b2mr1046741e87.17.1745596321671; 
+ Fri, 25 Apr 2025 08:52:01 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-54e7cc9ea2csm642135e87.148.2025.04.25.08.47.42
+ 2adb3069b0e04-54e7ccb803fsm642112e87.228.2025.04.25.08.52.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Apr 2025 08:47:42 -0700 (PDT)
-Date: Fri, 25 Apr 2025 17:47:42 +0200
+ Fri, 25 Apr 2025 08:52:01 -0700 (PDT)
+Date: Fri, 25 Apr 2025 17:52:00 +0200
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: Corvin =?iso-8859-1?Q?K=F6hne?= <corvin.koehne@gmail.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
@@ -74,19 +74,19 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Alistair Francis <alistair@alistair23.me>,
  Corvin =?iso-8859-1?Q?K=F6hne?= <c.koehne@beckhoff.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 03/21] hw/dma/zynq-devcfg: Handle bitstream loading via
- DMA to 0xffffffff
-Message-ID: <aAuunovjQLKz5koi@zapote>
+Subject: Re: [PATCH 04/21] hw/arm/zynq-devcfg: Prevent unintended unlock
+ during initialization
+Message-ID: <aAuvoFjhS0VEtpqq@zapote>
 References: <20250318130817.119636-1-corvin.koehne@gmail.com>
- <20250318130817.119636-4-corvin.koehne@gmail.com>
+ <20250318130817.119636-5-corvin.koehne@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250318130817.119636-4-corvin.koehne@gmail.com>
+In-Reply-To: <20250318130817.119636-5-corvin.koehne@gmail.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x130.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,55 +109,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 18, 2025 at 02:07:54PM +0100, Corvin Kˆhne wrote:
+On Tue, Mar 18, 2025 at 02:07:55PM +0100, Corvin Kˆhne wrote:
 > From: YannickV <Y.Vossen@beckhoff.com>
 > 
-> A DMA transfer to destination address `0xffffffff` should trigger a
-> bitstream load via the PCAP interface. Currently, this case is not
-> intercepted, causing loaders to enter an infinite loop when polling
-> the status register.
+> During the emulation startup, all registers are reset, which triggers the
+> `r_unlock_post_write` function with a value of 0. This led to an
+> unintended memory access disable, making the devcfg unusable.
 > 
-> This commit adds a check for `0xffffffff` as the destination address.
-> If detected, the relevant status register bits (`DMA_DONE`,
-> `DMA_P_DONE`, and `PCFG_DONE`) are set to indicate a successful
-> bitstream load. If the address is different, the DMA transfer proceeds
-> as usual. A successful load is indicated but nothing is actually
-> done. Guests relying on FPGA functions are still known to fail.
+> To address this, a property 'is_initialized' is introduced. It is set
+> to false during reset and updated to true once the initialization is
+> complete. The unlock function is simply ignored while 'is_initialized'
+> is false.
 > 
-> This feature is required for the integration of the Beckhoff
-> CX7200 model.
-
-Thanks, LGTM:
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-
-
-
+> I have no idea how this ever worked. Nevertheless, this restores the
+> correct behavior.
 > 
 > Signed-off-by: Yannick Voﬂen <y.vossen@beckhoff.com>
 > ---
->  hw/dma/xlnx-zynq-devcfg.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
+>  hw/dma/xlnx-zynq-devcfg.c         | 6 +++++-
+>  include/hw/dma/xlnx-zynq-devcfg.h | 2 ++
+>  2 files changed, 7 insertions(+), 1 deletion(-)
 > 
 > diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-> index 0fd0d23f57..b838c1c0d0 100644
+> index b838c1c0d0..03b5280228 100644
 > --- a/hw/dma/xlnx-zynq-devcfg.c
 > +++ b/hw/dma/xlnx-zynq-devcfg.c
-> @@ -247,7 +247,14 @@ static uint64_t r_lock_pre_write(RegisterInfo *reg, uint64_t val)
->  static void r_dma_dst_len_post_write(RegisterInfo *reg, uint64_t val)
+> @@ -143,9 +143,11 @@ static void xlnx_zynq_devcfg_reset(DeviceState *dev)
+>      XlnxZynqDevcfg *s = XLNX_ZYNQ_DEVCFG(dev);
+>      int i;
+>  
+> +    s->is_initialized = false;
+>      for (i = 0; i < XLNX_ZYNQ_DEVCFG_R_MAX; ++i) {
+>          register_reset(&s->regs_info[i]);
+>      }
+> +    s->is_initialized = true;
+>  }
+>  
+>  static void xlnx_zynq_devcfg_dma_go(XlnxZynqDevcfg *s)
+> @@ -221,7 +223,9 @@ static void r_unlock_post_write(RegisterInfo *reg, uint64_t val)
 >  {
 >      XlnxZynqDevcfg *s = XLNX_ZYNQ_DEVCFG(reg->opaque);
+>      const char *device_prefix = object_get_typename(OBJECT(s));
 > -
-> +    if ((s->regs[R_DMA_DST_ADDR]) == 0xffffffff) {
-> +        DB_PRINT("bitstream loading detected\n");
-> +        s->regs[R_INT_STS] |= R_INT_STS_DMA_DONE_MASK |
-> +                                R_INT_STS_DMA_P_DONE_MASK |
-> +                                R_INT_STS_PCFG_DONE_MASK;
-> +        xlnx_zynq_devcfg_update_ixr(s);
+> +    if (!s->is_initialized) {
+
+
+I think you can use device_is_in_reset(DEVICE(s))
+and get rid of is_initialized alltogether?
+
+
+
+
 > +        return;
 > +    }
->      s->dma_cmd_fifo[s->dma_cmd_fifo_num] = (XlnxZynqDevcfgDMACmd) {
->              .src_addr = s->regs[R_DMA_SRC_ADDR] & ~0x3UL,
->              .dest_addr = s->regs[R_DMA_DST_ADDR] & ~0x3UL,
+>      if (val == R_UNLOCK_MAGIC) {
+>          DB_PRINT("successful unlock\n");
+>          s->regs[R_CTRL] |= R_CTRL_PCAP_PR_MASK;
+> diff --git a/include/hw/dma/xlnx-zynq-devcfg.h b/include/hw/dma/xlnx-zynq-devcfg.h
+> index e4cf085d70..2ab054e598 100644
+> --- a/include/hw/dma/xlnx-zynq-devcfg.h
+> +++ b/include/hw/dma/xlnx-zynq-devcfg.h
+> @@ -55,6 +55,8 @@ struct XlnxZynqDevcfg {
+>      XlnxZynqDevcfgDMACmd dma_cmd_fifo[XLNX_ZYNQ_DEVCFG_DMA_CMD_FIFO_LEN];
+>      uint8_t dma_cmd_fifo_num;
+>  
+> +    bool is_initialized;
+> +
+>      uint32_t regs[XLNX_ZYNQ_DEVCFG_R_MAX];
+>      RegisterInfo regs_info[XLNX_ZYNQ_DEVCFG_R_MAX];
+>  };
 > -- 
 > 2.49.0
 > 
