@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA26C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 10:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5A86C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 10:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8GVn-0004tu-GE; Fri, 25 Apr 2025 06:42:27 -0400
+	id 1u8GWZ-0005vT-0m; Fri, 25 Apr 2025 06:43:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8GVl-0004qN-Qh
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:42:25 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8GWV-0005u9-Gp
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:43:11 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8GVk-0000Sf-3i
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:42:25 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43ce71582e9so15133115e9.1
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 03:42:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8GWQ-0000Xc-Uh
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:43:11 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-39bf44be22fso1408072f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 03:43:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745577741; x=1746182541; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745577785; x=1746182585; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EMa5YDqvt7rUbmf/BLQxC8RZNnMybCZ7CYFM+2JJQ1Y=;
- b=r2yvOAjo0bLVpFZt080ekrf9sVTVweyLaMAbaxHhDVkw8SMd8siGTva863Jml6EPN+
- x+UyxNrBa+FNiJDxHSkwKztYiGakjXYRkLf8tzwlOnZ6MctnUX3nU+nPGA1RgM4xbOwX
- PznUXEb/pFoL7sALJIE0/Jbmy8U/I+kWVoWc6sReFfLrkOZlv8bMhgZDJTksiKtYG2GQ
- ZJ9/ndTUNF/dvhudD+0mAfnVznqkm9Xo56vIw70PaHEtXcQCWkJbw0zGZZcRH+o1FNcZ
- JszxpBafp24DxjtlaNOHiJQlS0uylueooIe9FuJxAkOHCmNeGtfrvU21yf6ydgu63Tq3
- 1S6w==
+ bh=JOo2vnxNM8UNjqKhjcq0H8AejpKFIa0Ga+J9yzl4LE8=;
+ b=mHvwVzUPGqsGDjTojaXyTCXXAO6pp1f/U6abT7KQ0/ebsYmKT3WVfsTnPe1EOjVpoS
+ oEDeHh3tlF2evXAO1kUl+S8aZOmamGzDaJ6f2wZ+SWvJKuKmviy2DslgcQUTZFd67c/h
+ BE3DjL5LFyKiN3mwzvmKb+BuIIcJ2jeyEN40B4uaVzswHyANWRw6e7tYEguikmp+D8H6
+ ZZvAAOlLLMzfpXSGq36RW1FO4VJRfL3em+0fNAmtYx+73HyvtbLTMTq39eldbTAs1Ntf
+ Mlv7oe3X0IYXieTdesQ3lCPUHQBXkX2fl6UhCm5oLuVmq/E9vW2GtFz5DO3scGYEIxEk
+ rMVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745577741; x=1746182541;
+ d=1e100.net; s=20230601; t=1745577785; x=1746182585;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EMa5YDqvt7rUbmf/BLQxC8RZNnMybCZ7CYFM+2JJQ1Y=;
- b=El2dWlBD45OZ6m5cXfJ8l3UAA4naUgappzCxCHkr9bcTGvyPkwjuBtn7IFd3e/PQbK
- T0m77SvEPynEHaZDtbEGASgiCsAMopU3Nvo+JsdXDdXQdQkUH9reErB8o/N7xvSIlXgr
- ZkQY3roG8jSwQV0AInjuVKz0P2gXlPfifWi/TfSL73luj0Sb0xEsfvQckdgdTgS7CgaJ
- /yj+DNsV0v6mTUZxQ0j2IqoTwfUHVyMIVjcyYvHohksUmk5kCgNd26WRkn0gitBnpYVM
- ybHD6LEnAl6/NALIKA0PjPXGwU3CeQ9NZNhSsiwi+DgAeGHAc2sw9/ssCBReNdF5vmkU
- RV+Q==
-X-Gm-Message-State: AOJu0YxeVRSNnctdEyDsMAyzqMDKNUke8nXHEuY4vdV1KVqjeSGZJ0ZY
- 1RB9Hh5ZUllOXHNgz9Ju1P1XxAt50jfZzDWvuGRhTKXZ35+IXDGihX+sMkmMDBGDCkcwSgv95dw
- i
-X-Gm-Gg: ASbGncv2snJosJyPzk4GFzFskbLskzgKDZW4+6ZBEtrlPbZOEdaQkpefa8vHev0QmPD
- DYrb7memGgsfzbakITCIyj4YjbxGvOCKzpGcEutvltlDuz89meNhuHyCoSJZhSviPNVN/WdhyzB
- 7pBd9si1uwjrPtKDSALQS3zUD48wL3NVSfndxA4x3FY5BGgQaQmHxJGm8vfxXVinGXYZvuQmzqO
- m41JwR0Iq1kKc7jIiGnEgfXUI3etPfe5Jul0D2tw3q5tRScsIGwGpJ8WcQWQuVs35B74klolXW7
- tYSzWFS49FBF/657kggydh9SQKSW4Gu6kjcnLTNkh7Wb/hIlqRE9VMXiSRUPHqFeD2EdYqTU4ZG
- CzJoYkF8y
-X-Google-Smtp-Source: AGHT+IEL2Z2Qz5//Odz1WcfyWLUBlLvg49qVxEqjot01dzOxIe42BqkmHQ/3QC0E94D2jLUvpeEIPw==
-X-Received: by 2002:a05:600c:3d9a:b0:43c:f597:d589 with SMTP id
- 5b1f17b1804b1-440a66ac6bbmr11279905e9.27.1745577740882; 
- Fri, 25 Apr 2025 03:42:20 -0700 (PDT)
+ bh=JOo2vnxNM8UNjqKhjcq0H8AejpKFIa0Ga+J9yzl4LE8=;
+ b=BkdNMmicZgyCGze5rmz9V0O+yE12528bhXCmMSP3q5yGuTibBOAhh38tM+eYdT2KME
+ Lt83740IiHT71EfzSGP0qi0Zw/yZrWG7TimC2CZ5AhPtS2aQBEk2ounZ5rq1ZFeuRWZ2
+ Mme0l7sX8FxTEfKyOzYxONfl4gOjt5mazP4YT2TmopcPVgjAN2i5/w3N6By4z+0PGJim
+ IiLf9Pa8L/ihi+aIEyu9pFXiB8+OO5cDsMc8iv9GLTimImoLG8mfg47RVN+XeRFm0SuU
+ X89t0USMZJr1GxegFG1nre8iytPuJJZUcqZpTRwKF/04gaq/YFl7eAvM3ySDW+AHsQYS
+ 7pXQ==
+X-Gm-Message-State: AOJu0Yyw7o0E23BBtSZ+b5oITl8LSVrIcIIDvKfPSo+dRrAuqOiChSQx
+ /I6PJ4VMNWZ6Ry4RVPq5fiiSKwfazj5ANq3xNj6E8jCprLxgTXamjYB7R4h8f5iiFxkJ9W3uxip
+ H
+X-Gm-Gg: ASbGncuFhNum5Lt5rSW96fIqYayc3QzJh2z0QUSZ8nZJe6XV3v2tjiAOQjSbU3G0JaI
+ G1DLatA7C+udBliAJnFhou5QsBsI0Q2fHMUrulA165t2HHa1kTrfx/3+rCEh1xY+TB6g9D6LFND
+ tpIjFsBWmfJuKNfMnAPMP3wDr2JoyyKlYwUGk1bCgKyef050mlQDq9QPsqIwzEi3AJHaEHynSUX
+ PIApke/Zizv45BssDxM65o4QfRKQHI7N5GwoBwqNnVIp/D2YHGpsbxAD099IUfMRkhkGTqDeDF8
+ GegNPK2O0sr2buYEkh0s6XgeC0V8/d0+ll1zaMz+gQSklHyLxBT/9vfuR5diIrzLcFHsd4LxYsS
+ SNWEEPPFl
+X-Google-Smtp-Source: AGHT+IFINrrY71IdZqVRyHyIGy4TPwtkQ7IHo8s+d4Qk3hSPDQwUbGg6BO+iFYIyJzy6cmTY1xlq+w==
+X-Received: by 2002:a05:6000:2212:b0:39e:e588:6745 with SMTP id
+ ffacd0b85a97d-3a074f0dadamr1548262f8f.46.1745577784804; 
+ Fri, 25 Apr 2025 03:43:04 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073cc199fsm2006316f8f.55.2025.04.25.03.42.20
+ ffacd0b85a97d-3a073ca4e50sm2040527f8f.30.2025.04.25.03.43.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 03:42:20 -0700 (PDT)
-Message-ID: <b0a61c9c-2496-4322-a78b-2d2f5a11d63a@linaro.org>
-Date: Fri, 25 Apr 2025 12:42:19 +0200
+ Fri, 25 Apr 2025 03:43:04 -0700 (PDT)
+Message-ID: <1debc1a4-7989-438c-82da-946a73ecb6b1@linaro.org>
+Date: Fri, 25 Apr 2025 12:43:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/6] qom: Constify class_data
+Subject: Re: [PATCH] system/memory: Remove DEVICE_HOST_ENDIAN definition
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
+Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-References: <20250424194905.82506-1-philmd@linaro.org>
+References: <20250423111625.10424-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250424194905.82506-1-philmd@linaro.org>
+In-Reply-To: <20250423111625.10424-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,19 +103,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/4/25 21:48, Philippe Mathieu-Daudé wrote:
-
-> Following Richard's suggestion [*], make QOM class data *const*.
+On 23/4/25 13:16, Philippe Mathieu-Daudé wrote:
+> Since the previous commit ("exec/memory.h: make devend_memop
+> "target defines" agnostic") there is a single use of the
+> DEVICE_HOST_ENDIAN definition in ram_device_mem_ops: inline
+> it and remove its definition altogether.
 > 
-> [*] https://lore.kernel.org/qemu-devel/f4ec871d-e759-44bc-a10b-872322330a3f@linaro.org/
-> 
-> Philippe Mathieu-Daudé (6):
->    hw/misc/edu: Convert type_init() -> DEFINE_TYPES()
->    qom: Have class_base_init() take a const data argument
->    qom: Have class_init() take a const data argument
->    qom: Constify TypeInfo::class_data
->    qom: Constify TypeInfo::interfaces
->    qom: Make InterfaceInfo[] uses const
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> Based-on: <20250422192819.302784-1-richard.henderson@linaro.org>
+> ---
+>   include/exec/cpu-common.h | 6 ------
+>   system/memory-internal.h  | 3 ---
+>   system/memory.c           | 2 +-
+>   3 files changed, 1 insertion(+), 10 deletions(-)
 
-Series queued, thanks.
+Patch queued.
 
