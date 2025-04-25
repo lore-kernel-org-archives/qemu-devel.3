@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C099C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 19:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFEEBC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 19:42:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8OuY-00013H-H0; Fri, 25 Apr 2025 15:40:34 -0400
+	id 1u8Ow3-00029P-Eu; Fri, 25 Apr 2025 15:42:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u8OuV-00010T-Qi
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 15:40:32 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1u8Ovh-00025q-Et
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 15:41:46 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u8OuT-0007OE-Hh
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 15:40:31 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-af50f56b862so1895688a12.1
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 12:40:29 -0700 (PDT)
+ id 1u8Ove-0007TL-Ti
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 15:41:45 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-22928d629faso30163755ad.3
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 12:41:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745610028; x=1746214828; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745610101; x=1746214901; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GljpmAfE2XxBlvDW/7WSOIHzyuXWxiT+7+/eskdV4GQ=;
- b=LwKETA2P0ZADHFFPUXg5c1q3Lwp4s6SXqG+JPYps0+oKmhqjycmY1wJbMOxT96wkB7
- HRuv6QTw9mvbPEF9dQiWoVnFiXzFyk4NDHtOjaeD6yOGYsQoul28Xi9MmPIw+XP4e5+c
- GPgTRdxPnDEPRGUPKCMc7GZVBss6oKCjn1ycy+ZoKtDvVmMeaMw0D7w0wxVpGeIM5FEQ
- Sfh71LMQMZfkylzvhLoLpEN9VgJ5BvDWKrc9v/65O+VvLJ2vNmGc3j8rvqeDnCUMmLYi
- P3vBbT8HPFlLTIlrVzHxW/U70WqgVDWuPhZaNnxvUfSWoGM7Qci0OTh8pYPfJ73ZXOCe
- RlYg==
+ bh=5UcNvA7rjecFIpTEr4Xcb9gK0+4d1KB8hV650O02870=;
+ b=J0uIioyIs+I9THLAzI6tRblKcedGs/VLC4vBv8XyaejgyfWs8RPvlbU8Zrm41AjkGB
+ 0QWGMhBg/dLQR92q2UT2dRG0PBd9xNczxbBAQUBqMUwC5gsS/ePRmNxBMfh6rb8f01/R
+ Z7AXn0ZLBB3XFYgN4a0aHH81jfTCd+jdII6wcQs/7Ox1x6ds3zFsj2N7jjvUTin+O5PW
+ u7unvNixftj3xb9Sr+lbjUnYXN2sjzvFdHbT7c3YoiivVoswHFp5GF2b8y70qr6ts/lE
+ InzajnMlBc4TgRI79NXCsHOguhTADF+Z+f39uSFFeJsLAl4U0Q9LtOG+E/MxjmYCl0BZ
+ EBaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745610028; x=1746214828;
+ d=1e100.net; s=20230601; t=1745610101; x=1746214901;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GljpmAfE2XxBlvDW/7WSOIHzyuXWxiT+7+/eskdV4GQ=;
- b=U1FVg+80J0SOHzyxrWexkabYk4SotKFOYC/9g4p3Mh0sJ59mWh+Emx5zc08vS6TIxS
- +GN81L6eByI5jhA9hIg2zpxOCnJAgcoZOfdvqSj9aFthcxyEIqdo7ZOw8ls+FnJgBu/N
- d+Hls61RLj8M1EP9p+GoHfxZT9HJbdkKJx12OlryRS4t5/Zh5gm/4DmPv3Sr4up3lTH4
- tbRMlCkPUfjJHNuO97g12i2tRh3aIDf7vmW91nueqk0YL7k0gIFmUCR+sapQcEwe9c4t
- I44oDYLjWDZsTPpcHLS4rTawcc/iniRR+d6FvC7k3Ksc1o/5RiXhV0e0tJ8LA4MdCjXL
- bhiA==
+ bh=5UcNvA7rjecFIpTEr4Xcb9gK0+4d1KB8hV650O02870=;
+ b=A+Tr8IuEBNecqTLgRaX/y/lEGtTsNLLIzkWUv2wBPBufHVmFtipu2pbuQKGfMA9K9h
+ 3Et9aZH2DXOmY6m+bPJV8HsGE/2kRGkQur2J57f4nfhdFHPNyKDdQqfR1irpaKjh5g0O
+ yuVde3PrttesFBcauh+mTko5XAKn6GlRp9lCkT+O2mc2wNayyPjZ7vFs/Z5WS6qtdJV3
+ G/CfqimBa1dXja+3u29/PFt72DOv+waFtnMJz5zmBg+jo7yPaPnk2oseefLhHDgsazFS
+ ZX7hmN2nwGivryIdJE7X6bswZF0ASdnVXZxrJrL5CwYM9+IBURUKP8FSK7piG972wpYl
+ /J6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUCKaceWVi7XzhUdgqKvbXvVjTH7eSaY3OQ8K9i89OqMIYHXjI2j+HNUkPddu2TovfASId5DoPBfVva@nongnu.org
-X-Gm-Message-State: AOJu0Yz7Flny43a9k6/Ho8+JsWEqT4Djp/47X9/vtek9k+r4/PG/c5uc
- cKzIkJ4Us8XiXVvZP7HzEPUG4O6VFL6Xh9sH1EVhEpuksyHxylxHwYFF9NlIOHs=
-X-Gm-Gg: ASbGnctJkn6dhag9WE+ErPhWTkYzFau79KrPYiagLKh0dKTUAN+GvQ+Vro0BjrbswI3
- hJJS60ZtiLD8GTckvaMF+HhbPWtssyA1TFrB9PrCEn7KZlSWzJ/Gi/hqiBV/aBz6BDH6FJ2+rdl
- MHnPi1lyWG9pJ2SdUZ8zrHqTmFKyXXTOCPfSWOvzaCRLU7e+Pi3v9fbRY1CF06JKfrMTI7M/zk2
- n/zDnfiXaOy0SZ8f8RC9TDK/lYOTNRV4qR4Ye9FY4A1dt2puk634XX9onkQ2AarACLAR+W73nP6
- eG3mgJIfHg+2/pyH43a1iVz82lsOrgWCSeRStZLWx23WIWYLZNV1FQ==
-X-Google-Smtp-Source: AGHT+IE7Xv4FF8bakpTYMot4O48vrU7bJ2TM7YOgr7gp5AItgMndKwHgV+3ARoFXoE3B+Jkix4HGsg==
-X-Received: by 2002:a17:90b:274b:b0:2ff:7b28:a51a with SMTP id
- 98e67ed59e1d1-30a0133647cmr1096839a91.17.1745610027981; 
- Fri, 25 Apr 2025 12:40:27 -0700 (PDT)
+ AJvYcCUoMWGPsjr/A/DBsC/toptPZUOgLB1AZFJtlBFeiazk1AwgYXuMb8UanXz6OZl/kuc/Tk2rjDpBKVHk@nongnu.org
+X-Gm-Message-State: AOJu0YyZjsU9wx6fICoyr/FsNUq0g9B3GYVZt5DX6V5DVJ+SY8wccMb6
+ ezc70lBCJB41qLkvwmQeKFE8CTzJlpo6mwErkNcVGnvRpnS5/DK4VA87QFhT4ek=
+X-Gm-Gg: ASbGncuVGmnH9wHdOqPT66vfHCOh1hSYz+kiXDhhcF2CNOq12rbLEqerShqJyEBC+++
+ vGUAOpVTaBnRRWUiDTyEIgev0WfGkTphxqll0h75a+9cShCjGfcwFE54vGPhr7mJJFZxg/oyTZz
+ 4osYglc7chix5EGzCQhmo0ZkAfoRKXb9Uc5AdYcr+aMtESWId+IDx0iW5LJ7yAmRk0FPeqdZyjN
+ uTeYIJuJhVdmf/WVoxgTUWiCpsqJFN/k30MLU1RaE5/N/87HZosmLgjKkvwSwBGuUO5q7o3S5Pi
+ j/iSkJqAiihS8hDcSEQPe4cj4/DowRD0A2Y4zKjecX5LNAd80JsuJg==
+X-Google-Smtp-Source: AGHT+IFHOmQiAidEhbTT7zOLykeO2eyuJ+HwFHipa3tD5Qb3YEc2zFcYsSb8OsuG3HvGkIOzakPXFQ==
+X-Received: by 2002:a17:903:320b:b0:220:e362:9b1a with SMTP id
+ d9443c01a7336-22dbf5f9367mr54673875ad.25.1745610101136; 
+ Fri, 25 Apr 2025 12:41:41 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-309ef146f92sm3911792a91.40.2025.04.25.12.40.27
+ 41be03b00d2f7-b15f8597f67sm3277215a12.34.2025.04.25.12.41.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 12:40:27 -0700 (PDT)
-Message-ID: <e7acdae3-de5d-453c-9197-0022f7b32374@linaro.org>
-Date: Fri, 25 Apr 2025 12:40:27 -0700
+ Fri, 25 Apr 2025 12:41:40 -0700 (PDT)
+Message-ID: <7d74322a-22f8-4a5f-b0d2-3cbc3b65c570@linaro.org>
+Date: Fri, 25 Apr 2025 12:41:40 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/15] accel/tcg: Convert TARGET_HAS_PRECISE_SMC to
- TCGCPUOps.precise_smc
+Subject: Re: [PATCH 08/15] accel/tcg: Simplify CPU_TLB_DYN_MAX_BITS
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20250424011918.599958-1-richard.henderson@linaro.org>
- <20250424011918.599958-8-richard.henderson@linaro.org>
+ <20250424011918.599958-9-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250424011918.599958-8-richard.henderson@linaro.org>
+In-Reply-To: <20250424011918.599958-9-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,22 +103,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/23/25 18:19, Richard Henderson wrote:
-> Instead of having a compile-time TARGET_HAS_PRECISE_SMC definition,
-> have each target set the 'precise_smc' field in the TCGCPUOps
-> structure.
+> Stop taking TARGET_VIRT_ADDR_SPACE_BITS into account.
+> 
+> Since we currently bound CPU_TLB_DYN_MAX_BITS to 22,
+> the new bound with a 4k page size is 20, which isn't
+> so different.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/accel/tcg/cpu-ops.h |  7 +++++++
->   include/exec/poison.h       |  1 -
->   target/i386/cpu.h           |  4 ----
->   target/s390x/cpu.h          |  2 --
->   accel/tcg/tb-maint.c        | 32 +++++++++++++-------------------
->   accel/tcg/user-exec.c       | 10 +++++-----
->   target/i386/tcg/tcg-cpu.c   |  1 +
->   target/s390x/cpu.c          |  1 +
->   8 files changed, 27 insertions(+), 31 deletions(-)
->
+>   accel/tcg/tlb-bounds.h | 21 +--------------------
+>   1 file changed, 1 insertion(+), 20 deletions(-)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
