@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE9DCC369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 08:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA623C369D1
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 08:50:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Eib-0002pD-Jl; Fri, 25 Apr 2025 04:47:33 -0400
+	id 1u8EkF-0006Ym-28; Fri, 25 Apr 2025 04:49:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u8EiZ-0002ng-3B
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 04:47:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u8Ek2-0006D5-KD
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 04:49:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u8EiW-0003Dd-Hj
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 04:47:30 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u8Ek0-0003Kt-AM
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 04:49:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745570846;
+ s=mimecast20190719; t=1745570939;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EAVkTegx08KSi2/p/LIgIi/c/VdoNv9CjIxpyafvHx4=;
- b=NWMaigpNykKV38X5VNvNfmf2yninT8onOZhyEDQyaQA37pKsF4dqaXell43A7tDAdqGo97
- 88rM3qzgbfKzRQbdO3KT4Bfl7BiwmiGht/ajIDPaIAlYJSPB6bYP6UEf5Wy3u2yN7jwHFI
- alS/7J0e/rooI+XoIWeIKtXk/nyEEXk=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Dm7vGpZP5EoeI30V0/xpiSTroCenQJrmqRZLViECxjc=;
+ b=G3/08KC7uuOFIbhMrqNrbYpDO6Fw5E8QsobM6DkaD4zIklRPAwhBkopTEvj5SyjWVZ1M2J
+ ELrFcIJod/xDwuqZws6w0oWFNBSDMLkwHtu8TgNAZg6c6mNryKSkjE+D6elmewI2JjPnPf
+ dDyQz9v5WdWHc21XDoW/WBOiHYBo/S0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-633--Cl4mEy2PgKlRjqE0OHQ_w-1; Fri,
- 25 Apr 2025 04:47:21 -0400
-X-MC-Unique: -Cl4mEy2PgKlRjqE0OHQ_w-1
-X-Mimecast-MFC-AGG-ID: -Cl4mEy2PgKlRjqE0OHQ_w_1745570840
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-544-03q7kRizMYeWtN6HRuTAfw-1; Fri,
+ 25 Apr 2025 04:48:55 -0400
+X-MC-Unique: 03q7kRizMYeWtN6HRuTAfw-1
+X-Mimecast-MFC-AGG-ID: 03q7kRizMYeWtN6HRuTAfw_1745570934
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4D8EE19560AB; Fri, 25 Apr 2025 08:47:20 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 839BB180099F; Fri, 25 Apr 2025 08:48:54 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.33.65])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4291130002C3; Fri, 25 Apr 2025 08:47:17 +0000 (UTC)
+ id 3BEE130001AB; Fri, 25 Apr 2025 08:48:51 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Kirti Wankhede <kwankhede@nvidia.com>, Avihai Horon <avihaih@nvidia.com>,
- Prasad Pandit <pjp@fedoraproject.org>, John Levon <john.levon@nutanix.com>
-Subject: [PULL 07/50] vfio: Introduce a new header file for external migration
- services
-Date: Fri, 25 Apr 2025 10:46:00 +0200
-Message-ID: <20250425084644.102196-8-clg@redhat.com>
+ Joao Martins <joao.m.martins@oracle.com>,
+ John Levon <john.levon@nutanix.com>
+Subject: [PULL 38/50] vfio: Introduce vfio_listener_un/register() routines
+Date: Fri, 25 Apr 2025 10:46:31 +0200
+Message-ID: <20250425084644.102196-39-clg@redhat.com>
 In-Reply-To: <20250425084644.102196-1-clg@redhat.com>
 References: <20250425084644.102196-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -86,184 +85,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The migration core subsystem makes use of the VFIO migration API to
-collect statistics on the number of bytes transferred. These services
-are declared in "hw/vfio/vfio-common.h" which also contains VFIO
-internal declarations. Move the migration declarations into a new
-header file "hw/vfio/vfio-migration.h" to reduce the exposure of VFIO
-internals.
+This hides the MemoryListener implementation and makes the code common
+to both IOMMU backends, legacy and IOMMUFD.
 
-While at it, use a 'vfio_migration_' prefix for these services.
-
-To be noted, vfio_migration_add_bytes_transferred() is a VFIO
-migration internal service which we will be moved in the subsequent
-patches.
-
-Cc: Kirti Wankhede <kwankhede@nvidia.com>
-Cc: Avihai Horon <avihaih@nvidia.com>
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
 Reviewed-by: John Levon <john.levon@nutanix.com>
-Reviewed-by: Avihai Horon <avihaih@nvidia.com>
-Link: https://lore.kernel.org/qemu-devel/20250326075122.1299361-4-clg@redhat.com
+Link: https://lore.kernel.org/qemu-devel/20250326075122.1299361-35-clg@redhat.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-common.h    |  5 +----
- include/hw/vfio/vfio-migration.h | 16 ++++++++++++++++
- hw/vfio/migration-multifd.c      |  5 +++--
- hw/vfio/migration.c              | 11 ++++++-----
- migration/target.c               |  8 ++++----
- 5 files changed, 30 insertions(+), 15 deletions(-)
- create mode 100644 include/hw/vfio/vfio-migration.h
+ hw/vfio/vfio-listener.h |  3 ++-
+ hw/vfio/container.c     | 11 +++--------
+ hw/vfio/iommufd.c       |  9 ++-------
+ hw/vfio/listener.c      | 22 +++++++++++++++++++++-
+ 4 files changed, 28 insertions(+), 17 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
-index f58cae9e55c9a2816358160984fab18324fba0cf..7a551bb2300f047b98c90a72ea0b21356ecb668a 100644
---- a/include/hw/vfio/vfio-common.h
-+++ b/include/hw/vfio/vfio-common.h
-@@ -290,13 +290,10 @@ extern VFIODeviceList vfio_device_list;
- extern const MemoryListener vfio_memory_listener;
- extern int vfio_kvm_device_fd;
+diff --git a/hw/vfio/vfio-listener.h b/hw/vfio/vfio-listener.h
+index 93af6747b28955f038454a335b361787f8364a3a..eb69ddd374fa20683007cfc4e9a7bf6fe707f27d 100644
+--- a/hw/vfio/vfio-listener.h
++++ b/hw/vfio/vfio-listener.h
+@@ -9,6 +9,7 @@
+ #ifndef HW_VFIO_VFIO_LISTENER_H
+ #define HW_VFIO_VFIO_LISTENER_H
  
--bool vfio_mig_active(void);
- int vfio_block_multiple_devices_migration(VFIODevice *vbasedev, Error **errp);
- void vfio_unblock_multiple_devices_migration(void);
- bool vfio_viommu_preset(VFIODevice *vbasedev);
--int64_t vfio_mig_bytes_transferred(void);
--void vfio_mig_reset_bytes_transferred(void);
--void vfio_mig_add_bytes_transferred(unsigned long val);
-+void vfio_migration_add_bytes_transferred(unsigned long val);
- bool vfio_device_state_is_running(VFIODevice *vbasedev);
- bool vfio_device_state_is_precopy(VFIODevice *vbasedev);
+-extern const MemoryListener vfio_memory_listener;
++bool vfio_listener_register(VFIOContainerBase *bcontainer, Error **errp);
++void vfio_listener_unregister(VFIOContainerBase *bcontainer);
  
-diff --git a/include/hw/vfio/vfio-migration.h b/include/hw/vfio/vfio-migration.h
-new file mode 100644
-index 0000000000000000000000000000000000000000..0d4ecd33d5d8c214bb77e0652b4405b6e43bcafa
---- /dev/null
-+++ b/include/hw/vfio/vfio-migration.h
-@@ -0,0 +1,16 @@
-+/*
-+ * VFIO migration interface
-+ *
-+ * Copyright Red Hat, Inc. 2025
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_VFIO_VFIO_MIGRATION_H
-+#define HW_VFIO_VFIO_MIGRATION_H
-+
-+bool vfio_migration_active(void);
-+int64_t vfio_migration_bytes_transferred(void);
-+void vfio_migration_reset_bytes_transferred(void);
-+
-+#endif /* HW_VFIO_VFIO_MIGRATION_H */
-diff --git a/hw/vfio/migration-multifd.c b/hw/vfio/migration-multifd.c
-index 378f6f3bf01f6a4155fb424f8028cb5380f27f02..09aa57f5f890f37f7e36c857fd813f55b1da2fce 100644
---- a/hw/vfio/migration-multifd.c
-+++ b/hw/vfio/migration-multifd.c
-@@ -11,6 +11,7 @@
+ #endif /* HW_VFIO_VFIO_LISTENER_H */
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index ff540e1c598b2b6390bdd9e26655a905c8388669..e4fcb1ad8bee80136fedcdc07cd68d56b5eeae04 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -616,12 +616,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+     group->container = container;
+     QLIST_INSERT_HEAD(&container->group_list, group, container_next);
  
- #include "qemu/osdep.h"
- #include "hw/vfio/vfio-common.h"
-+#include "hw/vfio/vfio-migration.h"
- #include "migration/misc.h"
- #include "qapi/error.h"
- #include "qemu/bswap.h"
-@@ -575,7 +576,7 @@ vfio_save_complete_precopy_thread_config_state(VFIODevice *vbasedev,
-         return false;
+-    bcontainer->listener = vfio_memory_listener;
+-    memory_listener_register(&bcontainer->listener, bcontainer->space->as);
+-
+-    if (bcontainer->error) {
+-        error_propagate_prepend(errp, bcontainer->error,
+-            "memory listener initialization failed: ");
++    if (!vfio_listener_register(bcontainer, errp)) {
+         goto listener_release_exit;
      }
  
--    vfio_mig_add_bytes_transferred(packet_len);
-+    vfio_migration_add_bytes_transferred(packet_len);
- 
-     return true;
- }
-@@ -645,7 +646,7 @@ vfio_multifd_save_complete_precopy_thread(SaveLiveCompletePrecopyThreadData *d,
-             goto thread_exit;
+@@ -631,7 +626,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+ listener_release_exit:
+     QLIST_REMOVE(group, container_next);
+     vfio_kvm_device_del_group(group);
+-    memory_listener_unregister(&bcontainer->listener);
++    vfio_listener_unregister(bcontainer);
+     if (vioc->release) {
+         vioc->release(bcontainer);
+     }
+@@ -669,7 +664,7 @@ static void vfio_disconnect_container(VFIOGroup *group)
+      * group.
+      */
+     if (QLIST_EMPTY(&container->group_list)) {
+-        memory_listener_unregister(&bcontainer->listener);
++        vfio_listener_unregister(bcontainer);
+         if (vioc->release) {
+             vioc->release(bcontainer);
          }
- 
--        vfio_mig_add_bytes_transferred(packet_size);
-+        vfio_migration_add_bytes_transferred(packet_size);
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 7488d21215b6eee78c9c51cfb227d9c8c59c4978..e47720247d6acfd6ea0e5a2e2a2eecabfa62dce3 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -410,7 +410,7 @@ static void iommufd_cdev_container_destroy(VFIOIOMMUFDContainer *container)
+     if (!QLIST_EMPTY(&bcontainer->device_list)) {
+         return;
+     }
+-    memory_listener_unregister(&bcontainer->listener);
++    vfio_listener_unregister(bcontainer);
+     iommufd_backend_free_id(container->be, container->ioas_id);
+     object_unref(container);
+ }
+@@ -562,12 +562,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+         bcontainer->pgsizes = qemu_real_host_page_size();
      }
  
-     if (!vfio_save_complete_precopy_thread_config_state(vbasedev,
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 8bf65b8e11094b8363692dba3084b762362c7dd6..582d65932a6c590eaecd8bf0b765f27d93896c72 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -17,6 +17,7 @@
+-    bcontainer->listener = vfio_memory_listener;
+-    memory_listener_register(&bcontainer->listener, bcontainer->space->as);
+-
+-    if (bcontainer->error) {
+-        error_propagate_prepend(errp, bcontainer->error,
+-                                "memory listener initialization failed: ");
++    if (!vfio_listener_register(bcontainer, errp)) {
+         goto err_listener_register;
+     }
  
- #include "system/runstate.h"
- #include "hw/vfio/vfio-common.h"
-+#include "hw/vfio/vfio-migration.h"
- #include "migration/misc.h"
- #include "migration/savevm.h"
- #include "migration/vmstate.h"
-@@ -373,7 +374,7 @@ static ssize_t vfio_save_block(QEMUFile *f, VFIOMigration *migration)
-     qemu_put_be64(f, VFIO_MIG_FLAG_DEV_DATA_STATE);
-     qemu_put_be64(f, data_size);
-     qemu_put_buffer(f, migration->data_buffer, data_size);
--    vfio_mig_add_bytes_transferred(data_size);
-+    vfio_migration_add_bytes_transferred(data_size);
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index 70bdeb3ce743088306f0941d63e51bddb242a697..d19674503c5dfc6b61671db316a186d18ae6f865 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -45,6 +45,7 @@
+ #include "system/tpm.h"
+ #include "vfio-migration-internal.h"
+ #include "vfio-helpers.h"
++#include "vfio-listener.h"
  
-     trace_vfio_save_block(migration->vbasedev->name, data_size);
- 
-@@ -1047,22 +1048,22 @@ static int vfio_block_migration(VFIODevice *vbasedev, Error *err, Error **errp)
- 
- /* ---------------------------------------------------------------------- */
- 
--int64_t vfio_mig_bytes_transferred(void)
-+int64_t vfio_migration_bytes_transferred(void)
- {
-     return MIN(qatomic_read(&bytes_transferred), INT64_MAX);
- }
- 
--void vfio_mig_reset_bytes_transferred(void)
-+void vfio_migration_reset_bytes_transferred(void)
- {
-     qatomic_set(&bytes_transferred, 0);
- }
- 
--void vfio_mig_add_bytes_transferred(unsigned long val)
-+void vfio_migration_add_bytes_transferred(unsigned long val)
- {
-     qatomic_add(&bytes_transferred, val);
- }
- 
--bool vfio_mig_active(void)
-+bool vfio_migration_active(void)
- {
-     VFIODevice *vbasedev;
- 
-diff --git a/migration/target.c b/migration/target.c
-index f5d8cfe7c2a3473f4bd3f5068145598c60973c58..12fd399f0c521c5c28535b58f24feab6845947fd 100644
---- a/migration/target.c
-+++ b/migration/target.c
-@@ -11,21 +11,21 @@
- #include CONFIG_DEVICES
- 
- #ifdef CONFIG_VFIO
--#include "hw/vfio/vfio-common.h"
-+#include "hw/vfio/vfio-migration.h"
- #endif
- 
- #ifdef CONFIG_VFIO
- void migration_populate_vfio_info(MigrationInfo *info)
- {
--    if (vfio_mig_active()) {
-+    if (vfio_migration_active()) {
-         info->vfio = g_malloc0(sizeof(*info->vfio));
--        info->vfio->transferred = vfio_mig_bytes_transferred();
-+        info->vfio->transferred = vfio_migration_bytes_transferred();
+ /*
+  * Device state interfaces
+@@ -1162,7 +1163,7 @@ static void vfio_listener_log_sync(MemoryListener *listener,
      }
  }
  
- void migration_reset_vfio_bytes_transferred(void)
- {
--    vfio_mig_reset_bytes_transferred();
-+    vfio_migration_reset_bytes_transferred();
- }
- #else
- void migration_populate_vfio_info(MigrationInfo *info)
+-const MemoryListener vfio_memory_listener = {
++static const MemoryListener vfio_memory_listener = {
+     .name = "vfio",
+     .region_add = vfio_listener_region_add,
+     .region_del = vfio_listener_region_del,
+@@ -1170,3 +1171,22 @@ const MemoryListener vfio_memory_listener = {
+     .log_global_stop = vfio_listener_log_global_stop,
+     .log_sync = vfio_listener_log_sync,
+ };
++
++bool vfio_listener_register(VFIOContainerBase *bcontainer, Error **errp)
++{
++    bcontainer->listener = vfio_memory_listener;
++    memory_listener_register(&bcontainer->listener, bcontainer->space->as);
++
++    if (bcontainer->error) {
++        error_propagate_prepend(errp, bcontainer->error,
++                                "memory listener initialization failed: ");
++        return false;
++    }
++
++    return true;
++}
++
++void vfio_listener_unregister(VFIOContainerBase *bcontainer)
++{
++    memory_listener_unregister(&bcontainer->listener);
++}
 -- 
 2.49.0
 
