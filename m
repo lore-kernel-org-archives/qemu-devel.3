@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C99E5C369D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:35:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80F49C369D9
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8L2Q-0008FP-I6; Fri, 25 Apr 2025 11:32:26 -0400
+	id 1u8L49-0005IU-3B; Fri, 25 Apr 2025 11:34:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L2D-0007I8-Jh
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:32:14 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u8L3n-0003Zn-4S
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:33:51 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L2A-00048e-3Z
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:32:13 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-39c14016868so2262466f8f.1
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:32:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u8L3l-0004Oo-GL
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:33:50 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-7369ce5d323so1970578b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:33:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745595128; x=1746199928; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IxXJRtg6QqaW97XxEFpJjDjkVurmz7fFxY1fgchqgLI=;
- b=SMijpDuspowig71cVJJYQu2E3zbDMNBRBC3SmwhC6w9XePhtVIYlXHTOL/MKo1bHJz
- bJ4COw4+08vVpLNfkjhowwY2bLsbptjxtTxr43hrKtHzppUGeW5XQkFA/soRxaNgor5p
- OZbEHWNarbEVzP5AZqD2uYkz7lKxX4kmeRycOujud5hompOIl9wTzeSAdjRkAutOJV8/
- Dt1R3eobBLOKOp/Cjk3ZUbF/oeP+eeQiV1T90dsFMRkv4uC4A3xLlfibDKh8EtVEEdUy
- THpmRlzvLc7ZrHeOA3TD6ctF4tHBKpfxPLCiTjowmMnV4r/lFz87qrZWl8xC8PZw4eCF
- z6nQ==
+ d=linaro.org; s=google; t=1745595227; x=1746200027; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QPCim8b+LO4Q2JcSDoJ2nk4O0pMo2S3iPj2Txm8vP3w=;
+ b=wLZGDabH/BZVGCKqIJ9uO9bNEVlByGaYRlK6KOewrrtvVgDndAYwxIN9Gu5tHlDBST
+ M7Q+LIrAfYfPBa/6FO5OC0iJjD0CVRrB0y5hq6P4fo+cmOa/h2LXekXh7m1qWfl2S/Bq
+ SHYKJKAOCUGIWIzVisDKcF9kHr92a89tp1sVzEuAK5jRMxMliW5+wZ5RvhD9f/+z2UK/
+ ugOrUyV+dPwCq122uyMtk21plzLePvWC6buCCxKhrGKPshXgFuQM/MZsrT7yx/WjkK72
+ D6Oicf8oRs/vth4RXBPMAC3W8YuEZy29J1Hk6ose8i/caeFrvwVnIGozI+0ec14l15c+
+ PJtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745595128; x=1746199928;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IxXJRtg6QqaW97XxEFpJjDjkVurmz7fFxY1fgchqgLI=;
- b=OnuXeEWTH1+8eRJ1oD4cVQqr3uCIteNCPry2rFMFBPtV0LBwtNKvj0lnnStwnKNhjT
- fL69Mgfyg7ApIl1J0e31lHhKTAT6sWrdWKTvTELhS21t3zikQnLU9L/vtQ9lG/tnFl/d
- /tYX+aMkT4njA6fLO5iYycppBC3FXQYfXjlvjioxmZj0hNv9b/1qYhMs+K9LwqPVL5Y4
- y0WROA6TYadrFG3j9/xlKoYGzYKFyL8QNv8Hl2ldtEulIijkAoV4eap1TLt1Towg82Fx
- tEE39dY01Gzt6VIbjuA9qvOZ4u6neZOI0hBPoPEgus3D6ipAitx9QMdKOW3MR9qB70UX
- KeuQ==
-X-Gm-Message-State: AOJu0YyvrPHTi9t2RFLA6ukAbBWpxT38xLorCHSazluSVGh1S2qdAoo2
- S5IlngAoaV98kKDOZ2CWXLitGdDrY/btVdeP0J3M25oog/w75sKefUeV5xxJbGrHSKGcoakIopC
- 1
-X-Gm-Gg: ASbGncvWMEQbmNi+7j1ASbx/EXDFREwP/C6+J9kA4ghWjdWW/QS9mRzNoYUjCUDJ6rn
- TzZv7nTG6zYF1gZMYIFLPPX6hiY98nIyEuHuZdaC4bZvrxXhX0kA2vW715iQQh5R4l8G71RDTBU
- oi07oW5ClL/3+FEaSxTUoVn8Hexfo0+xD5uVnqEGi206C+GJY9qHcRkbETjw2mAtdCRXq9n6NNr
- pr/J374x+MWfp1LNwoYxCWVfL3jQvPouYCUajpaYWIGh/Lb81HL8aK/890y5L1n+v2Jq5aC6LKq
- svnlbYgHckZe2A8Itf7LIwFt5r8mg0+ZLweYDJlapsNYBD0Z3gJt5CKY7dmHCTDlcN/YCAZlr9i
- fRB2QsETZ3dxUqoE=
-X-Google-Smtp-Source: AGHT+IFDqQZSt0gYfJw2WCHXjGFKdP+LXp/4aFb+cw90md1BsyMSr957YnrFuFQHl2heFr3dzK3Oww==
-X-Received: by 2002:a5d:64e4:0:b0:391:41c9:7a87 with SMTP id
- ffacd0b85a97d-3a074f79251mr2215414f8f.51.1745595128062; 
- Fri, 25 Apr 2025 08:32:08 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073cc4153sm2726173f8f.57.2025.04.25.08.32.07
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 08:32:07 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 41/58] system/kvm: make functions accessible from common code
-Date: Fri, 25 Apr 2025 17:28:25 +0200
-Message-ID: <20250425152843.69638-42-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
-References: <20250425152843.69638-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1745595227; x=1746200027;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QPCim8b+LO4Q2JcSDoJ2nk4O0pMo2S3iPj2Txm8vP3w=;
+ b=vTJ4rbVCnvlt+NBqg1K0la0hJe/m2My+3PYoQXJ4O8EN88fLHAYH0ybBe3O1oCJdsW
+ 2k0e6t+ooy7lBGeat7jQUGH7KywhZRkU84WWW0IV03ZXwex50fVaZLbf2x/FOUmwcaZX
+ AhGxHzTHg+sD3KaE/1OmWmcUS3YVy4tVn6sJAJfJnGtJFqyyY3Cej78WNlN602Vcf27K
+ VdviGcA2rH4N8fUVugqY5nfkaG+vosi4IbQIvCcV2ynuSi0pSHIOO0DtIBo0toDTaANN
+ j5jU6RrPoN+7KGEQmWlyi3koyVzcXAVWE6uuFIuaHIpyLKe3YZDHnuxEOKhwLPFaNg+d
+ AzIA==
+X-Gm-Message-State: AOJu0Yyjuj80w6EXvP+KXkwgwnjttToTpCZSLdroYLuFaysmwIYFE//4
+ fDvwXbyi9ohOBKAHZ3PzQV9IRr7EMdGHk9Ci+oboGuETD0DnJVSKKSzdTg4meQs=
+X-Gm-Gg: ASbGncsaj3AbY5szUrZdUjbZ8FBlJYEOR5j6Q/Lyi4KyMvdzlhyZ5n9s5uzxKfFxcM9
+ V2jTwYNd9dx5MeqNN0DW6WIsJxmgNTls1GZgPuRPzfdJhvGfgXF9AhEXXXI1IpEm6PCYlqLpjxW
+ Djpdl1TP4AbwPrfjOAnvP8J0/XBLdtVn2EgO7Y8k1KBBOXNIe0tcOYe3IUGfuYViUrmI839EEii
+ DE2VD0VtZXsxzFaM8w1xApQWc1N2CLErwv4A907BMStXmVY9UbeCCpn+N8mjnewTS+7rYeq9ehj
+ GpDqnPLiDVP8au69mlOvUIgTFcCFk9s2l/6GkEoRvf2QuFvKwZeTTK6S8sLDzuq788qG2OFH8Tl
+ VaQpjDWI=
+X-Google-Smtp-Source: AGHT+IE/oQ4K6EnWfQGgNQPzyDfhP8uWARAMS+VZ/cPcaqCxAWJYlKy3QxsxrauDyGkH63dZ/rxLWQ==
+X-Received: by 2002:a05:6a00:2e22:b0:736:339b:8296 with SMTP id
+ d2e1a72fcca58-73fd896a1b8mr3636652b3a.18.1745595227173; 
+ Fri, 25 Apr 2025 08:33:47 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73e259134a9sm3297699b3a.24.2025.04.25.08.33.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Apr 2025 08:33:46 -0700 (PDT)
+Message-ID: <49fafb18-2186-4d19-867b-bc26c1c43572@linaro.org>
+Date: Fri, 25 Apr 2025 08:33:45 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/loongarch/virt: Get physical entry address with elf
+ file
+To: Bibo Mao <maobibo@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+References: <20250425021620.3968737-1-maobibo@loongson.cn>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250425021620.3968737-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,50 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On 4/24/25 19:16, Bibo Mao wrote:
+> With load_elf() api, image load low address and high address is converted
+> to physical address if parameter translate_fn is provided. However
+> executing entry address is still virtual address. Here convert entry
+> address into physical address, since MMU is disabled when system power on,
+> the first PC instruction should be physical address.
+> 
+> Signed-off-by: Bibo Mao<maobibo@loongson.cn>
+> ---
+>    v1 ... v2:
+>    1. Only modify LoongArch specified rather than load_elf() API, since
+>       there is be potential influence with other architectures.
+> ---
+>   hw/loongarch/boot.c | 1 +
+>   1 file changed, 1 insertion(+)
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250424232829.141163-8-pierrick.bouvier@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/system/kvm.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 18811cad6fd..b690dda1370 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -210,6 +210,10 @@ bool kvm_arm_supports_user_irq(void);
- int kvm_on_sigbus_vcpu(CPUState *cpu, int code, void *addr);
- int kvm_on_sigbus(int code, void *addr);
- 
-+int kvm_check_extension(KVMState *s, unsigned int extension);
-+
-+int kvm_vm_ioctl(KVMState *s, unsigned long type, ...);
-+
- void kvm_flush_coalesced_mmio_buffer(void);
- 
- #ifdef COMPILING_PER_TARGET
-@@ -237,8 +241,6 @@ static inline int kvm_update_guest_debug(CPUState *cpu, unsigned long reinject_t
- 
- int kvm_ioctl(KVMState *s, unsigned long type, ...);
- 
--int kvm_vm_ioctl(KVMState *s, unsigned long type, ...);
--
- int kvm_vcpu_ioctl(CPUState *cpu, unsigned long type, ...);
- 
- /**
-@@ -441,8 +443,6 @@ void kvm_arch_update_guest_debug(CPUState *cpu, struct kvm_guest_debug *dbg);
- 
- bool kvm_arch_stop_on_emulation_error(CPUState *cpu);
- 
--int kvm_check_extension(KVMState *s, unsigned int extension);
--
- int kvm_vm_check_extension(KVMState *s, unsigned int extension);
- 
- #define kvm_vm_enable_cap(s, capability, cap_flags, ...)             \
--- 
-2.47.1
+Although perhaps we should adjust the API because all users have to do exactly this, and 
+it's easy to miss.
 
+
+r~
 
