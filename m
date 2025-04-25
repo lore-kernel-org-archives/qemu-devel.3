@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45D0AC369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 19:57:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 378BFC369D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 19:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8P9u-0002Px-L4; Fri, 25 Apr 2025 15:56:26 -0400
+	id 1u8PD3-0004Ni-HC; Fri, 25 Apr 2025 15:59:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1u8P9t-0002PU-Bo; Fri, 25 Apr 2025 15:56:25 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1u8PCk-0004KN-Ht; Fri, 25 Apr 2025 15:59:24 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1u8P9r-0001Fk-9D; Fri, 25 Apr 2025 15:56:25 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-39c1efbefc6so1884372f8f.1; 
- Fri, 25 Apr 2025 12:56:22 -0700 (PDT)
+ id 1u8PCg-0001Ux-1k; Fri, 25 Apr 2025 15:59:19 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43d0359b1fcso17820975e9.0; 
+ Fri, 25 Apr 2025 12:59:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745610981; x=1746215781; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745611155; x=1746215955; darn=nongnu.org;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=A2gfaBXNp4dU0dm+i9LlMdykMAI/Yullks1UebA9OG0=;
- b=lxahaUzSpOAuwokyBFXPBQqvuoIB0Y/eI/dV2gA/NH5qdi0ldsl8DslgCWnY/+n3vT
- RAiWwCQuh+EF/P57sznJlJ1cBlYZDyxUydXHvXjaKEjzDANg51HQOIiOqEV3Gk5UTzsp
- Rnm4PexXmu2xaQqhhjjAqdWTw5eyhdpkYtDsZiptHfY/wjqoVaINR+i/Jrc5BA9QXj5W
- ObbUNhlCESYF58GrRAz+svXKOHe4oeqJyWY45mtDAwwugkv4lJM/O6N9ACeI84xgKKym
- LD1ibcIO1fQJLhcSvYhihP9z77Z72CgUBQ0sSFKzZCcm9KJXtx/UTTZ0735g9mk+1A/T
- fZnw==
+ bh=yweKDTzZHfMStYqASqNPpklMtZspKfWLJrLsjOL9QlI=;
+ b=NNS7kOe/Ix+qQ+KfDO4BNd0zL+/ZvCUV4AIA2tMufBEsuO1WRaokfDEcIVwpw6sWWr
+ RW122Hpg1DSHyx4wCEHnGxvYZWaQ59EM1V2EhuStRxo9+0Y7r7R4bUGhnBvUIEw8aHW3
+ MxYA2B1wyNvb1yZqrGin9Wdtg0EJt//cKHekmyos3iHhUAk+Adc5C5TqXQmPkTTEIbXY
+ 7vU7zPgKT0KfxoZNnXHHYOJIRNh7HNcn1KW6IK2lQ8S+njWgWVoG/AovPlQG7UdoNtnJ
+ RReY4Dv8H7EGe7IoTazA4lEZRh8FERstcTYliXi7sisdqGn5yUk9u6tkxpMfCHiWWEuz
+ 8PfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745610981; x=1746215781;
+ d=1e100.net; s=20230601; t=1745611155; x=1746215955;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:message-id:subject:cc
  :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=A2gfaBXNp4dU0dm+i9LlMdykMAI/Yullks1UebA9OG0=;
- b=ZSvKcDh4iEeOYTC/5qWDFASBeytFuuXBCGNmbdqSj8+wrA8qDvUde+icp+lwc5B8i9
- STAFIUKwcU2I6PCAUUUy0VGbBAkKmyIZopLF91URKZrHD2GWctjUHfGN6b1ONxIz1j0o
- Y/SQwpeGPc91x8vmftYrhwd8uN34Wde1Z6ISF4PbjXTxOg5IO958W0ZiOg7gCGNCJjqw
- ZZkg47akKYo/a/Esq4/EPBpzv2TdV8F47FtpHi2+3W+pKiRL0/w/A1Cg/UrkcxThX//B
- O8iOqt5Utf3wBStPFU98zbse2QiZJqXO/f0e87249S0j9rkQ1DauizU66T3fBdLePYY4
- mCqQ==
+ bh=yweKDTzZHfMStYqASqNPpklMtZspKfWLJrLsjOL9QlI=;
+ b=NwLN6/Z/xCZQH1TSGFIx+s6yTVTY3u0N0hYSBpGxtMCQMZmd+CO3iOAgoOMyVRPccR
+ sdLFB6Pg2KXeCPyDRu6KYVBjnwMGNtgJ4PXAKHPD7jCcav//PrXo9UKWFbMIQtqynOHG
+ 22m0ccgUOyUt7E1yntAbYCmgiRlBJsGn2GNLjSD/58dug2/nXdZ8Gep5uVPBxO2RasLG
+ QdWTGON9N4xpQdrgovfw+rLrTCI1MPwI95QuPAPvy24G2wiNfTgkhGr4Gal8/OS5qvSY
+ KCS4JiL7mGmlXLBwYJQojQ2ryv5LwpPhu36oLD+37cGXzkMzYZuF+39Op5r1YP/BhsT8
+ /3Ew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX8HyIR5DoTVS9E7z6IKVYW4z1+YGrQX4pjZfMMm3TVJLt4voKmfkraY9ALE4AlCpgjY7MsxMJ36g==@nongnu.org
-X-Gm-Message-State: AOJu0Ywsz9ft76o88S3GVEtOHHogTw0v6wRJMu68mYZckGMD/LpMj1iW
- l0C8DaGe6ik272n/dfz+hgJzevuPFD/Q4uQhXbvLPBuSKIK+JO3E
-X-Gm-Gg: ASbGncu9GN4vDsaA4ygUf7xCpieKLY81JgIHcrRPZB3DKfHSa5G8RqbKk/Zf/s02YrE
- JBwajoRLAqM0O5xMhRNMkmR1VmL2OtoP2040r0sK/c56XStGHkn9tpAdwV+yPM7+KH10Z5+2XLO
- WfKgbyZ7HnO9XUaRsl6O9rYT6d3SKUq2XAmwxZ7hUIJ3RaA3FCFPmu+sDLdGA2GAeUo0IX8xs3D
- AX71X5t+NEZE2bhVd9R1NUZjqo1vPZM14ZKS1w0KnmAdyb5qc2FQRJ5VPS843WIZ8S8hI10RO/f
- BNJPo0f5O+rBgfrIP3E+eH+LoLU43XDzeMb4rVNeFQ9AmDxBTe/HcKcs3bxwu9iNoy/g0zEEX3U
- fSmHyWEi+vGsr
-X-Google-Smtp-Source: AGHT+IFPc14uPY4ZvxH25N5kQbAk1JSTFHjRt56GVHPCAokD31/lLopSzZ7oM7Z1isV3lM1hueeNLg==
-X-Received: by 2002:a05:6000:240b:b0:38d:d701:419c with SMTP id
- ffacd0b85a97d-3a074f0dca7mr2867191f8f.41.1745610980402; 
- Fri, 25 Apr 2025 12:56:20 -0700 (PDT)
+ AJvYcCVy7JC/krEs6lhhXJfqhxh9Hq244HxiJ5QqHW9w/+sWzHTIB1T9abL7LBcp+t/94YvjqsuvCTcPxw==@nongnu.org
+X-Gm-Message-State: AOJu0YylmshK1xlYB6zbisbJxm51ISVCYdRRFpmJfWQv77Xk+UXyVhwR
+ UnmkmAY/CiYbuaSVHWWP2E7Wtqtq+9e6jTv/u9yeIAkIOt3ko0Sv
+X-Gm-Gg: ASbGncuc2zZ3qvpRExHG6f5AWC8xQVHoxTfACjixV782iNZ6EvgmYFv4TIPlvcoekn3
+ /+smLzptmBCFwys12tIQhtwhSXiJwPiGIMzv4EHt4KMqjVzyoEkuObk3TJCgamKCzsTZo4I/GVc
+ xUIqIn6ycSXMOk1YYo+EKRXSsowV34aUUM08xWaUznSfYmT7q3MZy52QsX2l2ySTaOwQQ7wldxk
+ laSrBPJRyXSjyWK2homwx0VV1KjnbnzPYQI5xSBI7Vuy9e71AfQIGMrDFYGfI1sK9Tgb1hC1zoW
+ aZ2g/XJHMtEuIyxMAZwzhrAAe6AnGuWgKjqSy4vWj5fGZg9G0uCYuVQOqOat5I8CM5C+HiItdTf
+ NQYV8KAHgf/rC
+X-Google-Smtp-Source: AGHT+IEVPUhwLmv8riv8/fDAe4xeHMfwpRY3f+z1CPFugWvVDtdP4qQBzqD6o7VZHGNqMGQF6T8d9Q==
+X-Received: by 2002:a05:600c:1c23:b0:43c:ec72:3daf with SMTP id
+ 5b1f17b1804b1-4409c513fa7mr79424265e9.14.1745611154876; 
+ Fri, 25 Apr 2025 12:59:14 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073e46501sm3171296f8f.73.2025.04.25.12.56.19
+ ffacd0b85a97d-3a073cc180bsm3295318f8f.53.2025.04.25.12.59.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Apr 2025 12:56:19 -0700 (PDT)
-Date: Fri, 25 Apr 2025 21:56:18 +0200
+ Fri, 25 Apr 2025 12:59:14 -0700 (PDT)
+Date: Fri, 25 Apr 2025 21:59:13 +0200
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: Corvin =?iso-8859-1?Q?K=F6hne?= <corvin.koehne@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Yannick =?iso-8859-1?Q?Vo=DFen?= <y.vossen@beckhoff.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair@alistair23.me>,
- Corvin =?iso-8859-1?Q?K=F6hne?= <c.koehne@beckhoff.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 10/21] hw/misc/zynq_slcr: Add logic for DCI configuration
-Message-ID: <aAvo4vhsKM7rApVy@zapote>
+To: Corvin =?iso-8859-1?Q?K=F6hne?= <C.Koehne@beckhoff.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ Yannick =?iso-8859-1?Q?Vo=DFen?= <Y.Vossen@beckhoff.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "alistair@alistair23.me" <alistair@alistair23.me>
+Subject: Re: [PATCH 00/21] hw/arm: add CX7200 board emulation
+Message-ID: <aAvpkV1ExuLthoH9@zapote>
 References: <20250318130817.119636-1-corvin.koehne@gmail.com>
- <20250318130817.119636-11-corvin.koehne@gmail.com>
+ <b4a0daac7b200e4ffc08879977dbde120a8d5f73.camel@beckhoff.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250318130817.119636-11-corvin.koehne@gmail.com>
+In-Reply-To: <b4a0daac7b200e4ffc08879977dbde120a8d5f73.camel@beckhoff.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,104 +108,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 18, 2025 at 02:08:01PM +0100, Corvin Köhne wrote:
-> From: YannickV <Y.Vossen@beckhoff.com>
+On Thu, Apr 24, 2025 at 10:48:17AM +0000, Corvin Köhne wrote:
+> On Tue, 2025-03-18 at 14:07 +0100, Corvin Köhne wrote:
+> > CAUTION: External Email!!
+> > From: Corvin Köhne <c.koehne@beckhoff.com>
+> > 
+> > Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
+> > platform. This commit series adds the Beckhoff CX7200 as new board variant to
+> > QEMU.
+> > 
+> > The emulation is able to successfully boot an CX7200 image. The image includes
+> > some self tests executed on every boot. Only the cache self test fails due to
+> > QEMU emulating the cache as always being coherent. The self tests include
+> > f.e.:
+> > 
+> > * Network
+> > * Flash
+> > * CCAT DMA + EEPROM [1]
+> > * TwinCAT (Beckhoff's automation control software [2])
+> > 
+> > [1] https://github.com/beckhoff/ccat
+> > [2] https://www.beckhoff.com/en-us/products/automation/
+> > 
+> > Corvin Köhne (1):
+> >   MAINTAINERS: add myself as reviewer for Beckhoff devices
+> > 
+> > YannickV (20):
+> >   hw/timer: Make frequency configurable
+> >   hw/timer: Make PERIPHCLK period configurable
+> >   hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffffffff
+> >   hw/arm/zynq-devcfg: Prevent unintended unlock during initialization
+> >   hw/dma/zynq: Notify devcfg on FPGA reset via SLCR control
+> >   hw/dma/zynq-devcfg: Simulate dummy PL reset
+> >   hw/dma/zynq-devcfg: Indicate power-up status of PL
+> >   hw/dma/zynq-devcfg: Fix register memory
+> >   hw/misc: Add dummy ZYNQ DDR controller
+> >   hw/misc/zynq_slcr: Add logic for DCI configuration
+> >   hw/misc: Add Beckhoff CCAT device
+> >   hw/arm: Add new machine based on xilinx-zynq-a9 for Beckhoff CX7200
+> >   hw/arm/beckhoff_CX7200: Remove second SD controller
+> >   hw/arm/beckhoff_CX7200: Remove second GEM
+> >   hw/arm/beckhoff_CX7200: Adjust Flashes and Busses
+> >   hw/arm/beckhoff_CX7200: Remove usb interfaces
+> >   hw/arm/beckhoff_CX7200: Remove unimplemented devices
+> >   hw/arm/beckhoff_CX7200: Set CPU frequency and PERIPHCLK period
+> >   hw/arm/beckhoff_CX7200: Add CCAT to CX7200
+> >   hw/arm/beckhoff_CX7200: Add dummy DDR CTRL to CX7200
+> > 
+> >  MAINTAINERS                       |   7 +
+> >  hw/arm/Kconfig                    |  18 ++
+> >  hw/arm/beckhoff_CX7200.c          | 440 ++++++++++++++++++++++++++++++
+> >  hw/arm/
+> > https://nospamproxywebp.beckhoff.com/enQsig/link?id=BAgAAACF1PqAcgZXNGoAAACSdE
+> > 7DUYKKiipqQsJl32BC_vIVe3kQ23Cr-DKSrQn5Y_I0ZnsAu8qZHVUsGVmYwKL0amQboD-LYv9rWN-
+> > mvEPUf2y-CZ1qrggzKI9xgbKnOi8XSPZVd2G0Lro-8fGR9tAuNB-3CWjEaKli0                
+> > |   1 +
+> >  hw/dma/xlnx-zynq-devcfg.c         |  36 ++-
+> >  hw/misc/Kconfig                   |   6 +
+> >  hw/misc/beckhoff_ccat.c           | 365 +++++++++++++++++++++++++
+> >  hw/misc/
+> > https://nospamproxywebp.beckhoff.com/enQsig/link?id=BAgAAACF1PqAcgZXNGoAAACSdE
+> > 7DUYKKiipqQsJl32BC_vIVe3kQ23Cr-DKSrQn5Y_I0ZnsAu8qZHVUsGVmYwKL0amQboD-LYv9rWN-
+> > mvEPUf2y-CZ1qrggzKI9xgbKnOi8XSPZVd2G0Lro-8fGR9tAuNB-3CWjEaKli0               
+> > |   2 +
+> >  hw/misc/zynq_ddr-ctrl.c           | 331 ++++++++++++++++++++++
+> >  hw/misc/zynq_slcr.c               |  47 ++++
+> >  hw/timer/a9gtimer.c               |  25 +-
+> >  hw/timer/arm_mptimer.c            |  33 ++-
+> >  include/hw/dma/xlnx-zynq-devcfg.h |   3 +
+> >  include/hw/timer/a9gtimer.h       |   2 +
+> >  include/hw/timer/arm_mptimer.h    |   4 +
+> >  15 files changed, 1309 insertions(+), 11 deletions(-)
+> >  create mode 100644 hw/arm/beckhoff_CX7200.c
+> >  create mode 100644 hw/misc/beckhoff_ccat.c
+> >  create mode 100644 hw/misc/zynq_ddr-ctrl.c
 > 
-> The registers for the digitally controlled impedance (DCI) clock are
-> part of the system level control registers (SLCR). The DONE bit in
-> the status register indicates a successfull DCI calibration. An
-> description of the calibration process can be found here:
-> https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/DDR-IOB-Impedance-Calibration
+> Hi,
 > 
-> The DCI control register and status register have been added. As soon
-> as the ENABLE and RESET bit are set, the RESET bit has also been toggled
-> to 0 before and the UPDATE_CONTROL is not set, the DONE bit in the status
-> register is set. If these bits change the DONE bit is reset. Note that the
-> option bits are not taken into consideration.
-> 
-> Signed-off-by: Yannick Voßen <y.vossen@beckhoff.com>
+> any feedback for those commits?
+>
 
-LGTM:
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Hi Corvin,
 
+Thanks for the reminder and sorry for the delay! I started reviewing and
+sending comments today. Cool work!
 
+It would be great if you could include a patch to docs/system/arm/
+describing how to test this machine.
 
-
-> ---
->  hw/misc/zynq_slcr.c | 31 +++++++++++++++++++++++++++++++
->  1 file changed, 31 insertions(+)
-> 
-> diff --git a/hw/misc/zynq_slcr.c b/hw/misc/zynq_slcr.c
-> index 9b3220f354..10ef8ecee8 100644
-> --- a/hw/misc/zynq_slcr.c
-> +++ b/hw/misc/zynq_slcr.c
-> @@ -181,6 +181,12 @@ REG32(GPIOB_CFG_HSTL, 0xb14)
->  REG32(GPIOB_DRVR_BIAS_CTRL, 0xb18)
->  
->  REG32(DDRIOB, 0xb40)
-> +REG32(DDRIOB_DCI_CTRL, 0xb70)
-> +    FIELD(DDRIOB_DCI_CTRL, RESET, 0, 1)
-> +    FIELD(DDRIOB_DCI_CTRL, ENABLE, 1, 1)
-> +    FIELD(DDRIOB_DCI_CTRL, UPDATE_CONTROL, 20, 1)
-> +REG32(DDRIOB_DCI_STATUS, 0xb74)
-> +    FIELD(DDRIOB_DCI_STATUS, DONE, 13, 1)
->  #define DDRIOB_LENGTH 14
->  
->  #define ZYNQ_SLCR_MMIO_SIZE     0x1000
-> @@ -194,6 +200,8 @@ struct ZynqSLCRState {
->  
->      MemoryRegion iomem;
->  
-> +    bool ddriob_dci_ctrl_reset_toggled;
-> +
->      uint32_t regs[ZYNQ_SLCR_NUM_REGS];
->  
->      Clock *ps_clk;
-> @@ -332,6 +340,8 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
->  
->      DB_PRINT("RESET\n");
->  
-> +    s->ddriob_dci_ctrl_reset_toggled = false;
-> +
->      s->regs[R_LOCKSTA] = 1;
->      /* 0x100 - 0x11C */
->      s->regs[R_ARM_PLL_CTRL]   = 0x0001A008;
-> @@ -419,6 +429,8 @@ static void zynq_slcr_reset_init(Object *obj, ResetType type)
->      s->regs[R_DDRIOB + 4] = s->regs[R_DDRIOB + 5] = s->regs[R_DDRIOB + 6]
->                            = 0x00000e00;
->      s->regs[R_DDRIOB + 12] = 0x00000021;
-> +
-> +    s->regs[R_DDRIOB_DCI_CTRL] = 0x00000020;
->  }
->  
->  static void zynq_slcr_reset_hold(Object *obj, ResetType type)
-> @@ -555,6 +567,25 @@ static void zynq_slcr_write(void *opaque, hwaddr offset,
->                  (int)offset, (unsigned)val & 0xFFFF);
->          }
->          return;
-> +
-> +    case R_DDRIOB_DCI_CTRL:
-> +        if (!FIELD_EX32(val, DDRIOB_DCI_CTRL, RESET) && 
-> +            FIELD_EX32(s->regs[R_DDRIOB_DCI_CTRL], DDRIOB_DCI_CTRL, RESET)) {
-> +
-> +            s->ddriob_dci_ctrl_reset_toggled = true;
-> +            DB_PRINT("DDRIOB DCI CTRL RESET was toggled\n");
-> +        }
-> +
-> +        if (FIELD_EX32(val, DDRIOB_DCI_CTRL, ENABLE) &&
-> +            FIELD_EX32(val, DDRIOB_DCI_CTRL, RESET) &&
-> +            !FIELD_EX32(val, DDRIOB_DCI_CTRL, UPDATE_CONTROL) &&
-> +            s->ddriob_dci_ctrl_reset_toggled) {
-> +
-> +            s->regs[R_DDRIOB_DCI_STATUS] |= R_DDRIOB_DCI_STATUS_DONE_MASK;
-> +        } else {
-> +            s->regs[R_DDRIOB_DCI_STATUS] &= ~R_DDRIOB_DCI_STATUS_DONE_MASK;
-> +        }
-> +        break;
->      }
->  
->      if (s->regs[R_LOCKSTA]) {
-> -- 
-> 2.49.0
-> 
+Cheers,
+Edgar
 
