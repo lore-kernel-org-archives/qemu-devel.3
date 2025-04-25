@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90373C369D5
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 22:35:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C308C369D5
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 22:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8RLU-0001XX-SU; Fri, 25 Apr 2025 18:16:33 -0400
+	id 1u8RTL-0005Gq-LJ; Fri, 25 Apr 2025 18:24:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8RLN-0001Ku-Sm
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:16:27 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8RT0-00052t-BW
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:24:18 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8RLF-0003VF-4J
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:16:25 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3913d129c1aso1839226f8f.0
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 15:16:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8RSy-0004MR-IT
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 18:24:18 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-39c1ef4ae3aso1767580f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 15:24:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745619373; x=1746224173; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745619854; x=1746224654; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1B5bfHQA32ByEyNRaIccvyVfRoxcXRJl6KVjp2Ex+n8=;
- b=Z9ADq7bJoPQqLSQPWp7Hrd0gczceNOFPMhbSBRyerhKvKxpuTJ2gEHTj9tMIs7Kb/b
- Sj7LmqykdpYgQitIe4eNXdXb/UKEK54Uk7fWyrn5kNXqY7yoMTpKpLAAmWeP6YTXXRYY
- N/TSY85kU3ItkmzM1sosoyUBN8wJtkspAcjoAuacIpjfDq0Q7jdqQMc6nB5UFIfbH4xV
- pOO920Kf/QAR8ryemqnO9TT3jQQLH3C4GzjuFe8wntoQVRWlOAkGZmztS7SYrythrxGE
- EFtcxoJYkSgZ2+WHa8psaYV5Bin26ankkhFE++HGoc40Tv0VNeJexyGqEC6dsMOCrbNW
- n9Fg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=UAdFV5EgY0DcLQsaiDziWDHGl+k2cCf5iTdE37WRRbg=;
+ b=BHG13CUt1XD3HHCP30rU8DN5lnl5Qwj8LJaXbQlUy9774xJqX2nWs2WNvect3OzGix
+ iuG8rLbIeeBITvxfMC+L30JTR2oskXGWYdGZQqyWDU5fVS2BXh1GKZp3cTf8I0LKMz6S
+ 4USyWQPk94W1GOUWaUd73u2tuuD21UA4DfUEjKUXw2PeNolcxbvmaedsl5QwbtMRQB3M
+ MBhapBJp0aF+Oup3+1PtgGrbq3qmNR5FvaOaIWRa/DQNc35RdPY9dQwmyYQcvWG3iL+s
+ Yxe4asi36IZ7d1zq6mnXK+nwGkDuHewzJaRG/dyeyOCDhV9stz68DUlv1PG1w725J9c/
+ TdpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745619373; x=1746224173;
+ d=1e100.net; s=20230601; t=1745619854; x=1746224654;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1B5bfHQA32ByEyNRaIccvyVfRoxcXRJl6KVjp2Ex+n8=;
- b=iAo4s83JeuIMzSRSoMXL3wDN4GU8VeTbAOrHLbHl6RXMvYtXY0+DW2+2kglS/gpUjf
- cn4wE85gX8g1M/k5QzPnT/9m/bYsq2uE2prsnGrIBIhIuJjS3k/Ejxvdok6gyWyn1ro3
- 3ytArnn0H7uRbQqeARnFyLuhjYN4NNwji1eGFInIpkWglLNA5HIxz27+pmZ18Ojj8+i0
- ZvMu/S2XD2UnAo2hbBq57bQm6vIRT1kjXYm5YWLwyl3DnIEZ1xIoFFg4/zEYrdngBo1/
- K0NS+Bm2q6JY6XwzH4CaAfhV2a8hqwKRtpFeUvO/aA372cZgtZPiLoe+aBCcsd8mTUpl
- 2Ohg==
-X-Gm-Message-State: AOJu0YywmMMjkAVvjXBRkadOYjvwzE12paAh71N2pjG5gfKQUiGoxTPU
- ydieND9KHWO6czieG3Yx7grJXBXGYYyh2iDxcpyFmjTwDqPNA0WwOTHcgVE4Kw4=
-X-Gm-Gg: ASbGncvQqw9bPge9Je+l7cI6725d9KMLOHk5/XxfbJJvaRytFrqvJpl2CaqDb9VTdua
- SwJ1Meoa5/TGuM/LWyhJjw3Qmuxjs2YE+IvAbctv2c4+ZqSfp69VCsQBbs2ZZ8Jng7eTUmo1k9R
- X/8dOBITXc7DJCxb6Tl8JCDeD2NfYbptQKt9eLXU5wm+p6uu9W5KwbSZP+h4pnTd/BC3Gvia+f4
- RwjHw99TAXRCdMOXROpXSgkQS848uoG1BjON8O/p23pBP8ty/M7xAPwlvL0gl/Dk0zV3AXh0uCs
- WxEl0zgdH7qbIHr57DF/dnwmf59BEimVN4osKMosAyYSnKsAbeDLDELgup1Sm4n188RZVADFdng
- RxzNj2Jhl
-X-Google-Smtp-Source: AGHT+IHi3/5mhxBeC6tl6hzRxBOyOxq0pLI01JAkNMs8ucJBRsuoX0myxbTVOT3i40MYnnWmGlJS+A==
-X-Received: by 2002:a05:6000:40c7:b0:39f:d13:32a with SMTP id
- ffacd0b85a97d-3a074d4f2c9mr2939428f8f.29.1745619373535; 
- Fri, 25 Apr 2025 15:16:13 -0700 (PDT)
+ bh=UAdFV5EgY0DcLQsaiDziWDHGl+k2cCf5iTdE37WRRbg=;
+ b=J+BXmwuefzFro78chAZjNcNrhRVPP7DkueLkFnqzJqwVl9VT5DNUIQEmsjYxLbvz68
+ cFJLHnfZT06JjeaxJR7bTOwFC7C8Z9ditDgcpIh0zZTGctDpb9RlJYFd+v4CkPdpa2UT
+ +QPrHZmyfefRV9RDAJOLSN9iwYkgBrYGKXRAp4guY1JRZ9GLVNLPPoZK0buV5xD8Fp+M
+ oqWapqt6CiO25YhW+8u6BKf4Rdxrc2ieTd3XJieUBJQX+jcVKkYrRGcKM62o0yoTP/pZ
+ pw9XI9b9I38feGt6BvG6D+2BMwMbCyMQfguOtGrDZk94sx0HDppu0c/ZbUMw5NJXtZ2R
+ s+xw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVYAJcewC5mxYwL+2VhKWzXPZS50F5zETKs2O/oylJT9nsxTVxtYcgdaeMcCzqIMGH/NCV7f3Sdw+zz@nongnu.org
+X-Gm-Message-State: AOJu0YwLBKgugxW839dJnteI3yGq9cf+fEHLlINpl4nA22uN4UzdtWHG
+ ulNrEiJ22KI4CFbJXdI4m52OovJDAYMW2V9Tg/R0+ODbOv6BhgfN2beXpXk8+ue04+Igmze4Gp3
+ 7
+X-Gm-Gg: ASbGncvjyWgPXitcBmkX4oi5EtLkXw0xcKQPPl/z0Nbryv+36IlmQsDI15V9uJLuHWN
+ fORIdlB3LWRRN9D7MIMybUYOlZXClQVzYwAHJZvSCj/1D365ZpZJr6AvKevAWstkHbVi8CQmXeM
+ /88a4daWCt1rGV686b9eTwNVFcVscmoAS0r0uo8tDM7cWx4I66udijNp7FfDQyyBL0U+pOFpSsE
+ MlK7kIuPWQm/oW3tBD43wIW1R255TpfTNk9ryllg/WKuBzpZHhjFZnlDI3UyCt4PSmp9+MjCwmK
+ UULb9i3EMKAsZvw5fqUn8sAfPLpqjRwvsYNqB2o4Q3/W74jWtbvwvnAHcO3m0iV2hgYAeEEVkub
+ kC0ZCerU6
+X-Google-Smtp-Source: AGHT+IGxzJxrRDchr1K0oSV8PQ/7DzdpYenOCZTObdyUFl3Bdg2X0fBXUdBkRPEpTJCBnnpo2/a5XA==
+X-Received: by 2002:a05:6000:248a:b0:390:ec6e:43ea with SMTP id
+ ffacd0b85a97d-3a06d66d0ebmr6702861f8f.15.1745619854174; 
+ Fri, 25 Apr 2025 15:24:14 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073bbeb5esm3567829f8f.0.2025.04.25.15.16.03
+ 5b1f17b1804b1-4409d2e01bdsm72033555e9.38.2025.04.25.15.24.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 15:16:04 -0700 (PDT)
-Message-ID: <305d68df-b690-4a93-9a08-925cddbac8e3@linaro.org>
-Date: Sat, 26 Apr 2025 00:16:03 +0200
+ Fri, 25 Apr 2025 15:24:12 -0700 (PDT)
+Message-ID: <31c2dec5-70be-42c2-9e93-aac053b8dab6@linaro.org>
+Date: Sat, 26 Apr 2025 00:24:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, stefanha@redhat.com, 
- Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
- peter.maydell@linaro.org, thuth@redhat.com, jsnow@redhat.com,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
- <aAs6Q2GiBUbUCc2I@redhat.com>
+Subject: Re: [PATCH 2/2] tcg/sparc64: Implement CTPOP
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20250425200024.853260-1-richard.henderson@linaro.org>
+ <20250425200024.853260-3-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aAs6Q2GiBUbUCc2I@redhat.com>
+In-Reply-To: <20250425200024.853260-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,48 +102,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/4/25 09:35, Daniel P. Berrangé wrote:
-> On Thu, Apr 24, 2025 at 11:33:47AM -0700, Pierrick Bouvier wrote:
->> Feedback
->> ========
->>
->> The goal of this series is to be spark a conversation around following topics:
->>
->> - Would you be open to such an approach? (expose all code, and restrict commands
->>    registered at runtime only for specific targets)
-> 
-> QMP defines a public API between QEMU and external mgmt apps, and personally I
-> like the idea that the API exposed is identical across all binaries and thus
-> the API becomes independent of the impl choice of combined vs separate binaries,.
+On 25/4/25 22:00, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/sparc64/tcg-target.c.inc | 27 ++++++++++++++++++++++-----
+>   1 file changed, 22 insertions(+), 5 deletions(-)
 
-I tried to expose all structures / unions as a first step (not yet
-commands) but realized even structure fields can be conditional,
-see @deprecated-props:
-
-   ##
-   # @CpuModelExpansionInfo:
-   #
-   # The result of a cpu model expansion.
-   #
-   # @model: the expanded CpuModelInfo.
-   #
-   # @deprecated-props: a list of properties that are flagged as
-   #     deprecated by the CPU vendor.  The list depends on the
-   #     CpuModelExpansionType: "static" properties are a subset of the
-   #     enabled-properties for the expanded model; "full" properties are
-   #     a set of properties that are deprecated across all models for
-   #     the architecture.  (since: 9.1).
-   #
-   # Since: 2.8
-   ##
-   { 'struct': 'CpuModelExpansionInfo',
-     'data': { 'model': 'CpuModelInfo',
-               'deprecated-props' : { 'type': ['str'],
-                                      'if': 'TARGET_S390X' } },
-     'if': { 'any': [ 'TARGET_S390X',
-                      'TARGET_I386',
-                      'TARGET_ARM',
-                      'TARGET_LOONGARCH64',
-                      'TARGET_RISCV' ] } }
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
