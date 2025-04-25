@@ -4,85 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C29E4C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 08:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED33EC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 08:29:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8E6i-0007c9-6g; Fri, 25 Apr 2025 04:08:24 -0400
+	id 1u8EQb-0005SA-WE; Fri, 25 Apr 2025 04:28:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u8E6c-0007b5-Q1; Fri, 25 Apr 2025 04:08:20 -0400
-Received: from mgamail.intel.com ([198.175.65.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u8E6Z-00076N-Q5; Fri, 25 Apr 2025 04:08:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745568496; x=1777104496;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=5KRtg0VP7RhePb2K1+43zCTF9YsbA4O/PrqeshZCb4w=;
- b=PK8aNYUoJuEx4LxX7TElVXurQieQYMXXBpZ3RGL36kmUPFlTlYXN4Mha
- HMVqFPQXubFI594kxQ97k+LFMGdCIHDb+Xb/y8ITMc6CJUMRWD74YDUbd
- iW9OWls00TXQpyvBYEcJrBWo7CMsa/2Q5XFn/t2502em5xy8USXgPurWK
- 7WsY72cp9g4Eeq7Kzr2Vd6RU6ggLwFgB3Wbc8E7h8HnJI0ezB4QzlP5CL
- wwVmSzAWMROfubCWVicGrSF6QgL0AlEBV2K1X1yQwj87JAJvlidq7xinW
- pW/fOUMix+HS2QJKWLEJtDpj5bRGBLJ9mS0g3QX5To1nBbhbm8RTbhkyQ w==;
-X-CSE-ConnectionGUID: du0OzITwRR+C1HZ2bU/X4g==
-X-CSE-MsgGUID: e94w0k4vTQm5BU4pp/Z1lg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11413"; a="47240146"
-X-IronPort-AV: E=Sophos;i="6.15,238,1739865600"; d="scan'208";a="47240146"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Apr 2025 01:08:09 -0700
-X-CSE-ConnectionGUID: 2BKS4ujcSP2OGoMmWUBd1w==
-X-CSE-MsgGUID: BElnjdbdSySYVUcokWJU+A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,238,1739865600"; d="scan'208";a="163808291"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa002.jf.intel.com with ESMTP; 25 Apr 2025 01:07:59 -0700
-Date: Fri, 25 Apr 2025 16:28:54 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org, qemu-s390x@nongnu.org,
- pbonzini@redhat.com, mtosatti@redhat.com, sandipan.das@amd.com,
- babu.moger@amd.com, likexu@tencent.com, like.xu.linux@gmail.com,
- groug@kaod.org, khorenko@virtuozzo.com,
- alexander.ivanov@virtuozzo.com, den@virtuozzo.com,
- davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
- dapeng1.mi@linux.intel.com, joe.jin@oracle.com,
- peter.maydell@linaro.org, gaosong@loongson.cn,
- chenhuacai@kernel.org, philmd@linaro.org, aurelien@aurel32.net,
- jiaxun.yang@flygoat.com, arikalo@gmail.com, npiggin@gmail.com,
- danielhb413@gmail.com, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
- thuth@redhat.com, flavra@baylibre.com, ewanhai-oc@zhaoxin.com,
- ewanhai@zhaoxin.com, cobechen@zhaoxin.com, louisqi@zhaoxin.com,
- liamni@zhaoxin.com, frankzhu@zhaoxin.com, silviazhao@zhaoxin.com,
- kraxel@redhat.com, berrange@redhat.com
-Subject: Re: [PATCH v4 01/11] [DO NOT MERGE] i386/cpu: Consolidate the helper
- to get Host's vendor
-Message-ID: <aAtHxmpV7ka1lseC@intel.com>
-References: <20250416215306.32426-1-dongli.zhang@oracle.com>
- <20250416215306.32426-2-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1u8EQY-0005Qc-St
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 04:28:54 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1u8EQW-0000si-1O
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 04:28:54 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8CxG6y5RwtoP_DFAA--.33604S3;
+ Fri, 25 Apr 2025 16:28:41 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowMAxzxu2RwtoedqUAA--.58220S3;
+ Fri, 25 Apr 2025 16:28:41 +0800 (CST)
+Subject: Re: [PATCH v2 03/16] hw/intc/loongarch_pch: Remove some duplicate
+ macro
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20250324093730.3683378-1-maobibo@loongson.cn>
+ <20250324093730.3683378-4-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <6831bc3e-b681-00a8-18b4-6903d5faffa5@loongson.cn>
+Date: Fri, 25 Apr 2025 16:31:17 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250416215306.32426-2-dongli.zhang@oracle.com>
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -51
-X-Spam_score: -5.2
-X-Spam_bar: -----
-X-Spam_report: (-5.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.84,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+In-Reply-To: <20250324093730.3683378-4-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowMAxzxu2RwtoedqUAA--.58220S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxCr48Zryrtw4DKryUur4UGFX_yoW5Aw18pF
+ ZxAFWagF4DGry7XFn2ya45Zrn7J3ZrWr9F9anIkryrGrs8X34xWF1kJ3yagF1UK3y3Jryv
+ gFsxua4a9F4UXFbCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-2.215, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,29 +84,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 16, 2025 at 02:52:26PM -0700, Dongli Zhang wrote:
-> Date: Wed, 16 Apr 2025 14:52:26 -0700
-> From: Dongli Zhang <dongli.zhang@oracle.com>
-> Subject: [PATCH v4 01/11] [DO NOT MERGE] i386/cpu: Consolidate the helper
->  to get Host's vendor
-> X-Mailer: git-send-email 2.43.5
-> 
-> From: Zhao Liu <zhao1.liu@intel.com>
-> 
-> Extend host_cpu_vendor_fms() to help more cases to get Host's vendor
-> information.
-> 
-> Cc: Dongli Zhang <dongli.zhang@oracle.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+ÔÚ 2025/3/24 ÏÂÎç5:37, Bibo Mao Ð´µÀ:
+> The meaning of macro definition STATUS_LO_START is simliar with
+> PCH_PIC_INT_STATUS, only that offset is different, the same for
+> macro POL_LO_START. Now remove these duplicated macro definitions.
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
-> This patch is already queued by Paolo.
-> https://lore.kernel.org/all/20250410075619.145792-1-zhao1.liu@intel.com/
-> I don't need to add my Signed-off-by.
-> 
->  target/i386/host-cpu.c        | 10 ++++++----
->  target/i386/kvm/vmsr_energy.c |  3 +--
->  2 files changed, 7 insertions(+), 6 deletions(-)
+>   hw/intc/loongarch_pch_pic.c            | 20 ++++++++++----------
+>   include/hw/intc/loongarch_pic_common.h |  5 -----
+>   2 files changed, 10 insertions(+), 15 deletions(-)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-Thanks. It has been merged as commit ae39acef49e2916 now.
+Thanks.
+Song Gao
+> diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+> index 4c845ba5e9..a2d9930ac9 100644
+> --- a/hw/intc/loongarch_pch_pic.c
+> +++ b/hw/intc/loongarch_pch_pic.c
+> @@ -208,19 +208,19 @@ static uint64_t loongarch_pch_pic_high_readw(void *opaque, hwaddr addr,
+>   {
+>       LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
+>       uint64_t val = 0;
+> -    uint32_t offset = addr & 0xfff;
+> +    uint32_t offset = addr + PCH_PIC_INT_STATUS;
+>   
+>       switch (offset) {
+> -    case STATUS_LO_START:
+> +    case PCH_PIC_INT_STATUS:
+>           val = (uint32_t)(s->intisr & (~s->int_mask));
+>           break;
+> -    case STATUS_HI_START:
+> +    case PCH_PIC_INT_STATUS + 4:
+>           val = (s->intisr & (~s->int_mask)) >> 32;
+>           break;
+> -    case POL_LO_START:
+> +    case PCH_PIC_INT_POL:
+>           val = (uint32_t)s->int_polarity;
+>           break;
+> -    case POL_HI_START:
+> +    case PCH_PIC_INT_POL + 4:
+>           val = s->int_polarity >> 32;
+>           break;
+>       default:
+> @@ -236,21 +236,21 @@ static void loongarch_pch_pic_high_writew(void *opaque, hwaddr addr,
+>   {
+>       LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
+>       uint32_t offset, data = (uint32_t)value;
+> -    offset = addr & 0xfff;
+> +    offset = addr + PCH_PIC_INT_STATUS;
+>   
+>       trace_loongarch_pch_pic_high_writew(size, addr, data);
+>   
+>       switch (offset) {
+> -    case STATUS_LO_START:
+> +    case PCH_PIC_INT_STATUS:
+>           s->intisr = get_writew_val(s->intisr, data, 0);
+>           break;
+> -    case STATUS_HI_START:
+> +    case PCH_PIC_INT_STATUS + 4:
+>           s->intisr = get_writew_val(s->intisr, data, 1);
+>           break;
+> -    case POL_LO_START:
+> +    case PCH_PIC_INT_POL:
+>           s->int_polarity = get_writew_val(s->int_polarity, data, 0);
+>           break;
+> -    case POL_HI_START:
+> +    case PCH_PIC_INT_POL + 4:
+>           s->int_polarity = get_writew_val(s->int_polarity, data, 1);
+>           break;
+>       default:
+> diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
+> index b33bebb129..ef6edc15bf 100644
+> --- a/include/hw/intc/loongarch_pic_common.h
+> +++ b/include/hw/intc/loongarch_pic_common.h
+> @@ -26,11 +26,6 @@
+>   #define PCH_PIC_INT_STATUS              0x3a0
+>   #define PCH_PIC_INT_POL                 0x3e0
+>   
+> -#define STATUS_LO_START                 0
+> -#define STATUS_HI_START                 0x4
+> -#define POL_LO_START                    0x40
+> -#define POL_HI_START                    0x44
+> -
+>   #define TYPE_LOONGARCH_PIC_COMMON "loongarch_pic_common"
+>   OBJECT_DECLARE_TYPE(LoongArchPICCommonState,
+>                       LoongArchPICCommonClass, LOONGARCH_PIC_COMMON)
 
 
