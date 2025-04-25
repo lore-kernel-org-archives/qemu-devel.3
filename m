@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B9FC369D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:38:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 443BEC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:39:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8L2t-0001d4-S9; Fri, 25 Apr 2025 11:32:56 -0400
+	id 1u8L0R-0001Ix-Qg; Fri, 25 Apr 2025 11:30:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L2a-0000bH-IE
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:32:39 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L04-0000gk-UT
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:30:03 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L2Y-0004BE-8M
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:32:36 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-39c1ee0fd43so1946990f8f.0
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:32:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L02-0003d6-HM
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:30:00 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-39c13fa05ebso1598092f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:29:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745595152; x=1746199952; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745594995; x=1746199795; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ry9O9boaNvWNKXTX4XveCYOkptDL47bcTRXPjT/icgU=;
- b=ETLCHYd5D613QQLF6Ne1RdYSatP80+j9Tg2DedfC+cchdA/1sxBbEy+Eg8lViX0qWL
- 1ml191aT8RgbAkBoSHi5Ia3RGBH5Y8MRfA8zf3Dou0ZNAtu0aWIvBHKZwsxTs6zRw0wQ
- VwN+tfSX4/0bAhQ5SfUBFP7D62ftv8LgkwA22/hPSj/ZpbsqraEoJSQZOk6SWzCdIKkZ
- mRWGI6QUAHvKPeFS+9Sq3aFSdT5/CmbaKuwTXLCH+rCrRz8UpWeIep5mEB04IKvJkQNc
- 8/uyH+x8eTfvHwbOxb6jYigMVpm9Y/bJkLmP/UOsj9Glxdyhak5/Um8hcnHQyTRR0G1u
- H9YQ==
+ bh=UDxkbdkyL4GcSfv3jwWo9uDXk+Gdi7zDW5D89ScTwDs=;
+ b=qQqlNUwMh4dYecWZd4Dzw71YSh9dHSedf7PZkP5VQm6u7Fr5r2durkvXWKo1lVHwiK
+ pFYA+OBSzoFQgw4VxZqYLNi4k5sgRWfb1T7Qnu7rLtmpeBLg1fya8PLUw6hWObCbdGUS
+ RttWyriR3ewU2zjoKrsnUjJo3MnwSt/oW1Xag7mscFe0quvQ4kQvKWJD4jqh8vuUfs1Q
+ AaD//5dpxn86aRLWFB9gkzBN6G7bcO4s22Ys2wuS9MgLbCDP2lq3EcYaTRkGyaXaT4HM
+ pMV1m8TGpIwPaj10FjG5wM0uzGFso6eRAV4sQDO1oZLrv157soX9htWuyyG7ESGoxSAz
+ VJ5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745595152; x=1746199952;
+ d=1e100.net; s=20230601; t=1745594995; x=1746199795;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ry9O9boaNvWNKXTX4XveCYOkptDL47bcTRXPjT/icgU=;
- b=STZPSwwylvosicmfDeLubqE+5xpmYQbzaNQD7z2EPYJzUOk1GMbwwI7qkJfHTdShbo
- aQSV6TddM2v6ygz6UAVq2gR60l5TCwkF6Sb1qdfNmkIq/KMJJ7gdf+Bp4OLic0gAphBh
- J90qnlmXsPJGQfCYA0q5ITKRYVsiFWnuqt2yCrGe0pgC9OQ/RIZ6/gB2lMsCuIvFfhHP
- QNic7hk/p9Y7S0lMfHxNhWviLB6udQCxcYMD8ZezzjefvSitKn+HaKwBi5weeySYYjy2
- i9a5S4zS/loC1p+UT9OOoW90XqPH0eFbZlAj1Uuk1XoErrjH2tV7rmRGYmHTgQngHVlw
- P+HQ==
-X-Gm-Message-State: AOJu0YwIUFto8KEQ95n3eJmQeIkdMS73ty4mojwXnW9m7X2X2/JKpRTf
- U11aEwUFFtbSlvIkOQ8d4XKZ1elFjFlDaQC+sKBLzdM3ze6TsBS0ZCFxfnpTUf5n0a5O8YE04Ke
- W
-X-Gm-Gg: ASbGncuwvu7hUZMQAfVRzIqRoKq6rFFWHxNJtQAg/jyXmtEpEl/gfjdUq7nAXFT+TS5
- xUdidPcvC+bOnTfnRIthBHJckFKBj1Rplo9WnKtlP2GJSzG9RW5o/iSUkZH6bbDNkguK02BUPbB
- ZCvK4Do19hgs9lNPnZOjlSGwgaZjMij1jsIHyiUQZU/G2TJTEqs000dGhmoN44EcAqEl3BnX3D9
- loSN7Tey9ox4oxu9tj3GrWILntL31tIMlFoWIv+o3vFcmx84F4TBkGRbQCJ1xpwuseuXiMdum0k
- iKfak3sSf02eUFb2J+8yH0zU6+OCBn8MXlfjfyC6qX1RE1MZTRwwHxy/ldoPBQ2MiuVL44in6kW
- JyC3xfqmlWzbZOAc=
-X-Google-Smtp-Source: AGHT+IGB/pZtEKXU1RuPRqh7oQio87UgAP7gVCn7Yx/suZaa/vkj9X9tgPtlw0nM5stFzd9gJkyYxw==
-X-Received: by 2002:a5d:5847:0:b0:399:6dc0:f134 with SMTP id
- ffacd0b85a97d-3a074f43f47mr1906094f8f.51.1745595152277; 
- Fri, 25 Apr 2025 08:32:32 -0700 (PDT)
+ bh=UDxkbdkyL4GcSfv3jwWo9uDXk+Gdi7zDW5D89ScTwDs=;
+ b=ChgQAL5orNMqKQIhtjM7NLr1JLJDg1IW+myzBwbP1UzjIq4EnEZ39B9PIvJL+g5tfW
+ t2Gj0FCoQXePqbWg8vsRXoNLla93adNUWxPaOvB0JicCq598aFFTcmjvkF84mg4f+yM6
+ uQAn/Y0Y1uzpct2wGSjYU+sszQK5rVuNsxO/+bY3IPNm7acfxDPc/9mnLGqL99SAIU1e
+ 3Z5C8usy6zIsgq9EnzNq6sKjWvfQZVG8N/NLE3w1jL3Hzne0QhQMYFaUlQiGbr6lB7id
+ VIuoxuYJ3Kny8e7Cg1Wi6YlUOAzQvGMZZWFWZz9g+R6TgyM40kUzGi9Etohb6zFbeY5k
+ KlTQ==
+X-Gm-Message-State: AOJu0YzmWca3ZvhFZyyHYnlVFpAMm3S7RqNwgPtoR+hNkXU8grXb3vqj
+ GIUnc1YewoqTYORwPpSPwnXdwz8B5z2Z9T0B1PCXyLNAPmHrc7BLKbj1gFNZdRJK+EADt29rgzi
+ 5
+X-Gm-Gg: ASbGncseToouYcWpMiJ+DvrSC6iHvFR/HxOPFXNmJ9cAsh01AS02damtBZnbltP+zv4
+ kw5Ag3+62/L5lL/Pi9aPzKcbgc4Rhca97ULHmnFJmFQNY8qKmkY6Bj8qW/uJAAL4PqxacDOOKlx
+ /9l6IHUnRZi/4Nc+CRNL7QNBYWB9q+Wa1tSsKw2zdg4S8NdCXl27LV0deTg3IWe7jGeOha+Q6/V
+ Ou681mLocYB9xDsV7c+sk+HUurr+tr8rZSKkvFSCVZIGVJbTvEBvo6mjHjn8/m4U9+rd5zAO7Zm
+ TzWR0TRCoGhC3hAoxyj3deEU7FYRFP1yP5RdoTmWnBHE26rSwKFjyDuWsDROF/oz6tN35s2QJ4S
+ P2PWccXnKpANrWjPRRMoATQmqJw==
+X-Google-Smtp-Source: AGHT+IHtD0eUm4V4gIpr0vWhkpcGYZiI5AwILRSAGTiZcQV9opHY2KZ6UyqTUrrpZnPrmzRO+PBs0g==
+X-Received: by 2002:adf:e290:0:b0:3a0:77d0:b96 with SMTP id
+ ffacd0b85a97d-3a077d00de1mr1131141f8f.6.1745594995327; 
+ Fri, 25 Apr 2025 08:29:55 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073e47307sm2678889f8f.65.2025.04.25.08.32.31
+ ffacd0b85a97d-3a073e5c7d1sm2611004f8f.83.2025.04.25.08.29.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 08:32:31 -0700 (PDT)
+ Fri, 25 Apr 2025 08:29:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 46/58] target/mips: Check CPU endianness at runtime using
- env_is_bigendian()
-Date: Fri, 25 Apr 2025 17:28:30 +0200
-Message-ID: <20250425152843.69638-47-philmd@linaro.org>
+Subject: [PULL 14/58] qom: Constify TypeInfo::class_data
+Date: Fri, 25 Apr 2025 17:27:58 +0200
+Message-ID: <20250425152843.69638-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
 References: <20250425152843.69638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,98 +100,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since CPU endianness can be toggled at runtime before resetting,
-checking the endianness at build time preprocessing the
-TARGET_BIG_ENDIAN definition isn't correct. We have to call
-mips_env_is_bigendian() to get the CPU endianness at runtime.
+All callers now correctly expect a const class data.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250417131004.47205-4-philmd@linaro.org>
+Message-Id: <20250424194905.82506-5-philmd@linaro.org>
 ---
- target/mips/tcg/msa_helper.c | 34 ++++++++++++++++------------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+ include/qom/object.h                                | 2 +-
+ hw/arm/armsse.c                                     | 2 +-
+ hw/block/m25p80.c                                   | 2 +-
+ hw/isa/vt82c686.c                                   | 4 ++--
+ hw/net/e1000.c                                      | 2 +-
+ hw/ppc/spapr_cpu_core.c                             | 2 +-
+ hw/scsi/megasas.c                                   | 2 +-
+ hw/sensor/tmp421.c                                  | 2 +-
+ hw/virtio/virtio-pci.c                              | 4 ++--
+ qom/object.c                                        | 2 +-
+ target/arm/cpu.c                                    | 2 +-
+ target/arm/cpu64.c                                  | 2 +-
+ target/mips/cpu.c                                   | 2 +-
+ target/s390x/cpu_models.c                           | 4 ++--
+ target/sparc/cpu.c                                  | 2 +-
+ target/xtensa/helper.c                              | 2 +-
+ rust/qemu-api/src/qom.rs                            | 2 +-
+ scripts/codeconverter/codeconverter/test_regexps.py | 2 +-
+ 18 files changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/target/mips/tcg/msa_helper.c b/target/mips/tcg/msa_helper.c
-index 14de4a71ff6..e349344647c 100644
---- a/target/mips/tcg/msa_helper.c
-+++ b/target/mips/tcg/msa_helper.c
-@@ -8212,7 +8212,6 @@ void helper_msa_ffint_u_df(CPUMIPSState *env, uint32_t df, uint32_t wd,
- /* Element-by-element access macros */
- #define DF_ELEMENTS(df) (MSA_WRLEN / DF_BITS(df))
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 2fb86f00a68..42b75d10a43 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -488,7 +488,7 @@ struct TypeInfo
  
--#if TARGET_BIG_ENDIAN
- static inline uint64_t bswap16x4(uint64_t x)
- {
-     uint64_t m = 0x00ff00ff00ff00ffull;
-@@ -8223,7 +8222,6 @@ static inline uint64_t bswap32x2(uint64_t x)
- {
-     return ror64(bswap64(x), 32);
- }
--#endif
+     void (*class_init)(ObjectClass *klass, const void *data);
+     void (*class_base_init)(ObjectClass *klass, const void *data);
+-    void *class_data;
++    const void *class_data;
  
- void helper_msa_ld_b(CPUMIPSState *env, uint32_t wd,
-                      target_ulong addr)
-@@ -8252,10 +8250,10 @@ void helper_msa_ld_h(CPUMIPSState *env, uint32_t wd,
-      */
-     d0 = cpu_ldq_le_data_ra(env, addr + 0, ra);
-     d1 = cpu_ldq_le_data_ra(env, addr + 8, ra);
--#if TARGET_BIG_ENDIAN
--    d0 = bswap16x4(d0);
--    d1 = bswap16x4(d1);
--#endif
-+    if (mips_env_is_bigendian(env)) {
-+        d0 = bswap16x4(d0);
-+        d1 = bswap16x4(d1);
-+    }
-     pwd->d[0] = d0;
-     pwd->d[1] = d1;
- }
-@@ -8273,10 +8271,10 @@ void helper_msa_ld_w(CPUMIPSState *env, uint32_t wd,
-      */
-     d0 = cpu_ldq_le_data_ra(env, addr + 0, ra);
-     d1 = cpu_ldq_le_data_ra(env, addr + 8, ra);
--#if TARGET_BIG_ENDIAN
--    d0 = bswap32x2(d0);
--    d1 = bswap32x2(d1);
--#endif
-+    if (mips_env_is_bigendian(env)) {
-+        d0 = bswap32x2(d0);
-+        d1 = bswap32x2(d1);
-+    }
-     pwd->d[0] = d0;
-     pwd->d[1] = d1;
- }
-@@ -8339,10 +8337,10 @@ void helper_msa_st_h(CPUMIPSState *env, uint32_t wd,
-     /* Store 8 bytes at a time.  See helper_msa_ld_h. */
-     d0 = pwd->d[0];
-     d1 = pwd->d[1];
--#if TARGET_BIG_ENDIAN
--    d0 = bswap16x4(d0);
--    d1 = bswap16x4(d1);
--#endif
-+    if (mips_env_is_bigendian(env)) {
-+        d0 = bswap16x4(d0);
-+        d1 = bswap16x4(d1);
-+    }
-     cpu_stq_le_data_ra(env, addr + 0, d0, ra);
-     cpu_stq_le_data_ra(env, addr + 8, d1, ra);
- }
-@@ -8360,10 +8358,10 @@ void helper_msa_st_w(CPUMIPSState *env, uint32_t wd,
-     /* Store 8 bytes at a time.  See helper_msa_ld_w. */
-     d0 = pwd->d[0];
-     d1 = pwd->d[1];
--#if TARGET_BIG_ENDIAN
--    d0 = bswap32x2(d0);
--    d1 = bswap32x2(d1);
--#endif
-+    if (mips_env_is_bigendian(env)) {
-+        d0 = bswap32x2(d0);
-+        d1 = bswap32x2(d1);
-+    }
-     cpu_stq_le_data_ra(env, addr + 0, d0, ra);
-     cpu_stq_le_data_ra(env, addr + 8, d1, ra);
- }
+     InterfaceInfo *interfaces;
+ };
+diff --git a/hw/arm/armsse.c b/hw/arm/armsse.c
+index d65a46b8d8d..9403b65ddb5 100644
+--- a/hw/arm/armsse.c
++++ b/hw/arm/armsse.c
+@@ -1730,7 +1730,7 @@ static void armsse_register_types(void)
+             .name = armsse_variants[i].name,
+             .parent = TYPE_ARM_SSE,
+             .class_init = armsse_class_init,
+-            .class_data = (void *)&armsse_variants[i],
++            .class_data = &armsse_variants[i],
+         };
+         type_register_static(&ti);
+     }
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index 75b9d712518..a5336d92ff9 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -1893,7 +1893,7 @@ static void m25p80_register_types(void)
+             .name       = known_devices[i].part_name,
+             .parent     = TYPE_M25P80,
+             .class_init = m25p80_class_init,
+-            .class_data = (void *)&known_devices[i],
++            .class_data = &known_devices[i],
+         };
+         type_register_static(&ti);
+     }
+diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
+index 80366aaf647..c62afc907b2 100644
+--- a/hw/isa/vt82c686.c
++++ b/hw/isa/vt82c686.c
+@@ -259,7 +259,7 @@ static const TypeInfo vt82c686b_pm_info = {
+     .name          = TYPE_VT82C686B_PM,
+     .parent        = TYPE_VIA_PM,
+     .class_init    = via_pm_class_init,
+-    .class_data    = (void *)&vt82c686b_pm_init_info,
++    .class_data    = &vt82c686b_pm_init_info,
+ };
+ 
+ static const ViaPMInitInfo vt8231_pm_init_info = {
+@@ -272,7 +272,7 @@ static const TypeInfo vt8231_pm_info = {
+     .name          = TYPE_VT8231_PM,
+     .parent        = TYPE_VIA_PM,
+     .class_init    = via_pm_class_init,
+-    .class_data    = (void *)&vt8231_pm_init_info,
++    .class_data    = &vt8231_pm_init_info,
+ };
+ 
+ 
+diff --git a/hw/net/e1000.c b/hw/net/e1000.c
+index d49730f4ad4..13814e84d18 100644
+--- a/hw/net/e1000.c
++++ b/hw/net/e1000.c
+@@ -1770,7 +1770,7 @@ static void e1000_register_types(void)
+ 
+         type_info.name = info->name;
+         type_info.parent = TYPE_E1000_BASE;
+-        type_info.class_data = (void *)info;
++        type_info.class_data = info;
+         type_info.class_init = e1000_class_init;
+ 
+         type_register_static(&type_info);
+diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
+index b4b926d759a..4952f9bd2cf 100644
+--- a/hw/ppc/spapr_cpu_core.c
++++ b/hw/ppc/spapr_cpu_core.c
+@@ -388,7 +388,7 @@ static void spapr_cpu_core_class_init(ObjectClass *oc, const void *data)
+ #define DEFINE_SPAPR_CPU_CORE_TYPE(cpu_model) \
+     {                                                   \
+         .parent = TYPE_SPAPR_CPU_CORE,                  \
+-        .class_data = (void *) POWERPC_CPU_TYPE_NAME(cpu_model), \
++        .class_data = POWERPC_CPU_TYPE_NAME(cpu_model), \
+         .class_init = spapr_cpu_core_class_init,        \
+         .name = SPAPR_CPU_CORE_TYPE_NAME(cpu_model),    \
+     }
+diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
+index ffcabd5a8e9..b024905a01f 100644
+--- a/hw/scsi/megasas.c
++++ b/hw/scsi/megasas.c
+@@ -2572,7 +2572,7 @@ static void megasas_register_types(void)
+ 
+         type_info.name = info->name;
+         type_info.parent = TYPE_MEGASAS_BASE;
+-        type_info.class_data = (void *)info;
++        type_info.class_data = info;
+         type_info.class_init = megasas_class_init;
+         type_info.interfaces = info->interfaces;
+ 
+diff --git a/hw/sensor/tmp421.c b/hw/sensor/tmp421.c
+index 263bfa1bbda..3421c440869 100644
+--- a/hw/sensor/tmp421.c
++++ b/hw/sensor/tmp421.c
+@@ -382,7 +382,7 @@ static void tmp421_register_types(void)
+             .name       = devices[i].name,
+             .parent     = TYPE_TMP421,
+             .class_init = tmp421_class_init,
+-            .class_data = (void *) &devices[i],
++            .class_data = &devices[i],
+         };
+         type_register_static(&ti);
+     }
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index c0fd3db0630..95bf7ddd972 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2497,13 +2497,13 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
+ 
+         generic_type_info.parent = base_name;
+         generic_type_info.class_init = virtio_pci_base_class_init;
+-        generic_type_info.class_data = (void *)t;
++        generic_type_info.class_data = t;
+ 
+         assert(!t->non_transitional_name);
+         assert(!t->transitional_name);
+     } else {
+         base_type_info.class_init = virtio_pci_base_class_init;
+-        base_type_info.class_data = (void *)t;
++        base_type_info.class_data = t;
+     }
+ 
+     type_register_static(&base_type_info);
+diff --git a/qom/object.c b/qom/object.c
+index 06d7367032e..425ee2f0ee8 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -57,7 +57,7 @@ struct TypeImpl
+     void (*class_init)(ObjectClass *klass, const void *data);
+     void (*class_base_init)(ObjectClass *klass, const void *data);
+ 
+-    void *class_data;
++    const void *class_data;
+ 
+     void (*instance_init)(Object *obj);
+     void (*instance_post_init)(Object *obj);
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 81257f20fd7..00577f97eb6 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2758,7 +2758,7 @@ void arm_cpu_register(const ARMCPUInfo *info)
+         .parent = TYPE_ARM_CPU,
+         .instance_init = arm_cpu_instance_init,
+         .class_init = info->class_init ?: cpu_register_class_init,
+-        .class_data = (void *)info,
++        .class_data = info,
+     };
+ 
+     type_info.name = g_strdup_printf("%s-" TYPE_ARM_CPU, info->name);
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 1184c92b4c0..eaf5705cdc2 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -855,7 +855,7 @@ void aarch64_cpu_register(const ARMCPUInfo *info)
+         .parent = TYPE_AARCH64_CPU,
+         .instance_init = aarch64_cpu_instance_init,
+         .class_init = info->class_init ?: cpu_register_class_init,
+-        .class_data = (void *)info,
++        .class_data = info,
+     };
+ 
+     type_info.name = g_strdup_printf("%s-" TYPE_ARM_CPU, info->name);
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index 29611a0a1c3..d13361a1507 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -626,7 +626,7 @@ static void mips_register_cpudef_type(const struct mips_def_t *def)
+         .name = typename,
+         .parent = TYPE_MIPS_CPU,
+         .class_init = mips_cpu_cpudef_class_init,
+-        .class_data = (void *)def,
++        .class_data = def,
+     };
+ 
+     type_register_static(&ti);
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index b097ed55d9d..8951f1b36f9 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -1072,7 +1072,7 @@ static void register_types(void)
+             .instance_init = s390_cpu_model_initfn,
+             .instance_finalize = s390_cpu_model_finalize,
+             .class_init = s390_base_cpu_model_class_init,
+-            .class_data = (void *) &s390_cpu_defs[i],
++            .class_data = &s390_cpu_defs[i],
+         };
+         char *name = s390_cpu_type_name(s390_cpu_defs[i].name);
+         TypeInfo ti = {
+@@ -1081,7 +1081,7 @@ static void register_types(void)
+             .instance_init = s390_cpu_model_initfn,
+             .instance_finalize = s390_cpu_model_finalize,
+             .class_init = s390_cpu_model_class_init,
+-            .class_data = (void *) &s390_cpu_defs[i],
++            .class_data = &s390_cpu_defs[i],
+         };
+ 
+         type_register_static(&ti_base);
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 981aa86e0e0..bc753d5f627 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -1104,7 +1104,7 @@ static void sparc_register_cpudef_type(const struct sparc_def_t *def)
+         .name = typename,
+         .parent = TYPE_SPARC_CPU,
+         .class_init = sparc_cpu_cpudef_class_init,
+-        .class_data = (void *)def,
++        .class_data = def,
+     };
+ 
+     type_register_static(&ti);
+diff --git a/target/xtensa/helper.c b/target/xtensa/helper.c
+index 04597879815..2d93b45036d 100644
+--- a/target/xtensa/helper.c
++++ b/target/xtensa/helper.c
+@@ -192,7 +192,7 @@ void xtensa_register_core(XtensaConfigList *node)
+     TypeInfo type = {
+         .parent = TYPE_XTENSA_CPU,
+         .class_init = xtensa_core_class_init,
+-        .class_data = (void *)node->config,
++        .class_data = node->config,
+     };
+ 
+     xtensa_finalize_config(node->config);
+diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+index f385cb72753..f0a79f96d5e 100644
+--- a/rust/qemu-api/src/qom.rs
++++ b/rust/qemu-api/src/qom.rs
+@@ -513,7 +513,7 @@ pub trait ObjectImpl: ObjectType + IsA<Object> {
+         class_size: core::mem::size_of::<Self::Class>(),
+         class_init: Some(rust_class_init::<Self>),
+         class_base_init: Self::CLASS_BASE_INIT,
+-        class_data: core::ptr::null_mut(),
++        class_data: core::ptr::null(),
+         interfaces: core::ptr::null_mut(),
+     };
+ 
+diff --git a/scripts/codeconverter/codeconverter/test_regexps.py b/scripts/codeconverter/codeconverter/test_regexps.py
+index 72113927960..08857c5008d 100644
+--- a/scripts/codeconverter/codeconverter/test_regexps.py
++++ b/scripts/codeconverter/codeconverter/test_regexps.py
+@@ -70,7 +70,7 @@ def fullmatch(regexp, s):
+             .name = armsse_variants[i].name,
+             .parent = TYPE_ARMSSE,
+             .class_init = armsse_class_init,
+-            .class_data = (void *)&armsse_variants[i],
++            .class_data = &armsse_variants[i],
+         };''', re.MULTILINE)
+ 
+     print(RE_ARRAY_ITEM)
 -- 
 2.47.1
 
