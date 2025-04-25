@@ -4,181 +4,167 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06299C369D1
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 10:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF78C369D1
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 10:30:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8G5e-0001KL-VC; Fri, 25 Apr 2025 06:15:27 -0400
+	id 1u8GJf-0006Q6-2y; Fri, 25 Apr 2025 06:29:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sandipan.Das@amd.com>)
- id 1u8G5X-0001JN-Ja; Fri, 25 Apr 2025 06:15:21 -0400
-Received: from mail-mw2nam12on2060c.outbound.protection.outlook.com
- ([2a01:111:f403:200a::60c]
- helo=NAM12-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <schnelle@linux.ibm.com>)
+ id 1u8GJc-0006Pj-Qa
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:29:52 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sandipan.Das@amd.com>)
- id 1u8G5R-0004tB-U8; Fri, 25 Apr 2025 06:15:16 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VvbRGTw1eLQulrLmEZRgYUw2+EjoNQgBQE0cLPIFbeb8syrHb8SBxECm+/wleu19JopyFnKjK85NZpQDptShonxYtPh9/f8QlkNr/GMXRmLgOifW4mfaX5oVVRvbadnBO37UJTmAj/PvO/JsG/gc+W5QNLt/Nd1xYX/M2B/0T88NI45SXjyOlHGfdnpg/gGtGIrDN+mn3IcSkX0v7U3o4yD1+urw44ByjBvOLzUuREyMuBpSQXC3kvqE0yXAJaLvMWRE0vOFRVnw19GqhUtRD5rzTr2IpgLokvepjZJJsqGnE9ijhYnpMFNKJzcMY5wDNbU0vHigrTG7GQm/TeoutQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UX2FNs5luK3UOi8SSpbtwZ5wYmm3RcOR+q+r1rPpaKg=;
- b=BYhT+pLecz78jghdvkaFq9zdB4E/5QRhMDuj7P2Q4LcJlK2eL+2A+F23mF6X3WjIr7OdvbVC1CXrRZVTOPUglAr+0/ZKANGdTGKsEGgIbbJzwK8aZgH8cOTxPnWXS6k7gk/ocDaR80s+9i3hfXWnIhP9bMxf5KxtHvt/pxzufqEdLHkmj0bvbebpNnbrtVhIZkcwjPhYqeQW3WG9PZa57CGzfJ2VCzT9Z3YPUxts5s6J/67EKHy60PCUKuDeo27c0mMrNuf6E1xtvP7cA6HhFP0YLAuxmqbB1/jskuoG2aPPyELUm5DmMiKyeguTx7AKI7fRhRpEV1IQ7kwL47Ap+g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UX2FNs5luK3UOi8SSpbtwZ5wYmm3RcOR+q+r1rPpaKg=;
- b=zWX32rQVlXcJc+n/tqYH6mGXdc44eOaa5ri34Muat9dJIfXWMnw0wIc/KFjrRchiGtbW/vqfB8KWBYBWwU5MIfVAnttxhCGA+bSmD1Xk2Hk04LVgD2JzWQV/+Q348I+tLa1YxmGqYX1fjua1DjK9FjYF0Uz8zJQi1HbWayauCd8=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from PH7PR12MB5712.namprd12.prod.outlook.com (2603:10b6:510:1e3::13)
- by CH3PR12MB8188.namprd12.prod.outlook.com (2603:10b6:610:120::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.26; Fri, 25 Apr
- 2025 10:15:06 +0000
-Received: from PH7PR12MB5712.namprd12.prod.outlook.com
- ([fe80::2efc:dc9f:3ba8:3291]) by PH7PR12MB5712.namprd12.prod.outlook.com
- ([fe80::2efc:dc9f:3ba8:3291%6]) with mapi id 15.20.8678.025; Fri, 25 Apr 2025
- 10:15:06 +0000
-Message-ID: <8a723b11-76f3-46ab-b89e-54e14b8825a4@amd.com>
-Date: Fri, 25 Apr 2025 15:44:45 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/11] target/i386/kvm: reset AMD PMU registers during
- VM reset
-To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org, qemu-s390x@nongnu.org
-Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
- babu.moger@amd.com, likexu@tencent.com, like.xu.linux@gmail.com,
- groug@kaod.org, khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
- den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
- dapeng1.mi@linux.intel.com, joe.jin@oracle.com, peter.maydell@linaro.org,
- gaosong@loongson.cn, chenhuacai@kernel.org, philmd@linaro.org,
- aurelien@aurel32.net, jiaxun.yang@flygoat.com, arikalo@gmail.com,
- npiggin@gmail.com, danielhb413@gmail.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
- thuth@redhat.com, flavra@baylibre.com, ewanhai-oc@zhaoxin.com,
- ewanhai@zhaoxin.com, cobechen@zhaoxin.com, louisqi@zhaoxin.com,
- liamni@zhaoxin.com, frankzhu@zhaoxin.com, silviazhao@zhaoxin.com,
- kraxel@redhat.com, berrange@redhat.com
-References: <20250416215306.32426-1-dongli.zhang@oracle.com>
- <20250416215306.32426-10-dongli.zhang@oracle.com>
-Content-Language: en-US
-From: Sandipan Das <sandipan.das@amd.com>
-In-Reply-To: <20250416215306.32426-10-dongli.zhang@oracle.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN3PR01CA0122.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:96::8) To PH7PR12MB5712.namprd12.prod.outlook.com
- (2603:10b6:510:1e3::13)
+ (Exim 4.90_1) (envelope-from <schnelle@linux.ibm.com>)
+ id 1u8GJa-0006lh-Rb
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:29:52 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53ONkK1E025695;
+ Fri, 25 Apr 2025 10:29:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=GEuC4K
+ IZtrvat6ZIfbO6T1lmGcrkVUqrpd6FgWSgQPw=; b=hvmB2j+rWldXrjYbdGM6OO
+ fbDiQYGlfbSegMzgRh7/jx0FBMZ01jwwoPGHPFkUOe+JHByF5sYyD5wsn3kEiCCt
+ /zHWFrYdFPTbGokHvnDJUD2G1uFBO/tiTiibuYUVecfon8mPlGcSW4M5ywbkVfqd
+ 5I7R7SwHxLyIpUdNvxUzMsxV6QD/L2W2kwmxja74vC6cKYff4xAHqONtts3R8SH1
+ dwNp3mx64LHsWcTAvlwGPLwNYoeWkZnnBoJY7Ce01PLzQrHSRaoFtLa3qtMMudbp
+ pxaHUaxq97VbKOhNx4ZF6VayIhforfZyj3Jzojl6jWE29UGLkA5cCjrosZTmlNag
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 467y90t918-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 25 Apr 2025 10:29:41 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53P8E5qY000973;
+ Fri, 25 Apr 2025 10:29:40 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 466jfy4s25-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 25 Apr 2025 10:29:40 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53PATdSk58851676
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 25 Apr 2025 10:29:39 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EBF6B58054;
+ Fri, 25 Apr 2025 10:29:38 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 90A9C5804E;
+ Fri, 25 Apr 2025 10:29:36 +0000 (GMT)
+Received: from [9.111.33.137] (unknown [9.111.33.137])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 25 Apr 2025 10:29:36 +0000 (GMT)
+Message-ID: <aae585ad4d9884e204ff1f153f4d1be5453b284a.camel@linux.ibm.com>
+Subject: Re: [PATCH v5 1/3] util: Add functions for s390x mmio read/write
+From: Niklas Schnelle <schnelle@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>, Farhan Ali <alifm@linux.ibm.com>,
+ qemu-devel@nongnu.org, Heiko Carstens <hca@linux.ibm.com>
+Cc: alex.williamson@redhat.com, stefanha@redhat.com, mjrosato@linux.ibm.com,
+ philmd@linaro.org, kwolf@redhat.com, hreitz@redhat.com, fam@euphon.net
+Date: Fri, 25 Apr 2025 12:29:35 +0200
+In-Reply-To: <06f9244c-671c-4215-9d20-7bb69194fae6@redhat.com>
+References: <20250417173801.827-1-alifm@linux.ibm.com>
+ <20250417173801.827-2-alifm@linux.ibm.com>
+ <06f9244c-671c-4215-9d20-7bb69194fae6@redhat.com>
+Autocrypt: addr=schnelle@linux.ibm.com; prefer-encrypt=mutual;
+ keydata=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
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.3 (3.54.3-1.fc41) 
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5712:EE_|CH3PR12MB8188:EE_
-X-MS-Office365-Filtering-Correlation-Id: fc8ecd18-ecaa-4ac4-66fd-08dd83e20cc0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|7416014|1800799024|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?dTFZeVZHLzJidWVhS2kxcnBkV2xrVG1WYmdSNEZSK3hNS2w1bkY1Qzl5cnhh?=
- =?utf-8?B?OWxjaXdWZkdXOVYzRkJmYnZodWdocFhoM2NPOWFyN1pKK1FoZElTWE1VbVkx?=
- =?utf-8?B?QzhwSWhqbFo1djZQQmVydFZDa2N2dkhGdzdXY3ZEYXJicEhZOFk1NmoyTlFx?=
- =?utf-8?B?MFVlbGNNTkxzWUtpeWNyTFJ2YXlsL2tnWlZJdUwxL3ZvWnEzU1k4TklSc0dG?=
- =?utf-8?B?K2dpS1piQitnZHBzbGptT1ViMUQ1YkFGTEZuTjk2MVV3WlRscGQrZWRIbE5C?=
- =?utf-8?B?YytIdzFrZGtaR25OTkJDWlFibFduaEpBYWJER0lxb0w0K1Z3TkJBS001NzJI?=
- =?utf-8?B?bW5wM1cxTVJxbXFkWDNhaUcvUlI0U3FpOFVLNDc4eGU1bE9TWW9Hc1JyZXpo?=
- =?utf-8?B?UkNoTXhNTmhJMlNhZ243NVFNU0dkQWxsdW1JM3d1OXRHckhReTREUHM5WWE2?=
- =?utf-8?B?VTVqRWluVVJGR2dSVWNJdEcxd3d0WWFjc3Yyb2JQTFc1RDF1RHpzWVkzQ20v?=
- =?utf-8?B?cnlKZmJCVmhjM1RnOE43SVN2UUpBdVhqcGlmc3RKd2w0NGFhazNEeVdQNHF5?=
- =?utf-8?B?NUxySmkvUlRhMUVpS21NdExEYzIxbE96Q3RaMGFETldxaUJ1OHRnV2FXSmZ5?=
- =?utf-8?B?WkJHOUVwNFc5bXJyQ0dWK203U1RrdWlOUWsrM29LdWhkalZTUGR1ODRPTFVs?=
- =?utf-8?B?cXFPWHllbE1sRzBHaGN1Z2drRi9QTU9mNlo3dVh6K1RiNVAycU1QTGVDa2g0?=
- =?utf-8?B?clEwbmlkU2NqMTRkZWhKUE1pcXZxRFBFb3A0VzN2R1F3eUg0VTlSaGZEL1JU?=
- =?utf-8?B?NlNPdlZPVzM4OEF6WXpKK2pNeVVxTENQSTRneUZtc1daV1NROW5BekNNWDA1?=
- =?utf-8?B?SWJyY0ZLTGFoL25JYTdwZ2phVFdpYUsvdUlsbmgvRit6NjVONmh5WU0zQU43?=
- =?utf-8?B?Q0QzVTk5bnRBNWFWODF6UHBiOGxtRXArbTZLVXNDTHdvSkN6Y2ZOZ0J4eWVZ?=
- =?utf-8?B?Nnh0UWVUc1pxRVdZZ00rZmNxNHNqQUU0UHpNMkc2K1ZHY2o0SGZVbkFuaEdB?=
- =?utf-8?B?NGtmRHRSTU1rY2ZOUW9rK0taQzRuVmdyamVLZ0NVTk1OOXJPTll3NWR3QkZR?=
- =?utf-8?B?SjB5REpYRTRPNnUzYUw5YjFlMXNJckgvMzd6UU8rL0FCcFRCVzhwclQ2SnZx?=
- =?utf-8?B?SmFVNlZPMEkrM2RGMDdnZXhhQVBzOEh1TEhJU0RzeDVVaWE2Qm8wRU9vajRF?=
- =?utf-8?B?Y0plVU1TeXN4UVludEp1dHlQOEJ5ejI3Y24yN1lSN2Q4ZDlmeWlWTXNXWGRs?=
- =?utf-8?B?MTJ2Yk11SW9mSEwvTjZDM3ZHa1QwNXVKYUp6K0xIQ1N2OHBtdTRqRTN4c3ZC?=
- =?utf-8?B?MjM1ZWlDRXlLeXlpZ0ZtMTFGdFBVdk1VbEMwUTRUdHNLNkUwckxBajlnWU9l?=
- =?utf-8?B?Y0JyckVCZHVNdG1sWTJhUmhYYU1LQlhvLzM3MVJCenJEbzFtNlVHV3ErM0pT?=
- =?utf-8?B?cElWWnZSSzczaFBRUGQvYXlETTlpUzFSMXZUbUUwbmsyUWsra1N3bWs2SHA0?=
- =?utf-8?B?aFlQM3IySzJrdmRpQ1hzUW1LbVFhRThhUDNiMkRoTHFTVE91Nk9qNkFSMmds?=
- =?utf-8?B?NTF0cEdIWEQ0TGR6UVJhYzFTL21WNFp6cFZScVovR2krTXRTWXdUS2E2VGV0?=
- =?utf-8?B?RkVzazlhKzdDaU9hVTlmYVFrU3pvdUw2ZnRVU2pRMGsvMExEdlVTcTRDWmxW?=
- =?utf-8?B?N0I0Z2JtV2hzaDNPZkVTc3dORWw2YzdleGY0WUtWNVpvZVVSY2FwZ2lJbW9P?=
- =?utf-8?B?aklXWkhpc3pEN3luWHdzeWsyMUMxQTBVREVWbFFEQ0ZHVHh1bjFwQmlUTWlC?=
- =?utf-8?B?QUxSSDFqMHJTcnZPbmN3Ti9NS3NLMUcwV2xaTk5JMGErc3VscnhZWS9xdVMy?=
- =?utf-8?Q?39xqwrS3VpA=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH7PR12MB5712.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(7416014)(1800799024)(7053199007); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NE0xUjd4TndtMVorUW8rY1F5bDNaMUFTZWV1dnpLdFRBN2c2WXN3dmZXZVZn?=
- =?utf-8?B?b1Z1VnNybW5qWHlPUUN2OFRLZ1MyeHA5Sm0wbXZWSUpFM3BwYVBJT0RqM1Nu?=
- =?utf-8?B?cDVta2ZuaVJCWTJ6c2pNaU0vRnZ5M09tY0VrNTk3T0ZDMEpMTG0yK1FBc1lC?=
- =?utf-8?B?bVNlZG1SV3Z3MDVXbW4xanZQcEdVSXhoa1YwY1FNem1tU3VodmdWZ3hjL0pN?=
- =?utf-8?B?cVhEdUxheGFyaWQyb0tBUTdBWmRHK2FuVVlQeGx3cjhWWmxybExMaFpyZ3I0?=
- =?utf-8?B?NWxacVN2Mkd3Ni90dHZUaEJ3RlhNQTVsRGZXU1p5MkdBOGxROGJ3VUdBcXRK?=
- =?utf-8?B?OEdQWThHTWlDdjEvakZhUTNQK2w3UzBFdzF2SGRweXF5b1BwWXhidS80MHA5?=
- =?utf-8?B?V1Q1QTJiWUJQZ3FESW5RVDBkQTJ0ZlVleVlPRGhackl4LytKVTcvamhZMlZs?=
- =?utf-8?B?TEhmK0xPc1R2WGpRSWtaVFIyOUg3OHVrN1VWUGRFamFmaE5BTU94cTVleENH?=
- =?utf-8?B?VC9hZzRvMlpJMHNtbFpkcUlWTCtxYUlpc0lNU0pyU2wvU2ZUVHN2Mng5Qm95?=
- =?utf-8?B?WS83alBWQ2NHalNOZUd5Q1NTWnpGRG9PTUVYbUVDSXRzSnd3L3p2emRtRVhh?=
- =?utf-8?B?TjRLN3VlSUdjMFJvNWpXOUpDbm5YMGNETjArV0VydWs3eXJZbXVHRUh0NFNy?=
- =?utf-8?B?eFk0dVdsMmFMdzBSQkNSM1NUaDIzcU5GekU0NVp1UzNMaTZHV3psNTUwQnhJ?=
- =?utf-8?B?NEp0Q0w2Uk9aK0FiZGNLL21yZTdDSXRFZjl1SVo1M1hndUlaRUk2OWcvVjFC?=
- =?utf-8?B?NkpzVm96L0x6RWxobWhTTDBBKy90bHdOZnd1TzZLMG5GRk5GdzNxOGROQnlT?=
- =?utf-8?B?by9tdndhNFdHUW9NRTZ0YlZGUVQyNWRvelJOTE1uRjdHdVN5MEMwVi9BZHBr?=
- =?utf-8?B?K3VGVFJQSVR6dzRlN0JKelFRUG1zVzB6L2FjenVxWForZ2l5L0U0aEdQRmlE?=
- =?utf-8?B?akM3Rmxyam5QNXBhY0NxQ2ZQcG40TWtJUWg3SVpOSXpOK3RodG16c3lvdkFm?=
- =?utf-8?B?Y2dMMXZMY09neHJKUlZDTmNWTkx2QlNBclovdlVCaWxWeUdNV1pXN1BQekdI?=
- =?utf-8?B?MjBQNDJaL0phZ2oycG1hS0xDM0RWR3B6UzRqQVlaTTlKV1RadXFqQzQzSGNl?=
- =?utf-8?B?ci9nME4vcmlHYWxsVXRYN1lpOFdBczV0aTFPdGJ3OWwvdDFCQWtFZDN2SEIw?=
- =?utf-8?B?aUZiQUtobmh0Q2NSNS95eXBMVVp3TnVNOHFra1FHMWx6MXhCODlnb3lzb3Ru?=
- =?utf-8?B?TmpLWUQrWDNkTy9YVTI5YkdWMlFNMXFGRU1Uc1plMmM0TTFzVU9lK2c5R0pJ?=
- =?utf-8?B?Qk1IOHZGOFY3Z1gwdjU3ZWlPcWd2ZDN4LzJNd3pPK3dKdmFIV3hmelpZT1I5?=
- =?utf-8?B?RGRHTTMyNjVLb20xbU1qeEQ1cnBXeWxsQ1dBYXlSL1FhNTNPRUUrOWxRZU82?=
- =?utf-8?B?aFl3alR6NFE1T0c5YUdzV3pWczhvT3Y0OTBNWjlxU1U0L3RMRnNMVHNPYjkv?=
- =?utf-8?B?WVlvUGFSVVN2cHYyVmErREVjYlNGaXc4cWdQVjlsL1k2djYzR0JuT3RlREx1?=
- =?utf-8?B?RVVTOEVqS1dGWnBUOUhmeThDNXZNT0ZydkJmcXptdmlGTFFweWtXMWpOMUxH?=
- =?utf-8?B?TitHYzhNcXl4TGswNXhqWVdHYm5ycENwNm5RVWc5ZE1vd1hsellZSFFMTHhv?=
- =?utf-8?B?MWQwR3l1RmRpTExoMTg0bmdzUXZkblJCZkJzOG9YaEJ2UGJhVjd3MzhVZE5t?=
- =?utf-8?B?ZG96aTdaZS90SnhxUEwxalFSMHJ2dXhQeDA5L2x6N1g3eTd0R285NGdKUEUr?=
- =?utf-8?B?RXdhLzBkcFFYNlBneW5STno3WjErSGt6aDV3bTYyU3Y3Yk52ODEyWE1BRVYr?=
- =?utf-8?B?U0NvOUZ4eDRXeDVKVzhESVY4QUNhU2o5STAxcjgyYkpMaU81TmRpb3Y3RDdl?=
- =?utf-8?B?Z0I0RVAraUM5TG1QNWlqNkdlWnRtRWFHV0hEbURHU2lXSldzVHpHQXZEMU9i?=
- =?utf-8?B?NlJOTXFoVlBHL3l0OXdhSGR4NWhyV0tRdkY2YjVNbXp5TzNkNHdWZFJmWHY2?=
- =?utf-8?Q?FP31fi5cGMhdnmSQqUK9K9GmW?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fc8ecd18-ecaa-4ac4-66fd-08dd83e20cc0
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5712.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Apr 2025 10:15:06.0303 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9U5wcmkOPLzkIpxG8j5vca44fz4ZeWajF+gwy/k6pbusRazRFiKp85Pyqfq85Kjj9LsRMSv0LgCFrt0JjqkUFw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8188
-Received-SPF: permerror client-ip=2a01:111:f403:200a::60c;
- envelope-from=Sandipan.Das@amd.com;
- helo=NAM12-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=aZRhnQot c=1 sm=1 tr=0 ts=680b6415 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8
+ a=OzNfXOGz8eQtRcrgYXoA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: Q3KBnHUtXVMOSz_ZI59M_pd2p3Y4lOAg
+X-Proofpoint-ORIG-GUID: Q3KBnHUtXVMOSz_ZI59M_pd2p3Y4lOAg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI1MDA3MyBTYWx0ZWRfX7xOWc4gfRWe7
+ zHOPuH7zx5Y7F5NjiscjT9AQ9SxO1p5uEz0DHZHylXWN2svcFIya0jdNSIW4IsBYplevsL630AU
+ MlGa6JzBxz09XOPvnh665l8Iqw3keNNc4gveN2tYY9GQW6JKpaKMYcYWVcpo2f3bU++N+jNV2a/
+ usOpQV4E1Wqo6BW9C2Ysl4P4P5p0PQM3XvhGKSQJ01/x+0w03E0dVspBuDRMYXl2cxDOSfzixpC
+ YMqfOd49uw9OA/ir+1qS8wXOR5lyDtKjZ97lDXOKjyxikvm+dH5sAzWu9UV+txX6VdbT8BUUKH/
+ AaOwMD3sS3CNvCmBA2qQWbLLmXI9E8p8lozGPaU5K18qxjGsLd8deqVYjd53wpz8tFfANNG+jTq
+ rb5lAlNFQJyVSCwZ0YLrTZbMcbrHP01+YRUfg9SP6hzjy893bGBesCXBu+87nHoYhZIbRcpH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-25_02,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 priorityscore=1501
+ clxscore=1015 mlxlogscore=991 impostorscore=0 mlxscore=0 malwarescore=0
+ phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504250073
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=schnelle@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.84,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -194,71 +180,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/17/2025 3:22 AM, Dongli Zhang wrote:
-> QEMU uses the kvm_get_msrs() function to save Intel PMU registers from KVM
-> and kvm_put_msrs() to restore them to KVM. However, there is no support for
-> AMD PMU registers. Currently, pmu_version and num_pmu_gp_counters are
-> initialized based on cpuid(0xa), which does not apply to AMD processors.
-> For AMD CPUs, prior to PerfMonV2, the number of general-purpose registers
-> is determined based on the CPU version.
-> 
-> To address this issue, we need to add support for AMD PMU registers.
-> Without this support, the following problems can arise:
-> 
-> 1. If the VM is reset (e.g., via QEMU system_reset or VM kdump/kexec) while
-> running "perf top", the PMU registers are not disabled properly.
-> 
-> 2. Despite x86_cpu_reset() resetting many registers to zero, kvm_put_msrs()
-> does not handle AMD PMU registers, causing some PMU events to remain
-> enabled in KVM.
-> 
-> 3. The KVM kvm_pmc_speculative_in_use() function consistently returns true,
-> preventing the reclamation of these events. Consequently, the
-> kvm_pmc->perf_event remains active.
-> 
-> 4. After a reboot, the VM kernel may report the following error:
-> 
-> [    0.092011] Performance Events: Fam17h+ core perfctr, Broken BIOS detected, complain to your hardware vendor.
-> [    0.092023] [Firmware Bug]: the BIOS has corrupted hw-PMU resources (MSR c0010200 is 530076)
-> 
-> 5. In the worst case, the active kvm_pmc->perf_event may inject unknown
-> NMIs randomly into the VM kernel:
-> 
-> [...] Uhhuh. NMI received for unknown reason 30 on CPU 0.
-> 
-> To resolve these issues, we propose resetting AMD PMU registers during the
-> VM reset process.
-> 
-> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
-> ---
-> Changed since v1:
->   - Modify "MSR_K7_EVNTSEL0 + 3" and "MSR_K7_PERFCTR0 + 3" by using
->     AMD64_NUM_COUNTERS (suggested by Sandipan Das).
->   - Use "AMD64_NUM_COUNTERS_CORE * 2 - 1", not "MSR_F15H_PERF_CTL0 + 0xb".
->     (suggested by Sandipan Das).
->   - Switch back to "-pmu" instead of using a global "pmu-cap-disabled".
->   - Don't initialize PMU info if kvm.enable_pmu=N.
-> Changed since v2:
->   - Remove 'static' from host_cpuid_vendorX.
->   - Change has_pmu_version to pmu_version.
->   - Use object_property_get_int() to get CPU family.
->   - Use cpuid_find_entry() instead of cpu_x86_cpuid().
->   - Send error log when host and guest are from different vendors.
->   - Move "if (!cpu->enable_pmu)" to begin of function. Add comments to
->     reminder developers.
->   - Add support to Zhaoxin. Change is_same_vendor() to
->     is_host_compat_vendor().
->   - Didn't add Reviewed-by from Sandipan because the change isn't minor.
-> Changed since v3:
->   - Use host_cpu_vendor_fms() from Zhao's patch.
->   - Check AMD directly makes the "compat" rule clear.
->   - Add comment to MAX_GP_COUNTERS.
->   - Skip PMU info initialization if !kvm_pmu_disabled.
-> 
->  target/i386/cpu.h     |  12 +++
->  target/i386/kvm/kvm.c | 175 +++++++++++++++++++++++++++++++++++++++++-
->  2 files changed, 183 insertions(+), 4 deletions(-)
-> 
+On Fri, 2025-04-25 at 11:00 +0200, Thomas Huth wrote:
+> On 17/04/2025 19.37, Farhan Ali wrote:
+> > Starting with z15 (or newer) we can execute mmio
+> > instructions from userspace. On older platforms
+> > where we don't have these instructions available
+> > we can fallback to using system calls to access
+> > the PCI mapped resources.
+> >=20
+> > This patch adds helper functions for mmio reads
+> > and writes for s390x.
+> >=20
+> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+> > Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+> > ---
+> >   include/qemu/s390x_pci_mmio.h |  24 ++++++
+> >   util/meson.build              |   2 +
+> >   util/s390x_pci_mmio.c         | 148 +++++++++++++++++++++++++++++++++=
++
+> >   3 files changed, 174 insertions(+)
+> >   create mode 100644 include/qemu/s390x_pci_mmio.h
+> >   create mode 100644 util/s390x_pci_mmio.c
+> >=20
+> > diff --git a/include/qemu/s390x_pci_mmio.h b/include/qemu/s390x_pci_mmi=
+o.h
+> > new file mode 100644
+> > index 0000000000..c5f63ecefa
+> > --- /dev/null
+> > +++ b/include/qemu/s390x_pci_mmio.h
+> > @@ -0,0 +1,24 @@
+> > +/*
+> > + * s390x PCI MMIO definitions
+> > + *
+> > + * Copyright 2025 IBM Corp.
+> > + * Author(s): Farhan Ali <alifm@linux.ibm.com>
+> > + *
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + */
+> > +#ifndef S390X_PCI_MMIO_H
+> > +#define S390X_PCI_MMIO_H
+> > +
+> > +#ifdef __s390x__
+> > +uint8_t s390x_pci_mmio_read_8(const void *ioaddr);
+> > +uint16_t s390x_pci_mmio_read_16(const void *ioaddr);
+> > +uint32_t s390x_pci_mmio_read_32(const void *ioaddr);
+> > +uint64_t s390x_pci_mmio_read_64(const void *ioaddr);
+> > +
+> > +void s390x_pci_mmio_write_8(void *ioaddr, uint8_t val);
+> > +void s390x_pci_mmio_write_16(void *ioaddr, uint16_t val);
+> > +void s390x_pci_mmio_write_32(void *ioaddr, uint32_t val);
+> > +void s390x_pci_mmio_write_64(void *ioaddr, uint64_t val);
+> > +#endif /* __s390x__ */
+> > +
+> > +#endif /* S390X_PCI_MMIO_H */
+> > diff --git a/util/meson.build b/util/meson.build
+> > index 780b5977a8..acb21592f9 100644
+> > --- a/util/meson.build
+> > +++ b/util/meson.build
+> > @@ -131,4 +131,6 @@ elif cpu in ['ppc', 'ppc64']
+> >     util_ss.add(files('cpuinfo-ppc.c'))
+> >   elif cpu in ['riscv32', 'riscv64']
+> >     util_ss.add(files('cpuinfo-riscv.c'))
+> > +elif cpu =3D=3D 's390x'
+> > +  util_ss.add(files('s390x_pci_mmio.c'))
+> >   endif
+> > diff --git a/util/s390x_pci_mmio.c b/util/s390x_pci_mmio.c
+> > new file mode 100644
+> > index 0000000000..820458a026
+> > --- /dev/null
+> > +++ b/util/s390x_pci_mmio.c
+> > @@ -0,0 +1,148 @@
+> > +/*
+> > + * s390x PCI MMIO definitions
+> > + *
+> > + * Copyright 2025 IBM Corp.
+> > + * Author(s): Farhan Ali <alifm@linux.ibm.com>
+> > + *
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + */
+> > +
+> > +#include "qemu/osdep.h"
+> > +#include <unistd.h>
+>=20
+> unistd.h is already included by osdep.h, so you don't have to include it=
+=20
+> again here.
+>=20
+> > +#include <sys/syscall.h>
+> > +#include "qemu/s390x_pci_mmio.h"
+> > +#include "elf.h"
+> > +
+> > +union register_pair {
+> > +    unsigned __int128 pair;
+> > +    struct {
+> > +        uint64_t even;
+> > +        uint64_t odd;
+> > +    };
+> > +};
+> > +
+> > +static bool is_mio_supported;
+> > +
+> > +static __attribute__((constructor)) void check_is_mio_supported(void)
+> > +{
+> > +    is_mio_supported =3D !!(qemu_getauxval(AT_HWCAP) & HWCAP_S390_PCI_=
+MIO);
+> > +}
+> > +
+> > +static uint64_t s390x_pcilgi(const void *ioaddr, size_t len)
+> > +{
+> > +    union register_pair ioaddr_len =3D { .even =3D (uint64_t)ioaddr,
+> > +                                       .odd =3D len };
+> > +    uint64_t val;
+> > +    int cc;
+> > +
+> > +    asm volatile(
+> > +        /* pcilgi */
+> > +        ".insn   rre,0xb9d60000,%[val],%[ioaddr_len]\n"
+> > +        "ipm     %[cc]\n"
+> > +        "srl     %[cc],28\n"
+> > +        : [cc] "=3Dd"(cc), [val] "=3Dd"(val),
+> > +        [ioaddr_len] "+&d"(ioaddr_len.pair) :: "cc");
+>=20
+> Do we need the "&" modifier here? ... at least the kernel does not seem t=
+o=20
+> use it ...
+>=20
 
-Reviewed-by: Sandipan Das <sandipan.das@amd.com>
+From my understanding it's not strictly needed, but I also used it in
+the rdma-core user-space code where I had pointed Farhan. I looked at
+the PR again but didn't find or remember why I added it. We do have the
+same constraint in the kernel implementation of the syscalll
+(__pcilg_mio_inuser()) that I worked on in the same time frame but that
+also has other instructions before the PCILGI. I see it in other uses
+of "union register_pair" in the kernel too. Reading the gcc docs again,
+I also think it does give gcc the right information here. The
+address/length pair is only written to after it is read what it
+should/can do with this information I don't know. Adding Heiko who
+knows way more than I about inline assembly.
+
+> > +
+> > +    if (cc) {
+> > +        val =3D -1ULL;
+> > +    }
+> > +
+> > +    return val;
+> > +}
+> > +
+> > +static void s390x_pcistgi(void *ioaddr, uint64_t val, size_t len)
+> > +{
+> > +    union register_pair ioaddr_len =3D {.even =3D (uint64_t)ioaddr, .o=
+dd =3D len};
+> > +
+> > +    asm volatile (
+> > +        /* pcistgi */
+> > +        ".insn   rre,0xb9d40000,%[val],%[ioaddr_len]\n"
+> > +        : [ioaddr_len] "+&d" (ioaddr_len.pair)
+>=20
+> dito
+>=20
+> > +        : [val] "d" (val)
+> > +        : "cc", "memory");
+> > +}
 
