@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DAC7C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 11:16:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CAEDC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 11:17:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8H2S-0003Bf-O0; Fri, 25 Apr 2025 07:16:12 -0400
+	id 1u8H2x-0003IB-Jg; Fri, 25 Apr 2025 07:16:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8H2R-0003Am-02
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 07:16:11 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8H2P-00048E-8x
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 07:16:10 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43cf0d787eeso24074715e9.3
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 04:16:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745579767; x=1746184567; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=C0+6++I8ZYzgo53hdAJlQ+PAexnb750t9iDp5+aKXc0=;
- b=IPoDpf8Yucq3Jxk6eHJrFNQ3BMAbKpwViBpe0XVYvq7mxLy38u03d70+rMQyMEydk7
- 3Vh0dyU+VGBSaWeD0AiKPYO/aE6JyJ70wHRPAn3XYOADFsLo0HxGfBqpjCFNf/Qt29GN
- MTU/sJtL6QMUTV/CU2iyvfty4hT1pTYB5am1s7djOXk0Pjz4491Lx/12flnda9gcpjDa
- M8GOs7jM2yqyzlgMEhSBkneCt2LnLknoPQfms59p7mo2P6U/52VGpAf28VocdFX9jeKN
- bJbqa7ru3EljqDDTcRiIFwg8k1+Wufw24td3LbjPX6kEnCxHP0Qqh0HwgKnvRXYd4Atn
- EPzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745579767; x=1746184567;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=C0+6++I8ZYzgo53hdAJlQ+PAexnb750t9iDp5+aKXc0=;
- b=rEJxSFiJm5ZxLBN7Yzeq0ZDMD5e/VdVVd7J4qzExk+EjZ0OqdMQ7LN+bo28tqRiowa
- F8aonaJgY3+0hFUdLo0L/y1X2HhXbNFb24rcUWaTjOpBWdD5Q59auCKzllUPR95wfnOB
- Aid2bMYrgtTvuvSG4T+wsquqKJgbrA0IeaPd4kycOGL8hUmzpPzhZtYjuAgoQTnivghb
- EA+i/yDlEpJ8KvyT/7gU6m072XThRnTB4Ksm8WYWSb0PnVipQyP1HFUsKGIE8GPAj1lC
- nVCYdDFQ95EFrq2CC6fP3Ppess1fQlvsY5MBwPpCslwgLcoEbUh/FaLXjIdGZ1EoMYr2
- Jy+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXc+L8wG5riergcH2biAmFBlHEImQPt4cDWeWluEct55J5oG8dINS5CWfVMmDwaBRPEdaryzU61IY/v@nongnu.org
-X-Gm-Message-State: AOJu0YxD9T0ylaLNzOgbBI32w5T8u30pr+wv763eTYA8cfZWdY6+4B+c
- mFmMIoqMEKIFc+nQzns4muC5eedy0lOXUDfHYij8//0WNQfhyY9U8iYJH+8KbgA=
-X-Gm-Gg: ASbGncv1KjszaBmIJM6LVr7AlY7Gmv52YBDoqsmIS3JBZ8lGytr915k6UgFpBKdP6Jc
- HMaShe5WhKPxXYB8JcxBmPBVWgIKmMgMYU8J4zxEIrSw0zKWGmNou8wk2SO/YNutXuITMNd8kW0
- wk/Cxc58FRnhdre+YUeHSbQKLlvEPjE6UuQgXEr+2ElWE6Tyd1yvR03zQpzmXkprUoeuK6805e+
- VPEyhNhgaX+GHAyfbhmehMei3ur5UbS4ID8vYapmTjoAbIzuSEc7uug6blXgJg0f7WJQ+Vn9HhG
- dW/rw741Ilemtvj0xsZatFzcCC2tYBJ6y7l5ibjZ6bG4rdNUVfpK69J66WmpMVXYGEwYpKyVRMV
- WF60clwv1cMyB4uJNJK8=
-X-Google-Smtp-Source: AGHT+IFJV11VAEAxATVG3sMjByRSdGuphrEr2qODFZ9f5cf/caZYYTfz2MLUCKAR0HsSka0w8rNILA==
-X-Received: by 2002:a05:600c:1911:b0:43d:83a:417d with SMTP id
- 5b1f17b1804b1-440a65dbddcmr13430915e9.12.1745579767379; 
- Fri, 25 Apr 2025 04:16:07 -0700 (PDT)
-Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4409d29b9c4sm56294895e9.3.2025.04.25.04.16.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 04:16:06 -0700 (PDT)
-Message-ID: <152f7911-21ee-48e7-b0ca-dd562dad8afd@linaro.org>
-Date: Fri, 25 Apr 2025 13:16:05 +0200
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1u8H2g-0003FQ-QA
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 07:16:30 -0400
+Received: from mx1.zhaoxin.com ([210.0.225.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1u8H2b-00048h-NW
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 07:16:23 -0400
+X-ASG-Debug-ID: 1745579772-086e234cd1c2fa0001-jgbH7p
+Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
+ mx1.zhaoxin.com with ESMTP id D6Fs2bMu5xfgz9Ux (version=TLSv1.2
+ cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+ Fri, 25 Apr 2025 19:16:12 +0800 (CST)
+X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from ZXSHMBX3.zhaoxin.com (10.28.252.165) by ZXSHMBX3.zhaoxin.com
+ (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Fri, 25 Apr
+ 2025 19:16:12 +0800
+Received: from ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2]) by
+ ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2%6]) with mapi id
+ 15.01.2507.044; Fri, 25 Apr 2025 19:16:12 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from [192.168.31.91] (10.28.66.62) by zxbjmbx1.zhaoxin.com
+ (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Fri, 25 Apr
+ 2025 19:14:06 +0800
+Message-ID: <970df0f3-f26f-4f3c-8259-22f8508e57e8@zhaoxin.com>
+Date: Fri, 25 Apr 2025 19:14:05 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Whether the qemu mps2-an385 model support getchar?
-To: =?UTF-8?B?5bCP6ams6am5?= <1353455048@qq.com>,
- qemu-devel <qemu-devel@nongnu.org>
-References: <tencent_6CC3332A93DC02BE2030AB5BC0E63B10B808@qq.com>
-Content-Language: en-US
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-arm <qemu-arm@nongnu.org>, Gustavo Romero <gustavo.romero@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <tencent_6CC3332A93DC02BE2030AB5BC0E63B10B808@qq.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: Re: [PATCH v4] target/i386: Fix model number of Zhaoxin YongFeng vCPU
+ template
+To: Michael Tokarev <mjt@tls.msk.ru>, <pbonzini@redhat.com>,
+ <zhao1.liu@intel.com>, <xiaoyao.li@intel.com>
+X-ASG-Orig-Subj: Re: [PATCH v4] target/i386: Fix model number of Zhaoxin
+ YongFeng vCPU template
+CC: <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>, <qemu-devel@nongnu.org>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20250415024545.517897-1-ewanhai-oc@zhaoxin.com>
+ <8159d6e6-7de6-47ed-92ca-a6ec2721cf10@tls.msk.ru>
+From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+In-Reply-To: <8159d6e6-7de6-47ed-92ca-a6ec2721cf10@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.28.66.62]
+X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
+ zxbjmbx1.zhaoxin.com (10.29.252.163)
+X-Moderation-Data: 4/25/2025 7:16:11 PM
+X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
+X-Barracuda-Start-Time: 1745579772
+X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
+X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 1160
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
+X-Barracuda-Spam-Score: -2.02
+X-Barracuda-Spam-Status: No,
+ SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.140473
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
+ helo=mx1.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,18 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
 
-Cc'ing Alex and Gustavo.
 
-On 23/4/25 13:31, 小马驹 wrote:
-> When I use mps2-an385 model on qemu, I found that it seems not support 
-> getchar. I used the FreeRTOS official demo(mps2-an385-GCC-QEMU), then I 
-> tried to use UART  to receive input strings from QEMU terminal, so I 
-> tried to use getchar() function. However, some errors occurred in QEMU 
-> as shown below:
-> qemu: fatal: Lockup: can't escalate 3 to HardFault (current priority -1)
-> Is it means there are something wrong in the emulated board? And how to 
-> solve the problem?
-> ------------------------------------------------------------------------
+On 4/24/25 3:25 PM, Michael Tokarev wrote:
+> 
+> On 15.04.2025 05:45, Ewan Hai wrote:
+>> The model number was mistakenly set to 0x0b (11) in commit ff04bc1ac4.
+>> The correct value is 0x5b. This mistake occurred because the extended
+>> model bits in cpuid[eax=0x1].eax were overlooked, and only the base
+>> model was used.
+>>
+>> Using the wrong model number can affect guest behavior. One known issue
+>> is that vPMU (which relies on the model number) may fail to operate
+>> correctly.
+>>
+>> This patch corrects the model field by introducing a new vCPU version.
+>>
+>> Additionally, it adds a "Preferred CPU models for Zhaoxin x86 hosts"
+>> section in docs/system/cpu-models-x86.rst.inc to recommend the
+>> appropriate Zhaoxin CPU model(s).
+>>
+>> Fixes: ff04bc1ac4 ("target/i386: Introduce Zhaoxin Yongfeng CPU model")
+>> Signed-off-by: Ewan Hai <ewanhai-oc@zhaoxin.com>
+>> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> 
+> Is it a qemu-stable material (for 10.0.x)?
+> 
+> I'm picking this one up, please let me know if I should not.
+> 
+
+I'm not sure if this should go into qemu-stable. Maybe Paolo Bonzini or Zhao can 
+answer?
+
 
