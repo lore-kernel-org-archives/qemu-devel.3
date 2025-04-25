@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12993C369C2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F84AC369D7
 	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:25:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Kta-0001cN-Ej; Fri, 25 Apr 2025 11:23:18 -0400
+	id 1u8Kth-0001h0-B4; Fri, 25 Apr 2025 11:23:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u8KtZ-0001c0-5B
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:23:17 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1u8Ktf-0001fT-Cr
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:23:23 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u8KtX-0002oV-Ed
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:23:16 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7376dd56f60so1820188b3a.3
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:23:14 -0700 (PDT)
+ id 1u8Ktc-0002qS-6r
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:23:23 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-7398d65476eso2015966b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:23:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745594593; x=1746199393; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=XsIdeYda1erw7LbBUV6axRJk82z+kY+iFWtGvqMba+A=;
- b=cJFM2zlyQ8Sgso5vfrxb8uLqdH7SkwGH3bUGHpR/H3bHH7PHflvRAUZ+0WIa+kKu83
- qsyGacH+h08EDrx1RadxooUjHke7ZxsOfuxcgj9iF37vDAAfNHtWpNDV8x7Dg06v4kty
- 1SMfsTW1fkePs1MzBqtQ8vmDCVdFnPiHQD9xrqfqMHtXDoxaWlx+S7TJNvLegq0yCfBv
- m2r/Zad8vpEpKWmy1E06ReMhj07zW4aGsdXoBYwlapUvypUQNFYkvZsW2T5kTG9+0H1L
- P/IOHoj6yLqrTlAQlCvJuFuJe9gQFV+U/WRILUshCdWRg2d25rrYnPymgb+UfJMBF1pp
- sAhQ==
+ d=linaro.org; s=google; t=1745594598; x=1746199398; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Gj1TznuRCvGs0CqAqeiTcoQslN5U+5zXVdqj/kfvErI=;
+ b=KB1mvoOpcahpai4bRzMx2zi3n+pKeW82PlJawGwMV7yXEYgnPB5u6q2wLkTT9i/O/Z
+ EVEZDfAEcQwIO51tF527kmhU8T9gO1JBnA0N0+9saNJGCICPog7R9ONsWHuejILn6DI/
+ Ez5Ai1Xfz/kyUPMLFlhGMXH2okXPcYmDbeRRdOd248reC8bbwytnsS0qOJcphg0+JLt6
+ x8n2tF4ZtFWUkR3H+q1XYMzEr2LflNP2MoC4sO6QdIQwZqIfxqJUmAGsiZY27qtQi6bc
+ Tt4aMSKKqyQPHXvHM2A3R7HUWYx42K620n4Tzf/oDF151Q2Cz0lbLkKRLfCKyD1AMzwZ
+ kt0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745594593; x=1746199393;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XsIdeYda1erw7LbBUV6axRJk82z+kY+iFWtGvqMba+A=;
- b=mDz8Vr5U7L4iW7J6L14Ppaw1ZftMMPtQ3V7B0lCxjH7i5WX4iBvn2ThmWEDgDRgaGb
- PbL8L3AKf8YEpPhrK326gULHfRcoVOve7LtVcK/67aF3PBzcv12GB5KvPKOvRYECK3yb
- 7zsE6SyT421DAU3yz1g3pe/JWaOK1uhOqp/lxDTEuUGsw+OPc5fgmVfLpTc1PMbGE2b6
- Z7SBtWtT/Xkfwzl3pAF6nEkxIL2mz3ePP2ARTk+OTrZueiSHUlPZPfF8tvXtav6gQqAL
- dmz2m0nf1D+H8DDM823Ai6mIizC9wiIHrloQjKjYoG9LAiqf02uLkm/mPGvvN2BADgbW
- yqFQ==
-X-Gm-Message-State: AOJu0YxWhYSPbRHodx9Kas7L3QM6ZCLcdAPbidfTVwJrDjuOUATFmQtW
- P+7hAm6FZfyIzYQePbB40GexwEGTaJFXKpNrNU9CFcU0pC+Y2XqHayBjLfNdB9NgqLiCwioapVQ
- W
-X-Gm-Gg: ASbGncuzTqt9fh2rSNUq+LIhqgmRlyrau3LiEBtidmgrtMdw8KuTBVmgAQ7Mawf668v
- ahdUnOfkxVRzAlgLDblKXtWtIHlNz27OHElsx/EGM2WJtGdQraerJFHz5SK2qqW+9iMqfDK0/MN
- VDzSsU/eesneHk9oTnsZ1SUWaFzX3WIXkzNAu+HXqewvXhOa4d1Yf5Kj3C5B908ocI+DNSkYT35
- DmTqzsuT9z1TGUn6JNBRjdhVZZaWVEppF4M7qmnn0JVLgsh+rc7Q3n/iJVL5BZjjXc/I9u2dU3n
- gWGCp7NxScXT3P+77NVXfL2gZuQnS5omy4g2gJDUeJiGSyoBjafae+sAuraSI3CqWLqPNg1t12A
+ d=1e100.net; s=20230601; t=1745594598; x=1746199398;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Gj1TznuRCvGs0CqAqeiTcoQslN5U+5zXVdqj/kfvErI=;
+ b=eGrI5VBq4QfWspNYtVx4HYgdcjLHAyUi9MeWGNpABy0UNM0lzay64t53ym9GyP4XRy
+ Ga+7PzTqWOxy0dLLMLK15R7UlijCzdXSTczdG9+qstuH+MzJOgmo55kJcp/8iW9LsAqW
+ jz4jU2jmjQNsTNIuHSiJZo2Ds9ii/gmItH/okkjMF+8lH0fHpx7eM6OD7ae2oIaxVniy
+ aXrxW4XVQDo0loaNs2wGnYShtRuaB9/+lAuz0+f0sfgTJejIUEQpi2O8LDeKH851n/oC
+ WLQHwxgkBaWap60EZdzu6RBxZCwBi5rv2lww8vsTyq1L/X5JeWVu1nv3wLWP2KftR19q
+ S3+A==
+X-Gm-Message-State: AOJu0YwnCsXgjWscCHyNVbq7j4Dd0xn/ZSBCQTFbmpgmmR26ExKljYWM
+ CieV5F6qWBzD6h4N7D+m5chiI/d1gYyTO/Cq95JZqjw+Owv+Yse2wiawPFnZP0GIyhLgHbCfCxM
+ f
+X-Gm-Gg: ASbGncuExrPOXriO8ToLEevUdBHzIw7ZI5UAxDx+aORvQo5ru4XGJmi/rnLt/zioglZ
+ eEdeUas91zdDQBQt8sZ0A6oILyzsA15fjFEz9gE+vk/7fPQPOy1hP1x081/ZyRG+yDgRiDLPAEY
+ L4aybNuf5KbI9rE7KzSyvEtP1LdKuueorelpVRdY0sAUhjXuvHTLIevLXpUb2ClgYXlEII/SQPJ
+ /nJ2gOE5o7yDGj65tfotlB3GFtT6VrVt3NlGo3buN92gy95KKLa03DGYQqD8rntunY0ompvOTDh
+ bsCLPFVvjrKL3BHOZjA3AXpqtGesJJLf5AkGoWziYUSQEB2LLcMbyviAp1bf2eUXvWlkrjbHS8A
  =
-X-Google-Smtp-Source: AGHT+IG5v//cncY6cjtb4Wpg6QILbJyWY+jch8sq3RxRUvkqBoR7RkAm8vRtzB3aVtLMa7gplqG4QA==
-X-Received: by 2002:a05:6a00:acc:b0:736:6151:c6ca with SMTP id
- d2e1a72fcca58-73fd6807122mr4010391b3a.4.1745594593121; 
- Fri, 25 Apr 2025 08:23:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHlpTJ5GWn6gG2zhioZwB3wxKSuwTAio2KDzURoJmoOdGD1WB6S+fGML5Si6lQzViQU+sr9yg==
+X-Received: by 2002:aa7:880a:0:b0:736:b923:5323 with SMTP id
+ d2e1a72fcca58-73e268ef417mr8849538b3a.10.1745594598552; 
+ Fri, 25 Apr 2025 08:23:18 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25a6a49esm3390466b3a.106.2025.04.25.08.23.12
+ d2e1a72fcca58-73e25a6a49esm3390466b3a.106.2025.04.25.08.23.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Apr 2025 08:23:12 -0700 (PDT)
+ Fri, 25 Apr 2025 08:23:18 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, dbarboza@ventanamicro.com
-Subject: [PATCH 0/7] target/riscv: Fix write_misa vs aligned next_pc
-Date: Fri, 25 Apr 2025 08:23:04 -0700
-Message-ID: <20250425152311.804338-1-richard.henderson@linaro.org>
+Subject: [PATCH 7/7] target/riscv: Fix write_misa vs aligned next_pc
+Date: Fri, 25 Apr 2025 08:23:11 -0700
+Message-ID: <20250425152311.804338-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250425152311.804338-1-richard.henderson@linaro.org>
+References: <20250425152311.804338-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,35 +100,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As discussed, the use of GETPC() within write_misa is wrong.
-I've done just enough plumbing to get the helper return address
-piped down to write_misa, so that we can make use of unwind data.
+Do not examine a random host return address, but
+properly compute the next pc for the guest cpu.
 
-AFAIK, nothing in check-tcg or check-functional would test this.
-It shouldn't be too hard to write a test akin to issue1060.S,
-but I'm going to leave that to someone else.
+Fixes: f18637cd611 ("RISC-V: Add misa runtime write support")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/riscv/csr.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-
-r~
-
-
-Richard Henderson (7):
-  target/riscv: Pass ra to riscv_csr_write_fn
-  target/riscv: Pass ra to riscv_csrrw_do64
-  target/riscv: Pass ra to riscv_csrrw_do128
-  target/riscv: Pass ra to riscv_csrrw
-  target/riscv: Pass ra to riscv_csrrw_i128
-  target/riscv: Move insn_len to internals.h
-  target/riscv: Fix write_misa vs aligned next_pc
-
- target/riscv/cpu.h       |  15 ++-
- target/riscv/internals.h |   5 +
- hw/riscv/riscv_hart.c    |   2 +-
- target/riscv/csr.c       | 278 +++++++++++++++++++++------------------
- target/riscv/op_helper.c |  13 +-
- target/riscv/translate.c |   5 -
- 6 files changed, 169 insertions(+), 149 deletions(-)
-
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index a663f527a4..85f9b4c3d2 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -30,6 +30,8 @@
+ #include "exec/icount.h"
+ #include "qemu/guest-random.h"
+ #include "qapi/error.h"
++#include "tcg/insn-start-words.h"
++#include "internals.h"
+ #include <stdbool.h>
+ 
+ /* CSR function table public API */
+@@ -2099,6 +2101,19 @@ static RISCVException read_misa(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
++static target_ulong get_next_pc(CPURISCVState *env, uintptr_t ra)
++{
++    uint64_t data[TARGET_INSN_START_WORDS];
++
++    /* Outside of a running cpu, env contains the next pc. */
++    if (ra == 0 || !cpu_unwind_state_data(env_cpu(env), ra, data)) {
++        return env->pc;
++    }
++
++    /* Within unwind data, [0] is pc and [1] is the opcode. */
++    return data[0] + insn_len(data[1]);
++}
++
+ static RISCVException write_misa(CPURISCVState *env, int csrno,
+                                  target_ulong val, uintptr_t ra)
+ {
+@@ -2114,11 +2129,8 @@ static RISCVException write_misa(CPURISCVState *env, int csrno,
+     /* Mask extensions that are not supported by this hart */
+     val &= env->misa_ext_mask;
+ 
+-    /*
+-     * Suppress 'C' if next instruction is not aligned
+-     * TODO: this should check next_pc
+-     */
+-    if ((val & RVC) && (GETPC() & ~3) != 0) {
++    /* Suppress 'C' if next instruction is not aligned. */
++    if ((val & RVC) && (get_next_pc(env, ra) & ~3) != 0) {
+         val &= ~RVC;
+     }
+ 
 -- 
 2.43.0
 
