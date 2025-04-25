@@ -4,70 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2FF5C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 12:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74B55C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 12:12:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8HqI-0004Yc-SR; Fri, 25 Apr 2025 08:07:43 -0400
+	id 1u8Hu1-0006RX-E0; Fri, 25 Apr 2025 08:11:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u8Hq6-0004Vz-3w
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:07:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u8Hpz-00026y-Fh
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:07:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745582841;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=m3y4+kI9w3FgzMnC/IBwgA6hKN/HREC4guVhYzNguXk=;
- b=SYG+jTTc+g2HUhTPkhuWONVxk4HHlS1XAuuHWx9swAfeDCUVyyWHBIZb1yurIYuKSgs9vU
- 5sJresfEXFotq2fkGplFXVqFB24r5ricfjR+wcrKx8EWb9K49lwrqQmcpzYAgYz3VlFRom
- PeNjAyVhwSNuguULJdkz8u150oTYifU=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-MTWftHpmM8iG-RLc7aHsnw-1; Fri,
- 25 Apr 2025 08:07:17 -0400
-X-MC-Unique: MTWftHpmM8iG-RLc7aHsnw-1
-X-Mimecast-MFC-AGG-ID: MTWftHpmM8iG-RLc7aHsnw_1745582836
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 294811956089; Fri, 25 Apr 2025 12:07:15 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.33.60])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 113CF19560A3; Fri, 25 Apr 2025 12:07:11 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Stefan Hajnoczi <stefanha@gmail.com>
-Subject: [PATCH] Drop support for Python 3.8
-Date: Fri, 25 Apr 2025 14:07:10 +0200
-Message-ID: <20250425120710.879518-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1u8Hty-0006Qt-7p
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:11:30 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1u8Htv-0002hw-IJ
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:11:29 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-39ee623fe64so2089495f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 05:11:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1745583085; x=1746187885; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=1kScVoLyjKlBL6tKudOwB4udef7cfYVq7fLgZ2bYekA=;
+ b=QcsrEns2ide2jVtBHcuYWBSbIXVv9UhkR0t6/sWrT5WgGbLUDx25VVCOei161r1P+d
+ RqsmS8jF/2nq9MZjucHMq4sIZBnkZNXv8mTUSAXUsBYB+RvW7nJuf9vMEwZ4+EM+POfk
+ 0RYs5lYVhWv0vzHuNwpOSosg5qZRpLN273FtsZJZQmWjhFSnuZjR+XUh0bj96jl1lAhM
+ qeIuPkyTOTx3OEtaQ4SgQK5U5Wdmf4ksZiZYTKe42qEAEKBYfWsgmZI0yheituyE1hts
+ jWDfbcs+biqbdKhcD7B7YynTRr58xyXRDCWnXVMK9lNdAoqwTTjhm3pyFYiz1bLB9PCx
+ uQbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745583085; x=1746187885;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1kScVoLyjKlBL6tKudOwB4udef7cfYVq7fLgZ2bYekA=;
+ b=JboFhZbkuh5Vim4OwNVIpPfvWxCMRtM4k62GjSWq+DFCqM04McOCqB/q7ECgP+6ccK
+ PH2yKBz4N6kvTUE4fdlxmGMI1nhwXt+a4C4S1naqo7NeIrabTnhPKwQc1KAAo2Pf+kDz
+ tuRuTSc2nRyGzRiX0Tbzys9eBIP7Rccvf8zV7u4kh/5BWf3EQC2y//IYni2yvcrZIElk
+ 0sDLjeUlUKoRHCO9ZmPyiksbzzcHPyvbTImHK9aBhFxQzfiQXKaggcpmnfRoDSRcIsu3
+ 6zDHcATjCq0tf/ZAVXzCm+AwzhtklGv1eCV4avhT3B8sORcCICVC52lYe7x5fK0kFWZO
+ R0lA==
+X-Gm-Message-State: AOJu0Yw7TZLTx3rvtVPckAQjO/nyjfVQHS3r79ehe8zoQzy/cSmnzHBj
+ ud5pj6C/Z1nelS596sN9e+CGUDPk0nlXejeLYK43EhTL/akOxL7WJKFTpINc5J4=
+X-Gm-Gg: ASbGncsa++okZEx0gi5Nxs9XiUIsmyBU42ZxCTmDAeU6815heoErL+c7R4PQeeJLqnF
+ OtXhNeSshwDtFWHnJpIqnBjqmCCduWSXC6a9gzdn1xGtMAMiF1yleluz1Cj6WdJc6iivCYybZB6
+ 9QV0cCBF8PAALl5AK1MJnAxgDxRoUbCXxLH6iUUL/P3PA+o4xYbEhoNHR3smLCHJIWxDw9FT/Y5
+ RXQXeWTmnQbHirXiZw6zy1wLzRc0DrhDKn2Oud2MGM6FsSNhbhl0oFy832FXRxNRSWhcTByYAHh
+ qGHf/L8515BlJI9dyra3rNGr7y9F
+X-Google-Smtp-Source: AGHT+IEOMsnPi0/qmEEe9UU2t/HQJXERPrlMVjaye1AX/0qgHDLa/RL4oA08DcN6MDeujs23NTlmJQ==
+X-Received: by 2002:a05:6000:2283:b0:39c:f0d:9146 with SMTP id
+ ffacd0b85a97d-3a074f11d7fmr1610276f8f.45.1745583084938; 
+ Fri, 25 Apr 2025 05:11:24 -0700 (PDT)
+Received: from localhost ([2a02:8308:a00c:e200::f716])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a073e461bfsm2191386f8f.79.2025.04.25.05.11.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 25 Apr 2025 05:11:24 -0700 (PDT)
+Date: Fri, 25 Apr 2025 14:11:23 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
+Subject: Re: [PATCH v2 8/9] target/riscv: widen (m|s)counteren to target_ulong
+Message-ID: <20250425-d3897a3163a3fb2853763a8e@orel>
+References: <20250425113705.2741457-1-dbarboza@ventanamicro.com>
+ <20250425113705.2741457-9-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250425113705.2741457-9-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.314,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,191 +99,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Fri, Apr 25, 2025 at 08:37:04AM -0300, Daniel Henrique Barboza wrote:
+> We want to support scounteren as a KVM CSR. The KVM UAPI defines every
+> CSR size as target_ulong, and our env->scounteren is fixed at 32 bits.
+> 
+> The other existing cases where the property size does not match the KVM
+> reg size happens with uint64_t properties, like 'mstatus'. When running
+> a 32 bit CPU we'll write a 32 bit 'sstatus' KVM reg into the 64 bit
+> 'mstatus' field. As long as we're consistent, i.e. we're always
+> reading/writing the same words, this is ok.
+> 
+> For scounteren, a KVM guest running in a 64 bit CPU will end up writing
+> a 64 bit reg in a 32 bit field. This will have all sort of funny side
+> effects in the KVM guest that we would rather avoid.
+> 
+> Increase scounteren to target_ulong to allow KVM to read/write the
+> scounteren CSR without any surprises. 'mcounteren' is being changed to
+> target_ulong for consistency.
+> 
+> Aside from bumping the version of the RISCVCPU vmstate no other
+> behavioral changes are expected.
+> 
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  target/riscv/cpu.h     | 4 ++--
+>  target/riscv/machine.c | 8 ++++----
+>  2 files changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index f5a60d0c52..0623c3187b 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -400,8 +400,8 @@ struct CPUArchState {
+>       */
+>      bool two_stage_indirect_lookup;
+>  
+> -    uint32_t scounteren;
+> -    uint32_t mcounteren;
+> +    target_ulong scounteren;
+> +    target_ulong mcounteren;
 
-Python 3.8 went "end of life" in October 2024 and Fedora 42 dropped
-this version already, so the "python" CI job is currently failing.
-Thus it's time to drop support for this Python version in QEMU, too.
+Let's leave mcounteren a u32 and write a comment above scounteren
+explaining that it's supposed to be a u32 (as the spec says) but
+we're using a ulong instead to support KVM's get/put due to how
+it's defined in struct kvm_riscv_csr.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- This is an alternative suggestion to:
- https://lore.kernel.org/qemu-devel/20250422125626.72907-1-thuth@redhat.com/
+>  
+>      uint32_t scountinhibit;
+>      uint32_t mcountinhibit;
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index df2d5bad8d..4b11b203fb 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -401,8 +401,8 @@ static const VMStateDescription vmstate_ssp = {
+>  
+>  const VMStateDescription vmstate_riscv_cpu = {
+>      .name = "cpu",
+> -    .version_id = 10,
+> -    .minimum_version_id = 10,
+> +    .version_id = 11,
+> +    .minimum_version_id = 11,
+>      .post_load = riscv_cpu_post_load,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
+> @@ -445,8 +445,8 @@ const VMStateDescription vmstate_riscv_cpu = {
+>          VMSTATE_UINTTL(env.mtval, RISCVCPU),
+>          VMSTATE_UINTTL(env.miselect, RISCVCPU),
+>          VMSTATE_UINTTL(env.siselect, RISCVCPU),
+> -        VMSTATE_UINT32(env.scounteren, RISCVCPU),
+> -        VMSTATE_UINT32(env.mcounteren, RISCVCPU),
+> +        VMSTATE_UINTTL(env.scounteren, RISCVCPU),
+> +        VMSTATE_UINTTL(env.mcounteren, RISCVCPU),
 
- docs/about/build-platforms.rst         |  2 +-
- configure                              | 14 +++++++-------
- python/Makefile                        |  8 ++++----
- python/setup.cfg                       |  7 +++----
- python/tests/minreqs.txt               |  2 +-
- scripts/qapi/mypy.ini                  |  2 +-
- tests/docker/dockerfiles/python.docker |  1 -
- 7 files changed, 17 insertions(+), 19 deletions(-)
+Since we only expect the lower 32 bits to ever be written, then do we need
+to make this change?
 
-diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-index 52521552c8a..c3651871d20 100644
---- a/docs/about/build-platforms.rst
-+++ b/docs/about/build-platforms.rst
-@@ -101,7 +101,7 @@ Python runtime
-   option of the ``configure`` script to point QEMU to a supported
-   version of the Python runtime.
- 
--  As of QEMU |version|, the minimum supported version of Python is 3.8.
-+  As of QEMU |version|, the minimum supported version of Python is 3.9.
- 
- Python build dependencies
-   Some of QEMU's build dependencies are written in Python.  Usually these
-diff --git a/configure b/configure
-index 000309cf610..40705afdf57 100755
---- a/configure
-+++ b/configure
-@@ -540,17 +540,17 @@ if test -n "$linux_arch" && ! test -d "$source_path/linux-headers/asm-$linux_arc
- fi
- 
- check_py_version() {
--    # We require python >= 3.8.
-+    # We require python >= 3.9.
-     # NB: a True python conditional creates a non-zero return code (Failure)
--    "$1" -c 'import sys; sys.exit(sys.version_info < (3,8))'
-+    "$1" -c 'import sys; sys.exit(sys.version_info < (3,9))'
- }
- 
- first_python=
- if test -z "${PYTHON}"; then
-     # A bare 'python' is traditionally python 2.x, but some distros
-     # have it as python 3.x, so check in both places.
--    for binary in python3 python python3.12 python3.11 \
--                          python3.10 python3.9 python3.8; do
-+    for binary in python3 python python3.13 python3.12 python3.11 \
-+                          python3.10 python3.9 ; do
-         if has "$binary"; then
-             python=$(command -v "$binary")
-             if check_py_version "$python"; then
-@@ -933,7 +933,7 @@ then
-     # If first_python is set, there was a binary somewhere even though
-     # it was not suitable.  Use it for the error message.
-     if test -n "$first_python"; then
--        error_exit "Cannot use '$first_python', Python >= 3.8 is required." \
-+        error_exit "Cannot use '$first_python', Python >= 3.9 is required." \
-             "Use --python=/path/to/python to specify a supported Python."
-     else
-         error_exit "Python not found. Use --python=/path/to/python"
-@@ -941,11 +941,11 @@ then
- fi
- 
- if ! check_py_version "$python"; then
--  error_exit "Cannot use '$python', Python >= 3.8 is required." \
-+  error_exit "Cannot use '$python', Python >= 3.9 is required." \
-              "Use --python=/path/to/python to specify a supported Python." \
-              "Maybe try:" \
-              "  openSUSE Leap 15.3+: zypper install python39" \
--             "  CentOS 8: dnf install python38"
-+             "  CentOS: dnf install python3.12"
- fi
- 
- # Resolve PATH
-diff --git a/python/Makefile b/python/Makefile
-index 1fa4ba2498e..764b79ccb23 100644
---- a/python/Makefile
-+++ b/python/Makefile
-@@ -9,13 +9,13 @@ help:
- 	@echo "make check-minreqs:"
- 	@echo "    Run tests in the minreqs virtual environment."
- 	@echo "    These tests use the oldest dependencies."
--	@echo "    Requires: Python 3.8"
--	@echo "    Hint (Fedora): 'sudo dnf install python3.8'"
-+	@echo "    Requires: Python 3.9"
-+	@echo "    Hint (Fedora): 'sudo dnf install python3.9'"
- 	@echo ""
- 	@echo "make check-tox:"
- 	@echo "    Run tests against multiple python versions."
- 	@echo "    These tests use the newest dependencies."
--	@echo "    Requires: Python 3.8 - 3.11, and tox."
-+	@echo "    Requires: Python 3.9 - 3.11, and tox."
- 	@echo "    Hint (Fedora): 'sudo dnf install python3-tox python3.11'"
- 	@echo "    The variable QEMU_TOX_EXTRA_ARGS can be use to pass extra"
- 	@echo "    arguments to tox".
-@@ -59,7 +59,7 @@ PIP_INSTALL = pip install --disable-pip-version-check
- min-venv: $(QEMU_MINVENV_DIR) $(QEMU_MINVENV_DIR)/bin/activate
- $(QEMU_MINVENV_DIR) $(QEMU_MINVENV_DIR)/bin/activate: setup.cfg tests/minreqs.txt
- 	@echo "VENV $(QEMU_MINVENV_DIR)"
--	@python3.8 -m venv $(QEMU_MINVENV_DIR)
-+	@python3.9 -m venv $(QEMU_MINVENV_DIR)
- 	@(								\
- 		echo "ACTIVATE $(QEMU_MINVENV_DIR)";			\
- 		. $(QEMU_MINVENV_DIR)/bin/activate;			\
-diff --git a/python/setup.cfg b/python/setup.cfg
-index cf5af7e6641..c48dff280a3 100644
---- a/python/setup.cfg
-+++ b/python/setup.cfg
-@@ -14,7 +14,6 @@ classifiers =
-     Natural Language :: English
-     Operating System :: OS Independent
-     Programming Language :: Python :: 3 :: Only
--    Programming Language :: Python :: 3.8
-     Programming Language :: Python :: 3.9
-     Programming Language :: Python :: 3.10
-     Programming Language :: Python :: 3.11
-@@ -23,7 +22,7 @@ classifiers =
-     Typing :: Typed
- 
- [options]
--python_requires = >= 3.8
-+python_requires = >= 3.9
- packages =
-     qemu.qmp
-     qemu.machine
-@@ -78,7 +77,7 @@ exclude = __pycache__,
- 
- [mypy]
- strict = True
--python_version = 3.8
-+python_version = 3.9
- warn_unused_configs = True
- namespace_packages = True
- warn_unused_ignores = False
-@@ -186,7 +185,7 @@ multi_line_output=3
- # of python available on your system to run this test.
- 
- [tox:tox]
--envlist = py38, py39, py310, py311, py312, py313
-+envlist = py39, py310, py311, py312, py313
- skip_missing_interpreters = true
- 
- [testenv]
-diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
-index a3f423efd84..6445407ba87 100644
---- a/python/tests/minreqs.txt
-+++ b/python/tests/minreqs.txt
-@@ -1,5 +1,5 @@
- # This file lists the ***oldest possible dependencies*** needed to run
--# "make check" successfully under ***Python 3.8***. It is used primarily
-+# "make check" successfully under ***Python 3.9***. It is used primarily
- # by GitLab CI to ensure that our stated minimum versions in setup.cfg
- # are truthful and regularly validated.
- #
-diff --git a/scripts/qapi/mypy.ini b/scripts/qapi/mypy.ini
-index 8109470a031..c9dbcec2db0 100644
---- a/scripts/qapi/mypy.ini
-+++ b/scripts/qapi/mypy.ini
-@@ -1,4 +1,4 @@
- [mypy]
- strict = True
- disallow_untyped_calls = False
--python_version = 3.8
-+python_version = 3.9
-diff --git a/tests/docker/dockerfiles/python.docker b/tests/docker/dockerfiles/python.docker
-index 8f0af9ef25f..59e70a02484 100644
---- a/tests/docker/dockerfiles/python.docker
-+++ b/tests/docker/dockerfiles/python.docker
-@@ -15,7 +15,6 @@ ENV PACKAGES \
-     python3.11 \
-     python3.12 \
-     python3.13 \
--    python3.8 \
-     python3.9
- 
- RUN dnf install -y $PACKAGES
--- 
-2.49.0
+>          VMSTATE_UINT32(env.scountinhibit, RISCVCPU),
+>          VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
+>          VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS, 0,
+> -- 
+> 2.49.0
+> 
 
+Thanks,
+drew
 
