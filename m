@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92142C369D8
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:32:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36B6AC369D3
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:32:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8L1k-0004dq-QP; Fri, 25 Apr 2025 11:31:45 -0400
+	id 1u8L1z-00065g-SJ; Fri, 25 Apr 2025 11:32:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L1K-0003MR-NB
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:31:19 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L1Y-0004aO-Aq
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:31:32 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L1I-00042B-9V
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:31:18 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-39c0dfba946so1760738f8f.3
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:31:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L1W-00043j-CX
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:31:31 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3913b539aabso1345499f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:31:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745595074; x=1746199874; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745595088; x=1746199888; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7WkHvd226Ypz8G1TSGXdLXTD8awP0PmcoXl0RA0stOw=;
- b=Qjqma+/JQEqavirCaVl5CnQMegR4zBzaZISOKqcHq89CYN4HdiC4QeBUFQq9JzUDJu
- m80eMPoIB9JJcfLqV+IBnbrAsEmXJ+cCEEeuAvSn4+Sf9/IaFe39xrv93+k/xXm0ew7N
- KsJXUuI5yXrcWevamMAr4eD3aYMOCtf+cG8VHdgBQkaiEr2UNxpN1HKFiwuZjQaRao79
- mRxbSxATaGBp15bUTEo+bw3Dgtug+pZGnpGlIUjHiEuMZVbuyaqOhrH3QlD0dNcqOVEb
- xJ/XCi0M4ehUIANslOiMCcFmenr7w9/ulXKf7BUqfEip5T7ZOWYQPy/MLuBm/sno20fd
- 9S8A==
+ bh=eiBpwyewNsWHNCmNEbMKXMBr6iNUyIIVRgYWIEt5InM=;
+ b=ZGH7DSvcFNIGejkujG7vV7L4q0s4PDnUtJxRXY3GF3HzLiD/A8nLJhKO5PSQKHT4NT
+ wVtjmC4inaQTqYvIVrAjN9MyyvIX+HWMlqsnIstG7t35C3Q7mX1wv56RJxaqPYRH+YR0
+ yGkymrv6PRWTfx88cRvLDjskujAJWqWk2l0qAGchdRgZzeRmhca05KG7jxd9Wme4xNyT
+ PAePWkdKfLccjVAlBwGc27X6M+PSHVqapZfJkwm4Q2HMurDzzm8J5joicdEBdAdjphWt
+ FZWWJsoeuDEXmtx2l/VY8G/BsjO/rFdYJ2IXutfxe8ICuRjSD0haMzRNLz7wFrP8btP3
+ ETsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745595074; x=1746199874;
+ d=1e100.net; s=20230601; t=1745595088; x=1746199888;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7WkHvd226Ypz8G1TSGXdLXTD8awP0PmcoXl0RA0stOw=;
- b=v8TuAUgOrCmzWFyuY7kXCIN6c92K5erR1w94EM9P/T9a8cIcv19v5+2FNX1IPWsxvP
- N8V+B/RDla3Eqb9qZZzxQ4iAqbJYenOz/Cuk//sQwLVAAO7jeIoxK265tdJFmzI/bnnw
- j0FRvIAPeBwvXBbQscdZqtZomY3cyucsMN5N+bMydPGZtdMRtfB0pmnDRA3AeLsLKLel
- 823sfm4ODJ7LmjLRDxf8Ao5CqdQ8RvnVCwkF2f5dJ5cA/avgV507x9gG+nNhoCZlwino
- 0fVk3tv/w7m1dVXvFCqpWpnGprDhglHifzCc45EqSN1VNVytyPDqMOSGdEYa9glWCsqC
- owbQ==
-X-Gm-Message-State: AOJu0YxoddXdsV+WZ751SWYxpUTviB5bc6HK6R1dnrgEvdhNpaIhTDBX
- 1j2EDYx9kXzm5hHmCCFy8SqJxi1FcXnCNsaIOxh6Zmc4+afaD3zgL8vYPL2lOYNK0dus5HtNZcg
- q
-X-Gm-Gg: ASbGncttOD6tDVNALyK2G/vGSdqqboKs5nqWqzA4uCwQRyUBMMrzN/5lSbTrQRdsaba
- PdMBGro7CPKh8dI9bM9+DqQKduS32bPC5GR4iZ8vpJEIneBHxHgMLWPNv/aqWqqO0yYQ/vzr4Jk
- YdtLv+uDfMJWtQ8bUEu5WFEEdnV4U/WNBbppLTk0khLfvVNYbi/a7DQkNA2D7Px0M9ftgzqQCE4
- WeWrPKFVxDe6IId7ci6PqOsvZrfCWWwURrYEHjrjNuNAnKqMa/38xaTKkjA3PauzNqQGa2qZZv/
- GOToCpcXpw+MV/4nwWwhLCq+SZ3ZtyEA8t6L4G6XqCNfSzlmEVx3EDEgqoqNUTToAA07tt0yzHs
- uMtOiJW8WgDRsY+8=
-X-Google-Smtp-Source: AGHT+IFPHUvutD9x44y2VkPzId9OGZF7HtDd2xL6FxgYEPHyEgW9Nflo9+uca3+aB4eG0d/bYsrFCw==
-X-Received: by 2002:a05:6000:402c:b0:397:8f09:5f6 with SMTP id
- ffacd0b85a97d-3a074f4316dmr2343839f8f.47.1745595074164; 
- Fri, 25 Apr 2025 08:31:14 -0700 (PDT)
+ bh=eiBpwyewNsWHNCmNEbMKXMBr6iNUyIIVRgYWIEt5InM=;
+ b=tiUlooUubO0c7X8hdrjWuefRk5ulnrQdSxXDzJIlCfRMjWL7gYNqIdmbbjnwjpgqg7
+ 6NOeHl+++6UFeKbj1wqYhhWQpxNGGOTuH/ebWaCHBrrAA+MLaxYxvh72NGQXuJmd8nae
+ ogP+wtWuBFQviBntBcCg3aS1GEYwOvRB6hPQFe9FwgepfdeeEPTBJ6UG2jn+clJ07qrd
+ x8n5RDpaWq0e5yyTsD734+5VSi4yHPgQ36AAk8xmy/ZREMbbqPflqEx/7NC+Uc65V4Iz
+ 63EdZclt+56o7A3+YCttBArI7f8c6XDk30gYij26DkOhiJm6kj/ybcE6aCWY1SQz9/CR
+ wbAQ==
+X-Gm-Message-State: AOJu0Yzn+Fr8qjni2b/TQadx4MOzvXE7KL7f1kvLP664ax243dX9ugcO
+ 4q230h2bcV4dxOrkucGgYulTcu5LHBU+YoSk9PBxp02ZfD4c0hVUYrB3uowtsqoRczMuynLznMK
+ I
+X-Gm-Gg: ASbGnctHWEJls6Gyyeafx9uNQjshRfWRjN575H0k4pDcgJoonWGreWT1+I0aLNwvUKQ
+ Cxhzr7VowqEeANf52ImaxlTeSc8o2esTP1TJmFxwaVMzwEDggRB7JH2+mzDomNRzTE2kFrRmLaP
+ e7rUB7r9e/52HxlVFdmDBuI7LzPHTCjZOQ6TBXdbxk32r3FBdfFZ2CW4eZYLOf1QfPh0A8BF0DJ
+ VjdKluqVGtYZ9dJb2BxzWxkoSkAIPJ1GIxYy48YWw/4zanOMlOCZ95guKOgLY8vFFr66CQNLPo/
+ JpXpWw0qixM7xK+pERnBZuiUqTfcxQdsaqD9KfxDhkHfy0N+t1Liz1HNIHONg4978ssog3wE5N/
+ NLPDwzRteV6JSBwU=
+X-Google-Smtp-Source: AGHT+IHqVqye5O5d1Et5LvyMSdWsU+Mg5+k727CftuHgsLo+DR+EECnLym6PIWk7dSJ/2iSaCOvcPw==
+X-Received: by 2002:a5d:59ae:0:b0:39a:ca05:5232 with SMTP id
+ ffacd0b85a97d-3a074e0ef10mr2309522f8f.5.1745595088378; 
+ Fri, 25 Apr 2025 08:31:28 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073e46976sm2665566f8f.63.2025.04.25.08.31.13
+ ffacd0b85a97d-3a073e4684csm2624707f8f.76.2025.04.25.08.31.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 08:31:13 -0700 (PDT)
+ Fri, 25 Apr 2025 08:31:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 30/58] hw/core/loader: Fix type conflict of GLib function
- pointers
-Date: Fri, 25 Apr 2025 17:28:14 +0200
-Message-ID: <20250425152843.69638-31-philmd@linaro.org>
+Subject: [PULL 33/58] system/vl: Fix type conflict of GLib function pointers
+Date: Fri, 25 Apr 2025 17:28:17 +0200
+Message-ID: <20250425152843.69638-34-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
 References: <20250425152843.69638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,34 +111,34 @@ function pointer casting.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <26dfe9191154ca65dca6ef51ce768ad2a0c30d5f.1745295397.git.ktokunaga.mail@gmail.com>
+Message-ID: <e9a50b76c54cc64fc9985186f0aef3fcc2024da6.1745295397.git.ktokunaga.mail@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/core/loader.c | 4 ++--
+ system/vl.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index a3aa62d132e..b792a54bb02 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -1410,7 +1410,7 @@ typedef struct RomSec {
-  * work, but this way saves a little work later by avoiding
-  * dealing with "gaps" of 0 length.
-  */
--static gint sort_secs(gconstpointer a, gconstpointer b)
-+static gint sort_secs(gconstpointer a, gconstpointer b, gpointer d)
+diff --git a/system/vl.c b/system/vl.c
+index c17945c4939..4ab2001df75 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1524,7 +1524,7 @@ static bool debugcon_parse(const char *devname, Error **errp)
+     return true;
+ }
+ 
+-static gint machine_class_cmp(gconstpointer a, gconstpointer b)
++static gint machine_class_cmp(gconstpointer a, gconstpointer b, gpointer d)
  {
-     RomSec *ra = (RomSec *) a;
-     RomSec *rb = (RomSec *) b;
-@@ -1463,7 +1463,7 @@ RomGap rom_find_largest_gap_between(hwaddr base, size_t size)
-     /* sentinel */
-     secs = add_romsec_to_list(secs, base + size, 1);
+     const MachineClass *mc1 = a, *mc2 = b;
+     int res;
+@@ -1574,7 +1574,7 @@ static void machine_help_func(const QDict *qdict)
+     }
  
--    secs = g_list_sort(secs, sort_secs);
-+    secs = g_list_sort_with_data(secs, sort_secs, NULL);
- 
-     for (it = g_list_first(secs); it; it = g_list_next(it)) {
-         cand = (RomSec *) it->data;
+     printf("Supported machines are:\n");
+-    machines = g_slist_sort(machines, machine_class_cmp);
++    machines = g_slist_sort_with_data(machines, machine_class_cmp, NULL);
+     for (el = machines; el; el = el->next) {
+         MachineClass *mc = el->data;
+         if (mc->alias) {
 -- 
 2.47.1
 
