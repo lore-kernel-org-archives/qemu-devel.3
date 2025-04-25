@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 190D3C369AB
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 00:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A627AC369AB
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 00:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u87Le-0006wo-3S; Thu, 24 Apr 2025 20:55:22 -0400
+	id 1u87Lb-0006nN-Ps; Thu, 24 Apr 2025 20:55:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u87La-0006mT-UV
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 20:55:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u87LX-0006et-NQ
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 20:55:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u87LZ-0000mQ-CN
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 20:55:18 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1u87LV-0000lC-TL
+ for qemu-devel@nongnu.org; Thu, 24 Apr 2025 20:55:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745542516;
+ s=mimecast20190719; t=1745542513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XxqVYIlN1ZlXcezHFPpFEZRs19Uzw4DTzoZFCemFol4=;
- b=SB67rW8wfk8GwJcLeHIw4CEb3HE4j2GiGE7yrfSyOOLYcgXtw2UcSZDl5m0Hsyyi4o0LAz
- i9ma/WAbtvnkN6AtaYB1cRHOTImFC9HiKcMocbtO0to+aya3Bj6/EKPNF+/+icTe/sKyRm
- mWfJ7YEOECBmu2TQ0R9m/pWthKe6njM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Wn6zBuqpNVmvcfbdxpgMz2X9n+bh2itxCd5KFp+3S5M=;
+ b=YTQYO3HhWTBK27EvvSxqwg7qVKQzquCf2Ihmx6UHt5Nv5JG/5xe+rGU67qbVR7yZ+cx+Dw
+ LAlv4ZwIRfdKecJO2XWlmE9HHm2fA8h0MfFsewxmqIkUT58vEysQ5Bn3hPUKGJMahSGO1e
+ hBlcuJrKNxKwbcKrp7Oo/9vBijsc19w=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-372-6cBAjYN9NAqdX9bcYNpPjg-1; Thu,
- 24 Apr 2025 20:55:12 -0400
-X-MC-Unique: 6cBAjYN9NAqdX9bcYNpPjg-1
-X-Mimecast-MFC-AGG-ID: 6cBAjYN9NAqdX9bcYNpPjg_1745542511
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-_GJZ2hz_M9WZRMCRouLacQ-1; Thu,
+ 24 Apr 2025 20:55:10 -0400
+X-MC-Unique: _GJZ2hz_M9WZRMCRouLacQ-1
+X-Mimecast-MFC-AGG-ID: _GJZ2hz_M9WZRMCRouLacQ_1745542509
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6A17195609D; Fri, 25 Apr 2025 00:55:11 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AB29C180036D; Fri, 25 Apr 2025 00:55:09 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.59])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 15B7A1800378; Fri, 25 Apr 2025 00:55:09 +0000 (UTC)
+ id 0032A1800374; Fri, 25 Apr 2025 00:55:07 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, vsementsov@yandex-team.ru, stefanha@redhat.com,
  John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH v3 07/11] mirror: Skip pre-zeroing destination if it is
- already zero
-Date: Thu, 24 Apr 2025 19:52:07 -0500
-Message-ID: <20250425005439.2252467-20-eblake@redhat.com>
+Subject: [PATCH v3 06/11] mirror: Minor refactoring
+Date: Thu, 24 Apr 2025 19:52:06 -0500
+Message-ID: <20250425005439.2252467-19-eblake@redhat.com>
 In-Reply-To: <20250425005439.2252467-13-eblake@redhat.com>
 References: <20250425005439.2252467-13-eblake@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -28
 X-Spam_score: -2.9
@@ -85,79 +84,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When doing a sync=full mirroring, QMP drive-mirror requests full
-zeroing if it did not just create the destination, and blockdev-mirror
-requests full zeroing unconditionally.  This is because during a full
-sync, we must ensure that the portions of the disk that are not
-otherwise touched by the source still read as zero upon completion.
+Commit 5791ba52 (v9.2) pre-initialized ret in mirror_dirty_init to
+silence a false positive compiler warning, even though in all code
+paths where ret is used, it was guaranteed to be reassigned
+beforehand.  But since the function returns -errno, and -1 is not
+always the right errno, it's better to initialize to -EIO.
 
-However, in mirror_dirty_init(), we were blindly assuming that if the
-destination allows punching holes, we should pre-zero the entire
-image; and if it does not allow punching holes, then treat the entire
-source as dirty rather than mirroring just the allocated portions of
-the source.  Without the ability to punch holes, this results in the
-destination file being fully allocated; and even when punching holes
-is supported, it causes duplicate I/O to the portions of the
-destination corresponding to chunks of the source that are allocated
-but read as zero.
-
-Smarter is to avoid the pre-zeroing pass over the destination if it
-can be proved the destination already reads as zero.  Note that a
-later patch will then further improve things to skip writing to the
-destination for parts of the image where the source is zero; but even
-with just this patch, it is possible to see a difference for any BDS
-that can quickly report that it already reads as zero.
-
-Note, however, that if the destination was opened with
-"detect-zeroes": "unmap", then the user wants us to punch holes where
-possible for any zeroes in the source; in that case, we are better off
-doing unmap up front in bulk.
+An upcoming patch wants to track two bitmaps in
+do_sync_target_write(); this will be easier if the current variables
+related to the dirty bitmap are renamed.
 
 Signed-off-by: Eric Blake <eblake@redhat.com>
-
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
-
-v3: add exemption for "detect-zeroes":"unmap" on destination
----
- block/mirror.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ block/mirror.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/block/mirror.c b/block/mirror.c
-index 34c6c5252e1..4059bf96854 100644
+index a53582f17bb..34c6c5252e1 100644
 --- a/block/mirror.c
 +++ b/block/mirror.c
-@@ -849,13 +849,30 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
-     bdrv_graph_co_rdunlock();
+@@ -841,7 +841,7 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+     int64_t offset;
+     BlockDriverState *bs;
+     BlockDriverState *target_bs = blk_bs(s->target);
+-    int ret = -1;
++    int ret = -EIO;
+     int64_t count;
 
-     if (s->zero_target) {
-+        offset = 0;
-+        bdrv_graph_co_rdlock();
-+        ret = bdrv_co_is_all_zeroes(target_bs);
-+        bdrv_graph_co_rdunlock();
-+        if (ret < 0) {
-+            return ret;
-+        }
-+        /*
-+         * If the destination already reads as zero, and we are not
-+         * requested to punch holes into existing zeroes, then we can
-+         * skip pre-zeroing the destination.
-+         */
-+        if (ret > 0 &&
-+            (target_bs->detect_zeroes != BLOCKDEV_DETECT_ZEROES_OPTIONS_UNMAP ||
-+             !bdrv_can_write_zeroes_with_unmap(target_bs))) {
-+            offset = s->bdev_length;
-+        }
-         if (!bdrv_can_write_zeroes_with_unmap(target_bs)) {
-             bdrv_set_dirty_bitmap(s->dirty_bitmap, 0, s->bdev_length);
-             return 0;
-         }
+     bdrv_graph_co_rdlock();
+@@ -1341,7 +1341,7 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
+ {
+     int ret;
+     size_t qiov_offset = 0;
+-    int64_t bitmap_offset, bitmap_end;
++    int64_t dirty_bitmap_offset, dirty_bitmap_end;
 
-         s->initial_zeroing_ongoing = true;
--        for (offset = 0; offset < s->bdev_length; ) {
-+        while (offset < s->bdev_length) {
-             int bytes = MIN(s->bdev_length - offset,
-                             QEMU_ALIGN_DOWN(INT_MAX, s->granularity));
+     if (!QEMU_IS_ALIGNED(offset, job->granularity) &&
+         bdrv_dirty_bitmap_get(job->dirty_bitmap, offset))
+@@ -1388,11 +1388,11 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
+      * Tails are either clean or shrunk, so for bitmap resetting
+      * we safely align the range down.
+      */
+-    bitmap_offset = QEMU_ALIGN_UP(offset, job->granularity);
+-    bitmap_end = QEMU_ALIGN_DOWN(offset + bytes, job->granularity);
+-    if (bitmap_offset < bitmap_end) {
+-        bdrv_reset_dirty_bitmap(job->dirty_bitmap, bitmap_offset,
+-                                bitmap_end - bitmap_offset);
++    dirty_bitmap_offset = QEMU_ALIGN_UP(offset, job->granularity);
++    dirty_bitmap_end = QEMU_ALIGN_DOWN(offset + bytes, job->granularity);
++    if (dirty_bitmap_offset < dirty_bitmap_end) {
++        bdrv_reset_dirty_bitmap(job->dirty_bitmap, dirty_bitmap_offset,
++                                dirty_bitmap_end - dirty_bitmap_offset);
+     }
 
+     job_progress_increase_remaining(&job->common.job, bytes);
+@@ -1430,10 +1430,10 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
+          * at function start, and they must be still dirty, as we've locked
+          * the region for in-flight op.
+          */
+-        bitmap_offset = QEMU_ALIGN_DOWN(offset, job->granularity);
+-        bitmap_end = QEMU_ALIGN_UP(offset + bytes, job->granularity);
+-        bdrv_set_dirty_bitmap(job->dirty_bitmap, bitmap_offset,
+-                              bitmap_end - bitmap_offset);
++        dirty_bitmap_offset = QEMU_ALIGN_DOWN(offset, job->granularity);
++        dirty_bitmap_end = QEMU_ALIGN_UP(offset + bytes, job->granularity);
++        bdrv_set_dirty_bitmap(job->dirty_bitmap, dirty_bitmap_offset,
++                              dirty_bitmap_end - dirty_bitmap_offset);
+         qatomic_set(&job->actively_synced, false);
+
+         action = mirror_error_action(job, false, -ret);
 -- 
 2.49.0
 
