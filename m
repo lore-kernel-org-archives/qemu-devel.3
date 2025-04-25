@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F2F2C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:34:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71832C369D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:34:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8L1L-0003IG-62; Fri, 25 Apr 2025 11:31:19 -0400
+	id 1u8L2z-00029r-Ls; Fri, 25 Apr 2025 11:33:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L1A-0002W6-CP
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:31:08 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L2o-0001Fp-CJ
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:32:50 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L18-00041Q-EE
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:31:08 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-39129fc51f8so1925999f8f.0
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:31:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8L2m-0004CL-Bd
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:32:49 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-39129fc51f8so1928040f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:32:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745595064; x=1746199864; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745595166; x=1746199966; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5L0VRZfPFZCVjC2nBfKXHPmUNh0r0Sy/642Ifkd7GzA=;
- b=adbHjS71pIBqBJUZN00GGbMCiY9O0W25nmUaGR7AN/+/seb6scO2WeO+HYN+CxhBI1
- L/a+nGWU2/JYa9cRX7EJtXV4ptvwyrux9yAedbMQAKHehIi/Yh5Fsi++NhRJVQrDreJd
- G2qKbPlotTFCvww+JwqGgWuIYQthUyNoJJ25WN2EbL5xzX7QY2GMk5Oanup42k38XRR/
- BRRH6wiFf6cVkPvF4mJ6LJTOD68vlKnpTDX/DhexbbZjN7gzQ3YnZZallTwC77RigeTx
- F5/yvi0CMWE2xCrjh94Tycz3R52drIyjicLWSHhlySVz7tTEBbZLvkqLY+y75w5UF6fR
- nbqA==
+ bh=teMG3JygoBDrbKMTX3hz7+h4Vn64sYsEGgE4H+sueD8=;
+ b=uH5Aw6RcZ//9egpKj9mTt5MF6XoWpF9SFkvt6DAZYlIltG67UDkrvrb8a75sbgdZDF
+ o4qhBje/XeIjE8wJO83tasTgrbYVppzXU9S1tSASLma1thDfnJ5qrxE/Ti4NsucTyfDe
+ EKvPX2SoXvfwSJkYjrLc2OYuqDlwZ6pF6q0Q+WolXd2++bNS00gGM8SFLskglnAKNcD2
+ SXhC85gzyFR44ZUaDHT23WYMezl7WN/O6GZ/4c396vM8i0NRgMIrOJztIe8Cvq1DCh8W
+ c9ysZkiPbCKsFemSo7HKdb5XbnvoFeYFF3Y/8RmKc4JtWWp2HNCCdy3vk095IbETthxY
+ nbhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745595064; x=1746199864;
+ d=1e100.net; s=20230601; t=1745595166; x=1746199966;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5L0VRZfPFZCVjC2nBfKXHPmUNh0r0Sy/642Ifkd7GzA=;
- b=LyjELxenHpA6+MtGFZExLkYuzsY0fWhV8Xl/ykoYrbxIeQYEmn6GJ0RQeBl4HuklqR
- SVKJh2PFn97CuqQQes81bHh0heCUdExaqESyvV3YzzZ9NZp80AkD86JTLM4abSA8o59r
- pjqvhoYoZF9x4+pN5dRngK9k4ghmWsCiIndcnJTnvFU4BFJ+YywUiqcet6xYk56Yltud
- Z/47mMZGIwNqI/WvLdildV8j9/lvgtXPsW7rGd7WHVL1LtC/PKR0KfYrfRV0UDTvr0FV
- OJ4oJgsCWrF5qUnfKl5bbGOxrx0FA1rHfreStbJ9ZIjvjtT3BL7eOd1rlBJ4MKseK53F
- +iDA==
-X-Gm-Message-State: AOJu0Yw3lVpE3bV6xVfKf0pS74Pdjq3a+yPkm2bDdoJ4WjMJ5jcZPx2F
- H4aYWoR789ogyVu91dSJWbbIWZZAXIp1TySjuoS4wnCGppGltGQ8G90euZZ9PIhFHGgRNGVQlxX
- u
-X-Gm-Gg: ASbGncsX6a3eLBHStOQ75V3fty6LW1NvJ7G9+2hi37l4ubAkcw5I5d9whxwsXcEAygm
- 3nLuN2rfgzDb/Tg9e5GecdxGKcTQtLMIn+tsC+OzolJpY8aqXbG2kowfjzkOA7sAoXuQsN/u98S
- 96k9BXw5pd0SltXJkcKEXnJk1N8BRfaAPImm1mkRyPqkliuUJ9cEDH9+dMEdmV/LcryqjqtOyx4
- xtwt/Resreplfa74exAba2pOp3uLgiKcukFNvNUUT/Oqu6s0Lzsx7lAFa14CEm3HiH0XbmhqxjK
- jv8uYTbSJdfbuXYE1gCHqOAaWF/Q3zP+qx1Dn5sxTa7/MgpiRsdF0ZQW5S1X9680lxA9umzExRM
- mLnIBTrT69bH2xKI=
-X-Google-Smtp-Source: AGHT+IGVal3MRlvy3621e5+2nfOeCAg1kfnlrmLDJZh/UrGI00WRQ2n7cFhDgDEyPJnfTeLgnNCKfg==
-X-Received: by 2002:a05:6000:2505:b0:38b:d7d2:12f6 with SMTP id
- ffacd0b85a97d-3a074e147a9mr2115676f8f.2.1745595064267; 
- Fri, 25 Apr 2025 08:31:04 -0700 (PDT)
+ bh=teMG3JygoBDrbKMTX3hz7+h4Vn64sYsEGgE4H+sueD8=;
+ b=cTIPHNCU5nz7pd8A1DxQgXAF1DpjE8m8SQEOaan3lZfwoSd5WqTgU8zBnK3Dz+9qy7
+ NQ5U40hH0J+xRrtK1ttf66Nn4xRQKZzl3DD7c39FtfAAmQYzInyhXx01IzZnsWqUlbVK
+ ImlslJ5BKskVxXbEuNMy55O3AM6VSbhaMTj/k2jOrZ0xBbx4JT74XO7vxls6n1BRj7Dh
+ bqWHZCJ2YJhhjHjImyspPFJO5H1VdjhQ/tZ0XDKTxeDOlDAn3ArF/1TBWRuisazFEhsm
+ s9lCqmhK6w711C6m/0HscR6hcrMHtAzD5I5R3TR5SywO4lnEawiAWLJJ/Ckhu2/UP4ii
+ NCtg==
+X-Gm-Message-State: AOJu0YzT7ORnxEuiubts9LGWqPk9qUN0mc8Kxkll6e//cOVEVPkP2ij3
+ KrCohFtq9QuP/5kN61jzim9IF4PjMQ1Ibpll0LbBPQmQNuiZWh2su99rtZRLLa1Up8pRFzjSxwe
+ 5
+X-Gm-Gg: ASbGncst2AdoCHQyvhhE/x7aSR/AyNVEy95a47afLl4YHNpVhBe7EDbKZBBNgsEfoFV
+ Ubf9m8+0/1voGx2uk6FFNHZApcN3AHk73ZstZBu9eH/Nkq/T7TrhLaW4+thsvpp8erL5ek/90Se
+ D8+FLjCkhiRlYnKokUHB0eV6Lb0Cm7U3Jl/hltcjhd2ziqrvuCLXvD7lLsPU6+nf3DKknMIsaW6
+ jXsA9VOK5UjheqNDV3xGzyNHkbnElfvp2kg3q6Rqhrf+9PVRo07AhizU7IzSgIu5CM6L/Ly1JTQ
+ Rg1tPh6wVw5sLzHgudfXCqnEU0Hw5hgenDbdncShoO/vsDaxBytaExRSoJq0tu+8a8ZGnlC8IDx
+ AzwltDu1FNjycHdg=
+X-Google-Smtp-Source: AGHT+IHVPOnV4OysBe/RFdgzwdK35ucDEHmhUOGjZsO9JM18gpu9z+0CWkK34iJo7v/vX5e1NAjQAg==
+X-Received: by 2002:a05:6000:40ca:b0:39c:1257:ccae with SMTP id
+ ffacd0b85a97d-3a074fa76bcmr2068527f8f.57.1745595166423; 
+ Fri, 25 Apr 2025 08:32:46 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073c8cc81sm2699639f8f.19.2025.04.25.08.31.03
+ 5b1f17b1804b1-440a53108f2sm28032085e9.19.2025.04.25.08.32.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 08:31:03 -0700 (PDT)
+ Fri, 25 Apr 2025 08:32:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 28/58] hw/usb/hcd-xhci: Unmap canceled packet
-Date: Fri, 25 Apr 2025 17:28:12 +0200
-Message-ID: <20250425152843.69638-29-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 49/58] hw/microblaze: Evaluate TARGET_BIG_ENDIAN at compile time
+Date: Fri, 25 Apr 2025 17:28:33 +0200
+Message-ID: <20250425152843.69638-50-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
 References: <20250425152843.69638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,60 +100,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Rather than evaluating TARGET_BIG_ENDIAN at preprocessing
+time via #ifdef'ry, do it in C at compile time
 
-When the Stop Endpoint Command is received, packets running
-asynchronously are canceled and then all packets are cleaned up. Packets
-running asynchronously hold the DMA mapping so cleaning the packets leak
-the mapping. Remove the mapping after canceling packets to fix the leak.
-
-Fixes: 62c6ae04cf43 ("xhci: Initial xHCI implementation")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250418-xhc-v1-1-bb32dab6a67e@daynix.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250417131004.47205-8-philmd@linaro.org>
 ---
- hw/usb/hcd-xhci.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ hw/microblaze/petalogix_ml605_mmu.c | 12 ++++++------
+ hw/microblaze/xlnx-zynqmp-pmu.c     | 12 ++++++------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index b3785b8ba6c..292c378bfc9 100644
---- a/hw/usb/hcd-xhci.c
-+++ b/hw/usb/hcd-xhci.c
-@@ -1187,6 +1187,12 @@ static void xhci_ep_free_xfer(XHCITransfer *xfer)
-     g_free(xfer);
+diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
+index c887c7a99ed..bea6b689fd1 100644
+--- a/hw/microblaze/petalogix_ml605_mmu.c
++++ b/hw/microblaze/petalogix_ml605_mmu.c
+@@ -218,12 +218,12 @@ petalogix_ml605_init(MachineState *machine)
+ 
+ static void petalogix_ml605_machine_init(MachineClass *mc)
+ {
+-#if TARGET_BIG_ENDIAN
+-    mc->desc = "PetaLogix linux refdesign for xilinx ml605 (big endian)";
+-    mc->deprecation_reason = "big endian support is not tested";
+-#else
+-    mc->desc = "PetaLogix linux refdesign for xilinx ml605 (little endian)";
+-#endif
++    if (TARGET_BIG_ENDIAN) {
++        mc->desc = "PetaLogix linux refdesign for xilinx ml605 (big endian)";
++        mc->deprecation_reason = "big endian support is not tested";
++    } else {
++        mc->desc = "PetaLogix linux refdesign for xilinx ml605 (little endian)";
++    }
+     mc->init = petalogix_ml605_init;
  }
  
-+static void xhci_xfer_unmap(XHCITransfer *xfer)
-+{
-+    usb_packet_unmap(&xfer->packet, &xfer->sgl);
-+    qemu_sglist_destroy(&xfer->sgl);
-+}
-+
- static int xhci_ep_nuke_one_xfer(XHCITransfer *t, TRBCCode report)
- {
-     int killed = 0;
-@@ -1198,6 +1204,7 @@ static int xhci_ep_nuke_one_xfer(XHCITransfer *t, TRBCCode report)
+diff --git a/hw/microblaze/xlnx-zynqmp-pmu.c b/hw/microblaze/xlnx-zynqmp-pmu.c
+index ea1430f4081..ed40b5f2e05 100644
+--- a/hw/microblaze/xlnx-zynqmp-pmu.c
++++ b/hw/microblaze/xlnx-zynqmp-pmu.c
+@@ -181,12 +181,12 @@ static void xlnx_zynqmp_pmu_init(MachineState *machine)
  
-     if (t->running_async) {
-         usb_cancel_packet(&t->packet);
-+        xhci_xfer_unmap(t);
-         t->running_async = 0;
-         killed = 1;
-     }
-@@ -1480,12 +1487,6 @@ err:
-     return -1;
+ static void xlnx_zynqmp_pmu_machine_init(MachineClass *mc)
+ {
+-#if TARGET_BIG_ENDIAN
+-    mc->desc = "Xilinx ZynqMP PMU machine (big endian)";
+-    mc->deprecation_reason = "big endian support is not tested";
+-#else
+-    mc->desc = "Xilinx ZynqMP PMU machine (little endian)";
+-#endif
++    if (TARGET_BIG_ENDIAN) {
++        mc->desc = "Xilinx ZynqMP PMU machine (big endian)";
++        mc->deprecation_reason = "big endian support is not tested";
++    } else {
++        mc->desc = "Xilinx ZynqMP PMU machine (little endian)";
++    }
+     mc->init = xlnx_zynqmp_pmu_init;
  }
  
--static void xhci_xfer_unmap(XHCITransfer *xfer)
--{
--    usb_packet_unmap(&xfer->packet, &xfer->sgl);
--    qemu_sglist_destroy(&xfer->sgl);
--}
--
- static void xhci_xfer_report(XHCITransfer *xfer)
- {
-     uint32_t edtla = 0;
 -- 
 2.47.1
 
