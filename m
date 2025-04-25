@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A0E7C369D1
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 05:51:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81DE1C369D1
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 06:06:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8BxS-0000lf-5I; Fri, 25 Apr 2025 01:50:42 -0400
+	id 1u8CBT-0008IJ-9Z; Fri, 25 Apr 2025 02:05:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1u8BxP-0000lW-Ey
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 01:50:39 -0400
-Received: from mx1.zhaoxin.com ([210.0.225.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1u8BxM-00075z-Di
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 01:50:39 -0400
-X-ASG-Debug-ID: 1745560220-086e234ccebe3a0001-jgbH7p
-Received: from ZXSHMBX1.zhaoxin.com (ZXSHMBX1.zhaoxin.com [10.28.252.163]) by
- mx1.zhaoxin.com with ESMTP id CzmEFEBrOJKbujBo (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Fri, 25 Apr 2025 13:50:20 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from ZXSHMBX3.zhaoxin.com (10.28.252.165) by ZXSHMBX1.zhaoxin.com
- (10.28.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Fri, 25 Apr
- 2025 13:50:20 +0800
-Received: from ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2]) by
- ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2%6]) with mapi id
- 15.01.2507.044; Fri, 25 Apr 2025 13:50:20 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from [192.168.31.91] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Thu, 24 Apr
- 2025 21:44:35 +0800
-Message-ID: <c522ebb5-04d5-49c6-9ad8-d755b8998988@zhaoxin.com>
-Date: Thu, 24 Apr 2025 21:44:34 +0800
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u8CBQ-0008Fh-Vs
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 02:05:09 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u8CBO-0000Vc-W0
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 02:05:08 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-b061a775ac3so1786458a12.0
+ for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 23:05:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745561105; x=1746165905; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ABpbcOWjuHUUX4PFpFLH1HSDJ2yZI97EUbncpxaJW3M=;
+ b=x+TXEP4Id/GWWWkINoG1z3nYiwaaheXjy1hTO0kFN/HeHGkQ/KJwUwKQQEbnLWfmPJ
+ EMSXcGrJ5u4ENJQyIcJ93vXZsurRHymm0wmumyinYvnLfApNTwH18iNdjMAqT2LYMmU4
+ UcWjOC+Br55JeEOOI9KVH2Jjp8UW+GbXfBRZKQkgpu4Cckk76po9e19ATqZ8WUljYAYq
+ lgCDJW+TzLJF/VkUan3Yqg56lTEDxaFnh31gll3RFv+NAthIYcpVVrkNUIAw31WG8uVP
+ 3kGUJR9K0e4o3iiuOB4iwmSz0iPOe6Yg1iYDaoRXDGLFzkgIwtxbeLQncU1PNUNnwkxN
+ EyAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745561105; x=1746165905;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ABpbcOWjuHUUX4PFpFLH1HSDJ2yZI97EUbncpxaJW3M=;
+ b=mENCKFsVyXRfnYTtzB7d3H2ugOFMn8Wj6heL3bwGoKEXAoAhGEL1lkKLCbReOf6gaI
+ HPAXq1+lgxLefEO2KySe3qdlyj5Jbrzy7sSWhuapo9deUqb5YCoCT5245adS8krb5AeL
+ eplV75SwyhaS3G+ucekLdvUDRK87TX8yxil1qf1EPh6W4PeF8Pwu9Ozlj3Dp/Oa58Fjj
+ Fsz//8fOGN3G0NnINkGMvwdymEFadIYfLSFmlrCSZinV4PFjeyd/P0szDVLIqwn7Auwh
+ KeiZNUScMP1Yp6gzLZ9QE208ase7Zz3G/JrxkAbiRKMyzif/39yfl73odhLJShg77kZk
+ UsDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUIZnwYl30DbmM8zu3Zzd3epXkCWyVNeeDJwyIi28CokeM0B2w2cGMM/qlrn9SHN4Cw0S4o9kThkMyp@nongnu.org
+X-Gm-Message-State: AOJu0Yz7Noxmqgn+4ELOMucpVapdUXMzIwwVq0M0NHB1uDrppDCgr1qx
+ 33AQL64fekD+9Z32KGD6OOCqKSFU7bjZ14WqPNCzYKFkLu8orXzn4B2SD8NKzNM=
+X-Gm-Gg: ASbGncsm8cy5eFTXyXGUbKneEuTDgToRb3DBRBmEgspb6RbmaJfgFyPkjRckdW4vLQ4
+ XCQYBtj5krX4s+0eR8QKb/An5/O98ikzHG4AOxtaQ3L2DNu1kqd/Xprm4q2sXnQbhKTgetKT5t9
+ 437QN9yZP/O1ZmzdwToRTjJeoSJZ01ujoNlNmDoqNnWWnYTRH3XKMRmzH0AYjiio4sdApqo9Yb4
+ n4m+4KfrRPeuxpqGZgyW9+bVmSyenoEvNSb05XTzPmEvaWvTM7gbJRjFWOIsPdSBaQMNfHW0a8Q
+ pZ0vdaJJj/n32IpYSlZ/XrAPJXkWH8J02ExeU/2o5jmXzGsNLxYq35a+6iiFmY6U
+X-Google-Smtp-Source: AGHT+IF0ny0a3YirJTRFRu8m4HDGJhYVUBY2gIKRiHfaWG/oIWLs2woM9F7MrykNpn6a5be8G1j2qg==
+X-Received: by 2002:a05:6a21:3284:b0:1f5:8678:183d with SMTP id
+ adf61e73a8af0-2045b6f1a80mr1567692637.14.1745561104889; 
+ Thu, 24 Apr 2025 23:05:04 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73e25912ee5sm2426497b3a.33.2025.04.24.23.05.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 24 Apr 2025 23:05:04 -0700 (PDT)
+Message-ID: <51f3a96b-9c7a-4242-a822-145d68e068d9@linaro.org>
+Date: Thu, 24 Apr 2025 23:05:03 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 01/10] i386/cpu: Mark CPUID[0x80000005] as reserved for Intel
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>
-X-ASG-Orig-Subj: Re: [RFC 01/10] i386/cpu: Mark CPUID[0x80000005] as reserved
- for Intel
-CC: Babu Moger <babu.moger@amd.com>, Xiaoyao Li <xiaoyao.li@intel.com>, "Tejus
- GK" <tejus.gk@nutanix.com>, Jason Zeng <jason.zeng@intel.com>,
- Manish Mishra <manish.mishra@nutanix.com>, Tao Su <tao1.su@intel.com>,
- <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>
-References: <20250423114702.1529340-1-zhao1.liu@intel.com>
- <20250423114702.1529340-2-zhao1.liu@intel.com>
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-In-Reply-To: <20250423114702.1529340-2-zhao1.liu@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 4/25/2025 1:50:19 PM
-X-Barracuda-Connect: ZXSHMBX1.zhaoxin.com[10.28.252.163]
-X-Barracuda-Start-Time: 1745560220
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 2968
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.140462
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
- helo=mx1.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: Re: [RFC PATCH v5 08/21] hw/arm: Add DEFINE_MACHINE_[ARM_]AARCH64()
+ macros
+Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, Anton Johansson <anjo@rev.ng>
+References: <20250424222112.36194-1-philmd@linaro.org>
+ <20250424222112.36194-9-philmd@linaro.org>
+ <1332b395-1e3e-2be7-83f2-15f2d89b0449@eik.bme.hu>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <1332b395-1e3e-2be7-83f2-15f2d89b0449@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,78 +107,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 4/23/25 7:46 PM, Zhao Liu wrote:
+On 4/24/25 17:16, BALATON Zoltan wrote:
+> On Fri, 25 Apr 2025, Philippe Mathieu-Daudé wrote:
+>> A machine defined with the DEFINE_MACHINE_ARM_AARCH64() macro
+>> will be available on qemu-system-arm and qemu-system-aarch64
+>> binaries.
+>>
+>> One defined with DEFINE_MACHINE_AARCH64() will only be available
+>> in the qemu-system-aarch64 binary.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>> include/hw/arm/machines-qom.h | 13 +++++++++++++
+>> target/arm/machine.c          | 12 ++++++++++++
+>> 2 files changed, 25 insertions(+)
+>>
+>> diff --git a/include/hw/arm/machines-qom.h b/include/hw/arm/machines-qom.h
+>> index a17225f5f92..6277ee986d9 100644
+>> --- a/include/hw/arm/machines-qom.h
+>> +++ b/include/hw/arm/machines-qom.h
+>> @@ -9,10 +9,23 @@
+>> #ifndef HW_ARM_MACHINES_QOM_H
+>> #define HW_ARM_MACHINES_QOM_H
+>>
+>> +#include "hw/boards.h"
+>> +
+>> #define TYPE_TARGET_ARM_MACHINE \
+>>          "target-info-arm-machine"
+>>
+>> #define TYPE_TARGET_AARCH64_MACHINE \
+>>          "target-info-aarch64-machine"
+>>
+>> +extern InterfaceInfo arm_aarch64_machine_interfaces[];
+>> +extern InterfaceInfo aarch64_machine_interfaces[];
+>> +
+>> +#define DEFINE_MACHINE_ARM_AARCH64(namestr, machine_initfn) \
+>> +        DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, \
+>> +                                       arm_aarch64_machine_interfaces)
+>> +
+>> +#define DEFINE_MACHINE_AARCH64(namestr, machine_initfn) \
+>> +        DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, \
+>> +                                       aarch64_machine_interfaces)
+>> +
+>> #endif
+>> diff --git a/target/arm/machine.c b/target/arm/machine.c
+>> index 978249fb71b..193c7a9cff0 100644
+>> --- a/target/arm/machine.c
+>> +++ b/target/arm/machine.c
+>> @@ -8,6 +8,7 @@
+>> #include "cpu-features.h"
+>> #include "migration/cpu.h"
+>> #include "target/arm/gtimer.h"
+>> +#include "hw/arm/machines-qom.h"
+>>
+>> static bool vfp_needed(void *opaque)
+>> {
+>> @@ -1111,3 +1112,14 @@ const VMStateDescription vmstate_arm_cpu = {
+>>          NULL
+>>      }
+>> };
+>> +
+>> +InterfaceInfo arm_aarch64_machine_interfaces[] = {
+>> +    { TYPE_TARGET_ARM_MACHINE },
+>> +    { TYPE_TARGET_AARCH64_MACHINE },
+>> +    { }
+>> +};
+>> +
+>> +InterfaceInfo aarch64_machine_interfaces[] = {
+>> +    { TYPE_TARGET_AARCH64_MACHINE },
+>> +    { }
+>> +};
 > 
-> Per SDM, 0x80000005 leaf is reserved for Intel CPU, and its current
-> "assert" check blocks adding new cache model for non-AMD CPUs.
+> Why do you need these? If you define DEFINE_MACHINE_WITH_INTERFACES as
+> OBJECT_DEFINE_TYPE_WITH_INTERFACES then you can write:
 > 
-> Therefore, check the vendor and encode this leaf as all-0 for Intel
-> CPU. And since Zhaoxin mostly follows Intel behavior, apply the vendor
-> check for Zhaoxin as well.
 
-Thanks for taking Zhaoxin CPUs into account.
+This was requested in v4 by Richard to remove anonymous array 
+duplication in .data.
 
-Zhaoxin follows AMD's definition for CPUID leaf 0x80000005, so this leaf is 
-valid on our CPUs rather than reserved. We do, however, follow Intel's 
-definition for leaf 0x80000006.
-
-> Note, for !vendor_cpuid_only case, non-AMD CPU would get the wrong
-> information, i.e., get AMD's cache model for Intel or Zhaoxin CPUs.
-> For this case, there is no need to tweak for non-AMD CPUs, because
-> vendor_cpuid_only has been turned on by default since PC machine v6.1.
+> DEFINE_MACHINE_WITH_INTERFACES(name, initfn, { TYPE_TARGET_ARM_MACHINE },
+>       { TYPE_TARGET_AARCH64_MACHINE }, { })
 > 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->   target/i386/cpu.c | 16 ++++++++++++++--
->   1 file changed, 14 insertions(+), 2 deletions(-)
+> and no more macros needed. Ideally those places that are now blown up
+> should use DEFINE_MACHINE too. Maybe they don't yet because the parent
+> type  is hardcoded so we should really have
 > 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 1b64ceaaba46..8fdafa8aedaf 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -7248,11 +7248,23 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
->           *edx = env->cpuid_model[(index - 0x80000002) * 4 + 3];
->           break;
->       case 0x80000005:
-> -        /* cache info (L1 cache) */
-> -        if (cpu->cache_info_passthrough) {
-> +        /*
-> +         * cache info (L1 cache)
-> +         *
-> +         * For !vendor_cpuid_only case, non-AMD CPU would get the wrong
-> +         * information, i.e., get AMD's cache model. It doesn't matter,
-> +         * vendor_cpuid_only has been turned on by default since
-> +         * PC machine v6.1.
-> +         */
-> +        if (cpu->vendor_cpuid_only &&
-> +            (IS_INTEL_CPU(env) || IS_ZHAOXIN_CPU(env))) {
 
-Given that, there is no need to add IS_ZHAOXIN_CPU(env) to the 0x80000005 path. 
-Note that the L1 TLB constants for the YongFeng core differ from the current 
-values in target/i386/cpu.c(YongFeng defaults shown in brackets):
+Not sure what you mean by "no more macros needed".
+arm_aarch64_machine_interfaces or aarch64_machine_interfaces are arrays 
+(defined only once), which are passed as a parameter to 
+DEFINE_MACHINE_WITH_INTERFACES, or manually set with ".interfaces =".
 
-#define L1_DTLB_2M_ASSOC       1 (4)
-#define L1_DTLB_2M_ENTRIES   255 (32)
-#define L1_DTLB_4K_ASSOC       1 (6)
-#define L1_DTLB_4K_ENTRIES   255 (96)
+> DEFINE_MACHINE_EXTENDED(name, parent, initfn, interfaces...)
+> 
+> and remove more bolier plate that way?
+> 
 
-#define L1_ITLB_2M_ASSOC       1 (4)
-#define L1_ITLB_2M_ENTRIES   255 (32)
-#define L1_ITLB_4K_ASSOC       1 (6)
-#define L1_ITLB_4K_ENTRIES   255 (96)
+Could you can share a concrete example of what you expect, with the new 
+macros to add, and how to use them for a given board?
 
-I am still reviewing how these constants flow through cpu_x86_cpuid() for leaf 
-0x80000005, so I'm not yet certain whether they are overridden.
-
-For now, the patchset can ignore Zhaoxin in leaf 0x80000005. Once I have traced 
-the code path, I will send an update if needed. Please include Zhaoxin in the 
-handling for leaf 0x80000006.
-
-I should have sent this after completing my review, but I did not want to delay 
-your work. Sorry for the noise.
-
-Thanks again for your work.
+> Regards,
+> BALATON Zoltan
 
 
