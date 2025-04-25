@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C7AC369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 12:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67BCBC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 12:43:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8IHR-0003va-3f; Fri, 25 Apr 2025 08:35:45 -0400
+	id 1u8INu-0005HD-4X; Fri, 25 Apr 2025 08:42:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1u8IHO-0003vJ-DW
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:35:43 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1u8INs-0005Gx-0I
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:42:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1u8IHA-0005pR-Be
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:35:29 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1u8INq-0006NB-4k
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:42:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745584525;
+ s=mimecast20190719; t=1745584938;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=oCSYk21fTvbCfROTPzWI57OHSkghy+8C+pEVm/cbo1E=;
- b=b9AhdiEz2pCVvRAlX2ICk92VI3FFOm/Dyp0LwYigb03nsQ2gA8DaljTJ6+4wfTYGgbkEWj
- rIez8PMcLW2oolvztzQFjeNRShgTw2B2TC7EyJ42dHDrBJdwERqY4j4dhiLSWblnW8WUyW
- Cx/kJg5qhyAkV0eTa0R0OgAL0O6YabQ=
+ bh=pXNNqoi19Ba69uwcAj3Kv/k/r4tm7gG4ENXbwT+pfM0=;
+ b=Y81uExZSFYgqefuN8uZsslEgmHAeTN9q+udPv5QFso+elHNa2qdlIoqOwsMM/85zAx4leT
+ rkt/FkHZtybv27WKAgqpW7lGtN0m5i0JkF8w8eOHkGGefTwO3vwIRKeH0BluBHF3IopUTa
+ kQ4sEssaXdumweNiASXxd0oG/et5RlI=
 Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
  [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-103-QLbHxF3LOp2cANUOkCoRhQ-1; Fri, 25 Apr 2025 08:35:22 -0400
-X-MC-Unique: QLbHxF3LOp2cANUOkCoRhQ-1
-X-Mimecast-MFC-AGG-ID: QLbHxF3LOp2cANUOkCoRhQ_1745584521
+ us-mta-205-1b2k9yG4P7G3saKIvh65qg-1; Fri, 25 Apr 2025 08:42:15 -0400
+X-MC-Unique: 1b2k9yG4P7G3saKIvh65qg-1
+X-Mimecast-MFC-AGG-ID: 1b2k9yG4P7G3saKIvh65qg_1745584934
 Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-39135d31ca4so832740f8f.1
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 05:35:22 -0700 (PDT)
+ ffacd0b85a97d-39c184b20a2so888807f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 05:42:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745584521; x=1746189321;
+ d=1e100.net; s=20230601; t=1745584934; x=1746189734;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=oCSYk21fTvbCfROTPzWI57OHSkghy+8C+pEVm/cbo1E=;
- b=rgYQBB4PeCurLzFoLfV356FYezChwiggS/RuNNbkrp0hbEoM8n/76pgjNRw0Ftl7Dz
- Q6JMsG7h82d0t64GmJpDGzPu9BSaB0Q79VxiyUtyCUZ2vWDX+/H4gN6JfPXf600ICChp
- evn6ev3dResqvw5btsXGAzeTH60EaCYBOfWfBqVyDCxQJ0VReOCxUv0n0dgYea5lT/Ud
- x4QO1/Dv5nY2SNPJ5GhUBlJu+dK+z6C/Zh8wb9rxa4/T1mLlmQXolLCoIy7teZaAVA9N
- H5dRMUeTNN8RYCIbQyqmwPhRof7XXJIkk/ZaL4e3k/N/xjsuvzV2OfWu3v1gAHiQzzrm
- nJgQ==
-X-Gm-Message-State: AOJu0YxRMth1Ouhhc4xQV4gMkTN7BC4CgEaDX7ojP8iWL49Vi8YoFObg
- wdUTiTkbHJ2s7YQDbokCA3fA0mXfjiWf4joaXq8NuSVrCygb5enLft/gRsSQKlNG0qtew2xJaEH
- 4/T+K6xox0mUDqF4c1eziDdY7TS5Ny5CXLPtI6nBZu/YemVnS7eGG
-X-Gm-Gg: ASbGnctACCTkWiznWPkLJWYr7CwiXGbk93v8ILAFBfv3saO3TaoJV1Gdbl7IuQdLing
- cCEEB8ceHOwrdJaGr2NU8VtbetUALPMnwt6WE3+rbBvAnkseFOi5Aynjb9RJgUznItxyNNiY1F9
- kLHrMHBpMkDs7bazp/qIBAHwKdCzuLGx1mhQ2r168E2IxT1LuVK18j9FRmsS1lpzYqyCi1f/QHU
- 3PceoRQI1DAmcq/K25d+ApezQi8YD5i2M0y9ND9NC5T8yT25u4tgqZkqzdzEkK2qpYzuO99Ug4g
- wsaYh/KP7ka/RzWX1/lsPqLWX7Turv+Dyp0fplMzmg==
-X-Received: by 2002:a05:6000:4313:b0:391:386d:5971 with SMTP id
- ffacd0b85a97d-3a06d66d21cmr5292602f8f.14.1745584521284; 
- Fri, 25 Apr 2025 05:35:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF35EBNlLy12KC3xCfWWQicrt19aNwkw/jItNvq1tEUmbDBEF5INyWJtfJlOJfNi6XEu53FLw==
-X-Received: by 2002:a05:6000:4313:b0:391:386d:5971 with SMTP id
- ffacd0b85a97d-3a06d66d21cmr5292568f8f.14.1745584520824; 
- Fri, 25 Apr 2025 05:35:20 -0700 (PDT)
-Received: from [192.168.3.141] (p4ff23df8.dip0.t-ipconnect.de. [79.242.61.248])
+ bh=pXNNqoi19Ba69uwcAj3Kv/k/r4tm7gG4ENXbwT+pfM0=;
+ b=ancLuFTlYB+ee6nXDVAuehE33V5f50EyUMpetY0nvfic4NbILQCvKh5a6lt99AnPXK
+ U1Fpbm815CDlFXmAPSLOf4pTUOyNRyZJVsdIw8I0tkuUcky4wf3ef7zRhd+JVG6g9U0L
+ kcgNynd9KHbNTgn5Q9e3slXWnbSRK54T3YslQQPzZmimUwaduFgWzbuhoza8ffSxhYtd
+ 5wPqdwpZz+laLm/1IhCjmPVnLdy/hSu/nmqDuaQjZD7JeH8KPMMfOChUC54bBOTOpPNh
+ htO8+SxGas6MNRMPNzGbbOOfxJrg/AeaKBnfMJnqCOe9PJmAT4AGYX4/OtrnCI1x+hMf
+ TIYQ==
+X-Gm-Message-State: AOJu0YxhvJEJ28JcS73pYkrV429g0eYn6jIOuHhcR+GSYCMXOfCFahYL
+ jWfuKvDM33TFZCAVGMeVS6FY0CPHUMu9ddxTQ4FiBFlJ9ZdrMLO06bCT3AMoktvmcnnJ1y8WFbX
+ tzAzlPMHjnqF5zGZpKrQJQ6Q54W5L+qU4Aao30A2b08EOCS7sQLP9
+X-Gm-Gg: ASbGncuGZT3qdKPYSv3TOp7ZmxY600+qPtefd4rtttrAeLViMUBAA6ypvumyInZ4hhc
+ 9LzHe3ip4cf+Gxw2FjhP3RrnDbesdyQPcMpGhNpkktjqVbRWqdFlk2chRvcjbLkWonZ8BPPEpqj
+ vsHfgX2RJNpJX2YCC8aJpIJy+MsV5c5mJhG7bpp4KC4nlim8dclnlg9VZjr2wRdBd/jo9uN+eV2
+ FFe1hZhTifZQWHuTA9w0XEORZszt2LcArq2XM/HuFT4MGh8VwpGHwSNMD7OYyneP2KE7hTnvDJG
+ 8O+nNwakqjm3xWQERndaxw19ftX5gP9jLxSJeoDcrZQM0JNYayTVkouFU8wszMxFmF+2fVftnak
+ IDuRTIwt7l1U1hdRNlEETfh8jQQZ6Nti1sZBH
+X-Received: by 2002:a5d:64a3:0:b0:39a:c467:a095 with SMTP id
+ ffacd0b85a97d-3a074e1f72emr1656242f8f.24.1745584934394; 
+ Fri, 25 Apr 2025 05:42:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH0dQmSUnE83lfcUweDIFLTRC1sLPiRsqAP2bvMHN9DAFRKWHykYVNejLYQ7r8QtFrIL6ZU8A==
+X-Received: by 2002:a5d:64a3:0:b0:39a:c467:a095 with SMTP id
+ ffacd0b85a97d-3a074e1f72emr1656216f8f.24.1745584934001; 
+ Fri, 25 Apr 2025 05:42:14 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c70f:6900:6c56:80f8:c14:6d2a?
+ (p200300cbc70f69006c5680f80c146d2a.dip0.t-ipconnect.de.
+ [2003:cb:c70f:6900:6c56:80f8:c14:6d2a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-440a536a02csm23854305e9.27.2025.04.25.05.35.19
+ ffacd0b85a97d-3a073e5d264sm2295556f8f.95.2025.04.25.05.42.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 05:35:20 -0700 (PDT)
-Message-ID: <39ae9a9e-9108-464f-9e2e-03e16976607a@redhat.com>
-Date: Fri, 25 Apr 2025 14:35:19 +0200
+ Fri, 25 Apr 2025 05:42:13 -0700 (PDT)
+Message-ID: <37cace3c-942e-457d-8a1a-fa37050428a7@redhat.com>
+Date: Fri, 25 Apr 2025 14:42:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 02/13] memory: Change
- memory_region_set_ram_discard_manager() to return the result
+Subject: Re: [PATCH v4 03/13] memory: Unify the definiton of
+ ReplayRamPopulate() and ReplayRamDiscard()
 To: Chenyi Qiang <chenyi.qiang@intel.com>, Alexey Kardashevskiy
  <aik@amd.com>, Peter Xu <peterx@redhat.com>,
  Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -86,9 +89,7 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
  Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
 References: <20250407074939.18657-1-chenyi.qiang@intel.com>
- <20250407074939.18657-3-chenyi.qiang@intel.com>
- <d4b44d77-3522-42bd-b02f-fe2e9be65857@amd.com>
- <7436cdd9-513c-483a-a994-8602142c7551@intel.com>
+ <20250407074939.18657-4-chenyi.qiang@intel.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -136,9 +137,9 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <7436cdd9-513c-483a-a994-8602142c7551@intel.com>
+In-Reply-To: <20250407074939.18657-4-chenyi.qiang@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
@@ -164,58 +165,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-                               RamDiscardManager *rdm);>>>      /**
->>>     * memory_region_find: translate an address/size relative to a
->>> diff --git a/system/memory.c b/system/memory.c
->>> index b17b5538ff..62d6b410f0 100644
->>> --- a/system/memory.c
->>> +++ b/system/memory.c
->>> @@ -2115,12 +2115,16 @@ RamDiscardManager
->>> *memory_region_get_ram_discard_manager(MemoryRegion *mr)
->>>        return mr->rdm;
->>>    }
->>>    -void memory_region_set_ram_discard_manager(MemoryRegion *mr,
->>> -                                           RamDiscardManager *rdm)
->>> +int memory_region_set_ram_discard_manager(MemoryRegion *mr,
->>> +                                          RamDiscardManager *rdm)
->>>    {
->>>        g_assert(memory_region_is_ram(mr));
->>> -    g_assert(!rdm || !mr->rdm);
->>> +    if (mr->rdm && rdm) {
->>> +        return -EBUSY;
->>> +    }
->>> +
->>>        mr->rdm = rdm;
->>> +    return 0;
->>
->> This is a change which can potentially break something, or currently
->> there is no way to trigger -EBUSY? Thanks,
+On 07.04.25 09:49, Chenyi Qiang wrote:
+> Update ReplayRamDiscard() function to return the result and unify the
+> ReplayRamPopulate() and ReplayRamDiscard() to ReplayStateChange() at
+> the same time due to their identical definitions. This unification
+> simplifies related structures, such as VirtIOMEMReplayData, which makes
+> it more cleaner and maintainable.
 > 
-> Before this series, virtio-mem is the only user to
-> set_ram_discard_manager(), there's no way to trigger -EBUSY. With this
-> series, guest_memfd-backed RAMBlocks become the second user. It can be
-> triggered if we try to use virtio-mem in confidential VMs.
+> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+> ---
+> Changes in v4:
+>      - Modify the commit message. We won't use Replay() operation when
+>        doing the attribute change like v3.
+> 
+> Changes in v3:
+>      - Newly added.
+> ---
 
-Right. I have plans on looking into using virtio-mem for confidential 
-VMs, so far it's not compatible.
+[...]
 
-One challenge will be resolving how to deal with two sources of information.
+>   
+> -typedef int (*ReplayRamPopulate)(MemoryRegionSection *section, void *opaque);
+> -typedef void (*ReplayRamDiscard)(MemoryRegionSection *section, void *opaque);
+> +typedef int (*ReplayStateChange)(MemoryRegionSection *section, void *opaque);
+>   
 
-Assume virtio-mem says "memory is now plugged", we would have to check 
-with guest_memfd if it is also in the "shared" state. If not, no need to 
-notify anybody.
+But it's not a state change.
 
-Similarly, if guest_memfd says "memory is now shared", we would have to 
-check with guest_memfd if it is in the "plugged" state.
+ReplayRamState maybe?
 
+[...]
+>   /*
+> diff --git a/system/memory.c b/system/memory.c
+> index 62d6b410f0..b5ab729e13 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -2147,7 +2147,7 @@ bool ram_discard_manager_is_populated(const RamDiscardManager *rdm,
+>   
+>   int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
+>                                            MemoryRegionSection *section,
+> -                                         ReplayRamPopulate replay_fn,
+> +                                         ReplayStateChange replay_fn,
+>                                            void *opaque)
+>   {
+>       RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_GET_CLASS(rdm);
+> @@ -2156,15 +2156,15 @@ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
+>       return rdmc->replay_populated(rdm, section, replay_fn, opaque);
+>   }
+>   
+> -void ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
+> -                                          MemoryRegionSection *section,
+> -                                          ReplayRamDiscard replay_fn,
+> -                                          void *opaque)
+> +int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
+> +                                         MemoryRegionSection *section,
+> +                                         ReplayStateChange replay_fn,
+> +                                         void *opaque)
+>   {
+>       RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_GET_CLASS(rdm);
+>   
+>       g_assert(rdmc->replay_discarded);
+> -    rdmc->replay_discarded(rdm, section, replay_fn, opaque);
+> +    return rdmc->replay_discarded(rdm, section, replay_fn, opaque);
+>   }
 
-I don't know yet how exactly the solution would look like.
+The idea was that ram_discard_manager_replay_discarded() would never be 
+able to fail. But I don't think this really matters, because the 
+function is provided by the caller, that can just always return 0 -- 
+like we do in dirty_bitmap_clear_section() now.
 
-Possibly, we have a list of such "populate/discard" information sources, 
-and a real "manager" on top, that gets notified by these sources.
-
-That real "manager" would then collect information from other sources to 
-make a decision whether to propagate the populate / shared notification.
+So yeah, this looks fine to me, given that we don't call it a "state 
+change" when we are merely replaying a selected state.
 
 -- 
 Cheers,
