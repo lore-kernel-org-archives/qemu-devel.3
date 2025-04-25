@@ -4,94 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D0FBC369D1
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 09:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF84C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 09:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8FcV-0007ov-A1; Fri, 25 Apr 2025 05:45:19 -0400
+	id 1u8Fk8-0002Um-A0; Fri, 25 Apr 2025 05:53:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1u8FcO-0007i1-H9
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:45:13 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Fk4-0002Ty-OC
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:53:09 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1u8FcL-0001GU-7A
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:45:11 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-22c336fcdaaso24219285ad.3
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 02:45:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Fk2-0001yr-Vh
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 05:53:08 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3914aba1ce4so1533801f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 02:53:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1745574307; x=1746179107; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wPyR9ISg3Z6Gzq43oyU6p3l7xjpmxyGvN24IK2eZha8=;
- b=FsEhOiabi1+0aW5FlCGFKzdblFafVa1gp19Zl8+1ik2bxxG8IlORiOhUgHBc4JWIMi
- WmI/Ujop1Vmip/Fs7Rc1AVovRQzbj+fAAquqy6E9dY0l1t02t4BDahVyB1n9kd8CEB/l
- UumO6PerQoKrveBLS2BOcKGJ/iuvZUvk4SzbFppfn7b2QKVNl/asKvkcUE2Ijos8svFH
- yjrygxrntWSNuqXxeJszxb43lduZfuQKuzqL8ztgwoXKD/g3RyLOsakR8UZR/9uisjQV
- 1jxUfif8vpp2OnIGBvs9XJcXZeA1BbCdWIELpLfj2BCXK7BCQL//HFQRQFVVE3FTMwDX
- deEw==
+ d=linaro.org; s=google; t=1745574784; x=1746179584; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=oCIFc9Ywm0AmaVntvVN1+juG/a3jixQnZLK3MkEjkm4=;
+ b=kSouVUMOot5Zj39yk0LfLkjUXupHvsl294SM5+kdqvq6iLVrJZ4KEHEqplzO3gqlbb
+ ouq12+ZEfilZ8RLEeMUaGJd81rOiytxv7x+cxBNcRdQM0byH7dfr3jJteLM3DRoC5Bvz
+ xGwsZ+MG0uc5MDvG17F5yt+Te9TTnQWUQcciabCAF5gbDvQcvYdRobChmn8I/GJvF2xN
+ KVEw76sTAiH6J9Q8GaxGX7hA1VLNanYdNwgT9prOB35URjtbKVGvoDgsTvfKfbRACaHM
+ cmXC/4rqbdqB0XCSBc7c7eDRvuoYt1NP/iepWpHzDpFz45FlogyltYFdaOM/+B1Q+Z92
+ Z53g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745574307; x=1746179107;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wPyR9ISg3Z6Gzq43oyU6p3l7xjpmxyGvN24IK2eZha8=;
- b=LYA7AjBQIogLjrNjnBCiiyjdR3wWdy8KNWDem20kT+5DBKvWaY/ojm37NLeFG3KQXL
- +LtB0eQnji2ZPuhf2JsKfSxX1fx91ZOncS55ekK3f1rF1AVtwfWTtqqeTA+zZydsgPgx
- B05WAI6cUn64bhhNTdi+XJHJLsDmXA4fHSHkUebgqtIvumHZP0qvzbFIzGKz7Z3Eph9R
- OvNtMIog3EouU+sQmk6gnhtpf8BWhmR+0Y47D76V1KMdc8Hy9tVtJWIqmbUBsQ9N/ucg
- iM43hieVKvlT6Z+ManDtXUF5RL+XR3UnCiQU/x6u24K8S3thun1hlCMfv+cmw0z4jG81
- 493g==
-X-Gm-Message-State: AOJu0Yy/hrZNAQEsj5R/g5Dgu24YYP1yhKRiup56dP4xv3KwohqpBTeA
- GPqKqO8b6Tj+o1G3nLap1YW1ybQ8KdwkPzsaPrAVzjisY2QlzQQ8GqR6NpEkpufIQUh6jTvu6zt
- Mj6Z0/Rzgl0bBV7R1F5wKyg5F5CbsfCpPbfh+ODB1I42QK0qqzBYknnAJmFGhQPdXxT7mapxlzM
- xuxVjhNUZDtfNQOlvzGp8MPBBMQgBnI4MiVGOyDJOZAdiy
-X-Gm-Gg: ASbGncu0AqbT48BLgVJhvNH0ezua7KqUod+6bKJq+eOv3aJpJnw3SHKwzJ/pcylVEBS
- fz+spyghTB+zZFAjhPJduj4NyvsFVmgz+I0CgswtfJwcQ9GHpPLMv8rrDJnus2Y2MiVItMdXUek
- wDklGj7+z+Edp3puUOLG7iNqLWebv6kEFtoOR+nz3JqiPIgcWKmfr+PrsxwGKMVd6RgE9wlzCrh
- Tq0Sw+cbWVdTvvDR1rjP1xSYE1z91h7zx4XPyPUbhpM63N7uHyjT4gqtjCuzz47PVFNb8uWeM6P
- VUnv/Q2FORVCUqEnhWR8IPNj3L9iHcyNWL2iutDe90IuR7hT9Vgcr8dsRE+LREdV6Y6qbTOBjPp
- JreDv8vFu+uZC34FP5Xl+
-X-Google-Smtp-Source: AGHT+IEqq3nt6n75tIdmubGO21PuetqxIPHl6yVqppq6my43SHCp951bQdTpK7NfhDB0+eKdyJIGFg==
-X-Received: by 2002:a17:90b:5101:b0:305:2d27:7ba0 with SMTP id
- 98e67ed59e1d1-309f7d87675mr2877505a91.6.1745574306984; 
- Fri, 25 Apr 2025 02:45:06 -0700 (PDT)
-Received: from jchang-1875.internal.sifive.com ([136.226.228.205])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-309f27e22dasm2288826a91.17.2025.04.25.02.45.04
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 02:45:06 -0700 (PDT)
-From: Jay Chang <jay.chang@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v2 2/2] target/riscv: Make PMP region count configurable
-Date: Fri, 25 Apr 2025 17:44:52 +0800
-Message-ID: <20250425094452.17013-3-jay.chang@sifive.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250425094452.17013-1-jay.chang@sifive.com>
-References: <20250425094452.17013-1-jay.chang@sifive.com>
+ d=1e100.net; s=20230601; t=1745574784; x=1746179584;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=oCIFc9Ywm0AmaVntvVN1+juG/a3jixQnZLK3MkEjkm4=;
+ b=Iv4zPYFJeVlJ7vLw0XrnU5MbIdssesovKxpF9YjHwK4p9hjoEEGtldFDa65KMGMScZ
+ xg3R5OGAdT7U7QOq1b9rWzy5VWDsCi/ZPSLrLUBa8DgCb3SoBx0r7tcPs7Q92lTU5d45
+ TXZVzGx6y5hz5NVx3UIN+1hAkvixIO6racmOxNPcUBofyAQmVBP6/MIp0YrcQ1ScvkMn
+ CHuPpkAhqsH19fj2nZ3qASaWrVp1BRKx6lSjhz4fMb6IFLp7Oz9d1wckcHx8NgYxf3je
+ eVuvsq0LfTjL0NlRj28y1p1SUisc/jORRoqPGZaRUHJCbVKUVGS12oou0lQov7ZRiGHb
+ TFrQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZGAb+gF9xZi/CIBUMYjdT+yixKMFmpJ83YUgvji0bDkzkjEWC8c8I8Rx/tRU3TqIpZ7FK++fpY4gI@nongnu.org
+X-Gm-Message-State: AOJu0YwX0W40BuZ+DIck0Y2od+BkYBk2YOpHL4i94UtBkGolweG1QhEe
+ 4TzmypK1RhIo3JJ4feMCIDaSBueRgGBgf086kaDihsyXcsR+HnXv3Sq+uBEJ4lI=
+X-Gm-Gg: ASbGncuNQ9bf2zQz2cOQAB3WO63DJxPKGBYk9mF2Xrfp3SHbweDcWkzFKAnYHYfzvD9
+ lhpoCcan1cD8W9LhwS6yZAXtbOPoGxwbvB/EsfK/ycohnTvGzppciQCY5uUOUyKf85W5SbOjhRR
+ HSJD+ZuidZsgXi6DWw6whl3k4kZCc9jEqk+QNFN/ADojbztTxXIuti7W7bPHvYgF2O+yLuNaviL
+ JeCeA2iFmKQA7CNEjSej0pbsiBBtBdEzb5YvbaYq0QVJlJ5S0cyFRBc4YEq9yXzvB/6v2cpgHLh
+ /M3H3i13XjsPPZ581tXsgzeoFj12NzbyBqciB/PkxZOT0qovw6B7nmaijStAagrsvDQm3EHsOOT
+ OLfvk93WdBEvc3w==
+X-Google-Smtp-Source: AGHT+IG95+POenL5gKJwS9slJpt7SxpswHKyyx89IsPDwhTXRxfUHh00LpewklDXgGcsHBUbli+wLg==
+X-Received: by 2002:a05:6000:22c6:b0:391:3406:b4e1 with SMTP id
+ ffacd0b85a97d-3a074e2e253mr1240336f8f.15.1745574784367; 
+ Fri, 25 Apr 2025 02:53:04 -0700 (PDT)
+Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a073e5c7d1sm1804282f8f.83.2025.04.25.02.53.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Apr 2025 02:53:03 -0700 (PDT)
+Message-ID: <25215587-3a6b-4206-92be-16ae25e4853c@linaro.org>
+Date: Fri, 25 Apr 2025 11:53:03 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=jay.chang@sifive.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/16] hw/intc/loongarch_pch: Use generic read callback
+ for iomem32_low region
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20250324093730.3683378-1-maobibo@loongson.cn>
+ <20250324093730.3683378-8-maobibo@loongson.cn>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250324093730.3683378-8-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,341 +103,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously, the number of PMP regions was hardcoded to 16 in QEMU.
-This patch replaces the fixed value with a new `pmp_regions` field,
-allowing platforms to configure the number of PMP regions.
+On 24/3/25 10:37, Bibo Mao wrote:
+> For memory region iomem32_low, generic read callback is used.
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   hw/intc/loongarch_pch_pic.c | 71 +++++++++++++++++++++++++------------
+>   1 file changed, 48 insertions(+), 23 deletions(-)
+> 
+> diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+> index 10b4231464..b495bd3a4d 100644
+> --- a/hw/intc/loongarch_pch_pic.c
+> +++ b/hw/intc/loongarch_pch_pic.c
+> @@ -7,6 +7,7 @@
+>   
+>   #include "qemu/osdep.h"
+>   #include "qemu/bitops.h"
+> +#include "qemu/log.h"
+>   #include "hw/irq.h"
+>   #include "hw/intc/loongarch_pch_pic.h"
+>   #include "trace.h"
+> @@ -71,47 +72,71 @@ static void pch_pic_irq_handler(void *opaque, int irq, int level)
+>       pch_pic_update_irq(s, mask, level);
+>   }
+>   
+> -static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
+> -                                            unsigned size)
+> +static uint64_t pch_pic_read(void *opaque, hwaddr addr, uint64_t field_mask)
+>   {
+>       LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
+>       uint64_t val = 0;
+> +    uint32_t offset = addr & 7;
+>   
+>       switch (addr) {
+> -    case PCH_PIC_INT_ID:
+> -        val = s->id.data & UINT_MAX;
+> +    case PCH_PIC_INT_ID ... PCH_PIC_INT_ID + 7:
+> +        val = s->id.data;
+>           break;
+> -    case PCH_PIC_INT_ID + 4:
+> -        val = s->id.data >> 32;
+> +    case PCH_PIC_INT_MASK ... PCH_PIC_INT_MASK + 7:
+> +        val = s->int_mask;
+>           break;
+> -    case PCH_PIC_INT_MASK:
+> -        val = (uint32_t)s->int_mask;
+> +    case PCH_PIC_INT_EDGE ... PCH_PIC_INT_EDGE + 7:
+> +        val = s->intedge;
+>           break;
+> -    case PCH_PIC_INT_MASK + 4:
+> -        val = s->int_mask >> 32;
+> +    case PCH_PIC_HTMSI_EN ... PCH_PIC_HTMSI_EN + 7:
+> +        val = s->htmsi_en;
+>           break;
+> -    case PCH_PIC_INT_EDGE:
+> -        val = (uint32_t)s->intedge;
+> +    case PCH_PIC_AUTO_CTRL0 ... PCH_PIC_AUTO_CTRL0 + 7:
+> +    case PCH_PIC_AUTO_CTRL1 ... PCH_PIC_AUTO_CTRL1 + 7:
+> +        /* PCH PIC connect to EXTIOI always, discard auto_ctrl access */
+>           break;
+> -    case PCH_PIC_INT_EDGE + 4:
+> -        val = s->intedge >> 32;
+> +    default:
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "pch_pic_read: Bad address 0x%"PRIx64"\n", addr);
+>           break;
+> -    case PCH_PIC_HTMSI_EN:
+> -        val = (uint32_t)s->htmsi_en;
+> +    }
+> +
+> +    return (val >> (offset * 8)) & field_mask;
 
-If no specific value is provided, the default number of PMP regions
-remains 16 to preserve the existing behavior.
+Maybe you want to simplify from a different angle:
 
-A new CPU parameter num-pmp-regions has been introduced to the QEMU
-command line. For example:
-
-	-cpu rv64, g=true, c=true, pmp=true, num-pmp-regions=8
-
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Signed-off-by: Jay Chang <jay.chang@sifive.com>
----
- target/riscv/cpu.c                | 54 +++++++++++++++++++++++++++++--
- target/riscv/cpu.h                |  2 +-
- target/riscv/cpu_cfg_fields.h.inc |  1 +
- target/riscv/csr.c                |  5 ++-
- target/riscv/machine.c            |  3 +-
- target/riscv/pmp.c                | 28 ++++++++++------
- 6 files changed, 79 insertions(+), 14 deletions(-)
-
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index ee20bd7ca2..9cab08f9df 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1123,6 +1123,7 @@ static void riscv_cpu_init(Object *obj)
-     cpu->cfg.cbom_blocksize = 64;
-     cpu->cfg.cbop_blocksize = 64;
-     cpu->cfg.cboz_blocksize = 64;
-+    cpu->cfg.pmp_regions = 16;
-     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
-     cpu->cfg.max_satp_mode = -1;
- 
-@@ -1574,6 +1575,46 @@ static const PropertyInfo prop_pmp = {
-     .set = prop_pmp_set,
- };
- 
-+static void prop_num_pmp_regions_set(Object *obj, Visitor *v, const char *name,
-+                                     void *opaque, Error **errp)
-+{
-+    RISCVCPU *cpu = RISCV_CPU(obj);
-+    uint16_t value;
-+
-+    visit_type_uint16(v, name, &value, errp);
-+
-+    if (cpu->cfg.pmp_regions != value && riscv_cpu_is_vendor(obj)) {
-+        cpu_set_prop_err(cpu, name, errp);
-+        return;
-+    }
-+
-+    if (cpu->env.priv_ver < PRIV_VERSION_1_12_0 && value > 16) {
-+        error_setg(errp, "Number of PMP regions exceeds maximum available");
-+        return;
-+    } else if (value > 64) {
-+        error_setg(errp, "Number of PMP regions exceeds maximum available");
-+        return;
-+    }
-+
-+    cpu_option_add_user_setting(name, value);
-+    cpu->cfg.pmp_regions = value;
-+}
-+
-+static void prop_num_pmp_regions_get(Object *obj, Visitor *v, const char *name,
-+                                     void *opaque, Error **errp)
-+{
-+    uint16_t value = RISCV_CPU(obj)->cfg.pmp_regions;
-+
-+    visit_type_uint16(v, name, &value, errp);
-+}
-+
-+static const PropertyInfo prop_num_pmp_regions = {
-+    .type = "uint16",
-+    .description = "num-pmp-regions",
-+    .get = prop_num_pmp_regions_get,
-+    .set = prop_num_pmp_regions_set,
-+};
-+
- static int priv_spec_from_str(const char *priv_spec_str)
- {
-     int priv_version = -1;
-@@ -2573,6 +2614,7 @@ static const Property riscv_cpu_properties[] = {
- 
-     {.name = "mmu", .info = &prop_mmu},
-     {.name = "pmp", .info = &prop_pmp},
-+    {.name = "num-pmp-regions", .info = &prop_num_pmp_regions},
- 
-     {.name = "priv_spec", .info = &prop_priv_spec},
-     {.name = "vext_spec", .info = &prop_vext_spec},
-@@ -2895,6 +2937,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-     DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_DYNAMIC_CPU, TYPE_RISCV_CPU,
-         .cfg.mmu = true,
-         .cfg.pmp = true,
-+        .cfg.pmp_regions = 8,
-         .priv_spec = PRIV_VERSION_LATEST,
-     ),
- 
-@@ -2941,7 +2984,8 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.max_satp_mode = VM_1_10_MBARE,
-         .cfg.ext_zifencei = true,
-         .cfg.ext_zicsr = true,
--        .cfg.pmp = true
-+        .cfg.pmp = true,
-+        .cfg.pmp_regions = 8
-     ),
- 
-     DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_U, TYPE_RISCV_VENDOR_CPU,
-@@ -2952,7 +2996,8 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.ext_zifencei = true,
-         .cfg.ext_zicsr = true,
-         .cfg.mmu = true,
--        .cfg.pmp = true
-+        .cfg.pmp = true,
-+        .cfg.pmp_regions = 8
-     ),
- 
- #if defined(TARGET_RISCV32) || \
-@@ -2970,6 +3015,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.ext_zifencei = true,
-         .cfg.ext_zicsr = true,
-         .cfg.pmp = true,
-+        .cfg.pmp_regions = 8,
-         .cfg.ext_smepmp = true,
- 
-         .cfg.ext_zba = true,
-@@ -3044,6 +3090,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.ext_xtheadmempair = true,
-         .cfg.ext_xtheadsync = true,
-         .cfg.pmp = true,
-+        .cfg.pmp_regions = 8,
- 
-         .cfg.mvendorid = THEAD_VENDOR_ID,
- 
-@@ -3067,6 +3114,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.rvv_ta_all_1s = true,
-         .cfg.misa_w = true,
-         .cfg.pmp = true,
-+        .cfg.pmp_regions = 8,
-         .cfg.cbom_blocksize = 64,
-         .cfg.cbop_blocksize = 64,
-         .cfg.cboz_blocksize = 64,
-@@ -3123,6 +3171,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.ext_zifencei = true,
-         .cfg.ext_zicsr = true,
-         .cfg.pmp = true,
-+        .cfg.pmp_regions = 8,
-         .cfg.ext_zicbom = true,
-         .cfg.cbom_blocksize = 64,
-         .cfg.cboz_blocksize = 64,
-@@ -3167,6 +3216,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
- 
-         .cfg.mmu = true,
-         .cfg.pmp = true,
-+        .cfg.pmp_regions = 8,
- 
-         .cfg.max_satp_mode = VM_1_10_SV39,
-     ),
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 679f417336..de4517c4f8 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -162,7 +162,7 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
- 
- #define MMU_USER_IDX 3
- 
--#define MAX_RISCV_PMPS (16)
-+#define MAX_RISCV_PMPS (64)
- 
- #if !defined(CONFIG_USER_ONLY)
- #include "pmp.h"
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index 59f134a419..d80eb1eb7b 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -163,6 +163,7 @@ TYPED_FIELD(uint16_t, elen, 0)
- TYPED_FIELD(uint16_t, cbom_blocksize, 0)
- TYPED_FIELD(uint16_t, cbop_blocksize, 0)
- TYPED_FIELD(uint16_t, cboz_blocksize, 0)
-+TYPED_FIELD(uint16_t, pmp_regions, 0)
- 
- TYPED_FIELD(int8_t, max_satp_mode, -1)
- 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 41cf469615..daaef8c438 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -736,7 +736,10 @@ static RISCVException dbltrp_hmode(CPURISCVState *env, int csrno)
- static RISCVException pmp(CPURISCVState *env, int csrno)
- {
-     if (riscv_cpu_cfg(env)->pmp) {
--        if (csrno <= CSR_PMPCFG3) {
-+        uint16_t MAX_PMPCFG = (env->priv_ver >= PRIV_VERSION_1_12_0) ?
-++                              CSR_PMPCFG15 : CSR_PMPCFG3;
-+
-+        if (csrno <= MAX_PMPCFG) {
-             uint32_t reg_index = csrno - CSR_PMPCFG0;
- 
-             /* TODO: RV128 restriction check */
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index df2d5bad8d..e9a179ae55 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -36,8 +36,9 @@ static int pmp_post_load(void *opaque, int version_id)
-     RISCVCPU *cpu = opaque;
-     CPURISCVState *env = &cpu->env;
-     int i;
-+    uint16_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
- 
--    for (i = 0; i < MAX_RISCV_PMPS; i++) {
-+    for (i = 0; i < pmp_regions; i++) {
-         pmp_update_rule_addr(env, i);
-     }
-     pmp_update_rule_nums(env);
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index c685f7f2c5..3439295d41 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -121,7 +121,9 @@ uint32_t pmp_get_num_rules(CPURISCVState *env)
-  */
- static inline uint8_t pmp_read_cfg(CPURISCVState *env, uint32_t pmp_index)
- {
--    if (pmp_index < MAX_RISCV_PMPS) {
-+    uint16_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
-+
-+    if (pmp_index < pmp_regions) {
-         return env->pmp_state.pmp[pmp_index].cfg_reg;
-     }
- 
-@@ -135,7 +137,9 @@ static inline uint8_t pmp_read_cfg(CPURISCVState *env, uint32_t pmp_index)
-  */
- static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_t val)
- {
--    if (pmp_index < MAX_RISCV_PMPS) {
-+    uint16_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
-+
-+    if (pmp_index < pmp_regions) {
-         if (env->pmp_state.pmp[pmp_index].cfg_reg == val) {
-             /* no change */
-             return false;
-@@ -235,9 +239,10 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
- void pmp_update_rule_nums(CPURISCVState *env)
- {
-     int i;
-+    uint16_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
- 
-     env->pmp_state.num_rules = 0;
--    for (i = 0; i < MAX_RISCV_PMPS; i++) {
-+    for (i = 0; i < pmp_regions; i++) {
-         const uint8_t a_field =
-             pmp_get_a_field(env->pmp_state.pmp[i].cfg_reg);
-         if (PMP_AMATCH_OFF != a_field) {
-@@ -331,6 +336,7 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
-     int pmp_size = 0;
-     hwaddr s = 0;
-     hwaddr e = 0;
-+    uint16_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
- 
-     /* Short cut if no rules */
-     if (0 == pmp_get_num_rules(env)) {
-@@ -355,7 +361,7 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
-      * 1.10 draft priv spec states there is an implicit order
-      * from low to high
-      */
--    for (i = 0; i < MAX_RISCV_PMPS; i++) {
-+    for (i = 0; i < pmp_regions; i++) {
-         s = pmp_is_in_range(env, i, addr);
-         e = pmp_is_in_range(env, i, addr + pmp_size - 1);
- 
-@@ -526,8 +532,9 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
- {
-     trace_pmpaddr_csr_write(env->mhartid, addr_index, val);
-     bool is_next_cfg_tor = false;
-+    uint16_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
- 
--    if (addr_index < MAX_RISCV_PMPS) {
-+    if (addr_index < pmp_regions) {
-         if (env->pmp_state.pmp[addr_index].addr_reg == val) {
-             /* no change */
-             return;
-@@ -537,7 +544,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-          * In TOR mode, need to check the lock bit of the next pmp
-          * (if there is a next).
-          */
--        if (addr_index + 1 < MAX_RISCV_PMPS) {
-+        if (addr_index + 1 < pmp_regions) {
-             uint8_t pmp_cfg = env->pmp_state.pmp[addr_index + 1].cfg_reg;
-             is_next_cfg_tor = PMP_AMATCH_TOR == pmp_get_a_field(pmp_cfg);
- 
-@@ -572,8 +579,9 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
- target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
- {
-     target_ulong val = 0;
-+    uint16_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
- 
--    if (addr_index < MAX_RISCV_PMPS) {
-+    if (addr_index < pmp_regions) {
-         val = env->pmp_state.pmp[addr_index].addr_reg;
-         trace_pmpaddr_csr_read(env->mhartid, addr_index, val);
-     } else {
-@@ -591,6 +599,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
- {
-     int i;
-     uint64_t mask = MSECCFG_MMWP | MSECCFG_MML;
-+    uint16_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
-     /* Update PMM field only if the value is valid according to Zjpm v1.0 */
-     if (riscv_cpu_cfg(env)->ext_smmpm &&
-         riscv_cpu_mxl(env) == MXL_RV64 &&
-@@ -602,7 +611,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
- 
-     /* RLB cannot be enabled if it's already 0 and if any regions are locked */
-     if (!MSECCFG_RLB_ISSET(env)) {
--        for (i = 0; i < MAX_RISCV_PMPS; i++) {
-+        for (i = 0; i < pmp_regions; i++) {
-             if (pmp_is_locked(env, i)) {
-                 val &= ~MSECCFG_RLB;
-                 break;
-@@ -658,6 +667,7 @@ target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
-     hwaddr tlb_sa = addr & ~(TARGET_PAGE_SIZE - 1);
-     hwaddr tlb_ea = tlb_sa + TARGET_PAGE_SIZE - 1;
-     int i;
-+    uint16_t pmp_regions = riscv_cpu_cfg(env)->pmp_regions;
- 
-     /*
-      * If PMP is not supported or there are no PMP rules, the TLB page will not
-@@ -668,7 +678,7 @@ target_ulong pmp_get_tlb_size(CPURISCVState *env, hwaddr addr)
-         return TARGET_PAGE_SIZE;
-     }
- 
--    for (i = 0; i < MAX_RISCV_PMPS; i++) {
-+    for (i = 0; i < pmp_regions; i++) {
-         if (pmp_get_a_field(env->pmp_state.pmp[i].cfg_reg) == PMP_AMATCH_OFF) {
-             continue;
-         }
--- 
-2.48.1
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -320,8 +320,7 @@ static const MemoryRegionOps 
+loongarch_pch_pic_reg32_low_ops = {
+          .max_access_size = 8,
+      },
+      .impl = {
+-        .min_access_size = 4,
+-        .max_access_size = 4,
++        .min_access_size = 8,
+      },
+      .endianness = DEVICE_LITTLE_ENDIAN,
+  };
 
 
