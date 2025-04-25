@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17B74C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:30:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D9F3C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 15:31:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Kzr-0000Ma-LW; Fri, 25 Apr 2025 11:29:47 -0400
+	id 1u8KzP-00008V-Ac; Fri, 25 Apr 2025 11:29:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Kzl-0000Jt-SK
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:29:42 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8KzK-00007A-Ih
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:29:15 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Kzk-0003Zk-6c
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:29:41 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43edb40f357so16848685e9.0
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:29:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8KzH-0003Wt-G8
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 11:29:14 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43ce70f9afbso19504445e9.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 08:29:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745594978; x=1746199778; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745594949; x=1746199749; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YS0KKbVb3QlYsS+EDVG/sJJ1OU5Cca6YcSkQlykDIeM=;
- b=bW9O5mgNzVg5l4I5seWtmQGM3rQYY6eJJ+yxCHISU7UrKFH9HxgTd0ZYW9UcP9oQT/
- 2q8ygk5LP4s+EThWHQprQbYulF6EewWp5YGNA3CuGEVOjOaIL4HybUoM4+ztkOhMm/dW
- 8jD4mzW/kFHjmpR+rorviWhtwHkQjVx4toPf6Plg4QZRDdBEuDZAJX+3bWgYm16JnBsY
- Ty2OqFgGebBs3BCYLnEq7wQ+IfwE6aqWgnOGnXu9vnERtr3oV6UAiFeMka94crN7kyse
- 4XxMphE5AXpoPgmIiy/rs58lxrs9v9w1zYqfv5JHaVjdFn/lUY1KqQeZIi87d2DSwX8a
- ytlg==
+ bh=X8jl8hB9zMqvOgbv5oC21KdNuLlcY3iJS3hENETS5RE=;
+ b=sxFnocQMQ1/0s22SBF3EmA1LaISrE2l4i9183L+zmn7UZca0svqY4bqaB/d7xM+Q0W
+ 6OLyxRtL6rcQ5SmKa34h3W8ABc3TLD6GqWbQz1tMe0mwoXri4b1TkL7d5x4m8nhvLYqG
+ y2B671tIhqPqnHYMnfZ8N0GbCR+Kk7JbXjV7grT+JTh1aFBThULnFIbjCi6OkIaYiWJf
+ fmJxcgnyhgJMyobphAchSak4uOzGocx7wVvcnOqYkmKXNi3/m/ABw1L8e+nACx8UifdZ
+ 6Qt24y+AcZKt9sYxqOWBmhcvpkDEbPRqAEAjaGo3ISOUuzO9FtdaP+Q5Ku+NYZcA6OXX
+ Idxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745594978; x=1746199778;
+ d=1e100.net; s=20230601; t=1745594949; x=1746199749;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YS0KKbVb3QlYsS+EDVG/sJJ1OU5Cca6YcSkQlykDIeM=;
- b=MGFP/1efNG3siaoZg8BUkzTJ6fwUeom9ypv8WK7HX54gIOjp3qMdNCTOHkbIFCY16d
- tJHWZI7NiDjrriMvPtyddDtr3jJBzIvTemaV5jHwHM6aL3amXIk5dEzSUd8rBs+KoiOP
- ia7pmBxcYrDGmXK+feHMcbrEpgUp+oiVWp+ysoblJXpM9G6ydc5EH3bBacbobanTLXwS
- RNaYP+ny6owULK4sBRDNlcfYt53CGASWT3noYVRR/5j/pcp1R5Wncf5Sq1BuIFPkLfSD
- 6/aMYIi5tkCVRLy78g+3dIMlHbuWT3u57me7Sq9BpDYR/o3/RfGt5FPYhRxJ8S05prI3
- p8gA==
-X-Gm-Message-State: AOJu0YywU/VXVkg4FlUR4UL2nQsUuedvw9wDlL2lMZLCPG4GameeDQlw
- SydaD5rg2KcsRUcSTEOd4LpUct2oKLfzBr9uVAq1VnrcFaxx3dw6U/LpzUBR1CWfYxsE5cu5FQD
- F
-X-Gm-Gg: ASbGnctkOcIuiH62C0aGVUWYMm5tIkO+y7WI40yGy38TjeHTA5eCGIb6oR6p35KASMo
- OJZsRuae49th95sxgQHf/Wu8rSOJJoJfr/QvMHbk0FbwYACP1teJo93z7a1RBruLIFi9GXzkpL4
- 0UncUhsWwmbl9buRvVpWkFUEp8I5nRbQO1TI1b4PQt2vxotax+TQlSG1iC2XiSXhMbjTOT/vYUZ
- cPjkYOyzRm4jzzVrtvH8oQeanOWl3cJkmK1PXFD1BBszL87MwJTxOrr/knW+8QXVnByP2nZTTKd
- 0GM6xCW2LuOseIA8QvKTrS54hPSawkptYl167SBsPyw6V6xvhPi1230FWXB0j7oKB+xvPOksZDr
- Npf6jjiehSGLJhbU=
-X-Google-Smtp-Source: AGHT+IFInjTQAR1G200iUGYgOowwmDQfqVthj6CTIfwaQ54XRZhxQgpBt71wqtuBQPjqKHUeF3ZBWg==
-X-Received: by 2002:a05:600c:4f12:b0:43c:e70d:4504 with SMTP id
- 5b1f17b1804b1-440a661a17dmr21668015e9.19.1745594977953; 
- Fri, 25 Apr 2025 08:29:37 -0700 (PDT)
+ bh=X8jl8hB9zMqvOgbv5oC21KdNuLlcY3iJS3hENETS5RE=;
+ b=IFcwEuL57Vcn1NFxfn/5ruAZqOvUYgrEuhNFTrSH9q3UaDLXYI/wDhYJcVt44XsTU/
+ gvNlutAT75iqvvNpjEfZrcGYuYzIMBSCaZF63gUOZRF/mXa5HYCD3q7WQy0eKqPJruCZ
+ NQPdSht5ySksnk9SSttoGdKtekUUBDzL/OoRIi3gkUM/FxXHwd12gXtpDCOv/Xh7uPFf
+ Kk75UVHxeccJrXprly66DfdqcsLwLRyw/Fdqw1L1WYXnfpqGLryz5HHLPANeTgSFWYQs
+ 4mopObOu+Cw6NNuUtqtk/fmeQWcXQ9cDJLa0F0+fpjxWSLovrieF5xEYCcm5HA6Umi7a
+ CZrQ==
+X-Gm-Message-State: AOJu0YxugyH8ckkeIjzsknapm7OrP0S6EPbrZDuiPOkd9WiOqUyTN7L3
+ H/eLbewR5bnUm4JfFnYrg2rJP1VlyhYqJQ+CfU+rSPqg+YV2s9EnLWjtkUaziuuxXAsoZkaPm5f
+ G
+X-Gm-Gg: ASbGncsrHkejR8zNs3ZXuzOXuTxp1hr6vS1ult6hvBZdC4Wcurr1qvIygBqj9VTLI6x
+ 0tuWxyQQrLiK00TJ34sIRsrDdac34e5VKdWhC9oxb+cJ98qXcS6jJd+OaVm0/8pIsAn36veCVWz
+ Y+UBGTamU51wkmmBqjWFnQ2003B1ZErfGAuMPk4oWYzdrmTNUXe4t+zo7pPnS2GKGMSkHhH9fKk
+ EetVs7GcumaEzYncPKjmfFdYDBqfko9+iT391ifaPGmG9ZgFKqrr7ZdiaEM4xZAFCJxX8mDhav7
+ g7op3HUetBotBIAelMT4LqvqNepq0zp8vm6/tdHCxegJTtNYfocp3k/5XoSPLo/CSsUqG3PzhkU
+ dOptyv/FQOAszr5w=
+X-Google-Smtp-Source: AGHT+IHOW9Vd4u/X9xRjc2m5GQCS/ApbZi6+31HM0P0Q3Dl6EJ/2wE53jMBwH2FAlmDH/WKnLa5/PA==
+X-Received: by 2002:a05:6000:144f:b0:391:13d6:c9f0 with SMTP id
+ ffacd0b85a97d-3a074f2ef6dmr2717698f8f.47.1745594949437; 
+ Fri, 25 Apr 2025 08:29:09 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4409d29ba29sm62396805e9.7.2025.04.25.08.29.37
+ ffacd0b85a97d-3a073ca42cdsm2628191f8f.22.2025.04.25.08.29.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 08:29:37 -0700 (PDT)
+ Fri, 25 Apr 2025 08:29:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 11/58] hw/misc/edu: Convert type_init() -> DEFINE_TYPES()
-Date: Fri, 25 Apr 2025 17:27:55 +0200
-Message-ID: <20250425152843.69638-12-philmd@linaro.org>
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 05/58] target/i386: Register CPUClass:list_cpus
+Date: Fri, 25 Apr 2025 17:27:49 +0200
+Message-ID: <20250425152843.69638-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250425152843.69638-1-philmd@linaro.org>
 References: <20250425152843.69638-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,54 +102,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer DEFINE_TYPES() macro over type_init() to register
-QOM types.
-
-Initialize the .interfaces struct field as compound literal
-casted to InterfaceInfo type like the rest of our code base.
+Register x86_cpu_list() as CPUClass:list_cpus callback.
+Reduce its scope and remove the cpu_list definition.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250424194905.82506-2-philmd@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-Id: <20250324185837.46506-3-philmd@linaro.org>
 ---
- hw/misc/edu.c | 21 +++++++++------------
- 1 file changed, 9 insertions(+), 12 deletions(-)
+ target/i386/cpu.h | 3 ---
+ target/i386/cpu.c | 3 ++-
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/hw/misc/edu.c b/hw/misc/edu.c
-index 504178b4a22..5723ef0ed13 100644
---- a/hw/misc/edu.c
-+++ b/hw/misc/edu.c
-@@ -429,21 +429,18 @@ static void edu_class_init(ObjectClass *class, void *data)
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 9866595cd0e..54bf9639f19 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2365,7 +2365,6 @@ int x86_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+ int x86_cpu_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
+ void x86_cpu_gdb_init(CPUState *cs);
+ 
+-void x86_cpu_list(void);
+ int cpu_x86_support_mca_broadcast(CPUX86State *env);
+ 
+ #ifndef CONFIG_USER_ONLY
+@@ -2559,8 +2558,6 @@ uint64_t cpu_get_tsc(CPUX86State *env);
+ #define TARGET_DEFAULT_CPU_TYPE X86_CPU_TYPE_NAME("qemu32")
+ #endif
+ 
+-#define cpu_list x86_cpu_list
+-
+ /* MMU modes definitions */
+ #define MMU_KSMAP64_IDX    0
+ #define MMU_KSMAP32_IDX    1
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 1f970aa4daa..955295fe798 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6319,7 +6319,7 @@ static void x86_cpu_list_entry(gpointer data, gpointer user_data)
  }
  
--static void pci_edu_register_types(void)
--{
--    static InterfaceInfo interfaces[] = {
--        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
--        { },
--    };
--    static const TypeInfo edu_info = {
-+static const TypeInfo edu_types[] = {
-+    {
-         .name          = TYPE_PCI_EDU_DEVICE,
-         .parent        = TYPE_PCI_DEVICE,
-         .instance_size = sizeof(EduState),
-         .instance_init = edu_instance_init,
-         .class_init    = edu_class_init,
--        .interfaces = interfaces,
--    };
-+        .interfaces    = (InterfaceInfo[]) {
-+            { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-+            { },
-+        },
-+    }
-+};
+ /* list available CPU models and flags */
+-void x86_cpu_list(void)
++static void x86_cpu_list(void)
+ {
+     int i, j;
+     GSList *list;
+@@ -8905,6 +8905,7 @@ static void x86_cpu_common_class_init(ObjectClass *oc, void *data)
+     cc->reset_dump_flags = CPU_DUMP_FPU | CPU_DUMP_CCOP;
  
--    type_register_static(&edu_info);
--}
--type_init(pci_edu_register_types)
-+DEFINE_TYPES(edu_types)
+     cc->class_by_name = x86_cpu_class_by_name;
++    cc->list_cpus = x86_cpu_list;
+     cc->parse_features = x86_cpu_parse_featurestr;
+     cc->dump_state = x86_cpu_dump_state;
+     cc->set_pc = x86_cpu_set_pc;
 -- 
 2.47.1
 
