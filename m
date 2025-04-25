@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74B55C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 12:12:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72A43C369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 12:13:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Hu1-0006RX-E0; Fri, 25 Apr 2025 08:11:33 -0400
+	id 1u8HvA-0007MP-Hr; Fri, 25 Apr 2025 08:12:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1u8Hty-0006Qt-7p
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:11:30 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1u8Htv-0002hw-IJ
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:11:29 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-39ee623fe64so2089495f8f.1
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 05:11:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1745583085; x=1746187885; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=1kScVoLyjKlBL6tKudOwB4udef7cfYVq7fLgZ2bYekA=;
- b=QcsrEns2ide2jVtBHcuYWBSbIXVv9UhkR0t6/sWrT5WgGbLUDx25VVCOei161r1P+d
- RqsmS8jF/2nq9MZjucHMq4sIZBnkZNXv8mTUSAXUsBYB+RvW7nJuf9vMEwZ4+EM+POfk
- 0RYs5lYVhWv0vzHuNwpOSosg5qZRpLN273FtsZJZQmWjhFSnuZjR+XUh0bj96jl1lAhM
- qeIuPkyTOTx3OEtaQ4SgQK5U5Wdmf4ksZiZYTKe42qEAEKBYfWsgmZI0yheituyE1hts
- jWDfbcs+biqbdKhcD7B7YynTRr58xyXRDCWnXVMK9lNdAoqwTTjhm3pyFYiz1bLB9PCx
- uQbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745583085; x=1746187885;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1kScVoLyjKlBL6tKudOwB4udef7cfYVq7fLgZ2bYekA=;
- b=JboFhZbkuh5Vim4OwNVIpPfvWxCMRtM4k62GjSWq+DFCqM04McOCqB/q7ECgP+6ccK
- PH2yKBz4N6kvTUE4fdlxmGMI1nhwXt+a4C4S1naqo7NeIrabTnhPKwQc1KAAo2Pf+kDz
- tuRuTSc2nRyGzRiX0Tbzys9eBIP7Rccvf8zV7u4kh/5BWf3EQC2y//IYni2yvcrZIElk
- 0sDLjeUlUKoRHCO9ZmPyiksbzzcHPyvbTImHK9aBhFxQzfiQXKaggcpmnfRoDSRcIsu3
- 6zDHcATjCq0tf/ZAVXzCm+AwzhtklGv1eCV4avhT3B8sORcCICVC52lYe7x5fK0kFWZO
- R0lA==
-X-Gm-Message-State: AOJu0Yw7TZLTx3rvtVPckAQjO/nyjfVQHS3r79ehe8zoQzy/cSmnzHBj
- ud5pj6C/Z1nelS596sN9e+CGUDPk0nlXejeLYK43EhTL/akOxL7WJKFTpINc5J4=
-X-Gm-Gg: ASbGncsa++okZEx0gi5Nxs9XiUIsmyBU42ZxCTmDAeU6815heoErL+c7R4PQeeJLqnF
- OtXhNeSshwDtFWHnJpIqnBjqmCCduWSXC6a9gzdn1xGtMAMiF1yleluz1Cj6WdJc6iivCYybZB6
- 9QV0cCBF8PAALl5AK1MJnAxgDxRoUbCXxLH6iUUL/P3PA+o4xYbEhoNHR3smLCHJIWxDw9FT/Y5
- RXQXeWTmnQbHirXiZw6zy1wLzRc0DrhDKn2Oud2MGM6FsSNhbhl0oFy832FXRxNRSWhcTByYAHh
- qGHf/L8515BlJI9dyra3rNGr7y9F
-X-Google-Smtp-Source: AGHT+IEOMsnPi0/qmEEe9UU2t/HQJXERPrlMVjaye1AX/0qgHDLa/RL4oA08DcN6MDeujs23NTlmJQ==
-X-Received: by 2002:a05:6000:2283:b0:39c:f0d:9146 with SMTP id
- ffacd0b85a97d-3a074f11d7fmr1610276f8f.45.1745583084938; 
- Fri, 25 Apr 2025 05:11:24 -0700 (PDT)
-Received: from localhost ([2a02:8308:a00c:e200::f716])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073e461bfsm2191386f8f.79.2025.04.25.05.11.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Apr 2025 05:11:24 -0700 (PDT)
-Date: Fri, 25 Apr 2025 14:11:23 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
-Subject: Re: [PATCH v2 8/9] target/riscv: widen (m|s)counteren to target_ulong
-Message-ID: <20250425-d3897a3163a3fb2853763a8e@orel>
-References: <20250425113705.2741457-1-dbarboza@ventanamicro.com>
- <20250425113705.2741457-9-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u8Hv7-0007M9-Ti
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:12:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u8Hv5-0002m6-Qy
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 08:12:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745583158;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=93G5hedL8wGXkR16FrgAiautmyOJaLbLQf6UTzonWAc=;
+ b=McjbmOAnQli9qBDBFs4HqOAWwmf0KJSlE8X7oeUKAcN5jOrpQN61uHD6ZRFjPAjkjs4Lws
+ E3iAS/7T74rwM6xMdqLd/LiCHwR325d4Ym+c4MhqofkPRD0zxumKAnXfR9tJZhOiN6r7Ou
+ Hus8CvsxaFYw6soFTPlkmp0PPMD+na8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-B0uzA8haNv6afmq2Udi-6w-1; Fri,
+ 25 Apr 2025 08:12:31 -0400
+X-MC-Unique: B0uzA8haNv6afmq2Udi-6w-1
+X-Mimecast-MFC-AGG-ID: B0uzA8haNv6afmq2Udi-6w_1745583150
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C64D1800360; Fri, 25 Apr 2025 12:12:30 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.69])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CCB6A19560A3; Fri, 25 Apr 2025 12:12:26 +0000 (UTC)
+Date: Fri, 25 Apr 2025 13:12:23 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>
+Subject: Re: [PATCH] Drop support for Python 3.8
+Message-ID: <aAt8J9eKFeI2XgSa@redhat.com>
+References: <20250425120710.879518-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250425113705.2741457-9-dbarboza@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250425120710.879518-1-thuth@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -23
+X-Spam_score: -2.4
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.314,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,91 +89,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 25, 2025 at 08:37:04AM -0300, Daniel Henrique Barboza wrote:
-> We want to support scounteren as a KVM CSR. The KVM UAPI defines every
-> CSR size as target_ulong, and our env->scounteren is fixed at 32 bits.
+On Fri, Apr 25, 2025 at 02:07:10PM +0200, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> The other existing cases where the property size does not match the KVM
-> reg size happens with uint64_t properties, like 'mstatus'. When running
-> a 32 bit CPU we'll write a 32 bit 'sstatus' KVM reg into the 64 bit
-> 'mstatus' field. As long as we're consistent, i.e. we're always
-> reading/writing the same words, this is ok.
+> Python 3.8 went "end of life" in October 2024 and Fedora 42 dropped
+> this version already, so the "python" CI job is currently failing.
+> Thus it's time to drop support for this Python version in QEMU, too.
 > 
-> For scounteren, a KVM guest running in a 64 bit CPU will end up writing
-> a 64 bit reg in a 32 bit field. This will have all sort of funny side
-> effects in the KVM guest that we would rather avoid.
-> 
-> Increase scounteren to target_ulong to allow KVM to read/write the
-> scounteren CSR without any surprises. 'mcounteren' is being changed to
-> target_ulong for consistency.
-> 
-> Aside from bumping the version of the RISCVCPU vmstate no other
-> behavioral changes are expected.
-> 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  target/riscv/cpu.h     | 4 ++--
->  target/riscv/machine.c | 8 ++++----
->  2 files changed, 6 insertions(+), 6 deletions(-)
+>  This is an alternative suggestion to:
+>  https://lore.kernel.org/qemu-devel/20250422125626.72907-1-thuth@redhat.com/
 > 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index f5a60d0c52..0623c3187b 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -400,8 +400,8 @@ struct CPUArchState {
->       */
->      bool two_stage_indirect_lookup;
->  
-> -    uint32_t scounteren;
-> -    uint32_t mcounteren;
-> +    target_ulong scounteren;
-> +    target_ulong mcounteren;
+>  docs/about/build-platforms.rst         |  2 +-
+>  configure                              | 14 +++++++-------
+>  python/Makefile                        |  8 ++++----
+>  python/setup.cfg                       |  7 +++----
+>  python/tests/minreqs.txt               |  2 +-
+>  scripts/qapi/mypy.ini                  |  2 +-
+>  tests/docker/dockerfiles/python.docker |  1 -
+>  7 files changed, 17 insertions(+), 19 deletions(-)
 
-Let's leave mcounteren a u32 and write a comment above scounteren
-explaining that it's supposed to be a u32 (as the spec says) but
-we're using a ulong instead to support KVM's get/put due to how
-it's defined in struct kvm_riscv_csr.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
->  
->      uint32_t scountinhibit;
->      uint32_t mcountinhibit;
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index df2d5bad8d..4b11b203fb 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -401,8 +401,8 @@ static const VMStateDescription vmstate_ssp = {
->  
->  const VMStateDescription vmstate_riscv_cpu = {
->      .name = "cpu",
-> -    .version_id = 10,
-> -    .minimum_version_id = 10,
-> +    .version_id = 11,
-> +    .minimum_version_id = 11,
->      .post_load = riscv_cpu_post_load,
->      .fields = (const VMStateField[]) {
->          VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
-> @@ -445,8 +445,8 @@ const VMStateDescription vmstate_riscv_cpu = {
->          VMSTATE_UINTTL(env.mtval, RISCVCPU),
->          VMSTATE_UINTTL(env.miselect, RISCVCPU),
->          VMSTATE_UINTTL(env.siselect, RISCVCPU),
-> -        VMSTATE_UINT32(env.scounteren, RISCVCPU),
-> -        VMSTATE_UINT32(env.mcounteren, RISCVCPU),
-> +        VMSTATE_UINTTL(env.scounteren, RISCVCPU),
-> +        VMSTATE_UINTTL(env.mcounteren, RISCVCPU),
 
-Since we only expect the lower 32 bits to ever be written, then do we need
-to make this change?
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
->          VMSTATE_UINT32(env.scountinhibit, RISCVCPU),
->          VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
->          VMSTATE_STRUCT_ARRAY(env.pmu_ctrs, RISCVCPU, RV_MAX_MHPMCOUNTERS, 0,
-> -- 
-> 2.49.0
-> 
-
-Thanks,
-drew
 
