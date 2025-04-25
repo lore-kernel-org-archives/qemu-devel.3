@@ -4,92 +4,181 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C943C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 10:00:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E89FC369D1
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 10:13:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Fqq-0005Bl-Hu; Fri, 25 Apr 2025 06:00:08 -0400
+	id 1u8G2a-0007mF-Di; Fri, 25 Apr 2025 06:12:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Fqo-0005At-T6
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:00:07 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Fqm-0002pr-Ho
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:00:06 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-43cef035a3bso13860445e9.1
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 03:00:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745575203; x=1746180003; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jxdmkHEq0pFQGxDjTDaZiXSaDwdSP8VoH1JzK7bL3tM=;
- b=d+QjrmFInkyZYLtKNiqtqeOWRkgjxIimSBV5EcEuaWREcok64a/lHApl9vY+hJsKlf
- G8cSTHuNsw8Jw9rddhsLZnGP75eVbqwZLf5giSiPVhRoluosUNoy464qYluFYDViXCOm
- 1ehhUtOfYONcRIs67919VsG67C5CADUVHG0EVP9u6iv0Fdvy32eg2Tc9skt7eUpyr8BS
- j4/zxu/TTt8I1G0PzV98l4eIbLJNyaEPn8atoR5Q2BkVpvqnoMvNqf7hhE+r/UMsFuS4
- LJBb5ypvsAw0vbkfnlxnq051fGEikrgxmR5eITa6Nbl6xWmc2GVU4QOwoOVqdto6U0Zr
- kpuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745575203; x=1746180003;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jxdmkHEq0pFQGxDjTDaZiXSaDwdSP8VoH1JzK7bL3tM=;
- b=tbeV2I+X3bH2XYYDGQrXXRnTJsmi3A7dM1UbRI2sGuZpZ+IfCzV9hyRWcAHKP4ni2w
- ZEGYG1PTkSUp+jL8j9ciiZidATpc79MxWWBxTaJf/f1bLPc8KBiI/nsRFkLO0R5Tqa3e
- AFXdg2T7vxi97jviM1C8sio+i+Qc2/BQIgl3hvo7JBnD2r95O8kazLGZ2w/oQThhohBT
- JiTq19oCaFqnzUk544wrdG0utKc4QbOAVl/ZgNyu5euUohi5EEReLCF6GeDMP4A+Z+MN
- NgAdPwNq/4AJ0QhMRy1rVlF+4E35HzKhelyPESOIUITN6NhzroBq+agP6msl/Bz7h3LB
- RQ5g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVa33C8Bw2yhFz1S40chaJHUE3LM6Ykn/zZU2MBtmIHjnUyA8CypyMzWjCFqHoc7uiMLOnSkMWZItGx@nongnu.org
-X-Gm-Message-State: AOJu0YzrcYLs492eaNhiHNm6gEUzpS5OxxQQ9cQNKGzgZcoTwL3OuBSF
- GMQcqmARv54DYDJ0lVmvUvzrKDmHCFLuu+8hR1cL6k2j2uvwlFuq0EZu/sy3DYg=
-X-Gm-Gg: ASbGncu5uYEqqA/nQXdgH0VrD2ZPg7YHxg/+mxKI1Oo/ZtsCJbjks/tfVOrKnVNtJvm
- cE60U9BMqF2B95cRXH2roWO13ur7jQJUyKVp5vsCnAiNBKVnRZ2QYjDknNgFnllSiul0TEPOymX
- 8B5hBzX+FDGJv7+80OJR2Ng5H3J4/JVDrjAN3ovRpTJXvL30UQxOufvj9i+Vj5svfXwKLxeGclB
- +4oKDKRHtymlJnpqPuUjJjUiKGEwXfmRhLScG0LClKrES+PeDxVzxMv1jCbA/xR+Ex2b/LUYGS2
- tf3b3JBo7Wz+CtLXQkjYXw3ot1wfvG7KMu2n/Vtk3qGPeOLjzEtnD8f/Er5i84oHYSmAosm4oE4
- m+ncDfSVpjtrJdA==
-X-Google-Smtp-Source: AGHT+IG5kOb23QnP7zoG7jSNMxnY+XHcDOw/3vWB9yhmNzAimCOjeNvn8IHq2TKeLvC7EmD+cMdkOg==
-X-Received: by 2002:a05:600c:c8d:b0:43d:9d5:474d with SMTP id
- 5b1f17b1804b1-440a63470c6mr15520275e9.0.1745575202707; 
- Fri, 25 Apr 2025 03:00:02 -0700 (PDT)
-Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4409d2ac27dsm51270175e9.22.2025.04.25.02.59.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 03:00:01 -0700 (PDT)
-Message-ID: <747b53e3-2913-4a51-95d0-1a8b67de2d4a@linaro.org>
-Date: Fri, 25 Apr 2025 11:59:59 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <Sandipan.Das@amd.com>)
+ id 1u8G2W-0007l9-B2; Fri, 25 Apr 2025 06:12:12 -0400
+Received: from mail-mw2nam04on20603.outbound.protection.outlook.com
+ ([2a01:111:f403:240a::603]
+ helo=NAM04-MW2-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Sandipan.Das@amd.com>)
+ id 1u8G2S-0004TV-SD; Fri, 25 Apr 2025 06:12:11 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yu89biubvqWFBb+DFlM13nIq7+/RzAFf50RCOz/akQcTE7+mEC9aOlZYTFPTrkkws7QLRdSTyvOWzOoMMwR7gK2eewNizRqjIcyVUZgLuUNYJwiLbYcW/wl9n3dwk5Fx2RqRbO8mWrQ0gbAmDco3I2KZEraB6z9YokdyjjtW89H2MNSZJraNT9Kb04Xk5lBjz2DrpLSrgINe+ZsJskvfc7aj4SVeni4Mgl6VxRJwIAza/mbNLrQA8koo3l61quzPSFwag7ddzsv3n9Dc3PVSMYnakw9ImneNZohXlujGJo50JUsmv+4VR7fruBSjfmcLGTvSEtSVghjRNeov0e6QnA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8JZzkTTnUL+5Gml7zyoVZ5ze+OGRpqRc9p5c+E69QO0=;
+ b=XDmmI7ci85wIviouLtHEhnRxhxB5b1sKFfaieHByMbTBoMmiCMjJH1IsLZhzCzOAhDApDdqzZQ+C1VitMmjRVwOgb8vZth+0QKoKDUN+jz/KzGjXOIwj/6/IcFqPU+ZxJBFgYJGKUrD83P8afumM7DMtLVFgNMgAfWv2ieFdq+kyqO8lqrSw/aaIUfFVThNZolikJb1gVn1ZK9iLUBXA3s6EUAin7g2OQhe9mFTErdqDjgBPebnD72wF8VSOjBZvXsZsSdpX7sa7FolVsxpQKKA+4AaY3uQIytLxR8pqnJUFiCxlw8ueBhoCxm59UjyxDjSTcHg8uvA3vFEkQeZqzw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8JZzkTTnUL+5Gml7zyoVZ5ze+OGRpqRc9p5c+E69QO0=;
+ b=aglAW4z13SVz6N2jttrCx21LgjAaTy5kIJwfSHaXLZBSCoipjNaszjNqM+Y+4nWupe2NMVd4Rdm7VpvpCuUcuobmmpY0mXz1W8GRNIwr8ZfS85BcixTUhtCwc9LezfGtcHWAXD3xy/7W9ve3chznji/VqoVa+bFko9Jlgnpsus4=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from PH7PR12MB5712.namprd12.prod.outlook.com (2603:10b6:510:1e3::13)
+ by IA1PR12MB8520.namprd12.prod.outlook.com (2603:10b6:208:44d::5)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.27; Fri, 25 Apr
+ 2025 10:11:58 +0000
+Received: from PH7PR12MB5712.namprd12.prod.outlook.com
+ ([fe80::2efc:dc9f:3ba8:3291]) by PH7PR12MB5712.namprd12.prod.outlook.com
+ ([fe80::2efc:dc9f:3ba8:3291%6]) with mapi id 15.20.8678.025; Fri, 25 Apr 2025
+ 10:11:58 +0000
+Message-ID: <0fd10a67-2f62-4665-b744-ddc385c100ea@amd.com>
+Date: Fri, 25 Apr 2025 15:41:38 +0530
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/3] Enable QEMU NVMe userspace driver on s390x
-To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: stefanha@redhat.com, mjrosato@linux.ibm.com, schnelle@linux.ibm.com,
- kwolf@redhat.com, hreitz@redhat.com, thuth@redhat.com, fam@euphon.net
-References: <20250417173801.827-1-alifm@linux.ibm.com>
- <15457df6-11fd-41d4-9cb1-14e4473c1866@linux.ibm.com>
+Subject: Re: [PATCH v4 03/11] target/i386: disable PERFCORE when "-pmu" is
+ configured
+To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ babu.moger@amd.com, likexu@tencent.com, like.xu.linux@gmail.com,
+ groug@kaod.org, khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com, peter.maydell@linaro.org,
+ gaosong@loongson.cn, chenhuacai@kernel.org, philmd@linaro.org,
+ aurelien@aurel32.net, jiaxun.yang@flygoat.com, arikalo@gmail.com,
+ npiggin@gmail.com, danielhb413@gmail.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
+ thuth@redhat.com, flavra@baylibre.com, ewanhai-oc@zhaoxin.com,
+ ewanhai@zhaoxin.com, cobechen@zhaoxin.com, louisqi@zhaoxin.com,
+ liamni@zhaoxin.com, frankzhu@zhaoxin.com, silviazhao@zhaoxin.com,
+ kraxel@redhat.com, berrange@redhat.com
+References: <20250416215306.32426-1-dongli.zhang@oracle.com>
+ <20250416215306.32426-4-dongli.zhang@oracle.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <15457df6-11fd-41d4-9cb1-14e4473c1866@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: Sandipan Das <sandipan.das@amd.com>
+In-Reply-To: <20250416215306.32426-4-dongli.zhang@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN3PR01CA0164.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:de::6) To PH7PR12MB5712.namprd12.prod.outlook.com
+ (2603:10b6:510:1e3::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5712:EE_|IA1PR12MB8520:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1276b4ef-9f1f-49fc-1ad3-08dd83e19cc7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|1800799024|366016|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?SkR0UGFjamxSTE5tTCtraTZoY2pPSmczbFNHQTUxRm5xdTNadThFMW4wVEFo?=
+ =?utf-8?B?MVo2UXRKekpvdm5JT2lxekNDK05mOC9Lb0k3TkxpdXNzbjNKOGV1QXozSDkz?=
+ =?utf-8?B?RlFsRjdHYzg2aFJ2L2daNjlmcHc0VTRWVFo2ZGQ1RWJSMEFxUzBPdkJYRnJP?=
+ =?utf-8?B?QWxlME9iWUlWWGszUlFsZk5UTjNOYnV3SkdQeWVBaFh0eHVQT3k3em9LT1JH?=
+ =?utf-8?B?QUVJbHZIRkhJdTRFNVozclYyMWFKVHpvSFpXY08vREhwSkkycmxQUzgrbVFl?=
+ =?utf-8?B?VEdGbnJPNXBpaVhTRnJIV2ovTTRiWlZNZTNTbXMvSWd0WlNkYnA1Mk05ajVo?=
+ =?utf-8?B?Rk43M0tCRnh1TmJISWlKYkFoa21JbkNBTms5TUszZVp3VnVLNkFxRXhYaVA5?=
+ =?utf-8?B?SmhUNHlUMmRaL3NsOWZPNXpHQTRqVnRkTDgyUDVMZjZDUVFvTjVobFhBVzZm?=
+ =?utf-8?B?ejl6emNTd0ZuMHB4eXg5RUtZcWFKbXF0VmdJWkhSZzhwU3lxZlozNmxrQTZp?=
+ =?utf-8?B?S1JxMkk0UEtWNUhKN050WHJWWktXVWZNbU1PY0N5QWNtd1BFVk1jZmcwWlhi?=
+ =?utf-8?B?NyticTRGdDZmdDkzcU1xeldIVlBEemNRYkNhWlJoOGRNbWxCTGlsTFU4bDYx?=
+ =?utf-8?B?M042c21vdFJKRHlJbE1XMlJHWml1TDN4dThFOERDRVc1YzRtVFJiaHljc0hN?=
+ =?utf-8?B?aWlsTGI3Sk1vczk1alZHZWVlTGlwWU85K0JlTVNrQzIwM3ViRjd2UXRMQmpw?=
+ =?utf-8?B?RU5wNWZmdGh5WFVEUUNvR0lvVTd2K09oZVU3OWpQMmZ5VW1HN3RIUFRSa0pV?=
+ =?utf-8?B?Y09xWVlYSi9FMkFDS1hVU0s3amhaTHlkNFNnbjc2VzQ0eHhTKzdqTjRybmFp?=
+ =?utf-8?B?OEhINjJVM2ppMjhPa0x5UHNDNzFyUVBMajIvWjQ0SXMrVGpsbEFGWmxQZzJx?=
+ =?utf-8?B?dHZuZHJJRlJjdm96dkxrREN3cjRPaExOSFNoc25IRXZvOER1YmFMVnZuQTNC?=
+ =?utf-8?B?cy96WG9Hd2hnZEhnd1QyZkxTMDhGTHlLTk1BMWdQOTlCeXY1TjlnN0hUQXhP?=
+ =?utf-8?B?RWlXQWZNbXNEQ0Q0d0t6a1ZsWmIxUzd5WTBJcFBhT2ZlQmI5cTQ1ZTFpaU9D?=
+ =?utf-8?B?Z2ZpdmVUOVhlMldFa0JBeUlSS0taeVNKY3o1RC9RdFgvS2x2NnlmclpPTU9C?=
+ =?utf-8?B?WXFhL2pWNGZnVXFiaWhHNmY0TVZ2bWlYdGQ0aXpGZmhGQU5XRGkvdzROZTJs?=
+ =?utf-8?B?YURiMFloSnM0VmJSZElId3d3ZzVlWlpNT0xvNFFjSFVIenNweVlDQ0pzbGZu?=
+ =?utf-8?B?QWtBZllodnBlcldCT1M1bVp6QzNwK2s5RE5NV2ZnWmtoR283dVBVdG1mZndv?=
+ =?utf-8?B?bUVERklOamRyeGNpZHRXTFAvaTlNRnlrK3BTQk53N2pjT2I1L0lKdStrNTRv?=
+ =?utf-8?B?ZlVkdEc0RmhBREZGM2ljRVBZNWtnMWNDT2FxMksrYzk2bDVhNzNmNEV5QWFr?=
+ =?utf-8?B?cHZVZU9mS3p3dzFZK0Iyblk5RXN3L09GSlo2UHdQVVhvUlJDRjhuRm5QSG1Y?=
+ =?utf-8?B?RGlLVElxTWM2R3lVbWh5MlUvK0c1cjFubkQ3cGkrSlJUZ1QxdWYwamVLOVEz?=
+ =?utf-8?B?bXNSaFdaaUwwZzFJUDgrMWhKaTBTaVlialFNZVdxSnVNcFFJdnJ5QlBqQ2I4?=
+ =?utf-8?B?aEJQTEE0OXBrNU1JUzJNOWtCRnVzdk5Cdm5Vb1ZBclV1OEpvcjNZWTQzM25y?=
+ =?utf-8?B?QWE5b21GUzFGTUh0RGIyOFlETHpHblRXWTA5RXdlTy9mc0o4UnAwY1B5T1BM?=
+ =?utf-8?B?aW4yN25ISDI4VUJ6eTJSMzU0NUh3cEhoNy8yaEkyS3BYRHVycW1IU0hGcERK?=
+ =?utf-8?B?MjNGSXp5NW12VXFVWUEwTE1CYVo4RzE3eklFdFhZbEpOa3ltVXNSeW1VeFQ3?=
+ =?utf-8?Q?cTVrX5oLQyg=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH7PR12MB5712.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(366016)(7053199007); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ako0bWY1UGR4cmtVRjIxdFVBUE1iaXFSTnpBeVlTTEJXUStxdmM3QXRSVmo0?=
+ =?utf-8?B?bW9GWmwyQ3ZpZkpTQW9wblBKMTlhZ2FIV09nZWlKcVJHSXd3VElKYk4yeHV5?=
+ =?utf-8?B?cWpHTytyUFk3N0FsckZ6MUswdTNRN0tET3hlTllHV3NsL0Y3dDZVV1IyZ3VB?=
+ =?utf-8?B?YVdJR2RlMlNvSFlJVytjbUZTdW1DcHFxZGxZckhURnp2RUlyMmR4aVdFSUZ1?=
+ =?utf-8?B?M1dxWVY0QjlFVHZ3QUIxZjAwNjJYM3F3ZHhKU3Y2cVlmYjN0OFNpZEgyc1g3?=
+ =?utf-8?B?anVSWEh4VDhSdm5GZGN5emh0bHpmT1hzb0RzNDhWQ01hWTc3K1FGV1kyVitI?=
+ =?utf-8?B?MkxFSGo5WTBRcnlzRWdad3ZnR3cwS29Zck1LWUo1amtJR09XbFA3VDVUcG1k?=
+ =?utf-8?B?OS9LNHppWWlVZzJXV08xcVhmcjF1eDlxYkt0SDBZSjl6VjFsYndMKzg4NkRi?=
+ =?utf-8?B?akxKaERhUXVucXVYbTF4eVN4dStGbWNYSVlFVE1qbFpNQjQ3bVpxanVYTHdq?=
+ =?utf-8?B?anJiTUhVSkZPTWUvNXBqdEdTblU3ZFRzYjE5bWhsSlRSN2dxeXV4dGh1dW9L?=
+ =?utf-8?B?bzVjNFVjNnlIb0FrdEJPZEFHdU1nSEViWFBaSXowQUF1dmxrK0JIbHdtMFI3?=
+ =?utf-8?B?QzRyU1Zxai9xb2lQS3lvM1NwK2tBOTkrM1MxTTlyQTFLMStwcFVXVmZlR0l4?=
+ =?utf-8?B?dVNsTVRQbjRyTTAyZ1NBZEM0ekhpUzhmTTBobkJoOU5SYlNGOStBS0l3Z2pJ?=
+ =?utf-8?B?amZDVWpRU01kWUYwa0p6dlpIT3FySjNORkhGdnBiZ3RqcWVOQWx6WC9MeVYx?=
+ =?utf-8?B?eWVaU3ozSW81Zjdzd1FRMGplQUNtUTc3UnAvRVdRbVhhZVBkbzVEOXpRUExN?=
+ =?utf-8?B?YU52ems0SytwVWRUYjF1aW8zZkFOYkcydHY1L25aWml1Y2tLcTFVbFh6dDc0?=
+ =?utf-8?B?bzRiTE9rUWJXYWZRbDJKZW1CYU95bDFMWE01TlozRXFGQ1RUbzRRb0JPcmRa?=
+ =?utf-8?B?aGJ1Y2dEM2dZN3prNHNCaEd3bjdnbjJ1Q0lPYVVoUFMzcnhwM1NDdk5DcVdC?=
+ =?utf-8?B?LzY3d2VFSXZ4Y2lVYmppUXVvazNvVzdEYW44WkZadFI5blFMclVWUEg3TnhL?=
+ =?utf-8?B?MzdZQkdsTzVPSnR0Q3NHQjF1aHIrWWhCM2JvaFBtbmw3blEyWXJ6WFFpVmFO?=
+ =?utf-8?B?R0s3QzBYem93c04xamxyME0vRnlWbGkrdnJabmtrSnkra2gwU24zR2dEeHZE?=
+ =?utf-8?B?U090R2doRlc0SnNCbE9TTGRaRkRKdm9JbFJwMW9JTGdJWUpOdk1LbWM4cU1D?=
+ =?utf-8?B?ZVVQZmVYRlllNzNjL2E4WHVHNnQwL2FNWnZkMm9JN2lyZWx0aWVBNmY2R2t4?=
+ =?utf-8?B?TTJqa1VUeXNQTFVoeldsWFQwRUg5aXVqcCtzd2tRK0VRWXlnNkg0WUZZRkwx?=
+ =?utf-8?B?NVZNYUFtdkVKUXFqRzBxMHNrUndnejgwdWtGcnpMcVZkWUU3QkdYZ2M2cmJO?=
+ =?utf-8?B?WExRWFl5TUFkbEZJSTlaZExRT3BZemRhakt3NVltQ3ZmYk45dW02U04yMTZ0?=
+ =?utf-8?B?QjkwWlh5ck9uVCtvQTdpYThpeHMvd0RoSVhVRVZVRFNRRUdxREVjVjBUdDVJ?=
+ =?utf-8?B?UlV6bWFBUjNKWVlHZjRBQ1JjckMvT3NhV2M4cy91MDF6OWNtNkJuN0YxM1U4?=
+ =?utf-8?B?N0Q4NkdZb2VXalcvb3p4RStPMHpxcnVTaUhZWkpkVS9oYXRVQ3oyQ0NTaVJV?=
+ =?utf-8?B?a1JwUzBOYU9mNjQxRDZrMVA1TWFoSTJlUUM1OGkxMU1mMC9odnhhMnhGdXBn?=
+ =?utf-8?B?SmlHc3ZvVVpCTXgzVVMvY3BCS0dYTjFJbXBxakROa3F5Rm83czBkWXdHSnBx?=
+ =?utf-8?B?MTN2dFllcFhTb3l4WDdoRk45ckNFbUVUendyQnMzNkhPSittWVZnVStPOGUw?=
+ =?utf-8?B?THpwYzNEeEFrSnFHQm5CaWNrSW1sMFFxc1BFSnVKWlhKcW1EclhkWVR2d1gv?=
+ =?utf-8?B?ME40eHlEcEJxYjA4WHR5b0M0bmVScjdjYTJiY2hmemwrOUVvRExJREF3MEtS?=
+ =?utf-8?B?R1dKNGR5RVBjR2hoeHladnZ4eTRibk5admRvaGkxZXBDVmlDbmU2UnVmV0Jk?=
+ =?utf-8?Q?B/M87IHVUa833MD8ryFXDTgFD?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1276b4ef-9f1f-49fc-1ad3-08dd83e19cc7
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5712.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Apr 2025 10:11:58.0273 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: zSNT7nvQs5QZaK3I9ikQwSjSn5S5r5tA+R9HvNDbMb1jkLD3vNhp3z+HqsWuwnJnd7Fcy/HIEOwKHeJADhuCjw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8520
+Received-SPF: permerror client-ip=2a01:111:f403:240a::603;
+ envelope-from=Sandipan.Das@amd.com;
+ helo=NAM04-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.84,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,94 +194,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/4/25 18:24, Farhan Ali wrote:
-> Hi Alex,
+On 4/17/2025 3:22 AM, Dongli Zhang wrote:
+> Currently, AMD PMU support isn't determined based on CPUID, that is, the
+> "-pmu" option does not fully disable KVM AMD PMU virtualization.
+> 
+> To minimize AMD PMU features, remove PERFCORE when "-pmu" is configured.
+> 
+> To completely disable AMD PMU virtualization will be implemented via
+> KVM_CAP_PMU_CAPABILITY in upcoming patches.
+> 
+> As a reminder, neither CPUID_EXT3_PERFCORE nor
+> CPUID_8000_0022_EAX_PERFMON_V2 is removed from env->features[] when "-pmu"
+> is configured. Developers should query whether they are supported via
+> cpu_x86_cpuid() rather than relying on env->features[] in future patches.
+> 
+> Suggested-by: Zhao Liu <zhao1.liu@intel.com>
+> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> Changed since v2:
+>   - No need to check "kvm_enabled() && IS_AMD_CPU(env)".
+> 
+>  target/i386/cpu.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
 
-Cc'ing Cédric as co-maintainer with Alex.
-
-> 
-> Polite ping. Please let me know if there are any concerns with this 
-> version of the patches.
-> 
-> Thanks
-> 
-> Farhan
-> 
-> On 4/17/2025 10:37 AM, Farhan Ali wrote:
->> Hi,
->>
->> Recently on s390x we have enabled mmap support for vfio-pci devices [1].
->> This allows us to take advantage and use userspace drivers on s390x. 
->> However,
->> on s390x we have special instructions for MMIO access. Starting with z15
->> (and newer platforms) we have new PCI Memory I/O (MIO) instructions which
->> operate on virtually mapped PCI memory spaces, and can be used from 
->> userspace.
->> On older platforms we would fallback to using existing system calls 
->> for MMIO access.
->>
->> This patch series introduces support the PCI MIO instructions, and 
->> enables s390x
->> support for the userspace NVMe driver on s390x. I would appreciate any 
->> review/feedback
->> on the patches.
->>
->> Thanks
->> Farhan
->>
->> [1] https://lore.kernel.org/linux-s390/20250226-vfio_pci_mmap-v7-0- 
->> c5c0f1d26efd@linux.ibm.com/
->>
->> ChangeLog
->> ---------
->> v4 series https://lore.kernel.org/qemu-devel/20250414213616.2675-1- 
->> alifm@linux.ibm.com/
->> v4 -> v5
->>      - Fixup typo in PCI MMIO API (patch 2).
->>
->> v3 series https://lore.kernel.org/qemu-devel/20250401172246.2688-1- 
->> alifm@linux.ibm.com/
->> v3 -> v4
->>      - Use generic ld/st functions for non s390x PCI access suggested 
->> by Alex (patch 2).
->>      - Removed R-b for patch 2 as the host PCI MMIO access API changed 
->> for non-s390x.
->>      Would appreciate review on this again.
->>
->> v2 series https://mail.gnu.org/archive/html/qemu-devel/2025-03/ 
->> msg06847.html
->> v2 -> v3
->>      - Update the PCI MMIO APIs to reflect that its PCI MMIO access on 
->> host
->> as suggested by Stefan(patch 2)
->>      - Move s390x ifdef check to s390x_pci_mmio.h as suggested by 
->> Philippe (patch 1)
->>      - Add R-bs for the respective patches.
->>
->> v1 series https://mail.gnu.org/archive/html/qemu-devel/2025-03/ 
->> msg06596.html
->> v1 -> v2
->>      - Add 8 and 16 bit reads/writes for completeness (patch 1)
->>      - Introduce new QEMU PCI MMIO read/write API as suggested by 
->> Stefan (patch 2)
->>      - Update NVMe userspace driver to use QEMU PCI MMIO functions 
->> (patch 3)
->>
->>
->> Farhan Ali (3):
->>    util: Add functions for s390x mmio read/write
->>    include: Add a header to define host PCI MMIO functions
->>    block/nvme: Use host PCI MMIO API
->>
->>   block/nvme.c                  |  41 +++++-----
->>   include/qemu/host-pci-mmio.h  | 141 ++++++++++++++++++++++++++++++++
->>   include/qemu/s390x_pci_mmio.h |  24 ++++++
->>   util/meson.build              |   2 +
->>   util/s390x_pci_mmio.c         | 148 ++++++++++++++++++++++++++++++++++
->>   5 files changed, 338 insertions(+), 18 deletions(-)
->>   create mode 100644 include/qemu/host-pci-mmio.h
->>   create mode 100644 include/qemu/s390x_pci_mmio.h
->>   create mode 100644 util/s390x_pci_mmio.c
->>
-
+Reviewed-by: Sandipan Das <sandipan.das@amd.com>
 
