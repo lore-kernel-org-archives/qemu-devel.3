@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD8DCC369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 17:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F420FC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 17:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8N59-0003no-Jw; Fri, 25 Apr 2025 13:43:23 -0400
+	id 1u8NDE-0008Kg-Mq; Fri, 25 Apr 2025 13:51:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8N55-0003nO-LP
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 13:43:20 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u8NDC-0008KQ-DG
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 13:51:42 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8N53-0005yS-Fu
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 13:43:18 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-39ac56756f6so2478601f8f.2
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 10:43:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u8NDA-0007Io-DC
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 13:51:42 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-af5139ad9a2so1789257a12.1
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 10:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745602992; x=1746207792; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=yqxJ7mdx6v2xsA4qEI8XQwgVvbXS34ddK4YUceguVuQ=;
- b=HWOmZ/4/7+ekXdFb/a3JXLAX00cBY+P+PxxLeQpd47yfHHsypDFB0y5xX5/AgQ8vlw
- TStyyd7Dws5ojF48Ywkoe/GY1f1Jg2XyTqxYK9s5rOc6+PeznLCjkMcIgOCXDvL8tWoY
- hhdWADzgVX+f48FSzMvQugQmQihzvRzbnth8a83NjFfV4INbRpXRSANM82SYtUa+01Q0
- VNITMTTp9LlSnybnwNJY9ZtNL9gGHJs5RzAmyuAmBaSonp02suk02nlsa493AJuUHYCI
- R6m6T+beLKdgl247N+qmaL7WCjlDQQB7WfbWmG35jgvO+T1oXjs1C8q7NMKCQi9Wk6CM
- vbiA==
+ d=linaro.org; s=google; t=1745603498; x=1746208298; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gHsqF05gDfDZJDjvInAkAzw6+W/TXwh11F4SS3tmYGA=;
+ b=LppacOLE3tXOzyY8/WCkoOYgBIHhCoA2d1kjQ78MS4kzv0k4in3Bl/NrvxH/JmTsbo
+ Ig6VvhybvtEXoTyaFAn8hliEbDo+1fk/4TUHCdkrw7iD9bvysm5XykmHc+qRnD20fx1w
+ WNTxjiVQ69/W7whHiS3k8t+DLrzlWH4laxaxsV2YKunF8hxc0NwipoK2VIMhQSUCkT5W
+ xQqIwvDYH4WCXHJPe1q6V0HbBOBEKhB2s5ODFfMoIxfeqtB8NCp8l0hcy6CWUDgv+qGL
+ X+EofIJMJck73NkDD79vHjQ6NBGOHhPD7EAJcslnLU6cM+8GOd1AN2ZtkIiFnfe1mk93
+ KAkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745602992; x=1746207792;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yqxJ7mdx6v2xsA4qEI8XQwgVvbXS34ddK4YUceguVuQ=;
- b=cUEnoLZZXeECpWQt2bNSNowlYTbOwHTg6+jyB0eVVvvFW+ZRJRVfxRvUfwJwvTchrx
- hCslwRmWvbNbnim+mbn6kO7pEzzCwvbVbQrywFbNbpYaj4STTTLU9wxaV9CMkA7lnXTZ
- hX+QuLCd6TjmDz9qjsAyvOnc74MWI88aGbScIp9/gfu1U2jwFDz9ahMYshdR45gNUx5B
- L2QV8SjOqL5fTTB67OkIP6DfKXAj19qT4VRKBFm4CXPqldm/l2t23XxQ1cQ96jxMql8O
- Yp1kyldFm6ueMNDFYhEcO0HErlX8pCnhbW6mpEoiXmsogvQ2elPcFZs8GvZdQO11l+uF
- fdpA==
-X-Gm-Message-State: AOJu0YyOTYsjzcX26xJ54hA7nF44gMSKnCQOZ7ZOJS8O2YZPUFEeZGzr
- gNGAv0SOI6ENb3nK8oFjSZfw7VgcCfAgaFmTPw73NoBqfFYv8G3yJdEQRJG5UWg5tf16vcI/VPN
- W
-X-Gm-Gg: ASbGnct9jP+oN13B3pdK0+uOeeTl4Rays/1X8uGzYlZ8+HRRZNuCiJmj7iuPyy2pRGs
- 5Jv1NpGK4agCTXCC4fpNuHImQynKM8i2JOb/z9SN4M1Wc5ucpOhIM+AgiFUdPnglns3iDRcjK5i
- oRnKW/w4XZqPBHEXbVSKNzsKA0cCIo2lTCaRLX1Ua7YEpE/ZXLNXBBG6K0fhc4iWY3U7PTUNXO9
- nqvvGJ2WTYLUEryfOHKa1k1/RhNGAQ/v9FjJME+kQfGeYizQOlWmjgrDw6CjPiUGK+V/nDeTqlB
- d4R0RUIqRuUjJrXvKr5MX8XpFkMF8jhr6TXcZMcNns8tcHGB0/8K8C1F3B/aEAsSKbwleGdMXDQ
- gRF+XxZvqGDhtmu8=
-X-Google-Smtp-Source: AGHT+IFiHVZTGn9Ov1lP5AMRSU9t0Insq2QnGswpgQclTn3ij4TrZNEW0dgMbBsz/n3Pv7T3sEepKg==
-X-Received: by 2002:a05:6000:1844:b0:391:158f:3d59 with SMTP id
- ffacd0b85a97d-3a07aa69788mr187237f8f.15.1745602992303; 
- Fri, 25 Apr 2025 10:43:12 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073e461bfsm2963279f8f.79.2025.04.25.10.43.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 25 Apr 2025 10:43:11 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH] target/i386/hvf: Include missing 'exec/target_page.h' header
-Date: Fri, 25 Apr 2025 19:43:10 +0200
-Message-ID: <20250425174310.70890-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
+ d=1e100.net; s=20230601; t=1745603498; x=1746208298;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gHsqF05gDfDZJDjvInAkAzw6+W/TXwh11F4SS3tmYGA=;
+ b=s2cmk29ugy60RPx1/UgZUoH+1SrB9jJKdZUjt7rbJYwZl8vEGOOOQV3qVdxRD15q+R
+ 93hBJhrk8Z/eCdY2O2cXMKJcypFe9w0MOTcis5MqTIt9hmqx3UjK+eRvweH9MZR+tGhD
+ LJ+nsY2ZSMljcadkmf2XD0D9SC0SkmYTlgX+jJOMCclGbocPUZIqZtl3mZZmf17LptaS
+ 20M34Lffs0mDVGxtou+Z+H/RBs8GF1mD2s2aLsS1M89aEvOzGSRUvR/bZY5Q6gzNqB7T
+ b8pp8VjzSPD2H6vIbML844TJZVfUZDHRl2ObZTQcoCM7veXtxkGr+uPGqyomNNwgdYLX
+ 2aAw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXHJKiFtLGkRgwErsJzssGv5siD/HGNRT9cZqisiiKEVvqzwfQd9YESdkKfjci1+HrijERIZJaS1aFF@nongnu.org
+X-Gm-Message-State: AOJu0YwRk4zMP8DuVVoLLxprhvTqYhfvXa/RJDFCdzXBk9izaqIpeAHu
+ 5u94aYyX/pceeh3tLiNrQOuF/hGLp95AF8Vz4UUWU/xfhRwahFNABs1FTI7SNPU=
+X-Gm-Gg: ASbGncu5EdicfTU0Muq0+pHvGbuYPkth45QDAHOeX8OZ/NTsIMANgdz13Dn18X0QhN6
+ 1xJkEkarUYY4rY+9kpGtQOc2W+38450To3J2I9SmgiAimI4D/W3n6p+bXk2ZlgNq/Ap3RuoSM9s
+ BjssTVO9J2+/bkKf4HHQkEZeZaiVQR2Dwa8mLMe7Qq6X/xB6hw2xg9FP1rDErCaktZ986zb8ie5
+ J6Q/Z5mgoNkOrEY9FlvR7ICEmeTiOmivCiSQJ6bVdDY11r3J+LFP04QSL5xGQCpt1MNbvnElpbD
+ Tw3m1LFq22C5/Kayak5gX/qwV2O284gsDVkKuZiGToYH+tsLUkQEcnxfMJvMfz6E
+X-Google-Smtp-Source: AGHT+IFFqDJly2PReIQnI9MexyTjMuZj1FVTobKJpRXXKAvNVtydr7sR7x6T1mbXIin1mhgeDzViBQ==
+X-Received: by 2002:a05:6a21:9981:b0:1f5:7f45:7f95 with SMTP id
+ adf61e73a8af0-2045b99afa6mr4061692637.27.1745603498463; 
+ Fri, 25 Apr 2025 10:51:38 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73e25941d65sm3598325b3a.63.2025.04.25.10.51.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 25 Apr 2025 10:51:38 -0700 (PDT)
+Message-ID: <667613df-e7fe-40ac-ad4c-b57c70b524ea@linaro.org>
+Date: Fri, 25 Apr 2025 10:51:37 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386/hvf: Include missing 'exec/target_page.h'
+ header
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>, 
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250425174310.70890-1-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250425174310.70890-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,34 +106,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Include "exec/target_page.h" to be able to compile HVF on x86_64:
+On 4/25/25 10:43, Philippe Mathieu-Daudé wrote:
+> Include "exec/target_page.h" to be able to compile HVF on x86_64:
+> 
+>    ../target/i386/hvf/hvf.c:139:49: error: use of undeclared identifier 'TARGET_PAGE_SIZE'
+>                uint64_t dirty_page_start = gpa & ~(TARGET_PAGE_SIZE - 1u);
+>                                                  ^
+>    ../target/i386/hvf/hvf.c:141:45: error: use of undeclared identifier 'TARGET_PAGE_SIZE'
+>                hv_vm_protect(dirty_page_start, TARGET_PAGE_SIZE,
+> 
+> Fixes: 9c2ff9cdc9b ("exec/cpu-all: remove exec/target_page include")
+> Reported-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/i386/hvf/hvf.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+> index 23ebf2550ac..da1dc66da07 100644
+> --- a/target/i386/hvf/hvf.c
+> +++ b/target/i386/hvf/hvf.c
+> @@ -50,6 +50,7 @@
+>   #include "qemu/error-report.h"
+>   #include "qemu/memalign.h"
+>   #include "qapi/error.h"
+> +#include "exec/target_page.h"
+>   #include "migration/blocker.h"
+>   
+>   #include "system/hvf.h"
 
-  ../target/i386/hvf/hvf.c:139:49: error: use of undeclared identifier 'TARGET_PAGE_SIZE'
-              uint64_t dirty_page_start = gpa & ~(TARGET_PAGE_SIZE - 1u);
-                                                ^
-  ../target/i386/hvf/hvf.c:141:45: error: use of undeclared identifier 'TARGET_PAGE_SIZE'
-              hv_vm_protect(dirty_page_start, TARGET_PAGE_SIZE,
+Thanks for the patch Philippe,
 
-Fixes: 9c2ff9cdc9b ("exec/cpu-all: remove exec/target_page include")
-Reported-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/i386/hvf/hvf.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 23ebf2550ac..da1dc66da07 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -50,6 +50,7 @@
- #include "qemu/error-report.h"
- #include "qemu/memalign.h"
- #include "qapi/error.h"
-+#include "exec/target_page.h"
- #include "migration/blocker.h"
- 
- #include "system/hvf.h"
--- 
-2.47.1
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
