@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3C67C369C2
-	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 10:48:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC3AC369C2
+	for <qemu-devel@archiver.kernel.org>; Fri, 25 Apr 2025 10:52:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8GbB-0002Qs-BQ; Fri, 25 Apr 2025 06:48:01 -0400
+	id 1u8GfW-0003fa-8W; Fri, 25 Apr 2025 06:52:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8GbA-0002Qj-1U
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:48:00 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8GfQ-0003eV-My
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:52:27 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8Gb7-00013E-U5
- for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:47:59 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-43cfebc343dso13754525e9.2
- for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 03:47:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u8GfM-0001Xm-Bi
+ for qemu-devel@nongnu.org; Fri, 25 Apr 2025 06:52:24 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-39ee57c0b8cso2257409f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 25 Apr 2025 03:52:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745578076; x=1746182876; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745578339; x=1746183139; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ypchpRLlfRQ09Ckjm2etbEojRQ1tDgJT3EJ3DeDQ64M=;
- b=OQyak3VNqNUveRCHhoQDf0OglpSoa4trE+rBA1Trz7xKjRkl133xkCkJbqXiKZAEJJ
- jjBQ3HPdKZ5DCJ6VD7MsFi+SfCaStEmFZpsqg3d9FuKD/iySjKPZuxV4qOM1U0gGf2Ev
- TeBzNnGtw3tFhAVqwn7SMo/iKlFIXQcNffp66r3/T2ywGYRq9MirCFXGGty0/vkog/4T
- 7UkHqFLb/mhZhDG1UM5225TIlle4HKCRw/kSXBp7HzhZ+IXFDtVbUDyr7GXTqnwnrfAN
- +AwrM1WKwjQwUS+SQCSm5rhvxo+rxhtB9A1wKtD5RhpZL5ferIMnNtd+n+6yMPxrp2ZZ
- gNmw==
+ bh=eso8jOrK5VodkMze1LgDrB6dXFF0uzS4SRH6lKFkbFQ=;
+ b=KWkELokj/XB8D/i5qSJdc2dTHs9RND1AN1xU4yPCMpvI+s73aikW/CIasJWimooqry
+ NjxKqdr7dRfvfd6dvu3/HkPomXMwF+0UdHuGTPZD9V2x/Rh7o2Xw9ePKMfIhtwMQs9PF
+ KTlidfZGpp2mJrnwPEs4rijxXevHHuYlHxjmos9JvRMht63Drs92FM3R//yj/t/vY9NY
+ /kHXXBgPnxv3FX8KoHAN6DnhoxnVVkDbVKuBdSOkIEToauWiHVWl/kORF8MUIQFa8JlQ
+ 6guWMyDPCjHuY1anFAysmYm1nOhr8SiU4Nuhh1UufTz2TkZL19XaZV1m5mpneQK6EeT9
+ zzaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745578076; x=1746182876;
+ d=1e100.net; s=20230601; t=1745578339; x=1746183139;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ypchpRLlfRQ09Ckjm2etbEojRQ1tDgJT3EJ3DeDQ64M=;
- b=pw6b/UCjeghLF7glPMvdzCmwD08n8zd0Q+uUrsLBQ7z+YIwipz4gMAFcTTysMnPDVw
- E5qzr0gO4DnlZWdsU9chYZi5HcK8djEXDzGtntvmRh0105regXo9hz2cehXEa2tHHNk3
- KocuBadHSMklY8deCf4sedUvpbRP4r1ZopRV6UR/IaeFVXEMLHSI4ek/eqnBDFQKT858
- C0qjv963D+i5G7489QuiO/Cg35wyo/2CrNfU7+ne6g/EaxBVyZxossX4V6gxqt8BuSfg
- hKiKEAAOjGcwx/k8zorK+Kjrxii/3c9dM2HJq35ihNqaM/01VWDI6bqafEYawtvcFmmQ
- e/VQ==
+ bh=eso8jOrK5VodkMze1LgDrB6dXFF0uzS4SRH6lKFkbFQ=;
+ b=QDXe/VUvbtyMU/mTbgoUAo1YrCRtJ2DKnY2/LjGe5Tl3GQ22BkuL4+j89DKWKSHbXW
+ 1Wbh084KYb6HS016DDLAgJGR7FBZ23uzR3pjdZBXTtDQ9XiabB+nmqOIU/FQgHU3UwRH
+ 3Ay1Q5uo+ielO6DJsM9SB9WHNPA8S5g0yuDdb6+FDaJ37f646S1+VtLkAJGzL7KPwC2m
+ qUGJcf5QSll2pl5etSre74P8PUxn8SiELQhxKGCLMm30PHofOcCGivbYJhL6v1CGr4nN
+ 3zPMVEtpEYhdWpJquOVPV+kWllYbU1jx2BpCiko6Cgxgm4uG0vV3MreW1N1fTHUfJW0W
+ 74cQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUkZzMM0097il32R+nwOq3QO5B66I/YOYmggBUTOVydB0pxHEROF+z2xrnmcVc8zR6rTFJzFgYQxzt8@nongnu.org
-X-Gm-Message-State: AOJu0Yzs0eb9lsUB/16pYRp5bfrLJ4NrFTwLgp/ef53i2Lo0QFishVoS
- BSD2levPxRDUsBuehjwP60ddvTaYX7XkVXeYzltEa4Cqj0BgLCiPkGMfum4RRjY=
-X-Gm-Gg: ASbGnctWYmeOBEQ5ba9DnfSwRpSZmo3sIjyloDbURI53Qb3DpvsN+082Cmoex4MlBF0
- mAOrg0Ny25ObFgdjrufNC59KGzVofRbqj0E+BwMGmT70PSXA3p0hFwW9nEMDSw8r+X4rBzxvUba
- 1EhsT0JHCxtjrTaSbyiay8ayHQYcFphBQ0cqSauRXhpQedjF1dqtbPbgXTZ3D9hLda9K+cRbGWY
- JMtepFy9Vr+cMcNsfHAIS8glSZoYlcDnsuTwqnbsld4/TLjcK/ma6VQWajrpoiCgtcrkl9R0aCM
- 1oT7dm+9IABn22g7cSt/dygndOo0h+fC7TDADqvxnFva/CYdzepxXS7JGIsy0gwkYKs8WHivVEm
- mZTWrAiIQ35jhBpfa5HA=
-X-Google-Smtp-Source: AGHT+IFtN7YhPZ/m4QZIp9s3D6nh1kUmHcc7xnhZ2BLHqhEB2Zf3fkTPWykjdryZPRRJofdvthWJSw==
-X-Received: by 2002:a05:600c:34ce:b0:43d:fa58:81d3 with SMTP id
- 5b1f17b1804b1-440a66b0803mr13762205e9.32.1745578076248; 
- Fri, 25 Apr 2025 03:47:56 -0700 (PDT)
+ AJvYcCWlFz9EnecWwD59Rlo/y46hf2LYW2b5XLRKxv+kn1kGjwL4hJvnWGJSs8L8ENhmABkdP/3rTh9inzhy@nongnu.org
+X-Gm-Message-State: AOJu0YxbVkffuQeYuVGfoGyqxlIVFvlEGCNB+CZ0W8vDd+8jrV8a9cFf
+ vrwOpwt3DjTltRsJ4ylJ5Ez06tnUZA/fUQQ1G/pbtcRu09E1mtqIPrADCkVeMldcKzS7FxjSvAn
+ 5
+X-Gm-Gg: ASbGncvU5z5A6i8kCa+ovZcl+B+H9T6mfCrglyY5UEkBKfPc/FlOBRSjeLSNPG9et/B
+ in33OvwWnUfCIs9ZU4syOW7vMT40SNfNEumkNJPWImHSezeSM+s56XaaRAxkeaEn3AfdP6AIZN+
+ HoD/o11YIrjtKucf86XvSYbGzVHrse0rX2qAHjoAR/KaB3qeGNKIn39/19UCA4b6ntH134IdPme
+ ptjdBEkGlt2/QoJ9pCW4muV0XNXu3b8ZjepJ+jJlv7Q5woI6gKzEV5WtFvEUNY0oNKEqbljwq/D
+ 4MrXyJW7WY23DdTlGWupeTdk/rEQSXn74UhObbxwd/k+XtQkfojVg572y2pqAgHI/UddLcOp3Rc
+ 7mW0dQQsa
+X-Google-Smtp-Source: AGHT+IFqmkOYxBeBqaq8D77M3QmxL32pwgNeWTCawEbgbcw9TUXZFn6PZZDemblDmr3zJYaGdri9lQ==
+X-Received: by 2002:a5d:6da5:0:b0:39c:13fd:ec44 with SMTP id
+ ffacd0b85a97d-3a074e14995mr1489718f8f.5.1745578338720; 
+ Fri, 25 Apr 2025 03:52:18 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-440a5303c68sm20472955e9.12.2025.04.25.03.47.55
+ ffacd0b85a97d-3a073e46a49sm1983531f8f.61.2025.04.25.03.52.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 25 Apr 2025 03:47:55 -0700 (PDT)
-Message-ID: <0604a5c5-3db0-43f7-a747-9d731bda28e8@linaro.org>
-Date: Fri, 25 Apr 2025 12:47:54 +0200
+ Fri, 25 Apr 2025 03:52:18 -0700 (PDT)
+Message-ID: <ca139831-0461-4fe2-9639-89d1020f4f63@linaro.org>
+Date: Fri, 25 Apr 2025 12:52:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Move device tree files in a subdir in pc-bios
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-devel@nongnu.org,
- "Edgar E.Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Michael Tokarev <mjt@tls.msk.ru>, Thomas Huth <thuth@redhat.com>
-References: <cover.1745402140.git.balaton@eik.bme.hu>
- <f3501944-f278-45a8-91a7-0dab5a5416e0@nutanix.com>
- <dc690610-8484-4da0-9233-74d711f263cf@linaro.org>
- <aAjTT6qRwp139RII@redhat.com>
- <fe7faa77-6480-b6cb-fb7e-b0ae17735646@eik.bme.hu>
- <aAjlEd5aSx578AJ0@redhat.com>
+Subject: Re: [PATCH 0/4] meson: Use osdep_prefix for strchrnul()
+To: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Cc: Eric Blake <eblake@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ devel@daynix.com, qemu-stable <qemu-stable@nongnu.org>
+References: <20250424-buildsys-v1-0-97655e3b25d7@daynix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aAjlEd5aSx578AJ0@redhat.com>
+In-Reply-To: <20250424-buildsys-v1-0-97655e3b25d7@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,119 +108,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/4/25 15:03, Daniel P. Berrangé wrote:
-> On Wed, Apr 23, 2025 at 02:54:26PM +0200, BALATON Zoltan wrote:
->> On Wed, 23 Apr 2025, Daniel P. Berrangé wrote:
->>> On Wed, Apr 23, 2025 at 01:23:28PM +0200, Philippe Mathieu-Daudé wrote:
->>>> Hi Mark,
->>>>
->>>> On 23/4/25 12:18, Mark Cave-Ayland wrote:
->>>>> On 23/04/2025 11:02, BALATON Zoltan wrote:
->>>>>
->>>>>> Simple series doing what the subject says.
->>>>>>
->>>>>> v2:
->>>>>> - Added changes to qemu.nsi (Philippe)
->>>>>> - Changed order of enum to keep it sorted. This changes value of
->>>>>> existing define but the value is not relevant, always used by name.
->>>>>>
->>>>>> BALATON Zoltan (2):
->>>>>>     system/datadir: Add new type constant for DTB files
->>>>>>     pc-bios: Move device tree files in their own subdir
->>>>>>
->>>>>>    MAINTAINERS                                |   2 +-
->>>>>>    hw/microblaze/boot.c                       |   2 +-
->>>>>>    hw/ppc/ppc440_bamboo.c                     |   2 +-
->>>>>>    hw/ppc/sam460ex.c                          |   2 +-
->>>>>>    hw/ppc/virtex_ml507.c                      |   2 +-
->>>>>>    include/qemu/datadir.h                     |  11 +++++++---
->>>>>>    pc-bios/{ => dtb}/bamboo.dtb               | Bin
->>>>>>    pc-bios/{ => dtb}/bamboo.dts               |   0
->>>>>>    pc-bios/{ => dtb}/canyonlands.dtb          | Bin
->>>>>>    pc-bios/{ => dtb}/canyonlands.dts          |   0
->>>>>>    pc-bios/dtb/meson.build                    |  23 +++++++++++++++++++++
->>>>>>    pc-bios/{ => dtb}/petalogix-ml605.dtb      | Bin
->>>>>>    pc-bios/{ => dtb}/petalogix-ml605.dts      |   0
->>>>>>    pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb | Bin
->>>>>>    pc-bios/{ => dtb}/petalogix-s3adsp1800.dts |   0
->>>>>>    pc-bios/meson.build                        |  23 +--------------------
->>>>>>    qemu.nsi                                   |   2 +-
->>>>>>    system/datadir.c                           |   5 ++++-
->>>>>>    18 files changed, 42 insertions(+), 32 deletions(-)
->>>>>>    rename pc-bios/{ => dtb}/bamboo.dtb (100%)
->>>>>>    rename pc-bios/{ => dtb}/bamboo.dts (100%)
->>>>>>    rename pc-bios/{ => dtb}/canyonlands.dtb (100%)
->>>>>>    rename pc-bios/{ => dtb}/canyonlands.dts (100%)
->>>>>>    create mode 100644 pc-bios/dtb/meson.build
->>>>>>    rename pc-bios/{ => dtb}/petalogix-ml605.dtb (100%)
->>>>>>    rename pc-bios/{ => dtb}/petalogix-ml605.dts (100%)
->>>>>>    rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb (100%)
->>>>>>    rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dts (100%)
->>>>>
->>>>> In previous discussions we've had around what to do with pc-bios, wasn't
->>>>> the consensus that we should aim towards dividing up the directory on a
->>>>> per-target basis? I'm wondering if this is going in right direction, as
->>>>> I can certainly see that a per-target split would be more useful to
->>>>> packagers.
->>
->> One problem is that pc-bios doesn't only contain machine firmware but also
->> card ROMs which would belong to more targets (or archs) as e.g. PCI cards
->> work on multiple archs. So it's not trivial to split by target, you'd still
->> have a lot of files not easily assigned to any target.
->>
->> This series is in preparation for another that will add a dtb for pegasos2
->> and I did not want to increase the mess and took the opportunity to try to
->> tidy it a bit. I don't intend to do any major refactoring of the pc-bios
->> dir, that's out of scope of these patches.
->>
->>>> pc-bios/ is already a mess, packagers usually take it as a whole. This
->>>> series isn't making the current situation worse.
->>>>
->>>> I don't recall a per-target split discussion, but one moving firmware
->>>> blobs out of tree in a more adapted storage like git-lfs.
->>>
->>> Talking about the pc-bios dir in general is a bit of a can of worms
->>> and we never make concrete progress historically :-(
->>>
->>> Probably best to split up the problem to some extent.
->>>
->>> The device tree files are conceptually quite different from the
->>> 3rd party pre-built firmware images, which are diffferent from
->>> the keymaps.
->>>
->>> IIUC, device tree files are tied to specific machine types, so
->>> I wonder if they should not simply live alongside their machine
->>> type .c impl file, completely outside of pc-bios ?
->>>
->>> eg
->>>
->>>   petalogix-ml605.{dts,dtb} live alongside hw/microblaze/petalogix_ml605_mmu.c
->>>   babmboo.{dts,dtb} live alongside ./hw/ppc/ppc440_bamboo.c
->>
->> You need the dtbs at run time and the dir where we can look files up is the
->> pc-bios. So these need to be installed there at the end. We could scatter
->> them around in the source to put them next their machines but that would
->> make installation of them more difficult than having it in one dir.
->>
->>> For the keymaps it feels like an probable easy win to move them to a
->>> ui/keymaps/ directory instead.
->>
->> Currently you can run a git build directly from build dir and it will find
->> the roms/dtbs/keymaps. You can also run a binary copied elsewhere if you
->> pass -L path/to/pc-bios. Moving things out of it would break this and may
->> cause more problems than it would solve.
-> 
-> 
-> This is just describing a limitation of the current resource locating
-> implementation. For running in tree there's no reason why we can't
-> look in a different directory for keymaps/dtbs - we just took the
-> lazy option historically of putting them alongside firmware. That
-> can be fixed.
+Hi Paolo, Pierrick,
 
-That can still be fixed later ;) I'm queuing this series as it tidies
-a bit the pc-bios/ directory.
+On 24/4/25 06:50, Akihiko Odaki wrote:
+> macOS SDK may have the symbol of strchrnul(), but it is actually
+> available only on macOS 15.4 or later and that fact is codified in
+> string.h. Include the header file using osdep_prefix to check if the
+> function is available on the deployment target.
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+> Akihiko Odaki (4):
+>        meson: Use has_header_symbol() to check getcpu()
+>        meson: Remove CONFIG_STATX and CONFIG_STATX_MNT_ID
+>        meson: Share common C source prefixes
+>        meson: Use osdep_prefix for strchrnul()
 
-Regards,
+If you don't have objections, I'm queuing this series as a hotfix
+because multiple users are complaining building QEMU on macOS fails
+by default. Unfortunately Apple made their SDK change the week we
+released v10.0.0, I recommend it gets in v10.0.1 soon enough.
+
+Thanks,
 
 Phil.
 
