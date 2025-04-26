@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64ACFC369CB
-	for <qemu-devel@archiver.kernel.org>; Sat, 26 Apr 2025 06:37:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49E5AC369D3
+	for <qemu-devel@archiver.kernel.org>; Sat, 26 Apr 2025 06:39:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8Z9U-0006DG-Q8; Sat, 26 Apr 2025 02:36:41 -0400
+	id 1u8ZBp-0007HV-Kq; Sat, 26 Apr 2025 02:39:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u8Z9S-0006CY-E3; Sat, 26 Apr 2025 02:36:38 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1u8ZBn-0007Ft-8a; Sat, 26 Apr 2025 02:39:03 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u8Z9Q-00084m-9l; Sat, 26 Apr 2025 02:36:37 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-3031354f134so2575504a91.3; 
- Fri, 25 Apr 2025 23:36:31 -0700 (PDT)
+ id 1u8ZBl-0008Dh-Jk; Sat, 26 Apr 2025 02:39:03 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-73bb647eb23so2623848b3a.0; 
+ Fri, 25 Apr 2025 23:38:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745649390; x=1746254190; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745649538; x=1746254338; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7/DYVcSZH+ZAOykmkKdDPPXfsHSN4FIgsDv2mq8ftDk=;
- b=iCVIGAbIltzIgM33pC7lQtK7m4dPXxwqcExomcSYvaSipipO83JK9mjEUPAxxFa/eF
- 4RP8secAR838B/fzqxv0KJCitFPrnH+BPk6+XqEBQtalLRAAhtMHzqnKvUsZurCv4aKf
- RLBGgUespxDILqrGXkWnU+4zFJxcmFRP0w84BT4UyCw1xGIVAjlwvvgcRLS5+6xwECqc
- SDKn3RDSAM7kICitpXsCkH6JDseHxqhKtk8+B1h7T99l8FHx3rkcb3sNoMTH18saxm7w
- /xO+P4jA0NPEv4NDY280WdpvdSk874zhirV8MqYxKHtm0qnPoq7+BdTWDcuI0KAGsc8Z
- 5+yw==
+ bh=/T1LZKwySduyRo2h0IOtfFdSgYkIBmpQV9h3xYV3Y5s=;
+ b=Uy+DFBUC4ZFiBKmjMxba0PB/7EgLeKm/O1lCXGD2RHNx8RSqhGkLeF0tmZv1uQTGxG
+ 6UKIaVjMuEPVZaDrFWWG/DnVzPHxTAqpWzYtM9HqetMtWBwM3tngB5zPCsEARp/kDDxr
+ eVfmRuo4rdFE75f3scB2DXhxRICUrmbWtfJLdUr5BFuyZEc0HohjBFPh53F159PmAQ1x
+ Hdx6sm2ea82v2TlmsGXcXMuKeJoIIFCvLFsRaDpFr4ekdTQYoy45deiP4x/J+AeYAoil
+ K6DM7kk4eB216pMzMpicdi8WVeoSpa3yeyVzUFqC25CibaBO/t6c/GLhP7f/hJtAylB7
+ O+Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745649390; x=1746254190;
+ d=1e100.net; s=20230601; t=1745649538; x=1746254338;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7/DYVcSZH+ZAOykmkKdDPPXfsHSN4FIgsDv2mq8ftDk=;
- b=IimPoj0JWYjV6AB3PKNFn6jkCTAIn8ePGkMx/K8iQGhiiHdvcSlT1MAwaYMeQn9Szq
- +f+Nh6Pd3BTaRxonlSd3noBvVveezsD4m5MFEtQqozPReXlwu8VWrRVxaMk31KrrzPFh
- mC22Z3t9VjbsEC6XUR91kcvzpuvvL+wTH7qbgAg+VTIY5uXWQ4N4e0pk0/c3mbp78quh
- uZBBg3yaLCv5plzzglkfgIWOZJY8uB9DtYw+TvTSAG+zmdnkbu86Z3gMxK3jklVjK8oQ
- /D8RhgE0izEVRr3MlZz6AdVavsy4V36CAEg9N1ZPy3S0qlARH/uSIl7CAgV65UxELznA
- jH+Q==
+ bh=/T1LZKwySduyRo2h0IOtfFdSgYkIBmpQV9h3xYV3Y5s=;
+ b=fK3EM9UyeBmIgar54nZjUTPRAOJ5rp0xxTr768YX4dgH0hdiXC0Rs8/W8vC4xqJL2G
+ 6B+brgDnzilTu9rJlqzUDVqPvodfzKBoZdmqHmpIgkr195bbBlUd5kuGnk78oRYvoIS0
+ Sy8JGOtau021lNTO+WBH+i9hGOTtfZN9fYTg7XVhkF6rALaFkP/jp1gD/Okb9FZYCwuH
+ MC5yaTxXMrs/O9D0+L+hw/qZ5P5JjvKqlrZC6LCZDmIcRA4jFVeysf9/swY6nCRaz0qf
+ X9BddjeCy7rfZBtfM9gTqLwcCGkv06zu17oYhe5REjrtMgKKwhhG+Lc9p+ztvUYU/kIc
+ B/7A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU26Gn4HnE17OV9tBNc8oQyVVbqumSCZLgmOhYSrwWYLhngum0m4L6Lf4becUgYIB/YweACrV1+lMg=@nongnu.org,
- AJvYcCUEj06hNYI5g1P+yVLzuEI7ShJ6iRDHpfqpXCuvX6/FWkFxQUZjxmTCtq5NQUX9t29vfqhyFyPcUA==@nongnu.org,
- AJvYcCWDbEsyAid96FOYr0M5nb3ZbffO4KQT/ktwFagQg+8vvpATm20al4IX5dqS7rqskN5DBjctHJ/6LePtrQ==@nongnu.org,
- AJvYcCWRkiDk6Ye9WYWM8eIv5VNFAF+EaUPKavpIC8bRpUBr1M8ajQxaxN4jBc9cl08LCe9ecd1dAVYAPHvbxQ==@nongnu.org,
- AJvYcCXBNuGXCSzZfuFd8fLkNZvk1NC+X/BuLc+98ytsDJYtPdlMolPzOb8yyvsQWMetGQCRu5rksxMg7IqKEQ==@nongnu.org
-X-Gm-Message-State: AOJu0Ywfuk0Opfa+XZOtrjDzLGtAt3os3H/cpOJnHFwBBWoycjxsqnCn
- S3oMm/nZgc5QOg4ts+BqlmxoS9na4M09Ru26Ko74mGcdudUlneHSwQ4kKrji8OVsLQWBBiawv7C
- +Jsega4kskUglQ9IhlWcjCZ7RTos=
-X-Gm-Gg: ASbGncuaUK20RVbvNAvAvmi5+8ZOMnIlUGG14dVS/1kjgXmoNQ9TBqBXFtxi1/ms1F1
- E2ngAQHzCRzh4kpgGCVGrAh0XP8Dw/jw1HyL7LCI+PjIr37HXKJUdEggDR55MRAb5TyigOSJaiL
- vXtHy5+gtxXK2MIxEgpqZLzNGDAF13e4r7ChaPu3wXHOGInwGntTgt
-X-Google-Smtp-Source: AGHT+IHMcheiRX7erJEHMS9wBhZL3GAzAbFVYxcWM3rTtUBOTQfuoJgV8JtbSD2j87Ul7lrwoc20Wvu5/d2oBjfRKdE=
-X-Received: by 2002:a17:90b:5101:b0:305:2d27:7ba0 with SMTP id
- 98e67ed59e1d1-309f7d87675mr7518197a91.6.1745649390456; Fri, 25 Apr 2025
- 23:36:30 -0700 (PDT)
+ AJvYcCU1lPlo8u58ubQ/nLj8qI8DXmBfUc6lONFSxbHsiuJixSctZ5i9F6tojpB5Yz/tiY5ckPRC5Le0J42ZuA==@nongnu.org,
+ AJvYcCUzydWbhmJmu57iLAMY1x9bX1J8byeDJw2QI5ai+u1OpAfUXE8vrmJiTkNNzhWYo3dXH/NxWdeD3Q==@nongnu.org,
+ AJvYcCVHWMv4wn+3EJMcYS1B0E3U5gAwmCg9fQy//Rbq9wUxzV/USXtfBNpJWfjqiMJh0ZQDNhrAH9Yb0Bp3uQ==@nongnu.org,
+ AJvYcCW+4aY2ALYwO7e7GJ8ng8T5x2YrTueh4u3hu3oXzPAgh+qIyumAipMM0z5biryveTJJsRnmIxutj4g=@nongnu.org,
+ AJvYcCXLmWAot+jtuAlL7fmnpkezN5Ru+mQUDSlq3mtUCjPJxL5qrLu4gt4lJkPxIYTdeEAKjBq4E12igiEGhg==@nongnu.org
+X-Gm-Message-State: AOJu0YywFLsKtZ3CL4nuGFDtXaM8HFqZylYq02p5A/IzY+iwNBHGDs/1
+ +79EneH6jWAjmZX7pu+YVAuxq3g0f+AZVTLseKs6/bTmpwijuujUcmaYFgGWxj1asH7dBJYNyN/
+ yzXhiKiC/fLreQ9BXeh5YLicAkj4=
+X-Gm-Gg: ASbGnct47M86xsUiLO8kldLWeOnISMUzhis8B7H2ILRVNPjGb043yclon3P+6v/KZMg
+ RGoVIMaNuE4OxCCQ9zl4oYwLZjX+EwQe1nky0QFQNttHoyf1yiA+v6xUZsmLhv7iIYV8qqrgklc
+ 9cbj/RNyP7uPaxluEi+ANcNnEb2/IWe8FBm/UrByAbTVwgzfVy/tbR
+X-Google-Smtp-Source: AGHT+IHPfSQkkpkcBFSfcIVQOJdr8vuupIRlsf58kYnTZTu9jfM8osjgQAZcyGwfjotTwU7n4se3juPAMjXfY/btnLg=
+X-Received: by 2002:a17:90b:3504:b0:2ee:f22a:61dd with SMTP id
+ 98e67ed59e1d1-30a013bac35mr2692858a91.32.1745649538523; Fri, 25 Apr 2025
+ 23:38:58 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1745295397.git.ktokunaga.mail@gmail.com>
- <edc1b2ac9a26dc5bbf9a3897e842fbb36c69ea87.1745295397.git.ktokunaga.mail@gmail.com>
- <06c52d58-1b12-4036-b243-91be7a1b841f@redhat.com>
-In-Reply-To: <06c52d58-1b12-4036-b243-91be7a1b841f@redhat.com>
+ <01b21c849b459660453eb905d12ff0da4c65f53c.1745295397.git.ktokunaga.mail@gmail.com>
+ <5b7afc3e-d5d3-4485-96ab-a1b212644607@linaro.org>
+In-Reply-To: <5b7afc3e-d5d3-4485-96ab-a1b212644607@linaro.org>
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Date: Sat, 26 Apr 2025 15:36:18 +0900
-X-Gm-Features: ATxdqUENhsWBICk9wxb3d5lIslSKZKSH5r1a65cIaeR_TLmUoy57ps7Ep6Mfc3E
-Message-ID: <CAEDrbUbq=r_xuKcBLJ+1p5O4rkVVfaq_q5gP7pDuei_5+zCBSg@mail.gmail.com>
-Subject: Re: [PATCH v2 10/20] include/glib-compat.h: Poison g_list_sort and
- g_slist_sort
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Date: Sat, 26 Apr 2025 15:38:47 +0900
+X-Gm-Features: ATxdqUEudJEQciex8VkQsUG2VLwhDymMM4jg3D4EAR_WFlPPRlIFWXCgzUkbd-w
+Message-ID: <CAEDrbUZrPSBezgUpVfJC8-R0ED9yLMB5YYu5e_zd9jdnd+5CKQ@mail.gmail.com>
+Subject: Re: [PATCH v2 04/20] target/arm/helper.c: Fix type conflict of GLib
+ function pointers
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org
 Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>, 
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
@@ -91,9 +92,9 @@ Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  qemu-block@nongnu.org, 
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000d212ca0633a8ab3e"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x102b.google.com
+Content-Type: multipart/alternative; boundary="000000000000a567c50633a8b425"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,26 +117,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d212ca0633a8ab3e
+--000000000000a567c50633a8b425
 Content-Type: text/plain; charset="UTF-8"
 
-Hi Thomas,
+Hi Philippe,
 
-> Cosmetic nit: Multiline comments in QEMU should start with "/*" on their
-own
-> line.
+> Why not use a gpointer for @d like in other patches?
 
-Thank you for the feedback. I'll fix this in the next version of the series.
+Thank you for the feedback. I'll fix this to use a gpointer in the next
+version of the series.
 
---000000000000d212ca0633a8ab3e
+--000000000000a567c50633a8b425
 Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Thomas,<br><br>&gt; Cosmetic nit: Mult=
-iline comments in QEMU should start with &quot;/*&quot; on their own<br>&gt=
-; line.<br><br>Thank you for the feedback. I&#39;ll fix this in the next ve=
-rsion of the series.<br><br></div><br><div class=3D"gmail_quote gmail_quote=
-_container"><br></div></div>
+<div dir="ltr"><div dir="ltr">Hi Philippe,<br><br>&gt; Why not use a gpointer for @d like in other patches?<br><br>Thank you for the feedback. I&#39;ll fix this to use a gpointer in the next<br>version of the series.<br><br><br></div></div>
 
---000000000000d212ca0633a8ab3e--
+--000000000000a567c50633a8b425--
 
