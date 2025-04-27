@@ -4,90 +4,205 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97F81C369CB
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 02:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D0FBC369CB
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 02:28:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8rXa-00019g-9z; Sat, 26 Apr 2025 22:14:46 -0400
+	id 1u8rjl-0003eE-7m; Sat, 26 Apr 2025 22:27:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1u8rXZ-00017R-1K
- for qemu-devel@nongnu.org; Sat, 26 Apr 2025 22:14:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1u8rjh-0003V5-5X
+ for qemu-devel@nongnu.org; Sat, 26 Apr 2025 22:27:18 -0400
+Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1u8rXW-0000Yh-Du
- for qemu-devel@nongnu.org; Sat, 26 Apr 2025 22:14:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745720078;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xW11uHN7NofLdIpNe75aZ1RurFZcalms+AcD3FQWSP0=;
- b=XpHfeYZP9kz5xMFtInFdHr4wzJRtNdNMhKv7FznikqG7hvIdr8QHX+l61orrPC3SAX8r2s
- TDRYb7scF5id61Fk8+F+syL2UFMr0sh6UF7/B7JTs0W9R32c/qrq1E5s90sqQtxviIA8w/
- 8+aRFoOaGXpFbYhl8VMaO/bZblsR9Ew=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-438-KMa7XRKMN2ejKEqn0x5m0w-1; Sat, 26 Apr 2025 22:14:30 -0400
-X-MC-Unique: KMa7XRKMN2ejKEqn0x5m0w-1
-X-Mimecast-MFC-AGG-ID: KMa7XRKMN2ejKEqn0x5m0w_1745720069
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ac3d175fe71so227526966b.0
- for <qemu-devel@nongnu.org>; Sat, 26 Apr 2025 19:14:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745720069; x=1746324869;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xW11uHN7NofLdIpNe75aZ1RurFZcalms+AcD3FQWSP0=;
- b=QcpUa1ZXkjpLBZ3YTc7EaM4PL4zQSHQ2bIv0OD9nxfN20zfG3APcLAwviEAF5MbxhA
- vUPmsOccLjHsU6xNmejPjclKNozHwDaD7cnRkSamx52rrD7AT0h9vtThXyeocTmKnHac
- VlN+LqRj81+pEufj74PL1sjuOwGyiBLDrvY4WPnCA9M1GujR6IMac4ERozSO/mR+Ii+Z
- mXgWzjB7wFKneyFispvXpv+64VAjMKRDRqs5NIiN/i4v3uKd5elmVQvZqDNFqghNureA
- hewSsxQBMwq0uHLCEtHzTFqMsmhwgbZ2XqX9hThL7/iCgWuaOuEjIiejDKmn5beG9xrE
- gptg==
-X-Gm-Message-State: AOJu0YwjLM5Pfd5DkgjaFgrCEj9wwoV4WVA9vFv/5WTJxIPcI+7nMPrK
- tT9bieoMVlfWoLVD37A5p8CFwbNDF0L7IcExBD1pLimiCUI72jEeEDXY/ysNKaoZJtarBQg5vN/
- gpBLCgn9mElTfahqwSP+2uPbAkIk3tK9JTAELJrki1KLGkqjb/1D9V8/IOFnF406b4UoxbghKjL
- CPqhwQLJZDFaB3Eid6V7nfhvj1CTQ=
-X-Gm-Gg: ASbGncsEX61KkLhRAyl9Hc4Y0Kxb4L5Ka8kYDWBVD3ftRoz2DrjNrwquESXVjRBe0k/
- xPLbtk22sD3iTDkFvUHuDquZ8F5BAF4hyYd+kUn14aMuZf/7QK5NKAmA2xOtwhFZ/bh/SGA==
-X-Received: by 2002:a17:907:9405:b0:acb:39c6:3974 with SMTP id
- a640c23a62f3a-ace71047902mr712324166b.5.1745720069424; 
- Sat, 26 Apr 2025 19:14:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHb6O7Q0rHzgQmVPZEBXVdPmSHAmqMrsPCJ1zlP162aN1Kk67Yzl1tv9HiZaqcou6ZaJ1CmaCJ0IMNiQ2SRy/k=
-X-Received: by 2002:a17:907:9405:b0:acb:39c6:3974 with SMTP id
- a640c23a62f3a-ace71047902mr712322866b.5.1745720069104; Sat, 26 Apr 2025
- 19:14:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250424-reapply-v2-1-d0ba763ac782@daynix.com>
- <6hrijekkhh53kyckihqv5sbkcfzqry43xt62imjq4j52jk6tqc@zmr4lquiq3k5>
-In-Reply-To: <6hrijekkhh53kyckihqv5sbkcfzqry43xt62imjq4j52jk6tqc@zmr4lquiq3k5>
-From: Lei Yang <leiyang@redhat.com>
-Date: Sun, 27 Apr 2025 10:13:51 +0800
-X-Gm-Features: ATxdqUFFUqOwdepbWGj-zswU9bjDuqK0560HVDeY2FWDjmhtlCoO6Pmxr9tpBYw
-Message-ID: <CAPpAL=wFdQoR9p9BeiKTMrtwXbUs46c3O7d2G7N4fm6oShx4fA@mail.gmail.com>
-Subject: Re: [PATCH v2] virtio-net: Copy received packet to buffer
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, Antoine Damhet <adamhet@scaleway.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1u8rjd-0002BS-ST
+ for qemu-devel@nongnu.org; Sat, 26 Apr 2025 22:27:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745720834; x=1777256834;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=ohGhC4nxkgvliUvalrALSM916H+Cc9KP45Xe3ht205k=;
+ b=JZeUFItRl7fA8TrZYF7nroR2uuyfoCymVpDvGg4qpeq9gEtc7M6fVrdT
+ iXYz0mcm4QS9ssQOqeYi4Ic4kIebVpq2QqnowiaSZwicnTQ5RCZ9BBWAq
+ /Ye2GrBZV68y+eUdY5Tza3I0K9uWrmeA3RARgw1Rj0XDhjitesmqnpiS4
+ na1Fd8d6j47oGDY/DLvaitb2DFujly7b39taV4vKLurLO7kiG/YPn/l02
+ nX+0SupCcca8EnZ5/LWGR9iseWoDGXCiyCdITtl1VrW+8ftSM76SzdLgv
+ FSDaqu48+AptPb6kyTSqziQ9SQF/In8FNc6ktlZsA/MGnEvKKRrrVpMEB Q==;
+X-CSE-ConnectionGUID: 5ZExXorvTAC7GAxKvLbTMA==
+X-CSE-MsgGUID: dNu/bDLnStSeo1JWL2MMpw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="58700667"
+X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="58700667"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Apr 2025 19:27:11 -0700
+X-CSE-ConnectionGUID: V/ajIFOmSBy0cidPwfC/Mw==
+X-CSE-MsgGUID: ZZ1M2G7UTZqG7dvZmAWNxA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="138364799"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Apr 2025 19:27:11 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Sat, 26 Apr 2025 19:27:10 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14 via Frontend Transport; Sat, 26 Apr 2025 19:27:10 -0700
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.44) by
+ edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Sat, 26 Apr 2025 19:27:09 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PV7O6sfPDJN1xtHLm19EuxtHcADOOe+0o8uArRWsgUZ8O03YF0eMnrxDoH1XasIYEEJNntmImpsDKf2aQJYfdtPV4AkLCi5FkRKyBICHCuQpa1Eqj4hKvW59fFj+kAl/wKrRwZYOi0VFgfdEcHUYUjAJIPo5W0CaOK3pctYzmLAVJW0vCE4o45Bs5e/gtSsEsg/u/iwi+L15jY924Qg2exgleUFhXwV+2KGF4Jz6i0McNNuMs/3xiV5HjiGPbsbalEhzy/4ck5r+lP3AvT7D4BtZvO58d0yuRF+PRBeRe011jOz+YP3AXVYoQzjkw6j3LO8HFAL2JdR0iayy2a8y2A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sH1btQOxBPI7BRTvmWiXQRmZWnVFSZDyPGSOVBbTmgc=;
+ b=UGCEcayUDw6wRErSRotNfuRru8vdKbMcsHcqbBZK/vsf3Z1jVhcyXyaQuEJfPCQC2htv6lkcOkrofxtMFq2DHPeeKtl1tTtfg8CZ7pcmRQOsDZiogvhOtMKI4B3ApmM6xqkBG9JRFKLzWBV/lbgpyOb3YhfB5192aBHQp8ntw5OzGC7B9whS3yektBdaEMwP16b3JOmBuNDU3YTr5Sp4zLC6orX31VwLbgeoPg6vX+Xh80/em9ZnYTJ9w91sHYz/46u2QoxuKPiXNqlE/76s4wgRwnYHze3B1qGtjUX3uQlrBlOcKmeaM8HgpEML9FRTeVZlox7xgF+y0Uip63mkZg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ IA0PR11MB7862.namprd11.prod.outlook.com (2603:10b6:208:3dc::8) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8678.27; Sun, 27 Apr 2025 02:27:02 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95%4]) with mapi id 15.20.8678.028; Sun, 27 Apr 2025
+ 02:27:02 +0000
+Message-ID: <c7ee2562-5f66-44ed-b31f-db06916d3d7b@intel.com>
+Date: Sun, 27 Apr 2025 10:26:52 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 10/13] memory: Change NotifyStateClear() definition to
+ return the result
+To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>, 
+ Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
+ <dan.j.williams@intel.com>, Peng Chao P <chao.p.peng@intel.com>, Gao Chao
+ <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao
+ <xiaoyao.li@intel.com>
+References: <20250407074939.18657-1-chenyi.qiang@intel.com>
+ <20250407074939.18657-11-chenyi.qiang@intel.com>
+Content-Language: en-US
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+In-Reply-To: <20250407074939.18657-11-chenyi.qiang@intel.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.738,
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: KU2P306CA0031.MYSP306.PROD.OUTLOOK.COM
+ (2603:1096:d10:3d::17) To DM3PR11MB8735.namprd11.prod.outlook.com
+ (2603:10b6:0:4b::20)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|IA0PR11MB7862:EE_
+X-MS-Office365-Filtering-Correlation-Id: 65b5215c-f317-405a-2982-08dd8532fe56
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UWw4SHdET3JhSG9aeHFrT09CZmRhVFBUcDhiaTNvektVTDl4bW04aCtIZTNw?=
+ =?utf-8?B?WDk4dmNMT0NTVkxVaHRPMURqd0dOYmFnRWRXV2V4bUIrcElLbUpyZzU2Q1NJ?=
+ =?utf-8?B?WXp5dDBpbXdaaEJMOTNEWkRSczZpSk5UZEVxbldqZDBRbThMYmgxTnlmSnZq?=
+ =?utf-8?B?TUpGNG1WVEVsK2dPRkNIR3oxcVhISWRadDA2eE1DQXNYdzZkcGd4VklYY2Zw?=
+ =?utf-8?B?VmI4MzlNSithZm9TMGxBL0xvbC9GZGFMTGJnK2FraytoeE9sN1I0U09CcFRh?=
+ =?utf-8?B?ZDFYSlhxbnplUTFydHNUZWU3V0ZHMDZVYkljcXp0ZXEwRlJWbXdueHREaGN0?=
+ =?utf-8?B?RFcwaWsrZWZwd0YxbXhpQldBMkdjbVVqS1hkTVZQUDU4M1FrK092MnliSk5l?=
+ =?utf-8?B?ZUNTc05TcDBzSyt1Tmd5N1k4UUx5SEYrTklscXNENSt2VkM1VXozNXJ4dVB5?=
+ =?utf-8?B?S1Q4d3NNRi9NR0lPby9SNHZ2ZG1FUWxNU3YwMEJWdTYwZE9QZHRpZ1ZwSUU5?=
+ =?utf-8?B?K0VHZDdyL0xiU0E5Unl6UVpYM1BWa1g1MzQ2T1U2b1IxRHVzSTcwWUJkL1Ez?=
+ =?utf-8?B?dldLTFBLRElEdFNkREM0NjFRZmF6ekt1UDIwWGExYzN4UVBad0lrZWt6Vy9j?=
+ =?utf-8?B?RjYrS3FSemJIR1pKakdvL3FKTWl0a0l3ZExhVjZMTFFJUUlPMWI5a2puSEhW?=
+ =?utf-8?B?aHdob1F3VktubHhGNi9VWGYrMm04ZjBiVTNHUC9hbkpMNkkyQnNiOWhhekcv?=
+ =?utf-8?B?bi93YkpsZDJvZ01PYmEyZ1lqbEJYUG5IYTE0dmtrRmhnWkJaZ25qSndUbWd3?=
+ =?utf-8?B?N2o0dEVUVStvdXplRFRDYXJQMzZZeWluTEpMVnVGTDZRaUdLWXpFa29rMnV6?=
+ =?utf-8?B?QUNPa09vM2JJTXMzRkRJeFgzaWdnVmduWDRieU0wUUlSMkZUWHVnM1RTMnB6?=
+ =?utf-8?B?U1JTRStyMzZnOC9ZUjliTjhIS1RmTDUrb1FUdEdzRGdLbTlnMlZDUkx2ZzFS?=
+ =?utf-8?B?aHR2RUFxSVBnY2ExS3Y4b3NIeXAxVm9ld3ltVnFwWVVoWVVaYnBnb3JRcG04?=
+ =?utf-8?B?NUZ5ZStWSGtlUHBwZDR4aFVwMmp1czN3eGVWbE9CY2ZZOGZOSXV0Q2h1RnBV?=
+ =?utf-8?B?QXBiN1lObTJ2bDUwS3U0cUh3Q1J5MXlJbjl4Zi94N1BTLy94alJqT2tCN2Jx?=
+ =?utf-8?B?bVFwWXBsbSt5NTI5WXpkNWF2alVLRUFqVnk0WmIzdU9UdHJJYTk5d2NJUWM4?=
+ =?utf-8?B?ZzRFaXJ1blU0Mko3UUFUNjJYRVVLZUlBV1VxcUhqcTl3a0xUUWNxNmc3UDd0?=
+ =?utf-8?B?VVg4UFZmdHYzcnpKNENGb0xtNng5bVo4VGF3NFlSMjFZTllpTzVnWFFaSGFy?=
+ =?utf-8?B?Qks4QmV1Y3VFaWxDeFZzNVpYM1pTb1hQZ0R5ZlJvYTd1UEx6SmVRR3g1TnVz?=
+ =?utf-8?B?eFI5VUxJRWlFVnpWaDIzNklaems0aitUVHRxbWtneE0rbmdIcWVUN3hSQ1ZY?=
+ =?utf-8?B?aGprZHZrVWhyU2JCZVJzQVR4Z0tCNkZ5ZDRUSmRWNkEzZytsOEJselh1WWps?=
+ =?utf-8?B?RnJmQ3M3c1dOWjgzenZacmpvb3ZUZ0hXSmFWKzN6MUoydVVNejFNOUtaYVE4?=
+ =?utf-8?B?QWtuTEFLbnhLbFl5MGxWM09pSmNNM3dBZWhSaldlbXJvaHhhRTIwSTZoYWNq?=
+ =?utf-8?B?Mzc4SHhJTnB4NmtHU1RKcEw5Y3dBeVhkVk0yVGtrVjNIY2xxVk9ZQnRESDEv?=
+ =?utf-8?B?TXZMT2FlekJLQXhIWUdRVnUvSFRnSGtaell4VXdNbjYvZmYrNEdZV2dDY0wz?=
+ =?utf-8?B?aVBSU2hvNEw4WTIvNVo2NlIwbUhPdy9wdWpKdElUME14cEM3LzRueGxXc0lj?=
+ =?utf-8?B?M1hYWjFIVW1lQ0VOTzRCeXhNQXlwSCtBbzdvTE8vV253U1BzU05KTGg0dnN4?=
+ =?utf-8?Q?dXq4oFOoGdA=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VFBjMVlpQ003YTlNRTJCQXR0M0ZNdWx6RnM4L0ZMMHgxSmhRWDN4d2xjSjM0?=
+ =?utf-8?B?dkZMdTBET016YnBJVVF3UUV3WFYxelYyYlFYTGUxVFF6Nk1TMWhXVmJKbHpC?=
+ =?utf-8?B?ekxHQlN1UldHUWE3VmlLeW5RMkxxQ0NJM1ltUDJ4bEZSd1ZGSnJ5b2UyTmRt?=
+ =?utf-8?B?dGRSUFRHd0J4b1lvUzVlU3hLUk5VQzFGT2VaaTR2TElMREkzbVprNjg2eFV5?=
+ =?utf-8?B?ek5zZHAzc2NpODVBR1hEdU53cjIyS0RBZkJRdlpydGZyNVk1NHVKU0xpRmNW?=
+ =?utf-8?B?WG1zMnBaOVFFLzRoR256aFF5RTR1VDhjU29YeXRCK3NJaG56QThVMFVMVk44?=
+ =?utf-8?B?NjR5RDIrajVGNHRoMHJJa2RzdUNCWmtRNW1nQVlSTU5HbDZhcklIUU5JU0RB?=
+ =?utf-8?B?UjdmMEZMaE1mdUErYytsb3d2Z0dxQTdsNUFUZUxpU0U1L1B3YnRqVDJrd3Vy?=
+ =?utf-8?B?dHlJSFVhZE9GNklMMU5qeDRoV2RmV1lKaWtoQ0p4N0g1QXRJWXBlOG5PUElH?=
+ =?utf-8?B?TzRGQWdQaU9zcGptZzF2TWw5OTNnZStxMm1RMHNsTUNsNmNKYmpibCtac1Rj?=
+ =?utf-8?B?aFg5MEFCM3UxckgreTBuYnFRbGU0MFdwK29rQkJhM0FMQ3Q5Wmtia0pqRFFQ?=
+ =?utf-8?B?UWpKZVEzb1MwUXFLUDVWKzc4WTRpRlU4a1pGWlkvWGo2eHFncTY1TnRROGwr?=
+ =?utf-8?B?U2dGeWJKN0ZveWs3SlNKV2x6K3dPbVU0QUlQZ0lRRWJ1Qk1nYm5QdTU1OFha?=
+ =?utf-8?B?RTE1UVE4VFBtRXRtUFlQd1B5RmJMSDRyd0JQRVZWSUVMTHU1Z2ZBWnZhZG9D?=
+ =?utf-8?B?MDh1azNwSkZrRFg3Y3VjOFRlbFFnTmo4T1pQTTUyL2ZBTEQ0U1ZqWlBmTm1L?=
+ =?utf-8?B?WTlzYzlsdjJ2NDBhUFI0d2ZWL2N1bU5iaTEvQlcyaVgxZy9VUzFnTmNZVVVl?=
+ =?utf-8?B?eHYwMExjZE5xVThKTXZFOTMyRjhIaTQxRnFyRmJzU0hOZ1grSVpVTTVnQWQ0?=
+ =?utf-8?B?Y09BTkNHbVdmSTFRWno5Mk05ajZtSDgybWlwTlBrQkxhQ3l5MkpPRTV2aHlS?=
+ =?utf-8?B?MHROSUV0OHRuTm10T2dQZTVuS0w4Q3BJN2tSQUtFMVdUZERNejNPTjkxMU1U?=
+ =?utf-8?B?UXk4QmVSelZsQSt6bU5ZRGkwL2o1WFpzdldTN1owUXY1dWVVWkFwb3RpRGwy?=
+ =?utf-8?B?eWVjdTJvWDRCanNlMU9ZeSsrR0xNUUFBdXlROFBGK050T2VLVlk2VmNBaVdT?=
+ =?utf-8?B?VEdIU3FaTTVEZEllZTJ4N0tSU0d3UFhuVWRCd09sN1V5NllITGJMdUtqRUpr?=
+ =?utf-8?B?MDFPVGo0OWRqM1ZhUk96bjhPUnQ2ckhseVg2dUlNQVpELytEMW45Qm5pMDRr?=
+ =?utf-8?B?c01YZXpxQTFxV3g0dktrSEtlb2J2K1ZsRVRmT2NXbEZxUHNMSy81SWRRaVk3?=
+ =?utf-8?B?eFEzQlBlVnBUZGIxT2ducS9ZaGlHb2ZoQVE5MmNJcHN2SUIzNlRPZjYvbGFD?=
+ =?utf-8?B?blduVjFidGJob3pLdWdFMmcwTjIzRHBRNUlLMFpETERhNzhjclNxbkwzeVJp?=
+ =?utf-8?B?eTFNbE85cDdkQm1Hb3dJTTh2ZEJNRXVlSFVpNHZ4ZWN0ZkJaTitWNzBkdDd2?=
+ =?utf-8?B?L2svTkp4VnQweUtsN1JYanpoYmlBWGIwRXpHb0poTUhGZ1lHT05ZUWt1cU1X?=
+ =?utf-8?B?S0lPUllkNjlxSTZCbktqVHIzNytBNTZJY2Z6MVlpVWtxL0wrbXhrbk9wSTZ5?=
+ =?utf-8?B?bnRaMUVhanRzNVdoQzVXOGhqRFdBMHBienV3OVNMN3grbktTUGpMYVpLZ2tY?=
+ =?utf-8?B?TUljbVZUaVNUQVJpallTdFdSbUpNQWZzU00vK0NzQlR3OE1mUFIvcTNHeDZW?=
+ =?utf-8?B?cU53cFVncDRMYW0wZzlLZlJyY0s3SGo4OWtBckgrUUdWSmIwU2w4M1k1Vkg0?=
+ =?utf-8?B?ak80eDU1UDNwSFBvdTlPZWo4SjExeDF4ZG9oM291UVp5c21LcCtWeHg5VGt0?=
+ =?utf-8?B?QVk4NEJ1T2xSdFVQbWIwQTJBeHBGdGxJUzVqaHg2Tk9JQVFYU3B5ckMzWXNG?=
+ =?utf-8?B?NVZjdUx5dXk4V2pWbW5QeHlzeVIwUHN2Z21jM3NaSnZqQTFZQjJpc0NLanY0?=
+ =?utf-8?B?WlBKVWZKNXM2K1ZYRWpYSUtBR3N6WkRIVG13alRWZnM4SzRpYS9mSCtCZk8v?=
+ =?utf-8?B?QWc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 65b5215c-f317-405a-2982-08dd8532fe56
+X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Apr 2025 02:27:02.1796 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2McVCyZtgE04HccnW1MnY4JZlvQevLk7OA9c+R/9ZBtCTXxGrsN70hJOjj1YGjWbyeDkXZxS/vWXHM4ABMDnyg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR11MB7862
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.12;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.738,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,51 +218,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QE tested this patch's v2 with virtio-net regression tests, everything
-works fine.
+Hi David,
 
-Tested-by: Lei Yang <leiyang@redhat.com>
+Any thought on patch 10-12, which is to move the change attribute into a
+priority listener. A problem is how to handle the error handling of
+private_to_shared failure. Previously, we thought it would never be able
+to fail, but right now, it is possible in corner cases (e.g. -ENOMEM) in
+set_attribute_private(). At present, I simply raise an assert instead of
+adding any rollback work (see patch 11).
 
-On Thu, Apr 24, 2025 at 11:49=E2=80=AFPM Antoine Damhet <adamhet@scaleway.c=
-om> wrote:
->
-> On Thu, Apr 24, 2025 at 06:49:57PM +0900, Akihiko Odaki wrote:
-> > Commit e28fbd1c525d ("Revert "virtio-net: Copy received header to
-> > buffer"") reverted commit 7987d2be5a8b, which attempted to remove the
-> > need to patch the (const) input buffer.
-> >
-> > Achieve the original goal by copying the header or the entire packet to
-> > a writable buffer as necessary. Copy the virtio-net header when patchin=
-g
-> > it. Copy the entire packet when filling the UDP checksum as required by
-> > net_checksum_calculate().
-> >
-> > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> > ---
-> > Supersedes: <20250405-mtu-v1-1-08c5910fa6fd@daynix.com>
-> > ("[PATCH] virtio-net: Copy all for dhclient workaround")
-> >
-> > This reapplies commit 7987d2be5a8b ("virtio-net: Copy all for dhclient
-> > workaround"), which was reverted by commit e28fbd1c525d ("Revert
-> > "virtio-net: Copy received header to buffer""), with a fix in the
-> > superseded patch. It also renames identifiers according to the
-> > discussion with Antoine Damhet.
-> > ---
-> > Changes in v2:
-> > - Rewrote the message avoiding archeology as suggested by
-> >   Michael S. Tsirkin.
-> > - Link to v1: https://lore.kernel.org/qemu-devel/20250423-reapply-v1-1-=
-6f4fc3027906@daynix.com
-> > ---
-> >  hw/net/virtio-net.c | 91 ++++++++++++++++++++++++++++-----------------=
---------
-> >  1 file changed, 48 insertions(+), 43 deletions(-)
->
-> Reviewed-by: Antoine Damhet <adamhet@scaleway.com>
-> Tested-by: Antoine Damhet <adamhet@scaleway.com>
->
-> --
-> Antoine 'xdbob' Damhet
-> Engineer @scaleway
+On 4/7/2025 3:49 PM, Chenyi Qiang wrote:
+> So that the caller can check the result of NotifyStateClear() handler if
+> the operation fails.
+> 
+> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+> ---
+> Changes in v4:
+>     - Newly added.
+> ---
+>  hw/vfio/common.c      | 18 ++++++++++--------
+>  include/exec/memory.h |  4 ++--
+>  2 files changed, 12 insertions(+), 10 deletions(-)
+> 
+> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
+> index 48468a12c3..6e49ae597d 100644
+> --- a/hw/vfio/common.c
+> +++ b/hw/vfio/common.c
+> @@ -335,8 +335,8 @@ out:
+>      rcu_read_unlock();
+>  }
+>  
+> -static void vfio_state_change_notify_to_state_clear(VFIOContainerBase *bcontainer,
+> -                                                    MemoryRegionSection *section)
+> +static int vfio_state_change_notify_to_state_clear(VFIOContainerBase *bcontainer,
+> +                                                   MemoryRegionSection *section)
+>  {
+>      const hwaddr size = int128_get64(section->size);
+>      const hwaddr iova = section->offset_within_address_space;
+> @@ -348,24 +348,26 @@ static void vfio_state_change_notify_to_state_clear(VFIOContainerBase *bcontaine
+>          error_report("%s: vfio_container_dma_unmap() failed: %s", __func__,
+>                       strerror(-ret));
+>      }
+> +
+> +    return ret;
+>  }
+>  
+> -static void vfio_ram_discard_notify_discard(StateChangeListener *scl,
+> -                                            MemoryRegionSection *section)
+> +static int vfio_ram_discard_notify_discard(StateChangeListener *scl,
+> +                                           MemoryRegionSection *section)
+>  {
+>      RamDiscardListener *rdl = container_of(scl, RamDiscardListener, scl);
+>      VFIORamDiscardListener *vrdl = container_of(rdl, VFIORamDiscardListener,
+>                                                  listener);
+> -    vfio_state_change_notify_to_state_clear(vrdl->bcontainer, section);
+> +    return vfio_state_change_notify_to_state_clear(vrdl->bcontainer, section);
+>  }
+>  
+> -static void vfio_private_shared_notify_to_private(StateChangeListener *scl,
+> -                                                  MemoryRegionSection *section)
+> +static int vfio_private_shared_notify_to_private(StateChangeListener *scl,
+> +                                                 MemoryRegionSection *section)
+>  {
+>      PrivateSharedListener *psl = container_of(scl, PrivateSharedListener, scl);
+>      VFIOPrivateSharedListener *vpsl = container_of(psl, VFIOPrivateSharedListener,
+>                                                     listener);
+> -    vfio_state_change_notify_to_state_clear(vpsl->bcontainer, section);
+> +    return vfio_state_change_notify_to_state_clear(vpsl->bcontainer, section);
+>  }
+>  
+>  static int vfio_state_change_notify_to_state_set(VFIOContainerBase *bcontainer,
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index a61896251c..9472d9e9b4 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -523,8 +523,8 @@ typedef int (*ReplayStateChange)(MemoryRegionSection *section, void *opaque);
+>  typedef struct StateChangeListener StateChangeListener;
+>  typedef int (*NotifyStateSet)(StateChangeListener *scl,
+>                                MemoryRegionSection *section);
+> -typedef void (*NotifyStateClear)(StateChangeListener *scl,
+> -                                 MemoryRegionSection *section);
+> +typedef int (*NotifyStateClear)(StateChangeListener *scl,
+> +                                MemoryRegionSection *section);
+>  
+>  struct StateChangeListener {
+>      /*
 
 
