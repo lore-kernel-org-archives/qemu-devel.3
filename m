@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 926D6C369D1
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 16:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28211C369D1
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 16:51:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u95DL-00010X-1C; Sun, 27 Apr 2025 12:50:47 -0400
+	id 1u95DK-0000zh-5i; Sun, 27 Apr 2025 12:50:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u95DJ-0000zN-NL
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 12:50:45 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u95DI-0000z2-8A
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 12:50:44 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u95DE-0005pj-RC
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 12:50:45 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43cf680d351so28769555e9.0
- for <qemu-devel@nongnu.org>; Sun, 27 Apr 2025 09:50:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u95DB-0005pH-AY
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 12:50:38 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43edecbfb94so38202125e9.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Apr 2025 09:50:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745772636; x=1746377436; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7BQ16vIw1EHB1x27l7KHahTZhvMciox87CMxJC1bBgM=;
- b=ltuhItOGsvxUJ6yOwPrUYdTaTlhKEV9IBc6EYr1bEAghnjIrKDYs+H7SmygndyVURJ
- AHj9Jgo2EdfX5PzMtQM5vC6Ef5VCi+nTEaAKS/UOl2l93jBMlJ2dpnbZYQgUP92tco/N
- L7StHpwZFHh7e9WdBR6IT7ecB/qUDlzwJNGz5eqZQ1Qt7NpDwxI31h04K1gXnGGvyCPI
- ty92J3oW2WGNFx5Cx4YpS2+9rpmjv87UR6XCO02y/Bj1ntS/Rs/NH6LX52jA3cjQ2hO1
- EMBxOuOhZj56AvJn8bHw7hg9d/R74/b6gWip+Fy0EL5ea1JEq2k8z+zN912wjqAhXytj
- ajmA==
+ d=gmail.com; s=20230601; t=1745772634; x=1746377434; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=lYHxWvOlghFSADlJY7dsqqkXQbCxF+CrIV5UmKFdgTk=;
+ b=kF3XqYKIVhqtZpxC1LWQoK7//TsRaF1qhuOVty62tfa5zZGXZ/xvwMrlTKOn82lXBv
+ xx7MiYiXdZuYGUo942uUww3zzEhxMvERWUUGOEmGODGCNy8wlq0jl51Wy/TwbD/MXuav
+ 7LWls1XBpQMVeISK/cuMY1LhkY2+OgtwXYLrT1kCIDQ3CUi6RzCS8Bfa/HbHMyt65NaU
+ HD7QG2cVmCwe8yWlQnKHFuOyeXsQbv9JJsyd3EJ6x3ar4AMGJhddfmE63VDFTHJ3YjGz
+ hKBOal8w2+FNOHGwznZ6aLTJiz9v+hdoZwj8n3R5ccPcnLEseHZpEHyJnIKYuwIYjGOD
+ HdNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745772636; x=1746377436;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7BQ16vIw1EHB1x27l7KHahTZhvMciox87CMxJC1bBgM=;
- b=nRpKG2jQeT4cs4jWA1B6votZ6M6M2YMPIITYXZ3wJ1y4vKIxgU3TvcV/6I8VRiwIqz
- yaGw3YvU3lYD8jiQ+AMJ/6wRBMC8pE9kxeuoi4pblIQoXRFtTMDTwZ7EPjOI2sNqr6I3
- XLg7TfrWQwwNO7v5X+rZFXSnHbJb0JmDrmRdMZqpXPQCmgmSjrRiGzQ/W3VskLVYv0VC
- qsNrJL/V2bHz+KVqnTBd1rg3RSUZ4A3x9KAsmp256q/JqW+LFR2m1HMbH1cRe5cZEwTs
- YNTvNui9MCNf3YYjpULojfWhxdB2wut+hpVxHTznxMH8fy+ADP1JW5NkV5lJ+qbRasWK
- 9LgA==
-X-Gm-Message-State: AOJu0Yw2CovvvnKIsFpuu0xx4H6xto432jSruOG6mmJKfovieBep68Uy
- duhlSytHIKI8TqlDQ43b9J6itSjzC0/98QK/th/j0fMH3hY85Bu29wFrWw==
-X-Gm-Gg: ASbGncuDHz/YEeH8OhnKXO0O6Qj033rkiPRL56rfJnq/hHG0h2isZzyO4mdX7MmNat2
- hb6cNCZtMFi/XZj7fesN1DfzPKcccRAzsRUf+brL7wPFJy7+w5b18J2Ty+w12OZi29jxg73FirM
- 2R/HcHIH0fVKLfUsSd2wFPgkzuDggqiBbxwQKs7grTcPy14cvbZ2kRwbg5itEx+K9CbI7CD9mbl
- UY81obDZ7jmbRzcVHpvnZdoGjOhnfDAhPAFmUOH9gN4svzp8CZ9to0iB7Z5OmtYjhoZrLVchsRg
- taLyE2tPNKuXX0XDuO5JevkrYdxRmSDP7qODBEdQYxdDQXPv2k1bmBjGXw8ASgoYmTDZjOAwQ0n
- l+Gb13ZLmG7LQe5eoTjAyGmN0GdD9
-X-Google-Smtp-Source: AGHT+IFFwoldIJQiHfNwBoilsP7suJ9qF/0En0sn6t67KOayrXDWvCYI2MH+cLNJBClEn38jmmp9Fw==
-X-Received: by 2002:a05:600c:6c95:b0:43c:f680:5c2e with SMTP id
- 5b1f17b1804b1-4409c512c5amr111714175e9.13.1745772636242; 
- Sun, 27 Apr 2025 09:50:36 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1745772634; x=1746377434;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lYHxWvOlghFSADlJY7dsqqkXQbCxF+CrIV5UmKFdgTk=;
+ b=EtA0SeqDJTxV65qAKWMnrZ9GscG3wM0f/+tgJ8T02Wzbpjs8jvhv0M4rJIaeFZky1t
+ WyYKBAVnav6uECZ1rTCk1+voVwkxgDjmhFXSIOtMkJCMpC6pHPw8Zi/5mCAebnvD0A4w
+ 2Cwkgzz3+b/bCbAttKlSHtTo24OhbynDa5MaqjWIxvnqWl3uJ+eSTcdjGB2ZyS/OOSRl
+ p4nQEPQBb0tyxH4yi+eOe6rcX83Y9mczp/7i1sUJ16F5ycdnhrtQyaVcoLlmIqSxEtej
+ V8RS4GYtRNkiKzyVwOk9iD0J6Tl8wufFo37T0MNvGG4TV7Q+e3l8MG5pIuvlh8u2iKg/
+ wtJg==
+X-Gm-Message-State: AOJu0Yz9KpE7wO4/ik4RGe8PRreMLH/owCDuKJZ7ADEJWAQlOyIg/5O/
+ JELTvOvXNz7jRdFUFDh4yVqJwRzci381j6sxvAtSSINFeqBHccSF58hIkg==
+X-Gm-Gg: ASbGncuc02sA/CiFOa9Kh8Ej2k/Dk2HUbhV8MA8nIomRrWn8TDEpHgiU0lBv2xdNVhs
+ cNn3Gv8+wWeCGJBuy846msWJ3vCW6jUY4qotjsVw5gawU7dfSYJFNLYnpRbZQf2ga39i1gvRTkM
+ KNUZbLRRTX83iuEw6EFapfhnI6Z4aeWbOErJ3oqYAaC0b60c9OJ2uTZMYeP7+/11eqqo2D574oZ
+ HOAbK/yxLWT5M94WXmciyNKs9uDD/eAVIZVcukxUQYZo5SFy5jjsSZwtuVC2XJKvYnEcOYp0+kS
+ vbOxcTYsd7nUnmiuq42q2a7uq0w3uhKWYTo2PsEHUFT9/EkuN0iIpFvOgvHU5saf8ubNy3Rhlpb
+ Tcv9M2hjQUFfIgBOGSFF7TmY9hIg1
+X-Google-Smtp-Source: AGHT+IHOKbclK3XSCYZIZjm0gxY6h3lKbp0qznWjlyfBYxrrRP7F0XZY5ab20FcfTZPCjlRbkmww2w==
+X-Received: by 2002:a05:6000:430a:b0:39c:1257:cd41 with SMTP id
+ ffacd0b85a97d-3a074fbc45emr6566409f8f.59.1745772633826; 
+ Sun, 27 Apr 2025 09:50:33 -0700 (PDT)
 Received: from localhost.localdomain (46-116-102-127.bb.netvision.net.il.
  [46.116.102.127]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073c8cd7fsm8783139f8f.1.2025.04.27.09.50.35
+ ffacd0b85a97d-3a073c8cd7fsm8783139f8f.1.2025.04.27.09.50.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 27 Apr 2025 09:50:35 -0700 (PDT)
+ Sun, 27 Apr 2025 09:50:33 -0700 (PDT)
 From: Nir Soffer <nirsof@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  "Richard Jones" <rjones@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Eric Blake" <eblake@redhat.com>, Nir Soffer <nirsof@gmail.com>
-Subject: [PATCH v3 2/2] io: Increase unix socket buffers on Linux
-Date: Sun, 27 Apr 2025 19:50:29 +0300
-Message-Id: <20250427165029.9072-3-nirsof@gmail.com>
+Subject: [PATCH v3 0/2] io: Increase unix stream socket buffer size
+Date: Sun, 27 Apr 2025 19:50:27 +0300
+Message-Id: <20250427165029.9072-1-nirsof@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250427165029.9072-1-nirsof@gmail.com>
-References: <20250427165029.9072-1-nirsof@gmail.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=nirsof@gmail.com; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=nirsof@gmail.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,107 +98,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Like macOS we have similar issue on Linux. For TCP socket the send
-buffer size is 2626560 bytes (~2.5 MiB) and we get good performance.
-However for unix socket the default and maximum buffer size is 212992
-bytes (208 KiB) and we see poor performance when using one NBD
-connection, up to 4 times slower than macOS on the same machine.
+On both macOS and Linux, the default send buffer size too small causing poor
+performance when reading and writing to qemu-nbd. A simple way to experience
+this is to compare TCP and unix sockets, showing that TCP socket is much
+faster. Programs like nbdcopy partly mitigate this by using multiple NBD
+connections.
 
-Tracing shows that for every 2 MiB payload (qemu uses 2 MiB io size), we
-do 1 recvmsg call with TCP socket, and 10 recvmsg calls with unix
-socket.
+On macOS the default send buffer size is 8192 bytes. Increasing the send buffer
+size to 2 MiB shows up to *12.6 times higher throughput* and lower cpu usage.
 
-Fixing this issue requires changing the maximum send buffer size (the
-receive buffer size is ignored). This can be done using:
+On Linux the default and maximum buffer size is 212992 bytes. Increasing the
+send buffer size to 2 MiB shows up to *2.7 times higher throughput* and lower
+cpu usage. On older machine we see very little improvement, up to 1.03 times
+higher throughput.
 
-    $ cat /etc/sysctl.d/net-mem-max.conf
-    net.core.wmem_max = 2097152
+We likely have the same issue on other platforms. It should be easy to enable
+this change for more platform by defining UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE.
 
-    $ sudo sysctl -p /etc/sysctl.d/net-mem-max.conf
+Changes since v2:
+- Test with different receive buffer size (Daniel)
+- Test with larger send buffer size (2m, 4m)
+- Set only send buffer size - setting receive buffer size has no effect
+- Increase send buffer size to 2m (based on new tests)
+- Enable the change also for Linux
+- Change only unix stream socket - datagram socket need different configuration
+- Modify the code to make it easy to support unix datagram socket
 
-With this we can set the socket buffer size to 2 MiB. With the defaults
-the value requested by qemu is clipped to the maximum size and has no
-effect.
+v2 was here:
+https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg03167.html
 
-I tested on 2 machines:
-- Fedora 42 VM on MacBook Pro M2 Max
-- Dell PowerEdge R640 (Intel(R) Xeon(R) Gold 6230 CPU @ 2.10GHz)
+Nir Soffer (2):
+  io: Increase unix socket buffers size on macOS
+  io: Increase unix socket buffers on Linux
 
-On the older Dell machine we see very little improvement, up to 1.03
-higher throughput. On the M2 machine we see up to 2.67 times higher
-throughput. The following results are from the M2 machine.
+ io/channel-socket.c | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
-Reading from qemu-nbd with qemu-img convert. In this test buffer size of
-4m is optimal (2.28 times faster).
-
-| buffer size | time    | user    | system  |
-|-------------|---------|---------|---------|
-|     default |   4.292 |   0.243 |   1.604 |
-|      524288 |   2.167 |   0.058 |   1.288 |
-|     1048576 |   2.041 |   0.060 |   1.238 |
-|     2097152 |   1.884 |   0.060 |   1.191 |
-|     4194304 |   1.881 |   0.054 |   1.196 |
-
-Writing to qemu-nbd with qemu-img convert. In this test buffer size of
-1m is optimal (2.67 times faster).
-
-| buffer size | time    | user    | system  |
-|-------------|---------|---------|---------|
-|     default |   3.113 |   0.334 |   1.094 |
-|      524288 |   1.173 |   0.179 |   0.654 |
-|     1048576 |   1.164 |   0.164 |   0.670 |
-|     2097152 |   1.227 |   0.197 |   0.663 |
-|     4194304 |   1.227 |   0.198 |   0.666 |
-
-Computing a blkhash with nbdcopy. In this test buffer size of 512k is
-optimal (1.19 times faster).
-
-| buffer size | time    | user    | system  |
-|-------------|---------|---------|---------|
-|     default |   2.140 |   4.483 |   2.681 |
-|      524288 |   1.794 |   4.467 |   2.572 |
-|     1048576 |   1.807 |   4.447 |   2.644 |
-|     2097152 |   1.822 |   4.461 |   2.698 |
-|     4194304 |   1.827 |   4.465 |   2.700 |
-
-Computing a blkhash with blksum. In this test buffer size of 4m is
-optimal (2.65 times faster).
-
-| buffer size | time    | user    | system  |
-|-------------|---------|---------|---------|
-|     default |   3.582 |   4.595 |   2.392 |
-|      524288 |   1.499 |   4.384 |   1.482 |
-|     1048576 |   1.377 |   4.381 |   1.345 |
-|     2097152 |   1.388 |   4.389 |   1.354 |
-|     4194304 |   1.352 |   4.395 |   1.302 |
-
-Signed-off-by: Nir Soffer <nirsof@gmail.com>
----
- io/channel-socket.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index 06901ab694..f2974fab74 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -39,12 +39,13 @@
- #define SOCKET_MAX_FDS 16
- 
- /*
-- * Testing shows that 2m send buffer gives best throuput and lowest cpu usage.
-- * Changing the receive buffer size has no effect on performance.
-+ * Testing shows that 2m send buffer is optimal. Changing the receive buffer
-+ * size has no effect on performance.
-+ * On Linux we need to increase net.core.wmem_max to make this effective.
-  */
--#ifdef __APPLE__
-+#if defined(__APPLE__) || defined(__linux__)
- #define UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE (2 * MiB)
--#endif /* __APPLE__ */
-+#endif
- 
- static void qio_channel_socket_set_buffers(QIOChannelSocket *ioc)
- {
 -- 
 2.39.5 (Apple Git-154)
 
