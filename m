@@ -4,74 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5E6CC369D5
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 06:56:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 630A4C369D5
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 07:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8vvH-0001rC-Oz; Sun, 27 Apr 2025 02:55:33 -0400
+	id 1u8w54-0005i5-Tf; Sun, 27 Apr 2025 03:05:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1u8vvB-0001qK-FO
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 02:55:26 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1u8vv8-00049T-3K
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 02:55:25 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxbeLK1A1o0hzHAA--.29906S3;
- Sun, 27 Apr 2025 14:55:07 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMCxLcXH1A1ojUaYAA--.50309S3;
- Sun, 27 Apr 2025 14:55:05 +0800 (CST)
-Subject: Re: [PATCH v2 04/16] hw/intc/loongarch_pch: Set version information
- at initial stage
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u8w51-0005hQ-Em; Sun, 27 Apr 2025 03:05:35 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u8w4x-0005nw-UM; Sun, 27 Apr 2025 03:05:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745737532; x=1777273532;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=/VAXcw1oJpNq80iCbs63zP5UG4yX37TNo7LthnbGVBo=;
+ b=WPycwxgB746nkyfhq7oZ97mJE0UngqJuCp9pjZe8F9enW8zJlH5E3U3l
+ I8eqs3fHA1B3XLhoFSw1UKG4PZgQ6Gqyp0qWodmQXCjw2bS66wdUOgM7H
+ YOb7pBnbqHxU495hNiUXtfv2mm0p9IlavuYr/bPZizR5h/St8uty7T/Dw
+ NBt9cMNblD23iMlYvPn7PdN8UtmyyyKqoa0yLSSjB/4/N4SAYyvV1IlDI
+ oHuRw2g3okRd9JqjXNN6MlWB5uRkF/pZIkNo5XWQ6NVxon2wZdmTRDARI
+ Nyf718FSNdNmMXcMPT6oulxmzFlhmCuMraBsoL3AcuopeYrFJCo5h+jAV w==;
+X-CSE-ConnectionGUID: gJV9MrDkSDCkkw3G+EZXuw==
+X-CSE-MsgGUID: uB1B60kaQdO+GLOf6tI5Gg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="47255469"
+X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="47255469"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Apr 2025 00:05:28 -0700
+X-CSE-ConnectionGUID: rVl3Mel3THqiZcQli6WIqg==
+X-CSE-MsgGUID: kb1BB0dSQ0S5A+G0fWVAEQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="156475720"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa002.fm.intel.com with ESMTP; 27 Apr 2025 00:05:23 -0700
+Date: Sun, 27 Apr 2025 15:26:20 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Shaoqin Huang <shahuang@redhat.com>, Eric Auger <eauger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>,
+ Alexander Graf <agraf@csgraf.de>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250324093730.3683378-1-maobibo@loongson.cn>
- <20250324093730.3683378-5-maobibo@loongson.cn>
- <b1ac7812-ac9b-4bcc-a04e-93dd43fbec51@linaro.org>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <2c55bf31-f3b7-b345-e6e7-864edbd7277b@loongson.cn>
-Date: Sun, 27 Apr 2025 14:53:59 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+Subject: Re: [PATCH 1/5] qapi/qom: Introduce kvm-pmu-filter object
+Message-ID: <aA3cHIcKmt3vdkVk@intel.com>
+References: <20250409082649.14733-1-zhao1.liu@intel.com>
+ <20250409082649.14733-2-zhao1.liu@intel.com>
+ <878qo8yu5u.fsf@pond.sub.org> <Z/iUiEXZj52CbduB@intel.com>
+ <87frifxqgk.fsf@pond.sub.org> <Z/i3+l3uQ3dTjnHT@intel.com>
+ <87fri8o70b.fsf@pond.sub.org> <aAnbLhBXMFAxE2vT@intel.com>
+ <fa6f20a9-3d7a-4c2d-94e5-c20dbaf4303e@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <b1ac7812-ac9b-4bcc-a04e-93dd43fbec51@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxLcXH1A1ojUaYAA--.50309S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tF17CrW7Wr15tF45XFy3Jrc_yoW5JF4fpr
- 1kArW3JrWUJrn7Jr1xAr1UXFy5JF4rJw1UWr1IgFyUJF45Jr10qr1UXr1j9F1UJr48Jr1j
- qr15Grn8uF1UXrbCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUBYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAaw2AFwI0_Jrv_JF1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0c
- Ia020Ex4CE44I27wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_
- JF1lYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrw
- CYjI0SjxkI62AI1cAE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j
- 6r4UMxCIbckI1I0E14v26r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwV
- AFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv2
- 0xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4
- v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AK
- xVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8TqcUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.665,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fa6f20a9-3d7a-4c2d-94e5-c20dbaf4303e@linaro.org>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.738,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,63 +98,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Philip and Markus,
 
+Let's discuss how to handle compilation for different architectures as
+well as different accelerators here.
 
-On 2025/4/25 下午5:57, Philippe Mathieu-Daudé wrote:
-> On 24/3/25 10:37, Bibo Mao wrote:
->> Register PCH_PIC_INT_ID constains version and supported irq number
->> information, and it is read only register. The detailed value can
->> be set at initial stage, rather than read callback.
->>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->> ---
->>   hw/intc/loongarch_pch_pic.c            | 17 ++++++++++-------
->>   include/hw/intc/loongarch_pic_common.h | 17 +++++++++++++++--
->>   2 files changed, 25 insertions(+), 9 deletions(-)
+> > And "raw" format as a lower level format can be used for other arches
+> > (e.g., ARM).
 > 
+> Since you provide the ability to use a raw format, are we sure other
+> accelerators will never be interested in such PMU filtering?
 > 
->> diff --git a/include/hw/intc/loongarch_pic_common.h 
->> b/include/hw/intc/loongarch_pic_common.h
->> index ef6edc15bf..fb848da4b8 100644
->> --- a/include/hw/intc/loongarch_pic_common.h
->> +++ b/include/hw/intc/loongarch_pic_common.h
->> @@ -10,9 +10,9 @@
->>   #include "hw/pci-host/ls7a.h"
->>   #include "hw/sysbus.h"
->> -#define PCH_PIC_INT_ID_VAL              0x7000000UL
->> -#define PCH_PIC_INT_ID_VER              0x1UL
->>   #define PCH_PIC_INT_ID                  0x00
->> +#define  PCH_PIC_INT_ID_VAL             0x7
->> +#define  PCH_PIC_INT_ID_VER             0x1
->>   #define PCH_PIC_INT_MASK                0x20
->>   #define PCH_PIC_HTMSI_EN                0x40
->>   #define PCH_PIC_INT_EDGE                0x60
->> @@ -30,10 +30,23 @@
->>   OBJECT_DECLARE_TYPE(LoongArchPICCommonState,
->>                       LoongArchPICCommonClass, LOONGARCH_PIC_COMMON)
->> +union LoongArchPIC_ID {
->> +    struct {
->> +        uint64_t _reserved_0:24;
->> +        uint64_t id:8;
-> 
-> Why not use:
-> 
->             uint8_t _reserved_0[3];
->             uint8_t id;
-> 
-> Otherwise see commit ecbf3567e21 ("docs/devel/style: add a section about
-> bitfield, and disallow them for packed structures"), this might give
-> troubles on Windows or big-endian hosts such s390x.
-Good suggestion, will use this method rather than bit-field method.
+> I'm pretty sure HVF could benefit of it (whether we implement it there
+> is another story).
 
-Regards
-Bibo Mao
-> 
->> +        uint64_t version:8;
->> +        uint64_t _reserved_1:8;
->> +        uint64_t irq_num:8;
->> +        uint64_t _reserved_2:8;
->  > +    } QEMU_PACKED desc;> +    uint64_t data;
->> +};
+Nice to know it could benefit more cases.
+
+> What do you think about adding this as a generic accelerator feature.
+
+I can implement pmu-filter directly at the "accel" level.
+
+> If a particular accel doesn't support it and we ask to filter, we simply
+> report an error.
+
+One of the main issues is how to organize the QAPI scheme:
+
+First we have a "qapi/accelerator.json" like current implementation to
+provide:
+
+##
+# = Accelerators
+##
+
+Then we should have a "qapi/accelerator-target.json" (which will follows
+qapi/accelerator.json in qapi-schema.json, just like machine.json &
+machine-target.json), and place all pmu-filter related things in this
+file with specify the compilation condition, for example:
+
+{ 'struct': 'KvmPmuFilterProperties',
+  'data': { 'action': 'KvmPmuFilterAction',
+            '*x86-fixed-counter': 'uint32',
+            '*events': ['KvmPmuFilterEvent'] },
+  'if': 'CONFIG_KVM' }
+
+In the future, this could be expanded to: 'if': { 'any': [ 'CONFIG_HVF', 'CONFIG_KVM' ] }.
+
+I understand that there is no way to specify the architecture here,
+because it is not possible to specify a combination case like
+"TARGET_I386 & CONFIG_KVM", "TARGET_ARM & CONFIG_KVM", "TARGET_ARM & CONFIG_HVF"
+(please educate me if such "if" condition be implemented in QAPI :-)).
+
+So, I will put the arch-specific format check in pmu-filter.c by adding
+arch macros as I mentioned in this reply:
+
+https://lore.kernel.org/qemu-devel/aA3TeaYG9mNMdEiW@intel.com/
+
+And there'll need accel-specific format check (for example, maksed-entry
+is KVM specific, and it is not defined in x86 spec). I can check the
+accel-specific format in the `check` hook of
+object_class_property_add_link(), which links the pmu-filter object to
+accelerator.
+
+Do you like this idea?
+
+Thanks,
+Zhao
+
 
 
