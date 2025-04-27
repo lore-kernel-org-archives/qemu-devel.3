@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3B69C369D5
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 06:00:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9BD6C369D5
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 06:29:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8v3D-00035s-7T; Sun, 27 Apr 2025 01:59:39 -0400
+	id 1u8vVP-0000Jq-Je; Sun, 27 Apr 2025 02:28:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1u8v39-000310-M7
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 01:59:35 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1u8v37-0004cl-Pa
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 01:59:35 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-ac34257295dso621545466b.2
- for <qemu-devel@nongnu.org>; Sat, 26 Apr 2025 22:59:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1745733571; x=1746338371; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ftPshtP1hB5HWBGk2/JNDIyaKaQuZZKrJSVj3NCbXpg=;
- b=UHkDvgtSodzT2PJ438F5QmV4tBCiT41exJA11WJft7OFMHBOj3f6iNke4LnGJG1rPQ
- uKnuKN+Kozv3Md+e3BXGW39dAyB40mn6aBO3vWMQc+4+SCGJWMgVqPQX+ctnRiqfKuyE
- 3la8rC37KDa8adYQ6QpnMLK6EpyTdnV8ylYkAQE708svZizhXTMatnQx6iMXNr/UaPrO
- SVWVtv1Q/Zdo37ogQpYJB3zRRc3boMjROk6VvKPHuBFxIGOaFQTWtA6xuoBI6cx0wZ9H
- 1ATnQ+L6NKZ3rAhoqmgwaUa2ZcddCYcDNP9pvKZhnjxHWvY/hgtheRBoos3P/+C3WxA2
- sL0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745733571; x=1746338371;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ftPshtP1hB5HWBGk2/JNDIyaKaQuZZKrJSVj3NCbXpg=;
- b=N5tLmcPkzAfrOKlC3DggWfVXX5ZYoM2YHI0qT4Wu8zHbmn0fKyVv1cCiPTLwBkdYji
- raN50F3agRc/zIElE4Si6hm0ISFBrzgxxoy35WFKwzhlsdIFg8l/jzl5zhE1QKnSBgHs
- PHIqeGOTTGWfQ/fkOs3W9NrGubObtxbhVRQ44JTS/9T0ZcF6Q1CaIxNNgxDrWVRHd0jd
- NkZlBOaX+oxggpgJ7tFJyPvQ7Bnjx7OJ+wIyp39JzawM8CbU0IeUtCRE2RPXWn7icpjY
- wOI+vOKCHAaH4+RrqaazsPQ2nmOwLxOcKLA4fBKQ5H+OvowqQfVkoCRLz4yG8XvRyuZp
- g7wg==
-X-Gm-Message-State: AOJu0YzDPB2h366HjCCNl3rviggUkKqDwo44k3vGpK/lPkcgaEdml7gd
- Zf03FjcFPszUpTUe221m+Iv/P7Ggbb28rQzB40li2OzFbbKzPwahVggiEcpzHj4ZhOq9Zz42tTs
- iZPI=
-X-Gm-Gg: ASbGncv0PLPWtpEMD5XK2oJZhmWl9t7dbn5vuEVAAA9Ob1q3LhRPJTx9ltpC8UulvAb
- snsvTZPBxglfSFnCMPXFgqRXPxpmrMeTkMzmM2P65gj4mWXn5clTcnXiK7xJorMtVTQWNQgiKJM
- YRqtfiTXtuKYAA9bUObVGk1lodKncQNdWN08HuvWlDVFnMakmqyt9apjFOxRd+2HuY3XjHkbZ2J
- pv07I+Vdbm067NPxWNSYO7F+Q6TPXeOE8gMaRtuS6Uy122UpHmS9du6covNHNGn/jCwSgXxtR9i
- W9vIedI4/9qw2h84ks66unUzEAJrEymB/yrUlbG+0pu7AUbj7ah7sH4Xhc4mJiGy2LMwRA==
-X-Google-Smtp-Source: AGHT+IE/1E9c3j3v/bN/A8FCKQIFB2bSj+DLjIVniRAI/cygsVRGyrxOLZsEURI8DMaiFtI7K0icfg==
-X-Received: by 2002:a17:907:3ea3:b0:ac1:ecb5:7207 with SMTP id
- a640c23a62f3a-ace7111e569mr669313866b.29.1745733570889; 
- Sat, 26 Apr 2025 22:59:30 -0700 (PDT)
-Received: from localhost (cst2-173-28.cust.vodafone.cz. [31.30.173.28])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ace6ecf893fsm398809366b.96.2025.04.26.22.59.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 26 Apr 2025 22:59:30 -0700 (PDT)
-Date: Sun, 27 Apr 2025 07:59:29 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
-Subject: Re: [PATCH v3 8/9] target/riscv: widen scounteren to target_ulong
-Message-ID: <20250427-e13fa003b1bfad48e17bcee9@orel>
-References: <20250425160203.2774835-1-dbarboza@ventanamicro.com>
- <20250425160203.2774835-9-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u8vVN-0000H7-HV; Sun, 27 Apr 2025 02:28:45 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u8vVK-0000IL-Mt; Sun, 27 Apr 2025 02:28:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745735323; x=1777271323;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=mnGbRICatNcyoPrI5GrAe65yEryXZhpnLlqHMQGHYqQ=;
+ b=AFav72zjWXBQeavK2IzbgMOK26l5x0acTwx3Gw4CmxGE/RQUkT4UzKpo
+ ZdgF8rn+eMi+cORYSTEAPvBq7YbpZ1a86uNuvIx60xx5MC5U4Vo8usOxD
+ RB4G9YbNUZ1OYERnEjVKK04T4DzcfFwXyV3ktXhwVwZRkSBsvt4dS1jG9
+ vURx9KwgjDTUAGZuH31H4KuyxE6EaX2ZKIGkK0NOe74EqKaFAqV3Uva4M
+ /yXfkFGPoWeDLAMTufXpFJhPfAXlfnxuU2lkPYrvrptQm04/RDvTAEXO/
+ 73dgwOkDxiRLFPh+R2d9VAb1Y3MhFT7Z39uW1WErkWeQSgz4X6MLs+UNr w==;
+X-CSE-ConnectionGUID: DhJQYWq4QF67gBhfqf9ImA==
+X-CSE-MsgGUID: SgAfAPPSRtarCkRnruvcYA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="49995862"
+X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="49995862"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Apr 2025 23:28:37 -0700
+X-CSE-ConnectionGUID: iO0zR2YdQPuksNBrc7RPBg==
+X-CSE-MsgGUID: H4em+WpuSHWky0kg4kKVEg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="133216649"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa007.fm.intel.com with ESMTP; 26 Apr 2025 23:28:32 -0700
+Date: Sun, 27 Apr 2025 14:49:29 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Shaoqin Huang <shahuang@redhat.com>, Eric Auger <eauger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>
+Subject: Re: [PATCH 3/5] i386/kvm: Support event with select & umask format
+ in KVM PMU filter
+Message-ID: <aA3TeaYG9mNMdEiW@intel.com>
+References: <20250409082649.14733-1-zhao1.liu@intel.com>
+ <20250409082649.14733-4-zhao1.liu@intel.com>
+ <87frhwfuv1.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250425160203.2774835-9-dbarboza@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=ajones@ventanamicro.com; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+In-Reply-To: <87frhwfuv1.fsf@pond.sub.org>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.738,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,97 +93,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 25, 2025 at 01:02:02PM -0300, Daniel Henrique Barboza wrote:
-> We want to support scounteren as a KVM CSR. The KVM UAPI defines every
-> CSR size as target_ulong, and our env->scounteren is fixed at 32 bits.
-> 
-> The other existing cases where the property size does not match the KVM
-> reg size happens with uint64_t properties, like 'mstatus'. When running
-> a 32 bit CPU we'll write a 32 bit 'sstatus' KVM reg into the 64 bit
-> 'mstatus' field. As long as we're consistent, i.e. we're always
-> reading/writing the same words, this is ok.
-> 
-> For scounteren, a KVM guest running in a 64 bit CPU will end up writing
-> a 64 bit reg in a 32 bit field. This will have all sort of funny side
-> effects in the KVM guest that we would rather avoid.
-> 
-> Increase scounteren to target_ulong to allow KVM to read/write the
-> scounteren CSR without any surprises.
-> 
-> Aside from bumping the version of the RISCVCPU vmstate no other
-> behavioral changes are expected.
-> 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  target/riscv/cpu.h     | 9 ++++++++-
->  target/riscv/machine.c | 6 +++---
->  2 files changed, 11 insertions(+), 4 deletions(-)
-> 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index f5a60d0c52..66d4ddfcb4 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -400,7 +400,14 @@ struct CPUArchState {
->       */
->      bool two_stage_indirect_lookup;
->  
-> -    uint32_t scounteren;
-> +    /*
-> +     * scounteren is supposed to be an uint32_t, as the spec
-> +     * says. We're using a target_ulong instead because the
-> +     * scounteren KVM CSR is defined as target_ulong in
-> +     * kvm_riscv_csr, and we want to avoid having to deal
-> +     * with an ulong reg being read/written in an uint32_t.
-> +     */
-> +    target_ulong scounteren;
+Hi Markus,
 
-I'm having second thoughts about this. It seems like it should be
-avoidable with the use of an intermediary buffer (which we already
-have -- the uint64_t reg) and with tracking the size of the env state
-by capturing the size with the new macro used to build the array.
-Then,
+> > +        case KVM_PMU_EVENT_FORMAT_X86_SELECT_UMASK: {
+> > +            if (event->u.x86_select_umask.select > UINT12_MAX) {
+> > +                error_setg(errp,
+> > +                           "Parameter 'select' out of range (%d).",
+> > +                           UINT12_MAX);
+> > +                goto fail;
+> > +            }
+> > +
+> > +            /* No need to check the range of umask since it's uint8_t. */
+> > +            break;
+> > +        }
+> 
+> As we'll see below, the new x86-specific format is defined in the QAPI
+> schema regardless of target.
+> 
+> It is accepted here also regardless of target.  Doesn't matter much
+> right now, as the object is effectively useless for targets other than
+> x86, but I understand that will change.
+> 
+> Should we reject it unless the target is x86?
 
-for reading:
- 1. read the kvm reg into a buffer of the size kvm says it is
- 2. only write the bytes we can store from the buffer into the env state,
-    using the size field to know how many that is
+I previously supposed that different architectures should implement
+their own kvm_arch_check_pmu_filter(), which is the `check` hook of
+object_class_property_add_link():
 
-for writing:
- 1. put the env state into a buffer of the size kvm says the register is,
-    ensuring any upper unused bytes of the buffer are zero
- 2. write the buffer to kvm
+    object_class_property_add_link(oc, "pmu-filter",
+                                   TYPE_KVM_PMU_FILTER,
+                                   offsetof(KVMState, pmu_filter),
+                                   kvm_arch_check_pmu_filter,
+                                   OBJ_PROP_LINK_STRONG);
 
-Thanks,
-drew
+For x86, I implemented kvm_arch_check_pmu_filter() in target/i386/kvm/
+kvm.c and checked the supported formats (I also supposed arch-specific
+PMU filter could reject the unsupported format in
+kvm_arch_check_pmu_filter().)
 
->      uint32_t mcounteren;
->  
->      uint32_t scountinhibit;
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index df2d5bad8d..f3477e153b 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -401,8 +401,8 @@ static const VMStateDescription vmstate_ssp = {
->  
->  const VMStateDescription vmstate_riscv_cpu = {
->      .name = "cpu",
-> -    .version_id = 10,
-> -    .minimum_version_id = 10,
-> +    .version_id = 11,
-> +    .minimum_version_id = 11,
->      .post_load = riscv_cpu_post_load,
->      .fields = (const VMStateField[]) {
->          VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
-> @@ -445,7 +445,7 @@ const VMStateDescription vmstate_riscv_cpu = {
->          VMSTATE_UINTTL(env.mtval, RISCVCPU),
->          VMSTATE_UINTTL(env.miselect, RISCVCPU),
->          VMSTATE_UINTTL(env.siselect, RISCVCPU),
-> -        VMSTATE_UINT32(env.scounteren, RISCVCPU),
-> +        VMSTATE_UINTTL(env.scounteren, RISCVCPU),
->          VMSTATE_UINT32(env.mcounteren, RISCVCPU),
->          VMSTATE_UINT32(env.scountinhibit, RISCVCPU),
->          VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
-> -- 
-> 2.49.0
+But I think your idea is better, i.e., rejecting unsupported format
+early in pmu-filter parsing.
+
+Well, IIUC, there is no way to specify in QAPI that certain enumerations
+are generic and certain enumerations are arch-specific, so rejecting
+unsupported format can only happen in parsing code. For example, wrap
+the above code in "#if defined(TARGET_I386)":
+
+    for (node = head; node; node = node->next) {
+        KvmPmuFilterEvent *event = node->value;
+
+        switch (event->format) {
+        case KVM_PMU_EVENT_FORMAT_RAW:
+            break;
+#if defined(TARGET_I386)
+        case KVM_PMU_EVENT_FORMAT_X86_SELECT_UMASK: {
+            ...
+            break;
+        }
+        case KVM_PMU_EVENT_FORMAT_X86_MASKED_ENTRY: {
+            ...
+	    break;
+        }
+#endif
+        default:
+	    error_setg(errp,
+                       "Unsupported format.");
+            goto fail;
+        }
+
+        ...
+    }
+
+EMM, do you like this idea?
+
+> If not, I feel the behavior should be noted in the commit message.
+
+With the above change, I think it's possible to reject x86-specific
+format on non-x86 arch. And I can also note this behavior in commit
+message.
+
+> >          default:
+> >              g_assert_not_reached();
+> >          }
+> > @@ -67,6 +82,9 @@ static void kvm_pmu_filter_set_event(Object *obj, Visitor *v, const char *name,
+> >      filter->events = head;
+> >      qapi_free_KvmPmuFilterEventList(old_head);
+> >      return;
+> > +
+> > +fail:
+> > +    qapi_free_KvmPmuFilterEventList(head);
+> >  }
+> >  
+> >  static void kvm_pmu_filter_class_init(ObjectClass *oc, void *data)
+
+...
+
+> >  ##
+> >  # @KvmPmuFilterEvent:
+> >  #
+> > @@ -66,7 +82,8 @@
+> >  { 'union': 'KvmPmuFilterEvent',
+> >    'base': { 'format': 'KvmPmuEventFormat' },
+> >    'discriminator': 'format',
+> > -  'data': { 'raw': 'KvmPmuRawEvent' } }
+> > +  'data': { 'raw': 'KvmPmuRawEvent',
+> > +            'x86-select-umask': 'KvmPmuX86SelectUmaskEvent' } }
+> >  
+> >  ##
+> >  # @KvmPmuFilterProperties:
+> 
+> Documentation could perhaps be more explicit about this making sense
+> only for x86.
+
+What about the following doc?
+
+##
+# @KvmPmuFilterProperties:
+#
+# Properties of KVM PMU Filter (only for x86).
+
+> > diff --git a/qemu-options.hx b/qemu-options.hx
+> > index 51a7c61ce0b0..5dcce067d8dd 100644
+> > --- a/qemu-options.hx
+> > +++ b/qemu-options.hx
+> > @@ -6180,6 +6180,9 @@ SRST
+> >               ((select) & 0xff) | \
+> >               ((umask) & 0xff) << 8)
+> >  
+> > +        ``{"format":"x86-select-umask","select":event_select,"umask":event_umask}``
+> > +            Specify the single x86 PMU event with select and umask fields.
+> > +
+> >          An example KVM PMU filter object would look like:
+> >  
+> >          .. parsed-literal::
+> > diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> > index fa3a696654cb..0d36ccf250ed 100644
+> > --- a/target/i386/kvm/kvm.c
+> > +++ b/target/i386/kvm/kvm.c
+> > @@ -5974,6 +5974,10 @@ static bool kvm_config_pmu_event(KVMPMUFilter *filter,
+> >          case KVM_PMU_EVENT_FORMAT_RAW:
+> >              code = event->u.raw.code;
+> >              break;
+> > +        case KVM_PMU_EVENT_FORMAT_X86_SELECT_UMASK:
+> > +            code = X86_PMU_RAW_EVENT(event->u.x86_select_umask.select,
+> > +                                     event->u.x86_select_umask.umask);
+> > +            break;
+> >          default:
+> >              g_assert_not_reached();
+> >          }
+> > @@ -6644,6 +6648,7 @@ static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
+> >  
+> >          switch (event->format) {
+> >          case KVM_PMU_EVENT_FORMAT_RAW:
+> > +        case KVM_PMU_EVENT_FORMAT_X86_SELECT_UMASK:
+
+Here's the current format check I mentioned above. But I agree your idea
+and will check in the parsing of pmu-filter object.
+
+> >              break;
+> >          default:
+> >              error_setg(errp,
 > 
 
