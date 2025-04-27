@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B5DC369D5
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 08:34:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 408A7C369D8
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 08:36:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8xSd-0005Uj-3K; Sun, 27 Apr 2025 04:34:03 -0400
+	id 1u8xUg-0006NB-Qa; Sun, 27 Apr 2025 04:36:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u8xSb-0005UE-0Q
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 04:34:01 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u8xSY-0007lD-Ck
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 04:34:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745742838; x=1777278838;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=4rGlzdu8He8ClHKNopue69zlaCk1VKVz+yGQua4n6FQ=;
- b=JEy4rCFDXuJ7ahIjWEVmspbDWpbwXh0t+X0vyvdJLIUMT7fPNuqzu12C
- P4zGTh0sBXuGwxhfnVZ2LAsN1pySWbUfywv69GJ+kFVa1nHQHeF539ZGR
- fNL0p5eIdZFhk36rczwsVuwWZ9mSuCvWZsiYpIIaqvq9UBmSljxsGG9eO
- 9afqWFi+Of5trDWq9k9TJKnkX39zTjlN0DQO2h83n3vp1GI23o8Y5XVtw
- bu4GLvux6mXQ9ECkdDhUF7QdCtbx84s5ZIhItWzlQlLn/E06F8uypKVFr
- 7tUk+67DtF9v+QDMzMvWBGHKxrltSCMg2EIj08azB7pdoeAv4n9ByVzb3 Q==;
-X-CSE-ConnectionGUID: 2RAH1MLjTwKZl1mcRC9Cug==
-X-CSE-MsgGUID: xPcgzVBATv2NnWH79qq5cg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="57995102"
-X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="57995102"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Apr 2025 01:33:55 -0700
-X-CSE-ConnectionGUID: Qcy2UMLbRIaepBdyJ083tw==
-X-CSE-MsgGUID: CFL9Pbq7TRmRVanh/NT93w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="133782755"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 27 Apr 2025 01:33:51 -0700
-Date: Sun, 27 Apr 2025 16:54:48 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Sean Christopherson <seanjc@google.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Zide Chen <zide.chen@intel.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>,
- Mingwei Zhang <mizhang@google.com>, Das Sandipan <Sandipan.Das@amd.com>,
- Shukla Manali <Manali.Shukla@amd.com>, Dapeng Mi <dapeng1.mi@intel.com>
-Subject: Re: [PATCH 3/3] target/i386: Support
- VMX_VM_EXIT_SAVE_IA32_PERF_GLOBAL_CTRL
-Message-ID: <aA3w2PiRuNOMKwdM@intel.com>
-References: <20250324123712.34096-1-dapeng1.mi@linux.intel.com>
- <20250324123712.34096-4-dapeng1.mi@linux.intel.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1u8xUX-0006MY-QA
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 04:36:02 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1u8xUU-00084O-Dr
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 04:36:01 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxGHFn7A1oRyvHAA--.4395S3;
+ Sun, 27 Apr 2025 16:35:51 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxb8dl7A1oRXyYAA--.53743S3;
+ Sun, 27 Apr 2025 16:35:51 +0800 (CST)
+Subject: Re: [PATCH v2] hw/loongarch/virt: Get physical entry address with elf
+ file
+To: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+References: <20250425021620.3968737-1-maobibo@loongson.cn>
+ <49fafb18-2186-4d19-867b-bc26c1c43572@linaro.org>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <0b336af3-cfb5-4641-4a28-7dd280287210@loongson.cn>
+Date: Sun, 27 Apr 2025 16:34:45 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250324123712.34096-4-dapeng1.mi@linux.intel.com>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.738,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
+In-Reply-To: <49fafb18-2186-4d19-867b-bc26c1c43572@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxb8dl7A1oRXyYAA--.53743S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9xXoW7GFyUWr4UtFWkuFW5CF4xXwc_yoWDXrX_ua
+ yxCr1kXw1kt39rWw1rtr4rXr97A3WjkryY934xWFyxXry5JanxCFna9rZ3uas5KFWjyrnr
+ Ga929w4fC343GosvyTuYvTs0mTUanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbxAYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVW8JVW5JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Cr1j6rxdM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jOF4_U
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.665,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,39 +85,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> @@ -4212,7 +4213,8 @@ static const X86CPUDefinition builtin_x86_defs[] = {
->              VMX_VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL |
->              VMX_VM_EXIT_ACK_INTR_ON_EXIT | VMX_VM_EXIT_SAVE_IA32_PAT |
->              VMX_VM_EXIT_LOAD_IA32_PAT | VMX_VM_EXIT_SAVE_IA32_EFER |
-> -            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER,
-> +            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER |
-> +            VMX_VM_EXIT_SAVE_IA32_PERF_GLOBAL_CTRL,
->          .features[FEAT_VMX_MISC] =
->              MSR_VMX_MISC_STORE_LMA | MSR_VMX_MISC_ACTIVITY_HLT |
->              MSR_VMX_MISC_VMWRITE_VMEXIT,
-> @@ -4368,7 +4370,8 @@ static const X86CPUDefinition builtin_x86_defs[] = {
->              VMX_VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL |
->              VMX_VM_EXIT_ACK_INTR_ON_EXIT | VMX_VM_EXIT_SAVE_IA32_PAT |
->              VMX_VM_EXIT_LOAD_IA32_PAT | VMX_VM_EXIT_SAVE_IA32_EFER |
-> -            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER,
-> +            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER |
-> +            VMX_VM_EXIT_SAVE_IA32_PERF_GLOBAL_CTRL,
->          .features[FEAT_VMX_MISC] =
->              MSR_VMX_MISC_STORE_LMA | MSR_VMX_MISC_ACTIVITY_HLT |
->              MSR_VMX_MISC_VMWRITE_VMEXIT,
-> @@ -4511,7 +4514,8 @@ static const X86CPUDefinition builtin_x86_defs[] = {
->              VMX_VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL |
->              VMX_VM_EXIT_ACK_INTR_ON_EXIT | VMX_VM_EXIT_SAVE_IA32_PAT |
->              VMX_VM_EXIT_LOAD_IA32_PAT | VMX_VM_EXIT_SAVE_IA32_EFER |
-> -            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER,
-> +            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER |
-> +            VMX_VM_EXIT_SAVE_IA32_PERF_GLOBAL_CTRL,
->          .features[FEAT_VMX_MISC] =
->              MSR_VMX_MISC_STORE_LMA | MSR_VMX_MISC_ACTIVITY_HLT |
->              MSR_VMX_MISC_VMWRITE_VMEXIT,
 
-Instead of modifying SPR's CPU model directly, we should introduce a new
-version (SapphireRapids-v4), like Skylake-Server-v4 enables
-"vmx-eptp-switching".
+
+On 2025/4/25 下午11:33, Richard Henderson wrote:
+> On 4/24/25 19:16, Bibo Mao wrote:
+>> With load_elf() api, image load low address and high address is converted
+>> to physical address if parameter translate_fn is provided. However
+>> executing entry address is still virtual address. Here convert entry
+>> address into physical address, since MMU is disabled when system power 
+>> on,
+>> the first PC instruction should be physical address.
+>>
+>> Signed-off-by: Bibo Mao<maobibo@loongson.cn>
+>> ---
+>>    v1 ... v2:
+>>    1. Only modify LoongArch specified rather than load_elf() API, since
+>>       there is be potential influence with other architectures.
+>> ---
+>>   hw/loongarch/boot.c | 1 +
+>>   1 file changed, 1 insertion(+)
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> Although perhaps we should adjust the API because all users have to do 
+> exactly this, and it's easy to miss.
+Thanks, that is fair.
+
+Regards
+Bibo Mao
+> 
+> 
+> r~
 
 
