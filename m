@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A29BC369D5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F3FDC369D8
 	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 08:47:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8xeb-00086Q-0F; Sun, 27 Apr 2025 04:46:25 -0400
+	id 1u8xez-0008A3-HY; Sun, 27 Apr 2025 04:46:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u8xeZ-00086G-K6
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 04:46:23 -0400
+ id 1u8xex-00089n-EK
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 04:46:47 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u8xeX-0000cS-2A
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 04:46:23 -0400
+ id 1u8xev-0000fz-PB
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 04:46:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745743581; x=1777279581;
+ t=1745743606; x=1777279606;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=HZlpvbx0btXNobowdrNIQrAi8AUXXT/IK+bqPl2J49M=;
- b=hDImlAvSlQMWcFDTFqTwWPNttRl4PrJ6XTWRzbs3U+QSzOGFXG6tSbT/
- YQ/H1DQ7RJVMoJSiChC9c33m6lOwmEBtEwb5/DuPYlzMQIqEZ7e54EJrz
- Qziu69au9S8vg9GfHDLtOuZgyDuFNj5OqsZA+P8bw6lFgVPN7m5gfowyz
- oLz9yVQsZa+yXLkN+W7pu/Sx0UZA7Q6Qke5T7C6aD/5fbnzYOYNG1j+Ti
- mMGXt3V0HEubp3FUVrdXkhPHsLz2gVyA2QnRrYR6uoKioOdlm/92SUWK9
- nLn4zbbA5ybCIfGDevAOSqYj52FQyo/rIS6UjQ0VYCKwvaEzqM/bt7Aw3 A==;
-X-CSE-ConnectionGUID: 5W3HxfvtSXWkjaeTH5VLrw==
-X-CSE-MsgGUID: oeRbw1SkQnuWw4Le1Y1eoA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="58718470"
-X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="58718470"
+ bh=/GTyDHMle3ldZMARhT3TCRkxS223RtuLA6EgdyJ3gxc=;
+ b=kKT3rQ5QYEvgMwGhbmhfQ3ZPomkN119uHilSjvdL0cf38gKGd6Lu0j3f
+ NM8WZwFfzrJtanDQngXBg6QzMbGQ77Y1Y0NiEeuiNtKhmRJcJJtI/BrMf
+ /re/jzEGrnBb7F8L6FxA4zKDXYiw0xpLEEiOt7QpZOlBf3/xdQe4XbWUM
+ ofA4ZRO067hS0HdGF5bvIF2sUDe7i1qj4w1qMsjtfktZnU19IQB6l4vrM
+ hFcxhQ82nEdw/yXPnHsF+Gy83nT1lDcwnv2l3UH7nNYziqieExNusGU7P
+ uDIAjbsLcoGy5JkAIwZ3dekTMJp5hX/xdiJoTQrRTRx10bggRnV7oNk4m g==;
+X-CSE-ConnectionGUID: vcbFW9xlSz2fD5MsagmAcQ==
+X-CSE-MsgGUID: oo+nfG65TaOef3XUazzTbw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="58718488"
+X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="58718488"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Apr 2025 01:46:18 -0700
-X-CSE-ConnectionGUID: 5YzqeFwsRCSkAAsJU2H1Eg==
-X-CSE-MsgGUID: USKQEiDpQ6CDPsbiXZFTlA==
+ 27 Apr 2025 01:46:44 -0700
+X-CSE-ConnectionGUID: YRqdoL6KTSuXeJYfUSnNBA==
+X-CSE-MsgGUID: FfiRPcN2Q0SwK2mEVxa2xg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="138415687"
+X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="138415772"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 27 Apr 2025 01:46:16 -0700
-Date: Sun, 27 Apr 2025 17:07:11 +0800
+ by orviesa005.jf.intel.com with ESMTP; 27 Apr 2025 01:46:42 -0700
+Date: Sun, 27 Apr 2025 17:07:38 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,14 +57,15 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 26/55] i386/tdx: Finalize TDX VM
-Message-ID: <aA3zvysjNFBy2ATU@intel.com>
+Subject: Re: [PATCH v8 27/55] i386/tdx: Enable user exit on
+ KVM_HC_MAP_GPA_RANGE
+Message-ID: <aA3z2hyxuGzbV2nV@intel.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-27-xiaoyao.li@intel.com>
+ <20250401130205.2198253-28-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250401130205.2198253-27-xiaoyao.li@intel.com>
+In-Reply-To: <20250401130205.2198253-28-xiaoyao.li@intel.com>
 Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -50
@@ -90,20 +91,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:36AM -0400, Xiaoyao Li wrote:
-> Date: Tue,  1 Apr 2025 09:01:36 -0400
+On Tue, Apr 01, 2025 at 09:01:37AM -0400, Xiaoyao Li wrote:
+> Date: Tue,  1 Apr 2025 09:01:37 -0400
 > From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH v8 26/55] i386/tdx: Finalize TDX VM
+> Subject: [PATCH v8 27/55] i386/tdx: Enable user exit on KVM_HC_MAP_GPA_RANGE
 > X-Mailer: git-send-email 2.34.1
 > 
-> Invoke KVM_TDX_FINALIZE_VM to finalize the TD's measurement and make
-> the TD vCPUs runnable once machine initialization is complete.
+> KVM translates TDG.VP.VMCALL<MapGPA> to KVM_HC_MAP_GPA_RANGE, and QEMU
+> needs to enable user exit on KVM_HC_MAP_GPA_RANGE in order to handle the
+> memory conversion requested by TD guest.
 > 
 > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 > ---
->  target/i386/kvm/tdx.c | 3 +++
->  1 file changed, 3 insertions(+)
+> changes in v6:
+>  - new patch;
+> ---
+>  target/i386/kvm/tdx.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
