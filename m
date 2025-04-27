@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F3FDC369D8
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 08:47:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78FC8C369D3
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 09:43:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8xez-0008A3-HY; Sun, 27 Apr 2025 04:46:49 -0400
+	id 1u8yX3-0000aD-Vb; Sun, 27 Apr 2025 05:42:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u8xex-00089n-EK
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 04:46:47 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1u8yWz-0000ZA-NN
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 05:42:38 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u8xev-0000fz-PB
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 04:46:47 -0400
+ (Exim 4.90_1) (envelope-from <dapeng1.mi@linux.intel.com>)
+ id 1u8yWx-0006aj-0y
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 05:42:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745743606; x=1777279606;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=/GTyDHMle3ldZMARhT3TCRkxS223RtuLA6EgdyJ3gxc=;
- b=kKT3rQ5QYEvgMwGhbmhfQ3ZPomkN119uHilSjvdL0cf38gKGd6Lu0j3f
- NM8WZwFfzrJtanDQngXBg6QzMbGQ77Y1Y0NiEeuiNtKhmRJcJJtI/BrMf
- /re/jzEGrnBb7F8L6FxA4zKDXYiw0xpLEEiOt7QpZOlBf3/xdQe4XbWUM
- ofA4ZRO067hS0HdGF5bvIF2sUDe7i1qj4w1qMsjtfktZnU19IQB6l4vrM
- hFcxhQ82nEdw/yXPnHsF+Gy83nT1lDcwnv2l3UH7nNYziqieExNusGU7P
- uDIAjbsLcoGy5JkAIwZ3dekTMJp5hX/xdiJoTQrRTRx10bggRnV7oNk4m g==;
-X-CSE-ConnectionGUID: vcbFW9xlSz2fD5MsagmAcQ==
-X-CSE-MsgGUID: oo+nfG65TaOef3XUazzTbw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="58718488"
-X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="58718488"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Apr 2025 01:46:44 -0700
-X-CSE-ConnectionGUID: YRqdoL6KTSuXeJYfUSnNBA==
-X-CSE-MsgGUID: FfiRPcN2Q0SwK2mEVxa2xg==
+ t=1745746955; x=1777282955;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=20rtXIKpVHePMp/s5NOBXpbrgNMBI6Ac2g1H+IRiiLA=;
+ b=KUXBtfwtGT6OaZiNdV6TWdoDpYT0K2gd4maxpc7a8240ehL95Yd7jziE
+ pdwooJiWXE0BOJnFDcGSblsZA39IxxQsAMCojmvYRzKNnyOa5pnFaDjBD
+ DgXm10Wx+f0+M66ywnn9W3Dk951EXQbw6l0wKv8SP2lPcH/dEMcyo1EUO
+ 6O5klSRXn9V3IkMCp2dYYsP+cnC6p0l/hA6FTsTwk/27THshWDL3W7mNI
+ y0cY4dIBf8uFsk4L2Ld85Wz36zMdmjczAQzjU6i7oAk9BelhwT8WIYEJQ
+ IVF2Z1V9bBE+1XQe4POvlxaXyCxjEqW6cVHd7dS442bdF+ztEPjT4gvSy A==;
+X-CSE-ConnectionGUID: 2VgDxz7+QqO9nHBm7/nbRw==
+X-CSE-MsgGUID: SP2d+HQ9Q7C9EfHABZzoTg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="47438869"
+X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="47438869"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Apr 2025 02:42:30 -0700
+X-CSE-ConnectionGUID: zj6lZ3H8QjOQTMsxinQBnw==
+X-CSE-MsgGUID: tMiRphQHRkWlAdVlJsZJiQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="138415772"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 27 Apr 2025 01:46:42 -0700
-Date: Sun, 27 Apr 2025 17:07:38 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Francesco Lavra <francescolavra.fl@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 27/55] i386/tdx: Enable user exit on
- KVM_HC_MAP_GPA_RANGE
-Message-ID: <aA3z2hyxuGzbV2nV@intel.com>
-References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-28-xiaoyao.li@intel.com>
+X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="133759400"
+Received: from dapengmi-mobl1.ccr.corp.intel.com (HELO [10.124.245.128])
+ ([10.124.245.128])
+ by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Apr 2025 02:42:27 -0700
+Message-ID: <4ee686a3-6970-4560-b0ad-00329d773148@linux.intel.com>
+Date: Sun, 27 Apr 2025 17:42:24 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250401130205.2198253-28-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] target/i386: Support
+ VMX_VM_EXIT_SAVE_IA32_PERF_GLOBAL_CTRL
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Sean Christopherson <seanjc@google.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Zide Chen <zide.chen@intel.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, Dongli Zhang <dongli.zhang@oracle.com>,
+ Mingwei Zhang <mizhang@google.com>, Das Sandipan <Sandipan.Das@amd.com>,
+ Shukla Manali <Manali.Shukla@amd.com>, Dapeng Mi <dapeng1.mi@intel.com>
+References: <20250324123712.34096-1-dapeng1.mi@linux.intel.com>
+ <20250324123712.34096-4-dapeng1.mi@linux.intel.com>
+ <aA3w2PiRuNOMKwdM@intel.com>
+Content-Language: en-US
+From: "Mi, Dapeng" <dapeng1.mi@linux.intel.com>
+In-Reply-To: <aA3w2PiRuNOMKwdM@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=198.175.65.16;
+ envelope-from=dapeng1.mi@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
 X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.738,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.738,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001,
+ UPPERCASE_50_75=0.008 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,24 +93,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:37AM -0400, Xiaoyao Li wrote:
-> Date: Tue,  1 Apr 2025 09:01:37 -0400
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH v8 27/55] i386/tdx: Enable user exit on KVM_HC_MAP_GPA_RANGE
-> X-Mailer: git-send-email 2.34.1
-> 
-> KVM translates TDG.VP.VMCALL<MapGPA> to KVM_HC_MAP_GPA_RANGE, and QEMU
-> needs to enable user exit on KVM_HC_MAP_GPA_RANGE in order to handle the
-> memory conversion requested by TD guest.
-> 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> ---
-> changes in v6:
->  - new patch;
-> ---
->  target/i386/kvm/tdx.c | 7 +++++++
->  1 file changed, 7 insertions(+)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+On 4/27/2025 4:54 PM, Zhao Liu wrote:
+>> @@ -4212,7 +4213,8 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>>              VMX_VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL |
+>>              VMX_VM_EXIT_ACK_INTR_ON_EXIT | VMX_VM_EXIT_SAVE_IA32_PAT |
+>>              VMX_VM_EXIT_LOAD_IA32_PAT | VMX_VM_EXIT_SAVE_IA32_EFER |
+>> -            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER,
+>> +            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER |
+>> +            VMX_VM_EXIT_SAVE_IA32_PERF_GLOBAL_CTRL,
+>>          .features[FEAT_VMX_MISC] =
+>>              MSR_VMX_MISC_STORE_LMA | MSR_VMX_MISC_ACTIVITY_HLT |
+>>              MSR_VMX_MISC_VMWRITE_VMEXIT,
+>> @@ -4368,7 +4370,8 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>>              VMX_VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL |
+>>              VMX_VM_EXIT_ACK_INTR_ON_EXIT | VMX_VM_EXIT_SAVE_IA32_PAT |
+>>              VMX_VM_EXIT_LOAD_IA32_PAT | VMX_VM_EXIT_SAVE_IA32_EFER |
+>> -            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER,
+>> +            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER |
+>> +            VMX_VM_EXIT_SAVE_IA32_PERF_GLOBAL_CTRL,
+>>          .features[FEAT_VMX_MISC] =
+>>              MSR_VMX_MISC_STORE_LMA | MSR_VMX_MISC_ACTIVITY_HLT |
+>>              MSR_VMX_MISC_VMWRITE_VMEXIT,
+>> @@ -4511,7 +4514,8 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+>>              VMX_VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL |
+>>              VMX_VM_EXIT_ACK_INTR_ON_EXIT | VMX_VM_EXIT_SAVE_IA32_PAT |
+>>              VMX_VM_EXIT_LOAD_IA32_PAT | VMX_VM_EXIT_SAVE_IA32_EFER |
+>> -            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER,
+>> +            VMX_VM_EXIT_LOAD_IA32_EFER | VMX_VM_EXIT_SAVE_VMX_PREEMPTION_TIMER |
+>> +            VMX_VM_EXIT_SAVE_IA32_PERF_GLOBAL_CTRL,
+>>          .features[FEAT_VMX_MISC] =
+>>              MSR_VMX_MISC_STORE_LMA | MSR_VMX_MISC_ACTIVITY_HLT |
+>>              MSR_VMX_MISC_VMWRITE_VMEXIT,
+> Instead of modifying SPR's CPU model directly, we should introduce a new
+> version (SapphireRapids-v4), like Skylake-Server-v4 enables
+> "vmx-eptp-switching".
 
+Sure. Let me have a look this.
+
+
+>
 
