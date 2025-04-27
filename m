@@ -4,80 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9BD6C369D5
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 06:29:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5E6CC369D5
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 06:56:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u8vVP-0000Jq-Je; Sun, 27 Apr 2025 02:28:47 -0400
+	id 1u8vvH-0001rC-Oz; Sun, 27 Apr 2025 02:55:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u8vVN-0000H7-HV; Sun, 27 Apr 2025 02:28:45 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u8vVK-0000IL-Mt; Sun, 27 Apr 2025 02:28:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745735323; x=1777271323;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=mnGbRICatNcyoPrI5GrAe65yEryXZhpnLlqHMQGHYqQ=;
- b=AFav72zjWXBQeavK2IzbgMOK26l5x0acTwx3Gw4CmxGE/RQUkT4UzKpo
- ZdgF8rn+eMi+cORYSTEAPvBq7YbpZ1a86uNuvIx60xx5MC5U4Vo8usOxD
- RB4G9YbNUZ1OYERnEjVKK04T4DzcfFwXyV3ktXhwVwZRkSBsvt4dS1jG9
- vURx9KwgjDTUAGZuH31H4KuyxE6EaX2ZKIGkK0NOe74EqKaFAqV3Uva4M
- /yXfkFGPoWeDLAMTufXpFJhPfAXlfnxuU2lkPYrvrptQm04/RDvTAEXO/
- 73dgwOkDxiRLFPh+R2d9VAb1Y3MhFT7Z39uW1WErkWeQSgz4X6MLs+UNr w==;
-X-CSE-ConnectionGUID: DhJQYWq4QF67gBhfqf9ImA==
-X-CSE-MsgGUID: SgAfAPPSRtarCkRnruvcYA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11415"; a="49995862"
-X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="49995862"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Apr 2025 23:28:37 -0700
-X-CSE-ConnectionGUID: iO0zR2YdQPuksNBrc7RPBg==
-X-CSE-MsgGUID: H4em+WpuSHWky0kg4kKVEg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,243,1739865600"; d="scan'208";a="133216649"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 26 Apr 2025 23:28:32 -0700
-Date: Sun, 27 Apr 2025 14:49:29 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Shaoqin Huang <shahuang@redhat.com>, Eric Auger <eauger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>
-Subject: Re: [PATCH 3/5] i386/kvm: Support event with select & umask format
- in KVM PMU filter
-Message-ID: <aA3TeaYG9mNMdEiW@intel.com>
-References: <20250409082649.14733-1-zhao1.liu@intel.com>
- <20250409082649.14733-4-zhao1.liu@intel.com>
- <87frhwfuv1.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1u8vvB-0001qK-FO
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 02:55:26 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1u8vv8-00049T-3K
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 02:55:25 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxbeLK1A1o0hzHAA--.29906S3;
+ Sun, 27 Apr 2025 14:55:07 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCxLcXH1A1ojUaYAA--.50309S3;
+ Sun, 27 Apr 2025 14:55:05 +0800 (CST)
+Subject: Re: [PATCH v2 04/16] hw/intc/loongarch_pch: Set version information
+ at initial stage
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250324093730.3683378-1-maobibo@loongson.cn>
+ <20250324093730.3683378-5-maobibo@loongson.cn>
+ <b1ac7812-ac9b-4bcc-a04e-93dd43fbec51@linaro.org>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <2c55bf31-f3b7-b345-e6e7-864edbd7277b@loongson.cn>
+Date: Sun, 27 Apr 2025 14:53:59 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87frhwfuv1.fsf@pond.sub.org>
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.738,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <b1ac7812-ac9b-4bcc-a04e-93dd43fbec51@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMCxLcXH1A1ojUaYAA--.50309S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tF17CrW7Wr15tF45XFy3Jrc_yoW5JF4fpr
+ 1kArW3JrWUJrn7Jr1xAr1UXFy5JF4rJw1UWr1IgFyUJF45Jr10qr1UXr1j9F1UJr48Jr1j
+ qr15Grn8uF1UXrbCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUBYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAaw2AFwI0_Jrv_JF1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0c
+ Ia020Ex4CE44I27wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_
+ JF1lYx0Ex4A2jsIE14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrw
+ CYjI0SjxkI62AI1cAE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j
+ 6r4UMxCIbckI1I0E14v26r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwV
+ AFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv2
+ 0xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4
+ v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr1lIxAIcVC2z280aVCY1x0267AK
+ xVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8TqcUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.665,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,165 +87,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Markus,
 
-> > +        case KVM_PMU_EVENT_FORMAT_X86_SELECT_UMASK: {
-> > +            if (event->u.x86_select_umask.select > UINT12_MAX) {
-> > +                error_setg(errp,
-> > +                           "Parameter 'select' out of range (%d).",
-> > +                           UINT12_MAX);
-> > +                goto fail;
-> > +            }
-> > +
-> > +            /* No need to check the range of umask since it's uint8_t. */
-> > +            break;
-> > +        }
+
+On 2025/4/25 下午5:57, Philippe Mathieu-Daudé wrote:
+> On 24/3/25 10:37, Bibo Mao wrote:
+>> Register PCH_PIC_INT_ID constains version and supported irq number
+>> information, and it is read only register. The detailed value can
+>> be set at initial stage, rather than read callback.
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   hw/intc/loongarch_pch_pic.c            | 17 ++++++++++-------
+>>   include/hw/intc/loongarch_pic_common.h | 17 +++++++++++++++--
+>>   2 files changed, 25 insertions(+), 9 deletions(-)
 > 
-> As we'll see below, the new x86-specific format is defined in the QAPI
-> schema regardless of target.
 > 
-> It is accepted here also regardless of target.  Doesn't matter much
-> right now, as the object is effectively useless for targets other than
-> x86, but I understand that will change.
+>> diff --git a/include/hw/intc/loongarch_pic_common.h 
+>> b/include/hw/intc/loongarch_pic_common.h
+>> index ef6edc15bf..fb848da4b8 100644
+>> --- a/include/hw/intc/loongarch_pic_common.h
+>> +++ b/include/hw/intc/loongarch_pic_common.h
+>> @@ -10,9 +10,9 @@
+>>   #include "hw/pci-host/ls7a.h"
+>>   #include "hw/sysbus.h"
+>> -#define PCH_PIC_INT_ID_VAL              0x7000000UL
+>> -#define PCH_PIC_INT_ID_VER              0x1UL
+>>   #define PCH_PIC_INT_ID                  0x00
+>> +#define  PCH_PIC_INT_ID_VAL             0x7
+>> +#define  PCH_PIC_INT_ID_VER             0x1
+>>   #define PCH_PIC_INT_MASK                0x20
+>>   #define PCH_PIC_HTMSI_EN                0x40
+>>   #define PCH_PIC_INT_EDGE                0x60
+>> @@ -30,10 +30,23 @@
+>>   OBJECT_DECLARE_TYPE(LoongArchPICCommonState,
+>>                       LoongArchPICCommonClass, LOONGARCH_PIC_COMMON)
+>> +union LoongArchPIC_ID {
+>> +    struct {
+>> +        uint64_t _reserved_0:24;
+>> +        uint64_t id:8;
 > 
-> Should we reject it unless the target is x86?
-
-I previously supposed that different architectures should implement
-their own kvm_arch_check_pmu_filter(), which is the `check` hook of
-object_class_property_add_link():
-
-    object_class_property_add_link(oc, "pmu-filter",
-                                   TYPE_KVM_PMU_FILTER,
-                                   offsetof(KVMState, pmu_filter),
-                                   kvm_arch_check_pmu_filter,
-                                   OBJ_PROP_LINK_STRONG);
-
-For x86, I implemented kvm_arch_check_pmu_filter() in target/i386/kvm/
-kvm.c and checked the supported formats (I also supposed arch-specific
-PMU filter could reject the unsupported format in
-kvm_arch_check_pmu_filter().)
-
-But I think your idea is better, i.e., rejecting unsupported format
-early in pmu-filter parsing.
-
-Well, IIUC, there is no way to specify in QAPI that certain enumerations
-are generic and certain enumerations are arch-specific, so rejecting
-unsupported format can only happen in parsing code. For example, wrap
-the above code in "#if defined(TARGET_I386)":
-
-    for (node = head; node; node = node->next) {
-        KvmPmuFilterEvent *event = node->value;
-
-        switch (event->format) {
-        case KVM_PMU_EVENT_FORMAT_RAW:
-            break;
-#if defined(TARGET_I386)
-        case KVM_PMU_EVENT_FORMAT_X86_SELECT_UMASK: {
-            ...
-            break;
-        }
-        case KVM_PMU_EVENT_FORMAT_X86_MASKED_ENTRY: {
-            ...
-	    break;
-        }
-#endif
-        default:
-	    error_setg(errp,
-                       "Unsupported format.");
-            goto fail;
-        }
-
-        ...
-    }
-
-EMM, do you like this idea?
-
-> If not, I feel the behavior should be noted in the commit message.
-
-With the above change, I think it's possible to reject x86-specific
-format on non-x86 arch. And I can also note this behavior in commit
-message.
-
-> >          default:
-> >              g_assert_not_reached();
-> >          }
-> > @@ -67,6 +82,9 @@ static void kvm_pmu_filter_set_event(Object *obj, Visitor *v, const char *name,
-> >      filter->events = head;
-> >      qapi_free_KvmPmuFilterEventList(old_head);
-> >      return;
-> > +
-> > +fail:
-> > +    qapi_free_KvmPmuFilterEventList(head);
-> >  }
-> >  
-> >  static void kvm_pmu_filter_class_init(ObjectClass *oc, void *data)
-
-...
-
-> >  ##
-> >  # @KvmPmuFilterEvent:
-> >  #
-> > @@ -66,7 +82,8 @@
-> >  { 'union': 'KvmPmuFilterEvent',
-> >    'base': { 'format': 'KvmPmuEventFormat' },
-> >    'discriminator': 'format',
-> > -  'data': { 'raw': 'KvmPmuRawEvent' } }
-> > +  'data': { 'raw': 'KvmPmuRawEvent',
-> > +            'x86-select-umask': 'KvmPmuX86SelectUmaskEvent' } }
-> >  
-> >  ##
-> >  # @KvmPmuFilterProperties:
+> Why not use:
 > 
-> Documentation could perhaps be more explicit about this making sense
-> only for x86.
-
-What about the following doc?
-
-##
-# @KvmPmuFilterProperties:
-#
-# Properties of KVM PMU Filter (only for x86).
-
-> > diff --git a/qemu-options.hx b/qemu-options.hx
-> > index 51a7c61ce0b0..5dcce067d8dd 100644
-> > --- a/qemu-options.hx
-> > +++ b/qemu-options.hx
-> > @@ -6180,6 +6180,9 @@ SRST
-> >               ((select) & 0xff) | \
-> >               ((umask) & 0xff) << 8)
-> >  
-> > +        ``{"format":"x86-select-umask","select":event_select,"umask":event_umask}``
-> > +            Specify the single x86 PMU event with select and umask fields.
-> > +
-> >          An example KVM PMU filter object would look like:
-> >  
-> >          .. parsed-literal::
-> > diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> > index fa3a696654cb..0d36ccf250ed 100644
-> > --- a/target/i386/kvm/kvm.c
-> > +++ b/target/i386/kvm/kvm.c
-> > @@ -5974,6 +5974,10 @@ static bool kvm_config_pmu_event(KVMPMUFilter *filter,
-> >          case KVM_PMU_EVENT_FORMAT_RAW:
-> >              code = event->u.raw.code;
-> >              break;
-> > +        case KVM_PMU_EVENT_FORMAT_X86_SELECT_UMASK:
-> > +            code = X86_PMU_RAW_EVENT(event->u.x86_select_umask.select,
-> > +                                     event->u.x86_select_umask.umask);
-> > +            break;
-> >          default:
-> >              g_assert_not_reached();
-> >          }
-> > @@ -6644,6 +6648,7 @@ static void kvm_arch_check_pmu_filter(const Object *obj, const char *name,
-> >  
-> >          switch (event->format) {
-> >          case KVM_PMU_EVENT_FORMAT_RAW:
-> > +        case KVM_PMU_EVENT_FORMAT_X86_SELECT_UMASK:
-
-Here's the current format check I mentioned above. But I agree your idea
-and will check in the parsing of pmu-filter object.
-
-> >              break;
-> >          default:
-> >              error_setg(errp,
+>             uint8_t _reserved_0[3];
+>             uint8_t id;
 > 
+> Otherwise see commit ecbf3567e21 ("docs/devel/style: add a section about
+> bitfield, and disallow them for packed structures"), this might give
+> troubles on Windows or big-endian hosts such s390x.
+Good suggestion, will use this method rather than bit-field method.
+
+Regards
+Bibo Mao
+> 
+>> +        uint64_t version:8;
+>> +        uint64_t _reserved_1:8;
+>> +        uint64_t irq_num:8;
+>> +        uint64_t _reserved_2:8;
+>  > +    } QEMU_PACKED desc;> +    uint64_t data;
+>> +};
+
 
