@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28211C369D1
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 16:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8602CC369D1
+	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 23:00:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u95DK-0000zh-5i; Sun, 27 Apr 2025 12:50:46 -0400
+	id 1u9Axs-0006Ql-8t; Sun, 27 Apr 2025 18:59:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u95DI-0000z2-8A
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 12:50:44 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <nirsof@gmail.com>)
+ id 1u9Axq-0006Pj-Po; Sun, 27 Apr 2025 18:59:10 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nirsof@gmail.com>) id 1u95DB-0005pH-AY
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 12:50:38 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43edecbfb94so38202125e9.1
- for <qemu-devel@nongnu.org>; Sun, 27 Apr 2025 09:50:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nirsof@gmail.com>)
+ id 1u9Axo-0007A7-DH; Sun, 27 Apr 2025 18:59:10 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3995ff6b066so2042921f8f.3; 
+ Sun, 27 Apr 2025 15:59:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745772634; x=1746377434; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745794745; x=1746399545; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=lYHxWvOlghFSADlJY7dsqqkXQbCxF+CrIV5UmKFdgTk=;
- b=kF3XqYKIVhqtZpxC1LWQoK7//TsRaF1qhuOVty62tfa5zZGXZ/xvwMrlTKOn82lXBv
- xx7MiYiXdZuYGUo942uUww3zzEhxMvERWUUGOEmGODGCNy8wlq0jl51Wy/TwbD/MXuav
- 7LWls1XBpQMVeISK/cuMY1LhkY2+OgtwXYLrT1kCIDQ3CUi6RzCS8Bfa/HbHMyt65NaU
- HD7QG2cVmCwe8yWlQnKHFuOyeXsQbv9JJsyd3EJ6x3ar4AMGJhddfmE63VDFTHJ3YjGz
- hKBOal8w2+FNOHGwznZ6aLTJiz9v+hdoZwj8n3R5ccPcnLEseHZpEHyJnIKYuwIYjGOD
- HdNg==
+ bh=rGYuD4DxYkUVs+1Dcpzny1FKUufmmLwpsZn1qYLXkDM=;
+ b=PC0Rrr4lihCZqgIvuLKXjRvIGT0CbHzQSvh9eV8ipV6EYvzJXxVwvhdv+A623Zvu8/
+ 9cVA5eDo0K9kBUufT18WPhfy/amW81wWhVz2xSEdwOdk/RigjfK6xR6cOseZ8i9VyaON
+ gKL1aH8ytGL8TKQd9oJBS8XWtOoo894JWAFJ3qEU1QhbSWNfLCpM6HjXDkN+SZmS7P5T
+ 9fVd/D8rEQ3fNpQyA30cMKd+AlcFvW2FXbeKiWG2VtzSJiy0vVCI/TiiAr6G06KSW/yM
+ +klL0cpD7aNxeFPaiou5mWnlmrpjGg9EN8o7tzHYJLOlaqpdPwLPM9qnWHwpcoyTsMi9
+ YJfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745772634; x=1746377434;
+ d=1e100.net; s=20230601; t=1745794745; x=1746399545;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lYHxWvOlghFSADlJY7dsqqkXQbCxF+CrIV5UmKFdgTk=;
- b=EtA0SeqDJTxV65qAKWMnrZ9GscG3wM0f/+tgJ8T02Wzbpjs8jvhv0M4rJIaeFZky1t
- WyYKBAVnav6uECZ1rTCk1+voVwkxgDjmhFXSIOtMkJCMpC6pHPw8Zi/5mCAebnvD0A4w
- 2Cwkgzz3+b/bCbAttKlSHtTo24OhbynDa5MaqjWIxvnqWl3uJ+eSTcdjGB2ZyS/OOSRl
- p4nQEPQBb0tyxH4yi+eOe6rcX83Y9mczp/7i1sUJ16F5ycdnhrtQyaVcoLlmIqSxEtej
- V8RS4GYtRNkiKzyVwOk9iD0J6Tl8wufFo37T0MNvGG4TV7Q+e3l8MG5pIuvlh8u2iKg/
- wtJg==
-X-Gm-Message-State: AOJu0Yz9KpE7wO4/ik4RGe8PRreMLH/owCDuKJZ7ADEJWAQlOyIg/5O/
- JELTvOvXNz7jRdFUFDh4yVqJwRzci381j6sxvAtSSINFeqBHccSF58hIkg==
-X-Gm-Gg: ASbGncuc02sA/CiFOa9Kh8Ej2k/Dk2HUbhV8MA8nIomRrWn8TDEpHgiU0lBv2xdNVhs
- cNn3Gv8+wWeCGJBuy846msWJ3vCW6jUY4qotjsVw5gawU7dfSYJFNLYnpRbZQf2ga39i1gvRTkM
- KNUZbLRRTX83iuEw6EFapfhnI6Z4aeWbOErJ3oqYAaC0b60c9OJ2uTZMYeP7+/11eqqo2D574oZ
- HOAbK/yxLWT5M94WXmciyNKs9uDD/eAVIZVcukxUQYZo5SFy5jjsSZwtuVC2XJKvYnEcOYp0+kS
- vbOxcTYsd7nUnmiuq42q2a7uq0w3uhKWYTo2PsEHUFT9/EkuN0iIpFvOgvHU5saf8ubNy3Rhlpb
- Tcv9M2hjQUFfIgBOGSFF7TmY9hIg1
-X-Google-Smtp-Source: AGHT+IHOKbclK3XSCYZIZjm0gxY6h3lKbp0qznWjlyfBYxrrRP7F0XZY5ab20FcfTZPCjlRbkmww2w==
-X-Received: by 2002:a05:6000:430a:b0:39c:1257:cd41 with SMTP id
- ffacd0b85a97d-3a074fbc45emr6566409f8f.59.1745772633826; 
- Sun, 27 Apr 2025 09:50:33 -0700 (PDT)
+ bh=rGYuD4DxYkUVs+1Dcpzny1FKUufmmLwpsZn1qYLXkDM=;
+ b=fqEoH5/NitfkA8p+U+WM9NiMrP2oZmocrezfz+PdcFZEwxMD8dxO3GHkSUbZVpf5pq
+ cWWzcMsRk/jDtandbJOfeRPu4HDQ7R3Vo3uwR2Y7TngXYUBRDTBNo7qnagNnmON5oYFK
+ CldwsxIzTaOGwcCxp5jyVYrzy2lCmZ7gBr8xpewj2ua17iiSezN1d0oEkJO+OW61RZFV
+ sCtcDGbjsIHDcoYPNMrO8njMkRIR/PMYdFeraTXZUPMb4yX5AAMdvS8J3G/w6SCD+5to
+ rdFmIsIA1qWeex0hxdXpXDw50mf93E8JY2LPFPddCfxo00zeffin8h1Mk6sZeayXD9sc
+ 9/AA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUWT/MSxeNIbmfyxQGXzg0XMz7mya/BaiuY9vyYOtMiLF+d7NuSd5y2e5L/I3OpFqc7CBy8JrwA89Fn@nongnu.org
+X-Gm-Message-State: AOJu0Yz5ASePKCuF3jeQxijBs+bJzobMFhXtaREbq+IeOKCR/dSJZwjy
+ zPRPHVOsW21mQpLRjCsZu+T0b4B/BQYTYB8hvp9usSFb4lnqfUF7Cnt736i7
+X-Gm-Gg: ASbGncuuo7rNtAVRpyutaYF7X4I9n1cgs36/tzmzMPMn6F/I+wXh74En+S1ZAWZSsYK
+ Xy37m2ZcClzxVGLBVCGUyVk8v4c2+5yTS+D2wt8IZUklOS9fejBGemjIKl0r0X9kqk7iZ60qnuv
+ IsQLfX0I9tzT+/eU/GZuRrU4I4+zZxqkKIXD7q2iRNXb1ukJigCwomj838PHJ/edyPaA6EYM833
+ 4D0zslXxj1g3hvFQAjGgAqVfewn1ZC+Q1Hejk6YAEiXSidHcutWoiis85JTOHmw8fyxVROaA6iK
+ 9Z6TSmZqw1DEYoDLADu5LE2n0BhPXf9TLnRw+Sa3vwx6H5VjCFehQtba5yeCrOJwNkNWb9iA9lE
+ PY5uXj/xEQEHl+/Eo8ihRreg2QgCAoA5N6RaD+bA=
+X-Google-Smtp-Source: AGHT+IGnH0+3Ira0Y7+A/EC+XN7kUGurKPrs/rwX0aYDXk2Y5hZkxx8jLkr1CdEEsHr34I4/z9q/MA==
+X-Received: by 2002:a5d:5885:0:b0:397:3900:ef80 with SMTP id
+ ffacd0b85a97d-3a07aa66795mr3653654f8f.22.1745794744949; 
+ Sun, 27 Apr 2025 15:59:04 -0700 (PDT)
 Received: from localhost.localdomain (46-116-102-127.bb.netvision.net.il.
  [46.116.102.127]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073c8cd7fsm8783139f8f.1.2025.04.27.09.50.32
+ ffacd0b85a97d-3a073e5da4dsm9499765f8f.99.2025.04.27.15.59.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 27 Apr 2025 09:50:33 -0700 (PDT)
+ Sun, 27 Apr 2025 15:59:03 -0700 (PDT)
 From: Nir Soffer <nirsof@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- "Richard Jones" <rjones@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Eric Blake" <eblake@redhat.com>, Nir Soffer <nirsof@gmail.com>
-Subject: [PATCH v3 0/2] io: Increase unix stream socket buffer size
-Date: Sun, 27 Apr 2025 19:50:27 +0300
-Message-Id: <20250427165029.9072-1-nirsof@gmail.com>
+Cc: Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-block@nongnu.org,
+ Fam Zheng <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>,
+ Nir Soffer <nirsof@gmail.com>
+Subject: [PATCH 0/2] block/null: Add read-pattern
+Date: Mon, 28 Apr 2025 01:58:58 +0300
+Message-Id: <20250427225900.24316-1-nirsof@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=nirsof@gmail.com; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=nirsof@gmail.com; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,41 +100,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On both macOS and Linux, the default send buffer size too small causing poor
-performance when reading and writing to qemu-nbd. A simple way to experience
-this is to compare TCP and unix sockets, showing that TCP socket is much
-faster. Programs like nbdcopy partly mitigate this by using multiple NBD
-connections.
+The null driver is very usefull for testing and benchmarking, but it can not
+emulate an image full of zeroes or an image full of non-zero bytes. Such images
+are needed for testing computing a blkhash via qemu-nbd or qemu-storage-daemon.
 
-On macOS the default send buffer size is 8192 bytes. Increasing the send buffer
-size to 2 MiB shows up to *12.6 times higher throughput* and lower cpu usage.
+This change adds `read-pattern` option allowing emulution of image full of
+zeroes and image for of non-zero bytes.
 
-On Linux the default and maximum buffer size is 212992 bytes. Increasing the
-send buffer size to 2 MiB shows up to *2.7 times higher throughput* and lower
-cpu usage. On older machine we see very little improvement, up to 1.03 times
-higher throughput.
-
-We likely have the same issue on other platforms. It should be easy to enable
-this change for more platform by defining UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE.
-
-Changes since v2:
-- Test with different receive buffer size (Daniel)
-- Test with larger send buffer size (2m, 4m)
-- Set only send buffer size - setting receive buffer size has no effect
-- Increase send buffer size to 2m (based on new tests)
-- Enable the change also for Linux
-- Change only unix stream socket - datagram socket need different configuration
-- Modify the code to make it easy to support unix datagram socket
-
-v2 was here:
-https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg03167.html
+I used this for testing
+https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg05096.html
 
 Nir Soffer (2):
-  io: Increase unix socket buffers size on macOS
-  io: Increase unix socket buffers on Linux
+  block/null: Report DATA if not reading zeroes
+  block/null: Add read-pattern option
 
- io/channel-socket.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ block/null.c         | 21 ++++++++++++++++++---
+ qapi/block-core.json |  9 ++++++++-
+ 2 files changed, 26 insertions(+), 4 deletions(-)
 
 -- 
 2.39.5 (Apple Git-154)
