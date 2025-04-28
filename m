@@ -4,152 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78B60C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:42:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6762C3ABA3
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:42:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9MsB-0002Wn-Gd; Mon, 28 Apr 2025 07:42:07 -0400
+	id 1u9MsD-0002bT-9z; Mon, 28 Apr 2025 07:42:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u9Ms7-0002TX-Ua
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:42:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u9Ms2-0008KV-Uk
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:42:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745840516;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=R4PAlGWbevRoaBrxDCnbAFbZ3AIKlmXXxG7R6C5+158=;
- b=gUeuc8Vyw385islbAxKNR/N/hwrbXRORoTya7dGEixe3dZsZRkOOs6P1ZeLDE/HS1YHCG5
- 0ClxR/6u5r7ITRKUCzHDD2uZgmdjkouwZA1AifGRust6uqU85+8hp9dVhG9H6LpWii6ChV
- vWYM53Frv4Oh0O9/zojFMHcK6momgX0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-128-0t8zm_m1MKKlMPKJgpDmrQ-1; Mon, 28 Apr 2025 07:41:54 -0400
-X-MC-Unique: 0t8zm_m1MKKlMPKJgpDmrQ-1
-X-Mimecast-MFC-AGG-ID: 0t8zm_m1MKKlMPKJgpDmrQ_1745840513
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-39123912ff0so1090633f8f.2
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 04:41:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745840513; x=1746445313;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u9Ms9-0002Ud-G0; Mon, 28 Apr 2025 07:42:05 -0400
+Received: from mail-ua1-x92d.google.com ([2607:f8b0:4864:20::92d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u9Ms4-0008LD-HM; Mon, 28 Apr 2025 07:42:05 -0400
+Received: by mail-ua1-x92d.google.com with SMTP id
+ a1e0cc1a2514c-86d69774081so1967664241.0; 
+ Mon, 28 Apr 2025 04:41:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1745840518; x=1746445318; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R4PAlGWbevRoaBrxDCnbAFbZ3AIKlmXXxG7R6C5+158=;
- b=Zp5fskaZSoEm05BflLlTMjiLm1wfxHx+Ozzx0S60oxe4X4bcd+RTmMBOeeMUjmjDkt
- a8erfAd2xr5J3QLOMy4zUDAqoHO3bu0KCBHF76+7ktofJ+tmYACX0VVTXRqI0llwZ5Cz
- fdHAGb+vUbFKp0zVcC0JqsqbvgnOREI2/SVDzSq3rlLcfe3gFMMAKJuT8g8ajOaH2aVY
- kgMroR4W7O8yPzL3WXlO8GOCfGwSaEd6VLzruxYXFnSA9myNpzjY1DNJQKSMQHhyau4n
- se21dWRHFeijDRY0GPp14VQMmsSJ3a55Owq559SLIUKzVv4iEQiznyFTrzQc63mrFT2I
- wFiA==
-X-Gm-Message-State: AOJu0YxOgvfFmAp47iHHZeRFTX1BWZdCJPxXI5vUI1ykQk6Z42YiKX9F
- KmuYLR4E1GOf252wETkyJ9QCLXNfD9rYLCnfhMNaX7+M8s/raofttfhT/bTo5jnggZVAh23AbLn
- +UCRiekBY5kcuieh6gYsoOaHiXkOsqj103NyUKZIOAekgg8S2jEDF
-X-Gm-Gg: ASbGnctjqzFqIOOfsN6eNbo+A00RBfRAxzXpF1DAbH6jlpDnzsud1h9ihlnitfNWgJA
- lCx5Kpay85QznObH08wvxJ2EHgWqWFVnMG/psVeEkbV7CRMNK9sIDILLM0VelGmjJzHw5i/9Hzy
- iIBmJcRzzh6Nb+vPghio2JgbUgoXyLzYyzcj8slLVO/sZgQ8lSKMsM1sbwYGZHbjQ0/Auwk8T6C
- ntX/ThVu9EZcWm9CkE6JeHo8IjGpInDd7KfTxPlLUNCh8tzqWbW4tzgngbAZpEWMlqQKeTgNnFw
- h5M8NEXUM9ayuIOUvM9faa72nO4Co8ACrhZgE+yqQZ8BOyKdfQ==
-X-Received: by 2002:a05:6000:144b:b0:39c:c64e:cf58 with SMTP id
- ffacd0b85a97d-3a074f8fb0amr10389733f8f.55.1745840512834; 
- Mon, 28 Apr 2025 04:41:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEUQsASKJ9YyMGaHdp3Zs29kqxWSL2jqLH8px8O/nftFhoUl1uj6NAG76FG/itt4wLYV/F7LQ==
-X-Received: by 2002:a05:6000:144b:b0:39c:c64e:cf58 with SMTP id
- ffacd0b85a97d-3a074f8fb0amr10389683f8f.55.1745840511869; 
- Mon, 28 Apr 2025 04:41:51 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073cbeda3sm11022372f8f.50.2025.04.28.04.41.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 04:41:51 -0700 (PDT)
-Message-ID: <9f36d6d9-8ec4-4c0e-a25a-481ffed82149@redhat.com>
-Date: Mon, 28 Apr 2025 13:41:50 +0200
+ bh=zoZ23h+0t4Ylo7V3s8WlX5TovJjgvt0c5gmCa8D7wBU=;
+ b=Z3GYXHtVitY2cFqyLFFhKnBa4dgG+V2lSNxZWnwlP40PywdYtbKnS/oMUYV5CVMzd4
+ 0kTFivjMYYTS+yftT4rGaPueKJLEv/B//aO/MbEzTlgV+H+jE/F/BnXutLsqDfLI64kA
+ ghri/C6BIZGYWuEoYa3t7NGiHd7g0UvzDmeCtRCJLM/ouYaiYdk6EBc3fFoCyF0C7r/4
+ VCb8st0liXrTNIG17IgBZteNM/PxK548oXCQyPzXn+TiWLSyTtkr8S4qg9yElonqaAKs
+ zmRJlBK+SLgRBU4hwdVedQz/+YwJAG1RC3foiEzOh2gBtpePStXn52f2ITEjgVPCOd+D
+ DKLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745840518; x=1746445318;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zoZ23h+0t4Ylo7V3s8WlX5TovJjgvt0c5gmCa8D7wBU=;
+ b=icuc3WgqUMvvmTAyd28rGk5fEBOPTk4/eW/9D2UvE10QKWD9Tezpxq6OPfQwXnixh6
+ 3vmQusz4EU2wyACF1+loIb4crQvvedLhCfCizDzmIeHwcBrjiJXsF0NB1a6JtpkSAYFD
+ 0uZtlU6CCHUYrUWe8S8HCkEjz3M7TlJFX1l4jyjuxnpexJCARTNGoUgziorIKPk2nRCa
+ IP8xej24bpKWj/QXFPzs4qW+vPGOcvoqYquO1HrfimRBcoCv/+ow2QLMDiU671XzBqMQ
+ Ix+YkKEqvCsjEklU5HqDgJzRwIuFX1coY9UmL8FKoIGONt/rYvnFdmk9Tj9XquPgGo/A
+ vbxQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWNHDUxkhS7Z8pUqPR72DuMHwd6O/CByoVn2ptDM2NkEMUPLyFDJEFOSOxPH197DxlankxnX7cUUABh@nongnu.org
+X-Gm-Message-State: AOJu0YzMk+Ce8ywbifw+x4Mq14jRiDZKRcES3By2OIOwrOXPpUBJD/CY
+ yBRJfWAGepsgtIeAgoFbf9pw9jRg7SXmrpHQBjjrOOjdnigtOAzvTn1ONgIRQYI7qHLEqnWjaRQ
+ DDwZvqWmnhQJBEyZLIcfcts4eVg8=
+X-Gm-Gg: ASbGncs3I/hM99wL291JL9kWgTdTh307MYEkHCPnE7cikYLLP4NZGwmZUyu2ga+k+Wm
+ /p8Oqm0WlC47ibtZA/nH2mKtpK4WoPUcSnOVv00lfjNgd+cdEg82ReA9ID7SuJb/Q/1YLfvo1Eh
+ uEFGQtbRUShQtO+vRQh821uzt72XVZYTYj/FViKPP5s9pvCu256hjj
+X-Google-Smtp-Source: AGHT+IEU3JuuZr6P4JnJm6KMYWYxBFXx9QpCjnPoA4r7U/Ryk3fnC9PRIlVlTJTCtv689+6RDXU47Jo1huwoBduBZTA=
+X-Received: by 2002:a05:6102:1525:b0:4bb:c4ff:5cb9 with SMTP id
+ ada2fe7eead31-4d640d85cbemr5004615137.15.1745840518476; Mon, 28 Apr 2025
+ 04:41:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/14] vfio: specify VFIO_DMA_UNMAP_FLAG_ALL to callback
-To: John Levon <levon@movementarian.org>
-Cc: qemu-devel@nongnu.org, Tony Krowiak <akrowiak@linux.ibm.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, qemu-s390x@nongnu.org,
- Tomita Moeko <tomitamoeko@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>
-References: <20250409134814.478903-1-john.levon@nutanix.com>
- <20250409134814.478903-8-john.levon@nutanix.com>
- <3cc6ed06-7ee4-42f4-a09e-03d8fe922537@redhat.com>
- <aAkgqXP1NjCfwKbG@movementarian.org>
- <a8906e2c-220d-49d5-89c7-b59df9335a4b@redhat.com>
- <aAqShRO9blV0LOny@movementarian.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <aAqShRO9blV0LOny@movementarian.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250425160203.2774835-1-dbarboza@ventanamicro.com>
+ <20250425160203.2774835-5-dbarboza@ventanamicro.com>
+In-Reply-To: <20250425160203.2774835-5-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 28 Apr 2025 21:41:30 +1000
+X-Gm-Features: ATxdqUFSXgpcc0im3iIGOKv5QB3FHU6IjogQyk_qi-B90ZbwIUKF0eO8IieWzAQ
+Message-ID: <CAKmqyKPx7cDedo5jWGR5KO3UcV2mgJ-9oakXYbtkwQj0C3brqA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/9] target/riscv/kvm: turn kvm_riscv_reg_id_ulong()
+ into a macro
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
+ ajones@ventanamicro.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92d;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,49 +98,396 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/25 21:35, John Levon wrote:
-> On Thu, Apr 24, 2025 at 07:16:52PM +0200, Cédric Le Goater wrote:
-> 
->>> Having said that I'm OK with going back to just a simple boolean if you'd really
->>> prefer.
->>
->> yes. VFIO_DMA_UNMAP_FLAG_ALL is a kernel interface and we don't
->> need more than one flag today.
-> 
-> OK
-> 
->>>> Why not unmap the halves here instead of in the backends ?
->>>
->>> The whole point of the change is that right now the generic listener.c code has
->>> a workaround that is specific to one particular backend.
->>
->> It's due to the ARM IO space size AFAICT.
->>
->>> vfio-user doesn't have
->>> any need to unmap in halves and in fact *has* to pass an "unmap all" flag.
->>
->> OK. So this flag is a vfio-user requirement. Why can't we call
->> vfio_container_dma_unmap() twice from vfio_listener_region_del() ?
-> 
-> Are you suggesting that the vfio-user backend - and the protocol - somehow
-> accounts for the two unmaps and translates it back into an unmap all? How would
-> that work?
+On Sat, Apr 26, 2025 at 2:04=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> We need the reg_id_ulong() helper to be a macro to be able to create a
+> static array of KVMCPUConfig that will hold CSR information.
+>
+> Despite the amount of changes all of them are tedious/trivial:
+>
+> - replace instances of "kvm_riscv_reg_id_ulong" with
+>   "KVM_RISCV_REG_ID_ULONG";
+>
+> - RISCV_CORE_REG(), RISCV_CSR_REG(), RISCV_CONFIG_REG() and
+>   RISCV_VECTOR_CSR_REG() only receives one 'name' arg. Remove unneeded
+>   'env' variables when applicable.
+>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
-ok. Let's keep that way. It's not too invasive a change.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
+Alistair
 
-Thanks,
-
-C.
-
-
-
-> 
-> Surely it's very ugly indeed to embed a foible of the (old) vfio kernel
-> interface into every backend.
-> 
-> regards
-> john
-> 
-
+> ---
+>  target/riscv/kvm/kvm-cpu.c | 99 ++++++++++++++++----------------------
+>  1 file changed, 41 insertions(+), 58 deletions(-)
+>
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index c91ecdfe59..fd66bc1759 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -64,23 +64,11 @@ static bool cap_has_mp_state;
+>  #define KVM_RISCV_REG_ID_U64(type, idx) (KVM_REG_RISCV | KVM_REG_SIZE_U6=
+4 | \
+>                                           type | idx)
+>
+> -static uint64_t kvm_riscv_reg_id_ulong(CPURISCVState *env, uint64_t type=
+,
+> -                                 uint64_t idx)
+> -{
+> -    uint64_t id =3D KVM_REG_RISCV | type | idx;
+> -
+> -    switch (riscv_cpu_mxl(env)) {
+> -    case MXL_RV32:
+> -        id |=3D KVM_REG_SIZE_U32;
+> -        break;
+> -    case MXL_RV64:
+> -        id |=3D KVM_REG_SIZE_U64;
+> -        break;
+> -    default:
+> -        g_assert_not_reached();
+> -    }
+> -    return id;
+> -}
+> +#if defined(TARGET_RISCV64)
+> +#define KVM_RISCV_REG_ID_ULONG(type, idx) KVM_RISCV_REG_ID_U64(type, idx=
+)
+> +#else
+> +#define KVM_RISCV_REG_ID_ULONG(type, idx) KVM_RISCV_REG_ID_U32(type, idx=
+)
+> +#endif
+>
+>  static uint64_t kvm_encode_reg_size_id(uint64_t id, size_t size_b)
+>  {
+> @@ -103,16 +91,16 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *cp=
+u,
+>      return kvm_encode_reg_size_id(id, size_b);
+>  }
+>
+> -#define RISCV_CORE_REG(env, name) \
+> -    kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CORE, \
+> +#define RISCV_CORE_REG(name) \
+> +    KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CORE, \
+>                             KVM_REG_RISCV_CORE_REG(name))
+>
+> -#define RISCV_CSR_REG(env, name) \
+> -    kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CSR, \
+> +#define RISCV_CSR_REG(name) \
+> +    KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CSR, \
+>                             KVM_REG_RISCV_CSR_REG(name))
+>
+> -#define RISCV_CONFIG_REG(env, name) \
+> -    kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CONFIG, \
+> +#define RISCV_CONFIG_REG(name) \
+> +    KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CONFIG, \
+>                             KVM_REG_RISCV_CONFIG_REG(name))
+>
+>  #define RISCV_TIMER_REG(name)  KVM_RISCV_REG_ID_U64(KVM_REG_RISCV_TIMER,=
+ \
+> @@ -122,13 +110,13 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *c=
+pu,
+>
+>  #define RISCV_FP_D_REG(idx)  KVM_RISCV_REG_ID_U64(KVM_REG_RISCV_FP_D, id=
+x)
+>
+> -#define RISCV_VECTOR_CSR_REG(env, name) \
+> -    kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_VECTOR, \
+> +#define RISCV_VECTOR_CSR_REG(name) \
+> +    KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_VECTOR, \
+>                             KVM_REG_RISCV_VECTOR_CSR_REG(name))
+>
+>  #define KVM_RISCV_GET_CSR(cs, env, csr, reg) \
+>      do { \
+> -        int _ret =3D kvm_get_one_reg(cs, RISCV_CSR_REG(env, csr), &reg);=
+ \
+> +        int _ret =3D kvm_get_one_reg(cs, RISCV_CSR_REG(csr), &reg); \
+>          if (_ret) { \
+>              return _ret; \
+>          } \
+> @@ -136,7 +124,7 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *cpu=
+,
+>
+>  #define KVM_RISCV_SET_CSR(cs, env, csr, reg) \
+>      do { \
+> -        int _ret =3D kvm_set_one_reg(cs, RISCV_CSR_REG(env, csr), &reg);=
+ \
+> +        int _ret =3D kvm_set_one_reg(cs, RISCV_CSR_REG(csr), &reg); \
+>          if (_ret) { \
+>              return _ret; \
+>          } \
+> @@ -244,7 +232,7 @@ static void kvm_riscv_update_cpu_misa_ext(RISCVCPU *c=
+pu, CPUState *cs)
+>
+>          /* If we're here we're going to disable the MISA bit */
+>          reg =3D 0;
+> -        id =3D kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_ISA_EXT,
+> +        id =3D KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_ISA_EXT,
+>                                      misa_cfg->kvm_reg_id);
+>          ret =3D kvm_set_one_reg(cs, id, &reg);
+>          if (ret !=3D 0) {
+> @@ -430,7 +418,6 @@ static KVMCPUConfig kvm_sbi_dbcn =3D {
+>
+>  static void kvm_riscv_update_cpu_cfg_isa_ext(RISCVCPU *cpu, CPUState *cs=
+)
+>  {
+> -    CPURISCVState *env =3D &cpu->env;
+>      uint64_t id, reg;
+>      int i, ret;
+>
+> @@ -441,7 +428,7 @@ static void kvm_riscv_update_cpu_cfg_isa_ext(RISCVCPU=
+ *cpu, CPUState *cs)
+>              continue;
+>          }
+>
+> -        id =3D kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_ISA_EXT,
+> +        id =3D KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_ISA_EXT,
+>                                      multi_ext_cfg->kvm_reg_id);
+>          reg =3D kvm_cpu_cfg_get(cpu, multi_ext_cfg);
+>          ret =3D kvm_set_one_reg(cs, id, &reg);
+> @@ -566,14 +553,14 @@ static int kvm_riscv_get_regs_core(CPUState *cs)
+>      target_ulong reg;
+>      CPURISCVState *env =3D &RISCV_CPU(cs)->env;
+>
+> -    ret =3D kvm_get_one_reg(cs, RISCV_CORE_REG(env, regs.pc), &reg);
+> +    ret =3D kvm_get_one_reg(cs, RISCV_CORE_REG(regs.pc), &reg);
+>      if (ret) {
+>          return ret;
+>      }
+>      env->pc =3D reg;
+>
+>      for (i =3D 1; i < 32; i++) {
+> -        uint64_t id =3D kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CORE, =
+i);
+> +        uint64_t id =3D KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CORE, i);
+>          ret =3D kvm_get_one_reg(cs, id, &reg);
+>          if (ret) {
+>              return ret;
+> @@ -592,13 +579,13 @@ static int kvm_riscv_put_regs_core(CPUState *cs)
+>      CPURISCVState *env =3D &RISCV_CPU(cs)->env;
+>
+>      reg =3D env->pc;
+> -    ret =3D kvm_set_one_reg(cs, RISCV_CORE_REG(env, regs.pc), &reg);
+> +    ret =3D kvm_set_one_reg(cs, RISCV_CORE_REG(regs.pc), &reg);
+>      if (ret) {
+>          return ret;
+>      }
+>
+>      for (i =3D 1; i < 32; i++) {
+> -        uint64_t id =3D kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CORE, =
+i);
+> +        uint64_t id =3D KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CORE, i);
+>          reg =3D env->gpr[i];
+>          ret =3D kvm_set_one_reg(cs, id, &reg);
+>          if (ret) {
+> @@ -796,26 +783,26 @@ static int kvm_riscv_get_regs_vector(CPUState *cs)
+>          return 0;
+>      }
+>
+> -    ret =3D kvm_get_one_reg(cs, RISCV_VECTOR_CSR_REG(env, vstart), &reg)=
+;
+> +    ret =3D kvm_get_one_reg(cs, RISCV_VECTOR_CSR_REG(vstart), &reg);
+>      if (ret) {
+>          return ret;
+>      }
+>      env->vstart =3D reg;
+>
+> -    ret =3D kvm_get_one_reg(cs, RISCV_VECTOR_CSR_REG(env, vl), &reg);
+> +    ret =3D kvm_get_one_reg(cs, RISCV_VECTOR_CSR_REG(vl), &reg);
+>      if (ret) {
+>          return ret;
+>      }
+>      env->vl =3D reg;
+>
+> -    ret =3D kvm_get_one_reg(cs, RISCV_VECTOR_CSR_REG(env, vtype), &reg);
+> +    ret =3D kvm_get_one_reg(cs, RISCV_VECTOR_CSR_REG(vtype), &reg);
+>      if (ret) {
+>          return ret;
+>      }
+>      env->vtype =3D reg;
+>
+>      if (kvm_v_vlenb.supported) {
+> -        ret =3D kvm_get_one_reg(cs, RISCV_VECTOR_CSR_REG(env, vlenb), &r=
+eg);
+> +        ret =3D kvm_get_one_reg(cs, RISCV_VECTOR_CSR_REG(vlenb), &reg);
+>          if (ret) {
+>              return ret;
+>          }
+> @@ -853,26 +840,26 @@ static int kvm_riscv_put_regs_vector(CPUState *cs)
+>      }
+>
+>      reg =3D env->vstart;
+> -    ret =3D kvm_set_one_reg(cs, RISCV_VECTOR_CSR_REG(env, vstart), &reg)=
+;
+> +    ret =3D kvm_set_one_reg(cs, RISCV_VECTOR_CSR_REG(vstart), &reg);
+>      if (ret) {
+>          return ret;
+>      }
+>
+>      reg =3D env->vl;
+> -    ret =3D kvm_set_one_reg(cs, RISCV_VECTOR_CSR_REG(env, vl), &reg);
+> +    ret =3D kvm_set_one_reg(cs, RISCV_VECTOR_CSR_REG(vl), &reg);
+>      if (ret) {
+>          return ret;
+>      }
+>
+>      reg =3D env->vtype;
+> -    ret =3D kvm_set_one_reg(cs, RISCV_VECTOR_CSR_REG(env, vtype), &reg);
+> +    ret =3D kvm_set_one_reg(cs, RISCV_VECTOR_CSR_REG(vtype), &reg);
+>      if (ret) {
+>          return ret;
+>      }
+>
+>      if (kvm_v_vlenb.supported) {
+>          reg =3D cpu->cfg.vlenb;
+> -        ret =3D kvm_set_one_reg(cs, RISCV_VECTOR_CSR_REG(env, vlenb), &r=
+eg);
+> +        ret =3D kvm_set_one_reg(cs, RISCV_VECTOR_CSR_REG(vlenb), &reg);
+>
+>          for (int i =3D 0; i < 32; i++) {
+>              /*
+> @@ -951,25 +938,24 @@ static void kvm_riscv_destroy_scratch_vcpu(KVMScrat=
+chCPU *scratch)
+>
+>  static void kvm_riscv_init_machine_ids(RISCVCPU *cpu, KVMScratchCPU *kvm=
+cpu)
+>  {
+> -    CPURISCVState *env =3D &cpu->env;
+>      struct kvm_one_reg reg;
+>      int ret;
+>
+> -    reg.id =3D RISCV_CONFIG_REG(env, mvendorid);
+> +    reg.id =3D RISCV_CONFIG_REG(mvendorid);
+>      reg.addr =3D (uint64_t)&cpu->cfg.mvendorid;
+>      ret =3D ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
+>      if (ret !=3D 0) {
+>          error_report("Unable to retrieve mvendorid from host, error %d",=
+ ret);
+>      }
+>
+> -    reg.id =3D RISCV_CONFIG_REG(env, marchid);
+> +    reg.id =3D RISCV_CONFIG_REG(marchid);
+>      reg.addr =3D (uint64_t)&cpu->cfg.marchid;
+>      ret =3D ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
+>      if (ret !=3D 0) {
+>          error_report("Unable to retrieve marchid from host, error %d", r=
+et);
+>      }
+>
+> -    reg.id =3D RISCV_CONFIG_REG(env, mimpid);
+> +    reg.id =3D RISCV_CONFIG_REG(mimpid);
+>      reg.addr =3D (uint64_t)&cpu->cfg.mimpid;
+>      ret =3D ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
+>      if (ret !=3D 0) {
+> @@ -984,7 +970,7 @@ static void kvm_riscv_init_misa_ext_mask(RISCVCPU *cp=
+u,
+>      struct kvm_one_reg reg;
+>      int ret;
+>
+> -    reg.id =3D RISCV_CONFIG_REG(env, isa);
+> +    reg.id =3D RISCV_CONFIG_REG(isa);
+>      reg.addr =3D (uint64_t)&env->misa_ext_mask;
+>      ret =3D ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
+>
+> @@ -1001,11 +987,10 @@ static void kvm_riscv_init_misa_ext_mask(RISCVCPU =
+*cpu,
+>  static void kvm_riscv_read_cbomz_blksize(RISCVCPU *cpu, KVMScratchCPU *k=
+vmcpu,
+>                                           KVMCPUConfig *cbomz_cfg)
+>  {
+> -    CPURISCVState *env =3D &cpu->env;
+>      struct kvm_one_reg reg;
+>      int ret;
+>
+> -    reg.id =3D kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CONFIG,
+> +    reg.id =3D KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CONFIG,
+>                                      cbomz_cfg->kvm_reg_id);
+>      reg.addr =3D (uint64_t)kvmconfig_get_cfg_addr(cpu, cbomz_cfg);
+>      ret =3D ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
+> @@ -1019,7 +1004,6 @@ static void kvm_riscv_read_cbomz_blksize(RISCVCPU *=
+cpu, KVMScratchCPU *kvmcpu,
+>  static void kvm_riscv_read_multiext_legacy(RISCVCPU *cpu,
+>                                             KVMScratchCPU *kvmcpu)
+>  {
+> -    CPURISCVState *env =3D &cpu->env;
+>      uint64_t val;
+>      int i, ret;
+>
+> @@ -1027,7 +1011,7 @@ static void kvm_riscv_read_multiext_legacy(RISCVCPU=
+ *cpu,
+>          KVMCPUConfig *multi_ext_cfg =3D &kvm_multi_ext_cfgs[i];
+>          struct kvm_one_reg reg;
+>
+> -        reg.id =3D kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_ISA_EXT,
+> +        reg.id =3D KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_ISA_EXT,
+>                                          multi_ext_cfg->kvm_reg_id);
+>          reg.addr =3D (uint64_t)&val;
+>          ret =3D ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
+> @@ -1159,7 +1143,7 @@ static void kvm_riscv_init_multiext_cfg(RISCVCPU *c=
+pu, KVMScratchCPU *kvmcpu)
+>
+>      for (i =3D 0; i < ARRAY_SIZE(kvm_multi_ext_cfgs); i++) {
+>          multi_ext_cfg =3D &kvm_multi_ext_cfgs[i];
+> -        reg_id =3D kvm_riscv_reg_id_ulong(&cpu->env, KVM_REG_RISCV_ISA_E=
+XT,
+> +        reg_id =3D KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_ISA_EXT,
+>                                          multi_ext_cfg->kvm_reg_id);
+>          reg_search =3D bsearch(&reg_id, reglist->reg, reglist->n,
+>                               sizeof(uint64_t), uint64_cmp);
+> @@ -1338,12 +1322,11 @@ void kvm_arch_init_irq_routing(KVMState *s)
+>
+>  static int kvm_vcpu_set_machine_ids(RISCVCPU *cpu, CPUState *cs)
+>  {
+> -    CPURISCVState *env =3D &cpu->env;
+>      target_ulong reg;
+>      uint64_t id;
+>      int ret;
+>
+> -    id =3D RISCV_CONFIG_REG(env, mvendorid);
+> +    id =3D RISCV_CONFIG_REG(mvendorid);
+>      /*
+>       * cfg.mvendorid is an uint32 but a target_ulong will
+>       * be written. Assign it to a target_ulong var to avoid
+> @@ -1355,13 +1338,13 @@ static int kvm_vcpu_set_machine_ids(RISCVCPU *cpu=
+, CPUState *cs)
+>          return ret;
+>      }
+>
+> -    id =3D RISCV_CONFIG_REG(env, marchid);
+> +    id =3D RISCV_CONFIG_REG(marchid);
+>      ret =3D kvm_set_one_reg(cs, id, &cpu->cfg.marchid);
+>      if (ret !=3D 0) {
+>          return ret;
+>      }
+>
+> -    id =3D RISCV_CONFIG_REG(env, mimpid);
+> +    id =3D RISCV_CONFIG_REG(mimpid);
+>      ret =3D kvm_set_one_reg(cs, id, &cpu->cfg.mimpid);
+>
+>      return ret;
+> @@ -1911,7 +1894,7 @@ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu,=
+ Error **errp)
+>      if (cpu->cfg.ext_zicbom &&
+>          riscv_cpu_option_set(kvm_cbom_blocksize.name)) {
+>
+> -        reg.id =3D kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CONFIG,
+> +        reg.id =3D KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CONFIG,
+>                                          kvm_cbom_blocksize.kvm_reg_id);
+>          reg.addr =3D (uint64_t)&val;
+>          ret =3D ioctl(kvmcpu.cpufd, KVM_GET_ONE_REG, &reg);
+> @@ -1930,7 +1913,7 @@ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu,=
+ Error **errp)
+>      if (cpu->cfg.ext_zicboz &&
+>          riscv_cpu_option_set(kvm_cboz_blocksize.name)) {
+>
+> -        reg.id =3D kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CONFIG,
+> +        reg.id =3D KVM_RISCV_REG_ID_ULONG(KVM_REG_RISCV_CONFIG,
+>                                          kvm_cboz_blocksize.kvm_reg_id);
+>          reg.addr =3D (uint64_t)&val;
+>          ret =3D ioctl(kvmcpu.cpufd, KVM_GET_ONE_REG, &reg);
+> --
+> 2.49.0
+>
+>
 
