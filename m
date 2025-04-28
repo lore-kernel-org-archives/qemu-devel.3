@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6AD6C369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 13:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC127C369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 13:06:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9O5o-0000pe-8d; Mon, 28 Apr 2025 09:00:16 -0400
+	id 1u9O5Z-0000Cc-E0; Mon, 28 Apr 2025 09:00:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9O55-0007ue-5A
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:59:31 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1u9O56-0007yB-Ho
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:59:32 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9O50-00037g-SM
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:59:30 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5f4d0da2d2cso9075131a12.3
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 05:59:26 -0700 (PDT)
+ id 1u9O52-00038S-0f
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:59:32 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-acb39c45b4eso752545766b.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 05:59:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745845165; x=1746449965; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745845166; x=1746449966; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=prKtOm6WcF+MO/JIEf9B+KJu4Pq11tFhYp9uWEc/J/U=;
- b=JYR4ScJ4o0Eaf/t8uzCG9Iv8kQv+vZEbIG5Q91rPJfl+q56UmMBSY7pHixpO6eKTX9
- rWOvvTX4wuiqSUtKCa6lEd+kGiQ/QbpsFhVeERrOFYwmesHq20kUwL3qez8pJmrL6VF+
- nuyCv3lSEn0+UOGnoDiJR9dwPLl6wHBD/hNouQqXH4B+bLsgb2JSBKmPgUiGICHmLBfi
- EhgKPvQdRQCsk4owsZ3rRbg/tPug1Go7qa9lB6knhwdZolgLI2CorK+kpZN//5pABLLB
- OrpB/ewmAipEqORdg+RmfZHT2WtHXywpdZ8anjjilgeGjf8y5nWW9qByJpFtghBX42Jg
- j6+A==
+ bh=vC8n191P5j8mUKL+6H7GfxpWwzkXlFDtmwixiEivZfA=;
+ b=LtbM9zZAjmrx8EPgUFzb4dwTkeIhqbUPaHQ8zrSMnBMSP9Ti1EBkrlViXT4GEk3Bd0
+ RtVT3VZHOOD7iyHbZ3/tiIKFjuj+1vdWpC+gnHactdN+hAr/rR3xCa5y5m5r6nBeyQJw
+ zYwDZNA7ENipR08B+UJfNFKv61ITw0t/nYGheA3quvhrTy5uk6EsQcfXfpcxnWd/hdym
+ +L8xonNM7mKLRwCBN9YWYH2ZY+pTPu9X5f5QCUNZACzIPMtzcYNm0c4IbA50wyK4+YUY
+ wN9W3RhHDIsJXtmfCiX33HOAQ461RgZTvK3slBCmmTDvzSuQomnXwqiVt6k1tKsNZGT3
+ v2RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745845165; x=1746449965;
+ d=1e100.net; s=20230601; t=1745845166; x=1746449966;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=prKtOm6WcF+MO/JIEf9B+KJu4Pq11tFhYp9uWEc/J/U=;
- b=vNJGRr8zMCDyHZW/lMB+rynxvkx5jTGvPv4sx2NbZfZIXMiYsBSw68d6LFQ+SyheIw
- W+BYj4g9zF4M1zHhOOeSEuPP9DazkWGHdZPGYfphzeY9NtvOVkS+P59E9r68diD7REIy
- 9Qe0uuE7EgVf2OkXWRcLLqaSSUJBqo2HrZx+rVNw+iEsxcMLzObgoA2TfxuKam2t6fSS
- z0e3uxRgZSBmYHL3TVkGWvLiBsIs1yvcTAYk4kwGwXv6/JUpTdAD4PBBw6hn1ZuR6Oo9
- pSAVdkK4wM1Z4sFIJBOwECwzuaECo5Sok42uMxquDZcdKwWc4s/+eW4mYs0mZVyoC6ja
- ABIQ==
-X-Gm-Message-State: AOJu0YyWj+f9ahKdKFPca+PC5RHzBYXeLPl4LqFJrVILhYgPEap9JsEj
- mBs/iVMOIyf6shTienxOgzIZND7h3L+vbbzy1GMaNDDLU893NbEwgq4rWpr3Ixk=
-X-Gm-Gg: ASbGnctvQeo5DZPwa7ieZg1wemMCS/qI66jlSn2lpitxIG9lLFUnZoq1qEua7ZPcnqT
- udiyoRkMFlzc9u2RyWlIa2UZzkyro/Dac704fMM0OrU9xszNpWpVviRy0v2lhPZ7PBL/irLaBdZ
- +SRf+oM+tAQhMbNCSP8/Bbci3YdJK/I0rJbL8hw7I2dkZUXvVDErLswuGEnQSPe+dSbX+Qt/Pjz
- ZhbgeNh4IRrvUcJ5kSQOftOpQTurAEcZ14Ojcp2v0y83901rdJJT9W+LIjRDGn7GSNL9u+L2C0T
- 7ZzBpJTnVfHUGEu5qP2pTCj8PBHJVXSg7miIqXaTQ3w=
-X-Google-Smtp-Source: AGHT+IGzAX+aRTF0EET+3PaTwDDE/fPb/NKX1yXORuWXmXnUA2BFIOrNj6J6V61RJrSP+CORgBVvaA==
-X-Received: by 2002:a05:6402:278e:b0:5f2:f29c:b98c with SMTP id
- 4fb4d7f45d1cf-5f73984e3eemr7678441a12.32.1745845164918; 
- Mon, 28 Apr 2025 05:59:24 -0700 (PDT)
+ bh=vC8n191P5j8mUKL+6H7GfxpWwzkXlFDtmwixiEivZfA=;
+ b=I5nQPThjYVFX7Q6/gxKUb2l5Zjh5JwE37CV2YhX+lqXbeC2Zl+HSuLaMaSZ6lDsKpl
+ qTFnh7jWUXourDOFyw1tQ9Hb0IksvWXfmCw2X6CvtIykYAXKX6jmqtoE95h+i8ShzRN7
+ GkeysOtHftvSMJZsNZpylLLIYO6mUlZ560tdI9dYUH2LM2TL/x+u4V56niS7RoeqFDb5
+ Uf5Jq4w7OgLDDwfBev1IuNulYtBnYuQyDehi4Vt9Aey+jgZsLIeQngQQL5hVf69p3En7
+ TjAu/xPNi8BbNgEAlQtn4v1tJ2McFm7ySGeHA9Ptjgn+6wKbCu9yQa+roXEeIfXtYQEC
+ NxHg==
+X-Gm-Message-State: AOJu0YwbFGVL44PRcgpomCTyYJrT5VHprdvz+zJkkLY/5efd+20bGLYj
+ GGkh9BaTJ6RKIO4kNS0lV55B1kOtxBFrsQEGnO6K0Sl9IuWeAOXtTCsvEI2q5RE=
+X-Gm-Gg: ASbGnctMx/d8kJ/JoUJEhUZIx4hch1PBKX3bypaK44jco45JduAmeCltU/ZgrVuuibO
+ +ir5j8jnx4TJR72u4cbdx3bi6leeCkIwGa1YR+mhY6oYrPRIONAvHzPZqg1gzWg++EgSjqqKS7w
+ mMeYUb1B3meaJXyfGIhi/zvADppvAflolPPx1m6bd/rJ1UgG3ft3yi/RakdLHHbPgJlSkR4i2mm
+ xhLRLHmknRZaWelFmagh9VSqZWaoaYb7cW2mRma8EOy9hKj9sNYn8yK80Pt2dmyLsnL9q5ePk6C
+ 4E0X+w1bjAPYszQ6sLwOpgY5UmZjsudGyGV1ONiFdueyqOxotogcAw==
+X-Google-Smtp-Source: AGHT+IED1VGhWqCdajh1Q5+7Cw2W1bP5Mo1Pw7eAQUzkWrCu2Ac7PFkEvBkH9u2TAvelW25TVOfLaQ==
+X-Received: by 2002:a17:907:2d94:b0:ace:6703:3cd5 with SMTP id
+ a640c23a62f3a-ace73a45cd7mr1155454166b.19.1745845166242; 
+ Mon, 28 Apr 2025 05:59:26 -0700 (PDT)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f7011fc361sm5820327a12.16.2025.04.28.05.59.20
+ a640c23a62f3a-ace6e41b7f9sm623625266b.6.2025.04.28.05.59.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 28 Apr 2025 05:59:22 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DF9935FAEF;
- Mon, 28 Apr 2025 13:59:18 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 032375FAF0;
+ Mon, 28 Apr 2025 13:59:19 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
@@ -77,17 +77,17 @@ Cc: Thomas Huth <thuth@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  qemu-stable@nongnu.org
-Subject: [PATCH 7/9] hw/display: re-arrange memory region tracking
-Date: Mon, 28 Apr 2025 13:59:16 +0100
-Message-Id: <20250428125918.449346-8-alex.bennee@linaro.org>
+Subject: [PATCH 8/9] virtio-gpu: fix hang under TCG when unmapping blob
+Date: Mon, 28 Apr 2025 13:59:17 +0100
+Message-Id: <20250428125918.449346-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250428125918.449346-1-alex.bennee@linaro.org>
 References: <20250428125918.449346-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -110,119 +110,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QOM objects can be embedded in other QOM objects and managed as part
-of their lifetime but this isn't the case for
-virtio_gpu_virgl_hostmem_region. However before we can split it out we
-need some other way of associating the wider data structure with the
-memory region.
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-Fortunately MemoryRegion has an opaque pointer. This is passed down to
-MemoryRegionOps for device type regions but is unused in the
-memory_region_init_ram_ptr() case. Use the opaque to carry the
-reference and allow the final MemoryRegion object to be reaped when
-its reference count is cleared.
+This commit fixes an indefinite hang when using VIRTIO GPU blob objects
+under TCG in certain conditions.
 
+The VIRTIO_GPU_CMD_RESOURCE_MAP_BLOB VIRTIO command creates a
+MemoryRegion and attaches it to an offset on a PCI BAR of the
+VirtIOGPUdevice. The VIRTIO_GPU_CMD_RESOURCE_UNMAP_BLOB command unmaps
+it.
+
+Because virglrenderer commands are not thread-safe they are only
+called on the main context and QEMU performs the cleanup in three steps
+to prevent a use-after-free scenario where the guest can access the
+region after it’s unmapped:
+
+1. From the main context, the region’s field finish_unmapping is false
+   by default, so it sets a variable cmd_suspended, increases the
+   renderer_blocked variable, deletes the blob subregion, and unparents
+   the blob subregion causing its reference count to decrement.
+
+2. From an RCU context, the MemoryView gets freed, the FlatView gets
+   recalculated, the free callback of the blob region
+   virtio_gpu_virgl_hostmem_region_free is called which sets the
+   region’s field finish_unmapping to true, allowing the main thread
+   context to finish replying to the command
+
+3. From the main context, the command is processed again, but this time
+   finish_unmapping is true, so virgl_renderer_resource_unmap can be
+   called and a response is sent to the guest.
+
+It happens so that under TCG, if the guest has no timers configured (and
+thus no interrupt will cause the CPU to exit), the RCU thread does not
+have enough time to grab the locks and recalculate the FlatView.
+
+That’s not a big problem in practice since most guests will assume a
+response will happen later in time and go on to do different things,
+potentially triggering interrupts and allowing the RCU context to run.
+If the guest waits for the unmap command to complete though, it blocks
+indefinitely. Attaching to the QEMU monitor and force quitting the guest
+allows the cleanup to continue.
+
+There's no reason why the FlatView recalculation can't occur right away
+when we delete the blob subregion, however. It does not, because when we
+create the subregion we set the object as its own parent:
+
+    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+
+The extra reference is what prevents freeing the memory region object in
+the memory transaction of deleting the subregion.
+
+This commit changes the owner object to the device, which removes the
+extra owner reference in the memory region and causes the MR to be
+freed right away in the main context.
+
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250410122643.1747913-2-manos.pitsidianakis@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20250410122643.1747913-3-manos.pitsidianakis@linaro.org>
 Cc: qemu-stable@nongnu.org
 ---
- include/system/memory.h       |  1 +
- hw/display/virtio-gpu-virgl.c | 23 ++++++++---------------
- 2 files changed, 9 insertions(+), 15 deletions(-)
+ hw/display/virtio-gpu-virgl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index fbbf4cf911..b3cef1acb5 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -783,6 +783,7 @@ struct MemoryRegion {
-     DeviceState *dev;
- 
-     const MemoryRegionOps *ops;
-+    /* opaque data, used by backends like @ops */
-     void *opaque;
-     MemoryRegion *container;
-     int mapped_via_alias; /* Mapped via an alias, container might be NULL */
 diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 145a0b3879..71a7500de9 100644
+index 71a7500de9..8fbe4e70cc 100644
 --- a/hw/display/virtio-gpu-virgl.c
 +++ b/hw/display/virtio-gpu-virgl.c
-@@ -52,17 +52,11 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
- 
- #if VIRGL_VERSION_MAJOR >= 1
- struct virtio_gpu_virgl_hostmem_region {
--    MemoryRegion mr;
-+    MemoryRegion *mr;
-     struct VirtIOGPU *g;
-     bool finish_unmapping;
- };
- 
--static struct virtio_gpu_virgl_hostmem_region *
--to_hostmem_region(MemoryRegion *mr)
--{
--    return container_of(mr, struct virtio_gpu_virgl_hostmem_region, mr);
--}
--
- static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
- {
-     VirtIOGPU *g = opaque;
-@@ -73,14 +67,12 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
- static void virtio_gpu_virgl_hostmem_region_free(void *obj)
- {
-     MemoryRegion *mr = MEMORY_REGION(obj);
--    struct virtio_gpu_virgl_hostmem_region *vmr;
-+    struct virtio_gpu_virgl_hostmem_region *vmr = mr->opaque;
-     VirtIOGPUBase *b;
-     VirtIOGPUGL *gl;
- 
--    vmr = to_hostmem_region(mr);
--    vmr->finish_unmapping = true;
--
-     b = VIRTIO_GPU_BASE(vmr->g);
-+    vmr->finish_unmapping = true;
-     b->renderer_blocked--;
- 
-     /*
-@@ -118,8 +110,8 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
- 
-     vmr = g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
+@@ -112,7 +112,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
      vmr->g = g;
-+    mr = g_new0(MemoryRegion, 1);
+     mr = g_new0(MemoryRegion, 1);
  
--    mr = &vmr->mr;
-     memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
+-    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
++    memory_region_init_ram_ptr(mr, OBJECT(g), "blob", size, data);
      memory_region_add_subregion(&b->hostmem, offset, mr);
      memory_region_set_enabled(mr, true);
-@@ -131,7 +123,9 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
-      * command processing until MR is fully unreferenced and freed.
-      */
-     OBJECT(mr)->free = virtio_gpu_virgl_hostmem_region_free;
-+    mr->opaque = vmr;
  
-+    vmr->mr = mr;
-     res->mr = mr;
- 
-     return 0;
-@@ -142,16 +136,15 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
-                                      struct virtio_gpu_virgl_resource *res,
-                                      bool *cmd_suspended)
- {
--    struct virtio_gpu_virgl_hostmem_region *vmr;
-     VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
-     MemoryRegion *mr = res->mr;
-+    struct virtio_gpu_virgl_hostmem_region *vmr;
-     int ret;
- 
-     if (!mr) {
-         return 0;
-     }
--
--    vmr = to_hostmem_region(res->mr);
-+    vmr = mr->opaque;
- 
-     /*
-      * Perform async unmapping in 3 steps:
 -- 
 2.39.5
 
