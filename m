@@ -4,112 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A477C369D3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9346C369D3
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:08:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9MIq-0000qf-L1; Mon, 28 Apr 2025 07:05:36 -0400
+	id 1u9ML4-0002o3-T1; Mon, 28 Apr 2025 07:07:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9MIp-0000oU-Ai
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:05:35 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9MIm-0001AI-KM
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:05:34 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5f4b7211badso7504655a12.2
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 04:05:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745838330; x=1746443130; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=BZlz0o/+lpXmIsKh9B5/Zpvx+OHIXNsIMABlhSOPrmQ=;
- b=pS0vfuhOqL9XaeVQlgcKASiVpVnE+kJoodeLGgpOv3jNxhnThT5VoFjgJx1+xKMMSz
- r1kp7veuY+BKX5LD/yG/o8hKXhRVDtt5bIQ/oUs45GcMeQ58dcf/w1nKTS8tFaxe7kU3
- gSYMqa7g1VuW0UaIw4VediygveEiHGniUk63nvr8QoPAvFzBNAaai7EO1LWFcacAnBx7
- GtGWMbh7/fTjumFQ4G5pdwxmUn+YC+aBJmlRu4jsrUkISWfVTNQKGH2im+V+A/MZof6d
- DuJFNhz+NytJA4N5hl7f/YhGzKvM7qQU1GLaDBiIB3P+0UJlFGx3muERzlokpeLlPc5t
- 412Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745838330; x=1746443130;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BZlz0o/+lpXmIsKh9B5/Zpvx+OHIXNsIMABlhSOPrmQ=;
- b=YLK3Y/KByEhiIzfu1snUWrFmfEUQnI1PMtlMzlaM0eFWXz0ZNtju7CYx1fevIKlcI1
- BDrzbnK6Qcb89g1LOmIHRwosch2jr+jna3PL0iP7tRVoYaXMOCdIqgt9Tk0u1JKlhfyk
- HEvQLF61nLbWDyp6VD/tasmFQ/FoC5o01XEqN53whicr3teyHhmz+JHdSiklVL3MYp4v
- s87Fa++idO15XagDr+xwpT1cVo6wo/y63YdoBcW5pRu1D1rIWITRjO4JGPQX690uoV1h
- M4zG/NvQur1ftr4NtyAbPYpejmCj3vJA5OWMEKsFYXWRn34myCBZpvUxG82/CjKrA4ZE
- 0Txw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXUIFi/8mNbfTWuRvO+vj5sje7Hv9wWdhfYhh63+ap6WRnsAeVJhm8qgPJYBcd3vcXcE8q3SRBkLjp+@nongnu.org
-X-Gm-Message-State: AOJu0YxYRs0aQ1hpyWlGGa/khVUKrbmODIrEY2o76uES/6M6G/w564oy
- NptxeQ/wuSDjv4yMgQz9JTa1IIGHyD0Ct5G3U3RvsV/lsgfhd8Ayn1RQibhAKY0=
-X-Gm-Gg: ASbGncvCdzxX6r6XSgVKIFrli65PUXL5yIFEhKACDvJesOOp7A65ibPB/Hcpel8nTWn
- xulkuZJKpEQbUlYC5GE28w9CXdVR2BIO4QQHTiCaJlZr9wHmorsoOYax61bFtYP3lEsiz0uXNJb
- ercjN8coixhBZZ+50G4MBXlLBsQQOGao9gcR+j1ntr8WKe736ZrMuzXsgZjNqb8TWn8uuAhvwWY
- Nsbif9EllXbsl+VQHTl7wMpZ6TyPTeqPMp5EK/vErz26/4Dtr31MDGW7PLpDgIHMHanJ0ctliF/
- NVhjKejZdY4629jiCSzdO19Pvt0MqcYPIK4w9gIIWT4=
-X-Google-Smtp-Source: AGHT+IFtFgZ+ekCMUsxlMyxvJWexnm8n2LDuxD1mYxzTtZESIbfP/S9JGYNgwwP5q8da3trOXwR2Ig==
-X-Received: by 2002:a50:c94c:0:b0:5f7:eaf0:8849 with SMTP id
- 4fb4d7f45d1cf-5f7eaf08be0mr2890017a12.16.1745838330572; 
- Mon, 28 Apr 2025 04:05:30 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f7011fbcbfsm5647291a12.9.2025.04.28.04.05.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Apr 2025 04:05:30 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 274F55F877;
- Mon, 28 Apr 2025 12:05:29 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Alessandro Di Federico <ale@rev.ng>, Alistair Francis
- <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
- Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- cw@f00f.org,
- dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Elena Ufimtseva <elena.ufimtseva@oracle.com>, Auger
- Eric <eric.auger@redhat.com>, felipe@nutanix.com, iggy@theiggy.com, Warner
- Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe
- <jgg@nvidia.com>, jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>,
- Joao Martins <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, Max Chou <max.chou@sifive.com>, Mark
- Burton <mburton@qti.qualcomm.com>, mdean@redhat.com,
- mimu@linux.vnet.ibm.com, "Ho, Nelson" <nelson.ho@windriver.com>, Paul
- Walmsley <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Phil =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>, QEMU Developers <qemu-devel@nongnu.org>, Roberto
- Campesato <rbc@meta.com>, Richard Henderson
- <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
- <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
- <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com, LIU
- Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Subject: KVM/QEMU Community call 29/04/2025 agenda items?
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Mon, 28 Apr 2025 12:05:29 +0100
-Message-ID: <874iy85yx2.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9ML2-0002kC-AV
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:07:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9MKv-0001Rc-2I
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:07:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745838463;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=M1AOojelORdVeu6DgUmb9GePIy/ctN0iAgA8kDjVK+0=;
+ b=RbtWV8YYl6MHGv+CUOIVgdsO4kyQcOccsSyIvwXmUQEehhMWabXeYYZ++x8+m0QkWyeiLD
+ Uf3UYHVxuv0bj9YL2G5lWLot6yp7N7r1oce6d450c9+dEb5cfT5WhWkdek/t0dHbyp8bjH
+ SDKPLERz5pyRU7QEc6Ib2lAUQrW4+0Y=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-E4rKltLZN1SffHMLvBW9og-1; Mon,
+ 28 Apr 2025 07:07:37 -0400
+X-MC-Unique: E4rKltLZN1SffHMLvBW9og-1
+X-Mimecast-MFC-AGG-ID: E4rKltLZN1SffHMLvBW9og_1745838456
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 317BE195608C; Mon, 28 Apr 2025 11:07:36 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9EBD730001A2; Mon, 28 Apr 2025 11:07:34 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2C8EE21E66C2; Mon, 28 Apr 2025 13:07:32 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Krempa <pkrempa@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
+ richard.henderson@linaro.org,  stefanha@redhat.com,  Michael Roth
+ <michael.roth@amd.com>,  pbonzini@redhat.com,  peter.maydell@linaro.org,
+ thuth@redhat.com,  jsnow@redhat.com,  philmd@linaro.org,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  devel@lists.libvirt.org
+Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
+In-Reply-To: <aA9ChuXrkmx1Igy5@angien.pipo.sk> (Peter Krempa's message of
+ "Mon, 28 Apr 2025 10:55:34 +0200")
+References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+ <87a584b69n.fsf@pond.sub.org> <aA9ChuXrkmx1Igy5@angien.pipo.sk>
+Date: Mon, 28 Apr 2025 13:07:32 +0200
+Message-ID: <8734dswnm3.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: 37
-X-Spam_score: 3.7
-X-Spam_bar: +++
-X-Spam_report: (3.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.492,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,18 +89,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Peter Krempa <pkrempa@redhat.com> writes:
 
-Hi,
+> On Fri, Apr 25, 2025 at 17:38:44 +0200, Markus Armbruster via Devel wrote:
+>> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+>
+> [...]
+>
+>> To be precise: conditionals that use macros restricted to
+>> target-specific code, i.e. the ones poisoned by exec/poison.h.  Let's
+>> call them target-specific QAPI conditionals.
+>> 
+>> The QAPI generator is blissfully unaware of all this.
+>> 
+>> The build system treats QAPI modules qapi/*-target.json as
+>> target-specific.  The .c files generated for them are compiled per
+>> target.  See qapi/meson.build.
+>> 
+>> Only such target-specific modules can can use target-specific QAPI
+>> conditionals.  Use in target-independent modules will generate C that
+>> won't compile.
+>> 
+>> Poisoned macros used in qapi/*-target.json:
+>> 
+>>     CONFIG_KVM
+>>     TARGET_ARM
+>>     TARGET_I386
+>>     TARGET_LOONGARCH64
+>>     TARGET_MIPS
+>>     TARGET_PPC
+>>     TARGET_RISCV
+>>     TARGET_S390X
 
-The KVM/QEMU community call is at:
+Commands and events:
 
-https://meet.jit.si/kvmcallmeeting
-@
-29/04/2025 14:00 UTC
+    CPU introspection: query-cpu-model-baseline, query-cpu-model-comparison, query-cpu-model-expansion, query-cpu-definitions
 
-Are there any agenda items for the sync-up?
+    S390 KVM CPU stuff: set-cpu-topology, CPU_POLARIZATION_CHANGE, query-s390x-cpu-polarization.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+    GIC: query-gic-capabilities
+
+    SEV: query-sev, query-sev-launch-measure, query-sev-capabilities, sev-inject-launch-secret, query-sev-attestation-report
+
+    SGX: query-sgx, query-sgx-capabilities
+
+    Xen: xen-event-list, xen-event-inject
+
+    An odd duck: rtc-reset-reinjection
+
+> I've had a look at what bits of the QMP schema are depending on the
+> above defines which libvirt uses.
+>
+> In many cases libvirt could restrict the use of given command/property
+> to only supported architectures. We decided to simply probe the presence
+> of the command because it's convenient to not have to filter them any
+> more
+>
+> - query-gic-capabilities
+>     - libvirt already calls this only for ARM guests based on the
+>       definition
+>
+> - query-sev and friends
+>   - libvirt uses presence of 'query-sev' to decide if the binary
+>     supports it; patching in a platofrm check is possible although
+>     inconvenient
+>
+> - query-sgx and friends
+>   - similar to sev
+>
+> -query-cpu-definitions and friends
+>   - see below
+
+Large subset of my list.
+
+>> >                            What we try to do here is to build them only once
+>>  instead.
+>>  
+>> You're trying to eliminate target-specific QAPI conditionals.  Correct?
+>> 
+>> > In the past, we identied that the best approach to solve this is to expose code
+>> > for all targets (thus removing all #if clauses), and stub missing
+>> > symbols for concerned targets.
+>> 
+>> This affects QAPI/QMP introspection, i.e. the value of query-qmp-schema.
+>> 
+>> Management applications can no longer use introspection to find out
+>> whether target-specific things are available.
+>
+> Indeed and libvirt already uses this in few cases as noded above.
+>
+>> 
+>> For instance, query-cpu-definitions is implemented for targets arm,
+>> i386, loongarch, mips, ppc, riscv, and s390x.  It initially was for
+>> fewer targets, and more targets followed one by one.  Still more may
+>> follow in the future.  Right now, management applications can use
+>> introspection to find out whether it is available.  That stops working
+>> when you make it available for all targets, stubbed out for the ones
+>> that don't (yet) implement it.
+>> 
+>> Management applications may have to be adjusted for this.
+>> 
+>> This is not an attempt to shoot down your approach.  I'm merely
+>> demonstrating limitations of your promise "if anyone notices a
+>> difference, it will be a bug."
+>> 
+>> Now, we could get really fancy and try to keep introspection the same by
+>> applying conditionals dynamically somehow.  I.e. have the single binary
+>> return different introspection values depending on the actual guest's
+>> target.
+>
+> I wonder how this will work if libvirt is probing a binary. Libvirt does
+> not look at the filename. It can't because it can be a
+> user-specified/compiled binary, override script, or a distro that chose
+> to rename the binary.
+>
+> The second thing that libvirt does after 'query-version' is
+> 'query-target'.
+>
+> So what should libvirt do once multiple targets are supported?
+>
+> How do we query CPUs for each of the supported targets?
+>
+> Will the result be the same if we query them one at a time or all at
+> once?
+
+Pierrick's stated goal is to have no noticable differences between the
+single binary and the qemu-system-<target> it covers.  This is obviously
+impossible if we can interact with the single binary before the target
+is fixed.
+
+>> This requires fixing the target before introspection.  Unless this is
+>> somehow completely transparent (wrapper scripts, or awful hacks based on
+>> the binary's filename, perhaps), management applications may have to be
+>> adjusted to actually do that.
+>
+> As noted filename will not work. Users can specify any filename and
+> create override scripts or rename the binary.
+
+True.
+
+>> Applies not just to introspection.  Consider query-cpu-definitions
+>> again.  It currently returns CPU definitions for *the* target.  What
+>> would a single binary's query-cpu-definitions return?  The CPU
+>> definitions for *all* its targets?  Management applications then receive
+>> CPUs that won't work, which may upset them.  To avoid noticable
+>> difference, we again have to fix the target before we look.
+>
+> Ah I see you had a similar question :D
+>
+>> 
+>> Of course, "fixing the target" stops making sense once we move to
+>> heterogeneous machines with multiple targets.
+>> 
+>> > This series build QAPI generated code once, by removing all TARGET_{arch} and
+>> > CONFIG_KVM clauses. What it does *not* at the moment is:
+>> > - prevent target specific commands to be visible for all targets
+>> >   (see TODO comment on patch 2 explaining how to address this)
+>> > - nothing was done to hide all this from generated documentation
+
 
