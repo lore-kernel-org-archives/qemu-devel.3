@@ -4,145 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8749DC369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 15:40:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E403C369DC
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 15:41:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9QaM-0005kq-V9; Mon, 28 Apr 2025 11:39:58 -0400
+	id 1u9QaK-0005ho-9f; Mon, 28 Apr 2025 11:39:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u9QaK-0005hs-51
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 11:39:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1u9QaH-0005gM-F5
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 11:39:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u9QaH-0002bv-Qo
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 11:39:55 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1u9Qa6-0002aa-NM
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 11:39:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745854791;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1745854779;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/gTNMXaHWMrAazHdNLO/mQhMYGW8pd5Kw3U9bA6vDq8=;
- b=XZHIASOBZP7J7BUZ5rg4IVR9RSwiyr5L0p3IY1c/Jrfz6JwMI1EMXd0zB233+UzpAzJD4P
- IzVDrFvZrf4+IHe4bAkPzyAwKiF7eocSqfIEOHfb0vHZSy/k/ysfSHXkujhRoeKx6yRbod
- SbzFDGJ7zW+VhQTDgiYAlFIs2tjkwkc=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=RXapd7NYWRzmDUaMVe+P8NaSGjdrTACqXbLK+NUx8aA=;
+ b=Na5KkMAPkKMKuAHJFyre6vjxsvv6cdrncJSsl3rRVILH/PNtvhf9V8E4RK1HDSjHqQGLtZ
+ Fi49fD2tpiWze+Nr6cgjJtcFAjyLh/Rzpvym46zTzhrNuM6PswfrVdCQlWVrvovzlERCN4
+ yY8lY/ntdiXv0qmgC+H+e0o+oS1+W+E=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-263-qOpwTuf3OSqan2gX04qI8Q-1; Mon, 28 Apr 2025 11:39:50 -0400
-X-MC-Unique: qOpwTuf3OSqan2gX04qI8Q-1
-X-Mimecast-MFC-AGG-ID: qOpwTuf3OSqan2gX04qI8Q_1745854789
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3912fe32a30so1660831f8f.1
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 08:39:49 -0700 (PDT)
+ us-mta-648-BdWlZ_03O3GDwtPrU0xSiA-1; Mon, 28 Apr 2025 11:39:32 -0400
+X-MC-Unique: BdWlZ_03O3GDwtPrU0xSiA-1
+X-Mimecast-MFC-AGG-ID: BdWlZ_03O3GDwtPrU0xSiA_1745854771
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43ce8f82e66so26090755e9.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 08:39:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745854789; x=1746459589;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/gTNMXaHWMrAazHdNLO/mQhMYGW8pd5Kw3U9bA6vDq8=;
- b=ebXOLLGa5R8TZsU2OWdzMG5/S4VrpsiGnMiGkQOKnupJyDNPUe3B7BQp/S/IyvTHjY
- Z3GboOR7w1h7MVhY1g7/Rtp/ibj47kvYnd54vxh/s5g/N08VXfi0mWFv0OsRxDm7PD8H
- cVPxNFUupLcYf/lzQP62mQzTWVVphVsycWc5nAqKoPAyNpHAX3rYagkTw4kXMTzTjB9O
- wPBdaOEbP1735iD9V4MucV57t/M1jIV7vhFZDe6Iks2q0Q1KlSEQIFmNiwHR9jQQkZHd
- jm836pXrTonTz+vSneeorClbVrawdKE2aMOsF+fTo1tuhBB32Hu3hgmIyPKJpaprshCZ
- PAcA==
+ d=1e100.net; s=20230601; t=1745854771; x=1746459571;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RXapd7NYWRzmDUaMVe+P8NaSGjdrTACqXbLK+NUx8aA=;
+ b=mCp3xRf8ZgkenoCZsMe2iwQXLNK9q28L20AVPCaSY4G6VImUSRUgsRX5rciJq8xRnz
+ jMFcG79UD/LlIiu+HbuZ7SZ7F3nfmO15Pb8Ah3avh5pDa12iCdxktkbUjT1Te4sos5aF
+ PJBUroJYruzdVX0XpSOZ3btpa8dFX+Yu1cbvgsCO4wauvVdzcKiwFoe8YVQEZcbvwx7M
+ SBkeHHOrbV4SUSoB/bDGKFPaSWrI7VhYbcHjmM9WJ623jz8v6OgSoYNJlzoKHS77ygu8
+ MPWy8sD6sNoBa3R9vHUBbHuWQjJt5+I42y+7mABEKZxYfMYHkb/4ZtIrVyyG8zgan3oZ
+ Lqhw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQLIIjdBpdsSLAwsGyK/8Dg9ZzcJXjnrg7ekioyW3IxVBz2B2ds9eMc3WEx3yCOe5kZAxbsw/2yo3X@nongnu.org
-X-Gm-Message-State: AOJu0YzmLCDqrAcxqMAMyH91GCoFdwIaftghBQdJLKYsj/8khRQsybhv
- 2usvHNsOJ+NtDc+X0KHcyWAS8mztUcnbPrrN1i7n5V7m1s5Br6YM4PyrfwW08DyrOGyc35FTVRJ
- Chk0OnXW8crJnrffw7tez5Uv7xd4xyUJhBSSmFQA+B1G0vQRn7Xhd
-X-Gm-Gg: ASbGncveYgwSmuu23mj3TW7AKducRwVhDuOLhA3fk4Vw3TrE+7Rrh2GVY+LYQgKx/4A
- sm7iebrymrxK+xCUJ8QHn3KDWz5bt4dBB0zen2WYITmX1BpRRUkjVchooDHNf0u1yNLLHH41y+C
- XrFjoMguUq4ltMrKujYrsi8gpSS9RHEPec4LdxnK7RuYxg/KJy8CRcmtt/QLR5VxEQ5xzCAhhiJ
- 0vOBBalRLU+PB7YR6k1bbxu4QlidW5V9CQ5IfogHhuqbjZB9xClbSbIK1WEHK/yYI2v/fsnyz90
- sTikDA4effRS7RqTCxA09JcIHyg0zoxtDRHxsnuYHYhzA0gh1Q==
-X-Received: by 2002:a5d:64c5:0:b0:39c:1ef6:4364 with SMTP id
- ffacd0b85a97d-3a074e23345mr10072008f8f.14.1745854788860; 
- Mon, 28 Apr 2025 08:39:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE3lG/89UMygGWxpi5I31po224jwWhBsezo4RApLIrI3aiGnI96EkCMdaGCcwlGCjLCt+EJqQ==
-X-Received: by 2002:a5d:64c5:0:b0:39c:1ef6:4364 with SMTP id
- ffacd0b85a97d-3a074e23345mr10071982f8f.14.1745854788414; 
- Mon, 28 Apr 2025 08:39:48 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
- ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ AJvYcCXZbezqTo7oXb0hHTTy/De6ZtbROn4teaTCAGCm+7P1qktPVNlw6Si/1r5APfcKyEk3kZeFA9iwjCA1@nongnu.org
+X-Gm-Message-State: AOJu0Yxv6BureWcMCX7EQiGfsERS3gFKLTyJo8nni5GyjNdNB7nHCh/m
+ wbJ8g7vQTrEMvPxaAFCPOHjE1fP/JPxuLg3Ua3f0V6+X5r7+CBL0pI9iDh6cYR4NGtFPV16T454
+ srmYkW4Zno3037DPhnQAXsSHIj7H/QZuIqtXAsLg+x5sjtZS2SRw/
+X-Gm-Gg: ASbGncv8jO/Ua7cLKp8GKgq2mtNGQ27TG2uL3f6sL6TgkSQ31BZdgwKMQ11RX7NUYgQ
+ LgCsmnyn6nUO6sfQxLnQDYDTa/kA9flQTxv/lP3OwXsU0MBVbQcI7x1fJjmAxSzwS5oZ8+txzXf
+ Gw3juHo2tIrzRubieM8t1zszMY8QU1O1h1kFYoz4d0HnmuO6x2IvBiC8gGm5//7i4IlyrX4Eqkf
+ 7Dm+XLXKQKXddMIsV6MAtin+b+T/o9UDepuVemBCTLUTodgxwf/B94iApukpYobMePqnG83XoKQ
+ wFeXYhR8SJzaWntAnhcksKq4PoJ57uZatng3OhZYDPz6y4C0NusIL/gpq7A=
+X-Received: by 2002:a05:600c:1e1c:b0:434:fa55:eb56 with SMTP id
+ 5b1f17b1804b1-440a65b6faemr107909375e9.7.1745854771309; 
+ Mon, 28 Apr 2025 08:39:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH6CUDPbszbTgz7yxt/b1M+rx+a0zOI3YH4Qj6KZVsOIJpC+ek3oFHf8QMpY9pIE56rzLmenQ==
+X-Received: by 2002:a05:600c:1e1c:b0:434:fa55:eb56 with SMTP id
+ 5b1f17b1804b1-440a65b6faemr107909015e9.7.1745854770691; 
+ Mon, 28 Apr 2025 08:39:30 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073e4698csm11531429f8f.62.2025.04.28.08.39.47
+ 5b1f17b1804b1-4409d29b990sm165131835e9.4.2025.04.28.08.39.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 08:39:47 -0700 (PDT)
-Message-ID: <fd6fa8cc-8e11-47a5-881a-1f0205aac742@redhat.com>
-Date: Mon, 28 Apr 2025 17:39:46 +0200
+ Mon, 28 Apr 2025 08:39:29 -0700 (PDT)
+Message-ID: <07b785e0-431d-40ba-ab04-56336fdac483@redhat.com>
+Date: Mon, 28 Apr 2025 17:39:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/14] vfio: add region info cache
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Tony Krowiak <akrowiak@linux.ibm.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, qemu-s390x@nongnu.org,
- Tomita Moeko <tomitamoeko@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- John Johnson <john.g.johnson@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>
-References: <20250409134814.478903-1-john.levon@nutanix.com>
- <20250409134814.478903-13-john.levon@nutanix.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250409134814.478903-13-john.levon@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH for-10.1 v5 04/13] arm/cpu: Store aa64pfr0/1 into the
+ idregs array
+Content-Language: en-US
+To: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ agraf@csgraf.de
+Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+References: <20250409144304.912325-1-cohuck@redhat.com>
+ <20250409144304.912325-5-cohuck@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250409144304.912325-5-cohuck@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
@@ -150,7 +107,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,293 +120,594 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/9/25 15:48, John Levon wrote:
-> Instead of requesting region information on demand with
-> VFIO_DEVICE_GET_REGION_INFO, maintain a cache: this will become
-> necessary for performance for vfio-user, where this call becomes a
-> message over the control socket, so is of higher overhead than the
-> traditional path.
-> 
-> We will also need it to generalize region accesses, as that means we
-> can't use ->config_offset for configuration space accesses, but must
-> look up the region offset (if relevant) each time.
-> 
-> Originally-by: John Johnson <john.g.johnson@oracle.com>
-> Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
-> Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
-> Signed-off-by: John Levon <john.levon@nutanix.com>
+
+
+On 4/9/25 4:42 PM, Cornelia Huck wrote:
+> From: Eric Auger <eric.auger@redhat.com>
+>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Sebastian Ott <sebott@redhat.com>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 > ---
->   hw/vfio/ccw.c                 |  5 -----
->   hw/vfio/container.c           | 10 ++++++++++
->   hw/vfio/device.c              | 31 +++++++++++++++++++++++++++----
->   hw/vfio/igd.c                 |  8 ++++----
->   hw/vfio/pci.c                 |  6 +++---
->   hw/vfio/region.c              |  2 +-
->   include/hw/vfio/vfio-device.h |  1 +
->   7 files changed, 46 insertions(+), 17 deletions(-)
-> 
-> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-> index dac8769925..14dee7cd19 100644
-> --- a/hw/vfio/ccw.c
-> +++ b/hw/vfio/ccw.c
-> @@ -504,7 +504,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
->   
->       vcdev->io_region_offset = info->offset;
->       vcdev->io_region = g_malloc0(info->size);
-> -    g_free(info);
->   
->       /* check for the optional async command region */
->       ret = vfio_device_get_region_info_type(vdev, VFIO_REGION_TYPE_CCW,
-> @@ -517,7 +516,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
->           }
->           vcdev->async_cmd_region_offset = info->offset;
->           vcdev->async_cmd_region = g_malloc0(info->size);
-> -        g_free(info);
->       }
->   
->       ret = vfio_device_get_region_info_type(vdev, VFIO_REGION_TYPE_CCW,
-> @@ -530,7 +528,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
->           }
->           vcdev->schib_region_offset = info->offset;
->           vcdev->schib_region = g_malloc(info->size);
-> -        g_free(info);
->       }
->   
->       ret = vfio_device_get_region_info_type(vdev, VFIO_REGION_TYPE_CCW,
-> @@ -544,7 +541,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
->           }
->           vcdev->crw_region_offset = info->offset;
->           vcdev->crw_region = g_malloc(info->size);
-> -        g_free(info);
->       }
->   
->       return true;
-> @@ -554,7 +550,6 @@ out_err:
->       g_free(vcdev->schib_region);
->       g_free(vcdev->async_cmd_region);
->       g_free(vcdev->io_region);
-> -    g_free(info);
->       return false;
->   }
->   
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 37b1217fd8..61333d7fc4 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -857,6 +857,16 @@ static bool vfio_device_get(VFIOGroup *group, const char *name,
->   
->   static void vfio_device_put(VFIODevice *vbasedev)
->   {
-> +    if (vbasedev->reginfo != NULL) {
-> +        int i;
-> +
-> +        for (i = 0; i < vbasedev->num_regions; i++) {
-> +            g_free(vbasedev->reginfo[i]);
-> +        }
-> +        g_free(vbasedev->reginfo);
-> +        vbasedev->reginfo = NULL;
-> +    }
-> +
+>  target/arm/cpu-features.h | 40 ++++++++++++++++-----------------
+>  target/arm/cpu.c          | 29 ++++++++----------------
+>  target/arm/cpu.h          |  2 --
+>  target/arm/cpu64.c        | 14 ++++--------
+>  target/arm/helper.c       |  6 ++---
+>  target/arm/hvf/hvf.c      |  9 ++++----
+>  target/arm/kvm.c          | 24 +++++++++-----------
+>  target/arm/tcg/cpu64.c    | 47 ++++++++++++++++++---------------------
+>  8 files changed, 73 insertions(+), 98 deletions(-)
+>
+> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+> index 37946d759375..5cc4721e6406 100644
+> --- a/target/arm/cpu-features.h
+> +++ b/target/arm/cpu-features.h
+> @@ -606,68 +606,68 @@ static inline bool isar_feature_aa64_rpres(const ARMISARegisters *id)
+>  static inline bool isar_feature_aa64_fp_simd(const ARMISARegisters *id)
+>  {
+>      /* We always set the AdvSIMD and FP fields identically.  */
+> -    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, FP) != 0xf;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR0, FP) != 0xf;
+>  }
+>  
+>  static inline bool isar_feature_aa64_fp16(const ARMISARegisters *id)
+>  {
+>      /* We always set the AdvSIMD and FP fields identically wrt FP16.  */
+> -    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, FP) == 1;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR0, FP) == 1;
+>  }
+>  
+>  static inline bool isar_feature_aa64_aa32(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, EL0) >= 2;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR0, EL0) >= 2;
+>  }
+>  
+>  static inline bool isar_feature_aa64_aa32_el1(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, EL1) >= 2;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR0, EL1) >= 2;
+>  }
+>  
+>  static inline bool isar_feature_aa64_aa32_el2(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, EL2) >= 2;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR0, EL2) >= 2;
+>  }
+>  
+>  static inline bool isar_feature_aa64_ras(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, RAS) != 0;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR0, RAS) != 0;
+>  }
+>  
+>  static inline bool isar_feature_aa64_doublefault(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, RAS) >= 2;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR0, RAS) >= 2;
+>  }
+>  
+>  static inline bool isar_feature_aa64_sve(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, SVE) != 0;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR0, SVE) != 0;
+>  }
+>  
+>  static inline bool isar_feature_aa64_sel2(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, SEL2) != 0;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR0, SEL2) != 0;
+>  }
+>  
+>  static inline bool isar_feature_aa64_rme(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, RME) != 0;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR0, RME) != 0;
+>  }
+>  
+>  static inline bool isar_feature_aa64_dit(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, DIT) != 0;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR0, DIT) != 0;
+>  }
+>  
+>  static inline bool isar_feature_aa64_scxtnum(const ARMISARegisters *id)
+>  {
+> -    int key = FIELD_EX64(id->id_aa64pfr0, ID_AA64PFR0, CSV2);
+> +    int key = FIELD_EX64_IDREG(id, ID_AA64PFR0, CSV2);
+>      if (key >= 2) {
+>          return true;      /* FEAT_CSV2_2 */
+>      }
+>      if (key == 1) {
+> -        key = FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, CSV2_FRAC);
+> +        key = FIELD_EX64_IDREG(id, ID_AA64PFR1, CSV2_FRAC);
+>          return key >= 2;  /* FEAT_CSV2_1p2 */
+>      }
+>      return false;
+> @@ -675,37 +675,37 @@ static inline bool isar_feature_aa64_scxtnum(const ARMISARegisters *id)
+>  
+>  static inline bool isar_feature_aa64_ssbs(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, SSBS) != 0;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR1, SSBS) != 0;
+>  }
+>  
+>  static inline bool isar_feature_aa64_bti(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, BT) != 0;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR1, BT) != 0;
+>  }
+>  
+>  static inline bool isar_feature_aa64_mte_insn_reg(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, MTE) != 0;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR1, MTE) != 0;
+>  }
+>  
+>  static inline bool isar_feature_aa64_mte(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, MTE) >= 2;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR1, MTE) >= 2;
+>  }
+>  
+>  static inline bool isar_feature_aa64_mte3(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, MTE) >= 3;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR1, MTE) >= 3;
+>  }
+>  
+>  static inline bool isar_feature_aa64_sme(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, SME) != 0;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR1, SME) != 0;
+>  }
+>  
+>  static inline bool isar_feature_aa64_nmi(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64pfr1, ID_AA64PFR1, NMI) != 0;
+> +    return FIELD_EX64_IDREG(id, ID_AA64PFR1, NMI) != 0;
+>  }
+>  
+>  static inline bool isar_feature_aa64_tgran4_lpa2(const ARMISARegisters *id)
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index f8783eff1d41..23be9ab97334 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -2126,14 +2126,11 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>      }
+>  
+>      if (!cpu->has_vfp) {
+> -        uint64_t t;
+>          uint32_t u;
+>  
+>          FIELD_DP64_IDREG(isar, ID_AA64ISAR1, JSCVT, 0);
+>  
+> -        t = cpu->isar.id_aa64pfr0;
+> -        t = FIELD_DP64(t, ID_AA64PFR0, FP, 0xf);
+> -        cpu->isar.id_aa64pfr0 = t;
+> +        FIELD_DP64_IDREG(isar, ID_AA64PFR0, FP, 0xf);
+>  
+>          u = cpu->isar.id_isar6;
+>          u = FIELD_DP32(u, ID_ISAR6, JSCVT, 0);
+> @@ -2188,9 +2185,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>          t = FIELD_DP64(t, ID_AA64ISAR1, I8MM, 0);
+>          SET_IDREG(isar, ID_AA64ISAR1, t);
+>  
+> -        t = cpu->isar.id_aa64pfr0;
+> -        t = FIELD_DP64(t, ID_AA64PFR0, ADVSIMD, 0xf);
+> -        cpu->isar.id_aa64pfr0 = t;
+> +        FIELD_DP64_IDREG(isar, ID_AA64PFR0, ADVSIMD, 0xf);
+>  
+>          u = cpu->isar.id_isar5;
+>          u = FIELD_DP32(u, ID_ISAR5, AES, 0);
+> @@ -2332,12 +2327,10 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>           */
+>          cpu->isar.id_pfr1 = FIELD_DP32(cpu->isar.id_pfr1, ID_PFR1, SECURITY, 0);
+>          cpu->isar.id_dfr0 = FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, COPSDBG, 0);
+> -        cpu->isar.id_aa64pfr0 = FIELD_DP64(cpu->isar.id_aa64pfr0,
+> -                                           ID_AA64PFR0, EL3, 0);
+> +        FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL3, 0);
+>  
+>          /* Disable the realm management extension, which requires EL3. */
+> -        cpu->isar.id_aa64pfr0 = FIELD_DP64(cpu->isar.id_aa64pfr0,
+> -                                           ID_AA64PFR0, RME, 0);
+> +        FIELD_DP64_IDREG(isar, ID_AA64PFR0, RME, 0);
+>      }
+>  
+>      if (!cpu->has_el2) {
+> @@ -2372,8 +2365,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>           * Disable the hypervisor feature bits in the processor feature
+>           * registers if we don't have EL2.
+>           */
+> -        cpu->isar.id_aa64pfr0 = FIELD_DP64(cpu->isar.id_aa64pfr0,
+> -                                           ID_AA64PFR0, EL2, 0);
+> +        FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL2, 0);
+>          cpu->isar.id_pfr1 = FIELD_DP32(cpu->isar.id_pfr1,
+>                                         ID_PFR1, VIRTUALIZATION, 0);
+>      }
+> @@ -2394,8 +2386,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>           * This matches Cortex-A710 BROADCASTMTE input being LOW.
+>           */
+>          if (tcg_enabled() && cpu->tag_memory == NULL) {
+> -            cpu->isar.id_aa64pfr1 =
+> -                FIELD_DP64(cpu->isar.id_aa64pfr1, ID_AA64PFR1, MTE, 1);
+> +            FIELD_DP64_IDREG(isar, ID_AA64PFR1, MTE, 1);
+>          }
+>  
+>          /*
+> @@ -2403,7 +2394,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>           * enabled on the guest (i.e mte=off), clear guest's MTE bits."
+>           */
+>          if (kvm_enabled() && !cpu->kvm_mte) {
+> -                FIELD_DP64(cpu->isar.id_aa64pfr1, ID_AA64PFR1, MTE, 0);
+> +                FIELD_DP64_IDREG(isar, ID_AA64PFR1, MTE, 0);
+>          }
+>  #endif
+>      }
+> @@ -2442,13 +2433,11 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>          cpu->isar.id_dfr0 =
+>              FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, MMAPTRC, 0);
+>          /* FEAT_AMU (Activity Monitors Extension) */
+> -        cpu->isar.id_aa64pfr0 =
+> -            FIELD_DP64(cpu->isar.id_aa64pfr0, ID_AA64PFR0, AMU, 0);
+> +        FIELD_DP64_IDREG(isar, ID_AA64PFR0, AMU, 0);
+>          cpu->isar.id_pfr0 =
+>              FIELD_DP32(cpu->isar.id_pfr0, ID_PFR0, AMU, 0);
+>          /* FEAT_MPAM (Memory Partitioning and Monitoring Extension) */
+> -        cpu->isar.id_aa64pfr0 =
+> -            FIELD_DP64(cpu->isar.id_aa64pfr0, ID_AA64PFR0, MPAM, 0);
+> +        FIELD_DP64_IDREG(isar, ID_AA64PFR0, MPAM, 0);
+>      }
+>  
+>      /* MPU can be configured out of a PMSA CPU either by setting has-mpu
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 4a143bc64b27..83ac125b97c5 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -1097,8 +1097,6 @@ struct ArchCPU {
+>          uint32_t dbgdidr;
+>          uint32_t dbgdevid;
+>          uint32_t dbgdevid1;
+> -        uint64_t id_aa64pfr0;
+> -        uint64_t id_aa64pfr1;
+>          uint64_t id_aa64mmfr0;
+>          uint64_t id_aa64mmfr1;
+>          uint64_t id_aa64mmfr2;
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index b914f2ed58b5..111b2514218e 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -310,16 +310,13 @@ static bool cpu_arm_get_sve(Object *obj, Error **errp)
+>  static void cpu_arm_set_sve(Object *obj, bool value, Error **errp)
+>  {
+>      ARMCPU *cpu = ARM_CPU(obj);
+> -    uint64_t t;
+>  
+>      if (value && kvm_enabled() && !kvm_arm_sve_supported()) {
+>          error_setg(errp, "'sve' feature not supported by KVM on this host");
+>          return;
+>      }
+>  
+> -    t = cpu->isar.id_aa64pfr0;
+> -    t = FIELD_DP64(t, ID_AA64PFR0, SVE, value);
+> -    cpu->isar.id_aa64pfr0 = t;
+> +    FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR0, SVE, value);
+>  }
+>  
+>  void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
+> @@ -370,11 +367,8 @@ static bool cpu_arm_get_sme(Object *obj, Error **errp)
+>  static void cpu_arm_set_sme(Object *obj, bool value, Error **errp)
+>  {
+>      ARMCPU *cpu = ARM_CPU(obj);
+> -    uint64_t t;
+>  
+> -    t = cpu->isar.id_aa64pfr1;
+> -    t = FIELD_DP64(t, ID_AA64PFR1, SME, value);
+> -    cpu->isar.id_aa64pfr1 = t;
+> +    FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR1, SME, value);
+>  }
+>  
+>  static bool cpu_arm_get_sme_fa64(Object *obj, Error **errp)
+> @@ -676,7 +670,7 @@ static void aarch64_a57_initfn(Object *obj)
+>      cpu->isar.id_isar4 = 0x00011142;
+>      cpu->isar.id_isar5 = 0x00011121;
+>      cpu->isar.id_isar6 = 0;
+> -    cpu->isar.id_aa64pfr0 = 0x00002222;
+> +    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+>      cpu->isar.id_aa64dfr0 = 0x10305106;
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+>      cpu->isar.id_aa64mmfr0 = 0x00001124;
+> @@ -738,7 +732,7 @@ static void aarch64_a53_initfn(Object *obj)
+>      cpu->isar.id_isar4 = 0x00011142;
+>      cpu->isar.id_isar5 = 0x00011121;
+>      cpu->isar.id_isar6 = 0;
+> -    cpu->isar.id_aa64pfr0 = 0x00002222;
+> +    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+>      cpu->isar.id_aa64dfr0 = 0x10305106;
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+>      cpu->isar.id_aa64mmfr0 = 0x00001122; /* 40 bit physical addr */
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index 548e51e82a8e..716d0570f6d6 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -6940,7 +6940,7 @@ static uint64_t id_pfr1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>  static uint64_t id_aa64pfr0_read(CPUARMState *env, const ARMCPRegInfo *ri)
+>  {
+>      ARMCPU *cpu = env_archcpu(env);
+> -    uint64_t pfr0 = cpu->isar.id_aa64pfr0;
+> +    uint64_t pfr0 = GET_IDREG(&cpu->isar, ID_AA64PFR0);
+>  
+>      if (env->gicv3state) {
+>          pfr0 |= 1 << 24;
+> @@ -7914,7 +7914,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+>                .access = PL1_R,
+>  #ifdef CONFIG_USER_ONLY
+>                .type = ARM_CP_CONST,
+> -              .resetvalue = cpu->isar.id_aa64pfr0
+> +              .resetvalue = GET_IDREG(isar, ID_AA64PFR0)
+>  #else
+>                .type = ARM_CP_NO_RAW,
+>                .accessfn = access_aa64_tid3,
+> @@ -7926,7 +7926,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+>                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 4, .opc2 = 1,
+>                .access = PL1_R, .type = ARM_CP_CONST,
+>                .accessfn = access_aa64_tid3,
+> -              .resetvalue = cpu->isar.id_aa64pfr1},
+> +              .resetvalue = GET_IDREG(isar, ID_AA64PFR1)},
+>              { .name = "ID_AA64PFR2_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
+>                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 4, .opc2 = 2,
+>                .access = PL1_R, .type = ARM_CP_CONST,
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index 8d6852fd7a52..9d37ca6bbbde 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -862,8 +862,8 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>          int reg;
+>          uint64_t *val;
+>      } regs[] = {
+> -        { HV_SYS_REG_ID_AA64PFR0_EL1, &host_isar.id_aa64pfr0 },
+> -        { HV_SYS_REG_ID_AA64PFR1_EL1, &host_isar.id_aa64pfr1 },
+> +        { HV_SYS_REG_ID_AA64PFR0_EL1, &host_isar.idregs[ID_AA64PFR0_EL1_IDX] },
+> +        { HV_SYS_REG_ID_AA64PFR1_EL1, &host_isar.idregs[ID_AA64PFR1_EL1_IDX] },
+>          { HV_SYS_REG_ID_AA64DFR0_EL1, &host_isar.id_aa64dfr0 },
+>          { HV_SYS_REG_ID_AA64DFR1_EL1, &host_isar.id_aa64dfr1 },
+>          { HV_SYS_REG_ID_AA64ISAR0_EL1, &host_isar.idregs[ID_AA64ISAR0_EL1_IDX] },
+> @@ -910,7 +910,8 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>       * - fix any assumptions we made that SME implies SVE (since
+>       *   on the M4 there is SME but not SVE)
+>       */
+> -    host_isar.id_aa64pfr1 &= ~R_ID_AA64PFR1_SME_MASK;
+> +    SET_IDREG(&host_isar, ID_AA64PFR1,
+> +              GET_IDREG(&host_isar, ID_AA64PFR1) & ~R_ID_AA64PFR1_SME_MASK);
+>  
+>      ahcf->isar = host_isar;
+>  
+> @@ -927,7 +928,7 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>      ahcf->reset_sctlr |= 0x00800000;
+>  
+>      /* Make sure we don't advertise AArch32 support for EL0/EL1 */
+> -    if ((host_isar.id_aa64pfr0 & 0xff) != 0x11) {
+> +    if ((GET_IDREG(&host_isar, ID_AA64PFR0) & 0xff) != 0x11) {
+>          return false;
+>      }
+>  
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index e8992348b27f..44a5e219b051 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -331,8 +331,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>      ahcf->dtb_compatible = "arm,arm-v8";
+>      int fd = fdarray[2];
+>  
+> -    err = read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64pfr0,
+> -                         ARM64_SYS_REG(3, 0, 0, 4, 0));
+> +    err = get_host_cpu_reg(fd, ahcf, ID_AA64PFR0_EL1_IDX);
+>      if (unlikely(err < 0)) {
+>          /*
+>           * Before v4.15, the kernel only exposed a limited number of system
+> @@ -350,11 +349,10 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>           * ??? Either of these sounds like too much effort just
+>           *     to work around running a modern host kernel.
+>           */
+> -        ahcf->isar.id_aa64pfr0 = 0x00000011; /* EL1&0, AArch64 only */
+> +        SET_IDREG(&ahcf->isar, ID_AA64PFR0, 0x00000011); /* EL1&0, AArch64 only */
+>          err = 0;
+>      } else {
+> -        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64pfr1,
+> -                              ARM64_SYS_REG(3, 0, 0, 4, 1));
+> +        err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR1_EL1_IDX);
+>          err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64smfr0,
+>                                ARM64_SYS_REG(3, 0, 0, 4, 5));
+>          err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64dfr0,
+> @@ -380,10 +378,8 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>           * than skipping the reads and leaving 0, as we must avoid
+>           * considering the values in every case.
+>           */
+> -        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_pfr0,
+> -                              ARM64_SYS_REG(3, 0, 0, 1, 0));
+> -        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_pfr1,
+> -                              ARM64_SYS_REG(3, 0, 0, 1, 1));
+> +        err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR0_EL1_IDX);
+Hum I think we have a conversion mistake here:
 
-Can we have a vfio_device_unprepare() routine for symmetry with
-routine vfio_device_get_all_region_info() ? Naming should be
-improved too.
++DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
++DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
 
->       if (!vbasedev->group) {>           return;
->       }
-> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-> index 2966171118..102fa5a9b4 100644
-> --- a/hw/vfio/device.c
-> +++ b/hw/vfio/device.c
-> @@ -205,6 +205,17 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
->   {
->       size_t argsz = sizeof(struct vfio_region_info);
->   
-> +    /* create region info cache */
-> +    if (vbasedev->reginfo == NULL) {
-> +        vbasedev->reginfo = g_new0(struct vfio_region_info *,
-> +                                   vbasedev->num_regions);
-> +    }
+Eric
 
-I guess we could allocate ->reginfo[] array sooner in the VFIODevice
-object life cycle. Since we lack a realize handler, may be in
-vfio_device_prepare() ?
-
-
-> +    /* check cache */
-> +    if (vbasedev->reginfo[index] != NULL) {
-> +        *info = vbasedev->reginfo[index];
-> +        return 0;
-> +    }
-> +
->       *info = g_malloc0(argsz);
->   
->       (*info)->index = index;
-> @@ -224,6 +235,9 @@ retry:
->           goto retry;
->       }
->   
-> +    /* fill cache */
-> +    vbasedev->reginfo[index] = *info;
-> +
->       return 0;
->   }
->   
-> @@ -242,7 +256,6 @@ int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
->   
->           hdr = vfio_get_region_info_cap(*info, VFIO_REGION_INFO_CAP_TYPE);
->           if (!hdr) {
-> -            g_free(*info);
->               continue;
->           }
->   
-> @@ -254,8 +267,6 @@ int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
->           if (cap_type->type == type && cap_type->subtype == subtype) {
->               return 0;
->           }
-> -
-> -        g_free(*info);
->       }
->   
->       *info = NULL;
-> @@ -264,7 +275,7 @@ int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
->   
->   bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type)
->   {
-> -    g_autofree struct vfio_region_info *info = NULL;
-> +    struct vfio_region_info *info = NULL;
->       bool ret = false;
->   
->       if (!vfio_device_get_region_info(vbasedev, region, &info)) {
-> @@ -427,6 +438,16 @@ void vfio_device_detach(VFIODevice *vbasedev)
->       VFIO_IOMMU_GET_CLASS(vbasedev->bcontainer)->detach_device(vbasedev);
->   }
->   
-> +static void vfio_device_get_all_region_info(VFIODevice *vbasedev)
-> +{
-> +    struct vfio_region_info *info;
-> +    int i;
-> +
-> +    for (i = 0; i < vbasedev->num_regions; i++) {
-> +        vfio_device_get_region_info(vbasedev, i, &info);
-> +    }
-> +}
-> +
-
-if the vfio_device_get_all_region_info() routine queries *all* region
-infos to fill the ->reginfo[] cache array, why do we also need the
-lazy cache filling method in vfio_device_get_region_info() ? This looks
-redundant to me. I would rather have vfio_device_get_region_info()
-operate on the cache only.
-
-
-Thanks,
-
-C.
-
-
->   void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
->                            struct vfio_device_info *info)
->   {
-> @@ -439,4 +460,6 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
->       QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
->   
->       QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
-> +
-> +    vfio_device_get_all_region_info(vbasedev);
->   }
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index e1cba16399..d70da1ce38 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -198,7 +198,7 @@ static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
->   
->   static bool vfio_pci_igd_setup_opregion(VFIOPCIDevice *vdev, Error **errp)
->   {
-> -    g_autofree struct vfio_region_info *opregion = NULL;
-> +    struct vfio_region_info *opregion = NULL;
->       int ret;
->   
->       /* Hotplugging is not supported for opregion access */
-> @@ -361,8 +361,8 @@ static int vfio_pci_igd_lpc_init(VFIOPCIDevice *vdev,
->   
->   static bool vfio_pci_igd_setup_lpc_bridge(VFIOPCIDevice *vdev, Error **errp)
->   {
-> -    g_autofree struct vfio_region_info *host = NULL;
-> -    g_autofree struct vfio_region_info *lpc = NULL;
-> +    struct vfio_region_info *host = NULL;
-> +    struct vfio_region_info *lpc = NULL;
->       PCIDevice *lpc_bridge;
->       int ret;
->   
-> @@ -526,7 +526,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->            * - OpRegion
->            * - Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
->            */
-> -        g_autofree struct vfio_region_info *rom = NULL;
-> +        struct vfio_region_info *rom = NULL;
->   
->           legacy_mode_enabled = true;
->           info_report("IGD legacy mode enabled, "
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index c3842d2f8d..b40d5abdfd 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -882,8 +882,8 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
->   
->   static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
->   {
-> -    g_autofree struct vfio_region_info *reg_info = NULL;
->       VFIODevice *vbasedev = &vdev->vbasedev;
-> +    struct vfio_region_info *reg_info = NULL;
->       uint64_t size;
->       off_t off = 0;
->       ssize_t bytes;
-> @@ -2721,7 +2721,7 @@ static VFIODeviceOps vfio_pci_ops = {
->   bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
->   {
->       VFIODevice *vbasedev = &vdev->vbasedev;
-> -    g_autofree struct vfio_region_info *reg_info = NULL;
-> +    struct vfio_region_info *reg_info = NULL;
->       int ret;
->   
->       ret = vfio_device_get_region_info(vbasedev, VFIO_PCI_VGA_REGION_INDEX, &reg_info);
-> @@ -2786,7 +2786,7 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
->   static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
->   {
->       VFIODevice *vbasedev = &vdev->vbasedev;
-> -    g_autofree struct vfio_region_info *reg_info = NULL;
-> +    struct vfio_region_info *reg_info = NULL;
->       struct vfio_irq_info irq_info;
->       int i, ret = -1;
->   
-> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-> index 04bf9eb098..ef2630cac3 100644
-> --- a/hw/vfio/region.c
-> +++ b/hw/vfio/region.c
-> @@ -182,7 +182,7 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
->   int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
->                         int index, const char *name)
->   {
-> -    g_autofree struct vfio_region_info *info = NULL;
-> +    struct vfio_region_info *info = NULL;
->       int ret;
->   
->       ret = vfio_device_get_region_info(vbasedev, index, &info);
-> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-> index 9522a09c48..967b07cd89 100644
-> --- a/include/hw/vfio/vfio-device.h
-> +++ b/include/hw/vfio/vfio-device.h
-> @@ -81,6 +81,7 @@ typedef struct VFIODevice {
->       IOMMUFDBackend *iommufd;
->       VFIOIOASHwpt *hwpt;
->       QLIST_ENTRY(VFIODevice) hwpt_next;
-> +    struct vfio_region_info **reginfo;
->   } VFIODevice;
->   
->   struct VFIODeviceOps {
+> +        err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR1_EL1_IDX);
+>          err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_dfr0,
+>                                ARM64_SYS_REG(3, 0, 0, 1, 2));
+>          err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_mmfr0,
+> @@ -434,14 +430,14 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>           * arch/arm64/kvm/sys_regs.c:trap_dbgidr() does.
+>           * We only do this if the CPU supports AArch32 at EL1.
+>           */
+> -        if (FIELD_EX32(ahcf->isar.id_aa64pfr0, ID_AA64PFR0, EL1) >= 2) {
+> -            int wrps = FIELD_EX64(ahcf->isar.id_aa64dfr0, ID_AA64DFR0, WRPS);
+> -            int brps = FIELD_EX64(ahcf->isar.id_aa64dfr0, ID_AA64DFR0, BRPS);
+> +        if (FIELD_EX32_IDREG(&ahcf->isar, ID_AA64PFR0, EL1) >= 2) {
+> +            int wrps = FIELD_EX64(&ahcf->isar.id_aa64dfr0, ID_AA64DFR0, WRPS);
+> +            int brps = FIELD_EX64(&ahcf->isar.id_aa64dfr0, ID_AA64DFR0, BRPS);
+>              int ctx_cmps =
+> -                FIELD_EX64(ahcf->isar.id_aa64dfr0, ID_AA64DFR0, CTX_CMPS);
+> +                FIELD_EX64(&ahcf->isar.id_aa64dfr0, ID_AA64DFR0, CTX_CMPS);
+>              int version = 6; /* ARMv8 debug architecture */
+>              bool has_el3 =
+> -                !!FIELD_EX32(ahcf->isar.id_aa64pfr0, ID_AA64PFR0, EL3);
+> +                !!FIELD_EX32_IDREG(&ahcf->isar, ID_AA64PFR0, EL3);
+>              uint32_t dbgdidr = 0;
+>  
+>              dbgdidr = FIELD_DP32(dbgdidr, DBGDIDR, WRPS, wrps);
+> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+> index f62e62595d8b..478ef839bafa 100644
+> --- a/target/arm/tcg/cpu64.c
+> +++ b/target/arm/tcg/cpu64.c
+> @@ -63,8 +63,8 @@ static void aarch64_a35_initfn(Object *obj)
+>      cpu->isar.id_isar3 = 0x01112131;
+>      cpu->isar.id_isar4 = 0x00011142;
+>      cpu->isar.id_isar5 = 0x00011121;
+> -    cpu->isar.id_aa64pfr0 = 0x00002222;
+> -    cpu->isar.id_aa64pfr1 = 0;
+> +    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+> +    SET_IDREG(isar, ID_AA64PFR1, 0);
+>      cpu->isar.id_aa64dfr0 = 0x10305106;
+>      cpu->isar.id_aa64dfr1 = 0;
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+> @@ -158,11 +158,8 @@ static bool cpu_arm_get_rme(Object *obj, Error **errp)
+>  static void cpu_arm_set_rme(Object *obj, bool value, Error **errp)
+>  {
+>      ARMCPU *cpu = ARM_CPU(obj);
+> -    uint64_t t;
+>  
+> -    t = cpu->isar.id_aa64pfr0;
+> -    t = FIELD_DP64(t, ID_AA64PFR0, RME, value);
+> -    cpu->isar.id_aa64pfr0 = t;
+> +    FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR0, RME, value);
+>  }
+>  
+>  static void cpu_max_set_l0gptsz(Object *obj, Visitor *v, const char *name,
+> @@ -228,8 +225,8 @@ static void aarch64_a55_initfn(Object *obj)
+>      cpu->isar.id_aa64mmfr0 = 0x0000000000101122ull;
+>      cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
+>      cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
+> -    cpu->isar.id_aa64pfr0  = 0x0000000010112222ull;
+> -    cpu->isar.id_aa64pfr1  = 0x0000000000000010ull;
+> +    SET_IDREG(isar, ID_AA64PFR0, 0x0000000010112222ull);
+> +    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000010ull);
+>      cpu->id_afr0       = 0x00000000;
+>      cpu->isar.id_dfr0  = 0x04010088;
+>      cpu->isar.id_isar0 = 0x02101110;
+> @@ -312,7 +309,7 @@ static void aarch64_a72_initfn(Object *obj)
+>      cpu->isar.id_isar3 = 0x01112131;
+>      cpu->isar.id_isar4 = 0x00011142;
+>      cpu->isar.id_isar5 = 0x00011121;
+> -    cpu->isar.id_aa64pfr0 = 0x00002222;
+> +    SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+>      cpu->isar.id_aa64dfr0 = 0x10305106;
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+>      cpu->isar.id_aa64mmfr0 = 0x00001124;
+> @@ -361,8 +358,8 @@ static void aarch64_a76_initfn(Object *obj)
+>      cpu->isar.id_aa64mmfr0 = 0x0000000000101122ull;
+>      cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
+>      cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
+> -    cpu->isar.id_aa64pfr0  = 0x1100000010111112ull; /* GIC filled in later */
+> -    cpu->isar.id_aa64pfr1  = 0x0000000000000010ull;
+> +    SET_IDREG(isar, ID_AA64PFR0, 0x1100000010111112ull); /* GIC filled in later */
+> +    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000010ull);
+>      cpu->id_afr0       = 0x00000000;
+>      cpu->isar.id_dfr0  = 0x04010088;
+>      cpu->isar.id_isar0 = 0x02101110;
+> @@ -427,8 +424,8 @@ static void aarch64_a64fx_initfn(Object *obj)
+>      cpu->revidr = 0x00000000;
+>      cpu->ctr = 0x86668006;
+>      cpu->reset_sctlr = 0x30000180;
+> -    cpu->isar.id_aa64pfr0 =   0x0000000101111111; /* No RAS Extensions */
+> -    cpu->isar.id_aa64pfr1 = 0x0000000000000000;
+> +    SET_IDREG(isar, ID_AA64PFR0, 0x0000000101111111); /* No RAS Extensions */
+> +    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000000);
+>      cpu->isar.id_aa64dfr0 = 0x0000000010305408;
+>      cpu->isar.id_aa64dfr1 = 0x0000000000000000;
+>      cpu->id_aa64afr0 = 0x0000000000000000;
+> @@ -609,8 +606,8 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
+>      cpu->isar.id_aa64mmfr0 = 0x0000000000101125ull;
+>      cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
+>      cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
+> -    cpu->isar.id_aa64pfr0  = 0x1100000010111112ull; /* GIC filled in later */
+> -    cpu->isar.id_aa64pfr1  = 0x0000000000000020ull;
+> +    SET_IDREG(isar, ID_AA64PFR0, 0x1100000010111112ull); /* GIC filled in later */
+> +    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000020ull);
+>      cpu->id_afr0       = 0x00000000;
+>      cpu->isar.id_dfr0  = 0x04010088;
+>      cpu->isar.id_isar0 = 0x02101110;
+> @@ -688,8 +685,8 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+>      cpu->isar.id_aa64mmfr0 = 0x0000000000101125ull;
+>      cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
+>      cpu->isar.id_aa64mmfr2 = 0x0220011102101011ull;
+> -    cpu->isar.id_aa64pfr0  = 0x1101110120111112ull; /* GIC filled in later */
+> -    cpu->isar.id_aa64pfr1  = 0x0000000000000020ull;
+> +    SET_IDREG(isar, ID_AA64PFR0, 0x1101110120111112ull); /* GIC filled in later */
+> +    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000020ull);
+>      cpu->id_afr0       = 0x00000000;
+>      cpu->isar.id_dfr0  = 0x15011099;
+>      cpu->isar.id_isar0 = 0x02101110;
+> @@ -925,8 +922,8 @@ static void aarch64_a710_initfn(Object *obj)
+>      cpu->isar.mvfr1    = 0x13211111;
+>      cpu->isar.mvfr2    = 0x00000043;
+>      cpu->isar.id_pfr2  = 0x00000011;
+> -    cpu->isar.id_aa64pfr0  = 0x1201111120111112ull; /* GIC filled in later */
+> -    cpu->isar.id_aa64pfr1  = 0x0000000000000221ull;
+> +    SET_IDREG(isar, ID_AA64PFR0, 0x1201111120111112ull); /* GIC filled in later */
+> +    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000221ull);
+>      SET_IDREG(isar, ID_AA64ZFR0, 0x0000110100110021ull); /* with Crypto */
+>      cpu->isar.id_aa64dfr0  = 0x000011f010305619ull;
+>      cpu->isar.id_aa64dfr1  = 0;
+> @@ -1027,8 +1024,8 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
+>      cpu->isar.mvfr1    = 0x13211111;
+>      cpu->isar.mvfr2    = 0x00000043;
+>      cpu->isar.id_pfr2  = 0x00000011;
+> -    cpu->isar.id_aa64pfr0  = 0x1201111120111112ull; /* GIC filled in later */
+> -    cpu->isar.id_aa64pfr1  = 0x0000000000000221ull;
+> +    SET_IDREG(isar, ID_AA64PFR0, 0x1201111120111112ull); /* GIC filled in later */
+> +    SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000221ull);
+>      SET_IDREG(isar, ID_AA64ZFR0, 0x0000110100110021ull); /* with Crypto */
+>      cpu->isar.id_aa64dfr0  = 0x000011f210305619ull;
+>      cpu->isar.id_aa64dfr1  = 0;
+> @@ -1183,7 +1180,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+>      t = FIELD_DP64(t, ID_AA64ISAR2, WFXT, 2);     /* FEAT_WFxT */
+>      SET_IDREG(isar, ID_AA64ISAR2, t);
+>  
+> -    t = cpu->isar.id_aa64pfr0;
+> +    t = GET_IDREG(isar, ID_AA64PFR0);
+>      t = FIELD_DP64(t, ID_AA64PFR0, FP, 1);        /* FEAT_FP16 */
+>      t = FIELD_DP64(t, ID_AA64PFR0, ADVSIMD, 1);   /* FEAT_FP16 */
+>      t = FIELD_DP64(t, ID_AA64PFR0, RAS, 2);       /* FEAT_RASv1p1 + FEAT_DoubleFault */
+> @@ -1192,9 +1189,9 @@ void aarch64_max_tcg_initfn(Object *obj)
+>      t = FIELD_DP64(t, ID_AA64PFR0, DIT, 1);       /* FEAT_DIT */
+>      t = FIELD_DP64(t, ID_AA64PFR0, CSV2, 3);      /* FEAT_CSV2_3 */
+>      t = FIELD_DP64(t, ID_AA64PFR0, CSV3, 1);      /* FEAT_CSV3 */
+> -    cpu->isar.id_aa64pfr0 = t;
+> +    SET_IDREG(isar, ID_AA64PFR0, t);
+>  
+> -    t = cpu->isar.id_aa64pfr1;
+> +    t = GET_IDREG(isar, ID_AA64PFR1);
+>      t = FIELD_DP64(t, ID_AA64PFR1, BT, 1);        /* FEAT_BTI */
+>      t = FIELD_DP64(t, ID_AA64PFR1, SSBS, 2);      /* FEAT_SSBS2 */
+>      /*
+> @@ -1207,7 +1204,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+>      t = FIELD_DP64(t, ID_AA64PFR1, SME, 1);       /* FEAT_SME */
+>      t = FIELD_DP64(t, ID_AA64PFR1, CSV2_FRAC, 0); /* FEAT_CSV2_3 */
+>      t = FIELD_DP64(t, ID_AA64PFR1, NMI, 1);       /* FEAT_NMI */
+> -    cpu->isar.id_aa64pfr1 = t;
+> +    SET_IDREG(isar, ID_AA64PFR1, t);
+>  
+>      t = cpu->isar.id_aa64mmfr0;
+>      t = FIELD_DP64(t, ID_AA64MMFR0, PARANGE, 6); /* FEAT_LPA: 52 bits */
 
 
