@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E20CBC369D3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4FA7C369D8
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:35:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9MiL-0000u4-4Z; Mon, 28 Apr 2025 07:31:58 -0400
+	id 1u9Ml0-0003Om-TW; Mon, 28 Apr 2025 07:34:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1u9Mhz-0000n1-MV
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:31:36 -0400
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u9Mkv-0003Ik-GI; Mon, 28 Apr 2025 07:34:38 -0400
+Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1u9Mhw-0006f6-Pg
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:31:35 -0400
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-4766cb762b6so53569581cf.0
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 04:31:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u9Mkt-00070R-KR; Mon, 28 Apr 2025 07:34:37 -0400
+Received: by mail-ua1-x929.google.com with SMTP id
+ a1e0cc1a2514c-86d3ac0fec0so4773240241.1; 
+ Mon, 28 Apr 2025 04:34:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745839891; x=1746444691; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745840073; x=1746444873; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vuBzn1Ze52/7QArs7NnQKw5uA8IXR5jlK2PsLxtap4c=;
- b=W3sKEL3WsOjrXqDV+eo25Oj66fh1EF3KZBPxAInLfmspv9SuBwFRDVlJ4rg6W+Dn1I
- d9YboJypxi4mBWvMXWSssoaut6qOK0ZJBmzzTiQYHB6VKSgndkkORd4v7jm5dOk4WtrI
- 92//ZopFDOCD6WoO501u1GFuc5MSktYXQ0LnLWK8jkx9j6L4ubsWoAa8gVda//bzjxco
- ZQ9xwmoOqzTgwccznK/cBpS8e+i2+iEym3889S08TkfEZOWjWbXHz1Hc67lvuVoz5UDM
- 5sU0pWZHq9206h+ma/g5RLkkSWTc+BIC7SkJ0Y0HkGud32WpFgPDzY88vwFAI8s9bHbf
- gArw==
+ bh=czqLAWOYbO2YBPV8Q3OncAYsZIlCPhfdtUV561iOTus=;
+ b=VBSlGpHskn6U/oF1XUoSmZOMqjM2KKvrkuhcwOblDPX273AuZr2HMZ/sA4ZL/khODF
+ i7b9l7fxwQzNiEcuwwRWCz5EPSI1hN6y5imDF1fapaK8A0+V2TxzcgJRSvHyerD3CsUN
+ NAQtoMHOUG4ubf8/OZR83fck7/OsRlxWcRiVb4P0W1dbHESHq0c4YMufXEhthvAqOwUh
+ PbjU7m6qQRme7XtywsLi8GjTdwWs9GtNe34iYMzqw877WEzTH/EVStJd/XpOw0VPpAVz
+ 1+Xr7IgcXW5Yh10aaFs5uHc8C1+3g3vHmM1WWiBQbHTESb0WTDCKaawjyfTSeAwGhMGh
+ hykw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745839891; x=1746444691;
+ d=1e100.net; s=20230601; t=1745840073; x=1746444873;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vuBzn1Ze52/7QArs7NnQKw5uA8IXR5jlK2PsLxtap4c=;
- b=cmkfUxJZ48/TsTf8/F2RJXRJB4FEC7751GdEw+748xFWiMGMsIorT+SkTGwV2bNDXg
- PUW4tvmtO4YN4giHEzexcO/E8LUtpYJgKb5KPFz0PTGpeMceSunMy3Y1c9MOKGumJ3Mb
- U0v56FsHWVZGSaki50UEq9wQo/pd2S7byTh2WiYTOm+i9qVxKa084wYsZ4uTY3YKigJN
- bw51K8R4UBBYAlN66FKT37vsbjnLWrV3no3n/kXSCIFiRO1K5kKdywgxQbDq9HsTg7Ii
- 17WT0DLtv8PvsqmMEvomtsJToJENOdHl4IhGeWzXJH+m7+GqNFu8hU0MNUJdGeIOTDLp
- /kNg==
-X-Gm-Message-State: AOJu0YwJ2ill0IquSOf4TNgW6Ol7R8s46ptGhvB5l/A8kb1QIxP5InMQ
- Eb+EmAIrKWgL73yCQxuNiscJqN4Fh3KkEaFrwG4stbwguBNxGWTavKZ/jMYrNZN/y4ojpUG3daC
- FSmkDOhdHI05CuUSALxFjau64xJU=
-X-Gm-Gg: ASbGnct843bhLQmzMBPdkHx7ksFMqIgFnuuqWr2qS6cICjqLfTU6vRqdrBS+cIROki3
- thnujHIMytrsWNvaakmVHnVsJfzv3xACm0E2Er4MPwh0ra9RZNznA0HnKzYvrNVmemGMley+n5n
- Lt9P+B4rzLsbxFe47sESKztG3+Vg5hYU6aMfysHtgwj2HHEYubQhczdsU3OQ63qon8AA==
-X-Google-Smtp-Source: AGHT+IEkt6YcnEkNGPbqdytLh2ravRwV5akVpP/f0U+QA6AewZJ66n+XGV+SDsmsNyK/NgTtJ8bUmFxAZr25VX/BNyI=
-X-Received: by 2002:a05:622a:1490:b0:476:fd6e:df89 with SMTP id
- d75a77b69052e-4802f401555mr161688461cf.17.1745839891267; Mon, 28 Apr 2025
- 04:31:31 -0700 (PDT)
+ bh=czqLAWOYbO2YBPV8Q3OncAYsZIlCPhfdtUV561iOTus=;
+ b=o4+ebOMxwMenuwOzfpD3ycXDHwtdvaB4zlWzolx4enqG27TfpDYGPMlm/KHYypuVso
+ MUDs4gSHBGPgB6ExcwlQrMP/RO0N0RUyiUHX4aKncOJZwDYTMfR5QwVIXaLpHXji3k1L
+ qjoHys2Zm44S5C/PjSq71aUu7LiZoxbXbtN3kL8IYggDCtJef8WgnUd4cpyy+ZsHGVi8
+ YQzr9r3/5Jx5cSplovBd79Cf03zdEVeOQuKidviUl0LXhDHJUpOSEDwa+8Mn5k9fd7PL
+ /KIgZkGcEyq8fRqA4lAetU0ICurbtwSybEvz/oFRFOzalRWJQy60T9uxJHgX01j9ibjC
+ hm/g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXmtRUG50IjMybQkvhg7eBkJ2Crwkmdi+BEOE8MmwGS1XM1QMNwL/6XdGYWcK/byvSKAB2/gb3KCtuX@nongnu.org
+X-Gm-Message-State: AOJu0YwECvcBE1eElzItqAVm37h+OnCCtMhsrqZhGKhbeHB6bkhpXzLQ
+ 01BgYL1XqSzvOqSaJzh5rsVScaacspBEigkI2yLmLMal9uPRa16RFwtFd0uRKrzxJLXRkCI41sZ
+ XtcNwVd2JtLjNP3+zivt0A+hCbFY=
+X-Gm-Gg: ASbGnctNUnC9KRqAclg6t1v7KHs2KQRheIX9c86iFAOzy6rR5ntxfJhpA3RFjIBEyZj
+ zjIr4UfNVqgyIByTWslhVY/dG+Mf6uDMoHAeIy4j+yNMz1kfyQhYj3v0ZdNvxCNrUGTOP4TDigb
+ VDpmoX9TqB0VoPetXaTGKp/3V3G48k/UXkVR04lXRBEW8NLUxmdUH5
+X-Google-Smtp-Source: AGHT+IFU3uZ/RAXEBipifVwz8MQU21Yu5cSaqBhoyIAp7aQPIW+hLaZ4q1akrxGmnocH4XzALs90aBJpCMEydxCX72c=
+X-Received: by 2002:a05:6102:80a1:b0:4c1:7c38:135 with SMTP id
+ ada2fe7eead31-4d5407dec57mr7803397137.0.1745840072820; Mon, 28 Apr 2025
+ 04:34:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250428080336.2574852-1-dietmar@proxmox.com>
- <20250428080336.2574852-3-dietmar@proxmox.com>
-In-Reply-To: <20250428080336.2574852-3-dietmar@proxmox.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 28 Apr 2025 15:31:18 +0400
-X-Gm-Features: ATxdqUFRlfgrtBiA9dyVJrGLp08LMxOMzPV6M7g7kejw9vwDkb8iwDCBRUbg2Qo
-Message-ID: <CAJ+F1CLs3zy131Nkr97ve5LPVZJVfS_mJ26nS7p2vVhyeftD1Q@mail.gmail.com>
-Subject: Re: [PATCH v4 2/8] vnc: initialize gst during argument processing
-To: Dietmar Maurer <dietmar@proxmox.com>
-Cc: qemu-devel@nongnu.org
+References: <20250425160203.2774835-1-dbarboza@ventanamicro.com>
+ <20250425160203.2774835-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20250425160203.2774835-2-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 28 Apr 2025 21:34:06 +1000
+X-Gm-Features: ATxdqUGGpCuGtr_68OUtXQIgA_JLgVXAzWBj4qYCezrucQwqEEyiRSmDwvcL8SA
+Message-ID: <CAKmqyKOPLQ14Mq11PChv1vhWTLAUT6vpDk6jsWCxESDWDBgqcw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/9] target/riscv/kvm: minor fixes/tweaks
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
+ ajones@ventanamicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,58 +97,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Mon, Apr 28, 2025 at 12:04=E2=80=AFPM Dietmar Maurer <dietmar@proxmox.co=
-m> wrote:
+On Sat, Apr 26, 2025 at 2:05=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
-> So that we can set --gst- options on the qemu command line.
+> Remove an unused 'KVMScratchCPU' pointer argument in
+> kvm_riscv_check_sbi_dbcn_support().
 >
-> Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
+> Put kvm_riscv_reset_regs_csr() after kvm_riscv_put_regs_csr(). This will
+> make a future patch diff easier to read, when changes in
+> kvm_riscv_reset_regs_csr() and kvm_riscv_get_regs_csr() will be made.
+>
+> Fixes: a6b53378f5 ("target/riscv/kvm: implement SBI debug console (DBCN) =
+calls")
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
-This breaks the build, because gstreamer may not be linked.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Maybe another reason to drop the gst_init(argc, argv) and do it in VNC
-module only instead...
-
-thanks
+Alistair
 
 > ---
->  system/vl.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
+>  target/riscv/kvm/kvm-cpu.c | 29 ++++++++++++++---------------
+>  1 file changed, 14 insertions(+), 15 deletions(-)
 >
-> diff --git a/system/vl.c b/system/vl.c
-> index ec93988a03..c7fff02da2 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -140,6 +140,10 @@
->  #include "qemu/guest-random.h"
->  #include "qemu/keyval.h"
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 9214ce490c..accad4c28e 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -613,19 +613,6 @@ static int kvm_riscv_put_regs_core(CPUState *cs)
+>      return ret;
+>  }
 >
-> +#ifdef CONFIG_GSTREAMER
-> +#include <gst/gst.h>
-> +#endif
+> -static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
+> -{
+> -    env->mstatus =3D 0;
+> -    env->mie =3D 0;
+> -    env->stvec =3D 0;
+> -    env->sscratch =3D 0;
+> -    env->sepc =3D 0;
+> -    env->scause =3D 0;
+> -    env->stval =3D 0;
+> -    env->mip =3D 0;
+> -    env->satp =3D 0;
+> -}
+> -
+>  static int kvm_riscv_get_regs_csr(CPUState *cs)
+>  {
+>      CPURISCVState *env =3D &RISCV_CPU(cs)->env;
+> @@ -660,6 +647,19 @@ static int kvm_riscv_put_regs_csr(CPUState *cs)
+>      return 0;
+>  }
+>
+> +static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
+> +{
+> +    env->mstatus =3D 0;
+> +    env->mie =3D 0;
+> +    env->stvec =3D 0;
+> +    env->sscratch =3D 0;
+> +    env->sepc =3D 0;
+> +    env->scause =3D 0;
+> +    env->stval =3D 0;
+> +    env->mip =3D 0;
+> +    env->satp =3D 0;
+> +}
 > +
->  #define MAX_VIRTIO_CONSOLES 1
+>  static int kvm_riscv_get_regs_fp(CPUState *cs)
+>  {
+>      int ret =3D 0;
+> @@ -1078,7 +1078,6 @@ static int uint64_cmp(const void *a, const void *b)
+>  }
 >
->  typedef struct BlockdevOptionsQueueEntry {
-> @@ -2848,6 +2852,10 @@ void qemu_init(int argc, char **argv)
->      bool userconfig =3D true;
->      FILE *vmstate_dump_file =3D NULL;
+>  static void kvm_riscv_check_sbi_dbcn_support(RISCVCPU *cpu,
+> -                                             KVMScratchCPU *kvmcpu,
+>                                               struct kvm_reg_list *reglis=
+t)
+>  {
+>      struct kvm_reg_list *reg_search;
+> @@ -1197,7 +1196,7 @@ static void kvm_riscv_init_multiext_cfg(RISCVCPU *c=
+pu, KVMScratchCPU *kvmcpu)
+>          kvm_riscv_read_vlenb(cpu, kvmcpu, reglist);
+>      }
 >
-> +#ifdef CONFIG_GSTREAMER
-> +    gst_init(&argc, &argv);
-> +#endif
-> +
->      qemu_add_opts(&qemu_drive_opts);
->      qemu_add_drive_opts(&qemu_legacy_drive_opts);
->      qemu_add_drive_opts(&qemu_common_drive_opts);
+> -    kvm_riscv_check_sbi_dbcn_support(cpu, kvmcpu, reglist);
+> +    kvm_riscv_check_sbi_dbcn_support(cpu, reglist);
+>  }
+>
+>  static void riscv_init_kvm_registers(Object *cpu_obj)
 > --
-> 2.39.5
+> 2.49.0
 >
 >
-
-
---=20
-Marc-Andr=C3=A9 Lureau
 
