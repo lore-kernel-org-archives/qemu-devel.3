@@ -4,95 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF0D5C369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 13:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A67C369DC
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 13:52:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9Opi-0006Jh-Qc; Mon, 28 Apr 2025 09:47:42 -0400
+	id 1u9OtX-0007ub-CE; Mon, 28 Apr 2025 09:51:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u9Opd-0006Hg-Jv
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 09:47:37 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u9Opa-0002pq-Lb
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 09:47:37 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-b07d607dc83so4149749a12.1
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 06:47:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745848052; x=1746452852; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wq1rFmNEHgX2FeK42gIa+Nv74jFHymhRXwt6/Ht0GNg=;
- b=qAeqOnAyI0k3kHkQLyhiUmg6Ut5WRNm8ju//3peQQnI5M7M8s7bWnSgcDShH/EKMl8
- 61eU7/UmpdarwZmbbsMX7xeHJdzN+4sGtPFu2rAaFaZxXi0mwF9xfxz41ECrmOhQ2kzS
- XdOGrUeAfwHUWvvxkYvXQRXuPgYyOC53TSFHjnVWCKgFN6AvmDU41gaoJPgvbhPJtrG4
- +aqQoc8DrvOnEYRxL9Qo55qbdQooCa11EUIwO8p7mMA9CpMIM9bT5vKeQyZ6NoYNWqwR
- dRNaVQ1tVUEzCOoR/Tqbd5TzBbAZfffVTYKgI2e8SGMoFgf6wYyaDxoI4PkxoWN7aQE/
- ULmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745848052; x=1746452852;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wq1rFmNEHgX2FeK42gIa+Nv74jFHymhRXwt6/Ht0GNg=;
- b=ntCWiBM3Eas7Z7p7/cK1vPkxJbdcvzM1dm5tKQQtI5DDDNk8b6WNxS628IV1OKeIU4
- MdCDzhKiGSy9wM0Hq6WfaRnWR2miUG1uFybanzirqISOi3KBx6KtutSUBL7E68y8LFNL
- SW8EhiPDESlYYHD/V+SWGI/rKOA7Ny78ZHhfLvcT8Qg7FGXeR/Heodzhs9dplN2761Bz
- cG96X0Jt1/st+NZyaARYqcL5GCz5bXIqK/dCmy35YUW/XzmtKqgbIdVF1xTmNAKljmpr
- /AFrbwIdgnv1yx0nSDgaafvxeW4Oy7UbK6OlkzlEpjzwOKng6wf7Hr6ZJesFiE0RPQK/
- yEfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVOKag4RGJgI2nGWFH8u/N3jgsv2Ivuv1ZcGLxxrOG6ZRY3O3RfVhvOzfofXpcFlE4KIX8vYrNthdzq@nongnu.org
-X-Gm-Message-State: AOJu0Ywl/ehqwI1OR+ESWKkRWZGCWSEx2Vw5agiVStMTqVr/w9PGSZhV
- hDfeAxLE+PMNtmlN3OWaizSI8sPfLKmFwyxGeMMZ193gYwiEG1oqT6pmdNIoBO8=
-X-Gm-Gg: ASbGncuwZbJWTaBi9fUPTuCm4M3849B5LovOf1RIb6ZWj9TGYG17unY13dHwbiLEvt+
- YqdC7ElvKu5KOScnuJ8lRnXq4S5TfzG4eWmSyOORhTonw0H5/PKkD7NPdBo0YVqELpz23Zgeskj
- 219LFpdOf1BgMf3jiz+5lHjhiWoYcY9UxPVQYHQNei5T07jtX3ktzXtUj0Z9iMnA8GIkOXsQudR
- KIa2tuiD9aQHhlotgoENlLc/HN03VJqAYEhtUu9XI/rf1hm40j4yM/o3ujDfmuAGKTbyoK9sBkM
- VsbLUo12eLDIJn1PYyTeeIcdisqryE3B50nKy2nSiUCXSdVOxWn0oV4JmKTbpO/bXcWfn6E6sc/
- c5ERPbBQ=
-X-Google-Smtp-Source: AGHT+IGy2UhDGwgMs3xVh4FMzIQmk5kPFpFshvIqTcuvkXjcem9uiOSTdvuF3UPpQANnzjCdLZxybA==
-X-Received: by 2002:a17:90b:2b86:b0:2ee:cded:9ac7 with SMTP id
- 98e67ed59e1d1-309f7dde854mr15667906a91.20.1745848052250; 
- Mon, 28 Apr 2025 06:47:32 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-309f784a56asm7165759a91.41.2025.04.28.06.47.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 06:47:31 -0700 (PDT)
-Message-ID: <ded56ee3-25bb-4ffd-98e4-2f47c500c88d@linaro.org>
-Date: Mon, 28 Apr 2025 06:47:29 -0700
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u9OtG-0007tE-W1; Mon, 28 Apr 2025 09:51:27 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u9OtD-0003Bk-VE; Mon, 28 Apr 2025 09:51:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745848280; x=1777384280;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=VsHmrNXKviIE8IQ9R1HhlyLdam+mB76jNTS9v/imXWs=;
+ b=afBJGxlnOygstodwxP54aaFlIZ3eTk0lr/YevradvLsAnXAYODv1IFua
+ zjXAVv0GZEk2Hg9elHoi1nv9mvBDr8Orh7BRnYm1qOvoIA6zBY7RA8HB3
+ U19BC7HAbYaMyQNAu94NNY5nr5OHjaniDFmWg2VLzVZVvtaRmwymtWuLS
+ CjEWZN6orvJ1XqIhjOltEUf0IJqYn4ZpTfXYVldVhFLmrs7o7Zpnb9Eiv
+ zAmtCOBJvNeGWRYWuw3HVu5PIYR7P2CrdsKjr7BRPeTIqHcN8llBQx1cU
+ ym7WzcTGgsZc+l8aaU13xW6vVGkBtVYDU+6pitS4hvUyGFC3RYQN3PcCW A==;
+X-CSE-ConnectionGUID: ++y8CVQiTomQGISsRyufGw==
+X-CSE-MsgGUID: hOnViCjORTiYDAyCkld9mg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11416"; a="58085736"
+X-IronPort-AV: E=Sophos;i="6.15,246,1739865600"; d="scan'208";a="58085736"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Apr 2025 06:51:14 -0700
+X-CSE-ConnectionGUID: 9rsWKEuKTXSkzsns7eGPDg==
+X-CSE-MsgGUID: mHZMTY5nS4exFTHFKWI5vQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,246,1739865600"; d="scan'208";a="164487636"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa002.jf.intel.com with ESMTP; 28 Apr 2025 06:51:09 -0700
+Date: Mon, 28 Apr 2025 22:12:06 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Shaoqin Huang <shahuang@redhat.com>, Eric Auger <eauger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Sebastian Ott <sebott@redhat.com>, Gavin Shan <gshan@redhat.com>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Dapeng Mi <dapeng1.mi@intel.com>, Yi Lai <yi1.lai@intel.com>
+Subject: Re: [PATCH 2/5] i386/kvm: Support basic KVM PMU filter
+Message-ID: <aA+MttdYlZKPAwqT@intel.com>
+References: <20250409082649.14733-1-zhao1.liu@intel.com>
+ <20250409082649.14733-3-zhao1.liu@intel.com>
+ <878qnoha3j.fsf@pond.sub.org> <aA3sLRzZj2270cSs@intel.com>
+ <87r01c3jd2.fsf@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] target/ppc: Inline most of dcbz helper
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>
-References: <20240701005939.5A0AF4E6000@zero.eik.bme.hu>
- <d3c6c417-20d9-a215-2a5c-86fa084b00fa@eik.bme.hu>
- <173c9111-e065-0dd5-c276-6bbc0351f9cc@eik.bme.hu>
- <2b969dcd-4a82-9086-803d-c52ea274fefb@eik.bme.hu>
- <e4fc537a-a15e-77dd-1167-32b12ee7a22d@eik.bme.hu>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <e4fc537a-a15e-77dd-1167-32b12ee7a22d@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87r01c3jd2.fsf@pond.sub.org>
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,34 +93,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/28/25 06:26, BALATON Zoltan wrote:
-> I have tried profiling the dst in real card vfio vram with dcbz case (with 100 iterations 
-> instead of 10000 in above tests) but I'm not sure I understand the results. vperm and dcbz 
-> show up but not too high. Can somebody explain what is happening here and where the 
-> overhead likely comes from? Here is the profile result I got:
+On Mon, Apr 28, 2025 at 08:12:09AM +0200, Markus Armbruster wrote:
+> Date: Mon, 28 Apr 2025 08:12:09 +0200
+> From: Markus Armbruster <armbru@redhat.com>
+> Subject: Re: [PATCH 2/5] i386/kvm: Support basic KVM PMU filter
 > 
-> Samples: 104K of event 'cycles:Pu', Event count (approx.): 122371086557
->    Children      Self  Command          Shared Object            Symbol
-> -   99.44%     0.95%  qemu-system-ppc  qemu-system-ppc          [.] cpu_exec_loop
->     - 98.49% cpu_exec_loop
->        - 98.48% cpu_tb_exec
->           - 90.95% 0x7f4e705d8f15
->                helper_ldub_mmu
->                do_ld_mmio_beN
->              - cpu_io_recompile
->                 - 45.79% cpu_loop_exit_noexc
+> Zhao Liu <zhao1.liu@intel.com> writes:
+> 
+> > ...
+> >
+> >> > diff --git a/qemu-options.hx b/qemu-options.hx
+> >> > index dc694a99a30a..51a7c61ce0b0 100644
+> >> > --- a/qemu-options.hx
+> >> > +++ b/qemu-options.hx
+> >> > @@ -232,7 +232,8 @@ DEF("accel", HAS_ARG, QEMU_OPTION_accel,
+> >> >      "                eager-split-size=n (KVM Eager Page Split chunk size, default 0, disabled. ARM only)\n"
+> >> >      "                notify-vmexit=run|internal-error|disable,notify-window=n (enable notify VM exit and set notify window, x86 only)\n"
+> >> >      "                thread=single|multi (enable multi-threaded TCG)\n"
+> >> > -    "                device=path (KVM device path, default /dev/kvm)\n", QEMU_ARCH_ALL)
+> >> > +    "                device=path (KVM device path, default /dev/kvm)\n"
+> >> > +    "                pmu-filter=id (configure KVM PMU filter)\n", QEMU_ARCH_ALL)
+> >> 
+> >> As we'll see below, this property is actually available only for i386.
+> >> Other target-specific properties document this like "x86 only".  Please
+> >> do that for this one, too.
+> >
+> > Thanks! I'll change QEMU_ARCH_ALL to QEMU_ARCH_I386.
+> 
+> That would be wrong :)
+> 
+> QEMU_ARCH_ALL is the last argument passed to macro DEF().  It applies to
+> the entire option, in this case -accel.
 
-I think the real problem is the number of loop exits due to i/o.  If I'm reading this 
-rightly, 45% of execution is in cpu_io_recompile.
+Thank you for correction! I didn't realize this point :-(.
 
-I/O can only happen as the last insn of a translation block.  When we detect that it has 
-happened in the middle of a translation block, we abort the block, compile a new one, and 
-restart execution.
+> I'd like you to mark the option parameter as "(x86 only)", like
+> notify-vmexit right above, and several more elsewhere.
 
-Where this becomes a bottleneck is when this same translation block is in a loop.  Exactly 
-this case of memset/memcpy of VRAM.  This could be addressed by invalidating the previous 
-translation block and creating a new one which always ends with the i/o.
+Sure, I see. This option has already provided good example for me.
 
+> >> As far as I can tell, the kvm-pmu-filter object needs to be activated
+> >> with -accel pmu-filter=... to do anything.  Correct?
+> >
+> > Yes,
+> >
+> >> You can create any number of kvm-pmu-filter objects, but only one of
+> >> them can be active.  Correct?
+> >
+> > Yes! I'll try to report error when user repeats to set this object, or
+> > mention this rule in doc.
+> 
+> Creating kvm-pmu-filter objects without using them should be harmless,
+> shouldn't it?  I think users can already create other kinds of unused
+> objects.
 
-r~
+I think I understand now. Indeed, creating an object should be allowed
+regardless of whether it's used, as this helps decouple "-object" from
+other options.
+
+I can add something that:
+
+the kvm-pmu-filter object needs to be activated with "-accel pmu-filter=id",
+and only when it is activated, its filter policy can be passed to KVM.
+
+(A single sentence is just an example; I think it needs to be carefully
+refined within the context of the entire paragraph :-).)
+
+> >> > +
+> >> > +static int kvm_install_pmu_event_filter(KVMState *s)
+> >> > +{
+> >> > +    struct kvm_pmu_event_filter *kvm_filter;
+> >> > +    KVMPMUFilter *filter = s->pmu_filter;
+> >> > +    int ret;
+> >> > +
+> >> > +    kvm_filter = g_malloc0(sizeof(struct kvm_pmu_event_filter) +
+> >> > +                           filter->nevents * sizeof(uint64_t));
+> >> 
+> >> Should we use sizeof(filter->events[0])?
+> >
+> > No, here I'm trying to constructing the memory accepted in kvm interface
+> > (with the specific layout), which is not the same as the KVMPMUFilter
+> > object.
+> 
+> You're right.  What about sizeof(kvm_filter->events[0])?
+
+I get your point now! Yes, I should do in this way.
+
+Thanks,
+Zhao
+
 
