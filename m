@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A45F4C369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 12:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45BDDC369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 12:28:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9NRg-00085r-NJ; Mon, 28 Apr 2025 08:18:48 -0400
+	id 1u9NaC-0003kn-DJ; Mon, 28 Apr 2025 08:27:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u9NRY-0007y1-04
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:18:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u9NRS-0005xY-Hb
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:18:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745842710;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=85AyiEuKw37TnKlHYD5OdwAalQSw23HWyewxBLBSnDA=;
- b=NTsJhcLlS/qY/xJIoFwm8xiBsdp0oCm3OSKRpjkz8jtQV7s3MhMjxMfwn4nvwc9dRMvpI1
- ynjhSVyrI5k65Ep1UvaxGNyzAauBN4kax/7jfD7RjtyIhoZCZYD9Gu1BWNSxtcNGN2ZBCX
- vX1WoYX3rV7prcnnYNCRvhAIC6YSF+w=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-fuixBHXlNyG8RxN3Z35H4g-1; Mon, 28 Apr 2025 08:17:21 -0400
-X-MC-Unique: fuixBHXlNyG8RxN3Z35H4g-1
-X-Mimecast-MFC-AGG-ID: fuixBHXlNyG8RxN3Z35H4g_1745842640
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-44059976a1fso18839625e9.1
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 05:17:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1u9NaA-0003h3-Tm
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:27:34 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1u9Na8-0007Qx-Rd
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:27:34 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-b0db0b6a677so4708649a12.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 05:27:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1745843251; x=1746448051; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LHD5Hw3xe7D3CUfCU4oZp5+98TPBTV4XN9wlZ0CFwyY=;
+ b=DgHApvB4bpUwcDSthzK9zSd/BfrEPMwzIO6Z4/X+Son6pOs3TQ+g7bc9hIvymYZhUP
+ C1wbT2s8o1Mm3S4dp3x9I+6vkf+h2+XeuSaTJ9kAEdwBCrqYR02Yks/BO11IX9uUEdkS
+ 68rYyhOgPFrZO1dIJt99NOtYAwxOpkiwsq5TGOg9a/Wqd5NFbJApW5UF61DBHapw0jnO
+ 6dw+MnP+XYqUNqAB0nvWOjJKz9nGLHA1doDhZjVPyUBAt6KOPvGVpE0MEcdZ/a2FpgGY
+ jlZ9+b8R7I6+D6mu9uDKYw9HJi/P5bQ1aVS1jGzG7P3NivhTMPmXcRFFy8Pb63aBxYAf
+ G+dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745842639; x=1746447439;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=85AyiEuKw37TnKlHYD5OdwAalQSw23HWyewxBLBSnDA=;
- b=bGBPZsZ7eatPfxwwWuU/OQaiOv06tExPrHfITjdcS7AsB8ELNjNqfvw2XYLB5sUAFt
- LC/mUu7EhHupZ7/meOU2s4iu38vDxfT1f8Bbd1ktMIgzgQJ529JaE6TuEokQdCph0+ih
- QmASk5hsvd8S1N+vn+mCOznln7w7xdhqc4hQLJxNzCdO2YZN43fkecdQ8GFNa/cyvb78
- ZY4AdmFBG/sd2m2ALKMKfWC2wT5B4D78hoiXwW7Vdp509M3tzjdiJDghx8T4tt2TaB2C
- osMobyRia2ThYv4eRMg/AKypnGXShdyeJt5sWlRZKOZMLIUpevwo4BQhPGIn9zpN+OnA
- NlrA==
-X-Gm-Message-State: AOJu0YxTgKBuyvAdPQe6EPjqdf96nb+uFZTCV5WA9NkE2woHTZbVR/ES
- r3rzG/dx7OMT5TIyz7vlwtgS4vIjQstGn76vS0GsM0Aotkp9KIAsrowpCOBODTyWg4QvrVkPgqC
- Cu7AtCvDjvP82Dzp55C97Gz+EHEFiVpM+P7ml0TipLNBxeh8OXo4B/wuvR3SW1DBF2wmNJh5KwQ
- dS9SH3h6N1cudd1Icm5SRUv5EPpKQUxsjM7GUHnQ==
-X-Gm-Gg: ASbGnctileo4aMyMOMkupMv1o2hfhAVmu5GvkC/01uXNwe4h0LYkqBf7yKmE6qD4Xcw
- jMW7DSVZTtwrnPs2VYpeDz/1uBbsJLDquDeD5BqGGAkBQLXDYKR6R42DDOEfuKX6rxa+b
-X-Received: by 2002:a5d:64ed:0:b0:39c:142d:c0a with SMTP id
- ffacd0b85a97d-3a074e233bcmr8346489f8f.19.1745842639484; 
- Mon, 28 Apr 2025 05:17:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFlZa/afQ/Qvz+9b3p9P/PPkUEBUQrwbhVmN4IBE/Fd8SkAnBcQiy7Bg2qZcSUP/d6kLfFwLuAspZYJbXPNE00=
-X-Received: by 2002:a5d:64ed:0:b0:39c:142d:c0a with SMTP id
- ffacd0b85a97d-3a074e233bcmr8346471f8f.19.1745842639077; Mon, 28 Apr 2025
- 05:17:19 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1745843251; x=1746448051;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LHD5Hw3xe7D3CUfCU4oZp5+98TPBTV4XN9wlZ0CFwyY=;
+ b=HsZYEuMuR6BKqjHuauNEr8wRZJg2x0wEUA0xmpn8WMo7BJkWPFTsnSBL3Yh44FEpWu
+ QJknsZ0THOJCtECMU7e9F4UXDCNd9JjGtCU8UJ/2HUfLidOC2+Jsqod9j3NhWonkuMoh
+ U6/llJKGUitqQS/YTFFdPAx7iGWNRicthOdYsUVwE4yEyzf7MraqJ31jaP9BIhXLW//J
+ JTYD/b4gFYLr/miTJH5y4I8EUYA9+Ekkci0oyERYg3xn+F0HA9ekP6KbzUtQRiRAQHYb
+ 5JSOhlLUEqnB2O5iUUzmDBReDTzHJu1GHeCdwHThM15pb9h8uRJCctQKFQuZXPu7fHUa
+ H5sA==
+X-Gm-Message-State: AOJu0YxUR+OZLfVy4jTEyp2tw+iAIgMIWGiJ1nOJxG+3hzoy/y9ALLs0
+ Pgf6yv+CZjoh6a4RRoy73VUhtXFj3AFtBKXpi7BNb2k+klwvpaT/W/j+QccodUU=
+X-Gm-Gg: ASbGncu2c0XhcaC1BgJsQCcitNrAOLME4mZIGlf5fI4ScSR8stpajIFVRE3CSRGog0X
+ FrA3/QE5PoPR7p13BZVkQkwvwzrHrSrPUsGiOzFrGNJHhwaqGFvhCzDt12hZt24gBKkYgKO5Fw7
+ 20I8tpmvoH5fMf16UACs++P53cQnSjW6fFqXmI3ucBL1gocuoYYXpJ/44ljETBSO7Lfyr7LIGQa
+ qJhNfHyj2QEkWAbVBIzg6aBu5EcBYMl2rsOVcY2pP4NefmEQq7MPmMHRqA8jCH9DRZRCpsAaB2N
+ OTW9520dpyRrUZAYcKWHZ0TTInZ09ZkW8ahSINRGus9SBLVbSJ0VrTQ=
+X-Google-Smtp-Source: AGHT+IF0ce7SPg+TpOh+niFf/8FSQc0f+snrRT9SuLCyoj3Wvep0JX1GgAtr5XL2838C8jYvM9mGvw==
+X-Received: by 2002:a05:6a21:10f:b0:1f5:79c4:5da6 with SMTP id
+ adf61e73a8af0-2045b6984f2mr14792141637.5.1745843250999; 
+ Mon, 28 Apr 2025 05:27:30 -0700 (PDT)
+Received: from [192.168.68.110] ([152.234.125.33])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b15faded634sm7146869a12.73.2025.04.28.05.27.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Apr 2025 05:27:30 -0700 (PDT)
+Message-ID: <8a2ea33b-e867-4a72-b36c-012c11e428ee@ventanamicro.com>
+Date: Mon, 28 Apr 2025 09:27:27 -0300
 MIME-Version: 1.0
-References: <20250428073442.315770-1-pbonzini@redhat.com>
- <20250428073442.315770-9-pbonzini@redhat.com>
- <30770d2b-ac76-4d13-b8f2-ca39c0b82e0f@ventanamicro.com>
-In-Reply-To: <30770d2b-ac76-4d13-b8f2-ca39c0b82e0f@ventanamicro.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 28 Apr 2025 14:17:07 +0200
-X-Gm-Features: ATxdqUHYroJ4HglSKbajTSSIbCcDau1Pq4_ZpQxiXIHK0QfR5z0HsTn1tPpCpIc
-Message-ID: <CABgObfZX1j4N=Oeq9Y=_YeccCq7--s0=r5DaANA+iA1UnoJyVg@mail.gmail.com>
-Subject: Re: [PATCH 08/26] target/riscv: store RISCVCPUDef struct directly in
- the class
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 8/9] target/riscv: widen scounteren to target_ulong
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
+References: <20250425160203.2774835-1-dbarboza@ventanamicro.com>
+ <20250425160203.2774835-9-dbarboza@ventanamicro.com>
+ <20250427-e13fa003b1bfad48e17bcee9@orel>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250427-e13fa003b1bfad48e17bcee9@orel>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,234 +103,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 28, 2025 at 1:50=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
->
->
-> On 4/28/25 4:34 AM, Paolo Bonzini wrote:
-> > Prepare for adding more fields to RISCVCPUDef and reading them in
-> > riscv_cpu_init: instead of storing the misa_mxl_max field in
-> > RISCVCPUClass, ensure that there's always a valid RISCVCPUDef struct
-> > and go through it.
-> >
-> > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> > ---
-> >   target/riscv/cpu.h         |  2 +-
-> >   hw/riscv/boot.c            |  2 +-
-> >   target/riscv/cpu.c         | 23 ++++++++++++++++++-----
-> >   target/riscv/gdbstub.c     |  6 +++---
-> >   target/riscv/kvm/kvm-cpu.c | 21 +++++++++------------
-> >   target/riscv/machine.c     |  2 +-
-> >   target/riscv/tcg/tcg-cpu.c | 10 +++++-----
-> >   target/riscv/translate.c   |  2 +-
-> >   8 files changed, 39 insertions(+), 29 deletions(-)
-> >
-> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > index 62e303f0635..842c9d3f194 100644
-> > --- a/target/riscv/cpu.h
-> > +++ b/target/riscv/cpu.h
-> > @@ -553,7 +553,7 @@ struct RISCVCPUClass {
-> >
-> >       DeviceRealize parent_realize;
-> >       ResettablePhases parent_phases;
-> > -    RISCVMXL misa_mxl_max;  /* max mxl for this cpu */
-> > +    RISCVCPUDef *def;
-> >   };
-> >
-> >   static inline int riscv_has_ext(CPURISCVState *env, target_ulong ext)
-> > diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-> > index 765b9e2b1ab..828a867be39 100644
-> > --- a/hw/riscv/boot.c
-> > +++ b/hw/riscv/boot.c
-> > @@ -37,7 +37,7 @@
-> >   bool riscv_is_32bit(RISCVHartArrayState *harts)
-> >   {
-> >       RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(&harts->harts[0]);
-> > -    return mcc->misa_mxl_max =3D=3D MXL_RV32;
-> > +    return mcc->def->misa_mxl_max =3D=3D MXL_RV32;
-> >   }
-> >
-> >   /*
-> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> > index f30cf1b532b..d8c189d596b 100644
-> > --- a/target/riscv/cpu.c
-> > +++ b/target/riscv/cpu.c
-> > @@ -357,7 +357,7 @@ void riscv_cpu_set_misa_ext(CPURISCVState *env, uin=
-t32_t ext)
-> >
-> >   int riscv_cpu_max_xlen(RISCVCPUClass *mcc)
-> >   {
-> > -    return 16 << mcc->misa_mxl_max;
-> > +    return 16 << mcc->def->misa_mxl_max;
-> >   }
-> >
-> >   #ifndef CONFIG_USER_ONLY
-> > @@ -1048,7 +1048,7 @@ static void riscv_cpu_reset_hold(Object *obj, Res=
-etType type)
-> >           mcc->parent_phases.hold(obj, type);
-> >       }
-> >   #ifndef CONFIG_USER_ONLY
-> > -    env->misa_mxl =3D mcc->misa_mxl_max;
-> > +    env->misa_mxl =3D mcc->def->misa_mxl_max;
-> >       env->priv =3D PRV_M;
-> >       env->mstatus &=3D ~(MSTATUS_MIE | MSTATUS_MPRV);
-> >       if (env->misa_mxl > MXL_RV32) {
-> > @@ -1450,7 +1450,7 @@ static void riscv_cpu_init(Object *obj)
-> >       RISCVCPU *cpu =3D RISCV_CPU(obj);
-> >       CPURISCVState *env =3D &cpu->env;
-> >
-> > -    env->misa_mxl =3D mcc->misa_mxl_max;
-> > +    env->misa_mxl =3D mcc->def->misa_mxl_max;
-> >
-> >   #ifndef CONFIG_USER_ONLY
-> >       qdev_init_gpio_in(DEVICE(obj), riscv_cpu_set_irq,
-> > @@ -1544,7 +1544,7 @@ static void riscv_cpu_validate_misa_mxl(RISCVCPUC=
-lass *mcc)
-> >       CPUClass *cc =3D CPU_CLASS(mcc);
-> >
-> >       /* Validate that MISA_MXL is set properly. */
-> > -    switch (mcc->misa_mxl_max) {
-> > +    switch (mcc->def->misa_mxl_max) {
-> >   #ifdef TARGET_RISCV64
-> >       case MXL_RV64:
-> >       case MXL_RV128:
-> > @@ -3071,12 +3071,24 @@ static void riscv_cpu_common_class_init(ObjectC=
-lass *c, const void *data)
-> >       device_class_set_props(dc, riscv_cpu_properties);
-> >   }
-> >
-> > +static void riscv_cpu_class_base_init(ObjectClass *c, const void *data=
-)
-> > +{
-> > +    RISCVCPUClass *mcc =3D RISCV_CPU_CLASS(c);
-> > +    RISCVCPUClass *pcc =3D RISCV_CPU_CLASS(object_class_get_parent(c))=
-;
-> > +
-> > +    if (pcc->def) {
-> > +        mcc->def =3D g_memdup2(pcc->def, sizeof(*pcc->def));
-> > +    } else {
-> > +        mcc->def =3D g_new0(RISCVCPUDef, 1);
-> > +    }
-> > +}
-> > +
-> >   static void riscv_cpu_class_init(ObjectClass *c, const void *data)
-> >   {
-> >       RISCVCPUClass *mcc =3D RISCV_CPU_CLASS(c);
-> >       const RISCVCPUDef *def =3D data;
-> >
-> > -    mcc->misa_mxl_max =3D def->misa_mxl_max;
-> > +    mcc->def->misa_mxl_max =3D def->misa_mxl_max;
-> >       riscv_cpu_validate_misa_mxl(mcc);
-> >   }
-> >
-> > @@ -3227,6 +3239,7 @@ static const TypeInfo riscv_cpu_type_infos[] =3D =
-{
-> >           .abstract =3D true,
-> >           .class_size =3D sizeof(RISCVCPUClass),
-> >           .class_init =3D riscv_cpu_common_class_init,
-> > +        .class_base_init =3D riscv_cpu_class_base_init,
-> >       },
-> >       {
-> >           .name =3D TYPE_RISCV_DYNAMIC_CPU,
-> > diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-> > index 18e88f416af..1934f919c01 100644
-> > --- a/target/riscv/gdbstub.c
-> > +++ b/target/riscv/gdbstub.c
-> > @@ -62,7 +62,7 @@ int riscv_cpu_gdb_read_register(CPUState *cs, GByteAr=
-ray *mem_buf, int n)
-> >           return 0;
-> >       }
-> >
-> > -    switch (mcc->misa_mxl_max) {
-> > +    switch (mcc->def->misa_mxl_max) {
-> >       case MXL_RV32:
-> >           return gdb_get_reg32(mem_buf, tmp);
-> >       case MXL_RV64:
-> > @@ -82,7 +82,7 @@ int riscv_cpu_gdb_write_register(CPUState *cs, uint8_=
-t *mem_buf, int n)
-> >       int length =3D 0;
-> >       target_ulong tmp;
-> >
-> > -    switch (mcc->misa_mxl_max) {
-> > +    switch (mcc->def->misa_mxl_max) {
-> >       case MXL_RV32:
-> >           tmp =3D (int32_t)ldl_p(mem_buf);
-> >           length =3D 4;
-> > @@ -359,7 +359,7 @@ void riscv_cpu_register_gdb_regs_for_features(CPUSt=
-ate *cs)
-> >                                    ricsv_gen_dynamic_vector_feature(cs,=
- cs->gdb_num_regs),
-> >                                    0);
-> >       }
-> > -    switch (mcc->misa_mxl_max) {
-> > +    switch (mcc->def->misa_mxl_max) {
-> >       case MXL_RV32:
-> >           gdb_register_coprocessor(cs, riscv_gdb_get_virtual,
-> >                                    riscv_gdb_set_virtual,
-> > diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> > index 75724b6af4f..41b6f34552a 100644
-> > --- a/target/riscv/kvm/kvm-cpu.c
-> > +++ b/target/riscv/kvm/kvm-cpu.c
-> > @@ -1997,22 +1997,19 @@ static void kvm_cpu_accel_register_types(void)
-> >   }
-> >   type_init(kvm_cpu_accel_register_types);
-> >
-> > -static void riscv_host_cpu_class_init(ObjectClass *c, const void *data=
-)
-> > -{
-> > -    RISCVCPUClass *mcc =3D RISCV_CPU_CLASS(c);
-> > -
-> > -#if defined(TARGET_RISCV32)
-> > -    mcc->misa_mxl_max =3D MXL_RV32;
-> > -#elif defined(TARGET_RISCV64)
-> > -    mcc->misa_mxl_max =3D MXL_RV64;
-> > -#endif
-> > -}
-> > -
-> >   static const TypeInfo riscv_kvm_cpu_type_infos[] =3D {
-> >       {
-> >           .name =3D TYPE_RISCV_CPU_HOST,
-> >           .parent =3D TYPE_RISCV_CPU,
-> > -        .class_init =3D riscv_host_cpu_class_init,
-> > +#if defined(TARGET_RISCV32)
-> > +        .class_data =3D &((const RISCVCPUDef) {
-> > +            .misa_mxl_max =3D MXL_RV32,
-> > +        },
-> > +#elif defined(TARGET_RISCV64)
-> > +        .class_data =3D &((const RISCVCPUDef) {
-> > +            .misa_mxl_max =3D MXL_RV64,
-> > +        },
-> > +#endif
-> >       }
-> >   };
->
-> Are we sure this patch compiles?
 
-No, you're right; I was not aware that RISC-V KVM is not covered by
-CI. I'm sorry.
 
-https://lore.kernel.org/qemu-devel/20250425152843.69638-1-philmd@linaro.org=
-/T/#t
+On 4/27/25 2:59 AM, Andrew Jones wrote:
+> On Fri, Apr 25, 2025 at 01:02:02PM -0300, Daniel Henrique Barboza wrote:
+>> We want to support scounteren as a KVM CSR. The KVM UAPI defines every
+>> CSR size as target_ulong, and our env->scounteren is fixed at 32 bits.
+>>
+>> The other existing cases where the property size does not match the KVM
+>> reg size happens with uint64_t properties, like 'mstatus'. When running
+>> a 32 bit CPU we'll write a 32 bit 'sstatus' KVM reg into the 64 bit
+>> 'mstatus' field. As long as we're consistent, i.e. we're always
+>> reading/writing the same words, this is ok.
+>>
+>> For scounteren, a KVM guest running in a 64 bit CPU will end up writing
+>> a 64 bit reg in a 32 bit field. This will have all sort of funny side
+>> effects in the KVM guest that we would rather avoid.
+>>
+>> Increase scounteren to target_ulong to allow KVM to read/write the
+>> scounteren CSR without any surprises.
+>>
+>> Aside from bumping the version of the RISCVCPU vmstate no other
+>> behavioral changes are expected.
+>>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> ---
+>>   target/riscv/cpu.h     | 9 ++++++++-
+>>   target/riscv/machine.c | 6 +++---
+>>   2 files changed, 11 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+>> index f5a60d0c52..66d4ddfcb4 100644
+>> --- a/target/riscv/cpu.h
+>> +++ b/target/riscv/cpu.h
+>> @@ -400,7 +400,14 @@ struct CPUArchState {
+>>        */
+>>       bool two_stage_indirect_lookup;
+>>   
+>> -    uint32_t scounteren;
+>> +    /*
+>> +     * scounteren is supposed to be an uint32_t, as the spec
+>> +     * says. We're using a target_ulong instead because the
+>> +     * scounteren KVM CSR is defined as target_ulong in
+>> +     * kvm_riscv_csr, and we want to avoid having to deal
+>> +     * with an ulong reg being read/written in an uint32_t.
+>> +     */
+>> +    target_ulong scounteren;
+> 
+> I'm having second thoughts about this. It seems like it should be
+> avoidable with the use of an intermediary buffer (which we already
+> have -- the uint64_t reg) and with tracking the size of the env state
+> by capturing the size with the new macro used to build the array.
+> Then,
 
-> As I said in the v3 this except opening 2 parentheses
-> and closing just one after RISCVCPUDef:
->
-> The error is fixable by closing both parentheses right before the comma, =
-e.g:
->
-> > +        }),
->
->
-> Can you mention the pull requests you based this series on top of? I can =
-apply the
-> dependencies and this series on top of it to see if it builds.
+I think I just understood what you mean. You suggested a more generic
+approach instead of handling just the scounteren case.
 
-It's based on master +
-https://lore.kernel.org/qemu-devel/20250425152843.69638-1-philmd@linaro.org=
-/.
+To handle this in a more generic way we can store the size of the env
+var using that macro magic you suggested in v1, and then we can handle
+all cases where we have a 32 bit env in QEMU exactly like we would handle
+scounteren.
 
-Paolo
+I'll do a new version with this change in the patch that introduces
+scounteren. Thanks,
+
+
+Daniel
+
+> 
+> for reading:
+>   1. read the kvm reg into a buffer of the size kvm says it is
+>   2. only write the bytes we can store from the buffer into the env state,
+>      using the size field to know how many that is
+> 
+> for writing:
+>   1. put the env state into a buffer of the size kvm says the register is,
+>      ensuring any upper unused bytes of the buffer are zero
+>   2. write the buffer to kvm
+> 
+> Thanks,
+> drew
+> 
+>>       uint32_t mcounteren;
+>>   
+>>       uint32_t scountinhibit;
+>> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+>> index df2d5bad8d..f3477e153b 100644
+>> --- a/target/riscv/machine.c
+>> +++ b/target/riscv/machine.c
+>> @@ -401,8 +401,8 @@ static const VMStateDescription vmstate_ssp = {
+>>   
+>>   const VMStateDescription vmstate_riscv_cpu = {
+>>       .name = "cpu",
+>> -    .version_id = 10,
+>> -    .minimum_version_id = 10,
+>> +    .version_id = 11,
+>> +    .minimum_version_id = 11,
+>>       .post_load = riscv_cpu_post_load,
+>>       .fields = (const VMStateField[]) {
+>>           VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
+>> @@ -445,7 +445,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+>>           VMSTATE_UINTTL(env.mtval, RISCVCPU),
+>>           VMSTATE_UINTTL(env.miselect, RISCVCPU),
+>>           VMSTATE_UINTTL(env.siselect, RISCVCPU),
+>> -        VMSTATE_UINT32(env.scounteren, RISCVCPU),
+>> +        VMSTATE_UINTTL(env.scounteren, RISCVCPU),
+>>           VMSTATE_UINT32(env.mcounteren, RISCVCPU),
+>>           VMSTATE_UINT32(env.scountinhibit, RISCVCPU),
+>>           VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
+>> -- 
+>> 2.49.0
+>>
 
 
