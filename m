@@ -4,80 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BA33C3ABA5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 21:21:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0540C369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 21:30:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9VuY-0003Q1-AS; Mon, 28 Apr 2025 17:21:14 -0400
+	id 1u9W2q-00019g-8V; Mon, 28 Apr 2025 17:29:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3LvEPaAwKCpcE12985JK561E7FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--nabihestefan.bounces.google.com>)
- id 1u9VuH-0003O3-0A
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 17:21:01 -0400
-Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3LvEPaAwKCpcE12985JK561E7FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--nabihestefan.bounces.google.com>)
- id 1u9VuC-00026E-Oa
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 17:20:50 -0400
-Received: by mail-pl1-x64a.google.com with SMTP id
- d9443c01a7336-225505d1ca5so46897675ad.2
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 14:20:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1745875246; x=1746480046; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=/ikzH7SasR4txyw70n4vtW5X+UiNJXBlyt4kScEBCTM=;
- b=NsOYVUNFnwOFNqZ8221mY/vrakx0de/k2YUkE7E9JLyNuuzgsc/ZxH12x++aESi/rw
- dNtFRYCdaI7uhCPVXPbSjYerkUz0/kkZm+2zLZPfR78gs/iGia4v2qJ3SZb2t6BNP6Me
- yM+13ZO06TKgtIVJT0iUY3ccx0/MjIkBp2EZFEI+w2lv4rJT261J/FFQ2Fgauvq1Eot5
- 94vbbqOz3eqMyH4T12CkxkE67JDj7qt6mVO2FGH2VHzGtNxm3ECyWoRObEvFtcId5Wqe
- 2nvGZN0fHnaqLnMKbwU+QgBXKiPmQ5gcrctROh1gO1DiqQwXzTPiXe42j/VrPzbUohf2
- 6Q0w==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u9W2d-00011C-1S
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 17:29:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1u9W2a-0002xK-IM
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 17:29:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745875766;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=NMhNuLjt63eowH3oKWmSShOdGkp8MGze4Co3FYP62dg=;
+ b=dy99CXHikmnkFieclEoAGLpNqtfT4DP8aVgyqtGkrjVXm1NzPcA91/ajHY2P3lli+Ytl20
+ xAbvh4WmOT0PR960Gqb5r/emH8hfhe5qwbmEwzQpC6wibtkE9R0Acwl3Hj2EoHTpmgATEx
+ z51CmSJCQ4tCHl8D+EKaM3wBAQAkBLs=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-167-StURlI12NkORA9eJEGR-hA-1; Mon, 28 Apr 2025 17:29:22 -0400
+X-MC-Unique: StURlI12NkORA9eJEGR-hA-1
+X-Mimecast-MFC-AGG-ID: StURlI12NkORA9eJEGR-hA_1745875762
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43f405810b4so26919765e9.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 14:29:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745875246; x=1746480046;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/ikzH7SasR4txyw70n4vtW5X+UiNJXBlyt4kScEBCTM=;
- b=J7kCiVqShGA2nWr+KFIsC9L24hg8ta+jScffaWPgAbyP2HMrIsqCBn4T2mtnA5AzHE
- NeZiXD4XHlhm7PkHB6DctNPMd6gYJowPL8rR45tNZ9YYBOSobQcTbhTXl3yIe0JO4Mpr
- l+GePy6xV6F8SHOPXJF4C8SnaGJ+kUo4nKZGJFJ2KCHhhwH2ITBZhQT6qAlHPIzkfhd7
- BzW4d4asyR6yir/i3k5NOSWsT/9pXLS3NVS1rG0u3wPU4oz0JztI8o2Hl5hKbL3pSaGR
- NhxUJrX2eSloFLFrEDxRBCb/yMpAdcPQ6GJEcTk331ZzGW2NXbQH316XZQFWzo9SvgCS
- QGqg==
-X-Gm-Message-State: AOJu0YxO4mbyBKtHTEHeXQgOBkm+pV5R9Fxy/OIsHuF67w+libg8mGlh
- aCBNppJK2HAXDHXOkRZnVWjldkxH+buzUUfZGOcM9XtBRvf/fRCIC25laubWRR6I4F4qmRpjKlI
- Tzvvl5X/VF8mQ+dYL8vgSaUi5Zn+Bhcfo+L7EklZgunSS4B8XFGT36D0qDS3QAnUJvJcp/bmP7y
- ix4szTmO5AKrMJsM0RfJMoq89vTPD6ne5apcYbPn/LVS7Kpuy9PoPFzV+da5awZr4=
-X-Google-Smtp-Source: AGHT+IGWB9QMaqFiy/yZpuFVTZmsu8oviwn+plteSuZs7IjNvGRjCPMo8xszt27OPEfQQhoj8yow/3y+2+ePqKvBgkw=
-X-Received: from pgbdm2.prod.google.com ([2002:a05:6a02:d82:b0:b0e:1d1:49c9])
- (user=nabihestefan job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:d50c:b0:223:5c77:7ef1 with SMTP id
- d9443c01a7336-22de6ea2e01mr8419715ad.21.1745875246020; 
- Mon, 28 Apr 2025 14:20:46 -0700 (PDT)
-Date: Mon, 28 Apr 2025 21:20:41 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.49.0.901.g37484f566f-goog
-Message-ID: <20250428212041.1301050-1-nabihestefan@google.com>
-Subject: [PATCH] tests/qtest/libqos: Fix UBSan misalignment finding
-From: Nabih Estefan <nabihestefan@google.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, lvivier@redhat.com, farosas@suse.de, 
- sriram.yagnaraman@ericsson.com, akihiko.odaki@daynix.com, 
- Nabih Estefan <nabihestefan@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
- envelope-from=3LvEPaAwKCpcE12985JK561E7FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--nabihestefan.bounces.google.com;
- helo=mail-pl1-x64a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ d=1e100.net; s=20230601; t=1745875761; x=1746480561;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NMhNuLjt63eowH3oKWmSShOdGkp8MGze4Co3FYP62dg=;
+ b=jrmvkhrZ2ogN0Lo2YIJzeEkYK+W+ZRQ1IG0++EzEwL3B7Al4z0l6rFDCe/fXr0eSd9
+ rQ+zeG02g+wXEI5D93Ckv6YL+dMMXB6eVwDZjk2q6kUBsobYBd0duaYNatGA1y+VyxFh
+ n1sdobBQFzfUNCzgymiRnUKyWlucpU2T8as4eklKGTQ/EItz2CfguinqafMSMyWKIiU/
+ KTprmMIk46j7Bzqaj3ZfqdwFjFNncOQFXj+MCTs5cHp73U2x5D/EAaC+xkdtvZaPUY3T
+ wVTD92Op6LAPGb+98Dr5pcFr844fNNVv6oXx4Qwz7OObSd4UuRgs+RI4a+n28h4dortX
+ GEfQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVqmqpdoCSx8a/Qg8e/7DT4oHdGbQ5RHYZkn0PRYb9efR2JJJ962pcWJHrEUnCmR8jImzwuHmz2pO6B@nongnu.org
+X-Gm-Message-State: AOJu0YymByJD77caFVfuaBraPxDXkdXnh8n3yrfaudsxAXp896H2QbRB
+ rRVdg/In4osyTVOlYHdeVDOgJ2DyrOGy2/Jb7DxXOvosF36e3Y/SvlG/FhVRoZogb2iozofbVJO
+ 6V5+qqC55cuYzZBjTb4pRXDymKVSERjeNiuWX6hE+NKpfRXljn2p5
+X-Gm-Gg: ASbGncte/473HmWxMPOsBl1yEgFcq6NIpVjwkD/LzgHd8CkYHk/PPrCnCposmHCowAZ
+ 3LgeUdxGBBShQQxkJdX9Pk3t9wkwsUY/zgjIc8WjkgzRn6HI8or0vQWSXHFT2a713oQKWAbWWHa
+ 6ptAaE8yaHkWqhwsj+muyxqSGIY1YDKAsD1twhv29dPOEG9SQHC5AA/R/Ocm47Di1g+9cUH12I4
+ uATsGs4mAepGyOjzNuoyT7bA7fQBbr1GZmaJPA5x7Wh/sYaq0ksWxHI/Td7TMLMo8b/Qp6Ye0bE
+ 4Ri3R5jGP5Wid6+MHcRv4aAJ36Ol7GEjzUTYoCc2IuNaYQzn4g==
+X-Received: by 2002:a05:600c:c0f:b0:43d:563:6fef with SMTP id
+ 5b1f17b1804b1-440ab848800mr84230225e9.21.1745875761675; 
+ Mon, 28 Apr 2025 14:29:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG84bXxcOmI4MMEc0fDNoXbfKpl/RQCHz/opJfUN+aYROF9FC8qx52sZTCGiD6gX+cTA/pBEw==
+X-Received: by 2002:a05:600c:c0f:b0:43d:563:6fef with SMTP id
+ 5b1f17b1804b1-440ab848800mr84230095e9.21.1745875761316; 
+ Mon, 28 Apr 2025 14:29:21 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:3f78:514a:4f03:fdc0?
+ ([2a01:e0a:280:24f0:3f78:514a:4f03:fdc0])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4409d2ad112sm167192615e9.24.2025.04.28.14.29.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Apr 2025 14:29:20 -0700 (PDT)
+Message-ID: <e35561c9-f104-4be0-8bf4-cae726118028@redhat.com>
+Date: Mon, 28 Apr 2025 23:29:19 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 0/6] Report vfio-ap configuration changes
+To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, thuth@redhat.com, akrowiak@linux.ibm.com
+References: <20250425052401.8287-1-rreyes@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250425052401.8287-1-rreyes@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,48 +157,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Running with `--enable-ubsan` leads to a qtest failure:
-```
-../tests/qtest/libqos/igb.c:106:5: runtime error: load of misaligned address 0x562040be8e33 for type 'uint32_t', which requires 4 byte alignment
-```
-Instead of straight casting the uint8_t array, we use memcpy to assure
-alignment is correct against uint32_t and uint16_t.
+On 4/25/25 07:23, Rorie Reyes wrote:
+> Changelog:
+> v7:
+> - Dropped initial commit for linux-header file vfio.h since I created two new commits
+> to address the changes made in v6
+> - Moved patches 6 and 7 to the beginning of the series after dropping the first patch
+>     - Because I dropped the initial commit for linux-header file vfio.h, I had to add
+> VFIO_AP_CFG_CHG_IRQ_INDEX
+> - Resyncing latest to v6.15-rc3
+> - Still need Thomas Huth's review of v5 changes for patch 6/6
 
-Change-Id: Ibd2bc3d870ea37bcbaf2e459806a22ae17464049
-Google-Bug-Id: 391659542
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
----
- hw/pci/remote_pci.c      | 0
- tests/qtest/libqos/igb.c | 8 ++++++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
- create mode 100644 hw/pci/remote_pci.c
+I checked the build without default devices.
 
-diff --git a/hw/pci/remote_pci.c b/hw/pci/remote_pci.c
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/qtest/libqos/igb.c b/tests/qtest/libqos/igb.c
-index f40c4ec4cd..f31b1a7261 100644
---- a/tests/qtest/libqos/igb.c
-+++ b/tests/qtest/libqos/igb.c
-@@ -103,11 +103,15 @@ static void igb_pci_start_hw(QOSGraphObject *obj)
-     e1000e_macreg_write(&d->e1000e, E1000_RDLEN(0), E1000E_RING_LEN);
-     e1000e_macreg_write(&d->e1000e, E1000_RDT(0), 0);
-     e1000e_macreg_write(&d->e1000e, E1000_RDH(0), 0);
-+    uint32_t safe32_address;
-+    memcpy(&safe32_address, address, sizeof(uint32_t));
-     e1000e_macreg_write(&d->e1000e, E1000_RA,
--                        le32_to_cpu(*(uint32_t *)address));
-+                        le32_to_cpu(safe32_address));
-+    uint16_t safe16_address;
-+    memcpy(&safe16_address, (address + 4), sizeof(uint16_t));
-     e1000e_macreg_write(&d->e1000e, E1000_RA + 4,
-                         E1000_RAH_AV | E1000_RAH_POOL_1 |
--                        le16_to_cpu(*(uint16_t *)(address + 4)));
-+                        le16_to_cpu(safe16_address));
- 
-     /* Set supported receive descriptor mode */
-     e1000e_macreg_write(&d->e1000e,
--- 
-2.49.0.901.g37484f566f-goog
+Applied to vfio-next.
+
+Thanks,
+
+C.
+
 
 
