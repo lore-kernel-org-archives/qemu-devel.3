@@ -4,110 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2B19C369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 16:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE7EDC369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 16:06:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9QyY-0006VP-Ob; Mon, 28 Apr 2025 12:04:58 -0400
+	id 1u9QzJ-00075C-GY; Mon, 28 Apr 2025 12:05:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1u9QyV-0006TE-OD
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 12:04:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1u9QyP-0007Bl-IP
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 12:04:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745856287;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=J/EeK1RCCCSsjRnGX3nnWuQHDH86ViKOrqiXs7WJ5m0=;
- b=FCIsBV4iT6ueoFeYRhB8T4pF3pPKbbvZTtLta/550bjK4vBzBtnw4k+A/fFFpx5lHj5HbH
- loh1nqxjiF3EpyDCI6KxO9ir2GmvSfPkZxywdVY5YL81mCBlBhwAm3d3abb4OMLhlzL7OS
- rK6Jr7MR7RN9uE6MwP4ti1FtPD/zYFM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-631-MUao6S7XP_6Q8xlydgWtrA-1; Mon, 28 Apr 2025 12:04:44 -0400
-X-MC-Unique: MUao6S7XP_6Q8xlydgWtrA-1
-X-Mimecast-MFC-AGG-ID: MUao6S7XP_6Q8xlydgWtrA_1745856284
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-39d9243b1c2so1576849f8f.2
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 09:04:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745856284; x=1746461084;
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u9QzC-0006zS-32
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 12:05:38 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u9Qz0-0007YG-Rq
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 12:05:36 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-223fb0f619dso56304545ad.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 09:05:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745856322; x=1746461122; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=J/EeK1RCCCSsjRnGX3nnWuQHDH86ViKOrqiXs7WJ5m0=;
- b=XlgCqFIEZbZpqI77UOpkVg0oUazmWx9gPUj18AvjdyEdJ54orI9mtU2QnG5ugiN97x
- DI3KoTfW8qppQ8FUj164UxEyxyzf8a2/v0LEs3aJtJGrylyISbfeNEzHNWxe6dXgvLih
- 849obB0YF67gYEKbj9PXQX3JcOUta8lnzXiUQUHywXWTTO+dM48XswUa7+sykm+dl98Z
- a7cCyu94VtLydeLca/TNTIZCGCnIX7TwC+LzXwcDoUYm5r85nLsnqLqjCkfiRPIZPlNT
- n1/F/5uB39k/r0G5Ol10s8RVYm7e8WNI8DONS2HuY8Im1Hus83JpsowgIcjpKXiqbMMX
- AP3g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQ7WzWKot81WwJ+d12/srmi6WwAAayMCjZ2hTo3bp+sgTHlHMPcAOuR2CR84HbXLVJt2Am6bBzXYzC@nongnu.org
-X-Gm-Message-State: AOJu0YwBpG7RtJBnJ/6+Xx2bCtoUdiOxpfFJull4aNqYkWd8PLFRC6nB
- egaRxgAtiKV2kbq7bjO9gfKgo3UXVwRpaYyKyMcrJZ0Y8DMKOKE2/kQWS2OaBJ45eq0ShwaSBuz
- D8lmjivaacOUcybnKSwen3jiybDYeL+tA6nkCjCbIoQCOn93HNZHX
-X-Gm-Gg: ASbGncvfQ7YJVMPBb0f+iD3OMRVqnKHjyUESn36pbbeX4bgqkhfZi+b7m/QxVgFZwdz
- 5H6VX7vZpW2GqgGUWBsdNRR+KRpV+XyIJW1zMbx6wKbkcZGJOdZGcxEv006fXxNJpWYfgPcJsKQ
- rCoJHeX4BsZlWoYv6OjlLHbCj7Q7jhYCKS0OA0mu3/7ihFt8B2m7TYiTNttlTQ5KhiGzZrgBdeH
- 72uwya5dQAWZh9xc/HFjuB3KD/ndOBuCA6/GrIRbB9GZHcpTkbFOVpZ2RtYBHWNkY7hXBxSiaXV
- 5ZoFpqeeKdLyRSSlZVnQVWdarh1ptIx/5lT4ciXJR6CxIAOkwjASYZ/fahE=
-X-Received: by 2002:a05:6000:2506:b0:38f:4d40:358 with SMTP id
- ffacd0b85a97d-3a07aa5a90emr8168574f8f.9.1745856283275; 
- Mon, 28 Apr 2025 09:04:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF+5pzoi4rf1ldPhsRH2Yyb3IUf7DG4q39WrmhqxuvM3+5vMTIw4ne3QfHosud3K+3JXC+VNw==
-X-Received: by 2002:a05:6000:2506:b0:38f:4d40:358 with SMTP id
- ffacd0b85a97d-3a07aa5a90emr8167981f8f.9.1745856278493; 
- Mon, 28 Apr 2025 09:04:38 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AQqQXg/3MYPjMQmC4x06+ud5ksukLFNdy/HiIea8tD4=;
+ b=E93blDMIEy0Eo0+sqXB482VPx1Km+VCHm2WPN9qaIMuo7e098YHJCVHJwAcgdqkbpD
+ SLzIWxR9NZ02yMI6vprS2hmCExpw4K/ueICWoeYdmN+WPc/H+/q258KfbifzoKJcqylM
+ odQ1JyJ9Jm/XBH98hNcK7t21vvKrgHqrVrCJaoGCQN06JaLB7Vxnk0344Vq4jEv+59GF
+ F6WCnbBxDVguXPTAvSK678iX9PGTin63y1X8gvcLlilaRAWhvX3D5Oy3A/pDJKvhruNy
+ s1sQWHJR7PSfrvG+3JZl+cO67miC8W5Qp88hODlJ366XNYNZ+vSsfDNhGlfpSIn0p6Lb
+ 1JWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745856322; x=1746461122;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AQqQXg/3MYPjMQmC4x06+ud5ksukLFNdy/HiIea8tD4=;
+ b=YMYdTYiM627BTvmAWv7C3wbqWuMJPHT8ylTKJyGXCDpdvjDCDDl5OkRX+Be38tNVg4
+ dlIjus2u099Cna+rZnKDaC3I/+1aeA8Jj65eN3xDDe/2LjEmaRGGtexNuboZQaYsdbwX
+ w2ynNqSJen55Li/2OqEgdmHJfXMqGFC//11IjmpQehEmKd7CZMNiJqfaNS3P9fEeFvLh
+ +i2Vl5XPuUj80vvSzXnzrefkE7Rm+zwAaHTPR/70+iJJWkAeBT/Oxpo+7bidE9dyUy4F
+ KAl4iTpFeGXqJjAtx2gJ8A9NyF4VpsVNQCy05pUk/re7CdaQ2+1wH00NFl4e7lbNNRsP
+ /DZg==
+X-Gm-Message-State: AOJu0YwUYTGsjqTX39x1PCgB8kfT5h5B4FbSrXqytFrdeH10irnb01Jb
+ OdKCielFZ5wUTkWPmoAatc2UQnumZUvlrBGigGi629U+6ma1BXSgX3oFV2TJ/F0=
+X-Gm-Gg: ASbGncvmg6ubyZlWD46sX2OJ9EsOyXc7xmGB14ZWygkI4FI3Y5eE48J6R2J7JPLz8FT
+ 3niHTlysJ36lDfeG2m9A8Gx3oFbYVGk7thJad6Pi82dACbgTxeNHUnEBet61loTqkWNJbHePZ8h
+ pPAXlb4GFJkKtAkFI6e3reKWB/S0Oq2snU9sqnbpz2nfCr5ur+jRQ1364InHY3OKb2QBv1j3r7o
+ 4JZJAgEt2ECsUfqdHxoi/JT3XhdL20+lWETw9m+CxVkzZ74hkGqyb4y646Qwr2K62Ht/3Q+16aR
+ xmpt17Q1f9hZ64CAx1XvQzy3iaGSHebbwtTkuH3wpj2Agf9RaJsPwfyfympQ9ICd
+X-Google-Smtp-Source: AGHT+IHcF8mRnxbMq54QyFIHrh8Kn+88GXCwx5v895cugLbrArhNNad7uyjrOWk+HMXLgdT5p5PZZg==
+X-Received: by 2002:a17:903:3c48:b0:220:f7bb:842 with SMTP id
+ d9443c01a7336-22dbf64099dmr163513895ad.42.1745856321880; 
+ Mon, 28 Apr 2025 09:05:21 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073bbeb5esm11506742f8f.0.2025.04.28.09.04.36
+ d9443c01a7336-22db51025basm84725995ad.187.2025.04.28.09.05.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 09:04:37 -0700 (PDT)
-Message-ID: <7424a39c-9bde-452e-99d5-a18bd9a432aa@redhat.com>
-Date: Mon, 28 Apr 2025 18:04:36 +0200
+ Mon, 28 Apr 2025 09:05:21 -0700 (PDT)
+Message-ID: <25bb4527-f145-4d9c-8f91-a962bfa14a6f@linaro.org>
+Date: Mon, 28 Apr 2025 09:05:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-10.1 v5 08/13] arm/cpu: Store id_isar0-7 into the
- idregs array
+Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
 Content-Language: en-US
-To: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- agraf@csgraf.de
-Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-References: <20250409144304.912325-1-cohuck@redhat.com>
- <20250409144304.912325-9-cohuck@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250409144304.912325-9-cohuck@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, stefanha@redhat.com, 
+ Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
+ berrange@redhat.com, peter.maydell@linaro.org, thuth@redhat.com,
+ jsnow@redhat.com, philmd@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, devel@lists.libvirt.org,
+ Victor Toso <victortoso@redhat.com>
+References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+ <87a584b69n.fsf@pond.sub.org>
+ <5b21965d-2428-454c-9dd7-266987495abd@linaro.org>
+ <87a583789z.fsf@pond.sub.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87a583789z.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,1088 +105,262 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 4/25/25 11:21 PM, Markus Armbruster wrote:
+> Trouble is some uses of the second kind are in QAPI conditionals.  I can
+> see three options:
+> 
+> (1) Drop these conditionals.
+> 
+> (2) Replace them by run-time checks.
+> 
+> (3) Have target-specific QAPI-generated code for multiple targets
+>      coexist in the single binary.
+> 
+> As far as I can tell, your RFC series is an incomplete attempt at (2).
+> 
+> I gather you considered (3), but you dislike it for its bloat and
+> possibly other reasons.  I sympathize; the QAPI-generated code is plenty
+> bloated as it is, in good part to early design decisions (not mine).
+> 
+> Your "no noticeable differences" goal precludes (1).
+> 
+> Back to (2).  In C, replacing compile-time conditionals by run-time
+> checks means replacing #if FOO by if (foo).  Such a transformation isn't
+> possible in the QAPI schema.  To make it possible, we need to evolve the
+> QAPI schema language.
+> 
+> docs/devel/qapi-code-gen.rst describes what we have:
+> 
+>          COND = STRING
+>               | { 'all: [ COND, ... ] }
+>               | { 'any: [ COND, ... ] }
+>               | { 'not': COND }
+> 
+>      [....]
+> 
+>      The C code generated for the definition will then be guarded by an #if
+>      preprocessing directive with an operand generated from that condition:
+> 
+>       * STRING will generate defined(STRING)
+>       * { 'all': [COND, ...] } will generate (COND && ...)
+>       * { 'any': [COND, ...] } will generate (COND || ...)
+>       * { 'not': COND } will generate !COND
+> 
+> So, conditions are expression trees where the leaves are preprocessor
+> symbols and the inner nodes are operators.
+> 
+> It's not quite obvious to me how to best evolve this to support run-time
+> checks.
+> 
 
+After looking at the introspection code, I don't see any major blocker.
+We need to keep some of existing "if", as they are based on config-host, 
+and should apply.
+We can introduce a new "available_if" (or any other name), which 
+generates a runtime check when building the schema, or when serializing 
+a struct.
 
-On 4/9/25 4:42 PM, Cornelia Huck wrote:
-> From: Eric Auger <eric.auger@redhat.com>
+This way, by modifying the .json with:
+- if: 'TARGET_I386'
++ available_if: 'target_i386()'
+
+This way, we keep the possibility to have ifdef, and we can expose at 
+runtime based on available_if. So we can keep the exact same schema we 
+have today per target.
+
+> Whatever we choose should support generating Rust and Go as well.  Why?
+> Rust usage in QEMU is growing, and we'll likely need to generate some
+> Rust from the QAPI schema.  Victor Toso has been working on Go bindings
+> for use in Go QMP client software.
+> 
+
+I don't see any blocker with that. If you mention generating Rust and Go 
+from qapi json definitions, it's already dependent on C preprocessor 
+because of ifdef constant. So it will have to be adapted anyway.
+Having the same function (target_i386()) name through different 
+languages is not something hard to achieve.
+
+>>> The build system treats QAPI modules qapi/*-target.json as
+>>> target-specific.  The .c files generated for them are compiled per
+>>> target.  See qapi/meson.build.
+>>>
+>>> Only such target-specific modules can can use target-specific QAPI
+>>> conditionals.  Use in target-independent modules will generate C that
+>>> won't compile.
+>>>
+>>> Poisoned macros used in qapi/*-target.json:
+>>>
+>>>       CONFIG_KVM
+>>>       TARGET_ARM
+>>>       TARGET_I386
+>>>       TARGET_LOONGARCH64
+>>>       TARGET_MIPS
+>>>       TARGET_PPC
+>>>       TARGET_RISCV
+>>>       TARGET_S390X
+>>>
+>>>>                              What we try to do here is to build them only once
+>>>> instead.
+>>>
+>>> You're trying to eliminate target-specific QAPI conditionals.  Correct?
+>>>
+>>
+>> Yes, but without impacting the list of commands exposed. Thus, it would
+>> be needed to select at runtime to expose/register commands.
+> 
+> Conditionals affect more than just commands.
 >
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Sebastian Ott <sebott@redhat.com>
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> ---
->  hw/intc/armv7m_nvic.c     |  12 ++--
->  target/arm/cpu-features.h |  36 +++++-----
->  target/arm/cpu.c          |  24 +++----
->  target/arm/cpu.h          |   7 --
->  target/arm/cpu64.c        |  28 ++++----
->  target/arm/helper.c       |  14 ++--
->  target/arm/kvm.c          |  21 ++----
->  target/arm/tcg/cpu-v7m.c  |  90 +++++++++++++-----------
->  target/arm/tcg/cpu32.c    | 144 +++++++++++++++++++++-----------------
->  target/arm/tcg/cpu64.c    | 108 ++++++++++++++--------------
->  10 files changed, 243 insertions(+), 241 deletions(-)
+
+Thus, the proposal above to do the same for concerned struct members.
+
+>>>> In the past, we identied that the best approach to solve this is to expose code
+>>>> for all targets (thus removing all #if clauses), and stub missing
+>>>> symbols for concerned targets.
+>>>
+>>> This affects QAPI/QMP introspection, i.e. the value of query-qmp-schema.
+>>>
+>>> Management applications can no longer use introspection to find out
+>>> whether target-specific things are available.
+>>>
+>>
+>> As asked on my previous email answering Daniel, would that be possible
+>> to build the schema dynamically, so we can decide what to expose or not
+>> introspection wise?
+> 
+> QAPI was designed to be compile-time static.  Revising such fundamental
+> design assumptions is always fraught.  I can't give you a confident
+> assessment now.  All I can offer you is my willingness to explore
+> solutions.  See "really fancy" below.
+> 
+> Fun fact: we used to generate the value of query-qmp-schema as a single
+> string.  We switched to the current, more bloated representation to
+> support conditionals (commit 7d0f982bfbb).
 >
-> diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
-> index 7212c87c68ec..55e726be7a2c 100644
-> --- a/hw/intc/armv7m_nvic.c
-> +++ b/hw/intc/armv7m_nvic.c
-> @@ -1303,32 +1303,32 @@ static uint32_t nvic_readl(NVICState *s, uint32_t offset, MemTxAttrs attrs)
->          if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
->              goto bad_offset;
->          }
-> -        return cpu->isar.id_isar0;
-> +        return GET_IDREG(&cpu->isar, ID_ISAR0);
->      case 0xd64: /* ISAR1.  */
->          if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
->              goto bad_offset;
->          }
-> -        return cpu->isar.id_isar1;
-> +        return GET_IDREG(&cpu->isar, ID_ISAR1);
->      case 0xd68: /* ISAR2.  */
->          if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
->              goto bad_offset;
->          }
-> -        return cpu->isar.id_isar2;
-> +        return GET_IDREG(&cpu->isar, ID_ISAR2);
->      case 0xd6c: /* ISAR3.  */
->          if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
->              goto bad_offset;
->          }
-> -        return cpu->isar.id_isar3;
-> +        return GET_IDREG(&cpu->isar, ID_ISAR3);
->      case 0xd70: /* ISAR4.  */
->          if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
->              goto bad_offset;
->          }
-> -        return cpu->isar.id_isar4;
-> +        return GET_IDREG(&cpu->isar, ID_ISAR4);
->      case 0xd74: /* ISAR5.  */
->          if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
->              goto bad_offset;
->          }
-> -        return cpu->isar.id_isar5;
-> +        return GET_IDREG(&cpu->isar, ID_ISAR5);
->      case 0xd78: /* CLIDR */
->          return cpu->clidr;
->      case 0xd7c: /* CTR */
-> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-> index 1ac1f3e95984..003cf735e8ef 100644
-> --- a/target/arm/cpu-features.h
-> +++ b/target/arm/cpu-features.h
-> @@ -45,93 +45,93 @@
->   */
->  static inline bool isar_feature_aa32_thumb_div(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar0, ID_ISAR0, DIVIDE) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR0, DIVIDE) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_arm_div(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar0, ID_ISAR0, DIVIDE) > 1;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR0, DIVIDE) > 1;
->  }
->  
->  static inline bool isar_feature_aa32_lob(const ARMISARegisters *id)
->  {
->      /* (M-profile) low-overhead loops and branch future */
-> -    return FIELD_EX32(id->id_isar0, ID_ISAR0, CMPBRANCH) >= 3;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR0, CMPBRANCH) >= 3;
->  }
->  
->  static inline bool isar_feature_aa32_jazelle(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar1, ID_ISAR1, JAZELLE) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR1, JAZELLE) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_aes(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar5, ID_ISAR5, AES) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR5, AES) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_pmull(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar5, ID_ISAR5, AES) > 1;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR5, AES) > 1;
->  }
->  
->  static inline bool isar_feature_aa32_sha1(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar5, ID_ISAR5, SHA1) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR5, SHA1) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_sha2(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar5, ID_ISAR5, SHA2) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR5, SHA2) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_crc32(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar5, ID_ISAR5, CRC32) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR5, CRC32) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_rdm(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar5, ID_ISAR5, RDM) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR5, RDM) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_vcma(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar5, ID_ISAR5, VCMA) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR5, VCMA) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_jscvt(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar6, ID_ISAR6, JSCVT) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR6, JSCVT) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_dp(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar6, ID_ISAR6, DP) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR6, DP) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_fhm(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar6, ID_ISAR6, FHM) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR6, FHM) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_sb(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar6, ID_ISAR6, SB) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR6, SB) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_predinv(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar6, ID_ISAR6, SPECRES) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR6, SPECRES) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_bf16(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar6, ID_ISAR6, BF16) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR6, BF16) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_i8mm(const ARMISARegisters *id)
->  {
-> -    return FIELD_EX32(id->id_isar6, ID_ISAR6, I8MM) != 0;
-> +    return FIELD_EX32_IDREG(id, ID_ISAR6, I8MM) != 0;
->  }
->  
->  static inline bool isar_feature_aa32_ras(const ARMISARegisters *id)
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index 7bd20d1f2710..45d922110c17 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -2132,10 +2132,10 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
->  
->          FIELD_DP64_IDREG(isar, ID_AA64PFR0, FP, 0xf);
->  
-> -        u = cpu->isar.id_isar6;
-> +        u = GET_IDREG(isar, ID_ISAR6);
->          u = FIELD_DP32(u, ID_ISAR6, JSCVT, 0);
->          u = FIELD_DP32(u, ID_ISAR6, BF16, 0);
-> -        cpu->isar.id_isar6 = u;
-> +        SET_IDREG(isar, ID_ISAR6, u);
->  
->          u = cpu->isar.mvfr0;
->          u = FIELD_DP32(u, MVFR0, FPSP, 0);
-> @@ -2187,20 +2187,20 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
->  
->          FIELD_DP64_IDREG(isar, ID_AA64PFR0, ADVSIMD, 0xf);
->  
-> -        u = cpu->isar.id_isar5;
-> +        u = GET_IDREG(isar, ID_ISAR5);
->          u = FIELD_DP32(u, ID_ISAR5, AES, 0);
->          u = FIELD_DP32(u, ID_ISAR5, SHA1, 0);
->          u = FIELD_DP32(u, ID_ISAR5, SHA2, 0);
->          u = FIELD_DP32(u, ID_ISAR5, RDM, 0);
->          u = FIELD_DP32(u, ID_ISAR5, VCMA, 0);
-> -        cpu->isar.id_isar5 = u;
-> +        SET_IDREG(isar, ID_ISAR5, u);
->  
-> -        u = cpu->isar.id_isar6;
-> +        u = GET_IDREG(isar, ID_ISAR6);
->          u = FIELD_DP32(u, ID_ISAR6, DP, 0);
->          u = FIELD_DP32(u, ID_ISAR6, FHM, 0);
->          u = FIELD_DP32(u, ID_ISAR6, BF16, 0);
->          u = FIELD_DP32(u, ID_ISAR6, I8MM, 0);
-> -        cpu->isar.id_isar6 = u;
-> +        SET_IDREG(isar, ID_ISAR6, u);
->  
->          if (!arm_feature(env, ARM_FEATURE_M)) {
->              u = cpu->isar.mvfr1;
-> @@ -2238,19 +2238,17 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
->  
->          unset_feature(env, ARM_FEATURE_THUMB_DSP);
->  
-> -        u = cpu->isar.id_isar1;
-> -        u = FIELD_DP32(u, ID_ISAR1, EXTEND, 1);
-> -        cpu->isar.id_isar1 = u;
-> +        FIELD_DP32_IDREG(isar, ID_ISAR1, EXTEND, 1);
->  
-> -        u = cpu->isar.id_isar2;
-> +        u = GET_IDREG(isar, ID_ISAR2);
->          u = FIELD_DP32(u, ID_ISAR2, MULTU, 1);
->          u = FIELD_DP32(u, ID_ISAR2, MULTS, 1);
-> -        cpu->isar.id_isar2 = u;
-> +        SET_IDREG(isar, ID_ISAR2, u);
->  
-> -        u = cpu->isar.id_isar3;
-> +        u = GET_IDREG(isar, ID_ISAR3);
->          u = FIELD_DP32(u, ID_ISAR3, SIMD, 1);
->          u = FIELD_DP32(u, ID_ISAR3, SATURATE, 0);
-> -        cpu->isar.id_isar3 = u;
-> +        SET_IDREG(isar, ID_ISAR3, u);
->      }
->  
->  
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index a3a3b8031eed..c98bdc1687c0 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -1073,13 +1073,6 @@ struct ArchCPU {
->       * field by reading the value from the KVM vCPU.
->       */
->      struct ARMISARegisters {
-> -        uint32_t id_isar0;
-> -        uint32_t id_isar1;
-> -        uint32_t id_isar2;
-> -        uint32_t id_isar3;
-> -        uint32_t id_isar4;
-> -        uint32_t id_isar5;
-> -        uint32_t id_isar6;
->          uint32_t id_mmfr0;
->          uint32_t id_mmfr1;
->          uint32_t id_mmfr2;
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index c8ab8761282a..1489ebb1015e 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -660,13 +660,13 @@ static void aarch64_a57_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x40000000;
->      cpu->isar.id_mmfr2 = 0x01260000;
->      cpu->isar.id_mmfr3 = 0x02102211;
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232042;
-> -    cpu->isar.id_isar3 = 0x01112131;
-> -    cpu->isar.id_isar4 = 0x00011142;
-> -    cpu->isar.id_isar5 = 0x00011121;
-> -    cpu->isar.id_isar6 = 0;
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232042);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00011142);
-> +    SET_IDREG(isar, ID_ISAR5, 0x00011121);
-> +    SET_IDREG(isar, ID_ISAR6, 0);
->      SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
->      SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
->      SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
-> @@ -722,13 +722,13 @@ static void aarch64_a53_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x40000000;
->      cpu->isar.id_mmfr2 = 0x01260000;
->      cpu->isar.id_mmfr3 = 0x02102211;
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232042;
-> -    cpu->isar.id_isar3 = 0x01112131;
-> -    cpu->isar.id_isar4 = 0x00011142;
-> -    cpu->isar.id_isar5 = 0x00011121;
-> -    cpu->isar.id_isar6 = 0;
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232042);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00011142);
-> +    SET_IDREG(isar, ID_ISAR5, 0x00011121);
-> +    SET_IDREG(isar, ID_ISAR6, 0);
->      SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
->      SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
->      SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 275e590876bf..1ba8551f6db8 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -7828,32 +7828,32 @@ void register_cp_regs_for_features(ARMCPU *cpu)
->                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 2, .opc2 = 0,
->                .access = PL1_R, .type = ARM_CP_CONST,
->                .accessfn = access_aa32_tid3,
-> -              .resetvalue = cpu->isar.id_isar0 },
-> +              .resetvalue = GET_IDREG(isar, ID_ISAR0)},
->              { .name = "ID_ISAR1", .state = ARM_CP_STATE_BOTH,
->                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 2, .opc2 = 1,
->                .access = PL1_R, .type = ARM_CP_CONST,
->                .accessfn = access_aa32_tid3,
-> -              .resetvalue = cpu->isar.id_isar1 },
-> +              .resetvalue = GET_IDREG(isar, ID_ISAR1)},
->              { .name = "ID_ISAR2", .state = ARM_CP_STATE_BOTH,
->                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 2, .opc2 = 2,
->                .access = PL1_R, .type = ARM_CP_CONST,
->                .accessfn = access_aa32_tid3,
-> -              .resetvalue = cpu->isar.id_isar2 },
-> +              .resetvalue = GET_IDREG(isar, ID_ISAR2)},
->              { .name = "ID_ISAR3", .state = ARM_CP_STATE_BOTH,
->                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 2, .opc2 = 3,
->                .access = PL1_R, .type = ARM_CP_CONST,
->                .accessfn = access_aa32_tid3,
-> -              .resetvalue = cpu->isar.id_isar3 },
-> +              .resetvalue = GET_IDREG(isar, ID_ISAR3) },
->              { .name = "ID_ISAR4", .state = ARM_CP_STATE_BOTH,
->                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 2, .opc2 = 4,
->                .access = PL1_R, .type = ARM_CP_CONST,
->                .accessfn = access_aa32_tid3,
-> -              .resetvalue = cpu->isar.id_isar4 },
-> +              .resetvalue = GET_IDREG(isar, ID_ISAR4) },
->              { .name = "ID_ISAR5", .state = ARM_CP_STATE_BOTH,
->                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 2, .opc2 = 5,
->                .access = PL1_R, .type = ARM_CP_CONST,
->                .accessfn = access_aa32_tid3,
-> -              .resetvalue = cpu->isar.id_isar5 },
-> +              .resetvalue = GET_IDREG(isar, ID_ISAR5) },
->              { .name = "ID_MMFR4", .state = ARM_CP_STATE_BOTH,
->                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 2, .opc2 = 6,
->                .access = PL1_R, .type = ARM_CP_CONST,
-> @@ -7863,7 +7863,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
->                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 2, .opc2 = 7,
->                .access = PL1_R, .type = ARM_CP_CONST,
->                .accessfn = access_aa32_tid3,
-> -              .resetvalue = cpu->isar.id_isar6 },
-> +              .resetvalue = GET_IDREG(isar, ID_ISAR6) },
->          };
->          define_arm_cp_regs(cpu, v6_idregs);
->          define_arm_cp_regs(cpu, v6_cp_reginfo);
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index a73ff0a603bc..ceb7e7bec7a2 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -383,22 +383,15 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->                                ARM64_SYS_REG(3, 0, 0, 1, 6));
->          err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_mmfr3,
->                                ARM64_SYS_REG(3, 0, 0, 1, 7));
-> -        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_isar0,
-> -                              ARM64_SYS_REG(3, 0, 0, 2, 0));
-> -        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_isar1,
-> -                              ARM64_SYS_REG(3, 0, 0, 2, 1));
-> -        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_isar2,
-> -                              ARM64_SYS_REG(3, 0, 0, 2, 2));
-> -        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_isar3,
-> -                              ARM64_SYS_REG(3, 0, 0, 2, 3));
-> -        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_isar4,
-> -                              ARM64_SYS_REG(3, 0, 0, 2, 4));
-> -        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_isar5,
-> -                              ARM64_SYS_REG(3, 0, 0, 2, 5));
-> +        err |= get_host_cpu_reg(fd, ahcf, ID_ISAR0_EL1_IDX);
-> +        err |= get_host_cpu_reg(fd, ahcf, ID_ISAR1_EL1_IDX);
-> +        err |= get_host_cpu_reg(fd, ahcf, ID_ISAR2_EL1_IDX);
-> +        err |= get_host_cpu_reg(fd, ahcf, ID_ISAR3_EL1_IDX);
-> +        err |= get_host_cpu_reg(fd, ahcf, ID_ISAR4_EL1_IDX);
-> +        err |= get_host_cpu_reg(fd, ahcf, ID_ISAR5_EL1_IDX);
-> +        err |= get_host_cpu_reg(fd, ahcf, ID_ISAR6_EL1_IDX);
->          err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_mmfr4,
->                                ARM64_SYS_REG(3, 0, 0, 2, 6));
-> -        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_isar6,
-> -                              ARM64_SYS_REG(3, 0, 0, 2, 7));
->  
->          err |= read_sys_reg32(fdarray[2], &ahcf->isar.mvfr0,
->                                ARM64_SYS_REG(3, 0, 0, 3, 0));
-> diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
-> index c4dd30927268..9d5938abdb4b 100644
-> --- a/target/arm/tcg/cpu-v7m.c
-> +++ b/target/arm/tcg/cpu-v7m.c
-> @@ -45,6 +45,7 @@ static bool arm_v7m_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
->  static void cortex_m0_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    uint64_t *idregs = cpu->isar.idregs;
->      set_feature(&cpu->env, ARM_FEATURE_V6);
->      set_feature(&cpu->env, ARM_FEATURE_M);
->  
-> @@ -66,18 +67,19 @@ static void cortex_m0_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x00000000;
->      cpu->isar.id_mmfr2 = 0x00000000;
->      cpu->isar.id_mmfr3 = 0x00000000;
-> -    cpu->isar.id_isar0 = 0x01141110;
-> -    cpu->isar.id_isar1 = 0x02111000;
-> -    cpu->isar.id_isar2 = 0x21112231;
-> -    cpu->isar.id_isar3 = 0x01111110;
-> -    cpu->isar.id_isar4 = 0x01310102;
-> -    cpu->isar.id_isar5 = 0x00000000;
-> -    cpu->isar.id_isar6 = 0x00000000;
-> +    SET_IDREG(idregs, ID_ISAR0, 0x01141110);
-> +    SET_IDREG(idregs, ID_ISAR1, 0x02111000);
-> +    SET_IDREG(idregs, ID_ISAR2, 0x21112231);
-> +    SET_IDREG(idregs, ID_ISAR3, 0x01111110);
-> +    SET_IDREG(idregs, ID_ISAR4, 0x01310102);
-> +    SET_IDREG(idregs, ID_ISAR5, 0x00000000);
-> +    SET_IDREG(idregs, ID_ISAR6, 0x00000000);
->  }
->  
->  static void cortex_m3_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    uint64_t *idregs = cpu->isar.idregs;
->      set_feature(&cpu->env, ARM_FEATURE_V7);
->      set_feature(&cpu->env, ARM_FEATURE_M);
->      set_feature(&cpu->env, ARM_FEATURE_M_MAIN);
-> @@ -91,18 +93,19 @@ static void cortex_m3_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x00000000;
->      cpu->isar.id_mmfr2 = 0x00000000;
->      cpu->isar.id_mmfr3 = 0x00000000;
-> -    cpu->isar.id_isar0 = 0x01141110;
-> -    cpu->isar.id_isar1 = 0x02111000;
-> -    cpu->isar.id_isar2 = 0x21112231;
-> -    cpu->isar.id_isar3 = 0x01111110;
-> -    cpu->isar.id_isar4 = 0x01310102;
-> -    cpu->isar.id_isar5 = 0x00000000;
-> -    cpu->isar.id_isar6 = 0x00000000;
-> +    SET_IDREG(idregs, ID_ISAR0, 0x01141110);
-> +    SET_IDREG(idregs, ID_ISAR1, 0x02111000);
-> +    SET_IDREG(idregs, ID_ISAR2, 0x21112231);
-> +    SET_IDREG(idregs, ID_ISAR3, 0x01111110);
-> +    SET_IDREG(idregs, ID_ISAR4, 0x01310102);
-> +    SET_IDREG(idregs, ID_ISAR5, 0x00000000);
-> +    SET_IDREG(idregs, ID_ISAR6, 0x00000000);
->  }
->  
->  static void cortex_m4_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    uint64_t *idregs = cpu->isar.idregs;
->  
->      set_feature(&cpu->env, ARM_FEATURE_V7);
->      set_feature(&cpu->env, ARM_FEATURE_M);
-> @@ -121,18 +124,19 @@ static void cortex_m4_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x00000000;
->      cpu->isar.id_mmfr2 = 0x00000000;
->      cpu->isar.id_mmfr3 = 0x00000000;
-> -    cpu->isar.id_isar0 = 0x01141110;
-> -    cpu->isar.id_isar1 = 0x02111000;
-> -    cpu->isar.id_isar2 = 0x21112231;
-> -    cpu->isar.id_isar3 = 0x01111110;
-> -    cpu->isar.id_isar4 = 0x01310102;
-> -    cpu->isar.id_isar5 = 0x00000000;
-> -    cpu->isar.id_isar6 = 0x00000000;
-> +    SET_IDREG(idregs, ID_ISAR0, 0x01141110);
-> +    SET_IDREG(idregs, ID_ISAR1, 0x02111000);
-> +    SET_IDREG(idregs, ID_ISAR2, 0x21112231);
-> +    SET_IDREG(idregs, ID_ISAR3, 0x01111110);
-> +    SET_IDREG(idregs, ID_ISAR4, 0x01310102);
-> +    SET_IDREG(idregs, ID_ISAR5, 0x00000000);
-> +    SET_IDREG(idregs, ID_ISAR6, 0x00000000);
->  }
->  
->  static void cortex_m7_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    uint64_t *idregs = cpu->isar.idregs;
->  
->      set_feature(&cpu->env, ARM_FEATURE_V7);
->      set_feature(&cpu->env, ARM_FEATURE_M);
-> @@ -151,18 +155,19 @@ static void cortex_m7_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x00000000;
->      cpu->isar.id_mmfr2 = 0x01000000;
->      cpu->isar.id_mmfr3 = 0x00000000;
-> -    cpu->isar.id_isar0 = 0x01101110;
-> -    cpu->isar.id_isar1 = 0x02112000;
-> -    cpu->isar.id_isar2 = 0x20232231;
-> -    cpu->isar.id_isar3 = 0x01111131;
-> -    cpu->isar.id_isar4 = 0x01310132;
-> -    cpu->isar.id_isar5 = 0x00000000;
-> -    cpu->isar.id_isar6 = 0x00000000;
-> +    SET_IDREG(idregs, ID_ISAR0, 0x01101110);
-> +    SET_IDREG(idregs, ID_ISAR1, 0x02112000);
-> +    SET_IDREG(idregs, ID_ISAR2, 0x20232231);
-> +    SET_IDREG(idregs, ID_ISAR3, 0x01111131);
-> +    SET_IDREG(idregs, ID_ISAR4, 0x01310132);
-> +    SET_IDREG(idregs, ID_ISAR5, 0x00000000);
-> +    SET_IDREG(idregs, ID_ISAR6, 0x00000000);
->  }
->  
->  static void cortex_m33_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    uint64_t *idregs = cpu->isar.idregs;
->  
->      set_feature(&cpu->env, ARM_FEATURE_V8);
->      set_feature(&cpu->env, ARM_FEATURE_M);
-> @@ -183,13 +188,13 @@ static void cortex_m33_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x00000000;
->      cpu->isar.id_mmfr2 = 0x01000000;
->      cpu->isar.id_mmfr3 = 0x00000000;
-> -    cpu->isar.id_isar0 = 0x01101110;
-> -    cpu->isar.id_isar1 = 0x02212000;
-> -    cpu->isar.id_isar2 = 0x20232232;
-> -    cpu->isar.id_isar3 = 0x01111131;
-> -    cpu->isar.id_isar4 = 0x01310132;
-> -    cpu->isar.id_isar5 = 0x00000000;
-> -    cpu->isar.id_isar6 = 0x00000000;
-> +    SET_IDREG(idregs, ID_ISAR0, 0x01101110);
-> +    SET_IDREG(idregs, ID_ISAR1, 0x02212000);
-> +    SET_IDREG(idregs, ID_ISAR2, 0x20232232);
-> +    SET_IDREG(idregs, ID_ISAR3, 0x01111131);
-> +    SET_IDREG(idregs, ID_ISAR4, 0x01310132);
-> +    SET_IDREG(idregs, ID_ISAR5, 0x00000000);
-> +    SET_IDREG(idregs, ID_ISAR6, 0x00000000);
->      cpu->clidr = 0x00000000;
->      cpu->ctr = 0x8000c000;
->  }
-> @@ -197,6 +202,7 @@ static void cortex_m33_initfn(Object *obj)
->  static void cortex_m55_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    uint64_t *idregs = cpu->isar.idregs;
->  
->      set_feature(&cpu->env, ARM_FEATURE_V8);
->      set_feature(&cpu->env, ARM_FEATURE_V8_1M);
-> @@ -220,13 +226,13 @@ static void cortex_m55_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x00000000;
->      cpu->isar.id_mmfr2 = 0x01000000;
->      cpu->isar.id_mmfr3 = 0x00000011;
-> -    cpu->isar.id_isar0 = 0x01103110;
-> -    cpu->isar.id_isar1 = 0x02212000;
-> -    cpu->isar.id_isar2 = 0x20232232;
-> -    cpu->isar.id_isar3 = 0x01111131;
-> -    cpu->isar.id_isar4 = 0x01310132;
-> -    cpu->isar.id_isar5 = 0x00000000;
-> -    cpu->isar.id_isar6 = 0x00000000;
-> +    SET_IDREG(idregs, ID_ISAR0, 0x01103110);
-> +    SET_IDREG(idregs, ID_ISAR1, 0x02212000);
-> +    SET_IDREG(idregs, ID_ISAR2, 0x20232232);
-> +    SET_IDREG(idregs, ID_ISAR3, 0x01111131);
-> +    SET_IDREG(idregs, ID_ISAR4, 0x01310132);
-> +    SET_IDREG(idregs, ID_ISAR5, 0x00000000);
-> +    SET_IDREG(idregs, ID_ISAR6, 0x00000000);
->      cpu->clidr = 0x00000000; /* caches not implemented */
->      cpu->ctr = 0x8303c003;
->  }
-> diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-> index 2c45b7eddda7..d022ba3c9b32 100644
-> --- a/target/arm/tcg/cpu32.c
-> +++ b/target/arm/tcg/cpu32.c
-> @@ -23,18 +23,19 @@
->  void aa32_max_features(ARMCPU *cpu)
->  {
->      uint32_t t;
-> +    ARMISARegisters *isar = &cpu->isar;
->  
->      /* Add additional features supported by QEMU */
-> -    t = cpu->isar.id_isar5;
-> +    t = GET_IDREG(isar, ID_ISAR5);
->      t = FIELD_DP32(t, ID_ISAR5, AES, 2);          /* FEAT_PMULL */
->      t = FIELD_DP32(t, ID_ISAR5, SHA1, 1);         /* FEAT_SHA1 */
->      t = FIELD_DP32(t, ID_ISAR5, SHA2, 1);         /* FEAT_SHA256 */
->      t = FIELD_DP32(t, ID_ISAR5, CRC32, 1);
->      t = FIELD_DP32(t, ID_ISAR5, RDM, 1);          /* FEAT_RDM */
->      t = FIELD_DP32(t, ID_ISAR5, VCMA, 1);         /* FEAT_FCMA */
-> -    cpu->isar.id_isar5 = t;
-> +    SET_IDREG(isar, ID_ISAR5, t);
->  
-> -    t = cpu->isar.id_isar6;
-> +    t = GET_IDREG(isar, ID_ISAR6);
->      t = FIELD_DP32(t, ID_ISAR6, JSCVT, 1);        /* FEAT_JSCVT */
->      t = FIELD_DP32(t, ID_ISAR6, DP, 1);           /* Feat_DotProd */
->      t = FIELD_DP32(t, ID_ISAR6, FHM, 1);          /* FEAT_FHM */
-> @@ -42,7 +43,7 @@ void aa32_max_features(ARMCPU *cpu)
->      t = FIELD_DP32(t, ID_ISAR6, SPECRES, 1);      /* FEAT_SPECRES */
->      t = FIELD_DP32(t, ID_ISAR6, BF16, 1);         /* FEAT_AA32BF16 */
->      t = FIELD_DP32(t, ID_ISAR6, I8MM, 1);         /* FEAT_AA32I8MM */
-> -    cpu->isar.id_isar6 = t;
-> +    SET_IDREG(isar, ID_ISAR6, t);
->  
->      t = cpu->isar.mvfr1;
->      t = FIELD_DP32(t, MVFR1, FPHP, 3);            /* FEAT_FP16 */
-> @@ -140,7 +141,7 @@ static void arm926_initfn(Object *obj)
->       * ARMv5 does not have the ID_ISAR registers, but we can still
->       * set the field to indicate Jazelle support within QEMU.
->       */
-> -    cpu->isar.id_isar1 = FIELD_DP32(cpu->isar.id_isar1, ID_ISAR1, JAZELLE, 1);
-> +    FIELD_DP32_IDREG(&cpu->isar, ID_ISAR1, JAZELLE, 1);
->      /*
->       * Similarly, we need to set MVFR0 fields to enable vfp and short vector
->       * support even though ARMv5 doesn't have this register.
-> @@ -182,7 +183,7 @@ static void arm1026_initfn(Object *obj)
->       * ARMv5 does not have the ID_ISAR registers, but we can still
->       * set the field to indicate Jazelle support within QEMU.
->       */
-> -    cpu->isar.id_isar1 = FIELD_DP32(cpu->isar.id_isar1, ID_ISAR1, JAZELLE, 1);
-> +    FIELD_DP32_IDREG(&cpu->isar, ID_ISAR1, JAZELLE, 1);
->      /*
->       * Similarly, we need to set MVFR0 fields to enable vfp and short vector
->       * support even though ARMv5 doesn't have this register.
-> @@ -206,6 +207,7 @@ static void arm1026_initfn(Object *obj)
->  static void arm1136_r2_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    ARMISARegisters *isar = &cpu->isar;
->      /*
->       * What qemu calls "arm1136_r2" is actually the 1136 r0p2, ie an
->       * older core than plain "arm1136". In particular this does not
-> @@ -233,17 +235,18 @@ static void arm1136_r2_initfn(Object *obj)
->      cpu->isar.id_mmfr0 = 0x01130003;
->      cpu->isar.id_mmfr1 = 0x10030302;
->      cpu->isar.id_mmfr2 = 0x01222110;
-> -    cpu->isar.id_isar0 = 0x00140011;
-> -    cpu->isar.id_isar1 = 0x12002111;
-> -    cpu->isar.id_isar2 = 0x11231111;
-> -    cpu->isar.id_isar3 = 0x01102131;
-> -    cpu->isar.id_isar4 = 0x141;
-> +    SET_IDREG(isar, ID_ISAR0, 0x00140011);
-> +    SET_IDREG(isar, ID_ISAR1, 0x12002111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x11231111);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01102131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x141);
->      cpu->reset_auxcr = 7;
->  }
->  
->  static void arm1136_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    ARMISARegisters *isar = &cpu->isar;
->  
->      cpu->dtb_compatible = "arm,arm1136";
->      set_feature(&cpu->env, ARM_FEATURE_V6K);
-> @@ -264,17 +267,18 @@ static void arm1136_initfn(Object *obj)
->      cpu->isar.id_mmfr0 = 0x01130003;
->      cpu->isar.id_mmfr1 = 0x10030302;
->      cpu->isar.id_mmfr2 = 0x01222110;
-> -    cpu->isar.id_isar0 = 0x00140011;
-> -    cpu->isar.id_isar1 = 0x12002111;
-> -    cpu->isar.id_isar2 = 0x11231111;
-> -    cpu->isar.id_isar3 = 0x01102131;
-> -    cpu->isar.id_isar4 = 0x141;
-> +    SET_IDREG(isar, ID_ISAR0, 0x00140011);
-> +    SET_IDREG(isar, ID_ISAR1, 0x12002111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x11231111);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01102131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x141);
->      cpu->reset_auxcr = 7;
->  }
->  
->  static void arm1176_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    ARMISARegisters *isar = &cpu->isar;
->  
->      cpu->dtb_compatible = "arm,arm1176";
->      set_feature(&cpu->env, ARM_FEATURE_V6K);
-> @@ -296,17 +300,18 @@ static void arm1176_initfn(Object *obj)
->      cpu->isar.id_mmfr0 = 0x01130003;
->      cpu->isar.id_mmfr1 = 0x10030302;
->      cpu->isar.id_mmfr2 = 0x01222100;
-> -    cpu->isar.id_isar0 = 0x0140011;
-> -    cpu->isar.id_isar1 = 0x12002111;
-> -    cpu->isar.id_isar2 = 0x11231121;
-> -    cpu->isar.id_isar3 = 0x01102131;
-> -    cpu->isar.id_isar4 = 0x01141;
-> +    SET_IDREG(isar, ID_ISAR0, 0x0140011);
-> +    SET_IDREG(isar, ID_ISAR1, 0x12002111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x11231121);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01102131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x01141);
->      cpu->reset_auxcr = 7;
->  }
->  
->  static void arm11mpcore_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    ARMISARegisters *isar = &cpu->isar;
->  
->      cpu->dtb_compatible = "arm,arm11mpcore";
->      set_feature(&cpu->env, ARM_FEATURE_V6K);
-> @@ -325,11 +330,11 @@ static void arm11mpcore_initfn(Object *obj)
->      cpu->isar.id_mmfr0 = 0x01100103;
->      cpu->isar.id_mmfr1 = 0x10020302;
->      cpu->isar.id_mmfr2 = 0x01222000;
-> -    cpu->isar.id_isar0 = 0x00100011;
-> -    cpu->isar.id_isar1 = 0x12002111;
-> -    cpu->isar.id_isar2 = 0x11221011;
-> -    cpu->isar.id_isar3 = 0x01102131;
-> -    cpu->isar.id_isar4 = 0x141;
-> +    SET_IDREG(isar, ID_ISAR0, 0x00100011);
-> +    SET_IDREG(isar, ID_ISAR1, 0x12002111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x11221011);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01102131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x141);
->      cpu->reset_auxcr = 1;
->  }
->  
-> @@ -343,6 +348,7 @@ static const ARMCPRegInfo cortexa8_cp_reginfo[] = {
->  static void cortex_a8_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    ARMISARegisters *isar = &cpu->isar;
->  
->      cpu->dtb_compatible = "arm,cortex-a8";
->      set_feature(&cpu->env, ARM_FEATURE_V7);
-> @@ -365,11 +371,11 @@ static void cortex_a8_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x20000000;
->      cpu->isar.id_mmfr2 = 0x01202000;
->      cpu->isar.id_mmfr3 = 0x11;
-> -    cpu->isar.id_isar0 = 0x00101111;
-> -    cpu->isar.id_isar1 = 0x12112111;
-> -    cpu->isar.id_isar2 = 0x21232031;
-> -    cpu->isar.id_isar3 = 0x11112131;
-> -    cpu->isar.id_isar4 = 0x00111142;
-> +    SET_IDREG(isar, ID_ISAR0, 0x00101111);
-> +    SET_IDREG(isar, ID_ISAR1, 0x12112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232031);
-> +    SET_IDREG(isar, ID_ISAR3, 0x11112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00111142);
->      cpu->isar.dbgdidr = 0x15141000;
->      cpu->clidr = (1 << 27) | (2 << 24) | 3;
->      cpu->ccsidr[0] = 0xe007e01a; /* 16k L1 dcache. */
-> @@ -412,6 +418,7 @@ static const ARMCPRegInfo cortexa9_cp_reginfo[] = {
->  static void cortex_a9_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    ARMISARegisters *isar = &cpu->isar;
->  
->      cpu->dtb_compatible = "arm,cortex-a9";
->      set_feature(&cpu->env, ARM_FEATURE_V7);
-> @@ -440,11 +447,11 @@ static void cortex_a9_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x20000000;
->      cpu->isar.id_mmfr2 = 0x01230000;
->      cpu->isar.id_mmfr3 = 0x00002111;
-> -    cpu->isar.id_isar0 = 0x00101111;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232041;
-> -    cpu->isar.id_isar3 = 0x11112131;
-> -    cpu->isar.id_isar4 = 0x00111142;
-> +    SET_IDREG(isar, ID_ISAR0, 0x00101111);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232041);
-> +    SET_IDREG(isar, ID_ISAR3, 0x11112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00111142);
->      cpu->isar.dbgdidr = 0x35141000;
->      cpu->clidr = (1 << 27) | (1 << 24) | 3;
->      cpu->ccsidr[0] = 0xe00fe019; /* 16k L1 dcache. */
-> @@ -479,6 +486,7 @@ static const ARMCPRegInfo cortexa15_cp_reginfo[] = {
->  static void cortex_a7_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    ARMISARegisters *isar = &cpu->isar;
->  
->      cpu->dtb_compatible = "arm,cortex-a7";
->      set_feature(&cpu->env, ARM_FEATURE_V7VE);
-> @@ -509,11 +517,11 @@ static void cortex_a7_initfn(Object *obj)
->       * a7_mpcore_r0p5_trm, page 4-4 gives 0x01101110; but
->       * table 4-41 gives 0x02101110, which includes the arm div insns.
->       */
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232041;
-> -    cpu->isar.id_isar3 = 0x11112131;
-> -    cpu->isar.id_isar4 = 0x10011142;
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232041);
-> +    SET_IDREG(isar, ID_ISAR3, 0x11112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x10011142);
->      cpu->isar.dbgdidr = 0x3515f005;
->      cpu->isar.dbgdevid = 0x01110f13;
->      cpu->isar.dbgdevid1 = 0x1;
-> @@ -528,6 +536,7 @@ static void cortex_a7_initfn(Object *obj)
->  static void cortex_a15_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    ARMISARegisters *isar = &cpu->isar;
->  
->      cpu->dtb_compatible = "arm,cortex-a15";
->      set_feature(&cpu->env, ARM_FEATURE_V7VE);
-> @@ -556,11 +565,11 @@ static void cortex_a15_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x20000000;
->      cpu->isar.id_mmfr2 = 0x01240000;
->      cpu->isar.id_mmfr3 = 0x02102211;
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232041;
-> -    cpu->isar.id_isar3 = 0x11112131;
-> -    cpu->isar.id_isar4 = 0x10011142;
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232041);
-> +    SET_IDREG(isar, ID_ISAR3, 0x11112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x10011142);
->      cpu->isar.dbgdidr = 0x3515f021;
->      cpu->isar.dbgdevid = 0x01110f13;
->      cpu->isar.dbgdevid1 = 0x0;
-> @@ -585,6 +594,7 @@ static const ARMCPRegInfo cortexr5_cp_reginfo[] = {
->  static void cortex_r5_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    ARMISARegisters *isar = &cpu->isar;
->  
->      set_feature(&cpu->env, ARM_FEATURE_V7);
->      set_feature(&cpu->env, ARM_FEATURE_V7MP);
-> @@ -599,13 +609,13 @@ static void cortex_r5_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x00000000;
->      cpu->isar.id_mmfr2 = 0x01200000;
->      cpu->isar.id_mmfr3 = 0x0211;
-> -    cpu->isar.id_isar0 = 0x02101111;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232141;
-> -    cpu->isar.id_isar3 = 0x01112131;
-> -    cpu->isar.id_isar4 = 0x0010142;
-> -    cpu->isar.id_isar5 = 0x0;
-> -    cpu->isar.id_isar6 = 0x0;
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101111);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232141);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x0010142);
-> +    SET_IDREG(isar, ID_ISAR5, 0x21232141);
-glurp this one is bad
-it should be SET_IDREG(isar, ID_ISAR5, 0x0);
 
-Eric
+It's nice to have this, and this is what would allow us to 
+conditionnally include or not various definitions/commands/fields. I was 
+a bit worried we would have a "static string", but was glad to find a 
+static list instead.
 
-> +    SET_IDREG(isar, ID_ISAR6, 0x0);
->      cpu->mp_is_up = true;
->      cpu->pmsav7_dregion = 16;
->      cpu->isar.reset_pmcr_el0 = 0x41151800;
-> @@ -720,6 +730,7 @@ static const ARMCPRegInfo cortex_r52_cp_reginfo[] = {
->  static void cortex_r52_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    ARMISARegisters *isar = &cpu->isar;
->  
->      set_feature(&cpu->env, ARM_FEATURE_V8);
->      set_feature(&cpu->env, ARM_FEATURE_EL2);
-> @@ -746,12 +757,12 @@ static void cortex_r52_initfn(Object *obj)
->      cpu->isar.id_mmfr2 = 0x01200000;
->      cpu->isar.id_mmfr3 = 0xf0102211;
->      cpu->isar.id_mmfr4 = 0x00000010;
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232142;
-> -    cpu->isar.id_isar3 = 0x01112131;
-> -    cpu->isar.id_isar4 = 0x00010142;
-> -    cpu->isar.id_isar5 = 0x00010001;
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232142);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00010142);
-> +    SET_IDREG(isar, ID_ISAR5, 0x00010001);
->      cpu->isar.dbgdidr = 0x77168000;
->      cpu->clidr = (1 << 27) | (1 << 24) | 0x3;
->      cpu->ccsidr[0] = 0x700fe01a; /* 32KB L1 dcache */
-> @@ -949,6 +960,7 @@ static void pxa270c5_initfn(Object *obj)
->  static void arm_max_initfn(Object *obj)
->  {
->      ARMCPU *cpu = ARM_CPU(obj);
-> +    ARMISARegisters *isar = &cpu->isar;
->  
->      /* aarch64_a57_initfn, advertising none of the aarch64 features */
->      cpu->dtb_compatible = "arm,cortex-a57";
-> @@ -976,13 +988,13 @@ static void arm_max_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x40000000;
->      cpu->isar.id_mmfr2 = 0x01260000;
->      cpu->isar.id_mmfr3 = 0x02102211;
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232042;
-> -    cpu->isar.id_isar3 = 0x01112131;
-> -    cpu->isar.id_isar4 = 0x00011142;
-> -    cpu->isar.id_isar5 = 0x00011121;
-> -    cpu->isar.id_isar6 = 0;
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232042);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00011142);
-> +    SET_IDREG(isar, ID_ISAR5, 0x00011121);
-> +    SET_IDREG(isar, ID_ISAR6, 0);
->      cpu->isar.reset_pmcr_el0 = 0x41013000;
->      cpu->clidr = 0x0a200023;
->      cpu->ccsidr[0] = 0x701fe00a; /* 32KB L1 dcache */
-> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-> index cadc1258fc40..ad47279cdd46 100644
-> --- a/target/arm/tcg/cpu64.c
-> +++ b/target/arm/tcg/cpu64.c
-> @@ -57,12 +57,12 @@ static void aarch64_a35_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x40000000;
->      cpu->isar.id_mmfr2 = 0x01260000;
->      cpu->isar.id_mmfr3 = 0x02102211;
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232042;
-> -    cpu->isar.id_isar3 = 0x01112131;
-> -    cpu->isar.id_isar4 = 0x00011142;
-> -    cpu->isar.id_isar5 = 0x00011121;
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232042);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00011142);
-> +    SET_IDREG(isar, ID_ISAR5, 0x00011121);
->      SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
->      SET_IDREG(isar, ID_AA64PFR1, 0);
->      SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
-> @@ -229,13 +229,13 @@ static void aarch64_a55_initfn(Object *obj)
->      SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000010ull);
->      cpu->id_afr0       = 0x00000000;
->      cpu->isar.id_dfr0  = 0x04010088;
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232042;
-> -    cpu->isar.id_isar3 = 0x01112131;
-> -    cpu->isar.id_isar4 = 0x00011142;
-> -    cpu->isar.id_isar5 = 0x01011121;
-> -    cpu->isar.id_isar6 = 0x00000010;
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232042);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00011142);
-> +    SET_IDREG(isar, ID_ISAR5, 0x01011121);
-> +    SET_IDREG(isar, ID_ISAR6, 0x00000010);
->      cpu->isar.id_mmfr0 = 0x10201105;
->      cpu->isar.id_mmfr1 = 0x40000000;
->      cpu->isar.id_mmfr2 = 0x01260000;
-> @@ -303,12 +303,12 @@ static void aarch64_a72_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x40000000;
->      cpu->isar.id_mmfr2 = 0x01260000;
->      cpu->isar.id_mmfr3 = 0x02102211;
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232042;
-> -    cpu->isar.id_isar3 = 0x01112131;
-> -    cpu->isar.id_isar4 = 0x00011142;
-> -    cpu->isar.id_isar5 = 0x00011121;
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232042);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00011142);
-> +    SET_IDREG(isar, ID_ISAR5, 0x00011121);
->      SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
->      SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
->      SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
-> @@ -362,13 +362,13 @@ static void aarch64_a76_initfn(Object *obj)
->      SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000010ull);
->      cpu->id_afr0       = 0x00000000;
->      cpu->isar.id_dfr0  = 0x04010088;
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232042;
-> -    cpu->isar.id_isar3 = 0x01112131;
-> -    cpu->isar.id_isar4 = 0x00010142;
-> -    cpu->isar.id_isar5 = 0x01011121;
-> -    cpu->isar.id_isar6 = 0x00000010;
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232042);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00010142);
-> +    SET_IDREG(isar, ID_ISAR5, 0x01011121);
-> +    SET_IDREG(isar, ID_ISAR6, 0x00000010);
->      cpu->isar.id_mmfr0 = 0x10201105;
->      cpu->isar.id_mmfr1 = 0x40000000;
->      cpu->isar.id_mmfr2 = 0x01260000;
-> @@ -610,13 +610,13 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
->      SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000020ull);
->      cpu->id_afr0       = 0x00000000;
->      cpu->isar.id_dfr0  = 0x04010088;
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232042;
-> -    cpu->isar.id_isar3 = 0x01112131;
-> -    cpu->isar.id_isar4 = 0x00010142;
-> -    cpu->isar.id_isar5 = 0x01011121;
-> -    cpu->isar.id_isar6 = 0x00000010;
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232042);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00010142);
-> +    SET_IDREG(isar, ID_ISAR5, 0x01011121);
-> +    SET_IDREG(isar, ID_ISAR6, 0x00000010);
->      cpu->isar.id_mmfr0 = 0x10201105;
->      cpu->isar.id_mmfr1 = 0x40000000;
->      cpu->isar.id_mmfr2 = 0x01260000;
-> @@ -689,13 +689,13 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
->      SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000020ull);
->      cpu->id_afr0       = 0x00000000;
->      cpu->isar.id_dfr0  = 0x15011099;
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232042;
-> -    cpu->isar.id_isar3 = 0x01112131;
-> -    cpu->isar.id_isar4 = 0x00010142;
-> -    cpu->isar.id_isar5 = 0x11011121;
-> -    cpu->isar.id_isar6 = 0x01100111;
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232042);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00010142);
-> +    SET_IDREG(isar, ID_ISAR5, 0x11011121);
-> +    SET_IDREG(isar, ID_ISAR6, 0x01100111);
->      cpu->isar.id_mmfr0 = 0x10201105;
->      cpu->isar.id_mmfr1 = 0x40000000;
->      cpu->isar.id_mmfr2 = 0x01260000;
-> @@ -910,14 +910,14 @@ static void aarch64_a710_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x40000000;
->      cpu->isar.id_mmfr2 = 0x01260000;
->      cpu->isar.id_mmfr3 = 0x02122211;
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232042;
-> -    cpu->isar.id_isar3 = 0x01112131;
-> -    cpu->isar.id_isar4 = 0x00010142;
-> -    cpu->isar.id_isar5 = 0x11011121; /* with Crypto */
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232042);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00010142);
-> +    SET_IDREG(isar, ID_ISAR5, 0x11011121); /* with Crypto */
->      cpu->isar.id_mmfr4 = 0x21021110;
-> -    cpu->isar.id_isar6 = 0x01111111;
-> +    SET_IDREG(isar, ID_ISAR6, 0x01111111);
->      cpu->isar.mvfr0    = 0x10110222;
->      cpu->isar.mvfr1    = 0x13211111;
->      cpu->isar.mvfr2    = 0x00000043;
-> @@ -1013,14 +1013,14 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
->      cpu->isar.id_mmfr1 = 0x40000000;
->      cpu->isar.id_mmfr2 = 0x01260000;
->      cpu->isar.id_mmfr3 = 0x02122211;
-> -    cpu->isar.id_isar0 = 0x02101110;
-> -    cpu->isar.id_isar1 = 0x13112111;
-> -    cpu->isar.id_isar2 = 0x21232042;
-> -    cpu->isar.id_isar3 = 0x01112131;
-> -    cpu->isar.id_isar4 = 0x00010142;
-> -    cpu->isar.id_isar5 = 0x11011121; /* with Crypto */
-> +    SET_IDREG(isar, ID_ISAR0, 0x02101110);
-> +    SET_IDREG(isar, ID_ISAR1, 0x13112111);
-> +    SET_IDREG(isar, ID_ISAR2, 0x21232042);
-> +    SET_IDREG(isar, ID_ISAR3, 0x01112131);
-> +    SET_IDREG(isar, ID_ISAR4, 0x00010142);
-> +    SET_IDREG(isar, ID_ISAR5, 0x11011121); /* with Crypto */
->      cpu->isar.id_mmfr4 = 0x01021110;
-> -    cpu->isar.id_isar6 = 0x01111111;
-> +    SET_IDREG(isar, ID_ISAR6, 0x01111111);
->      cpu->isar.mvfr0    = 0x10110222;
->      cpu->isar.mvfr1    = 0x13211111;
->      cpu->isar.mvfr2    = 0x00000043;
+>>> For instance, query-cpu-definitions is implemented for targets arm,
+>>> i386, loongarch, mips, ppc, riscv, and s390x.  It initially was for
+>>> fewer targets, and more targets followed one by one.  Still more may
+>>> follow in the future.  Right now, management applications can use
+>>> introspection to find out whether it is available.  That stops working
+>>> when you make it available for all targets, stubbed out for the ones
+>>> that don't (yet) implement it.
+>>>
+>>
+>> I will repeat, just to be clear, I don't think exposing all commands is
+>> a good idea.
+>> The current series *does not* do this, simply because I didn't want to
+>> huge work for nothing.
+> 
+> Got it.
+> 
+>>> Management applications may have to be adjusted for this.
+>>>
+>>> This is not an attempt to shoot down your approach.  I'm merely
+>>> demonstrating limitations of your promise "if anyone notices a
+>>> difference, it will be a bug."
+>>>
+>>
+>> I stick to this promise :).
+>>
+>>> Now, we could get really fancy and try to keep introspection the same by
+>>> applying conditionals dynamically somehow.  I.e. have the single binary
+>>> return different introspection values depending on the actual guest's
+>>> target.
+>>>
+>>> This requires fixing the target before introspection.  Unless this is
+>>> somehow completely transparent (wrapper scripts, or awful hacks based on
+>>> the binary's filename, perhaps), management applications may have to be
+>>> adjusted to actually do that.
+>>>
+>>> Applies not just to introspection.  Consider query-cpu-definitions
+>>> again.  It currently returns CPU definitions for *the* target.  What
+>>> would a single binary's query-cpu-definitions return?  The CPU
+>>> definitions for *all* its targets?  Management applications then receive
+>>> CPUs that won't work, which may upset them.  To avoid noticable
+>>> difference, we again have to fix the target before we look.
+>>>
+>>> Of course, "fixing the target" stops making sense once we move to
+>>> heterogeneous machines with multiple targets.
+>>>
+>>
+>> At this point, I don't have think about what should be the semantic when
+>> we'll have multiple targets running simultaneously (expose the union,
+>> restrict to the main arch, choose a third way).
+> 
+> We have to unless we make query-cpu-definitions fail or impossible to
+> send while the target is still undecided.
+> 
+> Making it fail would violate the "no observable differences" goal.
+> 
+> The only path to true "no observable differences" I can see is to fix
+> the target before the management application interacts with QEMU in any
+> way.  This would make QMP commands (query-cpu-definitions,
+> query-qmp-schema, ...) impossible to send before the target is fixed.
+>
 
+The current target will be set at the entry of main() in QEMU, so before 
+the monitor is created. Thus, it will be unambiguous.
+
+>>>> This series build QAPI generated code once, by removing all TARGET_{arch} and
+>>>> CONFIG_KVM clauses. What it does *not* at the moment is:
+>>>> - prevent target specific commands to be visible for all targets
+>>>>     (see TODO comment on patch 2 explaining how to address this)
+>>>> - nothing was done to hide all this from generated documentation
+>>>
+>>> For better or worse, generated documentation always contains everything.
+>>>
+>>
+>> Fine for me, it makes sense, as the official documentation published,
+>> which is what people will consume primarily, is for all targets.
+>>
+>>> An argument could be made for stripping out documentation for the stuff
+>>> that isn't included in this build.
+>>>
+>>>>   From what I understood, the only thing that matters is to limit qmp commands
+>>>> visible. Exposing enums, structure, or events is not a problem, since they
+>>>> won't be used/triggered for non concerned targets. Please correct me if this is
+>>>> wrong, and if there are unexpected consequences for libvirt or other consumers.
+>>>
+>>> I'm not sure what you mean by "to limit qmp commands visible".
+>>>
+>>> QAPI/QMP introspection has all commands and events, and all types
+>>> reachable from them.  query-qmp-schema returns an array, where each
+>>> array element describes one command, event, or type.  When a command,
+>>> event, or type is conditional in the schema, the element is wrapped in
+>>> the #if generated for the condition.
+>>>
+>>
+>> After reading and answering to your valuable email, I definitely think
+> 
+> Thanks!
+> 
+>> the introspection schema we expose should be adapted, independently of
+>> how we build QAPI code (i.e. using #ifdef TARGET or not).
+>>
+>> Is it something technically hard to achieve?
+> 
+> Unclear.  See "fundamental design assumptions" and "need to evolve the
+> QAPI schema language" above.
+> 
+> If you want to learn more about introspection, I'd recommend
+> docs/devel/qapi-code-gen.rst section "Client JSON Protocol
+> introspection".
+>
+
+I'll give a try at conditioning all this by runtime checks, so you can 
+review which changes it would create.
+
+> [...]
+> 
+
+Regards,
+Pierrick
 
