@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0738FC369D1
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 03:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3339C369D1
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 03:26:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9F68-0005nY-2K; Sun, 27 Apr 2025 23:24:00 -0400
+	id 1u9F7R-0006Tb-1B; Sun, 27 Apr 2025 23:25:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1u9F65-0005nA-J0
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 23:23:57 -0400
+ id 1u9F7P-0006T4-AP
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 23:25:19 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1u9F62-0006Cm-FE
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 23:23:57 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1u9F7M-0006g2-Qs
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 23:25:18 -0400
 Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxCGrE9A5ox_THAA--.3873S3;
- Mon, 28 Apr 2025 11:23:49 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxjawY9Q5oEPXHAA--.36292S3;
+ Mon, 28 Apr 2025 11:25:12 +0800 (CST)
 Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowMDxu8TB9A5o9V6aAA--.57976S3;
- Mon, 28 Apr 2025 11:23:47 +0800 (CST)
-Subject: Re: [PATCH v2 12/16] hw/intc/loongarch_pch: Use generic write
- callback for iomem8 region
+ by front1 (Coremail) with SMTP id qMiowMBx3MQW9Q5oRWCaAA--.57306S3;
+ Mon, 28 Apr 2025 11:25:10 +0800 (CST)
+Subject: Re: [PATCH v2 13/16] hw/intc/loongarch_pch: Use unified trace event
+ for memory region ops
 To: Bibo Mao <maobibo@loongson.cn>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
 References: <20250324093730.3683378-1-maobibo@loongson.cn>
- <20250324093730.3683378-13-maobibo@loongson.cn>
+ <20250324093730.3683378-14-maobibo@loongson.cn>
 From: gaosong <gaosong@loongson.cn>
-Message-ID: <b100099b-d109-f971-116c-ef828828da7f@loongson.cn>
-Date: Mon, 28 Apr 2025 11:26:24 +0800
+Message-ID: <6d720428-deda-a755-8dcf-4ebe6507e8dc@loongson.cn>
+Date: Mon, 28 Apr 2025 11:27:48 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20250324093730.3683378-13-maobibo@loongson.cn>
+In-Reply-To: <20250324093730.3683378-14-maobibo@loongson.cn>
 Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-CM-TRANSID: qMiowMDxu8TB9A5o9V6aAA--.57976S3
+X-CM-TRANSID: qMiowMBx3MQW9Q5oRWCaAA--.57306S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxAF17ZF45urW8CFW5Ary5GFX_yoW5Gw1rpr
- ZxZry3KF4DtFsFgFs7J3WDZr4xWFn7W34a9390ka409rZ8ZrykXFyDJ34kJFyjk34xArW8
- XFs5CryY9a1DW3XCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoWxWFW7WF43uw1fGryDJrW8uFX_yoWrtFy3pr
+ Z3ZrnxtFs5tF1qqrykZw15XF1xJF1Ig34a9asIkryI9w4DZwn8WFykJr97XF4j934DJrWY
+ qan5GFyYqa1DWagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
  IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
@@ -85,76 +85,119 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 ÔÚ 2025/3/24 ÏÂÎç5:37, Bibo Mao Ð´µÀ:
-> Add iomem8 region register write operation emulation in generic write
-> function loongarch_pch_pic_write(), and use this function for iomem8
-> region.
+> Add trace event trace_loongarch_pch_pic_read(), replaces the following
+> three events:
+>    trace_loongarch_pch_pic_low_readw()
+>    trace_loongarch_pch_pic_high_readw()
+>    trace_loongarch_pch_pic_readb()
+> The similiar with write trace event.
 >
 > Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 > ---
->   hw/intc/loongarch_pch_pic.c | 31 ++++++++++---------------------
->   1 file changed, 10 insertions(+), 21 deletions(-)
-
+>   hw/intc/loongarch_pch_pic.c | 24 ++++++------------------
+>   hw/intc/trace-events        |  8 ++------
+>   2 files changed, 8 insertions(+), 24 deletions(-)
 Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-Thanks.
+Thankss.
 Song Gao
 > diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-> index 83148a234b..bc4dd697d2 100644
+> index bc4dd697d2..ff1e5992bd 100644
 > --- a/hw/intc/loongarch_pch_pic.c
 > +++ b/hw/intc/loongarch_pch_pic.c
-> @@ -123,7 +123,7 @@ static void pch_pic_write(void *opaque, hwaddr addr, uint64_t value,
->   {
->       LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
->       uint32_t offset;
-> -    uint64_t old, mask, data;
-> +    uint64_t old, mask, data, *ptemp;
->   
->       offset = addr & 7;
->       addr -= offset;
-> @@ -161,6 +161,14 @@ static void pch_pic_write(void *opaque, hwaddr addr, uint64_t value,
->       case PCH_PIC_INT_POL ... PCH_PIC_INT_POL + 7:
->           s->int_polarity = (s->int_polarity & ~mask) | data;
+> @@ -200,12 +200,15 @@ static uint64_t loongarch_pch_pic_read(void *opaque, hwaddr addr,
 >           break;
-> +    case PCH_PIC_HTMSI_VEC ... PCH_PIC_HTMSI_VEC_END:
-> +        ptemp = (uint64_t *)(s->htmsi_vector + addr - PCH_PIC_HTMSI_VEC);
-> +        *ptemp = (*ptemp & ~mask) | data;
-> +        break;
-> +    case PCH_PIC_ROUTE_ENTRY ... PCH_PIC_ROUTE_ENTRY_END:
-> +        ptemp = (uint64_t *)(s->route_entry + addr - PCH_PIC_ROUTE_ENTRY);
-> +        *ptemp = (*ptemp & ~mask) | data;
-> +        break;
->       default:
->           qemu_log_mask(LOG_GUEST_ERROR,
->                         "pch_pic_write: Bad address 0x%"PRIx64"\n", addr);
-> @@ -269,28 +277,9 @@ static uint64_t loongarch_pch_pic_readb(void *opaque, hwaddr addr,
+>       }
+>   
+> +    trace_loongarch_pch_pic_read(size, addr, val);
+>       return val;
+>   }
+>   
+>   static void loongarch_pch_pic_write(void *opaque, hwaddr addr,
+>                                       uint64_t value, unsigned size)
+>   {
+> +    trace_loongarch_pch_pic_write(size, addr, value);
+> +
+>       switch (size) {
+>       case 1:
+>           pch_pic_write(opaque, addr, value, 0xFF);
+> @@ -230,55 +233,40 @@ static void loongarch_pch_pic_write(void *opaque, hwaddr addr,
+>   static uint64_t loongarch_pch_pic_low_readw(void *opaque, hwaddr addr,
+>                                               unsigned size)
+>   {
+> -    uint64_t val;
+> -
+> -    val = loongarch_pch_pic_read(opaque, addr, size);
+> -    trace_loongarch_pch_pic_low_readw(size, addr, val);
+> -    return val;
+> +    return loongarch_pch_pic_read(opaque, addr, size);
+>   }
+>   
+>   static void loongarch_pch_pic_low_writew(void *opaque, hwaddr addr,
+>                                            uint64_t value, unsigned size)
+>   {
+> -    trace_loongarch_pch_pic_low_writew(size, addr, value);
+>       loongarch_pch_pic_write(opaque, addr, value, size);
+>   }
+>   
+>   static uint64_t loongarch_pch_pic_high_readw(void *opaque, hwaddr addr,
+>                                           unsigned size)
+>   {
+> -    uint64_t val;
+> -
+>       addr += PCH_PIC_INT_STATUS;
+> -    val = loongarch_pch_pic_read(opaque, addr, size);
+> -    trace_loongarch_pch_pic_high_readw(size, addr, val);
+> -    return val;
+> +    return loongarch_pch_pic_read(opaque, addr, size);
+>   }
+>   
+>   static void loongarch_pch_pic_high_writew(void *opaque, hwaddr addr,
+>                                        uint64_t value, unsigned size)
+>   {
+>       addr += PCH_PIC_INT_STATUS;
+> -    trace_loongarch_pch_pic_high_writew(size, addr, value);
+>       loongarch_pch_pic_write(opaque, addr, value, size);
+>   }
+>   
+>   static uint64_t loongarch_pch_pic_readb(void *opaque, hwaddr addr,
+>                                           unsigned size)
+>   {
+> -    uint64_t val;
+> -
+>       addr += PCH_PIC_ROUTE_ENTRY;
+> -    val = loongarch_pch_pic_read(opaque, addr, size);
+> -    trace_loongarch_pch_pic_readb(size, addr, val);
+> -    return val;
+> +    return loongarch_pch_pic_read(opaque, addr, size);
+>   }
+>   
 >   static void loongarch_pch_pic_writeb(void *opaque, hwaddr addr,
 >                                        uint64_t data, unsigned size)
 >   {
-> -    LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
-> -    int32_t offset_tmp;
-> -
 >       addr += PCH_PIC_ROUTE_ENTRY;
->       trace_loongarch_pch_pic_writeb(size, addr, data);
-> -
-> -    switch (addr) {
-> -    case PCH_PIC_HTMSI_VEC ... PCH_PIC_HTMSI_VEC_END:
-> -        offset_tmp = addr - PCH_PIC_HTMSI_VEC;
-> -        if (offset_tmp >= 0 && offset_tmp < 64) {
-> -            s->htmsi_vector[offset_tmp] = (uint8_t)(data & 0xff);
-> -        }
-> -        break;
-> -    case PCH_PIC_ROUTE_ENTRY ... PCH_PIC_ROUTE_ENTRY_END:
-> -        offset_tmp = addr - PCH_PIC_ROUTE_ENTRY;
-> -        if (offset_tmp >= 0 && offset_tmp < 64) {
-> -            s->route_entry[offset_tmp] = (uint8_t)(data & 0xff);
-> -        }
-> -        break;
-> -    default:
-> -        break;
-> -    }
-> +    loongarch_pch_pic_write(opaque, addr, data, size);
+> -    trace_loongarch_pch_pic_writeb(size, addr, data);
+>       loongarch_pch_pic_write(opaque, addr, data, size);
 >   }
 >   
->   static const MemoryRegionOps loongarch_pch_pic_reg32_low_ops = {
+> diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+> index 0ba9a02e73..334aa6a97b 100644
+> --- a/hw/intc/trace-events
+> +++ b/hw/intc/trace-events
+> @@ -314,12 +314,8 @@ loongson_ipi_read(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x
+>   loongson_ipi_write(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%"PRIx64
+>   # loongarch_pch_pic.c
+>   loongarch_pch_pic_irq_handler(int irq, int level) "irq %d level %d"
+> -loongarch_pch_pic_low_readw(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+> -loongarch_pch_pic_low_writew(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+> -loongarch_pch_pic_high_readw(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+> -loongarch_pch_pic_high_writew(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+> -loongarch_pch_pic_readb(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+> -loongarch_pch_pic_writeb(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+> +loongarch_pch_pic_read(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+> +loongarch_pch_pic_write(unsigned size, uint64_t addr, uint64_t val) "size: %u addr: 0x%"PRIx64 "val: 0x%" PRIx64
+>   
+>   # loongarch_pch_msi.c
+>   loongarch_msi_set_irq(int irq_num) "set msi irq %d"
 
 
