@@ -4,110 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7A9C3ABA4
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 13:56:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D116BC369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 13:58:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9Oxa-0002Pe-95; Mon, 28 Apr 2025 09:55:50 -0400
+	id 1u9P07-0003sE-Vo; Mon, 28 Apr 2025 09:58:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9OxR-0002MY-FF
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 09:55:43 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9OxP-0003aw-2N
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 09:55:40 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-acb5ec407b1so794135566b.1
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 06:55:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745848537; x=1746453337; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LEXGM8VEQ7TacdCTkEDwWwtSCt5+sL53MvUEavsTFoM=;
- b=Q/TXTaTftCsF80gNPRd4fWzqSaPl8EqcleXBzZN/puy2p5gtAZLoF+jRo7PH7bNPrs
- bW6zt1Seeq94mhtOL7v3rCt4a65eXmVdUvdjDrJn9g8cXzuqI1p/5kDi07XXPD8yAt2f
- 8/dK5aaK+ugm8jtMQvPP/6MXqVTEBSsJeEht+gJWeIc8lMEizyUEyyOQijLqyTYYAc5k
- t2K+ik8pqcAcL+lvHUevuAbeAZ5cUNgctdY09jN10o/mXrqX9iGxbtm7ElHMOu524v/7
- YCvelzhDBFtabnp5TA0SWzhL7Fw/5H13GaGbJnPTOy8FqpEK394tTmCLGvJpY0r34DsQ
- a4AQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745848537; x=1746453337;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=LEXGM8VEQ7TacdCTkEDwWwtSCt5+sL53MvUEavsTFoM=;
- b=wHNYiUrpAeQPTQlCsR96Hh3+N59ZVGxOihWz1wTAZaFSVY1Cf9TAyKmLyuzx8cU/tc
- OsinVD0Ftm/dGULs+bgGDKM4wCGAmlZzQKAuX9JAi4gvZrKb7gBkoZIG4AQoBeq6Od13
- yZNfMWYNgLhB+l6/EfCumH4WK7Rb2NM491naG9dqNlHlPn0RGqokPV/yQDLOQGeyTU+r
- RXQWyQaoy0YzKmU2Mfp4AgkeMqc2Ak0zZfmeCJctdbsB8NGy4dNuv09+vkaqu8Cbn7bV
- RhcdJsMa4jty2Qzmqxt83507/gIoPwGQD6jBWDR3djF4B+NgIUx9FrY092PceziEtofd
- SJ6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUccnf77gTDhAoMmN+I9u2VheHeuong2hZJp3UcZCYqraGV8bybNmxw68dW5uP5UNH98dbLaTwCCP6u@nongnu.org
-X-Gm-Message-State: AOJu0YzRVWswHIm5zEZv1wewtees2UJH9k1pyjN1AaY/ZJZoWwfgv8kU
- C4izF0B8XZUaC5YqN5S+ExaZZoxIj1anRDmkhafqAnubfgp/wj6+3jcXe6cdr1c=
-X-Gm-Gg: ASbGnctFwiObB/yPFbFa5uCdTo3qO+LdKY2HKNQrfAZ5fJFyri2q1T2MAij69qWmo66
- I0SG8NQ9iSc3yY0QMObeIWEvMCEQm/uLEfKuSm8nVNNsxr2xYa2kNrhoQFc0Uu+Pim6Ks2Jrx51
- YRF1vzzlQ8nuCx7Idj0qiyC+easWSPoqyehkWrJFctLESnsqwM6bngpMLqbr/rIKC1tnRP9vehM
- wWHoEo3gAF85UaznyDGISsfhC9b6l+qxBGyBVCcbxEEJdtbSm+JfyC3G77aDga7szAYVMcGlFdh
- rgzv/wf3tX9UsRqFlarvET+HFjWOgmauJC9gxjik7V0=
-X-Google-Smtp-Source: AGHT+IEb4w7yVlKdUqckxkSYEYMebtULtjjmYXNW0Hy3uNfvsSfXqnrJ905dgSqaYu4CQ0BBDjOGTQ==
-X-Received: by 2002:a17:907:7f15:b0:ac3:8aa5:53f6 with SMTP id
- a640c23a62f3a-ace848f8408mr698956166b.24.1745848537433; 
- Mon, 28 Apr 2025 06:55:37 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-acebeca80a0sm44840266b.90.2025.04.28.06.55.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Apr 2025 06:55:36 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EF2A75F905;
- Mon, 28 Apr 2025 14:55:35 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: liucong2565@phytium.com.cn
-Cc: "Dmitry Osipenko" <dmitry.osipenko@collabora.com>,  "Sean
- Christopherson" <seanjc@google.com>,  Jiqian.Chen@amd.com,
- akihiko.odaki@daynix.com,  alexander.deucher@amd.com,
- christian.koenig@amd.com,  gert.wollny@collabora.com,
- gurchetansingh@chromium.org,  hi@alyssa.is,  honglei1.huang@amd.com,
- julia.zhang@amd.com,  kraxel@redhat.com,  marcandre.lureau@redhat.com,
- mst@redhat.com,  pbonzini@redhat.com,  philmd@linaro.org,
- pierre-eric.pelloux-prayer@amd.com,  qemu-devel@nongnu.org,
- ray.huang@amd.com,  robdclark@gmail.com,  roger.pau@citrix.com,
- slp@redhat.com,  stefano.stabellini@amd.com,  xenia.ragiadakou@amd.com,
- zzyiwei@chromium.org
-Subject: Re: [PATCH v11 04/10] virtio-gpu: Support asynchronous fencing
-In-Reply-To: <3118467e.dc3.1967c73dca7.Coremail.liucong2565@phytium.com.cn>
- (liucong's message of "Mon, 28 Apr 2025 20:51:30 +0800 (GMT+08:00)")
-References: <20250310120555.150077-5-dmitry.osipenko@collabora.com>
- <20250410095454.188105-1-liucong2565@phytium.com.cn>
- <d0e9e72a-02bf-4f1e-abe0-6e8d0d089b29@collabora.com>
- <5514d916.6d34.19622831b11.Coremail.liucong2565@phytium.com.cn>
- <425ebb80-4348-46f3-878b-054800a8fe85@collabora.com>
- <f662c725-e40e-43eb-b155-2440cff34324@collabora.com>
- <2d6e3b03.bb9.1967717fa84.Coremail.liucong2565@phytium.com.cn>
- <03414f52-def8-4b50-8da4-69b722dfc758@collabora.com>
- <87cycw61m8.fsf@draig.linaro.org>
- <3118467e.dc3.1967c73dca7.Coremail.liucong2565@phytium.com.cn>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Mon, 28 Apr 2025 14:55:35 +0100
-Message-ID: <87y0vk4ch4.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1u9Ozm-0003lQ-1T; Mon, 28 Apr 2025 09:58:07 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1u9Ozk-0003iV-8j; Mon, 28 Apr 2025 09:58:05 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id BDD0E11D759;
+ Mon, 28 Apr 2025 16:58:00 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 03607200009;
+ Mon, 28 Apr 2025 16:58:00 +0300 (MSK)
+Message-ID: <45fec2ac-9c59-4fe9-b750-8d04aa3e473f@tls.msk.ru>
+Date: Mon, 28 Apr 2025 16:58:00 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 4/4] qemu-img: improve queue depth validation in img_bench
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20250425175252.316807-1-kwolf@redhat.com>
+ <20250425175252.316807-5-kwolf@redhat.com>
+ <8fb759d6-6682-4962-b81d-ea20dbecd1e9@tls.msk.ru>
+Content-Language: en-US, ru-RU
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <8fb759d6-6682-4962-b81d-ea20dbecd1e9@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,29 +105,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-liucong2565@phytium.com.cn writes:
+28.04.2025 16:54, Michael Tokarev пишет:
+> 25.04.2025 20:52, Kevin Wolf wrote:
+>> From: Denis Rastyogin <gerben@altlinux.org>
+>>
+>> This error was discovered by fuzzing qemu-img.
+>>
+>> Currently, running `qemu-img bench -d 0` in img_bench is allowed,
+>> which is a pointless operation and causes qemu-img to hang.
+>>
+>> Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
+>> Message-ID: <20250327162423.25154-5-gerben@altlinux.org>
+>> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+>> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+>> ---
+>>   qemu-img.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/qemu-img.c b/qemu-img.c
+>> index 2044c22a4c..76ac5d3028 100644
+>> --- a/qemu-img.c
+>> +++ b/qemu-img.c
+>> @@ -4571,7 +4571,7 @@ static int img_bench(int argc, char **argv)
+>>           {
+>>               unsigned long res;
+>> -            if (qemu_strtoul(optarg, NULL, 0, &res) < 0 || res > INT_MAX) {
+>> +            if (qemu_strtoul(optarg, NULL, 0, &res) <= 0 || res > INT_MAX) {
+>>                   error_report("Invalid queue depth specified");
+>>                   return 1;
+>>               }
+> 
+> FWIW, it's been covered by my qemu-img options patches for way over a year.
 
-> I user Phytium D3000 8 Core, and I am not sure if it has a broken PCI.
->
-> https://www.cpubenchmark.net/cpu.php?cpu=3DARM+Phytium+D3000+8+Core+2500+=
-MHz
+In particular:
 
-Ahh - looks totally unrelated to the Altera platform so hopefully that
-isn't an issue. Apparently a lot of the PCIe implementations are based
-off the same underlying IP but without details its hard to check.
+https://lore.kernel.org/qemu-devel/20240927061121.573271-28-mjt@tls.msk.ru/
 
-I assume everything runs fine directly when not virtualised? Without a
-patched kernel on the AVA you would see corruption for X11 systems
-(although not Wayland). e.g.:
+I'm still waiting for some feedback from these patches - heard neither ACK
+nor NACK for this rather large work.
 
-  https://gitlab.freedesktop.org/mesa/mesa/-/issues/9100
-
-
-If you are happy your Arm can drive the AMD GPU ok from the host system
-you should focus on verifying the page locking is working as intended
-for the guests.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+/mjt
 
