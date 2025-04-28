@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 468A9C36005
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 06:02:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A750C36005
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 06:10:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9HYj-0002Jz-Va; Mon, 28 Apr 2025 02:01:41 -0400
+	id 1u9Hgw-00052v-Rt; Mon, 28 Apr 2025 02:10:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1u9HYb-0002Bl-Lb
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 02:01:39 -0400
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1u9Hgr-00051b-0L
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 02:10:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1u9HYZ-0001cu-Db
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 02:01:33 -0400
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1u9Hgo-0002OP-6d
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 02:10:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745820086;
+ s=mimecast20190719; t=1745820600;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8DsXi5Kvh+l42bSkdTG9kUZjvqqHLUantxE5fbCkrE4=;
- b=dnowMzG6mnuvk3GCj9yjyuw6+hersIE5/BoKvFpJ/6/mFIuDZa0AhS5vfBGOOT+L1dFNrp
- zXX8hArw9B6aIcWcZ5c+LhJoJ34unsfXXWWqFkkPGMleYyW5MHZqRDABjTZqDCAANLdnNv
- ys6SeXlJTp3IRwlrUxqt0n5rZiE1zqU=
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
- [209.85.222.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+z4i+41zwqN4dV9AdZu/w/vurPApnrl88zS3GbUA73g=;
+ b=U1Clu2eSthSc4F+TdDqofr6FxTS3KmnWg2KiKBcLaa42vd4EjY3ug3TV7DH/u/FZ3i0hcA
+ QB35nQVfgV/o80YcajqjnCCzeTQmM7MJXzoiGRsMDlGus6X5vBS0VzVyyXNjTa9e3rw2a2
+ yjxcItEOx2b5miYvYaKrWn4pLdIioGs=
+Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com
+ [209.85.221.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-613-k84S5yIGPHGR75WEANsLog-1; Mon, 28 Apr 2025 02:01:24 -0400
-X-MC-Unique: k84S5yIGPHGR75WEANsLog-1
-X-Mimecast-MFC-AGG-ID: k84S5yIGPHGR75WEANsLog_1745820084
-Received: by mail-ua1-f71.google.com with SMTP id
- a1e0cc1a2514c-875b0acbb58so933456241.2
- for <qemu-devel@nongnu.org>; Sun, 27 Apr 2025 23:01:24 -0700 (PDT)
+ us-mta-393-PkL0MYoWMxaqf6B2PKDynQ-1; Mon, 28 Apr 2025 02:09:57 -0400
+X-MC-Unique: PkL0MYoWMxaqf6B2PKDynQ-1
+X-Mimecast-MFC-AGG-ID: PkL0MYoWMxaqf6B2PKDynQ_1745820597
+Received: by mail-vk1-f199.google.com with SMTP id
+ 71dfb90a1353d-523c33cfea8so4752883e0c.1
+ for <qemu-devel@nongnu.org>; Sun, 27 Apr 2025 23:09:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745820084; x=1746424884;
+ d=1e100.net; s=20230601; t=1745820596; x=1746425396;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8DsXi5Kvh+l42bSkdTG9kUZjvqqHLUantxE5fbCkrE4=;
- b=RH9/20aVr5fseEWr7i6yU+YokWoqH4L6WeC3xbIyn5IMos6DTUVbNcBceUxxF+z3ek
- 9rDvfGA4IPP9I5lt66r1kgT7EkB2mLWjUhgNQR64c9Ji/8SyAumqhsLVkTltnpfkfstg
- 7ypHy80cx/BmR1VXWB617CmmytoYjfUZFsf5d/tcB4xna97u3kSiTIp28eDHTYz8rWdB
- l7O1UvPC8N52C88ehPQXhXam5BxR4MQnjQa3Mh188AYdHtb8y97s7RgCApYh+vJ2myXq
- BWc0ze39MySVXvPFFW81RlHDDvVpjIEO8mDWH+7AZA9FLHHzgJ5Bmj0wTVnztBcB/ME6
- AgJQ==
+ bh=+z4i+41zwqN4dV9AdZu/w/vurPApnrl88zS3GbUA73g=;
+ b=hQczJdsbIdEVaHcUux3NPNCt2TRYRjwwIHO8isoTju5zFT98g4+XCZkJqvApgVdfm5
+ HRKB5rO9lpWO4lQwh/LKZJ+ziB5ZUN1KyKXL7kI0/rBMYlEtOP4GOOqumkeqzVa9JfV1
+ CN95XwtBci+nagwofaYcABDYrmaw59VRXGNWWSbL+juOqK0aQYHe2OCcbaytC8RkngY2
+ 3G1nP2PXwrBn9XZ23pB44e4LpaIJcLk1LV8tsxA+AHf0gttjHGvrsf/ybDz7dWOt4xki
+ QnJjCkUvHAIw8CCsMLrbCt/B/wSXcYx4v9kLRGkEmfi9pTyHpECgFok2Uxvn20OGdhsI
+ 3cJA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV5xdB1WXZLntzEgYSnvMk0OStOL7r5XGtYWubUOPNaBPuNNFW5VnkqyoaW5gXLrExHVZ7ZxFsYpgTa@nongnu.org
-X-Gm-Message-State: AOJu0Yyq9U78ZRzXBOm1LJ6lqaLBINrh04MedJzwMS+TeApPYGJ/SHxF
- Tk8kd4KdM0kX/oI7R16OgD4+Q2dswSWJ9ddMo5EuNFuEw1JDWG/Gi+FEg0jqTSLx9IV9yg4OGhg
- 12uEoFuf2GGlAh/jZbynWmnMuoL32Fz9kpHg6bDbVxicxB3UaGyhfhNjB4IvxLY/CfusrE28R64
- H7E+lBrR4ingxulcFc3lyKg4aOPV3AhWINGiHeNQ==
-X-Gm-Gg: ASbGnctkomd+sOQGQzqKXk1eBV8FiFi6ZqT+F/CDg3Q7RUbYklMxqV1hzkED3y2TRE4
- HvOgBqKoKlPv/cTFgyoPawpc6zivf2stgtjI4CiX4pBV65/fVcC+hssfYdcEl1An63YZhdA==
-X-Received: by 2002:a05:6102:3a0b:b0:4cb:5d6e:e6c8 with SMTP id
- ada2fe7eead31-4d5439cbffbmr6421780137.9.1745820083286; 
- Sun, 27 Apr 2025 23:01:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEogQLJRec8DIsRozgxPs3dcC9XnyB5EjXTz73QxEyxH6rdVVOVSNiXxF5vFi6xhE6mpaw66s4V+7VcigBxKDM=
-X-Received: by 2002:a05:6102:3a0b:b0:4cb:5d6e:e6c8 with SMTP id
- ada2fe7eead31-4d5439cbffbmr6421771137.9.1745820083012; Sun, 27 Apr 2025
- 23:01:23 -0700 (PDT)
+ AJvYcCXSsHudcmEBBqAjQs/Qfgpfzge3yfy2J/h2zB13uZ/2XbQrImh20hY8LSc+pEPI6ps1AUviXPjp3Xxg@nongnu.org
+X-Gm-Message-State: AOJu0YxMxKdHkoje2MJK7lvWuBK3UAQTgvhQ+z+og4dus2rlIurYcliK
+ BM+U+jXjE9Dc7oovIdBZIoVnrHb7yYbefwrhdTmH23Xd5iJ9gUWlukzfx+Lqql/UP7vC84Cpkfr
+ lT5zUTTK4DQ3lntkmXwkBhFixUBFAW0fLTVhgtUiW59mXtW+EXpsIMzlinxgNbIwFzuW5h4VJRJ
+ D7SqH2q+dE8oc2rJWRXff21rauWMXFh31Lcdp8+A==
+X-Gm-Gg: ASbGnctjdzfFgf+3rp0vlfDeEW1eDbUjn7X/1RUJfn+1BIEKuNAQ5GQh4cknQOl+A3t
+ qmPj9BSWpay2WfV/TjszU0lxs8sD4HRF7K5Xn7pZz85o86fHGsGMDH8uATZqhk2ip708ilg==
+X-Received: by 2002:a05:6102:15a5:b0:4c1:90ee:f8c1 with SMTP id
+ ada2fe7eead31-4d5433ef0c2mr6665164137.5.1745820596552; 
+ Sun, 27 Apr 2025 23:09:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEOYoEt4QEx8QIKtjVo4LYirnufWasrfZWzS48RbfPHHg+jNFITCvv6kieJGUDp5U+DtwTGJLz0wS578wMR3u8=
+X-Received: by 2002:a05:6102:15a5:b0:4c1:90ee:f8c1 with SMTP id
+ ada2fe7eead31-4d5433ef0c2mr6665161137.5.1745820596330; Sun, 27 Apr 2025
+ 23:09:56 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250417102522.4125379-1-lulu@redhat.com>
- <20250417102522.4125379-5-lulu@redhat.com>
- <CACGkMEsKmFZ_QaZZFohJvouQ9CWbPbOY56KJ27hBdfVFJiWORg@mail.gmail.com>
-In-Reply-To: <CACGkMEsKmFZ_QaZZFohJvouQ9CWbPbOY56KJ27hBdfVFJiWORg@mail.gmail.com>
+ <20250417102522.4125379-4-lulu@redhat.com>
+ <CACGkMEscXQxKSNN=3-0wuYJUxw7wGby1B-pD0yLLbSOHY9ez0w@mail.gmail.com>
+In-Reply-To: <CACGkMEscXQxKSNN=3-0wuYJUxw7wGby1B-pD0yLLbSOHY9ez0w@mail.gmail.com>
 From: Cindy Lu <lulu@redhat.com>
-Date: Mon, 28 Apr 2025 14:00:46 +0800
-X-Gm-Features: ATxdqUHPm3Nur1Rxhe3j8Z4Mo7LWBG6FzRbIvE0EUNkWe7WSlYMKMlRN6TEp2sQ
-Message-ID: <CACLfguU7rPGpR2NH2oCUN3KcsnLJfFe38+0keDgBXi+k1=NPLg@mail.gmail.com>
-Subject: Re: [PATCH v7 4/4] virtio_net: Add third acceptable configuration for
- MAC setup.
+Date: Mon, 28 Apr 2025 14:09:20 +0800
+X-Gm-Features: ATxdqUFmGLfq3p5Tuf-qvGl16v58zP88aYzlD_nuCBN9IDxZsnqEUtBPOQ-DhYQ
+Message-ID: <CACLfguWLXgEcKyjOPC-2Uih5ARJA34_2gm3hebN+CC0OV4DbRA@mail.gmail.com>
+Subject: Re: [PATCH v7 3/4] virtio_net: Add second acceptable configuration
+ for MAC setup
 To: Jason Wang <jasowang@redhat.com>
 Cc: mst@redhat.com, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
@@ -104,63 +104,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 21, 2025 at 11:22=E2=80=AFAM Jason Wang <jasowang@redhat.com> w=
+On Mon, Apr 21, 2025 at 11:19=E2=80=AFAM Jason Wang <jasowang@redhat.com> w=
 rote:
 >
-> On Thu, Apr 17, 2025 at 6:26=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
+> On Thu, Apr 17, 2025 at 6:25=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
 > >
-> > For VDPA devices, Allow configurations where both the hardware MAC addr=
-ess
-> > and QEMU command line MAC address are zero.
-> > In this case, QEMU will automatically generate a random MAC address and
-> > assign it to the hardware, and the VM will use this random MAC address =
-as
-> > its MAC address.
+> > For VDPA devices, Allow configurations where the hardware MAC address
+> > is non-zero while the MAC address in the QEMU command line is zero.
+> > In this case, QEMU will use the hardware MAC address from the device.
 > >
 > > Signed-off-by: Cindy Lu <lulu@redhat.com>
 > > ---
-> >  hw/net/virtio-net.c | 11 +++++++++++
-> >  1 file changed, 11 insertions(+)
+> >  hw/net/virtio-net.c | 14 ++++++++++++++
+> >  1 file changed, 14 insertions(+)
 > >
 > > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> > index 808a2fe4d4..2d4ac20ee0 100644
+> > index 0b6a4e5634..808a2fe4d4 100644
 > > --- a/hw/net/virtio-net.c
 > > +++ b/hw/net/virtio-net.c
-> > @@ -3772,7 +3772,18 @@ static bool virtio_net_check_vdpa_mac(VirtIONet =
+> > @@ -3757,6 +3757,20 @@ static bool virtio_net_check_vdpa_mac(VirtIONet =
 *n, uint8_t *hwmac,
+> >          if ((memcmp(hwmac, cmdline_mac, sizeof(MACAddr)) =3D=3D 0)) {
 > >              return true;
 > >          }
-> >      }
-> > +    /*
-> > +     * 3. The hardware MAC address is 0,
-> > +     *  and the MAC address in the QEMU command line is also 0.
+> > +        /*
+> > +         * 2. The hardware MAC address is NOT 0 and the MAC address in
+> > +         *  the QEMU command line is 0.
+> > +         *  In this case,qemu will use the hardware MAC address overwr=
+ite
+> > +         *  the QEMU command line MAC address saved in VirtIONet->mac[=
+0].
+> > +         *  In the following process, QEMU will use this MAC address
+> > +         *  to complete the initialization.
+> > +         */
+> > +        if (memcmp(cmdline_mac, &zero, sizeof(MACAddr)) =3D=3D 0) {
+> > +            /* overwrite the mac address with hardware address */
+> > +            memcpy(&n->mac[0], hwmac, sizeof(n->mac));
+> > +            memcpy(&n->nic_conf.macaddr, hwmac, sizeof(n->mac));
 >
-> Can this happen? I'd expect qemu should check for invalid mac addresses.
+> I'm not sure I get here, shouldn't we need to call get_config() here?
 >
-If the QEMU command line does not specify the MAC address, it passes a
-value of 0 to this function. Therefore, we may not need to add a check
-here, as this value will be replaced with a random MAC address in the
-subsequent process.
-thanks
+> Thanks
+>
+I made a small change to this function: get_config() is called in
+virtio_net_device_realize() before check_mac(), so we don't need to
+call it again.
+Thanks
 Cindy
-
-> > +     *  In this situation, QEMU generates a random MAC address and
-> > +     *  uses CVQ/set_config to assign it to the device.
-> > +     */
-> > +    if ((memcmp(hwmac, &zero, sizeof(MACAddr)) =3D=3D 0) &&
-> > +        (memcmp(cmdline_mac, &zero, sizeof(MACAddr)) =3D=3D 0)) {
-> > +        memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
+> > +            return true;
+> > +        }
+> >      }
 > >
-> > +        return true;
-> > +    }
 > >      return false;
-> >  }
-> >  static void virtio_net_device_realize(DeviceState *dev, Error **errp)
 > > --
 > > 2.45.0
 > >
->
-> Thanks
 >
 
 
