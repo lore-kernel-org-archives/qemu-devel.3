@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADEE5C369DC
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 21:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A6F2C369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 21:39:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9WAv-0007Bc-BB; Mon, 28 Apr 2025 17:38:05 -0400
+	id 1u9WBg-00005K-5I; Mon, 28 Apr 2025 17:38:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u9WAt-00079V-H4
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 17:38:03 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1u9WBd-0008Tz-ER
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 17:38:49 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u9WAr-0004LS-RZ
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 17:38:03 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-3085f827538so7291320a91.0
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 14:38:01 -0700 (PDT)
+ id 1u9WBb-0004N0-PF
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 17:38:49 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-73712952e1cso5702671b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 14:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745876280; x=1746481080; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745876326; x=1746481126; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Bv9s0XU0fSrF7wKrJOhCZJYZ1A5rRkecsR7oyH+hF78=;
- b=Rydfykaaf92v0NmLn/55n209VlG1U2nmclCTvC/Lr+BevwXNLfXUZrZ8spH2LdzAmo
- VH+6VOncqAbFRGhaKO6EzjE0ErujPb34BUi94bNwj+FhZzRCrr9JpHdSMPHIDCAW3Fyt
- ZeCp+8heB0ne0Kz1ACzA8x9lgFmyqvodxA87ruvJjzV1q26eEedxzgMGJhWFo2CuCfDp
- i2s2a2+UxMTQqxMwIFtblSCk/SWsol3Ph5s5fxDHuxmyZ4KOcFP58roXFPFa1EW+s7QI
- GxHKv4TMU684MX6zXqlbbjBOMdW0q7bn1eWJYFn4GDQKcwjokQSTmTkZyVdQQEXBNfyS
- HTrA==
+ bh=b+Iq1N6on9ErzNaz7jJzAm3wbw1jKo4KxFviGK5Rf+M=;
+ b=Ov8y7/5LSDef8KxgT7fVaCczVqK62VEVdLrfTc3QNr5Dk6vVeeuaZvNd/1nXa48FmI
+ kxsHcRYlWGrWWwONzngehfF71HQcX/y0sTjI0PnIa4Q5B0whsZvwQVz5SpZHXi8C6qO2
+ ayQAZoZMc897eL2S/AHqXFUZNhi46XYmr7W06lkBUoep87ZCOwmYWuiXFjGf5AugTrL/
+ mCDQCpYN6Sm3qM0gNPM7gtwjrjf3km+mS/MuYA/IuliBJnLr0kaYgj7cygbkApTkTiaI
+ 021Qru38dejrvL3ZBNTshodyV9wADK896HOWqOUbuLWA3m7XTkpbR8LHn5GFwh8BvnT3
+ idYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745876280; x=1746481080;
+ d=1e100.net; s=20230601; t=1745876326; x=1746481126;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Bv9s0XU0fSrF7wKrJOhCZJYZ1A5rRkecsR7oyH+hF78=;
- b=g0MvOm+w1k0pqMOsybsoU4htwrZtVvKJXfiRINyDyp9pc39rtlRcMRxiLsgTJrmfSJ
- hcdCkrQzinVIPK13HJqJeOpaIvAvY+P04Ev4fdMIvKgsBSA5fILddXyuDlCL47A0QWfA
- 0/AIPX6Q858GwGaybEP56lOJvGyNa8dFSzh3dTx7qmVTf52Xn4jWROBdYs3zxT0US1TV
- +/Cs5StGqRajUeE6racgSbf/9oaHddwkjtqoHcWZFpfHjRvCNnpvChzRZuwwajGLjULU
- nZZVkU0dXokgpC6MmqtAgojyQz1utmGSsewNkrVEfxNRZIlkB5C01tkm8Lm7hEc7s/4d
- 2nGA==
+ bh=b+Iq1N6on9ErzNaz7jJzAm3wbw1jKo4KxFviGK5Rf+M=;
+ b=QpHxITWJdQdHluEVHFoj3bCxUbWVxFGV1h4T84zLn0IkGz9KyqxAPkqu3XELhhtQ0V
+ L7zjuiEXDqxQLfVUk3lFxGaIVJBl9u0S7rblKZ5ulAnBjTRVJjAVWNGqRfVJhFya1qs/
+ srjnZ3MGD1obf4Fy9LExHp+tZkY3xod1MtdlHBVDBImp6ZBF6yc/VOaUiQi4mUqbZ0Rq
+ 1AhWP0p7hp50b/4ay6x4KANBHU2suNGZhk3vFWcKwHmCW6HmNt+AnppNCLZIjeT9q+Wd
+ MiVBTFJKnLBvl1pZoku7U8vyCnuH3m/EJfv350Z5Ak1bALHuSQIEfs0c9Pw3EsK+Iddw
+ CZNA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbvlhXfo+xTMaY2OYQFxi0LYiTN1K+rJngkWQEe1eOvBmyCY1ARfp8upC8/urJbw1pXc4SD85qUSI7@nongnu.org
-X-Gm-Message-State: AOJu0Yw5hMzEqnIcy8vdTgKVpxKsGx3q/yqkECn4Mrkw8oDsNWCPNj7P
- u5NE6Q5qeu9oT/X1+vrOqQpRo7csNc4hiyfxDMm9yspZUb4TVZkrBv/Pl/EfZPQ=
-X-Gm-Gg: ASbGncuqQYrYZuy7TEifPBBioPTuJWjynwELFLrU1YimZn1h8HuLFkm5jxDRhLWdr2q
- NNeUj3ZDpM6C72VAFeQZJ5RRkt2umdQ93I53UCFJlp+bUguuVh1W6Rhb+mtKE88fVlvIkKdltFj
- UCo257bR7IDLUuqCp5tNFkAGj1Uj7eWe4RRz52WDT+hjxu921QEmle+FqQljUQlzyU3uDDofu6H
- fHxuXGTZh0vFAKtm5o4MNqR/Y2BLDopKWvsVB9FrixVJzAPhV8DEZpTkMRV3Czkx8r/U2PhKbF0
- /qvCxaNmThviSFvhBeNC5lX2Fpzjk55Kt+tKzFQ3zf3/GgZenZjQVCPp/dzwoq0O
-X-Google-Smtp-Source: AGHT+IFprCabT1RSIMWAdYrCNwaONRs9IzSAIvFJsNK5Ck+XS048pTUPkM9ypLSANCemPsW2Tnj68A==
-X-Received: by 2002:a17:90b:278d:b0:2ff:6608:78cd with SMTP id
- 98e67ed59e1d1-30a013279d6mr17242856a91.9.1745876280174; 
- Mon, 28 Apr 2025 14:38:00 -0700 (PDT)
+ AJvYcCUndEKcl0nh6ZYOUtJqhiJO4w1mICObUbEVkGrIFTKOj7tPTyw2/g3tsoIZt13+bCSF3D5kIxPDOg5o@nongnu.org
+X-Gm-Message-State: AOJu0YxW3jJ24mgPBCGPDVvoWdK4GOE8T24myZMZSNEnD64kli7RX0bj
+ z8mE21rCWE3Sci8nvouzV7EtrbxOQlBWneeMnsACogs2TuJaHS1sLBnBnNWLmPM=
+X-Gm-Gg: ASbGncswNtryD1/6LlIEFAIMmeI6woECz1DFINjHTXSvQPjzfUz6SUjiisN8zZhM6gG
+ cNAa94dIziQU1q20vqF8Cpa5pv7MVzW/qRbwhgj3uG4FAJo4POUmPsUb4EzfsIsiM7wEX1MVc5o
+ 1bqUkkuIgoygEmOriu3V3eiMvtz6pb1vI4aPJXTXp5UkdvdRfeJT6rrNo3Dqr3r4fBNwmw67mMW
+ oqlYVaz6fTmNejxNmStT2zrfHG4vUv9quFcHpUNCC88ZmJYyJuof5ID+lCVgpKr59Sn9Pg1P4VB
+ ocXjyqml5+ooD2LRZ9lC2lEXPjXoV+dMclzocgj7hRj4KciiCIEuRA==
+X-Google-Smtp-Source: AGHT+IH3zc3FhiCQuYxWyETCdZ9A+3gLizjHG8Bt1VkfRQENqqhPQ4JWiS5UER+5aVaLOvsFuiPiIA==
+X-Received: by 2002:a05:6a00:218c:b0:736:5753:12fd with SMTP id
+ d2e1a72fcca58-73ff72553c3mr15091207b3a.4.1745876326001; 
+ Mon, 28 Apr 2025 14:38:46 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db4d76c8bsm88323805ad.48.2025.04.28.14.37.59
+ d2e1a72fcca58-73e25a6a17csm8521845b3a.111.2025.04.28.14.38.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 14:37:59 -0700 (PDT)
-Message-ID: <bb706ddf-ae69-4ddd-a6f4-67f7c993c355@linaro.org>
-Date: Mon, 28 Apr 2025 14:37:59 -0700
+ Mon, 28 Apr 2025 14:38:45 -0700 (PDT)
+Message-ID: <2b411bc3-cb00-4e3e-8f63-325716da8e40@linaro.org>
+Date: Mon, 28 Apr 2025 14:38:45 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/10] accel/tcg: Unconditionally use CPU_DUMP_CCOP in
- log_cpu_exec
+Subject: Re: [PATCH 03/10] accel/tcg: Introduce TCGCPUOps.cpu_exec_reset
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: philmd@linaro.org
 References: <20250428201028.1699157-1-richard.henderson@linaro.org>
- <20250428201028.1699157-3-richard.henderson@linaro.org>
+ <20250428201028.1699157-4-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250428201028.1699157-3-richard.henderson@linaro.org>
+In-Reply-To: <20250428201028.1699157-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,17 +104,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/28/25 1:10 PM, Richard Henderson wrote:
-> This flag is only tested by target/i386, so including this
-> makes no functional change.  This is similar to other places
-> like cpu-target.c which use CPU_DUMP_CCOP unconditionally.
+> Initialize all instances with cpu_reset(), so that there
+> is no functional change.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-> We could just as easily remove CPU_DUMP_CCOP entirely, and let
-> target/i386 dump CCOP along with general regs like other targets.
-> ---
->   accel/tcg/cpu-exec.c | 5 +----
->   1 file changed, 1 insertion(+), 4 deletions(-)
+>   include/accel/tcg/cpu-ops.h | 2 ++
+>   accel/tcg/cpu-exec.c        | 3 ++-
+>   target/alpha/cpu.c          | 1 +
+>   target/arm/cpu.c            | 1 +
+>   target/arm/tcg/cpu-v7m.c    | 1 +
+>   target/avr/cpu.c            | 1 +
+>   target/hppa/cpu.c           | 1 +
+>   target/i386/tcg/tcg-cpu.c   | 1 +
+>   target/loongarch/cpu.c      | 1 +
+>   target/m68k/cpu.c           | 1 +
+>   target/microblaze/cpu.c     | 1 +
+>   target/mips/cpu.c           | 1 +
+>   target/openrisc/cpu.c       | 1 +
+>   target/ppc/cpu_init.c       | 1 +
+>   target/riscv/tcg/tcg-cpu.c  | 1 +
+>   target/rx/cpu.c             | 1 +
+>   target/s390x/cpu.c          | 1 +
+>   target/sh4/cpu.c            | 1 +
+>   target/sparc/cpu.c          | 1 +
+>   target/tricore/cpu.c        | 1 +
+>   target/xtensa/cpu.c         | 1 +
+>   21 files changed, 23 insertions(+), 1 deletion(-)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
