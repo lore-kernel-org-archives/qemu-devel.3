@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9936C369DC
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 14:00:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9B88C369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 14:02:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9P2K-0006b6-QA; Mon, 28 Apr 2025 10:00:44 -0400
+	id 1u9P3k-0007Iq-26; Mon, 28 Apr 2025 10:02:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u9P2H-0006a7-UK
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 10:00:41 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u9P3i-0007ID-2B
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 10:02:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u9P2G-00045G-93
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 10:00:41 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u9P3g-0004Cq-Ax
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 10:02:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745848837;
+ s=mimecast20190719; t=1745848927;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=o+K9fY3HxhttjtKjHOfixYuMIUFJSLFgMg1UK+eFuek=;
- b=CGldGy/GgGPPKwtjlp4dLH9be2IoReUUOofYnLW6fKy0O2uoVr+2JssygaBPjrmQ91jlbl
- TdD8G3vcLW/GYBd7q+7tTJBZp28cRe78f8pWA3ux18O39LKo+ueN1y3AlfFTK8fKUfB3xT
- JEcoyyHU0Uq8ZbkgJoEYGa9EIbdGYtI=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=oVDaO+qTXn+ujDK2ncQx+yn7CcEGLmLQc2GUBGf+VUE=;
+ b=hLu5jGe/F62Jjyv++HPR0olPUA8B6nVDMSJHbqiU0soNJYpksvn/L5Uvq+JeU4xrqLjTp5
+ LjmuveMN6FJcLz2GCRV7HPma9bZcCl71DsPbnwp9RNdjPkypOVNDSMLm91Bx1EbP9XgMBI
+ b3qYymt4yPudLVADIN2tbpXBgsvWieQ=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-282-RAo-_MC0P5WoDqHwlEsMKw-1; Mon, 28 Apr 2025 10:00:35 -0400
-X-MC-Unique: RAo-_MC0P5WoDqHwlEsMKw-1
-X-Mimecast-MFC-AGG-ID: RAo-_MC0P5WoDqHwlEsMKw_1745848834
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-ac31adc55e4so392631866b.3
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 07:00:35 -0700 (PDT)
+ us-mta-244-LoVN3MlKPgO1L2dQgWlVOA-1; Mon, 28 Apr 2025 10:02:01 -0400
+X-MC-Unique: LoVN3MlKPgO1L2dQgWlVOA-1
+X-Mimecast-MFC-AGG-ID: LoVN3MlKPgO1L2dQgWlVOA_1745848921
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-acb98b5b0bdso433981266b.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 07:02:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745848834; x=1746453634;
+ d=1e100.net; s=20230601; t=1745848920; x=1746453720;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=o+K9fY3HxhttjtKjHOfixYuMIUFJSLFgMg1UK+eFuek=;
- b=hN00zdi1v5Mol7DqGCyvTzqNYZhRN/Y0nJn/j5hOOf2J749eESY7LJaUxyZ+HLi7L+
- Ax4DXC3FfhZH6x8myGL1mEw1+4l69SmYqOd6LUS5lK78etBCtqEEIgc+wFWjSeF45+Qq
- PC0532ALS6WI89zPb3paP5ANz+7lhtkfqbvmblFmIqZVjrzg53V8O4p9Blm650SQyiay
- S+lGUa+sziKmDYDqzZtxSSjE2PRwDibY1lHEo44wir+eii+LwTQQWQY1PWFhNUmuyQ5Y
- 4+kGnVwxj+oW9EuWHcuPcvC2odd1Sh/4B5yybJQ/IZxK/s/6pGK/9OZuo+/OAiCQ0n2z
- H2Vg==
+ bh=oVDaO+qTXn+ujDK2ncQx+yn7CcEGLmLQc2GUBGf+VUE=;
+ b=v4MSx7ivH9FOa7XNQOJOVVEAjY6TrB4tzbpyVDED3xcs0aRuU1/XpTZFNDVp90KY/y
+ KKC97IOY43T4vWvOama8sUXn1CCHn8qukRVlaChJAbDnNzhuayF4QLFGKAv1ds+0lTi9
+ KMT5mlDWxp/6ooSVKZ2kwtmCp6ouOBKXziuH1dEa4NKhitZBgsG40PB5iH1wBV1Fd5jb
+ ZMlztvM82kgG+NlzZW+WNnkGYbAUsBcj7Mbx6lIG+gRPjXALqjJEq+x6KIwVPoI4caTD
+ P+swUAhIBF88nF9rZduhfM7rAv52T+UGz9xZUN3Xff5JFgtsMYDWloJOSBhrxrsnW1qX
+ 5UTg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVKpvZT4SA809i7xW7zbO95akKpVB3OSE56JjqCDmgiUMfb+RJnWNRWelhyiUFv7k5vrwwoQyWiw0XQ@nongnu.org
-X-Gm-Message-State: AOJu0Yz7c8zVipb06nyVKMfurMTIJ2k0zIZxsIr5HJLM+xY8aE0ar2Vp
- a0avUeYkIaHZ7aBzs3tIVQvOC6cWKYb8J7yS/nD/SDA8DGM4JdEHtbd4uLqoiM3mPOODPu0U40z
- oQ9WLNBEYXF/swKlaSN2Q38KNDxmRtpMmyRD3vjB5XpBtavyjnCnI
-X-Gm-Gg: ASbGnct6KxYtZaAbuMBPa3xVON68bBdr2Q6gfHtLIrP6kafO4XD9pX5k4raPV1EvLft
- iQ1oqRWLe17/v2LQdZlUiKRAAf52xdzrST3n+XaFXIXUbffhDkBn+vKNd3EJ1vszOpvrIkOq0dH
- txNHKxC+HZkdR9EL7nSLYgXPoET4bXqASSrX9MsJMyj6fWe+jM5XQWRTbwImS1lug3Bo9+SPTaB
- BRE3ncuDV5zFqJo1KfnM+2ntGi5+8iBy0poJAsBQe1bM8Kl+uWKJfI7fW357yJF0+r1m837sB01
- LR796tBIxDS1USIvMBmG34EQbH4KwPW6UsF/tQMxbHMonw==
-X-Received: by 2002:a17:907:3e03:b0:ace:3a27:9413 with SMTP id
- a640c23a62f3a-ace739dd0b1mr975330666b.11.1745848834132; 
- Mon, 28 Apr 2025 07:00:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHgpiNm+DCC8Ygtm/7Sg6Lto+DAyvQ9iiDITk7jvKKrsIz8hBi/R2gDZdE0M63rQ8zlgLeirw==
-X-Received: by 2002:a17:907:3e03:b0:ace:3a27:9413 with SMTP id
- a640c23a62f3a-ace739dd0b1mr975326366b.11.1745848833651; 
- Mon, 28 Apr 2025 07:00:33 -0700 (PDT)
+ AJvYcCWrJWj9eoPusS68NpTIDtrDVgSUFsxo+YaxM8XpMVcTygeN3iFPuch09sm5hD2ShC16JMkP08Zns2jh@nongnu.org
+X-Gm-Message-State: AOJu0YzrBonjak2r7ECE+iRslnR31uc/MsB4RYCITNcdx2ltA0W1zx3p
+ tFj/Xgtl/KpZxflatIfy+fO2nJOgiR31XiAquR4u9Gd6dEPUQ1t2Nb73rDDDLcTb5g1YpncxvNg
+ 0dp6ZFCYhCC/jTEQohe9EwjCAPT24crqIIkQNYaRq93aLxUABnuD3
+X-Gm-Gg: ASbGncuyeNyVvth0mhiWeCpvNBZunGFjT0Vzl2yP00sDsDxATlALip6L41r/ulfxHu8
+ j3yNZAeaRTwNQAPeZDQUVlVMbC/u1zsEqbgEH8Lqdr4Pi2nYMxKi9bqX8W/KuihoTHbWDUcxu5R
+ DKtJKQf7gpubmZyFSWW93LEsTBpTNpE4r1eWKZ9CGRGyNXV1tHjIv10C6hgnwWbh2iQWtOXPnmm
+ 790cQYxN3QLglz21kH174/MJ86VQD6qjSX8OHUZywHtt+gLNW74NkNwrJ2mT9+5pdnUUqsj8t6P
+ Vjhyf1vps3TrNmhOlOmEfr9Wfm7IJVZ23pMaSzwz4fp3Wg==
+X-Received: by 2002:a17:907:3ea3:b0:ac1:ecb5:7207 with SMTP id
+ a640c23a62f3a-ace7111e569mr1044832466b.29.1745848920373; 
+ Mon, 28 Apr 2025 07:02:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHpQ2A59x4luIYuijd4eK/UCx5XlvMVMe+kGUR42Kos1u8T673GCTD3ZcRVKEoVz1ZeH1tQJw==
+X-Received: by 2002:a17:907:3ea3:b0:ac1:ecb5:7207 with SMTP id
+ a640c23a62f3a-ace7111e569mr1044825466b.29.1745848919721; 
+ Mon, 28 Apr 2025 07:01:59 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-43-178-177.web.vodafone.de.
  [109.43.178.177]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ace6edafed3sm625975666b.180.2025.04.28.07.00.32
+ a640c23a62f3a-ace6edafec7sm626447466b.165.2025.04.28.07.01.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 07:00:33 -0700 (PDT)
-Message-ID: <e833c21d-cdbd-4924-a8dc-79c8269f87b2@redhat.com>
-Date: Mon, 28 Apr 2025 16:00:30 +0200
+ Mon, 28 Apr 2025 07:01:59 -0700 (PDT)
+Message-ID: <294fd9b9-6880-477f-a2b4-773f1e5274c8@redhat.com>
+Date: Mon, 28 Apr 2025 16:01:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/9] tests/docker: expose $HOME/.cache as docker volume
+Subject: Re: [PATCH 2/9] gitlab: disable debug info on CI builds
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Alexandre Iooss <erdnaxe@crans.org>, "Michael S. Tsirkin"
@@ -87,7 +87,7 @@ Cc: Alexandre Iooss <erdnaxe@crans.org>, "Michael S. Tsirkin"
  Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
 References: <20250428125918.449346-1-alex.bennee@linaro.org>
- <20250428125918.449346-2-alex.bennee@linaro.org>
+ <20250428125918.449346-3-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -132,7 +132,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250428125918.449346-2-alex.bennee@linaro.org>
+In-Reply-To: <20250428125918.449346-3-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -144,7 +144,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,27 +161,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 28/04/2025 14.59, Alex Bennée wrote:
-> If you want to run functional tests we should share .cache so we don't
-> force containers to continually re-download images.
+> Our default build enables debug info which adds hugely to the size of
+> the builds as well as the size of cached objects. Disable debug info
+> across the board to save space and reduce pressure on the CI system.
+> We still have a number of builds which explicitly enable debug and
+> related extra asserts like --enable-debug-tcg.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   tests/docker/Makefile.include | 1 +
+>   .gitlab-ci.d/buildtest-template.yml | 1 +
 >   1 file changed, 1 insertion(+)
 > 
-> diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
-> index fa1cbb6726..56a8d9f8ff 100644
-> --- a/tests/docker/Makefile.include
-> +++ b/tests/docker/Makefile.include
-> @@ -224,6 +224,7 @@ docker-run: docker-qemu-src
->   			$(if $(NOUSER),,				\
->   				-e CCACHE_DIR=/var/tmp/ccache 		\
->   				-v $(DOCKER_CCACHE_DIR):/var/tmp/ccache:z \
-> +				-v $(HOME)/.cache:$(HOME)/.cache 	\
+> diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+> index d4f145fdb5..d9e69c3237 100644
+> --- a/.gitlab-ci.d/buildtest-template.yml
+> +++ b/.gitlab-ci.d/buildtest-template.yml
+> @@ -24,6 +24,7 @@
+>       - ccache --zero-stats
+>       - section_start configure "Running configure"
+>       - ../configure --enable-werror --disable-docs --enable-fdt=system
+> +          --disable-debug-info
 
-Maybe better restrict it to ~/.cache/qemu ? ... to avoid sharing other 
-subfolders there to the container?
+Do we have any jobs that might show stack traces in the console output ? 
+build-oss-fuzz comes to my mind, but that uses a separate script, so we 
+should be fine there?
 
-  Thomas
+So assuming there are no other jobs around that might need it:
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
