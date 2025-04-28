@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E08C36005
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 06:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F1EC369D9
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 06:43:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9IBj-0004Sh-Nl; Mon, 28 Apr 2025 02:41:59 -0400
+	id 1u9IA0-0002Pj-Ho; Mon, 28 Apr 2025 02:40:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u9IB2-0003JX-S1; Mon, 28 Apr 2025 02:41:24 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1u9I9q-0002K1-P7; Mon, 28 Apr 2025 02:40:04 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u9IAv-00079G-SQ; Mon, 28 Apr 2025 02:41:16 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2295d78b433so45731735ad.2; 
- Sun, 27 Apr 2025 23:41:08 -0700 (PDT)
+ id 1u9I9n-0006pB-Dl; Mon, 28 Apr 2025 02:40:01 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-22c336fcdaaso50856395ad.3; 
+ Sun, 27 Apr 2025 23:39:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745822467; x=1746427267; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745822396; x=1746427196; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+/nnk2ZOF1tW/MJazOrX1XPPavmSBWDJgIss4LsgUwQ=;
- b=O3hL2UkLyiruFtzP6pCoYyeFxO6sRLffZNU8p8UBwGRb5UhlODSOfSJjvDUetW+yBA
- oZAWFxNdBEczgDB2X89oeuH5JTgWhfH9tgX5u03ZUgawtSRRLBPQyHlubGbko8LUr4Vi
- rkiUJuPwf88dAQFiOBnpSkM/aZt9QK8Kb1rw1Ae1A2qxWlB4KADmgluIQzC2gmmTIoKe
- OzT+FyKG9g+SexOYxxs60Djo1wP2Ua8p4Up0KFlfWKWPdWwPZjVYztmPj4cGq9XHj8j1
- 8RYXxOWhY+gdarc2o6LtphaZrlZilWqq0LZqq6Mn2GLCDK4LpuJgwo9P+MAfKvL1aOjF
- Rd3Q==
+ bh=Lww8hov75vab4etPov3FqdJvlp/MIqzg17mT2sCNDQ8=;
+ b=heC/KZ6jWveVLlSwkoREBe02yT6G6lKYGRFD5YQnQDvIH6kJbPY9b1CDP4/AC5Lyjm
+ 1wcDQ+Z2XQl9ilyYtgPvQnYpOYdcM81kVlocF0x2XcLJ4Enul280o5sshfsdb+yY3p+W
+ l7noP8zrPXvoAyU8KamTyjvsKXDt+54zXZxPVfpcHGkdX3LlGj26AjxcrWfLAUt4wg1W
+ AulGv92WuTG/5AXnRUoEpyH3henhG0R1yhHpEpHuPJDOHe8yiIIDyvJq9g0hBq2QJZvA
+ F+FZ1sn/zlp7tMtyHo9UIb+aC3eX/TRW3z4bJeIp+yQWX8KtIoIk1EXlW4Pq7+jzyKF2
+ HTgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745822467; x=1746427267;
+ d=1e100.net; s=20230601; t=1745822396; x=1746427196;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+/nnk2ZOF1tW/MJazOrX1XPPavmSBWDJgIss4LsgUwQ=;
- b=b7BwUao+MvB16qggg61XEp2qGwPWzsJJqVSuc489VypM6Un2La43I5HRIYT/h7rbyx
- xdogEN06FF5GnQQfSUAILX+CVVTPRbF5Yo2E2D0Akp1r47F0Z7gVDNAA7mUfe8r+Mnl8
- YE5KGZGEJq3Mce73ibplcbUTbJCryksqujugaxIodq4ypXQr+mpYhHnFw+sc3XulHnx/
- i95xhgoP9otXtG2eotUJTip727g6qHkEh286Zq92LczHU2ChULaaRJ9D/c4XHoCoweJF
- dGEXkeRJvi83hO4uH/5hwrK031AtRWEoEoXkcvEUzeloxjdGGXq19fZNYqguUh6y5HRS
- wpHw==
+ bh=Lww8hov75vab4etPov3FqdJvlp/MIqzg17mT2sCNDQ8=;
+ b=lQ2DEYwQqJhP+TSFI/SahRDbk42SIJOmIghqZIUAltXKdA9JIdiZbJdSrZVYmL9S1J
+ xCx3bRn3DIawcVNRFg57z9pROCRW8/B/umB4KJt2dtozQQbYcGbym0hwX+lWQU9wFXhx
+ nhtX31SyXDTXNQHEqNPVWKSaXY7YDb4AANojGfdm1X0dvhuAAXRAaouvQVAVUHmMDRh4
+ yfbXHUColo29ArNQmG5bgvlDxiEzGbTVl9eIywKbH4IFlWsk9ZJn2Dde+2nylBIR/L1z
+ dZeo+yfa/4EkwAw2JQy+OqC87ih8gYPZ2TlBQxbdlTD+s6gFhx1LmxqSiit1bieTEsU7
+ c0cw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUK+EkfyLVOtUG2zqB1DPvujesM9PpbFMJ17oXEhJEMcQhFFuuIr0yhLIMwDhmViUPN0kprdWtZaig=@nongnu.org,
- AJvYcCV779Oc+C0QyiGU+TFhZ/S5bGC2ectwYc5B6cDkgJxOGq5xNA4UG1xZbCWdGesn8cHLqjaLdhqohtnODA==@nongnu.org,
- AJvYcCXxOs2dkvhW4ALSalbRKsX0Ae0m8KfkQygsjerQCkeA65h1/cSUhqHtOq051VSfyLSipaFN56cM7Zj70Q==@nongnu.org,
- AJvYcCXzo7Y6eUw8268BkoJGYPwbgqnKaK6Me8HvCTAIgShVdRO1N1glkwKk/YULrwDmzTLxWfoJdpTeCw==@nongnu.org
-X-Gm-Message-State: AOJu0YyYFT5WBtfC+0s9IT+M43McrDH2T0kimJrTekov6pv89Qhd58Ky
- FnQzzCJlvuqUSupnYZb34T5t554hv6Mwjn71dOSmThSIApdjc9rBHd+5HWJb
-X-Gm-Gg: ASbGncvoPFqQ0IR9/I38ms/4kLJhV5XAs0ev5ZsKXHbiUIc1lwinT/HE+cxcXG3DqSp
- bZLBYuUUJXUtRBGZSDESFWF8juqc6CDbIUhR+gXHpKzFm/9wGMlGz41Q6KmllRzW/bEGrA/buYx
- HJOWw91rBAJe3E5VJEoHtFzUsdG4pyLSQ9kwuWtcYU8zllg88xyxNi+D3emf2oDXWOMIB3j1c0r
- fMrw6r9CXNCwvUag3uCOx1avVkSWNuaeKDQMDYS4Ro9U6fJSnrmOQH204hWdqowuxBk/NZ+fddt
- 8F2ANhomml+cyX1ABhjqMdYwazQGvF+9hE1sO4Ny2e1mvpvT
-X-Google-Smtp-Source: AGHT+IHy8JC9peExQmw9o+e1dR7WVS5JuRxtg0fw7P70HK7P9CvHmfmRCy8fXoV4eVZdOOZik8y5Ig==
-X-Received: by 2002:a17:902:cf4c:b0:22c:33b2:e410 with SMTP id
- d9443c01a7336-22dc69efab4mr115305535ad.2.1745822467072; 
- Sun, 27 Apr 2025 23:41:07 -0700 (PDT)
+ AJvYcCWRbX+XboOy0JilBRfeT+C/OycC2nLDSgl4E7XGg6wbfZOwh/wapLZVMilUbkKrLksu3WdFV3ePQhM=@nongnu.org,
+ AJvYcCX1jzBW3OzzVUTC7wsNRUSipIpvII6XzzIfAEMlYox8VpaziPV+Szvxbo8wJL3bgwVOAW4IUVmN/A==@nongnu.org,
+ AJvYcCX6VL0plLVTbqEMhsGhvFyPC3Ab7zqsq2tFT3lYupDWJE2l0GSgcSm4ME5Bb34RmoTnNFIuGqNFi6vLrg==@nongnu.org,
+ AJvYcCXP+lYgrPcnxwyZLKMWVqRwFiYfDs9sZ7kCHZjgjnvYHNUoShoM/oYIiDGNWzHAAEnc0xEzMgYA961UAg==@nongnu.org
+X-Gm-Message-State: AOJu0YxzyxP8Y3aRTeCb76exw49wiDb955wOWvucuWxRsndFCtoG8u2J
+ 2ci9qGZVM9RkRXaOlcf3p57sNbCmitq6Ngg4NS52vyI1mLdPlGfllQ01hdeE
+X-Gm-Gg: ASbGncsf1XuQ+koulolrQP47UQuCHwUNnhSsXw3lhz14dfVVgLFaLwZCekSMQ/oc/I/
+ 7jE/Uf/lOPy/Q3zaegzvNfPX8FpeDRSSMEVpGielZQEFfa13Yi/g7rjqPP7IufnTu7UAukAduXH
+ NaqxYdS8qu9empBS5cK5QsK3+EWsMaI9XI7GNpuMrjk8vIRlI59Kt2KMsv96ETpPMCvQ2Pe94jh
+ RjuDiYQoRUuxSvXm0CZUA+G9nKY4cAUDZ+AVB3yYIwcEaeHv0ZgFS+uae+6RrlB6YSMiittU+tp
+ IiNIMSraxhrwjLJDpW1nwTelfN+N0rze113CzA==
+X-Google-Smtp-Source: AGHT+IFt0ZirYoW1xYqnSpsbjooBfunphjZ0zCT0Gw8GHldDifYI8Hr1ZVtidupvceMD4VAN9K9TRQ==
+X-Received: by 2002:a17:903:40c7:b0:21f:8453:7484 with SMTP id
+ d9443c01a7336-22dbf5f704fmr147698225ad.30.1745822396574; 
+ Sun, 27 Apr 2025 23:39:56 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:bcb:2cf3:f1b5:b7f])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db4dbe328sm74721215ad.88.2025.04.27.23.40.59
+ d9443c01a7336-22db4dbe328sm74721215ad.88.2025.04.27.23.39.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Apr 2025 23:41:06 -0700 (PDT)
+ Sun, 27 Apr 2025 23:39:55 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -89,18 +89,18 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH v3 11/20] util/cacheflush.c: Update cache flushing mechanism
- for Emscripten
-Date: Mon, 28 Apr 2025 15:39:00 +0900
-Message-ID: <2926a798fa52a3a5b11c3df4edd1643d2b7cdcb9.1745820062.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH v3 02/20] qom/object.c: Fix type conflict of GLib function
+ pointers
+Date: Mon, 28 Apr 2025 15:38:51 +0900
+Message-ID: <128ace316789fb5af6e6cdab7788ebe9b6bc639c.1745820062.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1745820062.git.ktokunaga.mail@gmail.com>
 References: <cover.1745820062.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,59 +123,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Although __builtin___clear_cache is used to flush the instruction cache for
-a specified memory region, this operation doesn't apply to wasm, as its
-memory isn't executable. Moreover, Emscripten does not support this builtin
-and fails to compile it with the following error.
-
-> fatal error: error in backend: llvm.clear_cache is not supported on wasm
-
-To resolve this, this commit removes the call to __builtin___clear_cache for
-Emscripten build.
+On Emscripten, function pointer casts can result in runtime failures due to
+strict function signature checks. This affects the use of g_list_sort and
+g_slist_sort, which internally perform function pointer casts that are not
+supported by Emscripten. To avoid these issues, g_list_sort_with_data and
+g_slist_sort_with_data should be used instead, as they do not rely on
+function pointer casting.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/qemu/cacheflush.h | 7 +++++++
- util/cacheflush.c         | 4 ++++
- 2 files changed, 11 insertions(+)
+ qom/object.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 V3:
-- Fixed the commit message to remove a confusing link.
+- This commit is included in this series sololy to ensure successful
+  builds. It has already been picked up by a pull request, so please ignore
+  it.
 
-diff --git a/include/qemu/cacheflush.h b/include/qemu/cacheflush.h
-index ae20bcda73..76eb55d818 100644
---- a/include/qemu/cacheflush.h
-+++ b/include/qemu/cacheflush.h
-@@ -26,6 +26,13 @@ static inline void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
-     /* icache is coherent and does not require flushing. */
+diff --git a/qom/object.c b/qom/object.c
+index 01618d06bd..87f84bac41 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1191,7 +1191,7 @@ GSList *object_class_get_list(const char *implements_type,
+     return list;
  }
  
-+#elif defined(EMSCRIPTEN)
-+
-+static inline void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len)
-+{
-+    /* Wasm doesn't have executable region of memory. */
-+}
-+
- #else
+-static gint object_class_cmp(gconstpointer a, gconstpointer b)
++static gint object_class_cmp(gconstpointer a, gconstpointer b, gpointer d)
+ {
+     return strcasecmp(object_class_get_name((ObjectClass *)a),
+                       object_class_get_name((ObjectClass *)b));
+@@ -1200,8 +1200,9 @@ static gint object_class_cmp(gconstpointer a, gconstpointer b)
+ GSList *object_class_get_list_sorted(const char *implements_type,
+                                      bool include_abstract)
+ {
+-    return g_slist_sort(object_class_get_list(implements_type, include_abstract),
+-                        object_class_cmp);
++    return g_slist_sort_with_data(
++        object_class_get_list(implements_type, include_abstract),
++        object_class_cmp, NULL);
+ }
  
- void flush_idcache_range(uintptr_t rx, uintptr_t rw, size_t len);
-diff --git a/util/cacheflush.c b/util/cacheflush.c
-index 1d12899a39..17c58918de 100644
---- a/util/cacheflush.c
-+++ b/util/cacheflush.c
-@@ -229,6 +229,10 @@ static void __attribute__((constructor)) init_cache_info(void)
- 
- /* Caches are coherent and do not require flushing; symbol inline. */
- 
-+#elif defined(EMSCRIPTEN)
-+
-+/* Wasm doesn't have executable region of memory. */
-+
- #elif defined(__aarch64__) && !defined(CONFIG_WIN32)
- /*
-  * For Windows, we use generic implementation of flush_idcache_range, that
+ Object *object_ref(void *objptr)
 -- 
 2.43.0
 
