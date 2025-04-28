@@ -4,85 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28A5EC369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 16:26:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECC62C369DC
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 16:36:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9RII-0005Nu-St; Mon, 28 Apr 2025 12:25:22 -0400
+	id 1u9RS1-0000sO-5G; Mon, 28 Apr 2025 12:35:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9RIG-0005Md-1H
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 12:25:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9RI7-0002o6-9l
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 12:25:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745857507;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=26jfT4yYws4ox9C/3roTpInDX9JvbAHrajw/qRQX6u8=;
- b=YTke+g0E7yWtDE5pyW39/GfNzUOJ0Z9cwZ3KhSGuDx9ypbJesWlBzO+GXoPy0VhOv67fhO
- yRC2tKvAdRQ2mWUXlow3GWVvvuQijukd1aFSIHEitQjoxA4hpKIURGsT3TSWVp9XOqNIl1
- OjocrZqpYfOtmYTiESXRkJKbZmC07uw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-370-ReANHy3WO9utRsUTJJy7fw-1; Mon,
- 28 Apr 2025 12:25:02 -0400
-X-MC-Unique: ReANHy3WO9utRsUTJJy7fw-1
-X-Mimecast-MFC-AGG-ID: ReANHy3WO9utRsUTJJy7fw_1745857500
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 35B3E1955E79; Mon, 28 Apr 2025 16:24:59 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E3FDA19560A3; Mon, 28 Apr 2025 16:24:57 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 94FBC21E66C2; Mon, 28 Apr 2025 18:24:55 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  Eric Blake <eblake@redhat.com>,
- Michael Roth <michael.roth@amd.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Marcelo
- Tosatti <mtosatti@redhat.com>,  Shaoqin Huang <shahuang@redhat.com>,  Eric
- Auger <eauger@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>,  Thomas Huth <thuth@redhat.com>,
- Sebastian Ott <sebott@redhat.com>,  Gavin Shan <gshan@redhat.com>,
- qemu-devel@nongnu.org,  kvm@vger.kernel.org,  qemu-arm@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>,  Yi Lai <yi1.lai@intel.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- pierrick.bouvier@linaro.org
-Subject: Re: [PATCH 3/5] i386/kvm: Support event with select & umask format
- in KVM PMU filter
-In-Reply-To: <aA+Ty2IqnE4zQhJv@intel.com> (Zhao Liu's message of "Mon, 28 Apr
- 2025 22:42:19 +0800")
-References: <20250409082649.14733-1-zhao1.liu@intel.com>
- <20250409082649.14733-4-zhao1.liu@intel.com>
- <87frhwfuv1.fsf@pond.sub.org> <aA3TeaYG9mNMdEiW@intel.com>
- <87h6283g9g.fsf@pond.sub.org> <aA+Ty2IqnE4zQhJv@intel.com>
-Date: Mon, 28 Apr 2025 18:24:55 +0200
-Message-ID: <87ldrks17s.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u9RRv-0000jo-4o
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 12:35:20 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u9RRr-0005AN-TZ
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 12:35:18 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-7394945d37eso4376857b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 09:35:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745858113; x=1746462913; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hAdjt1tdJ7Dho/Onvtu/H1kypBhA3JR5OeXo5daA080=;
+ b=Pz3vb9Ek+PUjzoTX4K6cznN0qkWePgS9XXyIQNZpOwmWqmz22cQVrO4jNFTw0wx775
+ rhD9Ba0q6ZAvb/YGGgPhtEavDBRu9bhhJP+upm3z2aUYs0EqOM8SQLzh6cEhFZnWrBQ9
+ TlvXc0Ajr8A+Lqw2IQSOYxtOygJ1iGSRcf/d9nW1WzhfZFwrveVcPYA9lzNmeo27HgT3
+ UaIahqRHqS90RTfGDMBJF4KXq/fXeVR3KnsvNWSumtrCUFqzee4HxmrFMST5TvQl0Xlr
+ a1JYpsyuljzO4BnbocS2awRnjtpQ5i5j29bl+owshDCV9FBqHLHTpnOi6JFwVy0VEWDv
+ Shag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745858113; x=1746462913;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hAdjt1tdJ7Dho/Onvtu/H1kypBhA3JR5OeXo5daA080=;
+ b=upC6H/1Rrzo+SnK796UJbLqVE/3dVOsQ+TyC1NeE2iHCBH7rxNy2lZARh5MIKgezl8
+ r05F+I/cr4GvXKLNHPjSRi3139nVLFs0AYhFhZpWIXdEcUoDbRwSD2BnDayWchRtzwUs
+ vYAygEPw0FVGZ9y2PiG1Ti/AHkROfAlSUEjbstfaGY04pBTpc073W+rnI8gij8o6R4dt
+ 26isi/fO4Wv9EfZqP+qkwQIhYOUfWdb0cjNt/ksthnV/136PyiKc4XeaoMqvVt75MhGT
+ 8S7iG5QjtgAndpLxw1NgwQA06YPDWaGS2XfMApPFb9eAML65LlAtnuE7EBqmXYqJnKe2
+ lCag==
+X-Gm-Message-State: AOJu0Yy/TepUsuJ2ikn6iuiulJy/2FEyDvnQ0v9hU5uxhN6IYhLj5Xue
+ wfLU3VxWfmn1ZsarQ7kHteUshZ+1LKlggjo8dJR8k9YaZI3uWDyQ0tBUk95GVys=
+X-Gm-Gg: ASbGncstClWyNxSdOfrJRn+n7+gCWCOZBbE3JNXFciBmOBJow8QZDLRyfsfVTr0DDhV
+ GSjmLeidOUnZm7nvaPSspuS1lC3Wj+57RlE0M1dysPr51KlO69WWv2/QHNcZghSLzKf/xPPp8Tz
+ qXt1qOV+JuUdmWq4XB/Q5OEmK2hqPGPZF0pHbiJHBd8azBX4fwqytoByCqWbh/ltYIlrPP4kyYb
+ h8SY5T5zyKcXqvTcA4xIOmt7Ocqin/L9VJA6PEqljkh8+1BT43Jh+gE7MhLWr/M6bWGg31ZQI/z
+ WDCfhgsoGkEe2MEUHj02c8eUDDYuzlPt2wj2OzqrYj8/bX97qWNfPg==
+X-Google-Smtp-Source: AGHT+IHl1TCjwelpI+QPtQMggOZNGjLgw8eI4LPb0fJAAL39w58ZhLy0wJaI1AleCG4JmZWzgEdSVQ==
+X-Received: by 2002:a05:6a21:600b:b0:1f5:83da:2f9f with SMTP id
+ adf61e73a8af0-2046a43086fmr12710332637.12.1745858112676; 
+ Mon, 28 Apr 2025 09:35:12 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b15faded629sm7473932a12.63.2025.04.28.09.35.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Apr 2025 09:35:12 -0700 (PDT)
+Message-ID: <2cc27344-8cfd-4435-9d41-79b86f61d537@linaro.org>
+Date: Mon, 28 Apr 2025 09:35:11 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
+Content-Language: en-US
+To: Markus Armbruster <armbru@redhat.com>, Peter Krempa <pkrempa@redhat.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, stefanha@redhat.com, 
+ Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
+ peter.maydell@linaro.org, thuth@redhat.com, jsnow@redhat.com,
+ philmd@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ devel@lists.libvirt.org
+References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+ <87a584b69n.fsf@pond.sub.org> <aA9ChuXrkmx1Igy5@angien.pipo.sk>
+ <8734dswnm3.fsf@pond.sub.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <8734dswnm3.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,122 +106,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhao Liu <zhao1.liu@intel.com> writes:
+On 4/28/25 4:07 AM, Markus Armbruster wrote:
+> Peter Krempa <pkrempa@redhat.com> writes:
+> 
+>> So what should libvirt do once multiple targets are supported?
+>>
+>> How do we query CPUs for each of the supported targets?
+>>
 
-> On Mon, Apr 28, 2025 at 09:19:07AM +0200, Markus Armbruster wrote:
->> Date: Mon, 28 Apr 2025 09:19:07 +0200
->> From: Markus Armbruster <armbru@redhat.com>
->> Subject: Re: [PATCH 3/5] i386/kvm: Support event with select & umask format
->>  in KVM PMU filter
->> 
->> Zhao Liu <zhao1.liu@intel.com> writes:
->> 
->> > Hi Markus,
->> >
->> >> > +        case KVM_PMU_EVENT_FORMAT_X86_SELECT_UMASK: {
->> >> > +            if (event->u.x86_select_umask.select > UINT12_MAX) {
->> >> > +                error_setg(errp,
->> >> > +                           "Parameter 'select' out of range (%d).",
->> >> > +                           UINT12_MAX);
->> >> > +                goto fail;
->> >> > +            }
->> >> > +
->> >> > +            /* No need to check the range of umask since it's uint8_t. */
->> >> > +            break;
->> >> > +        }
->> >> 
->> >> As we'll see below, the new x86-specific format is defined in the QAPI
->> >> schema regardless of target.
->> >> 
->> >> It is accepted here also regardless of target.  Doesn't matter much
->> >> right now, as the object is effectively useless for targets other than
->> >> x86, but I understand that will change.
->> >> 
->> >> Should we reject it unless the target is x86?
->> >
->> > I previously supposed that different architectures should implement
->> > their own kvm_arch_check_pmu_filter(), which is the `check` hook of
->> > object_class_property_add_link():
->> >
->> >     object_class_property_add_link(oc, "pmu-filter",
->> >                                    TYPE_KVM_PMU_FILTER,
->> >                                    offsetof(KVMState, pmu_filter),
->> >                                    kvm_arch_check_pmu_filter,
->> >                                    OBJ_PROP_LINK_STRONG);
->> 
->> This way, the checking happens only when you actually connect the
->> kvm-pmu-filter object to the accelerator.
->> 
->> Have you considered checking in the kvm-pmu-filter object's complete()
->> method?  Simple example of how to do that: qauthz_simple_complete() in
->> authz/simple.c.
->
-> Thank you, I hadn't noticed it before. Now I study it carefully, and yes,
-> this is a better way than `check` hook. Though in the following we are
-> talking about other ways to handle target-specific check, this helper
-> may be still useful as I proposed to help check accel-specific cases in
-> the reply to Philip [*].
->
-> [*]: https://lore.kernel.org/qemu-devel/aA3cHIcKmt3vdkVk@intel.com/
->
->> > For x86, I implemented kvm_arch_check_pmu_filter() in target/i386/kvm/
->> > kvm.c and checked the supported formats (I also supposed arch-specific
->> > PMU filter could reject the unsupported format in
->> > kvm_arch_check_pmu_filter().)
->> >
->> > But I think your idea is better, i.e., rejecting unsupported format
->> > early in pmu-filter parsing.
->> >
->> > Well, IIUC, there is no way to specify in QAPI that certain enumerations
->> > are generic and certain enumerations are arch-specific,
->> 
->> Here's how to make enum values conditional:
->> 
->>     { 'enum': 'KvmPmuEventFormat',
->>       'data': ['raw',
->>                { 'name': 'x86-select-umask', 'if': 'TARGET_I386' }
->>                { 'name': 'x86-masked-entry', 'if': 'TARGET_I386' } ] }
->
-> What I'm a bit hesitant about is that, if different arches add similar
-> "conditional" enumerations later, it could cause the enumeration values
-> to change under different compilation conditions (correct? :-)). Although
-> it might not break anything, since we don't rely on the specific numeric
-> values.
+It's kind of a similar question we have to solve now with QEMU code.
+What happens when a symbol is duplicated, and available only for several 
+targets?
 
-Every binary we create contains target-specific code for at most one
-target.  Therefore, different numerical encodings for different targets
-are fine.
+In this case, we found various approaches to solve this:
+- unify this symbol for all targets (single implementation)
+- unify all targets to provide this symbol (multiple impl, all targets)
+- rename symbols adding {arch} suffix, so it's disambiguated by name
+- create a proper interface which an available function (multiple impl, 
+selective targets)
 
-Same argument for struct members, by the way.  Consider
+In the case of query-cpu-definitions, my intuition is that we want to 
+have a single implementation, and that we return *all* the cpus, merging 
+all architectures. In the end, we (and libvirt also) should think out of 
+the "target" box. It's an implementation detail, based on the fact QEMU 
+had 'targets' associated to various binaries for a long time and not a 
+concept that should leak into all consumers.
 
-    { 'struct': 'CpuModelExpansionInfo',
-      'data': { 'model': 'CpuModelInfo',
-                'deprecated-props' : { 'type': ['str'],
-                                       'if': 'TARGET_S390X' } },
-      'if': { 'any': [ 'TARGET_S390X',
-                       'TARGET_I386',
-                       'TARGET_ARM',
-                       'TARGET_LOONGARCH64',
-                       'TARGET_RISCV' ] } }
+>> Will the result be the same if we query them one at a time or all at
+>> once?
+> 
+> Pierrick's stated goal is to have no noticable differences between the
+> single binary and the qemu-system-<target> it covers.  This is obviously
+> impossible if we can interact with the single binary before the target
+> is fixed.
+> 
 
-This generates
+Right.
+At this point, we can guarantee the target will be fixed before anything 
+else, at the start of main(). It's obviously an implementation choice, 
+but to be honest, I don't see what we would gain from having a "null" 
+default QEMU target, unable to emulate anything.
 
-    #if defined(TARGET_S390X) || defined(TARGET_I386) || defined(TARGET_ARM) || defined(TARGET_LOONGARCH64) || defined(TARGET_RISCV)
-    struct CpuModelExpansionInfo {
-        CpuModelInfo *model;
-    #if defined(TARGET_S390X)
-        strList *deprecated_props;
-    #endif /* defined(TARGET_S390X) */
-    };
-    #endif /* defined(TARGET_S390X) || defined(TARGET_I386) || defined(TARGET_ARM) || defined(TARGET_LOONGARCH64) || defined(TARGET_RISCV) */
+>>> This requires fixing the target before introspection.  Unless this is
+>>> somehow completely transparent (wrapper scripts, or awful hacks based on
+>>> the binary's filename, perhaps), management applications may have to be
+>>> adjusted to actually do that.
+>>
+>> As noted filename will not work. Users can specify any filename and
+>> create override scripts or rename the binary.
+> 
+> True.
+> 
 
-The struct's size depends on the target.  If we ever add members after
-@deprecated_props, their offset depends on the target, too.
+I would prefer to not open this pandora box on this thread, but don't 
+worry, the best will be done to support all those cases, including 
+renaming the binary, allowing any prefix, suffix, as long as name stays 
+unambiguous. If you rename it to qemu-ok, how can you expect anything?
 
-The single binary work will invalidate the "at most one target"
-property.  We need to figure out how to best deal with that, but not in
-this thread.
-
-[...]
-
+We can provide the possibility to have a "default" target set at compile 
+time, for distributors creating their own specific QEMU binaries. But in 
+the context of classical software distribution, it doesn't make any sense.
 
