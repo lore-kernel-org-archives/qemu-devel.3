@@ -4,102 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A07C6C36005
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 09:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E1B1C36005
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 10:08:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9L3h-0007QV-5q; Mon, 28 Apr 2025 05:45:53 -0400
+	id 1u9LOW-0001w7-Cy; Mon, 28 Apr 2025 06:07:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9L3e-0007Po-6y
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 05:45:50 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1u9LOR-0001vw-7X
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 06:07:19 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9L3a-0005ye-PG
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 05:45:49 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43cfdc2c8c9so23541655e9.2
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 02:45:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1u9LOO-0000e1-9S
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 06:07:18 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5e0caa151so8503528a12.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 03:07:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745833545; x=1746438345; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OoA8Dn2Wtac2FOPR6/hQFftJ/lbfSRDWIBIb8p6NPmE=;
- b=M5n+foSXbONpmshrF6YiRY1ltxwjpofJm4z58vTpoxgaGS69fn3tQ0BT3O6i/WaFD2
- y3KeZgg5un1osW56cDMUBii7EszZ8h6wSYVh7EBO3whbWK/uXwyCIf/ewaIZasaBFMdT
- BPAXaNlgUihmI9TpJp65KFM53GtMk6i/zMYYmbXXUBGp1Acs6SBcYX6SDC6XVkotr3Nn
- EsKnh1S9eM+LUz5fM5EwmbxF8Pc9jfPM4ZvOFRDhPQ+mokOICdixHnBqDf8anTidZ9sE
- WkY6UAJfV14JH8jwE5F2nAEQF6Jiu9xUn2EbhQsqRyo4iRiApxDjsSNsS7+51voW5RNT
- RdRQ==
+ d=linaro.org; s=google; t=1745834833; x=1746439633; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sfy3YvyTiko4df9AwnisD8cH/l8e+t8MO+Ftd9FpUqY=;
+ b=LyCISH5bMvs+d1Jw6i6uZyejjIAoigvpjTq/mnH+e3dyetQ1uX+zp+HgO6nCKozjPp
+ ELba768JyS3W8EW7o0UUQy2EPLsNpwWujXQEd9doXJyv6hDXydQpT0hFaft6T8Sf9C5a
+ WJ+0XGlfVknbc8Ax1YR2ApuHmW6ylrRDrrs6E3ViTfphdQxx3PRtvIUJBs63n0E0r6yq
+ rBv4aBCBQ8PRBXoXI7KTQaAjsP2PsafEIz/Nrl1nC82y5bv3vVkxeT9fydGz+nmxTtPr
+ NRGazzqzXZVPTPs/rBwa1goZZK/wWVNyBJqoYYw21AjKiJDRJIxGonJRY9CYyV9T/SFk
+ 7vlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745833545; x=1746438345;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OoA8Dn2Wtac2FOPR6/hQFftJ/lbfSRDWIBIb8p6NPmE=;
- b=Dghhj8cJes0HwpD+10Z/zZWlcTo7YWwSPqVFy52FZpevwn/dtsqJgHNJ3utQ3HloqZ
- 90eJWHzI6V5sep6MGXkXeAFJccEi4B/9UOHs8moTPahTB1DGwg8YW+iQV3fYlmL+ha5A
- xcvNsAISHK6bHVyFZtVl55v5QOwiRmwz7YIFpiw3viWuLSqeuTRn0F2WPyw9k1HBmufm
- 5EF4rXHvN67+2NypH05reyrYU3sq4ywW9EpDvfk/TttSdOTRUrLVLLde48VAA6/Gkn8Z
- LLTPP0Gqd6tb4zYSk6GVkRQ8zyQjr2J1wTuS5ZTi+oPp1Pam1kGJKLAJU2Twm79jQcbo
- /t/A==
+ d=1e100.net; s=20230601; t=1745834833; x=1746439633;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=sfy3YvyTiko4df9AwnisD8cH/l8e+t8MO+Ftd9FpUqY=;
+ b=UwvB7T5aQ5vhoMk+DynEgOIK09Mj8upapsgv7ClL7R0mFMoi+KuKiCS5axp6OXFTtZ
+ zWbo/lodlnMQWGWQ6Q4yUBDuHiyzMqZ/RpqhmDGeI1SZSy3aX7JEszig8h4etwOMqiUm
+ E0T8TX/+4R2wLTx7Dmvji4F0rZgIoWHiRxgsMg73TYOfRtxg9DjSl0QypDojucXiwxA+
+ dfctPyz/xrMymJMhMv+XvS+dVZ2Q0gyJ5SU1XP+DUImtWTBE0CnddWm1Ob8b+5IeM/1I
+ MNj6Xwo7DsYEpeJtEgbJAAHjvOvqrXk7runbx0y6GT2dQaqaOWHrCLv3DeiPNo053sqY
+ zpkQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUAUutRrYHYBNhiTF0lY9HWvkctFw9oS08V5YFNXE2mmP1K8av19aFHkUK2/Ze5VNtue1QxBWR+5ykv@nongnu.org
-X-Gm-Message-State: AOJu0YxzUWw6YTF+ZWOWpsMcAFIwVdD6qOGSRffPJvnjawF8gD2qEJgD
- 3i+WFbPx/NBLbLAGI5nU612D00NG75E8HSAyKeB2KCf1001zZSwzDPZfCfOjH2k=
-X-Gm-Gg: ASbGncujAZ+Xl8gRR2AQvuaxcrG+67BVodIK7qjiTVE1XwWk2jkfN+ob3XGgOZjO2pg
- dftSv94Aj7GoJaGI2DET+yBTulJKjIgysqLRMpzRp9iehi2Ue4wUp0q5WSwRNxqtXL1dWz4aZCd
- jj7ftPy2s8Vn8uHhSQxkfXsUqR+tLb1oOXUM7MsPAksuxWExsI6nJ7hMXdiMTkYfL7SquRsGQU8
- AApngvtup8xC8LhVxtBcgk/koc+rdatCBNZswrlMtBNDxLXFBTxSJtha23in4nhnKdC4HbHAMbj
- KbK4EiJwb3J2t3bMemgXh3VDsMSu/ax/EbTki8k8va5y5gXWBYzygzIpDH5WxvXbFs+JGryPpp6
- kzBuzmfXqQb6QEA==
-X-Google-Smtp-Source: AGHT+IEdzWhPjOwoXJ32qyPj7AtJQPsa62Oh51XphA9zB3DvDhkh3yWQECq1OdWrChPNRgnEC9f4qQ==
-X-Received: by 2002:a05:600c:b8d:b0:440:66c5:26f4 with SMTP id
- 5b1f17b1804b1-440a65cdb5dmr89255715e9.1.1745833544725; 
- Mon, 28 Apr 2025 02:45:44 -0700 (PDT)
-Received: from [192.168.69.226] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4409d29b990sm155277435e9.4.2025.04.28.02.45.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 02:45:44 -0700 (PDT)
-Message-ID: <55dd4885-9f2e-4a52-bced-b70058f54101@linaro.org>
-Date: Mon, 28 Apr 2025 11:45:43 +0200
+ AJvYcCXl2IrSqbC1dRsxPyxRWQThmLRS+Sz4R21ALmWP4UuCAtRwKNJrINqgWacnwqfBvvTDty+6Ju6IYt3A@nongnu.org
+X-Gm-Message-State: AOJu0YzBzGQWqpmsgwswJb53EnJnF3slK02z9b+BQ3mkZYhjYdxF4q93
+ e45U/tJqJUr6WwTz/g+yjJsPuGkpwQDdCXTPgJWlo+Se1jyyjNtxBddUxzrqeck=
+X-Gm-Gg: ASbGncs08e0LXD8W0df6bCf0Go7DNUIaTP2ifwH1AiTqTE1cFKRgncX0d13JTe6ZYvG
+ 0GIorbksA1FwYyLjy+BxeGWVV7pL+N8/Rc3awswC0g/D29r6yOZnuRdKPB9wAqoPfh0ns6k3f9X
+ ATXnhq7sa5biWfafYJqVp5htuR3zAt5ZJDETn86K/EBX6T529sY8vqGAiyxo7VTwUekDELvNNJy
+ lUlQRIHM1Lpo0wbXqXWZncwtourMQpezq45SjMIN49TwMRNWicKrg2HVBGgX7NFlcMuGnWMDyQP
+ YbTUvh8b374vHz6X73TVzniVbqmY1XUzAzdyOmRDBS8=
+X-Google-Smtp-Source: AGHT+IETgHngsb4qTDJMps7CeFvKAb9NaUyX2KcrYNBY3mOx7zIUza0kkDIc6fXCEjwI00/tE7nfiA==
+X-Received: by 2002:a05:6402:51d2:b0:5f6:31f3:d744 with SMTP id
+ 4fb4d7f45d1cf-5f72268597dmr10175266a12.11.1745834832927; 
+ Mon, 28 Apr 2025 03:07:12 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5f703833c8csm5550618a12.72.2025.04.28.03.07.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Apr 2025 03:07:12 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4FC735F877;
+ Mon, 28 Apr 2025 11:07:11 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: =?utf-8?B?5YiY6IGq?= <liucong2565@phytium.com.cn>,  Sean Christopherson
+ <seanjc@google.com>,  Jiqian.Chen@amd.com,  akihiko.odaki@daynix.com,
+ alexander.deucher@amd.com,  christian.koenig@amd.com,
+ gert.wollny@collabora.com,  gurchetansingh@chromium.org,  hi@alyssa.is,
+ honglei1.huang@amd.com,  julia.zhang@amd.com,  kraxel@redhat.com,
+ marcandre.lureau@redhat.com,  mst@redhat.com,  pbonzini@redhat.com,
+ philmd@linaro.org,  pierre-eric.pelloux-prayer@amd.com,
+ qemu-devel@nongnu.org,  ray.huang@amd.com,  robdclark@gmail.com,
+ roger.pau@citrix.com,  slp@redhat.com,  stefano.stabellini@amd.com,
+ xenia.ragiadakou@amd.com,  zzyiwei@chromium.org
+Subject: Re: [PATCH v11 04/10] virtio-gpu: Support asynchronous fencing
+In-Reply-To: <03414f52-def8-4b50-8da4-69b722dfc758@collabora.com> (Dmitry
+ Osipenko's message of "Sun, 27 Apr 2025 17:16:52 +0300")
+References: <20250310120555.150077-5-dmitry.osipenko@collabora.com>
+ <20250410095454.188105-1-liucong2565@phytium.com.cn>
+ <d0e9e72a-02bf-4f1e-abe0-6e8d0d089b29@collabora.com>
+ <5514d916.6d34.19622831b11.Coremail.liucong2565@phytium.com.cn>
+ <425ebb80-4348-46f3-878b-054800a8fe85@collabora.com>
+ <f662c725-e40e-43eb-b155-2440cff34324@collabora.com>
+ <2d6e3b03.bb9.1967717fa84.Coremail.liucong2565@phytium.com.cn>
+ <03414f52-def8-4b50-8da4-69b722dfc758@collabora.com>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Mon, 28 Apr 2025 11:07:11 +0100
+Message-ID: <87cycw61m8.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 06/10] hw/arm/aspeed: Add support for loading vbootrom
- image via "-bios"
-To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>,
- "nabihestefan@google.com" <nabihestefan@google.com>
-References: <20250417031209.2647703-1-jamin_lin@aspeedtech.com>
- <20250417031209.2647703-7-jamin_lin@aspeedtech.com>
- <85a2947e-6909-4311-8b58-f9eb8045e76c@kaod.org>
- <SI2PR06MB5041D4AD25381C7D1D6A5C1CFCBB2@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <a4c178b6-7048-42d1-9e90-58ed87baf9b5@kaod.org>
- <SI2PR06MB5041756942DE834177DFF573FCBA2@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <53e66299-ba7f-404e-87c8-2952fb4d857b@kaod.org>
- <SI2PR06MB504102422034DBB6EA8CFFE4FC812@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <SI2PR06MB504102422034DBB6EA8CFFE4FC812@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,62 +120,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/4/25 09:54, Jamin Lin wrote:
-> Hi Cedric,
-> 
->> Subject: Re: [PATCH v4 06/10] hw/arm/aspeed: Add support for loading
->> vbootrom image via "-bios"
->>
->> Hello Jamin,
->>
->> + Phil.
->>
->> On 4/23/25 09:02, Jamin Lin wrote:
->>> Hi Cedric,
->>>
->>>> Cc: Troy Lee <troy_lee@aspeedtech.com>; nabihestefan@google.com
->>>> Subject: Re: [PATCH v4 06/10] hw/arm/aspeed: Add support for loading
->>>> vbootrom image via "-bios"
->>>>
->>>> Hello Jamin,
->>>>
->>>>> Based on the design of aspeed_install_boot_rom, users can place
->>>>> their ROM code at the top of the image-bmc, and this function will
->>>>> install image-bmc which included the user's ROM IMAGE at the
->>>>> ASPEED_DEV_SPI_BOOT address.  For AST2600, users typically set the
->>>>> boot address to 0x0 and boot directly from there.
->>>>>
->>>>> For AST2700, we introduced a vbootrom to simulate the ROM code and
->>>>> the BOOTMCU SPL (RISC-V).
->>>>
->>>> Side question, is anyone working on the BOOTMCU SPL (RISC-V) models ?
->>>> heterogeneous machines should be supported one day.
->>>>
->>>
->>> Troy developed an initial implementation, but testing has not yet been
->>> performed due to uncertainty around "how to share DRAM memory and
->> controllers registers" between the RISC-V and the Cortex-A35 cores.
->>> Furthermore, RISC-V interrupt support is currently not implemented.
->> Could you explain a bit more the issues you are facing ? Single QEMU binary is
->> expected to become a reality in the near future and the
->> ast2700 models could benefit from it.
->>
-> There is a BootMCU which is a 32-bit RISC-V CPU, and its DRAM start address is 0x80000000 (32-bit address space).
-> The primary CPU is a Cortex-A35, and its DRAM start address is 0x400000000 (64-bit address space).
-> 
-> If the BootMCU writes 0x12345678 to address 0x80000000, the Cortex-A35 should be able to read 0x12345678 from address 0x400000000.
-> Similarly, if the Cortex-A35 writes 0x00ABCDEF to address 0x400000000, the BootMCU should be able to read 0x00ABCDEF from address 0x80000000.
+Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
-This shouldn't be a problem, the raspi machines have something similar.
+> On 4/27/25 14:53, =E5=88=98=E8=81=AA wrote:
+>> Hi Dmitry,
+>>=20
+>> The virglrender patch can fix the virgl issue, but the native context st=
+ill fails to run on my machine.
+>> I'm not sure if anyone has successfully run it on an ARM64 machine befor=
+e.
+>
+> Thanks for the testing!
+>
+>> When running with Venus, the virtual machine can successfully run vkcube=
+. However, when using the native context, a KVM error is triggered. Both my=
+ guest and host kernels are already updated to version 6.14.
+>>=20
+>> Here are the commands and error messages I encountered:
+>>=20
+>> ```
+>> phytium@ubuntu:~/working/virglrenderer$
+>> /opt/native-context-v11/bin/qemu-system-aarch64 --machine
+>> virt,accel=3Dkvm,memory-backend=3Dmem1 -cpu host -smp 4 -m 4G -drive
+>> file=3D/home/phytium/working/ubuntu24.04-aarch64-native-context,format=
+=3Draw,if=3Dvirtio
+>> -bios /usr/share/AAVMF/AAVMF_CODE.ms.fd -netdev user,id=3Dnet0 -device
+>> virtio-net-pci,netdev=3Dnet0 -device
+>> virtio-gpu-gl,hostmem=3D4G,blob=3Don,venus=3Don -object
+>> memory-backend-memfd,id=3Dmem1,size=3D4G -display
+>> sdl,gl=3Don,show-cursor=3Don -device usb-ehci,id=3Dusb -device
+>> usb-mouse,bus=3Dusb.0 -device usb-kbd,bus=3Dusb.0
+>> phytium@ubuntu:~/working/virglrenderer$=20
+>> phytium@ubuntu:~/working/virglrenderer$
+>> /opt/native-context-v11/bin/qemu-system-aarch64 --machine
+>> virt,accel=3Dkvm,memory-backend=3Dmem1 -cpu host -smp 4 -m 4G -drive
+>> file=3D/home/phytium/working/ubuntu24.04-aarch64-native-context,format=
+=3Draw,if=3Dvirtio
+>> -bios /usr/share/AAVMF/AAVMF_CODE.ms.fd -netdev user,id=3Dnet0 -device
+>> virtio-net-pci,netdev=3Dnet0 -device
+>> virtio-gpu-gl,hostmem=3D4G,blob=3Don,drm_native_context=3Don -object
+>> memory-backend-memfd,id=3Dmem1,size=3D4G -display
+>> sdl,gl=3Don,show-cursor=3Don -device usb-ehci,id=3Dusb -device
+>> usb-mouse,bus=3Dusb.0 -device usb-kbd,bus=3Dusb.0
+>> error: kvm run failed Bad address
+>>  PC=3D0000e2bcbbf31ab0 X00=3D0000e2bc9c3ae060 X01=3D0000e2bc7c02af00
+>> X02=3D0000000000000014 X03=3D0000e2bc9c3ae000 X04=3D0000e2bc7c02af14
+>> X05=3D0000e2bc9c3ae074 X06=3D0000000000000200 X07=3D0000e2bc7c02a8f8
+>> X08=3D00000000000000de X09=3D0000000000000200 X10=3D0000000000001000
+>> X11=3D0000000000000004 X12=3D0000e2bc7c0000b0 X13=3D0000000000000001
+>> X14=3D0000000000000020 X15=3D0000e2bc9e465f93 X16=3D0000e2bcad6a01f0
+>> X17=3D0000e2bcbbf31a80 X18=3D0000000000000093 X19=3D0000000000000060
+>> X20=3D0000000000000074 X21=3D0000e2bc9e46c5f0 X22=3D0000e2bc9c3ae000
+>> X23=3D0000000000000074 X24=3D0000c02241da83b0 X25=3D0000c02241da85a0
+>> X26=3D0000c02241da85a0 X27=3D0000000000000014 X28=3D0000e2bc9e46c5f0
+>> X29=3D0000e2bc9e46c610 X30=3D0000e2bcac809c38  SP=3D0000e2bc9e46c510
+>> PSTATE=3D20001000 --C- EL0t
+>> phytium@ubuntu:~/working/virglrenderer$ uname -a
+>> Linux ubuntu 6.14.1-061401-generic #202504071048 SMP PREEMPT_DYNAMIC Mon=
+ Apr  7 11:34:37 UTC 2025 aarch64 aarch64 aarch64 GNU/Linux
+>> ```
+>
+> Alex Benn=C3=A9e reported the very same problem with KVM on ARM + native =
+ctx
+> AMD dGPU in the past. You may try to add error messages to
+> virt/kvm/kvm_main.c of host Linux kernel to find from where KVM error
+> originates. Sounds like page refcounting may be not working properly
+> on ARM.
 
-I remember having an issue when displaying the address spaces on the
-monitor, using your example, if you start mapping the dram on the rv
-core, then the AS has some internal offset, and when you map it on the
-arm cluster, the offset persists and you'd see it mapped at
-0x3_8000_0000 while being at 0x4_0000_0000 (it is a bug). However the
-accesses from the arm cores really hit 0x4_0000_0000 base: it is just
-a display problem IIRC.
+Also what hardware is the machine? The AVA (and most things with the
+same chipset) have a broken PCI which needs a workaround for unaligned
+SIMD access:
 
-Maybe the thread around this issue was this one:
-https://lore.kernel.org/qemu-devel/20210421144846.GI4440@xz-x1/
+  https://github.com/stsquad/linux/tree/testing/altra-tweaks-for-gpu
+
+>
+> +CC: Sean Christopherson
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
