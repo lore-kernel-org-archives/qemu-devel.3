@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF07C369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 16:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66F89C369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 16:13:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9R5C-0002ww-SA; Mon, 28 Apr 2025 12:11:50 -0400
+	id 1u9R60-0004Ha-NZ; Mon, 28 Apr 2025 12:12:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1u9R46-0002Az-VO
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 12:10:51 -0400
-Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
+ id 1u9R4M-0002EF-SN
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 12:11:01 -0400
+Received: from mail-pl1-x642.google.com ([2607:f8b0:4864:20::642])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1u9R3t-0008P4-LK
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 12:10:42 -0400
-Received: by mail-pl1-x643.google.com with SMTP id
- d9443c01a7336-2240b4de12bso75494765ad.2
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 09:10:28 -0700 (PDT)
+ id 1u9R4E-0008RL-5q
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 12:10:54 -0400
+Received: by mail-pl1-x642.google.com with SMTP id
+ d9443c01a7336-225df540edcso60591745ad.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 09:10:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745856626; x=1746461426; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745856646; x=1746461446; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I+hBDhes3/DrcIWlptsB64Pmy5+nfTxX6Db/iDs1KCE=;
- b=kqJ5EURp6S+KLM7HxWrJ5TnZTd9egvuFIT0/Jzfp9t/+NsvBnDNEpJAMWyBoxEmwgV
- uagE05vSuFA2EG45seEBCe1qbw2+Hluns/7/VzKsPtLLmvl8T1GTTjoch6TnluBzTeS6
- xBNX49RzvGZwN8pP67EyiStH8QKfKhJk0LodzmwPHx14pC8e0+IvrPuCUqDeZi0RbbKJ
- l/IunLJpC4SsGpDIywvAn2h3FztYyOS+IxfaCV9GWaGPCmrNuBOkIMG86h6u6wPQj52l
- 8ZH/vcGWy00lO0fWESC86vRnxiLQDd+V9vNbtFkMQqVfqqjuHxCtldg3uwGtyTE3NYKY
- WzyQ==
+ bh=7aE8b1UhajUDkj6qd0OYblaMEqfKDSI9mrQFdziqmhQ=;
+ b=fTRKidCXePIqlZiARiHuHKUlhVElkxwY2ENoHWf7wMs43Vi7PVyqpvkaCaeSMpGipO
+ Lq8I9TACyeK5HGDiy0cFR6QocHZsPwqdZf3maYxtzLMwa6LCudjG7cmduXxXIEtAgszX
+ dt5KkaeFBW8rH/Gi60WQm+vB/VhQyDMwaXY2EcNpI4UvY9Qxrzuw0wvfMWPr7N799oIK
+ gEKUOCsjpT5b9y2ZE8gsy5+gpBCXpv9FU7bkM6tEg14v2FhR0ExHLGhlO5xIr8CEc5ou
+ TWkhXOJcqIWDZAxB7bH1EGOn0ecUqyX3HVsPgi/w4Oj4WPymWEHp2Cx6HQon5VMi5zzY
+ itsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745856626; x=1746461426;
+ d=1e100.net; s=20230601; t=1745856646; x=1746461446;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=I+hBDhes3/DrcIWlptsB64Pmy5+nfTxX6Db/iDs1KCE=;
- b=OWjeqYA5H3L3z3NH4fv3y9521q0bC+aoTDSRmLtGMtDGpxJ6t75Cdh5iGPmO9C37KO
- t2LPWcL+NP5M130UQBcn2RNB7AvkpDkvpW5KCOIaKfuO8/qzqb9P3FEnKuaVPKso1EXc
- pk3X7opCdG02Z8W/eHcxYrr3bAm4NcMNAl6tiz+tqR1I2tt6yHvLOLX7Yws161T4Hpxb
- E0BOMQzI/bwr0wWeREI+RRvG75s1dLtucYiA430Yq/CsqlSFge8ITHilDv1YR78H8paV
- d3FfB2dSyum5stU35VMNYweiQbfv21efiKn7AUYiaiBn/8dvAvw774azLH0eFOEus+US
- WUxw==
-X-Gm-Message-State: AOJu0YyGDd4eOo9tcmY3U973aaq+NQ3iSRo+8GBr9okKZhJd760YHpCL
- s5fmB7mzTewrox2aDoj8E4CxbubBWCv9emlIVFYPn9bELhR5utM=
-X-Gm-Gg: ASbGncsdAk7+0oEOjgX6DdEHZjNXRudRxKhnkIx1J810TovdykDRX5ZHeaAYL1ZiWJh
- 40YIC3jJ3h0DV2YDwHKJaxZuCfUWR73F/5WqWPJRI2JQifQdtR1Q/JjtnoKpgLR/urdGHAv4iKH
- ENFjlzegBk/vVzTXewoMN/IDcf4QtSsXbzzdiozrO0cqBqROnuM64CC9NrIJ0NJvOWrnsT6Y1yv
- uTsDa5s112ykuOz3lbhQTSVvEL9C4H7KUYh3SrcYafqJjm8qb2NoNGTzXQwDmn8N67ZWdiDRfXC
- 2TYAP3CwLqBXrUR2v/xBYZa5nOBZozWptJRkSR8NIZILVtxLp+wuINBE
-X-Google-Smtp-Source: AGHT+IGHrAlQjtNfNelP3s4SZrhhlaFRgStmo2Z7AIrMI8EPbpiLPNUP/51zzUtf+nK4OUzO7zbWfQ==
-X-Received: by 2002:a17:902:f60e:b0:224:c46:d166 with SMTP id
- d9443c01a7336-22dc6a684famr156183585ad.40.1745856625758; 
- Mon, 28 Apr 2025 09:10:25 -0700 (PDT)
+ bh=7aE8b1UhajUDkj6qd0OYblaMEqfKDSI9mrQFdziqmhQ=;
+ b=tqbxNxruUj+yemcUD3jhNpkL7S6L807MLn/0EUa2pDj1zRLlaFTywsTBVJwZx5mFC0
+ ve5jj0cOiddy5QqGoQtZnIIXnHADRLatIzZPzF1E6oLwjo3F0vQeqX7Qyz7eYS14gnXK
+ j94InNxPtppZh4zG8z3hHcjNctDXB3o5jEkTJv5nRERatDENKC+PDiCtic6j8x3PXdZk
+ Rk5H8hH5gOB/d4mn/ipUNgWkZtYBT2Oq14j9UStbt8BJxY+ztFwGw/pWgcWhb7+toe6f
+ WWqWwXai9iHEqwsPnpswF2Bn4DQoD5VVnwPXYQLNk30ueMZyo96sPRj7ueaJ0ZrJ5aF8
+ 481Q==
+X-Gm-Message-State: AOJu0YyvGUPvBTz+MR5SHSa/1/AglhWB0f07NbebBwFdKQjbfAtB31j1
+ 99a6UdSVEvMKwr3YyXKBPi9xHoeU2l4nyBaSVqqF2smbAd7rliA=
+X-Gm-Gg: ASbGncu/yfs8CS3NPIfd09C7We7qcWJdzkfjq2hvF9ocXGXUkoHfgTAnzJbVZ8rTWX2
+ 9dSFr/MNHacMQ5WAs7WjnFcFnraYSHEGzESCgeu+F0xldAL4gbtqaXw0IMDiWhIRZF9FptJdLPE
+ 4dotHkXQJKo43Ec43T1f4LT5GnWnX9IPBd03Vkhg6WDQwmseP9oI62svUDMYu8LL0UgF6zZ+sdq
+ TrfeXqacC6zp8rCm9qbMt0Zq0JMHNXvqyOsUfmo+/wn/OKizbO9co8BufcVK3FoHZwZDbAnGrR2
+ 7o8sJ6rB8mqHA/Y1ZJqKHvngIwSd7jBKzLZ4xcipWbBbwRQRD4KhP1vb
+X-Google-Smtp-Source: AGHT+IF0P4WqVmtv2hEgazmdoJOonBje32hXkn1pw5WMtRPCiXTmlp0XUAXweGDpid1uxs2zR4N8hA==
+X-Received: by 2002:a17:903:3bae:b0:215:a2f4:d4ab with SMTP id
+ d9443c01a7336-22dbf8ea2ecmr160007625ad.7.1745856646136; 
+ Mon, 28 Apr 2025 09:10:46 -0700 (PDT)
 Received: from localhost.localdomain ([139.227.182.191])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db5221677sm84357515ad.248.2025.04.28.09.10.22
+ d9443c01a7336-22db5221677sm84357515ad.248.2025.04.28.09.10.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Apr 2025 09:10:25 -0700 (PDT)
+ Mon, 28 Apr 2025 09:10:45 -0700 (PDT)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Tomita Moeko <tomitamoeko@gmail.com>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>
-Subject: [PATCH 2/9] vfio/igd: Always emulate ASLS (OpRegion) register
-Date: Tue, 29 Apr 2025 00:09:57 +0800
-Message-ID: <20250428161004.35613-3-tomitamoeko@gmail.com>
+Subject: [PATCH 7/9] vfio/igd: Allow overriding GMS with 0xf0 to 0xfe on Gen9+
+Date: Tue, 29 Apr 2025 00:10:02 +0800
+Message-ID: <20250428161004.35613-8-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250428161004.35613-1-tomitamoeko@gmail.com>
 References: <20250428161004.35613-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x643.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::642;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x642.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,53 +101,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ASLS register represents the base address of OpRegion, and it is
-programmed with HPA. In IGD passthrough scenario, it needs to be
-reprogrammed with GPA by guest firmware. To prevent guest accessing
-wrong memory range, ASLS should always be emulated and cleared.
-
-In GVT-g scenario, emulating ASLS is unnecessary as access is handled
-by kvmgt backend [1].
-
-[1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/gpu/drm/i915/gvt/cfg_space.c?h=v6.14#n295
+On Gen9 and later IGD devices, GMS 0xf0 to 0xfe represents 4MB to 60MB
+pre-allocated memory size in 4MB increments. Allow users overriding
+GMS with these values.
 
 Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 ---
- hw/vfio/igd.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ hw/vfio/igd.c | 59 +++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 41 insertions(+), 18 deletions(-)
 
 diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index cecc3245b7..ae19456457 100644
+index 496d3df598..7f289a62a3 100644
 --- a/hw/vfio/igd.c
 +++ b/hw/vfio/igd.c
-@@ -182,10 +182,6 @@ static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
- 
-     trace_vfio_pci_igd_opregion_enabled(vdev->vbasedev.name);
- 
--    pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
--    pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
--    pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
--
+@@ -411,6 +411,44 @@ static bool vfio_pci_igd_setup_lpc_bridge(VFIOPCIDevice *vdev, Error **errp)
      return true;
  }
  
-@@ -583,7 +579,15 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-     if ((vdev->features & VFIO_FEATURE_ENABLE_IGD_LPC) &&
-         !vfio_pci_igd_setup_lpc_bridge(vdev, errp)) {
-         goto error;
--     }
++static bool vfio_pci_igd_override_gms(int gen, uint32_t gms, uint32_t *gmch)
++{
++    bool ret = false;
++
++    if (gen == -1) {
++        error_report("x-igd-gms is not supported on this device");
++    } else if (gen < 8) {
++        if (gms <= 0x10) {
++            *gmch &= ~(IGD_GMCH_GEN6_GMS_MASK << IGD_GMCH_GEN6_GMS_SHIFT);
++            *gmch |= gms << IGD_GMCH_GEN6_GMS_SHIFT;
++            ret = true;
++        } else {
++            error_report(QERR_INVALID_PARAMETER_VALUE, "x-igd-gms", "0~0x10");
++        }
++    } else if (gen == 8) {
++        if (gms <= 0x40) {
++            *gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
++            *gmch |= gms << IGD_GMCH_GEN8_GMS_SHIFT;
++            ret = true;
++        } else {
++            error_report(QERR_INVALID_PARAMETER_VALUE, "x-igd-gms", "0~0x40");
++        }
++    } else {
++        /* 0x0  to 0x40: 32MB increments starting at 0MB */
++        /* 0xf0 to 0xfe: 4MB increments starting at 4MB */
++        if ((gms <= 0x40) || (gms >= 0xf0 && gms <= 0xfe)) {
++            *gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
++            *gmch |= gms << IGD_GMCH_GEN8_GMS_SHIFT;
++            ret = true;
++        } else {
++            error_report(QERR_INVALID_PARAMETER_VALUE,
++                         "x-igd-gms", "0~0x40 or 0xf0~0xfe");
++        }
 +    }
 +
-+    /*
-+     * ASLS (OpRegion address) is read-only, emulated
-+     * It contains HPA, guest firmware need to reprogram it with GPA.
-+     */
-+    pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
-+    pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
-+    pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~0);
++    return ret;
++}
++
+ #define IGD_GGC_MMIO_OFFSET     0x108040
+ #define IGD_BDSM_MMIO_OFFSET    0x1080C0
  
-     /*
-      * Allow user to override dsm size using x-igd-gms option, in multiples of
+@@ -593,24 +631,9 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+      * 32MiB. This option should only be used when the desired size cannot be
+      * set from DVMT Pre-Allocated option in host BIOS.
+      */
+-    if (vdev->igd_gms) {
+-        if (gen < 8) {
+-            if (vdev->igd_gms <= 0x10) {
+-                gmch &= ~(IGD_GMCH_GEN6_GMS_MASK << IGD_GMCH_GEN6_GMS_SHIFT);
+-                gmch |= vdev->igd_gms << IGD_GMCH_GEN6_GMS_SHIFT;
+-            } else {
+-                error_report(QERR_INVALID_PARAMETER_VALUE,
+-                             "x-igd-gms", "0~0x10");
+-            }
+-        } else {
+-            if (vdev->igd_gms <= 0x40) {
+-                gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
+-                gmch |= vdev->igd_gms << IGD_GMCH_GEN8_GMS_SHIFT;
+-            } else {
+-                error_report(QERR_INVALID_PARAMETER_VALUE,
+-                             "x-igd-gms", "0~0x40");
+-            }
+-        }
++    if (vdev->igd_gms &&
++        !vfio_pci_igd_override_gms(gen, vdev->igd_gms, &gmch)) {
++        return false;
+     }
+ 
+     gms_size = igd_stolen_memory_size(gen, gmch);
 -- 
 2.47.2
 
