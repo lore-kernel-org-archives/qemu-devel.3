@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC127C369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 13:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 347FFC369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 13:06:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9O5Z-0000Cc-E0; Mon, 28 Apr 2025 09:00:05 -0400
+	id 1u9O5i-0000Yo-3N; Mon, 28 Apr 2025 09:00:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9O56-0007yB-Ho
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:59:32 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1u9O54-0007uO-Uq
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:59:31 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9O52-00038S-0f
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:59:32 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-acb39c45b4eso752545766b.1
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 05:59:27 -0700 (PDT)
+ id 1u9O4y-00036y-K5
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:59:28 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-ac2c663a3daso935283866b.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 05:59:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745845166; x=1746449966; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745845163; x=1746449963; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vC8n191P5j8mUKL+6H7GfxpWwzkXlFDtmwixiEivZfA=;
- b=LtbM9zZAjmrx8EPgUFzb4dwTkeIhqbUPaHQ8zrSMnBMSP9Ti1EBkrlViXT4GEk3Bd0
- RtVT3VZHOOD7iyHbZ3/tiIKFjuj+1vdWpC+gnHactdN+hAr/rR3xCa5y5m5r6nBeyQJw
- zYwDZNA7ENipR08B+UJfNFKv61ITw0t/nYGheA3quvhrTy5uk6EsQcfXfpcxnWd/hdym
- +L8xonNM7mKLRwCBN9YWYH2ZY+pTPu9X5f5QCUNZACzIPMtzcYNm0c4IbA50wyK4+YUY
- wN9W3RhHDIsJXtmfCiX33HOAQ461RgZTvK3slBCmmTDvzSuQomnXwqiVt6k1tKsNZGT3
- v2RQ==
+ bh=U57KKXtG3p2E4GxRki+kejQJQkJUB7hPOj4McHyafgQ=;
+ b=NASWo8/GBCe4GuKte1m6OOvxqxl2e73kO2fqArfE9jZ+LIzUoC7B+erYSOVJgpPUF9
+ TzUao1LaWaITWZ4jjFHsF514WabiQ4Iq2KlvCa4m7vvUDcjZLrlwZTvaDWQ9LetIVwMp
+ NadHDV6LztwnuPczSQpW1mCUjVPs+Ka+hnKmQkyyCXHgbIqSWFUbU2tvIDSp8qNFG1Ai
+ mGwafPg2n6usoY9myUSRZJPPao1qYZ9zeYEiRTGNBO0NzFDgJGVn3+/N1R/tttUwUWtb
+ zdllZI3DSBNJz8rcDHcdZORu14DPkTc3Sm/RinsW2vWZxk19Bd747LgI06bL78rMY+Sa
+ 53bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745845166; x=1746449966;
+ d=1e100.net; s=20230601; t=1745845163; x=1746449963;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vC8n191P5j8mUKL+6H7GfxpWwzkXlFDtmwixiEivZfA=;
- b=I5nQPThjYVFX7Q6/gxKUb2l5Zjh5JwE37CV2YhX+lqXbeC2Zl+HSuLaMaSZ6lDsKpl
- qTFnh7jWUXourDOFyw1tQ9Hb0IksvWXfmCw2X6CvtIykYAXKX6jmqtoE95h+i8ShzRN7
- GkeysOtHftvSMJZsNZpylLLIYO6mUlZ560tdI9dYUH2LM2TL/x+u4V56niS7RoeqFDb5
- Uf5Jq4w7OgLDDwfBev1IuNulYtBnYuQyDehi4Vt9Aey+jgZsLIeQngQQL5hVf69p3En7
- TjAu/xPNi8BbNgEAlQtn4v1tJ2McFm7ySGeHA9Ptjgn+6wKbCu9yQa+roXEeIfXtYQEC
- NxHg==
-X-Gm-Message-State: AOJu0YwbFGVL44PRcgpomCTyYJrT5VHprdvz+zJkkLY/5efd+20bGLYj
- GGkh9BaTJ6RKIO4kNS0lV55B1kOtxBFrsQEGnO6K0Sl9IuWeAOXtTCsvEI2q5RE=
-X-Gm-Gg: ASbGnctMx/d8kJ/JoUJEhUZIx4hch1PBKX3bypaK44jco45JduAmeCltU/ZgrVuuibO
- +ir5j8jnx4TJR72u4cbdx3bi6leeCkIwGa1YR+mhY6oYrPRIONAvHzPZqg1gzWg++EgSjqqKS7w
- mMeYUb1B3meaJXyfGIhi/zvADppvAflolPPx1m6bd/rJ1UgG3ft3yi/RakdLHHbPgJlSkR4i2mm
- xhLRLHmknRZaWelFmagh9VSqZWaoaYb7cW2mRma8EOy9hKj9sNYn8yK80Pt2dmyLsnL9q5ePk6C
- 4E0X+w1bjAPYszQ6sLwOpgY5UmZjsudGyGV1ONiFdueyqOxotogcAw==
-X-Google-Smtp-Source: AGHT+IED1VGhWqCdajh1Q5+7Cw2W1bP5Mo1Pw7eAQUzkWrCu2Ac7PFkEvBkH9u2TAvelW25TVOfLaQ==
-X-Received: by 2002:a17:907:2d94:b0:ace:6703:3cd5 with SMTP id
- a640c23a62f3a-ace73a45cd7mr1155454166b.19.1745845166242; 
- Mon, 28 Apr 2025 05:59:26 -0700 (PDT)
+ bh=U57KKXtG3p2E4GxRki+kejQJQkJUB7hPOj4McHyafgQ=;
+ b=VNLjw2HLWuU7CeoX46E2nQENrQSa2SWOwrKfUTn9HViOTf0rt9oXKbK3+PAevnGyZt
+ jDD2RSXDYUDJWKnrFTJrazCgMbdfxydadv33c0J57WKQ59y5t1AqH0KAjc935ThGrnj9
+ 47rOlL8xknoYOTKO+JZzU1vWJNKCIXKuoNacrxJCDWv9PLZ8qDDDMMOAwwnEncmX7NFj
+ /9ymnOfYtpvOK+k+NX26jY6yd1mcHXiVAr4Q5SDlPMnIjK4rzaigvFsJh9uRMZNBOo09
+ li1Acm9tnqiBmOyJsoyVFroQQQ3NbI5QzMU2gBZWACQTfSG7V6U76XPlEsIgFTTAfh3G
+ OvNw==
+X-Gm-Message-State: AOJu0Yw3xPK7rZvXuZvzMnJBdm5F8i8/CXVSFzuP3uN43N9YRcm8vGDG
+ 6JrIgNHshOE7QNvHEefomIxinZonhikMI7WxBhMoApdB61NyJZrKrQ8kmd/4Xzo=
+X-Gm-Gg: ASbGncvp3hLSU9W2+ik2qLkqowal9XVuIZGmoDuXilNjuh0Maiy8GEhMZLNzGLsRvb2
+ Flo8BcEnBaC/9olxpbtihWSGLQFrGR7rZsDjPsOrpRUVev2jvOW1Dw3abP/FXshfN9tzPkeFSrL
+ T1rWhUVyvfofJziTy569wJ9nf5T2ugYJHlNaH24oS0JlACaizE855Yo8F39TEsKWDBuThCQ7bCQ
+ FRKmnZBdf/FayMNfDScP2tppMvwPOGjV9kmF1HmQwI1n+F/TdgAFsMMPcT3QGOgnPPrwKPtY6vg
+ Wr+FvvfWl1NDWhd22BJGdpokY5VF/d7hYNYuP2UlDPg=
+X-Google-Smtp-Source: AGHT+IFc5jRZJP3HDBk8y2drDkR6BAF6FGwmR+FgwjTl/hYgZeI8xxnZuZqLi3ZtMKd8JlC3W3ovOw==
+X-Received: by 2002:a17:907:97c9:b0:acb:b267:436b with SMTP id
+ a640c23a62f3a-ace84938eeemr803926066b.25.1745845162835; 
+ Mon, 28 Apr 2025 05:59:22 -0700 (PDT)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ace6e41b7f9sm623625266b.6.2025.04.28.05.59.20
+ 4fb4d7f45d1cf-5f7011055f0sm5809746a12.15.2025.04.28.05.59.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 28 Apr 2025 05:59:22 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 032375FAF0;
- Mon, 28 Apr 2025 13:59:19 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id C6DB65FAEE;
+ Mon, 28 Apr 2025 13:59:18 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
@@ -74,20 +74,18 @@ Cc: Thomas Huth <thuth@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-stable@nongnu.org
-Subject: [PATCH 8/9] virtio-gpu: fix hang under TCG when unmapping blob
-Date: Mon, 28 Apr 2025 13:59:17 +0100
-Message-Id: <20250428125918.449346-9-alex.bennee@linaro.org>
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PATCH 6/9] MAINTAINERS: add myself to virtio-gpu for Odd Fixes
+Date: Mon, 28 Apr 2025 13:59:15 +0100
+Message-Id: <20250428125918.449346-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250428125918.449346-1-alex.bennee@linaro.org>
 References: <20250428125918.449346-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -110,83 +108,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Seeing as I've taken a few patches to here now I might as well put
+myself forward to maintain virtio-gpu. I've marked it as Odd Fixes as
+it's not my core focus. If someone with more GPU experience comes
+forward we can always update again.
 
-This commit fixes an indefinite hang when using VIRTIO GPU blob objects
-under TCG in certain conditions.
-
-The VIRTIO_GPU_CMD_RESOURCE_MAP_BLOB VIRTIO command creates a
-MemoryRegion and attaches it to an offset on a PCI BAR of the
-VirtIOGPUdevice. The VIRTIO_GPU_CMD_RESOURCE_UNMAP_BLOB command unmaps
-it.
-
-Because virglrenderer commands are not thread-safe they are only
-called on the main context and QEMU performs the cleanup in three steps
-to prevent a use-after-free scenario where the guest can access the
-region after it’s unmapped:
-
-1. From the main context, the region’s field finish_unmapping is false
-   by default, so it sets a variable cmd_suspended, increases the
-   renderer_blocked variable, deletes the blob subregion, and unparents
-   the blob subregion causing its reference count to decrement.
-
-2. From an RCU context, the MemoryView gets freed, the FlatView gets
-   recalculated, the free callback of the blob region
-   virtio_gpu_virgl_hostmem_region_free is called which sets the
-   region’s field finish_unmapping to true, allowing the main thread
-   context to finish replying to the command
-
-3. From the main context, the command is processed again, but this time
-   finish_unmapping is true, so virgl_renderer_resource_unmap can be
-   called and a response is sent to the guest.
-
-It happens so that under TCG, if the guest has no timers configured (and
-thus no interrupt will cause the CPU to exit), the RCU thread does not
-have enough time to grab the locks and recalculate the FlatView.
-
-That’s not a big problem in practice since most guests will assume a
-response will happen later in time and go on to do different things,
-potentially triggering interrupts and allowing the RCU context to run.
-If the guest waits for the unmap command to complete though, it blocks
-indefinitely. Attaching to the QEMU monitor and force quitting the guest
-allows the cleanup to continue.
-
-There's no reason why the FlatView recalculation can't occur right away
-when we delete the blob subregion, however. It does not, because when we
-create the subregion we set the object as its own parent:
-
-    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
-
-The extra reference is what prevents freeing the memory region object in
-the memory transaction of deleting the subregion.
-
-This commit changes the owner object to the device, which removes the
-extra owner reference in the memory region and causes the MR to be
-freed right away in the main context.
-
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20250410122643.1747913-3-manos.pitsidianakis@linaro.org>
-Cc: qemu-stable@nongnu.org
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/display/virtio-gpu-virgl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ MAINTAINERS | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 71a7500de9..8fbe4e70cc 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -112,7 +112,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
-     vmr->g = g;
-     mr = g_new0(MemoryRegion, 1);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 661a47db5a..f67c8edcf6 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2636,7 +2636,8 @@ F: hw/display/ramfb*.c
+ F: include/hw/display/ramfb.h
  
--    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
-+    memory_region_init_ram_ptr(mr, OBJECT(g), "blob", size, data);
-     memory_region_add_subregion(&b->hostmem, offset, mr);
-     memory_region_set_enabled(mr, true);
- 
+ virtio-gpu
+-S: Orphan
++M: Alex Bennée <alex.bennee@linaro.org>
++M: Odd Fixes
+ F: hw/display/virtio-gpu*
+ F: hw/display/virtio-vga.*
+ F: include/hw/virtio/virtio-gpu.h
 -- 
 2.39.5
 
