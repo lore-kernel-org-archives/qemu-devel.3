@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE1DDC369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 19:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8763C369DC
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 20:11:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9UYx-000240-HM; Mon, 28 Apr 2025 15:54:47 -0400
+	id 1u9UoF-00057U-R2; Mon, 28 Apr 2025 16:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1u9UYv-00022Q-B4
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 15:54:45 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u9UoE-00057A-Fw
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 16:10:34 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1u9UYt-00055J-Ez
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 15:54:45 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5f3f04b5dbcso8403440a12.1
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 12:54:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u9UoC-0000bb-Ab
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 16:10:34 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-7376dd56f8fso7135945b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 13:10:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745870081; x=1746474881; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fNsssxanrh3jvU/AEQbNK8rS/k/AXf/vyKGi6cIEUY0=;
- b=TXC1AYlimxUiew5U++mXwP9/kMv5RvWTyrVtYdfx4E0LaQhGUtmr2NUGSujEhL+bcG
- GzC15NEL/4SxAW5glMgaWWeHvMCpF3iBjIqnZSadxDfk1mJ2cUmhoxwlRL0Mb3wg1sHB
- q3wdTJM4XRoUA3b7WmA3HgNtV4zGFNTDK0yykvBR/3l7ILp/XnPvxzaAyF/qGTRUQVbF
- YuoAelCrxvxwXj1wfSI49ihHyAc4l3axPJ/nbnj6Sg5zCThQX4guDLNwEHGfEExTvEPd
- A6HygCftgVKeZIqQ6btDkdubLqCQJQ4+B/9GQMSomphjNf6ZNTwCpruX0D16e7ESDMGG
- +JIA==
+ d=linaro.org; s=google; t=1745871030; x=1746475830; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZstQx0xoB7jIoONMjyreiTAoGKvxvGwP2tm8dTefAWo=;
+ b=Gsks/igplDbtvbN3QVvAxJ8QahXGed5eP0blDsDxHYqLOu1umqA16BLDeNnjRKYG+r
+ GJ5c7r2+kdYo5PFAsTyJVSydoyJMzU7OngugOxU3xSGsJPh1ytuAyk+aiX8B2LO2aFfB
+ oZYnxkNlh0pdUlbGqwIZCuWe9tjNmroEys6sPovBaEk0SUXg2sA0LopIIZ5eL++fvy6r
+ GNqGWCmRw8FbC+e9mR4BxW7yNaLxbpdUOFoAUpItHCEBiaGUrStgMC9LhjQvpsYgLb0X
+ HlmkjVadEoiiqzRse3DiSchF65eO1tDwZ17rCRvuOpgZtmSLl8glSJMVAIJ8OQrKgJKX
+ /cfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745870081; x=1746474881;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fNsssxanrh3jvU/AEQbNK8rS/k/AXf/vyKGi6cIEUY0=;
- b=CaWBtBR0wwvFWF3UoU33fez1HkdXReU7Lj1TmR8NEUjnUIItTVWhOdTPMvbTv4Q8iK
- CQwfT8yEAJCGlzfvs34uQfZCVnWNcC5dvco8Vd6Bvmm9uEAbwiyun0g2BjENSOrS9xvb
- Hd6BjvopJk3NIU0gAquBOumzqV0ZglcWFu93/GvWTvtXri0n5H+hH6MTjhYoGHDaq4dC
- nXv/OZMrrzp8EIDZ+e6yCqXC2Im1K509RfnHiKIH0enVhdm1iaCquvz4OOWVM8yw6b+P
- XUnIxcUh+vg3XrQ58hx5VXyLyA1cPNYh1u675pcxthYUrvc3sY2+mNcpP+3bIINIrTQv
- K5tA==
-X-Gm-Message-State: AOJu0YyFreVldSs1lRxb1ZLBk0/Ro6k2NPuzLByD0Yw6iJOWWgX1YCsO
- +UtftJH1yZ461Pft+23i+q9JuU+IDOENnY/nYlY9pZlvGKy4WrZh6BWMg89mJ+vSTgsGsLsQW7e
- Z12a/z/Kr/fVTw2N6XEzikqdwbCU=
-X-Gm-Gg: ASbGnctSpsIusjABpEZrucEWqDJ8ranbR1I50GDJtW1h8aZKPNfVzlU0Z+ynr6nSAeN
- ElzHNPIi+mlDjLaYTwhZRkYX5lls3pfBpU/iv3GTcQbxoB6W8GuC+gLngHxZQbSVk9v0s5I/mli
- sSQdBB0G+YIa1dC00CXOWo
-X-Google-Smtp-Source: AGHT+IHYMIBwEL83N316N4KF1cWC0vIQJ1d05ki+JX0enqP99eKLD5lgRPh82yY3mqEGFy1Z4J3OiOnfohuyWW74pMw=
-X-Received: by 2002:a05:6402:4409:b0:5ed:61c8:adcf with SMTP id
- 4fb4d7f45d1cf-5f83b0d3c3amr165649a12.15.1745870081183; Mon, 28 Apr 2025
- 12:54:41 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1745871030; x=1746475830;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZstQx0xoB7jIoONMjyreiTAoGKvxvGwP2tm8dTefAWo=;
+ b=P9p+dzhPk5xuTkR38qjDtCj7Pd97DxpigzEwqpha8q6NpBdSeQuWUe3STanI6/T+vu
+ rIdE7T2N1nzSk4ZHIwF4DUadL2qFUM0TaGk0KTEUJC9CsFFhD8jalk0GZFiC128EmkOU
+ vCA3IFkvchzpmR6y0CfJCBNn7hSYYae4C79x/rg/+x10exe1QkU/VvHVWEq0ylDVQur2
+ CTiV2mhO0pO8BoWidUL9intkwxlVU6ncO1FCW1dp/Rf5pksoK9+12p+hAMjMXopf54GM
+ 1GudRSrPyCP5F0MpFD/pjkcyD4Nt3yCwApThw+6w0ZPKAN7d+Bn4n+SikNxRmBrFY1oL
+ 6w3w==
+X-Gm-Message-State: AOJu0YyAbMGyaSYGDGydbiQNObv08yT1pBrcfxO1VlMyW+ApTDh5czsS
+ 5IbiS82XREU3qY4Lnp6lz4odsqrQnJIHzWwmpbohy2ix9akDB7g+B4BOcp7wymg33c00kRaae5v
+ 3
+X-Gm-Gg: ASbGncuJDoBIM5zvPcCOumfhlZAHBiKn+neQUbgXJT/J8t1v2NZiq4hb7he4Zm8tX2A
+ 7MQ4Tjc8WRAbq4BPeemoFe0MoWilkdFewYT5d3aD0MS4n+99N3xXJEjjkQT43UX9dhm8Dnwrx+E
+ xZyx36euHZhNL/FHwcFslAGcgZ9PlhNPdAQgfAHcYsNS2+gQ9swxY52qEAIwhpnNPgfyU9wyRZW
+ MWqWUO+vMmBuyI/0h1wTbLk/39Q2FM8EYt9GzR+BB9IcgWMK02nEAOmA1c+o8YP3SiX5zN3jVp9
+ MdRuKNIgz8W/UHe3a+i8NCOvm3MpXLVRaKxl9GGCAw3pPI21Le+wQlNF+x6N+fUynFRYxRs0saE
+ =
+X-Google-Smtp-Source: AGHT+IEYYJIbVfKVYbgNcefR5Vq8buIxa1A+Kj+iCTakVB4sKMNUUIiG/W3EmxdBCyLUISWjFJC6jQ==
+X-Received: by 2002:aa7:888c:0:b0:736:4644:86ee with SMTP id
+ d2e1a72fcca58-740292a2faamr527096b3a.14.1745871030072; 
+ Mon, 28 Apr 2025 13:10:30 -0700 (PDT)
+Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73e25912fb9sm8469976b3a.34.2025.04.28.13.10.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Apr 2025 13:10:29 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org,
+	philmd@linaro.org
+Subject: [PATCH 00/10] accel/tcg: Compile cpu-exec.c twice
+Date: Mon, 28 Apr 2025 13:10:18 -0700
+Message-ID: <20250428201028.1699157-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
- <CAJSP0QUXuAUxMLOz5Zw1zwk0zwBRwuFM=qCufwf0TLr+w1YXvQ@mail.gmail.com>
- <1718b3de-9187-4fd0-87e7-ffe91393caf8@linaro.org>
-In-Reply-To: <1718b3de-9187-4fd0-87e7-ffe91393caf8@linaro.org>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 28 Apr 2025 15:54:28 -0400
-X-Gm-Features: ATxdqUH5DJB-HZBy7QILOhsyrrQueNTGvegH0J-iDAMv1YJhdyGXt2enJadV2GM
-Message-ID: <CAJSP0QUKmWY0b9xxX5k-8iV=P4QC4EXdHdzF41LrA0AmRcse3A@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, stefanha@redhat.com, 
- Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
- berrange@redhat.com, 
- peter.maydell@linaro.org, thuth@redhat.com, jsnow@redhat.com, 
- philmd@linaro.org, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x530.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,92 +98,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 28, 2025 at 3:25=E2=80=AFPM Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> Hi Stefan,
->
-> On 4/28/25 11:14 AM, Stefan Hajnoczi wrote:
-> > On Thu, Apr 24, 2025 at 2:35=E2=80=AFPM Pierrick Bouvier
-> > <pierrick.bouvier@linaro.org> wrote:
-> >> Feedback
-> >> =3D=3D=3D=3D=3D=3D=3D=3D
-> >>
-> >> The goal of this series is to be spark a conversation around following=
- topics:
-> >>
-> >> - Would you be open to such an approach? (expose all code, and restric=
-t commands
-> >>    registered at runtime only for specific targets)
-> >>
-> >> - Are there unexpected consequences for libvirt or other consumers to =
-expose
-> >>    more definitions than what we have now?
-> >>
-> >> - Would you recommend another approach instead? I experimented with ha=
-ving per
-> >>    target generated files, but we still need to expose quite a lot in =
-headers, so
-> >>    my opinion is that it's much more complicated for zero benefit. As =
-well, the
-> >>    code size impact is more than negligible, so the simpler, the bette=
-r.
-> >
-> > Do you anticipate that Linux distributions will change how they
-> > package QEMU? For example, should they ship a single qemu-all package
-> > in addition to or as a replacement for the typical model today where
-> > qemu-system-aarch64, qemu-system-x86_64, etc are shipped as separate
-> > packages?
-> >
->
-> Different distributions will have different opinions.
-> In case we decide one day (which is *not* short term future) to replace
-> existing binaries with a single one, it's probably a discussion that
-> will happen.
->
-> My personal "anticipation" is that if we unify all targets in a single
-> binary (which is not happening tomorrow), distributions can always
-> create a qemu-system-common package, and depend on it for all targets.
-> Thus, every qemu-system-X will simply include the expected symlink (or
-> wrapper script, or whatever) to the single binary.
-> Or they can recompile the single binary for every subpackage they want
-> in case they want to absolutely reduce the code size for a single
-> target, even though the sum of binaries will be infinitely bigger than
-> using the single one.
-> In any case, it's not something that will happen soon, except if
-> everyone in the community becomes convinced of the advantage of building
-> QEMU as a single binary, instead of per target binaries.
->
-> Even if this never converges, there are still benefits left for what is
-> done right now:
-> - Faster multi targets build: less compilation units =3D=3D less time.
-> - Smaller multi targets build footprint: seems relevant as disk space on
-> GitLab CI is a recurrent complaint.
-> - Clarification of code: I hope C developers are objectively (i.e. not
-> personal preference) convinced that less ifdef soup is better.
->
-> > It would be nice to hear from packager maintainers in this discussion
-> > so that there is a consensus between developers and package
-> > maintainers.
-> >
->
-> Sure.
->
-> Maybe there is a misunderstanding, but at this point, we are not trying
-> to invent anything new. We are just looking for a way to build QAPI
-> generated code only once, so it's possible to link together object files
-> coming from two different targets.
->
-> My mistake was to not mention introspection in the cover letter, but
-> thanks to Markus and Daniel, I understood the consequences of that, and
-> my position is to keep the current schema and serialization methods
-> *exactly* as they are, so consumers don't see any change. The only place
-> where we need to do changes are scripts/qapi and qapi/.
+More work toward single-binary.
 
-Okay, if this is just about QAPI for now then it's definitely too
-early to discuss packaging.
+r~
 
-I'm still curious which specific use cases you have in mind?
+Richard Henderson (10):
+  accel/tcg: Generalize fake_user_interrupt test
+  accel/tcg: Unconditionally use CPU_DUMP_CCOP in log_cpu_exec
+  accel/tcg: Introduce TCGCPUOps.cpu_exec_reset
+  target/i386: Split out x86_cpu_exec_reset
+  accel/tcg: Hoist cpu_get_tb_cpu_state decl to accl/tcg/cpu-ops.h
+  target/riscv: Move cpu_get_tb_cpu_state to tcg-cpu.c
+  accel/tcg: Return TCGTBCPUState from cpu_get_tb_cpu_state
+  accel/tcg: Move cpu_get_tb_cpu_state to TCGCPUOps
+  accel/tcg: Split out accel/tcg/helper-retaddr.h
+  accel/tcg: Compile cpu-exec.c twice
 
-Stefan
+ accel/tcg/internal-common.h        |   6 ++
+ include/accel/tcg/cpu-ldst.h       |  34 ----------
+ include/accel/tcg/cpu-ops.h        |  14 ++++
+ include/accel/tcg/helper-retaddr.h |  43 ++++++++++++
+ include/qemu/typedefs.h            |   1 +
+ target/alpha/cpu.h                 |  11 ---
+ target/arm/cpu.h                   |   3 -
+ target/arm/internals.h             |   1 +
+ target/avr/cpu.h                   |  18 -----
+ target/hexagon/cpu.h               |  15 -----
+ target/hppa/cpu.h                  |   3 -
+ target/i386/cpu.h                  |  14 ----
+ target/loongarch/cpu.h             |  12 ----
+ target/m68k/cpu.h                  |  16 -----
+ target/microblaze/cpu.h            |   8 ---
+ target/mips/cpu.h                  |   9 ---
+ target/openrisc/cpu.h              |  10 ---
+ target/ppc/cpu.h                   |  13 ----
+ target/ppc/internal.h              |   2 +
+ target/riscv/cpu.h                 |   3 -
+ target/rx/cpu.h                    |   9 ---
+ target/s390x/cpu.h                 |   9 ---
+ target/sh4/cpu.h                   |  15 -----
+ target/sparc/cpu.h                 |   3 -
+ target/tricore/cpu.h               |  12 ----
+ target/xtensa/cpu.h                |  68 -------------------
+ accel/tcg/cpu-exec.c               | 103 +++++++++++------------------
+ accel/tcg/translate-all.c          |   8 +--
+ accel/tcg/user-exec.c              |   1 +
+ target/alpha/cpu.c                 |  17 ++++-
+ target/arm/cpu.c                   |   2 +
+ target/arm/helper.c                |  17 +++--
+ target/arm/tcg/cpu-v7m.c           |   2 +
+ target/arm/tcg/helper-a64.c        |   1 +
+ target/arm/tcg/sme_helper.c        |   1 +
+ target/arm/tcg/sve_helper.c        |   1 +
+ target/avr/cpu.c                   |  20 +++++-
+ target/hexagon/cpu.c               |  20 +++++-
+ target/hppa/cpu.c                  |  15 +++--
+ target/i386/tcg/tcg-cpu.c          |  33 ++++++++-
+ target/loongarch/cpu.c             |  19 +++++-
+ target/m68k/cpu.c                  |  23 ++++++-
+ target/microblaze/cpu.c            |  16 ++++-
+ target/mips/cpu.c                  |  13 ++++
+ target/openrisc/cpu.c              |  17 ++++-
+ target/ppc/cpu_init.c              |   3 +-
+ target/ppc/helper_regs.c           |  19 +++---
+ target/ppc/mem_helper.c            |   1 +
+ target/riscv/cpu_helper.c          |  97 ---------------------------
+ target/riscv/tcg/tcg-cpu.c         | 100 ++++++++++++++++++++++++++++
+ target/rx/cpu.c                    |  16 ++++-
+ target/s390x/cpu.c                 |  17 +++--
+ target/s390x/tcg/mem_helper.c      |   1 +
+ target/sh4/cpu.c                   |  28 +++++++-
+ target/sparc/cpu.c                 |  19 ++++--
+ target/tricore/cpu.c               |  15 ++++-
+ target/xtensa/cpu.c                |  75 ++++++++++++++++++++-
+ accel/tcg/meson.build              |   2 +-
+ 58 files changed, 561 insertions(+), 513 deletions(-)
+ create mode 100644 include/accel/tcg/helper-retaddr.h
+
+-- 
+2.43.0
+
 
