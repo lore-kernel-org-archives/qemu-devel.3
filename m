@@ -4,59 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B50F2C369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 14:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFBFFC369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 14:59:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9Pt5-0006wg-ML; Mon, 28 Apr 2025 10:55:15 -0400
+	id 1u9Pwf-00016w-Kw; Mon, 28 Apr 2025 10:58:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1u9Pt2-0006w5-Me
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 10:55:13 -0400
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1u9Pt0-0004Lb-Sh
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 10:55:12 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id C694DA4AFDD;
- Mon, 28 Apr 2025 14:49:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34D32C4CEE4;
- Mon, 28 Apr 2025 14:55:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1745852102;
- bh=zi6Vwcq4nnHq+r8Y7dxMQD3ZRIktPnY93hyecncn6yY=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=XGCzqkJ/CAbb5iJEKqB66iBVf+HeZWnOitTsVYthGd9ER+QN8BAH2uE68uc86isuz
- br+zRKh+e1lkSTcQbcM3MHFSWpS1eQ2TPVnlU707Zq8U/KIUHLGK4/he09TygaoAHp
- PmvZrss5KUxXt71gso+J2KIo+5HqRUapKEYC6C2oIVOm+fwLhXmwKHc8Q6ZzcEn67E
- hEutu/BeNPRHkv7IvugTqeIlfjLR/oDZ14PilxxRHd1/lk6p2qqXd/3i7ulAiF+nUz
- r0giMzrgUy6lVvsvSUEG4Hgv5f7icmaL/15QNjC2SwQ5Zlkm4TA4Oezk4EY7utI1cM
- g7OBNpSgbuUHQ==
-Date: Mon, 28 Apr 2025 14:55:00 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Roman Bolshakov <rbolshakov@ddn.com>, Cameron Esfahani <dirty@apple.com>
-Subject: Re: [PATCH v2] i386/emulate: remove rflags leftovers
-Message-ID: <aA-WxBhhLqllyuau@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
-References: <20250428105108.196762-1-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u9Pwb-00016i-4P
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 10:58:53 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u9PwZ-0004xx-5v
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 10:58:52 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7369ce5d323so3983725b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 07:58:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745852329; x=1746457129; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=HMnnQp3Qy3sSdk8cyhT47of0kYbAf1dAsOQz6r2tgEQ=;
+ b=A6+LFBmaCIGjSBwDOcDJX7aaLvkO7ZhPSRJCvrP9B2IQbMSv0UeI48qHZJrCDAUQKd
+ Mk5dOPnNLSGuS/cABeTuN4NGSzvbmXwBoowzzA5TBFOArjVJHZI/zLCjjaY7WK52agwt
+ 9GcrEnyBeM8/+1ODEWgaXa9NxmK2jMB6vtjGw2XroetALD2LDZ3mWKzL3zjGMzCqTvX9
+ 4iKTGD9sL8sFEbrsc0F08kD6GLzwVsQzpkx6hh9ffEdi7ONnkOtvTIcy9106iy5TyiUl
+ H7aMLEB5E/AeSY7gbMLu5n2TbJFOGKiyq1/RY01dsK48+LItq0WVB05yn5JkhS6lLm0E
+ BmQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745852329; x=1746457129;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HMnnQp3Qy3sSdk8cyhT47of0kYbAf1dAsOQz6r2tgEQ=;
+ b=UEgSM4KiEaoTQCMKcywZQsWTBx0VDu5IMFXRfLHdFHsx5jDrLZnt4hw4/KJAt3gAcE
+ 8R5MDvOrP+NZW5D4horSn/Sp5fQzedrNU5HYtQY3XKcPviF9Pi7DNFQHQ6ss+nog4kc2
+ Sy+v94KD/8y0AC34zAuPebI5J8IJ8yY9Xs4zzj8+40PJD5vUJ5CX/r9F0zVycUujr4Sd
+ hR4lHxum3K14SzIoFkQw0U0tBAZSPiEjeVWfXjtpbZXI9PWWGbXjDNkVOBLY60Jym9Vx
+ wllj1vQLaaa7qrORKPNAYUEzWVGdbT0FtpOvZg21RXBrO3GW6TtC8rfHkpppJrxBf1q4
+ uAPA==
+X-Gm-Message-State: AOJu0Yz7nz2Bjr7Rt8L8t3viK+mKXcXeLHScuZUyU9TFywzhEiIBHk7p
+ KPjBD4gQAvo6UT59SAXRZoDenm1HyH/MI1Tr0oqIUmghXTA4Tv7jL6YNMRwezHIfhzUpqvi4erk
+ k
+X-Gm-Gg: ASbGncvWD+V+2AauzRDbRcxfIjJIeiFlESVazHUFakfutThBPJW/KLJhzRHm3YdazBp
+ g+WoV1QlHQtlMDiDA+YPVuX8iTylvpITMvP1bZO4cinH4RHKItsch9SLwUWvJqLqcqi/iyCZcmH
+ Jp3JnpLx16d7xSVSEa7mW0QUa13thmrSoav107J3jYCA+xgzKqe8etgwEHV4lhsqHoxtCQMgL8y
+ HKZ/aaagvitDwiGiQeiu9BtEVNN7QQ8+5Ab8jNg4qjWQ96ko+Zi/9MpPPXOdkVcA3PvytXlztKA
+ S9w1+EQPiEOeLLOWfYrHpWdKIkW8RVYaPtylyAfMd6SKvMuq46LG/m2IPGoqHTmywxbpiEOvAeo
+ qu7/SU6I=
+X-Google-Smtp-Source: AGHT+IFbxq/lLe0tDWG6QI6eKu/kIBEiqG5j3JWoYh9Kl+8MptFA6RVfIb2OEcmskcb+n0SKCtkiHg==
+X-Received: by 2002:a05:6a20:9c9b:b0:203:de5e:798c with SMTP id
+ adf61e73a8af0-2045b6f519amr18357525637.18.1745852329366; 
+ Mon, 28 Apr 2025 07:58:49 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b15f7eb7914sm7276678a12.20.2025.04.28.07.58.48
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Apr 2025 07:58:48 -0700 (PDT)
+Message-ID: <5ecee8bf-c340-4d7e-b47b-461c80ee9bfa@linaro.org>
+Date: Mon, 28 Apr 2025 07:58:46 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250428105108.196762-1-magnuskulke@linux.microsoft.com>
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
- envelope-from=wei.liu@kernel.org; helo=nyc.source.kernel.org
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/26] target/riscv: store RISCVCPUDef struct directly in
+ the class
+To: qemu-devel@nongnu.org
+References: <20250428073442.315770-1-pbonzini@redhat.com>
+ <20250428073442.315770-9-pbonzini@redhat.com>
+ <30770d2b-ac76-4d13-b8f2-ca39c0b82e0f@ventanamicro.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <30770d2b-ac76-4d13-b8f2-ca39c0b82e0f@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,95 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 28, 2025 at 12:51:08PM +0200, Magnus Kulke wrote:
-> In c901905 rflags have been removed from `x86_decode`, but there were
-> some leftovers.
+On 4/28/25 04:50, Daniel Henrique Barboza wrote:
+>>   static const TypeInfo riscv_kvm_cpu_type_infos[] = {
+>>       {
+>>           .name = TYPE_RISCV_CPU_HOST,
+>>           .parent = TYPE_RISCV_CPU,
+>> -        .class_init = riscv_host_cpu_class_init,
+>> +#if defined(TARGET_RISCV32)
+>> +        .class_data = &((const RISCVCPUDef) {
+>> +            .misa_mxl_max = MXL_RV32,
+>> +        },
+>> +#elif defined(TARGET_RISCV64)
+>> +        .class_data = &((const RISCVCPUDef) {
+>> +            .misa_mxl_max = MXL_RV64,
+>> +        },
+>> +#endif
+>>       }
+>>   };
 > 
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-
-The code looks good -- it is doing what c901905ea670 did.
-
-You can add an extra tag for ease of backporting:
-
-Fixes: c901905ea670 ("target/i386/emulate: remove flags_mask")
-
-Two nits:
-
-The subject prefix. The majority of the patches start with
-"target/i386", but I see ones start with "i386", too, so perhaps this is
-not a big deal.
-
-The length of the commit hash in the commit message should be longer.
-Linux kernel uses 12 characters. Looking at some recent commits in the
-QEMU tree, their commti hash length goes from 11 to 14.
-
-Assuming you've built and tested this patch and with the minor issues
-fixed:
-
-Reviewed-by: Wei Liu <wei.liu@kernel.org>
-
-> ---
->  target/i386/emulate/x86_decode.c | 17 ++++++-----------
->  1 file changed, 6 insertions(+), 11 deletions(-)
+> Are we sure this patch compiles? As I said in the v3 this except opening 2 parentheses
+> and closing just one after RISCVCPUDef:
 > 
-> diff --git a/target/i386/emulate/x86_decode.c b/target/i386/emulate/x86_decode.c
-> index 7fee219687..7efa2f570e 100644
-> --- a/target/i386/emulate/x86_decode.c
-> +++ b/target/i386/emulate/x86_decode.c
-> @@ -1408,7 +1408,7 @@ struct decode_tbl _2op_inst[] = {
->  };
->  
->  struct decode_x87_tbl invl_inst_x87 = {0x0, 0, 0, 0, 0, false, false, NULL,
-> -                                       NULL, decode_invalid, 0};
-> +                                       NULL, decode_invalid};
->  
->  struct decode_x87_tbl _x87_inst[] = {
->      {0xd8, 0, 3, X86_DECODE_CMD_FADD, 10, false, false,
-> @@ -1456,8 +1456,7 @@ struct decode_x87_tbl _x87_inst[] = {
->       decode_x87_modrm_st0, NULL, decode_d9_4},
->      {0xd9, 4, 0, X86_DECODE_CMD_INVL, 4, false, false,
->       decode_x87_modrm_bytep, NULL, NULL},
-> -    {0xd9, 5, 3, X86_DECODE_CMD_FLDxx, 10, false, false, NULL, NULL, NULL,
-> -     RFLAGS_MASK_NONE},
-> +    {0xd9, 5, 3, X86_DECODE_CMD_FLDxx, 10, false, false, NULL, NULL, NULL},
->      {0xd9, 5, 0, X86_DECODE_CMD_FLDCW, 2, false, false,
->       decode_x87_modrm_bytep, NULL, NULL},
->  
-> @@ -1478,20 +1477,17 @@ struct decode_x87_tbl _x87_inst[] = {
->       decode_x87_modrm_st0, NULL},
->      {0xda, 3, 3, X86_DECODE_CMD_FCMOV, 10, false, false, decode_x87_modrm_st0,
->       decode_x87_modrm_st0, NULL},
-> -    {0xda, 4, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL, NULL,
-> -     RFLAGS_MASK_NONE},
-> +    {0xda, 4, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL, NULL},
->      {0xda, 4, 0, X86_DECODE_CMD_FSUB, 4, false, false, decode_x87_modrm_st0,
->       decode_x87_modrm_intp, NULL},
->      {0xda, 5, 3, X86_DECODE_CMD_FUCOM, 10, false, true, decode_x87_modrm_st0,
->       decode_decode_x87_modrm_st0, NULL},
->      {0xda, 5, 0, X86_DECODE_CMD_FSUB, 4, true, false, decode_x87_modrm_st0,
->       decode_x87_modrm_intp, NULL},
-> -    {0xda, 6, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL, NULL,
-> -     RFLAGS_MASK_NONE},
-> +    {0xda, 6, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL, NULL},
->      {0xda, 6, 0, X86_DECODE_CMD_FDIV, 4, false, false, decode_x87_modrm_st0,
->       decode_x87_modrm_intp, NULL},
-> -    {0xda, 7, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL, NULL,
-> -     RFLAGS_MASK_NONE},
-> +    {0xda, 7, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL, NULL},
->      {0xda, 7, 0, X86_DECODE_CMD_FDIV, 4, true, false, decode_x87_modrm_st0,
->       decode_x87_modrm_intp, NULL},
->  
-> @@ -1511,8 +1507,7 @@ struct decode_x87_tbl _x87_inst[] = {
->       decode_x87_modrm_intp, NULL, NULL},
->      {0xdb, 4, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL,
->       decode_db_4},
-> -    {0xdb, 4, 0, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL, NULL,
-> -     RFLAGS_MASK_NONE},
-> +    {0xdb, 4, 0, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL, NULL},
->      {0xdb, 5, 3, X86_DECODE_CMD_FUCOMI, 10, false, false,
->       decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
->      {0xdb, 5, 0, X86_DECODE_CMD_FLD, 10, false, false,
-> -- 
-> 2.34.1
 > 
+>> -        .class_init = riscv_host_cpu_class_init,
+>> +#if defined(TARGET_RISCV32)
+>> +        .class_data = &(( <-----
+>                         const RISCVCPUDef) {
+
+I'll repeat that the parenthesis are completely unnecessary, just
+
+   = &(const RISCVCPUDef){ ... }
+
+The extras should be dropped everywhere.
+
+
+r~
+
 
