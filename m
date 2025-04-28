@@ -4,92 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D116BC369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 13:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9936C369DC
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 14:00:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9P07-0003sE-Vo; Mon, 28 Apr 2025 09:58:28 -0400
+	id 1u9P2K-0006b6-QA; Mon, 28 Apr 2025 10:00:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1u9Ozm-0003lQ-1T; Mon, 28 Apr 2025 09:58:07 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u9P2H-0006a7-UK
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 10:00:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1u9Ozk-0003iV-8j; Mon, 28 Apr 2025 09:58:05 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BDD0E11D759;
- Mon, 28 Apr 2025 16:58:00 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 03607200009;
- Mon, 28 Apr 2025 16:58:00 +0300 (MSK)
-Message-ID: <45fec2ac-9c59-4fe9-b750-8d04aa3e473f@tls.msk.ru>
-Date: Mon, 28 Apr 2025 16:58:00 +0300
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u9P2G-00045G-93
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 10:00:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745848837;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=o+K9fY3HxhttjtKjHOfixYuMIUFJSLFgMg1UK+eFuek=;
+ b=CGldGy/GgGPPKwtjlp4dLH9be2IoReUUOofYnLW6fKy0O2uoVr+2JssygaBPjrmQ91jlbl
+ TdD8G3vcLW/GYBd7q+7tTJBZp28cRe78f8pWA3ux18O39LKo+ueN1y3AlfFTK8fKUfB3xT
+ JEcoyyHU0Uq8ZbkgJoEYGa9EIbdGYtI=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-282-RAo-_MC0P5WoDqHwlEsMKw-1; Mon, 28 Apr 2025 10:00:35 -0400
+X-MC-Unique: RAo-_MC0P5WoDqHwlEsMKw-1
+X-Mimecast-MFC-AGG-ID: RAo-_MC0P5WoDqHwlEsMKw_1745848834
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-ac31adc55e4so392631866b.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 07:00:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745848834; x=1746453634;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=o+K9fY3HxhttjtKjHOfixYuMIUFJSLFgMg1UK+eFuek=;
+ b=hN00zdi1v5Mol7DqGCyvTzqNYZhRN/Y0nJn/j5hOOf2J749eESY7LJaUxyZ+HLi7L+
+ Ax4DXC3FfhZH6x8myGL1mEw1+4l69SmYqOd6LUS5lK78etBCtqEEIgc+wFWjSeF45+Qq
+ PC0532ALS6WI89zPb3paP5ANz+7lhtkfqbvmblFmIqZVjrzg53V8O4p9Blm650SQyiay
+ S+lGUa+sziKmDYDqzZtxSSjE2PRwDibY1lHEo44wir+eii+LwTQQWQY1PWFhNUmuyQ5Y
+ 4+kGnVwxj+oW9EuWHcuPcvC2odd1Sh/4B5yybJQ/IZxK/s/6pGK/9OZuo+/OAiCQ0n2z
+ H2Vg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVKpvZT4SA809i7xW7zbO95akKpVB3OSE56JjqCDmgiUMfb+RJnWNRWelhyiUFv7k5vrwwoQyWiw0XQ@nongnu.org
+X-Gm-Message-State: AOJu0Yz7c8zVipb06nyVKMfurMTIJ2k0zIZxsIr5HJLM+xY8aE0ar2Vp
+ a0avUeYkIaHZ7aBzs3tIVQvOC6cWKYb8J7yS/nD/SDA8DGM4JdEHtbd4uLqoiM3mPOODPu0U40z
+ oQ9WLNBEYXF/swKlaSN2Q38KNDxmRtpMmyRD3vjB5XpBtavyjnCnI
+X-Gm-Gg: ASbGnct6KxYtZaAbuMBPa3xVON68bBdr2Q6gfHtLIrP6kafO4XD9pX5k4raPV1EvLft
+ iQ1oqRWLe17/v2LQdZlUiKRAAf52xdzrST3n+XaFXIXUbffhDkBn+vKNd3EJ1vszOpvrIkOq0dH
+ txNHKxC+HZkdR9EL7nSLYgXPoET4bXqASSrX9MsJMyj6fWe+jM5XQWRTbwImS1lug3Bo9+SPTaB
+ BRE3ncuDV5zFqJo1KfnM+2ntGi5+8iBy0poJAsBQe1bM8Kl+uWKJfI7fW357yJF0+r1m837sB01
+ LR796tBIxDS1USIvMBmG34EQbH4KwPW6UsF/tQMxbHMonw==
+X-Received: by 2002:a17:907:3e03:b0:ace:3a27:9413 with SMTP id
+ a640c23a62f3a-ace739dd0b1mr975330666b.11.1745848834132; 
+ Mon, 28 Apr 2025 07:00:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHgpiNm+DCC8Ygtm/7Sg6Lto+DAyvQ9iiDITk7jvKKrsIz8hBi/R2gDZdE0M63rQ8zlgLeirw==
+X-Received: by 2002:a17:907:3e03:b0:ace:3a27:9413 with SMTP id
+ a640c23a62f3a-ace739dd0b1mr975326366b.11.1745848833651; 
+ Mon, 28 Apr 2025 07:00:33 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-43-178-177.web.vodafone.de.
+ [109.43.178.177]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ace6edafed3sm625975666b.180.2025.04.28.07.00.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Apr 2025 07:00:33 -0700 (PDT)
+Message-ID: <e833c21d-cdbd-4924-a8dc-79c8269f87b2@redhat.com>
+Date: Mon, 28 Apr 2025 16:00:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 4/4] qemu-img: improve queue depth validation in img_bench
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org
-References: <20250425175252.316807-1-kwolf@redhat.com>
- <20250425175252.316807-5-kwolf@redhat.com>
- <8fb759d6-6682-4962-b81d-ea20dbecd1e9@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <8fb759d6-6682-4962-b81d-ea20dbecd1e9@tls.msk.ru>
+Subject: Re: [PATCH 1/9] tests/docker: expose $HOME/.cache as docker volume
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20250428125918.449346-1-alex.bennee@linaro.org>
+ <20250428125918.449346-2-alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250428125918.449346-2-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,44 +160,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-28.04.2025 16:54, Michael Tokarev пишет:
-> 25.04.2025 20:52, Kevin Wolf wrote:
->> From: Denis Rastyogin <gerben@altlinux.org>
->>
->> This error was discovered by fuzzing qemu-img.
->>
->> Currently, running `qemu-img bench -d 0` in img_bench is allowed,
->> which is a pointless operation and causes qemu-img to hang.
->>
->> Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
->> Message-ID: <20250327162423.25154-5-gerben@altlinux.org>
->> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
->> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
->> ---
->>   qemu-img.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/qemu-img.c b/qemu-img.c
->> index 2044c22a4c..76ac5d3028 100644
->> --- a/qemu-img.c
->> +++ b/qemu-img.c
->> @@ -4571,7 +4571,7 @@ static int img_bench(int argc, char **argv)
->>           {
->>               unsigned long res;
->> -            if (qemu_strtoul(optarg, NULL, 0, &res) < 0 || res > INT_MAX) {
->> +            if (qemu_strtoul(optarg, NULL, 0, &res) <= 0 || res > INT_MAX) {
->>                   error_report("Invalid queue depth specified");
->>                   return 1;
->>               }
+On 28/04/2025 14.59, Alex Bennée wrote:
+> If you want to run functional tests we should share .cache so we don't
+> force containers to continually re-download images.
 > 
-> FWIW, it's been covered by my qemu-img options patches for way over a year.
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/docker/Makefile.include | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
+> index fa1cbb6726..56a8d9f8ff 100644
+> --- a/tests/docker/Makefile.include
+> +++ b/tests/docker/Makefile.include
+> @@ -224,6 +224,7 @@ docker-run: docker-qemu-src
+>   			$(if $(NOUSER),,				\
+>   				-e CCACHE_DIR=/var/tmp/ccache 		\
+>   				-v $(DOCKER_CCACHE_DIR):/var/tmp/ccache:z \
+> +				-v $(HOME)/.cache:$(HOME)/.cache 	\
 
-In particular:
+Maybe better restrict it to ~/.cache/qemu ? ... to avoid sharing other 
+subfolders there to the container?
 
-https://lore.kernel.org/qemu-devel/20240927061121.573271-28-mjt@tls.msk.ru/
+  Thomas
 
-I'm still waiting for some feedback from these patches - heard neither ACK
-nor NACK for this rather large work.
-
-/mjt
 
