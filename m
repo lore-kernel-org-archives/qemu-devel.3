@@ -4,31 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D0BC369D9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A444BC369D3
 	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 08:04:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9JSt-0004jA-LB; Mon, 28 Apr 2025 04:03:47 -0400
+	id 1u9JSw-0004lH-22; Mon, 28 Apr 2025 04:03:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dietmar@zilli.proxmox.com>)
- id 1u9JSr-0004fz-CZ
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 04:03:45 -0400
+ id 1u9JSs-0004hp-Mi
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 04:03:47 -0400
 Received: from [94.136.29.99] (helo=zilli.proxmox.com)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dietmar@zilli.proxmox.com>) id 1u9JSp-00051U-AR
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 04:03:45 -0400
+ (envelope-from <dietmar@zilli.proxmox.com>) id 1u9JSp-00051R-C6
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 04:03:46 -0400
 Received: by zilli.proxmox.com (Postfix, from userid 1000)
- id D74971C05FF; Mon, 28 Apr 2025 10:03:38 +0200 (CEST)
+ id DD7C61C0A60; Mon, 28 Apr 2025 10:03:38 +0200 (CEST)
 From: Dietmar Maurer <dietmar@proxmox.com>
 To: marcandre.lureau@redhat.com,
 	qemu-devel@nongnu.org
 Cc: Dietmar Maurer <dietmar@proxmox.com>
-Subject: [PATCH v4 0/8] Add VNC Open H.264 Encoding
-Date: Mon, 28 Apr 2025 10:03:28 +0200
-Message-Id: <20250428080336.2574852-1-dietmar@proxmox.com>
+Subject: [PATCH v4 4/8] vnc: h264: send additional frames after the display is
+ clean
+Date: Mon, 28 Apr 2025 10:03:32 +0200
+Message-Id: <20250428080336.2574852-5-dietmar@proxmox.com>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250428080336.2574852-1-dietmar@proxmox.com>
+References: <20250428080336.2574852-1-dietmar@proxmox.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 94.136.29.99 (failed)
@@ -56,84 +59,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As defined by:
+The vnc implementation only sends frames when it detects changes in
+the server's framebuffer. This leads to artifacts when there are no
+further changes, as the internal H264 encoder may still contain data.
 
-https://github.com/rfbproto/rfbproto/blob/master/rfbproto.rst#open-h-264-encoding
+This patch modifies the code to send a few additional frames in such
+situations to flush the H264 encoder data.
 
-The noVNC HTML application recently added support for this encoding. There is
-also an open pull request to add audio support to noVNC:
+Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
+---
+ ui/vnc.c | 13 ++++++++++++-
+ ui/vnc.h |  3 +++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-https://github.com/novnc/noVNC/pull/1952
-
-With that in place, the web based VNC console is good enough to display
-a VM showing a video with reasonable bandwidth.
-
-Possible improvements:
-
-- Decide whether we should allow --gst-* arguments on the command line
-- Dynamic switching to/from H264 mode at high change rates
-
-We may also extend the RFB Audio protocol with "opus" encoding, because uncompressed
-audio need too much bandwidth.
-
-Changes in v4:
-
-- style fixes and cleanup (as suggested by Marc and Daniel)
-- use SPDX-License-Identifier for new file
-- protect everything with #ifdef CONFIG_GSTREAMER
-- simplify vnc_refresh as suggested by Daniel (avoid populating
-  the rectangle array, do not use vs after it might be freed)
-- make "h264" a boolean option
-- add new "h264-encoders" options (colon separated)
-- add a cleanup path for vnc instead of using shutdown notifiers.
-
-
-Changes in v3:
-
-- add license header
-- sqash patch to remove libavcodec prefix
-- use gst_clear_object and goto error
-- use single g_object_set
-- g_autoptr/g_new0
-- document vnc_h264_send_framebuffer_update returnm value
-- avoid mixed declarations
-- use loop to retrieve samples
-- initialize gst during argument processing
-- add hardware encoders
-
-
-Changes in v2:
-
-- cleanup: h264: remove wrong libavcodec_ prefix from function names
-- search for available h264 encoder, and only enable h264 if a
-  encoder is available
-- new vnc option to configure h264 at server side
-
-
-Dietmar Maurer (8):
-  new configure option to enable gstreamer
-  vnc: initialize gst during argument processing
-  add vnc h264 encoder
-  vnc: h264: send additional frames after the display is clean
-  h264: search for available h264 encoder
-  h264: new vnc options to configure h264 at server side
-  h264: add hardware encoders
-  h264: stop gstreamer pipeline before destroying, cleanup on exit
-
- include/ui/console.h          |   1 +
- meson.build                   |  10 +
- meson_options.txt             |   2 +
- scripts/meson-buildoptions.sh |   3 +
- system/runstate.c             |   2 +
- system/vl.c                   |   8 +
- ui/meson.build                |   1 +
- ui/vnc-enc-h264.c             | 358 ++++++++++++++++++++++++++++++++++
- ui/vnc-jobs.c                 |  53 +++--
- ui/vnc.c                      |  80 +++++++-
- ui/vnc.h                      |  29 +++
- 11 files changed, 529 insertions(+), 18 deletions(-)
- create mode 100644 ui/vnc-enc-h264.c
-
+diff --git a/ui/vnc.c b/ui/vnc.c
+index c1f2c3ae15..0efdc9ec39 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3236,6 +3236,7 @@ static void vnc_refresh(DisplayChangeListener *dcl)
+     VncDisplay *vd = container_of(dcl, VncDisplay, dcl);
+     VncState *vs, *vn;
+     int has_dirty, rects = 0;
++    bool keep_dirty = false;
+ 
+     if (QTAILQ_EMPTY(&vd->clients)) {
+         update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_MAX);
+@@ -3253,11 +3254,21 @@ static void vnc_refresh(DisplayChangeListener *dcl)
+     vnc_unlock_display(vd);
+ 
+     QTAILQ_FOREACH_SAFE(vs, &vd->clients, next, vn) {
++#ifdef CONFIG_GSTREAMER
++        if (vs->h264) {
++            if (has_dirty) {
++                vs->h264->keep_dirty = VNC_H264_KEEP_DIRTY;
++            } else if (vs->h264->keep_dirty > 0) {
++                keep_dirty = true;
++                vs->h264->keep_dirty--;
++            }
++        }
++#endif
+         rects += vnc_update_client(vs, has_dirty);
+         /* vs might be free()ed here */
+     }
+ 
+-    if (has_dirty && rects) {
++    if ((has_dirty && rects) || keep_dirty) {
+         vd->dcl.update_interval /= 2;
+         if (vd->dcl.update_interval < VNC_REFRESH_INTERVAL_BASE) {
+             vd->dcl.update_interval = VNC_REFRESH_INTERVAL_BASE;
+diff --git a/ui/vnc.h b/ui/vnc.h
+index 0fe9a9ab16..29012b75c7 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -236,10 +236,13 @@ typedef struct VncZywrle {
+ } VncZywrle;
+ 
+ #ifdef CONFIG_GSTREAMER
++/* Number of frames we send after the display is clean. */
++#define VNC_H264_KEEP_DIRTY 10
+ typedef struct VncH264 {
+     GstElement *pipeline, *source, *gst_encoder, *sink, *convert;
+     size_t width;
+     size_t height;
++    guint keep_dirty;
+ } VncH264;
+ #endif
+ 
 -- 
 2.39.5
 
