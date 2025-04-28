@@ -4,89 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B547BC369DC
-	for <qemu-devel@archiver.kernel.org>; Sun, 27 Apr 2025 23:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF8A1C369D1
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 00:14:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9Axt-0006TH-Qf; Sun, 27 Apr 2025 18:59:13 -0400
+	id 1u9C7S-0002iu-VX; Sun, 27 Apr 2025 20:13:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nirsof@gmail.com>)
- id 1u9Axs-0006QM-15; Sun, 27 Apr 2025 18:59:12 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nirsof@gmail.com>)
- id 1u9Axp-0007AJ-VP; Sun, 27 Apr 2025 18:59:11 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-39ac9aea656so4896478f8f.3; 
- Sun, 27 Apr 2025 15:59:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745794747; x=1746399547; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JgTtq3pHpaj7n78orlTAZ+jsq9yxJtDldmhOoqc2tZs=;
- b=Y0XXuznKivFso3NfLigZVY84W422JA9Eiu6WogfVu0FTN7XIam7HMwNgjtErjmggHS
- 4XuwZNVuAj+yPO8qrj/rXBDmOcfPgkvMP3uObDitskW4gDf4KSCaPwZqIn1dR2xJBXEJ
- +6b4T2gufrpR3i53fPWA3cDgh/OpTN4EW+PjBfmla/5H2eB+ZJl8/TnDNHg4QkmIlGqP
- rqtdeJEu7aBtJYEzh0XdxqkEMfCOOCqNfy1nMqPSVO3OfCDKM1P0p7PDn05dmzwwaRj3
- ZEZ2prk2Z/4rIkNRsOXPgK8sRDa9lZeNba9i0c7Gwqdd4b/SJmhU+u4pOJEW6jfscPFm
- PdyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745794747; x=1746399547;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JgTtq3pHpaj7n78orlTAZ+jsq9yxJtDldmhOoqc2tZs=;
- b=VG9n+CjZcq7ObeOtRICwAbV2hlecrzFuWDzUkdV8Zgu8j1fWvWIBWjpUHyvZat1fOP
- oJ3eefkXq3/GWYtV4FU8ZT/x+w4WxPLxp6Qt72D7vHx4nMOHo6jp6eLrR+R0nsZ1yOmt
- zIx3tRt/liOMrnSKG4tZDW2VQqumnZzwuUsff5l5P4F851wWc0/s7tg5BcKXnCRMdrDk
- E+2joEJUjzX3IzRk/4UfjdabyCZHq28gnpJxydV1/Q5sPr7zs8ADAagV7LBxKT5rvX/b
- nVi7Ac9u3zA9thaetPHNCGcN7UlNfMxaB76rDrKFR5jQE/VURj4M8wQTtZmSMe3bMMqd
- MEyQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWW2MMkbG1lYUfP35txWAWIv1ciGJrYBb5jbLPq+X1WOt8pVKH/OiaQmXyAbcwY+iLaQtw5us8Dtkck@nongnu.org
-X-Gm-Message-State: AOJu0YxvQkvPe7a2M6ZD0TUMP/2HZUZkgJ6p5xefnOxM4Hw/xXgDZD+W
- TWs5vp/AM1WuuGaSvg53zXfkMOu1Z4OfVkloCasg0c62p9XFcAyb3JNNjYrQ
-X-Gm-Gg: ASbGnctsnGU8s2OGTOEYIn/QqJ8vCivE9n41MCZqetJvAtfHpfbWltNYgFuLRtxRcMJ
- HnHXHJfquwlTQNqlAhLEZHieV7Z+qUvVmoqSFghrt2wMvDhoyTfsQCR5axg0jvMglWywUSAXDX0
- b9TDunDIF2jLwDKIf6xceRQcdhzWqQUGwbsQtMEJY9WlyqatrhTPL29swptSUSONc2ZjYn35Gk9
- pjFGx2kGcs2UWZ5l0a6sLNOH4KEkdRzlkB+SHF5SMYwN7AP5qteAeNDwbWDOjnKXi4W0RQe8FLp
- yClH7+6pZeetaJr5T0G26vPPDpbBUwN5I2rLNfBb8jtIOTeyJir1S01QIwd2GZ5/i4BGMpHT86y
- cw1Z/aioeL+kOfUnW5urfMMjjC+YN
-X-Google-Smtp-Source: AGHT+IEc+nCVkp5ZU+1JUcEW70h2wTqtK2DjgoElMWgFwGC0VJZqg6Ed8iwRbHNn3kUgxiJ94c8QAA==
-X-Received: by 2002:a5d:6483:0:b0:3a0:84a5:4067 with SMTP id
- ffacd0b85a97d-3a084a5428amr859977f8f.54.1745794746924; 
- Sun, 27 Apr 2025 15:59:06 -0700 (PDT)
-Received: from localhost.localdomain (46-116-102-127.bb.netvision.net.il.
- [46.116.102.127]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073e5da4dsm9499765f8f.99.2025.04.27.15.59.05
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 27 Apr 2025 15:59:06 -0700 (PDT)
-From: Nir Soffer <nirsof@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>,
- Nir Soffer <nirsof@gmail.com>
-Subject: [PATCH 1/2] block/null: Report DATA if not reading zeroes
-Date: Mon, 28 Apr 2025 01:58:59 +0300
-Message-Id: <20250427225900.24316-2-nirsof@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250427225900.24316-1-nirsof@gmail.com>
-References: <20250427225900.24316-1-nirsof@gmail.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u9C7Q-0002ic-D8; Sun, 27 Apr 2025 20:13:08 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u9C7J-0001hN-Mv; Sun, 27 Apr 2025 20:13:06 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4BD1455D22A;
+ Mon, 28 Apr 2025 02:12:48 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id iVVeL8i09SWT; Mon, 28 Apr 2025 02:12:45 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id DD41355C592; Mon, 28 Apr 2025 02:12:45 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D9703745682;
+ Mon, 28 Apr 2025 02:12:45 +0200 (CEST)
+Date: Mon, 28 Apr 2025 02:12:45 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+cc: Nicholas Piggin <npiggin@gmail.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [RFC PATCH] target/ppc: Inline most of dcbz helper
+In-Reply-To: <d3c6c417-20d9-a215-2a5c-86fa084b00fa@eik.bme.hu>
+Message-ID: <173c9111-e065-0dd5-c276-6bbc0351f9cc@eik.bme.hu>
+References: <20240701005939.5A0AF4E6000@zero.eik.bme.hu>
+ <d3c6c417-20d9-a215-2a5c-86fa084b00fa@eik.bme.hu>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=nirsof@gmail.com; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,49 +65,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If read-zeroes is not set, we did not report BDRV_BLOCK_DATA or
-BDRV_BLOCK_ZERO. This is not consistent with other drivers and can
-confuse users or other programs:
+On Thu, 24 Apr 2025, BALATON Zoltan wrote:
+>> The test case I've used came out of a discussion about very slow
+>> access to VRAM of a graphics card passed through with vfio the reason
+>> for which is still not clear but it was already known that dcbz is
+>> often used by MacOS and AmigaOS for clearing memory and to avoid
+>> reading values about to be overwritten which is faster on real CPU but
+>> was found to be slower on QEMU. The optimised copy routines were
+>> posted here:
+>> https://www.amigans.net/modules/newbb/viewtopic.php?post_id=149123#forumpost149123
+>> and the rest of it I've written to make it a test case is here:
+>> http://zero.eik.bme.hu/~balaton/qemu/vramcopy.tar.xz
+>> Replace the body of has_altivec() with just "return false". Sorry for
+>> only giving pieces but the code posted above has a copyright that does
+>> not allow me to include it in the test. This is not measuring VRAM
+>> access now just memory copy but shows the effect of dcbz. I've got
+>> these results with this patch:
+>> 
+>> Linux user master:                  Linux user patch:
+>> byte loop: 2.2 sec                  byte loop: 2.2 sec
+>> memcpy: 2.19 sec                    memcpy: 2.19 sec
+>> copyToVRAMNoAltivec: 1.7 sec        copyToVRAMNoAltivec: 1.71 sec
+>> copyToVRAMAltivec: 2.13 sec         copyToVRAMAltivec: 2.12 sec
+>> copyFromVRAMNoAltivec: 5.11 sec     copyFromVRAMNoAltivec: 2.79 sec
+>> copyFromVRAMAltivec: 5.87 sec       copyFromVRAMAltivec: 3.26 sec
+>> 
+>> Linux system master:                Linux system patch:
+>> byte loop: 5.86 sec                 byte loop: 5.9 sec
+>> memcpy: 5.45 sec                    memcpy: 5.47 sec
+>> copyToVRAMNoAltivec: 2.51 sec       copyToVRAMNoAltivec: 2.53 sec
+>> copyToVRAMAltivec: 3.84 sec         copyToVRAMAltivec: 3.85 sec
+>> copyFromVRAMNoAltivec: 6.11 sec     copyFromVRAMNoAltivec: 3.92 sec
+>> copyFromVRAMAltivec: 7.22 sec       copyFromVRAMAltivec: 5.51 sec
 
-    % qemu-img map --output json "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': '1g'}}"
-    [{ "start": 0, "length": 1073741824, "depth": 0, "present": false, "zero": false, "data": false, "compressed": false}]
+I did some more benchmarking to identify what slows it down. I noticed 
+that memset uses dcbz too so I added a test for that. I've also added a 
+parameter to allow testing actual VRAM and now that I have a card working 
+with vfio-pci passthrough I could also test that. The updated 
+vramcopy.tar.xz is at the same URL as above. These tests were run with the 
+amigaone machine under Linux booted as described here:
+https://www.qemu.org/docs/master/system/ppc/amigang.html
 
-    % qemu-nbd "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': '1g'}}" &
+I compiled the benchmark twice, once as in the tar and once replacing dcbz 
+in the copyFromVRAM* routines with dcba (which is noop on QEMU). First two 
+results are with both src and dst in RAM, second two tests are with dst in 
+VRAM (mapped from phys address 0x80800000 where the card's framebuffer is 
+mapped). The left column shows results with emulated ati-vga as in the 
+amigang.html docs. The right column is with real ATI X550 card (old and 
+slow but works with this old PPC Linux) passed through with vfio-pci.
 
-    % nbdinfo --map nbd://127.0.0.1
-             0  1073741824    1  hole
+with ati-vga                            with vfio-pci
 
-With this change we report DATA in this case:
+src 0xb79c8008 dst 0xb78c7008	      |	src 0xb7c92008 dst 0xb7b91008
+byte loop: 21.16 sec			byte loop: 21.16 sec
+memset: 3.85 sec		      |	memset: 3.87 sec
+memcpy: 5.07 sec			memcpy: 5.07 sec
+copyToVRAMNoAltivec: 2.52 sec	      |	copyToVRAMNoAltivec: 2.53 sec
+copyToVRAMAltivec: 2.42 sec	      |	copyToVRAMAltivec: 2.37 sec
+copyFromVRAMNoAltivec: 6.39 sec	      |	copyFromVRAMNoAltivec: 6.38 sec
+copyFromVRAMAltivec: 7.02 sec	      |	copyFromVRAMAltivec: 7 sec
 
-    % ./qemu-img map --output json "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': '1g'}}"
-    [{ "start": 0, "length": 1073741824, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": 0}]
+using dcba instead of dcbz	      |	using dcba instead of dcbz
+src 0xb7b69008 dst 0xb7a68008	      |	src 0xb7c44008 dst 0xb7b43008
+byte loop: 21.14 sec			byte loop: 21.14 sec
+memset: 3.85 sec		      |	memset: 3.88 sec
+memcpy: 5.06 sec		      |	memcpy: 5.07 sec
+copyToVRAMNoAltivec: 2.53 sec	      |	copyToVRAMNoAltivec: 2.52 sec
+copyToVRAMAltivec: 2.3 sec		copyToVRAMAltivec: 2.3 sec
+copyFromVRAMNoAltivec: 2.59 sec		copyFromVRAMNoAltivec: 2.59 sec
+copyFromVRAMAltivec: 2.95 sec		copyFromVRAMAltivec: 2.95 sec
 
-    % ./qemu-nbd "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': '1g'}}" &
+dst in emulated ati-vga		      |	dst in real card vfio vram
+mapping 0x80800000			mapping 0x80800000
+src 0xb78e0008 dst 0xb77de000	      |	src 0xb7ec5008 dst 0xb7dc3000
+byte loop: 21.2 sec		      |	byte loop: 563.98 sec
+memset: 3.89 sec		      |	memset: 39.25 sec
+memcpy: 5.07 sec		      |	memcpy: 140.49 sec
+copyToVRAMNoAltivec: 2.53 sec	      |	copyToVRAMNoAltivec: 72.03 sec
+copyToVRAMAltivec: 12.22 sec	      |	copyToVRAMAltivec: 78.12 sec
+copyFromVRAMNoAltivec: 6.43 sec	      |	copyFromVRAMNoAltivec: 728.52 sec
+copyFromVRAMAltivec: 35.33 sec	      |	copyFromVRAMAltivec: 754.95 sec
 
-    % nbdinfo --map nbd://127.0.0.1
-             0  1073741824    0  data
+dst in emulated ati-vga using dcba    |	dst in real card vfio vram using dcba
+mapping 0x80800000			mapping 0x80800000
+src 0xb7ba7008 dst 0xb7aa5000	      |	src 0xb77f4008 dst 0xb76f2000
+byte loop: 21.15 sec		      |	byte loop: 577.42 sec
+memset: 3.85 sec		      |	memset: 39.52 sec
+memcpy: 5.06 sec		      |	memcpy: 142.8 sec
+copyToVRAMNoAltivec: 2.53 sec	      |	copyToVRAMNoAltivec: 71.71 sec
+copyToVRAMAltivec: 12.2 sec	      |	copyToVRAMAltivec: 78.09 sec
+copyFromVRAMNoAltivec: 2.6 sec	      |	copyFromVRAMNoAltivec: 727.23 sec
+copyFromVRAMAltivec: 35.03 sec	      |	copyFromVRAMAltivec: 753.15 sec
 
-Signed-off-by: Nir Soffer <nirsof@gmail.com>
----
- block/null.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+The results show that dcbz has some effect but an even bigger slow down is 
+caused by using AltiVec which is supposed to do wider access to reduce the 
+overhead but maybe it's not translated to host vector instructions 
+correctly. The host in the above test was Intel i7-9700K. So to solve this 
+maybe AltiVec should be improved more than dcbz but I don't know what and 
+how.
 
-diff --git a/block/null.c b/block/null.c
-index dc0b1fdbd9..7ba87bd9a9 100644
---- a/block/null.c
-+++ b/block/null.c
-@@ -239,9 +239,7 @@ static int coroutine_fn null_co_block_status(BlockDriverState *bs,
-     *map = offset;
-     *file = bs;
- 
--    if (s->read_zeroes) {
--        ret |= BDRV_BLOCK_ZERO;
--    }
-+    ret |= s->read_zeroes ? BDRV_BLOCK_ZERO : BDRV_BLOCK_DATA;
-     return ret;
- }
- 
--- 
-2.39.5 (Apple Git-154)
-
+Regards,
+BALATON Zoltan
 
