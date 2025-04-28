@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0570C369D3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:35:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5801DC369D8
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:36:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9Ml4-0003Rn-48; Mon, 28 Apr 2025 07:34:46 -0400
+	id 1u9MmF-0004uv-JM; Mon, 28 Apr 2025 07:36:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u9Mky-0003Mb-JV
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:34:41 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u9Mm0-0004dk-7C; Mon, 28 Apr 2025 07:35:45 -0400
+Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u9Mkw-00070i-9K
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:34:40 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-224171d6826so70256865ad.3
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 04:34:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1u9Mlx-0007IU-2B; Mon, 28 Apr 2025 07:35:43 -0400
+Received: by mail-vk1-xa30.google.com with SMTP id
+ 71dfb90a1353d-5240b014f47so1965894e0c.1; 
+ Mon, 28 Apr 2025 04:35:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1745840075; x=1746444875; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fu7sRBtJPEYmTWcMmeOGRGS0ZMmaoMKDbYrKi7QmIlM=;
- b=Nehel6kWAMJT/YtKhkYhOymDr3nV4E/WUwZYjJnlKYZcrDCirXm/Cn3TAb8fQWrBHx
- nSeV8UNgAqPeR35zyGavUWCMUi5TgUoBAS1mqu0hrwxmt3Zn+J/VMw1rKE2IjHXColql
- 07cDFbX4k7VuFk+E0qcrNM0nRUHpH738CKqMMbrhvywTm+/VgIy1DwtY1IIZCHk6E8GE
- 1YujLG9YBX+/XCRfxmRQIN1WYbC/zLlN5exkedcv9kG6TuhwlGm9kz8/dTUW4EEeSWZW
- q54C+oyTXdDNS35PwFvn5St+cwJD0kujUFxxGw6Zl3E+1FW0ftuN51cnfbGe5auslZFF
- BPoQ==
+ d=gmail.com; s=20230601; t=1745840139; x=1746444939; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3EsV7k/FuAOkrFGPbTAMGG3l2r0gJBfaQzva5veKlH4=;
+ b=hGn73dVaYxctQ90p+5675OgG9+bwUZUvNubdNbHHAsJ/u2zV0VP/Wq1eap6awX94q3
+ 9Fba0LYKji3X19ABduIy/YZzuRGZb60trPAqTs30BJU7O6K/CUGBaiYObI1V17g/TuZ7
+ RyO1CIMXUyWmhBYzqqzHN+IOjsf9OpaCpxACT0Ix3uRj+GgpObIy9jQ+MDIDFr6YGAu0
+ DGb0n1sWgDSDenEzZea9o/nbkYw+FGfLd317xKc0lm8NZmOuq+rVy8l+QxlPlhb43qqu
+ RY7+d3nMtcvS6TQPZEiYg2xiJn5IjZCAjZBPQ4caxM1CpuD2OwXGETmZ0ABCQWffJyWW
+ +MxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745840075; x=1746444875;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fu7sRBtJPEYmTWcMmeOGRGS0ZMmaoMKDbYrKi7QmIlM=;
- b=xPD85U6Ab3sUrht2TnQ43x00Kge5s6fcIM9SPA9pY/dgjZoNxJWo+LayYqvG0gFQtF
- 7NGp6y7vA/WTyiEMp56gbgngq3p/TpDAxXGBbQNPIXB/5TCZoiTEscRYUsqWXJZdL5a6
- Q+vD3CBfyWBE/doVbf2mhzeh4k3gC97A06M6k4VydKdk4L7F68JOOQWBP4DUbCrYauKi
- EaqhXkJpR+kM4C0JTxdya32vhfmqKgOeSNqotpJ+VBV4dUgKYIYLXoFmHavVUpDsQrA5
- C0da5MV5A7vTfZq+/2YkKIHSUkKZB5Hef5cjO/A72+2ui7DW+uPYg6r81Lgw+nyDPUWw
- WxJw==
-X-Gm-Message-State: AOJu0YyTEqT7Iv3rhGSZ2ZNZ2aNB9DXv/bd+73RNnQD0f6Y70+zH0kKS
- OOZIi4OQmh3kZcQRP8bovqy0SUV852SF3O9w1vT/5rKnqx4S7vnX8hki4UhqObg4tF9TmY46n0c
- l
-X-Gm-Gg: ASbGncudz51gl3hlV9Wd1IXg7H9Eem4WmBXdykA3xAVu25emzSL4esmS6WTsz3GB/kX
- yj4qDcGexdw53sl/xAtIWlDqp+ffPHpbbibIPfNBVOxOECNSAtXT1l/r909QTZN7vyKPE1tLD6N
- g3JjnjH+Osq/Y6Bux10bupDkeFJUow7vIt/Hquv83YDJeUgcgGX/OZ3DM91wJGNw1B57HWXoSpD
- R/uY2R9bo+3lIVl0uDOoqEnLA2mtKkStJ8dOIjnNbcQarLJILr5GOf07FmoG3YA/AreZiw414/C
- DY9hLGp/iaM033s2CSXQ+PzR9RfSsXvIa+N06TiHiCY6F6+/c8ezGRI=
-X-Google-Smtp-Source: AGHT+IHeFrEeB01OKdN0AiwQ+HaAdRP4E72PH//lutC4leuC+ms2VjU33MrwWbrwvS0/S/S7I2w2Kw==
-X-Received: by 2002:a17:902:f60e:b0:224:c46:d166 with SMTP id
- d9443c01a7336-22dc6a684famr140115785ad.40.1745840075577; 
- Mon, 28 Apr 2025 04:34:35 -0700 (PDT)
-Received: from [192.168.68.110] ([152.234.125.33])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db51026dfsm80351235ad.170.2025.04.28.04.34.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 04:34:35 -0700 (PDT)
-Message-ID: <cff08cd2-9223-42e1-aa54-d5094b74ebf4@ventanamicro.com>
-Date: Mon, 28 Apr 2025 08:34:31 -0300
+ d=1e100.net; s=20230601; t=1745840139; x=1746444939;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3EsV7k/FuAOkrFGPbTAMGG3l2r0gJBfaQzva5veKlH4=;
+ b=QfVwHegj8C+2aGN6r8EmkAsFsptIVJl59s5I/0zYXzST46XScuCT5OAVhgAlk1szYm
+ Cqbhr/yH3d4K5Z8HfTfqJDUZmBU+Uc9tuA62ohcqz/aVkbhFGW5JYT3Ry3nk6cHKQ2Yd
+ lsnD8w19M1xevpP5UPe7qW0eLuivJvBCGQEwXPzsbseD+mpmJwVeanOq5r5xk9+lfNuY
+ UKWKa4DmSuUzZ8ZLlho3CCY6rCDwU5wYDVnvoGDTLXnfKXrCwkRNE0bzquXwvTIaqtcN
+ TRgB3sAlEuK7elaNm4O5g1UqV9n42niMg+hGE/rE4moPeFui6CJwJp5vmUGYtCzdqMRy
+ H60g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUHhGEMiRe7n1jf2/IEy2kic/KsywCJeYPmeaDCxCBRRLP2u1Q4rM9+TEdLZdBBh9oERbytXk8s+5Vr@nongnu.org
+X-Gm-Message-State: AOJu0Yzb89GRvyhTGrFj+h1DCDFOnm4s1cXZE8Cw4Ic4UeipdAxsdCIj
+ k8RjMqcgiYnswHnp1wQfpJm77hu5f1iiFCyJ+BnewTVmqPt9nQJJVv9THU/LczTGF0pMUrqRhRB
+ mkv87+4BUwD9EFrNbkts0Cmlb3wQ=
+X-Gm-Gg: ASbGncs8pR0s1xT2wXt5tcg86bDqK7158HPjT/4tO1DWJuasIQaXOS3+mHZ8PqWBVE/
+ fGVQxnCFfGlrdAYW8VeZQsmhE8TPhnhgUaU6JXZnB1X8p/FqoTQcxc4MisRR5ssc7fRPKqWQdsk
+ 47+Yxllr5vYfA3dQHL1WHYoU9h9dEFDXvJzr//XVC1/1JwIZBo20Kn
+X-Google-Smtp-Source: AGHT+IEfqb3rapnJLVZDVFhbb2VzUGIU/m2xTt/WPD6e0a8c4/XoKQDlLEGbCvModZSsQ4GJp3EhDFBR1ku7aBvl6cM=
+X-Received: by 2002:a05:6122:1818:b0:529:2644:8c with SMTP id
+ 71dfb90a1353d-52a9713267emr4703890e0c.8.1745840139094; Mon, 28 Apr 2025
+ 04:35:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/9] target/riscv: widen scounteren to target_ulong
-To: Andrew Jones <ajones@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
 References: <20250425160203.2774835-1-dbarboza@ventanamicro.com>
- <20250425160203.2774835-9-dbarboza@ventanamicro.com>
- <20250427-e13fa003b1bfad48e17bcee9@orel>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250427-e13fa003b1bfad48e17bcee9@orel>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ <20250425160203.2774835-3-dbarboza@ventanamicro.com>
+In-Reply-To: <20250425160203.2774835-3-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 28 Apr 2025 21:35:12 +1000
+X-Gm-Features: ATxdqUHxRc7YS4s0NgiWyQWFaDmB8A0vffoSHAhSfqwxJRn09_ei8hTtSb4PBu0
+Message-ID: <CAKmqyKP_rwOskpCGuwy2AWyp+QFTemCV5-TrnyphSUuAxm_XpA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/9] target/riscv/kvm: fix leak in
+ kvm_riscv_init_multiext_cfg()
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
+ ajones@ventanamicro.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,117 +98,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Sat, Apr 26, 2025 at 2:06=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> 'reglist' is being g-malloc'ed but never freed.
+>
+> Reported-by: Andrew Jones <ajones@ventanamicro.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-On 4/27/25 2:59 AM, Andrew Jones wrote:
-> On Fri, Apr 25, 2025 at 01:02:02PM -0300, Daniel Henrique Barboza wrote:
->> We want to support scounteren as a KVM CSR. The KVM UAPI defines every
->> CSR size as target_ulong, and our env->scounteren is fixed at 32 bits.
->>
->> The other existing cases where the property size does not match the KVM
->> reg size happens with uint64_t properties, like 'mstatus'. When running
->> a 32 bit CPU we'll write a 32 bit 'sstatus' KVM reg into the 64 bit
->> 'mstatus' field. As long as we're consistent, i.e. we're always
->> reading/writing the same words, this is ok.
->>
->> For scounteren, a KVM guest running in a 64 bit CPU will end up writing
->> a 64 bit reg in a 32 bit field. This will have all sort of funny side
->> effects in the KVM guest that we would rather avoid.
->>
->> Increase scounteren to target_ulong to allow KVM to read/write the
->> scounteren CSR without any surprises.
->>
->> Aside from bumping the version of the RISCVCPU vmstate no other
->> behavioral changes are expected.
->>
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> ---
->>   target/riscv/cpu.h     | 9 ++++++++-
->>   target/riscv/machine.c | 6 +++---
->>   2 files changed, 11 insertions(+), 4 deletions(-)
->>
->> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
->> index f5a60d0c52..66d4ddfcb4 100644
->> --- a/target/riscv/cpu.h
->> +++ b/target/riscv/cpu.h
->> @@ -400,7 +400,14 @@ struct CPUArchState {
->>        */
->>       bool two_stage_indirect_lookup;
->>   
->> -    uint32_t scounteren;
->> +    /*
->> +     * scounteren is supposed to be an uint32_t, as the spec
->> +     * says. We're using a target_ulong instead because the
->> +     * scounteren KVM CSR is defined as target_ulong in
->> +     * kvm_riscv_csr, and we want to avoid having to deal
->> +     * with an ulong reg being read/written in an uint32_t.
->> +     */
->> +    target_ulong scounteren;
-> 
-> I'm having second thoughts about this. It seems like it should be
-> avoidable with the use of an intermediary buffer (which we already
-> have -- the uint64_t reg) and with tracking the size of the env state
-> by capturing the size with the new macro used to build the array.
+Alistair
 
-scounteren is an uint32_t field so I'm not sure why we need to track it.
-
-
-> Then,
-> 
-> for reading:
->   1. read the kvm reg into a buffer of the size kvm says it is
->   2. only write the bytes we can store from the buffer into the env state,
->      using the size field to know how many that is
-> 
-> for writing:
->   1. put the env state into a buffer of the size kvm says the register is,
->      ensuring any upper unused bytes of the buffer are zero
->   2. write the buffer to kvm
-
-
-So in short we would just read/write the lower 32 bits of scounteren, making it
-a 32 bit CSR as far as QEMU is concerned. Given that it is a 32 bit CSR in the
-RISC-V ISA too I guess it's safe for QEMU to do this assumption.
-
-
-Thanks,
-
-Daniel
-
-
-> 
-> Thanks,
-> drew
-> 
->>       uint32_t mcounteren;
->>   
->>       uint32_t scountinhibit;
->> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
->> index df2d5bad8d..f3477e153b 100644
->> --- a/target/riscv/machine.c
->> +++ b/target/riscv/machine.c
->> @@ -401,8 +401,8 @@ static const VMStateDescription vmstate_ssp = {
->>   
->>   const VMStateDescription vmstate_riscv_cpu = {
->>       .name = "cpu",
->> -    .version_id = 10,
->> -    .minimum_version_id = 10,
->> +    .version_id = 11,
->> +    .minimum_version_id = 11,
->>       .post_load = riscv_cpu_post_load,
->>       .fields = (const VMStateField[]) {
->>           VMSTATE_UINTTL_ARRAY(env.gpr, RISCVCPU, 32),
->> @@ -445,7 +445,7 @@ const VMStateDescription vmstate_riscv_cpu = {
->>           VMSTATE_UINTTL(env.mtval, RISCVCPU),
->>           VMSTATE_UINTTL(env.miselect, RISCVCPU),
->>           VMSTATE_UINTTL(env.siselect, RISCVCPU),
->> -        VMSTATE_UINT32(env.scounteren, RISCVCPU),
->> +        VMSTATE_UINTTL(env.scounteren, RISCVCPU),
->>           VMSTATE_UINT32(env.mcounteren, RISCVCPU),
->>           VMSTATE_UINT32(env.scountinhibit, RISCVCPU),
->>           VMSTATE_UINT32(env.mcountinhibit, RISCVCPU),
->> -- 
->> 2.49.0
->>
-
+> ---
+>  target/riscv/kvm/kvm-cpu.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index accad4c28e..6ba122f360 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1119,10 +1119,10 @@ static void kvm_riscv_read_vlenb(RISCVCPU *cpu, K=
+VMScratchCPU *kvmcpu,
+>
+>  static void kvm_riscv_init_multiext_cfg(RISCVCPU *cpu, KVMScratchCPU *kv=
+mcpu)
+>  {
+> +    g_autofree struct kvm_reg_list *reglist =3D NULL;
+>      KVMCPUConfig *multi_ext_cfg;
+>      struct kvm_one_reg reg;
+>      struct kvm_reg_list rl_struct;
+> -    struct kvm_reg_list *reglist;
+>      uint64_t val, reg_id, *reg_search;
+>      int i, ret;
+>
+> --
+> 2.49.0
+>
+>
 
