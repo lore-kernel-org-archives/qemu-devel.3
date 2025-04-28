@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD3A7C369D3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 08:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48A8FC36005
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 08:05:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9JSt-0004hb-9t; Mon, 28 Apr 2025 04:03:47 -0400
+	id 1u9JSz-0004qp-Vb; Mon, 28 Apr 2025 04:03:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dietmar@zilli.proxmox.com>)
- id 1u9JSr-0004gD-FG
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 04:03:45 -0400
+ id 1u9JSu-0004k0-Bg
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 04:03:49 -0400
 Received: from [94.136.29.99] (helo=zilli.proxmox.com)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dietmar@zilli.proxmox.com>) id 1u9JSp-00051T-4f
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 04:03:45 -0400
+ (envelope-from <dietmar@zilli.proxmox.com>) id 1u9JSs-00052W-EB
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 04:03:47 -0400
 Received: by zilli.proxmox.com (Postfix, from userid 1000)
- id DA03C1C082A; Mon, 28 Apr 2025 10:03:38 +0200 (CEST)
+ id E23651C0E02; Mon, 28 Apr 2025 10:03:38 +0200 (CEST)
 From: Dietmar Maurer <dietmar@proxmox.com>
 To: marcandre.lureau@redhat.com,
 	qemu-devel@nongnu.org
 Cc: Dietmar Maurer <dietmar@proxmox.com>
-Subject: [PATCH v4 2/8] vnc: initialize gst during argument processing
-Date: Mon, 28 Apr 2025 10:03:30 +0200
-Message-Id: <20250428080336.2574852-3-dietmar@proxmox.com>
+Subject: [PATCH v4 7/8] h264: add hardware encoders
+Date: Mon, 28 Apr 2025 10:03:35 +0200
+Message-Id: <20250428080336.2574852-8-dietmar@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250428080336.2574852-1-dietmar@proxmox.com>
 References: <20250428080336.2574852-1-dietmar@proxmox.com>
@@ -58,39 +58,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-So that we can set --gst- options on the qemu command line.
+add most common hardware encoders:
+
+- nvh264enc: for NVidia hardware
+- vaapih264enc: for common AMD and Intel cards
 
 Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
 ---
- system/vl.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ ui/vnc-enc-h264.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/system/vl.c b/system/vl.c
-index ec93988a03..c7fff02da2 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -140,6 +140,10 @@
- #include "qemu/guest-random.h"
- #include "qemu/keyval.h"
+diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
+index 09b974a787..98055c095f 100644
+--- a/ui/vnc-enc-h264.c
++++ b/ui/vnc-enc-h264.c
+@@ -20,7 +20,7 @@ static char *get_available_encoder(const char *encoder_list)
  
-+#ifdef CONFIG_GSTREAMER
-+#include <gst/gst.h>
-+#endif
-+
- #define MAX_VIRTIO_CONSOLES 1
+     if (!strcmp(encoder_list, "")) {
+         /* use default list */
+-        encoder_list = "x264enc:openh264enc";
++        encoder_list = "nvh264enc:vaapih264enc:x264enc:openh264enc";
+     }
  
- typedef struct BlockdevOptionsQueueEntry {
-@@ -2848,6 +2852,10 @@ void qemu_init(int argc, char **argv)
-     bool userconfig = true;
-     FILE *vmstate_dump_file = NULL;
+     encoder_array = g_strsplit(encoder_list, ":", -1);
+@@ -50,7 +50,19 @@ static GstElement *create_encoder(const char *encoder_name)
+         return NULL;
+     }
  
-+#ifdef CONFIG_GSTREAMER
-+    gst_init(&argc, &argv);
-+#endif
-+
-     qemu_add_opts(&qemu_drive_opts);
-     qemu_add_drive_opts(&qemu_legacy_drive_opts);
-     qemu_add_drive_opts(&qemu_common_drive_opts);
+-    if (!strcmp(encoder_name, "x264enc")) {
++    if (!strcmp(encoder_name, "nvh264enc")) {
++        g_object_set(
++            encoder,
++            "preset", 8,         /* p1 - fastest */
++            "multi-pass", 1,     /* multipass disabled */
++            "tune", 2,           /* low latency */
++            "zerolatency", true, /* low latency */
++            /* avoid access unit delimiters (Nal Unit Type 9) - not required */
++            "aud", false,
++            NULL);
++    } else if (!strcmp(encoder_name, "vaapih264enc")) {
++        g_object_set(encoder, "tune", 1, NULL); /* high compression */
++    } else if (!strcmp(encoder_name, "x264enc")) {
+         g_object_set(
+             encoder,
+             "tune", 4, /* zerolatency */
 -- 
 2.39.5
 
