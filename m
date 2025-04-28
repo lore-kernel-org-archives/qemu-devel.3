@@ -4,76 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9346C369D3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:08:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED972C369D3
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:08:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9ML4-0002o3-T1; Mon, 28 Apr 2025 07:07:54 -0400
+	id 1u9MLP-00038e-Vq; Mon, 28 Apr 2025 07:08:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9ML2-0002kC-AV
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:07:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1u9MLK-00034T-88; Mon, 28 Apr 2025 07:08:10 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9MKv-0001Rc-2I
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:07:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745838463;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=M1AOojelORdVeu6DgUmb9GePIy/ctN0iAgA8kDjVK+0=;
- b=RbtWV8YYl6MHGv+CUOIVgdsO4kyQcOccsSyIvwXmUQEehhMWabXeYYZ++x8+m0QkWyeiLD
- Uf3UYHVxuv0bj9YL2G5lWLot6yp7N7r1oce6d450c9+dEb5cfT5WhWkdek/t0dHbyp8bjH
- SDKPLERz5pyRU7QEc6Ib2lAUQrW4+0Y=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-E4rKltLZN1SffHMLvBW9og-1; Mon,
- 28 Apr 2025 07:07:37 -0400
-X-MC-Unique: E4rKltLZN1SffHMLvBW9og-1
-X-Mimecast-MFC-AGG-ID: E4rKltLZN1SffHMLvBW9og_1745838456
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 317BE195608C; Mon, 28 Apr 2025 11:07:36 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9EBD730001A2; Mon, 28 Apr 2025 11:07:34 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 2C8EE21E66C2; Mon, 28 Apr 2025 13:07:32 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Krempa <pkrempa@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
- richard.henderson@linaro.org,  stefanha@redhat.com,  Michael Roth
- <michael.roth@amd.com>,  pbonzini@redhat.com,  peter.maydell@linaro.org,
- thuth@redhat.com,  jsnow@redhat.com,  philmd@linaro.org,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  devel@lists.libvirt.org
-Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
-In-Reply-To: <aA9ChuXrkmx1Igy5@angien.pipo.sk> (Peter Krempa's message of
- "Mon, 28 Apr 2025 10:55:34 +0200")
-References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
- <87a584b69n.fsf@pond.sub.org> <aA9ChuXrkmx1Igy5@angien.pipo.sk>
-Date: Mon, 28 Apr 2025 13:07:32 +0200
-Message-ID: <8734dswnm3.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1u9MLG-0001T7-00; Mon, 28 Apr 2025 07:08:08 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZmLCH6LlSz6K9QY;
+ Mon, 28 Apr 2025 19:03:07 +0800 (CST)
+Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
+ by mail.maildlp.com (Postfix) with ESMTPS id AC4761402EF;
+ Mon, 28 Apr 2025 19:07:55 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.203.177.99) by
+ frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 28 Apr 2025 13:07:54 +0200
+To: <qemu-devel@nongnu.org>
+CC: <philmd@linaro.org>, <alireza.sanaee@huawei.com>, <anisinha@redhat.com>,
+ <armbru@redhat.com>, <berrange@redhat.com>, <dapeng1.mi@linux.intel.com>,
+ <eric.auger@redhat.com>, <farman@linux.ibm.com>, <gustavo.romero@linaro.org>, 
+ <imammedo@redhat.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <linuxarm@huawei.com>, <mst@redhat.com>,
+ <mtosatti@redhat.com>, <peter.maydell@linaro.org>, <qemu-arm@nongnu.org>,
+ <richard.henderson@linaro.org>, <shameerali.kolothum.thodi@huawei.com>,
+ <shannon.zhaosl@gmail.com>, <yangyicong@hisilicon.com>, <zhao1.liu@intel.com>
+Subject: [PATCH v10 0/6] Specifying cache topology on ARM
+Date: Mon, 28 Apr 2025 12:07:48 +0100
+Message-ID: <20250428110754.48-1-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.492,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Originating-IP: [10.203.177.99]
+X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
+ frapeml500003.china.huawei.com (7.182.85.28)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.01, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,165 +68,148 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Krempa <pkrempa@redhat.com> writes:
+Specifying the cache layout in virtual machines is useful for
+applications and operating systems to fetch accurate information about
+the cache structure and make appropriate adjustments. Enforcing correct
+sharing information can lead to better optimizations. Patches that allow
+for an interface to express caches was landed in the prior cycles. This
+patchset uses the interface as a foundation.  Thus, the device tree and
+ACPI/PPTT table, and device tree are populated based on
+user-provided information and CPU topology.
 
-> On Fri, Apr 25, 2025 at 17:38:44 +0200, Markus Armbruster via Devel wrote:
->> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
->
-> [...]
->
->> To be precise: conditionals that use macros restricted to
->> target-specific code, i.e. the ones poisoned by exec/poison.h.  Let's
->> call them target-specific QAPI conditionals.
->> 
->> The QAPI generator is blissfully unaware of all this.
->> 
->> The build system treats QAPI modules qapi/*-target.json as
->> target-specific.  The .c files generated for them are compiled per
->> target.  See qapi/meson.build.
->> 
->> Only such target-specific modules can can use target-specific QAPI
->> conditionals.  Use in target-independent modules will generate C that
->> won't compile.
->> 
->> Poisoned macros used in qapi/*-target.json:
->> 
->>     CONFIG_KVM
->>     TARGET_ARM
->>     TARGET_I386
->>     TARGET_LOONGARCH64
->>     TARGET_MIPS
->>     TARGET_PPC
->>     TARGET_RISCV
->>     TARGET_S390X
+Example:
 
-Commands and events:
 
-    CPU introspection: query-cpu-model-baseline, query-cpu-model-comparison, query-cpu-model-expansion, query-cpu-definitions
++----------------+                            +----------------+
+|    Socket 0    |                            |    Socket 1    |
+|    (L3 Cache)  |                            |    (L3 Cache)  |
++--------+-------+                            +--------+-------+
+         |                                             |
++--------+--------+                            +--------+--------+
+|   Cluster 0     |                            |   Cluster 0     |
+|   (L2 Cache)    |                            |   (L2 Cache)    |
++--------+--------+                            +--------+--------+
+         |                                             |
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+|   Core 0         | |   Core 1        |    |   Core 0        |  |   Core 1    |
+|   (L1i, L1d)     | |   (L1i, L1d)    |    |   (L1i, L1d)    |  |   (L1i, L1d)|
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+         |                   |                       |                   |
++--------+              +--------+              +--------+          +--------+
+|Thread 0|              |Thread 1|              |Thread 1|          |Thread 0|
++--------+              +--------+              +--------+          +--------+
+|Thread 1|              |Thread 0|              |Thread 0|          |Thread 1|
++--------+              +--------+              +--------+          +--------+
 
-    S390 KVM CPU stuff: set-cpu-topology, CPU_POLARIZATION_CHANGE, query-s390x-cpu-polarization.
 
-    GIC: query-gic-capabilities
+The following command will represent the system relying on **ACPI PPTT tables**.
 
-    SEV: query-sev, query-sev-launch-measure, query-sev-capabilities, sev-inject-launch-secret, query-sev-attestation-report
+./qemu-system-aarch64 \
+ -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
+ -cpu max \
+ -m 2048 \
+ -smp sockets=2,clusters=1,cores=2,threads=2 \
+ -kernel ./Image.gz \
+ -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
+ -initrd rootfs.cpio.gz \
+ -bios ./edk2-aarch64-code.fd \
+ -nographic
 
-    SGX: query-sgx, query-sgx-capabilities
+The following command will represent the system relying on **the device tree**.
 
-    Xen: xen-event-list, xen-event-inject
+./qemu-system-aarch64 \
+ -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
+ -cpu max \
+ -m 2048 \
+ -smp sockets=2,clusters=1,cores=2,threads=2 \
+ -kernel ./Image.gz \
+ -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=off" \
+ -initrd rootfs.cpio.gz \
+ -nographic
 
-    An odd duck: rtc-reset-reinjection
+Failure cases:
+    1) There are scenarios where caches exist in systems' registers but
+    left unspecified by users. In this case qemu returns failure.
 
-> I've had a look at what bits of the QMP schema are depending on the
-> above defines which libvirt uses.
->
-> In many cases libvirt could restrict the use of given command/property
-> to only supported architectures. We decided to simply probe the presence
-> of the command because it's convenient to not have to filter them any
-> more
->
-> - query-gic-capabilities
->     - libvirt already calls this only for ARM guests based on the
->       definition
->
-> - query-sev and friends
->   - libvirt uses presence of 'query-sev' to decide if the binary
->     supports it; patching in a platofrm check is possible although
->     inconvenient
->
-> - query-sgx and friends
->   - similar to sev
->
-> -query-cpu-definitions and friends
->   - see below
+    2) SMT threads cannot share caches which is not very common. More
+    discussions here [1].
 
-Large subset of my list.
+Currently only three levels of caches are supported to be specified from
+the command line. However, increasing the value does not require
+significant changes. Further, this patch assumes l2 and l3 unified
+caches and does not allow l(2/3)(i/d). The level terminology is
+thread/core/cluster/socket right now. Hierarchy assumed in this patch:
+Socket level = Cluster level + 1 = Core level + 2 = Thread level + 3;
 
->> >                            What we try to do here is to build them only once
->>  instead.
->>  
->> You're trying to eliminate target-specific QAPI conditionals.  Correct?
->> 
->> > In the past, we identied that the best approach to solve this is to expose code
->> > for all targets (thus removing all #if clauses), and stub missing
->> > symbols for concerned targets.
->> 
->> This affects QAPI/QMP introspection, i.e. the value of query-qmp-schema.
->> 
->> Management applications can no longer use introspection to find out
->> whether target-specific things are available.
->
-> Indeed and libvirt already uses this in few cases as noded above.
->
->> 
->> For instance, query-cpu-definitions is implemented for targets arm,
->> i386, loongarch, mips, ppc, riscv, and s390x.  It initially was for
->> fewer targets, and more targets followed one by one.  Still more may
->> follow in the future.  Right now, management applications can use
->> introspection to find out whether it is available.  That stops working
->> when you make it available for all targets, stubbed out for the ones
->> that don't (yet) implement it.
->> 
->> Management applications may have to be adjusted for this.
->> 
->> This is not an attempt to shoot down your approach.  I'm merely
->> demonstrating limitations of your promise "if anyone notices a
->> difference, it will be a bug."
->> 
->> Now, we could get really fancy and try to keep introspection the same by
->> applying conditionals dynamically somehow.  I.e. have the single binary
->> return different introspection values depending on the actual guest's
->> target.
->
-> I wonder how this will work if libvirt is probing a binary. Libvirt does
-> not look at the filename. It can't because it can be a
-> user-specified/compiled binary, override script, or a distro that chose
-> to rename the binary.
->
-> The second thing that libvirt does after 'query-version' is
-> 'query-target'.
->
-> So what should libvirt do once multiple targets are supported?
->
-> How do we query CPUs for each of the supported targets?
->
-> Will the result be the same if we query them one at a time or all at
-> once?
+TODO:
+  1) Making the code to work with arbitrary levels
+  2) Separated data and instruction cache at L2 and L3.
+  3) Additional cache controls.  e.g. size of L3 may not want to just
+  match the underlying system, because only some of the associated host
+  CPUs may be bound to this VM.
 
-Pierrick's stated goal is to have no noticable differences between the
-single binary and the qemu-system-<target> it covers.  This is obviously
-impossible if we can interact with the single binary before the target
-is fixed.
+[1] https://lore.kernel.org/devicetree-spec/20250203120527.3534-1-alireza.sanaee@huawei.com/
 
->> This requires fixing the target before introspection.  Unless this is
->> somehow completely transparent (wrapper scripts, or awful hacks based on
->> the binary's filename, perhaps), management applications may have to be
->> adjusted to actually do that.
->
-> As noted filename will not work. Users can specify any filename and
-> create override scripts or rename the binary.
+Change Log:
+  v9->v10:
+   * PPTT rev down to 2.
 
-True.
+  v8->v9:
+   * rebase to 10
+   * Fixed a bug in device-tree generation related to a scenario when
+        caches are shared at core in higher levels than 1.
+  v7->v8:
+   * rebase: Merge tag 'pull-nbd-2024-08-26' of https://repo.or.cz/qemu/ericb into staging
+   * I mis-included a file in patch #4 and I removed it in this one.
 
->> Applies not just to introspection.  Consider query-cpu-definitions
->> again.  It currently returns CPU definitions for *the* target.  What
->> would a single binary's query-cpu-definitions return?  The CPU
->> definitions for *all* its targets?  Management applications then receive
->> CPUs that won't work, which may upset them.  To avoid noticable
->> difference, we again have to fix the target before we look.
->
-> Ah I see you had a similar question :D
->
->> 
->> Of course, "fixing the target" stops making sense once we move to
->> heterogeneous machines with multiple targets.
->> 
->> > This series build QAPI generated code once, by removing all TARGET_{arch} and
->> > CONFIG_KVM clauses. What it does *not* at the moment is:
->> > - prevent target specific commands to be visible for all targets
->> >   (see TODO comment on patch 2 explaining how to address this)
->> > - nothing was done to hide all this from generated documentation
+  v6->v7:
+   * Intel stuff got pulled up, so rebase.
+   * added some discussions on device tree.
+
+  v5->v6:
+   * Minor bug fix.
+   * rebase based on new Intel patchset.
+     - https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
+
+  v4->v5:
+    * Added Reviewed-by tags.
+    * Applied some comments.
+
+  v3->v4:
+    * Device tree added.
+
+Depends-on: Building PPTT with root node and identical implementation flag
+Depends-on: Msg-id: 20250423114130.902-1-alireza.sanaee@huawei.com
+
+Alireza Sanaee (6):
+  target/arm/tcg: increase cache level for cpu=max
+  arm/virt.c: add cache hierarchy to device tree
+  bios-tables-test: prepare to change ARM ACPI virt PPTT
+  hw/acpi/aml-build.c: add cache hierarchy to pptt table
+  tests/qtest/bios-table-test: testing new ARM ACPI PPTT tables
+  Update the ACPI tables according to the acpi aml_build changes
+
+ hw/acpi/aml-build.c                           | 201 +++++++++-
+ hw/arm/virt-acpi-build.c                      |   8 +-
+ hw/arm/virt.c                                 | 343 ++++++++++++++++++
+ hw/cpu/core.c                                 |  92 +++++
+ hw/loongarch/virt-acpi-build.c                |   2 +-
+ include/hw/acpi/aml-build.h                   |   4 +-
+ include/hw/arm/virt.h                         |   4 +
+ include/hw/cpu/core.h                         |  26 ++
+ target/arm/tcg/cpu64.c                        |  13 +
+ tests/data/acpi/aarch64/virt/PPTT             | Bin 96 -> 176 bytes
+ .../data/acpi/aarch64/virt/PPTT.acpihmatvirt  | Bin 176 -> 496 bytes
+ tests/data/acpi/aarch64/virt/PPTT.topology    | Bin 356 -> 676 bytes
+ tests/qtest/bios-tables-test.c                |  14 +-
+ 13 files changed, 698 insertions(+), 9 deletions(-)
+
+-- 
+2.34.1
 
 
