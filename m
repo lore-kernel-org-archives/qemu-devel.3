@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C960C36005
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 06:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FBE4C36005
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 06:41:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9IAQ-0002bg-GD; Mon, 28 Apr 2025 02:40:38 -0400
+	id 1u9IAk-0002kP-AP; Mon, 28 Apr 2025 02:40:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u9IAL-0002YU-CW; Mon, 28 Apr 2025 02:40:33 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1u9IAT-0002eV-5V; Mon, 28 Apr 2025 02:40:41 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u9IAJ-00074C-4B; Mon, 28 Apr 2025 02:40:33 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2ff784dc055so4030751a91.1; 
- Sun, 27 Apr 2025 23:40:29 -0700 (PDT)
+ id 1u9IAQ-000755-Jr; Mon, 28 Apr 2025 02:40:40 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-227c7e57da2so36448995ad.0; 
+ Sun, 27 Apr 2025 23:40:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745822428; x=1746427228; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745822436; x=1746427236; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=l4KoYLWG+bLIwoIosSyQfEMM4+zIu3Mc1lJmj7mkIac=;
- b=ZzC3FLCH62Mxa3bc/VHdPRygYVUbAMKGH1QyOCq0IJg9oh/XsfD1s274IUIX5bVFFx
- 9pgOfWevobAYJXIAFR1a/AkrdfsjwPfnOVqRJyryekoqQ/v9l2EHdZQBfmHXhe9UXAKk
- XFrC1HY640UtF3fIagk0jWCNGDoX++BduhicGgAtGidV6lw+JFioFLfJpgZYMYn4GFuU
- O1XVFEjflKuyvFxof/JQtBxruqzK5GbT8/3uj6dj2/VYVUN9yNYsfB01Y+jRmd8YAoeH
- Av4g8Bq5zNR2J9zj+jwvMQfEiOum5B+IY7QLyLF6xK2sga6ZObpDL4RknqQ/tlcgmKiv
- yquw==
+ bh=5KG3ys+zAj0YETOqmeP7cGbdHvPb7QsrrfQymJd8O+8=;
+ b=EPDNQYd60PCvUwkp1CsqV6gD5WnbbXNCi/9z8aJLBBMiK9WK61y4cM+TxzjvDZtOQK
+ quwk1XRp6K/ouTvHFrrLC6VazNxp3msnrNuOq+RTOHepMeH6VbQ3mosUq05+81t/ysOi
+ vzc8S8wjeay9x1YyLtfRyMe11ffc6E3qeNs67jT6mgF3C0maUtXpJ1Yi5sN23spUsZRl
+ F/8U8JLwZePfZT9TBQ0QzqK/58msdfqPIiXTk9v3Qr/MjnoL+M+1COVxgkEX26EVXMFp
+ PM415MCNnQIqmZoakW7gsYtryfjtVJRZyI2f9tOKIv7+wBst7xqIIZvb4YO3Q0oFBV7v
+ at4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745822428; x=1746427228;
+ d=1e100.net; s=20230601; t=1745822436; x=1746427236;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=l4KoYLWG+bLIwoIosSyQfEMM4+zIu3Mc1lJmj7mkIac=;
- b=QOTSDfSVyNMCrnyXXmuc+2OZQ80kM3WR+F8lvhovQ2iMCe8wQJCXhjSahua9Ln8IZ2
- /r1a2nRdBtIlT8gZsVt1Y7L483jgm8hwlRy3hRX1sl9T9vsrrdzMTlcEcw85fAfzmbvy
- /WFyW4cwhuFi2D7Qu6spkYqHnr5mQN6+aF19BgKeEE3+U6DYj43uN2QN3N1kFdsWDOOo
- KPL25HagfhIgQHD5EFSK/q4vtX06iL7Dvv98lc7lH+9B9ucxf+1J8hanOZ/QyRI3CDns
- Pfttzo1WJXws6LRPgxyAaDR9IIuPa7yEFmeJpV6Dt7vlbd3HmtQhc9wYofwdSM56Z1sf
- XmhA==
+ bh=5KG3ys+zAj0YETOqmeP7cGbdHvPb7QsrrfQymJd8O+8=;
+ b=W1y7EVh6kmk1/jl+7JL79bPbaSztM877Fh6ILVCwfHQziPlCAZmbtLzAtBw/XBlFTL
+ 2DYbHBmftImiQ0wb7N+DSyzpWnpztctaErDnUDHwCUYB9j37xMDZPKa0rdkRoPRIuoqO
+ auTe1T6q0qKxrk4tsd7+SS4Xvc0DeqTbCXqpEO7Tw1Xpv8IZufLsGgH5vebEuiBdtLKW
+ 0xA1QSNQdb3f7FZfzvLq4GR5P3JFg6Vrjm3dpffD4Xr3IR4bvpIsVE8y+DnTrqmjbdKG
+ 1NefXzol+/iwUCG5LTgtBKd1wPDgLV7z7hFuZX79pD5A9tjDdm6i40PHRlElGeYx0St2
+ cJbg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUKpMdJF99htoiIYdZFSABQV2jIf2U1SRA/6Ts6kyaQtpxAoWDeIHjELBpb37yM8Rhx5y3b2YDMnxH+Hg==@nongnu.org,
- AJvYcCWn1CayGFrvfTF4MdoT7WpSOOjwkhi0jdLnANwoTvYlx+sYL+gd8KZ7DcPInNRp+BrqRcNzW5XnWA==@nongnu.org,
- AJvYcCXEbcKKfkzHYABeYAZ3HoNBUNGTbNFIzm/g8TWP62FGjygukw9EjAEj5J69rJ9inUpNZwzKCFn85Mg=@nongnu.org,
- AJvYcCXwvRUq+tau8Dkx7RWLJQLXij33rhqxtEUj6abYtZebBPXsifncJpeE52zjbwBa7x26tpY+tl4SaYNpxw==@nongnu.org
-X-Gm-Message-State: AOJu0Yza1d9DkEguSCmlSYMXxYPDHDRKZyeLufIPKXKMrIq2JV9MvxEj
- SW04651ZIdTIlSc69UFh88OB5NVM0m0c1jcLdin1d1pVt5EvxIOp1i8Aw0Zi
-X-Gm-Gg: ASbGncsJaFpeWX7LvpNZD8g/RcsihfYF5yu91JRsGx7wz0Pe3MZr67vMo6mbJRB4zVV
- y9R3KVMQbtvRF4SX/ukefBAhk/EQoza/AO5EIc3xW0XcfJSUagqSgXucU7rA82l2rsXfb6LFow9
- 00TapLD+559uPHwK+PTNJ1UTuFJHE5AAlg8r/20dHFQe0j1QAlVTQVupG7xfHtSYYJ2O1k92PQD
- 0iFlvW1Vk8zESywBvz2kxQERaSsJirk20DFfjoKDkz2vq05gCzCPoR6+hskoLGmC2HlCu6VXZrp
- Ltm1FfH0ZakRCXsp5G8Ig3vXJjs6ARJDgsxiZA==
-X-Google-Smtp-Source: AGHT+IEJbv93eh6nTpjZuH/I0Vi1B6hLrtMXuCMbvHNfvCXIiuIjQWpkE1nTDm3AmKAPMACUN8cl7Q==
-X-Received: by 2002:a17:90a:d888:b0:2ee:b4bf:2d06 with SMTP id
- 98e67ed59e1d1-309f7dfdd54mr14235173a91.19.1745822428051; 
- Sun, 27 Apr 2025 23:40:28 -0700 (PDT)
+ AJvYcCUWqvqZ26jWUXXjE8oZ+i+aIWl+3dll1dqapS2GKrqJN1MYAQ+PAIBYWNRilPuLd+i0nqGaomzhnDs=@nongnu.org,
+ AJvYcCVQovasqbWGeX2WPtGWhz/HqEhmgesV0sq/UQ4ALw33Iv05mj75pfI5Q7yodqOPDJx90Xq0ASF6E3+yCg==@nongnu.org,
+ AJvYcCVhYT+bPwOycZyZHwxV9dFPm2ZbzdsHMnT0L/nEZmjWfXsU5XznwIgK1TbQPmKjN1YK0Zyf/LLtO4EcRg==@nongnu.org,
+ AJvYcCXq/+s+qxKqLK+SWAgUuFaoKyc6hCFIRGm9oraPpwqEqqdSVEuu4X9TK1Nh9FVKmrQWuOIuJ4ynhw==@nongnu.org
+X-Gm-Message-State: AOJu0Yw1ttKAc1tvxZRjJIQEe7SrQ0XSO3wJTTzm3+/8Scbk93aOolxR
+ I8X61pTFJhT4qmFAQQm5DkSYQGmjjr3N6gj+A6B2LbCg3nJQ/RhKrQBidHsq
+X-Gm-Gg: ASbGncuDVcaxJiTVCTvk37sQ6G8pu8S1zKf3gwERCFwkxbGeu+Lue6rdLtMI+O79gzr
+ KaqPZGY9zqE7zW+7a3YCa4EWuIhE7Mx5bkr2WBGNZQtJg0SIdB7Q/A6QLQwVmgltJOrtLd51mtv
+ YlDg8EVvELsRz+jQ0J5waAp/6R9qjfm8i+nW30Uzmx6gi58u0I5Cwvaf3sfiWnE7c4lu5YUyY6t
+ kKkEbriac6NN7UCp6LK1Pm3FThM9/sVzVTcI3rG8F5GI6x9YoJlsdYKwrWRL2e6CSVGzUDy7OcW
+ EZdlw6JfEWbbvrslf7SjslW1nR1TuL5/evKABA==
+X-Google-Smtp-Source: AGHT+IFwGC6KPL901dNt4Pvf1ez+6eS9Jh4yCu/CPGqZj0aBAx1/EXuIDBkRhG8Nw3jpPT3vkP9g7Q==
+X-Received: by 2002:a17:903:189:b0:224:18bb:44c2 with SMTP id
+ d9443c01a7336-22dc69efad8mr95438035ad.6.1745822435857; 
+ Sun, 27 Apr 2025 23:40:35 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:bcb:2cf3:f1b5:b7f])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db4dbe328sm74721215ad.88.2025.04.27.23.40.20
+ d9443c01a7336-22db4dbe328sm74721215ad.88.2025.04.27.23.40.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Apr 2025 23:40:27 -0700 (PDT)
+ Sun, 27 Apr 2025 23:40:35 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -89,18 +89,18 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH v3 06/20] contrib/plugins: Fix type conflict of GLib function
+Subject: [PATCH v3 07/20] hw/net/can: Fix type conflict of GLib function
  pointers
-Date: Mon, 28 Apr 2025 15:38:55 +0900
-Message-ID: <cffa8259cc9bc78a5719a22e871fedbd9e80023b.1745820062.git.ktokunaga.mail@gmail.com>
+Date: Mon, 28 Apr 2025 15:38:56 +0900
+Message-ID: <937d1feaa739a8f5be8d55084231f085ac9553b2.1745820062.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1745820062.git.ktokunaga.mail@gmail.com>
 References: <cover.1745820062.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -132,277 +132,38 @@ function pointer casting.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Francisco Iglesias <francisco.iglesias@amd.com>
 ---
- contrib/plugins/cache.c     | 12 ++++++------
- contrib/plugins/cflow.c     | 10 +++++-----
- contrib/plugins/hotblocks.c |  4 ++--
- contrib/plugins/hotpages.c  |  4 ++--
- contrib/plugins/howvec.c    |  4 ++--
- contrib/plugins/hwprofile.c |  8 ++++----
- tests/tcg/plugins/mem.c     |  4 ++--
- tests/tcg/plugins/syscall.c |  4 ++--
- 8 files changed, 25 insertions(+), 25 deletions(-)
+ hw/net/can/xlnx-versal-canfd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 V3:
 - This commit is included in this series sololy to ensure successful
   builds. It has already been picked up by a pull request, so please ignore
   it.
 
-diff --git a/contrib/plugins/cache.c b/contrib/plugins/cache.c
-index 7cfd3df249..56508587d3 100644
---- a/contrib/plugins/cache.c
-+++ b/contrib/plugins/cache.c
-@@ -576,7 +576,7 @@ static void sum_stats(void)
+diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
+index b5a4a4af7e..bafe50f5a7 100644
+--- a/hw/net/can/xlnx-versal-canfd.c
++++ b/hw/net/can/xlnx-versal-canfd.c
+@@ -1278,7 +1278,7 @@ static void tx_fifo_stamp(XlnxVersalCANFDState *s, uint32_t tb0_regid)
      }
  }
  
--static int dcmp(gconstpointer a, gconstpointer b)
-+static int dcmp(gconstpointer a, gconstpointer b, gpointer d)
+-static gint g_cmp_ids(gconstpointer data1, gconstpointer data2)
++static gint g_cmp_ids(gconstpointer data1, gconstpointer data2, gpointer d)
  {
-     InsnData *insn_a = (InsnData *) a;
-     InsnData *insn_b = (InsnData *) b;
-@@ -584,7 +584,7 @@ static int dcmp(gconstpointer a, gconstpointer b)
-     return insn_a->l1_dmisses < insn_b->l1_dmisses ? 1 : -1;
- }
+     tx_ready_reg_info *tx_reg_1 = (tx_ready_reg_info *) data1;
+     tx_ready_reg_info *tx_reg_2 = (tx_ready_reg_info *) data2;
+@@ -1316,7 +1316,7 @@ static GSList *prepare_tx_data(XlnxVersalCANFDState *s)
+             temp->can_id = s->regs[reg_num];
+             temp->reg_num = reg_num;
+             list = g_slist_prepend(list, temp);
+-            list = g_slist_sort(list, g_cmp_ids);
++            list = g_slist_sort_with_data(list, g_cmp_ids, NULL);
+         }
  
--static int icmp(gconstpointer a, gconstpointer b)
-+static int icmp(gconstpointer a, gconstpointer b, gpointer d)
- {
-     InsnData *insn_a = (InsnData *) a;
-     InsnData *insn_b = (InsnData *) b;
-@@ -592,7 +592,7 @@ static int icmp(gconstpointer a, gconstpointer b)
-     return insn_a->l1_imisses < insn_b->l1_imisses ? 1 : -1;
- }
- 
--static int l2_cmp(gconstpointer a, gconstpointer b)
-+static int l2_cmp(gconstpointer a, gconstpointer b, gpointer d)
- {
-     InsnData *insn_a = (InsnData *) a;
-     InsnData *insn_b = (InsnData *) b;
-@@ -645,7 +645,7 @@ static void log_top_insns(void)
-     InsnData *insn;
- 
-     miss_insns = g_hash_table_get_values(miss_ht);
--    miss_insns = g_list_sort(miss_insns, dcmp);
-+    miss_insns = g_list_sort_with_data(miss_insns, dcmp, NULL);
-     g_autoptr(GString) rep = g_string_new("");
-     g_string_append_printf(rep, "%s", "address, data misses, instruction\n");
- 
-@@ -659,7 +659,7 @@ static void log_top_insns(void)
-                                insn->l1_dmisses, insn->disas_str);
-     }
- 
--    miss_insns = g_list_sort(miss_insns, icmp);
-+    miss_insns = g_list_sort_with_data(miss_insns, icmp, NULL);
-     g_string_append_printf(rep, "%s", "\naddress, fetch misses, instruction\n");
- 
-     for (curr = miss_insns, i = 0; curr && i < limit; i++, curr = curr->next) {
-@@ -676,7 +676,7 @@ static void log_top_insns(void)
-         goto finish;
-     }
- 
--    miss_insns = g_list_sort(miss_insns, l2_cmp);
-+    miss_insns = g_list_sort_with_data(miss_insns, l2_cmp, NULL);
-     g_string_append_printf(rep, "%s", "\naddress, L2 misses, instruction\n");
- 
-     for (curr = miss_insns, i = 0; curr && i < limit; i++, curr = curr->next) {
-diff --git a/contrib/plugins/cflow.c b/contrib/plugins/cflow.c
-index 930ecb46fc..b5e33f25f9 100644
---- a/contrib/plugins/cflow.c
-+++ b/contrib/plugins/cflow.c
-@@ -98,7 +98,7 @@ static GHashTable *nodes;
- struct qemu_plugin_scoreboard *state;
- 
- /* SORT_HOTTEST */
--static gint hottest(gconstpointer a, gconstpointer b)
-+static gint hottest(gconstpointer a, gconstpointer b, gpointer d)
- {
-     NodeData *na = (NodeData *) a;
-     NodeData *nb = (NodeData *) b;
-@@ -107,7 +107,7 @@ static gint hottest(gconstpointer a, gconstpointer b)
-         na->dest_count == nb->dest_count ? 0 : 1;
- }
- 
--static gint exception(gconstpointer a, gconstpointer b)
-+static gint exception(gconstpointer a, gconstpointer b, gpointer d)
- {
-     NodeData *na = (NodeData *) a;
-     NodeData *nb = (NodeData *) b;
-@@ -116,7 +116,7 @@ static gint exception(gconstpointer a, gconstpointer b)
-         na->early_exit == nb->early_exit ? 0 : 1;
- }
- 
--static gint popular(gconstpointer a, gconstpointer b)
-+static gint popular(gconstpointer a, gconstpointer b, gpointer d)
- {
-     NodeData *na = (NodeData *) a;
-     NodeData *nb = (NodeData *) b;
-@@ -138,7 +138,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
- {
-     g_autoptr(GString) result = g_string_new("collected ");
-     GList *data;
--    GCompareFunc sort = &hottest;
-+    GCompareDataFunc sort = &hottest;
-     int i = 0;
- 
-     g_mutex_lock(&node_lock);
-@@ -162,7 +162,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-         break;
-     }
- 
--    data = g_list_sort(data, sort);
-+    data = g_list_sort_with_data(data, sort, NULL);
- 
-     for (GList *l = data;
-          l != NULL && i < topn;
-diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index f12bfb7a26..98404b6885 100644
---- a/contrib/plugins/hotblocks.c
-+++ b/contrib/plugins/hotblocks.c
-@@ -39,7 +39,7 @@ typedef struct {
-     unsigned long insns;
- } ExecCount;
- 
--static gint cmp_exec_count(gconstpointer a, gconstpointer b)
-+static gint cmp_exec_count(gconstpointer a, gconstpointer b, gpointer d)
- {
-     ExecCount *ea = (ExecCount *) a;
-     ExecCount *eb = (ExecCount *) b;
-@@ -79,7 +79,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     g_string_append_printf(report, "%d entries in the hash table\n",
-                            g_hash_table_size(hotblocks));
-     counts = g_hash_table_get_values(hotblocks);
--    it = g_list_sort(counts, cmp_exec_count);
-+    it = g_list_sort_with_data(counts, cmp_exec_count, NULL);
- 
-     if (it) {
-         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
-diff --git a/contrib/plugins/hotpages.c b/contrib/plugins/hotpages.c
-index c6e6493719..9d48ac969e 100644
---- a/contrib/plugins/hotpages.c
-+++ b/contrib/plugins/hotpages.c
-@@ -48,7 +48,7 @@ typedef struct {
- static GMutex lock;
- static GHashTable *pages;
- 
--static gint cmp_access_count(gconstpointer a, gconstpointer b)
-+static gint cmp_access_count(gconstpointer a, gconstpointer b, gpointer d)
- {
-     PageCounters *ea = (PageCounters *) a;
-     PageCounters *eb = (PageCounters *) b;
-@@ -83,7 +83,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     if (counts && g_list_next(counts)) {
-         GList *it;
- 
--        it = g_list_sort(counts, cmp_access_count);
-+        it = g_list_sort_with_data(counts, cmp_access_count, NULL);
- 
-         for (i = 0; i < limit && it->next; i++, it = it->next) {
-             PageCounters *rec = (PageCounters *) it->data;
-diff --git a/contrib/plugins/howvec.c b/contrib/plugins/howvec.c
-index 2aa9029c3f..42bddb6566 100644
---- a/contrib/plugins/howvec.c
-+++ b/contrib/plugins/howvec.c
-@@ -155,7 +155,7 @@ static ClassSelector class_tables[] = {
- static InsnClassExecCount *class_table;
- static int class_table_sz;
- 
--static gint cmp_exec_count(gconstpointer a, gconstpointer b)
-+static gint cmp_exec_count(gconstpointer a, gconstpointer b, gpointer d)
- {
-     InsnExecCount *ea = (InsnExecCount *) a;
-     InsnExecCount *eb = (InsnExecCount *) b;
-@@ -208,7 +208,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     counts = g_hash_table_get_values(insns);
-     if (counts && g_list_next(counts)) {
-         g_string_append_printf(report, "Individual Instructions:\n");
--        counts = g_list_sort(counts, cmp_exec_count);
-+        counts = g_list_sort_with_data(counts, cmp_exec_count, NULL);
- 
-         for (i = 0; i < limit && g_list_next(counts);
-              i++, counts = g_list_next(counts)) {
-diff --git a/contrib/plugins/hwprofile.c b/contrib/plugins/hwprofile.c
-index 2a4cbc47d4..a9838ccc87 100644
---- a/contrib/plugins/hwprofile.c
-+++ b/contrib/plugins/hwprofile.c
-@@ -71,7 +71,7 @@ static void plugin_init(void)
-     devices = g_hash_table_new(NULL, NULL);
- }
- 
--static gint sort_cmp(gconstpointer a, gconstpointer b)
-+static gint sort_cmp(gconstpointer a, gconstpointer b, gpointer d)
- {
-     DeviceCounts *ea = (DeviceCounts *) a;
-     DeviceCounts *eb = (DeviceCounts *) b;
-@@ -79,7 +79,7 @@ static gint sort_cmp(gconstpointer a, gconstpointer b)
-            eb->totals.reads + eb->totals.writes ? -1 : 1;
- }
- 
--static gint sort_loc(gconstpointer a, gconstpointer b)
-+static gint sort_loc(gconstpointer a, gconstpointer b, gpointer d)
- {
-     IOLocationCounts *ea = (IOLocationCounts *) a;
-     IOLocationCounts *eb = (IOLocationCounts *) b;
-@@ -126,13 +126,13 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     if (counts && g_list_next(counts)) {
-         GList *it;
- 
--        it = g_list_sort(counts, sort_cmp);
-+        it = g_list_sort_with_data(counts, sort_cmp, NULL);
- 
-         while (it) {
-             DeviceCounts *rec = (DeviceCounts *) it->data;
-             if (rec->detail) {
-                 GList *accesses = g_hash_table_get_values(rec->detail);
--                GList *io_it = g_list_sort(accesses, sort_loc);
-+                GList *io_it = g_list_sort_with_data(accesses, sort_loc, NULL);
-                 const char *prefix = pattern ? "off" : "pc";
-                 g_string_append_printf(report, "%s @ 0x%"PRIx64"\n",
-                                        rec->name, rec->base);
-diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
-index d87d6628e0..ca4e8883dd 100644
---- a/tests/tcg/plugins/mem.c
-+++ b/tests/tcg/plugins/mem.c
-@@ -67,7 +67,7 @@ static enum qemu_plugin_mem_rw rw = QEMU_PLUGIN_MEM_RW;
- static GMutex lock;
- static GHashTable *regions;
- 
--static gint addr_order(gconstpointer a, gconstpointer b)
-+static gint addr_order(gconstpointer a, gconstpointer b, gpointer d)
- {
-     RegionInfo *na = (RegionInfo *) a;
-     RegionInfo *nb = (RegionInfo *) b;
-@@ -94,7 +94,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     if (do_region_summary) {
-         GList *counts = g_hash_table_get_values(regions);
- 
--        counts = g_list_sort(counts, addr_order);
-+        counts = g_list_sort_with_data(counts, addr_order, NULL);
- 
-         g_string_printf(out, "Region Base, Reads, Writes, Seen all\n");
- 
-diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
-index 47aad55fc1..42801f5c86 100644
---- a/tests/tcg/plugins/syscall.c
-+++ b/tests/tcg/plugins/syscall.c
-@@ -180,7 +180,7 @@ static void print_entry(gpointer val, gpointer user_data)
-     qemu_plugin_outs(out);
- }
- 
--static gint comp_func(gconstpointer ea, gconstpointer eb)
-+static gint comp_func(gconstpointer ea, gconstpointer eb, gpointer d)
- {
-     SyscallStats *ent_a = (SyscallStats *) ea;
-     SyscallStats *ent_b = (SyscallStats *) eb;
-@@ -197,7 +197,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
- 
-     g_mutex_lock(&lock);
-     GList *entries = g_hash_table_get_values(statistics);
--    entries = g_list_sort(entries, comp_func);
-+    entries = g_list_sort_with_data(entries, comp_func, NULL);
-     qemu_plugin_outs("syscall no.  calls  errors\n");
- 
-     g_list_foreach(entries, print_entry, NULL);
+         reg_ready >>= 1;
 -- 
 2.43.0
 
