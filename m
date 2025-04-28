@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E05C369D3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51242C369D3
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9Maz-0004wO-DB; Mon, 28 Apr 2025 07:24:21 -0400
+	id 1u9Mh1-0008Th-6I; Mon, 28 Apr 2025 07:30:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1u9MaV-0004QX-PT
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:23:52 -0400
-Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ id 1u9Mgn-0008Jp-LS
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:30:25 -0400
+Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1u9MaS-0004Q0-Pk
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:23:50 -0400
-Received: by mail-qt1-x832.google.com with SMTP id
- d75a77b69052e-4769bbc21b0so55137101cf.2
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 04:23:47 -0700 (PDT)
+ id 1u9Mgk-0006QO-Cl
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:30:20 -0400
+Received: by mail-qt1-x82b.google.com with SMTP id
+ d75a77b69052e-476ae781d21so55196081cf.3
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 04:30:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745839426; x=1746444226; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745839817; x=1746444617; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6t+8Mt3Ml1JWakzvw0Ml1abS9iDSvbm9RWEfJJSwrjo=;
- b=fKl7wDGG/O8E9qD6PJZfNzbg+3zQ9MFl7p3s+fNFQ14sI46qDxRYATuMf+k9+BJ0xE
- R4l9uZC81AQNCLTRQowVwNNGt3gEq5BqYKP8A3nudjV1XJ+YPH1XlUgsm6ddF8YkYa4x
- gvsqmNfLS1B6WQFurTs4Nr579/RuZNtcKQ7vF4J1K94buhQ0SLbkaAYwUjPNOn89pHwY
- MoUw/B6Ea6MqMok2C2+ZBc6weDjKA52lzVOOYZ/ej9Y3meWLU43LuZLEWE/ILTqVthWA
- ToDpCbEMQIKDPXEFcSenIvPyXcDdVLLFvqZQwNt76A8kTETLPB9FIcp574Xspgf3HpZC
- 0xPg==
+ bh=yIqPigYp3Pw5WS9rLb0ajmo+bKsFXEeZUnnNSzzC+rU=;
+ b=a7hZzLfXVvhaRf4zy9KRGALePLFxtvRFIt/qas/Ay9zQNjvvv5/2YlZWvxO/HGBcNz
+ q40zxCh3B0+PZXuPcApFTJS+W4N9FV1T8s4NQomk5Vno9VQRe20awF+Fde/DEOWf7+cD
+ AEBHc291Zc+GmyH+BxONps98aCdJFx1SiSxYoLnORRi9fYdHVZjdfazmq0IVntjnwcfL
+ ip8vwr17M1TPDP5DjJZ8b1T4YtEZ6xUAv3E5DOzj8rjBdeVjAIhoBecmMHGuKREUG52x
+ YS9Zatb+7BnlmDWY+wFtICQKnElqKJxZkM71RNg7UBcZVkjik+Ti0DdfedAY7eDCwcUL
+ smRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745839426; x=1746444226;
+ d=1e100.net; s=20230601; t=1745839817; x=1746444617;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6t+8Mt3Ml1JWakzvw0Ml1abS9iDSvbm9RWEfJJSwrjo=;
- b=OdDY0zkqX2aSSrD0Uok+YgiqlqqBtUDZlihnhvOJwpzB51EYyMbVmmrb5g+dLGLOKr
- 1I5U5ZdVD0SG0KAMQXX8DwJE68MyYrZV4ZXaxMDr93ZlrG4nDD6xvQg7QqYNLuoeFiI0
- nbJism9K08RyVt4YlNaWG3WfjobdVgR5ln6+pMIQ3ZFWh+rRifJ+AVZHlYLk4Y9xjCxQ
- P0K0SiZ5/rikd0U90Ex1J0r/2yw75s8eOEBFh/Xna8Pxw+Gn/RNgCw3GWZUWa9D+Mg8Y
- VYQHO+XWwsIcfqSbOTkbwyqvjMdm7BtqqK2XNo7yY9ntwkafHsTNIZB8FD57hWZiaznc
- ezjA==
-X-Gm-Message-State: AOJu0YyNIGZUssPgArBiSYb+n2s9rGCKqsjsEGosqHH8QorQraMo1trK
- UFuCoDNPu8eJgngq9/Fk9fxVJxT2/o+d4WJMlBOAb1gyfx1mYSH+8c2exGIxFs4epusE1hHhQip
- aqSNsHtKBxS6YGwm6hoFv2aH+CeY=
-X-Gm-Gg: ASbGncu947Xnvfkbb3xkalTCIhlTV5QWlmuqq8vgH3tzSV1qjkQI1Tcg+S2pu9Xxg3I
- IcGsTcH6dXU7RN2cce87TNSdyWf9kS1egX/8EXpViGuOJLaOombWoe4UJjAUrkfvp4kjYimiG3q
- tJiKNG6Gb3zRPObd0YHec/GODQl3MUfRp3kIN+COBLJWt91Zr13oSQIyI=
-X-Google-Smtp-Source: AGHT+IHGI7vh0A/a4CT5KNwkubYmTM3ci7egfOyX0Tij9vfDz25rEv8BfYG3168fjP0xroKN44B7X2TnVOmGQ7GnkXo=
-X-Received: by 2002:a05:622a:181c:b0:477:6c0e:d5b4 with SMTP id
- d75a77b69052e-4801c2c3a5emr209669691cf.2.1745839426288; Mon, 28 Apr 2025
- 04:23:46 -0700 (PDT)
+ bh=yIqPigYp3Pw5WS9rLb0ajmo+bKsFXEeZUnnNSzzC+rU=;
+ b=tIuGitZZBSMzO1V4mVO3DhixEWKD/lEynraX4E9pzvcoFLBb2iy8UtElzPgPHYQU7g
+ yXTNmtrnhGq5n7rFKQuCM10L/D85LIPItN2sZ0SrEKIMYnYojUHHrICP5Iwf6ixSz9sN
+ qp5GLa0MeGlglboRZKhAqpyiKUlO0Bs3OhzFmyoakg0H+zg1zNAyAIxUwncXeYNit67d
+ p6a8CGTvYtbOG4lBp4RTyitEpCS1mPdf9hhiSi4coEXdt7dUcrQPK1N45KOa8CHP6zVT
+ 8JB40W21JqH6u8CJ8vDVh8j0UumNvQbbgbsL7YqCBlRdLlJdZrVeZ0YBfqvGuudjgSkr
+ icLg==
+X-Gm-Message-State: AOJu0Yy7vqiWSDtqPO+a9hHRANPha1ld/OCzX8UNoAJSbi28KBu92fCe
+ +5J83qfgYbOj8b8rNjq6iUxuPp7oU4/c04In9WsmDLfjn8O0vjz4xGvKlX3rSSVxDdVmpCrgel2
+ mNfXSOo+CIRcApZ/Ytz0iuFLifB/kv+Jl31088g==
+X-Gm-Gg: ASbGncsN9IduOSnWfyoJXcwabAsjKI2xW+KdEiCkwV1R5kOHueEJmM4YDsH6DKuUZTB
+ +oL+EQ64y1Qjr00Hoivj1QZMLmmEQx1KjwCCnd0+ckIf05KEaCQiUpfsqUa58nqdkA4JNcZDhKS
+ I24JvXis0yFSM61Kfv9ElR/rGmO1mH7h1twhQJ9/bRcF+CnMQ3rNgBL6Q=
+X-Google-Smtp-Source: AGHT+IEHOIRpARlQxt5qq9//Z2k1IyJAvc52vp8DA8GnTNTzg2Kzh44Qaa4ugc18crX7leQ+EuSdgzqQlaYomfGW1Vg=
+X-Received: by 2002:ac8:5755:0:b0:476:c656:4e80 with SMTP id
+ d75a77b69052e-48132e8c0c0mr163238311cf.34.1745839816545; Mon, 28 Apr 2025
+ 04:30:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250419094959.224954-1-weifeng.liu.z@gmail.com>
-In-Reply-To: <20250419094959.224954-1-weifeng.liu.z@gmail.com>
+References: <20250428080336.2574852-1-dietmar@proxmox.com>
+ <20250428080336.2574852-2-dietmar@proxmox.com>
+In-Reply-To: <20250428080336.2574852-2-dietmar@proxmox.com>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 28 Apr 2025 15:23:33 +0400
-X-Gm-Features: ATxdqUGGCntVRPvWO2Fe_GPfOwfnUl62hDp57RfZ94v6xNhBRfbHNb0GVoOhdZU
-Message-ID: <CAJ+F1C+jPtvsY0yy9rZJLRLME9cC=p1bRGrXA3G1XQfJUmDXrg@mail.gmail.com>
-Subject: Re: [PATCH] ui/gtk: Properly apply x/y scale when rendering GL area
-To: Weifeng Liu <weifeng.liu.z@gmail.com>
-Cc: qemu-devel@nongnu.org, hikalium <hikalium@hikalium.com>, 
- Alexander Orzechowski <orzechowski.alexander@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>
+Date: Mon, 28 Apr 2025 15:30:03 +0400
+X-Gm-Features: ATxdqUFIzjA4BmFkNSl5P-Sw4LBx4IwC8gAOjMJlFPJnuLo8OgFqBdTCiFqAIxQ
+Message-ID: <CAJ+F1C+7cb2-B_wY8UWDaE1oqHXFncUnMTzX3eMax5Oa2cR+rQ@mail.gmail.com>
+Subject: Re: [PATCH v4 1/8] new configure option to enable gstreamer
+To: Dietmar Maurer <dietmar@proxmox.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x832.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,57 +94,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Sat, Apr 19, 2025 at 1:51=E2=80=AFPM Weifeng Liu <weifeng.liu.z@gmail.co=
+On Mon, Apr 28, 2025 at 12:07=E2=80=AFPM Dietmar Maurer <dietmar@proxmox.co=
 m> wrote:
 >
-> On startup, scale_x and scale_y were set to 1 that didn't reflect the
-> real situation of the scan-out, resulting in incorrect cursor
-> coordinates to be sent when moving the mouse pointer. Simply updating
-> the scales before rendering the image fixes this issue.
+> GStreamer is required to implement H264 encoding for VNC. Please note
+> that QEMU already depends on this library when you enable Spice.
 >
-> Cc: hikalium <hikalium@hikalium.com>
-> Cc: Alexander Orzechowski <orzechowski.alexander@gmail.com>
-> Cc: Gerd Hoffmann <kraxel@redhat.com>
-> Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
+> Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
 
-
-Tested-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-(Hopefully someone has enough motivation to actually understand this
-change better - otherwise I'll simply queue it?)
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
 > ---
->  ui/gtk-gl-area.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+>  meson.build                   | 10 ++++++++++
+>  meson_options.txt             |  2 ++
+>  scripts/meson-buildoptions.sh |  3 +++
+>  3 files changed, 15 insertions(+)
 >
-> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-> index 2c9a0db425..01235f876a 100644
-> --- a/ui/gtk-gl-area.c
-> +++ b/ui/gtk-gl-area.c
-> @@ -42,6 +42,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
->  #ifdef CONFIG_GBM
->      QemuDmaBuf *dmabuf =3D vc->gfx.guest_fb.dmabuf;
->  #endif
-> +    int fbw, fbh;
->      int ww, wh, ws, y1, y2;
->
->      if (!vc->gfx.gls) {
-> @@ -53,6 +54,11 @@ void gd_gl_area_draw(VirtualConsole *vc)
->      ww =3D gtk_widget_get_allocated_width(vc->gfx.drawing_area) * ws;
->      wh =3D gtk_widget_get_allocated_height(vc->gfx.drawing_area) * ws;
->
-> +    fbw =3D surface_width(vc->gfx.ds);
-> +    fbh =3D surface_height(vc->gfx.ds);
-> +    vc->gfx.scale_x =3D (double)ww / fbw / ws;
-> +    vc->gfx.scale_y =3D (double)wh / fbh / ws;
+> diff --git a/meson.build b/meson.build
+> index 41f68d3806..626d58d989 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1348,6 +1348,14 @@ if not get_option('zstd').auto() or have_block
+>                      required: get_option('zstd'),
+>                      method: 'pkg-config')
+>  endif
 > +
->      if (vc->gfx.scanout_mode) {
->          if (!vc->gfx.guest_fb.framebuffer) {
->              return;
+> +gstreamer =3D not_found
+> +if not get_option('gstreamer').auto() or have_system
+> +  gstreamer =3D dependency('gstreamer-1.0 gstreamer-base-1.0', version: =
+'>=3D1.22.0',
+> +                          required: get_option('gstreamer'),
+> +                          method: 'pkg-config')
+> +endif
+> +
+>  qpl =3D not_found
+>  if not get_option('qpl').auto() or have_system
+>    qpl =3D dependency('qpl', version: '>=3D1.5.0',
+> @@ -2563,6 +2571,7 @@ config_host_data.set('CONFIG_MALLOC_TRIM', has_mall=
+oc_trim)
+>  config_host_data.set('CONFIG_STATX', has_statx)
+>  config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
+>  config_host_data.set('CONFIG_ZSTD', zstd.found())
+> +config_host_data.set('CONFIG_GSTREAMER', gstreamer.found())
+>  config_host_data.set('CONFIG_QPL', qpl.found())
+>  config_host_data.set('CONFIG_UADK', uadk.found())
+>  config_host_data.set('CONFIG_QATZIP', qatzip.found())
+> @@ -4836,6 +4845,7 @@ summary_info +=3D {'snappy support':    snappy}
+>  summary_info +=3D {'bzip2 support':     libbzip2}
+>  summary_info +=3D {'lzfse support':     liblzfse}
+>  summary_info +=3D {'zstd support':      zstd}
+> +summary_info +=3D {'gstreamer support': gstreamer}
+>  summary_info +=3D {'Query Processing Library support': qpl}
+>  summary_info +=3D {'UADK Library support': uadk}
+>  summary_info +=3D {'qatzip support':    qatzip}
+> diff --git a/meson_options.txt b/meson_options.txt
+> index 59d973bca0..11cd132be5 100644
+> --- a/meson_options.txt
+> +++ b/meson_options.txt
+> @@ -254,6 +254,8 @@ option('vnc_sasl', type : 'feature', value : 'auto',
+>         description: 'SASL authentication for VNC server')
+>  option('vte', type : 'feature', value : 'auto',
+>         description: 'vte support for the gtk UI')
+> +option('gstreamer', type : 'feature', value : 'auto',
+> +       description: 'for VNC H.264 encoding with gstreamer')
+>
+>  # GTK Clipboard implementation is disabled by default, since it may caus=
+e hangs
+>  # of the guest VCPUs. See gitlab issue 1150:
+> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.s=
+h
+> index 3e8e00852b..f88475f707 100644
+> --- a/scripts/meson-buildoptions.sh
+> +++ b/scripts/meson-buildoptions.sh
+> @@ -229,6 +229,7 @@ meson_options_help() {
+>    printf "%s\n" '                  Xen PCI passthrough support'
+>    printf "%s\n" '  xkbcommon       xkbcommon support'
+>    printf "%s\n" '  zstd            zstd compression support'
+> +  printf "%s\n" '  gstreamer       gstreamer support (H264 for VNC)'
+>  }
+>  _meson_option_parse() {
+>    case $1 in
+> @@ -581,6 +582,8 @@ _meson_option_parse() {
+>      --disable-xkbcommon) printf "%s" -Dxkbcommon=3Ddisabled ;;
+>      --enable-zstd) printf "%s" -Dzstd=3Denabled ;;
+>      --disable-zstd) printf "%s" -Dzstd=3Ddisabled ;;
+> +    --enable-gstreamer) printf "%s" -Dgstreamer=3Denabled ;;
+> +    --disable-gstreamer) printf "%s" -Dgstreamer=3Ddisabled ;;
+>      *) return 1 ;;
+>    esac
+>  }
 > --
-> 2.49.0
+> 2.39.5
 >
 >
 
