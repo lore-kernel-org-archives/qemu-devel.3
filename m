@@ -4,86 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE9AC369D1
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 02:30:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10465C369D1
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 03:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9EFm-0001KN-8o; Sun, 27 Apr 2025 22:29:54 -0400
+	id 1u9Evq-00006H-TM; Sun, 27 Apr 2025 23:13:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <timlee660101@gmail.com>)
- id 1u9EFg-0001B6-0A; Sun, 27 Apr 2025 22:29:49 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <timlee660101@gmail.com>)
- id 1u9EFe-0000HE-92; Sun, 27 Apr 2025 22:29:47 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7376dd56f8fso5767535b3a.2; 
- Sun, 27 Apr 2025 19:29:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745807384; x=1746412184; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=SgIEZVqP2SoL72AS38TPlzGLTk7c9CmbSWc1OpOBnGc=;
- b=hqS2W+b3Qx2+EmAgBwuVkCMMoR8nxC1Sm1bMGG+KFuiz8mIUpTrPzZ1MFl3o7J0TLJ
- AyahEsTXeM4Y4yLLYQbzrW8HxWB0hvRiI1Athqb3L6DM8gMMxEd0XPdGDfGsde5PjBQe
- HnqcBjnjCTPwRXxAhKGN93PlXp3tjFEXzNiGzCXr7FX6a9NwaZLYr92L1mjTIErNcYQZ
- 62mmaoUz1Afe/H8DOy40OI3v3Ek0LkG42B3fVtjPt8ejR1u/GHwb9F3mptowAORff4UK
- maZs2CrGoOlqsE+kBlEm9eTqJXb32/Ao4RlD+Q+N3zQzZ8ETVJSgUrPmMpsun15vE96g
- eP0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745807384; x=1746412184;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SgIEZVqP2SoL72AS38TPlzGLTk7c9CmbSWc1OpOBnGc=;
- b=aYek2yxVhzi604Wi3AT8ysiEHB7p6abkbjOO1t9CUC3XGTa7NST2Ie5g88WHJL70nt
- WDVQbIIld4xWPTn6KBHHn1Z0XRUZG9CjSUfsszni8duVBcPc+okrenjG5gknSeg7Mq0N
- 0/71dx1eXBxB8UKZsMvx1rccHniQ8dseHvKLOGJb/eeBMZk3TEb3vrlk0Anx1OkMToq5
- dIktwiQdaa1LyA3iqpRyubvFTY9wvEDZO2g/jyExKqTfONLEDeEPRyzrpBbN7Q+om0HK
- qhf5Z/fgLIz9eJqparCpuAAG5k54lYZhWpi37zHPdnrsjrkDoMlS5qMx71fKYrbDaebE
- ocRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXkdpcyLh9YxdnMpprkSyRx6ITjATdSe+3QjWt51Oe3UMIlFjYsXMXhm4X9RDeH7sDg7kAotTtdHBy1@nongnu.org
-X-Gm-Message-State: AOJu0Ywmk635RRmFYhJ+ZqKVGOfvQrWUx6WPlQgjGwg73q+0ZnSr6XBL
- j1n4QRCNFrln3nt7WRvaH5pxLft2ecmzhz5x79EofOQvvStTTlC4
-X-Gm-Gg: ASbGnctd8lejwHoizkUZpK7bH9jTYiBdoduL6wWKe6dRnHZCT+aWUt+1/GfuB/PjAaO
- yWWypD5RsMRPZSO2Nmxga5SURhoKUjLwU1k46zbXatL57nNADvnjS8ZPKkgPaYqeu/GbamMJfKv
- bGm5jwo1dsDV1jBd2Kd9QIML1MW2bz6ZIjBV+qEPjfwpbDsyRg572ifyY+cZtAt8Qu7HHD0INdS
- o/yB2bSvJXTC6oukRmD0x9n9NDqUVNaSxGiXMwuGMWE/su3Tu0k4nqsydNv/jsWfWIDccy5+VuV
- 0sWcpbmWDj2Qd4067clZ3oUkesf+MZPveDc1txTJRd6NO35Zx1Y+w+k1vmyXKghc71cMDJpqi83
- tJKashYttQXu/2uWjojQ=
-X-Google-Smtp-Source: AGHT+IFPLzdbNwn8WI0xgg+Regp2GllciQEkS36fRd9g5Iv/JrMpllEe9Cr7dmL2Ho0jrH4Vlf2ROA==
-X-Received: by 2002:a05:6a00:99f:b0:73b:71a9:a5ad with SMTP id
- d2e1a72fcca58-73fd897ac9amr13151151b3a.16.1745807383829; 
- Sun, 27 Apr 2025 19:29:43 -0700 (PDT)
-Received: from hcdev-d520mt.. (60-250-196-139.hinet-ip.hinet.net.
- [60.250.196.139]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-73e25941eecsm7085557b3a.54.2025.04.27.19.29.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Apr 2025 19:29:43 -0700 (PDT)
-From: Tim Lee <timlee660101@gmail.com>
-To: peter.maydell@linaro.org, wuhaotsh@google.com, kfting@nuvoton.com,
- chli30@nuvoton.com
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Tim Lee <timlee660101@gmail.com>
-Subject: [PATCH] hw/arm/npcm8xx_boards: Correct valid_cpu_types setting of
- NPCM8XX SoC
-Date: Mon, 28 Apr 2025 10:29:34 +0800
-Message-Id: <20250428022934.3081139-1-timlee660101@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1u9Evm-00005r-Ip
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 23:13:18 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1u9Evk-0005HO-Pz
+ for qemu-devel@nongnu.org; Sun, 27 Apr 2025 23:13:18 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxrnJI8g5ou_LHAA--.3794S3;
+ Mon, 28 Apr 2025 11:13:12 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowMCx_cZG8g5o5lmaAA--.63019S3;
+ Mon, 28 Apr 2025 11:13:10 +0800 (CST)
+Subject: Re: [PATCH v2 06/16] hw/intc/loongarch_pch: Discard write operation
+ with ISR register
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20250324093730.3683378-1-maobibo@loongson.cn>
+ <20250324093730.3683378-7-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <33f34f64-ed2b-aac5-84de-9c9059403e82@loongson.cn>
+Date: Mon, 28 Apr 2025 11:15:48 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20250324093730.3683378-7-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=timlee660101@gmail.com; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Language: en-US
+X-CM-TRANSID: qMiowMCx_cZG8g5o5lmaAA--.63019S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj9xXoWrZr4xZw1DXw18KF1xWw4rZwc_yoWDtrb_W3
+ Wak3sxCw1UJr1rAa1qvr15ZF45A3W5XF9ayas7Xr18J345XFWrAw1UWrs8Zrn2qa4UWwn8
+ GayxZr9a9w1FkosvyTuYvTs0mTUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbI8YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUwmhF
+ DUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-1.279, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,29 +84,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-NPCM8XX SoC is the successor of the NPCM7XX. It features quad-core
-Cortex-A35 (Armv8, 64-bit) CPUs and some additional peripherals.
-Correct the `valid_cpu_types` setting to match the NPCM8XX SoC.
-
-Signed-off-by: Tim Lee <timlee660101@gmail.com>
----
- hw/arm/npcm8xx_boards.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/arm/npcm8xx_boards.c b/hw/arm/npcm8xx_boards.c
-index 3fb8478e72..6d3e59f6b9 100644
---- a/hw/arm/npcm8xx_boards.c
-+++ b/hw/arm/npcm8xx_boards.c
-@@ -213,7 +213,7 @@ static void npcm8xx_machine_class_init(ObjectClass *oc, void *data)
- {
-     MachineClass *mc = MACHINE_CLASS(oc);
-     static const char * const valid_cpu_types[] = {
--        ARM_CPU_TYPE_NAME("cortex-a9"),
-+        ARM_CPU_TYPE_NAME("cortex-a35"),
-         NULL
-     };
- 
--- 
-2.34.1
+ÔÚ 2025/3/24 ÏÂÎç5:37, Bibo Mao Ð´µÀ:
+> With the latest 7A1000 user manual, interrupt status register ISR is
+> read only. Here discard write operation with ISR register.
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   hw/intc/loongarch_pch_pic.c | 6 ------
+>   1 file changed, 6 deletions(-)
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+thanks.
+Song Gao
+> diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+> index 93f7ceb6b9..10b4231464 100644
+> --- a/hw/intc/loongarch_pch_pic.c
+> +++ b/hw/intc/loongarch_pch_pic.c
+> @@ -234,12 +234,6 @@ static void loongarch_pch_pic_high_writew(void *opaque, hwaddr addr,
+>       trace_loongarch_pch_pic_high_writew(size, addr, data);
+>   
+>       switch (addr) {
+> -    case PCH_PIC_INT_STATUS:
+> -        s->intisr = get_writew_val(s->intisr, data, 0);
+> -        break;
+> -    case PCH_PIC_INT_STATUS + 4:
+> -        s->intisr = get_writew_val(s->intisr, data, 1);
+> -        break;
+>       case PCH_PIC_INT_POL:
+>           s->int_polarity = get_writew_val(s->int_polarity, data, 0);
+>           break;
 
 
