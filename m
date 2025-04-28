@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ED9BC36005
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 06:45:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F98C369D3
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 06:45:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9IES-0001Lo-3T; Mon, 28 Apr 2025 02:44:48 -0400
+	id 1u9I9t-0002Kb-LD; Mon, 28 Apr 2025 02:40:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u9IC0-00058j-Ti; Mon, 28 Apr 2025 02:42:20 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1u9I9j-0002Ig-Nf; Mon, 28 Apr 2025 02:39:56 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u9IBx-0007JF-3r; Mon, 28 Apr 2025 02:42:15 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-224341bbc1dso46081005ad.3; 
- Sun, 27 Apr 2025 23:42:11 -0700 (PDT)
+ id 1u9I9i-0006ns-3R; Mon, 28 Apr 2025 02:39:55 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-22423adf751so44601245ad.2; 
+ Sun, 27 Apr 2025 23:39:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745822530; x=1746427330; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745822389; x=1746427189; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HPP2G+ypt7YrX8hzAUA27wm3oJ/maSzQ00zwDCJ8YQQ=;
- b=VKgINTe1KdV9KqolyL77owYRUH8Zip8T2lL0E3rTJ+Lg8fOzFTuPoGU+i0w2aMiukM
- rYy5RsQlf9bPqQ5+BjlR8N3nCc6n8A95WXXQ0UN+TMtVZ17yvwf0A3YQP1Ql02OLlKRW
- hPdxtb4wIysfZlPasDGFNm4jqp0X5Z+O6TmPcg9lTl7CRFGtNaIta9Q23H3ytrhR6BcN
- Tx46pZCZItNbrZ3exOByV6XAzXHrCq05jd8S7RedbirEKVfnvKUCp6GtLeVQhYMG2rAC
- 8ChaOxpPNm+aoXEMv+B1+/agKKYtVPQzuS9VMsnPrno6l5ecLLWKl7f3Wz0CbKK5XqZK
- yorw==
+ bh=sXRxpcTPXlWeCW9VyVkVrsS4eG/L50janz5xzL80Y6M=;
+ b=YXY65bmFDZMHHBCwKnWXhVVzW0XnPI6vhLLW4xEkGeUOWuSBQu6LrEHcttFRc20ZJK
+ ehkxOwE5HFxjQ1PiUADZdS1RJo3xFdthUMlc4x1rV+JfJNp4ctzhmNUuzsfTkSKr/zUV
+ PCLaJW60YVf5x8vf4dZ19CqIOhZqQJ4zgDB7j1KlKysDKVpPsGAMdLbnz5lmcSuhD9uq
+ y76oHwDs23McwA2oDIhYP3kKsvkNboz+DmgPp+LDVLdTDbAkn4v8qeeS8r7wAJpwLncx
+ UPAGLkdAs/Wn+4a1CcNqa3F6C4fAmyy9tAz1P2oKWxXFP7VwxynXVRy/pxhZJLh5Mb1p
+ t7NA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745822530; x=1746427330;
+ d=1e100.net; s=20230601; t=1745822389; x=1746427189;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HPP2G+ypt7YrX8hzAUA27wm3oJ/maSzQ00zwDCJ8YQQ=;
- b=sNuDZCwdLgMAuanCBEd+3sG05S5qCsDEX5+MfCB27l0fbCV//lMWM6m+ncfiMWQlRq
- Ly17Yvf04kQYSQR9h+47eHjOWr2lGZePlhsCKSepU1VpHQa7gZpJADBRHDYnBduBYi5l
- duXLS7TLXmTI7FSWD1UaOybjQhNGos18nXs0xZB+4++/rP5Uzql4bgvwUlgtPVPcaCie
- 3tAcV9Iyq3x16TKBrNmqK8nrG1S7qIH0PSCGcMe/xWTIwCS1QMEY7TKoEIyQTUGFYW6a
- o9Uh2p7dVXKEcaXgayDpqmYZh1EodJGlNDFCT89XHOo9hNbDFRjHhXF2KgIS1l2Eo4zJ
- 5Czg==
+ bh=sXRxpcTPXlWeCW9VyVkVrsS4eG/L50janz5xzL80Y6M=;
+ b=jpbxvj4Ip+Ekzdm3eRp6zaOfRj1QbubYc21W6972MB5LIK6N1Om5r31x4yuNqFXhpB
+ BjZ9moepaBx9Apl1ujybQ+PnC1BtHv11fMlHJ060PUgtCXILUHPlx2S0TqyVFc3NprPv
+ zyZnBidH9SDd8+jElf8IE0SBjde/xcIDvH7+dk0ShAWEfTQqNwoFUrAlvJor24NHC8++
+ ypMXc0pmwZD7i8aoPAWIde8afC3UDmCcQlGd2In+tvBsQYN9HK2lHcujqRc6a8yv00dT
+ 1CVcuBuBJhwhswQbJ5TCoMK3z41nPNB4VkaxO9jWo1oLL9jBgB7W8fLwLs3hP1UFeJmH
+ uXVA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUKdc3SXmp48MzN/xFCHMWtTPHZ1hnfTLycN0jBemrvxJTnMYRrf+mmjTQaiRfERm3Oo8vgu17gMCSz+g==@nongnu.org,
- AJvYcCVutPn6fhAB/ArTFNnBMJ0mOUJwQflyCwEbejfDmjs90bmCXijLfBJ+AK57kZCCgkWJnAdTL5BTvA==@nongnu.org,
- AJvYcCX6wfgY9kYQzgKaRUqXqCelxVMW4YIQli9OzYBnK6xHoZ6xtpXbUhkV9JqqWM4VXlERmLYBEnPlplc=@nongnu.org,
- AJvYcCXJJa9uuvilw7n52kwX72eUHgtYM9Y+gahDg2NMLU7jpI/wbqkPKJKOy0wx0KnTVXbOgRBCR++oAJZhCA==@nongnu.org
-X-Gm-Message-State: AOJu0Ywa+wLug8S8yuy7ac0y8xPrj/xxsVieUzlUDiccn3xoSE0kwt+6
- TW9vYX/CTtlJgD19GYxGkNDcfOjJ31rRTMWG6cTdWGA+JYGByCIHVUCidmm4
-X-Gm-Gg: ASbGncsstSyykePVoYK36d6aut4/NO1nXFANVHF+yw8xfiR+zKR58vlqfEhPfoyuY6N
- Skg+PaUOd1pdKqp46TZiPM3o49sZnGgrtBt+cOpxPBmlcCX0i0gGVsKGDf92VIuI1shwjzyimk0
- z4SKV+rAmyX6tuKTFR82csrO+yYl5g/Ag5Jdd5+NTPhqh1ZubIEWnDe55Kh+017PAPlFFXrt1xu
- 8Pvv6TRz+buL4UegiTW9RafJYCMByWTBlOja4X7sJ+Ouhtx9Eoc2VS40KhIXDGfD+4x62CJDMzz
- kft8mO6dPalkdXE6JhHlSX4GaOYXqQ8lOGooEw==
-X-Google-Smtp-Source: AGHT+IHRWN3JsCNfDZHbW955JRTfqsVw/h+K8xx0iThNgk+AM0ZZghQ0w1nuOaVl0h4f5oB7XeLWzw==
-X-Received: by 2002:a17:903:320b:b0:225:abd2:5e39 with SMTP id
- d9443c01a7336-22dbf5f8179mr156498775ad.30.1745822530085; 
- Sun, 27 Apr 2025 23:42:10 -0700 (PDT)
+ AJvYcCUeyuUGq5mvroaTc91uwLOUKpI2BU8ZoUzBERZl1FJZshq1H2BZPK7v2TP73zeV0vnZeMFVh8Vn/7Qy3w==@nongnu.org,
+ AJvYcCX9osWeitHRS2vlSkHyn8yunY8c6bHTh024fZNiN1Jl+hbOUCxAAzW8Vln+ZpwJt9Z8rNxaplRD6g==@nongnu.org,
+ AJvYcCXSgP6BP/ccoOsVW2kqkVHx3c5WSt+x9a00i8NW8V3l2pfOkmLRS1Uzd2a6fDr8QSwB5oclaHsH+/vUeQ==@nongnu.org,
+ AJvYcCXl5wBwofeyXXV0+RF/4g8MgxHvesgL66EH3vcteS/LqPPw5A1/ZRiKClI04UTIW7M/CaVtosLLGCo=@nongnu.org
+X-Gm-Message-State: AOJu0Yz3YIh/GsazYCVEQHqZhlsQF08Sbm1hBT9BWlxmS7N+7dYwWxAE
+ cheY1PDJH2AmXv3Y99ryYOd4pkVgx5JdUI4ge+DBBdi9wSF5xr7rtnv5eIom
+X-Gm-Gg: ASbGncvkvsexVpzN6fTIL6IbPyxh54DaC6VVcrr1MtghWcGWKtPobLN9IBnUpDjK1zU
+ 8EGSRvOMBk13aYj/NLUdKBsOYkC9aqR2bCdy5F78mv2cCTR9NjJFTwlvJLuZN9yMsXPFENuTIlH
+ Ma/aQHqdNRpSWb0OPt9oB/NxdOLbwyZvnH1cdNvBNvvmezksHn98uHwnSHbIe0O95zV+YQamksJ
+ BkSjuh9UM3iycRlNPHGsmIrQmUH1EE+GtrVc4+4ZtzLAaAe47mJzCvqmTnIY01WK2YVDblsuMGz
+ bHM+tjd7C7P3ev6jfRdo/wgqNuj0/nvfC7BHYg==
+X-Google-Smtp-Source: AGHT+IFrZH8PrQNIR1i1QyW1F4U8cydPPxpBJ7fMsIckNZPcgjOFtfm3xC65ZGB6y11sDLsbKqifGA==
+X-Received: by 2002:a17:903:32c8:b0:223:fb3a:8631 with SMTP id
+ d9443c01a7336-22dbf5fc2aemr168535235ad.24.1745822388742; 
+ Sun, 27 Apr 2025 23:39:48 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:bcb:2cf3:f1b5:b7f])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db4dbe328sm74721215ad.88.2025.04.27.23.42.02
+ d9443c01a7336-22db4dbe328sm74721215ad.88.2025.04.27.23.39.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Apr 2025 23:42:09 -0700 (PDT)
+ Sun, 27 Apr 2025 23:39:47 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -89,17 +89,18 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH v3 19/20] tests: Add Dockerfile containing dependencies for
- Emscripten build
-Date: Mon, 28 Apr 2025 15:39:08 +0900
-Message-ID: <8bed6e9d46ef09328a87320928b5dec575d1e435.1745820062.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH v3 01/20] hw/core/loader.c: Fix type conflict of GLib function
+ pointers
+Date: Mon, 28 Apr 2025 15:38:50 +0900
+Message-ID: <2898d818d4eb82a3604509ef3ec8646f0d0deafd.1745820062.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1745820062.git.ktokunaga.mail@gmail.com>
 References: <cover.1745820062.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,180 +123,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The added Dockerfile is based on the emsdk image, which includes the
-Emscripten toolchain. It also cross-compiles the necessary dependencies
-(glib, libffi, pixman, and zlib) for the Emscripten target environment.
+On Emscripten, function pointer casts can result in runtime failures due to
+strict function signature checks. This affects the use of g_list_sort and
+g_slist_sort, which internally perform function pointer casts that are not
+supported by Emscripten. To avoid these issues, g_list_sort_with_data and
+g_slist_sort_with_data should be used instead, as they do not rely on
+function pointer casting.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS                                   |   1 +
- .../dockerfiles/emsdk-wasm32-cross.docker     | 145 ++++++++++++++++++
- 2 files changed, 146 insertions(+)
- create mode 100644 tests/docker/dockerfiles/emsdk-wasm32-cross.docker
+ hw/core/loader.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index dd5a97ac36..2c5417b7e7 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -635,6 +635,7 @@ F: include/system/os-wasm.h
- F: os-wasm.c
- F: util/coroutine-wasm.c
- F: configs/meson/emscripten.txt
-+F: tests/docker/dockerfiles/emsdk-wasm32-cross.docker
+V3:
+- This commit is included in this series sololy to ensure successful
+  builds. It has already been picked up by a pull request, so please ignore
+  it.
+
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index a3aa62d132..b792a54bb0 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -1410,7 +1410,7 @@ typedef struct RomSec {
+  * work, but this way saves a little work later by avoiding
+  * dealing with "gaps" of 0 length.
+  */
+-static gint sort_secs(gconstpointer a, gconstpointer b)
++static gint sort_secs(gconstpointer a, gconstpointer b, gpointer d)
+ {
+     RomSec *ra = (RomSec *) a;
+     RomSec *rb = (RomSec *) b;
+@@ -1463,7 +1463,7 @@ RomGap rom_find_largest_gap_between(hwaddr base, size_t size)
+     /* sentinel */
+     secs = add_romsec_to_list(secs, base + size, 1);
  
- Alpha Machines
- --------------
-diff --git a/tests/docker/dockerfiles/emsdk-wasm32-cross.docker b/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-new file mode 100644
-index 0000000000..60a7d02f56
---- /dev/null
-+++ b/tests/docker/dockerfiles/emsdk-wasm32-cross.docker
-@@ -0,0 +1,145 @@
-+# syntax = docker/dockerfile:1.5
-+
-+ARG EMSDK_VERSION_QEMU=3.1.50
-+ARG ZLIB_VERSION=1.3.1
-+ARG GLIB_MINOR_VERSION=2.84
-+ARG GLIB_VERSION=${GLIB_MINOR_VERSION}.0
-+ARG PIXMAN_VERSION=0.44.2
-+ARG FFI_VERSION=v3.4.7
-+ARG MESON_VERSION=1.5.0
-+
-+FROM emscripten/emsdk:$EMSDK_VERSION_QEMU AS build-base
-+ARG MESON_VERSION
-+ENV TARGET=/builddeps/target
-+ENV CPATH="$TARGET/include"
-+ENV PKG_CONFIG_PATH="$TARGET/lib/pkgconfig"
-+ENV EM_PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
-+ENV CFLAGS="-O3 -pthread -DWASM_BIGINT"
-+ENV CXXFLAGS="$CFLAGS"
-+ENV LDFLAGS="-sWASM_BIGINT -sASYNCIFY=1 -L$TARGET/lib"
-+RUN apt-get update && apt-get install -y \
-+    autoconf \
-+    build-essential \
-+    libglib2.0-dev \
-+    libtool \
-+    pkgconf \
-+    ninja-build \
-+    python3-pip
-+RUN pip3 install meson==${MESON_VERSION} tomli
-+RUN mkdir /build
-+WORKDIR /build
-+RUN mkdir -p $TARGET
-+RUN <<EOF
-+cat <<EOT > /cross.meson
-+[host_machine]
-+system = 'emscripten'
-+cpu_family = 'wasm32'
-+cpu = 'wasm32'
-+endian = 'little'
-+
-+[binaries]
-+c = 'emcc'
-+cpp = 'em++'
-+ar = 'emar'
-+ranlib = 'emranlib'
-+pkgconfig = ['pkg-config', '--static']
-+EOT
-+EOF
-+
-+FROM build-base AS zlib-dev
-+ARG ZLIB_VERSION
-+RUN mkdir -p /zlib
-+RUN curl -Ls https://zlib.net/zlib-$ZLIB_VERSION.tar.xz | \
-+    tar xJC /zlib --strip-components=1
-+WORKDIR /zlib
-+RUN emconfigure ./configure --prefix=$TARGET --static
-+RUN emmake make install -j$(nproc)
-+
-+FROM build-base AS libffi-dev
-+ARG FFI_VERSION
-+RUN mkdir -p /libffi
-+RUN git clone https://github.com/libffi/libffi /libffi
-+WORKDIR /libffi
-+RUN git checkout $FFI_VERSION
-+RUN autoreconf -fiv
-+RUN emconfigure ./configure --host=wasm32-unknown-linux \
-+    --prefix=$TARGET --enable-static \
-+    --disable-shared --disable-dependency-tracking \
-+    --disable-builddir --disable-multi-os-directory \
-+    --disable-raw-api --disable-docs
-+RUN emmake make install SUBDIRS='include' -j$(nproc)
-+
-+FROM build-base AS pixman-dev
-+ARG PIXMAN_VERSION
-+RUN mkdir /pixman/
-+RUN git clone  https://gitlab.freedesktop.org/pixman/pixman /pixman/
-+WORKDIR /pixman
-+RUN git checkout pixman-$PIXMAN_VERSION
-+RUN <<EOF
-+cat <<EOT >> /cross.meson
-+[built-in options]
-+c_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+cpp_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+objc_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+c_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
-+cpp_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
-+EOT
-+EOF
-+RUN meson setup _build --prefix=$TARGET --cross-file=/cross.meson \
-+    --default-library=static \
-+    --buildtype=release -Dtests=disabled -Ddemos=disabled
-+RUN meson install -C _build
-+
-+FROM build-base AS glib-dev
-+ARG GLIB_VERSION
-+ARG GLIB_MINOR_VERSION
-+RUN mkdir -p /stub
-+WORKDIR /stub
-+RUN <<EOF
-+cat <<'EOT' > res_query.c
-+#include <netdb.h>
-+int res_query(const char *name, int class,
-+              int type, unsigned char *dest, int len)
-+{
-+    h_errno = HOST_NOT_FOUND;
-+    return -1;
-+}
-+EOT
-+EOF
-+RUN emcc ${CFLAGS} -c res_query.c -fPIC -o libresolv.o
-+RUN ar rcs libresolv.a libresolv.o
-+RUN mkdir -p $TARGET/lib/
-+RUN cp libresolv.a $TARGET/lib/
-+
-+RUN mkdir -p /glib
-+RUN curl -Lks https://download.gnome.org/sources/glib/${GLIB_MINOR_VERSION}/glib-$GLIB_VERSION.tar.xz | \
-+    tar xJC /glib --strip-components=1
-+
-+COPY --link --from=zlib-dev /builddeps/ /builddeps/
-+COPY --link --from=libffi-dev /builddeps/ /builddeps/
-+
-+WORKDIR /glib
-+RUN <<EOF
-+CFLAGS="$CFLAGS -Wno-incompatible-function-pointer-types" ;
-+cat <<EOT >> /cross.meson
-+[built-in options]
-+c_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+cpp_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+objc_args = [$(printf "'%s', " $CFLAGS | sed 's/, $//')]
-+c_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
-+cpp_link_args = [$(printf "'%s', " $LDFLAGS | sed 's/, $//')]
-+EOT
-+EOF
-+RUN meson setup _build --prefix=$TARGET --cross-file=/cross.meson \
-+    --default-library=static --buildtype=release --force-fallback-for=pcre2 \
-+    -Dselinux=disabled -Dxattr=false -Dlibmount=disabled -Dnls=disabled \
-+    -Dtests=false -Dglib_debug=disabled -Dglib_assert=false -Dglib_checks=false
-+# FIXME: emscripten doesn't provide some pthread functions in the final link,
-+#        which isn't detected during meson setup.
-+RUN sed -i -E "/#define HAVE_POSIX_SPAWN 1/d" ./_build/config.h
-+RUN sed -i -E "/#define HAVE_PTHREAD_GETNAME_NP 1/d" ./_build/config.h
-+RUN meson install -C _build
-+
-+FROM build-base
-+COPY --link --from=glib-dev /builddeps/ /builddeps/
-+COPY --link --from=pixman-dev /builddeps/ /builddeps/
+-    secs = g_list_sort(secs, sort_secs);
++    secs = g_list_sort_with_data(secs, sort_secs, NULL);
+ 
+     for (it = g_list_first(secs); it; it = g_list_next(it)) {
+         cand = (RomSec *) it->data;
 -- 
 2.43.0
 
