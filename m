@@ -4,65 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0505BC369D3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 10:32:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7718FC36005
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 10:32:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9Llm-0000Kx-BL; Mon, 28 Apr 2025 06:31:28 -0400
+	id 1u9Ll3-0006ig-8k; Mon, 28 Apr 2025 06:30:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u9Lld-0008P9-2K
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 06:31:17 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1u9Ljv-0004DN-IA
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 06:29:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u9LlY-0004AK-Fh
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 06:31:15 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1F8A855D22A;
- Mon, 28 Apr 2025 12:31:10 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id yCvVJ2_XAtYS; Mon, 28 Apr 2025 12:31:08 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0923455D232; Mon, 28 Apr 2025 12:31:08 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 06FD0745683;
- Mon, 28 Apr 2025 12:31:08 +0200 (CEST)
-Date: Mon, 28 Apr 2025 12:31:07 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: Richard Henderson <richard.henderson@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
- Anton Johansson <anjo@rev.ng>
-Subject: Re: [RFC PATCH v5 08/21] hw/arm: Add DEFINE_MACHINE_[ARM_]AARCH64()
- macros
-In-Reply-To: <c4479348-00b2-4604-adad-e8d8911c75a6@linaro.org>
-Message-ID: <21e6cbae-54fe-2d11-307f-2fe36a08c97b@eik.bme.hu>
-References: <20250424222112.36194-1-philmd@linaro.org>
- <20250424222112.36194-9-philmd@linaro.org>
- <1332b395-1e3e-2be7-83f2-15f2d89b0449@eik.bme.hu>
- <51f3a96b-9c7a-4242-a822-145d68e068d9@linaro.org>
- <f84a52af-aecf-5235-7971-689580ffb71f@eik.bme.hu>
- <29f67d66-9eef-493a-9d96-99240ca25a14@linaro.org>
- <75b7e110-9293-32b2-64c8-26eabaace8b7@eik.bme.hu>
- <033d94c7-ac74-4a44-87ae-aeac964afd10@linaro.org>
- <c4479348-00b2-4604-adad-e8d8911c75a6@linaro.org>
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1u9Ljt-0003dD-0A
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 06:29:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745836166;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=iT9nqTQhwiTs/XfpG8t9+pzbZhZ0wqmcylIeL5XyJwo=;
+ b=YfdIsgBGh6OITPCLI7d4ClfYqoAJR8BFLOp1yuVSkgL5CeQJwvmmr8eYDhmaf2sbYuQh3Y
+ 9CnSAR35vWXEVwClWfWKl/1ulEI4J9lCSOIVKvGf4WRHPIb3BDkIiC0cM2jXuXHhODj3KL
+ du2Zwd5tmuU/L3ugJlnKPzggdIvOc6U=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-257-cuhhO8nkP2m-W_I-D1P8Ig-1; Mon, 28 Apr 2025 06:29:24 -0400
+X-MC-Unique: cuhhO8nkP2m-W_I-D1P8Ig-1
+X-Mimecast-MFC-AGG-ID: cuhhO8nkP2m-W_I-D1P8Ig_1745836163
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43d5ca7c86aso26948755e9.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 03:29:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745836163; x=1746440963;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iT9nqTQhwiTs/XfpG8t9+pzbZhZ0wqmcylIeL5XyJwo=;
+ b=XumSxph8G8h5t9NogZ10Y9ztH+Vxa1xPTabiD/9SzCWCAlRYrjVsywR3qrTayTNw1u
+ YVyXjEiYPizSgO53X847nETIZNnuQ7F9NKyWRHUXAw8bJ8dbkkfnfBAYbb37SduTIQNz
+ WtM0x0Ller/i98mR7NgR2izZajy8eIDMWQaFx4oyahD+Yr0kpb7s8h+MPcGD0j+m6cFN
+ iiY+mKliXwPpGcDuFFAUtvckYbq4VDrMDdFooix9HGJcf4sMseB44BSWLn1s0mjQv+dw
+ Ii7GEmTU1HuNKRKFa27S6HISGzboTwekiaL2cCnoKH/8AG5bubNxiEkAULFf+Oykfcs7
+ ji0Q==
+X-Gm-Message-State: AOJu0YzboibtLGgOChDSzq87+OWXH11tpaLFqaWLU53XtAbuJ2ppsJ/M
+ JNeDIhDgVARixYP0tUAcwYwFKifPRVc8J6gm5r81JqW5mYVr9Z2J3UnLM34Md2oQ4pYHofoo12C
+ Qv7u07t/QFvVN1ruzrzAoFivh3+p2dNOJSt6dVFYEGjC0Nf7aIloy
+X-Gm-Gg: ASbGncvkSvv8TC8j35oPUUk4Z1IFt6q9sfYiwKm9iarBhoyeb0E+Eu3Tk/+PFRayQoG
+ U4qUmc6K+n1Xmy/fBs5LLdP5AplfuoGxLzaL213Fxl5bJJhnevmBJmC48mVI//PxzUOBr5Z0IjJ
+ RQPDVNjQ1w0f3Yy+D05qy68XCgNm1X3+Lf+ihODmTN6DNCU6ZMlTa8dnuxqCD4DUghCJwn2Pgqd
+ R2HyXYNoV6PtcNKZpqpSjRBlMAkcWcprAnfbl0GMYybx82L768dwilLYSvWawquRDaaKf7nkUzb
+X-Received: by 2002:a05:600c:4e16:b0:43b:ca39:6c75 with SMTP id
+ 5b1f17b1804b1-440a660a95dmr113161435e9.16.1745836162742; 
+ Mon, 28 Apr 2025 03:29:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH1eH1kd/pxn8wDNb2NfTDGeA24XGKMHGyCW5xwoMWIGrk5Kax6VA71CqZJwLzt3uNXkIQ+qQ==
+X-Received: by 2002:a05:600c:4e16:b0:43b:ca39:6c75 with SMTP id
+ 5b1f17b1804b1-440a660a95dmr113161235e9.16.1745836162361; 
+ Mon, 28 Apr 2025 03:29:22 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a073c8d769sm10880370f8f.12.2025.04.28.03.29.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Apr 2025 03:29:21 -0700 (PDT)
+Date: Mon, 28 Apr 2025 12:29:20 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Prasad Pandit <ppandit@redhat.com>, 
+ Xiaohui Li <xiaohli@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] migration/postcopy: Spatial locality page hint for
+ preempt mode
+Message-ID: <ozfomusssu3gcy75kfagortacpazz3a2cicmoxkyltw4xeds54@2a4lsuw7hka7>
+References: <20250424220705.195544-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-523160171-1745836268=:12513"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250424220705.195544-1-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -29
+X-Spam_score: -3.0
+X-Spam_bar: ---
+X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.492,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URG_BIZ=0.573 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,233 +107,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Peter
 
---3866299591-523160171-1745836268=:12513
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+On 2025-04-24 18:07, Peter Xu wrote:
+> The preempt mode postcopy has been introduced for a while.  From latency
+> POV, it should always win the vanilla postcopy.
+> 
+> However there's one thing missing when preempt mode is enabled right now,
+> which is the spatial locality hint when there're page requests from the
+> destination side.
+> 
+> In vanilla postcopy, as long as a page request was unqueued, it will update
+> the PSS of the precopy background stream, so that after a page request the
+> background thread will move the pages after whatever was requested.  It's
+> pretty much a natural behavior when there's only one channel anyway, and
+> one scanner to send the pages.
+> 
+> Preempt mode didn't follow that, because preempt mode has its own channel
+> and its own PSS (which doesn't linearly scan the guest memory, but
+> dedicated to resolve page requested from destination).  So the page request
+> process and the background migration process are completely separate.
+> 
+> This patch adds the hint explicitly for preempt mode.  With that, whenever
+> the preempt mode receives a page request on the source, it will service the
+> remote page fault in the return path, then it'll provide a hint to the
+> background thread so that we'll start sending the pages right after the
+> requested ones in the background, assuming the follow up pages have a
+> higher chance to be accessed later.
+> 
+> NOTE: since the background migration thread and return path thread run
+> completely concurrently, it doesn't always mean the hint will be applied
+> every single time.  For example, it's possible that the return path thread
+> receives multiple page requests in a row without the background thread
+> getting the chance to consume one.  In such case, the preempt thread only
+> provide the hint if the previous hint has been consumed.  After all,
+> there's no point queuing hints when we only have one linear scanner.
+> 
+> This could measureably improve the simple sequential memory access pattern
+> during postcopy (when preempt is on).  For random accesses, I can measure a
+> slight increase of remote page fault latency from ~500us -> ~600us, that
+> could be a trade-off to have such hint mechanism, and after all that's
+> still greatly improved comparing to vanilla postcopy on random (~10ms).
+> 
+> The patch is verified by our QE team in a video streaming test case, to
+> reduce the pause of the video from ~1min to a few seconds when switching
+> over to postcopy with preempt mode.
+> 
+> Tested-by: Xiaohui Li <xiaohli@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/ram.c | 97 ++++++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 96 insertions(+), 1 deletion(-)
+> 
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 424df6d9f1..21d2f87ff1 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -91,6 +91,36 @@
+>  
+>  XBZRLECacheStats xbzrle_counters;
+>  
+> +/*
+> + * This structure locates a specific location of a guest page.  In QEMU,
+> + * it's described in a tuple of (ramblock, offset).
+> + */
+> +struct PageLocation {
+> +    RAMBlock *block;
+> +    unsigned long offset;
+> +};
+> +typedef struct PageLocation PageLocation;
+> +
+> +/**
+> + * PageLocationHint: describes a hint to a page location
+> + *
+> + * @valid     set if the hint is vaild and to be consumed
+> + * @location: the hint content
+> + *
+> + * In postcopy preempt mode, the urgent channel may provide hints to the
+> + * background channel, so that QEMU source can try to migrate whatever is
+> + * right after the requested urgent pages.
+> + *
+> + * This is based on the assumption that the VM (already running on the
+> + * destination side) tends to access the memory with spatial locality.
+> + * This is also the default behavior of vanilla postcopy (preempt off).
+> + */
+> +struct PageLocationHint {
+> +    bool valid;
+> +    PageLocation location;
+> +};
+> +typedef struct PageLocationHint PageLocationHint;
+> +
+>  /* used by the search for pages to send */
+>  struct PageSearchStatus {
+>      /* The migration channel used for a specific host page */
+> @@ -395,6 +425,13 @@ struct RAMState {
+>       * RAM migration.
+>       */
+>      unsigned int postcopy_bmap_sync_requested;
+> +    /*
+> +     * Page hint during postcopy when preempt mode is on.  Return path
+> +     * thread sets it, while background migration thread consumes it.
+> +     *
+> +     * Protected by @bitmap_mutex.
+> +     */
+> +    PageLocationHint page_hint;
+>  };
+>  typedef struct RAMState RAMState;
+>  
+> @@ -2039,6 +2076,21 @@ static void pss_host_page_finish(PageSearchStatus *pss)
+>      pss->host_page_start = pss->host_page_end = 0;
+>  }
+>  
+> +static void ram_page_hint_update(RAMState *rs, PageSearchStatus *pss)
+> +{
+> +    PageLocationHint *hint = &rs->page_hint;
+> +
+> +    /* If there's a pending hint not consumed, don't bother */
+> +    if (hint->valid) {
+> +        return;
+> +    }
+> +
+> +    /* Provide a hint to the background stream otherwise */
+> +    hint->location.block = pss->block;
+> +    hint->location.offset = pss->page;
+> +    hint->valid = true;
+> +}
+> +
+>  /*
+>   * Send an urgent host page specified by `pss'.  Need to be called with
+>   * bitmap_mutex held.
+> @@ -2084,6 +2136,7 @@ out:
+>      /* For urgent requests, flush immediately if sent */
+>      if (sent) {
+>          qemu_fflush(pss->pss_channel);
+> +        ram_page_hint_update(rs, pss);
+>      }
+>      return ret;
+>  }
+> @@ -2171,6 +2224,30 @@ static int ram_save_host_page(RAMState *rs, PageSearchStatus *pss)
+>      return (res < 0 ? res : pages);
+>  }
+>  
+> +static bool ram_page_hint_valid(RAMState *rs)
+> +{
+> +    /* There's only page hint during postcopy preempt mode */
+> +    if (!postcopy_preempt_active()) {
+> +        return false;
+> +    }
+> +
+> +    return rs->page_hint.valid;
+> +}
+> +
+> +static void ram_page_hint_collect(RAMState *rs, RAMBlock **block,
+> +                                  unsigned long *page)
+> +{
+> +    PageLocationHint *hint = &rs->page_hint;
+> +
+> +    assert(hint->valid);
+> +
+> +    *block = hint->location.block;
+> +    *page = hint->location.offset;
+> +
+> +    /* Mark the hint consumed */
+> +    hint->valid = false;
+> +}
+> +
+>  /**
+>   * ram_find_and_save_block: finds a dirty page and sends it to f
+>   *
+> @@ -2187,6 +2264,8 @@ static int ram_save_host_page(RAMState *rs, PageSearchStatus *pss)
+>  static int ram_find_and_save_block(RAMState *rs)
+>  {
+>      PageSearchStatus *pss = &rs->pss[RAM_CHANNEL_PRECOPY];
+> +    unsigned long next_page;
+> +    RAMBlock *next_block;
+>      int pages = 0;
+>  
+>      /* No dirty page as there is zero RAM */
+> @@ -2206,7 +2285,14 @@ static int ram_find_and_save_block(RAMState *rs)
+>          rs->last_page = 0;
+>      }
+>  
+> -    pss_init(pss, rs->last_seen_block, rs->last_page);
+> +    if (ram_page_hint_valid(rs)) {
+> +        ram_page_hint_collect(rs, &next_block, &next_page);
+> +    } else {
+> +        next_block = rs->last_seen_block;
+> +        next_page = rs->last_page;
+> +    }
+> +
+> +    pss_init(pss, next_block, next_page);
+>  
+>      while (true){
+>          if (!get_queued_page(rs, pss)) {
+> @@ -2339,6 +2425,13 @@ static void ram_save_cleanup(void *opaque)
+>      ram_state_cleanup(rsp);
+>  }
+>  
+> +static void ram_page_hint_reset(PageLocationHint *hint)
+> +{
+> +    hint->location.block = NULL;
+> +    hint->location.offset = 0;
+> +    hint->valid = false;
+> +}
+> +
+>  static void ram_state_reset(RAMState *rs)
+>  {
+>      int i;
+> @@ -2351,6 +2444,8 @@ static void ram_state_reset(RAMState *rs)
+>      rs->last_page = 0;
+>      rs->last_version = ram_list.version;
+>      rs->xbzrle_started = false;
+> +
+> +    ram_page_hint_reset(&rs->page_hint);
+>  }
+>  
+>  #define MAX_WAIT 50 /* ms, half buffered_file limit */
+> -- 
+> 2.48.1
+> 
 
-On Mon, 28 Apr 2025, Philippe Mathieu-Daudé wrote:
-> On 25/4/25 22:36, Pierrick Bouvier wrote:
->> On 4/25/25 13:29, BALATON Zoltan wrote:
->>> On Fri, 25 Apr 2025, Pierrick Bouvier wrote:
->>>> On 4/25/25 02:43, BALATON Zoltan wrote:
->>>>> On Thu, 24 Apr 2025, Pierrick Bouvier wrote:
->>>>>> On 4/24/25 17:16, BALATON Zoltan wrote:
->>>>>>> On Fri, 25 Apr 2025, Philippe Mathieu-Daudé wrote:
->>>>>>>> A machine defined with the DEFINE_MACHINE_ARM_AARCH64() macro
->>>>>>>> will be available on qemu-system-arm and qemu-system-aarch64
->>>>>>>> binaries.
->>>>>>>> 
->>>>>>>> One defined with DEFINE_MACHINE_AARCH64() will only be available
->>>>>>>> in the qemu-system-aarch64 binary.
->>>>>>>> 
->>>>>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>>>>> ---
->>>>>>>> include/hw/arm/machines-qom.h | 13 +++++++++++++
->>>>>>>> target/arm/machine.c          | 12 ++++++++++++
->>>>>>>> 2 files changed, 25 insertions(+)
->>>>>>>> 
->>>>>>>> diff --git a/include/hw/arm/machines-qom.h
->>>>>>>> b/include/hw/arm/machines-qom.h
->>>>>>>> index a17225f5f92..6277ee986d9 100644
->>>>>>>> --- a/include/hw/arm/machines-qom.h
->>>>>>>> +++ b/include/hw/arm/machines-qom.h
->>>>>>>> @@ -9,10 +9,23 @@
->>>>>>>> #ifndef HW_ARM_MACHINES_QOM_H
->>>>>>>> #define HW_ARM_MACHINES_QOM_H
->>>>>>>> 
->>>>>>>> +#include "hw/boards.h"
->>>>>>>> +
->>>>>>>> #define TYPE_TARGET_ARM_MACHINE \
->>>>>>>>            "target-info-arm-machine"
->>>>>>>> 
->>>>>>>> #define TYPE_TARGET_AARCH64_MACHINE \
->>>>>>>>            "target-info-aarch64-machine"
->>>>>>>> 
->>>>>>>> +extern InterfaceInfo arm_aarch64_machine_interfaces[];
->>>>>>>> +extern InterfaceInfo aarch64_machine_interfaces[];
->>>>>>>> +
->>>>>>>> +#define DEFINE_MACHINE_ARM_AARCH64(namestr, machine_initfn) \
->>>>>>>> +        DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, \
->>>>>>>> + 
->>>>>>>> arm_aarch64_machine_interfaces)
->>>>>>>> +
->>>>>>>> +#define DEFINE_MACHINE_AARCH64(namestr, machine_initfn) \
->>>>>>>> +        DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, \
->>>>>>>> +                                       aarch64_machine_interfaces)
->>>>>>>> +
->>>>>>>> #endif
->>>>>>>> diff --git a/target/arm/machine.c b/target/arm/machine.c
->>>>>>>> index 978249fb71b..193c7a9cff0 100644
->>>>>>>> --- a/target/arm/machine.c
->>>>>>>> +++ b/target/arm/machine.c
->>>>>>>> @@ -8,6 +8,7 @@
->>>>>>>> #include "cpu-features.h"
->>>>>>>> #include "migration/cpu.h"
->>>>>>>> #include "target/arm/gtimer.h"
->>>>>>>> +#include "hw/arm/machines-qom.h"
->>>>>>>> 
->>>>>>>> static bool vfp_needed(void *opaque)
->>>>>>>> {
->>>>>>>> @@ -1111,3 +1112,14 @@ const VMStateDescription vmstate_arm_cpu = {
->>>>>>>>            NULL
->>>>>>>>        }
->>>>>>>> };
->>>>>>>> +
->>>>>>>> +InterfaceInfo arm_aarch64_machine_interfaces[] = {
->>>>>>>> +    { TYPE_TARGET_ARM_MACHINE },
->>>>>>>> +    { TYPE_TARGET_AARCH64_MACHINE },
->>>>>>>> +    { }
->>>>>>>> +};
->>>>>>>> +
->>>>>>>> +InterfaceInfo aarch64_machine_interfaces[] = {
->>>>>>>> +    { TYPE_TARGET_AARCH64_MACHINE },
->>>>>>>> +    { }
->>>>>>>> +};
->>>>>>> 
->>>>>>> Why do you need these? If you define DEFINE_MACHINE_WITH_INTERFACES as
->>>>>>> OBJECT_DEFINE_TYPE_WITH_INTERFACES then you can write:
->>>>>>> 
->>>>>> 
->>>>>> This was requested in v4 by Richard to remove anonymous array 
->>>>>> duplication
->>>>>> in
->>>>>> .data.
->>>>>> 
->>>>>>> DEFINE_MACHINE_WITH_INTERFACES(name, initfn, { TYPE_TARGET_ARM_MACHINE 
->>>>>>> },
->>>>>>>         { TYPE_TARGET_AARCH64_MACHINE }, { })
->>>>>>> 
->>>>>>> and no more macros needed. Ideally those places that are now blown up
->>>>>>> should use DEFINE_MACHINE too. Maybe they don't yet because the parent
->>>>>>> type  is hardcoded so we should really have
->>>>>>> 
->>>>>> 
->>>>>> Not sure what you mean by "no more macros needed".
->>>>> 
->>>>> No other specialised macros needed for each machine type other than
->>>>> DEFINE_MACHINE_WITH_INTERFACES or DEFINE_MACHINE_EXTENDED. So I 
->>>>> suggested
->>>>> to keep DEFINE_MACHINE by making it more general so it can cover the new
->>>>> uses instead of bringing back the boiler plate and losing the clarity
->>>>> hinding these behind the macros.
->>>>> 
->>>> 
->>>> This is exactly what we have in this series.
->>>> Patch 7 introduces DEFINE_MACHINE_WITH_INTERFACES.
->>>> I guess Philippe chose a new name to avoid modifying all existing
->>>> DEFINE_MACHINE, and I think it's understandable, as we want those changes 
->>>> to
->>>> impact hw/arm only first. That said, it would be very easy to 
->>>> refactor/modify
->>>> later, so it's not a big deal.
->>>> 
->>>> This patch introduces DEFINE_MACHINE_ARM_AARCH64 and 
->>>> DEFINE_MACHINE_AARCH64.
->>>> 
->>>> Is the problem with those specialized DEFINE_MACHINE_{ARM, AARCH64}
->>>> definition?
->>>> If yes, and if you prefer an explicit DEFINE_MACHINE_WITH_INTERFACES(...,
->>>> arm_aarch64_machine_interfaces), I'm sure Philippe would be open to make 
->>>> such
->>>> a change to satisfy reviews.
->>>> 
->>>> Let's just try to decide something, and move on.
->>>> 
->>>>>> arm_aarch64_machine_interfaces or aarch64_machine_interfaces are arrays
->>>>>> (defined only once), which are passed as a parameter to
->>>>>> DEFINE_MACHINE_WITH_INTERFACES, or manually set with ".interfaces =".
->>>>> 
->>>>> Look at how OBJECT_DEFINE_TYPE_WITH_INTERFACES is defined.
->>>>> 
->>>> 
->>>> This macro is not used for any machine definition so far, and 
->>>> DEFINE_MACHINE
->>>> is the "standard" macro used, at least the one most commonly used in the
->>>> codebase. So it makes sense to simply expand the latter.
->>> 
->>> I was referring to that as an example how a DEFINE_MACHINE_WITH_INTERFACES
->>> should work not suggesting to use OBJECT_DEFINE_TYPE_WITH_INTERFACES.
->>> 
->>>>>>> DEFINE_MACHINE_EXTENDED(name, parent, initfn, interfaces...)
->>>>>>> 
->>>>>>> and remove more bolier plate that way?
->>>>>>> 
->>>>>> 
->>>>>> Could you can share a concrete example of what you expect, with the new
->>>>>> macros to add, and how to use them for a given board?
->>>>> 
->>>>> I tried to do that in this message you replied to.
->>>>> 
->>>> 
->>>> If you refer to "DEFINE_MACHINE_EXTENDED(name, parent, initfn,
->>>> interfaces...)", this is almost exactly what patch 7 is introducing with
->>>> DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, ifaces).
->>> 
->>> The difference is that OBJECT_DEFINE_TYPE_WITH_INTERFACES takes a list of
->>> interfaces and defines the array itself and you pass the array which is
->>> limiting as you then need to define a lot of arrays to pass to your macro
->>> instead of only passing the elements and let it define tha array.
->>> 
->>> I just want to see instead of
->>> 
->>> static const TypeInfo machine_types[] = {
->>> ...lots of boiler plate code here
->>> };
->>> 
->>> something like
->>> 
->>> DEFINE_MACHINE_EXTENDED(machine1, TYPE_WHATEVER_MACHINE, {INTERFACE1}, 
->>> {INTERFACE2}, {})
->>> DEFINE_MACHINE_EXTENDED(machine2, TYPE_OTHER_MACHINE, {INTERFACE1}, 
->>> {INTERFACE3}, {})
->>> DEFINE_MACHINE_EXTENDED(machine3, TYPE_THIRD_MACHINE, {INTERFACE1}, {})
->>> 
->> 
->> Ok, I understand better.
->> 
->> It was my point as well on v4, that introducing those symbols is less 
->> readable and less scalable, for a negligible benefit in terms of code size, 
->> which was the primary concern.
->> We can always reconsider this later, especially when adding another 
->> architecture to single binary, it's not a problem and something set in 
->> stone.
->> 
->> Would you be ok if we proceed with the current version, knowing those 
->> limitations, for now?
->
-> If Zoltan disagrees, we need Richard to agree to go back on v4.
->
-> Keep in mind that what we are trying to achieve is quite more complex
-> than code style or .rodata savings, besides we eventually want to have
-> dynamic machines & DSL.
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 
-Since you are touching the lines using DEFINE_MACHINE it's a good 
-opportunity to change the macro to be more general to be able to keep 
-using it instead of replacing it with the boiler plate it's supposed to 
-hide. Adding one or two more parameters to the macro is not a big change 
-so I don't see why you don't want to do it. This could be addressed later 
-to revert to use the macro again but in practice it will not be addressed 
-because everybody will be busy doing other things and doing that now would 
-prevent some churn. I too, don't like doing unrelated clean up which is 
-not the main goal, but if it's not much more work then it's not 
-unreasonable to do it. I only oppose to that if it's a lot of work so I 
-would not ask such change but what I asked is not unrelated and quite 
-simple change.
-
-That said, I can't stop you so if you still don't want to do it now then 
-you can move on. I don't care that much as long as you stay within hw/arm, 
-but will raise my concern again when you submit a similar patch that 
-touches parts I care more about. If others don't think it's a problem and 
-not bothered by the boiler plate code then it's not so important but 
-otherwise I think I have a valid point. I remember when I started to get 
-to know QEMU it was quite difficult to wade through all the QOM boiler 
-plate just to see what is related to the actual functionality. These 
-macros help to make code more readable and accessible for new people.
-
-Regards,
-BALATON Zoltan
---3866299591-523160171-1745836268=:12513--
 
