@@ -4,85 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4649C369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 18:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05F72C369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 18:27:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9T0L-0001PQ-N1; Mon, 28 Apr 2025 14:14:57 -0400
+	id 1u9TBL-00032O-OQ; Mon, 28 Apr 2025 14:26:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1u9T0K-0001OE-9c
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 14:14:56 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1u9T0F-0003tX-0r
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 14:14:52 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5e5deb6482cso10762079a12.1
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 11:14:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745864089; x=1746468889; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AjKNiikJyBmirsKy6pyuiW7Mn9TwxcAn5BT4pMvqRA8=;
- b=hfM63/KKPtNkNOUiO1KY5u10jxZB/AerTwRS583fTZLsMVX6VULx8KkRN1KQLhyPJY
- Wi+UYX2fQdErwqlbeNwTjdTmiV2XeFNU61j7KMcp974exCk89Pom0NAVTUV97AUjGgTA
- BjR3wueg/O2SOoYx+3Knxd8uyAOQ8mudQMuEz9N4pwlnp//9m99m0gpzKlt9gcElbKm1
- /ihQWzQfVDZqNwxy6hR+CzM0YLcc1Z5k4GEDzMnVsZi0ty03DxtZkYAv1IiL/RhWM2MI
- icWc3IM0ql4MLQD1NThYrZVKnv3dW3Tf+OuPrLx1HehGNCKLzhrDZHuU9crungJcaBTJ
- FJBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745864089; x=1746468889;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AjKNiikJyBmirsKy6pyuiW7Mn9TwxcAn5BT4pMvqRA8=;
- b=gRmz/Ep4rndUA+7PhTOPIAZJWXBF77s/v5EObOqiw8TqL1uH3WlDy4MsEHSlPfMmOr
- +pwJ1TRRIEbirc/RiujudduSqY7lqEZtArpXJhwDoYKPFeXv6Eu7d7T2z7u7hobgAmPX
- Oix0KyVGLq5CBAFWO8bEh2NtPTqaabTrLLkGMHvXy33ffYYt+uPyoRT0Sy+SDuyINMUY
- fGKRS/HuAXWWMSkzYx+kZs3rTtSqtICnnvVvS5SvL1ZcMAI90ybfiYmz9Em/HsZ1clVO
- GjK+2ezVGViPMEIm+qAH5NsSP+b8o0Rw33SM7nQlQSRKpCnZIOsT5YzlX+mthiFItJ1l
- lYiQ==
-X-Gm-Message-State: AOJu0YxrGZQE0VEipyMKfJrXmUt/2aixAVOPxNNjzzlNJRVdhKnXne9u
- 9dLvJTHx5gBBicytXSXUpsKTxBd6hz43XAZXb/7S2sfpQ7cLeST9U9lnMUK8BPEuv9keCeqfuhE
- as7RhWpkwi+NHKTedD8q+vI/E+ME=
-X-Gm-Gg: ASbGnctJkSutInoqjETo0f/78MOGW4oNEikbWXKpq+gsewD/gOoEFNQz7RlEcymAuAV
- HrlYLDomyEqb4181SfNlNu36XgmFiR104DrIKsSRxO+0QN8MxczaP0G0impSlM1F9mrhNkFLDZe
- LMAbKrXQSgQmHiI/aRz+W1/ismNRHk6q0=
-X-Google-Smtp-Source: AGHT+IGLveNjqXkNXWtKi1nj3N6hQkoajrBtS6IGYKS12jwcgzD+uVXjeUIU+KrSdd0koiXMP9h7iliHXfaBYRoK27k=
-X-Received: by 2002:a05:6402:354a:b0:5f7:f4ff:6267 with SMTP id
- 4fb4d7f45d1cf-5f83930aeaamr162935a12.17.1745864088520; Mon, 28 Apr 2025
- 11:14:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1u9TBJ-00031v-5I
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 14:26:17 -0400
+Received: from rev.ng ([94.130.142.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1u9TBF-0006AV-9z
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 14:26:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=wFezQOD2yscSntukfZyFluygScON3XlQ63DIYS6cFHE=; b=L2D335qpVTXbSdv
+ 3vgvpukHTFaMxKniVf2CfcL+Vuw4AiwCak15u04HIIgzmc/ilEpWXgNlSc9IaylDnH6+pSo9oqa6T
+ CaW6xwynT8JPtRSD95XdsJutpIgazylQlyeeDB9GDZUP5QnAmadGl4ZMjZhuTyC1YRIXaNByAz/CJ
+ 2s=;
+Date: Mon, 28 Apr 2025 20:27:17 +0200
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, 
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v3 09/13] accel/tcg: Include 'accel/tcg/getpc.h' in
+ 'exec/helper-proto'
+Message-ID: <ll6avykvfgf7yn27pwe7qvquq7udalqwzfaf6xdxxh7rfmh7q4@kwscgnbg5hb2>
+References: <20250424202412.91612-1-philmd@linaro.org>
+ <20250424202412.91612-10-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
-In-Reply-To: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 28 Apr 2025 14:14:34 -0400
-X-Gm-Features: ATxdqUFrgRvrp6WWbL6mBi8UrJj2kn1Q1TRwqOvUqEiJMVrZ6MCcsNHsVqe7IXY
-Message-ID: <CAJSP0QUXuAUxMLOz5Zw1zwk0zwBRwuFM=qCufwf0TLr+w1YXvQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, stefanha@redhat.com, 
- Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
- berrange@redhat.com, 
- peter.maydell@linaro.org, thuth@redhat.com, jsnow@redhat.com, 
- philmd@linaro.org, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x530.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250424202412.91612-10-philmd@linaro.org>
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,42 +64,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 24, 2025 at 2:35=E2=80=AFPM Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
-> Feedback
-> =3D=3D=3D=3D=3D=3D=3D=3D
->
-> The goal of this series is to be spark a conversation around following to=
-pics:
->
-> - Would you be open to such an approach? (expose all code, and restrict c=
-ommands
->   registered at runtime only for specific targets)
->
-> - Are there unexpected consequences for libvirt or other consumers to exp=
-ose
->   more definitions than what we have now?
->
-> - Would you recommend another approach instead? I experimented with havin=
-g per
->   target generated files, but we still need to expose quite a lot in head=
-ers, so
->   my opinion is that it's much more complicated for zero benefit. As well=
-, the
->   code size impact is more than negligible, so the simpler, the better.
+On 24/04/25, Philippe Mathieu-Daudé wrote:
+> Most files including "exec/helper-proto.h" call GETPC().
+> Include it there (in the common part) instead of the
+> unspecific "exec/exec-all.h" header.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  include/exec/exec-all.h            | 1 -
+>  include/exec/helper-proto-common.h | 2 ++
+>  accel/tcg/translate-all.c          | 1 +
+>  target/avr/helper.c                | 1 -
+>  4 files changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+> index 4c5ad98c6a9..816274bf905 100644
+> --- a/include/exec/exec-all.h
+> +++ b/include/exec/exec-all.h
+> @@ -26,7 +26,6 @@
+>  #include "exec/vaddr.h"
+>  
+>  #if defined(CONFIG_TCG)
+> -#include "accel/tcg/getpc.h"
+>  
+>  /**
+>   * probe_access:
+> diff --git a/include/exec/helper-proto-common.h b/include/exec/helper-proto-common.h
+> index 16782ef46c8..76e6c25becb 100644
+> --- a/include/exec/helper-proto-common.h
+> +++ b/include/exec/helper-proto-common.h
+> @@ -13,4 +13,6 @@
+>  #include "exec/helper-proto.h.inc"
+>  #undef  HELPER_H
+>  
+> +#include "accel/tcg/getpc.h"
+> +
 
-Do you anticipate that Linux distributions will change how they
-package QEMU? For example, should they ship a single qemu-all package
-in addition to or as a replacement for the typical model today where
-qemu-system-aarch64, qemu-system-x86_64, etc are shipped as separate
-packages?
+Non-TCG builds will fail since exec/helper-proto.h is sometimes
+included outside CONFIG_TCG (e.g. target/arm/debug_helper.c).
 
-It would be nice to hear from packager maintainers in this discussion
-so that there is a consensus between developers and package
-maintainers.
-
-Stefan
+-- 
+Anton Johansson
+rev.ng Labs Srl.
 
