@@ -4,73 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3533C369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 12:42:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39615C369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 12:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9NnA-0007NA-5b; Mon, 28 Apr 2025 08:41:10 -0400
+	id 1u9NtT-0002eH-Pv; Mon, 28 Apr 2025 08:47:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1u9Nmf-0007AF-PN
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:40:31 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ id 1u9NtR-0002dy-Aj
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:47:29 -0400
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1u9Nma-00014y-TQ
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:40:26 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-6febbd3b75cso44338927b3.0
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 05:40:21 -0700 (PDT)
+ id 1u9NtN-0001yr-Pg
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 08:47:28 -0400
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-e733a6ff491so929730276.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 05:47:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745844021; x=1746448821; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745844442; x=1746449242; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pirX8cpyg6mVMtG1862TELtx0K1OBQ8PpeZW5fiTkRk=;
- b=LV/pe8JfezP8XvgB19bx5nKVL8GrNNAQYRS9Y3MrbzYjUowjgABF9H9nd1rXsPAxhM
- qRWNYNBUV9W7EutpnDQ1VPDVeYpJ9qo1EF2qR0TkOoJgfgeUAr36BEhl8MF6OY6Aqmho
- BU4PpWjIdNmS9VoXTXbecUBX+Mdtf4OFkE/Oh1Tpv6SlfFP5o2O3rjtFRot09yDVsaqb
- eDkM0fo1hxCDsyFhn5o16E/QCprcxBSa56c0AL3m7exxj8tJUMEDy+jRuVfJTSgFzrgd
- pANr8q75XMyAhj3DaCgURtMYVh9pBKkAaOwXcpHDyBPNu43bknXsLrvtqd6S/n6ZPS2L
- 7HGw==
+ bh=jgkeaH9Wvr3SdTJnXpmBgXX3ovTBm5XK+7al14CaMzA=;
+ b=XP7Jy7AmVK9fqQg/B5tNqsNmHmFyJc9mxiDtRhhdI0T8b00CSZhrO2WHPCntmtmg3M
+ DUHFd0HxOxZoz0Bnf04PtEhffWIEnD7hCTCAjd1rtDnIwRMRR+nCWwUPEJ7YC+j1lTED
+ 5xtX/HfwybvHjPWIcasY8cPY9yi1LapfIJ+wLnhPC3R10GOA4Uxd9fYItYcvP/A9C3uc
+ rQ6ESRaxEXtSEtY+iAFN8mNjewQKAzWiUZeb4uSvQsObaq9mESZ5dc4WpUz54G2Z+yXn
+ vxI5ztDjSggW0vlwAshOAH0nImjcfs+yDffVf4l3N/nQnEKap4mPGStVck23yzciRldU
+ FqLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745844021; x=1746448821;
+ d=1e100.net; s=20230601; t=1745844442; x=1746449242;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pirX8cpyg6mVMtG1862TELtx0K1OBQ8PpeZW5fiTkRk=;
- b=Kbw1CXUxeZGyShaUo9OCgnyO4O5AhEbAwQZNsJSR0QcM7VtTMQipLFfWoaO2LXnS0h
- 0uxcJNdCWJsJMzGI5vbH1HHvfPzWVbnUK11a4mmtgJPSI55cvhda6YRLNs3rWhkuKoWL
- SWy6OuALN2+5XAGqzOcrNE0Mzwk4iIPZ4Rf0uQuBg7HHv+lSKlxVJOoVIFL6TKzjvH6O
- 62jsjU8NYhVqXnIWYNLLcYfHjNEL7uDjhxpNHITP6X1mBf5M03NPzz9Ulf1aao958LZa
- hJcyo/vi3jFZNfpBtbjG1OHU3BT1N2DOcGr1+SfidplFRFjimhkBvVyXPOtj9TMtqBlR
- hXlg==
-X-Gm-Message-State: AOJu0YyXuTNAmfyngUGUkULBIV7swNPM5Au6EGiSi70N9uJCec9PobIR
- vWrZ72g4kCWAru6xwfIl5YUhF/p9p0G3Mnnixq5MBV9wTjA4X1CJgyaGKh7hX5GjenwB0yFVUHJ
- OLdWkx7k+YhCkjGhCRWC3rdhqUEgnKjNBwkyeQA==
-X-Gm-Gg: ASbGncuwro/bzkgD2WcTtWt4DWGTMNujMdVScHoG23Wx2gnPNaHpg3Y92UYRThFZPt7
- eYCmD/7sAYDeemxMesS54+9pT0FWf9Gqs/ziEPeLMFekJ5SmY9rxc+a2OpUMF9Qj1KIdIAUZaea
- /PtjP5psz01gSLkfb9z4EnFg8=
-X-Google-Smtp-Source: AGHT+IF/HoMfSAzVy4Q8umhuBjc35j9vJuCCbncxnt6uREJ59g5AC+rPUfYRIp/cekpwmffLqGKCoDquA8ArGOwKjcU=
-X-Received: by 2002:a05:690c:f8a:b0:703:b92c:7170 with SMTP id
- 00721157ae682-7085f16b2d9mr122474177b3.12.1745844020890; Mon, 28 Apr 2025
- 05:40:20 -0700 (PDT)
+ bh=jgkeaH9Wvr3SdTJnXpmBgXX3ovTBm5XK+7al14CaMzA=;
+ b=MdITkhjZDqFXpjxecGwUvwn2P9QKE1EMqdokZ0MDZnU3zbQkBWFNLtuVJ2YZRCdUN0
+ cyqR2Qtcc2s1HxDb3MASLCnGSbudiAyuT9BwV9VBGl90JwEfF+uf9m2bvR4+ul5gRiZo
+ 17qSJH2cIFWwGzMaeM/a+jEFTGl8PvUIjsruq9Sk7Ltvb5TFPy6NOi4rqaxoqODwLhrb
+ PFlDGcTNqpTt8/nrFZlfRghQ3bsZWwZdcEgT6UQNd6byBTVkZsiU45zC3+Ol3DUz4Ki/
+ CwDrWNKSeNuJvn+FopoNBsRTUFn4K7LLlhSNxLIIIyn9J+Ct1W132fPTFuuWA5Mr2PvM
+ vxEQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXibuK0EJgx3YYv9CuwezKfjKEaeijpSqVnqb/nAcH2zR53qUfCPavRulzzYBhrmtOa1l9qZbApFvkj@nongnu.org
+X-Gm-Message-State: AOJu0Yy776J5IPj3VBwBuevYejlynsBWfW1DEEYKe567THcf6ZED2L0f
+ ApQ2TkFap+0huAWOzYVo45f7erlEmuERsAzRK2Jmy7YNM1nBDP30SGh8nDoS3W+sv5OCRogt7ik
+ Bv3OAKXRD1ectOIZWmSyARfK7UAW6DJEx4ArS8PPt9BeTe3Fk
+X-Gm-Gg: ASbGncv+SES5jLrtYVTGCbnm/Z8zPKYFwaHv4EEdt31fEaeullnYNT8Pmqtz/SK5qf7
+ 7zoghHisQpwnJEW0eYIU7OGtiolVwyxi5d18Yz9zfq8M9+WZWK07NDttLCHNQx10+v5y+kCjtEP
+ on+thFHRqjhzZOyZMNDJ2jaMk=
+X-Google-Smtp-Source: AGHT+IEZr8FTbNBcqOHw9aEIXQsd1Ik1IWRkAzwblSvK1e/PMjsHhZX0kmqNYU6rd6jKXLF4NWeuqHNVZiTdxxyO5PU=
+X-Received: by 2002:a05:6902:20ca:b0:e73:1812:88ec with SMTP id
+ 3f1490d57ef6-e732336f56cmr11563214276.11.1745844442169; Mon, 28 Apr 2025
+ 05:47:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <tencent_6CC3332A93DC02BE2030AB5BC0E63B10B808@qq.com>
-In-Reply-To: <tencent_6CC3332A93DC02BE2030AB5BC0E63B10B808@qq.com>
+References: <20250402135402.14526-1-zhangckid@gmail.com>
+ <d39ed054-d99b-46a8-afc8-1a2981d919e1@linaro.org>
+ <CAK3tnvLqGLzQffAi=dk_VzXgH_k_r_z2xNTN3tVE-G+xjpPWcw@mail.gmail.com>
+ <CAK3tnvJMOe+rtjnwbfQ8nuZyQAtGMPKjgXBVo2RpkmKNtzAXpQ@mail.gmail.com>
+In-Reply-To: <CAK3tnvJMOe+rtjnwbfQ8nuZyQAtGMPKjgXBVo2RpkmKNtzAXpQ@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 28 Apr 2025 13:40:09 +0100
-X-Gm-Features: ATxdqUHfsmhsjODmLNyCijkZR0EhR3kNVWgbRpnaDsvyJtxpTzuIO40OBOKSAa8
-Message-ID: <CAFEAcA_kekj7L9a1TwQ__WCyhgFd8P+32pB+dQGO570tEoNZMw@mail.gmail.com>
-Subject: Re: Whether the qemu mps2-an385 model support getchar?
-To: =?UTF-8?B?5bCP6ams6am5?= <1353455048@qq.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
+Date: Mon, 28 Apr 2025 13:47:10 +0100
+X-Gm-Features: ATxdqUHMhAv_DH3jeMjZ9-CX81MkeGQd34Ve_bPeyW3o0dUNGPxTfV4ygvCvqdY
+Message-ID: <CAFEAcA8i60Ydeu+rpVYdRbDkMRaQ5EPmzAbBNsMHWq9Lr3FRaA@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/virt.c: Fix wrong default cpu type in AARCH64
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,21 +98,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 23 Apr 2025 at 14:06, =E5=B0=8F=E9=A9=AC=E9=A9=B9 <1353455048@qq.co=
-m> wrote:
+On Thu, 24 Apr 2025 at 09:57, Zhang Chen <zhangckid@gmail.com> wrote:
 >
-> When I use mps2-an385 model on qemu, I found that it seems not support ge=
-tchar. I used the FreeRTOS official demo(mps2-an385-GCC-QEMU), then I tried=
- to use UART  to receive input strings from QEMU terminal, so I tried to us=
-e getchar() function. However, some errors occurred in QEMU as shown below:
-> qemu: fatal: Lockup: can't escalate 3 to HardFault (current priority -1)
-> Is it means there are something wrong in the emulated board? And how to s=
-olve the problem?
+> On Thu, Apr 3, 2025 at 10:23=E2=80=AFAM Zhang Chen <zhangckid@gmail.com> =
+wrote:
+> >
+> > On Thu, Apr 3, 2025 at 2:43=E2=80=AFAM Richard Henderson
+> > <richard.henderson@linaro.org> wrote:
+> > >
+> > > On 4/2/25 06:54, Zhang Chen wrote:
+> > > > Because of the CONFIG_TCG auto enabled, the cpu type "cortex-a15"
+> > > > is mistakenly set to the default AARCH64 target.
+> > >
+> > > This is the correct backward compatible setting.
+> > > In essence, it means that you *must* supply a -cpu argument.
+> > >
+> > >
+> >
+> > If the "-cpu" is required, the VM should not be started without this ar=
+gument.
+> > If yes, I will skip this patch and submit another one to make QEMU
+> > refuse to start without this parameter.
+> >
+>
+> Ping... and let me explain this status, it is not just for the default va=
+lue.
+> 1. The cpu type "cortex-a15" is not the correct backward compatible
+> setting for AARCH64 target.
+> The ARM cortex-a15 is a 32 bit CPU based on ARMv7-A architecture. It
+> can not boot for AARCH64 target.
+> For example, the Apple M silicon can not boot with the default -cpu value=
+.
 
-The UARTs on that board work fine. The error message means your
-guest code took a fatal exception (i.e. it crashed). You should
-start by debugging to find out why the crash happened, which
-might or might not be related to the UARTs specifically.
+'qemu-system-aarch64' doesn't mean "I want an AArch64 CPU", it
+just means that you can select AArch64 machines and CPUs. Almost
+all command lines that work with qemu-system-arm also do the same
+thing if run with qemu-system-aarch64. So in this case,
+"qemu-system-aarch64 -M virt" does the same as "qemu-system-arm -M virt",
+including the CPU type selected.
+
+The Cortex-A15 is now very rarely what anybody wants, but we
+keep it this way to avoid breaking existing users' command lines.
+(It works fine if you pass it a 32-bit guest kernel.)
 
 thanks
 -- PMM
