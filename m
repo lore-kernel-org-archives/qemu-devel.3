@@ -4,187 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CC02C36005
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 08:57:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08E08C36005
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 08:57:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9KI6-0006iy-Kf; Mon, 28 Apr 2025 04:56:42 -0400
+	id 1u9KIV-00074k-7k; Mon, 28 Apr 2025 04:57:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1u9KI3-0006iW-EA
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 04:56:39 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1u9KHx-0006ii-89
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 04:56:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745830593; x=1777366593;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=OVDbwYg9Tdgo2ZKHAhJyAr8owrP5XZNhZ0SCGvI8C+c=;
- b=gX44oOnMlkn0E1D9zkyREnZXmCzwEyP0iQZTdU9+8UCPvHyvyQONTm9R
- qN/eYYbLQPxYxHlE7Zy66Rw7oA21MxExiswfKXbb/G8+oQ14kU/7kSviB
- 6THm5cyNxaDZ6+03UVNMLnCLChl8ihw/txjXxFI9Y2AmrLauDoYbuvGNA
- ZzU3b7EFKAXsTpBpD5si/jK+LNyexUPi6auIw/fLZNheboBOD6xM6Yvro
- vQayYKCgrHje403U6jf1h9121Rx815nnVTWmLCPAXcic1X3808jnd9c4W
- jo1EG+NKGUxzoavSh4zAQEL5/TQKNTRDN1iB5pPXZL+VEDRWLpGMug/+x w==;
-X-CSE-ConnectionGUID: jrwsuitYTSCxcA01g+7Rrw==
-X-CSE-MsgGUID: VigVEIp+SIujT5wQ7nRdMw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11416"; a="57608579"
-X-IronPort-AV: E=Sophos;i="6.15,245,1739865600"; d="scan'208";a="57608579"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2025 01:56:26 -0700
-X-CSE-ConnectionGUID: t/cXXFqLSpqjuMdHhVWIFw==
-X-CSE-MsgGUID: UPtis2/SQaKbQZwWhsR6QA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,245,1739865600"; d="scan'208";a="133978141"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2025 01:56:26 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Mon, 28 Apr 2025 01:56:25 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14 via Frontend Transport; Mon, 28 Apr 2025 01:56:25 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.40) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Mon, 28 Apr 2025 01:56:23 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rNRjHrPwuK+XblEexdsG2iDTLMcYTgETfF61TPEUN0NYivGSAEEbi809uhZh4eBkmzNl1+slmFgldWqCy7CVPhdrRAn7VMRwkXjO31BrRpcnmCvvqZKsGwORCtw9AWZqZihhcAhAT+nd568mQ9s74bKgQvIeCdUhUhWw2RDVHw3t9J5BT0tk8H7ek0RHgNyzs1a1uXk2khKnbyZsjCkFBaeqjRHP+xUjZOxdse5ObQibHTq1tIkvxtZtLF/cv6FVBda2phC7QuZp79Hnw6h7aKka6OaxwVMMqfuif6yiX1EyjsRRH9U2akqLRNZb4ghJvcn4YrYhfoXd1joWHgP/Cw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SxUXhKut3c9Bft1wVuG639u9U8lw4TxtJR+1B24yBPo=;
- b=LsvmWihUZaPxt2P26sNP8EmJgq9ZKAZVo55ueAO/c98WXQSfojiErSC8Hk1V+7vHRBi/eXQo5fFdXsfvUK+apDoTnGmMdkzWd4WiR88Ui0UAzf4YytY6urZNSbVL24jbm4w8N/uIDe7yZN45utv4WyOqUPqbzF3ulfE/yxQkR3CcnZheUXa8XGuN+UrH3hDS0IzUIsxRy4aUXqM7eO/Kt5i0M2TIDLzKcs8jFHoQATsXH0yz0aMlfru6rU+VAYL6UtiMER6kvQFVDeNI/5Ghrj6hkAImFKR+EzSJkudMPc2SjH6xC7fDGrwzdxwjtX/ISDUuZcuyX0YJDXC4PEfxWQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by MW3PR11MB4667.namprd11.prod.outlook.com (2603:10b6:303:53::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.31; Mon, 28 Apr
- 2025 08:55:53 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091%4]) with mapi id 15.20.8678.028; Mon, 28 Apr 2025
- 08:55:53 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "jasowang@redhat.com" <jasowang@redhat.com>, "Tian, Kevin"
- <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>, "peterx@redhat.com"
- <peterx@redhat.com>, "mst@redhat.com" <mst@redhat.com>
-Subject: RE: [PATCH v4 3/3] intel_iommu: Take the VTD lock when looking for
- and creating address spaces
-Thread-Topic: [PATCH v4 3/3] intel_iommu: Take the VTD lock when looking for
- and creating address spaces
-Thread-Index: AQHbt/xFnz+12v1rTEmQHzTfc+jobLO4xhPA
-Date: Mon, 28 Apr 2025 08:55:53 +0000
-Message-ID: <SJ0PR11MB67441EF218A7D9B3D9860A1892812@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20250428051235.10767-1-clement.mathieu--drif@eviden.com>
- <20250428051235.10767-4-clement.mathieu--drif@eviden.com>
-In-Reply-To: <20250428051235.10767-4-clement.mathieu--drif@eviden.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|MW3PR11MB4667:EE_
-x-ms-office365-filtering-correlation-id: 69c5b5cb-6d64-4aa6-050e-08dd86327b3d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700018;
-x-microsoft-antispam-message-info: =?us-ascii?Q?b6rPdBo4pIRCVkHhwqrVwqEA89RTfMyPA0JMtGZuXPVklPAWSPexQzYmmyun?=
- =?us-ascii?Q?H/uIKc9zsNWueH8I120VSTLvVNUC13iCqx2f2OeCPK8Z9gggCBflB6tVRuyF?=
- =?us-ascii?Q?BkC/UZCGTs45zL18ihJPAKuiE7xE23RH6uKP09Z9jaJcr0UDgCDuKQdgpsKQ?=
- =?us-ascii?Q?2ltPjVgWXXGi7V1/xu/BUWuBmDdIs3c2EEARCaRzPAKWzWJhyzsUvVWIwm60?=
- =?us-ascii?Q?rmGOYYEZUzT3jJsgh5axE8g1bh9vVwQOGL5Rr6xAnsfwvhLb18W9kEX0Rtm2?=
- =?us-ascii?Q?8h6DtFmz46ZwopxWmKZcaaIdMhzVk/4Dftz/SKSlLAvjLyn2NTgD9XppTWGi?=
- =?us-ascii?Q?jdq1lSoTOxGYP+ockEa3VcLb0c+2+qVf0h56OaLjMvmsw1EN4lOcsmXIWImH?=
- =?us-ascii?Q?gMyAzy+54N6bqUErCWHcmNJIe3T+yPmOBfuqouZm4YFoWtaXNZbGYnw/vNav?=
- =?us-ascii?Q?8Qe9v6ZSkhhAbtfx0+VLJrhDcz6LQ4NjLt08IDD+DrZiG4AV8nrSPZ6Kub2g?=
- =?us-ascii?Q?q1vDeKHCa7h0xvNhgSfLIe1rodOz/ILFqa4q8qyoO9/lSUt+Wjk/jEPylXT0?=
- =?us-ascii?Q?5Va6zGnR76nbTsl3Vz7me/bwdRpE9dnuk83LrBeHubtR1tN0ym5LbxT70Hmk?=
- =?us-ascii?Q?OwWmzq+hLWd1lS7V0VMYnT9WdqxmF4mUPLdMaEO/359LhMSnN8ojWMYpw9qN?=
- =?us-ascii?Q?r6qkk4XHxPfNAGGqK4XcRveY5kpy8+0Eeiq15NkHmsgGemoRmxsc/VkumKun?=
- =?us-ascii?Q?Pbn3UqsLGVRkGluxF2Szz2yZJowwT1VgMrzzzdUsVraBriGEYjyHzkEriK+3?=
- =?us-ascii?Q?BsxI02ezylIPqSxfWzpR+BEYa01fgDPKiIaSQ42d1KSmdCbHvbb5iL/sRVe0?=
- =?us-ascii?Q?d3sUEKHYkXKcWP3AtCA8s5zCWiIioVzjzpnjOWWd2vorl7b92EuQFH53BuL4?=
- =?us-ascii?Q?5IpsUuh+iy6mc+DNB+oCqcVkJ6iH7SaRKz6LOHZ7+/6ejPHnkYlZ0cwicB1H?=
- =?us-ascii?Q?KUshK0743sw0YPuKDfDYiXymNdSGfBeah4DmTFs1BB243345vXEPx5fgwtQI?=
- =?us-ascii?Q?qMeidqjdUHZMWxLSsATHAQMaBRfSmcPPPVRxq0GQ9duHJ1BEFFfewApksSM2?=
- =?us-ascii?Q?+Z5KOzsumj0RIrZdTN++oPh8/l2QEXGBZiHcLZpgKu3iBQch0HS0vxqp2M7O?=
- =?us-ascii?Q?1CWzcPg/x3q4WIg1IEit3Rykwl0yd2lMJVDM4EMZUkE1O5jCGegvA/sLTTj7?=
- =?us-ascii?Q?rRL9JqsGakpTOSiwg86pvSAjuiDMOH0kv6hTbj1tiUbN11r5jS0GLTJ8p/Ag?=
- =?us-ascii?Q?a/H/90qQgQvfUuNUFeeEGB21CP9q4PWnYRKuVHMh6BHHmkx0m8tTwqTcyyRf?=
- =?us-ascii?Q?KqFiNkmBv5WrFyqA4ooRLVTYoZFD6/6cDACPQQmQt/49RDtFJfgfNoI4Ffql?=
- =?us-ascii?Q?cRQaDvihOtHGCzAcYXXGhLQpN4eAe2Abd1MkLmRZeP3tMxIS/jUtswPWseSO?=
- =?us-ascii?Q?ngWKLDJgUHClpa8=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?ZSGz30Gc3Jdf69H793zD2WoTXVnkRNN62+Copw3q6vYQUmRcLW6GLOnL3XRk?=
- =?us-ascii?Q?jCwH9K6NLCtWyyKQHX6y8hKhb7kkYsLqXHefIvEvafwtTY5mScqEMDwoWsK/?=
- =?us-ascii?Q?30dpvwf1Uag9Dg59xooe0seGq2cvVxAMY8u3EYRlyLPuvARQiM1LxYxJ/kOh?=
- =?us-ascii?Q?Mci4McsyIjNsk3UBLUoXc38ftADEtRWglR5VhQU7cbgCcX2CfwXq0lB9mg+U?=
- =?us-ascii?Q?mogavXqRvjI5YU0UCeAqTfw3rq//8a8t31ITv2/9fqswFJYoq61AIKwvxqOa?=
- =?us-ascii?Q?BZnksyfT35I3SPUzhTmybTiDFXkks4qwUobupis97Naui+0mSRw+roDU9S4X?=
- =?us-ascii?Q?m1P3zTtJgcDr4OHwLhFCjk5zp7H5S+dNhRNTUJgSOlNkKaW/3Y6A7SmqL6yT?=
- =?us-ascii?Q?jyjpiu5IKEaMRiMkbsYcWSRg4jURI8YAVohz2/gNC3XIT0PwRnFCye5fDyFN?=
- =?us-ascii?Q?ORwg0R6TB4cIcMq9zzy5R+vYbieYP5pCW93LB5bB57xNoYSTca56Osmzidab?=
- =?us-ascii?Q?5TC7JyMugJ1raLZmwpPPcu83kpCoimOy4mV+IkGqnnxvMnGlrVjI1QueOWe2?=
- =?us-ascii?Q?8+PXJjrH6EjBtVJSDpi+Z91H0Z6LHQ7d8fmZoreLHH30XmaWZId9X9OE339j?=
- =?us-ascii?Q?ozjbSHZFMDqXrKcXQJqRonWyxubs3OUZ9uU8hyjJjRas1lI/9VBbwknPI5XT?=
- =?us-ascii?Q?eHVUjvzIduA0ZxZtVoRYHZB8+lbLXA2JzO7dsfWtPa4K50pRko57k7fugQHq?=
- =?us-ascii?Q?t7Np7LRP4I9Z4A57lKmGK7MRyGcQ/MAfrvWziDjVJNyK6Qz9I8fCrMIOR0Qw?=
- =?us-ascii?Q?B5diZRJHup7P96dQPg9qyRb6x/q2COXhhK3ygAr1h/erMEGup2/z8S+mN2VB?=
- =?us-ascii?Q?99HX50/Td50MvoIEaIuqOwPDUP+awMr6YU7VgMfEMTbnWI9aG20GR8vVSUsq?=
- =?us-ascii?Q?zvUslUoLIicYnbsJ8mct48EB2tTeMM/aJrmQctNwNqg1djf2yweV6wTuGxCt?=
- =?us-ascii?Q?Oyx/EarBvNJqUtPxc0/cCG0mvUj21xbZQg9U4o5TrhjcPPtdfCmTa8s102qv?=
- =?us-ascii?Q?OvC09jrYruG6GDNakrwEy47rJuf2z+c3nMTOc9P57nNTYkhykuato5U5Z1AP?=
- =?us-ascii?Q?4ES/07MPIiyvLw6lWVtw7gY6uvkm8F+L24JjHOfi+4XpyjsDEhSRYdiIc0qJ?=
- =?us-ascii?Q?YIRKbSK/ygkAkTpmBoH/YOLIfruX5GxB6W2LNLb5nFtZKzePxVADWaCBoQkZ?=
- =?us-ascii?Q?On3pzlpJZQtKPTjerjOCMKuziOTpz9vboubsttBR02j3WoNeFXDky3eP6orn?=
- =?us-ascii?Q?886icsyILcxlb1BQfeowyOL/TmVHPwSBKBgvHZ/SeyNP+ZFmuUcKFgE2TYzT?=
- =?us-ascii?Q?nWmaeNFPTW9FR9ixIOhMG9anbkHErly5GTd5rhSgN0umVznwxwLvjmsTt+ya?=
- =?us-ascii?Q?b+iXFNd5VNmSdu7q/6ie3FDOmJHryTiL+cyFkL5YM0cNJitPeA4YGgHPrZ77?=
- =?us-ascii?Q?BFp1z/E/S7z0blQGdRA/3IjecMe5KB5HUXQk37eHcQXvONQSmLgnysmsmHuZ?=
- =?us-ascii?Q?8D9Lb/diUelm9g4zhoJH1NdEhN7KPhhosc488JTP?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
+ id 1u9KIK-0006v0-Ta; Mon, 28 Apr 2025 04:56:57 -0400
+Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <mengzhuo@iscas.ac.cn>)
+ id 1u9KIB-0006kd-8D; Mon, 28 Apr 2025 04:56:51 -0400
+Received: from iscas.ac.cn (unknown [180.136.146.38])
+ by APP-01 (Coremail) with SMTP id qwCowAAHsQHAQg9olVHqDA--.21979S2;
+ Mon, 28 Apr 2025 16:56:34 +0800 (CST)
+From: Meng Zhuo <mengzhuo@iscas.ac.cn>
+To: qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Meng Zhuo <mengzhuo@iscas.ac.cn>
+Subject: [PATCH v2] target/riscv/kvm: add satp mode for host cpu
+Date: Mon, 28 Apr 2025 16:56:32 +0800
+Message-Id: <20250428085632.3102-1-mengzhuo@iscas.ac.cn>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 69c5b5cb-6d64-4aa6-050e-08dd86327b3d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Apr 2025 08:55:53.0514 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 1KSpy4JLD2ZwhPJjcr9Vwy6/ENOlqJhjkDUxo6DXAsT+r/RUP54/bxmzF6okjv+OZlOzdl4OcOFBpaNmofrPElPLGHTNM5OfFLLVgTGjzIo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW3PR11MB4667
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.11;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.492,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qwCowAAHsQHAQg9olVHqDA--.21979S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxZw4UXr18Kry8Kw15XFy3twb_yoW5WF4Upr
+ W5G398CrW3JFZrJayfJr1kXF45Jws5Kr4aka1xCr13Xan8trW5WF1vg3W7AF98GF48AF13
+ u3W0yrW7CF48tFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUkG14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+ 1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+ 6F4UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
+ CE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
+ 2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJV
+ W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc7CjxVAaw2AFwI0_
+ JF0_Jw1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67
+ AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIY
+ rxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14
+ v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8
+ JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x0JUBVbkUUU
+ UU=
+X-Originating-IP: [180.136.146.38]
+X-CM-SenderInfo: pphqw6xkxrqxpvfd2hldfou0/1tbiDAUGEmgPGOBFCQABsP
+Received-SPF: pass client-ip=159.226.251.21; envelope-from=mengzhuo@iscas.ac.cn;
+ helo=cstnet.cn
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -200,74 +77,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Clement,
+This patch adds host satp mode while kvm/host cpu satp mode is not
+set.
 
->-----Original Message-----
->From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
->Subject: [PATCH v4 3/3] intel_iommu: Take the VTD lock when looking for an=
-d
->creating address spaces
->
->vtd_find_add_as can be called by multiple threads which leads to a race
->condition on address space creation. The IOMMU lock must be taken to
->avoid such a race.
->
->Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
->---
-> hw/i386/intel_iommu.c | 28 ++++++++++++++++++++++++++--
-> 1 file changed, 26 insertions(+), 2 deletions(-)
->
->diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
->index b7855f4b87..931ac01ef0 100644
->--- a/hw/i386/intel_iommu.c
->+++ b/hw/i386/intel_iommu.c
->@@ -4203,11 +4203,15 @@ VTDAddressSpace
->*vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->         .pasid =3D pasid,
->     };
->     VTDAddressSpace *vtd_dev_as;
->+    struct vtd_as_key *new_key =3D NULL;
->     char name[128];
->
->+    vtd_iommu_lock(s);
->     vtd_dev_as =3D g_hash_table_lookup(s->vtd_address_spaces, &key);
->+    vtd_iommu_unlock(s);
->+
->     if (!vtd_dev_as) {
->-        struct vtd_as_key *new_key =3D g_malloc(sizeof(*new_key));
->+        new_key =3D g_malloc(sizeof(*new_key));
->
->         new_key->bus =3D bus;
->         new_key->devfn =3D devfn;
->@@ -4302,9 +4306,29 @@ VTDAddressSpace
->*vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
->                                             &vtd_dev_as->nodmar, 0);
->
->         vtd_switch_address_space(vtd_dev_as);
->+    }
->
->-        g_hash_table_insert(s->vtd_address_spaces, new_key, vtd_dev_as);
->+    if (new_key !=3D NULL) {
->+        VTDAddressSpace *second_vtd_dev_as;
->+
->+        /*
->+         * Take the lock again and recheck as the AS might have
->+         * been created in the meantime.
->+         */
->+        vtd_iommu_lock(s);
->+
->+        second_vtd_dev_as =3D g_hash_table_lookup(s->vtd_address_spaces, =
-&key);
->+        if (!second_vtd_dev_as) {
->+            g_hash_table_insert(s->vtd_address_spaces, new_key, vtd_dev_a=
-s);
->+        } else {
->+            vtd_dev_as =3D second_vtd_dev_as;
->+            g_free(vtd_dev_as);
->+            g_free(new_key);
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2931
+Signed-off-by: Meng Zhuo <mengzhuo@iscas.ac.cn>
+---
+ target/riscv/cpu.c         |  3 +--
+ target/riscv/cpu.h         |  1 +
+ target/riscv/kvm/kvm-cpu.c | 20 +++++++++++++++++++-
+ 3 files changed, 21 insertions(+), 3 deletions(-)
 
-We need to release memory regions under this vtd_dev_as to avoid leak.
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 2b830b3317..98f78886e6 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -434,8 +434,7 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit)
+     g_assert_not_reached();
+ }
+ 
+-static void set_satp_mode_max_supported(RISCVCPU *cpu,
+-                                        uint8_t satp_mode)
++void set_satp_mode_max_supported(RISCVCPU *cpu, uint8_t satp_mode)
+ {
+     bool rv32 = riscv_cpu_mxl(&cpu->env) == MXL_RV32;
+     const bool *valid_vm = rv32 ? valid_vm_1_10_32 : valid_vm_1_10_64;
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 167909c89b..44318d2e97 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -916,6 +916,7 @@ char *riscv_cpu_get_name(RISCVCPU *cpu);
+ 
+ void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+ void riscv_add_satp_mode_properties(Object *obj);
++void set_satp_mode_max_supported(RISCVCPU *cpu, uint8_t satp_mode);
+ bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
+ 
+ /* CSR function table */
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 5315134e08..8f465119f5 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -953,6 +953,23 @@ static void kvm_riscv_destroy_scratch_vcpu(KVMScratchCPU *scratch)
+     close(scratch->kvmfd);
+ }
+ 
++static void kvm_riscv_init_satp_mode(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
++{
++    CPURISCVState *env = &cpu->env;
++    struct kvm_one_reg reg;
++    int ret;
++    uint64_t val;
++
++    reg.id = RISCV_CONFIG_REG(env, satp_mode);
++    reg.addr = (uint64_t)&val;
++    ret = ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
++    if (ret != 0) {
++        error_report("Unable to retrieve satp from host, error %d", ret);
++    }
++
++    set_satp_mode_max_supported(cpu, val);
++}
++
+ static void kvm_riscv_init_machine_ids(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
+ {
+     CPURISCVState *env = &cpu->env;
+@@ -1212,6 +1229,7 @@ static void riscv_init_kvm_registers(Object *cpu_obj)
+     kvm_riscv_init_machine_ids(cpu, &kvmcpu);
+     kvm_riscv_init_misa_ext_mask(cpu, &kvmcpu);
+     kvm_riscv_init_multiext_cfg(cpu, &kvmcpu);
++    kvm_riscv_init_satp_mode(cpu, &kvmcpu);
+ 
+     kvm_riscv_destroy_scratch_vcpu(&kvmcpu);
+ }
+@@ -1891,7 +1909,7 @@ static bool kvm_cpu_realize(CPUState *cs, Error **errp)
+         }
+     }
+ 
+-   return true;
++    return true;
+ }
+ 
+ void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+-- 
+2.39.5
 
-Thanks
-Zhenzhong
 
