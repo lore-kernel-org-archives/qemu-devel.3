@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B438C369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 15:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E85BC369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 15:55:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9QoN-0004Q6-Jq; Mon, 28 Apr 2025 11:54:27 -0400
+	id 1u9Qoi-0004kI-NX; Mon, 28 Apr 2025 11:54:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u9QoI-0004Mc-4Y
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 11:54:22 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u9QoU-0004c4-73
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 11:54:34 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1u9QoE-0005AI-SW
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 11:54:21 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-af51596da56so4206687a12.0
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 08:54:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u9QoP-0005Cf-6q
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 11:54:33 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-225477548e1so52818115ad.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 08:54:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745855655; x=1746460455; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
+ d=linaro.org; s=google; t=1745855667; x=1746460467; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=q3aqpTyEo4Ne+b8xIfe/goV4Eq53K8pgzq5YFaS0WxY=;
- b=AnmIjwsH8pyt0f4/MMeEwlb+2Pp+x7vWfbeyZaAaDEH5VLi98TR6RIHEzV/kDozd3K
- M2DGgazrznZIQ+CHlYMt9MAY7Id+WGn30CLv4TVf+KlgclWldqqOTInBBc7PCdbwPTUT
- W2jInIJ4UiwV+M4PNCtqCQAVas2uyV6CKcrpUCGVeINAg+75SHDPg+KyIUDN364CU/ff
- gwl5HoOJDptAv3UMepcye6c6unDT7XE5DcswgX3a24kkfsb/u2jtQIX4RAk4NyKSYGYO
- YtApt2nzcDlsE7iyc5u1A70XDJlQM7pULCJxPX6d/V+UTzsPwttCdi0qBFQowuV6M+hg
- +aSw==
+ bh=WLgNM24oE8JmYOvmumG7fHdb/by6PACQ5IWUN8ph6Ec=;
+ b=ctlDmyqNDtFocaR/kdtYr5HR2on314aN/icyLAp1gDE8FnM1qUMXeSjzPFaNE1jPFe
+ ArRx5A+EKnyXG5zweMBHVQu8hn5GH9Gxzh14+sn0n3JdGIVSgwMzhuc/1ehYiG+EwUJ1
+ 1cQQyZStXlK1oDpWoMojucVH497Z0t8Knsl8O3vW/NJqncBCQBLAlsJjxJYaovQZclUM
+ TKeuYqQ0qAuT+DxzOV+OeMdO4wL9BVXD+O4xSvd7JiTXXSmkyfHzEuMtYbhLJ503az47
+ eoyjs6Ivz/ctx/D4o3uBw6TX9uAkKf7OSZGXRU58JbaAwH9Ufr/gDsHvY6oI0l3xPB5O
+ ZeKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745855655; x=1746460455;
- h=content-transfer-encoding:in-reply-to:from:content-language
+ d=1e100.net; s=20230601; t=1745855667; x=1746460467;
+ h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=q3aqpTyEo4Ne+b8xIfe/goV4Eq53K8pgzq5YFaS0WxY=;
- b=Gh1rYAAbk8v3SUgDyW9SesssvLpF5eTRYFGABraDvZlKRuD6b10e/83utU0Ar1ZKp5
- 7a+maeRD1JGl5S/fqoWZ9TU4CpB7jdOrs2jrkK7BkNlG4yIcuxGj1W5D7/Px71+7/TVu
- A8tYEl+0IVDlU9A9eBrBlNXlNUk/lTd+3HnBhrklE110QMLltSwseU67s+ZAQnFJfgem
- jnxTJxlfRgPiDP2XWqYmBQFqjDP7mPek4SG+jE12xcU6g4L3caM2rTDLbQRy86uDdJ1e
- WCOMh+p7pzLnfVw/nK7rDkV5U4LJiaBSM1Jtf+Fc9KwYwZI8H9r8SG4MNEsO04pT4BZI
- OLOQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVnpVl5I7TPr887I+dFC4u9qgdS9f+2tKrrpiTO8WmQTJFlEisRm9giww826giB7AtekGymIcL8izRI@nongnu.org
-X-Gm-Message-State: AOJu0YzOMfvMBowo8hPFeqItk19cXAFX1uVPdtOBHzxMAkOJTvKy7eAa
- M8TvvzXZiPrCJ+701Nx2iRkFwtSjcYt1cUxcsiVe2TpSSMSg+dSzEzk2KIEsGss=
-X-Gm-Gg: ASbGnct6mZ1MJLr2FRrLGr0GvULvdJJTqVZTJ143cNtl+OPz2d34xPZrfYM2b8ROTvE
- t56S+rvPZTSCnadp5x0wVQEpaiBkUwNB6JwsZqTJEwgrhOW8hDUGQoLuI8Et24MqUqERZUDg5Wg
- 59NBPC6+NEpXt6KIQUHAmbMwsKMAkLj6pXPFJ0YcRWEZZ1TaIX+bbz1u90BT1nRzwTAn8F7mu6x
- CehhrvD37AsfAB0PngpRSUkLz9jrwSPT12QvoQxQ2DIY42axg8+wRs8CZ2bVS8u6AQskc7XMuny
- fEBlMagOz2TSKiqOTpCNjEmWvo5O8OWOzYz6K5YSk2ZifMs2Mof/6YUgNQBVlYN6eg0FAgWcNTP
- k/ZwicPI=
-X-Google-Smtp-Source: AGHT+IGq39Fkm/08Siuzlsmrfgf5QPyWBbk5ihd8aKOtZ1eIcBk7fY2KHAohyoB2LpQBTEJtpPMUKw==
-X-Received: by 2002:a17:90b:180d:b0:2ea:3f34:f18f with SMTP id
- 98e67ed59e1d1-30a2155e3a9mr443786a91.19.1745855655583; 
- Mon, 28 Apr 2025 08:54:15 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ bh=WLgNM24oE8JmYOvmumG7fHdb/by6PACQ5IWUN8ph6Ec=;
+ b=guaN5tGrwa/ENfCOf/tmz/zkROln9/EJgVxR4bxRVYh3SzNORlxMHa3uOZVLzeni3/
+ mL4bCsUTKbyNwccuJaTb4UPeYpsaeQGOW6P8NI99Mgk55lsQRI4hpDuHDRIO10EudNH2
+ /fR55kDSrJ/QgKnJm0swaDkVe/q0Nl6ur0aQ6ApIFWmo/UfAsoYb1NkacXOxQpXxx+Aj
+ sZ5tJ+jHPfneKSkXWpHgj02BO45ZmyQe4B1W/b/UxToCQvUBcL9vb5EBXenQjiNmnpWt
+ lTol07rgFN8EcZaGixLzmVzAe6RXLzmELsGRsjJD7wv+06rDbcBbu0mJxYEW7EFkVghz
+ +LGQ==
+X-Gm-Message-State: AOJu0Yzrrh55UArTBq4Pdlb17uFDss4laTyBzfhanI2p0C7O7guezaJD
+ Y+cO9TElhCzi4VawFPDG941lVVU06O/xv5qmeqo4FTer3RM62ZBBh6ZcmXcePdQ=
+X-Gm-Gg: ASbGncsQe9YUZV8kmQj+CjX1O/w6obrv58XHSibNwRNPz2Ko7niakpFidh4mvtyBkz/
+ PU5eHb4cXwswFGo23HWinqfmS5OSdqNsmQN/wYMwR4oxrfR1QISlF8q5Z+KobYWySK8rN+R6Psf
+ FMChjJImYrr1FZpc1G45uHxrIlPt21V4ITszMN5RGE9yUdd62UvU80Oqs7bfmpH/Wvk7SvPa1FD
+ uTYUmR68y69HFYrX/2slIg2cuoQNgNfX3QLMXzC7Ooe32JRFqJ78AQcjk6CvGzCdnAChNsrhZkK
+ XYrUU3IKT+YTzy6Asiv31yinR0AlUDZ3scI38S9KZ8l9T6fcS4SVZg==
+X-Google-Smtp-Source: AGHT+IFWmpd25z64+80HJ2mg4NMlGTmYsykQ+pPkkcobYVy0g4RP5ROnKHGdEUkUirlKR3meBiZ2tg==
+X-Received: by 2002:a17:902:db02:b0:223:fabd:4f99 with SMTP id
+ d9443c01a7336-22de5ec17aamr2294405ad.5.1745855667007; 
+ Mon, 28 Apr 2025 08:54:27 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-309f782d461sm8169389a91.39.2025.04.28.08.54.14
+ d9443c01a7336-22db52214fdsm84327345ad.251.2025.04.28.08.54.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 08:54:15 -0700 (PDT)
-Message-ID: <4ae2766c-28f9-4374-ac3e-94213fe53981@linaro.org>
-Date: Mon, 28 Apr 2025 08:54:13 -0700
+ Mon, 28 Apr 2025 08:54:26 -0700 (PDT)
+Message-ID: <1e93220e-0390-43f6-b8f7-beedacf5c65f@linaro.org>
+Date: Mon, 28 Apr 2025 08:54:25 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 8/8] hw/hyperv/hyperv: common compilation unit
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Marcelo Tosatti <mtosatti@redhat.com>, alex.bennee@linaro.org,
- kvm@vger.kernel.org, philmd@linaro.org, manos.pitsidianakis@linaro.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-References: <20250424232829.141163-1-pierrick.bouvier@linaro.org>
- <20250424232829.141163-9-pierrick.bouvier@linaro.org>
+Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, stefanha@redhat.com, 
+ Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
+ peter.maydell@linaro.org, thuth@redhat.com, jsnow@redhat.com,
+ philmd@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+ <aAs6Q2GiBUbUCc2I@redhat.com>
+ <65639a73-c6d7-472f-8788-69341f93760d@linaro.org>
+ <aA8-PjcGmMrGqXGK@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250424232829.141163-9-pierrick.bouvier@linaro.org>
+In-Reply-To: <aA8-PjcGmMrGqXGK@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,14 +107,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/25 16:28, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   hw/hyperv/hyperv.c    | 3 ++-
->   hw/hyperv/meson.build | 2 +-
->   2 files changed, 3 insertions(+), 2 deletions(-)
+On 4/28/25 1:37 AM, Daniel P. Berrangé wrote:
+> On Fri, Apr 25, 2025 at 01:39:49PM -0700, Pierrick Bouvier wrote:
+>> On 4/25/25 00:35, Daniel P. Berrangé wrote:
+>>> On Thu, Apr 24, 2025 at 11:33:47AM -0700, Pierrick Bouvier wrote:
+>>>> Feedback
+>>>> ========
+>>>>
+>>>> The goal of this series is to be spark a conversation around following topics:
+>>>>
+>>>> - Would you be open to such an approach? (expose all code, and restrict commands
+>>>>     registered at runtime only for specific targets)
+>>>
+>>> QMP defines a public API between QEMU and external mgmt apps, and personally I
+>>> like the idea that the API exposed is identical across all binaries and thus
+>>> the API becomes independent of the impl choice of combined vs separate binaries,.
+>>>
+>>>> - Are there unexpected consequences for libvirt or other consumers to expose
+>>>>     more definitions than what we have now?
+>>>
+>>> QEMU used the selective hiding of commands in the QMP schema as a mechanism
+>>> to allow mgmt apps to probe for supported features. We need to check usage
+>>> of each QMP API feature that's behind a TARGET_* condition and identify
+>>> which libvirt uses as a feature probe, then come up with a strategy for how
+>>> best to handle each case in libvirt in future. We might need some additional
+>>> runtime mechanism to probe for certain things, but we won't know until we
+>>> look at things in more detail.
+>>>
+>>
+>> Could we consider to hide the concerned commands from introspection related
+>> commands as well? The same way we prevent those commands to be registered,
+>> we can probably prevent them from being visible for libvirt.
+>> The code would still be there, and compiled once, but based on runtime
+>> target_X() value, it would not appear in introspected schema.
+>>
+>> I'm not sure how all this is implemented from QAPI code generator, maybe
+>> it's hard to do something like this, if we build the schema at compile time
+>> for instance.
+>>
+>>>> - Would you recommend another approach instead? I experimented with having per
+>>>>     target generated files, but we still need to expose quite a lot in headers, so
+>>>>     my opinion is that it's much more complicated for zero benefit. As well, the
+>>>>     code size impact is more than negligible, so the simpler, the better.
+>>>
+>>> IMHO it is unfortunate that the API we currently expose has a dependency on
+>>> a specific impl choice that mgmt apps are expected to rely on for feature
+>>> probing. An ideal API design is not so closely coupled to impl choice
+>>> (separate vs combined binaries), and would expose enough functionality
+>>> such that mgmt apps continue to work regardless of the impl choices.
+>>>
+>>
+>> At this point, do we know which kind of "feature" gets probed? Is it only
+>> the list of commands available, or is there probes based on enum/struct
+>> definition?
+> 
+> In general if it is visible from QMP it is liable to get probed - any
+> and every aspect of it is in scope.
+> 
+> To figure this out you need to produce a list of each command/struct/field
+> that has a 'if $TARGET' conditional, and check whether libvirt uses it or
+> not.
+>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+At this point, it seems more natural to expose exactly the same 
+information, instead of trying to see "potential" impact of exposing 
+more. I just feel like we'll open a pandora box, and it will take a long 
+time to converge anywhere.
 
-r~
+The initial motivation is just to remove per target code in QAPI 
+generated code, and not to trigger a whole refactoring in several projects.
+
+>>> We thought the conditionals were a good thing when we first designed QMP
+>>> this way. We ended up using two distinct classes of conditionals, one
+>>> reflecting build time features and one reflecting which target binary is
+>>> used. I don't think we fully contemplated the implications that the latter
+>>> set of conditionals would have on our ability to change our impl approach
+>>> in future. I think the proposal here is taking us in a good direction
+>>> given what we now know.
+>>>
+>>
+>> Thanks for considering an alternative way given the new needs, that's
+>> appreciated.
+>>
+>> Would that possible to get some help from people from libvirt or QAPI
+>> developers for this?
+> 
+> There challenge here is how QEMU will change this without back compat
+> problems.
+> 
+> Our deprecation process won't work well here. There's no nice way to flag
+> up that we're about to change the way conditionals work.
+> 
+
+If we expose exactly the same schema, there is no need to change 
+anything. The only impact is on modifying the .json, to add new *_if 
+clauses, targetting runtime, instead of compile time.
+
+When posting my series, I was not aware of all the introspection aspect, 
+and simply was focused on qemu monitor commands which are registered, so 
+thanks for bringing this.
+
+After looking at schema introspection code, I think it will not be hard 
+to expose parts based on a runtime check.
+
+> Most of the time libvirt adapts by changing the way we "probe the data",
+> but in this case its about adapting to the way we "probe data about the
+> data".
+> 
+> This kind of problem is why I liked the previous idea that Phillippe
+> was trying of introducing a "qemu-system-any" - it didn't affect the
+> behaviour of existing qemu-system-$TARGET commands, so apps had a
+> clean line in the sand between old & new behaviour.
+>
+
+It's something we might talk about later for sure.
+On this thread, if possible, I would like to avoid starting talking 
+about the new binary, new command line, new monitor schema, as they are 
+a different topic, and I'm sure people will have a lot of different 
+opinions, which won't solve the current issue of compiling QAPI 
+generated code only once.
+
+> With regards,
+> Daniel
+
 
