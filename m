@@ -4,72 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DD75C36005
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 07:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17CBFC369D3
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 07:35:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9Ism-0004mq-ED; Mon, 28 Apr 2025 03:26:30 -0400
+	id 1u9J13-0005WZ-4X; Mon, 28 Apr 2025 03:35:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9IsW-0004fH-00
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 03:26:13 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u9J0x-0005UM-0M
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 03:34:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9IsS-0008Da-IV
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 03:26:11 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u9J0v-0000w3-BO
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 03:34:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745825167;
+ s=mimecast20190719; t=1745825692;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CISJnPMfG/uXMv0l6JF9iE0pkiWbduTPqPP8qKQb4lc=;
- b=fH7vsYChrAznmqO8re0AV1vJzBXPUwOgh3J2XRem4nnupixrRlVA7Qc2NgCTo45yJZhP7V
- Clfnr7ylddPvPD5c2jQPJu716wxxveSaF4e/P2qVGCdmkgDv3FA05G95nTcHoK6DZ+tYbQ
- 1MxVPV7FS7ODGjIHBMzOucxCZTX74wE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-122-P6WChWBUNwemPEoOA7SP5g-1; Mon,
- 28 Apr 2025 03:26:04 -0400
-X-MC-Unique: P6WChWBUNwemPEoOA7SP5g-1
-X-Mimecast-MFC-AGG-ID: P6WChWBUNwemPEoOA7SP5g_1745825162
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6B09618004A7; Mon, 28 Apr 2025 07:26:02 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C7A6E1800352; Mon, 28 Apr 2025 07:26:00 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E6E6821E66C2; Mon, 28 Apr 2025 08:12:09 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,  Eric Blake <eblake@redhat.com>,
- Michael Roth <michael.roth@amd.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Marcelo
- Tosatti <mtosatti@redhat.com>,  Shaoqin Huang <shahuang@redhat.com>,  Eric
- Auger <eauger@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>,  Thomas Huth <thuth@redhat.com>,
- Sebastian Ott <sebott@redhat.com>,  Gavin Shan <gshan@redhat.com>,
- qemu-devel@nongnu.org,  kvm@vger.kernel.org,  qemu-arm@nongnu.org,
- Dapeng Mi <dapeng1.mi@intel.com>,  Yi Lai <yi1.lai@intel.com>
-Subject: Re: [PATCH 2/5] i386/kvm: Support basic KVM PMU filter
-In-Reply-To: <aA3sLRzZj2270cSs@intel.com> (Zhao Liu's message of "Sun, 27 Apr
- 2025 16:34:53 +0800")
-References: <20250409082649.14733-1-zhao1.liu@intel.com>
- <20250409082649.14733-3-zhao1.liu@intel.com>
- <878qnoha3j.fsf@pond.sub.org> <aA3sLRzZj2270cSs@intel.com>
-Date: Mon, 28 Apr 2025 08:12:09 +0200
-Message-ID: <87r01c3jd2.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=6A8Q80jal2O/r0XWxsKgPFOPn+7kL6jWK7xkvukvpdQ=;
+ b=aiUvty/zzEKvB/92xVq3CVmg+eBeZIkhu1bZrqBB5+bgRXfuaZErFq9sJUUdDxmkXEbd8C
+ fpzbDITYHkXxGt1XZkM8e/Ci+SU5Qq3hknXqP3Dcz2njnXitADixGJvz5fPItQB8APt7eL
+ eEXyPgMtzz+VO2C9uTOkqe4U33aANZs=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-378-_yt-24CbOrWpmm3L5QVMSQ-1; Mon, 28 Apr 2025 03:34:51 -0400
+X-MC-Unique: _yt-24CbOrWpmm3L5QVMSQ-1
+X-Mimecast-MFC-AGG-ID: _yt-24CbOrWpmm3L5QVMSQ_1745825690
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3912d5f6689so2312990f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 00:34:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745825689; x=1746430489;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6A8Q80jal2O/r0XWxsKgPFOPn+7kL6jWK7xkvukvpdQ=;
+ b=T7E4Rniaxa/NyvBy1kvzGgftWC5hncQI05jniui/zWVlZEGc2RJvaW4JcxOK2Fx7qj
+ en3t8B4t+Gi42qSzBkOztkcAN+Ksg2/aqwcbn0jwtpLhJtH9a58IfRRXVPhaatJ3DxGq
+ jlM+z825NbKP7fISBNCnyvCcnHVz9Tsb7f1nnluhHnLnxirw8RChGNIl5JPG03HDEqWX
+ m3j3RI7GFB4qzRkEXWC8L+l4hw40Tcr2LwYA1ISMFRWeIjot79QrflSOajrexwA55ozB
+ bNc8Fd7JfPU+xO9heSM0/1NQ7ak9bLboNIHl1BhQKSHREoNjsyXFD3PjPUUbEi+HaS+Y
+ kz7A==
+X-Gm-Message-State: AOJu0Yy3z4TCsm1z1h7Dze/0Lb8h8TIoNG7HyKa1NDy1k0dkHFnMZMbC
+ 1ry9GTksCQ0ygOxXXdd37l3F/l0EuQ1wPoECxhbUKtqBPpob8/MIW319zSiAPxCs0zSRFsli3bA
+ rCGPV/CZja/ybM8sa6/hAso4IHOtWbNz0sq10zWx+3mxjb9meVOVl8VVh4BalvMgvGe8bmLVRh4
+ 6n94T9YxjcHXaFvTU83JR+J3B9UChgCc5qShmn
+X-Gm-Gg: ASbGnctMq3YWi43TM+oJhWBKqE5UYS0m/iDpKG7Hu3bDN1g3de4qf785juUe5GMkf11
+ YG7nSc0PZQg3cY9if/leEiBainnB23VcZNi8EkUn+kDqO1kbOytqIxLNCw8YqK3XkP5titYgswM
+ fqHyYF9orFWhoaDtOqKGDCrkF3Ie5NN85tRhpLKxklK8+XPJpBb33MjHcafnMDmcAxkHj0i0RVZ
+ 7HZXx/9M5/4aTZHPGA91xrbD/WC3BZFUUdDAhaQ2e3THaE7Kq3USVwnIwq6saG6CtQdDDLsO5g/
+ dQclvQNBKrP1RTA=
+X-Received: by 2002:a05:6000:659:20b0:390:ee01:68fa with SMTP id
+ ffacd0b85a97d-3a074e2f5f4mr5412468f8f.24.1745825689398; 
+ Mon, 28 Apr 2025 00:34:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFCbhDcYVjq266H6xnfPTnegEg1cNRv0W4LrRnB+jtT/ymIF+lKZ7QnlcbVZE/zq991gLduNw==
+X-Received: by 2002:a05:6000:659:20b0:390:ee01:68fa with SMTP id
+ ffacd0b85a97d-3a074e2f5f4mr5412450f8f.24.1745825688952; 
+ Mon, 28 Apr 2025 00:34:48 -0700 (PDT)
+Received: from [192.168.122.1] ([151.95.54.106])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a073cc180bsm10449518f8f.53.2025.04.28.00.34.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Apr 2025 00:34:47 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: alistair.francis@wdc.com,
+	dbarboza@ventanamicro.com
+Subject: [PATCH 02/26] target/riscv: assert argument to
+ set_satp_mode_max_supported is valid
+Date: Mon, 28 Apr 2025 09:34:17 +0200
+Message-ID: <20250428073442.315770-3-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250428073442.315770-1-pbonzini@redhat.com>
+References: <20250428073442.315770-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -94,69 +110,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhao Liu <zhao1.liu@intel.com> writes:
+Check that the argument to set_satp_mode_max_supported is valid for
+the MXL value of the CPU.  It would be a bug in the CPU definition
+if it weren't.
 
-> ...
->
->> > diff --git a/qemu-options.hx b/qemu-options.hx
->> > index dc694a99a30a..51a7c61ce0b0 100644
->> > --- a/qemu-options.hx
->> > +++ b/qemu-options.hx
->> > @@ -232,7 +232,8 @@ DEF("accel", HAS_ARG, QEMU_OPTION_accel,
->> >      "                eager-split-size=n (KVM Eager Page Split chunk size, default 0, disabled. ARM only)\n"
->> >      "                notify-vmexit=run|internal-error|disable,notify-window=n (enable notify VM exit and set notify window, x86 only)\n"
->> >      "                thread=single|multi (enable multi-threaded TCG)\n"
->> > -    "                device=path (KVM device path, default /dev/kvm)\n", QEMU_ARCH_ALL)
->> > +    "                device=path (KVM device path, default /dev/kvm)\n"
->> > +    "                pmu-filter=id (configure KVM PMU filter)\n", QEMU_ARCH_ALL)
->> 
->> As we'll see below, this property is actually available only for i386.
->> Other target-specific properties document this like "x86 only".  Please
->> do that for this one, too.
->
-> Thanks! I'll change QEMU_ARCH_ALL to QEMU_ARCH_I386.
+In fact, there is such a bug in riscv_bare_cpu_init(): not just
+SV64 is not a valid VM mode for 32-bit CPUs, SV64 is not a
+valid VM mode at all, not yet at least.
 
-That would be wrong :)
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/riscv/cpu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-QEMU_ARCH_ALL is the last argument passed to macro DEF().  It applies to
-the entire option, in this case -accel.
-
-I'd like you to mark the option parameter as "(x86 only)", like
-notify-vmexit right above, and several more elsewhere.
-
->> As far as I can tell, the kvm-pmu-filter object needs to be activated
->> with -accel pmu-filter=... to do anything.  Correct?
->
-> Yes,
->
->> You can create any number of kvm-pmu-filter objects, but only one of
->> them can be active.  Correct?
->
-> Yes! I'll try to report error when user repeats to set this object, or
-> mention this rule in doc.
-
-Creating kvm-pmu-filter objects without using them should be harmless,
-shouldn't it?  I think users can already create other kinds of unused
-objects.
-
->> > +
->> > +static int kvm_install_pmu_event_filter(KVMState *s)
->> > +{
->> > +    struct kvm_pmu_event_filter *kvm_filter;
->> > +    KVMPMUFilter *filter = s->pmu_filter;
->> > +    int ret;
->> > +
->> > +    kvm_filter = g_malloc0(sizeof(struct kvm_pmu_event_filter) +
->> > +                           filter->nevents * sizeof(uint64_t));
->> 
->> Should we use sizeof(filter->events[0])?
->
-> No, here I'm trying to constructing the memory accepted in kvm interface
-> (with the specific layout), which is not the same as the KVMPMUFilter
-> object.
-
-You're right.  What about sizeof(kvm_filter->events[0])?
-
-[...]
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index e0604f4c78b..e0e70a2227f 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -445,6 +445,8 @@ static void set_satp_mode_max_supported(RISCVCPU *cpu,
+             cpu->cfg.satp_mode.supported |= (1 << i);
+         }
+     }
++
++    assert(cpu->cfg.satp_mode.supported & (1 << satp_mode));
+ }
+ 
+ /* Set the satp mode to the max supported */
+@@ -1498,7 +1500,9 @@ static void riscv_bare_cpu_init(Object *obj)
+      * satp_mode manually (see set_satp_mode_default()).
+      */
+ #ifndef CONFIG_USER_ONLY
+-    set_satp_mode_max_supported(cpu, VM_1_10_SV64);
++    set_satp_mode_max_supported(RISCV_CPU(obj),
++        riscv_cpu_mxl(&RISCV_CPU(obj)->env) == MXL_RV32 ?
++        VM_1_10_SV32 : VM_1_10_SV57);
+ #endif
+ }
+ 
+-- 
+2.49.0
 
 
