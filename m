@@ -4,66 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC9BDC369D3
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E05C369D3
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:24:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9MXG-00038r-75; Mon, 28 Apr 2025 07:20:30 -0400
+	id 1u9Maz-0004wO-DB; Mon, 28 Apr 2025 07:24:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1u9MXA-00038c-5e
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:20:24 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1u9MX6-0003lc-LE
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:20:23 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZmLTW1D9pz6K9RC;
- Mon, 28 Apr 2025 19:15:27 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id EEC441400DB;
- Mon, 28 Apr 2025 19:20:14 +0800 (CST)
-Received: from localhost (10.203.177.99) by frapeml500003.china.huawei.com
- (7.182.85.28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 28 Apr
- 2025 13:20:14 +0200
-Date: Mon, 28 Apr 2025 12:20:09 +0100
-To: "Michael S. Tsirkin" <mst@redhat.com>
-CC: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Yicong Yang
- <yangyicong@huawei.com>, <yangyicong@hisilicon.com>, <qemu-devel@nongnu.org>, 
- <anisinha@redhat.com>, <imammedo@redhat.com>, <linuxarm@huawei.com>,
- <peter.maydell@linaro.org>, <prime.zeng@hisilicon.com>,
- <shameerali.kolothum.thodi@huawei.com>, <wangyanan55@huawei.com>
-Subject: Re: [PATCH v3 4/5] hw/acpi/aml-build: Update the revision of PPTT
- table
-Message-ID: <20250428122009.00004aca.alireza.sanaee@huawei.com>
-In-Reply-To: <20250423115024-mutt-send-email-mst@kernel.org>
-References: <20250423114130.902-1-alireza.sanaee@huawei.com>
- <20250423114130.902-5-alireza.sanaee@huawei.com>
- <20250423083909-mutt-send-email-mst@kernel.org>
- <6b783651-e952-ffe9-6c49-7ee9459741c8@huawei.com>
- <20250423113447-mutt-send-email-mst@kernel.org>
- <20250423164720.000070b9@huawei.com>
- <20250423115024-mutt-send-email-mst@kernel.org>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1u9MaV-0004QX-PT
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:23:52 -0400
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1u9MaS-0004Q0-Pk
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 07:23:50 -0400
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-4769bbc21b0so55137101cf.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 04:23:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1745839426; x=1746444226; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6t+8Mt3Ml1JWakzvw0Ml1abS9iDSvbm9RWEfJJSwrjo=;
+ b=fKl7wDGG/O8E9qD6PJZfNzbg+3zQ9MFl7p3s+fNFQ14sI46qDxRYATuMf+k9+BJ0xE
+ R4l9uZC81AQNCLTRQowVwNNGt3gEq5BqYKP8A3nudjV1XJ+YPH1XlUgsm6ddF8YkYa4x
+ gvsqmNfLS1B6WQFurTs4Nr579/RuZNtcKQ7vF4J1K94buhQ0SLbkaAYwUjPNOn89pHwY
+ MoUw/B6Ea6MqMok2C2+ZBc6weDjKA52lzVOOYZ/ej9Y3meWLU43LuZLEWE/ILTqVthWA
+ ToDpCbEMQIKDPXEFcSenIvPyXcDdVLLFvqZQwNt76A8kTETLPB9FIcp574Xspgf3HpZC
+ 0xPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745839426; x=1746444226;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6t+8Mt3Ml1JWakzvw0Ml1abS9iDSvbm9RWEfJJSwrjo=;
+ b=OdDY0zkqX2aSSrD0Uok+YgiqlqqBtUDZlihnhvOJwpzB51EYyMbVmmrb5g+dLGLOKr
+ 1I5U5ZdVD0SG0KAMQXX8DwJE68MyYrZV4ZXaxMDr93ZlrG4nDD6xvQg7QqYNLuoeFiI0
+ nbJism9K08RyVt4YlNaWG3WfjobdVgR5ln6+pMIQ3ZFWh+rRifJ+AVZHlYLk4Y9xjCxQ
+ P0K0SiZ5/rikd0U90Ex1J0r/2yw75s8eOEBFh/Xna8Pxw+Gn/RNgCw3GWZUWa9D+Mg8Y
+ VYQHO+XWwsIcfqSbOTkbwyqvjMdm7BtqqK2XNo7yY9ntwkafHsTNIZB8FD57hWZiaznc
+ ezjA==
+X-Gm-Message-State: AOJu0YyNIGZUssPgArBiSYb+n2s9rGCKqsjsEGosqHH8QorQraMo1trK
+ UFuCoDNPu8eJgngq9/Fk9fxVJxT2/o+d4WJMlBOAb1gyfx1mYSH+8c2exGIxFs4epusE1hHhQip
+ aqSNsHtKBxS6YGwm6hoFv2aH+CeY=
+X-Gm-Gg: ASbGncu947Xnvfkbb3xkalTCIhlTV5QWlmuqq8vgH3tzSV1qjkQI1Tcg+S2pu9Xxg3I
+ IcGsTcH6dXU7RN2cce87TNSdyWf9kS1egX/8EXpViGuOJLaOombWoe4UJjAUrkfvp4kjYimiG3q
+ tJiKNG6Gb3zRPObd0YHec/GODQl3MUfRp3kIN+COBLJWt91Zr13oSQIyI=
+X-Google-Smtp-Source: AGHT+IHGI7vh0A/a4CT5KNwkubYmTM3ci7egfOyX0Tij9vfDz25rEv8BfYG3168fjP0xroKN44B7X2TnVOmGQ7GnkXo=
+X-Received: by 2002:a05:622a:181c:b0:477:6c0e:d5b4 with SMTP id
+ d75a77b69052e-4801c2c3a5emr209669691cf.2.1745839426288; Mon, 28 Apr 2025
+ 04:23:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.99]
-X-ClientProxiedBy: lhrpeml100012.china.huawei.com (7.191.174.184) To
- frapeml500003.china.huawei.com (7.182.85.28)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250419094959.224954-1-weifeng.liu.z@gmail.com>
+In-Reply-To: <20250419094959.224954-1-weifeng.liu.z@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 28 Apr 2025 15:23:33 +0400
+X-Gm-Features: ATxdqUGGCntVRPvWO2Fe_GPfOwfnUl62hDp57RfZ94v6xNhBRfbHNb0GVoOhdZU
+Message-ID: <CAJ+F1C+jPtvsY0yy9rZJLRLME9cC=p1bRGrXA3G1XQfJUmDXrg@mail.gmail.com>
+Subject: Re: [PATCH] ui/gtk: Properly apply x/y scale when rendering GL area
+To: Weifeng Liu <weifeng.liu.z@gmail.com>
+Cc: qemu-devel@nongnu.org, hikalium <hikalium@hikalium.com>, 
+ Alexander Orzechowski <orzechowski.alexander@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x832.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,96 +92,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 23 Apr 2025 11:51:41 -0400
-"Michael S. Tsirkin" <mst@redhat.com> wrote:
+Hi
 
-Hi Michael,
+On Sat, Apr 19, 2025 at 1:51=E2=80=AFPM Weifeng Liu <weifeng.liu.z@gmail.co=
+m> wrote:
+>
+> On startup, scale_x and scale_y were set to 1 that didn't reflect the
+> real situation of the scan-out, resulting in incorrect cursor
+> coordinates to be sent when moving the mouse pointer. Simply updating
+> the scales before rendering the image fixes this issue.
+>
+> Cc: hikalium <hikalium@hikalium.com>
+> Cc: Alexander Orzechowski <orzechowski.alexander@gmail.com>
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
 
-> On Wed, Apr 23, 2025 at 04:47:20PM +0100, Jonathan Cameron wrote:
-> > On Wed, 23 Apr 2025 11:35:46 -0400
-> > "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> >   
-> > > On Wed, Apr 23, 2025 at 10:15:42PM +0800, Yicong Yang wrote:  
-> > > > On 2025/4/23 20:39, Michael S. Tsirkin wrote:    
-> > > > > On Wed, Apr 23, 2025 at 12:41:29PM +0100, Alireza Sanaee
-> > > > > wrote:    
-> > > > >> From: Yicong Yang <yangyicong@hisilicon.com>
-> > > > >>
-> > > > >> The lastest ACPI spec 6.5 support PPTT revision 3. Update it
-> > > > >> by handy. This is compatible with previous revision.
-> > > > >>
-> > > > >> Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-> > > > >> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > > >> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>    
-> > > > > 
-> > > > > 
-> > > > > I don't get it. Why are you updating it? Which features
-> > > > > from the new one are you using?
-> > > > >     
-> > > > 
-> > > > no new features for this patchset. considered updating it to
-> > > > the latest ACPI spec since we're going to touch the PPTT table
-> > > > and tested data.    
-> > > 
-> > > it's best to wait until there are actual features you need.
-> > > don't make changes for the sake of changes, there's always
-> > > some risk.  
-> > 
-> > Once we add the cache description (Ali's other set) can we make
-> > sure we arbitrary decide to have separate cache structures.  The
-> > earlier table version allowed sharing of the entrees in the table
-> > which then became not allowed in the newer spec. That will smooth
-> > the path quite a bit and is a valid way to interpret the earlier
-> > spec.
-> > 
-> > If we do that, we can bring the IDs + the version update as a
-> > precursor to MPAM support series. I don't think we need them until
-> > that series (which is a way off being ready to merge yet!)
-> > 
-> > Jonathan  
-> 
-> Why not. Sounds like all that can be made part of Ali's patchset?
-> I am also ok to merge things gradually, as long as it's
-> clear and documented in the commit log why we are
-> making the change and where things are going.
-> 
-> > >   
-> > > > >> ---
-> > > > >>  hw/acpi/aml-build.c | 2 +-
-> > > > >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> > > > >>
-> > > > >> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> > > > >> index 3010325ca423..e5401dfdb1a8 100644
-> > > > >> --- a/hw/acpi/aml-build.c
-> > > > >> +++ b/hw/acpi/aml-build.c
-> > > > >> @@ -2155,7 +2155,7 @@ void build_pptt(GArray *table_data,
-> > > > >> BIOSLinker *linker, MachineState *ms, uint32_t pptt_start =
-> > > > >> table_data->len; uint32_t root_offset;
-> > > > >>      int n;
-> > > > >> -    AcpiTable table = { .sig = "PPTT", .rev = 2,
-> > > > >> +    AcpiTable table = { .sig = "PPTT", .rev = 3,
-> > > > >>                          .oem_id = oem_id, .oem_table_id =
-> > > > >> oem_table_id }; 
-> > > > >>      acpi_table_begin(&table, table_data);
-> > > > >> -- 
-> > > > >> 2.34.1    
-> > > > > 
-> > > > > 
-> > > > > .
-> > > > >     
-> > > 
-> > >   
-> 
-> 
-For this patchset, we eventually decided to rev down  for now, on
-another version sent earlier. We can always rev up when it is
-absolutely necessary. So it is now rev == 2.
 
-Thanks,
-Alireza
+Tested-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+(Hopefully someone has enough motivation to actually understand this
+change better - otherwise I'll simply queue it?)
+
+> ---
+>  ui/gtk-gl-area.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+> index 2c9a0db425..01235f876a 100644
+> --- a/ui/gtk-gl-area.c
+> +++ b/ui/gtk-gl-area.c
+> @@ -42,6 +42,7 @@ void gd_gl_area_draw(VirtualConsole *vc)
+>  #ifdef CONFIG_GBM
+>      QemuDmaBuf *dmabuf =3D vc->gfx.guest_fb.dmabuf;
+>  #endif
+> +    int fbw, fbh;
+>      int ww, wh, ws, y1, y2;
+>
+>      if (!vc->gfx.gls) {
+> @@ -53,6 +54,11 @@ void gd_gl_area_draw(VirtualConsole *vc)
+>      ww =3D gtk_widget_get_allocated_width(vc->gfx.drawing_area) * ws;
+>      wh =3D gtk_widget_get_allocated_height(vc->gfx.drawing_area) * ws;
+>
+> +    fbw =3D surface_width(vc->gfx.ds);
+> +    fbh =3D surface_height(vc->gfx.ds);
+> +    vc->gfx.scale_x =3D (double)ww / fbw / ws;
+> +    vc->gfx.scale_y =3D (double)wh / fbh / ws;
+> +
+>      if (vc->gfx.scanout_mode) {
+>          if (!vc->gfx.guest_fb.framebuffer) {
+>              return;
+> --
+> 2.49.0
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
