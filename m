@@ -4,83 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 308DDC369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 22:38:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C05C369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 22:38:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9X6g-0000hJ-Dv; Mon, 28 Apr 2025 18:37:46 -0400
+	id 1u9X6v-0000wW-8J; Mon, 28 Apr 2025 18:38:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u9X6e-0000fE-6l; Mon, 28 Apr 2025 18:37:44 -0400
-Received: from mail-ua1-x936.google.com ([2607:f8b0:4864:20::936])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u9X6s-0000vB-Tu
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 18:38:00 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u9X6X-0001rw-TT; Mon, 28 Apr 2025 18:37:43 -0400
-Received: by mail-ua1-x936.google.com with SMTP id
- a1e0cc1a2514c-877c48657f9so1247968241.1; 
- Mon, 28 Apr 2025 15:37:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1u9X6n-0001tO-2B
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 18:37:58 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-739be717eddso4453545b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 15:37:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745879846; x=1746484646; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1xXwSa+gw10RWSBVuFTIf/YMq30a60MmJPe7AW9WDaI=;
- b=gNGwSo+PvLMfiGK3P1ubd/IWGso/gYpE7dbFhwvONSomW61jRcskB3K4Zl0uOMkwVw
- c1JowP/DwiREEsBrzFX8plKOS4yQyDMk/iavP+iWsDEEFtTjrpcDdML/+V9k3K0Vqjq9
- uHYajUqD10haT5H9HpdsHvqcxLywQlIWm/YBssNuG1j8zmQWI/2RgwWSfJ2nqzkHxO9K
- Jye45GlEgy9kv7V3FuOTUfc4eM+CLjmlraeowPw7swtfViE+ZtkYtt5+4C3f5SAnZ9j9
- hkDz/tA0zpt2OTzBF3B4zgQhpqC30wQy44vzKbvpgbQzy3p2mr7xSqpHd0G0qtdHDJ30
- ENFg==
+ d=linaro.org; s=google; t=1745879869; x=1746484669; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=M5hlfZiLAYWt6bKYJLRFXVd9RsPvX+9Kz+as6sxKwm8=;
+ b=hSwyUDkHqE2W8SqANYsU+WzZrHLflqQfm9X9Q+kxvpYx5siPzXEZyHTWpx82JVjmyd
+ 00384xp7B4H8MPALX9pi2wRYbGJgy87+ZXWBSezP2rfgka33gf6uMXvevbt9C6PmVEN9
+ BaT1HBlPuogQ/xc9wcqplTN7I7s1dTpqETsqfKcQlHwQC9gR6h55cce75me12MGHXjBd
+ f3mFYMwEYqFe2Im7d9Oa18j7fHYETCbWrx35S2uPSJ3zzxIYytQZ4ySU2NyIZMxgSkUl
+ TCzZjYTryLTw2xNeYoywJPpT09P6BWzqpcxoiiiseS/oBRGS+CoKG51esz8MST4XFpfq
+ 13Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745879846; x=1746484646;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1xXwSa+gw10RWSBVuFTIf/YMq30a60MmJPe7AW9WDaI=;
- b=IEX/U1a8bejKsywwgYBJtYW3mnYCwR4Axf/0eOQf8UNzo80X7NkGzU7cas8cDDikYS
- aUUYhWXEWi17qrwgwyLFYsLGruxZTfe6B2PnaiS1xX/AoKn11ov328zTw3XqjKglE2S3
- dPBI8fnofhu4zColUoi1qzEHGDpX5heFDHDZPbcO6mojEL6f/70OZ+jqZ6fo//QKC85z
- 2fSyi5M4KLhjVcp/YRMRa0qhu/+mtcyzpBUMTX5A0HKqxft1w51S2KSRlEyGSffziiWR
- vbSQGGLZdXjMnwkSiUA3vapakbtaMalX7ktb79HwfzLRHgcmmyB1qPb9DfShy7xtYV6Y
- ixIQ==
+ d=1e100.net; s=20230601; t=1745879869; x=1746484669;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=M5hlfZiLAYWt6bKYJLRFXVd9RsPvX+9Kz+as6sxKwm8=;
+ b=sayQNfQ/KcFksmaWR4PQlTNLCvGMk7Tqzli+I1SibfyezMQxk2Sr5DCZJ5okQ9/g1F
+ 7LuLS+cSccdq1WhcLM/u7qC7qXI4tFDDJ437KqmvmlYJUP6nCeH3EMI6s+sfReIymieR
+ eZMwNTNBN2aIa7bG4H+QbWVSjoCg0CeFPC+Tc8tzdq3Z/y6Zyh+mGn4k5bkLxQpgFyS4
+ rAtjaONxNhh+TXhUybxDLuWG5Eh7eR3EKTR3zDkqIEFBIcs2KCvMxOgT6+z8K67Uga/C
+ OjldSBUg9HOFpyR4n9Th5PSYAUPT+DYkgCKNWe/0xTpJujgZHt5pVrdhz5Ui0/KR/bZC
+ Kc0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJM271wAgDs7rOwM97E2gZukTDLF/36notXtgkqyh4z8RpEJ/qahW7FsPGS4mvgyXfxeQE2O+72rSd@nongnu.org
-X-Gm-Message-State: AOJu0Yybs/Z/tBFX2DIMfrGC/weOZD924oqngNrCbHXONhNmXAFGDP0d
- CJeVOdyCkiPS9dh578BdjDFtGL2TmefWmtKUB+/P1+XV9bmABUM+6/Z5jnkhpMld+z5VO/hSTQa
- 5yg6GKmL5WJ77fxYG3erJQak4H1ZJIw==
-X-Gm-Gg: ASbGncuqfOxnwuZFRf9jattOYwvIyTEZd4i9pxwCvOSafnpmmcYwdbrZkGvK0xM5I4H
- AXp1ygSEuR/9MIdgtVTbaMoK5pRh6HeQpPybSsePrh/ETi8fYEBsD+ysQI8OZYVDMNXq1riOzEz
- UkMvfxDlwrrQuYpRPJhqKZZO7mAwt4W6V/sJ8nCsdk/CAkdpzQpDYq
-X-Google-Smtp-Source: AGHT+IGV2vAKqerYSeeEsmF6biff+2M0r4Cmr5fKh7mujET6C18uhFMGO+X2vDGNxqpahpqz5RnVPRiCo9dzPQq0u9c=
-X-Received: by 2002:a05:6102:dce:b0:4c1:774b:3f7a with SMTP id
- ada2fe7eead31-4d641f618b5mr6957939137.16.1745879846270; Mon, 28 Apr 2025
- 15:37:26 -0700 (PDT)
+ AJvYcCU1RnCYBUcdc1aGDrAoPTEu56F6t0s7Wcc0vnx4S2HQdczXTUVMc4gaj9gzHvWx+0guRGRM59RHcCkl@nongnu.org
+X-Gm-Message-State: AOJu0Yw7v7MA/JdgnG/RNmtzZ8z3mAJkXfOVxN3SbpqgNNhOm4Kt99et
+ imdKNVcGJVYGSga1jFHEPEp1M9y/jnyzmcx9UzDEI3eXtTWEljWBNn3Dama/jMZX3Nw//R+K68X
+ d
+X-Gm-Gg: ASbGncsrM+InX4UDsi83X0wksc1tHu7vbUy1fjk/oGddeZ2iX7LGSr3f3DhtdwumgB9
+ J1Ai3aFF6bO1v9KRxlUrdva/wLR4vYuDly6CKMcaCbexqvxhrnyD2IeQ5AC1bx30BXYGMm1ZrBi
+ UzKhW5qUiep4Y4R9wLaDF156mFeWv8FhdcJyOoe4iy/H4RKpYfgqAF8WTGRuPME/nZx1DZ9Yq5w
+ q2+X+DROxarbpj9QJEEmxqtZQ+8GN2mAk3L15x8tjh30+cJI+DPrX6Yc47cDlUefyi+LRLOZ5ri
+ QuaQw9SoRErLlC3Uw4TR1KJgyPOruiw1MWCqxXhZRIZ4N7HLe5DEtXfR+aWYK1auQmMPXqK0w5e
+ 59pz5q8fYY+W31u5rhA==
+X-Google-Smtp-Source: AGHT+IFApPHb1i4ZEI8FgaR00Q66tx9l3nFgn59sw6wveutNb1Dd4F/iW/FHAtMx4+bqxgCdkMXg1Q==
+X-Received: by 2002:a05:6a00:ac5:b0:739:4a93:a5df with SMTP id
+ d2e1a72fcca58-740294703dcmr945517b3a.12.1745879869344; 
+ Mon, 28 Apr 2025 15:37:49 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-73e25a6e252sm8536891b3a.119.2025.04.28.15.37.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Apr 2025 15:37:49 -0700 (PDT)
+Message-ID: <ad2a2ba6-04c2-4618-9003-47625d31b365@linaro.org>
+Date: Mon, 28 Apr 2025 15:37:47 -0700
 MIME-Version: 1.0
-References: <20250425152311.804338-1-richard.henderson@linaro.org>
- <20250425152311.804338-6-richard.henderson@linaro.org>
-In-Reply-To: <20250425152311.804338-6-richard.henderson@linaro.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 29 Apr 2025 08:37:00 +1000
-X-Gm-Features: ATxdqUGvXAAk0GOyDpmkKNwP_IoIpg5RREVDC6n8ztucxWOEN-NjRMwYc0gSS1A
-Message-ID: <CAKmqyKP3Yp6osXE=K2TmiVSjHZK+eLoT2gQydv=9mxnESdM3pQ@mail.gmail.com>
-Subject: Re: [PATCH 5/7] target/riscv: Pass ra to riscv_csrrw_i128
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- dbarboza@ventanamicro.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::936;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x936.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/10] accel/tcg: Return TCGTBCPUState from
+ cpu_get_tb_cpu_state
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+References: <20250428201028.1699157-1-richard.henderson@linaro.org>
+ <20250428201028.1699157-8-richard.henderson@linaro.org>
+ <e56a1170-9e0f-4aed-83f5-99ac5c1261a3@linaro.org>
+ <31ec7f6c-e5fe-401e-96f4-74bc7b0dee36@linaro.org>
+ <db0b8cff-b79f-4f4f-8322-c9f41462cdd5@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <db0b8cff-b79f-4f4f-8322-c9f41462cdd5@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,107 +109,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Apr 26, 2025 at 1:23=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 4/28/25 15:26, Pierrick Bouvier wrote:
+> On 4/28/25 3:07 PM, Richard Henderson wrote:
+>> On 4/28/25 15:00, Pierrick Bouvier wrote:
+>>> On 4/28/25 1:10 PM, Richard Henderson wrote:
+>>>> diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
+>>>> index f5e5746976..8dbe79ea7c 100644
+>>>> --- a/include/accel/tcg/cpu-ops.h
+>>>> +++ b/include/accel/tcg/cpu-ops.h
+>>>> @@ -18,8 +18,13 @@
+>>>>    #include "exec/vaddr.h"
+>>>>    #include "tcg/tcg-mo.h"
+>>>> -void cpu_get_tb_cpu_state(CPUArchState *env, vaddr *pc,
+>>>> -                          uint64_t *cs_base, uint32_t *flags);
+>>>> +struct TCGTBCPUState {
+>>>> +    vaddr pc;
+>>>> +    uint32_t flags;
+>>>> +    uint64_t flags2;
+>>>
+>>> Could it be named cs_base instead?
+>>> flags2 is a little bit generic.
+>>
+>> Of course flags2 is generic -- it's only cs_base for x86.
+>>
+> 
+> It seems to be named the same for other architectures as well,
+> so it's wrong for all other arch too?
+> 
+> My point is that:
+> tb_gen_code(cpu, s.pc, s.flags2, s.flags, cflags);
+> 
+> is error prone, and it's easy to swap flags and flags2 by mistake.
+> I don't mind the name, but something more distinct would help.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+I fully intended to go on and pass in TCGTBCPUState, rather than 3 separate args.  I guess 
+I stopped early with the meson.build change for build twice.
 
-Alistair
 
-> ---
->  target/riscv/cpu.h       | 4 ++--
->  target/riscv/csr.c       | 8 ++++----
->  target/riscv/op_helper.c | 9 +++++----
->  3 files changed, 11 insertions(+), 10 deletions(-)
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 2c0524d0be..8b84793b15 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -851,8 +851,8 @@ typedef RISCVException (*riscv_csr_op_fn)(CPURISCVSta=
-te *env, int csrno,
->  RISCVException riscv_csrr_i128(CPURISCVState *env, int csrno,
->                                 Int128 *ret_value);
->  RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
-> -                                Int128 *ret_value,
-> -                                Int128 new_value, Int128 write_mask);
-> +                                Int128 *ret_value, Int128 new_value,
-> +                                Int128 write_mask, uintptr_t ra);
->
->  typedef RISCVException (*riscv_csr_read128_fn)(CPURISCVState *env, int c=
-srno,
->                                                 Int128 *ret_value);
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 097640e25d..a663f527a4 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -5656,8 +5656,8 @@ RISCVException riscv_csrr_i128(CPURISCVState *env, =
-int csrno,
->  }
->
->  RISCVException riscv_csrrw_i128(CPURISCVState *env, int csrno,
-> -                                Int128 *ret_value,
-> -                                Int128 new_value, Int128 write_mask)
-> +                                Int128 *ret_value, Int128 new_value,
-> +                                Int128 write_mask, uintptr_t ra)
->  {
->      RISCVException ret;
->
-> @@ -5668,7 +5668,7 @@ RISCVException riscv_csrrw_i128(CPURISCVState *env,=
- int csrno,
->
->      if (csr_ops[csrno].read128) {
->          return riscv_csrrw_do128(env, csrno, ret_value,
-> -                                 new_value, write_mask, 0);
-> +                                 new_value, write_mask, ra);
->      }
->
->      /*
-> @@ -5681,7 +5681,7 @@ RISCVException riscv_csrrw_i128(CPURISCVState *env,=
- int csrno,
->      target_ulong old_value;
->      ret =3D riscv_csrrw_do64(env, csrno, &old_value,
->                             int128_getlo(new_value),
-> -                           int128_getlo(write_mask), 0);
-> +                           int128_getlo(write_mask), ra);
->      if (ret =3D=3D RISCV_EXCP_NONE && ret_value) {
->          *ret_value =3D int128_make64(old_value);
->      }
-> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> index aee16e2e3a..e3770a2655 100644
-> --- a/target/riscv/op_helper.c
-> +++ b/target/riscv/op_helper.c
-> @@ -108,7 +108,7 @@ void helper_csrw_i128(CPURISCVState *env, int csr,
->  {
->      RISCVException ret =3D riscv_csrrw_i128(env, csr, NULL,
->                                            int128_make128(srcl, srch),
-> -                                          UINT128_MAX);
-> +                                          UINT128_MAX, GETPC());
->
->      if (ret !=3D RISCV_EXCP_NONE) {
->          riscv_raise_exception(env, ret, GETPC());
-> @@ -116,13 +116,14 @@ void helper_csrw_i128(CPURISCVState *env, int csr,
->  }
->
->  target_ulong helper_csrrw_i128(CPURISCVState *env, int csr,
-> -                       target_ulong srcl, target_ulong srch,
-> -                       target_ulong maskl, target_ulong maskh)
-> +                               target_ulong srcl, target_ulong srch,
-> +                               target_ulong maskl, target_ulong maskh)
->  {
->      Int128 rv =3D int128_zero();
->      RISCVException ret =3D riscv_csrrw_i128(env, csr, &rv,
->                                            int128_make128(srcl, srch),
-> -                                          int128_make128(maskl, maskh));
-> +                                          int128_make128(maskl, maskh),
-> +                                          GETPC());
->
->      if (ret !=3D RISCV_EXCP_NONE) {
->          riscv_raise_exception(env, ret, GETPC());
-> --
-> 2.43.0
->
->
+r~
 
