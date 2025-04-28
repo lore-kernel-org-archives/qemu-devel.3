@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A5BEC369D3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 831C8C36005
 	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 07:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9J1O-0006B2-C8; Mon, 28 Apr 2025 03:35:22 -0400
+	id 1u9J1V-0006IF-1Z; Mon, 28 Apr 2025 03:35:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u9J0w-0005UE-LP
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 03:34:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1u9J1C-0005rm-I9
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 03:35:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1u9J0u-0000vd-Gz
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 03:34:54 -0400
+ id 1u9J1A-00019V-TG
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 03:35:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745825688;
+ s=mimecast20190719; t=1745825706;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=B99/og5rMuCkodv4MIhThbXa/C68v7OicONbccI/XSk=;
- b=e6mLZCt9Qd0I135+5WCCOqYzm8n2pJ3eG9zU6xaIBoeSjDv8XWH2pecDBWjXW+IS9uurlY
- AUmr87UqHE18+WUgfrhDUyOqQeHX9rNAWZYuhqDX3eXEr1sbpRzcN1n5u+Bvy1ztlmjGUf
- xSZzYi4MK1VwhYlL6IY3i5AmoTjXdpQ=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tf6Wtd7Zeg686LjseDJ7I7VG+SHXJ9oiE4YrRyhx9/Y=;
+ b=VptWn7Wx586UQQlxxRB9diS0PcFDF+q+9qnhSEnf3pH0gI+i4vXciUsH2zCJLdk0q9Faj6
+ R8y9RvG7pYvhEeEYGocxcdFcQdvmK8Yxa8qptfOSTfvu8jMmgWOlMsmn5ZYV/DsDJg72jI
+ VimEsxf0+WEvQG0Nuk/05n5xJx62r2I=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-374-FQKtcKgPPZKB9zY20FHHMg-1; Mon, 28 Apr 2025 03:34:46 -0400
-X-MC-Unique: FQKtcKgPPZKB9zY20FHHMg-1
-X-Mimecast-MFC-AGG-ID: FQKtcKgPPZKB9zY20FHHMg_1745825686
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-39d8e5ca9c2so2241464f8f.0
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 00:34:46 -0700 (PDT)
+ us-mta-427-wBeNztlGMrW2rW3vLid-KQ-1; Mon, 28 Apr 2025 03:35:04 -0400
+X-MC-Unique: wBeNztlGMrW2rW3vLid-KQ-1
+X-Mimecast-MFC-AGG-ID: wBeNztlGMrW2rW3vLid-KQ_1745825703
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-39c1b1c0969so2714317f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 00:35:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745825684; x=1746430484;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=B99/og5rMuCkodv4MIhThbXa/C68v7OicONbccI/XSk=;
- b=GUpIyH0vepdiBOfS0v858MMqPVpMmd8Ix2dHlvzR9hMTdH0CkaantVIfZMdc33xj79
- Qft0JsIJr9/BET0pLexkDdkrqXO8NwVJP+YOZANJHL5P5PcOh9b4eOUxXFhXfZfXcNV+
- +roe7xD5IzxykkjCs79x/uNrpp9CpbUutEVZ69zWM6/fJj4Mq5eJozqJG5HqLqOJpcoU
- iYxb6pdj95KiwGdTXWq9vZk87/D3ouezGf2TfWk85vE0C0gGLmv5tvTi3/rfbPJ9M8Q6
- v/H5Mv2mUEL8BeyRDcTiQYz/8UZIkDtbwizeMEmHvgnQiG5qGPa7VljdcjQ2aQzsGJaX
- pt/g==
-X-Gm-Message-State: AOJu0Yy27FQEwFsC/4u5fySlartINWWvbM8s1nO9DqIZGaztrGp1n2sn
- BH6A3G4F05AhGj00ltGMPlQ8cEMGw2XlpZuvBVXqdtVN3tfMymPfM4yRdMhX76qh57sFeHLHSSl
- ANXWPWr3scOU2RylIFjSsEStNkRLIcC2nWEDBzUybE+vNsoUTavNBe758FemAZtzN+3kxyhZO2U
- xjNkLOyLO+PMACIqWgNkZW2zx6eY/ZEzbcqwDG
-X-Gm-Gg: ASbGncuTvXPWqNq6DV4tlKUAAALe4KULHh5z2B15mhmiYdQ5QgTtLMuuENnldy/+IiC
- 4hZk14h0MHl8vrUs9MDLAPNrfe9Cguc8UnlOEoM6Jz/vmgHfkeDFYL1wJzPaxyboYqbVeEzYdpE
- JIiKzEtVlATtb6R8pMd2yYMajltdRzCXYtXnfdZLgX9N6gtmxbhxfclE6vatabSghbwcjJSQIqX
- 8r72GODXkvBxEs/TaZt1aDIkhUPnN7PCflKkTyhN53QCzBPEOyvABkzDQ7AE1hRfqX/7UJYlKKa
- tPG9gIdpJeSEvHA=
-X-Received: by 2002:a05:6000:144c:b0:3a0:830d:ec58 with SMTP id
- ffacd0b85a97d-3a0830dec71mr2224144f8f.28.1745825684447; 
- Mon, 28 Apr 2025 00:34:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHcQ4DtFhS0dYWhwOkt0RKWG19LnC22i6e2UuEDh54TWh2cF4dqZ9Xe8sMWyjf5CS0QZ8qKCg==
-X-Received: by 2002:a05:6000:144c:b0:3a0:830d:ec58 with SMTP id
- ffacd0b85a97d-3a0830dec71mr2224129f8f.28.1745825684045; 
- Mon, 28 Apr 2025 00:34:44 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1745825702; x=1746430502;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=tf6Wtd7Zeg686LjseDJ7I7VG+SHXJ9oiE4YrRyhx9/Y=;
+ b=Pa+HOx/9UK7QYXB1vqinN2wP2lDv+nAfjDhqNRaCWS0XfLZJvTD9VhfwWm41QvWg3o
+ 746JbaTX3QwL5nueJ2S2/RFncky3fJZJIM5laBhlxOfGV1avKNjEQv19+HhwaPezbDqt
+ 5Wj+xF3EdVdALYMA6R8mQk+H0OHvVYaOP1f0cwito8ZPpzpSe8EL2lZX6su7s6A68cHn
+ pHKxaSxuX51HZQ499BN8vSSYiLh8OMiPn4Cmt79LKaAnB/DRTxWSFbFtgZbIYD7NEQkq
+ R9sefrqFH81lyAkLjs5wMxSgnIrBUOklQMn93xLGjmr9nukOQVaN8khYnvl5TAMPweeP
+ KxWw==
+X-Gm-Message-State: AOJu0YzriIEqaBPDfj8dTT+p0W5A2ctDgBqiZ5i1VNefSTWm/FSng1WL
+ WSLos2I5bbsFFugR6ekUqlXFPcwRx5K0mQhrspHgyZLK/SX5VtkDsKb+xjCPwXs/34kJjvYbpS5
+ /6uhTeF7luJfEGTOJmhAoiOBUUcweXCey90REUuRjbgiU+ouKGKRILNw6uEg2SOM5V7rWHde6og
+ FrcFK0Nzm9iW4Tn5JMoOtoG1vBzeJjoaJljRpC
+X-Gm-Gg: ASbGnct9bZCX/Kg2gtm8CkgMxBEKCkdSfef+X658qxGVjdWoZy6Uu9qQF1ba+U8ERK6
+ toDpyFC/MbxPMkML+QmzxJOPf1eqWF+7ZL0kArCyuiOzEOlG+Fz4DEsWsAWgPjEAFyta17+3H2g
+ IQWcNIvFfnO5dYVoox4NJgTBdbP1i1Z0+zQznRXwm2dlfB/lotEux4inKiGbA20OTf2e5rZxzS8
+ aHOjt5NE+Qr6YXqu90TNPelVgSydAzqnUfgoiCJtKXgtEC/pbSKeUinPKcobkSeYzp/j9FNuhz8
+ rn4IagLnJC+aZ1M=
+X-Received: by 2002:a05:6000:2905:b0:390:e7c1:59c4 with SMTP id
+ ffacd0b85a97d-3a07aa690bamr5589045f8f.13.1745825702586; 
+ Mon, 28 Apr 2025 00:35:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHoZYpKyKXQO3ty2aokjOl7KorbPq4HOTB0XCyztA4KbJ3SdqYEe7/rZvcEi3+Qk6VkATTIqA==
+X-Received: by 2002:a05:6000:2905:b0:390:e7c1:59c4 with SMTP id
+ ffacd0b85a97d-3a07aa690bamr5589005f8f.13.1745825702027; 
+ Mon, 28 Apr 2025 00:35:02 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-440a536a1d1sm116822955e9.26.2025.04.28.00.34.43
+ ffacd0b85a97d-3a073cbedb9sm10138452f8f.44.2025.04.28.00.34.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Apr 2025 00:34:43 -0700 (PDT)
+ Mon, 28 Apr 2025 00:35:00 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: alistair.francis@wdc.com,
 	dbarboza@ventanamicro.com
-Subject: [PATCH v4 00/26] target/riscv: SATP mode and CPU definition overhaul
-Date: Mon, 28 Apr 2025 09:34:15 +0200
-Message-ID: <20250428073442.315770-1-pbonzini@redhat.com>
+Subject: [PATCH 07/26] target/riscv: introduce RISCVCPUDef
+Date: Mon, 28 Apr 2025 09:34:22 +0200
+Message-ID: <20250428073442.315770-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250428073442.315770-1-pbonzini@redhat.com>
+References: <20250428073442.315770-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -106,60 +109,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is just a rebase of v3 on top of all pending pull requests.  One patch
-(target/riscv: do not make RISCVCPUConfig fields conditional) went away
-because the field was already made unconditional by commit e4610f38095
-("target/riscv: Remove ifndef CONFIG_USER_ONLY from cpu_cfg.h", 2025-04-23).
+Start putting all the CPU definitions in a struct.  Later this will replace
+instance_init functions with declarative code, for now just remove the
+ugly cast of class_data.
 
-Paolo
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/riscv/cpu.h |  4 ++++
+ target/riscv/cpu.c | 27 ++++++++++++++++++---------
+ 2 files changed, 22 insertions(+), 9 deletions(-)
 
-
-Paolo Bonzini (26):
-  hw/riscv: acpi: only create RHCT MMU entry for supported types
-  target/riscv: assert argument to set_satp_mode_max_supported is valid
-  target/riscv: cpu: store max SATP mode as a single integer
-  target/riscv: update max_satp_mode based on QOM properties
-  target/riscv: remove supported from RISCVSATPMap
-  target/riscv: move satp_mode.{map,init} out of CPUConfig
-  target/riscv: introduce RISCVCPUDef
-  target/riscv: store RISCVCPUDef struct directly in the class
-  target/riscv: merge riscv_cpu_class_init with the class_base function
-  target/riscv: move RISCVCPUConfig fields to a header file
-  target/riscv: include default value in cpu_cfg_fields.h.inc
-  target/riscv: add more RISCVCPUDef fields
-  target/riscv: convert abstract CPU classes to RISCVCPUDef
-  target/riscv: convert profile CPU models to RISCVCPUDef
-  target/riscv: convert bare CPU models to RISCVCPUDef
-  target/riscv: convert dynamic CPU models to RISCVCPUDef
-  target/riscv: convert SiFive E CPU models to RISCVCPUDef
-  target/riscv: convert ibex CPU models to RISCVCPUDef
-  target/riscv: convert SiFive U models to RISCVCPUDef
-  target/riscv: th: make CSR insertion test a bit more intuitive
-  target/riscv: generalize custom CSR functionality
-  target/riscv: convert TT C906 to RISCVCPUDef
-  target/riscv: convert TT Ascalon to RISCVCPUDef
-  target/riscv: convert Ventana V1 to RISCVCPUDef
-  target/riscv: convert Xiangshan Nanhu to RISCVCPUDef
-  target/riscv: remove .instance_post_init
-
- target/riscv/cpu-qom.h            |    2 +
- target/riscv/cpu.h                |   42 +-
- target/riscv/cpu_cfg.h            |  178 +----
- target/riscv/cpu_cfg_fields.h.inc |  170 +++++
- hw/riscv/boot.c                   |    2 +-
- hw/riscv/virt-acpi-build.c        |   15 +-
- hw/riscv/virt.c                   |    5 +-
- target/riscv/cpu.c                | 1014 +++++++++++++----------------
- target/riscv/csr.c                |   11 +-
- target/riscv/gdbstub.c            |    6 +-
- target/riscv/kvm/kvm-cpu.c        |   27 +-
- target/riscv/machine.c            |    2 +-
- target/riscv/tcg/tcg-cpu.c        |   13 +-
- target/riscv/th_csr.c             |   30 +-
- target/riscv/translate.c          |    2 +-
- 15 files changed, 730 insertions(+), 789 deletions(-)
- create mode 100644 target/riscv/cpu_cfg_fields.h.inc
-
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 97dc3ba7811..62e303f0635 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -537,6 +537,10 @@ struct ArchCPU {
+     const GPtrArray *decoders;
+ };
+ 
++typedef struct RISCVCPUDef {
++    RISCVMXL misa_mxl_max;  /* max mxl for this cpu */
++} RISCVCPUDef;
++
+ /**
+  * RISCVCPUClass:
+  * @parent_realize: The parent class' realize handler.
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index ab6ee39d304..f30cf1b532b 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -3074,8 +3074,9 @@ static void riscv_cpu_common_class_init(ObjectClass *c, const void *data)
+ static void riscv_cpu_class_init(ObjectClass *c, const void *data)
+ {
+     RISCVCPUClass *mcc = RISCV_CPU_CLASS(c);
++    const RISCVCPUDef *def = data;
+ 
+-    mcc->misa_mxl_max = (RISCVMXL)GPOINTER_TO_UINT(data);
++    mcc->misa_mxl_max = def->misa_mxl_max;
+     riscv_cpu_validate_misa_mxl(mcc);
+ }
+ 
+@@ -3171,40 +3172,48 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt, char *nodename)
+ }
+ #endif
+ 
+-#define DEFINE_DYNAMIC_CPU(type_name, misa_mxl_max, initfn) \
++#define DEFINE_DYNAMIC_CPU(type_name, misa_mxl_max_, initfn) \
+     {                                                       \
+         .name = (type_name),                                \
+         .parent = TYPE_RISCV_DYNAMIC_CPU,                   \
+         .instance_init = (initfn),                          \
+         .class_init = riscv_cpu_class_init,                 \
+-        .class_data = GUINT_TO_POINTER(misa_mxl_max)        \
++        .class_data = &((const RISCVCPUDef) {               \
++             .misa_mxl_max = (misa_mxl_max_),               \
++        }),                                                 \
+     }
+ 
+-#define DEFINE_VENDOR_CPU(type_name, misa_mxl_max, initfn)  \
++#define DEFINE_VENDOR_CPU(type_name, misa_mxl_max_, initfn) \
+     {                                                       \
+         .name = (type_name),                                \
+         .parent = TYPE_RISCV_VENDOR_CPU,                    \
+         .instance_init = (initfn),                          \
+         .class_init = riscv_cpu_class_init,                 \
+-        .class_data = GUINT_TO_POINTER(misa_mxl_max)        \
++        .class_data = &((const RISCVCPUDef) {               \
++             .misa_mxl_max = (misa_mxl_max_),               \
++        }),                                                 \
+     }
+ 
+-#define DEFINE_BARE_CPU(type_name, misa_mxl_max, initfn)    \
++#define DEFINE_BARE_CPU(type_name, misa_mxl_max_, initfn)   \
+     {                                                       \
+         .name = (type_name),                                \
+         .parent = TYPE_RISCV_BARE_CPU,                      \
+         .instance_init = (initfn),                          \
+         .class_init = riscv_cpu_class_init,                 \
+-        .class_data = GUINT_TO_POINTER(misa_mxl_max)        \
++        .class_data = &((const RISCVCPUDef) {               \
++             .misa_mxl_max = (misa_mxl_max_),               \
++        }),                                                 \
+     }
+ 
+-#define DEFINE_PROFILE_CPU(type_name, misa_mxl_max, initfn) \
++#define DEFINE_PROFILE_CPU(type_name, misa_mxl_max_, initfn) \
+     {                                                       \
+         .name = (type_name),                                \
+         .parent = TYPE_RISCV_BARE_CPU,                      \
+         .instance_init = (initfn),                          \
+         .class_init = riscv_cpu_class_init,                 \
+-        .class_data = GUINT_TO_POINTER(misa_mxl_max)        \
++        .class_data = &((const RISCVCPUDef) {               \
++             .misa_mxl_max = (misa_mxl_max_),               \
++        }),                                                 \
+     }
+ 
+ static const TypeInfo riscv_cpu_type_infos[] = {
 -- 
 2.49.0
 
