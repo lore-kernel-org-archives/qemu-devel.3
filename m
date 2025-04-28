@@ -4,72 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EED0EC369D9
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 03:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33303C36005
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 04:08:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9FCs-0001yX-59; Sun, 27 Apr 2025 23:30:58 -0400
+	id 1u9FmF-0004dz-5z; Mon, 28 Apr 2025 00:07:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1u9FCp-0001wL-FL
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 23:30:55 -0400
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1u9FiL-0004Ci-7H
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 00:03:29 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1u9FCn-0007Zg-4W
- for qemu-devel@nongnu.org; Sun, 27 Apr 2025 23:30:55 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxaeFq9g5o9PXHAA--.25642S3;
- Mon, 28 Apr 2025 11:30:50 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowMAxDcVp9g5oxmKaAA--.58193S3;
- Mon, 28 Apr 2025 11:30:49 +0800 (CST)
-Subject: Re: [PATCH v2 2/2] hw/loongarch/virt: Allow user to customize OEM ID
- and OEM table ID
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Igor Mammedov <imammedo@redhat.com>
-References: <20250304074134.1782295-1-maobibo@loongson.cn>
- <20250304074134.1782295-3-maobibo@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <01e32995-9bd5-254d-2c37-577c72e0b679@loongson.cn>
-Date: Mon, 28 Apr 2025 11:33:28 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (envelope-from <maobibo@loongson.cn>) id 1u9FiG-0003ep-FI
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 00:03:28 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8Bx32sJ_g5oHv3HAA--.4142S3;
+ Mon, 28 Apr 2025 12:03:21 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMDxvhsC_g5o63OaAA--.7484S7;
+ Mon, 28 Apr 2025 12:03:20 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+Subject: [PULL 5/8] hw/intc/loongarch_pch: Replace legacy reset callback with
+ new api
+Date: Mon, 28 Apr 2025 12:03:10 +0800
+Message-Id: <20250428040313.413822-6-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250428040313.413822-1-maobibo@loongson.cn>
+References: <20250428040313.413822-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-In-Reply-To: <20250304074134.1782295-3-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowMAxDcVp9g5oxmKaAA--.58193S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxZF47XryruFWUKF13Cw43twc_yoW5Ww4DpF
- 4fZr95WFyUXF17GwsxJ3WkCFn8Grs2ka4jgFs7Zr1xCF98ur1DGr1xCw47tFy8A34qqF4F
- 9w1v9rZxWayxJ3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVW8JVW5JwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jo
- sjUUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+X-CM-TRANSID: qMiowMDxvhsC_g5o63OaAA--.7484S7
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-1.279, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,94 +65,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ÔÚ 2025/3/4 ÏÂÎç3:41, Bibo Mao Ð´µÀ:
-> On LoongArch virt machine, the default OEM ID and OEM table ID is
-> "BOCHS " and "BXPC    ". Here property x-oem-id and x-oem-table-id
-> is added on virt machine to set customized OEM ID and OEM table ID.
->
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   hw/loongarch/virt.c | 58 +++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 58 insertions(+)
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+Replace legacy reset callback register device_class_set_legacy_reset()
+with new function resettable_class_set_parent_phases(). With new API,
+it will call reset callback of parent object.
 
-thanks,
-Song Gao
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 59533b058b..ff28e57e32 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -770,6 +770,48 @@ static void virt_set_acpi(Object *obj, Visitor *v, const char *name,
->       visit_type_OnOffAuto(v, name, &lvms->acpi, errp);
->   }
->   
-> +static char *virt_get_oem_id(Object *obj, Error **errp)
-> +{
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> +
-> +    return g_strdup(lvms->oem_id);
-> +}
-> +
-> +static void virt_set_oem_id(Object *obj, const char *value, Error **errp)
-> +{
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> +    size_t len = strlen(value);
-> +
-> +    if (len > 6) {
-> +        error_setg(errp,
-> +                   "User specified oem-id value is bigger than 6 bytes in size");
-> +        return;
-> +    }
-> +
-> +    strncpy(lvms->oem_id, value, 6);
-> +}
-> +
-> +static char *virt_get_oem_table_id(Object *obj, Error **errp)
-> +{
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> +
-> +    return g_strdup(lvms->oem_table_id);
-> +}
-> +
-> +static void virt_set_oem_table_id(Object *obj, const char *value,
-> +                                  Error **errp)
-> +{
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> +    size_t len = strlen(value);
-> +
-> +    if (len > 8) {
-> +        error_setg(errp,
-> +                   "User specified oem-table-id value is bigger than 8 bytes in size");
-> +        return;
-> +    }
-> +    strncpy(lvms->oem_table_id, value, 8);
-> +}
-> +
->   static void virt_initfn(Object *obj)
->   {
->       LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> @@ -973,6 +1015,22 @@ static void virt_class_init(ObjectClass *oc, void *data)
->   #ifdef CONFIG_TPM
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
->   #endif
-> +    object_class_property_add_str(oc, "x-oem-id",
-> +                                  virt_get_oem_id,
-> +                                  virt_set_oem_id);
-> +    object_class_property_set_description(oc, "x-oem-id",
-> +                                          "Override the default value of field OEMID "
-> +                                          "in ACPI table header."
-> +                                          "The string may be up to 6 bytes in size");
-> +
-> +
-> +    object_class_property_add_str(oc, "x-oem-table-id",
-> +                                  virt_get_oem_table_id,
-> +                                  virt_set_oem_table_id);
-> +    object_class_property_set_description(oc, "x-oem-table-id",
-> +                                          "Override the default value of field OEM Table ID "
-> +                                          "in ACPI table header."
-> +                                          "The string may be up to 8 bytes in size");
->   }
->   
->   static const TypeInfo virt_machine_types[] = {
+The internal state has been cleared in parent object
+LOONGARCH_PIC_COMMON, here parent_phases.hold() is directly called.
+
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+---
+ hw/intc/loongarch_pch_pic.c         | 26 ++++++++------------------
+ include/hw/intc/loongarch_pch_pic.h |  1 +
+ 2 files changed, 9 insertions(+), 18 deletions(-)
+
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index acd75ccb0c..32b7275996 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -354,25 +354,13 @@ static const MemoryRegionOps loongarch_pch_pic_reg8_ops = {
+     .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
+-static void loongarch_pch_pic_reset(DeviceState *d)
++static void loongarch_pic_reset_hold(Object *obj, ResetType type)
+ {
+-    LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(d);
+-    int i;
+-
+-    s->int_mask = -1;
+-    s->htmsi_en = 0x0;
+-    s->intedge  = 0x0;
+-    s->intclr   = 0x0;
+-    s->auto_crtl0 = 0x0;
+-    s->auto_crtl1 = 0x0;
+-    for (i = 0; i < 64; i++) {
+-        s->route_entry[i] = 0x1;
+-        s->htmsi_vector[i] = 0x0;
++    LoongarchPICClass *lpc = LOONGARCH_PIC_GET_CLASS(obj);
++
++    if (lpc->parent_phases.hold) {
++        lpc->parent_phases.hold(obj, type);
+     }
+-    s->intirr = 0x0;
+-    s->intisr = 0x0;
+-    s->last_intirr = 0x0;
+-    s->int_polarity = 0x0;
+ }
+ 
+ static void loongarch_pic_realize(DeviceState *dev, Error **errp)
+@@ -408,8 +396,10 @@ static void loongarch_pic_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     LoongarchPICClass *lpc = LOONGARCH_PIC_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
+ 
+-    device_class_set_legacy_reset(dc, loongarch_pch_pic_reset);
++    resettable_class_set_parent_phases(rc, NULL, loongarch_pic_reset_hold,
++                                       NULL, &lpc->parent_phases);
+     device_class_set_parent_realize(dc, loongarch_pic_realize,
+                                     &lpc->parent_realize);
+ }
+diff --git a/include/hw/intc/loongarch_pch_pic.h b/include/hw/intc/loongarch_pch_pic.h
+index 481cc58aed..839a59a43b 100644
+--- a/include/hw/intc/loongarch_pch_pic.h
++++ b/include/hw/intc/loongarch_pch_pic.h
+@@ -22,6 +22,7 @@ struct LoongarchPICClass {
+     LoongArchPICCommonClass parent_class;
+ 
+     DeviceRealize parent_realize;
++    ResettablePhases parent_phases;
+ };
+ 
+ #endif /* HW_LOONGARCH_PCH_PIC_H */
+-- 
+2.43.5
 
 
