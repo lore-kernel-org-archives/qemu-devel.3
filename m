@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5801DC369D8
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:36:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48976C369DC
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 11:38:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9MmF-0004uv-JM; Mon, 28 Apr 2025 07:36:00 -0400
+	id 1u9Mo2-00074u-Gq; Mon, 28 Apr 2025 07:37:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u9Mm0-0004dk-7C; Mon, 28 Apr 2025 07:35:45 -0400
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ id 1u9Mnp-00070l-F5; Mon, 28 Apr 2025 07:37:40 -0400
+Received: from mail-ua1-x934.google.com ([2607:f8b0:4864:20::934])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u9Mlx-0007IU-2B; Mon, 28 Apr 2025 07:35:43 -0400
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-5240b014f47so1965894e0c.1; 
- Mon, 28 Apr 2025 04:35:39 -0700 (PDT)
+ id 1u9Mnl-0007Vy-8v; Mon, 28 Apr 2025 07:37:36 -0400
+Received: by mail-ua1-x934.google.com with SMTP id
+ a1e0cc1a2514c-86d69774081so1965841241.0; 
+ Mon, 28 Apr 2025 04:37:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745840139; x=1746444939; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745840251; x=1746445051; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3EsV7k/FuAOkrFGPbTAMGG3l2r0gJBfaQzva5veKlH4=;
- b=hGn73dVaYxctQ90p+5675OgG9+bwUZUvNubdNbHHAsJ/u2zV0VP/Wq1eap6awX94q3
- 9Fba0LYKji3X19ABduIy/YZzuRGZb60trPAqTs30BJU7O6K/CUGBaiYObI1V17g/TuZ7
- RyO1CIMXUyWmhBYzqqzHN+IOjsf9OpaCpxACT0Ix3uRj+GgpObIy9jQ+MDIDFr6YGAu0
- DGb0n1sWgDSDenEzZea9o/nbkYw+FGfLd317xKc0lm8NZmOuq+rVy8l+QxlPlhb43qqu
- RY7+d3nMtcvS6TQPZEiYg2xiJn5IjZCAjZBPQ4caxM1CpuD2OwXGETmZ0ABCQWffJyWW
- +MxA==
+ bh=XaMnPXgZvOCHElWWI4dW7rr7ASgl5wjxBGiCfDYNC5A=;
+ b=Q6KFVDChxl2QiAUw4ix3+4X4sLk5A5cMg/YD1IY5aoa/HzJNWc/a+ioi+vuDYT4zyg
+ fEltW8ZocKj17sWfYokCngwXlrBidZyLeNErKHiDJjqycK6rGcDf/K4J4DgoKabnVScy
+ N3ChKpPze2Ax3QCDoUz/42bri3hM1p3Jdiy11YuiwisyaJfgFqETfX6P4nMlvyTn4Eet
+ GXZOB34qI1vilmUB9/V18UJuVsMbXTECOck9QvwUD0lwViFr8IdNOghadaprywW5aODn
+ MD9bntbNv48q+4tXyxNUxz937Lr2UtaAP4znsfwXs6ywytooNDYvoNSGVG3BYargRJJ1
+ 92XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745840139; x=1746444939;
+ d=1e100.net; s=20230601; t=1745840251; x=1746445051;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3EsV7k/FuAOkrFGPbTAMGG3l2r0gJBfaQzva5veKlH4=;
- b=QfVwHegj8C+2aGN6r8EmkAsFsptIVJl59s5I/0zYXzST46XScuCT5OAVhgAlk1szYm
- Cqbhr/yH3d4K5Z8HfTfqJDUZmBU+Uc9tuA62ohcqz/aVkbhFGW5JYT3Ry3nk6cHKQ2Yd
- lsnD8w19M1xevpP5UPe7qW0eLuivJvBCGQEwXPzsbseD+mpmJwVeanOq5r5xk9+lfNuY
- UKWKa4DmSuUzZ8ZLlho3CCY6rCDwU5wYDVnvoGDTLXnfKXrCwkRNE0bzquXwvTIaqtcN
- TRgB3sAlEuK7elaNm4O5g1UqV9n42niMg+hGE/rE4moPeFui6CJwJp5vmUGYtCzdqMRy
- H60g==
+ bh=XaMnPXgZvOCHElWWI4dW7rr7ASgl5wjxBGiCfDYNC5A=;
+ b=R8qjSLTyGJoQ8uNqP+N/70ouxlHsN3VMD066I4Hn95ePu36utGL3QpFaGHccZOh1jE
+ 11eo7ELjKNVcd0v1VbYN7f9C0PcC5tB/YpjsnC+GifuwQ04cBmyW4CBD7Q46KtkfbUpW
+ jEftGzwQa6kJvewYiLbe/MyKEpwuRQzSkOBa9QL9UgQd6D/lfY9dxf2wwnJY+YxImB9n
+ EZUqLUGL+1RplI6oOtjxzp0870TnYE1orytIF86ZPaGkRboFTEv2paGtS/WkTYbUd7Xv
+ TgpOemN7Ycp+WUVlbBgfAjDMqUsaGZpZJgUVLZ2LNtVq8z1A8ZwecZxM/bMBlWaCA9Cw
+ uubw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUHhGEMiRe7n1jf2/IEy2kic/KsywCJeYPmeaDCxCBRRLP2u1Q4rM9+TEdLZdBBh9oERbytXk8s+5Vr@nongnu.org
-X-Gm-Message-State: AOJu0Yzb89GRvyhTGrFj+h1DCDFOnm4s1cXZE8Cw4Ic4UeipdAxsdCIj
- k8RjMqcgiYnswHnp1wQfpJm77hu5f1iiFCyJ+BnewTVmqPt9nQJJVv9THU/LczTGF0pMUrqRhRB
- mkv87+4BUwD9EFrNbkts0Cmlb3wQ=
-X-Gm-Gg: ASbGncs8pR0s1xT2wXt5tcg86bDqK7158HPjT/4tO1DWJuasIQaXOS3+mHZ8PqWBVE/
- fGVQxnCFfGlrdAYW8VeZQsmhE8TPhnhgUaU6JXZnB1X8p/FqoTQcxc4MisRR5ssc7fRPKqWQdsk
- 47+Yxllr5vYfA3dQHL1WHYoU9h9dEFDXvJzr//XVC1/1JwIZBo20Kn
-X-Google-Smtp-Source: AGHT+IEfqb3rapnJLVZDVFhbb2VzUGIU/m2xTt/WPD6e0a8c4/XoKQDlLEGbCvModZSsQ4GJp3EhDFBR1ku7aBvl6cM=
-X-Received: by 2002:a05:6122:1818:b0:529:2644:8c with SMTP id
- 71dfb90a1353d-52a9713267emr4703890e0c.8.1745840139094; Mon, 28 Apr 2025
- 04:35:39 -0700 (PDT)
+ AJvYcCUd0gHYslTR4rrExVc8iXlJoRgdHIQ9hT7sDxODy/MXgBnQG3KCJTdpS1PF9tmuMbKiSXBJE+PrMNDL@nongnu.org
+X-Gm-Message-State: AOJu0YyBYajlD6avmJ3XqSY0l6yd+p9viKpK/P6eTLmUYk3NrnIVxTsZ
+ gJ8cdE4JQeMkV8GPp5OAW2Bl2ziirRfIpa5dcrSmHfUZvMbVfVKdAGlPN/gdJnRhLkH26j+LDDr
+ nbrbTI4JE5O9UFgR5WuooD57Nwu8=
+X-Gm-Gg: ASbGnctETcpn02EdShWNXMqUpr6YHEWJL9P+MTui8saopvwQiS2l0QyH8RIZm3ML//T
+ V8IgbpGOIVKthH35pFzcDcfmZl5FmtULEqzwXAlNetmFtNjo8p4NZ730hIZKcnunQ9z9pg8z6Mk
+ 53dtBJN4DtVFj7YmBu3rO5vIlmTe4dhjYDIQbOVove6+TbIm8LdptR
+X-Google-Smtp-Source: AGHT+IFG94sTfMDUfjMf+obOkFI71MyAP4YJWA5NARMWNON6IoRUQlkhDDfef1kwx++bkCbQwFN2FxTSU1OT+Yv636k=
+X-Received: by 2002:a05:6102:2042:b0:4c1:76a4:aee4 with SMTP id
+ ada2fe7eead31-4d641f6746fmr4190380137.19.1745840251348; Mon, 28 Apr 2025
+ 04:37:31 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250425160203.2774835-1-dbarboza@ventanamicro.com>
- <20250425160203.2774835-3-dbarboza@ventanamicro.com>
-In-Reply-To: <20250425160203.2774835-3-dbarboza@ventanamicro.com>
+ <20250425160203.2774835-4-dbarboza@ventanamicro.com>
+In-Reply-To: <20250425160203.2774835-4-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 28 Apr 2025 21:35:12 +1000
-X-Gm-Features: ATxdqUHxRc7YS4s0NgiWyQWFaDmB8A0vffoSHAhSfqwxJRn09_ei8hTtSb4PBu0
-Message-ID: <CAKmqyKP_rwOskpCGuwy2AWyp+QFTemCV5-TrnyphSUuAxm_XpA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/9] target/riscv/kvm: fix leak in
- kvm_riscv_init_multiext_cfg()
+Date: Mon, 28 Apr 2025 21:37:04 +1000
+X-Gm-Features: ATxdqUH7McXznPAvt1tVsE59baF52qIjrVSQ5nnjPQQR9iHKnyBnYEgp4rozyes
+Message-ID: <CAKmqyKNg3P44zUxKpz1y0joOennykQUA7YkOO=3WfXqu7QV2vA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/9] target/riscv/kvm: turn u32/u64 reg functions into
+ macros
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
  ajones@ventanamicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::934;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x934.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,12 +98,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Apr 26, 2025 at 2:06=E2=80=AFAM Daniel Henrique Barboza
+On Sat, Apr 26, 2025 at 2:03=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> 'reglist' is being g-malloc'ed but never freed.
+> This change is motivated by a future change w.r.t CSRs management. We
+> want to handle them the same way as KVM extensions, i.e. a static array
+> with KVMCPUConfig objs that will be read/write during init and so on.
+> But to do that properly we must be able to declare a static array that
+> hold KVM regs.
 >
-> Reported-by: Andrew Jones <ajones@ventanamicro.com>
+> C does not allow to init static arrays and use functions as
+> initializers, e.g. we can't do:
+>
+> .kvm_reg_id =3D kvm_riscv_reg_id_ulong(...)
+>
+> When instantiating the array. We can do that with macros though, so our
+> goal is turn kvm_riscv_reg_ulong() in a macro. It is cleaner to turn
+> every other reg_id_*() function in macros, and ulong will end up using
+> the macros for u32 and u64, so we'll start with them.
+>
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
@@ -112,27 +125,71 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/kvm/kvm-cpu.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  target/riscv/kvm/kvm-cpu.c | 22 +++++++++-------------
+>  1 file changed, 9 insertions(+), 13 deletions(-)
 >
 > diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index accad4c28e..6ba122f360 100644
+> index 6ba122f360..c91ecdfe59 100644
 > --- a/target/riscv/kvm/kvm-cpu.c
 > +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -1119,10 +1119,10 @@ static void kvm_riscv_read_vlenb(RISCVCPU *cpu, K=
-VMScratchCPU *kvmcpu,
+> @@ -58,6 +58,12 @@ void riscv_kvm_aplic_request(void *opaque, int irq, in=
+t level)
 >
->  static void kvm_riscv_init_multiext_cfg(RISCVCPU *cpu, KVMScratchCPU *kv=
-mcpu)
+>  static bool cap_has_mp_state;
+>
+> +#define KVM_RISCV_REG_ID_U32(type, idx) (KVM_REG_RISCV | KVM_REG_SIZE_U3=
+2 | \
+> +                                         type | idx)
+> +
+> +#define KVM_RISCV_REG_ID_U64(type, idx) (KVM_REG_RISCV | KVM_REG_SIZE_U6=
+4 | \
+> +                                         type | idx)
+> +
+>  static uint64_t kvm_riscv_reg_id_ulong(CPURISCVState *env, uint64_t type=
+,
+>                                   uint64_t idx)
 >  {
-> +    g_autofree struct kvm_reg_list *reglist =3D NULL;
->      KVMCPUConfig *multi_ext_cfg;
->      struct kvm_one_reg reg;
->      struct kvm_reg_list rl_struct;
-> -    struct kvm_reg_list *reglist;
->      uint64_t val, reg_id, *reg_search;
->      int i, ret;
+> @@ -76,16 +82,6 @@ static uint64_t kvm_riscv_reg_id_ulong(CPURISCVState *=
+env, uint64_t type,
+>      return id;
+>  }
 >
+> -static uint64_t kvm_riscv_reg_id_u32(uint64_t type, uint64_t idx)
+> -{
+> -    return KVM_REG_RISCV | KVM_REG_SIZE_U32 | type | idx;
+> -}
+> -
+> -static uint64_t kvm_riscv_reg_id_u64(uint64_t type, uint64_t idx)
+> -{
+> -    return KVM_REG_RISCV | KVM_REG_SIZE_U64 | type | idx;
+> -}
+> -
+>  static uint64_t kvm_encode_reg_size_id(uint64_t id, size_t size_b)
+>  {
+>      uint64_t size_ctz =3D __builtin_ctz(size_b);
+> @@ -119,12 +115,12 @@ static uint64_t kvm_riscv_vector_reg_id(RISCVCPU *c=
+pu,
+>      kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_CONFIG, \
+>                             KVM_REG_RISCV_CONFIG_REG(name))
+>
+> -#define RISCV_TIMER_REG(name)  kvm_riscv_reg_id_u64(KVM_REG_RISCV_TIMER,=
+ \
+> +#define RISCV_TIMER_REG(name)  KVM_RISCV_REG_ID_U64(KVM_REG_RISCV_TIMER,=
+ \
+>                   KVM_REG_RISCV_TIMER_REG(name))
+>
+> -#define RISCV_FP_F_REG(idx)  kvm_riscv_reg_id_u32(KVM_REG_RISCV_FP_F, id=
+x)
+> +#define RISCV_FP_F_REG(idx)  KVM_RISCV_REG_ID_U32(KVM_REG_RISCV_FP_F, id=
+x)
+>
+> -#define RISCV_FP_D_REG(idx)  kvm_riscv_reg_id_u64(KVM_REG_RISCV_FP_D, id=
+x)
+> +#define RISCV_FP_D_REG(idx)  KVM_RISCV_REG_ID_U64(KVM_REG_RISCV_FP_D, id=
+x)
+>
+>  #define RISCV_VECTOR_CSR_REG(env, name) \
+>      kvm_riscv_reg_id_ulong(env, KVM_REG_RISCV_VECTOR, \
 > --
 > 2.49.0
 >
