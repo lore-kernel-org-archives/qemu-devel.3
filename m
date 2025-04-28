@@ -4,94 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E85BC369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 15:55:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60FBEC369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 15:57:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9Qoi-0004kI-NX; Mon, 28 Apr 2025 11:54:48 -0400
+	id 1u9Qqs-00088r-7p; Mon, 28 Apr 2025 11:57:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u9QoU-0004c4-73
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 11:54:34 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u9QoP-0005Cf-6q
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 11:54:33 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-225477548e1so52818115ad.0
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 08:54:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745855667; x=1746460467; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=WLgNM24oE8JmYOvmumG7fHdb/by6PACQ5IWUN8ph6Ec=;
- b=ctlDmyqNDtFocaR/kdtYr5HR2on314aN/icyLAp1gDE8FnM1qUMXeSjzPFaNE1jPFe
- ArRx5A+EKnyXG5zweMBHVQu8hn5GH9Gxzh14+sn0n3JdGIVSgwMzhuc/1ehYiG+EwUJ1
- 1cQQyZStXlK1oDpWoMojucVH497Z0t8Knsl8O3vW/NJqncBCQBLAlsJjxJYaovQZclUM
- TKeuYqQ0qAuT+DxzOV+OeMdO4wL9BVXD+O4xSvd7JiTXXSmkyfHzEuMtYbhLJ503az47
- eoyjs6Ivz/ctx/D4o3uBw6TX9uAkKf7OSZGXRU58JbaAwH9Ufr/gDsHvY6oI0l3xPB5O
- ZeKQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1u9Qqd-0007wf-GL
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 11:56:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1u9QqX-0005jp-Nd
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 11:56:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745855794;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ktVKJmtkMVGmq1y2Ov1M19xkWiMbtAmAmsDoTOZZCy4=;
+ b=J3Zm51xiU4nXOkHQW5X6B0c/QNZPJB5RMIdWIzael0Jh6VvMyAJ2Gmr8iirU1UEuIUCq2W
+ hobF5MLSdEd02b1zMpWjPn+RG64igtRfh1pIdXAn0UIevdvBKH6PgSxP+O6lwv22oKuL1A
+ QQXXTBynqMO90x3eUJUq9mD5olGTrxg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-227-fl3dfBbMPTSy7DGsVYMFzg-1; Mon, 28 Apr 2025 11:56:31 -0400
+X-MC-Unique: fl3dfBbMPTSy7DGsVYMFzg-1
+X-Mimecast-MFC-AGG-ID: fl3dfBbMPTSy7DGsVYMFzg_1745855791
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43cf44b66f7so29939175e9.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 08:56:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745855667; x=1746460467;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WLgNM24oE8JmYOvmumG7fHdb/by6PACQ5IWUN8ph6Ec=;
- b=guaN5tGrwa/ENfCOf/tmz/zkROln9/EJgVxR4bxRVYh3SzNORlxMHa3uOZVLzeni3/
- mL4bCsUTKbyNwccuJaTb4UPeYpsaeQGOW6P8NI99Mgk55lsQRI4hpDuHDRIO10EudNH2
- /fR55kDSrJ/QgKnJm0swaDkVe/q0Nl6ur0aQ6ApIFWmo/UfAsoYb1NkacXOxQpXxx+Aj
- sZ5tJ+jHPfneKSkXWpHgj02BO45ZmyQe4B1W/b/UxToCQvUBcL9vb5EBXenQjiNmnpWt
- lTol07rgFN8EcZaGixLzmVzAe6RXLzmELsGRsjJD7wv+06rDbcBbu0mJxYEW7EFkVghz
- +LGQ==
-X-Gm-Message-State: AOJu0Yzrrh55UArTBq4Pdlb17uFDss4laTyBzfhanI2p0C7O7guezaJD
- Y+cO9TElhCzi4VawFPDG941lVVU06O/xv5qmeqo4FTer3RM62ZBBh6ZcmXcePdQ=
-X-Gm-Gg: ASbGncsQe9YUZV8kmQj+CjX1O/w6obrv58XHSibNwRNPz2Ko7niakpFidh4mvtyBkz/
- PU5eHb4cXwswFGo23HWinqfmS5OSdqNsmQN/wYMwR4oxrfR1QISlF8q5Z+KobYWySK8rN+R6Psf
- FMChjJImYrr1FZpc1G45uHxrIlPt21V4ITszMN5RGE9yUdd62UvU80Oqs7bfmpH/Wvk7SvPa1FD
- uTYUmR68y69HFYrX/2slIg2cuoQNgNfX3QLMXzC7Ooe32JRFqJ78AQcjk6CvGzCdnAChNsrhZkK
- XYrUU3IKT+YTzy6Asiv31yinR0AlUDZ3scI38S9KZ8l9T6fcS4SVZg==
-X-Google-Smtp-Source: AGHT+IFWmpd25z64+80HJ2mg4NMlGTmYsykQ+pPkkcobYVy0g4RP5ROnKHGdEUkUirlKR3meBiZ2tg==
-X-Received: by 2002:a17:902:db02:b0:223:fabd:4f99 with SMTP id
- d9443c01a7336-22de5ec17aamr2294405ad.5.1745855667007; 
- Mon, 28 Apr 2025 08:54:27 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ d=1e100.net; s=20230601; t=1745855790; x=1746460590;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ktVKJmtkMVGmq1y2Ov1M19xkWiMbtAmAmsDoTOZZCy4=;
+ b=X9gpjmqr94uQcqyxTwpUPk0n+ZcYjq+q5SBDhI+P68GporecdKVFUP1XWO8OcEL4Cx
+ QAaCrsgixcWHzcRC3hAeyeUAVc4RsXA7YaAUH7PA7MONsHVqvyBElpRhOKCsqcZeFiAd
+ nAxqSXFKlzMj7htVgGAUwm0jkak/NDL0XgNvhbEz0+bDrAQOjuOb+gaBqcgbt9rr+oO3
+ sRng4IqPqOTLDAWRP/ZVQwcAzqNRK62AVLb/4zwDRfJJS+4PQAvSEKRAtXB5Rdx3DLZt
+ uIujoTQIKxQLsAWtPb7Bf89abX6v2eEhrqq4DRJo3ZKXrIntE5bZZDp/2bgjLCocfYXr
+ 8k9g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWR0Uk1gsg6Hf4jek2iAjomq9rpdRzcx3mrTkrG/Kn6xx6bLNvhYZa/ERGNV1OaGE1AL64NJGp+0EZN@nongnu.org
+X-Gm-Message-State: AOJu0Yz7r1vcu7Ke+KNxI//X3D4jweJuAWQ4gmCDuMHqlZOhzYKWoabN
+ iPWrw8ZsxUUE3oxqR1GC7GZJ3iFVstHTHr92AKRvxLwsCuFM9tjB1tEL34MtE+EDQalVv37DytL
+ 26vGvURch240uq/jdFPFzcMzPPtCGENiWzBayJi2dUxviqE5+E28i
+X-Gm-Gg: ASbGncvbZwSIYzfyccXIf/AqUPTg6cPa1XxMQbrZEysWxDM+LZRxBub/irGdoPkIAES
+ J5bb13Ax1HRes0w/GObkOG/HV6jSf4tcwJ21/j+tB9E6Pg2ImSKijCc03MEhJHtuI+e+AuCHaY0
+ hUBmhmSo6wKq/+bfEzApXKyN0U8wpqbB6Sy5VoKXazzJieqidd9iP837ABVEYnkoyNRvPVntlbB
+ 8EIsTHvTuYlWzLkkFdrChwpLbDINBzMqPcLoY2nS9X1/vYAjewWImUCWmjkSBLucz6i9H/FwN/8
+ 9PbkIxXhq7D9T4ofx7+kM5qC4k4m6tfpszAw6Y1YkcKg2obsEJMx1rQ4apI=
+X-Received: by 2002:a05:600c:1ca0:b0:43c:ec4c:25b1 with SMTP id
+ 5b1f17b1804b1-440a66ac67bmr89982685e9.23.1745855790518; 
+ Mon, 28 Apr 2025 08:56:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHH0Rnv14Di0hDXdSVIQJAGLOiTt+LHLrKc0/nI1AqVgmEB0mBp0k9/vn+RMml2vXyJSyptdQ==
+X-Received: by 2002:a05:600c:1ca0:b0:43c:ec4c:25b1 with SMTP id
+ 5b1f17b1804b1-440a66ac67bmr89982455e9.23.1745855790107; 
+ Mon, 28 Apr 2025 08:56:30 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db52214fdsm84327345ad.251.2025.04.28.08.54.26
+ 5b1f17b1804b1-4409d2a2386sm164158895e9.14.2025.04.28.08.56.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 08:54:26 -0700 (PDT)
-Message-ID: <1e93220e-0390-43f6-b8f7-beedacf5c65f@linaro.org>
-Date: Mon, 28 Apr 2025 08:54:25 -0700
+ Mon, 28 Apr 2025 08:56:29 -0700 (PDT)
+Message-ID: <c150cb74-d11a-4090-90fa-0405a488c471@redhat.com>
+Date: Mon, 28 Apr 2025 17:56:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, stefanha@redhat.com, 
- Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
- peter.maydell@linaro.org, thuth@redhat.com, jsnow@redhat.com,
- philmd@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
- <aAs6Q2GiBUbUCc2I@redhat.com>
- <65639a73-c6d7-472f-8788-69341f93760d@linaro.org>
- <aA8-PjcGmMrGqXGK@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH for-10.1 v5 06/13] arm/cpu: Store aa64dfr0/1 into the
+ idregs array
 Content-Language: en-US
-In-Reply-To: <aA8-PjcGmMrGqXGK@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+To: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ agraf@csgraf.de
+Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+References: <20250409144304.912325-1-cohuck@redhat.com>
+ <20250409144304.912325-7-cohuck@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250409144304.912325-7-cohuck@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,130 +120,355 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/28/25 1:37 AM, Daniel P. Berrangé wrote:
-> On Fri, Apr 25, 2025 at 01:39:49PM -0700, Pierrick Bouvier wrote:
->> On 4/25/25 00:35, Daniel P. Berrangé wrote:
->>> On Thu, Apr 24, 2025 at 11:33:47AM -0700, Pierrick Bouvier wrote:
->>>> Feedback
->>>> ========
->>>>
->>>> The goal of this series is to be spark a conversation around following topics:
->>>>
->>>> - Would you be open to such an approach? (expose all code, and restrict commands
->>>>     registered at runtime only for specific targets)
->>>
->>> QMP defines a public API between QEMU and external mgmt apps, and personally I
->>> like the idea that the API exposed is identical across all binaries and thus
->>> the API becomes independent of the impl choice of combined vs separate binaries,.
->>>
->>>> - Are there unexpected consequences for libvirt or other consumers to expose
->>>>     more definitions than what we have now?
->>>
->>> QEMU used the selective hiding of commands in the QMP schema as a mechanism
->>> to allow mgmt apps to probe for supported features. We need to check usage
->>> of each QMP API feature that's behind a TARGET_* condition and identify
->>> which libvirt uses as a feature probe, then come up with a strategy for how
->>> best to handle each case in libvirt in future. We might need some additional
->>> runtime mechanism to probe for certain things, but we won't know until we
->>> look at things in more detail.
->>>
->>
->> Could we consider to hide the concerned commands from introspection related
->> commands as well? The same way we prevent those commands to be registered,
->> we can probably prevent them from being visible for libvirt.
->> The code would still be there, and compiled once, but based on runtime
->> target_X() value, it would not appear in introspected schema.
->>
->> I'm not sure how all this is implemented from QAPI code generator, maybe
->> it's hard to do something like this, if we build the schema at compile time
->> for instance.
->>
->>>> - Would you recommend another approach instead? I experimented with having per
->>>>     target generated files, but we still need to expose quite a lot in headers, so
->>>>     my opinion is that it's much more complicated for zero benefit. As well, the
->>>>     code size impact is more than negligible, so the simpler, the better.
->>>
->>> IMHO it is unfortunate that the API we currently expose has a dependency on
->>> a specific impl choice that mgmt apps are expected to rely on for feature
->>> probing. An ideal API design is not so closely coupled to impl choice
->>> (separate vs combined binaries), and would expose enough functionality
->>> such that mgmt apps continue to work regardless of the impl choices.
->>>
->>
->> At this point, do we know which kind of "feature" gets probed? Is it only
->> the list of commands available, or is there probes based on enum/struct
->> definition?
-> 
-> In general if it is visible from QMP it is liable to get probed - any
-> and every aspect of it is in scope.
-> 
-> To figure this out you need to produce a list of each command/struct/field
-> that has a 'if $TARGET' conditional, and check whether libvirt uses it or
-> not.
+
+
+On 4/9/25 4:42 PM, Cornelia Huck wrote:
+> From: Eric Auger <eric.auger@redhat.com>
 >
-
-At this point, it seems more natural to expose exactly the same 
-information, instead of trying to see "potential" impact of exposing 
-more. I just feel like we'll open a pandora box, and it will take a long 
-time to converge anywhere.
-
-The initial motivation is just to remove per target code in QAPI 
-generated code, and not to trigger a whole refactoring in several projects.
-
->>> We thought the conditionals were a good thing when we first designed QMP
->>> this way. We ended up using two distinct classes of conditionals, one
->>> reflecting build time features and one reflecting which target binary is
->>> used. I don't think we fully contemplated the implications that the latter
->>> set of conditionals would have on our ability to change our impl approach
->>> in future. I think the proposal here is taking us in a good direction
->>> given what we now know.
->>>
->>
->> Thanks for considering an alternative way given the new needs, that's
->> appreciated.
->>
->> Would that possible to get some help from people from libvirt or QAPI
->> developers for this?
-> 
-> There challenge here is how QEMU will change this without back compat
-> problems.
-> 
-> Our deprecation process won't work well here. There's no nice way to flag
-> up that we're about to change the way conditionals work.
-> 
-
-If we expose exactly the same schema, there is no need to change 
-anything. The only impact is on modifying the .json, to add new *_if 
-clauses, targetting runtime, instead of compile time.
-
-When posting my series, I was not aware of all the introspection aspect, 
-and simply was focused on qemu monitor commands which are registered, so 
-thanks for bringing this.
-
-After looking at schema introspection code, I think it will not be hard 
-to expose parts based on a runtime check.
-
-> Most of the time libvirt adapts by changing the way we "probe the data",
-> but in this case its about adapting to the way we "probe data about the
-> data".
-> 
-> This kind of problem is why I liked the previous idea that Phillippe
-> was trying of introducing a "qemu-system-any" - it didn't affect the
-> behaviour of existing qemu-system-$TARGET commands, so apps had a
-> clean line in the sand between old & new behaviour.
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Sebastian Ott <sebott@redhat.com>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> ---
+>  target/arm/cpu-features.h | 16 ++++++++--------
+>  target/arm/cpu.c          | 15 +++++----------
+>  target/arm/cpu.h          |  2 --
+>  target/arm/cpu64.c        |  4 ++--
+>  target/arm/helper.c       |  4 ++--
+>  target/arm/hvf/hvf.c      |  4 ++--
+>  target/arm/internals.h    |  6 +++---
+>  target/arm/kvm.c          | 12 +++++-------
+>  target/arm/tcg/cpu64.c    | 33 +++++++++++++++++----------------
+>  9 files changed, 44 insertions(+), 52 deletions(-)
 >
+> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+> index 36c35f6a434a..7f6331ca437d 100644
+> --- a/target/arm/cpu-features.h
+> +++ b/target/arm/cpu-features.h
+> @@ -900,30 +900,30 @@ static inline bool isar_feature_aa64_nv2(const ARMISARegisters *id)
+>  
+>  static inline bool isar_feature_aa64_pmuv3p1(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, PMUVER) >= 4 &&
+> -        FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, PMUVER) != 0xf;
+> +    return FIELD_EX64_IDREG(id, ID_AA64DFR0, PMUVER) >= 4 &&
+> +        FIELD_EX64_IDREG(id, ID_AA64DFR0, PMUVER) != 0xf;
+>  }
+>  
+>  static inline bool isar_feature_aa64_pmuv3p4(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, PMUVER) >= 5 &&
+> -        FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, PMUVER) != 0xf;
+> +    return FIELD_EX64_IDREG(id, ID_AA64DFR0, PMUVER) >= 5 &&
+> +        FIELD_EX64_IDREG(id, ID_AA64DFR0, PMUVER) != 0xf;
+>  }
+>  
+>  static inline bool isar_feature_aa64_pmuv3p5(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, PMUVER) >= 6 &&
+> -        FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, PMUVER) != 0xf;
+> +    return FIELD_EX64_IDREG(id, ID_AA64DFR0, PMUVER) >= 6 &&
+> +        FIELD_EX64_IDREG(id, ID_AA64DFR0, PMUVER) != 0xf;
+>  }
+>  
+>  static inline bool isar_feature_aa64_debugv8p2(const ARMISARegisters *id)
+>  {
+> -    return FIELD_EX64(id->id_aa64dfr0, ID_AA64DFR0, DEBUGVER) >= 8;
+> +    return FIELD_EX64_IDREG(id, ID_AA64DFR0, DEBUGVER) >= 8;
+>  }
+>  
+>  static inline bool isar_feature_aa64_doublelock(const ARMISARegisters *id)
+>  {
+> -    return FIELD_SEX64(id->id_aa64dfr0, ID_AA64DFR0, DOUBLELOCK) >= 0;
+> +    return FIELD_SEX64_IDREG(id, ID_AA64DFR0, DOUBLELOCK) >= 0;
+>  }
+>  
+>  static inline bool isar_feature_aa64_sve2(const ARMISARegisters *id)
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 23be9ab97334..7bd20d1f2710 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -2353,8 +2353,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>                  cpu);
+>  #endif
+>      } else {
+> -        cpu->isar.id_aa64dfr0 =
+> -            FIELD_DP64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, PMUVER, 0);
+> +        FIELD_DP64_IDREG(isar, ID_AA64DFR0, PMUVER, 0);
+>          cpu->isar.id_dfr0 = FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, PERFMON, 0);
+>          cpu->pmceid0 = 0;
+>          cpu->pmceid1 = 0;
+> @@ -2414,19 +2413,15 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>           * try to access the non-existent system registers for them.
+>           */
+>          /* FEAT_SPE (Statistical Profiling Extension) */
+> -        cpu->isar.id_aa64dfr0 =
+> -            FIELD_DP64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, PMSVER, 0);
+> +        FIELD_DP64_IDREG(isar, ID_AA64DFR0, PMSVER, 0);
+>          /* FEAT_TRBE (Trace Buffer Extension) */
+> -        cpu->isar.id_aa64dfr0 =
+> -            FIELD_DP64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, TRACEBUFFER, 0);
+> +        FIELD_DP64_IDREG(isar, ID_AA64DFR0, TRACEBUFFER, 0);
+>          /* FEAT_TRF (Self-hosted Trace Extension) */
+> -        cpu->isar.id_aa64dfr0 =
+> -            FIELD_DP64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, TRACEFILT, 0);
+> +        FIELD_DP64_IDREG(isar, ID_AA64DFR0, TRACEFILT, 0);
+>          cpu->isar.id_dfr0 =
+>              FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, TRACEFILT, 0);
+>          /* Trace Macrocell system register access */
+> -        cpu->isar.id_aa64dfr0 =
+> -            FIELD_DP64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, TRACEVER, 0);
+> +        FIELD_DP64_IDREG(isar, ID_AA64DFR0, TRACEVER, 0);
+>          cpu->isar.id_dfr0 =
+>              FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, COPTRC, 0);
+>          /* Memory mapped trace */
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 30f27fb64aed..37bb337b3c71 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -1097,8 +1097,6 @@ struct ArchCPU {
+>          uint32_t dbgdidr;
+>          uint32_t dbgdevid;
+>          uint32_t dbgdevid1;
+> -        uint64_t id_aa64dfr0;
+> -        uint64_t id_aa64dfr1;
+>          uint64_t id_aa64smfr0;
+>          uint64_t reset_pmcr_el0;
+>          uint64_t idregs[NUM_ID_IDX];
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index 6d51a53b0abb..4ba53f75ed96 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -671,7 +671,7 @@ static void aarch64_a57_initfn(Object *obj)
+>      cpu->isar.id_isar5 = 0x00011121;
+>      cpu->isar.id_isar6 = 0;
+>      SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+> -    cpu->isar.id_aa64dfr0 = 0x10305106;
+> +    SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+>      SET_IDREG(isar, ID_AA64MMFR0, 0x00001124);
+>      cpu->isar.dbgdidr = 0x3516d000;
+> @@ -733,7 +733,7 @@ static void aarch64_a53_initfn(Object *obj)
+>      cpu->isar.id_isar5 = 0x00011121;
+>      cpu->isar.id_isar6 = 0;
+>      SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+> -    cpu->isar.id_aa64dfr0 = 0x10305106;
+> +    SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+>      SET_IDREG(isar, ID_AA64MMFR0, 0x00001122); /* 40 bit physical addr */
+>      cpu->isar.dbgdidr = 0x3516d000;
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index 15ca88b165e1..8efe508306e5 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -7961,12 +7961,12 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+>                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 5, .opc2 = 0,
+>                .access = PL1_R, .type = ARM_CP_CONST,
+>                .accessfn = access_aa64_tid3,
+> -              .resetvalue = cpu->isar.id_aa64dfr0 },
+> +              .resetvalue = GET_IDREG(isar, ID_AA64DFR0) },
+>              { .name = "ID_AA64DFR1_EL1", .state = ARM_CP_STATE_AA64,
+>                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 5, .opc2 = 1,
+>                .access = PL1_R, .type = ARM_CP_CONST,
+>                .accessfn = access_aa64_tid3,
+> -              .resetvalue = cpu->isar.id_aa64dfr1 },
+> +              .resetvalue = GET_IDREG(isar, ID_AA64DFR1) },
+>              { .name = "ID_AA64DFR2_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
+>                .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 5, .opc2 = 2,
+>                .access = PL1_R, .type = ARM_CP_CONST,
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index 833681e9a28e..b0c45d4ca294 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -867,8 +867,8 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>      } regs[] = {
+>          { HV_SYS_REG_ID_AA64PFR0_EL1, &host_isar.idregs[ID_AA64PFR0_EL1_IDX] },
+>          { HV_SYS_REG_ID_AA64PFR1_EL1, &host_isar.idregs[ID_AA64PFR1_EL1_IDX] },
+> -        { HV_SYS_REG_ID_AA64DFR0_EL1, &host_isar.id_aa64dfr0 },
+> -        { HV_SYS_REG_ID_AA64DFR1_EL1, &host_isar.id_aa64dfr1 },
+> +        { HV_SYS_REG_ID_AA64DFR0_EL1, &host_isar.idregs[ID_AA64DFR0_EL1_IDX] },
+> +        { HV_SYS_REG_ID_AA64DFR1_EL1, &host_isar.idregs[ID_AA64DFR1_EL1_IDX] },
+>          { HV_SYS_REG_ID_AA64ISAR0_EL1, &host_isar.idregs[ID_AA64ISAR0_EL1_IDX] },
+>          { HV_SYS_REG_ID_AA64ISAR1_EL1, &host_isar.idregs[ID_AA64ISAR1_EL1_IDX] },
+>          /* Add ID_AA64ISAR2_EL1 here when HVF supports it */
+> diff --git a/target/arm/internals.h b/target/arm/internals.h
+> index 28585c07555b..cafc8e66324f 100644
+> --- a/target/arm/internals.h
+> +++ b/target/arm/internals.h
+> @@ -1170,7 +1170,7 @@ static inline bool regime_using_lpae_format(CPUARMState *env, ARMMMUIdx mmu_idx)
+>  static inline int arm_num_brps(ARMCPU *cpu)
+>  {
+>      if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+> -        return FIELD_EX64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, BRPS) + 1;
+> +        return FIELD_EX64_IDREG(&cpu->isar, ID_AA64DFR0, BRPS) + 1;
+>      } else {
+>          return FIELD_EX32(cpu->isar.dbgdidr, DBGDIDR, BRPS) + 1;
+>      }
+> @@ -1184,7 +1184,7 @@ static inline int arm_num_brps(ARMCPU *cpu)
+>  static inline int arm_num_wrps(ARMCPU *cpu)
+>  {
+>      if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+> -        return FIELD_EX64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, WRPS) + 1;
+> +        return FIELD_EX64_IDREG(&cpu->isar, ID_AA64DFR0, WRPS) + 1;
+>      } else {
+>          return FIELD_EX32(cpu->isar.dbgdidr, DBGDIDR, WRPS) + 1;
+>      }
+> @@ -1198,7 +1198,7 @@ static inline int arm_num_wrps(ARMCPU *cpu)
+>  static inline int arm_num_ctx_cmps(ARMCPU *cpu)
+>  {
+>      if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+> -        return FIELD_EX64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, CTX_CMPS) + 1;
+> +        return FIELD_EX64_IDREG(&cpu->isar, ID_AA64DFR0, CTX_CMPS) + 1;
+>      } else {
+>          return FIELD_EX32(cpu->isar.dbgdidr, DBGDIDR, CTX_CMPS) + 1;
+>      }
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 5f3c42b94690..e999d98dcf7f 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -355,10 +355,8 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>          err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR1_EL1_IDX);
+>          err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64smfr0,
+>                                ARM64_SYS_REG(3, 0, 0, 4, 5));
+> -        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64dfr0,
+> -                              ARM64_SYS_REG(3, 0, 0, 5, 0));
+> -        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64dfr1,
+> -                              ARM64_SYS_REG(3, 0, 0, 5, 1));
+> +        err |= get_host_cpu_reg(fd, ahcf, ID_AA64DFR0_EL1_IDX);
+> +        err |= get_host_cpu_reg(fd, ahcf, ID_AA64DFR1_EL1_IDX);
+>          err |= get_host_cpu_reg(fd, ahcf, ID_AA64ISAR0_EL1_IDX);
+>          err |= get_host_cpu_reg(fd, ahcf, ID_AA64ISAR1_EL1_IDX);
+>          err |= get_host_cpu_reg(fd, ahcf, ID_AA64ISAR2_EL1_IDX);
+> @@ -427,10 +425,10 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>           * We only do this if the CPU supports AArch32 at EL1.
+>           */
+>          if (FIELD_EX32_IDREG(&ahcf->isar, ID_AA64PFR0, EL1) >= 2) {
+> -            int wrps = FIELD_EX64(&ahcf->isar.id_aa64dfr0, ID_AA64DFR0, WRPS);
+> -            int brps = FIELD_EX64(&ahcf->isar.id_aa64dfr0, ID_AA64DFR0, BRPS);
+> +            int wrps = FIELD_EX64_IDREG(&ahcf->isar, ID_AA64DFR0, WRPS);
+> +            int brps = FIELD_EX64_IDREG(&ahcf->isar, ID_AA64DFR0, BRPS);
+>              int ctx_cmps =
+> -                FIELD_EX64(&ahcf->isar.id_aa64dfr0, ID_AA64DFR0, CTX_CMPS);
+> +                FIELD_EX64_IDREG(&ahcf->isar, ID_AA64DFR0, CTX_CMPS);
+>              int version = 6; /* ARMv8 debug architecture */
+>              bool has_el3 =
+>                  !!FIELD_EX32_IDREG(&ahcf->isar, ID_AA64PFR0, EL3);
+> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+> index 439c29e69546..41077b3dcd08 100644
+> --- a/target/arm/tcg/cpu64.c
+> +++ b/target/arm/tcg/cpu64.c
+> @@ -65,8 +65,8 @@ static void aarch64_a35_initfn(Object *obj)
+>      cpu->isar.id_isar5 = 0x00011121;
+>      SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+>      SET_IDREG(isar, ID_AA64PFR1, 0);
+> -    cpu->isar.id_aa64dfr0 = 0x10305106;
+> -    cpu->isar.id_aa64dfr1 = 0;
+> +    SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
+> +    SET_IDREG(isar, ID_AA64DFR1, 0);
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+>      SET_IDREG(isar, ID_AA64ISAR1, 0);
+>      SET_IDREG(isar, ID_AA64MMFR0, 0x00101122);
+> @@ -219,7 +219,7 @@ static void aarch64_a55_initfn(Object *obj)
+>      cpu->clidr = 0x82000023;
+>      cpu->ctr = 0x84448004; /* L1Ip = VIPT */
+>      cpu->dcz_blocksize = 4; /* 64 bytes */
+> -    cpu->isar.id_aa64dfr0  = 0x0000000010305408ull;
+> +    SET_IDREG(isar, ID_AA64DFR0, 0x0000000010305408ull);
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x0000100010211120ull);
+>      SET_IDREG(isar, ID_AA64ISAR1, 0x0000000000100001ull);
+>      SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000101122ull);
+> @@ -310,7 +310,7 @@ static void aarch64_a72_initfn(Object *obj)
+>      cpu->isar.id_isar4 = 0x00011142;
+>      cpu->isar.id_isar5 = 0x00011121;
+>      SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
+> -    cpu->isar.id_aa64dfr0 = 0x10305106;
+> +    SET_IDREG(isar, ID_AA64DFR0, 0x10305106);
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
+>      SET_IDREG(isar, ID_AA64MMFR0, 0x00001124);
+>      cpu->isar.dbgdidr = 0x3516d000;
+> @@ -352,7 +352,7 @@ static void aarch64_a76_initfn(Object *obj)
+>      cpu->clidr = 0x82000023;
+>      cpu->ctr = 0x8444C004;
+>      cpu->dcz_blocksize = 4;
+> -    cpu->isar.id_aa64dfr0  = 0x0000000010305408ull;
+> +    SET_IDREG(isar, ID_AA64DFR0, 0x0000000010305408ull),
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x0000100010211120ull);
+>      SET_IDREG(isar, ID_AA64ISAR1, 0x0000000000100001ull);
+>      SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000101122ull);
+> @@ -426,8 +426,8 @@ static void aarch64_a64fx_initfn(Object *obj)
+>      cpu->reset_sctlr = 0x30000180;
+>      SET_IDREG(isar, ID_AA64PFR0, 0x0000000101111111); /* No RAS Extensions */
+>      SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000000);
+> -    cpu->isar.id_aa64dfr0 = 0x0000000010305408;
+> -    cpu->isar.id_aa64dfr1 = 0x0000000000000000;
+> +    SET_IDREG(isar, ID_AA64DFR0, 0x0000000010305408),
+> +    SET_IDREG(isar, ID_AA64DFR1, 0x0000000000000000),
+>      cpu->id_aa64afr0 = 0x0000000000000000;
+>      cpu->id_aa64afr1 = 0x0000000000000000;
+>      SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000001122);
+> @@ -600,7 +600,7 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
+>      cpu->clidr = 0x82000023;
+>      cpu->ctr = 0x8444c004;
+>      cpu->dcz_blocksize = 4;
+> -    cpu->isar.id_aa64dfr0  = 0x0000000110305408ull;
+> +    SET_IDREG(isar, ID_AA64DFR0, 0x0000000110305408ull);
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x0000100010211120ull);
+>      SET_IDREG(isar, ID_AA64ISAR1, 0x0000000000100001ull);
+>      SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000101125ull);
+> @@ -678,8 +678,8 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+>      cpu->dcz_blocksize = 4;
+>      cpu->id_aa64afr0 = 0x00000000;
+>      cpu->id_aa64afr1 = 0x00000000;
+> -    cpu->isar.id_aa64dfr0  = 0x000001f210305519ull;
+> -    cpu->isar.id_aa64dfr1 = 0x00000000;
+> +    SET_IDREG(isar, ID_AA64DFR0, 0x000001f210305519ull),
+> +    SET_IDREG(isar, ID_AA64DFR1, 0x00000000),
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x1011111110212120ull); /* with FEAT_RNG */
+>      SET_IDREG(isar, ID_AA64ISAR1, 0x0011000001211032ull);
+>      SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000101125ull);
+> @@ -925,8 +925,9 @@ static void aarch64_a710_initfn(Object *obj)
+>      SET_IDREG(isar, ID_AA64PFR0, 0x1201111120111112ull); /* GIC filled in later */
+>      SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000221ull);
+>      SET_IDREG(isar, ID_AA64ZFR0, 0x0000110100110021ull); /* with Crypto */
+> -    cpu->isar.id_aa64dfr0  = 0x000011f010305619ull;
+> -    cpu->isar.id_aa64dfr1  = 0;
+> +    SET_IDREG(isar, ID_AA64DFR0, 0x000011f010305619ull);
+> +    SET_IDREG(isar, ID_AA64DFR0, 0x000011f010305619ull);
+this line is doubled.
 
-It's something we might talk about later for sure.
-On this thread, if possible, I would like to avoid starting talking 
-about the new binary, new command line, new monitor schema, as they are 
-a different topic, and I'm sure people will have a lot of different 
-opinions, which won't solve the current issue of compiling QAPI 
-generated code only once.
-
-> With regards,
-> Daniel
+Eric
+> +    SET_IDREG(isar, ID_AA64DFR1, 0);
+>      cpu->id_aa64afr0       = 0;
+>      cpu->id_aa64afr1       = 0;
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x0221111110212120ull); /* with Crypto */
+> @@ -1027,8 +1028,8 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
+>      SET_IDREG(isar, ID_AA64PFR0, 0x1201111120111112ull); /* GIC filled in later */
+>      SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000221ull);
+>      SET_IDREG(isar, ID_AA64ZFR0, 0x0000110100110021ull); /* with Crypto */
+> -    cpu->isar.id_aa64dfr0  = 0x000011f210305619ull;
+> -    cpu->isar.id_aa64dfr1  = 0;
+> +    SET_IDREG(isar, ID_AA64DFR0, 0x000011f210305619ull);
+> +    SET_IDREG(isar, ID_AA64DFR1, 0);
+>      cpu->id_aa64afr0       = 0;
+>      cpu->id_aa64afr1       = 0;
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x1221111110212120ull); /* with Crypto and FEAT_RNG */
+> @@ -1261,11 +1262,11 @@ void aarch64_max_tcg_initfn(Object *obj)
+>      t = FIELD_DP64(t, ID_AA64ZFR0, F64MM, 1);     /* FEAT_F64MM */
+>      SET_IDREG(isar, ID_AA64ZFR0, t);
+>  
+> -    t = cpu->isar.id_aa64dfr0;
+> +    t = GET_IDREG(isar, ID_AA64DFR0);
+>      t = FIELD_DP64(t, ID_AA64DFR0, DEBUGVER, 10); /* FEAT_Debugv8p8 */
+>      t = FIELD_DP64(t, ID_AA64DFR0, PMUVER, 6);    /* FEAT_PMUv3p5 */
+>      t = FIELD_DP64(t, ID_AA64DFR0, HPMN0, 1);     /* FEAT_HPMN0 */
+> -    cpu->isar.id_aa64dfr0 = t;
+> +    SET_IDREG(isar, ID_AA64DFR0, t);
+>  
+>      t = cpu->isar.id_aa64smfr0;
+>      t = FIELD_DP64(t, ID_AA64SMFR0, F32F32, 1);   /* FEAT_SME */
 
 
