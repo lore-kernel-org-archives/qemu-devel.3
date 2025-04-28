@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 281A5C36005
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 06:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE933C36005
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 06:48:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9IBW-0003oa-8D; Mon, 28 Apr 2025 02:41:46 -0400
+	id 1u9IBW-0003sN-VT; Mon, 28 Apr 2025 02:41:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u9IBF-0003PX-5Y; Mon, 28 Apr 2025 02:41:34 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1u9IAj-0002qN-86; Mon, 28 Apr 2025 02:40:58 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ktokunaga.mail@gmail.com>)
- id 1u9IBC-0007AT-JI; Mon, 28 Apr 2025 02:41:28 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-224019ad9edso64965895ad.1; 
- Sun, 27 Apr 2025 23:41:23 -0700 (PDT)
+ id 1u9IAh-00077J-HM; Mon, 28 Apr 2025 02:40:56 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso51812535ad.2; 
+ Sun, 27 Apr 2025 23:40:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745822483; x=1746427283; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1745822451; x=1746427251; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=A+qJYGpC8zudJ6XJWHSpEsa6KVoxk0Yfz+c+aIsjTJ0=;
- b=IQYByhayqVNutAHN5Ov/06dBSOIxi0CUmkd6O1ji8nBTO/Xuk8MYadQkkZJW0UZIQH
- F3RQnRYBqF1VRf3SSIPvi7rZP8D3hFgOJooNhW8VkMjRGMaOwju+wfqRltqM/4YpZUwN
- DMmWQjkVAa7RhOhqTigguGDkL4J5cowk50+PcNOl18EamQ2Of3jy14rcVf4RRahhtSHh
- CYq6yvdukMnN9+ANv3xo04CkCV8ntrWKWhaKFd25rOzrUFyo7SPJmy7Nkbzylu7ZOUqf
- EZPi5ULjnGlkwFBRJooe7ADGFMEImwWYf8hdw37MGGzM1YPIan5HBzsaqAVqa7vW64ck
- Sf6g==
+ bh=8Q15BGW6LhwhT6zw6SRS78AEAgNrS56qYf9dYAkVJ5Y=;
+ b=AjylmvaFPr+KHJRSTh1qYpgiOI4sk+GwXkn6i9Fp9hXvz7oWUseD0JKkR+OPfMeTBP
+ 1ZHlrz/a1IzRtxg+a+nxcVPL99GPmThA5aFDS9nSvI+KeHeapqqgzafXs0zkYPksXv9e
+ JNFcY144PTF4XEmTgf88V42ZEx4FBxuqDIuwITs/RV1KLalkRvg/zD6yaqSluIo1TRyG
+ cBhSVhhm05KIg+4BlDf8r2PxTJQp1X8u2Qp3jkLWlYXEPJa1rYK8juKvi5AHDit8C4IK
+ LET1QYYJdiDHOGTGuGFGhsBTEoHjJyF6iicm7boa8PnEMK9LAFugf4/dLP5pfiI9bj7q
+ T6wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745822483; x=1746427283;
+ d=1e100.net; s=20230601; t=1745822451; x=1746427251;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=A+qJYGpC8zudJ6XJWHSpEsa6KVoxk0Yfz+c+aIsjTJ0=;
- b=FPHZibllCBV7CsO66BtJB2YvcaxyvS3inVfgfCo7/HLezh530LJRujxP5rzegH4pvP
- 4Dlp6vpFP+8eV2QAoxB/t7CJ5tNyBDa/SECNY7/tbLOBtsm5hO2Axnn7mJCANKOPL5pS
- wj8sp6I43whFX6uoD10C33+KjEOH7CaXxGXluofxGCLs10vNQh09EsprU2rubj5xkX1X
- EGVxxtiFvSkjSm2SeVjFE97jgyG5tVrY8bTWRWCo5lZwUufP97oEftNUAqPVHkrXf6cm
- MMcyALPTKiItb4siRdpMlBqHVem/hvWVDFK9MuS5ZIglcOrFyh/oIOK+fsFtxcr4HJQ7
- +8nw==
+ bh=8Q15BGW6LhwhT6zw6SRS78AEAgNrS56qYf9dYAkVJ5Y=;
+ b=gL5l145cxTpn/Lw9/WI0wmh/9F/xxtqRYHyXKpV3kMO0L7+k/NDjLnQoujh4DNu5xk
+ 3PuLgiC8xj34URrsm+tk588ZVPFBd61dRlRQPkAo5XlsN0rJ+UEC76AtLlE6Snb0Xe68
+ cGwJBgapqn7BTLHulSA8fWf6UD//62w18lsfM08C1TRryPfnELnJhvg5+xa6jbnftvuN
+ VXIyD+vELBUGhrNFZMC8n7yHPCmWgeddc2ETZLeKNXubCGbj2ZCoWIX4jDkBuetFM+bB
+ Lw19xl5Kdjqg1YJfbT8gz5av4HP1AXz4l0yv7jKOppCmxj4Z46gXpPQtj0V6QL7dsV2K
+ wAqQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwwMagM3/uPZI9Ex01JGehf8LRptye1VtKlRXbzFjg5HuCJq/MkPG+udXNWzAZNjYQnhmc8Nm2clOfyg==@nongnu.org,
- AJvYcCWxS3A7Y954u0la3mDDPWjc1BOBG8qDPO094k79aGC1SIk8Bl78aX2bUugNIBDiFUtKrwQbDEuOcA==@nongnu.org,
- AJvYcCXTjH8/Nabn72JnAAJ4Z1Qok5+6ANvh6vfxh4TbrfDijNp4oK2wb2nDg6qGdP93SQeyaRR+zdJvHed9pg==@nongnu.org,
- AJvYcCXx0x1P4UhE7TIIKFygvOn+XNDLOLaUqYOpeWDZGHiNBROLtGf0lmjyHaM66RxCSNxMijuSBeMXM70=@nongnu.org
-X-Gm-Message-State: AOJu0YzIpP2K/L24Uai2RzJzEGJycabrL4H7IO1WEHUUfBbMh65JQHTl
- Z6T/kdXGaYNvj3eKAGk10HZZtvNtU3trJVATy4Xi7Rz3fnbvXghJxIOCiu5l
-X-Gm-Gg: ASbGncuYdIGVIMqaVae1FdzoC+3L0DI3cBngX5uZirX+1BOr/Xcy8DkytXU3JkaZPHv
- WN0qD+nY0fPECsZEREd4wdcJXyZFeG0ackr2K6H53u5xAJyZaWobRJRbX4kAyn6Kt3wLza5Wvwb
- nkxp9MRYaEUW+IHQKGsL448pFk8n0YdUQjuoWHuKpxWeggFwkgKXk8FovlFOesK48+HRKfNJrw6
- E3ZuQGt9gTwjRwJQ47Gp3h8qjcd6hxJxr6s5HP+kCHsmY3XTyftHJ9U2zUqsGY/jrfdts5pCqwc
- VpStTiJVHlKmUWQkLKJSTKeqOFRabyZ7y2nnPA==
-X-Google-Smtp-Source: AGHT+IHO3f+qZc9Iv97lxl2T4n0xLw+LFAlqa4f7UljrI/mIPNgu9dL4YuCAFvRtzFV72lSX8lpLmw==
-X-Received: by 2002:a17:903:94c:b0:223:5ca8:5ecb with SMTP id
- d9443c01a7336-22dbf62335emr154850705ad.42.1745822482596; 
- Sun, 27 Apr 2025 23:41:22 -0700 (PDT)
+ AJvYcCV67vCddRrFSDfqi929phd9Z4cc2OC5/NHVtfxJOI0AiANHNpxfdVWUQ9Mt9ZsyjEBGzPE1FTIzrDo=@nongnu.org,
+ AJvYcCWMxxxSoHT0fbiz2zTqKhIFE98ouenKTIyQfdwVud2tVBDvdi6/VWCQXypbYlz+TMnR/rUyyKtW6ZMsDw==@nongnu.org,
+ AJvYcCWX7XeUYNMt29e8FAqw0ZWJ69nC//w18wrbdKn7XETt1eoU9fN/JynxpN8wp32kzu+Rd1/jfWOCOQ==@nongnu.org,
+ AJvYcCXALKvvQLO+Cyhgn/8PerCsFJnluDXFEH5utYI283qephyzdtLIoGpHHxa4I5kMyXhjeiEivL3Ug67QZg==@nongnu.org
+X-Gm-Message-State: AOJu0Yw5bVzryG4WiyU2pmfaolkcRySjjqDg3cpLjsSMVo+dLFXhskfA
+ 9pj4wvq3BUM6HLProXWjmm81SQC5E2thWOMZAyz/lo1FIEKgCCBndw27XRmi
+X-Gm-Gg: ASbGncuDzO1jx4qPmACTY3fSw3tSR8nL+UO1yfeZ6U4cDoqoBykgxLeJPRGtc0uXkb2
+ 9mOyDKu/IBhAz9AtZ7lMJPPLGzADKHTZPci4AHpm3kSDXQq9eCFfg617/Mfki5584HF+XmrmLoS
+ h/ayHcUw5LwavnQ8RH4DlH7GH4aQWp+j7McN4UgTVhIBb040xhHVK3sRhHmdsmFSbWHI3PrWrYU
+ vevNNyYgk5tFVizk9A01Wfe18q4PNwtb+BpeCOaGumiGcDTZgZCrorPyGUnkyviq07BZRJqAjr0
+ dfPcnj3ohskfB1W1N1EHIs61xOxMsej/+eIq5A==
+X-Google-Smtp-Source: AGHT+IHUzvkkUjB8d7ThlNvRcVu0LfUpCbBEl2GyOReJ/zYjSf2e/+O+k3koZv79twbkihrK1nuyzw==
+X-Received: by 2002:a17:903:1744:b0:220:d601:a704 with SMTP id
+ d9443c01a7336-22dbf5ecbedmr128835925ad.18.1745822451373; 
+ Sun, 27 Apr 2025 23:40:51 -0700 (PDT)
 Received: from ktock.. ([240d:1a:3b6:8b00:bcb:2cf3:f1b5:b7f])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db4dbe328sm74721215ad.88.2025.04.27.23.41.15
+ d9443c01a7336-22db4dbe328sm74721215ad.88.2025.04.27.23.40.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 27 Apr 2025 23:41:21 -0700 (PDT)
+ Sun, 27 Apr 2025 23:40:50 -0700 (PDT)
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -89,17 +89,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
-Subject: [PATCH v3 13/20] block: Fix type confict of the copy_file_range stub
-Date: Mon, 28 Apr 2025 15:39:02 +0900
-Message-ID: <938d2beba15d4bd496a600ee401995fbaa385c62.1745820062.git.ktokunaga.mail@gmail.com>
+Subject: [PATCH v3 09/20] target/s390x: Fix type conflict of GLib function
+ pointers
+Date: Mon, 28 Apr 2025 15:38:58 +0900
+Message-ID: <e91c4e266b839f62b5c41173a05896b210ae1180.1745820062.git.ktokunaga.mail@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1745820062.git.ktokunaga.mail@gmail.com>
 References: <cover.1745820062.git.ktokunaga.mail@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=ktokunaga.mail@gmail.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,38 +122,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Emscripten doesn't provide copy_file_range implementation but it declares
-this function in its headers. Meson correctly detects the missing
-implementation and unsets HAVE_COPY_FILE_RANGE. However, the stub defined in
-file-posix.c causes a type conflict with the declaration from Emscripten
-during compilation.
-
-To fix this error, this commit updates the stub implementation in
-file-posix.c to exactly match the declaration in Emscripten's headers. The
-manpage also aligns with this signature.
+On Emscripten, function pointer casts can result in runtime failures due to
+strict function signature checks. This affects the use of g_list_sort and
+g_slist_sort, which internally perform function pointer casts that are not
+supported by Emscripten. To avoid these issues, g_list_sort_with_data and
+g_slist_sort_with_data should be used instead, as they do not rely on
+function pointer casting.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- block/file-posix.c | 4 ++--
+ target/s390x/cpu_models.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 69257c0891..2758f31844 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -2015,8 +2015,8 @@ static int handle_aiocb_write_zeroes_unmap(void *opaque)
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index 8e0b01dc65..5e7c091681 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -373,7 +373,7 @@ static void s390_print_cpu_model_list_entry(gpointer data, gpointer user_data)
+     g_free(name);
  }
  
- #ifndef HAVE_COPY_FILE_RANGE
--static off_t copy_file_range(int in_fd, off_t *in_off, int out_fd,
--                             off_t *out_off, size_t len, unsigned int flags)
-+ssize_t copy_file_range(int in_fd, off_t *in_off, int out_fd,
-+                        off_t *out_off, size_t len, unsigned int flags)
+-static gint s390_cpu_list_compare(gconstpointer a, gconstpointer b)
++static gint s390_cpu_list_compare(gconstpointer a, gconstpointer b, gpointer d)
  {
- #ifdef __NR_copy_file_range
-     return syscall(__NR_copy_file_range, in_fd, in_off, out_fd,
+     const S390CPUClass *cc_a = S390_CPU_CLASS((ObjectClass *)a);
+     const S390CPUClass *cc_b = S390_CPU_CLASS((ObjectClass *)b);
+@@ -415,7 +415,7 @@ void s390_cpu_list(void)
+ 
+     qemu_printf("Available CPUs:\n");
+     list = object_class_get_list(TYPE_S390_CPU, false);
+-    list = g_slist_sort(list, s390_cpu_list_compare);
++    list = g_slist_sort_with_data(list, s390_cpu_list_compare, NULL);
+     g_slist_foreach(list, s390_print_cpu_model_list_entry, NULL);
+     g_slist_free(list);
+ 
 -- 
 2.43.0
 
