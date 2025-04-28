@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17A78C369D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 19:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE1DDC369D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 19:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9UHH-0000wL-8V; Mon, 28 Apr 2025 15:36:31 -0400
+	id 1u9UYx-000240-HM; Mon, 28 Apr 2025 15:54:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u9UHF-0000vs-Ad
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 15:36:29 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1u9UYv-00022Q-B4
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 15:54:45 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u9UHD-00012E-4J
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 15:36:28 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-73c17c770a7so7029469b3a.2
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 12:36:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1u9UYt-00055J-Ez
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 15:54:45 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5f3f04b5dbcso8403440a12.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 12:54:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745868985; x=1746473785; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tG9rtszfKpI6JIRQ6cOZyNrKxoWnVoT5lszhtLjWB/Q=;
- b=gdlrbfbILHuXz43Tt15w3KytUhRP3KbK/AnZhYdw5pgJAUuvSY9ADCJPGv/eo0J5DO
- T/wprWyOAFDEjOULN7HnKqkT4hkMrXvZ4BsExfKABlumW8pm3col/aMmv71e59Osnl4a
- dApJ/29T1/FJcyW4oHAX3SsP9L3mVNRwrfIfsEkqOmo9+vLyrYhvd4MDQ8B/sb5MTLUU
- yNkffoohkx85JM/t5dgaiaJfYt3LOJ29NDfyNSMfdALOE3KKxRLCt6yhwbg/e5Seu34i
- iarP4fNRS7/KeTkXPu3G0x5myzZtZKGIJ880x5x4vp7HO8CPIl845D/hKakhKV4muYxZ
- mqOQ==
+ d=gmail.com; s=20230601; t=1745870081; x=1746474881; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fNsssxanrh3jvU/AEQbNK8rS/k/AXf/vyKGi6cIEUY0=;
+ b=TXC1AYlimxUiew5U++mXwP9/kMv5RvWTyrVtYdfx4E0LaQhGUtmr2NUGSujEhL+bcG
+ GzC15NEL/4SxAW5glMgaWWeHvMCpF3iBjIqnZSadxDfk1mJ2cUmhoxwlRL0Mb3wg1sHB
+ q3wdTJM4XRoUA3b7WmA3HgNtV4zGFNTDK0yykvBR/3l7ILp/XnPvxzaAyF/qGTRUQVbF
+ YuoAelCrxvxwXj1wfSI49ihHyAc4l3axPJ/nbnj6Sg5zCThQX4guDLNwEHGfEExTvEPd
+ A6HygCftgVKeZIqQ6btDkdubLqCQJQ4+B/9GQMSomphjNf6ZNTwCpruX0D16e7ESDMGG
+ +JIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745868985; x=1746473785;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tG9rtszfKpI6JIRQ6cOZyNrKxoWnVoT5lszhtLjWB/Q=;
- b=Ne/0W9PP9IbqPSJZeCvrD/Blx7oFzdWdz9Ai7z/v+sFRPPy4X46vp/gN4XSRLcgv0G
- 6OqEg5eZo6pxYWWalQqZPXU7SK0jeZseWE4vNxRzMLgRc4mz2oUKSDKwWAs6OSCZWoi0
- MhVx6gsZbFTAK5XAhpqIqjUTtWOSTjs4RgemwwcbvhUHa5EVIfeZlU437izkxuZbZAvp
- zmwc8wypPQ1vFO5K8TSR3RkIYGMaZ706zEdGwdvJrZZKzDqt+8HYyS7pky1rJYVSw5rW
- xnuk7C+zXDGjqth2w8Iq+io3ayYVZD/sjbQ/aeDdKe+aCBTnnlEFhMzXHDTDHsCiMx/l
- 70eA==
-X-Gm-Message-State: AOJu0YxlCJRDQlnLrZJjHaNB570VdnkXurfZ/7bzXKV+4qdvMnUiOC2G
- 0WuXPHAN9+bUI8GJu+ZSkoxBusvs7sjDq4u/vV8ZP/HSf9ywwA/D4hby4fiKryExhh8HGkEkmmm
- 0
-X-Gm-Gg: ASbGncsmppOwH4UOQ+QBqC/iwvog1tdk6IupDbBF7BbzBLepVfFCsGxs1gw598H2Ojq
- 38SGVvRWXEua2dS9MF1QV4b9a+5C7ocLDEYWltd02uU9Gqh/0nFxqhlpido4AaZUBP9e4KYAUUe
- ymzMqKPwmhybmUgRJOtUQNFbZlRLX46jQFveVgx077J5s9Ee09JC33aR38+20jwy7eyHLBp4IHz
- WFAxHK4LsVU3zxPBkVp/jewgxW2G/eYnVYJz19daQ5mwN1xsQF3ueYpVSTU5PXtKD02cJwFRGE4
- 6sbMRj8dH7SivrTk+htZbJV9Fpj4Ap5eS96wh61eOh5mKC+MLStdYQ==
-X-Google-Smtp-Source: AGHT+IGNrE1QjYa/OY9IjNphAfi1yAvOEiQ9GJhV2vfLfOOxq4SSmth3HMoFZYuoTSSM9ZLNf3jcww==
-X-Received: by 2002:a05:6a00:acd:b0:73e:598:b2a1 with SMTP id
- d2e1a72fcca58-74027102b74mr1301113b3a.1.1745868985323; 
- Mon, 28 Apr 2025 12:36:25 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74022ee1fdcsm1071956b3a.15.2025.04.28.12.36.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 12:36:24 -0700 (PDT)
-Message-ID: <0a39e805-eb75-4b88-b316-189acad38efa@linaro.org>
-Date: Mon, 28 Apr 2025 12:36:24 -0700
+ d=1e100.net; s=20230601; t=1745870081; x=1746474881;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fNsssxanrh3jvU/AEQbNK8rS/k/AXf/vyKGi6cIEUY0=;
+ b=CaWBtBR0wwvFWF3UoU33fez1HkdXReU7Lj1TmR8NEUjnUIItTVWhOdTPMvbTv4Q8iK
+ CQwfT8yEAJCGlzfvs34uQfZCVnWNcC5dvco8Vd6Bvmm9uEAbwiyun0g2BjENSOrS9xvb
+ Hd6BjvopJk3NIU0gAquBOumzqV0ZglcWFu93/GvWTvtXri0n5H+hH6MTjhYoGHDaq4dC
+ nXv/OZMrrzp8EIDZ+e6yCqXC2Im1K509RfnHiKIH0enVhdm1iaCquvz4OOWVM8yw6b+P
+ XUnIxcUh+vg3XrQ58hx5VXyLyA1cPNYh1u675pcxthYUrvc3sY2+mNcpP+3bIINIrTQv
+ K5tA==
+X-Gm-Message-State: AOJu0YyFreVldSs1lRxb1ZLBk0/Ro6k2NPuzLByD0Yw6iJOWWgX1YCsO
+ +UtftJH1yZ461Pft+23i+q9JuU+IDOENnY/nYlY9pZlvGKy4WrZh6BWMg89mJ+vSTgsGsLsQW7e
+ Z12a/z/Kr/fVTw2N6XEzikqdwbCU=
+X-Gm-Gg: ASbGnctSpsIusjABpEZrucEWqDJ8ranbR1I50GDJtW1h8aZKPNfVzlU0Z+ynr6nSAeN
+ ElzHNPIi+mlDjLaYTwhZRkYX5lls3pfBpU/iv3GTcQbxoB6W8GuC+gLngHxZQbSVk9v0s5I/mli
+ sSQdBB0G+YIa1dC00CXOWo
+X-Google-Smtp-Source: AGHT+IHYMIBwEL83N316N4KF1cWC0vIQJ1d05ki+JX0enqP99eKLD5lgRPh82yY3mqEGFy1Z4J3OiOnfohuyWW74pMw=
+X-Received: by 2002:a05:6402:4409:b0:5ed:61c8:adcf with SMTP id
+ 4fb4d7f45d1cf-5f83b0d3c3amr165649a12.15.1745870081183; Mon, 28 Apr 2025
+ 12:54:41 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bsd-user: add option to enable plugins
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, richard.henderson@linaro.org,
- alex.bennee@linaro.org, Kyle Evans <kevans@freebsd.org>
-References: <20250331234228.3475706-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250331234228.3475706-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+ <CAJSP0QUXuAUxMLOz5Zw1zwk0zwBRwuFM=qCufwf0TLr+w1YXvQ@mail.gmail.com>
+ <1718b3de-9187-4fd0-87e7-ffe91393caf8@linaro.org>
+In-Reply-To: <1718b3de-9187-4fd0-87e7-ffe91393caf8@linaro.org>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 28 Apr 2025 15:54:28 -0400
+X-Gm-Features: ATxdqUH5DJB-HZBy7QILOhsyrrQueNTGvegH0J-iDAMv1YJhdyGXt2enJadV2GM
+Message-ID: <CAJSP0QUKmWY0b9xxX5k-8iV=P4QC4EXdHdzF41LrA0AmRcse3A@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, stefanha@redhat.com, 
+ Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
+ berrange@redhat.com, 
+ peter.maydell@linaro.org, thuth@redhat.com, jsnow@redhat.com, 
+ philmd@linaro.org, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,71 +100,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/31/25 4:42 PM, Pierrick Bouvier wrote:
-> Nothing prevent plugins to be enabled on this platform for user
-> binaries, only the option in the driver is missing.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   bsd-user/main.c | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
-> 
-> diff --git a/bsd-user/main.c b/bsd-user/main.c
-> index fdb160bed0f..329bd1acc02 100644
-> --- a/bsd-user/main.c
-> +++ b/bsd-user/main.c
-> @@ -175,6 +175,9 @@ static void usage(void)
->              "-strace           log system calls\n"
->              "-trace            [[enable=]<pattern>][,events=<file>][,file=<file>]\n"
->              "                  specify tracing options\n"
-> +#ifdef CONFIG_PLUGIN
-> +           "-plugin           [file=]<file>[,<argname>=<argvalue>]\n"
-> +#endif
->              "\n"
->              "Environment variables:\n"
->              "QEMU_STRACE       Print system calls and arguments similar to the\n"
-> @@ -225,6 +228,8 @@ static void init_task_state(TaskState *ts)
->       };
->   }
->   
-> +static QemuPluginList plugins = QTAILQ_HEAD_INITIALIZER(plugins);
-> +
->   void gemu_log(const char *fmt, ...)
->   {
->       va_list ap;
-> @@ -307,6 +312,7 @@ int main(int argc, char **argv)
->       cpu_model = NULL;
->   
->       qemu_add_opts(&qemu_trace_opts);
-> +    qemu_plugin_add_opts();
->   
->       optind = 1;
->       for (;;) {
-> @@ -399,6 +405,11 @@ int main(int argc, char **argv)
->               do_strace = 1;
->           } else if (!strcmp(r, "trace")) {
->               trace_opt_parse(optarg);
-> +#ifdef CONFIG_PLUGIN
-> +        } else if (!strcmp(r, "plugin")) {
-> +            r = argv[optind++];
-> +            qemu_plugin_opt_parse(r, &plugins);
-> +#endif
->           } else if (!strcmp(r, "0")) {
->               argv0 = argv[optind++];
->           } else {
-> @@ -433,6 +444,7 @@ int main(int argc, char **argv)
->           exit(1);
->       }
->       trace_init_file();
-> +    qemu_plugin_load_list(&plugins, &error_fatal);
->   
->       /* Zero out regs */
->       memset(regs, 0, sizeof(struct target_pt_regs));
+On Mon, Apr 28, 2025 at 3:25=E2=80=AFPM Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> Hi Stefan,
+>
+> On 4/28/25 11:14 AM, Stefan Hajnoczi wrote:
+> > On Thu, Apr 24, 2025 at 2:35=E2=80=AFPM Pierrick Bouvier
+> > <pierrick.bouvier@linaro.org> wrote:
+> >> Feedback
+> >> =3D=3D=3D=3D=3D=3D=3D=3D
+> >>
+> >> The goal of this series is to be spark a conversation around following=
+ topics:
+> >>
+> >> - Would you be open to such an approach? (expose all code, and restric=
+t commands
+> >>    registered at runtime only for specific targets)
+> >>
+> >> - Are there unexpected consequences for libvirt or other consumers to =
+expose
+> >>    more definitions than what we have now?
+> >>
+> >> - Would you recommend another approach instead? I experimented with ha=
+ving per
+> >>    target generated files, but we still need to expose quite a lot in =
+headers, so
+> >>    my opinion is that it's much more complicated for zero benefit. As =
+well, the
+> >>    code size impact is more than negligible, so the simpler, the bette=
+r.
+> >
+> > Do you anticipate that Linux distributions will change how they
+> > package QEMU? For example, should they ship a single qemu-all package
+> > in addition to or as a replacement for the typical model today where
+> > qemu-system-aarch64, qemu-system-x86_64, etc are shipped as separate
+> > packages?
+> >
+>
+> Different distributions will have different opinions.
+> In case we decide one day (which is *not* short term future) to replace
+> existing binaries with a single one, it's probably a discussion that
+> will happen.
+>
+> My personal "anticipation" is that if we unify all targets in a single
+> binary (which is not happening tomorrow), distributions can always
+> create a qemu-system-common package, and depend on it for all targets.
+> Thus, every qemu-system-X will simply include the expected symlink (or
+> wrapper script, or whatever) to the single binary.
+> Or they can recompile the single binary for every subpackage they want
+> in case they want to absolutely reduce the code size for a single
+> target, even though the sum of binaries will be infinitely bigger than
+> using the single one.
+> In any case, it's not something that will happen soon, except if
+> everyone in the community becomes convinced of the advantage of building
+> QEMU as a single binary, instead of per target binaries.
+>
+> Even if this never converges, there are still benefits left for what is
+> done right now:
+> - Faster multi targets build: less compilation units =3D=3D less time.
+> - Smaller multi targets build footprint: seems relevant as disk space on
+> GitLab CI is a recurrent complaint.
+> - Clarification of code: I hope C developers are objectively (i.e. not
+> personal preference) convinced that less ifdef soup is better.
+>
+> > It would be nice to hear from packager maintainers in this discussion
+> > so that there is a consensus between developers and package
+> > maintainers.
+> >
+>
+> Sure.
+>
+> Maybe there is a misunderstanding, but at this point, we are not trying
+> to invent anything new. We are just looking for a way to build QAPI
+> generated code only once, so it's possible to link together object files
+> coming from two different targets.
+>
+> My mistake was to not mention introspection in the cover letter, but
+> thanks to Markus and Daniel, I understood the consequences of that, and
+> my position is to keep the current schema and serialization methods
+> *exactly* as they are, so consumers don't see any change. The only place
+> where we need to do changes are scripts/qapi and qapi/.
 
-Gentle ping on this series.
-As we didn't have any feedback from BSD side, could we consider to 
-enable this upstream?
+Okay, if this is just about QAPI for now then it's definitely too
+early to discuss packaging.
 
-Regards,
-Pierrick
+I'm still curious which specific use cases you have in mind?
+
+Stefan
 
