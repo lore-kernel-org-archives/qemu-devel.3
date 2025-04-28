@@ -4,45 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1FFEC36005
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 07:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC904C369D3
+	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 07:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9J8t-000473-KR; Mon, 28 Apr 2025 03:43:11 -0400
+	id 1u9JBs-0007a6-Pp; Mon, 28 Apr 2025 03:46:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=KRh2=XO=kaod.org=clg@ozlabs.org>)
- id 1u9J7U-0002hZ-Ip; Mon, 28 Apr 2025 03:41:43 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1u9JBR-0007Xm-EA; Mon, 28 Apr 2025 03:45:46 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=KRh2=XO=kaod.org=clg@ozlabs.org>)
- id 1u9J7R-0002JS-Kg; Mon, 28 Apr 2025 03:41:40 -0400
+ id 1u9JBP-0002vP-6k; Mon, 28 Apr 2025 03:45:45 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZmFkg4WwBz4xD9;
- Mon, 28 Apr 2025 17:41:31 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZmFqQ2N04z4xCy;
+ Mon, 28 Apr 2025 17:45:38 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZmFkc2RyRz4wj2;
- Mon, 28 Apr 2025 17:41:28 +1000 (AEST)
-Message-ID: <e3d35357-de8c-44da-b54e-7ec2761f513b@kaod.org>
-Date: Mon, 28 Apr 2025 09:41:25 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZmFqL5l1zz4wcy;
+ Mon, 28 Apr 2025 17:45:34 +1000 (AEST)
+Message-ID: <53e66299-ba7f-404e-87c8-2952fb4d857b@kaod.org>
+Date: Mon, 28 Apr 2025 09:45:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] hw/arm: Integrate Aspeed OTP memory into AST10x0
- and AST2600 SoCs
-To: Kane Chen <kane_chen@aspeedtech.com>,
+Subject: Re: [PATCH v4 06/10] hw/arm/aspeed: Add support for loading vbootrom
+ image via "-bios"
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250423025651.189702-1-kane_chen@aspeedtech.com>
- <20250423025651.189702-4-kane_chen@aspeedtech.com>
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>,
+ "nabihestefan@google.com" <nabihestefan@google.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250417031209.2647703-1-jamin_lin@aspeedtech.com>
+ <20250417031209.2647703-7-jamin_lin@aspeedtech.com>
+ <85a2947e-6909-4311-8b58-f9eb8045e76c@kaod.org>
+ <SI2PR06MB5041D4AD25381C7D1D6A5C1CFCBB2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <a4c178b6-7048-42d1-9e90-58ed87baf9b5@kaod.org>
+ <SI2PR06MB5041756942DE834177DFF573FCBA2@SI2PR06MB5041.apcprd06.prod.outlook.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -87,16 +92,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250423025651.189702-4-kane_chen@aspeedtech.com>
+In-Reply-To: <SI2PR06MB5041756942DE834177DFF573FCBA2@SI2PR06MB5041.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=KRh2=XO=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
 X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,121 +119,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/23/25 04:56, Kane Chen wrote:
-> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+Hello Jamin,
+
++ Phil.
+
+On 4/23/25 09:02, Jamin Lin wrote:
+> Hi Cedric,
 > 
-> This patch wires up the OTP memory device (`aspeed.otpmem`) into the
-> AST1030 and AST2600 SoC models. The device is initialized, attached
-> to a backing block drive (`-drive id=otpmem`) and linked to the SBC
-> controller via a QOM link.
+>> Cc: Troy Lee <troy_lee@aspeedtech.com>; nabihestefan@google.com
+>> Subject: Re: [PATCH v4 06/10] hw/arm/aspeed: Add support for loading
+>> vbootrom image via "-bios"
+>>
+>> Hello Jamin,
+>>
+>>> Based on the design of aspeed_install_boot_rom, users can place their
+>>> ROM code at the top of the image-bmc, and this function will install
+>>> image-bmc which included the user's ROM IMAGE at the
+>>> ASPEED_DEV_SPI_BOOT address.  For AST2600, users typically set the
+>>> boot address to 0x0 and boot directly from there.
+>>>
+>>> For AST2700, we introduced a vbootrom to simulate the ROM code and the
+>>> BOOTMCU SPL (RISC-V).
+>>
+>> Side question, is anyone working on the BOOTMCU SPL (RISC-V) models ?
+>> heterogeneous machines should be supported one day.
+>>
 > 
-> The default OTP memory image can be generated using the following
-> command.
-> ```bash
-> for i in $(seq 1 2048); do
->    printf '\x00\x00\x00\x00\xff\xff\xff\xff'
-> done > otpmem.img
-> ```
-> 
-> To load the OTP memory image into the guest, use:
-> ```bash
-> ./qemu-system-arm \
->    -drive id=otpmem,file=otpmem.img,if=none,format=raw \
->    ...
-> ```
+> Troy developed an initial implementation, but testing has not yet been performed due to uncertainty around
+> "how to share DRAM memory and controllers registers" between the RISC-V and the Cortex-A35 cores.
+> Furthermore, RISC-V interrupt support is currently not implemented.
+Could you explain a bit more the issues you are facing ? Single QEMU
+binary is expected to become a reality in the near future and the
+ast2700 models could benefit from it.
 
-I thought we were going to implement the same method of the edk2 flash
-devices of the q35 machine. Setting a machine option would set the drive :
-
-   qemu-system-arm -M ast2600-evb,otpmem=otpmem-drive \
-       -blockdev node-name=otpmem,driver=file,filename=/path/to/otpmem.img \
-       ...
-
-Which is not what is proposed below.
-
-> Note: Do not use the -snapshot option, or OTP data writes will not
-> persist to the image file.
-> 
-> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-> ---
->   hw/arm/aspeed_ast10x0.c     | 19 +++++++++++++++++++
->   hw/arm/aspeed_ast2600.c     | 19 +++++++++++++++++++
->   include/hw/arm/aspeed_soc.h |  2 ++
->   3 files changed, 40 insertions(+)
-> 
-> diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-> index ec329f4991..eaa70feb9f 100644
-> --- a/hw/arm/aspeed_ast10x0.c
-> +++ b/hw/arm/aspeed_ast10x0.c
-> @@ -15,6 +15,7 @@
->   #include "system/system.h"
->   #include "hw/qdev-clock.h"
->   #include "hw/misc/unimp.h"
-> +#include "system/block-backend-global-state.h"
->   #include "hw/arm/aspeed_soc.h"
->   
->   #define ASPEED_SOC_IOMEM_SIZE 0x00200000
-> @@ -156,6 +157,8 @@ static void aspeed_soc_ast1030_init(Object *obj)
->   
->       object_initialize_child(obj, "sbc", &s->sbc, TYPE_ASPEED_SBC);
->   
-> +    object_initialize_child(obj, "otpmem", &s->otpmem, TYPE_ASPEED_OTPMEM);
-> +
-
-This belongs to AspeedSBC. See below.
-
->       for (i = 0; i < sc->wdts_num; i++) {
->           snprintf(typename, sizeof(typename), "aspeed.wdt-%s", socname);
->           object_initialize_child(obj, "wdt[*]", &s->wdt[i], typename);
-> @@ -194,6 +197,7 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
->       Error *err = NULL;
->       int i;
->       g_autofree char *sram_name = NULL;
-> +    BlockBackend *blk;
->   
->       if (!clock_has_source(s->sysclk)) {
->           error_setg(errp, "sysclk clock must be wired up by the board code");
-> @@ -359,6 +363,21 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
->                           ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
->       }
->   
-> +    /* OTP memory */
-> +    blk = blk_by_name(ASPEED_OTPMEM_DRIVE);
-> +    if (blk) {
-> +        blk_set_perm(blk, BLK_PERM_CONSISTENT_READ | BLK_PERM_WRITE,
-> +                     0, &error_fatal);
-> +        qdev_prop_set_drive(DEVICE(&s->otpmem), "drive", blk);
-> +
-> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->otpmem), errp)) {
-> +            return;
-> +        }
-> +        /* Assign OTP memory to SBC */
-> +        object_property_set_link(OBJECT(&s->sbc), "otpmem",
-> +                                 OBJECT(&s->otpmem), &error_abort);
-> +    }
-> +
-
-The "optmem" machine option should be pointing to "drive" option of
-the AspeedOTPMemState object in this object hierarchy :
-
-   /machine (ast2600-evb-machine)
-     /soc (ast2600-a3)
-       /sbc (aspeed.sbc)
-         /aspeed.sbc[0] (memory-region)
-         /optmem (aspeed.otpmem)         <- move otpmem there
-
-This will require using object_property_add_alias() in 2 or 3 levels.
-
-    object_property_add_alias(OBJECT(parent), "optmem"
-                              OBJECT(child), "drive", &error_abort)
-
-Please try that instead and let's see the result.
 
 Thanks,
 
 C.
-
-
 
 
 
