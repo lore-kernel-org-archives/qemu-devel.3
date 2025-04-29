@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95FA8C369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 06:18:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 639E0C369CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 06:19:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9eEW-0004CQ-Hg; Tue, 29 Apr 2025 02:14:20 -0400
+	id 1u9eDI-0001kk-0w; Tue, 29 Apr 2025 02:13:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1u9eDk-0002hY-NB; Tue, 29 Apr 2025 02:13:34 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1u9eDB-0001VY-Rk; Tue, 29 Apr 2025 02:12:57 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1u9eDh-0005S4-9Z; Tue, 29 Apr 2025 02:13:31 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-227c7e57da2so47536955ad.0; 
- Mon, 28 Apr 2025 23:13:27 -0700 (PDT)
+ id 1u9eD9-0005OL-RP; Tue, 29 Apr 2025 02:12:57 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-227d6b530d8so60778495ad.3; 
+ Mon, 28 Apr 2025 23:12:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745907207; x=1746512007; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iktpIu7SWJtpnnDwsmtRLfc5OtKIy8xH5BFHKzvdoFE=;
- b=BI9ov5arGprxI4WclIbMYsYoFPi67l2V8H+7DzHAx1HxSJdEhreCqDTwbrqOi7lP1h
- 8WU5RW+/0Ch/MBVQY5gUo7lyJGTlWywxgR7lsh6yysc0Tw3AxnqlsoFTUjZLi+mt/IX1
- AcxgHV+f1J5CWA7aAemsE1yNTV2zPx1iZkrTUx/n3Mt4ZKdr3Ugo6E394TqN1hyZ3LhY
- 0o/9A00mUBUjuD1OvfR4l1g4pgz2dk708wozRWjoRYv3Md0f0mACWNNHI6g6xJMLhv2D
- vdT7tWJ07217M3ca8RDtPtTVA1oLUdNDodNveRqyYQrAY8kTCcCzPbgSQQmeXxCqZnie
- L8BQ==
+ d=gmail.com; s=20230601; t=1745907174; x=1746511974; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=MbwimO4EqZ7sgOqFY8zyCqt9fX1bmrn547vhHkSRXAY=;
+ b=MLDr2GgadhHBLLR7o+f+Zlfg1vV6kxlIsumr9R0JwipCV6aoT4S+1te8Hb/xGEpgis
+ eWR6S0dyvUcTiFIv163hQzCZS41IR9JRmIJgrpM1RJRkZzBHL2eO6ND57yECpMSgRUHA
+ /OBF2K4Po7AfH1ZiFDPmhTTVCXBs9gVZMPAxnm5vJs2SFEtDjTMkM8SzTvgf5C14VKWw
+ YWI1f6JIghml3cx08AYKuyr6f4v7QMYqjHlBJR8sTU2CJUEQrJ2K//fvmMj8RElBAw+P
+ JacEE033+OcJVHKh/pTZkanJWpVyfMhGO5VyZJ+zUP7AZJTxGiN22zjsUk6y6gP35zYB
+ rgbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745907207; x=1746512007;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=iktpIu7SWJtpnnDwsmtRLfc5OtKIy8xH5BFHKzvdoFE=;
- b=suC7ZdP89D+jmQjKa3nYQCvlX1KtttrQX96cIRBZwPYlWg10WWKZ61zgpN5sVEF57c
- BC6d9XrCKWmt3qYBIvVc8qi2HBNfgLDgWi72Va9fWUhwVgSfj28uaRyIpznNnqX19M79
- 4MkgZLZppKMCP1L2k5FHNEaG6H6geu8+EN+DPpDL8n82lJGtFpfJi0UgcI5aTlef9vqF
- ZIxOMkqhtxLh4fuTa/98l1m8ncw7Y64zniXDsUHwfcJK2n1O8f4ErmMt9m/E8DU9L22i
- DiAXDDYFwI9WYVjCPl7RcbVZ9eJQ5EOHjaELBgbXwT4jHVXbXW436uH7ycEgwqHKil06
- Ym6Q==
+ d=1e100.net; s=20230601; t=1745907174; x=1746511974;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MbwimO4EqZ7sgOqFY8zyCqt9fX1bmrn547vhHkSRXAY=;
+ b=CZTANZ2fmAA+Kx53TZz2Kc8jiXeuJVx+o5i2zIMs1tsj+b/2vOKjxKE4i2Pcl7JPi5
+ POtbOuNnw7lZBDbuuoykTzv+9rILy7mAECFw3CYl1HwywudyDIFIRYYrbY05mJ2ZJ0Br
+ kbNqKNAsxgzHhHdOVYETfYPtys1vSPL+Ws24uzGBhkxJ/8tMCuA1ZdKwGa7dKco24FHM
+ KSMzMu5uW5hgd3Nz7Syi4xIq81q2dk41RIRIXsgw5e1lt95GFac2ELzxyw074J2CUNqR
+ 449bGf1F4NJbJbVLzTlZoIx7bjDqww8+l7g9XjS+ZmFoDlo6U71npl5LttYwb4b2Ar4N
+ 9MTw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZmIUTYCd03wYfBrYoqDRz4odroiOjawrPvOmJdTmNjOy3XmlJNiDSLnYQbVR+xWYjZDvH7SuXgIso@nongnu.org
-X-Gm-Message-State: AOJu0Yz5Y2JiGkM84Pxmxch49GewggHpDVnR90zRQ1FGOOMB3S1NUqnc
- XPXr25mzzqDek3nK7pjrOyMJKT2B/wC9UD9KVJy7phhDaUHx46r9oddMPQ==
-X-Gm-Gg: ASbGncsO7fJSzt5shH+hrwVpu1Vy06idbQ07STx3j/rKiMrBjVgrmOWZBaz85LnUrPO
- wtr9VCu/+VxqcepSwO1hIiXkpAxsj+y7lKi4deR0HYnfW9R3cfmTfyVuKz3fUBrD2qnSPB680hR
- 9RLUehIJLs+kVgIxrGBwyzp2RTAsbjMpvbCpnGjAhA6lgkhtaE8jp2p2uWmXgS+LxgfXs5dErtb
- 2rANc7tAWHIKwVozgfhQDjQIXv+nZ76XfzXgp/Q2e5Fu8UulhtTGVXCiWbi3qUDnADKaI/dW691
- EHZlWs2xike50QE+VjjyjRkzsUGwRn2rk6OJDW6XnUV4M7W9ss4=
-X-Google-Smtp-Source: AGHT+IFgetI6sus7o9QHIx7THDiC5T3npX8Cf2qF2P25MrTljoQgDmdgruFQ5tFCrfQKY3VN1TtHyA==
-X-Received: by 2002:a17:903:1b6b:b0:224:160d:3f5b with SMTP id
- d9443c01a7336-22dc6a827efmr179985605ad.49.1745907206776; 
- Mon, 28 Apr 2025 23:13:26 -0700 (PDT)
+ AJvYcCVvSI5VBAgVejg0u/jAseAqy5iT5sJKBnwY3bEBxOgd6DfU755qr2+pE4UPX11FJL3lj2vuxNs9mrG+@nongnu.org
+X-Gm-Message-State: AOJu0YxDNWxGUQGJquqRMMcHYTICtqLcBEGbGWnR0wQNFLjTOf/155aY
+ 02FLANEE+qUYIZgwJD0+bNf9FvMi0Xfpt3FJHQl0pcBbbO+UopxZPoPm3w==
+X-Gm-Gg: ASbGncvRnbyvCBEIGCgSUg7u9q7dBIYRTnh2SMp4PfaQkN6p37rBt+31FMyvlIxtiPS
+ bsTClnLo1w1znidcav8Zg2HhKi4vNtwrvyKMF5+6XM0Dnu9jjU3JEY1g3bj4T6DOC+Aj33s3FRI
+ ZufGhF7vjHX2TFK8TlZ22nXn8CnV54HLUq0XREjGj7KITHcUlD4cYj/VnywVQ7usk0DrxWnKaPe
+ xC7RqIONJnI5s8cIl2ChxyHHNiGxi8P8zGrwhYzq4IQ+JQegH/bWarP/sI0Qo/q1iCgLjlaUlEt
+ 1v9whYVNlU3lAn0wwPewgF+UB6ENQzKH3BKn8Q2y1BQwchql+sU=
+X-Google-Smtp-Source: AGHT+IEavuBjj7LDUhSQm0zWcQ/fNQoLZfMkhtFQPQOhPktWN21/k0OzNU65SJO8ihGwTD/ufOSJRA==
+X-Received: by 2002:a17:903:1948:b0:22c:3609:97ed with SMTP id
+ d9443c01a7336-22de6eb552bmr23405705ad.30.1745907173836; 
+ Mon, 28 Apr 2025 23:12:53 -0700 (PDT)
 Received: from donnager-debian.. ([45.124.203.19])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db52169casm93947765ad.238.2025.04.28.23.13.24
+ d9443c01a7336-22db52169casm93947765ad.238.2025.04.28.23.12.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Apr 2025 23:13:26 -0700 (PDT)
+ Mon, 28 Apr 2025 23:12:53 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 12/13] hw/riscv/virt: Use setprop_sized_cells for pcie
-Date: Tue, 29 Apr 2025 15:42:21 +0930
-Message-ID: <20250429061223.1457166-14-joel@jms.id.au>
+Subject: [PATCH 00/13] hw/riscv/virt: device tree reg cleanups 
+Date: Tue, 29 Apr 2025 15:42:08 +0930
+Message-ID: <20250429061223.1457166-1-joel@jms.id.au>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250429061223.1457166-1-joel@jms.id.au>
-References: <20250429061223.1457166-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=joel.stan@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=joel.stan@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -100,33 +97,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current device tree property uses two cells for the address (and for
-the size), but assumes the they are less than 32 bits by hard coding the
-high cell to zero.
+This is a set of cleanups for the riscv virt machine device tree
+generation that apply on top of Daniel's recent series. 
 
-Use qemu_fdt_setprop_sized_cells to do the job of splitting the upper
-and lower 32 bits across cells.
+Using dumpdtb the old and new device trees are identical for -M virt and
+-M virt,aia=aplic-imsic.
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- hw/riscv/virt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The final patch is not meant for merging, but demonstrates bugs in the
+existing code when the reg property describes an address > 4GB.
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index f8943f81790c..cd19c266e62a 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -894,8 +894,8 @@ static void create_fdt_pcie(RISCVVirtState *s,
-     if (s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC) {
-         qemu_fdt_setprop_cell(ms->fdt, name, "msi-parent", msi_pcie_phandle);
-     }
--    qemu_fdt_setprop_cells(ms->fdt, name, "reg", 0,
--        s->memmap[VIRT_PCIE_ECAM].base, 0, s->memmap[VIRT_PCIE_ECAM].size);
-+    qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg", 2,
-+        s->memmap[VIRT_PCIE_ECAM].base, 2, s->memmap[VIRT_PCIE_ECAM].size);
-     qemu_fdt_setprop_sized_cells(ms->fdt, name, "ranges",
-         1, FDT_PCI_RANGE_IOPORT, 2, 0,
-         2, s->memmap[VIRT_PCIE_PIO].base, 2, s->memmap[VIRT_PCIE_PIO].size,
+Based-on: 20250423110630.2249904-1-dbarboza@ventanamicro.com
+
+Joel Stanley (13):
+  hw/riscv/virt: Fix clint base address type
+  hw/riscv/virt: Use setprop_sized_cells for clint
+  hw/riscv/virt: Use setprop_sized_cells for memory
+  hw/riscv/virt: Use setprop_sized_cells for aplic
+  hw/riscv/virt: Use setprop_sized_cells for aclint
+  hw/riscv/virt: Use setprop_sized_cells for plic
+  hw/riscv/virt: Use setprop_sized_cells for virtio
+  hw/riscv/virt: Use setprop_sized_cells for reset
+  hw/riscv/virt: Use setprop_sized_cells for uart
+  hw/riscv/virt: Use setprop_sized_cells for rtc
+  hw/riscv/virt: Use setprop_sized_cells for iommu
+  hw/riscv/virt: Use setprop_sized_cells for pcie
+  NOMERGE: virt: Adjust devices so everything is > 4G
+
+ hw/riscv/virt.c | 108 ++++++++++++++++++++++++------------------------
+ 1 file changed, 53 insertions(+), 55 deletions(-)
+
 -- 
 2.47.2
 
