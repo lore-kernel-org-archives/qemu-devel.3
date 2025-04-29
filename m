@@ -4,144 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E140C369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 05:22:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BA64C369CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 05:26:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9dQM-0005kK-Pw; Tue, 29 Apr 2025 01:22:30 -0400
+	id 1u9dTo-0006pV-0l; Tue, 29 Apr 2025 01:26:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u9dQK-0005gC-6V
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 01:22:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u9dQH-0000NK-OE
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 01:22:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745904144;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gOVwsbPORcgoQp/LsLcCTQu/V1bgR6UpWgYnDVBuJ+Q=;
- b=W0/7Khd9xVzvfAUMD31rC+gxr84tIkT2IP692E+srHE2XIs+bwP4zrkJ/rVOBukD12cKaw
- YiVRiAI9Pla5dFiTVTy33W14AzVCEjMr5+rUMdRm7bQ4ZjMKa/cD5tqEDHxpU6rcBwdcz2
- /kP5GnGQH4BhoTIUvrpeJoYUGIOq8aE=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-492-dDDPXP7SPQe3wO9dCWQ5NA-1; Tue, 29 Apr 2025 01:22:22 -0400
-X-MC-Unique: dDDPXP7SPQe3wO9dCWQ5NA-1
-X-Mimecast-MFC-AGG-ID: dDDPXP7SPQe3wO9dCWQ5NA_1745904141
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-acb8d1231ffso406118866b.2
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 22:22:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1u9dTl-0006pD-ES; Tue, 29 Apr 2025 01:26:01 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1u9dTj-0000kH-Aq; Tue, 29 Apr 2025 01:26:01 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-acacb8743a7so940573866b.1; 
+ Mon, 28 Apr 2025 22:25:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=jms.id.au; s=google; t=1745904357; x=1746509157; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=UULEW/KaWm2jHs9sP0tHkXnBwnbTPDhkgpLa7XVbG8s=;
+ b=jSQlYPOOIeW/+B0cXoMo8XUJ7EeacTiv0EgSDmDOFZ8NkQQvnii2BuLOgvVL7Q+kW0
+ MFf6Jc5X9NlZGAZfQLW/8X436PJ64GzONBkwlwmGBswcVZ6thI0ngOVEtwmzDhFIcyiP
+ zV683ZLGFuUdhzG1UMhiv2E8skaLMnmgGUHMM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745904141; x=1746508941;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1745904357; x=1746509157;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gOVwsbPORcgoQp/LsLcCTQu/V1bgR6UpWgYnDVBuJ+Q=;
- b=WeJcHb0Uq9CCQSvEhzlnWfbToWUdhsTRpu2FiwA3gSseRse2FhrZ/VfjcbSwEN5DNt
- dDmPNnBWia8UbA5IYMjOYLNn/P0JKdfVhvXM1vmoq/L3calPcjCrfcSe/m9OoCq+wopX
- RvRGZerB3jqH0fEg1ImpOEhMEeupX/USmvTR8BBXRDwJT+9aJF0OLXSSrpoZpcEwFsih
- 2Ld1PHnSll0F2vM8urwSLucl9QGj9+g6oOcKn2GR43Q6I1P4TJ4jr783URR5SRgYD5jQ
- dPVpXZMkdU1cLc0xBDTUzdjo6nN0/7IUQthZLJXtE+C8XoW6rhZo4M8WZsQl4JMYmFaM
- jGQw==
+ bh=UULEW/KaWm2jHs9sP0tHkXnBwnbTPDhkgpLa7XVbG8s=;
+ b=PbElT4lCuO2i3TNH20Xp+PqztWY9Z/VnPtX7Mw75rYXHtIZNAXAHp3592Vs+ABNuEF
+ 3ZR9dFNbJfMvWwiPRtDszdREaN5RgfuwN0vUZq62v7u0cJYJqLEPNen2DV9PglUjKDHD
+ OETcXLjrDqPlivo5ApjV1lNkFyuTN3z2GYIuvdxGN76//P58YgxecOimUSWoSsFOV164
+ CSCYPI10hXCQcFIy089UAA0BL+97fGZJe/t2v2SH/fBnHRmLIH5uySHXenCU3SGNT/0r
+ jDNR55qsvUUaxOqGYCkeSY77Vd7ioe5sWmGUWDMgsaxTkKMBvl2uv1cn0hZew9XbDKQW
+ FjGg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWIe6Dr/+UtJSH7EryCPr04Nd3WpN3MdNdVMPj+Sk7VDXxQAFRQaL2whaJWNpFjuHXZBvcBebxrA7wj@nongnu.org
-X-Gm-Message-State: AOJu0Yzqv2MiUQ4Hn2lRE4Q+T9mvZ/d2BTUfN4eDs3ENnaGcNdyk8BwB
- lrQreqhU6wMoiQkEzIj9Pn8Zx44ZF4LJDOyFpCgF9eloFmulc65YN2nW8OmHJO30Gek1UY2WYK+
- K4wPlqxdPMWg3fKeSwxyihkiaX9PWvWyx12N99/4LPN9+oo3vHexy
-X-Gm-Gg: ASbGncvs+oi8bR08S5Ajj6pCkNUNgbtKJGyAOWVzMyHnIUmqgSWbjU4iYY0bzuQP7yJ
- Ia3MaA2F/puLpUiUlcgXSGs4C5OAJwaGGwUREf/WewnpJtgEuBpNqXfqnMZt/LdGw36/MuiDMgz
- gD74qnFadLz52PthuFiIOfmyEU8Tc5ZXCSoVGPhlmn4r551viNeP73fRzIKAbglMuoORamoVf9v
- lYvBWB96isJjcfGIWSiYcsTH5qRycpwoBfliuRR2mAaDf6hYrc6J8Snjyuwqrxi/yPVU8CZ2g/o
- StAi3WqnNIUbnj0UaNAK46KRPuYYFmU+2xJ/4A0p
-X-Received: by 2002:a17:907:7206:b0:aca:96a7:d373 with SMTP id
- a640c23a62f3a-acec4ed9e96mr246162266b.57.1745904140985; 
- Mon, 28 Apr 2025 22:22:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHZO12vzQBj4U2bvSWeCGRgpWHL8XPXW+4MJIAq8UqfzjNBUFiagiR71fsWyMvgjXyCDO0lRg==
-X-Received: by 2002:a17:907:7206:b0:aca:96a7:d373 with SMTP id
- a640c23a62f3a-acec4ed9e96mr246159666b.57.1745904140593; 
- Mon, 28 Apr 2025 22:22:20 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ace6edb1e60sm715584866b.183.2025.04.28.22.22.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 22:22:20 -0700 (PDT)
-Message-ID: <9f72389e-7adb-425d-8ab4-5770c8b89e9c@redhat.com>
-Date: Tue, 29 Apr 2025 07:22:17 +0200
+ AJvYcCWqOosv3GS6ZP6IVlUsaRAu3sPgfekcmmQ8ckETpNFSdK2D+AH9Sm6l5wWPPTIumW5jxmzMV7354HG9@nongnu.org
+X-Gm-Message-State: AOJu0YyKb2JXLxd456qtVD0f5OSLbtEZdCmpFDmbdHBLzvj4HbjSueof
+ lZBojiM3WX2hiQM1oEzYwJtcw1kuJ3KwD1sNQLxaru9wWXpgsB8oCLtEVfeMTZK+Z085WHleMza
+ iL+jAQKRh0/A1dofOEdHM8Q5PJy39Jg==
+X-Gm-Gg: ASbGncs63oEg8PeQGhu9cBdIiApFHRbAuixJtjhN4kFJR6pdCxki/d84i7MQKRZWGM/
+ kJMZtlBmrNE5l/m64C+AISnqYSrpZGZnu0XlHXZuCONjN7oj94th39TmSMkMEo0AFVu+K8F8lMB
+ NYiv7Czz3iFnnrWVxOhnLFTw==
+X-Google-Smtp-Source: AGHT+IHwInmrQ99CC5fXl+RJmPAd3a1co+2sk+ZRtvp5tGYk1gaBMBg8DNUSG6zrzvrKAlW45RQsbOF3adyW6CkaPvQ=
+X-Received: by 2002:a17:907:3e26:b0:acb:124e:81fa with SMTP id
+ a640c23a62f3a-acec69cfafbmr174269966b.5.1745904357043; Mon, 28 Apr 2025
+ 22:25:57 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH QEMU] x86/headers: Replace __ASSEMBLY__ with __ASSEMBLER__
- in UAPI headers
-To: Alexey Kardashevskiy <aik@amd.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Stefano Garzarella
- <sgarzare@redhat.com>, Li Zhijian <lizhijian@cn.fujitsu.com>,
- Rorie Reyes <rreyes@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>
-References: <20250429001705.2734439-1-aik@amd.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250429001705.2734439-1-aik@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+References: <20250423110630.2249904-1-dbarboza@ventanamicro.com>
+ <20250423110630.2249904-2-dbarboza@ventanamicro.com>
+ <CACPK8XfF74wHqdBBz=qPLefAD8pKT-0C8e=kfFtTeMH+teF-7A@mail.gmail.com>
+ <7d5181de-eb42-44b0-80cb-b2f8a3aed47c@ventanamicro.com>
+In-Reply-To: <7d5181de-eb42-44b0-80cb-b2f8a3aed47c@ventanamicro.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 29 Apr 2025 14:55:44 +0930
+X-Gm-Features: ATxdqUGqqgq0pkLWP1GWf5c5uX3f6AlSA4y8QdT2ntMam8_fIKmLE6P8rI51ToU
+Message-ID: <CACPK8Xc5Av4QnHwcfe5JhcHUYmdLxm6P+vDh=_zze7UvbaaJ8w@mail.gmail.com>
+Subject: Re: [PATCH 1/9] hw/riscv/virt.c: enforce s->memmap use in
+ machine_init()
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, 
+ Conor Dooley <conor@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=joel.stan@gmail.com; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,39 +95,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/04/2025 02.17, Alexey Kardashevskiy wrote:
-> The recent kernel update 8a141be3233af7d broke the headers update,
-> fix it in the script.
+On Fri, 25 Apr 2025 at 21:23, Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+>
+>
+> On 4/24/25 6:51 AM, Joel Stanley wrote:
+> > On Wed, 23 Apr 2025 at 20:37, Daniel Henrique Barboza
+> > <dbarboza@ventanamicro.com> wrote:
+> >>
+> >> Throughout the code we're accessing the board memmap, most of the time,
+> >> by accessing it statically via 'virt_memmap'. This static map is also
+> >> assigned in the machine state in s->memmap.
+> >>
+> >> We're also passing it as a variable to some fdt functions, which is
+> >> unorthodox since we can spare a function argument by accessing it
+> >> statically or via the machine state.
+> >>
+> >> All the current forms are valid but not all of the are scalable. In the
+> >> future we will version this board, and then all this code will need
+> >> rework because it should point to the updated memmap. In this case,
+> >> we'll want to assign the adequate versioned memmap once during init,
+> >> in s->memmap like it is being done today, and the rest of the code
+> >> will access the updated map via s->memmap.
+> >
+> > I was writing a patch for a machine and came across the same
+> > inconsistencies. Nice clean up.
+> >
+> > Some of the device initlisation code could be refactored out to be
+> > shared by other machines within the riscv directory. Related, parts of
+> > the device tree creation could belong to the model, instead of to the
+> > machine, as the properties are a property (!) of the device.
+>
+>
+> Yes, delegating the FDT creation to the device, instead of having each machine
+> to create the (mostly) same FDT code over and over again, is something that
+> I've considering for awhile.
+>
+> I keep postponing it mainly because I would like to verify with the DT folks if
+> there's a guarantee that a given device/CPU DT is always the same, i.e. a device
+> DT is always the same regardless of the machine. I have a guess that that this is
+> indeed the case but a confirmation would be nice .... Conor, care to comment?
 
-Thanks, but the same patch is already on the list:
+I'd be interested in Coner's thoughts on this.
 
-https://lore.kernel.org/qemu-devel/20250425052401.8287-2-rreyes@linux.ibm.com/
+My understanding is bindings strive to specify the hardware
+independent of the machine it's part of. We have bindings in the
+kernel tree, and associated drivers that use those bindings, that work
+fine on different machines. The litex peripherals are an extreme case
+of this; peripherals defined in python that are attached to soft cores
+often running on a FPGA.
 
-> Or we want both __ASSEMBLY__ and __ASSEMBLER__?
+At a practical level generating the device tree for a given device
+does need to take into account specifics of the machine.
 
-It's about one x86 header, and for x86, all macros got changed, so I think 
-we don't need to check for both here.
+Things like interrupt properties depend on the interrupt device you're
+delivering to (some have two cells to provide a 'flags' parameter
+alongside the irq number). In general anything that contains phandles
+could end up being machine specific. Another case is the number of
+cells in reg properties, which depend on the bus the device is
+described to be on.
 
-  Thomas
+These are things that some common code would need to handle, not show
+stoppers for the idea.
 
+> In this refactor we could then create FDTs by passing along a memmap pointer and
+> a fdt pointer, as you've suggested.
+>
+> All this said, there's no need to do such FDT refactory all at once. I think I'll
+> start with the most common devices between RISC-V boards and go from there.
 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8a141be3233af7d
-> ---
->   scripts/update-linux-headers.sh | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
-> index 8913e4fb99b..b43b8ef75a6 100755
-> --- a/scripts/update-linux-headers.sh
-> +++ b/scripts/update-linux-headers.sh
-> @@ -177,7 +177,7 @@ EOF
->   
->           # Remove everything except the macros from bootparam.h avoiding the
->           # unnecessary import of several video/ist/etc headers
-> -        sed -e '/__ASSEMBLY__/,/__ASSEMBLY__/d' \
-> +        sed -e '/__ASSEMBLER__/,/__ASSEMBLER__/d' \
->                  "$hdrdir/include/asm/bootparam.h" > "$hdrdir/bootparam.h"
->           cp_portable "$hdrdir/bootparam.h" \
->                       "$output/include/standard-headers/asm-$arch"
+Agreed! It was just something to keep in mind when deciding what
+pointers to pass around.
 
+Cheers,
+
+Joel
 
