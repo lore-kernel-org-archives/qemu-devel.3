@@ -4,110 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13910C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 09:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F2BC369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 09:21:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9h8U-0006vy-Pa; Tue, 29 Apr 2025 05:20:18 -0400
+	id 1u9h7j-0005WS-DV; Tue, 29 Apr 2025 05:19:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
- id 1u9h8P-0006l8-Np; Tue, 29 Apr 2025 05:20:13 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1u9h7b-0005Og-EQ; Tue, 29 Apr 2025 05:19:25 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
- id 1u9h8N-0004fs-Gq; Tue, 29 Apr 2025 05:20:13 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53T4ESrh006492;
- Tue, 29 Apr 2025 09:20:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=dpAS50
- J9K4bmIU5YjF4pL4ZxOYz4xQ9yDjBS7yKG+fU=; b=n6y/JFf/qtTrJTm/KyWptr
- vp3C/ZRDC20MQx351+UD8w/YbGK00VtgvkHVr3OWhhW7XmEIySv6l+q5MhUxtIE0
- UWzYcLxmDCACGhQEvZKL/SvOAdqJaNlvWl/REixWT0jpEVg5GwvhX7nzRRoDL2ax
- gVnd5Eq5lFdJP3Qt3moKPb7gYbFT4OnDVrT2KeJuAKhpXex44+4zKukg3ynXkaBA
- krzQHq8Q9bYCs04O6hByxE9Fb+DWO1QbJ6LvT7RyvozxlF/GB5/yVvzqpx8JNkJF
- 7gaHeEskXlo/Ti8IEn0TPDruoKhzw6n6e+lz4MYHYfjCM0DrKvTXT8UHjobpmB5Q
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ahs9a7u3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Apr 2025 09:20:08 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53T8pXGp016119;
- Tue, 29 Apr 2025 09:20:07 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 469a70ann9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Apr 2025 09:20:07 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53T9K3Bd32113358
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 29 Apr 2025 09:20:03 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F05C12022D;
- Tue, 29 Apr 2025 09:20:02 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 98CF72022E;
- Tue, 29 Apr 2025 09:20:02 +0000 (GMT)
-Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
- [9.87.129.78]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 29 Apr 2025 09:20:02 +0000 (GMT)
-Message-ID: <fd8ffc6bf1ba66c0479f6b02bbc747d392d34f1c.camel@linux.ibm.com>
-Subject: Re: [PATCH v4 1/4] hw/s390x: add SCLP event type CPI
-From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>, qemu-s390x mailing
- list <qemu-s390x@nongnu.org>, Thomas Huth <thuth@redhat.com>, Daniel
- Berrange <berrange@redhat.com>
-Cc: qemu-devel mailing list <qemu-devel@nongnu.org>, Hendrik Brueckner
- <brueckner@linux.ibm.com>
-Date: Tue, 29 Apr 2025 11:20:02 +0200
-In-Reply-To: <20250410150934.1331433-2-shalini@linux.ibm.com>
-References: <20250410150934.1331433-1-shalini@linux.ibm.com>
- <20250410150934.1331433-2-shalini@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1u9h7Z-0004Ff-55; Tue, 29 Apr 2025 05:19:22 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 29 Apr
+ 2025 17:18:57 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Tue, 29 Apr 2025 17:18:57 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <longzl2@lenovo.com>,
+ <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v3 4/9] hw/intc/aspeed: Add support for AST2700 TSP INTC
+Date: Tue, 29 Apr 2025 17:18:48 +0800
+Message-ID: <20250429091855.1948374-5-steven_lee@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250429091855.1948374-1-steven_lee@aspeedtech.com>
+References: <20250429091855.1948374-1-steven_lee@aspeedtech.com>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=LuKSymdc c=1 sm=1 tr=0 ts=681099c8 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=d4LToudSVkjQPbQJ9YAA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: GvEA3X0iq-1MWk-D4JXQVXaT9uSad081
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDA2NyBTYWx0ZWRfX4tf4tDwK1FYU
- 07bIGj3NWSD2LQNKWxD/hXXiw+o5LpzKECZZ2TFk+ajyv01b1CevJCh4BKT+qNYUx1SaBXwM37T
- NrsUVcKMawTCHzyNAjemZRnd8cdr4mfdLGgqpFxGcqlcWvu230ZZZwW5DcMR3JQuwCX0Od0I6W8
- /Vz1fSSM3XshY/mY3avnrsnfTQ7mjQT7a2zG6o7kBUKAb6IFc4qa4sC+CdaBVE9HpnijKovbhJe
- COFn/k9tI1kA4bzE5YHjKe/rcSI7GeLPFK/urexfr+LpjCda3G/wIJe/Rm0s9NWMIQ1rbKc7vxw
- HoaNXDR66Cz7296lP1J1dL4U2j+4/iMA8r1db6MDFNv0hVHT8KH79/3b2f7v08uVrkdyEs9wdib
- KkLrEgTIv6fDUEEB2ufHBFHcyR7nxwGsf0ScSqZ8lyfdYBRiDerN02J3aptPW/Sw1ia3FmWw
-X-Proofpoint-GUID: GvEA3X0iq-1MWk-D4JXQVXaT9uSad081
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-29_03,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0
- mlxlogscore=999 clxscore=1015 spamscore=0 lowpriorityscore=0
- priorityscore=1501 bulkscore=0 mlxscore=0 impostorscore=0 suspectscore=0
- malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504290067
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=steven_lee@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,69 +62,318 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Steven Lee <steven_lee@aspeedtech.com>
+From:  Steven Lee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 2025-04-10 at 17:09 +0200, Shalini Chellathurai Saroja wrote:
-> Implement the Service-Call Logical Processor (SCLP) event
-> type Control-Program Identification (CPI) in QEMU. This
-> event is used to send CPI identifiers from the guest to the
-> host. The CPI identifiers are: system type, system name,
-> system level and sysplex name.
->=20
-> System type: operating system of the guest (e.g. "LINUX").
-> System name: user configurable name of the guest (e.g. "TESTVM").
-> System level: distribution and kernel version, if the system type is Linu=
-x
-> (e.g. 0x50e00).
-> Sysplex name: name of the cluster which the guest belongs to (if any)
-> (e.g. "PLEX").
->=20
-> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> ---
->  hw/s390x/event-facility.c         |  2 +
->  hw/s390x/meson.build              |  1 +
->  hw/s390x/s390-virtio-ccw.c        | 14 +++++
->  hw/s390x/sclpcpi.c                | 92 +++++++++++++++++++++++++++++++
->  include/hw/s390x/event-facility.h | 13 +++++
->  5 files changed, 122 insertions(+)
->  create mode 100644 hw/s390x/sclpcpi.c
+- Define new types for ast2700tsp INTC and INTCIO
+- Add register definitions for TSP INTC and INTCIO
+- Implement write handlers for TSP INTC and INTCIO
+- Register new types in aspeed_intc_register_types
 
-[...]
+The design of the TSP INTC and INTCIO controllers is similar to
+AST2700, with the following differences:
 
+- AST2700
+  Support GICINT128 to GICINT136 in INTC
+  The INTCIO GIC_192_201 has 10 output pins, mapped as follows:
+    Bit 0 -> GIC 192
+    Bit 1 -> GIC 193
+    Bit 2 -> GIC 194
+    Bit 3 -> GIC 195
+    Bit 4 -> GIC 196
 
->  static void s390_cpu_plug(HotplugHandler *hotplug_dev,
-> diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
-> new file mode 100644
-> index 0000000000..13589459b1
-> --- /dev/null
-> +++ b/hw/s390x/sclpcpi.c
+- AST2700-tsp
+  Support TSPINT128 to TSPINT136 in INTC
+  The INTCIO TSPINT_160_169 has 10 output pins, mapped as follows:
+    Bit 0 -> TSPINT 160
+    Bit 1 -> TSPINT 161
+    Bit 2 -> TSPINT 162
+    Bit 3 -> TSPINT 163
+    Bit 4 -> TSPINT 164
 
-[...]
+Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+Change-Id: I9e71a8aac400c0cdbd5b78073d0ada79d12a1350
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/intc/aspeed_intc.h |   2 +
+ hw/intc/aspeed_intc.c         | 213 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 215 insertions(+)
 
-> +static void cpi_class_init(ObjectClass *klass, void *data)
+diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
+index 746f159bf3..51288384a5 100644
+--- a/include/hw/intc/aspeed_intc.h
++++ b/include/hw/intc/aspeed_intc.h
+@@ -17,6 +17,8 @@
+ #define TYPE_ASPEED_2700_INTCIO TYPE_ASPEED_INTC "io-ast2700"
+ #define TYPE_ASPEED_2700SSP_INTC TYPE_ASPEED_INTC "-ast2700ssp"
+ #define TYPE_ASPEED_2700SSP_INTCIO TYPE_ASPEED_INTC "io-ast2700ssp"
++#define TYPE_ASPEED_2700TSP_INTC TYPE_ASPEED_INTC "-ast2700tsp"
++#define TYPE_ASPEED_2700TSP_INTCIO TYPE_ASPEED_INTC "io-ast2700tsp"
+ 
+ OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
+ 
+diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
+index 39bee5232c..09c4f6b5ff 100644
+--- a/hw/intc/aspeed_intc.c
++++ b/hw/intc/aspeed_intc.c
+@@ -106,6 +106,51 @@ REG32(SSPINT164_STATUS,     0x1C4)
+ REG32(SSPINT165_EN,         0x1D0)
+ REG32(SSPINT165_STATUS,     0x1D4)
+ 
++/*
++ * TSP INTC Registers
++ */
++REG32(TSPINT128_EN,             0x3000)
++REG32(TSPINT128_STATUS,         0x3004)
++REG32(TSPINT129_EN,             0x3100)
++REG32(TSPINT129_STATUS,         0x3104)
++REG32(TSPINT130_EN,             0x3200)
++REG32(TSPINT130_STATUS,         0x3204)
++REG32(TSPINT131_EN,             0x3300)
++REG32(TSPINT131_STATUS,         0x3304)
++REG32(TSPINT132_EN,             0x3400)
++REG32(TSPINT132_STATUS,         0x3404)
++REG32(TSPINT133_EN,             0x3500)
++REG32(TSPINT133_STATUS,         0x3504)
++REG32(TSPINT134_EN,             0x3600)
++REG32(TSPINT134_STATUS,         0x3604)
++REG32(TSPINT135_EN,             0x3700)
++REG32(TSPINT135_STATUS,         0x3704)
++REG32(TSPINT136_EN,             0x3800)
++REG32(TSPINT136_STATUS,         0x3804)
++REG32(TSPINT137_EN,             0x3900)
++REG32(TSPINT137_STATUS,         0x3904)
++REG32(TSPINT138_EN,             0x3A00)
++REG32(TSPINT138_STATUS,         0x3A04)
++REG32(TSPINT160_169_EN,         0x3B00)
++REG32(TSPINT160_169_STATUS,     0x3B04)
++
++/*
++ * TSP INTCIO Registers
++ */
++
++REG32(TSPINT160_EN,         0x200)
++REG32(TSPINT160_STATUS,     0x204)
++REG32(TSPINT161_EN,         0x210)
++REG32(TSPINT161_STATUS,     0x214)
++REG32(TSPINT162_EN,         0x220)
++REG32(TSPINT162_STATUS,     0x224)
++REG32(TSPINT163_EN,         0x230)
++REG32(TSPINT163_STATUS,     0x234)
++REG32(TSPINT164_EN,         0x240)
++REG32(TSPINT164_STATUS,     0x244)
++REG32(TSPINT165_EN,         0x250)
++REG32(TSPINT165_STATUS,     0x254)
++
+ static const AspeedINTCIRQ *aspeed_intc_get_irq(AspeedINTCClass *aic,
+                                                 uint32_t reg)
+ {
+@@ -540,6 +585,50 @@ static void aspeed_ssp_intc_write(void *opaque, hwaddr offset, uint64_t data,
+     return;
+ }
+ 
++static void aspeed_tsp_intc_write(void *opaque, hwaddr offset, uint64_t data,
++                                        unsigned size)
++{
++    AspeedINTCState *s = ASPEED_INTC(opaque);
++    const char *name = object_get_typename(OBJECT(s));
++    uint32_t reg = offset >> 2;
++
++    trace_aspeed_intc_write(name, offset, size, data);
++
++    switch (reg) {
++    case R_TSPINT128_EN:
++    case R_TSPINT129_EN:
++    case R_TSPINT130_EN:
++    case R_TSPINT131_EN:
++    case R_TSPINT132_EN:
++    case R_TSPINT133_EN:
++    case R_TSPINT134_EN:
++    case R_TSPINT135_EN:
++    case R_TSPINT136_EN:
++    case R_TSPINT160_169_EN:
++        aspeed_intc_enable_handler(s, offset, data);
++        break;
++    case R_TSPINT128_STATUS:
++    case R_TSPINT129_STATUS:
++    case R_TSPINT130_STATUS:
++    case R_TSPINT131_STATUS:
++    case R_TSPINT132_STATUS:
++    case R_TSPINT133_STATUS:
++    case R_TSPINT134_STATUS:
++    case R_TSPINT135_STATUS:
++    case R_TSPINT136_STATUS:
++        aspeed_intc_status_handler(s, offset, data);
++        break;
++    case R_TSPINT160_169_STATUS:
++        aspeed_intc_status_handler_multi_outpins(s, offset, data);
++        break;
++    default:
++        s->regs[reg] = data;
++        break;
++    }
++
++    return;
++}
++
+ static uint64_t aspeed_intcio_read(void *opaque, hwaddr offset,
+                                    unsigned int size)
+ {
+@@ -622,6 +711,40 @@ static void aspeed_ssp_intcio_write(void *opaque, hwaddr offset, uint64_t data,
+     return;
+ }
+ 
++static void aspeed_tsp_intcio_write(void *opaque, hwaddr offset, uint64_t data,
++                                unsigned size)
++{
++    AspeedINTCState *s = ASPEED_INTC(opaque);
++    const char *name = object_get_typename(OBJECT(s));
++    uint32_t reg = offset >> 2;
++
++    trace_aspeed_intc_write(name, offset, size, data);
++
++    switch (reg) {
++    case R_TSPINT160_EN:
++    case R_TSPINT161_EN:
++    case R_TSPINT162_EN:
++    case R_TSPINT163_EN:
++    case R_TSPINT164_EN:
++    case R_TSPINT165_EN:
++        aspeed_intc_enable_handler(s, offset, data);
++        break;
++    case R_TSPINT160_STATUS:
++    case R_TSPINT161_STATUS:
++    case R_TSPINT162_STATUS:
++    case R_TSPINT163_STATUS:
++    case R_TSPINT164_STATUS:
++    case R_TSPINT165_STATUS:
++        aspeed_intc_status_handler(s, offset, data);
++        break;
++    default:
++        s->regs[reg] = data;
++        break;
++    }
++
++    return;
++}
++
+ static const MemoryRegionOps aspeed_intc_ops = {
+     .read = aspeed_intc_read,
+     .write = aspeed_intc_write,
+@@ -662,6 +785,26 @@ static const MemoryRegionOps aspeed_ssp_intcio_ops = {
+     }
+ };
+ 
++static const MemoryRegionOps aspeed_tsp_intc_ops = {
++    .read = aspeed_intc_read,
++    .write = aspeed_tsp_intc_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    }
++};
++
++static const MemoryRegionOps aspeed_tsp_intcio_ops = {
++    .read = aspeed_intcio_read,
++    .write = aspeed_tsp_intcio_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    }
++};
++
+ static void aspeed_intc_instance_init(Object *obj)
+ {
+     AspeedINTCState *s = ASPEED_INTC(obj);
+@@ -887,6 +1030,74 @@ static const TypeInfo aspeed_2700ssp_intcio_info = {
+     .class_init = aspeed_2700ssp_intcio_class_init,
+ };
+ 
++static AspeedINTCIRQ aspeed_2700tsp_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
++    {0, 0, 10, R_TSPINT160_169_EN, R_TSPINT160_169_STATUS},
++    {1, 10, 1, R_TSPINT128_EN, R_TSPINT128_STATUS},
++    {2, 11, 1, R_TSPINT129_EN, R_TSPINT129_STATUS},
++    {3, 12, 1, R_TSPINT130_EN, R_TSPINT130_STATUS},
++    {4, 13, 1, R_TSPINT131_EN, R_TSPINT131_STATUS},
++    {5, 14, 1, R_TSPINT132_EN, R_TSPINT132_STATUS},
++    {6, 15, 1, R_TSPINT133_EN, R_TSPINT133_STATUS},
++    {7, 16, 1, R_TSPINT134_EN, R_TSPINT134_STATUS},
++    {8, 17, 1, R_TSPINT135_EN, R_TSPINT135_STATUS},
++    {9, 18, 1, R_TSPINT136_EN, R_TSPINT136_STATUS},
++};
++
++static void aspeed_2700tsp_intc_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
++
++    dc->desc = "ASPEED 2700 TSP INTC Controller";
++    aic->num_lines = 32;
++    aic->num_inpins = 10;
++    aic->num_outpins = 19;
++    aic->mem_size = 0x4000;
++    aic->nr_regs = 0x3B08 >> 2;
++    aic->reg_offset = 0;
++    aic->reg_ops = &aspeed_tsp_intc_ops;
++    aic->irq_table = aspeed_2700tsp_intc_irqs;
++    aic->irq_table_count = ARRAY_SIZE(aspeed_2700tsp_intc_irqs);
++}
++
++static const TypeInfo aspeed_2700tsp_intc_info = {
++    .name = TYPE_ASPEED_2700TSP_INTC,
++    .parent = TYPE_ASPEED_INTC,
++    .class_init = aspeed_2700tsp_intc_class_init,
++};
++
++static AspeedINTCIRQ aspeed_2700tsp_intcio_irqs[ASPEED_INTC_MAX_INPINS] = {
++    {0, 0, 1, R_TSPINT160_EN, R_TSPINT160_STATUS},
++    {1, 1, 1, R_TSPINT161_EN, R_TSPINT161_STATUS},
++    {2, 2, 1, R_TSPINT162_EN, R_TSPINT162_STATUS},
++    {3, 3, 1, R_TSPINT163_EN, R_TSPINT163_STATUS},
++    {4, 4, 1, R_TSPINT164_EN, R_TSPINT164_STATUS},
++    {5, 5, 1, R_TSPINT165_EN, R_TSPINT165_STATUS},
++};
++
++static void aspeed_2700tsp_intcio_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
++
++    dc->desc = "ASPEED 2700 TSP INTC IO Controller";
++    aic->num_lines = 32;
++    aic->num_inpins = 6;
++    aic->num_outpins = 6;
++    aic->mem_size = 0x400;
++    aic->nr_regs = 0x258 >> 2;
++    aic->reg_offset = 0x0;
++    aic->reg_ops = &aspeed_tsp_intcio_ops;
++    aic->irq_table = aspeed_2700tsp_intcio_irqs;
++    aic->irq_table_count = ARRAY_SIZE(aspeed_2700tsp_intcio_irqs);
++}
++
++static const TypeInfo aspeed_2700tsp_intcio_info = {
++    .name = TYPE_ASPEED_2700TSP_INTCIO,
++    .parent = TYPE_ASPEED_INTC,
++    .class_init = aspeed_2700tsp_intcio_class_init,
++};
++
+ static void aspeed_intc_register_types(void)
+ {
+     type_register_static(&aspeed_intc_info);
+@@ -894,6 +1105,8 @@ static void aspeed_intc_register_types(void)
+     type_register_static(&aspeed_2700_intcio_info);
+     type_register_static(&aspeed_2700ssp_intc_info);
+     type_register_static(&aspeed_2700ssp_intcio_info);
++    type_register_static(&aspeed_2700tsp_intc_info);
++    type_register_static(&aspeed_2700tsp_intcio_info);
+ }
+ 
+ type_init(aspeed_intc_register_types);
+-- 
+2.34.1
 
-Should be 'const void *data'.
-
-> +{
-> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
-> +    SCLPEventClass *k =3D SCLP_EVENT_CLASS(klass);
-> +
-> +    dc->user_creatable =3D false;
-> +
-> +    k->can_handle_event =3D can_handle_event;
-> +    k->get_send_mask =3D send_mask;
-> +    k->get_receive_mask =3D receive_mask;
-> +    k->write_event_data =3D write_event_data;
-> +}
-
-[...]
-
---=20
-IBM Deutschland Research & Development GmbH
-Vorsitzender des Aufsichtsrats: Wolfgang Wendt
-Gesch=C3=A4ftsf=C3=BChrung: David Faller
-Sitz der Gesellschaft: B=C3=B6blingen / Registergericht: Amtsgericht Stuttg=
-art, HRB 243294
 
