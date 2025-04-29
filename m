@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F0CC3ABA8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D7FFC369CB
 	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 05:01:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9d5L-00081U-B2; Tue, 29 Apr 2025 01:00:50 -0400
+	id 1u9d59-0007lA-HZ; Tue, 29 Apr 2025 01:00:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u9d4w-0007Wx-M9
+ id 1u9d4v-0007UX-87
  for qemu-devel@nongnu.org; Tue, 29 Apr 2025 01:00:23 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u9d4t-0005yV-Nt
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 01:00:21 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2279915e06eso62680865ad.1
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 22:00:19 -0700 (PDT)
+ id 1u9d4s-0005yG-K0
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 01:00:20 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-af50f56b862so3805637a12.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 22:00:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745902818; x=1746507618; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=J1+mpgNwQQblB514w6gW7TOdOsjY6yGJh5E66/u+eSU=;
- b=pncYCfXlRLAwDiIcQYTGtm7L5DlaZwUOlrsIEVty0QqHFgkoWQFZGuvp8h6AnQN9Mc
- +JAp8+3ExTvWsbXlUT/adPAgNTVkhRRTyg0u2unBCVFXnDkQj+A3+KddSbS/ImL6cs8A
- 81VjqtnRfouLp1U56xc2oNq2fGYOVD4DJoVXoYc6PLwrcSpei1riMS/4yrAw0OWFtJxj
- 8EZ1OmSXWHRFHLbXe+ljLZzYtfuw5rfpGy98dktYu+i0zb10jP8PwjwOuIaxKFD+tMzw
- gVEy1uNdmh5YPoYL4cAYIcW8T4oc7WV9jZHs0ZsepRxU4FiHCEE8lje32kPcVZZkKEPG
- L4BA==
+ d=linaro.org; s=google; t=1745902816; x=1746507616; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=E7e6flwrW0Xr7srdLRTYqMhF0r9DLRZRxyW/leVX1gE=;
+ b=iXg0ppm5WGp+tF+ixLxEYz2yX44EFR6mQOoblqNJ6UIzHzkTff288+R4IRjW/lrJN+
+ +dA0GS0vjPylcKn1D/9rqf43eCHAtvAQT/yiaXalqFUpxUmw2pWqWPOyr4SFlb7nlmjG
+ I9k3XZTvyH/WLRM715E/gsuhZWJ6mFATg1EKPoSGEqi7IHZ/plblilmQCM2Xdv6EP6/t
+ cnkUqL7Am7Bwuf4iJYaa9mXiaE5BVu72OwwL+HvmGyCCBtt23j2Aiy7fE/sO7PD7hS9U
+ PkWBdwtt5blTuXf1N608woOrIYjyq8Kc7u9ppV5yXDDNWkDFkCv3QMbSdPQ0WI/vnjzA
+ vN4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745902818; x=1746507618;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=J1+mpgNwQQblB514w6gW7TOdOsjY6yGJh5E66/u+eSU=;
- b=sLSojl3m2c3Wtwc72TTpFxieyehvg+5J/VauYsXIEDEDomeXabNAh2+xWqRPamOB9W
- LHnxrut4WHw/FWp+T1OuaE86JYCv4ND3JXYrmy1dAiVX8p91QfUq7JSpXZpjShfIFbiJ
- nZEOgiHiXp/x+1z7Nt2ADp9vnBvngFo/rdAocdjQ72jf4V8aWUkkklOJ4pVXbJ/Ro8VA
- W92pGXs+CS05OzlTRn+B9Mj8u479jvYY59nxk5FBNS3m/grJp73rPO0PWI++b19LzUrq
- svJXa6RDH3vS+3jmSoMh/mlCA2VZKQl2hpEtV5D4ZKEcF8iWk+hiWYNIPYbfaipxR0F+
- 0Q4Q==
-X-Gm-Message-State: AOJu0Yz4zBEznSvjaQp7K/KNbPQMM9h5+MTEQ7FpnZXJ8inCQ1UFeQWF
- mtvxPmblk8fnOU4cde0YrZTlWSNZWq6Dz+orVu/ubGACICowzgIGyrkOwonbMCKuJ0+d3F9zfXi
- k
-X-Gm-Gg: ASbGnctyVzx/JguT3v4dE0ZZ0+MvjSTTVqmQr0bPwf1khGP6Kz5A9l0XPlgUWniyNIr
- x2UPX74i88ZmXh7HRda3qP1/5mDIH7US9ma3eq4BmuocQr+BMTOex5jTX2kFyw2kCZ9Hh7O8iXX
- mPhD1dDghG36UZTulKi8ewYa3W0Hjotm1uuLGkMfpMLmfhc0TG0BkYjLyMQWByBFN99ZotrRBrY
- lKQcWE8R+pVu0NO2F/u3EWNE9GAfo3tTO5rowSbn9SuAAvROCT8ueDVX+6IIfJOia+rvu4j2k3m
- T/6IzfbYKbglTAxWVE1FmD8m/pvKaJSP0Xap8hb3
-X-Google-Smtp-Source: AGHT+IERHWhMGoawkxhND2r6sOYx5Beqk5TQos+njQ8aQ63QB1/yRMYJ7tUQDCBZu8a/05Bc1162dQ==
-X-Received: by 2002:a17:902:d4d1:b0:224:76f:9e59 with SMTP id
- d9443c01a7336-22dc69f3b0fmr169007685ad.10.1745902818246; 
- Mon, 28 Apr 2025 22:00:18 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1745902816; x=1746507616;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=E7e6flwrW0Xr7srdLRTYqMhF0r9DLRZRxyW/leVX1gE=;
+ b=qYIYRisPH/8GTNLrl84oeUkkTM793xznLjRh3fBKRYjo77H7D8m7WEYwHbnlilgeH0
+ xKxbkjxqsV+04CtTgyQrt1bLDgnA3ZB1iSRULvCv911Sa94iWQHBiAiJaN+kL4rhCl2F
+ /S7BKP1ZCdsSKRS8fgU/H4ovYjhJUIlR+j0r3FLSn0lLINxDCqxlwoWV4tA/vEoGPN9i
+ fsF0C0d5a46b0v1QUgoCXrPG/8aFGeWcb/oKLI9W6XW+v3meGznFg1Pa9AWPQn6LZKZ8
+ SDAv+ufs+5gKDihskm3b52PXqeOjWshFGM7cAM2qdK3Oj/o0qMZwYWXA0PDtkSMx3NBf
+ Ahbw==
+X-Gm-Message-State: AOJu0Yz+cNx2piTEVHDR8NhPZqSX2VBKidQHPPwJ8yqPOv4Eg0cUJxUH
+ psodePZUymSacbtwk3xeKDQKKeZc7zvOwNJGsmBZgV5KtSbrug2opfzkWXXY6g6i97ndPtefR8K
+ 1
+X-Gm-Gg: ASbGncsld3pGXu6V54Y4N5eRzpSVs4LZSVJkxlHb8gWKTH3ye0PBFqiQaU+ncoOWcC4
+ I3LvHeZmaav3b85nqXChSNihxym5rqbZP4BzJRjZ+YVz4qtoCLU8qDA8QbEyDB5zuDqCO+YSAqS
+ kRUvrm82n5Pykl8zc9JQZ117M/ko8rWVbAmTZkoeoQWoF9Hziz6aDSjpNBLT2viF5uWPKm2u78H
+ sUcLumq1AsmF3j40AHl8ngKHebPZQw3qijYbkJKuJwaI3oqOwtLhdsSl0/ZcYFxi/vDRGDDVZcE
+ iW1gyHFlzhQZBGMoO2P3i2YRnDDpNOxyp4k/2fgP
+X-Google-Smtp-Source: AGHT+IGtTYums0vJIYUAxvrHOiwYyUcioYLnqAFsCGQIOBOAUh+3sHRwCcQhNBYfSH9HQfYcsvlOJQ==
+X-Received: by 2002:a17:903:2ec8:b0:216:6901:d588 with SMTP id
+ d9443c01a7336-22dc69ffb69mr175276195ad.15.1745902816496; 
+ Mon, 28 Apr 2025 22:00:16 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db4dbd6f7sm93004015ad.76.2025.04.28.22.00.17
+ d9443c01a7336-22db4dbd6f7sm93004015ad.76.2025.04.28.22.00.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 28 Apr 2025 22:00:17 -0700 (PDT)
+ Mon, 28 Apr 2025 22:00:16 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
@@ -70,16 +69,15 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-arm@nongnu.org, anjo@rev.ng, richard.henderson@linaro.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 02/13] include/system/hvf: missing vaddr include
-Date: Mon, 28 Apr 2025 21:59:59 -0700
-Message-ID: <20250429050010.971128-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH 00/13] single-binary: compile target/arm twice
+Date: Mon, 28 Apr 2025 21:59:57 -0700
+Message-ID: <20250429050010.971128-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250429050010.971128-1-pierrick.bouvier@linaro.org>
-References: <20250429050010.971128-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,40 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On MacOS x86_64:
-In file included from ../target/i386/hvf/x86_task.c:13:
-/Users/runner/work/qemu/qemu/include/system/hvf.h:42:5: error: unknown type name 'vaddr'
-    vaddr pc;
-    ^
-/Users/runner/work/qemu/qemu/include/system/hvf.h:43:5: error: unknown type name 'vaddr'
-    vaddr saved_insn;
-    ^
-/Users/runner/work/qemu/qemu/include/system/hvf.h:45:5: error: type name requires a specifier or qualifier
-    QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
-    ^
-/Users/runner/work/qemu/qemu/include/system/hvf.h:45:18: error: a parameter list without types is only allowed in a function definition
-    QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
-                 ^
-/Users/runner/work/qemu/qemu/include/system/hvf.h:45:36: error: expected ';' at end of declaration list
-    QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
+More work toward single-binary.
+This series convert target/arm/cpu.c.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- include/system/hvf.h | 1 +
- 1 file changed, 1 insertion(+)
+Built on {linux, windows, macos} x {x86_64, aarch64}
+Fully tested on linux-x86_64
+https://github.com/pbo-linaro/qemu/actions/runs/14722101993
 
-diff --git a/include/system/hvf.h b/include/system/hvf.h
-index 730f927f034..356fced63e3 100644
---- a/include/system/hvf.h
-+++ b/include/system/hvf.h
-@@ -15,6 +15,7 @@
- 
- #include "qemu/accel.h"
- #include "qom/object.h"
-+#include "exec/vaddr.h"
- 
- #ifdef COMPILING_PER_TARGET
- #include "cpu.h"
+Philippe Mathieu-Daudé (1):
+  target/arm: Replace target_ulong -> uint64_t for HWBreakpoint
+
+Pierrick Bouvier (12):
+  include/system/hvf: missing vaddr include
+  meson: add common libs for target and target_system
+  target/arm: move kvm stubs and remove CONFIG_KVM from kvm_arm.h
+  target/arm/kvm_arm: copy definitions from kvm headers
+  target/arm/kvm-stub: add missing stubs
+  target/arm/cpu: remove CONFIG_KVM from arm_cpu_kvm_set_irq
+  accel/hvf: add hvf_enabled() for common code
+  target/arm/cpu: get endianness from cpu state
+  target/arm/cpu: remove TARGET_AARCH64 around aarch64_cpu_dump_state
+    common
+  target/arm/cpu: remove TARGET_AARCH64 in arm_cpu_finalize_features
+  target/arm/cpu: compile file twice (user, system) only
+  target/arm/cpu32-stubs.c: compile file twice (user, system)
+
+ meson.build              | 78 ++++++++++++++++++++++++-------
+ include/system/hvf.h     | 15 ++++--
+ target/arm/internals.h   |  6 +--
+ target/arm/kvm_arm.h     | 99 +++++++---------------------------------
+ accel/hvf/hvf-stub.c     |  3 ++
+ target/arm/cpu.c         | 37 +++++----------
+ target/arm/cpu32-stubs.c | 24 ++++++++++
+ target/arm/hyp_gdbstub.c |  6 +--
+ target/arm/kvm-stub.c    | 87 +++++++++++++++++++++++++++++++++++
+ accel/hvf/meson.build    |  1 +
+ target/arm/meson.build   | 15 ++++--
+ 11 files changed, 233 insertions(+), 138 deletions(-)
+ create mode 100644 accel/hvf/hvf-stub.c
+ create mode 100644 target/arm/cpu32-stubs.c
+
 -- 
 2.47.2
 
