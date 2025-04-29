@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A3BC369DC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B0CC3ABA5
 	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 16:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9nzP-0004YB-TQ; Tue, 29 Apr 2025 12:39:24 -0400
+	id 1u9nzW-0004Z3-8k; Tue, 29 Apr 2025 12:39:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1u9nzG-0004XS-LM
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:39:16 -0400
+ id 1u9nzT-0004Ya-Te
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:39:28 -0400
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1u9nzE-0006ab-Pq
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:39:14 -0400
+ id 1u9nzS-0006j1-6d
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:39:27 -0400
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1u9nz2-00000002eEc-0aYm; Tue, 29 Apr 2025 18:39:00 +0200
-Message-ID: <20219818-88e0-4b61-af49-6a27b867e882@maciej.szmigiero.name>
-Date: Tue, 29 Apr 2025 18:38:54 +0200
+ id 1u9nzQ-00000002eEp-3cV1; Tue, 29 Apr 2025 18:39:24 +0200
+Message-ID: <174378df-525d-41b1-920f-3797ca300e3f@maciej.szmigiero.name>
+Date: Tue, 29 Apr 2025 18:39:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 7/8] include/system: make functions accessible from
- common code
+Subject: Re: [PATCH v5 0/8] hw/hyperv: remove duplication compilation units
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Cc: Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  alex.bennee@linaro.org, kvm@vger.kernel.org, philmd@linaro.org,
  manos.pitsidianakis@linaro.org, richard.henderson@linaro.org,
  Paolo Bonzini <pbonzini@redhat.com>
 References: <20250424232829.141163-1-pierrick.bouvier@linaro.org>
- <20250424232829.141163-8-pierrick.bouvier@linaro.org>
+ <81732388-d0f7-4bdf-ac8a-3537276dc284@linaro.org>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -80,9 +79,9 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  m/ajx6lQA/hW0zLYAew2v6WnHFnOXUlI3hv9LusUtj3XtLV2mf1FHvfYlrlI9WQsLiOE5nFN
  IsqJLm0TmM0i8WDnWovQHM8D0IzI/eUc4Ktbp0fVwWThP1ehdPEUKGCZflck5gvuU8yqE55r
  VrUwC3ocRUs4wXdUGZp67sExrfnb8QC2iXhYb+TpB8g7otkqYjL/nL8cQ8hdmg==
-In-Reply-To: <20250424232829.141163-8-pierrick.bouvier@linaro.org>
+In-Reply-To: <81732388-d0f7-4bdf-ac8a-3537276dc284@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
  envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
 X-Spam_score_int: -18
@@ -107,14 +106,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25.04.2025 01:28, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   include/system/kvm.h | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+On 25.04.2025 01:30, Pierrick Bouvier wrote:
+> On 4/24/25 16:28, Pierrick Bouvier wrote:
+>> Work towards having a single binary, by removing duplicated object files.
+>>
+>> v2
+>> - remove osdep from header
+>> - use hardcoded buffer size for syndbg, assuming page size is always 4Kb.
+>>
+>> v3
+>> - fix assert for page size.
+>>
+>> v4
+>> - use KiB unit
+>>
+>> v5
+>> - rebase on top of system memory common series
+>> - make hw/hyperv/hyperv common
+>>
+>> v6
+>> - rebase on top of master (now contains all changes needed for memory access)
+>> - finish making hw/hyperv/hyperv common (hw/hyperv/hyperv.c)
+>>
+>> Pierrick Bouvier (8):
+>>    hw/hyperv/hv-balloon-stub: common compilation unit
+>>    hw/hyperv/hyperv.h: header cleanup
+>>    hw/hyperv/vmbus: common compilation unit
+>>    hw/hyperv/syndbg: common compilation unit
+>>    hw/hyperv/balloon: common balloon compilation units
+>>    hw/hyperv/hyperv_testdev: common compilation unit
+>>    include/system: make functions accessible from common code
+>>    hw/hyperv/hyperv: common compilation unit
+>>
+>>   include/hw/hyperv/hyperv.h |  3 ++-
+>>   include/system/kvm.h       |  8 ++++----
+>>   hw/hyperv/hyperv.c         |  3 ++-
+>>   hw/hyperv/syndbg.c         |  9 ++++++---
+>>   hw/hyperv/vmbus.c          |  2 +-
+>>   hw/hyperv/meson.build      | 11 ++++++-----
+>>   6 files changed, 21 insertions(+), 15 deletions(-)
+>>
 > 
-It looks like this patch was already merged outside of this patch set.
+> @Maciej, this is now ready to be tested :)
 
+Tested this patch set on a Windows VM with hv-balloon QEMU device
+(which uses VMBus, which in turn uses basic Hyper-V host support).
+
+No problems encountered, so:
+Tested-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+
+> Regards,
+> Pierrick
 Thanks,
 Maciej
 
