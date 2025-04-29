@@ -4,67 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08915C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 15:57:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B98A1C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 16:00:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9nKc-0002wB-Da; Tue, 29 Apr 2025 11:57:14 -0400
+	id 1u9nNG-0004bG-4d; Tue, 29 Apr 2025 11:59:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u9nKY-0002tt-M3
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:57:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1u9nKW-0003B2-Cv
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:57:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745942226;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=QxSeVOzh1ZOvQlc8005PTafUjWamVAoMPx8ZyD71PAk=;
- b=Rv8fYrZE0vSAkpFreotbBa+fwxVXvCcW2jBbMJCxi8tA+fW7rYJZwoyQpEWs3JEZWgVITF
- JerCeeONFf4BkoM5SI6KOOjc/FacETvCNnpUGI2JCuKFdXOUqfjCutBRXOGwpy6VpyxZCm
- q45zkz0otBlKdhhDkVrKzmKLEGGNz/0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-346-7ecH-6JrOcWkxgsxJIZdmg-1; Tue,
- 29 Apr 2025 11:56:59 -0400
-X-MC-Unique: 7ecH-6JrOcWkxgsxJIZdmg-1
-X-Mimecast-MFC-AGG-ID: 7ecH-6JrOcWkxgsxJIZdmg_1745942218
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6C6E2180034E; Tue, 29 Apr 2025 15:56:58 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.44.34.64])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CA80819560A3; Tue, 29 Apr 2025 15:56:56 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	stefanha@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PATCH] file-posix: Fix crash on discard_granularity == 0
-Date: Tue, 29 Apr 2025 17:56:54 +0200
-Message-ID: <20250429155654.102735-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1u9nND-0004ab-H3; Tue, 29 Apr 2025 11:59:55 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1u9nNB-0003iS-HI; Tue, 29 Apr 2025 11:59:55 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-54c0fa6d455so7924368e87.1; 
+ Tue, 29 Apr 2025 08:59:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1745942391; x=1746547191; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-disposition:mime-version:references
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bSY4QOlO+/bbDaoMNloD5m49KP/BpXRRD5Fy+F/PSWs=;
+ b=HiGB6aAsO2ZEB32KOhE+htVsM9E4r61DWhtMpYCTnQzr58QxFp9mo5ahlMvtrU8tLi
+ z82anumZfRxyLzwBtuIbbdREuVYvaf+QPDXXC29bMzCv1SoEDS6cNHNKVDOxhDvQAvee
+ IPllCeIaEQj8FI/GPVlFU3tU5fpWWgAjPyZRnNho4LdAV1SKCiLRnZ83bP60ojBKQiwh
+ 4FgV/PUj5H/Q00K/nYFxx50LY2dPBhGoNDB1U/eqvxv8FO+EhpagCx3KT78KsBDTPQVF
+ qVcFkvt/JgKlfZdDAeJUxKIt8it8ndrFMMOAYdMOyUB/RNm5EgBBuk+Uq6W0pAT9k8kf
+ I0zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745942391; x=1746547191;
+ h=user-agent:in-reply-to:content-disposition:mime-version:references
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bSY4QOlO+/bbDaoMNloD5m49KP/BpXRRD5Fy+F/PSWs=;
+ b=w9q77pTb3qH1zRvJ9s2tWbiYyFnsrKqUjuO0y1cPbEWK2ZV8xjXMDxYVWQQPLClORH
+ 2aPqk7sZTOYt/EWPrCwfcP3JR5EJasjOAEjRL0QlqvPeZnWu/OskuA7MdXAVcvxyHxRg
+ hsI6E/HWo2/OBSuDJ5axlXhzW3/eXUWYqGKqTHkHB+fjDX9octRHFpZbKVioDPVnxbop
+ 805wfLYGJnzwqGTg9usPApE+JWaf1vN3vap/nD6o0ctatTMRZ+V4FPFQue7jmFw3Upz2
+ 8y3d8j+iaGh4TfmiYNQzvp7h+6AAi/sTounqjOL7smsIYKmCoBBm4lWWGJB0zaGqGxNO
+ QKXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUUSwCKdYFxCgV/sqD1jgY1FXWMjyhtJq1KHbPEGAOKi0qpfVG235KDZmFCPv4nuzzta6ieDWdJJnag@nongnu.org
+X-Gm-Message-State: AOJu0YxNT4DItreosvhgMXgckpN3df6LFdxcF5q17p2y16ar+XkX72CI
+ YxSHbubC3NqpY890oQNacsXvHhd2GZ5MqJxJ5tp8owpU46FVYhNZ
+X-Gm-Gg: ASbGnct7wGNtWfi4MtqI60M5lPMR3kxWCEGN+G5gPa9KDymwI76MRg8YbPVecraWgmI
+ SZHNlYYdMwaZ8z5RtRlrhlpT5V1kDWLHLT0fk7SzQ+6YTmM87qB810dcRScHgB7NC0Dw/LpBFD0
+ IueqkVJcRfhRw6chIkead4VOj+VDMGfZdn6jBgdCjnoWW7J5n+VXqawAU/QT3vRoh5vtgPekMl8
+ alXxg8eUumntHWFmayGhYfIV0SAyaRNUs8emr/FI6FCyZv6jYqnCZtdz8r4wTT6ZDmuc6tBjj6j
+ hwVk3QTVR9gCZuzXUS9CXNrkEPWl1yM5s4qrKm8q1gD7Ghm0B28SDXkEFwVmMoZnjvFTD0srKqO
+ 5sd0dqLXNvFTF
+X-Google-Smtp-Source: AGHT+IFP07WVtKoPKapNiX+C0U6lhvWxHwGwB8ud6kuf2XOjYwB+0M1EjC6UCygOOkNQxcNvN84vIw==
+X-Received: by 2002:a2e:b8cd:0:b0:30b:ef98:4653 with SMTP id
+ 38308e7fff4ca-31d5c4f0842mr12223821fa.36.1745942390582; 
+ Tue, 29 Apr 2025 08:59:50 -0700 (PDT)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-317d0019d64sm25187271fa.63.2025.04.29.08.59.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Apr 2025 08:59:49 -0700 (PDT)
+Date: Tue, 29 Apr 2025 17:59:49 +0200
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 1/7] target/microblaze: Use 'obj' in DEVICE() casts in
+ mb_cpu_initfn()
+Message-ID: <aBD3dXFuQCDSgSBF@zapote>
+References: <20250429132200.605611-1-peter.maydell@linaro.org>
+ <20250429132200.605611-2-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250429132200.605611-2-peter.maydell@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,32 +103,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Block devices that don't support discard have a discard_granularity of
-0. Currently, this results in a division by zero when we try to make
-sure that it's a multiple of request_alignment. Only try to update
-bs->bl.pdiscard_alignment when we got a non-zero discard_granularity
-from sysfs.
+On Tue, Apr 29, 2025 at 02:21:54PM +0100, Peter Maydell wrote:
+> We're about to make a change that removes the only other use
+> of the 'cpu' local variable in mb_cpu_initfn(); since the
+> DEVICE() casts work fine with the Object*, use that instead,
+> so that we can remove the local variable when we make the
+> following change.
+>
 
-Fixes: f605796aae4 ('file-posix: probe discard alignment on Linux block devices')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- block/file-posix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 0d6e12f880..0d85123d0f 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -1573,7 +1573,7 @@ static void raw_refresh_limits(BlockDriverState *bs, Error **errp)
-         int ret;
- 
-         ret = hdev_get_pdiscard_alignment(&st, &dalign);
--        if (ret == 0) {
-+        if (ret == 0 && dalign != 0) {
-             uint32_t ralign = bs->bl.request_alignment;
- 
-             /* Probably never happens, but handle it just in case */
--- 
-2.49.0
 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  target/microblaze/cpu.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+> index 00a2730de4d..d92a43191bd 100644
+> --- a/target/microblaze/cpu.c
+> +++ b/target/microblaze/cpu.c
+> @@ -333,11 +333,11 @@ static void mb_cpu_initfn(Object *obj)
+>  
+>  #ifndef CONFIG_USER_ONLY
+>      /* Inbound IRQ and FIR lines */
+> -    qdev_init_gpio_in(DEVICE(cpu), microblaze_cpu_set_irq, 2);
+> -    qdev_init_gpio_in_named(DEVICE(cpu), mb_cpu_ns_axi_dp, "ns_axi_dp", 1);
+> -    qdev_init_gpio_in_named(DEVICE(cpu), mb_cpu_ns_axi_ip, "ns_axi_ip", 1);
+> -    qdev_init_gpio_in_named(DEVICE(cpu), mb_cpu_ns_axi_dc, "ns_axi_dc", 1);
+> -    qdev_init_gpio_in_named(DEVICE(cpu), mb_cpu_ns_axi_ic, "ns_axi_ic", 1);
+> +    qdev_init_gpio_in(DEVICE(obj), microblaze_cpu_set_irq, 2);
+> +    qdev_init_gpio_in_named(DEVICE(obj), mb_cpu_ns_axi_dp, "ns_axi_dp", 1);
+> +    qdev_init_gpio_in_named(DEVICE(obj), mb_cpu_ns_axi_ip, "ns_axi_ip", 1);
+> +    qdev_init_gpio_in_named(DEVICE(obj), mb_cpu_ns_axi_dc, "ns_axi_dc", 1);
+> +    qdev_init_gpio_in_named(DEVICE(obj), mb_cpu_ns_axi_ic, "ns_axi_ic", 1);
+>  #endif
+>  
+>      /* Restricted 'endianness' property is equivalent of 'little-endian' */
+> -- 
+> 2.43.0
+> 
 
