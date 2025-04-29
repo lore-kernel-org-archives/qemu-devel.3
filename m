@@ -4,101 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 877FEC369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 07:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F610C369CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 07:37:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9fQg-0007N0-7r; Tue, 29 Apr 2025 03:30:58 -0400
+	id 1u9fWq-0000cd-Bl; Tue, 29 Apr 2025 03:37:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=LSAW=XP=kaod.org=clg@ozlabs.org>)
- id 1u9fQR-0007Kd-7I
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 03:30:50 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1u9fWk-0000a2-Iu
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 03:37:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=LSAW=XP=kaod.org=clg@ozlabs.org>)
- id 1u9fQM-0006gT-LM
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 03:30:42 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZmsRX32zVz4xPF;
- Tue, 29 Apr 2025 17:30:32 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZmsRT0sPqz4xM4;
- Tue, 29 Apr 2025 17:30:28 +1000 (AEST)
-Message-ID: <0f279822-8f24-4b00-92ab-847ef88c5207@kaod.org>
-Date: Tue, 29 Apr 2025 09:30:26 +0200
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1u9fWg-0007NU-LX
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 03:37:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745912227;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=UadOz9QVlaP2fsjv6JvLL9s0kwKA5oubpohJmzBnkBw=;
+ b=KVnDjP8wp9hz3HzQ0zeUAkY0HDISkfOgVjZI3SmSGBRcAAcFbH6KeUJUcx4V0zwrIPTScx
+ Oo1J5IcYf7ShVB1vcUIygT2YHhbjwWDgbcm+dchaBoKzA+u5GXQvTXVfUaHhlbjGXSmP5p
+ G4b2EOY2t0OX+ppmU61JAKEWW9ONNjY=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-542-N3P79H7LPvSx-ejHD_rRjQ-1; Tue, 29 Apr 2025 03:37:05 -0400
+X-MC-Unique: N3P79H7LPvSx-ejHD_rRjQ-1
+X-Mimecast-MFC-AGG-ID: N3P79H7LPvSx-ejHD_rRjQ_1745912224
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-39d917b1455so1548714f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 00:37:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745912224; x=1746517024;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=UadOz9QVlaP2fsjv6JvLL9s0kwKA5oubpohJmzBnkBw=;
+ b=f9d9ooQ9wclBm86GKhQZvATyL1/DDFzuHbeFM7bRhAbqNl0cftUqy4QrX88T6RZqZE
+ 0xrLbgilL7uB2Ed8NRd827bpz0e+BWiGXhtCRIRhWFTNADcFrLMY7JUk+YDE5WMj9q2S
+ aWC6sV7J7sjixCLz4cTcGeiIsFZDBVt3AaVXNd3j8CgvsHxP0yXEtTMWrFnoZr7Pvtgq
+ wknbl1Ta7AoLJM0cNgsMjCDP9QAiun6/ucc1ndB2rQaIqBgl8uZax9dYdbiznyG+9fih
+ /y/Edrqty9eDI/mspYelflttCZk9xl6cJgAtqYRrzW6Wpy1Yef5oSd96Cfdl6dvzqDOp
+ snPQ==
+X-Gm-Message-State: AOJu0YxCrknRRvPFVYLU0y30dM4BEbBfHTP51o73+sYDaXWUFvPM0RRv
+ Po36DK0bBpu8Co4HYfpOhFlUJirGnu5kUnI84DeVz/ozI9diCYb/IvL99O0QDbFh5UeXc2EeEGW
+ LdpSGH6KlbPa7RhClf4ySWtUauG5LoQLX2IAZwCX+sJubPntvrjPG
+X-Gm-Gg: ASbGncsP90tVFzYCrr9i3PxMNzbLkhOA6JZlG2XxfWgYh+ua9zjp7pthwNaCCBpxaiM
+ oiWXI7fdGUyvuSHkjZYgDL12jz4Zbl37epOW/bAkbCPRvmXkoWSTbUDB8GydU96KuBZV0DefqBB
+ boSdsssCB2vpf2QZs7fENXRCRl6Iu+iU7sMEsr5eWWKhQtNlPWavLqmT+0Ag811rnA38ZKAtDZX
+ 01zfd0K7xqtSrKX00nj+ZNG1mOadKBImR1j2Y89hDhQCol8RgPmKxQllTVEsnFdjuYut4uKMj/c
+ sEKrBYrnIZSxe8M4Eouwem13ic5nAX+lf6P0INg=
+X-Received: by 2002:a05:6000:4382:b0:390:fe8b:f442 with SMTP id
+ ffacd0b85a97d-3a07ab8c463mr9311751f8f.54.1745912224142; 
+ Tue, 29 Apr 2025 00:37:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG6KNm9A9b4mT46o2XpG04KY7IEeUVql/sE/YyA3uwQsWi3cTtxKvvytRCdWp6WNVHpymeh0Q==
+X-Received: by 2002:a05:6000:4382:b0:390:fe8b:f442 with SMTP id
+ ffacd0b85a97d-3a07ab8c463mr9311729f8f.54.1745912223679; 
+ Tue, 29 Apr 2025 00:37:03 -0700 (PDT)
+Received: from [192.168.3.141] (p5b0c613e.dip0.t-ipconnect.de. [91.12.97.62])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a073e461bfsm13282405f8f.79.2025.04.29.00.37.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Apr 2025 00:37:03 -0700 (PDT)
+Message-ID: <489d0473-579a-4850-a6d5-be38bf2954b9@redhat.com>
+Date: Tue, 29 Apr 2025 09:37:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH QEMU] x86/headers: Replace __ASSEMBLY__ with __ASSEMBLER__
- in UAPI headers
-To: Thomas Huth <thuth@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Stefano Garzarella
- <sgarzare@redhat.com>, Li Zhijian <lizhijian@cn.fujitsu.com>,
- Rorie Reyes <rreyes@linux.ibm.com>
-References: <20250429001705.2734439-1-aik@amd.com>
- <9f72389e-7adb-425d-8ab4-5770c8b89e9c@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <9f72389e-7adb-425d-8ab4-5770c8b89e9c@redhat.com>
+Subject: Re: [PATCH] s390x: Clear RAM on diag308 subcode 3 reset
+To: Nicholas Miehlbradt <nicholas@linux.ibm.com>, borntraeger@linux.ibm.com,
+ thuth@redhat.com, richard.henderson@linaro.org, iii@linux.ibm.com,
+ pasic@linux.ibm.com, farman@linux.ibm.com, qemu-s390x@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20250429052021.10789-1-nicholas@linux.ibm.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20250429052021.10789-1-nicholas@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=LSAW=XP=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,21 +155,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/29/25 07:22, Thomas Huth wrote:
-> On 29/04/2025 02.17, Alexey Kardashevskiy wrote:
->> The recent kernel update 8a141be3233af7d broke the headers update,
->> fix it in the script.
+On 29.04.25 07:20, Nicholas Miehlbradt wrote:
+> The reset performed by subcode 3 of the diag308 instruction specifies
+> that system memory should be reset. This patch implements that
+> behaviour.
 > 
-> Thanks, but the same patch is already on the list:
+> Introduce S390_RESET_REIPL_CLEAR to differentiate between subcode 3 and
+> subcode 4 resets.
 > 
-> https://lore.kernel.org/qemu-devel/20250425052401.8287-2-rreyes@linux.ibm.com/
+> When doing a clear reset, discard the ramblock containing the system
+> ram.
+> 
+> Signed-off-by: Nicholas Miehlbradt <nicholas@linux.ibm.com>
+> ---
+>   hw/s390x/ipl.h             | 1 +
+>   hw/s390x/s390-virtio-ccw.c | 6 ++++++
+>   target/s390x/diag.c        | 3 +--
+>   target/s390x/kvm/kvm.c     | 6 +++++-
+>   4 files changed, 13 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
+> index cb55101f06..9c38946363 100644
+> --- a/hw/s390x/ipl.h
+> +++ b/hw/s390x/ipl.h
+> @@ -38,6 +38,7 @@ enum s390_reset {
+>       /* default is a reset not triggered by a CPU e.g. issued by QMP */
+>       S390_RESET_EXTERNAL = 0,
+>       S390_RESET_REIPL,
+> +    S390_RESET_REIPL_CLEAR,
+>       S390_RESET_MODIFIED_CLEAR,
+>       S390_RESET_LOAD_NORMAL,
+>       S390_RESET_PV,
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index 94edd42dd2..bc07158b16 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -455,6 +455,7 @@ static void s390_machine_reset(MachineState *machine, ResetType type)
+>       enum s390_reset reset_type;
+>       CPUState *cs, *t;
+>       S390CPU *cpu;
+> +    RAMBlock *rb = machine->ram->ram_block;
+>   
+>       /*
+>        * Temporarily drop the record/replay mutex to let rr_cpu_thread_fn()
+> @@ -479,6 +480,7 @@ static void s390_machine_reset(MachineState *machine, ResetType type)
+>       switch (reset_type) {
+>       case S390_RESET_EXTERNAL:
+>       case S390_RESET_REIPL:
+> +    case S390_RESET_REIPL_CLEAR:
+>           /*
+>            * Reset the subsystem which includes a AP reset. If a PV
+>            * guest had APQNs attached the AP reset is a prerequisite to
+> @@ -489,6 +491,10 @@ static void s390_machine_reset(MachineState *machine, ResetType type)
+>               s390_machine_unprotect(ms);
+>           }
+>   
+> +        if (reset_type == S390_RESET_REIPL_CLEAR) {
+> +            ram_block_discard_range(rb, 0 , qemu_ram_get_used_length(rb));
+> +        }
+> +
 
-yeah. I grabbed the whole series which includes a linux-headers update
-in vfio-next. I plan to send a PR in a couple of weeks.
+I suspect that we don't care about virtio-mem devices, because the 
+memory semantics are different (and usually they will get reset to "no 
+memory" during reboots either way -> discarded)
+
+The only problem I see is with vfio devices is the new "memory pinned" 
+mode. [1]
+
+There, we'd have to check if any such device is around (discarding of 
+ram is disabled?), and fallback to actual zeroing of memory.
 
 
-Thanks,
+[1] https://lkml.kernel.org/r/20250226210013.238349-1-mjrosato@linux.ibm.com
 
-C.
+-- 
+Cheers,
+
+David / dhildenb
 
 
