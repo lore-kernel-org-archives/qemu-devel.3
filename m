@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC3D1C369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 06:42:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED2B8C369CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 06:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9efA-0002sF-DE; Tue, 29 Apr 2025 02:41:52 -0400
+	id 1u9eht-0004cq-Tu; Tue, 29 Apr 2025 02:44:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9ef5-0002rq-5s
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:41:47 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9ehi-0004bk-1I
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:44:32 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9ef1-0000XC-2O
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:41:45 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-39c0dfba946so4059192f8f.3
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 23:41:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9ehf-0000cK-3g
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:44:29 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43ce70f9afbso44149375e9.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 23:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745908901; x=1746513701; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745909057; x=1746513857; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=N20g7q8+jz3n6iwYSqv5tG9RdHzqq2SwTudMigGh1BI=;
- b=eSzRTdcTdvt2tYZ/ePAv+Ug5orWxtck81ZRtZMgzwHm3QbEVbFQBBthe2oDygnTgyo
- IMreJA3zO6dwLifmZn8zx0NeT6FDzaz9SWEC17NDvswlNWHZWOZ1SfFFOqPoDOprQCiF
- dgYzOPHgmH1StuQNQ12oaCnffj2GZ9jJrK2EPCjbq40I8MBIZrXEAMNBfxhBoY+wd8Zd
- G2+Alg8nKCcrpVhCga6fL6W1LDl51feeLwY51Yxq+H/WqifxhI/UCjAhDWHNuwzLIrf8
- 5U2elvcFg8WVRbY67vJcMpviwuNj7xBofbEYWyGQTYc3ID8/F0sWZ9Etuz+OUjg71UqO
- M+BQ==
+ bh=JlqfCyNdE5FYlekZVAaqvdxIkrdBYx0EdLuO6m4gKXQ=;
+ b=I+A05LJGSI8sfLkVV4wyR/aw8JwwrQ4Mfu78hbgfcYx4oJuM9hnKZlQDNRzrlTjGsz
+ L+FGaZlKM/0KH92uTqPqkk8jaZhcSGo6PDe2v+XtI0Cil5xXjK2VF4uDh/FudBVpF+Ud
+ /N4w4s4C9ZQ08fo9+BFVzjSWMvf2K4doMBeGcvIDh87SzLVs6jE1XdsrUZIcbyDzb9xz
+ SUpS9YyfO0YomFexUtT+6T6peweZSvNRxilwAlh5PPD74Jkv9CoxXp4+80qhhS2oA+YF
+ RQhvbwGthEnO+GxA0arwY+kSXsgsCNTumVaV88IOCrRlbg25q16EoltYtMKAi6/zBgpN
+ hChA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745908901; x=1746513701;
+ d=1e100.net; s=20230601; t=1745909057; x=1746513857;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N20g7q8+jz3n6iwYSqv5tG9RdHzqq2SwTudMigGh1BI=;
- b=QxEkY4FplXBfc4XX4bKyiIVQr/63CJIA/AeCwFycwcmILrVCwGiE1M59MNZKVH4zDc
- h/i7DuiIppVP6PZyZz51J3TIpAYnbe0JclOSnwzeowwOaKQTmJcir76kOf2/u3iISROB
- K3kfv8YMLW/GB26aAvPJqQ6bwGvSfIhyaHKyqXryLgIZRm1lZCqHL9SyZuHbAdB7pWr6
- E5rRF4wzp6DRaEhKvgtM8PT1cz6mus0tY2gQIKQL8ZkBDWxzy/8IPOhXcPWM40/iOVR4
- 640p9FL1nauY+b3IQNRqzT2ehe0c9QNH59CHi0pAJ9bTTLzflw/VdmKamIA5nslYjGse
- R7Ag==
+ bh=JlqfCyNdE5FYlekZVAaqvdxIkrdBYx0EdLuO6m4gKXQ=;
+ b=ckLuOk6lnnStH4hNcwC7uBTpkKFnuxUnkJ83dEFoyqiakPA/NNH4HLWmU9pnARlo0p
+ vdtS+vc62FfNHVYasPKv8uG7AsuEcs4VpGT8b1cxUmzi1f0kwFB9J+v6M3NVUK6EPZio
+ D0hvCYjgARdwBrncwpkpRxpxR/xTaf6jzhtQ27NWI4uu03/j1+PnnER6GtVZwi7Wdu2v
+ K/7/Bye5uOCHfeTmbh+//N4jlj/HfbzPh2MEN+oFtk+tHOWjfxqh77skT6/OPnHnm5Ws
+ TxwiYgTQfPfIRl+NM5OyjYBTHwAQhwqGJQGCfjs5futkoQjYCQjnZ/Mfr1ywj1JKOKZT
+ e3/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV72DF00tSHrruBOXwDpoELI0Cqu7c8ijoH6SkK5OttZpQ6T3oTxNHt/LJUQSHTsD4aEBoRzVcWeJL2@nongnu.org
-X-Gm-Message-State: AOJu0YzjDcYh+lZcRBsH7oozsXCFQ92gsPQAUNE351yiVOedo7NegS/h
- wOtOZa2m2C8fCUWGHa6DI2PZerLxXP+PMd8z2UxBxekbKNne9F+Znp4SLjcf5JI=
-X-Gm-Gg: ASbGncsYJYcYVOgvl3Mb63ULrqe8DYaQenJTKNtnmq3qeUK3FYwWquqT3iP8BvdibKX
- Y14SYEbmy4Zv8gz8WvBBgaqi2HbjNyAkhRoR9JxiFDZJt0NYoSwYGmFgA/8wUAVgHO6q0ZvB5Un
- qDq5pbw18mIvHyV4uyYOk+tCXjV1tiCYfgbXOVDPwGJrlg6NCmjiOdXJQ031USDGH8Ktaf7uu/k
- WUUjW/PifI4LN5J5qbF6wvYEHYmkZU49qJg1z0PfrrfwfX5XfcxiVihNLaGomOrN840fWtMBAmG
- 1q3312fTNr0+HecouuObE55SZPskruit/meaFAvvUZODUtyBgqqUUQdvwkGRB3IjCSX0/Hxowws
- SPpILa51n
-X-Google-Smtp-Source: AGHT+IGM/6U68NqfI01Xoy8zun/KOA+r1zmo7BOLLLK2FG/0SfK2jGRopKaL/2dT2Icl1BTWRq5Fnw==
-X-Received: by 2002:adf:e548:0:b0:391:2e6a:30fe with SMTP id
- ffacd0b85a97d-3a07ab9bcd7mr7573454f8f.39.1745908901480; 
- Mon, 28 Apr 2025 23:41:41 -0700 (PDT)
+ AJvYcCV3uenlgxb2PKr+bLHuFAoWDU11qkDW12Mp67ym4QUJaTd2EZ3F/jYi/QkjYW9XUXZ5GH3IuxTL3Xz3@nongnu.org
+X-Gm-Message-State: AOJu0YzlkRhVpVPjcrnuy3E48bRau5Sg/wGv+1Y9cded3e1T8AcxdE7p
+ zTbb8mnoIoaD2Jajf0eGMnGzxK68xlTVyVNY06zs7eksFrrtQfvMb7JglfmHVWQ=
+X-Gm-Gg: ASbGncveDqiEnplj7o7lRNzkUo9Jqc+bOG3wAkbEWMbrz9xkBWLIR2GlomSXkpP4FOR
+ NM/bo0JX/TKkRZ6fu3pDqqy4N3fnDpfrpM53pfg/u+3mMXSdfU2A2ow/KUhcB8Ly2PTmQxg48p6
+ gZNVVevxAtQ/ugslRmq4Y2Ls7me4aiVjvqDSlXTt6iuU5qSXGcbJ3X2J6moEG1RWPYXG6SqDrP5
+ opjUda9kf6DUcm4sRkTBq3M56rguXXYsjUwJnTLBYdYR97hGY7sZF1IwaTMG9F0tBZlQLL7Ca3g
+ NARpBSQAvJt2Ad0S0jn47MpRfxM2MSJ5E64HuhlWsWPsJ0lV9/ad9pv0slQijP6WQ4lBPmuW2OV
+ elTyu2k3v
+X-Google-Smtp-Source: AGHT+IG/re0U2Tx2EPr2yseNyXywcsc6ECGSm7WWNkjUaQzlHqkDw1EiTRrszRRPYp0XnwP/pTGnog==
+X-Received: by 2002:a05:600c:1d9b:b0:43c:fe15:41cb with SMTP id
+ 5b1f17b1804b1-441ac85cf5bmr23130455e9.15.1745909056904; 
+ Mon, 28 Apr 2025 23:44:16 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073c8da58sm13155853f8f.15.2025.04.28.23.41.40
+ 5b1f17b1804b1-440a538f9c6sm146196795e9.39.2025.04.28.23.44.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 23:41:41 -0700 (PDT)
-Message-ID: <d1bbb933-8f9b-42de-93c2-b1d7ae984553@linaro.org>
-Date: Tue, 29 Apr 2025 08:41:40 +0200
+ Mon, 28 Apr 2025 23:44:16 -0700 (PDT)
+Message-ID: <b7c96493-c10c-44a8-8ab9-7879837fe143@linaro.org>
+Date: Tue, 29 Apr 2025 08:44:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] accel/tcg: Split out accel/tcg/helper-retaddr.h
+Subject: Re: [PATCH 03/10] accel/tcg: Introduce TCGCPUOps.cpu_exec_reset
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org
 References: <20250428201028.1699157-1-richard.henderson@linaro.org>
- <20250428201028.1699157-10-richard.henderson@linaro.org>
+ <20250428201028.1699157-4-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250428201028.1699157-10-richard.henderson@linaro.org>
+In-Reply-To: <20250428201028.1699157-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,23 +103,51 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 28/4/25 22:10, Richard Henderson wrote:
-> Move set_helper_retaddr and clear_helper_retaddr
-> to a new header file.
+> Initialize all instances with cpu_reset(), so that there
+> is no functional change.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/accel/tcg/cpu-ldst.h       | 34 -----------------------
->   include/accel/tcg/helper-retaddr.h | 43 ++++++++++++++++++++++++++++++
->   accel/tcg/cpu-exec.c               |  1 +
->   accel/tcg/user-exec.c              |  1 +
->   target/arm/tcg/helper-a64.c        |  1 +
->   target/arm/tcg/sme_helper.c        |  1 +
->   target/arm/tcg/sve_helper.c        |  1 +
->   target/ppc/mem_helper.c            |  1 +
->   target/s390x/tcg/mem_helper.c      |  1 +
->   9 files changed, 50 insertions(+), 34 deletions(-)
->   create mode 100644 include/accel/tcg/helper-retaddr.h
+>   include/accel/tcg/cpu-ops.h | 2 ++
+>   accel/tcg/cpu-exec.c        | 3 ++-
+>   target/alpha/cpu.c          | 1 +
+>   target/arm/cpu.c            | 1 +
+>   target/arm/tcg/cpu-v7m.c    | 1 +
+>   target/avr/cpu.c            | 1 +
+>   target/hppa/cpu.c           | 1 +
+>   target/i386/tcg/tcg-cpu.c   | 1 +
+>   target/loongarch/cpu.c      | 1 +
+>   target/m68k/cpu.c           | 1 +
+>   target/microblaze/cpu.c     | 1 +
+>   target/mips/cpu.c           | 1 +
+>   target/openrisc/cpu.c       | 1 +
+>   target/ppc/cpu_init.c       | 1 +
+>   target/riscv/tcg/tcg-cpu.c  | 1 +
+>   target/rx/cpu.c             | 1 +
+>   target/s390x/cpu.c          | 1 +
+>   target/sh4/cpu.c            | 1 +
+>   target/sparc/cpu.c          | 1 +
+>   target/tricore/cpu.c        | 1 +
+>   target/xtensa/cpu.c         | 1 +
+>   21 files changed, 23 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
+> index 60b5e97205..3ff72b8d9d 100644
+> --- a/include/accel/tcg/cpu-ops.h
+> +++ b/include/accel/tcg/cpu-ops.h
+> @@ -155,6 +155,8 @@ struct TCGCPUOps {
+>       void (*do_interrupt)(CPUState *cpu);
+>       /** @cpu_exec_interrupt: Callback for processing interrupts in cpu_exec */
+>       bool (*cpu_exec_interrupt)(CPUState *cpu, int interrupt_request);
+> +    /** @cpu_exec_reset: Callback for reset in cpu_exec.  */
+> +    void (*cpu_exec_reset)(CPUState *cpu);
+
+I'm not sure "cpu_exec" is still relevant these days, maybe we can
+directly call it "cpu_reset()". Anyhow,
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+>       /**
+>        * @cpu_exec_halt: Callback for handling halt in cpu_exec.
+>        *
 
