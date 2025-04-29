@@ -4,75 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D144BC369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BABD7C3ABA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9lZg-0001Gg-1s; Tue, 29 Apr 2025 10:04:40 -0400
+	id 1u9la9-0002Cj-Qe; Tue, 29 Apr 2025 10:05:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1u9lZc-0001Ey-7b
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:04:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1u9lZa-0005Zx-K2
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:04:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745935473;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ElO/ngycnV01KSHZ2Wn33oP4orMzW8dezzCCc8O9yIc=;
- b=GIQOxzEqXh0PXCKi7192ENs7oQoDw3gPXnc/xEgcxzFGZL3vS7xvdv4UynfRa27cB6jXbZ
- 4jtitkS07TSoW+ufsRDW4AW0a0C3F5ncgDHYrNeY9tuZtHpsPlHmn7Z7lUC5KugOon5SyU
- OaRnqY6EJgekYxRVK30UrXik1y7PXzc=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-LqvBAay1MsuYgld8kADXKQ-1; Tue,
- 29 Apr 2025 10:03:24 -0400
-X-MC-Unique: LqvBAay1MsuYgld8kADXKQ-1
-X-Mimecast-MFC-AGG-ID: LqvBAay1MsuYgld8kADXKQ_1745935403
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D6CC119560A2; Tue, 29 Apr 2025 14:03:22 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.19])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A25D01800378; Tue, 29 Apr 2025 14:03:21 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 2/6] qdev: make release_drive() idempotent
-Date: Tue, 29 Apr 2025 18:03:02 +0400
-Message-ID: <20250429140306.190384-3-marcandre.lureau@redhat.com>
-In-Reply-To: <20250429140306.190384-1-marcandre.lureau@redhat.com>
-References: <20250429140306.190384-1-marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1u9la2-0001kF-6f
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:05:03 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1u9lZz-0005eC-Eu
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:05:01 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-39ee651e419so3148095f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 07:04:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1745935498; x=1746540298; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=yTRJcztr788Tp3EvhH7sp7iab6GaQ3Jwx+0m9lrgSSY=;
+ b=Sd0C6RBO/gNwlNda5Y4+C3CqV3A1ceCRS1tL8AAi+drBYzDhawpMun3bI8j8wIZdMV
+ SjsIt7Z3EmDFBb3MMVTMIl/0b5gfELAVnjOv+ZEiXzbd59j8U3yxpoUgUmXS1CtCbUxt
+ j9MMSQIeVdvGNuksxS8eNdFtFUZKG79vJcn7DRewymtFfQY0Y5XIsyQ2F7+ZuTtDpf7G
+ aLP2NDD5T0dWCmwSzroMcy7BBbIj/OjDnhrZDjKwOoDdoV3nsDSkwnRTjJXw4jJEpdHn
+ 29RT+3UP6v+fStq0Se3k5rYxHLjHHkYtPm9ajT2SLZd4Xg5ryMlSMbU3Vfg++W8aSE7I
+ gV+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745935498; x=1746540298;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yTRJcztr788Tp3EvhH7sp7iab6GaQ3Jwx+0m9lrgSSY=;
+ b=aao2Sq7lI9MiklmVwP434Nzk6BlcG1Hrn/Nu8do084eqHo5tVOa27Kmsrwleb/cJ01
+ nHJ2s9hGTGs+nf0gVJhY62qyUXqQGLH/2SqoosSIg4mp1RQ2AoByGUl6SR6PRY36my4t
+ 8/QkISVObnAqqDovfYEfEJaoZnbfrrYZr1OFitJLLQDvfs2vbV8atwZaq0SPEL7anz/z
+ yhRqsmX6X1MQMP2Pj/OkpEBeX+mBuKdkg99Rx3+unjnxx+V6sflaEXKBQ4w+v7Z8tXux
+ AYIBDYvFEq4EaJ4HkkkwruuAEmWA1L7KUhmTBZbCkMIcdq8u/eID/BwKQylvbj/lf96Z
+ UnPg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUn6UR3NWROTXKCBBOGyZQAtJgWNxfhqoVE8/sk7w/I4GAnNDN7jtW+irHzdzKef0iY0ZflB6CjR4bq@nongnu.org
+X-Gm-Message-State: AOJu0Yyd5DSWqmgdUVU0rfLxCsqlXdVDaProqYoqRj7lfEqMJco7hF7R
+ iId3VCo60m54Wy8XFUYv+keCuUXoTBo1YCHiGo4ihenAe2kcuTJnm6Dv03jjm3wExYTZTFyMvJG
+ RvqeBMlhmrRtV5V5hMHbhqm/gXf9ANHxd
+X-Gm-Gg: ASbGncsorvxOEu9SJ/oS3UVweg1fJkyEDtvuW6kL0AdSWTX569xhcStXqZJ/24VrYmD
+ W7sjmv4JLRtOE7pEsoFpNqO2woNyyI0SPYktpb06ZSXFZ2ZVKCWHhPO1eYglybpg3JZ7c20yz5T
+ coJWuSY6bk9crxcD2FfIsz
+X-Google-Smtp-Source: AGHT+IF8M6KGsFOS5f+rPYRc86PmZO49kTcH51QcNaRzsJJeI8T2h2zDwJD13OvIZhh363PLmO/JH5PEW3ubY9qZobg=
+X-Received: by 2002:a05:6000:2c5:b0:391:3988:1c97 with SMTP id
+ ffacd0b85a97d-3a08a351817mr2425515f8f.17.1745935497346; Tue, 29 Apr 2025
+ 07:04:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+References: <20250428040313.413822-1-maobibo@loongson.cn>
+In-Reply-To: <20250428040313.413822-1-maobibo@loongson.cn>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 29 Apr 2025 10:04:44 -0400
+X-Gm-Features: ATxdqUGhfrV6TN6WBNtPSaFeD0i55MimYzxYdXvAHQukYz6oJgaJWe75YiHaUCc
+Message-ID: <CAJSP0QXKPt16JARrVNKKzfOFO1f3TYqpS5TSYMKD43q2mQhYRQ@mail.gmail.com>
+Subject: Re: [PULL 0/8] loongarch-to-apply queue
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=stefanha@gmail.com; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,28 +93,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+Please take a look at the following CI failure:
 
-So it can eventually be called multiple times safely.
+Fail: The memory reads and writes count does not match.
+Expected Reads: 114688, Actual Reads: 0
+Expected Writes: 63488, Actual Writes: 32768
+make[1]: *** [Makefile:202: run-plugin-memory-with-libmem.so] Error 1
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/core/qdev-properties-system.c | 1 +
- 1 file changed, 1 insertion(+)
+https://gitlab.com/qemu-project/qemu/-/jobs/9865233699#L4223
 
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 8e11e6388b..b10835185c 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -231,6 +231,7 @@ static void release_drive(Object *obj, const char *name, void *opaque)
-     if (*ptr) {
-         blockdev_auto_del(*ptr);
-         blk_detach_dev(*ptr, dev);
-+        *ptr = NULL;
-     }
- }
- 
--- 
-2.49.0
+Thanks!
 
+Stefan
 
