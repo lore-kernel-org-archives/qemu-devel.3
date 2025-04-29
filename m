@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA848C3ABA9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA281C3ABAB
 	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 11:36:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9jDx-0007Io-US; Tue, 29 Apr 2025 07:34:05 -0400
+	id 1u9jDx-0007G9-1S; Tue, 29 Apr 2025 07:34:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u9jDl-0006zl-3B; Tue, 29 Apr 2025 07:33:53 -0400
+ id 1u9jDj-0006wx-Py; Tue, 29 Apr 2025 07:33:52 -0400
 Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1u9jDi-0008H3-65; Tue, 29 Apr 2025 07:33:52 -0400
+ id 1u9jDe-0008FT-7Z; Tue, 29 Apr 2025 07:33:51 -0400
 Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
  [IPv6:2a02:6b8:c42:cca4:0:640:432b:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 44354613ED;
- Tue, 29 Apr 2025 14:33:46 +0300 (MSK)
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id A3A1C613D9;
+ Tue, 29 Apr 2025 14:33:41 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b423::1:3a])
  by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id bXTAnY0Fe0U0-gsLH5Sh2; Tue, 29 Apr 2025 14:33:45 +0300
+ ESMTPSA id bXTAnY0Fe0U0-EKYKT2em; Tue, 29 Apr 2025 14:33:41 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1745926425;
- bh=QFP2bF/oCU/i3KsQH4XH+arblxug5ghRMFZFdOGqZ/Y=;
+ s=default; t=1745926421;
+ bh=xkLZ1GZTOtbVQt+osR2ziS0pLuj2G7hrkNYOXSXAPIU=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=hU+Hcza7Q85TTgTkk4GpaMBbLvE3605tgOJej3Ho2i9pqHq00dg4TISNy/rQ0F3+S
- dZBoazqU9Cn3sodRUBD77how5ks4byEHDe7MLe7kq/uFvJ3bYK1pJPVn8l6Z+f3+if
- WNbSJ1luKoEOOITKl4ar6ZEeQnaCpumBqVkyJVCs=
+ b=Fzp22hLmF6e9sWVdT93i+PxIw/x4FZP033Gw0a+8mTSPxLBvhWZPsoZwZasTxgMnW
+ vD2aX0qxYhaxShfEwgxRcCcCdnvaIK34tJrOPmo4/g7jqMnyGIxE03pTWTgJ0RddOo
+ 8QvA+zuD7INGa8b8Vm+H4Kp9bjaOC1F3w6AndIBE=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Krempa <pkrempa@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 7/8] qapi/block-core: deprecate some block-job- APIs
-Date: Tue, 29 Apr 2025 14:33:34 +0300
-Message-ID: <20250429113335.423535-13-vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ qemu-stable@nongnu.org,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PULL 3/5] block/reqlist: allow adding overlapping requests
+Date: Tue, 29 Apr 2025 14:33:28 +0300
+Message-ID: <20250429113335.423535-7-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250429113335.423535-1-vsementsov@yandex-team.ru>
 References: <20250429113335.423535-1-vsementsov@yandex-team.ru>
@@ -75,169 +74,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For change, pause, resume, complete, dismiss and finalize actions
-corresponding job- and block-job commands are almost equal. The
-difference is in find_block_job_locked() vs find_job_locked()
-functions. What's different?
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-1. find_block_job_locked() checks whether the found job is a block-job.
-   This is OK when moving to more generic API, no needs to document this
-   change.
+Allow overlapping request by removing the assert that made it
+impossible. There are only two callers:
 
-2. find_block_job_locked() reports DeviceNotActive on failure, when
-   find_job_locked() reports GenericError. So, let's document this
-   difference in deprecated.txt. Still, for dismiss and finalize errors
-   are not documented at all, so be silent in deprecated.txt as well.
+1. block_copy_task_create()
 
-ACKed-by: Peter Krempa <pkrempa@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+It already asserts the very same condition before calling
+reqlist_init_req().
+
+2. cbw_snapshot_read_lock()
+
+There is no need to have read requests be non-overlapping in
+copy-before-write when used for snapshot-access. In fact, there was no
+protection against two callers of cbw_snapshot_read_lock() calling
+reqlist_init_req() with overlapping ranges and this could lead to an
+assertion failure [1].
+
+In particular, with the reproducer script below [0], two
+cbw_co_snapshot_block_status() callers could race, with the second
+calling reqlist_init_req() before the first one finishes and removes
+its conflicting request.
+
+[0]:
+
+> #!/bin/bash -e
+> dd if=/dev/urandom of=/tmp/disk.raw bs=1M count=1024
+> ./qemu-img create /tmp/fleecing.raw -f raw 1G
+> (
+> ./qemu-system-x86_64 --qmp stdio \
+> --blockdev raw,node-name=node0,file.driver=file,file.filename=/tmp/disk.raw \
+> --blockdev raw,node-name=node1,file.driver=file,file.filename=/tmp/fleecing.raw \
+> <<EOF
+> {"execute": "qmp_capabilities"}
+> {"execute": "blockdev-add", "arguments": { "driver": "copy-before-write", "file": "node0", "target": "node1", "node-name": "node3" } }
+> {"execute": "blockdev-add", "arguments": { "driver": "snapshot-access", "file": "node3", "node-name": "snap0" } }
+> {"execute": "nbd-server-start", "arguments": {"addr": { "type": "unix", "data": { "path": "/tmp/nbd.socket" } } } }
+> {"execute": "block-export-add", "arguments": {"id": "exp0", "node-name": "snap0", "type": "nbd", "name": "exp0"}}
+> EOF
+> ) &
+> sleep 5
+> while true; do
+> ./qemu-nbd -d /dev/nbd0
+> ./qemu-nbd -c /dev/nbd0 nbd:unix:/tmp/nbd.socket:exportname=exp0 -f raw -r
+> nbdinfo --map 'nbd+unix:///exp0?socket=/tmp/nbd.socket'
+> done
+
+[1]:
+
+> #5  0x000071e5f0088eb2 in __GI___assert_fail (...) at ./assert/assert.c:101
+> #6  0x0000615285438017 in reqlist_init_req (...) at ../block/reqlist.c:23
+> #7  0x00006152853e2d98 in cbw_snapshot_read_lock (...) at ../block/copy-before-write.c:237
+> #8  0x00006152853e3068 in cbw_co_snapshot_block_status (...) at ../block/copy-before-write.c:304
+> #9  0x00006152853f4d22 in bdrv_co_snapshot_block_status (...) at ../block/io.c:3726
+> #10 0x000061528543a63e in snapshot_access_co_block_status (...) at ../block/snapshot-access.c:48
+> #11 0x00006152853f1a0a in bdrv_co_do_block_status (...) at ../block/io.c:2474
+> #12 0x00006152853f2016 in bdrv_co_common_block_status_above (...) at ../block/io.c:2652
+> #13 0x00006152853f22cf in bdrv_co_block_status_above (...) at ../block/io.c:2732
+> #14 0x00006152853d9a86 in blk_co_block_status_above (...) at ../block/block-backend.c:1473
+> #15 0x000061528538da6c in blockstatus_to_extents (...) at ../nbd/server.c:2374
+> #16 0x000061528538deb1 in nbd_co_send_block_status (...) at ../nbd/server.c:2481
+> #17 0x000061528538f424 in nbd_handle_request (...) at ../nbd/server.c:2978
+> #18 0x000061528538f906 in nbd_trip (...) at ../nbd/server.c:3121
+> #19 0x00006152855a7caf in coroutine_trampoline (...) at ../util/coroutine-ucontext.c:175
+
+Cc: qemu-stable@nongnu.org
+Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-Id: <20240712140716.517911-1-f.ebner@proxmox.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-ID: <20250409084232.28201-3-vsementsov@yandex-team.ru>
 ---
- docs/about/deprecated.rst | 31 +++++++++++++++++++++++++++++++
- qapi/block-core.json      | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 61 insertions(+)
+ block/copy-before-write.c | 3 ++-
+ block/reqlist.c           | 2 --
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 05381441a9..b0d3ae6b32 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -148,6 +148,37 @@ options are removed in favor of using explicit ``blockdev-create`` and
- ``blockdev-add`` calls. See :doc:`/interop/live-block-operations` for
- details.
+diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+index e835987e52..81afeff1c7 100644
+--- a/block/copy-before-write.c
++++ b/block/copy-before-write.c
+@@ -66,7 +66,8 @@ typedef struct BDRVCopyBeforeWriteState {
  
-+``block-job-pause`` (since 10.1)
-+''''''''''''''''''''''''''''''''
-+
-+Use ``job-pause`` instead. The only difference is that ``job-pause``
-+always reports GenericError on failure when ``block-job-pause`` reports
-+DeviceNotActive when block-job is not found.
-+
-+``block-job-resume`` (since 10.1)
-+'''''''''''''''''''''''''''''''''
-+
-+Use ``job-resume`` instead. The only difference is that ``job-resume``
-+always reports GenericError on failure when ``block-job-resume`` reports
-+DeviceNotActive when block-job is not found.
-+
-+``block-job-complete`` (since 10.1)
-+'''''''''''''''''''''''''''''''''''
-+
-+Use ``job-complete`` instead. The only difference is that ``job-complete``
-+always reports GenericError on failure when ``block-job-complete`` reports
-+DeviceNotActive when block-job is not found.
-+
-+``block-job-dismiss`` (since 10.1)
-+''''''''''''''''''''''''''''''''''
-+
-+Use ``job-dismiss`` instead.
-+
-+``block-job-finalize`` (since 10.1)
-+'''''''''''''''''''''''''''''''''''
-+
-+Use ``job-finalize`` instead.
-+
- ``query-migrationthreads`` (since 9.2)
- ''''''''''''''''''''''''''''''''''''''
+     /*
+      * @frozen_read_reqs: current read requests for fleecing user in bs->file
+-     * node. These areas must not be rewritten by guest.
++     * node. These areas must not be rewritten by guest. There can be multiple
++     * overlapping read requests.
+      */
+     BlockReqList frozen_read_reqs;
  
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 6beab0dc12..22061227ca 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -2969,6 +2969,11 @@
- #     the name of the parameter), but since QEMU 2.7 it can have other
- #     values.
- #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use @job-pause
-+#     instead.
-+#
- # Errors:
- #     - If no background operation is active on this device,
- #       DeviceNotActive
-@@ -2976,6 +2981,7 @@
- # Since: 1.3
- ##
- { 'command': 'block-job-pause', 'data': { 'device': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
-@@ -2992,6 +2998,11 @@
- #     the name of the parameter), but since QEMU 2.7 it can have other
- #     values.
- #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use @job-resume
-+#     instead.
-+#
- # Errors:
- #     - If no background operation is active on this device,
- #       DeviceNotActive
-@@ -2999,6 +3010,7 @@
- # Since: 1.3
- ##
- { 'command': 'block-job-resume', 'data': { 'device': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
-@@ -3026,6 +3038,11 @@
- #     the name of the parameter), but since QEMU 2.7 it can have other
- #     values.
- #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use @job-complete
-+#     instead.
-+#
- # Errors:
- #     - If no background operation is active on this device,
- #       DeviceNotActive
-@@ -3033,6 +3050,7 @@
- # Since: 1.3
- ##
- { 'command': 'block-job-complete', 'data': { 'device': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
-@@ -3053,9 +3071,15 @@
- #
- # @id: The job identifier.
- #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use @job-dismiss
-+#     instead.
-+#
- # Since: 2.12
- ##
- { 'command': 'block-job-dismiss', 'data': { 'id': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
-@@ -3075,9 +3099,15 @@
- #
- # @id: The job identifier.
- #
-+# Features:
-+#
-+# @deprecated: This command is deprecated.  Use @job-finalize
-+#     instead.
-+#
- # Since: 2.12
- ##
- { 'command': 'block-job-finalize', 'data': { 'id': 'str' },
-+  'features': ['deprecated'],
-   'allow-preconfig': true }
- 
- ##
+diff --git a/block/reqlist.c b/block/reqlist.c
+index 08cb57cfa4..098e807378 100644
+--- a/block/reqlist.c
++++ b/block/reqlist.c
+@@ -20,8 +20,6 @@
+ void reqlist_init_req(BlockReqList *reqs, BlockReq *req, int64_t offset,
+                       int64_t bytes)
+ {
+-    assert(!reqlist_find_conflict(reqs, offset, bytes));
+-
+     *req = (BlockReq) {
+         .offset = offset,
+         .bytes = bytes,
 -- 
-2.48.1
+2.34.1
 
 
