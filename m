@@ -4,56 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 082A4C369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 06:25:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31906C369CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 06:29:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9eP5-0002KD-5u; Tue, 29 Apr 2025 02:25:15 -0400
+	id 1u9eSN-0003Ge-Cx; Tue, 29 Apr 2025 02:28:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1u9eOp-0002Fs-RT
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:25:04 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1u9eSH-0003Df-3m
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:28:35 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
- id 1u9eOl-0006mz-E9
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:24:57 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 2540543FAD;
- Tue, 29 Apr 2025 06:24:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A8BC4CEE3;
- Tue, 29 Apr 2025 06:24:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1745907893;
- bh=idVj8BJYs1Aw6SHVsrP3TsDm5Ni1zLsu+rVHmdH+T8Y=;
- h=Date:From:To:Cc:Subject:From;
- b=YTQ1ugM/wUtnj780ut7zFmKfKYGM/dnBu/DCsxUBcI9q4ogyomT+mH2QD6pnpm3Ys
- k75PAF8cTcIK1Bj3z06GmML6ll2TR89iQ8NuqOOH3YzTFQIPqKPBjNnfbZfXhhv1yM
- mfyQ2DLUGCaOAQUeguwBQyDCOXixP2z5JJs6V+2eqGF/qlE9CcSCPDfU3JkgxIcNT0
- L/FVJZLdcG6vh9/Vu6DeJhDQqpYgy+B4v26rrthamORAKLmW8Jilk7NNIrSosmMibQ
- AEhgW2d1Gs+npGHjE1dXvAVihqMxVNvyZJi9TagFqV80mF8mDN1JQDBxr1r8TGAfbu
- jrOkf8+TP3s4Q==
-Date: Tue, 29 Apr 2025 06:24:51 +0000
-From: Wei Liu <wei.liu@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Wei Liu <wei.liu@kernel.org>, Cameron Esfahani <dirty@apple.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH] target/i386/hvf: fix a compilation error
-Message-ID: <aBBws1ikCDfyC0RI@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1u9eSD-0007AI-85
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:28:32 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 29 Apr
+ 2025 14:28:22 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Tue, 29 Apr 2025 14:28:22 +0800
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>, "Richard
+ Henderson" <richard.henderson@linaro.org>, =?UTF-8?q?Alex=20Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Nicholas Piggin <npiggin@gmail.com>, Hao Wu
+ <wuhaotsh@google.com>, Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Xianglai Li <lixianglai@loongson.cn>, "open
+ list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <nabihestefan@google.com>
+Subject: [PATCH v8 0/1] Support vbootrom for AST2700
+Date: Tue, 29 Apr 2025 14:28:19 +0800
+Message-ID: <20250429062822.1184920-1-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=wei.liu@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,40 +63,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Include exec/target_page.h to fix the following build error.
+v1:
+  Add initial support for AST27x0
+  The purpose of vbootrom here is to simulate the work of BootMCU SPL (riscv)
+  in AST2700, because QEMU doesn't support heterogenous architecture yet.
 
-x86_64-softmmu.a.p/target_i386_hvf_hvf.c.o -c ../target/i386/hvf/hvf.c
-../target/i386/hvf/hvf.c:139:49: error: use of undeclared identifier 'TARGET_PAGE_SIZE'
-  139 |             uint64_t dirty_page_start = gpa & ~(TARGET_PAGE_SIZE - 1u);
-      |                                                 ^
-../target/i386/hvf/hvf.c:141:45: error: use of undeclared identifier 'TARGET_PAGE_SIZE'
-  141 |             hv_vm_protect(dirty_page_start, TARGET_PAGE_SIZE,
-      |                                             ^
+  ast27x0_bootrom.bin is a simplified, free (Apache 2.0) boot ROM for
+  ASPEED AST27x0 BMC SOC. It currently implements the bare minimum to
+  load, parse, initialize and run boot images stored in SPI flash, but may grow
+  more features over time as needed. The source code is available at:
+  https://github.com/google/vbootrom
 
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
----
-I suspect 58d00538ceeef990 and its follow-up patches caused this issue but I
-unfortunately don't have cycles to investigate further.
----
- target/i386/hvf/hvf.c | 1 +
- 1 file changed, 1 insertion(+)
+v2:
+  Add "Introduced ASPEED_DEV_VBOOTROM in the device enumeration" patch to fix
+  build failed.
 
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 23ebf2550a..99e37a33e5 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -76,6 +76,7 @@
- #include "qemu/main-loop.h"
- #include "qemu/accel.h"
- #include "target/i386/cpu.h"
-+#include "exec/target_page.h"
- 
- static Error *invtsc_mig_blocker;
- 
+v3:
+  1. Supports both vbootrom and device loader boot methods, with vbootrom used as
+  the default.
+  2. Fix review and QTEST test failed issues. 
+
+v4: 
+  Adjust the patch order.
+  
+v5:
+  fix review issue and remove unnecessary class attribure.
+  doc: create a new section for AST2700.
+  
+v6:
+  fix review issue.
+  Add google/vbootrom commit id for ast27x0
+  split to patch to update documentataion for ast27x0
+
+v7:
+  update vbootrom pre-built image and add its build info
+  
+v8:
+  kept list in alphabetic order
+
+Jamin Lin (1):
+  pc-bios: Add AST27x0 vBootrom
+
+ MAINTAINERS                 |   1 +
+ pc-bios/README              |   6 ++++++
+ pc-bios/ast27x0_bootrom.bin | Bin 0 -> 15552 bytes
+ pc-bios/meson.build         |   1 +
+ 4 files changed, 8 insertions(+)
+ create mode 100644 pc-bios/ast27x0_bootrom.bin
+
 -- 
-2.39.5 (Apple Git-154)
+2.43.0
 
 
