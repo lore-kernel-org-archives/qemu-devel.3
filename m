@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE29C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 12:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42731C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 12:47:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9kKH-00024A-Bw; Tue, 29 Apr 2025 08:44:41 -0400
+	id 1u9kKZ-0002jW-Kr; Tue, 29 Apr 2025 08:44:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u9kKB-0001s2-S6
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 08:44:35 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1u9kKQ-0002Ya-MQ
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 08:44:51 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u9kK7-0004Kv-8e
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 08:44:34 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-22401f4d35aso71677105ad.2
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 05:44:30 -0700 (PDT)
+ id 1u9kKO-0004NV-Nt
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 08:44:50 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-30820167b47so5819357a91.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 05:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1745930669; x=1746535469; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1745930686; x=1746535486; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f6R3EUC6CKMFKAnlwhLj+btXOWn++vvQKz0yRoESdjA=;
- b=X2i/1Pd6UXzyP3hFj9U0jz1yOBA4hIMM5CEaSJ2CAACKMBN2XJv0aG17FEtqiWrp+k
- Y9NVzXtcSJKDpf7hPNVBS7BPlbJ42tGifRw1r1xynA95b5yeWrHQW6OMj2q3eVP6awae
- bTprXO5ezsOI7AyB+34iVPm13T6DIG/HPEYrgub3vesYh0HfVH9w8Vra5FoPUxDm3fzh
- hrbM/C2RlNaCD7mS9KEyXYPDSQcEqZefQY9QPSiNxkrCzWLreuE0svS6qLYMEaHrCpiH
- tseJKkg/r5b1tR23QVZ6q8CHsKUk2s0/grhyEPzRPKDV8Ka8EDhBwoZysZcGC2PAjgeG
- 7W6Q==
+ bh=iLAKtSByZPkbwLOMWEWkl5uORyVUUQ5Q0ynhQjz8M4I=;
+ b=egbJykF1AipJY/c7bnE4N0w0UpykP0WrDbtdhjQVAzW4DyJGrjKTsJet1vDbS2gwuF
+ eQqC9jhtBNgBeFtjQ9Vh12LLv+fRuJhMEXmWZjZ1wPBVA3goDE2skdg1m/ljoXWAy0pJ
+ PhEaiAmeYM95P7Y/JJfSubElClvEqNkx7px4Y6h1R+zBBuwU3a+ZNJKHbID5juxARUDY
+ XfNCM9sWcti6phyHvTpSl9kRTDReD24Fp4FcCklvqBLcH1xz9wf5ZHcT2k+f7dKQa0vA
+ lyASI1k3VviGdJH4xM9UEGlLrtCukn6Q172RYrLwfrKv595/iVS7/X5hpj9MjDdFxtnG
+ 0tJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745930669; x=1746535469;
+ d=1e100.net; s=20230601; t=1745930686; x=1746535486;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=f6R3EUC6CKMFKAnlwhLj+btXOWn++vvQKz0yRoESdjA=;
- b=v6hjBZ2uynIptBDEDkJGZZ/IPnxt3U+EwVaIVhr2IfM4U4YD6yd3rJqhpX7FAOFwt7
- K3YWSq648AfuKpD68D47uXoK8LFoFCMAKPZAvFOZcAl2D0PqWoUezYxdfRTlHmQ8A7UN
- w4bqGZO9R4HE8TrJG4qs9eG+PG0TGEBKplmvCbxrjBj8U5S9I1NjoL2DsNDoUPtuD9iW
- 54aS37iipU8cOI8t1XDFxMuZjNuv3rJmiiV4KHIFFUgOvUYijuB6TDy5MmFYASEse33M
- 77DXtuiSbU2ISfkgYU4SN5p5pZ0FMo1duCFePILYYHFu2qRVlvMosLnUmLNIGF+HMnog
- Oo1Q==
-X-Gm-Message-State: AOJu0Yw0ux54x6gNgs7HFLbZvJ53HavgQnww23tTOFmfBipFq/RY8dC9
- DhjtFFJWY7sk7rX/iNLsA8gMcX8G9R+2iEfSAVae2c1Dbq3ApyLocyY585c6HJ7j636Y0/BIbzE
- t
-X-Gm-Gg: ASbGncse/P7g3PHBVUIluze2J8Gi+KVbBdABy9K0q3yt0biPrNNJQH88ZRYLob3i6oy
- dx/njH/ENisbDIzON/xzzQd5wUT3e+r+XgerxikaRk+OxEaLQ8EvJTHEDvF9YBWDPQFGQzpwkwj
- YN6P0XqDvo1gODvp+dxOWkE9iJK7zbNMS/1OQwJThsDE6dxFixeODKq8QXTb6wLuSZg8JomoVEF
- dJB4r02t4WEDGOTghRL7lZd7yVHkol+qCTMwbouAFXHZ9Fql+YCaVaZnGA7uiCD5ycVaHA7a9Wf
- lkhzAmDlmluCvARuDrEgBvakbFFO1Maml0YhRNOjZXw=
-X-Google-Smtp-Source: AGHT+IGmMhlkUUOja7G84fk0iUqVZ+TD8ZVcKKFoDQZ9WqFsELGXmOs256cY8/umL4ISSk5CqAKbJA==
-X-Received: by 2002:a17:90b:2750:b0:2ff:7ad4:77af with SMTP id
- 98e67ed59e1d1-30a23de91d4mr3386528a91.20.1745930669041; 
- Tue, 29 Apr 2025 05:44:29 -0700 (PDT)
+ bh=iLAKtSByZPkbwLOMWEWkl5uORyVUUQ5Q0ynhQjz8M4I=;
+ b=R/uOO6un4OBu6s4Dz7QmEmb4H3C+9MgASYPXtGJC0BkwCoaGfDk3aWnCmIU+5X9cmd
+ u8w97lkZdYiKbTyhuFYsY9ky4k3EDdz9d6c2ys6P/E8lhES2CedK9d56pgfxOblXwkih
+ jK8LNpSDXtjY/nvjShfVKOb+Mn+EIZ5ImovtfJ5vbHREiqgvLDEBgA0VSAvWhVduI05K
+ DEwmjGOEttv2gxM1GtP/GB84plpURUjMV4GFHtRYfjOFGZh97cKK2jPGpI9vqVrSTMhC
+ hLqCm/CKJnyEabFVEak8FIJZihGsDK/DJ/v0/Kq4YriVIM0aRT7fCEsa7lcqdixA4494
+ MLCg==
+X-Gm-Message-State: AOJu0Yzm26OWaESyXopKYjfIWrR+lBVFyJquuXDR1+8DJEgf6jJCZ6Mz
+ 9HAj04gLV+++cW1SLXc/eeFkSyuEAjcGVMCDFixYB4uzQZYr+cCgeddQybt45tYBZ3jpZg7QSdu
+ J
+X-Gm-Gg: ASbGncsZjziqIXc/imTRZ6FH9Gss4ELfdYby6VuSlAZDznvTet56ogU2aiS564hHmgF
+ ofQcUyjPTym9jG0q3h9KmIyg1tHY+8Acjaqtrl5f67GlTN6eg8avTngSbP9pEgNlEtMKEKgGbVo
+ KxLYi1OaXDxJcLK1k4qP7XMjnozeL7UR2HDj84PpGkKwPe45OHYPbC1oV6I0m8wTp1/VPCFkhJE
+ Li8lVgXJ09W31oV46rqSWSg2GA6iK1g969vSx+bkl8E2eMrP38z9JAznQR4YeAIXHq9fK8OF5CN
+ BT+ktYBCoGo3BgAKiFFltgw3hWHC6dM6qWbz7/YiT+M=
+X-Google-Smtp-Source: AGHT+IFkJErRsiaXwNaEsHBdH2BCQMafFZcQ3joCdFl0WSuJtH7/E5ZMOt2zGaQHQrIAArAUq65d7Q==
+X-Received: by 2002:a17:90b:264b:b0:2fe:b907:5e5a with SMTP id
+ 98e67ed59e1d1-30a22467d74mr4050029a91.10.1745930685570; 
+ Tue, 29 Apr 2025 05:44:45 -0700 (PDT)
 Received: from grind.. ([152.234.125.33]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-309ef04ba89sm11001161a91.10.2025.04.29.05.44.26
+ 98e67ed59e1d1-309ef04ba89sm11001161a91.10.2025.04.29.05.44.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 05:44:28 -0700 (PDT)
+ Tue, 29 Apr 2025 05:44:45 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, ajones@ventanamicro.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v5 1/9] target/riscv/kvm: minor fixes/tweaks
-Date: Tue, 29 Apr 2025 09:44:13 -0300
-Message-ID: <20250429124421.223883-2-dbarboza@ventanamicro.com>
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v5 8/9] target/riscv/kvm: read/write KVM regs via env size
+Date: Tue, 29 Apr 2025 09:44:20 -0300
+Message-ID: <20250429124421.223883-9-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250429124421.223883-1-dbarboza@ventanamicro.com>
 References: <20250429124421.223883-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,82 +99,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove an unused 'KVMScratchCPU' pointer argument in
-kvm_riscv_check_sbi_dbcn_support().
+We're going to add support for scounteren in the next patch. KVM defines
+as a target_ulong CSR, while QEMU defines env->scounteren as a 32 bit
+field. This will cause the current code to read/write a 64 bit CSR in a
+32 bit field when running in a 64 bit CPU.
 
-Put kvm_riscv_reset_regs_csr() after kvm_riscv_put_regs_csr(). This will
-make a future patch diff easier to read, when changes in
-kvm_riscv_reset_regs_csr() and kvm_riscv_get_regs_csr() will be made.
+To prevent that, change the current logic to honor the size of the QEMU
+storage instead of the KVM CSR reg.
 
-Fixes: a6b53378f5 ("target/riscv/kvm: implement SBI debug console (DBCN) calls")
+Suggested-by: Andrew Jones <ajones@ventanamicro.com>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/kvm/kvm-cpu.c | 29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+ target/riscv/kvm/kvm-cpu.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 9214ce490c..accad4c28e 100644
+index 5efee8adb2..d55361962d 100644
 --- a/target/riscv/kvm/kvm-cpu.c
 +++ b/target/riscv/kvm/kvm-cpu.c
-@@ -613,19 +613,6 @@ static int kvm_riscv_put_regs_core(CPUState *cs)
-     return ret;
- }
+@@ -135,6 +135,7 @@ typedef struct KVMCPUConfig {
+     const char *description;
+     target_ulong offset;
+     uint64_t kvm_reg_id;
++    uint32_t prop_size;
+     bool user_set;
+     bool supported;
+ } KVMCPUConfig;
+@@ -237,6 +238,7 @@ static void kvm_riscv_update_cpu_misa_ext(RISCVCPU *cpu, CPUState *cs)
  
--static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
--{
--    env->mstatus = 0;
--    env->mie = 0;
--    env->stvec = 0;
--    env->sscratch = 0;
--    env->sepc = 0;
--    env->scause = 0;
--    env->stval = 0;
--    env->mip = 0;
--    env->satp = 0;
--}
--
- static int kvm_riscv_get_regs_csr(CPUState *cs)
- {
-     CPURISCVState *env = &RISCV_CPU(cs)->env;
-@@ -660,6 +647,19 @@ static int kvm_riscv_put_regs_csr(CPUState *cs)
-     return 0;
- }
+ #define KVM_CSR_CFG(_name, _env_prop, reg_id) \
+     {.name = _name, .offset = ENV_CSR_OFFSET(_env_prop), \
++     .prop_size = sizeof(((CPURISCVState *)0)->_env_prop), \
+      .kvm_reg_id = reg_id}
  
-+static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
-+{
-+    env->mstatus = 0;
-+    env->mie = 0;
-+    env->stvec = 0;
-+    env->sscratch = 0;
-+    env->sepc = 0;
-+    env->scause = 0;
-+    env->stval = 0;
-+    env->mip = 0;
-+    env->satp = 0;
-+}
-+
- static int kvm_riscv_get_regs_fp(CPUState *cs)
- {
-     int ret = 0;
-@@ -1078,7 +1078,6 @@ static int uint64_cmp(const void *a, const void *b)
- }
+ static KVMCPUConfig kvm_csr_cfgs[] = {
+@@ -646,9 +648,9 @@ static int kvm_riscv_get_regs_csr(CPUState *cs)
+             return ret;
+         }
  
- static void kvm_riscv_check_sbi_dbcn_support(RISCVCPU *cpu,
--                                             KVMScratchCPU *kvmcpu,
-                                              struct kvm_reg_list *reglist)
- {
-     struct kvm_reg_list *reg_search;
-@@ -1197,7 +1196,7 @@ static void kvm_riscv_init_multiext_cfg(RISCVCPU *cpu, KVMScratchCPU *kvmcpu)
-         kvm_riscv_read_vlenb(cpu, kvmcpu, reglist);
-     }
+-        if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint32_t)) {
+-            kvm_cpu_csr_set_u32(cpu, csr_cfg, reg);
+-        } else if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint64_t)) {
++        if (csr_cfg->prop_size == sizeof(uint32_t)) {
++            kvm_cpu_csr_set_u32(cpu, csr_cfg, (uint32_t)reg);
++        } else if (csr_cfg->prop_size == sizeof(uint64_t)) {
+             kvm_cpu_csr_set_u64(cpu, csr_cfg, reg);
+         } else {
+             g_assert_not_reached();
+@@ -671,9 +673,9 @@ static int kvm_riscv_put_regs_csr(CPUState *cs)
+             continue;
+         }
  
--    kvm_riscv_check_sbi_dbcn_support(cpu, kvmcpu, reglist);
-+    kvm_riscv_check_sbi_dbcn_support(cpu, reglist);
- }
- 
- static void riscv_init_kvm_registers(Object *cpu_obj)
+-        if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint32_t)) {
++        if (csr_cfg->prop_size == sizeof(uint32_t)) {
+             reg = kvm_cpu_csr_get_u32(cpu, csr_cfg);
+-        } else if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint64_t)) {
++        } else if (csr_cfg->prop_size == sizeof(uint64_t)) {
+             reg = kvm_cpu_csr_get_u64(cpu, csr_cfg);
+         } else {
+             g_assert_not_reached();
 -- 
 2.49.0
 
