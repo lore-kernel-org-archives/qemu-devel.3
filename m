@@ -4,94 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A6D1C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1303DC369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9m5b-0003Qk-Kq; Tue, 29 Apr 2025 10:37:39 -0400
+	id 1u9m8U-0004lX-Jv; Tue, 29 Apr 2025 10:40:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1u9m5R-0003Pw-Ep
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:37:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u9m8S-0004lI-Io; Tue, 29 Apr 2025 10:40:36 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1u9m5O-0004Rb-5X
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:37:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745937441;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BltxbORp3dU4O4Pqs/IE9o/fPooMKUc/0lnLwVGWTro=;
- b=Qg6vnpvEWbfeDrmgBAvjLrQRMZaL6HYPhc6emGKCQOpHmk57kcJL/tiIe+qqpL0ufY/i99
- R1/lWjfhNNFl9feC8poKG2b2JasA9OgGcfGZtdOT0TyMwwzj5mP0Ys+tOYZOSMTYlJbVhh
- YAFOZ7oBj10vOSMpDmQ6ldemuuJ2JPY=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-351-0WFYeJnyOMKrAVQmhndiAg-1; Tue, 29 Apr 2025 10:37:19 -0400
-X-MC-Unique: 0WFYeJnyOMKrAVQmhndiAg-1
-X-Mimecast-MFC-AGG-ID: 0WFYeJnyOMKrAVQmhndiAg_1745937438
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6eeb5e86c5fso65496226d6.1
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 07:37:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745937438; x=1746542238;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BltxbORp3dU4O4Pqs/IE9o/fPooMKUc/0lnLwVGWTro=;
- b=QNmB9Vyf/v5E2bONHvwTPz65o4ey4uO+tsMZeA2MNB1R7pjj3G5nvusAseg8IOc/Wq
- ZKC8L1NQeYMTudbzN8f1FFVuLt5Kynhag0rPwFhT0NCyGa7POYrQFXuyK5mD9eXXlAGZ
- gNQpjAQOmlXIb16GqyPLR8itH+ACUOCNtrNyI98JNzdoKlWSZarVc6ABU7g5kz9tyflS
- bPmbb6rTcN+ek3mnchA3XK1o2FJ29JAR9Kikc2r0C/Khn5+iqYEGoPG+J8I8T65WDSo6
- 5sCgBATm1mxEx3bZjg6TM+IzDs/5BfLOEsfC8MuOviy176nWMef4E0aL6uM6vC25zzTf
- /wZw==
-X-Gm-Message-State: AOJu0Yx/YKH3QsFS6GWvdPmDm39O6U+J8+652lXNaoP7zgNTWEUPeaAt
- supA7GvPOJ7tk37nileBG/Z8JwHZ2CKP8a21Gc+PCrQEw+iIIy1jafeu4hpJ3cE3bdLwABBvRwv
- juGuWifif3N8szdo1dBZB3+4hoPyQDb/xc4jAsqmZWMOW3IStKcemR8fM4rRV4yTOomHNO2jUY6
- sVW+C+Rll7f8aGkTsn/4AxEU56kaI=
-X-Gm-Gg: ASbGncui2BYQ9aQPcJausL7CpLvSxNeFeVSsGBW58qxiO1GF02o+8iqelVntYaIZ3IB
- /96hQkjZQsBODiL0RXyGAnn5Ya1UFmeCdiBqhwuQ2I+weUz+DzFOW8eM4u/koM8fBckWDz0yIuH
- VAp3WPS0k61ovKKLuSj5SrIs7zKA==
-X-Received: by 2002:a05:6214:2528:b0:6e8:fe60:fdeb with SMTP id
- 6a1803df08f44-6f4f0596e09mr60654926d6.17.1745937438481; 
- Tue, 29 Apr 2025 07:37:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuYsk5hmw2BpMGnaqJljYKyl5KEI4sF4Xv42SDMaT7Wn7OJiyNRwVKQk9jAzr7R81Va6CJnYgUk7qto1TVaw8=
-X-Received: by 2002:a05:6214:2528:b0:6e8:fe60:fdeb with SMTP id
- 6a1803df08f44-6f4f0596e09mr60654606d6.17.1745937438197; Tue, 29 Apr 2025
- 07:37:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u9m8Q-0005Ej-2b; Tue, 29 Apr 2025 10:40:36 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E56D655D23D;
+ Tue, 29 Apr 2025 16:40:30 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id KavJHoGJKmo3; Tue, 29 Apr 2025 16:40:28 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id EC18C55D23C; Tue, 29 Apr 2025 16:40:28 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id EA2D1745683;
+ Tue, 29 Apr 2025 16:40:28 +0200 (CEST)
+Date: Tue, 29 Apr 2025 16:40:28 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Richard Henderson <richard.henderson@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [RFC PATCH] target/ppc: Inline most of dcbz helper
+In-Reply-To: <ded56ee3-25bb-4ffd-98e4-2f47c500c88d@linaro.org>
+Message-ID: <164d86d5-f17a-1f89-d973-c3e56255195d@eik.bme.hu>
+References: <20240701005939.5A0AF4E6000@zero.eik.bme.hu>
+ <d3c6c417-20d9-a215-2a5c-86fa084b00fa@eik.bme.hu>
+ <173c9111-e065-0dd5-c276-6bbc0351f9cc@eik.bme.hu>
+ <2b969dcd-4a82-9086-803d-c52ea274fefb@eik.bme.hu>
+ <e4fc537a-a15e-77dd-1167-32b12ee7a22d@eik.bme.hu>
+ <ded56ee3-25bb-4ffd-98e4-2f47c500c88d@linaro.org>
 MIME-Version: 1.0
-References: <20250429140306.190384-1-marcandre.lureau@redhat.com>
- <20250429140306.190384-7-marcandre.lureau@redhat.com>
- <CABgObfY03pS2DV6ttABt0-82RGvRbVKq8atM9Eoki2-WFELhXA@mail.gmail.com>
-In-Reply-To: <CABgObfY03pS2DV6ttABt0-82RGvRbVKq8atM9Eoki2-WFELhXA@mail.gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 29 Apr 2025 18:37:06 +0400
-X-Gm-Features: ATxdqUGiN_HnZNspYaAhvwQ2qTdILmxVrUxDbNBRUEE4Lw4jnOTJFtSi-sE3RsE
-Message-ID: <CAMxuvaxn83Fmx2DPhYrYuHJJDyCLAxJtuz_Sjrt3Y=CoiEu73w@mail.gmail.com>
-Subject: Re: [PATCH 6/6] RFC: qom/object: simplify object_property_del_all()
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1978539636-1745937628=:35167"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,31 +69,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, Apr 29, 2025 at 6:23=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
->
->
-> Il mar 29 apr 2025, 16:03 <marcandre.lureau@redhat.com> ha scritto:
->>
->> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->>
->> Since commit 9859fac ("object: release all props"), the code was changed
->> to tracks the already released properties in a hash table. I am not sure
->> why this was done, perhaps to prevent from potential crashes if
->> properties are being added dynamically during release. I am not sure if
->> it's a valid concern though.
->
->
-> You always need object_property_iter_init in case prop->release deletes a=
- property, thus invalidating the GHashTable iterator. The hash table instea=
-d is needed in case prop->release does *not* delete a property, because the=
-n the property reappears on subsequent recreations of the iterator.
+--3866299591-1978539636-1745937628=:35167
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Yes, changing the properties while they are being removed is I think
-the reason I added the HashTable/Set. But is this a valid concern?
-(the penalty is a bit sad)
+On Mon, 28 Apr 2025, Richard Henderson wrote:
+> On 4/28/25 06:26, BALATON Zoltan wrote:
+>> I have tried profiling the dst in real card vfio vram with dcbz case (with 
+>> 100 iterations instead of 10000 in above tests) but I'm not sure I 
+>> understand the results. vperm and dcbz show up but not too high. Can 
+>> somebody explain what is happening here and where the overhead likely comes 
+>> from? Here is the profile result I got:
+>> 
+>> Samples: 104K of event 'cycles:Pu', Event count (approx.): 122371086557
+>>    Children      Self  Command          Shared Object            Symbol
+>> -   99.44%     0.95%  qemu-system-ppc  qemu-system-ppc          [.] 
+>> cpu_exec_loop
+>>     - 98.49% cpu_exec_loop
+>>        - 98.48% cpu_tb_exec
+>>           - 90.95% 0x7f4e705d8f15
+>>                helper_ldub_mmu
+>>                do_ld_mmio_beN
+>>              - cpu_io_recompile
+>>                 - 45.79% cpu_loop_exit_noexc
+>
+> I think the real problem is the number of loop exits due to i/o.  If I'm 
+> reading this rightly, 45% of execution is in cpu_io_recompile.
+>
+> I/O can only happen as the last insn of a translation block.
 
+I'm not sure I understand this. A comment above cpu_io_recompile says "In 
+deterministic execution mode, instructions doing device I/Os must be at 
+the end of the TB." Is that wrong? Otherwise shouldn't this only apply if 
+running with icount or something like that?
+
+> When we detect 
+> that it has happened in the middle of a translation block, we abort the 
+> block, compile a new one, and restart execution.
+
+Where does that happen? The calls of cpu_io_recompile in this case seem to 
+come from io_prepare which is called from do_ld16_mmio_beN if 
+(!cpu->neg.can_do_io) but I don't see how can_do_io is set.
+
+> Where this becomes a bottleneck is when this same translation block is in a 
+> loop.  Exactly this case of memset/memcpy of VRAM.  This could be addressed 
+> by invalidating the previous translation block and creating a new one which 
+> always ends with the i/o.
+
+And where to do that? cpu_io_recompile just exits the TB but what 
+generates the new TB? I need some more clues to understands how to do 
+this.
+
+Regards,
+BALATON Zoltan
+--3866299591-1978539636-1745937628=:35167--
 
