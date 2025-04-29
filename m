@@ -4,73 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA9E5C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 18:57:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE092C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 19:04:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9q8s-0006X5-6L; Tue, 29 Apr 2025 14:57:18 -0400
+	id 1u9qFV-0002g8-Ss; Tue, 29 Apr 2025 15:04:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1u9q8n-0006SM-JM; Tue, 29 Apr 2025 14:57:15 -0400
-Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1u9q8k-0007Kr-3D; Tue, 29 Apr 2025 14:57:12 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1745953012; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=hj8bY+8qWDtVD0ThbUrV5Mp/C7T2oaIhDhOu5MbWyeyBAbDezvN/NBkHaV6jADADTVf0LHivRLlbIiVq1oOHDnY7I9vgqPAnGbcZhWf/jEYsgWpbA+rHpT3yW8WgAyUGB1R5HRerura7VA4J2Fr8J63h3fdEeSEYO3DdHJAq0pQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1745953012;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=xknWTEB7yvoubiG4cKQIwcY0VebPt0mmtLezT0eqyFs=; 
- b=FZff2QoX2yUQ6qZW2uizJwmPmnpPgeEAkQ1828RUXzF2p+p9Ub0QnczKWSpEsZy+ZARCMrLxj3m+3m+Mn8Z5B7aYBdEnNeOA0/0CW3G0/gzlFbwqKZnXm7/V2z2NSWCqr3Ip4hHEEvvVvL3sqPzqWvgYKYv8uyJcFXsNzHkBcCo=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1745953012; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=xknWTEB7yvoubiG4cKQIwcY0VebPt0mmtLezT0eqyFs=;
- b=YLztQpros48pfl3txC8rwjdPcI6+b7BOOD7bOHdGrWVxfOABUgmV/NSq/o1FZ+5e
- pIcBwidk2EhGS7lMA6vNB/7NjvQqVsB6NaXpwTmB03TPB4kgNN+QZQZiWI+FqJejrTE
- CUjdFL6+gMsXbv9m6jSRCcQ1Tma/PpHlZe0e/1bI=
-Received: by mx.zohomail.com with SMTPS id 1745953009629739.3299186013759;
- Tue, 29 Apr 2025 11:56:49 -0700 (PDT)
-Message-ID: <9115fa7c-ed94-449d-816b-a13125275dac@collabora.com>
-Date: Tue, 29 Apr 2025 21:56:44 +0300
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u9qFR-0002fT-JZ
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 15:04:06 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u9qFP-0001LC-TB
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 15:04:05 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-225df540edcso2311305ad.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 12:04:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745953441; x=1746558241; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KJUA94wbzrF2TqG5k3OIFWX0mNWNsjxKNMoNENadxj4=;
+ b=zErQ2EwtwsH+ZETgylJvPV8WRX2wr3U+yTD+TzehScTq0sovhqJ/sB79xWVULxdmTl
+ X3Le7DnM+lu62NDQr76x04Y/d8O4N5o9Ik/dUIQP/iW+WTeH3i55Y/sCP5lo9s9hAAWb
+ ZviiImR/laVCYNqJ3x87KrRMUd/yNbw1efFVb9z68CY3ZEWtPY9zWAY7QRBKO24JTdZb
+ fxny0CISLSUvcKHbVcn2hfpVwj2Tul0l7wlVsAb7oesxgGRIztIJ+xyeZr4XVuXqckY/
+ RAMqfEMa1qOrvBd9PM7Xv3HKEFjPsuhqJhTlObtFVADfBtixS1nuBYnGorX0eDCFOBOf
+ dR1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745953441; x=1746558241;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KJUA94wbzrF2TqG5k3OIFWX0mNWNsjxKNMoNENadxj4=;
+ b=YjpzmtPGNvr4frnLzrxe6qz765z28SgjhGflTYFOaVw4JLDbeEoGWLII2DhO9E6W+d
+ N3idKeoQxQ5Hd6eyk5SAkZkZB2HkxX608G3tVHk+zgxuVN2TQgu9P0JcKyaRd6nR4e0x
+ JLjg1Q1ktToYqb2XjJ6jX5el152PEEsjpefco019N8BYzUSQfd69CCXLm1FVm10zKAF7
+ fG0coE0MZXk1use+UMTob7JHrXsMBq/hgaa7JzBy6igEgbvmRWFgiSzWNcdcndVk3E75
+ OAhL4IcQa4ZtXQUKFjIZOu1Lsu++xJDGfCjj6Tl9arcAAnfyfzvLfMd9uTxd9oW96UUH
+ WIfg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVkB8B9tYeYvY23sg9gw91Ri0D6kuXhiCoV7UjZ+8SS4DjH2m2maUQLlXYh3EiRHX+7zAjIlLxTDuPR@nongnu.org
+X-Gm-Message-State: AOJu0Yz+UQNLoJakQRQi/eov1SLgjkgXN3vHtpCI+LU/YTDwQrx7Z23V
+ 9JXriF02sBMqu5BDawuhWVaLvmlT4U2n6bqAd5NaYkoLQWOoI5y6CZWXx8CbDL8=
+X-Gm-Gg: ASbGncsmVBesg2XZK/cEEiRQ/srUg6qGbG+vwkctMJwgTemwumgtg3Dg8FncuSvp/Hj
+ x/anz2oQW5hYZWIUYbJhcPvhNhWcePrzyF7mVz2VkkjfATlQI3j3BNAnSVIOtPHEcfsFXWv1o8v
+ 0oItetvMxiPXc4ZeqfKF7o4bD/zt1/8uw3tmgttMrwOXa6ZvFPeH4sVfGk7HhHX5gACo3DJrK2v
+ qH85YJ9Jt1DALzS2aCkvij+zOzkvydmCvEzKoSeCJEzlnJnL65VRT/HrqAVXQzEYmIvycZvl8OU
+ i5NEl85S7Wapjp3m9ZQVSipiMbA+fiJhLZoqAmZ2JpEHluw8l3u4OA==
+X-Google-Smtp-Source: AGHT+IEFhCUzUk6NtiiOx7T9qwwC+alD3nE57XwtdM9FuF3xJNQubdNRWmbxgoGf5ZE6BkijouEEdg==
+X-Received: by 2002:a17:903:1a05:b0:225:abd2:5e5a with SMTP id
+ d9443c01a7336-22df474794fmr461365ad.4.1745953441450; 
+ Tue, 29 Apr 2025 12:04:01 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22db4dc70efsm106342925ad.95.2025.04.29.12.04.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Apr 2025 12:04:01 -0700 (PDT)
+Message-ID: <0fe55a8a-a12b-4673-9d18-57ca42871fe8@linaro.org>
+Date: Tue, 29 Apr 2025 12:04:00 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] MAINTAINERS: add myself to virtio-gpu for Odd Fixes
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Thomas Huth <thuth@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <20250428125918.449346-1-alex.bennee@linaro.org>
- <20250428125918.449346-7-alex.bennee@linaro.org>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: Re: [PATCH 07/10] accel/tcg: Return TCGTBCPUState from
+ cpu_get_tb_cpu_state
 Content-Language: en-US
-In-Reply-To: <20250428125918.449346-7-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+References: <20250428201028.1699157-1-richard.henderson@linaro.org>
+ <20250428201028.1699157-8-richard.henderson@linaro.org>
+ <e56a1170-9e0f-4aed-83f5-99ac5c1261a3@linaro.org>
+ <31ec7f6c-e5fe-401e-96f4-74bc7b0dee36@linaro.org>
+ <db0b8cff-b79f-4f4f-8322-c9f41462cdd5@linaro.org>
+ <ad2a2ba6-04c2-4618-9003-47625d31b365@linaro.org>
+ <1d3bc5b5-1bd8-4f18-9da4-db82f037e5de@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <1d3bc5b5-1bd8-4f18-9da4-db82f037e5de@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,42 +109,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/28/25 15:59, Alex BennÃ©e wrote:
-> Seeing as I've taken a few patches to here now I might as well put
-> myself forward to maintain virtio-gpu. I've marked it as Odd Fixes as
-> it's not my core focus. If someone with more GPU experience comes
-> forward we can always update again.
+On 4/29/25 11:55 AM, Richard Henderson wrote:
+> On 4/28/25 15:37, Richard Henderson wrote:
+>> On 4/28/25 15:26, Pierrick Bouvier wrote:
+>>> On 4/28/25 3:07 PM, Richard Henderson wrote:
+>>>> On 4/28/25 15:00, Pierrick Bouvier wrote:
+>>>>> On 4/28/25 1:10 PM, Richard Henderson wrote:
+>>>>>> diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
+>>>>>> index f5e5746976..8dbe79ea7c 100644
+>>>>>> --- a/include/accel/tcg/cpu-ops.h
+>>>>>> +++ b/include/accel/tcg/cpu-ops.h
+>>>>>> @@ -18,8 +18,13 @@
+>>>>>>     #include "exec/vaddr.h"
+>>>>>>     #include "tcg/tcg-mo.h"
+>>>>>> -void cpu_get_tb_cpu_state(CPUArchState *env, vaddr *pc,
+>>>>>> -                          uint64_t *cs_base, uint32_t *flags);
+>>>>>> +struct TCGTBCPUState {
+>>>>>> +    vaddr pc;
+>>>>>> +    uint32_t flags;
+>>>>>> +    uint64_t flags2;
+>>>>>
+>>>>> Could it be named cs_base instead?
+>>>>> flags2 is a little bit generic.
+>>>>
+>>>> Of course flags2 is generic -- it's only cs_base for x86.
+>>>>
+>>>
+>>> It seems to be named the same for other architectures as well,
+>>> so it's wrong for all other arch too?
+>>>
+>>> My point is that:
+>>> tb_gen_code(cpu, s.pc, s.flags2, s.flags, cflags);
+>>>
+>>> is error prone, and it's easy to swap flags and flags2 by mistake.
+>>> I don't mind the name, but something more distinct would help.
+>>
+>> I fully intended to go on and pass in TCGTBCPUState, rather than 3 separate args.  I guess
+>> I stopped early with the meson.build change for build twice.
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->  MAINTAINERS | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+> You do have a point that it's still named "cs_base" within TranslationBlock.  I'll keep
+> the cs_base name for now and rename it all at once at a later date.
+>
+
+Sounds good.
+
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 661a47db5a..f67c8edcf6 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2636,7 +2636,8 @@ F: hw/display/ramfb*.c
->  F: include/hw/display/ramfb.h
->  
->  virtio-gpu
-> -S: Orphan
-> +M: Alex Bennée <alex.bennee@linaro.org>
-> +M: Odd Fixes
->  F: hw/display/virtio-gpu*
->  F: hw/display/virtio-vga.*
->  F: include/hw/virtio/virtio-gpu.h
-
-Thanks a lot for stepping up!
-
-This reminded me that I wanted to propose myself as reviewer for the
-virtio-gpu patches. Will do it soon.
-
-Akihiko Odaki is also good at reviewing virtio-gpu patches. Wondering if
-Akihiko would want to be added as reviewer or co-maintainer of virtio-gpu?
-
--- 
-Best regards,
-Dmitry
+> r~
 
 
