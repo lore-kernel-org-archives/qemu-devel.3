@@ -4,99 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AEDEC369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BBAEC369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:25:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9ltB-0000SK-FU; Tue, 29 Apr 2025 10:24:49 -0400
+	id 1u9ltv-0000qD-9g; Tue, 29 Apr 2025 10:25:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9lt7-0000SA-W8
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:24:46 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u9ltW-0000bh-8B
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:25:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9lt4-00011C-RR
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:24:44 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1u9ltT-0001DT-LQ
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:25:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745936681;
+ s=mimecast20190719; t=1745936706;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xHCY6WdVEU3LtFWBoTmA3wMJ6DSlEtLNxVMBM885Tf8=;
- b=etsRumgBwtvGvR6Pf4sI4g0bQ7+XzOJzBAt2HL27UhDe9wHkeORyEjRBg16gQ8Ru4c5SDE
- yMsxCdqsluE9RlTW2BtWzkqCswZcJYaZRm2SzCLYCRQzt33MZbb76XEUnwKB2IU1iGFCzj
- SoitOhvYB3lTFzsmDwaMUBETHOQ6FEc=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/ldTXU3xb6Uj55vJAVMIKvmWuqI+nN2VBgXfsl1y1sA=;
+ b=KRCp7ilRlv3GsHuEPpSJmORRmtHqzHWv9Ty6l4r4lKuJ0WtZcvH3LEaqSm6exo3uvJ9Sn3
+ NqQhV9CXJuql8uD8pJcWk1JO9F9fjTOMD/oxSVkm1wv5Mo3Adn7AjkN1qFLcIahAM2kkPZ
+ 28nA1CXARWGWl2DyKNrSR2M58l9ZgPs=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-226-RzXBW__ZPR2G1aPfBrSQKw-1; Tue, 29 Apr 2025 10:24:39 -0400
-X-MC-Unique: RzXBW__ZPR2G1aPfBrSQKw-1
-X-Mimecast-MFC-AGG-ID: RzXBW__ZPR2G1aPfBrSQKw_1745936679
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6ed0526b507so103723016d6.0
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 07:24:39 -0700 (PDT)
+ us-mta-414-P-GHEd-JPw6iwQBi-jLe2A-1; Tue, 29 Apr 2025 10:25:04 -0400
+X-MC-Unique: P-GHEd-JPw6iwQBi-jLe2A-1
+X-Mimecast-MFC-AGG-ID: P-GHEd-JPw6iwQBi-jLe2A_1745936703
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a08a1c0fc5so534217f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 07:25:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745936679; x=1746541479;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xHCY6WdVEU3LtFWBoTmA3wMJ6DSlEtLNxVMBM885Tf8=;
- b=MydKzR+VCuxF8h96UuX8BrslX5ylvPky7AESu/xcEmWPjVMPD41253CR1cFaPVLmRc
- sivwLCPiRDaVuL7aEQgqG8AYBwBpvAX+qPlS3menhrtXmWTdMkHHMubxct7RlzxDgr+5
- USHe0UbJAyVfZB8HOTHjJaF4vwBe21OXxpGxfKehIpWsp8qpOlK0bP3pDZ6g25O+x1jr
- GwiY8/klPNjHPAZDnNn8Vuq32FHrrCInlV0dkQupIBaxDr1n8LrYgH7v4EO28uL2vqQ1
- Ud0r7CfsuFjiT3k66w1AuHfS8pteHOKT1X+TONc6T/B9Me5uic69nUKBgMfFemzo2e7d
- rJhw==
-X-Gm-Message-State: AOJu0Yw8jY/FIJqqZk1h1S7fkVXQ9STSzB7WgsDzaG47oB0ndpYF7qfx
- JQYyobn6YXz/5DcUbNl4YYq2F2bGM51/F6Eq0F/HtD3WzrK5kDc0zS+LxkuY8aySnil0mYUC57v
- 5KaVCeSypAJzDZtm1gIN1Biqh5UY7hajMz4FlmGYEwO2u0AnlHF/G
-X-Gm-Gg: ASbGncuMcDD/STRY/5cQbDtZw/7CX/sfrIIDR0W7SdRdkGCea/eMJrFAcbZoX9b22Ll
- ZH2KXyp4DgrjJUjHZg3BSC5t+JTVH10bOu/Y8V+3I799J5AWnMxZ2oaibkChgAMq0NDkD8ZTbiW
- vlg53DeVC4B5BKl2FigzbFzPKZGCqp0I8+EDLT3KSa8bUS3tiPoVimnhYt6ZT6Z5UHocRkZp5QN
- kNdgsR5CowcbQjI6s13/fhPe4GER9q4C+RMJam4PXB0sBYM6+ljEI1Szi5Xv0D7uoRH9FQEV0rM
- VGA=
-X-Received: by 2002:ad4:5e85:0:b0:6d4:1bad:740c with SMTP id
- 6a1803df08f44-6f4f052eae5mr65961966d6.4.1745936679239; 
- Tue, 29 Apr 2025 07:24:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHde9/dC4TIhlJ/cB0hUyCymXQTIypEYoHGGijtf+9rV4ZQVKR96ETIdKycWrL27W7aIFl6lQ==
-X-Received: by 2002:ad4:5e85:0:b0:6d4:1bad:740c with SMTP id
- 6a1803df08f44-6f4f052eae5mr65961426d6.4.1745936678855; 
- Tue, 29 Apr 2025 07:24:38 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6f4c0933f01sm73610106d6.28.2025.04.29.07.24.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 07:24:38 -0700 (PDT)
-Date: Tue, 29 Apr 2025 10:24:35 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Stafford Horne <shorne@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Helge Deller <deller@gmx.de>, Yanan Wang <wangyanan55@huawei.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] target/migration: Inline VMSTATE_CPU()
-Message-ID: <aBDhI1_frQQGVfV3@x1.local>
-References: <20250429085148.11876-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1745936703; x=1746541503;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/ldTXU3xb6Uj55vJAVMIKvmWuqI+nN2VBgXfsl1y1sA=;
+ b=VZ1us0m2UiVLGgN5xhaj/oOLk8UHGPfqFrPr7R3qsOPtGr59SBZ4AxmdZ+RBp9WP/s
+ KVVTe5pCiLNmhfkQZyk2BBLsD5RbF1lAmzo0WC/BL4IyI//1AhC//2PLMs3MgACMg6+6
+ tiZ8w8gWKDf7yyudYAkTol72sVWuylZSMTASdsNsRY8furUHG++vcLLS1CgWLQg2GiOS
+ fiHPX4Avju4Z37eBPndP5K7Ug+d3ig7lvXd1bE/uTdh4mJ9K+8qZvQRGarhDezVGsrJP
+ gyeF9tYDvCB1T/Fz61Lh6oUOAJDys7tnIwOnsAYbr69LEUStcHGtTiyKM8myN4oiEvtJ
+ VNWw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUsd21brWm8Sotnt53XWk9N2I3resoPv4n/rVOhSxCib/jl0LX6HiDE658Dhi9LADJXXVmxmFNNNVNp@nongnu.org
+X-Gm-Message-State: AOJu0YyPDP6P82DI2MILhWM/+RpoRNXgRUIl8s5L4PZTBeRebvRI7f/g
+ l2exdh5WJ7HeAlfc5gIdTTBNy+3C1koRuuBwblFQz3p9K3MXqgOAKoE3+w7aQPE5lOBOjUCztcd
+ FcV59s5DZ92+D1zBEMrPHEKgZi7zdJ2uZYi5+P7fYdPxGO3jeZojwUIxSicbUB6pxLxvz79MEpI
+ LoqjRxQ6l0uQ1UP088XwUEUFByJ6c=
+X-Gm-Gg: ASbGnctrMA73F7xOlMXyZCodeCClQ81SYIITm7FgGuFEHrgYebY2i6W/73tzi583ioY
+ J8yrqP0eETcYfkWzjy9RbLFBEbSXQjDgxCVw8/q8SI5cNG1HmG80AmdiXWGubzuMxL3E=
+X-Received: by 2002:a5d:6947:0:b0:3a0:8325:8090 with SMTP id
+ ffacd0b85a97d-3a0890ab7dfmr2775255f8f.18.1745936702583; 
+ Tue, 29 Apr 2025 07:25:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFn5K8ZiipJ8PpEcBMsEyVdUyMUHV60O+LocCKTeXg05u5JifTA54a9fkIAaxgd94jOLcBxt4BL4y0uSHEFFHg=
+X-Received: by 2002:a5d:6947:0:b0:3a0:8325:8090 with SMTP id
+ ffacd0b85a97d-3a0890ab7dfmr2775229f8f.18.1745936702204; Tue, 29 Apr 2025
+ 07:25:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250429085148.11876-1-philmd@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+References: <874iy85yx2.fsf@draig.linaro.org>
+ <eefb308b-5cd8-4b30-bc32-e37f601cb07b@linaro.org>
+In-Reply-To: <eefb308b-5cd8-4b30-bc32-e37f601cb07b@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 29 Apr 2025 16:24:49 +0200
+X-Gm-Features: ATxdqUEOSw3c3XC5DaIgbZ1zDMBwzK3d9WVx0Z-qRuyCunLOCOXiVxLVEoF-oUE
+Message-ID: <CABgObfYmm2RgFUuViDJA_cuqeCUOh_DV5Qar8YLnrbfYVV39VQ@mail.gmail.com>
+Subject: Re: KVM/QEMU Community call 29/04/2025 agenda items?
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Mark Burton <mburton@qti.qualcomm.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Markus Armbruster <armbru@redhat.com>, 
+ Alessandro Di Federico <ale@rev.ng>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, 
+ Brian Cain <bcain@quicinc.com>, "Daniel P. Berrange" <berrange@redhat.com>, 
+ Chao Peng <chao.p.peng@linux.intel.com>, Neo Jia <cjia@nvidia.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ "Wedgwood, Chris" <cw@f00f.org>, dhedde@kalrayinc.com,
+ Eric Blake <eblake@redhat.com>, 
+ eblot@rivosinc.com, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Auger Eric <eric.auger@redhat.com>, 
+ Felipe Franciosi <felipe@nutanix.com>, iggy@theiggy.com,
+ Warner Losh <imp@bsdimp.com>, 
+ Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
+ Jidong Xiao <jidong.xiao@gmail.com>, 
+ Jim Shu <jim.shu@sifive.com>, Joao Martins <joao.m.martins@oracle.com>, 
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Max Chou <max.chou@sifive.com>, 
+ Meirav Dean <mdean@redhat.com>, mimu@linux.vnet.ibm.com, 
+ "Ho, Nelson" <nelson.ho@windriver.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Bernhard Beschow <shentey@gmail.com>, 
+ Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ Wei Wang <wei.w.wang@intel.com>, 
+ z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ "Wu, Zhiyong" <zwu.kernel@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000ef93a10633eb903b"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,47 +135,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 29, 2025 at 10:51:48AM +0200, Philippe Mathieu-Daudé wrote:
-> VMSTATE_CPU() is only used in 4 places and doesn't provide
-> much, directly inline it using VMSTATE_STRUCT().
-> 
-> This removes the last COMPILING_PER_TARGET in "hw/core/cpu.h".
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  include/hw/core/cpu.h       | 12 ------------
->  target/alpha/machine.c      |  2 +-
->  target/hppa/machine.c       |  2 +-
->  target/microblaze/machine.c |  2 +-
->  target/openrisc/machine.c   |  2 +-
->  5 files changed, 4 insertions(+), 16 deletions(-)
-> 
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 12b2ff1f7d2..1e87f7d393e 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -1121,20 +1121,8 @@ bool cpu_exec_realizefn(CPUState *cpu, Error **errp);
->  void cpu_exec_unrealizefn(CPUState *cpu);
->  void cpu_exec_reset_hold(CPUState *cpu);
->  
-> -#ifdef COMPILING_PER_TARGET
-> -
->  extern const VMStateDescription vmstate_cpu_common;
->  
-> -#define VMSTATE_CPU() {                                                     \
-> -    .name = "parent_obj",                                                   \
-> -    .size = sizeof(CPUState),                                               \
-> -    .vmsd = &vmstate_cpu_common,                                            \
-> -    .flags = VMS_STRUCT,                                                    \
-> -    .offset = 0,                                                            \
-> -}
+--000000000000ef93a10633eb903b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Before looking at this I didn't notice there're a bunch of vmsds that are
-with version_id=0.. but looks like it's working all fine..
+Il lun 28 apr 2025, 14:58 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> h=
+a
+scritto:
 
-Acked-by: Peter Xu <peterx@redhat.com>
+> On 28/4/25 13:05, Alex Benn=C3=A9e wrote:
+> >
+> > Hi,
+> >
+> > The KVM/QEMU community call is at:
+> >
+> > https://meet.jit.si/kvmcallmeeting
+> > @
+> > 29/04/2025 14:00 UTC
+> >
+> > Are there any agenda items for the sync-up?
+> >
+>
+> For single binary / heterogeneous emulation, we'd like QAPI to
+> be "feature-agnostic". In particular, using the example of KVM
+> accelerator, whether a binary can run with it built-in or not
+> should be is irrelevant for management applications: they should
+> only check if it is used (enabled).
+>
+> The following series is adding KVM specific structures and commands:
+>
+> https://lore.kernel.org/qemu-devel/20250409082649.14733-2-zhao1.liu@intel=
+.com/
+> It could be interesting to discuss if this can be avoided. But this
+> can also be discussed on the mailing list (as it is still currently).
+>
 
--- 
-Peter Xu
+Would it be possible to just mark the commands as "do not autoregister" and
+then do the registration (for example) at machine/accelerator/CPU creation?
+
+I think qemu-ga already has a similar run-time registration model but I
+don't know why QEMU does not use it.
+
+Paolo
+
+>
+
+--000000000000ef93a10633eb903b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il lun 28 apr 2025, 14:58 Philip=
+pe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linar=
+o.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">On 28/4/25 13:05, Alex Benn=C3=A9e wrote:<br>
+&gt; <br>
+&gt; Hi,<br>
+&gt; <br>
+&gt; The KVM/QEMU community call is at:<br>
+&gt; <br>
+&gt; <a href=3D"https://meet.jit.si/kvmcallmeeting" rel=3D"noreferrer noref=
+errer" target=3D"_blank">https://meet.jit.si/kvmcallmeeting</a><br>
+&gt; @<br>
+&gt; 29/04/2025 14:00 UTC<br>
+&gt; <br>
+&gt; Are there any agenda items for the sync-up?<br>
+&gt; <br>
+<br>
+For single binary / heterogeneous emulation, we&#39;d like QAPI to<br>
+be &quot;feature-agnostic&quot;. In particular, using the example of KVM<br=
+>
+accelerator, whether a binary can run with it built-in or not<br>
+should be is irrelevant for management applications: they should<br>
+only check if it is used (enabled).<br>
+<br>
+The following series is adding KVM specific structures and commands:<br>
+<a href=3D"https://lore.kernel.org/qemu-devel/20250409082649.14733-2-zhao1.=
+liu@intel.com/" rel=3D"noreferrer noreferrer" target=3D"_blank">https://lor=
+e.kernel.org/qemu-devel/20250409082649.14733-2-zhao1.liu@intel.com/</a><br>
+It could be interesting to discuss if this can be avoided. But this<br>
+can also be discussed on the mailing list (as it is still currently).<br></=
+blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Would =
+it be possible to just mark the commands as &quot;do not autoregister&quot;=
+ and then do the registration (for example) at machine/accelerator/CPU crea=
+tion?</div><div dir=3D"auto"><br></div><div dir=3D"auto">I think qemu-ga al=
+ready has a similar run-time registration model but I don&#39;t know why QE=
+MU does not use it.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paol=
+o</div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">
+</blockquote></div></div></div>
+
+--000000000000ef93a10633eb903b--
 
 
