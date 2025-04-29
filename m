@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46DA1C369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 03:46:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3554C369CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 04:24:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9buK-0000jf-JW; Mon, 28 Apr 2025 23:45:20 -0400
+	id 1u9cVS-0004wz-Kv; Tue, 29 Apr 2025 00:23:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1u9buF-0000bu-1r
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 23:45:17 -0400
-Received: from mx2.zhaoxin.com ([61.152.208.219])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1u9buB-0006EM-71
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 23:45:14 -0400
-X-ASG-Debug-ID: 1745898301-1eb14e386c24b00001-jgbH7p
-Received: from ZXSHMBX1.zhaoxin.com (ZXSHMBX1.zhaoxin.com [10.28.252.163]) by
- mx2.zhaoxin.com with ESMTP id dFEAuEQj5ArlE9Jv (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Tue, 29 Apr 2025 11:45:01 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from ZXSHMBX3.zhaoxin.com (10.28.252.165) by ZXSHMBX1.zhaoxin.com
- (10.28.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Tue, 29 Apr
- 2025 11:45:01 +0800
-Received: from ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2]) by
- ZXSHMBX3.zhaoxin.com ([fe80::8cc5:5bc6:24ec:65f2%6]) with mapi id
- 15.01.2507.044; Tue, 29 Apr 2025 11:45:01 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from [192.168.31.91] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Tue, 29 Apr
- 2025 11:36:41 +0800
-Message-ID: <db6ae3bb-f4e5-4719-9beb-623fcff56af2@zhaoxin.com>
-Date: Tue, 29 Apr 2025 11:36:40 +0800
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1u9cVO-0004wp-Uu
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 00:23:39 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1u9cVL-0001eb-Ta
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 00:23:38 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-ac28e66c0e1so642598466b.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 21:23:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=jms.id.au; s=google; t=1745900614; x=1746505414; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=LAXlAtPGJwDWF60WvcD+w8wIUKAYpGZYJ6F44kFLy9M=;
+ b=Q0Qt8/GjYIK2VX9FE+ZIM5XN4DGbrXZX7ueGRs6oUGfF/qflD/XKPxrpD7OwMmEFf4
+ x/ki/AQ/oLlwn5GaifmUeVXmyeTALF8HpnAFkR1RKC4IawHiFZm60yl0c6Y0ju/xkzDd
+ 7RrvWalG7mNgG3yG6zYBwPtGu1vsSb9pDkSvI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745900614; x=1746505414;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LAXlAtPGJwDWF60WvcD+w8wIUKAYpGZYJ6F44kFLy9M=;
+ b=f9rkfKkaNKD3//G1SiHKhLz9ajEai+yZhirAtYtWc6bOIAc1LOCxqBec3YGDilxTo5
+ Mlukyn624z/4PUok648kth1TnXRNnwXUEWr+BDfF7u/QrTYgpW2EraCBGqLpNkIbYnSW
+ 9P2WiP8IdGtc077RuDX24CJ1JvBLmVW9vgg7A4UplIfvPPi4KjVE/wxdoZqEcFbDaw46
+ 8CjNh9ch0t3Gf7hXPxGgDloiiw8uvbywvZyE/2hm/rw0H6K5+8re3wHAqCET/df0f99L
+ hznH2xXXw5uzzu4ypzujyjpkcPFMABsgstMDzM4xLFd/SALuDq/bWECfW9Uzu4FIGZ9+
+ Iqvw==
+X-Gm-Message-State: AOJu0YwbwzEpXnYnuRETgHX5lbw6CC/ANtKODmz6I/pA33ZbMgEjoJP/
+ pVGBSIzgnjPJ8GCKgIXZ/6ecuJvFgYoQVg2Zyc/UGM0x0L40lWZ7XjQmwknYYNQdopQvPoF1irv
+ rjLPAfT3V+GgCXB9vC9W1jJIVMh4=
+X-Gm-Gg: ASbGncuRkFfduqKVlgM9JLJGvJFkJ37oU/nZqztcRBI0jkKDejAa6nGjLsEJcPrnWlq
+ xgGmbbDGbcPOmGifCxJPhvl71NDt3PR+qaYt2C3FfCy1cYCPqh90Wd3LbzuUhwJF8LxDTPEAYjs
+ /DzVI56PyU4LRX3G7mzs12RA==
+X-Google-Smtp-Source: AGHT+IFiHKeiP4AmG5wPoXM/i8I6fjVlE0D2oMFJECv40m+rhA976I/QxDqiYNG4SfIHxU/1PR4LnFnT6tRG7usTeFk=
+X-Received: by 2002:a17:907:1c18:b0:ac2:a42a:999b with SMTP id
+ a640c23a62f3a-acec4ed4b9emr189306966b.52.1745900613477; Mon, 28 Apr 2025
+ 21:23:33 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Subject: [Bug] "-ht" flag ignored under KVM - guest still reports HT
-To: Xiaoyao Li <xiaoyao.li@intel.com>, Zhao Liu <zhao1.liu@intel.com>, "Paolo
- Bonzini" <pbonzini@redhat.com>
-X-ASG-Orig-Subj: [Bug] "-ht" flag ignored under KVM - guest still reports HT
-CC: <yeeli@zhaoxin.com>, <cobechen@zhaoxin.com>, <ewanhai@zhaoxin.com>,
- <MaryFeng@zhaoxin.com>, <Runaguo@zhaoxin.com>, <Xanderchen@zhaoxin.com>,
- <Alansong@zhaoxin.com>, <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 4/29/2025 11:45:00 AM
-X-Barracuda-Connect: ZXSHMBX1.zhaoxin.com[10.28.252.163]
-X-Barracuda-Start-Time: 1745898301
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 1062
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.140645
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=61.152.208.219;
- envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250428073442.315770-1-pbonzini@redhat.com>
+ <20250428073442.315770-23-pbonzini@redhat.com>
+In-Reply-To: <20250428073442.315770-23-pbonzini@redhat.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 29 Apr 2025 13:53:20 +0930
+X-Gm-Features: ATxdqUGdM-eoruqhOibyokScm8W76ty5Sdz_iXLX49A8eKTQwuKZegk20Vcfplk
+Message-ID: <CACPK8Xer1VL-=eSwZ=4cLDu6SqohejLs28=_hp44W04Dz_S5ug@mail.gmail.com>
+Subject: Re: [PATCH 22/26] target/riscv: convert TT C906 to RISCVCPUDef
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com, dbarboza@ventanamicro.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=joel.stan@gmail.com; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,43 +90,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Community,
+On Mon, 28 Apr 2025 at 17:10, Paolo Bonzini <pbonzini@redhat.com> wrote:
 
-We have observed that the 'ht' feature bit cannot be disabled when QEMU runs 
-with KVM acceleration.
+I think a typo has snuck into the subject here. s/TT/Thead/
 
-qemu-system-x86_64 \
-   --enable-kvm \
-   -machine q35 \
-   -cpu host,-ht \
-   -smp 4 \
-   -m 4G \
-   -drive file=rootfs.img,format=raw \
-   -nographic \
-   -append 'console=ttyS0 root=/dev/sda rw'
-
-Because '-ht' is specified, the guest should expose no HT capability 
-(cpuid.1.edx[28] = 0), and /proc/cpuinfo shouldn't show HT feature, but we still 
-saw ht in linux guest when run 'cat /proc/cpuinfo'.
-
-XiaoYao mentioned that:
-
-It has been the behavior of QEMU since
-
-   commit 400281af34e5ee6aa9f5496b53d8f82c6fef9319
-   Author: Andre Przywara <andre.przywara@amd.com>
-   Date:   Wed Aug 19 15:42:42 2009 +0200
-
-     set CPUID bits to present cores and threads topology
-
-that we cannot remove HT CPUID bit from guest via "-cpu xxx,-ht" if the
-VM has >= 2 vcpus.
-
-I'd like to know whether there's a plan to address this issue, or if the current 
-behaviour is considered acceptable.
-
-Best regards,
-Ewan.
-
-
+>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  target/riscv/cpu.c | 61 +++++++++++++++++++++-------------------------
+>  1 file changed, 28 insertions(+), 33 deletions(-)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 5045ebc0b70..f3af9643af4 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -500,38 +500,6 @@ static void riscv_register_custom_csrs(RISCVCPU *cpu, const RISCVCSR *csr_list)
+>  #endif
+>
+>  #if defined(TARGET_RISCV64)
+> -static void rv64_thead_c906_cpu_init(Object *obj)
 
