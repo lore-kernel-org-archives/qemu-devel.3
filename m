@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F35E7C3ABA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D144BC369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:06:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9lZx-0001XA-Cu; Tue, 29 Apr 2025 10:04:58 -0400
+	id 1u9lZg-0001Gg-1s; Tue, 29 Apr 2025 10:04:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1u9lZj-0001Jq-Tm
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:04:45 -0400
+ id 1u9lZc-0001Ey-7b
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:04:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1u9lZg-0005aw-A2
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:04:43 -0400
+ id 1u9lZa-0005Zx-K2
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:04:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745935479;
+ s=mimecast20190719; t=1745935473;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3RD+T3s3ZLoFw7FsAGFcWoNvnyVuBj6hHjHenRueXpE=;
- b=X6lhLnZFuIOhyU0Q5YcGNrj1leHMHTAv/yStmXUoUkrqVx0xWgeU0uI3TOPw1pYM39b3oM
- m6i3ROzuFbjuW/2oGqOLBXoxDO0ssaKtxVor+RfEMyv1UZX4mW4Ho4bVAEQ1bOm9lMCDep
- Yj8ptFqKYIxcXDOA1iEUZfRCd/qlsDw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ElO/ngycnV01KSHZ2Wn33oP4orMzW8dezzCCc8O9yIc=;
+ b=GIQOxzEqXh0PXCKi7192ENs7oQoDw3gPXnc/xEgcxzFGZL3vS7xvdv4UynfRa27cB6jXbZ
+ 4jtitkS07TSoW+ufsRDW4AW0a0C3F5ncgDHYrNeY9tuZtHpsPlHmn7Z7lUC5KugOon5SyU
+ OaRnqY6EJgekYxRVK30UrXik1y7PXzc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-442-8LpxaMOtMiOa2gDBrpyNXA-1; Tue,
- 29 Apr 2025 10:03:30 -0400
-X-MC-Unique: 8LpxaMOtMiOa2gDBrpyNXA-1
-X-Mimecast-MFC-AGG-ID: 8LpxaMOtMiOa2gDBrpyNXA_1745935409
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-LqvBAay1MsuYgld8kADXKQ-1; Tue,
+ 29 Apr 2025 10:03:24 -0400
+X-MC-Unique: LqvBAay1MsuYgld8kADXKQ-1
+X-Mimecast-MFC-AGG-ID: LqvBAay1MsuYgld8kADXKQ_1745935403
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DF20F1955DDA; Tue, 29 Apr 2025 14:03:28 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D6CC119560A2; Tue, 29 Apr 2025 14:03:22 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.19])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8FB8E18001D5; Tue, 29 Apr 2025 14:03:26 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A25D01800378; Tue, 29 Apr 2025 14:03:21 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>,
  Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 3/6] qdev: make release_tpm() idempotent
-Date: Tue, 29 Apr 2025 18:03:03 +0400
-Message-ID: <20250429140306.190384-4-marcandre.lureau@redhat.com>
+Subject: [PATCH 2/6] qdev: make release_drive() idempotent
+Date: Tue, 29 Apr 2025 18:03:02 +0400
+Message-ID: <20250429140306.190384-3-marcandre.lureau@redhat.com>
 In-Reply-To: <20250429140306.190384-1-marcandre.lureau@redhat.com>
 References: <20250429140306.190384-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -94,18 +94,18 @@ So it can eventually be called multiple times safely.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- backends/tpm/tpm_util.c | 1 +
+ hw/core/qdev-properties-system.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/backends/tpm/tpm_util.c b/backends/tpm/tpm_util.c
-index f2d1739e33..16eab82cd2 100644
---- a/backends/tpm/tpm_util.c
-+++ b/backends/tpm/tpm_util.c
-@@ -72,6 +72,7 @@ static void release_tpm(Object *obj, const char *name, void *opaque)
- 
-     if (*be) {
-         tpm_backend_reset(*be);
-+        *be = NULL;
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index 8e11e6388b..b10835185c 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -231,6 +231,7 @@ static void release_drive(Object *obj, const char *name, void *opaque)
+     if (*ptr) {
+         blockdev_auto_del(*ptr);
+         blk_detach_dev(*ptr, dev);
++        *ptr = NULL;
      }
  }
  
