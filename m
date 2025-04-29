@@ -4,58 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FFC8C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 17:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CFF1C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 17:12:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9oUl-0008EK-O6; Tue, 29 Apr 2025 13:11:48 -0400
+	id 1u9oUr-0008GE-MY; Tue, 29 Apr 2025 13:11:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u9oUi-0008Do-KU; Tue, 29 Apr 2025 13:11:44 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u9oUf-0006bY-VC; Tue, 29 Apr 2025 13:11:44 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7E8A555D239;
- Tue, 29 Apr 2025 19:11:37 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id uWSJJS7hS5iB; Tue, 29 Apr 2025 19:11:35 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 19F0C55C592; Tue, 29 Apr 2025 19:11:35 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 17D17745682;
- Tue, 29 Apr 2025 19:11:35 +0200 (CEST)
-Date: Tue, 29 Apr 2025 19:11:35 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [RFC PATCH] target/ppc: Inline most of dcbz helper
-In-Reply-To: <87bjsf3s40.fsf@draig.linaro.org>
-Message-ID: <9438979e-b809-8209-bed0-7ac4b0c10912@eik.bme.hu>
-References: <20240701005939.5A0AF4E6000@zero.eik.bme.hu>
- <d3c6c417-20d9-a215-2a5c-86fa084b00fa@eik.bme.hu>
- <173c9111-e065-0dd5-c276-6bbc0351f9cc@eik.bme.hu>
- <2b969dcd-4a82-9086-803d-c52ea274fefb@eik.bme.hu>
- <e4fc537a-a15e-77dd-1167-32b12ee7a22d@eik.bme.hu>
- <87bjsf3s40.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1u9oUl-0008Eu-TA
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 13:11:48 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1u9oUj-0006cj-J9
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 13:11:47 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-223fd89d036so79043245ad.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 10:11:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1745946704; x=1746551504; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=6CaCUpqk+9FSZbThzpVRvIPtToFP6IsxF0amHL3mChY=;
+ b=fyltm2veyKnXqgZIdlu8RjRjYT3Axc8gUvICWCwqXo1CVZEAikjJAhzgLqUHCJkRhC
+ GcD6Y6jAJXcUrUCz5DpdWypmCOIsuza87PMRgm4m0wjKXlAynydzxdhmbscKs3CGnc8C
+ tcz9FGNiLXlSQhsSBko0PdPy56KyaWYK7NU4wcSMe7I4fiKgo31/TBLzEK/YUk4UiMQu
+ Ac87MkKnDgG2nesa7Wx/hl0eMRgNXivkN2Q8/R/KlKL/p3uRZWPckCErdAJZQR//W9mp
+ Y52dTBbICt+LrROi3qkzpLPINoJnTXeeLh0zORVYqadOYPaJLdLWttYuuRjgnUuCIozu
+ X8QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745946704; x=1746551504;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6CaCUpqk+9FSZbThzpVRvIPtToFP6IsxF0amHL3mChY=;
+ b=AumV23qZS/QGmj6rTcaAF0c6cjM5wv2WkhrFu8DsK6FbbpP5w2P5Y/ueHuj8vJyW5+
+ japMK50Q4x178bSTfCO2T4oo92Z+ofW5/EtjoOx2Nkgn7noslb6hsZLd4CzaH5+k3k+I
+ +KTDhgloCOn4ZoZxVFzzj+EMKDMtT9uAo4ZWh74Z66TFPCnnw3Oj2Y6IZBIPKbkSmUo7
+ x+6T/weJbhopyljO3q3YeHHsEs/gHlxWzta5FoqaCipZP5NaqjNDvRs6nW9US08DWeqW
+ M03E1iwLbtuvkKmcs/XJxIJKuC7E9LArN8gfBwncpmXfYqIxkn8DUfCrU7fJJ5xMgBqz
+ GlIg==
+X-Gm-Message-State: AOJu0YwHIqPiDCtwPviDheHGRtJZEKBuWiouI9EZVXDOJ/pecr47Ka6N
+ E2dislHSfcjmgajFh3TsicBws1W9tuiXYR3mMy+QFZmMhL1su3Rarchh1A1+KWg=
+X-Gm-Gg: ASbGncuxPae6nTe7/o4aL1OfnbfllpT972XPIoeN8UBsXx5x+VANiSYzfyHEsQgV24a
+ GZSKkgw9eFp2WeU87+niOZAe144h7WIeolgfyzRapdJDtv1ZXcihholUQajfM9cIxkmAGk5F0Kv
+ EBWOgE79NFoJoqMWljZDgBCjRVb+MilRiTf7SkCk3V9P95c5qRFhMNtiYGmMGuY2wtXMriRDXId
+ Qd40uEwwn+WCmuSMgdnyfiCapV3y1IBl/+kU0Pi131Oj1MfcEW44+WGPlR5G3WPcukeFShjTDs7
+ SzBJVhJeCpmBJ1yrczMn0RrLvigBxkckM9eet9W0PZIJ3BFl+uN1ivc=
+X-Google-Smtp-Source: AGHT+IFMEBJtPgNb1DpLL8WYgeOjwjmFLqaAfM3eJ2gHJDyyIGTJs3VNmn/Q1POVvRR51jLv4WkgAg==
+X-Received: by 2002:a17:903:19c6:b0:227:eb61:34b8 with SMTP id
+ d9443c01a7336-22df34e9148mr2491075ad.25.1745946703845; 
+ Tue, 29 Apr 2025 10:11:43 -0700 (PDT)
+Received: from [192.168.68.110] ([152.234.125.33])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22db4dbe58csm105647575ad.97.2025.04.29.10.11.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Apr 2025 10:11:43 -0700 (PDT)
+Message-ID: <45b9b66d-1aa7-47da-9458-04ab726d5aae@ventanamicro.com>
+Date: Tue, 29 Apr 2025 14:11:39 -0300
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1258299402-1745946695=:85983"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 9/9] hw/riscv/virt.c: remove 'long' casts in fmt strings
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: Joel Stanley <joel@jms.id.au>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
+References: <20250423110630.2249904-1-dbarboza@ventanamicro.com>
+ <20250423110630.2249904-10-dbarboza@ventanamicro.com>
+ <CACPK8Xei9L_82YV7+wPmTacEh2MNLFticOEny_6kSM9miCAt2w@mail.gmail.com>
+ <d404d535-fc04-43ac-a7a7-2f216cad993c@ventanamicro.com>
+Content-Language: en-US
+In-Reply-To: <d404d535-fc04-43ac-a7a7-2f216cad993c@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,103 +104,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---3866299591-1258299402-1745946695=:85983
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
 
-On Tue, 29 Apr 2025, Alex Bennée wrote:
-> BALATON Zoltan <balaton@eik.bme.hu> writes:
->> On Mon, 28 Apr 2025, BALATON Zoltan wrote:
->>> On Mon, 28 Apr 2025, BALATON Zoltan wrote:
->>>> On Thu, 24 Apr 2025, BALATON Zoltan wrote:
->>>>>> The test case I've used came out of a discussion about very slow
->>>>>> access to VRAM of a graphics card passed through with vfio the reason
->>>>>> for which is still not clear but it was already known that dcbz is
->>>>>> often used by MacOS and AmigaOS for clearing memory and to avoid
->>>>>> reading values about to be overwritten which is faster on real CPU but
->>>>>> was found to be slower on QEMU. The optimised copy routines were
->>>>>> posted here:
-> <snip>
+On 4/29/25 9:40 AM, Daniel Henrique Barboza wrote:
+> Joel,
+> 
+> I'll make these changes in this patch to be consistent with what we've
+> been discussing:
+> 
+> - change addr to hwaddr
+> - use HWADDR_PRIx instead of PRIx64
+> 
+> i.e. this diff:
+> 
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index 1eae84db15..0020d8f404 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -303,12 +303,13 @@ static void create_fdt_socket_cpus(RISCVVirtState *s, int socket,
+>   static void create_fdt_socket_memory(RISCVVirtState *s, int socket)
+>   {
+>       g_autofree char *mem_name = NULL;
+> -    uint64_t addr, size;
+> +    hwaddr addr;
+> +    uint64_t size;
+>       MachineState *ms = MACHINE(s);
+> 
+>       addr = s->memmap[VIRT_DRAM].base + riscv_socket_mem_offset(ms, socket);
+>       size = riscv_socket_mem_size(ms, socket);
+> -    mem_name = g_strdup_printf("/memory@%"PRIx64, addr);
+> +    mem_name = g_strdup_printf("/memory@%"HWADDR_PRIx, addr);
+>       qemu_fdt_add_subnode(ms->fdt, mem_name);
+>       qemu_fdt_setprop_cells(ms->fdt, mem_name, "reg",
+>           addr >> 32, addr, size >> 32, size);
+> 
+> 
+> I did this change and applied your "hw/riscv/virt: device tree reg cleanups" series on top
+> of it, and there are no conflicts. No change needed in your side.
+
+It seems I was wrong. The v2 will conflict with your patch 03. I think a rebase from
+your series can't be avoided ...
+
+Daniel
+
+> 
+> 
+> Thanks,
+> 
+> Daniel
+> 
+> 
+> 
+> On 4/24/25 6:41 AM, Joel Stanley wrote:
+>> On Wed, 23 Apr 2025 at 20:39, Daniel Henrique Barboza
+>> <dbarboza@ventanamicro.com> wrote:
+>>>
+>>> We can avoid the 'long' casts by using PRIx64 and HWADDR_PRIx on the fmt
+>>> strings for uint64_t and hwaddr types.
+>>>
+>>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>>> ---
+>>>   hw/riscv/virt.c | 29 +++++++++++++++--------------
+>>>   1 file changed, 15 insertions(+), 14 deletions(-)
+>>>
+>>> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+>>> index 036a0a9bfb..075c035f25 100644
+>>> --- a/hw/riscv/virt.c
+>>> +++ b/hw/riscv/virt.c
+>>> @@ -309,7 +309,7 @@ static void create_fdt_socket_memory(RISCVVirtState *s, int socket)
+>>>
+>>>       addr = s->memmap[VIRT_DRAM].base + riscv_socket_mem_offset(ms, socket);
+>>>       size = riscv_socket_mem_size(ms, socket);
+>>> -    mem_name = g_strdup_printf("/memory@%lx", (long)addr);
+>>> +    mem_name = g_strdup_printf("/memory@%"PRIx64, addr);
 >>
->> I have tried profiling the dst in real card vfio vram with dcbz case
->> (with 100 iterations instead of 10000 in above tests) but I'm not sure
->> I understand the results. vperm and dcbz show up but not too high. Can
->> somebody explain what is happening here and where the overhead likely
->> comes from? Here is the profile result I got:
+>> I wondered why this wasn't a HWADDR_PRIx.
 >>
->> Samples: 104K of event 'cycles:Pu', Event count (approx.): 122371086557
->>   Children      Self  Command          Shared Object            Symbol
->> -   99.44%     0.95%  qemu-system-ppc  qemu-system-ppc          [.] cpu_exec_loop
->>    - 98.49% cpu_exec_loop
->>       - 98.48% cpu_tb_exec
->>          - 90.95% 0x7f4e705d8f15
->>               helper_ldub_mmu
->>               do_ld_mmio_beN
->>             - cpu_io_recompile
->
-> This looks like the dbz instructions are being used to clear device
-> memory and tripping over the can_do_io check (normally the translator
-> tries to ensure all device access is at the end of a block).
+>> addr (and NodeInfo::node_mem?) could be a hwaddr? That would make
+>> everything more consistent.
+>>
+>> Cheers,
+>>
+>> Joel
+> 
 
-If you look at the benchmark results I posted earlier in this thread in 
-https://lists.nongnu.org/archive/html/qemu-ppc/2025-04/msg00326.html
-I also tried using dcba instead of dcbz in the CopyFromVRAM* functions but 
-that only helped very little so not sure it's because of dcbz. Then I 
-thought it might be VPERM but the NoAltivec variants are also only a 
-little faster. It could be that using 64 bit access instead of 128 bit 
-(the NoAltivec functions use FPU regs) makes it slower while avoiding 
-VPERM makes it faster which cancel each other but the profile also shows 
-VPERM not high and somebody else also tested this with -cpu g3 and only 
-got 1% faster result so maybe it's also not primarily because of VPERM but 
-there's a bigger overhead before these..
-
-> You could try ending the block on dbz instructions and seeing if that
-> helps. Normally I would expect the helper to be more efficient as it can
-> probe the whole address range once and then use host insns to blat the
-> memory.
-
-Maybe I could try that if I can do that the same way as done in 
-io_prepare.
-
->>                - 45.79% cpu_loop_exit_noexc
->>                   - cpu_loop_exit
->>                     __longjmp_chk
->>                     cpu_exec_setjmp
->>                   - cpu_exec_loop
->>                      - 45.78% cpu_tb_exec
->>                           42.35% 0x7f4e6f3f0000
->>                         - 0.72% 0x7f4e99f37037
->>                              helper_VPERM
->>                         - 0.68% 0x7f4e99f3716d
->>                              helper_VPERM
->>                - 45.16% rr_cpu_thread_fn
->
-> Hmm you seem to be running in icount mode here for some reason.
-
-No idea why. I had no such options and complied without --enable-debug and 
-nothing special on QEMU command just defaults options. How can I check if 
-icount is enabled? Can profiling with perf tool interfere? I thought that 
-only reads CPU performance counters and does not attach to the process 
-otherwise.
-
-Regards,
-BALATON Zoltan
-
->>                   - 45.16% tcg_cpu_exec
->>                      - 45.15% cpu_exec
->>                         - 45.15% cpu_exec_setjmp
->>                            - cpu_exec_loop
->>                               - 45.14% cpu_tb_exec
->>                                    42.08% 0x7f4e6f3f0000
->>                                  - 0.72% 0x7f4e99f37037
->>                                       helper_VPERM
->>                                  - 0.67% 0x7f4e99f3716d
->>                                       helper_VPERM
-> <snip>
->
->
---3866299591-1258299402-1745946695=:85983--
 
