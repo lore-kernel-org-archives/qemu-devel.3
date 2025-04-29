@@ -4,87 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37674C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 10:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC762C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 10:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9iAJ-0007ys-74; Tue, 29 Apr 2025 06:26:15 -0400
+	id 1u9iCt-0004Ot-GW; Tue, 29 Apr 2025 06:28:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1u9iAF-0007sn-E2
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 06:26:11 -0400
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1u9iCs-0004Lh-45
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 06:28:54 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1u9iAC-0006UZ-Bz
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 06:26:10 -0400
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e72cc45d99cso5098988276.3
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 03:26:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1u9iCq-0006jG-Bs
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 06:28:53 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-acb2faa9f55so727362866b.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 03:28:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745922366; x=1746527166; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1745922530; x=1746527330; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZFu3+tYtMxIGGm84GUWIPNJD6pNOJ4l8XUwZe3/snfg=;
- b=o/RxLzd+riiEJ3G/1Mbmi0HztHfseayIOVUrXxqv9Bn8+KGsrIsQproKFk98ea24PL
- iP3yNmtvNFO152f5/Xh9W4oHcczu9qHLip7RrkZeD6l9tZFYwo7RtscafAFNKkybSehP
- RhJzTIOTiZBtl90t/5Q7I8kdqtGYk4ejG1tJpxQjpDJo/KaVEmbursNIPJyIorrm0olP
- S3ZSV/aC3z3aRPhN71zDO+ItPjAhFJJEIZi6zxN3IjzjZFiVNiv8ZF3PxSExqq60nsr0
- kqAq5TMNNWipa+iGBYTK5bxHcLex/x+H0Be2JDSwAsGqFlR+CWPWtsb+EpI18k5rRt8Z
- Ulgw==
+ bh=4rOWVjl/1DXK0gZtSfaoRm6OeA5/IKVvn80lwHtioKQ=;
+ b=gEsNQZz2UthWLMvwszqqYmpqX9514LN60MaifcauTKV+yXaIYkBRcE71+j3fHG6D6p
+ 9dIA2wOsvdu3IhFQzZnX8DrdrlSjj3TCX/948E6LpgsQbBTxMjSslyJtDMi43IgBpexa
+ PNWj9aQwnwpvtzWXB9rdtulprGe2G9OnNNYTwbDIiVkZTHhl6xFNWoEGGQEEA96OGdqC
+ VBtSAB8DXaM6BoxrYzrQ2xNcVn9iom44MJiKVM5j+td3CNWRrBjuQGvkPgAw4xOLSqsr
+ prQkmuaAJTcJ6zpapzO5kKES/yqYsq3QIpvPyUb/xF4UTggTdytS6rIC3Kx1+99p2/vG
+ LB/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745922366; x=1746527166;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZFu3+tYtMxIGGm84GUWIPNJD6pNOJ4l8XUwZe3/snfg=;
- b=b4ghugFnX70LD8MdEAuDGPQmQWDlWts1QP8fDLRyIhlBiFilnHmTbnqSXLujEzcXXT
- sRGYKdAKE78TXVMM+Jnx1wwja2UK+7AsT7LsZZBC3gcGBKyJaFuXUaq8SWwSlqTCGYbL
- EpuzF3/iPLNxCgM1a6+nVc80eHq8OOxtXWTKuhiuGozbq0FDYK0uh6g2mfaFCJeg7xtp
- bkh8+RaV8cwh384rkPP4SmYORaMsXmi9Hj/btAoKi1GHE3BwZZv8RqJMHTqxAv8f1xTx
- gFhBgPoMYh5CCcUhmAYI0MWfkm1+W30WTItJfikkJmwh6r5+XnLWe/aKpObnVsQs5KFX
- mBiw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXcsE2T6bEkRLsWaN+ho7IDiyiLinTc/WGFPUNWWhqcTa9CGXadMbX9msw2/wiyB8nPqV57rMbc7bqz@nongnu.org
-X-Gm-Message-State: AOJu0Ywl9g9IfcJ60Hp7SJum2egJvsDTSEHbidG+OHNc/TQ7VTt5loS6
- nDZOkfnYJI4zM0wOZIb514hGLEIhyxHvXL5mTQDkFRElgzmkov7FvTh0axfOK1vib9UccMRQOeX
- 2KAH/EuaEoykI6fl2dytKqnxmdne3oGJ6XJks+A==
-X-Gm-Gg: ASbGncsxdGZu5rhYA/cY1WiAIOlvLbg9Q60CC/AQuN4dCXrxmxHF+JfJAwT5bxH54M4
- l99r1Iq5kfKtvw09ot/GdOfA6n/mtnaVvk99Da8uxJgEb4/5M2hJvZEUlpek0Odaab+b/RNY3Ao
- w+pNhuxIwBc6bNN8A9buod+8w=
-X-Google-Smtp-Source: AGHT+IG2L16BxXQcB0XI194mSVjvEIOfp0VQJgFWCNuFDfwXsbqs8V6E8d56LDbXusirUj64wa6i/ogyRIpgrBwu7dM=
-X-Received: by 2002:a05:6902:114a:b0:e73:3279:9fd0 with SMTP id
- 3f1490d57ef6-e733279baa6mr11153123276.9.1745922366504; Tue, 29 Apr 2025
- 03:26:06 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1745922530; x=1746527330;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4rOWVjl/1DXK0gZtSfaoRm6OeA5/IKVvn80lwHtioKQ=;
+ b=FmYJjo5I6gQPgHxzDCyqyVf5OkMuMF69twYE5ywRwjqHhc8hF0x9nwiW2SrffzJLbb
+ iPtGYeiik/vVppqXN2VCg0R4HGM0OD8u+b/JO9KAF/DRSGw0YerAe63qCdComMeW6sOH
+ wk9mL6/ISSYmS83g10J5iFsG0AmySxampWNmmjBOo7tZMpBWAnUxqp07bCJCizd4zKv5
+ aLQP0W8eWnT+26Ile5aj30/SPtEhdlK97A0vpe+Zv4DAIfwtTDDQrEunZbAzDeZdo5D1
+ C58y8qrF6912xYqBZSxIWBtYCVUzlT02Ln1DqWPXwPTe25jIqNBNQ2v/UJ2gLuORHNCW
+ GJZw==
+X-Gm-Message-State: AOJu0Yz/wESw+Tc3oosjMn3/hxDFLqeK/OQpv/If6zLDJHhgyuW+m8SJ
+ 7P7NA81j/rp007PWI6GtZd/JsATnQaGz1JCL6fE2udayVdmAT++sapwaWMdt95M=
+X-Gm-Gg: ASbGncvjG22Sp52bSAn5zwINdpUJ+ostLcWoqOs2THKkm8mt+Doisl/5mCLUKrBiSyT
+ aQBh1L0hKghmLGOkNeU/1JLdDesucxUJThOvWFIEOi3gPMTyp6MOGYeLMhWr4efdx/Ma+Xz997B
+ qH91Nu5yHaMlUInoUTHXAnUuVPeMbwliGF4YSiZlP6Uw75DscqnTg5/NRQdLiAv2++niCedWUJj
+ 82MPxdBxJ2DQL+vxsuf3AEgRPWVuQQxOzOsnCoSueXJMzB3zdXKZrMLY7Y05aAp2WmyMjzAqTBT
+ TSmSLsJhe0coxRXJSw4CBGMgsKRcbWoGdWJY1aUIcCc=
+X-Google-Smtp-Source: AGHT+IEBZUnAyyYT54h37+wjYFYJg0lSj5oXqRABO3XpWGJh41kqGVVuJO5FVEJvP6bxnQODDW7u2Q==
+X-Received: by 2002:a17:907:6d27:b0:ac4:169:3664 with SMTP id
+ a640c23a62f3a-ace8493c5e0mr1133416666b.33.1745922530486; 
+ Tue, 29 Apr 2025 03:28:50 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ace6ed49c2fsm752361666b.124.2025.04.29.03.28.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Apr 2025 03:28:49 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1BEF45F863;
+ Tue, 29 Apr 2025 11:28:49 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ kvm@vger.kernel.org,  Paolo Bonzini <pbonzini@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  qemu-arm@nongnu.org,
+ anjo@rev.ng, richard.henderson@linaro.org
+Subject: Re: [PATCH 05/13] target/arm/kvm_arm: copy definitions from kvm
+ headers
+In-Reply-To: <20250429050010.971128-6-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Mon, 28 Apr 2025 22:00:02 -0700")
+References: <20250429050010.971128-1-pierrick.bouvier@linaro.org>
+ <20250429050010.971128-6-pierrick.bouvier@linaro.org>
+User-Agent: mu4e 1.12.9; emacs 30.1
+Date: Tue, 29 Apr 2025 11:28:49 +0100
+Message-ID: <87msbz45y6.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20250317142819.900029-1-peter.maydell@linaro.org>
- <20250317142819.900029-7-peter.maydell@linaro.org>
- <ca432cc8-31a6-4b22-81e7-4c620a9f199f@linaro.org>
-In-Reply-To: <ca432cc8-31a6-4b22-81e7-4c620a9f199f@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 29 Apr 2025 11:25:55 +0100
-X-Gm-Features: ATxdqUEN5hyxAiqqXPxSLzhZ41T7DLEwqGwN1hsr0Z9Pfxv9qN5BxP_kQxyS2tQ
-Message-ID: <CAFEAcA-MYHyvgOs7PMj-36d_BJEybNcWzrjCSmK7io+hNJ7n1w@mail.gmail.com>
-Subject: Re: [PATCH for-10.1 6/9] target/arm: Present AArch64 gdbstub based on
- ARM_FEATURE_AARCH64
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,65 +107,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 25 Apr 2025 at 15:42, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+
+> "linux/kvm.h" is not included for code compiled without
+> COMPILING_PER_TARGET, and headers are different depending architecture
+> (arm, arm64).
+> Thus we need to manually expose some definitions that will
+> be used by target/arm, ensuring they are the same for arm amd aarch64.
 >
-> Hi Peter,
+> As well, we must but prudent to not redefine things if code is already
+> including linux/kvm.h, thus the #ifndef COMPILING_PER_TARGET guard.
 >
-> On 17/3/25 15:28, Peter Maydell wrote:
-> > Currently we provide an AArch64 gdbstub for CPUs which are
-> > TYPE_AARCH64_CPU, and an AArch32 gdbstub for those which are only
-> > TYPE_ARM_CPU.  This mostly does the right thing, except in the
-> > corner case of KVM with -cpu host,aarch64=3Doff.  That produces a CPU
-> > which is TYPE_AARCH64_CPU but which has ARM_FEATURE_AARCH64 removed
-> > and which to the guest is in AArch32 mode.
-> >
-> > Now we have moved all the handling of AArch64-vs-AArch32 gdbstub
-> > behaviour into TYPE_ARM_CPU we can change the condition we use for
-> > whether to select the AArch64 gdbstub to look at ARM_FEATURE_AARCH64.
-> > This will mean that we now correctly provide an AArch32 gdbstub for
-> > aarch64=3Doff CPUs.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >   target/arm/internals.h | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/target/arm/internals.h b/target/arm/internals.h
-> > index a14c269fa5a..a18d87fa28b 100644
-> > --- a/target/arm/internals.h
-> > +++ b/target/arm/internals.h
-> > @@ -1694,7 +1694,7 @@ void aarch64_add_sme_properties(Object *obj);
-> >   /* Return true if the gdbstub is presenting an AArch64 CPU */
-> >   static inline bool arm_gdbstub_is_aarch64(ARMCPU *cpu)
-> >   {
-> > -    return object_dynamic_cast(OBJECT(cpu), TYPE_AARCH64_CPU);
-> > +    return arm_feature(&cpu->env, ARM_FEATURE_AARCH64);
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>  target/arm/kvm_arm.h | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
 >
-> Unfortunately this doesn't work well: while a Aarch64 CPU is of type
-> TYPE_AARCH64_CPU right after being instantiated (not yet QOM realized),
-> the features are only finalized during arm_cpu_instance_init():
+> diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+> index c8ddf8beb2e..eedd081064c 100644
+> --- a/target/arm/kvm_arm.h
+> +++ b/target/arm/kvm_arm.h
+> @@ -16,6 +16,21 @@
+>  #define KVM_ARM_VGIC_V2   (1 << 0)
+>  #define KVM_ARM_VGIC_V3   (1 << 1)
+>=20=20
+> +#ifndef COMPILING_PER_TARGET
+> +
+> +/* we copy those definitions from asm-arm and asm-aarch64, as they are t=
+he same
+> + * for both architectures */
+> +#define KVM_ARM_IRQ_CPU_IRQ 0
+> +#define KVM_ARM_IRQ_CPU_FIQ 1
+> +#define KVM_ARM_IRQ_TYPE_CPU 0
+> +typedef unsigned int __u32;
+> +struct kvm_vcpu_init {
+> +    __u32 target;
+> +    __u32 features[7];
+> +};
+> +
+> +#endif /* COMPILING_PER_TARGET */
+> +
 
-Thanks for finding this. The problem is that gdb_init_cpu() is
-being called as part of the base-class instance init, so the
-CPU object isn't fully instantiated yet -- it hasn't even run
-the aarch64_max_initfn() function yet. So gdb_init_cpu() ends
-up calling CPU-specific methods on a half-instantiated object,
-which is why it crashes.
+I'm not keen on the duplication. It seems to be the only reason we have
+struct kvm_vcpu_init is for kvm_arm_create_scratch_host_vcpu() where the
+only *external* user passes in a NULL.
 
-But we do need to move things so they happen after realize,
-because up til realize the CPU properties might be changed
-(otherwise we give the wrong answer for the aarch64=3Doff case).
-Except that part of the CPU subclass realize involves calling
-gdb_register_coprocessor(), which needs to happen after we've
-set up the core regs for gdb.
+If kvm_arm_create_scratch_host_vcpu() is made internal static to
+target/arm/kvm.c which will should always include the real linux headers
+you just need a QMP helper.
 
-I think that moving the call to cpu_exec_realizefn() would
-work (this gets called near the start of realize, so before
-the subclass realize decides to add more gdb registers).
-But I'll have to check whether that would be wrong for
-some other architecture, and maybe there's a neater way
-to do this.
+For the IRQ types is this just a sign of target/arm/cpu.c needing
+splitting into TCG and KVM bits?
 
--- PMM
+
+>  /**
+>   * kvm_arm_register_device:
+>   * @mr: memory region for this device
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
