@@ -4,99 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76942C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 16:29:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0FC1C3ABA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 16:32:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9nos-0001VQ-3C; Tue, 29 Apr 2025 12:28:30 -0400
+	id 1u9nsk-0004Mv-Kt; Tue, 29 Apr 2025 12:32:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1u9noo-0001SP-Hg
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:28:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1u9nol-0003cB-Ci
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:28:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745944101;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=l50atMCuK0a/t6+OSsjycsY+3SVS0yqhWVsTT+GbMRY=;
- b=RS7dLxtzMrvPyM/UhKCxc6n11nXhg5GqB5fpfIWsS5UJ5JEeXlO5nr1IKH6zh0ISaGgIOI
- FJ1QpYaptzHyGOkbv2Os8K8Z+cM3hdqTwSk7w0c6G2JcGI4z3PoIRHs4sQqucNj7lMGq8w
- jHJOxmBdNRW+XtkOPtOSt328jkafojE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-531-dIZbPOfSO5WaUwa-3eUGlQ-1; Tue, 29 Apr 2025 12:27:12 -0400
-X-MC-Unique: dIZbPOfSO5WaUwa-3eUGlQ-1
-X-Mimecast-MFC-AGG-ID: dIZbPOfSO5WaUwa-3eUGlQ_1745944031
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43ceb011ea5so35363565e9.2
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 09:27:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1u9nsa-0004Dy-Af
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:32:20 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1u9nsX-0004ep-TE
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:32:20 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-39c13fa05ebso4129532f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 09:32:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745944335; x=1746549135; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UaBqPwU8v0bxHExIzn1AypHbV/LUoB1l5R7CUYyKSz0=;
+ b=AeupGfTevFAgxKw5j7rLzkdZ+akiZj0cpBAXGeso3pHlRCCa1Fw3Oe3t1+w62ofgqT
+ bZRCt3MMO5ET3aPauxZi/mKrtNZfKSyQBKuQHeDApXg5eXA34k5dukilrJJTc+DRQPwg
+ wFwpuJkVDXrIhOpsH/PgKz4GpnncN2hSeUbtFIzG23ZC+ZTqQs4AisYmZYqor8h/CeJp
+ ZunCXO5cLZOkTeRyIBdGjmq0wqm4oy7jYz8ugs3cv0AViMimoGhTxnLWk4tTC/96epdT
+ j6AYE44LMsuGwIJGxTFIpoSxRX/lrFjP6CO5wpesrtd4aRAyvc3sdo5FwcjiZZDsyWNX
+ MSDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745944031; x=1746548831;
- h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l50atMCuK0a/t6+OSsjycsY+3SVS0yqhWVsTT+GbMRY=;
- b=UJsyQMEmZftp1oTL4eaN1X9klApKZIT8ixQWaj1JUTXu9/5p/A/jxngUgnnX/xw89q
- k/diaGC7bRS7MhFRVpGups3bOnnSATbP7LrmnR23OGisiQ0ceA4QjvP0Qu7/PMgDPZgZ
- JMHQpDLwnF9uAOg7lgnLd+1tQ+DjNUEUqmXd2699DseNnL1z7aga61d2jJohYetX5Hit
- vcCMR/M3tEpdH3QAuFxfe24/NzUNVjsjS9vDrcVjOjb8tz8AJEYBgLM7oQUjNDz88/gN
- 6OIZm5IdCgQD+gRL58K5T3XBES6SoW9bfEzvvP2m6ar8ar1SQ/nyXzea5DOZTmnng8+/
- qEDA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXiMvfJCJ94HKZ+oqoAkx2yFSTBR6D4sC2+tYNef0vyNVfqlHW/aAfjWQbPbruP0C4WjAQqLK1+TqeV@nongnu.org
-X-Gm-Message-State: AOJu0YxlVXuG6+tyeHwORnTjQ+0eGvacIk+5ByVh5sCB80Na6UvOMgwx
- XN11fHjq7M6LaJYotW2D5Z71+1Al+L3QPddC+Yqx8oHaw+9zuQ7O4rG5dkBYZztdZ+GrrVbzQrD
- jgom8aBRZKRkFPnxqAmxz5NQ60ZmQAYaJbQw3GIDnYQ8HlyHY1g6K
-X-Gm-Gg: ASbGncssoBLB9O1sDeO6PwkQI4PD6AXnisXPg8JyQiMXZvA0hnT36WBrPqUko4iTPjJ
- 79YT5GBr5XozdAuhO2lxRQ7HS3XEbX4gtk+4ONCFoUgnLyDpm2OD9sN5FVFFsLnjMfea6XvzmJw
- qENC7PBtzjLzm/djIVqx+rBKfempzsEAOcF+1RZB0LcoGuUN+9IWbDMAW8HPTnjIhc25PbF8WKL
- 1uiPokyoxRk0ofE+fAMtQDu1ehgpRHt1eYsUFCipDn9ke8Nb7B0b0oVHEJtrRIzmE+ErF01A0tC
- fUGlspeoVcoFbDR2BqN6Jw19t7+MOWA4i+dKAU88nG9bbR3+uAnMW0G4C47/
-X-Received: by 2002:a05:600c:4f8f:b0:43c:fffc:7886 with SMTP id
- 5b1f17b1804b1-440ab7aececmr117307555e9.8.1745944031419; 
- Tue, 29 Apr 2025 09:27:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuUSzhkKqv0CBZmumvxFVHUHd6z0kkIg62q2bNYagDKXU1xaQJccG/XSf0llsSSRxcQQTkcg==
-X-Received: by 2002:a05:600c:4f8f:b0:43c:fffc:7886 with SMTP id
- 5b1f17b1804b1-440ab7aececmr117307275e9.8.1745944031090; 
- Tue, 29 Apr 2025 09:27:11 -0700 (PDT)
-Received: from rh (p200300f6af1bce00e6fe5f11c0a7f4a1.dip0.t-ipconnect.de.
- [2003:f6:af1b:ce00:e6fe:5f11:c0a7:f4a1])
+ d=1e100.net; s=20230601; t=1745944335; x=1746549135;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UaBqPwU8v0bxHExIzn1AypHbV/LUoB1l5R7CUYyKSz0=;
+ b=kDtktWRRDbpetM23F15usIP5TLAUejxHIsPE/XBXaTHGffLPqP/Jg0L5aa9hnzxMLs
+ N2XTgSBnTov51q/UwUR6Minn3c/BI53lHXZ/DEDsQZV9Pv0nmH46MwGHKb7skhE5bVi6
+ d/ImCB/UeJH9WqeO8p3+G9f8q4LBPnqYPd7eX7Ly6hEfCUy90HK6FTtAXYs5E/0gTrTu
+ hYSU0Gz+9B2giMI0p2SUxrv/09Gs4vxfAuqBT0d49YiJ7Tdeo/CO2XrS2vRWBOZXhrC/
+ Qld/LkVHYkX66f2ILtK8DOnMaFiTkwQJGAiaYxURrP3ChFXHn7QqwVJ10pow58bZg3EP
+ 8pDw==
+X-Gm-Message-State: AOJu0Yxe7SadpSmddR7g9Pip+xK4jokkNETfiDKM7ML0mvudBePG+l5U
+ 4P5UASKIZLssJpaaRoSeT8TWahWqDK0ffHyjOWKNhOlNTRzVIQbBx3D+pP89Yt67pre06lJvFG4
+ Z
+X-Gm-Gg: ASbGnctKu3bagMlF0J8xgh3MDMeO4C/tu2WsUWEDpdVLmGM0ODcgkXFb/Tq0lHSJlf/
+ lzJDz8mtyclju3KpmqECC86AC63Yz0aMSxdmkeHcrib142amXgjzwC1T9TGxCYQpwA9fbgIjejO
+ gViw787rWIea/lYt+e/qwb+jhyAg8u92T1tVTDQuVyeg4jnbuc08Q9aKo/ED3g7xvVgFgvRVGSG
+ utqPaht3VKsZzUdmZa/1tjfahZeEgXgQunZPlM1c84Sx+Vwirizb9Ee39we+BQlbDoDRb6zBRbq
+ n3B2J0TyrhtJW9gcIEU5LM4Ps8lTeCjBGO/+JZdQop9mrXg=
+X-Google-Smtp-Source: AGHT+IGKMYVW2Eqn/ecIuO8bJLhGT77wSlS5j4yB2A/+FVp5LJZbHtRxjggADKA3pVvZyff8ZJ/5bw==
+X-Received: by 2002:a05:6000:4201:b0:3a0:8826:d9df with SMTP id
+ ffacd0b85a97d-3a08f7b8472mr10499f8f.49.1745944334505; 
+ Tue, 29 Apr 2025 09:32:14 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-440a53044b3sm160787565e9.15.2025.04.29.09.27.10
+ ffacd0b85a97d-3a073ca4cbcsm14176326f8f.25.2025.04.29.09.32.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 09:27:10 -0700 (PDT)
-Date: Tue, 29 Apr 2025 18:27:09 +0200 (CEST)
-From: Sebastian Ott <sebott@redhat.com>
-To: Cornelia Huck <cohuck@redhat.com>
-cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org, 
- richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org, 
- oliver.upton@linux.dev, shameerali.kolothum.thodi@huawei.com, 
- armbru@redhat.com, berrange@redhat.com, abologna@redhat.com, 
- jdenemar@redhat.com, agraf@csgraf.de, shahuang@redhat.com, 
- mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
-Subject: Re: [PATCH v3 05/10] arm/cpu: accessors for writable id registers
-In-Reply-To: <20250414163849.321857-6-cohuck@redhat.com>
-Message-ID: <bebefcad-d9db-a2b7-ab69-8eed34b9e63d@redhat.com>
-References: <20250414163849.321857-1-cohuck@redhat.com>
- <20250414163849.321857-6-cohuck@redhat.com>
+ Tue, 29 Apr 2025 09:32:13 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH 0/2] docs: Avoid duplicate labels with a sphinx extn
+Date: Tue, 29 Apr 2025 17:32:10 +0100
+Message-ID: <20250429163212.618953-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,52 +97,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 14 Apr 2025, Cornelia Huck wrote:
-> Also add conversion between the different indices.
->
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> ---
-> target/arm/cpu.h | 18 ++++++++++++++++++
-> 1 file changed, 18 insertions(+)
->
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index bbee7ff2414a..775a8aebc5d3 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -876,6 +876,13 @@ typedef struct IdRegMap {
->     uint64_t regs[NR_ID_REGS];
-> } IdRegMap;
->
-> +#define ARM_FEATURE_ID_RANGE_IDX(op0, op1, crn, crm, op2)               \
-> +        ({                                                              \
-> +                __u64 __op1 = (op1) & 3;                                \
-> +                __op1 -= (__op1 == 3);                                  \
-> +                (__op1 << 6 | ((crm) & 7) << 3 | (op2));                \
-> +        })
-> +
-> /* REG is ID_XXX */
-> #define FIELD_DP64_IDREG(ISAR, REG, FIELD, VALUE)                       \
->     ({                                                                  \
-> @@ -923,6 +930,17 @@ typedef struct IdRegMap {
->         i_->idregs[REG ## _EL1_IDX];                                    \
->     })
->
-> +#define GET_IDREG_WRITABLE(MAP, REG)                                  \
-> +    ({                                                                \
-> +    const IdRegMap *m_ = (MAP);                                       \
-> +    int index = ARM_FEATURE_ID_RANGE_IDX((sysreg >> 14) & 0x0000c000, \
-> +                                         (sysreg >> 11) & 0x00003800, \
-> +                                         (sysreg >> 7) & 0x00000780,  \
-> +                                         (sysreg >> 3) & 0x00000078,  \
-> +                                         sysreg & 0x00000007);        \
-> +    m_->regs[index];                                                  \
-> +    })
-> +
+Sphinx requires that labels within documents are unique across the
+whole manual.  This is because the "create a hyperlink" directive
+specifies only the name of the label, not a filename+label.  Some
+Sphinx versions will warn about duplicate labels, but even if there
+is no warning there is still an ambiguity and no guarantee that the
+hyperlink will be created to the intended target.
 
-s/sysreg/REG/
+For QEMU this is awkward, because we have various .rst.inc fragments
+which we include into multiple .rst files.  If you define a label in
+the .rst.inc file then it will be a duplicate label.  We have mostly
+worked around this by not putting labels into those .rst.inc files,
+or by adding "insert a label" functionality into the hxtool extension
+(see commit 1eeb432a953b0 "doc/sphinx/hxtool.py: add optional label
+argument to SRST directive"). However, we let one into the codebase
+without initially noticing, in commit 7f6314427e ("docs/devel: add a
+codebase section"), because not all versions of Sphinx warn about
+the duplicate labels.
 
-Also GET_IDREG_WRITABLE doesn't seem to be used in this series.
+This patchset resolves the problem by implementing a small Sphinx
+extension. The extension lets you write in a .rst.inc:
 
-Sebastian
+  .. uniquelabel:: mylabel
+
+and it will be as if you had written:
+
+  .. _foo/bar-mylabel
+
+where foo/bar.rst is the top level document that includes the
+.rst.inc file.
+
+Patch 1 is the extension; patch 2 is the use of it to fix the
+problem in qemu-block-drivers.rst.inc. (Concretely, the result is
+that instead of an ambiguous "nbd" label, we now have separate
+"system/images-nbd" and "system/qemu-block-drivers-nbd" labels.
+We want to link to the former, because the latter is in the
+manpage, not the proper HTML manual.)
+
+This patchset is a bit RFC quality -- I have not tested it
+super thoroughly, and the extension itself is written based on
+our existing ones, because I'm neither a Python nor a Sphinx
+expert. I figured I'd send it out to see if people agreed that
+it was the right way to solve this problem.
+
+(In theory we could remove the SRST(label) functionality from
+the hxtool extension and have the .hx files use uniquelabel.
+Not sure that's worthwhile at this point.)
+
+PS: I find that our extensions are confused about whether they
+should set "required_arguments = 1" or "required_argument = 1";
+probably the latter are all bugs that happen to have no bad
+side effects...
+
+thanks
+-- PMM
+
+Peter Maydell (2):
+  docs: Create a uniquelabel Sphinx extension
+  docs: Use uniquelabel in qemu-block-drivers.rst.inc
+
+ docs/conf.py                           |  1 +
+ docs/devel/codebase.rst                |  2 +-
+ docs/sphinx/uniquelabel.py             | 74 ++++++++++++++++++++++++++
+ docs/system/qemu-block-drivers.rst.inc |  2 +-
+ 4 files changed, 77 insertions(+), 2 deletions(-)
+ create mode 100644 docs/sphinx/uniquelabel.py
+
+-- 
+2.43.0
 
 
