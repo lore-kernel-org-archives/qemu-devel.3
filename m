@@ -4,55 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1303DC369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A11C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 15:00:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9m8U-0004lX-Jv; Tue, 29 Apr 2025 10:40:39 -0400
+	id 1u9mQd-0004aL-Lm; Tue, 29 Apr 2025 10:59:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u9m8S-0004lI-Io; Tue, 29 Apr 2025 10:40:36 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1u9m8Q-0005Ej-2b; Tue, 29 Apr 2025 10:40:36 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E56D655D23D;
- Tue, 29 Apr 2025 16:40:30 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id KavJHoGJKmo3; Tue, 29 Apr 2025 16:40:28 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id EC18C55D23C; Tue, 29 Apr 2025 16:40:28 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EA2D1745683;
- Tue, 29 Apr 2025 16:40:28 +0200 (CEST)
-Date: Tue, 29 Apr 2025 16:40:28 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Richard Henderson <richard.henderson@linaro.org>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [RFC PATCH] target/ppc: Inline most of dcbz helper
-In-Reply-To: <ded56ee3-25bb-4ffd-98e4-2f47c500c88d@linaro.org>
-Message-ID: <164d86d5-f17a-1f89-d973-c3e56255195d@eik.bme.hu>
-References: <20240701005939.5A0AF4E6000@zero.eik.bme.hu>
- <d3c6c417-20d9-a215-2a5c-86fa084b00fa@eik.bme.hu>
- <173c9111-e065-0dd5-c276-6bbc0351f9cc@eik.bme.hu>
- <2b969dcd-4a82-9086-803d-c52ea274fefb@eik.bme.hu>
- <e4fc537a-a15e-77dd-1167-32b12ee7a22d@eik.bme.hu>
- <ded56ee3-25bb-4ffd-98e4-2f47c500c88d@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9mQc-0004XV-1j
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:59:22 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9mQa-0008GZ-6J
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:59:21 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43ce71582e9so46095695e9.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 07:59:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745938758; x=1746543558; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=HMhmQHLH8iV90bKlA7RRenTXjvbapnut7sKnApZGq/c=;
+ b=ztpsxTOqU1dVtS2cbZt9RYdE3PTOM3k8e4/SHLlzC6MuauUyA1QvGZ6Lwr5YH8Xv7M
+ b/PN8xI6pMEgsH0cfR9q0H/LT1hNv4jrmOcI8Ct4D2aHSyVkjmhmyAZOVmGtRXaeY9kk
+ JFL0kWu4lWDCJeyjaM0tTRNNOOrXtYRFu/g4exvYAKoscPbBdGOmrtQiG9ODvaH/SFSP
+ d6Dg1uwd+IOFTLtPPIOeNO+5s5b8RFxQVL3WL7NepRqcTyRFGmQXDO2JB+fMjVMfUT5x
+ yrkrvZIhcmf/dvyNTmWcAEuumQHXZ/RyIpTf9eCoMiG5SZBPlOYGKTiT1SNqBbRIHBK6
+ RDzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745938758; x=1746543558;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HMhmQHLH8iV90bKlA7RRenTXjvbapnut7sKnApZGq/c=;
+ b=bhwqMjt6mmCY0Mru8xz/aP4CMGlwW2lT91yfJSEKIdQVbqHIHpUnZA9DiFfYqEuvl2
+ NaWT1PUAV9CKuvQyquXgb12hchQHTCm1QpA8BCDvcwzLLXXhqFUaSDWvepvxlocxcrOC
+ dYEEKwb58ZwnxXy1EjgNaq7f7R9XPnyisVW0s/f2gIZe/g9/xISAp60k9YJzdzMhyEzX
+ utimx6+PLiYgUctfHTrLihEu4170J3Da41yaBnnL977pLn2WfbF4xsD5MgUxNR7XZ3Qs
+ suf8INSwhkdGqB+pdCGIzuXtoaxRRh+JlXJ5I78wP/RkcUdifcTcQNgJU3kdKueXh1iy
+ Hkhg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUzk4iByi0/wUz86f9HG23nNiGAeKutsj/yenkqVdIbvhgptxxdII7rZ9IeVSWpXtGDG9bpASnojweJ@nongnu.org
+X-Gm-Message-State: AOJu0YxVzHvQWMM+dNR5NLdfVw5F1MeluFASOxXfvnwPxdJSLwtSIi5N
+ p6b9UMl6DQLr3WBTn/KcyiJbu751PhtHQGL+//gqcuMCif5PriaZBH12Xk6KP3E=
+X-Gm-Gg: ASbGnctciP2BMMqK2TwCOZso+YRi+iGm+rV6k+km4dwXKuQi+9V3mRPbi0kOdjx4NpH
+ jJMhBkOMVrL/fXiwq5qnMiBkS38WrvCaD26tpbBCbgE9hewKum2jU3YQh5JlkGd1BmknaF4Leqk
+ RQXcYGsdxvtBnDytUu7i3N1QQFnneTGsWb8ZNXyskjnHBbkzsF8YaghNaRid2OwxE6wRRk0B0d2
+ KNO2S9PZolsWuUi5jzy+2ApEU6r1CIF0ImS/mr+/Ab1d/TwMCFyozlU/ZXCmQBWmRZXaSaJcLQa
+ 0Vu67S1Fo9p5ADkaxf+LBW7eqt/mZMrIERUPWXHWfQGIXojckEjy13HZvkwAoexjLZSgPOfnV32
+ Bw7tC+LvzbrXHLg==
+X-Google-Smtp-Source: AGHT+IFBC8MwQqZfUE2JQVkITXAWw82smszcDtWrkFX9lAOZGsorTVUtA1y98Y0SrLjIb75IOnt/mg==
+X-Received: by 2002:a5d:5f91:0:b0:391:29f:4f87 with SMTP id
+ ffacd0b85a97d-3a0894a393emr3644098f8f.49.1745938758147; 
+ Tue, 29 Apr 2025 07:59:18 -0700 (PDT)
+Received: from [192.168.69.226] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a073c8d67esm14339507f8f.17.2025.04.29.07.59.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Apr 2025 07:59:17 -0700 (PDT)
+Message-ID: <fd4e6766-c5f3-4e5e-8eeb-5d2296ba440a@linaro.org>
+Date: Tue, 29 Apr 2025 16:59:16 +0200
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1978539636-1745937628=:35167"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/7] target/microblaze: Use 'obj' in DEVICE() casts in
+ mb_cpu_initfn()
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
+References: <20250429132200.605611-1-peter.maydell@linaro.org>
+ <20250429132200.605611-2-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250429132200.605611-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,61 +104,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 29/4/25 15:21, Peter Maydell wrote:
+> We're about to make a change that removes the only other use
+> of the 'cpu' local variable in mb_cpu_initfn(); since the
+> DEVICE() casts work fine with the Object*, use that instead,
+> so that we can remove the local variable when we make the
+> following change.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/microblaze/cpu.c | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
 
---3866299591-1978539636-1745937628=:35167
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-On Mon, 28 Apr 2025, Richard Henderson wrote:
-> On 4/28/25 06:26, BALATON Zoltan wrote:
->> I have tried profiling the dst in real card vfio vram with dcbz case (with 
->> 100 iterations instead of 10000 in above tests) but I'm not sure I 
->> understand the results. vperm and dcbz show up but not too high. Can 
->> somebody explain what is happening here and where the overhead likely comes 
->> from? Here is the profile result I got:
->> 
->> Samples: 104K of event 'cycles:Pu', Event count (approx.): 122371086557
->>    Children      Self  Command          Shared Object            Symbol
->> -   99.44%     0.95%  qemu-system-ppc  qemu-system-ppc          [.] 
->> cpu_exec_loop
->>     - 98.49% cpu_exec_loop
->>        - 98.48% cpu_tb_exec
->>           - 90.95% 0x7f4e705d8f15
->>                helper_ldub_mmu
->>                do_ld_mmio_beN
->>              - cpu_io_recompile
->>                 - 45.79% cpu_loop_exit_noexc
->
-> I think the real problem is the number of loop exits due to i/o.  If I'm 
-> reading this rightly, 45% of execution is in cpu_io_recompile.
->
-> I/O can only happen as the last insn of a translation block.
-
-I'm not sure I understand this. A comment above cpu_io_recompile says "In 
-deterministic execution mode, instructions doing device I/Os must be at 
-the end of the TB." Is that wrong? Otherwise shouldn't this only apply if 
-running with icount or something like that?
-
-> When we detect 
-> that it has happened in the middle of a translation block, we abort the 
-> block, compile a new one, and restart execution.
-
-Where does that happen? The calls of cpu_io_recompile in this case seem to 
-come from io_prepare which is called from do_ld16_mmio_beN if 
-(!cpu->neg.can_do_io) but I don't see how can_do_io is set.
-
-> Where this becomes a bottleneck is when this same translation block is in a 
-> loop.  Exactly this case of memset/memcpy of VRAM.  This could be addressed 
-> by invalidating the previous translation block and creating a new one which 
-> always ends with the i/o.
-
-And where to do that? cpu_io_recompile just exits the TB but what 
-generates the new TB? I need some more clues to understands how to do 
-this.
-
-Regards,
-BALATON Zoltan
---3866299591-1978539636-1745937628=:35167--
 
