@@ -4,95 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64613C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 15:28:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718A6C3ABA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 15:30:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9msS-0007k5-Ag; Tue, 29 Apr 2025 11:28:08 -0400
+	id 1u9muL-00019M-RH; Tue, 29 Apr 2025 11:30:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9msC-0007Ux-Or
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:27:52 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9muJ-00017q-RA
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:30:03 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9msA-0005AM-8D
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:27:51 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5e677f59438so9673359a12.2
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 08:27:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9muI-0005TX-4d
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:30:03 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43d07ca6a80so24204395e9.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 08:30:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745940465; x=1746545265; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/RuN7hWbYlGEh6Q9xsPeBHljyCxObtRUIbgSvnDDCD4=;
- b=cLSh15MXJgmuuytgCycYbIK7RidGfFQEP0kCxzfaFWEtqHDLy37o2ukxqmj7L7W/2g
- niYcKYul2Vwsxpyu+Y7bUQAPlTWEYC9Nk3Px6OSOAUc/oWRyZQ+CGcd6xbXVqN+iyOBe
- wbYdx2PTeNi8gIDXrjMVsYaWOL2AY32TImDwqb8u8B4xu8wQStkGvk3cJgEoQEehXEKO
- yYB+5q+e2tnsw4JY1tQG5MwYQI2C3U9JQXlI3toknSiQhNmo1hvdFwmiV5nm5PEdBtgu
- 7X1+cJNeIFICRwwvHtl/zwbyCDMD8pKYza7Hj1+VmDgI9+ONdxKRxTI4i+65Dqd5iNM8
- mGnQ==
+ d=linaro.org; s=google; t=1745940600; x=1746545400; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dcR/48vA20vSoICEE1sIu/cVLt9/pwqBLkytLSHavfk=;
+ b=xkf1sbUCzQApcjfstSDLpJG7SLAJWMbFYkDHuvhNBb3NpfSe5VS6IbV2Zk5qIhHmeB
+ 5bRGpAff2QFJNUpf4ZsnTi32xpcPv/nWImbeD6eWtTkf3iUT09dMGPz1T+KDesy8Hjve
+ B/D3eHLx+zBYqJVVh8pFi8gXZBHxtpyiQ5fhqIqeoZDjbqDtsgMCYvCQTLSUFWzekF9Y
+ Loj82jOgAL+TFJQ8xtQKna3QZCtgo4E6KfmpTC4Ip0lfQdIwLZp+u4x+rzlS7PYS2PII
+ j/DgJV/kKkULpB8ARuKvs6tPmXFHaNJoZZyiSFv4U+475wIw3XHCrY1ehKzAb+onyKvf
+ Lwlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745940465; x=1746545265;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/RuN7hWbYlGEh6Q9xsPeBHljyCxObtRUIbgSvnDDCD4=;
- b=ZWOH8VpvXcLoroKjNfE81UGeU3IvxrhRoTGqBOFWYxz+ZTbIaYZQoF6eKqR3hAnC7J
- s/lTdeAxWvkcBL8Aip00VcpB5cscQpmbpT2VZGQDaMqdkgS+3v8xQ/HUyuqO8mpT8hS6
- kjj2NKKN/BxUdUIpUZCQ07gZKb8mLxkwaeLg/7LPGGgQ3vZUjm0uSVOhwKev+1uj4pXc
- bIwdpmJspVubgOwGlDO+x4eF+1HY6vqb3kYx12HFGi4EcmPEPArcvKUYRDiM82x5fz7D
- kwhrJqbWTsW2ClRPripMXmBzTpJKSQFlCFVQuIRkhPmPnhPuDixiexOwy9fM02w+G7UE
- ODfg==
-X-Gm-Message-State: AOJu0YxqsUc4z+T2Iz3vM3ZzlJhI4HKxi4mUnF1LpkIixvC+mo+d+LZo
- KDVQB3HnqvVjOfeuXSI5Onhh7bV25aUvOELRnaJJkd2x2xghGES3/OijezUuD8JMZfeg9d96JJ0
- LCCw=
-X-Gm-Gg: ASbGnctkSHbnHrQ5VvKvaF5luzfdru4ns6TmyA5LGnzXpU3OaCjqqGNgwgbRYTAz+5z
- +umw3ghheEaX3NyhMtYk24FL/B+oV70Lw1SklZACIFNNHcWWCFHfbDcLfQSyf+wlwKWlapUP7Ti
- JAGARBiImnXDGjx3voAb6eCe6cBfKysQED9QW6BH/G9pQGMZ4GWcEltf9v9A4JNhuaNw9UJjnzm
- IZQlEqidc4WYv6pQfzwMu4YkRDW0/LQEWGZsTRVm0uq5iqICOJdUHE0FAgxg5S9yDtr5rQ4leW4
- jsAYgBeME1iBn/oIyE5bfz3Gf5HFuJhWmAwFFFV8jm8=
-X-Google-Smtp-Source: AGHT+IGHuzfvhcmdR/Z5KUUboYQ765ihs4SB0scTktklvL9k4RhDPSP9cx840UFmsMtKOO/pBAO48g==
-X-Received: by 2002:a17:907:9495:b0:aca:cac7:28e2 with SMTP id
- a640c23a62f3a-acec4eb540bmr385308666b.40.1745940464693; 
- Tue, 29 Apr 2025 08:27:44 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ace6e4e726dsm793594366b.40.2025.04.29.08.27.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 08:27:44 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3CEAD5F863;
- Tue, 29 Apr 2025 16:27:43 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org,  qemu-ppc@nongnu.org,  Nicholas Piggin
- <npiggin@gmail.com>,  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [RFC PATCH] target/ppc: Inline most of dcbz helper
-In-Reply-To: <e4fc537a-a15e-77dd-1167-32b12ee7a22d@eik.bme.hu> (BALATON
- Zoltan's message of "Mon, 28 Apr 2025 15:26:07 +0200 (CEST)")
-References: <20240701005939.5A0AF4E6000@zero.eik.bme.hu>
- <d3c6c417-20d9-a215-2a5c-86fa084b00fa@eik.bme.hu>
- <173c9111-e065-0dd5-c276-6bbc0351f9cc@eik.bme.hu>
- <2b969dcd-4a82-9086-803d-c52ea274fefb@eik.bme.hu>
- <e4fc537a-a15e-77dd-1167-32b12ee7a22d@eik.bme.hu>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Tue, 29 Apr 2025 16:27:43 +0100
-Message-ID: <87bjsf3s40.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1745940600; x=1746545400;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dcR/48vA20vSoICEE1sIu/cVLt9/pwqBLkytLSHavfk=;
+ b=XIU7lyTax2FuqMWZZd/DPqXFJUKnHFqAxvWRcbFZvOApNXdK0DBIUEnAgHtfH7vf1e
+ l9XC+aDrR7QpekoCLBmbBHs+tZazvsNpyiMX3OJbKMf07rVTu181Hq1WlTBlMArReldn
+ SJF1vJdUM6cty6oZG8YjYp7DD6cHUP2+t2lAShwWi1N7K42JmS7A2Duqs+oBzfp3y5Zc
+ yspM/5sPXlLstd83ChYzI1wBT2sg0YnuM08/a3UmtQXf3x0/t7LzxtUlcWqRhyFWKYrO
+ /3nH8KmIUiQKLok0LLYAHdAO8o1+lRpc2ufdb8kLXfqtkRIFyC0oxgQHDz0gi8oJTs+2
+ LJpw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDA6mB305Y7v8bvZ6wocXY9bPCFM0YrTJ0txqgLekxHlyHoLwPMoHjZKpQ+diE6FQbJHVef3k100Cs@nongnu.org
+X-Gm-Message-State: AOJu0YwjP/EGGpRz1LsmOBB/3DOWVjoMxs3fATCYM5M2iYtGa/e2Y2Br
+ WDkou+poWOA9VKzL/uzC3kJxTCTrxA9nb41DgNOiD9hNgyWFnaQy2UjzotHrHIk=
+X-Gm-Gg: ASbGnct1UEZiXS9qhh5XTSkNz4andoGcH/RypXpues0TL0jV9U7HxwsMsgWKaxaUbq/
+ 6ZqlRvzXYXw8YmxAqHcA8FVWgnwzgyRiW5URY5SNsRlnXrHFr3tceRKD1Xu27igPg6Ar08nkdFW
+ rPyCrwqPI0l9UGBNcxm70ygs/HJM6oAcjIeqop+thYpzNCKi8xqq5NwVffRxTojwdGFnQubOI6m
+ okIXpIt2CFuyUrTHNMjuaqUU8KzKgBhyESfBgVOCqadmpfuLJdGUqq4CPcFaPbSwuVzFzI3z+lt
+ U24OJJQF/Do/cbaR+2vbP6xPrwkynzafgGBeqF10X3kfjOJ0MPzD7wXpFlxjksQvE2JLgLyC0WZ
+ 1HDFAh6V7dEE+JQ==
+X-Google-Smtp-Source: AGHT+IEp9oMJW5zthKuAsxN07dLTNQ5ohwpv8PRYKRVC1dsV0LMR4kZkZ4GNRSlX8YLQ+67XKx71qg==
+X-Received: by 2002:a05:600c:4f8f:b0:43d:7588:667b with SMTP id
+ 5b1f17b1804b1-440ab7b5f6emr132826025e9.10.1745940599837; 
+ Tue, 29 Apr 2025 08:29:59 -0700 (PDT)
+Received: from [192.168.69.226] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-440a536a1d1sm162858425e9.26.2025.04.29.08.29.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Apr 2025 08:29:59 -0700 (PDT)
+Message-ID: <57a4f76e-43b8-484e-9a7f-5cf85374a177@linaro.org>
+Date: Tue, 29 Apr 2025 17:29:58 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] tests/vmstate-static-checker-data: Remove old dump
+ files
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>, John Snow <jsnow@redhat.com>
+References: <20250429152141.294380-1-thuth@redhat.com>
+ <20250429152141.294380-2-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250429152141.294380-2-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,74 +104,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-BALATON Zoltan <balaton@eik.bme.hu> writes:
+On 29/4/25 17:21, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> These files reference QEMU machine types that have already been
+> removed and thus are of no use anymore.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   MAINTAINERS                                  |    1 -
+>   tests/vmstate-static-checker-data/dump1.json | 1163 ------------------
+>   tests/vmstate-static-checker-data/dump2.json |  968 ---------------
+>   3 files changed, 2132 deletions(-)
+>   delete mode 100644 tests/vmstate-static-checker-data/dump1.json
+>   delete mode 100644 tests/vmstate-static-checker-data/dump2.json
 
-> On Mon, 28 Apr 2025, BALATON Zoltan wrote:
->> On Mon, 28 Apr 2025, BALATON Zoltan wrote:
->>> On Thu, 24 Apr 2025, BALATON Zoltan wrote:
->>>>> The test case I've used came out of a discussion about very slow
->>>>> access to VRAM of a graphics card passed through with vfio the reason
->>>>> for which is still not clear but it was already known that dcbz is
->>>>> often used by MacOS and AmigaOS for clearing memory and to avoid
->>>>> reading values about to be overwritten which is faster on real CPU but
->>>>> was found to be slower on QEMU. The optimised copy routines were
->>>>> posted here:
-<snip>
->
-> I have tried profiling the dst in real card vfio vram with dcbz case
-> (with 100 iterations instead of 10000 in above tests) but I'm not sure
-> I understand the results. vperm and dcbz show up but not too high. Can
-> somebody explain what is happening here and where the overhead likely
-> comes from? Here is the profile result I got:
->
-> Samples: 104K of event 'cycles:Pu', Event count (approx.): 122371086557
->   Children      Self  Command          Shared Object            Symbol
-> -   99.44%     0.95%  qemu-system-ppc  qemu-system-ppc          [.] cpu_e=
-xec_loop
->    - 98.49% cpu_exec_loop
->       - 98.48% cpu_tb_exec
->          - 90.95% 0x7f4e705d8f15
->               helper_ldub_mmu
->               do_ld_mmio_beN
->             - cpu_io_recompile
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This looks like the dbz instructions are being used to clear device
-memory and tripping over the can_do_io check (normally the translator
-tries to ensure all device access is at the end of a block).
-
-You could try ending the block on dbz instructions and seeing if that
-helps. Normally I would expect the helper to be more efficient as it can
-probe the whole address range once and then use host insns to blat the
-memory.
-
->                - 45.79% cpu_loop_exit_noexc
->                   - cpu_loop_exit
->                     __longjmp_chk
->                     cpu_exec_setjmp
->                   - cpu_exec_loop
->                      - 45.78% cpu_tb_exec
->                           42.35% 0x7f4e6f3f0000
->                         - 0.72% 0x7f4e99f37037
->                              helper_VPERM
->                         - 0.68% 0x7f4e99f3716d
->                              helper_VPERM
->                - 45.16% rr_cpu_thread_fn
-
-Hmm you seem to be running in icount mode here for some reason.
-
->                   - 45.16% tcg_cpu_exec
->                      - 45.15% cpu_exec
->                         - 45.15% cpu_exec_setjmp
->                            - cpu_exec_loop
->                               - 45.14% cpu_tb_exec
->                                    42.08% 0x7f4e6f3f0000
->                                  - 0.72% 0x7f4e99f37037
->                                       helper_VPERM
->                                  - 0.67% 0x7f4e99f3716d
->                                       helper_VPERM
-<snip>
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
