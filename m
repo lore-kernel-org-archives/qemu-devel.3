@@ -4,95 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4126FC369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 13:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1BACC369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 13:49:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9l2F-0004dy-Q7; Tue, 29 Apr 2025 09:30:07 -0400
+	id 1u9lJu-00061Y-4E; Tue, 29 Apr 2025 09:48:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=LSAW=XP=kaod.org=clg@ozlabs.org>)
- id 1u9l27-0004W0-B0; Tue, 29 Apr 2025 09:29:59 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9lJo-000608-KV
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 09:48:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=LSAW=XP=kaod.org=clg@ozlabs.org>)
- id 1u9l24-0007AY-HT; Tue, 29 Apr 2025 09:29:58 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Zn1Q731q7z4x5g;
- Tue, 29 Apr 2025 23:29:51 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Zn1Q54NcVz4wyl;
- Tue, 29 Apr 2025 23:29:49 +1000 (AEST)
-Message-ID: <13dbdee6-17f9-4fba-a8b2-ff4688496807@kaod.org>
-Date: Tue, 29 Apr 2025 15:29:46 +0200
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9lJl-0002Ia-TB
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 09:48:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745934491;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mQCnz7nH2NBHwXyEMcPzFnTV157wqVq2fmiuHV8ef1c=;
+ b=dMkw3oBT8+6a0pUV5+Vr3uyZrK8eTdkFRVdDIFaSadXmpUagfnzdyQmFg7wNIuVuOIiOnt
+ yz3QzmysCQAivXhqYrvrgsqT57jZrj0FyHQMtCOQAVmxYSvZ1qzg7auMGVqAnVxuU8z9Hq
+ tREJofIv2qzlK/+5f/8Q1fbQrB1mPSg=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-457-adcprLFrMfqx0bqejxtQrg-1; Tue, 29 Apr 2025 09:48:03 -0400
+X-MC-Unique: adcprLFrMfqx0bqejxtQrg-1
+X-Mimecast-MFC-AGG-ID: adcprLFrMfqx0bqejxtQrg_1745934483
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6e8feea216aso120227096d6.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 06:48:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745934483; x=1746539283;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mQCnz7nH2NBHwXyEMcPzFnTV157wqVq2fmiuHV8ef1c=;
+ b=jJT7YGEWAcLK/qQw/O7rYL6NQ5l5U37uoy07aDW5HU5Nnk6kasOlcC+5eCQbJCbwDS
+ stajUqb97uVbm1tjg9zjSC5aGZYeiJ81Rf2wfcjKTKiYXHIDml7WWWHZRY/aScN7usqE
+ AgP/VUISx0492GuqM1LSVUGxAqrUqh4hXMOhhmcqLKaHvE8HNr1uMtvmr7wzv6WXEING
+ ySBwH14xS8wbePPd2MBY5gjZPhZOhAQGOGRAWea3KwGsTZM9N5RUdii2srsG1F3SjwyM
+ sxZx8uHKOqtic8b/liiR2IcUX9QPVBg04GDUXd+HH1PqWpZ67GQP6NuL7p8J+giKY49w
+ hS0w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVyQaHkrCZN2mRInn76jK5pjJyrjSI272XfB3Ytor6RRTjwePWVAA4n1CZ6XzXMy3AH+ZIswe555Eys@nongnu.org
+X-Gm-Message-State: AOJu0Yy3pMgnfUBwtyMVXODm9oPAUl6HhuzZhLqKrjxW1a8FI+dmk3UM
+ lgsdeD8N4KaaN8MmwoakCc1ZJkwRHiQMe6tFIo1fh21SlJoz/MzWXO5MMQ2IFBxiplleh1+U55t
+ JYL9CGT/8vmBhAnUXU0mHi0w6Jxj30u46Sv+NIyl5UgkAtLYhDhNu
+X-Gm-Gg: ASbGnctxAJDwLAaVXhqbnuvoMBYxt+5q7/Ovp0ZcAAN2CKUAtPU1ScPeaEJB/M9zDUa
+ IXeEm09YN/TA1NbAFdGC9jwhVWSteJQgZXlLExSEnnlW5o1Qec7nM8GmsLT6CBztIUACFU6+iOf
+ exkwRizMTDj4EfbEMR1rW2mLm4S+gTSFhvNu0VzDt6MbD5+gooIqf8rJWlZBHqoFo7xBkse4r7Q
+ /tM41uo2+ueeHxDBlSZScRfaBuZiWibaO3bHW/J1a2FIQMGy14SQuK2UbbrRsCvWOFQEzufs7UM
+ JF4=
+X-Received: by 2002:a05:622a:6090:b0:476:ae71:eabf with SMTP id
+ d75a77b69052e-4885a1123bdmr52684201cf.21.1745934482820; 
+ Tue, 29 Apr 2025 06:48:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH2Xad4n6QAP6B+Ijwpjm+ltGAVvEGB/wBXlJZxEG2LkiBDM+1Kpx/mM1JNmg5aKcb+V1opDQ==
+X-Received: by 2002:a05:622a:6090:b0:476:ae71:eabf with SMTP id
+ d75a77b69052e-4885a1123bdmr52683881cf.21.1745934482485; 
+ Tue, 29 Apr 2025 06:48:02 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-47e9eaf264dsm80411381cf.10.2025.04.29.06.48.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Apr 2025 06:48:01 -0700 (PDT)
+Date: Tue, 29 Apr 2025 09:47:59 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ berrange@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v9 0/7] Allow to enable multifd and postcopy migration
+ together
+Message-ID: <aBDYj3k83_W6ihlF@x1.local>
+References: <20250411114534.3370816-1-ppandit@redhat.com>
+ <87ecxteym0.fsf@suse.de> <87bjswfeis.fsf@suse.de>
+ <CAE8KmOzzn7g1=pd2J325gAf4ffmGALKoHdgL17So4KawxkZdbg@mail.gmail.com>
+ <87y0vyepta.fsf@suse.de> <aAlu0hcUCdzmIN4p@x1.local>
+ <CAE8KmOz7P+Pz8zwJq+mTEJbZjhCk7iAo9+c5DrZzhbTmz=VtUQ@mail.gmail.com>
+ <aBDObgL7hDQMy63F@x1.local>
+ <CAE8KmOx9yuZWWHnaA6gkC2VpeimY1=Pw+AU9iDvQ+vVpUp_vKg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 14/14] ppc/spapr: remove deprecated machine pseries-3.0
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: npiggin@gmail.com, danielhb413@gmail.com
-References: <20241007153838.1085522-1-harshpb@linux.ibm.com>
- <20241007153838.1085522-15-harshpb@linux.ibm.com>
- <68da6aab-eb1e-4c26-888f-54a1c8cad987@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <68da6aab-eb1e-4c26-888f-54a1c8cad987@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=LSAW=XP=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOx9yuZWWHnaA6gkC2VpeimY1=Pw+AU9iDvQ+vVpUp_vKg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,54 +113,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Harsh,
-
-On 10/11/24 07:57, Cédric Le Goater wrote:
-> On 10/7/24 17:38, Harsh Prateek Bora wrote:
->> As per Qemu's deprecation policy [1], and the mailing list discussion
->> that happened on [2], pseries-3.0 is more than 6 years old since release
->> and therefore due for deletion as already deprecated for >3 years.
->>
->> [1] https://www.qemu.org/docs/master/about/deprecated.html
->> [2] https://lore.kernel.org/qemu-devel/1d7c210e-d7a6-4233-b555-c99a41f3c4e2@kaod.org/
->>
->> While at it, also remove related legacy irq hacks which are now obsolete.
->>
->> Suggested-by: Cédric Le Goater <clg@kaod.org>
->> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+On Tue, Apr 29, 2025 at 06:58:29PM +0530, Prasad Pandit wrote:
+> On Tue, 29 Apr 2025 at 18:34, Peter Xu <peterx@redhat.com> wrote:
+> > I think that's what Fabiano mentioned, but ultimately we need to verify it
+> > on a reproducer to know.
+> ...
+> > Looks ok, but please add some comments explain why postcopy needs to do it,
+> > and especially do it during precopy phase.
+> >
+> > I'd use migrate_postcopy_ram() instead.
 > 
-> I induced you in error. This version has not been deprecated yet.
-> 
-> We will have to wait a little longer (2 cycles) to remove it when
-> the automatic deprecation process starts. See c9fd2d9a48ee. You
-> can resend when the 10.1 cycle starts, around april 2025.
+> * Okay. It should be '||' instead of '&&' in the first conditional I
+> think, we want to write zeropage when postcopy is enabled.
+> ===
+> diff --git a/migration/multifd-zero-page.c b/migration/multifd-zero-page.c
+> index dbc1184921..4d6677feab 100644
+> --- a/migration/multifd-zero-page.c
+> +++ b/migration/multifd-zero-page.c
+> @@ -85,9 +85,11 @@ void multifd_recv_zero_page_process(MultiFDRecvParams *p)
+>  {
+>      for (int i = 0; i < p->zero_num; i++) {
+>          void *page = p->host + p->zero[i];
+> -        if (ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
+> +        if (migrate_postcopy_ram() ||
+> +            ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
+>              memset(page, 0, multifd_ram_page_size());
+> -        } else {
+> +        }
+> +        if (!ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
+>              ramblock_recv_bitmap_set_offset(p->block, p->zero[i]);
+>          }
+>      }
+> ===
+> * I'll send this one if it looks okay.
 
-Machines pseries-3.0, 3.1 and 4.0 can now be removed.
+Please don't rush to send. Again, let's verify the issue first before
+resending anything.
 
-Thanks,
+If you could reproduce it it would be perfect, then we can already verify
+it.  Otherwise we may need help from Fabiano.  Let's not send anything if
+you're not yet sure whether it works..  It can confuse people thinking
+problem solved, but maybe not yet.
 
-C.
-
-$ QEMU_DELETE_MACHINES=1 ./install/bin/qemu-system-ppc64 -machine ? | grep pseries
-pseries-10.0         pSeries Logical Partition (PAPR compliant)
-pseries              pSeries Logical Partition (PAPR compliant) (alias of pseries-10.1)
-pseries-10.1         pSeries Logical Partition (PAPR compliant) (default)
-pseries-4.1          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-4.2          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-5.0          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-5.1          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-5.2          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-6.0          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-6.1          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-6.2          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-7.0          pSeries Logical Partition (PAPR compliant) (deprecated)
-pseries-7.1          pSeries Logical Partition (PAPR compliant)
-pseries-7.2          pSeries Logical Partition (PAPR compliant)
-pseries-8.0          pSeries Logical Partition (PAPR compliant)
-pseries-8.1          pSeries Logical Partition (PAPR compliant)
-pseries-8.2          pSeries Logical Partition (PAPR compliant)
-pseries-9.0          pSeries Logical Partition (PAPR compliant)
-pseries-9.1          pSeries Logical Partition (PAPR compliant)
-pseries-9.2          pSeries Logical Partition (PAPR compliant)
+-- 
+Peter Xu
 
 
