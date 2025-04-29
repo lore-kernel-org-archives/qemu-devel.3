@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E35DC369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 15:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 406F1C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 15:06:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9mSd-00077A-Um; Tue, 29 Apr 2025 11:01:28 -0400
+	id 1u9mXS-0000YN-4f; Tue, 29 Apr 2025 11:06:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1u9mSX-00073o-Mf
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:01:21 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1u9mSV-0000Gb-Rh
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:01:21 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-39149bccb69so5177644f8f.2
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 08:01:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1745938878; x=1746543678; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=+cMJfChjBSBP2ccnqJVsUfxZYMhTeyHWd6pJNZd1f+Q=;
- b=AnjUM93PLlUKN0TsfXP0bQKHmwr4CLRdOgEt5WBEwsnbYCq1lLyVosGZu6dXJxgPLl
- /9YuZCrwwIItQS7yLKzf4IeiwylpGTUJtNVk/1cL3dOf4/RCpug2yqgpYXb1yeKAqC5X
- 8mRxE3BKd+fpARAS7TupprMpIAD0OgpwplBPdCFH6j+7NCD7piAUU78/qGvWIoh+kL1g
- buoIE4cwh37T2qe5dBj+NvBimV1nBZ6DS6/sRkFKpSJj9nZ2bk5nYkxVr6leeo98QILq
- ASKseM//Hn8yVN3pD5MIRX+F/WVF1Wi7BiH8ELk9fJlNGEIf3qfYLiTgJa8Baq1fie7k
- g3Sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745938878; x=1746543678;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+cMJfChjBSBP2ccnqJVsUfxZYMhTeyHWd6pJNZd1f+Q=;
- b=wGI3eM941YutzMVQMmLJAqWzOMZgeMU/mGdskOwA97O3nDYPe4w6ayRnRjSFV7ni5X
- 2Rj2898sOtPtwnB8bqyYP6Z+ltfIZvtiCEzRDjy4KRJd4BJKZssjQlNjM/kb0qs5RR2e
- ePngVSb7XV5ns5qWUMCMspSC/LsTZmp2iSy65JyfyMdu7OL1E8kaUAL+Rrer4tX61jUv
- d5KxuL+KlnfDA/sOjQkTXzmRvN978H5+dn3zSBgZOXD+Bfb5DRatFKPS6O52Z08+scAZ
- QZDhH1vi/HWvfD7OxCPxnMYycHvL0wcmhWR1VJal4VuE25eZR6/0ZFBDRwAEWEnJmXcC
- BFEg==
-X-Gm-Message-State: AOJu0YxXpUGl9f0S77SPS7NCn9gQ54TQTfRUO8VhDSXYm2ERBZjXeD1h
- Cda5TTytjEX7PEFlaPVz5CmUwAq5aEySxGT42EYlGS7EOcqZUqvnbTp015wtJJQ=
-X-Gm-Gg: ASbGnctAxOBziKv7TPacK35ObMFaNLkZx9gGOpiifT4LUVW1rkvcJw3uLzJz5/sQk3F
- S9UDfxIifnYpyT8RNHKyEaSlOtui/q8aTTlcVIzvNO31FovZbGWE0E3pqH+ouELlPky8Pt6qlR2
- 1+5y4sFOjgVyakc1H8pBaEP9M1+O81bOkdMB75udZjM7dj1GCkPB4FDXs3VXFXa/+p3meX8kicO
- DdzNNRnxm3bkHgLrX/F2d1HBzNcH04owDW5RQnaICnZMRQmMGuZScdncTyE0C/80fhWTIKOyXKu
- ooOoZZAbilY1iMRbFJFfe1m08zkV
-X-Google-Smtp-Source: AGHT+IEFyIJdyAkmt2+nZ8oQ4niYy0tHwpRBw2ajAfhbQz9aif+YKpAcD0ShcDJSJewFpg7s/qlshQ==
-X-Received: by 2002:a05:6000:420a:b0:39c:f0d:9146 with SMTP id
- ffacd0b85a97d-3a08ad779f7mr2813635f8f.45.1745938876995; 
- Tue, 29 Apr 2025 08:01:16 -0700 (PDT)
-Received: from localhost ([2a02:8308:a00c:e200::f716])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073e46869sm14207678f8f.72.2025.04.29.08.01.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 08:01:16 -0700 (PDT)
-Date: Tue, 29 Apr 2025 17:01:15 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org
-Subject: Re: [PATCH v5 8/9] target/riscv/kvm: read/write KVM regs via env size
-Message-ID: <20250429-a0df0d9ceb3eb53328bf909b@orel>
-References: <20250429124421.223883-1-dbarboza@ventanamicro.com>
- <20250429124421.223883-9-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u9mXP-0000Vo-O7
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:06:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u9mXM-00013j-L3
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:06:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745939177;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dwaK0IxC2pbqVeQMmGXI6esESj6Xw708dRuZw0V6WIo=;
+ b=WmjcmStdGqGPaixbUtmiZbiA+FiGEqu0OFqUkA/9MwvNk/4Q2G6vXe1iQ5tI20fNh59YvG
+ tfjOsZcUbheBL6k78pK9YttzW/Ltiu9Uxl8djc9zydNvDMRUj49ZjUWU0R8opykqpfB0hG
+ 7gNWYD6zWbyZH8VWFMSA2mxKErQP3ms=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-qCCk8-wiNIK8yO7R2mqc9Q-1; Tue,
+ 29 Apr 2025 11:06:08 -0400
+X-MC-Unique: qCCk8-wiNIK8yO7R2mqc9Q-1
+X-Mimecast-MFC-AGG-ID: qCCk8-wiNIK8yO7R2mqc9Q_1745939167
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1860D1800A0D; Tue, 29 Apr 2025 15:06:07 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.98])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 08D9918001D7; Tue, 29 Apr 2025 15:06:03 +0000 (UTC)
+Date: Tue, 29 Apr 2025 16:06:01 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ devel@lists.libvirt.org, Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v2 1/5] Revert "include/hw: temporarily disable deletion
+ of versioned machine types"
+Message-ID: <aBDq2Rg2LKOnHrm1@redhat.com>
+References: <20250429131526.1842130-1-berrange@redhat.com>
+ <20250429131526.1842130-2-berrange@redhat.com>
+ <ba15c1a9-d568-46ee-ada4-b8250fbb24bb@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250429124421.223883-9-dbarboza@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ba15c1a9-d568-46ee-ada4-b8250fbb24bb@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,72 +92,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 29, 2025 at 09:44:20AM -0300, Daniel Henrique Barboza wrote:
-> We're going to add support for scounteren in the next patch. KVM defines
-> as a target_ulong CSR, while QEMU defines env->scounteren as a 32 bit
-> field. This will cause the current code to read/write a 64 bit CSR in a
-> 32 bit field when running in a 64 bit CPU.
+On Tue, Apr 29, 2025 at 04:30:56PM +0200, Thomas Huth wrote:
+> On 29/04/2025 15.15, Daniel P. Berrangé wrote:
+> > This reverts commit c9fd2d9a48ee3c195cf83cc611b87b09f02f0013.
+> > 
+> > When we introduced the specialized machine type deprecation policy, we
+> > allow automatic deprecation to take effect immediately, but blocked the
+> > automatic deletion of machine types for 2 releases. This ensured we
+> > complied with the historical deprecation policy during the transition
+> > window. Startnig with the 10.1.0 dev cycle, the old machine types would
 > 
-> To prevent that, change the current logic to honor the size of the QEMU
-> storage instead of the KVM CSR reg.
+> typo: Startnig
 > 
-> Suggested-by: Andrew Jones <ajones@ventanamicro.com>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->  target/riscv/kvm/kvm-cpu.c | 12 +++++++-----
->  1 file changed, 7 insertions(+), 5 deletions(-)
+> > be candidates for removal under both the old and new deprecation
+> > policies.
+> > 
+> > Thus we can now enable automatic deletion of old machine types, which
+> > takes effect by skipping the QOM type registration. This prevents the
+> > machine types being listed with '-machine help', and blocks their
+> > creation. The actual code can be purged at a convenient time of the
+> > maintainer's choosing.
+> > 
+> > In the case of the x86_64 target, this change results in the blocking
+> > of the following machine types:
+> > 
+> >    pc-i440fx-4.0        Standard PC (i440FX + PIIX, 1996) (deprecated)
+> >    pc-i440fx-3.1        Standard PC (i440FX + PIIX, 1996) (deprecated)
+> >    pc-i440fx-3.0        Standard PC (i440FX + PIIX, 1996) (deprecated)
+> >    pc-i440fx-2.9        Standard PC (i440FX + PIIX, 1996) (deprecated)
+> >    pc-i440fx-2.8        Standard PC (i440FX + PIIX, 1996) (deprecated)
+> >    pc-i440fx-2.7        Standard PC (i440FX + PIIX, 1996) (deprecated)
+> >    pc-i440fx-2.6        Standard PC (i440FX + PIIX, 1996) (deprecated)
+> >    pc-i440fx-2.5        Standard PC (i440FX + PIIX, 1996) (deprecated)
+> >    pc-i440fx-2.4        Standard PC (i440FX + PIIX, 1996) (deprecated)
+> >    pc-i440fx-2.12       Standard PC (i440FX + PIIX, 1996) (deprecated)
+> >    pc-i440fx-2.11       Standard PC (i440FX + PIIX, 1996) (deprecated)
+> >    pc-i440fx-2.10       Standard PC (i440FX + PIIX, 1996) (deprecated)
+> >    pc-q35-4.0.1         Standard PC (Q35 + ICH9, 2009) (deprecated)
+> >    pc-q35-4.0           Standard PC (Q35 + ICH9, 2009) (deprecated)
+> >    pc-q35-3.1           Standard PC (Q35 + ICH9, 2009) (deprecated)
+> >    pc-q35-3.0           Standard PC (Q35 + ICH9, 2009) (deprecated)
+> >    pc-q35-2.9           Standard PC (Q35 + ICH9, 2009) (deprecated)
+> >    pc-q35-2.8           Standard PC (Q35 + ICH9, 2009) (deprecated)
+> >    pc-q35-2.7           Standard PC (Q35 + ICH9, 2009) (deprecated)
+> >    pc-q35-2.6           Standard PC (Q35 + ICH9, 2009) (deprecated)
+> >    pc-q35-2.5           Standard PC (Q35 + ICH9, 2009) (deprecated)
+> >    pc-q35-2.4           Standard PC (Q35 + ICH9, 2009) (deprecated)
+> >    pc-q35-2.12          Standard PC (Q35 + ICH9, 2009) (deprecated)
+> >    pc-q35-2.11          Standard PC (Q35 + ICH9, 2009) (deprecated)
+> >    pc-q35-2.10          Standard PC (Q35 + ICH9, 2009) (deprecated)
+> > 
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >   include/hw/boards.h | 19 +------------------
+> >   1 file changed, 1 insertion(+), 18 deletions(-)
+> > 
+> > diff --git a/include/hw/boards.h b/include/hw/boards.h
+> > index 765dc8dd35..74a8e96b2e 100644
+> > --- a/include/hw/boards.h
+> > +++ b/include/hw/boards.h
+> > @@ -719,28 +719,11 @@ struct MachineState {
+> >    * suitable period of time has passed, it will cause
+> >    * execution of the method to return, avoiding registration
+> >    * of the machine
+> > - *
+> > - * The new deprecation and deletion policy for versioned
+> > - * machine types was introduced in QEMU 9.1.0.
+> > - *
+> > - * Under the new policy a number of old machine types (any
+> > - * prior to 2.12) would be liable for immediate deletion
+> > - * which would be a violation of our historical deprecation
+> > - * and removal policy
+> > - *
+> > - * Thus deletions are temporarily gated on existance of
+> > - * the env variable "QEMU_DELETE_MACHINES" / QEMU version
+> > - * number >= 10.1.0. This gate can be deleted in the 10.1.0
+> > - * dev cycle
+> >    */
+> >   #define MACHINE_VER_DELETION(...) \
+> >       do { \
+> >           if (MACHINE_VER_SHOULD_DELETE(__VA_ARGS__)) { \
+> > -            if (getenv("QEMU_DELETE_MACHINES") || \
+> > -                QEMU_VERSION_MAJOR > 10 || (QEMU_VERSION_MAJOR == 10 && \
+> > -                                            QEMU_VERSION_MINOR >= 1)) { \
+> > -                return; \
+> > -            } \
+> > +            return; \
 > 
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index 5efee8adb2..d55361962d 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -135,6 +135,7 @@ typedef struct KVMCPUConfig {
->      const char *description;
->      target_ulong offset;
->      uint64_t kvm_reg_id;
-> +    uint32_t prop_size;
->      bool user_set;
->      bool supported;
->  } KVMCPUConfig;
-> @@ -237,6 +238,7 @@ static void kvm_riscv_update_cpu_misa_ext(RISCVCPU *cpu, CPUState *cs)
->  
->  #define KVM_CSR_CFG(_name, _env_prop, reg_id) \
->      {.name = _name, .offset = ENV_CSR_OFFSET(_env_prop), \
-> +     .prop_size = sizeof(((CPURISCVState *)0)->_env_prop), \
->       .kvm_reg_id = reg_id}
->  
->  static KVMCPUConfig kvm_csr_cfgs[] = {
-> @@ -646,9 +648,9 @@ static int kvm_riscv_get_regs_csr(CPUState *cs)
->              return ret;
->          }
->  
-> -        if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint32_t)) {
-> -            kvm_cpu_csr_set_u32(cpu, csr_cfg, reg);
-> -        } else if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint64_t)) {
-> +        if (csr_cfg->prop_size == sizeof(uint32_t)) {
-> +            kvm_cpu_csr_set_u32(cpu, csr_cfg, (uint32_t)reg);
-> +        } else if (csr_cfg->prop_size == sizeof(uint64_t)) {
->              kvm_cpu_csr_set_u64(cpu, csr_cfg, reg);
->          } else {
->              g_assert_not_reached();
-> @@ -671,9 +673,9 @@ static int kvm_riscv_put_regs_csr(CPUState *cs)
->              continue;
->          }
->  
-> -        if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint32_t)) {
-> +        if (csr_cfg->prop_size == sizeof(uint32_t)) {
->              reg = kvm_cpu_csr_get_u32(cpu, csr_cfg);
-> -        } else if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint64_t)) {
-> +        } else if (csr_cfg->prop_size == sizeof(uint64_t)) {
->              reg = kvm_cpu_csr_get_u64(cpu, csr_cfg);
->          } else {
->              g_assert_not_reached();
-> -- 
-> 2.49.0
->
+> I wonder whether we might want to have it the other way round now instead,
+> so that we could re-activate the dead machines in case a certain environment
+> variable (QEMU_ZOMBI_MACHINES) is set? Anyway, just an idea, not sure
+> whether it's a good one. So for this patch:
 
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Well we should have followup patch(s) to actually delete the now unused
+machine code, so ideally there will be no machines that could be
+re-activated.
+
+> 
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> 
+> 
+> >           } \
+> >       } while (0)
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
