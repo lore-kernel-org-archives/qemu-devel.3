@@ -4,139 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D5BBC369D5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 00:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F248C369D5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 01:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9Yk1-0003d9-6E; Mon, 28 Apr 2025 20:22:29 -0400
+	id 1u9ZUh-0000Xx-9j; Mon, 28 Apr 2025 21:10:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1u9Yjz-0003cq-8d
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 20:22:27 -0400
-Received: from mail-bn8nam04on2052.outbound.protection.outlook.com
- ([40.107.100.52] helo=NAM04-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u9ZUf-0000Xk-5o
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 21:10:41 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
- id 1u9Yjw-0005Fj-Ai
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 20:22:26 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=i9l5JyQiEsKZwxxlCuQx0X4KPFQXbPsG0Vtb8tZF+Byg0CdhywNZ32Z12H2g/rp26MnAxUbNI8RWOSIBI68ePRS34CjNddPQ9FVAAdH70CiKPOrGt+wn1Iq7CU3OmkftM4EOtl21mCCd0B824Zc7LJsaMYqzHEX6N/MzFBvS/qzvcUbdKKbu5/68DhMM7rBakQyEw6NlsAQtPubsRlPfPr/sGKmdJoOmrvVjymcfseA2n8sO7D/B5I5LY49ckuG+vAXRUHHywDoEFyLi1pYOYC2AApZ1UwpJcLUD1WPoLlL2ngON4LdB88I9tFIEulr/gYqm2oqKmH8aMvpXCTCi7w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2OnzZ7iJDqkrJgWKN6qHfpv0y6FAH2Uamz+0XrsMGis=;
- b=cky3HG2DqIl0DR4g8xFA93l/P6Ue5fhFrgURJLGUY0qu124a4Xc03jhlMaHq+PeHz02fhs5yUk5pvK1dMlExp8WaCetiG4JoGeUexBsCWOinqJi5CM06sGn02glaVE3Ht4emX14cFhigZAWp302Ky4DxxyQu0u57U9o9V4WvlZtyqBaop84IVcxWc5ZPbM7s1A0tXU+6rWGcBj1FG9AetOHSCrrIeGcXysQn1iawJDi02tps0MSfN002hA/2FPJrxUX0zA8OXp8Yih4C5ZJnTU46d4LocsBIQElbNGuuQxHXeomWmAEPbEkHNOS72LW4AQ1RVRCHgVwRhRZVdmaxpg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2OnzZ7iJDqkrJgWKN6qHfpv0y6FAH2Uamz+0XrsMGis=;
- b=ALhucL9gBz8jQk/G+7m9r+uHHuQtKlF3H0kUrmVRNget7MJSZYokvu4x/Ff+hKqb6z/l4ofy7+SjJ+40K8h9c+SNedeaFGhYk5/B9YvwsqAMUWW4RweRJ8fN0P2sMaCV7/TZ6QB8cUdBCSkYySiBXw1VIAU3Eq5yXwSZQrsSWPI=
-Received: from SA1PR05CA0020.namprd05.prod.outlook.com (2603:10b6:806:2d2::22)
- by SJ0PR12MB6944.namprd12.prod.outlook.com (2603:10b6:a03:47b::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.27; Tue, 29 Apr
- 2025 00:17:17 +0000
-Received: from SA2PEPF00003F67.namprd04.prod.outlook.com
- (2603:10b6:806:2d2:cafe::8) by SA1PR05CA0020.outlook.office365.com
- (2603:10b6:806:2d2::22) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8655.33 via Frontend Transport; Tue,
- 29 Apr 2025 00:17:17 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- SA2PEPF00003F67.mail.protection.outlook.com (10.167.248.42) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8678.33 via Frontend Transport; Tue, 29 Apr 2025 00:17:17 +0000
-Received: from aiemdee.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 28 Apr
- 2025 19:17:14 -0500
-From: Alexey Kardashevskiy <aik@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Li Zhijian
- <lizhijian@cn.fujitsu.com>, Alexey Kardashevskiy <aik@amd.com>
-Subject: [PATCH QEMU] x86/headers: Replace __ASSEMBLY__ with __ASSEMBLER__ in
- UAPI headers
-Date: Tue, 29 Apr 2025 10:17:05 +1000
-Message-ID: <20250429001705.2734439-1-aik@amd.com>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1u9ZUa-0003Lp-OM
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 21:10:40 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 97CD855D233;
+ Tue, 29 Apr 2025 03:10:31 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id oGjlJFV3kOaX; Tue, 29 Apr 2025 03:10:29 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id A13BD55D230; Tue, 29 Apr 2025 03:10:29 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9FC2C745682;
+ Tue, 29 Apr 2025 03:10:29 +0200 (CEST)
+Date: Tue, 29 Apr 2025 03:10:29 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
+ Anton Johansson <anjo@rev.ng>
+Subject: Re: [RFC PATCH v5 08/21] hw/arm: Add DEFINE_MACHINE_[ARM_]AARCH64()
+ macros
+In-Reply-To: <b711cddb-0a68-4dba-a492-4c51683eb116@linaro.org>
+Message-ID: <d454c53d-dba3-e665-39c6-267bbbab8aed@eik.bme.hu>
+References: <20250424222112.36194-1-philmd@linaro.org>
+ <20250424222112.36194-9-philmd@linaro.org>
+ <1332b395-1e3e-2be7-83f2-15f2d89b0449@eik.bme.hu>
+ <51f3a96b-9c7a-4242-a822-145d68e068d9@linaro.org>
+ <f84a52af-aecf-5235-7971-689580ffb71f@eik.bme.hu>
+ <29f67d66-9eef-493a-9d96-99240ca25a14@linaro.org>
+ <75b7e110-9293-32b2-64c8-26eabaace8b7@eik.bme.hu>
+ <033d94c7-ac74-4a44-87ae-aeac964afd10@linaro.org>
+ <c4479348-00b2-4604-adad-e8d8911c75a6@linaro.org>
+ <21e6cbae-54fe-2d11-307f-2fe36a08c97b@eik.bme.hu>
+ <6d7f8b57-b8d4-49cd-b0fd-72e5428bc94a@linaro.org>
+ <29bf183a-957b-6c03-be66-bee38f106fc5@eik.bme.hu>
+ <b711cddb-0a68-4dba-a492-4c51683eb116@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA2PEPF00003F67:EE_|SJ0PR12MB6944:EE_
-X-MS-Office365-Filtering-Correlation-Id: 66f1f7d3-ccf7-4e36-0a3c-08dd86b33321
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|36860700013|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?A3oPlGQFQHEAxdb13+jqUsQoo4d6PgTf/M2Bv1fwQTUmXAI5lfSe7NgOEGAw?=
- =?us-ascii?Q?q7jBCZBTqtiegcU3dOeWJA0RjhAUHIctEvJcsa4Op7o8oEP4ixDmpxrRrP84?=
- =?us-ascii?Q?XCXh11FgBTc8neF/J1v2ntr42iugqQMYH8zEnp48LfCEt8oJDVBhptHyCBrQ?=
- =?us-ascii?Q?N/IpeeSw4JLgne1WN9D6y3FVk9/+PMqTjgvQX8A7yxGdKRlt7uGmmkeXu8Rk?=
- =?us-ascii?Q?xc8K1M+mxeJEM16qekY1WwOl+Qn9vpSQjXmj7hfdgyrRW1/I7RzDX4xfybG7?=
- =?us-ascii?Q?tz657/306dYdKfSCGVNo+rR/lDu5Y7D65N9G8J5vSZ3RHwv6+e7/U3qdXUJO?=
- =?us-ascii?Q?GocmaBEDdx9nRheRLYYi7srG+JwuuOuDuUHc3Whm9GzX5I62+cn1Oj0v+qql?=
- =?us-ascii?Q?pxrGPoRbs20JN9LJ++sNKj3rR/i6STZ9m/HasRbJZgA90B6sfTBMq6MaXkZD?=
- =?us-ascii?Q?DpRLs2F9Zv8oXfDPHs3TPvWmfQjWKiNX1qyoLP0reJuazKSwXnbphApxzU80?=
- =?us-ascii?Q?0MS2u0WP626j/vGvStgu8EVgJMTglSajzQYaihcy6P52d0efwwHN9hemUSVk?=
- =?us-ascii?Q?dVjR5OWfnWj+9oweDoqwJx5fYbKZW26PMxr3cZIC7nMjVmxt77L7NUtFWw+e?=
- =?us-ascii?Q?AAAYaBV/bxpzIDNlHIsFKLMGSOJn7R5prueiPO/3ceRlYvZHElqWhARi10UI?=
- =?us-ascii?Q?UmgQ6w0h0fTZ5+lkwDyzpLJRTzAGXQ15RljKnNMOEJfmeJUJBqbqKp3xk79/?=
- =?us-ascii?Q?wD/MJvZ7Ts7aBETe9iOUH/KRxOQfemqVXS8e6hTbNlZY7pr0yqhDKh9j22LJ?=
- =?us-ascii?Q?SaflANrp1rt8JAfxQcYErsO681muATGnfGlGcS3rS0mXyRcKSMXR13dpqVll?=
- =?us-ascii?Q?tRwouK7CQi8bqCiADOl3cEB2mS6iVq0YYF9iDw7gmWfUvj+Qpzk8k0yNSUdc?=
- =?us-ascii?Q?GBTgasJJcDM8KKGrmrx7N3nR4c3bvXz2CuBfARcCnPw0HzN9IajTuJPlBaUw?=
- =?us-ascii?Q?40DfO1Me07H0pluIH2jBIbcc3tu8oBu4XefZWTGSdbDFlw0Yc5nkXuQI1GH0?=
- =?us-ascii?Q?KIC7kbLc/eiKNxPfiEZIJwuKlBd0MExCxdYXz06z2m8slt4tDl2sv/MTZ6kr?=
- =?us-ascii?Q?9sdZst93NIjr1sLGwxseeZok4ts5wMAomJHIal89ieO5bBjcDABtjWZtss8r?=
- =?us-ascii?Q?AK0WdpLwRZ3/3HUdbJBzqysr1a+5q+Rf8gtP4cWib5Wz9B0jQo7tBLYetWwV?=
- =?us-ascii?Q?dibbMjpzTkIHsjRHuL9V/9NIyG+vbuvd38ud8nppsvek3rC7ci0tKYLxUtWU?=
- =?us-ascii?Q?uP6WCFECk9/nFS91FRKeUp3hLF7D/wbrHsV1+B/MA/q4mN1ep6fa3/6zRUHh?=
- =?us-ascii?Q?FsiEPPVZxqRNCvX7yiTy1f6esuJf5+PoxUf8bm3ApgxecNSJQvKR2clMhOSm?=
- =?us-ascii?Q?i3Cw4cHN1O1BWUKfUT/0ABpQFveXSrU42FPiucm7V/44imlYNqgoJHGJJuvD?=
- =?us-ascii?Q?Br+5BNaoKAY7Y62plvnwTp95rk8Aw8La2jxednWddMBbeTXVRNC+7ZBBog?=
- =?us-ascii?Q?=3D=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Apr 2025 00:17:17.0895 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 66f1f7d3-ccf7-4e36-0a3c-08dd86b33321
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00003F67.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6944
-Received-SPF: permerror client-ip=40.107.100.52;
- envelope-from=Alexey.Kardashevskiy@amd.com;
- helo=NAM04-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,34 +81,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The recent kernel update 8a141be3233af7d broke the headers update,
-fix it in the script.
+On Mon, 28 Apr 2025, Pierrick Bouvier wrote:
+> On 4/28/25 11:44 AM, BALATON Zoltan wrote:
+>> On Mon, 28 Apr 2025, Pierrick Bouvier wrote:
+>>> On 4/28/25 3:31 AM, BALATON Zoltan wrote:
+>>>> Since you are touching the lines using DEFINE_MACHINE it's a good
+>>>> opportunity to change the macro to be more general to be able to keep
+>>>> using it instead of replacing it with the boiler plate it's supposed to
+>>>> hide. Adding one or two more parameters to the macro is not a big change
+>>>> so I don't see why you don't want to do it. This could be addressed later
+>>>> to revert to use the macro again but in practice it will not be addressed
+>>>> because everybody will be busy doing other things and doing that now 
+>>>> would
+>>>> prevent some churn. I too, don't like doing unrelated clean up which is
+>>>> not the main goal, but if it's not much more work then it's not
+>>>> unreasonable to do it. I only oppose to that if it's a lot of work so I
+>>>> would not ask such change but what I asked is not unrelated and quite
+>>>> simple change.
+>>>> 
+>>>> That said, I can't stop you so if you still don't want to do it now then
+>>>> you can move on. I don't care that much as long as you stay within 
+>>>> hw/arm,
+>>>> but will raise my concern again when you submit a similar patch that
+>>>> touches parts I care more about. If others don't think it's a problem and
+>>>> not bothered by the boiler plate code then it's not so important but
+>>>> otherwise I think I have a valid point. I remember when I started to get
+>>>> to know QEMU it was quite difficult to wade through all the QOM boiler
+>>>> plate just to see what is related to the actual functionality. These
+>>>> macros help to make code more readable and accessible for new people.
+>>> 
+>>> Having been through that recently, I agree with you that it can be hard to
+>>> follow at first. Luckily, we have perfect compiler based completion for 
+>>> all
+>>> editors those days (I sincerely hope everyone spent 2 hours configuring 
+>>> this
+>>> on their own favorite one), and it's easy to see where things are defined 
+>>> and
+>>> used, even when code is cryptic.
+>> 
+>> It's not about typing but reading it. The verbose struct definitions are
+>> hard to follow and makes board code look more complex than it should be.
+>> 
+>>> That said, pushing to someone adding a new field the responsibility of
+>>> cleaning up the whole thing is not a fair request. You can't expect your
+>>> friends to clean your shared house because they brought a cake for dinner.
+>> 
+>> I tend to get such requests to clean up unrelated things whenever I try to
+>> change anything in PPC Mac emulation which I also complain about and think
+>> is not reasonable to ask. But I did not ask for unrelated cleanup here and
+>> changing the patch so you don't do this:
+>> 
+>> -DEFINE_MACHINE("none", machine_none_machine_init)
+>> +static const TypeInfo null_machine_types[] = {
+>> +    {
+>> +        .name           = MACHINE_TYPE_NAME("none"),
+>> +        .parent         = TYPE_MACHINE,
+>> +        .class_init     = null_machine_class_init,
+>> +    },
+>> +};
+>> +
+>> +DEFINE_TYPES(null_machine_types)
+>> 
+>> but instead add the .interfaces field to a variant of DEFINE_MACHINE once
+>> and keep the one line definition is not something unreasonable to ask. I
+>> think you can ask your friends to not make a mess in the shared house
+>> while having a party or at least clean up after that. Adding one more
+>> parameter to the macro is also simple to do so I don't get why you're so
+>> opposed to this.
+>> 
+>
+> Maybe there is a misunderstanding on my side, but it seems that what you 
+> asked is exactly patch 7, which introduce DEFINE_MACHINE_WITH_INTERFACES.
 
-Cc: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Alexey Kardashevskiy <aik@amd.com>
----
+Almost but not quite. I don't know why I can't get this through to you. If 
+you compare patch 7 to how DO_OBJECT_DEFINE_TYPE_EXTENDED is defined do 
+you notice the difference in how .interfaces is set? With the same way as 
+in DO_OBJECT_DEFINE_TYPE_EXTENDED you don't need separate InterfaceInfo 
+arm_aarch64_machine_interfaces[] definitions or different macros in the 
+next patch just list the needed interfaces in the machine definitions.
 
-Or we want both __ASSEMBLY__ and __ASSEMBLER__?
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8a141be3233af7d
----
- scripts/update-linux-headers.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
-index 8913e4fb99b..b43b8ef75a6 100755
---- a/scripts/update-linux-headers.sh
-+++ b/scripts/update-linux-headers.sh
-@@ -177,7 +177,7 @@ EOF
- 
-         # Remove everything except the macros from bootparam.h avoiding the
-         # unnecessary import of several video/ist/etc headers
--        sed -e '/__ASSEMBLY__/,/__ASSEMBLY__/d' \
-+        sed -e '/__ASSEMBLER__/,/__ASSEMBLER__/d' \
-                "$hdrdir/include/asm/bootparam.h" > "$hdrdir/bootparam.h"
-         cp_portable "$hdrdir/bootparam.h" \
-                     "$output/include/standard-headers/asm-$arch"
--- 
-2.49.0
-
+Regards,
+BALATON Zoltan
 
