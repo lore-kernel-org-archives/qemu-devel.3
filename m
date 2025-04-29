@@ -4,69 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3554C369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 04:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5287DC369CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 04:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9cVS-0004wz-Kv; Tue, 29 Apr 2025 00:23:42 -0400
+	id 1u9cln-0006SG-5x; Tue, 29 Apr 2025 00:40:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1u9cVO-0004wp-Uu
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 00:23:39 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1u9clg-0006Ry-Vu
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 00:40:29 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1u9cVL-0001eb-Ta
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 00:23:38 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-ac28e66c0e1so642598466b.0
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 21:23:35 -0700 (PDT)
+ id 1u9clc-00044l-MN
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 00:40:27 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-ac34257295dso939992366b.2
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 21:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1745900614; x=1746505414; darn=nongnu.org;
+ d=jms.id.au; s=google; t=1745901622; x=1746506422; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=LAXlAtPGJwDWF60WvcD+w8wIUKAYpGZYJ6F44kFLy9M=;
- b=Q0Qt8/GjYIK2VX9FE+ZIM5XN4DGbrXZX7ueGRs6oUGfF/qflD/XKPxrpD7OwMmEFf4
- x/ki/AQ/oLlwn5GaifmUeVXmyeTALF8HpnAFkR1RKC4IawHiFZm60yl0c6Y0ju/xkzDd
- 7RrvWalG7mNgG3yG6zYBwPtGu1vsSb9pDkSvI=
+ bh=V0v/TYwvjG+d6TWayOXNWFPo/MJkvEdg7WvDq2KVH/I=;
+ b=lV5jMXJV0ioYeeYI3oYK3828FRE3ao0pZXF51/4bPoha3O8l6ntzlrmldThjPw0Hhi
+ luy7P434NargsRPFlS0WEOi0SQXS7d6fUJG3CokxdX4zeo+hua6UAf6/zopuRCkSWoYX
+ ExmexLN56CYfvaFNj+iVdjCL8Re3PJuqpTz7o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745900614; x=1746505414;
+ d=1e100.net; s=20230601; t=1745901622; x=1746506422;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LAXlAtPGJwDWF60WvcD+w8wIUKAYpGZYJ6F44kFLy9M=;
- b=f9rkfKkaNKD3//G1SiHKhLz9ajEai+yZhirAtYtWc6bOIAc1LOCxqBec3YGDilxTo5
- Mlukyn624z/4PUok648kth1TnXRNnwXUEWr+BDfF7u/QrTYgpW2EraCBGqLpNkIbYnSW
- 9P2WiP8IdGtc077RuDX24CJ1JvBLmVW9vgg7A4UplIfvPPi4KjVE/wxdoZqEcFbDaw46
- 8CjNh9ch0t3Gf7hXPxGgDloiiw8uvbywvZyE/2hm/rw0H6K5+8re3wHAqCET/df0f99L
- hznH2xXXw5uzzu4ypzujyjpkcPFMABsgstMDzM4xLFd/SALuDq/bWECfW9Uzu4FIGZ9+
- Iqvw==
-X-Gm-Message-State: AOJu0YwbwzEpXnYnuRETgHX5lbw6CC/ANtKODmz6I/pA33ZbMgEjoJP/
- pVGBSIzgnjPJ8GCKgIXZ/6ecuJvFgYoQVg2Zyc/UGM0x0L40lWZ7XjQmwknYYNQdopQvPoF1irv
- rjLPAfT3V+GgCXB9vC9W1jJIVMh4=
-X-Gm-Gg: ASbGncuRkFfduqKVlgM9JLJGvJFkJ37oU/nZqztcRBI0jkKDejAa6nGjLsEJcPrnWlq
- xgGmbbDGbcPOmGifCxJPhvl71NDt3PR+qaYt2C3FfCy1cYCPqh90Wd3LbzuUhwJF8LxDTPEAYjs
- /DzVI56PyU4LRX3G7mzs12RA==
-X-Google-Smtp-Source: AGHT+IFiHKeiP4AmG5wPoXM/i8I6fjVlE0D2oMFJECv40m+rhA976I/QxDqiYNG4SfIHxU/1PR4LnFnT6tRG7usTeFk=
-X-Received: by 2002:a17:907:1c18:b0:ac2:a42a:999b with SMTP id
- a640c23a62f3a-acec4ed4b9emr189306966b.52.1745900613477; Mon, 28 Apr 2025
- 21:23:33 -0700 (PDT)
+ bh=V0v/TYwvjG+d6TWayOXNWFPo/MJkvEdg7WvDq2KVH/I=;
+ b=OqF0hhxDyEv1Kuo7kNJxS/8cxP2QypIfOiy0jQDjlx/5a0S2PuZxTb7uQoJNFHMMHk
+ +MnuLcXt7vI8YXY4spkttysq7u77YzBe3vCWqc7UzzQeQA2zUsfSNmabC/HGq7Y9M7gx
+ eBG05n/pOoOxrRvB6q0F69JeQnNghdF2NvDoHPKUC+39tBzte69WkXO6cH8w+hKkSoLM
+ pnDztXBxB3xltPcBoWFmn8meE90hgfq7SVtUSUGypGlEQWp9gA99/GI6xneIUkjiO/bo
+ CBegAZet8FX2inrH0/eshXt5TgolDRmJGAg/jNzdtCfCvri3Iyp0QJQ41KB66lhYrr48
+ Nytg==
+X-Gm-Message-State: AOJu0YzqIh6cdS3uA3zr1RPgIYWRYl3Twbl7Klvvi7VoRqC82su6x6UU
+ 3cmDtuumMU3jc+WoB7i8UsrFmm4vomzlngjVSqSXmQvnsAYIWGrPUbclPWP4ZQwNpap7Pi8sMoK
+ fmzyoEZhdohX0XAIJQoVjsxuYBLs=
+X-Gm-Gg: ASbGncuN10zY5qmO3BqeZ7oFZjg7MV1hjTTXDz+1l+ZiiuAXIF/VdleiAvG2PrS+D+J
+ Rbrms4mBWRVTk1vxiDYElYTgweOY5rRrtti99JMyf375hSpGstK+zcUFjcQEGTJQRHPnRGexN4v
+ pmLrdgHFwYBw4N8yGCQGWcaA==
+X-Google-Smtp-Source: AGHT+IHjOEntMyJx17/hHLInk1lQ/Q3mH9BgNlwZ32m7IQEm8BwTg9MYpPQhbTrL3pfXEvZ3QKNG9ZmzZPBs2QOV3dI=
+X-Received: by 2002:a17:906:f58f:b0:aca:d2f0:d291 with SMTP id
+ a640c23a62f3a-acec4ccfda3mr207693166b.5.1745901621552; Mon, 28 Apr 2025
+ 21:40:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250428073442.315770-1-pbonzini@redhat.com>
- <20250428073442.315770-23-pbonzini@redhat.com>
-In-Reply-To: <20250428073442.315770-23-pbonzini@redhat.com>
+References: <20250425115912.912889-1-djordje.todorovic@htecgroup.com>
+ <20250425115912.912889-10-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20250425115912.912889-10-djordje.todorovic@htecgroup.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 29 Apr 2025 13:53:20 +0930
-X-Gm-Features: ATxdqUGdM-eoruqhOibyokScm8W76ty5Sdz_iXLX49A8eKTQwuKZegk20Vcfplk
-Message-ID: <CACPK8Xer1VL-=eSwZ=4cLDu6SqohejLs28=_hp44W04Dz_S5ug@mail.gmail.com>
-Subject: Re: [PATCH 22/26] target/riscv: convert TT C906 to RISCVCPUDef
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com, dbarboza@ventanamicro.com
+Date: Tue, 29 Apr 2025 14:10:08 +0930
+X-Gm-Features: ATxdqUFuUyAnM0ez5CUdzzmeHRB1uomEePg3mqMWEQhV_yH0GdDSgXjbUa_8vOc
+Message-ID: <CACPK8Xd3LSxOT4KO1gUCjCqq9Ro6rXfr+_BSAQXeaTv9+2b2GA@mail.gmail.com>
+Subject: Re: [PATCH 9/9] hw/riscv: Add a network device e1000e to the
+ boston-aia
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Chao-ying Fu <cfu@mips.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=joel.stan@gmail.com; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=joel.stan@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -90,24 +92,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 28 Apr 2025 at 17:10, Paolo Bonzini <pbonzini@redhat.com> wrote:
-
-I think a typo has snuck into the subject here. s/TT/Thead/
-
+On Fri, 25 Apr 2025 at 23:37, Djordje Todorovic
+<Djordje.Todorovic@htecgroup.com> wrote:
 >
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Add a network device e1000e to the boston-aia board model.
+> There is no pch_gbe emulation, so we add e1000e in slot 0 func 1,
+> instead. We need to pass func to call pci_parse_devaddr to find
+> out slot and func.
+>
+> Signed-off-by: Chao-ying Fu <cfu@mips.com>
+> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
 > ---
->  target/riscv/cpu.c | 61 +++++++++++++++++++++-------------------------
->  1 file changed, 28 insertions(+), 33 deletions(-)
+>  hw/pci/pci.c          | 23 ++++++++++++-----------
+>  hw/riscv/boston-aia.c |  5 +++++
+>  2 files changed, 17 insertions(+), 11 deletions(-)
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 5045ebc0b70..f3af9643af4 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -500,38 +500,6 @@ static void riscv_register_custom_csrs(RISCVCPU *cpu, const RISCVCSR *csr_list)
->  #endif
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 2844ec5556..9748acda09 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -980,16 +980,15 @@ static int pci_parse_devaddr(const char *addr, int *domp, int *busp,
 >
->  #if defined(TARGET_RISCV64)
-> -static void rv64_thead_c906_cpu_init(Object *obj)
+>      slot = val;
+>
+> -    if (funcp != NULL) {
+> -        if (*e != '.')
+> -            return -1;
+> -
+> -        p = e + 1;
+> -        val = strtoul(p, &e, 16);
+> -        if (e == p)
+> -            return -1;
+> +    if (funcp != NULL && *e != 0) {
+> +      if (*e != '.')
+> +        return -1;
+> +      p = e + 1;
+> +      val = strtoul(p, &e, 16);
+> +      if (e == p)
+> +        return -1;
+>
+> -        func = val;
+> +      func = val;
+
+Some unrelated changes have crept into your patch.
+
+When you re-send be sure to cc qemu-riscv@nongnu.org.
 
