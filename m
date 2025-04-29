@@ -4,74 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC10C369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 06:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 701C6C3ABA4
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 06:13:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9eCv-0000qN-TM; Tue, 29 Apr 2025 02:12:42 -0400
+	id 1u9eDU-0002Kk-Sw; Tue, 29 Apr 2025 02:13:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1u9eCe-0000a3-3C
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:12:27 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1u9eCb-0005Mm-OE
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:12:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745907142; x=1777443142;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=0uQUu7jwWHtxWQnUaOy1/HzHY9G5+CCLW6sT3sEd1lA=;
- b=ZI1pshXQP5vU3wMNmPr5WW72pExbKsUPR8mC3CG2maKRFuT99v4L9Lme
- T5tdMokR4ZtJXR0hEryoL95m/ffkB2wUsjR7vJexfsnxJ+ddBv+Wq6YTy
- 5KWsbHsE3AhFKDzu6qtpnZqSZez1utqPA1YNkSiO1luwjgsN55U/Yo7dr
- YKPcDtm/X4nuXyXnePKot/3zDv24tsm7hkRk0FnlxAOOn6zZNYRHz26jf
- YYwyItA3XbN21nU6SbntJv4h46ukPlSPfzS/qito4YnAOALFVXOZvf7mo
- rX3zyCVM9ES5/zPp9GaWrVzL6iykFYKx6F9u9LxP/Ew0debx8Lgh5bJbQ A==;
-X-CSE-ConnectionGUID: 3ilKcBImSTW7raxAohRmOg==
-X-CSE-MsgGUID: 2s2mMQE8Rzq7lzz65lV7Xg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11417"; a="58169834"
-X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="58169834"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2025 23:12:10 -0700
-X-CSE-ConnectionGUID: HX0lm92dRVyOGH1Fyg/NAA==
-X-CSE-MsgGUID: FftOUFKETmSVhZjBaK345A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="133687173"
-Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
- by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2025 23:12:05 -0700
-From: Vivek Kasireddy <vivek.kasireddy@intel.com>
-To: qemu-devel@nongnu.org
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>
-Subject: [PATCH v3 4/6] ui/console-gl: Add a helper to create a texture with
- linear memory layout
-Date: Mon, 28 Apr 2025 23:08:28 -0700
-Message-ID: <20250429060952.59508-5-vivek.kasireddy@intel.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250429060952.59508-1-vivek.kasireddy@intel.com>
-References: <20250429060952.59508-1-vivek.kasireddy@intel.com>
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1u9eDQ-00026y-Ek; Tue, 29 Apr 2025 02:13:12 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1u9eDO-0005Pz-Pq; Tue, 29 Apr 2025 02:13:12 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2279915e06eso63118755ad.1; 
+ Mon, 28 Apr 2025 23:13:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1745907189; x=1746511989; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cWkcFRsJpyggITDuSxIVooDZ/mBbjHxv03/6iVGQ8mI=;
+ b=nekZXnimCoCUcS5Tz+DtSqlrVKYuhIha3OEN2kekxloIDXt/8LcN+7pWkPAd1pGbeT
+ GRjWsfRW8hndLZpyiiTStaXJPDW+TYMZu5XkjSqBnpLUUNdsqNZpyRObj5srAGXwUSQn
+ 2gENg6m+NhyKIz6Ekd1BlN9qfnyOyckiVLefzsu+coayzgZZ+p+cCIeLOc2PKHrESm6u
+ E9ohhl46c5Iy989tbjfy3lP5czS4/sTpv3J9KpEhQNjylcb2WHiAVtSTegb/khecM8JQ
+ aYWWwR4VJ1M7TEBpl77rJi2aiwk5PR2YajcSlGFDIx/vBdYHtFkkWfkH1GVkh4pAy25z
+ mnXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745907189; x=1746511989;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cWkcFRsJpyggITDuSxIVooDZ/mBbjHxv03/6iVGQ8mI=;
+ b=IdnP2BWbUD7UOwHSU0lYmx4nZuioG/JdyFefsTSibZ0ucvEYYpmQwv+49ds+0oqgJG
+ T80r24Jkx/3EqyLJZ+POi20bK5Wtibxk27nhzxfRvFP4kayXJy+hkiZRSold3XR8g69X
+ ZPfDS0+zCxf8S70So2ACN4nBd4NAF9BdSKlc+nhbRBO42U3wk/tQvMoYvDclQ1g+p8oA
+ Y/K5ppR/H4kd5l49yAWAbqqXt1CFbUum7sy/8wEuGAcbGxt/CV3MqTqy7wCpoVqYgOtz
+ avEUn17eV+45zLTYzXdSdNfZ0UM+YcqVh91D+RzYuYX0ys+AKO7XbEve7rodIIilBWlK
+ HBTw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCf+yeXX/eYULjW1EN8k1aiGcVGUCD9bBq1XekB68m3tZoe4NvV0JUXy8Am+2XZyFRNjxcugAZtdkG@nongnu.org
+X-Gm-Message-State: AOJu0Yy69n+clJUsJQThcW/iU4/oSDK7Eg9UBD4udC/Lx9bA5A6dvq/z
+ kMmcDwKyhU17zOgh/kRzW0xSYdtp8x/lkEbl4NCap5LLmJC6maaHf8MkjA==
+X-Gm-Gg: ASbGncuY7f98POblDY5CMsP1hV4J+RwEVs5XUZzFmaRuIqE1ADZpc0kALcOygpak5Ta
+ jhatBLlJycB7RPnW7j06V8jeQ1TVF1+cUF5HTDfSeIiXdHEGhgdWK1eMU1eQggFpgzmahZxVpFZ
+ rPnkC3FSu4stOTV1wwiuBvpYYKOB6WZz7/De64FfNnfJysSe4gigdUhQtUnjFpr4dxqSng4kl7O
+ B+bP6gZyObwFwXDX4cicUbwHBDqxEMp5I8KTYLf4wlfVO7etpcQisgEtNYn/8ahNmjQ4P58TZX5
+ 9lhDq6a98j/fkgFNpIjfoa+M+RmnJHjQAEKwPdLdH4yyfxgfkUo=
+X-Google-Smtp-Source: AGHT+IEKFombNcX7/DtSRuUHsUQ/C+MUMn9/cQevxTulBHvuGUDhyk5GFeNlyKO6hH0XV9bjXk50IA==
+X-Received: by 2002:a17:903:41d1:b0:224:2717:7992 with SMTP id
+ d9443c01a7336-22dc6a6cff9mr182056625ad.33.1745907189043; 
+ Mon, 28 Apr 2025 23:13:09 -0700 (PDT)
+Received: from donnager-debian.. ([45.124.203.19])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22db52169casm93947765ad.238.2025.04.28.23.13.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Apr 2025 23:13:08 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-riscv@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 05/13] hw/riscv/virt: Use setprop_sized_cells for aclint
+Date: Tue, 29 Apr 2025 15:42:14 +0930
+Message-ID: <20250429061223.1457166-7-joel@jms.id.au>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250429061223.1457166-1-joel@jms.id.au>
+References: <20250429061223.1457166-1-joel@jms.id.au>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.9;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=joel.stan@gmail.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,83 +100,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are cases where we do not want the memory layout of a texture to
-be tiled as the component processing the texture would not know how to
-de-tile either via software or hardware. Therefore, ensuring that the
-memory backing the texture has a linear layout is absolutely necessary
-in these situations.
+The current device tree property uses two cells for the address (and for
+the size), but assumes the they are less than 32 bits by hard coding the
+high cell to zero.
 
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Frediano Ziglio <freddy77@gmail.com>
-Cc: Dongwon Kim <dongwon.kim@intel.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Use qemu_fdt_setprop_sized_cells to do the job of splitting the upper
+and lower 32 bits across cells.
+
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- include/ui/console.h |  2 ++
- ui/console-gl.c      | 28 ++++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+)
+ hw/riscv/virt.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 46b3128185..fa2dd53e2e 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -422,6 +422,8 @@ bool console_gl_check_format(DisplayChangeListener *dcl,
-                              pixman_format_code_t format);
- void surface_gl_create_texture(QemuGLShader *gls,
-                                DisplaySurface *surface);
-+void surface_gl_create_texture_from_fd(DisplaySurface *surface,
-+                                       int fd, GLuint *texture);
- void surface_gl_update_texture(QemuGLShader *gls,
-                                DisplaySurface *surface,
-                                int x, int y, int w, int h);
-diff --git a/ui/console-gl.c b/ui/console-gl.c
-index 103b954017..f83012fed4 100644
---- a/ui/console-gl.c
-+++ b/ui/console-gl.c
-@@ -25,6 +25,7 @@
-  * THE SOFTWARE.
-  */
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- #include "ui/console.h"
- #include "ui/shader.h"
- 
-@@ -96,6 +97,33 @@ void surface_gl_create_texture(QemuGLShader *gls,
-     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
- }
- 
-+void surface_gl_create_texture_from_fd(DisplaySurface *surface,
-+                                       int fd, GLuint *texture)
-+{
-+    unsigned long size = surface_stride(surface) * surface_height(surface);
-+    GLuint mem_obj;
-+
-+    if (!epoxy_has_gl_extension("GL_EXT_memory_object") ||
-+        !epoxy_has_gl_extension("GL_EXT_memory_object_fd")) {
-+        return;
-+    }
-+
-+#ifdef GL_EXT_memory_object_fd
-+    glCreateMemoryObjectsEXT(1, &mem_obj);
-+    glImportMemoryFdEXT(mem_obj, size, GL_HANDLE_TYPE_OPAQUE_FD_EXT, fd);
-+    if (glGetError() != GL_NO_ERROR) {
-+        error_report("spice: cannot import memory object from fd");
-+        return;
-+    }
-+
-+    glGenTextures(1, texture);
-+    glBindTexture(GL_TEXTURE_2D, *texture);
-+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_TILING_EXT, GL_LINEAR_TILING_EXT);
-+    glTexStorageMem2DEXT(GL_TEXTURE_2D, 1, GL_RGBA8, surface_width(surface),
-+                         surface_height(surface), mem_obj, 0);
-+#endif
-+}
-+
- void surface_gl_update_texture(QemuGLShader *gls,
-                                DisplaySurface *surface,
-                                int x, int y, int w, int h)
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 62200ea39d07..0141ea4795e5 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -387,8 +387,8 @@ static void create_fdt_socket_aclint(RISCVVirtState *s,
+         qemu_fdt_add_subnode(ms->fdt, name);
+         qemu_fdt_setprop_string(ms->fdt, name, "compatible",
+             "riscv,aclint-mswi");
+-        qemu_fdt_setprop_cells(ms->fdt, name, "reg",
+-            0x0, addr, 0x0, RISCV_ACLINT_SWI_SIZE);
++        qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg",
++            2, addr, 2, RISCV_ACLINT_SWI_SIZE);
+         qemu_fdt_setprop(ms->fdt, name, "interrupts-extended",
+             aclint_mswi_cells, aclint_cells_size);
+         qemu_fdt_setprop(ms->fdt, name, "interrupt-controller", NULL, 0);
+@@ -410,11 +410,11 @@ static void create_fdt_socket_aclint(RISCVVirtState *s,
+     qemu_fdt_add_subnode(ms->fdt, name);
+     qemu_fdt_setprop_string(ms->fdt, name, "compatible",
+         "riscv,aclint-mtimer");
+-    qemu_fdt_setprop_cells(ms->fdt, name, "reg",
+-        0x0, addr + RISCV_ACLINT_DEFAULT_MTIME,
+-        0x0, size - RISCV_ACLINT_DEFAULT_MTIME,
+-        0x0, addr + RISCV_ACLINT_DEFAULT_MTIMECMP,
+-        0x0, RISCV_ACLINT_DEFAULT_MTIME);
++    qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg",
++        2, addr + RISCV_ACLINT_DEFAULT_MTIME,
++        2, size - RISCV_ACLINT_DEFAULT_MTIME,
++        2, addr + RISCV_ACLINT_DEFAULT_MTIMECMP,
++        2, RISCV_ACLINT_DEFAULT_MTIME);
+     qemu_fdt_setprop(ms->fdt, name, "interrupts-extended",
+         aclint_mtimer_cells, aclint_cells_size);
+     riscv_socket_fdt_write_id(ms, name, socket);
+@@ -428,8 +428,8 @@ static void create_fdt_socket_aclint(RISCVVirtState *s,
+         qemu_fdt_add_subnode(ms->fdt, name);
+         qemu_fdt_setprop_string(ms->fdt, name, "compatible",
+             "riscv,aclint-sswi");
+-        qemu_fdt_setprop_cells(ms->fdt, name, "reg",
+-            0x0, addr, 0x0, s->memmap[VIRT_ACLINT_SSWI].size);
++        qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg",
++            2, addr, 2, s->memmap[VIRT_ACLINT_SSWI].size);
+         qemu_fdt_setprop(ms->fdt, name, "interrupts-extended",
+             aclint_sswi_cells, aclint_cells_size);
+         qemu_fdt_setprop(ms->fdt, name, "interrupt-controller", NULL, 0);
 -- 
-2.49.0
+2.47.2
 
 
