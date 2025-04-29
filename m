@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96214C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E1C2C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9lf2-0003TO-AL; Tue, 29 Apr 2025 10:10:15 -0400
+	id 1u9ldi-0000e4-N8; Tue, 29 Apr 2025 10:08:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9leZ-0003As-B9
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:09:43 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9ldh-0000dO-9a
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:08:49 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9leX-0006TU-Nw
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:09:43 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43d07ca6a80so23664365e9.1
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 07:09:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9ldc-0006G7-UW
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:08:48 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-39ee57c0b8cso6956006f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 07:08:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745935780; x=1746540580; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745935722; x=1746540522; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cgWjRtFl0Tqbcd4/+gPIcf2l4PP5xa+gpuaAj2NrLow=;
- b=Y838GGm3mFEK6Q7WaC5H/eNdklCYSMjUbxJGxA41F4ELmmWUxbfkwnGBHsP/3ixJWH
- DThO5mMsn1L+eMJ+POVEFJXhgX1irvx5pXnZjsMNW093oIpAPMLSgStkV0/+doj9xUfp
- /aSxr9F+0f3pNGw2nWLfjZjAWglEsGWqosl+uLhbJat+VUX7ieMmqMNFSsnZYRL+yLfO
- pcNyqlU+TTUVXxjijbSK/YcZMEKpfUOKPvF4+0V/lXX9NdYly4QWFQ9vNQDRYXckslHk
- kM0L5ne1hgvSXyfLiaER6b8jmQy/tLwIpJJUAnY05zf9/QafC9aM2rx/5PtItCxTFru6
- kr1Q==
+ bh=1rBTFzGlpmN0XM4Xhc9yiz4Q5nlS539l0QvdyVgqZAM=;
+ b=cQpUk0XRCoVg0qk/yrI+21rLGJ5Mhc2s5Mg1MUBD+K4FtYrXRNWpfuPVrMQnRyj3iy
+ EHOi+UUhcxbNp0mWKD02CQXR7MezCOXfChRy+zjCeCdNHcVLoRBFO/DAmSncmaSaV6mF
+ TXHVMY2J0pqOU+pu4sLKFypztaR2FxsZLcG9XEAk8I7/39EmZlfw0VeTjsC5bd5Ueg2N
+ YVo4aXdmf1MTojKReUa6rYan65KjPYdS6EnxzzpAj55kke2V02DWRDyNwQQqzhB7aQMz
+ /KHmmNrV7k82doV29k1X2+5P1CuMVsev6sElsHdkc8dhidEk/1lkX+dUYqMF3sgPRLRm
+ Te/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745935780; x=1746540580;
+ d=1e100.net; s=20230601; t=1745935722; x=1746540522;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cgWjRtFl0Tqbcd4/+gPIcf2l4PP5xa+gpuaAj2NrLow=;
- b=wUfx8TDFNPyDRzyeTBkLT6bT51WcPsGfhMMVIxlgApVvtOGnKxq2wQ3Rhxjx6oGCDZ
- YT0PA1FS0/ItqmFI1kpqFya43eHxOw743NRQEsR5/WbLmJfmx7k27ESbC0ngG8b6j0P6
- XKi3SdSoSvdS1bXSEdmpbX7L+0Pti0NHSqwnB4357vFKkXQroyVjPF+hrrDTlk2GEUXB
- 7E/K8YV5Y/+nnHORDZkd1yvNOt4QHqhkQtQszBq7vI23IBG4jXYkC/hFTgTrpZlM4g7s
- HdVwDJlWDstemoaHAaHtXggADDd1zOhGdjUlOSorgbKyA7X9/mqD9OGY7sbeEMMUIRTn
- Vs0g==
-X-Gm-Message-State: AOJu0YwFy29u/qZVoCUwAVP4szf1DSi9kKxkbO6MNjrA9yhMf0XrJ8KF
- 73uPOe4YuSEc9clqpHmh+Z/GUsZs5Gqxvkd+89E1Mr5iE4wXZUW7UzNOR2qt4b3W1H2HL1t8y+t
- P
-X-Gm-Gg: ASbGncsRGQd8J1D1TBckMt4gWwgv02t9MDhv68hW1S1LJUHZ/gt0OlcNjj2iyvSGoWt
- An4l4kKXL2LwazLGTJicey2PcYvXSs1TivhtJ64HDdQesxlRX4qJ3c45DlwTkfIL7QQ/fZBui3r
- P1R/Q5N3hlRWcJZCsaCA3hrpGlop/QI/qgCkKO5vpTHuAAejvMcpe1YbUTpBcOf8uld7Jtl9vK8
- iOGDJoPf7Yu/maAJ8PBNXILkjVQByoyHK+JpmHyDTPFtcouFDc2x2bY1THkXLafdoiV75ayztno
- JvQQaFU4W3kOjDBJeO7/bvTTzJ7QJmtanKoHnis69wNyk63XdqKeSg5TBL1DNbZF2h5sexymwGr
- PDJS4Q8UuvaJyMru9LTgt
-X-Google-Smtp-Source: AGHT+IEyWXukeI+Pl5W22LKIsZz5SJqar6L1PSi+oMoZ13+hLI2v4xf8Dl64BDyxeCtUv8HLak6k/g==
-X-Received: by 2002:a05:600c:b9b:b0:43b:ca39:6c7d with SMTP id
- 5b1f17b1804b1-440ab782a91mr132704845e9.3.1745935778149; 
- Tue, 29 Apr 2025 07:09:38 -0700 (PDT)
+ bh=1rBTFzGlpmN0XM4Xhc9yiz4Q5nlS539l0QvdyVgqZAM=;
+ b=qfJaGXuQRc96W8he6XeuDeFnBhJ6sjbRDRTU8l04t7HHa7xC+ZhalHXJ2HE/Bf7pkw
+ OVvOy9m755qp2tQfLHsLjE48xLMcl5IcnALNHvaPslQW5bM7pgQPBwx+HljWXyTkjEh4
+ 9YGHLBnK4h5yuaSMt0s1JmayGpISdpZLeGdFtPYOro80ocg6lDuugLZ9svt92Ba+8Gsw
+ lMR45ePLkDFP/1HmvoNjdVXew/ArhDr1evMVuBsBr65Ib8BzbWrycjjof8R+r1l+kVAY
+ 64ILfmVHM0swSbFjLW5D4L6WkBVH1SxZrDXAPpoqOMXIBRbbUECRsxZ1PoGLBTKQ9L58
+ zYxA==
+X-Gm-Message-State: AOJu0YxZ2zu5eL4EUux6pw6bmM+24JQn6iYYC9GAnXyFMALMnx+8UbR5
+ HDetiDn/zbM6QR6H4+KF/5V23Vv6m1rKxvr6lNjvG2thSgYrH0AIdlhMtMIoITupnQzzAsGH+fr
+ 1
+X-Gm-Gg: ASbGncuw2lxALLZMLrm8SMRzYbcU6cmLo2A/fwOk9bxIeVYR5Mi5n5trcZwS/30joJY
+ rdWQ3oSf5jxP6XKJ1uh+cr10B7PeLcgL71M8qyT91CMmuE9pQFLSrH3PLJ9YIEUftgMD2etcY/h
+ UfnufhFPJrtjE6Tfn6aWTOnfHl9NHBT8H2uvuvEAIIZxA+POai8CU/Cb2fHlmIFcueGhK3+w/Tu
+ dXEy486ucjZGJU5B2vekSF4fCPy+nQolQhkXR/yFv6HUZAXFT1JFh/6xIoJeiGbA8ZYSM04t3RK
+ GH+qUXXOBY2D8cuBE4mJfsjtWyVdubmveCl7s3aEmJMpdbMAuvFf4eFkukYowrjcy4hOZctHQ0T
+ mEZ3jL+7kDzAH5Cy5IDrp
+X-Google-Smtp-Source: AGHT+IFnDrVcedbXHpcglRf3Zfr33IFFYKasSaoLQa9TB96b58tL9E1xh2++cLgtcB9Hp183gOayEg==
+X-Received: by 2002:adf:f7c5:0:b0:391:3406:b4e2 with SMTP id
+ ffacd0b85a97d-3a0894a17f0mr2414426f8f.49.1745935722255; 
+ Tue, 29 Apr 2025 07:08:42 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073bbeb5esm14012581f8f.0.2025.04.29.07.09.36
+ ffacd0b85a97d-3a073cbedc4sm13721492f8f.47.2025.04.29.07.08.41
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 29 Apr 2025 07:09:37 -0700 (PDT)
+ Tue, 29 Apr 2025 07:08:41 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -76,25 +76,24 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 14/19] hw/scsi/vmw_pvscsi: Remove
- PVSCSI_COMPAT_OLD_PCI_CONFIGURATION definition
-Date: Tue, 29 Apr 2025 16:08:20 +0200
-Message-ID: <20250429140825.25964-15-philmd@linaro.org>
+Subject: [PATCH v2 03/19] hw/i386/pc: Remove pc_compat_2_4[] array
+Date: Tue, 29 Apr 2025 16:08:09 +0200
+Message-ID: <20250429140825.25964-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250429140825.25964-1-philmd@linaro.org>
 References: <20250429140825.25964-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,79 +109,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PVSCSI_COMPAT_OLD_PCI_CONFIGURATION was only used by the
-hw_compat_2_5[] array, via the 'x-old-pci-configuration=on'
-property. We removed all machines using that array, lets remove
-all the code around PVSCSI_COMPAT_OLD_PCI_CONFIGURATION.
+The pc_compat_2_4[] array was only used by the pc-q35-2.4
+and pc-i440fx-2.4 machines, which got removed. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/scsi/vmw_pvscsi.c | 26 +++++++-------------------
- 1 file changed, 7 insertions(+), 19 deletions(-)
+ include/hw/i386/pc.h |  3 ---
+ hw/i386/pc.c         | 19 -------------------
+ 2 files changed, 22 deletions(-)
 
-diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
-index d5825b67868..34de59a7cf6 100644
---- a/hw/scsi/vmw_pvscsi.c
-+++ b/hw/scsi/vmw_pvscsi.c
-@@ -69,17 +69,11 @@ OBJECT_DECLARE_TYPE(PVSCSIState, PVSCSIClass, PVSCSI)
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index f4a874b17fc..b34aa25fdce 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -301,9 +301,6 @@ extern const size_t pc_compat_2_6_len;
+ extern GlobalProperty pc_compat_2_5[];
+ extern const size_t pc_compat_2_5_len;
  
+-extern GlobalProperty pc_compat_2_4[];
+-extern const size_t pc_compat_2_4_len;
+-
+ #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+     static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
+                                                  const void *data) \
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index c8bb4a3ee47..2b46714a5ac 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -262,25 +262,6 @@ const size_t pc_compat_2_6_len = G_N_ELEMENTS(pc_compat_2_6);
+ GlobalProperty pc_compat_2_5[] = {};
+ const size_t pc_compat_2_5_len = G_N_ELEMENTS(pc_compat_2_5);
  
- /* Compatibility flags for migration */
--#define PVSCSI_COMPAT_OLD_PCI_CONFIGURATION_BIT 0
--#define PVSCSI_COMPAT_OLD_PCI_CONFIGURATION \
--    (1 << PVSCSI_COMPAT_OLD_PCI_CONFIGURATION_BIT)
- #define PVSCSI_COMPAT_DISABLE_PCIE_BIT 1
- #define PVSCSI_COMPAT_DISABLE_PCIE \
-     (1 << PVSCSI_COMPAT_DISABLE_PCIE_BIT)
- 
--#define PVSCSI_USE_OLD_PCI_CONFIGURATION(s) \
--    ((s)->compat_flags & PVSCSI_COMPAT_OLD_PCI_CONFIGURATION)
--#define PVSCSI_MSI_OFFSET(s) \
--    (PVSCSI_USE_OLD_PCI_CONFIGURATION(s) ? 0x50 : 0x7c)
-+#define PVSCSI_MSI_OFFSET    (0x7c)
- #define PVSCSI_EXP_EP_OFFSET (0x40)
- 
- typedef struct PVSCSIRingInfo {
-@@ -1110,7 +1104,7 @@ pvscsi_init_msi(PVSCSIState *s)
-     int res;
-     PCIDevice *d = PCI_DEVICE(s);
- 
--    res = msi_init(d, PVSCSI_MSI_OFFSET(s), PVSCSI_MSIX_NUM_VECTORS,
-+    res = msi_init(d, PVSCSI_MSI_OFFSET, PVSCSI_MSIX_NUM_VECTORS,
-                    PVSCSI_USE_64BIT, PVSCSI_PER_VECTOR_MASK, NULL);
-     if (res < 0) {
-         trace_pvscsi_init_msi_fail(res);
-@@ -1158,15 +1152,11 @@ pvscsi_realizefn(PCIDevice *pci_dev, Error **errp)
-     trace_pvscsi_state("init");
- 
-     /* PCI subsystem ID, subsystem vendor ID, revision */
--    if (PVSCSI_USE_OLD_PCI_CONFIGURATION(s)) {
--        pci_set_word(pci_dev->config + PCI_SUBSYSTEM_ID, 0x1000);
--    } else {
--        pci_set_word(pci_dev->config + PCI_SUBSYSTEM_VENDOR_ID,
--                     PCI_VENDOR_ID_VMWARE);
--        pci_set_word(pci_dev->config + PCI_SUBSYSTEM_ID,
--                     PCI_DEVICE_ID_VMWARE_PVSCSI);
--        pci_config_set_revision(pci_dev->config, 0x2);
--    }
-+    pci_set_word(pci_dev->config + PCI_SUBSYSTEM_VENDOR_ID,
-+                 PCI_VENDOR_ID_VMWARE);
-+    pci_set_word(pci_dev->config + PCI_SUBSYSTEM_ID,
-+                 PCI_DEVICE_ID_VMWARE_PVSCSI);
-+    pci_config_set_revision(pci_dev->config, 0x2);
- 
-     /* PCI latency timer = 255 */
-     pci_dev->config[PCI_LATENCY_TIMER] = 0xff;
-@@ -1298,8 +1288,6 @@ static const VMStateDescription vmstate_pvscsi = {
- 
- static const Property pvscsi_properties[] = {
-     DEFINE_PROP_UINT8("use_msg", PVSCSIState, use_msg, 1),
--    DEFINE_PROP_BIT("x-old-pci-configuration", PVSCSIState, compat_flags,
--                    PVSCSI_COMPAT_OLD_PCI_CONFIGURATION_BIT, false),
-     DEFINE_PROP_BIT("x-disable-pcie", PVSCSIState, compat_flags,
-                     PVSCSI_COMPAT_DISABLE_PCIE_BIT, false),
- };
+-GlobalProperty pc_compat_2_4[] = {
+-    PC_CPU_MODEL_IDS("2.4.0")
+-    { "Haswell-" TYPE_X86_CPU, "abm", "off" },
+-    { "Haswell-noTSX-" TYPE_X86_CPU, "abm", "off" },
+-    { "Broadwell-" TYPE_X86_CPU, "abm", "off" },
+-    { "Broadwell-noTSX-" TYPE_X86_CPU, "abm", "off" },
+-    { "host" "-" TYPE_X86_CPU, "host-cache-info", "on" },
+-    { TYPE_X86_CPU, "check", "off" },
+-    { "qemu64" "-" TYPE_X86_CPU, "sse4a", "on" },
+-    { "qemu64" "-" TYPE_X86_CPU, "abm", "on" },
+-    { "qemu64" "-" TYPE_X86_CPU, "popcnt", "on" },
+-    { "qemu32" "-" TYPE_X86_CPU, "popcnt", "on" },
+-    { "Opteron_G2" "-" TYPE_X86_CPU, "rdtscp", "on" },
+-    { "Opteron_G3" "-" TYPE_X86_CPU, "rdtscp", "on" },
+-    { "Opteron_G4" "-" TYPE_X86_CPU, "rdtscp", "on" },
+-    { "Opteron_G5" "-" TYPE_X86_CPU, "rdtscp", "on", }
+-};
+-const size_t pc_compat_2_4_len = G_N_ELEMENTS(pc_compat_2_4);
+-
+ /*
+  * @PC_FW_DATA:
+  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
 -- 
 2.47.1
 
