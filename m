@@ -4,86 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39067C369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 08:02:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4344C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 08:24:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9fuk-00051h-C3; Tue, 29 Apr 2025 04:02:02 -0400
+	id 1u9gGD-0008Qm-UX; Tue, 29 Apr 2025 04:24:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1u9fui-00051N-N4
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 04:02:00 -0400
-Received: from mail-qt1-x831.google.com ([2607:f8b0:4864:20::831])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1u9fug-0002JA-AW
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 04:02:00 -0400
-Received: by mail-qt1-x831.google.com with SMTP id
- d75a77b69052e-47664364628so70032191cf.1
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 01:01:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745913717; x=1746518517; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BPDzGVhU6MGC/Ugrwer7bSWmIYJ8B8q33RN2058R8gQ=;
- b=SonhHgRaUtuQqdgudDBcqz6bAAk6y1XJRGcBT46wVNMLLOE82n94qS7cWNT50BG5Vm
- 3UdzzpcyP5OF+U8ycVkYlkgMa5xx+DmGVM1f1yeZTZj57BQyCcEIgnbWRZIUXbPAHH4J
- jhPHmJtDjBcuHFH7ZREoRM5fDUZAIsBWrldOh9Gb7lVe8NX1ANPYk+IDLofwAkXPNfZJ
- XUkijDjhInoBJq+aZCoWmqZo/s4hJDrVls2ThV9E+CW3aYNnOhi2H6ZVSF++j7tjr2D8
- FFhyrM9ThVHzRLdDslL6bBaXAyvbuQ4ifPM9Bf1ORaySaQvakyg54LwDBrWyFTijuwNt
- wNlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745913717; x=1746518517;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BPDzGVhU6MGC/Ugrwer7bSWmIYJ8B8q33RN2058R8gQ=;
- b=PMlYMqH1qu2ftOEO+qgsWr665IDy7PAx45Ct0PKHk6rJAdCr25gWJALPTEK5pLdkHJ
- 4WeUkpAMbvRejvtU+6lxjnAkL4qZC3o96Fp22TdCcrqhct9s1FYBLC78Ojn8Iroj9+D+
- uzLR8kPApQVNtbCWUXedpyaIbWfSwpU+uMf812gjv6HZ1wyb5Onu+e8hWowcFyjaFX20
- 7kCLXI8O7h+FDADVezo+OIdt5w/rcPyhC7rgbHrqyO8OKEEfom7oSgkaE/wbVdgYsmy4
- rWWxH14ody+mUZCaJ1fDsgYTAiRVNBUcv6A0y4GjesfhuqtkjWOlXaXQGflAAB66Zaks
- fRxQ==
-X-Gm-Message-State: AOJu0Yxt7uSDVpW6XZ5Ci8N2jMMqtBCn0n8h5irQ2/c3nYBPlnoFr8yc
- 82DXXFVAsUhNq2rxdPQM6URNFq7XKHqPVaNZaoQ9kqEx9OMMKER8sqh6GmDllbkAOmW9R+lwPWQ
- cGc1kXy/OL4cvM/uvL+UIARU3Y7c=
-X-Gm-Gg: ASbGncsL2up6jIjHHD+nhG5L/UNR44QVVLuDdnNiK0Jg8q4bTK9nK/zt5OdOzi4UC8R
- Mb0o8ll3JenIHFA3k0LQyKNdcwP2378Y4FIsvFOLMF2CpSU6VIx/MStF2tKZXZkNZQuWpI0AcgZ
- AJQwAqoVYFnY24ySYpaEp1klWd6f2hBSR4YEB0ukooOoQavfjN7cm195M=
-X-Google-Smtp-Source: AGHT+IGyS3fBxq7WGG/SPKnQBuqEMrPVk9Y3yR6l+4c3Y6RIE3L3gyaA7qVmW/pzQfL2hhTId89uCGD1QQRS9pnm38I=
-X-Received: by 2002:a05:622a:610d:b0:475:19cc:a81a with SMTP id
- d75a77b69052e-4885b09e371mr33559281cf.21.1745913716820; Tue, 29 Apr 2025
- 01:01:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9gGA-0008QP-IN
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 04:24:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9gG7-00057y-IU
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 04:24:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745915044;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OgYtKMXbx4Z+dO1+tpXRR5gV5Uix4DFdS3gI0Ps7Vw8=;
+ b=VwieMMc7Zw8TwBjLIKnwPovtU2ZsrdFwpR51RNjJvbqTQNnC/F1OHO7SqRtl9mgYkDgYmO
+ xZQzgLw58bDREvfhxSs5sGYzjP8w1hYGXmF2Xr7gcb+jodpk6LDTgDUaPJOhUTRSqZyF+Z
+ 93Yv+n82XddjkHab0iFvGuIxAZxCXqw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-73-v8w7NI_qPs-WKbLvxK-pBA-1; Tue,
+ 29 Apr 2025 04:24:00 -0400
+X-MC-Unique: v8w7NI_qPs-WKbLvxK-pBA-1
+X-Mimecast-MFC-AGG-ID: v8w7NI_qPs-WKbLvxK-pBA_1745915038
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 738F31956096; Tue, 29 Apr 2025 08:23:58 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8E312180045C; Tue, 29 Apr 2025 08:23:57 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3B63921E6768; Tue, 29 Apr 2025 10:23:55 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Peter Krempa <pkrempa@redhat.com>,  qemu-devel@nongnu.org,
+ richard.henderson@linaro.org,  stefanha@redhat.com,  Michael Roth
+ <michael.roth@amd.com>,  pbonzini@redhat.com,  peter.maydell@linaro.org,
+ thuth@redhat.com,  jsnow@redhat.com,  philmd@linaro.org,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  devel@lists.libvirt.org
+Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
+In-Reply-To: <2cc27344-8cfd-4435-9d41-79b86f61d537@linaro.org> (Pierrick
+ Bouvier's message of "Mon, 28 Apr 2025 09:35:11 -0700")
+References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+ <87a584b69n.fsf@pond.sub.org> <aA9ChuXrkmx1Igy5@angien.pipo.sk>
+ <8734dswnm3.fsf@pond.sub.org>
+ <2cc27344-8cfd-4435-9d41-79b86f61d537@linaro.org>
+Date: Tue, 29 Apr 2025 10:23:55 +0200
+Message-ID: <875xinnzok.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20250429060952.59508-1-vivek.kasireddy@intel.com>
-In-Reply-To: <20250429060952.59508-1-vivek.kasireddy@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 29 Apr 2025 12:01:44 +0400
-X-Gm-Features: ATxdqUG12DDQRqU-iQTUPc_JnQOPU0zTu0MZhhCVZeHzeNZidB4exCqSz7MkZIU
-Message-ID: <CAJ+F1CJA1qH5sm+E7e4yD7vdZsOGczYY-w+FD2j3zynX9t5Bjw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] ui/spice: Enable gl=on option for non-local or
- remote clients
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Frediano Ziglio <freddy77@gmail.com>, 
- Michael Scherle <michael.scherle@rz.uni-freiburg.de>,
- Dongwon Kim <dongwon.kim@intel.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::831;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x831.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,90 +91,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Vivek
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-On Tue, Apr 29, 2025 at 10:13=E2=80=AFAM Vivek Kasireddy
-<vivek.kasireddy@intel.com> wrote:
+> On 4/28/25 4:07 AM, Markus Armbruster wrote:
+>> Peter Krempa <pkrempa@redhat.com> writes:
+>> 
+>>> So what should libvirt do once multiple targets are supported?
+>>>
+>>> How do we query CPUs for each of the supported targets?
+>>>
 >
-> To address the limitation that this option is incompatible with
-> remote clients, this patch series adds an option to select a
-> preferred codec and also enable gl=3Don option for clients that
-> are connected via the network. In other words, with this option
-> enabled (and the below linked Spice series merged), it would be
-> possible to have Qemu share a dmabuf fd with Spice, which would
-> then forward it to a hardware or software based encoder and
-> eventually send the data associated with the fd to a client that
-> could be located on a different machine.
+> It's kind of a similar question we have to solve now with QEMU code.
+> What happens when a symbol is duplicated, and available only for several 
+> targets?
 >
-> Essentially, this patch series provides a hardware accelerated,
-> opensource VDI option for users using Qemu and Spice by leveraging
-> the iGPU/dGPU on the host machine via the Gstreamer framework.
+> In this case, we found various approaches to solve this:
+> - unify this symbol for all targets (single implementation)
+> - unify all targets to provide this symbol (multiple impl, all targets)
+> - rename symbols adding {arch} suffix, so it's disambiguated by name
+> - create a proper interface which an available function (multiple impl, 
+> selective targets)
 >
+> In the case of query-cpu-definitions, my intuition is that we want to 
+> have a single implementation, and that we return *all* the cpus, merging 
+> all architectures. In the end, we (and libvirt also) should think out of 
+> the "target" box. It's an implementation detail, based on the fact QEMU 
+> had 'targets' associated to various binaries for a long time and not a 
+> concept that should leak into all consumers.
+>
+>>> Will the result be the same if we query them one at a time or all at
+>>> once?
+>> 
+>> Pierrick's stated goal is to have no noticable differences between the
+>> single binary and the qemu-system-<target> it covers.  This is obviously
+>> impossible if we can interact with the single binary before the target
+>> is fixed.
+>> 
+>
+> Right.
+> At this point, we can guarantee the target will be fixed before anything 
+> else, at the start of main(). It's obviously an implementation choice, 
+> but to be honest, I don't see what we would gain from having a "null" 
+> default QEMU target, unable to emulate anything.
+>
+>>>> This requires fixing the target before introspection.  Unless this is
+>>>> somehow completely transparent (wrapper scripts, or awful hacks based on
+>>>> the binary's filename, perhaps), management applications may have to be
+>>>> adjusted to actually do that.
+>>>
+>>> As noted filename will not work. Users can specify any filename and
+>>> create override scripts or rename the binary.
+>> 
+>> True.
+>> 
+>
+> I would prefer to not open this pandora box on this thread, but don't 
+> worry, the best will be done to support all those cases, including 
+> renaming the binary, allowing any prefix, suffix, as long as name stays 
+> unambiguous. If you rename it to qemu-ok, how can you expect anything?
+>
+> We can provide the possibility to have a "default" target set at compile 
+> time, for distributors creating their own specific QEMU binaries. But in 
+> the context of classical software distribution, it doesn't make any sense.
 
-Could you explain why Spice or GStreamer can't handle a non-linear
-texture layout? It feels like a limitation that is not under QEMU
-responsibility, I am not sure it should have to do it.
+I don't wish to derail this thread, but we've been dancing around the
+question of how to best fix the target for some time.  I think we should
+talk about it for real.
 
-Btw, the series will likely have conflicts with "ui: support multi
-plane texture", which I think we should merge first.
-(https://patchew.org/QEMU/20250327025848.46962-1-yuq825@gmail.com/)
+Mind, this is not an objection to your larger "single binary" idea.  It
+could be only if it was an intractable problem, but I don't think it is.
 
-> v2 -> v3:
-> - Check for errors after invoking glImportMemoryFdEXT() using
->   glGetError() and report the error to user (Dmitry)
->
-> v1 -> v2:
-> - Replace the option name preferred-codec with video-codecs (Marc-Andr=C3=
-=A9)
-> - Add a warning when an fd cannot be created from texture (Marc-Andr=C3=
-=A9)
-> - Add a new patch to blit the scanout texture into a linear one to
->   make it work with virgl
-> - Rebased and tested against the latest Spice master
->
-> Tested with the following Qemu parameters:
-> -device virtio-vga,max_outputs=3D1,xres=3D1920,yres=3D1080,blob=3Dtrue
-> -spice port=3D3001,gl=3Don,disable-ticketing=3Don,video-codecs=3Dgstreame=
-r:h264
->
-> and remote-viewer --spice-debug spice://x.x.x.x:3001 on the client side.
->
-> Associated Spice server MR (merged):
-> https://gitlab.freedesktop.org/spice/spice/-/merge_requests/229
->
-> ---
-> Cc: Gerd Hoffmann <kraxel@redhat.com>
-> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> Cc: Frediano Ziglio <freddy77@gmail.com>
-> Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
-> Cc: Dongwon Kim <dongwon.kim@intel.com>
-> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
-> Vivek Kasireddy (6):
->   ui/spice: Add an option for users to provide a preferred codec
->   ui/spice: Enable gl=3Don option for non-local or remote clients
->   ui/spice: Submit the gl_draw requests at 60 FPS for remote clients
->   ui/console-gl: Add a helper to create a texture with linear memory
->     layout
->   ui/spice: Create a new texture with linear layout when gl=3Don is
->     enabled
->   ui/spice: Blit the scanout texture if its memory layout is not linear
->
->  include/ui/console.h       |   2 +
->  include/ui/spice-display.h |   4 +
->  qemu-options.hx            |   5 +
->  ui/console-gl.c            |  28 ++++++
->  ui/spice-core.c            |  16 ++++
->  ui/spice-display.c         | 184 +++++++++++++++++++++++++++++++++----
->  6 files changed, 223 insertions(+), 16 deletions(-)
->
-> --
-> 2.49.0
->
->
+You want the single binary you're trying to create to be a drop-in
+replacement for per-target binaries.
 
+"Drop-in replacement" means existing usage continues to work.
+Additional interfaces are not a problem.
 
---=20
-Marc-Andr=C3=A9 Lureau
+To achieve "drop-in replacement", the target needs to be fixed
+automatically, and before the management application can further
+interact with it.
+
+If I understand you correctly, you're proposing to use argv[0] for that,
+roughly like this: assume it's qemu-system-<target>, extract <target>
+first thing in main(), done.
+
+What if it's not named that way?  If I understand you correctly, you're
+proposing to fall back to a compiled-in default target.
+
+I don't think this is going to fly.
+
+Developers rename the binary all the time, and expect this not to change
+behavior.  For instance, I routinely rename qemu-FOO to qemu-FOO.old or
+qemu-FOO.COMMIT-HASH to let me compare behavior easily.
+
+We could relax the assumption to support such renames.  Developers then
+need to be aware of what renames are supported.  Meh.
+
+The more we relax the pattern, the likelier surprising behavior becomes.
+
+We could mitigate surprises by eliminating the built-in default target.
+
+Users invoke their binaries with their own names, too.  If Joe R. User
+finds qemu-system-<joe's-fav-target> too much to type, and creates a
+symlink named q to it, more power to him!
+
+Distributions have packaged renamed binaries.  qemu-kvm has been used
+quite widely.
+
+In neither of these cases, relaxing the pattern helps.
+
+The least bad solution I can see so far is a new option -target.
+
+Instead of turning the target-specific binaries into links to / copies
+of the single binary, they become wrappers that pass -target as the
+first option.  We need to make sure this option is honored in time then,
+which should be easy enough.
+
+If you invoke the single binary directly, you need to pass -target
+yourself.  If you don't to pass it, or pass it late in the command line,
+you open up a window for interaction with indeterminate target.
+Target-specific interfaces could exhibit different behavior then, even
+fail.  That's fine under "additional interfaces are not a problem".
+
+Thoughts?
+
 
