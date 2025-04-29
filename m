@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3574EC3ABA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 05:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C4E5C369CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 05:56:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9dqM-0002eF-RU; Tue, 29 Apr 2025 01:49:22 -0400
+	id 1u9dx7-0003p1-FO; Tue, 29 Apr 2025 01:56:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9dqD-0002dM-Qq
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 01:49:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1u9dx0-0003oW-L2
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 01:56:15 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9dqB-0002rh-7k
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 01:49:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745905749;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=85wJiP+fftMxnEu8gB5QEfKfjw62x7GPJE0VbwIqAB8=;
- b=Q0ivWJcXO2fybK6he8C+kcwvvTnrpHiAHtjeCKdXbiaH+ZqPzJBZZk3l1ntXO+VY6Q5wTI
- co8smeng8UZWIJ4IAymgXOAt/0TfQtsHLd6xmOmLLSMlC49qX6sjxnOizqLLFlGPluQ2/t
- 1x9A4/COEpMt2gsQS4+3icmJPGl1KIw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-126-AMy9p1miNXGfkbw4AkneEw-1; Tue,
- 29 Apr 2025 01:49:05 -0400
-X-MC-Unique: AMy9p1miNXGfkbw4AkneEw-1
-X-Mimecast-MFC-AGG-ID: AMy9p1miNXGfkbw4AkneEw_1745905744
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3713819560A7; Tue, 29 Apr 2025 05:49:04 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 35B731956094; Tue, 29 Apr 2025 05:49:03 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A16EA21E66C2; Tue, 29 Apr 2025 07:49:00 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  "Richard W.M. Jones"
- <rjones@redhat.com>,  Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
- <hreitz@redhat.com>
-Subject: Re: [PATCH v2 1/4] nbd: Add multi-conn option
-In-Reply-To: <20250428185246.492388-7-eblake@redhat.com> (Eric Blake's message
- of "Mon, 28 Apr 2025 13:46:44 -0500")
-References: <20250428185246.492388-6-eblake@redhat.com>
- <20250428185246.492388-7-eblake@redhat.com>
-Date: Tue, 29 Apr 2025 07:49:00 +0200
-Message-ID: <877c33qzzn.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1u9dwx-0003er-0A
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 01:56:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745906171; x=1777442171;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=Tu+vQM2FZn7coLoq40tbMIWVd6GUqk7JnawDfSdnBm0=;
+ b=HboanY/CGOFGJdqpasG7V1yJtUfHewMETT58Z0xW/XOb1caeurqVELxb
+ Z/Y2dsg/z8PN1H8rfHfrGw4VIWWy4TjAgwvJc75wpgcbx1pYgRUG933et
+ eZtEZf029SU+IAODUADx5RszWKTxO4NTULNIwAaFOSfXLg12/LL2XJQiX
+ e0mmcGAsOKo6qo5/r/Jykj21xeEoGjueW5DOUAzceQJnbEMM16ImB80sC
+ PP3+OoVz+zuc980w/I29fJHh+Axx8RVKkf5S6MuvXFihzl4AHw4DvQFFS
+ 2+GO94Gxt4xMb2mM8QG9/AtSYGbcm7SLQq4XIw+/EY/BAYwnc34/RK8gw Q==;
+X-CSE-ConnectionGUID: H8IasbGjTo2C5FHkvGsT/g==
+X-CSE-MsgGUID: mTaMpIIhS9Gb0uHFqs2Oyw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11417"; a="64935162"
+X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="64935162"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Apr 2025 22:56:05 -0700
+X-CSE-ConnectionGUID: BjVxhGz9TMmgDbqZtKEujA==
+X-CSE-MsgGUID: 6heALCXkRlyl0zRvWVXZHQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="138718582"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Apr 2025 22:56:02 -0700
+Message-ID: <4a1cfda7-4077-4754-b5a5-40db744419b4@intel.com>
+Date: Tue, 29 Apr 2025 13:55:59 +0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Bug] QEMU TCG warnings after commit c6bd2dd63420 - HTT / CMP_LEG
+ bits
+To: Ewan Hai <ewanhai-oc@zhaoxin.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: yeeli@zhaoxin.com, cobechen@zhaoxin.com, ewanhai@zhaoxin.com,
+ MaryFeng@zhaoxin.com, Runaguo@zhaoxin.com, Xanderchen@zhaoxin.com,
+ Alansong@zhaoxin.com, qemu-devel@nongnu.org
+References: <c111d9f9-2914-4b41-811a-b3a9ad0d83a9@zhaoxin.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <c111d9f9-2914-4b41-811a-b3a9ad0d83a9@zhaoxin.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,134 +89,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Eric Blake <eblake@redhat.com> writes:
+On 4/29/2025 11:02 AM, Ewan Hai wrote:
+> Hi Community,
+> 
+> This email contains 3 bugs appear to share the same root cause.
+> 
+> [1] We ran into the following warnings when running QEMU v10.0.0 in TCG 
+> mode:
+> 
+> qemu-system-x86_64 \
+>    -machine q35 \
+>    -m 4G -smp 4 \
+>    -kernel ./arch/x86/boot/bzImage \
+>    -bios /usr/share/ovmf/OVMF.fd \
+>    -drive file=~/kernel/rootfs.ext4,index=0,format=raw,media=disk \
+>    -drive file=~/kernel/swap.img,index=1,format=raw,media=disk \
+>    -nographic \
+>    -append 'root=/dev/sda rw resume=/dev/sdb console=ttyS0 nokaslr'
+> 
+> qemu-system-x86_64: warning: TCG doesn't support requested feature: 
+> CPUID.01H:EDX.ht [bit 28]
+> qemu-system-x86_64: warning: TCG doesn't support requested feature: 
+> CPUID.80000001H:ECX.cmp-legacy [bit 1]
+> (repeats 4 times, once per vCPU)
+> 
+> Tracing the history shows that commit c6bd2dd63420 "i386/cpu: Set up 
+> CPUID_HT in x86_cpu_expand_features() instead of cpu_x86_cpuid()" is 
+> what introduced the warnings.
+> 
+> Since that commit, TCG unconditionally advertises HTT (CPUID 1 EDX[28]) 
+> and CMP_LEG (CPUID 8000_0001 ECX[1]). Because TCG itself has no SMT 
+> support, these bits trigger the warnings above.
+> 
+> [2] Also, Zhao pointed me to a similar report on GitLab:
+> https://gitlab.com/qemu-project/qemu/-/issues/2894
+> The symptoms there look identical to what we're seeing.
+> 
+> By convention we file one issue per email, but these two appear to share 
+> the same root cause, so I'm describing them together here.
 
-> From: "Richard W.M. Jones" <rjones@redhat.com>
->
-> Add multi-conn option to the NBD client.  This commit just adds the
-> option, it is not functional.
->
-> Setting this to a value > 1 permits multiple connections to the NBD
-> server; a typical value might be 4.  The default is 1, meaning only a
-> single connection is made.  If the NBD server does not advertise that
-> it is safe for multi-conn then this setting is forced to 1.
->
-> Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
-> [eblake: also expose it through QMP]
-> Signed-off-by: Eric Blake <eblake@redhat.com>
-> ---
->  qapi/block-core.json |  8 +++++++-
->  block/nbd.c          | 24 ++++++++++++++++++++++++
->  2 files changed, 31 insertions(+), 1 deletion(-)
->
-> diff --git a/qapi/block-core.json b/qapi/block-core.json
-> index 7f70ec6d3cb..5c10824f35b 100644
-> --- a/qapi/block-core.json
-> +++ b/qapi/block-core.json
-> @@ -4545,6 +4545,11 @@
->  #     until successful or until @open-timeout seconds have elapsed.
->  #     Default 0 (Since 7.0)
->  #
-> +# @multi-conn: Request the number of parallel client connections to make
-> +#     to the server, up to 16.  If the server does not advertise support
-> +#     for multiple connections, or if this value is 0 or 1, all traffic
-> +#     is sent through a single connection.  Default 1 (Since 10.1)
-> +#
+It was caused by my two patches. I think the fix can be as follow.
+If no objection from the community, I can submit the formal patch.
 
-So we silently ignore @multi-conn when its value is (nonsensical) zero,
-and when the server doesn't let us honor the value.  Hmm.  Silently
-ignoring the user's wishes can result in confusion.  Should we reject
-instead?
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 1f970aa4daa6..fb95aadd6161 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -776,11 +776,12 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t 
+vendor1,
+            CPUID_PAE | CPUID_MCE | CPUID_CX8 | CPUID_APIC | CPUID_SEP | \
+            CPUID_MTRR | CPUID_PGE | CPUID_MCA | CPUID_CMOV | CPUID_PAT | \
+            CPUID_PSE36 | CPUID_CLFLUSH | CPUID_ACPI | CPUID_MMX | \
+-          CPUID_FXSR | CPUID_SSE | CPUID_SSE2 | CPUID_SS | CPUID_DE)
++          CPUID_FXSR | CPUID_SSE | CPUID_SSE2 | CPUID_SS | CPUID_DE | \
++          CPUID_HT)
+            /* partly implemented:
+            CPUID_MTRR, CPUID_MCA, CPUID_CLFLUSH (needed for Win64) */
+            /* missing:
+-          CPUID_VME, CPUID_DTS, CPUID_SS, CPUID_HT, CPUID_TM, CPUID_PBE */
++          CPUID_VME, CPUID_DTS, CPUID_SS, CPUID_TM, CPUID_PBE */
 
->  # Features:
->  #
->  # @unstable: Member @x-dirty-bitmap is experimental.
-> @@ -4558,7 +4563,8 @@
->              '*tls-hostname': 'str',
->              '*x-dirty-bitmap': { 'type': 'str', 'features': [ 'unstable' ] },
->              '*reconnect-delay': 'uint32',
-> -            '*open-timeout': 'uint32' } }
-> +            '*open-timeout': 'uint32',
-> +            '*multi-conn': 'uint32' } }
->
->  ##
->  # @BlockdevOptionsRaw:
-> diff --git a/block/nbd.c b/block/nbd.c
-> index d5a2b21c6d1..5eb00e360af 100644
-> --- a/block/nbd.c
-> +++ b/block/nbd.c
-> @@ -48,6 +48,7 @@
->
->  #define EN_OPTSTR ":exportname="
->  #define MAX_NBD_REQUESTS    16
-> +#define MAX_MULTI_CONN      16
+  /*
+   * Kernel-only features that can be shown to usermode programs even if
+@@ -848,7 +849,8 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t 
+vendor1,
 
-Out of curiosity: where does this value come from?
+  #define TCG_EXT3_FEATURES (CPUID_EXT3_LAHF_LM | CPUID_EXT3_SVM | \
+            CPUID_EXT3_CR8LEG | CPUID_EXT3_ABM | CPUID_EXT3_SSE4A | \
+-          CPUID_EXT3_3DNOWPREFETCH | CPUID_EXT3_KERNEL_FEATURES)
++          CPUID_EXT3_3DNOWPREFETCH | CPUID_EXT3_KERNEL_FEATURES | \
++          CPUID_EXT3_CMP_LEG)
 
->
->  #define COOKIE_TO_INDEX(cookie) ((cookie) - 1)
->  #define INDEX_TO_COOKIE(index)  ((index) + 1)
-> @@ -97,6 +98,7 @@ typedef struct BDRVNBDState {
->      /* Connection parameters */
->      uint32_t reconnect_delay;
->      uint32_t open_timeout;
-> +    uint32_t multi_conn;
->      SocketAddress *saddr;
->      char *export;
->      char *tlscredsid;
-> @@ -1840,6 +1842,15 @@ static QemuOptsList nbd_runtime_opts = {
->                      "attempts until successful or until @open-timeout seconds "
->                      "have elapsed. Default 0",
->          },
-> +        {
-> +            .name = "multi-conn",
-> +            .type = QEMU_OPT_NUMBER,
-> +            .help = "If > 1 permit up to this number of connections to the "
-> +                    "server. The server must also advertise multi-conn "
-> +                    "support.  If <= 1, only a single connection is made "
-> +                    "to the server even if the server advertises multi-conn. "
-> +                    "Default 1",
+  #define TCG_EXT4_FEATURES 0
 
-This text implies the requested value is silently limited to the value
-provided by the server, unlike the doc comment above.  Although the
-"must" in "the sever must" could also be understood as "error when it
-doesn't".
+> [3] My colleague Alan noticed what appears to be a related problem: if 
+> we launch a guest with '-cpu <model>,-ht --enable-kvm', which means 
+> explicitly removing the ht flag, but the guest still reports HT(cat / 
+> proc/cpuinfo in linux guest) enabled. In other words, under KVM the ht 
+> bit seems to be forced on even when the user tries to disable it.
 
-> +        },
->          { /* end of list */ }
->      },
->  };
-> @@ -1895,6 +1906,10 @@ static int nbd_process_options(BlockDriverState *bs, QDict *options,
->
->      s->reconnect_delay = qemu_opt_get_number(opts, "reconnect-delay", 0);
->      s->open_timeout = qemu_opt_get_number(opts, "open-timeout", 0);
-> +    s->multi_conn = qemu_opt_get_number(opts, "multi-conn", 1);
-> +    if (s->multi_conn > MAX_MULTI_CONN) {
-> +        s->multi_conn = MAX_MULTI_CONN;
-> +    }
+This has been the behavior of QEMU for many years, not some regression 
+introduced by my patches. We can discuss how to address it separately.
 
-We silently cap the user's requested number to 16.  Not clear from QAPI
-schema doc comment; the "up to 16" there suggests more is an error.
-Should we error out instead?
-
->
->      ret = 0;
->
-> @@ -1949,6 +1964,15 @@ static int nbd_open(BlockDriverState *bs, QDict *options, int flags,
->
->      nbd_client_connection_enable_retry(s->conn);
->
-> +    /*
-> +     * We set s->multi_conn in nbd_process_options above, but now that
-> +     * we have connected if the server doesn't advertise that it is
-> +     * safe for multi-conn, force it to 1.
-> +     */
-> +    if (!(s->info.flags & NBD_FLAG_CAN_MULTI_CONN)) {
-> +        s->multi_conn = 1;
-> +    }
-> +
->      return 0;
->
->  fail:
+> Best regards,
+> Ewan
 
 
