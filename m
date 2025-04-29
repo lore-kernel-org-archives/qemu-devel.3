@@ -4,84 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A11C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 15:00:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E35DC369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 15:01:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9mQd-0004aL-Lm; Tue, 29 Apr 2025 10:59:23 -0400
+	id 1u9mSd-00077A-Um; Tue, 29 Apr 2025 11:01:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9mQc-0004XV-1j
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:59:22 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1u9mSX-00073o-Mf
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:01:21 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9mQa-0008GZ-6J
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:59:21 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43ce71582e9so46095695e9.1
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 07:59:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1u9mSV-0000Gb-Rh
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:01:21 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-39149bccb69so5177644f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 08:01:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745938758; x=1746543558; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HMhmQHLH8iV90bKlA7RRenTXjvbapnut7sKnApZGq/c=;
- b=ztpsxTOqU1dVtS2cbZt9RYdE3PTOM3k8e4/SHLlzC6MuauUyA1QvGZ6Lwr5YH8Xv7M
- b/PN8xI6pMEgsH0cfR9q0H/LT1hNv4jrmOcI8Ct4D2aHSyVkjmhmyAZOVmGtRXaeY9kk
- JFL0kWu4lWDCJeyjaM0tTRNNOOrXtYRFu/g4exvYAKoscPbBdGOmrtQiG9ODvaH/SFSP
- d6Dg1uwd+IOFTLtPPIOeNO+5s5b8RFxQVL3WL7NepRqcTyRFGmQXDO2JB+fMjVMfUT5x
- yrkrvZIhcmf/dvyNTmWcAEuumQHXZ/RyIpTf9eCoMiG5SZBPlOYGKTiT1SNqBbRIHBK6
- RDzA==
+ d=ventanamicro.com; s=google; t=1745938878; x=1746543678; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=+cMJfChjBSBP2ccnqJVsUfxZYMhTeyHWd6pJNZd1f+Q=;
+ b=AnjUM93PLlUKN0TsfXP0bQKHmwr4CLRdOgEt5WBEwsnbYCq1lLyVosGZu6dXJxgPLl
+ /9YuZCrwwIItQS7yLKzf4IeiwylpGTUJtNVk/1cL3dOf4/RCpug2yqgpYXb1yeKAqC5X
+ 8mRxE3BKd+fpARAS7TupprMpIAD0OgpwplBPdCFH6j+7NCD7piAUU78/qGvWIoh+kL1g
+ buoIE4cwh37T2qe5dBj+NvBimV1nBZ6DS6/sRkFKpSJj9nZ2bk5nYkxVr6leeo98QILq
+ ASKseM//Hn8yVN3pD5MIRX+F/WVF1Wi7BiH8ELk9fJlNGEIf3qfYLiTgJa8Baq1fie7k
+ g3Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745938758; x=1746543558;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HMhmQHLH8iV90bKlA7RRenTXjvbapnut7sKnApZGq/c=;
- b=bhwqMjt6mmCY0Mru8xz/aP4CMGlwW2lT91yfJSEKIdQVbqHIHpUnZA9DiFfYqEuvl2
- NaWT1PUAV9CKuvQyquXgb12hchQHTCm1QpA8BCDvcwzLLXXhqFUaSDWvepvxlocxcrOC
- dYEEKwb58ZwnxXy1EjgNaq7f7R9XPnyisVW0s/f2gIZe/g9/xISAp60k9YJzdzMhyEzX
- utimx6+PLiYgUctfHTrLihEu4170J3Da41yaBnnL977pLn2WfbF4xsD5MgUxNR7XZ3Qs
- suf8INSwhkdGqB+pdCGIzuXtoaxRRh+JlXJ5I78wP/RkcUdifcTcQNgJU3kdKueXh1iy
- Hkhg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUzk4iByi0/wUz86f9HG23nNiGAeKutsj/yenkqVdIbvhgptxxdII7rZ9IeVSWpXtGDG9bpASnojweJ@nongnu.org
-X-Gm-Message-State: AOJu0YxVzHvQWMM+dNR5NLdfVw5F1MeluFASOxXfvnwPxdJSLwtSIi5N
- p6b9UMl6DQLr3WBTn/KcyiJbu751PhtHQGL+//gqcuMCif5PriaZBH12Xk6KP3E=
-X-Gm-Gg: ASbGnctciP2BMMqK2TwCOZso+YRi+iGm+rV6k+km4dwXKuQi+9V3mRPbi0kOdjx4NpH
- jJMhBkOMVrL/fXiwq5qnMiBkS38WrvCaD26tpbBCbgE9hewKum2jU3YQh5JlkGd1BmknaF4Leqk
- RQXcYGsdxvtBnDytUu7i3N1QQFnneTGsWb8ZNXyskjnHBbkzsF8YaghNaRid2OwxE6wRRk0B0d2
- KNO2S9PZolsWuUi5jzy+2ApEU6r1CIF0ImS/mr+/Ab1d/TwMCFyozlU/ZXCmQBWmRZXaSaJcLQa
- 0Vu67S1Fo9p5ADkaxf+LBW7eqt/mZMrIERUPWXHWfQGIXojckEjy13HZvkwAoexjLZSgPOfnV32
- Bw7tC+LvzbrXHLg==
-X-Google-Smtp-Source: AGHT+IFBC8MwQqZfUE2JQVkITXAWw82smszcDtWrkFX9lAOZGsorTVUtA1y98Y0SrLjIb75IOnt/mg==
-X-Received: by 2002:a5d:5f91:0:b0:391:29f:4f87 with SMTP id
- ffacd0b85a97d-3a0894a393emr3644098f8f.49.1745938758147; 
- Tue, 29 Apr 2025 07:59:18 -0700 (PDT)
-Received: from [192.168.69.226] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073c8d67esm14339507f8f.17.2025.04.29.07.59.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Apr 2025 07:59:17 -0700 (PDT)
-Message-ID: <fd4e6766-c5f3-4e5e-8eeb-5d2296ba440a@linaro.org>
-Date: Tue, 29 Apr 2025 16:59:16 +0200
+ d=1e100.net; s=20230601; t=1745938878; x=1746543678;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+cMJfChjBSBP2ccnqJVsUfxZYMhTeyHWd6pJNZd1f+Q=;
+ b=wGI3eM941YutzMVQMmLJAqWzOMZgeMU/mGdskOwA97O3nDYPe4w6ayRnRjSFV7ni5X
+ 2Rj2898sOtPtwnB8bqyYP6Z+ltfIZvtiCEzRDjy4KRJd4BJKZssjQlNjM/kb0qs5RR2e
+ ePngVSb7XV5ns5qWUMCMspSC/LsTZmp2iSy65JyfyMdu7OL1E8kaUAL+Rrer4tX61jUv
+ d5KxuL+KlnfDA/sOjQkTXzmRvN978H5+dn3zSBgZOXD+Bfb5DRatFKPS6O52Z08+scAZ
+ QZDhH1vi/HWvfD7OxCPxnMYycHvL0wcmhWR1VJal4VuE25eZR6/0ZFBDRwAEWEnJmXcC
+ BFEg==
+X-Gm-Message-State: AOJu0YxXpUGl9f0S77SPS7NCn9gQ54TQTfRUO8VhDSXYm2ERBZjXeD1h
+ Cda5TTytjEX7PEFlaPVz5CmUwAq5aEySxGT42EYlGS7EOcqZUqvnbTp015wtJJQ=
+X-Gm-Gg: ASbGnctAxOBziKv7TPacK35ObMFaNLkZx9gGOpiifT4LUVW1rkvcJw3uLzJz5/sQk3F
+ S9UDfxIifnYpyT8RNHKyEaSlOtui/q8aTTlcVIzvNO31FovZbGWE0E3pqH+ouELlPky8Pt6qlR2
+ 1+5y4sFOjgVyakc1H8pBaEP9M1+O81bOkdMB75udZjM7dj1GCkPB4FDXs3VXFXa/+p3meX8kicO
+ DdzNNRnxm3bkHgLrX/F2d1HBzNcH04owDW5RQnaICnZMRQmMGuZScdncTyE0C/80fhWTIKOyXKu
+ ooOoZZAbilY1iMRbFJFfe1m08zkV
+X-Google-Smtp-Source: AGHT+IEFyIJdyAkmt2+nZ8oQ4niYy0tHwpRBw2ajAfhbQz9aif+YKpAcD0ShcDJSJewFpg7s/qlshQ==
+X-Received: by 2002:a05:6000:420a:b0:39c:f0d:9146 with SMTP id
+ ffacd0b85a97d-3a08ad779f7mr2813635f8f.45.1745938876995; 
+ Tue, 29 Apr 2025 08:01:16 -0700 (PDT)
+Received: from localhost ([2a02:8308:a00c:e200::f716])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a073e46869sm14207678f8f.72.2025.04.29.08.01.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Apr 2025 08:01:16 -0700 (PDT)
+Date: Tue, 29 Apr 2025 17:01:15 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org
+Subject: Re: [PATCH v5 8/9] target/riscv/kvm: read/write KVM regs via env size
+Message-ID: <20250429-a0df0d9ceb3eb53328bf909b@orel>
+References: <20250429124421.223883-1-dbarboza@ventanamicro.com>
+ <20250429124421.223883-9-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/7] target/microblaze: Use 'obj' in DEVICE() casts in
- mb_cpu_initfn()
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: "Edgar E . Iglesias" <edgar.iglesias@gmail.com>
-References: <20250429132200.605611-1-peter.maydell@linaro.org>
- <20250429132200.605611-2-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250429132200.605611-2-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250429124421.223883-9-dbarboza@ventanamicro.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,18 +98,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/4/25 15:21, Peter Maydell wrote:
-> We're about to make a change that removes the only other use
-> of the 'cpu' local variable in mb_cpu_initfn(); since the
-> DEVICE() casts work fine with the Object*, use that instead,
-> so that we can remove the local variable when we make the
-> following change.
+On Tue, Apr 29, 2025 at 09:44:20AM -0300, Daniel Henrique Barboza wrote:
+> We're going to add support for scounteren in the next patch. KVM defines
+> as a target_ulong CSR, while QEMU defines env->scounteren as a 32 bit
+> field. This will cause the current code to read/write a 64 bit CSR in a
+> 32 bit field when running in a 64 bit CPU.
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> To prevent that, change the current logic to honor the size of the QEMU
+> storage instead of the KVM CSR reg.
+> 
+> Suggested-by: Andrew Jones <ajones@ventanamicro.com>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->   target/microblaze/cpu.c | 10 +++++-----
->   1 file changed, 5 insertions(+), 5 deletions(-)
+>  target/riscv/kvm/kvm-cpu.c | 12 +++++++-----
+>  1 file changed, 7 insertions(+), 5 deletions(-)
+> 
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 5efee8adb2..d55361962d 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -135,6 +135,7 @@ typedef struct KVMCPUConfig {
+>      const char *description;
+>      target_ulong offset;
+>      uint64_t kvm_reg_id;
+> +    uint32_t prop_size;
+>      bool user_set;
+>      bool supported;
+>  } KVMCPUConfig;
+> @@ -237,6 +238,7 @@ static void kvm_riscv_update_cpu_misa_ext(RISCVCPU *cpu, CPUState *cs)
+>  
+>  #define KVM_CSR_CFG(_name, _env_prop, reg_id) \
+>      {.name = _name, .offset = ENV_CSR_OFFSET(_env_prop), \
+> +     .prop_size = sizeof(((CPURISCVState *)0)->_env_prop), \
+>       .kvm_reg_id = reg_id}
+>  
+>  static KVMCPUConfig kvm_csr_cfgs[] = {
+> @@ -646,9 +648,9 @@ static int kvm_riscv_get_regs_csr(CPUState *cs)
+>              return ret;
+>          }
+>  
+> -        if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint32_t)) {
+> -            kvm_cpu_csr_set_u32(cpu, csr_cfg, reg);
+> -        } else if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint64_t)) {
+> +        if (csr_cfg->prop_size == sizeof(uint32_t)) {
+> +            kvm_cpu_csr_set_u32(cpu, csr_cfg, (uint32_t)reg);
+> +        } else if (csr_cfg->prop_size == sizeof(uint64_t)) {
+>              kvm_cpu_csr_set_u64(cpu, csr_cfg, reg);
+>          } else {
+>              g_assert_not_reached();
+> @@ -671,9 +673,9 @@ static int kvm_riscv_put_regs_csr(CPUState *cs)
+>              continue;
+>          }
+>  
+> -        if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint32_t)) {
+> +        if (csr_cfg->prop_size == sizeof(uint32_t)) {
+>              reg = kvm_cpu_csr_get_u32(cpu, csr_cfg);
+> -        } else if (KVM_REG_SIZE(csr_cfg->kvm_reg_id) == sizeof(uint64_t)) {
+> +        } else if (csr_cfg->prop_size == sizeof(uint64_t)) {
+>              reg = kvm_cpu_csr_get_u64(cpu, csr_cfg);
+>          } else {
+>              g_assert_not_reached();
+> -- 
+> 2.49.0
+>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
 
