@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A122FC3ABA5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:15:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5368C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:17:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9lfR-0004Ta-Dy; Tue, 29 Apr 2025 10:10:37 -0400
+	id 1u9le0-0001Yx-Fd; Tue, 29 Apr 2025 10:09:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9lex-0003Ys-JX
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:10:13 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9ldy-0001NX-0B
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:09:06 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9let-0006Y9-IQ
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:10:06 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-39c14016868so6138062f8f.1
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 07:10:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9ldw-0006Kh-5A
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:09:05 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-39ee651e419so3152528f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 07:09:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745935801; x=1746540601; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745935742; x=1746540542; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Pj+GFYlfc9iJo6yTyQ5Nz9Q5zJ67gCxIABOM4SRTAcA=;
- b=gXh/bVlQdJQTMAVRSkqnIAWAV7I9YCDkmkcdrfeZk4cRDELaohkEJ4fvil/Pj+ClqL
- 9hMGN41Gkv8BYsBQcuhePMjskOeFOt1sEYadga3ZHJvU0j1PxpPLeP9K6s3UPURMWBPQ
- TMX9tZ/XCP8U+jOME8tT1MKiW1jFIBUjlbOpkhqhYK43Geu64w+GSb8Xp1T/u7PnbC9q
- pM0/fkCrU4Ni8X6RYUNOOO/78vLa+TiFFnKBkyz3SLTvQ4UX5ayOkxRI03DBBGWf7Yd4
- 65W/r3WO5WY6sSiufIAa9ovMddvtR5stOiuZhC0D8s6Fv7003ht/snQXMSFaXRVE/3Yo
- eFtQ==
+ bh=xJvF5VVqWRoBuruHMFkUoRv70wTkjLmBdIDnHMXKE5w=;
+ b=EFil7s1UHwWd5OWtuX3OP5lQ+aJACrJJM20E5KYBj1VEWhaZWGL7icZoSYZtVzamTT
+ sz5K67Jb8dLq4Ibs6M4urgley4+lUJZFRfVeYWRySrEaVRH1wFrAHAq6we/tMXci9QFn
+ A5r5oQdsfSfMnlwdU2PBUxZkfDYvdevv3RmIellcgNz49K3EXHgWlsRJvYreOHbEGios
+ asLa3x3Q+J6GBN6/1NGHzeWJ7wANRsquL+tWPyNpFHYvEcxG04uDLuCilgy2sTRjAZrx
+ 8vMkcNMaHTq732+l+cl76sGSLKNuXhbhe8Q/5CsktGNjjOC1VMbEjLVokuvEhfIFmqC1
+ ZJgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745935801; x=1746540601;
+ d=1e100.net; s=20230601; t=1745935742; x=1746540542;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Pj+GFYlfc9iJo6yTyQ5Nz9Q5zJ67gCxIABOM4SRTAcA=;
- b=xHj040E04T8rnPOGqI4ECcaWXsau+dIkly+iG+72G8J5qgcGVGIqZqCVmPilYJsHjS
- OHFlM9fYlXMTfeSkg1xSC9yc9cClrS3e3H/pr1tKIexN49wWIpBxz61mvshHGkCf2r+Z
- W/kSIFLr8HmCm7gr3mgEe8WDUGddcfLDF+4ZRPEwRYa6tIwh2cj3vOFXbwFyNwlU9q10
- pd2JBPbuhbnpSpr9R3T9eQle4GkCJOo3bj5wty5LTa2T+qsilrHRA+RHtGJS2nYwyVQ5
- wD+C6apHsJifujYDPPxYnt2ZBDC5+McW0aPcozI6bpsZQDl/4P6YhbSbrU3kVwqEUnO1
- E8JQ==
-X-Gm-Message-State: AOJu0YyfuQlOLUFPc8Gp5I2lcD96oDEF8gBQGOphmBCP6yuDbVBjORfH
- EL69MSKVqBSnU12qtnUC5phvPjNK8VhMS5rluSUr02jeRZGWviK3ltbglfk/BV0Lm/3TMcrt1ry
- b
-X-Gm-Gg: ASbGncvi7RkUE2xpS4IE2Z0ivCp/j0C7DeHOVj6IQez8GXCDXl46ZeeQFzInWoZCEkc
- 4XA/0pSlcgAb7BDJ7+qWkoLu53kAhgVVu7Ha/XEF8JPe1nUcSz7XZ2v4z+EwoLXMHCeIjkU4UEx
- J+ifaIxJPegRZyoVNJ2gpWbo/U+sVZGeKfREh9hW2j0EXqBxFpPspdxn3vc7DnNPj2Ac0ptnjIQ
- 2+yKnmNBt1lwveXrGGwupmyXjjLJAtt7tJHWo0H18PNBsWtecE8vdJGzoCumBunXN5etakSnjo5
- NTfIQIPSgBGyZ+5/ybh16DBaN3yIF4LBA9luCtPOl33882ZMFQEtMuD1fwgC79EAbM8DlZqN+S4
- KW3xbrwRgHbFPNfu6sfFU
-X-Google-Smtp-Source: AGHT+IFVIY3rxNjKTFlO6YgU4hgP6PjtliadrJgM6zPKxeh0WA+yTsyWX+d11aO7yYXRFK0J0prRBA==
-X-Received: by 2002:a05:6000:507:b0:3a0:8119:7ab3 with SMTP id
- ffacd0b85a97d-3a0890ab0a3mr2962571f8f.15.1745935801186; 
- Tue, 29 Apr 2025 07:10:01 -0700 (PDT)
+ bh=xJvF5VVqWRoBuruHMFkUoRv70wTkjLmBdIDnHMXKE5w=;
+ b=bzyMXHLKnJBfI8cLOfAh0xrwzOc+Gttu96n9RymWOlYtqxGh2YOd1pfiSJgf8GzwWp
+ jmHVL0l1Fo5a8oy7HIpBHVMb9ENk8NdTQyikv9gMybqbx0J9AuTFsrnH9iQzlrv4eCDQ
+ 6IwXBIA9VWCIWy5kJT+sAjHnUYsRvdNhNL1zi31yb9m+jHAOeSxUezNB7rV3mxx5kP2O
+ 07K3cOcFpoFKa9LPinerLPk3PbGB2sr8ineWzJJR2nov/sHaCHPfYSjymAL2CPyzot+U
+ cp5OdkMu4A3RPcNoLG+RW8EU+FjNZBEtbsc7+0P710AeTt+k4TzGFM6lo4sB4l1LIhOh
+ 8I1Q==
+X-Gm-Message-State: AOJu0YwmxWcL/+b1isUdNdsIEchJVOBCz6BeFAxOvMUKmevHnXGhG2Mp
+ mV7aXOWxhEBuml9PXkAul/ohnZeEjHjJ/46kqpdzHE1LAIJ9JMxdjGwD+cYDSCETJiLSod3NH9r
+ S
+X-Gm-Gg: ASbGncssU8p41L7HIHs+u3LjTiKkGxjaUVYkSt0egXJW9FoL4ttp6Tx6QVRgNrU/L2k
+ xxczzfCGzQBnTAezPabsUvVZfjqq++kgePpsqXuSuWHr6UdhaadNatkw42i5Oo+f8+9eymoglRm
+ v3wDRuFB0sYUwuICeZdGycWHtIBqB4oRprQq/25nYJv1tDTYvwvairxH3IinydcHmoNf5jo9xwh
+ QBKPiplwymFTLseW0FXPq89CeGuakuLqeKXqUyr8fWD20/pkwEijTBzouscxQ+LAKly5uFwH5G6
+ BrkFOSmbVDmzhKsYkUDBNWHafvXNuQ4sCo3q+j9X4cvcqEJ9he9qP4qsVR4qlYlrCH8aD1QPr92
+ XJKgQTZwJvYoAq5kpz7wB
+X-Google-Smtp-Source: AGHT+IHqhQZj26CkbljySSOi/m4T68KKNHqofreXrVFW0zi09YQEdDBKJr7vuuVmRYZg6Qr/vVZx5Q==
+X-Received: by 2002:a05:6000:400e:b0:3a0:6ae3:a1a with SMTP id
+ ffacd0b85a97d-3a08a3517damr2748285f8f.23.1745935742143; 
+ Tue, 29 Apr 2025 07:09:02 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073c8da58sm14202431f8f.15.2025.04.29.07.09.59
+ ffacd0b85a97d-3a073c8ca72sm13769517f8f.4.2025.04.29.07.09.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 29 Apr 2025 07:10:00 -0700 (PDT)
+ Tue, 29 Apr 2025 07:09:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -76,18 +76,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 18/19] hw/net/vmxnet3: Remove
- VMXNET3_COMPAT_FLAG_DISABLE_PCIE definition
-Date: Tue, 29 Apr 2025 16:08:24 +0200
-Message-ID: <20250429140825.25964-19-philmd@linaro.org>
+Subject: [PATCH v2 07/19] hw/virtio/virtio-pci: Remove
+ VIRTIO_PCI_FLAG_MIGRATE_EXTRA definition
+Date: Tue, 29 Apr 2025 16:08:13 +0200
+Message-ID: <20250429140825.25964-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250429140825.25964-1-philmd@linaro.org>
 References: <20250429140825.25964-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,53 +110,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VMXNET3_COMPAT_FLAG_DISABLE_PCIE was only used by the
-hw_compat_2_5[] array, via the 'x-disable-pcie=on' property.
-We removed all machines using that array, lets remove all the
-code around VMXNET3_COMPAT_FLAG_DISABLE_PCIE.
+VIRTIO_PCI_FLAG_MIGRATE_EXTRA was only used by the
+hw_compat_2_4[] array, via the 'migrate-extra=true'
+property. We removed all machines using that array,
+lets remove all the code around VIRTIO_PCI_FLAG_MIGRATE_EXTRA.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/net/vmxnet3.c | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ include/hw/virtio/virtio-pci.h | 4 ----
+ hw/virtio/virtio-pci.c         | 6 +-----
+ 2 files changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-index 3cf5d71f478..d080fe9b38a 100644
---- a/hw/net/vmxnet3.c
-+++ b/hw/net/vmxnet3.c
-@@ -41,11 +41,6 @@
- #define PCI_DEVICE_ID_VMWARE_VMXNET3_REVISION 0x1
- #define VMXNET3_MSIX_BAR_SIZE 0x2000
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 31ec144509f..d39161766e0 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -32,7 +32,6 @@ DECLARE_OBJ_CHECKERS(VirtioPCIBusState, VirtioPCIBusClass,
+ enum {
+     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
+     VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
+-    VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT,
+     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
+     VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
+     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
+@@ -57,9 +56,6 @@ enum {
+ /* virtio version flags */
+ #define VIRTIO_PCI_FLAG_DISABLE_PCIE (1 << VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT)
  
--/* Compatibility flags for migration */
--#define VMXNET3_COMPAT_FLAG_DISABLE_PCIE_BIT 1
--#define VMXNET3_COMPAT_FLAG_DISABLE_PCIE \
--    (1 << VMXNET3_COMPAT_FLAG_DISABLE_PCIE_BIT)
+-/* migrate extra state */
+-#define VIRTIO_PCI_FLAG_MIGRATE_EXTRA (1 << VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT)
 -
- #define VMXNET3_EXP_EP_OFFSET (0x48)
- #define VMXNET3_MSI_OFFSET    (0x84)
- #define VMXNET3_MSIX_OFFSET   (0x9c)
-@@ -2466,8 +2461,6 @@ static const VMStateDescription vmstate_vmxnet3 = {
+ /* have pio notification for modern device ? */
+ #define VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY \
+     (1 << VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT)
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 0fa8fe49556..a3e2e007d6c 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -146,9 +146,7 @@ static const VMStateDescription vmstate_virtio_pci = {
  
- static const Property vmxnet3_properties[] = {
-     DEFINE_NIC_PROPERTIES(VMXNET3State, conf),
--    DEFINE_PROP_BIT("x-disable-pcie", VMXNET3State, compat_flags,
--                    VMXNET3_COMPAT_FLAG_DISABLE_PCIE_BIT, false),
- };
- 
- static void vmxnet3_realize(DeviceState *qdev, Error **errp)
-@@ -2476,9 +2469,7 @@ static void vmxnet3_realize(DeviceState *qdev, Error **errp)
-     PCIDevice *pci_dev = PCI_DEVICE(qdev);
-     VMXNET3State *s = VMXNET3(qdev);
- 
--    if (!(s->compat_flags & VMXNET3_COMPAT_FLAG_DISABLE_PCIE)) {
--        pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
--    }
-+    pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
- 
-     vc->parent_dc_realize(qdev, errp);
+ static bool virtio_pci_has_extra_state(DeviceState *d)
+ {
+-    VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
+-
+-    return proxy->flags & VIRTIO_PCI_FLAG_MIGRATE_EXTRA;
++    return true;
  }
+ 
+ static void virtio_pci_save_extra_state(DeviceState *d, QEMUFile *f)
+@@ -2349,8 +2347,6 @@ static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
+ static const Property virtio_pci_properties[] = {
+     DEFINE_PROP_BIT("virtio-pci-bus-master-bug-migration", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT, false),
+-    DEFINE_PROP_BIT("migrate-extra", VirtIOPCIProxy, flags,
+-                    VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT, true),
+     DEFINE_PROP_BIT("modern-pio-notify", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
+     DEFINE_PROP_BIT("x-disable-pcie", VirtIOPCIProxy, flags,
 -- 
 2.47.1
 
