@@ -4,117 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06D80C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 15:21:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C7EC369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 15:21:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9mlM-0000yN-8h; Tue, 29 Apr 2025 11:20:50 -0400
+	id 1u9mlT-00015c-Ir; Tue, 29 Apr 2025 11:20:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9mlE-0000wY-SE
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:20:40 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9mlD-0003uy-2L
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:20:40 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5f62d3ed994so11186649a12.2
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 08:20:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745940036; x=1746544836; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=liv/jGDBXoA3vWhb48MyqfIOZMfsx4+H2kCwl2c448o=;
- b=nvouBR+V9LbDjnwHziAhM5sQXqCr99UpJ6WXtSAmbSu2Q9n7twM+nRK9GUaTL85rbt
- IezIcky0nDNzZeqkAtWYeZeaiHE+sycLHa2UPUoUyhJprwbBb/2InEy51RMrf0Ll86i3
- vz/5wsyrDudtOcDarhcRkmy0t0QWsIwZ+XJ3d/zfoqeAfs3CXVqMHRkq35qOPhba22Db
- aA0LugbeYLXKmj5WUoSQkBBmiJmvgfrJ5tPKGb6sy9Oq0LODFlRdxJkrsQrWiNckPdxw
- QUJf/jcsI+5vlavn5qJtYcCq9WRbly+TBK4aezBImSZ8fZq9afvGY3lMONkXysDImkwD
- N5UQ==
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1u9mlO-0000zW-Ub
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:20:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1u9mlI-0003vd-6C
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:20:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745940041;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UyzFVjatxS36KJ9rYJoavpDJAz9S5JYQSu7Cx8uAJeA=;
+ b=WgeF+12ErC+VyU607kTYLAxq98kzrg/oFaZA8WLePGbhBbqXSmiZplEJnJMGlSxnaxwpKp
+ UG+t1fQkLboreLlPACKKjzOSPyfBvDKH0dAIZL/U+wlY13mHaRpfWf6jTjzVBJrvFr4L1J
+ xQhSBiQeVgWC+RLDyNhKQM8g78JgDd4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-524-MGVlrZMsNoGsivRfXBmamQ-1; Tue, 29 Apr 2025 11:20:39 -0400
+X-MC-Unique: MGVlrZMsNoGsivRfXBmamQ-1
+X-Mimecast-MFC-AGG-ID: MGVlrZMsNoGsivRfXBmamQ_1745940038
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43f405810b4so32386005e9.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 08:20:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745940036; x=1746544836;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=liv/jGDBXoA3vWhb48MyqfIOZMfsx4+H2kCwl2c448o=;
- b=scxHho6y1QT6U3I00s8gdnTgjSG39kbbeGf8MiYXuXIo5AS3scqrEWcu0Xe97tf/Uq
- +ee0m+ZQcqs4Iyqmwr+COZ7ViWVTjBMdKvVQ2YhIfV7mAcPTjQx5ww5YYIl7NsfaXYbw
- po0AFWhoz5aDVM9NjkmLycXbXJo6FopmW1btoDnTePDfj0CM4sN6sEQQHRWqY8gELdCk
- tJ/gD+0GDpHEWKNR5bjww/kTaRLmKiGpnUoRV5GI7Rw60+amrVAHhLZOET/ktt/whM/0
- /RYSOmmRHit6PENiahlzjcnYHmQOFjLaTsgtvgNAQMbT/W0Epd1Bfy+a0GEuooOEaxs7
- 4uJg==
+ d=1e100.net; s=20230601; t=1745940037; x=1746544837;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UyzFVjatxS36KJ9rYJoavpDJAz9S5JYQSu7Cx8uAJeA=;
+ b=u3p1oj2rUd+7XgQAKVbZLO20i41pMoPf051LPsm//4Tb2eVBaMhBfE+qaB8XHA4Szi
+ dhtB/W7AoAzrs6sKMoYtbLkhdhVpG4hJgU3lpOLEkCysY8XZzdDeV1ClVTCrx8b6uJSl
+ pRCL9zJfFHMDji1BY5tLcO/FmeqYFflvgTp82lyH5vy78Jp2i+UnemlIPeZUPllyXNBJ
+ WSx8vkB1jw0MMFwtDfaBg/og21ziClhj13KurAV/BYIn1n8RDENVNYNHMldPxGvnB1Gj
+ yKSw4B9N2LUpX5NiAGe11VzBjqdtCl9+7va6Rq9IkR39YXbeGF1PQxocy0ljMckh7dpz
+ KyeA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVtH/e+RSri9dNou3zHv1n0wSQJcfYW4hRTRQlFYeCDldIhV+DhxiSSHU+IWWje5/JWxVX5K+0sySCv@nongnu.org
-X-Gm-Message-State: AOJu0YwqOQJfpJDbyHgVzXVZMwsGwhwU66g9V4C5implBMdVFDJBMtcU
- L/WLTdBJSV/bvErcrxruZLqPloEZWzE9u1/zOC6eZXSwsvNFaVNXn802+eeYQdc=
-X-Gm-Gg: ASbGnctkBvptE7lywjz8uk1/uEExefcgR/Q9uisZJmoiVCOnEmUQAooLE/7gU7MAx1b
- C2HRpsQG3NqX2kbUVw3FZZeIWiEXIJEYQtSnSXgBJqkk1eZd5nw3iDxPK2VqAWnsc2md180Q5Wb
- 0M9VxMK31mQOMOK3E+ZewLHfVjukUQrxF0hX3t2VmcJnB/IyDWqU7MoRveOzyUPnklUT8la3zuX
- k/gq7pNEHwSB/q6LwKXG2OWy475ZZmTDfjNJXlqs8U0pZq48V0GdWLAP5nrAV/oQW3UaFlZccSl
- qZfpP3sElp/1KSDRopqsbPEewf/rmv5lLbttUkaqUh24XsREjiWDFw==
-X-Google-Smtp-Source: AGHT+IHwabybpRzh68vdca4n1rCdlz2ra4aEctctmdobKdfEIw119XLGJZEOAS78kKqISYDRbt7sQQ==
-X-Received: by 2002:a05:6402:26c1:b0:5f6:d1f8:98c9 with SMTP id
- 4fb4d7f45d1cf-5f83b274236mr3520202a12.33.1745940036064; 
- Tue, 29 Apr 2025 08:20:36 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f7016f6424sm7750305a12.42.2025.04.29.08.20.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 08:20:35 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 77ADE5F863;
- Tue, 29 Apr 2025 16:20:34 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Alessandro Di Federico <ale@rev.ng>
-Cc: Alistair Francis <alistair.francis@wdc.com>,  Anton Johansson
- <anjo@rev.ng>,  Markus Armbruster <armbru@redhat.com>,  Brian Cain
- <bcain@quicinc.com>,  "Daniel P. Berrange" <berrange@redhat.com>,  Chao
- Peng <chao.p.peng@linux.intel.com>,  cjia@nvidia.com,  =?utf-8?Q?C=C3=A9d?=
- =?utf-8?Q?ric?= Le Goater
- <clg@kaod.org>,  cw@f00f.org,  dhedde@kalrayinc.com,  Eric Blake
- <eblake@redhat.com>,  eblot@rivosinc.com,  "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>,  Eduardo Habkost <eduardo@habkost.net>,  Elena
- Ufimtseva <elena.ufimtseva@oracle.com>,  Auger Eric
- <eric.auger@redhat.com>,  felipe@nutanix.com,  iggy@theiggy.com,  Warner
- Losh <imp@bsdimp.com>,  Jan Kiszka <jan.kiszka@web.de>,  Jason Gunthorpe
- <jgg@nvidia.com>,  jidong.xiao@gmail.com,  Jim Shu <jim.shu@sifive.com>,
- Joao Martins <joao.m.martins@oracle.com>,  Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>,  Luc Michel <luc@lmichel.fr>,  Manos
- Pitsidianakis <manos.pitsidianakis@linaro.org>,  Max Chou
- <max.chou@sifive.com>,  Mark Burton <mburton@qti.qualcomm.com>,
- mdean@redhat.com,  mimu@linux.vnet.ibm.com,  "Ho, Nelson"
- <nelson.ho@windriver.com>,  Paul Walmsley <paul.walmsley@sifive.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Phil =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  QEMU
- Developers <qemu-devel@nongnu.org>,  Roberto Campesato <rbc@meta.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Shameerali Kolothum
- Thodi <shameerali.kolothum.thodi@huawei.com>,  Bernhard Beschow
- <shentey@gmail.com>,  Stefan Hajnoczi <stefanha@gmail.com>,  Thomas Huth
- <thuth@redhat.com>,  Wei Wang <wei.w.wang@intel.com>,  z.huo@139.com,  LIU
- Zhiwei <zhiwei_liu@linux.alibaba.com>,  zwu.kernel@gmail.com
-Subject: Re: KVM/QEMU Community call 29/04/2025 agenda items?
-In-Reply-To: <874iy85yx2.fsf@draig.linaro.org> ("Alex =?utf-8?Q?Benn=C3=A9?=
- =?utf-8?Q?e=22's?= message of "Mon, 28 Apr 2025 12:05:29 +0100")
-References: <874iy85yx2.fsf@draig.linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Tue, 29 Apr 2025 16:20:34 +0100
-Message-ID: <87h6273sfx.fsf@draig.linaro.org>
+ AJvYcCVZbZ3wMR+E1ZRjsIrmJcMWzIFmywGBZEpwTbOLm3SlhRf+Kox4ScgQ8VRxMO2sw7EkJr2OFlRM82ct@nongnu.org
+X-Gm-Message-State: AOJu0Yyv5aE8BCgSwQ9zI0tZr4u59R7Qz5m+DsZlAY9qB9YbwuAd/z6e
+ UjI+uMjDcsIOF4hdCMdgIRCy/gGFzeYA1wJwBrAGsuhMw6mgj80Tkjd1jU5LJvZo19eYarG9Qpp
+ 6Txeiu3QHneSd2A82/uhIn3Fb6e3lK90g6sypAyc019HnulxaMjYoXDxxCD9fXSQlT9FSnx/V22
+ GfBcTx+TZV9RPvJ9HgUGcn/QygJLM=
+X-Gm-Gg: ASbGnctdmGDANBXcqp7cum7YUZaXiyBC0vUB1FdexCP7mZ8P4jzzkCwvgzvs5PoZvKH
+ V0YzcERm5GnjhoJOdn+UQm7p0uEWEhihePgioAo5QcJ+bNVWhEZm6gJcdXISFDNj7MA7r
+X-Received: by 2002:a05:600c:384d:b0:43d:53c:1ad6 with SMTP id
+ 5b1f17b1804b1-440ab848aa3mr111520905e9.26.1745940037554; 
+ Tue, 29 Apr 2025 08:20:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFxfJgVbiYQNxsI7gP8lEH6I+T3LgwKZYpuj5+Oduk4S9a9TqHCMh/UCFpr+lwWGdaoYalZd1/0r/Zb4IIQtr0=
+X-Received: by 2002:a05:600c:384d:b0:43d:53c:1ad6 with SMTP id
+ 5b1f17b1804b1-440ab848aa3mr111520695e9.26.1745940037250; Tue, 29 Apr 2025
+ 08:20:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: 37
-X-Spam_score: 3.7
-X-Spam_bar: +++
-X-Spam_report: (3.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20250411114534.3370816-1-ppandit@redhat.com>
+ <87ecxteym0.fsf@suse.de> <87bjswfeis.fsf@suse.de>
+ <CAE8KmOzzn7g1=pd2J325gAf4ffmGALKoHdgL17So4KawxkZdbg@mail.gmail.com>
+ <87y0vyepta.fsf@suse.de> <aAlu0hcUCdzmIN4p@x1.local>
+ <CAE8KmOz7P+Pz8zwJq+mTEJbZjhCk7iAo9+c5DrZzhbTmz=VtUQ@mail.gmail.com>
+ <aBDObgL7hDQMy63F@x1.local>
+ <CAE8KmOx9yuZWWHnaA6gkC2VpeimY1=Pw+AU9iDvQ+vVpUp_vKg@mail.gmail.com>
+ <aBDYj3k83_W6ihlF@x1.local>
+In-Reply-To: <aBDYj3k83_W6ihlF@x1.local>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Tue, 29 Apr 2025 20:50:19 +0530
+X-Gm-Features: ATxdqUEU6YQfcF5v5zsh2GUgJImggSwi4bE9dDG6qbpn-Wn137uYIOK6Se1FKVY
+Message-ID: <CAE8KmOxR1EoyLK6+49bVJK9BW0NfhgEcE2_aVxQQjkBY9y1xwA@mail.gmail.com>
+Subject: Re: [PATCH v9 0/7] Allow to enable multifd and postcopy migration
+ together
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,23 +110,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
-
-> Hi,
+On Tue, 29 Apr 2025 at 19:18, Peter Xu <peterx@redhat.com> wrote:
+> Please don't rush to send. Again, let's verify the issue first before
+> resending anything.
 >
-> The KVM/QEMU community call is at:
->
-> https://meet.jit.si/kvmcallmeeting
-> @
-> 29/04/2025 14:00 UTC
+> If you could reproduce it it would be perfect, then we can already verify
+> it.  Otherwise we may need help from Fabiano.  Let's not send anything if
+> you're not yet sure whether it works..  It can confuse people thinking
+> problem solved, but maybe not yet.
 
-Due to scheduling conflicts there will not be a call on the 13th of May
-making the next call on the 27th.
+* No, the migration hang issue is not reproducing on my side. Earlier
+in this thread, Fabiano said you'll be better able to confirm the
+issue. (so its possible fix as well I guess)
 
->
-> Are there any agenda items for the sync-up?
+* You don't have access to the set-up that he uses for running tests
+and merging patches? Would it be possible for you to run the same
+tests? (just checking, I don't know how co-maintainers work to
+test/merge patches)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+* If we don't send the patch, how will Fabiano test it? Should we wait
+for Fabiano to come back and then make this same patch in his set-up
+and test/verify it?
+
+Thank you.
+---
+  - Prasad
+
 
