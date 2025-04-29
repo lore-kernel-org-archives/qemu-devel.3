@@ -4,51 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D41AFC369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 09:20:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13910C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 09:20:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9h7p-0005fQ-Oi; Tue, 29 Apr 2025 05:19:37 -0400
+	id 1u9h8U-0006vy-Pa; Tue, 29 Apr 2025 05:20:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1u9h7n-0005co-34; Tue, 29 Apr 2025 05:19:35 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1u9h8P-0006l8-Np; Tue, 29 Apr 2025 05:20:13 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1u9h7k-0004Ff-Ek; Tue, 29 Apr 2025 05:19:34 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 29 Apr
- 2025 17:18:58 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Tue, 29 Apr 2025 17:18:58 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, <longzl2@lenovo.com>,
- <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>
-Subject: [PATCH v3 7/9] hw/arm: Introduce ASPEED AST2700 A1 full core machine
-Date: Tue, 29 Apr 2025 17:18:51 +0800
-Message-ID: <20250429091855.1948374-8-steven_lee@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250429091855.1948374-1-steven_lee@aspeedtech.com>
-References: <20250429091855.1948374-1-steven_lee@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1u9h8N-0004fs-Gq; Tue, 29 Apr 2025 05:20:13 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53T4ESrh006492;
+ Tue, 29 Apr 2025 09:20:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=dpAS50
+ J9K4bmIU5YjF4pL4ZxOYz4xQ9yDjBS7yKG+fU=; b=n6y/JFf/qtTrJTm/KyWptr
+ vp3C/ZRDC20MQx351+UD8w/YbGK00VtgvkHVr3OWhhW7XmEIySv6l+q5MhUxtIE0
+ UWzYcLxmDCACGhQEvZKL/SvOAdqJaNlvWl/REixWT0jpEVg5GwvhX7nzRRoDL2ax
+ gVnd5Eq5lFdJP3Qt3moKPb7gYbFT4OnDVrT2KeJuAKhpXex44+4zKukg3ynXkaBA
+ krzQHq8Q9bYCs04O6hByxE9Fb+DWO1QbJ6LvT7RyvozxlF/GB5/yVvzqpx8JNkJF
+ 7gaHeEskXlo/Ti8IEn0TPDruoKhzw6n6e+lz4MYHYfjCM0DrKvTXT8UHjobpmB5Q
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ahs9a7u3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 29 Apr 2025 09:20:08 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53T8pXGp016119;
+ Tue, 29 Apr 2025 09:20:07 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 469a70ann9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 29 Apr 2025 09:20:07 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53T9K3Bd32113358
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 29 Apr 2025 09:20:03 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F05C12022D;
+ Tue, 29 Apr 2025 09:20:02 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 98CF72022E;
+ Tue, 29 Apr 2025 09:20:02 +0000 (GMT)
+Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
+ [9.87.129.78]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 29 Apr 2025 09:20:02 +0000 (GMT)
+Message-ID: <fd8ffc6bf1ba66c0479f6b02bbc747d392d34f1c.camel@linux.ibm.com>
+Subject: Re: [PATCH v4 1/4] hw/s390x: add SCLP event type CPI
+From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>, qemu-s390x mailing
+ list <qemu-s390x@nongnu.org>, Thomas Huth <thuth@redhat.com>, Daniel
+ Berrange <berrange@redhat.com>
+Cc: qemu-devel mailing list <qemu-devel@nongnu.org>, Hendrik Brueckner
+ <brueckner@linux.ibm.com>
+Date: Tue, 29 Apr 2025 11:20:02 +0200
+In-Reply-To: <20250410150934.1331433-2-shalini@linux.ibm.com>
+References: <20250410150934.1331433-1-shalini@linux.ibm.com>
+ <20250410150934.1331433-2-shalini@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=steven_lee@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=LuKSymdc c=1 sm=1 tr=0 ts=681099c8 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=d4LToudSVkjQPbQJ9YAA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: GvEA3X0iq-1MWk-D4JXQVXaT9uSad081
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDA2NyBTYWx0ZWRfX4tf4tDwK1FYU
+ 07bIGj3NWSD2LQNKWxD/hXXiw+o5LpzKECZZ2TFk+ajyv01b1CevJCh4BKT+qNYUx1SaBXwM37T
+ NrsUVcKMawTCHzyNAjemZRnd8cdr4mfdLGgqpFxGcqlcWvu230ZZZwW5DcMR3JQuwCX0Od0I6W8
+ /Vz1fSSM3XshY/mY3avnrsnfTQ7mjQT7a2zG6o7kBUKAb6IFc4qa4sC+CdaBVE9HpnijKovbhJe
+ COFn/k9tI1kA4bzE5YHjKe/rcSI7GeLPFK/urexfr+LpjCda3G/wIJe/Rm0s9NWMIQ1rbKc7vxw
+ HoaNXDR66Cz7296lP1J1dL4U2j+4/iMA8r1db6MDFNv0hVHT8KH79/3b2f7v08uVrkdyEs9wdib
+ KkLrEgTIv6fDUEEB2ufHBFHcyR7nxwGsf0ScSqZ8lyfdYBRiDerN02J3aptPW/Sw1ia3FmWw
+X-Proofpoint-GUID: GvEA3X0iq-1MWk-D4JXQVXaT9uSad081
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-29_03,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 phishscore=0
+ mlxlogscore=999 clxscore=1015 spamscore=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 mlxscore=0 impostorscore=0 suspectscore=0
+ malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504290067
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,276 +120,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Steven Lee <steven_lee@aspeedtech.com>
-From:  Steven Lee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Added new machine type `ast2700fc` with full core support.
-- Defined `Ast2700FCState` structure for the new machine type.
-- Implemented initialization functions for CA35, SSP, and TSP components.
-- Updated `ast2700fc_types` to include the new machine type.
-- Set machine class properties for `ast2700fc`.
+On Thu, 2025-04-10 at 17:09 +0200, Shalini Chellathurai Saroja wrote:
+> Implement the Service-Call Logical Processor (SCLP) event
+> type Control-Program Identification (CPI) in QEMU. This
+> event is used to send CPI identifiers from the guest to the
+> host. The CPI identifiers are: system type, system name,
+> system level and sysplex name.
+>=20
+> System type: operating system of the guest (e.g. "LINUX").
+> System name: user configurable name of the guest (e.g. "TESTVM").
+> System level: distribution and kernel version, if the system type is Linu=
+x
+> (e.g. 0x50e00).
+> Sysplex name: name of the cluster which the guest belongs to (if any)
+> (e.g. "PLEX").
+>=20
+> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  hw/s390x/event-facility.c         |  2 +
+>  hw/s390x/meson.build              |  1 +
+>  hw/s390x/s390-virtio-ccw.c        | 14 +++++
+>  hw/s390x/sclpcpi.c                | 92 +++++++++++++++++++++++++++++++
+>  include/hw/s390x/event-facility.h | 13 +++++
+>  5 files changed, 122 insertions(+)
+>  create mode 100644 hw/s390x/sclpcpi.c
 
-Test Step:
-- Download ast2700-default-obmc.tar.gz from AspeedTech-BMC OpenBmc
-  release page.
-- Run the following QEMU command:
+[...]
 
-  ```
-  IMGDIR=~/path/to/image
-  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
 
-  ./qemu-system-aarch64 -machine ast2700fc \
-  -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
-  -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
-  -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
-  -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/tee-raw.bin \
-  -device loader,cpu-num=0,addr=0x430000000 \
-  -device loader,cpu-num=1,addr=0x430000000 \
-  -device loader,cpu-num=2,addr=0x430000000 \
-  -device loader,cpu-num=3,addr=0x430000000 \
-  -device loader,file=${IMGDIR}/ast2700-ssp.elf,cpu-num=4 \
-  -device loader,file=${IMGDIR}/ast2700-tsp.elf,cpu-num=5 \
-  -drive file=${IMGDIR}/image-bmc,if=mtd,format=raw \
-  -serial pty -serial pty -serial pty \
-  -snapshot \
-  -S -nographic
-  ```
+>  static void s390_cpu_plug(HotplugHandler *hotplug_dev,
+> diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
+> new file mode 100644
+> index 0000000000..13589459b1
+> --- /dev/null
+> +++ b/hw/s390x/sclpcpi.c
 
-- After starting QEMU, serial devices will be redirected:
+[...]
 
-  char device redirected to /dev/pts/51 (label serial0)
-  char device redirected to /dev/pts/52 (label serial1)
-  char device redirected to /dev/pts/53 (label serial2)
+> +static void cpi_class_init(ObjectClass *klass, void *data)
 
-- serial0 is the console for the four Cortex-A35 primary processors,
-  serial1 and serial2 are the consoles for the two Cortex-M4 coprocessors.
+Should be 'const void *data'.
 
-- Connect to the consoles using a terminal emulator.
+> +{
+> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> +    SCLPEventClass *k =3D SCLP_EVENT_CLASS(klass);
+> +
+> +    dc->user_creatable =3D false;
+> +
+> +    k->can_handle_event =3D can_handle_event;
+> +    k->get_send_mask =3D send_mask;
+> +    k->get_receive_mask =3D receive_mask;
+> +    k->write_event_data =3D write_event_data;
+> +}
 
-Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-Change-Id: I32447b9372a78eb53a07135afef59c2a19202328
----
- hw/arm/aspeed_ast27x0-fc.c | 192 +++++++++++++++++++++++++++++++++++++
- hw/arm/meson.build         |   4 +-
- 2 files changed, 195 insertions(+), 1 deletion(-)
- create mode 100644 hw/arm/aspeed_ast27x0-fc.c
+[...]
 
-diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-new file mode 100644
-index 0000000000..fee691dbf8
---- /dev/null
-+++ b/hw/arm/aspeed_ast27x0-fc.c
-@@ -0,0 +1,192 @@
-+/*
-+ * ASPEED SoC 2700 family
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ *
-+ * This code is licensed under the GPL version 2 or later.  See
-+ * the COPYING file in the top-level directory.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/units.h"
-+#include "qapi/error.h"
-+#include "system/block-backend.h"
-+#include "system/system.h"
-+#include "hw/arm/aspeed.h"
-+#include "hw/boards.h"
-+#include "hw/qdev-clock.h"
-+#include "hw/arm/aspeed_soc.h"
-+#include "hw/loader.h"
-+#include "hw/arm/boot.h"
-+#include "hw/block/flash.h"
-+
-+
-+#define TYPE_AST2700A1FC MACHINE_TYPE_NAME("ast2700fc")
-+OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700A1FC);
-+
-+static struct arm_boot_info ast2700fc_board_info = {
-+    .board_id = -1, /* device-tree-only board */
-+};
-+
-+struct Ast2700FCState {
-+    MachineState parent_obj;
-+
-+    MemoryRegion ca35_memory;
-+    MemoryRegion ca35_dram;
-+    MemoryRegion ssp_memory;
-+    MemoryRegion tsp_memory;
-+
-+    Clock *ssp_sysclk;
-+    Clock *tsp_sysclk;
-+
-+    Aspeed27x0SoCState ca35;
-+    Aspeed27x0SSPSoCState ssp;
-+    Aspeed27x0TSPSoCState tsp;
-+
-+    bool mmio_exec;
-+};
-+
-+#define AST2700FC_BMC_RAM_SIZE (2 * GiB)
-+#define AST2700FC_CM4_DRAM_SIZE (32 * MiB)
-+
-+#define AST2700FC_HW_STRAP1 0x000000C0
-+#define AST2700FC_HW_STRAP2 0x00000003
-+#define AST2700FC_FMC_MODEL "w25q01jvq"
-+#define AST2700FC_SPI_MODEL "w25q512jv"
-+
-+static void ast2700fc_ca35_init(MachineState *machine)
-+{
-+    Ast2700FCState *s = AST2700A1FC(machine);
-+    AspeedSoCState *soc;
-+    AspeedSoCClass *sc;
-+
-+    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a1");
-+    soc = ASPEED_SOC(&s->ca35);
-+    sc = ASPEED_SOC_GET_CLASS(soc);
-+
-+    memory_region_init(&s->ca35_memory, OBJECT(&s->ca35), "ca35-memory",
-+                       UINT64_MAX);
-+
-+    if (!memory_region_init_ram(&s->ca35_dram, OBJECT(&s->ca35), "ca35-dram",
-+                                AST2700FC_BMC_RAM_SIZE, &error_abort)) {
-+        return;
-+    }
-+    if (!object_property_set_link(OBJECT(&s->ca35), "memory",
-+                                  OBJECT(&s->ca35_memory),
-+                                  &error_abort)) {
-+        return;
-+    };
-+    if (!object_property_set_link(OBJECT(&s->ca35), "dram",
-+                                  OBJECT(&s->ca35_dram), &error_abort)) {
-+        return;
-+    }
-+    if (!object_property_set_int(OBJECT(&s->ca35), "ram-size",
-+                                 AST2700FC_BMC_RAM_SIZE, &error_abort)) {
-+        return;
-+    }
-+    if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
-+                                 AST2700FC_HW_STRAP1, &error_abort)) {
-+        return;
-+    }
-+    if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap2",
-+                                 AST2700FC_HW_STRAP2, &error_abort)) {
-+        return;
-+    }
-+    aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART12, serial_hd(0));
-+    if (!qdev_realize(DEVICE(&s->ca35), NULL, &error_abort)) {
-+        return;
-+    }
-+
-+    /*
-+     * AST2700 EVB has a LM75 temperature sensor on I2C bus 0 at address 0x4d.
-+     */
-+    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "tmp105", 0x4d);
-+
-+    aspeed_board_init_flashes(&soc->fmc, AST2700FC_FMC_MODEL, 2, 0);
-+    aspeed_board_init_flashes(&soc->spi[0], AST2700FC_SPI_MODEL, 1, 2);
-+
-+    ast2700fc_board_info.ram_size = machine->ram_size;
-+    ast2700fc_board_info.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
-+
-+    arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
-+}
-+
-+static void ast2700fc_ssp_init(MachineState *machine)
-+{
-+    AspeedSoCState *soc;
-+    Ast2700FCState *s = AST2700A1FC(machine);
-+    s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
-+    clock_set_hz(s->ssp_sysclk, 200000000ULL);
-+
-+    object_initialize_child(OBJECT(s), "ssp", &s->ssp, "ast2700ssp");
-+    memory_region_init(&s->ssp_memory, OBJECT(&s->ssp), "ssp-memory",
-+                       UINT64_MAX);
-+
-+    qdev_connect_clock_in(DEVICE(&s->ssp), "sysclk", s->ssp_sysclk);
-+    if (!object_property_set_link(OBJECT(&s->ssp), "memory",
-+                                  OBJECT(&s->ssp_memory), &error_abort)) {
-+        return;
-+    }
-+
-+    soc = ASPEED_SOC(&s->ssp);
-+    aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART4, serial_hd(1));
-+    if (!qdev_realize(DEVICE(&s->ssp), NULL, &error_abort)) {
-+        return;
-+    }
-+}
-+
-+static void ast2700fc_tsp_init(MachineState *machine)
-+{
-+    AspeedSoCState *soc;
-+    Ast2700FCState *s = AST2700A1FC(machine);
-+    s->tsp_sysclk = clock_new(OBJECT(s), "TSP_SYSCLK");
-+    clock_set_hz(s->tsp_sysclk, 200000000ULL);
-+
-+    object_initialize_child(OBJECT(s), "tsp", &s->tsp, "ast2700tsp");
-+    memory_region_init(&s->tsp_memory, OBJECT(&s->tsp), "tsp-memory",
-+                       UINT64_MAX);
-+
-+    qdev_connect_clock_in(DEVICE(&s->tsp), "sysclk", s->tsp_sysclk);
-+    if (!object_property_set_link(OBJECT(&s->tsp), "memory",
-+                                  OBJECT(&s->tsp_memory), &error_abort)) {
-+        return;
-+    }
-+
-+    soc = ASPEED_SOC(&s->tsp);
-+    aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART7, serial_hd(2));
-+    if (!qdev_realize(DEVICE(&s->tsp), NULL, &error_abort)) {
-+        return;
-+    }
-+}
-+
-+static void ast2700fc_init(MachineState *machine)
-+{
-+    ast2700fc_ca35_init(machine);
-+    ast2700fc_ssp_init(machine);
-+    ast2700fc_tsp_init(machine);
-+}
-+
-+static void ast2700fc_class_init(ObjectClass *oc, void *data)
-+{
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-+    mc->alias = "ast2700fc";
-+    mc->desc = "ast2700 full core support";
-+    mc->init = ast2700fc_init;
-+    mc->no_floppy = 1;
-+    mc->no_cdrom = 1;
-+    mc->min_cpus = mc->max_cpus = mc->default_cpus = 6;
-+}
-+
-+static const TypeInfo ast2700fc_types[] = {
-+    {
-+        .name           = MACHINE_TYPE_NAME("ast2700fc"),
-+        .parent         = TYPE_MACHINE,
-+        .class_init     = ast2700fc_class_init,
-+        .instance_size  = sizeof(Ast2700FCState),
-+    },
-+};
-+
-+DEFINE_TYPES(ast2700fc_types)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index ac6657d3ec..b0923b45df 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -49,7 +49,9 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_ast10x0.c',
-   'aspeed_eeprom.c',
-   'fby35.c'))
--arm_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files('aspeed_ast27x0.c'))
-+arm_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
-+  'aspeed_ast27x0.c',
-+  'aspeed_ast27x0-fc.c'))
- arm_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2.c'))
- arm_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2-tz.c'))
- arm_ss.add(when: 'CONFIG_MSF2', if_true: files('msf2-soc.c'))
--- 
-2.34.1
-
+--=20
+IBM Deutschland Research & Development GmbH
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Gesch=C3=A4ftsf=C3=BChrung: David Faller
+Sitz der Gesellschaft: B=C3=B6blingen / Registergericht: Amtsgericht Stuttg=
+art, HRB 243294
 
