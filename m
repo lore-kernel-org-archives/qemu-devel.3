@@ -4,88 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C7EC369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 15:21:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43C21C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 15:22:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9mlT-00015c-Ir; Tue, 29 Apr 2025 11:20:57 -0400
+	id 1u9mmQ-0002ed-Ja; Tue, 29 Apr 2025 11:21:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1u9mlO-0000zW-Ub
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:20:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u9mmO-0002eN-WE
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:21:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1u9mlI-0003vd-6C
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:20:45 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1u9mmN-00046B-Bc
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 11:21:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745940041;
+ s=mimecast20190719; t=1745940110;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UyzFVjatxS36KJ9rYJoavpDJAz9S5JYQSu7Cx8uAJeA=;
- b=WgeF+12ErC+VyU607kTYLAxq98kzrg/oFaZA8WLePGbhBbqXSmiZplEJnJMGlSxnaxwpKp
- UG+t1fQkLboreLlPACKKjzOSPyfBvDKH0dAIZL/U+wlY13mHaRpfWf6jTjzVBJrvFr4L1J
- xQhSBiQeVgWC+RLDyNhKQM8g78JgDd4=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-524-MGVlrZMsNoGsivRfXBmamQ-1; Tue, 29 Apr 2025 11:20:39 -0400
-X-MC-Unique: MGVlrZMsNoGsivRfXBmamQ-1
-X-Mimecast-MFC-AGG-ID: MGVlrZMsNoGsivRfXBmamQ_1745940038
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43f405810b4so32386005e9.1
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 08:20:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745940037; x=1746544837;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UyzFVjatxS36KJ9rYJoavpDJAz9S5JYQSu7Cx8uAJeA=;
- b=u3p1oj2rUd+7XgQAKVbZLO20i41pMoPf051LPsm//4Tb2eVBaMhBfE+qaB8XHA4Szi
- dhtB/W7AoAzrs6sKMoYtbLkhdhVpG4hJgU3lpOLEkCysY8XZzdDeV1ClVTCrx8b6uJSl
- pRCL9zJfFHMDji1BY5tLcO/FmeqYFflvgTp82lyH5vy78Jp2i+UnemlIPeZUPllyXNBJ
- WSx8vkB1jw0MMFwtDfaBg/og21ziClhj13KurAV/BYIn1n8RDENVNYNHMldPxGvnB1Gj
- yKSw4B9N2LUpX5NiAGe11VzBjqdtCl9+7va6Rq9IkR39YXbeGF1PQxocy0ljMckh7dpz
- KyeA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVZbZ3wMR+E1ZRjsIrmJcMWzIFmywGBZEpwTbOLm3SlhRf+Kox4ScgQ8VRxMO2sw7EkJr2OFlRM82ct@nongnu.org
-X-Gm-Message-State: AOJu0Yyv5aE8BCgSwQ9zI0tZr4u59R7Qz5m+DsZlAY9qB9YbwuAd/z6e
- UjI+uMjDcsIOF4hdCMdgIRCy/gGFzeYA1wJwBrAGsuhMw6mgj80Tkjd1jU5LJvZo19eYarG9Qpp
- 6Txeiu3QHneSd2A82/uhIn3Fb6e3lK90g6sypAyc019HnulxaMjYoXDxxCD9fXSQlT9FSnx/V22
- GfBcTx+TZV9RPvJ9HgUGcn/QygJLM=
-X-Gm-Gg: ASbGnctdmGDANBXcqp7cum7YUZaXiyBC0vUB1FdexCP7mZ8P4jzzkCwvgzvs5PoZvKH
- V0YzcERm5GnjhoJOdn+UQm7p0uEWEhihePgioAo5QcJ+bNVWhEZm6gJcdXISFDNj7MA7r
-X-Received: by 2002:a05:600c:384d:b0:43d:53c:1ad6 with SMTP id
- 5b1f17b1804b1-440ab848aa3mr111520905e9.26.1745940037554; 
- Tue, 29 Apr 2025 08:20:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFxfJgVbiYQNxsI7gP8lEH6I+T3LgwKZYpuj5+Oduk4S9a9TqHCMh/UCFpr+lwWGdaoYalZd1/0r/Zb4IIQtr0=
-X-Received: by 2002:a05:600c:384d:b0:43d:53c:1ad6 with SMTP id
- 5b1f17b1804b1-440ab848aa3mr111520695e9.26.1745940037250; Tue, 29 Apr 2025
- 08:20:37 -0700 (PDT)
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OWcDNlinGNFO3RLbbYaloSh0EiMQcHVyn7VLxmHsfl0=;
+ b=VvK9PAwwiI8QRzxZFnIQ3qELTtaMUEOkZfqYFSZoM7+o8Q2BNCIg+WcDT2MKvjntNkeFVO
+ 8Yjr8CP4l1rqrATRVNgm+1W1nFnabr/2ryaxmwjIiFw+KDaS8ZiKRg07SHnAGH4oi1EJps
+ q6qIz1TCsWCMuC/slI726qvyGEQLTGE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-261-YLKxHgj5P-CUz7ahfw7oRg-1; Tue,
+ 29 Apr 2025 11:21:46 -0400
+X-MC-Unique: YLKxHgj5P-CUz7ahfw7oRg-1
+X-Mimecast-MFC-AGG-ID: YLKxHgj5P-CUz7ahfw7oRg_1745940105
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C1949195609D; Tue, 29 Apr 2025 15:21:45 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.241])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9AE91180045C; Tue, 29 Apr 2025 15:21:43 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+	Fabiano Rosas <farosas@suse.de>
+Cc: Peter Xu <peterx@redhat.com>,
+	John Snow <jsnow@redhat.com>
+Subject: [PATCH 0/4] Test vmstate with scripts/vmstate-static-checker.py
+Date: Tue, 29 Apr 2025 17:21:37 +0200
+Message-ID: <20250429152141.294380-1-thuth@redhat.com>
 MIME-Version: 1.0
-References: <20250411114534.3370816-1-ppandit@redhat.com>
- <87ecxteym0.fsf@suse.de> <87bjswfeis.fsf@suse.de>
- <CAE8KmOzzn7g1=pd2J325gAf4ffmGALKoHdgL17So4KawxkZdbg@mail.gmail.com>
- <87y0vyepta.fsf@suse.de> <aAlu0hcUCdzmIN4p@x1.local>
- <CAE8KmOz7P+Pz8zwJq+mTEJbZjhCk7iAo9+c5DrZzhbTmz=VtUQ@mail.gmail.com>
- <aBDObgL7hDQMy63F@x1.local>
- <CAE8KmOx9yuZWWHnaA6gkC2VpeimY1=Pw+AU9iDvQ+vVpUp_vKg@mail.gmail.com>
- <aBDYj3k83_W6ihlF@x1.local>
-In-Reply-To: <aBDYj3k83_W6ihlF@x1.local>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 29 Apr 2025 20:50:19 +0530
-X-Gm-Features: ATxdqUEU6YQfcF5v5zsh2GUgJImggSwi4bE9dDG6qbpn-Wn137uYIOK6Se1FKVY
-Message-ID: <CAE8KmOxR1EoyLK6+49bVJK9BW0NfhgEcE2_aVxQQjkBY9y1xwA@mail.gmail.com>
-Subject: Re: [PATCH v9 0/7] Allow to enable multifd and postcopy migration
- together
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, berrange@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -110,30 +80,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 29 Apr 2025 at 19:18, Peter Xu <peterx@redhat.com> wrote:
-> Please don't rush to send. Again, let's verify the issue first before
-> resending anything.
->
-> If you could reproduce it it would be perfect, then we can already verify
-> it.  Otherwise we may need help from Fabiano.  Let's not send anything if
-> you're not yet sure whether it works..  It can confuse people thinking
-> problem solved, but maybe not yet.
+This set of patches adds an automatic test of the vmstate via the
+scripts/vmstate-static-checker.py script. For this we need some
+reference files from an older version of QEMU. There are already
+some files available in tests/vmstate-static-checker-data/ but
+they are of no use anymore since they have been taken from machines
+that have already been removed a long time ago (and thus these files
+now get removed, too). I chose to use QEMU 7.2 for the reference files
+instead since this is a long term support release that is still actively
+being maintained, so we certainly want to make sure that we don't
+break migration from that version to the latest one.
 
-* No, the migration hang issue is not reproducing on my side. Earlier
-in this thread, Fabiano said you'll be better able to confirm the
-issue. (so its possible fix as well I guess)
+Thomas Huth (4):
+  tests/vmstate-static-checker-data: Remove old dump files
+  scripts/vmstate-static-checker.py: Allow new name for ghes_addr_le
+    field
+  tests/data/vmstate-static-checker: Add dump files from QEMU 7.2.17
+  tests/functional: Test with scripts/vmstate-static-checker.py
 
-* You don't have access to the set-up that he uses for running tests
-and merging patches? Would it be possible for you to run the same
-tests? (just checking, I don't know how co-maintainers work to
-test/merge patches)
+ MAINTAINERS                                   |    3 +-
+ scripts/vmstate-static-checker.py             |    1 +
+ .../aarch64/virt-7.2.json                     | 2571 +++++++++++++
+ .../vmstate-static-checker/m68k/virt-7.2.json | 2936 ++++++++++++++
+ .../ppc64/pseries-7.2.json}                   | 1276 ++++---
+ .../s390x/s390-ccw-virtio-7.2.json            |  475 +++
+ .../x86_64/pc-q35-7.2.json                    | 3402 +++++++++++++++++
+ tests/functional/meson.build                  |   13 +-
+ tests/functional/test_vmstate.py              |   56 +
+ tests/vmstate-static-checker-data/dump1.json  | 1163 ------
+ 10 files changed, 10143 insertions(+), 1753 deletions(-)
+ create mode 100644 tests/data/vmstate-static-checker/aarch64/virt-7.2.json
+ create mode 100644 tests/data/vmstate-static-checker/m68k/virt-7.2.json
+ rename tests/{vmstate-static-checker-data/dump2.json => data/vmstate-static-checker/ppc64/pseries-7.2.json} (51%)
+ create mode 100644 tests/data/vmstate-static-checker/s390x/s390-ccw-virtio-7.2.json
+ create mode 100644 tests/data/vmstate-static-checker/x86_64/pc-q35-7.2.json
+ create mode 100755 tests/functional/test_vmstate.py
+ delete mode 100644 tests/vmstate-static-checker-data/dump1.json
 
-* If we don't send the patch, how will Fabiano test it? Should we wait
-for Fabiano to come back and then make this same patch in his set-up
-and test/verify it?
-
-Thank you.
----
-  - Prasad
+-- 
+2.49.0
 
 
