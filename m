@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D12C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 22:17:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78F8CC369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 22:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9tGC-0007vy-D0; Tue, 29 Apr 2025 18:17:05 -0400
+	id 1u9tTj-0003bq-63; Tue, 29 Apr 2025 18:31:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9tG9-0007vN-Sc
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 18:17:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9tTc-0003aU-Hm
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 18:30:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9tG8-00076H-7c
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 18:17:01 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9tTa-0000jK-OK
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 18:30:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745965018;
+ s=mimecast20190719; t=1745965853;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ubSeTtcfjSfz9gMCcJiIN/L+o5YJBUfRBCcZzyBCehA=;
- b=VozQsPC6hDOLc1JOgXgLUi4qP8D3NWfVFGuk5eW9QflaXt/b5coUOluIghiAYtklBdK3+n
- pNwfDfZ9kE2p5FYhLBHXgWaSS1lVXr+AccMUTtnSyY48cyaH39mnMgwcKgN9IBiob7KOBT
- oLPQK09TEYM9y8AGTjVipmoNrxgb5lg=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CCZjV8nenmIWH736nx0tWmzLkRQBMs8cP17mfRA4pC8=;
+ b=XgNS6VbH6tmjirDzMlnqH16X1SnGuja7vlkuPOOZnie8Oc+ybtgINGxFfjFClISIlxsor1
+ TmsvygiUo4qz8oGTu0HAxecuM6Nl/I0Mwu3Ll+cgZUWxcTsq3r6C4PXITMAp9v9j9yr3gW
+ Ve2DV/YzuCfv7yjzSlX51dPRcxrvink=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-339-gM5IRydgPz-xFAVudoXbNg-1; Tue, 29 Apr 2025 18:16:57 -0400
-X-MC-Unique: gM5IRydgPz-xFAVudoXbNg-1
-X-Mimecast-MFC-AGG-ID: gM5IRydgPz-xFAVudoXbNg_1745965017
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6e9083404b7so117863076d6.1
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 15:16:57 -0700 (PDT)
+ us-mta-630-ll6_cSbzO3uAGXKMk3wdEA-1; Tue, 29 Apr 2025 18:30:49 -0400
+X-MC-Unique: ll6_cSbzO3uAGXKMk3wdEA-1
+X-Mimecast-MFC-AGG-ID: ll6_cSbzO3uAGXKMk3wdEA_1745965848
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6e8ed78717eso107400856d6.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 15:30:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745965017; x=1746569817;
+ d=1e100.net; s=20230601; t=1745965848; x=1746570648;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ubSeTtcfjSfz9gMCcJiIN/L+o5YJBUfRBCcZzyBCehA=;
- b=F7rP/kPotE26uxTWVjSjqTPnZYJ8wUSvHV+O9oOFbHXfgnOSny30ckS1oTuUmt5Stl
- T2o2nzKi0JwKAP7OGhTgcBdzNht3JmVXoYdbkzpSSrtAM5YGBBSPWi7oS4wrZdOI5p3w
- gXkX8zMOJs/J4/3gLJA4k6/8ZgP9cMg30S1yKX8tlLrIrwEESyLUyiauwzbfkxK+OIm/
- ZO1cAnfiK2Mq1FT9wsfyJH5dsTfJ6ws/qctX2TzBFkOltDejKuuNI8Q4X9M96ttzMwH8
- Ro9u4k3IleX5dgnnC4De3Rx3GakmjIXP8PgIulGtXU07yXKKmZ9oZiSraITCyYsgBwIX
- HZug==
-X-Gm-Message-State: AOJu0YwPa7NVS6vWC3dmZZrLbTh4iZYLUImS46tg4FK8qlQz4AZLOabH
- crVoCYx8YpPgZUuqTq2ndohB5/7DzwdJno2DSThUl4T7jZeBzNeyV9KhWj4+hdfPKVl3VJxhHqW
- m3TQFLDJunm0b42VzicF1A2jXbE+FYbUO6zc1Htn+5E1rVuvRSAJOSHk0U22y
-X-Gm-Gg: ASbGncugwRfLnt/FbJSzS3+XC2ciolzyxQqMmtoBOrWJOSNhnEkI4efvyDU9UZxlKIE
- dXmuJpQMJX8zyCuxedGrqzQj/Nye+sX9hOw0ccgN5hhd9XjSvQQU89tC/UgKwj3/521wL5yMyIf
- yH1YLWvztvaXkS0+wuPg2DfxL/KCzAGdWRIbZSYWaucgv3KYS569A0b4PiyQk/Axa6vufqXv0pT
- NtqAEHuCM6Qyh789Sv73JsBZMC7oYNwl1dBHEFd+krzbx43YVvAaPzu6f9HssI49mAtE8yKakos
- hYs=
-X-Received: by 2002:a05:6214:c2f:b0:6f4:cbcf:5d46 with SMTP id
- 6a1803df08f44-6f4fced5afbmr17883436d6.20.1745965016697; 
- Tue, 29 Apr 2025 15:16:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdWnmUPg0Vy42WlOX8JRAspZ7uWHfSq7yALI3lS4s/UeCUfHu5wtfgWnX1DVooiBKuHiFubA==
-X-Received: by 2002:a05:6214:c2f:b0:6f4:cbcf:5d46 with SMTP id
- 6a1803df08f44-6f4fced5afbmr17883166d6.20.1745965016426; 
- Tue, 29 Apr 2025 15:16:56 -0700 (PDT)
+ bh=CCZjV8nenmIWH736nx0tWmzLkRQBMs8cP17mfRA4pC8=;
+ b=L0Z6apoLyEkjVFEum+OO8OfTuzy+zKb5YMkWW4mQld5tlI4PDqpGEvILSoKz7/ljCH
+ Q8fx4u0FQtCXgn/K/hQbbzeBSwRYIymhTVgHjxtj0nRjJWi5OyYoI5bGgtKq5+9kG94l
+ t0Jla1ndNjouDBfCAxLluDomwILLQQI4/tQest/z+x0EqWgkE220DAKxateMi9Zx1ptZ
+ 1t11pKqvPIChf9v3hw9U2cdCsMtEm7P3SynNfqth2ZshDXdPaPvzJ3InedcywEO6c4vD
+ 1NbftcxWfN+zWJhekbDjq0Cre4Gadj9PfMnhc1DsEClQVo5YehSc4pVIMu2JzMC4AZdN
+ h3qw==
+X-Gm-Message-State: AOJu0YytzmgN1MoQtPxamjSYIvh0MGkjuiBXm0tzhBXbRHkoGizHEN53
+ 2psoDfLInXRaWeTPnjXes4add+0hZ87F+GeGYt4j4kGMWyrOM5PPpTGRU4ahYex4cKB8bJSUK1A
+ LeBKPAUnfTmOie41fZXDnIamnRexe0JSwHNJY25XFW4gNLrjgY7HHiEru9y5b
+X-Gm-Gg: ASbGncspLRy14U/kJqyPP/POW7ZpLOa8XIKy7nXhYe8fQFrEUSa15w+sgKIHxUz+eiO
+ sESuBbtPUuMsWtRSlUAgGBO+5g8oJIzcfD8Mn5Ovys3hDw1VPjNyFenD6AdOIToN/KEJepxe3VW
+ 9lPBqDfFa3c4VONSBrMidcs0wTTqm0kHP00BY+a69jNXgxwdyu/HG88wB7nrN0GrnellQP4UGnq
+ 8wLeZT8BatPogFfUcbWVYvfkDvwe3wSSdfq7WNgyzlEZU8ovYjPbBeLAJ47TXwoJkgxkC47HZWy
+ mko=
+X-Received: by 2002:a05:6214:cca:b0:6e8:fe60:fded with SMTP id
+ 6a1803df08f44-6f4fcf8f447mr16199376d6.30.1745965848254; 
+ Tue, 29 Apr 2025 15:30:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH0HR+/fqfnk2gJpj2b3Z8+D389EhtsSg+muHW1ifBtyQ/w0prdmAtbmMV+1k2MKOBJh1G43w==
+X-Received: by 2002:a05:6214:cca:b0:6e8:fe60:fded with SMTP id
+ 6a1803df08f44-6f4fcf8f447mr16198986d6.30.1745965847808; 
+ Tue, 29 Apr 2025 15:30:47 -0700 (PDT)
 Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6f4fe6d0de5sm773516d6.28.2025.04.29.15.16.55
+ 6a1803df08f44-6f4fe835441sm778346d6.69.2025.04.29.15.30.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 15:16:55 -0700 (PDT)
-Date: Tue, 29 Apr 2025 18:16:52 -0400
+ Tue, 29 Apr 2025 15:30:47 -0700 (PDT)
+Date: Tue, 29 Apr 2025 18:30:43 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Thomas Huth <thuth@redhat.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH 2/4] scripts/vmstate-static-checker.py: Allow new name
- for ghes_addr_le field
-Message-ID: <aBFP1AqJocemibBc@x1.local>
+Subject: Re: [PATCH 3/4] tests/data/vmstate-static-checker: Add dump files
+ from QEMU 7.2.17
+Message-ID: <aBFTE8r3lyqUcAsT@x1.local>
 References: <20250429152141.294380-1-thuth@redhat.com>
- <20250429152141.294380-3-thuth@redhat.com>
+ <20250429152141.294380-4-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250429152141.294380-3-thuth@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20250429152141.294380-4-thuth@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -106,36 +106,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 29, 2025 at 05:21:39PM +0200, Thomas Huth wrote:
+On Tue, Apr 29, 2025 at 05:21:40PM +0200, Thomas Huth wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
-> ghes_addr_le has been renamed to hw_error_le in commit 652f6d86cbb
-> ("acpi/ghes: better name the offset of the hardware error firmware").
-> Adjust the checker script to allow that changed field name.
+> For automatic tests, we need reference files from older QEMU versions.
+> QEMU 7.2 is a long term stable release, so it's a good candidate for
+> checking whether the migration could still work correctly. Let's add the
+> files from that version that have been taken with the "-dump-vmstate"
+> parameter of QEMU (compiled with single machines and the configure switch
+> "--without-default-devices" to keep the json files reasonable small).
+> 
+> Some devices also have been removed manually from the json files, e.g.
+> the "pci-bridge" (which can be disabled in later QEMU versions via Kconfig),
+> and some Linux-related devices like "scsi-block" and "scsi-generic" and
+> KVM-related devices. Without removing them, we might get errors otherwise
+> if these devices have not been compiled into the destination QEMU build.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
-
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
 > ---
->  scripts/vmstate-static-checker.py | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/scripts/vmstate-static-checker.py b/scripts/vmstate-static-checker.py
-> index 9c0e6b81f21..25aca839a03 100755
-> --- a/scripts/vmstate-static-checker.py
-> +++ b/scripts/vmstate-static-checker.py
-> @@ -42,6 +42,7 @@ def check_fields_match(name, s_field, d_field):
->      # Some fields changed names between qemu versions.  This list
->      # is used to allow such changes in each section / description.
->      changed_names = {
-> +        'acpi-ghes': ['ghes_addr_le', 'hw_error_le'],
->          'apic': ['timer', 'timer_expiry'],
->          'e1000': ['dev', 'parent_obj'],
->          'ehci': ['dev', 'pcidev'],
-> -- 
-> 2.49.0
-> 
+>  MAINTAINERS                                   |    1 +
+>  .../aarch64/virt-7.2.json                     | 2571 +++++++++++++
+>  .../vmstate-static-checker/m68k/virt-7.2.json | 2936 ++++++++++++++
+>  .../ppc64/pseries-7.2.json                    | 1068 ++++++
+>  .../s390x/s390-ccw-virtio-7.2.json            |  475 +++
+>  .../x86_64/pc-q35-7.2.json                    | 3402 +++++++++++++++++
+>  6 files changed, 10453 insertions(+)
+>  create mode 100644 tests/data/vmstate-static-checker/aarch64/virt-7.2.json
+>  create mode 100644 tests/data/vmstate-static-checker/m68k/virt-7.2.json
+>  create mode 100644 tests/data/vmstate-static-checker/ppc64/pseries-7.2.json
+>  create mode 100644 tests/data/vmstate-static-checker/s390x/s390-ccw-virtio-7.2.json
+>  create mode 100644 tests/data/vmstate-static-checker/x86_64/pc-q35-7.2.json
+
+This looks like an improvement indeed, it so far only covers machine type
+7.2, rather than all machine types.  I used to run these by hands before
+each release.. and sometimes I forgot.  Before me, I am aware at least Dave
+used to run also during softfreezes.
+
+One thing I am wondering is if we can do it the same way as the compat
+migration test in CI, so that we always compare with a base (which is the
+previous release binary), then move the base after each release.
+
+After all, due to migration-compat-common CI job, we always build the base
+version of QEMU already in build-previous-qemu, so we already have two
+binaries at hand.  IIUC we only need one new job to generate the two JSON
+blobs, and feed them to the checker on both directions.
+
+If that is the case, it might have a benefit that we can cover all the
+machines as long as listed on both binaries, then check all of them?
+
+Meanwhile, if we keep the ball rolling for each release (by boosting the
+base QEMU binary version), IIUC it guarantees all the new binaries will
+make sure to provide compatible VMSDs all across since we start running the
+job.
+
+Would that work?
 
 -- 
 Peter Xu
