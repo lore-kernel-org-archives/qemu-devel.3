@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C4E5C369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 05:56:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68600C369CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 06:01:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9dx7-0003p1-FO; Tue, 29 Apr 2025 01:56:21 -0400
+	id 1u9e1Z-0006eb-BF; Tue, 29 Apr 2025 02:00:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1u9dx0-0003oW-L2
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 01:56:15 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9e1T-0006dp-R3
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:00:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1u9dwx-0003er-0A
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 01:56:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745906171; x=1777442171;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=Tu+vQM2FZn7coLoq40tbMIWVd6GUqk7JnawDfSdnBm0=;
- b=HboanY/CGOFGJdqpasG7V1yJtUfHewMETT58Z0xW/XOb1caeurqVELxb
- Z/Y2dsg/z8PN1H8rfHfrGw4VIWWy4TjAgwvJc75wpgcbx1pYgRUG933et
- eZtEZf029SU+IAODUADx5RszWKTxO4NTULNIwAaFOSfXLg12/LL2XJQiX
- e0mmcGAsOKo6qo5/r/Jykj21xeEoGjueW5DOUAzceQJnbEMM16ImB80sC
- PP3+OoVz+zuc980w/I29fJHh+Axx8RVKkf5S6MuvXFihzl4AHw4DvQFFS
- 2+GO94Gxt4xMb2mM8QG9/AtSYGbcm7SLQq4XIw+/EY/BAYwnc34/RK8gw Q==;
-X-CSE-ConnectionGUID: H8IasbGjTo2C5FHkvGsT/g==
-X-CSE-MsgGUID: mTaMpIIhS9Gb0uHFqs2Oyw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11417"; a="64935162"
-X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="64935162"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2025 22:56:05 -0700
-X-CSE-ConnectionGUID: BjVxhGz9TMmgDbqZtKEujA==
-X-CSE-MsgGUID: 6heALCXkRlyl0zRvWVXZHQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="138718582"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2025 22:56:02 -0700
-Message-ID: <4a1cfda7-4077-4754-b5a5-40db744419b4@intel.com>
-Date: Tue, 29 Apr 2025 13:55:59 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9e1Q-0004E4-6K
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:00:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745906447;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DsGeOpTdHCwYrEMdQ0GaAk04goDxdBIB970E3YM4HCs=;
+ b=by4IXYdXhp4QNvoLgaEYT53qOFiodJUhSHTE8/24aXf64/LiEEhpCb+3hMw705SHpUH28v
+ P5ZtNZPypL4RtUrEFrqgSCe9VZs7gdekw2qC8Xijx2SW7cq0D4wa/gpVknlF3Uo0IxMGUZ
+ kY9ca/hC81hG30h6Di1FOU3r8wsJM0c=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-526-1ItqQZe1O8CmBiKkSPNgIw-1; Tue,
+ 29 Apr 2025 02:00:43 -0400
+X-MC-Unique: 1ItqQZe1O8CmBiKkSPNgIw-1
+X-Mimecast-MFC-AGG-ID: 1ItqQZe1O8CmBiKkSPNgIw_1745906442
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 439EA1956087; Tue, 29 Apr 2025 06:00:42 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5452730001A2; Tue, 29 Apr 2025 06:00:41 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E05B621E66C2; Tue, 29 Apr 2025 08:00:38 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: Nir Soffer <nirsof@gmail.com>,  qemu-devel@nongnu.org,  Hanna Reitz
+ <hreitz@redhat.com>,  qemu-block@nongnu.org,  Fam Zheng <fam@euphon.net>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH 2/2] block/null: Add read-pattern option
+In-Reply-To: <pykbbqg7om2ahqs7h7gfstgvvlbfjc2gx3yobvbego6jrnqo6p@zohvnrrpfwce>
+ (Eric Blake's message of "Mon, 28 Apr 2025 16:55:06 -0500")
+References: <20250427225900.24316-1-nirsof@gmail.com>
+ <20250427225900.24316-3-nirsof@gmail.com>
+ <pykbbqg7om2ahqs7h7gfstgvvlbfjc2gx3yobvbego6jrnqo6p@zohvnrrpfwce>
+Date: Tue, 29 Apr 2025 08:00:38 +0200
+Message-ID: <87zffzpkvt.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Bug] QEMU TCG warnings after commit c6bd2dd63420 - HTT / CMP_LEG
- bits
-To: Ewan Hai <ewanhai-oc@zhaoxin.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: yeeli@zhaoxin.com, cobechen@zhaoxin.com, ewanhai@zhaoxin.com,
- MaryFeng@zhaoxin.com, Runaguo@zhaoxin.com, Xanderchen@zhaoxin.com,
- Alansong@zhaoxin.com, qemu-devel@nongnu.org
-References: <c111d9f9-2914-4b41-811a-b3a9ad0d83a9@zhaoxin.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <c111d9f9-2914-4b41-811a-b3a9ad0d83a9@zhaoxin.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,89 +88,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/29/2025 11:02 AM, Ewan Hai wrote:
-> Hi Community,
-> 
-> This email contains 3 bugs appear to share the same root cause.
-> 
-> [1] We ran into the following warnings when running QEMU v10.0.0 in TCG 
-> mode:
-> 
-> qemu-system-x86_64 \
->    -machine q35 \
->    -m 4G -smp 4 \
->    -kernel ./arch/x86/boot/bzImage \
->    -bios /usr/share/ovmf/OVMF.fd \
->    -drive file=~/kernel/rootfs.ext4,index=0,format=raw,media=disk \
->    -drive file=~/kernel/swap.img,index=1,format=raw,media=disk \
->    -nographic \
->    -append 'root=/dev/sda rw resume=/dev/sdb console=ttyS0 nokaslr'
-> 
-> qemu-system-x86_64: warning: TCG doesn't support requested feature: 
-> CPUID.01H:EDX.ht [bit 28]
-> qemu-system-x86_64: warning: TCG doesn't support requested feature: 
-> CPUID.80000001H:ECX.cmp-legacy [bit 1]
-> (repeats 4 times, once per vCPU)
-> 
-> Tracing the history shows that commit c6bd2dd63420 "i386/cpu: Set up 
-> CPUID_HT in x86_cpu_expand_features() instead of cpu_x86_cpuid()" is 
-> what introduced the warnings.
-> 
-> Since that commit, TCG unconditionally advertises HTT (CPUID 1 EDX[28]) 
-> and CMP_LEG (CPUID 8000_0001 ECX[1]). Because TCG itself has no SMT 
-> support, these bits trigger the warnings above.
-> 
-> [2] Also, Zhao pointed me to a similar report on GitLab:
-> https://gitlab.com/qemu-project/qemu/-/issues/2894
-> The symptoms there look identical to what we're seeing.
-> 
-> By convention we file one issue per email, but these two appear to share 
-> the same root cause, so I'm describing them together here.
+Eric Blake <eblake@redhat.com> writes:
 
-It was caused by my two patches. I think the fix can be as follow.
-If no objection from the community, I can submit the formal patch.
+> On Mon, Apr 28, 2025 at 01:59:00AM +0300, Nir Soffer wrote:
+>> When the `read-zeroes` is set, reads produce zeroes, and block status
+>> return BDRV_BLOCK_ZERO, emulating a sparse image.
+>> 
+>> If we don't set `read-zeros` we report BDRV_BLOCK_DATA, but image data
+>> is undefined; posix_memalign, _aligned_malloc, valloc, or memalign do
+>> not promise to zero allocated memory.
+>> 
+>> When computing a blkhash of an image via qemu-nbd, we want to test 3
+>> cases:
+>> 
+>> 1. Sparse image: skip reading the entire image based on block status
+>>    result, and use a pre-computed zero block hash.
+>> 2. Image full of zeroes: read the entire image, detect block full of
+>>    zeroes and skip block hash computation.
+>> 3. Image full of data: read the entire image and compute a hash of all
+>>    blocks.
+>> 
+>> This change adds `read-pattern` option. If the option is set, reads
+>> produce the specified pattern. With this option we can emulate an image
+>> full of zeroes or full of non-zeroes.
+>> 
+>> Specifying both `read-zeroes` and `read-pattern != 0` is not useful
+>> since `read-zeroes` implies a sparse image.  In this case `read-zeroes`
+>> wins and we ignore the pattern. Maybe we need to make the options mutual
+>> exclusive.
+>
+> I would lean towards an error.  It's easier to remove an error later
+> if we find it was too strict, than to be lax up front and then regret
+> it down the road when we wish we had been more strict.
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 1f970aa4daa6..fb95aadd6161 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -776,11 +776,12 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t 
-vendor1,
-            CPUID_PAE | CPUID_MCE | CPUID_CX8 | CPUID_APIC | CPUID_SEP | \
-            CPUID_MTRR | CPUID_PGE | CPUID_MCA | CPUID_CMOV | CPUID_PAT | \
-            CPUID_PSE36 | CPUID_CLFLUSH | CPUID_ACPI | CPUID_MMX | \
--          CPUID_FXSR | CPUID_SSE | CPUID_SSE2 | CPUID_SS | CPUID_DE)
-+          CPUID_FXSR | CPUID_SSE | CPUID_SSE2 | CPUID_SS | CPUID_DE | \
-+          CPUID_HT)
-            /* partly implemented:
-            CPUID_MTRR, CPUID_MCA, CPUID_CLFLUSH (needed for Win64) */
-            /* missing:
--          CPUID_VME, CPUID_DTS, CPUID_SS, CPUID_HT, CPUID_TM, CPUID_PBE */
-+          CPUID_VME, CPUID_DTS, CPUID_SS, CPUID_TM, CPUID_PBE */
+Seconded.  Silently "fixing" the user's nonsensical instructions is
+commonly a bad idea.
 
-  /*
-   * Kernel-only features that can be shown to usermode programs even if
-@@ -848,7 +849,8 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t 
-vendor1,
+>> The following examples shows how the new option can be used with blksum
+>> (or nbdcopy --blkhash) to compute a blkhash of an image using the
+>> null-co driver.
+>> 
+>> Sparse image - the very fast path:
+>> 
+>>     % ./qemu-nbd -r -t -e 0 -f raw -k /tmp/sparse.sock \
+>>         "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': '100g', 'read-zeroes': true}}" &
+>> 
+>>     % time blksum 'nbd+unix:///?socket=/tmp/sparse.sock'
+>>     300ad1efddb063822fea65ae3174cd35320939d4d0b050613628c6e1e876f8f6  nbd+unix:///?socket=/tmp/sparse.sock
+>>     blksum 'nbd+unix:///?socket=/tmp/sparse.sock'  0.05s user 0.01s system 92% cpu 0.061 total
+>> 
+>> Image full of zeros - same hash, 268 times slower:
+>> 
+>>     % ./qemu-nbd -r -t -e 0 -f raw -k /tmp/zero.sock \
+>>         "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': '100g', 'read-pattern': 0}}" &
+>> 
+>>     % time blksum 'nbd+unix:///?socket=/tmp/zero.sock'
+>>     300ad1efddb063822fea65ae3174cd35320939d4d0b050613628c6e1e876f8f6  nbd+unix:///?socket=/tmp/zero.sock
+>>     blksum 'nbd+unix:///?socket=/tmp/zero.sock'  7.45s user 22.57s system 183% cpu 16.347 total
+>> 
+>> Image full of data - difference hash, heavy cpu usage:
+>> 
+>>     % ./qemu-nbd -r -t -e 0 -f raw -k /tmp/data.sock \
+>>         "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': '100g', 'read-pattern': -1}}" &
+>> 
+>>     % time blksum 'nbd+unix:///?socket=/tmp/data.sock'
+>>     2c122b3ed28c83ede3c08485659fa9b56ee54ba1751db74d8ba9aa13d9866432  nbd+unix:///?socket=/tmp/data.sock
+>>     blksum 'nbd+unix:///?socket=/tmp/data.sock'  46.05s user 14.15s system 448% cpu 13.414 total
+>> 
+>> Tested on top of
+>> https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg05096.html.
+>> 
+>> Signed-off-by: Nir Soffer <nirsof@gmail.com>
+>> ---
+>>  block/null.c         | 17 +++++++++++++++++
+>>  qapi/block-core.json |  9 ++++++++-
+>>  2 files changed, 25 insertions(+), 1 deletion(-)
+>
+> Should block status return ZERO|DATA when read-pattern=0 is present?
+>
+   diff --git a/qapi/block-core.json b/qapi/block-core.json
+   index b1937780e1..7d576cccbb 100644
+   --- a/qapi/block-core.json
+   +++ b/qapi/block-core.json
+   @@ -3297,10 +3297,17 @@
+    # @read-zeroes: if true, reads from the device produce zeroes; if
+    #     false, the buffer is left unchanged.
+    #     (default: false; since: 4.1)
 
-  #define TCG_EXT3_FEATURES (CPUID_EXT3_LAHF_LM | CPUID_EXT3_SVM | \
-            CPUID_EXT3_CR8LEG | CPUID_EXT3_ABM | CPUID_EXT3_SSE4A | \
--          CPUID_EXT3_3DNOWPREFETCH | CPUID_EXT3_KERNEL_FEATURES)
-+          CPUID_EXT3_3DNOWPREFETCH | CPUID_EXT3_KERNEL_FEATURES | \
-+          CPUID_EXT3_CMP_LEG)
+The commit message explains "read-zeroes": true behaves like a sparse
+image.  The existing doc comment does not.  I suspect it should.
 
-  #define TCG_EXT4_FEATURES 0
+    #
+>> +# @read-pattern: if set, reads from the device produce the specified
+>> +#     pattern; if unset, the buffer is left unchanged.
+>> +#     (since: 10.1)
+>> +#
+>>  # Since: 2.9
+>>  ##
+>>  { 'struct': 'BlockdevOptionsNull',
+>> -  'data': { '*size': 'int', '*latency-ns': 'uint64', '*read-zeroes': 'bool' } }
+>> +  'data': { '*size': 'int',
+>> +            '*latency-ns': 'uint64',
+>> +            '*read-zeroes': 'bool',
+>> +            '*read-pattern': 'int' } }
+>
+> Should this be 'uint8' instead of 'int', so that we aren't silently
+> truncating spurious upper bits when passing it to memset()?
 
-> [3] My colleague Alan noticed what appears to be a related problem: if 
-> we launch a guest with '-cpu <model>,-ht --enable-kvm', which means 
-> explicitly removing the ht flag, but the guest still reports HT(cat / 
-> proc/cpuinfo in linux guest) enabled. In other words, under KVM the ht 
-> bit seems to be forced on even when the user tries to disable it.
+Yes, please.
 
-This has been the behavior of QEMU for many years, not some regression 
-introduced by my patches. We can discuss how to address it separately.
+Without this, the doc comment does not sufficiently specify the contents
+of the image.  "The specified pattern" could be read as
 
-> Best regards,
-> Ewan
+* Four bytes given by the 32 bit value of @read-pattern in big endian
+
+* or in little endian
+
+* or in host endian
+
+In fact, it's none of the above, it's the least significant byte.
+
+Please try to clarify the doc comment in addition to narrowing the type.
 
 
