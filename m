@@ -4,115 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0C6EC369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 16:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76942C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 16:29:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9nkh-0007Sx-Ax; Tue, 29 Apr 2025 12:24:11 -0400
+	id 1u9nos-0001VQ-3C; Tue, 29 Apr 2025 12:28:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1u9nkf-0007Qv-5X
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:24:09 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1u9noo-0001SP-Hg
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:28:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1u9nkc-0002Qh-Fe
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:24:08 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53TEOrni028303;
- Tue, 29 Apr 2025 16:19:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=zekSs1
- tEMG04AL8a5eNRlC7bMVWFZaswI9NBeWmwukY=; b=cfqf6y/R2VZ0tl0lF9UOsH
- DWX4B3UFZo6wP7/BMfteW3ZxE21YB08CPh5gs3UTkW5CpP3kouorhPcvhtiLE79P
- VsOAhvPaaP0n1SMUTVmBFiFSc/2RbCQx0+RiMuZYgZ2BwMkam77Bl6byWuBnnNHZ
- KZH+7GneQ1+nBNZhr+lap33ytmS4Xu/ymuoRQ20b7yTnToidATx9FKSdEkUqsxhX
- uriStgx2ochHwUYKz08HBb/K+0MkyYas9+xzJZtTQCNgsuxkPCqx3TDKYEKNQC31
- SJXH319pOXYBeErrsVxMJod7ghGzpY25mkwnQYiiSl7rdRukxHCw9xA7tTLTWkAQ
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ah8mc9xt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Apr 2025 16:19:54 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53TDYSLr016095;
- Tue, 29 Apr 2025 16:19:53 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 469a70c4w8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Apr 2025 16:19:53 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53TGJqXT31785686
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 29 Apr 2025 16:19:52 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2835C58045;
- Tue, 29 Apr 2025 16:19:52 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 43F5758052;
- Tue, 29 Apr 2025 16:19:51 +0000 (GMT)
-Received: from [9.61.250.102] (unknown [9.61.250.102])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 29 Apr 2025 16:19:51 +0000 (GMT)
-Message-ID: <d695b9da-3136-4599-ab03-427fcb14e91c@linux.ibm.com>
-Date: Tue, 29 Apr 2025 12:19:50 -0400
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1u9nol-0003cB-Ci
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:28:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745944101;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=l50atMCuK0a/t6+OSsjycsY+3SVS0yqhWVsTT+GbMRY=;
+ b=RS7dLxtzMrvPyM/UhKCxc6n11nXhg5GqB5fpfIWsS5UJ5JEeXlO5nr1IKH6zh0ISaGgIOI
+ FJ1QpYaptzHyGOkbv2Os8K8Z+cM3hdqTwSk7w0c6G2JcGI4z3PoIRHs4sQqucNj7lMGq8w
+ jHJOxmBdNRW+XtkOPtOSt328jkafojE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-531-dIZbPOfSO5WaUwa-3eUGlQ-1; Tue, 29 Apr 2025 12:27:12 -0400
+X-MC-Unique: dIZbPOfSO5WaUwa-3eUGlQ-1
+X-Mimecast-MFC-AGG-ID: dIZbPOfSO5WaUwa-3eUGlQ_1745944031
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43ceb011ea5so35363565e9.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 09:27:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745944031; x=1746548831;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=l50atMCuK0a/t6+OSsjycsY+3SVS0yqhWVsTT+GbMRY=;
+ b=UJsyQMEmZftp1oTL4eaN1X9klApKZIT8ixQWaj1JUTXu9/5p/A/jxngUgnnX/xw89q
+ k/diaGC7bRS7MhFRVpGups3bOnnSATbP7LrmnR23OGisiQ0ceA4QjvP0Qu7/PMgDPZgZ
+ JMHQpDLwnF9uAOg7lgnLd+1tQ+DjNUEUqmXd2699DseNnL1z7aga61d2jJohYetX5Hit
+ vcCMR/M3tEpdH3QAuFxfe24/NzUNVjsjS9vDrcVjOjb8tz8AJEYBgLM7oQUjNDz88/gN
+ 6OIZm5IdCgQD+gRL58K5T3XBES6SoW9bfEzvvP2m6ar8ar1SQ/nyXzea5DOZTmnng8+/
+ qEDA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXiMvfJCJ94HKZ+oqoAkx2yFSTBR6D4sC2+tYNef0vyNVfqlHW/aAfjWQbPbruP0C4WjAQqLK1+TqeV@nongnu.org
+X-Gm-Message-State: AOJu0YxlVXuG6+tyeHwORnTjQ+0eGvacIk+5ByVh5sCB80Na6UvOMgwx
+ XN11fHjq7M6LaJYotW2D5Z71+1Al+L3QPddC+Yqx8oHaw+9zuQ7O4rG5dkBYZztdZ+GrrVbzQrD
+ jgom8aBRZKRkFPnxqAmxz5NQ60ZmQAYaJbQw3GIDnYQ8HlyHY1g6K
+X-Gm-Gg: ASbGncssoBLB9O1sDeO6PwkQI4PD6AXnisXPg8JyQiMXZvA0hnT36WBrPqUko4iTPjJ
+ 79YT5GBr5XozdAuhO2lxRQ7HS3XEbX4gtk+4ONCFoUgnLyDpm2OD9sN5FVFFsLnjMfea6XvzmJw
+ qENC7PBtzjLzm/djIVqx+rBKfempzsEAOcF+1RZB0LcoGuUN+9IWbDMAW8HPTnjIhc25PbF8WKL
+ 1uiPokyoxRk0ofE+fAMtQDu1ehgpRHt1eYsUFCipDn9ke8Nb7B0b0oVHEJtrRIzmE+ErF01A0tC
+ fUGlspeoVcoFbDR2BqN6Jw19t7+MOWA4i+dKAU88nG9bbR3+uAnMW0G4C47/
+X-Received: by 2002:a05:600c:4f8f:b0:43c:fffc:7886 with SMTP id
+ 5b1f17b1804b1-440ab7aececmr117307555e9.8.1745944031419; 
+ Tue, 29 Apr 2025 09:27:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFuUSzhkKqv0CBZmumvxFVHUHd6z0kkIg62q2bNYagDKXU1xaQJccG/XSf0llsSSRxcQQTkcg==
+X-Received: by 2002:a05:600c:4f8f:b0:43c:fffc:7886 with SMTP id
+ 5b1f17b1804b1-440ab7aececmr117307275e9.8.1745944031090; 
+ Tue, 29 Apr 2025 09:27:11 -0700 (PDT)
+Received: from rh (p200300f6af1bce00e6fe5f11c0a7f4a1.dip0.t-ipconnect.de.
+ [2003:f6:af1b:ce00:e6fe:5f11:c0a7:f4a1])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-440a53044b3sm160787565e9.15.2025.04.29.09.27.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 29 Apr 2025 09:27:10 -0700 (PDT)
+Date: Tue, 29 Apr 2025 18:27:09 +0200 (CEST)
+From: Sebastian Ott <sebott@redhat.com>
+To: Cornelia Huck <cohuck@redhat.com>
+cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org, 
+ richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org, 
+ oliver.upton@linux.dev, shameerali.kolothum.thodi@huawei.com, 
+ armbru@redhat.com, berrange@redhat.com, abologna@redhat.com, 
+ jdenemar@redhat.com, agraf@csgraf.de, shahuang@redhat.com, 
+ mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
+Subject: Re: [PATCH v3 05/10] arm/cpu: accessors for writable id registers
+In-Reply-To: <20250414163849.321857-6-cohuck@redhat.com>
+Message-ID: <bebefcad-d9db-a2b7-ab69-8eed34b9e63d@redhat.com>
+References: <20250414163849.321857-1-cohuck@redhat.com>
+ <20250414163849.321857-6-cohuck@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH QEMU] x86/headers: Replace __ASSEMBLY__ with __ASSEMBLER__
- in UAPI headers
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Thomas Huth <thuth@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
- qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Stefano Garzarella
- <sgarzare@redhat.com>, Li Zhijian <lizhijian@cn.fujitsu.com>
-References: <20250429001705.2734439-1-aik@amd.com>
- <9f72389e-7adb-425d-8ab4-5770c8b89e9c@redhat.com>
- <0f279822-8f24-4b00-92ab-847ef88c5207@kaod.org>
-Content-Language: en-US
-From: Rorie Reyes <rreyes@linux.ibm.com>
-In-Reply-To: <0f279822-8f24-4b00-92ab-847ef88c5207@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: KxWBFvPgSulflcAqhkv2yCyqyxzDCtYh
-X-Proofpoint-GUID: KxWBFvPgSulflcAqhkv2yCyqyxzDCtYh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDEyMCBTYWx0ZWRfXzvXzp5ynqS3Q
- 4GxpTxLzTPfiv8rdfsjImC9+/Ty7cehE3rsiWhMISvLY2ElO6LhDWE0AEipwPUcJ0paALStE3mP
- NItGy5IWVxLtdVBqcNeGTa12+bzjNEr7w/6OVtqohhriAYIVIvJQdNOsnR4B7O61icyL6xPtjhU
- fBzn2+RwOFb9VN4sqsc2iulQpEbim4rjQkvIhYbPhp6tUumyVV8Nita+1hPf2PTEhNE8lwSnk/V
- ATZc8hcvur351p3Lmz94Pr0Km8ugc3OBitIQZpeDp8fuRaquXImBxoymK4w+C5UZI6VGSrSAvg1
- 5Sjk2o6SH1JwO5ugnlnXG2F52vSCITq7A16k81EzC+MewY1NHWBcWNu4kCNt3S/3tfZzeVyq7Aq
- 50Hot2gK181JK89AnTJA6y0Kk75JTPLPlhWMRAqE59iPR/syTgrBANBY2KAEsLHl7lVsS+7g
-X-Authority-Analysis: v=2.4 cv=QNRoRhLL c=1 sm=1 tr=0 ts=6810fc2a cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=cKuHB-N4JTawYMGt0BEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-29_06,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0
- mlxlogscore=605 spamscore=0 clxscore=1011 mlxscore=0 malwarescore=0
- bulkscore=0 priorityscore=1501 phishscore=0 impostorscore=0
- lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504290120
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rreyes@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -130,25 +112,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/29/25 3:30 AM, Cédric Le Goater wrote:
+On Mon, 14 Apr 2025, Cornelia Huck wrote:
+> Also add conversion between the different indices.
+>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> ---
+> target/arm/cpu.h | 18 ++++++++++++++++++
+> 1 file changed, 18 insertions(+)
+>
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index bbee7ff2414a..775a8aebc5d3 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -876,6 +876,13 @@ typedef struct IdRegMap {
+>     uint64_t regs[NR_ID_REGS];
+> } IdRegMap;
+>
+> +#define ARM_FEATURE_ID_RANGE_IDX(op0, op1, crn, crm, op2)               \
+> +        ({                                                              \
+> +                __u64 __op1 = (op1) & 3;                                \
+> +                __op1 -= (__op1 == 3);                                  \
+> +                (__op1 << 6 | ((crm) & 7) << 3 | (op2));                \
+> +        })
+> +
+> /* REG is ID_XXX */
+> #define FIELD_DP64_IDREG(ISAR, REG, FIELD, VALUE)                       \
+>     ({                                                                  \
+> @@ -923,6 +930,17 @@ typedef struct IdRegMap {
+>         i_->idregs[REG ## _EL1_IDX];                                    \
+>     })
+>
+> +#define GET_IDREG_WRITABLE(MAP, REG)                                  \
+> +    ({                                                                \
+> +    const IdRegMap *m_ = (MAP);                                       \
+> +    int index = ARM_FEATURE_ID_RANGE_IDX((sysreg >> 14) & 0x0000c000, \
+> +                                         (sysreg >> 11) & 0x00003800, \
+> +                                         (sysreg >> 7) & 0x00000780,  \
+> +                                         (sysreg >> 3) & 0x00000078,  \
+> +                                         sysreg & 0x00000007);        \
+> +    m_->regs[index];                                                  \
+> +    })
+> +
 
-> On 4/29/25 07:22, Thomas Huth wrote:
->> On 29/04/2025 02.17, Alexey Kardashevskiy wrote:
->>> The recent kernel update 8a141be3233af7d broke the headers update,
->>> fix it in the script.
->>
->> Thanks, but the same patch is already on the list:
->>
->> https://lore.kernel.org/qemu-devel/20250425052401.8287-2-rreyes@linux.ibm.com/ 
->>
->
-> yeah. I grabbed the whole series which includes a linux-headers update
-> in vfio-next. I plan to send a PR in a couple of weeks.
->
->
-> Thanks,
->
-> C.
->
-Is there anything on my end that you need from me?
+s/sysreg/REG/
+
+Also GET_IDREG_WRITABLE doesn't seem to be used in this series.
+
+Sebastian
+
 
