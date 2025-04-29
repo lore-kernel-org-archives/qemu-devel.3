@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E1C2C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:13:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBA0AC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 14:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9ldi-0000e4-N8; Tue, 29 Apr 2025 10:08:50 -0400
+	id 1u9lfN-00045R-7m; Tue, 29 Apr 2025 10:10:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9ldh-0000dO-9a
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:08:49 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9lep-0003V8-Om
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:10:05 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9ldc-0006G7-UW
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:08:48 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-39ee57c0b8cso6956006f8f.0
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 07:08:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9lem-0006Uy-J6
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 10:09:59 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43cef035a3bso43260795e9.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 07:09:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745935722; x=1746540522; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745935789; x=1746540589; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1rBTFzGlpmN0XM4Xhc9yiz4Q5nlS539l0QvdyVgqZAM=;
- b=cQpUk0XRCoVg0qk/yrI+21rLGJ5Mhc2s5Mg1MUBD+K4FtYrXRNWpfuPVrMQnRyj3iy
- EHOi+UUhcxbNp0mWKD02CQXR7MezCOXfChRy+zjCeCdNHcVLoRBFO/DAmSncmaSaV6mF
- TXHVMY2J0pqOU+pu4sLKFypztaR2FxsZLcG9XEAk8I7/39EmZlfw0VeTjsC5bd5Ueg2N
- YVo4aXdmf1MTojKReUa6rYan65KjPYdS6EnxzzpAj55kke2V02DWRDyNwQQqzhB7aQMz
- /KHmmNrV7k82doV29k1X2+5P1CuMVsev6sElsHdkc8dhidEk/1lkX+dUYqMF3sgPRLRm
- Te/g==
+ bh=j41fV/T5fVwdY4VDR58WCPqJo5aDoWrBkyOMJ4Dwydk=;
+ b=sSRybMXsNRHONHi260Dy9TnGh+3FDJfPzIKE7STPRsZdNgUpGb+aZ4YaK9pdOBZrxm
+ DHtfy5zR0QGXCyQTUcbOj5vFAiLrLaPewqLWEzQWRQkNZlVDkQ1Ap0waox9PGSOU9tnf
+ E+Yegwy9udbAAIExgEutNpnlBMMKrkFEqNiu4EPeq4/ZXYL+FxA0qH8gMrzVUpkhnqsC
+ qAZqMlQDifVmGwYQ0ONFWkUSGcwhuujTkLjYhAIMLrY3E9Q99tXlIAwDLOIiZKIhqa3s
+ 6uRHD+sFZhO1Q7QDSuOqee4NWASy8/NGn+pH11vKVne/qJOZikSb6gCRREYGFjxsUjv9
+ ri7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745935722; x=1746540522;
+ d=1e100.net; s=20230601; t=1745935789; x=1746540589;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1rBTFzGlpmN0XM4Xhc9yiz4Q5nlS539l0QvdyVgqZAM=;
- b=qfJaGXuQRc96W8he6XeuDeFnBhJ6sjbRDRTU8l04t7HHa7xC+ZhalHXJ2HE/Bf7pkw
- OVvOy9m755qp2tQfLHsLjE48xLMcl5IcnALNHvaPslQW5bM7pgQPBwx+HljWXyTkjEh4
- 9YGHLBnK4h5yuaSMt0s1JmayGpISdpZLeGdFtPYOro80ocg6lDuugLZ9svt92Ba+8Gsw
- lMR45ePLkDFP/1HmvoNjdVXew/ArhDr1evMVuBsBr65Ib8BzbWrycjjof8R+r1l+kVAY
- 64ILfmVHM0swSbFjLW5D4L6WkBVH1SxZrDXAPpoqOMXIBRbbUECRsxZ1PoGLBTKQ9L58
- zYxA==
-X-Gm-Message-State: AOJu0YxZ2zu5eL4EUux6pw6bmM+24JQn6iYYC9GAnXyFMALMnx+8UbR5
- HDetiDn/zbM6QR6H4+KF/5V23Vv6m1rKxvr6lNjvG2thSgYrH0AIdlhMtMIoITupnQzzAsGH+fr
- 1
-X-Gm-Gg: ASbGncuw2lxALLZMLrm8SMRzYbcU6cmLo2A/fwOk9bxIeVYR5Mi5n5trcZwS/30joJY
- rdWQ3oSf5jxP6XKJ1uh+cr10B7PeLcgL71M8qyT91CMmuE9pQFLSrH3PLJ9YIEUftgMD2etcY/h
- UfnufhFPJrtjE6Tfn6aWTOnfHl9NHBT8H2uvuvEAIIZxA+POai8CU/Cb2fHlmIFcueGhK3+w/Tu
- dXEy486ucjZGJU5B2vekSF4fCPy+nQolQhkXR/yFv6HUZAXFT1JFh/6xIoJeiGbA8ZYSM04t3RK
- GH+qUXXOBY2D8cuBE4mJfsjtWyVdubmveCl7s3aEmJMpdbMAuvFf4eFkukYowrjcy4hOZctHQ0T
- mEZ3jL+7kDzAH5Cy5IDrp
-X-Google-Smtp-Source: AGHT+IFnDrVcedbXHpcglRf3Zfr33IFFYKasSaoLQa9TB96b58tL9E1xh2++cLgtcB9Hp183gOayEg==
-X-Received: by 2002:adf:f7c5:0:b0:391:3406:b4e2 with SMTP id
- ffacd0b85a97d-3a0894a17f0mr2414426f8f.49.1745935722255; 
- Tue, 29 Apr 2025 07:08:42 -0700 (PDT)
+ bh=j41fV/T5fVwdY4VDR58WCPqJo5aDoWrBkyOMJ4Dwydk=;
+ b=ITeaLDj7CQ7UkKmI1nwHD2+tiO8hsWkG9xyipjObGZkkF6TvrGIMJxPk8ZuyvdnZlT
+ 9E2ukNstBRcK/cBnLaAcOgHXCiE4PUh6bg/NT1fWgwn5DqBNHfRKEMhYC76rhwTPL3G2
+ gcy8e1pOrwiDLs2N7fr/Gq53RJvdD2RfewdB/wE9qXu2iv99KkYDaKvkuyaiuMNRjJkt
+ S5i7zvugNdXZTqMArqeLnp7FxUB+vvIp7QyGGIj8T/oYyl+hPfd0z+IBsZz3+xlmCyAO
+ TZjJw42ZudMS5xEfD3eM7YdJPqW0ooKPgtLid/FmwmvncehCuZ83VrZx9G+XX8eRj8Aw
+ wDPQ==
+X-Gm-Message-State: AOJu0Yxb/ltaWS5plLoj1lU6pSvqS+Ou7/7T5SPraaVEC7GW5nijl1ak
+ ic12tJVug7Uj2EvAyaktJ015/AjGJdHwACJaESDMs+GJA4qJ7416i4oGNjwFiw/1J2IZ0mJPKC/
+ +
+X-Gm-Gg: ASbGncv/xxUAaRxycmryeenriu/c7e6pxsfjl+V7tBHl8F1XpzlWqU6uJnJgJe3tqSf
+ aVd2Bak+LGKXQ9n0Rhw0ibrDIMNvOjhAEq6SA077RXCJv8sX4AN5r0Z5m4mjayRoE3l0ISzmc+U
+ +PiqPH+QtucKNLU0PVW95fX70POqngzyJDlwNXdxmXYpQnFjMywD1AwxRgllg+fJTLu/gULdR8/
+ 6LGaY/ZHzqguLdeWWndyQWaXH01jJoKn+QPwwDuWmlwumGWMBtgGQ30c4O0YBb+ZVugofT22TXg
+ 7nE2JLxJvDeOi25ERaAbL1kQsRQNLV+HJb3gZwhM3G8sQQX+Uy/K1c7t3DDMhB7kROqm8uRXV6q
+ 75mX06iI3VjsYckeqNVoC
+X-Google-Smtp-Source: AGHT+IFb5nYayxjTU8XD3JSTOuyV3WiSXankX9wyKjueE1RtxtuSlbEIWCQvzlEg2kqY9bAFP0Pw1Q==
+X-Received: by 2002:a05:600c:1f91:b0:440:9b1a:cd78 with SMTP id
+ 5b1f17b1804b1-440ab7b7969mr144090985e9.10.1745935789042; 
+ Tue, 29 Apr 2025 07:09:49 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073cbedc4sm13721492f8f.47.2025.04.29.07.08.41
+ ffacd0b85a97d-3a073e5c6a0sm13996273f8f.86.2025.04.29.07.09.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 29 Apr 2025 07:08:41 -0700 (PDT)
+ Tue, 29 Apr 2025 07:09:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -76,17 +76,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 03/19] hw/i386/pc: Remove pc_compat_2_4[] array
-Date: Tue, 29 Apr 2025 16:08:09 +0200
-Message-ID: <20250429140825.25964-4-philmd@linaro.org>
+Subject: [PATCH v2 16/19] hw/scsi/vmw_pvscsi: Convert DeviceRealize ->
+ InstanceInit
+Date: Tue, 29 Apr 2025 16:08:22 +0200
+Message-ID: <20250429140825.25964-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250429140825.25964-1-philmd@linaro.org>
 References: <20250429140825.25964-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,60 +110,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pc_compat_2_4[] array was only used by the pc-q35-2.4
-and pc-i440fx-2.4 machines, which got removed. Remove it.
+Simplify replacing pvscsi_realize() by pvscsi_instance_init(),
+removing the need for device_class_set_parent_realize().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/hw/i386/pc.h |  3 ---
- hw/i386/pc.c         | 19 -------------------
- 2 files changed, 22 deletions(-)
+ hw/scsi/vmw_pvscsi.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index f4a874b17fc..b34aa25fdce 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -301,9 +301,6 @@ extern const size_t pc_compat_2_6_len;
- extern GlobalProperty pc_compat_2_5[];
- extern const size_t pc_compat_2_5_len;
+diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
+index e163023d14c..7c98b1b8ea6 100644
+--- a/hw/scsi/vmw_pvscsi.c
++++ b/hw/scsi/vmw_pvscsi.c
+@@ -1267,21 +1267,15 @@ static const Property pvscsi_properties[] = {
+     DEFINE_PROP_UINT8("use_msg", PVSCSIState, use_msg, 1),
+ };
  
--extern GlobalProperty pc_compat_2_4[];
--extern const size_t pc_compat_2_4_len;
+-static void pvscsi_realize(DeviceState *qdev, Error **errp)
++static void pvscsi_instance_init(Object *obj)
+ {
+-    PVSCSIClass *pvs_c = PVSCSI_GET_CLASS(qdev);
+-    PCIDevice *pci_dev = PCI_DEVICE(qdev);
 -
- #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
-     static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
-                                                  const void *data) \
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index c8bb4a3ee47..2b46714a5ac 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -262,25 +262,6 @@ const size_t pc_compat_2_6_len = G_N_ELEMENTS(pc_compat_2_6);
- GlobalProperty pc_compat_2_5[] = {};
- const size_t pc_compat_2_5_len = G_N_ELEMENTS(pc_compat_2_5);
+-    pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+-
+-    pvs_c->parent_dc_realize(qdev, errp);
++    PCI_DEVICE(obj)->cap_present |= QEMU_PCI_CAP_EXPRESS;
+ }
  
--GlobalProperty pc_compat_2_4[] = {
--    PC_CPU_MODEL_IDS("2.4.0")
--    { "Haswell-" TYPE_X86_CPU, "abm", "off" },
--    { "Haswell-noTSX-" TYPE_X86_CPU, "abm", "off" },
--    { "Broadwell-" TYPE_X86_CPU, "abm", "off" },
--    { "Broadwell-noTSX-" TYPE_X86_CPU, "abm", "off" },
--    { "host" "-" TYPE_X86_CPU, "host-cache-info", "on" },
--    { TYPE_X86_CPU, "check", "off" },
--    { "qemu64" "-" TYPE_X86_CPU, "sse4a", "on" },
--    { "qemu64" "-" TYPE_X86_CPU, "abm", "on" },
--    { "qemu64" "-" TYPE_X86_CPU, "popcnt", "on" },
--    { "qemu32" "-" TYPE_X86_CPU, "popcnt", "on" },
--    { "Opteron_G2" "-" TYPE_X86_CPU, "rdtscp", "on" },
--    { "Opteron_G3" "-" TYPE_X86_CPU, "rdtscp", "on" },
--    { "Opteron_G4" "-" TYPE_X86_CPU, "rdtscp", "on" },
--    { "Opteron_G5" "-" TYPE_X86_CPU, "rdtscp", "on", }
--};
--const size_t pc_compat_2_4_len = G_N_ELEMENTS(pc_compat_2_4);
--
- /*
-  * @PC_FW_DATA:
-  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
+ static void pvscsi_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+-    PVSCSIClass *pvs_k = PVSCSI_CLASS(klass);
+     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
+ 
+     k->realize = pvscsi_realizefn;
+@@ -1290,8 +1284,6 @@ static void pvscsi_class_init(ObjectClass *klass, const void *data)
+     k->device_id = PCI_DEVICE_ID_VMWARE_PVSCSI;
+     k->class_id = PCI_CLASS_STORAGE_SCSI;
+     k->subsystem_id = 0x1000;
+-    device_class_set_parent_realize(dc, pvscsi_realize,
+-                                    &pvs_k->parent_dc_realize);
+     device_class_set_legacy_reset(dc, pvscsi_reset);
+     dc->vmsd = &vmstate_pvscsi;
+     device_class_set_props(dc, pvscsi_properties);
+@@ -1306,6 +1298,7 @@ static const TypeInfo pvscsi_info = {
+     .class_size    = sizeof(PVSCSIClass),
+     .instance_size = sizeof(PVSCSIState),
+     .class_init    = pvscsi_class_init,
++    .instance_init = pvscsi_instance_init,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_HOTPLUG_HANDLER },
+         { INTERFACE_PCIE_DEVICE },
 -- 
 2.47.1
 
