@@ -4,86 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EA63C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 16:33:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A3BC369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 16:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9nsx-0004XO-Ct; Tue, 29 Apr 2025 12:32:43 -0400
+	id 1u9nzP-0004YB-TQ; Tue, 29 Apr 2025 12:39:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1u9nsb-0004G4-A4
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:32:23 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1u9nsY-0004fM-Jp
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:32:20 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-39ac9aea656so7204212f8f.3
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 09:32:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745944336; x=1746549136; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R9X12hAVFdbebjHYEQDRzia04epp7Dk4I6xOhWrWV8E=;
- b=QEjWfLW1b1uDEffAAvlEF6Lo8mCYXOInkxjKAq5NTYCTxXd4paXAuDjSV1oXOZkIDf
- fn9jA2txfZrRJYGdqoXPYiDVSwh0EV/1TJFDzIdWLWVpERXL15ZngmcPRdzD4OUa9Vmr
- xXlT3GjP/TPfvNPo67cep4PXW5xta7V5p3Dea3A9CsoWgzTaxdnbc/XPae0f5xGNZzbO
- /jt+Wt30/cJMChcr/Z2gYI2Wx4baDrmnfPbbcgndVPao0AFshaslbxuTnaXnbewb8AzI
- YPvVDDzNNaJFn7ceYX8HLxY+8/nq048k5wUpZrkZzpRcIFcHYdN5cMNnpY4nzSipTZQj
- w9tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745944336; x=1746549136;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=R9X12hAVFdbebjHYEQDRzia04epp7Dk4I6xOhWrWV8E=;
- b=Z7KrzehU45UU61PN/okMOKtytTXvb79z+cQNLrCDuK0KzsGMChnAzA2v0ltpGUg9Mk
- AILDKNkMRi8RijHxno83vTNo3hj3r4KrnClZgXfJoW9vuUhcqCX+qtPl3p++gSATOAbT
- 4o6wrK+OMNK6XX0sxrJM3SmzHp5kR04JmbDWqh7aUKh5kUNbmB6Wf4bP/QfMbU8zwGSq
- lA0RKikhvbA8UXmeq7GtXht3Ouc1zz9M++Ldfih2tiONtgb/clSSR0k2XkqZSH9DkzbN
- yp3LWCsLLdKvQbhBQmmUcv5aX0WQAkZMYlcHo0io85Webicr03X7XDjm+NFvPrsqXg1a
- /9rg==
-X-Gm-Message-State: AOJu0YzqsxHgt5LK5kkkGsby4BcpySyjBVfjqag9Wxtd+P1SFY0c2zfq
- WJUoF+KJVHFWsXWOC1q7CAhjjMNIdPnA4tHJh9A08lnXNQ4bNXdftmyRZ87xRmNTv5W5ROafDbg
- Q
-X-Gm-Gg: ASbGnct6fgGZDI4Tch10XOkq5WCW4O9oXf3r24AG7nfiS3zvPLJneysRzHCLutvsixu
- bonYZqrW2kCJrq3aZJFGult32Xu137eq3nHJEj5O8rqRcm8KaTIwtacZzU59kNMt6uqAsBEVS9s
- jJqoHmIW2Ixz3ohSju0SPkYnCBDU1cbKK++3WhRE02v+m2UP8ZfRYMruVFJqDVm5aDgG/maeir7
- G6WTO33whth6TQ/6EPyFLYnP9k3XQcQgyx8sf6gBZ9CszZTRzm7EmVO+AiQHnD7wJBOqf3qlN+z
- Zchkmbf1+uC+47u3ExO0TRpw9IRTpcwQjtjWsYlcybYbACo=
-X-Google-Smtp-Source: AGHT+IHmd6wr0LEUIg/GUJzVo23tmjG34a5HjAQD10PRGaFf+B5aNUmPV+ImnL1Fsm1q0Z+u9t1Rgw==
-X-Received: by 2002:a05:6000:4304:b0:39c:141a:6c67 with SMTP id
- ffacd0b85a97d-3a08f7a3ff1mr16922f8f.45.1745944336468; 
- Tue, 29 Apr 2025 09:32:16 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073ca4cbcsm14176326f8f.25.2025.04.29.09.32.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 09:32:15 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 2/2] docs: Use uniquelabel in qemu-block-drivers.rst.inc
-Date: Tue, 29 Apr 2025 17:32:12 +0100
-Message-ID: <20250429163212.618953-3-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250429163212.618953-1-peter.maydell@linaro.org>
-References: <20250429163212.618953-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1u9nzG-0004XS-LM
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:39:16 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1u9nzE-0006ab-Pq
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 12:39:14 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1u9nz2-00000002eEc-0aYm; Tue, 29 Apr 2025 18:39:00 +0200
+Message-ID: <20219818-88e0-4b61-af49-6a27b867e882@maciej.szmigiero.name>
+Date: Tue, 29 Apr 2025 18:38:54 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 7/8] include/system: make functions accessible from
+ common code
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ alex.bennee@linaro.org, kvm@vger.kernel.org, philmd@linaro.org,
+ manos.pitsidianakis@linaro.org, richard.henderson@linaro.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250424232829.141163-1-pierrick.bouvier@linaro.org>
+ <20250424232829.141163-8-pierrick.bouvier@linaro.org>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <20250424232829.141163-8-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,46 +107,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the uniquelabel directive for the 'nbd' label in
-qemu-block-drivers.rst.inc.  This avoids a complaint from some Sphinx
-versions about it being a duplicate label, and means that we can
-reliably ensure that the link in codebase.rst goes to the document
-file that we intend (i.e.  the section of the HTML manual on disk
-images, not the HTML copy of the qemu-block-drivers manpage).
+On 25.04.2025 01:28, Pierrick Bouvier wrote:
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   include/system/kvm.h | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+It looks like this patch was already merged outside of this patch set.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- docs/devel/codebase.rst                | 2 +-
- docs/system/qemu-block-drivers.rst.inc | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/docs/devel/codebase.rst b/docs/devel/codebase.rst
-index 40273e7d31e..f3f133e9adb 100644
---- a/docs/devel/codebase.rst
-+++ b/docs/devel/codebase.rst
-@@ -116,7 +116,7 @@ yet, so sometimes the source code is all you have.
- * `monitor <https://gitlab.com/qemu-project/qemu/-/tree/master/monitor>`_:
-   `Monitor <QEMU monitor>` implementation (HMP & QMP).
- * `nbd <https://gitlab.com/qemu-project/qemu/-/tree/master/nbd>`_:
--  QEMU `NBD (Network Block Device) <nbd>` server.
-+  QEMU `NBD (Network Block Device) <system/images-nbd>` server.
- * `net <https://gitlab.com/qemu-project/qemu/-/tree/master/net>`_:
-   Network (host) support.
- * `pc-bios <https://gitlab.com/qemu-project/qemu/-/tree/master/pc-bios>`_:
-diff --git a/docs/system/qemu-block-drivers.rst.inc b/docs/system/qemu-block-drivers.rst.inc
-index cfe1acb78ae..1a405e47823 100644
---- a/docs/system/qemu-block-drivers.rst.inc
-+++ b/docs/system/qemu-block-drivers.rst.inc
-@@ -500,7 +500,7 @@ What you should *never* do:
- - expect it to work when loadvm'ing
- - write to the FAT directory on the host system while accessing it with the guest system
- 
--.. _nbd:
-+.. uniquelabel:: nbd
- 
- NBD access
- ~~~~~~~~~~
--- 
-2.43.0
+Thanks,
+Maciej
 
 
