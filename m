@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25233C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 21:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D51CEC3ABA5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 21:14:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9sF8-0005Cl-PF; Tue, 29 Apr 2025 17:11:54 -0400
+	id 1u9sHJ-0006Yz-Sf; Tue, 29 Apr 2025 17:14:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u9sF6-0005A6-W4
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 17:11:53 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1u9sHH-0006Vo-2O
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 17:14:07 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u9sF4-0004q4-DI
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 17:11:52 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-22c336fcdaaso79218745ad.3
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 14:11:49 -0700 (PDT)
+ id 1u9sHE-00057V-Pe
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 17:14:06 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-22c33e4fdb8so70214895ad.2
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 14:14:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745961109; x=1746565909; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745961243; x=1746566043; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+vBxbVVL0iKGPcc8hbFY6P4N8NFA8CDBAgRz2WbbHH0=;
- b=jTwBvOKNycWgEunZw92IgYg/08HgVvhJF5qzW31fEwtHgJp5b39n1PF5VLOl1TRSr3
- d+sbD/xecdk2sas4LoVtQT/qe38bFudyQATGix76bIJ8tmOZoUpcNgpoSYnyVrpMOgyU
- 58pOVaYovzLCGP3w+Ud1YRYeSuXPF/Ahw7lsfkbAp9Y90LvjErCfaEemzFq1TxMuMKRc
- TDfGFG8iVIQxAahGXPw8XNdLnWr6zpQzT8hvkhVB2RTfQp7O3UYLt1iIQRfg3N+sVyDX
- QD4oLJ6/WHlwb5i46WbYcM1TuR+qE6vgQXhvyecuRY2YoIPP15upko9LGIp7mBdFp4wI
- OGJQ==
+ bh=hOHQaZoxZ7UbKQya7ht8bDTHCEK26P6Ba+yTQsPhO10=;
+ b=ujHPdu+pkZIAb9sPsVt11XQWsNJ7oPr/BnM/wDh3Z1sBl86WhvVPdG2QU2Rpj5mh4T
+ 3ElU31MSSAu7Yk4xkZLIrQyho2yiET7z7jM/IgpqztJmrp4YNa/F8fFOgPcZbp72g4Bn
+ IpbhJb38tnJsbKP0PbNIMVvKnVMJUVG9VKF7rebVMsw3jGUOBtiwfn8maJaZ3eZDp2jt
+ sCXloYpAeSOd6B80psPH1FDp94G1js/Adfa7QP7862a+v4JXQomV7cnNuBNg0a8yWogp
+ 8RnOhJoR1E2POdAUS4h+X839s+xFDtddGukASIpa3QZGO2/cADGPBMubbiA1lzTzFm/k
+ 3w7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745961109; x=1746565909;
+ d=1e100.net; s=20230601; t=1745961243; x=1746566043;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+vBxbVVL0iKGPcc8hbFY6P4N8NFA8CDBAgRz2WbbHH0=;
- b=eOcFSV4LTmpJwJoIUxt6ExXizSIXassoXxgQmR1H+Ci9ztPiAF5fJlnE9n1Zw7rotY
- bJqHtV7KjXuKvOW7j0OD5iuHhzHQs13xfznPqZst2yieprabwlfhYxq6MeKXNqLEAoSd
- JFDNPVvKQ5TJ3eLU+MOYQCq7AFj5lIGWcWKVFCEW+IkXDomWWgH4g6oAexKd5T2GyMYS
- GImG2UCbFlQfpJLkjV8nflerdMZAfUiFSugwfiGZYQZLOyrNFKEA6aa0QquC7+6SxfpK
- VriiERhMF/dg5yHevyTMk4UhifRCoGbXKEyHGZMPdyZGyfwxcQ6frvy+5YM60g84rRQ0
- 1RbQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXUwx4wA0txlbqTR5H3hmzYU0m1FBGZZTJKNGMIfh4A3v+g9Fi6afaJvMwf8kCYrWmsAQtnZFcddAPc@nongnu.org
-X-Gm-Message-State: AOJu0YwgNGqlbUmcMctpVWFVLBLiVi5MoOd8PwzQsXlieWvNJFbM8d0e
- vQ2BgDXWS+I1ZRZ+KPzkWHS4HDPxZBA3+4Q+9HosdROVh+hGfo6YkJikS1ADlJk=
-X-Gm-Gg: ASbGncsR7J7URveUQPvl5FCA7SBoMmmfwqFb+Jzsmty/r24yUzKcUJHg0bp22tEMlsv
- cKOKsxPND4D/SvhjwdOcGvFhWjHvFcQvkQjLp5t0j0UJs/wKXPCRmvi5XIwhGbjPJoPyWjdTMZt
- 7EX2/NijztXbRE2ePBR9yehc2q2sITO+ANYH7RUw2478bKSYFLBisId8jQHpXCo6YvJp4ZSGK34
- A1f00zSwuj9XySiNRFSpR3NOhvFwrKt1/5wgBAO5hP61Phe+UqjYRtQY4WxrmP/LkGUPg3f7g9N
- 3ltziFqd4wBbTtIJm2GbkhQ1105MBsNBmS7tbDi+tk/uJOx/EGW2UQ==
-X-Google-Smtp-Source: AGHT+IEFmAHBbO2wKdGpPUmlZ7vzYIs7H2Tc0jXj+u7tbNw7KX5eQru8f502ZH9woOgYHKduUx5NSg==
-X-Received: by 2002:a17:903:8cd:b0:223:6657:5003 with SMTP id
- d9443c01a7336-22df35700b2mr14256935ad.32.1745961108795; 
- Tue, 29 Apr 2025 14:11:48 -0700 (PDT)
+ bh=hOHQaZoxZ7UbKQya7ht8bDTHCEK26P6Ba+yTQsPhO10=;
+ b=b6LQwYtd4mYt6RVbN4HMkl8DMF5c5BgXGTEugA8ZzoxbE0ZR8ES/QrkLjn2dpMzrB9
+ Zpsd9zpMJ8qhasoDUB+xyN7EG/qiNUtZW6NtjQmlmXICN/KZTAL9lgem2knymSGfGfDm
+ 11e9N3GcMT2mU+Xcfw9CvNzOheMaPZs4ymzotyMnjUEShpWnzr//IJfFIRUEULMP9R0W
+ Tj10r5nNtOWc7INcyYomjs7v3GoRnKnFn+0dlYM9d/eK5ZVMRih2Wnm+hQW9SXAKorar
+ efLBNtTXAiZVEWCdNjgFWezfa1AM+4KvftoB9Tbp10vctGKN8g0qFKl5E4pCWhXz8ZRO
+ IXHg==
+X-Gm-Message-State: AOJu0YyRL6+/uQaTEnAEewvh7L4erUEGOZ9sH6Askis1boXQ7Jcm2hq4
+ MeeWHD3Zx9S/nOO8hnoPhL6v9As15+0QnxzRp2rpPLCM483fIEQSlTvwFwIo3k8=
+X-Gm-Gg: ASbGncstv0NE104GMOixQnZTBWsjYkdYzgwFzWepUgUf+tU1gUgI5nerBz0kBbaLqua
+ DmRk3iNB51n5fClGWQSJQ58lqF4qriLqD9tMxQ+5p7Z7IF5lqcffkmX/aGzncCB77Mp+Fig3h7G
+ IVbTa4YEt9p5dpMit8crF/97ITjo0nrGLCoj7gkBs6+wiT9LX/krE6OlZHSKVHk0m0W/a1jDJHc
+ R3XgNBioU1kzRQfMTEomwMQlaJ4+bFS5agDrQTGrjFvFzZ996CFD3lbK9aKcT55zV7fhtnJsZ3J
+ RrBStcvbc3PvMcfEZfsA/RAWYoNh51sPch9MrVolMuosDUx+gQvyCGb72yL6fStk
+X-Google-Smtp-Source: AGHT+IGVp4+1Bhotq0d4aremIqEwnPUtzY6snkcOfYlsGofhxa81gl1LdUI7VT6xUzXDUNe4F7okDg==
+X-Received: by 2002:a17:903:2f43:b0:224:1943:c5c with SMTP id
+ d9443c01a7336-22df34d33edmr13219515ad.15.1745961243059; 
+ Tue, 29 Apr 2025 14:14:03 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db5102d31sm107976365ad.198.2025.04.29.14.11.48
+ d9443c01a7336-22db50e7b50sm107997675ad.130.2025.04.29.14.14.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Apr 2025 14:11:48 -0700 (PDT)
-Message-ID: <12579394-7bce-4b9e-ba66-00ce1dff43d1@linaro.org>
-Date: Tue, 29 Apr 2025 14:11:47 -0700
+ Tue, 29 Apr 2025 14:14:02 -0700 (PDT)
+Message-ID: <d455055c-a13b-4e00-b921-5ede2be08e89@linaro.org>
+Date: Tue, 29 Apr 2025 14:14:02 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/13] meson: add common libs for target and target_system
+Subject: Re: [PATCH 05/13] target/arm/kvm_arm: copy definitions from kvm
+ headers
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
- alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-arm@nongnu.org, anjo@rev.ng, richard.henderson@linaro.org
 References: <20250429050010.971128-1-pierrick.bouvier@linaro.org>
- <20250429050010.971128-4-pierrick.bouvier@linaro.org>
- <fd70e4f4-29b8-4027-a70c-747729172ce5@linaro.org>
+ <20250429050010.971128-6-pierrick.bouvier@linaro.org>
+ <87msbz45y6.fsf@draig.linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <fd70e4f4-29b8-4027-a70c-747729172ce5@linaro.org>
+In-Reply-To: <87msbz45y6.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,150 +106,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/29/25 11:01 AM, Philippe Mathieu-Daudé wrote:
-> Hi Pierrick,
+On 4/29/25 3:28 AM, Alex Bennée wrote:
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 > 
-> On 29/4/25 07:00, Pierrick Bouvier wrote:
->> Following what we did for hw/, we need target specific common libraries
->> for target. We need 2 different libraries:
->> - code common to a base architecture
->> - system code common to a base architecture
+>> "linux/kvm.h" is not included for code compiled without
+>> COMPILING_PER_TARGET, and headers are different depending architecture
+>> (arm, arm64).
+>> Thus we need to manually expose some definitions that will
+>> be used by target/arm, ensuring they are the same for arm amd aarch64.
 >>
->> For user code, it can stay compiled per target for now.
+>> As well, we must but prudent to not redefine things if code is already
+>> including linux/kvm.h, thus the #ifndef COMPILING_PER_TARGET guard.
 >>
 >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >> ---
->>    meson.build | 78 +++++++++++++++++++++++++++++++++++++++++------------
->>    1 file changed, 61 insertions(+), 17 deletions(-)
+>>   target/arm/kvm_arm.h | 15 +++++++++++++++
+>>   1 file changed, 15 insertions(+)
 >>
->> diff --git a/meson.build b/meson.build
->> index 68d36ac140f..7b2cf3cd7d1 100644
->> --- a/meson.build
->> +++ b/meson.build
->> @@ -3684,6 +3684,8 @@ target_arch = {}
->>    target_system_arch = {}
->>    target_user_arch = {}
->>    hw_common_arch = {}
->> +target_common_arch = {}
->> +target_common_system_arch = {}
->>    
->>    # NOTE: the trace/ subdirectory needs the qapi_trace_events variable
->>    # that is filled in by qapi/.
->> @@ -4087,29 +4089,59 @@ common_all = static_library('common',
->>    
->>    # construct common libraries per base architecture
->>    hw_common_arch_libs = {}
->> +target_common_arch_libs = {}
->> +target_common_system_arch_libs = {}
->>    foreach target : target_dirs
->>      config_target = config_target_mak[target]
->>      target_base_arch = config_target['TARGET_BASE_ARCH']
->> +  target_inc = [include_directories('target' / target_base_arch)]
->> +  inc = [common_user_inc + target_inc]
->>    
->> -  # check if already generated
->> -  if target_base_arch in hw_common_arch_libs
->> -    continue
->> -  endif
->> +  # prevent common code to access cpu compile time definition,
->> +  # but still allow access to cpu.h
->> +  target_c_args = ['-DCPU_DEFS_H']
->> +  target_system_c_args = target_c_args + ['-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU']
->>    
->>      if target_base_arch in hw_common_arch
->> -    target_inc = [include_directories('target' / target_base_arch)]
->> -    src = hw_common_arch[target_base_arch]
->> -    lib = static_library(
->> -      'hw_' + target_base_arch,
->> -      build_by_default: false,
->> -      sources: src.all_sources() + genh,
->> -      include_directories: common_user_inc + target_inc,
->> -      implicit_include_directories: false,
->> -      # prevent common code to access cpu compile time
->> -      # definition, but still allow access to cpu.h
->> -      c_args: ['-DCPU_DEFS_H', '-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU'],
->> -      dependencies: src.all_dependencies())
->> -    hw_common_arch_libs += {target_base_arch: lib}
->> +    if target_base_arch not in hw_common_arch_libs
->> +      src = hw_common_arch[target_base_arch]
->> +      lib = static_library(
->> +        'hw_' + target_base_arch,
->> +        build_by_default: false,
->> +        sources: src.all_sources() + genh,
->> +        include_directories: inc,
->> +        c_args: target_system_c_args,
->> +        dependencies: src.all_dependencies())
->> +      hw_common_arch_libs += {target_base_arch: lib}
->> +    endif
->> +  endif
+>> diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+>> index c8ddf8beb2e..eedd081064c 100644
+>> --- a/target/arm/kvm_arm.h
+>> +++ b/target/arm/kvm_arm.h
+>> @@ -16,6 +16,21 @@
+>>   #define KVM_ARM_VGIC_V2   (1 << 0)
+>>   #define KVM_ARM_VGIC_V3   (1 << 1)
+>>   
+>> +#ifndef COMPILING_PER_TARGET
 >> +
->> +  if target_base_arch in target_common_arch
->> +    if target_base_arch not in target_common_arch_libs
->> +      src = target_common_arch[target_base_arch]
->> +      lib = static_library(
->> +        'target_' + target_base_arch,
->> +        build_by_default: false,
->> +        sources: src.all_sources() + genh,
->> +        include_directories: inc,
->> +        c_args: target_c_args,
->> +        dependencies: src.all_dependencies())
->> +      target_common_arch_libs += {target_base_arch: lib}
->> +    endif
->> +  endif
+>> +/* we copy those definitions from asm-arm and asm-aarch64, as they are the same
+>> + * for both architectures */
+>> +#define KVM_ARM_IRQ_CPU_IRQ 0
+>> +#define KVM_ARM_IRQ_CPU_FIQ 1
+>> +#define KVM_ARM_IRQ_TYPE_CPU 0
+>> +typedef unsigned int __u32;
+>> +struct kvm_vcpu_init {
+>> +    __u32 target;
+>> +    __u32 features[7];
+>> +};
 >> +
->> +  if target_base_arch in target_common_system_arch
->> +    if target_base_arch not in target_common_system_arch_libs
->> +      src = target_common_system_arch[target_base_arch]
->> +      lib = static_library(
->> +        'target_system_' + target_base_arch,
->> +        build_by_default: false,
->> +        sources: src.all_sources() + genh,
->> +        include_directories: inc,
->> +        c_args: target_system_c_args,
->> +        dependencies: src.all_dependencies())
->> +      target_common_system_arch_libs += {target_base_arch: lib}
->> +    endif
->>      endif
->>    endforeach
->>    
->> @@ -4282,12 +4314,24 @@ foreach target : target_dirs
->>      target_common = common_ss.apply(config_target, strict: false)
->>      objects = [common_all.extract_objects(target_common.sources())]
->>      arch_deps += target_common.dependencies()
->> +  if target_base_arch in target_common_arch_libs
->> +    src = target_common_arch[target_base_arch].apply(config_target, strict: false)
->> +    lib = target_common_arch_libs[target_base_arch]
->> +    objects += lib.extract_objects(src.sources())
->> +    arch_deps += src.dependencies()
->> +  endif
->>      if target_type == 'system' and target_base_arch in hw_common_arch_libs
->>        src = hw_common_arch[target_base_arch].apply(config_target, strict: false)
->>        lib = hw_common_arch_libs[target_base_arch]
->>        objects += lib.extract_objects(src.sources())
->>        arch_deps += src.dependencies()
->>      endif
->> +  if target_type == 'system' and target_base_arch in target_common_system_arch_libs
->> +    src = target_common_system_arch[target_base_arch].apply(config_target, strict: false)
->> +    lib = target_common_system_arch_libs[target_base_arch]
->> +    objects += lib.extract_objects(src.sources())
->> +    arch_deps += src.dependencies()
->> +  endif
->>    
->>      target_specific = specific_ss.apply(config_target, strict: false)
->>      arch_srcs += target_specific.sources()
+>> +#endif /* COMPILING_PER_TARGET */
+>> +
 > 
-> Somehow related to this patch, when converting from target_system_arch
-> to target_common_system_arch, emptying it, I get:
-> 
-> ../../meson.build:4237:27: ERROR: Key microblaze is not in the dictionary.
-> 
-> 4235   if target.endswith('-softmmu')
-> 4236     target_type='system'
-> 4237     t = target_system_arch[target_base_arch].apply(config_target,
-> strict: false)
+> I'm not keen on the duplication. It seems to be the only reason we have
+> struct kvm_vcpu_init is for kvm_arm_create_scratch_host_vcpu() where the
+> only *external* user passes in a NULL.
 >
 
-Patch 12 introduces an empty arm_common_ss and it does not seem to be a 
-problem.
-Feel free to share your meson.build if there is a problem.
+I'm not keen about it either, so thanks for pointing it.
+
+> If kvm_arm_create_scratch_host_vcpu() is made internal static to
+> target/arm/kvm.c which will should always include the real linux headers
+> you just need a QMP helper.
+>
+
+Yes, sounds like the good approach! Thanks.
+
+> For the IRQ types is this just a sign of target/arm/cpu.c needing
+> splitting into TCG and KVM bits?
+> 
+
+I'll move relevant functions to target/arm/kvm.c, so cpu.c can be 
+isolated from this.
+
+> 
+>>   /**
+>>    * kvm_arm_register_device:
+>>    * @mr: memory region for this device
+> 
+
 
