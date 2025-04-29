@@ -4,77 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5287DC369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 04:41:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F0CC3ABA8
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 05:01:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9cln-0006SG-5x; Tue, 29 Apr 2025 00:40:36 -0400
+	id 1u9d5L-00081U-B2; Tue, 29 Apr 2025 01:00:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1u9clg-0006Ry-Vu
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 00:40:29 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u9d4w-0007Wx-M9
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 01:00:23 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1u9clc-00044l-MN
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 00:40:27 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-ac34257295dso939992366b.2
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 21:40:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u9d4t-0005yV-Nt
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 01:00:21 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2279915e06eso62680865ad.1
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 22:00:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1745901622; x=1746506422; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=V0v/TYwvjG+d6TWayOXNWFPo/MJkvEdg7WvDq2KVH/I=;
- b=lV5jMXJV0ioYeeYI3oYK3828FRE3ao0pZXF51/4bPoha3O8l6ntzlrmldThjPw0Hhi
- luy7P434NargsRPFlS0WEOi0SQXS7d6fUJG3CokxdX4zeo+hua6UAf6/zopuRCkSWoYX
- ExmexLN56CYfvaFNj+iVdjCL8Re3PJuqpTz7o=
+ d=linaro.org; s=google; t=1745902818; x=1746507618; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J1+mpgNwQQblB514w6gW7TOdOsjY6yGJh5E66/u+eSU=;
+ b=pncYCfXlRLAwDiIcQYTGtm7L5DlaZwUOlrsIEVty0QqHFgkoWQFZGuvp8h6AnQN9Mc
+ +JAp8+3ExTvWsbXlUT/adPAgNTVkhRRTyg0u2unBCVFXnDkQj+A3+KddSbS/ImL6cs8A
+ 81VjqtnRfouLp1U56xc2oNq2fGYOVD4DJoVXoYc6PLwrcSpei1riMS/4yrAw0OWFtJxj
+ 8EZ1OmSXWHRFHLbXe+ljLZzYtfuw5rfpGy98dktYu+i0zb10jP8PwjwOuIaxKFD+tMzw
+ gVEy1uNdmh5YPoYL4cAYIcW8T4oc7WV9jZHs0ZsepRxU4FiHCEE8lje32kPcVZZkKEPG
+ L4BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745901622; x=1746506422;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=V0v/TYwvjG+d6TWayOXNWFPo/MJkvEdg7WvDq2KVH/I=;
- b=OqF0hhxDyEv1Kuo7kNJxS/8cxP2QypIfOiy0jQDjlx/5a0S2PuZxTb7uQoJNFHMMHk
- +MnuLcXt7vI8YXY4spkttysq7u77YzBe3vCWqc7UzzQeQA2zUsfSNmabC/HGq7Y9M7gx
- eBG05n/pOoOxrRvB6q0F69JeQnNghdF2NvDoHPKUC+39tBzte69WkXO6cH8w+hKkSoLM
- pnDztXBxB3xltPcBoWFmn8meE90hgfq7SVtUSUGypGlEQWp9gA99/GI6xneIUkjiO/bo
- CBegAZet8FX2inrH0/eshXt5TgolDRmJGAg/jNzdtCfCvri3Iyp0QJQ41KB66lhYrr48
- Nytg==
-X-Gm-Message-State: AOJu0YzqIh6cdS3uA3zr1RPgIYWRYl3Twbl7Klvvi7VoRqC82su6x6UU
- 3cmDtuumMU3jc+WoB7i8UsrFmm4vomzlngjVSqSXmQvnsAYIWGrPUbclPWP4ZQwNpap7Pi8sMoK
- fmzyoEZhdohX0XAIJQoVjsxuYBLs=
-X-Gm-Gg: ASbGncuN10zY5qmO3BqeZ7oFZjg7MV1hjTTXDz+1l+ZiiuAXIF/VdleiAvG2PrS+D+J
- Rbrms4mBWRVTk1vxiDYElYTgweOY5rRrtti99JMyf375hSpGstK+zcUFjcQEGTJQRHPnRGexN4v
- pmLrdgHFwYBw4N8yGCQGWcaA==
-X-Google-Smtp-Source: AGHT+IHjOEntMyJx17/hHLInk1lQ/Q3mH9BgNlwZ32m7IQEm8BwTg9MYpPQhbTrL3pfXEvZ3QKNG9ZmzZPBs2QOV3dI=
-X-Received: by 2002:a17:906:f58f:b0:aca:d2f0:d291 with SMTP id
- a640c23a62f3a-acec4ccfda3mr207693166b.5.1745901621552; Mon, 28 Apr 2025
- 21:40:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1745902818; x=1746507618;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=J1+mpgNwQQblB514w6gW7TOdOsjY6yGJh5E66/u+eSU=;
+ b=sLSojl3m2c3Wtwc72TTpFxieyehvg+5J/VauYsXIEDEDomeXabNAh2+xWqRPamOB9W
+ LHnxrut4WHw/FWp+T1OuaE86JYCv4ND3JXYrmy1dAiVX8p91QfUq7JSpXZpjShfIFbiJ
+ nZEOgiHiXp/x+1z7Nt2ADp9vnBvngFo/rdAocdjQ72jf4V8aWUkkklOJ4pVXbJ/Ro8VA
+ W92pGXs+CS05OzlTRn+B9Mj8u479jvYY59nxk5FBNS3m/grJp73rPO0PWI++b19LzUrq
+ svJXa6RDH3vS+3jmSoMh/mlCA2VZKQl2hpEtV5D4ZKEcF8iWk+hiWYNIPYbfaipxR0F+
+ 0Q4Q==
+X-Gm-Message-State: AOJu0Yz4zBEznSvjaQp7K/KNbPQMM9h5+MTEQ7FpnZXJ8inCQ1UFeQWF
+ mtvxPmblk8fnOU4cde0YrZTlWSNZWq6Dz+orVu/ubGACICowzgIGyrkOwonbMCKuJ0+d3F9zfXi
+ k
+X-Gm-Gg: ASbGnctyVzx/JguT3v4dE0ZZ0+MvjSTTVqmQr0bPwf1khGP6Kz5A9l0XPlgUWniyNIr
+ x2UPX74i88ZmXh7HRda3qP1/5mDIH7US9ma3eq4BmuocQr+BMTOex5jTX2kFyw2kCZ9Hh7O8iXX
+ mPhD1dDghG36UZTulKi8ewYa3W0Hjotm1uuLGkMfpMLmfhc0TG0BkYjLyMQWByBFN99ZotrRBrY
+ lKQcWE8R+pVu0NO2F/u3EWNE9GAfo3tTO5rowSbn9SuAAvROCT8ueDVX+6IIfJOia+rvu4j2k3m
+ T/6IzfbYKbglTAxWVE1FmD8m/pvKaJSP0Xap8hb3
+X-Google-Smtp-Source: AGHT+IERHWhMGoawkxhND2r6sOYx5Beqk5TQos+njQ8aQ63QB1/yRMYJ7tUQDCBZu8a/05Bc1162dQ==
+X-Received: by 2002:a17:902:d4d1:b0:224:76f:9e59 with SMTP id
+ d9443c01a7336-22dc69f3b0fmr169007685ad.10.1745902818246; 
+ Mon, 28 Apr 2025 22:00:18 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22db4dbd6f7sm93004015ad.76.2025.04.28.22.00.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Apr 2025 22:00:17 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
+ alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, anjo@rev.ng, richard.henderson@linaro.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 02/13] include/system/hvf: missing vaddr include
+Date: Mon, 28 Apr 2025 21:59:59 -0700
+Message-ID: <20250429050010.971128-3-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250429050010.971128-1-pierrick.bouvier@linaro.org>
+References: <20250429050010.971128-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-References: <20250425115912.912889-1-djordje.todorovic@htecgroup.com>
- <20250425115912.912889-10-djordje.todorovic@htecgroup.com>
-In-Reply-To: <20250425115912.912889-10-djordje.todorovic@htecgroup.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 29 Apr 2025 14:10:08 +0930
-X-Gm-Features: ATxdqUFuUyAnM0ez5CUdzzmeHRB1uomEePg3mqMWEQhV_yH0GdDSgXjbUa_8vOc
-Message-ID: <CACPK8Xd3LSxOT4KO1gUCjCqq9Ro6rXfr+_BSAQXeaTv9+2b2GA@mail.gmail.com>
-Subject: Re: [PATCH 9/9] hw/riscv: Add a network device e1000e to the
- boston-aia
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Chao-ying Fu <cfu@mips.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=joel.stan@gmail.com; helo=mail-ej1-x62b.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -92,49 +102,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 25 Apr 2025 at 23:37, Djordje Todorovic
-<Djordje.Todorovic@htecgroup.com> wrote:
->
-> Add a network device e1000e to the boston-aia board model.
-> There is no pch_gbe emulation, so we add e1000e in slot 0 func 1,
-> instead. We need to pass func to call pci_parse_devaddr to find
-> out slot and func.
->
-> Signed-off-by: Chao-ying Fu <cfu@mips.com>
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-> ---
->  hw/pci/pci.c          | 23 ++++++++++++-----------
->  hw/riscv/boston-aia.c |  5 +++++
->  2 files changed, 17 insertions(+), 11 deletions(-)
->
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index 2844ec5556..9748acda09 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -980,16 +980,15 @@ static int pci_parse_devaddr(const char *addr, int *domp, int *busp,
->
->      slot = val;
->
-> -    if (funcp != NULL) {
-> -        if (*e != '.')
-> -            return -1;
-> -
-> -        p = e + 1;
-> -        val = strtoul(p, &e, 16);
-> -        if (e == p)
-> -            return -1;
-> +    if (funcp != NULL && *e != 0) {
-> +      if (*e != '.')
-> +        return -1;
-> +      p = e + 1;
-> +      val = strtoul(p, &e, 16);
-> +      if (e == p)
-> +        return -1;
->
-> -        func = val;
-> +      func = val;
+On MacOS x86_64:
+In file included from ../target/i386/hvf/x86_task.c:13:
+/Users/runner/work/qemu/qemu/include/system/hvf.h:42:5: error: unknown type name 'vaddr'
+    vaddr pc;
+    ^
+/Users/runner/work/qemu/qemu/include/system/hvf.h:43:5: error: unknown type name 'vaddr'
+    vaddr saved_insn;
+    ^
+/Users/runner/work/qemu/qemu/include/system/hvf.h:45:5: error: type name requires a specifier or qualifier
+    QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
+    ^
+/Users/runner/work/qemu/qemu/include/system/hvf.h:45:18: error: a parameter list without types is only allowed in a function definition
+    QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
+                 ^
+/Users/runner/work/qemu/qemu/include/system/hvf.h:45:36: error: expected ';' at end of declaration list
+    QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
 
-Some unrelated changes have crept into your patch.
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ include/system/hvf.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-When you re-send be sure to cc qemu-riscv@nongnu.org.
+diff --git a/include/system/hvf.h b/include/system/hvf.h
+index 730f927f034..356fced63e3 100644
+--- a/include/system/hvf.h
++++ b/include/system/hvf.h
+@@ -15,6 +15,7 @@
+ 
+ #include "qemu/accel.h"
+ #include "qom/object.h"
++#include "exec/vaddr.h"
+ 
+ #ifdef COMPILING_PER_TARGET
+ #include "cpu.h"
+-- 
+2.47.2
+
 
