@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4344C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 08:24:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB01FC3ABA9
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 08:35:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9gGD-0008Qm-UX; Tue, 29 Apr 2025 04:24:14 -0400
+	id 1u9gQ7-0000kR-VH; Tue, 29 Apr 2025 04:34:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9gGA-0008QP-IN
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 04:24:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1u9gG7-00057y-IU
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 04:24:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745915044;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OgYtKMXbx4Z+dO1+tpXRR5gV5Uix4DFdS3gI0Ps7Vw8=;
- b=VwieMMc7Zw8TwBjLIKnwPovtU2ZsrdFwpR51RNjJvbqTQNnC/F1OHO7SqRtl9mgYkDgYmO
- xZQzgLw58bDREvfhxSs5sGYzjP8w1hYGXmF2Xr7gcb+jodpk6LDTgDUaPJOhUTRSqZyF+Z
- 93Yv+n82XddjkHab0iFvGuIxAZxCXqw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-73-v8w7NI_qPs-WKbLvxK-pBA-1; Tue,
- 29 Apr 2025 04:24:00 -0400
-X-MC-Unique: v8w7NI_qPs-WKbLvxK-pBA-1
-X-Mimecast-MFC-AGG-ID: v8w7NI_qPs-WKbLvxK-pBA_1745915038
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 738F31956096; Tue, 29 Apr 2025 08:23:58 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E312180045C; Tue, 29 Apr 2025 08:23:57 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3B63921E6768; Tue, 29 Apr 2025 10:23:55 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Peter Krempa <pkrempa@redhat.com>,  qemu-devel@nongnu.org,
- richard.henderson@linaro.org,  stefanha@redhat.com,  Michael Roth
- <michael.roth@amd.com>,  pbonzini@redhat.com,  peter.maydell@linaro.org,
- thuth@redhat.com,  jsnow@redhat.com,  philmd@linaro.org,  Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  devel@lists.libvirt.org
-Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
-In-Reply-To: <2cc27344-8cfd-4435-9d41-79b86f61d537@linaro.org> (Pierrick
- Bouvier's message of "Mon, 28 Apr 2025 09:35:11 -0700")
-References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
- <87a584b69n.fsf@pond.sub.org> <aA9ChuXrkmx1Igy5@angien.pipo.sk>
- <8734dswnm3.fsf@pond.sub.org>
- <2cc27344-8cfd-4435-9d41-79b86f61d537@linaro.org>
-Date: Tue, 29 Apr 2025 10:23:55 +0200
-Message-ID: <875xinnzok.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1u9gQ3-0000jL-Nz
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 04:34:23 -0400
+Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1u9gQ1-0006Zd-Uq
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 04:34:23 -0400
+Received: by mail-yw1-x1129.google.com with SMTP id
+ 00721157ae682-702599fa7c5so53008387b3.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 01:34:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745915659; x=1746520459; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aJdXS513DaZqn2tyTP0u1sBIKi56jeLcaOX/W+hUxrw=;
+ b=Ysa1zd3znK/Jyt6wIUJinqTGpVnnmTRJYr6DbyyH+KlZsBCg3hBfawOJ99gD5LW7Qg
+ oUxiF94PlKCiD2FXXufdaTg+QyEshg1E6uxqyW6+2op0kW1IRFz7KoOZEMaGunZIPsGr
+ k+S0ypKqUISiFvt1IMekcX8nT1FQN/jmTp6VoRJMoU3Ktbl/HhbrlAKNqAiJs6zbcXdZ
+ Nzdg9G29vI4Ftx/Z2bVXi2r4jfQIJfXJ2GCTdQnc1PVD7mwUyKTLL5/6TYoJaTWX3u68
+ 0NYSKH4VCOmHCiRd8mePzHJYHDelgC5BhlgewgdD/K4LtXHRwX1YLs4dWb022TUEEK+U
+ xPMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745915659; x=1746520459;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=aJdXS513DaZqn2tyTP0u1sBIKi56jeLcaOX/W+hUxrw=;
+ b=S3oNg0lK0StrU1oUOgRi1y4mizx0/6M0CB8xl24s+E2ybCjzm0Gl4c0n+jWaWC7iDH
+ DvRuTh2yPd9wMYv7mRnEjOJdxmafdJtu7BZjIu8HdxeKRJ9eFmgpIbnkrOJosB8DyzmT
+ 2yZUWgtX24DSEeKt/2zUhplfhnF0ZXefQ/1vngE38faiHkTeW34473vLgdwKO1uSwaZd
+ L8mHfsx+nGsxtlGgWiWEk8K26V5qHjnfumhsEBo+z1Z9GnUzzsKDyum7hnG6wGZzJAMo
+ OCosZelB7Jtx/QXHYziJL3KgLiI1fPSkaBWkVeRHB9KWKlnmDc3/cHPI8smz90wK2AEM
+ gs5A==
+X-Gm-Message-State: AOJu0YwC8mbVEetrTDNCE79YjOLEZMH+Zriu7whfor0pU+D3V7f6GQca
+ UnV6jsOAQgjt6TBPr/pa7S0db77GUXWXAFoiNz9+o+wD5WExmhDFLBS6i4PHGE0UZrHyNr0jvrS
+ dE5u9UnHaNZOOZTz+SXbBqYwsEZk27D/o+LwF5eKyYSZFINXU
+X-Gm-Gg: ASbGncuEV5s1hkT/E/pyrOuAdhj6U1HjB4pqAuTSguvYXN4mZMtY35Me1RCX+Xha84y
+ 3Z88TCtZPMhnphkJzDKi+DNVgALVeQaLekICjpFu5XHKfEDst7umvhOlCnnqNm6tFOfSgQRLHGu
+ TxCi7AV6lwZgvIicf70Fz+WL4=
+X-Google-Smtp-Source: AGHT+IGclq8YL4D4x+kwaClqwQXldYDn9wyb0kyWidhDQM9N5XlQ3pCJUOGqmeiwAdh+u9Y7NuquBJ8EvIA0xj3kuek=
+X-Received: by 2002:a05:690c:f0b:b0:6f9:b144:34e6 with SMTP id
+ 00721157ae682-7089ab05c82mr32598527b3.13.1745915659513; Tue, 29 Apr 2025
+ 01:34:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+References: <tencent_6CC3332A93DC02BE2030AB5BC0E63B10B808@qq.com>
+ <CAFEAcA_kekj7L9a1TwQ__WCyhgFd8P+32pB+dQGO570tEoNZMw@mail.gmail.com>
+ <tencent_B77227163765667B525580026461F5007805@qq.com>
+In-Reply-To: <tencent_B77227163765667B525580026461F5007805@qq.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 29 Apr 2025 09:34:08 +0100
+X-Gm-Features: ATxdqUGWE771yJGNQE3lxEdhxCbtEGRiJg6B2PcRSESY6es5feJass23I5SE-Oo
+Message-ID: <CAFEAcA9Gpg-2-R0M+GUvD6LRRcDxEaqEh1HPeUTNRP2o_Woo2w@mail.gmail.com>
+Subject: Re: Whether the qemu mps2-an385 model support getchar?
+To: =?UTF-8?B?5bCP6ams6am5?= <1353455048@qq.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,128 +95,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On Mon, 28 Apr 2025 at 18:24, =E5=B0=8F=E9=A9=AC=E9=A9=B9 <1353455048@qq.co=
+m> wrote:
+> Peter Maydell wrote:
+>> The UARTs on that board work fine. The error message means your
+>> guest code took a fatal exception (i.e. it crashed). You should
+>> start by debugging to find out why the crash happened, which
+>> might or might not be related to the UARTs specifically.
 
-> On 4/28/25 4:07 AM, Markus Armbruster wrote:
->> Peter Krempa <pkrempa@redhat.com> writes:
->> 
->>> So what should libvirt do once multiple targets are supported?
->>>
->>> How do we query CPUs for each of the supported targets?
->>>
->
-> It's kind of a similar question we have to solve now with QEMU code.
-> What happens when a symbol is duplicated, and available only for several 
-> targets?
->
-> In this case, we found various approaches to solve this:
-> - unify this symbol for all targets (single implementation)
-> - unify all targets to provide this symbol (multiple impl, all targets)
-> - rename symbols adding {arch} suffix, so it's disambiguated by name
-> - create a proper interface which an available function (multiple impl, 
-> selective targets)
->
-> In the case of query-cpu-definitions, my intuition is that we want to 
-> have a single implementation, and that we return *all* the cpus, merging 
-> all architectures. In the end, we (and libvirt also) should think out of 
-> the "target" box. It's an implementation detail, based on the fact QEMU 
-> had 'targets' associated to various binaries for a long time and not a 
-> concept that should leak into all consumers.
->
->>> Will the result be the same if we query them one at a time or all at
->>> once?
->> 
->> Pierrick's stated goal is to have no noticable differences between the
->> single binary and the qemu-system-<target> it covers.  This is obviously
->> impossible if we can interact with the single binary before the target
->> is fixed.
->> 
->
-> Right.
-> At this point, we can guarantee the target will be fixed before anything 
-> else, at the start of main(). It's obviously an implementation choice, 
-> but to be honest, I don't see what we would gain from having a "null" 
-> default QEMU target, unable to emulate anything.
->
->>>> This requires fixing the target before introspection.  Unless this is
->>>> somehow completely transparent (wrapper scripts, or awful hacks based on
->>>> the binary's filename, perhaps), management applications may have to be
->>>> adjusted to actually do that.
->>>
->>> As noted filename will not work. Users can specify any filename and
->>> create override scripts or rename the binary.
->> 
->> True.
->> 
->
-> I would prefer to not open this pandora box on this thread, but don't 
-> worry, the best will be done to support all those cases, including 
-> renaming the binary, allowing any prefix, suffix, as long as name stays 
-> unambiguous. If you rename it to qemu-ok, how can you expect anything?
->
-> We can provide the possibility to have a "default" target set at compile 
-> time, for distributors creating their own specific QEMU binaries. But in 
-> the context of classical software distribution, it doesn't make any sense.
+> But I just write getchar() in the demo's main_blinky() function
+> without any other order, I just keep the original UART address
+> configuration in demo and annotation other codes, however, the
+> error still occurred. The program can enter the main_blinky()
+> successfully but can't excute getchar().
 
-I don't wish to derail this thread, but we've been dancing around the
-question of how to best fix the target for some time.  I think we should
-talk about it for real.
+When I say "guest code" I don't mean just "the three lines
+of code you wrote in the main function", I mean the entire
+guest image:
+ * your code
+ * the RTOS/support libraries/etc
+ * the configuration, e.g. which machine it was built for
 
-Mind, this is not an objection to your larger "single binary" idea.  It
-could be only if it was an intractable problem, but I don't think it is.
+Something in there is probably wrong (e.g. perhaps you're
+using an RTOS setup that's configured for the wrong board
+or that thinks the UART is at the wrong address, or perhaps
+the RTOS is trying to use a non-UART device that QEMU
+doesn't emulate). The first step is the same: you need
+to debug the guest image to find out why it's hitting an
+exception.
 
-You want the single binary you're trying to create to be a drop-in
-replacement for per-target binaries.
-
-"Drop-in replacement" means existing usage continues to work.
-Additional interfaces are not a problem.
-
-To achieve "drop-in replacement", the target needs to be fixed
-automatically, and before the management application can further
-interact with it.
-
-If I understand you correctly, you're proposing to use argv[0] for that,
-roughly like this: assume it's qemu-system-<target>, extract <target>
-first thing in main(), done.
-
-What if it's not named that way?  If I understand you correctly, you're
-proposing to fall back to a compiled-in default target.
-
-I don't think this is going to fly.
-
-Developers rename the binary all the time, and expect this not to change
-behavior.  For instance, I routinely rename qemu-FOO to qemu-FOO.old or
-qemu-FOO.COMMIT-HASH to let me compare behavior easily.
-
-We could relax the assumption to support such renames.  Developers then
-need to be aware of what renames are supported.  Meh.
-
-The more we relax the pattern, the likelier surprising behavior becomes.
-
-We could mitigate surprises by eliminating the built-in default target.
-
-Users invoke their binaries with their own names, too.  If Joe R. User
-finds qemu-system-<joe's-fav-target> too much to type, and creates a
-symlink named q to it, more power to him!
-
-Distributions have packaged renamed binaries.  qemu-kvm has been used
-quite widely.
-
-In neither of these cases, relaxing the pattern helps.
-
-The least bad solution I can see so far is a new option -target.
-
-Instead of turning the target-specific binaries into links to / copies
-of the single binary, they become wrappers that pass -target as the
-first option.  We need to make sure this option is honored in time then,
-which should be easy enough.
-
-If you invoke the single binary directly, you need to pass -target
-yourself.  If you don't to pass it, or pass it late in the command line,
-you open up a window for interaction with indeterminate target.
-Target-specific interfaces could exhibit different behavior then, even
-fail.  That's fine under "additional interfaces are not a problem".
-
-Thoughts?
-
+thanks
+-- PMM
 
