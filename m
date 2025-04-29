@@ -4,105 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F380C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 09:06:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 322A7C3ABA9
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 09:15:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9gua-0000IK-7o; Tue, 29 Apr 2025 05:05:56 -0400
+	id 1u9h30-0002wu-VT; Tue, 29 Apr 2025 05:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=LSAW=XP=kaod.org=clg@ozlabs.org>)
- id 1u9guW-0000Fy-6X; Tue, 29 Apr 2025 05:05:52 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1u9h2w-0002wK-6I
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 05:14:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=LSAW=XP=kaod.org=clg@ozlabs.org>)
- id 1u9guT-0002Vi-HK; Tue, 29 Apr 2025 05:05:51 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZmvYN1j8pz4x5k;
- Tue, 29 Apr 2025 19:05:44 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1u9h2t-0003Uy-Ip
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 05:14:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745918069;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=BJ3//JPAx/nUzeOLzQWjQinjYvaU2RHgLTrf+ieGEYI=;
+ b=UirDZHWVwX4iUDz0qiuVbgHKub3r7Gqcq7CNEjN0zxEs31QS1uhF+97fx4gXkJcCLgscO+
+ 9SIbbkOPxhZQQFleEJUoetzuEKD/d85+bLQa2M+UUVF/ST7nXhtO2MJB6RtE3im5G4DnB9
+ NyWuI03Vs3vqnK3Xt0KwSinnaGPyErU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-92-7Jwzf014NJqBuipxi2gkHQ-1; Tue,
+ 29 Apr 2025 05:14:27 -0400
+X-MC-Unique: 7Jwzf014NJqBuipxi2gkHQ-1
+X-Mimecast-MFC-AGG-ID: 7Jwzf014NJqBuipxi2gkHQ_1745918066
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZmvYJ4pvNz4wcd;
- Tue, 29 Apr 2025 19:05:40 +1000 (AEST)
-Message-ID: <683e0219-ad4f-40cc-b541-c533487ce8dd@kaod.org>
-Date: Tue, 29 Apr 2025 11:05:36 +0200
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C08B11956096; Tue, 29 Apr 2025 09:14:25 +0000 (UTC)
+Received: from localhost (unknown [10.42.28.3])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 69E23195608D; Tue, 29 Apr 2025 09:14:24 +0000 (UTC)
+Date: Tue, 29 Apr 2025 10:14:22 +0100
+From: "Richard W.M. Jones" <rjones@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH v2 1/4] nbd: Add multi-conn option
+Message-ID: <20250429091422.GG1450@redhat.com>
+References: <20250428185246.492388-6-eblake@redhat.com>
+ <20250428185246.492388-7-eblake@redhat.com>
+ <877c33qzzn.fsf@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] hw/arm: Integrate Aspeed OTP memory into AST10x0
- and AST2600 SoCs
-To: Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20250423025651.189702-1-kane_chen@aspeedtech.com>
- <20250423025651.189702-4-kane_chen@aspeedtech.com>
- <e3d35357-de8c-44da-b54e-7ec2761f513b@kaod.org>
- <SI6PR06MB76317C8FAC3EBF18AAF632ECF7812@SI6PR06MB7631.apcprd06.prod.outlook.com>
- <2a85d0c5-0606-411d-b8c5-4b8806182384@kaod.org>
- <SI6PR06MB76310DFCE06AC5FB55CD3AE6F7802@SI6PR06MB7631.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <SI6PR06MB76310DFCE06AC5FB55CD3AE6F7802@SI6PR06MB7631.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=LSAW=XP=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <877c33qzzn.fsf@pond.sub.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=rjones@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,28 +87,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Kane,
-
-[ ... ]
-
-> The Secure Boot Controller (SBC) includes some components like OTP
-> memory, crypto engine, boot controller, and so on. All components
-> within the SBC are fixed and cannot be changed. If we allow an otpmem
-> machine option, it may imply that different types or sizes of OTP
-> memory models are supported, such as:
+On Tue, Apr 29, 2025 at 07:49:00AM +0200, Markus Armbruster wrote:
+> Eric Blake <eblake@redhat.com> writes:
 > 
-> * Different size: -M ast2600-evb,otpmem=otpmem-64k-drive
-> * Different model: -M ast2600-evb,otpmem=flash-drive
+> > From: "Richard W.M. Jones" <rjones@redhat.com>
+> >
+> > Add multi-conn option to the NBD client.  This commit just adds the
+> > option, it is not functional.
+> >
+> > Setting this to a value > 1 permits multiple connections to the NBD
+> > server; a typical value might be 4.  The default is 1, meaning only a
+> > single connection is made.  If the NBD server does not advertise that
+> > it is safe for multi-conn then this setting is forced to 1.
+> >
+> > Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
+> > [eblake: also expose it through QMP]
+> > Signed-off-by: Eric Blake <eblake@redhat.com>
+> > ---
+> >  qapi/block-core.json |  8 +++++++-
+> >  block/nbd.c          | 24 ++++++++++++++++++++++++
+> >  2 files changed, 31 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/qapi/block-core.json b/qapi/block-core.json
+> > index 7f70ec6d3cb..5c10824f35b 100644
+> > --- a/qapi/block-core.json
+> > +++ b/qapi/block-core.json
+> > @@ -4545,6 +4545,11 @@
+> >  #     until successful or until @open-timeout seconds have elapsed.
+> >  #     Default 0 (Since 7.0)
+> >  #
+> > +# @multi-conn: Request the number of parallel client connections to make
+> > +#     to the server, up to 16.  If the server does not advertise support
+> > +#     for multiple connections, or if this value is 0 or 1, all traffic
+> > +#     is sent through a single connection.  Default 1 (Since 10.1)
+> > +#
+> 
+> So we silently ignore @multi-conn when its value is (nonsensical) zero,
+> and when the server doesn't let us honor the value.  Hmm.  Silently
+> ignoring the user's wishes can result in confusion.  Should we reject
+> instead?
 
-The optmem model should check the size and fail to realize in that
-case. This would stop the machine before reset. This is a common
-pattern in QEMU. See m25p80_realize().
+We could certainly reject 0.  It's also possible to reject the case
+where multi-conn is not supported by the server, but is requested by
+the client, but I feel that's a bit user-unfriendly.  After all,
+multi-conn isn't essential for it to work, it's needed if you want
+best performance.  (Maybe issue a warning in the code - below - where
+we set multi-conn back to 1?  I don't know what qemu thinks about
+warnings.)
 
-Also, I think we would like the machine to start even if there is no
-block backend. Please check how m25p80 models that behavior.
+> >  # Features:
+> >  #
+> >  # @unstable: Member @x-dirty-bitmap is experimental.
+> > @@ -4558,7 +4563,8 @@
+> >              '*tls-hostname': 'str',
+> >              '*x-dirty-bitmap': { 'type': 'str', 'features': [ 'unstable' ] },
+> >              '*reconnect-delay': 'uint32',
+> > -            '*open-timeout': 'uint32' } }
+> > +            '*open-timeout': 'uint32',
+> > +            '*multi-conn': 'uint32' } }
+> >
+> >  ##
+> >  # @BlockdevOptionsRaw:
+> > diff --git a/block/nbd.c b/block/nbd.c
+> > index d5a2b21c6d1..5eb00e360af 100644
+> > --- a/block/nbd.c
+> > +++ b/block/nbd.c
+> > @@ -48,6 +48,7 @@
+> >
+> >  #define EN_OPTSTR ":exportname="
+> >  #define MAX_NBD_REQUESTS    16
+> > +#define MAX_MULTI_CONN      16
+> 
+> Out of curiosity: where does this value come from?
 
-Thanks,
+So I should note first this is a maximum, not a recommendation.
 
-C.
+nbdcopy defaults to 4, which was derived from testing on a high end
+(for 2024) AMD machine.  Above 4 performance doesn't increase any
+further on that machine.  It's going to very much depend on how many
+cores you have spare, how many TCP connections you want to open, and
+how effectively the client and server handle parallelism.
+
+And imponderables like one we hit in virt-v2v: If accessing a VMware
+server, the VMware server actually slows down as you add more
+connections, even though it should theoretically support multi-conn.
+We ended up forcing multi-conn to 1 in this case.  You can't know this
+in advance from the client side.
+
+> >
+> >  #define COOKIE_TO_INDEX(cookie) ((cookie) - 1)
+> >  #define INDEX_TO_COOKIE(index)  ((index) + 1)
+> > @@ -97,6 +98,7 @@ typedef struct BDRVNBDState {
+> >      /* Connection parameters */
+> >      uint32_t reconnect_delay;
+> >      uint32_t open_timeout;
+> > +    uint32_t multi_conn;
+> >      SocketAddress *saddr;
+> >      char *export;
+> >      char *tlscredsid;
+> > @@ -1840,6 +1842,15 @@ static QemuOptsList nbd_runtime_opts = {
+> >                      "attempts until successful or until @open-timeout seconds "
+> >                      "have elapsed. Default 0",
+> >          },
+> > +        {
+> > +            .name = "multi-conn",
+> > +            .type = QEMU_OPT_NUMBER,
+> > +            .help = "If > 1 permit up to this number of connections to the "
+> > +                    "server. The server must also advertise multi-conn "
+> > +                    "support.  If <= 1, only a single connection is made "
+> > +                    "to the server even if the server advertises multi-conn. "
+> > +                    "Default 1",
+> 
+> This text implies the requested value is silently limited to the value
+> provided by the server, unlike the doc comment above.  Although the
+> "must" in "the sever must" could also be understood as "error when it
+> doesn't".
+
+I'll just note that multi-conn is a boolean flag advertised by the
+server.  Servers don't advertise any preferred number of connections.
+I don't know how to improve the text.
+
+> > +        },
+> >          { /* end of list */ }
+> >      },
+> >  };
+> > @@ -1895,6 +1906,10 @@ static int nbd_process_options(BlockDriverState *bs, QDict *options,
+> >
+> >      s->reconnect_delay = qemu_opt_get_number(opts, "reconnect-delay", 0);
+> >      s->open_timeout = qemu_opt_get_number(opts, "open-timeout", 0);
+> > +    s->multi_conn = qemu_opt_get_number(opts, "multi-conn", 1);
+> > +    if (s->multi_conn > MAX_MULTI_CONN) {
+> > +        s->multi_conn = MAX_MULTI_CONN;
+> > +    }
+> 
+> We silently cap the user's requested number to 16.  Not clear from QAPI
+> schema doc comment; the "up to 16" there suggests more is an error.
+> Should we error out instead?
+> 
+> >
+> >      ret = 0;
+> >
+> > @@ -1949,6 +1964,15 @@ static int nbd_open(BlockDriverState *bs, QDict *options, int flags,
+> >
+> >      nbd_client_connection_enable_retry(s->conn);
+> >
+> > +    /*
+> > +     * We set s->multi_conn in nbd_process_options above, but now that
+> > +     * we have connected if the server doesn't advertise that it is
+> > +     * safe for multi-conn, force it to 1.
+> > +     */
+> > +    if (!(s->info.flags & NBD_FLAG_CAN_MULTI_CONN)) {
+> > +        s->multi_conn = 1;
+> > +    }
+> > +
+> >      return 0;
+> >
+> >  fail:
+
+Rich.
+
+-- 
+Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
+Read my programming and virtualization blog: http://rwmj.wordpress.com
+virt-p2v converts physical machines to virtual machines.  Boot with a
+live CD or over the network (PXE) and turn machines into KVM guests.
+http://libguestfs.org/virt-v2v
 
 
