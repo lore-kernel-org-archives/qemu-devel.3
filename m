@@ -4,94 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAF93C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 09:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99A63C3ABA9
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 09:19:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9h4n-0003hj-VE; Tue, 29 Apr 2025 05:16:31 -0400
+	id 1u9h7Y-0005Nz-Sf; Tue, 29 Apr 2025 05:19:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9h4H-0003VU-Vh
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 05:16:03 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1u9h4F-0003pC-Mx
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 05:15:57 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-ace333d5f7bso935708766b.3
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 02:15:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745918152; x=1746522952; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DmtOy/ZG9qrrV3/RcfFT98L7Kv6MyvS8sAjoX/+25k4=;
- b=TBxF/fOHRaUqehTmp31RVvStcDwraBBC7RO9r7oXsgYEjpJGVH7o0Ru+HL/oJvwHBL
- KkNQikwNJY5XNaQbrA+bUMLv/LaZ8i0SqZtvJ3lTUlvrJE615kOMLkCFksK4Edgfs3OY
- FsgbqU5s6O6bgrdfJ3e6QzY7EZhUB/HWI9yOubZEQufQctqkF6a5RP5xnYKORcaoSZHF
- +GNB6i4RgN+ZeQiSH4kjXPpAAuwwCWP8OeFjvmq6HlOaJE37SBKQCiE/LDbDs73oBF4e
- ZC9PGTGsevuX2CRrJ7nlSu6FloEEXhu7p3fJm7en23GvhVBKXSAz/xmINRU8A1xbRYO9
- j3TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745918152; x=1746522952;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DmtOy/ZG9qrrV3/RcfFT98L7Kv6MyvS8sAjoX/+25k4=;
- b=RrpKqMhE1k9YqGDxaOF0LUsxYsdWyHA2Fs0SA9zB/ebetDMIO7oJTh5Y0gbpwF3O+5
- iozy+o0UYjnuTnfJm2sU/4oygdiSIkt/tZZBj+fDb1Dq5ZI/2GGlhqe+Me98Fk/5upVp
- GZQnTMBZJ24V2bp5mtrCZ//4uL5H5qmiZUfLyUpKU1S0KEn8R+xUek0d/XdsvTx1xCBv
- FBMrP2aV+Jk9hGD6+K08hgTff0lirEmyqGzFfyE7N9bVF7ZXhWx8QYIZ8MzqXRHI8K7x
- G376o5oBD0WAEkm0J7x2sthE/KJKwJpNfNDKbdOP+vE12PIA6vISdATyFhUXgOpIZ4SC
- JSBA==
-X-Gm-Message-State: AOJu0YxdXAbeiFHRufpiCkQg+l37zz82B3t6XE6rDAchv7eQh7piLzN8
- I3Kzm+m/2q90H0m1GM+etNhL6BWp6OYPTemeGsbmgP3I3PxU0OQNkUv5k9KYni4=
-X-Gm-Gg: ASbGncuEK1Mvq08jERa9IAue4w7HOjn4rudrL6K3TSJZQFgvtMyIvxwLvRxY03wQTzF
- hR5lTm+QMeK/7xXYCp07zjndW//XCM+riXTTh8PDJpI4fDCOnqZHKMqyAmJlmO2ye5uZjRuVDNk
- yCSB9FLn4NedA19E3eVxv8xhN7Au+2+J/VhPi9dFSC8sxhHqWLLVXWYgxI7fzPPDQUjjuIOfFm6
- gGa76fFMxJaqI6R46MPwMrayaSGHXXDBT48fXR0koEDUBcbLC2CEZCRKgb3/VQxd12plgbdUgUB
- 1dshV4YDUooXdgYbSEOQPW3lc7eQ0ozw9XSS01r0dqY=
-X-Google-Smtp-Source: AGHT+IFejMuzZX3IfeC1lGuUK4hm4+ZuXZbt8ZBZC4iacJFnjcoCd1UhcNczc/J3wiUMumQ+AK0wKg==
-X-Received: by 2002:a17:907:7ba3:b0:ac7:ecea:8472 with SMTP id
- a640c23a62f3a-ace8493b5camr1153942066b.26.1745918152017; 
- Tue, 29 Apr 2025 02:15:52 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ace6e41ad27sm745439866b.5.2025.04.29.02.15.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 02:15:51 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 994485F863;
- Tue, 29 Apr 2025 10:15:50 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- kvm@vger.kernel.org,  Paolo Bonzini <pbonzini@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  qemu-arm@nongnu.org,
- anjo@rev.ng, richard.henderson@linaro.org
-Subject: Re: [PATCH 01/13] target/arm: Replace target_ulong -> uint64_t for
- HWBreakpoint
-In-Reply-To: <20250429050010.971128-2-pierrick.bouvier@linaro.org> (Pierrick
- Bouvier's message of "Mon, 28 Apr 2025 21:59:58 -0700")
-References: <20250429050010.971128-1-pierrick.bouvier@linaro.org>
- <20250429050010.971128-2-pierrick.bouvier@linaro.org>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Tue, 29 Apr 2025 10:15:50 +0100
-Message-ID: <87selr49bt.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1u9h7R-0005N6-VP; Tue, 29 Apr 2025 05:19:16 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1u9h7P-0004Ff-KC; Tue, 29 Apr 2025 05:19:13 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 29 Apr
+ 2025 17:18:55 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Tue, 29 Apr 2025 17:18:55 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <longzl2@lenovo.com>,
+ <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v3 1/9] aspeed: ast27x0: Map unimplemented devices in SoC
+ memory
+Date: Tue, 29 Apr 2025 17:18:45 +0800
+Message-ID: <20250429091855.1948374-2-steven_lee@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250429091855.1948374-1-steven_lee@aspeedtech.com>
+References: <20250429091855.1948374-1-steven_lee@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=steven_lee@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,22 +63,172 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Steven Lee <steven_lee@aspeedtech.com>
+From:  Steven Lee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+Maps following unimplemented devices in SoC memory
+- dpmcu
+- iomem
+- iomem0
+- iomem1
+- ltpi
 
-> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-> CPUARMState::pc is of type uint64_t.
->
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Iomem, Iomem0 and Iomem1 include unimplemented controllers in the
+memory ranges 0x0 - 0x1000000, 0x120000000 - 0x121000000 and
+0x14000000 - 0x141000000.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+For instance:
+- USB hub at 0x12010000
+- eSPI at 0x14C5000
+- PWM at 0x140C0000
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+DPMCU stands for Display Port MCU controller. LTPI is used to connect
+to AST1700.
+AST1700 is an I/O expander that supports the DC-SCM 2.1 LTPI protocol.
+It provides AST2700 with additional GPIO, UART, I3C, and other
+interfaces.
+
+Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+Change-Id: Iea6c11651c40e341a395b6dbb81975ea2639aebd
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/arm/aspeed_soc.h |  6 +++++
+ hw/arm/aspeed_ast27x0.c     | 51 ++++++++++++++++++++++++++++++++-----
+ 2 files changed, 50 insertions(+), 7 deletions(-)
+
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index f069d17d16..dd5fb731e2 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -90,6 +90,8 @@ struct AspeedSoCState {
+     SerialMM uart[ASPEED_UARTS_NUM];
+     Clock *sysclk;
+     UnimplementedDeviceState iomem;
++    UnimplementedDeviceState iomem0;
++    UnimplementedDeviceState iomem1;
+     UnimplementedDeviceState video;
+     UnimplementedDeviceState emmc_boot_controller;
+     UnimplementedDeviceState dpmcu;
+@@ -97,6 +99,7 @@ struct AspeedSoCState {
+     UnimplementedDeviceState espi;
+     UnimplementedDeviceState udc;
+     UnimplementedDeviceState sgpiom;
++    UnimplementedDeviceState ltpi;
+     UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
+     AspeedAPB2OPBState fsi[2];
+ };
+@@ -171,6 +174,9 @@ const char *aspeed_soc_cpu_type(AspeedSoCClass *sc);
+ enum {
+     ASPEED_DEV_SPI_BOOT,
+     ASPEED_DEV_IOMEM,
++    ASPEED_DEV_IOMEM0,
++    ASPEED_DEV_IOMEM1,
++    ASPEED_DEV_LTPI,
+     ASPEED_DEV_UART0,
+     ASPEED_DEV_UART1,
+     ASPEED_DEV_UART2,
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index dce7255a2c..a3fe2582f8 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -23,8 +23,16 @@
+ #include "qobject/qlist.h"
+ #include "qemu/log.h"
+ 
++#define AST2700_SOC_IO_SIZE          0x01000000
++#define AST2700_SOC_IOMEM_SIZE       0x01000000
++#define AST2700_SOC_DPMCU_SIZE       0x00040000
++#define AST2700_SOC_LTPI_SIZE        0x01000000
++
+ static const hwaddr aspeed_soc_ast2700_memmap[] = {
++    [ASPEED_DEV_IOMEM]     =  0x00000000,
+     [ASPEED_DEV_SRAM]      =  0x10000000,
++    [ASPEED_DEV_DPMCU]     =  0x11000000,
++    [ASPEED_DEV_IOMEM0]    =  0x12000000,
+     [ASPEED_DEV_HACE]      =  0x12070000,
+     [ASPEED_DEV_EMMC]      =  0x12090000,
+     [ASPEED_DEV_INTC]      =  0x12100000,
+@@ -36,6 +44,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_TIMER1]    =  0x12C10000,
+     [ASPEED_DEV_SLI]       =  0x12C17000,
+     [ASPEED_DEV_UART4]     =  0X12C1A000,
++    [ASPEED_DEV_IOMEM1]    =  0x14000000,
+     [ASPEED_DEV_FMC]       =  0x14000000,
+     [ASPEED_DEV_SPI0]      =  0x14010000,
+     [ASPEED_DEV_SPI1]      =  0x14020000,
+@@ -68,6 +77,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_UART12]    =  0X14C33B00,
+     [ASPEED_DEV_WDT]       =  0x14C37000,
+     [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
++    [ASPEED_DEV_LTPI]      =  0x300000000,
+     [ASPEED_DEV_SDRAM]     =  0x400000000,
+ };
+ 
+@@ -491,6 +501,16 @@ static void aspeed_soc_ast2700_init(Object *obj)
+ 
+     snprintf(typename, sizeof(typename), "aspeed.hace-%s", socname);
+     object_initialize_child(obj, "hace", &s->hace, typename);
++    object_initialize_child(obj, "dpmcu", &s->dpmcu,
++                            TYPE_UNIMPLEMENTED_DEVICE);
++    object_initialize_child(obj, "ltpi", &s->ltpi,
++                            TYPE_UNIMPLEMENTED_DEVICE);
++    object_initialize_child(obj, "iomem", &s->iomem,
++                            TYPE_UNIMPLEMENTED_DEVICE);
++    object_initialize_child(obj, "iomem0", &s->iomem0,
++                            TYPE_UNIMPLEMENTED_DEVICE);
++    object_initialize_child(obj, "iomem1", &s->iomem1,
++                            TYPE_UNIMPLEMENTED_DEVICE);
+ }
+ 
+ /*
+@@ -526,8 +546,10 @@ static bool aspeed_soc_ast2700_gic_realize(DeviceState *dev, Error **errp)
+     if (!sysbus_realize(gicbusdev, errp)) {
+         return false;
+     }
+-    sysbus_mmio_map(gicbusdev, 0, sc->memmap[ASPEED_GIC_DIST]);
+-    sysbus_mmio_map(gicbusdev, 1, sc->memmap[ASPEED_GIC_REDIST]);
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->gic), 0,
++                    sc->memmap[ASPEED_GIC_DIST]);
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->gic), 1,
++                    sc->memmap[ASPEED_GIC_REDIST]);
+ 
+     for (i = 0; i < sc->num_cpus; i++) {
+         DeviceState *cpudev = DEVICE(&a->cpu[i]);
+@@ -876,11 +898,26 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->hace), 0,
+                        aspeed_soc_get_irq(s, ASPEED_DEV_HACE));
+ 
+-    create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
+-    create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
+-    create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
+-    create_unimplemented_device("ast2700.ltpi", 0x30000000, 0x1000000);
+-    create_unimplemented_device("ast2700.io", 0x0, 0x4000000);
++    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->dpmcu),
++                                  "aspeed.dpmcu",
++                                  sc->memmap[ASPEED_DEV_DPMCU],
++                                  AST2700_SOC_DPMCU_SIZE);
++    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->ltpi),
++                                  "aspeed.ltpi",
++                                  sc->memmap[ASPEED_DEV_LTPI],
++                                  AST2700_SOC_LTPI_SIZE);
++    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem),
++                                  "aspeed.io",
++                                  sc->memmap[ASPEED_DEV_IOMEM],
++                                  AST2700_SOC_IO_SIZE);
++    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem0),
++                                  "aspeed.iomem0",
++                                  sc->memmap[ASPEED_DEV_IOMEM0],
++                                  AST2700_SOC_IOMEM_SIZE);
++    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem1),
++                                  "aspeed.iomem1",
++                                  sc->memmap[ASPEED_DEV_IOMEM1],
++                                  AST2700_SOC_IOMEM_SIZE);
+ }
+ 
+ static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, void *data)
+-- 
+2.34.1
+
 
