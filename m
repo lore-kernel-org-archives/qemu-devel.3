@@ -4,93 +4,196 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78F8CC369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 22:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6667C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 22:43:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9tTj-0003bq-63; Tue, 29 Apr 2025 18:31:03 -0400
+	id 1u9teX-0000MD-DM; Tue, 29 Apr 2025 18:42:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9tTc-0003aU-Hm
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 18:30:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1u9teV-0000Lv-C9; Tue, 29 Apr 2025 18:42:11 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9tTa-0000jK-OK
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 18:30:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745965853;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CCZjV8nenmIWH736nx0tWmzLkRQBMs8cP17mfRA4pC8=;
- b=XgNS6VbH6tmjirDzMlnqH16X1SnGuja7vlkuPOOZnie8Oc+ybtgINGxFfjFClISIlxsor1
- TmsvygiUo4qz8oGTu0HAxecuM6Nl/I0Mwu3Ll+cgZUWxcTsq3r6C4PXITMAp9v9j9yr3gW
- Ve2DV/YzuCfv7yjzSlX51dPRcxrvink=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-ll6_cSbzO3uAGXKMk3wdEA-1; Tue, 29 Apr 2025 18:30:49 -0400
-X-MC-Unique: ll6_cSbzO3uAGXKMk3wdEA-1
-X-Mimecast-MFC-AGG-ID: ll6_cSbzO3uAGXKMk3wdEA_1745965848
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6e8ed78717eso107400856d6.2
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 15:30:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745965848; x=1746570648;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CCZjV8nenmIWH736nx0tWmzLkRQBMs8cP17mfRA4pC8=;
- b=L0Z6apoLyEkjVFEum+OO8OfTuzy+zKb5YMkWW4mQld5tlI4PDqpGEvILSoKz7/ljCH
- Q8fx4u0FQtCXgn/K/hQbbzeBSwRYIymhTVgHjxtj0nRjJWi5OyYoI5bGgtKq5+9kG94l
- t0Jla1ndNjouDBfCAxLluDomwILLQQI4/tQest/z+x0EqWgkE220DAKxateMi9Zx1ptZ
- 1t11pKqvPIChf9v3hw9U2cdCsMtEm7P3SynNfqth2ZshDXdPaPvzJ3InedcywEO6c4vD
- 1NbftcxWfN+zWJhekbDjq0Cre4Gadj9PfMnhc1DsEClQVo5YehSc4pVIMu2JzMC4AZdN
- h3qw==
-X-Gm-Message-State: AOJu0YytzmgN1MoQtPxamjSYIvh0MGkjuiBXm0tzhBXbRHkoGizHEN53
- 2psoDfLInXRaWeTPnjXes4add+0hZ87F+GeGYt4j4kGMWyrOM5PPpTGRU4ahYex4cKB8bJSUK1A
- LeBKPAUnfTmOie41fZXDnIamnRexe0JSwHNJY25XFW4gNLrjgY7HHiEru9y5b
-X-Gm-Gg: ASbGncspLRy14U/kJqyPP/POW7ZpLOa8XIKy7nXhYe8fQFrEUSa15w+sgKIHxUz+eiO
- sESuBbtPUuMsWtRSlUAgGBO+5g8oJIzcfD8Mn5Ovys3hDw1VPjNyFenD6AdOIToN/KEJepxe3VW
- 9lPBqDfFa3c4VONSBrMidcs0wTTqm0kHP00BY+a69jNXgxwdyu/HG88wB7nrN0GrnellQP4UGnq
- 8wLeZT8BatPogFfUcbWVYvfkDvwe3wSSdfq7WNgyzlEZU8ovYjPbBeLAJ47TXwoJkgxkC47HZWy
- mko=
-X-Received: by 2002:a05:6214:cca:b0:6e8:fe60:fded with SMTP id
- 6a1803df08f44-6f4fcf8f447mr16199376d6.30.1745965848254; 
- Tue, 29 Apr 2025 15:30:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH0HR+/fqfnk2gJpj2b3Z8+D389EhtsSg+muHW1ifBtyQ/w0prdmAtbmMV+1k2MKOBJh1G43w==
-X-Received: by 2002:a05:6214:cca:b0:6e8:fe60:fded with SMTP id
- 6a1803df08f44-6f4fcf8f447mr16198986d6.30.1745965847808; 
- Tue, 29 Apr 2025 15:30:47 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6f4fe835441sm778346d6.69.2025.04.29.15.30.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 15:30:47 -0700 (PDT)
-Date: Tue, 29 Apr 2025 18:30:43 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH 3/4] tests/data/vmstate-static-checker: Add dump files
- from QEMU 7.2.17
-Message-ID: <aBFTE8r3lyqUcAsT@x1.local>
-References: <20250429152141.294380-1-thuth@redhat.com>
- <20250429152141.294380-4-thuth@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1u9teT-0003KG-4H; Tue, 29 Apr 2025 18:42:11 -0400
+Received: from pps.filterd (m0127837.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53TCtBaq020781;
+ Tue, 29 Apr 2025 15:42:01 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=YSdoDs180mNiS7KDZpcVQxZ3r8m3P6fouN2A24WLx
+ gc=; b=e2rxJigzpOB7CkxJZBQsRzU1FN4MN2GBdASl8knK6gHln+1Wy9Wfc0PZz
+ C7dxhYUiaYvl87Kg6pYGhKYSuNI0bx9wra3uwIdOsagrIqwUBCuoYZBWV5xaUMqr
+ swI0YrKwIdxgIJDFx+IcOd1Pm2LWoV/WpuNyXUHWZe3tipvOT5zSJYlvNQawdwL/
+ ah+vixqtFdhsRpoHtP+yJWAFIM7YGNzyU3qmFTlbxBxnOsjtBGbzyN3hk02+CzHc
+ g5Gzv85fXBLnCyqEhnePVeC5mz9TuP/0v72HU5b+LthdMC9NVC3BlgqD0m7JrdyP
+ FMNoWPlLMBDxLA7pnzIk7jI6C3yAg==
+Received: from cy3pr05cu001.outbound.protection.outlook.com
+ (mail-westcentralusazlp17013079.outbound.protection.outlook.com [40.93.6.79])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 468ud8famh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 29 Apr 2025 15:42:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ebqp0lEHnaPPcRN35fSM6R965iAkaZqFwUpWFPEoen4WJGBxLZWVE835BW6tMYwaBWBKBGfryhpddsMig0+7m6Z/Em0XGCEENvC3/xCuGDHJD3HyVPb1eHGNj6EplS31M9XawRvAECuvDrIeB1G2UB1BAMn7HaSSQ9IxkI9zo73qNTgRI050flGCnQi6UclxezcPGndZ4dd7GQh/128BY3thZILS12dRUEX4Jk2Gx1d92zFH/hmOW9vRe+C3MKMTYcmvMggrPqZLxx79YNtaXw0MeftsD0rf7Rraf1/dPROu1n8pwFdl5Xhn94Cq20bP/LkOHowDoYS3PuGCA6bzlw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZLCqtt8QC8u+5VzgZ4UCu0o77t8PRV+0MvwN/Mv4RMk=;
+ b=oA6LvUlhzMRz0RsZj1hyjqPMVW7LH2eMqs/llzXQgDRd+f7A7LrgYbze+q14v/FD0Al2uXcahr0oa+BVOhJOIp/OB9Th56ykgxy4hVU4AKFDHl2kwbzFm9Uu9jbRj7M6P8cm5iJe5ZZYnUGkzZEfynAUSI2ZcAnZ9o8lKgcraKTjmeZp8vFpBtAQta4NnOqApDPeJYLgHsB9zfbpVxlKo00c1Ldc/YctH42a7/nZbblqYQMLv1SpsSksgkhmGM+Y2A1RU9XcmArDI4KH+eiEFBxcuVvplQKy/rYXwItg/4qYcexsoUD8a4iIMq8XK4wOOx6z3Ukxv77vWEcjpgBegg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZLCqtt8QC8u+5VzgZ4UCu0o77t8PRV+0MvwN/Mv4RMk=;
+ b=mBdv4Yh4/IqpNXtfd2jsUC3qZBGcj+iowIMJlJad5xvuSAoNqSNQ53du2j1ND4wpeOiRXpe9bUE5yzqkqQpcnWFTZRuBhTo2fK6/JJJCCxFK83OkOLcrwtRWg16fTvEL0YHOu8iqO8sj2+Bhv/fIO7cF1jKCErFud0U5uNCvkLkCeHdqDKZPWsqapZC+oJF5aWkEhy2nGAuZC8ZtWQw/Do4V47iAFtgDpucxZ0Xce3iOeOHiihTY+rj5eUJPBa0ZaSTg7hoCF6ks9mo3XALq3v+EVfNZ2PXa/FIg4TsRZHrQFdkcbzCtbRNdkRIQ6zz66tukHrThKi2Dgw6ltAHEEA==
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
+ by SA6PR02MB10430.namprd02.prod.outlook.com (2603:10b6:806:408::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.19; Tue, 29 Apr
+ 2025 22:41:59 +0000
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51%6]) with mapi id 15.20.8699.012; Tue, 29 Apr 2025
+ 22:41:59 +0000
+Date: Tue, 29 Apr 2025 23:41:54 +0100
+From: John Levon <john.levon@nutanix.com>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, Tony Krowiak <akrowiak@linux.ibm.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>, qemu-s390x@nongnu.org,
+ Tomita Moeko <tomitamoeko@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
+Subject: Re: [PATCH 12/14] vfio: add region info cache
+Message-ID: <aBFVspaqahGmud87@lent>
+References: <20250409134814.478903-1-john.levon@nutanix.com>
+ <20250409134814.478903-13-john.levon@nutanix.com>
+ <fd6fa8cc-8e11-47a5-881a-1f0205aac742@redhat.com>
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250429152141.294380-4-thuth@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fd6fa8cc-8e11-47a5-881a-1f0205aac742@redhat.com>
+X-Url: http://www.movementarian.org/
+X-ClientProxiedBy: LO4P123CA0274.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:195::9) To CH2PR02MB6760.namprd02.prod.outlook.com
+ (2603:10b6:610:7f::9)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|SA6PR02MB10430:EE_
+X-MS-Office365-Filtering-Correlation-Id: 330130c4-b2e0-413c-ea38-08dd876f0d4b
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?wKTYzkLIFmfXe+Z3l0D/pu7Wiw7zMzG0UAYm4oCmEFSHJiYEHBZE5f4VbS?=
+ =?iso-8859-1?Q?vp5LdOVy2n+LIPBw3Fa4nUVyVnQWOEsNQsKtp/LLAfMMDMAx8HA8CcW7lA?=
+ =?iso-8859-1?Q?PA9MRc655Fx2+i/ZqPjQ43KS6IV967EsmzQricSe0uz56iKCtFqSq9OL+J?=
+ =?iso-8859-1?Q?691XUABKYSorHN/Q/ulMammG+0lPsYyu59UUbgFd0PxBKbsGFxrAK0mb4i?=
+ =?iso-8859-1?Q?E8zrsuo4quz14UYLnMuUX8Ibzh3NAIaI1Qv4JRyBvq44hsJgHQOQeR1HCa?=
+ =?iso-8859-1?Q?cy6djaPKN5ik/gi5ia/cZn5UZHDeCuUcUhBLrH885YsfABPdMD9KNUEV3v?=
+ =?iso-8859-1?Q?7qavF8I5t671Kuey4iRTly8Act+14DUkH9XT7QBf5JhxEo/2df28bHeTi3?=
+ =?iso-8859-1?Q?kXdPGxkwOMDdmblG8GdiadpLwqKnI554sJpACP229L3aa0+7QjVEjAgVXc?=
+ =?iso-8859-1?Q?10/RL+rmBjcKBG4grLKTwwhRTNscEBeGBHiMHD20EbfDpm38XnND/MVB19?=
+ =?iso-8859-1?Q?FTD91PyOlhc9kMSangXDJD2rJdRYzy6p7YbTLtb31BvU4gep8uRCFQUi8M?=
+ =?iso-8859-1?Q?pGKGjhk1VfF6s6pvdGgoVKKAcdgXOPtxXvc/2P3qM+mF1c2vi20lOLdMJe?=
+ =?iso-8859-1?Q?jGb7SXSTw7yJLoaVIroNYkUQTN0G5VsdiT/L7ecSo/a6MTNkWh9PxwTfPP?=
+ =?iso-8859-1?Q?gpqbs4560wwG+4QxS82UjBc4NE5j9BnTtY0kqNMcR4Hb4hEaDqXzjIGY2Q?=
+ =?iso-8859-1?Q?5TSwGPrjPWUJvbRjNgKTrTunnlvArXpWALinV/4eE9oLo4S8DBUKaAalJ6?=
+ =?iso-8859-1?Q?FaDyiaGyZmaBJpzWt5jMtsorvd8gfZTTP4VmDUt1AqQC3ACJyMJ8StC+do?=
+ =?iso-8859-1?Q?6k/rUHVTRCbWEH5r6xB+6dGDC8iUSWQcWXh0YZWiSF5UCDiF9AqJFupzWr?=
+ =?iso-8859-1?Q?qX7EBsB6hiVv6qUvxK/9D02psAdnhNHpCK/mZN+zWiToZkNwsNhNxw+py+?=
+ =?iso-8859-1?Q?I3y1C1R4feum8j6W4vQJU88UMbaVHnxFib1nKlxmT7qiQm+n6caZP7Uih5?=
+ =?iso-8859-1?Q?bZKQJgO/v7M9XZT0/I0OSFuXOI7J0b2t0AsvO41cvChZqkLYf1OC6ZBXOI?=
+ =?iso-8859-1?Q?gVvGFDI/Uro8Y5puEOlLcpoaeZIFY1IJ5iSBY9dplMFYHiriZGFmQTlCos?=
+ =?iso-8859-1?Q?fcMx2FLN8SYCimLbB5h8FlnF7oZrerFeheUUbQ+1h31X3wMaD5Ead8qCyu?=
+ =?iso-8859-1?Q?p+6/075OsjnfTwI2RvmKnwXsOIFt1WWSzj0LOi1atUPCoj8t/S2vEdvV88?=
+ =?iso-8859-1?Q?DqVGhHv6Btr6xgzoJ0g2n6UvDltjyQp/QNkIv1xLmk0r5G52og/KAaMh7u?=
+ =?iso-8859-1?Q?wlzBYCvQU5uslNn9nPzRsPTIIc/RAiK150bXmDqY05uUf2Fc6QHtl3Dl3Z?=
+ =?iso-8859-1?Q?fOKbI1/cf6wriXY7J8FtaZVM/H4UvyImgGhU065mcnOlokPPMtthbKhOYh?=
+ =?iso-8859-1?Q?I=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?N0qfq71NSWrTtacFTDhDfa5HHWmndPZGMj1E8CB0Zu6xOfe0iahBRlxA8J?=
+ =?iso-8859-1?Q?sb39HCzTOfUSXAjlO1RBcn3hBOrzs2BFjVdAvDBzV88hPSoQyzgRX/XUR2?=
+ =?iso-8859-1?Q?gNoinLJB5rq5piRA6TvzbLkCIYVZdRqUoCveIK3mwNN9krkzi/XoVAfhGt?=
+ =?iso-8859-1?Q?4Z6slKqesPSKiQPL6bW0fVhivZ41CMU4BeVAjlHbtjXtHLBThwBgObYVys?=
+ =?iso-8859-1?Q?EDquW7RIOsCxGZ+acge7zyHg2iY3f72lGvIgfGyq2Fec8/Q7syjnRqdQXB?=
+ =?iso-8859-1?Q?gfgiKGzF/hYPAydTPKykYNGwgWs2M4uUeeGYAiU6hdxxoaeZm2yBixECbL?=
+ =?iso-8859-1?Q?ffPXJrAWxZJ0l10J+20yr9zGV6tr62qu+qDBMOnBfs0XM//k7eRet9ThSu?=
+ =?iso-8859-1?Q?QzVKGbADrWUCiixsAb7b+8p7lQHATAf/eSFryikULO9jNUYZ1jTJ6tBWC5?=
+ =?iso-8859-1?Q?vZZ4l+qld3WMzRihf6Bm9EVJHe5T0eoj4wJ4SdJGAIVa4r1q9DI8JnzZVP?=
+ =?iso-8859-1?Q?e1BZ+ZplK8mJBxKC5QeY//3eNhJxFdZmH4XEuHG66nkpNtBN/aseo3tS/r?=
+ =?iso-8859-1?Q?QfEtMSGF00R0tE9BwkNYI7z+QASBAbs6SADOST8fR+CYT1FtF/UnGWou9w?=
+ =?iso-8859-1?Q?7oxiw3g37EzzITwwhGF5fdlwytxf4apCr0xaeBMKoyesnZ67BjLZnWCyY9?=
+ =?iso-8859-1?Q?sU3h0vpXjydV8fK//ODnl/MgOWk7cI9FV59oPlUxJ5cuYbf6vf34wnJc4E?=
+ =?iso-8859-1?Q?G8zjwGftdjKrFMf0ZpRqJtHP2yoy16QnVs+AtEblKMeSGk5sIZGWlD6CBR?=
+ =?iso-8859-1?Q?5A0/6hoK5z7D0Nr+C+tjZTd1qiHK1R0BMq/jf3XZdPYTbZPbmCMex8riPz?=
+ =?iso-8859-1?Q?cxUc7KYziERXNzWwb/Dng+oTfbuTzTpAbpv7eAbPdXzSQDAZql1tzl9l1D?=
+ =?iso-8859-1?Q?Jd3KTNIf4sYlh7ARvoi+iIf8hvIdG5NmH8/gfsN8gl9bZau+C95pUVpBsP?=
+ =?iso-8859-1?Q?t1Gn2cjFA2Y70TWGEUMny7bRtq1s2dvWxGVuqBWpBDaaBS+SgI+8IJ2akm?=
+ =?iso-8859-1?Q?szkUg/oMuJBNTrjJW+5ncCVM4lPdFioQKwauAKLlerpCslfWyORMqMzWNd?=
+ =?iso-8859-1?Q?BCpM99CL8u2EXb5ARtTL0e1OFPIu0wRpAUzJwZa0QSJb9sJwS9ur56mjja?=
+ =?iso-8859-1?Q?QMxVcfPeY+Y9mrK9E8EftFubtWNBvc3WDQsdCVl0M+6ms7H+8626N5soph?=
+ =?iso-8859-1?Q?+f8pGZDm9vKm1Sq+5aOLsuQJZqVSfnghWO2zq+nXGnKykbhoT01ZoL2/g7?=
+ =?iso-8859-1?Q?YNFlLq64K2B+K/WILj8OqNSYxSKVevc6GXvhQOlAxpt51qPXhK7rMSHDqA?=
+ =?iso-8859-1?Q?NQW6qIzVphl0XasugSNMP0OkJ0nZrM0+OIUG6mBT0+u+iUmHtFxl4Cjjd1?=
+ =?iso-8859-1?Q?DZQeeggIyJBKVf2ACFhKtwz9FLAP9Jw++icRzhy3aSnWD83MzEh5gnmXN1?=
+ =?iso-8859-1?Q?sLg3T5bH68uFseOadvX60bwpaKH1cv/c0yaz9NuQxMNIzcDheWeNNl+Fhv?=
+ =?iso-8859-1?Q?4c03rGBacqNEx6OmFYaeVYlM533W69FVGc15UxXo0U8qunH2Qrjxx5y3rS?=
+ =?iso-8859-1?Q?9o/kHv5TxbxWAL9WRHkQEUAK9fZzNHn5TZ?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 330130c4-b2e0-413c-ea38-08dd876f0d4b
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Apr 2025 22:41:59.2522 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Hb4482ErBDcr39K9IdfOnFnKodXLhJDnihV2ULuqwSLqkXt0bwMXwQrJ2XgOO12aHMx8l9xE2UWrViNlaTzlzw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA6PR02MB10430
+X-Proofpoint-GUID: n1i3Gl_HIrTmFCMBtLVyC3qy-kOzctOr
+X-Authority-Analysis: v=2.4 cv=IugecK/g c=1 sm=1 tr=0 ts=681155b9 cx=c_pps
+ a=K1+iGLXgNHoxMcL4Lb8acQ==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
+ a=XR8D0OoHHMoA:10 a=0kUYKlekyDsA:10 a=6mCx4M2ZX_vFk3heEUMA:9 a=3ZKOabzyN94A:10
+ a=wPNLvfGTeEIA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDE2OCBTYWx0ZWRfX9LD4pT1BTyad
+ yM+rDph5R/LdF1IVHRtwo9n6Nn7rhpW2GWxiB1Ao/NZkI8dV5If4LuPGn0h+ve7C1hyqXd7NMjH
+ 6+nhaIhQ/GDblGrC51cCKYl22P9StPHXjW0Yu7j72I8zseGwnz0bbuoXKQjIXv73xOvIH18jCxy
+ Y17XEdHpeRrd20W4ntEM0Ps9ZHH9JwE7gt7AS/90MGD8p0zX1joTMngRyeFUQhztn0Ulwx6+r/J
+ /rnQbgw4PFspu5Ygr+MZhBoLwrNEiwL5rnEZMt6kHxeMtrh4uwqAgfUsQussyNOY6ho6YOjwTsk
+ QDLipytyvwBUOrCGmbbsF84ts+lWdWMTD9sXRyStblGRwIakGhM278/q6LLx1xG3PXNJjFMOJCV
+ VEKIfC1/Kt9jO7km5VxJU0isISaC+wodYy0FHKbl7GNVQslZ41K92UThU8KSWLtXWyjG9fBN
+X-Proofpoint-ORIG-GUID: n1i3Gl_HIrTmFCMBtLVyC3qy-kOzctOr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-29_08,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=john.levon@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,62 +209,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 29, 2025 at 05:21:40PM +0200, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On Mon, Apr 28, 2025 at 05:39:46PM +0200, Cédric Le Goater wrote:
+
+> > +static void vfio_device_get_all_region_info(VFIODevice *vbasedev)
+> > +{
+> > +    struct vfio_region_info *info;
+> > +    int i;
+> > +
+> > +    for (i = 0; i < vbasedev->num_regions; i++) {
+> > +        vfio_device_get_region_info(vbasedev, i, &info);
 > 
-> For automatic tests, we need reference files from older QEMU versions.
-> QEMU 7.2 is a long term stable release, so it's a good candidate for
-> checking whether the migration could still work correctly. Let's add the
-> files from that version that have been taken with the "-dump-vmstate"
-> parameter of QEMU (compiled with single machines and the configure switch
-> "--without-default-devices" to keep the json files reasonable small).
-> 
-> Some devices also have been removed manually from the json files, e.g.
-> the "pci-bridge" (which can be disabled in later QEMU versions via Kconfig),
-> and some Linux-related devices like "scsi-block" and "scsi-generic" and
-> KVM-related devices. Without removing them, we might get errors otherwise
-> if these devices have not been compiled into the destination QEMU build.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  MAINTAINERS                                   |    1 +
->  .../aarch64/virt-7.2.json                     | 2571 +++++++++++++
->  .../vmstate-static-checker/m68k/virt-7.2.json | 2936 ++++++++++++++
->  .../ppc64/pseries-7.2.json                    | 1068 ++++++
->  .../s390x/s390-ccw-virtio-7.2.json            |  475 +++
->  .../x86_64/pc-q35-7.2.json                    | 3402 +++++++++++++++++
->  6 files changed, 10453 insertions(+)
->  create mode 100644 tests/data/vmstate-static-checker/aarch64/virt-7.2.json
->  create mode 100644 tests/data/vmstate-static-checker/m68k/virt-7.2.json
->  create mode 100644 tests/data/vmstate-static-checker/ppc64/pseries-7.2.json
->  create mode 100644 tests/data/vmstate-static-checker/s390x/s390-ccw-virtio-7.2.json
->  create mode 100644 tests/data/vmstate-static-checker/x86_64/pc-q35-7.2.json
+> if the vfio_device_get_all_region_info() routine queries *all* region
+> infos to fill the ->reginfo[] cache array, why do we also need the
+> lazy cache filling method in vfio_device_get_region_info() ? This looks
+> redundant to me. I would rather have vfio_device_get_region_info()
+> operate on the cache only.
 
-This looks like an improvement indeed, it so far only covers machine type
-7.2, rather than all machine types.  I used to run these by hands before
-each release.. and sometimes I forgot.  Before me, I am aware at least Dave
-used to run also during softfreezes.
+I realised I'm not confident about doing this: in theory, a vfio device region
+could later become valid based on some change in operation (and hence get region
+info would then subsequently work post setup). Instead, I'm going to drop the
+"get all" and operate only in caching mode, does that sound OK?
 
-One thing I am wondering is if we can do it the same way as the compat
-migration test in CI, so that we always compare with a base (which is the
-previous release binary), then move the base after each release.
-
-After all, due to migration-compat-common CI job, we always build the base
-version of QEMU already in build-previous-qemu, so we already have two
-binaries at hand.  IIUC we only need one new job to generate the two JSON
-blobs, and feed them to the checker on both directions.
-
-If that is the case, it might have a benefit that we can cover all the
-machines as long as listed on both binaries, then check all of them?
-
-Meanwhile, if we keep the ball rolling for each release (by boosting the
-base QEMU binary version), IIUC it guarantees all the new binaries will
-make sure to provide compatible VMSDs all across since we start running the
-job.
-
-Would that work?
-
--- 
-Peter Xu
-
+regards
+john
 
