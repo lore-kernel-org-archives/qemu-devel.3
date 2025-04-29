@@ -4,83 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 223EFC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 09:48:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67890C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 09:49:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9hZj-0004vl-F0; Tue, 29 Apr 2025 05:48:27 -0400
+	id 1u9hak-0005rb-Bn; Tue, 29 Apr 2025 05:49:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u9hZg-0004r5-6n
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 05:48:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u9hai-0005rH-96
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 05:49:28 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1u9hZd-0000aK-UE
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 05:48:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745920100;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=uAzYfmEA4ZlzMGzQV5ZXsXVfrmBmz8sqT7sNKurT35g=;
- b=RzuiGH5N2prbOZoGsmepT410WCoZpmn1O3SzReZpc5qUsqgPs13kbZFKesiHdIgCJoJIdo
- BGEz8Hq/gC7tGeclYrE7AfQ9QrhcIoeVOdA/kLg4Aq4LV93F6lsvpxe9tV3oFRnzW1INrw
- IaQmdIbrMaK0wIK5+O0Za74FK8ZZVTM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-82-3twGYU2DOAuXCRt-6zbOow-1; Tue,
- 29 Apr 2025 05:48:16 -0400
-X-MC-Unique: 3twGYU2DOAuXCRt-6zbOow-1
-X-Mimecast-MFC-AGG-ID: 3twGYU2DOAuXCRt-6zbOow_1745920094
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0D4581800876; Tue, 29 Apr 2025 09:48:13 +0000 (UTC)
-Received: from localhost (dhcp-192-216.str.redhat.com [10.33.192.216])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 606EF1956094; Tue, 29 Apr 2025 09:48:10 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: eric.auger@redhat.com, eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- oliver.upton@linux.dev, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- agraf@csgraf.de
-Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: Re: [PATCH for-10.1 v5 06/13] arm/cpu: Store aa64dfr0/1 into the
- idregs array
-In-Reply-To: <c150cb74-d11a-4090-90fa-0405a488c471@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20250409144304.912325-1-cohuck@redhat.com>
- <20250409144304.912325-7-cohuck@redhat.com>
- <c150cb74-d11a-4090-90fa-0405a488c471@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Tue, 29 Apr 2025 11:48:08 +0200
-Message-ID: <87ikmnqox3.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1u9hag-0000lt-H6
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 05:49:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1745920166; x=1777456166;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=oZpTia+6XVj/h1OeoJNYOvffFVIEw3X2QsDQsE0c8CA=;
+ b=XRYApE4Dv2fVVOHZSANp9zgSa/UrNHNfpmt1s2zlsqd41Wa8kwTBgX27
+ pg3FUkxITsD28rL1q3IP4jrI3TJsrfrhIARQTdXi6k+lYD36Tk8wSwgWo
+ xYuXeCJA1ji200FBSszfzRHd4Q4uA/ZHWPJHlM9SoQQ5M62Y0vCayry+M
+ gOgtUHJund/9aXfTXmIC5QJ1LFVjdaSTw86y6mozh7/R35xGaOYxDxevy
+ lf78DmwQMuub932TnmF5jDn9hbLbkVimD6oCfLZ3hTtX1x2c/5PD9yyea
+ XGhJjL9x2JDM99bYtGSqXvU+FfVmchsDUnbVirWzbj3V3d0a84ZdJBbVO g==;
+X-CSE-ConnectionGUID: Fth703dsTX+rELEgv/MjrQ==
+X-CSE-MsgGUID: gvboBmWtTzKMRYIsAnykFg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11417"; a="46652498"
+X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="46652498"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Apr 2025 02:49:24 -0700
+X-CSE-ConnectionGUID: LFG5Ey7PQqagNe0Zmm0vwQ==
+X-CSE-MsgGUID: tV0vLvAUQyOvHYaD4/jxGA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="133677679"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa010.jf.intel.com with ESMTP; 29 Apr 2025 02:49:21 -0700
+Date: Tue, 29 Apr 2025 18:10:18 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: Re: [PATCH v8 33/55] i386/cpu: Introduce enable_cpuid_0x1f to force
+ exposing CPUID 0x1f
+Message-ID: <aBClilnva6J+WjkT@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-34-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250401130205.2198253-34-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,37 +91,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 28 2025, Eric Auger <eric.auger@redhat.com> wrote:
+On Tue, Apr 01, 2025 at 09:01:43AM -0400, Xiaoyao Li wrote:
+> Date: Tue,  1 Apr 2025 09:01:43 -0400
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: [PATCH v8 33/55] i386/cpu: Introduce enable_cpuid_0x1f to force
+>  exposing CPUID 0x1f
+> X-Mailer: git-send-email 2.34.1
+> 
+> Currently, QEMU exposes CPUID 0x1f to guest only when necessary, i.e.,
+> when topology level that cannot be enumerated by leaf 0xB, e.g., die or
+> module level, are configured for the guest, e.g., -smp xx,dies=2.
+> 
+> However, TDX architecture forces to require CPUID 0x1f to configure CPU
+> topology.
+> 
+> Introduce a bool flag, enable_cpuid_0x1f, in CPU for the case that
+> requires CPUID leaf 0x1f to be exposed to guest.
+> 
+> Introduce a new function x86_has_cpuid_0x1f(), which is the warpper of
 
-> On 4/9/25 4:42 PM, Cornelia Huck wrote:
->> From: Eric Auger <eric.auger@redhat.com>
->>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> Reviewed-by: Sebastian Ott <sebott@redhat.com>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> ---
->>  target/arm/cpu-features.h | 16 ++++++++--------
->>  target/arm/cpu.c          | 15 +++++----------
->>  target/arm/cpu.h          |  2 --
->>  target/arm/cpu64.c        |  4 ++--
->>  target/arm/helper.c       |  4 ++--
->>  target/arm/hvf/hvf.c      |  4 ++--
->>  target/arm/internals.h    |  6 +++---
->>  target/arm/kvm.c          | 12 +++++-------
->>  target/arm/tcg/cpu64.c    | 33 +++++++++++++++++----------------
->>  9 files changed, 44 insertions(+), 52 deletions(-)
+s/warpper/wrapper/
 
->> @@ -925,8 +925,9 @@ static void aarch64_a710_initfn(Object *obj)
->>      SET_IDREG(isar, ID_AA64PFR0, 0x1201111120111112ull); /* GIC filled in later */
->>      SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000221ull);
->>      SET_IDREG(isar, ID_AA64ZFR0, 0x0000110100110021ull); /* with Crypto */
->> -    cpu->isar.id_aa64dfr0  = 0x000011f010305619ull;
->> -    cpu->isar.id_aa64dfr1  = 0;
->> +    SET_IDREG(isar, ID_AA64DFR0, 0x000011f010305619ull);
->> +    SET_IDREG(isar, ID_AA64DFR0, 0x000011f010305619ull);
-> this line is doubled.
+(found by "scripts/checkpatch.pl --codespell *" :-))
 
-Indeed, fixing.
+> cpu->enable_cpuid_0x1f and x86_has_extended_topo() to check if it needs
+> to enable cpuid leaf 0x1f for the guest.
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+>  target/i386/cpu.c     | 4 ++--
+>  target/i386/cpu.h     | 9 +++++++++
+>  target/i386/kvm/kvm.c | 2 +-
+>  3 files changed, 12 insertions(+), 3 deletions(-)
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
