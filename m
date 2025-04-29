@@ -4,89 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C952C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 13:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 025AAC369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 13:16:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9ke2-0004LT-GV; Tue, 29 Apr 2025 09:05:06 -0400
+	id 1u9koJ-0000Lo-DB; Tue, 29 Apr 2025 09:15:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9kdw-0004Jf-VV
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 09:05:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u9koH-0000LQ-I6
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 09:15:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9kds-0001Rh-V6
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 09:04:59 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u9koF-00040T-SQ
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 09:15:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745931892;
+ s=mimecast20190719; t=1745932538;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1nrCjU7uUSDJ+lWC4154feQNw/X8mcWdAxgYV/tyL5M=;
- b=J45CWTFUzm4jtI5YkrCqQmN9S3ALXQgkfOBIi/B+lntESZMZdQ8z03WIAS/3JkNai+M8dT
- Ij/VM8ryi3xocegP6+em9ibkr1l12hlFQwqpgwNC3nQxAq4/xrSo/0K3fo9eZeAFGLQj0v
- kylT86hvQhPy3xuTxbL3afbdLaFizbY=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-145-xka3sRa-OEeIxBdqlhtHog-1; Tue, 29 Apr 2025 09:04:50 -0400
-X-MC-Unique: xka3sRa-OEeIxBdqlhtHog-1
-X-Mimecast-MFC-AGG-ID: xka3sRa-OEeIxBdqlhtHog_1745931889
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7c5c9abdbd3so554969285a.1
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 06:04:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745931889; x=1746536689;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1nrCjU7uUSDJ+lWC4154feQNw/X8mcWdAxgYV/tyL5M=;
- b=uDnBvc9GasKaxNDRO0Sj0Hgp/tpfGOMiYq4de7+vmHxeL9kA+ZAlQCU6lk5NG064ms
- W+3AWjtmUuGm4obC9Cyk0Rgmj1G5Wlsw8c+m4DZgQaSNyKJszEasi1FY8KyuHD1O2f3R
- 9Su/8aS9/eec3TvMAZ40XBKX4M63FmPvf74o8sEpkMnNN0DnVq4zQ3Ia2tgQWxB+ED15
- wM6FgrOl8HP3rrEndBx/Hc9XhFZt6PxRKLbiPQqYvaND9yRhFHTuG9H4O+X7Eghmo8Ya
- rXRZcHN5ZR7sU2R2U3XkrR458jykWHDqvce1FD+BaeReJszkpD15EJ8TP/JsICa5v1NM
- rG3Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUwPRfiXfwwEuo2ZE7eTDRR+QlBO75MqtDA8Md2GFQEPPKwv6ap63gcmB3Ss0iEgxj4O02mCdnSYQxs@nongnu.org
-X-Gm-Message-State: AOJu0Ywp4BjRZ3Q6BKnuyBdezfUOxxAq0WtcB4rmGiD2+pY7/Q1zAzKz
- mg3KhWWGfR0qS0PQejlZzWcfNdk78hxIND0CZV4p1V8xHmsXv9hVS0D/dO1DIKzquM+Wx7p9ykJ
- 485SNYQIlymsMOCHwQS2K0chn6Umf0HoC7pgeRRfTsfbx9u3Blswl
-X-Gm-Gg: ASbGnctSGRW6txKs6PTj9b9H4W/SDImnhwuPk/OP0iN11RwUG/Aj33sm8MUWUUXnJuI
- Ihhya4YsEOVsACMrDoVluz3Qw8oaPboEtU/5mG3tQSVQVmGnvwotdy2LkmMhcvWDG/glJRsU4pD
- Ax8UTWDQyugbJu919hKSjGBDtqp9Qvt6Reaxu87anl9GzslNinmDZXkoZ9aAlPs6B5mosILhRgm
- XxMwYWOcwOrDL1M/a91mnS9ZJqG9WG/Ck6lrqw4sib8F9TcnST3UbgF2ep8Q5ckT5di1kIhqNF+
- /3A=
-X-Received: by 2002:a05:620a:28c9:b0:7c5:642f:b22f with SMTP id
- af79cd13be357-7cabdd80fddmr519427685a.18.1745931889625; 
- Tue, 29 Apr 2025 06:04:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzV2CJhrN/ZxCuM2+dAkTyHp02W0b3KMZY0RHCEItJb4XruCPpr8kn8CBAh8bc4KIBHeAkAw==
-X-Received: by 2002:a05:620a:28c9:b0:7c5:642f:b22f with SMTP id
- af79cd13be357-7cabdd80fddmr519423185a.18.1745931889231; 
- Tue, 29 Apr 2025 06:04:49 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c958eb534csm734188285a.117.2025.04.29.06.04.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 06:04:48 -0700 (PDT)
-Date: Tue, 29 Apr 2025 09:04:46 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- berrange@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH v9 0/7] Allow to enable multifd and postcopy migration
- together
-Message-ID: <aBDObgL7hDQMy63F@x1.local>
-References: <20250411114534.3370816-1-ppandit@redhat.com>
- <87ecxteym0.fsf@suse.de> <87bjswfeis.fsf@suse.de>
- <CAE8KmOzzn7g1=pd2J325gAf4ffmGALKoHdgL17So4KawxkZdbg@mail.gmail.com>
- <87y0vyepta.fsf@suse.de> <aAlu0hcUCdzmIN4p@x1.local>
- <CAE8KmOz7P+Pz8zwJq+mTEJbZjhCk7iAo9+c5DrZzhbTmz=VtUQ@mail.gmail.com>
+ content-transfer-encoding:content-transfer-encoding;
+ bh=6V7XFxCoLB8K03dExujKCIN8n66f4CpcpEnHTwhO3Zg=;
+ b=OHAIKV8nktrzHCW1QW1N7NQRhs1cPMqiSPCR+MXpbeDjVYj/WaiOyJxSa7Lc8T5JR5BvPX
+ Dba1LLG3cYa7iyPHQzuMWVvoZMM0ywjVVmPEeop2DVDdpJ1rVuVANt6tIVsdMRHGyiCQ5o
+ T84RXxHPr4qe0UI3JFYS3g6UauY9N+g=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-436-F4DkB8oHOVq93XhRnZF8LA-1; Tue,
+ 29 Apr 2025 09:15:33 -0400
+X-MC-Unique: F4DkB8oHOVq93XhRnZF8LA-1
+X-Mimecast-MFC-AGG-ID: F4DkB8oHOVq93XhRnZF8LA_1745932532
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E945180048E; Tue, 29 Apr 2025 13:15:31 +0000 (UTC)
+Received: from toolbx.redhat.com (unknown [10.42.28.98])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 09DBE18001D7; Tue, 29 Apr 2025 13:15:27 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, devel@lists.libvirt.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 0/5] docs: automated info about machine deprecation/removal
+ info
+Date: Tue, 29 Apr 2025 14:15:21 +0100
+Message-ID: <20250429131526.1842130-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAE8KmOz7P+Pz8zwJq+mTEJbZjhCk7iAo9+c5DrZzhbTmz=VtUQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -111,72 +89,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 29, 2025 at 06:21:13PM +0530, Prasad Pandit wrote:
-> Hi,
-> 
-> > On Thu, Apr 17, 2025 at 01:05:37PM -0300, Fabiano Rosas wrote:
-> > > It's not that page faults happen during multifd. The page was already
-> > > sent during precopy, but multifd-recv didn't write to it, it just marked
-> > > the receivedmap. When postcopy starts, the page gets accessed and
-> > > faults. Since postcopy is on, the migration wants to request the page
-> > > from the source, but it's present in the receivedmap, so it doesn't
-> > > ask. No page ever comes and the code hangs waiting for the page fault to
-> > > be serviced (or potentially faults continuously? I'm not sure on the
-> > > details).
-> >
-> > I think your previous analysis is correct on the zero pages.  I am not 100%
-> > sure if that's the issue but very likely.  I tend to also agree with you
-> > that we could skip zero page optimization in multifd code when postcopy is
-> > enabled (maybe plus some comment right above..).
-> 
->    migration/multifd: solve zero page causing multiple page faults
->      -> https://gitlab.com/qemu-project/qemu/-/commit/5ef7e26bdb7eda10d6d5e1b77121be9945e5e550
-> 
-> * Is this the optimization that is causing the migration hang issue?
+Since we deprecate and remove versioned machine types on a fixed
+schedule, we can automatically ensure that the docs reflect the
+latest version info, rather than requiring manual updates on each
+dev cycle.
 
-I think that's what Fabiano mentioned, but ultimately we need to verify it
-on a reproducer to know.
+The first patch in this series removes the hack which postponed
+automatic removal of versioned machine types to the 10.1.0 release,
+since we're now in the 10.1.0 dev cycle.
 
-> 
-> ===
-> diff --git a/migration/multifd-zero-page.c b/migration/multifd-zero-page.c
-> index dbc1184921..00f69ff965 100644
-> --- a/migration/multifd-zero-page.c
-> +++ b/migration/multifd-zero-page.c
-> @@ -85,7 +85,8 @@ void multifd_recv_zero_page_process(MultiFDRecvParams *p)
->  {
->      for (int i = 0; i < p->zero_num; i++) {
->          void *page = p->host + p->zero[i];
-> -        if (ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
-> +        if (!migrate_postcopy() &&
-> +            ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
->              memset(page, 0, multifd_ram_page_size());
->          } else {
->              ramblock_recv_bitmap_set_offset(p->block, p->zero[i]);
-> ===
-> 
-> * Would the above patch help to resolve it?
+The second patch in this series fixes the logic to ensure dev snapshots
+and release candidates don't have an off-by-1 error in setting
+deprecation and removal thresholds - they must predict the next formal
+release version number.
 
-Looks ok, but please add some comments explain why postcopy needs to do it,
-and especially do it during precopy phase.
+The following three patches deal with the docs stuff.
 
-I'd use migrate_postcopy_ram() instead. I wished migrate_dirty_bitmaps()
-has a better name, maybe migrate_postcopy_block()..  I have totally no idea
-who is using the feature, especially when postcopy-ram is off.
+With this series applied all versioned machine types prior to 4.1
+are now removed (hidden). We can delete the code at our leisure.
 
-> 
-> * Another way could be when the page fault occurs during postcopy
-> phase, if we know (from receivedmap) that the faulted page is a
-> zero-page, maybe we could write it locally on the destination to
-> service the page-fault?
+Changed in v2:
 
-I don't think we can know that - receivedmap set doesn't mean it's a zero
-page, but only says it's been received before.  It can also happen e.g. >1
-threads faulted on the same page then the 2nd thread faulted on it may see
-receivedmap set because the 1st thread got faulted already got the fault
-resolved.
+ - Remove hack that temporarily postponed automatic deletion
+   of machine types
+ - Fix docs version info for stable bugfix releases
+
+Daniel P. Berrangé (5):
+  Revert "include/hw: temporarily disable deletion of versioned machine
+    types"
+  include/hw/boards: cope with dev/rc versions in deprecation checks
+  docs/about/deprecated: auto-generate a note for versioned machine
+    types
+  docs/about/removed-features: auto-generate a note for versioned
+    machine types
+  include/hw/boards: add warning about changing deprecation logic
+
+ docs/about/deprecated.rst       |  7 ++++
+ docs/about/removed-features.rst | 10 +++---
+ docs/conf.py                    | 39 +++++++++++++++++++++-
+ include/hw/boards.h             | 58 +++++++++++++++++++++------------
+ 4 files changed, 89 insertions(+), 25 deletions(-)
 
 -- 
-Peter Xu
+2.49.0
 
 
