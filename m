@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB01FC3ABA9
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 08:35:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D659EC3ABAA
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 08:37:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9gQ7-0000kR-VH; Tue, 29 Apr 2025 04:34:28 -0400
+	id 1u9gSv-00025u-Ok; Tue, 29 Apr 2025 04:37:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1u9gQ3-0000jL-Nz
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 04:34:23 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1u9gQ1-0006Zd-Uq
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 04:34:23 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-702599fa7c5so53008387b3.1
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 01:34:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745915659; x=1746520459; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aJdXS513DaZqn2tyTP0u1sBIKi56jeLcaOX/W+hUxrw=;
- b=Ysa1zd3znK/Jyt6wIUJinqTGpVnnmTRJYr6DbyyH+KlZsBCg3hBfawOJ99gD5LW7Qg
- oUxiF94PlKCiD2FXXufdaTg+QyEshg1E6uxqyW6+2op0kW1IRFz7KoOZEMaGunZIPsGr
- k+S0ypKqUISiFvt1IMekcX8nT1FQN/jmTp6VoRJMoU3Ktbl/HhbrlAKNqAiJs6zbcXdZ
- Nzdg9G29vI4Ftx/Z2bVXi2r4jfQIJfXJ2GCTdQnc1PVD7mwUyKTLL5/6TYoJaTWX3u68
- 0NYSKH4VCOmHCiRd8mePzHJYHDelgC5BhlgewgdD/K4LtXHRwX1YLs4dWb022TUEEK+U
- xPMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745915659; x=1746520459;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=aJdXS513DaZqn2tyTP0u1sBIKi56jeLcaOX/W+hUxrw=;
- b=S3oNg0lK0StrU1oUOgRi1y4mizx0/6M0CB8xl24s+E2ybCjzm0Gl4c0n+jWaWC7iDH
- DvRuTh2yPd9wMYv7mRnEjOJdxmafdJtu7BZjIu8HdxeKRJ9eFmgpIbnkrOJosB8DyzmT
- 2yZUWgtX24DSEeKt/2zUhplfhnF0ZXefQ/1vngE38faiHkTeW34473vLgdwKO1uSwaZd
- L8mHfsx+nGsxtlGgWiWEk8K26V5qHjnfumhsEBo+z1Z9GnUzzsKDyum7hnG6wGZzJAMo
- OCosZelB7Jtx/QXHYziJL3KgLiI1fPSkaBWkVeRHB9KWKlnmDc3/cHPI8smz90wK2AEM
- gs5A==
-X-Gm-Message-State: AOJu0YwC8mbVEetrTDNCE79YjOLEZMH+Zriu7whfor0pU+D3V7f6GQca
- UnV6jsOAQgjt6TBPr/pa7S0db77GUXWXAFoiNz9+o+wD5WExmhDFLBS6i4PHGE0UZrHyNr0jvrS
- dE5u9UnHaNZOOZTz+SXbBqYwsEZk27D/o+LwF5eKyYSZFINXU
-X-Gm-Gg: ASbGncuEV5s1hkT/E/pyrOuAdhj6U1HjB4pqAuTSguvYXN4mZMtY35Me1RCX+Xha84y
- 3Z88TCtZPMhnphkJzDKi+DNVgALVeQaLekICjpFu5XHKfEDst7umvhOlCnnqNm6tFOfSgQRLHGu
- TxCi7AV6lwZgvIicf70Fz+WL4=
-X-Google-Smtp-Source: AGHT+IGclq8YL4D4x+kwaClqwQXldYDn9wyb0kyWidhDQM9N5XlQ3pCJUOGqmeiwAdh+u9Y7NuquBJ8EvIA0xj3kuek=
-X-Received: by 2002:a05:690c:f0b:b0:6f9:b144:34e6 with SMTP id
- 00721157ae682-7089ab05c82mr32598527b3.13.1745915659513; Tue, 29 Apr 2025
- 01:34:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u9gSt-00025d-Tw
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 04:37:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1u9gSq-0006zE-Kq
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 04:37:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745915835;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=OeW7VyJRkKYnKn6i4VF0cFJ3WFYd7NfLb4AkqclYkDQ=;
+ b=GiRPVPw53HxBdmRk5yBg86/sT4Cthlrzdvphu2klU7BX/WBPsCuh43DQEQZ0F8aw1RtSW6
+ yetiuhuV1wrzuuI1XgZ6W4ReknYGzoGfDAOXdCL1WPCyKprTSIPC1ZVfk4ZXmUIqTz6uf3
+ LTSg4wYzvU0OAgXy5C6kckeQK1Di+1U=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-2PhVA7vENgWlvi4oQgdhvA-1; Tue,
+ 29 Apr 2025 04:37:11 -0400
+X-MC-Unique: 2PhVA7vENgWlvi4oQgdhvA-1
+X-Mimecast-MFC-AGG-ID: 2PhVA7vENgWlvi4oQgdhvA_1745915830
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AC56A19560B0; Tue, 29 Apr 2025 08:37:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.98])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 627E5180047F; Tue, 29 Apr 2025 08:37:05 +0000 (UTC)
+Date: Tue, 29 Apr 2025 09:37:02 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ richard.henderson@linaro.org, stefanha@redhat.com,
+ Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
+ peter.maydell@linaro.org, thuth@redhat.com, jsnow@redhat.com,
+ philmd@linaro.org, Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ devel@lists.libvirt.org, Victor Toso <victortoso@redhat.com>
+Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
+Message-ID: <aBCPrqggooxF6Z1w@redhat.com>
+References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+ <87a584b69n.fsf@pond.sub.org>
+ <5b21965d-2428-454c-9dd7-266987495abd@linaro.org>
+ <87a583789z.fsf@pond.sub.org>
+ <25bb4527-f145-4d9c-8f91-a962bfa14a6f@linaro.org>
+ <8734drpg4j.fsf@pond.sub.org>
 MIME-Version: 1.0
-References: <tencent_6CC3332A93DC02BE2030AB5BC0E63B10B808@qq.com>
- <CAFEAcA_kekj7L9a1TwQ__WCyhgFd8P+32pB+dQGO570tEoNZMw@mail.gmail.com>
- <tencent_B77227163765667B525580026461F5007805@qq.com>
-In-Reply-To: <tencent_B77227163765667B525580026461F5007805@qq.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 29 Apr 2025 09:34:08 +0100
-X-Gm-Features: ATxdqUGWE771yJGNQE3lxEdhxCbtEGRiJg6B2PcRSESY6es5feJass23I5SE-Oo
-Message-ID: <CAFEAcA9Gpg-2-R0M+GUvD6LRRcDxEaqEh1HPeUTNRP2o_Woo2w@mail.gmail.com>
-Subject: Re: Whether the qemu mps2-an385 model support getchar?
-To: =?UTF-8?B?5bCP6ams6am5?= <1353455048@qq.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8734drpg4j.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,38 +91,166 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 28 Apr 2025 at 18:24, =E5=B0=8F=E9=A9=AC=E9=A9=B9 <1353455048@qq.co=
-m> wrote:
-> Peter Maydell wrote:
->> The UARTs on that board work fine. The error message means your
->> guest code took a fatal exception (i.e. it crashed). You should
->> start by debugging to find out why the crash happened, which
->> might or might not be related to the UARTs specifically.
+On Tue, Apr 29, 2025 at 09:43:24AM +0200, Markus Armbruster wrote:
+> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+> 
+> > After looking at the introspection code, I don't see any major blocker.
+> > We need to keep some of existing "if", as they are based on config-host, 
+> > and should apply.
+> > We can introduce a new "available_if" (or any other name), which 
+> > generates a runtime check when building the schema, or when serializing 
+> > a struct.
+> >
+> > This way, by modifying the .json with:
+> > - if: 'TARGET_I386'
+> > + available_if: 'target_i386()'
+> >
+> > This way, we keep the possibility to have ifdef, and we can expose at 
+> > runtime based on available_if. So we can keep the exact same schema we 
+> > have today per target.
+> 
+> The name is ugly.  Naming is hard.  No need to worry about it right now.
+> 
+> Semantics of having both 'if' and 'available_if'?  To work out an
+> answer, let's consider how to convert conditionals:
+> 
+> * 'if': STRING
+> 
+>   If STRING is a target-specific macro, replace by 'available_if': PRED,
+>   where PRED is the equivalent run-time predicate.
+> 
+>   Else, no change.
+> 
+> * 'if': { 'all': [COND, ...] }
+> 
+>   If COND contains only target-specific macros, replace by
+>   'available_if': { 'all': [PRED, ...] }, where the PRED are the
+>   equivalent run-time predicates.
+> 
+>   If COND contains no target-specific macros, no change.
+> 
+>   What if it contains both?
+> 
+>   - If each COND contains either only target-specific macros, or no
+>     target-specific macros, we could split the target-specific ones off
+>     into an additional 'available_if'.  This requires defining the
+>     semantics of having both 'if' and 'available_if' as "both conditions
+>     must be satisfied".
+> 
+>   - What if this isn't the case?
+> 
+> * 'if' { 'any': [COND, ...] }
+> 
+>   Similar, but to be able to split the COND we need "either condition
+>   must be satisfied."
+> 
+> Even if we can make this work somehow, it would likely be a royal mess
+> to explain in qapi-code-gen.rst.
+> 
+> We currently don't have "mixed" conditionals.  So we could sidestep the
+> problem: you can have either 'if' or 'available_if', but not both.
+> Feels like a cop out to me.
+> 
+> What if we move the "is dynamic" bit from the root of the conditional to
+> its leaves?  So far, the leaves are macro names.  What if we
+> additionally permit a function name?
+> 
+> Function name, not C expression, to not complicate generating code in
+> languages other than C too much.
+> 
+> Ignore the question of syntax for now, i.e. how to decide whether a leaf
+> is a macro or a function name.
 
-> But I just write getchar() in the demo's main_blinky() function
-> without any other order, I just keep the original UART address
-> configuration in demo and annotation other codes, however, the
-> error still occurred. The program can enter the main_blinky()
-> successfully but can't excute getchar().
+I wonder if any of this is worth the pain in practice.....
 
-When I say "guest code" I don't mean just "the three lines
-of code you wrote in the main function", I mean the entire
-guest image:
- * your code
- * the RTOS/support libraries/etc
- * the configuration, e.g. which machine it was built for
 
-Something in there is probably wrong (e.g. perhaps you're
-using an RTOS setup that's configured for the wrong board
-or that thinks the UART is at the wrong address, or perhaps
-the RTOS is trying to use a non-UART device that QEMU
-doesn't emulate). The first step is the same: you need
-to debug the guest image to find out why it's hitting an
-exception.
+Looking at the QAPI schema, we apply TARGET_xxxx conditions either to
+commands, or to structs/enums that are used in args/return of commands.
+We don't conditionalize individual fields, etc.
 
-thanks
--- PMM
+I tried to query our schema with 'jq' (incidentally rather tedious
+because of our JSON-but-not-JSON language[1]). If I select only
+commands we get:
+
+query-cpu-definitions          => currently many arches
+query-cpu-model-expansion      => currently many arches
+query-cpu-model-baseline       => currently s390x only
+query-cpu-model-comparison     => currently s390x only
+query-s390x-cpu-polarization   => inherently s390x only
+query-gic-capabilities         => inherently arm only
+query-sev                      => inherently x86 only
+query-sev-attestation-report   => inherently x86 only
+query-sev-capabilities         => inherently x86 only
+query-sev-launch-measure       => inherently x86 only
+query-sgx                      => inherently x86 only
+query-sgx-capabilities         => inherently x86 only
+rtc-reset-reinjection          => inherently x86 only
+set-cpu-topology               => inherently s390x only
+sev-inject-launch-secret       => inherently x86 only
+xen-event-inject               => currently x86 only
+xen-event-list                 => currently x86 only
+
+The two Xen commands are currently limited to x86, but if we ever extended
+Xen to arm, possibly they would make sense. IOW, conceptually a target
+conditional might be useful in future.
+
+The CPU model commands are the ones where having the target conditions
+visible in schema appears to add value, in that they'll allow a mgmt
+app to detect when we extend any of them to cover new architectures.
+
+
+Libvirt (and other mgmt apps) want to query the schema to see if commands
+exist in the QEMU they're using, before trying to invoke them. To some
+degree this is just a "nice to have" that improves error reporting/detection.
+
+
+For the commands that are inherently arch specific, the mgmt app should
+conceptually already know what architectures these commands apply to.
+These target conditionals provide little (no) value when probing commands
+in the schema.
+
+IOW, if we (for example) have a single binary for x86 and s390, it should
+be harmless if we report that 'query-sev' exists regardless of arch, as
+the mgmt app should none the less already know to only use it with x86.
+
+I don't know if libvirt correctly filters based on architecture in the
+case of SEV/SGX/GIC/RTC when probing & using these features, but if it
+does not, then I'd consider that a pre-existing bug that should be fixed.
+
+Libvirt doesn't use the Xen commands.
+
+For query-cpu-model-comparison/baseline, libvirt already filters its
+usage of these based on s390 arch, so even if x86 reported them I
+believe it won't break libvirt today. If these commands are extended
+to other archs in future, libvirt might want a way to detect this.
+On the flipside it might not be the end of the world if we just expose
+them on all arches and simply have them return an error at runtime
+where non-applicable. 
+
+
+IOW, while the target conditions could theoretically provide value at
+some point in future, it does not look like they do anything /today/
+for libvirt.
+
+Given that I wonder if we shouldn't just ignore the problem, and
+blindly remove all TARGET_nnn conditions from QAPI schema today. Let
+our future selves worry about it should this prove insufficient later.
+
+
+With regards,
+Daniel
+
+[1] To use QAPI JSON with 'jq' you must convert ' to " and
+    strip comments. eg
+    
+      cat *.json | sed -e "s/'/\"/g" -e 's/#.*//' | jq ...expression...
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
