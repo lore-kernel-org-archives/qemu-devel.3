@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A93C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 06:52:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21966C369CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 07:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9epY-0001oR-PK; Tue, 29 Apr 2025 02:52:36 -0400
+	id 1u9fA8-00067s-Vg; Tue, 29 Apr 2025 03:13:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9epI-0001m4-3o
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:52:23 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9fA6-00067b-Q9
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 03:13:50 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9epG-0001f0-E1
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:52:19 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43ce70f9afbso44197785e9.0
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 23:52:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9fA4-0004D6-JU
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 03:13:50 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-39ac9aea656so6520152f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 00:13:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745909536; x=1746514336; darn=nongnu.org;
+ d=linaro.org; s=google; t=1745910824; x=1746515624; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7zbCfy9rllF3cg9v4WoCsWISuDBGnOGV7W1YhT5T/GU=;
- b=Pre1Q13bUn4mcg1scAOSOMc5M5A+6sf5mgFZIUuAUqs2znaLZ3NtIgyAHKCPGFN98/
- jeeL9zw292uB0e7u0I2Vppu/NM+WkQDzG8rZw/UUv50waiTybiiMDnVICmANkCVphee8
- 0tNFgVO0RcX7E9CC+7MDcs1QCVTYUYMA33CccfaI65dp/RAS/jrJBIzjMXLPP+eUtcTf
- DFYXs4MhBCG9f2vYzDvBUMuZpanxt3Gdd6lDnVeCgeWWz0F/r8T6xIrV2ipKBvUPFI9s
- RLRRHeleqmN95SfWDOXALFxPRox0PDps8bYrmRptO9tBFkRNC5DWA1Xv49W39icQaLz8
- qFow==
+ bh=yehZmGTx7uAqJaLE76x+U27DnExTYI6sNqxGDs8Q0r8=;
+ b=Lfpwvoxzu+uRgHB6KqOZfATwiWgqzu90VKTYkxZ10isE7wMa9bO49W550/xemya7dO
+ p5mUaoII3J2N8085vz+T37OL0yP2IDI8UEFNz4yoaWlX9Qp2r8V/p7vYdE8gZl+9WDKS
+ 7UkFY7p6eTelFaCQ01jRT11WmpPzFbWscJA23MUS7aNXAlC4eoObdoUlZRLXlBA536Wn
+ bG6AJ5EIYCPN5mCatGd0taTtbEvMx5pJ92d3WDeWLBApH5GNiiosN0wcX4fNSvweWOkI
+ y3lirMm62PUhSGZHcX8OmQFx2DTxYt1hk9AwVRGOjUS2Leb6o94Lv3ch2Lmr4cy5Q1I9
+ U46w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745909536; x=1746514336;
+ d=1e100.net; s=20230601; t=1745910824; x=1746515624;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7zbCfy9rllF3cg9v4WoCsWISuDBGnOGV7W1YhT5T/GU=;
- b=p8AQNOq1EUxAwWanKVVkY2IH93uKkdg50UHQSt9ksDmhR+548MKevTldbLxpM95JqZ
- xxitYHZ7FE3OpWWGINLCRvQPGP6tCpOW0BY4zH3VrVcAuoke8e8gjp6aLh7CBbR6TLxJ
- gKtZlPOS1Bel9UiZjiZT7RNgp1/2x/xvqcwSMAU4ryVuRv0g3LPOEtpmSCEd7OydG8Gq
- jSAQoIIvf9mqs9UX5iVMemlk0VFgNGZQ4C6Pdgz6rK1w3IIszHa0a09+4pW+2jwxo+zj
- kH+J9eS0Jmz3ocjvtnCq3FjG+s8Hbpg471jNwvBgQuKmtwdkgoDfgJdZZIDxRxUcXAar
- lwEg==
+ bh=yehZmGTx7uAqJaLE76x+U27DnExTYI6sNqxGDs8Q0r8=;
+ b=C6QFn/XAn9zBxqUP1t+G9DKI3vieSrD2mYZSYb9jEulrXuWazr2/D37MmD9ueDKJmW
+ 0BQXTxxmuFhyFbLFl+xjMlNoYWmlU5z9/1jqvTmreq8QrZRO9Vka5ZeXLAV2ChX1Ildg
+ PvOohM/cpKC80FI2ckL5/h/2yWvLeTQ4jsiybYqEUTi8Wx+y0UbjmucXHICuYf9tr+rk
+ GyzNNVihBCDYuvrLibYBB1u8WcAg0mOkw5xUrAd64+fUrWHLje9GNFzMEk1CagnSadIo
+ U7olIMk+5Y/5PEAL1tMXRufHOabFU3UUlJRuYiefLijiCIRNQqCehu6KfNijVOTwF2Db
+ l7lA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXWneMR3gGn7I4tIXlHtCz7u7WP2BgqemJdJ+yTkzEHXG0YOyWt/nDaH6Dhk6rO0J+51phM8zhNu8kr@nongnu.org
-X-Gm-Message-State: AOJu0YyNQRyZu1qAc3G2F2OS6VpgKUR/m8DdQwvagrvGuQ2zXZ1o32t0
- FdxTQP+k3+dyPNhWLjJ9Pdp4E4PVbrnPBB92lmrlcptkfGDN6l+EVo6Xl22bJaw8gBStSLbvf/x
- D
-X-Gm-Gg: ASbGncvrLCQAB4iu6y25WpTSykAwoKbUGvkOVGXu8ItHY6ByNGQjeTAm6PTQha/jegy
- hn5drsZokBKmqdVHf3s437vPCwXBpqJbgWkkVerO+6vEHNgnbxd1Y9IPMrFqiTvKF/xcoX7JADR
- E3zaPm4G1YWe2eYAeZV2P8xkOXEluB416oPfApu9KZFjkspn5t+HNIGyTsXMqegkUb3Oe2gqZZb
- IfYNHKL2HQQCRzXROyr6RpBwxy6y1TnV0NQv8TglcaFE/X20DkcBgOyNFkZEJLgnlcXkgFXaWXd
- GEKJGemb5il7ioO1Yo8jcYmYGZf2KqDwjQ5FzzjjHA7c99Y/9lIcaYBXuyCuynm0FhBH/yg/0Un
- kIefDBvd/
-X-Google-Smtp-Source: AGHT+IHBas2At3FBk9oJecj02XTxpZ0xSMbazDP0+rbZJ1hcJDO4jHh6OI5jwf9yqc11jc6gp/EblA==
-X-Received: by 2002:a05:600c:3b0a:b0:43c:f5fe:5c26 with SMTP id
- 5b1f17b1804b1-441ac84b60emr17991375e9.4.1745909536653; 
- Mon, 28 Apr 2025 23:52:16 -0700 (PDT)
+ AJvYcCX70i62g4e/URXHOP2zrhHGyc+/joxyfIPr4cm1r4rwhTCDM3RJLw1KUX6imLdG3l2stRxsfc1XrRTL@nongnu.org
+X-Gm-Message-State: AOJu0Yz53bKUFO9MLfEjKKUcIR+SiYSE7VgTsiYm1Hqp/uGZWGpncqKm
+ yXfkzz/be8Lrno6FiRK8DbPHTK/uf9pMe+JWudclJTm1tzQVoX+UwLAaB5VNi+4=
+X-Gm-Gg: ASbGncsaKgagBd7TSV+f6WQDbqGo0WeytYo73JqkIec6sReMs/5wBhUO5t5TqokgeEh
+ Hu7QQ6kN939bqvm/Ttb//8oZjtPjXoYpZhNrh/WeS2cTmnU5mCSlQssJALGkMuX2rxweGt9ZTa9
+ rvZGl51aQP+IA1q3hVNiOuTRLfLlVGX021sQDWAyPKcRk8vBjbyBW2/nkgXzI64kLVgjeH0AWMZ
+ +bDuvH6jLB/oIbReyvF3QBhxnPf/dsfzqydXHUldNroW6RQQkGNHJqYK/Cd4Sa39akuZq7UAROZ
+ rnT9G/Pk4AaenCtV/VnDj+TsOL/V1gAR3ydsDCJYTS9V949YBamB7Xt+CegKmnGLCneRpIJf9nG
+ NONIJvYhXlwE02w==
+X-Google-Smtp-Source: AGHT+IF3jDfaiFaE0KiZ5e+08grYBav5IRWcws2yhNnnOdNJAuGgzhyThrFzk7CHNb/gc6OX5zpWeg==
+X-Received: by 2002:a5d:4884:0:b0:39c:141a:6c67 with SMTP id
+ ffacd0b85a97d-3a08949d731mr1735344f8f.45.1745910824440; 
+ Tue, 29 Apr 2025 00:13:44 -0700 (PDT)
 Received: from [192.168.69.169] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-440a531dc6csm144512875e9.24.2025.04.28.23.52.15
+ ffacd0b85a97d-3a073c8c95dsm12856743f8f.3.2025.04.29.00.13.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 23:52:16 -0700 (PDT)
-Message-ID: <aad93be3-1136-40e6-a9cf-29eba433a787@linaro.org>
-Date: Tue, 29 Apr 2025 08:52:15 +0200
+ Tue, 29 Apr 2025 00:13:43 -0700 (PDT)
+Message-ID: <e178a430-7916-4294-b0c3-60343ce6f023@linaro.org>
+Date: Tue, 29 Apr 2025 09:13:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386/hvf: fix a compilation error
-To: Wei Liu <wei.liu@kernel.org>, qemu-devel@nongnu.org
-Cc: Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>, 
- Phil Dennis-Jordan <phil@philjordan.eu>
-References: <aBBws1ikCDfyC0RI@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+Subject: Re: [PATCH 02/13] include/system/hvf: missing vaddr include
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
+ alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, anjo@rev.ng, richard.henderson@linaro.org
+References: <20250429050010.971128-1-pierrick.bouvier@linaro.org>
+ <20250429050010.971128-3-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aBBws1ikCDfyC0RI@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+In-Reply-To: <20250429050010.971128-3-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,43 +104,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/4/25 08:24, Wei Liu wrote:
-> Include exec/target_page.h to fix the following build error.
+Hi Pierrick,
+
+On 29/4/25 06:59, Pierrick Bouvier wrote:
+> On MacOS x86_64:
+> In file included from ../target/i386/hvf/x86_task.c:13:
+> /Users/runner/work/qemu/qemu/include/system/hvf.h:42:5: error: unknown type name 'vaddr'
+>      vaddr pc;
+>      ^
+> /Users/runner/work/qemu/qemu/include/system/hvf.h:43:5: error: unknown type name 'vaddr'
+>      vaddr saved_insn;
+>      ^
+> /Users/runner/work/qemu/qemu/include/system/hvf.h:45:5: error: type name requires a specifier or qualifier
+>      QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
+>      ^
+> /Users/runner/work/qemu/qemu/include/system/hvf.h:45:18: error: a parameter list without types is only allowed in a function definition
+>      QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
+>                   ^
+> /Users/runner/work/qemu/qemu/include/system/hvf.h:45:36: error: expected ';' at end of declaration list
+>      QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
 > 
-> x86_64-softmmu.a.p/target_i386_hvf_hvf.c.o -c ../target/i386/hvf/hvf.c
-> ../target/i386/hvf/hvf.c:139:49: error: use of undeclared identifier 'TARGET_PAGE_SIZE'
->    139 |             uint64_t dirty_page_start = gpa & ~(TARGET_PAGE_SIZE - 1u);
->        |                                                 ^
-> ../target/i386/hvf/hvf.c:141:45: error: use of undeclared identifier 'TARGET_PAGE_SIZE'
->    141 |             hv_vm_protect(dirty_page_start, TARGET_PAGE_SIZE,
->        |                                             ^
-> 
-> Signed-off-by: Wei Liu <wei.liu@kernel.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
-> I suspect 58d00538ceeef990 and its follow-up patches caused this issue but I
-> unfortunately don't have cycles to investigate further.
-
-Yeah sorry we don't have HVF intel covered anymore in our CI so we
-missed this. It is due to commit 9c2ff9cdc9b, see same fix:
-
-https://lore.kernel.org/qemu-devel/20250425174310.70890-1-philmd@linaro.org/
-
-> ---
->   target/i386/hvf/hvf.c | 1 +
+>   include/system/hvf.h | 1 +
 >   1 file changed, 1 insertion(+)
 > 
-> diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-> index 23ebf2550a..99e37a33e5 100644
-> --- a/target/i386/hvf/hvf.c
-> +++ b/target/i386/hvf/hvf.c
-> @@ -76,6 +76,7 @@
->   #include "qemu/main-loop.h"
+> diff --git a/include/system/hvf.h b/include/system/hvf.h
+> index 730f927f034..356fced63e3 100644
+> --- a/include/system/hvf.h
+> +++ b/include/system/hvf.h
+> @@ -15,6 +15,7 @@
+>   
 >   #include "qemu/accel.h"
->   #include "target/i386/cpu.h"
-> +#include "exec/target_page.h"
+>   #include "qom/object.h"
+> +#include "exec/vaddr.h"
 >   
->   static Error *invtsc_mig_blocker;
->   
+>   #ifdef COMPILING_PER_TARGET
+>   #include "cpu.h"
 
+What do you think of these changes instead?
 
+https://lore.kernel.org/qemu-devel/20250403235821.9909-27-philmd@linaro.org/
 
