@@ -4,193 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DB4FC369D5
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 01:11:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D734BC369D5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 01:22:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9ZVS-0000dd-Nl; Mon, 28 Apr 2025 21:11:30 -0400
+	id 1u9ZfG-0002cQ-Mz; Mon, 28 Apr 2025 21:21:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1u9ZVI-0000bu-85
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 21:11:22 -0400
-Received: from esa15.fujitsucc.c3s2.iphmx.com ([68.232.156.107])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1u9ZVF-0003NX-7V
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 21:11:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj1;
- t=1745889077; x=1777425077;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=WvaC1ZTuZ4t9fWcniOWagt3EHAJBSJ2hnG8EWcmBS20=;
- b=ke/hY4WKdfvLbT07Mse1ZAmESAW23slIGCxRVkfu4/Kn8rnJ1IqJlxqo
- 7fvUGwmd6Ouk2tSwLqS1fd98oM7cx8JQ3Zb8x8rUvnKVmStAwpE3VVDoh
- nDqAy7vSjg+GFl4BdXXe0vEZycSXDtEgQ8VRj1kRCUdbgpn/zHFDCe72s
- 2oXQlf6jotWdL9LEmHe2gdaeP7E5S0eXyKEmwtQIlSet1AowdsbcET6Lz
- q+aQBf/ZZ7vKevR0nYykROaHvjvg+yfAibmFjjxiu9058C9t3rBmtUIBs
- hSbO5Cv2PCvCGPJUBtGHg5Y3+Pa40MAsmjVPpLvyTZaY50wxFEhgRXycD A==;
-X-CSE-ConnectionGUID: jr0O2UmcShu3oZ1Vuov/GA==
-X-CSE-MsgGUID: RwNI3uP5SDe7pwb1NAx4QQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11417"; a="154636003"
-X-IronPort-AV: E=Sophos;i="6.15,247,1739804400"; d="scan'208";a="154636003"
-Received: from mail-japanwestazlp17010007.outbound.protection.outlook.com
- (HELO OS0P286CU011.outbound.protection.outlook.com) ([40.93.130.7])
- by ob1.fujitsucc.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Apr 2025 10:11:10 +0900
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=M2vCfalCgbcAavFk7zR4GIdgIHLMv87ZJHlTQBXjsXrKCTN53gXYKofltReO/z5VH2+Amx8E2tiBugbV7wxGfv0K64vehSROKth+bciOjJVb+kzX3MwD7eFxjHLcjZVDrQ6e8zTCkItF/8WskqeIA8+FmNaZXpqD1fephLP9+Y+CVJVh65UYTtOcBJrdDWfnEiFDfybwL7oCVLHzcxAdhWNiuB1WlhJqwudIPJru9NmwnnZVdEQcOBTp9BIyLwI462TOyVwIg/apdCcWUubINkL/yjpnBuRrd5e14Hci+13MJjQq7WfH+ZMbCqIEhkiAShJ+thBdqwIqhANmTV0h7A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WvaC1ZTuZ4t9fWcniOWagt3EHAJBSJ2hnG8EWcmBS20=;
- b=g16BpNPmS4ceBiba2t2dIi4nlaGnd9TV0fJehND0I/FZh7LIQu7zY/wxT3K12SdS3xYunDUKddgLePZt4tXvR64/qxvKLlLLJgHJPffVsOPynst+eL8F+cK58VGG81jTRa9Zj2de9hOc8lHYvAGGASDVgKWvtJ9jeBuuhKryI/qu6tD0ZNHPWvFaUkQFCLATiIy2siqRtmPeW1BL1fnQzg/os3kfElqm/PpzWuCWaPTwgCHOHphyXcDV+4L4EH3DeuwdB/IUbyDa1RWwp75PNwTzNOrA79LBavMtKoRL/1toNusDpxzSVQZI26QsFkFDdqbI11dibQw2USDyF9UqpA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
- dkim=pass header.d=fujitsu.com; arc=none
-Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com (2603:1096:403:6::12)
- by TYCPR01MB6915.jpnprd01.prod.outlook.com (2603:1096:400:ba::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.30; Tue, 29 Apr
- 2025 01:11:03 +0000
-Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com
- ([fe80::d9ba:425a:7044:6377]) by TY1PR01MB1562.jpnprd01.prod.outlook.com
- ([fe80::d9ba:425a:7044:6377%4]) with mapi id 15.20.8678.027; Tue, 29 Apr 2025
- 01:11:02 +0000
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Fan Ni
- <fan.ni@samsung.com>, "linux-cxl@vger.kernel.org"
- <linux-cxl@vger.kernel.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH] hw/pci-bridge/pci_expander_bridge: Fix HDM passthrough
- condition
-Thread-Topic: [PATCH] hw/pci-bridge/pci_expander_bridge: Fix HDM passthrough
- condition
-Thread-Index: AQHbm8o0B9htuAj4zE2+ObG4bZ08ZbOXmoiAgA15+4CAFPsKgA==
-Date: Tue, 29 Apr 2025 01:11:01 +0000
-Message-ID: <06c02571-8abc-4304-81e3-9413c47a0bf4@fujitsu.com>
-References: <20250323080420.935930-1-lizhijian@fujitsu.com>
- <e2933a3b-7600-4f84-bfa9-d7b59dafb939@fujitsu.com>
- <20250415174717.00001509@huawei.com>
-In-Reply-To: <20250415174717.00001509@huawei.com>
-Accept-Language: en-US, zh-CN
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla Thunderbird
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=fujitsu.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TY1PR01MB1562:EE_|TYCPR01MB6915:EE_
-x-ms-office365-filtering-correlation-id: 19a0b34d-1d0e-4152-ca7a-08dd86bab53b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|1580799027|38070700018; 
-x-microsoft-antispam-message-info: =?utf-8?B?ek91UXQ2TXRVUmJnZWlaR2h6SE9udG4wdlljbE5VOHZNdU5VemxEVWM5SjZO?=
- =?utf-8?B?aXEzdzNRdUgvYVhFMGJ6SlJzNE4rbFJPRmJQK2lzMXBpRm5Xbm5IRnlVR0Ew?=
- =?utf-8?B?MmZ3MnZyMlBvZWpDTzdIbmFpNzAxNjdZaEp4OTBxL3RScGY4SFFrM20vOG1G?=
- =?utf-8?B?dDRZR1c2c21KSHZMeklHNXVXMmtQcjVSazB1V3RlcTZTQm1DMno0NmxPM0Zq?=
- =?utf-8?B?VGFKK2NibkJGRiswQVBuZ093T3I3azU1Ri90UWxISFZwbUxjby82RWJJNk8r?=
- =?utf-8?B?cFhjSTA4d3h5TE1oeHlaV3ZJN2xrcmZ6eEYrRklFK2xMWGlnRFBlbDBqc1Fq?=
- =?utf-8?B?WUxOMDRpQmYrSDM3Q0wyMGFGYllYZkVpbmxuSWRuUWU2Y1c5OEVMZ2xiZzFz?=
- =?utf-8?B?N0ZMWG5lenBLWmlPUEM4TldaNm1meTlQVXN3ZEpNLy9zUDhlb2VMb2VrRDRL?=
- =?utf-8?B?NkR4dWpJYVkyWHk0SktSM052QU9yWFpiZG5IVlorVzlQWUMzZEQrcE5adSto?=
- =?utf-8?B?QUY0akxOMFBXNmJjaVlnUGM3S3dQVWp2Z29ZWmhaOGxoL1JiWXI4Qm16bEFz?=
- =?utf-8?B?aWNMYS8xS044a2pYWWRYOXBJcGNya3I5NkNUcWVwN1dYVFJyUHBybytDRklP?=
- =?utf-8?B?UHBoeElZaStWRmtRYVd6dDIrbGpBbGptMDVNaWFOcG9RVHJDTG5LRFJ1SEdB?=
- =?utf-8?B?UjRMTnhGM0g2elRoUmZvUTZlRXlMNWVvZHNpb1ViMlhOb01tYnFMenViN2tO?=
- =?utf-8?B?QWl4akFwbzFtbFgyeHFrWDgwcndMdHNCbWRhcUhGdG1tNEM0Y1hVZ0J3ek1B?=
- =?utf-8?B?VzBpUjZBdXpDNWZMeUxxaHUrN2VyZHFyVm1mdmYrYXR2MDJiTTBMeXlOSzhO?=
- =?utf-8?B?NG84Y3B5ODBFaFJrSXBwYmtCMlY4UDZZVDRuTHd1aHNpdS8xaGJJcGFyNlI1?=
- =?utf-8?B?cUw1MjhTWVBxSUNPV1ZwaGtEUHVJUXpKL2VZNUJ6RzlnRzZ4QkZhbmgvUEZM?=
- =?utf-8?B?NlN6RC9wb2ZqaHlzK25QdHJ4bVY4bDU4c2ducFpMOFYyZVBtUzRRNm1odlZv?=
- =?utf-8?B?dzJvWTQ4THVHZGQydDdMY1EvRHpVQTdsQkkxVENkVnFXcHB5TEgyVzNWV2JZ?=
- =?utf-8?B?bDAyL2gvblhHbG12Umg1c01mTDJyMlpmdHVNa1FLUzdGYkltNXBDVEZScURo?=
- =?utf-8?B?czdzd1VMWVAvMnlrbkxvL2kyWG1hN0JPM2VLbThSOGFGaWZKZlIrUWRVZW81?=
- =?utf-8?B?U2lWNnR4eGM4WSt6WmVwNGszb0JYb3dDNm1aR3hIekIwVmNoWm5ubFNlandS?=
- =?utf-8?B?R1VZd2RhNVJaRTVwdG0waVF0T3ZCMzlsR1IrOGtIcDlSalhoN3RvYUkrU0xv?=
- =?utf-8?B?c2ZxWURZK1EydVVOaG9pc2hiK1pCYzFBcUF5bm1MUko0K2pGRU9MQUlQTjNL?=
- =?utf-8?B?d3NaWWlqeE1LMjZUSEplaEpxdG5qc2dkbktKaTBlRTJjRlpIQ2NvN3NueDVG?=
- =?utf-8?B?S000RmV5d3dUVDNoK2htK2tvWVV6QUZ5Q0hUeThNOHF3bGV6ZWdvQW9mbVpr?=
- =?utf-8?B?WnhEVnhzaFh5RE5vQU9IUVZHajhvVmVnaUdxRWVSSi9FQzNWcHlpb1AxWXYy?=
- =?utf-8?B?K0dRdFE2OEI5S09ZM203SlNacThKYTJpYTdLUHFnc2lrZGxVNlhtQm96a0Z5?=
- =?utf-8?B?MHBwUkE0WmloQTJhL2w1NDN6SDZWMHAreWhEN0JRZTZkRlo1aVJsWmZ1V2pE?=
- =?utf-8?B?Yld3N0QzNUFJRUpkUnVJT284N212NUFsa3g1RGo1cWoxL3VxSlJpTHZkRXA2?=
- =?utf-8?B?WHBHL3d5bDlhdldXbFphNS9sMjRLaFV6Tm9VUDhVa3V6YVZNdUlyY1hxT1Ez?=
- =?utf-8?B?OHJqa2ZKZldnZmtBZ3ZMQ2tZbTM2ang4b0lCdjF6ZVpxOFBHcm54ZWlyYlps?=
- =?utf-8?B?dCtSTFdjdSswcEhoTTdiemJrUTdLWGlNZDBKUUFVRkZSc0d5OWhtTFVRYzJI?=
- =?utf-8?B?ZFpPaGRFZ2lvTXFKbjZlMkg4MlN0TlRXdURNQm1MSGR5ZEhiUWIxU1M2dUZo?=
- =?utf-8?Q?X/gRgr?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:TY1PR01MB1562.jpnprd01.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(1580799027)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?L1VWK2dZL1FTYVBua3FhTC9jckdzTHR3Z3ptcTR1Sm44dG9GbkdERmVGRWdX?=
- =?utf-8?B?ZFR6RERnRFN5RGxha0FOb3Y5SG45NlRCMDdYZVVveU82SGxremdEcUYrcTB1?=
- =?utf-8?B?TDZmUjFzUjZFMXZhcDFLeGVFTlpIVWJMV014Y2laVk9nMVZvZ1dvYlduejJB?=
- =?utf-8?B?UE1CSDZ2Y2lKVlF2UVYyWUNUWEZxTG1Hclg5ZUdUeDh2MjB3VWxUR0JUM0Yr?=
- =?utf-8?B?WGo3ZHEyeEI5Vy9zZ0Eyb0Rpd3A3RHJWK1lEbVFxaGpxNTdvWjJlK2Z5S0Fu?=
- =?utf-8?B?bGc2dEpwanZoT25GdUpERnVQYXRROS9NQTM2dFUyM0VtTE0vWm9LVlZNVVNH?=
- =?utf-8?B?ZS9uSnNyUlpWcTY3RVp0a3FqSXhGK1Ezc2RHZkFMN2FsTWtvbWVQS3gyYy9r?=
- =?utf-8?B?Z2VPeU5uampDOW9JdWk3dzdNSkdweXN1QXJmY0N4a2ZBTittakwyd3JPcXls?=
- =?utf-8?B?WVBGRHVOWElkRldYWVVqN2ZZYWswcGdFSG5qZ3k0eitOUDdqSjlCQ1ZRYnRx?=
- =?utf-8?B?VkU0czIyQW55dCs3bUtuZXA3T1lnSWdnUHR6Nm9kNlV1dE90Q2J0SDQ4V2hn?=
- =?utf-8?B?Q254SE1XV0VzaG9haEZrMytKeEo2em5yZnB6YUJHRlgwZFV5U2ZWbWZRNGNh?=
- =?utf-8?B?enVoMGhLN2dLc0M3dXlxbnY2R1dSY1FzOFlVRFpSSnVlK0FNQ3NYTnlYbmVK?=
- =?utf-8?B?b1NkTXhrV0hmWU55ZmRveFJReVpBSU5LVjJqZTcrMWtKeVpNQ2QyK2psVTlk?=
- =?utf-8?B?RHVndVYzcXpCdjNudmRkZmZFYkdaMlpQZVNtZjExd0xmVmtzT1U3dkxaZUVo?=
- =?utf-8?B?UTVLK0kyLzd1NTZobDFqMFpQaFBTQm8vd1EwdnJ6b0VFUHJnd1QvWjZXdCtW?=
- =?utf-8?B?c1RhQnBLQ0NhSHZDaXQ5QzJUL1RqQUNRUy8xRThnMDRQRXovWnFOZFphUHhM?=
- =?utf-8?B?Y1h5QWs0dGRCYlcwLzk4YkZkdWVoNVl6QVJYeVpDNnlJUUlrUzdNdThDRVZy?=
- =?utf-8?B?VW9tbDNJRmhaMUNSSnNtTlJxK2N3YWUyeDk3cDhxM0F3elBTWm52Sm16dWVY?=
- =?utf-8?B?MzZrT05NcFgwdGs0OHByOHZVY0d4TDY2S1VDNTRJdEkxWXZYMUR0TzVXTU5U?=
- =?utf-8?B?UEMyM0pYYXN5REJpTE9jRDgyWTlNR3dMZ0srSDNpSDdEQVZaclE1cEV4ZjBY?=
- =?utf-8?B?SE5XV3lRM2ZBeTdhYXhBaDNJYTgxeGoxRCtiTHpsR2hmUVZmZXljeTY4bWh2?=
- =?utf-8?B?VzBrSGYzcUNvV0dSejZTek1peTc1MWJFSWE2THphNTNvNUJZTXFUZHRsa0hB?=
- =?utf-8?B?a0VKWGtBUXRNMWY1TXdoS3paUWdVTHY0NExDY2MzRUNQMHJEMTdWMDFrVDBm?=
- =?utf-8?B?THZVSUFvbzdXd1R4b2NHcjBaaU5TWU8wUEtWV2tjRENQVHpLLzBaZTdUbWZV?=
- =?utf-8?B?YUJJY2swRE1Qc2dYeFNRa1hScE0zS09SUExwZTd1cC9uSlV3NjJyQnlTSm9x?=
- =?utf-8?B?M2FLYlhCbmpLOTJUTjdUc2tTeTAwaFQ0TzRudU9RWklqNEEvajQ0dm9XTGJM?=
- =?utf-8?B?OVhzb21TOFdRMXZkODhrNUpuMzFoVWF3clBQM2FRd3V1b0tXOXhyUi9LL0tV?=
- =?utf-8?B?K3ByKzR4MWQ4dSs1UDJCVlVKTHc0QmllWTh1WEZQQ2Q2MHVGVFFYVmFETmQ3?=
- =?utf-8?B?NzNnVVhUd21GOTRBWk52RmlNeit5Rkx2eHJ6OXdWUmRCelRsWlZzWHoxa01y?=
- =?utf-8?B?bXBaajFMTmdEOWEyVEdDTDZvNnNORWczL0Exd1h3a3FjbXFsSC9oZThBcytw?=
- =?utf-8?B?d29URmRrWStXTUtIbTNDTzFnYnlQOFpwZGREcm5ROVBhelJ6Sm1xb2ZYY3Ft?=
- =?utf-8?B?QldkN2lTWTg1QlN5WWYzWDM5NWxpSkMxZEphb2JaNnRUSWlQVlMyV2kyczNI?=
- =?utf-8?B?VW5IWkZlOG12eG9CTHVySEVjSjdocVVyMzJFWFFsQjdlWWNSZVVLVTk2UHcy?=
- =?utf-8?B?Q1dKRkZLcWxSMExPWHZWTE90WGhYdjQ2NExmTTAzSS96czltenFtaGxDZ1ZD?=
- =?utf-8?B?QjlOZE5RQk5YOVhxbjlsVk5PR0hsdmNSRTFFQjkzeGV6VmZkRUVsMmFRVisx?=
- =?utf-8?B?RlRCNGZKamdtZ25LWGJ1NTFqemJNMDc2ZkN0V2thS255dWtDczVaRXQzSmlr?=
- =?utf-8?B?dGc9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <ECD92C9FE7989248B7DFE448ACE25801@jpnprd01.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u9ZfE-0002cB-DV
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 21:21:36 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1u9ZfB-0004R3-62
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 21:21:35 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2295d78b45cso77943285ad.0
+ for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 18:21:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745889691; x=1746494491; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2Wex76+OGQ2MuLme+ILG+crQCYN6TZuDT1DGM92BNVg=;
+ b=bE5J50TPRwUD3UlQUF0c2ulmc1Y4EOHzr8MCySQgb7YePdbgIqNDvzfyy0NzKAGeLU
+ krDqnn4YrraMU8n8epF7+aFhNvWh9YKjkzV1gRkWfh1gEAHvmVd+6wnaP1iPia7hW300
+ hNk0Tln9IdEjgrfWECGXtj5ZSwRQZ5WKEEqOZRk8yoZHb0uUN7EKMKRwk1D20X144k+2
+ x1fy5ZdPrGghOP1whZGaxOBSNHETIDKfVHFNUwBmDtvjXD5qzmEQiEh66CJYHJJZTPKr
+ bFNXLIjoev2gFHJkg+cLojZt6cvodBeCPRtwvfA3WoM+hz8DyBy2YJwiPLFOyW7jADAf
+ sOGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745889691; x=1746494491;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2Wex76+OGQ2MuLme+ILG+crQCYN6TZuDT1DGM92BNVg=;
+ b=qEZZit9f5/6IciLruYBkGjUoab0Y8bzg7OihWPyIHflEhy0dclqWV5HJNWW/zfHiAE
+ Q4yitGAHZtNtBltpOXaOMkl1lmvYjEHersPCGEgwq//7a61FiF1lwn1AxSsWL7oYLwLl
+ UVnUr2KkIp8V0+LCsWf6lIqjLSMzWfo1pPE1zYJm/tIVAorc6g0FpRXjQ61YD0O81fIj
+ E/PRGB1Q5mKqxyesDsv3L9SxY8jLkw5bl+Rxd+aXLaFWrbVO0wW9fGKrVzUv5pms1tbQ
+ NbhIy6B1r2WFeazReGDydEV13yMbkbFzuwNkzyFsh5MuxxehkDgem6x7aFbL6OFTQmKi
+ vFow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzKesibzBVfnXVAZjcF6NXqC139U7vHgJeC/Wi3x0HRMfyHI8QfpB25Wr/gfk2cFg4yTmzDkGqw4E9@nongnu.org
+X-Gm-Message-State: AOJu0Yxbwrux/fQ8J24QoYxJ7v/xFp3NkVM7PSy5Y5LW2BBZf2jXEi7E
+ KJvWvIr6JQ6DqPHlDh+4JboIxRZpgqL6NnyaPwcIpEWmFwqcLD3NQpvXHIHeH9Y=
+X-Gm-Gg: ASbGnctG/f28KCwMWd3GhgNbrHvypF6BAOLCjCYlvhrd0S5q95ZwnwQbJU67tEASj3H
+ QxMVoK5rNWHiA64+O74tVMgfZfmmPidrLRhfTAKH5oErwkc3OZBEh5BI7lA+IiNPvVXhb6LmIrh
+ fGWhitgVMkU/xmVEPFylpCHmcQpCWXncDIde/ntIpQc7qbfBCudfqPTIo8Pxn47aoMovINAx4jt
+ 8bbCNm99zXQdPGWX0o1DGWHjL0yKz9DmynNKckyK03nrqloN8Z1z9yO/IWcPMyrVMZR3c3s9Yc/
+ 9Qcel4GcRnTBlc9B0Xn7cLts5yjIGpUy34Cp1qI9OEv45ON5ZFzCXQ==
+X-Google-Smtp-Source: AGHT+IHA7Tyk2iBDEt4kV79AiKgEW/7nZ6AmIFM6HqVRRq0armpa83MnAHKScdFh0kq/JWvAnpdYRg==
+X-Received: by 2002:a17:903:2405:b0:21f:85ee:f2df with SMTP id
+ d9443c01a7336-22dc6a0474dmr177922645ad.15.1745889691062; 
+ Mon, 28 Apr 2025 18:21:31 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b15f76f580asm6532751a12.2.2025.04.28.18.21.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Apr 2025 18:21:30 -0700 (PDT)
+Message-ID: <afe9878a-1710-4994-81ee-f308f5be2900@linaro.org>
+Date: Mon, 28 Apr 2025 18:21:29 -0700
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: N/oOBidl4jDPmMZvBZI2LdVqNrc1wZzFSQu+AkVRw9ijwRTHQDRLq5SFKbjD9kGlzcCmNLhUqSPc7MzFAJbtbAPy7qa5dMFwjp0OErDOiqyDnSkLyx9wODdo1EgQW68q2ftbGn1RGw0nBQXSbGmfVfimAZltLRZwvOmfrPgNZflYtBPGD6nXMyCiniIxdUSbriJSWzPiHcFE6+fTinm7sAQe3nRtD88l1b8Pbw/W8PkFbq8tg5Vu4xZd4N0zjAm8xWCoxaJjuH6n8KFXkQ64he+r43GLF0sQEdSy4gHfsSVn8HAUX9F6SDXBINHThUOj52ygSRN05WlfUV/PaNRSulOVEjqhhPF+WTSDeW/+F2m4Gb2rEA2hw2OlDs5dsvKFg1nbxEbDCuLIlG4GzW6lVAckf6mTr7pQhdQABXgmXxN44eA7tp7Y/qQHBFXTU5FamO4GTgzMWYcs76yhcQ+peD0wT9SxrqBieXNceQDDohl9z2bZKAcBHUKm7+OGnfiy0Baihv15UDjVCL0NCEiOzExqa0hBOmNzs7hHAK0mBfAAYrzkNOftSOGGMJHYMuBlQwJQlU1BVXMPNc1WPucYaQLJLUmMJ0eAw3+axYgojUAbdQ8KGV5q8psbq6wFgo8O
-X-OriginatorOrg: fujitsu.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TY1PR01MB1562.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 19a0b34d-1d0e-4152-ca7a-08dd86bab53b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Apr 2025 01:11:01.8836 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 1OdfSwpD7KAGz3YevQFNYnbZ0+nITKuyxk/4JiwCFfhUftj9rkloSP8iO5PcalCXoAhGJqGpqUmomHSwI5WVlw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCPR01MB6915
-Received-SPF: pass client-ip=68.232.156.107;
- envelope-from=lizhijian@fujitsu.com; helo=esa15.fujitsucc.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v5 08/21] hw/arm: Add DEFINE_MACHINE_[ARM_]AARCH64()
+ macros
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, Anton Johansson <anjo@rev.ng>
+References: <20250424222112.36194-1-philmd@linaro.org>
+ <20250424222112.36194-9-philmd@linaro.org>
+ <1332b395-1e3e-2be7-83f2-15f2d89b0449@eik.bme.hu>
+ <51f3a96b-9c7a-4242-a822-145d68e068d9@linaro.org>
+ <f84a52af-aecf-5235-7971-689580ffb71f@eik.bme.hu>
+ <29f67d66-9eef-493a-9d96-99240ca25a14@linaro.org>
+ <75b7e110-9293-32b2-64c8-26eabaace8b7@eik.bme.hu>
+ <033d94c7-ac74-4a44-87ae-aeac964afd10@linaro.org>
+ <c4479348-00b2-4604-adad-e8d8911c75a6@linaro.org>
+ <21e6cbae-54fe-2d11-307f-2fe36a08c97b@eik.bme.hu>
+ <6d7f8b57-b8d4-49cd-b0fd-72e5428bc94a@linaro.org>
+ <29bf183a-957b-6c03-be66-bee38f106fc5@eik.bme.hu>
+ <b711cddb-0a68-4dba-a492-4c51683eb116@linaro.org>
+ <d454c53d-dba3-e665-39c6-267bbbab8aed@eik.bme.hu>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <d454c53d-dba3-e665-39c6-267bbbab8aed@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -203,60 +115,98 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-From:  "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgSm9uYXRoYW4sDQoNCg0KSSBhcG9sb2dpemUgZm9yIHRoZSBkZWxheWVkIHJlc3BvbnNlOyBJ
-IGhhdmUganVzdCByZXR1cm5lZCBmcm9tIHZhY2F0aW9uLg0KDQoNCk9uIDE2LzA0LzIwMjUgMDA6
-NDcsIEpvbmF0aGFuIENhbWVyb24gd3JvdGU6DQo+IE9uIE1vbiwgNyBBcHIgMjAyNSAwMjo1OToy
-MCArMDAwMA0KPiAiWmhpamlhbiBMaSAoRnVqaXRzdSkiIDxsaXpoaWppYW5AZnVqaXRzdS5jb20+
-IHdyb3RlOg0KPiANCj4+IFBpbmcNCj4gDQo+IFNvcnJ5LCBJIHdyb3RlIGhhbGYgYSByZXBseSBi
-dXQgdGhlbiBsb3N0IGl0IGJlZm9yZSBzZW5kaW5nDQo+IC0gd2FzIHN0aWxsIGluIG15IGRyYWZ0
-cyA6KA0KPiANCj4+DQo+PiBPbmx5IGlmIChkc3BfY291bnQ9PTEgJiYgaGRtX2Zvcl9wYXNzdGhy
-b3VnaD09dHJ1ZSksIHRoZSBRRU1VIHNob3VsZG4ndCBpbXBsZW1lbnQNCj4+IHRoZSBIRE0gZGVj
-b2RkZXIgZm9yIHRoZSBIb3N0LWJyaWRnZS4NCj4gDQo+IEhETSBmb3IgcGFzcyB0aHJvdWdoIG1l
-YW5zIHRoYXQgd2UgZG8gaGF2ZSBkZWNvZGVycyBldmVuIGZvciBwYXNzIHRocm91Z2gNCj4gbm90
-IHRoYXQgd2UgZG8gbm90LiAgVGhlIG5hbWUgY291bGQgYmUgYmV0dGVyIGFuZCB0aGUgY29kZSBm
-bG93DQo+IHBlcmhhcHMgc2ltcGxlci4NCg0KSSBnb3QgeW91LCBJIGRpZCBhZG1pdCB0aGF0IEkg
-bWlzdW5kZXJzdG9vZCBpdCBiZWZvcmUuDQp0aGUgd29yZCAqaGRtKiBpbiBoZG1fZm9yX3Bhc3N0
-aHJvdWdoIG1lYW5zICJIb3N0LW1hbmFnZWQgRGV2aWNlIE1lbW9yeSIgd2hpY2ggd2FzIG1pc3Np
-bmcgKkRlY29kZXJzKg0KU28gaXQgdGhvdWdoIG9mIGl0IHdhcyBhbiBvcHRpb24gdG8gZW5hYmxl
-IHRoZSBwYXNzIHRocm91Z2ggZmVhdHVyZQ0KDQpQZXIgQ1hMIFNQRUMgIjguMi40LjIwIENYTCBI
-RE0gRGVjb2RlciBDYXBhYmlsaXR5IFN0cnVjdHVyZSIsDQpJIHJlYWQgaXQgYXMgInplcm8gY2Fw
-YWJpbGl0eSBzdHJ1Y3R1cmUgaW5zdGFuY2UgaXMgb3B0aW9uYWwsIHNvIGl0IHNob3VsZCBkaXNh
-YmxlIGJ5IGRlZmF1bHQiLA0Kd2hpbGUgdGhlIFFFTVUgaW1wbGVtZW50ZWQgaXQgYXMgZW5hYmxl
-ZCBieSBkZWZhdWx0Lg0KDQpUaGlzIGFubm95ZWQgbWUgd2hlbiBJIHRyaWVkIHRvIGltcGxlbWVu
-dCBwcm92aXNpb25pbmcgSERNIGRlY29kZXJzKHRoZSBndWVzdCB3aWxsIGNvbnN0cnVjdA0KQ1hM
-IHJlZ2lvbiBieSB0aGVtKSBpbiBRRU1VLg0KDQpUaGFua3MNClpoaWppYW4NCg0KDQo+IA0KPj4N
-Cj4+IEJ1dCBwcmV2aW91cyBjb2RlIGRpZG4ndCBmb2xsb3cgdGhpcy4NCj4gDQo+PiBUaGFua3MN
-Cj4+IFpoaWppYW4NCj4+DQo+PiBPbiAyMy8wMy8yMDI1IDE2OjA0LCBMaSBaaGlqaWFuIHdyb3Rl
-Og0KPj4+IFJldmVyc2UgdGhlIGxvZ2ljYWwgY29uZGl0aW9uIGZvciBIRE0gcGFzc3Rocm91Z2gg
-c3VwcG9ydCBpbg0KPj4+IHBjaV9leHBhbmRlcl9icmlkZ2UuIFRoaXMgcGF0Y2ggZW5zdXJlcyB0
-aGUgSERNIHBhc3N0aHJvdWdoIGNvbmRpdGlvbg0KPj4+IGlzIGV2YWx1YXRlZCBvbmx5IHdoZW4g
-aGRtX2Zvcl9wYXNzdGhyb3VnaCBpcyBzZXQgdG8gdHJ1ZSwgYWxpZ25pbmcNCj4+PiBiZWhhdmlv
-ciB3aXRoIGludGVuZGVkIHNlbWFudGljcyBhbmQgY29tbWVudHMuDQo+Pj4NCj4+PiBTaWduZWQt
-b2ZmLWJ5OiBMaSBaaGlqaWFuIDxsaXpoaWppYW5AZnVqaXRzdS5jb20+DQo+Pj4gLS0tDQo+Pj4N
-Cj4+PiBUaGlzIGNoYW5nZSBjb3JyZWN0cyB3aGF0IGFwcGVhcnMgdG8gYmUgYSBwcmV2aW91cyBt
-aXN0YWtlIGluIGxvZ2ljDQo+Pj4gcmVnYXJkaW5nIEhETSBwYXNzdGhyb3VnaCBjb25kaXRpb25z
-Lg0KPj4+IC0tLQ0KPj4+ICAgIGh3L3BjaS1icmlkZ2UvcGNpX2V4cGFuZGVyX2JyaWRnZS5jIHwg
-MiArLQ0KPj4+ICAgIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigt
-KQ0KPj4+DQo+Pj4gZGlmZiAtLWdpdCBhL2h3L3BjaS1icmlkZ2UvcGNpX2V4cGFuZGVyX2JyaWRn
-ZS5jIGIvaHcvcGNpLWJyaWRnZS9wY2lfZXhwYW5kZXJfYnJpZGdlLmMNCj4+PiBpbmRleCAzMzk2
-YWI0YmRkLi4yNWY4OTIyZDc2IDEwMDY0NA0KPj4+IC0tLSBhL2h3L3BjaS1icmlkZ2UvcGNpX2V4
-cGFuZGVyX2JyaWRnZS5jDQo+Pj4gKysrIGIvaHcvcGNpLWJyaWRnZS9wY2lfZXhwYW5kZXJfYnJp
-ZGdlLmMNCj4+PiBAQCAtMzA3LDcgKzMwNyw3IEBAIHN0YXRpYyB2b2lkIHB4Yl9jeGxfZGV2X3Jl
-c2V0KERldmljZVN0YXRlICpkZXYpDQo+Pj4gICAgICAgICAqIFRoZSBDWEwgc3BlY2lmaWNhdGlv
-biBhbGxvd3MgZm9yIGhvc3QgYnJpZGdlcyB3aXRoIG5vIEhETSBkZWNvZGVycw0KPj4+ICAgICAg
-ICAgKiBpZiB0aGV5IG9ubHkgaGF2ZSBhIHNpbmdsZSByb290IHBvcnQuDQo+Pj4gICAgICAgICAq
-Lw0KPj4+IC0gICAgaWYgKCFQWEJfQ1hMX0RFVihkZXYpLT5oZG1fZm9yX3Bhc3N0aHJvdWdoKSB7
-DQo+IA0KPiBUaGlzIG1ha2VzIHVzIG9ubHkgY2hlY2sgdGhlIG51bWJlciBvZiBwb3J0cyBpZiB3
-ZSBhcmUgbm90DQo+IHByb3ZpZGluZyBoZG0gZGVjb2RlcnMgZm9yIHBhc3N0aHJvdWdoIHBvcnRz
-Lg0KPiANCj4gSWYgd2UgYXJlIHByb3ZpZGluZyBIRE0gRGVjb2RlcnMgYW55d2F5IHdlIGRvbid0
-IGNhcmUgaG93IG1hbnkNCj4gcG9ydHMgdGhlcmUgYXJlIHNvIHRoZSAwIHZhbHVlIGlzIGZpbmUu
-DQo+IA0KPj4+ICsgICAgaWYgKFBYQl9DWExfREVWKGRldiktPmhkbV9mb3JfcGFzc3Rocm91Z2gp
-IHsNCj4+PiAgICAgICAgICAgIGRzcF9jb3VudCA9IHBjaWVfY291bnRfZHNfcG9ydHMoaGItPmJ1
-cyk7DQo+Pj4gICAgICAgIH0NCj4+PiAgICAgICAgLyogSW5pdGlhbCByZXNldCB3aWxsIGhhdmUg
-MCBkc3Agc28gd2FpdCB1bnRpbCA+IDAgKg0KPiA=
+On 4/28/25 6:10 PM, BALATON Zoltan wrote:
+> On Mon, 28 Apr 2025, Pierrick Bouvier wrote:
+>> On 4/28/25 11:44 AM, BALATON Zoltan wrote:
+>>> On Mon, 28 Apr 2025, Pierrick Bouvier wrote:
+>>>> On 4/28/25 3:31 AM, BALATON Zoltan wrote:
+>>>>> Since you are touching the lines using DEFINE_MACHINE it's a good
+>>>>> opportunity to change the macro to be more general to be able to keep
+>>>>> using it instead of replacing it with the boiler plate it's supposed to
+>>>>> hide. Adding one or two more parameters to the macro is not a big change
+>>>>> so I don't see why you don't want to do it. This could be addressed later
+>>>>> to revert to use the macro again but in practice it will not be addressed
+>>>>> because everybody will be busy doing other things and doing that now
+>>>>> would
+>>>>> prevent some churn. I too, don't like doing unrelated clean up which is
+>>>>> not the main goal, but if it's not much more work then it's not
+>>>>> unreasonable to do it. I only oppose to that if it's a lot of work so I
+>>>>> would not ask such change but what I asked is not unrelated and quite
+>>>>> simple change.
+>>>>>
+>>>>> That said, I can't stop you so if you still don't want to do it now then
+>>>>> you can move on. I don't care that much as long as you stay within
+>>>>> hw/arm,
+>>>>> but will raise my concern again when you submit a similar patch that
+>>>>> touches parts I care more about. If others don't think it's a problem and
+>>>>> not bothered by the boiler plate code then it's not so important but
+>>>>> otherwise I think I have a valid point. I remember when I started to get
+>>>>> to know QEMU it was quite difficult to wade through all the QOM boiler
+>>>>> plate just to see what is related to the actual functionality. These
+>>>>> macros help to make code more readable and accessible for new people.
+>>>>
+>>>> Having been through that recently, I agree with you that it can be hard to
+>>>> follow at first. Luckily, we have perfect compiler based completion for
+>>>> all
+>>>> editors those days (I sincerely hope everyone spent 2 hours configuring
+>>>> this
+>>>> on their own favorite one), and it's easy to see where things are defined
+>>>> and
+>>>> used, even when code is cryptic.
+>>>
+>>> It's not about typing but reading it. The verbose struct definitions are
+>>> hard to follow and makes board code look more complex than it should be.
+>>>
+>>>> That said, pushing to someone adding a new field the responsibility of
+>>>> cleaning up the whole thing is not a fair request. You can't expect your
+>>>> friends to clean your shared house because they brought a cake for dinner.
+>>>
+>>> I tend to get such requests to clean up unrelated things whenever I try to
+>>> change anything in PPC Mac emulation which I also complain about and think
+>>> is not reasonable to ask. But I did not ask for unrelated cleanup here and
+>>> changing the patch so you don't do this:
+>>>
+>>> -DEFINE_MACHINE("none", machine_none_machine_init)
+>>> +static const TypeInfo null_machine_types[] = {
+>>> +    {
+>>> +        .name           = MACHINE_TYPE_NAME("none"),
+>>> +        .parent         = TYPE_MACHINE,
+>>> +        .class_init     = null_machine_class_init,
+>>> +    },
+>>> +};
+>>> +
+>>> +DEFINE_TYPES(null_machine_types)
+>>>
+>>> but instead add the .interfaces field to a variant of DEFINE_MACHINE once
+>>> and keep the one line definition is not something unreasonable to ask. I
+>>> think you can ask your friends to not make a mess in the shared house
+>>> while having a party or at least clean up after that. Adding one more
+>>> parameter to the macro is also simple to do so I don't get why you're so
+>>> opposed to this.
+>>>
+>>
+>> Maybe there is a misunderstanding on my side, but it seems that what you
+>> asked is exactly patch 7, which introduce DEFINE_MACHINE_WITH_INTERFACES.
+> 
+> Almost but not quite. I don't know why I can't get this through to you. If
+> you compare patch 7 to how DO_OBJECT_DEFINE_TYPE_EXTENDED is defined do
+> you notice the difference in how .interfaces is set? With the same way as
+> in DO_OBJECT_DEFINE_TYPE_EXTENDED you don't need separate InterfaceInfo
+> arm_aarch64_machine_interfaces[] definitions or different macros in the
+> next patch just list the needed interfaces in the machine definitions.
+>
+
+I'm sorry, I don't understand what you want exactly, despite asking 
+several times.
+I think it would be more clear if you could apply this series on your 
+side, write a small patch showing *exactly* what you expect, and 
+applying this to one of the board concerned. Then, we can do the change 
+you request.
+
+> Regards,
+> BALATON Zoltan
+
 
