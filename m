@@ -4,88 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB66C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 13:01:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C952C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 13:05:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9kXt-0002V1-0W; Tue, 29 Apr 2025 08:58:45 -0400
+	id 1u9ke2-0004LT-GV; Tue, 29 Apr 2025 09:05:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u9kXq-0002Ty-Ri
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 08:58:42 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u9kXm-0000BH-91
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 08:58:41 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-af5085f7861so4384342a12.3
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 05:58:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1745931516; x=1746536316; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IpsnEUwn4rtW5yM+6A4MeXd/5suwXE07WSJlApopJRI=;
- b=n1Rse9OoT6zjHtq1zS1TtGt0qkC/boWVyKm+u4PKaC7+N4RvUb7jEfjFOiNLRUhHfj
- Nc5yNNPYQDk4DdB5ZVqp2RvS2DL5ceJiQ6/oWPh4YzF441dLugxA/YpBT6GyTYMhilJ5
- NOei4BIJymWtRAeXz5nol7et66uOBNLvRgOVcF9NMxmnXfORcmR/JCoy1Rj9vmr2aATD
- vT1OzzYR9JVHzNbW1KAaOPrLs3vcfOirnXBeO/juo6pHfiZvSBM/oBOQz0mdoc1COqWR
- byV6dVsw5xfGGqpxwJE1cu+0DsyvG8YzXtsWbO5XO7eOnT218tdqm3wfh1SA0/M+VEE6
- Do6A==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9kdw-0004Jf-VV
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 09:05:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9kds-0001Rh-V6
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 09:04:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1745931892;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1nrCjU7uUSDJ+lWC4154feQNw/X8mcWdAxgYV/tyL5M=;
+ b=J45CWTFUzm4jtI5YkrCqQmN9S3ALXQgkfOBIi/B+lntESZMZdQ8z03WIAS/3JkNai+M8dT
+ Ij/VM8ryi3xocegP6+em9ibkr1l12hlFQwqpgwNC3nQxAq4/xrSo/0K3fo9eZeAFGLQj0v
+ kylT86hvQhPy3xuTxbL3afbdLaFizbY=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-145-xka3sRa-OEeIxBdqlhtHog-1; Tue, 29 Apr 2025 09:04:50 -0400
+X-MC-Unique: xka3sRa-OEeIxBdqlhtHog-1
+X-Mimecast-MFC-AGG-ID: xka3sRa-OEeIxBdqlhtHog_1745931889
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7c5c9abdbd3so554969285a.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 06:04:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745931516; x=1746536316;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IpsnEUwn4rtW5yM+6A4MeXd/5suwXE07WSJlApopJRI=;
- b=A62UD9BXr8Q13v1p9jkc1Z+7xPXtQ1LHcWcPi1vKybb25A2M5+l/LewmHBOfhdao8n
- +1TiUqeh7IJLY70JUPuFZhtB0NBmI2PXU5ChgqVtTIg5Zof6LDeYu7ZxL6CLvi4PbOCt
- I5Ajt6R0XYorL1CTIm3D7yyp6aD0q/2d/o4QVYEbnrvjjP0mSjTX/54ls4taHMlptCUK
- viCkEFunAJ0mhI1heGwgAShK1rJxC03FXiTAJFEZRYKKgmZDoi3s+4mxL/cccFNmEiYs
- NXbBRqskmeiN2h8hKcJH0aicDUAw0qQmNg3C4Y6hNwtA4g8UBzBTIe5vH0SJg/p7FO2f
- H4AA==
-X-Gm-Message-State: AOJu0Yx3cYtWNN3fKEyPlaUYUnei7s73AV2Yt7Y8vwjVWRLWCASEA0sl
- YZKa36f7206x9/jzSioFCmO7c8KAL1LbzeCXcX5+i6LAiJ90n8K/XSeLmxKc6QhIoCAeGD5HPee
- q
-X-Gm-Gg: ASbGncvQHA8YH9DGr8yrEITr4+SDQwE+vaN25xNhhML9zQzLUPdNsMeLH0aLRfumVMO
- a3rNMmcJzj/vabq4f214JWUxt8l9afHGni4i8BJ85cOTkYvoOGt8FAU86GMRsPeyfM2VaQC8XPt
- 8ldMzThN0OYGYFTNkaAYOQW2oqMyBr5luOUjmez+x2A9aUdi3VoQm3CyBFthYSWqcyAf86NQ5cR
- EzYlDw5uLki5jDKqqIhWBH0/rikT99UXsPWzX9DT7xU5UFJP+wfpP3PK2nIkpo5iTTkxDKbY5iy
- 6pxxfLg0Ssz+FvQ/OyG/De4JN33kg82RV97mirdGuy8=
-X-Google-Smtp-Source: AGHT+IH+UgU0XypMfocAMaJBHHpCrpRWH+EjLU22SW3BwNtuISO+x0mdPthJN/DBdzYOeiBipNtbnA==
-X-Received: by 2002:a05:6a20:9f9a:b0:1f5:6c7b:8920 with SMTP id
- adf61e73a8af0-2046a3eec69mr16980591637.9.1745931515833; 
- Tue, 29 Apr 2025 05:58:35 -0700 (PDT)
-Received: from grind.. ([152.234.125.33]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b15f7fb7e54sm8889440a12.30.2025.04.29.05.58.33
+ d=1e100.net; s=20230601; t=1745931889; x=1746536689;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1nrCjU7uUSDJ+lWC4154feQNw/X8mcWdAxgYV/tyL5M=;
+ b=uDnBvc9GasKaxNDRO0Sj0Hgp/tpfGOMiYq4de7+vmHxeL9kA+ZAlQCU6lk5NG064ms
+ W+3AWjtmUuGm4obC9Cyk0Rgmj1G5Wlsw8c+m4DZgQaSNyKJszEasi1FY8KyuHD1O2f3R
+ 9Su/8aS9/eec3TvMAZ40XBKX4M63FmPvf74o8sEpkMnNN0DnVq4zQ3Ia2tgQWxB+ED15
+ wM6FgrOl8HP3rrEndBx/Hc9XhFZt6PxRKLbiPQqYvaND9yRhFHTuG9H4O+X7Eghmo8Ya
+ rXRZcHN5ZR7sU2R2U3XkrR458jykWHDqvce1FD+BaeReJszkpD15EJ8TP/JsICa5v1NM
+ rG3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUwPRfiXfwwEuo2ZE7eTDRR+QlBO75MqtDA8Md2GFQEPPKwv6ap63gcmB3Ss0iEgxj4O02mCdnSYQxs@nongnu.org
+X-Gm-Message-State: AOJu0Ywp4BjRZ3Q6BKnuyBdezfUOxxAq0WtcB4rmGiD2+pY7/Q1zAzKz
+ mg3KhWWGfR0qS0PQejlZzWcfNdk78hxIND0CZV4p1V8xHmsXv9hVS0D/dO1DIKzquM+Wx7p9ykJ
+ 485SNYQIlymsMOCHwQS2K0chn6Umf0HoC7pgeRRfTsfbx9u3Blswl
+X-Gm-Gg: ASbGnctSGRW6txKs6PTj9b9H4W/SDImnhwuPk/OP0iN11RwUG/Aj33sm8MUWUUXnJuI
+ Ihhya4YsEOVsACMrDoVluz3Qw8oaPboEtU/5mG3tQSVQVmGnvwotdy2LkmMhcvWDG/glJRsU4pD
+ Ax8UTWDQyugbJu919hKSjGBDtqp9Qvt6Reaxu87anl9GzslNinmDZXkoZ9aAlPs6B5mosILhRgm
+ XxMwYWOcwOrDL1M/a91mnS9ZJqG9WG/Ck6lrqw4sib8F9TcnST3UbgF2ep8Q5ckT5di1kIhqNF+
+ /3A=
+X-Received: by 2002:a05:620a:28c9:b0:7c5:642f:b22f with SMTP id
+ af79cd13be357-7cabdd80fddmr519427685a.18.1745931889625; 
+ Tue, 29 Apr 2025 06:04:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHzV2CJhrN/ZxCuM2+dAkTyHp02W0b3KMZY0RHCEItJb4XruCPpr8kn8CBAh8bc4KIBHeAkAw==
+X-Received: by 2002:a05:620a:28c9:b0:7c5:642f:b22f with SMTP id
+ af79cd13be357-7cabdd80fddmr519423185a.18.1745931889231; 
+ Tue, 29 Apr 2025 06:04:49 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7c958eb534csm734188285a.117.2025.04.29.06.04.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 05:58:35 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, joel@jms.id.au,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 6/9] hw/riscv/virt.c: use s->memmap in create_fdt_sockets()
- path
-Date: Tue, 29 Apr 2025 09:58:08 -0300
-Message-ID: <20250429125811.224803-7-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250429125811.224803-1-dbarboza@ventanamicro.com>
-References: <20250429125811.224803-1-dbarboza@ventanamicro.com>
+ Tue, 29 Apr 2025 06:04:48 -0700 (PDT)
+Date: Tue, 29 Apr 2025 09:04:46 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ berrange@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v9 0/7] Allow to enable multifd and postcopy migration
+ together
+Message-ID: <aBDObgL7hDQMy63F@x1.local>
+References: <20250411114534.3370816-1-ppandit@redhat.com>
+ <87ecxteym0.fsf@suse.de> <87bjswfeis.fsf@suse.de>
+ <CAE8KmOzzn7g1=pd2J325gAf4ffmGALKoHdgL17So4KawxkZdbg@mail.gmail.com>
+ <87y0vyepta.fsf@suse.de> <aAlu0hcUCdzmIN4p@x1.local>
+ <CAE8KmOz7P+Pz8zwJq+mTEJbZjhCk7iAo9+c5DrZzhbTmz=VtUQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOz7P+Pz8zwJq+mTEJbZjhCk7iAo9+c5DrZzhbTmz=VtUQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,298 +111,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-create_fdt_sockets() and all its fdt helpers (create_fdt_socket_aplic(),
-create_fdt_imsic(), create_fdt_socket_plic(), create_fdt_socket_aclint()
-and create_fdt_socket_memory()) can use s->memmap from their
-RISCVVirtState pointer instead of having an extra memmap argument.
+On Tue, Apr 29, 2025 at 06:21:13PM +0530, Prasad Pandit wrote:
+> Hi,
+> 
+> > On Thu, Apr 17, 2025 at 01:05:37PM -0300, Fabiano Rosas wrote:
+> > > It's not that page faults happen during multifd. The page was already
+> > > sent during precopy, but multifd-recv didn't write to it, it just marked
+> > > the receivedmap. When postcopy starts, the page gets accessed and
+> > > faults. Since postcopy is on, the migration wants to request the page
+> > > from the source, but it's present in the receivedmap, so it doesn't
+> > > ask. No page ever comes and the code hangs waiting for the page fault to
+> > > be serviced (or potentially faults continuously? I'm not sure on the
+> > > details).
+> >
+> > I think your previous analysis is correct on the zero pages.  I am not 100%
+> > sure if that's the issue but very likely.  I tend to also agree with you
+> > that we could skip zero page optimization in multifd code when postcopy is
+> > enabled (maybe plus some comment right above..).
+> 
+>    migration/multifd: solve zero page causing multiple page faults
+>      -> https://gitlab.com/qemu-project/qemu/-/commit/5ef7e26bdb7eda10d6d5e1b77121be9945e5e550
+> 
+> * Is this the optimization that is causing the migration hang issue?
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- hw/riscv/virt.c | 89 ++++++++++++++++++++++++++-----------------------
- 1 file changed, 47 insertions(+), 42 deletions(-)
+I think that's what Fabiano mentioned, but ultimately we need to verify it
+on a reproducer to know.
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 5f31c95955..2383a557bd 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -300,14 +300,13 @@ static void create_fdt_socket_cpus(RISCVVirtState *s, int socket,
-     }
- }
- 
--static void create_fdt_socket_memory(RISCVVirtState *s,
--                                     const MemMapEntry *memmap, int socket)
-+static void create_fdt_socket_memory(RISCVVirtState *s, int socket)
- {
-     g_autofree char *mem_name = NULL;
-     uint64_t addr, size;
-     MachineState *ms = MACHINE(s);
- 
--    addr = memmap[VIRT_DRAM].base + riscv_socket_mem_offset(ms, socket);
-+    addr = s->memmap[VIRT_DRAM].base + riscv_socket_mem_offset(ms, socket);
-     size = riscv_socket_mem_size(ms, socket);
-     mem_name = g_strdup_printf("/memory@%lx", (long)addr);
-     qemu_fdt_add_subnode(ms->fdt, mem_name);
-@@ -318,7 +317,7 @@ static void create_fdt_socket_memory(RISCVVirtState *s,
- }
- 
- static void create_fdt_socket_clint(RISCVVirtState *s,
--                                    const MemMapEntry *memmap, int socket,
-+                                    int socket,
-                                     uint32_t *intc_phandles)
- {
-     int cpu;
-@@ -339,21 +338,22 @@ static void create_fdt_socket_clint(RISCVVirtState *s,
-         clint_cells[cpu * 4 + 3] = cpu_to_be32(IRQ_M_TIMER);
-     }
- 
--    clint_addr = memmap[VIRT_CLINT].base + (memmap[VIRT_CLINT].size * socket);
-+    clint_addr = s->memmap[VIRT_CLINT].base +
-+                 (s->memmap[VIRT_CLINT].size * socket);
-     clint_name = g_strdup_printf("/soc/clint@%lx", clint_addr);
-     qemu_fdt_add_subnode(ms->fdt, clint_name);
-     qemu_fdt_setprop_string_array(ms->fdt, clint_name, "compatible",
-                                   (char **)&clint_compat,
-                                   ARRAY_SIZE(clint_compat));
-     qemu_fdt_setprop_cells(ms->fdt, clint_name, "reg",
--        0x0, clint_addr, 0x0, memmap[VIRT_CLINT].size);
-+        0x0, clint_addr, 0x0, s->memmap[VIRT_CLINT].size);
-     qemu_fdt_setprop(ms->fdt, clint_name, "interrupts-extended",
-         clint_cells, s->soc[socket].num_harts * sizeof(uint32_t) * 4);
-     riscv_socket_fdt_write_id(ms, clint_name, socket);
- }
- 
- static void create_fdt_socket_aclint(RISCVVirtState *s,
--                                     const MemMapEntry *memmap, int socket,
-+                                     int socket,
-                                      uint32_t *intc_phandles)
- {
-     int cpu;
-@@ -380,8 +380,10 @@ static void create_fdt_socket_aclint(RISCVVirtState *s,
-     aclint_cells_size = s->soc[socket].num_harts * sizeof(uint32_t) * 2;
- 
-     if (s->aia_type != VIRT_AIA_TYPE_APLIC_IMSIC) {
--        addr = memmap[VIRT_CLINT].base + (memmap[VIRT_CLINT].size * socket);
-+        addr = s->memmap[VIRT_CLINT].base +
-+               (s->memmap[VIRT_CLINT].size * socket);
-         name = g_strdup_printf("/soc/mswi@%lx", addr);
-+
-         qemu_fdt_add_subnode(ms->fdt, name);
-         qemu_fdt_setprop_string(ms->fdt, name, "compatible",
-             "riscv,aclint-mswi");
-@@ -396,13 +398,13 @@ static void create_fdt_socket_aclint(RISCVVirtState *s,
-     }
- 
-     if (s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC) {
--        addr = memmap[VIRT_CLINT].base +
-+        addr = s->memmap[VIRT_CLINT].base +
-                (RISCV_ACLINT_DEFAULT_MTIMER_SIZE * socket);
-         size = RISCV_ACLINT_DEFAULT_MTIMER_SIZE;
-     } else {
--        addr = memmap[VIRT_CLINT].base + RISCV_ACLINT_SWI_SIZE +
--            (memmap[VIRT_CLINT].size * socket);
--        size = memmap[VIRT_CLINT].size - RISCV_ACLINT_SWI_SIZE;
-+        addr = s->memmap[VIRT_CLINT].base + RISCV_ACLINT_SWI_SIZE +
-+               (s->memmap[VIRT_CLINT].size * socket);
-+        size = s->memmap[VIRT_CLINT].size - RISCV_ACLINT_SWI_SIZE;
-     }
-     name = g_strdup_printf("/soc/mtimer@%lx", addr);
-     qemu_fdt_add_subnode(ms->fdt, name);
-@@ -419,14 +421,15 @@ static void create_fdt_socket_aclint(RISCVVirtState *s,
-     g_free(name);
- 
-     if (s->aia_type != VIRT_AIA_TYPE_APLIC_IMSIC) {
--        addr = memmap[VIRT_ACLINT_SSWI].base +
--            (memmap[VIRT_ACLINT_SSWI].size * socket);
-+        addr = s->memmap[VIRT_ACLINT_SSWI].base +
-+               (s->memmap[VIRT_ACLINT_SSWI].size * socket);
-+
-         name = g_strdup_printf("/soc/sswi@%lx", addr);
-         qemu_fdt_add_subnode(ms->fdt, name);
-         qemu_fdt_setprop_string(ms->fdt, name, "compatible",
-             "riscv,aclint-sswi");
-         qemu_fdt_setprop_cells(ms->fdt, name, "reg",
--            0x0, addr, 0x0, memmap[VIRT_ACLINT_SSWI].size);
-+            0x0, addr, 0x0, s->memmap[VIRT_ACLINT_SSWI].size);
-         qemu_fdt_setprop(ms->fdt, name, "interrupts-extended",
-             aclint_sswi_cells, aclint_cells_size);
-         qemu_fdt_setprop(ms->fdt, name, "interrupt-controller", NULL, 0);
-@@ -437,7 +440,7 @@ static void create_fdt_socket_aclint(RISCVVirtState *s,
- }
- 
- static void create_fdt_socket_plic(RISCVVirtState *s,
--                                   const MemMapEntry *memmap, int socket,
-+                                   int socket,
-                                    uint32_t *phandle, uint32_t *intc_phandles,
-                                    uint32_t *plic_phandles)
- {
-@@ -451,7 +454,8 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
-     };
- 
-     plic_phandles[socket] = (*phandle)++;
--    plic_addr = memmap[VIRT_PLIC].base + (memmap[VIRT_PLIC].size * socket);
-+    plic_addr = s->memmap[VIRT_PLIC].base +
-+                (s->memmap[VIRT_PLIC].size * socket);
-     plic_name = g_strdup_printf("/soc/plic@%lx", plic_addr);
-     qemu_fdt_add_subnode(ms->fdt, plic_name);
-     qemu_fdt_setprop_cell(ms->fdt, plic_name,
-@@ -490,7 +494,7 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
-     }
- 
-     qemu_fdt_setprop_cells(ms->fdt, plic_name, "reg",
--        0x0, plic_addr, 0x0, memmap[VIRT_PLIC].size);
-+        0x0, plic_addr, 0x0, s->memmap[VIRT_PLIC].size);
-     qemu_fdt_setprop_cell(ms->fdt, plic_name, "riscv,ndev",
-                           VIRT_IRQCHIP_NUM_SOURCES - 1);
-     riscv_socket_fdt_write_id(ms, plic_name, socket);
-@@ -499,8 +503,8 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
- 
-     if (!socket) {
-         platform_bus_add_all_fdt_nodes(ms->fdt, plic_name,
--                                       memmap[VIRT_PLATFORM_BUS].base,
--                                       memmap[VIRT_PLATFORM_BUS].size,
-+                                       s->memmap[VIRT_PLATFORM_BUS].base,
-+                                       s->memmap[VIRT_PLATFORM_BUS].size,
-                                        VIRT_PLATFORM_BUS_IRQ);
-     }
- }
-@@ -587,7 +591,7 @@ static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
-     qemu_fdt_setprop_cell(ms->fdt, imsic_name, "phandle", msi_phandle);
- }
- 
--static void create_fdt_imsic(RISCVVirtState *s, const MemMapEntry *memmap,
-+static void create_fdt_imsic(RISCVVirtState *s,
-                              uint32_t *phandle, uint32_t *intc_phandles,
-                              uint32_t *msi_m_phandle, uint32_t *msi_s_phandle)
- {
-@@ -596,12 +600,12 @@ static void create_fdt_imsic(RISCVVirtState *s, const MemMapEntry *memmap,
- 
-     if (!kvm_enabled()) {
-         /* M-level IMSIC node */
--        create_fdt_one_imsic(s, memmap[VIRT_IMSIC_M].base, intc_phandles,
-+        create_fdt_one_imsic(s, s->memmap[VIRT_IMSIC_M].base, intc_phandles,
-                              *msi_m_phandle, true, 0);
-     }
- 
-     /* S-level IMSIC node */
--    create_fdt_one_imsic(s, memmap[VIRT_IMSIC_S].base, intc_phandles,
-+    create_fdt_one_imsic(s, s->memmap[VIRT_IMSIC_S].base, intc_phandles,
-                          *msi_s_phandle, false,
-                          imsic_num_bits(s->aia_guests + 1));
- 
-@@ -678,7 +682,7 @@ static void create_fdt_one_aplic(RISCVVirtState *s, int socket,
- }
- 
- static void create_fdt_socket_aplic(RISCVVirtState *s,
--                                    const MemMapEntry *memmap, int socket,
-+                                    int socket,
-                                     uint32_t msi_m_phandle,
-                                     uint32_t msi_s_phandle,
-                                     uint32_t *phandle,
-@@ -695,18 +699,19 @@ static void create_fdt_socket_aplic(RISCVVirtState *s,
- 
-     if (!kvm_enabled()) {
-         /* M-level APLIC node */
--        aplic_addr = memmap[VIRT_APLIC_M].base +
--                     (memmap[VIRT_APLIC_M].size * socket);
--        create_fdt_one_aplic(s, socket, aplic_addr, memmap[VIRT_APLIC_M].size,
-+        aplic_addr = s->memmap[VIRT_APLIC_M].base +
-+                     (s->memmap[VIRT_APLIC_M].size * socket);
-+        create_fdt_one_aplic(s, socket, aplic_addr,
-+                             s->memmap[VIRT_APLIC_M].size,
-                              msi_m_phandle, intc_phandles,
-                              aplic_m_phandle, aplic_s_phandle,
-                              true, num_harts);
-     }
- 
-     /* S-level APLIC node */
--    aplic_addr = memmap[VIRT_APLIC_S].base +
--                 (memmap[VIRT_APLIC_S].size * socket);
--    create_fdt_one_aplic(s, socket, aplic_addr, memmap[VIRT_APLIC_S].size,
-+    aplic_addr = s->memmap[VIRT_APLIC_S].base +
-+                 (s->memmap[VIRT_APLIC_S].size * socket);
-+    create_fdt_one_aplic(s, socket, aplic_addr, s->memmap[VIRT_APLIC_S].size,
-                          msi_s_phandle, intc_phandles,
-                          aplic_s_phandle, 0,
-                          false, num_harts);
-@@ -714,8 +719,8 @@ static void create_fdt_socket_aplic(RISCVVirtState *s,
-     if (!socket) {
-         g_autofree char *aplic_name = fdt_get_aplic_nodename(aplic_addr);
-         platform_bus_add_all_fdt_nodes(ms->fdt, aplic_name,
--                                       memmap[VIRT_PLATFORM_BUS].base,
--                                       memmap[VIRT_PLATFORM_BUS].size,
-+                                       s->memmap[VIRT_PLATFORM_BUS].base,
-+                                       s->memmap[VIRT_PLATFORM_BUS].size,
-                                        VIRT_PLATFORM_BUS_IRQ);
-     }
- 
-@@ -733,7 +738,7 @@ static void create_fdt_pmu(RISCVVirtState *s)
-     riscv_pmu_generate_fdt_node(ms->fdt, hart.pmu_avail_ctrs, pmu_name);
- }
- 
--static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
-+static void create_fdt_sockets(RISCVVirtState *s,
-                                uint32_t *phandle,
-                                uint32_t *irq_mmio_phandle,
-                                uint32_t *irq_pcie_phandle,
-@@ -769,20 +774,20 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
-         create_fdt_socket_cpus(s, socket, clust_name, phandle,
-                                &intc_phandles[phandle_pos]);
- 
--        create_fdt_socket_memory(s, memmap, socket);
-+        create_fdt_socket_memory(s, socket);
- 
-         if (virt_aclint_allowed() && s->have_aclint) {
--            create_fdt_socket_aclint(s, memmap, socket,
-+            create_fdt_socket_aclint(s, socket,
-                                      &intc_phandles[phandle_pos]);
-         } else if (tcg_enabled()) {
--            create_fdt_socket_clint(s, memmap, socket,
-+            create_fdt_socket_clint(s, socket,
-                                     &intc_phandles[phandle_pos]);
-         }
-     }
- 
-     if (s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC) {
--        create_fdt_imsic(s, memmap, phandle, intc_phandles,
--            &msi_m_phandle, &msi_s_phandle);
-+        create_fdt_imsic(s, phandle, intc_phandles,
-+                         &msi_m_phandle, &msi_s_phandle);
-         *msi_pcie_phandle = msi_s_phandle;
-     }
- 
-@@ -791,7 +796,7 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
-      * mode, we'll use only one APLIC instance.
-      */
-     if (!virt_use_emulated_aplic(s->aia_type)) {
--        create_fdt_socket_aplic(s, memmap, 0,
-+        create_fdt_socket_aplic(s, 0,
-                                 msi_m_phandle, msi_s_phandle, phandle,
-                                 &intc_phandles[0], xplic_phandles,
-                                 ms->smp.cpus);
-@@ -805,11 +810,11 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
-             phandle_pos -= s->soc[socket].num_harts;
- 
-             if (s->aia_type == VIRT_AIA_TYPE_NONE) {
--                create_fdt_socket_plic(s, memmap, socket, phandle,
-+                create_fdt_socket_plic(s, socket, phandle,
-                                        &intc_phandles[phandle_pos],
-                                        xplic_phandles);
-             } else {
--                create_fdt_socket_aplic(s, memmap, socket,
-+                create_fdt_socket_aplic(s, socket,
-                                         msi_m_phandle, msi_s_phandle, phandle,
-                                         &intc_phandles[phandle_pos],
-                                         xplic_phandles,
-@@ -1125,7 +1130,7 @@ static void finalize_fdt(RISCVVirtState *s)
-     uint32_t irq_pcie_phandle = 1, irq_virtio_phandle = 1;
-     uint32_t iommu_sys_phandle = 1;
- 
--    create_fdt_sockets(s, s->memmap, &phandle, &irq_mmio_phandle,
-+    create_fdt_sockets(s, &phandle, &irq_mmio_phandle,
-                        &irq_pcie_phandle, &irq_virtio_phandle,
-                        &msi_pcie_phandle);
- 
+> 
+> ===
+> diff --git a/migration/multifd-zero-page.c b/migration/multifd-zero-page.c
+> index dbc1184921..00f69ff965 100644
+> --- a/migration/multifd-zero-page.c
+> +++ b/migration/multifd-zero-page.c
+> @@ -85,7 +85,8 @@ void multifd_recv_zero_page_process(MultiFDRecvParams *p)
+>  {
+>      for (int i = 0; i < p->zero_num; i++) {
+>          void *page = p->host + p->zero[i];
+> -        if (ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
+> +        if (!migrate_postcopy() &&
+> +            ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
+>              memset(page, 0, multifd_ram_page_size());
+>          } else {
+>              ramblock_recv_bitmap_set_offset(p->block, p->zero[i]);
+> ===
+> 
+> * Would the above patch help to resolve it?
+
+Looks ok, but please add some comments explain why postcopy needs to do it,
+and especially do it during precopy phase.
+
+I'd use migrate_postcopy_ram() instead. I wished migrate_dirty_bitmaps()
+has a better name, maybe migrate_postcopy_block()..  I have totally no idea
+who is using the feature, especially when postcopy-ram is off.
+
+> 
+> * Another way could be when the page fault occurs during postcopy
+> phase, if we know (from receivedmap) that the faulted page is a
+> zero-page, maybe we could write it locally on the destination to
+> service the page-fault?
+
+I don't think we can know that - receivedmap set doesn't mean it's a zero
+page, but only says it's been received before.  It can also happen e.g. >1
+threads faulted on the same page then the 2nd thread faulted on it may see
+receivedmap set because the 1st thread got faulted already got the fault
+resolved.
+
 -- 
-2.49.0
+Peter Xu
 
 
