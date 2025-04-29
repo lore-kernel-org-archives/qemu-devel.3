@@ -4,74 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C576C369CB
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00CABC3ABA4
 	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 06:14:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9eCu-0000mj-08; Tue, 29 Apr 2025 02:12:40 -0400
+	id 1u9eE8-0003ZK-My; Tue, 29 Apr 2025 02:14:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1u9eCb-0000Xd-6g
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:12:21 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1u9eCY-0005MH-DF
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 02:12:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745907139; x=1777443139;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=hZhn5KZdOeyv+nzABRzyG2dgF19g/XdGsIUnsInYycg=;
- b=kygs4OVUZaJd99av4+3VwDNJb5oVzXOPw3FA1qCwztW/jmlIxOGTIZgX
- EV5UDbBy9z/0YWl563D3Yk9iGxCfkpp9HD/1rSl/X4wHFRGpWS+K+7058
- mX/sXS8K068VcHQp5KfpwNcQpA6o4htV0/AR+qTgrvO0sTGDkbrml73Ii
- pAY1Q0+sIrcJZ5j2A1ULSJyKrqtCqkpebbfFL6LNfRIH16XeIm0ruVN8u
- iBA4AMreJHmCEgFtTS0imCRaT7n+UV1+ysCHX3lhwYUfbLIzqMVwWKva+
- 9CEsz2ccgqniA/Bu4izk8EmbKtodLKFh+5fB6YCTgMSufUdja0igzEWLg g==;
-X-CSE-ConnectionGUID: mkFe9cQdSNyf+u1++wfZ5g==
-X-CSE-MsgGUID: xd4obuW9SySYUDCPnEeHSg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11417"; a="58169816"
-X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="58169816"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2025 23:12:10 -0700
-X-CSE-ConnectionGUID: 5Il5I5aUSB+1vT4XI+plmA==
-X-CSE-MsgGUID: QwYPd6EMSKycC0w9WhOWYw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="133687166"
-Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
- by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Apr 2025 23:12:05 -0700
-From: Vivek Kasireddy <vivek.kasireddy@intel.com>
-To: qemu-devel@nongnu.org
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>
-Subject: [PATCH v3 1/6] ui/spice: Add an option for users to provide a
- preferred codec
-Date: Mon, 28 Apr 2025 23:08:25 -0700
-Message-ID: <20250429060952.59508-2-vivek.kasireddy@intel.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250429060952.59508-1-vivek.kasireddy@intel.com>
-References: <20250429060952.59508-1-vivek.kasireddy@intel.com>
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1u9eDb-0002Tl-6Y; Tue, 29 Apr 2025 02:13:26 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1u9eDX-0005Qy-Ka; Tue, 29 Apr 2025 02:13:22 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-223fd89d036so69602785ad.1; 
+ Mon, 28 Apr 2025 23:13:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1745907196; x=1746511996; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i5jQ6wutrbKpg8Tugc42Fb3JNM9evspVPMNApKKkwn0=;
+ b=DPSH8weerqDMwgHNJqmmFwaQwALgCboqnuG8Y6GrO8IdwB4ApwoioX5fKVjyVt71N7
+ Ryt0rcWPecNVbMD/4nk1n1qFZh+9SqxT02HWd4mTG4EihHNiX2lxwFb3HADOJCBTS4g4
+ +GzrUnVbq922j4yepjwELryVbmAWAPpT51M8b+e89JhL+iLlTsFtkpLtRdYOsmU8O9dh
+ kwdCxnKI2Pc6OpWilUoIa8/mnmhas+E/EIB+D3tPMPM3Yp9My+0kP/+3FixxLNVJJz17
+ 64FiU1efMhskwN9Q6ByhDgFEWlvzLd/Jc9/0rGCu5XCby9hqtLGIw5mBAU5IaaqMwBma
+ FJCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745907196; x=1746511996;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=i5jQ6wutrbKpg8Tugc42Fb3JNM9evspVPMNApKKkwn0=;
+ b=aO8FEeVAqGSWyNZwjUYF5zENR7nx/Nv/lVbUS3Y7lt42wPi+33vi3g7ArdbO7nATsK
+ 8zVdrXww7URTgwxIJooLW5pBX6mlydCCzhooN97BDHT6aQe8MjxGwrjJlYmvF5uvEalR
+ 7oPv069RWcjnVWbmJFg5NJieHtc8EtpJNCkvtr82vS9S0OcyG8GTVZG7fzH22JfadSYy
+ DjKO6wLX3gguvGs7+HjtRAHZv2T1cTUgOFM32YRydGDxm+g+SIJioYioV1nfrhiWI3H7
+ MQO+pRZAc7w5wAgBCX9SOb5RurUE7mWMaZVrlEqM+YBlHurtCm5EldebrmybuAxSA15P
+ RByg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUvRvhTsSQEC+CluNLDMf7QxBLsjIxCOGYiHRi2+fxso1zbL/PvhoT58NO2SYxHAG5xQ9FT3A+b4IBE@nongnu.org
+X-Gm-Message-State: AOJu0Yzz8yWtAhMQMVjF8tAqmdk8ie+9JX03PiuusEqqzpRqCGw0Hu+c
+ XtI2Qqm/gbEemfYHWzUtCTUPDY+6XDk1GTrxS/j++ZiRL3ulYVwzc/bmtQ==
+X-Gm-Gg: ASbGncvsh35YniiaaZuQbPiuVTvuqngc30SeZOY3ppsIQPUpPCapC+Arb5T7e/BNQ1L
+ lZkWovHbVUvYblaw6tIMqRWcXgQs/RwUY43ubXTYiga5Z8Gw7M9W4qItZShlJcFgxAX8kNK/Tv3
+ kBv1EYcrUOuKo4tqM5zNTpWx+8Uj0+IuV/IsEw1UMpIVK6N0oJgoXWq4NiTLyLT8+Y+DlqHqbMw
+ nLPGVNPa/KEcLsadQ6BOY7BSPpoaSMuL2NOnphUXG6bKDqK6nJQG7OQh6patV6eD0mqkaLySuYg
+ mOSddS3KuldYkfgRwZDTrqV7zpQkFyA2wm6+1qT5dnqIq/wcDgA=
+X-Google-Smtp-Source: AGHT+IFO6ZhzVehfjitzSOHJLmRRXTnSuJfRp7PiCXE4Bnf8xHb44Lp/5kbNdEsdvFN+GyzIGPS//Q==
+X-Received: by 2002:a17:903:2ec8:b0:216:6901:d588 with SMTP id
+ d9443c01a7336-22dc69ffb69mr178117665ad.15.1745907196493; 
+ Mon, 28 Apr 2025 23:13:16 -0700 (PDT)
+Received: from donnager-debian.. ([45.124.203.19])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22db52169casm93947765ad.238.2025.04.28.23.13.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 28 Apr 2025 23:13:15 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-riscv@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 08/13] hw/riscv/virt: Use setprop_sized_cells for reset
+Date: Tue, 29 Apr 2025 15:42:17 +0930
+Message-ID: <20250429061223.1457166-10-joel@jms.id.au>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250429061223.1457166-1-joel@jms.id.au>
+References: <20250429061223.1457166-1-joel@jms.id.au>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.9;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=joel.stan@gmail.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,82 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Giving users an option to choose a particular codec will enable
-them to make an appropriate decision based on their hardware and
-use-case.
+The current device tree property uses two cells for the address (and for
+the size), but assumes the they are less than 32 bits by hard coding the
+high cell to zero.
 
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Frediano Ziglio <freddy77@gmail.com>
-Cc: Dongwon Kim <dongwon.kim@intel.com>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Use qemu_fdt_setprop_sized_cells to do the job of splitting the upper
+and lower 32 bits across cells.
+
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- qemu-options.hx |  5 +++++
- ui/spice-core.c | 12 ++++++++++++
- 2 files changed, 17 insertions(+)
+ hw/riscv/virt.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index dc694a99a3..608a07cfc1 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -2281,6 +2281,7 @@ DEF("spice", HAS_ARG, QEMU_OPTION_spice,
-     "       [,streaming-video=[off|all|filter]][,disable-copy-paste=on|off]\n"
-     "       [,disable-agent-file-xfer=on|off][,agent-mouse=[on|off]]\n"
-     "       [,playback-compression=[on|off]][,seamless-migration=[on|off]]\n"
-+    "       [,video-codecs=<encoder>:<codec>\n"
-     "       [,gl=[on|off]][,rendernode=<file>]\n"
-     "                enable spice\n"
-     "                at least one of {port, tls-port} is mandatory\n",
-@@ -2369,6 +2370,10 @@ SRST
-     ``seamless-migration=[on|off]``
-         Enable/disable spice seamless migration. Default is off.
- 
-+    ``video-codecs=<encoder>:<codec>``
-+        Provide the preferred codec the Spice server should use.
-+        Default would be spice:mjpeg.
-+
-     ``gl=[on|off]``
-         Enable/disable OpenGL context. Default is off.
- 
-diff --git a/ui/spice-core.c b/ui/spice-core.c
-index 0326c63bec..907b0e9a81 100644
---- a/ui/spice-core.c
-+++ b/ui/spice-core.c
-@@ -488,6 +488,9 @@ static QemuOptsList qemu_spice_opts = {
-         },{
-             .name = "streaming-video",
-             .type = QEMU_OPT_STRING,
-+        },{
-+            .name = "video-codecs",
-+            .type = QEMU_OPT_STRING,
-         },{
-             .name = "agent-mouse",
-             .type = QEMU_OPT_BOOL,
-@@ -662,6 +665,7 @@ static void qemu_spice_init(void)
-     char *x509_key_file = NULL,
-         *x509_cert_file = NULL,
-         *x509_cacert_file = NULL;
-+    const char *video_codecs = NULL;
-     int port, tls_port, addr_flags;
-     spice_image_compression_t compression;
-     spice_wan_compression_t wan_compr;
-@@ -801,6 +805,14 @@ static void qemu_spice_init(void)
-         spice_server_set_streaming_video(spice_server, SPICE_STREAM_VIDEO_OFF);
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index cf7e16cc6678..baa894b11aa6 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -932,8 +932,9 @@ static void create_fdt_reset(RISCVVirtState *s, uint32_t *phandle)
+         qemu_fdt_setprop_string_array(ms->fdt, name, "compatible",
+                                       (char **)&compat, ARRAY_SIZE(compat));
      }
- 
-+    video_codecs = qemu_opt_get(opts, "video-codecs");
-+    if (video_codecs) {
-+        if (spice_server_set_video_codecs(spice_server, video_codecs)) {
-+            error_report("invalid video codecs");
-+            exit(1);
-+        }
-+    }
-+
-     spice_server_set_agent_mouse
-         (spice_server, qemu_opt_get_bool(opts, "agent-mouse", 1));
-     spice_server_set_playback_compression
+-    qemu_fdt_setprop_cells(ms->fdt, name, "reg",
+-        0x0, s->memmap[VIRT_TEST].base, 0x0, s->memmap[VIRT_TEST].size);
++    qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg",
++                                 2, s->memmap[VIRT_TEST].base,
++                                 2, s->memmap[VIRT_TEST].size);
+     qemu_fdt_setprop_cell(ms->fdt, name, "phandle", test_phandle);
+     test_phandle = qemu_fdt_get_phandle(ms->fdt, name);
+     g_free(name);
 -- 
-2.49.0
+2.47.2
 
 
