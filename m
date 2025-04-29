@@ -4,92 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8991C369DC
-	for <qemu-devel@archiver.kernel.org>; Mon, 28 Apr 2025 23:04:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D5BBC369D5
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 00:23:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9XVZ-0004Uh-5q; Mon, 28 Apr 2025 19:03:29 -0400
+	id 1u9Yk1-0003d9-6E; Mon, 28 Apr 2025 20:22:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u9XVW-0004Tz-3y
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 19:03:26 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1u9XVM-0004ka-Q4
- for qemu-devel@nongnu.org; Mon, 28 Apr 2025 19:03:25 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-30820167b47so5344892a91.0
- for <qemu-devel@nongnu.org>; Mon, 28 Apr 2025 16:03:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745881392; x=1746486192; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Afj+lu9lGhLDc3PkAGzfp/bNbDjeLSLISbLDH0TaFuY=;
- b=FteHy9Rf9ADZqzh619+m4KCbIjhHYDGpvxCFXmWR8T3AVChnHoGeQ80kkwZ8a8GluO
- cU62kRlXS1G8mxnKlkeWhOUZgbylwkSQYPLKOWjp9KYo01kh2uGuLD1Q2Alyb0W5Tci/
- 0KbXU/2asbeSzvOGfNY8alyu6cPp8CgYIFPtzc3Kl8vrEyPT3Dxtz6gufuTCLt19zWge
- cqKjvpSu/DSp/G5nhUNx/vAqvIJvxXCsF/VJ95RhEOjU0bBG8A1SgyXd19zvkWvI796Z
- qM1xvDEzTrHWyeSG0RGk+PhzkN2HZl+4R/z2Gzh5kpBAuKCYxkjj6O8/wVi+ZpG3SuCp
- 4S0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745881392; x=1746486192;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Afj+lu9lGhLDc3PkAGzfp/bNbDjeLSLISbLDH0TaFuY=;
- b=hGG4AlGwXc5FaHOpEeWJQ9El9VObBEbpxwFkQpKsX2NecPaqZ+mkOEXLiDPdGzvGJx
- hHbEO0KDx8+yHmIgfnotdYO8FTlGGhmIx6MhBF1uD0Xk9IgH7DaoUGELda4beeZRfKUA
- pvVO/mgry6h6bJEQ5aJsf96/x6kUETWGBzGgsXl9wHNA2or+mgRbquyh8vxcWW4yWrI+
- mRpXlH/TMrqWr5C0Y1CKFx+TcE/GCHOIxHh3kzQzenQ8ahB3H3DlPGv5E+aTnnjmfIDh
- IlbSb1Se14gZNe+lPTRxGgZ09tFQ3WixpsyKOC1GOMvSBADAvP3++Zgv4AAcjkM++LNV
- lckQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUNhy8/uK7OK+ONcEwRggWjuWb5tnh5WdKAdN1J809y+CbBs9eG82kd3ZuFBiTH74aOKE1WzL6tXPI0@nongnu.org
-X-Gm-Message-State: AOJu0YyDGJz1BTsdIzyrY4ckeHFTFyDSAD2GRGbycRjt+AkJUY4O5O8a
- +zV/27IeeA8kL2rpB6oqMtKVkWUu/jv3T1fzoJXhKt3mWQeMIgau0C4j3fr/Mbg=
-X-Gm-Gg: ASbGncs10AgcdF1o2zHmFE/iyFq2fdTJxAJG17gs0K6n276FEkahDbD++RUTrS5Lg/H
- 1AM1MI2L3HBuUAMonYBkM/D0OR0mB7lI9QKa597dKLf/eAfWaK8vSzWqNe1zunpXoRKwXoTt9ft
- 6aXvLEUZhNCs83ykEIYSU3YrSjonJ+gEy+lAzpZhVBiImq0ggKPW0BkBYxbY/XqDbToEqt3xuet
- cceloBpPrP3b5cUPiQ2MYijpr3t0zzpIVte9+I5yOgd0z2HFMXmLNJOe6uHCsODPRsk3KhQ4d33
- gfPRNeShVDp/xO3DK0G8EHcKMkmH2dcGXgfbnQ6UuwZbqgVqPa7K2A==
-X-Google-Smtp-Source: AGHT+IHgXKtFB8jEFHMdmsDEBLq2/CuZWER6ghjfwWctY77bwVoBcUVRLJpR1ABe9rPzhLlSV7uwQw==
-X-Received: by 2002:a17:90b:5403:b0:2ff:53d6:2b82 with SMTP id
- 98e67ed59e1d1-30a224af03cmr1418874a91.11.1745881392406; 
- Mon, 28 Apr 2025 16:03:12 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-309f784a56asm7865036a91.41.2025.04.28.16.03.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 28 Apr 2025 16:03:12 -0700 (PDT)
-Message-ID: <b13089fa-75bf-4eab-a0a4-1061c24943cd@linaro.org>
-Date: Mon, 28 Apr 2025 16:03:11 -0700
+ (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
+ id 1u9Yjz-0003cq-8d
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 20:22:27 -0400
+Received: from mail-bn8nam04on2052.outbound.protection.outlook.com
+ ([40.107.100.52] helo=NAM04-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
+ id 1u9Yjw-0005Fj-Ai
+ for qemu-devel@nongnu.org; Mon, 28 Apr 2025 20:22:26 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=i9l5JyQiEsKZwxxlCuQx0X4KPFQXbPsG0Vtb8tZF+Byg0CdhywNZ32Z12H2g/rp26MnAxUbNI8RWOSIBI68ePRS34CjNddPQ9FVAAdH70CiKPOrGt+wn1Iq7CU3OmkftM4EOtl21mCCd0B824Zc7LJsaMYqzHEX6N/MzFBvS/qzvcUbdKKbu5/68DhMM7rBakQyEw6NlsAQtPubsRlPfPr/sGKmdJoOmrvVjymcfseA2n8sO7D/B5I5LY49ckuG+vAXRUHHywDoEFyLi1pYOYC2AApZ1UwpJcLUD1WPoLlL2ngON4LdB88I9tFIEulr/gYqm2oqKmH8aMvpXCTCi7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2OnzZ7iJDqkrJgWKN6qHfpv0y6FAH2Uamz+0XrsMGis=;
+ b=cky3HG2DqIl0DR4g8xFA93l/P6Ue5fhFrgURJLGUY0qu124a4Xc03jhlMaHq+PeHz02fhs5yUk5pvK1dMlExp8WaCetiG4JoGeUexBsCWOinqJi5CM06sGn02glaVE3Ht4emX14cFhigZAWp302Ky4DxxyQu0u57U9o9V4WvlZtyqBaop84IVcxWc5ZPbM7s1A0tXU+6rWGcBj1FG9AetOHSCrrIeGcXysQn1iawJDi02tps0MSfN002hA/2FPJrxUX0zA8OXp8Yih4C5ZJnTU46d4LocsBIQElbNGuuQxHXeomWmAEPbEkHNOS72LW4AQ1RVRCHgVwRhRZVdmaxpg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2OnzZ7iJDqkrJgWKN6qHfpv0y6FAH2Uamz+0XrsMGis=;
+ b=ALhucL9gBz8jQk/G+7m9r+uHHuQtKlF3H0kUrmVRNget7MJSZYokvu4x/Ff+hKqb6z/l4ofy7+SjJ+40K8h9c+SNedeaFGhYk5/B9YvwsqAMUWW4RweRJ8fN0P2sMaCV7/TZ6QB8cUdBCSkYySiBXw1VIAU3Eq5yXwSZQrsSWPI=
+Received: from SA1PR05CA0020.namprd05.prod.outlook.com (2603:10b6:806:2d2::22)
+ by SJ0PR12MB6944.namprd12.prod.outlook.com (2603:10b6:a03:47b::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.27; Tue, 29 Apr
+ 2025 00:17:17 +0000
+Received: from SA2PEPF00003F67.namprd04.prod.outlook.com
+ (2603:10b6:806:2d2:cafe::8) by SA1PR05CA0020.outlook.office365.com
+ (2603:10b6:806:2d2::22) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8655.33 via Frontend Transport; Tue,
+ 29 Apr 2025 00:17:17 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ SA2PEPF00003F67.mail.protection.outlook.com (10.167.248.42) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8678.33 via Frontend Transport; Tue, 29 Apr 2025 00:17:17 +0000
+Received: from aiemdee.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 28 Apr
+ 2025 19:17:14 -0500
+From: Alexey Kardashevskiy <aik@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Li Zhijian
+ <lizhijian@cn.fujitsu.com>, Alexey Kardashevskiy <aik@amd.com>
+Subject: [PATCH QEMU] x86/headers: Replace __ASSEMBLY__ with __ASSEMBLER__ in
+ UAPI headers
+Date: Tue, 29 Apr 2025 10:17:05 +1000
+Message-ID: <20250429001705.2734439-1-aik@amd.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bsd-user: add option to enable plugins
-Content-Language: en-US
-To: Kyle Evans <kevans@FreeBSD.org>, qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, richard.henderson@linaro.org,
- alex.bennee@linaro.org
-References: <20250331234228.3475706-1-pierrick.bouvier@linaro.org>
- <0a39e805-eb75-4b88-b316-189acad38efa@linaro.org>
- <a7cc7e54-b84d-44e1-8c75-df39b44dd28f@FreeBSD.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <a7cc7e54-b84d-44e1-8c75-df39b44dd28f@FreeBSD.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SA2PEPF00003F67:EE_|SJ0PR12MB6944:EE_
+X-MS-Office365-Filtering-Correlation-Id: 66f1f7d3-ccf7-4e36-0a3c-08dd86b33321
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|82310400026|36860700013|376014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?A3oPlGQFQHEAxdb13+jqUsQoo4d6PgTf/M2Bv1fwQTUmXAI5lfSe7NgOEGAw?=
+ =?us-ascii?Q?q7jBCZBTqtiegcU3dOeWJA0RjhAUHIctEvJcsa4Op7o8oEP4ixDmpxrRrP84?=
+ =?us-ascii?Q?XCXh11FgBTc8neF/J1v2ntr42iugqQMYH8zEnp48LfCEt8oJDVBhptHyCBrQ?=
+ =?us-ascii?Q?N/IpeeSw4JLgne1WN9D6y3FVk9/+PMqTjgvQX8A7yxGdKRlt7uGmmkeXu8Rk?=
+ =?us-ascii?Q?xc8K1M+mxeJEM16qekY1WwOl+Qn9vpSQjXmj7hfdgyrRW1/I7RzDX4xfybG7?=
+ =?us-ascii?Q?tz657/306dYdKfSCGVNo+rR/lDu5Y7D65N9G8J5vSZ3RHwv6+e7/U3qdXUJO?=
+ =?us-ascii?Q?GocmaBEDdx9nRheRLYYi7srG+JwuuOuDuUHc3Whm9GzX5I62+cn1Oj0v+qql?=
+ =?us-ascii?Q?pxrGPoRbs20JN9LJ++sNKj3rR/i6STZ9m/HasRbJZgA90B6sfTBMq6MaXkZD?=
+ =?us-ascii?Q?DpRLs2F9Zv8oXfDPHs3TPvWmfQjWKiNX1qyoLP0reJuazKSwXnbphApxzU80?=
+ =?us-ascii?Q?0MS2u0WP626j/vGvStgu8EVgJMTglSajzQYaihcy6P52d0efwwHN9hemUSVk?=
+ =?us-ascii?Q?dVjR5OWfnWj+9oweDoqwJx5fYbKZW26PMxr3cZIC7nMjVmxt77L7NUtFWw+e?=
+ =?us-ascii?Q?AAAYaBV/bxpzIDNlHIsFKLMGSOJn7R5prueiPO/3ceRlYvZHElqWhARi10UI?=
+ =?us-ascii?Q?UmgQ6w0h0fTZ5+lkwDyzpLJRTzAGXQ15RljKnNMOEJfmeJUJBqbqKp3xk79/?=
+ =?us-ascii?Q?wD/MJvZ7Ts7aBETe9iOUH/KRxOQfemqVXS8e6hTbNlZY7pr0yqhDKh9j22LJ?=
+ =?us-ascii?Q?SaflANrp1rt8JAfxQcYErsO681muATGnfGlGcS3rS0mXyRcKSMXR13dpqVll?=
+ =?us-ascii?Q?tRwouK7CQi8bqCiADOl3cEB2mS6iVq0YYF9iDw7gmWfUvj+Qpzk8k0yNSUdc?=
+ =?us-ascii?Q?GBTgasJJcDM8KKGrmrx7N3nR4c3bvXz2CuBfARcCnPw0HzN9IajTuJPlBaUw?=
+ =?us-ascii?Q?40DfO1Me07H0pluIH2jBIbcc3tu8oBu4XefZWTGSdbDFlw0Yc5nkXuQI1GH0?=
+ =?us-ascii?Q?KIC7kbLc/eiKNxPfiEZIJwuKlBd0MExCxdYXz06z2m8slt4tDl2sv/MTZ6kr?=
+ =?us-ascii?Q?9sdZst93NIjr1sLGwxseeZok4ts5wMAomJHIal89ieO5bBjcDABtjWZtss8r?=
+ =?us-ascii?Q?AK0WdpLwRZ3/3HUdbJBzqysr1a+5q+Rf8gtP4cWib5Wz9B0jQo7tBLYetWwV?=
+ =?us-ascii?Q?dibbMjpzTkIHsjRHuL9V/9NIyG+vbuvd38ud8nppsvek3rC7ci0tKYLxUtWU?=
+ =?us-ascii?Q?uP6WCFECk9/nFS91FRKeUp3hLF7D/wbrHsV1+B/MA/q4mN1ep6fa3/6zRUHh?=
+ =?us-ascii?Q?FsiEPPVZxqRNCvX7yiTy1f6esuJf5+PoxUf8bm3ApgxecNSJQvKR2clMhOSm?=
+ =?us-ascii?Q?i3Cw4cHN1O1BWUKfUT/0ABpQFveXSrU42FPiucm7V/44imlYNqgoJHGJJuvD?=
+ =?us-ascii?Q?Br+5BNaoKAY7Y62plvnwTp95rk8Aw8La2jxednWddMBbeTXVRNC+7ZBBog?=
+ =?us-ascii?Q?=3D=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(82310400026)(36860700013)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Apr 2025 00:17:17.0895 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 66f1f7d3-ccf7-4e36-0a3c-08dd86b33321
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SA2PEPF00003F67.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6944
+Received-SPF: permerror client-ip=40.107.100.52;
+ envelope-from=Alexey.Kardashevskiy@amd.com;
+ helo=NAM04-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.484,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,29 +152,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/28/25 3:57 PM, Kyle Evans wrote:
->> Gentle ping on this series.
->> As we didn't have any feedback from BSD side, could we consider to
->> enable this upstream?
->>
-> 
-> Sorry- I have no strong opinion on plugins, but the diff looks
-> incredibly reasonable and non-invasive.  I'm not really seeing any
-> reason we'd object, but I don't personally feel qualified to review this
-> (except as a basic human C linter- I can't imagine the added calls
-> breaking anything we rely on).
-> 
+The recent kernel update 8a141be3233af7d broke the headers update,
+fix it in the script.
 
-Thanks for your answer Kyle.
-The current issue is that check-tcg is not tested on BSD hosts for now, 
-so enabling plugins support is not tested.
+Cc: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Alexey Kardashevskiy <aik@amd.com>
+---
 
-That said, it works on the few cases I tried, and there is nothing 
-specific to BSD in tcg or plugins code, so it would be reasonable to 
-enable this I think.
+Or we want both __ASSEMBLY__ and __ASSEMBLER__?
 
-> Thanks,
-> 
-> Kyle Evans
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=8a141be3233af7d
+---
+ scripts/update-linux-headers.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index 8913e4fb99b..b43b8ef75a6 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -177,7 +177,7 @@ EOF
+ 
+         # Remove everything except the macros from bootparam.h avoiding the
+         # unnecessary import of several video/ist/etc headers
+-        sed -e '/__ASSEMBLY__/,/__ASSEMBLY__/d' \
++        sed -e '/__ASSEMBLER__/,/__ASSEMBLER__/d' \
+                "$hdrdir/include/asm/bootparam.h" > "$hdrdir/bootparam.h"
+         cp_portable "$hdrdir/bootparam.h" \
+                     "$output/include/standard-headers/asm-$arch"
+-- 
+2.49.0
 
 
