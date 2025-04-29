@@ -4,110 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45545C369CB
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 07:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F8BC369CB
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 07:58:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9ffR-0007qo-QK; Tue, 29 Apr 2025 03:46:19 -0400
+	id 1u9fq7-0002ly-6E; Tue, 29 Apr 2025 03:57:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1u9ff4-0007nQ-RT; Tue, 29 Apr 2025 03:45:53 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1u9ff1-00004s-L5; Tue, 29 Apr 2025 03:45:49 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53T4EXpG028608;
- Tue, 29 Apr 2025 07:45:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=GC2Pq3
- t7zkGok5uU5gkEEXkYg4bcrwYYdNywiVnp0rM=; b=KvF4HtZOHM0U9I/Yi1Sf/G
- mwSTzN2oCCZyryqDd4lWWc+BZiwyP6S1lGuz76ss1WYha02hlCJFyUP3WvT5zCvK
- OuhX95YzMEor6W6cRVvawXBAzkPV/sy/UVMRyO7ZqffJWAZCsa9A9gc1WjapsmZh
- Us8/cWmSsOHm+uLIERCoyctOx6E9ZGyPiOOntO03Cm7QvB0quJMH1KRoEUELs1ZB
- tXLA0F8ma4R/ysIJa6Pah8g4N8cwc34tScCzzEZKJBK77PKvvXDsL+2Aw46ROjtB
- 0e3LUYWJhLD6lcKy8vCZnsoFh1/BkbsY1fklMlns77Kxj4g277VNIAXb9gXZHyxA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46ah8m9yht-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Apr 2025 07:45:42 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53T4HAuB016145;
- Tue, 29 Apr 2025 07:45:41 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 469a70abw3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 29 Apr 2025 07:45:41 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 53T7jbo428115262
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 29 Apr 2025 07:45:37 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2D7F42004B;
- Tue, 29 Apr 2025 07:45:37 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B695320043;
- Tue, 29 Apr 2025 07:45:36 +0000 (GMT)
-Received: from [9.111.8.182] (unknown [9.111.8.182])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 29 Apr 2025 07:45:36 +0000 (GMT)
-Message-ID: <5863e80e-8296-4f63-bf7d-783b2a9aca0a@linux.ibm.com>
-Date: Tue, 29 Apr 2025 09:45:36 +0200
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1u9fq4-0002h5-VD
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 03:57:13 -0400
+Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1u9fq3-0001i4-1k
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 03:57:12 -0400
+Received: by mail-qt1-x833.google.com with SMTP id
+ d75a77b69052e-47ae894e9b7so126197471cf.3
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 00:57:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1745913429; x=1746518229; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1d9ARNGCWUyYFaldzJ6MkvlROsfVdZxOlnwHjJwXpdw=;
+ b=hW7UP6s3AQDiFrt6GXYX1VaCb42YMN9PZM7A2XgUJuBGm0VZitfowYHJa7sYe9whMl
+ r4GewT3f2UfGEmxnkELpOe/bbTbtWqooT//xMhuf8xkoKho1KtxFjxoJtlbcO7/UfMpy
+ es0B9ekl3N0gk/BoaM/SpCpB6SNgrV+iYyyZqoyqhBm/5ayNlSRebG5WHVfs0mm+qEl6
+ ngVmgAbAojcfGosNCjwMdy4Nzj2OVNztCsszQvFBJYMP/jNWAz71AohKXH64ErXRMKNe
+ het7LXwKRPp5IcoKiukeYtCPWBVyybzgsTOoYvowtRWBr1LWatyC9pC+YLv5NdO2V/g0
+ zcrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1745913429; x=1746518229;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1d9ARNGCWUyYFaldzJ6MkvlROsfVdZxOlnwHjJwXpdw=;
+ b=fl6T81nX0Pz+9JWgmlfP2izMO/o6d6KEm4n5nRh4f0nVeOL0zsIm4v5+YXp7+rFK33
+ 4HYEd5Y4vtMrF9j9PgzuI2/g7wHZC43OoeUC1hpc57UQXKeiO8ULUQ5f9dfA28lpBDo0
+ sQgwnxIQESHsQXqbF+W/5XEWPZUHqrymA6LRWYXJ5SMyct8rc6KugmZJ1/rCLVym5yn8
+ 90x1hm5qYvzkxoB6DNmRwIc8XH0k/T8AqGfmDoVrcLaEby1EZbFojyjb+Tw3QQcasZV1
+ HrYcKuG125lYOGVF45ngBZJ5+u3ji1KwuYxFFNpAuCbqweFXkqRSbTXcjmo9Ii4N1ejh
+ 1klA==
+X-Gm-Message-State: AOJu0Ywu1EKEFyNq1deq/VBPppAOzQwlNC0r9dvi/vagsHmYVL9yMlI0
+ D3XPYu8Z+0IqPV48TdAXX0HOI5SsEBepwHRujVPbZ6m9fPIsSxeIzftmX3FD/iePGTqsfyUNVJg
+ jQE/zyK6EVvFxCBIgzP/hS6+0Jmw=
+X-Gm-Gg: ASbGncttNfb1B4o/4F7Riz622iqi1sK3j4yJxrADBE1pQHdvIzTI14+ny6djkKbGU80
+ TdqgJfi3s9CWYdLu948HHwOqkdV5hYMQFbcWztdxwp8u5IFrQ6rJ7Zjwup8k5iwMHbvA+qJAc6z
+ h7nxyABVXSuJVN7j+HTi2nWxn6JOLc18RpdJOdPuGlowDelHoNiciyIA0=
+X-Google-Smtp-Source: AGHT+IE1QCCp0r53vXZm9dT5WBeIS2TQbvOHBs4LAgLapKkSiRJymIFdYDMxA+3qvsT5f3DN+eOD3C5CdtHMGhCNbgQ=
+X-Received: by 2002:ac8:5d0f:0:b0:476:8e88:6632 with SMTP id
+ d75a77b69052e-48131de4b4bmr161656791cf.29.1745913429064; Tue, 29 Apr 2025
+ 00:57:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] s390x: Clear RAM on diag308 subcode 3 reset
-To: David Hildenbrand <david@redhat.com>,
- Nicholas Miehlbradt <nicholas@linux.ibm.com>, thuth@redhat.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, pasic@linux.ibm.com,
- farman@linux.ibm.com, qemu-s390x@nongnu.org
-Cc: qemu-devel@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20250429052021.10789-1-nicholas@linux.ibm.com>
- <489d0473-579a-4850-a6d5-be38bf2954b9@redhat.com>
-Content-Language: en-US
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <489d0473-579a-4850-a6d5-be38bf2954b9@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: EzX7TH8HLc0pktR3xlW_ct10ACmm9LM9
-X-Proofpoint-GUID: EzX7TH8HLc0pktR3xlW_ct10ACmm9LM9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDI5MDA1NiBTYWx0ZWRfX1rIW0bhSn+gv
- 57cP2lWMpOCeq5xisBKNi4tHwOTcSkiDgqGGe1bA3+BCvLoThs9TKG1sZ/qXdWqQLv3mp9zyfqs
- jJ7mn0ZSaarLBk3ciPZGxqHoGGNEkkQpqJ7/f0eNybIZJ298ypVY/oh2Y02T7ULMQNFsv+quJC/
- xZJlXBCEpeF0h/DKxjEi94IsyNFImJ6RxSsco/aGj4FL4xoJ/LZWu00dJl7WIwtR3adCWW8TqWI
- 2bseRMEzTf+tOoHuPa6fm1Y3g41cHnB1VvGkNCsOqbac+w368x6hhr3DKl7v7iAKjyR1WiBC/GE
- J/frmRp4cjldsorbshIODrLMDu+pXoGgq1oke+ZOYAe9mYc+aIqDAxzy6vRpPAageeZx6OSlRCe
- tpysmfue/3OebMGd4P6fdfdt08fcKVlDVbefORj+yaKmCswc1I+yM1KoNynW/ULoNi8ywqJV
-X-Authority-Analysis: v=2.4 cv=QNRoRhLL c=1 sm=1 tr=0 ts=681083a6 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=euwsPxPV0lgtU7-4LgsA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-04-29_02,2025-04-24_02,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0
- mlxlogscore=720 spamscore=0 clxscore=1011 mlxscore=0 malwarescore=0
- bulkscore=0 priorityscore=1501 phishscore=0 impostorscore=0
- lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2504290056
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250429060952.59508-1-vivek.kasireddy@intel.com>
+ <20250429060952.59508-6-vivek.kasireddy@intel.com>
+In-Reply-To: <20250429060952.59508-6-vivek.kasireddy@intel.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 29 Apr 2025 11:56:56 +0400
+X-Gm-Features: ATxdqUHlxW-SSu_x9X0RuX8rt3VNdFu9VG2vlHeBaH252V6nWO6dv4lyvVB8cD8
+Message-ID: <CAJ+F1CKxjHW773h1HaVH4o4SD2uWL=xnCBWutWN50FwxR-whGA@mail.gmail.com>
+Subject: Re: [PATCH v3 5/6] ui/spice: Create a new texture with linear layout
+ when gl=on is enabled
+To: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x833.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,15 +97,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 29.04.25 um 09:37 schrieb David Hildenbrand:
-[...]
-> The only problem I see is with vfio devices is the new "memory pinned" mode. [1]
-> 
-> There, we'd have to check if any such device is around (discarding of ram is disabled?), and fallback to actual zeroing of memory.
+Hi
 
-CC Matt to double check.
+On Tue, Apr 29, 2025 at 10:13=E2=80=AFAM Vivek Kasireddy
+<vivek.kasireddy@intel.com> wrote:
+>
+> Since most encoders/decoders (invoked by Spice) may not work with
+> tiled memory associated with a texture, we need to create another
+> texture that has linear memory layout and use that instead.
+>
+> Note that, there does not seem to be a direct way to indicate to the
+> GL implementation that a texture's backing memory needs to be linear.
+> Instead, we have to do it in a roundabout way where we need to first
+> create a tiled texture and import that as a memory object to create
+> a new texture that has a linear memory layout.
+>
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Cc: Frediano Ziglio <freddy77@gmail.com>
+> Cc: Dongwon Kim <dongwon.kim@intel.com>
+> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> ---
+>  ui/spice-display.c | 63 +++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 62 insertions(+), 1 deletion(-)
+>
+> diff --git a/ui/spice-display.c b/ui/spice-display.c
+> index 2c4daa0707..047d453a0b 100644
+> --- a/ui/spice-display.c
+> +++ b/ui/spice-display.c
+> @@ -26,6 +26,7 @@
+>  #include "ui/console.h"
+>  #include "trace.h"
+>
+> +#include "standard-headers/drm/drm_fourcc.h"
+>  #include "ui/spice-display.h"
+>
+>  bool spice_opengl;
+> @@ -890,11 +891,65 @@ static void spice_gl_update(DisplayChangeListener *=
+dcl,
+>      ssd->gl_updates++;
+>  }
+>
+> +static bool spice_gl_replace_fd_texture(SimpleSpiceDisplay *ssd,
+> +                                        EGLint *stride, EGLint *fourcc,
+> +                                        EGLuint64KHR *modifier,
+> +                                        int *fd)
+> +{
+> +    GLuint texture =3D 0;
+> +
+> +    if (!remote_client) {
+> +        return true;
+> +    }
+> +
+> +    if (surface_format(ssd->ds) =3D=3D PIXMAN_r5g6b5) {
+> +        return true;
+> +    }
 
-> 
-> [1] https://lkml.kernel.org/r/20250226210013.238349-1-mjrosato@linux.ibm.com
+Please explain why this particular format is handled differently with a com=
+ment.
 
+> +
+> +    if (*modifier =3D=3D DRM_FORMAT_MOD_LINEAR) {
+> +        return true;
+> +    }
+> +
+> +    /*
+> +     * We really want to ensure that the memory layout of the texture
+> +     * is linear; otherwise, the encoder's output may show corruption.
+> +     */
+> +    surface_gl_create_texture_from_fd(ssd->ds, *fd, &texture);
+> +
+> +    /*
+> +     * A successful return after glImportMemoryFdEXT() means that
+> +     * the ownership of fd has been passed to GL. In other words,
+> +     * the fd we got above should not be used anymore.
+> +     */
+> +    if (texture > 0) {
+> +        *fd =3D egl_get_fd_for_texture(texture,
+> +                                     stride, fourcc,
+> +                                     NULL);
+> +        if (*fd < 0) {
+> +            glDeleteTextures(1, &texture);
+> +            *fd =3D egl_get_fd_for_texture(ssd->ds->texture,
+> +                                         stride, fourcc,
+> +                                         NULL);
+> +            if (*fd < 0) {
+> +                surface_gl_destroy_texture(ssd->gls, ssd->ds);
+> +                warn_report("spice: no texture available to display");
+> +                return false;
+> +            }
+> +        } else {
+> +            surface_gl_destroy_texture(ssd->gls, ssd->ds);
+> +            ssd->ds->texture =3D texture;
+> +        }
+> +    }
+
+If it failed, it does nothing and continues?
+
+
+> +    return true;
+> +}
+> +
+>  static void spice_gl_switch(DisplayChangeListener *dcl,
+>                              struct DisplaySurface *new_surface)
+>  {
+>      SimpleSpiceDisplay *ssd =3D container_of(dcl, SimpleSpiceDisplay, dc=
+l);
+>      EGLint stride, fourcc;
+> +    EGLuint64KHR modifier;
+> +    bool ret;
+>      int fd;
+>
+>      if (ssd->ds) {
+> @@ -905,12 +960,18 @@ static void spice_gl_switch(DisplayChangeListener *=
+dcl,
+>          surface_gl_create_texture(ssd->gls, ssd->ds);
+>          fd =3D egl_get_fd_for_texture(ssd->ds->texture,
+>                                      &stride, &fourcc,
+> -                                    NULL);
+> +                                    &modifier);
+>          if (fd < 0) {
+>              surface_gl_destroy_texture(ssd->gls, ssd->ds);
+>              return;
+>          }
+>
+> +        ret =3D spice_gl_replace_fd_texture(ssd, &stride, &fourcc, &modi=
+fier, &fd);
+> +        if (!ret) {
+> +            surface_gl_destroy_texture(ssd->gls, ssd->ds);
+> +            return;
+> +        }
+> +
+>          trace_qemu_spice_gl_surface(ssd->qxl.id,
+>                                      surface_width(ssd->ds),
+>                                      surface_height(ssd->ds),
+> --
+> 2.49.0
+>
+>
+
+
+--
+Marc-Andr=C3=A9 Lureau
 
