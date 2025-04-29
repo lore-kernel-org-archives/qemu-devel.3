@@ -4,85 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2F89C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 12:47:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 934EEC369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 12:51:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9kKP-0002Ue-Ku; Tue, 29 Apr 2025 08:44:49 -0400
+	id 1u9kQa-0003dL-8l; Tue, 29 Apr 2025 08:51:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u9kKO-0002TH-Ts
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 08:44:48 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1u9kKL-0004N7-Iy
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 08:44:47 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2ff6e91cff5so5471197a91.2
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 05:44:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1745930683; x=1746535483; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sqkSXWmlAzXCmkQApAbF+YpwERfG9A2hRBSgef/JTFs=;
- b=ZDok/Q5Cj78hcj7v68oV8h7G6ySTe+IUjExHRQR22BtwGFQE6iHl1tuQDUijJflFGv
- 8cPj9stRuir4JcDzGPSTvsjFi5sVCcJtIdaYPLC7EBm6mz6abDgy7RFhGgzWPJcPuQw/
- ELZoG8vChgVYCGKn/moHkDh4r/QigA06KtAlNa3lkXB6vRlRFkHaSdqmqXtIhb9ZhUHa
- 5HOuYl6i+w34DDeOzH7wl5pIGb50Oz/dnHKmPimHMx8vEQHDu+21Miq+hFMx1KUOZHvE
- Pa1Q20wHErs3EOjQr0rRLiSTiGP1VeHigGIzjOskijtmbk/hsPRsPNHHG8Q0hZCLWfnp
- k1YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745930683; x=1746535483;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sqkSXWmlAzXCmkQApAbF+YpwERfG9A2hRBSgef/JTFs=;
- b=NDI/w06IPsxlI35nI35uXWUyia/v+ysN4J0MtV0rgW295UY7fdOARQUnru/kechdkK
- wseJ0Uf4Byp0fnVmJzmob/Xv6nRj1R9UbPmCxnXP7ESc5U/spxwfv16FJXK5hHFXbpOE
- bgS/C8xbYJhiy3ds+NSKQGQhG5RooTJOEvwOlZPbW1n2uZtc3uEACcfB0aUJ0GxVF3QQ
- V6DhjHyEJ0+0in8TlBinMwHpNC4HQGeks3lpxH2dFmMA6jormEzNKuH4Ls5MnwL6o0BA
- cyKTr4oqyDZTiaj+SvyTtiQEdtuMyiygf/1XWyivVBGRxhbPMa6g3z0oZOr/RNfk7IQi
- VaRQ==
-X-Gm-Message-State: AOJu0Yy1M+wyLKeVFTiUvzP5Cq+NunWk/Hq8IIqNaTpNClRFok1vuKoE
- bSyaMKKgOMQRa/Ukx9m0Z0LihAKTRrG6f6J8jI5LKaOS8pMKqriPe0HqL1GCB4AvxcBNXWpiZkS
- J
-X-Gm-Gg: ASbGncvnIjx0o9LKDtD9HWnooPsFA7u4b7AwZb0g+umZ8wTVLHEW0j1cbYoxxKyhfE8
- h0DY+h10sRNLt/SaOPUPQS+Ew1HCn7kNHp16MKebtEy01wjDwBhjswSOLHUvvDi5CLzvlniipLi
- jHmtutCrFiNc1I3KEJi+qi7p7AuzczpylfS9BMw+5TZawjRJtCtboF1J3qnnXeyv+wOZGfgPaPj
- Uzu8yWRxxfW0TOyn7v7l7M9lNp693z2LWuw1VReFwA3LLk4N4cxlU4srjXjxaeYpDGlglmgACSR
- +1a4Vbl9+cm01NQhcQ/VOkagVnsbewj9UDPA6hmwCOU=
-X-Google-Smtp-Source: AGHT+IGRP37o9WXqP6qNkb4kWf2nc8/v/hyMZYH+atvtdw7PrOYEpLRly9pK/EhuHjgpSxrIIMrf9A==
-X-Received: by 2002:a17:90b:394d:b0:2ff:5357:1c7f with SMTP id
- 98e67ed59e1d1-30a215ac108mr4945816a91.30.1745930683201; 
- Tue, 29 Apr 2025 05:44:43 -0700 (PDT)
-Received: from grind.. ([152.234.125.33]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-309ef04ba89sm11001161a91.10.2025.04.29.05.44.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 05:44:42 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, ajones@ventanamicro.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v5 7/9] target/riscv/kvm: add senvcfg CSR
-Date: Tue, 29 Apr 2025 09:44:19 -0300
-Message-ID: <20250429124421.223883-8-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250429124421.223883-1-dbarboza@ventanamicro.com>
-References: <20250429124421.223883-1-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1u9kPa-0002XD-Q7
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 08:50:13 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1u9kPX-000691-Aj
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 08:50:09 -0400
+Received: from example.com (unknown [20.107.5.167])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 85F92211AD21;
+ Tue, 29 Apr 2025 05:50:00 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 85F92211AD21
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1745931005;
+ bh=ns6+0s0UaAGhlbbCqiHdm1pFKIB+Rz0chhyo7IYM/v4=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=fYzcHlMeD5xHksDvVNRk1WI5r5HYT+63BSik9oUt+ppTqhBNdGlWBPnJ753Plh2gy
+ wOL4seE4ORiT4yhw8d5ZdTT6cT+MbWE7q6kWQu1VO3rH5++IkNyMz0wfmc9w+F85qr
+ Vw3x3pSCJnnGMevLAtoiplEfd+A1ITdasONh1W6o=
+Date: Tue, 29 Apr 2025 14:49:56 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Cameron Esfahani <dirty@apple.com>, Wei Liu <wei.liu@kernel.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: Re: [PATCH v3] target/i386/emulate: remove rflags leftovers
+Message-ID: <aBDK9Cd8AQn1H18t@example.com>
+References: <20250429093319.5010-1-magnuskulke@linux.microsoft.com>
+ <CABgObfaxzxdBf3f-JwKA8osOwZZQf-dqpsambpAFhPvkvjDo8w@mail.gmail.com>
+ <aBDBExDzR57PcRre@example.com>
+ <CABgObfbCSnQxdFzexobKr9HtoGcB_5R_6eioCzAvMyc6ZzGypw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABgObfbCSnQxdFzexobKr9HtoGcB_5R_6eioCzAvMyc6ZzGypw@mail.gmail.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,37 +70,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We're missing the senvcfg CSRs which is already present in the
-KVM UAPI.
+On Tue, Apr 29, 2025 at 02:27:21PM +0200, Paolo Bonzini wrote:
+> Il mar 29 apr 2025, 14:17 Magnus Kulke <magnuskulke@linux.microsoft.com> ha
+> scritto:
+> 
+> > Yes, I'm using the generalized emulator in the context of adding the MSHV
+> > accelerator. (I'll probably get around sending an RFC patchset this week
+> > for
+> > it). There were minor compilation issues w/ the emulator code, that I had
+> > to
+> > fix to make it compile on Linux. However I don't have access to an x86_64
+> > Mac for development either, so I can't test a HVF build.
+> >
+> 
+> No problem, using MSHV to test if I am breaking anything in the emulator is
+> enough!
+> 
+> Paolo
+> 
 
-Reported-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
----
- target/riscv/kvm/kvm-cpu.c | 2 ++
- 1 file changed, 2 insertions(+)
+Sure CC me, I'll try to keep up and test the changes.
 
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 1ce747d047..5efee8adb2 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -249,6 +249,7 @@ static KVMCPUConfig kvm_csr_cfgs[] = {
-     KVM_CSR_CFG("stval",      stval,      RISCV_CSR_REG(stval)),
-     KVM_CSR_CFG("sip",        mip,        RISCV_CSR_REG(sip)),
-     KVM_CSR_CFG("satp",       satp,       RISCV_CSR_REG(satp)),
-+    KVM_CSR_CFG("senvcfg",    senvcfg,    RISCV_CSR_REG(senvcfg)),
- };
- 
- static void *kvmconfig_get_env_addr(RISCVCPU *cpu, KVMCPUConfig *csr_cfg)
-@@ -698,6 +699,7 @@ static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
-     env->stval = 0;
-     env->mip = 0;
-     env->satp = 0;
-+    env->senvcfg = 0;
- }
- 
- static int kvm_riscv_get_regs_fp(CPUState *cs)
--- 
-2.49.0
-
+> Best,
+> >
+> > Magnus
+> >
+> > > ---
+> > > >  target/i386/emulate/x86_decode.c | 17 ++++++-----------
+> > > >  1 file changed, 6 insertions(+), 11 deletions(-)
+> > > >
+> > > > diff --git a/target/i386/emulate/x86_decode.c
+> > > > b/target/i386/emulate/x86_decode.c
+> > > > index 7fee219687..7efa2f570e 100644
+> > > > --- a/target/i386/emulate/x86_decode.c
+> > > > +++ b/target/i386/emulate/x86_decode.c
+> > > > @@ -1408,7 +1408,7 @@ struct decode_tbl _2op_inst[] = {
+> > > >  };
+> > > >
+> > > >  struct decode_x87_tbl invl_inst_x87 = {0x0, 0, 0, 0, 0, false, false,
+> > > > NULL,
+> > > > -                                       NULL, decode_invalid, 0};
+> > > > +                                       NULL, decode_invalid};
+> > > >
+> > > >  struct decode_x87_tbl _x87_inst[] = {
+> > > >      {0xd8, 0, 3, X86_DECODE_CMD_FADD, 10, false, false,
+> > > > @@ -1456,8 +1456,7 @@ struct decode_x87_tbl _x87_inst[] = {
+> > > >       decode_x87_modrm_st0, NULL, decode_d9_4},
+> > > >      {0xd9, 4, 0, X86_DECODE_CMD_INVL, 4, false, false,
+> > > >       decode_x87_modrm_bytep, NULL, NULL},
+> > > > -    {0xd9, 5, 3, X86_DECODE_CMD_FLDxx, 10, false, false, NULL, NULL,
+> > NULL,
+> > > > -     RFLAGS_MASK_NONE},
+> > > > +    {0xd9, 5, 3, X86_DECODE_CMD_FLDxx, 10, false, false, NULL, NULL,
+> > > > NULL},
+> > > >      {0xd9, 5, 0, X86_DECODE_CMD_FLDCW, 2, false, false,
+> > > >       decode_x87_modrm_bytep, NULL, NULL},
+> > > >
+> > > > @@ -1478,20 +1477,17 @@ struct decode_x87_tbl _x87_inst[] = {
+> > > >       decode_x87_modrm_st0, NULL},
+> > > >      {0xda, 3, 3, X86_DECODE_CMD_FCMOV, 10, false, false,
+> > > > decode_x87_modrm_st0,
+> > > >       decode_x87_modrm_st0, NULL},
+> > > > -    {0xda, 4, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL,
+> > NULL,
+> > > > -     RFLAGS_MASK_NONE},
+> > > > +    {0xda, 4, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL,
+> > NULL},
+> > > >      {0xda, 4, 0, X86_DECODE_CMD_FSUB, 4, false, false,
+> > > > decode_x87_modrm_st0,
+> > > >       decode_x87_modrm_intp, NULL},
+> > > >      {0xda, 5, 3, X86_DECODE_CMD_FUCOM, 10, false, true,
+> > > > decode_x87_modrm_st0,
+> > > >       decode_decode_x87_modrm_st0, NULL},
+> > > >      {0xda, 5, 0, X86_DECODE_CMD_FSUB, 4, true, false,
+> > > > decode_x87_modrm_st0,
+> > > >       decode_x87_modrm_intp, NULL},
+> > > > -    {0xda, 6, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL,
+> > NULL,
+> > > > -     RFLAGS_MASK_NONE},
+> > > > +    {0xda, 6, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL,
+> > NULL},
+> > > >      {0xda, 6, 0, X86_DECODE_CMD_FDIV, 4, false, false,
+> > > > decode_x87_modrm_st0,
+> > > >       decode_x87_modrm_intp, NULL},
+> > > > -    {0xda, 7, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL,
+> > NULL,
+> > > > -     RFLAGS_MASK_NONE},
+> > > > +    {0xda, 7, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL,
+> > NULL},
+> > > >      {0xda, 7, 0, X86_DECODE_CMD_FDIV, 4, true, false,
+> > > > decode_x87_modrm_st0,
+> > > >       decode_x87_modrm_intp, NULL},
+> > > >
+> > > > @@ -1511,8 +1507,7 @@ struct decode_x87_tbl _x87_inst[] = {
+> > > >       decode_x87_modrm_intp, NULL, NULL},
+> > > >      {0xdb, 4, 3, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL,
+> > > >       decode_db_4},
+> > > > -    {0xdb, 4, 0, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL,
+> > NULL,
+> > > > -     RFLAGS_MASK_NONE},
+> > > > +    {0xdb, 4, 0, X86_DECODE_CMD_INVL, 10, false, false, NULL, NULL,
+> > NULL},
+> > > >      {0xdb, 5, 3, X86_DECODE_CMD_FUCOMI, 10, false, false,
+> > > >       decode_x87_modrm_st0, decode_x87_modrm_st0, NULL},
+> > > >      {0xdb, 5, 0, X86_DECODE_CMD_FLD, 10, false, false,
+> > > > --
+> > > > 2.34.1
+> > > >
+> > > >
+> >
+> >
 
