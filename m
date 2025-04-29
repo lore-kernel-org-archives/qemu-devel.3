@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67890C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 09:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF5BEC3ABA9
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 09:50:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9hak-0005rb-Bn; Tue, 29 Apr 2025 05:49:30 -0400
+	id 1u9hbO-0006Xy-Vv; Tue, 29 Apr 2025 05:50:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u9hai-0005rH-96
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 05:49:28 -0400
-Received: from mgamail.intel.com ([192.198.163.19])
+ id 1u9hbN-0006Wq-EV
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 05:50:09 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1u9hag-0000lt-H6
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 05:49:27 -0400
+ id 1u9hbL-000128-Ht
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 05:50:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1745920166; x=1777456166;
+ t=1745920208; x=1777456208;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=oZpTia+6XVj/h1OeoJNYOvffFVIEw3X2QsDQsE0c8CA=;
- b=XRYApE4Dv2fVVOHZSANp9zgSa/UrNHNfpmt1s2zlsqd41Wa8kwTBgX27
- pg3FUkxITsD28rL1q3IP4jrI3TJsrfrhIARQTdXi6k+lYD36Tk8wSwgWo
- xYuXeCJA1ji200FBSszfzRHd4Q4uA/ZHWPJHlM9SoQQ5M62Y0vCayry+M
- gOgtUHJund/9aXfTXmIC5QJ1LFVjdaSTw86y6mozh7/R35xGaOYxDxevy
- lf78DmwQMuub932TnmF5jDn9hbLbkVimD6oCfLZ3hTtX1x2c/5PD9yyea
- XGhJjL9x2JDM99bYtGSqXvU+FfVmchsDUnbVirWzbj3V3d0a84ZdJBbVO g==;
-X-CSE-ConnectionGUID: Fth703dsTX+rELEgv/MjrQ==
-X-CSE-MsgGUID: gvboBmWtTzKMRYIsAnykFg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11417"; a="46652498"
-X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="46652498"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Apr 2025 02:49:24 -0700
-X-CSE-ConnectionGUID: LFG5Ey7PQqagNe0Zmm0vwQ==
-X-CSE-MsgGUID: tV0vLvAUQyOvHYaD4/jxGA==
+ bh=Wz0oQcKHk/Az2NoDoiHHFLOVkWTsFpelBCDLt3Mle9w=;
+ b=b7/CLpZYT8QmhZ07VEO35wkua3paSbXTTTstHe59/TkMrJWe1Kw5XK3c
+ /UCPrICk3n9O9MNzJre89a0HXlExhjS8thflJitR9O4M3VsfCON0ff9Rm
+ jdT/gQXoLyle7krvKnNp92Sv8ksHgDx2665p1YCW6BZeF8wDBu1nc+q2I
+ YJeomO975vFI3H5uUU93d6FU7xd8lF5KTwsMJ6RwmfOCq+3kp3xdSgdjl
+ sIMVk+YqqXb+iSEHTetnDeShIn6TlR5z16xdqwNZPx4vS3HSrqrVab5wf
+ QFPam6zHhOCGtmb6H6GjAUSKjLBpCUg0/3vsEbt3A3H9J5pEL1DvPierN Q==;
+X-CSE-ConnectionGUID: jT2XKOfRRX6YrHyY9y0/ow==
+X-CSE-MsgGUID: phlbX1KLQECA1YuCzo4geg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11417"; a="47623366"
+X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="47623366"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 29 Apr 2025 02:50:05 -0700
+X-CSE-ConnectionGUID: Je5z58QtQEC0dOA2BMJMpw==
+X-CSE-MsgGUID: o5nFavxwQO6MyxeEyIW66g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="133677679"
+X-IronPort-AV: E=Sophos;i="6.15,248,1739865600"; d="scan'208";a="134286309"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa010.jf.intel.com with ESMTP; 29 Apr 2025 02:49:21 -0700
-Date: Tue, 29 Apr 2025 18:10:18 +0800
+ by fmviesa010.fm.intel.com with ESMTP; 29 Apr 2025 02:50:01 -0700
+Date: Tue, 29 Apr 2025 18:10:58 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,16 +57,15 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 33/55] i386/cpu: Introduce enable_cpuid_0x1f to force
- exposing CPUID 0x1f
-Message-ID: <aBClilnva6J+WjkT@intel.com>
+Subject: Re: [PATCH v8 34/55] i386/tdx: Force exposing CPUID 0x1f
+Message-ID: <aBClsr+6urEwc2J1@intel.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-34-xiaoyao.li@intel.com>
+ <20250401130205.2198253-35-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250401130205.2198253-34-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250401130205.2198253-35-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=198.175.65.16; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -48
 X-Spam_score: -4.9
@@ -91,38 +90,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:43AM -0400, Xiaoyao Li wrote:
-> Date: Tue,  1 Apr 2025 09:01:43 -0400
+On Tue, Apr 01, 2025 at 09:01:44AM -0400, Xiaoyao Li wrote:
+> Date: Tue,  1 Apr 2025 09:01:44 -0400
 > From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH v8 33/55] i386/cpu: Introduce enable_cpuid_0x1f to force
->  exposing CPUID 0x1f
+> Subject: [PATCH v8 34/55] i386/tdx: Force exposing CPUID 0x1f
 > X-Mailer: git-send-email 2.34.1
 > 
-> Currently, QEMU exposes CPUID 0x1f to guest only when necessary, i.e.,
-> when topology level that cannot be enumerated by leaf 0xB, e.g., die or
-> module level, are configured for the guest, e.g., -smp xx,dies=2.
-> 
-> However, TDX architecture forces to require CPUID 0x1f to configure CPU
-> topology.
-> 
-> Introduce a bool flag, enable_cpuid_0x1f, in CPU for the case that
-> requires CPUID leaf 0x1f to be exposed to guest.
-> 
-> Introduce a new function x86_has_cpuid_0x1f(), which is the warpper of
-
-s/warpper/wrapper/
-
-(found by "scripts/checkpatch.pl --codespell *" :-))
-
-> cpu->enable_cpuid_0x1f and x86_has_extended_topo() to check if it needs
-> to enable cpuid leaf 0x1f for the guest.
+> TDX uses CPUID 0x1f to configure TD guest's CPU topology. So set
+> enable_cpuid_0x1f for TDs.
 > 
 > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > ---
->  target/i386/cpu.c     | 4 ++--
->  target/i386/cpu.h     | 9 +++++++++
->  target/i386/kvm/kvm.c | 2 +-
->  3 files changed, 12 insertions(+), 3 deletions(-)
+>  target/i386/kvm/tdx.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
