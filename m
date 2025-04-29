@@ -4,100 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1BACC369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 13:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D92C369DC
+	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 13:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9lJu-00061Y-4E; Tue, 29 Apr 2025 09:48:24 -0400
+	id 1u9lM7-00075V-PE; Tue, 29 Apr 2025 09:50:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9lJo-000608-KV
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 09:48:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1u9lJl-0002Ia-TB
- for qemu-devel@nongnu.org; Tue, 29 Apr 2025 09:48:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745934491;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mQCnz7nH2NBHwXyEMcPzFnTV157wqVq2fmiuHV8ef1c=;
- b=dMkw3oBT8+6a0pUV5+Vr3uyZrK8eTdkFRVdDIFaSadXmpUagfnzdyQmFg7wNIuVuOIiOnt
- yz3QzmysCQAivXhqYrvrgsqT57jZrj0FyHQMtCOQAVmxYSvZ1qzg7auMGVqAnVxuU8z9Hq
- tREJofIv2qzlK/+5f/8Q1fbQrB1mPSg=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-457-adcprLFrMfqx0bqejxtQrg-1; Tue, 29 Apr 2025 09:48:03 -0400
-X-MC-Unique: adcprLFrMfqx0bqejxtQrg-1
-X-Mimecast-MFC-AGG-ID: adcprLFrMfqx0bqejxtQrg_1745934483
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6e8feea216aso120227096d6.0
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 06:48:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9lLy-00074W-5V
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 09:50:31 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1u9lLv-00038Z-Ri
+ for qemu-devel@nongnu.org; Tue, 29 Apr 2025 09:50:29 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-39ee5ac4321so6502407f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 06:50:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745934625; x=1746539425; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OvZO1vi/PJ3mSrdrLV5JB0Ltlq5dtxV6yCArhUx/7xo=;
+ b=UFski+Lfpsa8mDn8OWvMvcWG0a9uZkDcpCPAegmcMyaGyQMzujVcRQ+nup2IaW11eI
+ u4OIJo1DO+0YqndpM4qhQlX01uwwIG9FVTE3kn2KNgAgQZ7IbUVGl7nsoPB64UrDsyjj
+ +3f451DNVC5URvRCvx8rqdIb7GTNpp7sP+ZEgvzzc++YQBUFtSaIlbGlY1T1HEOqYwqn
+ 5V7mzYQYUJ4mkRZNvv2LPNGc5ehfAKBT26IqIUV4lSUiZZSMtCIG4+3mpjB4EI5STTbS
+ 4HKEIpjWmVbcO3aSwSbiTcaJKN2cHhGDJfwT/e6OlLlg1RZtfk0vaY7FDB8nyidCI3bT
+ 1TBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745934483; x=1746539283;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mQCnz7nH2NBHwXyEMcPzFnTV157wqVq2fmiuHV8ef1c=;
- b=jJT7YGEWAcLK/qQw/O7rYL6NQ5l5U37uoy07aDW5HU5Nnk6kasOlcC+5eCQbJCbwDS
- stajUqb97uVbm1tjg9zjSC5aGZYeiJ81Rf2wfcjKTKiYXHIDml7WWWHZRY/aScN7usqE
- AgP/VUISx0492GuqM1LSVUGxAqrUqh4hXMOhhmcqLKaHvE8HNr1uMtvmr7wzv6WXEING
- ySBwH14xS8wbePPd2MBY5gjZPhZOhAQGOGRAWea3KwGsTZM9N5RUdii2srsG1F3SjwyM
- sxZx8uHKOqtic8b/liiR2IcUX9QPVBg04GDUXd+HH1PqWpZ67GQP6NuL7p8J+giKY49w
- hS0w==
+ d=1e100.net; s=20230601; t=1745934625; x=1746539425;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OvZO1vi/PJ3mSrdrLV5JB0Ltlq5dtxV6yCArhUx/7xo=;
+ b=dRNPuxTPDrg+7Bl31oBhcMQZd5XNVgL5YaFJaC4yLcKZZc4Xvs3g2jD2wuqHajF+7V
+ pb4ysUXgWCOKGMOCbg9ZDjm1P1IQa5020zmViDVvhnULGvEUl59e/lZA5EdDXKo0tRsm
+ zJdK+Ks3S8sqJrLy6YCOWWjZ6rBqrNrKqswLkhgPwNQHgUDvozGEzlblE5cI6wILRlGV
+ 2KuNhEWJ3nxowGoF133/IP/khXFEqhdDFejxJstoKhWSy0EfxRzL5HUs8x0EVpcSJNVI
+ sLxMi7GZD3BirZjGzLXuMHKlYCbEeWPetlKbqze5FCF8H4FTcazXVyeyRjqgEjGLpPDp
+ A48Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVyQaHkrCZN2mRInn76jK5pjJyrjSI272XfB3Ytor6RRTjwePWVAA4n1CZ6XzXMy3AH+ZIswe555Eys@nongnu.org
-X-Gm-Message-State: AOJu0Yy3pMgnfUBwtyMVXODm9oPAUl6HhuzZhLqKrjxW1a8FI+dmk3UM
- lgsdeD8N4KaaN8MmwoakCc1ZJkwRHiQMe6tFIo1fh21SlJoz/MzWXO5MMQ2IFBxiplleh1+U55t
- JYL9CGT/8vmBhAnUXU0mHi0w6Jxj30u46Sv+NIyl5UgkAtLYhDhNu
-X-Gm-Gg: ASbGnctxAJDwLAaVXhqbnuvoMBYxt+5q7/Ovp0ZcAAN2CKUAtPU1ScPeaEJB/M9zDUa
- IXeEm09YN/TA1NbAFdGC9jwhVWSteJQgZXlLExSEnnlW5o1Qec7nM8GmsLT6CBztIUACFU6+iOf
- exkwRizMTDj4EfbEMR1rW2mLm4S+gTSFhvNu0VzDt6MbD5+gooIqf8rJWlZBHqoFo7xBkse4r7Q
- /tM41uo2+ueeHxDBlSZScRfaBuZiWibaO3bHW/J1a2FIQMGy14SQuK2UbbrRsCvWOFQEzufs7UM
- JF4=
-X-Received: by 2002:a05:622a:6090:b0:476:ae71:eabf with SMTP id
- d75a77b69052e-4885a1123bdmr52684201cf.21.1745934482820; 
- Tue, 29 Apr 2025 06:48:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH2Xad4n6QAP6B+Ijwpjm+ltGAVvEGB/wBXlJZxEG2LkiBDM+1Kpx/mM1JNmg5aKcb+V1opDQ==
-X-Received: by 2002:a05:622a:6090:b0:476:ae71:eabf with SMTP id
- d75a77b69052e-4885a1123bdmr52683881cf.21.1745934482485; 
- Tue, 29 Apr 2025 06:48:02 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-47e9eaf264dsm80411381cf.10.2025.04.29.06.48.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 29 Apr 2025 06:48:01 -0700 (PDT)
-Date: Tue, 29 Apr 2025 09:47:59 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- berrange@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH v9 0/7] Allow to enable multifd and postcopy migration
- together
-Message-ID: <aBDYj3k83_W6ihlF@x1.local>
-References: <20250411114534.3370816-1-ppandit@redhat.com>
- <87ecxteym0.fsf@suse.de> <87bjswfeis.fsf@suse.de>
- <CAE8KmOzzn7g1=pd2J325gAf4ffmGALKoHdgL17So4KawxkZdbg@mail.gmail.com>
- <87y0vyepta.fsf@suse.de> <aAlu0hcUCdzmIN4p@x1.local>
- <CAE8KmOz7P+Pz8zwJq+mTEJbZjhCk7iAo9+c5DrZzhbTmz=VtUQ@mail.gmail.com>
- <aBDObgL7hDQMy63F@x1.local>
- <CAE8KmOx9yuZWWHnaA6gkC2VpeimY1=Pw+AU9iDvQ+vVpUp_vKg@mail.gmail.com>
+ AJvYcCXfQ0HhDEVlhqBvGXvdbdVdWFKc0cyGcHDuBpfISv9Df5SB3qn7VInykJMSvosv680ZZRG6li23Su6n@nongnu.org
+X-Gm-Message-State: AOJu0Yy3qtO8nUnv8Qw5K6BF+c6EyKsBKSwW2Dh/wr8k7gpumtEE/S7G
+ NjTm1A4txnLlt9rIAMXu5tByhQem9YvR6KQE2lvjXmLPnkgz8sKFSI7aROr1QVw=
+X-Gm-Gg: ASbGnctfFbOD8JGYN5UYznjuMw7rgJ0urtI3iXPTBBX46ZMyMYST4KtQgM3u7ixG1dX
+ sgau1WO0LNGnumJRIIozjclYDmzz+TjXgcEoOMlwZYBQ+yyVfayAeUnETRpNmVX5UN3y0tcGKiY
+ C3CyL+904rqLztWiTcMRD1F8zsdwfVAryznIGbDLyeHLEcDj3nr9AV/YsMVrP9lAwpf1wZNC2O7
+ jiwwYMcpPL+/8aRJwahAArBl/iLqWjPZvuDN0SE6tvKEGRX7q0UTYx/TVh/blpBmC4YEcY0j6Lj
+ MN93k9Ygz1Qam2kIPAbRH9Do5eKfRfTBjepXPF8D0OzVi8g+wWB6q3v5sffQC5k4ezlcwxw3Ij6
+ 4DGWKX3QsEeWYO2eTn3jk3+90
+X-Google-Smtp-Source: AGHT+IGpld5BfK8y50mkwHgjXFP9KeALLNdnIz4rwNhmdYh9pdmylf5YqZYhHkY7ACrfBwGnowZL0g==
+X-Received: by 2002:a05:6000:2483:b0:39d:724f:a8ae with SMTP id
+ ffacd0b85a97d-3a0891b8241mr3331761f8f.33.1745934625394; 
+ Tue, 29 Apr 2025 06:50:25 -0700 (PDT)
+Received: from [192.168.69.226] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a073e5e345sm14193749f8f.94.2025.04.29.06.50.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Apr 2025 06:50:24 -0700 (PDT)
+Message-ID: <3a9141ba-7916-462e-ac2e-a72f17f0767e@linaro.org>
+Date: Tue, 29 Apr 2025 15:50:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAE8KmOx9yuZWWHnaA6gkC2VpeimY1=Pw+AU9iDvQ+vVpUp_vKg@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/21] hw/virtio/virtio-pci: Remove
+ VIRTIO_PCI_FLAG_MIGRATE_EXTRA definition
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-block@nongnu.org,
+ Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, John Snow <jsnow@redhat.com>
+References: <20250115232247.30364-1-philmd@linaro.org>
+ <20250115232247.30364-10-philmd@linaro.org>
+ <1f4f420a-0f29-4eae-88e5-0bb100536d63@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <1f4f420a-0f29-4eae-88e5-0bb100536d63@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,49 +112,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 29, 2025 at 06:58:29PM +0530, Prasad Pandit wrote:
-> On Tue, 29 Apr 2025 at 18:34, Peter Xu <peterx@redhat.com> wrote:
-> > I think that's what Fabiano mentioned, but ultimately we need to verify it
-> > on a reproducer to know.
-> ...
-> > Looks ok, but please add some comments explain why postcopy needs to do it,
-> > and especially do it during precopy phase.
-> >
-> > I'd use migrate_postcopy_ram() instead.
+On 17/1/25 10:06, Thomas Huth wrote:
+> On 16/01/2025 00.22, Philippe Mathieu-Daudé wrote:
+>> VIRTIO_PCI_FLAG_MIGRATE_EXTRA was only used by the
+>> hw_compat_2_4[] array, via the 'migrate-extra=true'
+>> property. We removed all machines using that array,
+>> lets remove all the code around VIRTIO_PCI_FLAG_MIGRATE_EXTRA.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/hw/virtio/virtio-pci.h |  4 ----
+>>   hw/virtio/virtio-pci.c         | 10 ----------
+>>   2 files changed, 14 deletions(-)
+>>
+>> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/ 
+>> virtio-pci.h
+>> index 971c5fabd44..dd6eb9a4fc7 100644
+>> --- a/include/hw/virtio/virtio-pci.h
+>> +++ b/include/hw/virtio/virtio-pci.h
+>> @@ -32,7 +32,6 @@ DECLARE_OBJ_CHECKERS(VirtioPCIBusState, 
+>> VirtioPCIBusClass,
+>>   enum {
+>>       VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
+>>       VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
+>> -    VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT,
+>>       VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
+>>       VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
+>>       VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
+>> @@ -57,9 +56,6 @@ enum {
+>>   /* virtio version flags */
+>>   #define VIRTIO_PCI_FLAG_DISABLE_PCIE (1 << 
+>> VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT)
+>> -/* migrate extra state */
+>> -#define VIRTIO_PCI_FLAG_MIGRATE_EXTRA (1 << 
+>> VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT)
+>> -
+>>   /* have pio notification for modern device ? */
+>>   #define VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY \
+>>       (1 << VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT)
+>> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+>> index c773a9130c7..8dca3ae73e6 100644
+>> --- a/hw/virtio/virtio-pci.c
+>> +++ b/hw/virtio/virtio-pci.c
+>> @@ -144,13 +144,6 @@ static const VMStateDescription 
+>> vmstate_virtio_pci = {
+>>       }
+>>   };
+>> -static bool virtio_pci_has_extra_state(DeviceState *d)
+>> -{
+>> -    VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
+>> -
+>> -    return proxy->flags & VIRTIO_PCI_FLAG_MIGRATE_EXTRA;
+>> -}
+>> -
+>>   static void virtio_pci_save_extra_state(DeviceState *d, QEMUFile *f)
+>>   {
+>>       VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
+>> @@ -2352,8 +2345,6 @@ static void virtio_pci_bus_reset_hold(Object 
+>> *obj, ResetType type)
+>>   static const Property virtio_pci_properties[] = {
+>>       DEFINE_PROP_BIT("virtio-pci-bus-master-bug-migration", 
+>> VirtIOPCIProxy, flags,
+>>                       VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT, 
+>> false),
+>> -    DEFINE_PROP_BIT("migrate-extra", VirtIOPCIProxy, flags,
+>> -                    VIRTIO_PCI_FLAG_MIGRATE_EXTRA_BIT, true),
+>>       DEFINE_PROP_BIT("modern-pio-notify", VirtIOPCIProxy, flags,
+>>                       VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
+>>       DEFINE_PROP_BIT("x-disable-pcie", VirtIOPCIProxy, flags,
+>> @@ -2601,7 +2592,6 @@ static void 
+>> virtio_pci_bus_class_init(ObjectClass *klass, void *data)
+>>       k->load_queue = virtio_pci_load_queue;
+>>       k->save_extra_state = virtio_pci_save_extra_state;
+>>       k->load_extra_state = virtio_pci_load_extra_state;
+>> -    k->has_extra_state = virtio_pci_has_extra_state;
 > 
-> * Okay. It should be '||' instead of '&&' in the first conditional I
-> think, we want to write zeropage when postcopy is enabled.
-> ===
-> diff --git a/migration/multifd-zero-page.c b/migration/multifd-zero-page.c
-> index dbc1184921..4d6677feab 100644
-> --- a/migration/multifd-zero-page.c
-> +++ b/migration/multifd-zero-page.c
-> @@ -85,9 +85,11 @@ void multifd_recv_zero_page_process(MultiFDRecvParams *p)
->  {
->      for (int i = 0; i < p->zero_num; i++) {
->          void *page = p->host + p->zero[i];
-> -        if (ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
-> +        if (migrate_postcopy_ram() ||
-> +            ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
->              memset(page, 0, multifd_ram_page_size());
-> -        } else {
-> +        }
-> +        if (!ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
->              ramblock_recv_bitmap_set_offset(p->block, p->zero[i]);
->          }
->      }
-> ===
-> * I'll send this one if it looks okay.
+> Did you test your patches? Looking at the calling site:
+> 
+> static bool virtio_extra_state_needed(void *opaque)
+> {
+>      VirtIODevice *vdev = opaque;
+>      BusState *qbus = qdev_get_parent_bus(DEVICE(vdev));
+>      VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+> 
+>      return k->has_extra_state &&
+>          k->has_extra_state(qbus->parent);
+> }
+> 
+> ... this will return now false instead of true, so I think your patch 
+> here is wrong?
 
-Please don't rush to send. Again, let's verify the issue first before
-resending anything.
-
-If you could reproduce it it would be perfect, then we can already verify
-it.  Otherwise we may need help from Fabiano.  Let's not send anything if
-you're not yet sure whether it works..  It can confuse people thinking
-problem solved, but maybe not yet.
-
--- 
-Peter Xu
+Oops, good catch...
 
 
