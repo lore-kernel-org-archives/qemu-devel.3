@@ -4,107 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3FEDC369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 11:17:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 392C9C369DC
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 11:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA5Qo-0003XO-Bz; Wed, 30 Apr 2025 07:16:50 -0400
+	id 1uA5QU-0003Tn-IK; Wed, 30 Apr 2025 07:16:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uA5Qa-0003Um-7q
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 07:16:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
+ id 1uA5QF-0003ST-BO; Wed, 30 Apr 2025 07:16:15 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uA5QX-00009v-OJ
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 07:16:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746011792;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7aTdI0eXcHL+/EB0i8qpArKPzXZkLK5tj67K3mmoyHo=;
- b=PC8Les/NNA+gulEkDLHJFEgQW7U+GHfpsRA30wsg0ovcBBDQP6FY1QopgfwYiIwllVDOfq
- KhpEpnXT3DLEjd5y7ptOX0FyZ6k8MHisAsEDaziLLRRewPo+AHFdRjGugPmWXLqJvlffKP
- 9ujtxbmZPcUy9j6JBXrqW2jnKba8O9M=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-kCOjktBiM0WyWYNRPDrKiQ-1; Wed,
- 30 Apr 2025 07:16:28 -0400
-X-MC-Unique: kCOjktBiM0WyWYNRPDrKiQ-1
-X-Mimecast-MFC-AGG-ID: kCOjktBiM0WyWYNRPDrKiQ_1746011783
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9603319560A0; Wed, 30 Apr 2025 11:16:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.35])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B034F18001D5; Wed, 30 Apr 2025 11:16:08 +0000 (UTC)
-Date: Wed, 30 Apr 2025 12:16:05 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Mark Burton <mburton@qti.qualcomm.com>,
- Eduardo Habkost <eduardo@habkost.net>, Alessandro Di Federico <ale@rev.ng>,
- Alistair Francis <alistair.francis@wdc.com>,
- Anton Johansson <anjo@rev.ng>, Brian Cain <bcain@quicinc.com>,
- Chao Peng <chao.p.peng@linux.intel.com>, Neo Jia <cjia@nvidia.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- "Wedgwood, Chris" <cw@f00f.org>, dhedde@kalrayinc.com,
- Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Auger Eric <eric.auger@redhat.com>,
- Felipe Franciosi <felipe@nutanix.com>, iggy@theiggy.com,
- Warner Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>,
- Jason Gunthorpe <jgg@nvidia.com>,
- Jidong Xiao <jidong.xiao@gmail.com>, Jim Shu <jim.shu@sifive.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
- Luc Michel <luc@lmichel.fr>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Max Chou <max.chou@sifive.com>, Meirav Dean <mdean@redhat.com>,
- mimu@linux.vnet.ibm.com, "Ho, Nelson" <nelson.ho@windriver.com>,
- Paul Walmsley <paul.walmsley@sifive.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- Bernhard Beschow <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>,
- Thomas Huth <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>,
- z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "Wu, Zhiyong" <zwu.kernel@gmail.com>
-Subject: Re: KVM/QEMU Community call 29/04/2025 agenda items?
-Message-ID: <aBIGdQab_PufZ2X6@redhat.com>
-References: <874iy85yx2.fsf@draig.linaro.org>
- <eefb308b-5cd8-4b30-bc32-e37f601cb07b@linaro.org>
- <CABgObfYmm2RgFUuViDJA_cuqeCUOh_DV5Qar8YLnrbfYVV39VQ@mail.gmail.com>
- <87a57ydj8y.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
+ id 1uA5QC-0008S0-Ar; Wed, 30 Apr 2025 07:16:14 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53UA4Dx2006425;
+ Wed, 30 Apr 2025 11:15:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=UiZDN4ieHNK2NFU4zb9jQfoCyosFsY
+ zflROR2QiB/L8=; b=Zqc+iTeLE5Y1KdxxY0xZA2lBALBW6vabKXPCEzfY4JY/sw
+ eWqi771YaVvvY+OuxoK0H3OAhrlfNfysk+L9j1RM+hRzfPeXd7A61k4p57fM/mIe
+ Goiv9KTlOt/TpNSYxRlcjvhkJlu6E3T/n+PnVMxNMqkPOMNTQJmh5w+vvGhdnjV5
+ +4YN288NzHHhAih+1izvhejUuUn9vzII7W11ICAhqSomrf9Pac5sdrEaFR/hm2sf
+ wlsNLlcqDC6VFIi9XfxUJ0BsUZ60vZg/j+C5fFDVBFO9yAkCPqQn+sKLWvBEjizF
+ cYLK8duWoWP2U39NBXBbV6k2Ud6GcQuZXqe4UKKQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46bhsjr9tu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 30 Apr 2025 11:15:32 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 53UB0f8B025696;
+ Wed, 30 Apr 2025 11:15:32 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46bhsjr9tp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 30 Apr 2025 11:15:32 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53U9Rwfm024607;
+ Wed, 30 Apr 2025 11:15:31 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 469c1m7b0e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 30 Apr 2025 11:15:31 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53UBFRvw31130198
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 30 Apr 2025 11:15:27 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9824A20043;
+ Wed, 30 Apr 2025 11:15:27 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C2F0020040;
+ Wed, 30 Apr 2025 11:15:25 +0000 (GMT)
+Received: from li-c6426e4c-27cf-11b2-a85c-95d65bc0de0e.ibm.com (unknown
+ [9.124.221.86])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 30 Apr 2025 11:15:25 +0000 (GMT)
+Date: Wed, 30 Apr 2025 16:45:23 +0530
+From: Gautam Menghani <gautam@linux.ibm.com>
+To: npiggin@gmail.com, danielhb413@gmail.com, harshpb@linux.ibm.com,
+ pbonzini@redhat.com
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ vaibhav@linux.ibm.com
+Subject: Re: [PATCH v2] hw/ppc/spapr_hcall: Return host mitigation
+ characteristics in KVM mode
+Message-ID: <3yhi7haaddnluzc5oy23nynywjeazkkngx47hwoymce6lmcitp@chtjm727vuz4>
+References: <20250417111907.258723-1-gautam@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a57ydj8y.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+In-Reply-To: <20250417111907.258723-1-gautam@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=dcuA3WXe c=1 sm=1 tr=0 ts=68120654 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=kj9zAlcOel0A:10 a=XR8D0OoHHMoA:10 a=pPNRN5iWhjdFy-iXWNUA:9
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: q49GvDOeZJPz3AGM5bALBlxmbci7SeQD
+X-Proofpoint-ORIG-GUID: bRY-NMR0W81ELbhCsaXgLzU-rE2gsMAv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDA3NSBTYWx0ZWRfX4AOrvpznDcyQ
+ EavVYP9WyoA9/TfcLN3RwqIZfIQohrmanJfQFEDXOPHQ6uXsEkO//Y3VNmHmHutmZR/wrt7YRT1
+ 2U7jqWlTXKIiMcOake+F44NxJduoXDNvmkjWF5gyxaFYUoMOY0nqgsnhnG9BciLNTaCwkpC0NFJ
+ sb42mNkKyie0GlJOlRVJtLHBwITIWDGsAzQToEnE/I/i/V+7UihOKs/MVniVKCCwTmvPc1iNxjS
+ EW8psXKxRGVxvk3Udh8yoDSf1+sMuPrKuWdV7+/WkewSVWeHz0aQGifVbYDR7ga5FkQ2FKOyeSQ
+ rbXgmYeVKChdROyr61Q5kRXeF3xcMn71aga2/vbLGx2hWuSPNa3McmDqxVLkJmMu6qzm6Onm4NU
+ YyXmBo3CeW8vu2V59lS+INI5T9cROvXAgowuTG4KV9dzUymfgX0DovGyX5K3rRwmjl5To3kH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-30_03,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 suspectscore=0
+ spamscore=0 impostorscore=0 bulkscore=0 adultscore=0 mlxscore=0
+ malwarescore=0 mlxlogscore=556 priorityscore=1501 lowpriorityscore=0
+ clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504300075
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=gautam@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.483,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,134 +125,13 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 30, 2025 at 12:41:17PM +0200, Markus Armbruster wrote:
-> Paolo Bonzini <pbonzini@redhat.com> writes:
-> 
-> > Il lun 28 apr 2025, 14:58 Philippe Mathieu-Daudé <philmd@linaro.org> ha
-> > scritto:
-> >
-> >> On 28/4/25 13:05, Alex Bennée wrote:
-> >> >
-> >> > Hi,
-> >> >
-> >> > The KVM/QEMU community call is at:
-> >> >
-> >> > https://meet.jit.si/kvmcallmeeting
-> >> > @
-> >> > 29/04/2025 14:00 UTC
-> >> >
-> >> > Are there any agenda items for the sync-up?
-> >> >
-> >>
-> >> For single binary / heterogeneous emulation, we'd like QAPI to
-> >> be "feature-agnostic". In particular, using the example of KVM
-> >> accelerator, whether a binary can run with it built-in or not
-> >> should be is irrelevant for management applications: they should
-> >> only check if it is used (enabled).
-> >>
-> >> The following series is adding KVM specific structures and commands:
-> >>
-> >> https://lore.kernel.org/qemu-devel/20250409082649.14733-2-zhao1.liu@intel.com/
-> >> It could be interesting to discuss if this can be avoided. But this
-> >> can also be discussed on the mailing list (as it is still currently).
-> >>
-> >
-> > Would it be possible to just mark the commands as "do not autoregister" and
-> > then do the registration (for example) at machine/accelerator/CPU creation?
-> >
-> > I think qemu-ga already has a similar run-time registration model but I
-> > don't know why QEMU does not use it.
-> 
-> I think we covered this to a degree in
-> 
->     Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
->     Message-ID: <87a584b69n.fsf@pond.sub.org>
->     https://lore.kernel.org/qemu-devel/87a584b69n.fsf@pond.sub.org/
-> 
-> But let me try to give you a shorter argument.
+Hello,
 
-snip
+Please let me know if any changes are needed in this patch.
 
-> Another example: the KVM PMU filter series linked above wants to define
-> 
->     { 'enum': 'KvmPmuEventFormat',
->       'data': ['raw', 'x86-select-umask', 'x86-masked-entry'] }
-> 
-> The enum makes sense only when we have CONFIG_KVM.  Member @raw makes
-> sense regardless of target then.  The other two only for TARGET_I386.
-
-NB, ...makes sense only when we have CONFIG_KVM **and** the QEMU
-process was launched with '-accel kvm'.
-
-It feels strange that we want our reported schema show a difference when
-we launch "qemu-system-x86_64 -accel tcg" between two builds one with
-and without CONFIG_KVM, when KVM is not in use ? 
-
-Or to reverse the question, why does it matter if we report existence
-of KvmPmuEventFormat unconditionally ?
-
-> We could elect to forgo such conditionals.  The main disadvantage is
-> loss of precision in query-qmp-schema.  Which may or may not matter, and
-> may or may not box us into corners.
-
-Is the precision we have justifiable ?
-
-When it comes to runtime configuration QMP is already imprecise.
-
-eg set-cpu-topology on x390 is KVM only but still there
-   when running with TCG
-
-eg reporting query-hotpluggable-cpus on machine types that
-   lack hotplug
-
-eg reporting set-numa-node on arches/machines that lack NUMA
-
-eg reporting query-balloon when no balloon device is present
-
-eg reporting various xen- commands when either the target
-   or machine type lack Xen support
-
-eg reporting many cxl-* commands when either the target
-   or machine type lacks CXL support.
-
-IOW the use of TARGET_ conditionals are only addressing a very
-narrow area of (im)precision, whose rationale is largely an
-artifact of our historical separate binary / multiple builds
-choice. The only real justification for continuing with this
-is that we've always done it.
-
-Creating a general runtime conditional mechanism in QAPI feels
-like opening a pandora's box.
-
-We'll have a mechanism but it will be impractical to use it fully
-enough to be able to claim we are actually precise. The scope of
-runtime choices/conditions is too huge.
-
-It risks creating a mechanism that requires a never ending stream
-of patches to address continually reported gaps. A potentially
-significant maintainer burden.
-
-By comparison the CONFIG_ conditionals in QAPI, both the scope
-and semantics clear and it is a fairly tractable problem, although
-even there we miss them eg lack of CONFIG_XEN conditions on xen
-commands.
-
-> Pierrick volunteered to explore evaluating target-specific QAPI-Schem
-> conditionals at run-time instead of compile-time.  This would preserve
-> the value of query-qmp-schema, unlike conditional command registration.
-> 
-> Finally, syntax isn't everything.  We need to preserve behavior, too.
-> But that's a separate topic.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Thanks,
+Gautam
 
