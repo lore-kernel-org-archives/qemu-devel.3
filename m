@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68A78C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 16:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D279C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 16:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAAcu-0006ky-M9; Wed, 30 Apr 2025 12:49:40 -0400
+	id 1uAAcj-0005uC-6Z; Wed, 30 Apr 2025 12:49:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAAcT-0005F2-9B
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:49:18 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1uAAcI-0004wO-1d
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:49:02 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAAcP-0001vY-5R
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:49:11 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-73bf1cef6ceso169663b3a.0
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 09:49:07 -0700 (PDT)
+ id 1uAAcG-0001tn-2e
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:49:01 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2255003f4c6so962775ad.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 09:48:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746031747; x=1746636547; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746031739; x=1746636539; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TNItTYCqljpWXCYmXErceMTzMhdQ1ZlNvx1ZSBZc8tk=;
- b=g41GqAogsc29mLkM+uU6lZSmCVnPF97u8idsrXxM3aIgjK7l6BY6zgDd+1ClbVZwe6
- Mt2mP0WCELRxbcM/BE9N+C+yPm+YxJRiqAfHFUuqMyXVaPxdWwIdtv5Faah10QnGVQ6i
- hNg1me8VhwGLBNOeDJjACCQy2gfQmPsfmnsU1UKMWh8XiEEFr1UWlgKrFRiROW/x8ND2
- Udgk4L4xstK0nZGrFF7M2z9WhDlY3dQy3nmIUGGbNGTg13dL8NSYrbnhe9YUgBhIfNW6
- lUZzQNTVcggPAeGzhPmzRy0ex/hP3iBC4Xn6ItCeFwqGgasvb/gC27s/F8GDeX/8yIUA
- G8Aw==
+ bh=bj7bdjIxhUGMCWdPS49pLEhAXBQWGoqis5NhDT45PZA=;
+ b=AUXdtJSbfPfA4WE7q21CoEHKs13uSbohaEXcNlckZMvVCdQ0F1BqKWQwQqzqGafluR
+ 8pwOmMblaRoYLRMhaD7rKQdMzpFtUj3OA4/SX3oQyULJ/oMH8Q444Lv/k40F4+3Df/YH
+ fRwEDCi86OmsI9uRDlywpTHj0FX0oG4Ymxko01+Rsw/cDWlVpDigCnli3ayL2YWhyNjk
+ U0Q1TGbZRr58w1/Nhe29zsHoSdudMFzbxHcd0z4qcbxmd8/33xVJLponuF1PywLiM9Z0
+ 6Pe8tOkvO1qmobZMl3zjuy9z0lGiu7NEdW2sxLLWw/7ygKdKQDb/llI+0pjrAdeWkGUN
+ l3nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746031747; x=1746636547;
+ d=1e100.net; s=20230601; t=1746031739; x=1746636539;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TNItTYCqljpWXCYmXErceMTzMhdQ1ZlNvx1ZSBZc8tk=;
- b=Sv/tMz6upQ0Rycy/tAkTEq6vSgodlYtrEfuHijnU/G4NNn4fT6NIXVCbwZrvJY9RDh
- kwP3ylmvsOs7KayzqBmuNzi+WpTFaEAxSQkkppjhmz4W6DO4OEvUEuUaLzrnbQ73xYOQ
- 7GP0ktofx4wTLuFwLuJj76sMETxecz2WYqOLPf+HfAIm/bgS9SsROeumcKZO8i/HftdE
- ntyL3jcIsVKwPfkB9I4wLQbJsxYrnh1FpfjpZ9l9D2oz8IMrk1aTebT0soVRjG7ABQeh
- MbRpyXoQHpiCkV8ITv35RzzBCq6ySzWdf+N7Xf5yibQW0uEE5d2VwtkanWFFeLIfE12s
- QmdQ==
-X-Gm-Message-State: AOJu0YwcfxawqCvwm+1ypzHiccurxC3EyAedWuQLZfxL9kiiX216U4V3
- djOl5eoSXXnDvuXIxAL0UET7JEnJ/PQl9Dd0x2dinn+FSMYOpLlpfTTDQoveH3h+PnuvX1d8lsS
- m
-X-Gm-Gg: ASbGncsngCpOW8IewSNvPlVKfY/FOBolE4jpFz3/WJb8MFpZwxUiHyOJ0umhrNoRrpB
- FAhRXg5W0Mqr1Q0uqTL+6Spi3PiY1V4ilWEOlazg8s9EmVr5roRqlF4AT9Eiq3D0GlfIiMWXjH1
- 2O59+emp2rDY4UCrC9lLdQsthx0mj3y78HvDWkm/SGPOI/b1eij7JLgj7SCNf4j+RxbT0z3XEMl
- Bqzd//DjD/cllN1ajTp0tYOpUUNUtAdSvocH/CbdBwO3JTm1pfwE7SpMSRfEiOewq+7CeIzWgCc
- SsttimMeAYhmqH+m8cUiz8BCtH6Hkj/XAjNhK/ECeMbKLRkgE37t5hWTELB7YoCnkIxREVEEDAc
+ bh=bj7bdjIxhUGMCWdPS49pLEhAXBQWGoqis5NhDT45PZA=;
+ b=etOkAk99PTnhJk6QBhwdzZX5GmxH6Z8xa3k3VKBwwjs2Qcj2UyNN54DAL8LpVKKOnT
+ IVCXrpp5B0NBD/NiqAyOiw2v8+FutYQUpM8W7ADezgimOOu6CVXZElMlMDq1SoBM6KlS
+ QfkZtIkd775ywMdK7nudY1USeAyVqytwydUjk7J2VwZNsdAR7jb5k8gvWG0dxxHMKsYS
+ Sl6egt2fzlMh3YeCgoNoBpALEzSyh5Mvf0bKP598+GXGydAjMJ1MRdEx/3arb2WSu3Z9
+ /cf64Cb1P1KWRGOJS9KfmoktaK2gQTf4Q9N52V+aCZaJaA/k38us7PWBOi+xiwAOJQPz
+ dZYw==
+X-Gm-Message-State: AOJu0YxiYH2XPgSILF7RltzBJsSOgMhjaG2CwyYIFtYndtytYjPd3h2M
+ HPCsevpUxRwBKB2SqvuLPJVTGmxSOBosim+/iHQcULVCI6uUHOAfa57DUUMZCV3DGJ2gpRXqjXZ
+ R
+X-Gm-Gg: ASbGncvPIm1q4L3Jnhwo53Z709PbEqBC2ZiSUf4vUOxEB8QivuV/+HlIZyDIqR+CUYH
+ L0WcWWrv4EK6ENiQdpeDWO+C00uEWrENSZ42fB5dWwg2VzGDIlV9fpKh+Q/pbq/b/8fNm5KL4Nv
+ dROaCpCwMzQ6wV9wo7UBapokZxIutIFBH5AABiwsBHgS40lDxzSB2z0PFZM73v2eBN8m8uVXGeX
+ pDhSqA3jUwrCn5y2xE+xWCltII9NdId6mMCPU3+3STCXsPum10vtQcoGU+at7cc8DR+iS5Yj/D8
+ 0dt6vOoGW4V8CE4FsWhNHKtwpHJrWUHJI0zkQ3KbJ3SVN1ho9FhLAmW7CvpCtBWuHpacCX8ZiMA
  =
-X-Google-Smtp-Source: AGHT+IEZUb64eDJnTtOSb4gVDYBTxU/1+2ahoDFAxTIV1MMqSExpd5h5asji5aQsou6V7+mZ5GhxCQ==
-X-Received: by 2002:a05:6a20:9f4e:b0:1f5:7eb5:72dc with SMTP id
- adf61e73a8af0-20aa26d41ccmr5129356637.3.1746031746767; 
- Wed, 30 Apr 2025 09:49:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8p9hTIkPhwLtOWTGQqssRSu2Dp/OZtJS2y6rM3de+/Dc8KgMYqK/Z4c5zuO0LBF/We1rDsQ==
+X-Received: by 2002:a17:903:18b:b0:220:c911:3f60 with SMTP id
+ d9443c01a7336-22df35ca8a0mr55955305ad.47.1746031738702; 
+ Wed, 30 Apr 2025 09:48:58 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b15f76f580asm9129704a12.2.2025.04.30.09.49.06
+ 41be03b00d2f7-b15f76f580asm9129704a12.2.2025.04.30.09.48.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Apr 2025 09:49:06 -0700 (PDT)
+ Wed, 30 Apr 2025 09:48:58 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	philmd@linaro.org
-Subject: [PATCH v2 14/16] accel/tcg: Pass TCGTBCPUState to tb_gen_code
-Date: Wed, 30 Apr 2025 09:48:52 -0700
-Message-ID: <20250430164854.2233995-15-richard.henderson@linaro.org>
+Subject: [PATCH v2 04/16] target/i386: Split out x86_cpu_exec_reset
+Date: Wed, 30 Apr 2025 09:48:42 -0700
+Message-ID: <20250430164854.2233995-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250430164854.2233995-1-richard.henderson@linaro.org>
 References: <20250430164854.2233995-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,134 +101,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Note that target/i386/cpu.h defines CPU_INTERRUPT_INIT
+as CPU_INTERRUPT_RESET.  Therefore we can handle the
+new TCGCPUOps.cpu_exec_reset hook.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/internal-common.h |  5 ++---
- accel/tcg/cpu-exec.c        |  4 ++--
- accel/tcg/translate-all.c   | 28 +++++++++++++---------------
- 3 files changed, 17 insertions(+), 20 deletions(-)
+ accel/tcg/cpu-exec.c      | 39 ++++++++++++++-------------------------
+ target/i386/tcg/tcg-cpu.c | 11 ++++++++++-
+ 2 files changed, 24 insertions(+), 26 deletions(-)
 
-diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
-index 98c702422f..1dbc45dd95 100644
---- a/accel/tcg/internal-common.h
-+++ b/accel/tcg/internal-common.h
-@@ -12,6 +12,7 @@
- #include "exec/cpu-common.h"
- #include "exec/translation-block.h"
- #include "exec/mmap-lock.h"
-+#include "accel/tcg/tb-cpu-state.h"
- 
- extern int64_t max_delay;
- extern int64_t max_advance;
-@@ -46,9 +47,7 @@ static inline bool cpu_plugin_mem_cbs_enabled(const CPUState *cpu)
- #endif
- }
- 
--TranslationBlock *tb_gen_code(CPUState *cpu, vaddr pc,
--                              uint64_t cs_base, uint32_t flags,
--                              int cflags);
-+TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s);
- void page_init(void);
- void tb_htable_init(void);
- void tb_reset_jump(TranslationBlock *tb, int n);
 diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 4ad84c2db8..a7436d2873 100644
+index 010f38edaa..c21c5d202d 100644
 --- a/accel/tcg/cpu-exec.c
 +++ b/accel/tcg/cpu-exec.c
-@@ -574,7 +574,7 @@ void cpu_exec_step_atomic(CPUState *cpu)
-         tb = tb_lookup(cpu, s);
-         if (tb == NULL) {
-             mmap_lock();
--            tb = tb_gen_code(cpu, s.pc, s.cs_base, s.flags, s.cflags);
-+            tb = tb_gen_code(cpu, s);
-             mmap_unlock();
-         }
+@@ -819,33 +819,22 @@ static inline bool cpu_handle_interrupt(CPUState *cpu,
+             cpu->exception_index = EXCP_HLT;
+             bql_unlock();
+             return true;
+-        }
+-#if defined(TARGET_I386)
+-        else if (interrupt_request & CPU_INTERRUPT_INIT) {
+-            X86CPU *x86_cpu = X86_CPU(cpu);
+-            CPUArchState *env = &x86_cpu->env;
+-            replay_interrupt();
+-            cpu_svm_check_intercept_param(env, SVM_EXIT_INIT, 0, 0);
+-            do_cpu_init(x86_cpu);
+-            cpu->exception_index = EXCP_HALTED;
+-            bql_unlock();
+-            return true;
+-        }
+-#else
+-        else if (interrupt_request & CPU_INTERRUPT_RESET) {
+-            replay_interrupt();
+-            cpu->cc->tcg_ops->cpu_exec_reset(cpu);
+-            bql_unlock();
+-            return true;
+-        }
+-#endif /* !TARGET_I386 */
+-        /* The target hook has 3 exit conditions:
+-           False when the interrupt isn't processed,
+-           True when it is, and we should restart on a new TB,
+-           and via longjmp via cpu_loop_exit.  */
+-        else {
++        } else {
+             const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
  
-@@ -951,7 +951,7 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
-                 uint32_t h;
- 
-                 mmap_lock();
--                tb = tb_gen_code(cpu, s.pc, s.cs_base, s.flags, s.cflags);
-+                tb = tb_gen_code(cpu, s);
-                 mmap_unlock();
- 
-                 /*
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index 97aadee52c..7b0bd50904 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -290,9 +290,7 @@ static int setjmp_gen_code(CPUArchState *env, TranslationBlock *tb,
++            if (interrupt_request & CPU_INTERRUPT_RESET) {
++                replay_interrupt();
++                tcg_ops->cpu_exec_reset(cpu);
++                bql_unlock();
++                return true;
++            }
++
++            /*
++             * The target hook has 3 exit conditions:
++             * False when the interrupt isn't processed,
++             * True when it is, and we should restart on a new TB,
++             * and via longjmp via cpu_loop_exit.
++             */
+             if (tcg_ops->cpu_exec_interrupt(cpu, interrupt_request)) {
+                 if (!tcg_ops->need_replay_interrupt ||
+                     tcg_ops->need_replay_interrupt(interrupt_request)) {
+diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
+index 5d1c758ae3..f3f0380e70 100644
+--- a/target/i386/tcg/tcg-cpu.c
++++ b/target/i386/tcg/tcg-cpu.c
+@@ -120,6 +120,15 @@ static bool x86_debug_check_breakpoint(CPUState *cs)
+     /* RF disables all architectural breakpoints. */
+     return !(env->eflags & RF_MASK);
  }
++
++static void x86_cpu_exec_reset(CPUState *cs)
++{
++    CPUArchState *env = cpu_env(cs);
++
++    cpu_svm_check_intercept_param(env, SVM_EXIT_INIT, 0, 0);
++    do_cpu_init(env_archcpu(env));
++    cs->exception_index = EXCP_HALTED;
++}
+ #endif
  
- /* Called with mmap_lock held for user mode emulation.  */
--TranslationBlock *tb_gen_code(CPUState *cpu,
--                              vaddr pc, uint64_t cs_base,
--                              uint32_t flags, int cflags)
-+TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s)
- {
-     CPUArchState *env = cpu_env(cpu);
-     TranslationBlock *tb, *existing_tb;
-@@ -305,14 +303,14 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
-     assert_memory_lock();
-     qemu_thread_jit_write();
- 
--    phys_pc = get_page_addr_code_hostp(env, pc, &host_pc);
-+    phys_pc = get_page_addr_code_hostp(env, s.pc, &host_pc);
- 
-     if (phys_pc == -1) {
-         /* Generate a one-shot TB with 1 insn in it */
--        cflags = (cflags & ~CF_COUNT_MASK) | 1;
-+        s.cflags = (s.cflags & ~CF_COUNT_MASK) | 1;
-     }
- 
--    max_insns = cflags & CF_COUNT_MASK;
-+    max_insns = s.cflags & CF_COUNT_MASK;
-     if (max_insns == 0) {
-         max_insns = TCG_MAX_INSNS;
-     }
-@@ -332,12 +330,12 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
- 
-     gen_code_buf = tcg_ctx->code_gen_ptr;
-     tb->tc.ptr = tcg_splitwx_to_rx(gen_code_buf);
--    if (!(cflags & CF_PCREL)) {
--        tb->pc = pc;
-+    if (!(s.cflags & CF_PCREL)) {
-+        tb->pc = s.pc;
-     }
--    tb->cs_base = cs_base;
--    tb->flags = flags;
--    tb->cflags = cflags;
-+    tb->cs_base = s.cs_base;
-+    tb->flags = s.flags;
-+    tb->cflags = s.cflags;
-     tb_set_page_addr0(tb, phys_pc);
-     tb_set_page_addr1(tb, -1);
-     if (phys_pc != -1) {
-@@ -355,9 +353,9 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
-     tcg_ctx->guest_mo = cpu->cc->tcg_ops->guest_default_memory_order;
- 
-  restart_translate:
--    trace_translate_block(tb, pc, tb->tc.ptr);
-+    trace_translate_block(tb, s.pc, tb->tc.ptr);
- 
--    gen_code_size = setjmp_gen_code(env, tb, pc, host_pc, &max_insns, &ti);
-+    gen_code_size = setjmp_gen_code(env, tb, s.pc, host_pc, &max_insns, &ti);
-     if (unlikely(gen_code_size < 0)) {
-         switch (gen_code_size) {
-         case -1:
-@@ -434,10 +432,10 @@ TranslationBlock *tb_gen_code(CPUState *cpu,
-      * For CF_PCREL, attribute all executions of the generated code
-      * to its first mapping.
-      */
--    perf_report_code(pc, tb, tcg_splitwx_to_rx(gen_code_buf));
-+    perf_report_code(s.pc, tb, tcg_splitwx_to_rx(gen_code_buf));
- 
-     if (qemu_loglevel_mask(CPU_LOG_TB_OUT_ASM) &&
--        qemu_log_in_addr_range(pc)) {
-+        qemu_log_in_addr_range(s.pc)) {
-         FILE *logfile = qemu_log_trylock();
-         if (logfile) {
-             int code_size, data_size;
+ #include "accel/tcg/cpu-ops.h"
+@@ -147,7 +156,7 @@ const TCGCPUOps x86_tcg_ops = {
+     .do_interrupt = x86_cpu_do_interrupt,
+     .cpu_exec_halt = x86_cpu_exec_halt,
+     .cpu_exec_interrupt = x86_cpu_exec_interrupt,
+-    .cpu_exec_reset = cpu_reset,
++    .cpu_exec_reset = x86_cpu_exec_reset,
+     .do_unaligned_access = x86_cpu_do_unaligned_access,
+     .debug_excp_handler = breakpoint_handler,
+     .debug_check_breakpoint = x86_debug_check_breakpoint,
 -- 
 2.43.0
 
