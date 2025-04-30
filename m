@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E5ADC369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 16:51:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6263FC3ABA9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 16:52:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAAcn-0006Em-AQ; Wed, 30 Apr 2025 12:49:33 -0400
+	id 1uAAcj-00060g-Vt; Wed, 30 Apr 2025 12:49:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAAcX-0005GV-08
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:49:18 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1uAAcP-00059u-FA
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:49:14 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAAcR-0001vs-2S
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:49:13 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-736aa9d0f2aso202914b3a.0
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 09:49:09 -0700 (PDT)
+ id 1uAAcM-0001vA-Sd
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:49:08 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-7394945d37eso123161b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 09:49:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746031748; x=1746636548; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746031745; x=1746636545; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BDXEkP41hr8unW2CYQoxGQEU1dZcDdkH6hmvqIdSZek=;
- b=zRdEWEIKd4wk1g3dIyDx+6nLy4mF9ZYIFp+Q1MPLbGdKQkez0DQR8Ak5pOl2B45376
- 2nAP2AtPZnidEsjNfCwCeiHBfBxLU625ZPJ/4X8YUbwyvAg1FYYsh7y/xPYk8X1faxr8
- s9YwEAthxyY3MQ4+N7DOjbo/BDH0YVpz4naYBzMJ3/8qBG2kehRkrhJHJeyrewZUb66y
- kYpXXtaxFUCbphcwQVXs03RLxJk7fk9lahmYJVgAn/m6oPiwKDBZfjEnycFsmSoI7eDd
- Ft9/Qw6qtXhQwVVjx3WPQ5Ouee3eU+aACbhO0yCtJzlUa1AD+Y8xZ7r7R1xNshPwckMy
- lrSw==
+ bh=+nN+VhF6i+pyNwMFDScdlcKn4qf+d1VgVsfcYGuBPgk=;
+ b=N0ckhziHavNlFPS6jTpxvsIJZkPpMd5FSwD4CDBrKLf1opDQjLlm0PY+8Yj+pKQnyO
+ a3o4vV93HBFBD0QJRiYSAqFIxc2dzl1FAmBeFv428w1e0fCQE1r6+qknGmi6U5qW/cNf
+ 3ZJQTfXZdRtVu1pdT30WqczF94QKWhPAVXRH2e3WM+Yz+95d4EijC08NiWG1SvXj2gHi
+ DFvD7AHp9SSMyftqF/DdiiVmfQuo/7OlIcx4/qeyyY8WbQwpv54UZAL3uk/Jx/u1bW+W
+ BysTyIdPRcSRRRUotEpp0O2fyTop+Zqs9Z6NUJXDoMSeUbI+WutGn8Jvf1bjcUsqvrv0
+ FzSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746031748; x=1746636548;
+ d=1e100.net; s=20230601; t=1746031745; x=1746636545;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BDXEkP41hr8unW2CYQoxGQEU1dZcDdkH6hmvqIdSZek=;
- b=Tn5Bnmc3vR+u22mb7gpa7m1i/uuhcT9tqU6Xh7KkRfsluVoTaKtjghDvr/pEpUsD8e
- xcr4cVKLxBr1CS3kHYkg6M+S8sQuca92gnn0o/OCRns994z2KWEMbrviKgmvHQPBhsO4
- IeQepNawmUwMNb3zxY8hpmvXADGbhXkljqNYUL+lbJoedK/8ZIZxIZ9OPCSXHXLbFOrT
- vRj9ndfJTvXc8w/EQCA9g6R4X1IUjLsQd4wo4R+4XYmO2o2Z9+60jeMsaeVfCSum50TT
- pY+3zWKwyjL/uAIAe5MXqNwVb4nwz1DkbBA9pZREH0vHgJ5bUi3avA75jYibwljCa/Yl
- Cvfg==
-X-Gm-Message-State: AOJu0Yy3KfWqJajdi/O6Q3s8XAjXtGgALtGLBDZpgYB7UyKghUyQN8VM
- 04Ga7MZmD4oZ/2c0lo6ZfDy9dDQXFxK1Bxfd5851XVPuzb2+xKxN7k8unL2soPnI7FEl+BVD14r
- d
-X-Gm-Gg: ASbGncvB0asgh0W9KgWt2Y3YFmBLgdT97BEMJvWIyGS2PLoxuknoVEsYeMrIgBglTQK
- OWf/VhoE4bWm2UQnQlEu8ycKIard/INZLJ0utfzkTfhkLNbWwZxGajF59AlTe2Ea38HNZZbqlGs
- jRFwV0P0NNK8kzQOFcqh2YSs3G8eayRBBPv/q7AXZUnFUQ1xIXdLH0ymJg3qPoiMuvSU+d0AcNH
- WMQz/d/5K0lDk4m9YWi8DO6xj/suz/TuAzKfFbH2tHe9//zP8/ltU0+Ty8pl5YGgF3MxrFTWOTi
- 0pCb+UBRhWGBaQNj4JIjgA1Gx5qV1Pjoc74SKcskacrRzpfXJBnGJK4nAZr+0VVTbCIs6eVSI/M
- =
-X-Google-Smtp-Source: AGHT+IFX4saEsqc4H+VJnoVaR2OP0bDQxkQNsbrJPLFxFxcUE1Cq02AFDk/sP9OwTi2iv82XGY6oPQ==
-X-Received: by 2002:a05:6a21:168b:b0:1ee:e24d:8fe3 with SMTP id
- adf61e73a8af0-20a87947e3bmr5794917637.10.1746031748329; 
- Wed, 30 Apr 2025 09:49:08 -0700 (PDT)
+ bh=+nN+VhF6i+pyNwMFDScdlcKn4qf+d1VgVsfcYGuBPgk=;
+ b=gLIozX/oXp69TVEttWj7OFCP5C6P2fJQEmbxUhri7yEMsa7s15TfmUVknfuLt1rTWd
+ 28SRjzugmeZAxPjFDwrCT7Mt5GCisyGlky1BsJt0cnuQyK+/Va2GwPmqbJ1DkoQt2QwN
+ Ix6stuZpdjQRXOH+A71gqqNmEthlJJyzLrlCNPdiVuBRK4wAUGlHClSAuRbw6JA3pmZi
+ 399DeOnqRRHv2OdUTs+3l68YjdoEjn/mnPx7LipSCQIgRvWTrbhSC1PoqlNtYg0hyyb0
+ t7dVW5N46aFmK4D+qqCGKrsVaZsSxJ1ZRrUQ1defoBmbCzRdYjMcZ9sQI47wGAgiKUgt
+ Au+Q==
+X-Gm-Message-State: AOJu0Yy0NRPGAZ4eNWibE54KaVCsygKulN5AzVPetm0cA3i5NfD0eAmD
+ 2jO/BB2Y3MNzOp2mE3OtC/q1F5MTvxsrCnS18RqbpjCtZTHsT4yjq8ueN+wldq9wSrl5T0tYDEG
+ n
+X-Gm-Gg: ASbGncuzExWAol35rG6CTzfEwHbqoej1oY0h3n/rOG7bcAGCY4Zja1ZlHf802DS4hWS
+ y/B6tw85EuYiHRtfwQrGAgB6x7ACQ6ZWpFXtj3Tq9Imfj0T0lkPyvbx+W76P5Q3J0NFr+uMkkMs
+ T609+OIUD9X5QjGX7cdhs4oRY3oUR2XswLpRxg02l3dcJ+qzEokT3g4GMIBUGVvIocsoq9Xu952
+ WotYMfbEc/x0OmOsyGX2JVuA9G8DSP18Ic/QLL2TJn3MtYL/IWJNJjRx71hTzmEvA5Q/3UpetAa
+ jXRgKNXoY4a8hc4IDuQZCeeV75m2aq9ZeH25iwY5oocjHB/3WzWyUshB/fJTJqpLCgPndG9NJIJ
+ 6xUynetVqeA==
+X-Google-Smtp-Source: AGHT+IHnOcKwmRXIJF1cFlSqM1U1OBhDPMVLQSl6TTBIThOI/V0/WpobNbEIg39I4G6FsX+aZqTkGQ==
+X-Received: by 2002:a05:6a20:cfa4:b0:1f5:9208:3ac7 with SMTP id
+ adf61e73a8af0-20aa468607fmr5534473637.41.1746031744677; 
+ Wed, 30 Apr 2025 09:49:04 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b15f76f580asm9129704a12.2.2025.04.30.09.49.07
+ 41be03b00d2f7-b15f76f580asm9129704a12.2.2025.04.30.09.49.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Apr 2025 09:49:07 -0700 (PDT)
+ Wed, 30 Apr 2025 09:49:04 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pierrick.bouvier@linaro.org,
 	philmd@linaro.org
-Subject: [PATCH v2 16/16] accel/tcg: Compile cpu-exec.c twice
-Date: Wed, 30 Apr 2025 09:48:54 -0700
-Message-ID: <20250430164854.2233995-17-richard.henderson@linaro.org>
+Subject: [PATCH v2 11/16] accel/tcg: Pass TCGTBCPUState to tb_lookup
+Date: Wed, 30 Apr 2025 09:48:49 -0700
+Message-ID: <20250430164854.2233995-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250430164854.2233995-1-richard.henderson@linaro.org>
 References: <20250430164854.2233995-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,53 +101,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cpu-exec.c  | 2 --
- accel/tcg/meson.build | 2 +-
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ accel/tcg/cpu-exec.c | 28 +++++++++++++---------------
+ 1 file changed, 13 insertions(+), 15 deletions(-)
 
 diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index a8fbda31ba..cc5f362305 100644
+index 4a405d7b56..808983e461 100644
 --- a/accel/tcg/cpu-exec.c
 +++ b/accel/tcg/cpu-exec.c
-@@ -22,7 +22,6 @@
- #include "qapi/error.h"
- #include "qapi/type-helpers.h"
- #include "hw/core/cpu.h"
--#include "accel/tcg/cpu-ldst.h"
- #include "accel/tcg/cpu-ops.h"
- #include "accel/tcg/helper-retaddr.h"
- #include "trace.h"
-@@ -37,7 +36,6 @@
- #include "qemu/rcu.h"
- #include "exec/log.h"
- #include "qemu/main-loop.h"
--#include "cpu.h"
- #include "exec/icount.h"
- #include "exec/replay-core.h"
- #include "system/tcg.h"
-diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
-index 3f7b127130..0bb089299b 100644
---- a/accel/tcg/meson.build
-+++ b/accel/tcg/meson.build
-@@ -5,6 +5,7 @@ endif
- tcg_ss = ss.source_set()
+@@ -232,35 +232,33 @@ static TranslationBlock *tb_htable_lookup(CPUState *cpu, vaddr pc,
+  *
+  * Returns: an existing translation block or NULL.
+  */
+-static inline TranslationBlock *tb_lookup(CPUState *cpu, vaddr pc,
+-                                          uint64_t cs_base, uint32_t flags,
+-                                          uint32_t cflags)
++static inline TranslationBlock *tb_lookup(CPUState *cpu, TCGTBCPUState s)
+ {
+     TranslationBlock *tb;
+     CPUJumpCache *jc;
+     uint32_t hash;
  
- tcg_ss.add(files(
-+  'cpu-exec.c',
-   'cpu-exec-common.c',
-   'tcg-runtime.c',
-   'tcg-runtime-gvec.c',
-@@ -21,7 +22,6 @@ libsystem_ss.add_all(tcg_ss)
- tcg_specific_ss = ss.source_set()
- tcg_specific_ss.add(files(
-   'tcg-all.c',
--  'cpu-exec.c',
-   'translate-all.c',
- ))
- tcg_specific_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user-exec.c'))
+     /* we should never be trying to look up an INVALID tb */
+-    tcg_debug_assert(!(cflags & CF_INVALID));
++    tcg_debug_assert(!(s.cflags & CF_INVALID));
+ 
+-    hash = tb_jmp_cache_hash_func(pc);
++    hash = tb_jmp_cache_hash_func(s.pc);
+     jc = cpu->tb_jmp_cache;
+ 
+     tb = qatomic_read(&jc->array[hash].tb);
+     if (likely(tb &&
+-               jc->array[hash].pc == pc &&
+-               tb->cs_base == cs_base &&
+-               tb->flags == flags &&
+-               tb_cflags(tb) == cflags)) {
++               jc->array[hash].pc == s.pc &&
++               tb->cs_base == s.cs_base &&
++               tb->flags == s.flags &&
++               tb_cflags(tb) == s.cflags)) {
+         goto hit;
+     }
+ 
+-    tb = tb_htable_lookup(cpu, pc, cs_base, flags, cflags);
++    tb = tb_htable_lookup(cpu, s.pc, s.cs_base, s.flags, s.cflags);
+     if (tb == NULL) {
+         return NULL;
+     }
+ 
+-    jc->array[hash].pc = pc;
++    jc->array[hash].pc = s.pc;
+     qatomic_set(&jc->array[hash].tb, tb);
+ 
+ hit:
+@@ -268,7 +266,7 @@ hit:
+      * As long as tb is not NULL, the contents are consistent.  Therefore,
+      * the virtual PC has to match for non-CF_PCREL translations.
+      */
+-    assert((tb_cflags(tb) & CF_PCREL) || tb->pc == pc);
++    assert((tb_cflags(tb) & CF_PCREL) || tb->pc == s.pc);
+     return tb;
+ }
+ 
+@@ -402,7 +400,7 @@ const void *HELPER(lookup_tb_ptr)(CPUArchState *env)
+         cpu_loop_exit(cpu);
+     }
+ 
+-    tb = tb_lookup(cpu, s.pc, s.cs_base, s.flags, s.cflags);
++    tb = tb_lookup(cpu, s);
+     if (tb == NULL) {
+         return tcg_code_gen_epilogue;
+     }
+@@ -581,7 +579,7 @@ void cpu_exec_step_atomic(CPUState *cpu)
+          * Any breakpoint for this insn will have been recognized earlier.
+          */
+ 
+-        tb = tb_lookup(cpu, s.pc, s.cs_base, s.flags, s.cflags);
++        tb = tb_lookup(cpu, s);
+         if (tb == NULL) {
+             mmap_lock();
+             tb = tb_gen_code(cpu, s.pc, s.cs_base, s.flags, s.cflags);
+@@ -955,7 +953,7 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
+                 break;
+             }
+ 
+-            tb = tb_lookup(cpu, s.pc, s.cs_base, s.flags, s.cflags);
++            tb = tb_lookup(cpu, s);
+             if (tb == NULL) {
+                 CPUJumpCache *jc;
+                 uint32_t h;
 -- 
 2.43.0
 
