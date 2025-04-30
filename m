@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDE18C3ABA9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 14:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDFCAC369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 14:28:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA8P3-0001Pi-1S; Wed, 30 Apr 2025 10:27:13 -0400
+	id 1uA8P8-0001Xx-7D; Wed, 30 Apr 2025 10:27:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA8OR-0001EW-Ck
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:26:38 -0400
-Received: from mail-qk1-x72d.google.com ([2607:f8b0:4864:20::72d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA8Ot-0001KT-B7
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:27:05 -0400
+Received: from mail-qv1-xf35.google.com ([2607:f8b0:4864:20::f35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA8OM-000765-Av
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:26:35 -0400
-Received: by mail-qk1-x72d.google.com with SMTP id
- af79cd13be357-7c081915cf3so1177716085a.1
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 07:26:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA8Op-00078I-6n
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:27:03 -0400
+Received: by mail-qv1-xf35.google.com with SMTP id
+ 6a1803df08f44-6e8f6970326so82985526d6.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 07:26:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746023188; x=1746627988; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746023216; x=1746628016; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3wudwU0Mjh7FMfb66kwc7bqI37P6PrLMFSD6vy2kDJU=;
- b=laY85Oe7/k0g2bXHnk3xoPtuAJ06mQmd1glTk+q3ik+qFwroDjzdZE6kNscZwtjkWq
- aGfp6u6VJ8WyLFRopKZxAibbYUTaubi2guTzbIFsqyWDtYFDTUi1kSnDayoHnxl08Ue4
- 1y0KmPy00oE2IuOPM0kzC0SjTbDNmM/CkxjiJAQOoD3My0sSr2QSb2VQzntJsOLXD1K1
- Q33CkaNjSrZXRJNTP+wfOktk6fFmrGJNk2ktKoWRTcZdqugWkP3Q2NwzXVxoXErx7Ooq
- 1pXKfjcoQL05uWxEnag7B8ec7EDK/BKbXA4Uskl6AQuqO+47jBetZcbFqhEqS9OHguXJ
- v84g==
+ bh=BWzzyY58ZMdH5v7Oa0GKNWiemzjm5i3yFvWM3N4y4TI=;
+ b=FP2IhDW9K0SvWemtP8zwGPxWN0JiotsRyFuGOxa/Xq4Brhp2rCd0NGybgoCnlH55qu
+ mxDHKjlnUlOIF6R77E+DBrvETXAoutCP3Fa7vzaLR48TfiZXKvgim9/ilaylgH/eQw/x
+ JB7gj0qIMmsyXeQd0mYNUBZD20hQKcTLLe7bLqMZRXLbz/GjHBykl+dF4GpNgX5uanCf
+ dlotbDwN4/3ZipO/A6lq1HXSK/d+xQF6vgFcm0LGwyQEDAvQUUUUM2PwQPIOhJXgaunv
+ 1wOKKCLU28Dyn4EwSthqyeBCAfoD/WIdpaP52jbwT11aNXaFpf62He+q09fEHyr5rRVQ
+ jvtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746023188; x=1746627988;
+ d=1e100.net; s=20230601; t=1746023216; x=1746628016;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3wudwU0Mjh7FMfb66kwc7bqI37P6PrLMFSD6vy2kDJU=;
- b=NEpMYwSesLOwHYjZM+//vhHM9NIR/ww0dIw9axUQjABvauuqmSnrzC7IGrbiO5ejKP
- dD23+runMrH/Z3TMHs/oprYZTnJWKXPH5Kl/W8hnjiyBPIT/WJ0xpo1oLZqOX3KmkszY
- Dws0xc2gnnuhdVMIwqROQrb+QkVN6xeSw0MWVH/1BmKnpQ2ZpgqAGgrIyEiiCESYe9Gn
- rkO7IcI1Fjb2nDtl88D/DBr9lC23uZ0jgiVrfXTgjy6ucnuLjklJJW872+wDYasgZZ5v
- 4iKEM2DFt8RchZkZdLmrXw44HkHn61b82ojdUWa+QPeADlz1cWdv+dxh19dji0xnchIz
- iHwA==
-X-Gm-Message-State: AOJu0YzkPxrnZOOOENGeEYo3EKzLx3ogWQ5rPjeGq35w0KusKYum7vLm
- sJtRp3FZt/kGmDAtnItBswdq+slmFmcrYa6uVDW8WU9qhu9gH7AxCfU3lE6V+CsaNpB7e3ejoO7
- P
-X-Gm-Gg: ASbGncssb2BIt2297KjHdZ3WqJDMgb0p2BRWAWksKrkctmscMoCf+fnx0hpGLs8ud6J
- AOfh6HE8Y7bt4eP4e2CBu9AOtIjA8Mq9JafPG8lBMF7JgjtcPUSkLS6Ezsh87JHHca5SIzYvdhl
- hT+XAUKHP84GPBi6EMtkAoAj8DwkrwhXZjH9mEg0iBshRBG9gQRKmmNJnwUSxUs6H/q3HLDPoWV
- AQKXFdpd7ZFxq3P10UoeMbF7YGqn9L7cSoM+iznItGqZ/BFVHMumc/5TWo+5kwoENSDQpq8LMB1
- cJS9fEjYjFhUWstRejMTDO0lPSlKSfeTnJRTUDiB5MyBeRj+lVzeYsgUf55S4zowNTSzFmZlhLG
- sPPQX0znyz3uq9ko=
-X-Google-Smtp-Source: AGHT+IE8kgSvLk6eL9zyOnSn0o9HeKRN/nWHaxdVgkiRb7SHu7sHw1t3P+7H5jtm88+xUtRFKpWSxg==
-X-Received: by 2002:a05:620a:469f:b0:7c7:56ac:1e89 with SMTP id
- af79cd13be357-7cac7dd38b8mr379745885a.3.1746023187979; 
- Wed, 30 Apr 2025 07:26:27 -0700 (PDT)
+ bh=BWzzyY58ZMdH5v7Oa0GKNWiemzjm5i3yFvWM3N4y4TI=;
+ b=wg7q+nMgt/HvgMMWWkVdUUoHJnZtlyF/tiDK3+jVajXg3ZfRP1wgsyr2ksdJDoznpe
+ +MSllc2A5A8zR3erPfWg9TS5YBNKgdsg8VXclnA3wLa9EoXg9Aj5wunB1HN52pP7FPcp
+ dR1ufXZpEnzQfuFynJzyyW654ymHbuGb3U4DdEICDqRKH2cbRK7BdywxAd+VcCV9Y50+
+ lvIbDzUGr31M/9HI+GM6JDkjYbssRU5bTMyULzZi4I1ycSGfGaMjIMGDxCv8QD6NxB+y
+ dIuvhRGmAc+Gyd2JhZSD4qaqhvcx3lgiMoF7YGjzXZqy86TZytbrzvDsx9tIXbVA2w/3
+ hxkQ==
+X-Gm-Message-State: AOJu0YwzQdwkGEXsehtqnYKSbwfTTmWT97Gv+D/II6Eukpo9FZf9RB1H
+ IYFK9+EKuSH1SmBDiiRp+fKmUPdNUmNTfsDTNeIf7TNwxHIBR8JydTSDa3rWpGX/U3HZj9YMng/
+ V
+X-Gm-Gg: ASbGncsNTEPOgvN8d0c/A7NWaVOJ34Fwp/s2QAKa+u/NJjvchtuuwMiNAqgp2qqVoL3
+ NqeQXlp5UunGtucrMNRNuoP8rc9VNmEED9WoHHAQtGZ4RbnNM/rBPFf4HB0OkMEf+ZGgiTlsH8C
+ AuZ/HgFUS4PK1XsOmxsVk3irSIZy9phjyrZnaN0NIQ/Lsdell0LzQvp8IbNQIgBHkPzMALtf55j
+ My/RyV1d2pf9XsPZu8mErQPYBgPkAAipJP5wm9r00qKbQ/fidYrG5VJ/0ngYfShKQP9QXzrgECV
+ kCZnAu+NRsN7cjlKFL9RFA71CLjZQowRA4bbItfg0fM1RwssmhsizMLARw+a0gcK3J+Puj72RZg
+ 0oWvDMqt2o5JQgPc=
+X-Google-Smtp-Source: AGHT+IH4vUYd5XRQ5+HCEjLa0M60O6KHzOjle44KqFdJYxiyUC2Mr7TqD8TAI07EtZWMaynkQurWlQ==
+X-Received: by 2002:a05:6214:2405:b0:6e8:fa33:2969 with SMTP id
+ 6a1803df08f44-6f4fce7b58cmr70829346d6.10.1746023216254; 
+ Wed, 30 Apr 2025 07:26:56 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c958d87309sm859262085a.80.2025.04.30.07.26.25
+ 6a1803df08f44-6f4fe6d1933sm8798406d6.40.2025.04.30.07.26.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 30 Apr 2025 07:26:27 -0700 (PDT)
+ Wed, 30 Apr 2025 07:26:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -77,17 +77,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/5] hw/intc/ioapic: Remove IOAPICCommonState::version field
-Date: Wed, 30 Apr 2025 16:26:06 +0200
-Message-ID: <20250430142609.84134-3-philmd@linaro.org>
+Subject: [PATCH 5/5] hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_PAGE_PER_VQ
+ definition
+Date: Wed, 30 Apr 2025 16:26:09 +0200
+Message-ID: <20250430142609.84134-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250430142609.84134-1-philmd@linaro.org>
 References: <20250430142609.84134-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72d;
- envelope-from=philmd@linaro.org; helo=mail-qk1-x72d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f35;
+ envelope-from=philmd@linaro.org; helo=mail-qv1-xf35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,114 +111,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IOAPICCommonState::version integer was only set
-in the hw_compat_2_7[] array, via the 'version=0x11'
-property. We removed all machines using that array,
-lets remove that property, simplify by only using the
-default version (defined as IOAPIC_VER_DEF).
+VIRTIO_PCI_FLAG_PAGE_PER_VQ was only used by the hw_compat_2_7[]
+array, via the 'page-per-vq=on' property. We removed all
+machines using that array, lets remove all the code around
+VIRTIO_PCI_FLAG_PAGE_PER_VQ (see commit 9a4c0e220d8 for similar
+VIRTIO_PCI_FLAG_* enum removal).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/ioapic_internal.h |  3 +--
- hw/intc/ioapic.c          | 18 ++----------------
- hw/intc/ioapic_common.c   |  2 +-
- 3 files changed, 4 insertions(+), 19 deletions(-)
+ include/hw/virtio/virtio-pci.h |  1 -
+ hw/display/virtio-vga.c        | 10 ----------
+ hw/virtio/virtio-pci.c         |  7 +------
+ 3 files changed, 1 insertion(+), 17 deletions(-)
 
-diff --git a/hw/intc/ioapic_internal.h b/hw/intc/ioapic_internal.h
-index 51205767f44..330ce195222 100644
---- a/hw/intc/ioapic_internal.h
-+++ b/hw/intc/ioapic_internal.h
-@@ -82,7 +82,7 @@
- #define IOAPIC_ID_MASK                  0xf
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 9838e8650a6..8abc5f8f20d 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -33,7 +33,6 @@ enum {
+     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
+     VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
+     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
+-    VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
+     VIRTIO_PCI_FLAG_ATS_BIT,
+     VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
+     VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT,
+diff --git a/hw/display/virtio-vga.c b/hw/display/virtio-vga.c
+index 40e60f70fcd..83d01f089b5 100644
+--- a/hw/display/virtio-vga.c
++++ b/hw/display/virtio-vga.c
+@@ -141,16 +141,6 @@ static void virtio_vga_base_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
+                                VIRTIO_GPU_SHM_ID_HOST_VISIBLE);
+     }
  
- #define IOAPIC_VER_ENTRIES_SHIFT        16
--
-+#define IOAPIC_VER_DEF                  0x20
- 
- #define TYPE_IOAPIC_COMMON "ioapic-common"
- OBJECT_DECLARE_TYPE(IOAPICCommonState, IOAPICCommonClass, IOAPIC_COMMON)
-@@ -104,7 +104,6 @@ struct IOAPICCommonState {
-     uint32_t irr;
-     uint64_t ioredtbl[IOAPIC_NUM_PINS];
-     Notifier machine_done;
--    uint8_t version;
-     uint64_t irq_count[IOAPIC_NUM_PINS];
-     int irq_level[IOAPIC_NUM_PINS];
-     int irq_eoi[IOAPIC_NUM_PINS];
-diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
-index 133bef852d1..5cc97767d9d 100644
---- a/hw/intc/ioapic.c
-+++ b/hw/intc/ioapic.c
-@@ -315,7 +315,7 @@ ioapic_mem_read(void *opaque, hwaddr addr, unsigned int size)
-             val = s->id << IOAPIC_ID_SHIFT;
-             break;
-         case IOAPIC_REG_VER:
--            val = s->version |
-+            val = IOAPIC_VER_DEF |
-                 ((IOAPIC_NUM_PINS - 1) << IOAPIC_VER_ENTRIES_SHIFT);
-             break;
-         default:
-@@ -411,8 +411,7 @@ ioapic_mem_write(void *opaque, hwaddr addr, uint64_t val,
-         }
-         break;
-     case IOAPIC_EOI:
--        /* Explicit EOI is only supported for IOAPIC version 0x20 */
--        if (size != 4 || s->version != 0x20) {
-+        if (size != 4) {
-             break;
-         }
-         ioapic_eoi_broadcast(val);
-@@ -444,18 +443,10 @@ static void ioapic_machine_done_notify(Notifier *notifier, void *data)
- #endif
- }
- 
--#define IOAPIC_VER_DEF 0x20
--
- static void ioapic_realize(DeviceState *dev, Error **errp)
- {
-     IOAPICCommonState *s = IOAPIC_COMMON(dev);
- 
--    if (s->version != 0x11 && s->version != 0x20) {
--        error_setg(errp, "IOAPIC only supports version 0x11 or 0x20 "
--                   "(default: 0x%x).", IOAPIC_VER_DEF);
--        return;
+-    if (!(vpci_dev->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ)) {
+-        /*
+-         * with page-per-vq=off there is no padding space we can use
+-         * for the stdvga registers.  Make the common and isr regions
+-         * smaller then.
+-         */
+-        vpci_dev->common.size /= 2;
+-        vpci_dev->isr.size /= 2;
 -    }
 -
-     memory_region_init_io(&s->io_memory, OBJECT(s), &ioapic_io_ops, s,
-                           "ioapic", 0x1000);
- 
-@@ -476,10 +467,6 @@ static void ioapic_unrealize(DeviceState *dev)
-     timer_free(s->delayed_ioapic_service_timer);
+     offset = memory_region_size(&vpci_dev->modern_bar);
+     offset -= vpci_dev->notify.size;
+     vpci_dev->notify.offset = offset;
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 7c965771907..4e0d4bda6ed 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -314,12 +314,9 @@ static bool virtio_pci_ioeventfd_enabled(DeviceState *d)
+     return (proxy->flags & VIRTIO_PCI_FLAG_USE_IOEVENTFD) != 0;
  }
  
--static const Property ioapic_properties[] = {
--    DEFINE_PROP_UINT8("version", IOAPICCommonState, version, IOAPIC_VER_DEF),
--};
+-#define QEMU_VIRTIO_PCI_QUEUE_MEM_MULT 0x1000
 -
- static void ioapic_class_init(ObjectClass *klass, const void *data)
+ static inline int virtio_pci_queue_mem_mult(struct VirtIOPCIProxy *proxy)
  {
-     IOAPICCommonClass *k = IOAPIC_COMMON_CLASS(klass);
-@@ -493,7 +480,6 @@ static void ioapic_class_init(ObjectClass *klass, const void *data)
-      */
-     k->post_load = ioapic_update_kvm_routes;
-     device_class_set_legacy_reset(dc, ioapic_reset_common);
--    device_class_set_props(dc, ioapic_properties);
+-    return (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ) ?
+-        QEMU_VIRTIO_PCI_QUEUE_MEM_MULT : 4;
++    return 4;
  }
  
- static const TypeInfo ioapic_info = {
-diff --git a/hw/intc/ioapic_common.c b/hw/intc/ioapic_common.c
-index fce3486e519..8b3e2ba9384 100644
---- a/hw/intc/ioapic_common.c
-+++ b/hw/intc/ioapic_common.c
-@@ -83,7 +83,7 @@ static void ioapic_print_redtbl(GString *buf, IOAPICCommonState *s)
-     int i;
- 
-     g_string_append_printf(buf, "ioapic0: ver=0x%x id=0x%02x sel=0x%02x",
--                           s->version, s->id, s->ioregsel);
-+                           IOAPIC_VER_DEF, s->id, s->ioregsel);
-     if (s->ioregsel) {
-         g_string_append_printf(buf, " (redir[%u])\n",
-                                (s->ioregsel - IOAPIC_REG_REDTBL_BASE) >> 1);
+ static int virtio_pci_ioeventfd_assign(DeviceState *d, EventNotifier *notifier,
+@@ -2348,8 +2345,6 @@ static const Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT, false),
+     DEFINE_PROP_BIT("modern-pio-notify", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
+-    DEFINE_PROP_BIT("page-per-vq", VirtIOPCIProxy, flags,
+-                    VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT, false),
+     DEFINE_PROP_BIT("ats", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_ATS_BIT, false),
+     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
 -- 
 2.47.1
 
