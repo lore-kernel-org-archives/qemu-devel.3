@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4429C3ABA9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 14:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E5B8C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 14:28:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA8Ox-0001FG-70; Wed, 30 Apr 2025 10:27:08 -0400
+	id 1uA8P9-0001Yi-4F; Wed, 30 Apr 2025 10:27:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA8OH-0001Dx-Sd
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:26:26 -0400
-Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA8Od-0001FY-7O
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:27:00 -0400
+Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA8OF-00075f-3d
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:26:25 -0400
-Received: by mail-qk1-x732.google.com with SMTP id
- af79cd13be357-7c597760323so809354685a.3
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 07:26:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA8Oa-00076q-VV
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:26:46 -0400
+Received: by mail-qt1-x830.google.com with SMTP id
+ d75a77b69052e-4775ccf3e56so12835111cf.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 07:26:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746023181; x=1746627981; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746023201; x=1746628001; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NpvMgcrpSQGafRLyw/ZNHAX6/bjj0J9IvQrfqDaCmhA=;
- b=EorfgvUiqlOHDcrO4TCvkJrha4KJqb70ushd/NHHSbA6eC3KGB0MoGnWOcwgj53kbH
- aCL1p9G9B5qGt63PXkzn+5/HrUEEJjzGyFotyAEe3DP7Qp5o40gW4YdbG+7bYzctZJB1
- qAz7kOu5TRzO+Y+pH8GVWtqvG02sQAkqq322S2Q2bKVfD/Gzf90hZEUOvPGOahp6TXdB
- GcNFmvJ80oxJcjfeNISkBfqROBsit+D5E+eR/VGS6FnfwYu5NH5Adclb6V3HN/fm3/LU
- wLZlei3AQRGuk1kfsN6vokcoiTE22hah5pMyQ5YqAD9UUtL9nNXWRxuqaKrtiZxwU9Dr
- wUPw==
+ bh=YNiEylsO3oY9vgtqAxWvkDME/V5ix0NbPvey475+kvI=;
+ b=McjjehhpwnwT2lp1ICgRWWUoIT07IYKapu8Ch1x58d0xpLufKDFc5HfI5iGHCAh22+
+ tzcIRQnZqx3BUtWYyyl9A82lDcxvoUzom+2XJY6lCD5Pdm+P7OMXoGegx9oTbnxit11h
+ NWN8X4fcbuWSbB/UcNImr1B9KGpZS4+5BpJESoqCJcV1h6XhZpERYkvhWj/7W43Sd+A2
+ ifLVwVasGhpkGK3zIpGJLKimgBcQazHNBWK5L7uv9fW2XUxg5AGBg+gPE1k5fe/UQyMt
+ +8MraCjD5mzLp0XswsRIoHLBRvxOgUWBIf1HEOt2aulS+favnTmKiL19wcbd8wYXC5gF
+ G6fQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746023181; x=1746627981;
+ d=1e100.net; s=20230601; t=1746023201; x=1746628001;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NpvMgcrpSQGafRLyw/ZNHAX6/bjj0J9IvQrfqDaCmhA=;
- b=sYtzstLiqT3DAeDPgTppdbSeuzyVJMS+vGkIo8kQUVLNqndcmNHOMQADqa5x3MVX4d
- 5YGH8u55AIjP+IxbQ15aEP4soHyXlX80Dga9sBMXAAZG1R59pO8viD/puuFbz0kmEPCu
- dTGCe6h/oeDSx/kPPyWnsXhtmTGJkavCR8naprQ8OPwChcm84BvefPGWWRSquqkTFPCR
- DC5ejOIEDJTUoAMbNq4nmLcqdx2kKBkVlWJxnGYpLIUnyVFNa8wL7atdvxiJv9GEsK0s
- zBb1MLYn6dJoKiMAIbnhwR1YKZD32i4yyRVVYDkuI08miZJVWR3DUXMqzp+BKzfABJjP
- uSYg==
-X-Gm-Message-State: AOJu0Ywa4xxbgvT2jjA34uDbJJXIB//VC8K0WILtfUYJowTpqvCnlUGy
- LUYL4mpaHeQAdmw3z1WUfVisLlxOCUwcIv7Dy8BOLasyrfnXWXh0+cn3MFgfqPrV0dZ8dRPz6KV
- l
-X-Gm-Gg: ASbGncsWOdWLP8dPdIHRjMfJse5YxS9OHamcQij0M6LwrUs7YZ6g1W87kymKiT4axcW
- Y2aFVW9pH/eT2/drozlTjJdDFj/qGD9Kg2joZyVQVQ9x0hPLZ5Epg0hwEWUhbD/3gdYyQJ3OgPS
- 7FvkGLNm33iaKtlejUa9gjnB7Nwd6reeiOAOUS11zupgbklnADKpos3AHH5Mzj34zvnXNbf0ZqH
- YH3otif0vjdTBrjCcPfK7u5RDnEVZSlhNN+GDdy8o9WMw5XkbF3MMtgbsnPcxc2XgW9LscHHL5k
- nJw1Fz8YZsuTlZJJ2yjDCn0EqV62TodUJaaWkVquNkDQuLfs9UU0J3n4D10nNcVCarA/BC4hr2c
- s/TisaID3aTbwPe8=
-X-Google-Smtp-Source: AGHT+IHhrFJ901CyS8hrsRsuGE/sjPVG1T+2AFQNRh7YNsqAy6Pm1hzqNnUiWs355IiUdpSDsoPzow==
-X-Received: by 2002:a05:620a:1985:b0:7c5:95f0:e776 with SMTP id
- af79cd13be357-7cac740f35cmr442128685a.1.1746023180741; 
- Wed, 30 Apr 2025 07:26:20 -0700 (PDT)
+ bh=YNiEylsO3oY9vgtqAxWvkDME/V5ix0NbPvey475+kvI=;
+ b=ILHvFtYxbulEahaPXm3tjBDI9yMYA5eQK9bFLnFpFzdBsLCr7LUUCpR9T7oXj+zWDT
+ MXugFqsTwgIIgQ8uT2Nq1syG7nvIg+hfgkvkhUlP0OEnh2sMEnPqRbnROePsH7US7jm1
+ NCRD8IsfqVRG6nlkNygmra4lZXkUPTXddLb7IPe0OBrLj1c5GbFgMt1/kgw3oVaIvywW
+ 2XKuUJCpc1GT+GYhYqEanniF/0wYzZQ8ejCxe4kAd2NXgkAtUa4mrWxJE1KSeUiHnmpk
+ udRgImaWefXEgm16q/SOG3EqPkZroj3SRJjVbL3HpPsg6KAnRTRQm9uwgmZeT77I8ZTQ
+ xzVw==
+X-Gm-Message-State: AOJu0Yy2iSPUlfGNCeJQEFRvP1A6cXW0XZ0wyLw4Ddv+ceR7kkRCK/+x
+ +hTnuFsZZESAa/D17v2vQwCTK41PVX3fwJPgSTShNboWTVP+MH0TLJyVNULO0kfUnU895ucgW4/
+ E
+X-Gm-Gg: ASbGncsh7z7lP9Bv8guxGM6BslVUKHtiKpB++3x7EeeQKkTTfFLanIXbUWzNI10Qtoe
+ 0zm22nstEIjnKVeWFgelKBHH1a7pcsViftlBbLhSrdei0Z6058X24pBq47pN6Vic94D+anpLLWk
+ YL5c092RaR1Bh72PpvlUXzYXy3klgUMdpSjnce97A1+grgOi7Ug2waRqpO9wGJtLeOtf2fcCsSS
+ CN5FOc950AetnZ5Z8A7KGXpIFH77xr5WWPoVbeKuj9dSerTpvdathet/LNvFT6p886qDc0RqWxL
+ aKg0APcbVZeSnjkLZ/cw8acSzEs8jHZtNEhvRLWcN8nnIzbVkOdkEzBWAU0ShJLH1gdGp/fN/tH
+ xndquR5RAl2CBgNo=
+X-Google-Smtp-Source: AGHT+IHIuuhl2d0QweUqC8LIA1LBxgrA9JuBF2OPV5h+GU8dN/1AvoMcH7B64fWgGf2b2RCFsMiHvQ==
+X-Received: by 2002:a05:622a:17c3:b0:475:19cc:a81a with SMTP id
+ d75a77b69052e-489cdce5f30mr50498161cf.21.1746023201331; 
+ Wed, 30 Apr 2025 07:26:41 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c958cac816sm858406185a.31.2025.04.30.07.26.18
+ d75a77b69052e-47e9f7aa2absm94274001cf.46.2025.04.30.07.26.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 30 Apr 2025 07:26:20 -0700 (PDT)
+ Wed, 30 Apr 2025 07:26:34 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -77,18 +77,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/5] hw/i386/intel_iommu: Remove IntelIOMMUState::buggy_eim
- field
-Date: Wed, 30 Apr 2025 16:26:05 +0200
-Message-ID: <20250430142609.84134-2-philmd@linaro.org>
+Subject: [PATCH 3/5] hw/virtio/virtio-pci: Remove
+ VirtIOPCIProxy::ignore_backend_features field
+Date: Wed, 30 Apr 2025 16:26:07 +0200
+Message-ID: <20250430142609.84134-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250430142609.84134-1-philmd@linaro.org>
 References: <20250430142609.84134-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
- envelope-from=philmd@linaro.org; helo=mail-qk1-x732.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
+ envelope-from=philmd@linaro.org; helo=mail-qt1-x830.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,55 +111,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IntelIOMMUState::buggy_eim boolean was only set in
-the hw_compat_2_7[] array, via the 'x-buggy-eim=true'
-property. We removed all machines using that array, lets
-remove that property, simplifying vtd_decide_config().
+The VirtIOPCIProxy::ignore_backend_features boolean was only set
+in the hw_compat_2_7[] array, via the 'x-ignore-backend-features=on'
+property. We removed all machines using that array, lets remove
+that property, simplify by only using the default version.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i386/intel_iommu.h | 1 -
- hw/i386/intel_iommu.c         | 5 ++---
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ include/hw/virtio/virtio-pci.h | 1 -
+ hw/virtio/virtio-pci.c         | 5 +----
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index e95477e8554..29304329d05 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -303,7 +303,6 @@ struct IntelIOMMUState {
-     uint32_t intr_size;             /* Number of IR table entries */
-     bool intr_eime;                 /* Extended interrupt mode enabled */
-     OnOffAuto intr_eim;             /* Toggle for EIM cabability */
--    bool buggy_eim;                 /* Force buggy EIM unless eim=off */
-     uint8_t aw_bits;                /* Host/IOVA address width (in bits) */
-     bool dma_drain;                 /* Whether DMA r/w draining enabled */
-     bool dma_translation;           /* Whether DMA translation supported */
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 5f8ed1243d1..c980cecb4ee 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3823,7 +3823,6 @@ static const Property vtd_properties[] = {
-     DEFINE_PROP_UINT32("version", IntelIOMMUState, version, 0),
-     DEFINE_PROP_ON_OFF_AUTO("eim", IntelIOMMUState, intr_eim,
-                             ON_OFF_AUTO_AUTO),
--    DEFINE_PROP_BOOL("x-buggy-eim", IntelIOMMUState, buggy_eim, false),
-     DEFINE_PROP_UINT8("aw-bits", IntelIOMMUState, aw_bits,
-                       VTD_HOST_ADDRESS_WIDTH),
-     DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, FALSE),
-@@ -4731,11 +4730,11 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-     }
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index f962c9116c1..9838e8650a6 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -149,7 +149,6 @@ struct VirtIOPCIProxy {
+     int config_cap;
+     uint32_t flags;
+     bool disable_modern;
+-    bool ignore_backend_features;
+     OnOffAuto disable_legacy;
+     /* Transitional device id */
+     uint16_t trans_devid;
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 8d68e56641a..7c965771907 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -1965,8 +1965,7 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
+      * Virtio capabilities present without
+      * VIRTIO_F_VERSION_1 confuses guests
+      */
+-    if (!proxy->ignore_backend_features &&
+-            !virtio_has_feature(vdev->host_features, VIRTIO_F_VERSION_1)) {
++    if (!virtio_has_feature(vdev->host_features, VIRTIO_F_VERSION_1)) {
+         virtio_pci_disable_modern(proxy);
  
-     if (s->intr_eim == ON_OFF_AUTO_AUTO) {
--        s->intr_eim = (kvm_irqchip_in_kernel() || s->buggy_eim)
-+        s->intr_eim = kvm_irqchip_in_kernel()
-                       && x86_iommu_ir_supported(x86_iommu) ?
-                                               ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-     }
--    if (s->intr_eim == ON_OFF_AUTO_ON && !s->buggy_eim) {
-+    if (s->intr_eim == ON_OFF_AUTO_ON) {
-         if (kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
-             error_setg(errp, "eim=on requires support on the KVM side"
-                              "(X2APIC_API, first shipped in v4.7)");
+         if (!legacy) {
+@@ -2351,8 +2350,6 @@ static const Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
+     DEFINE_PROP_BIT("page-per-vq", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT, false),
+-    DEFINE_PROP_BOOL("x-ignore-backend-features", VirtIOPCIProxy,
+-                     ignore_backend_features, false),
+     DEFINE_PROP_BIT("ats", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_ATS_BIT, false),
+     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
 -- 
 2.47.1
 
