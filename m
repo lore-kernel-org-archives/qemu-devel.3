@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AF73C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 23:07:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D442BC369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 23:08:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAGVm-0001lM-UQ; Wed, 30 Apr 2025 19:06:43 -0400
+	id 1uAGW8-0001qj-9Z; Wed, 30 Apr 2025 19:07:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAGVj-0001ic-Gn
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:06:40 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1uAGVl-0001l6-2y
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:06:41 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAGVf-0007Uj-L6
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:06:39 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-736c277331eso1528025b3a.1
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 16:06:35 -0700 (PDT)
+ id 1uAGVi-0007Vb-B9
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:06:40 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-736c1138ae5so450078b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 16:06:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746054394; x=1746659194; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746054397; x=1746659197; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=j9UcL+UexAzaPG1SzS7Ey5EkrsDUspO+0mY3N19ns74=;
- b=lb48uafWHr4unnirdf69q8VZqJl4R/qRtfpPndUdLRBYlXV2lqBMek4d+ZWV5+pCRz
- eDjD8DP67If4CiVoJiTX35Qu4qQ1gDCtm2L2yVOiabzqfFR1Wnr9vlJ1Qifa+gwri3Qj
- L3GVNAZFLDKIHtPJ+H6nAjvRoZWphjhqtcxXAfYP8oys6JwTndmtYPEUfTee6O/aklMb
- WK1t7fBbe0Hr7ru1P8Z2Tloqfxin1XZIioWBSTcXbTZkXqcshYxV+I7lGf3qFYWJqkn5
- onvIE8MiB1xuXhtfCYdEYHXA1/BtkdfzEWo++qI161PRrNQZL7zUKtxnFSLMmcQx7h+Y
- g3YA==
+ :reply-to; bh=LT3GsVAW+K3YxYOzK2RrjUaER8kwWH4wBwdfp6giJSE=;
+ b=WoiVWTznZNVzzj/X3wmz5+uuvk2DnecEhbfOHAdHfEBo8QFedM/7HihsTfxgw5LjTT
+ Q3CTGrpsui7e1qKAa5WjYuyXR3OMc4FAK1G4eALo/vXr5nH0FDbUjlix13f3I5NzKihZ
+ +6mds2qzlUcrwfbR+Sm1Dwy9tyc0CSy9T01NTNYPkr3TC2LN0PnbcGSjJ73jLwum1aKm
+ wLA1se+iXYWhtirG1xp1UmgyCRbArke6Fy5pZ7YASxyiFZRr/WpY2gq0/mN9eANZI4D0
+ 0ErW23LVGIqhHjU9xe1tJjb3BI9QKZRK3PRAzkbkZxOzjC/aKtFDvREj1u4gxhBVH71H
+ RxLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746054394; x=1746659194;
+ d=1e100.net; s=20230601; t=1746054397; x=1746659197;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=j9UcL+UexAzaPG1SzS7Ey5EkrsDUspO+0mY3N19ns74=;
- b=sPe5aICslfJ3QbTrpr7srrVJapdxUgWpdrKDNzu5Y0w3rQCLurEkBqu/dh9jW5c/OP
- Yu98bkO7If+Bv5qnxemQ77ReEh5i4ktZmleZr4zzA6nPm44V5LIM01Fo+hoKUH0vLwdD
- MUMBw0YJxw070RQv56FX7Jj1w5ndpS8chitJLLbqnFHg1OFx7HCfcJJQOEQInecn9CUE
- eJ8k1fdI78ysMf2CsKTNUqGmGcuzCY55eGwsgowO1b7bWzk4QU8K1JlCN0QXauvh+jcp
- CGYMJ/Vk5obulugGKrtGhMvfnZeZUgH+yTK7L3mbLWHuKlOABSvYZO+Ji5UwZkaqlYVn
- XGgw==
-X-Gm-Message-State: AOJu0YztyfNcuFk3GHNLoMcdLjIfMLPwuO6s5bd4lgU2y4tRZ8k12ugV
- +XSRYPTYmLBSiUxqU4NAxiOTIvWb1B9klUZSlArATWUhA+e9QgbyFu4rs4A+Ab9+sVc2Ope+dPH
- n
-X-Gm-Gg: ASbGncuSPKnZmw2vfgTmnK9DE60roswMhc9Dh1/d2ML7n4QD1+jHp97YfEENgHcvsin
- AhkDV8eW+o2VJbr7PfMsrPeCl/1lpqG5GizbQ/9U9h/ZvOtTeVDGzuH9Sqk/Q2ZylvSsgm/EW5E
- h17C9U+GdXtqPYqbvOGB7sMxzOSQYtSa6ZPfDDwPWnaf4ixdnyU11NaXgqmuehEucgM8/KdhMc3
- aUXZxX2eA0s6J1jhn8LHxwrPWVqRNRB52B1ttC9qeVMSB5zwKfcX2TfBUh7F83pBAe+oNjrn2lG
- tMZdLAtDLB0qD/oc1STNarQws2pWLS4taIVpuiX0uNKmTvw3e/85DTyXEQ/GJ/Y6ce1QZlE1jLs
- =
-X-Google-Smtp-Source: AGHT+IEgrEFXNLK9k3fn0SW6Af3GMVj4oWJ7xStLA1MEM7Ok5oJVtze+INkCLEY3GXZuEunyyYsQ8w==
-X-Received: by 2002:a05:6a21:3a88:b0:1f3:20be:c18a with SMTP id
- adf61e73a8af0-20bdc996bcfmr338524637.10.1746054393560; 
- Wed, 30 Apr 2025 16:06:33 -0700 (PDT)
+ bh=LT3GsVAW+K3YxYOzK2RrjUaER8kwWH4wBwdfp6giJSE=;
+ b=GCFa/uSsT5FWEtDeKOmTa+CFWcREcRVgYYGdUwVaLLH72R+AA7qDwsZoYkWud2X/J1
+ ohUhiqG38iHvygFep0go+n9N1aJksXx9IYiRfLIqj59e7aHjb4WYeNanlsuGOYMs9WjD
+ 19/rhA5XILCT3/IRavWpUcS68S7EJIDo4O//onVPDljxsx2lXytWv6N9UxEtX0SJOMCS
+ D6Xq/HBzufPBdlbzWAnOpUntRdHCJV9vpEGFRYRC5Gm46lidRrbl8+n/RqdjJNdLB2kN
+ fApXqq7utuyC5idGsCGua6R+/fe/Wo/GQtwCGOn5u+uOio8lmBzF96ssPjfLdJlKhQ+0
+ waFg==
+X-Gm-Message-State: AOJu0YyJ8Jrmz6XmepJDbS0Jw/h/6IMa3FQpR3w9x2C3YqILZ93ETOs3
+ lhmK4rA1IgJXJ+8qRgNkNdxOgbo8cKmixdC/STez+rjLSZH4LmFBJk04QgiKTKLLRYuYC8dvFLl
+ I
+X-Gm-Gg: ASbGnctqqRK4jU5GNIZSmV3QdygEwy+TWauM9EJwNa/wP0GMUPhNOvMrcG4chyhxS2P
+ PT4ncvbPVFRYcOSMWm3TqvWqF6UggK7P6cXgqi8wMTvaHR7wMxDCItgoNWROkohtQSr/hdbvMQG
+ u2b6Yd7f6bKJduoyizYolJoI3l53wOCGm+UNEWAEMyB6Y3fU0FL9ex1GcJXy/b34bpPnQhzulhF
+ +LsQAa0w49lsvqc3UYyZ/OMuvTdEZaFzpHS3SOywYCH6QiaOghxcxRgFT4Hq8gXT3PEKAvztqkx
+ AdMorufIHWjGC1i5QoA9ipz1QZlakCb68Ubq2tRRJEPZY1F38mbQL0pWVUnqcq1rV3i25opgOyx
+ 8ENBq0uY7Bg==
+X-Google-Smtp-Source: AGHT+IEttPXf0c2cZtzi93xwm+WldaEXm2r5JHF3L+uImhCZYvLK/D7UdOGmnjJFoZCx+uGw7q0gOQ==
+X-Received: by 2002:a05:6a00:3a06:b0:736:5c8e:baaa with SMTP id
+ d2e1a72fcca58-7403a75b4c4mr6766778b3a.2.1746054396900; 
+ Wed, 30 Apr 2025 16:06:36 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74039a30e2fsm2323287b3a.103.2025.04.30.16.06.33
+ d2e1a72fcca58-74039a30e2fsm2323287b3a.103.2025.04.30.16.06.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Apr 2025 16:06:33 -0700 (PDT)
+ Wed, 30 Apr 2025 16:06:36 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 1/6] tcg: Define INSN_START_WORDS as constant 3
-Date: Wed, 30 Apr 2025 16:06:26 -0700
-Message-ID: <20250430230631.2571291-2-richard.henderson@linaro.org>
+Subject: [PATCH 6/6] accel/tcg: Use vaddr in cpu_loop.h
+Date: Wed, 30 Apr 2025 16:06:31 -0700
+Message-ID: <20250430230631.2571291-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250430230631.2571291-1-richard.henderson@linaro.org>
 References: <20250430230631.2571291-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,353 +99,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the same value for all targets.
-
-Rename TARGET_INSN_START_WORDS and do not depend on
-TARGET_INSN_START_EXTRA_WORDS.
-Remove TCGContext.insn_start_words.
+Use vaddr instead of abi_ptr or target_ulong for a guest address.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/tcg/insn-start-words.h | 11 +++++------
- include/tcg/tcg-op.h           | 17 ++++++++++++++---
- include/tcg/tcg-opc.h          |  3 +--
- include/tcg/tcg.h              | 12 +++++++-----
- accel/tcg/translate-all.c      | 19 +++++++++----------
- target/i386/helper.c           |  2 +-
- target/openrisc/sys_helper.c   |  2 +-
- tcg/perf.c                     |  5 ++---
- tcg/tcg.c                      | 12 +++++-------
- 9 files changed, 45 insertions(+), 38 deletions(-)
+ include/user/cpu_loop.h | 12 +++++-------
+ accel/tcg/user-exec.c   |  2 +-
+ linux-user/signal.c     |  4 ++--
+ 3 files changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/include/tcg/insn-start-words.h b/include/tcg/insn-start-words.h
-index d416d19bcf..c52aec50a7 100644
---- a/include/tcg/insn-start-words.h
-+++ b/include/tcg/insn-start-words.h
-@@ -1,13 +1,12 @@
- /* SPDX-License-Identifier: MIT */
- /*
-- * Define TARGET_INSN_START_WORDS
-+ * Define INSN_START_WORDS
-  * Copyright (c) 2008 Fabrice Bellard
-  */
+diff --git a/include/user/cpu_loop.h b/include/user/cpu_loop.h
+index 589c66543f..ad8a1d711f 100644
+--- a/include/user/cpu_loop.h
++++ b/include/user/cpu_loop.h
+@@ -20,11 +20,9 @@
+ #ifndef USER_CPU_LOOP_H
+ #define USER_CPU_LOOP_H
  
--#ifndef TARGET_INSN_START_WORDS
-+#ifndef TCG_INSN_START_WORDS
-+#define TCG_INSN_START_WORDS
- 
--#include "cpu-param.h"
-+#define INSN_START_WORDS 3
- 
--# define TARGET_INSN_START_WORDS (1 + TARGET_INSN_START_EXTRA_WORDS)
--
--#endif /* TARGET_INSN_START_WORDS */
-+#endif /* TCG_INSN_START_WORDS */
-diff --git a/include/tcg/tcg-op.h b/include/tcg/tcg-op.h
-index 59d19755e6..c912578fdd 100644
---- a/include/tcg/tcg-op.h
-+++ b/include/tcg/tcg-op.h
-@@ -9,6 +9,7 @@
- #define TCG_TCG_OP_H
- 
- #include "tcg/tcg-op-common.h"
-+#include "tcg/insn-start-words.h"
- #include "exec/target_long.h"
- 
- #ifndef TARGET_LONG_BITS
-@@ -23,24 +24,34 @@
- # error
- #endif
- 
-+#if INSN_START_WORDS != 3
-+# error Mismatch with insn-start-words.h
-+#endif
+-#include "exec/abi_ptr.h"
++#include "exec/vaddr.h"
+ #include "exec/mmu-access-type.h"
+-#include "exec/log.h"
+-#include "exec/target_long.h"
+-#include "special-errno.h"
 +
- #if TARGET_INSN_START_EXTRA_WORDS == 0
- static inline void tcg_gen_insn_start(target_ulong pc)
+ 
+ /**
+  * adjust_signal_pc:
+@@ -46,7 +44,7 @@ MMUAccessType adjust_signal_pc(uintptr_t *pc, bool is_write);
+  * Return true if the write fault has been handled, and should be re-tried.
+  */
+ bool handle_sigsegv_accerr_write(CPUState *cpu, sigset_t *old_set,
+-                                 uintptr_t host_pc, abi_ptr guest_addr);
++                                 uintptr_t host_pc, vaddr guest_addr);
+ 
+ /**
+  * cpu_loop_exit_sigsegv:
+@@ -59,7 +57,7 @@ bool handle_sigsegv_accerr_write(CPUState *cpu, sigset_t *old_set,
+  * Use the TCGCPUOps hook to record cpu state, do guest operating system
+  * specific things to raise SIGSEGV, and jump to the main cpu loop.
+  */
+-G_NORETURN void cpu_loop_exit_sigsegv(CPUState *cpu, target_ulong addr,
++G_NORETURN void cpu_loop_exit_sigsegv(CPUState *cpu, vaddr addr,
+                                       MMUAccessType access_type,
+                                       bool maperr, uintptr_t ra);
+ 
+@@ -73,7 +71,7 @@ G_NORETURN void cpu_loop_exit_sigsegv(CPUState *cpu, target_ulong addr,
+  * Use the TCGCPUOps hook to record cpu state, do guest operating system
+  * specific things to raise SIGBUS, and jump to the main cpu loop.
+  */
+-G_NORETURN void cpu_loop_exit_sigbus(CPUState *cpu, target_ulong addr,
++G_NORETURN void cpu_loop_exit_sigbus(CPUState *cpu, vaddr addr,
+                                      MMUAccessType access_type,
+                                      uintptr_t ra);
+ 
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 68e01fc584..e1f4c4eacf 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -126,7 +126,7 @@ MMUAccessType adjust_signal_pc(uintptr_t *pc, bool is_write)
+  * guest, we'd end up in an infinite loop of retrying the faulting access.
+  */
+ bool handle_sigsegv_accerr_write(CPUState *cpu, sigset_t *old_set,
+-                                 uintptr_t host_pc, abi_ptr guest_addr)
++                                 uintptr_t host_pc, vaddr guest_addr)
  {
--    TCGOp *op = tcg_emit_op(INDEX_op_insn_start, 64 / TCG_TARGET_REG_BITS);
-+    TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
-+                            INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
-     tcg_set_insn_start_param(op, 0, pc);
-+    tcg_set_insn_start_param(op, 1, 0);
-+    tcg_set_insn_start_param(op, 2, 0);
+     switch (page_unprotect(cpu, guest_addr, host_pc)) {
+     case 0:
+diff --git a/linux-user/signal.c b/linux-user/signal.c
+index 4dafc2c3a2..cd0e7398aa 100644
+--- a/linux-user/signal.c
++++ b/linux-user/signal.c
+@@ -750,7 +750,7 @@ void force_sigsegv(int oldsig)
  }
- #elif TARGET_INSN_START_EXTRA_WORDS == 1
- static inline void tcg_gen_insn_start(target_ulong pc, target_ulong a1)
- {
--    TCGOp *op = tcg_emit_op(INDEX_op_insn_start, 2 * 64 / TCG_TARGET_REG_BITS);
-+    TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
-+                            INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
-     tcg_set_insn_start_param(op, 0, pc);
-     tcg_set_insn_start_param(op, 1, a1);
-+    tcg_set_insn_start_param(op, 2, 0);
- }
- #elif TARGET_INSN_START_EXTRA_WORDS == 2
- static inline void tcg_gen_insn_start(target_ulong pc, target_ulong a1,
-                                       target_ulong a2)
- {
--    TCGOp *op = tcg_emit_op(INDEX_op_insn_start, 3 * 64 / TCG_TARGET_REG_BITS);
-+    TCGOp *op = tcg_emit_op(INDEX_op_insn_start,
-+                            INSN_START_WORDS * 64 / TCG_TARGET_REG_BITS);
-     tcg_set_insn_start_param(op, 0, pc);
-     tcg_set_insn_start_param(op, 1, a1);
-     tcg_set_insn_start_param(op, 2, a2);
-diff --git a/include/tcg/tcg-opc.h b/include/tcg/tcg-opc.h
-index 995b79383e..e988edd93a 100644
---- a/include/tcg/tcg-opc.h
-+++ b/include/tcg/tcg-opc.h
-@@ -114,8 +114,7 @@ DEF(extrh_i64_i32, 1, 1, 0, 0)
- 
- #define DATA64_ARGS  (TCG_TARGET_REG_BITS == 64 ? 1 : 2)
- 
--/* There are tcg_ctx->insn_start_words here, not just one. */
--DEF(insn_start, 0, 0, DATA64_ARGS, TCG_OPF_NOT_PRESENT)
-+DEF(insn_start, 0, 0, DATA64_ARGS * INSN_START_WORDS, TCG_OPF_NOT_PRESENT)
- 
- DEF(exit_tb, 0, 0, 1, TCG_OPF_BB_EXIT | TCG_OPF_BB_END | TCG_OPF_NOT_PRESENT)
- DEF(goto_tb, 0, 0, 1, TCG_OPF_BB_EXIT | TCG_OPF_BB_END | TCG_OPF_NOT_PRESENT)
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index aa300a2f8b..a8c00c72cc 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -34,6 +34,7 @@
- #include "tcg-target-reg-bits.h"
- #include "tcg-target.h"
- #include "tcg/tcg-cond.h"
-+#include "tcg/insn-start-words.h"
- #include "tcg/debug-assert.h"
- 
- /* XXX: make safe guess about sizes */
-@@ -359,7 +360,6 @@ struct TCGContext {
-     int page_mask;
-     uint8_t page_bits;
-     uint8_t tlb_dyn_max_bits;
--    uint8_t insn_start_words;
-     TCGBar guest_mo;
- 
-     TCGRegSet reserved_regs;
-@@ -582,18 +582,19 @@ static inline TCGv_vec temp_tcgv_vec(TCGTemp *t)
-     return (TCGv_vec)temp_tcgv_i32(t);
- }
- 
--static inline TCGArg tcg_get_insn_param(TCGOp *op, int arg)
-+static inline TCGArg tcg_get_insn_param(TCGOp *op, unsigned arg)
- {
-     return op->args[arg];
- }
- 
--static inline void tcg_set_insn_param(TCGOp *op, int arg, TCGArg v)
-+static inline void tcg_set_insn_param(TCGOp *op, unsigned arg, TCGArg v)
- {
-     op->args[arg] = v;
- }
- 
--static inline uint64_t tcg_get_insn_start_param(TCGOp *op, int arg)
-+static inline uint64_t tcg_get_insn_start_param(TCGOp *op, unsigned arg)
- {
-+    tcg_debug_assert(arg < INSN_START_WORDS);
-     if (TCG_TARGET_REG_BITS == 64) {
-         return tcg_get_insn_param(op, arg);
-     } else {
-@@ -602,8 +603,9 @@ static inline uint64_t tcg_get_insn_start_param(TCGOp *op, int arg)
-     }
- }
- 
--static inline void tcg_set_insn_start_param(TCGOp *op, int arg, uint64_t v)
-+static inline void tcg_set_insn_start_param(TCGOp *op, unsigned arg, uint64_t v)
- {
-+    tcg_debug_assert(arg < INSN_START_WORDS);
-     if (TCG_TARGET_REG_BITS == 64) {
-         tcg_set_insn_param(op, arg, v);
-     } else {
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index 7b0bd50904..fa4998b341 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -120,7 +120,7 @@ static int64_t decode_sleb128(const uint8_t **pp)
- /* Encode the data collected about the instructions while compiling TB.
-    Place the data at BLOCK, and return the number of bytes consumed.
- 
--   The logical table consists of TARGET_INSN_START_WORDS target_ulong's,
-+   The logical table consists of INSN_START_WORDS uint64_t's,
-    which come from the target's insn_start data, followed by a uintptr_t
-    which comes from the host pc of the end of the code implementing the insn.
- 
-@@ -140,13 +140,13 @@ static int encode_search(TranslationBlock *tb, uint8_t *block)
-     for (i = 0, n = tb->icount; i < n; ++i) {
-         uint64_t prev, curr;
- 
--        for (j = 0; j < TARGET_INSN_START_WORDS; ++j) {
-+        for (j = 0; j < INSN_START_WORDS; ++j) {
-             if (i == 0) {
-                 prev = (!(tb_cflags(tb) & CF_PCREL) && j == 0 ? tb->pc : 0);
-             } else {
--                prev = insn_data[(i - 1) * TARGET_INSN_START_WORDS + j];
-+                prev = insn_data[(i - 1) * INSN_START_WORDS + j];
-             }
--            curr = insn_data[i * TARGET_INSN_START_WORDS + j];
-+            curr = insn_data[i * INSN_START_WORDS + j];
-             p = encode_sleb128(p, curr - prev);
-         }
-         prev = (i == 0 ? 0 : insn_end_off[i - 1]);
-@@ -178,7 +178,7 @@ static int cpu_unwind_data_from_tb(TranslationBlock *tb, uintptr_t host_pc,
-         return -1;
-     }
- 
--    memset(data, 0, sizeof(uint64_t) * TARGET_INSN_START_WORDS);
-+    memset(data, 0, sizeof(uint64_t) * INSN_START_WORDS);
-     if (!(tb_cflags(tb) & CF_PCREL)) {
-         data[0] = tb->pc;
-     }
-@@ -188,7 +188,7 @@ static int cpu_unwind_data_from_tb(TranslationBlock *tb, uintptr_t host_pc,
-      * at which the end of the insn exceeds host_pc.
-      */
-     for (i = 0; i < num_insns; ++i) {
--        for (j = 0; j < TARGET_INSN_START_WORDS; ++j) {
-+        for (j = 0; j < INSN_START_WORDS; ++j) {
-             data[j] += decode_sleb128(&p);
-         }
-         iter_pc += decode_sleb128(&p);
-@@ -206,7 +206,7 @@ static int cpu_unwind_data_from_tb(TranslationBlock *tb, uintptr_t host_pc,
- void cpu_restore_state_from_tb(CPUState *cpu, TranslationBlock *tb,
-                                uintptr_t host_pc)
- {
--    uint64_t data[TARGET_INSN_START_WORDS];
-+    uint64_t data[INSN_START_WORDS];
-     int insns_left = cpu_unwind_data_from_tb(tb, host_pc, data);
- 
-     if (insns_left < 0) {
-@@ -349,7 +349,6 @@ TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s)
-     tcg_ctx->page_mask = TARGET_PAGE_MASK;
-     tcg_ctx->tlb_dyn_max_bits = CPU_TLB_DYN_MAX_BITS;
  #endif
--    tcg_ctx->insn_start_words = TARGET_INSN_START_WORDS;
-     tcg_ctx->guest_mo = cpu->cc->tcg_ops->guest_default_memory_order;
  
-  restart_translate:
-@@ -457,7 +456,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s)
-             fprintf(logfile, "OUT: [size=%d]\n", gen_code_size);
-             fprintf(logfile,
-                     "  -- guest addr 0x%016" PRIx64 " + tb prologue\n",
--                    tcg_ctx->gen_insn_data[insn * TARGET_INSN_START_WORDS]);
-+                    tcg_ctx->gen_insn_data[insn * INSN_START_WORDS]);
-             chunk_start = tcg_ctx->gen_insn_end_off[insn];
-             disas(logfile, tb->tc.ptr, chunk_start);
- 
-@@ -470,7 +469,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s)
-                 size_t chunk_end = tcg_ctx->gen_insn_end_off[insn];
-                 if (chunk_end > chunk_start) {
-                     fprintf(logfile, "  -- guest addr 0x%016" PRIx64 "\n",
--                            tcg_ctx->gen_insn_data[insn * TARGET_INSN_START_WORDS]);
-+                            tcg_ctx->gen_insn_data[insn * INSN_START_WORDS]);
-                     disas(logfile, tb->tc.ptr + chunk_start,
-                           chunk_end - chunk_start);
-                     chunk_start = chunk_end;
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index 197fdac7dd..e0aaed3c4c 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -526,7 +526,7 @@ void cpu_x86_inject_mce(Monitor *mon, X86CPU *cpu, int bank,
- static inline target_ulong get_memio_eip(CPUX86State *env)
+-void cpu_loop_exit_sigsegv(CPUState *cpu, target_ulong addr,
++void cpu_loop_exit_sigsegv(CPUState *cpu, vaddr addr,
+                            MMUAccessType access_type, bool maperr, uintptr_t ra)
  {
- #ifdef CONFIG_TCG
--    uint64_t data[TARGET_INSN_START_WORDS];
-+    uint64_t data[INSN_START_WORDS];
-     CPUState *cs = env_cpu(env);
- 
-     if (!cpu_unwind_state_data(cs, cs->mem_io_pc, data)) {
-diff --git a/target/openrisc/sys_helper.c b/target/openrisc/sys_helper.c
-index 951f8e247a..d96b41a01c 100644
---- a/target/openrisc/sys_helper.c
-+++ b/target/openrisc/sys_helper.c
-@@ -218,7 +218,7 @@ target_ulong HELPER(mfspr)(CPUOpenRISCState *env, target_ulong rd,
- {
-     OpenRISCCPU *cpu = env_archcpu(env);
- #ifndef CONFIG_USER_ONLY
--    uint64_t data[TARGET_INSN_START_WORDS];
-+    uint64_t data[INSN_START_WORDS];
-     MachineState *ms = MACHINE(qdev_get_machine());
-     CPUState *cs = env_cpu(env);
-     int idx;
-diff --git a/tcg/perf.c b/tcg/perf.c
-index 412a987d95..4e8d2c1bee 100644
---- a/tcg/perf.c
-+++ b/tcg/perf.c
-@@ -313,7 +313,7 @@ void perf_report_code(uint64_t guest_pc, TranslationBlock *tb,
-                       const void *start)
- {
-     struct debuginfo_query *q;
--    size_t insn, start_words;
-+    size_t insn;
-     uint64_t *gen_insn_data;
- 
-     if (!perfmap && !jitdump) {
-@@ -329,11 +329,10 @@ void perf_report_code(uint64_t guest_pc, TranslationBlock *tb,
- 
-     /* Query debuginfo for each guest instruction. */
-     gen_insn_data = tcg_ctx->gen_insn_data;
--    start_words = tcg_ctx->insn_start_words;
- 
-     for (insn = 0; insn < tb->icount; insn++) {
-         /* FIXME: This replicates the restore_state_to_opc() logic. */
--        q[insn].address = gen_insn_data[insn * start_words + 0];
-+        q[insn].address = gen_insn_data[insn * INSN_START_WORDS + 0];
-         if (tb_cflags(tb) & CF_PCREL) {
-             q[insn].address |= (guest_pc & qemu_target_page_mask());
-         }
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index c4e866e9c3..648333a9fb 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -1989,7 +1989,6 @@ void tcg_func_start(TCGContext *s)
-     QSIMPLEQ_INIT(&s->labels);
- 
-     tcg_debug_assert(s->addr_type <= TCG_TYPE_REG);
--    tcg_debug_assert(s->insn_start_words > 0);
+     const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
+@@ -766,7 +766,7 @@ void cpu_loop_exit_sigsegv(CPUState *cpu, target_ulong addr,
+     cpu_loop_exit_restore(cpu, ra);
  }
  
- static TCGTemp *tcg_temp_alloc(TCGContext *s)
-@@ -2943,7 +2942,7 @@ void tcg_dump_ops(TCGContext *s, FILE *f, bool have_prefs)
-             nb_oargs = 0;
-             col += ne_fprintf(f, "\n ----");
- 
--            for (i = 0, k = s->insn_start_words; i < k; ++i) {
-+            for (i = 0, k = INSN_START_WORDS; i < k; ++i) {
-                 col += ne_fprintf(f, " %016" PRIx64,
-                                   tcg_get_insn_start_param(op, i));
-             }
-@@ -6835,7 +6834,7 @@ static void tcg_out_st_helper_args(TCGContext *s, const TCGLabelQemuLdst *ldst,
- 
- int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
+-void cpu_loop_exit_sigbus(CPUState *cpu, target_ulong addr,
++void cpu_loop_exit_sigbus(CPUState *cpu, vaddr addr,
+                           MMUAccessType access_type, uintptr_t ra)
  {
--    int i, start_words, num_insns;
-+    int i, num_insns;
-     TCGOp *op;
- 
-     if (unlikely(qemu_loglevel_mask(CPU_LOG_TB_OP)
-@@ -6925,9 +6924,8 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
-     QSIMPLEQ_INIT(&s->ldst_labels);
-     s->pool_labels = NULL;
- 
--    start_words = s->insn_start_words;
-     s->gen_insn_data =
--        tcg_malloc(sizeof(uint64_t) * s->gen_tb->icount * start_words);
-+        tcg_malloc(sizeof(uint64_t) * s->gen_tb->icount * INSN_START_WORDS);
- 
-     tcg_out_tb_start(s);
- 
-@@ -6969,8 +6967,8 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
-                 assert(s->gen_insn_end_off[num_insns] == off);
-             }
-             num_insns++;
--            for (i = 0; i < start_words; ++i) {
--                s->gen_insn_data[num_insns * start_words + i] =
-+            for (i = 0; i < INSN_START_WORDS; ++i) {
-+                s->gen_insn_data[num_insns * INSN_START_WORDS + i] =
-                     tcg_get_insn_start_param(op, i);
-             }
-             break;
+     const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
 -- 
 2.43.0
 
