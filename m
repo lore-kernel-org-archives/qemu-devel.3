@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4B67C3ABA9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 18:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E1DCC3ABA9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 18:51:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uACWO-0003rj-FQ; Wed, 30 Apr 2025 14:51:04 -0400
+	id 1uACWC-0003TP-3Z; Wed, 30 Apr 2025 14:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uACWN-0003oH-AD
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 14:51:03 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uACW9-0003Mu-U3
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 14:50:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uACWL-0008LA-NV
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 14:51:03 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uACW8-0008Jh-7E
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 14:50:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746039061;
+ s=mimecast20190719; t=1746039047;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LZvW2RNky95DizNFkoHrcOHvUETO94KZq32Qqt4f62s=;
- b=Xh2vekSjnDr1MlVkEnFUpcBUv5fWretJW6ta1aX1AMmwoqv7fNoA+sOelRPCdthP6TPGLm
- 1EjcmVsxVWVhw6QQ4RovwM2+T515/2tXVJqA3OJM15HEQEJ77oZ2kBBRyaeB/hMuBiCNMv
- V20VpgAM52IhJ6kjAlFmG1kQcv9ln7E=
+ bh=1jF3E5daF6g9w4QZMA0OD2SSi2U8rcfGr0Z+gYTEOaI=;
+ b=ML/VP/AbzAfR8kfRCuHe3GDz+SWz79HTwBjldPd0yc3R86c6XWqXZVdmSWsKY+jJWR5rrJ
+ 3fsAL4F8aKFRDTmg+CpH/rBU9/ec8gkXfrP1cpmOEp2aIw7YbYyD4Koq93oqddM+bRCNw9
+ YuYTPA92QrfKe6ZbbTt9CzTqD0onxFw=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-SvkHwoCfO52CUvkJlTSkcw-1; Wed,
- 30 Apr 2025 14:50:57 -0400
-X-MC-Unique: SvkHwoCfO52CUvkJlTSkcw-1
-X-Mimecast-MFC-AGG-ID: SvkHwoCfO52CUvkJlTSkcw_1746039056
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-491-I-AZhIBnOKqVYgiCxoiXJA-1; Wed,
+ 30 Apr 2025 14:50:45 -0400
+X-MC-Unique: I-AZhIBnOKqVYgiCxoiXJA-1
+X-Mimecast-MFC-AGG-ID: I-AZhIBnOKqVYgiCxoiXJA_1746039044
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5249D180036F; Wed, 30 Apr 2025 18:50:56 +0000 (UTC)
+ id 4A1891800EC8; Wed, 30 Apr 2025 18:50:44 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.67])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 78ADA19560A3; Wed, 30 Apr 2025 18:50:54 +0000 (UTC)
+ id 1528019560A3; Wed, 30 Apr 2025 18:50:41 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 7/9] meson.build: Put the D-Bus summary into the UI section
-Date: Wed, 30 Apr 2025 20:50:33 +0200
-Message-ID: <20250430185035.724919-8-thuth@redhat.com>
+ Steffen Eiden <seiden@linux.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>, Gautam Gala <ggala@linux.ibm.com>
+Subject: [PULL 2/9] target/s390x: Introduce function when exiting PV
+Date: Wed, 30 Apr 2025 20:50:28 +0200
+Message-ID: <20250430185035.724919-3-thuth@redhat.com>
 In-Reply-To: <20250430185035.724919-1-thuth@redhat.com>
 References: <20250430185035.724919-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -84,39 +83,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Gautam Gala <ggala@linux.ibm.com>
 
-We've got a dedicated section for UI options nowadays, so the
-D-Bus display should get reported here, too.
+Replace an existing macro (s390_pv_cmd_exit) that looks like
+a function with an actual function. The function will be used
+when exiting PV instead of the macro.
 
-Message-ID: <20250325055125.253669-1-thuth@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Steffen Eiden <seiden@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Signed-off-by: Gautam Gala <ggala@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20250423080915.1048123-3-ggala@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/s390x/kvm/pv.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index ccd6c71577d..6c61e1dcaec 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4619,7 +4619,6 @@ summary_info += {'Trace backends':    ','.join(get_option('trace_backends'))}
- if 'simple' in get_option('trace_backends')
-   summary_info += {'Trace output file': get_option('trace_file') + '-<pid>'}
- endif
--summary_info += {'D-Bus display':     dbus_display}
- summary_info += {'QOM debugging':     get_option('qom_cast_debug')}
- summary_info += {'Relocatable install': get_option('relocatable')}
- summary_info += {'vhost-kernel support': have_vhost_kernel}
-@@ -4802,6 +4801,7 @@ summary_info = {}
- if host_os == 'darwin'
-   summary_info += {'Cocoa support':           cocoa}
- endif
-+summary_info += {'D-Bus display':     dbus_display}
- summary_info += {'SDL support':       sdl}
- summary_info += {'SDL image support': sdl_image}
- summary_info += {'GTK support':       gtk}
+diff --git a/target/s390x/kvm/pv.c b/target/s390x/kvm/pv.c
+index 1947a3d6692..30b64f7f22e 100644
+--- a/target/s390x/kvm/pv.c
++++ b/target/s390x/kvm/pv.c
+@@ -59,14 +59,12 @@ static int __s390_pv_cmd(uint32_t cmd, const char *cmdname, void *data,
+  */
+ #define s390_pv_cmd(cmd, data) __s390_pv_cmd(cmd, #cmd, data, NULL)
+ #define s390_pv_cmd_pvrc(cmd, data, pvrc) __s390_pv_cmd(cmd, #cmd, data, pvrc)
+-#define s390_pv_cmd_exit(cmd, data)    \
+-{                                      \
+-    int rc;                            \
+-                                       \
+-    rc = __s390_pv_cmd(cmd, #cmd, data, NULL); \
+-    if (rc) {                          \
+-        exit(1);                       \
+-    }                                  \
++
++static void s390_pv_cmd_exit(uint32_t cmd, void *data)
++{
++    if (s390_pv_cmd(cmd, data)) {
++        exit(1);
++    }
+ }
+ 
+ int s390_pv_query_info(void)
 -- 
 2.49.0
 
