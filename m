@@ -4,92 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABFAAC369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 06:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F59C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 06:37:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA0ts-0006O0-Ou; Wed, 30 Apr 2025 02:26:32 -0400
+	id 1uA13R-0004Ir-FQ; Wed, 30 Apr 2025 02:36:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA0tq-0006Np-6A
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 02:26:30 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA0tm-0005Hy-UU
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 02:26:29 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43edecbfb94so63006865e9.1
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 23:26:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1745994385; x=1746599185; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=lHu33LUDtg0kcAgSiKjUqcyTlQI9RlTC4ZuwujDN2RA=;
- b=XAfE4re5/lU99szHK/idIlLdir2NSCXX2MkT4JEGGmZB7x+TVUl4tqhUcq8D49uT9w
- EO96evbMUoyTKwhZyR/DJBCBDSqy3TpLPU6QFUA3xNCaSPOhGfPc1kWemnz9pZzWvBcu
- 3sp0h8EtDz6ezdEEk4mefcBti0YHEKQLHjjlgryd9YyquDEq1Upn42HssavPMHpXH68M
- J84krqqBiB7r4ZR203ySnBp0iuqPn6ecaSjQ/lOIgyzjrvgZJ1QzdJu+6EITFfIGbVmE
- mCM+Fs9iyNW2AjMlfo4iglNFEr+hcoV9AKDjuBxGJ+IqOr5CtpNDkbmHXvC+iGeERSTm
- IFDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745994385; x=1746599185;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lHu33LUDtg0kcAgSiKjUqcyTlQI9RlTC4ZuwujDN2RA=;
- b=hSd6gBTBBY1cmF+500qHADLVFClESfgVi0U7AaheR0s1yuqM17tJl/7Cw/e1lN0tl8
- z7bV8Hq7kRhEjmGK7NdHEXEBPemdpLQcg8zNdS1MmE2LuX0C3fPGlo2TYX3foPNzQWSF
- ErbsWxqBTHfXSPf2g66BvsvPvXEmTqrQexZT4FTH4zKfPRwGm4O9GvHnkfJTmeYEo8f9
- ERVGHt9dtXIBH9WQgjvsOrgcgOHSJn1HUgxF5rMQt18XUtnz4NAfb8bbA0q0vNT7H6hh
- 6nw6VIcTFdGshgFCVGXX09i2I4hrVR0NWB4wBGWqLpC0h6sS2MWRGY0u6QuhM/xO3xDW
- 1Ldg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV0X6BW/HGbXa8au9iXS/GHH4gz8jepN1UAt8d2llQsu/g2N0RVra3HtoD+JfVkyIuAJmON0q1zvmYd@nongnu.org
-X-Gm-Message-State: AOJu0YzjBxrJT+1l86kV/dwk1N8nDiVCeCzGK//A0x9h7+yDvIn3oq4m
- oEzqGvNNkMxAkjeB9pZ/ijo0Xno9hm1bWERxvNF9+zkz5040C8DRaMhKhX10KuqNRPF82v78ALq
- T
-X-Gm-Gg: ASbGnctilzpDptS8u3wMMZyUbPVw8Mw8nHZJjps/GFq/H0Pu31WDOr2cCTFpl+YBFj4
- n7NJfRckKejSSyCqZzzR+Wc03uwoDZVWAKoMkUYnD44QES1CNCSfsX+Msi4WCq4d5Gfac6UFK2o
- /UtRkdOpG5XYyiKoe7GUc1zZHRFTq3K14KbqmCyjQmg4xeRDwM14G8SbHy/2ZvfnGMLln/l7j+a
- qjk9eeem3LuJoQo1Omz3fwtCZfC5aqlulNI7O00SV82N/Az7dhbpByZwqiqfB8YefgHd9xVmrcJ
- jT+Fml1B9HuAkOnzDhVzhR22wL7VSHa2/Tyz0vFtUFyFCYJClOW381WHgSwAEfvV4CsAxseLRpy
- a+/As72ny
-X-Google-Smtp-Source: AGHT+IGYSOmmiSCwzVMs610b9QkqaQcb85BvaceQNoaVvCzEjUJ1ZpVSqwvAVilpsbrjtlf+y4QaaQ==
-X-Received: by 2002:a05:600c:1912:b0:43d:ac5:11e8 with SMTP id
- 5b1f17b1804b1-441b1f5be91mr12053815e9.21.1745994384524; 
- Tue, 29 Apr 2025 23:26:24 -0700 (PDT)
-Received: from [192.168.69.226] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b2af457bsm12895175e9.24.2025.04.29.23.26.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Apr 2025 23:26:23 -0700 (PDT)
-Message-ID: <d57e4f5c-a677-4cba-bbe6-85b997a3b57a@linaro.org>
-Date: Wed, 30 Apr 2025 08:26:23 +0200
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uA13O-0004Ft-Kv
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 02:36:22 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uA13K-0006Rg-R0
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 02:36:21 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bx32vZxBFoEN7KAA--.8745S3;
+ Wed, 30 Apr 2025 14:36:09 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxXsXWxBFoHb6fAA--.8560S3;
+ Wed, 30 Apr 2025 14:36:08 +0800 (CST)
+Subject: Re: [PULL 0/8] loongarch-to-apply queue
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+References: <20250428040313.413822-1-maobibo@loongson.cn>
+ <CAJSP0QXKPt16JARrVNKKzfOFO1f3TYqpS5TSYMKD43q2mQhYRQ@mail.gmail.com>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <45219bab-be8c-bd9b-8175-370ed388155c@loongson.cn>
+Date: Wed, 30 Apr 2025 14:35:01 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/9] target/microblaze: Always use TARGET_LONG_BITS == 32
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: edgar.iglesias@gmail.com, "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Luc Michel <luc.michel@amd.com>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
- Michal Simek <michal.simek@amd.com>
-References: <20250212220155.1147144-1-richard.henderson@linaro.org>
- <ad364fce-f73d-4dde-b890-0ea86d9c4674@linaro.org>
+In-Reply-To: <CAJSP0QXKPt16JARrVNKKzfOFO1f3TYqpS5TSYMKD43q2mQhYRQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-In-Reply-To: <ad364fce-f73d-4dde-b890-0ea86d9c4674@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowMBxXsXWxBFoHb6fAA--.8560S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29K
+ BjDU0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26c
+ xKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vE
+ j48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxV
+ AFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAF
+ wI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU25Ef
+ UUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.12,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,37 +80,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
 
-On 13/2/25 13:37, Philippe Mathieu-Daudé wrote:
-> +AMD folks
+
+On 2025/4/29 下午10:04, Stefan Hajnoczi wrote:
+> Please take a look at the following CI failure:
 > 
-> On 12/2/25 23:01, Richard Henderson wrote:
->> Use out-of-line helpers to implement extended address memory ops.
->> With this, we can reduce TARGET_LONG_BITS to the more natural 32
->> for this 32-bit cpu.
+> Fail: The memory reads and writes count does not match.
+> Expected Reads: 114688, Actual Reads: 0
+> Expected Writes: 63488, Actual Writes: 32768
+> make[1]: *** [Makefile:202: run-plugin-memory-with-libmem.so] Error 1
 > 
-> I thought about something similar 2 months ago, but then realized
-> MicroBlaze cores can be synthetized in 64-bit, and IIRC there is
-> not much missing (I'd say effort would be to add 20% more of what
-> we currently have). Just wanted to mention before taking the
-> decision to restrict to 32-bit. OTOH if there are no plan for
-> adding 64-bit support at AMD, then I'm more than happy to simplify
-> by considering only 32-bit.
+> https://gitlab.com/qemu-project/qemu/-/jobs/9865233699#L4223
+yes, I can reproduce this problem.
+It is caused with patch 6 "hw/loongarch/virt: Get physical entry address 
+with elf file".
 
-I gave this series another go, and figured the microblaze target
-addition was done way before the 64-bit. C_DATA_SIZE value was fixed
-as 32, and C_ADDR_SIZE was not mentioned. Later C_DATA_SIZE became
-configurable as [32, 64] and C_ADDR_SIZE appeared.
+Regards
+Bibo Mao
+> 
+> Thanks!
+> 
+> Stefan
+> 
 
-Indeed what this series does is correctly implement the current
-target as C_DATA_SIZE=32 (C_ADDR_SIZE=32 implied).
-
-I had a quick look at what is missing for C_DATA_SIZE > 32 and it
-is more than the 20% I first roughly estimated. So with the current
-implementation, this series is doing the right thing IMHO.
-
-Regards,
-
-Phil.
 
