@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA752C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 05:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C37EC369DC
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 05:33:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9zzk-0002D2-R8; Wed, 30 Apr 2025 01:28:33 -0400
+	id 1u9zzp-0002II-4b; Wed, 30 Apr 2025 01:28:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1u9zzg-0002B8-A4
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 01:28:28 -0400
+ id 1u9zzf-0002AZ-Op
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 01:28:27 -0400
 Received: from smtp1.lauterbach.com ([62.154.241.196])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1u9zza-0006hi-7U
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 01:28:27 -0400
-Received: (qmail 1720 invoked by uid 484); 30 Apr 2025 05:28:03 -0000
+ id 1u9zza-0006kt-7Q
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 01:28:26 -0400
+Received: (qmail 1954 invoked by uid 484); 30 Apr 2025 05:28:06 -0000
 X-Qmail-Scanner-Diagnostics: from 10.2.13.100 by smtp1.lauterbach.com
  (envelope-from <mario.fleischmann@lauterbach.com>,
  uid 484) with qmail-scanner-2.11 
  (mhr: 1.0. clamdscan: 0.99/21437. spamassassin: 3.4.0.  
  Clear:RC:1(10.2.13.100):. 
- Processed in 0.012919 secs); 30 Apr 2025 05:28:03 -0000
+ Processed in 0.012961 secs); 30 Apr 2025 05:28:06 -0000
 Received: from unknown (HELO mflpc1.LTB.LAN)
  (Authenticated_SSL:mfleischmann@[10.2.13.100])
  (envelope-sender <mario.fleischmann@lauterbach.com>)
  by smtp1.lauterbach.com (qmail-ldap-1.03) with TLS_AES_256_GCM_SHA384
  encrypted SMTP
- for <qemu-devel@nongnu.org>; 30 Apr 2025 05:28:03 -0000
+ for <qemu-devel@nongnu.org>; 30 Apr 2025 05:28:06 -0000
 From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, philmd@linaro.org, armbru@redhat.com,
  christian.boenig@lauterbach.com,
  Mario Fleischmann <mario.fleischmann@lauterbach.com>
-Subject: [PATCH v2 05/20] mcd: Introduce MCD server stub
-Date: Wed, 30 Apr 2025 07:27:26 +0200
-Message-Id: <20250430052741.21145-6-mario.fleischmann@lauterbach.com>
+Subject: [PATCH v2 15/20] mcd test: Implement core state query
+Date: Wed, 30 Apr 2025 07:27:36 +0200
+Message-Id: <20250430052741.21145-16-mario.fleischmann@lauterbach.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
 References: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
@@ -71,272 +71,462 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To keep the MCD JSON protocol separate from QMP, a custom monitor has been
-implemented in mcd_monitor.c which can be run in parallel to the QMP monitor.
-It is responsible for handling the JSON communication and for dispatching
-the corresponding functions in mcd_stub.c
-The MCD server stub will call the corresponding server functions.
+Depending on the VM and CPU state, core states can be queried:
 
-To start the MCD monitor, configure QEMU with --enable-mcd and start it
-with the -mcd option.
+* MCD_CORE_STATE_DEBUG:   VM halted or CPU artifically stopped
+* MCD_CORE_STATE_RUNNING: VM and CPU running
+* MCD_CORE_STATE_HALTED:  CPU suspended
 
 Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
 ---
- MAINTAINERS            |  1 +
- docs/interop/mcd.rst   |  2 +
- include/exec/mcdstub.h | 17 ++++++++
- mcd/mcd_monitor.c      | 89 ++++++++++++++++++++++++++++++++++++++++++
- mcd/mcd_stub.c         | 11 ++++++
- mcd/meson.build        |  4 +-
- qemu-options.hx        | 11 ++++++
- system/vl.c            | 13 ++++++
- 8 files changed, 147 insertions(+), 1 deletion(-)
- create mode 100644 include/exec/mcdstub.h
- create mode 100644 mcd/mcd_monitor.c
- create mode 100644 mcd/mcd_stub.c
+ mcd/mcd_qapi.c         |  16 ++++++
+ mcd/mcd_qapi.h         |   2 +
+ mcd/mcd_server.c       |  48 +++++++++++++++-
+ mcd/mcd_stub.c         |  21 +++++++
+ qapi/mcd.json          |  55 +++++++++++++++++++
+ tests/qtest/mcd-test.c | 121 ++++++++++++++++++++++++++++++++++++++++-
+ tests/qtest/mcd-util.c |  58 ++++++++++++++++++++
+ tests/qtest/mcd-util.h |   9 +++
+ 8 files changed, 328 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7c085dc..159a38f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3126,6 +3126,7 @@ S: Maintained
- F: mcd/*
- F: docs/interop/mcd.rst
- F: qapi/mcd.json
-+F: include/exec/mcdstub.h
+diff --git a/mcd/mcd_qapi.c b/mcd/mcd_qapi.c
+index fcbd69f..11e28d3 100644
+--- a/mcd/mcd_qapi.c
++++ b/mcd/mcd_qapi.c
+@@ -195,3 +195,19 @@ MCDRegisterInfo *marshal_mcd_register_info(const mcd_register_info_st *reg_info)
  
- Memory API
- M: Paolo Bonzini <pbonzini@redhat.com>
-diff --git a/docs/interop/mcd.rst b/docs/interop/mcd.rst
-index 13e81df..860fa8d 100644
---- a/docs/interop/mcd.rst
-+++ b/docs/interop/mcd.rst
-@@ -52,6 +52,8 @@ has been added to implement a remote procedure call mechanism.
- Each function within the API corresponds to one QAPI command, ensuring a
- one-to-one mapping between the API's functions and the QAPI commands.
- 
-+Use the option ``-mcd dev`` to start MCD's QAPI monitor.
+     return marshal;
+ }
 +
- QAPI Reference
- --------------
- 
-diff --git a/include/exec/mcdstub.h b/include/exec/mcdstub.h
-new file mode 100644
-index 0000000..0513616
---- /dev/null
-+++ b/include/exec/mcdstub.h
-@@ -0,0 +1,17 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Copyright (c) 2025 Lauterbach GmbH
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef MCDSTUB_H
-+#define MCDSTUB_H
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+
-+bool mcd_monitor_start(const char *device, Error **errp);
-+
-+#endif /* MCDSTUB_H */
-diff --git a/mcd/mcd_monitor.c b/mcd/mcd_monitor.c
-new file mode 100644
-index 0000000..7ee3eba
---- /dev/null
-+++ b/mcd/mcd_monitor.c
-@@ -0,0 +1,89 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * mcdmonitor - MCD QAPI protocol handler
-+ *
-+ * Copyright (c) 2025 Lauterbach GmbH
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "exec/mcdstub.h"
-+#include "qobject/qdict.h"
-+#include "qobject/qjson.h"
-+#include "mcd/mcd-qapi-init-commands.h"
-+#include "mcd/mcd-qapi-commands.h"
-+#include "monitor/monitor-internal.h"
-+
-+typedef struct {
-+    Monitor mon;
-+    JSONMessageParser parser;
-+} MonitorMCD;
-+
-+static QmpCommandList qapi_commands;
-+static MonitorMCD mcd_mon;
-+
-+static int mcd_monitor_can_read(void *opaque)
++MCDCoreState *marshal_mcd_core_state(const mcd_core_state_st *state)
 +{
-+    return true;
++    MCDCoreState *marshal = g_malloc0(sizeof(*marshal));
++
++    *marshal = (MCDCoreState) {
++        .state = state->state,
++        .event = state->event,
++        .hw_thread_id = state->hw_thread_id,
++        .trig_id = state->trig_id,
++        .stop_str = g_strdup(state->stop_str),
++        .info_str = g_strdup(state->info_str),
++    };
++
++    return marshal;
 +}
+diff --git a/mcd/mcd_qapi.h b/mcd/mcd_qapi.h
+index 57c01b7..00c1393 100644
+--- a/mcd/mcd_qapi.h
++++ b/mcd/mcd_qapi.h
+@@ -35,6 +35,8 @@ MCDAddr *marshal_mcd_addr(const mcd_addr_st *addr);
+ MCDRegisterInfo *marshal_mcd_register_info(
+     const mcd_register_info_st *reg_info);
+ 
++MCDCoreState *marshal_mcd_core_state(const mcd_core_state_st *state);
 +
-+static void mcd_monitor_read(void *opaque, const uint8_t *buf, int size)
-+{
-+    json_message_parser_feed(&mcd_mon.parser, (const char *) buf, size);
-+}
+ mcd_api_version_st unmarshal_mcd_api_version(MCDAPIVersion *api_version);
+ 
+ mcd_core_con_info_st unmarshal_mcd_core_con_info(MCDCoreConInfo *con_info);
+diff --git a/mcd/mcd_server.c b/mcd/mcd_server.c
+index 041b97e..b0cf1b1 100644
+--- a/mcd/mcd_server.c
++++ b/mcd/mcd_server.c
+@@ -16,6 +16,7 @@
+ #include "exec/gdbstub.h"
+ #include "hw/core/cpu.h"
+ #include "system/runstate.h"
++#include "system/hw_accel.h"
+ 
+ /* Custom memory space type */
+ static const mcd_mem_type_et MCD_MEM_SPACE_IS_SECURE = 0x00010000;
+@@ -1192,7 +1193,52 @@ mcd_return_et mcd_set_global_f(const mcd_core_st *core, bool enable)
+ 
+ mcd_return_et mcd_qry_state_f(const mcd_core_st *core, mcd_core_state_st *state)
+ {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
++    mcdcore_state *core_state;
++    RunState rs;
 +
-+static void mcd_monitor_handle_chr_event(void *opaque, QEMUChrEvent event)
-+{
-+    switch (event) {
++    if (!core || !state) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    *state = (mcd_core_state_st) {
++        .stop_str = "",
++        .info_str = "",
++    };
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    cpu_synchronize_state(core_state->cpu);
++    rs = runstate_get();
++    switch (rs) {
++    case RUN_STATE_PRELAUNCH:
++    case RUN_STATE_DEBUG:
++    case RUN_STATE_PAUSED:
++        state->state = MCD_CORE_STATE_DEBUG;
++        pstrcpy(state->stop_str, MCD_INFO_STR_LEN, "RUN_STATE_PAUSED");
++        break;
++    case RUN_STATE_RUNNING:
++        if (core_state->cpu->running) {
++            state->state = MCD_CORE_STATE_RUNNING;
++        } else if (core_state->cpu->stopped) {
++            state->state = MCD_CORE_STATE_DEBUG;
++        } else if (core_state->cpu->halted) {
++            state->state = MCD_CORE_STATE_HALTED;
++            pstrcpy(state->info_str, MCD_INFO_STR_LEN, "halted");
++        } else {
++            state->state = MCD_CORE_STATE_UNKNOWN;
++        }
++        break;
 +    default:
-+        /* Ignore */
++        state->state = MCD_CORE_STATE_UNKNOWN;
 +        break;
 +    }
-+}
 +
-+static void handle_mcd_command(void *opaque, QObject *req, Error *err)
-+{
-+    QDict *rsp = qmp_dispatch(&qapi_commands, req, false, &mcd_mon.mon);
-+    const QObject *data = QOBJECT(rsp);
-+    GString *json = qobject_to_json_pretty(data, false);
-+    assert(json != NULL);
-+    g_string_append_c(json, '\n');
-+    monitor_puts(&mcd_mon.mon, json->str);
-+    g_string_free(json, true);
-+}
-+
-+static void mcd_monitor_init(Chardev *chr, Error **errp)
-+{
-+    if (!qemu_chr_fe_init(&mcd_mon.mon.chr, chr, errp)) {
-+        return;
-+    }
-+    qemu_chr_fe_set_echo(&mcd_mon.mon.chr, true);
-+
-+    /* For now, don't use the I/O thread */
-+    monitor_data_init(&mcd_mon.mon, true, false, false);
-+
-+    json_message_parser_init(&mcd_mon.parser, handle_mcd_command,
-+                             &mcd_mon.mon, NULL);
-+
-+    qemu_chr_fe_set_handlers(&mcd_mon.mon.chr, mcd_monitor_can_read,
-+                             mcd_monitor_read, mcd_monitor_handle_chr_event,
-+                             NULL, &mcd_mon.mon, NULL, true);
-+}
-+
-+bool mcd_monitor_start(const char *device, Error **errp)
-+{
-+    Chardev *chr = qemu_chr_new_noreplay("mcd", device, true, NULL);
-+    if (!chr) {
-+        error_setg(errp, "mcdstub: couldn't create Chardev");
-+        return false;
-+    }
-+    mcd_monitor_init(chr, errp);
-+    return true;
-+}
-+
-+static void __attribute__((__constructor__)) mcd_monitor_init_commands(void)
-+{
-+    mcd_qmp_init_marshal(&qapi_commands);
-+}
++    g_server_state.last_error = &MCD_ERROR_NONE;
+     return g_server_state.last_error->return_status;
+ }
+ 
 diff --git a/mcd/mcd_stub.c b/mcd/mcd_stub.c
-new file mode 100644
-index 0000000..de679a4
---- /dev/null
+index 76911b4..1385d6c 100644
+--- a/mcd/mcd_stub.c
 +++ b/mcd/mcd_stub.c
-@@ -0,0 +1,11 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * mcdstub - Conversion of MCD QAPI requests to MCD server function calls
-+ *
-+ * Copyright (c) 2025 Lauterbach GmbH
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
+@@ -568,3 +568,24 @@ MCDSetGlobalResult *qmp_mcd_set_global(uint32_t core_uid, bool enable,
+     g_stub_state.on_error_ask_server = true;
+     return result;
+ }
 +
-+#include "mcd_api.h"
-diff --git a/mcd/meson.build b/mcd/meson.build
-index d62a625..191f0cc 100644
---- a/mcd/meson.build
-+++ b/mcd/meson.build
-@@ -28,7 +28,9 @@ mcd_ss = ss.source_set()
- 
- mcd_ss.add(mcd_qapi_files.to_list())
- mcd_ss.add(files(
--  'mcd_server.c'))
-+  'mcd_server.c',
-+  'mcd_stub.c',
-+  'mcd_monitor.c'))
- 
- mcd_ss = mcd_ss.apply({})
- 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index dc694a9..2164ad3 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4724,6 +4724,17 @@ SRST
-     (see the :ref:`GDB usage` chapter in the System Emulation Users Guide).
- ERST
- 
++MCDQryStateResult *qmp_mcd_qry_state(uint32_t core_uid, Error **errp)
++{
++    MCDQryStateResult *result = g_malloc0(sizeof(*result));
++    mcd_core_state_st state;
++    mcd_core_st *core = NULL;
 +
-+#ifdef CONFIG_MCD
-+DEF("mcd", HAS_ARG, QEMU_OPTION_mcd, \
-+    "-mcd dev        accept MCD connection on 'dev'\n",
-+    QEMU_ARCH_ALL)
-+SRST
-+``-mcd dev``
-+    Start the MCD QAPI monitor and accept connections on device 'dev'.
-+ERST
-+#endif
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
 +
- DEF("d", HAS_ARG, QEMU_OPTION_d, \
-     "-d item1,...    enable logging of specified items (use '-d help' for a list of log items)\n",
-     QEMU_ARCH_ALL)
-diff --git a/system/vl.c b/system/vl.c
-index 520956f..73dc786 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -71,6 +71,9 @@
- #include "system/numa.h"
- #include "system/hostmem.h"
- #include "exec/gdbstub.h"
-+#ifdef CONFIG_MCD
-+#include "exec/mcdstub.h"
-+#endif
- #include "gdbstub/enums.h"
- #include "qemu/timer.h"
- #include "chardev/char.h"
-@@ -1280,6 +1283,7 @@ struct device_config {
-         DEV_PARALLEL,  /* -parallel      */
-         DEV_DEBUGCON,  /* -debugcon */
-         DEV_GDB,       /* -gdb, -s */
-+        DEV_MCD,       /* -mcd */
-         DEV_SCLP,      /* s390 sclp */
-     } type;
-     const char *cmdline;
-@@ -2789,6 +2793,10 @@ static bool qemu_machine_creation_done(Error **errp)
- 
-     foreach_device_config_or_exit(DEV_GDB, gdbserver_start);
- 
-+#ifdef CONFIG_MCD
-+    foreach_device_config_or_exit(DEV_MCD, mcd_monitor_start);
-+#endif
++    result->return_status = mcd_qry_state_f(core, &state);
++    if (result->return_status == MCD_RET_ACT_NONE) {
++        result->state = marshal_mcd_core_state(&state);
++    }
 +
-     if (!vga_interface_created && !default_vga &&
-         vga_interface_type != VGA_NONE) {
-         warn_report("A -vga option was passed but this machine "
-@@ -3150,6 +3158,11 @@ void qemu_init(int argc, char **argv)
-             case QEMU_OPTION_gdb:
-                 add_device_config(DEV_GDB, optarg);
-                 break;
-+#ifdef CONFIG_MCD
-+            case QEMU_OPTION_mcd:
-+                add_device_config(DEV_MCD, optarg);
-+                break;
-+#endif
-             case QEMU_OPTION_L:
-                 if (is_help_option(optarg)) {
-                     list_data_dirs = true;
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
+diff --git a/qapi/mcd.json b/qapi/mcd.json
+index c8b82e7..3560658 100644
+--- a/qapi/mcd.json
++++ b/qapi/mcd.json
+@@ -307,6 +307,29 @@
+     'hw-thread-id'        : 'uint32' } }
+ 
+ 
++##
++# @MCDCoreState:
++#
++# Structure type containing the state of a core.
++#
++# @state:        Core state.
++# @event:        Core events (OR'ed bitmask)
++# @hw-thread-id: ID of the hardware thread that caused the core to stop.
++# @trig-id:      ID of the trigger that caused the core to stop.
++# @stop-str:     Detailed description of a special stop reason.
++# @info-str:     Detailed description of the core state.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDCoreState',
++  'data': {
++    'state'       : 'uint32',
++    'event'       : 'uint32',
++    'hw-thread-id': 'uint32',
++    'trig-id'     : 'uint32',
++    'stop-str'    : 'str',
++    'info-str'    : 'str' } }
++
+ ##
+ # == Target Initialization API
+ ##
+@@ -1473,3 +1496,35 @@
+     'core-uid': 'uint32',
+     'enable'  : 'bool' },
+   'returns': 'MCDSetGlobalResult' }
++
++
++##
++# @MCDQryStateResult:
++#
++# Return value of @mcd-qry-state.
++#
++# @return-status: Return code.
++# @state:         The current execution state of the target core.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDQryStateResult',
++  'data': {
++    'return-status': 'uint32',
++    '*state': 'MCDCoreState' }}
++
++
++##
++# @mcd-qry-state:
++#
++# Function querying the execution state of a target core.
++#
++# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
++#
++# Returns: @MCDQryStateResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-qry-state',
++  'data': { 'core-uid': 'uint32' },
++  'returns': 'MCDQryStateResult' }
+diff --git a/tests/qtest/mcd-test.c b/tests/qtest/mcd-test.c
+index c342669..5cc5fc2 100644
+--- a/tests/qtest/mcd-test.c
++++ b/tests/qtest/mcd-test.c
+@@ -26,7 +26,7 @@
+ #include "libqtest.h"
+ #include "mcd-util.h"
+ 
+-#define QEMU_EXTRA_ARGS ""
++#define QEMU_EXTRA_ARGS "-accel tcg"
+ 
+ static bool verbose;
+ 
+@@ -137,6 +137,45 @@ static MCDQryCoresResult *open_server_query_cores(QTestStateMCD *qts)
+     return qry_cores_result;
+ }
+ 
++static mcd_core_state_et check_core_state(QTestStateMCD *qts, uint32_t core_uid)
++{
++    mcd_core_state_et state;
++
++    q_obj_mcd_qry_state_arg qry_state_args = {
++        .core_uid = core_uid,
++    };
++
++    MCDQryStateResult *qry_state_result = qtest_mcd_qry_state(qts,
++                                                              &qry_state_args);
++
++    g_assert(qry_state_result->return_status == MCD_RET_ACT_NONE);
++    g_assert(qry_state_result->state);
++    state = qry_state_result->state->state;
++
++    if (verbose) {
++        fprintf(stderr, "[INFO]\tCore state: ");
++        switch (qry_state_result->state->state) {
++        case MCD_CORE_STATE_RUNNING:
++            fprintf(stderr, "running\n");
++            break;
++        case MCD_CORE_STATE_HALTED:
++            fprintf(stderr, "halted\n");
++            break;
++        case MCD_CORE_STATE_DEBUG:
++            fprintf(stderr, "debug\n");
++            break;
++        case MCD_CORE_STATE_UNKNOWN:
++            fprintf(stderr, "unknown\n");
++            break;
++        default:
++            g_assert_not_reached();
++        }
++    }
++
++    qapi_free_MCDQryStateResult(qry_state_result);
++    return state;
++}
++
+ static void test_initialize(void)
+ {
+     QTestStateMCD qts = mcdtest_init(QEMU_EXTRA_ARGS);
+@@ -562,6 +601,85 @@ static void test_qry_core_info(void)
+     mcdtest_quit(&qts);
+ }
+ 
++static void test_go_stop(void)
++{
++    QTestStateMCD qts = mcdtest_init(QEMU_EXTRA_ARGS);
++    mcd_core_state_et core_state;
++    MCDQryCoresResult *cores_query = open_server_query_cores(&qts);
++
++    MCDCoreConInfoList *core_head = cores_query->core_con_info;
++    for (uint32_t c = 0; c < cores_query->num_cores; c++) {
++        q_obj_mcd_stop_arg stop_args = {
++            .global = true, /* only global stops currently supported */
++        };
++
++        q_obj_mcd_run_arg run_args = {
++            .global = true,
++        };
++
++        q_obj_mcd_close_core_arg close_core_args;
++
++        MCDRunResult *run_result;
++        MCDStopResult *stop_result;
++        MCDOpenCoreResult *open_core_result;
++        MCDCloseCoreResult *close_core_result;
++
++        MCDCoreConInfo *core_con_info = core_head->value;
++        q_obj_mcd_open_core_arg open_core_args = {
++            .core_con_info = core_con_info,
++        };
++
++        if (verbose) {
++            fprintf(stderr, "[INFO]\tTesting core %s (#%d)...\n",
++                            core_con_info->core,
++                            core_con_info->core_id);
++        }
++
++        open_core_result = qtest_mcd_open_core(&qts, &open_core_args);
++        g_assert(open_core_result->return_status == MCD_RET_ACT_NONE);
++        g_assert(open_core_result->has_core_uid);
++
++        check_core_state(&qts, open_core_result->core_uid);
++
++        if (verbose) {
++            fprintf(stderr, "[INFO]\tStop core\n");
++        }
++
++        stop_args.core_uid = open_core_result->core_uid;
++        stop_result = qtest_mcd_stop(&qts, &stop_args);
++        g_assert(stop_result->return_status == MCD_RET_ACT_NONE);
++        qapi_free_MCDStopResult(stop_result);
++
++        core_state = check_core_state(&qts, open_core_result->core_uid);
++        g_assert(core_state == MCD_CORE_STATE_DEBUG);
++
++        if (verbose) {
++            fprintf(stderr, "[INFO]\tResume core\n");
++        }
++
++        run_args.core_uid = open_core_result->core_uid;
++        run_result = qtest_mcd_run(&qts, &run_args);
++        g_assert(run_result->return_status == MCD_RET_ACT_NONE);
++        qapi_free_MCDRunResult(run_result);
++
++        core_state = check_core_state(&qts, open_core_result->core_uid);
++        /* could be running as well as halted */
++        g_assert(core_state != MCD_CORE_STATE_DEBUG);
++
++        close_core_args.core_uid = open_core_result->core_uid;
++        close_core_result = qtest_mcd_close_core(&qts, &close_core_args);
++        g_assert(close_core_result->return_status == MCD_RET_ACT_NONE);
++
++        qapi_free_MCDCloseCoreResult(close_core_result);
++        qapi_free_MCDOpenCoreResult(open_core_result);
++        core_head = core_head->next;
++    }
++
++    qapi_free_MCDQryCoresResult(cores_query);
++    qtest_mcd_exit(&qts);
++    mcdtest_quit(&qts);
++}
++
+ int main(int argc, char *argv[])
+ {
+     char *v_env = getenv("V");
+@@ -575,5 +693,6 @@ int main(int argc, char *argv[])
+     qtest_add_func("mcd/qry-cores", test_qry_cores);
+     qtest_add_func("mcd/open-core", test_open_core);
+     qtest_add_func("mcd/qry-core-info", test_qry_core_info);
++    qtest_add_func("mcd/go-stop", test_go_stop);
+     return g_test_run();
+ }
+diff --git a/tests/qtest/mcd-util.c b/tests/qtest/mcd-util.c
+index cd14ccb..a8b7855 100644
+--- a/tests/qtest/mcd-util.c
++++ b/tests/qtest/mcd-util.c
+@@ -329,3 +329,61 @@ MCDQryRegMapResult *qtest_mcd_qry_reg_map(QTestStateMCD *qts,
+ 
+     return unmarshal;
+ }
++
++MCDRunResult *qtest_mcd_run(QTestStateMCD *qts, q_obj_mcd_run_arg *args)
++{
++    Visitor *v;
++    QObject *marshal;
++    QDict *arg, *resp;
++    QObject *ret;
++    bool ok;
++    MCDRunResult *unmarshal;
++
++    MARSHAL_ARGS(q_obj_mcd_run_arg);
++
++    resp = qtest_mcd(qts, "{'execute': 'mcd-run',"
++                          "'arguments': %p}", arg);
++
++    UNMARSHAL_RESULT(MCDRunResult);
++
++    return unmarshal;
++}
++
++MCDStopResult *qtest_mcd_stop(QTestStateMCD *qts, q_obj_mcd_stop_arg *args)
++{
++    Visitor *v;
++    QObject *marshal;
++    QDict *arg, *resp;
++    QObject *ret;
++    bool ok;
++    MCDStopResult *unmarshal;
++
++    MARSHAL_ARGS(q_obj_mcd_stop_arg);
++
++    resp = qtest_mcd(qts, "{'execute': 'mcd-stop',"
++                          "'arguments': %p}", arg);
++
++    UNMARSHAL_RESULT(MCDStopResult);
++
++    return unmarshal;
++}
++
++MCDQryStateResult *qtest_mcd_qry_state(QTestStateMCD *qts,
++                                       q_obj_mcd_qry_state_arg *args)
++{
++    Visitor *v;
++    QObject *marshal;
++    QDict *arg, *resp;
++    QObject *ret;
++    bool ok;
++    MCDQryStateResult *unmarshal;
++
++    MARSHAL_ARGS(q_obj_mcd_qry_state_arg);
++
++    resp = qtest_mcd(qts, "{'execute': 'mcd-qry-state',"
++                          "'arguments': %p}", arg);
++
++    UNMARSHAL_RESULT(MCDQryStateResult);
++
++    return unmarshal;
++}
+diff --git a/tests/qtest/mcd-util.h b/tests/qtest/mcd-util.h
+index 2c47e88..7dd5102 100644
+--- a/tests/qtest/mcd-util.h
++++ b/tests/qtest/mcd-util.h
+@@ -60,4 +60,13 @@ MCDQryRegGroupsResult *qtest_mcd_qry_reg_groups(QTestStateMCD *qts,
+ MCDQryRegMapResult *qtest_mcd_qry_reg_map(QTestStateMCD *qts,
+                                           q_obj_mcd_qry_reg_map_arg *args);
+ 
++MCDRunResult *qtest_mcd_run(QTestStateMCD *qts,
++                            q_obj_mcd_run_arg *args);
++
++MCDStopResult *qtest_mcd_stop(QTestStateMCD *qts,
++                              q_obj_mcd_stop_arg *args);
++
++MCDQryStateResult *qtest_mcd_qry_state(QTestStateMCD *qts,
++                                       q_obj_mcd_qry_state_arg *args);
++
+ #endif /* TEST_MCD_UTILS_H */
 -- 
 2.34.1
 
