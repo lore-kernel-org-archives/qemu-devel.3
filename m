@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 358C0C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 17:52:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28292C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 17:54:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uABbk-0001iD-OF; Wed, 30 Apr 2025 13:52:32 -0400
+	id 1uABdk-0002OZ-42; Wed, 30 Apr 2025 13:54:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uABbi-0001hg-2k
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 13:52:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uABdh-0002Ng-L2
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 13:54:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uABbg-0001y5-DX
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 13:52:29 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uABdf-00025v-Om
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 13:54:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746035547;
+ s=mimecast20190719; t=1746035670;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JzidDxPLbc2z/zgJNjRYqmm4wcpc8FAnpkWQbDC70Fk=;
- b=BaQACLUHqb/QdAJqsWpcIVxJdvWh/3AKkOBCOBmp1NwgJsAy4cJuEaTKfF3b3RvKlh8RnY
- jwlHAy2pY3YyL62RH/Gmjoi16V5lVb5HmxhLH6mXLIyrVWg6wWxJDvIxztJhO4GavUUw7t
- Xbu7RoOElN0CoMADMziinShZZVt/OS4=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EtRSIw/7c03sySOED15QlpoVCopZmTyUah0yCc8TNo4=;
+ b=Ha1rgvdfvWRN1hNAFtyJSyeL5NfM2wpp6hbvIw/ZMdm3AEqPubhnJPWjTYxfXC0TahMy1H
+ 4CZs9BDJiWNCTl+CyfpX4BLMY8kzEgk05vqokoTlwYmORo7poOXj4JrBFSsVwoSquVLHDj
+ z3MS6t9GzDDYCitr/3JQZahLtrRY4TI=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-bF0l0zrzPqG3rZc6dJgjuQ-1; Wed, 30 Apr 2025 13:52:25 -0400
-X-MC-Unique: bF0l0zrzPqG3rZc6dJgjuQ-1
-X-Mimecast-MFC-AGG-ID: bF0l0zrzPqG3rZc6dJgjuQ_1746035544
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5e6c14c0a95so118504a12.0
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 10:52:25 -0700 (PDT)
+ us-mta-558-4COjHEMUN-WIfAmSySucLA-1; Wed, 30 Apr 2025 13:54:28 -0400
+X-MC-Unique: 4COjHEMUN-WIfAmSySucLA-1
+X-Mimecast-MFC-AGG-ID: 4COjHEMUN-WIfAmSySucLA_1746035667
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ac6b047c0dcso9381666b.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 10:54:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746035544; x=1746640344;
+ d=1e100.net; s=20230601; t=1746035667; x=1746640467;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=JzidDxPLbc2z/zgJNjRYqmm4wcpc8FAnpkWQbDC70Fk=;
- b=RiAq06P6fWxcyz6sVLQXYFK8wJLKJ6hw8I02gIs/3KeAEXofR036Hub6q1bm3SjzlD
- R1RDw7ZwRn38TBhEpd6O5i1oN1+cDPYUC+67t5u1AaCnVuCmESTypyNMLUuNi6UTQDii
- LRp35dHg6MiwybinagTWcskXEr3w610smIi1tB3gZO3VgoHN4hfprF4oWZ2dVp4Zhzqm
- IVyXY/GMfbRD/PID38WWLHjk+Sr0zZPnFM5+ylQntny/FXD1MS/npXxCj30qe5UzPMin
- K82vKP1IVYR4EnF/bTM0kznF1yuh3BCNv4QICjLrnY6vvbPTLUm8FEpU07/5wLJEJv0D
- 0Qag==
+ bh=EtRSIw/7c03sySOED15QlpoVCopZmTyUah0yCc8TNo4=;
+ b=f6NehlZeTP44PWeDos3a6RSgrGvxhGwROoTyhslZxKG4T09YTU/I3XJEu4VTzp+WRl
+ boCsTvHg0wZOmXIowPiTvMBWctEcAQB+9BIvPppbCLDXBiHGD2YbX1HCRLBdhHd/D0Yo
+ Pk+cqkR2o/Z1QnpoGMYJXJtHLnC7RJ7C5I/eNMc9m85+LjLlgXC87IlI9D17SARqo3oK
+ XTxQOc7dYTKwpr6HBsBemU/o/jV8nUGwoWnvtUD0G4G6HHCFzMF+5Lbr0IeiX7asRR0X
+ JlmZ5FfDRkWH+GDxH1Bd5B0blaD5cyAkzPGWgWZAPKWEI0RSO2WrweN0++MTzYK9n/kj
+ bcfg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU69pFr+pb9A00d5ivfkKiyUvBXaKGWPhwilvFuoB5CHTC7sBW5znia1Wrs+mvTV065vPhC+03uqbkl@nongnu.org
-X-Gm-Message-State: AOJu0YzxTo1pvDtLVpOixjKXIs0Qn5H34d3tgTrZNsOz6ulyZol8PB2J
- 8SlDrUAt26nCxewMB4J6bffFFR+dLlVDP3cDZyNsSftkNwQSrdemidgcP6IFYpadNseIffweMa1
- pLVTL4w2Ld7jITwJMkRFvJ/NLD2vU8V5yXAYzcl1A4MRSO/DTUbBz
-X-Gm-Gg: ASbGncuz9Kc8QGuitS6x9e/Rlcb0ZTi/zRzjnlpDSEDwzq/yiG9u9A9gh/oktzq1eiP
- w2d2VME2GdxhCAUVVUelBWOhKdnmRFEBYlD68C9UnjO8PmU46T+FU0EUud2DtghsNgf5n2d/R+A
- CeiYDZFxjb/irfuI4d4dNgPRBPtXd8n7BEDUQWugtXkf0JECWRhKL985r3pRD5lY1tfGgLMgryV
- uACWUR3Uq9KWdVJ1ouKWBwGErYL9NYUoa+5D7+EVbs/qSE/lNAlu+Dc6rb1BAveMrBYQMK9yJuu
- 2ZuKI8/YrGzKnscdk07uLORtxi6XzFf/keJhGRd3
-X-Received: by 2002:a05:6402:13c3:b0:5f7:f52e:ec93 with SMTP id
- 4fb4d7f45d1cf-5f8af0ca318mr2840275a12.31.1746035544331; 
- Wed, 30 Apr 2025 10:52:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IExwFSrz5WT7D6DbGfPh3ec3q0a/A4RNQR10ylxvje2wPFBsLPxCU04O+YEN2SwE2ZzaVV7Zw==
-X-Received: by 2002:a05:6402:13c3:b0:5f7:f52e:ec93 with SMTP id
- 4fb4d7f45d1cf-5f8af0ca318mr2840256a12.31.1746035544014; 
- Wed, 30 Apr 2025 10:52:24 -0700 (PDT)
+ AJvYcCULed3W7pY55PM91wlWnzFERNRMmxNGUeFfG7tC6pamyXY/Eq4pkFBlsmWgb9zFvRkkoYURhfGPYd1V@nongnu.org
+X-Gm-Message-State: AOJu0Yz1XEZxelWD93KpG50zz0qqmDJ1aplmLxHCl4O+isubfePx0KYO
+ UEBc+0+cvnV1yzCFiQmHIIA64Is/b/USzpBX0/WXx0AZ5U9ufNGGL2L3TQu9nPJsEMqW7Cm7mdw
+ sUkvLRGdh4pARIZU51z3jw6zrS1mwGJ+J1a+ptpHj+38asNIvrZ16
+X-Gm-Gg: ASbGncuw7RZMoFpgJHSTgKHpsfyfVPoVsqFQ/12ancA6vrLS/hvEqQQfLBYb7sNNXh0
+ kK13VVXENuP/ndg71Qwpwexyj8mxO5jWSYYFsZknWQeBjMQV9Ek19zkwP1BfcwQKj7cZVmjljDc
+ mWSd8vb3mmNNj5Hm1q1qjj2yDkzPwDhEAf39ARTkBPVaILAVbhYGZ1h/bsBsOC1Hfjr4o2XCeIg
+ cDmTGnwZTekkK6rRVoUOc2POFVt75M27t9k0DUZ5pa0jmwpFfGP+3QglbNIfqK2RZXMYZgyFLq0
+ mcOPSfN2ln7EiTFmX9kdkrgMKrsNOYs5K4T6LVen
+X-Received: by 2002:a17:907:3da3:b0:aca:d5a1:c324 with SMTP id
+ a640c23a62f3a-acee1f107e8mr400385666b.0.1746035667149; 
+ Wed, 30 Apr 2025 10:54:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE0NRpABOWlocOMVwaKOWN785WIxNP8mrvCXyMZgbrMJLLbEul5Xxv/FBDw/1FszBGevMyfhA==
+X-Received: by 2002:a17:907:3da3:b0:aca:d5a1:c324 with SMTP id
+ a640c23a62f3a-acee1f107e8mr400383266b.0.1746035666755; 
+ Wed, 30 Apr 2025 10:54:26 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f701400078sm9096770a12.27.2025.04.30.10.52.22
+ a640c23a62f3a-ace6e4f8814sm968511766b.69.2025.04.30.10.54.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Apr 2025 10:52:23 -0700 (PDT)
-Message-ID: <f632f551-b9c2-4474-9116-eaea3e2b4410@redhat.com>
-Date: Wed, 30 Apr 2025 19:52:20 +0200
+ Wed, 30 Apr 2025 10:54:26 -0700 (PDT)
+Message-ID: <82b79386-ee34-4f06-8e61-76f47b4aaad7@redhat.com>
+Date: Wed, 30 Apr 2025 19:54:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/3] include: Add a header to define host PCI MMIO
- functions
-To: Farhan Ali <alifm@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, stefanha@redhat.com, mjrosato@linux.ibm.com,
- schnelle@linux.ibm.com, philmd@linaro.org, kwolf@redhat.com,
- hreitz@redhat.com, fam@euphon.net
-References: <20250417173801.827-1-alifm@linux.ibm.com>
- <20250417173801.827-3-alifm@linux.ibm.com>
- <8decd67b-f1f7-4dcb-b2d5-519ea907e317@redhat.com>
- <e07375e3-6984-46aa-90b7-848594539f81@linux.ibm.com>
+Subject: Re: [PATCH] docs/devel/build-environment: enhance MSYS2 instructions
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250305213853.3685771-1-pierrick.bouvier@linaro.org>
+ <b28bf347-aa8e-405e-8009-025aaf61a984@linaro.org>
+ <88d6e264-4793-4095-8bb6-bc45621abeea@linaro.org>
+ <06666850-90a1-4b4a-b454-53df477de215@redhat.com>
+ <42a0987f-4f51-4d36-a3f5-1daf267c3e0d@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -130,7 +132,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <e07375e3-6984-46aa-90b7-848594539f81@linux.ibm.com>
+In-Reply-To: <42a0987f-4f51-4d36-a3f5-1daf267c3e0d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -158,30 +160,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/04/2025 18.47, Farhan Ali wrote:
-> 
-> ..snip...
-> 
->>> +static inline uint32_t host_pci_ldl_le_p(const void *ioaddr)
->>> +{
->>> +    uint32_t ret = 0;
->>> +#ifdef __s390x__
->>> +    ret = le32_to_cpu(s390x_pci_mmio_read_32(ioaddr));
->>> +#else
->>> +    ret = (uint32_t)ldl_le_p(ioaddr);
+On 30/04/2025 16.34, Pierrick Bouvier wrote:
+> On 4/30/25 3:09 AM, Thomas Huth wrote:
+>> On 28/04/2025 21.35, Pierrick Bouvier wrote:
+>>> On 3/24/25 10:47 AM, Pierrick Bouvier wrote:
+>>>> On 3/5/25 13:38, Pierrick Bouvier wrote:
+>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>>> ---
+>>>>>     docs/devel/build-environment.rst | 4 ++--
+>>>>>     1 file changed, 2 insertions(+), 2 deletions(-)
+>>>>>
+>>>>> diff --git a/docs/devel/build-environment.rst b/docs/devel/build-
+>>>>> environment.rst
+>>>>> index f133ef2e012..661f6ea8504 100644
+>>>>> --- a/docs/devel/build-environment.rst
+>>>>> +++ b/docs/devel/build-environment.rst
+>>>>> @@ -97,11 +97,11 @@ build QEMU in MSYS2 itself.
+>>>>>     ::
+>>>>> -    pacman -S wget
+>>>>> +    pacman -S wget base-devel git
+>>>>>         wget https://raw.githubusercontent.com/msys2/MINGW-packages/refs/
+>>>>> heads/master/mingw-w64-qemu/PKGBUILD
+>>>>>         # Some packages may be missing for your environment, installation
+>>>>> will still
+>>>>>         # be done though.
+>>>>> -    makepkg -s PKGBUILD || true
+>>>>> +    makepkg --syncdeps --nobuild PKGBUILD || true
+>>>>>     Build on windows-aarch64
+>>>>>     ++++++++++++++++++++++++
+>>>>
+>>>> Gentle ping on this trivial change for doc.
+>>>>
+>>>
+>>> Another gentle ping on this trivial doc change.
 >>
->> This is the only spot where you used a cast. Is it necessary, or could it 
->> be omitted?
+>> Not really my turf, I don't have much clue about the MSYS2 environment, but
+>> since there were no objections, I can add it to my next PR.
+>>
 > 
-> Yes, the ldl_le_p returns an int. We do similar cast here https:// 
-> github.com/qemu/qemu/blob/73d29ea2417b58ca55fba1aa468ba38e3607b583/include/ 
-> qemu/bswap.h#L416
+> Thank you, that's appreciated.
 
-... but that function there returns an 64-bit value, while you are assigning 
-the value to a 32-bit variable here, and you also only return a 32-bit value 
-from the function here. So there is no way that this could accidentally be 
-sign-extended, could it?
+Could you still please provide a proper patch description, as Daniel suggested?
 
-  Thomas
+  Thanks,
+   Thomas
 
 
