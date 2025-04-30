@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABF9DC369DC
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 09:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2553C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 09:32:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA3n2-0003cU-6f; Wed, 30 Apr 2025 05:31:40 -0400
+	id 1uA3nL-0003kn-D6; Wed, 30 Apr 2025 05:31:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=tzqG=XQ=kaod.org=clg@ozlabs.org>)
- id 1uA3mw-0003bT-L6; Wed, 30 Apr 2025 05:31:35 -0400
+ id 1uA3nH-0003jv-LM; Wed, 30 Apr 2025 05:31:55 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=tzqG=XQ=kaod.org=clg@ozlabs.org>)
- id 1uA3mt-0003VS-7P; Wed, 30 Apr 2025 05:31:33 -0400
+ id 1uA3nC-0003XO-Ii; Wed, 30 Apr 2025 05:31:53 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZnX4R5d3mz4xQ1;
- Wed, 30 Apr 2025 19:31:19 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZnX501TLqz4xG0;
+ Wed, 30 Apr 2025 19:31:48 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZnX4M3fp8z4x89;
- Wed, 30 Apr 2025 19:31:14 +1000 (AEST)
-Message-ID: <cdcf1ec9-9b67-42f5-970c-db82c91cf0bb@kaod.org>
-Date: Wed, 30 Apr 2025 11:31:10 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZnX4w4m4Bz4wvb;
+ Wed, 30 Apr 2025 19:31:44 +1000 (AEST)
+Message-ID: <298f8f40-8e80-4697-a25c-74a109886e78@kaod.org>
+Date: Wed, 30 Apr 2025 11:31:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/9] Introduce AST27x0 multi-SoC machine
+Subject: Re: [PATCH v3 9/9] docs: Add support for ast2700fc machine
 To: Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
@@ -40,6 +40,7 @@ To: Steven Lee <steven_lee@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
 References: <20250429091855.1948374-1-steven_lee@aspeedtech.com>
+ <20250429091855.1948374-10-steven_lee@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -84,7 +85,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250429091855.1948374-1-steven_lee@aspeedtech.com>
+In-Reply-To: <20250429091855.1948374-10-steven_lee@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -110,35 +111,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Steven,
-
 On 4/29/25 11:18, Steven Lee wrote:
-> This patch series introduces full core support for the AST27x0 SoC, along with necessary updates to the ASPEED AST27x0 SOC.
-> The AST27x0 SoC is a new family of ASPEED SoCs featuring 4 Cortex-A35 cores and 2 Cortex-M4 cores.
+> - Updated Aspeed family boards list to include `ast2700fc`.
+> - Added boot instructions for the `ast2700fc` machine.
+> - Detailed the configuration and loading of firmware for the
+>    Cortex-A35 and Cortex-M4 processors.
 > 
-> v1:
->    - Map unimplemented devices in SoC memory
->    - Intruduce AST2700 CM4 SoC
->    - Introduce AST27x0FC Machine
+> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
+> Change-Id: I48d90589d29ae6bb70a172e1798f18c0c38e6e22
+> ---
+>   docs/system/arm/aspeed.rst | 61 ++++++++++++++++++++++++++++++++++++--
+>   1 file changed, 59 insertions(+), 2 deletions(-)
 > 
-> v2:
->    - Remove unused functions
->    - Correct hex notation for device addresses in AST27x0 SoC
->    - Add AST2700 SSP INTC and AST2700 TSP INTC
->    - Split AST27x0 CM4 SoC to AST27x0 SSP SoC and AST27x0 TSP SoC
->    - Add AST27x0 A0 SSP SoC and AST27x0 A1 SSP SoC
->    - Add AST27x0 A0 TSP SoC and AST27x0 A1 TSP SoC
->    - Add functional tests for AST2700FC A0 and AST2700FC A1
->    - Add Documentation for AST2700FC
-> 
-> v3:
->    - Remove A0 SoC support and related functional tests
+> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+> index 97fd6a0e7f..160472411f 100644
+> --- a/docs/system/arm/aspeed.rst
+> +++ b/docs/system/arm/aspeed.rst
+> @@ -1,5 +1,5 @@
+> -Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+> -==================================================================================================================================================================================================================================================================================================================================================================================================================
+> +Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``ast2700fc``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+> +=================================================================================================================================================================================================================================================================================================================================================================================================================================
+>   
+>   The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+>   Aspeed evaluation boards. They are based on different releases of the
+> @@ -42,6 +42,7 @@ AST2600 SoC based machines :
+>   AST2700 SoC based machines :
+>   
+>   - ``ast2700-evb``          Aspeed AST2700 Evaluation board (Cortex-A35)
+> +- ``ast2700fc``            Aspeed AST2700 Evaluation board (Cortex-A35 + Cortex-M4)
+>   
+>   Supported devices
+>   -----------------
+> @@ -270,6 +271,62 @@ Boot the AST2700 machine from the flash image, use an MTD drive :
+>          -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
+>          -nographic
+>   
+> +Booting the ast2700fc machine
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> +
+> +AST2700 features four Cortex-A35 primary processors and two Cortex-M4 coprocessors.
+> +**ast2700-evb** machine focuses on emulating the four Cortex-A35 primary processors,
+> +**ast2700fc** machine extends **ast2700-evb** by adding support for the two Cortex-M4 coprocessors.
+> +
+> +To boot the AST2700 full-core machine, follow these steps:
+> +
+> +  1. Configure an MTD drive for the four Cortex-A35 primary processors.
+> +  2. Load:
+> +
+> +   - SSP (Secondary Service Processor) firmware on CPU 5 (``cpu-num=4``).
+> +   - TSP (Tertiary Service Processor) firmware on CPU 6 (``cpu-num=5``).
+> +
+> +.. code-block:: bash
+> +
+> +  IMGDIR=ast2700-default
+> +  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
+> +
+> +  $ qemu-system-aarch64 -M ast2700fc \
+> +       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
+> +       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
+> +       -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
+> +       -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/tee-raw.bin \
+> +       -device loader,cpu-num=0,addr=0x430000000 \
+> +       -device loader,cpu-num=1,addr=0x430000000 \
+> +       -device loader,cpu-num=2,addr=0x430000000 \
+> +       -device loader,cpu-num=3,addr=0x430000000 \
+> +       -drive file=${IMGDIR}/image-bmc,if=mtd,format=raw \
+> +       -device loader,file=${IMGDIR}/ast2700-ssp.elf,cpu-num=4 \
+> +       -device loader,file=${IMGDIR}/ast2700-tsp.elf,cpu-num=5 \
+> +       -serial pty -serial pty -serial pty \
+> +       -snapshot \
+> +       -S -nographic
+> +
+> +After starting QEMU, the serial devices will be redirected:
+> +
+> +.. code-block:: bash
+> +
+> +   char device redirected to /dev/pts/55 (label serial0)
+> +   char device redirected to /dev/pts/56 (label serial1)
+> +   char device redirected to /dev/pts/57 (label serial2)
+> +
+> +
+> +
+> +`serial0` is the console for the four Cortex-A35 primary processors, `serial1` and `serial2` are the consoles for the two Cortex-M4 coprocessors.
+> +To connect to the console, use `tio` or other terminal emulator:
 
-Please rebase on upstream QEMU before resending. There are new changes
-breaking this series (meson, class_init).
-
-Also, try compiling the documentation too. The last patch has formatting
-issues.
+The above does not compile.
 
 
 Thanks,
@@ -146,33 +204,16 @@ Thanks,
 C.
 
 
-
-> Steven Lee (9):
->    aspeed: ast27x0: Map unimplemented devices in SoC memory
->    aspeed: ast27x0: Correct hex notation for device addresses
->    hw/intc/aspeed: Add support for AST2700 SSP INTC
->    hw/intc/aspeed: Add support for AST2700 TSP INTC
->    hw/arm/aspeed_ast27x0-ssp: Introduce AST27x0 A1 SSP SoC
->    hw/arm/aspeed_ast27x0-tsp: Introduce AST27x0 A1 TSP SoC
->    hw/arm: Introduce ASPEED AST2700 A1 full core machine
->    tests/function/aspeed: Add functional test for AST2700FC
->    docs: Add support for ast2700fc machine
-> 
->   docs/system/arm/aspeed.rst                 |  61 ++-
->   include/hw/arm/aspeed_soc.h                |  32 ++
->   include/hw/intc/aspeed_intc.h              |   5 +
->   hw/arm/aspeed_ast27x0-fc.c                 | 192 ++++++++++
->   hw/arm/aspeed_ast27x0-ssp.c                | 309 +++++++++++++++
->   hw/arm/aspeed_ast27x0-tsp.c                | 309 +++++++++++++++
->   hw/arm/aspeed_ast27x0.c                    |  79 +++-
->   hw/intc/aspeed_intc.c                      | 424 +++++++++++++++++++++
->   hw/arm/meson.build                         |   6 +-
->   tests/functional/test_aarch64_ast2700fc.py | 137 +++++++
->   10 files changed, 1530 insertions(+), 24 deletions(-)
->   create mode 100644 hw/arm/aspeed_ast27x0-fc.c
->   create mode 100644 hw/arm/aspeed_ast27x0-ssp.c
->   create mode 100644 hw/arm/aspeed_ast27x0-tsp.c
->   create mode 100755 tests/functional/test_aarch64_ast2700fc.py
-> 
+> +
+> +.. code-block:: bash
+> +
+> +   $ tio /dev/pts/55
+> +   $ tio /dev/pts/56
+> +   $ tio /dev/pts/57
+> +
+> +
+>   Aspeed minibmc family boards (``ast1030-evb``)
+>   ==================================================================
+>   
 
 
