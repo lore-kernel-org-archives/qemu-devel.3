@@ -4,79 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 734CFC3ABA9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 16:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76E93C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 16:43:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAAUK-0005yj-Mk; Wed, 30 Apr 2025 12:40:50 -0400
+	id 1uAAWg-0007qH-Ev; Wed, 30 Apr 2025 12:43:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uAATn-0005qj-O4
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:40:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1uAAWe-0007p0-7d
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:43:12 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uAATg-0000vQ-4d
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:40:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746031206;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s+OUqpisuuZ80svS9YCGtrW1ZvvCotPcAHhrT3jPQe0=;
- b=IYmPfTjTWLJhVZulIXFjjtqMZXFA/cSsGplf8k5D+EAL8TnXc7UeN67zUzeI7rACTWqm+P
- JTOtf4BA8jjw6OVfgRvEUC0Azo3bMMV6/yk8HCVnIbR2pb+tJ6rXiPGcxc/usTUbqJnInK
- BBaKVUFq4Wz6kStO9hRqyd96IeKEtkA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-i6AVBgQJP92XQ8gSvZcixg-1; Wed,
- 30 Apr 2025 12:40:04 -0400
-X-MC-Unique: i6AVBgQJP92XQ8gSvZcixg-1
-X-Mimecast-MFC-AGG-ID: i6AVBgQJP92XQ8gSvZcixg_1746031204
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE53B1956078; Wed, 30 Apr 2025 16:40:03 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.35])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C7EF81800871; Wed, 30 Apr 2025 16:40:02 +0000 (UTC)
-Date: Wed, 30 Apr 2025 17:39:59 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: Functional tests precache behaviour
-Message-ID: <aBJSX6kcYQVM2hp7@redhat.com>
-References: <c83e0d26-4d1b-4a12-957d-c7b7ff4ba1b3@linaro.org>
- <7f0c4586-8a97-4e64-8abb-58a74b86afaa@redhat.com>
- <6e9a3cb3-e238-48a7-a67c-c95b36a517bc@linaro.org>
- <aBJJqtzQaTH_xcKK@redhat.com>
- <efbaccd1-9ef2-4aed-88ed-d6a2bcb7902b@linaro.org>
- <aBJP-_KJudesY_Pk@redhat.com>
- <f8ca0b3f-5a9a-4182-b0e0-352a90bd9374@linaro.org>
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1uAAWc-0001I6-Cq
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:43:11 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 53UAepD6010938;
+ Wed, 30 Apr 2025 16:43:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=zt86W+
+ j1fy60rZRUvqomhtAu3bdSdwgRjVbIjdPk6gY=; b=B8P9syP28xV+3daxC1lcn2
+ Id4ZaG+xfEUH/1ju5222eydvUA45tnGKd4Bs2Uwnn8UX01C9f6OoT9J8dPOJcD2l
+ t0C+bSUprPrCfxOSXUIQAl1Urq6SuIh674LNLhm9LLtoDYbtzuza2Gz+WPfM6QIr
+ fpWyU4wJLxgesWQ/SWBaU4gifMJurJ7LBZHN8U/H34AUXHHCalU1ZPaJl30nTomV
+ rSsXFA8AAjCkIYnrmj1wLYufNr9EbG0naHcFdo0t5LjaZGCu2x/4iMp3I9Q++UO9
+ BxaCfKrXTfaYY6wYUvftaAnyKIc9qC/iY5J4i4b1Kotagz+B279L5ORkrDkcEKrw
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46bjas1scc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 30 Apr 2025 16:43:01 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 53UDI2vA001893;
+ Wed, 30 Apr 2025 16:43:00 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 469bamrnkb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 30 Apr 2025 16:43:00 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 53UGgxxK15991358
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 30 Apr 2025 16:42:59 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 973A058052;
+ Wed, 30 Apr 2025 16:42:59 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A708A5805D;
+ Wed, 30 Apr 2025 16:42:57 +0000 (GMT)
+Received: from [9.61.242.230] (unknown [9.61.242.230])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 30 Apr 2025 16:42:57 +0000 (GMT)
+Message-ID: <cf1fffb7-1a37-4df5-8cf4-fa08d63368c9@linux.ibm.com>
+Date: Wed, 30 Apr 2025 09:42:52 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f8ca0b3f-5a9a-4182-b0e0-352a90bd9374@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/3] util: Add functions for s390x mmio read/write
+To: Heiko Carstens <hca@linux.ibm.com>,
+ Niklas Schnelle <schnelle@linux.ibm.com>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ alex.williamson@redhat.com, stefanha@redhat.com,
+ mjrosato@linux.ibm.com, philmd@linaro.org, kwolf@redhat.com,
+ hreitz@redhat.com, fam@euphon.net
+References: <20250417173801.827-1-alifm@linux.ibm.com>
+ <20250417173801.827-2-alifm@linux.ibm.com>
+ <06f9244c-671c-4215-9d20-7bb69194fae6@redhat.com>
+ <aae585ad4d9884e204ff1f153f4d1be5453b284a.camel@linux.ibm.com>
+ <20250425140929.7180Fdb-hca@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20250425140929.7180Fdb-hca@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: a5D7CZ1XP7i3OdKvoAXYMGaabYmKSBm3
+X-Proofpoint-ORIG-GUID: a5D7CZ1XP7i3OdKvoAXYMGaabYmKSBm3
+X-Authority-Analysis: v=2.4 cv=LKNmQIW9 c=1 sm=1 tr=0 ts=68125315 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=XR8D0OoHHMoA:10 a=DOTw15dRPa_roqCFQC4A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNDMwMDExOSBTYWx0ZWRfX/1tBh/r8hVdq
+ PoiJJimXV/IMr2phf2m58EEzNsUPky+peUmGrNXyiwG1sHwqhPZ13ZZw0quImHCEyItVpZNVNkT
+ b20BAJbycGUEzRBUMFkGmra2oI9azcuqBcND3TPuDqN3b7amcxbkNR2yx97XD7F3BCKw9pt4IFw
+ To0s6S0OP4/omgvo8iKRRVj9dXroD38LRcuGofgrKSij1koMlP0xeT6jGYPvL7Arm+LlZAQT9j0
+ 8r6R+tz/7SCCLSWyTZ0B8nc6+/lDVqF6yCLVO4WytUmIBF/bh7UGD3de+kuRTcLsL+oWN2zKhV8
+ 25s1KzzNzuouYd3a2/x4A+n+ijYM9XLtCEIWH8ioIznS3EGTqCXhhJvxlCZwj4hp/rbI5a79vso
+ +8+k/VYpgwjF+tuUACiu7lgvuTjR6DvSSbpd73mytaz1xVI+FeZlUi6EioOdqu2e4Bk7uZVm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-04-30_05,2025-04-24_02,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ priorityscore=1501 malwarescore=0 suspectscore=0 spamscore=0 mlxscore=0
+ impostorscore=0 adultscore=0 bulkscore=0 mlxlogscore=546 clxscore=1015
+ phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2504300119
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.483,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,106 +127,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 30, 2025 at 09:34:10AM -0700, Pierrick Bouvier wrote:
-> On 4/30/25 9:29 AM, Daniel P. Berrangé wrote:
-> > On Wed, Apr 30, 2025 at 09:21:41AM -0700, Pierrick Bouvier wrote:
-> > > On 4/30/25 9:02 AM, Daniel P. Berrangé wrote:
-> > > > On Wed, Apr 30, 2025 at 08:48:59AM -0700, Pierrick Bouvier wrote:
-> > > > > On 4/30/25 8:00 AM, Thomas Huth wrote:
-> > > > > > On 30/04/2025 16.34, Pierrick Bouvier wrote:
-> > > > > > > Hi folks,
-> > > > > > > 
-> > > > > > > $ ninja -C build precache-functional
-> > > > > > > 2025-04-30 07:23:20,382 - qemu-test - ERROR - Unable to download https://
-> > > > > > > archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
-> > > > > > > gzimg/armv7.img.gz: HTTP error 503
-> > > > > > > 2025-04-30 07:23:23,131 - qemu-test - ERROR - Unable to download https://
-> > > > > > > archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
-> > > > > > > gzimg/armv7.img.gz: HTTP error 503
-> > > > > > > 2025-04-30 07:23:25,870 - qemu-test - ERROR - Unable to download https://
-> > > > > > > archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
-> > > > > > > gzimg/armv7.img.gz: HTTP error 503
-> > > > > > > 2025-04-30 07:23:25,871 - qemu-test - ERROR - https://archive.netbsd.org/
-> > > > > > > pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz:
-> > > > > > > Download retries exceeded: skipping asset precache
-> > > > > > > $ echo $?
-> > > > > > > 0
-> > > > > > > 
-> > > > > > > Since we silently skip the asset precaching, how can we identify that an
-> > > > > > > asset is not available anymore (temporarily or not)?
-> > > > > > > Should we rely on test itself failing when trying to download again this asset?
-> > > > > > 
-> > > > > > The current logic fails hard for 404 errors, so if the asset is completely
-> > > > > > gone, we should notice it. For other error codes, we assume that it is only
-> > > > > > a temporary server problem that will hopefully be fixed on the server side
-> > > > > > sooner or later.
-> > > > > > 
-> > > > > 
-> > > > > Sounds good.
-> > > > > Should we replicate this semantic when running the test itself?
-> > > > > It would be more useful to skip it because an asset is missing instead of
-> > > > > reporting an error, except if it's a 404 error.
-> > > > 
-> > > > The tests already gracefully skip if one or more required assets
-> > > > are not available. See the 'setUp' method of QemuBaseTest
-> > > > 
-> > > >           if not self.assets_available():
-> > > >               self.skipTest('One or more assets is not available')
-> > > > 
-> > > > 
-> > > > In the 404 case, the pre-cache step should fail and thus we shouldn't
-> > > > even get to running the test.
-> > > > 
-> > > 
-> > > This is not the behaviour I observe (error, with server returning 503) [1],
-> > > thus my original email.
-> > > 
-> > > Maybe something is missing in the associated test, or in our test
-> > > infrastructure?
-> > > 
-> 
-> Or... in my command :)
-> 
-> > > Nothing funky in the command line used, you can reproduce it with:
-> > > $ rm -rf ~/.cache/qemu build/
-> > > $ ./configure
-> > > $ ./build/pyvenv/bin/meson test -C build --setup thorough --suite func-quick
-> > > --suite func-thorough -t 5 --print-errorlogs func-ppc-ppc_40p
-> > 
-> > Oh, you're running meson test directly.
-> > 
-> > The behaviour I describe is wrt the official way of running tests via
-> > 'make check' or 'make check-functional'.
-> > 
-> > When you use 'make', we set 'QEMU_TEST_NO_DOWNLOAD=1' when the tests
-> > themselves are run, so only the 'make precache-functional' will be
-> > permitted to try downloading.
-> > 
-> 
-> Oh thanks, that's what I was missing!
-> 
-> I'm running meson because the Makefile wrapper does not allow to pass any
-> additional parameters, or running specific test.
 
-FWIW, if you want to run a specific test, personally don't use meson
-or make, as you can just invoke the file directly:
+On 4/25/2025 7:09 AM, Heiko Carstens wrote:
+> On Fri, Apr 25, 2025 at 12:29:35PM +0200, Niklas Schnelle wrote:
+>> On Fri, 2025-04-25 at 11:00 +0200, Thomas Huth wrote:
+>>> On 17/04/2025 19.37, Farhan Ali wrote:
+>>>> +    asm volatile(
+>>>> +        /* pcilgi */
+>>>> +        ".insn   rre,0xb9d60000,%[val],%[ioaddr_len]\n"
+>>>> +        "ipm     %[cc]\n"
+>>>> +        "srl     %[cc],28\n"
+>>>> +        : [cc] "=d"(cc), [val] "=d"(val),
+>>>> +        [ioaddr_len] "+&d"(ioaddr_len.pair) :: "cc");
+>>> Do we need the "&" modifier here? ... at least the kernel does not seem to
+>>> use it ...
+>>  From my understanding it's not strictly needed, but I also used it in
+>> the rdma-core user-space code where I had pointed Farhan. I looked at
+> It is not needed, since all inputs are consumed before to any output
+> is written to.
 
- $ QEMU_TEST_QEMU_BINARY=./build/qemu-system-x86_64 \
-   PYTHONPATH=./python \
-   ./tests/functional/test_x86_cpu_model_versions.py 
+Ack, will update the patch.
 
-This was the key feature I wanted when we replaced avocado, as debugging
-tests without a harness getting in the way is much simpler
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>>>> +    asm volatile (
+>>>> +        /* pcistgi */
+>>>> +        ".insn   rre,0xb9d40000,%[val],%[ioaddr_len]\n"
+>>>> +        : [ioaddr_len] "+&d" (ioaddr_len.pair)
+>>> dito
+> Same here, it is not needed.
+
+Ack, will update the patch here as well.
+
+Thanks
+Farhan
+
 
 
