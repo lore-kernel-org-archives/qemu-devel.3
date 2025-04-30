@@ -4,90 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7539BC369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 16:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF6D7C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 16:30:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAACy-0004xI-PE; Wed, 30 Apr 2025 12:22:52 -0400
+	id 1uAAJs-0007eY-7n; Wed, 30 Apr 2025 12:30:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uAACw-0004wj-GL
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:22:50 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uAACr-0006df-El
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:22:47 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2295d78b433so71215ad.2
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 09:22:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746030164; x=1746634964; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wHK1qlWy27PdCOuSloyGM8+0rvVsPn/vvUmGzvL2hi4=;
- b=lxrNMWTiR8WXUvJqBlivuAjTrre9mrAxB5m/IOtY6YWr2X1S0m4PMVa9CVv2RJJDp5
- v7mhpFloEEUMyWk2QRfzjB1jUaL8fTQQrT7sQ7V3hn1thYhPMHAEq2qrx7cKd6DLp5Gr
- GpDiWrA9jnMw/B3Dp0nH0OeI9CYbNakpDhhJ61SYA7eQ1kh8lrw0++Qrft5Aw/SMVC5u
- j/NNsMTYKCMgnhEr9Mwy6FS/YV1oEHxKND8pqaK8VzYlNDtmZBSmwGqkE2szEitGeh1B
- 5j4DLnJOlMb86Sn8zcEncJy/N6gaioopu7OsoTf70Tkm5h8yo8hWptZ2cnTBKX3F6I69
- 3eRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746030164; x=1746634964;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wHK1qlWy27PdCOuSloyGM8+0rvVsPn/vvUmGzvL2hi4=;
- b=wVEyekMptsNyyizoMosx+vuBcThWQO/ynaYRtAY0Vj1VUyekUtzYCP81XsxSV2Z2Lg
- 1Hyu3ft2Q0D2qLKf4LGfcUy18iq4qboZdom6Yn3bGW5dzAUh5gla+mpjyRujgBtlhQ7z
- CmMkXjrQpF30078iMSdzJKwKw2sTbMyMy02lT2gKarO3QMtZjzxNL9vS/kO4ifA8PZew
- /+766jnao7hW5hEybxqU0BNszuqJsQ2CUMUNrAI1EuwrTTq2azBStCBN9kp9JUhU55yg
- h/KT6hhioMzSFpSSD9tF9p1p5VK2rOJJbkpyEqMykxsBM0JnSFf+t+2DxM3X6L6BjAYb
- k9Pg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUJBu/1NSRDNe9P9ql2A+TxEEn6bqCBsgSxbGh3uM7I4Mh8mok+NiBsq7katsxDyzNacQDGqR2BI+xj@nongnu.org
-X-Gm-Message-State: AOJu0YzPDYz92WNBCAazsgC7zm2lc6UVILbfgV6d0uqzSrx0Ms8SLstX
- 4jf5F9prn9lf8P8QqXzkkgjdMimivFe0OX4Rc+YwuBhXzDbKUrv4mfJLQFwK7OE=
-X-Gm-Gg: ASbGncvgVbFHCEKG8KuSO726EsOzIsn5sIFsZ+4IcU3Z8cnmPxKNXVLczvNGu9qVc6d
- WJS+j5btcxLRejtq7Y2cUTy1CRAFw2K/WIELvolk+u3hBpGAA//Agj5GDplqICN7rHaIcwtHynM
- v29QNOzhDhW+jMDKb0L0S9lTyynbDmfvKtAMbe/SEAoQFvjC6WZG/LbSMJ7eRR1NzrIzOO/5GLo
- c43lOGfltZlEEDB0PxorNFVXM5rPjdFsVTL0elg/2Lg6nsrZhkpNNummW0j2Wf5QQ0Uaae440ug
- FvrlQraF01bemikSJhcu7YYxxt8ayJPKPG7XYEeKtIkbA14HZGWgMA==
-X-Google-Smtp-Source: AGHT+IFWGzid0qFOdbPr0IIyjPzpQWR8vbRiPiqNaZ5fhbhU0kA0BwAee99jbOuOmsCU9Is9gI0O0w==
-X-Received: by 2002:a17:902:f685:b0:21f:7880:8472 with SMTP id
- d9443c01a7336-22df5827a21mr52449825ad.35.1746030163771; 
- Wed, 30 Apr 2025 09:22:43 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db5216a32sm124042485ad.219.2025.04.30.09.22.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Apr 2025 09:22:43 -0700 (PDT)
-Message-ID: <199b8d17-8f26-4ec2-b9e5-8ffc53f55155@linaro.org>
-Date: Wed, 30 Apr 2025 09:22:42 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uAAJr-0007bt-0s
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:29:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uAAJo-0007gs-RF
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:29:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746030595;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=xqpCAHN+2j9AUyOpBouMf2ki2zGBCPoZ2C7tqmYNs2k=;
+ b=FOKUDu/C46Vj82mnjXuz+ZV0iaN42zcgTBiD473m+TP9LTUWTczAAjvnrQhIYywza2wd71
+ sBwx88lmO/BC4uiNnwy8N8zAX3JMTZ8Z3HAnaUZHU5QllzsqFiTLKk9RctKR0nFhzA5+Fx
+ F7tCG8M+deyqqCoIOoFJwCt2vBLQ4K8=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-ISj-IjnhO8uYof8LDA56aQ-1; Wed,
+ 30 Apr 2025 12:29:52 -0400
+X-MC-Unique: ISj-IjnhO8uYof8LDA56aQ-1
+X-Mimecast-MFC-AGG-ID: ISj-IjnhO8uYof8LDA56aQ_1746030591
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1990B195608C; Wed, 30 Apr 2025 16:29:51 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.35])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E17C7195608D; Wed, 30 Apr 2025 16:29:49 +0000 (UTC)
+Date: Wed, 30 Apr 2025 17:29:47 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Subject: Re: Functional tests precache behaviour
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Message-ID: <aBJP-_KJudesY_Pk@redhat.com>
 References: <c83e0d26-4d1b-4a12-957d-c7b7ff4ba1b3@linaro.org>
  <7f0c4586-8a97-4e64-8abb-58a74b86afaa@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <7f0c4586-8a97-4e64-8abb-58a74b86afaa@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ <6e9a3cb3-e238-48a7-a67c-c95b36a517bc@linaro.org>
+ <aBJJqtzQaTH_xcKK@redhat.com>
+ <efbaccd1-9ef2-4aed-88ed-d6a2bcb7902b@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <efbaccd1-9ef2-4aed-88ed-d6a2bcb7902b@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.483,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,42 +89,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/30/25 8:00 AM, Thomas Huth wrote:
-> On 30/04/2025 16.34, Pierrick Bouvier wrote:
->> Hi folks,
->>
->> $ ninja -C build precache-functional
->> 2025-04-30 07:23:20,382 - qemu-test - ERROR - Unable to download https://
->> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
->> gzimg/armv7.img.gz: HTTP error 503
->> 2025-04-30 07:23:23,131 - qemu-test - ERROR - Unable to download https://
->> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
->> gzimg/armv7.img.gz: HTTP error 503
->> 2025-04-30 07:23:25,870 - qemu-test - ERROR - Unable to download https://
->> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
->> gzimg/armv7.img.gz: HTTP error 503
->> 2025-04-30 07:23:25,871 - qemu-test - ERROR - https://archive.netbsd.org/
->> pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz:
->> Download retries exceeded: skipping asset precache
->> $ echo $?
->> 0
->>
->> Since we silently skip the asset precaching, how can we identify that an
->> asset is not available anymore (temporarily or not)?
->> Should we rely on test itself failing when trying to download again this asset?
+On Wed, Apr 30, 2025 at 09:21:41AM -0700, Pierrick Bouvier wrote:
+> On 4/30/25 9:02 AM, Daniel P. Berrangé wrote:
+> > On Wed, Apr 30, 2025 at 08:48:59AM -0700, Pierrick Bouvier wrote:
+> > > On 4/30/25 8:00 AM, Thomas Huth wrote:
+> > > > On 30/04/2025 16.34, Pierrick Bouvier wrote:
+> > > > > Hi folks,
+> > > > > 
+> > > > > $ ninja -C build precache-functional
+> > > > > 2025-04-30 07:23:20,382 - qemu-test - ERROR - Unable to download https://
+> > > > > archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
+> > > > > gzimg/armv7.img.gz: HTTP error 503
+> > > > > 2025-04-30 07:23:23,131 - qemu-test - ERROR - Unable to download https://
+> > > > > archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
+> > > > > gzimg/armv7.img.gz: HTTP error 503
+> > > > > 2025-04-30 07:23:25,870 - qemu-test - ERROR - Unable to download https://
+> > > > > archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
+> > > > > gzimg/armv7.img.gz: HTTP error 503
+> > > > > 2025-04-30 07:23:25,871 - qemu-test - ERROR - https://archive.netbsd.org/
+> > > > > pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz:
+> > > > > Download retries exceeded: skipping asset precache
+> > > > > $ echo $?
+> > > > > 0
+> > > > > 
+> > > > > Since we silently skip the asset precaching, how can we identify that an
+> > > > > asset is not available anymore (temporarily or not)?
+> > > > > Should we rely on test itself failing when trying to download again this asset?
+> > > > 
+> > > > The current logic fails hard for 404 errors, so if the asset is completely
+> > > > gone, we should notice it. For other error codes, we assume that it is only
+> > > > a temporary server problem that will hopefully be fixed on the server side
+> > > > sooner or later.
+> > > > 
+> > > 
+> > > Sounds good.
+> > > Should we replicate this semantic when running the test itself?
+> > > It would be more useful to skip it because an asset is missing instead of
+> > > reporting an error, except if it's a 404 error.
+> > 
+> > The tests already gracefully skip if one or more required assets
+> > are not available. See the 'setUp' method of QemuBaseTest
+> > 
+> >          if not self.assets_available():
+> >              self.skipTest('One or more assets is not available')
+> > 
+> > 
+> > In the 404 case, the pre-cache step should fail and thus we shouldn't
+> > even get to running the test.
+> > 
 > 
-> The current logic fails hard for 404 errors, so if the asset is completely
-> gone, we should notice it. For other error codes, we assume that it is only
-> a temporary server problem that will hopefully be fixed on the server side
-> sooner or later.
+> This is not the behaviour I observe (error, with server returning 503) [1],
+> thus my original email.
 > 
->    Thomas
+> Maybe something is missing in the associated test, or in our test
+> infrastructure?
 > 
+> Nothing funky in the command line used, you can reproduce it with:
+> $ rm -rf ~/.cache/qemu build/
+> $ ./configure
+> $ ./build/pyvenv/bin/meson test -C build --setup thorough --suite func-quick
+> --suite func-thorough -t 5 --print-errorlogs func-ppc-ppc_40p
 
-By the way,
-thanks for all your effort to get rid of avocado tests, and converting 
-them to functional. It's infinitely better, especially the caching aspect.
+Oh, you're running meson test directly.
+
+The behaviour I describe is wrt the official way of running tests via
+'make check' or 'make check-functional'.
+
+When you use 'make', we set 'QEMU_TEST_NO_DOWNLOAD=1' when the tests
+themselves are run, so only the 'make precache-functional' will be
+permitted to try downloading.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
