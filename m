@@ -4,144 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C428C369DC
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 05:58:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C35FEC369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 06:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA0RT-0006ff-R0; Wed, 30 Apr 2025 01:57:12 -0400
+	id 1uA0aj-0003d6-NW; Wed, 30 Apr 2025 02:06:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uA0RK-0006cI-Ob
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 01:57:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uA0RE-0000ux-AG
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 01:56:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745992614;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1sCs8Z3Lo4R9JcFbKiTxS9Hxc2nbvukLJLr7nKgQWks=;
- b=K2SXHfHE46fdbHYcZUKoOBZI49oINGsYCDJ+zboeIKe5xxaoqOwwqaXqMSDOphyabbdKVe
- tq/qiCPQj6WbZKODqtCH41IEuUgwSBy5p+JJR+oEiavRFr6LNGfcys5lNK9tCzgYF85XTC
- 4gyUHnSwQLCa1ENmYEJ6bsYzvM1/YHA=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-V27ox9_uOZupJGhEPbQiEA-1; Wed, 30 Apr 2025 01:56:52 -0400
-X-MC-Unique: V27ox9_uOZupJGhEPbQiEA-1
-X-Mimecast-MFC-AGG-ID: V27ox9_uOZupJGhEPbQiEA_1745992611
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-acb94dbd01fso550432466b.1
- for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 22:56:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA0aX-0003ZJ-Jm
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 02:06:35 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA0aV-0002Gt-Gl
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 02:06:33 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-39ee682e0ddso4673536f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 29 Apr 2025 23:06:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1745993189; x=1746597989; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VaK0UyE1mFBNKIjhFBbQsGXEj6TCL5MtPpa0p8PsSEs=;
+ b=Vnjnsv+gEGQTK0Tw2aETxBVd2HqP4hz+anaWwh4SS05nGGel44OQ0wfIgcvbRPGDM4
+ T6NquNlqj7+coQdfYLHp+BZRqAXqQp3PB5UBCRUOYjtySjrVCfIkBW8Bghh8LX+Fxx3f
+ TFjtGKH4u8XObrwlja2dBNs8Ei5i0or3qCo0DdD3SK0VDRlLLlJkq5B05ml1ljVxtgn9
+ LED5hINvuQAwy/J1XSnDs6PT7eXrGl5mzH48zRdjyHA0SoDNn0VC78A04cCKQ7BaGjxB
+ 0n/AKaP6TVH+i378/eUcdz8k8YHS9yeStlwlKx0aqy4xbcK3ui1apnewkl5qtQAcLOM9
+ eCdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745992611; x=1746597411;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1sCs8Z3Lo4R9JcFbKiTxS9Hxc2nbvukLJLr7nKgQWks=;
- b=nVoTvxbM7DIUqpIBV6BZtsFqVTUMqojYosuzdkztO4nYIj209rKExEtB+TdLSqA4B6
- P5X5ThDRvtZwy/mb8bmhAtausGgOA2EDob8iqVd4fAXmN9pmiqBB1ipi/NycEXHWs1qJ
- bblo2rkeRpIHofqm9RMUfutxUEVGMRUKhPBVNM9hn8leBaJAjsrsNpAOFLNV3SCrxuKU
- ktTgbg4gYf9LUPEfuzgV+i0W3W8bQYQHab1CFvBIcBRsA9Ji71CXEjJ1WzeXdbdk+M3l
- i79U7PjGC5W6GYNQ0dEHy5NhcPQVxXUkJ7uO4ZfOsXcza2azleid4bW7/Nfu7WY1zkzM
- ZAgw==
+ d=1e100.net; s=20230601; t=1745993189; x=1746597989;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VaK0UyE1mFBNKIjhFBbQsGXEj6TCL5MtPpa0p8PsSEs=;
+ b=bwQJdcanbvOC6amPrQKyRlSdGjZDnIrBf4GhmSSICJuNNKPqUO1ZZJgpTOejyxt+MJ
+ KGE0tD+x/EM959MVrZqaFJNRjKLUATtxsuzeIRcqxJoGvXPm1efafpnBZnENSVkQrgFF
+ 4Y7m0XxiQcETYyo1BTivup5c1H1ukfE4oPZslvltWNdtNhDqr4D21BI16Be2XPL4zJvy
+ w83oYR+BfJMOX1g+dOIOVkZ9qWtasgTbsy86jltmwm47mC056yQ1kQrhqoa3w7lUBLZL
+ EsJqbYTKFDdAQoPSNrSAVzzzrb1Se0cBCqhEqRw5wxQgaADfnO9bHykZ+y11QXYaexkR
+ hN6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXnw1s3EpjtAMMuHn85IAJ+/HX6+6hTz7LL10FxzUmDECRV0KbuDdvGVu6gsK3bjBaVrcshkCw1FMK2@nongnu.org
-X-Gm-Message-State: AOJu0Yy0CVqDXZXUA2vx4onl4QUSEKakT1Xb2j0bdNJZntyoZBdvOxL2
- B0AHgUbUA5D5gSSg2Mbptbb7n1rRLhPXXGobx4ppkPcThOVBgu1othsJM58ImO79/7rKci3XFdw
- hHPcccS1i7StXG1/Te/1PX3ykKaHu4WtcXvFIXwZRd1LnM5KoWWLgXY4gYOhbdGs=
-X-Gm-Gg: ASbGncsfpFm5AKk346MOqfGq2hSuFeCxmjIidMuxrtJ1yDbnGOlYW8yz3szWIyuK5lw
- wbo5DWvubn2mfZcJ/aRQ3NN55LcxrmFkNGjsWxctUwIvKBW/frXJkaDs1kFCIAAbaamD6lewioH
- 8XqNh9k360DZafwziPciWPbFGJ0pujYNDibM5ztfia036v3HAvqmd4qkAlp3Ad0ibE24lYMsE2q
- vFxoM+Bm+CeNZMzDxXKqKuIYOE0cE6GDs2+hUcCvnXgGDUPISnKn2FaaSHKQeWGYV38eWcu84rR
- nhEQbDdNvF3pg2BzeCaRMNbtHVIAOUX35AJuu6Kl
-X-Received: by 2002:a17:907:970a:b0:ac1:dfab:d38e with SMTP id
- a640c23a62f3a-acee21a7048mr126031766b.15.1745992611047; 
- Tue, 29 Apr 2025 22:56:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH0+Miyton+dGGQ7JFE4NfGPvnu2VNQr+Yo4tr99abzAZWdovBR2CQ9F7qRpFc5VkfcDOr7jg==
-X-Received: by 2002:a17:907:970a:b0:ac1:dfab:d38e with SMTP id
- a640c23a62f3a-acee21a7048mr126030766b.15.1745992610574; 
- Tue, 29 Apr 2025 22:56:50 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-acecbb956b7sm193122866b.2.2025.04.29.22.56.49
+ AJvYcCX6BIjLdG4N4TB1luCPajKcDKnXyPT0B7V9joDElN2Z8kjAktwXfdiiMfAwDWU9RiyxjISk4InpI8yY@nongnu.org
+X-Gm-Message-State: AOJu0YxZ6h+XMOJmGuTYISFsPTkwoLrUbpGU6NVxnt3ks63TkrI5CZ9s
+ Bz0BnQpoRCB/nJEHjKMl6RcRckbdX+s19cxUCWhnyCYoH394yYNw7KldGux+Yyg=
+X-Gm-Gg: ASbGncuPFaLxeEvXsiCVNvEnzGlDEeSCniOisEynVEPjemU4TEfz5lntYkdkh1jRFBO
+ 1EcRRqeG6Ain8uZb+rZfNSNB1P+wXB1auoZEfsQikPV5Drkaag1cQ1yzhUZSeRdWAk62tS7P/Dq
+ eS218Cwpm/H5rTxcJagmpTIt7q4XrSMF3h0BCP1oYiVkydFfP4aCAu/RuGOdhpn2PYgQuP9OovK
+ dChuDCozZFiT5QdsY2qYUuABpyT9vTQak2Ftbu7Et/THQDZJbdybpXyTa9Tjv9Lc23tVl9V/D1v
+ 2hf+F3vqk0ytUuyJ5nGYgP62OYg2ln0xHnILwvJyi5733TvtqpzBpGJ2SYuhAOLaBM1URjNp/9K
+ Nq4w0aDgt
+X-Google-Smtp-Source: AGHT+IFqY2wyvF3cR961CoTKkr0CDZXR/0s85Nwqd83veNOjb0gavDaD/XgV16EoOIwhK0OowJ6D0g==
+X-Received: by 2002:a5d:64c7:0:b0:39c:1257:c96e with SMTP id
+ ffacd0b85a97d-3a08ff55599mr664270f8f.58.1745993188968; 
+ Tue, 29 Apr 2025 23:06:28 -0700 (PDT)
+Received: from [192.168.69.226] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a073e461bfsm16159104f8f.79.2025.04.29.23.06.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Apr 2025 22:56:50 -0700 (PDT)
-Message-ID: <564c25c9-1d8c-4828-9d6f-7fbcf58fad9c@redhat.com>
-Date: Wed, 30 Apr 2025 07:56:48 +0200
+ Tue, 29 Apr 2025 23:06:28 -0700 (PDT)
+Message-ID: <f5a5e439-ed3a-49af-a3f2-da8a6f44ae83@linaro.org>
+Date: Wed, 30 Apr 2025 08:06:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/2] target/ppc: Big-core scratch register fix
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, qemu-stable@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-References: <20250408124550.40485-1-npiggin@gmail.com>
- <20250408124550.40485-2-npiggin@gmail.com>
- <2d6dead5-f56c-43cf-b7d1-9567fef99616@redhat.com>
- <D9JJ5IIYVLVG.2RQ8C03WHFVBZ@gmail.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH 03/13] meson: add common libs for target and target_system
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
+ alex.bennee@linaro.org, qemu-arm@nongnu.org, anjo@rev.ng,
+ richard.henderson@linaro.org
+References: <20250429050010.971128-1-pierrick.bouvier@linaro.org>
+ <20250429050010.971128-4-pierrick.bouvier@linaro.org>
+ <fd70e4f4-29b8-4027-a70c-747729172ce5@linaro.org>
+ <12579394-7bce-4b9e-ba66-00ce1dff43d1@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <D9JJ5IIYVLVG.2RQ8C03WHFVBZ@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <12579394-7bce-4b9e-ba66-00ce1dff43d1@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,81 +107,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/04/2025 02.00, Nicholas Piggin wrote:
-> On Thu Apr 24, 2025 at 6:25 PM AEST, Thomas Huth wrote:
->> On 08/04/2025 14.45, Nicholas Piggin wrote:
->>> The per-core SCRATCH0-7 registers are shared between big cores, which
->>> was missed in the big-core implementation. It is difficult to model
->>> well with the big-core == 2xPnvCore scheme we moved to, this fix
->>> uses the even PnvCore to store the scrach data.
+On 29/4/25 23:11, Pierrick Bouvier wrote:
+> On 4/29/25 11:01 AM, Philippe Mathieu-Daudé wrote:
+>> Hi Pierrick,
+>>
+>> On 29/4/25 07:00, Pierrick Bouvier wrote:
+>>> Following what we did for hw/, we need target specific common libraries
+>>> for target. We need 2 different libraries:
+>>> - code common to a base architecture
+>>> - system code common to a base architecture
 >>>
->>> Also remove a stray log message that came in with the same patch that
->>> introduced patch.
+>>> For user code, it can stay compiled per target for now.
 >>>
->>> Fixes: c26504afd5f5c ("ppc/pnv: Add a big-core mode that joins two regular cores")
->>> Cc: qemu-stable@nongnu.org
->>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >>> ---
->>>    target/ppc/misc_helper.c | 9 ++++++++-
->>>    1 file changed, 8 insertions(+), 1 deletion(-)
+>>>    meson.build | 78 ++++++++++++++++++++++++++++++++++++++++ 
+>>> +------------
+>>>    1 file changed, 61 insertions(+), 17 deletions(-)
 >>>
->>> diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
->>> index 2d9512c116..46ae454afd 100644
->>> --- a/target/ppc/misc_helper.c
->>> +++ b/target/ppc/misc_helper.c
->>> @@ -332,6 +332,10 @@ target_ulong helper_load_sprd(CPUPPCState *env)
->>>        PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
->>>        target_ulong sprc = env->spr[SPR_POWER_SPRC];
->>>    
->>> +    if (pc->big_core) {
->>> +        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
->>> +    }
+>>> diff --git a/meson.build b/meson.build
+>>> index 68d36ac140f..7b2cf3cd7d1 100644
+>>> --- a/meson.build
+>>> +++ b/meson.build
+>>> @@ -3684,6 +3684,8 @@ target_arch = {}
+>>>    target_system_arch = {}
+>>>    target_user_arch = {}
+>>>    hw_common_arch = {}
+>>> +target_common_arch = {}
+>>> +target_common_system_arch = {}
+>>>    # NOTE: the trace/ subdirectory needs the qapi_trace_events variable
+>>>    # that is filled in by qapi/.
+>>> @@ -4087,29 +4089,59 @@ common_all = static_library('common',
+>>>    # construct common libraries per base architecture
+>>>    hw_common_arch_libs = {}
+>>> +target_common_arch_libs = {}
+>>> +target_common_system_arch_libs = {}
+>>>    foreach target : target_dirs
+>>>      config_target = config_target_mak[target]
+>>>      target_base_arch = config_target['TARGET_BASE_ARCH']
+>>> +  target_inc = [include_directories('target' / target_base_arch)]
+>>> +  inc = [common_user_inc + target_inc]
+>>> -  # check if already generated
+>>> -  if target_base_arch in hw_common_arch_libs
+>>> -    continue
+>>> -  endif
+>>> +  # prevent common code to access cpu compile time definition,
+>>> +  # but still allow access to cpu.h
+>>> +  target_c_args = ['-DCPU_DEFS_H']
+>>> +  target_system_c_args = target_c_args + ['- 
+>>> DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU']
+>>>      if target_base_arch in hw_common_arch
+>>> -    target_inc = [include_directories('target' / target_base_arch)]
+>>> -    src = hw_common_arch[target_base_arch]
+>>> -    lib = static_library(
+>>> -      'hw_' + target_base_arch,
+>>> -      build_by_default: false,
+>>> -      sources: src.all_sources() + genh,
+>>> -      include_directories: common_user_inc + target_inc,
+>>> -      implicit_include_directories: false,
+>>> -      # prevent common code to access cpu compile time
+>>> -      # definition, but still allow access to cpu.h
+>>> -      c_args: ['-DCPU_DEFS_H', '-DCOMPILING_SYSTEM_VS_USER', '- 
+>>> DCONFIG_SOFTMMU'],
+>>> -      dependencies: src.all_dependencies())
+>>> -    hw_common_arch_libs += {target_base_arch: lib}
+>>> +    if target_base_arch not in hw_common_arch_libs
+>>> +      src = hw_common_arch[target_base_arch]
+>>> +      lib = static_library(
+>>> +        'hw_' + target_base_arch,
+>>> +        build_by_default: false,
+>>> +        sources: src.all_sources() + genh,
+>>> +        include_directories: inc,
+>>> +        c_args: target_system_c_args,
+>>> +        dependencies: src.all_dependencies())
+>>> +      hw_common_arch_libs += {target_base_arch: lib}
+>>> +    endif
+>>> +  endif
 >>> +
->>>        switch (sprc & 0x3e0) {
->>>        case 0: /* SCRATCH0-3 */
->>>        case 1: /* SCRATCH4-7 */
->>> @@ -368,6 +372,10 @@ void helper_store_sprd(CPUPPCState *env, target_ulong val)
->>>        PnvCore *pc = pnv_cpu_state(cpu)->pnv_core;
->>>        int nr;
->>>    
->>> +    if (pc->big_core) {
->>> +        pc = pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x1);
->>> +    }
+>>> +  if target_base_arch in target_common_arch
+>>> +    if target_base_arch not in target_common_arch_libs
+>>> +      src = target_common_arch[target_base_arch]
+>>> +      lib = static_library(
+>>> +        'target_' + target_base_arch,
+>>> +        build_by_default: false,
+>>> +        sources: src.all_sources() + genh,
+>>> +        include_directories: inc,
+>>> +        c_args: target_c_args,
+>>> +        dependencies: src.all_dependencies())
+>>> +      target_common_arch_libs += {target_base_arch: lib}
+>>> +    endif
+>>> +  endif
 >>> +
+>>> +  if target_base_arch in target_common_system_arch
+>>> +    if target_base_arch not in target_common_system_arch_libs
+>>> +      src = target_common_system_arch[target_base_arch]
+>>> +      lib = static_library(
+>>> +        'target_system_' + target_base_arch,
+>>> +        build_by_default: false,
+>>> +        sources: src.all_sources() + genh,
+>>> +        include_directories: inc,
+>>> +        c_args: target_system_c_args,
+>>> +        dependencies: src.all_dependencies())
+>>> +      target_common_system_arch_libs += {target_base_arch: lib}
+>>> +    endif
+>>>      endif
+>>>    endforeach
+>>> @@ -4282,12 +4314,24 @@ foreach target : target_dirs
+>>>      target_common = common_ss.apply(config_target, strict: false)
+>>>      objects = [common_all.extract_objects(target_common.sources())]
+>>>      arch_deps += target_common.dependencies()
+>>> +  if target_base_arch in target_common_arch_libs
+>>> +    src = target_common_arch[target_base_arch].apply(config_target, 
+>>> strict: false)
+>>> +    lib = target_common_arch_libs[target_base_arch]
+>>> +    objects += lib.extract_objects(src.sources())
+>>> +    arch_deps += src.dependencies()
+>>> +  endif
+>>>      if target_type == 'system' and target_base_arch in 
+>>> hw_common_arch_libs
+>>>        src = hw_common_arch[target_base_arch].apply(config_target, 
+>>> strict: false)
+>>>        lib = hw_common_arch_libs[target_base_arch]
+>>>        objects += lib.extract_objects(src.sources())
+>>>        arch_deps += src.dependencies()
+>>>      endif
+>>> +  if target_type == 'system' and target_base_arch in 
+>>> target_common_system_arch_libs
+>>> +    src = 
+>>> target_common_system_arch[target_base_arch].apply(config_target, 
+>>> strict: false)
+>>> +    lib = target_common_system_arch_libs[target_base_arch]
+>>> +    objects += lib.extract_objects(src.sources())
+>>> +    arch_deps += src.dependencies()
+>>> +  endif
+>>>      target_specific = specific_ss.apply(config_target, strict: false)
+>>>      arch_srcs += target_specific.sources()
 >>
->>    Hi Nicholas,
+>> Somehow related to this patch, when converting from target_system_arch
+
+"Somehow related to" ~-> "pre-existing issue exposed by"
+
+>> to target_common_system_arch, emptying it, I get:
 >>
->> this patch breaks compilation when QEMU has been configured with
->> "--without-default-devices" :
+>> ../../meson.build:4237:27: ERROR: Key microblaze is not in the 
+>> dictionary.
 >>
->> FAILED: qemu-system-ppc64
->> cc -m64 @qemu-system-ppc64.rsp
->> /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in
->> function `helper_load_sprd':
->> .../qemu/target/ppc/misc_helper.c:336:(.text+0xcab): undefined reference to
->> `pnv_chip_find_core'
->> /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in
->> function `helper_store_sprd':
->> .../qemu/target/ppc/misc_helper.c:376:(.text+0xda3): undefined reference to
->> `pnv_chip_find_core'
->> collect2: error: ld returned 1 exit status
+>> 4235   if target.endswith('-softmmu')
+>> 4236     target_type='system'
+>> 4237     t = target_system_arch[target_base_arch].apply(config_target,
+>> strict: false)
 >>
->> Could you please have a look?
 > 
-> Thanks for the report, I have a hopefully simple fix just going through
-> CI now... Do you know if there's any reason to exclude a bunch of
-> targets in the build-without-defaults CI test? I wonder if we could just
-> enable all, it shouldn't add too much time to build test.
+> Patch 12 introduces an empty arm_common_ss and it does not seem to be a 
+> problem.
+> Feel free to share your meson.build if there is a problem.
 
-I think that setting has been added back then when we still built all 
-machines with --without-default-devices and only disabled the optional 
-devices. Then Paolo once cleaned this up (see commit bf616ce47be6802bbe7d 
-for example), so that all boards now get disabled by default, too. Since 
-that point in time, the runtime of the job is likely much decreased. So yes, 
-I think we could nowadays add more targets to that job without risking to 
-hit the timeout again. Could you maybe suggest a patch?
+Empty arm_common_ss[] isn't a problem. What I'm saying is
+when I move all files from target_system_arch[ARCH] to 
+target_common_system_arch[ARCH] I get an error because
+target_system_arch[ARCH] isn't expected to be empty.
+I suppose due to:
 
-  Thanks,
-   Thomas
+   target_system_arch[target_base_arch].apply()
 
+Yes, I can keep/add an empty source set but it makes meson
+files review more cumbersome (unused source set, but if you
+remove it then the build fails).
 
