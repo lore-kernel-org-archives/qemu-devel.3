@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A463DC369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 09:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCA11C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 09:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA3qT-00068E-12; Wed, 30 Apr 2025 05:35:14 -0400
+	id 1uA40s-0000RI-61; Wed, 30 Apr 2025 05:45:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=tzqG=XQ=kaod.org=clg@ozlabs.org>)
- id 1uA3qC-00064T-K5; Wed, 30 Apr 2025 05:34:56 -0400
+ id 1uA40m-0000Qu-3p; Wed, 30 Apr 2025 05:45:52 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=tzqG=XQ=kaod.org=clg@ozlabs.org>)
- id 1uA3q9-0003hj-H6; Wed, 30 Apr 2025 05:34:56 -0400
+ id 1uA40h-0004wo-MI; Wed, 30 Apr 2025 05:45:51 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZnX8V55yKz4xG0;
- Wed, 30 Apr 2025 19:34:50 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZnXP12ZRBz4xG0;
+ Wed, 30 Apr 2025 19:45:41 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZnX8R1930z4x89;
- Wed, 30 Apr 2025 19:34:46 +1000 (AEST)
-Message-ID: <6758c398-7827-4ca0-b36e-acd2225dbfb0@kaod.org>
-Date: Wed, 30 Apr 2025 11:34:44 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZnXNx08tBz4wbc;
+ Wed, 30 Apr 2025 19:45:36 +1000 (AEST)
+Message-ID: <11b5a654-00e9-447d-8827-83702ec30ab8@kaod.org>
+Date: Wed, 30 Apr 2025 11:45:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 8/9] tests/function/aspeed: Add functional test for
- AST2700FC
+Subject: Re: [PATCH v3 5/9] hw/arm/aspeed_ast27x0-ssp: Introduce AST27x0 A1
+ SSP SoC
 To: Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
@@ -41,7 +41,7 @@ To: Steven Lee <steven_lee@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
 References: <20250429091855.1948374-1-steven_lee@aspeedtech.com>
- <20250429091855.1948374-9-steven_lee@aspeedtech.com>
+ <20250429091855.1948374-6-steven_lee@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,9 +86,9 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250429091855.1948374-9-steven_lee@aspeedtech.com>
+In-Reply-To: <20250429091855.1948374-6-steven_lee@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=tzqG=XQ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
@@ -113,172 +113,420 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/29/25 11:18, Steven Lee wrote:
-> Add functional test for AST2700-fc machine.
+> The AST2700 SSP (Secondary Service Processor) is a Cortex-M4 coprocessor.
+> This patch adds support for A1 SSP with the following updates:
+> 
+> - Introduce Aspeed27x0SSPSoCState structure in aspeed_soc.h
+> - Define memory map and IRQ map for AST27x0 A1 SSP SoC
+> - Implement initialization and realization functions
+> - Add support for UART, INTC, and SCU devices
+> - Map unimplemented devices for IPC and SCUIO
+> 
+> The IRQ mapping is similar to AST2700 CA35 SoC, featuring a two-level
+> interrupt controller.
+> 
+> Difference from AST2700:
+> 
+>      - AST2700
+>        - Support GICINT128 to GICINT136 in INTC
+>        - The INTCIO GIC_192_201 has 10 output pins, mapped as follows:
+>            Bit 0 -> GIC 192
+>            Bit 1 -> GIC 193
+>            Bit 2 -> GIC 194
+>            Bit 3 -> GIC 195
+>            Bit 4 -> GIC 196
+> 
+>      - AST2700-ssp
+>        - Support SSPINT128 to SSPINT136 in INTC
+>        - The INTCIO SSPINT_160_169 has 10 output pins, mapped as follows:
+>            Bit 0 -> SSPINT 160
+>            Bit 1 -> SSPINT 161
+>            Bit 2 -> SSPINT 162
+>            Bit 3 -> SSPINT 163
+>            Bit 4 -> SSPINT 164
 > 
 > Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-> Change-Id: Ieced249cf471515a33f8f5f5386a2f58d431f2f9
-> --->   tests/functional/test_aarch64_ast2700fc.py | 137 +++++++++++++++++++++
->   1 file changed, 137 insertions(+)
->   create mode 100755 tests/functional/test_aarch64_ast2700fc.py
+> Change-Id: I924bf1a657f1e83f9e16d6673713f4a06ecdb496
+> ---
+>   include/hw/arm/aspeed_soc.h |  14 ++
+>   hw/arm/aspeed_ast27x0-ssp.c | 309 ++++++++++++++++++++++++++++++++++++
+>   hw/arm/meson.build          |   1 +
+>   3 files changed, 324 insertions(+)
+>   create mode 100644 hw/arm/aspeed_ast27x0-ssp.c
 > 
-> diff --git a/tests/functional/test_aarch64_ast2700fc.py b/tests/functional/test_aarch64_ast2700fc.py
-> new file mode 100755
-> index 0000000000..f7b7907fde
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+> index dd5fb731e2..7c65324801 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -145,6 +145,18 @@ struct Aspeed10x0SoCState {
+>       ARMv7MState armv7m;
+>   };
+>   
+> +struct Aspeed27x0SSPSoCState {
+> +    AspeedSoCState parent;
+> +    AspeedINTCState intc[2];
+> +    UnimplementedDeviceState ipc[2];
+> +    UnimplementedDeviceState scuio;
+> +
+> +    ARMv7MState armv7m;
+> +};
+> +
+> +#define TYPE_ASPEED27X0SSP_SOC "aspeed27x0ssp-soc"
+> +OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0SSPSoCState, ASPEED27X0SSP_SOC)
+> +
+>   #define TYPE_ASPEED10X0_SOC "aspeed10x0-soc"
+>   OBJECT_DECLARE_SIMPLE_TYPE(Aspeed10x0SoCState, ASPEED10X0_SOC)
+>   
+> @@ -255,6 +267,8 @@ enum {
+>       ASPEED_DEV_SLIIO,
+>       ASPEED_GIC_DIST,
+>       ASPEED_GIC_REDIST,
+> +    ASPEED_DEV_IPC0,
+> +    ASPEED_DEV_IPC1,
+>   };
+>   
+>   qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev);
+> diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
+> new file mode 100644
+> index 0000000000..32a74747c8
 > --- /dev/null
-> +++ b/tests/functional/test_aarch64_ast2700fc.py
-> @@ -0,0 +1,137 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional test that boots the AST2700 multi-SoCs with firmware
-> +#
-> +# Copyright (C) 2025 ASPEED Technology Inc
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +++ b/hw/arm/aspeed_ast27x0-ssp.c
+> @@ -0,0 +1,309 @@
+> +/*
+> + * ASPEED Ast27x0 SSP SoC
+> + *
+> + * Copyright (C) 2025 ASPEED Technology Inc.
+> + *
+> + * This code is licensed under the GPL version 2 or later.  See
+> + * the COPYING file in the top-level directory.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
 > +
-> +import os
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "exec/address-spaces.h"
+> +#include "hw/qdev-clock.h"
+> +#include "hw/misc/unimp.h"
+> +#include "hw/arm/aspeed_soc.h"
 > +
-> +from qemu_test import QemuSystemTest, Asset
-> +from qemu_test import wait_for_console_pattern
-> +from qemu_test import exec_command_and_wait_for_pattern
+> +#define AST2700_SSP_RAM_SIZE (32 * MiB)
 > +
+> +static const hwaddr aspeed_soc_ast27x0ssp_memmap[] = {
+> +    [ASPEED_DEV_SRAM]      =  0x00000000,
+> +    [ASPEED_DEV_INTC]      =  0x72100000,
+> +    [ASPEED_DEV_SCU]       =  0x72C02000,
+> +    [ASPEED_DEV_SCUIO]     =  0x74C02000,
+> +    [ASPEED_DEV_UART0]     =  0x74C33000,
+> +    [ASPEED_DEV_UART1]     =  0x74C33100,
+> +    [ASPEED_DEV_UART2]     =  0x74C33200,
+> +    [ASPEED_DEV_UART3]     =  0x74C33300,
+> +    [ASPEED_DEV_UART4]     =  0x72C1A000,
+> +    [ASPEED_DEV_INTCIO]    =  0x74C18000,
+> +    [ASPEED_DEV_IPC0]      =  0x72C1C000,
+> +    [ASPEED_DEV_IPC1]      =  0x74C39000,
+> +    [ASPEED_DEV_UART5]     =  0x74C33400,
+> +    [ASPEED_DEV_UART6]     =  0x74C33500,
+> +    [ASPEED_DEV_UART7]     =  0x74C33600,
+> +    [ASPEED_DEV_UART8]     =  0x74C33700,
+> +    [ASPEED_DEV_UART9]     =  0x74C33800,
+> +    [ASPEED_DEV_UART10]    =  0x74C33900,
+> +    [ASPEED_DEV_UART11]    =  0x74C33A00,
+> +    [ASPEED_DEV_UART12]    =  0x74C33B00,
+> +    [ASPEED_DEV_TIMER1]    =  0x72C10000,
+> +};
 > +
-> +class AST2700fcMachineSDK(QemuSystemTest):
-> +    ASSET_SDK_V905_AST2700 = Asset(
-> +            'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz',
-> +            'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
+> +static const int aspeed_soc_ast27x0ssp_irqmap[] = {
+> +    [ASPEED_DEV_SCU]       = 12,
+> +    [ASPEED_DEV_UART0]     = 164,
+> +    [ASPEED_DEV_UART1]     = 164,
+> +    [ASPEED_DEV_UART2]     = 164,
+> +    [ASPEED_DEV_UART3]     = 164,
+> +    [ASPEED_DEV_UART4]     = 8,
+> +    [ASPEED_DEV_UART5]     = 164,
+> +    [ASPEED_DEV_UART6]     = 164,
+> +    [ASPEED_DEV_UART7]     = 164,
+> +    [ASPEED_DEV_UART8]     = 164,
+> +    [ASPEED_DEV_UART9]     = 164,
+> +    [ASPEED_DEV_UART10]    = 164,
+> +    [ASPEED_DEV_UART11]    = 164,
+> +    [ASPEED_DEV_UART12]    = 164,
+> +    [ASPEED_DEV_TIMER1]    = 16,
+> +};
 > +
-> +    def do_test_aarch64_ast2700fc_ca35_start(self, image):
-> +        self.require_netdev('user')
-> +        self.vm.set_console()
-> +        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
-> +                         '-net', 'nic', '-net', 'user', '-snapshot')
+> +/* SSPINT 164 */
+> +static const int ast2700_ssp132_ssp164_intcmap[] = {
+> +    [ASPEED_DEV_UART0]     = 7,
+> +    [ASPEED_DEV_UART1]     = 8,
+> +    [ASPEED_DEV_UART2]     = 9,
+> +    [ASPEED_DEV_UART3]     = 10,
+> +    [ASPEED_DEV_UART5]     = 11,
+> +    [ASPEED_DEV_UART6]     = 12,
+> +    [ASPEED_DEV_UART7]     = 13,
+> +    [ASPEED_DEV_UART8]     = 14,
+> +    [ASPEED_DEV_UART9]     = 15,
+> +    [ASPEED_DEV_UART10]    = 16,
+> +    [ASPEED_DEV_UART11]    = 17,
+> +    [ASPEED_DEV_UART12]    = 18,
+> +};
 > +
-> +        self.vm.launch()
+> +struct nvic_intc_irq_info {
+> +    int irq;
+> +    int intc_idx;
+> +    int orgate_idx;
+> +    const int *ptr;
+> +};
 > +
-> +        wait_for_console_pattern(self, 'U-Boot 2023.10')
-> +        wait_for_console_pattern(self, '## Loading kernel from FIT Image')
-> +        wait_for_console_pattern(self, 'Starting kernel ...')
+> +static struct nvic_intc_irq_info ast2700_ssp_intcmap[] = {
+> +    {160, 1, 0, NULL},
+> +    {161, 1, 1, NULL},
+> +    {162, 1, 2, NULL},
+> +    {163, 1, 3, NULL},
+> +    {164, 1, 4, ast2700_ssp132_ssp164_intcmap},
+> +    {165, 1, 5, NULL},
+> +    {166, 1, 6, NULL},
+> +    {167, 1, 7, NULL},
+> +    {168, 1, 8, NULL},
+> +    {169, 1, 9, NULL},
+> +    {128, 0, 1, NULL},
+> +    {129, 0, 2, NULL},
+> +    {130, 0, 3, NULL},
+> +    {131, 0, 4, NULL},
+> +    {132, 0, 5, ast2700_ssp132_ssp164_intcmap},
+> +    {133, 0, 6, NULL},
+> +    {134, 0, 7, NULL},
+> +    {135, 0, 8, NULL},
+> +    {136, 0, 9, NULL},
+> +};
 > +
-> +    def do_test_aarch64_ast2700fc_ssp_start(self):
+> +static qemu_irq aspeed_soc_ast27x0ssp_get_irq(AspeedSoCState *s, int dev)
+> +{
+> +    Aspeed27x0SSPSoCState *a = ASPEED27X0SSP_SOC(s);
+> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
 > +
-> +        self.vm.shutdown()
-> +        self.vm.set_console(console_index=1)
-> +        self.vm.launch()
+> +    int or_idx;
+> +    int idx;
+> +    int i;
 > +
-> +    def do_test_aarch64_ast2700fc_tsp_start(self):
-> +        self.vm.shutdown()
-> +        self.vm.set_console(console_index=2)
-> +        self.vm.launch()
+> +    for (i = 0; i < ARRAY_SIZE(ast2700_ssp_intcmap); i++) {
+> +        if (sc->irqmap[dev] == ast2700_ssp_intcmap[i].irq) {
+> +            assert(ast2700_ssp_intcmap[i].ptr);
+> +            or_idx = ast2700_ssp_intcmap[i].orgate_idx;
+> +            idx = ast2700_ssp_intcmap[i].intc_idx;
+> +            return qdev_get_gpio_in(DEVICE(&a->intc[idx].orgates[or_idx]),
+> +                                    ast2700_ssp_intcmap[i].ptr[dev]);
+> +        }
+> +    }
 > +
-> +    def start_ast2700fc_test(self, name):
-> +        ca35_core = 4
-> +        uboot_size = os.path.getsize(self.scratch_file(name,
-> +                                                       'u-boot-nodtb.bin'))
-> +        uboot_dtb_load_addr = hex(0x400000000 + uboot_size)
+> +    return qdev_get_gpio_in(DEVICE(&a->armv7m), sc->irqmap[dev]);
+> +}
 > +
-> +        load_images_list = [
-> +            {
-> +                'addr': '0x400000000',
-> +                'file': self.scratch_file(name,
-> +                                          'u-boot-nodtb.bin')
-> +            },
-> +            {
-> +                'addr': str(uboot_dtb_load_addr),
-> +                'file': self.scratch_file(name, 'u-boot.dtb')
-> +            },
-> +            {
-> +                'addr': '0x430000000',
-> +                'file': self.scratch_file(name, 'bl31.bin')
-> +            },
-> +            {
-> +                'addr': '0x430080000',
-> +                'file': self.scratch_file(name, 'optee',
-> +                                          'tee-raw.bin')
-> +            }
-> +        ]
+> +static void aspeed_soc_ast27x0ssp_init(Object *obj)
+> +{
+> +    Aspeed27x0SSPSoCState *a = ASPEED27X0SSP_SOC(obj);
+> +    AspeedSoCState *s = ASPEED_SOC(obj);
+> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> +    char socname[8];
+> +    char typename[64];
+> +    int i;
+> +
+> +    if (sscanf(object_get_typename(obj), "%7s", socname) != 1) {
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    object_initialize_child(obj, "armv7m", &a->armv7m, TYPE_ARMV7M);
+> +
+> +    s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
+> +
+> +    snprintf(typename, sizeof(typename), "aspeed.scu-%s", socname);
+> +    object_initialize_child(obj, "scu", &s->scu, typename);
+> +    qdev_prop_set_uint32(DEVICE(&s->scu), "silicon-rev", sc->silicon_rev);
+> +
+> +    for (i = 0; i < sc->uarts_num; i++) {
+> +        object_initialize_child(obj, "uart[*]", &s->uart[i], TYPE_SERIAL_MM);
+> +    }
+> +
+> +    object_initialize_child(obj, "intc0", &a->intc[0],
+> +                            TYPE_ASPEED_2700SSP_INTC);
+> +    object_initialize_child(obj, "intc1", &a->intc[1],
+> +                            TYPE_ASPEED_2700SSP_INTCIO);
+> +
+> +    object_initialize_child(obj, "timerctrl", &s->timerctrl,
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "ipc0", &a->ipc[0],
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "ipc1", &a->ipc[1],
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +    object_initialize_child(obj, "scuio", &a->scuio,
+> +                            TYPE_UNIMPLEMENTED_DEVICE);
+> +}
+> +
+> +static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+> +{
+> +    Aspeed27x0SSPSoCState *a = ASPEED27X0SSP_SOC(dev_soc);
+> +    AspeedSoCState *s = ASPEED_SOC(dev_soc);
+> +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
+> +    DeviceState *armv7m;
+> +    Error *err = NULL;
+> +    g_autofree char *sram_name = NULL;
+> +    int i;
+> +
+> +    if (!clock_has_source(s->sysclk)) {
+> +        error_setg(errp, "sysclk clock must be wired up by the board code");
+> +        return;
+> +    }
+> +
+> +    /* AST27X0 SSP Core */
+> +    armv7m = DEVICE(&a->armv7m);
+> +    qdev_prop_set_uint32(armv7m, "num-irq", 256);
+> +    qdev_prop_set_string(armv7m, "cpu-type", aspeed_soc_cpu_type(sc));
+> +    qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
+> +    object_property_set_link(OBJECT(&a->armv7m), "memory",
+> +                             OBJECT(s->memory), &error_abort);
+> +    sysbus_realize(SYS_BUS_DEVICE(&a->armv7m), &error_abort);
+> +
+> +    sram_name = g_strdup_printf("aspeed.dram.%d",
+> +                                CPU(a->armv7m.cpu)->cpu_index);
+> +
+> +    if (!memory_region_init_ram(&s->sram, OBJECT(s), sram_name, sc->sram_size,
+> +                                &err)) {
+> +        return;
+> +    }
+> +    memory_region_add_subregion(s->memory,
+> +                                sc->memmap[ASPEED_DEV_SRAM],
+> +                                &s->sram);
+> +
+> +    /* SCU */
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->scu), errp)) {
+> +        return;
+> +    }
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->scu), 0, sc->memmap[ASPEED_DEV_SCU]);
+> +
+> +    /* INTC */
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[0]), errp)) {
+> +        return;
+> +    }
+> +
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[0]), 0,
+> +                    sc->memmap[ASPEED_DEV_INTC]);
+> +
+> +    /* INTCIO */
+> +    if (!sysbus_realize(SYS_BUS_DEVICE(&a->intc[1]), errp)) {
+> +        return;
+> +    }
+> +
+> +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[1]), 0,
+> +                    sc->memmap[ASPEED_DEV_INTCIO]);
+> +
+> +    /* irq source orgates -> INTC0 */
+> +    for (i = 0; i < ASPEED_INTC_GET_CLASS(&a->intc[0])->num_inpins; i++) {
+> +        qdev_connect_gpio_out(DEVICE(&a->intc[0].orgates[i]), 0,
+> +                              qdev_get_gpio_in(DEVICE(&a->intc[0]), i));
+> +    }
+> +    for (i = 0; i < ASPEED_INTC_GET_CLASS(&a->intc[0])->num_outpins; i++) {
+> +        assert(i < ARRAY_SIZE(ast2700_ssp_intcmap));
+> +        sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc[0]), i,
+> +                           qdev_get_gpio_in(DEVICE(&a->armv7m),
+> +                                            ast2700_ssp_intcmap[i].irq));
+> +    }
+> +    /* irq source orgates -> INTCIO */
+> +    for (i = 0; i < ASPEED_INTC_GET_CLASS(&a->intc[1])->num_inpins; i++) {
+> +        qdev_connect_gpio_out(DEVICE(&a->intc[1].orgates[i]), 0,
+> +                              qdev_get_gpio_in(DEVICE(&a->intc[1]), i));
+> +    }
+> +    /* INTCIO -> INTC */
+> +    for (i = 0; i < ASPEED_INTC_GET_CLASS(&a->intc[1])->num_outpins; i++) {
+> +        sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc[1]), i,
+> +                        qdev_get_gpio_in(DEVICE(&a->intc[0].orgates[0]), i));
+> +    }
+> +    /* UART */
+> +    if (!aspeed_soc_uart_realize(s, errp)) {
+> +        return;
+> +    }
+> +
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->timerctrl),
+> +                                  "aspeed.timerctrl",
+> +                                  sc->memmap[ASPEED_DEV_TIMER1], 0x200);
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->ipc[0]),
+> +                                  "aspeed.ipc0",
+> +                                  sc->memmap[ASPEED_DEV_IPC0], 0x1000);
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->ipc[1]),
+> +                                  "aspeed.ipc1",
+> +                                  sc->memmap[ASPEED_DEV_IPC1], 0x1000);
+> +    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&a->scuio),
+> +                                  "aspeed.scuio",
+> +                                  sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
+> +}
+> +
+> +static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass, void *data)
+> +{
+> +    static const char * const valid_cpu_types[] = {
+> +        ARM_CPU_TYPE_NAME("cortex-m4"), /* TODO: cortex-m4f */
+
+So no FPU ?  I wonder what "cortex-m4" CPU model in QEMU implements.
+Something to check.
 
 
-Could this test be simplified with the recent addition of vbootrom support ?
+> +        NULL
+> +    };
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    AspeedSoCClass *sc = ASPEED_SOC_CLASS(dc);
+> +
+> +    /* Reason: The Aspeed SoC can only be instantiated from a board */
+> +    dc->user_creatable = false;
+> +    dc->realize = aspeed_soc_ast27x0ssp_realize;
+> +
+> +    sc->valid_cpu_types = valid_cpu_types;
+> +    sc->silicon_rev = AST2700_A1_SILICON_REV;
+> +    sc->sram_size = AST2700_SSP_RAM_SIZE;
+> +    sc->spis_num = 0;
+> +    sc->ehcis_num = 0;
+> +    sc->wdts_num = 0;
+> +    sc->macs_num = 0;
+> +    sc->uarts_num = 13;
+> +    sc->uarts_base = ASPEED_DEV_UART0;
+> +    sc->irqmap = aspeed_soc_ast27x0ssp_irqmap;
+> +    sc->memmap = aspeed_soc_ast27x0ssp_memmap;
+> +    sc->num_cpus = 1;
+> +    sc->get_irq = aspeed_soc_ast27x0ssp_get_irq;
+> +}
+> +
+> +static const TypeInfo aspeed_soc_ast27x0ssp_types[] = {
+> +    {
+> +        .name           = TYPE_ASPEED27X0SSP_SOC,
+> +        .parent         = TYPE_ASPEED_SOC,
+> +        .instance_size  = sizeof(Aspeed27x0SSPSoCState),
+> +        .abstract       = true,
 
-If so, you can use this branch :
+The abstract class doesn't seem useful. why keep it ?
 
-   https://github.com/legoater/qemu/commits/aspeed-next/
-
-Anyhow,
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
-> +        for load_image in load_images_list:
-> +            addr = load_image['addr']
-> +            file = load_image['file']
-> +            self.vm.add_args('-device',
-> +                             f'loader,force-raw=on,addr={addr},file={file}')
+
+> +    }, {
+> +        .name           = "ast2700ssp",
+> +        .parent         = TYPE_ASPEED27X0SSP_SOC,
+> +        .instance_init  = aspeed_soc_ast27x0ssp_init,
+> +        .class_init     = aspeed_soc_ast27x0ssp_class_init,
+> +    },
+> +};
 > +
-> +        for i in range(ca35_core):
-> +            self.vm.add_args('-device',
-> +                             f'loader,addr=0x430000000,cpu-num={i}')
-> +
-> +        load_elf_list = {
-> +            'ssp': self.scratch_file(name, 'ast2700-ssp.elf'),
-> +            'tsp': self.scratch_file(name, 'ast2700-tsp.elf')
-> +        }
-> +
-> +        for cpu_num, key in enumerate(load_elf_list, start=4):
-> +            file = load_elf_list[key]
-> +            self.vm.add_args('-device',
-> +                             f'loader,file={file},cpu-num={cpu_num}')
-> +
-> +        self.vm.add_args('-device',
-> +                         'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
-> +        self.do_test_aarch64_ast2700fc_ca35_start(
-> +            self.scratch_file(name, 'image-bmc'))
-> +
-> +        wait_for_console_pattern(self, f'{name} login:')
-> +
-> +        exec_command_and_wait_for_pattern(self, 'root', 'Password:')
-> +        exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
-> +
-> +        exec_command_and_wait_for_pattern(
-> +                self,
-> +                'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
-> +                'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d')
-> +        exec_command_and_wait_for_pattern(
-> +                self,
-> +                'cat /sys/class/hwmon/hwmon*/temp1_input', '0')
-> +        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
-> +                    property='temperature', value=18000)
-> +        exec_command_and_wait_for_pattern(
-> +                self,
-> +                'cat /sys/class/hwmon/hwmon*/temp1_input', '18000')
-> +
-> +        self.do_test_aarch64_ast2700fc_ssp_start()
-> +
-> +        exec_command_and_wait_for_pattern(self, '\012', 'ssp:~$')
-> +        exec_command_and_wait_for_pattern(self, 'version',
-> +                                          'Zephyr version 3.7.1')
-> +        exec_command_and_wait_for_pattern(self, 'md 72c02000 1',
-> +                                          '[72c02000] 06010103')
-> +
-> +        self.do_test_aarch64_ast2700fc_tsp_start()
-> +
-> +        exec_command_and_wait_for_pattern(self, '\012', 'tsp:~$')
-> +        exec_command_and_wait_for_pattern(self, 'version',
-> +                                          'Zephyr version 3.7.1')
-> +        exec_command_and_wait_for_pattern(self, 'md 72c02000 1',
-> +                                          '[72c02000] 06010103')
-> +
-> +    def test_aarch64_ast2700fc_sdk_v09_05(self):
-> +        self.set_machine('ast2700fc')
-> +        self.archive_extract(self.ASSET_SDK_V905_AST2700)
-> +        self.start_ast2700fc_test('ast2700-default')
-> +
-> +
-> +if __name__ == '__main__':
-> +    QemuSystemTest.main()
+> +DEFINE_TYPES(aspeed_soc_ast27x0ssp_types)
+> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+> index ac473ce7cd..aec0a0b98d 100644
+> --- a/hw/arm/meson.build
+> +++ b/hw/arm/meson.build
+> @@ -44,6 +44,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+>     'aspeed_soc_common.c',
+>     'aspeed_ast2400.c',
+>     'aspeed_ast2600.c',
+> +  'aspeed_ast27x0-ssp.c',
+>     'aspeed_ast10x0.c',
+>     'aspeed_eeprom.c',
+>     'fby35.c'))
 
 
