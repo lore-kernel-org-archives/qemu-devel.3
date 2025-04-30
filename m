@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0310FC369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 16:22:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7539BC369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 16:23:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAAC3-0004Lc-8k; Wed, 30 Apr 2025 12:21:55 -0400
+	id 1uAACy-0004xI-PE; Wed, 30 Apr 2025 12:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uAAC1-0004LH-Ae
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:21:53 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1uAACw-0004wj-GL
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:22:50 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uAABz-0006WI-1f
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:21:53 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-227a8cdd241so214195ad.3
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 09:21:50 -0700 (PDT)
+ id 1uAACr-0006df-El
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:22:47 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2295d78b433so71215ad.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 09:22:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746030103; x=1746634903; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1746030164; x=1746634964; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CK3R8NG0Ht6HFQtv7LqmLGfMdjeBRifCgAvnIcKboVY=;
- b=ZIxqhWJ9i9rsxTf67NWkwElFb62W+3cjRYrCoY+vpybB2N+u1FR22YriFblyYYN0gC
- wcrXBkIqc5EodcBsl8wm8VPhnnnYYhCQVaSmcvYGFnEzNW3KHe7aMlefRx5AFKMwUT5j
- tLeyBobWsH6npLiuQ+nnxUcIAG8zu5ztH85d/vxizI4mt493ipqmLbP1Kb3Q1WfZhFxC
- 0lwudiRVEjL1GLXfQ3JBBQUs/Kqmi8BaSIgWFapKV/XQjoQPSOl5cLixobwWLHgEm/jG
- KbR4HQpf5scqDYIR8QE5kJxGL9JfobV2UgaTuNlA8asGQepaQ30qxfjkE6iZAI1t3jBl
- 3UAA==
+ bh=wHK1qlWy27PdCOuSloyGM8+0rvVsPn/vvUmGzvL2hi4=;
+ b=lxrNMWTiR8WXUvJqBlivuAjTrre9mrAxB5m/IOtY6YWr2X1S0m4PMVa9CVv2RJJDp5
+ v7mhpFloEEUMyWk2QRfzjB1jUaL8fTQQrT7sQ7V3hn1thYhPMHAEq2qrx7cKd6DLp5Gr
+ GpDiWrA9jnMw/B3Dp0nH0OeI9CYbNakpDhhJ61SYA7eQ1kh8lrw0++Qrft5Aw/SMVC5u
+ j/NNsMTYKCMgnhEr9Mwy6FS/YV1oEHxKND8pqaK8VzYlNDtmZBSmwGqkE2szEitGeh1B
+ 5j4DLnJOlMb86Sn8zcEncJy/N6gaioopu7OsoTf70Tkm5h8yo8hWptZ2cnTBKX3F6I69
+ 3eRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746030103; x=1746634903;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1746030164; x=1746634964;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CK3R8NG0Ht6HFQtv7LqmLGfMdjeBRifCgAvnIcKboVY=;
- b=LQ9C6wo7otUtnKB3v53B5e+2aJwRyE9aVgFgqHrTVX1fBD4r3VIp9X0EJwf6tJAzmB
- HuvuZbHPEwg1lB7Ldsoauvb4vMZ6EpQjQGHKpPOvL4MXmVdkyQPVYe8vSMYOiwdy9Pu9
- fiM4qlTQnW9VOgZEDfQxX2iBR75IzIRerkCmzJRuwdV0nywJW+eE+kF/FsknA33Yx7VN
- aGMXUKFedHJFwwaadc3lXB+NECJ2LlLhmgPLJmeAIBepwg5IsBS81jDu1eQXbrg7CY5q
- ccd1FVA3ZxwiLeN1l5d75cg4zGTLQ6B1JBHX2qe+oksgwpFhNEc7UJjsMAtqECdB8ro/
- q9sQ==
+ bh=wHK1qlWy27PdCOuSloyGM8+0rvVsPn/vvUmGzvL2hi4=;
+ b=wVEyekMptsNyyizoMosx+vuBcThWQO/ynaYRtAY0Vj1VUyekUtzYCP81XsxSV2Z2Lg
+ 1Hyu3ft2Q0D2qLKf4LGfcUy18iq4qboZdom6Yn3bGW5dzAUh5gla+mpjyRujgBtlhQ7z
+ CmMkXjrQpF30078iMSdzJKwKw2sTbMyMy02lT2gKarO3QMtZjzxNL9vS/kO4ifA8PZew
+ /+766jnao7hW5hEybxqU0BNszuqJsQ2CUMUNrAI1EuwrTTq2azBStCBN9kp9JUhU55yg
+ h/KT6hhioMzSFpSSD9tF9p1p5VK2rOJJbkpyEqMykxsBM0JnSFf+t+2DxM3X6L6BjAYb
+ k9Pg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjOZgURkd6szOLNuF5I5xz4gQ6OR1NbCVARSCTVXXNahV69txFv0wM2hvSs4Ow4XskKpI7Qj4wf8Pm@nongnu.org
-X-Gm-Message-State: AOJu0YyetLXZ1fer4Cna42EyMQ1TrlkKDh+q972WjAUxJm/4wNsNCeiu
- swn71lYUaCtP7/ZZN88aTFRFoQarb2aU+4cjQNxcZZZQFL2Kynpzz2+IhEn0TaI=
-X-Gm-Gg: ASbGncsGsQnmQr/IhUzpP2lOtuqhfPhfUxf/pPtMoJ1wKcvJkb+IAm8Iy12GSuIzIy/
- ZVrmR7U9YCwlxH86acKouJZ3zNCF6i6wSpM6zVAqWfFMcO+CK8QMF8BaRNKu6V3QqLzym8T1xm5
- l+mB0KJLTgJw6P0Qc4llWVlqVnpQc/k0FljPcEbq5U3hajmVKGwa364V0RnWXI1Ev5q+MphL1qt
- zhu+JVe2J+wSLpK4unLxy/GHvt681Uj/uuSncwuWitMl8K9Z0DHnSZvhXveFtjqINptksmb5vwV
- UhgcJciIGo7ELRLsX9sST40MBvAK9lmzexoX2Pef9gtJPCiqnFPOcg==
-X-Google-Smtp-Source: AGHT+IHfudTt7LszFLKuM/jUzOdJOodx6TuD54vAwFnTH4Qj15t8IKdPiLxy3B68wMPki8ZKi3v98Q==
-X-Received: by 2002:a17:903:1984:b0:224:ff0:4360 with SMTP id
- d9443c01a7336-22df35ffbabmr67866345ad.53.1746030102775; 
- Wed, 30 Apr 2025 09:21:42 -0700 (PDT)
+ AJvYcCUJBu/1NSRDNe9P9ql2A+TxEEn6bqCBsgSxbGh3uM7I4Mh8mok+NiBsq7katsxDyzNacQDGqR2BI+xj@nongnu.org
+X-Gm-Message-State: AOJu0YzPDYz92WNBCAazsgC7zm2lc6UVILbfgV6d0uqzSrx0Ms8SLstX
+ 4jf5F9prn9lf8P8QqXzkkgjdMimivFe0OX4Rc+YwuBhXzDbKUrv4mfJLQFwK7OE=
+X-Gm-Gg: ASbGncvgVbFHCEKG8KuSO726EsOzIsn5sIFsZ+4IcU3Z8cnmPxKNXVLczvNGu9qVc6d
+ WJS+j5btcxLRejtq7Y2cUTy1CRAFw2K/WIELvolk+u3hBpGAA//Agj5GDplqICN7rHaIcwtHynM
+ v29QNOzhDhW+jMDKb0L0S9lTyynbDmfvKtAMbe/SEAoQFvjC6WZG/LbSMJ7eRR1NzrIzOO/5GLo
+ c43lOGfltZlEEDB0PxorNFVXM5rPjdFsVTL0elg/2Lg6nsrZhkpNNummW0j2Wf5QQ0Uaae440ug
+ FvrlQraF01bemikSJhcu7YYxxt8ayJPKPG7XYEeKtIkbA14HZGWgMA==
+X-Google-Smtp-Source: AGHT+IFWGzid0qFOdbPr0IIyjPzpQWR8vbRiPiqNaZ5fhbhU0kA0BwAee99jbOuOmsCU9Is9gI0O0w==
+X-Received: by 2002:a17:902:f685:b0:21f:7880:8472 with SMTP id
+ d9443c01a7336-22df5827a21mr52449825ad.35.1746030163771; 
+ Wed, 30 Apr 2025 09:22:43 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db4d898e2sm125117235ad.7.2025.04.30.09.21.42
+ d9443c01a7336-22db5216a32sm124042485ad.219.2025.04.30.09.22.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Apr 2025 09:21:42 -0700 (PDT)
-Message-ID: <efbaccd1-9ef2-4aed-88ed-d6a2bcb7902b@linaro.org>
-Date: Wed, 30 Apr 2025 09:21:41 -0700
+ Wed, 30 Apr 2025 09:22:43 -0700 (PDT)
+Message-ID: <199b8d17-8f26-4ec2-b9e5-8ffc53f55155@linaro.org>
+Date: Wed, 30 Apr 2025 09:22:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: Functional tests precache behaviour
 Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 References: <c83e0d26-4d1b-4a12-957d-c7b7ff4ba1b3@linaro.org>
  <7f0c4586-8a97-4e64-8abb-58a74b86afaa@redhat.com>
- <6e9a3cb3-e238-48a7-a67c-c95b36a517bc@linaro.org>
- <aBJJqtzQaTH_xcKK@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <aBJJqtzQaTH_xcKK@redhat.com>
+In-Reply-To: <7f0c4586-8a97-4e64-8abb-58a74b86afaa@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,85 +103,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/30/25 9:02 AM, Daniel P. Berrangé wrote:
-> On Wed, Apr 30, 2025 at 08:48:59AM -0700, Pierrick Bouvier wrote:
->> On 4/30/25 8:00 AM, Thomas Huth wrote:
->>> On 30/04/2025 16.34, Pierrick Bouvier wrote:
->>>> Hi folks,
->>>>
->>>> $ ninja -C build precache-functional
->>>> 2025-04-30 07:23:20,382 - qemu-test - ERROR - Unable to download https://
->>>> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
->>>> gzimg/armv7.img.gz: HTTP error 503
->>>> 2025-04-30 07:23:23,131 - qemu-test - ERROR - Unable to download https://
->>>> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
->>>> gzimg/armv7.img.gz: HTTP error 503
->>>> 2025-04-30 07:23:25,870 - qemu-test - ERROR - Unable to download https://
->>>> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
->>>> gzimg/armv7.img.gz: HTTP error 503
->>>> 2025-04-30 07:23:25,871 - qemu-test - ERROR - https://archive.netbsd.org/
->>>> pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz:
->>>> Download retries exceeded: skipping asset precache
->>>> $ echo $?
->>>> 0
->>>>
->>>> Since we silently skip the asset precaching, how can we identify that an
->>>> asset is not available anymore (temporarily or not)?
->>>> Should we rely on test itself failing when trying to download again this asset?
->>>
->>> The current logic fails hard for 404 errors, so if the asset is completely
->>> gone, we should notice it. For other error codes, we assume that it is only
->>> a temporary server problem that will hopefully be fixed on the server side
->>> sooner or later.
->>>
+On 4/30/25 8:00 AM, Thomas Huth wrote:
+> On 30/04/2025 16.34, Pierrick Bouvier wrote:
+>> Hi folks,
 >>
->> Sounds good.
->> Should we replicate this semantic when running the test itself?
->> It would be more useful to skip it because an asset is missing instead of
->> reporting an error, except if it's a 404 error.
+>> $ ninja -C build precache-functional
+>> 2025-04-30 07:23:20,382 - qemu-test - ERROR - Unable to download https://
+>> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
+>> gzimg/armv7.img.gz: HTTP error 503
+>> 2025-04-30 07:23:23,131 - qemu-test - ERROR - Unable to download https://
+>> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
+>> gzimg/armv7.img.gz: HTTP error 503
+>> 2025-04-30 07:23:25,870 - qemu-test - ERROR - Unable to download https://
+>> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
+>> gzimg/armv7.img.gz: HTTP error 503
+>> 2025-04-30 07:23:25,871 - qemu-test - ERROR - https://archive.netbsd.org/
+>> pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz:
+>> Download retries exceeded: skipping asset precache
+>> $ echo $?
+>> 0
+>>
+>> Since we silently skip the asset precaching, how can we identify that an
+>> asset is not available anymore (temporarily or not)?
+>> Should we rely on test itself failing when trying to download again this asset?
 > 
-> The tests already gracefully skip if one or more required assets
-> are not available. See the 'setUp' method of QemuBaseTest
+> The current logic fails hard for 404 errors, so if the asset is completely
+> gone, we should notice it. For other error codes, we assume that it is only
+> a temporary server problem that will hopefully be fixed on the server side
+> sooner or later.
 > 
->          if not self.assets_available():
->              self.skipTest('One or more assets is not available')
-> 
-> 
-> In the 404 case, the pre-cache step should fail and thus we shouldn't
-> even get to running the test.
+>    Thomas
 > 
 
-This is not the behaviour I observe (error, with server returning 503) 
-[1], thus my original email.
-
-Maybe something is missing in the associated test, or in our test 
-infrastructure?
-
-Nothing funky in the command line used, you can reproduce it with:
-$ rm -rf ~/.cache/qemu build/
-$ ./configure
-$ ./build/pyvenv/bin/meson test -C build --setup thorough --suite 
-func-quick --suite func-thorough -t 5 --print-errorlogs func-ppc-ppc_40p
-
-[1] 
-https://github.com/pbo-linaro/qemu-ci/actions/runs/14747788692/job/41398348905
-
-Traceback (most recent call last):
-   File 
-"/home/runner/work/qemu-ci/qemu-ci/tests/functional/test_ppc_40p.py", 
-line 68, in test_openbios_and_netbsd
-     drive_path = self.ASSET_NETBSD71.fetch()
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-   File 
-"/home/runner/work/qemu-ci/qemu-ci/tests/functional/qemu_test/asset.py", 
-line 175, in fetch
-     raise AssetError(self, "Download retries exceeded", transient=True)
-qemu_test.asset.AssetError: 
-https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-7.1.2/iso/NetBSD-7.1.2-prep.iso: 
-Download retries exceeded
-
-> 
-> With regards,
-> Daniel
-
+By the way,
+thanks for all your effort to get rid of avocado tests, and converting 
+them to functional. It's infinitely better, especially the caching aspect.
 
