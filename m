@@ -4,62 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04D47C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 18:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E979C3ABA9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 18:52:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uACWR-0003yo-KJ; Wed, 30 Apr 2025 14:51:07 -0400
+	id 1uACW7-0003Mc-Vf; Wed, 30 Apr 2025 14:50:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uACWP-0003tv-J5
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 14:51:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uACW5-0003Lk-I2
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 14:50:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uACWN-0008LJ-V1
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 14:51:05 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uACW3-0008HK-9F
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 14:50:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746039063;
+ s=mimecast20190719; t=1746039041;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FGMmWQoDu0O44Khh2IplYBQXTQMrVHQxvhNgACgHD6s=;
- b=YoQcF3r1PME9Kqdmu0gejmIiwE3NW1WuWZARk16IvY9iKDVEHOEe8yf+Faj0FSGb2ZBlzJ
- HdQ9OkqLyvHii5zydDe3BHQLcIeyooKBWUmKvVfsOfLYfXiHIZAH4UpLMhEckAU2Pnt4tR
- oepbc0bxkt7VQsuj7EXfinj2WLHQhq8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=3FfK8u08oVV8pviIgKJKmYZYnSq6V3WDTwB072H8SUI=;
+ b=LEdJ/rjHVAsofx5Njt6NN4/iFXNH3rHU86ErxXZhguNwxJv2V3xU5makhyYF90Nn6WLEv8
+ qWEXhljtCa2vF6jk+IxP1mx9NAM9vBSXdKUJBiTpuUHC0PF6EqBkYp5afjF0JvHZ58exUD
+ Drpja0lcGe+AMRb8ZE2+Zv1G2xkY2VE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-359-79j4yoelPomgWdzlEF3-LA-1; Wed,
- 30 Apr 2025 14:50:59 -0400
-X-MC-Unique: 79j4yoelPomgWdzlEF3-LA-1
-X-Mimecast-MFC-AGG-ID: 79j4yoelPomgWdzlEF3-LA_1746039058
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-526-QoPPYL_6N46hWzukkxJvqA-1; Wed,
+ 30 Apr 2025 14:50:39 -0400
+X-MC-Unique: QoPPYL_6N46hWzukkxJvqA-1
+X-Mimecast-MFC-AGG-ID: QoPPYL_6N46hWzukkxJvqA_1746039039
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8B9E21956086; Wed, 30 Apr 2025 18:50:58 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BBD991800261
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 18:50:38 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.67])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C91AA19560A3; Wed, 30 Apr 2025 18:50:56 +0000 (UTC)
+ id A5E7019560A3; Wed, 30 Apr 2025 18:50:37 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>
-Subject: [PULL 8/9] hw/rtc/mc146818rtc: Drop pre-v3 migration stream support
-Date: Wed, 30 Apr 2025 20:50:34 +0200
-Message-ID: <20250430185035.724919-9-thuth@redhat.com>
-In-Reply-To: <20250430185035.724919-1-thuth@redhat.com>
-References: <20250430185035.724919-1-thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 0/9] Misc patches (s390x, build env, clean-ups)
+Date: Wed, 30 Apr 2025 20:50:26 +0200
+Message-ID: <20250430185035.724919-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -84,67 +80,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+The following changes since commit 73d29ea2417b58ca55fba1aa468ba38e3607b583:
 
-mc146818rtc's migration stream is at version 3 since commit
-56038ef6234 ("RTC: Update the RTC clock only when reading it")
-from 12 years ago, released in QEMU v1.3.0!
-No versioned machines are that old, we can safely remove
-support for older streams and the qdev_set_legacy_instance_id()
-call.
+  Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging (2025-04-27 12:47:23 -0400)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Message-ID: <20250115210048.25396-1-philmd@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- hw/rtc/mc146818rtc.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+are available in the Git repository at:
 
-diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
-index 6f787be7af8..f9f5cf396f0 100644
---- a/hw/rtc/mc146818rtc.c
-+++ b/hw/rtc/mc146818rtc.c
-@@ -819,7 +819,7 @@ static const VMStateDescription vmstate_rtc_irq_reinject_on_ack_count = {
- static const VMStateDescription vmstate_rtc = {
-     .name = "mc146818rtc",
-     .version_id = 3,
--    .minimum_version_id = 1,
-+    .minimum_version_id = 3,
-     .pre_save = rtc_pre_save,
-     .post_load = rtc_post_load,
-     .fields = (const VMStateField[]) {
-@@ -829,13 +829,13 @@ static const VMStateDescription vmstate_rtc = {
-         VMSTATE_TIMER_PTR(periodic_timer, MC146818RtcState),
-         VMSTATE_INT64(next_periodic_time, MC146818RtcState),
-         VMSTATE_UNUSED(3*8),
--        VMSTATE_UINT32_V(irq_coalesced, MC146818RtcState, 2),
--        VMSTATE_UINT32_V(period, MC146818RtcState, 2),
--        VMSTATE_UINT64_V(base_rtc, MC146818RtcState, 3),
--        VMSTATE_UINT64_V(last_update, MC146818RtcState, 3),
--        VMSTATE_INT64_V(offset, MC146818RtcState, 3),
--        VMSTATE_TIMER_PTR_V(update_timer, MC146818RtcState, 3),
--        VMSTATE_UINT64_V(next_alarm_time, MC146818RtcState, 3),
-+        VMSTATE_UINT32(irq_coalesced, MC146818RtcState),
-+        VMSTATE_UINT32(period, MC146818RtcState),
-+        VMSTATE_UINT64(base_rtc, MC146818RtcState),
-+        VMSTATE_UINT64(last_update, MC146818RtcState),
-+        VMSTATE_INT64(offset, MC146818RtcState),
-+        VMSTATE_TIMER_PTR(update_timer, MC146818RtcState),
-+        VMSTATE_UINT64(next_alarm_time, MC146818RtcState),
-         VMSTATE_END_OF_LIST()
-     },
-     .subsections = (const VMStateDescription * const []) {
-@@ -929,8 +929,6 @@ static void rtc_realizefn(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(&s->io, 0, &s->coalesced_io);
-     memory_region_add_coalescing(&s->coalesced_io, 0, 1);
- 
--    qdev_set_legacy_instance_id(dev, s->io_base, 3);
--
-     object_property_add_tm(OBJECT(s), "date", rtc_get_date);
- 
-     qdev_init_gpio_out(dev, &s->irq, 1);
--- 
-2.49.0
+  https://gitlab.com/thuth/qemu.git tags/pull-request-2025-04-30
+
+for you to fetch changes up to dce324fa06b358ccb01bf35611b6fc53b1f56b96:
+
+  docs/devel/build-environment: enhance MSYS2 instructions (2025-04-30 20:44:20 +0200)
+
+----------------------------------------------------------------
+* Extend s390x diagnose call 308 subcode 10 to return more information
+* Make valgrind support configurable
+* Drop support for Python 3.8
+* Some other misc cosmetic changes
+
+----------------------------------------------------------------
+Daniel P. Berrangé (1):
+      meson/configure: add 'valgrind' option & --{en, dis}able-valgrind flag
+
+Gautam Gala (3):
+      target/s390x: Introduce constant when checking if PV header couldn't be decrypted
+      target/s390x: Introduce function when exiting PV
+      target/s390x: Return UVC cmd code, RC and RRC value when DIAG 308 Subcode 10 fails to enter secure mode
+
+Philippe Mathieu-Daudé (1):
+      hw/rtc/mc146818rtc: Drop pre-v3 migration stream support
+
+Pierrick Bouvier (1):
+      docs/devel/build-environment: enhance MSYS2 instructions
+
+Thomas Huth (3):
+      Drop support for Python 3.8
+      tests/functional/test_ppc64_pseries: Skip test_ppc64_linux_smt_boot if necessary
+      meson.build: Put the D-Bus summary into the UI section
+
+ docs/about/build-platforms.rst         |  2 +-
+ docs/devel/build-environment.rst       |  4 +--
+ configure                              | 14 ++++----
+ meson.build                            | 15 ++++++--
+ hw/s390x/ipl.h                         |  6 ++--
+ target/s390x/kvm/pv.h                  | 26 ++++++++++----
+ hw/rtc/mc146818rtc.c                   | 18 +++++-----
+ hw/s390x/ipl.c                         | 11 +++---
+ hw/s390x/s390-virtio-ccw.c             | 14 ++++----
+ target/s390x/kvm/pv.c                  | 66 ++++++++++++++++++++++------------
+ meson_options.txt                      |  2 ++
+ python/Makefile                        |  8 ++---
+ python/setup.cfg                       |  7 ++--
+ python/tests/minreqs.txt               |  2 +-
+ scripts/meson-buildoptions.sh          |  3 ++
+ scripts/qapi/mypy.ini                  |  2 +-
+ tests/docker/dockerfiles/python.docker |  1 -
+ tests/functional/test_ppc64_pseries.py |  1 +
+ 18 files changed, 126 insertions(+), 76 deletions(-)
 
 
