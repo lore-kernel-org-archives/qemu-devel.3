@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4095C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 08:41:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12EBDC369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 08:47:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA2zl-000184-GZ; Wed, 30 Apr 2025 04:40:45 -0400
+	id 1uA35D-0002c6-6j; Wed, 30 Apr 2025 04:46:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA2zi-00017a-TO
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 04:40:43 -0400
-Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA359-0002bh-7l
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 04:46:19 -0400
+Received: from mail-qk1-x733.google.com ([2607:f8b0:4864:20::733])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA2zh-0005P1-0H
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 04:40:42 -0400
-Received: by mail-qk1-x732.google.com with SMTP id
- af79cd13be357-7c546334bdeso599804285a.2
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 01:40:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA356-00064n-Jq
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 04:46:18 -0400
+Received: by mail-qk1-x733.google.com with SMTP id
+ af79cd13be357-7c081915cf3so1119978985a.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 01:46:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746002438; x=1746607238; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746002775; x=1746607575; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/SRF6WHGAoCHNFDcr9vTE2KjI6+UXLVub7lgAtm4jUg=;
- b=tJ7TLoYG4MSRoJsb0VNMjvbQO8byX8E5ksTwXdCV+vL+Kv7Mln4SsSjF1IsayvI4VQ
- me3OvWMnGl/Ox1DcS1cBv9LP09XcQSrSYJ+xwADLmQsk/ASTI60vseesjkLtXmclXfN0
- B+FiVqFXLZMrCNB1HwvNxIuE+S/B9x4AZkpWOJ1YHygev/2cTDvdcOZFAOrRVvJYg//7
- GsWvgz8cNJBf4IFb6fEychgyuls25c3WzsX7hGiwJ1dl9HGvnIZnVNA0svrB/W26F4wu
- gh3/EfbgHGKuK4qUC1lRVjflySzrWxpPADP0arFXzxBpb4wlr3+E7AV7SWjl+AQUM7q7
- 8UmQ==
+ bh=eHgCB1hkLawCmyPOi0n971vetqKmWkZyGmQF8ZioWio=;
+ b=CzoPwl2BOH+WbIk6GC+2wFB7uC3ogM+Sn6M9lXEkn0MpbVmmTa/EzhEnsyttk4JQFR
+ jXf9rBHeeMRuPZboI8Ba4wjO9wPDbGsIZgrU3mPshIIJ1ftxKOSy9GyiEpMmTj9EIkup
+ xgJtBA/s2ygmlqiF/7EsuxSqlBKkpweoim/37XMwMGReF9bGByjBTtP8FQhYZgoUZX8R
+ 9SVeK8kGs8RJv47YltICIIWA7LAv7B6M2kiOzZU2su6JneqwAKwsmDQATiIGsRh1L6hJ
+ XHA+dGLsxMtMJSLeaZJoghcqNRguqCCbAeIGTjFLF9BpFk3/uS6YHakX6qnc1q1WyEQY
+ yUoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746002438; x=1746607238;
+ d=1e100.net; s=20230601; t=1746002775; x=1746607575;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/SRF6WHGAoCHNFDcr9vTE2KjI6+UXLVub7lgAtm4jUg=;
- b=YOmud/kA7rgBmRfU/cen5/Obq0TkdfPtqHgDtYGqqlz/icit9sOtrXiKm2Yvf+hIVX
- quoStU5kvKugo+4VkcqZ1YroyigAK4na80iw5kJhfwdumu4sohhy0GhWB2n1SEVf22P2
- FZV1w8tErwikMvP4ALlFRP/DNiWqlunL3h6sFGjy05TE6jD+GGlekVXaKTZee8awjdxY
- f7n0/IJXO0hWUDqbanTQS/snI6N3yr+CExUb6T7vMtA5+H6uwhThTzQNhY3s48ojHBHv
- KhL8lV20wQq54uvDoDrGKrAHyjOI00DPAHUJB4Q4gW8h19tUEjkYKS30QG3i7+aOzqyS
- 6z/w==
+ bh=eHgCB1hkLawCmyPOi0n971vetqKmWkZyGmQF8ZioWio=;
+ b=ocrN5pw2ntCb5wb0fn58uw89/PZc5QTww3Ci+GEvfeiFMbjtJEArwzdPBQPk3E6QqB
+ boGywmT0M7MYV18sACtctrd0lVN6cDwhtGFKaoZF60mro79WXPBJ3YHmjBcewCOTjKHi
+ s69TWecoBeQAfxg/1v1UETH379ZRbw8TIknG13gQzGGcqpuxRpEzaTwtYwEX5S3Jxi9k
+ 7VI6sn5Bqb5sG+Q1YEDGJBcrhOaFoBFf0r8/+OWVs821VBqzHSzpfmgxehdCUSUgZKXU
+ BkhXkIaHK6Ws1uMWgJjqLjqFsxujRX6zhv3Bwk+FZOYcxLj/1QS6wvmfL7idXOzuG62d
+ ebMw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUpLFK2JOOxGKKMYvNcOj8ymGICRFS9kBNEIynJZvvUjTTHLBtsefCOXiJWcShNybzgXBLwptuBoICj@nongnu.org
-X-Gm-Message-State: AOJu0YwEuZNF/KqsgOxuICFpoFN593gh5zbu0xChKCF0xjnvbWGUwGfV
- ftFOy0kEWMGBv989vqqtNbHlJrZlDZ/C67xMDQZootNkCjZ68qwoYVXqu97oMYw=
-X-Gm-Gg: ASbGnct56b7MXb7KtUKCFpXVBBRYbbw96N5aj4/o6ltoMumNrJR+QXkkdvCWyhdYtMN
- fXGMVq0v9Qy5tnboIA8fYQ/69fiBMJd3/0fzYd+XhLfcSG0zcNxH7TvSb+/dfxgXiaNTq1ycUPm
- TPsgMS1xItCZatxSF/oW8eoQpIhKyuMFfdW3ghNzmUdHtnuaUV2Ku//VbKFcEQOx1+Ao5WcIpGe
- +0Zcv9K4I2lD8N001YN2O9KSMGDEHCsXeTlkzKinaEv1EoNt331GKQFhtlTgG0rywF/sYQzhrR1
- zYHEeFAa/umicKpDFxwDblhlnAsM0l5hl2d8shL2Seif4oTuY/gODgbXzPMbU7hkb77tegnbE/b
- NrxwoIUtolW7+Ng==
-X-Google-Smtp-Source: AGHT+IE9K6X07+ubKSgZCk0tTInrpwKMX5vstIFrBlOhcL180iDSpo5fP7yKzkU87cr6SBcFK4YNKw==
-X-Received: by 2002:a05:620a:4483:b0:7c5:6396:f161 with SMTP id
- af79cd13be357-7cac7eb8e57mr228014485a.49.1746002438536; 
- Wed, 30 Apr 2025 01:40:38 -0700 (PDT)
+ AJvYcCW2BbZjFmBWtn0jXn1ORE/qlIxSntmODm+GgmZcMAy5yj8dsV2pqeRcN+VSBBY4tYA7kGz6EW+lbAUZ@nongnu.org
+X-Gm-Message-State: AOJu0Yze41AAFBxe5A2LOfglph3xU93PfnYkuhsh9lSe84RzNN3/BTSl
+ xrejWYYufzTRJVKZ3amchfaUD5wy/DjWF1nnbjraND0XQOJuOntU8LOZgb6ubOn5wwQ6aidDS8j
+ G
+X-Gm-Gg: ASbGncsKko6/mJK/HjvQUjALj1pj2up+wQaFbvlfA416pQ7DIIeFTaTJDeTq41Up6YU
+ ThuH23b5Q+60GzDdtz4irk5Y6WwNuFmk2Ss548Nn5avhP7E2qOZu+dKQWwg1sgMeqaNq8jhGtAQ
+ zk1Z86XPgAFdUVA607/9Xu/cI1pv8WZyzuJEIMRmQB0nnwP/R/iRtxkmMn6xIIwiisYXQvX/EMj
+ 4LrxLnX8zw3dVlX1z+nlJdPecv+m1ohamVavb8Q7Nm6MaWpOJwLC7hffCBFQXNMjVKZG6uKDzti
+ ZjgO4+FfrOnReentjepeyFtfEOvd7pa2dJ6t2x+rkTMAB3hdwknaqwCnIBx/b5K2XMisweL6nZG
+ 7vt2K2+4/w3n6vw==
+X-Google-Smtp-Source: AGHT+IHoFsy8zGFKUTIcywiaQPHqxUDVM/nTuZ7xE8q4iQj/IEsr66UkF+ZVyBYLROq03T1dp/shsw==
+X-Received: by 2002:a05:620a:4082:b0:7c0:c046:7c6b with SMTP id
+ af79cd13be357-7cac7ea1a0fmr258741085a.53.1746002775105; 
+ Wed, 30 Apr 2025 01:46:15 -0700 (PDT)
 Received: from [192.168.69.226] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7c958ea0b9bsm829861985a.91.2025.04.30.01.40.37
+ af79cd13be357-7c958e9f933sm831265485a.98.2025.04.30.01.46.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Apr 2025 01:40:38 -0700 (PDT)
-Message-ID: <c3efa112-5c79-4ead-9a0c-3e27f328cce2@linaro.org>
-Date: Wed, 30 Apr 2025 10:40:36 +0200
+ Wed, 30 Apr 2025 01:46:14 -0700 (PDT)
+Message-ID: <72b2d911-112e-48e3-9ba4-017a11758060@linaro.org>
+Date: Wed, 30 Apr 2025 10:46:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/qtest/libqos: Avoid double swapping when using
- modern virtio
-To: Thomas Huth <thuth@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250430073343.526867-1-thuth@redhat.com>
+Subject: Re: [PATCH v2 1/1] system: optimizing info mtree printing for monitors
+To: Chao Liu <lc00631@tecorigin.com>, pbonzini@redhat.com, peterx@redhat.com, 
+ david@redhat.com
+Cc: zhangtj@tecorigin.com, zqz00548@tecorigin.com, qemu-devel@nongnu.org
+References: <cover.1746001489.git.lc00631@tecorigin.com>
+ <501e578a4ef28515ccdefcbc82defc04363855ca.1746001489.git.lc00631@tecorigin.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250430073343.526867-1-thuth@redhat.com>
+In-Reply-To: <501e578a4ef28515ccdefcbc82defc04363855ca.1746001489.git.lc00631@tecorigin.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
- envelope-from=philmd@linaro.org; helo=mail-qk1-x732.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::733;
+ envelope-from=philmd@linaro.org; helo=mail-qk1-x733.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,70 +104,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/4/25 09:33, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> The logic in the qvirtio_read/write function is rather a headache,
-> involving byte-swapping when the target is big endian, just to
-> maybe involve another byte-swapping  in the qtest_read/write
-> function immediately afterwards (on the QEMU side). Let's do it in
-> a more obvious way here: For virtio 1.0, we know that the values have
-> to be little endian, so let's read/write the bytes in that well known
-> order here.
+Hi Chao,
 
-Thanks for looking at this!
-
+On 30/4/25 10:31, Chao Liu wrote:
+> Make the hierarchical relationship between nodes clearer by adding characters
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> e.g.
+> 
+> qemu-system-riscv64 -M virt -monitor stdio -display none
+> 
+> ```
+> (qemu) info mtree
+> ...
+> memory-region: system
+> │  ├── 0000000000000000-ffffffffffffffff (prio 0, i/o): system
+> │  │   ├── 0000000003000000-000000000300ffff (prio 0, i/o): gpex_ioport_window
+> │  │   │   └── 0000000003000000-000000000300ffff (prio 0, i/o): gpex_ioport
+> ...
+> │  │   └── 0000000400000000-00000007ffffffff (prio 0, i/o): alias ...
+> ```
+
+Nice :)
+
+> Signed-off-by: Chao Liu <lc00631@tecorigin.com>
+> Reviewed-by: Qingze Zhao <zqz00548@tecorigin.com>
+> Reviewed-by: Tingjian Zhang <zhangtj@tecorigin.com>
 > ---
->   This also decreases our usage of qtest_big_endian() which might (or
->   might not) get helpful for the universal binary one day...
+>   system/memory.c | 42 ++++++++++++++++++++++++++++++++++++------
+>   1 file changed, 36 insertions(+), 6 deletions(-)
 > 
->   tests/qtest/libqos/virtio.c | 61 ++++++++++++++++++++++++++-----------
->   1 file changed, 44 insertions(+), 17 deletions(-)
-> 
-> diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
-> index 2e7979652fd..078adf3c8dc 100644
-> --- a/tests/qtest/libqos/virtio.c
-> +++ b/tests/qtest/libqos/virtio.c
-> @@ -25,49 +25,76 @@
->    */
->   static uint16_t qvirtio_readw(QVirtioDevice *d, QTestState *qts, uint64_t addr)
->   {
-> -    uint16_t val = qtest_readw(qts, addr);
-> +    uint8_t buf[2];
+> diff --git a/system/memory.c b/system/memory.c
+> index 71434e7ad0..3a7faeb533 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -3296,6 +3296,27 @@ typedef QTAILQ_HEAD(, MemoryRegionList) MemoryRegionListHead;
+>                              int128_sub((size), int128_one())) : 0)
+>   #define MTREE_INDENT "  "
 >   
-> -    if (d->features & (1ull << VIRTIO_F_VERSION_1) && qtest_big_endian(qts)) {
-> -        val = bswap16(val);
-> +    if (d->features & (1ull << VIRTIO_F_VERSION_1)) {
-> +        qtest_memread(qts, addr, buf, sizeof(buf));
-> +        return (buf[1] << 8) | buf[0];
-> +    } else {
-> +        return qtest_readw(qts, addr);
->       }
-> -    return val;
->   }
+> +enum mtree_node_type {
+> +    MTREE_NODE_T_INNER,
+> +    MTREE_NODE_T_TAIL,
+> +};
+> +
+> +#define PRINT_MTREE_NODE(node_type) do {  \
+> +    if (node_type == MTREE_NODE_T_TAIL) { \
+> +        qemu_printf("└── ");              \
+> +    } else {                              \
+> +        qemu_printf("├── ");              \
+> +    }                                     \
+> +} while (0)
+> +
+> +#define PRINT_MTREE_COL(level) do { \
+> +    if (level == 0) {               \
+> +        qemu_printf("│  ");         \
+> +    } else {                        \
+> +        qemu_printf("│   ");        \
+> +    }                               \
+> +} while (0)
 
-What about using cpu_to_le() API?
+Prefer tiny C functions over macros (easier to maintain):
 
--- >8 --
-  static uint16_t qvirtio_readw(QVirtioDevice *d, QTestState *qts, 
-uint64_t addr)
-  {
--    uint16_t val = qtest_readw(qts, addr);
-+    uint16_t val;
+static void mtree_print_node(bool is_tail)
+{
+     qemu_printf(is_tail ? "└── " : "├── ");
+}
 
--    if (d->features & (1ull << VIRTIO_F_VERSION_1) && 
-qtest_big_endian(qts)) {
--        val = bswap16(val);
-+    if (d->features & (1ull << VIRTIO_F_VERSION_1)) {
-+        qtest_memread(qts, addr, &val, sizeof(val));
-+        cpu_to_le16s(&val);
-+    } else {
-+        val = qtest_readw(qts, addr);
-      }
-+
-      return val;
-  }
----
+static void mtree_print_col(unsigned level)
+{
+     qemu_printf(level ? "│   " : "│  ");
+}
+
 
