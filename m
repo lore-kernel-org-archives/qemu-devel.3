@@ -4,71 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3603C3ABA9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 16:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0310FC369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 16:22:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAA6P-0002dL-8Y; Wed, 30 Apr 2025 12:16:05 -0400
+	id 1uAAC3-0004Lc-8k; Wed, 30 Apr 2025 12:21:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunnyzhyy@qq.com>)
- id 1uAA6N-0002cz-1a; Wed, 30 Apr 2025 12:16:03 -0400
-Received: from out203-205-221-173.mail.qq.com ([203.205.221.173])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunnyzhyy@qq.com>)
- id 1uAA6G-0005iL-Pu; Wed, 30 Apr 2025 12:16:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1746029738; bh=1U8bfEqct4CithQPesE+NNzoOicQLLkLY3FP2OuYIK0=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=cKHBW4+BAJI2wM1aHUSOcTSn/FQMQ4RbiSjSh5tKCLdY/OxN5sO6uaYTq7Un/AnFX
- Fv3Q0WsHGt9HvE9NP4yxrVMs2nk739w4VpyaBtszUAJatB48cYFe6uaf0ct2SA9DfM
- LhIIRoJl1IMGv+6vWTWirkhhrjqmNNiUbEf1p+EY=
-Received: from 192.168.182.133 ([117.147.34.111])
- by newxmesmtplogicsvrszb21-0.qq.com (NewEsmtp) with SMTP
- id 25A970E6; Thu, 01 May 2025 00:09:26 +0800
-X-QQ-mid: xmsmtpt1746029366tfdg0mn1a
-Message-ID: <tencent_5A9BAC6959E81AE41E493B07736535CE7608@qq.com>
-X-QQ-XMAILINFO: MDbayGdXPuoeHCSVAdCPzgghUKcGCYaYwXiQpvkqAGMAhtxoXHSYtbOdoxWgHo
- Ml6YvkYcYUIixousvck7qLIWOkm+mX+b5K9GH+pjZyUlCbpfrRd0IMPNm4TTV/tqRjKulqAM+2LH
- +7KKgmOtzFpbhnqB9PCTjZIKB18SenzeS91esGrLFVcM4BFehcHYVB60CqBDqsNYnX9o6JeMt7gP
- DngHRYRei3E+6/xCOoY9LFDPMj0CpvLoD0MYlDtBPifJlRYLMyyemWDruIiep30S7d5YG5H+2pbr
- fV1VjpZ6lrusiBVPwIPfa7jE0Kvn6KNu7jwdQSmTlEloQDJyyUfVrcC801vVWxBW5RefTYGN22TA
- niMkSKOOA3cn7cC85OBITyvQycIf8iJBBe/dixieMP9/57cENvURXvR0FSRQUrSY3+iDJdxMV28c
- O9CfO6K6DGFkl3ypdEoibZlLbcCr209zCN6R8bJt+12U37mAzaFU4NSDK4BftQPITuSLgQiIuk7w
- h0Tj49PRejoJodBB6j+9jfa8igrub3wZIb7qYJRI1AtBu1vH1IOJJm3RqKdMkZQZGCWETsX7Sid7
- 4/0dIQN1sxOhzA+Mn29qf85TeDntfj89A0CAyRUeTCj2CYOBwhSYy2A7UEmgUTVxctHeUfwbCevK
- hvCtU/x9hV0QnJI96+TmLC/Synp7sj9CHofBZGo94kybYaRbzNQfugHcYNlXWX0rcgd7yxz50cYF
- kDNA9JhkFDHY+gu0Cgu0t61kh3yfvtGuUjyk8o6LF6SacWy2rOMYQJkLpeGwOWy6etQrVmR99r19
- zVdErrx0/4IeuRKi9koYLksCKhmbf8fKLuwXtXBZxr7obK14k570HEXMxd+fhqNMsAQYRuIjgzCc
- +xQ4FqPF0CYLzUCdKA0xTCsjzXFkf9WIflFW328AdD2YNOGy+UbioNXezsdV5gAq70MWvSO9wd1Z
- Fw/VVqRV1RapCHorDSJTqcUfSeMjL7eTy0XjSHXcWN3h7QjtOW5g==
-X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
-From: Sunny Zhu <sunnyzhyy@qq.com>
-To: eblake@redhat.com
-Cc: hreitz@redhat.com, jsnow@redhat.com, kwolf@redhat.com,
- qemu-block@nongnu.org, qemu-devel@nongnu.org, stefanha@redhat.com,
- vsementsov@yandex-team.ru
-Subject: Re: [PATCH v3 07/11] mirror: Skip pre-zeroing destination if it is
- already zero
-Date: Thu,  1 May 2025 00:09:26 +0800
-X-OQ-MSGID: <20250430160926.47496-1-sunnyzhyy@qq.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250425005439.2252467-20-eblake@redhat.com>
-References: <20250425005439.2252467-20-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uAAC1-0004LH-Ae
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:21:53 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uAABz-0006WI-1f
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 12:21:53 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-227a8cdd241so214195ad.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 09:21:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746030103; x=1746634903; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CK3R8NG0Ht6HFQtv7LqmLGfMdjeBRifCgAvnIcKboVY=;
+ b=ZIxqhWJ9i9rsxTf67NWkwElFb62W+3cjRYrCoY+vpybB2N+u1FR22YriFblyYYN0gC
+ wcrXBkIqc5EodcBsl8wm8VPhnnnYYhCQVaSmcvYGFnEzNW3KHe7aMlefRx5AFKMwUT5j
+ tLeyBobWsH6npLiuQ+nnxUcIAG8zu5ztH85d/vxizI4mt493ipqmLbP1Kb3Q1WfZhFxC
+ 0lwudiRVEjL1GLXfQ3JBBQUs/Kqmi8BaSIgWFapKV/XQjoQPSOl5cLixobwWLHgEm/jG
+ KbR4HQpf5scqDYIR8QE5kJxGL9JfobV2UgaTuNlA8asGQepaQ30qxfjkE6iZAI1t3jBl
+ 3UAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746030103; x=1746634903;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CK3R8NG0Ht6HFQtv7LqmLGfMdjeBRifCgAvnIcKboVY=;
+ b=LQ9C6wo7otUtnKB3v53B5e+2aJwRyE9aVgFgqHrTVX1fBD4r3VIp9X0EJwf6tJAzmB
+ HuvuZbHPEwg1lB7Ldsoauvb4vMZ6EpQjQGHKpPOvL4MXmVdkyQPVYe8vSMYOiwdy9Pu9
+ fiM4qlTQnW9VOgZEDfQxX2iBR75IzIRerkCmzJRuwdV0nywJW+eE+kF/FsknA33Yx7VN
+ aGMXUKFedHJFwwaadc3lXB+NECJ2LlLhmgPLJmeAIBepwg5IsBS81jDu1eQXbrg7CY5q
+ ccd1FVA3ZxwiLeN1l5d75cg4zGTLQ6B1JBHX2qe+oksgwpFhNEc7UJjsMAtqECdB8ro/
+ q9sQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWjOZgURkd6szOLNuF5I5xz4gQ6OR1NbCVARSCTVXXNahV69txFv0wM2hvSs4Ow4XskKpI7Qj4wf8Pm@nongnu.org
+X-Gm-Message-State: AOJu0YyetLXZ1fer4Cna42EyMQ1TrlkKDh+q972WjAUxJm/4wNsNCeiu
+ swn71lYUaCtP7/ZZN88aTFRFoQarb2aU+4cjQNxcZZZQFL2Kynpzz2+IhEn0TaI=
+X-Gm-Gg: ASbGncsGsQnmQr/IhUzpP2lOtuqhfPhfUxf/pPtMoJ1wKcvJkb+IAm8Iy12GSuIzIy/
+ ZVrmR7U9YCwlxH86acKouJZ3zNCF6i6wSpM6zVAqWfFMcO+CK8QMF8BaRNKu6V3QqLzym8T1xm5
+ l+mB0KJLTgJw6P0Qc4llWVlqVnpQc/k0FljPcEbq5U3hajmVKGwa364V0RnWXI1Ev5q+MphL1qt
+ zhu+JVe2J+wSLpK4unLxy/GHvt681Uj/uuSncwuWitMl8K9Z0DHnSZvhXveFtjqINptksmb5vwV
+ UhgcJciIGo7ELRLsX9sST40MBvAK9lmzexoX2Pef9gtJPCiqnFPOcg==
+X-Google-Smtp-Source: AGHT+IHfudTt7LszFLKuM/jUzOdJOodx6TuD54vAwFnTH4Qj15t8IKdPiLxy3B68wMPki8ZKi3v98Q==
+X-Received: by 2002:a17:903:1984:b0:224:ff0:4360 with SMTP id
+ d9443c01a7336-22df35ffbabmr67866345ad.53.1746030102775; 
+ Wed, 30 Apr 2025 09:21:42 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22db4d898e2sm125117235ad.7.2025.04.30.09.21.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 30 Apr 2025 09:21:42 -0700 (PDT)
+Message-ID: <efbaccd1-9ef2-4aed-88ed-d6a2bcb7902b@linaro.org>
+Date: Wed, 30 Apr 2025 09:21:41 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: Functional tests precache behaviour
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <c83e0d26-4d1b-4a12-957d-c7b7ff4ba1b3@linaro.org>
+ <7f0c4586-8a97-4e64-8abb-58a74b86afaa@redhat.com>
+ <6e9a3cb3-e238-48a7-a67c-c95b36a517bc@linaro.org>
+ <aBJJqtzQaTH_xcKK@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <aBJJqtzQaTH_xcKK@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=203.205.221.173; envelope-from=sunnyzhyy@qq.com;
- helo=out203-205-221-173.mail.qq.com
-X-Spam_score_int: 33
-X-Spam_score: 3.3
-X-Spam_bar: +++
-X-Spam_report: (3.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_DYNAMIC=0.982, SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,92 +106,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> When doing a sync=full mirroring, QMP drive-mirror requests full
-> zeroing if it did not just create the destination, and blockdev-mirror
-> requests full zeroing unconditionally.  This is because during a full
-> sync, we must ensure that the portions of the disk that are not
-> otherwise touched by the source still read as zero upon completion.
+On 4/30/25 9:02 AM, Daniel P. Berrangé wrote:
+> On Wed, Apr 30, 2025 at 08:48:59AM -0700, Pierrick Bouvier wrote:
+>> On 4/30/25 8:00 AM, Thomas Huth wrote:
+>>> On 30/04/2025 16.34, Pierrick Bouvier wrote:
+>>>> Hi folks,
+>>>>
+>>>> $ ninja -C build precache-functional
+>>>> 2025-04-30 07:23:20,382 - qemu-test - ERROR - Unable to download https://
+>>>> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
+>>>> gzimg/armv7.img.gz: HTTP error 503
+>>>> 2025-04-30 07:23:23,131 - qemu-test - ERROR - Unable to download https://
+>>>> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
+>>>> gzimg/armv7.img.gz: HTTP error 503
+>>>> 2025-04-30 07:23:25,870 - qemu-test - ERROR - Unable to download https://
+>>>> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/
+>>>> gzimg/armv7.img.gz: HTTP error 503
+>>>> 2025-04-30 07:23:25,871 - qemu-test - ERROR - https://archive.netbsd.org/
+>>>> pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz:
+>>>> Download retries exceeded: skipping asset precache
+>>>> $ echo $?
+>>>> 0
+>>>>
+>>>> Since we silently skip the asset precaching, how can we identify that an
+>>>> asset is not available anymore (temporarily or not)?
+>>>> Should we rely on test itself failing when trying to download again this asset?
+>>>
+>>> The current logic fails hard for 404 errors, so if the asset is completely
+>>> gone, we should notice it. For other error codes, we assume that it is only
+>>> a temporary server problem that will hopefully be fixed on the server side
+>>> sooner or later.
+>>>
+>>
+>> Sounds good.
+>> Should we replicate this semantic when running the test itself?
+>> It would be more useful to skip it because an asset is missing instead of
+>> reporting an error, except if it's a 404 error.
 > 
-> However, in mirror_dirty_init(), we were blindly assuming that if the
-> destination allows punching holes, we should pre-zero the entire
-> image; and if it does not allow punching holes, then treat the entire
-> source as dirty rather than mirroring just the allocated portions of
-> the source.  Without the ability to punch holes, this results in the
-> destination file being fully allocated; and even when punching holes
-> is supported, it causes duplicate I/O to the portions of the
-> destination corresponding to chunks of the source that are allocated
-> but read as zero.
+> The tests already gracefully skip if one or more required assets
+> are not available. See the 'setUp' method of QemuBaseTest
 > 
-> Smarter is to avoid the pre-zeroing pass over the destination if it
-> can be proved the destination already reads as zero.  Note that a
-> later patch will then further improve things to skip writing to the
-> destination for parts of the image where the source is zero; but even
-> with just this patch, it is possible to see a difference for any BDS
-> that can quickly report that it already reads as zero.
+>          if not self.assets_available():
+>              self.skipTest('One or more assets is not available')
 > 
-> Note, however, that if the destination was opened with
-> "detect-zeroes": "unmap", then the user wants us to punch holes where
-> possible for any zeroes in the source; in that case, we are better off
-> doing unmap up front in bulk.
 > 
-> Signed-off-by: Eric Blake <eblake@redhat.com>
+> In the 404 case, the pre-cache step should fail and thus we shouldn't
+> even get to running the test.
 > 
-> ---
-> 
-> v3: add exemption for "detect-zeroes":"unmap" on destination
-> ---
->  block/mirror.c | 19 ++++++++++++++++++-
->  1 file changed, 18 insertions(+), 1 deletion(-)
-> 
-> diff --git a/block/mirror.c b/block/mirror.c
-> index 34c6c5252e1..4059bf96854 100644
-> --- a/block/mirror.c
-> +++ b/block/mirror.c
-> @@ -849,13 +849,30 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
->      bdrv_graph_co_rdunlock();
-> 
->      if (s->zero_target) {
-> +        offset = 0;
-> +        bdrv_graph_co_rdlock();
-> +        ret = bdrv_co_is_all_zeroes(target_bs);
-> +        bdrv_graph_co_rdunlock();
-> +        if (ret < 0) {
-> +            return ret;
-> +        }
-> +        /*
-> +         * If the destination already reads as zero, and we are not
-> +         * requested to punch holes into existing zeroes, then we can
-> +         * skip pre-zeroing the destination.
-> +         */
-> +        if (ret > 0 &&
-> +            (target_bs->detect_zeroes != BLOCKDEV_DETECT_ZEROES_OPTIONS_UNMAP ||
-> +             !bdrv_can_write_zeroes_with_unmap(target_bs))) {
-> +            offset = s->bdev_length;
 
-If when bdrv_can_write_zeroes_with_unmap(target_bs) == true, we prefer to
-punch holes regardless of whether target_bs already reads as zero, then
-execute bdrv_co_is_all_zeroes() in advance might be wasteful.
+This is not the behaviour I observe (error, with server returning 503) 
+[1], thus my original email.
 
-    if (bdrv_can_write_zeroes_with_unmap(target_bs)) {
-        initial_zeroing();
-    } else {
-        ret = bdrv_co_is_all_zeroes(target_bs);
-        ...
-    }
+Maybe something is missing in the associated test, or in our test 
+infrastructure?
 
-> +        }
->          if (!bdrv_can_write_zeroes_with_unmap(target_bs)) {
->              bdrv_set_dirty_bitmap(s->dirty_bitmap, 0, s->bdev_length);
->              return 0;
+Nothing funky in the command line used, you can reproduce it with:
+$ rm -rf ~/.cache/qemu build/
+$ ./configure
+$ ./build/pyvenv/bin/meson test -C build --setup thorough --suite 
+func-quick --suite func-thorough -t 5 --print-errorlogs func-ppc-ppc_40p
 
-When ret > 0, We should not return directly here.
+[1] 
+https://github.com/pbo-linaro/qemu-ci/actions/runs/14747788692/job/41398348905
 
->          }
+Traceback (most recent call last):
+   File 
+"/home/runner/work/qemu-ci/qemu-ci/tests/functional/test_ppc_40p.py", 
+line 68, in test_openbios_and_netbsd
+     drive_path = self.ASSET_NETBSD71.fetch()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   File 
+"/home/runner/work/qemu-ci/qemu-ci/tests/functional/qemu_test/asset.py", 
+line 175, in fetch
+     raise AssetError(self, "Download retries exceeded", transient=True)
+qemu_test.asset.AssetError: 
+https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-7.1.2/iso/NetBSD-7.1.2-prep.iso: 
+Download retries exceeded
+
 > 
->          s->initial_zeroing_ongoing = true;
-> -        for (offset = 0; offset < s->bdev_length; ) {
-> +        while (offset < s->bdev_length) {
->              int bytes = MIN(s->bdev_length - offset,
->                              QEMU_ALIGN_DOWN(INT_MAX, s->granularity));
+> With regards,
+> Daniel
 
 
