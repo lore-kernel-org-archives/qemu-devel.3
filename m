@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6745C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 14:35:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51AD8C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 14:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA8Wg-0008NB-OF; Wed, 30 Apr 2025 10:35:06 -0400
+	id 1uA8WE-0007wI-Ik; Wed, 30 Apr 2025 10:34:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uA8Wb-0008F6-RH
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:35:03 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1uA8W2-0007oP-NX
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:34:26 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uA8WZ-0008Bq-JZ
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:35:01 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7376dd56f8fso9857327b3a.2
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 07:34:53 -0700 (PDT)
+ id 1uA8Vz-0008Aa-JR
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:34:26 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-736c3e7b390so7544780b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 07:34:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746023692; x=1746628492; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NBgzcavwdDjclrrC+CCUvPhUAmfW5aJ/3QAHhQXFjgU=;
- b=oFN45bhanPLqMW5BtmAKhuUviFO/V1ieumtPjcPUZSGxPQ9PY/ndAhcuMskyPhst68
- EfFr+N9FnQo3LUlqnpZ69YRhfY18rlKPv3jbdzagkeu/9eDZzTwqswRK893c17w3zM+f
- iUvBoy4HBbcR0/ih2nWbT5kdm0ItMJi59mOxg2SVux58We/8aAfNr6ILjN2w8AEXIktd
- wV1hsBmpMkoyp0dL2EG9mlfwllmRvEuEH3jCki2zmDlbrbIYETn3ND351IwTgG1Xhy1u
- thlL/rteDCTsExqn9FjbQ1min2mO6QP0/HGHX8GPFM6KSzL8c/tVTzdBRqeTtWQtVdI7
- ALYA==
+ d=linaro.org; s=google; t=1746023662; x=1746628462; darn=nongnu.org;
+ h=content-transfer-encoding:subject:to:from:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rW18o9E6I59ZEOmutdllxFRIpDG5spcQCfrVFA1LMoI=;
+ b=Y+ao2sarFPpdWb1Auy+q3+yJqLKaQXusIvzNTzujFKkj+HpKgZJKyel5p7l+yWTRrO
+ hIOQFu7EULIo+jpSy/ElWUT6DiQvvk1EKVf2P0ogly1sfVmR3a2i5K81ZGlQ5rKLD5+e
+ 53zptjx76hLtfr3kDnnj8djN37K2qVqZddZCbosZyG+Sa6RL6UDdIAIMoWXbG6t1PM9l
+ 8xKZf7uC7VvOrlKjf48EWSIUQUE4DMKKA3Lr7MaXh1s42hJ72aAbAKUEluKrWtEoulDo
+ eri7QWf5aipwSIjsH9pypmRHov5ss/ebBT1ibq1VRWDQzgsLDXkK5KFXcyMsyOLGuWNt
+ 60pA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746023692; x=1746628492;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NBgzcavwdDjclrrC+CCUvPhUAmfW5aJ/3QAHhQXFjgU=;
- b=iSP5G6aBnwxnAHId/H+nDd1zBG2yObyueusn/7H7Hnayr7y/ipf0Kz3oQwU5ZCmg8h
- k7ZgGNmhwXXPmnWFS1TtbVdsw7InUptujiJlEkDog33tIL+Ef6eAU6TWP91Q+Cs/626f
- n1ueICNGeaQel1+U34o6fz7UwWOO49OaAZgA56nWlPxrKhlFqk+7EABerTqkK80mUZ3W
- ouSWxswz1HpZwIC1AZX1m01oa45o0dgi5adlyziEnOS6K5ZR0DEaIKRGomRIpeGv2s66
- xLtB1K1WRGHHRe7X1jPEbaQltUwq00ahJaAl0nV0MT1gGps447oMYyb3IjyuuiHQJm9z
- Hg7Q==
+ d=1e100.net; s=20230601; t=1746023662; x=1746628462;
+ h=content-transfer-encoding:subject:to:from:content-language
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=rW18o9E6I59ZEOmutdllxFRIpDG5spcQCfrVFA1LMoI=;
+ b=tP41EBbT3zv6n1cJ9RS7zfSNGFjUWZ+aHN6N5axgTMNreYDWOORpzYPC0BCJxQpxAr
+ APvMQ8OWNRwwEsQhNn0eixPwyoKUq1zUscluNybs1z9U0npABLgbeDFUKb0ftTke2bXM
+ nEQMnC8M6WF+hjNdc8lMRyp0KO8mfyCUeGdy3XkEzRI8yibmWxVO5aZ1qjjE9Ac68JFS
+ fd1rDoGypMDtJ41GhPmjw2Yy5ENEjDwwmXTkq4jIgbwFG9COWMy8YqNhR/128CXAs3JX
+ ESTIoV7LVmwIqQZOMKIkucXF6RLJllPgsUAAZ5kJBor2T6FePMQGLO+OGuE624j5zqZX
+ ClwQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQRrJQMhd6f87fKg3j7gGTtkb2IiBmqOExaoHFMqZ02kCOUc9MjRisMjIMpViY69elY1e2L9o4L0Jv@nongnu.org
-X-Gm-Message-State: AOJu0YwFQSWsOS9Qd4HWhGkpa8ZrQDlcu7g0aLfgDRwbjIydGToK/JpZ
- XtQQmM0DeYDsyP7ZXPZWCw0tXBE2YOTQibKqq8R7yfIiMzZ0s/LwanqvLHYZPLY=
-X-Gm-Gg: ASbGncuekTGWZKSvGxJMp5iyD2GdslsxlFi0Ui4ZD6yVcPQ/Aqq16/u1ml7Ybuleo5P
- snuyj+WeIRcl44CL37YApBCQH65ChrsvZHgYP6P49Ho2eOQ1+EKjsfAYGXbyvTxs67T4iYdcrdv
- ArJ8+OajP43TF0v+B4lMZdO/xxPkAvHB8nnn71Nqn528fmoCj7DLZcDWL+HC0FQ1XGwrxL1OwyL
- 1vN0jse1jvL1710+yxXZUjbuWmFnYCia5HsF7Tu6PRFU8qPqLRtOg28Zaxqs+PMYpnPTgOHr394
- cvqdc6YL8IZz8aGqW7LSeSykxxlS6OkAfN4MCRbCcsrGd9SqhGkUTA==
-X-Google-Smtp-Source: AGHT+IHvBVpRYFKLJXtKnLPwgMRqq9OO1ls+IKJ06waHSKQ4+di0DdW5FEyt9larc0d2mQ3X/ldptQ==
-X-Received: by 2002:a05:6a00:139b:b0:736:bfc4:ef2c with SMTP id
- d2e1a72fcca58-74038793f8dmr4830837b3a.0.1746023692235; 
- Wed, 30 Apr 2025 07:34:52 -0700 (PDT)
+ AJvYcCWM19xeHamHxXOFCVD4OgIcprMI5ioG93+vogPHkPu4Fq1mjb8f1dacvASmM1xKgzjxvr2Nv6pUS+x+@nongnu.org
+X-Gm-Message-State: AOJu0Yy+h2EEXEIXdMUXSlBB3W1dIL9Z+FBsm1gkmQK1mtFvb7CTFlts
+ XBoFF/J5C3fAFL76/0b1YvmukeNIUziA0bzIy0Sh0tz47g1SEdi/JbgjxdfSNJrz4vwLRpTG172
+ 3
+X-Gm-Gg: ASbGncssB8fTmZ8e19cDDqdE+Yxur1Gn5alP8corhmUzjFGQzX6uMHjjY1QZcmmw0k8
+ USWMozZUPLutA44uvO6+R4OWTecpM6HUdAH5B+5j+DnA2r8825+bfaEGCo0SJXMfz5eJshYN01j
+ GhVdroBNE8Tn11P9ZShtedr7wNU0/AYZm0rjqaPcNWLxoPVsPcmdu04XpW8ZDw9L7pU2m4xjHm/
+ FlLVvBa+7d4f4e6RjtNE/7lvrvftjPA8JzHSfyjlpQWP82fUBdOLH9/q+5kIucdn+ysOG7hTnI7
+ HrmljHrFnog5H0ClcI08FQKWCY/q63F+FzYsnCI6MQ8v29wZ4p7P+w==
+X-Google-Smtp-Source: AGHT+IHam+dPUoVpBk2Jp7no1XhjrY0NaqMJ3gu33Bp/pYdYXzVv1NgK/diDW11RYnFKOGv7TsHpZg==
+X-Received: by 2002:a05:6a00:21c7:b0:736:32d2:aa93 with SMTP id
+ d2e1a72fcca58-74038abf64amr5076200b3a.20.1746023661939; 
+ Wed, 30 Apr 2025 07:34:21 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b15f770302csm10850448a12.12.2025.04.30.07.34.51
+ d2e1a72fcca58-74039a5c064sm1685842b3a.123.2025.04.30.07.34.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Apr 2025 07:34:51 -0700 (PDT)
-Message-ID: <42a0987f-4f51-4d36-a3f5-1daf267c3e0d@linaro.org>
-Date: Wed, 30 Apr 2025 07:34:51 -0700
+ Wed, 30 Apr 2025 07:34:21 -0700 (PDT)
+Message-ID: <c83e0d26-4d1b-4a12-957d-c7b7ff4ba1b3@linaro.org>
+Date: Wed, 30 Apr 2025 07:34:21 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/devel/build-environment: enhance MSYS2 instructions
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250305213853.3685771-1-pierrick.bouvier@linaro.org>
- <b28bf347-aa8e-405e-8009-025aaf61a984@linaro.org>
- <88d6e264-4793-4095-8bb6-bc45621abeea@linaro.org>
- <06666850-90a1-4b4a-b454-53df477de215@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <06666850-90a1-4b4a-b454-53df477de215@redhat.com>
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Functional tests precache behaviour
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,46 +101,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/30/25 3:09 AM, Thomas Huth wrote:
-> On 28/04/2025 21.35, Pierrick Bouvier wrote:
->> On 3/24/25 10:47 AM, Pierrick Bouvier wrote:
->>> On 3/5/25 13:38, Pierrick Bouvier wrote:
->>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>> ---
->>>>     docs/devel/build-environment.rst | 4 ++--
->>>>     1 file changed, 2 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/docs/devel/build-environment.rst b/docs/devel/build-
->>>> environment.rst
->>>> index f133ef2e012..661f6ea8504 100644
->>>> --- a/docs/devel/build-environment.rst
->>>> +++ b/docs/devel/build-environment.rst
->>>> @@ -97,11 +97,11 @@ build QEMU in MSYS2 itself.
->>>>     ::
->>>> -    pacman -S wget
->>>> +    pacman -S wget base-devel git
->>>>         wget https://raw.githubusercontent.com/msys2/MINGW-packages/refs/
->>>> heads/master/mingw-w64-qemu/PKGBUILD
->>>>         # Some packages may be missing for your environment, installation
->>>> will still
->>>>         # be done though.
->>>> -    makepkg -s PKGBUILD || true
->>>> +    makepkg --syncdeps --nobuild PKGBUILD || true
->>>>     Build on windows-aarch64
->>>>     ++++++++++++++++++++++++
->>>
->>> Gentle ping on this trivial change for doc.
->>>
->>
->> Another gentle ping on this trivial doc change.
-> 
-> Not really my turf, I don't have much clue about the MSYS2 environment, but
-> since there were no objections, I can add it to my next PR.
->
+Hi folks,
 
-Thank you, that's appreciated.
+$ ninja -C build precache-functional
+2025-04-30 07:23:20,382 - qemu-test - ERROR - Unable to download 
+https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz: 
+HTTP error 503
+2025-04-30 07:23:23,131 - qemu-test - ERROR - Unable to download 
+https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz: 
+HTTP error 503
+2025-04-30 07:23:25,870 - qemu-test - ERROR - Unable to download 
+https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz: 
+HTTP error 503
+2025-04-30 07:23:25,871 - qemu-test - ERROR - 
+https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz: 
+Download retries exceeded: skipping asset precache
+$ echo $?
+0
 
->    Thomas
-> 
+Since we silently skip the asset precaching, how can we identify that an 
+asset is not available anymore (temporarily or not)?
+Should we rely on test itself failing when trying to download again this 
+asset?
 
+Regards,
+Pierrick
 
