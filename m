@@ -4,107 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E900C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 11:51:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55AF7C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 12:03:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA5xl-0007vp-E0; Wed, 30 Apr 2025 07:50:53 -0400
+	id 1uA68l-0003Ro-PL; Wed, 30 Apr 2025 08:02:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=tzqG=XQ=kaod.org=clg@ozlabs.org>)
- id 1uA5xj-0007v7-GA; Wed, 30 Apr 2025 07:50:51 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=tzqG=XQ=kaod.org=clg@ozlabs.org>)
- id 1uA5xg-0004RY-CY; Wed, 30 Apr 2025 07:50:51 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Znb9F04Wpz4x8W;
- Wed, 30 Apr 2025 21:50:41 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Znb9943t2z4wcd;
- Wed, 30 Apr 2025 21:50:33 +1000 (AEST)
-Message-ID: <75f0e64c-fe23-4216-8139-78041d5e3e60@kaod.org>
-Date: Wed, 30 Apr 2025 13:50:30 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uA68j-0003RH-V8
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 08:02:14 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uA68h-0005bT-W7
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 08:02:13 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-6ef60e500d7so66542337b3.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 05:02:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746014530; x=1746619330; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rTrNUbs0rHf7kHhBUd+cMNoU4jrzm2hENUQKey2H8dI=;
+ b=HsdTGJSElOHth1FQR6dCcJjOglWxu4YtlGUBuAwsCSUHArXCufF6iziruS5UmZ2rP5
+ pQXG+qLSeALGamZO+vNP6ibsqdODpWoxk3KzhV+jzlKU1HZ8lS603ZJbRH8IJP7sTx7r
+ /qqsQpDZPB67S7x0F1GXtna3lmTa8LnNcN6Vw7lxWUXeJPm4s2Y3LDlKXbj3QYg47DWr
+ HuMUbwbbN6mVv+ehbDpBGLNLGR+X0rz1MW+XulFX5omI/rgvU5pdH8NTCnvC7aCDBJBq
+ 4e/OwQ6O1jts4LmbODjX8bjc1JQ1sftjcuQB48NRSmSQHYIIGVzL97CUhPM2NLfkuipD
+ ZmzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746014530; x=1746619330;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rTrNUbs0rHf7kHhBUd+cMNoU4jrzm2hENUQKey2H8dI=;
+ b=hXB4gxzbDKUCbTKLhy4ty4anV4j98a3tcHcxpn1SK8KVlkRNy0TdYuwK1agdiheH3x
+ cnk1zitVTDVX/y83x/12y4SlMmorteCMvTZbrkOrG5EwrmAlaygCDiuIWb+MALqMsXAX
+ qmo/BWbESfE5zN2PnjXGnlq2kQpR2J70/UjHmUUOUEJJLBNOYUv6Dhkc0Fd2iW/8Xoah
+ faU7M108GPBgvhV6EIK4+KyOssniKZ5498t09tNK9TSCIxnahCAKYjssLqviZKgiv78a
+ Pq96NuHAsLB3bJVUptuFcCK2dN0q9WJNPOxJfJr7cbf39h0jXBSlqmnVnfgJzwJ6hF0R
+ 9nJw==
+X-Gm-Message-State: AOJu0Yy+gLjsj9BUhlmpj20mnIGPozUkSEEGncmlYSeFUpzYoXZ2U5RV
+ 9iFHwu9U1VonGdXFReZzVlD+C1Phjg4FnQBXLp4iLJf6yr/ofXv2uOddbnNgwJAry3yv9+hQpnU
+ DZRA1jm7TRyXP1ZxyFmfMavZAVeLwhCGwYATR4w==
+X-Gm-Gg: ASbGncueKkcM+Om3+8HT/AYRHoZrtpACVHSdVf97RCC/1nbyrd/FV2Mi3+Q4S0klS3S
+ AW8B6MMYl8HLbpL2tVn2LdGGcyWY9GP3CRjDeVe7RDHOLwkTH3oS8tkLN86OpZt/f8Onk+2HRgP
+ a60nSsQ+zK008sUH/uJW22RTw=
+X-Google-Smtp-Source: AGHT+IH1E62hV5/kEWVMrAsdfoI6wKHqdUfwN2TM5IKtNk93QKs37LYFrXNoA2inke0f7uhnhoeHUX/85kJ0aAb5mfU=
+X-Received: by 2002:a05:690c:6ac9:b0:6fd:25dc:effe with SMTP id
+ 00721157ae682-708abe248a0mr39060937b3.25.1746014530349; Wed, 30 Apr 2025
+ 05:02:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] hw/arm: Integrate Aspeed OTP memory into AST10x0
- and AST2600 SoCs
-To: Kane Chen <kane_chen@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20250423025651.189702-1-kane_chen@aspeedtech.com>
- <20250423025651.189702-4-kane_chen@aspeedtech.com>
- <e3d35357-de8c-44da-b54e-7ec2761f513b@kaod.org>
- <SI6PR06MB76317C8FAC3EBF18AAF632ECF7812@SI6PR06MB7631.apcprd06.prod.outlook.com>
- <2a85d0c5-0606-411d-b8c5-4b8806182384@kaod.org>
- <SI6PR06MB76310DFCE06AC5FB55CD3AE6F7802@SI6PR06MB7631.apcprd06.prod.outlook.com>
- <683e0219-ad4f-40cc-b541-c533487ce8dd@kaod.org>
- <SI6PR06MB7631CA6AA68535099796E989F7832@SI6PR06MB7631.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <SI6PR06MB7631CA6AA68535099796E989F7832@SI6PR06MB7631.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=tzqG=XQ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <419c09dde7ca8a538f07e259a1cc3bbb4788f3ff.camel@suse.com>
+In-Reply-To: <419c09dde7ca8a538f07e259a1cc3bbb4788f3ff.camel@suse.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 30 Apr 2025 13:01:58 +0100
+X-Gm-Features: ATxdqUGvA8fYZTYdP403mWos9TmbRB25yej82zjwKHtg0YGl4y5AsmeP5drU4JA
+Message-ID: <CAFEAcA-Hz5Ni-NcB0GamsvQ=2y_1BFXgnA_uhrj-ThMHMGGuDg@mail.gmail.com>
+Subject: Re: Problem building (docs) with -j1
+To: Dario Faggioli <dfaggioli@suse.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, John Snow <jsnow@redhat.com>,
+ bwiedemann@suse.com, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,68 +94,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/30/25 12:30, Kane Chen wrote:
-> Hi Cédric,
-> 
-> Currently, the OTP memory is not supported, but the guest firmware
-> still attempts to access it, even though no functionality is
-> available.
-> 
-> To handle this case, I will silently discard those operations when no
-> backend is present, so that the machine can still boot and run without
-> error.
-> 
-> If you would prefer to have a message logged, please let me know.
+On Wed, 30 Apr 2025 at 10:14, Dario Faggioli <dfaggioli@suse.com> wrote:
+>
+> Hello,
+>
+> When building both v10.0.0 and master sequentially (like -j1 or
+> equivalent, e.g., when in a 1 vCPU VM) it fails when we get to docs
+> (`make man` is also enough to reproduce it), with this error:
+>
+>   [1/2] /usr/bin/env CONFDIR=3D/etc/qemu /home/dario/Sources/qemu/suse/gi=
+t_upstreams/qemu/build/pyvenv/bin/sphinx-build -q -W -Dkerneldoc_werror=3D1=
+ -j 1 -Dversion=3D10.0.50 '-Drelease=3DVirtualization:Staging:10.0 / openSU=
+SE_Tumbleweed' -Ddepfile=3Ddocs/docs.d -Ddepfile_stamp=3Ddocs/docs.stamp -b=
+ html -d /home/dario/Sources/qemu/suse/git_upstreams/qemu/build/docs/manual=
+.p /home/dario/Sources/qemu/suse/git_upstreams/qemu/docs /home/dario/Source=
+s/qemu/suse/git_upstreams/qemu/build/docs/manual
+>   FAILED: docs/docs.stamp
+>   /usr/bin/env CONFDIR=3D/etc/qemu /home/dario/Sources/qemu/suse/git_upst=
+reams/qemu/build/pyvenv/bin/sphinx-build -q -W -Dkerneldoc_werror=3D1 -j 1 =
+-Dversion=3D10.0.50 '-Drelease=3DVirtualization:Staging:10.0 / openSUSE_Tum=
+bleweed' -Ddepfile=3Ddocs/docs.d -Ddepfile_stamp=3Ddocs/docs.stamp -b html =
+-d /home/dario/Sources/qemu/suse/git_upstreams/qemu/build/docs/manual.p /ho=
+me/dario/Sources/qemu/suse/git_upstreams/qemu/docs /home/dario/Sources/qemu=
+/suse/git_upstreams/qemu/build/docs/manual
+>   /home/dario/Sources/qemu/suse/git_upstreams/qemu/docs/system/qemu-block=
+-drivers.rst.inc:506: WARNING: duplicate label nbd, other instance in /home=
+/dario/Sources/qemu/suse/git_upstreams/qemu/docs/system/images.rst
+>   ninja: build stopped: subcommand failed.
+>   make[1]: *** [Makefile:168: run-ninja] Error 1
+>   make[1]: Leaving directory '/home/dario/Sources/qemu/suse/git_upstreams=
+/qemu/build'
+>   make: *** [GNUmakefile:6: build] Error 2
+>
+> It works, instead, in parallel builds. In fact, building with 2
+> processes seems to be already enough for compiling the docs
+> successfully.
+>
+> OTOH, v9.2.3 works for me, in both sequential and parallel builds.
+>
+> I've tried to remove the `-W -Dkerneldoc_werror=3D1` arguments from
+> sphinx-build and that "resolves" the issue, so I think the problem is
+> the "WARNING: duplicate label nbd".
 
-Please add trace events for this case. There are always useful.
+It's odd that it only fails in -j1 -- our current thought was that
+this was related to the Sphinx version (some versions warn, some
+do not).
 
+I sent this patchset yesterday which I think should fix it:
+https://patchew.org/QEMU/20250429163212.618953-1-peter.maydell@linaro.org/
 
-Thanks,
+You might also be able to avoid the failure if you configure
+with --disable-werror   : I think (but have not tested) that that
+should make the warnings non-fatal for Sphinx as well as the C
+compiler.
 
-C.
-
-
-
-
-> 
-> Best Regards,
-> Kane
->> -----Original Message-----
->> From: Cédric Le Goater <clg@kaod.org>
->> Sent: Tuesday, April 29, 2025 5:06 PM
->> To: Kane Chen <kane_chen@aspeedtech.com>; Peter Maydell
->> <peter.maydell@linaro.org>; Steven Lee <steven_lee@aspeedtech.com>; Troy
->> Lee <leetroy@gmail.com>; Jamin Lin <jamin_lin@aspeedtech.com>; Andrew
->> Jeffery <andrew@codeconstruct.com.au>; Joel Stanley <joel@jms.id.au>; open
->> list:ASPEED BMCs <qemu-arm@nongnu.org>; open list:All patches CC here
->> <qemu-devel@nongnu.org>
->> Cc: Troy Lee <troy_lee@aspeedtech.com>
->> Subject: Re: [PATCH v3 3/3] hw/arm: Integrate Aspeed OTP memory into
->> AST10x0 and AST2600 SoCs
->>
->> Hello Kane,
->>
->> [ ... ]
->>
->>> The Secure Boot Controller (SBC) includes some components like OTP
->>> memory, crypto engine, boot controller, and so on. All components
->>> within the SBC are fixed and cannot be changed. If we allow an otpmem
->>> machine option, it may imply that different types or sizes of OTP
->>> memory models are supported, such as:
->>>
->>> * Different size: -M ast2600-evb,otpmem=otpmem-64k-drive
->>> * Different model: -M ast2600-evb,otpmem=flash-drive
->>
->> The optmem model should check the size and fail to realize in that case. This
->> would stop the machine before reset. This is a common pattern in QEMU. See
->> m25p80_realize().
->>
->> Also, I think we would like the machine to start even if there is no block
->> backend. Please check how m25p80 models that behavior.
->>
->> Thanks,
->>
->> C.
-> 
-
+thanks
+-- PMM
 
