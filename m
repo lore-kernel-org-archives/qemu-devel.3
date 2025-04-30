@@ -4,48 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5391CC369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 04:07:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2839FC369DC
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 05:29:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9yiY-0001Mg-H7; Wed, 30 Apr 2025 00:06:43 -0400
+	id 1u9zze-0002AE-Uz; Wed, 30 Apr 2025 01:28:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lc00631@tecorigin.com>)
- id 1u9yi0-00019X-Mi
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 00:06:08 -0400
-Received: from out28-219.mail.aliyun.com ([115.124.28.219])
+ (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
+ id 1u9zzc-00029v-Hz
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 01:28:24 -0400
+Received: from smtp1.lauterbach.com ([62.154.241.196])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lc00631@tecorigin.com>)
- id 1u9yhy-0005U5-Cg
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 00:06:08 -0400
-Received: from TC-DZ-03-0020.tc.local(mailfrom:lc00631@tecorigin.com
- fp:SMTPD_---.cbi39O2_1745985955 cluster:ay29) by smtp.aliyun-inc.com;
- Wed, 30 Apr 2025 12:05:55 +0800
-From: Chao Liu <lc00631@tecorigin.com>
-To: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com, philmd@linaro.org
-Cc: zhangtj@tecorigin.com, zqz00548@tecorigin.com, lc00631@tecorigin.com,
- qemu-devel@nongnu.org
-Subject: [PATCH v1 1/1] system: optimizing info mtree printing for monitors
-Date: Wed, 30 Apr 2025 12:02:23 +0800
-Message-ID: <8b29b86a9af84edba54cc53aec017224478312bf.1745894489.git.lc00631@tecorigin.com>
-X-Mailer: git-send-email 2.47.0.windows.2
-In-Reply-To: <cover.1745894489.git.lc00631@tecorigin.com>
-References: <cover.1745894489.git.lc00631@tecorigin.com>
+ (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
+ id 1u9zza-0006hh-6q
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 01:28:24 -0400
+Received: (qmail 1694 invoked by uid 484); 30 Apr 2025 05:28:03 -0000
+X-Qmail-Scanner-Diagnostics: from 10.2.13.100 by smtp1.lauterbach.com
+ (envelope-from <mario.fleischmann@lauterbach.com>,
+ uid 484) with qmail-scanner-2.11 
+ (mhr: 1.0. clamdscan: 0.99/21437. spamassassin: 3.4.0.  
+ Clear:RC:1(10.2.13.100):. 
+ Processed in 0.012884 secs); 30 Apr 2025 05:28:03 -0000
+Received: from unknown (HELO mflpc1.LTB.LAN)
+ (Authenticated_SSL:mfleischmann@[10.2.13.100])
+ (envelope-sender <mario.fleischmann@lauterbach.com>)
+ by smtp1.lauterbach.com (qmail-ldap-1.03) with TLS_AES_256_GCM_SHA384
+ encrypted SMTP
+ for <qemu-devel@nongnu.org>; 30 Apr 2025 05:28:03 -0000
+From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, philmd@linaro.org, armbru@redhat.com,
+ christian.boenig@lauterbach.com,
+ Mario Fleischmann <mario.fleischmann@lauterbach.com>
+Subject: [PATCH v2 04/20] qapi: Introduce MCD schema
+Date: Wed, 30 Apr 2025 07:27:25 +0200
+Message-Id: <20250430052741.21145-5-mario.fleischmann@lauterbach.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
+References: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.28.219;
- envelope-from=lc00631@tecorigin.com; helo=out28-219.mail.aliyun.com
+X-Qmail-Scanner-2.11: added fake Content-Type header
+Content-Type: text/plain
+Received-SPF: pass client-ip=62.154.241.196;
+ envelope-from=mario.fleischmann@lauterbach.com; helo=smtp1.lauterbach.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,106 +71,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make the hierarchical relationship between nodes clearer by adding characters
+The MCD implementation follows a remote procedure call approach:
+Each function from mcd_api.h will correspond to one command in mcd.json.
 
-Signed-off-by: Chao Liu <lc00631@tecorigin.com>
+Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
 ---
- system/memory.c | 34 +++++++++++++++++++++++++++-------
- 1 file changed, 27 insertions(+), 7 deletions(-)
+ MAINTAINERS          |  1 +
+ docs/interop/mcd.rst | 13 +++++++++++++
+ mcd/meson.build      | 27 +++++++++++++++++++++++++++
+ qapi/mcd.json        |  6 ++++++
+ 4 files changed, 47 insertions(+)
+ create mode 100644 qapi/mcd.json
 
-diff --git a/system/memory.c b/system/memory.c
-index 71434e7ad0..e723928068 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -3296,6 +3296,22 @@ typedef QTAILQ_HEAD(, MemoryRegionList) MemoryRegionListHead;
-                            int128_sub((size), int128_one())) : 0)
- #define MTREE_INDENT "  "
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 327d3c5..7c085dc 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3125,6 +3125,7 @@ M: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+ S: Maintained
+ F: mcd/*
+ F: docs/interop/mcd.rst
++F: qapi/mcd.json
  
-+#define PRINT_MTREE_COL(level) do { \
-+    if (level == 0) {               \
-+        qemu_printf("│  ");         \
-+    } else {                        \
-+        qemu_printf("│   ");        \
-+    }                               \
-+} while (0)
+ Memory API
+ M: Paolo Bonzini <pbonzini@redhat.com>
+diff --git a/docs/interop/mcd.rst b/docs/interop/mcd.rst
+index 2b21303..13e81df 100644
+--- a/docs/interop/mcd.rst
++++ b/docs/interop/mcd.rst
+@@ -44,6 +44,19 @@ To configure the build for MCD support:
+ 
+   ./configure --enable-mcd
+ 
++Debugging via QAPI
++------------------
 +
-+#define PRINT_MTREE_NODE(is_tail) do { \
-+    if (is_tail) {                     \
-+        qemu_printf("└── ");           \
-+    } else {                           \
-+        qemu_printf("├── ");           \
-+    }                                  \
-+} while (0)
++Since the MCD API does not define a communication protocol, a QAPI schema
++has been added to implement a remote procedure call mechanism.
++Each function within the API corresponds to one QAPI command, ensuring a
++one-to-one mapping between the API's functions and the QAPI commands.
 +
- static void mtree_expand_owner(const char *label, Object *obj)
- {
-     DeviceState *dev = (DeviceState *) object_dynamic_cast(obj, TYPE_DEVICE);
-@@ -3335,9 +3351,9 @@ static void mtree_print_mr_owner(const MemoryRegion *mr)
- static void mtree_print_mr(const MemoryRegion *mr, unsigned int level,
-                            hwaddr base,
-                            MemoryRegionListHead *alias_print_queue,
--                           bool owner, bool display_disabled)
-+                           bool owner, bool display_disabled, bool is_tail)
- {
--    MemoryRegionList *new_ml, *ml, *next_ml;
-+    MemoryRegionList *new_ml, *ml, *next_ml, *ml_tail;
-     MemoryRegionListHead submr_print_queue;
-     const MemoryRegion *submr;
-     unsigned int i;
-@@ -3376,8 +3392,9 @@ static void mtree_print_mr(const MemoryRegion *mr, unsigned int level,
-         }
-         if (mr->enabled || display_disabled) {
-             for (i = 0; i < level; i++) {
--                qemu_printf(MTREE_INDENT);
-+                PRINT_MTREE_COL(i);
-             }
-+            PRINT_MTREE_NODE(is_tail);
-             qemu_printf(HWADDR_FMT_plx "-" HWADDR_FMT_plx
-                         " (prio %d, %s%s): alias %s @%s " HWADDR_FMT_plx
-                         "-" HWADDR_FMT_plx "%s",
-@@ -3398,8 +3415,9 @@ static void mtree_print_mr(const MemoryRegion *mr, unsigned int level,
-     } else {
-         if (mr->enabled || display_disabled) {
-             for (i = 0; i < level; i++) {
--                qemu_printf(MTREE_INDENT);
-+                PRINT_MTREE_COL(i);
-             }
-+            PRINT_MTREE_NODE(is_tail);
-             qemu_printf(HWADDR_FMT_plx "-" HWADDR_FMT_plx
-                         " (prio %d, %s%s): %s%s",
-                         cur_start, cur_end,
-@@ -3434,9 +3452,11 @@ static void mtree_print_mr(const MemoryRegion *mr, unsigned int level,
-         }
-     }
++QAPI Reference
++--------------
++
++.. qapi-doc:: qapi/mcd.json
++
+ API Reference
+ -------------
  
-+    ml_tail = QTAILQ_LAST(&submr_print_queue);
-     QTAILQ_FOREACH(ml, &submr_print_queue, mrqueue) {
-         mtree_print_mr(ml->mr, level + 1, cur_start,
--                       alias_print_queue, owner, display_disabled);
-+                       alias_print_queue, owner,
-+                       display_disabled, ml_tail == ml);
-     }
+diff --git a/mcd/meson.build b/mcd/meson.build
+index 3e4e67a..d62a625 100644
+--- a/mcd/meson.build
++++ b/mcd/meson.build
+@@ -1,5 +1,32 @@
++mcd_qapi_outputs = [
++  'mcd-qapi-commands.c',
++  'mcd-qapi-commands.h',
++  'mcd-qapi-emit-events.c',
++  'mcd-qapi-emit-events.h',
++  'mcd-qapi-events.c',
++  'mcd-qapi-events.h',
++  'mcd-qapi-features.c',
++  'mcd-qapi-features.h',
++  'mcd-qapi-init-commands.c',
++  'mcd-qapi-init-commands.h',
++  'mcd-qapi-introspect.c',
++  'mcd-qapi-introspect.h',
++  'mcd-qapi-types.c',
++  'mcd-qapi-types.h',
++  'mcd-qapi-visit.c',
++  'mcd-qapi-visit.h',
++]
++
++mcd_qapi_files = custom_target('MCD QAPI files',
++                               output: mcd_qapi_outputs,
++                               input: '../qapi/mcd.json',
++                               command: [ qapi_gen, '-p', 'mcd-', '-o', 'mcd',
++                                          '--suppress-tracing','@INPUT0@'],
++                               depend_files: qapi_gen_depends)
++
+ mcd_ss = ss.source_set()
  
-     QTAILQ_FOREACH_SAFE(ml, &submr_print_queue, mrqueue, next_ml) {
-@@ -3614,7 +3634,7 @@ static void mtree_print_as(gpointer key, gpointer value, gpointer user_data)
-     struct AddressSpaceInfo *asi = user_data;
++mcd_ss.add(mcd_qapi_files.to_list())
+ mcd_ss.add(files(
+   'mcd_server.c'))
  
-     g_slist_foreach(as_same_root_mr_list, mtree_print_as_name, NULL);
--    mtree_print_mr(mr, 1, 0, asi->ml_head, asi->owner, asi->disabled);
-+    mtree_print_mr(mr, 1, 0, asi->ml_head, asi->owner, asi->disabled, false);
-     qemu_printf("\n");
- }
- 
-@@ -3659,7 +3679,7 @@ static void mtree_info_as(bool dispatch_tree, bool owner, bool disabled)
-     /* print aliased regions */
-     QTAILQ_FOREACH(ml, &ml_head, mrqueue) {
-         qemu_printf("memory-region: %s\n", memory_region_name(ml->mr));
--        mtree_print_mr(ml->mr, 1, 0, &ml_head, owner, disabled);
-+        mtree_print_mr(ml->mr, 1, 0, &ml_head, owner, disabled, false);
-         qemu_printf("\n");
-     }
- 
+diff --git a/qapi/mcd.json b/qapi/mcd.json
+new file mode 100644
+index 0000000..701fd03
+--- /dev/null
++++ b/qapi/mcd.json
+@@ -0,0 +1,6 @@
++# -*- Mode: Python -*-
++# vim: filetype=python
++
++##
++# = Multi-Core Debug (MCD) API
++##
 -- 
-2.48.1
+2.34.1
 
 
