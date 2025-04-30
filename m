@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC1A5C369DC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85463C369D9
 	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 05:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9zzj-0002Cb-MC; Wed, 30 Apr 2025 01:28:32 -0400
+	id 1uA009-0002Ze-Bs; Wed, 30 Apr 2025 01:28:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1u9zzf-0002Ad-R5
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 01:28:27 -0400
+ id 1u9zzu-0002LF-Qp
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 01:28:43 -0400
 Received: from smtp1.lauterbach.com ([62.154.241.196])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
- id 1u9zza-0006hr-7g
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 01:28:27 -0400
-Received: (qmail 1744 invoked by uid 484); 30 Apr 2025 05:28:04 -0000
+ id 1u9zzp-0006lk-JJ
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 01:28:42 -0400
+Received: (qmail 2065 invoked by uid 484); 30 Apr 2025 05:28:07 -0000
 X-Qmail-Scanner-Diagnostics: from 10.2.13.100 by smtp1.lauterbach.com
  (envelope-from <mario.fleischmann@lauterbach.com>,
  uid 484) with qmail-scanner-2.11 
  (mhr: 1.0. clamdscan: 0.99/21437. spamassassin: 3.4.0.  
  Clear:RC:1(10.2.13.100):. 
- Processed in 0.012709 secs); 30 Apr 2025 05:28:04 -0000
+ Processed in 0.024656 secs); 30 Apr 2025 05:28:07 -0000
 Received: from unknown (HELO mflpc1.LTB.LAN)
  (Authenticated_SSL:mfleischmann@[10.2.13.100])
  (envelope-sender <mario.fleischmann@lauterbach.com>)
  by smtp1.lauterbach.com (qmail-ldap-1.03) with TLS_AES_256_GCM_SHA384
  encrypted SMTP
- for <qemu-devel@nongnu.org>; 30 Apr 2025 05:28:03 -0000
+ for <qemu-devel@nongnu.org>; 30 Apr 2025 05:28:07 -0000
 From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, philmd@linaro.org, armbru@redhat.com,
  christian.boenig@lauterbach.com,
  Mario Fleischmann <mario.fleischmann@lauterbach.com>
-Subject: [PATCH v2 06/20] qtest: Introduce MCD test suite
-Date: Wed, 30 Apr 2025 07:27:27 +0200
-Message-Id: <20250430052741.21145-7-mario.fleischmann@lauterbach.com>
+Subject: [PATCH v2 20/20] mcd: Implement reset control
+Date: Wed, 30 Apr 2025 07:27:41 +0200
+Message-Id: <20250430052741.21145-21-mario.fleischmann@lauterbach.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
 References: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
@@ -71,165 +71,403 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qtest_qmp provides a convenient way to automatically serialize into the
-client JSON protocol and to send the command to the QMP socket.
-Since qtest has a strong dependency to the QMP monitor, a minimal number
-of function has been added to mcd-test.c for interoperability with MCD's
-protocol.
+Provide a system reset vector and handle it similar to hmp_system_reset
+
+We don't use a QMP related shutdown reason because the mcdserver is
+implemented independent of the used communication protocol.
+(In fact, another communication protocol implementation for MCD already
+exists and can be found at https://gitlab.com/lauterbach/mcdrefsrv)
 
 Signed-off-by: Mario Fleischmann <mario.fleischmann@lauterbach.com>
 ---
- MAINTAINERS             |  1 +
- tests/qtest/mcd-test.c  | 82 +++++++++++++++++++++++++++++++++++++++++
- tests/qtest/mcd-util.h  | 21 +++++++++++
- tests/qtest/meson.build |  5 +++
- 4 files changed, 109 insertions(+)
- create mode 100644 tests/qtest/mcd-test.c
- create mode 100644 tests/qtest/mcd-util.h
+ mcd/mcd_qapi.c   |  12 +++++
+ mcd/mcd_qapi.h   |   2 +
+ mcd/mcd_server.c |  98 +++++++++++++++++++++++++++++++++--
+ mcd/mcd_stub.c   |  61 ++++++++++++++++++++++
+ qapi/mcd.json    | 129 +++++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 297 insertions(+), 5 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 159a38f..cb4f9ab 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3127,6 +3127,7 @@ F: mcd/*
- F: docs/interop/mcd.rst
- F: qapi/mcd.json
- F: include/exec/mcdstub.h
-+X: tests/qtest/mcd-*
+diff --git a/mcd/mcd_qapi.c b/mcd/mcd_qapi.c
+index b0a995e..bfbb0f0 100644
+--- a/mcd/mcd_qapi.c
++++ b/mcd/mcd_qapi.c
+@@ -491,3 +491,15 @@ void free_mcd_txlist(mcd_txlist_st *txlist)
  
- Memory API
- M: Paolo Bonzini <pbonzini@redhat.com>
-diff --git a/tests/qtest/mcd-test.c b/tests/qtest/mcd-test.c
-new file mode 100644
-index 0000000..b9ee3f4
---- /dev/null
-+++ b/tests/qtest/mcd-test.c
-@@ -0,0 +1,82 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * mcdtest - Test suite for the Multi-Core Debug (MCD) API implementation
-+ *
-+ * Copyright (c) 2025 Lauterbach GmbH
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
+     g_free(txlist->tx);
+ }
 +
-+#include "qemu/osdep.h"
-+
-+#ifndef _WIN32
-+#include <sys/socket.h>
-+#include <sys/wait.h>
-+#include <sys/un.h>
-+#endif /* _WIN32 */
-+#ifdef __linux__
-+#include <sys/prctl.h>
-+#endif /* __linux__ */
-+#ifdef __FreeBSD__
-+#include <sys/procctl.h>
-+#endif /* __FreeBSD__ */
-+
-+#include "libqtest.h"
-+#include "mcd-util.h"
-+
-+#define QEMU_EXTRA_ARGS ""
-+
-+static bool verbose;
-+
-+static QTestStateMCD mcdtest_init(const char *extra_args)
++MCDRstInfo *marshal_mcd_rst_info(const mcd_rst_info_st *rst_info)
 +{
-+    QTestStateMCD qts_mcd;
-+    int sock;
++    MCDRstInfo *marshal = g_malloc0(sizeof(*marshal));
 +
-+    g_autofree gchar *sock_path = g_strdup_printf("%s/qtest-%d.mcd",
-+                                    g_get_tmp_dir(), getpid());
++    *marshal = (MCDRstInfo) {
++        .class_vector = rst_info->class_vector,
++        .info_str = g_strdup(rst_info->info_str),
++    };
 +
-+    /* remove possible orphan from earlier test run */
-+    unlink(sock_path);
-+    sock = qtest_socket_server(sock_path);
-+
-+    g_autoptr(GString) args = g_string_new(extra_args);
-+    g_string_append_printf(args, " -chardev socket,path=%s,id=mcdsock "
-+                                 "-mcd chardev:mcdsock",
-+                                 sock_path);
-+
-+    qts_mcd.qts = qtest_init_without_qmp_handshake(args->str);
-+    g_assert(qts_mcd.qts);
-+
-+    qts_mcd.mcd_fd = accept(sock, NULL, NULL);
-+    unlink(sock_path);
-+    g_assert(qts_mcd.mcd_fd >= 0);
-+
-+    return qts_mcd;
++    return marshal;
 +}
-+
-+static void mcdtest_quit(QTestStateMCD *qts)
-+{
-+    qtest_quit(qts->qts);
-+    close(qts->mcd_fd);
-+
-+    qts->qts = NULL;
-+    qts->mcd_fd = -1;
-+}
-+
-+static void test_initialize_mcdtest(void)
-+{
-+    QTestStateMCD qts = mcdtest_init(QEMU_EXTRA_ARGS);
-+    mcdtest_quit(&qts);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+    char *v_env = getenv("V");
-+    verbose = v_env && atoi(v_env) >= 1;
-+    g_test_init(&argc, &argv, NULL);
-+
-+    qtest_add_func("mcd/initialize-mcdtest", test_initialize_mcdtest);
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/mcd-util.h b/tests/qtest/mcd-util.h
-new file mode 100644
-index 0000000..18ff8bd
---- /dev/null
-+++ b/tests/qtest/mcd-util.h
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * mcdutil - Utility functions for the MCD API test suite
-+ *
-+ * Copyright (c) 2025 Lauterbach GmbH
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef TEST_MCD_UTILS_H
-+#define TEST_MCD_UTILS_H
-+
-+#include "libqtest.h"
-+
-+typedef struct {
-+    QTestState *qts;
-+    int mcd_fd;
-+} QTestStateMCD;
-+
-+#endif /* TEST_MCD_UTILS_H */
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 3136d15..3dc9508 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -397,6 +397,11 @@ if dbus_display
-   qtests += {'dbus-display-test': [dbus_display1, gio]}
- endif
+diff --git a/mcd/mcd_qapi.h b/mcd/mcd_qapi.h
+index 17b9690..7532809 100644
+--- a/mcd/mcd_qapi.h
++++ b/mcd/mcd_qapi.h
+@@ -56,6 +56,8 @@ MCDTx *marshal_mcd_tx(const mcd_tx_st *tx);
  
-+if get_option('mcd').enabled()
-+  qtests += { 'mcd-test': files('mcd-test.c') }
-+  qtests_generic += [ 'mcd-test' ]
-+endif
+ MCDTxlist *marshal_mcd_txlist(const mcd_txlist_st *txlist);
+ 
++MCDRstInfo *marshal_mcd_rst_info(const mcd_rst_info_st *rst_info);
 +
- qtest_executables = {}
- foreach dir : target_dirs
-   if not dir.endswith('-softmmu')
+ mcd_api_version_st unmarshal_mcd_api_version(MCDAPIVersion *api_version);
+ 
+ mcd_core_con_info_st unmarshal_mcd_core_con_info(MCDCoreConInfo *con_info);
+diff --git a/mcd/mcd_server.c b/mcd/mcd_server.c
+index 088ec47..11252ae 100644
+--- a/mcd/mcd_server.c
++++ b/mcd/mcd_server.c
+@@ -22,6 +22,8 @@
+ /* Custom memory space type */
+ static const mcd_mem_type_et MCD_MEM_SPACE_IS_SECURE = 0x00010000;
+ 
++#define MCD_RST_CLASS_SYSTEM_RESET 0
++
+ static const mcd_error_info_st MCD_ERROR_NOT_IMPLEMENTED = {
+     .return_status = MCD_RET_ACT_HANDLE_ERROR,
+     .error_code = MCD_ERR_FN_UNIMPLEMENTED,
+@@ -2100,24 +2102,110 @@ mcd_return_et mcd_execute_command_f(const mcd_core_st *core,
+ mcd_return_et mcd_qry_rst_classes_f(const mcd_core_st *core,
+                                     uint32_t *rst_class_vector)
+ {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
+-    return g_server_state.last_error->return_status;
++    mcdcore_state *core_state;
++
++    if (!core) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    if (!rst_class_vector) {
++        core_state->last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return core_state->last_error->return_status;
++    }
++
++    *rst_class_vector = (1 << MCD_RST_CLASS_SYSTEM_RESET);
++
++    core_state->last_error = &MCD_ERROR_NONE;
++    return core_state->last_error->return_status;
+ }
+ 
+ mcd_return_et mcd_qry_rst_class_info_f(const mcd_core_st *core,
+                                        uint8_t rst_class,
+                                        mcd_rst_info_st *rst_info)
+ {
++    mcdcore_state *core_state;
+ 
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
++    if (!core) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    if (rst_class != MCD_RST_CLASS_SYSTEM_RESET) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_PARAM,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "unknown reset class",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    if (!rst_info) {
++        core_state->last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return core_state->last_error->return_status;
++    }
++
++    *rst_info = (mcd_rst_info_st) {
++        .class_vector = (1 << MCD_RST_CLASS_SYSTEM_RESET),
++        .info_str = "System Reset",
++    };
++
++    g_server_state.last_error = &MCD_ERROR_NONE;
+     return g_server_state.last_error->return_status;
+ }
+ 
+ mcd_return_et mcd_rst_f(const mcd_core_st *core, uint32_t rst_class_vector,
+                         bool rst_and_halt)
+ {
+-    g_server_state.last_error = &MCD_ERROR_NOT_IMPLEMENTED;
+-    return g_server_state.last_error->return_status;
++    mcdcore_state *core_state;
++
++    if (!core) {
++        g_server_state.last_error = &MCD_ERROR_INVALID_NULL_PARAM;
++        return g_server_state.last_error->return_status;
++    }
++
++    core_state = find_core(core->core_con_info);
++    if (!core_state || core_state->open_core != core) {
++        g_server_state.last_error = &MCD_ERROR_UNKNOWN_CORE;
++        return g_server_state.last_error->return_status;
++    }
++
++    if (rst_class_vector != (1 << MCD_RST_CLASS_SYSTEM_RESET)) {
++        core_state->custom_error = (mcd_error_info_st) {
++            .return_status = MCD_RET_ACT_HANDLE_ERROR,
++            .error_code = MCD_ERR_PARAM,
++            .error_events = MCD_ERR_EVT_NONE,
++            .error_str = "unknown reset class",
++        };
++        core_state->last_error = &core_state->custom_error;
++        return core_state->last_error->return_status;
++    }
++
++    if (rst_and_halt) {
++        mcd_return_et ret = mcd_stop_f(core, true);
++        if (ret != MCD_RET_ACT_NONE) {
++            return ret;
++        }
++    }
++
++    qemu_system_reset_request(SHUTDOWN_CAUSE_HOST_UI);
++
++    core_state->last_error = &MCD_ERROR_NONE;
++    return core_state->last_error->return_status;
+ }
+ 
+ mcd_return_et mcd_chl_open_f(const mcd_core_st *core, mcd_chl_st *channel)
+diff --git a/mcd/mcd_stub.c b/mcd/mcd_stub.c
+index ddb3801..e1a01e2 100644
+--- a/mcd/mcd_stub.c
++++ b/mcd/mcd_stub.c
+@@ -634,6 +634,67 @@ MCDQryStateResult *qmp_mcd_qry_state(uint32_t core_uid, Error **errp)
+     return result;
+ }
+ 
++MCDQryRstClassesResult *qmp_mcd_qry_rst_classes(uint32_t core_uid, Error **errp)
++{
++    MCDQryRstClassesResult *result = g_malloc0(sizeof(*result));
++    mcd_core_st *core = NULL;
++
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++
++    result->return_status = mcd_qry_rst_classes_f(core,
++                                                  &result->rst_class_vector);
++    result->has_rst_class_vector = result->return_status == MCD_RET_ACT_NONE;
++
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
++
++MCDQryRstClassInfoResult *qmp_mcd_qry_rst_class_info(uint32_t core_uid,
++                                                     uint8_t rst_class,
++                                                     Error **errp)
++{
++    MCDQryRstClassInfoResult *result = g_malloc0(sizeof(*result));
++    mcd_rst_info_st rst_info;
++    mcd_core_st *core = NULL;
++
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++
++    result->return_status = mcd_qry_rst_class_info_f(core, rst_class,
++                                                     &rst_info);
++    if (result->return_status == MCD_RET_ACT_NONE) {
++        result->rst_info = marshal_mcd_rst_info(&rst_info);
++    }
++
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
++
++MCDRstResult *qmp_mcd_rst(uint32_t core_uid, uint32_t rst_class_vector,
++                          bool rst_and_halt, Error **errp)
++{
++    MCDRstResult *result = g_malloc0(sizeof(*result));
++    mcd_core_st *core = NULL;
++
++    result->return_status = retrieve_open_core(core_uid, &core);
++    if (result->return_status != MCD_RET_ACT_NONE) {
++        g_stub_state.on_error_ask_server = false;
++        return result;
++    }
++
++    result->return_status = mcd_rst_f(core, rst_class_vector, rst_and_halt);
++
++    g_stub_state.on_error_ask_server = true;
++    return result;
++}
++
+ MCDQryTrigInfoResult *qmp_mcd_qry_trig_info(uint32_t core_uid, Error **errp)
+ {
+     MCDQryTrigInfoResult *result = g_malloc0(sizeof(*result));
+diff --git a/qapi/mcd.json b/qapi/mcd.json
+index 8934d2d..b90cdfa 100644
+--- a/qapi/mcd.json
++++ b/qapi/mcd.json
+@@ -610,6 +610,24 @@
+     'stop-str'    : 'str',
+     'info-str'    : 'str' } }
+ 
++
++##
++# @MCDRstInfo:
++#
++# Structure type containing information about a particular reset class.
++#
++# @class-vector: Reset class vector which issues this reset. Exactly one bit
++#                may be set.
++# @info-str:     Description of the reset class.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDRstInfo',
++  'data': {
++    'class-vector': 'uint32',
++    'info-str'    : 'str' } }
++
++
+ ##
+ # == Target Initialization API
+ ##
+@@ -1881,6 +1899,117 @@
+   'returns': 'MCDQryStateResult' }
+ 
+ 
++##
++# == Reset Control API
++##
++
++
++##
++# @MCDQryRstClassesResult:
++#
++# Return value of @mcd-qry-rst-classes.
++#
++# @return-status:    Return code.
++# @rst-class-vector: A 32 bit vector that defines the available reset classes.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDQryRstClassesResult',
++   'data': {
++     'return-status': 'uint32',
++     '*rst-class-vector': 'uint32' }}
++
++
++##
++# @mcd-qry-rst-classes:
++#
++# Function querying information about reset classes supported by the target
++# system.
++#
++# @core-uid: Unique identifier of the open core as returned by @mcd-open-core.
++#
++# Returns: @MCDQryRstClassesResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-qry-rst-classes',
++  'data': { 'core-uid': 'uint32' },
++  'returns': 'MCDQryRstClassesResult' }
++
++
++##
++# @MCDQryRstClassInfoResult:
++#
++# Return value of @mcd-qry-rst-class-info.
++#
++# @return-status: Return code.
++# @rst-info:      Detailed information about the reset class.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDQryRstClassInfoResult',
++  'data': {
++    'return-status': 'uint32',
++    '*rst-info': 'MCDRstInfo' }}
++
++
++##
++# @mcd-qry-rst-class-info:
++#
++# Function querying information about a particular reset class supported by the
++# target system.
++#
++# @core-uid:  Unique identifier of the open core as returned by @mcd-open-core.
++# @rst-class: Reset class ID which refers to a bit in the 32-bit reset class
++#             vector as obtained by @mcd-qry-rst-classes.
++#
++# Returns: @MCDQryRstClassInfoResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-qry-rst-class-info',
++  'data': {
++    'core-uid' : 'uint32',
++    'rst-class': 'uint8'},
++  'returns': 'MCDQryRstClassInfoResult' }
++
++
++##
++# @MCDRstResult:
++#
++# Return value of @mcd-rst.
++#
++# @return-status: Return code.
++#
++# Since: 9.1
++##
++{ 'struct': 'MCDRstResult', 'data': { 'return-status': 'uint32' } }
++
++
++##
++# @mcd-rst:
++#
++# Function triggering one or more reset signals in parallel on the target
++# system.
++#
++# @core-uid:         Unique identifier of the open core as returned by
++#                    @mcd-open-core.
++# @rst-class-vector: Reset vector specifying the resets which shall be issued.
++# @rst-and-halt:     Optionally halting the core if the reset changes the core
++#                    state.
++#
++# Returns: @MCDRstResult
++#
++# Since: 9.1
++##
++{ 'command': 'mcd-rst',
++  'data': {
++    'core-uid'        : 'uint32',
++    'rst-class-vector': 'uint32',
++    'rst-and-halt'    : 'bool'},
++  'returns': 'MCDRstResult' }
++
++
+ ##
+ # == Target Trigger Setup API
+ ##
 -- 
 2.34.1
 
