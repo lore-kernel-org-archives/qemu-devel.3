@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E135C369DC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B452C369D9
 	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 12:32:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA6bd-0002lU-F1; Wed, 30 Apr 2025 08:32:05 -0400
+	id 1uA6c8-0002vD-UU; Wed, 30 Apr 2025 08:32:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA6bU-0002gw-FH
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 08:31:56 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA6c6-0002uF-8Y
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 08:32:34 -0400
 Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA6bS-0000P1-EO
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 08:31:55 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA6c4-0000QR-IK
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 08:32:33 -0400
 Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-4774ce422easo87466571cf.1
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 05:31:53 -0700 (PDT)
+ d75a77b69052e-4767e969b94so1796391cf.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 05:32:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746016313; x=1746621113; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746016351; x=1746621151; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=rYBrg3pEuxpPgVBHjS77kUjMrIuqMHY+Cf6oUjfem9s=;
- b=lz5RYW3wytHLoId+/Em4UQg4dlNrpC8vpjQxv0/hiALBl635LP+1GESYpVqPkHOdVk
- 5oproy11wPE725PJvt4JjmZbL/Ub4xFq32FpTcu3FNZCgm+AP9fx4U6lMrT2OEJZcwSJ
- cReDWn4sNJsPg4Ks+Hgm3ZogZrIKr+mdivLxDMe3R2Y/9MW9NpuwJSvLGfNhAxpPadNw
- 554I+iH5ITpBo5OLWZg8PHEib8UoRkZAb+dnXd+53YhnQHWgn2/PRMPuKOLVj1beOUpL
- KDswMZkjxz7L1jFlGzmo7D3p1wmgHzbJBtUSZyppkM+mx6yeO2cHv8XFJDzCzvcXGQ6U
- rfrw==
+ bh=5vuUcrKcSMMM0g6BBrWIzr9h93AbNBA2mKoiErMSu58=;
+ b=HxYKYo+C4fZHD2goQ0q/ufEjgHwqugixtSBkdizH7+OoE1Ork5nn33/K6S61VEJ14z
+ T16Tsx88FotXPAT4d2MM6t5j4Te76/aZ0hh6da3NrvnSo/+ROSnYVkFtoS8RpqqBZpQe
+ a7HjgIU4SkiTP1IE8mkIeNsadVyJPAFOASqCvgmrgK00Txc3wG5KV/T9+pNmKCtvSE+T
+ bwaoO4jzQNnuR85Boir4sd0DvoY7ifkl2JrWYCZh6hy7PZIdC5r7xisB908OJ5C/H3Vb
+ BvCU7j7TitWQyCu4+MpjAH5EDvJohntgH/IGtDG60AKpVAAPwbDS4VLG48gagg1+wzl0
+ ePrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746016313; x=1746621113;
+ d=1e100.net; s=20230601; t=1746016351; x=1746621151;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rYBrg3pEuxpPgVBHjS77kUjMrIuqMHY+Cf6oUjfem9s=;
- b=iHw0tRkZuxGO+EdxMuHh+5hBVNQY5Q9FN2pFzNW14HNSizn1losHpQg/j6L93HNqlY
- P8lM1JnRZMu9Zxo0I6WWA1M+UI0lkMh3zZK2GuTrp5Re3nTkkpldo925dqi9xLsGmh7F
- ka87PruR9EINsOSrluYEkiEUM66JUN39ZZAlTXCM33SQUPHqFEhpVllyADStgUTchG+j
- DOAJWNK82s9CxC/dz1BX8oC9eq0gYLisLcr0e5hJcm131eBd0w/fD9J2biPCFyDE2x7X
- oPNESZxDG/UhlPVRWIh7oZx79C2zXLmTqhIg+IHT2QKoMTM3lpjrCzR2JybJ9uVHMymD
- A1ow==
-X-Gm-Message-State: AOJu0YxFrpkSwWlnG/wLVfKKhgH7QN4DX0sKthhZruYnFLSn6jdrZO0K
- 6Q1l97HtjS7YS0dmxHGnR7nRjG8/KdPox+3cWD/+F4GzZ7SSHwF6wV40R2Gf8ng=
-X-Gm-Gg: ASbGncvqJQ6OzYCbXqv0MKHQjcENg4l6mt+Ly/JQZdad6qq3GzK/XOG5UKDl1DTbFd+
- 2jLx3WRr/Nj0ErMzVsRsYVHQmGWNsHxAg95gYvQCpy9EckrVDDRb36R8NTq2CMGCz1C0FfKx5bF
- FVs4iYOol/GT0e5m6NYpZZ7o8yfQTJUHCyipBchb5HKtdJFFQ+LKltWZ1ZOWu9mIRpoUZUStzRL
- qq/d+wRFH4Imq3jb35vbT1Wm19cDAbhMCNAqGo9M+H67a6Sd6sdr8zuC286nU6I6fgzPV/7tXy5
- /DOMYoBVdI3tHOIV1/WGPMaMlqjqqllichHU09OY1wBQ9SdcrYOpFw/Sr2f+J4557RtFUZqCUTS
- Ss44xunI8D88UlQ==
-X-Google-Smtp-Source: AGHT+IHXs+MPlWfOmLU5JtKPaw77UJ+tjNI1qvAq/HPmfsvE4ZHdUDmHVprq2WxveaFfOZdkolWLWg==
-X-Received: by 2002:a05:622a:4ac4:b0:476:b783:c946 with SMTP id
- d75a77b69052e-489e63d7f51mr40003051cf.33.1746016312713; 
- Wed, 30 Apr 2025 05:31:52 -0700 (PDT)
+ bh=5vuUcrKcSMMM0g6BBrWIzr9h93AbNBA2mKoiErMSu58=;
+ b=D59OVQl/MDkOe+iLD7v+9AvWn/F1hUIN/gR/7bEEfD7btVCbBF849qhxsj44W5E1Eo
+ +AFLH6BUKk2DkmjuZ049OULySlvLUElX+MoiV6BCS5wH6O0HMkqkU7CorYZH4w9/ClgG
+ E0XbFdnPPi5rx50n2SSH4clxhLVkTniOwUDMb96DGJeHTorb1jAh0QgzkXJixYFbt+Ol
+ q7rbtsMcRn996ZcqNwQfRtnNnf9H/GuUlis6FLm9HXU5ZdBeS6KE4f3N3bn2hSdIZiqQ
+ aTIWXua3420LFLZlCZZ/a7PtqyGFotM0elQgUUBWYtNtLrzghDxiUotJRCRAiKMG0BTi
+ 2F+g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUHmchURN4wcbMEClSuc0z54pXQFU2E1ygJmbzsWifKXW+WCoIBqKnxXKolifvpVllwPiPQOQry6uuL@nongnu.org
+X-Gm-Message-State: AOJu0YzB+9gd53mhfBdqJOc4BslPYGkBxe9jpKx4dui4AOHS5vly9ZZW
+ //RqjRycTd8O+hAvOTbKjdLgZ5PiXWhTq3T/G2hdtfOvYsjvlJ3GjYgDDrphICbizIkTK6C1+q9
+ S
+X-Gm-Gg: ASbGncsNFVqlKmp5l0OD3VVFXEqfzjs3l88Hl1BnXw6PbL7gc8VGKeoMV9o4MMW3CBk
+ 4re7vzYC/tZHkyZREGQxROrW958V7CHftEs5Md7e9K2J26CRqDpt6B2KDQLOPDqOykpE2eVetBZ
+ psU3Kx8gwVNulzNKEa1MSFM9jMzsAiANdW15aOJ5CX976cQ6umcZmc5xjXrnQ42xFTEcJt5AJCU
+ Mc4BuEtdct0S8Svx6J9bf7j0VmMpQhUlFbFM0mkRlhqM+Lc5z2VzMnO2FSZziAGJTWtzf735bDj
+ d1mq+3QGt9BJgQoegqRuPGKZroVCsDzgBdR/7J//UE6d5jnGPia93/wqTFVHZXqGV1s7+8yJ/96
+ Gtt/mwKpWIdpEEviaNEczuY05
+X-Google-Smtp-Source: AGHT+IGvcj+hTUGzTS5/zrDOzkvcecu33fY7f5Q8w3PgXskPgtrT9Nls2pLclxq8nvcvURBnmdBCbg==
+X-Received: by 2002:a05:622a:5793:b0:476:90ee:bc6a with SMTP id
+ d75a77b69052e-489e4e70749mr45093411cf.28.1746016350799; 
+ Wed, 30 Apr 2025 05:32:30 -0700 (PDT)
 Received: from [192.168.69.226] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-47ea169304dsm91643971cf.54.2025.04.30.05.31.51
+ d75a77b69052e-47ea179413fsm91689911cf.62.2025.04.30.05.32.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Apr 2025 05:31:52 -0700 (PDT)
-Message-ID: <83b80b4d-0ce1-4002-872e-1577527e88fa@linaro.org>
-Date: Wed, 30 Apr 2025 14:31:49 +0200
+ Wed, 30 Apr 2025 05:32:30 -0700 (PDT)
+Message-ID: <fa297df2-5128-4b88-9232-15eea38e10b1@linaro.org>
+Date: Wed, 30 Apr 2025 14:32:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] Running with `--enable-ubsan` leads to a qtest failure:
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Nabih Estefan <nabihestefan@google.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, lvivier@redhat.com,
- farosas@suse.de, sriram.yagnaraman@ericsson.com, akihiko.odaki@daynix.com
-References: <20250429155621.2028198-1-nabihestefan@google.com>
- <87cyct3owr.fsf@draig.linaro.org>
+Subject: Re: [PATCH 1/2] hw/loongarch/virt: Remove global variables about
+ initrd
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20250430094738.1556670-1-maobibo@loongson.cn>
+ <20250430094738.1556670-2-maobibo@loongson.cn>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87cyct3owr.fsf@draig.linaro.org>
+In-Reply-To: <20250430094738.1556670-2-maobibo@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
@@ -102,24 +104,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Subject is missing. What about "tests/qtest/igb: Avoid misaligned access"?
-
-On 30/4/25 12:49, Alex Bennée wrote:
-> Nabih Estefan <nabihestefan@google.com> writes:
+On 30/4/25 11:47, Bibo Mao wrote:
+> Global variables initrd_offset and initrd_size records loading information
+> about initrd, it can be moved to structure loongarch_boot_info.
 > 
->> v2: used ldl_le_p and lduw_l_p instead of memcpy as per upstream
->> suggestion.
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   hw/loongarch/boot.c         | 21 ++++++++++-----------
+>   include/hw/loongarch/boot.h |  2 ++
+>   2 files changed, 12 insertions(+), 11 deletions(-)
 
-This comment is not useful in git history.
-
->>
->> ```
->> ../tests/qtest/libqos/igb.c:106:5: runtime error: load of misaligned address 0x562040be8e33 for type 'uint32_t', which requires 4 byte alignment
->> ```
->> Instead of straight casting the uint8_t array, we use memcpy to assure
->> alignment is correct against uint32_t and uint16_t.
-> 
-> Queued to testing/next, thanks.
-> 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
