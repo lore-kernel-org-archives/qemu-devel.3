@@ -4,135 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B59DC369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 07:58:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 037D9C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 08:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA2K2-0007ja-IB; Wed, 30 Apr 2025 03:57:38 -0400
+	id 1uA2Nn-0001uX-Vn; Wed, 30 Apr 2025 04:01:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uA2Jz-0007ic-Nx
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:57:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uA2Nk-0001tq-D5
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 04:01:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uA2Jx-0007z7-4g
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:57:34 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uA2Ni-00005h-Lw
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 04:01:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745999850;
+ s=mimecast20190719; t=1746000084;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/TMMUGkNpp1D87llHefk/3l0BdaUkqmQQfCOp1G9twc=;
- b=gLRiTC0gnAuOhg1PUoiRE72DABSMg9ZiAJlc3ppEsKZUBheZm6WWNOJ047ZctNJDImnUFH
- O09CWSZU/ymNJ7vPB67DLdCs2qjpYrs0h3QxSHSpJD+NR7gPhmwg/4JndoEXpEY+TLWEvI
- 0+Rln/quf4YSu8Msx3i3OW6GTkyNrmk=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=j9nr8TESjgfGun1eC6o/X3NJTioY9/DFLe1eC77nVsk=;
+ b=EDXDJ9WgYDM8doBTVuj67M1GclXv030blkHn18YBH7uINDzJGA6yVBnfu+XLTPLnUa2CNI
+ zu2LGzA9qMJ5Cgjtaey5v02fDhG+fuD9+rcT9F/yt42cfACu5wpkR8mC0pk2Va3cBb5kz2
+ dNFBz6lpmigzp+KYW3UuqUE9zxgHjtc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-270-mut7q62NO2G7ch5D08R6mA-1; Wed, 30 Apr 2025 03:57:28 -0400
-X-MC-Unique: mut7q62NO2G7ch5D08R6mA-1
-X-Mimecast-MFC-AGG-ID: mut7q62NO2G7ch5D08R6mA_1745999847
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a064c45f03so303195f8f.0
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 00:57:27 -0700 (PDT)
+ us-mta-661-CeJA8_fVND6A9cCBv5J66A-1; Wed, 30 Apr 2025 04:01:22 -0400
+X-MC-Unique: CeJA8_fVND6A9cCBv5J66A-1
+X-Mimecast-MFC-AGG-ID: CeJA8_fVND6A9cCBv5J66A_1746000082
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43cf446681cso40323045e9.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 01:01:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745999847; x=1746604647;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/TMMUGkNpp1D87llHefk/3l0BdaUkqmQQfCOp1G9twc=;
- b=wRWYlWRdCX5zAIQUVqhmjzUvDCjJ8TmKBON92xI4RcWe2vRHdJ8EBsEVuDLutzBQ+i
- hl4PQZhOst6Y7CFAIwEocwyQqbhEW1sppqJRaZIA7GvESQYmMy4xot7ta39+IVSJWLZk
- oOnV71uB+itjGQzkkDYQSX0ZB9J9cg4PAIDsTK3DM3T6xw1yUvW5l14FLWzfq++u57Kp
- tRbIJiiRsjvtAQq/rOvLNnfYkqwEaUR756yNLCxnZn5RblsluzOHaOARxvGJDAKsxlHg
- GQmZFo/uD0BKRoUAorgx4SEMt4IfqDKGe2RbDKNhkDlSKzaIr9ODrPcYEEOms/g4aD7U
- dwfg==
-X-Gm-Message-State: AOJu0Yx+aGNqQD6opiafJnMcltseDDWNxIM0Tu9c8XbvpEsaf/FLOUph
- O3bHN518fayH2kPn2J6NmDw6YWsWpWR+R316rvqMl+ZGinkY0GyolECN3sAJzqRj3Jiho1W+Ojj
- 3k4Hu0sr3wZVUUFkM98wpdC2C6RoApCORbgiPyOc6x1VZVHf04Xkf
-X-Gm-Gg: ASbGncstCDpIVS56HzW1J7uJAkBpx9OPDWXVMLZgl2siKWe2naPF9m71c1d/ejNldQm
- o11vIy2NhNJbkdH5NWDNlN0HIfTDTMGy7IbmnHJS4G0uytuq/UMiOAC3Kyjjc2gnBE50iXNRJia
- LIG5oOjXD/PjIqoM2cSibDDb/odNBNfukFGvHeJBMMs3+v4k6SppXsmHCN2O7SZ3eluuraAmhcR
- 75MVF/eXECQ3lHp6BZhmIwxtFj8sZUSlNKREkrlqhEui36nL20DjXdvLMCMcVRGPguqHl4krFzV
- bhLcqkZ7kE/W9AJ5uT10xW19rG25vjvhxGfCUpWi
-X-Received: by 2002:a5d:64c8:0:b0:3a0:7c91:4aaf with SMTP id
- ffacd0b85a97d-3a08fb6929cmr1432139f8f.19.1745999846936; 
- Wed, 30 Apr 2025 00:57:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGycdqlDNX4tDu27jpUpX5XOPxPA/nfkHGczAK2D/jRbjNIi4SaHzdDkHqaaPNr3vlSWQgZyA==
-X-Received: by 2002:a5d:64c8:0:b0:3a0:7c91:4aaf with SMTP id
- ffacd0b85a97d-3a08fb6929cmr1432107f8f.19.1745999846532; 
- Wed, 30 Apr 2025 00:57:26 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
+ d=1e100.net; s=20230601; t=1746000082; x=1746604882;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=j9nr8TESjgfGun1eC6o/X3NJTioY9/DFLe1eC77nVsk=;
+ b=ddPpMLOVDyb0mqeDEzypVRDc8IH2eAF4xojXmGihJQoasVldOIRV5IrL6gnWaEedUc
+ gtpUpFSKJ1pT2HRhuxJQhlaMEtS+BF0FYBn7K72yGEsuYdQOQGTA7CeCi35dl+dxPPXT
+ cXl6ng74+KIFxYFbziAtP1ni9lDFVeDJa22QuEhtIcCCWeOTUxlGtLQ5IgaRoSFf/THs
+ O5cnL38yT9Nbv7l+NP34ZF61zFsBC3bxiUe3oXZOBcD2cIOoJQsfPMqw6xhKHaxWn/EM
+ KTYfOAaYNeK8rdcmlpJO8hEdPr/Z1LRwEY6cOlbDQVl9yEwxH0U3zoZ3GhdFzBl9RJJj
+ FfIA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVXUSjN1kwhk/rAC9mXT8eXzgnq/u7nZsOLTDK26ehL1tMbZ7pkl1l2vHx0aJ3gtn15WB+Bod/FQY32@nongnu.org
+X-Gm-Message-State: AOJu0Yz7dPkkvpm03SJ6a/Ri9TsDphnFsDL74aX2U6y701FDfFnSNfBB
+ vPo8ZAhWmUU0IrywE4ujxlaVlre1POk6iyAcquNmcMNkNyhMtOpX3MI2v2d+I2lG0MdaayalwW8
+ B+qH0k5BGcsIYJnerfYuVv7rv5n4X/gTGt6FR37aNwAtHGTls3D9j
+X-Gm-Gg: ASbGncszdmFHQ2ZqRTxD6bgxRNvtp4VC9yZCWDix5v385634CxG+oGkE2viRQF5LxB4
+ PGA5W43a+D/VH9SOMH4uvngqd2/FjitO2JBSNKT9qt/E6QMb7J/M2tLgJL+hnG9UYAbMlT0ip5b
+ bxAAT2gM1QPjsdXt7Du107itOVpE7D3Bo/FpXr6Q9ZHQ+qjBN0RxVB7aNt1+IdYmO0SBLOXWRMw
+ tbq/qsKKMYH8i0P0rJCl15ZPh1AgPFMNhXdalVVs8uAyUEUB8JU0VBvROXLAFLukMzpEFtDvXAU
+ y0cEkec9VHJZkWPimKVxTByFbqjfOwBAS8gP4BbRhw==
+X-Received: by 2002:a05:600c:4e8e:b0:43d:fa59:cc8f with SMTP id
+ 5b1f17b1804b1-441b1f61e4bmr12972105e9.33.1746000081683; 
+ Wed, 30 Apr 2025 01:01:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFvEJ1bCiJtcGWbXSqZtnkq35+DKSD4dqlX7ilzrQ9NkWVFzNuXSvT1P3dkLdDN337XPW3Z2A==
+X-Received: by 2002:a05:600c:4e8e:b0:43d:fa59:cc8f with SMTP id
+ 5b1f17b1804b1-441b1f61e4bmr12971765e9.33.1746000081213; 
+ Wed, 30 Apr 2025 01:01:21 -0700 (PDT)
+Received: from [192.168.3.141] (p4ff231f0.dip0.t-ipconnect.de. [79.242.49.240])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073e5e1c6sm16619596f8f.98.2025.04.30.00.57.25
+ 5b1f17b1804b1-441b2ad781csm15556045e9.8.2025.04.30.01.01.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Apr 2025 00:57:25 -0700 (PDT)
-Message-ID: <5d0e0b69-cbbc-4fa4-a847-fdc8603a8122@redhat.com>
-Date: Wed, 30 Apr 2025 09:57:24 +0200
+ Wed, 30 Apr 2025 01:01:20 -0700 (PDT)
+Message-ID: <210c69d9-803e-41a5-b40c-bc8372e582fa@redhat.com>
+Date: Wed, 30 Apr 2025 10:01:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Drop support for Python 3.8
-To: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Michael Roth <michael.roth@amd.com>,
- =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?= <berrange@redhat.com>,
- Stefan Hajnoczi <stefanha@gmail.com>
-References: <20250425120710.879518-1-thuth@redhat.com>
- <57f21448-79c1-4d46-9a8e-f9109eb67dcd@linaro.org>
- <87jz78b7fh.fsf@pond.sub.org>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v1 1/1] system: optimizing info mtree printing for monitors
+To: Chao Liu <lc00631@tecorigin.com>, pbonzini@redhat.com, peterx@redhat.com, 
+ philmd@linaro.org
+Cc: zhangtj@tecorigin.com, zqz00548@tecorigin.com, qemu-devel@nongnu.org
+References: <cover.1745894489.git.lc00631@tecorigin.com>
+ <8b29b86a9af84edba54cc53aec017224478312bf.1745894489.git.lc00631@tecorigin.com>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <87jz78b7fh.fsf@pond.sub.org>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <8b29b86a9af84edba54cc53aec017224478312bf.1745894489.git.lc00631@tecorigin.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -157,41 +157,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi!
+On 30.04.25 06:02, Chao Liu wrote:
+> Make the hierarchical relationship between nodes clearer by adding characters
+> 
+You should probably move most of your cover letter, including the example, in here.
 
-On 25/04/2025 17.13, Markus Armbruster wrote:
-> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
->> On 25/4/25 14:07, Thomas Huth wrote:
->>> From: Thomas Huth <thuth@redhat.com>
->>> Python 3.8 went "end of life" in October 2024 and Fedora 42 dropped
->>> this version already, so the "python" CI job is currently failing.
->>> Thus it's time to drop support for this Python version in QEMU, too.
+> Signed-off-by: Chao Liu <lc00631@tecorigin.com>
+> ---
+>   system/memory.c | 34 +++++++++++++++++++++++++++-------
+>   1 file changed, 27 insertions(+), 7 deletions(-)
+> 
+> diff --git a/system/memory.c b/system/memory.c
+> index 71434e7ad0..e723928068 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -3296,6 +3296,22 @@ typedef QTAILQ_HEAD(, MemoryRegionList) MemoryRegionListHead;
+>                              int128_sub((size), int128_one())) : 0)
+>   #define MTREE_INDENT "  "
+>   
+> +#define PRINT_MTREE_COL(level) do { \
+> +    if (level == 0) {               \
+> +        qemu_printf("│  ");         \
+> +    } else {                        \
+> +        qemu_printf("│   ");        \
+> +    }                               \
+> +} while (0)
+> +
+> +#define PRINT_MTREE_NODE(is_tail) do { \
+> +    if (is_tail) {                     \
+> +        qemu_printf("└── ");           \
+> +    } else {                           \
+> +        qemu_printf("├── ");           \
+> +    }                                  \
+> +} while (0)
+Just make these static inline functions.
+
+> +
+>   static void mtree_expand_owner(const char *label, Object *obj)
+>   {
+>       DeviceState *dev = (DeviceState *) object_dynamic_cast(obj, TYPE_DEVICE);
+> @@ -3335,9 +3351,9 @@ static void mtree_print_mr_owner(const MemoryRegion *mr)
+>   static void mtree_print_mr(const MemoryRegion *mr, unsigned int level,
+>                              hwaddr base,
+>                              MemoryRegionListHead *alias_print_queue,
+> -                           bool owner, bool display_disabled)
+> +                           bool owner, bool display_disabled, bool is_tail)
+
+
+The growing number of input booleans is a bit suboptimal, and the hard-coded
+"false" in the caller doesn't necessarily make the code easier to read.
+
+We could consider switching to a single flags variable, or maybe convert the
+"bool is_tail" into an enum like.
+
+enum mtree_node_type {
+     MTREE_NODE_T_INNER,
+     MTREE_NODE_T_TAIL,
+}
+
+e.g.
+
+mtree_print_mr(mr, 1, 0, asi->ml_head, asi->owner, asi->disabled,
+                MTREE_NODE_T_INNER);
+
+
+and
+
+enum mtree_node_type mtree_node_type = MTREE_NODE_T_INNER;
+
 ...
->>>    if test -z "${PYTHON}"; then
->>>        # A bare 'python' is traditionally python 2.x, but some distros
->>>        # have it as python 3.x, so check in both places.
->>> -    for binary in python3 python python3.12 python3.11 \
->>> -                          python3.10 python3.9 python3.8; do
->>> +    for binary in python3 python python3.13 python3.12 python3.11 \
->>
->> The 3.13 test was missing in commit 45b14be9b63 ("python: enable testing
->> for 3.13"). Preferably adding in a preliminary commit, otherwise mention
->> in this patch description
 
-Yes, I'll add a sentence to the patch description!
+if (ml == QTAILQ_LAST(&submr_print_queue)) {
+     mtree_node_type = MTREE_NODE_T_TAIL;
+}
 
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+-- 
+Cheers,
 
-Thanks!
-
-> Yes.  The patch looks good to me otherwise.  But John knows a lot more
-> about this stuff than I do; would be good to get his blessing.
-
-Seems like John is currently away from keyboard / busy with other stuff? I 
-think we should go ahead and include this patch to get the CI green again, 
-so I'll add it to my next pull request. If there is still anything that 
-needs to be done on top, it can be done in another patch later.
-
-  Thomas
+David / dhildenb
 
 
