@@ -4,30 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06D3DC369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 07:27:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D6FAC369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 07:27:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA1p2-0001dj-Fv; Wed, 30 Apr 2025 03:25:36 -0400
+	id 1uA1p0-0001co-IE; Wed, 30 Apr 2025 03:25:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dietmar@zilli.proxmox.com>)
- id 1uA1oy-0001c8-0a
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:25:32 -0400
+ id 1uA1ow-0001bg-Hi
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:25:30 -0400
 Received: from [94.136.29.99] (helo=zilli.proxmox.com)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dietmar@zilli.proxmox.com>) id 1uA1ow-0004EG-5u
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:25:31 -0400
+ (envelope-from <dietmar@zilli.proxmox.com>) id 1uA1ot-0004Db-LF
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:25:30 -0400
 Received: by zilli.proxmox.com (Postfix, from userid 1000)
- id 7C4A41C1125; Wed, 30 Apr 2025 09:25:25 +0200 (CEST)
+ id 773F61C0ACB; Wed, 30 Apr 2025 09:25:25 +0200 (CEST)
 From: Dietmar Maurer <dietmar@proxmox.com>
 To: marcandre.lureau@redhat.com,
 	qemu-devel@nongnu.org
 Cc: Dietmar Maurer <dietmar@proxmox.com>
-Subject: [PATCH v5 6/7] h264: add hardware encoders
-Date: Wed, 30 Apr 2025 09:25:23 +0200
-Message-Id: <20250430072524.3650582-7-dietmar@proxmox.com>
+Subject: [PATCH v5 3/7] vnc: h264: send additional frames after the display is
+ clean
+Date: Wed, 30 Apr 2025 09:25:20 +0200
+Message-Id: <20250430072524.3650582-4-dietmar@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250430072524.3650582-1-dietmar@proxmox.com>
 References: <20250430072524.3650582-1-dietmar@proxmox.com>
@@ -58,50 +59,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-add most common hardware encoders:
+The vnc implementation only sends frames when it detects changes in
+the server's framebuffer. This leads to artifacts when there are no
+further changes, as the internal H264 encoder may still contain data.
 
-- nvh264enc: for NVidia hardware
-- vaapih264enc: for common AMD and Intel cards
+This patch modifies the code to send a few additional frames in such
+situations to flush the H264 encoder data.
 
 Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
 ---
- ui/vnc-enc-h264.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ ui/vnc.c | 13 ++++++++++++-
+ ui/vnc.h |  3 +++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
-index 09b974a787..98055c095f 100644
---- a/ui/vnc-enc-h264.c
-+++ b/ui/vnc-enc-h264.c
-@@ -20,7 +20,7 @@ static char *get_available_encoder(const char *encoder_list)
+diff --git a/ui/vnc.c b/ui/vnc.c
+index ba71589c6f..975f3325e1 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3234,6 +3234,7 @@ static void vnc_refresh(DisplayChangeListener *dcl)
+     VncDisplay *vd = container_of(dcl, VncDisplay, dcl);
+     VncState *vs, *vn;
+     int has_dirty, rects = 0;
++    bool keep_dirty = false;
  
-     if (!strcmp(encoder_list, "")) {
-         /* use default list */
--        encoder_list = "x264enc:openh264enc";
-+        encoder_list = "nvh264enc:vaapih264enc:x264enc:openh264enc";
+     if (QTAILQ_EMPTY(&vd->clients)) {
+         update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_MAX);
+@@ -3251,11 +3252,21 @@ static void vnc_refresh(DisplayChangeListener *dcl)
+     vnc_unlock_display(vd);
+ 
+     QTAILQ_FOREACH_SAFE(vs, &vd->clients, next, vn) {
++#ifdef CONFIG_GSTREAMER
++        if (vs->h264) {
++            if (has_dirty) {
++                vs->h264->keep_dirty = VNC_H264_KEEP_DIRTY;
++            } else if (vs->h264->keep_dirty > 0) {
++                keep_dirty = true;
++                vs->h264->keep_dirty--;
++            }
++        }
++#endif
+         rects += vnc_update_client(vs, has_dirty);
+         /* vs might be free()ed here */
      }
  
-     encoder_array = g_strsplit(encoder_list, ":", -1);
-@@ -50,7 +50,19 @@ static GstElement *create_encoder(const char *encoder_name)
-         return NULL;
-     }
+-    if (has_dirty && rects) {
++    if ((has_dirty && rects) || keep_dirty) {
+         vd->dcl.update_interval /= 2;
+         if (vd->dcl.update_interval < VNC_REFRESH_INTERVAL_BASE) {
+             vd->dcl.update_interval = VNC_REFRESH_INTERVAL_BASE;
+diff --git a/ui/vnc.h b/ui/vnc.h
+index 0fe9a9ab16..29012b75c7 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -236,10 +236,13 @@ typedef struct VncZywrle {
+ } VncZywrle;
  
--    if (!strcmp(encoder_name, "x264enc")) {
-+    if (!strcmp(encoder_name, "nvh264enc")) {
-+        g_object_set(
-+            encoder,
-+            "preset", 8,         /* p1 - fastest */
-+            "multi-pass", 1,     /* multipass disabled */
-+            "tune", 2,           /* low latency */
-+            "zerolatency", true, /* low latency */
-+            /* avoid access unit delimiters (Nal Unit Type 9) - not required */
-+            "aud", false,
-+            NULL);
-+    } else if (!strcmp(encoder_name, "vaapih264enc")) {
-+        g_object_set(encoder, "tune", 1, NULL); /* high compression */
-+    } else if (!strcmp(encoder_name, "x264enc")) {
-         g_object_set(
-             encoder,
-             "tune", 4, /* zerolatency */
+ #ifdef CONFIG_GSTREAMER
++/* Number of frames we send after the display is clean. */
++#define VNC_H264_KEEP_DIRTY 10
+ typedef struct VncH264 {
+     GstElement *pipeline, *source, *gst_encoder, *sink, *convert;
+     size_t width;
+     size_t height;
++    guint keep_dirty;
+ } VncH264;
+ #endif
+ 
 -- 
 2.39.5
 
