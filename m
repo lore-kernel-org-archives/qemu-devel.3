@@ -4,139 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E985C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 15:03:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 926F7C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 15:03:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA8xG-0007z8-OB; Wed, 30 Apr 2025 11:02:41 -0400
+	id 1uA8tu-0002JR-Ln; Wed, 30 Apr 2025 10:59:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uA8wj-0007dK-R7
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 11:02:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uA8wh-00038f-1X
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 11:02:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746025315;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=6v2gJGDE5f4p+2XVl88kcJvcEVCZZjzXb+rTxbDh444=;
- b=IDU94ArcXWOphhukm798N2p2MNSKTm9AhKvqpm8PnhYs8CWyuTLcKQxeHgJRjB+Vj1sn7p
- vt3okIUU95FzATngHMmZ8GNP+SFdDtyx7m+enqJDdsMjtHig0d7PcawdJ7KcNu9Oe+OxbW
- ZQF3x4igcl4dDaCo3/cBbcPKT36ev7g=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-134-utE_L26vNmCjmPyRqQtQgg-1; Wed, 30 Apr 2025 11:00:57 -0400
-X-MC-Unique: utE_L26vNmCjmPyRqQtQgg-1
-X-Mimecast-MFC-AGG-ID: utE_L26vNmCjmPyRqQtQgg_1746025256
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43d007b2c79so45778105e9.2
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 08:00:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uA8tl-0002BK-P6
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:58:58 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uA8ti-0002eG-Sg
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:58:57 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-b12b984e791so7043424a12.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 07:58:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746025133; x=1746629933; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8aXdmB6f6CJf71wSR2HMNjOPhUhdvY7cV28foawZJTI=;
+ b=SLk68ec1MROp2P66QANGDxnPQam0wPBuLB2wSMgcYQr2sKC6W6E9XkQ4CT+WXx/3ly
+ aaqUTeJDeHlA6ReLIljUKPXvW9cqargmkn/MdiiPIrch5DIIROBSvW3u1Kvv+26meXDG
+ 8P8tm4jA626yodBPFqaO+E8SC8s5Z/JlJIc1BMn8a6E7i+B1jZV7mqIiA6uCdA95KEDa
+ ThCk3jzMk4ywv0+ojFOr/gu0xtecuEuluH6lMHCfB7X4ifhtLudDJIrV/Lcypye3p5sL
+ ctmtODg2yzXT4SN+WDSuN4hao/bXyh8NAYPPGegAVtQl/83+mmR2HE4tCQvdtWBOnZlm
+ kIlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746025256; x=1746630056;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6v2gJGDE5f4p+2XVl88kcJvcEVCZZjzXb+rTxbDh444=;
- b=T1E6phY8R4HQy7uqxTFpKBReRxij5TGHpQsdb29esohXyUOhdBtAOehQAc/RNXpVc8
- +HBZ1d5Q2IGN5zULFD6y7EMj2eu1tBZOIR2FFrzbvfWaFARWQ5aKTCSJWkhPB74Y+NlQ
- 8sDbnFNdhZSSqH37OJqhtfr4rXPFoK6qU3Ds5s0rHW696Gna9eO/GGTUgBmk1yY+k0xj
- V1v0ipnNGo72XcmCCb8gg4jeQplljPmeZ+rlFO2to2G4X/Y7pZqqbGhEqWAfbmpWXVqb
- HMqLm9Age2iot9NV7RhXUr+B0GRC4+iKje0LjV7YXDB7xAB+dv+J0fe6gyVNSZb1Poqt
- Mvuw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXvYAr1tnT5hppgGy6qaW8LFB9NfT9OM/GMrA67TE+Qlm5CUTFRx4WR50qXmALoybvmleFD1EYDZyRK@nongnu.org
-X-Gm-Message-State: AOJu0YygmA+Y+g0D2NkxcLeINitN2L8qeuWBznKqRkjTVdGECGDrZskL
- 5997RAB2LkjdQQoc8qQic18/wIh6tqtO4ByksZEmHgzeqyrkXNQye9gDHqljwFthJBIhAUcyZ1a
- StSmylQuzihYV3D94Js5DWuK/6GaUP7f/nHC9XXrCgqta5DdDw6tB
-X-Gm-Gg: ASbGnctLTlklxq5pnMuAHvPur5Ci/rqRK5xqeqWCCrJZQQTDtpUApCA9UbsRL6QCxKC
- zOOChiuN2rl1OWkS4BWuPBDwDxdqmYAsR4iHnjWYXQGs3+qnkxVLL/QSEJfy03pwH8AzOgsuCfx
- 5vDgcQYFk+az0GnfPIqtohC7YRzE+4BUgzRXHztm3r99vuef7UTIZwlMVPNphqJoTSIy+GujjeX
- HIxv1KARZ9Bbkc8u49UjT5Xjf82we0bAUvWOy8drx7nFiNKqNxlmtycz03uEhCGoDaReLY89ynl
- yar/IJ+YW49Z20pzpe8dUWBM9SA5nQBM/AZgBFgh
-X-Received: by 2002:a05:600c:4713:b0:43c:f332:7038 with SMTP id
- 5b1f17b1804b1-441b1f5aec7mr25414735e9.21.1746025255897; 
- Wed, 30 Apr 2025 08:00:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFVjaIxrEHc/n47nmtyoFqsP+z4GNiw7Z/4YF5Uh/dtg0bm8GhvHxP84Nmx068biKdtXVglbQ==
-X-Received: by 2002:a05:600c:4713:b0:43c:f332:7038 with SMTP id
- 5b1f17b1804b1-441b1f5aec7mr25414195e9.21.1746025255323; 
- Wed, 30 Apr 2025 08:00:55 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b2b97262sm28617275e9.4.2025.04.30.08.00.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Apr 2025 08:00:54 -0700 (PDT)
-Message-ID: <7f0c4586-8a97-4e64-8abb-58a74b86afaa@redhat.com>
-Date: Wed, 30 Apr 2025 17:00:51 +0200
+ d=1e100.net; s=20230601; t=1746025133; x=1746629933;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8aXdmB6f6CJf71wSR2HMNjOPhUhdvY7cV28foawZJTI=;
+ b=fK8MhPf/5uOKtya7aY33dtxVt2YNp47SZLZCEao9e7ZF7pKcLY5TcgaybVtbZ/1agC
+ irzL0BlIIEbF+5M6nIhop8+a7ce597c/7SBVcuMMXQK1c2W3DsgUX8IJzouXr1AgZiY2
+ tsZ2satV5Remph9o0oH757AEzLOLG4hhSiM+LjddLgg3FU+Vhw9lHC0p16r+XvBZxMk1
+ A5QRR10ROLJ0bHJxk/HTikQKJFwWqubSUc2/irvBrrTM14sNMjze1krz3dFNmAoCp74I
+ i7bJMP+FT2roTINOLCz7jGpBflgiGOpKyUg6evZlTX1OTy+pkEUg5TlJOE4+65n4fyfV
+ XNOA==
+X-Gm-Message-State: AOJu0YzKdLGX1sTjlKWKZUET559yHnVSVrTu/s2IF+d/LgWTLOgc7lLc
+ sGVkt/aqA+r5NjMDewu3AKoPvCtmbuWnIkTdMUmHL9xICrtM2OcZpLz/AEQuRB3eGWlrFDu0aW/
+ L
+X-Gm-Gg: ASbGnctdW2IeCSCHOcUU5cJVwB8RKLcEHZCOXvizDCrFK/4kjTTlYCCPSJbmtnon/vo
+ hWcIw4UwJD5RcbcnXCRVPEJFOG/flfdJ1a2A7rgUO23cJIMqEOQXuTaRIUs77VeVY+wmKMl7iQo
+ nIHCWYhd1VKYfDM09iikziC39Nz/ny8L59HmLt3O2uRNxR0LrkJha+M5JyidJTZ5iySPSlSJaF4
+ zm8u5xdGISPybJKKol8T6nGkWLinyTBFtmQsTH1WDaKR278sNacqNhnVG8qG+JQmS4Nsr+m9M69
+ pTZamfKhqj7VJUfZHu4BSRucZJfe/G9vlDNx0odL
+X-Google-Smtp-Source: AGHT+IFpssHgsSSYtikIQu6tj8ir0gDcjk2YukXZRDxWJf/hcTFbtG7nZrI131KGmvNhHjq05d2fDQ==
+X-Received: by 2002:a17:90b:5444:b0:2f2:a664:df1a with SMTP id
+ 98e67ed59e1d1-30a332d60b6mr5368225a91.2.1746025133341; 
+ Wed, 30 Apr 2025 07:58:53 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-30a34a5bd78sm1705652a91.42.2025.04.30.07.58.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 30 Apr 2025 07:58:52 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ kvm@vger.kernel.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ alex.bennee@linaro.org, richard.henderson@linaro.org, anjo@rev.ng,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 03/12] meson: add common libs for target and target_system
+Date: Wed, 30 Apr 2025 07:58:28 -0700
+Message-ID: <20250430145838.1790471-4-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250430145838.1790471-1-pierrick.bouvier@linaro.org>
+References: <20250430145838.1790471-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Functional tests precache behaviour
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <c83e0d26-4d1b-4a12-957d-c7b7ff4ba1b3@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <c83e0d26-4d1b-4a12-957d-c7b7ff4ba1b3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.483,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,34 +102,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/04/2025 16.34, Pierrick Bouvier wrote:
-> Hi folks,
-> 
-> $ ninja -C build precache-functional
-> 2025-04-30 07:23:20,382 - qemu-test - ERROR - Unable to download https:// 
-> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/ 
-> gzimg/armv7.img.gz: HTTP error 503
-> 2025-04-30 07:23:23,131 - qemu-test - ERROR - Unable to download https:// 
-> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/ 
-> gzimg/armv7.img.gz: HTTP error 503
-> 2025-04-30 07:23:25,870 - qemu-test - ERROR - Unable to download https:// 
-> archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/ 
-> gzimg/armv7.img.gz: HTTP error 503
-> 2025-04-30 07:23:25,871 - qemu-test - ERROR - https://archive.netbsd.org/ 
-> pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz: 
-> Download retries exceeded: skipping asset precache
-> $ echo $?
-> 0
-> 
-> Since we silently skip the asset precaching, how can we identify that an 
-> asset is not available anymore (temporarily or not)?
-> Should we rely on test itself failing when trying to download again this asset?
+Following what we did for hw/, we need target specific common libraries
+for target. We need 2 different libraries:
+- code common to a base architecture
+- system code common to a base architecture
 
-The current logic fails hard for 404 errors, so if the asset is completely 
-gone, we should notice it. For other error codes, we assume that it is only 
-a temporary server problem that will hopefully be fixed on the server side 
-sooner or later.
+For user code, it can stay compiled per target for now.
 
-  Thomas
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ meson.build | 78 +++++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 61 insertions(+), 17 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 68d36ac140f..7b2cf3cd7d1 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3684,6 +3684,8 @@ target_arch = {}
+ target_system_arch = {}
+ target_user_arch = {}
+ hw_common_arch = {}
++target_common_arch = {}
++target_common_system_arch = {}
+ 
+ # NOTE: the trace/ subdirectory needs the qapi_trace_events variable
+ # that is filled in by qapi/.
+@@ -4087,29 +4089,59 @@ common_all = static_library('common',
+ 
+ # construct common libraries per base architecture
+ hw_common_arch_libs = {}
++target_common_arch_libs = {}
++target_common_system_arch_libs = {}
+ foreach target : target_dirs
+   config_target = config_target_mak[target]
+   target_base_arch = config_target['TARGET_BASE_ARCH']
++  target_inc = [include_directories('target' / target_base_arch)]
++  inc = [common_user_inc + target_inc]
+ 
+-  # check if already generated
+-  if target_base_arch in hw_common_arch_libs
+-    continue
+-  endif
++  # prevent common code to access cpu compile time definition,
++  # but still allow access to cpu.h
++  target_c_args = ['-DCPU_DEFS_H']
++  target_system_c_args = target_c_args + ['-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU']
+ 
+   if target_base_arch in hw_common_arch
+-    target_inc = [include_directories('target' / target_base_arch)]
+-    src = hw_common_arch[target_base_arch]
+-    lib = static_library(
+-      'hw_' + target_base_arch,
+-      build_by_default: false,
+-      sources: src.all_sources() + genh,
+-      include_directories: common_user_inc + target_inc,
+-      implicit_include_directories: false,
+-      # prevent common code to access cpu compile time
+-      # definition, but still allow access to cpu.h
+-      c_args: ['-DCPU_DEFS_H', '-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU'],
+-      dependencies: src.all_dependencies())
+-    hw_common_arch_libs += {target_base_arch: lib}
++    if target_base_arch not in hw_common_arch_libs
++      src = hw_common_arch[target_base_arch]
++      lib = static_library(
++        'hw_' + target_base_arch,
++        build_by_default: false,
++        sources: src.all_sources() + genh,
++        include_directories: inc,
++        c_args: target_system_c_args,
++        dependencies: src.all_dependencies())
++      hw_common_arch_libs += {target_base_arch: lib}
++    endif
++  endif
++
++  if target_base_arch in target_common_arch
++    if target_base_arch not in target_common_arch_libs
++      src = target_common_arch[target_base_arch]
++      lib = static_library(
++        'target_' + target_base_arch,
++        build_by_default: false,
++        sources: src.all_sources() + genh,
++        include_directories: inc,
++        c_args: target_c_args,
++        dependencies: src.all_dependencies())
++      target_common_arch_libs += {target_base_arch: lib}
++    endif
++  endif
++
++  if target_base_arch in target_common_system_arch
++    if target_base_arch not in target_common_system_arch_libs
++      src = target_common_system_arch[target_base_arch]
++      lib = static_library(
++        'target_system_' + target_base_arch,
++        build_by_default: false,
++        sources: src.all_sources() + genh,
++        include_directories: inc,
++        c_args: target_system_c_args,
++        dependencies: src.all_dependencies())
++      target_common_system_arch_libs += {target_base_arch: lib}
++    endif
+   endif
+ endforeach
+ 
+@@ -4282,12 +4314,24 @@ foreach target : target_dirs
+   target_common = common_ss.apply(config_target, strict: false)
+   objects = [common_all.extract_objects(target_common.sources())]
+   arch_deps += target_common.dependencies()
++  if target_base_arch in target_common_arch_libs
++    src = target_common_arch[target_base_arch].apply(config_target, strict: false)
++    lib = target_common_arch_libs[target_base_arch]
++    objects += lib.extract_objects(src.sources())
++    arch_deps += src.dependencies()
++  endif
+   if target_type == 'system' and target_base_arch in hw_common_arch_libs
+     src = hw_common_arch[target_base_arch].apply(config_target, strict: false)
+     lib = hw_common_arch_libs[target_base_arch]
+     objects += lib.extract_objects(src.sources())
+     arch_deps += src.dependencies()
+   endif
++  if target_type == 'system' and target_base_arch in target_common_system_arch_libs
++    src = target_common_system_arch[target_base_arch].apply(config_target, strict: false)
++    lib = target_common_system_arch_libs[target_base_arch]
++    objects += lib.extract_objects(src.sources())
++    arch_deps += src.dependencies()
++  endif
+ 
+   target_specific = specific_ss.apply(config_target, strict: false)
+   arch_srcs += target_specific.sources()
+-- 
+2.47.2
 
 
