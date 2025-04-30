@@ -4,131 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2662C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 11:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3FEDC369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 11:17:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA5O5-0001UQ-Hh; Wed, 30 Apr 2025 07:14:01 -0400
+	id 1uA5Qo-0003XO-Bz; Wed, 30 Apr 2025 07:16:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uA5O3-0001TA-Bc
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 07:13:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uA5Qa-0003Um-7q
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 07:16:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uA5O1-00088i-8G
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 07:13:59 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uA5QX-00009v-OJ
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 07:16:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746011634;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1746011792;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=GusUV+t4jIpf/nDzHULR+DMC8F0jpNPmYK6Sr8d1luo=;
- b=cDR0Q+67mEifFQXDPRS12SClWoDh7jlZYzmOGYjnA7oHtrTSwZLXFjtLyKFFGRUSgpyv1A
- 7wPFkHt1rXy5ff/iDtEtgMWOjzKiet9HuKfMVATXfPKnoBYhGYs1E+YrA7Ez0UpfjhSKz9
- PN0Z4k1CvKg1bq5oT/1NxTzcRm4tiPE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-154-cXigi8pRP9KXNRF3c2VyWA-1; Wed, 30 Apr 2025 07:13:51 -0400
-X-MC-Unique: cXigi8pRP9KXNRF3c2VyWA-1
-X-Mimecast-MFC-AGG-ID: cXigi8pRP9KXNRF3c2VyWA_1746011630
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43947a0919aso49103875e9.0
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 04:13:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746011630; x=1746616430;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GusUV+t4jIpf/nDzHULR+DMC8F0jpNPmYK6Sr8d1luo=;
- b=QZ3mNEgsTuTOuQZdHqpBGh75M0NrUlcD+MkmXPz1TnxJtw3VHkHpsQObdhliTGvQai
- r5YbazqvrzRD0vTcy+rpixLkeR0RKhg5jkeWSw7Jn0d3YIcQz8nj3HdVV1E9uZmLyklF
- 3TKOU7saedWppPFTI8ZhNoPbdSDyr3OnMtbTitPju1R3aaMuUNIDpjh/BHKMjkyZebVS
- zcPLzSeuHRFgE7BUwQAqYQfJYX976FhM7/ITgv4ULVs1W+IiD1u3cGbJ3ej2mBubscsC
- dc8Fs8EeuYtpkwx82LgUcw3NXk8LQ3DvnQqaNC2vtup7BWruNDltlk4Hoe4RjdmAYHCB
- yuOg==
-X-Gm-Message-State: AOJu0YzXjT5LaGJ9UP1Qk+lvHOtDpdMahi8c4yTF0bQRIYQTjtVdhA2Z
- fvwcnb/YP+LnHUC3g/NNUOGVH1jynJ0TyxwRn0aoNMuBpkGmoDRhRmUEGTwKOlus+yQS4sAc4Hw
- Uo8IJ8nrwlAeBlenyOTHnK1pqf2Zg/4bhQ9MiBfP7MBztAl5HoXIh
-X-Gm-Gg: ASbGncvCICgRNzDK+ECwz88Ce26Qx9YtYEJWYPMLuMt7XV4JRzqXgOQ83V1/bZF1TXn
- OccstLnAq690SFiSwwE26VPIqhtBTN8MURbDGyCyOKQuXTAR0rudvaj1A+MX4Xt6apojHflEpGH
- sQiCamDylcc78VpqnBzEVy0l1t4DRfMU0yhgfz/osGdSFKv/5JG0QItPbwoslvlwsHKjE3YOrCL
- GLKmBastu4rEgHTUMkATB1sKaz6weUtALUP6e05c5E7xFpFXkMp5vD+mBhippq68awowmyomHfA
- HQTtwSEYa7SmVRfe+vqjal8JdW1106SBDzubFecQ
-X-Received: by 2002:a05:600c:384a:b0:43c:ec28:d31b with SMTP id
- 5b1f17b1804b1-441b263a413mr23086585e9.10.1746011630257; 
- Wed, 30 Apr 2025 04:13:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFqpHv6jqcOwe7UyiN3VGOc4SMHlg72RuQ6VeuRTJIh8vg57AfIWBhi8zhe0ymfrrXHFV2NvA==
-X-Received: by 2002:a05:600c:384a:b0:43c:ec28:d31b with SMTP id
- 5b1f17b1804b1-441b263a413mr23086265e9.10.1746011629840; 
- Wed, 30 Apr 2025 04:13:49 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b2bbc613sm21296105e9.31.2025.04.30.04.13.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Apr 2025 04:13:49 -0700 (PDT)
-Message-ID: <d5585d6b-fc61-4127-9acb-6235271fc45a@redhat.com>
-Date: Wed, 30 Apr 2025 13:13:48 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=7aTdI0eXcHL+/EB0i8qpArKPzXZkLK5tj67K3mmoyHo=;
+ b=PC8Les/NNA+gulEkDLHJFEgQW7U+GHfpsRA30wsg0ovcBBDQP6FY1QopgfwYiIwllVDOfq
+ KhpEpnXT3DLEjd5y7ptOX0FyZ6k8MHisAsEDaziLLRRewPo+AHFdRjGugPmWXLqJvlffKP
+ 9ujtxbmZPcUy9j6JBXrqW2jnKba8O9M=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-kCOjktBiM0WyWYNRPDrKiQ-1; Wed,
+ 30 Apr 2025 07:16:28 -0400
+X-MC-Unique: kCOjktBiM0WyWYNRPDrKiQ-1
+X-Mimecast-MFC-AGG-ID: kCOjktBiM0WyWYNRPDrKiQ_1746011783
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9603319560A0; Wed, 30 Apr 2025 11:16:21 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.35])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B034F18001D5; Wed, 30 Apr 2025 11:16:08 +0000 (UTC)
+Date: Wed, 30 Apr 2025 12:16:05 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Mark Burton <mburton@qti.qualcomm.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Alessandro Di Federico <ale@rev.ng>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Anton Johansson <anjo@rev.ng>, Brian Cain <bcain@quicinc.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, Neo Jia <cjia@nvidia.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ "Wedgwood, Chris" <cw@f00f.org>, dhedde@kalrayinc.com,
+ Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Auger Eric <eric.auger@redhat.com>,
+ Felipe Franciosi <felipe@nutanix.com>, iggy@theiggy.com,
+ Warner Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Jason Gunthorpe <jgg@nvidia.com>,
+ Jidong Xiao <jidong.xiao@gmail.com>, Jim Shu <jim.shu@sifive.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
+ Luc Michel <luc@lmichel.fr>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Max Chou <max.chou@sifive.com>, Meirav Dean <mdean@redhat.com>,
+ mimu@linux.vnet.ibm.com, "Ho, Nelson" <nelson.ho@windriver.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Bernhard Beschow <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>,
+ z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ "Wu, Zhiyong" <zwu.kernel@gmail.com>
+Subject: Re: KVM/QEMU Community call 29/04/2025 agenda items?
+Message-ID: <aBIGdQab_PufZ2X6@redhat.com>
+References: <874iy85yx2.fsf@draig.linaro.org>
+ <eefb308b-5cd8-4b30-bc32-e37f601cb07b@linaro.org>
+ <CABgObfYmm2RgFUuViDJA_cuqeCUOh_DV5Qar8YLnrbfYVV39VQ@mail.gmail.com>
+ <87a57ydj8y.fsf@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] tests/data/vmstate-static-checker: Add dump files
- from QEMU 7.2.17
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- John Snow <jsnow@redhat.com>
-References: <20250429152141.294380-1-thuth@redhat.com>
- <20250429152141.294380-4-thuth@redhat.com> <aBFTE8r3lyqUcAsT@x1.local>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <aBFTE8r3lyqUcAsT@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87a57ydj8y.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -150,74 +119,134 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/04/2025 00.30, Peter Xu wrote:
-> On Tue, Apr 29, 2025 at 05:21:40PM +0200, Thomas Huth wrote:
->> From: Thomas Huth <thuth@redhat.com>
->>
->> For automatic tests, we need reference files from older QEMU versions.
->> QEMU 7.2 is a long term stable release, so it's a good candidate for
->> checking whether the migration could still work correctly. Let's add the
->> files from that version that have been taken with the "-dump-vmstate"
->> parameter of QEMU (compiled with single machines and the configure switch
->> "--without-default-devices" to keep the json files reasonable small).
->>
->> Some devices also have been removed manually from the json files, e.g.
->> the "pci-bridge" (which can be disabled in later QEMU versions via Kconfig),
->> and some Linux-related devices like "scsi-block" and "scsi-generic" and
->> KVM-related devices. Without removing them, we might get errors otherwise
->> if these devices have not been compiled into the destination QEMU build.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   MAINTAINERS                                   |    1 +
->>   .../aarch64/virt-7.2.json                     | 2571 +++++++++++++
->>   .../vmstate-static-checker/m68k/virt-7.2.json | 2936 ++++++++++++++
->>   .../ppc64/pseries-7.2.json                    | 1068 ++++++
->>   .../s390x/s390-ccw-virtio-7.2.json            |  475 +++
->>   .../x86_64/pc-q35-7.2.json                    | 3402 +++++++++++++++++
->>   6 files changed, 10453 insertions(+)
->>   create mode 100644 tests/data/vmstate-static-checker/aarch64/virt-7.2.json
->>   create mode 100644 tests/data/vmstate-static-checker/m68k/virt-7.2.json
->>   create mode 100644 tests/data/vmstate-static-checker/ppc64/pseries-7.2.json
->>   create mode 100644 tests/data/vmstate-static-checker/s390x/s390-ccw-virtio-7.2.json
->>   create mode 100644 tests/data/vmstate-static-checker/x86_64/pc-q35-7.2.json
+On Wed, Apr 30, 2025 at 12:41:17PM +0200, Markus Armbruster wrote:
+> Paolo Bonzini <pbonzini@redhat.com> writes:
 > 
-> This looks like an improvement indeed, it so far only covers machine type
-> 7.2, rather than all machine types.  I used to run these by hands before
-> each release.. and sometimes I forgot.  Before me, I am aware at least Dave
-> used to run also during softfreezes.
+> > Il lun 28 apr 2025, 14:58 Philippe Mathieu-Daudé <philmd@linaro.org> ha
+> > scritto:
+> >
+> >> On 28/4/25 13:05, Alex Bennée wrote:
+> >> >
+> >> > Hi,
+> >> >
+> >> > The KVM/QEMU community call is at:
+> >> >
+> >> > https://meet.jit.si/kvmcallmeeting
+> >> > @
+> >> > 29/04/2025 14:00 UTC
+> >> >
+> >> > Are there any agenda items for the sync-up?
+> >> >
+> >>
+> >> For single binary / heterogeneous emulation, we'd like QAPI to
+> >> be "feature-agnostic". In particular, using the example of KVM
+> >> accelerator, whether a binary can run with it built-in or not
+> >> should be is irrelevant for management applications: they should
+> >> only check if it is used (enabled).
+> >>
+> >> The following series is adding KVM specific structures and commands:
+> >>
+> >> https://lore.kernel.org/qemu-devel/20250409082649.14733-2-zhao1.liu@intel.com/
+> >> It could be interesting to discuss if this can be avoided. But this
+> >> can also be discussed on the mailing list (as it is still currently).
+> >>
+> >
+> > Would it be possible to just mark the commands as "do not autoregister" and
+> > then do the registration (for example) at machine/accelerator/CPU creation?
+> >
+> > I think qemu-ga already has a similar run-time registration model but I
+> > don't know why QEMU does not use it.
+> 
+> I think we covered this to a degree in
+> 
+>     Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
+>     Message-ID: <87a584b69n.fsf@pond.sub.org>
+>     https://lore.kernel.org/qemu-devel/87a584b69n.fsf@pond.sub.org/
+> 
+> But let me try to give you a shorter argument.
 
-Since I had to strip down the dump files quite a bit (compiling QEMU with 
---without-default-devices etc.) to avoid errors when the current build is 
-limited, it's maybe best if you continue checking manually at least once 
-during the soft-freeze with a non-stripped json file.
+snip
 
-> One thing I am wondering is if we can do it the same way as the compat
-> migration test in CI, so that we always compare with a base (which is the
-> previous release binary), then move the base after each release.
+> Another example: the KVM PMU filter series linked above wants to define
 > 
-> After all, due to migration-compat-common CI job, we always build the base
-> version of QEMU already in build-previous-qemu, so we already have two
-> binaries at hand.  IIUC we only need one new job to generate the two JSON
-> blobs, and feed them to the checker on both directions.
+>     { 'enum': 'KvmPmuEventFormat',
+>       'data': ['raw', 'x86-select-umask', 'x86-masked-entry'] }
 > 
-> If that is the case, it might have a benefit that we can cover all the
-> machines as long as listed on both binaries, then check all of them?
-> 
-> Meanwhile, if we keep the ball rolling for each release (by boosting the
-> base QEMU binary version), IIUC it guarantees all the new binaries will
-> make sure to provide compatible VMSDs all across since we start running the
-> job.
-> 
-> Would that work?
+> The enum makes sense only when we have CONFIG_KVM.  Member @raw makes
+> sense regardless of target then.  The other two only for TARGET_I386.
 
-I can have a try, though we might need to teach the checker script some more 
-things first, e.g. it's getting confused if we clean up old and unnecessary 
-fields like in commit 445d3facffe82788b880107c0849dab9505b33d9 ...
+NB, ...makes sense only when we have CONFIG_KVM **and** the QEMU
+process was launched with '-accel kvm'.
 
-  Thomas
+It feels strange that we want our reported schema show a difference when
+we launch "qemu-system-x86_64 -accel tcg" between two builds one with
+and without CONFIG_KVM, when KVM is not in use ? 
+
+Or to reverse the question, why does it matter if we report existence
+of KvmPmuEventFormat unconditionally ?
+
+> We could elect to forgo such conditionals.  The main disadvantage is
+> loss of precision in query-qmp-schema.  Which may or may not matter, and
+> may or may not box us into corners.
+
+Is the precision we have justifiable ?
+
+When it comes to runtime configuration QMP is already imprecise.
+
+eg set-cpu-topology on x390 is KVM only but still there
+   when running with TCG
+
+eg reporting query-hotpluggable-cpus on machine types that
+   lack hotplug
+
+eg reporting set-numa-node on arches/machines that lack NUMA
+
+eg reporting query-balloon when no balloon device is present
+
+eg reporting various xen- commands when either the target
+   or machine type lack Xen support
+
+eg reporting many cxl-* commands when either the target
+   or machine type lacks CXL support.
+
+IOW the use of TARGET_ conditionals are only addressing a very
+narrow area of (im)precision, whose rationale is largely an
+artifact of our historical separate binary / multiple builds
+choice. The only real justification for continuing with this
+is that we've always done it.
+
+Creating a general runtime conditional mechanism in QAPI feels
+like opening a pandora's box.
+
+We'll have a mechanism but it will be impractical to use it fully
+enough to be able to claim we are actually precise. The scope of
+runtime choices/conditions is too huge.
+
+It risks creating a mechanism that requires a never ending stream
+of patches to address continually reported gaps. A potentially
+significant maintainer burden.
+
+By comparison the CONFIG_ conditionals in QAPI, both the scope
+and semantics clear and it is a fairly tractable problem, although
+even there we miss them eg lack of CONFIG_XEN conditions on xen
+commands.
+
+> Pierrick volunteered to explore evaluating target-specific QAPI-Schem
+> conditionals at run-time instead of compile-time.  This would preserve
+> the value of query-qmp-schema, unlike conditional command registration.
+> 
+> Finally, syntax isn't everything.  We need to preserve behavior, too.
+> But that's a separate topic.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
