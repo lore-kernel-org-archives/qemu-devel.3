@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5666BC369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 23:19:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC05C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 23:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAGho-00020p-9X; Wed, 30 Apr 2025 19:19:08 -0400
+	id 1uAH3f-00018S-Qm; Wed, 30 Apr 2025 19:41:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uAGhk-00020H-N6
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:19:04 -0400
-Received: from mail-vs1-xe33.google.com ([2607:f8b0:4864:20::e33])
+ id 1uAH3b-00017G-CN
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:41:39 -0400
+Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uAGhh-0000yV-JX
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:19:03 -0400
-Received: by mail-vs1-xe33.google.com with SMTP id
- ada2fe7eead31-4c4e1f16833so124777137.0
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 16:19:00 -0700 (PDT)
+ id 1uAH3Z-0003h6-MU
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:41:39 -0400
+Received: by mail-ua1-x92b.google.com with SMTP id
+ a1e0cc1a2514c-877d7fa49e0so274501241.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 16:41:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746055140; x=1746659940; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746056496; x=1746661296; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VlqUPiaS8swxqLxhzxQjhANIIzxQwz6aEkHL7nXuK7k=;
- b=Z0AsvplID9tIcQZu4YyCOKBOU7WkfGgUXzQLfQWO2ovHP0fFAN0pvqFrJt36Dz/7ON
- Hhi78j0DTijH/Jqa0dU8Xw6Xj0GT9HO2Na3Q06CvT4k/KubGEfxH+VZpC2n1rTZXMR+7
- Llff/FCQ8AVgnU8jqkJ88UiDexBCJSYWOi3yH46o74PmJw16KNlRFKzxo0pRUzzOnlC1
- w8ZKaiQIKevGk6FwkVT/AZpBKmLyIuU8rfejhXx2lZDrzoif9rhbG+WZEUoP8my/DKFf
- eqUx9nHyiYswBJ+q15bkdolgfVvMKIa7hafx7z2EJAodJBmywxR3R33rS4ix4R0J+aCj
- Mxmw==
+ bh=/nIo+B+FB7JUgd3BdCGZVRcayO+o9ImyQz+XIjMdkFA=;
+ b=eGFx9AXuzNWNzcw1nuFUN1GFRXbHlGQxdJ8OpdooCimbdVsIXAC4fi0m1yUdiN4VqK
+ /0BKOQIklXb6nqph914pNXw/BMj2cteo3olwO78+iHFG5GHC+Z5W/dtrwCbEzL5+FePb
+ vcRA7B0LgkLwsNlaNRPM0Iff7RRhfv5q5dD7s5Xx98lLL0HLmloVd+a02dpDxjiJfES+
+ aI9Gdu/MbSlO4n/WN/OfFxeEybBfYff1+FkgAhvbpHhe6FDQqm5dzOL4kY9IixbDlFyI
+ MmXe0x/7S1okjvMUmLD/jnXquwEzGkNHxlY/a1H0H6GN8Z8GIh6kp/0hLKtg8dESu4Hp
+ O1uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746055140; x=1746659940;
+ d=1e100.net; s=20230601; t=1746056496; x=1746661296;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VlqUPiaS8swxqLxhzxQjhANIIzxQwz6aEkHL7nXuK7k=;
- b=NTYJeaaFTjQANpHWihePFfFbD60LeZhF4MY2QT46qxYbe6+gMDwzRP1avip+jTcG1L
- QcCicyDm13C8idOQgHC2SDAMp/ytmoYS9ZSysTPXq7s59J/ZSb/N3zhL04tB12LyKzdj
- oV2xxwDYiz++xlHLpm2UMNHkGOruP1h/IFDa7UR3j23ekNOX3pLQ4Xnmk0AmDiJoBrYl
- +3WZtgQn8DzTJ1j2kMahKZnpxQMu75OnvKykLseEF/4VzogSFWvsFbb+PRoncbS3OkWI
- qa6yjoBqvFu3qwTnnSA5SwMxW93peQDKavP8ZNFYSDK2fylfLEA1ol1uABEFKMxCcpZC
- bhiw==
-X-Gm-Message-State: AOJu0YwvHW7Tci9ILRTV7uGM7Z3KcWIqPvzqNr/QsaICKDavfl8L9D2w
- sy2H7nbo99EwC/xW9hc1dpiQkqcpTBdHZOUBekWooGxwYdMrTFHYv9R9To/QdJpOl6qNS9LDRMX
- apJClkxiiBr7iytl9/X9bJqxR5owqMQ==
-X-Gm-Gg: ASbGncujbBwgJqRaNE7H1B1ZTs+WYSRLorpKq3D/E2Al0Ly0Yp+nqEVwY6H0JAbYiOp
- 2H6LFqMFUEkRH67T3lpotTSMJ8Y3FtUGJjMnDi6yfmlkB1LTBVZLu1EAaqb5np+9lc4g2PbLuYk
- SAhE3m4Hys30WO/7nCGvRHpginrBev5BRjnlaPDgXkXy7zZOhsF+sD
-X-Google-Smtp-Source: AGHT+IGuoL8L5WPConSB8X1JZgzkm63IdVjFO0l8PtWGxryC8UmM6e1ZXBtl3T3DmGLNhFr7JS1fkFDJkMvvos5gI9k=
-X-Received: by 2002:a05:6102:3909:b0:4bb:d062:455 with SMTP id
- ada2fe7eead31-4dae8c2acb4mr218619137.0.1746055139763; Wed, 30 Apr 2025
- 16:18:59 -0700 (PDT)
+ bh=/nIo+B+FB7JUgd3BdCGZVRcayO+o9ImyQz+XIjMdkFA=;
+ b=ciqhKO/TQ911OpM19848s79vWmIawJo6tvGKs/NRc3e32jdyHyUImjozOGcJdAeTG6
+ v06a8nZl6NhIj5TlcLJNIvdjqLNkeaM8loQ9zkTPYQjpAU7dwueQMWK+evKmwZ2/G61B
+ i1bzCt9MaMKG1JVG4g/5qJEhfzBQRShTvEMoRWNlRJyrL+nLH+R2V4cVkVerPj7F325S
+ Y+qEFxjOm9Yy/I0aftoTQ9JZcXMWsgBuSIEDmIRf+PeFi+bjalQUl4ObCNy27lST5XMK
+ M5qwoADehuYfvFaMeRZM5D7OBLV8Vis8KpVkN6gl1eMtNFxWhsIJRU5JkIAJiQ9E2QUu
+ nsXw==
+X-Gm-Message-State: AOJu0Yx9mDamqSxvIvnTWwWlJ4qwlvumUH59K1TgGe9atWb/azL4uQT3
+ 2TrSJzJ/ByocP84EAAh9KUwAbCH8+3hsrfnP7eBswGFOL2+E2muXw0vDsJvgIpGDxqmZW676xMl
+ 1s6H2qVHdhVt8YmzHqGCYZ87BE40=
+X-Gm-Gg: ASbGncssOa3O0n9lb1JlMCnTupc3I5vG/wZmcRAxuL77pQgDSM66v/35gdCKBZjTEQN
+ mEjKTsl39gCP/f7p6iImCIujAMcXDgKJjKGuhbUHNnPSyM4rcX8DPfMajf9lo4jWFBOxc90aTTy
+ YYBITLL9td9mL2vVS1uCYcPG7fPtE7AnK6z3skRg1ru0lc5hdlZRgs
+X-Google-Smtp-Source: AGHT+IGm6HdDPePiO3RYADMFo7wGqwLhgMwz83wlTL/+X9pT7q+2lGpqNI6Q3L6u+eYUVTHEIu/OvRHx0+jgLfBfja8=
+X-Received: by 2002:a05:6102:2c17:b0:4bb:c24b:b61a with SMTP id
+ ada2fe7eead31-4dae926fad9mr218767137.19.1746056496067; Wed, 30 Apr 2025
+ 16:41:36 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250429124421.223883-1-dbarboza@ventanamicro.com>
- <20250429124421.223883-10-dbarboza@ventanamicro.com>
-In-Reply-To: <20250429124421.223883-10-dbarboza@ventanamicro.com>
+In-Reply-To: <20250429124421.223883-1-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 1 May 2025 09:18:33 +1000
-X-Gm-Features: ATxdqUHHhqytRfncIH20zTINm8crXNAaI2Nv-MLPywDfI4zPtZS_h75VW9e23Rg
-Message-ID: <CAKmqyKMf+ZiFAP7+zwq-T_TtS8pAZmE_Mjya0RH4N0zHGPXnuA@mail.gmail.com>
-Subject: Re: [PATCH v5 9/9] target/riscv/kvm: add scounteren CSR
+Date: Thu, 1 May 2025 09:41:09 +1000
+X-Gm-Features: ATxdqUF005LrIvTFFHDqVj-D8te9RyyRbFg6DbvsXDxYvUl1uR-ePAL9LLi0Lgg
+Message-ID: <CAKmqyKPBpOckC6-7TB2pdMLjjeCRyV4JDXeufcEEdpkvmocV6g@mail.gmail.com>
+Subject: Re: [PATCH v5 0/9] target/riscv/kvm: CSR related fixes
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, ajones@ventanamicro.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e33;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -95,45 +94,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 29, 2025 at 10:47=E2=80=AFPM Daniel Henrique Barboza
+On Tue, Apr 29, 2025 at 10:46=E2=80=AFPM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> Add support for the scounteren KVM CSR. Note that env->scounteren is a
-> 32 bit and all KVM CSRs are target_ulong, so scounteren will be capped
-> to 32 bits read/writes.
+> Hi,
 >
-> Reported-by: Andrew Jones <ajones@ventanamicro.com>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+> This version has a fix on patch 8 where I did use an extra variable and
+> happened to set the wrong mask too.
+>
+> We'll let the compiler cast the uint32_t from an uint64_t reg. A cast
+> was added for extra clarity when reading the code, although some picky
+> toolchains might require an explicit cast in this case too.
+>
+> No other changes made.
+>
+> Patches missing acks/reviews: patch 8.
+>
+> Changes from v4:
+> - patch 8:
+>   - remove the 'reg32' variable and add an uint32_t cast when passing
+>     the uint64_t var 'reg' to kvm_cpu_csr_set_u32()
+> - v4 link: https://lore.kernel.org/qemu-riscv/20250428192323.84992-1-dbar=
+boza@ventanamicro.com/
+>
+> Daniel Henrique Barboza (9):
+>   target/riscv/kvm: minor fixes/tweaks
+>   target/riscv/kvm: fix leak in kvm_riscv_init_multiext_cfg()
+>   target/riscv/kvm: turn u32/u64 reg functions into macros
+>   target/riscv/kvm: turn kvm_riscv_reg_id_ulong() into a macro
+>   target/riscv/kvm: add kvm_csr_cfgs[]
+>   target/riscv/kvm: do not read unavailable CSRs
+>   target/riscv/kvm: add senvcfg CSR
+>   target/riscv/kvm: read/write KVM regs via env size
+>   target/riscv/kvm: add scounteren CSR
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
-> ---
->  target/riscv/kvm/kvm-cpu.c | 2 ++
->  1 file changed, 2 insertions(+)
 >
-> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-> index d55361962d..ff22ad1fb6 100644
-> --- a/target/riscv/kvm/kvm-cpu.c
-> +++ b/target/riscv/kvm/kvm-cpu.c
-> @@ -251,6 +251,7 @@ static KVMCPUConfig kvm_csr_cfgs[] =3D {
->      KVM_CSR_CFG("stval",      stval,      RISCV_CSR_REG(stval)),
->      KVM_CSR_CFG("sip",        mip,        RISCV_CSR_REG(sip)),
->      KVM_CSR_CFG("satp",       satp,       RISCV_CSR_REG(satp)),
-> +    KVM_CSR_CFG("scounteren", scounteren, RISCV_CSR_REG(scounteren)),
->      KVM_CSR_CFG("senvcfg",    senvcfg,    RISCV_CSR_REG(senvcfg)),
->  };
->
-> @@ -701,6 +702,7 @@ static void kvm_riscv_reset_regs_csr(CPURISCVState *e=
-nv)
->      env->stval =3D 0;
->      env->mip =3D 0;
->      env->satp =3D 0;
-> +    env->scounteren =3D 0;
->      env->senvcfg =3D 0;
->  }
+>  target/riscv/cpu.h         |   1 +
+>  target/riscv/kvm/kvm-cpu.c | 333 +++++++++++++++++++++++--------------
+>  2 files changed, 212 insertions(+), 122 deletions(-)
 >
 > --
 > 2.49.0
