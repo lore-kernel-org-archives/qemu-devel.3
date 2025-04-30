@@ -4,97 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70851C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 14:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 409F1C3ABA9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 14:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA8pW-0000FC-2z; Wed, 30 Apr 2025 10:54:35 -0400
+	id 1uA8tl-00028z-3u; Wed, 30 Apr 2025 10:58:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uA8pB-0000Ci-Ff
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:54:22 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uA8ti-00027J-Sm
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:58:54 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uA8p8-0002F0-Fy
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:54:12 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-acb5ec407b1so1183706266b.1
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 07:54:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uA8tg-0002dq-VY
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:58:54 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-aee773df955so1030644a12.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 07:58:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746024847; x=1746629647; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=B+92xMN9Y45fxRWHmYk42+bc5VvQ4fHNq1jKXEpkmFY=;
- b=W+gP8bhQ7L4fp+Sw80KU9MBrZD1PtXwPdfV8WXSeTWIKGt2sbRfssJQ66/bjO+/ryF
- fHXu4sPnxiaao1inQIBiuzbSNJqQabJiHFHJlvpA+xME4oBVQfOpwh4Gi4zi5iX28fTs
- QSyaxK5XTvQadP03hiZ6sbdMdPLLLBcmbVQcJVhaap4vUY3Ahxq2ucDjzug3d4aZFDNE
- XLJnXn4/xHYAHR0cxikXnfCj1/v8iFLpolUfJcsH9/lNfiTLkqWVlDdZrWjlIxwENzql
- Q0x/KI74j0mplUXioBhmVgys7Bc6UMVqird5iqItoj1Aa2uXjgtk9Yb5014KHISCTKQ/
- mlTQ==
+ d=linaro.org; s=google; t=1746025131; x=1746629931; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=B2+JbLMiiUYaemZWDCUtTt3O9Oj1MSI0kp/U5wwWhSE=;
+ b=i6z+mE+Q11rzyoVogFPoNK5MbOkDNPGfz09NvIlUcCH/wHBquWuGC7iQAmHpq0oDga
+ F4aJ1yOzYG4gmMU6y2pWcpPr6YHfsKvj5hV80DWNhtiCYQNb5hGRvwZke2MsbCpucD7W
+ WQFyaTq1jBvJOi2Y2XO9RD+vw84gfj5V4bTZ8ujIdh/jFP3fAndyG5mnvvdTYxMpsROB
+ N1BB52b0a16HlRjRL2WJz3s9B+dPnNnLGbr3mybfGbDR5lxoUzOsfDun5Xox+tyiuQXa
+ VItcEE0kG8gg0o/gk37mfKH+ikPLm9LE4kxrqHIoThcRJRFmQw7yewi3G/EvCxCOASQI
+ UqUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746024847; x=1746629647;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=B+92xMN9Y45fxRWHmYk42+bc5VvQ4fHNq1jKXEpkmFY=;
- b=MeawY7k7x8/6hxpFYNkjCua6Ryo/oGJxk3L1GifwKFWws8RIn++Asp1dvfbfaDBoeg
- aO4EXa6p79RwAflB4MeUrbg3fXZKtScy++fl6UbL+F4S8bwnO40l1/LxHAITnBJ39lDY
- Kb2ouMM47975BU+sOT/JFUaPTlMvSRZbtonL63iJKOdtPjSaOjlA4h0Vdo6I39HXVBnp
- JgpqlfMeT4A6qFpUF81jSTrgMS+R3Ii8XaNLSrTWt8z4aY4/M3Lk94X1fiiNhJbrQobs
- UiRcsmLiyr54o8dhZ5OCO+IEQPs0b2v4tbU4RjjvivJ1sIRGia5oeE5B3VBm6exv8krd
- 9U3g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbUCzxGoSs8KT/o2uXR2hRguXaQNtXVsWsBUuszT7dmP8ovcy4xPY2tzCQZRUJB1+yhApXAH0h/YUf@nongnu.org
-X-Gm-Message-State: AOJu0YxeglDSA1sZvfJmfH6vFnJfEZ4FN0lem2OgEHUfg7KZLEDZVNFx
- 0WGzc7UdTZHLIhPeRLnwgmEl72dtGDNLqbm9JR8H/lVOjsyBL2tmr6u1Fnmj9KCQnR2lXxGj6vv
- RBbc=
-X-Gm-Gg: ASbGncsXLKYgiAsxPjTlL4PyJ/LO28alKEZzyS8PeQO+MWGigbwVN+vUm8yEWMeTjL4
- YNtaMqBwL5ecKU974JSxd9/HYgKTnPl1fdNzjgPj+kuEspiYorAxjgY/w657XG7hgYOWE/5gvf4
- WLewkswBrGXrYDd+zKcAUbw8GDEp1s3sIPF3jsprAqKU3iWhWSmMWZP6RyhKqUnx/ySPvOBbORI
- i2ZbE0Ft3VDN4upIsKpkc2gwFLoxZDF5nv50pKals/lc0D+ji7ZiVGJZIYhkN5A7bP9nOLLPp8A
- iWsiGYmjyMMfcqOdQ2CkeoQXvgJ9WkQjj4qLP8fV/R7cySRQmam9ig==
-X-Google-Smtp-Source: AGHT+IHw1n8hOOC+FIuRt7dZgS/vS/2EWlnk5LSfzsvrCEWOcZMVkGZFLshnFM/iYczssXZtToAskA==
-X-Received: by 2002:a17:907:2d9f:b0:ace:3a35:43f2 with SMTP id
- a640c23a62f3a-acee215d9d2mr280135566b.6.1746024847425; 
- Wed, 30 Apr 2025 07:54:07 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-acebe215210sm358788266b.68.2025.04.30.07.54.06
+ d=1e100.net; s=20230601; t=1746025131; x=1746629931;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=B2+JbLMiiUYaemZWDCUtTt3O9Oj1MSI0kp/U5wwWhSE=;
+ b=F4kxjlnHEIXxXqEjqZwPiz7UrMafUlLAVfUUzMWUW6yILP7+SVA2hVTB5f1y0ydn2/
+ A+A1/uVdlokq2GNrdbc7S/5wWpyAOoEqaAZAEUaYCMlB3GUp4jscfvh2UJiwPUfCYR+Q
+ 2FY91DXsA03XpjGlQ/7FNAVEJSZUn/rsDy440guYGTZPx5nXUSeTA77UQv7m2w/wyeqR
+ 9C2N0KzeBaO9FOPWy6hgd9iZwdUoiy9FmidNoBn8feFEN/RR6eMeUc5Xquj6g+obeTJl
+ s4PUxjwVqtwh+se2I4XgBOmWK1F919SD+4orfy/cbvsjZX2YeJtcDj0UpW4lbX4pXo65
+ EpRg==
+X-Gm-Message-State: AOJu0YxKW1QZql7vXFyzU088SvntLkRgYXzx9rVmwy0wtJLUlH1U83uP
+ 8x76K3dK/puqsSJkN2V5j27Ou53CLjWm3ZPrwYY1Xqa92ajEocasbFRAnskbOL+oYNLgc+MLTkO
+ M
+X-Gm-Gg: ASbGncub57uGsFdo4yiY+jeFSGhqX+0GXt2E8GwytHAfv4S9rO7R5DZoNv+dQd2qYy8
+ vqrINyel3ZmdyVL1PvbcISDqHYRzReOVIF6YZtdTGjKxYiyzPfCnWR6Tpv01jfyrk0Gol2lrLWE
+ hHT2pBkztUG/8gAQQ0Eb/NpASdm+OVkN/TGYVxOgtDRIbqHLgQUfZfwNRDRFyKiENWRj/qUUrHR
+ jKUNT0LxBAQoDm0tGzW2ANpF7ufXLUsAjpSQaOXGmf4zeCxQCb2b6J109w21JoLy3MhI3XUWyve
+ rEMukILFjpUNgWdXBS0blEvEqFEsdOPJRGfu4DdP
+X-Google-Smtp-Source: AGHT+IGVJzpOY1sOKyELald78Uh/X55cVaOwtQ3xJcxUF7oIJGgGU4BQTL1AHVt8pNiGxX22IiuDXQ==
+X-Received: by 2002:a17:903:2ecb:b0:215:9eac:1857 with SMTP id
+ d9443c01a7336-22df4747f3emr44018045ad.5.1746025130724; 
+ Wed, 30 Apr 2025 07:58:50 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-30a34a5bd78sm1705652a91.42.2025.04.30.07.58.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Apr 2025 07:54:06 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0C8CF5F8BB;
- Wed, 30 Apr 2025 15:54:06 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,  qemu-devel@nongnu.org,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Laurent Vivier
- <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH v2] tests/qtest/libqos: Avoid double swapping when using
- modern virtio
-In-Reply-To: <20250430132817.610903-1-thuth@redhat.com> (Thomas Huth's message
- of "Wed, 30 Apr 2025 15:28:17 +0200")
-References: <20250430132817.610903-1-thuth@redhat.com>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Wed, 30 Apr 2025 15:54:05 +0100
-Message-ID: <87v7ql1z02.fsf@draig.linaro.org>
+ Wed, 30 Apr 2025 07:58:50 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ kvm@vger.kernel.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ alex.bennee@linaro.org, richard.henderson@linaro.org, anjo@rev.ng,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 00/12] single-binary: compile target/arm twice
+Date: Wed, 30 Apr 2025 07:58:25 -0700
+Message-ID: <20250430145838.1790471-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,25 +100,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+More work toward single-binary.
+This series convert target/arm/cpu.c.
 
-> From: Thomas Huth <thuth@redhat.com>
->
-> The logic in the qvirtio_read/write function is rather a headache,
-> involving byte-swapping when the target is big endian, just to
-> maybe involve another byte-swapping  in the qtest_read/write
-> function immediately afterwards (on the QEMU side). Let's do it in
-> a more obvious way here: For virtio 1.0, we know that the values have
-> to be little endian, so let's read/write the bytes in that well known
-> order here.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+Built on {linux, windows, macos} x {x86_64, aarch64}
+Fully tested on linux-x86_64
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+v2
+--
 
+- Remove duplication of kvm struct and constant (Alex)
+- Use target_big_endian() (Anton)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Philippe Mathieu-Daudé (1):
+  target/arm: Replace target_ulong -> uint64_t for HWBreakpoint
+
+Pierrick Bouvier (11):
+  include/system/hvf: missing vaddr include
+  meson: add common libs for target and target_system
+  target/arm: move kvm stubs and remove CONFIG_KVM from kvm_arm.h
+  target/arm/kvm-stub: add kvm_arm_reset_vcpu stub
+  target/arm/cpu: move arm_cpu_kvm_set_irq to kvm.c
+  accel/hvf: add hvf_enabled() for common code
+  target/arm/cpu: remove TARGET_BIG_ENDIAN dependency
+  target/arm/cpu: remove TARGET_AARCH64 around aarch64_cpu_dump_state
+    common
+  target/arm/cpu: remove TARGET_AARCH64 in arm_cpu_finalize_features
+  target/arm/cpu: compile file twice (user, system) only
+  target/arm/cpu32-stubs.c: compile file twice (user, system)
+
+ meson.build              | 78 +++++++++++++++++++++++++++--------
+ include/system/hvf.h     | 15 ++++---
+ target/arm/internals.h   |  6 +--
+ target/arm/kvm_arm.h     | 83 +-------------------------------------
+ accel/hvf/hvf-stub.c     |  3 ++
+ target/arm/cpu.c         | 47 +---------------------
+ target/arm/cpu32-stubs.c | 24 +++++++++++
+ target/arm/hyp_gdbstub.c |  6 +--
+ target/arm/kvm-stub.c    | 87 ++++++++++++++++++++++++++++++++++++++++
+ target/arm/kvm.c         | 29 ++++++++++++++
+ accel/hvf/meson.build    |  1 +
+ target/arm/meson.build   | 15 +++++--
+ 12 files changed, 237 insertions(+), 157 deletions(-)
+ create mode 100644 accel/hvf/hvf-stub.c
+ create mode 100644 target/arm/cpu32-stubs.c
+
+-- 
+2.47.2
+
 
