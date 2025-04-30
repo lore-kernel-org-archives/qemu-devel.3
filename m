@@ -4,53 +4,195 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B44A3C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 09:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 554E8C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 09:50:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA43B-0001h7-GT; Wed, 30 Apr 2025 05:48:21 -0400
+	id 1uA44s-0003ei-R5; Wed, 30 Apr 2025 05:50:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uA42i-0001au-OX
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 05:47:54 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uA42e-000562-Am
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 05:47:52 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxlmnA8RFoNAjLAA--.8207S3;
- Wed, 30 Apr 2025 17:47:44 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMCx7xu68RFoIBegAA--.7587S4;
- Wed, 30 Apr 2025 17:47:43 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH 2/2] hw/loongarch/virt: Remove global variables about memmap
- tables
-Date: Wed, 30 Apr 2025 17:47:38 +0800
-Message-Id: <20250430094738.1556670-3-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20250430094738.1556670-1-maobibo@loongson.cn>
-References: <20250430094738.1556670-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1uA44k-0003dx-VG
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 05:49:59 -0400
+Received: from esa8.fujitsucc.c3s2.iphmx.com ([68.232.159.88])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1uA44g-0005Gt-Qm
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 05:49:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj1;
+ t=1746006594; x=1777542594;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=K4+FNIpDuk5J9vLuKRAp5QIXqMNXBoOM6SBE/eawmtY=;
+ b=Q5xHB7/j/QpVGnDSwhG++CbSQWm0ATgP0Esf/gJH20X662VYYnibWcZu
+ yMdQk3snZOFqTozHAO8bA70zhrOZuXmnOodWQPCd4XIhvn6qM7m/+DKmk
+ zPSMR7gPCpXBR8D1+SJmK/LBM02KHGYtXK4cCZznCTdRO2lnXneKsIB/P
+ 190a/0lFbF1d/SyT1oAvquM2WTHVP1qjR95OsyYyXcdN9IX6+jcTJ7+Tw
+ KCQyNHB7KbgSP+2lxudtmjPWTlZU92FLCeHDUnd9Ixs/kVS7cKZPcp56J
+ MMmVoPkYfQYJKvJI22Ym4UmMrGhiOJsCWmm6B9cu4llktAMtVTjFCop/s A==;
+X-CSE-ConnectionGUID: 159tppf4R3OJsDCKc9nmhA==
+X-CSE-MsgGUID: keaO4M7aReeEFtB2tADWIg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11418"; a="154310041"
+X-IronPort-AV: E=Sophos;i="6.15,251,1739804400"; d="scan'208";a="154310041"
+Received: from mail-japaneastazlp17011026.outbound.protection.outlook.com
+ (HELO TYVP286CU001.outbound.protection.outlook.com) ([40.93.73.26])
+ by ob1.fujitsucc.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Apr 2025 18:49:45 +0900
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HD8IRcn1BDtenyxn3jpgiOwI5ExOV6yE8YPp0IKZwLvffBsW5h6CHSoLdmSvO0ntt/THDfWVU7wZMu3AHwcJtY6+J+zwemEZmQGH/ORTvOHyhHn560YEus3hyWF+r9gS+o+Ss2Dgg1YbBWkRkqlrz3Wkfgz9ezhRt930AzLY5NOEJMVK7JnYzU/pKQiCGH2cYO0gJ6JvByVmT75cj9h5UIdnYU0W0txqMKhI5as14c8Ao8QeFHvYqgC3xuuZA27IYKDlCSsFopvfWrF4gAWb+1ufDLQLbK1kA6LPZ231qtnT8q8ljB87lT8qde/yCD4QT/9fmpTKz+3hXUAH39lcGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=K4+FNIpDuk5J9vLuKRAp5QIXqMNXBoOM6SBE/eawmtY=;
+ b=AV4WFYbd3uMkLgniKs6LZ//2clrUsw847+CgpyBkh5cAFXsw/a7wg7c/mw8D+czwWnSuRuxIG1hyUVL1SGgY7RwUDFHb3gj/q+eqbIOhXpIqKsTkCYxbQUk73WtGgxWd8ygSl0gx1HQsF2XS88dWikmn9OME9amR6SlWfPYiKumyeRoefKbtUJ/D/w06AJ4N9JgwLM57nRuDXaPo5JI5ui351kgzzS+Dw1t9P+M/vMpSUlmgfvtWzN03bM5Rg5O1YNKABiWJQL1MqR9zMgifeSvqsdIll+Frn6BpsViDY4sY9gk45fpZJ/Lo4/NkuL8BNOwyoJPJe0EvO6cLvJLS4g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
+ dkim=pass header.d=fujitsu.com; arc=none
+Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com (2603:1096:403:6::12)
+ by TYCPR01MB6685.jpnprd01.prod.outlook.com (2603:1096:400:af::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.20; Wed, 30 Apr
+ 2025 09:49:42 +0000
+Received: from TY1PR01MB1562.jpnprd01.prod.outlook.com
+ ([fe80::d9ba:425a:7044:6377]) by TY1PR01MB1562.jpnprd01.prod.outlook.com
+ ([fe80::d9ba:425a:7044:6377%4]) with mapi id 15.20.8678.027; Wed, 30 Apr 2025
+ 09:49:41 +0000
+To: Peter Xu <peterx@redhat.com>
+CC: Fabiano Rosas <farosas@suse.de>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Jack Wang <jinpu.wang@ionos.com>, "Michael R . Galaxy"
+ <mrgalaxy@nvidia.com>, Yu Zhang <yu.zhang@ionos.com>
+Subject: Re: [PATCH] qtest/migration/rdma: Add test for rdma migration with
+ ipv6
+Thread-Topic: [PATCH] qtest/migration/rdma: Add test for rdma migration with
+ ipv6
+Thread-Index: AQHbnr3GPFM2rsTaa0SkDCwflcGbZrO7WJ6AgAC9noCAAAWmAIAAEQCA
+Date: Wed, 30 Apr 2025 09:49:40 +0000
+Message-ID: <396fcfe6-7ddb-41e7-ae28-e5210dea7dd7@fujitsu.com>
+References: <20250327021234.264161-1-lizhijian@fujitsu.com>
+ <aBFAIflmJns_nVIm@x1.local>
+ <78c811ed-d6a2-4811-9ac8-48c5c93a2fed@fujitsu.com>
+ <6aaafc7c-9876-45da-8cca-5b670b8ccc50@fujitsu.com>
+In-Reply-To: <6aaafc7c-9876-45da-8cca-5b670b8ccc50@fujitsu.com>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla Thunderbird
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=fujitsu.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TY1PR01MB1562:EE_|TYCPR01MB6685:EE_
+x-ms-office365-filtering-correlation-id: c853fed7-30d0-4b14-2ac4-08dd87cc53ff
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|1580799027|38070700018; 
+x-microsoft-antispam-message-info: =?utf-8?B?aWFpRkFscHFlUDNSNGg0Ym4wc1BLRm11a2ExazJqTitYZjN2MjlVSStNK1ZT?=
+ =?utf-8?B?N2sxUStFcUlpdlNTRTZBNzJuVmRkVTNpeGNPd0U3bTk3TzRxcTA4YVVnaWMw?=
+ =?utf-8?B?eHY2VkkxTGJHNm1zYU9JajVaUHk0VzFQa0orNXQ2VFhSUFNjcC9neVBlRjhk?=
+ =?utf-8?B?UGNSZWphR0xQVkRSbmt4SDRIWCtuUklqS0JZeW1JUG5Md3pBMTZ6YlV1d2Ft?=
+ =?utf-8?B?V1RNQys2ZWpjRzZpMmhvQzV4dHdOY0ZwMmFobkhCQXFxaC94c2MwcHVVS1lv?=
+ =?utf-8?B?UzUxL1lXQm5oSmFqekdoNjhZTitxYU9zTXBLdDNURGVPTDVFV29yd3VlT1BM?=
+ =?utf-8?B?NDQ2QVhnOVBwL2xkSHRUYXcvRGdaUldoU3pRVnVQSzd2NCswZjNBMUFLMmlC?=
+ =?utf-8?B?SXU0cXFEeHd1dEZTNVZFTVhTRTZ5L1JnYSt4YmsyaitUcm1CcXNoSjc2ZzJ6?=
+ =?utf-8?B?cXRNU1ZwaGZNdnNaUVFUczd4cGJFVmVYR3ZmR3R3UHR5N0E4a2prOTk5VzRQ?=
+ =?utf-8?B?N2o0QUUwUDhrRHNOWkk0bU1WZkUyeDZ4K0w3S2pKOEhpWk1qa3hRRm44MTJI?=
+ =?utf-8?B?UjFhazhNVCtIQkJkeXBQSXNxWXAyamt0V0pyTXdEUE4zR25kTklkWGUwMDU3?=
+ =?utf-8?B?TTF6NThMQ3VjWk5CTjg0cVF5TmpzSVdJcFJDQ2prbVF2YjJDc3NodDVMWjd5?=
+ =?utf-8?B?Tml0R3dZd0Z0ODR5aXpKTHdEajNKOFYyOGRwTzBKOHB2OUgvV1R6VWdyaDRF?=
+ =?utf-8?B?RlA5VUlPb3NDamw4R25hUGJreWgrSkY4R3lmMkVPYk94cUsxMVBxYllmRlRw?=
+ =?utf-8?B?V1ZSRVlybVpSNVFPZDByYVJydEpQR1N4R0x1akdVYjluM3V5b28wTFBQcUp4?=
+ =?utf-8?B?UHVnSEZLNDlndC9rN3JNTnF0cnJhc3puVU5UaGdHcGsreDFXM2lIb1BlVTZj?=
+ =?utf-8?B?NjFMaHQxSWwrdGMwRnVKZzRna1FsdWJoTW52OHRCZjltWFBlbFJKNTZ1Zmtu?=
+ =?utf-8?B?VHlaOWNqaklKN2V1RzhvZHhvR0ZrTllYbmRMZEdKa2xQaVN0OEwvSkMxY1ND?=
+ =?utf-8?B?UVdmblJBY1loQ1hxZEJpWmovU2hvQVBrRVBmZXJpTzNhVkhVdWl6WWRYZzF2?=
+ =?utf-8?B?NU1BK1gwNnRHSmFXN3hiS0ZNbjl1UXdCMzFUcWF6UDZ4MXZqQi8xRHd3SzBu?=
+ =?utf-8?B?WTNMVTg3ZVl0UHFOZG05K3R2UEc2RWVUcEpzellEbTNPeWtqK2lQU1MzY1NX?=
+ =?utf-8?B?UDhrSUlGQTFzVklaVjJNL01rWmNUa3JuU2toNjhLQjNVSXMzZDk4My9yQ1V2?=
+ =?utf-8?B?Q2ZiVmxIL2xwTDVqUkdXNzYxTUp5LzBrTVhsemd6cGVLQlU2RnlBZW5LMFMv?=
+ =?utf-8?B?V3RleE9GWDVMTGZEL3JqSmVKb2U2K0FrVkc2OThRajVWakNrTUUxb1JCRG9O?=
+ =?utf-8?B?cFRvam9qNnBqWHZkVU1NbFAvOW4xQXBxM2dwaElRK2FFRzV0bStJRzFkY3Vh?=
+ =?utf-8?B?MmRUb1NXU1Jla1IyaUNVWmF3c2w3Q2J1U0d3eFVKMVBjbWloOWE1YXlKc0J0?=
+ =?utf-8?B?b096RTdRSTJvenpkZktYZjRERUttUHV4VHpnazRtOFl2bG84Z1I1Q2xsOU5U?=
+ =?utf-8?B?M1YwcnlLaldFbkw3Rjdjc2U3MjBCWjZaTVp3QVo3VTFzbklCQXIrLzlDUmtr?=
+ =?utf-8?B?Y0VwSThSeExjWlFyY3o3a3JpSXJ4eW5ycStNeG5oMDVldW5QeDR3Ylo0NFZx?=
+ =?utf-8?B?S0hZTmdZTDdKZjBDK1BOWGNaN3NHb25lb2F0MmFiTy9iZnViZG1uUzZyN2xX?=
+ =?utf-8?B?UlFFd1pFS0R6RFFGVkpXM3Q4R0k4NjZFeHg3NlB6OVNWMXJqY3lFcGlqUVY0?=
+ =?utf-8?B?LzJ6cStOaTVJaFBkZTJObEFxY01WSjlXVDBIZEVieW5DSkFzbTNuV09obmJO?=
+ =?utf-8?B?YldyQ1M0YkRTeEU0WlRsUFdLZURybFVXRTN0eE9MbUJEOHFYTVI4ZGJDMGdq?=
+ =?utf-8?B?YU9sNmlyS0xiZzZIUWdYUGcwYytRTmZMV203UHo4cXIxWTJwL0p6bVhFb2tm?=
+ =?utf-8?Q?XcPSkC?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TY1PR01MB1562.jpnprd01.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(1580799027)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?eEpSRXZIVmJpODlBQzBDWGFqaXMyb3FpMERwbTJZdFdwN1lKVUN4ZDdmclNr?=
+ =?utf-8?B?RWc3NTFleTZNakFWTnJEWjVzcGg1KzlzNC9mSUY2dmFyZ2dabXhzTFlmTXln?=
+ =?utf-8?B?b3VJV0xBb2ZiYytIMVlXMUNUOTNsNFRDNGJVckc5amR6bHp5bFFMY3R0aXlH?=
+ =?utf-8?B?Ymdsay9HZ2dpRGR4OVo3YlE5MXlGMVAvSGdMY0tHcTNVN0lURVJzZ2tiWWZU?=
+ =?utf-8?B?N3Rxc0FTZ2xBNDhBbFdtMk9JUjFWWmRldHFYRCsxRnBycGxNMkdPN3pnbUl6?=
+ =?utf-8?B?YlR4dkloQ25Pd2k4Y2dNTDIxWjRTVnVtSmJNWXBLM2RQb3dwejBJdlF5TFNn?=
+ =?utf-8?B?MEsxS0d4NktjTzYvMGVBRm50eE82b0hYOVBJYzZKTnNzd2ZBVVFKbEg0T25j?=
+ =?utf-8?B?aW5sSnM4V3ZueTVsbHBPVVUyUFovMUxpaDBReG9ybmtYcnBSZmg5ZTFGNWI5?=
+ =?utf-8?B?ZUJyb1hKMWhWWGFRQ3V2bXBiN3VmUWFkbWdZWXkyVGt6UnZQVVJzZTVhMEt4?=
+ =?utf-8?B?MXVmNzNaMXBFMTByUzU5ZWNvRXpDUVJ6THF3K2Fmd1c5U0hLRXg0bTVOOXNE?=
+ =?utf-8?B?Rjh5cFVreFVwZHFBTmxTSmJkcUI4TEl0UURjYnV4cjRRUlZvL1pLbHBKN2VF?=
+ =?utf-8?B?MEViZzBnY0d0dE42MFIvaTBYcjlCN0FXRm42TUhtS1Q2WFZ3ZWU4VkptMmc5?=
+ =?utf-8?B?N1BsYk1RS0h3YmhUU2k4cnpWYUlCY1lYZFpudU0vRmFaVk5VN2dSSWk2R0Ny?=
+ =?utf-8?B?aTk4UXA0NEtITHZsLzBhWlhMZENPOEFsVFZ2VXIrc1g1cnVZVmxVRUNTdnQ4?=
+ =?utf-8?B?YXBKaDZhMzlsTW4xRDlhZDZoRFFsVmZra29mSlM1bUs0VExBRzBuVGwrVUZk?=
+ =?utf-8?B?cGZpb2RpclgvdlNDMmdFeWQ5MWZ2bzh3dUlnUERnczUxVXphaUMzdHhlOVJO?=
+ =?utf-8?B?elJ5ZExURHhSRi94UGJ4T091eU15TEJ4ZjRrU0hQTWRSZTBqY2lUYXg0OXc2?=
+ =?utf-8?B?ZDBsREI4MVNGTzliRFdIcnpuRVBueFNyY0UrTmRzSnNqdGsyZWhWT0RZdDVm?=
+ =?utf-8?B?MlVzWGt0clNJOG0yMlA1TnZjQmNIUml0N05WNkF2Qys5eGNxaS8yZlgrRXlK?=
+ =?utf-8?B?T00wTlIrd2FPMmNkbHF0eVlJTkhFUWpvUGRyeStlNWNpamhQR0hyQzl1TUFP?=
+ =?utf-8?B?TUJiQVlvVUVzSU1kZjlUSThPdHo5ZFFHWU00Z29iVkhuQzhBU201dXVMSlRu?=
+ =?utf-8?B?d2lGTlVqalpEb1p6V3I5NnBmbHNpNHBqaklWOUtUV0NzT0c5V1hEMWEyMHRq?=
+ =?utf-8?B?Uk5Za0VRdjVZNFhxZktDZ3BNYllRUUJER0FReWtvUVNibUVXa2xGNmtBS3JE?=
+ =?utf-8?B?ems2RFNxTjJnREJWWjBNOHQrV1RtQjlSMEQ2RUI0ekwyUGM4WHYrUU5lUXdl?=
+ =?utf-8?B?RS9pMDNKdTU1eVVhSjhpdTdINithNEl5bm4ybFFweThwenJUcmQ2Sk05NWdw?=
+ =?utf-8?B?R2JYeEVsZlBZb2xsOVNUdmxQVjl4ekVQcnh5a2hZSFBxQTEyUC9zMXczS3hq?=
+ =?utf-8?B?MGVucEpLUVd6ZUxvSXNmcDMrVjI0MDhaS1VaVnBGRXZUdjg4djJ2cUZHS0sz?=
+ =?utf-8?B?bWpOSVBmL0FWaFc3aGxqK0ducnJEcldEYzRsTnd1dmZNZ0FZc0EzdFJyd3FP?=
+ =?utf-8?B?M2dIRjdDdzQ0TTMyaENWVG10WVQ0TmxNUTZKcGx4aG82ZExRQWl2S05xcmVY?=
+ =?utf-8?B?NWlpenV3VFJiVXlnbGt4QkpTM1I1bVJBa1BvOHp0eklOaVBJZjJwU1BOcWVE?=
+ =?utf-8?B?OURJQXlGSmF6djlPRndObUo5S0VQWDRnbUFyejFmK1ljRE95eWRwYjVMM2ZH?=
+ =?utf-8?B?OWY0K2ZDYjFNSjc0L3VEcllYWHZNYTJSTnB4MzNpWUpxTGJhZkNHcVdjSktr?=
+ =?utf-8?B?dXpFekhhWUwzSG5ZaGhFZ1RVVll2bW4rZ2NPN3p3bDgxQjhNZURGOTBFdkds?=
+ =?utf-8?B?RGhyWVJqdktpMjNYT29Mck1IVThhb0JQMmFXS3E1aSsvWFMrQ1I2UjRLTkhh?=
+ =?utf-8?B?a25DYUhJYVBMQlpEVFV0bmlveUtHVVJvc3ZBeThaWjhxUjMxYjJ5STZtQUtV?=
+ =?utf-8?B?c2JOWitJUHZlZFEyZVhZYVpGYUZtSzFFaHM5Ry9yRWtzTVBsMytZaEltUnlC?=
+ =?utf-8?B?OEE9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <F70466BD6530AC4EACDA7B0A17AA7A21@jpnprd01.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCx7xu68RFoIBegAA--.7587S4
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: +aa5a2fPU6zAXRMGOEOUM1cyIfQuHD6yp6Z3I/MC4jovXpVc3PRpY7JH6gUoQatGIxe8q/HuEENKP5O4dHsq2Hmi7Zq3tCJH0iziwBtJe8aeRG/Dv1671mqPCS+ThFtnrAU1h2VTPYdBjBzZLrL9vc3gzsCBjRm1qwTqUeAh//qX2YPPb/dEN2Se8TeIoinyiN2j4oYIFSCZW78vYnufm4+0PJnfLxHP4hwpcT4oSRnkh6OOZwWkm5kxn6x/ttQ0kiRSjtcV83q0AWIQfbwgl44wivAI2EK77jfFRYN702xYX4FVDHCFK3KW0bI1vR1rWr12cIdtlOpJ7242EpXPeaOMLfY9XSTVP+SJJPW+whRQMPKBpRinaqyyH08/+hom0WljEE/YcVu947Q8ixe8b6o2t/dagQrCO2YnwaGKLgyXX7UGugj3VbvPj8Pjj/67m/hBZogumiuoxZ+jybSt01PuM04ekWBFJhxE6JsENKQcjD65vmQxriYFCxne+tvus8CrwZdfiv9ZA0nKqiMVwFD/imI/miRPPh2mHSDqqKEgOXIc3mERdBobWT2wAyX4zXWXRIpXV74H/S3GAUOo68Pgw0PZ3URLFN3MIomZrsv5wnPbQ9bcfGJ+eICNuzhn
+X-OriginatorOrg: fujitsu.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TY1PR01MB1562.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c853fed7-30d0-4b14-2ac4-08dd87cc53ff
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Apr 2025 09:49:40.8164 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ti5YpDVV3MxQJo+w4wf8LioliSkfo7LITIDfpoY9MKEFVTDjfkwkC9V9kiPzyfuxahzFDGSKbGJ08qQJnR9pMg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCPR01MB6685
+Received-SPF: pass client-ip=68.232.159.88; envelope-from=lizhijian@fujitsu.com;
+ helo=esa8.fujitsucc.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,231 +205,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+From:  "Zhijian Li (Fujitsu)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Global variables memmap_table and memmap_entries stores UEFI memory
-map table informations. It can be moved into structure
-LoongArchVirtMachineState.
-
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/loongarch/boot.c         | 31 +++++++++++++++++++------------
- hw/loongarch/virt.c         | 23 ++++++++++++++++-------
- include/hw/loongarch/boot.h |  3 ---
- include/hw/loongarch/virt.h |  2 ++
- 4 files changed, 37 insertions(+), 22 deletions(-)
-
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 44d537d987..86435caa5e 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -35,9 +35,6 @@ struct loongarch_linux_hdr {
-     uint32_t pe_header_offset;
- } QEMU_PACKED;
- 
--struct memmap_entry *memmap_table;
--unsigned memmap_entries;
--
- static const unsigned int slave_boot_code[] = {
-                   /* Configure reset ebase.                    */
-     0x0400302c,   /* csrwr      $t0, LOONGARCH_CSR_EENTRY      */
-@@ -91,12 +88,16 @@ static inline void *guidcpy(void *dst, const void *src)
-     return memcpy(dst, src, sizeof(efi_guid_t));
- }
- 
--static void init_efi_boot_memmap(struct efi_system_table *systab,
-+static void init_efi_boot_memmap(MachineState *ms,
-+                                 struct efi_system_table *systab,
-                                  void *p, void *start)
- {
-     unsigned i;
-     struct efi_boot_memmap *boot_memmap = p;
-     efi_guid_t tbl_guid = LINUX_EFI_BOOT_MEMMAP_GUID;
-+    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
-+    struct memmap_entry *memmap_table;
-+    unsigned int memmap_entries;
- 
-     /* efi_configuration_table 1 */
-     guidcpy(&systab->tables[0].guid, &tbl_guid);
-@@ -108,6 +109,8 @@ static void init_efi_boot_memmap(struct efi_system_table *systab,
-     boot_memmap->map_size = 0;
- 
-     efi_memory_desc_t *map = p + sizeof(struct efi_boot_memmap);
-+    memmap_table = lvms->memmap_table;
-+    memmap_entries = lvms->memmap_entries;
-     for (i = 0; i < memmap_entries; i++) {
-         map = (void *)boot_memmap + sizeof(*map);
-         map[i].type = memmap_table[i].type;
-@@ -144,10 +147,12 @@ static void init_efi_fdt_table(struct efi_system_table *systab)
-     systab->nr_tables = 3;
- }
- 
--static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
-+static void init_systab(MachineState *ms,
-+                        struct loongarch_boot_info *info, void *p, void *start)
- {
-     void *bp_tables_start;
-     struct efi_system_table *systab = p;
-+    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
- 
-     info->a2 = p - start;
- 
-@@ -164,9 +169,9 @@ static void init_systab(struct loongarch_boot_info *info, void *p, void *start)
-     systab->tables = p;
-     bp_tables_start = p;
- 
--    init_efi_boot_memmap(systab, p, start);
-+    init_efi_boot_memmap(ms, systab, p, start);
-     p += ROUND_UP(sizeof(struct efi_boot_memmap) +
--                  sizeof(efi_memory_desc_t) * memmap_entries, 64 * KiB);
-+                  sizeof(efi_memory_desc_t) * lvms->memmap_entries, 64 * KiB);
-     init_efi_initrd_table(info, systab, p, start);
-     p += ROUND_UP(sizeof(struct efi_initrd), 64 * KiB);
-     init_efi_fdt_table(systab);
-@@ -333,17 +338,19 @@ static void loongarch_firmware_boot(LoongArchVirtMachineState *lvms,
-     fw_cfg_add_kernel_info(info, lvms->fw_cfg);
- }
- 
--static void init_boot_rom(struct loongarch_boot_info *info, void *p)
-+static void init_boot_rom(MachineState *ms,
-+                          struct loongarch_boot_info *info, void *p)
- {
-     void *start = p;
- 
-     init_cmdline(info, p, start);
-     p += COMMAND_LINE_SIZE;
- 
--    init_systab(info, p, start);
-+    init_systab(ms, info, p, start);
- }
- 
--static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
-+static void loongarch_direct_kernel_boot(MachineState *ms,
-+                                         struct loongarch_boot_info *info)
- {
-     void *p, *bp;
-     int64_t kernel_addr = VIRT_FLASH0_BASE;
-@@ -361,7 +368,7 @@ static void loongarch_direct_kernel_boot(struct loongarch_boot_info *info)
-     /* Load cmdline and system tables at [0 - 1 MiB] */
-     p = g_malloc0(1 * MiB);
-     bp = p;
--    init_boot_rom(info, p);
-+    init_boot_rom(ms, info, p);
-     rom_add_blob_fixed_as("boot_info", bp, 1 * MiB, 0, &address_space_memory);
- 
-     /* Load slave boot code at pflash0 . */
-@@ -401,6 +408,6 @@ void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
-     if (lvms->bios_loaded) {
-         loongarch_firmware_boot(lvms, info);
-     } else {
--        loongarch_direct_kernel_boot(info);
-+        loongarch_direct_kernel_boot(ms, info);
-     }
- }
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 779544fada..601e7c6bd3 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -168,8 +168,15 @@ static void virt_powerdown_req(Notifier *notifier, void *opaque)
-     acpi_send_event(s->acpi_ged, ACPI_POWER_DOWN_STATUS);
- }
- 
--static void memmap_add_entry(uint64_t address, uint64_t length, uint32_t type)
-+static void memmap_add_entry(MachineState *ms, uint64_t address,
-+                             uint64_t length, uint32_t type)
- {
-+    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
-+    struct memmap_entry *memmap_table;
-+    unsigned int memmap_entries;
-+
-+    memmap_table = lvms->memmap_table;
-+    memmap_entries = lvms->memmap_entries;
-     /* Ensure there are no duplicate entries. */
-     for (unsigned i = 0; i < memmap_entries; i++) {
-         assert(memmap_table[i].address != address);
-@@ -182,6 +189,8 @@ static void memmap_add_entry(uint64_t address, uint64_t length, uint32_t type)
-     memmap_table[memmap_entries].type = cpu_to_le32(type);
-     memmap_table[memmap_entries].reserved = 0;
-     memmap_entries++;
-+    lvms->memmap_table = memmap_table;
-+    lvms->memmap_entries = memmap_entries;
- }
- 
- static DeviceState *create_acpi_ged(DeviceState *pch_pic,
-@@ -625,13 +634,13 @@ static void fw_cfg_add_memory(MachineState *ms)
-     }
- 
-     if (size >= gap) {
--        memmap_add_entry(base, gap, 1);
-+        memmap_add_entry(ms, base, gap, 1);
-         size -= gap;
-         base = VIRT_HIGHMEM_BASE;
-     }
- 
-     if (size) {
--        memmap_add_entry(base, size, 1);
-+        memmap_add_entry(ms, base, size, 1);
-         base += size;
-     }
- 
-@@ -646,7 +655,7 @@ static void fw_cfg_add_memory(MachineState *ms)
-          * lowram:  [base, +(gap - numa_info[0].node_mem))
-          * highram: [VIRT_HIGHMEM_BASE, +(ram_size - gap))
-          */
--        memmap_add_entry(base, gap - numa_info[0].node_mem, 1);
-+        memmap_add_entry(ms, base, gap - numa_info[0].node_mem, 1);
-         size = ram_size - gap;
-         base = VIRT_HIGHMEM_BASE;
-     } else {
-@@ -654,7 +663,7 @@ static void fw_cfg_add_memory(MachineState *ms)
-     }
- 
-     if (size) {
--        memmap_add_entry(base, size, 1);
-+        memmap_add_entry(ms, base, size, 1);
-     }
- }
- 
-@@ -740,8 +749,8 @@ static void virt_init(MachineState *machine)
-     rom_set_fw(lvms->fw_cfg);
-     if (lvms->fw_cfg != NULL) {
-         fw_cfg_add_file(lvms->fw_cfg, "etc/memmap",
--                        memmap_table,
--                        sizeof(struct memmap_entry) * (memmap_entries));
-+                        lvms->memmap_table,
-+                        sizeof(struct memmap_entry) * lvms->memmap_entries);
-     }
- 
-     /* Initialize the IO interrupt subsystem */
-diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
-index 27399de99c..9819f7fbe3 100644
---- a/include/hw/loongarch/boot.h
-+++ b/include/hw/loongarch/boot.h
-@@ -106,9 +106,6 @@ struct loongarch_boot_info {
-     uint64_t initrd_size;
- };
- 
--extern struct memmap_entry *memmap_table;
--extern unsigned memmap_entries;
--
- struct memmap_entry {
-     uint64_t address;
-     uint64_t length;
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 2b7d19953f..602feab0f0 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -63,6 +63,8 @@ struct LoongArchVirtMachineState {
-     struct loongarch_boot_info bootinfo;
-     DeviceState *ipi;
-     DeviceState *extioi;
-+    struct memmap_entry *memmap_table;
-+    unsigned int memmap_entries;
- };
- 
- #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
--- 
-2.39.3
-
+DQoNCk9uIDMwLzA0LzIwMjUgMTY6NDgsIFpoaWppYW4gTGkgKEZ1aml0c3UpIHZpYSB3cm90ZToN
+Cj4+PiBzdGRlcnI6DQo+Pj4gcWVtdS1zeXN0ZW0teDg2XzY0OiBjYW5ub3QgZ2V0IHJrZXkNCj4+
+PiBxZW11LXN5c3RlbS14ODZfNjQ6IGVycm9yIHdoaWxlIGxvYWRpbmcgc3RhdGUgc2VjdGlvbiBp
+ZCAyKHJhbSkNCj4+PiBxZW11LXN5c3RlbS14ODZfNjQ6IGxvYWQgb2YgbWlncmF0aW9uIGZhaWxl
+ZDogT3BlcmF0aW9uIG5vdCBwZXJtaXR0ZWQNCj4+PiBxZW11LXN5c3RlbS14ODZfNjQ6IHJkbWEg
+bWlncmF0aW9uOiByZWN2IHBvbGxpbmcgY29udHJvbCBlcnJvciENCj4+PiBxZW11LXN5c3RlbS14
+ODZfNjQ6IFJETUEgaXMgaW4gYW4gZXJyb3Igc3RhdGUgd2FpdGluZyBtaWdyYXRpb24gdG8gYWJv
+cnQhDQo+Pj4gcWVtdS1zeXN0ZW0teDg2XzY0OiBmYWlsZWQgdG8gc2F2ZSBTYXZlU3RhdGVFbnRy
+eSB3aXRoIGlkKG5hbWUpOiAyKHJhbSk6IC0xDQo+Pj4gcWVtdS1zeXN0ZW0teDg2XzY0OiBDaGFu
+bmVsIGVycm9yOiBPcGVyYXRpb24gbm90IHBlcm1pdHRlZA0KPj4+ICoqDQo+Pj4gRVJST1I6Li4v
+dGVzdHMvcXRlc3QvbWlncmF0aW9uL21pZ3JhdGlvbi1xbXAuYzoyMDA6Y2hlY2tfbWlncmF0aW9u
+X3N0YXR1czogYXNzZXJ0aW9uIGZhaWxlZCAoY3VycmVudF9zdGF0dXMgIT0gImZhaWxlZCIpOiAo
+ImZhaWxlZCIgIT0gImZhaWxlZCIpDQo+Pj4gcWVtdS1zeXN0ZW0teDg2XzY0OiB3YXJuaW5nOiBF
+YXJseSBlcnJvci4gU2VuZGluZyBlcnJvci4NCj4+PiBxZW11LXN5c3RlbS14ODZfNjQ6IHdhcm5p
+bmc6IHJkbWEgbWlncmF0aW9uOiBzZW5kIHBvbGxpbmcgY29udHJvbCBlcnJvcg0KPj4+IC4uL3Rl
+c3RzL3F0ZXN0L2xpYnF0ZXN0LmM6MTk5OiBraWxsX3FlbXUoKSB0cmllZCB0byB0ZXJtaW5hdGUg
+UUVNVSBwcm9jZXNzIGJ1dCBlbmNvdW50ZXJlZCBleGl0IHN0YXR1cyAxIChleHBlY3RlZCAwKQ0K
+Pj4+DQo+Pj4gU28gcnVubmluZyB0aGUgdGVzdCBhbHNvIG5lZWRzIHJvb3Q/wqAgSXMgaXQgcG9z
+c2libGUgd2UgZml4IHRoZSB0ZXN0IHNvIGl0DQo+Pj4gY2FuIGFsc28gYmUgc21hcnQgZW5vdWdo
+IHRvIHNraXAgaWYgaXQga25vd3MgaXQnbGwgaGl0IHRoZSAiY2Fubm90IGdldA0KPj4+IHJrZXki
+IGVycm9yIChldmVuIGlmIGl0IHNlZXMgdGhlIHJkbWEgbGluayBzZXR1cCk/wqAgTm90IHNvbWV0
+aGluZyB1cmdlbnQNCj4+PiBidXQgZGVmaW5pdGVseSBnb29kIHRvIGhhdmUuDQo+IEl0IHNlZW1z
+IGl0J3MgYSBzZWN1cml0eSBwcm9ibGVtLCBJIGhhdmUgbm8gYSBnb29kIGlkZWEgeWV0Lg0KPiAN
+Cj4gTGV0IG1lIHNlZSBzZWUuLi4NCg0KQW5vdGhlciB3b3JrYXJvdW5kIGlzIHVwZGF0ZSB0aGUg
+J3VsaW1pdCAtbCcgdG8gPj0xMjhNIGZvciBhIG5vbi1yb290IHVzZXIoaW4gcHJhY3RpY2UNCnRo
+aXMgdmFsdWUgd29ya3Mgd2VsbCBvbiBmZWRvcmE0MCkNCg0KU28gd2Ugd291bGQgaGF2ZSBzb21l
+dGhpbmcgbGlrZSB0aGlzOg0KDQpkaWZmIC0tZ2l0IGEvdGVzdHMvcXRlc3QvbWlncmF0aW9uL3By
+ZWNvcHktdGVzdHMuYyBiL3Rlc3RzL3F0ZXN0L21pZ3JhdGlvbi9wcmVjb3B5LXRlc3RzLmMNCmlu
+ZGV4IDlmNzIzNmRjNTlmLi4xZjI0NzUzYzVhNSAxMDA2NDQNCi0tLSBhL3Rlc3RzL3F0ZXN0L21p
+Z3JhdGlvbi9wcmVjb3B5LXRlc3RzLmMNCisrKyBiL3Rlc3RzL3F0ZXN0L21pZ3JhdGlvbi9wcmVj
+b3B5LXRlc3RzLmMNCkBAIC0xMDEsNiArMTAxLDI2IEBAIHN0YXRpYyB2b2lkIHRlc3RfcHJlY29w
+eV91bml4X2RpcnR5X3Jpbmcodm9pZCkNCiAgDQogICNpZmRlZiBDT05GSUdfUkRNQQ0KICANCisj
+aW5jbHVkZSA8c3lzL3Jlc291cmNlLmg+DQorI2RlZmluZSBSRVFVSVJFRF9NRU1MT0NLICgxMjgg
+KiAxMDI0ICogMTAyNCkgLy8gMTI4TUINCisNCitzdGF0aWMgYm9vbCBtbG9ja19jaGVjayh2b2lk
+KQ0KK3sNCisgICAgdWlkX3QgdWlkOw0KKyAgICBzdHJ1Y3QgcmxpbWl0IHJsaW07DQorDQorICAg
+IHVpZCA9IGdldHVpZCgpOw0KKyAgICBpZiAodWlkID09IDApIHsNCisgICAgICAgIHJldHVybiB0
+cnVlOw0KKyAgICB9DQorDQorICAgIGlmIChnZXRybGltaXQoUkxJTUlUX01FTUxPQ0ssICZybGlt
+KSAhPSAwKSB7DQorICAgICAgICByZXR1cm4gZmFsc2U7DQorICAgIH0NCisNCisgICAgcmV0dXJu
+IHJsaW0ucmxpbV9jdXIgPj0gUkVRVUlSRURfTUVNTE9DSzsNCit9DQorDQogICNkZWZpbmUgUkRN
+QV9NSUdSQVRJT05fSEVMUEVSICJzY3JpcHRzL3JkbWEtbWlncmF0aW9uLWhlbHBlci5zaCINCiAg
+c3RhdGljIGludCBuZXdfcmRtYV9saW5rKGNoYXIgKmJ1ZmZlciwgYm9vbCBpcHY2KQ0KICB7DQpA
+QCAtMTM3LDYgKzE1NywxMSBAQCBzdGF0aWMgdm9pZCB0ZXN0X3ByZWNvcHlfcmRtYV9wbGFpbl9p
+cChib29sIGlwdjYpDQogIHsNCiAgICAgIGNoYXIgYnVmZmVyWzEyOF0gPSB7fTsNCiAgDQorICAg
+IGlmICghbWxvY2tfY2hlY2soKSkgew0KKyAgICAgICAgZ190ZXN0X3NraXAoIid1bGltaXQgLWwn
+IGlzIHRvbyBzbWFsbCwgcmVxdWlyZSAxMjhNIik7DQorICAgICAgICByZXR1cm47DQorICAgIH0N
+CisNCiAgICAgIGlmIChuZXdfcmRtYV9saW5rKGJ1ZmZlciwgaXB2NikpIHsNCiAgICAgICAgICBn
+X3Rlc3Rfc2tpcCgiTm8gcmRtYSBsaW5rIGF2YWlsYWJsZVxuIg0KICAgICAgICAgICAgICAgICAg
+ICAgICIjIFRvIGVuYWJsZSB0aGUgdGVzdDpcbiI=
 
