@@ -4,31 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 248A3C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 07:26:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F41FC369DC
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 07:26:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA1p3-0001ds-GG; Wed, 30 Apr 2025 03:25:37 -0400
+	id 1uA1ox-0001bo-Cz; Wed, 30 Apr 2025 03:25:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dietmar@zilli.proxmox.com>)
- id 1uA1oz-0001cj-Nb
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:25:33 -0400
+ id 1uA1ov-0001bO-D9
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:25:29 -0400
 Received: from [94.136.29.99] (helo=zilli.proxmox.com)
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dietmar@zilli.proxmox.com>) id 1uA1ow-0004EJ-8n
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:25:32 -0400
+ (envelope-from <dietmar@zilli.proxmox.com>) id 1uA1ot-0004Dc-6P
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:25:28 -0400
 Received: by zilli.proxmox.com (Postfix, from userid 1000)
- id 7DEC41C1133; Wed, 30 Apr 2025 09:25:25 +0200 (CEST)
+ id 73C921C0287; Wed, 30 Apr 2025 09:25:25 +0200 (CEST)
 From: Dietmar Maurer <dietmar@proxmox.com>
 To: marcandre.lureau@redhat.com,
 	qemu-devel@nongnu.org
 Cc: Dietmar Maurer <dietmar@proxmox.com>
-Subject: [PATCH v5 7/7] h264: stop gstreamer pipeline before destroying,
- cleanup on exit
-Date: Wed, 30 Apr 2025 09:25:24 +0200
-Message-Id: <20250430072524.3650582-8-dietmar@proxmox.com>
+Subject: [PATCH v5 1/7] new configure option to enable gstreamer
+Date: Wed, 30 Apr 2025 09:25:18 +0200
+Message-Id: <20250430072524.3650582-2-dietmar@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250430072524.3650582-1-dietmar@proxmox.com>
 References: <20250430072524.3650582-1-dietmar@proxmox.com>
@@ -59,130 +58,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some encoders can hang indefinitely (i.e. nvh264enc) if
-the pipeline is not stopped before it is destroyed
-(Observed on Debian bookworm).
+GStreamer is required to implement H264 encoding for VNC. Please note
+that QEMU already depends on this library when you enable Spice.
 
 Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
 ---
- include/system/system.h |  1 +
- include/ui/console.h    |  1 +
- system/runstate.c       |  2 ++
- system/vl.c             |  7 +++++++
- ui/vnc-enc-h264.c       | 18 ++++++++++++++++++
- ui/vnc.c                | 15 +++++++++++++++
- 6 files changed, 44 insertions(+)
+ meson.build                   | 10 ++++++++++
+ meson_options.txt             |  2 ++
+ scripts/meson-buildoptions.sh |  3 +++
+ 3 files changed, 15 insertions(+)
 
-diff --git a/include/system/system.h b/include/system/system.h
-index a7effe7dfd..9226e60050 100644
---- a/include/system/system.h
-+++ b/include/system/system.h
-@@ -109,6 +109,7 @@ bool defaults_enabled(void);
- void qemu_init(int argc, char **argv);
- int qemu_main_loop(void);
- void qemu_cleanup(int);
-+void qemu_cleanup_displays(void);
- 
- extern QemuOptsList qemu_legacy_drive_opts;
- extern QemuOptsList qemu_common_drive_opts;
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 46b3128185..ff46e9fe98 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -458,6 +458,7 @@ int vnc_display_password(const char *id, const char *password);
- int vnc_display_pw_expire(const char *id, time_t expires);
- void vnc_parse(const char *str);
- int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp);
-+void vnc_cleanup(void);
- bool vnc_display_reload_certs(const char *id,  Error **errp);
- bool vnc_display_update(DisplayUpdateOptionsVNC *arg, Error **errp);
- 
-diff --git a/system/runstate.c b/system/runstate.c
-index 272801d307..0cb3ba5ec1 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -924,6 +924,8 @@ void qemu_cleanup(int status)
-     job_cancel_sync_all();
-     bdrv_close_all();
- 
-+    qemu_cleanup_displays();
+diff --git a/meson.build b/meson.build
+index bcb9d39a38..50a9a2b036 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1348,6 +1348,14 @@ if not get_option('zstd').auto() or have_block
+                     required: get_option('zstd'),
+                     method: 'pkg-config')
+ endif
 +
-     /* vhost-user must be cleaned up before chardevs.  */
-     tpm_cleanup();
-     net_cleanup();
-diff --git a/system/vl.c b/system/vl.c
-index c17945c493..a781ebd77b 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2679,6 +2679,13 @@ static void qemu_maybe_daemonize(const char *pid_file)
-     }
++gstreamer = not_found
++if not get_option('gstreamer').auto() or have_system
++  gstreamer = dependency('gstreamer-1.0 gstreamer-base-1.0', version: '>=1.22.0',
++                          required: get_option('gstreamer'),
++                          method: 'pkg-config')
++endif
++
+ qpl = not_found
+ if not get_option('qpl').auto() or have_system
+   qpl = dependency('qpl', version: '>=1.5.0',
+@@ -2563,6 +2571,7 @@ config_host_data.set('CONFIG_MALLOC_TRIM', has_malloc_trim)
+ config_host_data.set('CONFIG_STATX', has_statx)
+ config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
+ config_host_data.set('CONFIG_ZSTD', zstd.found())
++config_host_data.set('CONFIG_GSTREAMER', gstreamer.found())
+ config_host_data.set('CONFIG_QPL', qpl.found())
+ config_host_data.set('CONFIG_UADK', uadk.found())
+ config_host_data.set('CONFIG_QATZIP', qatzip.found())
+@@ -4895,6 +4904,7 @@ summary_info += {'snappy support':    snappy}
+ summary_info += {'bzip2 support':     libbzip2}
+ summary_info += {'lzfse support':     liblzfse}
+ summary_info += {'zstd support':      zstd}
++summary_info += {'gstreamer support': gstreamer}
+ summary_info += {'Query Processing Library support': qpl}
+ summary_info += {'UADK Library support': uadk}
+ summary_info += {'qatzip support':    qatzip}
+diff --git a/meson_options.txt b/meson_options.txt
+index 59d973bca0..11cd132be5 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -254,6 +254,8 @@ option('vnc_sasl', type : 'feature', value : 'auto',
+        description: 'SASL authentication for VNC server')
+ option('vte', type : 'feature', value : 'auto',
+        description: 'vte support for the gtk UI')
++option('gstreamer', type : 'feature', value : 'auto',
++       description: 'for VNC H.264 encoding with gstreamer')
+ 
+ # GTK Clipboard implementation is disabled by default, since it may cause hangs
+ # of the guest VCPUs. See gitlab issue 1150:
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index 3e8e00852b..f88475f707 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -229,6 +229,7 @@ meson_options_help() {
+   printf "%s\n" '                  Xen PCI passthrough support'
+   printf "%s\n" '  xkbcommon       xkbcommon support'
+   printf "%s\n" '  zstd            zstd compression support'
++  printf "%s\n" '  gstreamer       gstreamer support (H264 for VNC)'
  }
- 
-+void qemu_cleanup_displays(void)
-+{
-+#ifdef CONFIG_VNC
-+   vnc_cleanup();
-+#endif
-+}
-+
- static void qemu_init_displays(void)
- {
-     DisplayState *ds;
-diff --git a/ui/vnc-enc-h264.c b/ui/vnc-enc-h264.c
-index 98055c095f..6618f156b4 100644
---- a/ui/vnc-enc-h264.c
-+++ b/ui/vnc-enc-h264.c
-@@ -95,6 +95,24 @@ static GstElement *create_encoder(const char *encoder_name)
- 
- static void destroy_encoder_context(VncState *vs)
- {
-+    GstStateChangeReturn state_change_ret;
-+
-+    VNC_DEBUG("Destroy h264 context.\n");
-+
-+    /*
-+     * Some encoders can hang indefinitely (i.e. nvh264enc) if
-+     * the pipeline is not stopped before it is destroyed
-+     * (Observed on Debian bookworm).
-+     */
-+    if (vs->h264->pipeline != NULL) {
-+        state_change_ret = gst_element_set_state(
-+            vs->h264->pipeline, GST_STATE_NULL);
-+
-+        if (state_change_ret == GST_STATE_CHANGE_FAILURE) {
-+            VNC_DEBUG("Unable to stop the GST pipeline\n");
-+        }
-+    }
-+
-     gst_clear_object(&vs->h264->source);
-     gst_clear_object(&vs->h264->convert);
-     gst_clear_object(&vs->h264->gst_encoder);
-diff --git a/ui/vnc.c b/ui/vnc.c
-index c707b9da37..578d9eea32 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -4368,6 +4368,21 @@ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
-     return 0;
+ _meson_option_parse() {
+   case $1 in
+@@ -581,6 +582,8 @@ _meson_option_parse() {
+     --disable-xkbcommon) printf "%s" -Dxkbcommon=disabled ;;
+     --enable-zstd) printf "%s" -Dzstd=enabled ;;
+     --disable-zstd) printf "%s" -Dzstd=disabled ;;
++    --enable-gstreamer) printf "%s" -Dgstreamer=enabled ;;
++    --disable-gstreamer) printf "%s" -Dgstreamer=disabled ;;
+     *) return 1 ;;
+   esac
  }
- 
-+void vnc_cleanup(void)
-+{
-+    VncDisplay *vd;
-+    VncState *vs;
-+
-+    QTAILQ_FOREACH(vd, &vnc_displays, next) {
-+        QTAILQ_FOREACH(vs, &vd->clients, next) {
-+#ifdef CONFIG_GSTREAMER
-+            /* correctly close all h264 encoder pipelines */
-+            vnc_h264_clear(vs);
-+#endif
-+        }
-+    }
-+}
-+
- static void vnc_register_config(void)
- {
-     qemu_add_opts(&qemu_vnc_opts);
 -- 
 2.39.5
 
