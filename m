@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71269C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 07:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B59DC369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 07:58:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA21t-0004Yb-8u; Wed, 30 Apr 2025 03:38:53 -0400
+	id 1uA2K2-0007ja-IB; Wed, 30 Apr 2025 03:57:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uA21r-0004YJ-9I
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:38:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uA2Jz-0007ic-Nx
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:57:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uA21p-0005yD-9L
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:38:50 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uA2Jx-0007z7-4g
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 03:57:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745998726;
+ s=mimecast20190719; t=1745999850;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/Ng7O6TUPIZXkCsW/9yzV1cXjwD4T5lUtAWSo859F58=;
- b=goclI9jxzbZpDRobQJkfcP0ieHl5I2ws6hVIPE5DgKePpjnxkGaS3YuFwPsvDvbwkFtEkR
- 5tLJxDyItqjtfE+qPftRpmbzNUkH0fyGq1nJ963cc3CGyDWtlNv680x5toNWELsIWLtxx9
- 2GbJPlkNOshv8tdWs4yx4VZ2gsu3FNI=
+ bh=/TMMUGkNpp1D87llHefk/3l0BdaUkqmQQfCOp1G9twc=;
+ b=gLRiTC0gnAuOhg1PUoiRE72DABSMg9ZiAJlc3ppEsKZUBheZm6WWNOJ047ZctNJDImnUFH
+ O09CWSZU/ymNJ7vPB67DLdCs2qjpYrs0h3QxSHSpJD+NR7gPhmwg/4JndoEXpEY+TLWEvI
+ 0+Rln/quf4YSu8Msx3i3OW6GTkyNrmk=
 Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
  [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-626-FgNCPvgXPI2jAh-VZtSH2A-1; Wed, 30 Apr 2025 03:38:43 -0400
-X-MC-Unique: FgNCPvgXPI2jAh-VZtSH2A-1
-X-Mimecast-MFC-AGG-ID: FgNCPvgXPI2jAh-VZtSH2A_1745998723
+ us-mta-270-mut7q62NO2G7ch5D08R6mA-1; Wed, 30 Apr 2025 03:57:28 -0400
+X-MC-Unique: mut7q62NO2G7ch5D08R6mA-1
+X-Mimecast-MFC-AGG-ID: mut7q62NO2G7ch5D08R6mA_1745999847
 Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-391315098b2so2031385f8f.2
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 00:38:43 -0700 (PDT)
+ ffacd0b85a97d-3a064c45f03so303195f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 00:57:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745998723; x=1746603523;
+ d=1e100.net; s=20230601; t=1745999847; x=1746604647;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/Ng7O6TUPIZXkCsW/9yzV1cXjwD4T5lUtAWSo859F58=;
- b=K4GxaaOX72aX8gaArj8J2sulUCicOY/f9AtRZ1hG2lQZfh7ETYFukx0m3jhNlXNEnN
- BgakUB5Gq4gTuWn+svz7CfzMPEU/w4t3HkhEUQrzg4XwPS4jM/8Am+io08s3DGqt4sv5
- qL6SpxMPaTlX1+DvlLr081XERr/RoKZaf6J+nZO6HawEIzWZDfXnF7/bvjLooATFvjZt
- LpjsNg3jiL10YicegwdCOEOTGQjS/HEhHTCZxSWr3PjbPytI0/uVCI7XIiNyZUWH/RrX
- jmHoGkxT36XLLP1p/y/FtqSfrqEBjXpIsZoXKTdIBDyC7p3/P2tTNiVwdewetV0Pu+KV
- MoeQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXdfTsepqkkNplfnwTFOiQ813KJ4tICrm98xKHl4mBq4wHkFOlJciV5bMp3Ug+oFZg6o2Cm2kOrgiOp@nongnu.org
-X-Gm-Message-State: AOJu0YzlBt8hPkGfQUy2zuADtX9kdSDkh8NqOaYkcxA1sY9f76sLka5U
- CdoY9CMi4iNVtQu/fhn7lBtBaeH4mDVcQivfgxAkb6uhrzekCLjCOWftTbT9xDoV2wm763T32Ob
- Bsnm4YBE7fyyitvsP91f80P1WWRW4exzP7fGv6qSc1egq4nFAFjGv
-X-Gm-Gg: ASbGnctdaUNX8Ul9GI1sHMKRwc6v085AGW2jx2K9UqBaaOotDXdEN/4gb2MKOdFeiiI
- ztXgaldst+GFH+ytz5SxCRCTYolqlPzr7r2kqvQzVAW+ci8e5ul78xQYj4nEWHkt0LBfa+KGuEN
- sAXz0rcPwGqSAAbNL/WotgV2fvcUhuucZHKoizbu8wWtCm3J+kwbHGEUU9mQCwkOVk947v2389k
- bDVt/tqZJYoWCNrX6VSPdWfb9mH46g/AyMg9e8jdBxvqy7R8+UvgumVKswoWxaBRhsVHgn5syzA
- oTWrNLq3BE+LQJqtshpuRqKQ/0Mc0elUVTpyE6d8
-X-Received: by 2002:a5d:5c84:0:b0:391:2e6a:30fe with SMTP id
- ffacd0b85a97d-3a08ff50b1fmr1230102f8f.39.1745998722702; 
- Wed, 30 Apr 2025 00:38:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGIqumlKJbXjvLeZikQmdsKHCKb0UvhI+LKhKin3HVFacrh7P/eyfiRNiUcJ/5MVm1qj/pmhQ==
-X-Received: by 2002:a5d:5c84:0:b0:391:2e6a:30fe with SMTP id
- ffacd0b85a97d-3a08ff50b1fmr1230078f8f.39.1745998722349; 
- Wed, 30 Apr 2025 00:38:42 -0700 (PDT)
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/TMMUGkNpp1D87llHefk/3l0BdaUkqmQQfCOp1G9twc=;
+ b=wRWYlWRdCX5zAIQUVqhmjzUvDCjJ8TmKBON92xI4RcWe2vRHdJ8EBsEVuDLutzBQ+i
+ hl4PQZhOst6Y7CFAIwEocwyQqbhEW1sppqJRaZIA7GvESQYmMy4xot7ta39+IVSJWLZk
+ oOnV71uB+itjGQzkkDYQSX0ZB9J9cg4PAIDsTK3DM3T6xw1yUvW5l14FLWzfq++u57Kp
+ tRbIJiiRsjvtAQq/rOvLNnfYkqwEaUR756yNLCxnZn5RblsluzOHaOARxvGJDAKsxlHg
+ GQmZFo/uD0BKRoUAorgx4SEMt4IfqDKGe2RbDKNhkDlSKzaIr9ODrPcYEEOms/g4aD7U
+ dwfg==
+X-Gm-Message-State: AOJu0Yx+aGNqQD6opiafJnMcltseDDWNxIM0Tu9c8XbvpEsaf/FLOUph
+ O3bHN518fayH2kPn2J6NmDw6YWsWpWR+R316rvqMl+ZGinkY0GyolECN3sAJzqRj3Jiho1W+Ojj
+ 3k4Hu0sr3wZVUUFkM98wpdC2C6RoApCORbgiPyOc6x1VZVHf04Xkf
+X-Gm-Gg: ASbGncstCDpIVS56HzW1J7uJAkBpx9OPDWXVMLZgl2siKWe2naPF9m71c1d/ejNldQm
+ o11vIy2NhNJbkdH5NWDNlN0HIfTDTMGy7IbmnHJS4G0uytuq/UMiOAC3Kyjjc2gnBE50iXNRJia
+ LIG5oOjXD/PjIqoM2cSibDDb/odNBNfukFGvHeJBMMs3+v4k6SppXsmHCN2O7SZ3eluuraAmhcR
+ 75MVF/eXECQ3lHp6BZhmIwxtFj8sZUSlNKREkrlqhEui36nL20DjXdvLMCMcVRGPguqHl4krFzV
+ bhLcqkZ7kE/W9AJ5uT10xW19rG25vjvhxGfCUpWi
+X-Received: by 2002:a5d:64c8:0:b0:3a0:7c91:4aaf with SMTP id
+ ffacd0b85a97d-3a08fb6929cmr1432139f8f.19.1745999846936; 
+ Wed, 30 Apr 2025 00:57:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGycdqlDNX4tDu27jpUpX5XOPxPA/nfkHGczAK2D/jRbjNIi4SaHzdDkHqaaPNr3vlSWQgZyA==
+X-Received: by 2002:a5d:64c8:0:b0:3a0:7c91:4aaf with SMTP id
+ ffacd0b85a97d-3a08fb6929cmr1432107f8f.19.1745999846532; 
+ Wed, 30 Apr 2025 00:57:26 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a073c8ca99sm15997248f8f.20.2025.04.30.00.38.41
+ ffacd0b85a97d-3a073e5e1c6sm16619596f8f.98.2025.04.30.00.57.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Apr 2025 00:38:41 -0700 (PDT)
-Message-ID: <462058f0-ce94-467a-8865-cef1ec3cb646@redhat.com>
-Date: Wed, 30 Apr 2025 09:38:40 +0200
+ Wed, 30 Apr 2025 00:57:25 -0700 (PDT)
+Message-ID: <5d0e0b69-cbbc-4fa4-a847-fdc8603a8122@redhat.com>
+Date: Wed, 30 Apr 2025 09:57:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/7] new configure option to enable gstreamer
-To: Dietmar Maurer <dietmar@proxmox.com>, marcandre.lureau@redhat.com,
- qemu-devel@nongnu.org
-References: <20250430072524.3650582-1-dietmar@proxmox.com>
- <20250430072524.3650582-2-dietmar@proxmox.com>
+Subject: Re: [PATCH] Drop support for Python 3.8
+To: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?= <berrange@redhat.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>
+References: <20250425120710.879518-1-thuth@redhat.com>
+ <57f21448-79c1-4d46-9a8e-f9109eb67dcd@linaro.org>
+ <87jz78b7fh.fsf@pond.sub.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -124,9 +129,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250430072524.3650582-2-dietmar@proxmox.com>
+In-Reply-To: <87jz78b7fh.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -152,96 +157,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/04/2025 09.25, Dietmar Maurer wrote:
-> GStreamer is required to implement H264 encoding for VNC. Please note
-> that QEMU already depends on this library when you enable Spice.
-> 
-> Signed-off-by: Dietmar Maurer <dietmar@proxmox.com>
-> ---
->   meson.build                   | 10 ++++++++++
->   meson_options.txt             |  2 ++
->   scripts/meson-buildoptions.sh |  3 +++
->   3 files changed, 15 insertions(+)
-> 
-> diff --git a/meson.build b/meson.build
-> index bcb9d39a38..50a9a2b036 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1348,6 +1348,14 @@ if not get_option('zstd').auto() or have_block
->                       required: get_option('zstd'),
->                       method: 'pkg-config')
->   endif
-> +
-> +gstreamer = not_found
-> +if not get_option('gstreamer').auto() or have_system
-> +  gstreamer = dependency('gstreamer-1.0 gstreamer-base-1.0', version: '>=1.22.0',
-> +                          required: get_option('gstreamer'),
-> +                          method: 'pkg-config')
-> +endif
-> +
->   qpl = not_found
->   if not get_option('qpl').auto() or have_system
->     qpl = dependency('qpl', version: '>=1.5.0',
-> @@ -2563,6 +2571,7 @@ config_host_data.set('CONFIG_MALLOC_TRIM', has_malloc_trim)
->   config_host_data.set('CONFIG_STATX', has_statx)
->   config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
->   config_host_data.set('CONFIG_ZSTD', zstd.found())
-> +config_host_data.set('CONFIG_GSTREAMER', gstreamer.found())
->   config_host_data.set('CONFIG_QPL', qpl.found())
->   config_host_data.set('CONFIG_UADK', uadk.found())
->   config_host_data.set('CONFIG_QATZIP', qatzip.found())
-> @@ -4895,6 +4904,7 @@ summary_info += {'snappy support':    snappy}
->   summary_info += {'bzip2 support':     libbzip2}
->   summary_info += {'lzfse support':     liblzfse}
->   summary_info += {'zstd support':      zstd}
-> +summary_info += {'gstreamer support': gstreamer}
+  Hi!
 
-Should this maybe rather go into the "user interface" section, next to the 
-VNC options?
+On 25/04/2025 17.13, Markus Armbruster wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+>> On 25/4/25 14:07, Thomas Huth wrote:
+>>> From: Thomas Huth <thuth@redhat.com>
+>>> Python 3.8 went "end of life" in October 2024 and Fedora 42 dropped
+>>> this version already, so the "python" CI job is currently failing.
+>>> Thus it's time to drop support for this Python version in QEMU, too.
+...
+>>>    if test -z "${PYTHON}"; then
+>>>        # A bare 'python' is traditionally python 2.x, but some distros
+>>>        # have it as python 3.x, so check in both places.
+>>> -    for binary in python3 python python3.12 python3.11 \
+>>> -                          python3.10 python3.9 python3.8; do
+>>> +    for binary in python3 python python3.13 python3.12 python3.11 \
+>>
+>> The 3.13 test was missing in commit 45b14be9b63 ("python: enable testing
+>> for 3.13"). Preferably adding in a preliminary commit, otherwise mention
+>> in this patch description
 
->   summary_info += {'Query Processing Library support': qpl}
->   summary_info += {'UADK Library support': uadk}
->   summary_info += {'qatzip support':    qatzip}
-> diff --git a/meson_options.txt b/meson_options.txt
-> index 59d973bca0..11cd132be5 100644
-> --- a/meson_options.txt
-> +++ b/meson_options.txt
-> @@ -254,6 +254,8 @@ option('vnc_sasl', type : 'feature', value : 'auto',
->          description: 'SASL authentication for VNC server')
->   option('vte', type : 'feature', value : 'auto',
->          description: 'vte support for the gtk UI')
-> +option('gstreamer', type : 'feature', value : 'auto',
-> +       description: 'for VNC H.264 encoding with gstreamer')
->   
->   # GTK Clipboard implementation is disabled by default, since it may cause hangs
->   # of the guest VCPUs. See gitlab issue 1150:
-> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-> index 3e8e00852b..f88475f707 100644
-> --- a/scripts/meson-buildoptions.sh
-> +++ b/scripts/meson-buildoptions.sh
-> @@ -229,6 +229,7 @@ meson_options_help() {
->     printf "%s\n" '                  Xen PCI passthrough support'
->     printf "%s\n" '  xkbcommon       xkbcommon support'
->     printf "%s\n" '  zstd            zstd compression support'
-> +  printf "%s\n" '  gstreamer       gstreamer support (H264 for VNC)'
->   }
->   _meson_option_parse() {
->     case $1 in
-> @@ -581,6 +582,8 @@ _meson_option_parse() {
->       --disable-xkbcommon) printf "%s" -Dxkbcommon=disabled ;;
->       --enable-zstd) printf "%s" -Dzstd=enabled ;;
->       --disable-zstd) printf "%s" -Dzstd=disabled ;;
-> +    --enable-gstreamer) printf "%s" -Dgstreamer=enabled ;;
-> +    --disable-gstreamer) printf "%s" -Dgstreamer=disabled ;;
->       *) return 1 ;;
->     esac
->   }
+Yes, I'll add a sentence to the patch description!
 
-Please keep the scripts/meson-buildoptions.sh file sorted alphabetically. 
-It's an auto-generated file, so if you edit it this way manually, it will be 
-changed by the build system the next time someone touches meson_options.txt.
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-  Thanks,
-   Thomas
+Thanks!
+
+> Yes.  The patch looks good to me otherwise.  But John knows a lot more
+> about this stuff than I do; would be good to get his blessing.
+
+Seems like John is currently away from keyboard / busy with other stuff? I 
+think we should go ahead and include this patch to get the CI green again, 
+so I'll add it to my next pull request. If there is still anything that 
+needs to be done on top, it can be done in another patch later.
+
+  Thomas
 
 
