@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97FCBC369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 15:01:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E429C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 15:01:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA8ts-0002HH-AZ; Wed, 30 Apr 2025 10:59:04 -0400
+	id 1uA8tq-0002FE-5P; Wed, 30 Apr 2025 10:59:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uA8tl-0002Be-TW
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:58:58 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1uA8tk-00028d-Eb
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:58:56 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uA8tj-0002eT-Ey
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:58:57 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-3014678689aso6265a91.0
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 07:58:55 -0700 (PDT)
+ id 1uA8th-0002dw-7E
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:58:56 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-b074d908e56so5553657a12.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 07:58:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746025134; x=1746629934; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746025131; x=1746629931; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lgiqh7bhRD5cMq/BEBKsGo2haYh+WuQTB6qucvXC4NY=;
- b=Vg92JdSmGs+zCSOszLETlz1D8zmkjKlmISgfnAImNf8H4SoRngxqKfJcKerEtSw5d/
- OTmWuPiCHdmUUQabHK21YYNO+/cTFm1agetWXdQ6KXArJmprQcb8oli40H5XvSNM7n7A
- nZJl5BtN+tNkinv03kqE95fdXkDnCNGr6JrjAvkq26hic+N0frPmCyp/rJcoMCulLh8O
- y3X/niRMLmWwsn2AZhmpA6NPs31eU3eTdUxESC42QvIkfKMOZ77cifUleWRKnbabv4hq
- YKI+H7lfXZ+6ooY+cdlDCzcM8bTVEf2dnReDJD0pJZ27mQIenQQPjFu1hoo3xFYxLts8
- Jtog==
+ bh=v1JmSJqnxYquNU/v4UOEtwOcqbxnEb6aDiKyyBWqJ6s=;
+ b=ciQuEBJ6+6NTDvjgFSTEZN3Z1ln5rQbVjIYvK4p1XlaovYWnFb8be8gfb5SOEcuzUa
+ r5pL1wv+01Xno0uw0dkYT4e8eZ6sN3vtnY/O/J1IUmhEzOwPdWDbVS/aaDEsWzUQKF8J
+ ubsFyciTowsok282U9IX4LBedvzGf0dNGrKYgftIDcfr74XrwvUgALxkwu+9TQZopwDb
+ lGERrbKNU3zvFE/UYAh8wV+jfP5E9NmbJc3VAiJlb/fxUMm/iYSf8PysCZF9lU+mVnEO
+ DrGTI/4kMs8xRO5BMNW0hebr0RuV7OlCUcBkLtBf0BhpQZ4+TOReaj3kN1IIEs8uokLF
+ AN1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746025134; x=1746629934;
+ d=1e100.net; s=20230601; t=1746025131; x=1746629931;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lgiqh7bhRD5cMq/BEBKsGo2haYh+WuQTB6qucvXC4NY=;
- b=vmO3AvZ/2hs5H2yRvwSmkCjyvy1WF0v/nCR2XUN0tFsqLGVi4i3ve0bv4qZpJljL6K
- xWMr3oWgb35ZBOO9NpsnXSxXkGjx1n0Ems/lhAQI1wMtcKnkRa7FAGAnY2/YEeRGSqmJ
- H9aigb7R5hXKdVG90PG3D7S5CN1oHWjPP7Cr1vEIYq/vJwazx5CnwJXjPYw/A78YzsCD
- YyIpA0tzpTTK/0a6D/TbnaiLO1zoVInfKNHZDt+0u5mRL0MJu09eXfc9k712PvHms0JA
- EepABRKLsAH6T7sQu5ocgtIx5jLS7v8cAis8L2kc67v3i/39GuUuKG/cvhUbhAnXeS0G
- FW0Q==
-X-Gm-Message-State: AOJu0YwRetPsWT9fFEbu4wSOr6w6+lR5u6sPDPzG5Q5sL68D3vti+nDb
- 8skmS4LcdSS3aqBfOiUpkI2xNNBYeusSR+dG3ju0KXPeYZz+QqIftF38htVLjy8JvisgtoZMbKa
- t
-X-Gm-Gg: ASbGncuZZcT/+7y2CHQL+QXYb1XbVkYxbYqHiYX4U3rsWAovBDK5tSRWoKbLCgvjiSn
- mXVOXEAKCotLF2dNvHqFrpnbuDSIazjk43cbc6miPNFkTnsiA/Gfk3KDLjg6t8zxqcYyN+QQgU5
- +loUKlJLuuBI3q0zTsE46KL2ICEVmflC/oRjNjxihg+CtB/MFP3Lr0w58mtTOHuguVNKznZu6R2
- yDkzw7r0eb8xwXExrrDYlxiv3F+RRfdJ6MYvLVmsM+8NByFBdu9CwVShQqkAi5qAEvEo8Y2U1+j
- YRr7NNnLVoubl6Q+PTHpowDPF9GHOI463JoOrt6Q
-X-Google-Smtp-Source: AGHT+IFieDyuyjj+C4di99eeA1PGTo0L9NwfDDFPvRC1/0a/H5Z1PDo/6bzUYYe3zw+0C9wzY3sxBg==
-X-Received: by 2002:a17:90b:514c:b0:309:fffd:c15a with SMTP id
- 98e67ed59e1d1-30a343ecc28mr4110169a91.13.1746025134157; 
- Wed, 30 Apr 2025 07:58:54 -0700 (PDT)
+ bh=v1JmSJqnxYquNU/v4UOEtwOcqbxnEb6aDiKyyBWqJ6s=;
+ b=n6vj66luwqiAg5xBbQtT3dTAhBsZT3klfSbNWngsxIuf3qNVbokp74ui54vqhGFWBr
+ J+sBpp3l6Y3hNeQUhXVl7eyQW+qwWp76w1mrdoGo6Ptr3ZUfX7KicYa8Ve5W4oZ2AHKE
+ V41kq+9R3xitSv6gZ6PcL35vP7PU3iYf3Za7DH3m/DQT7OvudN22tjBcU/UuEdVPIR3L
+ zrGgaXb4ZqG1BdwSCLZBEHRBCkWSWLonaxeecu8GKbf7sjFj/y0jjAATdA6Lvu8vHgDp
+ btV+lGyutrq5Jqu89+HQ4RKC6nh9Rq4V+DmmD3uejylFMBwh14h84r0V5ZhchB96KNLs
+ svzA==
+X-Gm-Message-State: AOJu0Ywx8Q3dUa7j+d4WXzh/7SWMbbLGtLxdwYY9mVeYbmdXaZbFJgOT
+ AeXPg3p4swhZXnyihbFd3OKdnz8qETPMpImlbSCLksFUHFkVhdwtMrZuF5rhFwpOZ5EsJ9U/f9v
+ B
+X-Gm-Gg: ASbGncvLGaW4rNFhpURKP+TjjJtYX2XrnIpjCDGzmopJQ1wj1ITpCIoWMYhnpielXt/
+ 84aX9sIspkwxuGnuThJ7oJIOpe3M0uz9ap5yaKtSQs/hiG475FsfkwpPWC75YrqXEZBRDHaMud7
+ 38JuSHEtjInYSD9geqaGfJgdKAoAsSmtNW0wHT6c9k3Zln44jCvHworPmLWy1ea/qtzcpsSoNwy
+ qghkQ5hiF0X3eRh5FeODukDw+YTCDLcIjkFspgoA7nUuPRxrYziOdhSyM7jRaamuhrOVoaCjOKR
+ h/R5vQYWZM2RU8fspqZgcBBxrHwSf9wlhJbLhgaL
+X-Google-Smtp-Source: AGHT+IFi3zhIVBlI4fvnZXF3ndodFDug/+ZjzkjEgZ4p9GMyQhZU6U0C5qlme+C9qszLASfwf7Vv4g==
+X-Received: by 2002:a17:90b:3504:b0:301:cba1:7ada with SMTP id
+ 98e67ed59e1d1-30a343ce72cmr3932692a91.1.1746025131606; 
+ Wed, 30 Apr 2025 07:58:51 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30a34a5bd78sm1705652a91.42.2025.04.30.07.58.53
+ 98e67ed59e1d1-30a34a5bd78sm1705652a91.42.2025.04.30.07.58.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Apr 2025 07:58:53 -0700 (PDT)
+ Wed, 30 Apr 2025 07:58:51 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -70,17 +70,18 @@ Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  alex.bennee@linaro.org, richard.henderson@linaro.org, anjo@rev.ng,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 04/12] target/arm: move kvm stubs and remove CONFIG_KVM
- from kvm_arm.h
-Date: Wed, 30 Apr 2025 07:58:29 -0700
-Message-ID: <20250430145838.1790471-5-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 01/12] target/arm: Replace target_ulong -> uint64_t for
+ HWBreakpoint
+Date: Wed, 30 Apr 2025 07:58:26 -0700
+Message-ID: <20250430145838.1790471-2-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250430145838.1790471-1-pierrick.bouvier@linaro.org>
 References: <20250430145838.1790471-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,199 +104,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a forward decl for struct kvm_vcpu_init to avoid pulling all kvm
-headers.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+CPUARMState::pc is of type uint64_t.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/kvm_arm.h  | 83 +------------------------------------------
- target/arm/kvm-stub.c | 77 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 78 insertions(+), 82 deletions(-)
+ target/arm/internals.h   | 6 +++---
+ target/arm/hyp_gdbstub.c | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index 05c3de8cd46..7b9c7c4a148 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -94,7 +94,7 @@ void kvm_arm_cpu_post_load(ARMCPU *cpu);
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 4d3d84ffebd..c30689c9fcd 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1949,9 +1949,9 @@ extern GArray *hw_breakpoints, *hw_watchpoints;
+ #define get_hw_bp(i)    (&g_array_index(hw_breakpoints, HWBreakpoint, i))
+ #define get_hw_wp(i)    (&g_array_index(hw_watchpoints, HWWatchpoint, i))
+ 
+-bool find_hw_breakpoint(CPUState *cpu, target_ulong pc);
+-int insert_hw_breakpoint(target_ulong pc);
+-int delete_hw_breakpoint(target_ulong pc);
++bool find_hw_breakpoint(CPUState *cpu, uint64_t pc);
++int insert_hw_breakpoint(uint64_t pc);
++int delete_hw_breakpoint(uint64_t pc);
+ 
+ bool check_watchpoint_in_range(int i, vaddr addr);
+ CPUWatchpoint *find_hw_watchpoint(CPUState *cpu, vaddr addr);
+diff --git a/target/arm/hyp_gdbstub.c b/target/arm/hyp_gdbstub.c
+index 0512d67f8cf..4d8fd933868 100644
+--- a/target/arm/hyp_gdbstub.c
++++ b/target/arm/hyp_gdbstub.c
+@@ -54,7 +54,7 @@ GArray *hw_breakpoints, *hw_watchpoints;
+  * here so future PC comparisons will work properly.
   */
- void kvm_arm_reset_vcpu(ARMCPU *cpu);
  
--#ifdef CONFIG_KVM
-+struct kvm_vcpu_init;
- /**
-  * kvm_arm_create_scratch_host_vcpu:
-  * @cpus_to_try: array of QEMU_KVM_ARM_TARGET_* values (terminated with
-@@ -221,85 +221,4 @@ int kvm_arm_set_irq(int cpu, int irqtype, int irq, int level);
- 
- void kvm_arm_enable_mte(Object *cpuobj, Error **errp);
- 
--#else
--
--/*
-- * It's safe to call these functions without KVM support.
-- * They should either do nothing or return "not supported".
-- */
--static inline bool kvm_arm_aarch32_supported(void)
--{
--    return false;
--}
--
--static inline bool kvm_arm_pmu_supported(void)
--{
--    return false;
--}
--
--static inline bool kvm_arm_sve_supported(void)
--{
--    return false;
--}
--
--static inline bool kvm_arm_mte_supported(void)
--{
--    return false;
--}
--
--/*
-- * These functions should never actually be called without KVM support.
-- */
--static inline void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
--{
--    g_assert_not_reached();
--}
--
--static inline void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
--{
--    g_assert_not_reached();
--}
--
--static inline int kvm_arm_get_max_vm_ipa_size(MachineState *ms, bool *fixed_ipa)
--{
--    g_assert_not_reached();
--}
--
--static inline int kvm_arm_vgic_probe(void)
--{
--    g_assert_not_reached();
--}
--
--static inline void kvm_arm_pmu_set_irq(ARMCPU *cpu, int irq)
--{
--    g_assert_not_reached();
--}
--
--static inline void kvm_arm_pmu_init(ARMCPU *cpu)
--{
--    g_assert_not_reached();
--}
--
--static inline void kvm_arm_pvtime_init(ARMCPU *cpu, uint64_t ipa)
--{
--    g_assert_not_reached();
--}
--
--static inline void kvm_arm_steal_time_finalize(ARMCPU *cpu, Error **errp)
--{
--    g_assert_not_reached();
--}
--
--static inline uint32_t kvm_arm_sve_get_vls(ARMCPU *cpu)
--{
--    g_assert_not_reached();
--}
--
--static inline void kvm_arm_enable_mte(Object *cpuobj, Error **errp)
--{
--    g_assert_not_reached();
--}
--
--#endif
--
- #endif
-diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
-index 965a486b320..2b73d0598c1 100644
---- a/target/arm/kvm-stub.c
-+++ b/target/arm/kvm-stub.c
-@@ -22,3 +22,80 @@ bool write_list_to_kvmstate(ARMCPU *cpu, int level)
+-int insert_hw_breakpoint(target_ulong addr)
++int insert_hw_breakpoint(uint64_t addr)
  {
-     g_assert_not_reached();
+     HWBreakpoint brk = {
+         .bcr = 0x1,                             /* BCR E=1, enable */
+@@ -80,7 +80,7 @@ int insert_hw_breakpoint(target_ulong addr)
+  * Delete a breakpoint and shuffle any above down
+  */
+ 
+-int delete_hw_breakpoint(target_ulong pc)
++int delete_hw_breakpoint(uint64_t pc)
+ {
+     int i;
+     for (i = 0; i < hw_breakpoints->len; i++) {
+@@ -226,7 +226,7 @@ int delete_hw_watchpoint(vaddr addr, vaddr len, int type)
+     return -ENOENT;
  }
-+
-+/*
-+ * It's safe to call these functions without KVM support.
-+ * They should either do nothing or return "not supported".
-+ */
-+bool kvm_arm_aarch32_supported(void)
-+{
-+    return false;
-+}
-+
-+bool kvm_arm_pmu_supported(void)
-+{
-+    return false;
-+}
-+
-+bool kvm_arm_sve_supported(void)
-+{
-+    return false;
-+}
-+
-+bool kvm_arm_mte_supported(void)
-+{
-+    return false;
-+}
-+
-+/*
-+ * These functions should never actually be called without KVM support.
-+ */
-+void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-+
-+int kvm_arm_get_max_vm_ipa_size(MachineState *ms, bool *fixed_ipa)
-+{
-+    g_assert_not_reached();
-+}
-+
-+int kvm_arm_vgic_probe(void)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_arm_pmu_set_irq(ARMCPU *cpu, int irq)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_arm_pmu_init(ARMCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_arm_pvtime_init(ARMCPU *cpu, uint64_t ipa)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_arm_steal_time_finalize(ARMCPU *cpu, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+uint32_t kvm_arm_sve_get_vls(ARMCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_arm_enable_mte(Object *cpuobj, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
+ 
+-bool find_hw_breakpoint(CPUState *cpu, target_ulong pc)
++bool find_hw_breakpoint(CPUState *cpu, uint64_t pc)
+ {
+     int i;
+ 
 -- 
 2.47.2
 
