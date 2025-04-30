@@ -4,72 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C34CC369DC
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 12:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E135C369DC
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 12:32:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA6AL-0004on-NY; Wed, 30 Apr 2025 08:03:53 -0400
+	id 1uA6bd-0002lU-F1; Wed, 30 Apr 2025 08:32:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uA6AH-0004lB-58
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 08:03:50 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA6bU-0002gw-FH
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 08:31:56 -0400
+Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uA6AF-0005mg-AT
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 08:03:48 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-708b3cc144cso3155077b3.2
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 05:03:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA6bS-0000P1-EO
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 08:31:55 -0400
+Received: by mail-qt1-x82b.google.com with SMTP id
+ d75a77b69052e-4774ce422easo87466571cf.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 05:31:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746014626; x=1746619426; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=hnKVVtp0tA5v1qxF8otOQkxSZ2tWgmedGLFyxLrLsqs=;
- b=efaEk7em8WQ7CPgiwkcA0vTHX8pN6BcU2p22J2cUr4zzrP72kDm/8LYIA/nT1D7W/d
- 0XyNhj8JC6k8x0508akRIZ992gQ5k/qL5OUSroA8WdRSB2QBeCjcBFRc1AO26MRnRf66
- 8Ozxu9+mTaSLmPgvqJML+lhE0V77681/wBDbpbELKZu6BJLFykFITg01AedOYmBjDrVt
- RXIHhdMbJpy48XgTocQWlHFwFRxOMrpUQoRZAqQJhCYD6TULMeym9l9IBFjVoevLAS1e
- QkXuqijiKEje7ojdt0cu3d6ZHdQ7VNoxr6/f+V/zWv2ccm/R6kDcz4nnPuH+SiaYVZYm
- t13g==
+ d=linaro.org; s=google; t=1746016313; x=1746621113; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rYBrg3pEuxpPgVBHjS77kUjMrIuqMHY+Cf6oUjfem9s=;
+ b=lz5RYW3wytHLoId+/Em4UQg4dlNrpC8vpjQxv0/hiALBl635LP+1GESYpVqPkHOdVk
+ 5oproy11wPE725PJvt4JjmZbL/Ub4xFq32FpTcu3FNZCgm+AP9fx4U6lMrT2OEJZcwSJ
+ cReDWn4sNJsPg4Ks+Hgm3ZogZrIKr+mdivLxDMe3R2Y/9MW9NpuwJSvLGfNhAxpPadNw
+ 554I+iH5ITpBo5OLWZg8PHEib8UoRkZAb+dnXd+53YhnQHWgn2/PRMPuKOLVj1beOUpL
+ KDswMZkjxz7L1jFlGzmo7D3p1wmgHzbJBtUSZyppkM+mx6yeO2cHv8XFJDzCzvcXGQ6U
+ rfrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746014626; x=1746619426;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hnKVVtp0tA5v1qxF8otOQkxSZ2tWgmedGLFyxLrLsqs=;
- b=wljf4DVOF6iIxNznsJHWfd6ZasG6ObhjhjMK4uIegV80Q1gKq+kc5SUmWOEog4V7/+
- IfUkOTpMXhPmvUPf4zvikk37radyYpfbYPq5nJcRFyb04uZVWkid668eZusdWdd9aZQe
- BK50DIaUq6gQkKZwJOSH0Gv5xjjzU6CTcsO/zodD4xkKGd7a1l6wJO8B8dpcRDy+3X7+
- A7IQHNJh7tiW925lVFoyUfJMr6Fr2Tpg5hAX/xk00TuZ/huBJ/86kKO07CAscWQvrGAT
- 9Jh2MaBs58whDTeKWGQh4cFPwzVRhY6JQ5mwSzFLxu1Ak1x858QnFczh9zuQOUSKZNoe
- jcmA==
-X-Gm-Message-State: AOJu0YzPgvweY8r5HHI7Yx1V23JPIsvzgrOfC6SeS2VR3s56QxtbewCA
- 3QyRLoP2WcPM27+TNmHnjSBQBe78gZUnnyXYrGhwsTRcfK0wcFdTmeDDcC7RSK+wQoZWRedLSke
- f0HJ2jR4KJ/L919OzNxzyPQLYlMDZsWlPl/hrig==
-X-Gm-Gg: ASbGncsbTNtK6mzCVo+lrR5/D02c4/Jzki0XjwGmI23ray7yqhxV2ZSd3lUVLis79SQ
- +0dBD2bbFURQnznHRjnQvGZrc2zxNHE27/N9PSoUQAJ5ShpXsivXUHOvZ45zDSsqErfwvrFmxqA
- nz6+sEn6n1P3/GwCXzSd6VZHQ=
-X-Google-Smtp-Source: AGHT+IH/Tvl4x4T03kwzdTuuAKcXkFDb5acHPcV0eqzjQcFQAWUzN58Oeqjo/7zcLlHf6he/in4WGazFgMZg5P8T6ZI=
-X-Received: by 2002:a05:690c:25ca:b0:6fd:2062:c8a2 with SMTP id
- 00721157ae682-708abd653b0mr47028507b3.11.1746014626056; Wed, 30 Apr 2025
- 05:03:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746016313; x=1746621113;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rYBrg3pEuxpPgVBHjS77kUjMrIuqMHY+Cf6oUjfem9s=;
+ b=iHw0tRkZuxGO+EdxMuHh+5hBVNQY5Q9FN2pFzNW14HNSizn1losHpQg/j6L93HNqlY
+ P8lM1JnRZMu9Zxo0I6WWA1M+UI0lkMh3zZK2GuTrp5Re3nTkkpldo925dqi9xLsGmh7F
+ ka87PruR9EINsOSrluYEkiEUM66JUN39ZZAlTXCM33SQUPHqFEhpVllyADStgUTchG+j
+ DOAJWNK82s9CxC/dz1BX8oC9eq0gYLisLcr0e5hJcm131eBd0w/fD9J2biPCFyDE2x7X
+ oPNESZxDG/UhlPVRWIh7oZx79C2zXLmTqhIg+IHT2QKoMTM3lpjrCzR2JybJ9uVHMymD
+ A1ow==
+X-Gm-Message-State: AOJu0YxFrpkSwWlnG/wLVfKKhgH7QN4DX0sKthhZruYnFLSn6jdrZO0K
+ 6Q1l97HtjS7YS0dmxHGnR7nRjG8/KdPox+3cWD/+F4GzZ7SSHwF6wV40R2Gf8ng=
+X-Gm-Gg: ASbGncvqJQ6OzYCbXqv0MKHQjcENg4l6mt+Ly/JQZdad6qq3GzK/XOG5UKDl1DTbFd+
+ 2jLx3WRr/Nj0ErMzVsRsYVHQmGWNsHxAg95gYvQCpy9EckrVDDRb36R8NTq2CMGCz1C0FfKx5bF
+ FVs4iYOol/GT0e5m6NYpZZ7o8yfQTJUHCyipBchb5HKtdJFFQ+LKltWZ1ZOWu9mIRpoUZUStzRL
+ qq/d+wRFH4Imq3jb35vbT1Wm19cDAbhMCNAqGo9M+H67a6Sd6sdr8zuC286nU6I6fgzPV/7tXy5
+ /DOMYoBVdI3tHOIV1/WGPMaMlqjqqllichHU09OY1wBQ9SdcrYOpFw/Sr2f+J4557RtFUZqCUTS
+ Ss44xunI8D88UlQ==
+X-Google-Smtp-Source: AGHT+IHXs+MPlWfOmLU5JtKPaw77UJ+tjNI1qvAq/HPmfsvE4ZHdUDmHVprq2WxveaFfOZdkolWLWg==
+X-Received: by 2002:a05:622a:4ac4:b0:476:b783:c946 with SMTP id
+ d75a77b69052e-489e63d7f51mr40003051cf.33.1746016312713; 
+ Wed, 30 Apr 2025 05:31:52 -0700 (PDT)
+Received: from [192.168.69.226] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-47ea169304dsm91643971cf.54.2025.04.30.05.31.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 30 Apr 2025 05:31:52 -0700 (PDT)
+Message-ID: <83b80b4d-0ce1-4002-872e-1577527e88fa@linaro.org>
+Date: Wed, 30 Apr 2025 14:31:49 +0200
 MIME-Version: 1.0
-References: <20250429155621.2028198-1-nabihestefan@google.com>
-In-Reply-To: <20250429155621.2028198-1-nabihestefan@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 30 Apr 2025 13:03:34 +0100
-X-Gm-Features: ATxdqUHHYtjNplMhxNBL_6UFmnv_2nUodfKPTd_MvHrZ6xZELfqXrIkI3lpXYPs
-Message-ID: <CAFEAcA-K0B0gfpmG5x92o43aCNp-q3ocrgfvRG+7gN-NfgybJw@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] Running with `--enable-ubsan` leads to a qtest failure:
-To: Nabih Estefan <nabihestefan@google.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, lvivier@redhat.com, 
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Nabih Estefan <nabihestefan@google.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, lvivier@redhat.com,
  farosas@suse.de, sriram.yagnaraman@ericsson.com, akihiko.odaki@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+References: <20250429155621.2028198-1-nabihestefan@google.com>
+ <87cyct3owr.fsf@draig.linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87cyct3owr.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
+ envelope-from=philmd@linaro.org; helo=mail-qt1-x82b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,40 +102,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 29 Apr 2025 at 16:56, Nabih Estefan <nabihestefan@google.com> wrote:
->
-> v2: used ldl_le_p and lduw_l_p instead of memcpy as per upstream
-> suggestion.
->
-> ```
-> ../tests/qtest/libqos/igb.c:106:5: runtime error: load of misaligned address 0x562040be8e33 for type 'uint32_t', which requires 4 byte alignment
-> ```
-> Instead of straight casting the uint8_t array, we use memcpy to assure
-> alignment is correct against uint32_t and uint16_t.
->
-> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
-> ---
->  tests/qtest/libqos/igb.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/tests/qtest/libqos/igb.c b/tests/qtest/libqos/igb.c
-> index f40c4ec4cd..2e0bb58617 100644
-> --- a/tests/qtest/libqos/igb.c
-> +++ b/tests/qtest/libqos/igb.c
-> @@ -104,10 +104,10 @@ static void igb_pci_start_hw(QOSGraphObject *obj)
->      e1000e_macreg_write(&d->e1000e, E1000_RDT(0), 0);
->      e1000e_macreg_write(&d->e1000e, E1000_RDH(0), 0);
->      e1000e_macreg_write(&d->e1000e, E1000_RA,
-> -                        le32_to_cpu(*(uint32_t *)address));
-> +                        ldl_le_p((uint32_t *)address));
->      e1000e_macreg_write(&d->e1000e, E1000_RA + 4,
->                          E1000_RAH_AV | E1000_RAH_POOL_1 |
-> -                        le16_to_cpu(*(uint16_t *)(address + 4)));
-> +                        lduw_le_p((uint16_t *)(address + 4)));
+Subject is missing. What about "tests/qtest/igb: Avoid misaligned access"?
 
-ldl_le_p() etc take a 'void *' -- the casts here should not be
-necessary.
+On 30/4/25 12:49, Alex Bennée wrote:
+> Nabih Estefan <nabihestefan@google.com> writes:
+> 
+>> v2: used ldl_le_p and lduw_l_p instead of memcpy as per upstream
+>> suggestion.
 
-thanks
--- PMM
+This comment is not useful in git history.
+
+>>
+>> ```
+>> ../tests/qtest/libqos/igb.c:106:5: runtime error: load of misaligned address 0x562040be8e33 for type 'uint32_t', which requires 4 byte alignment
+>> ```
+>> Instead of straight casting the uint8_t array, we use memcpy to assure
+>> alignment is correct against uint32_t and uint16_t.
+> 
+> Queued to testing/next, thanks.
+> 
+
 
