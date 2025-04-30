@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECA26C3ABAA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C972DC369D9
 	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 23:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAGVz-0001nJ-OH; Wed, 30 Apr 2025 19:06:56 -0400
+	id 1uAGVp-0001lr-9q; Wed, 30 Apr 2025 19:06:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAGVi-0001hh-Pz
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:06:38 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1uAGVj-0001j3-Pf
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:06:40 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAGVf-0007V9-Tq
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:06:38 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-736bfa487c3so421470b3a.1
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 16:06:35 -0700 (PDT)
+ id 1uAGVh-0007VO-Cy
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:06:39 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-736e52948ebso538025b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 16:06:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746054394; x=1746659194; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746054396; x=1746659196; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AYLcw77q0drDQnqkv5fH2XhRnVGB7EFd56psZWVXXSQ=;
- b=UCcS70t45pR+lIozrmNqYyaJ+EwpwFM5FemJA2JgPZPXlcJeB8GH7ScUnQqavyHrqZ
- LKLUEtelbaGzN/6Ax/vwVwef5uKf3G91hEMxG6I5880vMFmDTBqkrBbOZNPB7iAHUbIh
- q1CXE/sKG0exHb+gg2CNEncyFg9kY4f99ol5pM9e4S72m1A17XpImGGSIZ3of6NrdIVl
- wvkm2QWBM6zgZUkEkjvjWMwwrj8GSzCpd8PqYiU6U/VFGHg7iRljiyFfwX55VqpIO14a
- tpgZ1Ratdsi7CPMYVIoMGhvJIApDMntZamFXxD1XurprD6JZYh/c5hZCm65jhDRxz7bs
- EkwA==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=JQMSsVL5Qlj5plf+juQAIXCjkfEY+x7lY+AAGxAAiXU=;
+ b=nSec6mJtJgr8tmi7TAjS6j0e+hpWYI4s3SdXt3qXRFzzRntuF/JNcHorQonwklnoMw
+ lZ3vrKzPbfUi5/TnlFH3QKTI0z9vliP1r4FuQ8ZlLh/aaznIpG8kC19tEcY/e16KwEYR
+ 1lBIrS5Fxmw9GzF4UyADpy7mEFBRkRpp0Fmibe/gS3BKyR3G/zZcfzUfHs34FzOgpK1E
+ 2cXfHi5rRDtMdcbezsguUtGqNM8DRR7bscGi5uCR4XPmCxxEA3/AohVKG9C0Tm3j0UkR
+ ur4tz9kVh/jZ5CQTTkD36yqZwtgyt70HHC7Mw/HHB+y4NR/xb52PX0XF3Ff9l5/DyLVb
+ RZPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746054394; x=1746659194;
+ d=1e100.net; s=20230601; t=1746054396; x=1746659196;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AYLcw77q0drDQnqkv5fH2XhRnVGB7EFd56psZWVXXSQ=;
- b=TtbC3CbPCIXVVYOu5Az/3NeMl6p5zvQwSsUURZVuhxtakJmDG3FjNKwzBPBgmCIDUq
- 1NqmJIOc/aOuFplM8jvJE4UvwJxWHtAvvMfZ8bOGhVbkeCwRAaAAgh34dRCzmEyoMmP9
- vhirbILWMTt3t4+6Aw99sAFgkLK3LEX9cXrftMIJqf3DcdUp0Tv+bpcZjQkqt2QYngvE
- 0Q4cIaE88QDYrLIidHNcLz8UJ1QfMxiHYG7FWeVRNzRo+pFRItEoIZYwWadinOY0nKfu
- 2kKS1uTE0DADqHiheZ80amZdm8bsLHUJ9IP/5lYeLqu+f9XFOatOx9yGb/v3EznPjNhy
- WudQ==
-X-Gm-Message-State: AOJu0Yzovl5kkEgR2IO/vfE+hUuLzmnisd3//fST3Qvmaknm9waK4FQD
- MMuU4crtY1PWKYd8iAT+vv2509m3un5hs25svsppAWrnuhaio6CrzDU1MXfgybOqyPRgEIcm9Aw
- X
-X-Gm-Gg: ASbGncuHDQmkFFfF/TfqsKv2UeJqG+3qHQUA4AQEIItb/VioEwAPZF/y4MMADzzT4LL
- kxVnVu4lo/J20gCXXNwo1K8F2evzfx0WANgAjzWsuRjJ4W1prgsvhJm4stoGCHt6klS5Eii1fDB
- zDLYKrCe1IyLz3Bea2mp1NMUm7uXht28Jo5P3anLJeS/KOA4DwYArjcHL69W6QC3xGDl4dU4dUa
- jT8UkJq9u2p+bmvFFX4Gq5qyuevE7iwfamaq9kVndOs4sJLVU32WVsrG8nDGe6KgLx2gDrtuRjP
- xNewODYC1Vt7ybzIW9Z5EwwT3pX3V87Ev7aNNujX6PVpoe9unrKUof5YWC1A3GEFUvgCMcR6Tzo
+ bh=JQMSsVL5Qlj5plf+juQAIXCjkfEY+x7lY+AAGxAAiXU=;
+ b=v0jgl6kbpnMFEKuxyVi7zne2OUDHbogUw/INxKgCR4Sa37Vg5QDjvvyQqVU1krWoS4
+ BbzhYRV3XXX6lHWIAr56mQ4EKCketPA+FCgSZo9Ia/h8GQ9FuKb24+jEut9do8gGwEN+
+ NRg5ac3GtFeSpHSIunnRdUDZ6G9JKhSEFsEG0QYxfpZzgGb4mUvxhaJXvUpjdaetaoJ3
+ 14jPcAJdlrA9AujcOBdWJAmMBCxPbf8rAeDBjoD8ID5fEh4z7B68wm0lyjs+Y7pdjGap
+ 2HKyqJu49dQvVpDwR+KiW/3Kdj05Lr+kmVE+P74gc/wSgZ8PTeY9UzEShsQqharfP2LE
+ lE1g==
+X-Gm-Message-State: AOJu0Yz1nDJs+iJGX6DHNETNGOFanUvj614Gf5yzdczMJU9cY2XyLQMW
+ 5Ikqkt25R0PpclmbN4VS7Zb2n/8pc0LjJZAycHRp0wZ9lXXWmPnK7vfyRUKyNOXnSi7cNUuAIqn
+ 6
+X-Gm-Gg: ASbGnct77ewjcZ5h8E1WUa1vXF6QiTIVZuquh2qy0PzcGonoCGVhCUwldcir6tboYF9
+ ykFkweBzx/gbGGiv3mg2HOvpvPSr2+AbQUbIVmsTi9JW9ZDKjN/qW/tQVUqauhCNDZYSFwuTGBH
+ IfyHHm+HChqxLGs7K7vqpqf2NsNgeSzlM2XyVw7aTIXsxHkAjXEThhLSaYm/f79rTNvwP8Z0wkC
+ 2YWZUvlU91m4TO8igT+svMZCrl0LJIpGrqGRREvCpdvA5Zmyb3qi/m3Ni7+YCJ+edD/Ne8UmYGQ
+ HT2xcWpmLhdcHtxIFB5Y1j/4ZsazQCoVm/CpumgFo6rn0+O80T9T+2sffgQpytKBZScLMYK5BfU
  =
-X-Google-Smtp-Source: AGHT+IFPfAcihB4qtMgBZ8eLfk/cjhfgx1AH4s9kGNRHa4zyr15xPVIeOxkQrDgmhUGuyPvHGi1AvA==
-X-Received: by 2002:a05:6a00:1909:b0:736:62a8:e52d with SMTP id
- d2e1a72fcca58-7403a7a4c90mr6599466b3a.12.1746054394368; 
- Wed, 30 Apr 2025 16:06:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGa75+rTqlB6U2gbH/010nm8GLmf5QG2C7y7qFQeekZ7he9GRxMNPpmD1HH7/inHFbiQQcaxw==
+X-Received: by 2002:a05:6a00:3915:b0:736:3768:6d74 with SMTP id
+ d2e1a72fcca58-740491c9454mr501166b3a.7.1746054395738; 
+ Wed, 30 Apr 2025 16:06:35 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74039a30e2fsm2323287b3a.103.2025.04.30.16.06.33
+ d2e1a72fcca58-74039a30e2fsm2323287b3a.103.2025.04.30.16.06.35
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Apr 2025 16:06:34 -0700 (PDT)
+ Wed, 30 Apr 2025 16:06:35 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-Subject: [PATCH 2/6] accel/tcg: Don't use TARGET_LONG_BITS in decode_sleb128
-Date: Wed, 30 Apr 2025 16:06:27 -0700
-Message-ID: <20250430230631.2571291-3-richard.henderson@linaro.org>
+Subject: [PATCH 4/6] accel/tcg: Build translate-all.c twice
+Date: Wed, 30 Apr 2025 16:06:29 -0700
+Message-ID: <20250430230631.2571291-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250430230631.2571291-1-richard.henderson@linaro.org>
 References: <20250430230631.2571291-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,29 +99,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we changed decode_sleb128 from target_long to
-int64_t, we failed to adjust the shift limit.
+Remove lots and lots of unused headers.
 
-Cc: qemu-stable@nongnu.org
-Fixes: c9ad8d27caa ("tcg: Widen gen_insn_data to uint64_t")
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/translate-all.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ accel/tcg/translate-all.c | 32 --------------------------------
+ accel/tcg/meson.build     |  2 +-
+ 2 files changed, 1 insertion(+), 33 deletions(-)
 
 diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index fa4998b341..acf32e6c08 100644
+index 6b6e10be9d..451b383aa8 100644
 --- a/accel/tcg/translate-all.c
 +++ b/accel/tcg/translate-all.c
-@@ -109,7 +109,7 @@ static int64_t decode_sleb128(const uint8_t **pp)
-         val |= (int64_t)(byte & 0x7f) << shift;
-         shift += 7;
-     } while (byte & 0x80);
--    if (shift < TARGET_LONG_BITS && (byte & 0x40)) {
-+    if (shift < 64 && (byte & 0x40)) {
-         val |= -(int64_t)1 << shift;
-     }
+@@ -22,46 +22,15 @@
+ #include "trace.h"
+ #include "disas/disas.h"
+ #include "tcg/tcg.h"
+-#if defined(CONFIG_USER_ONLY)
+-#include "qemu.h"
+-#if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+-#include <sys/param.h>
+-#if __FreeBSD_version >= 700104
+-#define HAVE_KINFO_GETVMMAP
+-#define sigqueue sigqueue_freebsd  /* avoid redefinition */
+-#include <sys/proc.h>
+-#include <machine/profile.h>
+-#define _KERNEL
+-#include <sys/user.h>
+-#undef _KERNEL
+-#undef sigqueue
+-#include <libutil.h>
+-#endif
+-#endif
+-#else
+-#include "system/ram_addr.h"
+-#endif
+-
+-#include "cpu-param.h"
+-#include "exec/cputlb.h"
+-#include "exec/page-protection.h"
+ #include "exec/mmap-lock.h"
+ #include "tb-internal.h"
+ #include "tlb-bounds.h"
+-#include "exec/translator.h"
+ #include "exec/tb-flush.h"
+-#include "qemu/bitmap.h"
+-#include "qemu/qemu-print.h"
+-#include "qemu/main-loop.h"
+ #include "qemu/cacheinfo.h"
+ #include "qemu/target-info.h"
+-#include "qemu/timer.h"
+ #include "exec/log.h"
+ #include "exec/icount.h"
+-#include "system/tcg.h"
+-#include "qapi/error.h"
+ #include "accel/tcg/cpu-ops.h"
+-#include "accel/tcg/getpc.h"
+ #include "tb-jmp-cache.h"
+ #include "tb-hash.h"
+ #include "tb-context.h"
+@@ -69,7 +38,6 @@
+ #include "internal-common.h"
+ #include "tcg/perf.h"
+ #include "tcg/insn-start-words.h"
+-#include "cpu.h"
  
+ TBContext tb_ctx;
+ 
+diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
+index 0bb089299b..7eb4619aea 100644
+--- a/accel/tcg/meson.build
++++ b/accel/tcg/meson.build
+@@ -10,6 +10,7 @@ tcg_ss.add(files(
+   'tcg-runtime.c',
+   'tcg-runtime-gvec.c',
+   'tb-maint.c',
++  'translate-all.c',
+   'translator.c',
+ ))
+ if get_option('plugins')
+@@ -22,7 +23,6 @@ libsystem_ss.add_all(tcg_ss)
+ tcg_specific_ss = ss.source_set()
+ tcg_specific_ss.add(files(
+   'tcg-all.c',
+-  'translate-all.c',
+ ))
+ tcg_specific_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user-exec.c'))
+ specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_specific_ss)
 -- 
 2.43.0
 
