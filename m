@@ -4,81 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0CD5C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 11:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F861C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 11:33:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA5c3-0008WF-7Y; Wed, 30 Apr 2025 07:28:27 -0400
+	id 1uA5gq-0001Q2-1k; Wed, 30 Apr 2025 07:33:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1uA5by-0008Vi-PD; Wed, 30 Apr 2025 07:28:22 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1uA5bv-00029v-Ol; Wed, 30 Apr 2025 07:28:22 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5e8be1c6ff8so2236501a12.1; 
- Wed, 30 Apr 2025 04:28:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1746012494; x=1746617294; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=LVa3YGDj/E1kBeDxbPLDNCVCnHYwLw/UNBTD+VzzjLs=;
- b=TmND7TSwXAKB0gx25AaKBUfMylYABjindaJrly8rSwK3aVfR5Ixc6bn37i5mvY93wH
- Y7HDBGlOrcHb/gwYDm8Y4mS0F2AADL+PAfnQFKXHYjBbIcQvoJ0LUjPOzQ2u+P9Q4GVH
- 5hke3GL9I6Lae+EfLZyDXj5WZGl0YI7+3TJ90=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746012494; x=1746617294;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LVa3YGDj/E1kBeDxbPLDNCVCnHYwLw/UNBTD+VzzjLs=;
- b=HtM7jRuw2jX1vWNvlW43/GEPQeMEtK6XJ9+agHLkfNLzqoybTjuBhyT+ogIg23z9hG
- Op3gXDgLOkHagm7Z+HR/xPKajDS/dXrJE8QnY6TTkzA//czIYvbvQQD5INzadDZjfm0B
- Ab2padalOfmiGZfVF8lQFRC5YTRGHO3W/VjnW+jyXPgvKA8VT0L4lA11uHBv99lfnFRB
- mpdprYBCjju8DEBnd0aZwXGuJRSAbccs+5ZdaRxz3eSu6HfK4PuB61RNPOso0fehx6QI
- /clPJAgBQyfCXx797AeiTPN9nc/4VbrW32hlyzkM3kCNKcFjNyChbtcaPRmd7IbDvSiA
- cCMg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUOtA/rlSzDAIER9KM87T3dFlW1YinVKfaLR8QCYP3taXamwi9iH0CUYD8+vJ4JbF3AhGHCtDOOfdr/@nongnu.org
-X-Gm-Message-State: AOJu0YzvOja1Mtb5l/060vUXdcWUvB1KYta9cX0h+V5knGViMzStXI/i
- GlPoFoTe3iuFUZjV62B3pLxrsmvq5Pch3E7vfOGEfe3VkR6zxpit5IECykCxj7pbuk3Vr+AYXjG
- 1t3j9VPj+EvArHBlgLyZSjbd1SyQ=
-X-Gm-Gg: ASbGncv3vifsoNG1A25f8xoLCz/PAgHMI4ouiuGX2yV3i8b5izw8kwf9QmaEVFlSMzc
- cIW/SxV4uJaX0D1skjilQ4IoArJX8rekLH2inp9gBuxDYxod4Udw6ALgYrQpk1Wj4GrWp5opoPr
- n5q8IkXoMsBrEfteoVinwAfA==
-X-Google-Smtp-Source: AGHT+IGCOkFGd/x1CSuEIdoH2xnPAeAtcuGQ0gCVP/TtcGXH9wSeb8SKkAmArDXBWR8wgtrCCeKq4mTeH3IJf7u7VsA=
-X-Received: by 2002:a17:907:6d0b:b0:ac1:df32:ac27 with SMTP id
- a640c23a62f3a-acedc79d656mr300561566b.53.1746012494213; Wed, 30 Apr 2025
- 04:28:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uA5gj-0001PU-9R
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 07:33:18 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uA5gg-0002ec-KH
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 07:33:16 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9863855D247;
+ Wed, 30 Apr 2025 13:33:11 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id FkE2cuLFI3Fo; Wed, 30 Apr 2025 13:33:09 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 85E0455D245; Wed, 30 Apr 2025 13:33:09 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 83C29745682;
+ Wed, 30 Apr 2025 13:33:09 +0200 (CEST)
+Date: Wed, 30 Apr 2025 13:33:09 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Chao Liu <lc00631@tecorigin.com>
+cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com, 
+ philmd@linaro.org, zhangtj@tecorigin.com, zqz00548@tecorigin.com, 
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 1/1] system: optimizing info mtree printing for monitors
+In-Reply-To: <501e578a4ef28515ccdefcbc82defc04363855ca.1746001489.git.lc00631@tecorigin.com>
+Message-ID: <7ec1e581-3919-fdf5-499a-279cba99d43d@eik.bme.hu>
+References: <cover.1746001489.git.lc00631@tecorigin.com>
+ <501e578a4ef28515ccdefcbc82defc04363855ca.1746001489.git.lc00631@tecorigin.com>
 MIME-Version: 1.0
-References: <20250423110630.2249904-1-dbarboza@ventanamicro.com>
- <20250423110630.2249904-10-dbarboza@ventanamicro.com>
- <CACPK8Xei9L_82YV7+wPmTacEh2MNLFticOEny_6kSM9miCAt2w@mail.gmail.com>
- <d404d535-fc04-43ac-a7a7-2f216cad993c@ventanamicro.com>
- <45b9b66d-1aa7-47da-9458-04ab726d5aae@ventanamicro.com>
-In-Reply-To: <45b9b66d-1aa7-47da-9458-04ab726d5aae@ventanamicro.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 30 Apr 2025 20:58:00 +0930
-X-Gm-Features: ATxdqUFxslx806NASeu219TBnPAq6jGGVTUJsQSzmU7_Smc9HYYofrQpmXqoxYs
-Message-ID: <CACPK8Xe5Aqm-7vjTGk6rUPZp50beue6wZeH_EqTQ50TDmNkzqA@mail.gmail.com>
-Subject: Re: [PATCH 9/9] hw/riscv/virt.c: remove 'long' casts in fmt strings
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=joel.stan@gmail.com; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ BOUNDARY="3866299591-686446110-1746012694=:25048"
+Content-ID: <527844fc-2175-2283-40e5-63e7b8ff2d5c@eik.bme.hu>
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: 6
+X-Spam_score: 0.6
+X-Spam_bar: /
+X-Spam_report: (0.6 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,60 +69,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 30 Apr 2025 at 02:41, Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--3866299591-686446110-1746012694=:25048
+Content-Type: text/plain; CHARSET=KOI8-R; format=flowed
+Content-Transfer-Encoding: 8BIT
+Content-ID: <19525fa1-0606-730a-2452-95eae2037834@eik.bme.hu>
+
+
+
+On Wed, 30 Apr 2025, Chao Liu wrote:
+
+> Make the hierarchical relationship between nodes clearer by adding characters
+>
+> e.g.
+>
+> qemu-system-riscv64 -M virt -monitor stdio -display none
+>
+> ```
+> (qemu) info mtree
+> ...
+> memory-region: system
+>   †€€ 0000000000000000-ffffffffffffffff (prio 0, i/o): system
+>      †€€ 0000000003000000-000000000300ffff (prio 0, i/o): gpex_ioport_window
+>         „€€ 0000000003000000-000000000300ffff (prio 0, i/o): gpex_ioport
+> ...
+>      „€€ 0000000400000000-00000007ffffffff (prio 0, i/o): alias ...
+> ```
+>
+> Signed-off-by: Chao Liu <lc00631@tecorigin.com>
+> Reviewed-by: Qingze Zhao <zqz00548@tecorigin.com>
+> Reviewed-by: Tingjian Zhang <zhangtj@tecorigin.com>
+> ---
+> system/memory.c | 42 ++++++++++++++++++++++++++++++++++++------
+> 1 file changed, 36 insertions(+), 6 deletions(-)
+>
+> diff --git a/system/memory.c b/system/memory.c
+> index 71434e7ad0..3a7faeb533 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -3296,6 +3296,27 @@ typedef QTAILQ_HEAD(, MemoryRegionList) MemoryRegionListHead;
+>                            int128_sub((size), int128_one())) : 0)
+> #define MTREE_INDENT "  "
+>
+> +enum mtree_node_type {
+> +    MTREE_NODE_T_INNER,
+> +    MTREE_NODE_T_TAIL,
+> +};
+> +
+> +#define PRINT_MTREE_NODE(node_type) do {  \
+> +    if (node_type == MTREE_NODE_T_TAIL) { \
+> +        qemu_printf("„€€  );              \
+> +    } else {                              \
+> +        qemu_printf("†€€ ");              \
+
+Could you remove one € to make the output less wide? Some memory region 
+names can be long and with 64bit addresses it easily overflows the line 
+length of narrower terminals which makes the output wrap and become less 
+readable. Shorter lines there still shows the tree but takes up less 
+horizontal space so I think shorter line here would be enough.
+
+Regards,
+BALATON Zoltan
+
+> +    }                                     \
+> +} while (0)
+> +
+> +#define PRINT_MTREE_COL(level) do { \
+> +    if (level == 0) {               \
+> +        qemu_printf("  ");         \
+> +    } else {                        \
+> +        qemu_printf("   ");        \
+> +    }                               \
+> +} while (0)
+> +
+> static void mtree_expand_owner(const char *label, Object *obj)
+> {
+>     DeviceState *dev = (DeviceState *) object_dynamic_cast(obj, TYPE_DEVICE);
+> @@ -3335,7 +3356,8 @@ static void mtree_print_mr_owner(const MemoryRegion *mr)
+> static void mtree_print_mr(const MemoryRegion *mr, unsigned int level,
+>                            hwaddr base,
+>                            MemoryRegionListHead *alias_print_queue,
+> -                           bool owner, bool display_disabled)
+> +                           bool owner, bool display_disabled,
+> +                           enum mtree_node_type node_type)
+> {
+>     MemoryRegionList *new_ml, *ml, *next_ml;
+>     MemoryRegionListHead submr_print_queue;
+> @@ -3376,8 +3398,9 @@ static void mtree_print_mr(const MemoryRegion *mr, unsigned int level,
+>         }
+>         if (mr->enabled || display_disabled) {
+>             for (i = 0; i < level; i++) {
+> -                qemu_printf(MTREE_INDENT);
+> +                PRINT_MTREE_COL(i);
+>             }
+> +            PRINT_MTREE_NODE(node_type);
+>             qemu_printf(HWADDR_FMT_plx "-" HWADDR_FMT_plx
+>                         " (prio %d, %s%s): alias %s @%s " HWADDR_FMT_plx
+>                         "-" HWADDR_FMT_plx "%s",
+> @@ -3398,8 +3421,9 @@ static void mtree_print_mr(const MemoryRegion *mr, unsigned int level,
+>     } else {
+>         if (mr->enabled || display_disabled) {
+>             for (i = 0; i < level; i++) {
+> -                qemu_printf(MTREE_INDENT);
+> +                PRINT_MTREE_COL(i);
+>             }
+> +            PRINT_MTREE_NODE(node_type);
+>             qemu_printf(HWADDR_FMT_plx "-" HWADDR_FMT_plx
+>                         " (prio %d, %s%s): %s%s",
+>                         cur_start, cur_end,
+> @@ -3435,8 +3459,12 @@ static void mtree_print_mr(const MemoryRegion *mr, unsigned int level,
+>     }
+>
+>     QTAILQ_FOREACH(ml, &submr_print_queue, mrqueue) {
+> +        if (ml == QTAILQ_LAST(&submr_print_queue)) {
+> +            node_type = MTREE_NODE_T_TAIL;
+> +        }
+>         mtree_print_mr(ml->mr, level + 1, cur_start,
+> -                       alias_print_queue, owner, display_disabled);
+> +                       alias_print_queue, owner,
+> +                       display_disabled, node_type);
+>     }
+>
+>     QTAILQ_FOREACH_SAFE(ml, &submr_print_queue, mrqueue, next_ml) {
+> @@ -3614,7 +3642,8 @@ static void mtree_print_as(gpointer key, gpointer value, gpointer user_data)
+>     struct AddressSpaceInfo *asi = user_data;
+>
+>     g_slist_foreach(as_same_root_mr_list, mtree_print_as_name, NULL);
+> -    mtree_print_mr(mr, 1, 0, asi->ml_head, asi->owner, asi->disabled);
+> +    mtree_print_mr(mr, 1, 0, asi->ml_head, asi->owner, asi->disabled,
+> +                   MTREE_NODE_T_INNER);
+>     qemu_printf("\n");
+> }
+>
+> @@ -3659,7 +3688,8 @@ static void mtree_info_as(bool dispatch_tree, bool owner, bool disabled)
+>     /* print aliased regions */
+>     QTAILQ_FOREACH(ml, &ml_head, mrqueue) {
+>         qemu_printf("memory-region: %s\n", memory_region_name(ml->mr));
+> -        mtree_print_mr(ml->mr, 1, 0, &ml_head, owner, disabled);
+> +        mtree_print_mr(ml->mr, 1, 0, &ml_head, owner, disabled,
+> +                       MTREE_NODE_T_INNER);
+>         qemu_printf("\n");
+>     }
 >
 >
->
-> On 4/29/25 9:40 AM, Daniel Henrique Barboza wrote:
-> > Joel,
-> >
-> > I'll make these changes in this patch to be consistent with what we've
-> > been discussing:
-> >
-> > - change addr to hwaddr
-> > - use HWADDR_PRIx instead of PRIx64
-> >
-> > i.e. this diff:
-> >
-> > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> > index 1eae84db15..0020d8f404 100644
-> > --- a/hw/riscv/virt.c
-> > +++ b/hw/riscv/virt.c
-> > @@ -303,12 +303,13 @@ static void create_fdt_socket_cpus(RISCVVirtState *s, int socket,
-> >   static void create_fdt_socket_memory(RISCVVirtState *s, int socket)
-> >   {
-> >       g_autofree char *mem_name = NULL;
-> > -    uint64_t addr, size;
-> > +    hwaddr addr;
-> > +    uint64_t size;
-
-Size should be a hwaddr too. This would be consistent with how
-MemMapEntry describes the base/size pairs.
-
-> >       MachineState *ms = MACHINE(s);
-> >
-> >       addr = s->memmap[VIRT_DRAM].base + riscv_socket_mem_offset(ms, socket);
-> >       size = riscv_socket_mem_size(ms, socket);
-> > -    mem_name = g_strdup_printf("/memory@%"PRIx64, addr);
-> > +    mem_name = g_strdup_printf("/memory@%"HWADDR_PRIx, addr);
-> >       qemu_fdt_add_subnode(ms->fdt, mem_name);
-> >       qemu_fdt_setprop_cells(ms->fdt, mem_name, "reg",
-> >           addr >> 32, addr, size >> 32, size);
-> >
-> >
-> > I did this change and applied your "hw/riscv/virt: device tree reg cleanups" series on top
-> > of it, and there are no conflicts. No change needed in your side.
->
-> It seems I was wrong. The v2 will conflict with your patch 03. I think a rebase from
-> your series can't be avoided ...
-
-If you want to pick them up as part of your series, and send them as a
-big patch set then that's fine with me.
-
-Otherwise I'll wait until we've got yours staged and send a new version out.
-
-Thanks!
-
-Joel
+--3866299591-686446110-1746012694=:25048--
 
