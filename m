@@ -4,90 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F657C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 10:42:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46195C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 10:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA4sp-0007xn-Ms; Wed, 30 Apr 2025 06:41:43 -0400
+	id 1uA4wJ-0000jj-Ul; Wed, 30 Apr 2025 06:45:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uA4sl-0007we-Ar
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 06:41:39 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uA4wI-0000jG-2Q
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 06:45:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uA4sh-0004Eb-KU
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 06:41:38 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uA4wG-0004gV-CV
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 06:45:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746009693;
+ s=mimecast20190719; t=1746009915;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6zJaCkloOT7meEjDo+zSa1cYbag/t0xH4JUf0KFuLtk=;
- b=Uto610mwDxv8vujGbVdtJ25YfAr5daFMITLHllg03s4QGXmhx29mOFz+7JeXDNYrq6R9HQ
- NidY8e08POl9P5ZO+NLBL82qKM9mmbx9YX0OwdWxgvMN4dwkJWh5Gnh/v6C7CuPtbijvrN
- AFaQWlVXWmohzNBiCMwTnFHDE+Y95yo=
+ bh=5wZ2yWQ/fpyyGKT3JEdOeN2Kk9J8fi8NAV2x0riqcYg=;
+ b=eWBYTuW7nnZPFreI1rmw9JF0xGCd+ztAFI2iKl124MUOkzMSekmMUuqARHvqP4Hu0O+Slc
+ beIeYu7wbVUW9KdHmWV1oqOgr9OmZVipXJxee9/qXFv3SlEYLLBVqrjSUejrh5pm26RzsF
+ ZGHlbMaoatYvaCgSGBJ75uIwfMtKsoQ=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-454-TO4o7q4eO0CPFPw8Qhq48Q-1; Wed,
- 30 Apr 2025 06:41:30 -0400
-X-MC-Unique: TO4o7q4eO0CPFPw8Qhq48Q-1
-X-Mimecast-MFC-AGG-ID: TO4o7q4eO0CPFPw8Qhq48Q_1746009685
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-3QEVNaS9OJOBt5wrhKmSlQ-1; Wed,
+ 30 Apr 2025 06:45:13 -0400
+X-MC-Unique: 3QEVNaS9OJOBt5wrhKmSlQ-1
+X-Mimecast-MFC-AGG-ID: 3QEVNaS9OJOBt5wrhKmSlQ_1746009912
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F276F1800264; Wed, 30 Apr 2025 10:41:22 +0000 (UTC)
+ id 71374180087F; Wed, 30 Apr 2025 10:45:12 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2C26A195608D; Wed, 30 Apr 2025 10:41:20 +0000 (UTC)
+ id EEFD1195608D; Wed, 30 Apr 2025 10:45:11 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DF75721E66C2; Wed, 30 Apr 2025 12:41:17 +0200 (CEST)
+ id 9DD4021E66C3; Wed, 30 Apr 2025 12:45:09 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Alex
- =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Zhao Liu <zhao1.liu@intel.com>,  Mark Burton
- <mburton@qti.qualcomm.com>,  Eduardo Habkost <eduardo@habkost.net>,
- Alessandro Di Federico <ale@rev.ng>,  Alistair Francis
- <alistair.francis@wdc.com>,  Anton Johansson <anjo@rev.ng>,  Brian Cain
- <bcain@quicinc.com>,  "Daniel P. Berrange" <berrange@redhat.com>,  Chao
- Peng <chao.p.peng@linux.intel.com>,  Neo Jia <cjia@nvidia.com>,
- =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@kaod.org>,  "Wedgwood, Chris" <cw@f00f.org>,
- dhedde@kalrayinc.com,  Eric Blake <eblake@redhat.com>,
- eblot@rivosinc.com,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,  Auger Eric
- <eric.auger@redhat.com>,  Felipe Franciosi <felipe@nutanix.com>,
- iggy@theiggy.com,  Warner Losh <imp@bsdimp.com>,  Jan Kiszka
- <jan.kiszka@web.de>,  Jason Gunthorpe <jgg@nvidia.com>,  Jidong Xiao
- <jidong.xiao@gmail.com>,  Jim Shu <jim.shu@sifive.com>,  Joao Martins
- <joao.m.martins@oracle.com>,  Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>,  Luc Michel <luc@lmichel.fr>,  Manos
- Pitsidianakis <manos.pitsidianakis@linaro.org>,  Max Chou
- <max.chou@sifive.com>,  Meirav Dean <mdean@redhat.com>,
- mimu@linux.vnet.ibm.com,  "Ho, Nelson" <nelson.ho@windriver.com>,  Paul
- Walmsley <paul.walmsley@sifive.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  QEMU Developers <qemu-devel@nongnu.org>,
- Roberto Campesato <rbc@meta.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>,  Bernhard Beschow
- <shentey@gmail.com>,  Stefan Hajnoczi <stefanha@gmail.com>,  Thomas Huth
- <thuth@redhat.com>,  Wei Wang <wei.w.wang@intel.com>,  z.huo@139.com,  LIU
- Zhiwei <zhiwei_liu@linux.alibaba.com>,  "Wu, Zhiyong"
- <zwu.kernel@gmail.com>
-Subject: Re: KVM/QEMU Community call 29/04/2025 agenda items?
-In-Reply-To: <CABgObfYmm2RgFUuViDJA_cuqeCUOh_DV5Qar8YLnrbfYVV39VQ@mail.gmail.com>
- (Paolo Bonzini's message of "Tue, 29 Apr 2025 16:24:49 +0200")
-References: <874iy85yx2.fsf@draig.linaro.org>
- <eefb308b-5cd8-4b30-bc32-e37f601cb07b@linaro.org>
- <CABgObfYmm2RgFUuViDJA_cuqeCUOh_DV5Qar8YLnrbfYVV39VQ@mail.gmail.com>
-Date: Wed, 30 Apr 2025 12:41:17 +0200
-Message-ID: <87a57ydj8y.fsf@pond.sub.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org,
+ John Snow <jsnow@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Michael Roth
+ <michael.roth@amd.com>,
+ Daniel =?utf-8?Q?P=2EBerrang=C3=A9?= <berrange@redhat.com>,  Stefan
+ Hajnoczi <stefanha@gmail.com>
+Subject: Re: [PATCH] Drop support for Python 3.8
+In-Reply-To: <5d0e0b69-cbbc-4fa4-a847-fdc8603a8122@redhat.com> (Thomas Huth's
+ message of "Wed, 30 Apr 2025 09:57:24 +0200")
+References: <20250425120710.879518-1-thuth@redhat.com>
+ <57f21448-79c1-4d46-9a8e-f9109eb67dcd@linaro.org>
+ <87jz78b7fh.fsf@pond.sub.org>
+ <5d0e0b69-cbbc-4fa4-a847-fdc8603a8122@redhat.com>
+Date: Wed, 30 Apr 2025 12:45:09 +0200
+Message-ID: <875ximdj2i.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -118,118 +95,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+Thomas Huth <thuth@redhat.com> writes:
 
-> Il lun 28 apr 2025, 14:58 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>=
- ha
-> scritto:
+>  Hi!
 >
->> On 28/4/25 13:05, Alex Benn=C3=A9e wrote:
->> >
->> > Hi,
->> >
->> > The KVM/QEMU community call is at:
->> >
->> > https://meet.jit.si/kvmcallmeeting
->> > @
->> > 29/04/2025 14:00 UTC
->> >
->> > Are there any agenda items for the sync-up?
->> >
->>
->> For single binary / heterogeneous emulation, we'd like QAPI to
->> be "feature-agnostic". In particular, using the example of KVM
->> accelerator, whether a binary can run with it built-in or not
->> should be is irrelevant for management applications: they should
->> only check if it is used (enabled).
->>
->> The following series is adding KVM specific structures and commands:
->>
->> https://lore.kernel.org/qemu-devel/20250409082649.14733-2-zhao1.liu@inte=
-l.com/
->> It could be interesting to discuss if this can be avoided. But this
->> can also be discussed on the mailing list (as it is still currently).
->>
+> On 25/04/2025 17.13, Markus Armbruster wrote:
+>> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+>>> On 25/4/25 14:07, Thomas Huth wrote:
+>>>> From: Thomas Huth <thuth@redhat.com>
+>>>> Python 3.8 went "end of life" in October 2024 and Fedora 42 dropped
+>>>> this version already, so the "python" CI job is currently failing.
+>>>> Thus it's time to drop support for this Python version in QEMU, too.
+> ...
+>>>>    if test -z "${PYTHON}"; then
+>>>>        # A bare 'python' is traditionally python 2.x, but some distros
+>>>>        # have it as python 3.x, so check in both places.
+>>>> -    for binary in python3 python python3.12 python3.11 \
+>>>> -                          python3.10 python3.9 python3.8; do
+>>>> +    for binary in python3 python python3.13 python3.12 python3.11 \
+>>>
+>>> The 3.13 test was missing in commit 45b14be9b63 ("python: enable testing
+>>> for 3.13"). Preferably adding in a preliminary commit, otherwise mention
+>>> in this patch description
 >
-> Would it be possible to just mark the commands as "do not autoregister" a=
-nd
-> then do the registration (for example) at machine/accelerator/CPU creatio=
-n?
+> Yes, I'll add a sentence to the patch description!
 >
-> I think qemu-ga already has a similar run-time registration model but I
-> don't know why QEMU does not use it.
+>>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>
+> Thanks!
+>
+>> Yes.  The patch looks good to me otherwise.  But John knows a lot more
+>> about this stuff than I do; would be good to get his blessing.
+>
+> Seems like John is currently away from keyboard / busy with other stuff? =
+I think we should go ahead and include this patch to get the CI green again=
+, so I'll add it to my next pull request. If there is still anything that n=
+eeds to be done on top, it can be done in another patch later.
 
-I think we covered this to a degree in
-
-    Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files c=
-ommon
-    Message-ID: <87a584b69n.fsf@pond.sub.org>
-    https://lore.kernel.org/qemu-devel/87a584b69n.fsf@pond.sub.org/
-
-But let me try to give you a shorter argument.
-
-Pierrick's stated goal is to have no noticable differences between the
-single binary and the qemu-system-<target> it covers.
-
-We have two external interfaces to worry about: QMP and the command
-line.  Let's ignore the latter for now.
-
-Target-specific differences in *syntax* come from QAPI schema
-conditionals with target-specific conditions.  Example:
-
-    { 'command': 'query-cpu-definitions', 'returns': ['CpuDefinitionInfo'],
-      'if': { 'any': [ 'TARGET_PPC',
-                       'TARGET_ARM',
-                       'TARGET_I386',
-                       'TARGET_S390X',
-                       'TARGET_MIPS',
-                       'TARGET_LOONGARCH64',
-                       'TARGET_RISCV' ] } }
-
-This command is only defined for some targets.
-
-The value of query-qmp-schema reflects this: it has
-query-cpu-definitions exactly when the condition is satisfied.  The
-condition is evaluated at compile-time, because that's how QAPI schema
-'if' works.
-
-Say we drop the condition and instead add an equivalent run-time
-condition to command registration.  This preserves behavior of command
-execution.  But query-qmp-schema now has query-cpu-definitions *always*.
-This is a noticable difference.  It may break management applications
-that use query-qmp-schema to probe for the command.
-
-Moreover, conditionals aren't limited to commands.  Example:
-
-    { 'struct': 'CpuModelExpansionInfo',
-      'data': { 'model': 'CpuModelInfo',
-                'deprecated-props' : { 'type': ['str'],
---->                                   'if': 'TARGET_S390X' } },
-      'if': { 'any': [ 'TARGET_S390X',
-                       'TARGET_I386',
-                       'TARGET_ARM',
-                       'TARGET_LOONGARCH64',
-                       'TARGET_RISCV' ] } }
-
-Here we have a conditional member.
-
-Another example: the KVM PMU filter series linked above wants to define
-
-    { 'enum': 'KvmPmuEventFormat',
-      'data': ['raw', 'x86-select-umask', 'x86-masked-entry'] }
-
-The enum makes sense only when we have CONFIG_KVM.  Member @raw makes
-sense regardless of target then.  The other two only for TARGET_I386.
-
-We could elect to forgo such conditionals.  The main disadvantage is
-loss of precision in query-qmp-schema.  Which may or may not matter, and
-may or may not box us into corners.
-
-Pierrick volunteered to explore evaluating target-specific QAPI-Schem
-conditionals at run-time instead of compile-time.  This would preserve
-the value of query-qmp-schema, unlike conditional command registration.
-
-Finally, syntax isn't everything.  We need to preserve behavior, too.
-But that's a separate topic.
+Makes sense.  I assume you'll amend the commit message to address
+Philippe's review.
 
 
