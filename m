@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1CD5C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 23:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A014C369DC
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 23:07:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAGVk-0001j5-Lc; Wed, 30 Apr 2025 19:06:40 -0400
+	id 1uAGVq-0001lx-4G; Wed, 30 Apr 2025 19:06:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAGVh-0001gV-TP
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:06:37 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1uAGVi-0001hr-W0
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:06:39 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAGVf-0007UZ-L6
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:06:37 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7403f3ece96so623196b3a.0
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 16:06:34 -0700 (PDT)
+ id 1uAGVh-0007VJ-2W
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 19:06:38 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-73bf1cef6ceso498582b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 16:06:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746054393; x=1746659193; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=2F+hPsL4LbSu3gW/DCRDUJFbiar1wwWjCNPQbPWWc9A=;
- b=S/7jKUhQM22TMYuRezZs+t7ibAxtKoOdJRll/ueEq9bbSM4AR+aDPqIFsbgvm6P2lD
- BaPdTepf9lsdSWhjCqUrf8y1p0YffJjir2lzl853sVdXlf5kpnsPelHBO2PpskPrEu6e
- dkPJOTwvCeAqv9omPGzjaeoEwhqzCUP9gaVh+7lwTyYDn9gmp2qbHIz1kbYaIVeoMhrV
- dJU/rVKr6UVcAIecLheln08oE/8Iuxa2sPjXZnwyAuKdEEdQPpTpPqaPwP7wAMnG8Wl8
- DSZGulezIWSEU+3cBrBYZk451vxov9iOn0T2FlAs5FVZVt8SoI/vbAMkZBBW1+rJXyVA
- 2pyg==
+ d=linaro.org; s=google; t=1746054395; x=1746659195; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=3WaB8ulU2dMi9YjFSsDNWzjp+rLier7nhupyaS/o3ZU=;
+ b=A9dnc9a6aTOfWAbOOOYSg1iJw4la47mmKfzKMhwcyYurHXYVeugoWWzEbD/figgU+7
+ c69TsquA9ZrFsTljDW+KosEmSu0hp897VUSv42DW0CD9/sxI3Ka+75Mbn1IX6r1akjJI
+ ONi/uxoRBsrC/yDDNha6QMq+hgopegsMqX0bumOPDh5C6MQjpCcMaeROEjacEtT3AT5K
+ 9mui7d3LL8rfWcq9gDfD/FUSnYOTrUJf36kEd3Bf8z6Vla6AlBrJPTcbm4CvqgP34sbk
+ w/R910hi/Xz0zAcgO/ryIxZ7TOoHS7F0oMaNJur4Mj92/ZjXWnl0ydqzg3N4vlSIDWjm
+ caTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746054393; x=1746659193;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2F+hPsL4LbSu3gW/DCRDUJFbiar1wwWjCNPQbPWWc9A=;
- b=cFYgHbz/wNhPF7CHJp4ZI5xM0L44zQeyvLdvZA4ZagmbqOVMUcyA9RPbDZdwXnitHv
- sJHIYZvINhJCDbptWTrren3Z1PAN9hCbs7u8VtoWCTFDy5PeofRPoIdJsnVVFJPTBker
- Lq4XHwZDqEoeFHWHaNMymDj19tzOGGBmt7DHQBBgxs0qyi4eTy0vIiHeAaRrQQIfTPeO
- Soyk3XPmLpzACRihMbjZKZgVhI5I75Fx3l11RCihICYUyupnZ5Ts2WbpJFBvrcwIowFO
- IMw8dDcoWFbPvQzhFfUmYwdNiln75xBKAtQXL4F5yVVtiS4lWYGaF63PyAgYmkD88BSk
- hVQA==
-X-Gm-Message-State: AOJu0Ywb5YTSkM6X28Bohssj3k/Y3djxzBYWh6/e6LsnYjxrkVmx9usI
- RhdGIUw2HelF6iYRtqc+CLOo/lyC160YKRb4Juvlpa5oNfzAXNjGMmaOO5To7iXLQE03jtpyAdz
- S
-X-Gm-Gg: ASbGnctD5rKmDNHJsJy+VJfMMPHQ9MucmVtWsGuEmfysxQ5U7J3RpQU7chJMPQzFaM0
- U89Bee36Phz9LP6PV57tSww9ufICePXyDldeE1ikGGnUAvih1TMcMONgWYcQ9MRmFQexebsN74u
- 40NHG7Vstr+VYaswFnVaXBYBHBvCDrI/C/iXTQAEZd5nxqqsgzTLbhVu3sm4xxmX2L/cyHteoR8
- nx/LZvGlWJzEdpqOj6+MLYWj9rDvlCAOXgG40rBA1QoQbAa1/MxKk+wmj9sbAfpyfRyiwSOt1UI
- J32wSZSc5swN2cr8GxafIGANaiYnDVsTDMvR17nFKL/Bg7hHRPOL4ylAzbPw7ekqsBm4imaMv/G
- KfqD84dTdDA==
-X-Google-Smtp-Source: AGHT+IGO50nF/qjWDo+w2pPm0lbKKEOgxQUGd/De6NSVIsEShK8ms/xkju87u25fxGtdxyM3n1wciA==
-X-Received: by 2002:a05:6a00:114b:b0:736:3be3:3d76 with SMTP id
- d2e1a72fcca58-7403a80a043mr5960016b3a.17.1746054392836; 
- Wed, 30 Apr 2025 16:06:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746054395; x=1746659195;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3WaB8ulU2dMi9YjFSsDNWzjp+rLier7nhupyaS/o3ZU=;
+ b=C99KOMXV36/w9ebwqHoe4DwW5rkkl2gsoIOK/3HRNJXR+uUqg40W2p78629WG7Argb
+ uFrhkMkjNfIw4d/hBRqBvD+tQQSw6H6J2rMQch4HZ+MG+0Tt99eNTm+uDYuZZgzaJwAe
+ L2ZgKIXGNuFffzPyxDcoQNLK7wtcatQxDX88UKvQpbyj/j+B9qJ3q2erpATWAfyAcgJf
+ S6YwVIOqVibjZGq30+GIMUTwRePqvze1STTw4RY68hBSiEERYTFlvXoZcgQfULKIfMMZ
+ qzwp63N+ApSO+Cju7OWW53OYpL9jXftlY0SrsWPPgQEXclaWs5mLObFxB3jweiO2Cb/i
+ r2Iw==
+X-Gm-Message-State: AOJu0YxwJvOzI2UcmfuyXVT+tcTDDC4t6D6mbAnVLVLF4ny52jEpSBd3
+ 4DMz/ucX7Sb93wWuUZROIsEaSxAI7VxEt5XykgVCj05UFNWsre1O2gpxpSeH6WHXfsmhilQ6DzL
+ A
+X-Gm-Gg: ASbGnctcJwNZFgSwxIA0eY/+IN8ZmpXDmJ18MYCJBq/UKZ34rFK6/oG2kSYWd8xGYOV
+ NHTVjlV9NH5nNzpY5z13yGT6dSsfCTqPuYj+i5kXM7KHWNE7kKEFqwwG/LO7e+KUBVi106ooYvu
+ ZaSrpLABNYMwkgS0hofu7l1qfjnzSLDl2puFD1Bl1LfTsinU2sQ3fX8X3QtMxOYlN5UACmE9ZCX
+ ve36c9GfntBZUZMSNAsf8lG+cOhIY9EQE2GFmWvhv53DPiFZEv36zICxrdyOEchr8ibTDOjk+ia
+ +EtmULWl+VYafO4Z3e94rymblSc2FHvJ24sQ0Mn6VHulQh8DY0oIgt09kbeXe4jJY893EfXgIlc
+ =
+X-Google-Smtp-Source: AGHT+IEdwwZ/PLAShXUYr1ptjiSI/d99uVOwW7OupHtEy2NwZi0N2eOujhyLOnVVDLtXN5jIC+7QYw==
+X-Received: by 2002:a05:6a20:1588:b0:1f5:8e94:2e81 with SMTP id
+ adf61e73a8af0-20ba6a20782mr1378674637.9.1746054395110; 
+ Wed, 30 Apr 2025 16:06:35 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74039a30e2fsm2323287b3a.103.2025.04.30.16.06.32
+ d2e1a72fcca58-74039a30e2fsm2323287b3a.103.2025.04.30.16.06.34
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 30 Apr 2025 16:06:32 -0700 (PDT)
+ Wed, 30 Apr 2025 16:06:34 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 0/6] accel/tcg: Build translate-all, tcg-all twice
-Date: Wed, 30 Apr 2025 16:06:25 -0700
-Message-ID: <20250430230631.2571291-1-richard.henderson@linaro.org>
+Subject: [PATCH 3/6] accel/tcg: Use target_long_bits() in translate-all.c
+Date: Wed, 30 Apr 2025 16:06:28 -0700
+Message-ID: <20250430230631.2571291-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250430230631.2571291-1-richard.henderson@linaro.org>
+References: <20250430230631.2571291-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,39 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based-on: 20250430164854.2233995-1-richard.henderson@linaro.org
-("[PATCH v2 00/16] accel/tcg: Compile cpu-exec.c twice")
-Based-on: 20250403234914.9154-6-philmd@linaro.org
-("RFC PATCH-for-10.1 05/19] qemu: Introduce target_long_bits()")
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ accel/tcg/translate-all.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-The finish line for accel/tcg is in sight...
-
-r~
-
-Richard Henderson (6):
-  tcg: Define INSN_START_WORDS as constant 3
-  accel/tcg: Don't use TARGET_LONG_BITS in decode_sleb128
-  accel/tcg: Use target_long_bits() in translate-all.c
-  accel/tcg: Build translate-all.c twice
-  accel/tcg: Build tcg-all.c twice
-  accel/tcg: Use vaddr in cpu_loop.h
-
- include/tcg/insn-start-words.h | 11 +++----
- include/tcg/tcg-op.h           | 17 +++++++++--
- include/tcg/tcg-opc.h          |  3 +-
- include/tcg/tcg.h              | 12 +++++---
- include/user/cpu_loop.h        | 12 +++-----
- accel/tcg/tcg-all.c            |  6 +---
- accel/tcg/translate-all.c      | 56 ++++++++--------------------------
- accel/tcg/user-exec.c          |  2 +-
- linux-user/signal.c            |  4 +--
- target/i386/helper.c           |  2 +-
- target/openrisc/sys_helper.c   |  2 +-
- tcg/perf.c                     |  5 ++-
- tcg/tcg.c                      | 12 +++-----
- accel/tcg/meson.build          |  6 ++--
- 14 files changed, 59 insertions(+), 91 deletions(-)
-
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index acf32e6c08..6b6e10be9d 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -54,6 +54,7 @@
+ #include "qemu/qemu-print.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/cacheinfo.h"
++#include "qemu/target-info.h"
+ #include "qemu/timer.h"
+ #include "exec/log.h"
+ #include "exec/icount.h"
+@@ -343,7 +344,7 @@ TranslationBlock *tb_gen_code(CPUState *cpu, TCGTBCPUState s)
+     }
+ 
+     tcg_ctx->gen_tb = tb;
+-    tcg_ctx->addr_type = TARGET_LONG_BITS == 32 ? TCG_TYPE_I32 : TCG_TYPE_I64;
++    tcg_ctx->addr_type = target_long_bits() == 32 ? TCG_TYPE_I32 : TCG_TYPE_I64;
+ #ifdef CONFIG_SOFTMMU
+     tcg_ctx->page_bits = TARGET_PAGE_BITS;
+     tcg_ctx->page_mask = TARGET_PAGE_MASK;
 -- 
 2.43.0
 
