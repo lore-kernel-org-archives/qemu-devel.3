@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25DA2C369DC
-	for <qemu-devel@archiver.kernel.org>; Tue, 29 Apr 2025 23:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28F98C369DC
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 00:01:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u9ueI-0006Ju-QY; Tue, 29 Apr 2025 19:46:02 -0400
+	id 1u9usn-0002KO-Gu; Tue, 29 Apr 2025 20:01:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u9ueE-0006JG-I4; Tue, 29 Apr 2025 19:45:58 -0400
-Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1u9usk-0002K2-Sx; Tue, 29 Apr 2025 20:00:58 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1u9ueD-00052I-2W; Tue, 29 Apr 2025 19:45:58 -0400
-Received: by mail-vk1-xa32.google.com with SMTP id
- 71dfb90a1353d-51eb1818d4fso8790613e0c.1; 
- Tue, 29 Apr 2025 16:45:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1u9usj-0006tw-51; Tue, 29 Apr 2025 20:00:58 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2279915e06eso76164925ad.1; 
+ Tue, 29 Apr 2025 17:00:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1745970355; x=1746575155; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1745971254; x=1746576054; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GRLavPxkSoe6Nb/0Zag6RIEZESR7OLmiKGVGue8Ye24=;
- b=BCX4etTO9Y98NTXEetdvS7fSucujoRJL369ssW29GsZpOLWIDHXipsEQLDpdXbukHL
- pcejIh6y+tkgI74w6b67dKgLuDaifK4RoFZ4xWD3yKAaZhJ2XdtvHfC0b8hFTgor154t
- 38J3VcjoWLSDLpskkQDzkpO7BBkZdcUg4FcPiat4ygdMAS3QHHBjhglJLYIbPTsPNf/Z
- xj0fnZ29SiqFWCc5JA7Pls8Bc543o3Q0ohTpsqluJd7KrFqsebFkQIIwjBoiBPzk1Ok+
- 9GTWQAEWXOxWmJzDOtpd39EkWAWpYX5OpfLU4e12oSmcAE/3GmAAj+HH9NCKllpH1z5O
- K3HA==
+ bh=Rp+BmmdqaPIOB7vBXabGioxQafO4oblBicMZFFr5CFc=;
+ b=UOlXK5ZlpUFEZYFEE8xxhiniwp4xq8CSstulZxnPd9c9oldIPEV1um/DzWwcwPLoJZ
+ l6aLUrPsPROoeZfD0xXoYhDqJxNMK8JV7cSgwa+OYXK4RLlj2EJ9bNjGQGRdynnBcaxn
+ gOM2nS00jWWKCA8MgnHxiSPPXOCDjTYVcUyMo8ecxs4hyLHOsUAUfjdtha3Y4Xp2eXVW
+ UUNVogZQWq5Q56ZDzdLwToL13zaPyvA6EvCMKAl66fJ4YCGWBRlVDb/mg0cDf+1oBhz6
+ u02DM3243VsZsOOmPrhY4SWWUMUeB9nsGIcBW8pRo5GsRt3ilC0P8+Z3IQ2wNQw+XCVc
+ pCZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745970355; x=1746575155;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GRLavPxkSoe6Nb/0Zag6RIEZESR7OLmiKGVGue8Ye24=;
- b=by/Lw8VvhLutMXwzvtiNZdAbB77a/IQsAbv71HrYK3fV+SMeIV0JbpRYtT5xopTZoF
- U8jkLWHHnAzIr9cqge1b6BSkZlW1956j5stSjQHYLqK1Q/CAj3JIyt8szuo/hIJuzofB
- mA51MPHsiLQwKHUbVecOB4MHCIQkLCUnu3bj5rDYwWpV2iGTdPGAhqsWjnhcV0qlETLY
- roJc9qja8+1qQkb8ZJP0xP7D9iJ/f/pK+ZZDBomvaxOVJtN4/+aimSqANAHoEYQd/h7a
- BJ03zKux46B7m5JI4RIrFPK+DzovhBX5c+fdcX0Xhmjs9uK5VV5FjurriULle7fFhwgT
- quwA==
+ d=1e100.net; s=20230601; t=1745971254; x=1746576054;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Rp+BmmdqaPIOB7vBXabGioxQafO4oblBicMZFFr5CFc=;
+ b=u0DepYoJ88T2Q3i9AI2no+ayte9yVWQTtDBSBcaBbe1wAh7VVowKZT1mveS5Jsb/Bm
+ WqX7c41uZAwm5EHpbiAxmtpOa0ex/8TiS7XNS+vImH3sBmIALZLWDWBksFQITcY9tX8N
+ ah8m2T+bVyG/wKOZ8XiSi08X+zTRd5g/0AdsH9kTXmct5ONXPv/Ls1g5LW7+aXyNnPqU
+ 92ERWtRHd90m3eOTuJrD/nsKQHFl6aiNHFWQvtZTvmc9WtfimW2RnhgcQAYaDdMDXOCq
+ 9pXoiiaLIGhqgzCh2g72g27R7IOnS8uStc2Wq5eEM/cVvSXviaQZ28nf97XiBGgUKBKO
+ YXNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUGaQbWMmo//SzCQJ/ZnFxI7Qe3v9yxNDoiwBqrPri3LWfOCyGYD626zGerZzt5uCEDv6OBKo5V0Tq4@nongnu.org,
- AJvYcCXqb5euryAsHNpBiyYzzxveHCY4hoLjFwQhdPUKNEIPj87zmfw4Ommqn6yTDyUUv2ew5GkrFG3fi7k9HA==@nongnu.org
-X-Gm-Message-State: AOJu0YyLD/1mQmEsxi/kYvCsv0fUJONl+K/fXJ+ZETXhreQgAGoZ0ZXg
- UcwnWvuod3Bq2G+uQ6ImxK2CgHlctv20j5DJYY2sAkWSbdHEeIX6c5yRIII5Yv22ojA1b3IkXvm
- Ov8u3FxmLIBAaxO8vutTdddnraRo=
-X-Gm-Gg: ASbGncsWZX7Ze676gANgRSfBJ5roSTJGtIpWMuv+RR8uh5PHPihS7Mpg6NLCQvJ/SMB
- SZdiQg7u/VVPPaQC1QVICqaPZc143l3SGq3JzYu2pXRHgFX9sxB98RauOlpqTUP/3Qe4yh77JsI
- KqNgbQZuOezI6qNABZj0pvMCMGukpLvy9Rp/EqtMLe0LCVDtR/9pKi
-X-Google-Smtp-Source: AGHT+IG5MaykAhFC22dDBnyRMgLwyYZx0a7hYQAQb8RPS9eIK9wj9vkPcQoyZlk+KFVwD8r6EMTMNUvaoZKJ2GtWf9M=
-X-Received: by 2002:a05:6122:2a07:b0:520:98ec:b25c with SMTP id
- 71dfb90a1353d-52acd733ac7mr1042674e0c.1.1745970355265; Tue, 29 Apr 2025
- 16:45:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250429061223.1457166-1-joel@jms.id.au>
-In-Reply-To: <20250429061223.1457166-1-joel@jms.id.au>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 30 Apr 2025 09:45:28 +1000
-X-Gm-Features: ATxdqUFh3dFHlcT9qzlhZ0sWopCsrry78b6s_gRU4EFtU-Eq2xZF6yBqPYc5H9s
-Message-ID: <CAKmqyKPro6xM3UW+CwyEy1xr+CBW_CffJ7J-i7_BCTF0ECAWww@mail.gmail.com>
-Subject: Re: [PATCH 00/13] hw/riscv/virt: device tree reg cleanups
-To: Joel Stanley <joel@jms.id.au>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+ AJvYcCUmq765EGdadWmHlf+fvLS4r8554R9kVZORTejseZ27/PlNkMBCCkfOfJODpft6K7fh0Qj5Jqp/nH3o@nongnu.org,
+ AJvYcCV+nFdHNLyEqOTB5nJRVysv8FzemdZTU2+9EGNoBmUOxxhRfb3fawcaWgw9i8MVhmuHRmfAuo9jn75jLes=@nongnu.org
+X-Gm-Message-State: AOJu0YynhyKeKxnrSLBhM+fmrDc2BOwNKEwXC64J0sjsNetMZWg1K9rr
+ tl4TZkbBcF4gi6HdT+yUlwhEZ0OROCr95f06PJsI02w9F+FEAj6Io4BUXGZx
+X-Gm-Gg: ASbGnctbpGdL0iP3ZGUvv3rz9yoR1/DEpITqCXyJ9QxpBKrGhdl12OHZBwIyGQa4MnU
+ r5ooryy5z2ih5739fVQ3wmCW/Xbgz9pYNlX0+J5Z5KgSPRdW16zWdE/dcaFjfxjtwFRdeMEba3F
+ ZFq0QIFOuHjrjBpMqKULy4evC/NMMN152m6bDekR0Bh5sGZtlEc87ToMK9YsQxW1yLtwltO7bUu
+ LlkeZYxT+JC9I7r4AItuTDq9wjGT35W1rxf/Fwo4FFr3kVY5/1Ei4rMziuCaQdzt0phJeCI7257
+ wgnzJJSxY7kzXHfkeO7WKmxcm6x0k8Uj
+X-Google-Smtp-Source: AGHT+IFfdmjraXc720GT5AxlxEHu0rvJK3vKTaaq6d01gOQEhfD26p5lbdQrvJ6/cI49Ua+DkyKMIw==
+X-Received: by 2002:a17:903:188:b0:224:6ee:ad with SMTP id
+ d9443c01a7336-22df5861e8fmr7395985ad.44.1745971253774; 
+ Tue, 29 Apr 2025 17:00:53 -0700 (PDT)
+Received: from localhost ([1.145.95.178]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22db51023a4sm109082195ad.167.2025.04.29.17.00.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 29 Apr 2025 17:00:53 -0700 (PDT)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 30 Apr 2025 10:00:48 +1000
+Message-Id: <D9JJ5IIYVLVG.2RQ8C03WHFVBZ@gmail.com>
+Cc: <qemu-ppc@nongnu.org>, <qemu-stable@nongnu.org>, "Daniel Henrique
+ Barboza" <danielhb413@gmail.com>, "Harsh Prateek Bora"
+ <harshpb@linux.ibm.com>
+Subject: Re: [PULL 1/2] target/ppc: Big-core scratch register fix
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Thomas Huth" <thuth@redhat.com>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.19.0
+References: <20250408124550.40485-1-npiggin@gmail.com>
+ <20250408124550.40485-2-npiggin@gmail.com>
+ <2d6dead5-f56c-43cf-b7d1-9567fef99616@redhat.com>
+In-Reply-To: <2d6dead5-f56c-43cf-b7d1-9567fef99616@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,49 +103,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 29, 2025 at 4:20=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrote=
-:
+On Thu Apr 24, 2025 at 6:25 PM AEST, Thomas Huth wrote:
+> On 08/04/2025 14.45, Nicholas Piggin wrote:
+>> The per-core SCRATCH0-7 registers are shared between big cores, which
+>> was missed in the big-core implementation. It is difficult to model
+>> well with the big-core =3D=3D 2xPnvCore scheme we moved to, this fix
+>> uses the even PnvCore to store the scrach data.
+>>=20
+>> Also remove a stray log message that came in with the same patch that
+>> introduced patch.
+>>=20
+>> Fixes: c26504afd5f5c ("ppc/pnv: Add a big-core mode that joins two regul=
+ar cores")
+>> Cc: qemu-stable@nongnu.org
+>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>> ---
+>>   target/ppc/misc_helper.c | 9 ++++++++-
+>>   1 file changed, 8 insertions(+), 1 deletion(-)
+>>=20
+>> diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+>> index 2d9512c116..46ae454afd 100644
+>> --- a/target/ppc/misc_helper.c
+>> +++ b/target/ppc/misc_helper.c
+>> @@ -332,6 +332,10 @@ target_ulong helper_load_sprd(CPUPPCState *env)
+>>       PnvCore *pc =3D pnv_cpu_state(cpu)->pnv_core;
+>>       target_ulong sprc =3D env->spr[SPR_POWER_SPRC];
+>>  =20
+>> +    if (pc->big_core) {
+>> +        pc =3D pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x=
+1);
+>> +    }
+>> +
+>>       switch (sprc & 0x3e0) {
+>>       case 0: /* SCRATCH0-3 */
+>>       case 1: /* SCRATCH4-7 */
+>> @@ -368,6 +372,10 @@ void helper_store_sprd(CPUPPCState *env, target_ulo=
+ng val)
+>>       PnvCore *pc =3D pnv_cpu_state(cpu)->pnv_core;
+>>       int nr;
+>>  =20
+>> +    if (pc->big_core) {
+>> +        pc =3D pnv_chip_find_core(pc->chip, CPU_CORE(pc)->core_id & ~0x=
+1);
+>> +    }
+>> +
 >
-> This is a set of cleanups for the riscv virt machine device tree
-> generation that apply on top of Daniel's recent series.
+>   Hi Nicholas,
 >
-> Using dumpdtb the old and new device trees are identical for -M virt and
-> -M virt,aia=3Daplic-imsic.
+> this patch breaks compilation when QEMU has been configured with=20
+> "--without-default-devices" :
 >
-> The final patch is not meant for merging, but demonstrates bugs in the
-> existing code when the reg property describes an address > 4GB.
+> FAILED: qemu-system-ppc64
+> cc -m64 @qemu-system-ppc64.rsp
+> /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in=20
+> function `helper_load_sprd':
+> .../qemu/target/ppc/misc_helper.c:336:(.text+0xcab): undefined reference =
+to=20
+> `pnv_chip_find_core'
+> /usr/bin/ld: libqemu-ppc64-softmmu.a.p/target_ppc_misc_helper.c.o: in=20
+> function `helper_store_sprd':
+> .../qemu/target/ppc/misc_helper.c:376:(.text+0xda3): undefined reference =
+to=20
+> `pnv_chip_find_core'
+> collect2: error: ld returned 1 exit status
 >
-> Based-on: 20250423110630.2249904-1-dbarboza@ventanamicro.com
->
-> Joel Stanley (13):
->   hw/riscv/virt: Fix clint base address type
->   hw/riscv/virt: Use setprop_sized_cells for clint
->   hw/riscv/virt: Use setprop_sized_cells for memory
->   hw/riscv/virt: Use setprop_sized_cells for aplic
->   hw/riscv/virt: Use setprop_sized_cells for aclint
->   hw/riscv/virt: Use setprop_sized_cells for plic
->   hw/riscv/virt: Use setprop_sized_cells for virtio
->   hw/riscv/virt: Use setprop_sized_cells for reset
->   hw/riscv/virt: Use setprop_sized_cells for uart
->   hw/riscv/virt: Use setprop_sized_cells for rtc
->   hw/riscv/virt: Use setprop_sized_cells for iommu
->   hw/riscv/virt: Use setprop_sized_cells for pcie
->   NOMERGE: virt: Adjust devices so everything is > 4G
+> Could you please have a look?
 
-Thanks, for the series
+Thanks for the report, I have a hopefully simple fix just going through
+CI now... Do you know if there's any reason to exclude a bunch of
+targets in the build-without-defaults CI test? I wonder if we could just
+enable all, it shouldn't add too much time to build test.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Can you send a v2 without patch 13 and not with two patch 1's?
-
-Alistair
-
->
->  hw/riscv/virt.c | 108 ++++++++++++++++++++++++------------------------
->  1 file changed, 53 insertions(+), 55 deletions(-)
->
-> --
-> 2.47.2
->
->
+Thanks,
+Nick
 
