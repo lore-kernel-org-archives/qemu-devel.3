@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AB58C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 19:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94C34C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 19:39:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAClz-00041W-Qi; Wed, 30 Apr 2025 15:07:11 -0400
+	id 1uADFu-0005tC-IF; Wed, 30 Apr 2025 15:38:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uACln-0003td-2v
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 15:07:07 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uADFr-0005s2-It
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 15:38:03 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uAClb-0002Lt-Km
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 15:06:49 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-22c336fcdaaso2600495ad.3
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 12:06:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uADFo-0005Od-Bz
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 15:38:03 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-301c4850194so263413a91.2
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 12:37:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746040006; x=1746644806; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1746041878; x=1746646678; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9n3Gc+fzJYrA8p18MsMkLFMsPX3ZwWCDB/5xmmls/q4=;
- b=pwDHMmGG8tav9CAqGQqP5i8WLBSW9vqYKsWT52WOzDH5/NlL/nTEsvv/kMW8hy0oGM
- GuleY1HcunEUlVmJC0QZXEk7a3SS9z9AwCLEpVbf7D5fCGisCCPuKnH1Gdsfmb1PJsW6
- MnxfX+hqNhULsc6Co0tglWRmVZvrxzpkV7IwF+46WJHIZGJeeaimUWTzAbnFzpmU8b4S
- Y5e0IZr8HWXr0BDQtDkjEpkuxw6zL7HKcTE51nyl94me3YK/mpLGhJdxbq79H/NMH+1I
- krfoz1PQN1RFC6V6pfj594+lr8o8abcbPPvSuErCjbXWIcBrN01rU3MkeKwUK9DJQotS
- yYZg==
+ bh=46CMMv13dD0wFfCACL3VvnbxJth6Z8s15blazSb5v24=;
+ b=LDE1XqDR5t9V6TtH7m/q6tPeKpkzIh85BznyhgdqMxGNarS64wnh541cojpBSaxnn9
+ mPEytFeNSsR10Mvn2N3W1JrYasti0XDfGfX0ESY+5EWjzsi6LW8KR9RQqxUDam4PYdtu
+ ik+jbNgMK+uXN5Mmueuyg9dzya9N0Z8NzKNMEhaZlwA3zqYH7OqVKNehVmC34GTJBNws
+ 3tedZ3g+Yd5b9mXSO5QtVMwpSyppy3Lo4sIwn8o1HTUaO/GzEj1OEfQxkGIw8U4KOGXq
+ 1jH5VMZRhv8V1FPo05ew0AvwPEaoVkOnz4PgV6ybhjiwzHPDpx1g12MEN2ywjkOamukU
+ eU6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746040006; x=1746644806;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1746041878; x=1746646678;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9n3Gc+fzJYrA8p18MsMkLFMsPX3ZwWCDB/5xmmls/q4=;
- b=RKRbD+FRfxkeczDu4A3IgJVV2ALK7nFDxpWBEM+dKVtfQtKOm89T62cJpRoVbqc2eH
- BH78TVrm0CQEUm3HL72NOwves8zf9j1IKv/G6uoYXQPAi0pXeLISK37ta/9+F+QC7HCN
- Lvh/Ibi6/89gPtBrdQHQwm5rfFgJoiOizjwLbQiCiK6QawTHwVMKW4oNoWIEhKp0F2c8
- 4J5jqeJ+sOUUB5HU3oYIhc8mXmuzdTwhiXSgaNyqR93LrscgRK/7zTssjJk9BRs16RLu
- qO+GI+R+WbG+3gJg2ehIvNX3YD8TN1tZL29ZmmDJxObh9btQ4Tl10W++ieWNO3Dm9hwN
- b+3Q==
+ bh=46CMMv13dD0wFfCACL3VvnbxJth6Z8s15blazSb5v24=;
+ b=TKcVWqUB4Tpiy/+7T9sUznHmMl4k1ls803tZU+SgTtiq4PyBH3r8Xoy80pknKSe4xW
+ 7lAmJMknJ6whp9tXB7Kp3NNZR5nudrlCTKpyMklCZHVMwgoWxbyKE7Mh1bvRj6jKsQix
+ UPQ+0sU98f+bCG26zYELQ+6LcGZCLAGJAisiMSFZrE6KAZWK+XP42oyStAEo9rOqykif
+ WQ7j8TGbY/r6I1SCbrkyXaFNHKLot3vh0TvwQeqi+TCIi7RqU9JTgXHgWmZBdyobin1P
+ dbppQhixkMwL7vCPN4PIkH0mYmKXxNtk5r9DHWdkTMlYvNsoiryDHHZ6zuLsi2uiXFOu
+ wsUw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8LjP5JK0INAjnajUPCAO7fkhZmHRMaQUf5cZlrCe3laWpUIQvnoogqHyA/GDKC9z9Bm3Vox9a7Kin@nongnu.org
-X-Gm-Message-State: AOJu0Yw9r+keU2fqDw5u3DhEuyG0EjbcGR6pXX2g0nu1u2ozft/R2jtx
- EgDaQD1v9Bbqmx1dD2s12ARFj1grxtQ9mf0FctbmS3pNb7l+xB0/GfA9BH2aklI=
-X-Gm-Gg: ASbGncswklhlQIKw2o9DwmVtNxds/LvDFTauSYskjhzVh2zwhGVGZzKH7dHnIdOOiT3
- vpWPco+mcheF3S8VOiBlo9Q+iCp+x0c/7LWpyUboLfRCyTUvCiWxFob6nqZFP+CMQgj334gsySF
- 6Om3/eHu/3qLfgUklYI0Sxm/onrXpvta5sXrUEmQCt9uUpI3Wsav8t7LqeM2OVdLLmu3RDpQ8hg
- s9WWoYdMd8sqiCdG0m1doMWsWwvh4FR7tmA88NunZlKk1FnRjZOw3Ln3Lh4JWcGhBYAOD1k21Op
- FyPKtc4nAeY52C96r903e6P0T2EmVpKiH93+uUTkMzvJ8SFj2RytSg==
-X-Google-Smtp-Source: AGHT+IEwJ9DmS6F4g37/Yr0JrWeK1e551wHd0iG5IlA+XAM9kxsLyaRa9Hjrx30O81QJwrT30x9ysQ==
-X-Received: by 2002:a17:903:2acc:b0:224:10a2:cae1 with SMTP id
- d9443c01a7336-22df356f9d7mr61399055ad.37.1746040006067; 
- Wed, 30 Apr 2025 12:06:46 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ AJvYcCW9M4tWHZZcIr20pJRPuZbSSxlg2VKTJ2s5n+hafC2QMbwdCHVdL6vVoskMdio6coudTmvEjFPeSxEJ@nongnu.org
+X-Gm-Message-State: AOJu0Ywx5mqzqhb1XFFJBfVA7ldcc6uEzN13XUCPrSib9oekFVsGtonn
+ 1OLChoZwmlMD4XqBYMqOE0px1hqHgpuQaFJPSXwVxAtQe5as78lG1d8KT1ESg7o=
+X-Gm-Gg: ASbGncuZHzbyTOqVCZ5YWUkAIPuG4n8h5hgHrWQB0OG9117gzYNf3nHZVUsLo8ZRcKp
+ iJO7imihTc3sjmN1c8R4Z0qMbGeKtJJzV35Oix+YubHzQrWnTd7PmM42klefJZkdPCP6yxmL0eE
+ /dTrYiRWVTfHiHz0VDlY/kOsWHUgGFWr72SCodT7IowrGhfLsMcq/ki9jIkILznM2+SePWL4Dxv
+ lt/LrFvdVDGZY3blqOZ4MfJ+jjBIIevEdKPgHlGGy8xWGb1sMLcq5SlNuPzRy5l8ZeUE1kgev35
+ ShMKsFMn+Ae5IbD1hYIb46qOt0sK0Al0KGJN0pWm5Qmew2XQumdFGodWeK0ZmxW+ovrwbDYX4Xt
+ ozpApRyI=
+X-Google-Smtp-Source: AGHT+IFSyb/O5R1D0FrH/3mqO+Zu6tZQP0SvzElaSlsbpqRHa9Obggj09oe2OF5Cj6givspeskY3Tg==
+X-Received: by 2002:a17:90b:1f8b:b0:308:1ee5:4247 with SMTP id
+ 98e67ed59e1d1-30a4012eda4mr286125a91.32.1746041878229; 
+ Wed, 30 Apr 2025 12:37:58 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b15f76f4680sm11028282a12.14.2025.04.30.12.06.45
+ 98e67ed59e1d1-30a349fff13sm2258979a91.14.2025.04.30.12.37.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Apr 2025 12:06:45 -0700 (PDT)
-Message-ID: <037f7d2b-91cf-4798-a6ae-ba3cbeebf2b6@linaro.org>
-Date: Wed, 30 Apr 2025 12:06:44 -0700
+ Wed, 30 Apr 2025 12:37:57 -0700 (PDT)
+Message-ID: <96559e9d-e610-433c-8ce6-3220e569fee4@linaro.org>
+Date: Wed, 30 Apr 2025 12:37:55 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/12] target/arm/cpu: remove TARGET_AARCH64 in
- arm_cpu_finalize_features
+Subject: Re: [PATCH qemu v2 1/2] accel/tcg: Fixed cross-page overflow for 32
+ bit guest
+To: ~percival_foss <foss@percivaleng.com>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
+ "open list:S390" <qemu-s390x@nongnu.org>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>
+References: <174595764300.3422.13156465553505851834-1@git.sr.ht>
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- kvm@vger.kernel.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- alex.bennee@linaro.org, anjo@rev.ng
-References: <20250430145838.1790471-1-pierrick.bouvier@linaro.org>
- <20250430145838.1790471-11-pierrick.bouvier@linaro.org>
- <8520456e-3e44-4028-976a-45d683610a8e@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <8520456e-3e44-4028-976a-45d683610a8e@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <174595764300.3422.13156465553505851834-1@git.sr.ht>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,23 +107,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/30/25 11:47 AM, Richard Henderson wrote:
-> On 4/30/25 07:58, Pierrick Bouvier wrote:
->> new file mode 100644
->> index 00000000000..fda7ccee4b5
->> --- /dev/null
->> +++ b/target/arm/cpu32-stubs.c
->> @@ -0,0 +1,24 @@
->> +#include "qemu/osdep.h"
->> +#include "target/arm/cpu.h"
+On 4/29/25 09:03, ~percival_foss wrote:
+> From: Percival Foss <foss@percivaleng.com>
 > 
-> Need license comment.  Otherwise,
->
-
-I'll add it, thanks.
-
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> The bug being resolved is that the current code in mmu_lookup() assumes
+> a valid 64-bit address space. If a guest has a 32-bit address space, a
+> page translation that crosses beyond the last page in the address space
+> will overflow out of the allocated guest virtual memory space in the
+> QEMU application and cause it to crash. In this case the first page will
+> be the last of the 32-bit address space (for example 0xFFFFF000 for 4K
+> page sizes) and the second page will overflow to a page beyond the
+> 32-bit address space (0x100000000 in the very same example). An invalid
+> translation will be added to the cpu translation table from the second
+> page. Thought the translation will be for page address 0x100000000,
+> checks in other parts of the codebase actually enforce using only 32
+> bits, and will match this translation. Part of the stored translation is
+> the effective address, and another part is the addend to be used to
+> offset into the QEMU process's virtual memory space. The addend will
+> incorporate the 0x100000000 and offset into likely invalid virtual
+> address space.
 > 
-> r~
+> The fix in the diff checks if the target is 32 bits and wraps the second
+> page address to the beginning of the memory space.
+> 
+> Signed off by: Percival Engineering <foss@percivaleng.com>
+> ---
+>   accel/tcg/cputlb.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index fb22048876..457b3f8ec7 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -1767,6 +1767,13 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+>           l->page[1].size = l->page[0].size - size0;
+>           l->page[0].size = size0;
+>   
+> +        /* check for wrapping address space on page crossing if target is 32 bit */
+> +        #if TARGET_LONG_BITS == 32
+> +        if (l->page[1].addr >= (1UL << TARGET_LONG_BITS)) {
+> +            l->page[1].addr %= (1UL << TARGET_LONG_BITS);
+> +        }
+> +        # endif
 
+I agree something needs doing, but this isn't it.
+
+This needs some sort of per-mmu mask, set when the cpu changes modes.  For instance, you 
+test ppc32, but the same thing can happen with ppc64 when MSR[SF] is clear.
+
+There are a fair number of other targets which can see the same issue, some more 
+complicated than this.  For instance, s390x in 24-bit mode or RISC-V with the pointer 
+masking extension.
+
+This needs some sort of extension to CPUTLBDesc, and a new variation on 
+tlb_flush_by_mmuidx in order for the target to clear the tlb while changing the mask 
+whenever the target cpu changes modes.
+
+
+r~
 
