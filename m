@@ -4,81 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51AD8C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 14:35:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6BB2C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 14:37:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uA8WE-0007wI-Ik; Wed, 30 Apr 2025 10:34:38 -0400
+	id 1uA8YY-0001qc-AF; Wed, 30 Apr 2025 10:37:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uA8W2-0007oP-NX
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:34:26 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA8Xu-0001kk-Cy
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:36:28 -0400
+Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uA8Vz-0008Aa-JR
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:34:26 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-736c3e7b390so7544780b3a.2
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 07:34:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uA8Xr-0008Sn-Ri
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 10:36:21 -0400
+Received: by mail-qk1-x732.google.com with SMTP id
+ af79cd13be357-7c96759d9dfso829778785a.3
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 07:36:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746023662; x=1746628462; darn=nongnu.org;
- h=content-transfer-encoding:subject:to:from:content-language
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rW18o9E6I59ZEOmutdllxFRIpDG5spcQCfrVFA1LMoI=;
- b=Y+ao2sarFPpdWb1Auy+q3+yJqLKaQXusIvzNTzujFKkj+HpKgZJKyel5p7l+yWTRrO
- hIOQFu7EULIo+jpSy/ElWUT6DiQvvk1EKVf2P0ogly1sfVmR3a2i5K81ZGlQ5rKLD5+e
- 53zptjx76hLtfr3kDnnj8djN37K2qVqZddZCbosZyG+Sa6RL6UDdIAIMoWXbG6t1PM9l
- 8xKZf7uC7VvOrlKjf48EWSIUQUE4DMKKA3Lr7MaXh1s42hJ72aAbAKUEluKrWtEoulDo
- eri7QWf5aipwSIjsH9pypmRHov5ss/ebBT1ibq1VRWDQzgsLDXkK5KFXcyMsyOLGuWNt
- 60pA==
+ d=linaro.org; s=google; t=1746023778; x=1746628578; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DSWOzj+TetM9ktd4qGCuEiwiPcM/WmhusD0atD6DZmQ=;
+ b=Q2L9ctXCVJwnvJ3LmZoj2UBO4kpiM/aVI6vVtzJ0qjzlw6ueYnUhAXm5ghkg2SKbuv
+ Abc63FFzCmyFlD8vC41UVysHMwPZAWlE6UNqpNqxzRZ1IA/pLPjQi3+C9u92HaLuwyWw
+ YSogOdHmjEwpE94y3nguN0Ile+cwYX8M7o6tWEU3eO9HmnzrgB25gF9CB5Ntv9vnr1wA
+ mAen8SKBNzTaqsWVz0jv0y0msZiEzvXiBQY4nN2Zco4sGYqvVaGHTM74QQW3rdXskllE
+ xD17CVz1EZupV3TCtd8JMX5PB1TLV6zNoWcNFkoUqBWrq2f4wv2WjvFcZj19u0Pmyg8d
+ MGow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746023662; x=1746628462;
- h=content-transfer-encoding:subject:to:from:content-language
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=rW18o9E6I59ZEOmutdllxFRIpDG5spcQCfrVFA1LMoI=;
- b=tP41EBbT3zv6n1cJ9RS7zfSNGFjUWZ+aHN6N5axgTMNreYDWOORpzYPC0BCJxQpxAr
- APvMQ8OWNRwwEsQhNn0eixPwyoKUq1zUscluNybs1z9U0npABLgbeDFUKb0ftTke2bXM
- nEQMnC8M6WF+hjNdc8lMRyp0KO8mfyCUeGdy3XkEzRI8yibmWxVO5aZ1qjjE9Ac68JFS
- fd1rDoGypMDtJ41GhPmjw2Yy5ENEjDwwmXTkq4jIgbwFG9COWMy8YqNhR/128CXAs3JX
- ESTIoV7LVmwIqQZOMKIkucXF6RLJllPgsUAAZ5kJBor2T6FePMQGLO+OGuE624j5zqZX
- ClwQ==
+ d=1e100.net; s=20230601; t=1746023778; x=1746628578;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DSWOzj+TetM9ktd4qGCuEiwiPcM/WmhusD0atD6DZmQ=;
+ b=g+za4X4psKkBHQmn5IcqV19XByyYQq3HnagsxW4+AFEQ/+JP8wKf5ZZcCYbwL8+egT
+ 8+0Te3unSa39RlwL2tLRc63ioR8eV8tIl6v3NF6kJg/QX9kFm/F2qCINc0gCu+0fr2j5
+ UjXI9NxgSCieFJJ73QonpXTefJi6+CjR11OmynfcIWkvViWFVXJuj4ApZl38eOwzQbNg
+ TxIfl12B0afbiTdHvukLZpL9pmqxOkEiYg6rIQPN2ESqriFdojxQetSbcIZmhjy2BIGq
+ V74kwyBeeXFeC4YPsoVBWuu6Dty7UHqU69HbwVdbKq9KmoApkW1JIg9jdlLT2pd35+0W
+ Uabg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWM19xeHamHxXOFCVD4OgIcprMI5ioG93+vogPHkPu4Fq1mjb8f1dacvASmM1xKgzjxvr2Nv6pUS+x+@nongnu.org
-X-Gm-Message-State: AOJu0Yy+h2EEXEIXdMUXSlBB3W1dIL9Z+FBsm1gkmQK1mtFvb7CTFlts
- XBoFF/J5C3fAFL76/0b1YvmukeNIUziA0bzIy0Sh0tz47g1SEdi/JbgjxdfSNJrz4vwLRpTG172
- 3
-X-Gm-Gg: ASbGncssB8fTmZ8e19cDDqdE+Yxur1Gn5alP8corhmUzjFGQzX6uMHjjY1QZcmmw0k8
- USWMozZUPLutA44uvO6+R4OWTecpM6HUdAH5B+5j+DnA2r8825+bfaEGCo0SJXMfz5eJshYN01j
- GhVdroBNE8Tn11P9ZShtedr7wNU0/AYZm0rjqaPcNWLxoPVsPcmdu04XpW8ZDw9L7pU2m4xjHm/
- FlLVvBa+7d4f4e6RjtNE/7lvrvftjPA8JzHSfyjlpQWP82fUBdOLH9/q+5kIucdn+ysOG7hTnI7
- HrmljHrFnog5H0ClcI08FQKWCY/q63F+FzYsnCI6MQ8v29wZ4p7P+w==
-X-Google-Smtp-Source: AGHT+IHam+dPUoVpBk2Jp7no1XhjrY0NaqMJ3gu33Bp/pYdYXzVv1NgK/diDW11RYnFKOGv7TsHpZg==
-X-Received: by 2002:a05:6a00:21c7:b0:736:32d2:aa93 with SMTP id
- d2e1a72fcca58-74038abf64amr5076200b3a.20.1746023661939; 
- Wed, 30 Apr 2025 07:34:21 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74039a5c064sm1685842b3a.123.2025.04.30.07.34.21
+ AJvYcCWnvSIChnt/QtqYeRHCmB6bGrNrStCjOe1dANL1KocTBWAST1is9KGWGZTOQRGTfMC2wfQwK21Bqx9p@nongnu.org
+X-Gm-Message-State: AOJu0YxtQ1nXvl20tj/El4ySbDtaeqg6Eb0ftlr3E6elgEKZuti9YdjF
+ W+Kc79GHuF57Z4WohbHmCjkBvnEgq8r9LZ2PZ3G1xnPcfXmOjwteyVpYEfEuQPU=
+X-Gm-Gg: ASbGncsJk8IPqncU80o5DHF6oSvZAuntAcM/faMWv7fAxNOCYR2Xm9EO1Y5cPB5p2co
+ npFdIS9YxT91ZYX1AMdur1HhjCK3eKjUXqtBUPixezaAZexmw2pauQHTLbcMB/aGuOgnve8u7z2
+ zwbDkx97BfLHEnRWPu5Ty0uaRWHgQZKbWMNQDSVy6QEPoP1icQur94n6PEsQahA/ym3S1mj5YHB
+ hYSFFcyDBfy6pMoSY9EdJiR6IZmMWqZK5WPYbGwyN29IrBP7ZVoSsswRvFe/DFJ+l0iDEMyPhHN
+ OhRHPZGf2MjF31A8Wh+KLRKmONTJRVOvXEGle+JstxnCZOqN0sPTvpPGwRyQe1+3x+/g+HBhupD
+ 5j+tnR51i
+X-Google-Smtp-Source: AGHT+IEnXWrum4IqIvIoHmZBMWef6cs0JjE7cOYD3ewM+Enstgq/KYi8AhvghsQkEfoEHS81/5q/pA==
+X-Received: by 2002:a05:620a:44d5:b0:7c5:6a66:5c1e with SMTP id
+ af79cd13be357-7cac7ecb87cmr402633185a.58.1746023778338; 
+ Wed, 30 Apr 2025 07:36:18 -0700 (PDT)
+Received: from [192.168.69.226] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7c958e9fbcasm861134785a.99.2025.04.30.07.36.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Apr 2025 07:34:21 -0700 (PDT)
-Message-ID: <c83e0d26-4d1b-4a12-957d-c7b7ff4ba1b3@linaro.org>
-Date: Wed, 30 Apr 2025 07:34:21 -0700
+ Wed, 30 Apr 2025 07:36:17 -0700 (PDT)
+Message-ID: <5ce00003-4105-40c7-954b-63336a4325d5@linaro.org>
+Date: Wed, 30 Apr 2025 16:36:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: KVM/QEMU Community call 29/04/2025 agenda items?
+To: Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Mark Burton <mburton@qti.qualcomm.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Alessandro Di Federico <ale@rev.ng>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
+ Brian Cain <bcain@quicinc.com>, "Daniel P. Berrange" <berrange@redhat.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, Neo Jia <cjia@nvidia.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ "Wedgwood, Chris" <cw@f00f.org>, dhedde@kalrayinc.com,
+ Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Auger Eric <eric.auger@redhat.com>, Felipe Franciosi <felipe@nutanix.com>,
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>,
+ Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
+ Jidong Xiao <jidong.xiao@gmail.com>, Jim Shu <jim.shu@sifive.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Max Chou <max.chou@sifive.com>, Meirav Dean <mdean@redhat.com>,
+ mimu@linux.vnet.ibm.com, "Ho, Nelson" <nelson.ho@windriver.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Bernhard Beschow <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>,
+ z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ "Wu, Zhiyong" <zwu.kernel@gmail.com>
+References: <874iy85yx2.fsf@draig.linaro.org>
+ <eefb308b-5cd8-4b30-bc32-e37f601cb07b@linaro.org>
+ <CABgObfYmm2RgFUuViDJA_cuqeCUOh_DV5Qar8YLnrbfYVV39VQ@mail.gmail.com>
+ <87a57ydj8y.fsf@pond.sub.org>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Functional tests precache behaviour
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87a57ydj8y.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
+ envelope-from=philmd@linaro.org; helo=mail-qk1-x732.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,29 +132,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi folks,
+On 30/4/25 12:41, Markus Armbruster wrote:
+> Paolo Bonzini <pbonzini@redhat.com> writes:
+> 
+>> Il lun 28 apr 2025, 14:58 Philippe Mathieu-Daudé <philmd@linaro.org> ha
+>> scritto:
+>>
+>>> On 28/4/25 13:05, Alex Bennée wrote:
+>>>>
+>>>> Hi,
+>>>>
+>>>> The KVM/QEMU community call is at:
+>>>>
+>>>> https://meet.jit.si/kvmcallmeeting
+>>>> @
+>>>> 29/04/2025 14:00 UTC
+>>>>
+>>>> Are there any agenda items for the sync-up?
+>>>>
+>>>
+>>> For single binary / heterogeneous emulation, we'd like QAPI to
+>>> be "feature-agnostic". In particular, using the example of KVM
+>>> accelerator, whether a binary can run with it built-in or not
+>>> should be is irrelevant for management applications: they should
+>>> only check if it is used (enabled).
+>>>
+>>> The following series is adding KVM specific structures and commands:
+>>>
+>>> https://lore.kernel.org/qemu-devel/20250409082649.14733-2-zhao1.liu@intel.com/
+>>> It could be interesting to discuss if this can be avoided. But this
+>>> can also be discussed on the mailing list (as it is still currently).
+>>>
+>>
+>> Would it be possible to just mark the commands as "do not autoregister" and
+>> then do the registration (for example) at machine/accelerator/CPU creation?
+>>
+>> I think qemu-ga already has a similar run-time registration model but I
+>> don't know why QEMU does not use it.
+> 
+> I think we covered this to a degree in
+> 
+>      Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
+>      Message-ID: <87a584b69n.fsf@pond.sub.org>
+>      https://lore.kernel.org/qemu-devel/87a584b69n.fsf@pond.sub.org/
+> 
+> But let me try to give you a shorter argument.
+> 
+> Pierrick's stated goal is to have no noticable differences between the
+> single binary and the qemu-system-<target> it covers.
+> 
+> We have two external interfaces to worry about: QMP and the command
+> line.  Let's ignore the latter for now.
+> 
+> Target-specific differences in *syntax* come from QAPI schema
+> conditionals with target-specific conditions.  Example:
+> 
+>      { 'command': 'query-cpu-definitions', 'returns': ['CpuDefinitionInfo'],
+>        'if': { 'any': [ 'TARGET_PPC',
+>                         'TARGET_ARM',
+>                         'TARGET_I386',
+>                         'TARGET_S390X',
+>                         'TARGET_MIPS',
+>                         'TARGET_LOONGARCH64',
+>                         'TARGET_RISCV' ] } }
+> 
+> This command is only defined for some targets.
+> 
+> The value of query-qmp-schema reflects this: it has
+> query-cpu-definitions exactly when the condition is satisfied.  The
+> condition is evaluated at compile-time, because that's how QAPI schema
+> 'if' works.
+> 
+> Say we drop the condition and instead add an equivalent run-time
+> condition to command registration.  This preserves behavior of command
+> execution.  But query-qmp-schema now has query-cpu-definitions *always*.
+> This is a noticable difference.  It may break management applications
+> that use query-qmp-schema to probe for the command.
+> 
+> Moreover, conditionals aren't limited to commands.  Example:
+> 
+>      { 'struct': 'CpuModelExpansionInfo',
+>        'data': { 'model': 'CpuModelInfo',
+>                  'deprecated-props' : { 'type': ['str'],
+> --->                                   'if': 'TARGET_S390X' } },
+>        'if': { 'any': [ 'TARGET_S390X',
+>                         'TARGET_I386',
+>                         'TARGET_ARM',
+>                         'TARGET_LOONGARCH64',
+>                         'TARGET_RISCV' ] } }
+> 
+> Here we have a conditional member.
 
-$ ninja -C build precache-functional
-2025-04-30 07:23:20,382 - qemu-test - ERROR - Unable to download 
-https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz: 
-HTTP error 503
-2025-04-30 07:23:23,131 - qemu-test - ERROR - Unable to download 
-https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz: 
-HTTP error 503
-2025-04-30 07:23:25,870 - qemu-test - ERROR - Unable to download 
-https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz: 
-HTTP error 503
-2025-04-30 07:23:25,871 - qemu-test - ERROR - 
-https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz: 
-Download retries exceeded: skipping asset precache
-$ echo $?
-0
+This this the single structure member conditional on field
+selectable by ./configure (IOW, not host-dependent). I proposed
+its removal in this patch:
+https://lore.kernel.org/qemu-devel/20250429100419.20427-1-philmd@linaro.org/
 
-Since we silently skip the asset precaching, how can we identify that an 
-asset is not available anymore (temporarily or not)?
-Should we rely on test itself failing when trying to download again this 
-asset?
 
-Regards,
-Pierrick
+IMHO conditionals should only depend on host / static configuration
+features, not features modifiable from the command line. (I'm always
+confused by KVM features published in the schema, but then you start
+your binary with -accel=tcg and still can run KVM specific commands
+via QMP, returning errors).
 
