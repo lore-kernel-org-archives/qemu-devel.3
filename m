@@ -4,98 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53AD6C369D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 18:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A837C369D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 30 Apr 2025 18:29:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uABvA-0001tD-7P; Wed, 30 Apr 2025 14:12:36 -0400
+	id 1uACB3-0007qt-Qh; Wed, 30 Apr 2025 14:29:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uABv7-0001rC-MU
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 14:12:33 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uACB2-0007ox-Qg
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 14:29:00 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uABv5-0004fW-4S
- for qemu-devel@nongnu.org; Wed, 30 Apr 2025 14:12:32 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-223fb0f619dso2037825ad.1
- for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 11:12:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uACB0-00067T-Kr
+ for qemu-devel@nongnu.org; Wed, 30 Apr 2025 14:29:00 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-73712952e1cso264621b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 30 Apr 2025 11:28:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746036749; x=1746641549; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1746037737; x=1746642537; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Oo5VAC6FFiaiCNIRU7t1i8OeYPVGZfcVM9VeES1ffjw=;
- b=Zs63d1rXdUNVoEavZXoaeEuoQ58vdt/g5NBjpRgrjrzTfLLKqe2QvEjzvVVhvfiIK8
- SsBZYhzjxZHs615WuXn3fZpUdEqjt9L2KfVSsDmhsITaIXh+3McbmqkRKtmNU9tf+g/y
- fBzxQyHl7ADAypgInoFDsk9nKYaXNFtQ3Z+pGI0+wOI8Wslz2yW4Hkty/N0VUuLfdW/6
- KdowQPYYSQ19jCdrtjEER+OQTRPemeL1SVhtPCak4gX/usy3bJEo60J4H+PxlJnJ6MSc
- +4UsuzGn6482ZKNbJ//TV9x8afyC8x01fTwljawHyS0C/PETveO2mc3MPNLbyslx563+
- nJlA==
+ bh=xf7StgsomvAyHveK2lC2y8EKqAE1ASvZR4bG/e1uZso=;
+ b=mUeEmivFnY+bw3n1joRnuNxG/4nVSKgAoBUFIXgm5/8vB4iAtJgjL6QZO4561d4q92
+ aVdy0pyS45IWmDJvq2fwc+p2fv8gXqBD4KmJPjrsjG8XKA87qontFJnK7N8EdEsVv733
+ kvzbIfi3fi5tTbGOfrJiOO/uTqUrboX9/SO537kRf8mmkPAdbdk2UtvTJsmwunXYotRG
+ +XzSAmqYFKyBGLxGTH6U2npbk0DBfO1qh8/vd0nOobWlIU6rQwxoqpTjtelAEXc7GUwv
+ tVoUjdCo8vmEseRYLfxNPNKP9tGcVXatYb8J7hg1mggwHcMMFJH6Mdp6h+sWKrnSOutw
+ 33Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746036749; x=1746641549;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1746037737; x=1746642537;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Oo5VAC6FFiaiCNIRU7t1i8OeYPVGZfcVM9VeES1ffjw=;
- b=CGnStoBdySsaGl3Md8K0m3pI6BLCvRggpb/rKLPtRZy9MWtvh5shmd1KN4GAOegrPH
- NcLfc9cWnYEnUt1UXyQEEjGb4vIV1W1NhCrfO6b9VoG7kLOCOsiofZwkqDHs+JfYKxsW
- 564G90GK9sNTBCsnWIQm+No0EjPMb6i78Vq5e/rSE5XpyK89w/SobiJolLUQ3JZd4HKZ
- 43xJ8F/48wb9P/b7bTDRnFiMDrapDQdY5doYP/KuxG1E9fb4dLhj6nGw0g+wEkwHik7O
- IzokmjQKetSZb9O/WxlKqV6SbGj3cf4WOiPfgbHs6kSFdGyxa4TROW3nGxow0mE+ulHV
- vGVA==
+ bh=xf7StgsomvAyHveK2lC2y8EKqAE1ASvZR4bG/e1uZso=;
+ b=I1KBFiCmTHG4HMK+uh6GhLxQAuuJ5KF+DplMuOJoPAL2hvg5MJDaKpdaA9jh/1cPb0
+ 4D7Hmq24ZEZgs6iQ2dMLrUkmfyBcphYEh60wET/moi0CFO1hGYMCsjSmNU4YBBRNfxBW
+ GYFVGq0wNCeXNSAy7IkI0l1hwlRLoEZunPEY9cdtekayjkYQhULVzlKnYaAym4QOzwmY
+ Q1uqyB08JfWXx+tEv45Clp5+3nFoFVEaFvl+KSoOQPBneaLgUbwb/t/DDZUsiZ9ONika
+ ukJPhpTRGgnzXtXfe9pW7LS5wdR2D15mCVL9rA8fSQs+CaMP2MUfagcOuA7Esy0kiVKc
+ C1wg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXMb42GuHx4syQGZQXVKs1eEH2JKg44XQuHgdpC7UaaA/aiakuhznmcok2AbjMtmNBuRHRcYmn0pwOh@nongnu.org
-X-Gm-Message-State: AOJu0YxmPlqnlPV0BpUlkKzmQYNwJNyPCQYtLzvSi2qpuXj/B/DnY/EG
- +5TfHhEZNN9jB963/iyIkjIB4pqlo3U+7fDkL/Mg+1sId4vo2X55labrLC7iEPc=
-X-Gm-Gg: ASbGnctTqM1gCMt6qEZ9yzdrzSyC58vf427WHWzwo9u2+D9roCBfwYvCkfHGST96Poh
- oKse1nkM5LzskuPHQutV4nB75tYem5JYOF6wqVZTOiEf4G/Kw/UItI61aGd3u3bjyoSrVDBnIBn
- LFgBQqryMi2yisAIIkfMOeopmzEjyBxTnqM6sNbRXF52K4svdqSexoacWXmHKSZHVet11WFHz0f
- B58EUmFzZRF+xRn9ykE3LdA0NDroAcmGePK6aOjk9XnknPxgKsB+uOADePgr0iWR4Zan/OYiq/D
- kmUQN9mRbS7LEZmF+rtBGkuQQiC/Q95Cg4GAhbE2+sB3LeoeQMlkxA==
-X-Google-Smtp-Source: AGHT+IGP+MnWTHimHJjTymYBKXMZ4Qzk3l4ccFmv0XPl9j5klcCO560yxO9CYx3CLEU0CQ445Hs1+g==
-X-Received: by 2002:a17:903:144f:b0:220:fce7:d3a6 with SMTP id
- d9443c01a7336-22df3508d30mr68259535ad.23.1746036749533; 
- Wed, 30 Apr 2025 11:12:29 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ AJvYcCXzEzOrWGYQEJF9KGkjXbfsEHbntFif8lweGPSHZJZYa1jsFHig7INZQgdnFVgOMOKemWDFlibVZTV8@nongnu.org
+X-Gm-Message-State: AOJu0Yz7QJI0Nzq1Fw9Wy6kPkTLm6NkWq+mk6rU1P5ITaMmWrdpPqJcG
+ tl4+PCP0r62Os54N2XZfAHVB15UNIrYnCCrGc2tgUSsg//+0Qvg720E3kSr7q3g=
+X-Gm-Gg: ASbGncvZvIuW9qTiGQbWr6/rcvvlyRZM/UL65eHIe2pt+VDoOa+4cyg1ntkeaEeyd/d
+ /XZjr/NddJlOdX37sbJ7zOrMNmbwP3SkDWtCHImwjUGj7n/6mR0ukp80oJikiR5cw7jrCZFzyGD
+ jEqISsciuM8z6DidP/LuyhgtBnvF7hi7v+MFY4ptptG9pGz8K94aWOAxMuTZDrBmtYFesiYxFe4
+ 8W+4RLeTYoQOXRfMw0Dlug3/1ycCSVatxyrJrlaPEQW16JlN2Ofj1fCuKrprt+n+MuDBq5KXzxE
+ dDaHHDwuXNNEkqxmdqhHvkSXyJWc017RgtidauQPsEm0Jv3x56Yk08u0K8A3u+XFwPmpV4vSoXz
+ yQODTkv5X4VeEiF4HhQ==
+X-Google-Smtp-Source: AGHT+IE4vHbPO94ar+fxRmmWot5znQkTAFs5WKYYBmdHcNgDR8Z0P7yQbM9KTvnMqybbIMnoHBwRnA==
+X-Received: by 2002:a05:6a00:a1a:b0:736:5f75:4a44 with SMTP id
+ d2e1a72fcca58-7403a836358mr4833489b3a.22.1746037736866; 
+ Wed, 30 Apr 2025 11:28:56 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22db4d76f4bsm125670985ad.49.2025.04.30.11.12.28
+ d2e1a72fcca58-74039a8d256sm2001099b3a.157.2025.04.30.11.28.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 30 Apr 2025 11:12:29 -0700 (PDT)
-Message-ID: <c5bd354b-15e9-4f44-b768-8d2ded4d0e5a@linaro.org>
-Date: Wed, 30 Apr 2025 11:12:28 -0700
+ Wed, 30 Apr 2025 11:28:56 -0700 (PDT)
+Message-ID: <34184e10-5337-408a-9052-d6796ab14494@linaro.org>
+Date: Wed, 30 Apr 2025 11:28:54 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs/devel/build-environment: enhance MSYS2 instructions
+Subject: Re: [PATCH v2 02/12] include/system/hvf: missing vaddr include
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ kvm@vger.kernel.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ alex.bennee@linaro.org, anjo@rev.ng
+References: <20250430145838.1790471-1-pierrick.bouvier@linaro.org>
+ <20250430145838.1790471-3-pierrick.bouvier@linaro.org>
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250305213853.3685771-1-pierrick.bouvier@linaro.org>
- <b28bf347-aa8e-405e-8009-025aaf61a984@linaro.org>
- <88d6e264-4793-4095-8bb6-bc45621abeea@linaro.org>
- <06666850-90a1-4b4a-b454-53df477de215@redhat.com>
- <42a0987f-4f51-4d36-a3f5-1daf267c3e0d@linaro.org>
- <82b79386-ee34-4f06-8e61-76f47b4aaad7@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <82b79386-ee34-4f06-8e61-76f47b4aaad7@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250430145838.1790471-3-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,57 +107,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/30/25 10:54 AM, Thomas Huth wrote:
-> On 30/04/2025 16.34, Pierrick Bouvier wrote:
->> On 4/30/25 3:09 AM, Thomas Huth wrote:
->>> On 28/04/2025 21.35, Pierrick Bouvier wrote:
->>>> On 3/24/25 10:47 AM, Pierrick Bouvier wrote:
->>>>> On 3/5/25 13:38, Pierrick Bouvier wrote:
->>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>>>> ---
->>>>>>      docs/devel/build-environment.rst | 4 ++--
->>>>>>      1 file changed, 2 insertions(+), 2 deletions(-)
->>>>>>
->>>>>> diff --git a/docs/devel/build-environment.rst b/docs/devel/build-
->>>>>> environment.rst
->>>>>> index f133ef2e012..661f6ea8504 100644
->>>>>> --- a/docs/devel/build-environment.rst
->>>>>> +++ b/docs/devel/build-environment.rst
->>>>>> @@ -97,11 +97,11 @@ build QEMU in MSYS2 itself.
->>>>>>      ::
->>>>>> -    pacman -S wget
->>>>>> +    pacman -S wget base-devel git
->>>>>>          wget https://raw.githubusercontent.com/msys2/MINGW-packages/refs/
->>>>>> heads/master/mingw-w64-qemu/PKGBUILD
->>>>>>          # Some packages may be missing for your environment, installation
->>>>>> will still
->>>>>>          # be done though.
->>>>>> -    makepkg -s PKGBUILD || true
->>>>>> +    makepkg --syncdeps --nobuild PKGBUILD || true
->>>>>>      Build on windows-aarch64
->>>>>>      ++++++++++++++++++++++++
->>>>>
->>>>> Gentle ping on this trivial change for doc.
->>>>>
->>>>
->>>> Another gentle ping on this trivial doc change.
->>>
->>> Not really my turf, I don't have much clue about the MSYS2 environment, but
->>> since there were no objections, I can add it to my next PR.
->>>
->>
->> Thank you, that's appreciated.
+On 4/30/25 07:58, Pierrick Bouvier wrote:
+> On MacOS x86_64:
+> In file included from ../target/i386/hvf/x86_task.c:13:
+> /Users/runner/work/qemu/qemu/include/system/hvf.h:42:5: error: unknown type name 'vaddr'
+>      vaddr pc;
+>      ^
+> /Users/runner/work/qemu/qemu/include/system/hvf.h:43:5: error: unknown type name 'vaddr'
+>      vaddr saved_insn;
+>      ^
+> /Users/runner/work/qemu/qemu/include/system/hvf.h:45:5: error: type name requires a specifier or qualifier
+>      QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
+>      ^
+> /Users/runner/work/qemu/qemu/include/system/hvf.h:45:18: error: a parameter list without types is only allowed in a function definition
+>      QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
+>                   ^
+> /Users/runner/work/qemu/qemu/include/system/hvf.h:45:36: error: expected ';' at end of declaration list
+>      QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
 > 
-> Could you still please provide a proper patch description, as Daniel suggested?
->
+> Reviewed-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
+> ---
+>   include/system/hvf.h | 1 +
+>   1 file changed, 1 insertion(+)
 
-Sure.
-I just sent v2: 20250430181047.2043492-1-pierrick.bouvier@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
->    Thanks,
->     Thomas
-> 
-
-Thanks,
-Pierrick
+r~
 
