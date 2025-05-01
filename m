@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D80FAC3ABA9
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 637C2C369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:30:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAbPl-0007VQ-Ax; Thu, 01 May 2025 17:25:53 -0400
+	id 1uAbPl-0007Wd-Bd; Thu, 01 May 2025 17:25:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbOw-0005QV-Mp
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:25:03 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1uAbOs-00052Y-QZ
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:24:58 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbOu-0002F4-Hp
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:25:02 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-736c1cf75e4so1364926b3a.2
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:24:59 -0700 (PDT)
+ id 1uAbOp-0002DL-QV
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:24:58 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7376dd56eccso1660514b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:24:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746134699; x=1746739499; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746134694; x=1746739494; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hQZJbuYh2n3Wgp49lh7OYyMC9rzODAQBYexbJ7U5E2E=;
- b=RtZ2Z50n9zFHApaaRhB8kVyP2L7Cmrff1ks3NT4cY4kRdameJH9de1urpSCmStDn2w
- K5YBMN3svsyQiUgzcCZ9j2a7v+AuqTPB6kBc4Veq1MZ/8jji+sd2N9MjAZnqpjJiYdGW
- 2L2PwVrj5xWk/ON3pRU3CBRsPRD+WthjXZzMbkYQmEpO1gegquqjHYd9RoCuNJdD6SJE
- E5Jxj7jtRmSVFVPtBeeidVyY0w9FF/b/pvpzdUiIuDrw1A1qAJy2t6dUgk1Fn7+/tAp2
- laxx3Mrx4QtAXQ0PRKfOS/6Ccgvuu3mIXM1u8qBcznlG4cLpSx/Ib/2LQFncdijCfLSh
- wNlg==
+ bh=dLPkA6JOnUOzci2wJy576ikVBoJf3Va9Je+srdX0Qbc=;
+ b=sByrXzekG7JpRmFSAuNqaWQFGoY2I1i5d0P98bf9ppq2yPPyG5OO7LVEkzhQGkXX7L
+ i9LMtzB48RjySSAbLapWIg0Hgmr/R79dNT6UhrvOAriWq5vCm0Jl39h/W2m5ogJ0WPTC
+ rg+Jpe1hZ9oKCLQEEGTu6+BmvtLjPn469YcoYINeEjJHj3jQycM/UISVoMlS2zgj8Pu6
+ PIZO2wBNTb8DxdNOA24PxKZE7Hq8b1UW5UWz8i1j2mLlanpDIlkUyLgPEijn7ggPB4Af
+ UA1ubRhPVz2Z+Qi/DvSGsLK8J9p/90V94F8sxiEkTSpjxW99c/MIhWjw9i0OspC9opnG
+ f0Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746134699; x=1746739499;
+ d=1e100.net; s=20230601; t=1746134694; x=1746739494;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hQZJbuYh2n3Wgp49lh7OYyMC9rzODAQBYexbJ7U5E2E=;
- b=bpAjTr2NYc0ROSeD+NagoTA1851DeO8UH7pMoq7PrO2bESN7meR53G1qDvRHzVLM6S
- JiyIRtwcPFkunNJ8+qR4u6PM/B+ofjq05eU/DZUSEvilWTnq0CM/Wvo9FAm0i9tEj2qU
- bnwoI7lTTWVsyghd+w6AvJxovgzwLZvT8csLe+fJIxHrh81OR5e8sqIjzQTABByCGVMH
- Vshp/EG8TcZyHbEZeXBdVBpauPleFoc6vBSMr/mgXF354XTERxFacnmf5Tw3zplj5Wm6
- pGhhlGzaXCdmE60/cjCiSVm80MqRMNVJeOsmJ0h/fYBQvJnoAbYWxgSaEoQybWOxTSSo
- FHVQ==
-X-Gm-Message-State: AOJu0YygtbW2CGZFmFBaZ9mW22xq4mi8Fz5iqfpegVDyT0rJfeC+YDXo
- vc3wZRmek5ScERQNfAMPexSDMr2ruxdkr9l8J9EYfOv43S4k55MJ2vimlvHrSOvDkn+AtI3CR7d
- v
-X-Gm-Gg: ASbGncvXzBjXyBJ1YCRs6jBUdrlyjVo/Hg8HOZoTJKjCwbOFycmgbVWJMih/sOqAQLC
- 4VdwpgGh6xqJzq23pTxnJ/fQhTeFnrnMZ+Nz1Z5LsxIcWu3YBy0YuYk3cTDDSfnp2QK8vKxIb0e
- UsiC8ymu6FX1hSzMdwD4aIZAHDnIhxBkODAe7JdMy4rYiwS064Nkj4q60gCKQ1KQtU0hP6msAgD
- UB/GV1YFLbh/7w/Nw7xG/D2icdP/ipHoyD3XnCr2129C4kr15QmvMEMR8ucUZV1hUmpqNtEIqEt
- DtSLZUl7kJJ7+rB1qoscCn5L+/2yB69PL21Mc8vfPF6n7E8J7UOyjGR95JqNjm/LoWaxngsklM4
+ bh=dLPkA6JOnUOzci2wJy576ikVBoJf3Va9Je+srdX0Qbc=;
+ b=j6USW6EtxxWvDxcQzs5fhN8LAobQ2yTNrw/+sJx7j+s7ABezK0kn/rnmPKwvh8TF9A
+ wcOrVTdAi47/dYI+fdUbzNBrSQ0SwHHOJY1p+oikqFP+yZJV+xF3IkHnaRWhHC+w+pGU
+ 0juvLJJrAnaxhiz9j3pX2o7C/HRAlyislhSE56+Ef6FkCLAqXDkcJ7khy8QApEjvWO8d
+ cqda/OkNX4fsJ/gzjWanrtCJei4vNWHR5ji5sUPyR3w8m9Z1lBLz3vCvibcxsb/UNFx+
+ tBCvNA0zDFoJNtjxUntHY5PBqs5XYI8G4wXJ8du5Vml/dBCwajYOMfvBIW7Zv4RfB/U5
+ E4Sg==
+X-Gm-Message-State: AOJu0YypwUQQmirI9ku648LsC8HfpSW3ZWNQOWgsJz/RezirycfWxNrZ
+ zZe3BatFzJgdTpB7vd0aLwk7/DgpWqNOVrC5/Cunb8gHvwm5lBuzHT/puDzdiDJxWDrjK8S8YSh
+ T
+X-Gm-Gg: ASbGnctwRe6yG2O0j5982E6CslvlU7+sh2dkCf2smXL2ZesQ6kOwHAaGPkLJ/PEBNbT
+ hxF1Mi7Fe/JbqkHo99yzF+nzJwpM6AUQo9B6VjPR7lkUaK1ocVtetIIClAHt+fvhilLiCfhgS4h
+ VQOWAtqF9znffFVEjkuVmuhpJXt2zAvZG52fKx0XQyHBuZZ7datasonFkewcVmCkIwBNy3K8Z9q
+ KXRbqiYRshsKvYdqO/gxogZZymupuDdtNXEhZfYCb8A55n0jjrxMULJEuiLfgevKsON9OrxqNay
+ K7g8UnT0WgIQrFzNJr3PmPc2ZfQfaDMttFgCnLnp+/7GAx6iEjtnWP1gwn1x7sX2bdQKsOXc2Ts
  =
-X-Google-Smtp-Source: AGHT+IEpJ/0p9Ry+r63ZoLjNUy/y4x+O9RZE9+pkhPfxrS8I+75gMuyDAi8UjsrZyLrHx2YlVDsE2g==
-X-Received: by 2002:a05:6a00:4482:b0:736:32d2:aa82 with SMTP id
- d2e1a72fcca58-74058b5afa8mr565644b3a.23.1746134698857; 
- Thu, 01 May 2025 14:24:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8FVdQwjBao55PZS0VSDl4tdpYSTTq3jGHsuVpKpRb5vsE53KSalB40MUFFqGyko86vH6Y3g==
+X-Received: by 2002:a05:6a00:448c:b0:736:592e:795f with SMTP id
+ d2e1a72fcca58-74058a20d67mr624109b3a.9.1746134694358; 
+ Thu, 01 May 2025 14:24:54 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-740590610desm135897b3a.146.2025.05.01.14.24.58
+ d2e1a72fcca58-740590610desm135897b3a.146.2025.05.01.14.24.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 14:24:58 -0700 (PDT)
+ Thu, 01 May 2025 14:24:54 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 58/59] accel/tcg: Avoid abi_ptr in user-exec.c
-Date: Thu,  1 May 2025 14:21:12 -0700
-Message-ID: <20250501212113.2961531-59-richard.henderson@linaro.org>
+Subject: [PULL 51/59] accel/tcg: Use target_long_bits() in cputlb.c
+Date: Thu,  1 May 2025 14:21:05 -0700
+Message-ID: <20250501212113.2961531-52-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250501212113.2961531-1-richard.henderson@linaro.org>
 References: <20250501212113.2961531-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,74 +100,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In page_dump/dump_region, use guest_addr_max to check the
-size of the guest address space and size the output
-appropriately.  This will change output with small values
-of -R reserved_va, but shouldn't affect anything else.
-
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/user-exec.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ accel/tcg/cputlb.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 46b1e97c30..085da0c036 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -29,6 +29,7 @@
- #include "accel/tcg/helper-retaddr.h"
- #include "accel/tcg/probe.h"
- #include "user/cpu_loop.h"
-+#include "user/guest-host.h"
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 5b6d6f7975..35c467aace 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -19,6 +19,7 @@
+ 
+ #include "qemu/osdep.h"
  #include "qemu/main-loop.h"
- #include "user/page-protection.h"
- #include "exec/page-protection.h"
-@@ -202,10 +203,19 @@ int walk_memory_regions(void *priv, walk_memory_regions_fn fn)
- static int dump_region(void *opaque, vaddr start, vaddr end, int prot)
- {
-     FILE *f = opaque;
-+    uint64_t mask;
-+    int width;
++#include "qemu/target-info.h"
+ #include "accel/tcg/cpu-ops.h"
+ #include "accel/tcg/iommu.h"
+ #include "accel/tcg/probe.h"
+@@ -771,19 +772,19 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
  
--    fprintf(f, TARGET_ABI_FMT_ptr "-" TARGET_ABI_FMT_ptr
--            " " TARGET_ABI_FMT_ptr " %c%c%c\n",
--            (abi_ptr)start, (abi_ptr)end, (abi_ptr)(end - start),
-+    if (guest_addr_max <= UINT32_MAX) {
-+        mask = UINT32_MAX, width = 8;
-+    } else {
-+        mask = UINT64_MAX, width = 16;
+     assert_cpu_is_self(cpu);
+ 
++    /* If no page bits are significant, this devolves to tlb_flush. */
++    if (bits < TARGET_PAGE_BITS) {
++        tlb_flush_by_mmuidx(cpu, idxmap);
++        return;
 +    }
-+
-+    fprintf(f, "%0*" PRIx64 "-%0*" PRIx64 " %0*" PRIx64 " %c%c%c\n",
-+            width, start & mask,
-+            width, end & mask,
-+            width, (end - start) & mask,
-             ((prot & PAGE_READ) ? 'r' : '-'),
-             ((prot & PAGE_WRITE) ? 'w' : '-'),
-             ((prot & PAGE_EXEC) ? 'x' : '-'));
-@@ -215,10 +225,10 @@ static int dump_region(void *opaque, vaddr start, vaddr end, int prot)
- /* dump memory mappings */
- void page_dump(FILE *f)
- {
--    const int length = sizeof(abi_ptr) * 2;
-+    int width = guest_addr_max <= UINT32_MAX ? 8 : 16;
+     /*
+      * If all bits are significant, and len is small,
+      * this devolves to tlb_flush_page.
+      */
+-    if (bits >= TARGET_LONG_BITS && len <= TARGET_PAGE_SIZE) {
++    if (len <= TARGET_PAGE_SIZE && bits >= target_long_bits()) {
+         tlb_flush_page_by_mmuidx(cpu, addr, idxmap);
+         return;
+     }
+-    /* If no page bits are significant, this devolves to tlb_flush. */
+-    if (bits < TARGET_PAGE_BITS) {
+-        tlb_flush_by_mmuidx(cpu, idxmap);
+-        return;
+-    }
  
-     fprintf(f, "%-*s %-*s %-*s %s\n",
--            length, "start", length, "end", length, "size", "prot");
-+            width, "start", width, "end", width, "size", "prot");
-     walk_memory_regions(f, dump_region);
- }
+     /* This should already be page aligned */
+     d.addr = addr & TARGET_PAGE_MASK;
+@@ -809,19 +810,19 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
+     TLBFlushRangeData d, *p;
+     CPUState *dst_cpu;
  
-@@ -1135,7 +1145,7 @@ static uint64_t do_ld8_mmu(CPUState *cpu, vaddr addr, MemOpIdx oi,
-     return ret;
- }
++    /* If no page bits are significant, this devolves to tlb_flush. */
++    if (bits < TARGET_PAGE_BITS) {
++        tlb_flush_by_mmuidx_all_cpus_synced(src_cpu, idxmap);
++        return;
++    }
+     /*
+      * If all bits are significant, and len is small,
+      * this devolves to tlb_flush_page.
+      */
+-    if (bits >= TARGET_LONG_BITS && len <= TARGET_PAGE_SIZE) {
++    if (len <= TARGET_PAGE_SIZE && bits >= target_long_bits()) {
+         tlb_flush_page_by_mmuidx_all_cpus_synced(src_cpu, addr, idxmap);
+         return;
+     }
+-    /* If no page bits are significant, this devolves to tlb_flush. */
+-    if (bits < TARGET_PAGE_BITS) {
+-        tlb_flush_by_mmuidx_all_cpus_synced(src_cpu, idxmap);
+-        return;
+-    }
  
--static Int128 do_ld16_mmu(CPUState *cpu, abi_ptr addr,
-+static Int128 do_ld16_mmu(CPUState *cpu, vaddr addr,
-                           MemOpIdx oi, uintptr_t ra)
- {
-     void *haddr;
+     /* This should already be page aligned */
+     d.addr = addr & TARGET_PAGE_MASK;
 -- 
 2.43.0
 
