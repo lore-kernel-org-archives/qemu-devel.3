@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC94C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91553C369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:08:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAb7W-00033H-D8; Thu, 01 May 2025 17:07:02 -0400
+	id 1uAb6Q-0001JT-7g; Thu, 01 May 2025 17:05:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb7B-0002Z3-HA
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:43 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6L-0001HI-Es
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:49 -0400
 Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb78-0006jJ-Nf
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:40 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6J-0006Z4-Ph
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:49 -0400
 Received: by mail-il1-x131.google.com with SMTP id
- e9e14a558f8ab-3d813c1c39eso12175435ab.0
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:06:38 -0700 (PDT)
+ e9e14a558f8ab-3d817bc6eb0so4548315ab.1
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:05:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746133597; x=1746738397; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746133545; x=1746738345; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=plmsFCscLUV04uq2qYRMQ5RH6cv8iwmOj9x5he8hi0s=;
- b=hDEsHcZRkfRTZeMkOPd2tfSxGmBfI68GpzkSzZtSrDgCWsnTPEdRuTHgTWvDRCZz2F
- +8cMyDTmuKJsAmQ/y/EhZMArwFBoHYjVUnTJUtonLtvdOkO4l1cBWMawzsKbByhXvpJZ
- icl7WScDrKYKFGQzb9Pv/Qv2h2IF8h1kJh0lqjjWgYShjcm8dtT+ytIluLlnjnZMs1kL
- 01prLfYFKCxjIsGMZkHfevlT4LyU522Ej/NLjRosj4fYZKbuWrhgW9zuh+R3BTWhbBqv
- ATM+9jOklbOwysdNXuohIk+u5tAvbQlIv2F8ajFzWwUtk1JLTLjGeMxAbfUR48bQ+aIb
- geIw==
+ bh=o/QVQ9eARYed3NJFRK9UiivRgqBpCyWfc+XTOWrPU4o=;
+ b=aDZV01h+aNa/6oF+owR4bkoobkcnTEUSjeLXC1D2c79flAKDLg01NkrmBu2/GtdR8S
+ 87Wv27uC1L5wnZZQDvzbUFGb/75OHfU60LbBP9DX/M2flC8oQswCIGEyPcmRhEjPGdzP
+ CaGB0WJ2x7oiuq71ecAp9xV7jezDRsgy+zwxlF2IW750NEgcyU1imxyTa9P/ZRLYhL9W
+ aePxNjOCuN4y7H3dWyWiN28K9ZkiPyM2uCFPwRTz3zCQGgjSEwRD7zBM28qUSoKl5irs
+ tITM8ohtvnXyKr/yDvHMmtHrA+577l5aBZP00vT8V58SpbbEYaozggjtItqQdcb8Yxk5
+ 6ZzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746133597; x=1746738397;
+ d=1e100.net; s=20230601; t=1746133545; x=1746738345;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=plmsFCscLUV04uq2qYRMQ5RH6cv8iwmOj9x5he8hi0s=;
- b=dcZvIvb4tBORnSr3GKvPVvbra81rdee2MjA0jxQ/zrxK9scBt4mwBBxLuVq9WO7mf/
- djDLciVNSkDRvGPVFT1gL4poTjrw0J23RkjUH0z4XKTEzAjrHflfKGkXQD8k/0+bN+vO
- jNbGQsdbwEwMtNIWcPaHkoZmGZkf/5vmzdYQ/JDLsZN29agWl7UbdPjnnhKb90DH4Erq
- v95qkDaKbigUTVjKM13qH10v+OcPvbKIEV8mG3SsEH6jFXeaHlSFU+gSOuVIHaqH/qkj
- OTRw0xMnUbupZCTc8TiN19O5oyrZq5foVz0zOYjWMJFhHkJHD+sDTW3Wz/iTnmUu+hjo
- iRgQ==
-X-Gm-Message-State: AOJu0YxusVf8UIaQzn3P0hhzRDt6Llc71pZz4XVj0JgNQyzB2cKgmRLF
- ZdzJr48DGhHV6Om8Ptdn25GlrR5hGEvqYTVdC/7b9MBKhhpyIkJoQeJwy6O7yooz+BQ/3/HzJIR
- S
-X-Gm-Gg: ASbGncvQfFRLmm3MYvHXVqFn4qbCqZK4ORZhdZSIV10IjHd2S0ecO292nN8x7q5qXeq
- x/nLl8sy+YSNQXG0UJXeAR2l5/PtXihySJ95ybOtdS6cx0u7vom/V18B0Z6jSOOAk221ICMUt+e
- Z1BG6aT4vl1BlVnqgPTyO2om5/tmzIv3b5lVgTS0eqZ1l/kJ5+g3vHAPK6+odj/YVxHrK0j1S4b
- o3SyWHW8z/pq04ecybPqFUhgwLEKqYulp+/VZr+BJPFg/pTkoDhlK11XUp1ZzhYDPlhqgAqMhoR
- 6q2vnxZmaa0E4ySykPsgQhQmf7cKhz9PTHPJSMDcX9xnEeuwc2+5i8MfTRp1p9fC2/2Pon16TZJ
- P44VAWGAXsHtplus=
-X-Google-Smtp-Source: AGHT+IE2EVWPt/an4zju0lHLQHhUQmTDSddIXQascsV19ewdipeU1SUU3c3LZXNsSrNz8PDdsE6w2A==
-X-Received: by 2002:a05:6e02:148d:b0:3d5:deaf:b443 with SMTP id
- e9e14a558f8ab-3d97c13449bmr5738325ab.3.1746133597257; 
- Thu, 01 May 2025 14:06:37 -0700 (PDT)
+ bh=o/QVQ9eARYed3NJFRK9UiivRgqBpCyWfc+XTOWrPU4o=;
+ b=BLy4W0pYRZjtOJoR5DqRcKgmG2WKqyvVtUyTcNXBmhwkfLgOhNwGgciGYC9ABxmgS3
+ av5B23dwZ1GwgcrVXqxERT0a8Zc2f1kjeTz0+1URbtlHr6+dK4O6JThKu1OsUgX8keMK
+ bv33ZOCtqwt2nOpu6DltDsZsTd0v03kg2eGkL8FTtngcv1X12VJtGm0EiNfdIxWff3s0
+ Esh/sySe3JdjY9/qna7IubFMY7/B1Fw/nnqcnl7GlPoIsRlvUKPCNFY5lnSOpJF0+u9g
+ Tf/g5qSKXuOnE3gY82qQswOwwX+Lko2TggvrB3aEHPKrDGpUq92iNn3BgoAVn+B+bWr8
+ /52Q==
+X-Gm-Message-State: AOJu0Ywnu/Gt/lOdpLxQOgg/z1eyQKJZreTUqvu3pqighDI3E5thxsGM
+ EwomaYpWHOMzlwIVuwdHr54Yf8cnyYc2tTksg8wsPINnYNIKKZFoVY4Cb11VTabgCPbGwAFzPeo
+ f
+X-Gm-Gg: ASbGnctr12qbrYsqHeNhIA+Y9unahhFpMR95fC/oH5ScEr02wCk4yXpp+vaiddgwuKC
+ 40BKjtNKl9dnqqbpBBCpncW3nGROWmPS8FVvCTO4FO7skurTY9VKtk5mPTPBLXTQ6oktUdgLGTN
+ i36Z0kUETT2VhZ+4uaRB9NKFrTGJTIxd/Zxfy0WHC99QJBET9nZqpjsSwEo2fpr6rBMuCvXovFG
+ b0zhm9Nc1iKzGSalO25DIatLspyFPiYvsaRIs8+xEzg3OdruBs7/SxlCBXpngmMLC/pe679sS5w
+ DEFrb0Zf18Rfdmiyjc8AOzyJjDRhH+Eov08H5w6A9ncTRnXCywAqrD1Kg0mcvOGoTq35rdsKnAS
+ Wfj0N/bl8301zECI=
+X-Google-Smtp-Source: AGHT+IE8GKM0G0mpiOZK0wMVckc0ZPpmMupnQz/unCFyiOCkLSgdY8QJIlLIG973JeMcgYSsJ7o9/Q==
+X-Received: by 2002:a05:6e02:1a85:b0:3d8:1d0e:5308 with SMTP id
+ e9e14a558f8ab-3d97c17f122mr5120005ab.6.1746133545451; 
+ Thu, 01 May 2025 14:05:45 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f88a91b069sm48588173.52.2025.05.01.14.06.33
+ e9e14a558f8ab-3d975eca768sm3074505ab.37.2025.05.01.14.05.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 14:06:36 -0700 (PDT)
+ Thu, 01 May 2025 14:05:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
@@ -77,9 +77,9 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>
-Subject: [PATCH 11/18] hw/nvram/fw_cfg: Remove FWCfgState::file_slots field
-Date: Thu,  1 May 2025 23:04:49 +0200
-Message-ID: <20250501210456.89071-12-philmd@linaro.org>
+Subject: [PATCH 05/18] hw/core/machine: Remove hw_compat_2_8[] array
+Date: Thu,  1 May 2025 23:04:43 +0200
+Message-ID: <20250501210456.89071-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501210456.89071-1-philmd@linaro.org>
 References: <20250501210456.89071-1-philmd@linaro.org>
@@ -94,7 +94,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,86 +110,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The FWCfgState::file_slots integer was only set in the
-hw_compat_2_8[] array, via the 'x-file-slots=0x10' property.
-We removed all machines using that array, lets remove that
-property and all the code around it. The number of slots is
-always FW_CFG_FILE_SLOTS_DFLT (32).
+The hw_compat_2_8[] array was only used by the pc-q35-2.8 and
+pc-i440fx-2.8 machines, which got removed. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/nvram/fw_cfg.h |  1 -
- hw/nvram/fw_cfg.c         | 24 +-----------------------
- 2 files changed, 1 insertion(+), 24 deletions(-)
+ include/hw/boards.h |  3 ---
+ hw/core/machine.c   | 14 --------------
+ 2 files changed, 17 deletions(-)
 
-diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
-index d41b9328fd1..07a31d214db 100644
---- a/include/hw/nvram/fw_cfg.h
-+++ b/include/hw/nvram/fw_cfg.h
-@@ -59,7 +59,6 @@ struct FWCfgState {
-     SysBusDevice parent_obj;
-     /*< public >*/
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 77707c4376a..84bd3735c42 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -835,7 +835,4 @@ extern const size_t hw_compat_2_10_len;
+ extern GlobalProperty hw_compat_2_9[];
+ extern const size_t hw_compat_2_9_len;
  
--    uint16_t file_slots;
-     FWCfgEntry *entries[2];
-     int *entry_order;
-     FWCfgFiles *files;
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index 54cfa07d3f5..71c41c979d7 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -257,7 +257,7 @@ static void fw_cfg_write(FWCfgState *s, uint8_t value)
- 
- static inline uint16_t fw_cfg_file_slots(const FWCfgState *s)
- {
--    return s->file_slots;
-+    return FW_CFG_FILE_SLOTS_DFLT;
- }
- 
- /* Note: this function returns an exclusive limit. */
-@@ -1153,24 +1153,6 @@ static const TypeInfo fw_cfg_info = {
- 
- static void fw_cfg_file_slots_allocate(FWCfgState *s, Error **errp)
- {
--    uint16_t file_slots_max;
+-extern GlobalProperty hw_compat_2_8[];
+-extern const size_t hw_compat_2_8_len;
 -
--    if (fw_cfg_file_slots(s) < FW_CFG_FILE_SLOTS_MIN) {
--        error_setg(errp, "\"file_slots\" must be at least 0x%x",
--                   FW_CFG_FILE_SLOTS_MIN);
--        return;
--    }
--
--    /* (UINT16_MAX & FW_CFG_ENTRY_MASK) is the highest inclusive selector value
--     * that we permit. The actual (exclusive) value coming from the
--     * configuration is (FW_CFG_FILE_FIRST + fw_cfg_file_slots(s)). */
--    file_slots_max = (UINT16_MAX & FW_CFG_ENTRY_MASK) - FW_CFG_FILE_FIRST + 1;
--    if (fw_cfg_file_slots(s) > file_slots_max) {
--        error_setg(errp, "\"file_slots\" must not exceed 0x%" PRIx16,
--                   file_slots_max);
--        return;
--    }
--
-     s->entries[0] = g_new0(FWCfgEntry, fw_cfg_max_entry(s));
-     s->entries[1] = g_new0(FWCfgEntry, fw_cfg_max_entry(s));
-     s->entry_order = g_new0(int, fw_cfg_max_entry(s));
-@@ -1179,8 +1161,6 @@ static void fw_cfg_file_slots_allocate(FWCfgState *s, Error **errp)
- static const Property fw_cfg_io_properties[] = {
-     DEFINE_PROP_BOOL("dma_enabled", FWCfgIoState, parent_obj.dma_enabled,
-                      true),
--    DEFINE_PROP_UINT16("x-file-slots", FWCfgIoState, parent_obj.file_slots,
--                       FW_CFG_FILE_SLOTS_DFLT),
+ #endif
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index bde19a2ff67..bc0606cf740 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -252,20 +252,6 @@ GlobalProperty hw_compat_2_9[] = {
  };
+ const size_t hw_compat_2_9_len = G_N_ELEMENTS(hw_compat_2_9);
  
- static void fw_cfg_io_realize(DeviceState *dev, Error **errp)
-@@ -1228,8 +1208,6 @@ static const Property fw_cfg_mem_properties[] = {
-     DEFINE_PROP_UINT32("data_width", FWCfgMemState, data_width, -1),
-     DEFINE_PROP_BOOL("dma_enabled", FWCfgMemState, parent_obj.dma_enabled,
-                      true),
--    DEFINE_PROP_UINT16("x-file-slots", FWCfgMemState, parent_obj.file_slots,
--                       FW_CFG_FILE_SLOTS_DFLT),
- };
+-GlobalProperty hw_compat_2_8[] = {
+-    { "fw_cfg_mem", "x-file-slots", "0x10" },
+-    { "fw_cfg_io", "x-file-slots", "0x10" },
+-    { "pflash_cfi01", "old-multiple-chip-handling", "on" },
+-    { "pci-bridge", "shpc", "on" },
+-    { TYPE_PCI_DEVICE, "x-pcie-extcap-init", "off" },
+-    { "virtio-pci", "x-pcie-deverr-init", "off" },
+-    { "virtio-pci", "x-pcie-lnkctl-init", "off" },
+-    { "virtio-pci", "x-pcie-pm-init", "off" },
+-    { "cirrus-vga", "vgamem_mb", "8" },
+-    { "isa-cirrus-vga", "vgamem_mb", "8" },
+-};
+-const size_t hw_compat_2_8_len = G_N_ELEMENTS(hw_compat_2_8);
+-
+ MachineState *current_machine;
  
- static void fw_cfg_mem_realize(DeviceState *dev, Error **errp)
+ static char *machine_get_kernel(Object *obj, Error **errp)
 -- 
 2.47.1
 
