@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 003BCC3ABA9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF9B3C369DC
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 23:21:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAdCs-0004bt-C4; Thu, 01 May 2025 19:20:42 -0400
+	id 1uAdDH-00050O-LE; Thu, 01 May 2025 19:21:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uAdCq-0004a2-DR; Thu, 01 May 2025 19:20:40 -0400
+ id 1uAdCu-0004hi-7r; Thu, 01 May 2025 19:20:44 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uAdCn-0007CC-Si; Thu, 01 May 2025 19:20:40 -0400
+ id 1uAdCs-0007Ez-Cr; Thu, 01 May 2025 19:20:43 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 2919A55D25A;
- Fri, 02 May 2025 01:20:35 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 74D1555D264;
+ Fri, 02 May 2025 01:20:40 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id xeU8V0jkHZTn; Fri,  2 May 2025 01:20:33 +0200 (CEST)
+ with ESMTP id IGxjj3DIh9hO; Fri,  2 May 2025 01:20:38 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 37D2555D25F; Fri, 02 May 2025 01:20:33 +0200 (CEST)
-Message-ID: <ad355178b2a3fe285854ed2e25b288baf0fd6e05.1746139668.git.balaton@eik.bme.hu>
+ id 8128155D265; Fri, 02 May 2025 01:20:38 +0200 (CEST)
+Message-ID: <d9b7948b91119474d6068a59b24d8bc47f1dffc8.1746139668.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1746139668.git.balaton@eik.bme.hu>
 References: <cover.1746139668.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 01/13] hw/boards: Extend DEFINE_MACHINE macro to cover more
- use cases
+Subject: [PATCH 06/13] hw/ppc/pegasos2: Rename mv field in machine state
 To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>
-Date: Fri, 02 May 2025 01:20:33 +0200 (CEST)
+Date: Fri, 02 May 2025 01:20:38 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -60,58 +59,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a more general DEFINE_MACHINE_EXTENDED macro and define simpler
-versions with less parameters based on that. This is inspired by how
-the OBJECT_DEFINE macros do this in a similar way to allow using the
-shortened definition in more complex cases too.
+Use more generic name for the field used to store the north bridge in
+the machine state.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- include/hw/boards.h | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ hw/ppc/pegasos2.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 765dc8dd35..6e52d4d10c 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -744,7 +744,8 @@ struct MachineState {
-         } \
-     } while (0)
+diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
+index 7dc7803c64..9b50cd3dab 100644
+--- a/hw/ppc/pegasos2.c
++++ b/hw/ppc/pegasos2.c
+@@ -68,7 +68,7 @@ struct Pegasos2MachineState {
+     MachineState parent_obj;
  
--#define DEFINE_MACHINE(namestr, machine_initfn) \
-+#define DEFINE_MACHINE_EXTENDED(namestr, PARENT_NAME, InstanceName, \
-+                                machine_initfn, ABSTRACT, ...) \
-     static void machine_initfn##_class_init(ObjectClass *oc, const void *data) \
-     { \
-         MachineClass *mc = MACHINE_CLASS(oc); \
-@@ -752,8 +753,11 @@ struct MachineState {
-     } \
-     static const TypeInfo machine_initfn##_typeinfo = { \
-         .name       = MACHINE_TYPE_NAME(namestr), \
--        .parent     = TYPE_MACHINE, \
-+        .parent     = TYPE_##PARENT_NAME, \
-         .class_init = machine_initfn##_class_init, \
-+        .instance_size = sizeof(InstanceName), \
-+        .abstract = ABSTRACT, \
-+        .interfaces = (const InterfaceInfo[]) { __VA_ARGS__ } , \
-     }; \
-     static void machine_initfn##_register_types(void) \
-     { \
-@@ -761,6 +765,14 @@ struct MachineState {
-     } \
-     type_init(machine_initfn##_register_types)
+     PowerPCCPU *cpu;
+-    DeviceState *mv;
++    DeviceState *nb; /* north bridge */
+     IRQState pci_irqs[PCI_NUM_PINS];
+     OrIRQState orirq[PCI_NUM_PINS];
+     qemu_irq mv_pirq[PCI_NUM_PINS];
+@@ -166,12 +166,12 @@ static void pegasos2_init(MachineState *machine)
+     }
  
-+#define DEFINE_MACHINE(namestr, machine_initfn) \
-+    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
-+                            false, { })
-+
-+#define DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, ...) \
-+    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
-+                            false, __VA_ARGS__)
-+
- extern GlobalProperty hw_compat_10_0[];
- extern const size_t hw_compat_10_0_len;
+     /* Marvell Discovery II system controller */
+-    pm->mv = DEVICE(sysbus_create_simple(TYPE_MV64361, -1,
++    pm->nb = DEVICE(sysbus_create_simple(TYPE_MV64361, -1,
+                           qdev_get_gpio_in(DEVICE(pm->cpu), PPC6xx_INPUT_INT)));
+     for (i = 0; i < PCI_NUM_PINS; i++) {
+-        pm->mv_pirq[i] = qdev_get_gpio_in_named(pm->mv, "gpp", 12 + i);
++        pm->mv_pirq[i] = qdev_get_gpio_in_named(pm->nb, "gpp", 12 + i);
+     }
+-    pci_bus = mv64361_get_pci_bus(pm->mv, 1);
++    pci_bus = mv64361_get_pci_bus(pm->nb, 1);
  
+     /* VIA VT8231 South Bridge (multifunction PCI device) */
+     via = OBJECT(pci_new_multifunction(PCI_DEVFN(12, 0), TYPE_VT8231_ISA));
+@@ -190,7 +190,7 @@ static void pegasos2_init(MachineState *machine)
+                               object_resolve_path_component(via, "rtc"),
+                               "date");
+     qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
+-                                qdev_get_gpio_in_named(pm->mv, "gpp", 31));
++                                qdev_get_gpio_in_named(pm->nb, "gpp", 31));
+ 
+     dev = PCI_DEVICE(object_resolve_path_component(via, "ide"));
+     pci_ide_create_devs(dev);
+@@ -208,7 +208,7 @@ static void pegasos2_init(MachineState *machine)
+         DeviceState *pd;
+         g_autofree const char *pn = g_strdup_printf("pcihost%d", h);
+ 
+-        pd = DEVICE(object_resolve_path_component(OBJECT(pm->mv), pn));
++        pd = DEVICE(object_resolve_path_component(OBJECT(pm->nb), pn));
+         assert(pd);
+         for (i = 0; i < PCI_NUM_PINS; i++) {
+             OrIRQState *ori = &pm->orirq[i];
+@@ -267,7 +267,7 @@ static void pegasos2_init(MachineState *machine)
+ static uint32_t pegasos2_mv_reg_read(Pegasos2MachineState *pm,
+                                      uint32_t addr, uint32_t len)
+ {
+-    MemoryRegion *r = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->mv), 0);
++    MemoryRegion *r = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->nb), 0);
+     uint64_t val = 0xffffffffULL;
+     memory_region_dispatch_read(r, addr, &val, size_memop(len) | MO_LE,
+                                 MEMTXATTRS_UNSPECIFIED);
+@@ -277,7 +277,7 @@ static uint32_t pegasos2_mv_reg_read(Pegasos2MachineState *pm,
+ static void pegasos2_mv_reg_write(Pegasos2MachineState *pm, uint32_t addr,
+                                   uint32_t len, uint32_t val)
+ {
+-    MemoryRegion *r = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->mv), 0);
++    MemoryRegion *r = sysbus_mmio_get_region(SYS_BUS_DEVICE(pm->nb), 0);
+     memory_region_dispatch_write(r, addr, val, size_memop(len) | MO_LE,
+                                  MEMTXATTRS_UNSPECIFIED);
+ }
+@@ -858,10 +858,10 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
+ 
+     fi.fdt = fdt;
+     fi.path = "/pci@c0000000";
+-    pci_bus = mv64361_get_pci_bus(pm->mv, 0);
++    pci_bus = mv64361_get_pci_bus(pm->nb, 0);
+     pci_for_each_device_reverse(pci_bus, 0, add_pci_device, &fi);
+     fi.path = "/pci@80000000";
+-    pci_bus = mv64361_get_pci_bus(pm->mv, 1);
++    pci_bus = mv64361_get_pci_bus(pm->nb, 1);
+     pci_for_each_device_reverse(pci_bus, 0, add_pci_device, &fi);
+ 
+     return fdt;
 -- 
 2.41.3
 
