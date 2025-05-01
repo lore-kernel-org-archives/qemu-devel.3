@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CC40C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7839FC369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:36:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAYkQ-0004ux-Cl; Thu, 01 May 2025 14:35:02 -0400
+	id 1uAYkT-0004wf-4d; Thu, 01 May 2025 14:35:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uAYkO-0004u2-Ib; Thu, 01 May 2025 14:35:00 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1uAYkP-0004uY-NW; Thu, 01 May 2025 14:35:01 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uAYkM-0007Vk-Rn; Thu, 01 May 2025 14:35:00 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5f3f04b5dbcso1869087a12.1; 
- Thu, 01 May 2025 11:34:57 -0700 (PDT)
+ id 1uAYkN-0007Vw-89; Thu, 01 May 2025 14:35:01 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5f4d0da2d2cso2398568a12.3; 
+ Thu, 01 May 2025 11:34:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746124496; x=1746729296; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Y9SBlCSkCVD4bmzSTB80UsQ0zXpNYjxPRjiJK/2PHJs=;
- b=aTjnnqW0LfaxeK626i5CkzrLm9VOSyBBC4qF+kAk5G1gonewNXEvqPR1Yfa3DLiJD1
- ZtP3HAXBxV3Po2mJI04dZx6csfkdFt5+MZqtDS3yYSN4EAnv90r0u38UOPC3SyTvaxN7
- 81f9iOBWE7vg6q9dPfzeIqZ/K91qdRbNUtqeJJfA4CmkjKg0HNuD02bNYvnI+k95bCw3
- F/+DuwCPEPo+nBIWzB6K9bJG3fgZ703uUhBBA+2xe7UCJLrbz+JbM2E7v5h93f1WitKi
- 0QAQUKmuzO7PfqRfKDS1SA/LgF7a+5HcXOCi+iNUFSs9akvEjUmSVr2Vo9oDEzfI+H8L
- 7vQw==
+ d=gmail.com; s=20230601; t=1746124497; x=1746729297; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BUdFeSyflWwNMC8spYoAFZC9mek/p0k7XGjJv0BP+DI=;
+ b=LWR14DGGNTta48/6yYC21NVXlBtFo1hssg2pFsO8U5kEfAxfjCQp64FP0zJCq/MFFh
+ xSSwyHpSFQOx5WR0drPL8Wsjrb/N6QwumsoZ8f/d+ePJxf/mo9wscADyIxiq6ODE9Qi7
+ xsqIr79cH0tZNLsxj0RXPX/2cWrZ9oEz/IqHazIOty4STR7quTbMgO+uG3VBmv4sjb8i
+ TeSiFLBEXOrfuPo4Bnf9oI88gPdDr3iH5ePeQhYBF1+qCTTrTTRSI9+n9GIiF8cpB5F1
+ gAe277WWCWbnSWddBFFXnK/72gExpAg6E0wK5eWjHmKNrsRwN3D2sgesu6XKJUvpTIy8
+ cd4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746124496; x=1746729296;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Y9SBlCSkCVD4bmzSTB80UsQ0zXpNYjxPRjiJK/2PHJs=;
- b=bgx4e3g1snaBhQUuoXDfDCpaitpaihm3CEdfpvLieR/r1TywlSSsSN3gAVToiSDHte
- SJMWyCwR7ydFnMn48ZYeFnelObOCQN9xlavAlYeVqmsHMjv0AfPSjHTNyvV3CgSxvDPY
- 1LNhuaYhKpP/SkyXg8T2SyHGPYVtQXaQx+dbXhQKylKLjwycIQQnK56KQapZd1pH+RmQ
- geE0a96e0xilw+HeEqrHW2Sq8QqROkg33wUQQ/VwkmQIpDiVXkQ/bqjvejXU5d2Ittld
- yFE/14FV97HmbO7jwRWu2tcqk1CQ6atqQOPPE2nZCstpIyGYnix59Q8FFxA/krgIvG76
- SI9Q==
+ d=1e100.net; s=20230601; t=1746124497; x=1746729297;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BUdFeSyflWwNMC8spYoAFZC9mek/p0k7XGjJv0BP+DI=;
+ b=AGvFH3owEAY6kE8ZpsyusJneITYxxK5LjpgXrBug+WC20Grox0s1YLVm5LxFUXPLl7
+ ixZ2B3aBVGo+T15WZaiek3cYCUEBEMRzjtmtMC8zGNQdAv8f2KCz0nWlf81gqg9sRnGm
+ tAQkfF8EddUjgJpI/tRH6LrGHd5cr/8j2UGOWPWyaKPOU80EDiWW+3htGlgH1SzTG4cY
+ ylQI7B+deb60oebdXEBsnI2OspVewHNlZyA9rT/wB7cKFbtAnRrRPmQh5fmvTnUjnHKz
+ G/kq8Gmq6f3AX8FILt5PGmWxCknqaFcCH/bv6GZ6qMePwc17IDwzMhTKZFKbxrcamycf
+ Mi7A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXKHV26l5pbPWzxc0vuA/eLJgL2WA6ACkXoJ0DA/uEYZNcV7J8cLxWkHiTwKAuWyffAi+FRGsdZ7w==@nongnu.org
-X-Gm-Message-State: AOJu0Yxv+FIejs5rdJl2fvRSP2Syo5SKTpv4ORF/EtOtDO/pyQV8GERE
- qFde9vfHHgDDD0wHuM9yjiBYbizaCuuZXbIExBY2e2RhOp1E/OJdd7t6Jw==
-X-Gm-Gg: ASbGnctTlmoSd+3jjCBU4h3iFJZBeA/y3pYHbdrqE1zjgymoCLHDfVZVpKKrXqjQV4y
- ojD1/IRxaOvSUJVRzv0woRa2hlgleAR2qkSFxqGa569vGyy2etBlIW3LO7fcHupDJZZR+3to15B
- VtjfxpoVXHmxLTR23LawP5HV59sZPJB/ClCMkkksZzPPczNaFq8J3WeLzxHkFnADnfrBmvFd9lJ
- QDwvqaWYc+M6K5lAQdkDH0tqvanNDoF/n7XuqMcKhfJhY5qVYLcAbCxbIm8dU/CoqIDCGqkUWcD
- gQZCPGeNQXBS79ZSxCjB1TtiUfvIX8SF9U6gIT5RQ01ea9VuxnnnCKXB0HdbV1CuE/JMwGLwdoA
- nLeNwP/lvjIGv1mJ8ajQ3qIDHxN8VRuZ6JzV/W2u0cgnx9tfkkvzqFTtgEYh++A==
-X-Google-Smtp-Source: AGHT+IE4nGQN5+5x1RpSwi8siiCDFy1SHzB9KJb2Is3zZeBAasegPyvMMXXkDhIff3z9roFDWixD3A==
-X-Received: by 2002:a05:6402:84d:b0:5f4:5dfa:995f with SMTP id
- 4fb4d7f45d1cf-5f89ae6c439mr6525224a12.13.1746124495133; 
- Thu, 01 May 2025 11:34:55 -0700 (PDT)
+ AJvYcCVoWHaJA2yJyH0I2X97MB9VQqhJAnPSelRmmDOc1cIa/hcSgtWM9N0RvHJqR8FMdPcCqrr1qd96RQ==@nongnu.org
+X-Gm-Message-State: AOJu0YyBZ8/pnlaht5m5tgWipy9x2iH78WVdcUyCWB0UYMIkoSYeSZEg
+ cvd0KqWIgLNghjy0clTq1QJUD6TUD9Q+fZP/t3Pby9ZBezRDYHpowppVtA==
+X-Gm-Gg: ASbGncsm3vVUAV6f0o5VqzJbsJ3y0Vr173vVRrM7/FBsAnfnmb1SINbi8I/x65O5koY
+ 39LLNnM6ilnnLdAwCZwUdX+Uir0n0c2rYAogHmpUDY7W3SYF2YjyubAkIooei5An7FCIk/aQzz3
+ XNc41hzcvhpDru5KxJkXnNd/h+RCRZlRD91M8S2Lh7UqNiYUqffyF/hm9/yQvq56zns3XbDh1lD
+ rtB2DuESOgi9RxikC5hzv/uxjcjPkMOo0Vy8f8XveKFnExmQPW6rCpQBMDw/HxzYEVkah4S7v3I
+ ToyZHZbnXx1Nbi2ZiKVVXKBnFmRHr3Zn0+MzFt3QfB4D0MEIST6ulkvEuea2UrR6SlcQ/7G5A7p
+ mx1Nme3j/xFD7yX9sjv4lLMys2hy3mktJvQNUxx0s1wyM0bxLGRiVMlz1qnQAL7FnUax9Qx/R
+X-Google-Smtp-Source: AGHT+IGIuCoXQtRq3tRwQHLbXYpOQ8pqmlwnVSxYpbW3q+AgKaQs4gDZ7aTyqkHiTR9X7Oylfq8rdw==
+X-Received: by 2002:a05:6402:1e88:b0:5f8:e24b:c8a6 with SMTP id
+ 4fb4d7f45d1cf-5f8e24bca83mr4146734a12.29.1746124496631; 
+ Thu, 01 May 2025 11:34:56 -0700 (PDT)
 Received: from localhost.localdomain
  (dynamic-2a02-3100-2980-eb00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:2980:eb00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f93000b272sm751709a12.68.2025.05.01.11.34.54
+ 4fb4d7f45d1cf-5f93000b272sm751709a12.68.2025.05.01.11.34.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 11:34:54 -0700 (PDT)
+ Thu, 01 May 2025 11:34:56 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Andrey Smirnov <andrew.smirnov@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 0/3] i.MX fixes
-Date: Thu,  1 May 2025 20:34:42 +0200
-Message-ID: <20250501183445.2389-1-shentey@gmail.com>
+Subject: [PATCH 2/3] hw/pci-host/designware: Fix viewport configuration
+Date: Thu,  1 May 2025 20:34:44 +0200
+Message-ID: <20250501183445.2389-3-shentey@gmail.com>
 X-Mailer: git-send-email 2.49.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20250501183445.2389-1-shentey@gmail.com>
+References: <20250501183445.2389-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x532.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,24 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series contains two bug fixes related to i.MX SoCs, plus one cosmetic=
-=0D
-change. The first fix adresses a bug in the Designware PCIe bridge that jus=
-t=0D
-got introduced in the 10.1 development cycle, the other one fixes a bug in =
-the=0D
-i.MX GPIO controller which existed since its introduction.=0D
-=0D
-Bernhard Beschow (3):=0D
-  hw/pci-host/designware: Remove unused include=0D
-  hw/pci-host/designware: Fix viewport configuration=0D
-  hw/gpio/imx_gpio: Fix interpretation of GDIR polarity=0D
-=0D
- hw/gpio/imx_gpio.c       | 2 +-=0D
- hw/pci-host/designware.c | 5 ++---=0D
- 2 files changed, 3 insertions(+), 4 deletions(-)=0D
-=0D
--- =0D
-2.49.0=0D
-=0D
+Commit 6970f91ac781, "hw/pci-host/designware: Use deposit/extract API"
+accidentally introduced a copy-and-paste error, causing Linux 6.14 to hang when
+initializing the PCIe bridge on the imx8mp-evk machine. This fix corrects the
+error.
+
+Fixes: 6970f91ac781 ("hw/pci-host/designware: Use deposit/extract API")
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/pci-host/designware.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
+index b4bff14579..f6e49ce9b8 100644
+--- a/hw/pci-host/designware.c
++++ b/hw/pci-host/designware.c
+@@ -348,14 +348,14 @@ static void designware_pcie_root_config_write(PCIDevice *d, uint32_t address,
+ 
+     case DESIGNWARE_PCIE_ATU_LOWER_BASE:
+     case DESIGNWARE_PCIE_ATU_UPPER_BASE:
+-        viewport->base = deposit64(root->msi.base,
++        viewport->base = deposit64(viewport->base,
+                                    address == DESIGNWARE_PCIE_ATU_LOWER_BASE
+                                    ? 0 : 32, 32, val);
+         break;
+ 
+     case DESIGNWARE_PCIE_ATU_LOWER_TARGET:
+     case DESIGNWARE_PCIE_ATU_UPPER_TARGET:
+-        viewport->target = deposit64(root->msi.base,
++        viewport->target = deposit64(viewport->target,
+                                      address == DESIGNWARE_PCIE_ATU_LOWER_TARGET
+                                      ? 0 : 32, 32, val);
+         break;
+-- 
+2.49.0
+
 
