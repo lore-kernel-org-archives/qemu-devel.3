@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62402C369DC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79588C3ABAA
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAbLx-00017T-Nv; Thu, 01 May 2025 17:21:57 -0400
+	id 1uAbLw-00016b-Jn; Thu, 01 May 2025 17:21:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbLp-000121-T7
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:49 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1uAbLm-00010f-QR
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:46 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbLo-0001b2-1F
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:49 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2255003f4c6so16096455ad.0
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:21:47 -0700 (PDT)
+ id 1uAbLk-0001a2-Uj
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:46 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2ff799d99dcso1549852a91.1
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:21:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746134506; x=1746739306; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746134503; x=1746739303; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BDXEkP41hr8unW2CYQoxGQEU1dZcDdkH6hmvqIdSZek=;
- b=JnZXALGOLYA9N10v33UAh/UJVJcgGU5ZkgQVm/8bZ3fs23ILewkU1EQ0iL7gZj2Z+a
- cI1lOMOJ0p2vMF5CZTYdFbLuj/iaq4H1K40DUTzcnuutcfXRZvda9l4XW9PPfPbXZaar
- K6a31VHLmlQJZoGUuPlujdW2Y+TxSdh5EKl5lvFyl0MdLqEqKxoBjSfEOS3r+Id1M521
- bkxXZlkJm6JGovZrCSpI/K/2imwlshrIaZkwVphA2w+8dwkrskcP43F0SHB5Sh82z9IG
- R8D8HLIJV9goeKdcuM1yRaM/gE0rfDpQjP/hvbAMJLxFLHuz5e96V6v2U0NA52WU0D9r
- Q1Lg==
+ bh=VSNENHYud6d4CatFFmLB8e+vJFaHLohbjF+bNPxyKN0=;
+ b=qsQlbzu15cPm/B9PbtnhCat2e34FpVPYvOTxlTApFPjSnmXViMEABeJ1GTthR+9c+P
+ B1qUxP9M6PsvmKNU7wKquwzBRCS7zd6QmDrv1u1VF+4jAfM0W0kzjBXJ/EffxiibBM53
+ wEeLzJx3e3NFnx5GzRaXSe6hSo0OGkcryUQIHE/Ke/0EnnknAzJXviXc6OkxQaM1GFiw
+ r13UIR+ma79VsTLuaySqAmflukqTaW+I326ptIbALFQPetbO8a+2Qu6P2Hkpjz1FojG9
+ kuRwOcZREPxLdg7MAj125P79KQUjS9uUs6Z/A6+BwVC11UbkhuVnsGxnJOFGOk4HlsPF
+ Hkmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746134506; x=1746739306;
+ d=1e100.net; s=20230601; t=1746134503; x=1746739303;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BDXEkP41hr8unW2CYQoxGQEU1dZcDdkH6hmvqIdSZek=;
- b=dfPJ9oS+dMofmn++pW6jRkdI90LmaoYRxeiboLvcPxwd35IGJdtz6GKU7oarrVbdNK
- GnFne2abaeU8tJ61srwwYweGJRNLH82RWfGAo9Ol27+TN5c7bsmSsWgoge7wtJFn+LpZ
- 4m49LMXGtPJMs5PYdsyryzQk7kTTixg64nQXKMaDPn7luENwGCfMfj09QTSt14CazuqV
- sKwDHNymHFYmnOK1/MOq+kuQCAbqMrTlsJ358ZHxqxe619yRdkJPdoeBn4s7qDlxXDnM
- PYiZL4CQayXYqlVvse/zgZZtiUKeRjDfNyLZIuW/SFNj+PTU86VcizIFFkMC4tWHmgAb
- j8tQ==
-X-Gm-Message-State: AOJu0YzY0c2DYx5qZIjPFzhlGnzfoem2cFUVfSRdBKWlj6249ZyNtH6o
- vkqZc2/ET/mhqZr4P5wq2U3VRjSawrjvIrNUGHVXMhv1T6nLFeJt8iBxkNgXpiRFaDudPmZKvTD
- M
-X-Gm-Gg: ASbGncukrnaLHpQbZjWpR2njVR0rnOCJxrN1XeTyMIa326pwzH7l0fXfp8h9SvKsqK4
- RAXnjA+23ssBUZUrT+vmrB/bs6r+2MuR8l66YdabzVPCvL+Xddvkio84V5Lpv3uywifaZbfV4vg
- aeE1TFCTj+I+35HzBRWIIazySL0xN5p9cTl5LRtHZdFamDsVrnxYmWUxcGJWgofUurbiHBVZ6CM
- 6EGHuv3+J8n+YscKs+/0z0i4xTfDNSbQ38qP9Gry3FpwgY2PecSqKM+ohaQqaWRo02J86+Rb5Mf
- gralf+OIHS7uRWlMmAW0TFyiDSf6f/yYjgjVgDtKTQBJKIqCU+DazZ0g6oXjtBiQsCYL/vw2ZLE
+ bh=VSNENHYud6d4CatFFmLB8e+vJFaHLohbjF+bNPxyKN0=;
+ b=vSK6nX0gJcymHnF8LcpWgQGBPbK/DecQeIVnYsCre5FaXk3oIaHex5gQgYGMw1lHZ+
+ K1fe1LxEAmWkERrpsVwuM+0GNieWm0wkVRuQp5lZa9/iNjQrNsYM8t9HG+MdUI7/KUYr
+ 3tur+0D3pKzLZiZ9bKCf0O3GFlQ7FupiJB1Tut+nxfmFsIwUjgwzKoE9lH1h9CL8hAh3
+ ll0QG/db0K9eqb2iufYYjNri8TmsmhMTR5Stu6aAPSzxKdMYr/viD6Qq6xr1m7EBXNIQ
+ E07riiobeEckD7gQPRiiLlpmzZvAXH8tcNacTIKiJXw7k1NGbe9QBT+l4t6+6nYueOiM
+ s5NA==
+X-Gm-Message-State: AOJu0YxGByEvNn3D9IprJ8F3Suq2lINQhTsjR3KCWiTtisQMxyFY63lV
+ UtQkLu63XFa1CN9o3oDACbPE07h2FxYOz32d/lPl0rVoyp0DyGPPe6NgWPuahPlw86osztYPHPo
+ s
+X-Gm-Gg: ASbGnctBSEf9besw1OU+U7Nk0NpUNM1jzMoUIApdKbNj1eupYcF725Q/x/nc0bWe6AH
+ 2Kkr2VwoSvf1e723LQpemWYhcdYRFCY+gL85YAXhdrlO5XtvLhTfq04XcHP4B8jSH1W82sN/c+A
+ Yc2zZlIZ36CfWhTgDpGdouqDgRhmbd8jWZ+Jwu8zUaGqX72dBBkkGHE+iIJEG2O++ktxIn6AXJC
+ QhpjMyUN+TiKyMadzbLR6b7oNMKYjkyXy1rrzDfFT4l/0K01T/kv4yerhjC1qb0TCgL+N4IQ5oi
+ vGgPJ8SZXyHMxlAhOc99MmAZZ8/O7I0IAB9+8Vmt1k6lALnufsjFp0qXC24ZtavqIAlgMm5kL0A
  =
-X-Google-Smtp-Source: AGHT+IHeR0xu8+Xbo4goc4M+TxcnEyj1ZGJXlJYWxp+aAGGMk12lcVMpmrgPuvrPPu1z826LT7sxuA==
-X-Received: by 2002:a17:903:41c4:b0:224:2201:84da with SMTP id
- d9443c01a7336-22e102b8586mr6675695ad.6.1746134506563; 
- Thu, 01 May 2025 14:21:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFqeurWgzAdWXiCr2xo/aNnUUVo7i37e/pkV/HcufWGGogozmrYxEVK1u7RDDAVb0OD2cmCZg==
+X-Received: by 2002:a17:90a:e705:b0:2ff:64c3:3bd4 with SMTP id
+ 98e67ed59e1d1-30a4e6befe1mr877791a91.31.1746134503540; 
+ Thu, 01 May 2025 14:21:43 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30a476267e0sm1384573a91.39.2025.05.01.14.21.46
+ 98e67ed59e1d1-30a476267e0sm1384573a91.39.2025.05.01.14.21.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 14:21:46 -0700 (PDT)
+ Thu, 01 May 2025 14:21:43 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 39/59] accel/tcg: Compile cpu-exec.c twice
-Date: Thu,  1 May 2025 14:20:53 -0700
-Message-ID: <20250501212113.2961531-40-richard.henderson@linaro.org>
+Subject: [PULL 35/59] accel/tcg: Pass TCGTBCPUState to tb_htable_lookup
+Date: Thu,  1 May 2025 14:20:49 -0700
+Message-ID: <20250501212113.2961531-36-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250501212113.2961531-1-richard.henderson@linaro.org>
 References: <20250501212113.2961531-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,50 +103,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cpu-exec.c  | 2 --
- accel/tcg/meson.build | 2 +-
- 2 files changed, 1 insertion(+), 3 deletions(-)
+ accel/tcg/cpu-exec.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
 diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index a8fbda31ba..cc5f362305 100644
+index 808983e461..8e6899950e 100644
 --- a/accel/tcg/cpu-exec.c
 +++ b/accel/tcg/cpu-exec.c
-@@ -22,7 +22,6 @@
- #include "qapi/error.h"
- #include "qapi/type-helpers.h"
- #include "hw/core/cpu.h"
--#include "accel/tcg/cpu-ldst.h"
- #include "accel/tcg/cpu-ops.h"
- #include "accel/tcg/helper-retaddr.h"
- #include "trace.h"
-@@ -37,7 +36,6 @@
- #include "qemu/rcu.h"
- #include "exec/log.h"
- #include "qemu/main-loop.h"
--#include "cpu.h"
- #include "exec/icount.h"
- #include "exec/replay-core.h"
- #include "system/tcg.h"
-diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
-index 3f7b127130..0bb089299b 100644
---- a/accel/tcg/meson.build
-+++ b/accel/tcg/meson.build
-@@ -5,6 +5,7 @@ endif
- tcg_ss = ss.source_set()
+@@ -195,26 +195,24 @@ static bool tb_lookup_cmp(const void *p, const void *d)
+     return false;
+ }
  
- tcg_ss.add(files(
-+  'cpu-exec.c',
-   'cpu-exec-common.c',
-   'tcg-runtime.c',
-   'tcg-runtime-gvec.c',
-@@ -21,7 +22,6 @@ libsystem_ss.add_all(tcg_ss)
- tcg_specific_ss = ss.source_set()
- tcg_specific_ss.add(files(
-   'tcg-all.c',
--  'cpu-exec.c',
-   'translate-all.c',
- ))
- tcg_specific_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user-exec.c'))
+-static TranslationBlock *tb_htable_lookup(CPUState *cpu, vaddr pc,
+-                                          uint64_t cs_base, uint32_t flags,
+-                                          uint32_t cflags)
++static TranslationBlock *tb_htable_lookup(CPUState *cpu, TCGTBCPUState s)
+ {
+     tb_page_addr_t phys_pc;
+     struct tb_desc desc;
+     uint32_t h;
+ 
+     desc.env = cpu_env(cpu);
+-    desc.cs_base = cs_base;
+-    desc.flags = flags;
+-    desc.cflags = cflags;
+-    desc.pc = pc;
+-    phys_pc = get_page_addr_code(desc.env, pc);
++    desc.cs_base = s.cs_base;
++    desc.flags = s.flags;
++    desc.cflags = s.cflags;
++    desc.pc = s.pc;
++    phys_pc = get_page_addr_code(desc.env, s.pc);
+     if (phys_pc == -1) {
+         return NULL;
+     }
+     desc.page_addr0 = phys_pc;
+-    h = tb_hash_func(phys_pc, (cflags & CF_PCREL ? 0 : pc),
+-                     flags, cs_base, cflags);
++    h = tb_hash_func(phys_pc, (s.cflags & CF_PCREL ? 0 : s.pc),
++                     s.flags, s.cs_base, s.cflags);
+     return qht_lookup_custom(&tb_ctx.htable, &desc, h, tb_lookup_cmp);
+ }
+ 
+@@ -253,7 +251,7 @@ static inline TranslationBlock *tb_lookup(CPUState *cpu, TCGTBCPUState s)
+         goto hit;
+     }
+ 
+-    tb = tb_htable_lookup(cpu, s.pc, s.cs_base, s.flags, s.cflags);
++    tb = tb_htable_lookup(cpu, s);
+     if (tb == NULL) {
+         return NULL;
+     }
 -- 
 2.43.0
 
