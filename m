@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D33CC3ABA3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A740C369DC
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 09:26:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAQAe-0006AR-Kg; Thu, 01 May 2025 05:25:32 -0400
+	id 1uAQAd-0006AD-Sw; Thu, 01 May 2025 05:25:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uAQAZ-00068x-Gp; Thu, 01 May 2025 05:25:27 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ id 1uAQAZ-00068w-Gg; Thu, 01 May 2025 05:25:27 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uAQAW-00054V-JO; Thu, 01 May 2025 05:25:27 -0400
+ id 1uAQAW-00054W-VJ; Thu, 01 May 2025 05:25:27 -0400
 Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:8a1d:0:640:a167:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 28F0560919;
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E4485609D5;
  Thu,  1 May 2025 12:25:16 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b533::1:21])
  by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id EPTMlH1FX0U0-0dOaqYvA; Thu, 01 May 2025 12:25:15 +0300
+ ESMTPSA id EPTMlH1FX0U0-u9gzxfkf; Thu, 01 May 2025 12:25:16 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1746091515;
- bh=s+3buzIgr5Bb5YcsxydQAH9d5RKXTCIS+p+gi84+HbM=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=VlPW7q4wZov44DyPECo7AwskbDo/ItaWlLHshJBFwbiTVb9xSVKpjAsCF/3zGnB6X
- R7hYLf9tkFvGSx7W9nxutyRyu7a1NIe6SEd5LFwR8nHYqCEKroNU92+C1sdBn2tlIt
- rKXHnazsGFyO1BBzeq3OBHId++2m7yG4OP8VOhvA=
+ s=default; t=1746091516;
+ bh=sYotRo+Ah37n4F4X6wotrKuMaZmMSZbEF/oLv8iWpXI=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=Xp7jfZ9yrL8RZYOXBfOp+8OqUnw6e4k71SzkapnDiOUD2cfQY5CX4DAVQwbcbBOc+
+ RDdCqd4IEjARmZgMojeqFRt5gv9W20l3rEF5CWdhpCExb0au0REocuL1YysW5vc951
+ 7jnNMiXaW74qDQ029akn4gXiPSBpNTSN5ItDu4q8=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org,
-	vsementsov@yandex-team.ru,
-	stefanha@gmail.com
-Subject: [PULL v2 0/8] block-job patches 2025-04-29
-Date: Thu,  1 May 2025 12:25:10 +0300
-Message-ID: <20250501092511.24068-1-vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, stefanha@gmail.com,
+ Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
+Subject: [PULL v2 3/8] block: refactor error handling of commit_iteration
+Date: Thu,  1 May 2025 12:25:11 +0300
+Message-ID: <20250501092511.24068-2-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250501092511.24068-1-vsementsov@yandex-team.ru>
+References: <20250501092511.24068-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,62 +72,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 73d29ea2417b58ca55fba1aa468ba38e3607b583:
+From: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
 
-  Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging (2025-04-27 12:47:23 -0400)
+Signed-off-by: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
+Message-Id: <20241026163010.2865002-4-libvirt-e6954efa@volkihar.be>
+[vsementsov]: move action declaration to the top of the function
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ block/commit.c | 63 ++++++++++++++++++++++++++++----------------------
+ 1 file changed, 36 insertions(+), 27 deletions(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/vsementsov/qemu.git tags/pull-block-jobs-2025-04-29-v2
-
-for you to fetch changes up to 35655b2d1b1015e3a6fa99ef9c2afc1826a765ba:
-
-  blockdev-backup: Add error handling option for copy-before-write jobs (2025-05-01 12:12:19 +0300)
-
-----------------------------------------------------------------
-block-job patches
-
-- deprecate some old block-job- APIs
-- on-cbw-error option for backup
-- more efficient zero handling in block commit
-
-v2:
-[03]: move variable declaration to function top, to silence clang and to
-      follow QEMU coding style
-
-----------------------------------------------------------------
-Raman Dzehtsiar (1):
-      blockdev-backup: Add error handling option for copy-before-write jobs
-
-Vincent Vanlaer (5):
-      block: get type of block allocation in commit_run
-      block: move commit_run loop to separate function
-      block: refactor error handling of commit_iteration
-      block: allow commit to unmap zero blocks
-      block: add test non-active commit with zeroed data
-
-Vladimir Sementsov-Ogievskiy (2):
-      qapi: synchronize jobs and block-jobs documentation
-      qapi/block-core: deprecate some block-job- APIs
-
- block/backup.c                                  |   3 +-
- block/commit.c                                  | 118 +++++++++++++++++-------
- block/copy-before-write.c                       |   2 +
- block/copy-before-write.h                       |   1 +
- block/replication.c                             |   4 +-
- blockdev.c                                      |   6 ++
- docs/about/deprecated.rst                       |  31 +++++++
- include/block/block_int-global-state.h          |   2 +
- qapi/block-core.json                            |  95 ++++++++++++++-----
- qapi/job.json                                   |  30 +++++-
- tests/qemu-iotests/tests/commit-zero-blocks     |  96 +++++++++++++++++++
- tests/qemu-iotests/tests/commit-zero-blocks.out |  54 +++++++++++
- tests/qemu-iotests/tests/copy-before-write      |  90 ++++++++++++++++++
- tests/qemu-iotests/tests/copy-before-write.out  |   4 +-
- 14 files changed, 471 insertions(+), 65 deletions(-)
- create mode 100755 tests/qemu-iotests/tests/commit-zero-blocks
- create mode 100644 tests/qemu-iotests/tests/commit-zero-blocks.out
-
+diff --git a/block/commit.c b/block/commit.c
+index 3ee0ade7df..5c6596a52e 100644
+--- a/block/commit.c
++++ b/block/commit.c
+@@ -129,51 +129,60 @@ static void commit_clean(Job *job)
+ }
+ 
+ static int commit_iteration(CommitBlockJob *s, int64_t offset,
+-                            int64_t *n, void *buf)
++                            int64_t *requested_bytes, void *buf)
+ {
++    BlockErrorAction action;
++    int64_t bytes = *requested_bytes;
+     int ret = 0;
+-    bool copy;
+     bool error_in_source = true;
+ 
+     /* Copy if allocated above the base */
+     WITH_GRAPH_RDLOCK_GUARD() {
+         ret = bdrv_co_common_block_status_above(blk_bs(s->top),
+             s->base_overlay, true, true, offset, COMMIT_BUFFER_SIZE,
+-            n, NULL, NULL, NULL);
++            &bytes, NULL, NULL, NULL);
+     }
+ 
+-    copy = (ret >= 0 && ret & BDRV_BLOCK_ALLOCATED);
+-    trace_commit_one_iteration(s, offset, *n, ret);
+-    if (copy) {
+-        assert(*n < SIZE_MAX);
++    trace_commit_one_iteration(s, offset, bytes, ret);
+ 
+-        ret = blk_co_pread(s->top, offset, *n, buf, 0);
+-        if (ret >= 0) {
+-            ret = blk_co_pwrite(s->base, offset, *n, buf, 0);
+-            if (ret < 0) {
+-                error_in_source = false;
+-            }
+-        }
+-    }
+     if (ret < 0) {
+-        BlockErrorAction action = block_job_error_action(&s->common,
+-                                                         s->on_error,
+-                                                         error_in_source,
+-                                                         -ret);
+-        if (action == BLOCK_ERROR_ACTION_REPORT) {
+-            return ret;
+-        } else {
+-            *n = 0;
+-            return 0;
++        goto fail;
++    }
++
++    if (ret & BDRV_BLOCK_ALLOCATED) {
++        assert(bytes < SIZE_MAX);
++
++        ret = blk_co_pread(s->top, offset, bytes, buf, 0);
++        if (ret < 0) {
++            goto fail;
+         }
++
++        ret = blk_co_pwrite(s->base, offset, bytes, buf, 0);
++        if (ret < 0) {
++            error_in_source = false;
++            goto fail;
++        }
++
++        block_job_ratelimit_processed_bytes(&s->common, bytes);
+     }
++
+     /* Publish progress */
+-    job_progress_update(&s->common.job, *n);
+ 
+-    if (copy) {
+-        block_job_ratelimit_processed_bytes(&s->common, *n);
++    job_progress_update(&s->common.job, bytes);
++
++    *requested_bytes = bytes;
++
++    return 0;
++
++fail:
++    action = block_job_error_action(&s->common, s->on_error,
++                                    error_in_source, -ret);
++    if (action == BLOCK_ERROR_ACTION_REPORT) {
++        return ret;
+     }
+ 
++    *requested_bytes = 0;
++
+     return 0;
+ }
+ 
 -- 
 2.48.1
 
