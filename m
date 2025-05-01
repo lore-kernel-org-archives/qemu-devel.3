@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9FF4C369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DCB4C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:40:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAYpQ-0004GB-6g; Thu, 01 May 2025 14:40:12 -0400
+	id 1uAYno-0002PS-Cj; Thu, 01 May 2025 14:38:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnp-0002Tj-1s
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:35 -0400
-Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnH-0000KZ-PA
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:03 -0400
+Received: from mail-io1-xd2d.google.com ([2607:f8b0:4864:20::d2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnn-0008JI-9D
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:32 -0400
-Received: by mail-io1-xd32.google.com with SMTP id
- ca18e2360f4ac-85b41281b50so43766939f.3
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:38:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnE-0008Ad-K2
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:37:58 -0400
+Received: by mail-io1-xd2d.google.com with SMTP id
+ ca18e2360f4ac-85ea482e3adso82855639f.0
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746124710; x=1746729510; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746124675; x=1746729475; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3wudwU0Mjh7FMfb66kwc7bqI37P6PrLMFSD6vy2kDJU=;
- b=zN1hRrga4n7cOC7r+LfFj01SA7Tq0gcFX4Owf/sUUkP/ADH77nXb5A1zxjb8YnPCmh
- wkNzKyDjvYs9nfaHB70fZ9O9D0NvSxrT2pngvMk6vBxUmXtN5ljpIl+sVmEux/XUEFWo
- wRm1MzPXRfAoYimq6hNbAyus3WP5ywDV5V+2IUbdtSf/62fbVlhaAqYC88UppgBR8BPH
- GKHfQbugjBlg0VUhqtyc8b+oFcN3tR130quohQcBEhlTUXAPt7U6iDQUjDw1iSU62UqH
- Wqe58tr41wyP6RYeGmeRsYJ5JuLd1R+6rEtBO29Sq6JhND4rea8cvcr+m0FvmoiPbtaJ
- yZNQ==
+ bh=rVL17Qw9Pu2E631HFpa6VOArtgxoydyEsXC8wSAHBfg=;
+ b=BAd41zSkDlk74zr7cp5pRMBxqxvCoQYA+zScB5mrYS3sQ0Goe1IlARGtIHIXwqJwY3
+ sOJncMeISF1mGy3fN650UOL51EbsIgbB4Z+3eAAH23w78eGBI/6QtPiLZLWo35odfMy2
+ zua3n9enr1ytPFoDj6IH4W7oQUJp+9L1Hj/dO8cidQz5WEQUDDYsKbx2GT1zPSvvQxV/
+ G/rijq8O+dRMf0cojqeNdjzE/orsgyFm452QN2GHYso0qIdGvakz7TP+yb8WbHlWfKFk
+ aCO4fIxeWmtK/I1/O0TNzblWJVydR9s1BnsnHAKCYgQsxebQiyocCtf1xWoHxLqpZYx9
+ Evsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746124710; x=1746729510;
+ d=1e100.net; s=20230601; t=1746124675; x=1746729475;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3wudwU0Mjh7FMfb66kwc7bqI37P6PrLMFSD6vy2kDJU=;
- b=PVpOrOHad5n6x+yUECZEAQAD3q+8cnPqLQIkYatU6pEHvHDuPRPUJWBUkpvPbfVLQu
- a8WuK/gX6Zu71QdUTiVDxWlwzmEEWfS6jOr279Fd1hxva2dOnvMs4Iu6nn9Ui9lKELMd
- sCY4d0GkX4sBm4kMY+LnAshzQEbKS/Z+JSZwcIF8WXpDtgSimY5fjcewWxqqkAr5Astu
- lEyBTWdOjk2GXJ3od0ISDQ33Slzj/ISCP6yZzB2iEk6Yr0nZAveXukYOXboE0h3E1GzN
- hpNcauaXGNSx/Ic5Lkl9GtunRiUAPwxwMu/lmkzD0pCh8p/cEIihKZCDwVNsUSYRZsD1
- x50A==
-X-Gm-Message-State: AOJu0Yz3s2AwWku7XhUeKWGtHJQL85PnxFzraLqpFdUjXR0wHJpwQMi8
- TEIh601c/2Q7Ek3SzD4N7tJCMt+5RRJWAY6mDvOafMtIiJ1UI/cKXb9p/TB+EZ8Ul/BGbEvF/uR
- j
-X-Gm-Gg: ASbGncvVcY5E+eec1/FRFI0ZvA070eFOsRs28b94ueSYw6RJik7DfHUY7eDDO6RPyAN
- WARb5ETWE9GPqrvwN2rrU5vFw+VgHGrMNLGB7Fw32N/7xGUB/LdXgyDdzn9etlb/dqjPLfxQPdE
- Iyx7zCPqy5RlsxbQ9Ggasp2xT5wN8OIRfABrhs1onU/+/DYj9oegnEelml4WJ266h66kBrPhsEg
- vwLIVUv0r+Np8nvFcrDsJP12IoLLATJ65SOLCxJcWG3xu0In2roPswCeKM3PZ4VDHn8QT2eiMcY
- AbM6KYpENwS/xd/CNFdynSGVfvnOsLkHnc4yf2H4Pr2mk1dn8GoRDmO3T9BzOlslPJroSbgGj/F
- iDOhulxcpAn82J6HvaQJL
-X-Google-Smtp-Source: AGHT+IGfc7WsuNYh2S9L4QJeB5B/x5wvmpw48oN35C7vYywPW56/D8NAFcMFU58BG1HXgdDPG5SKsg==
-X-Received: by 2002:a05:6602:2748:b0:855:5e3a:e56b with SMTP id
- ca18e2360f4ac-866b466c79cmr34962939f.12.1746124709895; 
- Thu, 01 May 2025 11:38:29 -0700 (PDT)
+ bh=rVL17Qw9Pu2E631HFpa6VOArtgxoydyEsXC8wSAHBfg=;
+ b=Tid5GDF0y1iYsCj2TNgIaGaP1ylAhdWPDouvVh20hekzLqJ6Uq5r41v1ilmt/35Y48
+ S4uBcl91I7eQslbkxlKExJFblcEmoPGR7uYrCyHj3D/mmI2tuseY5tptO2M/mG73IPjD
+ NgrEgHe6iOpKvFkW8ptVieWEm1N/topRhAyLpzoUqGPJunrlVz8jvaEUjHEJG887cruJ
+ 2XLydb0gVPdwDtC1NYHvh55B/J4gvHltNdx3E5gX7VynGeaCLC0E+bXKY35oVX49z/QD
+ E9JY8K3WD17S6Y1SJopl+OXbBDXYiQjRBzRp1AhYFKJLTohes167VH1HJY5w1nM/qSAw
+ 9o2A==
+X-Gm-Message-State: AOJu0YyfHjUY1HuzixSidUQmJtqBvjrkvuk4EhFSnN4Am66wcElfHsKE
+ FAwZHquerMTstR9n0Xuypta87/DqjtJfOD+bNOvny3ILLs394VFDh+5bsMe1jF/nfSQYQ9wq0ET
+ w
+X-Gm-Gg: ASbGncutZY9Mv9ye6zlHy/fxybVZ2aR5gopeXedP9teJDu3EBtAxAzu3NIPBBCtuUMZ
+ avsIwavE253ZKtaHZ3FbO9Nv+iIjJPD1cuckhuh7v5+d6Sd1V+x1O33+aHLd4ma+Urp+SQar1iU
+ IISiyCSS2L4PWoAt5JObAn1GHoetaprcXYfEZKGjjON4EXvVU2OQw7xUQMuqG5NdVn/R8Nqqyvb
+ KJgr7jcWKZsGmIP92RDQfrza07y+TNk85fTmOHjWPaS08rPN6vShRuV8N5Vw36R9ng5KjyRxkq7
+ 2hK2eIrtvbCaj0do3YAFhfxo7jo4JcTMD1w/Ro5eNOxLqxr9SzAlFWBPcy3aKOL2IsjuaGHJw+m
+ UizsM+srYvdO/6GJUbhd2
+X-Google-Smtp-Source: AGHT+IGG5OE/Ixh3jZxgfI4pUDnTZJ66lGC95ewqKj05gxccuEJpwmcOAGiSDD2gJZDzC7J+6zAtnQ==
+X-Received: by 2002:a05:6e02:1211:b0:3d4:346e:8d49 with SMTP id
+ e9e14a558f8ab-3d970b7753cmr37711295ab.9.1746124675173; 
+ Thu, 01 May 2025 11:37:55 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-864aa43a9f1sm21350039f.35.2025.05.01.11.38.26
+ 8926c6da1cb9f-4f88303c055sm303070173.138.2025.05.01.11.37.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 11:38:29 -0700 (PDT)
+ Thu, 01 May 2025 11:37:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
@@ -78,18 +78,17 @@ Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 13/16] hw/intc/ioapic: Remove IOAPICCommonState::version
- field
-Date: Thu,  1 May 2025 20:36:25 +0200
-Message-ID: <20250501183628.87479-14-philmd@linaro.org>
+Subject: [PATCH v2 09/16] hw/i386/pc: Remove pc_compat_2_7[] array
+Date: Thu,  1 May 2025 20:36:21 +0200
+Message-ID: <20250501183628.87479-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501183628.87479-1-philmd@linaro.org>
 References: <20250501183628.87479-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d32;
- envelope-from=philmd@linaro.org; helo=mail-io1-xd32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2d;
+ envelope-from=philmd@linaro.org; helo=mail-io1-xd2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,114 +111,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IOAPICCommonState::version integer was only set
-in the hw_compat_2_7[] array, via the 'version=0x11'
-property. We removed all machines using that array,
-lets remove that property, simplify by only using the
-default version (defined as IOAPIC_VER_DEF).
+The pc_compat_2_7[] array was only used by the pc-q35-2.7
+and pc-i440fx-2.7 machines, which got removed. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/ioapic_internal.h |  3 +--
- hw/intc/ioapic.c          | 18 ++----------------
- hw/intc/ioapic_common.c   |  2 +-
- 3 files changed, 4 insertions(+), 19 deletions(-)
+ include/hw/i386/pc.h |  3 ---
+ hw/i386/pc.c         | 10 ----------
+ 2 files changed, 13 deletions(-)
 
-diff --git a/hw/intc/ioapic_internal.h b/hw/intc/ioapic_internal.h
-index 51205767f44..330ce195222 100644
---- a/hw/intc/ioapic_internal.h
-+++ b/hw/intc/ioapic_internal.h
-@@ -82,7 +82,7 @@
- #define IOAPIC_ID_MASK                  0xf
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 4fb2033bc54..319ec82f709 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -289,9 +289,6 @@ extern const size_t pc_compat_2_9_len;
+ extern GlobalProperty pc_compat_2_8[];
+ extern const size_t pc_compat_2_8_len;
  
- #define IOAPIC_VER_ENTRIES_SHIFT        16
+-extern GlobalProperty pc_compat_2_7[];
+-extern const size_t pc_compat_2_7_len;
 -
-+#define IOAPIC_VER_DEF                  0x20
+ #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+     static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
+                                                  const void *data) \
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 7573b880905..ee7095c89a8 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -241,16 +241,6 @@ GlobalProperty pc_compat_2_8[] = {
+ };
+ const size_t pc_compat_2_8_len = G_N_ELEMENTS(pc_compat_2_8);
  
- #define TYPE_IOAPIC_COMMON "ioapic-common"
- OBJECT_DECLARE_TYPE(IOAPICCommonState, IOAPICCommonClass, IOAPIC_COMMON)
-@@ -104,7 +104,6 @@ struct IOAPICCommonState {
-     uint32_t irr;
-     uint64_t ioredtbl[IOAPIC_NUM_PINS];
-     Notifier machine_done;
--    uint8_t version;
-     uint64_t irq_count[IOAPIC_NUM_PINS];
-     int irq_level[IOAPIC_NUM_PINS];
-     int irq_eoi[IOAPIC_NUM_PINS];
-diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
-index 133bef852d1..5cc97767d9d 100644
---- a/hw/intc/ioapic.c
-+++ b/hw/intc/ioapic.c
-@@ -315,7 +315,7 @@ ioapic_mem_read(void *opaque, hwaddr addr, unsigned int size)
-             val = s->id << IOAPIC_ID_SHIFT;
-             break;
-         case IOAPIC_REG_VER:
--            val = s->version |
-+            val = IOAPIC_VER_DEF |
-                 ((IOAPIC_NUM_PINS - 1) << IOAPIC_VER_ENTRIES_SHIFT);
-             break;
-         default:
-@@ -411,8 +411,7 @@ ioapic_mem_write(void *opaque, hwaddr addr, uint64_t val,
-         }
-         break;
-     case IOAPIC_EOI:
--        /* Explicit EOI is only supported for IOAPIC version 0x20 */
--        if (size != 4 || s->version != 0x20) {
-+        if (size != 4) {
-             break;
-         }
-         ioapic_eoi_broadcast(val);
-@@ -444,18 +443,10 @@ static void ioapic_machine_done_notify(Notifier *notifier, void *data)
- #endif
- }
- 
--#define IOAPIC_VER_DEF 0x20
--
- static void ioapic_realize(DeviceState *dev, Error **errp)
- {
-     IOAPICCommonState *s = IOAPIC_COMMON(dev);
- 
--    if (s->version != 0x11 && s->version != 0x20) {
--        error_setg(errp, "IOAPIC only supports version 0x11 or 0x20 "
--                   "(default: 0x%x).", IOAPIC_VER_DEF);
--        return;
--    }
--
-     memory_region_init_io(&s->io_memory, OBJECT(s), &ioapic_io_ops, s,
-                           "ioapic", 0x1000);
- 
-@@ -476,10 +467,6 @@ static void ioapic_unrealize(DeviceState *dev)
-     timer_free(s->delayed_ioapic_service_timer);
- }
- 
--static const Property ioapic_properties[] = {
--    DEFINE_PROP_UINT8("version", IOAPICCommonState, version, IOAPIC_VER_DEF),
+-GlobalProperty pc_compat_2_7[] = {
+-    { TYPE_X86_CPU, "l3-cache", "off" },
+-    { TYPE_X86_CPU, "full-cpuid-auto-level", "off" },
+-    { "Opteron_G3" "-" TYPE_X86_CPU, "family", "15" },
+-    { "Opteron_G3" "-" TYPE_X86_CPU, "model", "6" },
+-    { "Opteron_G3" "-" TYPE_X86_CPU, "stepping", "1" },
+-    { "isa-pcspk", "migrate", "off" },
 -};
+-const size_t pc_compat_2_7_len = G_N_ELEMENTS(pc_compat_2_7);
 -
- static void ioapic_class_init(ObjectClass *klass, const void *data)
- {
-     IOAPICCommonClass *k = IOAPIC_COMMON_CLASS(klass);
-@@ -493,7 +480,6 @@ static void ioapic_class_init(ObjectClass *klass, const void *data)
-      */
-     k->post_load = ioapic_update_kvm_routes;
-     device_class_set_legacy_reset(dc, ioapic_reset_common);
--    device_class_set_props(dc, ioapic_properties);
- }
- 
- static const TypeInfo ioapic_info = {
-diff --git a/hw/intc/ioapic_common.c b/hw/intc/ioapic_common.c
-index fce3486e519..8b3e2ba9384 100644
---- a/hw/intc/ioapic_common.c
-+++ b/hw/intc/ioapic_common.c
-@@ -83,7 +83,7 @@ static void ioapic_print_redtbl(GString *buf, IOAPICCommonState *s)
-     int i;
- 
-     g_string_append_printf(buf, "ioapic0: ver=0x%x id=0x%02x sel=0x%02x",
--                           s->version, s->id, s->ioregsel);
-+                           IOAPIC_VER_DEF, s->id, s->ioregsel);
-     if (s->ioregsel) {
-         g_string_append_printf(buf, " (redir[%u])\n",
-                                (s->ioregsel - IOAPIC_REG_REDTBL_BASE) >> 1);
+ /*
+  * @PC_FW_DATA:
+  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
 -- 
 2.47.1
 
