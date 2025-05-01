@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6BBBC3ABA3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:38:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B8BC3ABA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAYnP-0000LF-Jh; Thu, 01 May 2025 14:38:08 -0400
+	id 1uAYnb-0001VF-VB; Thu, 01 May 2025 14:38:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYmY-0007Ug-9d
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:37:16 -0400
-Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYmr-0008BR-Tz
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:37:37 -0400
+Received: from mail-io1-xd2a.google.com ([2607:f8b0:4864:20::d2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYmW-00082F-Ja
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:37:14 -0400
-Received: by mail-il1-x12f.google.com with SMTP id
- e9e14a558f8ab-3d450154245so10673655ab.2
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:37:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYmo-000874-FJ
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:37:31 -0400
+Received: by mail-io1-xd2a.google.com with SMTP id
+ ca18e2360f4ac-86135ad7b4cso45849139f.1
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:37:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746124630; x=1746729430; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746124649; x=1746729449; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zXADTJwgYK4rQDoTBJwmSMh4WIgzI1vWgP1J7gzagsQ=;
- b=KdltTTsn3Ni/h/oQJaeelw3ESJW7W7A2+G9lR0c0TeVqnLBx6Uzj2CeqoXCI63kGmR
- /ha07fqZ6oxT9KwEruLWaQeoqJ8K1upqrbTCbAMosdgsU06BhCYJnDN0/0ZSxQOVD98t
- fkf0g7dyIzSaJ522vquZHoCJ579Vu2xCAKKJ+PEXXA2rzenzaaXaZnchap5E47x1wtyl
- lqa27/9ikY9XT4lgFNdWrKNnLQrCNtYBgioWmTtQOrZG4WDp9oTpChprpkg1kYvS0dLM
- P+4BqF3i/bd3+nDGyE66m+xyrLSM1y5n8ER9SzJksM0uaTGcdFLn9Px4bT+sWyA2pNbK
- 1n3w==
+ bh=1oEZ8pcFL0QpEheuXUBBXfN5IHyToSd/0wmZn4AbYIQ=;
+ b=fGaBVytxzxAuWA9JvLK6PXvZVoQdxLdKxrgwDbWtso+ixf8RN85HORsPEdJPZU36ic
+ FexaJt6Ij82KkHHis0cCnQVplna9XmcgJ4D9x/X/wH6+HdYA7NCR6GJdk44o2CUGMtdd
+ Rbe2QTcr0qb0gTCJqFYapP7Ux2eVB92NVyh3LmmGXpmInRboJPpbkjSzamXrmcMTgI+s
+ SVMd4M/sCwLKW6bJATVEhOh48M+1Eaq1rlhOkm98Bx4cdKdEi2GV8N4R8uuhWM3pgs0m
+ DXOZZaA5y68zxPxfvnBFx06le9tUWE9NFEov69f60E5cLBk0TfZBraURGZWu+fgwOjvH
+ bssw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746124630; x=1746729430;
+ d=1e100.net; s=20230601; t=1746124649; x=1746729449;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zXADTJwgYK4rQDoTBJwmSMh4WIgzI1vWgP1J7gzagsQ=;
- b=ZLRiZuLSC6eGSoXrGBfGR9YjA/u+/tJNRubgy9cx5/hPxN/1G6Mm733lQxhLEgkVuR
- 8RvPpwqFuyNIzXmQXIM2d4bLIu2uHvXv0BR+LixBRidXsgwcOHmSmJyf9aO0yAHUvFkH
- 2Y/qHgh1krvqHT5/oIDAh+IoMCSz2JH1cwniW4huo8SiaNsTsEzgkm8hkxaIx8EGzYAT
- bOZkwHRoP9Ji1u2sItXyOcaJIq9FfyVbm+K4R+vAoREMQrAfnzt392nhlGVlL9evR4Nw
- gl4DNFdrwottvLP0ER2uQXkHgRrjX2Flg+gRd1eAnF4AI2Kr/3Bm1qePbPDA2jC2DX2r
- +oiA==
-X-Gm-Message-State: AOJu0Yya2iA2/bAU+U+MBKszSfVI1iudPjz1Fh+/ewy/4oe+lT+fXqrg
- 0HvMbJisBnVd2PJuJtQvX2eUDG1d9uO/fIDiOC4xaM7fYG+twmbsCgSqVomq/Euau0U3KuDcZ7b
- 6
-X-Gm-Gg: ASbGncuFt6/inla/p8QsBlnZzlvcOegjWaIg6GJXH6GaNrRsYkljPa+AHcJLM2yF5OF
- 6q0LQiUUGz82vM/0OhEDsz1EZjT3WOlKkldDNouG3BQEUvJG1PpjKPeSBuPsolJtT8MQ92OVG9h
- v9fwq2+kaAufXzlcEpi/KTwxT3lfxY+k2ccooN0cyp9WBbIRuimuF9cvxyQtoATajSTl2Ttq0Kb
- xd7Eu6OayDkN6x4XCGC9StVgzw3IWmGUq2PHt31ZI05xY7sESi8p5GU+7d/Y/5+H7cKDtg7410a
- llPZdP00MKpq3hSIrXMnhqoxUJkUdspWM4i/17GY+HeyUzLf4IWDIY0pVfyhFefE6f/I6VmFkCn
- CPBstnoJYnv1XiLEPZN3v
-X-Google-Smtp-Source: AGHT+IG1AjPTJ9CmAnwaqhyWbwzMydJK02WR6ePNouF+OXrBZjI5JcJ2Zlaz7X4Kdy90KucPytqsSg==
-X-Received: by 2002:a05:6e02:1f05:b0:3d8:1cba:1854 with SMTP id
- e9e14a558f8ab-3d970198c59mr55748625ab.1.1746124630482; 
- Thu, 01 May 2025 11:37:10 -0700 (PDT)
+ bh=1oEZ8pcFL0QpEheuXUBBXfN5IHyToSd/0wmZn4AbYIQ=;
+ b=kjnspykLXqipZCLVzciGMVEN2i5dnCvQDm1WbF8/lyoosXnBZx1mUnwmT2eUzZOc65
+ Sr4twLYUVjooVHLDJbXVILI9uYRkGKHhQCXcDl/ir0EaPR7UjbTSI2ROaFK7VzY0Zaro
+ TfcCGoV8PVMdyNAblUAqnmX0zc5Djl9k9TRtqGr5D+eDDNzmDM95S01cFU1yxWkL7KGc
+ L1FP7IRZsGO8LWtbkX5ImH4Pg1yQKCG0s75mZ9ep89AZVITieZFgvi+W4xOIupMBOF/b
+ NSZIKBu6/Sej0RPAKjkP6kEZ/rD4B/7X+3nX+REK6j1d8MdAwhXydnsOgxKpw5G9hXTB
+ U12g==
+X-Gm-Message-State: AOJu0Yzmaa3asTYSbuBzqJergrRIFczvL+pm/8Wg1yQtwUxLUjcKErQ+
+ C9Fr+dAvhGV9OxtN0ljqkx2o1QEwIW27xWcJcEhsPek7xepztTPOrMBPdXr6ofw6jPRW+JPVHVn
+ h
+X-Gm-Gg: ASbGncvehENs1Jnt4c/f8AVZE6EZwdKdSyuZImpXO82hGSjfFSqfDYzqEUGo0LJE3ag
+ aJuOwJ4xdHCw/KnDaGdoPC5RIrvuwYrsgnQmPE4OTz4w2nM9gt4ghkr11TYLicXtz24qp92pWGp
+ dgUbdxstgGiDnBQ/XMiYax19H4mex/KJJqmMax4yi5pvnMaUIoYZojfnsOBeAWrCylPMyygt7Kn
+ 4Z2xNPkK+/IfNkq+XOZtD1LY0zrqx8HfkrjYkTfjbC/cZP0NmSEB/UMBAWI4SsKMTNI350ucBYq
+ NRb5qcEKAf1KHEwgUBzuMSTxAmQXDVkBgh+HzM0Mrl4FbJou26rTXtZ9+Or79EY40A/vohTNZSF
+ nTmrgJT6eWv2+IUsGTRAJiOL0ZJMwmh8=
+X-Google-Smtp-Source: AGHT+IHEoLmcU7pFCRgcEcxBtRCx1q/dYH/LtK4QVox6ESPbw8xzGEhMoWVUR6VP05yqT75tvB++yQ==
+X-Received: by 2002:a05:6602:3890:b0:861:7d39:d4d3 with SMTP id
+ ca18e2360f4ac-8669f967ce1mr37488939f.3.1746124648901; 
+ Thu, 01 May 2025 11:37:28 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d975e7808esm2526775ab.25.2025.05.01.11.37.06
+ ca18e2360f4ac-864aa32f7cbsm21510239f.28.2025.05.01.11.37.25
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 11:37:10 -0700 (PDT)
+ Thu, 01 May 2025 11:37:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
@@ -78,17 +78,17 @@ Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 04/16] hw/i386/pc: Remove pc_compat_2_6[] array
-Date: Thu,  1 May 2025 20:36:16 +0200
-Message-ID: <20250501183628.87479-5-philmd@linaro.org>
+Subject: [PATCH v2 06/16] hw/core/machine: Remove hw_compat_2_6[] array
+Date: Thu,  1 May 2025 20:36:18 +0200
+Message-ID: <20250501183628.87479-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501183628.87479-1-philmd@linaro.org>
 References: <20250501183628.87479-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
- envelope-from=philmd@linaro.org; helo=mail-il1-x12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2a;
+ envelope-from=philmd@linaro.org; helo=mail-io1-xd2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,48 +111,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pc_compat_2_6[] array was only used by the pc-q35-2.6
-and pc-i440fx-2.6 machines, which got removed. Remove it.
+The hw_compat_2_6[] array was only used by the pc-q35-2.6 and
+pc-i440fx-2.6 machines, which got removed. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i386/pc.h | 3 ---
- hw/i386/pc.c         | 8 --------
+ include/hw/boards.h | 3 ---
+ hw/core/machine.c   | 8 --------
  2 files changed, 11 deletions(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index a3de3e9560d..4fb2033bc54 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -292,9 +292,6 @@ extern const size_t pc_compat_2_8_len;
- extern GlobalProperty pc_compat_2_7[];
- extern const size_t pc_compat_2_7_len;
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 5f1a0fb7e28..a881db8e7d6 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -841,7 +841,4 @@ extern const size_t hw_compat_2_8_len;
+ extern GlobalProperty hw_compat_2_7[];
+ extern const size_t hw_compat_2_7_len;
  
--extern GlobalProperty pc_compat_2_6[];
--extern const size_t pc_compat_2_6_len;
+-extern GlobalProperty hw_compat_2_6[];
+-extern const size_t hw_compat_2_6_len;
 -
- #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
-     static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
-                                                  const void *data) \
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 49632b69d29..7573b880905 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -251,14 +251,6 @@ GlobalProperty pc_compat_2_7[] = {
+ #endif
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index e7001bf92cd..ce98820f277 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -275,14 +275,6 @@ GlobalProperty hw_compat_2_7[] = {
  };
- const size_t pc_compat_2_7_len = G_N_ELEMENTS(pc_compat_2_7);
+ const size_t hw_compat_2_7_len = G_N_ELEMENTS(hw_compat_2_7);
  
--GlobalProperty pc_compat_2_6[] = {
--    { TYPE_X86_CPU, "cpuid-0xb", "off" },
--    { "vmxnet3", "romfile", "" },
--    { TYPE_X86_CPU, "fill-mtrr-mask", "off" },
--    { "apic-common", "legacy-instance-id", "on", }
+-GlobalProperty hw_compat_2_6[] = {
+-    { "virtio-mmio", "format_transport_address", "off" },
+-    /* Optional because not all virtio-pci devices support legacy mode */
+-    { "virtio-pci", "disable-modern", "on",  .optional = true },
+-    { "virtio-pci", "disable-legacy", "off", .optional = true },
 -};
--const size_t pc_compat_2_6_len = G_N_ELEMENTS(pc_compat_2_6);
+-const size_t hw_compat_2_6_len = G_N_ELEMENTS(hw_compat_2_6);
 -
- /*
-  * @PC_FW_DATA:
-  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
+ MachineState *current_machine;
+ 
+ static char *machine_get_kernel(Object *obj, Error **errp)
 -- 
 2.47.1
 
