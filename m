@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CF35C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 23:02:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C642C3ABA9
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 23:02:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAcut-0008UQ-UY; Thu, 01 May 2025 19:02:08 -0400
+	id 1uAcue-0008NT-KH; Thu, 01 May 2025 19:01:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAcuq-0008TI-J8
- for qemu-devel@nongnu.org; Thu, 01 May 2025 19:02:04 -0400
-Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAcua-0008MG-4X
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 19:01:48 -0400
+Received: from mail-il1-x12b.google.com ([2607:f8b0:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAcuo-0002En-Du
- for qemu-devel@nongnu.org; Thu, 01 May 2025 19:02:04 -0400
-Received: by mail-il1-x131.google.com with SMTP id
- e9e14a558f8ab-3d8020ba858so16405765ab.0
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 16:02:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAcuX-0002B6-6t
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 19:01:47 -0400
+Received: by mail-il1-x12b.google.com with SMTP id
+ e9e14a558f8ab-3d9189e9a06so5436685ab.2
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 16:01:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746140521; x=1746745321; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746140503; x=1746745303; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F6iyIP6KaylLefLyBXHs1NcGKwBb7ZXW8SZqY1Ujxgs=;
- b=NqJtI6WPG61O0gHWSJlB+iHHyqUvyVR1ZkW25/cY/hnNLjfXnHD7N/6j8anyiSuaFU
- YuZZ8n0SewUFinmyUu2MZIny4hcJoy0YeKiUBeRMLv1f1JZOjhfED1l9GC+qzP1mY0Jn
- IlYvoqtsCI4u6akvV1jgyqXxKZUOZ7Xn2jjxqkuVilfMZu693BPsai1G3BgMNhS7iT+q
- KUqQ+sXvqGtwo7/IS4cQP4LtPQ+3zLGAS+WzziMFjSC3RIRubiYA1PEm++fyp7pH3DXf
- O48JkvK9N26G73d1ngQQsNXNGeyN588B7ne0MD6eGHpGHPi8vzUt0+o+7Bn9c2cK9fKO
- Ef9A==
+ bh=UogoyiXW138ZEeb+2tt0PHdIw32Ugidt6sz27K9+AA8=;
+ b=Lf09V9GTaMp9gDdB7CZonsOL/2HQ1O3tQk4uzf9vnau/9Af3UWL4nxXd657KjYqmIk
+ UpKXam7XmY4YJkwq2cGFOaOOeg75ShWgfS6iX1uYPUp50ajQcfk8lnsWD0w2waXDz/WO
+ 9p0dpZ2dbnD2vo0lQ6rIJpe5lMHhWFeLJl+GY8sIjkDYWYGDY0gJi5fYIstGx//gqksP
+ 0m7G8A0mPga2U6+uA5tinZk33PBr5lo8PxYNQR78U6LpiDHAjZfZic3P2t2OkzV5F/QW
+ KriToO6YYIyoIEb3DPQUSjRHq8qux3K75pLp6eGZOReEcc2ShOg5MapNDwij0mXuw8sd
+ W6vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746140521; x=1746745321;
+ d=1e100.net; s=20230601; t=1746140503; x=1746745303;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=F6iyIP6KaylLefLyBXHs1NcGKwBb7ZXW8SZqY1Ujxgs=;
- b=AXVvJws6G/jrNXwq/pOkKPG9PrDThN/ckG8Ega85Rc5SOBUwpg55TE2XXglaZ75wKd
- Qw83O7ZMu3xLC5tGBt//lTZbxn0ywoiQi3rb0jfR0NCR3wh76iGXjPrbHXitozKJpypk
- TG7mVEGB8EsLrGaALb6jTM4YaGp+Uxm18U9fEMNADzz0s4cOBif5aplHYqfzSz/76zMZ
- LjH4g4nbWpQ46oucjtLMuyDkNqn8k555BTjkQg4pR2dV5HlEszG4+4xwHgQFojromzyl
- zNaVnZ3nkgTGxNDSN0dT+9+3OczQZQU2HUVJPfU0ZkCmPpaI4Pg4xhrkFY126J7I42f5
- f3Lg==
-X-Gm-Message-State: AOJu0Yym4kcqd3pUzA01dj035KOd4TkxhY8N1eBvTf8CxBJvxywnzpQX
- 35In0Wuthe+9n3liUrFs/hLkWuSGClmc2uW+RG8//kHyWIIWOfgQ2u6pngbIv/QuzE/cJkjrYOt
- P
-X-Gm-Gg: ASbGncvMRM+B5J8VtTPlshn6gyQrxxal16PkbKG612m0/N12lEW84Aa8gxhpbkqm8VB
- 3yBbcFavKWgGiG1HzdUS2WiLkKWAi3kjHD/0ywwxg+qVM/WXMczJ9mhDmUsFeWnhzpm6glbK/H+
- NHzu88Adf7L0uvvkbbK7a+D0L73LwvHk4AdZN7sprCk4TiFnHdLnDfhRX8hDH7we0CESDnj28p+
- /Yxh6b992Cw+SOWx3T9NL9BIpTvyIbsijLhxdRGmcWAenyYNng2fclv9djrf+0qCJdfhNAkB0W8
- J4QV/hxAYcYVUxmbo7HJeNDbT6JphVBF44E8wMn6OpmUhlCmCNFir++2uKcbyuVzoeywfc+b2uC
- onidy8BAqwzfYcV38/Wqo
-X-Google-Smtp-Source: AGHT+IH95z8u90I9wNs9KSFDwx5ReseCvnWier+V7CDTEewnDP6kWftkeQTo7Uc7k+YVgaSmW5mMqA==
-X-Received: by 2002:a05:6e02:1a8f:b0:3d8:1d7c:e192 with SMTP id
- e9e14a558f8ab-3d97c196082mr10106525ab.7.1746140520957; 
- Thu, 01 May 2025 16:02:00 -0700 (PDT)
+ bh=UogoyiXW138ZEeb+2tt0PHdIw32Ugidt6sz27K9+AA8=;
+ b=AxTXmQOZO7CH3k7vzPTz56mpHhGqGx+8PLJ1JPYVDS/7hg2aP5gXtYlkB6V3G1kO9A
+ fWdXfxsrIwwmh5xlT7ByZLpnzuilvmAC7Iul1iNBxYNZXm2onw55oto+G18YXFyAWrMf
+ +NAV55E+d43WPaYiTy8x15aKJTLOM341oY6uP6jSWEqYsvEW7R3xXkr4dAjbTS/rwF7P
+ amED4FAu7XwCj2WAQCL6ppuANAhqFgpthrH2UHMta+NgxMti3dr12zHwuGdLQztRo5sF
+ FDF2WcTMjLgUUGcHAfWOv7lM9y9Q/rhhoILtUJgrs1V0BgD2hGqa7HxE97tbDQbGtopf
+ s45A==
+X-Gm-Message-State: AOJu0YxaNa2ezzFeorAPgb7ZTDslE+JA3xm+DQoJ/ijuO45l8bCsJwN3
+ 4wd+zVU+7+yBN1U2hAhybgQSmbKRJ2SmcC/+XJzfGO+c6HesI4WteEarvVjlnZCm4RiKTPoMMrq
+ v
+X-Gm-Gg: ASbGncvlkWPELpTGJbV6ym9Q/DbLwitW9MB7KYkv85OH2NAEKPesUCFFm5f8LFLs7gq
+ NVzn2P75XSoml+wx1fvY2AhbLXipYG25/i1SDHVegy/0FW3InVtm0fdcJSgJJ/RMLhsdT4vY7cs
+ g8kOVmM1odCD2aUNNRHh6GNXpWW9VgML1JAH5XP6NSzi6OZna2CPSJ2gFEFctx0GqUz1HITS3j5
+ pwYYCCYKqF8hq6Iz6X10i+0sWtXTMmyoyZrrSwiawEEm1/MeaMWRxyVvhDtT4yQQXTnJmIicqk7
+ L4fv8Jw/ap2eBMpbdqsDcQVeRSo+NrocHQ/YPgC4uEVadILyoepGBF+A7S3k1JK7io3WFoPhb5g
+ nw1SZv02alpK0EDm/IiE1
+X-Google-Smtp-Source: AGHT+IGIL0oPhv4toXK2RGB4CmhDijzyGCYQr701oKU23cJlJ54pR+dxGy3DVizBUKUNi2hsZWAU9Q==
+X-Received: by 2002:a05:6e02:18c8:b0:3d6:cd54:ba53 with SMTP id
+ e9e14a558f8ab-3d97c26091bmr10181675ab.22.1746140503334; 
+ Thu, 01 May 2025 16:01:43 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f88aac7e1asm87042173.135.2025.05.01.16.01.57
+ 8926c6da1cb9f-4f88aac7e1asm86910173.135.2025.05.01.16.01.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 16:02:00 -0700 (PDT)
+ Thu, 01 May 2025 16:01:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -78,18 +78,18 @@ Cc: Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, qemu-s390x@nongnu.org,
  Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH 03/10] hw/input/virtio-input: Remove
- VirtIOInputHID::wheel_axis field
-Date: Fri,  2 May 2025 01:01:21 +0200
-Message-ID: <20250501230129.2596-4-philmd@linaro.org>
+Subject: [PATCH 01/10] hw/s390x/s390-virtio-ccw: Remove the deprecated 2.10
+ and 2.11 machine types
+Date: Fri,  2 May 2025 01:01:19 +0200
+Message-ID: <20250501230129.2596-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501230129.2596-1-philmd@linaro.org>
 References: <20250501230129.2596-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::131;
- envelope-from=philmd@linaro.org; helo=mail-il1-x131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12b;
+ envelope-from=philmd@linaro.org; helo=mail-il1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,205 +112,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VirtIOInputHID::wheel_axis boolean was only set in the
-hw_compat_2_10[] array, via the 'wheel-axis=false' property.
-We removed all machines using that array, lets remove that
-property and all the code around it. There is only one
-virtio_input_config[] version for each device, rename it
-removing the '_v2' suffix.
+From: Thomas Huth <thuth@redhat.com>
 
+They are older than 6 years, so according to our machine support
+policy, they can be removed now.
+
+There was not anything special in the 2.10 machine type, so just remove
+it together with the 2.11 machine type. The 2.11 machine type switched
+some configuration that needs additional cleanups in the following
+patches.
+
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250115073819.15452-6-thuth@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/virtio/virtio-input.h |   1 -
- hw/input/virtio-input-hid.c      | 102 ++-----------------------------
- 2 files changed, 5 insertions(+), 98 deletions(-)
+ hw/s390x/s390-virtio-ccw.c | 37 -------------------------------------
+ 1 file changed, 37 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-input.h b/include/hw/virtio/virtio-input.h
-index e097b0b5217..1e94f8a03db 100644
---- a/include/hw/virtio/virtio-input.h
-+++ b/include/hw/virtio/virtio-input.h
-@@ -89,7 +89,6 @@ struct VirtIOInputHID {
-     const QemuInputHandler            *handler;
-     QemuInputHandlerState             *hs;
-     int                               ledstate;
--    bool                              wheel_axis;
- };
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 94edd42dd25..2c90702d834 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -1250,43 +1250,6 @@ static void ccw_machine_2_12_class_options(MachineClass *mc)
+ }
+ DEFINE_CCW_MACHINE(2, 12);
  
- struct VirtIOInputHost {
-diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
-index d986c3c16e3..a89a5b10c63 100644
---- a/hw/input/virtio-input-hid.c
-+++ b/hw/input/virtio-input-hid.c
-@@ -81,7 +81,6 @@ static void virtio_input_extend_config(VirtIOInput *vinput,
- static void virtio_input_handle_event(DeviceState *dev, QemuConsole *src,
-                                       InputEvent *evt)
- {
--    VirtIOInputHID *vhid = VIRTIO_INPUT_HID(dev);
-     VirtIOInput *vinput = VIRTIO_INPUT(dev);
-     virtio_input_event event;
-     int qcode;
-@@ -109,8 +108,7 @@ static void virtio_input_handle_event(DeviceState *dev, QemuConsole *src,
-         break;
-     case INPUT_EVENT_KIND_BTN:
-         btn = evt->u.btn.data;
--        if (vhid->wheel_axis &&
--            (btn->button == INPUT_BUTTON_WHEEL_UP ||
-+        if ((btn->button == INPUT_BUTTON_WHEEL_UP ||
-              btn->button == INPUT_BUTTON_WHEEL_DOWN) &&
-             btn->down) {
-             event.type  = cpu_to_le16(EV_REL);
-@@ -328,32 +326,7 @@ static const QemuInputHandler virtio_mouse_handler = {
-     .sync  = virtio_input_handle_sync,
- };
- 
--static struct virtio_input_config virtio_mouse_config_v1[] = {
--    {
--        .select    = VIRTIO_INPUT_CFG_ID_NAME,
--        .size      = sizeof(VIRTIO_ID_NAME_MOUSE),
--        .u.string  = VIRTIO_ID_NAME_MOUSE,
--    },{
--        .select    = VIRTIO_INPUT_CFG_ID_DEVIDS,
--        .size      = sizeof(struct virtio_input_devids),
--        .u.ids     = {
--            .bustype = const_le16(BUS_VIRTUAL),
--            .vendor  = const_le16(0x0627), /* same we use for usb hid devices */
--            .product = const_le16(0x0002),
--            .version = const_le16(0x0001),
--        },
--    },{
--        .select    = VIRTIO_INPUT_CFG_EV_BITS,
--        .subsel    = EV_REL,
--        .size      = 1,
--        .u.bitmap  = {
--            (1 << REL_X) | (1 << REL_Y),
--        },
--    },
--    { /* end of list */ },
--};
+-#ifdef CONFIG_S390X_LEGACY_CPUS
 -
--static struct virtio_input_config virtio_mouse_config_v2[] = {
-+static struct virtio_input_config virtio_mouse_config[] = {
-     {
-         .select    = VIRTIO_INPUT_CFG_ID_NAME,
-         .size      = sizeof(VIRTIO_ID_NAME_MOUSE),
-@@ -379,26 +352,13 @@ static struct virtio_input_config virtio_mouse_config_v2[] = {
-     { /* end of list */ },
- };
- 
--static const Property virtio_mouse_properties[] = {
--    DEFINE_PROP_BOOL("wheel-axis", VirtIOInputHID, wheel_axis, true),
--};
--
--static void virtio_mouse_class_init(ObjectClass *klass, const void *data)
+-static void ccw_machine_2_11_instance_options(MachineState *machine)
 -{
--    DeviceClass *dc = DEVICE_CLASS(klass);
+-    static const S390FeatInit qemu_cpu_feat = { S390_FEAT_LIST_QEMU_V2_11 };
+-    ccw_machine_2_12_instance_options(machine);
 -
--    device_class_set_props(dc, virtio_mouse_properties);
+-    /* before 2.12 we emulated the very first z900 */
+-    s390_set_qemu_cpu_model(0x2064, 7, 1, qemu_cpu_feat);
 -}
 -
- static void virtio_mouse_init(Object *obj)
- {
-     VirtIOInputHID *vhid = VIRTIO_INPUT_HID(obj);
-     VirtIOInput *vinput = VIRTIO_INPUT(obj);
- 
-     vhid->handler = &virtio_mouse_handler;
--    virtio_input_init_config(vinput, vhid->wheel_axis
--                             ? virtio_mouse_config_v2
--                             : virtio_mouse_config_v1);
-+    virtio_input_init_config(vinput, virtio_mouse_config);
-     virtio_input_extend_config(vinput, keymap_button,
-                                ARRAY_SIZE(keymap_button),
-                                VIRTIO_INPUT_CFG_EV_BITS, EV_KEY);
-@@ -409,7 +369,6 @@ static const TypeInfo virtio_mouse_info = {
-     .parent        = TYPE_VIRTIO_INPUT_HID,
-     .instance_size = sizeof(VirtIOInputHID),
-     .instance_init = virtio_mouse_init,
--    .class_init    = virtio_mouse_class_init,
- };
- 
- /* ----------------------------------------------------------------- */
-@@ -421,44 +380,7 @@ static const QemuInputHandler virtio_tablet_handler = {
-     .sync  = virtio_input_handle_sync,
- };
- 
--static struct virtio_input_config virtio_tablet_config_v1[] = {
--    {
--        .select    = VIRTIO_INPUT_CFG_ID_NAME,
--        .size      = sizeof(VIRTIO_ID_NAME_TABLET),
--        .u.string  = VIRTIO_ID_NAME_TABLET,
--    },{
--        .select    = VIRTIO_INPUT_CFG_ID_DEVIDS,
--        .size      = sizeof(struct virtio_input_devids),
--        .u.ids     = {
--            .bustype = const_le16(BUS_VIRTUAL),
--            .vendor  = const_le16(0x0627), /* same we use for usb hid devices */
--            .product = const_le16(0x0003),
--            .version = const_le16(0x0001),
--        },
--    },{
--        .select    = VIRTIO_INPUT_CFG_EV_BITS,
--        .subsel    = EV_ABS,
--        .size      = 1,
--        .u.bitmap  = {
--            (1 << ABS_X) | (1 << ABS_Y),
--        },
--    },{
--        .select    = VIRTIO_INPUT_CFG_ABS_INFO,
--        .subsel    = ABS_X,
--        .size      = sizeof(virtio_input_absinfo),
--        .u.abs.min = const_le32(INPUT_EVENT_ABS_MIN),
--        .u.abs.max = const_le32(INPUT_EVENT_ABS_MAX),
--    },{
--        .select    = VIRTIO_INPUT_CFG_ABS_INFO,
--        .subsel    = ABS_Y,
--        .size      = sizeof(virtio_input_absinfo),
--        .u.abs.min = const_le32(INPUT_EVENT_ABS_MIN),
--        .u.abs.max = const_le32(INPUT_EVENT_ABS_MAX),
--    },
--    { /* end of list */ },
--};
--
--static struct virtio_input_config virtio_tablet_config_v2[] = {
-+static struct virtio_input_config virtio_tablet_config[] = {
-     {
-         .select    = VIRTIO_INPUT_CFG_ID_NAME,
-         .size      = sizeof(VIRTIO_ID_NAME_TABLET),
-@@ -503,26 +425,13 @@ static struct virtio_input_config virtio_tablet_config_v2[] = {
-     { /* end of list */ },
- };
- 
--static const Property virtio_tablet_properties[] = {
--    DEFINE_PROP_BOOL("wheel-axis", VirtIOInputHID, wheel_axis, true),
--};
--
--static void virtio_tablet_class_init(ObjectClass *klass, const void *data)
+-static void ccw_machine_2_11_class_options(MachineClass *mc)
 -{
--    DeviceClass *dc = DEVICE_CLASS(klass);
+-    static GlobalProperty compat[] = {
+-        { TYPE_SCLP_EVENT_FACILITY, "allow_all_mask_sizes", "off", },
+-    };
 -
--    device_class_set_props(dc, virtio_tablet_properties);
+-    ccw_machine_2_12_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_11, hw_compat_2_11_len);
+-    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+-}
+-DEFINE_CCW_MACHINE(2, 11);
+-
+-static void ccw_machine_2_10_instance_options(MachineState *machine)
+-{
+-    ccw_machine_2_11_instance_options(machine);
 -}
 -
- static void virtio_tablet_init(Object *obj)
+-static void ccw_machine_2_10_class_options(MachineClass *mc)
+-{
+-    ccw_machine_2_11_class_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_10, hw_compat_2_10_len);
+-}
+-DEFINE_CCW_MACHINE(2, 10);
+-
+-#endif
+-
+ static void ccw_machine_register_types(void)
  {
-     VirtIOInputHID *vhid = VIRTIO_INPUT_HID(obj);
-     VirtIOInput *vinput = VIRTIO_INPUT(obj);
- 
-     vhid->handler = &virtio_tablet_handler;
--    virtio_input_init_config(vinput, vhid->wheel_axis
--                             ? virtio_tablet_config_v2
--                             : virtio_tablet_config_v1);
-+    virtio_input_init_config(vinput, virtio_tablet_config);
-     virtio_input_extend_config(vinput, keymap_button,
-                                ARRAY_SIZE(keymap_button),
-                                VIRTIO_INPUT_CFG_EV_BITS, EV_KEY);
-@@ -533,7 +442,6 @@ static const TypeInfo virtio_tablet_info = {
-     .parent        = TYPE_VIRTIO_INPUT_HID,
-     .instance_size = sizeof(VirtIOInputHID),
-     .instance_init = virtio_tablet_init,
--    .class_init    = virtio_tablet_class_init,
- };
- 
- /* ----------------------------------------------------------------- */
+     type_register_static(&ccw_machine_info);
 -- 
 2.47.1
 
