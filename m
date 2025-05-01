@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A14EDC3ABA3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E1D7C369DC
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:06:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAb5o-000100-7r; Thu, 01 May 2025 17:05:16 -0400
+	id 1uAb64-00014K-UZ; Thu, 01 May 2025 17:05:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb5m-0000zF-2y
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:14 -0400
-Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb63-00013G-Gc
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:31 -0400
+Received: from mail-il1-x12d.google.com ([2607:f8b0:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb5k-0006Sa-J3
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:13 -0400
-Received: by mail-il1-x131.google.com with SMTP id
- e9e14a558f8ab-3d6d162e516so11463135ab.1
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:05:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb61-0006VR-MQ
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:31 -0400
+Received: by mail-il1-x12d.google.com with SMTP id
+ e9e14a558f8ab-3d8fc9dbce4so9431785ab.0
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:05:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746133511; x=1746738311; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746133528; x=1746738328; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0h0T0XYnYLjPAQZ2YEHiTRTZsrkk7NXiD5Jirf7sOvY=;
- b=KX9wbSGoSQN4BGpuJ213MWBFl34bwzOH3kUgdSAcrw1E9QGFvHcmzlCtB/lpG70s5K
- wYDnfXiUE7VAgUyIe5/0FSPfpI05c4OtcoCrR0Ki+W2FYce5RSK2fMoqYcnJ+rp2bcOw
- tBLxoau9S0UXPu8VDsakAssn+4Tdalh7ZWc/p4E+Us+KZQTAPDIuu6qekwKJabTQ+Dyw
- XDtuxdTi4rjmGLuu5YolRXjL0ZfpmWy+ueJsFGrNoWLWbzAG1Zr6ncduN7mLgJOUf3oM
- gDnYwoGCbhKkkPgfJGq3I4iC/7TNXBL+oS6qf0OKiGGoCNao+xT7MIsyl7aQJokxBGfh
- jCNw==
+ bh=j5ZMEn7NCnklWa+DQm3mEiEs22N/Anfjag2M9l8eBgM=;
+ b=gDP/Cp1+nSdU3DlP3mtW04nBm9J4WCQR7XHpqtmvYc5tTDHZI7BK/quNDH21I8kqs2
+ 5T8oU+FuAgDSzl4LMOusSq2FX9fUgTsfeFGc7CpuoROSVffwN+oMwgvvw3QtkFKWkNZo
+ 0fkcG8Fp6bsy1AxIwmjCYPW0NLDHaNuOzJKABDYKWGO7EhHN6sbCDoa23cVU1KT6cWbo
+ ELRjMZ9+jztJ+Ho9rK2W5RblCQ0/WkgNPZS6u86GKBYzDG+SUSuRN6GBYdkT8lVKUAZj
+ baxfujiuOJf768bpVVD53n7NrAUGnbOjWBwiBpzXLsyA2GPJw/OunX/2xMRCwTIFqpao
+ 3oaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746133511; x=1746738311;
+ d=1e100.net; s=20230601; t=1746133528; x=1746738328;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0h0T0XYnYLjPAQZ2YEHiTRTZsrkk7NXiD5Jirf7sOvY=;
- b=ocoUNVr+8FvZls/2uigQmO0srUd7VPDE7sCs+L+Q8h+hBQfRW0zTeMyohCiPPb5PZr
- bfzD7niZUhlst5reKDCNxF4bibUQinZCubDyVN6F6+y1xC8pnA8tD5wCFV+n0wjr2A4i
- ylp4Rezy2ukYmg617kfrGCOHH5FC1DJGQTMWVe9eJlIVFCmY8RlhvYnKEN1W22jtWslm
- sdyUTrk1/G7y9LDGfmsIB/fT+0/ZAFfQq6ATgxD9w7ykWHAIlWqsFkUuoY/D/MUCOlKv
- qyv21DgWMRiSr/uTGxIKIIuRxxiHcB3rLM0lzkoU5ib2c3g1lhDFlZ/1IZA6fcjGy2Vh
- WT8Q==
-X-Gm-Message-State: AOJu0YytQkPYgUwUBQh72lrjSeq5eK9frlYJ3+rbCc8+jSAIZdVOZ6B+
- 3QWmEjnURw4W/3vm52xbD72MONRw42WlWs+yMVSxeFpeYrJ4DZbKMahYkGF9NStzlUN20/T7rm4
- T
-X-Gm-Gg: ASbGncvgpsSyxA/F0KPY2Wbr1rGNSre3Vl1gDukbFtyeA0hRN5oNc9tdfnlO4Z7Yv9c
- hoewS+Cq/CnaWMl1tCJ8vS3IM5knnYoX1xbe4/dPs+tLz6wW7bnkdLvp0gkN1XCGtGBFMxZ60G2
- B9vUHR00H6TK76TNmXhBXFX94BrxEj/kmSh5WRSn2zuhmbc0GVdGykWsyzUzkLxxk7m5PpV3z1w
- QHdekDVL0DCew15jdDcre+qPpldq2ko29O28sFlvB87GX/xWMjBSvsxW8UGV8sqSoMR6UozHHFw
- IIKdQINTywE79CCbCfNX2A5BQgJD6wfXOHHGqVzDdSRuL/UoYqbqc/c0zidT4kL4Ef9q5VCrpnG
- YxPkHVuXvpTLWPPU=
-X-Google-Smtp-Source: AGHT+IFh8n9MmJbVyx45lC1+gqYeauh0qoc78UnBChyJAU9v7q3pAgI5kk7rjfAy1HE2rIzsP49xFQ==
-X-Received: by 2002:a05:6e02:b46:b0:3d9:43fe:8e49 with SMTP id
- e9e14a558f8ab-3d97c1ade2bmr5797325ab.8.1746133510774; 
- Thu, 01 May 2025 14:05:10 -0700 (PDT)
+ bh=j5ZMEn7NCnklWa+DQm3mEiEs22N/Anfjag2M9l8eBgM=;
+ b=BrKbnc9bjYq7M/qvO2lVLh9jYMuC05r9wHYT9+n7VxtgIPuc+kNB6677KJr85Q9O/O
+ v6rWRz7zrA6J9BfhkIKqJ3mlfpa3qnna456AZqb+w4plavrPtQicrdy9dD9xqBfF/mF1
+ wV4p53g4DATG9FIxsSQxkH63LxB4koV4OQ5WnECCPE2jmFA+rXWDvDUzaJEB0NljiKVp
+ o8we41W4VVO8/bwKsMBjsLZMKRHxlj0FiVNsGfBFHhWPVKyA/V3uFuRGdnIuxvk8XEVH
+ BVNMfe+hFEA+8AS1jSnbWqiIhy2b/Pdp4pPHtYhH7rxZH2LhalGSj/7ITDif3NL2g0w8
+ hxsw==
+X-Gm-Message-State: AOJu0YxGdA1VOUV2WXoD98J9TyFEARCfF3p8DpFjWJMLn5nwJHoYtgQu
+ P33aPWZX+WL2WPbod65Onqhj/NvamzoHZJnB/yqgQYib/TLfc+hOpG52VYBfA3id7/CAPJFgpIh
+ N
+X-Gm-Gg: ASbGncv6nXe5dRR2r/+iTzok8pnkkOrOd2jiZqlWsPhS5fQ1Mykkp929vfDGmhAKcpk
+ e5YwUJMIMX0q+HeJZann1ds8AV783TKdL8CHIlkfMjxViV9/TbrEw0JK8tRVv01EfxhaFlj8Ano
+ +tsbdxt0e0J8cL11D8+hm2Y8NqQWL32Cp79zV5UYRiHDOnYvGmvrTX5ohtw4o1t47QRCNPTCF2v
+ cut21RTT6hm2pPah569xvbbJQ3nd4PWucSqT+irDoQ7OANGFUQTBdF+BA24zMacmS+p209MpXw3
+ y7weX157UqrfHqHYDeSPsWkLBkhacgZdW/ssXz/DbOMTJSm/amOdO+/9VnkD4KqZebUEqbDV24t
+ +HzQsIwebtCup1cCEOtEAB44ebg==
+X-Google-Smtp-Source: AGHT+IH9Rd922q2evnATmm7DN8w668qOn8IOr/ofQzAcWAN0RAGZzume8oqgTvNKsM/uRjmXO/wzFg==
+X-Received: by 2002:a05:6e02:3e8d:b0:3d9:3675:f531 with SMTP id
+ e9e14a558f8ab-3d97ae710cbmr8096145ab.6.1746133528213; 
+ Thu, 01 May 2025 14:05:28 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f88aa5832bsm44463173.84.2025.05.01.14.05.07
+ e9e14a558f8ab-3d975e27d71sm3033745ab.10.2025.05.01.14.05.24
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 14:05:10 -0700 (PDT)
+ Thu, 01 May 2025 14:05:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
@@ -77,18 +77,18 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>
-Subject: [PATCH 01/18] hw/i386/pc: Remove deprecated pc-q35-2.8 and
- pc-i440fx-2.8 machines
-Date: Thu,  1 May 2025 23:04:39 +0200
-Message-ID: <20250501210456.89071-2-philmd@linaro.org>
+Subject: [PATCH 03/18] hw/southbridge/ich9: Remove
+ ICH9_LPC_SMI_F_BROADCAST_BIT definition
+Date: Thu,  1 May 2025 23:04:41 +0200
+Message-ID: <20250501210456.89071-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501210456.89071-1-philmd@linaro.org>
 References: <20250501210456.89071-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::131;
- envelope-from=philmd@linaro.org; helo=mail-il1-x131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-il1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,54 +111,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These machines has been supported for a period of more than 6 years.
-According to our versioned machine support policy (see commit
-ce80c4fa6ff "docs: document special exception for machine type
-deprecation & removal") they can now be removed.
+The ICH9_LPC_SMI_F_BROADCAST_BIT feature bit was only set
+in the pc_compat_2_8[] array, via the 'x-smi-broadcast=off'
+property. We removed all machines using that array, lets remove
+that property and all the code around it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/pc_piix.c | 9 ---------
- hw/i386/pc_q35.c  | 9 ---------
- 2 files changed, 18 deletions(-)
+ include/hw/southbridge/ich9.h |  1 -
+ hw/acpi/ich9.c                |  6 ++----
+ hw/isa/lpc_ich9.c             | 22 +++-------------------
+ 3 files changed, 5 insertions(+), 24 deletions(-)
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 98bd8d0e67b..0d6ad9db627 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -746,15 +746,6 @@ static void pc_i440fx_machine_2_9_options(MachineClass *m)
+diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
+index 1e231e89c92..4764c03ac2d 100644
+--- a/include/hw/southbridge/ich9.h
++++ b/include/hw/southbridge/ich9.h
+@@ -244,7 +244,6 @@ struct ICH9LPCState {
+ #define ICH9_LPC_SMI_NEGOTIATED_FEAT_PROP "x-smi-negotiated-features"
  
- DEFINE_I440FX_MACHINE(2, 9);
+ /* bit positions used in fw_cfg SMI feature negotiation */
+-#define ICH9_LPC_SMI_F_BROADCAST_BIT            0
+ #define ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT          1
+ #define ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT       2
  
--static void pc_i440fx_machine_2_8_options(MachineClass *m)
--{
--    pc_i440fx_machine_2_9_options(m);
--    compat_props_add(m->compat_props, hw_compat_2_8, hw_compat_2_8_len);
--    compat_props_add(m->compat_props, pc_compat_2_8, pc_compat_2_8_len);
--}
+diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
+index c7a735bf642..40564605735 100644
+--- a/hw/acpi/ich9.c
++++ b/hw/acpi/ich9.c
+@@ -477,8 +477,7 @@ void ich9_pm_device_pre_plug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
+     if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+         uint64_t negotiated = lpc->smi_negotiated_features;
+ 
+-        if (negotiated & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT) &&
+-            !(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT))) {
++        if (!(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT))) {
+             error_setg(errp, "cpu hotplug with SMI wasn't enabled by firmware");
+             error_append_hint(errp, "update machine type to newer than 5.1 "
+                 "and firmware that suppors CPU hotplug with SMM");
+@@ -526,8 +525,7 @@ void ich9_pm_device_unplug_request_cb(HotplugHandler *hotplug_dev,
+                !lpc->pm.cpu_hotplug_legacy) {
+         uint64_t negotiated = lpc->smi_negotiated_features;
+ 
+-        if (negotiated & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT) &&
+-            !(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT))) {
++        if (!(negotiated & BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT))) {
+             error_setg(errp, "cpu hot-unplug with SMI wasn't enabled "
+                              "by firmware");
+             error_append_hint(errp, "update machine type to a version having "
+diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
+index 71afb45b631..c57a06e0dde 100644
+--- a/hw/isa/lpc_ich9.c
++++ b/hw/isa/lpc_ich9.c
+@@ -400,15 +400,6 @@ static void smi_features_ok_callback(void *opaque)
+     guest_cpu_hotplug_features = guest_features &
+                                  (BIT_ULL(ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT) |
+                                   BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT));
+-    if (!(guest_features & BIT_ULL(ICH9_LPC_SMI_F_BROADCAST_BIT)) &&
+-        guest_cpu_hotplug_features) {
+-        /*
+-         * cpu hot-[un]plug with SMI requires SMI broadcast,
+-         * leave @features_ok at zero
+-         */
+-        return;
+-    }
 -
--DEFINE_I440FX_MACHINE(2, 8);
--
- #ifdef CONFIG_ISAPC
- static void isapc_machine_options(MachineClass *m)
- {
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index a1f46cd8f03..54c18100122 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -639,12 +639,3 @@ static void pc_q35_machine_2_9_options(MachineClass *m)
+     if (guest_cpu_hotplug_features ==
+         BIT_ULL(ICH9_LPC_SMI_F_CPU_HOT_UNPLUG_BIT)) {
+         /* cpu hot-unplug is unsupported without cpu-hotplug */
+@@ -470,14 +461,9 @@ static void ich9_apm_ctrl_changed(uint32_t val, void *arg)
+ 
+     /* SMI_EN = PMBASE + 30. SMI control and enable register */
+     if (lpc->pm.smi_en & ICH9_PMIO_SMI_EN_APMC_EN) {
+-        if (lpc->smi_negotiated_features &
+-            (UINT64_C(1) << ICH9_LPC_SMI_F_BROADCAST_BIT)) {
+-            CPUState *cs;
+-            CPU_FOREACH(cs) {
+-                cpu_interrupt(cs, CPU_INTERRUPT_SMI);
+-            }
+-        } else {
+-            cpu_interrupt(current_cpu, CPU_INTERRUPT_SMI);
++        CPUState *cs;
++        CPU_FOREACH(cs) {
++            cpu_interrupt(cs, CPU_INTERRUPT_SMI);
+         }
+     }
  }
- 
- DEFINE_Q35_MACHINE(2, 9);
--
--static void pc_q35_machine_2_8_options(MachineClass *m)
--{
--    pc_q35_machine_2_9_options(m);
--    compat_props_add(m->compat_props, hw_compat_2_8, hw_compat_2_8_len);
--    compat_props_add(m->compat_props, pc_compat_2_8, pc_compat_2_8_len);
--}
--
--DEFINE_Q35_MACHINE(2, 8);
+@@ -830,8 +816,6 @@ static const Property ich9_lpc_properties[] = {
+     DEFINE_PROP_BOOL("noreboot", ICH9LPCState, pin_strap.spkr_hi, false),
+     DEFINE_PROP_BOOL("smm-compat", ICH9LPCState, pm.smm_compat, false),
+     DEFINE_PROP_BOOL("smm-enabled", ICH9LPCState, pm.smm_enabled, false),
+-    DEFINE_PROP_BIT64("x-smi-broadcast", ICH9LPCState, smi_host_features,
+-                      ICH9_LPC_SMI_F_BROADCAST_BIT, true),
+     DEFINE_PROP_BIT64("x-smi-cpu-hotplug", ICH9LPCState, smi_host_features,
+                       ICH9_LPC_SMI_F_CPU_HOTPLUG_BIT, true),
+     DEFINE_PROP_BIT64("x-smi-cpu-hotunplug", ICH9LPCState, smi_host_features,
 -- 
 2.47.1
 
