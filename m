@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59478C3ABAD
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:28:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35A01C369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:30:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAbPl-0007am-UT; Thu, 01 May 2025 17:25:54 -0400
+	id 1uAbLf-0000rm-9N; Thu, 01 May 2025 17:21:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbOq-0004np-WA
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:24:57 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1uAbLQ-0000lJ-5g
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:26 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbOo-0002Cl-RT
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:24:56 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-af589091049so1078466a12.1
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:24:54 -0700 (PDT)
+ id 1uAbLO-0001Rw-IL
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:23 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-afc857702d1so1489555a12.3
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:21:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746134693; x=1746739493; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746134481; x=1746739281; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SSbFpFjMPZ364OnkhpeAl/6b8u/xx6/tSoMMKW2aIxw=;
- b=MRr+wVn9Tl8I8uO8Aw57u0lPq2rgojaVKllBsBDrXowEj/4sFTBV7rnygv3lF+X5qO
- K56k1jbv3mIXQUgV3AqU5YVQw3BDJf1/rEZ2xojvNMnZVr7Eq7vAmRxXywRfG5PNa7d6
- xvyTgkE/PBqz/e6QnvMXUkDpEDeFA5K6qAq9OVZ7vUU9KiejgCWQv8ZTrablsAwfCIlF
- VQL6fTEzrw9d3iEfgqcdxzqP09GPzPQ42nZOXPEJ9SRJ67T2jX4kEyallTrO10bEfmLL
- Y1oTvEWjs8hcMPU0mD0ezCNX7Y+Z/gHw170z//MW0SlghpC5UbloU4Amm0Evduvoncn1
- DBiQ==
+ bh=q8/gUh8ns0OI2KXninhYbAotAkB5LmkpT0e10M7S7xU=;
+ b=j5b+3fwd04ZHbMTDfk3PN043Sy5sg2QsmP8B8Ut01UTXJOjj4nTIohVhKhaqBVCTXV
+ sCy91v347pSmFV8p5B4VcCad+IrR8PYKTG0yX6ncGyHIfm2lF78gizTLJqornb0mq793
+ QasifpzfRk0ZQ6DJBeIpLrndyJGmKVo+fR78b6gMAMAPFSGmJUK7ap5s2KR0mM3GSm0b
+ QYScUR7KB46g3m5n/YXJQGzzDiOmn4Ng0ZiGj9o+En07SjJfCdzmRQ5+BobtZ8L+pBuC
+ CAFAZboASXth+3TQrxzUfrSVHFHVLFbh4vQ7RFfH1rpec+07PxIfkj23zhustn6qXhsg
+ nFPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746134693; x=1746739493;
+ d=1e100.net; s=20230601; t=1746134481; x=1746739281;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SSbFpFjMPZ364OnkhpeAl/6b8u/xx6/tSoMMKW2aIxw=;
- b=dJW3NNfL/ANFkLYS1suztdrTWu2RRdTIMMKuJEamL5hFHVkOV9I4PJpAA+bCNuLiCP
- o2GtM96XAmiWIDjMnFKN2SNe6DMXJLdEDHlmBIHnILJpX3YSZrV+J4QqKHS8+rjS/PoE
- LLXalI3JR6eOKY5Z/EF5fk4tDqC8oLdlWF15ZXMVH/4U9ixETFb1dltbvfPXKU+ceRmY
- 0ggoZ8rPIzlA5JgmjHQ/SnaVp6w4wn2jtx5VXS0p49oink0O0YPSgb5eJ6Ic55uNlZYZ
- Ky6WQMZMB54sH90NOWOrqYnwwOUSS2d94xd/hB3GbZGKeS+V4EZezc2ghgy05uhjmNs/
- Afsw==
-X-Gm-Message-State: AOJu0YwrQ8625GnVdHWW2WrqZU10Pj3JsQEF5EFht57Xgz8WEE3k5HBs
- lP6Vv9Chr4OW/NRoJeQCnQ8LJHPWEoIUQi2SNWxNlazKQtxsacer5M6nzgDEkWBXQZMDZTBYfzy
- a
-X-Gm-Gg: ASbGncvnZafs9sj+CFU3bDcNwBNi+A2mSOXk1WgMD6PSgeCqfRHRLaeFkMNqICGT4Z4
- SQQrlfVWlWhWZ19j0JAK+GkWBn6oSCXhQbd1KgYQWLur4lWJGjRgNwyOD522puUnTCKaWSvqbqJ
- T/ys02hQHSQoojm9UT2Z84sxS073pcc59i8yh9Y4vedzKo408f8AfJp8chKeYW1SHKaDY7wkD6l
- CrX5nhzB+8IatCPTZ9FO6FTXYDHcr+cIXvBBQMtdTtXAIvromgFTqC1z13RNx17UeRxS1lsgAYK
- uDPaLvWhM6pqBmrTSGpB6Pl68jwEDuVKbpm7SjtnSq7qJ3Yzeay+wgHIe0vvUy0ZxfiaES/IFHE
+ bh=q8/gUh8ns0OI2KXninhYbAotAkB5LmkpT0e10M7S7xU=;
+ b=Cr1XcR1sLjakX28qWMIqt8dwMf1nhL8RTv749GPX6FDp5unNYuw+BVVZG6fvI9meh2
+ Vm+pvZjR/m5D9qy3PLwi5/M64MqT4F66+k4u88Y8GNx9WT5RGRXUkr4LjvmAhTAUe93F
+ 1eprCFF20fxPxjQCe9k//Jxa8MiKOqxBvpw/NlGW2/isOm3hgo48LSQAtm6CifhA8xUD
+ oDn3z4vb4nBRJCMqN/x7BhgrK03lGfVT536TxWhxOmDyJltyAP0OOZKbz0QMRJyVUjwJ
+ KN7iiZq0KOW9jqsGWUd2b6ab3+SarxwkKSnnZhAhlCNphbxFRNHytaWFu817ShaXnvgM
+ 2CMQ==
+X-Gm-Message-State: AOJu0YyIEaHxoD00Ois7VsDMzA2dhR0tTpakk6pdFoDuk3hZeNpeG/Fi
+ MQVem64OkE3CprWSeHunaJyYMTZZNQNYCvxKnPG0BRNMM6iZxc7avVFg263waKxE+aGfYHxthII
+ q
+X-Gm-Gg: ASbGncuV8cnalNNi0H6tYD7TCzcT9f8XqU+2z7UEfsy3owa5gcPHOVgm5QGOm1wSOFY
+ 2M7cLcOVc/VhZtRWQ7YBQT8OqfDxGCPVa2yzfUKU8RYOZjlt8hoLU/n2iBX4TNYIrHBMy++PRxD
+ t0Z93CongBf5hsQ8R4stqduZ1ihwShDpCwg3rQ4O1hIJ8xNx4n2IsWrcMR55vfGZ+irY37BD5wA
+ brMnsBHYy1gyZ+HJPLVA/A8Hgw5K/y3+og7whewcPRCI4X9KgBtKeWEZFkE5L97H8qRCXpPjVnH
+ TYszC8fOtscKpnvDT2ytLjsJG6FwwLojJMAWOKdOwRIMgqUmLFNPTO8nUtpC0cYKGp3QImFadZQ
  =
-X-Google-Smtp-Source: AGHT+IFcuVBoYG5HGRNf6eKJY0gPF7xPhGBG1OQas0wJlPh46gmwzS/URQP25Xrud1qO3eWORYSJdA==
-X-Received: by 2002:a05:6a20:2d09:b0:1f3:3ca3:8216 with SMTP id
- adf61e73a8af0-20cde373fb1mr587043637.5.1746134693143; 
- Thu, 01 May 2025 14:24:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFFSRRRp9YOiVdtJA9S8k8T64pH04xqkieXgILhhGjBcammyjlwsBFiBRd1ZqVlDpzgVgf2CQ==
+X-Received: by 2002:a17:90b:4e8e:b0:2ff:53ad:a0ec with SMTP id
+ 98e67ed59e1d1-30a4e5d58e3mr802224a91.21.1746134481210; 
+ Thu, 01 May 2025 14:21:21 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-740590610desm135897b3a.146.2025.05.01.14.24.52
+ 98e67ed59e1d1-30a476267e0sm1384573a91.39.2025.05.01.14.21.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 14:24:52 -0700 (PDT)
+ Thu, 01 May 2025 14:21:20 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 49/59] accel/tcg: Move user-only tlb_vaddr_to_host out of line
-Date: Thu,  1 May 2025 14:21:03 -0700
-Message-ID: <20250501212113.2961531-50-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 08/59] accel/tcg: Simplify CPU_TLB_DYN_MAX_BITS
+Date: Thu,  1 May 2025 14:20:22 -0700
+Message-ID: <20250501212113.2961531-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250501212113.2961531-1-richard.henderson@linaro.org>
 References: <20250501212113.2961531-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,54 +100,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At the same time, fix a mis-match between user and system
-by using vaddr not abi_ptr for the address parameter.
+Stop taking TARGET_VIRT_ADDR_SPACE_BITS into account.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Since we currently bound CPU_TLB_DYN_MAX_BITS to 22,
+the new bound with a 4k page size is 20, which isn't
+so different.
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/accel/tcg/cpu-ldst.h | 8 --------
- accel/tcg/user-exec.c        | 6 ++++++
- 2 files changed, 6 insertions(+), 8 deletions(-)
+ accel/tcg/tlb-bounds.h | 21 +--------------------
+ 1 file changed, 1 insertion(+), 20 deletions(-)
 
-diff --git a/include/accel/tcg/cpu-ldst.h b/include/accel/tcg/cpu-ldst.h
-index 44a62b54da..00e6419e13 100644
---- a/include/accel/tcg/cpu-ldst.h
-+++ b/include/accel/tcg/cpu-ldst.h
-@@ -515,15 +515,7 @@ static inline uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr addr)
-  * Otherwise (TLB entry is for an I/O access, guest software
-  * TLB fill required, etc) return NULL.
-  */
--#ifdef CONFIG_USER_ONLY
--static inline void *tlb_vaddr_to_host(CPUArchState *env, abi_ptr addr,
--                                      MMUAccessType access_type, int mmu_idx)
--{
--    return g2h(env_cpu(env), addr);
--}
--#else
- void *tlb_vaddr_to_host(CPUArchState *env, vaddr addr,
-                         MMUAccessType access_type, int mmu_idx);
--#endif
+diff --git a/accel/tcg/tlb-bounds.h b/accel/tcg/tlb-bounds.h
+index efd34d4793..f83d9ac9ee 100644
+--- a/accel/tcg/tlb-bounds.h
++++ b/accel/tcg/tlb-bounds.h
+@@ -7,26 +7,7 @@
+ #define ACCEL_TCG_TLB_BOUNDS_H
  
- #endif /* ACCEL_TCG_CPU_LDST_H */
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index e1f4c4eacf..adc5296ba5 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -850,6 +850,12 @@ void *probe_access(CPUArchState *env, vaddr addr, int size,
-     return size ? g2h(env_cpu(env), addr) : NULL;
- }
+ #define CPU_TLB_DYN_MIN_BITS 6
++#define CPU_TLB_DYN_MAX_BITS (32 - TARGET_PAGE_BITS)
+ #define CPU_TLB_DYN_DEFAULT_BITS 8
  
-+void *tlb_vaddr_to_host(CPUArchState *env, vaddr addr,
-+                        MMUAccessType access_type, int mmu_idx)
-+{
-+    return g2h(env_cpu(env), addr);
-+}
-+
- tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
-                                         void **hostp)
- {
+-# if HOST_LONG_BITS == 32
+-/* Make sure we do not require a double-word shift for the TLB load */
+-#  define CPU_TLB_DYN_MAX_BITS (32 - TARGET_PAGE_BITS)
+-# else /* HOST_LONG_BITS == 64 */
+-/*
+- * Assuming TARGET_PAGE_BITS==12, with 2**22 entries we can cover 2**(22+12) ==
+- * 2**34 == 16G of address space. This is roughly what one would expect a
+- * TLB to cover in a modern (as of 2018) x86_64 CPU. For instance, Intel
+- * Skylake's Level-2 STLB has 16 1G entries.
+- * Also, make sure we do not size the TLB past the guest's address space.
+- */
+-#  ifdef TARGET_PAGE_BITS_VARY
+-#   define CPU_TLB_DYN_MAX_BITS                                  \
+-    MIN(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
+-#  else
+-#   define CPU_TLB_DYN_MAX_BITS                                  \
+-    MIN_CONST(22, TARGET_VIRT_ADDR_SPACE_BITS - TARGET_PAGE_BITS)
+-#  endif
+-# endif
+-
+ #endif /* ACCEL_TCG_TLB_BOUNDS_H */
 -- 
 2.43.0
 
