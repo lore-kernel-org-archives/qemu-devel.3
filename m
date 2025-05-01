@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AC5EC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6BBBC3ABA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:38:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAYmW-0007Gh-MC; Thu, 01 May 2025 14:37:14 -0400
+	id 1uAYnP-0000LF-Jh; Thu, 01 May 2025 14:38:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYmH-000715-47
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:36:58 -0400
-Received: from mail-io1-xd33.google.com ([2607:f8b0:4864:20::d33])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYmY-0007Ug-9d
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:37:16 -0400
+Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYmD-0007wE-P5
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:36:55 -0400
-Received: by mail-io1-xd33.google.com with SMTP id
- ca18e2360f4ac-86192b64d0bso116669039f.3
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:36:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYmW-00082F-Ja
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:37:14 -0400
+Received: by mail-il1-x12f.google.com with SMTP id
+ e9e14a558f8ab-3d450154245so10673655ab.2
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:37:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746124612; x=1746729412; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746124630; x=1746729430; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qiohr4MT6BWGS6u7M3UfoTFyN24o8cqdcAs0DiC3HNk=;
- b=b0nxMbd1ACtu1y468TIvbTBDqIPTTENE/dfxYLLTXgJLNF26rrSzM5oVTNTDyd9AZe
- MUlKkZ6UQ0wBs1fI2nMkcbsO6muvyg9kDx91dRrdL/18G2Y6f2kEP5SNDNAiHgMjP7Ma
- CDj/tuCI+Vv3Z8BmM5zD6V6Beie4ls/pMLF1AE0CyrqBSsbFswxCQbG5hr/DYhXTUDHR
- YjXrlR27CYg2f8eaiS4rfUyyurQpD96c1gOEtibp8ySWRUSerpVkLTQ8VkzWkE9rpMgo
- T1UXAvB2Q5X6iEWO4iLU2AwcPcDG4+cj9ghGGItE5POlULsOO2rZErcs3lTQQV0/AelK
- Fj+w==
+ bh=zXADTJwgYK4rQDoTBJwmSMh4WIgzI1vWgP1J7gzagsQ=;
+ b=KdltTTsn3Ni/h/oQJaeelw3ESJW7W7A2+G9lR0c0TeVqnLBx6Uzj2CeqoXCI63kGmR
+ /ha07fqZ6oxT9KwEruLWaQeoqJ8K1upqrbTCbAMosdgsU06BhCYJnDN0/0ZSxQOVD98t
+ fkf0g7dyIzSaJ522vquZHoCJ579Vu2xCAKKJ+PEXXA2rzenzaaXaZnchap5E47x1wtyl
+ lqa27/9ikY9XT4lgFNdWrKNnLQrCNtYBgioWmTtQOrZG4WDp9oTpChprpkg1kYvS0dLM
+ P+4BqF3i/bd3+nDGyE66m+xyrLSM1y5n8ER9SzJksM0uaTGcdFLn9Px4bT+sWyA2pNbK
+ 1n3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746124612; x=1746729412;
+ d=1e100.net; s=20230601; t=1746124630; x=1746729430;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qiohr4MT6BWGS6u7M3UfoTFyN24o8cqdcAs0DiC3HNk=;
- b=P5tPOa35FfmML38mxV4y4yfYM32V4s9FqTSI40WIUrYIPyWOmmmnUcp6nPWmI8ThPf
- cDTXxDx8ETM4SSaa/2uUDYUcMkObWnIRM6Ie1tOSflnUu3sq89ybsdrq4GkUj0ZRc3Oa
- G0PkBSudZq8fuaLv7aCAUV3CzVo123tlLLdRhaEV+x62auEV42QMb/vMfn4X0+jhPRCc
- 3aPXILN+f4zfiFyqbULsogP7U+78/lG4B/PLRCk2l2AZ5zQqEULXqk3WrJmf2Pit6r/p
- Y0uE8KC4AgPRwk4tisI4KMOM16mTqCAQv6DHBWRRH7olkCV+33ngwmT2Qs6rsHb2DAeM
- JOBQ==
-X-Gm-Message-State: AOJu0YyR5+wvQPtfDJxav+gFH4qRtn+ItKciocJSrCIL+QLvHx2QZtvN
- V9bFtuc6zD2HjXQY0X3FOzLZV72YQ/BUvkVC5dllvF9el/2QjvdCdY6ost+EdQNhuz0OrFRALPq
- c
-X-Gm-Gg: ASbGncs+piFQ5+dy7wjEQDECMvFDfMSslMgnlmsdwqjr/yPY6jKqxrrXgFGpL4cAQuy
- PCSS4Ypy4GgL0IeLh8nqp2BOFB9ZYXjMUnhehefjLoJrtEoQzgT2h0hb7JjKGIxPYFYfCW+Npgj
- 9b/7syOaXf8QNq55OME4LVBQVvVKY8K6Dd5hREt2BiVJWjX8u3H9DVHRfdsJEzNxQCbHBT55Tdv
- Wi0oLvsM5LjQGG80VntQUskWqxSgwuH13V9tCHGDTe+qtdyV00vte1FPEpR820C6x6XPGBfpATE
- BZLV5z0gZDBwBdMBZ4EsG7NfjTrAo8Fl/jXhCEG9bn318N2GUXxFsEkG8sTSnnDNAWD9W6NYKaH
- OzMHIgJzY3TvtoqpGsMsB
-X-Google-Smtp-Source: AGHT+IEI/ja8MXv7xR6Z0/CRS5FrVaYwDPrSlgBwKFYWa06MPkqUmf7lSv3uPWavaabnHddE/FYGqQ==
-X-Received: by 2002:a05:6602:4088:b0:85b:482b:8530 with SMTP id
- ca18e2360f4ac-8669fb09e0dmr33611339f.2.1746124612153; 
- Thu, 01 May 2025 11:36:52 -0700 (PDT)
+ bh=zXADTJwgYK4rQDoTBJwmSMh4WIgzI1vWgP1J7gzagsQ=;
+ b=ZLRiZuLSC6eGSoXrGBfGR9YjA/u+/tJNRubgy9cx5/hPxN/1G6Mm733lQxhLEgkVuR
+ 8RvPpwqFuyNIzXmQXIM2d4bLIu2uHvXv0BR+LixBRidXsgwcOHmSmJyf9aO0yAHUvFkH
+ 2Y/qHgh1krvqHT5/oIDAh+IoMCSz2JH1cwniW4huo8SiaNsTsEzgkm8hkxaIx8EGzYAT
+ bOZkwHRoP9Ji1u2sItXyOcaJIq9FfyVbm+K4R+vAoREMQrAfnzt392nhlGVlL9evR4Nw
+ gl4DNFdrwottvLP0ER2uQXkHgRrjX2Flg+gRd1eAnF4AI2Kr/3Bm1qePbPDA2jC2DX2r
+ +oiA==
+X-Gm-Message-State: AOJu0Yya2iA2/bAU+U+MBKszSfVI1iudPjz1Fh+/ewy/4oe+lT+fXqrg
+ 0HvMbJisBnVd2PJuJtQvX2eUDG1d9uO/fIDiOC4xaM7fYG+twmbsCgSqVomq/Euau0U3KuDcZ7b
+ 6
+X-Gm-Gg: ASbGncuFt6/inla/p8QsBlnZzlvcOegjWaIg6GJXH6GaNrRsYkljPa+AHcJLM2yF5OF
+ 6q0LQiUUGz82vM/0OhEDsz1EZjT3WOlKkldDNouG3BQEUvJG1PpjKPeSBuPsolJtT8MQ92OVG9h
+ v9fwq2+kaAufXzlcEpi/KTwxT3lfxY+k2ccooN0cyp9WBbIRuimuF9cvxyQtoATajSTl2Ttq0Kb
+ xd7Eu6OayDkN6x4XCGC9StVgzw3IWmGUq2PHt31ZI05xY7sESi8p5GU+7d/Y/5+H7cKDtg7410a
+ llPZdP00MKpq3hSIrXMnhqoxUJkUdspWM4i/17GY+HeyUzLf4IWDIY0pVfyhFefE6f/I6VmFkCn
+ CPBstnoJYnv1XiLEPZN3v
+X-Google-Smtp-Source: AGHT+IG1AjPTJ9CmAnwaqhyWbwzMydJK02WR6ePNouF+OXrBZjI5JcJ2Zlaz7X4Kdy90KucPytqsSg==
+X-Received: by 2002:a05:6e02:1f05:b0:3d8:1cba:1854 with SMTP id
+ e9e14a558f8ab-3d970198c59mr55748625ab.1.1746124630482; 
+ Thu, 01 May 2025 11:37:10 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f88303be7fsm294879173.142.2025.05.01.11.36.48
+ e9e14a558f8ab-3d975e7808esm2526775ab.25.2025.05.01.11.37.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 11:36:51 -0700 (PDT)
+ Thu, 01 May 2025 11:37:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
@@ -78,18 +78,17 @@ Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 02/16] hw/i386/pc: Remove
- PCMachineClass::legacy_cpu_hotplug field
-Date: Thu,  1 May 2025 20:36:14 +0200
-Message-ID: <20250501183628.87479-3-philmd@linaro.org>
+Subject: [PATCH v2 04/16] hw/i386/pc: Remove pc_compat_2_6[] array
+Date: Thu,  1 May 2025 20:36:16 +0200
+Message-ID: <20250501183628.87479-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501183628.87479-1-philmd@linaro.org>
 References: <20250501183628.87479-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d33;
- envelope-from=philmd@linaro.org; helo=mail-io1-xd33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
+ envelope-from=philmd@linaro.org; helo=mail-il1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,298 +111,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PCMachineClass::legacy_cpu_hotplug boolean was only used
-by the pc-q35-2.6 and pc-i440fx-2.6 machines, which got
-removed. Remove it and simplify build_dsdt(), removing
-build_legacy_cpu_hotplug_aml() altogether.
+The pc_compat_2_6[] array was only used by the pc-q35-2.6
+and pc-i440fx-2.6 machines, which got removed. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/acpi/cpu_hotplug.h |   3 -
- include/hw/i386/pc.h          |   3 -
- hw/acpi/cpu_hotplug.c         | 230 ----------------------------------
- hw/i386/acpi-build.c          |   4 +-
- 4 files changed, 1 insertion(+), 239 deletions(-)
+ include/hw/i386/pc.h | 3 ---
+ hw/i386/pc.c         | 8 --------
+ 2 files changed, 11 deletions(-)
 
-diff --git a/include/hw/acpi/cpu_hotplug.h b/include/hw/acpi/cpu_hotplug.h
-index 3b932abbbbe..aeee630cf05 100644
---- a/include/hw/acpi/cpu_hotplug.h
-+++ b/include/hw/acpi/cpu_hotplug.h
-@@ -34,7 +34,4 @@ void legacy_acpi_cpu_hotplug_init(MemoryRegion *parent, Object *owner,
- void acpi_switch_to_modern_cphp(AcpiCpuHotplug *gpe_cpu,
-                                 CPUHotplugState *cpuhp_state,
-                                 uint16_t io_port);
--
--void build_legacy_cpu_hotplug_aml(Aml *ctx, MachineState *machine,
--                                  uint16_t io_base);
- #endif
 diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 79b72c54dd3..a3de3e9560d 100644
+index a3de3e9560d..4fb2033bc54 100644
 --- a/include/hw/i386/pc.h
 +++ b/include/hw/i386/pc.h
-@@ -110,9 +110,6 @@ struct PCMachineClass {
-     bool enforce_amd_1tb_hole;
-     bool isa_bios_alias;
+@@ -292,9 +292,6 @@ extern const size_t pc_compat_2_8_len;
+ extern GlobalProperty pc_compat_2_7[];
+ extern const size_t pc_compat_2_7_len;
  
--    /* generate legacy CPU hotplug AML */
--    bool legacy_cpu_hotplug;
+-extern GlobalProperty pc_compat_2_6[];
+-extern const size_t pc_compat_2_6_len;
 -
-     /* use PVH to load kernels that support this feature */
-     bool pvh_enabled;
+ #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+     static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
+                                                  const void *data) \
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 49632b69d29..7573b880905 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -251,14 +251,6 @@ GlobalProperty pc_compat_2_7[] = {
+ };
+ const size_t pc_compat_2_7_len = G_N_ELEMENTS(pc_compat_2_7);
  
-diff --git a/hw/acpi/cpu_hotplug.c b/hw/acpi/cpu_hotplug.c
-index aa0e1e3efa5..fe439705bda 100644
---- a/hw/acpi/cpu_hotplug.c
-+++ b/hw/acpi/cpu_hotplug.c
-@@ -116,233 +116,3 @@ void acpi_switch_to_modern_cphp(AcpiCpuHotplug *gpe_cpu,
-     memory_region_del_subregion(parent, &gpe_cpu->io);
-     cpu_hotplug_hw_init(parent, gpe_cpu->device, cpuhp_state, io_port);
- }
+-GlobalProperty pc_compat_2_6[] = {
+-    { TYPE_X86_CPU, "cpuid-0xb", "off" },
+-    { "vmxnet3", "romfile", "" },
+-    { TYPE_X86_CPU, "fill-mtrr-mask", "off" },
+-    { "apic-common", "legacy-instance-id", "on", }
+-};
+-const size_t pc_compat_2_6_len = G_N_ELEMENTS(pc_compat_2_6);
 -
--void build_legacy_cpu_hotplug_aml(Aml *ctx, MachineState *machine,
--                                  uint16_t io_base)
--{
--    Aml *dev;
--    Aml *crs;
--    Aml *pkg;
--    Aml *field;
--    Aml *method;
--    Aml *if_ctx;
--    Aml *else_ctx;
--    int i, apic_idx;
--    Aml *sb_scope = aml_scope("_SB");
--    uint8_t madt_tmpl[8] = {0x00, 0x08, 0x00, 0x00, 0x00, 0, 0, 0};
--    Aml *cpu_id = aml_arg(1);
--    Aml *apic_id = aml_arg(0);
--    Aml *cpu_on = aml_local(0);
--    Aml *madt = aml_local(1);
--    Aml *cpus_map = aml_name(CPU_ON_BITMAP);
--    Aml *zero = aml_int(0);
--    Aml *one = aml_int(1);
--    MachineClass *mc = MACHINE_GET_CLASS(machine);
--    const CPUArchIdList *apic_ids = mc->possible_cpu_arch_ids(machine);
--    X86MachineState *x86ms = X86_MACHINE(machine);
--
--    /*
--     * _MAT method - creates an madt apic buffer
--     * apic_id = Arg0 = Local APIC ID
--     * cpu_id  = Arg1 = Processor ID
--     * cpu_on = Local0 = CPON flag for this cpu
--     * madt = Local1 = Buffer (in madt apic form) to return
--     */
--    method = aml_method(CPU_MAT_METHOD, 2, AML_NOTSERIALIZED);
--    aml_append(method,
--        aml_store(aml_derefof(aml_index(cpus_map, apic_id)), cpu_on));
--    aml_append(method,
--        aml_store(aml_buffer(sizeof(madt_tmpl), madt_tmpl), madt));
--    /* Update the processor id, lapic id, and enable/disable status */
--    aml_append(method, aml_store(cpu_id, aml_index(madt, aml_int(2))));
--    aml_append(method, aml_store(apic_id, aml_index(madt, aml_int(3))));
--    aml_append(method, aml_store(cpu_on, aml_index(madt, aml_int(4))));
--    aml_append(method, aml_return(madt));
--    aml_append(sb_scope, method);
--
--    /*
--     * _STA method - return ON status of cpu
--     * apic_id = Arg0 = Local APIC ID
--     * cpu_on = Local0 = CPON flag for this cpu
--     */
--    method = aml_method(CPU_STATUS_METHOD, 1, AML_NOTSERIALIZED);
--    aml_append(method,
--        aml_store(aml_derefof(aml_index(cpus_map, apic_id)), cpu_on));
--    if_ctx = aml_if(cpu_on);
--    {
--        aml_append(if_ctx, aml_return(aml_int(0xF)));
--    }
--    aml_append(method, if_ctx);
--    else_ctx = aml_else();
--    {
--        aml_append(else_ctx, aml_return(zero));
--    }
--    aml_append(method, else_ctx);
--    aml_append(sb_scope, method);
--
--    method = aml_method(CPU_EJECT_METHOD, 2, AML_NOTSERIALIZED);
--    aml_append(method, aml_sleep(200));
--    aml_append(sb_scope, method);
--
--    method = aml_method(CPU_SCAN_METHOD, 0, AML_NOTSERIALIZED);
--    {
--        Aml *while_ctx, *if_ctx2, *else_ctx2;
--        Aml *bus_check_evt = aml_int(1);
--        Aml *remove_evt = aml_int(3);
--        Aml *status_map = aml_local(5); /* Local5 = active cpu bitmap */
--        Aml *byte = aml_local(2); /* Local2 = last read byte from bitmap */
--        Aml *idx = aml_local(0); /* Processor ID / APIC ID iterator */
--        Aml *is_cpu_on = aml_local(1); /* Local1 = CPON flag for cpu */
--        Aml *status = aml_local(3); /* Local3 = active state for cpu */
--
--        aml_append(method, aml_store(aml_name(CPU_STATUS_MAP), status_map));
--        aml_append(method, aml_store(zero, byte));
--        aml_append(method, aml_store(zero, idx));
--
--        /* While (idx < SizeOf(CPON)) */
--        while_ctx = aml_while(aml_lless(idx, aml_sizeof(cpus_map)));
--        aml_append(while_ctx,
--            aml_store(aml_derefof(aml_index(cpus_map, idx)), is_cpu_on));
--
--        if_ctx = aml_if(aml_and(idx, aml_int(0x07), NULL));
--        {
--            /* Shift down previously read bitmap byte */
--            aml_append(if_ctx, aml_shiftright(byte, one, byte));
--        }
--        aml_append(while_ctx, if_ctx);
--
--        else_ctx = aml_else();
--        {
--            /* Read next byte from cpu bitmap */
--            aml_append(else_ctx, aml_store(aml_derefof(aml_index(status_map,
--                       aml_shiftright(idx, aml_int(3), NULL))), byte));
--        }
--        aml_append(while_ctx, else_ctx);
--
--        aml_append(while_ctx, aml_store(aml_and(byte, one, NULL), status));
--        if_ctx = aml_if(aml_lnot(aml_equal(is_cpu_on, status)));
--        {
--            /* State change - update CPON with new state */
--            aml_append(if_ctx, aml_store(status, aml_index(cpus_map, idx)));
--            if_ctx2 = aml_if(aml_equal(status, one));
--            {
--                aml_append(if_ctx2,
--                    aml_call2(AML_NOTIFY_METHOD, idx, bus_check_evt));
--            }
--            aml_append(if_ctx, if_ctx2);
--            else_ctx2 = aml_else();
--            {
--                aml_append(else_ctx2,
--                    aml_call2(AML_NOTIFY_METHOD, idx, remove_evt));
--            }
--        }
--        aml_append(if_ctx, else_ctx2);
--        aml_append(while_ctx, if_ctx);
--
--        aml_append(while_ctx, aml_increment(idx)); /* go to next cpu */
--        aml_append(method, while_ctx);
--    }
--    aml_append(sb_scope, method);
--
--    /* The current AML generator can cover the APIC ID range [0..255],
--     * inclusive, for VCPU hotplug. */
--    QEMU_BUILD_BUG_ON(ACPI_CPU_HOTPLUG_ID_LIMIT > 256);
--    if (x86ms->apic_id_limit > ACPI_CPU_HOTPLUG_ID_LIMIT) {
--        error_report("max_cpus is too large. APIC ID of last CPU is %u",
--                     x86ms->apic_id_limit - 1);
--        exit(1);
--    }
--
--    /* create PCI0.PRES device and its _CRS to reserve CPU hotplug MMIO */
--    dev = aml_device("PCI0." stringify(CPU_HOTPLUG_RESOURCE_DEVICE));
--    aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0A06")));
--    aml_append(dev,
--        aml_name_decl("_UID", aml_string("CPU Hotplug resources"))
--    );
--    /* device present, functioning, decoding, not shown in UI */
--    aml_append(dev, aml_name_decl("_STA", aml_int(0xB)));
--    crs = aml_resource_template();
--    aml_append(crs,
--        aml_io(AML_DECODE16, io_base, io_base, 1, ACPI_GPE_PROC_LEN)
--    );
--    aml_append(dev, aml_name_decl("_CRS", crs));
--    aml_append(sb_scope, dev);
--    /* declare CPU hotplug MMIO region and PRS field to access it */
--    aml_append(sb_scope, aml_operation_region(
--        "PRST", AML_SYSTEM_IO, aml_int(io_base), ACPI_GPE_PROC_LEN));
--    field = aml_field("PRST", AML_BYTE_ACC, AML_NOLOCK, AML_PRESERVE);
--    aml_append(field, aml_named_field("PRS", 256));
--    aml_append(sb_scope, field);
--
--    /* build Processor object for each processor */
--    for (i = 0; i < apic_ids->len; i++) {
--        int cpu_apic_id = apic_ids->cpus[i].arch_id;
--
--        assert(cpu_apic_id < ACPI_CPU_HOTPLUG_ID_LIMIT);
--
--        dev = aml_processor(i, 0, 0, "CP%.02X", cpu_apic_id);
--
--        method = aml_method("_MAT", 0, AML_NOTSERIALIZED);
--        aml_append(method,
--            aml_return(aml_call2(CPU_MAT_METHOD,
--                                 aml_int(cpu_apic_id), aml_int(i))
--        ));
--        aml_append(dev, method);
--
--        method = aml_method("_STA", 0, AML_NOTSERIALIZED);
--        aml_append(method,
--            aml_return(aml_call1(CPU_STATUS_METHOD, aml_int(cpu_apic_id))));
--        aml_append(dev, method);
--
--        method = aml_method("_EJ0", 1, AML_NOTSERIALIZED);
--        aml_append(method,
--            aml_return(aml_call2(CPU_EJECT_METHOD, aml_int(cpu_apic_id),
--                aml_arg(0)))
--        );
--        aml_append(dev, method);
--
--        aml_append(sb_scope, dev);
--    }
--
--    /* build this code:
--     *   Method(NTFY, 2) {If (LEqual(Arg0, 0x00)) {Notify(CP00, Arg1)} ...}
--     */
--    /* Arg0 = APIC ID */
--    method = aml_method(AML_NOTIFY_METHOD, 2, AML_NOTSERIALIZED);
--    for (i = 0; i < apic_ids->len; i++) {
--        int cpu_apic_id = apic_ids->cpus[i].arch_id;
--
--        if_ctx = aml_if(aml_equal(aml_arg(0), aml_int(cpu_apic_id)));
--        aml_append(if_ctx,
--            aml_notify(aml_name("CP%.02X", cpu_apic_id), aml_arg(1))
--        );
--        aml_append(method, if_ctx);
--    }
--    aml_append(sb_scope, method);
--
--    /* build "Name(CPON, Package() { One, One, ..., Zero, Zero, ... })"
--     *
--     * Note: The ability to create variable-sized packages was first
--     * introduced in ACPI 2.0. ACPI 1.0 only allowed fixed-size packages
--     * ith up to 255 elements. Windows guests up to win2k8 fail when
--     * VarPackageOp is used.
--     */
--    pkg = x86ms->apic_id_limit <= 255 ? aml_package(x86ms->apic_id_limit) :
--                                        aml_varpackage(x86ms->apic_id_limit);
--
--    for (i = 0, apic_idx = 0; i < apic_ids->len; i++) {
--        int cpu_apic_id = apic_ids->cpus[i].arch_id;
--
--        for (; apic_idx < cpu_apic_id; apic_idx++) {
--            aml_append(pkg, aml_int(0));
--        }
--        aml_append(pkg, aml_int(apic_ids->cpus[i].cpu ? 1 : 0));
--        apic_idx = cpu_apic_id + 1;
--    }
--    aml_append(sb_scope, aml_name_decl(CPU_ON_BITMAP, pkg));
--    aml_append(ctx, sb_scope);
--
--    method = aml_method("\\_GPE._E02", 0, AML_NOTSERIALIZED);
--    aml_append(method, aml_call0("\\_SB." CPU_SCAN_METHOD));
--    aml_append(ctx, method);
--}
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 3fffa4a3328..625889783ec 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -1465,9 +1465,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-     }
-     aml_append(dsdt, scope);
- 
--    if (pcmc->legacy_cpu_hotplug) {
--        build_legacy_cpu_hotplug_aml(dsdt, machine, pm->cpu_hp_io_base);
--    } else {
-+    {
-         CPUHotplugFeatures opts = {
-             .acpi_1_compatible = true, .has_legacy_cphp = true,
-             .smi_path = pm->smi_on_cpuhp ? "\\_SB.PCI0.SMI0.SMIC" : NULL,
+ /*
+  * @PC_FW_DATA:
+  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
 -- 
 2.47.1
 
