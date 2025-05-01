@@ -4,97 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C61E7C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0457C3ABA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:14:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAb8K-0004aQ-Fj; Thu, 01 May 2025 17:07:52 -0400
+	id 1uAbEh-00067T-Na; Thu, 01 May 2025 17:14:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb7n-0003pE-UC
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:07:25 -0400
-Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uAbEf-00066m-7B
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:14:25 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb7k-0006p6-LD
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:07:18 -0400
-Received: by mail-il1-x12f.google.com with SMTP id
- e9e14a558f8ab-3d96d16b369so12886055ab.0
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:07:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uAbEd-00086g-8h
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:14:24 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2243803b776so24382575ad.0
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:14:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746133632; x=1746738432; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WwJU5ZPxxxnKG6o6jl5mOPQrDWUSsO9Sle41Xc0jm2Q=;
- b=jXmzCvFxuGGk27bOEpVB/qF1VgR+IA3gbU7PENbjAXAjyakEAuP2ZoSy8KrPDdQIID
- VnFAUewGzFhbZ+4CqAFFIEJi+cMgoafhJQHglecqfTa+qV4zQhHZYxI2cnK4goRHwetx
- YbPlSHGE1kO7CXhXklYfAobWcZb7CNgOnF7X1uRqS5dalZXxJTpjD5+N0XbHmUG3kTz5
- nwSvR9fzOfmnpLB95nYEmJxseUrDDYNYPoT54KDi11m5z+EWRkWiqaBFiVsCPM4Kque7
- p3yQH2xKubuePDXumet9gtGkjE+U0fCMEtRUkhAcTNNxI1MNyk2EVwIYGAk+ImUd+H60
- t0Kw==
+ d=linaro.org; s=google; t=1746134061; x=1746738861; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IjAzNRLbOrsoMtq/EPdzdknnHjpmqyE7LPvsWSwmdj8=;
+ b=Zy/7VQjIEzH1X+U+aGj9Bazd4yzMqG3jAVSK2QRWE1qHlIDVTNSxktxmQ0//MfKE3G
+ 7GX5eVMjt/vkRPC5r3y/c9y+6TqvDUeKe2bmxX4SFftFuBZQAM+64X+USaGkg9fEmKFZ
+ PbnWjmiW/iZZm1rNopT/HxgXPnc1326f7lr7IknBW2cAUs4nORXbCXmP+YS03ANx2GyG
+ 9JsB3sRGIXS8Vp/0xt3ST6LmYaZDRFGelWJEqkuEbOijDK8xAVzk0FCf2oFcgWp3LLEe
+ 0JaSxGVuxW6+sOJP6xulz1y9Tk8ziS+jKwoPrVeVxOwZlejlglvfqkkHCSCNGKFThasM
+ Krrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746133632; x=1746738432;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WwJU5ZPxxxnKG6o6jl5mOPQrDWUSsO9Sle41Xc0jm2Q=;
- b=vXfw+N9TVD+hCL8en0WgtSoSqCJ9KxflHXI5y1E8Jw/qO/XjDNncpjydjJTKBl+k73
- +dmtjwS/oFvBhNJc0hFGABczaAL3g2PQmTKgcAWc9TgAOrLnJVL72kNtb9CNXjHub0pS
- 1kQwWrZnHTFtuzvP7zVRgYAvy5kjMdy2hXhz0FMPAFoRp+Ryb8OJSd1HzCNeWVurUIEa
- 6WS73xAGCsdAaskTAGn4suHI0sjSLVfzBjxjaDcYqFexUcYZ9F1FuYooRRK3MD9IkfvJ
- 8isKUmKTGYNfhMCDrRpEUw3xnZwMPPhgeFq6eP91I5kg89AALVm8/WB07zGQe4JPxIDJ
- iVcA==
-X-Gm-Message-State: AOJu0Yy/foHAWO7fh3XAgMCxO6ZB7bBonoQCjh3OxbUU4D44AgxiP+ru
- k9xs258Lar6pZdE926hiv27fN0z6iN9YHN+xf3M5SKYnDfWkVXdp8IjWcTOvHkEgalRTHjwUgcr
- 8
-X-Gm-Gg: ASbGncvQA2gq4pgrez2mmI2df7k8InVUYayZb0/1runddzKjUMnqNNK4BS5vjVQwtc1
- 56C/8z3LE+la0iRjsqyhMbFpP0Ro3QQwTxzJM54r7zUMR7UQEeRm4Yb5Coc5XVkljrYM5wkuRIA
- QPIt9hBtfNMq6Bb+Pqbv/H6GrPqLBdUbxWMdVLw7Brck0vml5Pw5mH2LnAw0hYMGbmFoBOileV+
- t8ClazjnL3Q8Doo/T/n/ANdTcy6q4oYgcB8P8iYYJNqhsG4/0wc49bXrDvi46FF2nOFwNRXWSR6
- OROfJOUCEJYXPJwI7HCaVTFIoWG1Xy6IkDL/XHV0MjOhDzhuZMCBjEjgd3PRdQ4/+eL7iKxT2Bi
- ZYCxOc48XoWL9crY=
-X-Google-Smtp-Source: AGHT+IEr5p1LmQ9nlTOCpkroHBeFZN/OH2z1KfBspn9mGgar85WeTmUau62kPCCcvf7K5bYq5tsAiQ==
-X-Received: by 2002:a92:ca4e:0:b0:3d5:8923:faa5 with SMTP id
- e9e14a558f8ab-3d97c1af64bmr5387935ab.10.1746133632331; 
- Thu, 01 May 2025 14:07:12 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f88aa58ecesm46024173.98.2025.05.01.14.07.08
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 14:07:11 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
- <clement.mathieu--drif@eviden.com>, Zhao Liu <zhao1.liu@intel.com>,
- Hanna Reitz <hreitz@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- qemu-block@nongnu.org, Jason Wang <jasowang@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Ani Sinha <anisinha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Yi Liu <yi.l.liu@intel.com>
-Subject: [PATCH 15/18] hw/core/machine: Remove hw_compat_2_9[] array
-Date: Thu,  1 May 2025 23:04:53 +0200
-Message-ID: <20250501210456.89071-16-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250501210456.89071-1-philmd@linaro.org>
-References: <20250501210456.89071-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1746134061; x=1746738861;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IjAzNRLbOrsoMtq/EPdzdknnHjpmqyE7LPvsWSwmdj8=;
+ b=nxiOyqet6G/mhlG1b1DC6GK4G575H22Rcl5yWoBzqDgYd7Y0HubkTZu571pLVg4B2Y
+ ntQGKv35cTBN2IBEZDiU4his7sHlsMj6jwCSefRIbezRFbH/8MSTFzRsHNYjgEUn7rRI
+ NWgS2Y3RY9jwZqbzQjRPgDeIo2uUhGCGl0ZuY+xVAXwGD5KUHGrDgoYv5dBtpqh3ytoB
+ /glqF143fggG5wxFCLJTAJ5eh4mNhbIM+Sbt7/NoMWNZ1S748ttD/Jkju6GvSpraRAUa
+ l3YpLLJYXkslMzoFrA278O9BrofobHXqX3Ml0B40jcJQxzfJnFzH+4auvOrk8sgjIDF1
+ MByA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXdaUq/A2/ylp39aIQLhblKwE9mWozP5JdKY91YVv1wgTcI8uwZWYJnsJm8GhbhPoaPvp3Hhxf6Dcc2@nongnu.org
+X-Gm-Message-State: AOJu0YxfGIAP17NeBNb58t89emLayQG9jQe9OnOUw7EiE9CAmHEVfYKW
+ HCo8mi1aDMR3v98IDhmNmf9iSvQGDA6uhG7QTebwYmQfX8QNJnaEV75x5K9inv4=
+X-Gm-Gg: ASbGncvXWPscpIFCXnq6rXYiQGm37mIQx1NpJg78np1ODiTLdwbn796vJVyvTJ6umKL
+ zy4XzoeomHDG1yhm1dLjvsYZbdlDWfzARvEr6lPoM1cgUVfHZhkiWwdNUgNqoJImIELFrVvBRG/
+ 05zDR3SihGeAL+W0BDYvpcZ5YA35j5S6+So29VDU9yxqCyCaWMyah5pG4dZKVjr/WgxWWG3eVFL
+ iHQP3TktI7j7xznEzZZhAuHe13LlO+/nLLzDypa2qiLu6EiBNN02PXLoiNOEiESjYAIivbYz5pm
+ BcsBykpd3cl8d4JbmJ+8a2LbLp/YX61MwWrjFlpxpHJOC+d8l/WJ9eNFD7mt2uSA71iizaNYL7C
+ iLb9Ligg=
+X-Google-Smtp-Source: AGHT+IHrnRruNGSrJshHmWNz0Xu2ccGJ1f+1U8k2VE3mc5qFlXIZViS2LGp1pbaM8OTkQ1Dqx2jCgg==
+X-Received: by 2002:a17:903:2f91:b0:223:90ec:80f0 with SMTP id
+ d9443c01a7336-22e10344ebamr9025215ad.22.1746134060854; 
+ Thu, 01 May 2025 14:14:20 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22e1091702asm819235ad.206.2025.05.01.14.14.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 May 2025 14:14:20 -0700 (PDT)
+Message-ID: <757f10a3-712b-44a0-9914-5b221e185a20@linaro.org>
+Date: Thu, 1 May 2025 14:14:18 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 29/33] target/arm/ptw: replace target_ulong with
+ uint64_t
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>, anjo@rev.ng,
+ kvm@vger.kernel.org
+References: <20250501062344.2526061-1-pierrick.bouvier@linaro.org>
+ <20250501062344.2526061-30-pierrick.bouvier@linaro.org>
+ <21d32a4f-8954-4a36-ba0d-6cb7a50f242d@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <21d32a4f-8954-4a36-ba0d-6cb7a50f242d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
- envelope-from=philmd@linaro.org; helo=mail-il1-x12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,47 +109,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The hw_compat_2_9[] array was only used by the pc-q35-2.9 and
-pc-i440fx-2.9 machines, which got removed. Remove it.
+On 5/1/25 12:35, Philippe Mathieu-Daudé wrote:
+> On 1/5/25 08:23, Pierrick Bouvier wrote:
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>   target/arm/ptw.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+>> index d0a53d0987f..424d1b54275 100644
+>> --- a/target/arm/ptw.c
+>> +++ b/target/arm/ptw.c
+>> @@ -1660,7 +1660,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+>>       uint64_t ttbr;
+>>       hwaddr descaddr, indexmask, indexmask_grainsize;
+>>       uint32_t tableattrs;
+>> -    target_ulong page_size;
+>> +    uint64_t page_size;
+> 
+> Alternatively size_t.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/boards.h | 3 ---
- hw/core/machine.c   | 8 --------
- 2 files changed, 11 deletions(-)
+No, this is not related to the size of any host-side object.
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 84bd3735c42..513eb2a54fd 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -832,7 +832,4 @@ extern const size_t hw_compat_2_11_len;
- extern GlobalProperty hw_compat_2_10[];
- extern const size_t hw_compat_2_10_len;
- 
--extern GlobalProperty hw_compat_2_9[];
--extern const size_t hw_compat_2_9_len;
--
- #endif
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index bc0606cf740..486d1adb4b9 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -244,14 +244,6 @@ GlobalProperty hw_compat_2_10[] = {
- };
- const size_t hw_compat_2_10_len = G_N_ELEMENTS(hw_compat_2_10);
- 
--GlobalProperty hw_compat_2_9[] = {
--    { "pci-bridge", "shpc", "off" },
--    { "intel-iommu", "pt", "off" },
--    { "virtio-net-device", "x-mtu-bypass-backend", "off" },
--    { "pcie-root-port", "x-migrate-msix", "false" },
--};
--const size_t hw_compat_2_9_len = G_N_ELEMENTS(hw_compat_2_9);
--
- MachineState *current_machine;
- 
- static char *machine_get_kernel(Object *obj, Error **errp)
--- 
-2.47.1
+Bear in mind this particular page_size is used for the sizes of the intermediate page 
+table levels.  So, at the very top level of the page table walk this will be quite large.
 
+
+
+r~
 
