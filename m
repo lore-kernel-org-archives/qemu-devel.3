@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91553C369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:08:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C22EC369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:08:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAb6Q-0001JT-7g; Thu, 01 May 2025 17:05:54 -0400
+	id 1uAb6E-0001AB-7T; Thu, 01 May 2025 17:05:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6L-0001HI-Es
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:49 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6C-00019Y-95
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:40 -0400
 Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6J-0006Z4-Ph
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:49 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6A-0006XP-Jq
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:40 -0400
 Received: by mail-il1-x131.google.com with SMTP id
- e9e14a558f8ab-3d817bc6eb0so4548315ab.1
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:05:46 -0700 (PDT)
+ e9e14a558f8ab-3d81768268dso11950385ab.3
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:05:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746133545; x=1746738345; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746133537; x=1746738337; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o/QVQ9eARYed3NJFRK9UiivRgqBpCyWfc+XTOWrPU4o=;
- b=aDZV01h+aNa/6oF+owR4bkoobkcnTEUSjeLXC1D2c79flAKDLg01NkrmBu2/GtdR8S
- 87Wv27uC1L5wnZZQDvzbUFGb/75OHfU60LbBP9DX/M2flC8oQswCIGEyPcmRhEjPGdzP
- CaGB0WJ2x7oiuq71ecAp9xV7jezDRsgy+zwxlF2IW750NEgcyU1imxyTa9P/ZRLYhL9W
- aePxNjOCuN4y7H3dWyWiN28K9ZkiPyM2uCFPwRTz3zCQGgjSEwRD7zBM28qUSoKl5irs
- tITM8ohtvnXyKr/yDvHMmtHrA+577l5aBZP00vT8V58SpbbEYaozggjtItqQdcb8Yxk5
- 6ZzA==
+ bh=F+9tG6D5CrQpBCxb8rCcSa1c4gmLBRkbtI6i0IG/w1E=;
+ b=eJAPIuGoHz+Os1ioFy6Diov6MpfVL59X1ly52+VBSCl7qsfIwbMwkkKLb43kohHlBU
+ LXpuEdY5hLoBK7moDYFkrnHUcSY67fK9PE8DjLC3pnpmCwf2+B1eJpzDEAB6vk4Wrevc
+ KP9LID+1ezZP7sR9bXtbARcaC/WMgUsyb6/H9/IvCFzBzFhP0f+E5K9hWc/q4nlc2Ppn
+ i5M6cK4+0veskFSm0vtYEhHI+zYuu7kdqTwVh+qljNZCAjoo/cRjxuZVi53EFX5wCeFe
+ LULiJlK4Cgja+/u5iVYAvbsTaKEqAX2IZXKjLyPygWBjHcxTY3wMjlmY/FtGu5LW1/4l
+ SWEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746133545; x=1746738345;
+ d=1e100.net; s=20230601; t=1746133537; x=1746738337;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=o/QVQ9eARYed3NJFRK9UiivRgqBpCyWfc+XTOWrPU4o=;
- b=BLy4W0pYRZjtOJoR5DqRcKgmG2WKqyvVtUyTcNXBmhwkfLgOhNwGgciGYC9ABxmgS3
- av5B23dwZ1GwgcrVXqxERT0a8Zc2f1kjeTz0+1URbtlHr6+dK4O6JThKu1OsUgX8keMK
- bv33ZOCtqwt2nOpu6DltDsZsTd0v03kg2eGkL8FTtngcv1X12VJtGm0EiNfdIxWff3s0
- Esh/sySe3JdjY9/qna7IubFMY7/B1Fw/nnqcnl7GlPoIsRlvUKPCNFY5lnSOpJF0+u9g
- Tf/g5qSKXuOnE3gY82qQswOwwX+Lko2TggvrB3aEHPKrDGpUq92iNn3BgoAVn+B+bWr8
- /52Q==
-X-Gm-Message-State: AOJu0Ywnu/Gt/lOdpLxQOgg/z1eyQKJZreTUqvu3pqighDI3E5thxsGM
- EwomaYpWHOMzlwIVuwdHr54Yf8cnyYc2tTksg8wsPINnYNIKKZFoVY4Cb11VTabgCPbGwAFzPeo
- f
-X-Gm-Gg: ASbGnctr12qbrYsqHeNhIA+Y9unahhFpMR95fC/oH5ScEr02wCk4yXpp+vaiddgwuKC
- 40BKjtNKl9dnqqbpBBCpncW3nGROWmPS8FVvCTO4FO7skurTY9VKtk5mPTPBLXTQ6oktUdgLGTN
- i36Z0kUETT2VhZ+4uaRB9NKFrTGJTIxd/Zxfy0WHC99QJBET9nZqpjsSwEo2fpr6rBMuCvXovFG
- b0zhm9Nc1iKzGSalO25DIatLspyFPiYvsaRIs8+xEzg3OdruBs7/SxlCBXpngmMLC/pe679sS5w
- DEFrb0Zf18Rfdmiyjc8AOzyJjDRhH+Eov08H5w6A9ncTRnXCywAqrD1Kg0mcvOGoTq35rdsKnAS
- Wfj0N/bl8301zECI=
-X-Google-Smtp-Source: AGHT+IE8GKM0G0mpiOZK0wMVckc0ZPpmMupnQz/unCFyiOCkLSgdY8QJIlLIG973JeMcgYSsJ7o9/Q==
-X-Received: by 2002:a05:6e02:1a85:b0:3d8:1d0e:5308 with SMTP id
- e9e14a558f8ab-3d97c17f122mr5120005ab.6.1746133545451; 
- Thu, 01 May 2025 14:05:45 -0700 (PDT)
+ bh=F+9tG6D5CrQpBCxb8rCcSa1c4gmLBRkbtI6i0IG/w1E=;
+ b=ttdT5BtAnpIH5I9/K0hXZ5ZnvPWJW5VOtJw9d79hn9z+BaGWA/0Ks16mItwNOuPfZl
+ nZXqu1SZ3v0FKTkBwWB/mX5LG20/OIRG54pGqFwFS5MjF/KKjj7PJ5mOS0jqMb1o+NfG
+ xul9z68ZgQtDxp+7fONpQPzfzHEYejPLgdemFWEg67PHDFgiIYocE5V7qHpK40GdA5/0
+ K3wBpNiHleAMkwW5jvIDXIqfk5RMaYUjvGvg9AZSe8l4qLKSAKGeGNtaPQ3gNj+E6X2w
+ sr15uo5gwJWHM6HZkCDgqZUcEDGW2znBzGbPB6KJY+h7BXA9aBR6JSOCPqPdjBgvxtGx
+ hdvA==
+X-Gm-Message-State: AOJu0YyOsRyUKiNb5uUgpPSD0ex1TXCHVol9NQUO+tFcSwSGD9sSuVyK
+ Isbq3gyp2x5K3f0HQgnWl2i8OPc+fvqJLZ4gsU8ZEMfW/kStu4c0iAiyywBe1Juaed7lPKu4sE2
+ T
+X-Gm-Gg: ASbGncvjq5typ2P/IJR9uBzCqUgNhh7NVdJLzzAuKAvkUOUo+QzIdqUhohpOQcEmVzW
+ 3DF+LktaHLqUZTE9Vk50bF2T7EwEKzi16na2Q4jTTRlo3k0H6tsF1CaREYShHzT8qghKrN2NVs3
+ m4gTd+14WugsOG4RfAx8VmiVCMJ63nKqPA4hUCjH4ImsegKDipl+n4fV1+Jq9ysca79tK5nFJ2s
+ PIaHiV4VU/T0QATILqJWvuKYLm5HLSDtudjQ/VrSgB3DQHpUsKZI+u4RCfJBq6Pm9vLc3PMVeme
+ jWYD+aqND8w3DLCVlaeS2sddRkGkijcsZkBFsb9C6/wpgylGrWQc3R5NJ4Ea+i5WbKBU8oaGhjS
+ rWQKR4Iz0ZOBWIpQ=
+X-Google-Smtp-Source: AGHT+IH+u44+gr3VhAkwNxNdek+w2gvKkYRpBzQeqoif+zOyBP4Kz54Rrnu1ivOMXpo9f6cHu3CQ5A==
+X-Received: by 2002:a05:6e02:1529:b0:3d9:3e8e:60da with SMTP id
+ e9e14a558f8ab-3d97c237917mr4932745ab.17.1746133536916; 
+ Thu, 01 May 2025 14:05:36 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d975eca768sm3074505ab.37.2025.05.01.14.05.42
+ 8926c6da1cb9f-4f88a918039sm48520173.55.2025.05.01.14.05.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 14:05:45 -0700 (PDT)
+ Thu, 01 May 2025 14:05:36 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
@@ -77,9 +77,10 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>
-Subject: [PATCH 05/18] hw/core/machine: Remove hw_compat_2_8[] array
-Date: Thu,  1 May 2025 23:04:43 +0200
-Message-ID: <20250501210456.89071-6-philmd@linaro.org>
+Subject: [PATCH 04/18] hw/i386/kvm: Remove
+ KVMClockState::mach_use_reliable_get_clock field
+Date: Thu,  1 May 2025 23:04:42 +0200
+Message-ID: <20250501210456.89071-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501210456.89071-1-philmd@linaro.org>
 References: <20250501210456.89071-1-philmd@linaro.org>
@@ -94,7 +95,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,52 +111,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The hw_compat_2_8[] array was only used by the pc-q35-2.8 and
-pc-i440fx-2.8 machines, which got removed. Remove it.
+The KVMClockState::mach_use_reliable_get_clock boolean was only
+used by the pc-q35-2.8 and pc-i440fx-2.8 machines, which got removed.
+Remove it, along with the 'x-mach-use-reliable-get-clock' property.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/boards.h |  3 ---
- hw/core/machine.c   | 14 --------------
- 2 files changed, 17 deletions(-)
+ hw/i386/kvm/clock.c | 18 ------------------
+ 1 file changed, 18 deletions(-)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 77707c4376a..84bd3735c42 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -835,7 +835,4 @@ extern const size_t hw_compat_2_10_len;
- extern GlobalProperty hw_compat_2_9[];
- extern const size_t hw_compat_2_9_len;
+diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
+index f56382717f7..726ebfcb0cb 100644
+--- a/hw/i386/kvm/clock.c
++++ b/hw/i386/kvm/clock.c
+@@ -23,7 +23,6 @@
+ #include "migration/vmstate.h"
+ #include "hw/sysbus.h"
+ #include "hw/i386/kvm/clock.h"
+-#include "hw/qdev-properties.h"
+ #include "qapi/error.h"
  
--extern GlobalProperty hw_compat_2_8[];
--extern const size_t hw_compat_2_8_len;
+ #include <linux/kvm.h>
+@@ -43,9 +42,6 @@ struct KVMClockState {
+     /* whether the 'clock' value was obtained in the 'paused' state */
+     bool runstate_paused;
+ 
+-    /* whether machine type supports reliable KVM_GET_CLOCK */
+-    bool mach_use_reliable_get_clock;
 -
- #endif
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index bde19a2ff67..bc0606cf740 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -252,20 +252,6 @@ GlobalProperty hw_compat_2_9[] = {
+     /* whether the 'clock' value was obtained in a host with
+      * reliable KVM_GET_CLOCK */
+     bool clock_is_reliable;
+@@ -232,18 +228,10 @@ static void kvmclock_realize(DeviceState *dev, Error **errp)
+     qemu_add_vm_change_state_handler(kvmclock_vm_state_change, s);
+ }
+ 
+-static bool kvmclock_clock_is_reliable_needed(void *opaque)
+-{
+-    KVMClockState *s = opaque;
+-
+-    return s->mach_use_reliable_get_clock;
+-}
+-
+ static const VMStateDescription kvmclock_reliable_get_clock = {
+     .name = "kvmclock/clock_is_reliable",
+     .version_id = 1,
+     .minimum_version_id = 1,
+-    .needed = kvmclock_clock_is_reliable_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_BOOL(clock_is_reliable, KVMClockState),
+         VMSTATE_END_OF_LIST()
+@@ -304,18 +292,12 @@ static const VMStateDescription kvmclock_vmsd = {
+     }
  };
- const size_t hw_compat_2_9_len = G_N_ELEMENTS(hw_compat_2_9);
  
--GlobalProperty hw_compat_2_8[] = {
--    { "fw_cfg_mem", "x-file-slots", "0x10" },
--    { "fw_cfg_io", "x-file-slots", "0x10" },
--    { "pflash_cfi01", "old-multiple-chip-handling", "on" },
--    { "pci-bridge", "shpc", "on" },
--    { TYPE_PCI_DEVICE, "x-pcie-extcap-init", "off" },
--    { "virtio-pci", "x-pcie-deverr-init", "off" },
--    { "virtio-pci", "x-pcie-lnkctl-init", "off" },
--    { "virtio-pci", "x-pcie-pm-init", "off" },
--    { "cirrus-vga", "vgamem_mb", "8" },
--    { "isa-cirrus-vga", "vgamem_mb", "8" },
+-static const Property kvmclock_properties[] = {
+-    DEFINE_PROP_BOOL("x-mach-use-reliable-get-clock", KVMClockState,
+-                      mach_use_reliable_get_clock, true),
 -};
--const size_t hw_compat_2_8_len = G_N_ELEMENTS(hw_compat_2_8);
 -
- MachineState *current_machine;
+ static void kvmclock_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
  
- static char *machine_get_kernel(Object *obj, Error **errp)
+     dc->realize = kvmclock_realize;
+     dc->vmsd = &kvmclock_vmsd;
+-    device_class_set_props(dc, kvmclock_properties);
+ }
+ 
+ static const TypeInfo kvmclock_info = {
 -- 
 2.47.1
 
