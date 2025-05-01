@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E24D8C3ABAA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 003BCC3ABA9
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 23:21:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAdCw-0004kb-6m; Thu, 01 May 2025 19:20:46 -0400
+	id 1uAdCs-0004bt-C4; Thu, 01 May 2025 19:20:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uAdCs-0004cL-04; Thu, 01 May 2025 19:20:42 -0400
+ id 1uAdCq-0004a2-DR; Thu, 01 May 2025 19:20:40 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uAdCo-0007Ce-JX; Thu, 01 May 2025 19:20:41 -0400
+ id 1uAdCn-0007CC-Si; Thu, 01 May 2025 19:20:40 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4135855D25F;
- Fri, 02 May 2025 01:20:36 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2919A55D25A;
+ Fri, 02 May 2025 01:20:35 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id PUS-1d4u43VA; Fri,  2 May 2025 01:20:34 +0200 (CEST)
+ with ESMTP id xeU8V0jkHZTn; Fri,  2 May 2025 01:20:33 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 4585C55D261; Fri, 02 May 2025 01:20:34 +0200 (CEST)
-Message-ID: <5adb6507e27560573f013ceea4fc752c40455bd5.1746139668.git.balaton@eik.bme.hu>
+ id 37D2555D25F; Fri, 02 May 2025 01:20:33 +0200 (CEST)
+Message-ID: <ad355178b2a3fe285854ed2e25b288baf0fd6e05.1746139668.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1746139668.git.balaton@eik.bme.hu>
 References: <cover.1746139668.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 02/13] ppc/vof: Make nextprop behave more like Open Firmware
+Subject: [PATCH 01/13] hw/boards: Extend DEFINE_MACHINE macro to cover more
+ use cases
 To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>
-Date: Fri, 02 May 2025 01:20:34 +0200 (CEST)
+Date: Fri, 02 May 2025 01:20:33 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -59,94 +60,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The FDT does not normally store name properties but reconstructs it
-from path but Open Firmware specification says each node should at
-least have this property. This is correctly handled in getprop but
-nextprop should also return it even if not present as a property.
-
-Explicit name properties are still allowed because they are needed
-e.g. on the root node that guests expect to have specific names as
-seen on real machines instead of being empty so sometimes the node
-name may need to be overriden. For example on pegasos MorphOS checks
-the name of "/" and expects to find bplan,Pegasos2 which is how it
-identifies the machine.
+Add a more general DEFINE_MACHINE_EXTENDED macro and define simpler
+versions with less parameters based on that. This is inspired by how
+the OBJECT_DEFINE macros do this in a similar way to allow using the
+shortened definition in more complex cases too.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/ppc/vof.c | 50 +++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 33 insertions(+), 17 deletions(-)
+ include/hw/boards.h | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
-index f14efa3a7c..5ecfc68910 100644
---- a/hw/ppc/vof.c
-+++ b/hw/ppc/vof.c
-@@ -353,34 +353,50 @@ static uint32_t vof_nextprop(const void *fdt, uint32_t phandle,
- {
-     int offset, nodeoff = fdt_node_offset_by_phandle(fdt, phandle);
-     char prev[OF_PROPNAME_LEN_MAX + 1];
--    const char *tmp;
-+    const char *tmp = NULL;
-+    bool match = false;
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 765dc8dd35..6e52d4d10c 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -744,7 +744,8 @@ struct MachineState {
+         } \
+     } while (0)
  
-     if (readstr(prevaddr, prev, sizeof(prev))) {
-         return PROM_ERROR;
-     }
--
--    fdt_for_each_property_offset(offset, fdt, nodeoff) {
--        if (!fdt_getprop_by_offset(fdt, offset, &tmp, NULL)) {
--            return 0;
-+    /*
-+     * "name" may or may not be present in fdt but we should still return it.
-+     * Do that first and then skip it if seen later.
-+     */
-+    if (prev[0] == '\0') {
-+        tmp = "name";
-+    } else {
-+        if (strcmp(prev, "name") == 0) {
-+            prev[0] = '\0';
-         }
--        if (prev[0] == '\0' || strcmp(prev, tmp) == 0) {
--            if (prev[0] != '\0') {
--                offset = fdt_next_property_offset(fdt, offset);
--                if (offset < 0) {
--                    return 0;
--                }
--            }
-+        fdt_for_each_property_offset(offset, fdt, nodeoff) {
-             if (!fdt_getprop_by_offset(fdt, offset, &tmp, NULL)) {
-                 return 0;
-             }
--
--            if (VOF_MEM_WRITE(nameaddr, tmp, strlen(tmp) + 1) != MEMTX_OK) {
--                return PROM_ERROR;
-+            if (strcmp(tmp, "name") == 0) {
-+                continue;
-+            }
-+            if (match) {
-+                break;
-             }
--            return 1;
-+            if (strcmp(prev, tmp) == 0) {
-+                match = true;
-+                continue;
-+            }
-+            if (prev[0] == '\0') {
-+                break;
-+            }
-+        }
-+        if (offset < 0) {
-+            return 0;
-         }
-     }
--
-+    if (tmp) {
-+        if (VOF_MEM_WRITE(nameaddr, tmp, strlen(tmp) + 1) != MEMTX_OK) {
-+            return PROM_ERROR;
-+        }
-+        return 1;
-+    }
-     return 0;
- }
+-#define DEFINE_MACHINE(namestr, machine_initfn) \
++#define DEFINE_MACHINE_EXTENDED(namestr, PARENT_NAME, InstanceName, \
++                                machine_initfn, ABSTRACT, ...) \
+     static void machine_initfn##_class_init(ObjectClass *oc, const void *data) \
+     { \
+         MachineClass *mc = MACHINE_CLASS(oc); \
+@@ -752,8 +753,11 @@ struct MachineState {
+     } \
+     static const TypeInfo machine_initfn##_typeinfo = { \
+         .name       = MACHINE_TYPE_NAME(namestr), \
+-        .parent     = TYPE_MACHINE, \
++        .parent     = TYPE_##PARENT_NAME, \
+         .class_init = machine_initfn##_class_init, \
++        .instance_size = sizeof(InstanceName), \
++        .abstract = ABSTRACT, \
++        .interfaces = (const InterfaceInfo[]) { __VA_ARGS__ } , \
+     }; \
+     static void machine_initfn##_register_types(void) \
+     { \
+@@ -761,6 +765,14 @@ struct MachineState {
+     } \
+     type_init(machine_initfn##_register_types)
+ 
++#define DEFINE_MACHINE(namestr, machine_initfn) \
++    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
++                            false, { })
++
++#define DEFINE_MACHINE_WITH_INTERFACES(namestr, machine_initfn, ...) \
++    DEFINE_MACHINE_EXTENDED(namestr, MACHINE, MachineState, machine_initfn, \
++                            false, __VA_ARGS__)
++
+ extern GlobalProperty hw_compat_10_0[];
+ extern const size_t hw_compat_10_0_len;
  
 -- 
 2.41.3
