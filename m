@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 628ECC3ABAA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D80FAC3ABA9
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:30:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAbLv-00016C-Nl; Thu, 01 May 2025 17:21:55 -0400
+	id 1uAbPl-0007VQ-Ax; Thu, 01 May 2025 17:25:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbLm-00010a-QL
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:46 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1uAbOw-0005QV-Mp
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:25:03 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbLk-0001Zj-6o
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:45 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-736c277331eso2479937b3a.1
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:21:43 -0700 (PDT)
+ id 1uAbOu-0002F4-Hp
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:25:02 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-736c1cf75e4so1364926b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:24:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746134503; x=1746739303; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746134699; x=1746739499; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K4pHptChpTg8JmP9JZXmpp1i8GS4hyZpnC7DzMw80NY=;
- b=HfPFFBu7agSOh1/mFjqBu3aKlsQg/cnynqxtGXNvoYDmgpzDX0xq5p6sV3fM7fPLzZ
- EYrKZw9QzDoBxBMYmDqa4kUAZQwLvD6UPALznsTry5HEBKL1nmA645ZwIRCMd8DFZIjC
- 8Z68/AAWASyBkeeaL/hJBKChB5VhpcUfZpGlZygTBVMR5I6PN6aQ9poOtfbx/0EPblEw
- tt964NHeL8Q51QA3Nd6+Udw+7txmfdOggW7iq3JOcbJ8fgyNWutCaBMaH+VseVWTjOgK
- ClEwrsEfK7EyvY2Cm4EnSgPb3gfStSx1hZgfpkG4L24Isr1OKm0brtO/4sBgW4CPDpFd
- dbVQ==
+ bh=hQZJbuYh2n3Wgp49lh7OYyMC9rzODAQBYexbJ7U5E2E=;
+ b=RtZ2Z50n9zFHApaaRhB8kVyP2L7Cmrff1ks3NT4cY4kRdameJH9de1urpSCmStDn2w
+ K5YBMN3svsyQiUgzcCZ9j2a7v+AuqTPB6kBc4Veq1MZ/8jji+sd2N9MjAZnqpjJiYdGW
+ 2L2PwVrj5xWk/ON3pRU3CBRsPRD+WthjXZzMbkYQmEpO1gegquqjHYd9RoCuNJdD6SJE
+ E5Jxj7jtRmSVFVPtBeeidVyY0w9FF/b/pvpzdUiIuDrw1A1qAJy2t6dUgk1Fn7+/tAp2
+ laxx3Mrx4QtAXQ0PRKfOS/6Ccgvuu3mIXM1u8qBcznlG4cLpSx/Ib/2LQFncdijCfLSh
+ wNlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746134503; x=1746739303;
+ d=1e100.net; s=20230601; t=1746134699; x=1746739499;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=K4pHptChpTg8JmP9JZXmpp1i8GS4hyZpnC7DzMw80NY=;
- b=YNYbCMVOx4qP2NybLnkyo7UgHD3815y4JJW1M9h3k8PB9qNaoyeMKTEOALTPLt/bza
- crJhU2xeQf2qNjqDqJ4JxB6nm8rtShMDw41BDIQnMrSZG+GxYVzcIgsJ9CxX7q+thX3E
- UszahH8kxe9kndiL9/ndR9ZiuPHnVYb8Xt8L4buFiI5iAFEMjbGLHTmruNZtV8c9sm4W
- iRwDyOez2DS73Jb/AE3vyUZUjrq5X0canB4ScBma/1a7SGsbJZo2HauaciIAydIqolgJ
- lIJZ1+RJ8QDp7+dRJGPsOe75nk/Ka3IZa+J7328hxluqseOsF0Z1g17kpv0ivqJdF1BZ
- 4gAg==
-X-Gm-Message-State: AOJu0YyLPbT0Jr1JsJ7MZ6mVH+JWCLjUv0fljAU2SVdo/xSrysJLeyrj
- EuUXdnAw1ZNsFxsbQhFOu7MTjsjMbHtqezSmGktY9FK8PXSpV242ns3LBpvHg28xygEPvc6WoAG
- x
-X-Gm-Gg: ASbGncs38ObZ5h7fryKB4Ol35DerH2RWxbHiv/lIBYEhNNXN/nQXQrC+5qDDeZoSFz1
- 05ok245/xIYIoCyKeLSwyBE7vBhnqNHY4RoeRBiCRku1NWebYSUFtFOFvr7q/ljymJtbHpgZ11d
- s2FsKdI1mLL+/g1r2dRWnJJEaVZA21XBh9Qw9IYpC2DD15Ec8uucuiHINvFnyL6fAhfuDz0L25F
- MdbUKDFicQ2+Y9629eqjTRl77sseA6guCh8wDrbZuzIJSxKVjo5M3aEDL6moDUYq3bLNoQpwulI
- /q52jKM69KjrQM7+8owwoIy6X/0c8LayaxidMwhVAyfNLqbuVM04+T1XVEdq53nNuQGAujVFDco
+ bh=hQZJbuYh2n3Wgp49lh7OYyMC9rzODAQBYexbJ7U5E2E=;
+ b=bpAjTr2NYc0ROSeD+NagoTA1851DeO8UH7pMoq7PrO2bESN7meR53G1qDvRHzVLM6S
+ JiyIRtwcPFkunNJ8+qR4u6PM/B+ofjq05eU/DZUSEvilWTnq0CM/Wvo9FAm0i9tEj2qU
+ bnwoI7lTTWVsyghd+w6AvJxovgzwLZvT8csLe+fJIxHrh81OR5e8sqIjzQTABByCGVMH
+ Vshp/EG8TcZyHbEZeXBdVBpauPleFoc6vBSMr/mgXF354XTERxFacnmf5Tw3zplj5Wm6
+ pGhhlGzaXCdmE60/cjCiSVm80MqRMNVJeOsmJ0h/fYBQvJnoAbYWxgSaEoQybWOxTSSo
+ FHVQ==
+X-Gm-Message-State: AOJu0YygtbW2CGZFmFBaZ9mW22xq4mi8Fz5iqfpegVDyT0rJfeC+YDXo
+ vc3wZRmek5ScERQNfAMPexSDMr2ruxdkr9l8J9EYfOv43S4k55MJ2vimlvHrSOvDkn+AtI3CR7d
+ v
+X-Gm-Gg: ASbGncvXzBjXyBJ1YCRs6jBUdrlyjVo/Hg8HOZoTJKjCwbOFycmgbVWJMih/sOqAQLC
+ 4VdwpgGh6xqJzq23pTxnJ/fQhTeFnrnMZ+Nz1Z5LsxIcWu3YBy0YuYk3cTDDSfnp2QK8vKxIb0e
+ UsiC8ymu6FX1hSzMdwD4aIZAHDnIhxBkODAe7JdMy4rYiwS064Nkj4q60gCKQ1KQtU0hP6msAgD
+ UB/GV1YFLbh/7w/Nw7xG/D2icdP/ipHoyD3XnCr2129C4kr15QmvMEMR8ucUZV1hUmpqNtEIqEt
+ DtSLZUl7kJJ7+rB1qoscCn5L+/2yB69PL21Mc8vfPF6n7E8J7UOyjGR95JqNjm/LoWaxngsklM4
  =
-X-Google-Smtp-Source: AGHT+IEBRTgJzJMmSrFiUEx1YE3mPX2zXQBX5nW24KqOdsKe/bc14Lx3+QDLdiewRWA0aP32tB1ejA==
-X-Received: by 2002:a17:90b:2cc5:b0:2fa:1d9f:c80 with SMTP id
- 98e67ed59e1d1-30a42fe44eamr5881267a91.17.1746134502705; 
- Thu, 01 May 2025 14:21:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEpJ/0p9Ry+r63ZoLjNUy/y4x+O9RZE9+pkhPfxrS8I+75gMuyDAi8UjsrZyLrHx2YlVDsE2g==
+X-Received: by 2002:a05:6a00:4482:b0:736:32d2:aa82 with SMTP id
+ d2e1a72fcca58-74058b5afa8mr565644b3a.23.1746134698857; 
+ Thu, 01 May 2025 14:24:58 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30a476267e0sm1384573a91.39.2025.05.01.14.21.42
+ d2e1a72fcca58-740590610desm135897b3a.146.2025.05.01.14.24.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 14:21:42 -0700 (PDT)
+ Thu, 01 May 2025 14:24:58 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 34/59] accel/tcg: Pass TCGTBCPUState to tb_lookup
-Date: Thu,  1 May 2025 14:20:48 -0700
-Message-ID: <20250501212113.2961531-35-richard.henderson@linaro.org>
+Subject: [PULL 58/59] accel/tcg: Avoid abi_ptr in user-exec.c
+Date: Thu,  1 May 2025 14:21:12 -0700
+Message-ID: <20250501212113.2961531-59-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250501212113.2961531-1-richard.henderson@linaro.org>
 References: <20250501212113.2961531-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,97 +100,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+In page_dump/dump_region, use guest_addr_max to check the
+size of the guest address space and size the output
+appropriately.  This will change output with small values
+of -R reserved_va, but shouldn't affect anything else.
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cpu-exec.c | 28 +++++++++++++---------------
- 1 file changed, 13 insertions(+), 15 deletions(-)
+ accel/tcg/user-exec.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 4a405d7b56..808983e461 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -232,35 +232,33 @@ static TranslationBlock *tb_htable_lookup(CPUState *cpu, vaddr pc,
-  *
-  * Returns: an existing translation block or NULL.
-  */
--static inline TranslationBlock *tb_lookup(CPUState *cpu, vaddr pc,
--                                          uint64_t cs_base, uint32_t flags,
--                                          uint32_t cflags)
-+static inline TranslationBlock *tb_lookup(CPUState *cpu, TCGTBCPUState s)
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 46b1e97c30..085da0c036 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -29,6 +29,7 @@
+ #include "accel/tcg/helper-retaddr.h"
+ #include "accel/tcg/probe.h"
+ #include "user/cpu_loop.h"
++#include "user/guest-host.h"
+ #include "qemu/main-loop.h"
+ #include "user/page-protection.h"
+ #include "exec/page-protection.h"
+@@ -202,10 +203,19 @@ int walk_memory_regions(void *priv, walk_memory_regions_fn fn)
+ static int dump_region(void *opaque, vaddr start, vaddr end, int prot)
  {
-     TranslationBlock *tb;
-     CPUJumpCache *jc;
-     uint32_t hash;
+     FILE *f = opaque;
++    uint64_t mask;
++    int width;
  
-     /* we should never be trying to look up an INVALID tb */
--    tcg_debug_assert(!(cflags & CF_INVALID));
-+    tcg_debug_assert(!(s.cflags & CF_INVALID));
+-    fprintf(f, TARGET_ABI_FMT_ptr "-" TARGET_ABI_FMT_ptr
+-            " " TARGET_ABI_FMT_ptr " %c%c%c\n",
+-            (abi_ptr)start, (abi_ptr)end, (abi_ptr)(end - start),
++    if (guest_addr_max <= UINT32_MAX) {
++        mask = UINT32_MAX, width = 8;
++    } else {
++        mask = UINT64_MAX, width = 16;
++    }
++
++    fprintf(f, "%0*" PRIx64 "-%0*" PRIx64 " %0*" PRIx64 " %c%c%c\n",
++            width, start & mask,
++            width, end & mask,
++            width, (end - start) & mask,
+             ((prot & PAGE_READ) ? 'r' : '-'),
+             ((prot & PAGE_WRITE) ? 'w' : '-'),
+             ((prot & PAGE_EXEC) ? 'x' : '-'));
+@@ -215,10 +225,10 @@ static int dump_region(void *opaque, vaddr start, vaddr end, int prot)
+ /* dump memory mappings */
+ void page_dump(FILE *f)
+ {
+-    const int length = sizeof(abi_ptr) * 2;
++    int width = guest_addr_max <= UINT32_MAX ? 8 : 16;
  
--    hash = tb_jmp_cache_hash_func(pc);
-+    hash = tb_jmp_cache_hash_func(s.pc);
-     jc = cpu->tb_jmp_cache;
- 
-     tb = qatomic_read(&jc->array[hash].tb);
-     if (likely(tb &&
--               jc->array[hash].pc == pc &&
--               tb->cs_base == cs_base &&
--               tb->flags == flags &&
--               tb_cflags(tb) == cflags)) {
-+               jc->array[hash].pc == s.pc &&
-+               tb->cs_base == s.cs_base &&
-+               tb->flags == s.flags &&
-+               tb_cflags(tb) == s.cflags)) {
-         goto hit;
-     }
- 
--    tb = tb_htable_lookup(cpu, pc, cs_base, flags, cflags);
-+    tb = tb_htable_lookup(cpu, s.pc, s.cs_base, s.flags, s.cflags);
-     if (tb == NULL) {
-         return NULL;
-     }
- 
--    jc->array[hash].pc = pc;
-+    jc->array[hash].pc = s.pc;
-     qatomic_set(&jc->array[hash].tb, tb);
- 
- hit:
-@@ -268,7 +266,7 @@ hit:
-      * As long as tb is not NULL, the contents are consistent.  Therefore,
-      * the virtual PC has to match for non-CF_PCREL translations.
-      */
--    assert((tb_cflags(tb) & CF_PCREL) || tb->pc == pc);
-+    assert((tb_cflags(tb) & CF_PCREL) || tb->pc == s.pc);
-     return tb;
+     fprintf(f, "%-*s %-*s %-*s %s\n",
+-            length, "start", length, "end", length, "size", "prot");
++            width, "start", width, "end", width, "size", "prot");
+     walk_memory_regions(f, dump_region);
  }
  
-@@ -402,7 +400,7 @@ const void *HELPER(lookup_tb_ptr)(CPUArchState *env)
-         cpu_loop_exit(cpu);
-     }
+@@ -1135,7 +1145,7 @@ static uint64_t do_ld8_mmu(CPUState *cpu, vaddr addr, MemOpIdx oi,
+     return ret;
+ }
  
--    tb = tb_lookup(cpu, s.pc, s.cs_base, s.flags, s.cflags);
-+    tb = tb_lookup(cpu, s);
-     if (tb == NULL) {
-         return tcg_code_gen_epilogue;
-     }
-@@ -581,7 +579,7 @@ void cpu_exec_step_atomic(CPUState *cpu)
-          * Any breakpoint for this insn will have been recognized earlier.
-          */
- 
--        tb = tb_lookup(cpu, s.pc, s.cs_base, s.flags, s.cflags);
-+        tb = tb_lookup(cpu, s);
-         if (tb == NULL) {
-             mmap_lock();
-             tb = tb_gen_code(cpu, s.pc, s.cs_base, s.flags, s.cflags);
-@@ -955,7 +953,7 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
-                 break;
-             }
- 
--            tb = tb_lookup(cpu, s.pc, s.cs_base, s.flags, s.cflags);
-+            tb = tb_lookup(cpu, s);
-             if (tb == NULL) {
-                 CPUJumpCache *jc;
-                 uint32_t h;
+-static Int128 do_ld16_mmu(CPUState *cpu, abi_ptr addr,
++static Int128 do_ld16_mmu(CPUState *cpu, vaddr addr,
+                           MemOpIdx oi, uintptr_t ra)
+ {
+     void *haddr;
 -- 
 2.43.0
 
