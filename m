@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 869B9C369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C61E7C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:12:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAbAq-0007YL-Jf; Thu, 01 May 2025 17:10:30 -0400
+	id 1uAb8K-0004aQ-Fj; Thu, 01 May 2025 17:07:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb7v-0003qR-E3
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:07:31 -0400
-Received: from mail-io1-xd34.google.com ([2607:f8b0:4864:20::d34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb7r-0006qH-Iu
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb7n-0003pE-UC
  for qemu-devel@nongnu.org; Thu, 01 May 2025 17:07:25 -0400
-Received: by mail-io1-xd34.google.com with SMTP id
- ca18e2360f4ac-85db3475637so87039939f.1
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:07:22 -0700 (PDT)
+Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb7k-0006p6-LD
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:07:18 -0400
+Received: by mail-il1-x12f.google.com with SMTP id
+ e9e14a558f8ab-3d96d16b369so12886055ab.0
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:07:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746133641; x=1746738441; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746133632; x=1746738432; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+sYT96Q+b8vV/xVN5xVJCJ5YUm+R4rge65haKgSbsJY=;
- b=Ma9XUVrNMPO0Cyx3Wm26LTcrduCW6S1K5VUa6gio800UkvEgDtuXQlaTqKGcJga/Dw
- l3M1ZovSylb5P+MYlyoElnstWrWAKijO5tODkv7xkUYpY0uOI8FnFkT7QkVg8WSyqxe9
- 0DzoklSRsO9gcAr+QylL6T+5IYSBe24YmRH11binljuqcw1JBWYLZ0TmzEqcY6eJmTBt
- 26r9cZJkYYtwzA+W2GABPWJsmJjgKhsjvpxhShoPAtqWCn5DuJlHuE6gIAL0PdEq9fRh
- JvBRkeIsCn6ghBQsPI0UYNrhIR8ljMTcJU4qnBdyqA0lAvka5+FYi9VoV3xfBEDNNciW
- HxvA==
+ bh=WwJU5ZPxxxnKG6o6jl5mOPQrDWUSsO9Sle41Xc0jm2Q=;
+ b=jXmzCvFxuGGk27bOEpVB/qF1VgR+IA3gbU7PENbjAXAjyakEAuP2ZoSy8KrPDdQIID
+ VnFAUewGzFhbZ+4CqAFFIEJi+cMgoafhJQHglecqfTa+qV4zQhHZYxI2cnK4goRHwetx
+ YbPlSHGE1kO7CXhXklYfAobWcZb7CNgOnF7X1uRqS5dalZXxJTpjD5+N0XbHmUG3kTz5
+ nwSvR9fzOfmnpLB95nYEmJxseUrDDYNYPoT54KDi11m5z+EWRkWiqaBFiVsCPM4Kque7
+ p3yQH2xKubuePDXumet9gtGkjE+U0fCMEtRUkhAcTNNxI1MNyk2EVwIYGAk+ImUd+H60
+ t0Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746133641; x=1746738441;
+ d=1e100.net; s=20230601; t=1746133632; x=1746738432;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+sYT96Q+b8vV/xVN5xVJCJ5YUm+R4rge65haKgSbsJY=;
- b=q10qwmpWV+JNmQ5dis+ZTDQSBl3pQkuj/b/oujLPmmKZP1CdIwPprttUIzFr5RqhYj
- 4Tm/QTytDKO+mJ6AmuP/H93nZoBxOznt4oP5kZLNS++Kwma/DhddT2cfzYSeRYtN9YaA
- HQMm1NZYHIzfPMsDcXBiqoJ0xR2Cz6lrczI30g/rhQP/tcnxZOjAjxvSmstCuKwuAaZH
- wbICRYrU46sJZCqQQbGZE2ekIi61UfQEGUujnWs4O+IjaI0UQLkKygh1ytIuo3qPgaLM
- pY7ZIiLcp6FVEfnPWRl66FAH0KjOb3blMGDLsp1d16Gy9itxYPIPaUIwjLWgHQUCyk/u
- 2Zmg==
-X-Gm-Message-State: AOJu0YxYosUw43FTgTdYWqPma+/caWHx4Ilh6ElNEx+YvjvBug9266DW
- Y1Kx8ppS/nLhOPI3NlFkiY0sFOIwsDuiuRNvWDdnKS8DXTO+U7P21RjtvfUNGdTv0qwDawnLNzG
- T
-X-Gm-Gg: ASbGncsrJRlHEY570OAcNupC0LaJPSfDT9/tuJEAyrjNVKuea7ruJwazTqBFHS6hA+J
- o6LcIbqPSRCh0CKaLPmsxZt0QI8k9ZTLoPUgyrpcbUyloBiv76W3E8YJVMEyHVNyQKWc4P987oy
- vm5WzwagjS8/TQvwjdmJkiukVS/ZJSXcUUyfIjf9MSMbH+2ufL5y6R6c4/Lq4qa5lTCNF9PicOl
- VCU4ryE6svbyGljIavhmF9jK/dEiizGOmyzmdRmLarQAWKlBgaePfo6qVB8R8OtPN3H7/b0m1b9
- yfW5mE84vo0fsC5pjK+sJMxG78LjP3h7p83dQXXyUSbnn/7pTGeLzFHw2CWOZnecm/Ia0C0R7cD
- K2eirUsQayFQD+nQ=
-X-Google-Smtp-Source: AGHT+IFGqEyNq9qahKbJ00O0JYK18J5gKj3OWvCE509BkFlAxLqOoJhJG/vCXZ0YxjnMxOO+6J+RZw==
-X-Received: by 2002:a6b:601a:0:b0:85e:d0ca:b635 with SMTP id
- ca18e2360f4ac-864a3bceb99mr487124339f.2.1746133641157; 
- Thu, 01 May 2025 14:07:21 -0700 (PDT)
+ bh=WwJU5ZPxxxnKG6o6jl5mOPQrDWUSsO9Sle41Xc0jm2Q=;
+ b=vXfw+N9TVD+hCL8en0WgtSoSqCJ9KxflHXI5y1E8Jw/qO/XjDNncpjydjJTKBl+k73
+ +dmtjwS/oFvBhNJc0hFGABczaAL3g2PQmTKgcAWc9TgAOrLnJVL72kNtb9CNXjHub0pS
+ 1kQwWrZnHTFtuzvP7zVRgYAvy5kjMdy2hXhz0FMPAFoRp+Ryb8OJSd1HzCNeWVurUIEa
+ 6WS73xAGCsdAaskTAGn4suHI0sjSLVfzBjxjaDcYqFexUcYZ9F1FuYooRRK3MD9IkfvJ
+ 8isKUmKTGYNfhMCDrRpEUw3xnZwMPPhgeFq6eP91I5kg89AALVm8/WB07zGQe4JPxIDJ
+ iVcA==
+X-Gm-Message-State: AOJu0Yy/foHAWO7fh3XAgMCxO6ZB7bBonoQCjh3OxbUU4D44AgxiP+ru
+ k9xs258Lar6pZdE926hiv27fN0z6iN9YHN+xf3M5SKYnDfWkVXdp8IjWcTOvHkEgalRTHjwUgcr
+ 8
+X-Gm-Gg: ASbGncvQA2gq4pgrez2mmI2df7k8InVUYayZb0/1runddzKjUMnqNNK4BS5vjVQwtc1
+ 56C/8z3LE+la0iRjsqyhMbFpP0Ro3QQwTxzJM54r7zUMR7UQEeRm4Yb5Coc5XVkljrYM5wkuRIA
+ QPIt9hBtfNMq6Bb+Pqbv/H6GrPqLBdUbxWMdVLw7Brck0vml5Pw5mH2LnAw0hYMGbmFoBOileV+
+ t8ClazjnL3Q8Doo/T/n/ANdTcy6q4oYgcB8P8iYYJNqhsG4/0wc49bXrDvi46FF2nOFwNRXWSR6
+ OROfJOUCEJYXPJwI7HCaVTFIoWG1Xy6IkDL/XHV0MjOhDzhuZMCBjEjgd3PRdQ4/+eL7iKxT2Bi
+ ZYCxOc48XoWL9crY=
+X-Google-Smtp-Source: AGHT+IEr5p1LmQ9nlTOCpkroHBeFZN/OH2z1KfBspn9mGgar85WeTmUau62kPCCcvf7K5bYq5tsAiQ==
+X-Received: by 2002:a92:ca4e:0:b0:3d5:8923:faa5 with SMTP id
+ e9e14a558f8ab-3d97c1af64bmr5387935ab.10.1746133632331; 
+ Thu, 01 May 2025 14:07:12 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f88a8d0fecsm50261173.12.2025.05.01.14.07.17
+ 8926c6da1cb9f-4f88aa58ecesm46024173.98.2025.05.01.14.07.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 14:07:20 -0700 (PDT)
+ Thu, 01 May 2025 14:07:11 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
@@ -77,25 +77,24 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>
-Subject: [PATCH 16/18] hw/net/virtio-net: Remove VirtIONet::mtu_bypass_backend
- field
-Date: Thu,  1 May 2025 23:04:54 +0200
-Message-ID: <20250501210456.89071-17-philmd@linaro.org>
+Subject: [PATCH 15/18] hw/core/machine: Remove hw_compat_2_9[] array
+Date: Thu,  1 May 2025 23:04:53 +0200
+Message-ID: <20250501210456.89071-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501210456.89071-1-philmd@linaro.org>
 References: <20250501210456.89071-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d34;
- envelope-from=philmd@linaro.org; helo=mail-io1-xd34.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
+ envelope-from=philmd@linaro.org; helo=mail-il1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,62 +110,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VirtIONet::mtu_bypass_backend boolean was only set in
-the hw_compat_2_9[] array, via the 'x-mtu-bypass-backend=off'
-property. We removed all machines using that array, lets remove
-that property and all the code around it.
+The hw_compat_2_9[] array was only used by the pc-q35-2.9 and
+pc-i440fx-2.9 machines, which got removed. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/virtio/virtio-net.h | 1 -
- hw/net/virtio-net.c            | 8 ++------
- 2 files changed, 2 insertions(+), 7 deletions(-)
+ include/hw/boards.h | 3 ---
+ hw/core/machine.c   | 8 --------
+ 2 files changed, 11 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
-index b9ea9e824e3..353e872f677 100644
---- a/include/hw/virtio/virtio-net.h
-+++ b/include/hw/virtio/virtio-net.h
-@@ -214,7 +214,6 @@ struct VirtIONet {
-     uint64_t saved_guest_offloads;
-     AnnounceTimer announce_timer;
-     bool needs_vnet_hdr_swap;
--    bool mtu_bypass_backend;
-     /* primary failover device is hidden*/
-     bool failover_primary_hidden;
-     bool failover;
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 2de037c2736..a8a43ffa242 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -801,8 +801,7 @@ static uint64_t virtio_net_get_features(VirtIODevice *vdev, uint64_t features,
-     features = vhost_net_get_features(get_vhost_net(nc->peer), features);
-     vdev->backend_features = features;
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 84bd3735c42..513eb2a54fd 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -832,7 +832,4 @@ extern const size_t hw_compat_2_11_len;
+ extern GlobalProperty hw_compat_2_10[];
+ extern const size_t hw_compat_2_10_len;
  
--    if (n->mtu_bypass_backend &&
--            (n->host_features & 1ULL << VIRTIO_NET_F_MTU)) {
-+    if (n->host_features & (1ULL << VIRTIO_NET_F_MTU)) {
-         features |= (1ULL << VIRTIO_NET_F_MTU);
-     }
+-extern GlobalProperty hw_compat_2_9[];
+-extern const size_t hw_compat_2_9_len;
+-
+ #endif
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index bc0606cf740..486d1adb4b9 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -244,14 +244,6 @@ GlobalProperty hw_compat_2_10[] = {
+ };
+ const size_t hw_compat_2_10_len = G_N_ELEMENTS(hw_compat_2_10);
  
-@@ -953,8 +952,7 @@ static void virtio_net_set_features(VirtIODevice *vdev, uint64_t features)
-     Error *err = NULL;
-     int i;
+-GlobalProperty hw_compat_2_9[] = {
+-    { "pci-bridge", "shpc", "off" },
+-    { "intel-iommu", "pt", "off" },
+-    { "virtio-net-device", "x-mtu-bypass-backend", "off" },
+-    { "pcie-root-port", "x-migrate-msix", "false" },
+-};
+-const size_t hw_compat_2_9_len = G_N_ELEMENTS(hw_compat_2_9);
+-
+ MachineState *current_machine;
  
--    if (n->mtu_bypass_backend &&
--            !virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_MTU)) {
-+    if (!virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_MTU)) {
-         features &= ~(1ULL << VIRTIO_NET_F_MTU);
-     }
- 
-@@ -4121,8 +4119,6 @@ static const Property virtio_net_properties[] = {
-     DEFINE_PROP_UINT16("tx_queue_size", VirtIONet, net_conf.tx_queue_size,
-                        VIRTIO_NET_TX_QUEUE_DEFAULT_SIZE),
-     DEFINE_PROP_UINT16("host_mtu", VirtIONet, net_conf.mtu, 0),
--    DEFINE_PROP_BOOL("x-mtu-bypass-backend", VirtIONet, mtu_bypass_backend,
--                     true),
-     DEFINE_PROP_INT32("speed", VirtIONet, net_conf.speed, SPEED_UNKNOWN),
-     DEFINE_PROP_STRING("duplex", VirtIONet, net_conf.duplex_str),
-     DEFINE_PROP_BOOL("failover", VirtIONet, failover, false),
+ static char *machine_get_kernel(Object *obj, Error **errp)
 -- 
 2.47.1
 
