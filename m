@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E73EC369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 12:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84093C3ABA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 12:37:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAT8S-0000jJ-BU; Thu, 01 May 2025 08:35:28 -0400
+	id 1uATAU-0001LO-Fg; Thu, 01 May 2025 08:37:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAT8Q-0000j1-6m
- for qemu-devel@nongnu.org; Thu, 01 May 2025 08:35:26 -0400
-Received: from mail-io1-xd2b.google.com ([2607:f8b0:4864:20::d2b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uATAS-0001Kj-27
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 08:37:32 -0400
+Received: from mail-io1-xd33.google.com ([2607:f8b0:4864:20::d33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAT8O-0006N3-8l
- for qemu-devel@nongnu.org; Thu, 01 May 2025 08:35:25 -0400
-Received: by mail-io1-xd2b.google.com with SMTP id
- ca18e2360f4ac-864687c830aso81884139f.0
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 05:35:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uATAP-0006Ws-UB
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 08:37:31 -0400
+Received: by mail-io1-xd33.google.com with SMTP id
+ ca18e2360f4ac-861525e9b0aso83896539f.3
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 05:37:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746102922; x=1746707722; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746103048; x=1746707848; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OCoWouSDj7xQgUIVjzSkFwjZzpe31Z5F14doF7zHj8I=;
- b=ycuE+z5k5P3wxYV7zbUcs+TcYM4QlUO5q1LbDmvuALBIodFZIG96Cx9k5pp28SuaP/
- v6o5t0VfliI9ry40cCD6GmqUF/49+lz5jpPcFKw3aJxZRiIXtYJfp3SVYswj46TUyDT2
- KienV4Hf67n5aYf4CCPiXBpucQjOg8Jy/YvDhCxgiPG/ziQ2rMNQAhIFIXpjt5uqjG15
- 8jF92LcYR7EWvs+CgfCHqHWbFLVLJtlvADDZXTdSByltePRzYEAl2UBU6NHp5Vt8ynbS
- gd37l51vHKV7/V5LcgF273QRTgQCNsQ+2ojae38/aV3ASyJD4xsqPAVIyQvg6OZmACYC
- Ybpg==
+ bh=OFLNWV1qq8c2xcjhD4Kt0ZteyeD8hgPsBSiHuXkmMIU=;
+ b=gBv2Gm4W6IMEg3LQg4I+SzAdWFcgD8lUA8RSWJKWPaxL1Mlt2O8hb9ZuxcC1hkZXtI
+ 2KM2i5qkyKIpW4Q74g9QkRFxl7963hfZJ8W1Outv/Pob/fJBlNy/m3biBTCZJRnY0UWV
+ +urpC2j518id3DaxxhaZO/c3pSyAUlAahE8h0s+dUlbfkoFKbMksk9uDG0xkrVRyMGS9
+ 7GzlHVyCnub9EDLD8YFBO053W8IoYu1jYgrxPL16eGnKTotAnJ1N7ZECzO+iYZagIcft
+ kTlcJWsOKH6k5CZv/gXCLPK8feGaRhWpp0oZ1Ag017I/s1jVTJbz7dxmk4fedSpSpmpf
+ BiQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746102922; x=1746707722;
+ d=1e100.net; s=20230601; t=1746103048; x=1746707848;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OCoWouSDj7xQgUIVjzSkFwjZzpe31Z5F14doF7zHj8I=;
- b=LYQWoLSkeehwKjwh10GGohDzcaPu3H54meTUdl3XaxNrJKFh33WDeppAYfomVlZKVB
- FnXwo+8MeMw8+JCc+nIAYhYCik8EpKD3Ychi7gXs08zazYLYIbtXGDzKtper6WhmDDJm
- 23rG7pGcG/ZGowU/KtSEe3nsEza7Bww7JthA0ilqQRkoiSDHWjhmf2ulOIcjPg1iFGCW
- 64xeJUvtASUG+utXkewo1gP8EDIiRVC6d/BsWkB9chQp+wmFDTk8nS9Z20bckUeieAAE
- 8lSZ/5sgqzg5DzUKorNAKmhBFK3zOattxnglY+B2Lz9PbZGy2NCKIzrr1TFg3hc5itk/
- Qd3w==
+ bh=OFLNWV1qq8c2xcjhD4Kt0ZteyeD8hgPsBSiHuXkmMIU=;
+ b=AIx2WF/X+CI59MNyY3iQt41g43U9t0WU3w1CV1HMxLipiEs5bPRhr8snN55S90IO8r
+ 5WnYTSKSlUw+kEu3+b0SlHUCymuxS8geGFSMW5Aw+uvQ/7oJSQTZ8JHjdTISDjIOdqj4
+ zHhV5Z+xuL/CIAcX0Y9wExAkHWRmIpnwYxRXs4R/BSz0d1BPiUDj2x2iLcbE9FqDjTJ5
+ rZoNVLoRrDPYSjB6Cp4gHfsFOlYEeSQ9mm5wviDF7h5WENtussJT2Y4eBwjlTeM0TCC3
+ YWdwFtd0xWlL/9tkISLbqbkGqQGDcXNGPv9TJAJ4o634nZzzsgpV1b8k1z33bYuU7dUK
+ W6wA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXDzkJ/BJapfHpjqCzHuA+zWUkZllU/KsFGGuKQtykX82oOL60erxU9XKVBXRgFsslPToJDmN7a03d4@nongnu.org
-X-Gm-Message-State: AOJu0YzjqXY2RigkK8VH6hew5Javs6Q9YJxhHoHE61VoZOZI1Rk7Ls0W
- BHTWQxfnPHqlxnJg8ErgCOOH7RxWrN+rUKe5Y19XCPxSxE9lH5+NtXsdvw/A8/k=
-X-Gm-Gg: ASbGnct+5ULps9Ynl+9fUS09ybh9yeBmBXipFFKjPjlyfOGlZBVZApQY7dTamZXfT8O
- v4qahx12rVoo3Hkm+N+Ly1YuvP2vUk1W4fR/OFnoi5s+9UgVFTVAUNgqZBGLTeLxkgrx4/AXu9d
- xCYCzNKTTjF5uEOTXKHW1Z2q18eLlOtliR94qsGvNj4FHO7OSWtsfRzclsmgI/gXD2Fv39GbKpQ
- NG0v3EbrHcnQVzoPM8bcG0hshcIYSNZJ6ODvd8HyWiZaEYxSg58t9bRRn/0Q3e8KPpedjpBiaf4
- HWlmaXIvyIRktpR41VpR7MxmuJy1EF4g2hNhnKSSld7dDUN99RzKNJp66190VHPxEPgYnQH44gY
- 4De94Eigu
-X-Google-Smtp-Source: AGHT+IEqTGffDgUoDfr36a5kVB2hmf9T8Yd9yCb9UcfLDNhAcJ8q6T1zkJFb6exuySmCL0Jw9rPe4w==
-X-Received: by 2002:a05:6e02:1746:b0:3d9:2fbe:2bb1 with SMTP id
- e9e14a558f8ab-3d9676e4ef5mr86681365ab.12.1746102921943; 
- Thu, 01 May 2025 05:35:21 -0700 (PDT)
+ AJvYcCVYLaCTHIAdatqNO5ARyFSWueVcj2X4/2AFTjnFP68kfxG2wZpr3DJO8v/HAuHuvtxCq6eJRn5rfxSO@nongnu.org
+X-Gm-Message-State: AOJu0YwXw4mPdGfhWFbGz80EhUy71o0RadCqSvDQYp0ZfIdPx4m+20JE
+ JaJJu+uVI2ThrOMAsiO1+VV2l0yCcU2urcGgbLDws2AA/FwHC3fg3aDjoU16o6k=
+X-Gm-Gg: ASbGncttqhkJJN4EwBkheoEIrylE4PbquHqbCEgLuGVMZiK3WurW39AjdZ5jhinUWxq
+ qhOTGa+MjigG0XSuobv2tprS90uGNePhlKhv4tfmez1tlD0PNNT4wCITu6WIUX9xfabu+TeZT6Y
+ 1dIBBHn36jgajvr/epRw9Zu9syshIQ9degFxv4zPiQhx5+YbDsj1ru3worJQmcyPBV23uYT/ihM
+ TU1+u8XwPu9fDlBYSIYJHnuA+a6Vg3LE4ZmKm4m3R2NHVZ6wtEudqpq7dmAxtoYSC1AIohKqhGD
+ uuC2sJd0OuUvbudsDBS4pFXS89iLMYeLWp+8Oik2pJHYxFl1TIJqO0HQs6T9x++Sb8tXIZs1MXs
+ EUf2CsLVD
+X-Google-Smtp-Source: AGHT+IH+raCXF5fReJz062i2/TWQ45LLYwoydyUGw/n1VxugfP4hiWInS2ybHZMoefAt9oGRXjy5OQ==
+X-Received: by 2002:a6b:6002:0:b0:864:ab75:758 with SMTP id
+ ca18e2360f4ac-864ab750875mr80248839f.4.1746103048348; 
+ Thu, 01 May 2025 05:37:28 -0700 (PDT)
 Received: from [192.168.69.226] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d975ec99a8sm1087145ab.33.2025.05.01.05.35.19
+ 8926c6da1cb9f-4f883014619sm137173173.105.2025.05.01.05.37.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 May 2025 05:35:21 -0700 (PDT)
-Message-ID: <6d17f9a1-67d9-4a97-ae1d-21a78d2592a4@linaro.org>
-Date: Thu, 1 May 2025 14:35:19 +0200
+ Thu, 01 May 2025 05:37:27 -0700 (PDT)
+Message-ID: <8535f4b3-79cb-46f7-a313-4d0f9f4603dc@linaro.org>
+Date: Thu, 1 May 2025 14:37:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/1] Optimizing the print format of the QEMU monitor
- 'info mtree'
-To: Chao Liu <lc00631@tecorigin.com>, pbonzini@redhat.com, peterx@redhat.com, 
- david@redhat.com, armbru@redhat.com, balaton@eik.bme.hu
-Cc: zhangtj@tecorigin.com, zqz00548@tecorigin.com, qemu-devel@nongnu.org
-References: <cover.1746065388.git.lc00631@tecorigin.com>
+Subject: Re: [PATCH 2/6] accel/tcg: Don't use TARGET_LONG_BITS in
+ decode_sleb128
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20250430230631.2571291-1-richard.henderson@linaro.org>
+ <20250430230631.2571291-3-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <cover.1746065388.git.lc00631@tecorigin.com>
+In-Reply-To: <20250430230631.2571291-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2b;
- envelope-from=philmd@linaro.org; helo=mail-io1-xd2b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d33;
+ envelope-from=philmd@linaro.org; helo=mail-io1-xd33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,62 +103,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Chao,
+On 1/5/25 01:06, Richard Henderson wrote:
+> When we changed decode_sleb128 from target_long to
+> int64_t, we failed to adjust the shift limit.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: c9ad8d27caa ("tcg: Widen gen_insn_data to uint64_t")
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   accel/tcg/translate-all.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-On 1/5/25 04:24, Chao Liu wrote:
-> Hi, all:
-> 
-> Thanks to BALATON, and David for their reviews.
-> 
-> In PATCH v6:
-> 1. Replaced the bool type with enum mtree_node_type to improve code readability.
-> 2. Modified the output to use only one horizontal dash instead of two, and
->     aligned character printing for a cleaner look.
-> 
-> like this:
-> 
-> ```
-> $ ./qemu-system-aarch64 -S -monitor stdio -M raspi4b
-> (qemu) info mtree
-> address-space: memory
-> `- 0000000000000000-ffffffffffffffff (prio 0, i/o): system
->     |- 0000000000000000-000000007fffffff (prio 0, ram): ram
-> ...
->     |- 00000000fe000000-00000000ff7fffff (prio 1, i/o): bcm2835-peripherals
->     |  |- 00000000fe900000-00000000fe907fff (prio -1000, i/o): bcm2835-dbus
->     |  |- 00000000fe910000-00000000fe917fff (prio -1000, i/o): bcm2835-ave0
->     |  |- 00000000fe980000-00000000fe990fff (prio 0, i/o): dwc2
->     |  |  |- 00000000fe980000-00000000fe980fff (prio 0, i/o): dwc2-io
->     |  |  `- 00000000fe981000-00000000fe990fff (prio 0, i/o): dwc2-fifo
->     |  |- 00000000fec00000-00000000fec00fff (prio -1000, i/o): bcm2835-v3d
->     |  |- 00000000fec11000-00000000fec110ff (prio -1000, i/o): bcm2835-clkisp
->     |  |- 00000000fee00000-00000000fee000ff (prio -1000, i/o): bcm2835-sdramc
->     |  `- 00000000fee05000-00000000fee050ff (prio 0, i/o): bcm2835-dma-chan15
->     |- 00000000ff800000-00000000ff8000ff (prio 0, i/o): bcm2836-control
-> ...
->     |- 00000000ff845600-00000000ff8456ff (prio 0, i/o): gic_cpu
->     `- 00000000ff846000-00000000ff847fff (prio 0, i/o): gic_vcpu
-> ```
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Could we keep the address ranges aligned? I.e.:
-
- >   |--+     00000000fe000000-00000000ff7fffff (prio 1, i/o): 
-bcm2835-peripherals
- >   |  |---- 00000000fe900000-00000000fe907fff (prio -1000, i/o): 
-bcm2835-dbus
- >   |  |---- 00000000fe910000-00000000fe917fff (prio -1000, i/o): 
-bcm2835-ave0
- >   |  |--+  00000000fe980000-00000000fe990fff (prio 0, i/o): dwc2
- >   |  |  |- 00000000fe980000-00000000fe980fff (prio 0, i/o): dwc2-io
- >   |  |  `- 00000000fe981000-00000000fe990fff (prio 0, i/o): dwc2-fifo
- >   |  |---- 00000000fec00000-00000000fec00fff (prio -1000, i/o): 
-bcm2835-v3d
- >   |  |---- 00000000fec11000-00000000fec110ff (prio -1000, i/o): 
-bcm2835-clkisp
- >   |  |---- 00000000fee00000-00000000fee000ff (prio -1000, i/o): 
-bcm2835-sdramc
- >   |  `---- 00000000fee05000-00000000fee050ff (prio 0, i/o): 
-bcm2835-dma-chan15
- >   |------- 00000000ff800000-00000000ff8000ff (prio 0, i/o): 
-bcm2836-control
 
