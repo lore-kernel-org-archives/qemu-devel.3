@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F3B5C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B0EC369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:35:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAYkP-0004uZ-SE; Thu, 01 May 2025 14:35:01 -0400
+	id 1uAYkU-0004xO-55; Thu, 01 May 2025 14:35:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uAYkO-0004u5-Np; Thu, 01 May 2025 14:35:00 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1uAYkP-0004ui-VU; Thu, 01 May 2025 14:35:01 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uAYkN-0007Vm-6A; Thu, 01 May 2025 14:35:00 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5f4b7211badso1908030a12.2; 
- Thu, 01 May 2025 11:34:57 -0700 (PDT)
+ id 1uAYkN-0007W0-QH; Thu, 01 May 2025 14:35:01 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5c7d6b96fso2220885a12.3; 
+ Thu, 01 May 2025 11:34:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746124496; x=1746729296; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746124497; x=1746729297; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a12JZbce1+9GJpbaRrN1N9bSwXcK4gSSRdokzUK1bC4=;
- b=Hhd7RKqXNBNaDufYsTyhIUFiS0CTOFARE/JCuT9QJlie7fG3S5nUH4mEPLDQ8ywR2V
- qYlPzw+y2J6l7D2qOQyLOSMPVvQWYgTcOUg8qanZ3C/M/SUQSJdLNQ0hV8jAX2d2p5yT
- rfNM6CFSFS9Y9rG4VC0Hky66ibO7i5Nfzc+zEHnwWzYsJ+yGVpiiV8jikogS62Octkvi
- vo8XRYH+kWT29SNmBzP/nSRYMzs9Orz4H1tlE0sB5PNoJIh0MZ4MYUWnV6axhY/ryMe1
- MLrtaR1R/zHPg+hISC06NT87YDYGM37MDf5al+7HsUlkL+2jW8Wi08u3EE7frb0x8NRg
- NmYQ==
+ bh=RqUBQMIDvrWdaGrAbnq5K23B7hGYiXftBrPor930Aiw=;
+ b=LuYvAbicz8iX8UuSzYp9fKmPdcwc1o7QN2nK8wRTiCjOCA59tQfOJgeU7cXU963/3B
+ NwGKV3u0iol60yK4GL9/h0bZQT4ZKZ/MLb8xTbKxDRNK8bzEiNmqDbvipibCsTNpQqtc
+ sZj0QGFiv3D+t0+BNKmuPgaZprg7qBh0R/67AjwcYZ+0KIhjl5fWs2iNByszyHn6+MWb
+ POhjaETgq+LhSFHnrfYLxsjfqU8p9W2vmKQ34PtmARZAz2HNUWCrLbpOBcw7CnRKqLVt
+ oMlueYXGROZCPX3lXuMWYYEpshjyEJIF6qQ8v466mUH6Bi+ERESnChTEIpXdw5BcZ5Vk
+ UDXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746124496; x=1746729296;
+ d=1e100.net; s=20230601; t=1746124497; x=1746729297;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=a12JZbce1+9GJpbaRrN1N9bSwXcK4gSSRdokzUK1bC4=;
- b=mTRJO+JD7PLTRGtSf3fywiEE7gbb258enbxYa39B+KWSU9uHdtWBeby7oGR9kdRp4w
- pDDGWPDT4ubsi2tFSK3uL3aTHqR9VuFvH+han+6DnOxPo2M/4a4/Tlmj1ytTi9hVnVAa
- ip7jfG9YgeHvzmVjlKHFMTdxfGIdUx9cMeXM6dpxIZ9CdxR6rl7DGFv5Q9DOJOHKNjF9
- +oSZrk+5C+DIwVGRSmnrBtX9Ib7V98f/qaTAIiPW5Rzk1wzeR3i22ZFgqCohcBR9URGy
- /DbHF03faSMbziL4rtLx5tDibwfjSrYG1blrvQXITxteo6N+uoEnMy6RlBWNyeBfdL56
- UBQA==
+ bh=RqUBQMIDvrWdaGrAbnq5K23B7hGYiXftBrPor930Aiw=;
+ b=pPmGnYrNrYchWY9bZnR5bqcMCALTe3YetRSdlAmPiEFZpF9CR9ZRZyIxLxByfUZwqC
+ im0/L6yVvLPxfqyR+h2qKbEDTG5uOLug/z4ewwlabM/Pe5JipTpOm8BZ2k0ZffxIPVq/
+ Ubja/bomLJ7l0hK/xo0r5WtCGdF4RkVPSER0wQi4GXfUpLVhHy1eEOrUdS+UrBxoPyQd
+ z+C+aDOaRHWHa95irIxVkQMpxySOu1j5iLuhSk+FrtuiiGEiHRnBElmg9OZ0EVuTPT76
+ lJwn1v+If9ktwFbjNcJRDC6hAxxHKE0uxEmSwkc6zn6fQmlRboWxN5t1KNhXbUCvHbRq
+ WVZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUCZfFBohrCzKuk6yiq8sBSVu/QKw/NotDDpbT8eep14gznmIPIh6gQASxM2uBex5Wsj+jkCOqkw==@nongnu.org
-X-Gm-Message-State: AOJu0Yzk9JrwKuMaZ8O6BEpsZr54RWdPheFN/CToyjPeCja+QSJzNHWF
- UYql4aEKd1JGNcVO0+GVk4/vikZw71M3xRzrMeSaYB5IfxRjFHm6hXh0eA==
-X-Gm-Gg: ASbGnctTg6SOS2sJXf2ZV3h04VjerV/Pj+/hCDJC45H8H3VxDb8VUzcWgG9ydpx2SvJ
- 7velfR9AmAWLNzEAjnzx6CuxonpP8HHbv+NXC+nEELMS1YfsKA16uRvnJX1PTBon5tmhMrD24vH
- gu83xtgymm5NM80AJY6f/YnmBkal7LoC/XiibC359j12DNC4L+ncs0wE4p8wNyJ04h8hcjgsiBn
- cwh50F9LowAkUujD4CzuJHXrSmaUatYIVsmcBdFMhHzSiddPwRFZ9aEAPNmcvP14aIGU74JWOqR
- f/noWFI7TPSQj0kQaG3OnVxP/zoukKABecwFRXq+aQecFvmFVrkpHB3Q/QtdBMvEk0mX8PhYtr8
- TyPN1e70tZ/Mct6J4Z+PpRySYuW/35kitVcVsheWNhLOTGLaw0QEZ4CjAqtAUgA==
-X-Google-Smtp-Source: AGHT+IGZ/xZJjD3nzRw3hzXbRBfASxzEh7PD5/50xHhSZVzmGgk8IgL31hKyC7gSUNm/xRphrLdReA==
-X-Received: by 2002:a05:6402:210d:b0:5f6:f998:3c6e with SMTP id
- 4fb4d7f45d1cf-5f89b34d307mr7098971a12.18.1746124495986; 
- Thu, 01 May 2025 11:34:55 -0700 (PDT)
+ AJvYcCWCAmhnKLCIFVXeZX5lfZiCTPLo1CKSjgsLcOi9dKoVobsJZIoZbbrOkaXqHBmjK1Az96dmhCAahg==@nongnu.org
+X-Gm-Message-State: AOJu0YwbloDwPFSwl3aGtNK1Y/54T8OZI8FqMZ6lNMIZBbB6CKIgPdHM
+ eNu9XIxIQrV6bl0g55HXXcYx5tTsZZyI62xwkXqpOhr0IXAueoManxGKrg==
+X-Gm-Gg: ASbGncs8tM7LXwAiE0zR7tekBoA6kp/UYltPixEoANGeFi/ayn+GkLwoWA6Ur5FUuM7
+ gFYp/BlUXa2eRM/dYykRJT0gzZM/hikPJsKNycOJjmxYhXdHwGCkQEli/pzb+pUvMZrkxpLChyQ
+ wa/ZrgZT5pm2rEGikDL7fg9QSYzvxWc6JiKRpj2i4oGNxWbbQ7aORX8FQm7kesIXso6uMQPvOjh
+ eqy/REwgMPHmx+0f2yXPS73GHt2zxtqdvCTeNx8tIeAoXMLry9SPS/rKJzwejL6XnVGq3JGehtn
+ zT2f3ioo0elAp3L5DLE81U2wmDHjP5Uzhx2LAr9tQYOgx5quWZyc57vpglLnceSua6I3e++Ci3U
+ u5vfe5oCrgtph6ZzZ5+bai2nQrz4tgg29HV/+hHVZNFTF+rus7hIIcU9DJ+3HgQ==
+X-Google-Smtp-Source: AGHT+IF6luuiAmX/di/fru9iCSnBFuHBGw4XpbeWQWJCKLyNDt+ct5hz4TlaiFO3IkhNcl8wBY5/zQ==
+X-Received: by 2002:a05:6402:2753:b0:5ec:cd52:27c9 with SMTP id
+ 4fb4d7f45d1cf-5f91944d7demr2773168a12.31.1746124497327; 
+ Thu, 01 May 2025 11:34:57 -0700 (PDT)
 Received: from localhost.localdomain
  (dynamic-2a02-3100-2980-eb00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:2980:eb00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f93000b272sm751709a12.68.2025.05.01.11.34.55
+ 4fb4d7f45d1cf-5f93000b272sm751709a12.68.2025.05.01.11.34.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 11:34:55 -0700 (PDT)
+ Thu, 01 May 2025 11:34:56 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  Andrey Smirnov <andrew.smirnov@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 1/3] hw/pci-host/designware: Remove unused include
-Date: Thu,  1 May 2025 20:34:43 +0200
-Message-ID: <20250501183445.2389-2-shentey@gmail.com>
+Subject: [PATCH 3/3] hw/gpio/imx_gpio: Fix interpretation of GDIR polarity
+Date: Thu,  1 May 2025 20:34:45 +0200
+Message-ID: <20250501183445.2389-4-shentey@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250501183445.2389-1-shentey@gmail.com>
 References: <20250501183445.2389-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,27 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The DEFINE_TYPES() macro doesn't need the qemu/module.h include.
+According to the i.MX 8M Plus reference manual, a GPIO pin is configured as an
+output when the corresponding bit in the GDIR register is set. The function
+imx_gpio_set_int_line() is intended to be a no-op if the pin is configured as an
+output, returning early in such cases. However, it inverts the condition. Fix
+this by returning early when the bit is set.
 
-Fixes: 13a07eb146c8 ("hw/pci-host/designware: Declare CPU QOM types using
-DEFINE_TYPES() macro")
+Fixes: f44272809779 ("i.MX: Add GPIO device")
+cc: qemu-stable
 Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- hw/pci-host/designware.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/gpio/imx_gpio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
-index 183f838392..b4bff14579 100644
---- a/hw/pci-host/designware.c
-+++ b/hw/pci-host/designware.c
-@@ -20,7 +20,6 @@
+diff --git a/hw/gpio/imx_gpio.c b/hw/gpio/imx_gpio.c
+index f23c52af26..450ece4548 100644
+--- a/hw/gpio/imx_gpio.c
++++ b/hw/gpio/imx_gpio.c
+@@ -72,7 +72,7 @@ static void imx_gpio_update_int(IMXGPIOState *s)
+ static void imx_gpio_set_int_line(IMXGPIOState *s, int line, IMXGPIOLevel level)
+ {
+     /* if this signal isn't configured as an input signal, nothing to do */
+-    if (!extract32(s->gdir, line, 1)) {
++    if (extract32(s->gdir, line, 1)) {
+         return;
+     }
  
- #include "qemu/osdep.h"
- #include "qapi/error.h"
--#include "qemu/module.h"
- #include "qemu/log.h"
- #include "qemu/bitops.h"
- #include "hw/pci/msi.h"
 -- 
 2.49.0
 
