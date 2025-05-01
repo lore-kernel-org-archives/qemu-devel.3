@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34386C3ABA3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37132C3ABAA
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:22:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAbLl-0000z8-Fx; Thu, 01 May 2025 17:21:45 -0400
+	id 1uAbLc-0000q1-TO; Thu, 01 May 2025 17:21:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbLf-0000ru-3a
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:39 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1uAbLM-0000k7-Lk
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:21 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbLd-0001Wn-5Q
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:38 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-b061a775ac3so1427836a12.0
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:21:36 -0700 (PDT)
+ id 1uAbLJ-0001Qi-LP
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:20 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-301918a4e3bso1614363a91.3
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:21:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746134495; x=1746739295; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746134476; x=1746739276; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qEe9bxPY78rzldhxeSl0yGcr1LEt/gfI/ABj5JQK6lg=;
- b=v+euWi3ZrxYOrpni3BZDUjJv6pk3I4SIUWrrRElvqUf5DK38MoWXlIh9VQwL9mSNWi
- ua7g7I/vC4GQIWmqSir70xsIYCLJsnD1YVztPTpVCZLvkgHH7OQ0p8rWsBToMj6fAykg
- sHV0SFD8OENWtb+2B0rrlCommZuXtMFiTBv8/TRlrWgQMaPVk2g17Ci15QXTAnGadBoU
- pI4nadu22zdIijUQwMBF9u/C0mYfKP91LyNZTMUV1KKQerwLWF0099Jx4njl0XbqQgJJ
- Dv6svrAgzvOAwEk5Epcl3ZRwD3kV7uShHGGd1/fl5poTUixQ9eiwV5hqtEm3FJ+eBHCc
- hQZw==
+ bh=NyHS8JhkVggJWYCLf21RFoGh3DyPnGZlHWJduulHrvM=;
+ b=RV95qriSx30MWvHTFE+UBNYpRbsgNiP2BlxrrLRXBVro3YtxtOoZ/vQH6T0SR6kZw3
+ 29b+E++cndCxvJ4eEap40VMHGvA2gUeGvpQJ64T9bDUIoVtqzdsi3YwfBEPHD/rt8e1z
+ u2O26vWoIw2xKXKvbh+1VTZ4/iFxMAl2IF+aC0HPvX3YR9fWbiH9pYhWiZben4aWiFxY
+ fLIFbTY4Z7FSHlZAiBnX9ijlcpEdP+OVuXN6A5d0Px3w+3gfOJFi6in9jKmRd8i6d2Jm
+ 2WF1ZLyQSfWrZSWnnEK1Hhyq5iHXUNe47hAV7jVGkwn8T8XEg2vcx1N/qYRKtOi9/Xlx
+ /06g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746134495; x=1746739295;
+ d=1e100.net; s=20230601; t=1746134476; x=1746739276;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qEe9bxPY78rzldhxeSl0yGcr1LEt/gfI/ABj5JQK6lg=;
- b=cNrAYNNqY8DRjMq6GnUJzEBIFcMelskl6Dd38djUNtVe4Pc/bdHqX31GH80VcA9puv
- /Um/ybfoYT9TaeqCuOemPnXuBb7kHIKb/BDzAyQnu+P+cphqvGHWDzFsT/+647KFd2To
- jTEhO0f63fUQ2MK2WrLM/3HUGkEe53k+H7rHq8XAkevLh0FhiWzoBjkp6W4//6UVvw3z
- 3XwjjK+HJrKBhZzxq8Tiehn1SUqlGBKIJZBRxBcv8uksivrwQyfaWyG5dnerMnjKyC9u
- 2ffhAEYpEYifb06UNqs/gzHWr8X1n9SXdoJADLoeVh2nAX9NE2gtYRgesQLzQb8lsK90
- MpZg==
-X-Gm-Message-State: AOJu0YxmQdlLu4YULHpzHlYliXiTvPuXPH/uo0XEwAswKii+IGSwqhQu
- CQUKjOrjBrFVeEWkBmKEZUDrFjRRrJVziAh2fYYv9BZAbMgrsxNkQatgG5MTRn8ngiqdEeHbNFm
- u
-X-Gm-Gg: ASbGncspXiQw9xvke48Oe3Imu6zckzhPtWKkmimhnAP8VR71zCx5kwhMyHM0StBQmSv
- AWZk/15PG6xA6PBO8xP5Y12GIToqcepxRl+Xh6HPWebqqVMOcUjmdC7J48TTuHUgikHfOWpuSJA
- 9Vj7qpj1pSLXFTDj3TFnygAGY8CGq2H0TZ5hVInqbtU49GRs0VMPUCbhv40W9uhddE0VYAXA7YK
- BXiZQuV1bqsvGHfwIsbIL8Ej0HBEOX2RfS1kPb2g9XUPiFUTI4tsvH82HNOLffM2kHoJRnOv1Rf
- pc2A4Xd0FxjxC93tcKiygXNaYE2R9QsjJi7WtwZsK7+qqI9rbwDa5ltI7oZy3bxihUaWL+04Y+s
+ bh=NyHS8JhkVggJWYCLf21RFoGh3DyPnGZlHWJduulHrvM=;
+ b=pG9T9Jnv5D1Z7BBNanI0K+bt9XaY0MOy188nk11ivXMyFcCzQl9m5VFdo0IJGBw5BE
+ ZkFJ4EoOblKfZZGFVbHme0K4CdnP0WhzD29OMeNVu8ZL+ofX4CWbgRaDOqOtlf9PFu0T
+ IDWcvdjzxV4xEYVbYcnZg+J9NE5A2jqDlBogS5XM0KTFwaSu1YTV2t0yt1yl1u0qsmLT
+ nSpc6AvFLOvvAnIWRi8gaRfddhP5kR0BOePPDtzf+ClS9YLFkI6gWYLEw7frZWizb/Tr
+ 4olyu1DQJ1UCGZRqaqjZPZtBGXs0V9Ll4ziVxzo8LGOOUgEXgllWbOHxTG5ZZ56M5VbP
+ IODQ==
+X-Gm-Message-State: AOJu0YzcgIYnAYl4+7f0tr2QulHd+IJ4IZ9to3EQZSgIDI+6P2VBtCM+
+ yrEZrLEqq62dkHToJrUr41sFoNAAu6ut6kNdU2g8udEBa/yA0aOKSFNSOLF/NCVQHUkBIsHiihU
+ U
+X-Gm-Gg: ASbGncu4X/Jw/o3F928fXW/wD4DouW86MpPitXKiuJo3rytoatC2fYLy2gvS5g+hkH1
+ stNWdRgqV/9w12aeAT749znwekmTZZKBVaoNMGgJ+a8Yl5D68OMYU4vaAx7jOlDJUT8cDQ3JSCY
+ Xk5YyC1LTp1cbuWgwNlFd56wF+P2SXItp+3R7ciZ5x9szWFB2eoB6ZJZqr1YAjk6oPIiwYSrfBs
+ AQ6QikcLMVtsdv6aHax8Vz4VBHCQ4Avu210k2VM+s4SbP0OeLH8uD9gHRUI9sIAwldHHYNQF7g7
+ TKlmfdtQtv7uag7Cs8wqJyd1sMvBl9tUkMsN8cenXht3LLs+GfD9eFJXlrJ+sdHNBjtcVZI1Ows
  =
-X-Google-Smtp-Source: AGHT+IHAopIn5+8ItdZXk/VxBHbxag8ev8c1fz0ijh6faLJmFQBIIZDRGaMIh0uQP0onjke6xZ0QHQ==
-X-Received: by 2002:a17:90b:514b:b0:2ff:6f88:b04a with SMTP id
- 98e67ed59e1d1-30a4e5c5ec1mr870218a91.15.1746134495367; 
- Thu, 01 May 2025 14:21:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHtkU4VdKzrabxzLTDEVc2v0XZoB80B8iI1SAksvrWS7Yj8O4PiFnQsBYIVQ53+Y3AACEU+Gw==
+X-Received: by 2002:a17:90b:53c7:b0:2ee:8427:4b02 with SMTP id
+ 98e67ed59e1d1-30a4e69e8b9mr896905a91.28.1746134476100; 
+ Thu, 01 May 2025 14:21:16 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30a476267e0sm1384573a91.39.2025.05.01.14.21.34
+ 98e67ed59e1d1-30a476267e0sm1384573a91.39.2025.05.01.14.21.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 14:21:34 -0700 (PDT)
+ Thu, 01 May 2025 14:21:15 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 24/59] accel/tcg: Generalize fake_user_interrupt test
-Date: Thu,  1 May 2025 14:20:38 -0700
-Message-ID: <20250501212113.2961531-25-richard.henderson@linaro.org>
+Subject: [PULL 02/59] accel/tcg: Add CPUState argument to
+ tb_invalidate_phys_page_unwind
+Date: Thu,  1 May 2025 14:20:16 -0700
+Message-ID: <20250501212113.2961531-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250501212113.2961531-1-richard.henderson@linaro.org>
 References: <20250501212113.2961531-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,33 +103,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Test for the hook being present instead of ifdef TARGET_I386.
+Replace existing usage of current_cpu.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cpu-exec.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ accel/tcg/tb-internal.h | 3 ++-
+ accel/tcg/tb-maint.c    | 8 ++++----
+ accel/tcg/user-exec.c   | 5 +++--
+ 3 files changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 279df5fae7..8ff4a34509 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -732,10 +732,10 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
-      * If user mode only, we simulate a fake exception which will be
-      * handled outside the cpu execution loop.
-      */
--#if defined(TARGET_I386)
-     const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
--    tcg_ops->fake_user_interrupt(cpu);
--#endif /* TARGET_I386 */
-+    if (tcg_ops->fake_user_interrupt) {
-+        tcg_ops->fake_user_interrupt(cpu);
-+    }
-     *ret = cpu->exception_index;
-     cpu->exception_index = -1;
-     return true;
+diff --git a/accel/tcg/tb-internal.h b/accel/tcg/tb-internal.h
+index 08538e2896..1078de6c99 100644
+--- a/accel/tcg/tb-internal.h
++++ b/accel/tcg/tb-internal.h
+@@ -50,6 +50,7 @@ void tb_invalidate_phys_range_fast(ram_addr_t ram_addr,
+                                    uintptr_t retaddr);
+ #endif /* CONFIG_SOFTMMU */
+ 
+-bool tb_invalidate_phys_page_unwind(tb_page_addr_t addr, uintptr_t pc);
++bool tb_invalidate_phys_page_unwind(CPUState *cpu, tb_page_addr_t addr,
++                                    uintptr_t pc);
+ 
+ #endif
+diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+index d479f53ae0..714dcaedc9 100644
+--- a/accel/tcg/tb-maint.c
++++ b/accel/tcg/tb-maint.c
+@@ -1045,7 +1045,8 @@ static void tb_invalidate_phys_page(tb_page_addr_t addr)
+  * TB (because it was modified by this store and the guest CPU has
+  * precise-SMC semantics).
+  */
+-bool tb_invalidate_phys_page_unwind(tb_page_addr_t addr, uintptr_t pc)
++bool tb_invalidate_phys_page_unwind(CPUState *cpu, tb_page_addr_t addr,
++                                    uintptr_t pc)
+ {
+     TranslationBlock *current_tb;
+     bool current_tb_modified;
+@@ -1083,15 +1084,14 @@ bool tb_invalidate_phys_page_unwind(tb_page_addr_t addr, uintptr_t pc)
+              * the CPU state.
+              */
+             current_tb_modified = true;
+-            cpu_restore_state_from_tb(current_cpu, current_tb, pc);
++            cpu_restore_state_from_tb(cpu, current_tb, pc);
+         }
+         tb_phys_invalidate__locked(tb);
+     }
+ 
+     if (current_tb_modified) {
+         /* Force execution of one insn next time.  */
+-        CPUState *cpu = current_cpu;
+-        cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(current_cpu);
++        cpu->cflags_next_tb = 1 | CF_NOIRQ | curr_cflags(cpu);
+         return true;
+     }
+     return false;
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 90b345a0cf..39b76d9654 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -749,7 +749,8 @@ int page_unprotect(CPUState *cpu, tb_page_addr_t address, uintptr_t pc)
+             len = TARGET_PAGE_SIZE;
+             prot = p->flags | PAGE_WRITE;
+             pageflags_set_clear(start, start + len - 1, PAGE_WRITE, 0);
+-            current_tb_invalidated = tb_invalidate_phys_page_unwind(start, pc);
++            current_tb_invalidated =
++                tb_invalidate_phys_page_unwind(cpu, start, pc);
+         } else {
+             start = address & -host_page_size;
+             len = host_page_size;
+@@ -772,7 +773,7 @@ int page_unprotect(CPUState *cpu, tb_page_addr_t address, uintptr_t pc)
+                  * the corresponding translated code.
+                  */
+                 current_tb_invalidated |=
+-                    tb_invalidate_phys_page_unwind(addr, pc);
++                    tb_invalidate_phys_page_unwind(cpu, addr, pc);
+             }
+         }
+         if (prot & PAGE_EXEC) {
 -- 
 2.43.0
 
