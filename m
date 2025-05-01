@@ -4,93 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ADDDC369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 16:22:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87691C369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 16:25:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAWf3-0007Ao-B4; Thu, 01 May 2025 12:21:21 -0400
+	id 1uAWhn-0007uW-W9; Thu, 01 May 2025 12:24:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uAWeu-000771-Fi
- for qemu-devel@nongnu.org; Thu, 01 May 2025 12:21:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uAWer-0001UC-PC
- for qemu-devel@nongnu.org; Thu, 01 May 2025 12:21:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746116468;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HVKrUdJe1wYUDC9Uydj05qe8X/SD/VRyneT9qiiCQuc=;
- b=N2je2PuVx5CXpTdDINxY3PuRj0S7vhfMTrJXeeZOWx/WhTDs04L/lnd4zIzR9qHDimn0ga
- ocIPCcUig2dJi/izYCsT5tKKwRO0PBa8O9Wbq6iHytKLqlP5P6+ydSHPmBSBcYKnd7NvWM
- F0j74xF3A+1XuX3kqoCmriV5bk1u+T8=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-s83uTMxUMNqa4n-oAkP7FA-1; Thu, 01 May 2025 12:21:05 -0400
-X-MC-Unique: s83uTMxUMNqa4n-oAkP7FA-1
-X-Mimecast-MFC-AGG-ID: s83uTMxUMNqa4n-oAkP7FA_1746116464
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-39ee57e254aso536424f8f.1
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 09:21:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonwilson030981@googlemail.com>)
+ id 1uAPVJ-0001sy-AT
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 04:42:49 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jonwilson030981@googlemail.com>)
+ id 1uAPVH-0000LJ-CZ
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 04:42:49 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-43d0c18e84eso2515205e9.3
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 01:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=googlemail.com; s=20230601; t=1746088965; x=1746693765; darn=nongnu.org;
+ h=content-transfer-encoding:subject:content-language:to:user-agent
+ :mime-version:date:message-id:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BBg7ezcuprXykc/K02UIVpCehV40oQ6pHaLdEutMdP8=;
+ b=WEBDGX46HUgpZQMQRzky+tMvx3ob3sNkROGmY7MtaaDIpVih5tNKVkSwL3p1aNSX/l
+ DNW6gHEU2REHoOO6PjeSzNU9N4CVi7+3gGtbgToD3EPLCVrIHivkmk6YXk1iS5ukRd4a
+ +7hGx4n8thgpmYs4pUS8OxffgMkvo5m53y6zEuz/UtgjHBuECe8WIikyTbngacesmWXF
+ YKLDgywImMW8RSkC2SjRcbg5xOxXGvumXz+1yecbEUWsgLRwr/Ewd6BSvBpwqOtEprtX
+ 1gakjxbCuRjtl4xQ9S2y+CItJP4ZDUmhg74coqjw4hVwuICj+q1DfMroRLM4LPOZTGpX
+ WqqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746116464; x=1746721264;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HVKrUdJe1wYUDC9Uydj05qe8X/SD/VRyneT9qiiCQuc=;
- b=qATCQSO+zMcAatBd/vv+bkklqguAPgqJjDZsLfLbrTrOC0eMGkiRgDNkyhq250hcZ0
- TVG2D06ZgSlAcixKWhDurTB1/u4Y/D7GeYBzxWIdb1CbTsVz7KGN1jv/IRr3R3O2/L41
- lz9OILA8mgu2HHqpgk4rrh227EvAcMN/drYCksn9GuZdFH9fakVVhXFKUOmivegccvmh
- K88YH/Zahuu54BQ+zGr1F9s3aMo0LxTD9/03w7huby7CVreOnLjdt3u3qI2i9xmwpa0j
- jqLtghJsXXBZqzrPuCmxo+CwSbD9uC78XNMO4utJNVz6Z/0X0c7QOg4a2JLFU4wJn9fk
- wNOw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXtfFPdUJIK5zgMz+86ukPOVcVdvplobzaScndrODPIJIYh1Fc9Z5qSRkoPnS9+R87foTNBsLAST57C@nongnu.org
-X-Gm-Message-State: AOJu0YxcvR5J4tzsOUk55wuNuuYT+yM7BqvXq0VNq62tF2/AGCKYW29x
- 12A/7bT/wx7kgzk9bVsllMwM9r3O5vAzZD3QhEJyvEpiUYO50bOsqbUlrlO+R/QR8EIC1k2VbqP
- djon0p/m3ZnqJGSrvJhqTE41yRpBfvaS9f68JIr2mqwt0umLprL6lVgEucsvl+FHWgTuign1bYg
- YqZIz2jL9h5zY/DIsHo4BbwfWbwZ8=
-X-Gm-Gg: ASbGncvBRj2SG/4bNlaxMl+lqnUWzvN8kh8T3HJK1/ZUcMSPzKsKbcXDd41+vRIqHKg
- REcPoha3CAsDYx0WVURQngJWUEcKillxNSxMGBBfJ1bKtUiuYGGwvbm7xizpEvpb9wNu0
-X-Received: by 2002:a05:6000:4310:b0:3a0:7aa3:cc74 with SMTP id
- ffacd0b85a97d-3a08f75250dmr6586549f8f.6.1746116464404; 
- Thu, 01 May 2025 09:21:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEiO+cfTX1fq+ichGvQ2c37D9VtoYR3dhvhkaKShw4clsB1BsDjf9xm5pBUdlLjnvH9qJf0adaU3/IIz90F7A4=
-X-Received: by 2002:a05:6000:4310:b0:3a0:7aa3:cc74 with SMTP id
- ffacd0b85a97d-3a08f75250dmr6586536f8f.6.1746116464118; Thu, 01 May 2025
- 09:21:04 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746088965; x=1746693765;
+ h=content-transfer-encoding:subject:content-language:to:user-agent
+ :mime-version:date:message-id:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BBg7ezcuprXykc/K02UIVpCehV40oQ6pHaLdEutMdP8=;
+ b=n10kFT5UMEb2hEJLGtehZ+k2iMWvuWe/Aw4VG14d4PjiZwSoNRz1ooOFOGuN/CEvRW
+ ihftE9EvR2lovYnTBD2aofJJAg0wfFuhXfCX/QPuLs4jEJADa6/FG4H1OENHymJdqUEK
+ U5lIPL7/84yx+QLxnhpp/G2NwCouiAApkvrQK3rHVNEOhzpEKx8C46P2bw7ak+56CV0q
+ 1ZPPhhljQMvwguLRLWQw7NFmMywA1XCAXxoakwwHIaRhQIUpZZa2IX/Uy5iERjZ+BXfh
+ 17NZZUoXh0el/wGxWs0NYTT9aXfdFoJGLDztD7lrB+/NWS/H1ZMxv1u6sg3mpkSJh6tK
+ KbUg==
+X-Gm-Message-State: AOJu0YyCA5PLtwW1M9CQAxxdvpKafDZGE1QJlFKixUKA4vFeYRr9X3s5
+ g0ZKgMOLr4Bmh8T/bGt2UMNDGXoh5d246EdqxKreojUMI4ebgvqQhmlHvQ==
+X-Gm-Gg: ASbGncuaPZt43rJXWReUzDktcTH8GHdS5A+t2wdxdThYWvQFGza+71GmEr5Xyc7M8q1
+ 6EERJKT5m2/8c4RcA7o5waid1pJht9YBsZniujcnoWotmAGfgyNkJj0asl8Q54VBpCxP0xFctby
+ U3cXVUdfsYFRtzKXJyJMSVp6CPzPU4qLFT6xA3+hDdz+E1kyHC9W73Q+wiCj+Nps4W94pUS9YAm
+ UfJBrRQg+n9GAxL6xIeTDVdfOvamkozV+H1ZLNCN+qZNzB61zL4G5mAeHZ3rDMOayFoHmhFT1Zk
+ zESDjT3H+gKmOEysvPYUqZ1P9GZtUtzRGRT1dWCaEdSQ6ja/A5r/vc5RsbZ4keEgxWaRB2U8MVv
+ uQKBAYbpjOAnwhhjO
+X-Google-Smtp-Source: AGHT+IFz2Sh8OUvTbacp/JZ8jVs53Vf0aQOrD3anH3HluljsoH4O4cRXmL9SbIL0jCHdNLSzr20bfg==
+X-Received: by 2002:a05:600c:1e87:b0:43c:fa3f:8e5d with SMTP id
+ 5b1f17b1804b1-441b6ff201emr17847865e9.2.1746088964452; 
+ Thu, 01 May 2025 01:42:44 -0700 (PDT)
+Received: from [192.168.86.32] (97e5422b.skybroadband.com. [151.229.66.43])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-441b2aecc89sm50766755e9.9.2025.05.01.01.42.44
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 May 2025 01:42:44 -0700 (PDT)
+From: Jon Wilson <jonwilson030981@googlemail.com>
+X-Google-Original-From: Jon Wilson <jonwilson030981@gmail.com>
+Message-ID: <e703e0e8-8207-41b6-b2a5-6d6544816fd3@gmail.com>
+Date: Thu, 1 May 2025 09:42:43 +0100
 MIME-Version: 1.0
-References: <CABgObfa-ViHvve=oqV-Y88ghXGkevu1wTug=+24E4dKuG54c3Q@mail.gmail.com>
- <CAJSP0QVpxQDfuBOQiMyP41ufaJ=56Xh2sRhWSON=FvVuxDabaw@mail.gmail.com>
- <aBOYZsfT0retojQf@redhat.com>
-In-Reply-To: <aBOYZsfT0retojQf@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 1 May 2025 18:20:50 +0200
-X-Gm-Features: ATxdqUHfpV8wM2cTb6yj5JWEd7fM3INfLEjwzVca6241NIGV2wvTIDH-zaQzDgU
-Message-ID: <CABgObfa9O6V00H9Z7iawvUZWvXqQkj2XsdXejPW0tjXb_a7Erg@mail.gmail.com>
-Subject: Re: OSUOSL in trouble
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>, "Hajnoczi,
- Stefan" <stefanha@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="00000000000094a68d0634156baa"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.644,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+To: qemu-devel@nongnu.org
+Content-Language: en-US
+Subject: madvise(MADV_DONTDUMP)
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=jonwilson030981@googlemail.com; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 01 May 2025 12:24:09 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,70 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000094a68d0634156baa
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi, I'm a first time contributor to QEMU. I am using qemu-user for 
+fuzzing using LibAFL and as part of that including support for address 
+sanitizer 
+(https://github.com/google/sanitizers/wiki/addresssanitizeralgorithm). 
+In essence, this requires that my process running in QEMU requires very 
+large (albeit sparsely populated) memory ranges (terrabytes in size) for 
+the shadow maps. When ASAN detects  an error, it causes the target to 
+crash. As a result a coredump is generated (which would usually provide 
+a very welcome opportunity to perform a post mortem), but QEMU includes 
+these shadow maps in the core dump which it generates quickly exhausting 
+disk space.
 
-Il gio 1 mag 2025, 17:51 Daniel P. Berrang=C3=A9 <berrange@redhat.com> ha
-scritto:
+The function vma_dump_size performs only basic filtering of the ranges 
+included in the core dump and the implementation of target_madvise 
+disregards MADV_DONTDUMP (which per the spec it is at liberty to do). 
+However, it would be very helpful if QEMU were able to exclude ranges 
+marked with MADV_DONTDUMP. I believe it should be a simple case of 
+adding a flag to page-protection.h and using pageflags_find to update 
+the flags in target_madvise. Then the logic in vma_dump_size could be 
+updated accordingly. A more colourful and easier to read description of 
+this is in the following markdown gist (with references to the code in 
+question):
 
-> > Paolo, please let me know how I can help with migrating VMs or setting
-> up a
-> > CI Kubernetes cluster on Amazon.
->
+https://gist.github.com/WorksButNotTested/becd7a1f89690fad89b3e8b44ed7192d
 
-Since in the past Camilla did it but I am not sure if she has bandwidth,
-let's run it with Red Hat first. All I did was give her admin privileges on
-Azure.
+Would you be receptive to such a modification? Is my strategy for the 
+fix correct?
 
-In the meanwhile I will start migrating the VMs.
+Many thanks for your advice.
 
-Please ensure the any new CI machines for gitlab have persistent cache
-> enabled. Our functional test jobs are still downloading images on every
-> run due to lack of configured cache, which makes them unreliable when
-> sites have transient outages, as well as making jobs slower.
->
+Kind Regards.
 
-Thanks for the suggestion=E2=80=94just to be clear do the Azure runners hav=
-e that?
-
-Paolo
-
->
->
-
---00000000000094a68d0634156baa
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il gio 1 mag 2025, 17:51 Daniel P. Berrang=C3=A9 &lt;<=
-a href=3D"mailto:berrange@redhat.com" target=3D"_blank" rel=3D"noreferrer">=
-berrange@redhat.com</a>&gt; ha scritto:</div><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
-);padding-left:1ex">
-&gt; Paolo, please let me know how I can help with migrating VMs or setting=
- up a<br>
-&gt; CI Kubernetes cluster on Amazon.<br></blockquote></div></div><div dir=
-=3D"auto"><br></div><div dir=3D"auto">Since in the past Camilla did it but =
-I am not sure if she has bandwidth, let&#39;s run it with Red Hat first. Al=
-l I did was give her admin privileges on Azure.</div><div dir=3D"auto"><br>=
-</div><div dir=3D"auto">In the meanwhile I will start migrating the VMs.</d=
-iv><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"=
-><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
--left:1px solid rgb(204,204,204);padding-left:1ex">Please ensure the any ne=
-w CI machines for gitlab have persistent cache<br>
-enabled. Our functional test jobs are still downloading images on every<br>
-run due to lack of configured cache, which makes them unreliable when<br>
-sites have transient outages, as well as making jobs slower.<br></blockquot=
-e></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Thanks for the =
-suggestion=E2=80=94just to be clear do the Azure runners have that?</div><d=
-iv dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><d=
-iv class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
-<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">=
-</div></div>
-
---00000000000094a68d0634156baa--
+Jon
 
 
