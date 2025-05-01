@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59465C369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B3EDC3ABA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:07:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAb71-0002AZ-0c; Thu, 01 May 2025 17:06:31 -0400
+	id 1uAb6U-0001Ke-V4; Thu, 01 May 2025 17:05:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6d-0001RD-9o
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:15 -0400
-Received: from mail-il1-x12c.google.com ([2607:f8b0:4864:20::12c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6T-0001KH-Qw
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:57 -0400
+Received: from mail-il1-x12d.google.com ([2607:f8b0:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6a-0006cT-Jd
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:06 -0400
-Received: by mail-il1-x12c.google.com with SMTP id
- e9e14a558f8ab-3d5e68418b5so13085815ab.2
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:06:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6R-0006am-LP
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:57 -0400
+Received: by mail-il1-x12d.google.com with SMTP id
+ e9e14a558f8ab-3d9189e9a06so5153255ab.2
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:05:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746133563; x=1746738363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746133554; x=1746738354; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2UZQft0G0qLlkzlmAjD0AN5/aAoxDFjk+IIAiFxxuxk=;
- b=Wtk+b9wBVk38HPrXI90RbZSR5BhexoRwnSnhSGq44BatVkjicuCPiPb6knSrjfntTV
- VNil/y9ftsbM7WUY+oA5EXJDJxIKbetjmTbByOi5Fcymg1L1tLwoDuCMAueKXtUH4e4E
- cMAoQ3lyUScB40aqET6H2eUSIanzv5JY/aAYRivhYHyY5FoCyco9yY2UQYXGi3u5oIEo
- Vpy9XDju38ibod/5Kx5YKh8KSPNn5O0xwSB9SOz37TqGQIaBRs4ut4DvScniSo9TQJet
- 7CsAxdj9riASCLUcGBuvyjZ2vSyqEM7NtSbN1cRNfCQwa8y/05uiR8QGnYbTr0YuCK9k
- c/pw==
+ bh=S1tUkE2fqrTbr3cXQ8k1xcGcvFxNEjegGfUTV61cZkA=;
+ b=EbXFJ30A946jsPQLWn2SXFovj1q8wmST0y8Ek3Q7sGPSD43hiO+wAXDb3jajsbpLE7
+ Qhzmt7AsDqZaR0y4iK2zHr4PdfaGt2h3Ha7QnA/LLpqCbenXLYqC/9RGR2j7FMWbrnx0
+ GjgyjH5uIYXIVSEJUZ2uvdppdCaXnWV55VrFCL1Jm6fcwZYyDfEHwwOCXblG9F4tWGN/
+ sjZANgV0tfT4oEKymupqxNGVPSWxe76yYxdqvPZpCok4NfJmYt36slkWe4IfsL0yvcZq
+ YeqvsBuiqk+DXVFd4PM2U74vTcqddMWVAqGqg2MKGzERI2jFytJ4ev5uoxOEULuv7a5D
+ feJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746133563; x=1746738363;
+ d=1e100.net; s=20230601; t=1746133554; x=1746738354;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2UZQft0G0qLlkzlmAjD0AN5/aAoxDFjk+IIAiFxxuxk=;
- b=GR1zcYKFhhZPQJWaadJuRwnbTxC61GH9qCRvrlEkIdjGw9TInk8XbmkFI8Zp+ZVE3c
- bITMh3MQ4EcwFndxmN28Tn8IuHUxW9xgQH8gWGk6OHPR/oLtcfuCKCqGaE8zAuuelb+Y
- ENtn3t4G/IkEPxEjlMYG32v9MaSJzpwC8jI1IM1yqbkgludYdXUFegTBZ+Nle38qHgbQ
- cuXAnBwRDFEfbaRg0wm4vuHJVUSaB5zqkC5riXj9E3yUcZ0KXElqjN/ihJIpztam7lZp
- dbKuiPuN53QWlw3TqQUiEJIh4p878wOTC6ZDInvl5qF5HHMGH7vsqiZCLkoeqUh34Z3z
- smCw==
-X-Gm-Message-State: AOJu0YzIqjvXEVJGl8aj/s0y0tSrRwcNB/KyeE5p29aWVrAxepJv2DpI
- 056Mzdt1YS2ObFxqRZgGayqdQ2CNRUGSZMHQadshlg1j/yquTchfwp9D3oK+pSgJOfYJ0RK4uSB
- r
-X-Gm-Gg: ASbGncuwW4C0+1n5aYVkXIVchcy+dStq9Pef2nYv2C0GtRJDJxeVSOYiczCzygvSOLO
- 3xtZtD8LrA1EgYvWSEMOfgn2B3rT/RMZJnMgtqOazwt8dbSLSEhOxbCPb4v4Rsqs6+h8z9x7jel
- +NDN+rSD6A+qtnk2TvojsWcR2oflzSXq3yOUu43/+gTiLjxUnfmbxbBLmJPZwKJHonUlVFKkSwh
- ebtsRY28JdJOykBHBSEyssR7v+ii3t2JeCYRND+3n8OcnxYR4C97IhpgxEDsNCgoo7iwlgQIy+o
- IPYlBLEPLZd3bX2YJK2bIn2pW8RKw7M/e+FmdWHVgfLMTWaNlHSmx4Zl29MI6Jb/8B7p37aAvvO
- 6l9clV+XFK5Ro22E=
-X-Google-Smtp-Source: AGHT+IHTizOnKtd//rQZ5MNZ+h2FfRR5XgBuLQ9/ebXP/1Ak9kwfMQFLAcVGBVMrwMUIxStFBA2bIA==
-X-Received: by 2002:a05:6e02:1a85:b0:3d3:d074:b0d2 with SMTP id
- e9e14a558f8ab-3d97c1771a7mr5740545ab.2.1746133562899; 
- Thu, 01 May 2025 14:06:02 -0700 (PDT)
+ bh=S1tUkE2fqrTbr3cXQ8k1xcGcvFxNEjegGfUTV61cZkA=;
+ b=HVEO4JcwznmkNHp/da5pM5Fl8DnrPAi/BrZK1myyDLVYLsRz6uN76M4TVCQ/gQNOdX
+ 1adhDkVoYJY49IrlXjGrT6r2F/Yb6aR4+2ZI+GbyS+7e12peJDyNg4xXgfNe/qifS0lf
+ JpEmO97KHxlSq67eXHVE1xGDiLQ9oRTbeW9IUh0bHqB5Q8fYGZEfJnysy34bI+XOsfQS
+ PJ2X1NsQlUnRQJXWIHq+7J0YsFWlVICm9nxZNaq3sw7y+i9sXL+Qr/8GjZLKRR+2lUaI
+ KUIT4lVLWVRGPei3IBA1Ndk14vz0qAYbRfVtZwZ8x+4VLdC7nWlQJOLqGM8KJEh7O+iV
+ QONw==
+X-Gm-Message-State: AOJu0YxNBF99eBpDmHsQPBf33z8G8dZe+NT462rZstQyLBaROArcjNhA
+ 807AY6XxV4KIIP20sI+jZxyCLp2gFRtN3v666iePIibaAk4eYb4uqs3cUwQNLPmMA3f8DABJzXm
+ u
+X-Gm-Gg: ASbGncuaa6cakNFUoYEyoTNHSEbKdVZmSrh3SwojL/N+rHiCdn+1xZi7L1t+4LZXc9J
+ sMmZFOPcpruRTqDQHheaOUg8WreRzInQQPrXZT41rVnFfpgH05EH3gwPz9L+7baiiX5Z4VZ3YGD
+ nS86abW4X+N10MC9AjShFZOyKqEp9Gh6Z479kOkT5NFle0V+tV28W8kh/rvEqg6kXt6JNcSE7fM
+ zxzQTchGad2k1pyWPfhC8PUIYk6/SsS5mJF/hIR1PCHAAOHbe4BPesvW+lWHEDsZOPW/HfdXEJ3
+ g+5z6zZRfwyyg6vBYKI+8+ru0qQHqiuRmNkh3H7V+85118fKQkOZd7U1MZCx76nESaMXj0SKXzC
+ W8s8JKpvjN2PN3Zc=
+X-Google-Smtp-Source: AGHT+IEhN0gfiRGdQtK4gvD1FbBGyd1n3rEGkOmMELlyKFKYHHRG9NX+sRBTEqV5mMGJFOpbGJ+6uA==
+X-Received: by 2002:a05:6e02:1a8f:b0:3d8:1ed0:e167 with SMTP id
+ e9e14a558f8ab-3d97c239b27mr4578815ab.14.1746133554154; 
+ Thu, 01 May 2025 14:05:54 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d975f6d755sm3065295ab.69.2025.05.01.14.05.59
+ e9e14a558f8ab-3d975f58be3sm3253625ab.58.2025.05.01.14.05.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 14:06:02 -0700 (PDT)
+ Thu, 01 May 2025 14:05:53 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
@@ -77,17 +77,18 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>
-Subject: [PATCH 07/18] hw/pci/pcie: Remove QEMU_PCIE_EXTCAP_INIT definition
-Date: Thu,  1 May 2025 23:04:45 +0200
-Message-ID: <20250501210456.89071-8-philmd@linaro.org>
+Subject: [PATCH 06/18] hw/block/pflash: Remove
+ PFlashCFI01::old_multiple_chip_handling field
+Date: Thu,  1 May 2025 23:04:44 +0200
+Message-ID: <20250501210456.89071-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501210456.89071-1-philmd@linaro.org>
 References: <20250501210456.89071-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12c;
- envelope-from=philmd@linaro.org; helo=mail-il1-x12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-il1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,60 +111,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU_PCIE_EXTCAP_INIT was only used by the hw_compat_2_8[]
-array, via the 'x-pcie-extcap-init=off' property. We removed
-all machines using that array, lets remove all the code around
-QEMU_PCIE_EXTCAP_INIT.
+The PFlashCFI01::old_multiple_chip_handling boolean was only set
+in the hw_compat_2_8[] array, via the 'old-multiple-chip-handling=on'
+property. We removed all machines using that array, lets remove that
+property and all the code around it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/pci/pci.h | 2 --
- hw/pci/pci.c         | 2 --
- hw/pci/pcie.c        | 5 -----
- 3 files changed, 9 deletions(-)
+ hw/block/pflash_cfi01.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index c2fe6caa2c6..6c72a61c4b6 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -210,8 +210,6 @@ enum {
-     /* Link active status in endpoint capability is always set */
- #define QEMU_PCIE_LNKSTA_DLLLA_BITNR 8
-     QEMU_PCIE_LNKSTA_DLLLA = (1 << QEMU_PCIE_LNKSTA_DLLLA_BITNR),
--#define QEMU_PCIE_EXTCAP_INIT_BITNR 9
--    QEMU_PCIE_EXTCAP_INIT = (1 << QEMU_PCIE_EXTCAP_INIT_BITNR),
- #define QEMU_PCIE_CXL_BITNR 10
-     QEMU_PCIE_CAP_CXL = (1 << QEMU_PCIE_CXL_BITNR),
- #define QEMU_PCIE_ERR_UNC_MASK_BITNR 11
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index fe38c4c0287..36206c77b7c 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -90,8 +90,6 @@ static const Property pci_props[] = {
-                     QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
-     DEFINE_PROP_BIT("x-pcie-lnksta-dllla", PCIDevice, cap_present,
-                     QEMU_PCIE_LNKSTA_DLLLA_BITNR, true),
--    DEFINE_PROP_BIT("x-pcie-extcap-init", PCIDevice, cap_present,
--                    QEMU_PCIE_EXTCAP_INIT_BITNR, true),
-     DEFINE_PROP_STRING("failover_pair_id", PCIDevice,
-                        failover_pair_id),
-     DEFINE_PROP_UINT32("acpi-index",  PCIDevice, acpi_index, 0),
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 1b12db6fa29..a3969423bd3 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -245,11 +245,6 @@ int pcie_cap_init(PCIDevice *dev, uint8_t offset,
+diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+index 168101d8dfe..bba099a0c9e 100644
+--- a/hw/block/pflash_cfi01.c
++++ b/hw/block/pflash_cfi01.c
+@@ -84,7 +84,6 @@ struct PFlashCFI01 {
+     char *name;
+     void *storage;
+     VMChangeStateEntry *vmstate;
+-    bool old_multiple_chip_handling;
  
-     pci_set_word(dev->wmask + pos + PCI_EXP_DEVCTL2, PCI_EXP_DEVCTL2_EETLPPB);
- 
--    if (dev->cap_present & QEMU_PCIE_EXTCAP_INIT) {
--        /* read-only to behave like a 'NULL' Extended Capability Header */
--        pci_set_long(dev->wmask + PCI_CONFIG_SPACE_SIZE, 0);
+     /* block update buffer */
+     unsigned char *blk_bytes;
+@@ -703,13 +702,8 @@ static void pflash_cfi01_fill_cfi_table(PFlashCFI01 *pfl)
+      * in the cfi_table[].
+      */
+     num_devices = pfl->device_width ? (pfl->bank_width / pfl->device_width) : 1;
+-    if (pfl->old_multiple_chip_handling) {
+-        blocks_per_device = pfl->nb_blocs / num_devices;
+-        sector_len_per_device = pfl->sector_len;
+-    } else {
+-        blocks_per_device = pfl->nb_blocs;
+-        sector_len_per_device = pfl->sector_len / num_devices;
 -    }
--
-     return pos;
- }
++    blocks_per_device = pfl->nb_blocs;
++    sector_len_per_device = pfl->sector_len / num_devices;
+     device_len = sector_len_per_device * blocks_per_device;
  
+     /* Hardcoded CFI table */
+@@ -765,7 +759,7 @@ static void pflash_cfi01_fill_cfi_table(PFlashCFI01 *pfl)
+         pfl->cfi_table[0x2A] = 0x0B;
+     }
+     pfl->writeblock_size = 1 << pfl->cfi_table[0x2A];
+-    if (!pfl->old_multiple_chip_handling && num_devices > 1) {
++    if (num_devices > 1) {
+         pfl->writeblock_size *= num_devices;
+     }
+ 
+@@ -930,8 +924,6 @@ static const Property pflash_cfi01_properties[] = {
+     DEFINE_PROP_UINT16("id2", PFlashCFI01, ident2, 0),
+     DEFINE_PROP_UINT16("id3", PFlashCFI01, ident3, 0),
+     DEFINE_PROP_STRING("name", PFlashCFI01, name),
+-    DEFINE_PROP_BOOL("old-multiple-chip-handling", PFlashCFI01,
+-                     old_multiple_chip_handling, false),
+ };
+ 
+ static void pflash_cfi01_class_init(ObjectClass *klass, const void *data)
 -- 
 2.47.1
 
