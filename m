@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E86C9C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D0E3C369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:07:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAb70-0002AF-UU; Thu, 01 May 2025 17:06:31 -0400
+	id 1uAb7b-0003Ny-4x; Thu, 01 May 2025 17:07:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6t-0001ks-CI
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:24 -0400
-Received: from mail-il1-x133.google.com ([2607:f8b0:4864:20::133])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb7J-0002hA-3e
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:49 -0400
+Received: from mail-il1-x12a.google.com ([2607:f8b0:4864:20::12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6r-0006fx-Na
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:23 -0400
-Received: by mail-il1-x133.google.com with SMTP id
- e9e14a558f8ab-3d5e2606a1bso12501555ab.0
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:06:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb7H-0006kk-K2
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:48 -0400
+Received: by mail-il1-x12a.google.com with SMTP id
+ e9e14a558f8ab-3d7f111e9e1so15688715ab.1
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:06:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746133580; x=1746738380; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746133606; x=1746738406; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=isJ+xEvRBKFtxiyi/HDhWV18nqZ0er3zYVHJmZNBiUM=;
- b=gmOWgzwv7LdjGmEZxoL+p8bJnqDW02Elt+H8FCyHtVIQIPWLkcrmJO8+7NlkCVz68d
- lQd9AnaA6e+WWL1tccFMM7hyq34Gf2fRZRB3mCzu0tNYcSC13mA7tMaV9X+nXPfJl7GH
- 2B9TRkL3tsuoXgyZGqstcUaBDsZaOdeMCIaIuGRNeAWYXxFNgAqByvlh0vhkvK0liRIY
- dpqaZmZo+/wq+tTMH8i+tLvH0gEimCHMUyVyqyvOy5GLIlKusIT1Bi/CTsKX+Ax7sZnA
- yu/cEv+yEDsS+DzCBn1RK5Nl6ndWDkH8RpwftZa4/Y9FM+Q1RsjxzJSIsQbdQok2HJ5M
- zVGA==
+ bh=pT5M0lz4iXxP6eQat70i7GTGsl8o8UafTe6D3H+LKG8=;
+ b=Sua5MDqv7+6kbyAqjpct4jTdLQdqHqv0IN5nm61nsYJ5oko+xCpP0FaSGXQrt4x2kz
+ HPMfOt6CDVHsFVaekaf3aGxjsemz9+90wqyYKOBZMJbeko1U6JCQ1ncv5zwyNsR+7uCT
+ lUOsJQtpHnneU9UCRnozttz0HTE3s5d8HLdzUfZFP7332y6qS5xPB78DRT3z5BuYDXPg
+ zHezqZRJ32bbNvsTmy/NTI7jbu3e1dkPoPYloJiiMTwzm2TXD9ogoBtHOJ1GeDoXEQg2
+ 4OMCSKuKVKXIyG27Q42OaWrmUr5UWj+/1sgOFwvE9JDJYjnNn/TWujAWjDoqKE+kEa2H
+ WTng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746133580; x=1746738380;
+ d=1e100.net; s=20230601; t=1746133606; x=1746738406;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=isJ+xEvRBKFtxiyi/HDhWV18nqZ0er3zYVHJmZNBiUM=;
- b=D0ASi1CpCrGq1oH9UlY4NsTh0W6Wf4KA9pSctxw4bWGgW0C6SZ9AEbDv+tjcAgJoiG
- ybyTDVVixCGm3sQJlcCc49ZjTgR9M4hnnYAYPBqrc7UcIazUcEhsce/bg0PaDvl4MpQL
- T9unlK7n3/4DJzPLr57wU1BRU5AVSvVTDypm6pQYEp6ttyb4LGLbsK+i47HJ+L8Vdpoe
- AhqghSdInLzVMmUXzznlVUxvJGk5EzqjB44xQHwv0FXJuASrJ7wMXmlOYZ9k7ifh35ZT
- hn2a5pvkAmIHUHn8Drl95KQkuKtzSINun2gfOVlcdV22wQYM7aSkfGrWNOUch8aLm5Ct
- c04Q==
-X-Gm-Message-State: AOJu0YxhB3lxZ5mYdp5L7jeZOSn5IAsntYXYOZuxHlEy7MZ6LLBYGjO1
- ttprStTUPjbZEA2aurhqqhaEXmrp6QTdfR/yLZyWgP5AaGvDP7k5gggIACa6ECv1I7JRbO13EDH
- m
-X-Gm-Gg: ASbGnctJvmtjIuoCTnbK7lDDLR8lBC1j0v0XvdPt99qCJpU4tAxTkI7Z/DhiD3Oa56W
- ttatmOxX5/8QEEoGvPwTqX289Qss+LOitPumrsF5nzbgG+B+Hecc8qNnRkOs8dO/+a26+sI827I
- tr4LO+4T0Toqv9/KOQdC3yFcsLBMtDthH5H4UDqR6MyRJcF3X343WXDYvxJX75tc4VC9aZ+CBZn
- g9FOVd1pyIJocH6dC+TkoNnshL5Nr6cEApZ4zqadl/kTjgTzrn4mrvSqDOo/AeGTdIHd30rVFaj
- gFILRyUKlN8gaAcG7xsbXbBJKhuGkVwSjhrE/8fUAZUPbbYZ+tRrKqh/DeNJrsweAqrDMtC9rmc
- MP1JDrgr4gLO500w=
-X-Google-Smtp-Source: AGHT+IGINLrAHGwr43KW6ALjOdfV8joWbulUaker/Sm7tkf9exPUTefUtiE1begb9XhBvJBAZMBL6A==
-X-Received: by 2002:a05:6e02:3a01:b0:3d4:3db1:77ae with SMTP id
- e9e14a558f8ab-3d97c239085mr5769385ab.18.1746133580005; 
- Thu, 01 May 2025 14:06:20 -0700 (PDT)
+ bh=pT5M0lz4iXxP6eQat70i7GTGsl8o8UafTe6D3H+LKG8=;
+ b=k3fDjbHxesh7wskVBgObOmDgFDUZDMht8hTqXhbgQG85tPCW4clkUYbgnssJMD80E7
+ O/WwKDiEpzaop79aqbB5qtG/OZHfqKcV0qi6KIpt2oJYDYGB8ITOzoX+FqXxc4HN31Np
+ 2LSm2ngE9kUUZCBPt9E3rtSWI6u3qnc8A5aDQetl/MpIp4GHEaL0s/ZUMqrI2BE3CAe9
+ c/MLMVQ5U2quTjCCmLyhQkbKfH5W/SmIwWBBOh6lVHUYSXnqUUdC2hTX5N6mtEuPouzz
+ FKibBVkvyKiuu1Pcfe/k0/UyzYSs3Qd1WmZjeTTOU11A/8F5ERy5kxSXlPof20wInEcl
+ OPXA==
+X-Gm-Message-State: AOJu0Yy139C/nAAjJFYA5pjO5tp8YQO4fHhmaX8W/+522xWT4R2Fsiia
+ MYK2/66j/kAAs4yh1mVVAR1bkUBsx1Xg19vKmQ50QqU0rAAP+QV1yKMm4r2qPEb1Vfv/mo/DEvk
+ b
+X-Gm-Gg: ASbGnct3wdKD6W9/48b+0xLet8fybJnsntJclyZedANecZ4nQ3W6s7Sgt95A8ybzms0
+ /wneDWZsBc/TnIVbEskPoAFYjQiyU74yTzJlBD/hta9VWkUO1m3rH8sDVS94GL0XswLag9NWSN0
+ WQ1ADmyfXanyelwkbr4dErP96ZjosczXKA3ctrTIeuvOt5J3v4UHkMY5ezUI7ahyS+pcPpotfrL
+ hxAmiM470Gntk+VwOSEI4y9KA6l+flfSUSuacFVTtz3CdgeVUBrKLmffRrWDHJbCMu0KbjnOrmv
+ uf065jw6suMvw3czj0cNnGaSCYhCAGA3l47RuKbKc32ga+cGSQ8zcKkbpMzNMElzBzdkjJl8xPN
+ u0Lx59pS3sY3Qkr4=
+X-Google-Smtp-Source: AGHT+IFyZ7FYEZ0ZSdsw26U2Xktrm0Lfl9GBgVwXW2Vqi07mLib4x0Rm3VfQIgDk4i4z9prW/R11gw==
+X-Received: by 2002:a05:6e02:3784:b0:3d8:21ae:d9c with SMTP id
+ e9e14a558f8ab-3d97c154012mr5765095ab.5.1746133606161; 
+ Thu, 01 May 2025 14:06:46 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f88aac7f88sm44327173.133.2025.05.01.14.06.16
+ 8926c6da1cb9f-4f88aac7e27sm44626173.138.2025.05.01.14.06.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 14:06:19 -0700 (PDT)
+ Thu, 01 May 2025 14:06:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
@@ -77,25 +77,24 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>
-Subject: [PATCH 09/18] hw/virtio/virtio-pci: Remove
- VIRTIO_PCI_FLAG_INIT_LNKCTL definition
-Date: Thu,  1 May 2025 23:04:47 +0200
-Message-ID: <20250501210456.89071-10-philmd@linaro.org>
+Subject: [PATCH 12/18] hw/nvram/fw_cfg: Inline fw_cfg_file_slots()
+Date: Thu,  1 May 2025 23:04:50 +0200
+Message-ID: <20250501210456.89071-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501210456.89071-1-philmd@linaro.org>
 References: <20250501210456.89071-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-il1-x133.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12a;
+ envelope-from=philmd@linaro.org; helo=mail-il1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,66 +110,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VIRTIO_PCI_FLAG_INIT_LNKCTL was only used by the hw_compat_2_8[]
-array, via the 'x-pcie-lnkctl-init=off' property. We removed all
-machines using that array, lets remove all the code around
-VIRTIO_PCI_FLAG_INIT_LNKCTL (see commit 9a4c0e220d8 for similar
-VIRTIO_PCI_FLAG_* enum removal).
+Now than fw_cfg_file_slots() only returns
+FW_CFG_FILE_SLOTS_DFLT, we can inline it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/virtio/virtio-pci.h | 4 ----
- hw/virtio/virtio-pci.c         | 8 ++------
- 2 files changed, 2 insertions(+), 10 deletions(-)
+ hw/nvram/fw_cfg.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index ed142932f7b..a8dd613ffbc 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -34,7 +34,6 @@ enum {
-     VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
-     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
-     VIRTIO_PCI_FLAG_ATS_BIT,
--    VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT,
-     VIRTIO_PCI_FLAG_INIT_PM_BIT,
-     VIRTIO_PCI_FLAG_INIT_FLR_BIT,
-     VIRTIO_PCI_FLAG_AER_BIT,
-@@ -61,9 +60,6 @@ enum {
- /* address space translation service */
- #define VIRTIO_PCI_FLAG_ATS (1 << VIRTIO_PCI_FLAG_ATS_BIT)
+diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
+index 71c41c979d7..de65ee8342e 100644
+--- a/hw/nvram/fw_cfg.c
++++ b/hw/nvram/fw_cfg.c
+@@ -255,15 +255,10 @@ static void fw_cfg_write(FWCfgState *s, uint8_t value)
+     /* nothing, write support removed in QEMU v2.4+ */
+ }
  
--/* Init Link Control register */
--#define VIRTIO_PCI_FLAG_INIT_LNKCTL (1 << VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT)
+-static inline uint16_t fw_cfg_file_slots(const FWCfgState *s)
+-{
+-    return FW_CFG_FILE_SLOTS_DFLT;
+-}
 -
- /* Init Power Management */
- #define VIRTIO_PCI_FLAG_INIT_PM (1 << VIRTIO_PCI_FLAG_INIT_PM_BIT)
+ /* Note: this function returns an exclusive limit. */
+ static inline uint32_t fw_cfg_max_entry(const FWCfgState *s)
+ {
+-    return FW_CFG_FILE_FIRST + fw_cfg_file_slots(s);
++    return FW_CFG_FILE_FIRST + FW_CFG_FILE_SLOTS_DFLT;
+ }
  
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 0075ae590db..5b86a9a447c 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2218,10 +2218,8 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
-         /* Init error enabling flags */
-         pcie_cap_deverr_init(pci_dev);
+ static int fw_cfg_select(FWCfgState *s, uint16_t key)
+@@ -845,13 +840,13 @@ void fw_cfg_add_file_callback(FWCfgState *s,  const char *filename,
+     int order = 0;
  
--        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_LNKCTL) {
--            /* Init Link Control Register */
--            pcie_cap_lnkctl_init(pci_dev);
--        }
-+        /* Init Link Control Register */
-+        pcie_cap_lnkctl_init(pci_dev);
+     if (!s->files) {
+-        dsize = sizeof(uint32_t) + sizeof(FWCfgFile) * fw_cfg_file_slots(s);
++        dsize = sizeof(uint32_t) + sizeof(FWCfgFile) * FW_CFG_FILE_SLOTS_DFLT;
+         s->files = g_malloc0(dsize);
+         fw_cfg_add_bytes(s, FW_CFG_FILE_DIR, s->files, dsize);
+     }
  
-         if (proxy->flags & VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET) {
-             pci_set_word(pci_dev->config + pos + PCI_PM_CTRL,
-@@ -2347,8 +2345,6 @@ static const Property virtio_pci_properties[] = {
-                     VIRTIO_PCI_FLAG_ATS_BIT, false),
-     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT, true),
--    DEFINE_PROP_BIT("x-pcie-lnkctl-init", VirtIOPCIProxy, flags,
--                    VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
-     DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
-     DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
+     count = be32_to_cpu(s->files->count);
+-    assert(count < fw_cfg_file_slots(s));
++    assert(count < FW_CFG_FILE_SLOTS_DFLT);
+ 
+     /* Find the insertion point, sorting by file name. */
+     for (index = count;
+@@ -926,7 +921,7 @@ void *fw_cfg_modify_file(FWCfgState *s, const char *filename,
+         }
+     }
+ 
+-    assert(index < fw_cfg_file_slots(s));
++    assert(index < FW_CFG_FILE_SLOTS_DFLT);
+ 
+     /* add new one */
+     fw_cfg_add_file_callback(s, filename, NULL, NULL, NULL, data, len, true);
 -- 
 2.47.1
 
