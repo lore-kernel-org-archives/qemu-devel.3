@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DAA2C369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 14:57:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A89C369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 14:58:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAVK2-0005i3-T1; Thu, 01 May 2025 10:55:35 -0400
+	id 1uAVK2-0005i1-OP; Thu, 01 May 2025 10:55:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAVJy-0005gJ-EA
- for qemu-devel@nongnu.org; Thu, 01 May 2025 10:55:30 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1uAVJx-0005fj-Dc
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 10:55:29 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAVJw-0005Ub-DO
- for qemu-devel@nongnu.org; Thu, 01 May 2025 10:55:30 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-227cf12df27so10358725ad.0
+ id 1uAVJv-0005T3-L3
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 10:55:29 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-22928d629faso10450615ad.3
  for <qemu-devel@nongnu.org>; Thu, 01 May 2025 07:55:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746111327; x=1746716127; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746111326; x=1746716126; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fVyP76o6EOcJrt7iH7jc6aMX3NadFlFM45GV6fkbfLE=;
- b=BycKXzwagI0bVGVq8e7jJ+R2mglSALWkb10kKRADTMfCEUC9TF5E7PDXX6ntyRYjlw
- 0nBTxE28TzvYCGgIA4rWZ+PPcLcQ1h9NB+V7zKw9+uxTqWtc4mQWLp9MnexNT3ntgRN9
- IsiryT8KBI6mUb246xhArSOE7eGCQNnKrccs+2fuAA+xRrkJqKY7KkOlkKY1t60p6Pp4
- Lu5jH0RvKIGSPthMA/NFK793KVlznTLGFOyn/JjoY5PK/1BhxKAZ8klobirIfjYM18cA
- SB7TCigExG0fActklIRYK+bJkWk50sawmeFPSZd0LYvwqskqkCihlpGObP6QJgzl9iGY
- jZ/g==
+ :reply-to; bh=EmF5AKGTNJn4wCHiHLWI2Bve9d/Bi6dFsapJqoMpZyA=;
+ b=rbgZhXm7GbP07vxR0Ywywa3MVq4wUFUntDAJQ/Muck6oHL17rRhAr8XGQbKXGxVrQK
+ Jf4OEANWWW14rxQZSHEiPmQTKGJJA6zrO5ZRf/ZvzLuU+pPG32CaL1wxVDX6EPE0wbQ9
+ T9dpgW/3TlYRUDZENvgZilnGriPc9y3A+9Z9hI4Dv2ZFFZUCWAnXgVsVaE9oGzdpjyM7
+ gc5ZxPO/oQjOO0kRzmy1ZRcfTvp5qm392Ci9W/iMCtG1Rq6XtlaQXvWDOo5sQT8ynTlQ
+ R+u9qESOwAzQ6k7DIMosY8XCwwiyGG8LGj06RU8RBUMhuO50ZI4EM9rm+IjSjLdnBQbh
+ Q5Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746111327; x=1746716127;
+ d=1e100.net; s=20230601; t=1746111326; x=1746716126;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fVyP76o6EOcJrt7iH7jc6aMX3NadFlFM45GV6fkbfLE=;
- b=qF4NEB6Q7q85CucUBi/AHWEMEbGmd+cmTw33Bju0f5kncjbBipK71uijklUCGOheKR
- 5NnkPQ0QxbF6lgnKzI50xhgGSvBUymguyC+IbAxZXoyhxFlpYxbJm/Y0fnTEHO7c6ywD
- B8O8hpa6IyFmS64s6hA+c/Zr82U74C238lUxoV3dCfUP3YHXsU1ADOnJThiOYYjinTqn
- llJ/xVLFcS05FDld5N5OoLqk0y8dSq0Dj8s+UvJDmlMZCzkUesOy4bULoBtHLMslx1tm
- KB6IoDICmzKiApelW8qhgeXlK8xthc8dCxcvrCPqYJVJ+IQmT8mqN7hTkGSSflrmt5sx
- k5fA==
-X-Gm-Message-State: AOJu0YwmqlEdFF4OmFi4CWlvfeOeBmZFFRC1qoA+3U/dt47SLZ51eojt
- EMkYSr3uJKyp+AVMVrAvAe1nBMGcjsuJAN2bGbNufHxOt6o5k+YA88PzKWErS85yPItsJboCyoJ
- G
-X-Gm-Gg: ASbGncv7ldrekLlcaoRWx3gZn54vDKoTocXjIOuLhaY7Gv7TC99R7msZeSM3PWNQzdh
- VW58C1kFP9p/aSAo+VPe/yiqrAZI4gg+sJEbom2yGkRW4/iK+zD+knoxDueACmcH6MabWLMPz2T
- WnqVIycoINaq4/VfguQFyQSirpnTNypHoO7LK5kqZWUCY+RVioEtW5jPRRX4oQjxRq+UcmrgWmr
- 2Tatd/ycj2v4bUpUr6Q+Kwr3sxHsJYn1f0DHli2/F51aBIR/asa1B8U/mg6ONZqupWv8WFTMdy/
- 4dcn9UvzSshKMdah6OYvVlIemiupMVURx5Zmq9KOdVkqQJD2ih6z359kAuGyZooIRyfZZY1yUlg
+ bh=EmF5AKGTNJn4wCHiHLWI2Bve9d/Bi6dFsapJqoMpZyA=;
+ b=LqXejr0u+8ygh/XpmPIRfN+NFreInqhPv34X1C7Epos/gt94LlAXcAbFObSfHN8Pb1
+ 51foRsURF5xAg2z0kIjej4buZiKuhwxHWWCjax7KWTwszJ5R8a95I3+PhY92qYhSEn/C
+ wmJdvK+IHe83IJBO3QaZ5qqBCVOkmaR970Stm0lWe3v0lzTqyEoYsqmS49iKrH1XjCzk
+ OwnsU2aIwU8VNdBa4SesdQZ1v1WMD3VkOsw4RmgxOaeeagaKdZdGQkBh/ZTzrbAyH/TT
+ pFxQktwUAuX0eU5sak4gmpdZ+1QTW6/sQY9ddPEFm1byXPAQHNHFTJ88YLipN2To2KE9
+ dXbg==
+X-Gm-Message-State: AOJu0Yx43HOeOSpMWEBvUfqO82tHdXWobnEkjgPdrQpHqRUK/CaSe+pr
+ GEeAKErSvK2kBvkIWXZxHGhCSvwPJfXNzhSGmZIq9/azo8TZRYbkzLZEqd7yD1GnQEC8AbEGF2x
+ 3
+X-Gm-Gg: ASbGncsoOAtbt5wbG32xPV7b2gZUXiwns2iOBJz85jYhkC3ilscnNAJxgdyB9k6OJpr
+ blLTTxJTRqpSr0ANFLIbsIx8kTNRDhS8+SOTvzse+8acc9c+PZQXjWPDOnSQNm1oCd+KXxr2h1v
+ cwEAYUNakSDD0PG8YQuvs0z6SxQ/sRIf3/IKkQno+x4WIDR4pYT+JMhvdCMsZ4zbEr2x8XDSCpE
+ WHOMEJc7Wb2ZiZ/vEeMZDQTz7Nvg+JiL9uw1Q/pBtDNd9+XkNy01qvXnbP2pEj+okP+NHxqOkpO
+ VD2dX5URkzRzLFikBOe98aNRDCDuralafLPNBUYMlMZtbcMC/IRhrqoFiFdWsDKoDLEaG9ZYcI4
  =
-X-Google-Smtp-Source: AGHT+IFX9ATLOxHMw0h/lXi+fGjqm8u7aQeLw/DH2KWtQxDcTlm0NIBU5vO5Yk8Xa+KIgT5HKV/aBQ==
-X-Received: by 2002:a17:903:41ce:b0:216:4676:dfb5 with SMTP id
- d9443c01a7336-22e087ff587mr39495885ad.21.1746111326809; 
+X-Google-Smtp-Source: AGHT+IE6SAH9kbTgkJ+jnw7yhNzoK54Oul71yEAnPeV5LHiXnQreS+IiT8t0t54yhIdpBeXZwiuVcw==
+X-Received: by 2002:a17:903:1a6b:b0:224:2a6d:55ae with SMTP id
+ d9443c01a7336-22e0863b023mr47358415ad.48.1746111326043; 
  Thu, 01 May 2025 07:55:26 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e0bb0e770sm7644415ad.92.2025.05.01.07.55.26
+ d9443c01a7336-22e0bb0e770sm7644415ad.92.2025.05.01.07.55.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 07:55:26 -0700 (PDT)
+ Thu, 01 May 2025 07:55:25 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 08/11] accel/tcg: Move TARGET_TAGGED_ADDRESSES to
- TCGCPUOps.untagged_addr
-Date: Thu,  1 May 2025 07:55:16 -0700
-Message-ID: <20250501145520.2695073-9-richard.henderson@linaro.org>
+Subject: [PATCH 07/11] include/user: Use vaddr in guest-host.h
+Date: Thu,  1 May 2025 07:55:15 -0700
+Message-ID: <20250501145520.2695073-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250501145520.2695073-1-richard.henderson@linaro.org>
 References: <20250501145520.2695073-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,181 +99,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Replace abi_ptr and abi_ulong with vaddr.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/accel/tcg/cpu-ops.h |  7 +++++++
- include/user/guest-host.h   |  8 +++++---
- target/arm/cpu-param.h      |  7 +------
- target/arm/cpu.h            | 32 +-------------------------------
- target/arm/cpu.c            | 27 ++++++++++++++++++++++++++-
- 5 files changed, 40 insertions(+), 41 deletions(-)
+ include/user/guest-host.h | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
-index 23cd6af0b2..cd22e5d5b9 100644
---- a/include/accel/tcg/cpu-ops.h
-+++ b/include/accel/tcg/cpu-ops.h
-@@ -157,6 +157,13 @@ struct TCGCPUOps {
-      */
-     void (*record_sigbus)(CPUState *cpu, vaddr addr,
-                           MMUAccessType access_type, uintptr_t ra);
-+
-+    /**
-+     * untagged_addr: Remove an ignored tag from an address
-+     * @cpu: cpu context
-+     * @addr: tagged guest address
-+     */
-+    vaddr (*untagged_addr)(CPUState *cs, vaddr addr);
- #else
-     /** @do_interrupt: Callback for interrupt handling.  */
-     void (*do_interrupt)(CPUState *cpu);
 diff --git a/include/user/guest-host.h b/include/user/guest-host.h
-index 0656f2e356..8f7ef75896 100644
+index 8e10d36948..0656f2e356 100644
 --- a/include/user/guest-host.h
 +++ b/include/user/guest-host.h
-@@ -10,7 +10,7 @@
+@@ -8,7 +8,7 @@
+ #ifndef USER_GUEST_HOST_H
+ #define USER_GUEST_HOST_H
  
- #include "exec/vaddr.h"
+-#include "user/abitypes.h"
++#include "exec/vaddr.h"
  #include "user/guest-base.h"
--#include "cpu.h"
-+#include "accel/tcg/cpu-ops.h"
+ #include "cpu.h"
  
- /*
-  * If non-zero, the guest virtual address space is a contiguous subset
-@@ -29,12 +29,14 @@ extern unsigned long reserved_va;
-  */
+@@ -30,29 +30,29 @@ extern unsigned long reserved_va;
  extern unsigned long guest_addr_max;
  
--#ifndef TARGET_TAGGED_ADDRESSES
- static inline vaddr cpu_untagged_addr(CPUState *cs, vaddr x)
+ #ifndef TARGET_TAGGED_ADDRESSES
+-static inline abi_ptr cpu_untagged_addr(CPUState *cs, abi_ptr x)
++static inline vaddr cpu_untagged_addr(CPUState *cs, vaddr x)
  {
-+    const TCGCPUOps *tcg_ops = cs->cc->tcg_ops;
-+    if (tcg_ops->untagged_addr) {
-+        return tcg_ops->untagged_addr(cs, x);
-+    }
      return x;
  }
--#endif
+ #endif
  
  /* All direct uses of g2h and h2g need to go away for usermode softmmu.  */
- static inline void *g2h_untagged(vaddr x)
-diff --git a/target/arm/cpu-param.h b/target/arm/cpu-param.h
-index 5c5bc8a009..8b46c7c570 100644
---- a/target/arm/cpu-param.h
-+++ b/target/arm/cpu-param.h
-@@ -17,14 +17,9 @@
- #endif
- 
- #ifdef CONFIG_USER_ONLY
--# ifdef TARGET_AARCH64
--#  define TARGET_TAGGED_ADDRESSES
--# ifdef __FreeBSD__
--#  define TARGET_PAGE_BITS 12
--# else
-+# if defined(TARGET_AARCH64) && defined(CONFIG_LINUX)
- /* Allow user-only to vary page size from 4k */
- #  define TARGET_PAGE_BITS_VARY
--# endif
- # else
- #  define TARGET_PAGE_BITS 12
- # endif
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index be4449ca06..23720b2b17 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -783,12 +783,9 @@ typedef struct CPUArchState {
- #else /* CONFIG_USER_ONLY */
-     /* For usermode syscall translation.  */
-     bool eabi;
--#endif /* CONFIG_USER_ONLY */
--
--#ifdef TARGET_TAGGED_ADDRESSES
-     /* Linux syscall tagged address support */
-     bool tagged_addr_enable;
--#endif
-+#endif /* CONFIG_USER_ONLY */
- } CPUARMState;
- 
- static inline void set_feature(CPUARMState *env, int feature)
-@@ -3217,34 +3214,7 @@ extern const uint64_t pred_esz_masks[5];
- #define TAG_GRANULE      (1 << LOG2_TAG_GRANULE)
- 
- #ifdef CONFIG_USER_ONLY
--
- #define TARGET_PAGE_DATA_SIZE (TARGET_PAGE_SIZE >> (LOG2_TAG_GRANULE + 1))
--
--#ifdef TARGET_TAGGED_ADDRESSES
--/**
-- * cpu_untagged_addr:
-- * @cs: CPU context
-- * @x: tagged address
-- *
-- * Remove any address tag from @x.  This is explicitly related to the
-- * linux syscall TIF_TAGGED_ADDR setting, not TBI in general.
-- *
-- * There should be a better place to put this, but we need this in
-- * include/exec/cpu_ldst.h, and not some place linux-user specific.
-- */
--static inline target_ulong cpu_untagged_addr(CPUState *cs, target_ulong x)
--{
--    CPUARMState *env = cpu_env(cs);
--    if (env->tagged_addr_enable) {
--        /*
--         * TBI is enabled for userspace but not kernelspace addresses.
--         * Only clear the tag if bit 55 is clear.
--         */
--        x &= sextract64(x, 0, 56);
--    }
--    return x;
--}
--#endif /* TARGET_TAGGED_ADDRESSES */
- #endif /* CONFIG_USER_ONLY */
- 
- #endif
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 2020aec54a..45cb6fd7ee 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2671,7 +2671,31 @@ static const char *arm_gdb_get_core_xml_file(CPUState *cs)
-     return "arm-core.xml";
+-static inline void *g2h_untagged(abi_ptr x)
++static inline void *g2h_untagged(vaddr x)
+ {
+     return (void *)((uintptr_t)(x) + guest_base);
  }
  
--#ifndef CONFIG_USER_ONLY
-+#ifdef CONFIG_USER_ONLY
-+/**
-+ * aarch64_untagged_addr:
-+ *
-+ * Remove any address tag from @x.  This is explicitly related to the
-+ * linux syscall TIF_TAGGED_ADDR setting, not TBI in general.
-+ *
-+ * There should be a better place to put this, but we need this in
-+ * include/exec/cpu_ldst.h, and not some place linux-user specific.
-+ *
-+ * Note that arm-*-user will never set tagged_addr_enable.
-+ */
-+static vaddr aarch64_untagged_addr(CPUState *cs, vaddr x)
-+{
-+    CPUARMState *env = cpu_env(cs);
-+    if (env->tagged_addr_enable) {
-+        /*
-+         * TBI is enabled for userspace but not kernelspace addresses.
-+         * Only clear the tag if bit 55 is clear.
-+         */
-+        x &= sextract64(x, 0, 56);
-+    }
-+    return x;
-+}
-+#else
- #include "hw/core/sysemu-cpu-ops.h"
+-static inline void *g2h(CPUState *cs, abi_ptr x)
++static inline void *g2h(CPUState *cs, vaddr x)
+ {
+     return g2h_untagged(cpu_untagged_addr(cs, x));
+ }
  
- static const struct SysemuCPUOps arm_sysemu_ops = {
-@@ -2702,6 +2726,7 @@ static const TCGCPUOps arm_tcg_ops = {
- #ifdef CONFIG_USER_ONLY
-     .record_sigsegv = arm_cpu_record_sigsegv,
-     .record_sigbus = arm_cpu_record_sigbus,
-+    .untagged_addr = aarch64_untagged_addr,
- #else
-     .tlb_fill_align = arm_cpu_tlb_fill_align,
-     .cpu_exec_interrupt = arm_cpu_exec_interrupt,
+-static inline bool guest_addr_valid_untagged(abi_ulong x)
++static inline bool guest_addr_valid_untagged(vaddr x)
+ {
+     return x <= guest_addr_max;
+ }
+ 
+-static inline bool guest_range_valid_untagged(abi_ulong start, abi_ulong len)
++static inline bool guest_range_valid_untagged(vaddr start, vaddr len)
+ {
+     return len - 1 <= guest_addr_max && start <= guest_addr_max - len + 1;
+ }
+@@ -62,7 +62,7 @@ static inline bool guest_range_valid_untagged(abi_ulong start, abi_ulong len)
+ 
+ #define h2g_nocheck(x) ({ \
+     uintptr_t __ret = (uintptr_t)(x) - guest_base; \
+-    (abi_ptr)__ret; \
++    (vaddr)__ret; \
+ })
+ 
+ #define h2g(x) ({ \
 -- 
 2.43.0
 
