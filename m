@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0642C3ABB0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE8BC3ABB2
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:27:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAbPh-000735-EY; Thu, 01 May 2025 17:25:49 -0400
+	id 1uAbPz-0000Yb-44; Thu, 01 May 2025 17:26:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbOu-0005GI-HM
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:25:01 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1uAbOw-0005PJ-IH
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:25:03 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbOr-0002E4-Si
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:24:59 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-7376dd56f8fso2039227b3a.2
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:24:57 -0700 (PDT)
+ id 1uAbOt-0002Ep-Hm
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:25:02 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-af579e46b5dso992185a12.3
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:24:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746134696; x=1746739496; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746134698; x=1746739498; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fe29IZ11mCzFvm4KslVvKmO7MK48jjA31j/L8P/5R8A=;
- b=YdXwbRixG56l7kkFfVNyAA+iHvW8Kn4OKLpmsxieJWK83HYwDp7hvDQbVJ/Ibdb3N0
- jC9L9rH3pyTX/UFTmMsmyWjMEo5ziBE0DXEyUC8rcWIyj4HfhHXAlNK5iLQbhoFDbe/+
- SEflJMJ9E/8KeWilXe2J/oblWMMqQ+yc3085j5R05B/HGw1bCixKWE1DEB3kxsg0BHG8
- EsgoWQqPePdAJnsWgljEMPier0ysQwRltQ5+AAhrDx66r6F+lglBdllmqoC7Z1w4i7sV
- Ap7dfnpg5Y6fEHM2qTHVMuplvHIbj77BXlvyrOLG8NnHRqotX5rJCSrc0x09RBdlqk8z
- y1aw==
+ bh=M7zJ1IIf93+bko/Emk4HM+tkDtTMCkTvdeVlwV8Sclo=;
+ b=p/d/X0G+OhdgMhXNT0z5f5d9/uljfF4qPh2IApE6DohCGEwbpzC4r4HdhLx3ThCDVd
+ Uu95fNxu3J73ueFYqCCAKojYVtitivjDLZHLNgqMynmVVb0IrXJRU1ERe1xg88cUq3yy
+ TDLVrsGKQm+EQfU3YAGhZlnhbBmKyYIPH+ip0ja+7n0iUcNdDUJqGTUbEWupiDWM/C6v
+ NCZ1W9o3owH4we6W5DuFCpi3DvFPhRYcpoFb6LrsSgoS6cig5rXI8ag8fR89iHCCbkFX
+ 0m8h08DOC3AhbOhQ+enWeM8bECuJoXnekSdGbB9ogjGdi4gO+LeXNNhazQ6zc+9j6k1A
+ CaPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746134696; x=1746739496;
+ d=1e100.net; s=20230601; t=1746134698; x=1746739498;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fe29IZ11mCzFvm4KslVvKmO7MK48jjA31j/L8P/5R8A=;
- b=ZJTMyIdy31i81W1Po/3rZhUYFV2ft82DNrMdcqW+eRQogkBsnX7w0TjD1WhbwzCfF3
- /xiPbyinGPdraLzRdLorAOPy3zWSSNVrvQdN+xaJ7ed0vWOJ/sHo3IUfOzq4rXddGR74
- J486W/BhCSs23l043cXmA6ysT3oIttVZTVbV+mN8lTcbK9QYENSsqIZubuF05xmzgiOz
- XmTxRsdD7w0GWOLR+uit0NgT2RSR7WiYtqwEE/SPPJhvg70C7Y1gH/bauencsPt59VmJ
- nP9Jy8L6+NrYNJrDGXFuXnQvI+bP0hQUwP0FPyaArM4MT9Hpef98VD5ipXV8AW3UhSs2
- ygJQ==
-X-Gm-Message-State: AOJu0Yw4ZV62yiWc6uxcItGhW/ZIiZ6uwcoUWw8FX8zvOc1eDbem6AZW
- 5MwovggF91eHHo3NtkfX7sBEr1WekPFyKojt4Q6m9BXmryRfuggdYpDJEzjmmQo9YdMvegUAE68
- 5
-X-Gm-Gg: ASbGncviGj2HqhyGE8swxLnb/i8kRT9fSTRDCOjl7UyZ4WqJ11XUp87RgDV523+9S1b
- tVLL4vBSB/ookf6cLDw1HfW2JgZJjk60dSgwI2zW9nizJiCQJgJbSwNC3TPoGq/1chqXMfTNugF
- PDGLHMX4HjNIb2QRbssS/5EaKnKgJOU6GcDFksUrrCLss3Y8N19zDDr5wRsik5EOoLMfXghM2kP
- ocopmgXmy92Icc6Ogu1IK7fE+BRqRycDVXUevSf358nSnBVXJ6qqDdd3MnErf8liwzaOKwhHJbH
- R7xUoOXZ+5reBIpERWoInx3d4HClKL5k8VOtt2pf2VzPjWlPds/isly0zYjLirqz5dN99n4FDig
+ bh=M7zJ1IIf93+bko/Emk4HM+tkDtTMCkTvdeVlwV8Sclo=;
+ b=Vm5etJnxzRFFJJvFDOOADiO2Xn0rg2qVqbII9YbmMXnGe0oat1acwjpBz0p3VejNsO
+ +Odznf31H7cYxTEKNqE0gu4ZIsNjQuqitCJQmhj9YtcY7PLKGAKUtDENfkjNoBIbX5b0
+ Vur27CInx+r4a9Q/r4pnSUuAZTprSbhe+I+0T6WomMb4k4j3rEY7vYt5+cHJatkTgq4c
+ /42EAAZ02CbeVt/FLNKyLP80Jb0g2uJBBDxlUxOlLydUINIoTeUMVRYaIejlGq9M9et7
+ eYXnHW1odmqXa1t3/2FcDSK1J1lJ+thuZBCFAB8vZ/hSCkN5ecHpBDL923gNQS6/e2un
+ 69bA==
+X-Gm-Message-State: AOJu0YxMohgJFP8vsANIL+KytJBzvEi818ZPKDubS1UZIK8WbtxsPxl6
+ a7lJ7qVBL6sWtCkojYJ7rkszSfKqcsKCKecgZeaDUoUaorow13TIWXDxWdAHOTOfsVKW1dnkBo+
+ Q
+X-Gm-Gg: ASbGncs1tQOEBW+k9vNmS43/IOl+d2r6nguuiS99XZY6IZUPtxbLJZnHegVf/U0Ut4A
+ hnbpoV8sPYjCeJfGAklb76d4VFj0Jtq9/ATkQqIHt51O/kSNlKrJa8CBZISSTw1T546SO7RC1cX
+ VMPKMPWrCY5iuarg0F1rs+dseVNS69tdOjuAxfpUy2z35xRbQPAbDgdm4WueRcdt9VAqUlLHdXq
+ mNEVIwSPE1SjqoGCY0xFrlGIgLdsb0CGLk7LQ35p+KTiDIN5Rb6+5dVGeX7J78rPbrhGaHxXxl3
+ NQoFjzJ5/ADzvNZIo5vjk1JZ2o55MfF0pRmQsEXJELUeHQEkkLLb42at30W5tes40hC4SX1tfWE
  =
-X-Google-Smtp-Source: AGHT+IHEUPLRLy5Zhi/tOlT1fxx/dKDNQd6ZqrlTOvuuFgCPtzmXonbnajDLWzXdGi9si5L5B9NYag==
-X-Received: by 2002:a05:6a00:44cb:b0:73e:1e21:b653 with SMTP id
- d2e1a72fcca58-740588f2301mr577758b3a.5.1746134696210; 
- Thu, 01 May 2025 14:24:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGiFU0TO1N1t4T3C7X1u7RBo0pCO5ATlbcj4SRwph+NLwAYoKwzdFH59cBrYwUViJpYVLRKSw==
+X-Received: by 2002:a05:6a21:7103:b0:204:4573:d855 with SMTP id
+ adf61e73a8af0-20cde3746e9mr658743637.9.1746134698085; 
+ Thu, 01 May 2025 14:24:58 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-740590610desm135897b3a.146.2025.05.01.14.24.55
+ d2e1a72fcca58-740590610desm135897b3a.146.2025.05.01.14.24.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 14:24:55 -0700 (PDT)
+ Thu, 01 May 2025 14:24:57 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 54/59] include/user: Convert GUEST_ADDR_MAX to a variable
-Date: Thu,  1 May 2025 14:21:08 -0700
-Message-ID: <20250501212113.2961531-55-richard.henderson@linaro.org>
+Subject: [PULL 57/59] accel/tcg: Remove TARGET_PAGE_DATA_SIZE
+Date: Thu,  1 May 2025 14:21:11 -0700
+Message-ID: <20250501212113.2961531-58-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250501212113.2961531-1-richard.henderson@linaro.org>
 References: <20250501212113.2961531-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,145 +100,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove GUEST_ADDR_MAX and add guest_addr_max.
-Initialize it in *-user/main.c, after reserved_va.
+This macro is used by only one target, and even then under
+unusual conditions -- AArch64 with mmap's PROT_MTE flag.
+
+Since page size for aarch64-linux-user is variable, the
+per-page data size is also variable.
+Since page_reset_target_data via target_munmap does not
+have ready access to CPUState, simply pass in the size
+from the first allocation and remember that.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/user/guest-host.h | 27 +++++++--------------------
- accel/tcg/user-exec.c     |  4 ++--
- bsd-user/main.c           |  8 ++++++++
- linux-user/main.c         |  8 ++++++++
- 4 files changed, 25 insertions(+), 22 deletions(-)
+ include/user/page-protection.h |  8 +++++---
+ target/arm/cpu.h               |  4 ----
+ accel/tcg/user-exec.c          | 26 ++++++++++++++++----------
+ target/arm/tcg/mte_helper.c    |  4 ++--
+ 4 files changed, 23 insertions(+), 19 deletions(-)
 
-diff --git a/include/user/guest-host.h b/include/user/guest-host.h
-index 8d2079bbbb..8e10d36948 100644
---- a/include/user/guest-host.h
-+++ b/include/user/guest-host.h
-@@ -23,23 +23,11 @@
- extern unsigned long reserved_va;
+diff --git a/include/user/page-protection.h b/include/user/page-protection.h
+index 86143212fd..4bde664e4a 100644
+--- a/include/user/page-protection.h
++++ b/include/user/page-protection.h
+@@ -73,18 +73,20 @@ bool page_check_range_empty(vaddr start, vaddr last);
+ vaddr page_find_range_empty(vaddr min, vaddr max, vaddr len, vaddr align);
  
- /*
-- * Limit the guest addresses as best we can.
-- *
-- * When not using -R reserved_va, we cannot really limit the guest
-- * to less address space than the host.  For 32-bit guests, this
-- * acts as a sanity check that we're not giving the guest an address
-- * that it cannot even represent.  For 64-bit guests... the address
-- * might not be what the real kernel would give, but it is at least
-- * representable in the guest.
-- *
-- * TODO: Improve address allocation to avoid this problem, and to
-- * avoid setting bits at the top of guest addresses that might need
-- * to be used for tags.
-+ * The last byte of the guest address space.
-+ * If reserved_va is non-zero, guest_addr_max matches.
-+ * If reserved_va is zero, guest_addr_max equals the full guest space.
+ /**
+- * page_get_target_data(address)
++ * page_get_target_data
+  * @address: guest virtual address
++ * @size: per-page size
+  *
+- * Return TARGET_PAGE_DATA_SIZE bytes of out-of-band data to associate
++ * Return @size bytes of out-of-band data to associate
+  * with the guest page at @address, allocating it if necessary.  The
+  * caller should already have verified that the address is valid.
++ * The value of @size must be the same for every call.
+  *
+  * The memory will be freed when the guest page is deallocated,
+  * e.g. with the munmap system call.
   */
--#define GUEST_ADDR_MAX_                                                 \
--    ((MIN_CONST(TARGET_VIRT_ADDR_SPACE_BITS, TARGET_ABI_BITS) <= 32) ?  \
--     UINT32_MAX : ~0ul)
--#define GUEST_ADDR_MAX    (reserved_va ? : GUEST_ADDR_MAX_)
-+extern unsigned long guest_addr_max;
+ __attribute__((returns_nonnull))
+-void *page_get_target_data(vaddr address);
++void *page_get_target_data(vaddr address, size_t size);
  
- #ifndef TARGET_TAGGED_ADDRESSES
- static inline abi_ptr cpu_untagged_addr(CPUState *cs, abi_ptr x)
-@@ -61,17 +49,16 @@ static inline void *g2h(CPUState *cs, abi_ptr x)
+ typedef int (*walk_memory_regions_fn)(void *, vaddr, vaddr, int);
+ int walk_memory_regions(void *, walk_memory_regions_fn);
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 23720b2b17..6ed6409cb7 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -3213,8 +3213,4 @@ extern const uint64_t pred_esz_masks[5];
+ #define LOG2_TAG_GRANULE 4
+ #define TAG_GRANULE      (1 << LOG2_TAG_GRANULE)
  
- static inline bool guest_addr_valid_untagged(abi_ulong x)
- {
--    return x <= GUEST_ADDR_MAX;
-+    return x <= guest_addr_max;
- }
- 
- static inline bool guest_range_valid_untagged(abi_ulong start, abi_ulong len)
- {
--    return len - 1 <= GUEST_ADDR_MAX && start <= GUEST_ADDR_MAX - len + 1;
-+    return len - 1 <= guest_addr_max && start <= guest_addr_max - len + 1;
- }
- 
- #define h2g_valid(x) \
--    (HOST_LONG_BITS <= TARGET_VIRT_ADDR_SPACE_BITS || \
--     (uintptr_t)(x) - guest_base <= GUEST_ADDR_MAX)
-+    ((uintptr_t)(x) - guest_base <= guest_addr_max)
- 
- #define h2g_nocheck(x) ({ \
-     uintptr_t __ret = (uintptr_t)(x) - guest_base; \
+-#ifdef CONFIG_USER_ONLY
+-#define TARGET_PAGE_DATA_SIZE (TARGET_PAGE_SIZE >> (LOG2_TAG_GRANULE + 1))
+-#endif /* CONFIG_USER_ONLY */
+-
+ #endif
 diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index adc5296ba5..f674fd875e 100644
+index f674fd875e..46b1e97c30 100644
 --- a/accel/tcg/user-exec.c
 +++ b/accel/tcg/user-exec.c
-@@ -500,7 +500,7 @@ void page_set_flags(vaddr start, vaddr last, int flags)
-        guest address space.  If this assert fires, it probably indicates
-        a missing call to h2g_valid.  */
-     assert(start <= last);
--    assert(last <= GUEST_ADDR_MAX);
-+    assert(last <= guest_addr_max);
-     /* Only set PAGE_ANON with new mappings. */
-     assert(!(flags & PAGE_ANON) || (flags & PAGE_RESET));
-     assert_memory_lock();
-@@ -621,7 +621,7 @@ vaddr page_find_range_empty(vaddr min, vaddr max, vaddr len, vaddr align)
-     vaddr len_m1, align_m1;
+@@ -870,7 +870,6 @@ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
+     return addr;
+ }
  
-     assert(min <= max);
--    assert(max <= GUEST_ADDR_MAX);
-+    assert(max <= guest_addr_max);
-     assert(len != 0);
-     assert(is_power_of_2(align));
-     assert_memory_lock();
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index fa7645a56e..603fc80ba7 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -89,6 +89,7 @@ bool have_guest_base;
- #endif
+-#ifdef TARGET_PAGE_DATA_SIZE
+ /*
+  * Allocate chunks of target data together.  For the only current user,
+  * if we allocate one hunk per page, we have overhead of 40/128 or 40%.
+@@ -886,10 +885,16 @@ typedef struct TargetPageDataNode {
+ } TargetPageDataNode;
  
- unsigned long reserved_va;
-+unsigned long guest_addr_max;
+ static IntervalTreeRoot targetdata_root;
++static size_t target_page_data_size;
  
- const char *interp_prefix = CONFIG_QEMU_INTERP_PREFIX;
- const char *qemu_uname_release;
-@@ -500,6 +501,13 @@ int main(int argc, char **argv)
-         /* MAX_RESERVED_VA + 1 is a large power of 2, so is aligned. */
-         reserved_va = max_reserved_va;
-     }
-+    if (reserved_va != 0) {
-+        guest_addr_max = reserved_va;
-+    } else if (MIN(TARGET_VIRT_ADDR_SPACE_BITS, TARGET_ABI_BITS) <= 32) {
-+        guest_addr_max = UINT32_MAX;
-+    } else {
-+        guest_addr_max = ~0ul;
+ void page_reset_target_data(vaddr start, vaddr last)
+ {
+     IntervalTreeNode *n, *next;
++    size_t size = target_page_data_size;
++
++    if (likely(size == 0)) {
++        return;
 +    }
  
-     if (getenv("QEMU_STRACE")) {
-         do_strace = 1;
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 4af7f49f38..5ac5b55dc6 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -122,6 +122,7 @@ static const char *last_log_filename;
- #endif
+     assert_memory_lock();
  
- unsigned long reserved_va;
-+unsigned long guest_addr_max;
+@@ -920,17 +925,22 @@ void page_reset_target_data(vaddr start, vaddr last)
+         n_last = MIN(last, n->last);
+         p_len = (n_last + 1 - n_start) >> TARGET_PAGE_BITS;
  
- static void usage(int exitcode);
- 
-@@ -858,6 +859,13 @@ int main(int argc, char **argv, char **envp)
-         /* MAX_RESERVED_VA + 1 is a large power of 2, so is aligned. */
-         reserved_va = max_reserved_va;
+-        memset(t->data + p_ofs * TARGET_PAGE_DATA_SIZE, 0,
+-               p_len * TARGET_PAGE_DATA_SIZE);
++        memset(t->data + p_ofs * size, 0, p_len * size);
      }
-+    if (reserved_va != 0) {
-+        guest_addr_max = reserved_va;
-+    } else if (MIN(TARGET_VIRT_ADDR_SPACE_BITS, TARGET_ABI_BITS) <= 32) {
-+        guest_addr_max = UINT32_MAX;
-+    } else {
-+        guest_addr_max = ~0ul;
-+    }
+ }
  
-     /*
-      * Temporarily disable
+-void *page_get_target_data(vaddr address)
++void *page_get_target_data(vaddr address, size_t size)
+ {
+     IntervalTreeNode *n;
+     TargetPageDataNode *t;
+     vaddr page, region, p_ofs;
+ 
++    /* Remember the size from the first call, and it should be constant. */
++    if (unlikely(target_page_data_size != size)) {
++        assert(target_page_data_size == 0);
++        target_page_data_size = size;
++    }
++
+     page = address & TARGET_PAGE_MASK;
+     region = address & TBD_MASK;
+ 
+@@ -945,8 +955,7 @@ void *page_get_target_data(vaddr address)
+         mmap_lock();
+         n = interval_tree_iter_first(&targetdata_root, page, page);
+         if (!n) {
+-            t = g_malloc0(sizeof(TargetPageDataNode)
+-                          + TPD_PAGES * TARGET_PAGE_DATA_SIZE);
++            t = g_malloc0(sizeof(TargetPageDataNode) + TPD_PAGES * size);
+             n = &t->itree;
+             n->start = region;
+             n->last = region | ~TBD_MASK;
+@@ -957,11 +966,8 @@ void *page_get_target_data(vaddr address)
+ 
+     t = container_of(n, TargetPageDataNode, itree);
+     p_ofs = (page - region) >> TARGET_PAGE_BITS;
+-    return t->data + p_ofs * TARGET_PAGE_DATA_SIZE;
++    return t->data + p_ofs * size;
+ }
+-#else
+-void page_reset_target_data(vaddr start, vaddr last) { }
+-#endif /* TARGET_PAGE_DATA_SIZE */
+ 
+ /* The system-mode versions of these helpers are in cputlb.c.  */
+ 
+diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+index 13d7ac0097..0efc18a181 100644
+--- a/target/arm/tcg/mte_helper.c
++++ b/target/arm/tcg/mte_helper.c
+@@ -37,7 +37,6 @@
+ #include "qemu/guest-random.h"
+ #include "mte_helper.h"
+ 
+-
+ static int choose_nonexcluded_tag(int tag, int offset, uint16_t exclude)
+ {
+     if (exclude == 0xffff) {
+@@ -63,6 +62,7 @@ uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
+                                   bool probe, uintptr_t ra)
+ {
+ #ifdef CONFIG_USER_ONLY
++    const size_t page_data_size = TARGET_PAGE_SIZE >> (LOG2_TAG_GRANULE + 1);
+     uint64_t clean_ptr = useronly_clean_ptr(ptr);
+     int flags = page_get_flags(clean_ptr);
+     uint8_t *tags;
+@@ -83,7 +83,7 @@ uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
+         return NULL;
+     }
+ 
+-    tags = page_get_target_data(clean_ptr);
++    tags = page_get_target_data(clean_ptr, page_data_size);
+ 
+     index = extract32(ptr, LOG2_TAG_GRANULE + 1,
+                       TARGET_PAGE_BITS - LOG2_TAG_GRANULE - 1);
 -- 
 2.43.0
 
