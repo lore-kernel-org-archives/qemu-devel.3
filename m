@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B3EDC3ABA3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E86C9C3ABA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:07:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAb6U-0001Ke-V4; Thu, 01 May 2025 17:05:58 -0400
+	id 1uAb70-0002AF-UU; Thu, 01 May 2025 17:06:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6T-0001KH-Qw
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:57 -0400
-Received: from mail-il1-x12d.google.com ([2607:f8b0:4864:20::12d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6t-0001ks-CI
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:24 -0400
+Received: from mail-il1-x133.google.com ([2607:f8b0:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6R-0006am-LP
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:57 -0400
-Received: by mail-il1-x12d.google.com with SMTP id
- e9e14a558f8ab-3d9189e9a06so5153255ab.2
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:05:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6r-0006fx-Na
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:23 -0400
+Received: by mail-il1-x133.google.com with SMTP id
+ e9e14a558f8ab-3d5e2606a1bso12501555ab.0
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:06:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746133554; x=1746738354; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746133580; x=1746738380; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=S1tUkE2fqrTbr3cXQ8k1xcGcvFxNEjegGfUTV61cZkA=;
- b=EbXFJ30A946jsPQLWn2SXFovj1q8wmST0y8Ek3Q7sGPSD43hiO+wAXDb3jajsbpLE7
- Qhzmt7AsDqZaR0y4iK2zHr4PdfaGt2h3Ha7QnA/LLpqCbenXLYqC/9RGR2j7FMWbrnx0
- GjgyjH5uIYXIVSEJUZ2uvdppdCaXnWV55VrFCL1Jm6fcwZYyDfEHwwOCXblG9F4tWGN/
- sjZANgV0tfT4oEKymupqxNGVPSWxe76yYxdqvPZpCok4NfJmYt36slkWe4IfsL0yvcZq
- YeqvsBuiqk+DXVFd4PM2U74vTcqddMWVAqGqg2MKGzERI2jFytJ4ev5uoxOEULuv7a5D
- feJQ==
+ bh=isJ+xEvRBKFtxiyi/HDhWV18nqZ0er3zYVHJmZNBiUM=;
+ b=gmOWgzwv7LdjGmEZxoL+p8bJnqDW02Elt+H8FCyHtVIQIPWLkcrmJO8+7NlkCVz68d
+ lQd9AnaA6e+WWL1tccFMM7hyq34Gf2fRZRB3mCzu0tNYcSC13mA7tMaV9X+nXPfJl7GH
+ 2B9TRkL3tsuoXgyZGqstcUaBDsZaOdeMCIaIuGRNeAWYXxFNgAqByvlh0vhkvK0liRIY
+ dpqaZmZo+/wq+tTMH8i+tLvH0gEimCHMUyVyqyvOy5GLIlKusIT1Bi/CTsKX+Ax7sZnA
+ yu/cEv+yEDsS+DzCBn1RK5Nl6ndWDkH8RpwftZa4/Y9FM+Q1RsjxzJSIsQbdQok2HJ5M
+ zVGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746133554; x=1746738354;
+ d=1e100.net; s=20230601; t=1746133580; x=1746738380;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=S1tUkE2fqrTbr3cXQ8k1xcGcvFxNEjegGfUTV61cZkA=;
- b=HVEO4JcwznmkNHp/da5pM5Fl8DnrPAi/BrZK1myyDLVYLsRz6uN76M4TVCQ/gQNOdX
- 1adhDkVoYJY49IrlXjGrT6r2F/Yb6aR4+2ZI+GbyS+7e12peJDyNg4xXgfNe/qifS0lf
- JpEmO97KHxlSq67eXHVE1xGDiLQ9oRTbeW9IUh0bHqB5Q8fYGZEfJnysy34bI+XOsfQS
- PJ2X1NsQlUnRQJXWIHq+7J0YsFWlVICm9nxZNaq3sw7y+i9sXL+Qr/8GjZLKRR+2lUaI
- KUIT4lVLWVRGPei3IBA1Ndk14vz0qAYbRfVtZwZ8x+4VLdC7nWlQJOLqGM8KJEh7O+iV
- QONw==
-X-Gm-Message-State: AOJu0YxNBF99eBpDmHsQPBf33z8G8dZe+NT462rZstQyLBaROArcjNhA
- 807AY6XxV4KIIP20sI+jZxyCLp2gFRtN3v666iePIibaAk4eYb4uqs3cUwQNLPmMA3f8DABJzXm
- u
-X-Gm-Gg: ASbGncuaa6cakNFUoYEyoTNHSEbKdVZmSrh3SwojL/N+rHiCdn+1xZi7L1t+4LZXc9J
- sMmZFOPcpruRTqDQHheaOUg8WreRzInQQPrXZT41rVnFfpgH05EH3gwPz9L+7baiiX5Z4VZ3YGD
- nS86abW4X+N10MC9AjShFZOyKqEp9Gh6Z479kOkT5NFle0V+tV28W8kh/rvEqg6kXt6JNcSE7fM
- zxzQTchGad2k1pyWPfhC8PUIYk6/SsS5mJF/hIR1PCHAAOHbe4BPesvW+lWHEDsZOPW/HfdXEJ3
- g+5z6zZRfwyyg6vBYKI+8+ru0qQHqiuRmNkh3H7V+85118fKQkOZd7U1MZCx76nESaMXj0SKXzC
- W8s8JKpvjN2PN3Zc=
-X-Google-Smtp-Source: AGHT+IEhN0gfiRGdQtK4gvD1FbBGyd1n3rEGkOmMELlyKFKYHHRG9NX+sRBTEqV5mMGJFOpbGJ+6uA==
-X-Received: by 2002:a05:6e02:1a8f:b0:3d8:1ed0:e167 with SMTP id
- e9e14a558f8ab-3d97c239b27mr4578815ab.14.1746133554154; 
- Thu, 01 May 2025 14:05:54 -0700 (PDT)
+ bh=isJ+xEvRBKFtxiyi/HDhWV18nqZ0er3zYVHJmZNBiUM=;
+ b=D0ASi1CpCrGq1oH9UlY4NsTh0W6Wf4KA9pSctxw4bWGgW0C6SZ9AEbDv+tjcAgJoiG
+ ybyTDVVixCGm3sQJlcCc49ZjTgR9M4hnnYAYPBqrc7UcIazUcEhsce/bg0PaDvl4MpQL
+ T9unlK7n3/4DJzPLr57wU1BRU5AVSvVTDypm6pQYEp6ttyb4LGLbsK+i47HJ+L8Vdpoe
+ AhqghSdInLzVMmUXzznlVUxvJGk5EzqjB44xQHwv0FXJuASrJ7wMXmlOYZ9k7ifh35ZT
+ hn2a5pvkAmIHUHn8Drl95KQkuKtzSINun2gfOVlcdV22wQYM7aSkfGrWNOUch8aLm5Ct
+ c04Q==
+X-Gm-Message-State: AOJu0YxhB3lxZ5mYdp5L7jeZOSn5IAsntYXYOZuxHlEy7MZ6LLBYGjO1
+ ttprStTUPjbZEA2aurhqqhaEXmrp6QTdfR/yLZyWgP5AaGvDP7k5gggIACa6ECv1I7JRbO13EDH
+ m
+X-Gm-Gg: ASbGnctJvmtjIuoCTnbK7lDDLR8lBC1j0v0XvdPt99qCJpU4tAxTkI7Z/DhiD3Oa56W
+ ttatmOxX5/8QEEoGvPwTqX289Qss+LOitPumrsF5nzbgG+B+Hecc8qNnRkOs8dO/+a26+sI827I
+ tr4LO+4T0Toqv9/KOQdC3yFcsLBMtDthH5H4UDqR6MyRJcF3X343WXDYvxJX75tc4VC9aZ+CBZn
+ g9FOVd1pyIJocH6dC+TkoNnshL5Nr6cEApZ4zqadl/kTjgTzrn4mrvSqDOo/AeGTdIHd30rVFaj
+ gFILRyUKlN8gaAcG7xsbXbBJKhuGkVwSjhrE/8fUAZUPbbYZ+tRrKqh/DeNJrsweAqrDMtC9rmc
+ MP1JDrgr4gLO500w=
+X-Google-Smtp-Source: AGHT+IGINLrAHGwr43KW6ALjOdfV8joWbulUaker/Sm7tkf9exPUTefUtiE1begb9XhBvJBAZMBL6A==
+X-Received: by 2002:a05:6e02:3a01:b0:3d4:3db1:77ae with SMTP id
+ e9e14a558f8ab-3d97c239085mr5769385ab.18.1746133580005; 
+ Thu, 01 May 2025 14:06:20 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d975f58be3sm3253625ab.58.2025.05.01.14.05.50
+ 8926c6da1cb9f-4f88aac7f88sm44327173.133.2025.05.01.14.06.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 14:05:53 -0700 (PDT)
+ Thu, 01 May 2025 14:06:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
@@ -77,25 +77,25 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>
-Subject: [PATCH 06/18] hw/block/pflash: Remove
- PFlashCFI01::old_multiple_chip_handling field
-Date: Thu,  1 May 2025 23:04:44 +0200
-Message-ID: <20250501210456.89071-7-philmd@linaro.org>
+Subject: [PATCH 09/18] hw/virtio/virtio-pci: Remove
+ VIRTIO_PCI_FLAG_INIT_LNKCTL definition
+Date: Thu,  1 May 2025 23:04:47 +0200
+Message-ID: <20250501210456.89071-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501210456.89071-1-philmd@linaro.org>
 References: <20250501210456.89071-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12d;
- envelope-from=philmd@linaro.org; helo=mail-il1-x12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::133;
+ envelope-from=philmd@linaro.org; helo=mail-il1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,62 +111,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PFlashCFI01::old_multiple_chip_handling boolean was only set
-in the hw_compat_2_8[] array, via the 'old-multiple-chip-handling=on'
-property. We removed all machines using that array, lets remove that
-property and all the code around it.
+VIRTIO_PCI_FLAG_INIT_LNKCTL was only used by the hw_compat_2_8[]
+array, via the 'x-pcie-lnkctl-init=off' property. We removed all
+machines using that array, lets remove all the code around
+VIRTIO_PCI_FLAG_INIT_LNKCTL (see commit 9a4c0e220d8 for similar
+VIRTIO_PCI_FLAG_* enum removal).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/block/pflash_cfi01.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ include/hw/virtio/virtio-pci.h | 4 ----
+ hw/virtio/virtio-pci.c         | 8 ++------
+ 2 files changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-index 168101d8dfe..bba099a0c9e 100644
---- a/hw/block/pflash_cfi01.c
-+++ b/hw/block/pflash_cfi01.c
-@@ -84,7 +84,6 @@ struct PFlashCFI01 {
-     char *name;
-     void *storage;
-     VMChangeStateEntry *vmstate;
--    bool old_multiple_chip_handling;
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index ed142932f7b..a8dd613ffbc 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -34,7 +34,6 @@ enum {
+     VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
+     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
+     VIRTIO_PCI_FLAG_ATS_BIT,
+-    VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT,
+     VIRTIO_PCI_FLAG_INIT_PM_BIT,
+     VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+     VIRTIO_PCI_FLAG_AER_BIT,
+@@ -61,9 +60,6 @@ enum {
+ /* address space translation service */
+ #define VIRTIO_PCI_FLAG_ATS (1 << VIRTIO_PCI_FLAG_ATS_BIT)
  
-     /* block update buffer */
-     unsigned char *blk_bytes;
-@@ -703,13 +702,8 @@ static void pflash_cfi01_fill_cfi_table(PFlashCFI01 *pfl)
-      * in the cfi_table[].
-      */
-     num_devices = pfl->device_width ? (pfl->bank_width / pfl->device_width) : 1;
--    if (pfl->old_multiple_chip_handling) {
--        blocks_per_device = pfl->nb_blocs / num_devices;
--        sector_len_per_device = pfl->sector_len;
--    } else {
--        blocks_per_device = pfl->nb_blocs;
--        sector_len_per_device = pfl->sector_len / num_devices;
--    }
-+    blocks_per_device = pfl->nb_blocs;
-+    sector_len_per_device = pfl->sector_len / num_devices;
-     device_len = sector_len_per_device * blocks_per_device;
+-/* Init Link Control register */
+-#define VIRTIO_PCI_FLAG_INIT_LNKCTL (1 << VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT)
+-
+ /* Init Power Management */
+ #define VIRTIO_PCI_FLAG_INIT_PM (1 << VIRTIO_PCI_FLAG_INIT_PM_BIT)
  
-     /* Hardcoded CFI table */
-@@ -765,7 +759,7 @@ static void pflash_cfi01_fill_cfi_table(PFlashCFI01 *pfl)
-         pfl->cfi_table[0x2A] = 0x0B;
-     }
-     pfl->writeblock_size = 1 << pfl->cfi_table[0x2A];
--    if (!pfl->old_multiple_chip_handling && num_devices > 1) {
-+    if (num_devices > 1) {
-         pfl->writeblock_size *= num_devices;
-     }
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 0075ae590db..5b86a9a447c 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2218,10 +2218,8 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+         /* Init error enabling flags */
+         pcie_cap_deverr_init(pci_dev);
  
-@@ -930,8 +924,6 @@ static const Property pflash_cfi01_properties[] = {
-     DEFINE_PROP_UINT16("id2", PFlashCFI01, ident2, 0),
-     DEFINE_PROP_UINT16("id3", PFlashCFI01, ident3, 0),
-     DEFINE_PROP_STRING("name", PFlashCFI01, name),
--    DEFINE_PROP_BOOL("old-multiple-chip-handling", PFlashCFI01,
--                     old_multiple_chip_handling, false),
- };
+-        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_LNKCTL) {
+-            /* Init Link Control Register */
+-            pcie_cap_lnkctl_init(pci_dev);
+-        }
++        /* Init Link Control Register */
++        pcie_cap_lnkctl_init(pci_dev);
  
- static void pflash_cfi01_class_init(ObjectClass *klass, const void *data)
+         if (proxy->flags & VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET) {
+             pci_set_word(pci_dev->config + pos + PCI_PM_CTRL,
+@@ -2347,8 +2345,6 @@ static const Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_ATS_BIT, false),
+     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT, true),
+-    DEFINE_PROP_BIT("x-pcie-lnkctl-init", VirtIOPCIProxy, flags,
+-                    VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
+     DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
+     DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
 -- 
 2.47.1
 
