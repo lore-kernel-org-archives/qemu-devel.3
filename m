@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56C4AC369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 14:58:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69271C369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 14:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAVJx-0005ff-CG; Thu, 01 May 2025 10:55:29 -0400
+	id 1uAVJx-0005fk-HV; Thu, 01 May 2025 10:55:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAVJw-0005es-6y
- for qemu-devel@nongnu.org; Thu, 01 May 2025 10:55:28 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1uAVJt-0005dY-OW
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 10:55:25 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAVJt-0005Qi-Hb
- for qemu-devel@nongnu.org; Thu, 01 May 2025 10:55:27 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-22423adf751so11443055ad.2
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 07:55:25 -0700 (PDT)
+ id 1uAVJr-0005QO-TJ
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 10:55:25 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-227cf12df27so10357255ad.0
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 07:55:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746111324; x=1746716124; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746111322; x=1746716122; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=x/PgQfi425UDgUiGbtOMZZgEtm+lUa3KGmn3dWsY1lM=;
- b=aWCa8fk2BJ6ubapxJxbojAKB/PSF91mWx8SfU9WnroYJAaKgAcrWRQm8nKps2qwjV2
- ydbKHldijZ9ECYdJ6C/sGsowHgTiinVZZ9DY9QGEPOOeiEo8nfeeh75Dn5MURti1nzNI
- 7v1HxcyIPncrrRM9kBLQY3nvzexwIciO9u0LajSatSbBly5/DMqgjM2nlyQ1lW8/canf
- iqH3rSD6bk/IPQYGHPVlP2ekmx7ZrhWoCOaJMiV4xwkRzm5vURxZhKvgW6QhT6H8fX1T
- S26/+/aA4r/ubtMDwhPNiLxzWTfpz42SOE4mhJf0HNamb/mPTMuh3GaR6fi5FeTwU9Md
- /QFA==
+ :reply-to; bh=fbSBsMP5ixQP3674lJZfsVNkGgJPNW/j+NTvOfGTPO8=;
+ b=SUgcmnhlSkXBq8JqcHWLBF74yhCwrbWiuPqWxyRjpFW/LgtIppscuvzg9MIqZ1VdYh
+ ftNEVuRJu+ri6YRHgdSNJyMZwZPyE8UnqDz8prkthIsSFsDM6P5C/9Ro/vdoklTJmxI2
+ LzhruBClTdbs2fBtBO6TLpTXCgcIk2k8NnckVvqom6QxY82YW6GKHJ+fEaD8SdJAbTax
+ nvVZEN1HxVGt4bz4fXMsRfsoTEbU0AcbK/IJVhyK88IiBY7+KzF/UUBrDB/iFF47VN8K
+ G5g/G75SfiBhfc104AosglJtdZwqIqULT4k+a6BPrDXfXlpFD18AGJo/AzDWVLNHJxca
+ 7ENQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746111324; x=1746716124;
+ d=1e100.net; s=20230601; t=1746111322; x=1746716122;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=x/PgQfi425UDgUiGbtOMZZgEtm+lUa3KGmn3dWsY1lM=;
- b=aQXNRAIaHy7jNkjYgLrO9UJZVBQSmCEJKhdvbvW6EI2MUHG6W5tKa8oKqgeQvMkSML
- Zie7XYoosJ5wArCtPA3/9RNySccKB+/tK0PHkrATyNJv677gHlwCgLZN/6abkqcCclek
- +7JsXeShHpyN81FsXoWq1gbnTwODrGF5ruVx2GjX4hXdfpWdkcRj4OGI/RopRsat7ic4
- twtvdfQlkRl0J/0TG72qhcoxdg3pLI/buQiODDim2IvbhV8IQHQB/ADE3QYWNol4P2uy
- 7DgtAo3GMyyBariLJVaTLUtLYfoS3ZVfxNovbchlONqTyo+9ucLbwlBsq182JU4TIvJs
- W+NQ==
-X-Gm-Message-State: AOJu0Yz13QWEpIqPOf3K+hJgnNPUg1jvOk2GgiVr7FHYzrhg6uIGjLnh
- gOOcIkUtMFze51FPpSq28pWsjy5Gb5J+5NVluCutxBOeiIXadEIs/oeuQ6W4Tx3XiP0y0jZIsxO
- J
-X-Gm-Gg: ASbGncuaSKiYAMSjunaqntorVCJyp2h7GQFtOSUlLPVUNAvpZxfT7/ymgBJ1PbHoFBo
- 1EbgRxchaBl4vkWHqbG2HBItd4+9QxnmA3r+/QALNnO3JBgFFSMXQtU/M2Dln4dn6fUL0ymUJE+
- ISnkJW8t31/v09tkPe/oYbi62B1N1HXeAGfKGJmEw2h+7zwgVbLOp7B/EeXqpfueaQ9m+Vb8gLP
- +/R8NumZWq4Eeu1GzPaMJGZ1cGMaxxdmLoEf8NRY6HvEdKT3Z+EVM/AxFSaSw3J8G0XEYS0mcla
- /Ky0IA6YAzftfIuHvo/QHRz2Ld4X9F68wlzlyv4pox9apy8LONNjTfMlwHzP/k3u5brs91wQKh8
- =
-X-Google-Smtp-Source: AGHT+IFzgauIawkopdylbCya+8pGpTTVo258JyBdljaYdeHy3R4svlchVP4ZDVBe3gjDqOTjJJHyjw==
-X-Received: by 2002:a17:903:1cc:b0:22c:35c5:e30d with SMTP id
- d9443c01a7336-22e084288bamr34948305ad.13.1746111323957; 
- Thu, 01 May 2025 07:55:23 -0700 (PDT)
+ bh=fbSBsMP5ixQP3674lJZfsVNkGgJPNW/j+NTvOfGTPO8=;
+ b=QzoDf+1qkxJu9cMLkA1qgOuN/7DrLbdNOA4d/6pxAjtFfEbUwrzs5SrwjzTLIGhVfo
+ IRh+pJMPBx/YFcXdSzKPvMRpEERiUz5ZsDhm+0VAAAwnVdPPrhq2g9QXla32+K0JFQDD
+ XdJYvkVL6t3s98XgakLF7uWl454ZGkDs01BQOtqggGsUThvHkM65njPYChfJHZzp2RSz
+ /cbub1BWhUxZEfC/367RR8/617AAMai0cREafOGfh2JXq9MWJJQG/NbzNB0+DEUCotbK
+ gUhUfJPMfU79GA6/i6sAtZHdJnFJq0sIwOfo3RXmlDVXojyRFJFNQuk2xk8aeiHN+J8n
+ fRCg==
+X-Gm-Message-State: AOJu0YwQ8fY/spU+ZBtX+iCWc9dZxhgZZrsJkKZZeKgxbVmHaVo4pFXg
+ 5ZfmcC20Zaic4UILLdaKiJM/laT0nOdmd+0r7VGYVA21q6nfgk80lFjuoRokc/5n/q3LlvwS+hR
+ W
+X-Gm-Gg: ASbGnctkp/UuSm/JRXVADJSAaCWGmHxdeksGD0VHMFlpix5Tc7lgay7Qgyrb0cG1nQR
+ 5x/pmfttdRYumzB7ysvW4QdcDU9eavKkvx8sq2e3dCZuZoE1t5WeXOb9QQ8/vwFN0FKvyrG4INU
+ qlXS+oV6lsBcaAfqPnWe+YyssR4oUT6yT88tCJql2Tbh+y9QawV6L7imolixTJy4VUIbp+ABx4y
+ fVQr0fVdUZKv2kQ8Sw+VL6qay4F/BFTE3n8OImN9QEUYzvPSlfpnqrVEOzRaVFxOo5yZbyvSlca
+ nyswyk+qmPZlX7Ucce5IASiOJoqH5Yyn2G4EzxE3Lhtv75cW5D/BaxCnEAlWyuZZqEQY4pJPv3T
+ i2GfHW3dpOg==
+X-Google-Smtp-Source: AGHT+IFjhSGLnaDlUMbdpt1X3OyrArpYGOQ6OVgKKEsA3oVGq80nIkCBhU6+sCWg5KJmlMSislf7Zw==
+X-Received: by 2002:a17:902:ef03:b0:223:3394:3a2e with SMTP id
+ d9443c01a7336-22e087f7e2cmr41450325ad.18.1746111321982; 
+ Thu, 01 May 2025 07:55:21 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e0bb0e770sm7644415ad.92.2025.05.01.07.55.23
+ d9443c01a7336-22e0bb0e770sm7644415ad.92.2025.05.01.07.55.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 07:55:23 -0700 (PDT)
+ Thu, 01 May 2025 07:55:21 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 04/11] accel/tcg: Use vaddr for plugin_{load,store}_cb
-Date: Thu,  1 May 2025 07:55:12 -0700
-Message-ID: <20250501145520.2695073-5-richard.henderson@linaro.org>
+Subject: [PATCH 01/11] accel/tcg: Move user-only tlb_vaddr_to_host out of line
+Date: Thu,  1 May 2025 07:55:09 -0700
+Message-ID: <20250501145520.2695073-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250501145520.2695073-1-richard.henderson@linaro.org>
 References: <20250501145520.2695073-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,35 +99,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid the use of abi_ptr within ldst_common.c.inc.
+At the same time, fix a mis-match between user and system
+by using vaddr not abi_ptr for the address parameter.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/ldst_common.c.inc | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/accel/tcg/cpu-ldst.h | 8 --------
+ accel/tcg/user-exec.c        | 6 ++++++
+ 2 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/accel/tcg/ldst_common.c.inc b/accel/tcg/ldst_common.c.inc
-index 9791a4e9ef..57f3e06192 100644
---- a/accel/tcg/ldst_common.c.inc
-+++ b/accel/tcg/ldst_common.c.inc
-@@ -123,7 +123,7 @@ void helper_st_i128(CPUArchState *env, uint64_t addr, Int128 val, MemOpIdx oi)
-  * Load helpers for cpu_ldst.h
+diff --git a/include/accel/tcg/cpu-ldst.h b/include/accel/tcg/cpu-ldst.h
+index 44a62b54da..00e6419e13 100644
+--- a/include/accel/tcg/cpu-ldst.h
++++ b/include/accel/tcg/cpu-ldst.h
+@@ -515,15 +515,7 @@ static inline uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr addr)
+  * Otherwise (TLB entry is for an I/O access, guest software
+  * TLB fill required, etc) return NULL.
   */
+-#ifdef CONFIG_USER_ONLY
+-static inline void *tlb_vaddr_to_host(CPUArchState *env, abi_ptr addr,
+-                                      MMUAccessType access_type, int mmu_idx)
+-{
+-    return g2h(env_cpu(env), addr);
+-}
+-#else
+ void *tlb_vaddr_to_host(CPUArchState *env, vaddr addr,
+                         MMUAccessType access_type, int mmu_idx);
+-#endif
  
--static void plugin_load_cb(CPUArchState *env, abi_ptr addr,
-+static void plugin_load_cb(CPUArchState *env, vaddr addr,
-                            uint64_t value_low,
-                            uint64_t value_high,
-                            MemOpIdx oi)
-@@ -193,7 +193,7 @@ Int128 cpu_ld16_mmu(CPUArchState *env, vaddr addr,
-  * Store helpers for cpu_ldst.h
-  */
+ #endif /* ACCEL_TCG_CPU_LDST_H */
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index e1f4c4eacf..adc5296ba5 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -850,6 +850,12 @@ void *probe_access(CPUArchState *env, vaddr addr, int size,
+     return size ? g2h(env_cpu(env), addr) : NULL;
+ }
  
--static void plugin_store_cb(CPUArchState *env, abi_ptr addr,
-+static void plugin_store_cb(CPUArchState *env, vaddr addr,
-                             uint64_t value_low,
-                             uint64_t value_high,
-                             MemOpIdx oi)
++void *tlb_vaddr_to_host(CPUArchState *env, vaddr addr,
++                        MMUAccessType access_type, int mmu_idx)
++{
++    return g2h(env_cpu(env), addr);
++}
++
+ tb_page_addr_t get_page_addr_code_hostp(CPUArchState *env, vaddr addr,
+                                         void **hostp)
+ {
 -- 
 2.43.0
 
