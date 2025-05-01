@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32EB3C369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:41:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96188C3ABA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:41:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAYpH-0003aw-Iv; Thu, 01 May 2025 14:40:04 -0400
+	id 1uAYnd-0001ez-5s; Thu, 01 May 2025 14:38:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYng-00028j-ME
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:25 -0400
-Received: from mail-il1-x12a.google.com ([2607:f8b0:4864:20::12a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYmz-0008QH-FD
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:37:44 -0400
+Received: from mail-io1-xd30.google.com ([2607:f8b0:4864:20::d30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYne-0008IW-N1
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:24 -0400
-Received: by mail-il1-x12a.google.com with SMTP id
- e9e14a558f8ab-3d46ef71b6cso12280375ab.3
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:38:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYmx-00088F-EH
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:37:41 -0400
+Received: by mail-io1-xd30.google.com with SMTP id
+ ca18e2360f4ac-8616b7ad03bso31234239f.0
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746124701; x=1746729501; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746124657; x=1746729457; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NpvMgcrpSQGafRLyw/ZNHAX6/bjj0J9IvQrfqDaCmhA=;
- b=u+E130CvTa2buvbr6Z0GgwjxlAu2d2tHI/wP6ELU0gpT2VAi1GoVKVX+bkQezysorn
- lpIIu6GgfyJoiwDF8amKoqASH72Mq1Fa8YsuphLK+BPG8uUDfVNotVVclNyaLyNO+3ye
- OL3PriK61/juatXKX0KeUhcoaRaICp31VyaQj2GUuSZKojxN5ryD/IDcBkipBkWujQLz
- UpUX4TIAT3uHXJq4UQ8ua7HpZBxyUt7+Q3TXeMjcgDUzeGH+p5mapnUMJ48LERRHEUX5
- j/IEKUKZGwL722/srH08yO16dZJlZUO7XgVIsiO1VZo014jAaB5mKdDkfc6ChQ/8wsYy
- /u+w==
+ bh=LkLoJeHjOZe5nRnVptyiZRscDcIvghHTBUySTfzCR5w=;
+ b=M/hqND43bvbB7QLM/3v4/H4pmsw4F66fMr+AMjMTiSzC1bjQDYdBmoKzuLNR21mH/7
+ fKuGAiRbaXLzJAiNYYO/u1UMAmLfVZ6/C9JHBtdc6MpHge6S33IVyJwP08BrybQ8vd5o
+ lPSCfquUdAl0Si1R2ibf93zGDzCgp0eBydsikw1UgTEla23iiGyTynUiGkww6YfUPxPc
+ Dd+c/7KWZjlYoD+POpGAAHA94z0or+7z0LUIBsPKOboKi8rTUti8BYBFbXaH5zQ4e5M4
+ XnFirRAIA+cauJfzl1eO6HPN9Kbmv0hhaSbdVx3d1fLeuFdqmwosENh+78sySntUprIZ
+ VaYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746124701; x=1746729501;
+ d=1e100.net; s=20230601; t=1746124657; x=1746729457;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NpvMgcrpSQGafRLyw/ZNHAX6/bjj0J9IvQrfqDaCmhA=;
- b=VkECxNS5kKmO1y2C6I4FaZVvaQ2Th04p4EzErTpQ4Ymkt3IpPX/aVGG7MNiNIAja5O
- EzL4J5virQP15uwmtPmu3vv/vFaQrzWLtcyYV31hAW31jKQ363fLlqRMCs8D+YMGrlTB
- kE2F5T79RIcTbmepktPGoBrmAKeDHWHhPRCgG8AUqcG17JGSEwPtyCUMIAvmRpDm17PN
- DrFNmaFdMf9ASZ8Ygw6Y85o6VAOg6zo3LcIlVI1dJhVtuRP9L3zCMedkMN2ohP0rFsHX
- ryJh1P7BvdsSt7J6ouI0z6Mj2f3KrXxOsC/jCnokrUVB2ZyNHTStUxpF1gc/r2hzBJ9Z
- i21A==
-X-Gm-Message-State: AOJu0Yyj4avJnzrHII5YHAaRgzNoyHT3Il6gzGCvWOozLWuZIHkXodaE
- bTb+KVpQgEbQRcvGXh3poGxH+8vihfhvXgFSwOFvnTwPcwMPNZnbbzKUWDDFNB/bNZMFWdMc/af
- 3
-X-Gm-Gg: ASbGncuvBkce+3bdZy+DVpw/+LHCSRLQ68AMQyq94zmzjG2AgaJoACkUHI+vds1fX0F
- 8OzM6vbr3ivFBCFvKmPkiItpE6ZKsMaNH2/QnkkjuDH1KXB6JfMjeT7vDGky05fYXssESNYNQ59
- piwRyBJrYuX0JD2pnylitjrrx0ET1nHjaa6VCz83foDR+u6dtB4Wd9zKAbRu9UZKbhbSxGYI6Jf
- phCvnq1FKOBgg4DfJQYOviwYhntDLJwtALdkchk9NcESnOezsVh4o/uCaQpFMVu4scksh0Zih6u
- qHeDk4zdLRzFJfaGv92aAeLmY7R1l1bSVGJp46wocdxQgZXVDuTTEJWH+6OpnXI1XMRzZMqUmLx
- 7Lkzk6OcJujTV3RJu5bHjWhfjrofd/ME=
-X-Google-Smtp-Source: AGHT+IHesjngyZIqoY1XhWDgroSc1Qv1/VD7145/jTW5KKe+qQhy+N8XHls82UKCwc/xAtQY8IuwjQ==
-X-Received: by 2002:a92:d84e:0:b0:3d4:70ab:f96f with SMTP id
- e9e14a558f8ab-3d9701fc1f1mr38617615ab.8.1746124701176; 
- Thu, 01 May 2025 11:38:21 -0700 (PDT)
+ bh=LkLoJeHjOZe5nRnVptyiZRscDcIvghHTBUySTfzCR5w=;
+ b=eO/YZTJ69vlD1LGynaeIIIzwmOamlHV1M3bjccaaQMYoIYYk+D7EhCvpvr+OVBcoXl
+ aH4Io+b8gmiiT612iFWqawtusuX5gSKnF43utebeaoBmQNIy/6fiB4YhHtPFNss5TegH
+ fgaMym9OaTEqHmQWgOt5Akrx6m2/t68q+tiPtk5UlgIo5XAH7MsJzObuGT95OM2ToGKB
+ 2CF0j3b583Flq90ahYVVszYazDAfSwmskSYNeJYksNbz2FNz1Q86vkzBxwjZZeguAHzH
+ YH5j1SG329Cx4sAJDZuaB4rmESKaaTu5SLUPCFsiH94GBAtqUa2YT1pRNp3slL3nO61I
+ pZpA==
+X-Gm-Message-State: AOJu0Yz3ev9MLugwxRvG0eWGaYc2viMsiUX7FWEMqJ5t4exW00zZcHds
+ RNmqAyd8Q5CdYJM18pJyOOtNNLvZUeHJB9p/NW1qi31gu/JUDDQZ3FNy0LIkUc5/6nPatbal6MV
+ 4
+X-Gm-Gg: ASbGnctjJP9S54D1DYmwSlEn2n8rD+d4OAFJgiTTTgKLFScV96WAbWnr4dSLXh0OW5n
+ A9FOZJSJvY39DOyRiTCAnxzR7yZiKOQAx0g8lRmSPqGGBA6gWgWw0yEZfKuPPw65lLwn5izHOHQ
+ CPW5ax9RLNdxkHI4a3Ru44dc+4nn+SN7QjpKRuvZLY9vWhvkLkngis/x5dHc/948aiGTnqKjxM1
+ WXNhUNkOkNfvK6CJMrhcgD+PmDsp1kiHdnRrwrqNlJyur8joC+6FQd8kPBy9YmaVdU1K/4lx1MT
+ j6DxlVZ+QY1+plALJH8SM3Y7F78xF0eF+L+jZTug1Iw+OZdaUE5pofZXQ1+gAIzTINHLTtF1Qhi
+ dOawdr7aFrK79LfQ1O2GA
+X-Google-Smtp-Source: AGHT+IFXDjXZc0X1Nly0Y+glTSr0X7/Sj0FKQ7fjb0rxaUunKYHU0v3kfAlRuXIBAbDZYKTmyKDg4g==
+X-Received: by 2002:a05:6602:360e:b0:862:fc1e:43c4 with SMTP id
+ ca18e2360f4ac-8669fac62f5mr38157239f.7.1746124657585; 
+ Thu, 01 May 2025 11:37:37 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d975f6cce5sm2532555ab.59.2025.05.01.11.38.17
+ ca18e2360f4ac-864aa2b9400sm21179339f.3.2025.05.01.11.37.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 11:38:20 -0700 (PDT)
+ Thu, 01 May 2025 11:37:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
@@ -78,18 +78,18 @@ Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 12/16] hw/i386/intel_iommu: Remove
- IntelIOMMUState::buggy_eim field
-Date: Thu,  1 May 2025 20:36:24 +0200
-Message-ID: <20250501183628.87479-13-philmd@linaro.org>
+Subject: [PATCH v2 07/16] hw/virtio/virtio-mmio: Remove
+ VirtIOMMIOProxy::format_transport_address field
+Date: Thu,  1 May 2025 20:36:19 +0200
+Message-ID: <20250501183628.87479-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501183628.87479-1-philmd@linaro.org>
 References: <20250501183628.87479-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12a;
- envelope-from=philmd@linaro.org; helo=mail-il1-x12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d30;
+ envelope-from=philmd@linaro.org; helo=mail-io1-xd30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,55 +112,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IntelIOMMUState::buggy_eim boolean was only set in
-the hw_compat_2_7[] array, via the 'x-buggy-eim=true'
-property. We removed all machines using that array, lets
-remove that property, simplifying vtd_decide_config().
+The VirtIOMMIOProxy::format_transport_address boolean was only set
+in the hw_compat_2_6[] array, via the 'format_transport_address=off'
+property. We removed all machines using that array, lets remove
+that property, simplifying virtio_mmio_bus_get_dev_path().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i386/intel_iommu.h | 1 -
- hw/i386/intel_iommu.c         | 5 ++---
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ include/hw/virtio/virtio-mmio.h |  1 -
+ hw/virtio/virtio-mmio.c         | 15 ---------------
+ 2 files changed, 16 deletions(-)
 
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index e95477e8554..29304329d05 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -303,7 +303,6 @@ struct IntelIOMMUState {
-     uint32_t intr_size;             /* Number of IR table entries */
-     bool intr_eime;                 /* Extended interrupt mode enabled */
-     OnOffAuto intr_eim;             /* Toggle for EIM cabability */
--    bool buggy_eim;                 /* Force buggy EIM unless eim=off */
-     uint8_t aw_bits;                /* Host/IOVA address width (in bits) */
-     bool dma_drain;                 /* Whether DMA r/w draining enabled */
-     bool dma_translation;           /* Whether DMA translation supported */
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 5f8ed1243d1..c980cecb4ee 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3823,7 +3823,6 @@ static const Property vtd_properties[] = {
-     DEFINE_PROP_UINT32("version", IntelIOMMUState, version, 0),
-     DEFINE_PROP_ON_OFF_AUTO("eim", IntelIOMMUState, intr_eim,
-                             ON_OFF_AUTO_AUTO),
--    DEFINE_PROP_BOOL("x-buggy-eim", IntelIOMMUState, buggy_eim, false),
-     DEFINE_PROP_UINT8("aw-bits", IntelIOMMUState, aw_bits,
-                       VTD_HOST_ADDRESS_WIDTH),
-     DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, FALSE),
-@@ -4731,11 +4730,11 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-     }
+diff --git a/include/hw/virtio/virtio-mmio.h b/include/hw/virtio/virtio-mmio.h
+index aa492620228..8b19ec2291a 100644
+--- a/include/hw/virtio/virtio-mmio.h
++++ b/include/hw/virtio/virtio-mmio.h
+@@ -66,7 +66,6 @@ struct VirtIOMMIOProxy {
+     uint32_t guest_page_shift;
+     /* virtio-bus */
+     VirtioBusState bus;
+-    bool format_transport_address;
+     /* Fields only used for non-legacy (v2) devices */
+     uint32_t guest_features[2];
+     VirtIOMMIOQueue vqs[VIRTIO_QUEUE_MAX];
+diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
+index 532c67107ba..b7ee115b990 100644
+--- a/hw/virtio/virtio-mmio.c
++++ b/hw/virtio/virtio-mmio.c
+@@ -752,8 +752,6 @@ static void virtio_mmio_pre_plugged(DeviceState *d, Error **errp)
+ /* virtio-mmio device */
  
-     if (s->intr_eim == ON_OFF_AUTO_AUTO) {
--        s->intr_eim = (kvm_irqchip_in_kernel() || s->buggy_eim)
-+        s->intr_eim = kvm_irqchip_in_kernel()
-                       && x86_iommu_ir_supported(x86_iommu) ?
-                                               ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-     }
--    if (s->intr_eim == ON_OFF_AUTO_ON && !s->buggy_eim) {
-+    if (s->intr_eim == ON_OFF_AUTO_ON) {
-         if (kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
-             error_setg(errp, "eim=on requires support on the KVM side"
-                              "(X2APIC_API, first shipped in v4.7)");
+ static const Property virtio_mmio_properties[] = {
+-    DEFINE_PROP_BOOL("format_transport_address", VirtIOMMIOProxy,
+-                     format_transport_address, true),
+     DEFINE_PROP_BOOL("force-legacy", VirtIOMMIOProxy, legacy, true),
+     DEFINE_PROP_BIT("ioeventfd", VirtIOMMIOProxy, flags,
+                     VIRTIO_IOMMIO_FLAG_USE_IOEVENTFD_BIT, true),
+@@ -815,19 +813,6 @@ static char *virtio_mmio_bus_get_dev_path(DeviceState *dev)
+     virtio_mmio_proxy = VIRTIO_MMIO(virtio_mmio_bus->parent);
+     proxy_path = qdev_get_dev_path(DEVICE(virtio_mmio_proxy));
+ 
+-    /*
+-     * If @format_transport_address is false, then we just perform the same as
+-     * virtio_bus_get_dev_path(): we delegate the address formatting for the
+-     * device on the virtio-mmio bus to the bus that the virtio-mmio proxy
+-     * (i.e., the device that implements the virtio-mmio bus) resides on. In
+-     * this case the base address of the virtio-mmio transport will be
+-     * invisible.
+-     */
+-    if (!virtio_mmio_proxy->format_transport_address) {
+-        return proxy_path;
+-    }
+-
+-    /* Otherwise, we append the base address of the transport. */
+     section = memory_region_find(&virtio_mmio_proxy->iomem, 0, 0x200);
+     assert(section.mr);
+ 
 -- 
 2.47.1
 
