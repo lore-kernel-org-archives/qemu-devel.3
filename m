@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04A19C369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:25:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6DFEC369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:25:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAbLj-0000xY-Fg; Thu, 01 May 2025 17:21:43 -0400
+	id 1uAbOz-0005US-G0; Thu, 01 May 2025 17:25:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbLa-0000oF-Hs
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:35 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1uAbOm-0004Qt-Rb
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:24:53 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbLY-0001V6-1B
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:34 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-306b6ae4fb2so1303104a91.3
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:21:31 -0700 (PDT)
+ id 1uAbOk-0002Ak-Di
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:24:52 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-b0b2ce7cc81so1298234a12.3
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:24:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746134490; x=1746739290; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746134688; x=1746739488; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3IM3WNY4+mvaPjMT/1TSQTeg+RIG05hYdcLT8hVpAu0=;
- b=EebyiA8H9f4uQTKXGXQezAQeq++zKQhPeQnrzctxbzwgRgIfVZpDYMXvUKH4opYU7C
- 7kW6F62vznf402v04HRYOKS5+Vg1+kYH4Umy5hUJJREpwvaGvLGH+s60dPcFNrHastTO
- U3qVA4b9IHFPxIwWyocmjqTw2M1Kn+PiQgMjR249G1gsxvWOWh0v16B9FbXIMrmVoznj
- D4shaf3BL62chfS2AfpdSuhba6c5y0MzEQCsfOsCpjd5HndfJBG13knI021bxkcA1OB8
- Q/1XsEPk5uNKbmOCPXdb+9UQtlTloeM5tNq5EkHWiIEe65fGo41p0Z5AQHQy1BTTFVta
- jhQw==
+ bh=YBxJ7AZiyX/+Jv6DfasHwGdvua+9mEIKfUGwWBF4FSg=;
+ b=YAq8skbyzmt1XJhsFK6RBFF8JEkatwRw0rP4aryVsxkOwS1bnCM1QpZsHXxs2lkgJg
+ YnjCiZE3WM0RYyy+wozSnOqIafyb87qTynzdeNcT9SR5W3CjA7ExtXvcq2sXnVs8HJEZ
+ WdIFFMAJyM5Tddlcv/f+Dz9T5nKrCYhc1MAj5OMInGOzeUxAvdFndlSvW1etMG8UKF4Z
+ hRnb3F/Af/kzIKkN2Rdl+vGQP0Q2o6/vOCU1ECb/LY3d9Y7+CeiqlVT++5fPVosrMEQE
+ YoPVRnoEITG0LzIIceagJC0Smbk7AVzlx38dKmz01i8jKSMk7v7Yc2Z7RGp/LevCvAoA
+ ETqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746134490; x=1746739290;
+ d=1e100.net; s=20230601; t=1746134688; x=1746739488;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3IM3WNY4+mvaPjMT/1TSQTeg+RIG05hYdcLT8hVpAu0=;
- b=c2u6h7okki2gHE96PNzRdJ3wByPG4ADJBTs850JXVXOkvBYfq23bxPF9pr6Vvo9lgi
- NqSRKHKM3EY9s9k0zyVJe4qQBCOYljrQ6CiSaaQpbJFEtwQvip6QecoWWJfSPpgKNJo7
- lAP6tugLBCS2ys+8yUTVZan0vV4RsCjq5LM+FK6G2vxa4PxMWgsVFWi6hVJcyKzAXhym
- /aCCcLIpf92KPBVNHEu9QS7AYxmntvhJbIgYDrGQ95PyYc5wjZn4X/CKXp9Ew7H+tDvh
- yuP6YvNkz0qwkgVErV88R4V5RVbYkyR1saYlS4r17ws+JPVpAvmiX/CR0qTFG9vaKwte
- kPAw==
-X-Gm-Message-State: AOJu0YzRoQWVF61+uohCEu5SJmbN5nTzE/WCYm3GREGm5Q8dUhJL3Oo2
- 2IE+j0voPjj/a8n7PlL805n34Ekf33+ThVTX4WQ4KUEB9exVI7bDbujOUAtL24dKzT/yhfXRPAo
- L
-X-Gm-Gg: ASbGncuD9JHTt2LYF1fn4L0M89loFFLUEeUpGLXUygeQsZt5QKS/L1LN740h9PjYoRf
- RotZGiHBKN8ICBh2xKadgZQuSYrmX++DdHPz4uOkCH8+oG5eiLYyjWBBSAOZ5FPooveQMhc9ZRF
- ZJXATIsWVjaSC3akFs5JxAMNAc6ubF86FBvvzWy7cX7aZ7+SN45IktmZeXTxXlS7xsG83Y2S8ST
- ObncsJ1zYjBotA9B/upgtfhmANgTzmuZ7ZVWcm0mOG5/5emUbpqOMYnVWPeX1SKw2HmXTym76LD
- sjatY/wbbkluU1YFxENre/nH8oCkGtsVCqSjPjcvssGKKgyyswa2Pe/591DMEjLO67C3GkXCsLE
+ bh=YBxJ7AZiyX/+Jv6DfasHwGdvua+9mEIKfUGwWBF4FSg=;
+ b=VfB7s0jxnja9qBjFmOoC8FNXywMQu+yQBIUCf2E8rxwqJ0zXMqb8hrKxTA5D1mgZcu
+ LofXovSEoUK/KS9pQQb9lRNu81o+pB+AxaXEbBJvyE1JAn1AKMSpapmxCS3nGqbedHNf
+ nCZ2y9PDZRwzdfq8mFaegTINNpueyR2rxTX/XBJEkS9obOWwDn5N8eDPU7qU5nz0AmhC
+ /AcBx5CnIqqs61aWUfcenqKPv9UDZ8EJ0avaUqnMgruvKaqKEW/IvPfgxk6P0g2SLEFv
+ NkLiHiV7Cjohj9h4dEeITFFPJXiTwVhKd4QqlBYCfE5sdbHZ5mXFXS6+4GCyqD15gjJG
+ 0Hgw==
+X-Gm-Message-State: AOJu0YxGtU8ZXWBDN1n1eniuJwzcMVOiVRRHgjrp2LCuveVmx4uQRSTX
+ /gMBhbAGaLWZxPjflC2fjxBojhz7IDb+2iBZvACJW6ihNJiAXg5+N7mBsBC3o0HbX/QzECVSmgU
+ D
+X-Gm-Gg: ASbGncvsW4k4Sn49BBTgnt1Xm/3OujpWx49Ygzr6oW9iKhfjOxIJWfBEOA2nBru1LQF
+ 6AEA5sJDPoVgS89D37Khwj9QX9vV4rhF74n6YENQ7LRNjkCfx2TliL6wQkrwU/08zt1IBAPmbqo
+ uPFqTrssCM8tMAcKmiV41u8HcoHyCq+GbLHJzlgDpW6FQYo40QfF21mirENIUlVKL88rGL2UZtm
+ DvyoIiZH6HZ/ZyEweC4WyhS8qyjGV93waUzR2UGtRtAc1weKQYCRvMox9uVDzY/ab45VDbpzzuE
+ QBrB2ib+pkgUwAfs4PTZECdvuDCkFi05sZE8oZvA08l3RzXaP9swUdyFGv/Dlu03Q/p7u2/Kzkw
  =
-X-Google-Smtp-Source: AGHT+IGit4o1KJyAFXlSDsyoKIM8udhg6Umqt241SC/XoNvyFEOdLW18VRudmTHyH1UwzYSd7serSA==
-X-Received: by 2002:a17:90b:3c4e:b0:2ff:502e:62d4 with SMTP id
- 98e67ed59e1d1-30a4e6b55d2mr720455a91.32.1746134490648; 
- Thu, 01 May 2025 14:21:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE8u2vxt+cFpmmSY7otVyuCvkoyl5ZqnajQV/a77E8NO6K62r/LmKxaGJ6qfHpi6EC00xqu1g==
+X-Received: by 2002:a05:6a21:9985:b0:1fa:9819:c0a5 with SMTP id
+ adf61e73a8af0-20cde952d8fmr641997637.11.1746134688198; 
+ Thu, 01 May 2025 14:24:48 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30a476267e0sm1384573a91.39.2025.05.01.14.21.29
+ d2e1a72fcca58-740590610desm135897b3a.146.2025.05.01.14.24.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 14:21:30 -0700 (PDT)
+ Thu, 01 May 2025 14:24:47 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 19/59] accel/tcg: Include 'accel/tcg/getpc.h' in
- 'exec/helper-proto'
-Date: Thu,  1 May 2025 14:20:33 -0700
-Message-ID: <20250501212113.2961531-20-richard.henderson@linaro.org>
+Subject: [PULL 41/59] qemu/target_info: Add %target_cpu_type field to
+ TargetInfo
+Date: Thu,  1 May 2025 14:20:55 -0700
+Message-ID: <20250501212113.2961531-42-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250501212113.2961531-1-richard.henderson@linaro.org>
 References: <20250501212113.2961531-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,67 +104,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Most files including "exec/helper-proto.h" call GETPC().
-Include it there (in the common part) instead of the
-unspecific "exec/exec-all.h" header.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250424202412.91612-10-philmd@linaro.org>
 ---
- include/exec/exec-all.h            | 1 -
- include/exec/helper-proto-common.h | 2 ++
- accel/tcg/translate-all.c          | 1 +
- target/avr/helper.c                | 1 -
- 4 files changed, 3 insertions(+), 2 deletions(-)
+ include/qemu/target-info-impl.h | 2 ++
+ target-info-stub.c              | 6 +-----
+ target-info.c                   | 5 +++++
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index 4c5ad98c6a..816274bf90 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -26,7 +26,6 @@
- #include "exec/vaddr.h"
+diff --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-impl.h
+index d0e8c86176..76766eeaae 100644
+--- a/include/qemu/target-info-impl.h
++++ b/include/qemu/target-info-impl.h
+@@ -14,6 +14,8 @@
+ typedef struct TargetInfo {
+     /* runtime equivalent of TARGET_NAME definition */
+     const char *target_name;
++    /* runtime equivalent of CPU_RESOLVING_TYPE definition */
++    const char *cpu_type;
+     /* QOM typename machines for this binary must implement */
+     const char *machine_typename;
+ } TargetInfo;
+diff --git a/target-info-stub.c b/target-info-stub.c
+index bcf834f71d..86da297277 100644
+--- a/target-info-stub.c
++++ b/target-info-stub.c
+@@ -14,6 +14,7 @@
  
- #if defined(CONFIG_TCG)
--#include "accel/tcg/getpc.h"
+ static const TargetInfo target_info_stub = {
+     .target_name = TARGET_NAME,
++    .cpu_type = CPU_RESOLVING_TYPE,
+     .machine_typename = TYPE_MACHINE,
+ };
  
- /**
-  * probe_access:
-diff --git a/include/exec/helper-proto-common.h b/include/exec/helper-proto-common.h
-index 16782ef46c..76e6c25bec 100644
---- a/include/exec/helper-proto-common.h
-+++ b/include/exec/helper-proto-common.h
-@@ -13,4 +13,6 @@
- #include "exec/helper-proto.h.inc"
- #undef  HELPER_H
+@@ -21,8 +22,3 @@ const TargetInfo *target_info(void)
+ {
+     return &target_info_stub;
+ }
+-
+-const char *target_cpu_type(void)
+-{
+-    return CPU_RESOLVING_TYPE;
+-}
+diff --git a/target-info.c b/target-info.c
+index 0042769e3a..5f5ef1f932 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -15,6 +15,11 @@ const char *target_name(void)
+     return target_info()->target_name;
+ }
  
-+#include "accel/tcg/getpc.h"
++const char *target_cpu_type(void)
++{
++    return target_info()->cpu_type;
++}
 +
- #endif /* HELPER_PROTO_COMMON_H */
-diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
-index 38819a507b..0408e2522a 100644
---- a/accel/tcg/translate-all.c
-+++ b/accel/tcg/translate-all.c
-@@ -61,6 +61,7 @@
- #include "system/tcg.h"
- #include "qapi/error.h"
- #include "accel/tcg/cpu-ops.h"
-+#include "accel/tcg/getpc.h"
- #include "tb-jmp-cache.h"
- #include "tb-hash.h"
- #include "tb-context.h"
-diff --git a/target/avr/helper.c b/target/avr/helper.c
-index afa591470f..b9cd6d5ef2 100644
---- a/target/avr/helper.c
-+++ b/target/avr/helper.c
-@@ -23,7 +23,6 @@
- #include "qemu/error-report.h"
- #include "cpu.h"
- #include "accel/tcg/cpu-ops.h"
--#include "accel/tcg/getpc.h"
- #include "exec/cputlb.h"
- #include "exec/page-protection.h"
- #include "exec/target_page.h"
+ const char *target_machine_typename(void)
+ {
+     return target_info()->machine_typename;
 -- 
 2.43.0
 
