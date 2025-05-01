@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E79C369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3827AC3ABAA
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:40:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAYpA-0003S4-V9; Thu, 01 May 2025 14:39:58 -0400
+	id 1uAYok-0003EB-NS; Thu, 01 May 2025 14:39:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYo6-0002pw-H7
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:52 -0400
-Received: from mail-il1-x12c.google.com ([2607:f8b0:4864:20::12c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnX-0001B5-Qz
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:15 -0400
+Received: from mail-io1-xd29.google.com ([2607:f8b0:4864:20::d29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYo4-0008LM-Ri
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:50 -0400
-Received: by mail-il1-x12c.google.com with SMTP id
- e9e14a558f8ab-3d4436ba324so10399275ab.2
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:38:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnW-0008Fw-2O
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:15 -0400
+Received: by mail-io1-xd29.google.com with SMTP id
+ ca18e2360f4ac-85de3e8d0adso31612839f.1
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:38:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746124727; x=1746729527; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746124692; x=1746729492; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/F9wfO6J1RL2avC/Q42x6BrmpISj7RT0yS78rOyo2P0=;
- b=uMye31R1iLvvLbO4tsNih+pI50YAluPlYoUOi9kBeBrU9w0/rgwZlSSpFWdudGY4Jw
- UDjq29lCQd5ZhjIYC6jWyuGq3lcYpZZECi4jea38fym29nrXXJiGFSjMo7b/0SdpAJnc
- ZxEIWmraZkdzQ6Vq273ICnrTZ3NLxR2w5mNQuI1l1Kj8DmM3Ns8rBqWU9YYiO+98eb29
- Ae8S8ARCGbXibryOtIHGr2wyRmjSr8UaqzI6LbW4stgmp9+5Wwuh8KcbSJywN65M23iM
- 340bfhayr9vZe7uJC7UuY9jaMua47UH5m4c5BwOIrVjpcd/xywvz0oJu5/hjqPtVePFV
- vtJg==
+ bh=ZeBP6SMx5HnWyi7uG5Jn5cSUUcBtF9s2f1+jGOqbmJs=;
+ b=Ba+PDTxDjB5Pf1sFZBTI2oJqVxnYTTTXDXmewb8BqJFT9RvYvizs4xjKzIrVm6xCs8
+ kPG34otRFOlDfYX6D/ft69djf4RTRJA+WBWAxHgGR0rXPXMvbRhuyrtmLL2vQ0gL+Erl
+ yQP4czC/kh0klie7h27XNNIIEL0BWNfAxjr2TbqOoddlbzC9j7JoXm61nTk+vNPcGe+o
+ EjhwJ8T+7h6lC0+jyTb4jPD6sqPsl4540BvhWrvalY/H6l1t6ZzkXjIsFHihQIWTTDcM
+ g/ORgPMm/uxf3OpRZcw/Z8dFhJNVezQPHY2nKS27XjzB3p7dPGFCUsvtovLb0eCCPV2E
+ Y0rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746124727; x=1746729527;
+ d=1e100.net; s=20230601; t=1746124692; x=1746729492;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/F9wfO6J1RL2avC/Q42x6BrmpISj7RT0yS78rOyo2P0=;
- b=QGkQ2GOp6m1o+dR+HLSMvZlgCkFaMQNkX3PC6DUOCe2r4zG5J1uLAQdihiWVlonfaj
- xLsE6NHhXKYgdjKBF6tw9UUGG3oXpVzsqgzOJzEF70AQrhfdtsUQQI0lHUrof8Iq1jhG
- epHvPD1Fk3TsCfzLLyCALInWc2NUstSBBcXB2/9+4KZGDhKA0A5g52gbSTVhaXCXYZDB
- Ob0ccZmRW6ww9uz2xID+Yj0XXaxWZDYU2wyWeVKKtAk7aZsbzyetqpzDgu9hTMs9fWRy
- lN0UC4hCjqbDzSJqptDzr3GgRtzIjVcBvHOE2elV0obHc1thp9NR1h4UIxa+Wk+LcUYq
- Fq8Q==
-X-Gm-Message-State: AOJu0Yyf0WbGDC/wZf+9NtWZO0dwURsGctnA+Dffz+Cpj69yNzUPoFTQ
- BLFwW+AEA6f219Rd8pAbPudx9p0UDSCVOJpw96f26venh6ekWY+sfqrL4ihd/QYsLhCqay5dT/+
- v
-X-Gm-Gg: ASbGncs2XZ89pNXnS4uNssH5QZ863lz9+6UdW66NuJPVX2RCvkU/16Au0VkUOIumBV4
- FEebjUUZYjHpKa+2VuGjbybDUSD4RsAJn0aNpbukeqmNJzulRE7ea4d6S2BWXCDdUNV7nv9023y
- 7qbELp+0kzOkuzin99F6nfxKeMO3uakSa0Z48rTesi5NDUjOOp7CzRR/ZGTjrlcmDDB7deo9E7x
- 8xMoUwVgbxzYnBUkq8jrJwKHI7vVTmvXhN8n/0/yj2OqhhZNlViGTX6zMnrFT36WkU9z2sm7ikC
- a6ORhShS5me4pGSgyoa+g3JDLeKJo6qZFCFObIFFL2+OkKX/hk2jwFRuFzrCCQNCq9nrU4HpPDw
- Iw22K4Ne/LasBK2ESJonp
-X-Google-Smtp-Source: AGHT+IGihOUFVAP0DR72yKqIEpdpdx5OoYnNI1fE/eelnPQAlRUYSe1da8rZZUKH7vTD3q9CAvlySQ==
-X-Received: by 2002:a05:6e02:1fe8:b0:3d9:66ba:1ad2 with SMTP id
- e9e14a558f8ab-3d97be3aee1mr38235ab.0.1746124727244; 
- Thu, 01 May 2025 11:38:47 -0700 (PDT)
+ bh=ZeBP6SMx5HnWyi7uG5Jn5cSUUcBtF9s2f1+jGOqbmJs=;
+ b=Czp/GQeBsDuE8a5AxupVZKXbio/lZ1vC+HibXnBPDjhd8VKDnbWFHGCczPPyVyVJlY
+ fyOS46Hr21BYfVnzaKGA23HGqOT5ZLQgeIOQ0H5NpwdSrYyBsMLkwAtsOL04PUEtGYKb
+ 1nS2duywM/DtBkcC0g/vncU9ol21EXQrmOcMXQfgw+A7PwtwZ/nFAObtYQ0AulRACCGP
+ jgyvuZQZFVNtmtSld+jhAAg/o0IA4wowL1ghd7EUrveQn+PIyPg8qKaZZdQr2QWKNLN/
+ LSGZWdkuZSALaXPHOfKAFqVR/nhvvl9wgxLpIwo+JkAXX/zIpIlgoGyY3KKXNISkv8wg
+ 0cpw==
+X-Gm-Message-State: AOJu0YzU6VKjGp4sdwMjJYmRrk8JwOUyak0gy1pdEJtQGRV5h3IQ6uDp
+ ZkVB+u6Pb6TUMndxamb51XXSuWNronq/VpZfYPKZL9LGSoCU7iN56RgnoaCYWfV4PXtin6zOnLd
+ a
+X-Gm-Gg: ASbGncuzZa8qtyPi4ITFGyOyTctB9nAqPTQ6WgZWIIXpZkA9CJ1+wG0be6ewm/Fl1Yv
+ WaPIcFvkD4D0aNyfWSyC15MLx98GmBUFtvI1dZSOyyVb82dx72YpNeOxXhWzWpEk2xUHsvETcK6
+ W8NO5vhsTP65s2hRzzY45JxsUZePomx3iqCEZ2daqD4OqIEfgMyjT2cU3K5AMtZGkQNs12gaVCK
+ Jlpe88Waj2OY3K7RwbdcBUEkoZ5D2AqMiTMC345ZOG8syZjWbd001KmN7EbOXYD8FSCZVhVq6+B
+ J0hySzeGger1x6xZUT62vLAiCdfiplUNync3CbCm8vjc+vh8Vj5tMol+LhM3TYuHtheX/t+GCpi
+ hGx9yBiX2AsAkfVH7LD03wT7Z6vkO1Qo=
+X-Google-Smtp-Source: AGHT+IE3BUgksOVi+kqWOWHw9l86MQT2SOl30YQrrBZN8TQXLLk74sy7jedFfndCuzCVknrjUW7FLA==
+X-Received: by 2002:a05:6602:401b:b0:864:68b0:60b3 with SMTP id
+ ca18e2360f4ac-866b42504e4mr37684339f.12.1746124692487; 
+ Thu, 01 May 2025 11:38:12 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f882ee3f65sm307854173.52.2025.05.01.11.38.43
+ 8926c6da1cb9f-4f882eaee47sm306869173.2.2025.05.01.11.38.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 11:38:46 -0700 (PDT)
+ Thu, 01 May 2025 11:38:12 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
@@ -78,18 +78,17 @@ Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 15/16] hw/char/virtio-serial: Do not expose the
- 'emergency-write' property
-Date: Thu,  1 May 2025 20:36:27 +0200
-Message-ID: <20250501183628.87479-16-philmd@linaro.org>
+Subject: [PATCH v2 11/16] hw/core/machine: Remove hw_compat_2_7[] array
+Date: Thu,  1 May 2025 20:36:23 +0200
+Message-ID: <20250501183628.87479-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501183628.87479-1-philmd@linaro.org>
 References: <20250501183628.87479-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12c;
- envelope-from=philmd@linaro.org; helo=mail-il1-x12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d29;
+ envelope-from=philmd@linaro.org; helo=mail-io1-xd29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,52 +111,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VIRTIO_CONSOLE_F_EMERG_WRITE feature bit was only set
-in the hw_compat_2_7[] array, via the 'emergency-write=off'
-property. We removed all machines using that array, lets remove
-that property. All instances have this feature bit set and
-it can not be disabled.
+The hw_compat_2_7[] array was only used by the pc-q35-2.7 and
+pc-i440fx-2.7 machines, which got removed. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/char/virtio-serial-bus.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ include/hw/boards.h | 3 ---
+ hw/core/machine.c   | 9 ---------
+ 2 files changed, 12 deletions(-)
 
-diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-index eb79f5258b6..31bd1b7535d 100644
---- a/hw/char/virtio-serial-bus.c
-+++ b/hw/char/virtio-serial-bus.c
-@@ -1019,6 +1019,13 @@ static void virtser_port_device_unrealize(DeviceState *dev)
-     }
- }
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index a881db8e7d6..77707c4376a 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -838,7 +838,4 @@ extern const size_t hw_compat_2_9_len;
+ extern GlobalProperty hw_compat_2_8[];
+ extern const size_t hw_compat_2_8_len;
  
-+static void virtio_serial_instance_init(Object *obj)
-+{
-+    VirtIOSerial *vser = VIRTIO_SERIAL(obj);
-+
-+    vser->host_features |= BIT_ULL(VIRTIO_CONSOLE_F_EMERG_WRITE);
-+}
-+
- static void virtio_serial_device_realize(DeviceState *dev, Error **errp)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-@@ -1155,8 +1162,6 @@ static const VMStateDescription vmstate_virtio_console = {
- static const Property virtio_serial_properties[] = {
-     DEFINE_PROP_UINT32("max_ports", VirtIOSerial, serial.max_virtserial_ports,
-                                                   31),
--    DEFINE_PROP_BIT64("emergency-write", VirtIOSerial, host_features,
--                      VIRTIO_CONSOLE_F_EMERG_WRITE, true),
+-extern GlobalProperty hw_compat_2_7[];
+-extern const size_t hw_compat_2_7_len;
+-
+ #endif
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index ce98820f277..bde19a2ff67 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -266,15 +266,6 @@ GlobalProperty hw_compat_2_8[] = {
  };
+ const size_t hw_compat_2_8_len = G_N_ELEMENTS(hw_compat_2_8);
  
- static void virtio_serial_class_init(ObjectClass *klass, const void *data)
-@@ -1186,6 +1191,7 @@ static void virtio_serial_class_init(ObjectClass *klass, const void *data)
- static const TypeInfo virtio_device_info = {
-     .name = TYPE_VIRTIO_SERIAL,
-     .parent = TYPE_VIRTIO_DEVICE,
-+    .instance_init = virtio_serial_instance_init,
-     .instance_size = sizeof(VirtIOSerial),
-     .class_init = virtio_serial_class_init,
-     .interfaces = (const InterfaceInfo[]) {
+-GlobalProperty hw_compat_2_7[] = {
+-    { "virtio-pci", "page-per-vq", "on" },
+-    { "virtio-serial-device", "emergency-write", "off" },
+-    { "ioapic", "version", "0x11" },
+-    { "intel-iommu", "x-buggy-eim", "true" },
+-    { "virtio-pci", "x-ignore-backend-features", "on" },
+-};
+-const size_t hw_compat_2_7_len = G_N_ELEMENTS(hw_compat_2_7);
+-
+ MachineState *current_machine;
+ 
+ static char *machine_get_kernel(Object *obj, Error **errp)
 -- 
 2.47.1
 
