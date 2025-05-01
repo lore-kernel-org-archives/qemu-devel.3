@@ -4,90 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87691C369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 16:25:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B36CFC3ABA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 16:25:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAWhn-0007uW-W9; Thu, 01 May 2025 12:24:12 -0400
+	id 1uAWi9-00089F-9B; Thu, 01 May 2025 12:24:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonwilson030981@googlemail.com>)
- id 1uAPVJ-0001sy-AT
- for qemu-devel@nongnu.org; Thu, 01 May 2025 04:42:49 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uAWi7-00087U-9G
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 12:24:31 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jonwilson030981@googlemail.com>)
- id 1uAPVH-0000LJ-CZ
- for qemu-devel@nongnu.org; Thu, 01 May 2025 04:42:49 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43d0c18e84eso2515205e9.3
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 01:42:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uAWi4-00027R-Rm
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 12:24:30 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-736b350a22cso1022410b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 09:24:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=googlemail.com; s=20230601; t=1746088965; x=1746693765; darn=nongnu.org;
- h=content-transfer-encoding:subject:content-language:to:user-agent
- :mime-version:date:message-id:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BBg7ezcuprXykc/K02UIVpCehV40oQ6pHaLdEutMdP8=;
- b=WEBDGX46HUgpZQMQRzky+tMvx3ob3sNkROGmY7MtaaDIpVih5tNKVkSwL3p1aNSX/l
- DNW6gHEU2REHoOO6PjeSzNU9N4CVi7+3gGtbgToD3EPLCVrIHivkmk6YXk1iS5ukRd4a
- +7hGx4n8thgpmYs4pUS8OxffgMkvo5m53y6zEuz/UtgjHBuECe8WIikyTbngacesmWXF
- YKLDgywImMW8RSkC2SjRcbg5xOxXGvumXz+1yecbEUWsgLRwr/Ewd6BSvBpwqOtEprtX
- 1gakjxbCuRjtl4xQ9S2y+CItJP4ZDUmhg74coqjw4hVwuICj+q1DfMroRLM4LPOZTGpX
- WqqA==
+ d=linaro.org; s=google; t=1746116667; x=1746721467; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=oTb37Xh3764UHx4GkunEtiY4YocHVNCV/2Hme8te8Ks=;
+ b=TAIQROWJE2ekDYhgVMzE/g2WJUj16Le9I50nu4toSNBk2OhktK8Iek26abbIpiH/MQ
+ FBF2vAzigyZ0k/lZCYlZ0eNS5SYh86b2dGjCU2EqX+GU6BsqijAqYPt6gJ4s3xvxPxM0
+ IdydRa+UwSkcdap/et60AIORxt2wxAJSxSdT3W/RDvO6egm5vK8Csrnjdj+RVNuROwXP
+ XBlapnVlcV+VQfXkihah3YQ8q7iRiDRDLMjvS+hW9ILOIk0Pt2D2VZMVzAWUYVyqTVHx
+ YqJ3J922lhVu6wxcMHIRTbqwknPfA6n7SAPR/G0M6A2nIHA8MA9kbOg7DiDV9Q1+RvWQ
+ bpWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746088965; x=1746693765;
- h=content-transfer-encoding:subject:content-language:to:user-agent
- :mime-version:date:message-id:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BBg7ezcuprXykc/K02UIVpCehV40oQ6pHaLdEutMdP8=;
- b=n10kFT5UMEb2hEJLGtehZ+k2iMWvuWe/Aw4VG14d4PjiZwSoNRz1ooOFOGuN/CEvRW
- ihftE9EvR2lovYnTBD2aofJJAg0wfFuhXfCX/QPuLs4jEJADa6/FG4H1OENHymJdqUEK
- U5lIPL7/84yx+QLxnhpp/G2NwCouiAApkvrQK3rHVNEOhzpEKx8C46P2bw7ak+56CV0q
- 1ZPPhhljQMvwguLRLWQw7NFmMywA1XCAXxoakwwHIaRhQIUpZZa2IX/Uy5iERjZ+BXfh
- 17NZZUoXh0el/wGxWs0NYTT9aXfdFoJGLDztD7lrB+/NWS/H1ZMxv1u6sg3mpkSJh6tK
- KbUg==
-X-Gm-Message-State: AOJu0YyCA5PLtwW1M9CQAxxdvpKafDZGE1QJlFKixUKA4vFeYRr9X3s5
- g0ZKgMOLr4Bmh8T/bGt2UMNDGXoh5d246EdqxKreojUMI4ebgvqQhmlHvQ==
-X-Gm-Gg: ASbGncuaPZt43rJXWReUzDktcTH8GHdS5A+t2wdxdThYWvQFGza+71GmEr5Xyc7M8q1
- 6EERJKT5m2/8c4RcA7o5waid1pJht9YBsZniujcnoWotmAGfgyNkJj0asl8Q54VBpCxP0xFctby
- U3cXVUdfsYFRtzKXJyJMSVp6CPzPU4qLFT6xA3+hDdz+E1kyHC9W73Q+wiCj+Nps4W94pUS9YAm
- UfJBrRQg+n9GAxL6xIeTDVdfOvamkozV+H1ZLNCN+qZNzB61zL4G5mAeHZ3rDMOayFoHmhFT1Zk
- zESDjT3H+gKmOEysvPYUqZ1P9GZtUtzRGRT1dWCaEdSQ6ja/A5r/vc5RsbZ4keEgxWaRB2U8MVv
- uQKBAYbpjOAnwhhjO
-X-Google-Smtp-Source: AGHT+IFz2Sh8OUvTbacp/JZ8jVs53Vf0aQOrD3anH3HluljsoH4O4cRXmL9SbIL0jCHdNLSzr20bfg==
-X-Received: by 2002:a05:600c:1e87:b0:43c:fa3f:8e5d with SMTP id
- 5b1f17b1804b1-441b6ff201emr17847865e9.2.1746088964452; 
- Thu, 01 May 2025 01:42:44 -0700 (PDT)
-Received: from [192.168.86.32] (97e5422b.skybroadband.com. [151.229.66.43])
+ d=1e100.net; s=20230601; t=1746116667; x=1746721467;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=oTb37Xh3764UHx4GkunEtiY4YocHVNCV/2Hme8te8Ks=;
+ b=lBfUiJXXeNRJ+RZiHLFW1Taee00tIys6O2h6vuO/Ysh5mlzh8TJU/6CJBbg3LsPZOL
+ uTiIDIhOCXoJWWVoeFrEQZZ+ANEQicNsPnxIEH0nIvJcJLPgkH1Yj5n+mrsYWffiitdD
+ 6t3AE2yXGcZbPrBceTlb+LfnqHgcfUaNupQFn/KdnZw06KVPvlbDLoc1olU/mDk+ejSr
+ FhKYg2Ha6uU1xx+Juy6YTxyQP1sBxQNc0LXhLWw7huNNdvsTeqZNHdBx1AZiGUMFVDMo
+ hNQjJBpyjuFtOoRw3b0YtrL2pswQNCBfF9AYYJlMh60HaBa35Q7tiDGnH/VQI65W0iU2
+ 47Uw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU8ntYBoKlvuUsKyPU9RCWOeuE9NmuEENR5gwMWdWdyVutk7ONVKk1G2nNK5jIyArQhty3whBTGwvXg@nongnu.org
+X-Gm-Message-State: AOJu0YzWRSuPdgOU7K5u7zL2sknU6YGhPtZlhuahGYm0zKmB1uRA+TuO
+ YdrOd0B6o2YEvISo8c9p1pEsnUCWkrYV0uek+dvJJr8bZaymyF214jNVpTgBfMU=
+X-Gm-Gg: ASbGnctrIf24/es2NgsQnv/Mqh5Z4fA0o/vFt1BKqapb7RHaPXdxdwUiMWw8+DC6O1z
+ hSanfzcqzGCch5V2/AibgzOIbRBFH3+LemTUnqV02jFpqwN+7BfIrR9maDk4dJSTfIWKKeADw1A
+ 6Q46R3tZm6a8nzUGg0UuQZC4Ky1Szqsic9LUV1rnC+K1ICowIng6FQw7MEnROx8PtMYY0QJoRbL
+ YnMXt5h5cOnyoRkKrRF3mTMifI8XI01Q6FIMAQvn74sah8xm9HHAldZHL6xCeqyr/nWBv+niagC
+ 77KjR/qXGLlEIaEKuejNZvSINWxfIkELuOLdYVCperEN1c9yo5TTP6tkA53P9rgiiiYtc8Uck84
+ Mv82hT2f5cz+n5S0JGQ==
+X-Google-Smtp-Source: AGHT+IGKLGdqve4sfuTYMdlogniJ7+2V8YZQgAut8VVxQxe9cMTSQ+UfFqgvPdx3ptKN8imUOXcEEg==
+X-Received: by 2002:a05:6a00:1784:b0:736:7270:4d18 with SMTP id
+ d2e1a72fcca58-740491db38emr4206130b3a.14.1746116667105; 
+ Thu, 01 May 2025 09:24:27 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b2aecc89sm50766755e9.9.2025.05.01.01.42.44
- for <qemu-devel@nongnu.org>
+ 41be03b00d2f7-b1f9d66d8aesm794850a12.70.2025.05.01.09.24.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 May 2025 01:42:44 -0700 (PDT)
-From: Jon Wilson <jonwilson030981@googlemail.com>
-X-Google-Original-From: Jon Wilson <jonwilson030981@gmail.com>
-Message-ID: <e703e0e8-8207-41b6-b2a5-6d6544816fd3@gmail.com>
-Date: Thu, 1 May 2025 09:42:43 +0100
+ Thu, 01 May 2025 09:24:26 -0700 (PDT)
+Message-ID: <9512e14b-9d5c-420f-aef2-30ee28c8f701@linaro.org>
+Date: Thu, 1 May 2025 09:24:25 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 31/33] target/arm/ptw: compile file once (system)
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>, anjo@rev.ng,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ kvm@vger.kernel.org
+References: <20250501062344.2526061-1-pierrick.bouvier@linaro.org>
+ <20250501062344.2526061-32-pierrick.bouvier@linaro.org>
 Content-Language: en-US
-Subject: madvise(MADV_DONTDUMP)
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250501062344.2526061-32-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=jonwilson030981@googlemail.com; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 01 May 2025 12:24:09 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,38 +107,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, I'm a first time contributor to QEMU. I am using qemu-user for 
-fuzzing using LibAFL and as part of that including support for address 
-sanitizer 
-(https://github.com/google/sanitizers/wiki/addresssanitizeralgorithm). 
-In essence, this requires that my process running in QEMU requires very 
-large (albeit sparsely populated) memory ranges (terrabytes in size) for 
-the shadow maps. When ASAN detects  an error, it causes the target to 
-crash. As a result a coredump is generated (which would usually provide 
-a very welcome opportunity to perform a post mortem), but QEMU includes 
-these shadow maps in the core dump which it generates quickly exhausting 
-disk space.
+On 4/30/25 23:23, Pierrick Bouvier wrote:
+> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
+> ---
+>   target/arm/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-The function vma_dump_size performs only basic filtering of the ranges 
-included in the core dump and the implementation of target_madvise 
-disregards MADV_DONTDUMP (which per the spec it is at liberty to do). 
-However, it would be very helpful if QEMU were able to exclude ranges 
-marked with MADV_DONTDUMP. I believe it should be a simple case of 
-adding a flag to page-protection.h and using pageflags_find to update 
-the flags in target_madvise. Then the logic in vma_dump_size could be 
-updated accordingly. A more colourful and easier to read description of 
-this is in the following markdown gist (with references to the code in 
-question):
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-https://gist.github.com/WorksButNotTested/becd7a1f89690fad89b3e8b44ed7192d
-
-Would you be receptive to such a modification? Is my strategy for the 
-fix correct?
-
-Many thanks for your advice.
-
-Kind Regards.
-
-Jon
-
+r~
 
