@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B98FC369DC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E027C3ABA3
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 16:10:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAWTv-0001KX-Ro; Thu, 01 May 2025 12:09:53 -0400
+	id 1uAWTt-0001JS-TC; Thu, 01 May 2025 12:09:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uAWRA-0007FY-Jk
- for qemu-devel@nongnu.org; Thu, 01 May 2025 12:07:04 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1uAWPJ-0005QU-NE
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 12:05:23 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uAWR6-0005wu-Ip
- for qemu-devel@nongnu.org; Thu, 01 May 2025 12:06:59 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7370a2d1981so1042822b3a.2
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 09:06:54 -0700 (PDT)
+ id 1uAWPG-0005Ut-LC
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 12:05:04 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-739525d4e12so1192232b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 09:05:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746115614; x=1746720414; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746115501; x=1746720301; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=n/QTXsakOxtKwGoSSmKXGLQ9cZMpySQcCKNjhQ2UAoQ=;
- b=fAiX3izroJOkkDtDRyfTHlDwz8JPTPxlkDGVqsyDVViEV7Hhas98Gd7XTPBh7bqPRP
- SvSprEr2mntgM0FYALgkXxZarAeALyjGc7aGluxl753yZapg09mQqTYh1lAqCu4iwrQX
- RawTLZLj2JA2DjocPR1/fFBEU8nwC/TiKUp2nebt7E2x7mgoPv6kplmACPIMumvTre4i
- S8UdeOJlnHydrEpbYExTK6m+CDs0gyfEqCvI6f+Ipyg9phfEJQeNA34r0Rs4K3JPms2W
- webx5cWAL7NFIOqcPzaFRiuE9ikEjeasZV/SKBvKU5rnlg9FEFW5bYfCHRmlpwBqrvI4
- +7ew==
+ bh=4SES4h4v9vWZoxb0RllESUEUDYAAfrIloD4OwgpH1lQ=;
+ b=Hxbw7U7bwgL5lNntGyZA0ORNOEbFeuS+EEgW5opEXzVtKM3OU56eUxtNj9MfJfO0pB
+ L7G344vW3prg+rKzBESxkdWNzh1pIvGbEuIyLGH+8naRrp5BwywZFkJ4uajEOpE02aIk
+ iSHOM5JUvLcoafDMTTvyz1pqrV1APTndVFji5sNKkFY/mX26Z1DpNm/XSSIuQOu/lndm
+ W/dnPFE3ThwC2zTp86MUrNvGNLdK5DJ9mZCevnlnsG9w6gePbM41itRBCtYoCW53XIYs
+ LqMXFUiOgr/r/Logf263JD+/s8JfIHIOae8GM/yjkx99hqnelAg3Jfxg1Mn9atIui+9N
+ 1w+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746115614; x=1746720414;
+ d=1e100.net; s=20230601; t=1746115501; x=1746720301;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n/QTXsakOxtKwGoSSmKXGLQ9cZMpySQcCKNjhQ2UAoQ=;
- b=EaiGsKId9CpHCCdvIhMvPr+e7Ya4cJWtnZS4rOu6U+643ln7n+fb+6oUa31h+YLjo9
- hfrkxmuKIPnBaDSVAFGJqmvkABwpiJyEGAI05EvRCuvMC8W8IrM8N8Z37uJ4N1+YgQgp
- vs9IQa/oyx+7PFJoo/69AnfyPh7lhD6JG3ysgpjbKKOlHkSxXzQBMFbWGasVvcWbAKFj
- K5zPmwJNtLAlIjXA18ALxu/U63qtfx0n0R+DDI5XRtOS+CONJYeri/mlVdFYCHujtbTJ
- 4Mn97OLjvQ9js44zZewMvAU5cyS/4GN47eUIjsqTjVYpTX+T5tBbRvF6DtCu/YkM1yGB
- NiuQ==
+ bh=4SES4h4v9vWZoxb0RllESUEUDYAAfrIloD4OwgpH1lQ=;
+ b=jxSf2g1QIUkAlXMRiRNJvtb3dr1qgZOBRf8cT5+lkgyawjumDJCfU5mKwoIexO9phD
+ wDmlv7PcTPbS1s8d6z1WSXM5pAHZ4DGh01b8+UVkbm0HbPeagADW5m1CVanMw9e4b41/
+ rzoiXZFX5v+vgDtO33nnr3qXevDHfWa+Uy0DFPyMmVMGKoQiCyea9n/iqzGG4MAZRtr4
+ rAPk40d+QseadDQOawHvOVYyQ+BlwRyAr22c6wY6qKEnXwb6YjO2DQ1ZkirSr0RAfrxU
+ uVKVwRG+qWSEzyAFQ/mhqyPaUhbiUI/RjQrDC5ws0LkKkTzeSw8IXaJiCxKQokhONTjf
+ vDEQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVc0SMYZfPXwj5fnX2F9LD+3Qupc+ODjQU63BalSt3QsKDTtNMjLzUZ4/enQXJZnPYvcljMVN7r5yaM@nongnu.org
-X-Gm-Message-State: AOJu0YylRf11LRUNjDxGTOJ7Agn8V8IqQGDUJxBkRqjAPrxzCKzSrWAn
- 8WcmmIpZhoUwuYCTAKmsXRMB+EKei2n5kJ5Vy2yBuNNipPGUq3wz6nNV/RdiSNI=
-X-Gm-Gg: ASbGncuJe9LsiUMkwH18bJZ8LN3+OpmRXxZpXHAstL4g2FCGglyEynY5lBaOFC5PGk6
- B3zcZsJt21Ahx+3yVcThMgUn2oEsxy0ghwU6kx6BgPpzxF6XLXCSzngumuJDr57a+eYUpcsPylE
- HY2DqECN6Cgz89AabENF8C7zxwhA1fblIrCfTCj0WJ6KAbxwRd6oUBRS+c3wPfVmvcAJPHwHcaS
- HRAxcBuwgHK1YBuHJ/OA6fzHalVAG9qzx3DqqGIyxbQhGZrLZWnU0iBUsz70cSpOZTNglOQgiu8
- BSXoaDd6g1e1Kr6tVzax7VAQoWARDeKxrDRacgMx+va76SkQFTuOSw==
-X-Google-Smtp-Source: AGHT+IG8qSAxLjxHh8gCUMUOwuSkH7rHfRY0jM39RLsWDhp3mLjuC0VaoIQkmzO9gcr4Tn5nRkbuEg==
-X-Received: by 2002:a05:6a21:6802:b0:1f5:839e:ece8 with SMTP id
- adf61e73a8af0-20ba6a201b2mr5920779637.2.1746115613792; 
- Thu, 01 May 2025 09:06:53 -0700 (PDT)
+ AJvYcCU8jTTJVc+4PLrquZKiTAr04p78YR+NcWzToFI7a31BuByFTVY3U7/Ii5e4IvvqvJdDW8+A+pf9dQ/o@nongnu.org
+X-Gm-Message-State: AOJu0YxEYFZuAjWucEyft9ato1J/XawC5czd0KkkT4NrhRHWbN6WU2lr
+ 78SFlFohjcJThMWaDx1HEFu3BhegHKHYu6wCiiLjJPBLFJnUJvc1S4czlyF3ADs=
+X-Gm-Gg: ASbGncubwTc8rmfjpTOa5Cei3M3x5212v17q3q7CNOendIWFWBw2dyCeMI/X8mo0ewB
+ ZYEQKap0Q7/xCVgHaLQF/O7lhfl7tGo6tn/7jF0QroRmRC93BhTTVigfNZ/7cuVd/qzXtfaruOL
+ 2RZNJ9dlCh+KD6Yqnr3qKrPHvIjqbFpdP8dT1Xg9voxm9iX0+DVScDnxXT9akSSaK8SyE/nhoTC
+ 9aCpyEcPAvcqqEe5aESkwB31w5mrHs7FN6L1kst/lDO/RdaNSum48Rd59HJxjvtGS8x9Tt/om3+
+ L24uqSLkS2rXD5qO4UvV16iJvQ0JAT/f5IsmLet9DIbE/n00xs9LKPeDAalnfz5+
+X-Google-Smtp-Source: AGHT+IG4zU7AKbrfMlb4I7b6TrZEFM0+6EWomwmp2RNp8DdnSd+Dy0WCVNp9LQ+pWPWG3FOHndNsIQ==
+X-Received: by 2002:a05:6a00:b4e:b0:736:9e40:13b1 with SMTP id
+ d2e1a72fcca58-740492601d2mr4198899b3a.23.1746115501103; 
+ Thu, 01 May 2025 09:05:01 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b1f9d4f31aesm916323a12.43.2025.05.01.09.06.53
+ d2e1a72fcca58-7404f9fed21sm993064b3a.93.2025.05.01.09.05.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 May 2025 09:06:53 -0700 (PDT)
-Message-ID: <107f9576-b241-4e62-af17-928169a2c03b@linaro.org>
-Date: Thu, 1 May 2025 09:06:52 -0700
+ Thu, 01 May 2025 09:05:00 -0700 (PDT)
+Message-ID: <1275ceaf-af9e-4cf8-bcaf-844875607350@linaro.org>
+Date: Thu, 1 May 2025 09:04:59 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/11] accel/tcg: Remove TARGET_PAGE_DATA_SIZE
+Subject: Re: [PATCH 10/11] accel/tcg: Avoid abi_ptr in user-exec.c
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20250501145520.2695073-1-richard.henderson@linaro.org>
- <20250501145520.2695073-10-richard.henderson@linaro.org>
+ <20250501145520.2695073-11-richard.henderson@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250501145520.2695073-10-richard.henderson@linaro.org>
+In-Reply-To: <20250501145520.2695073-11-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,22 +103,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/1/25 7:55 AM, Richard Henderson wrote:
-> This macro is used by only one target, and even then under
-> unusual conditions -- AArch64 with mmap's PROT_MTE flag.
-> 
-> Since page size for aarch64-linux-user is variable, the
-> per-page data size is also variable.
-> Since page_reset_target_data via target_munmap does not
-> have ready access to CPUState, simply pass in the size
-> from the first allocation and remember that.
+> In page_dump/dump_region, use guest_addr_max to check the
+> size of the guest address space and size the output
+> appropriately.  This will change output with small values
+> of -R reserved_va, but shouldn't affect anything else.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/user/page-protection.h |  8 +++++---
->   target/arm/cpu.h               |  4 ----
->   accel/tcg/user-exec.c          | 26 ++++++++++++++++----------
->   target/arm/tcg/mte_helper.c    |  4 ++--
->   4 files changed, 23 insertions(+), 19 deletions(-)
+>   accel/tcg/user-exec.c | 22 ++++++++++++++++------
+>   1 file changed, 16 insertions(+), 6 deletions(-)
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
