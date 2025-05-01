@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DCB4C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:40:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF2FDC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:40:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAYno-0002PS-Cj; Thu, 01 May 2025 14:38:33 -0400
+	id 1uAYno-0002PQ-20; Thu, 01 May 2025 14:38:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnH-0000KZ-PA
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:03 -0400
-Received: from mail-io1-xd2d.google.com ([2607:f8b0:4864:20::d2d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnP-0000QD-0q
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:07 -0400
+Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnE-0008Ad-K2
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:37:58 -0400
-Received: by mail-io1-xd2d.google.com with SMTP id
- ca18e2360f4ac-85ea482e3adso82855639f.0
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:37:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnN-0008BQ-7H
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:06 -0400
+Received: by mail-il1-x130.google.com with SMTP id
+ e9e14a558f8ab-3d5e2606a1bso11381145ab.0
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:38:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746124675; x=1746729475; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746124684; x=1746729484; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rVL17Qw9Pu2E631HFpa6VOArtgxoydyEsXC8wSAHBfg=;
- b=BAd41zSkDlk74zr7cp5pRMBxqxvCoQYA+zScB5mrYS3sQ0Goe1IlARGtIHIXwqJwY3
- sOJncMeISF1mGy3fN650UOL51EbsIgbB4Z+3eAAH23w78eGBI/6QtPiLZLWo35odfMy2
- zua3n9enr1ytPFoDj6IH4W7oQUJp+9L1Hj/dO8cidQz5WEQUDDYsKbx2GT1zPSvvQxV/
- G/rijq8O+dRMf0cojqeNdjzE/orsgyFm452QN2GHYso0qIdGvakz7TP+yb8WbHlWfKFk
- aCO4fIxeWmtK/I1/O0TNzblWJVydR9s1BnsnHAKCYgQsxebQiyocCtf1xWoHxLqpZYx9
- Evsg==
+ bh=OGZ2h0bYEkKLAAI47CZVdSqBou71xk/HAQM6xphmlJ4=;
+ b=FwmkcGDd+e4oChMZjyc6hhXdyxOi9qT6Lf7DTt7CFPyu66zn9M7FI6iCCyJgakVvxZ
+ uxisEFkmAmBTikjCzzr8K3QxWSb0Y+NA7Ug3H34FyI90h7QBC9e4yDHeGw4WileWn5fs
+ 4DKJnxE85cgfyi+Fs3828S1DIP4pEw7au/yOavwNvLNTUFSBtsjIn+s1aEBGRPPxLxsD
+ GI49wk1+z0xhHgvz5ghW07dDfY3iBLawqTZOkEQ7bhIq0W0sOwH41ny1a9j6r9LbJEiF
+ pSAnuKIy2XWElkMSU9uGtO5I0rlj0f7j/SmEcpqTTSQSkouYB2Pmx9JGOE1rHr2ANzFr
+ c3dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746124675; x=1746729475;
+ d=1e100.net; s=20230601; t=1746124684; x=1746729484;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rVL17Qw9Pu2E631HFpa6VOArtgxoydyEsXC8wSAHBfg=;
- b=Tid5GDF0y1iYsCj2TNgIaGaP1ylAhdWPDouvVh20hekzLqJ6Uq5r41v1ilmt/35Y48
- S4uBcl91I7eQslbkxlKExJFblcEmoPGR7uYrCyHj3D/mmI2tuseY5tptO2M/mG73IPjD
- NgrEgHe6iOpKvFkW8ptVieWEm1N/topRhAyLpzoUqGPJunrlVz8jvaEUjHEJG887cruJ
- 2XLydb0gVPdwDtC1NYHvh55B/J4gvHltNdx3E5gX7VynGeaCLC0E+bXKY35oVX49z/QD
- E9JY8K3WD17S6Y1SJopl+OXbBDXYiQjRBzRp1AhYFKJLTohes167VH1HJY5w1nM/qSAw
- 9o2A==
-X-Gm-Message-State: AOJu0YyfHjUY1HuzixSidUQmJtqBvjrkvuk4EhFSnN4Am66wcElfHsKE
- FAwZHquerMTstR9n0Xuypta87/DqjtJfOD+bNOvny3ILLs394VFDh+5bsMe1jF/nfSQYQ9wq0ET
- w
-X-Gm-Gg: ASbGncutZY9Mv9ye6zlHy/fxybVZ2aR5gopeXedP9teJDu3EBtAxAzu3NIPBBCtuUMZ
- avsIwavE253ZKtaHZ3FbO9Nv+iIjJPD1cuckhuh7v5+d6Sd1V+x1O33+aHLd4ma+Urp+SQar1iU
- IISiyCSS2L4PWoAt5JObAn1GHoetaprcXYfEZKGjjON4EXvVU2OQw7xUQMuqG5NdVn/R8Nqqyvb
- KJgr7jcWKZsGmIP92RDQfrza07y+TNk85fTmOHjWPaS08rPN6vShRuV8N5Vw36R9ng5KjyRxkq7
- 2hK2eIrtvbCaj0do3YAFhfxo7jo4JcTMD1w/Ro5eNOxLqxr9SzAlFWBPcy3aKOL2IsjuaGHJw+m
- UizsM+srYvdO/6GJUbhd2
-X-Google-Smtp-Source: AGHT+IGG5OE/Ixh3jZxgfI4pUDnTZJ66lGC95ewqKj05gxccuEJpwmcOAGiSDD2gJZDzC7J+6zAtnQ==
-X-Received: by 2002:a05:6e02:1211:b0:3d4:346e:8d49 with SMTP id
- e9e14a558f8ab-3d970b7753cmr37711295ab.9.1746124675173; 
- Thu, 01 May 2025 11:37:55 -0700 (PDT)
+ bh=OGZ2h0bYEkKLAAI47CZVdSqBou71xk/HAQM6xphmlJ4=;
+ b=CfdVnop9nrR+NPZ3vSl4lpqG5FsJ9lDBRQ2O1DEyEeLcfAw8GFObO5CjqU+X92ynGJ
+ IdIaY1e2Wb56O+w9rWjHQuyknBNQ7oW+N6zBSq1Y36aANC+W4WGwQgprbMMbusE7ci/e
+ eWaYoGq19nAnhOKWRAj0qBPaUqvwJFgJocd3kdNS8XK2KwUGEsd9ppRxI4PdmHBYuU9C
+ vV0VJh6e4Dgpxkz61tupz0GEi1miF4D75qxLJSxpx+lTwNmGx+4LbIv5ymjndjpNlieP
+ I79JdAdh5SMRl3be53OFQZjMX161raEtQkeeO/xuHwyAqUM9v61yw5Xp3zI9lxV6tejw
+ D1ng==
+X-Gm-Message-State: AOJu0YwmzZRIcx7ys7ONph5mHDYZPLAEqx7XM1bVd1bFY/2dZW4sAMHw
+ ApB+tGRqe7zbIEsW8HkahxJ+MRg1bg5pY5Ff/FYeUPqJf2OHYCLKYSaOOwmM2P+MXhX8+IjpSG8
+ q
+X-Gm-Gg: ASbGncsiBG6Hr+h+h2uX+flm77egllwaTq/yodevp6FTh6O3wUshbJhOlg8g+YWt5GQ
+ UDo1rs3uVydEAc4wqJAgrW575+jMvNtbwvL29j8zGtZkMIeQTRRIcNWewofCPF8PDS8GTHa1fzT
+ K9Bi5zVnoFvoY/G8xoGmqrEr0d0pPvBnWpSJsu5NikTfHmx1JST9SHMVFiOhFBTTfm64Kw4QPuf
+ WEpPWIOMX96DYt5Gozn3upQd+SjMMjVdT5vX3k9U4WFqPG8GNM4E0699F08pxPxe0Wg5sa2v+iF
+ YYXq+Ca5gzfY7dXlIcYYr00YoIGivS2zF+nj5lpr2suivUcFAfpAsj1LhGAXmnumhEnmlGnQMDV
+ H4Pjz+4Net3ra5B96PPG6
+X-Google-Smtp-Source: AGHT+IHzWQcUIIfinKC7rxFeaw7Hlp6emFIZMh+YmdO1P8v1kjaU/e8pW4GvF74ErXVmB8i2FdAzPg==
+X-Received: by 2002:a05:6e02:2511:b0:3a7:88f2:cfa9 with SMTP id
+ e9e14a558f8ab-3d97022692cmr43020525ab.11.1746124683890; 
+ Thu, 01 May 2025 11:38:03 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f88303c055sm303070173.138.2025.05.01.11.37.51
+ 8926c6da1cb9f-4f882f06d40sm306171173.72.2025.05.01.11.38.00
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 11:37:54 -0700 (PDT)
+ Thu, 01 May 2025 11:38:03 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
@@ -78,17 +78,17 @@ Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 09/16] hw/i386/pc: Remove pc_compat_2_7[] array
-Date: Thu,  1 May 2025 20:36:21 +0200
-Message-ID: <20250501183628.87479-10-philmd@linaro.org>
+Subject: [PATCH v2 10/16] hw/audio/pcspk: Remove PCSpkState::migrate field
+Date: Thu,  1 May 2025 20:36:22 +0200
+Message-ID: <20250501183628.87479-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501183628.87479-1-philmd@linaro.org>
 References: <20250501183628.87479-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2d;
- envelope-from=philmd@linaro.org; helo=mail-io1-xd2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::130;
+ envelope-from=philmd@linaro.org; helo=mail-il1-x130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,50 +111,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pc_compat_2_7[] array was only used by the pc-q35-2.7
-and pc-i440fx-2.7 machines, which got removed. Remove it.
+The PCSpkState::migrate boolean was only set in the
+pc_compat_2_7[] array, via the 'migrate=off' property.
+We removed all machines using that array, lets remove
+that property, simplifying vmstate_spk[].
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i386/pc.h |  3 ---
- hw/i386/pc.c         | 10 ----------
- 2 files changed, 13 deletions(-)
+ hw/audio/pcspk.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 4fb2033bc54..319ec82f709 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -289,9 +289,6 @@ extern const size_t pc_compat_2_9_len;
- extern GlobalProperty pc_compat_2_8[];
- extern const size_t pc_compat_2_8_len;
- 
--extern GlobalProperty pc_compat_2_7[];
--extern const size_t pc_compat_2_7_len;
--
- #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
-     static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
-                                                  const void *data) \
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 7573b880905..ee7095c89a8 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -241,16 +241,6 @@ GlobalProperty pc_compat_2_8[] = {
+diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
+index a419161b5b1..0e83ba0bf73 100644
+--- a/hw/audio/pcspk.c
++++ b/hw/audio/pcspk.c
+@@ -56,7 +56,6 @@ struct PCSpkState {
+     unsigned int play_pos;
+     uint8_t data_on;
+     uint8_t dummy_refresh_clock;
+-    bool migrate;
  };
- const size_t pc_compat_2_8_len = G_N_ELEMENTS(pc_compat_2_8);
  
--GlobalProperty pc_compat_2_7[] = {
--    { TYPE_X86_CPU, "l3-cache", "off" },
--    { TYPE_X86_CPU, "full-cpuid-auto-level", "off" },
--    { "Opteron_G3" "-" TYPE_X86_CPU, "family", "15" },
--    { "Opteron_G3" "-" TYPE_X86_CPU, "model", "6" },
--    { "Opteron_G3" "-" TYPE_X86_CPU, "stepping", "1" },
--    { "isa-pcspk", "migrate", "off" },
--};
--const size_t pc_compat_2_7_len = G_N_ELEMENTS(pc_compat_2_7);
+ static const char *s_spk = "pcspk";
+@@ -196,18 +195,10 @@ static void pcspk_realizefn(DeviceState *dev, Error **errp)
+     pcspk_state = s;
+ }
+ 
+-static bool migrate_needed(void *opaque)
+-{
+-    PCSpkState *s = opaque;
 -
- /*
-  * @PC_FW_DATA:
-  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
+-    return s->migrate;
+-}
+-
+ static const VMStateDescription vmstate_spk = {
+     .name = "pcspk",
+     .version_id = 1,
+     .minimum_version_id = 1,
+-    .needed = migrate_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT8(data_on, PCSpkState),
+         VMSTATE_UINT8(dummy_refresh_clock, PCSpkState),
+@@ -218,7 +209,6 @@ static const VMStateDescription vmstate_spk = {
+ static const Property pcspk_properties[] = {
+     DEFINE_AUDIO_PROPERTIES(PCSpkState, card),
+     DEFINE_PROP_UINT32("iobase", PCSpkState, iobase,  0x61),
+-    DEFINE_PROP_BOOL("migrate", PCSpkState, migrate,  true),
+ };
+ 
+ static void pcspk_class_initfn(ObjectClass *klass, const void *data)
 -- 
 2.47.1
 
