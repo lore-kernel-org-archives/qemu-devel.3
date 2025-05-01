@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CAE1C3ABAC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E0B4C3ABA3
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:24:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAbLs-00014b-SM; Thu, 01 May 2025 17:21:52 -0400
+	id 1uAbLt-00015S-O0; Thu, 01 May 2025 17:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbLV-0000mK-JQ
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:31 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1uAbLm-00010g-Qf
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:46 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbLT-0001TR-OB
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:29 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-3085f827538so1909308a91.0
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:21:27 -0700 (PDT)
+ id 1uAbLj-0001ZZ-KN
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:46 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-af548cb1f83so1443414a12.3
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746134486; x=1746739286; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746134502; x=1746739302; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=27xaPxYDe2r5uVdVLgh1cUarR6C7vq0+H7FwQk1GTjM=;
- b=zhcQimxZlzqKdj7nJqieYs6AwvfgSo8b3MsvB0LXzO88HKBv9eNMtvfieFDEBjUUO8
- n1DO5YpXS0Mdw48v+YT6ZjlQsgdKQ1V9Jk5ybZIjMgKtE5k7eJjUolT+sQ1Fb0w6X2er
- FXT3m96KfBycVlF0AnzfRAQoTwrBdv/m2LDY5eFvvFNOUDpuqGLvOS7MAvhRmQZgFNbF
- qcIfIhFACQ/dt8GVCTwyJzVjfdHodjxzPAHzTce3lFVNIZS6YyBceABzYyHjJImLfAuC
- ERgy5LOPylM2vjEC3wcwJhrYOtFPOySFrxvQLxNCjEfNlDON+MR2yD50Glifc6yKLW2a
- jpbQ==
+ bh=wNT5Z/b9p+1dr/iEIvcApv/bdjCSakHasHj7w3R0SoY=;
+ b=MVAiNbQqSVirSctDXUbK1Kn9bL85YafzApEHfbHwi/s8oyRjauYs80kKnAt/+K8v2l
+ nqI4jmH2jdo3Y4Kx/3kZsYFyn4UjNrS5he/7aUmn1u8oXzMhw6TPpxYppy4lA4sXaVV/
+ FufsOSyK7yJr2lI5kKtSmvPI7mygeEGnmk7QBGcxGekOJU1+wfzFtXa0RAOft7eYfAV+
+ QdlpMYPxPjAnpvsd8wAj9HslqjNpo5nHqOfSlo00jAJccOiJ0hCev51DgA/AdyETvA6e
+ BJMIEYsjvmJrm/6GYcXUgZULyEioMSPA80J/ofXacuPQgzm6Jws+zqvee4WP5YEKluPf
+ sLJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746134486; x=1746739286;
+ d=1e100.net; s=20230601; t=1746134502; x=1746739302;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=27xaPxYDe2r5uVdVLgh1cUarR6C7vq0+H7FwQk1GTjM=;
- b=GwvtaHDYzobRDgIpEpBItsTkO2jUj72pe02ESO3ycnPv+tR0O9PzpnYBHYbrSBVMMe
- yGViBpLK6gL6dwiLoufBY4AAQ8p+7iAJXn4STTdMbdbPh/zUC36v04wb1HlDUK+6cw+R
- MU9/M4nQqLcVau+Wamx8JgbQsYU/ufO9jfqojctxINngHRQWfKqrBP47oClCoHmY4RSA
- bVpRlpztHgqgUtcruoYU8kIPpypx+C7bEnZSgIcB3b5irq2qVh3lbm0mde87Tzj0CUdr
- B85tcFxFH2QShakLke3OayR91HQAAKu3TnspoyZnbmjfsYgLYTmQxhYv39zhZB4cd5VP
- RtuQ==
-X-Gm-Message-State: AOJu0Yyhawb1wHf+ZEQCbw5mhVG6dcHTaTS9M8T8UejzkrrvmA6bA7Hk
- 0VxMj1rpMTAvfGwyAVo9k2zUcgksHhde2gm12TjdB36Tn+IjK/3FVPHAZxrj/BwwLJhn2dUANef
- S
-X-Gm-Gg: ASbGnctO0y23yx4I2fhVnd4A2betK88lhNa8/QyTUhFd0sdT+eWLrEns4eOiyKpbrFM
- 2V8w34rwoOVX7gyb1JpyTL1S2NAtthCX9WV7AX+xnLpa7gepAfZiqtIu30sYVSTmm04Qn+1xNZd
- XOOttkLetqFlw6d1RtBjaKR94Z5VBY48gmMIeigpucgmbybVX7i44XdaSeG3RPmaXyv8KlDF367
- rfJT/yWmWh3OyJVg+BHE35GyjuFDHlCzIHG0OgqrsOgGOzD6lXBrgOlxmicbCk0mgojxTB9x8dh
- lBisl6OvPR+YWWN4MwHMx+AC/mL3l3UL28MMpT+2G6Y9G/JKqqh8YdshEIvDqywGy8I6/tH80tq
- O9C2n0SE0HQ==
-X-Google-Smtp-Source: AGHT+IHTBwW8JXdvNTThtYvmFCvWBmIesGGr0MhROZjkIRrhpyCSn349TNU9xSGD+PMDqVG5komrDQ==
-X-Received: by 2002:a17:90b:2711:b0:2ee:9d49:3ae6 with SMTP id
- 98e67ed59e1d1-30a4e5aa625mr1040633a91.10.1746134486180; 
- Thu, 01 May 2025 14:21:26 -0700 (PDT)
+ bh=wNT5Z/b9p+1dr/iEIvcApv/bdjCSakHasHj7w3R0SoY=;
+ b=nPaKMyb78ANdC7L1/2uWxsvux1gN3T4RGMq+dsFuAoUp+92VlgoiP3CAwPlbuk2K3K
+ IiLWuz3roxaze/XbujGKtnk9Qg2lXQvf32v1Q4Zl5Q3wre+Gh75U9uGmq5ilRoWGseyZ
+ 70zjCQcZXi5MnwOYeMp6qC0xFz/i3NxpWEiKQ9MQEPXR/BtT2y//Mw0YU7wPbdLE/4KD
+ WGYdnk8hdPYGjXKfheFVIjiBOBt0YbcqvUu9fUQBhYYnDNCSB8fqW0qSzX2g7ndjUcHe
+ Cdi/u8ydXKZMR7Hb9tfxkt10E2+6ybeZq2E3mJGQLV6c+SzwZnOSL5yO+C8qtanNO6y9
+ 3Waw==
+X-Gm-Message-State: AOJu0YxJfvuhyZYMW7Wgi1NdVpN3HsTrkylMmtOQDwX7LQlgWsLmxbkI
+ NqKjECQg/0ZAlRNt5fR3cGSo2wvdFxyjk5NlTZzhkTOFYzStpOavM+HSvvTuMdIFCbySUF0yDlb
+ W
+X-Gm-Gg: ASbGncu+6CQxQ9//SyeXDaMQ4YOiiqoboswYz/VoOlVOGbgIOvaOD10lrrf/zTk+JlW
+ TmrlHZwI/a/qxFptQZDsdsUPlYzS9KGH6ovkIES9xe17lZlg3tR+cDdfLQQeDUVP38jCNGdae+m
+ VSqJchCb4DpN0Eb01ilgypD8Cnd0B6zelSv0EWKDd+CjNdToDMsY8P8DxHPzpv8ON13Cy5hP4Y0
+ 5moz6lho0YzhT905rfpijCWH1K+pCczDs9I5oWfQCr29dA+cxKMAymL4bKiEm6RswB6UOjRzQYO
+ mZzhoKYvl19X2r3OSqsGia+BXM2Ly/chiWW4JgDmFmtw7+X1ce59yyw8VZxfdvVx0puDoU48DvA
+ =
+X-Google-Smtp-Source: AGHT+IEr4QdHnOUWz/S6nYdAENSxaWXnG+kW7OMv+t4b7xsa3PfjTybr0jZZzwiQu+iPriVM972LAQ==
+X-Received: by 2002:a17:90b:2801:b0:2fe:baa3:b8bc with SMTP id
+ 98e67ed59e1d1-30a4e685d7amr727711a91.23.1746134502056; 
+ Thu, 01 May 2025 14:21:42 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30a476267e0sm1384573a91.39.2025.05.01.14.21.25
+ 98e67ed59e1d1-30a476267e0sm1384573a91.39.2025.05.01.14.21.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 14:21:25 -0700 (PDT)
+ Thu, 01 May 2025 14:21:41 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: [PULL 14/59] include/exec: Include missing headers in exec-all.h
-Date: Thu,  1 May 2025 14:20:28 -0700
-Message-ID: <20250501212113.2961531-15-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 33/59] accel/tcg: Move cpu_get_tb_cpu_state to TCGCPUOps
+Date: Thu,  1 May 2025 14:20:47 -0700
+Message-ID: <20250501212113.2961531-34-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250501212113.2961531-1-richard.henderson@linaro.org>
 References: <20250501212113.2961531-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,54 +100,592 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Move the global function name to a hook on TCGCPUOps.
 
-"exec/exec-all.h" declares prototypes such:
-
-  void *probe_access(CPUArchState *env, vaddr addr, int size,
-                                        ^^^^^
-                     MMUAccessType access_type, int mmu_idx,
-                     uintptr_t retaddr);
-  MemoryRegionSection *iotlb_to_section(CPUState *cpu,
-                                        hwaddr index,
-                                        ^^^^^^
-                                        MemTxAttrs attrs);
-                                        ^^^^^^^^^^
-
-vaddr is defined in "exec/vaddr.h", hwaddr in "exec/hwaddr.h"
-and MemTxAttrs in "exec/memattrs.h". All these headers are
-indirectly pulled in via "exec/translation-block.h". Since
-we will remove "exec/translation-block.h" in the next commit,
-include the missing ones, otherwise we'd get errors such:
-
-  include/exec/exec-all.h:51:1: error: unknown type name 'hwaddr'
-     51 | hwaddr memory_region_section_get_iotlb(CPUState *cpu,
-        | ^
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20250424202412.91612-5-philmd@linaro.org>
 ---
- include/exec/exec-all.h | 3 +++
- 1 file changed, 3 insertions(+)
+ include/accel/tcg/cpu-ops.h | 8 ++++++--
+ target/arm/internals.h      | 2 ++
+ target/ppc/internal.h       | 3 +++
+ accel/tcg/cpu-exec.c        | 7 ++++---
+ accel/tcg/translate-all.c   | 2 +-
+ target/alpha/cpu.c          | 3 ++-
+ target/arm/cpu.c            | 1 +
+ target/arm/tcg/cpu-v7m.c    | 1 +
+ target/arm/tcg/hflags.c     | 2 +-
+ target/avr/cpu.c            | 3 ++-
+ target/hexagon/cpu.c        | 3 ++-
+ target/hppa/cpu.c           | 3 ++-
+ target/i386/tcg/tcg-cpu.c   | 3 ++-
+ target/loongarch/cpu.c      | 3 ++-
+ target/m68k/cpu.c           | 3 ++-
+ target/microblaze/cpu.c     | 3 ++-
+ target/mips/cpu.c           | 3 ++-
+ target/openrisc/cpu.c       | 3 ++-
+ target/ppc/cpu_init.c       | 2 +-
+ target/ppc/helper_regs.c    | 3 ++-
+ target/riscv/tcg/tcg-cpu.c  | 3 ++-
+ target/rx/cpu.c             | 3 ++-
+ target/s390x/cpu.c          | 3 ++-
+ target/sh4/cpu.c            | 3 ++-
+ target/sparc/cpu.c          | 3 ++-
+ target/tricore/cpu.c        | 3 ++-
+ target/xtensa/cpu.c         | 3 ++-
+ 27 files changed, 56 insertions(+), 26 deletions(-)
 
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index 24383b6aba..c46255e66e 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -20,8 +20,11 @@
- #ifndef EXEC_ALL_H
- #define EXEC_ALL_H
+diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
+index 43a39c2e13..23cd6af0b2 100644
+--- a/include/accel/tcg/cpu-ops.h
++++ b/include/accel/tcg/cpu-ops.h
+@@ -19,8 +19,6 @@
+ #include "accel/tcg/tb-cpu-state.h"
+ #include "tcg/tcg-mo.h"
  
-+#include "exec/hwaddr.h"
-+#include "exec/memattrs.h"
- #include "exec/mmu-access-type.h"
- #include "exec/translation-block.h"
-+#include "exec/vaddr.h"
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs);
+-
+ struct TCGCPUOps {
+     /**
+      * mttcg_supported: multi-threaded TCG is supported
+@@ -63,6 +61,12 @@ struct TCGCPUOps {
+      */
+     void (*translate_code)(CPUState *cpu, TranslationBlock *tb,
+                            int *max_insns, vaddr pc, void *host_pc);
++    /**
++     * @get_tb_cpu_state: Extract CPU state for a TCG #TranslationBlock
++     *
++     * Fill in all data required to select or compile a TranslationBlock.
++     */
++    TCGTBCPUState (*get_tb_cpu_state)(CPUState *cs);
+     /**
+      * @synchronize_from_tb: Synchronize state from a TCG #TranslationBlock
+      *
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 382a4d1015..660d3a88e0 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -28,6 +28,7 @@
+ #include "exec/hwaddr.h"
+ #include "exec/vaddr.h"
+ #include "exec/breakpoint.h"
++#include "accel/tcg/tb-cpu-state.h"
+ #include "hw/registerfields.h"
+ #include "tcg/tcg-gvec-desc.h"
+ #include "system/memory.h"
+@@ -372,6 +373,7 @@ void arm_restore_state_to_opc(CPUState *cs,
+                               const uint64_t *data);
  
- #if defined(CONFIG_TCG)
- #include "accel/tcg/getpc.h"
+ #ifdef CONFIG_TCG
++TCGTBCPUState arm_get_tb_cpu_state(CPUState *cs);
+ void arm_cpu_synchronize_from_tb(CPUState *cs, const TranslationBlock *tb);
+ 
+ /* Our implementation of TCGCPUOps::cpu_exec_halt */
+diff --git a/target/ppc/internal.h b/target/ppc/internal.h
+index 9012d3809c..7723350227 100644
+--- a/target/ppc/internal.h
++++ b/target/ppc/internal.h
+@@ -21,6 +21,7 @@
+ #include "exec/breakpoint.h"
+ #include "hw/registerfields.h"
+ #include "exec/page-protection.h"
++#include "accel/tcg/tb-cpu-state.h"
+ 
+ /* PM instructions */
+ typedef enum {
+@@ -308,4 +309,6 @@ static inline int ger_pack_masks(int pmsk, int ymsk, int xmsk)
+     return msk;
+ }
+ 
++TCGTBCPUState ppc_get_tb_cpu_state(CPUState *cs);
++
+ #endif /* PPC_INTERNAL_H */
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index f7e7e7949d..4a405d7b56 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -395,7 +395,7 @@ const void *HELPER(lookup_tb_ptr)(CPUArchState *env)
+      */
+     cpu->neg.can_do_io = true;
+ 
+-    TCGTBCPUState s = cpu_get_tb_cpu_state(cpu);
++    TCGTBCPUState s = cpu->cc->tcg_ops->get_tb_cpu_state(cpu);
+     s.cflags = curr_cflags(cpu);
+ 
+     if (check_for_breakpoints(cpu, s.pc, &s.cflags)) {
+@@ -567,7 +567,7 @@ void cpu_exec_step_atomic(CPUState *cpu)
+         g_assert(!cpu->running);
+         cpu->running = true;
+ 
+-        TCGTBCPUState s = cpu_get_tb_cpu_state(cpu);
++        TCGTBCPUState s = cpu->cc->tcg_ops->get_tb_cpu_state(cpu);
+         s.cflags = curr_cflags(cpu);
+ 
+         /* Execute in a serial context. */
+@@ -935,7 +935,7 @@ cpu_exec_loop(CPUState *cpu, SyncClocks *sc)
+ 
+         while (!cpu_handle_interrupt(cpu, &last_tb)) {
+             TranslationBlock *tb;
+-            TCGTBCPUState s = cpu_get_tb_cpu_state(cpu);
++            TCGTBCPUState s = cpu->cc->tcg_ops->get_tb_cpu_state(cpu);
+             s.cflags = cpu->cflags_next_tb;
+ 
+             /*
+@@ -1052,6 +1052,7 @@ bool tcg_exec_realizefn(CPUState *cpu, Error **errp)
+         assert(tcg_ops->cpu_exec_reset);
+ #endif /* !CONFIG_USER_ONLY */
+         assert(tcg_ops->translate_code);
++        assert(tcg_ops->get_tb_cpu_state);
+         assert(tcg_ops->mmu_index);
+         tcg_ops->initialize();
+         tcg_target_initialized = true;
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index f2766cedfc..97aadee52c 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -590,7 +590,7 @@ void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr)
+         /* The exception probably happened in a helper.  The CPU state should
+            have been saved before calling it. Fetch the PC from there.  */
+         CPUArchState *env = cpu_env(cpu);
+-        TCGTBCPUState s = cpu_get_tb_cpu_state(cpu);
++        TCGTBCPUState s = cpu->cc->tcg_ops->get_tb_cpu_state(cpu);
+         tb_page_addr_t addr = get_page_addr_code(env, s.pc);
+ 
+         if (addr != -1) {
+diff --git a/target/alpha/cpu.c b/target/alpha/cpu.c
+index 90e3a2e748..890b84c032 100644
+--- a/target/alpha/cpu.c
++++ b/target/alpha/cpu.c
+@@ -41,7 +41,7 @@ static vaddr alpha_cpu_get_pc(CPUState *cs)
+     return env->pc;
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState alpha_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUAlphaState *env = cpu_env(cs);
+     uint32_t flags = env->flags & ENV_FLAG_TB_MASK;
+@@ -251,6 +251,7 @@ static const TCGCPUOps alpha_tcg_ops = {
+ 
+     .initialize = alpha_translate_init,
+     .translate_code = alpha_translate_code,
++    .get_tb_cpu_state = alpha_get_tb_cpu_state,
+     .synchronize_from_tb = alpha_cpu_synchronize_from_tb,
+     .restore_state_to_opc = alpha_restore_state_to_opc,
+     .mmu_index = alpha_cpu_mmu_index,
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 3dde70b04a..2020aec54a 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2693,6 +2693,7 @@ static const TCGCPUOps arm_tcg_ops = {
+ 
+     .initialize = arm_translate_init,
+     .translate_code = arm_translate_code,
++    .get_tb_cpu_state = arm_get_tb_cpu_state,
+     .synchronize_from_tb = arm_cpu_synchronize_from_tb,
+     .debug_excp_handler = arm_debug_excp_handler,
+     .restore_state_to_opc = arm_restore_state_to_opc,
+diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+index 5c8c374885..95b23d9b55 100644
+--- a/target/arm/tcg/cpu-v7m.c
++++ b/target/arm/tcg/cpu-v7m.c
+@@ -238,6 +238,7 @@ static const TCGCPUOps arm_v7m_tcg_ops = {
+ 
+     .initialize = arm_translate_init,
+     .translate_code = arm_translate_code,
++    .get_tb_cpu_state = arm_get_tb_cpu_state,
+     .synchronize_from_tb = arm_cpu_synchronize_from_tb,
+     .debug_excp_handler = arm_debug_excp_handler,
+     .restore_state_to_opc = arm_restore_state_to_opc,
+diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+index b49381924b..fd407a7b28 100644
+--- a/target/arm/tcg/hflags.c
++++ b/target/arm/tcg/hflags.c
+@@ -545,7 +545,7 @@ static bool mve_no_pred(CPUARMState *env)
+     return true;
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++TCGTBCPUState arm_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUARMState *env = cpu_env(cs);
+     CPUARMTBFlags flags;
+diff --git a/target/avr/cpu.c b/target/avr/cpu.c
+index 683195b61d..250241541b 100644
+--- a/target/avr/cpu.c
++++ b/target/avr/cpu.c
+@@ -54,7 +54,7 @@ static int avr_cpu_mmu_index(CPUState *cs, bool ifetch)
+     return ifetch ? MMU_CODE_IDX : MMU_DATA_IDX;
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState avr_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUAVRState *env = cpu_env(cs);
+     uint32_t flags = 0;
+@@ -241,6 +241,7 @@ static const TCGCPUOps avr_tcg_ops = {
+     .mttcg_supported = false,
+     .initialize = avr_cpu_tcg_init,
+     .translate_code = avr_cpu_translate_code,
++    .get_tb_cpu_state = avr_get_tb_cpu_state,
+     .synchronize_from_tb = avr_cpu_synchronize_from_tb,
+     .restore_state_to_opc = avr_restore_state_to_opc,
+     .mmu_index = avr_cpu_mmu_index,
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index a7f76dd089..a5a04173ab 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -255,7 +255,7 @@ static vaddr hexagon_cpu_get_pc(CPUState *cs)
+     return cpu_env(cs)->gpr[HEX_REG_PC];
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState hexagon_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUHexagonState *env = cpu_env(cs);
+     vaddr pc = env->gpr[HEX_REG_PC];
+@@ -344,6 +344,7 @@ static const TCGCPUOps hexagon_tcg_ops = {
+     .mttcg_supported = false,
+     .initialize = hexagon_translate_init,
+     .translate_code = hexagon_translate_code,
++    .get_tb_cpu_state = hexagon_get_tb_cpu_state,
+     .synchronize_from_tb = hexagon_cpu_synchronize_from_tb,
+     .restore_state_to_opc = hexagon_restore_state_to_opc,
+     .mmu_index = hexagon_cpu_mmu_index,
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index 40cbc191bb..6465181543 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -51,7 +51,7 @@ static vaddr hppa_cpu_get_pc(CPUState *cs)
+                          env->iaoq_f & -4);
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState hppa_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUHPPAState *env = cpu_env(cs);
+     uint32_t flags = 0;
+@@ -262,6 +262,7 @@ static const TCGCPUOps hppa_tcg_ops = {
+ 
+     .initialize = hppa_translate_init,
+     .translate_code = hppa_translate_code,
++    .get_tb_cpu_state = hppa_get_tb_cpu_state,
+     .synchronize_from_tb = hppa_cpu_synchronize_from_tb,
+     .restore_state_to_opc = hppa_restore_state_to_opc,
+     .mmu_index = hppa_cpu_mmu_index,
+diff --git a/target/i386/tcg/tcg-cpu.c b/target/i386/tcg/tcg-cpu.c
+index 3004fb3023..179dfdf064 100644
+--- a/target/i386/tcg/tcg-cpu.c
++++ b/target/i386/tcg/tcg-cpu.c
+@@ -48,7 +48,7 @@ static void x86_cpu_exec_exit(CPUState *cs)
+     env->eflags = cpu_compute_eflags(env);
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState x86_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUX86State *env = cpu_env(cs);
+     uint32_t flags, cs_base;
+@@ -160,6 +160,7 @@ const TCGCPUOps x86_tcg_ops = {
+     .guest_default_memory_order = TCG_MO_ALL & ~TCG_MO_ST_LD,
+     .initialize = tcg_x86_init,
+     .translate_code = x86_translate_code,
++    .get_tb_cpu_state = x86_get_tb_cpu_state,
+     .synchronize_from_tb = x86_cpu_synchronize_from_tb,
+     .restore_state_to_opc = x86_restore_state_to_opc,
+     .mmu_index = x86_cpu_mmu_index,
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 446cf43914..f7535d1be7 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -336,7 +336,7 @@ static bool loongarch_cpu_exec_interrupt(CPUState *cs, int interrupt_request)
+ }
+ #endif
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState loongarch_get_tb_cpu_state(CPUState *cs)
+ {
+     CPULoongArchState *env = cpu_env(cs);
+     uint32_t flags;
+@@ -882,6 +882,7 @@ static const TCGCPUOps loongarch_tcg_ops = {
+ 
+     .initialize = loongarch_translate_init,
+     .translate_code = loongarch_translate_code,
++    .get_tb_cpu_state = loongarch_get_tb_cpu_state,
+     .synchronize_from_tb = loongarch_cpu_synchronize_from_tb,
+     .restore_state_to_opc = loongarch_restore_state_to_opc,
+     .mmu_index = loongarch_cpu_mmu_index,
+diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+index b75ed6e887..c5196a612e 100644
+--- a/target/m68k/cpu.c
++++ b/target/m68k/cpu.c
+@@ -40,7 +40,7 @@ static vaddr m68k_cpu_get_pc(CPUState *cs)
+     return cpu->env.pc;
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState m68k_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUM68KState *env = cpu_env(cs);
+     uint32_t flags;
+@@ -613,6 +613,7 @@ static const TCGCPUOps m68k_tcg_ops = {
+ 
+     .initialize = m68k_tcg_init,
+     .translate_code = m68k_translate_code,
++    .get_tb_cpu_state = m68k_get_tb_cpu_state,
+     .restore_state_to_opc = m68k_restore_state_to_opc,
+     .mmu_index = m68k_cpu_mmu_index,
+ 
+diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+index 72a0d0583c..d069e40e70 100644
+--- a/target/microblaze/cpu.c
++++ b/target/microblaze/cpu.c
+@@ -95,7 +95,7 @@ static vaddr mb_cpu_get_pc(CPUState *cs)
+     return cpu->env.pc;
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState mb_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUMBState *env = cpu_env(cs);
+ 
+@@ -442,6 +442,7 @@ static const TCGCPUOps mb_tcg_ops = {
+ 
+     .initialize = mb_tcg_init,
+     .translate_code = mb_translate_code,
++    .get_tb_cpu_state = mb_get_tb_cpu_state,
+     .synchronize_from_tb = mb_cpu_synchronize_from_tb,
+     .restore_state_to_opc = mb_restore_state_to_opc,
+     .mmu_index = mb_cpu_mmu_index,
+diff --git a/target/mips/cpu.c b/target/mips/cpu.c
+index b0f7612a64..4cbfb9435a 100644
+--- a/target/mips/cpu.c
++++ b/target/mips/cpu.c
+@@ -549,7 +549,7 @@ static int mips_cpu_mmu_index(CPUState *cs, bool ifunc)
+     return mips_env_mmu_index(cpu_env(cs));
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState mips_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUMIPSState *env = cpu_env(cs);
+ 
+@@ -566,6 +566,7 @@ static const TCGCPUOps mips_tcg_ops = {
+ 
+     .initialize = mips_tcg_init,
+     .translate_code = mips_translate_code,
++    .get_tb_cpu_state = mips_get_tb_cpu_state,
+     .synchronize_from_tb = mips_cpu_synchronize_from_tb,
+     .restore_state_to_opc = mips_restore_state_to_opc,
+     .mmu_index = mips_cpu_mmu_index,
+diff --git a/target/openrisc/cpu.c b/target/openrisc/cpu.c
+index aba4639bbb..054ad33360 100644
+--- a/target/openrisc/cpu.c
++++ b/target/openrisc/cpu.c
+@@ -41,7 +41,7 @@ static vaddr openrisc_cpu_get_pc(CPUState *cs)
+     return cpu->env.pc;
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState openrisc_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUOpenRISCState *env = cpu_env(cs);
+ 
+@@ -258,6 +258,7 @@ static const TCGCPUOps openrisc_tcg_ops = {
+ 
+     .initialize = openrisc_translate_init,
+     .translate_code = openrisc_translate_code,
++    .get_tb_cpu_state = openrisc_get_tb_cpu_state,
+     .synchronize_from_tb = openrisc_cpu_synchronize_from_tb,
+     .restore_state_to_opc = openrisc_restore_state_to_opc,
+     .mmu_index = openrisc_cpu_mmu_index,
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 3a01731402..cf88a18244 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -45,7 +45,6 @@
+ #include "internal.h"
+ #include "spr_common.h"
+ #include "power8-pmu.h"
+-
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/boards.h"
+ #include "hw/intc/intc.h"
+@@ -7483,6 +7482,7 @@ static const TCGCPUOps ppc_tcg_ops = {
+   .guest_default_memory_order = 0,
+   .initialize = ppc_translate_init,
+   .translate_code = ppc_translate_code,
++  .get_tb_cpu_state = ppc_get_tb_cpu_state,
+   .restore_state_to_opc = ppc_restore_state_to_opc,
+   .mmu_index = ppc_cpu_mmu_index,
+ 
+diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
+index ccaf2b0343..7e5726871e 100644
+--- a/target/ppc/helper_regs.c
++++ b/target/ppc/helper_regs.c
+@@ -28,6 +28,7 @@
+ #include "cpu-models.h"
+ #include "spr_common.h"
+ #include "accel/tcg/cpu-ops.h"
++#include "internal.h"
+ 
+ /* Swap temporary saved registers with GPRs */
+ void hreg_swap_gpr_tgpr(CPUPPCState *env)
+@@ -256,7 +257,7 @@ void hreg_update_pmu_hflags(CPUPPCState *env)
+     env->hflags |= hreg_compute_pmu_hflags_value(env);
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++TCGTBCPUState ppc_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUPPCState *env = cpu_env(cs);
+     uint32_t hflags_current = env->hflags;
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 927153377e..55e00972b7 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -98,7 +98,7 @@ static int riscv_cpu_mmu_index(CPUState *cs, bool ifetch)
+     return riscv_env_mmu_index(cpu_env(cs), ifetch);
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
+ {
+     CPURISCVState *env = cpu_env(cs);
+     RISCVCPU *cpu = env_archcpu(env);
+@@ -243,6 +243,7 @@ const TCGCPUOps riscv_tcg_ops = {
+ 
+     .initialize = riscv_translate_init,
+     .translate_code = riscv_translate_code,
++    .get_tb_cpu_state = riscv_get_tb_cpu_state,
+     .synchronize_from_tb = riscv_cpu_synchronize_from_tb,
+     .restore_state_to_opc = riscv_restore_state_to_opc,
+     .mmu_index = riscv_cpu_mmu_index,
+diff --git a/target/rx/cpu.c b/target/rx/cpu.c
+index be778c9f65..36eba75545 100644
+--- a/target/rx/cpu.c
++++ b/target/rx/cpu.c
+@@ -44,7 +44,7 @@ static vaddr rx_cpu_get_pc(CPUState *cs)
+     return cpu->env.pc;
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState rx_get_tb_cpu_state(CPUState *cs)
+ {
+     CPURXState *env = cpu_env(cs);
+     uint32_t flags = 0;
+@@ -220,6 +220,7 @@ static const TCGCPUOps rx_tcg_ops = {
+ 
+     .initialize = rx_translate_init,
+     .translate_code = rx_translate_code,
++    .get_tb_cpu_state = rx_get_tb_cpu_state,
+     .synchronize_from_tb = rx_cpu_synchronize_from_tb,
+     .restore_state_to_opc = rx_restore_state_to_opc,
+     .mmu_index = rx_cpu_mmu_index,
+diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+index 279289f265..9c1158ebcc 100644
+--- a/target/s390x/cpu.c
++++ b/target/s390x/cpu.c
+@@ -309,7 +309,7 @@ static int s390x_cpu_mmu_index(CPUState *cs, bool ifetch)
+     return s390x_env_mmu_index(cpu_env(cs), ifetch);
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState s390x_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUS390XState *env = cpu_env(cs);
+     uint32_t flags;
+@@ -358,6 +358,7 @@ static const TCGCPUOps s390_tcg_ops = {
+ 
+     .initialize = s390x_translate_init,
+     .translate_code = s390x_translate_code,
++    .get_tb_cpu_state = s390x_get_tb_cpu_state,
+     .restore_state_to_opc = s390x_restore_state_to_opc,
+     .mmu_index = s390x_cpu_mmu_index,
+ 
+diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+index cbd43b55e5..b35f18e250 100644
+--- a/target/sh4/cpu.c
++++ b/target/sh4/cpu.c
+@@ -43,7 +43,7 @@ static vaddr superh_cpu_get_pc(CPUState *cs)
+     return cpu->env.pc;
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState superh_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUSH4State *env = cpu_env(cs);
+     uint32_t flags;
+@@ -289,6 +289,7 @@ static const TCGCPUOps superh_tcg_ops = {
+ 
+     .initialize = sh4_translate_init,
+     .translate_code = sh4_translate_code,
++    .get_tb_cpu_state = superh_get_tb_cpu_state,
+     .synchronize_from_tb = superh_cpu_synchronize_from_tb,
+     .restore_state_to_opc = superh_restore_state_to_opc,
+     .mmu_index = sh4_cpu_mmu_index,
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 6166b81f71..2a3e408923 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -716,7 +716,7 @@ static void sparc_cpu_synchronize_from_tb(CPUState *cs,
+     cpu->env.npc = tb->cs_base;
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState sparc_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUSPARCState *env = cpu_env(cs);
+     uint32_t flags = cpu_mmu_index(cs, false);
+@@ -1029,6 +1029,7 @@ static const TCGCPUOps sparc_tcg_ops = {
+ 
+     .initialize = sparc_tcg_init,
+     .translate_code = sparc_translate_code,
++    .get_tb_cpu_state = sparc_get_tb_cpu_state,
+     .synchronize_from_tb = sparc_cpu_synchronize_from_tb,
+     .restore_state_to_opc = sparc_restore_state_to_opc,
+     .mmu_index = sparc_cpu_mmu_index,
+diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
+index 1151a812b6..e56f90fde9 100644
+--- a/target/tricore/cpu.c
++++ b/target/tricore/cpu.c
+@@ -45,7 +45,7 @@ static vaddr tricore_cpu_get_pc(CPUState *cs)
+     return cpu_env(cs)->PC;
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState tricore_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUTriCoreState *env = cpu_env(cs);
+ 
+@@ -185,6 +185,7 @@ static const TCGCPUOps tricore_tcg_ops = {
+     .mttcg_supported = false,
+     .initialize = tricore_tcg_init,
+     .translate_code = tricore_translate_code,
++    .get_tb_cpu_state = tricore_get_tb_cpu_state,
+     .synchronize_from_tb = tricore_cpu_synchronize_from_tb,
+     .restore_state_to_opc = tricore_restore_state_to_opc,
+     .mmu_index = tricore_cpu_mmu_index,
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index 431b7ebd7b..91b71b6caa 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -55,7 +55,7 @@ static vaddr xtensa_cpu_get_pc(CPUState *cs)
+     return cpu->env.pc;
+ }
+ 
+-TCGTBCPUState cpu_get_tb_cpu_state(CPUState *cs)
++static TCGTBCPUState xtensa_get_tb_cpu_state(CPUState *cs)
+ {
+     CPUXtensaState *env = cpu_env(cs);
+     uint32_t flags = 0;
+@@ -312,6 +312,7 @@ static const TCGCPUOps xtensa_tcg_ops = {
+     .initialize = xtensa_translate_init,
+     .translate_code = xtensa_translate_code,
+     .debug_excp_handler = xtensa_breakpoint_handler,
++    .get_tb_cpu_state = xtensa_get_tb_cpu_state,
+     .restore_state_to_opc = xtensa_restore_state_to_opc,
+     .mmu_index = xtensa_cpu_mmu_index,
+ 
 -- 
 2.43.0
 
