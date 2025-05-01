@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1990DC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8255BC369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:26:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAbOq-0004bd-2U; Thu, 01 May 2025 17:24:56 -0400
+	id 1uAbPS-0006QY-IJ; Thu, 01 May 2025 17:25:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbOl-0004Lo-GU
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:24:51 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1uAbOo-0004b2-Ui
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:24:55 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbOj-0002Ai-9g
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:24:51 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-72d3b48d2ffso1656439b3a.2
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:24:48 -0700 (PDT)
+ id 1uAbOm-0002Bo-NB
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:24:54 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-736b350a22cso1242999b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:24:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746134687; x=1746739487; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746134691; x=1746739491; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iQ4d9VytMAyaMdEQkNc3+qF4cN/HnIg5sNtYWblQ1ok=;
- b=W5AvDSFVRywxzDxgULyeO141looRy6yTbT7gnj3zjZ5wbe+4FzoHRBG3PB2T73ARZP
- SNtdry3lsW7v/IEWJ7SbGa3sVMJ1m7MAVYtX5qWlF8y0CL5hum6hu7Y8PGht9JH/Od/Y
- XqNY96nd1U2ny6RZBpJ2lJWSJAi4Z1Pas/RIZodn45OE8qsnSgqDAUNozKym5hqjPxx4
- NVQ9pVM0w8IhZlknhor30LEJwdv+yl0i9Eah9F0LSu26P3zSPwSb9KNHzItBAc1mbO15
- s7NSKPL0HPTcdeIA+B7Ozkiap1TNUyfRxcLNQX2/7oDlC5D+5BRRBUrKeBDkxq/7nCO7
- yihg==
+ bh=nJR5rA8G7peaLdmnNfXC4dbOSl1Fc6PId1P5lzDPvoI=;
+ b=y22gnZ7T0WMI2lPXJAh8M1fWcukRhqFGD4SIDzqSKSF0xhg3gBcajx07aWPDnVrzjx
+ xzuLWeN6gLMZ9FYXC4BTBZFipqAD2iPo+Sc7uXpQyK7Uk1XiQxVlk2BHbh0G1n3BGJd5
+ 4OfUgrVJNdYCMxE8hefz3U+SyJtjtpk4udq2t0Zkn/WkD6lbr/N1Mb3tWb/b4nye9k3r
+ 6DFZu2knjENtHTyiq/eBlsHh5JU7Jcy8gp2aBgjPn1F/I38++uIPOin6SHEUmR/stjnJ
+ hCnf2qLK0GakaIFsQWKkT9fsrMAa9WgciJcF9RitcFdoxLRCvURHtu/U22NRpRr3N0kI
+ JHcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746134687; x=1746739487;
+ d=1e100.net; s=20230601; t=1746134691; x=1746739491;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iQ4d9VytMAyaMdEQkNc3+qF4cN/HnIg5sNtYWblQ1ok=;
- b=nuEKubPH+XV4fi4krGbne1v4JLceFKI4vc3n7iFndM1AAswPtOFI4oQaANPs2doFXF
- /RE3Ht5X2Fj4/ZkfMOU3ZEDV17A9yYPkfgCJSB8uCfq2x30kRXV0NIZxLEB0hW0qbt+u
- 6QdbcQqv9LyjLCGx/hVNNm1pFUjnH0uB1vECWpWOboPW9jKE3mK3FoZ/bcaQ333KKelA
- saCFAE+CvxxiRWCfPALJ7TX0WkdbOji2srxUlyr3fD2elb2Hj2xT+2dP/gR4tc2ja12W
- SPLFg3JN2/d1sCC2SI0hiXWcGRKvrEYWbdUcLeJ1AQtnlP/SfiOg2PfYZlTB/hfwJoej
- yf5Q==
-X-Gm-Message-State: AOJu0YyVyS5N93DomWomhSqV7EGM1XH8fsfKuzTngcgcheaZSclEONJu
- eV6b+kktUOIKUjnvmBP0P3MjdrxQAWR1YALMefiqbZsaHzKCSdaNJnzOPvXtc8FKSTVakYgx5Kl
- K
-X-Gm-Gg: ASbGncvn8L0UpDRGkPu/weXVfAhQzelRDSmVYcucmx3QOgH+dPbBSoLPPexLQLb1QtZ
- lnlycZWaAIY8NTao0HWFwHe1Vo2d4Wb9h9kprt5QNnoyQ1xUuRrtAaTqKatc16t0rOsLlZHQ44W
- 0GU1fb7hJgFnasXR77XzFDQwLYO8ozuiLNPPadHWJTt9SXB2ePCE86qHqTzJbkzy97A9EKd3nkK
- b5khNct+qumxaCLLBXqwnW76Op5xZ5+8nXon5UhXACP51u3QQvLItpkI7MpcVedX/WLTITsHeUE
- oxrpk7+pZZRr9QMf7p/tSPGir0jCrvR9W82iDC3NywJ57LZThHLLJtdT+8L0LsXi27oMAxUAwvq
- ppWlLNGLR3w==
-X-Google-Smtp-Source: AGHT+IEIFvDHIPpmVOYQKZDhA6VfBbl0atE9ys4hVp5TySxvaTO4GH2W1mNMkUA+HSWdHe31e9akBQ==
-X-Received: by 2002:a05:6a00:4482:b0:739:4a93:a5db with SMTP id
- d2e1a72fcca58-74058b510aemr586109b3a.22.1746134687646; 
- Thu, 01 May 2025 14:24:47 -0700 (PDT)
+ bh=nJR5rA8G7peaLdmnNfXC4dbOSl1Fc6PId1P5lzDPvoI=;
+ b=FdQQkXoLPWiE/4CjeVva67TxMK0p5eG3d/68w6ITuGCwP/dDQchd3o0am12varPXXE
+ Wztff/P6K/pYdbcTsKVZTA62UadbVeF1VjMrKvqccL7dDK0w257XKZ/bb7lmSatjJEZb
+ LRYBHwgBgH2Re3XU026RDkm+AR2VZf4i3wRwkyAejzOeFkGb1Gk84L+lsxN76LhaKda2
+ xKb2YKBy53GFzSzitJ0RSbnrBWO1BkDLH8SYQczEmRMtjMHY1M38OfGPzUUXxLU1cloX
+ eNM9Yg6UFodV3M/ztjNb/McRl/fQ7LeryoyLVVaXml+d0k54LUCGpV/A5DJBNgBzedyz
+ 72BA==
+X-Gm-Message-State: AOJu0YxtbmWcM3fTKHGzqkLM+XzUCelgA6MfzA3XgZ7usX6DwzlYMXbG
+ o5ON0nhab2sASOanYGSY4P430Q3J1/+UlBo7HOrd2XYOwsuhfqpm05r9RdWf8qUsx60qwMLpf+1
+ N
+X-Gm-Gg: ASbGncsgYdG0eHS4ep9Gpe5SaW9rrTANIJZt+s39QKSOt9JUuYrrvdMsLqJpoHo4948
+ /NSrhVaTlA5f5vqyxR3OF7BWxxz1C6nq4gBFutQGwHsNlfa0dGfuXIztZ+2vzSruti1faYlPkbj
+ 9ah4Up28Smd0oY4xWdTSaM+uSMFaNr38EhI3o/4ho1UyikYK0abjIp3bpJVZBap5sjEJwgVgqI9
+ Sb/fNcvTPrjEWTrQfqofo+7LW1fiof9btf9qrd7+hdT6v1ieRGL4ZwfVrlPg0FEiAVFmkY959JC
+ U1n0iyrcoMwGWg3XEWFefy+c2+GJvhEC16chAEjXAwLOpQX1JaSPZ/+tJeTKZPYFOlVKdXweLG0
+ =
+X-Google-Smtp-Source: AGHT+IF5gnslwRycSuZUhZUfBr7P3jws3g75V9HMO/5tfsGLMbZzAjuh9oeR52BVT/7e7/MAvmRq9A==
+X-Received: by 2002:a05:6a21:3a4a:b0:1fe:9537:84a0 with SMTP id
+ adf61e73a8af0-20cde951a73mr614149637.15.1746134691275; 
+ Thu, 01 May 2025 14:24:51 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-740590610desm135897b3a.146.2025.05.01.14.24.47
+ d2e1a72fcca58-740590610desm135897b3a.146.2025.05.01.14.24.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 14:24:47 -0700 (PDT)
+ Thu, 01 May 2025 14:24:50 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 40/59] system/vl: Filter machine list available for a
- particular target binary
-Date: Thu,  1 May 2025 14:20:54 -0700
-Message-ID: <20250501212113.2961531-41-richard.henderson@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 46/59] accel/tcg: Build translate-all.c twice
+Date: Thu,  1 May 2025 14:21:00 -0700
+Message-ID: <20250501212113.2961531-47-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250501212113.2961531-1-richard.henderson@linaro.org>
 References: <20250501212113.2961531-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,108 +100,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Remove lots and lots of unused headers.
 
-Binaries can register a QOM type to filter their machines
-by filling their TargetInfo::machine_typename field.
-
-This can be used by example by main() -> machine_help_func()
-to filter the machines list.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/qemu/target-info-impl.h | 2 ++
- include/qemu/target-info.h      | 8 ++++++++
- system/vl.c                     | 3 ++-
- target-info-stub.c              | 2 ++
- target-info.c                   | 5 +++++
- 5 files changed, 19 insertions(+), 1 deletion(-)
+ accel/tcg/translate-all.c | 32 --------------------------------
+ accel/tcg/meson.build     |  2 +-
+ 2 files changed, 1 insertion(+), 33 deletions(-)
 
-diff --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-impl.h
-index d30805f7f2..d0e8c86176 100644
---- a/include/qemu/target-info-impl.h
-+++ b/include/qemu/target-info-impl.h
-@@ -14,6 +14,8 @@
- typedef struct TargetInfo {
-     /* runtime equivalent of TARGET_NAME definition */
-     const char *target_name;
-+    /* QOM typename machines for this binary must implement */
-+    const char *machine_typename;
- } TargetInfo;
- 
- /**
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index 58d4136897..2b6ccabb11 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -16,6 +16,14 @@
-  */
- const char *target_name(void);
- 
-+/**
-+ * target_machine_typename:
-+ *
-+ * Returns: Name of the QOM interface implemented by machines
-+ *          usable on this target binary.
-+ */
-+const char *target_machine_typename(void);
-+
- /**
-  * target_cpu_type:
-  *
-diff --git a/system/vl.c b/system/vl.c
-index 520956f4a1..7223f1ff17 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -27,6 +27,7 @@
- #include "qemu/datadir.h"
- #include "qemu/units.h"
- #include "qemu/module.h"
-+#include "qemu/target-info.h"
- #include "exec/cpu-common.h"
- #include "exec/page-vary.h"
- #include "hw/qdev-properties.h"
-@@ -1564,7 +1565,7 @@ static void machine_help_func(const QDict *qdict)
-     GSList *el;
-     const char *type = qdict_get_try_str(qdict, "type");
- 
--    machines = object_class_get_list(TYPE_MACHINE, false);
-+    machines = object_class_get_list(target_machine_typename(), false);
-     if (type) {
-         ObjectClass *machine_class = OBJECT_CLASS(find_machine(type, machines));
-         if (machine_class) {
-diff --git a/target-info-stub.c b/target-info-stub.c
-index 773a10188c..bcf834f71d 100644
---- a/target-info-stub.c
-+++ b/target-info-stub.c
-@@ -9,10 +9,12 @@
- #include "qemu/osdep.h"
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index 6b6e10be9d..451b383aa8 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -22,46 +22,15 @@
+ #include "trace.h"
+ #include "disas/disas.h"
+ #include "tcg/tcg.h"
+-#if defined(CONFIG_USER_ONLY)
+-#include "qemu.h"
+-#if defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
+-#include <sys/param.h>
+-#if __FreeBSD_version >= 700104
+-#define HAVE_KINFO_GETVMMAP
+-#define sigqueue sigqueue_freebsd  /* avoid redefinition */
+-#include <sys/proc.h>
+-#include <machine/profile.h>
+-#define _KERNEL
+-#include <sys/user.h>
+-#undef _KERNEL
+-#undef sigqueue
+-#include <libutil.h>
+-#endif
+-#endif
+-#else
+-#include "system/ram_addr.h"
+-#endif
+-
+-#include "cpu-param.h"
+-#include "exec/cputlb.h"
+-#include "exec/page-protection.h"
+ #include "exec/mmap-lock.h"
+ #include "tb-internal.h"
+ #include "tlb-bounds.h"
+-#include "exec/translator.h"
+ #include "exec/tb-flush.h"
+-#include "qemu/bitmap.h"
+-#include "qemu/qemu-print.h"
+-#include "qemu/main-loop.h"
+ #include "qemu/cacheinfo.h"
  #include "qemu/target-info.h"
- #include "qemu/target-info-impl.h"
-+#include "hw/boards.h"
- #include "cpu.h"
+-#include "qemu/timer.h"
+ #include "exec/log.h"
+ #include "exec/icount.h"
+-#include "system/tcg.h"
+-#include "qapi/error.h"
+ #include "accel/tcg/cpu-ops.h"
+-#include "accel/tcg/getpc.h"
+ #include "tb-jmp-cache.h"
+ #include "tb-hash.h"
+ #include "tb-context.h"
+@@ -69,7 +38,6 @@
+ #include "internal-common.h"
+ #include "tcg/perf.h"
+ #include "tcg/insn-start-words.h"
+-#include "cpu.h"
  
- static const TargetInfo target_info_stub = {
-     .target_name = TARGET_NAME,
-+    .machine_typename = TYPE_MACHINE,
- };
+ TBContext tb_ctx;
  
- const TargetInfo *target_info(void)
-diff --git a/target-info.c b/target-info.c
-index 84b18931e7..0042769e3a 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -14,3 +14,8 @@ const char *target_name(void)
- {
-     return target_info()->target_name;
- }
-+
-+const char *target_machine_typename(void)
-+{
-+    return target_info()->machine_typename;
-+}
+diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
+index 0bb089299b..7eb4619aea 100644
+--- a/accel/tcg/meson.build
++++ b/accel/tcg/meson.build
+@@ -10,6 +10,7 @@ tcg_ss.add(files(
+   'tcg-runtime.c',
+   'tcg-runtime-gvec.c',
+   'tb-maint.c',
++  'translate-all.c',
+   'translator.c',
+ ))
+ if get_option('plugins')
+@@ -22,7 +23,6 @@ libsystem_ss.add_all(tcg_ss)
+ tcg_specific_ss = ss.source_set()
+ tcg_specific_ss.add(files(
+   'tcg-all.c',
+-  'translate-all.c',
+ ))
+ tcg_specific_ss.add(when: 'CONFIG_USER_ONLY', if_true: files('user-exec.c'))
+ specific_ss.add_all(when: 'CONFIG_TCG', if_true: tcg_specific_ss)
 -- 
 2.43.0
 
