@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09369C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:09:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5381AC369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:10:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAb8p-0005gx-P1; Thu, 01 May 2025 17:08:26 -0400
+	id 1uAb7R-0002m1-2q; Thu, 01 May 2025 17:06:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb7S-0002vY-Iz
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:59 -0400
-Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6m-0001d6-J8
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:19 -0400
+Received: from mail-il1-x12c.google.com ([2607:f8b0:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb7Q-0006m0-O4
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:58 -0400
-Received: by mail-io1-xd32.google.com with SMTP id
- ca18e2360f4ac-8616987c261so47491639f.3
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:06:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6i-0006eG-Vq
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:06:16 -0400
+Received: by mail-il1-x12c.google.com with SMTP id
+ e9e14a558f8ab-3d91db4f0c3so7471395ab.3
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:06:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746133615; x=1746738415; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746133571; x=1746738371; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5ZHrZc/SqHQCuHNUknWmlRcBkOUid9mb6wG/E9aJXzY=;
- b=JB1ZcBEhox8DyxEtyex6GQ9rcteS6g+DR4lZ5Eo28liSC7CvVI9myw9qIcTxqQzs3C
- 2Sc6cslZ91ZWqg7wa/lR9GJheZ2si9HlZi34ewVALsq0H9Uok1LmZybooqIH3G1roc0O
- 8+DMU8BBuGiaGSIuni3P2m8CMVkRJOvrtp2EhFRwxsfSnTIqOSc2YhPb7NoPz0rvSlGI
- ehEOSQUcXFOzlnISfzYYIqt2dOwZfs+UPqqJvDM9O5GgTtzOn/9kmDQILbhHRYnyTaLB
- Es/DzVJshcKWuOdxEOq+gL80kVyOmqaB+T3TmDdQjFIoi2r2B351/7nfTsciGqkfze2/
- lOiA==
+ bh=ZrPNr0Aj9fn0eddJzV+2Kcwv9eRua4WW4O8jcqwzOW4=;
+ b=cOMx2CDvkQSjjXA6Et2HTSy0eIvhbetCnvRCHp4WB/JnV9ZxNziKmkE8kR5q6u97rU
+ cd45lCvdBZrMjUAt9NwzLXYY8u5J2qcvOsVZToBbjZt5rslkzQN8ldpUZTxc6XMByrGY
+ FLe7Ru0C/Q7HTfdJVWvhoXiu0ECf8+5eCayYZYBG29clWviObq1sNlR7jM2b789O8ZFF
+ 52oXfGLQGp+tIZKlf7fp3mMW1uyLvj8KVQWZDL5eXS/yoZ9IJ7dKiwKVjdPWGYQn3V8a
+ z13n/loOk53k0BHNSogpJ5C0tvX/wnW1ZDnbXq/LeOEisQK2cWioWMY/0PHg07+3mclh
+ KbDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746133615; x=1746738415;
+ d=1e100.net; s=20230601; t=1746133571; x=1746738371;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5ZHrZc/SqHQCuHNUknWmlRcBkOUid9mb6wG/E9aJXzY=;
- b=VCK6SFhWU+oJzYCVR3j8rOkr0LvD0A+fBQ4LdTrPEw1kC74/ZqnkeEMVGFy6o1cvp6
- jf8ilRIKsIOUZMNsqn2YN68/nCF87XPc9RPHOcG38WKIGv9SJMJ5eqZGcT2vN/7eHkET
- 5+JR75gaYZIvUEi0gyUEKJ/urcwXFp5U30stirnFCpb8Juyn2aZw2bWhJlHqxdoxaI77
- 43Wc2OgDAV26ZPQ4P08/RBrpaKidZ7VA7aW9ZaBgEJIRiBx0V2xWv9itPaV/Njl4PnWd
- VfajLXVh4Ge5rfevMHWNT0Dcmc9GED7gzP8Syvew7MnX7auWDPJgYX9fXq1Qwkh+d9wq
- CwGQ==
-X-Gm-Message-State: AOJu0Yz2/XdeWEb0h5v5gezgmGHn74B6CFh9AcsNh9ejfiEYj6ElEmGs
- +DUThUA2BlOCcWj5hPgRPyNqqaSkrFhUqAFjuEssGoSUBr36SB5qisG7aZk9SBVnU/2Oo7OE3EL
- Y
-X-Gm-Gg: ASbGncuRhKHGe6HEgblNCdw20PwqUYr3xilbM/4T7xvHFGWrJBhhfy09KDmxOBiYa9Z
- /c0Ceu8vu+QOKiMOvRsafOHQ00GJurs+5IjzVMLd4lPHR3ALc5/0ON7MgbL7MeREtAl+OuOi510
- +UHfoOLCc1Btg9qokqxRyBG59755ydO0+37hjV0WSYBcHXv7YsCFfNQOQCc4lhJDPWCpgv56uOU
- NIr4MIoVdx6x5qSM+KgQcC66h4TkOh7Y4q2yhVSz7ooNJYpcUPOIDXCmicdQn2ZTVjYQEfjvztU
- dW59RiqkEOvpwflEr6fa54N5MGMtnKEsHobQ0ZbUiV3aZQNQY1xN67UaWGdat+YSrKPdXDlgkN3
- EkzXweRpXxJ5G5fY=
-X-Google-Smtp-Source: AGHT+IEFqPkhVc8RoBBRp3hJ+ER5sKSr0LXlPBt3TWkNE/vEJoqOW7hEWn7+OQbK/8C0ef4Wtyr8DQ==
-X-Received: by 2002:a05:6602:3a15:b0:85b:577b:37c9 with SMTP id
- ca18e2360f4ac-866b4298812mr90498639f.12.1746133614798; 
- Thu, 01 May 2025 14:06:54 -0700 (PDT)
+ bh=ZrPNr0Aj9fn0eddJzV+2Kcwv9eRua4WW4O8jcqwzOW4=;
+ b=JUKgSzrkgWkbM/Zb20heoAQtISpklFO+etvim8qDZRi6BdFR+zEXLLc21MxfA5TTvt
+ sJmZzuTuUbLzVn9LSkd5JiaD0jiTPiaXKonxuXc/qouXnVuc3WGEO/2Z92XK/nWYYYRd
+ 9DWs6ZFXRS4YhP59eq8eT44U0BS/bSs84yUNHyB8+eP4s7USOf+y0vGUHAU3/ElzUx6h
+ kHTQrJ8b5XbGmeQZoLeubTeASEVfhyXwVQdDfrl0WGpSnITUjEB4SQKU1qAZRynlxe8N
+ mXKy0hPgqf2lUcWWQP2o0dM8oBwxmU0EheXWI/3qon/nGPgx2QJ4ZHWK2OPv5R1uO2CD
+ 5aMA==
+X-Gm-Message-State: AOJu0YxqFY6FcshTkAbPKLI9Q4K2GsFrk11UQTY3lOLysW89Puo9tB05
+ xL7Fg4cgZlaYfmA0TQFm91wi3HQvwHLv2XeKz5J3sqES9tvkM9yX5/SXt3auYFRTUbcqDlTfPii
+ M
+X-Gm-Gg: ASbGncv/LWUofzj1q1yjMOL5dvprS8MzACqhFkZ2rTG2+T7NF3IeejQjNfiT4giWhPD
+ vbFmKOGt7aBXz4+L4nujY9LHhTyAvSUHfweXPjzttXWok1zf5mwbEzRpyoArRl+yDLiOx6RyEe2
+ al7t2AGG3s8dqGEZxQwyPiKLcqgaBd1H9O7HMkBcum0CxgkYlYW0gznafvL44Ic7G8U6Wr1a/Zy
+ rIHqdy8wteXgScZ6IJREO/3ylPT7JlhyYFXwuBjTUF/SRLww9PHzCLSp0UAv1xuY8WNIWZ86d4b
+ bQ/OBKU753rI8mNuxuM1ueVQdicSozUhBiHGNXtoKbEZ67+2aau3zVYe5ZJRetmxwDhSHItwYcZ
+ u7ubkRksLkjgAGaw=
+X-Google-Smtp-Source: AGHT+IGacAzQMWgI/LEam+U9zfxt7TyjpF2feQ63IFLhoXJ2ZySmggQRPvskD9DNBjzgWmUilmnVmQ==
+X-Received: by 2002:a05:6e02:12e7:b0:3d3:fdcc:8fb8 with SMTP id
+ e9e14a558f8ab-3d97c18897bmr5250535ab.10.1746133571433; 
+ Thu, 01 May 2025 14:06:11 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-864aa443886sm24652739f.36.2025.05.01.14.06.51
+ 8926c6da1cb9f-4f88aac80f6sm43264173.141.2025.05.01.14.06.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 14:06:54 -0700 (PDT)
+ Thu, 01 May 2025 14:06:11 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
@@ -77,18 +77,18 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>
-Subject: [PATCH 13/18] hw/i386/pc: Remove deprecated pc-q35-2.9 and
- pc-i440fx-2.9 machines
-Date: Thu,  1 May 2025 23:04:51 +0200
-Message-ID: <20250501210456.89071-14-philmd@linaro.org>
+Subject: [PATCH 08/18] hw/virtio/virtio-pci: Remove
+ VIRTIO_PCI_FLAG_INIT_DEVERR definition
+Date: Thu,  1 May 2025 23:04:46 +0200
+Message-ID: <20250501210456.89071-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501210456.89071-1-philmd@linaro.org>
 References: <20250501210456.89071-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d32;
- envelope-from=philmd@linaro.org; helo=mail-io1-xd32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-il1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,54 +111,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These machines has been supported for a period of more than 6 years.
-According to our versioned machine support policy (see commit
-ce80c4fa6ff "docs: document special exception for machine type
-deprecation & removal") they can now be removed.
+VIRTIO_PCI_FLAG_INIT_DEVERR was only used by the hw_compat_2_8[]
+array, via the 'x-pcie-deverr-init=off' property. We removed all
+machines using that array, lets remove all the code around
+VIRTIO_PCI_FLAG_INIT_DEVERR (see commit 9a4c0e220d8 for similar
+VIRTIO_PCI_FLAG_* enum removal).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/pc_piix.c | 9 ---------
- hw/i386/pc_q35.c  | 9 ---------
- 2 files changed, 18 deletions(-)
+ include/hw/virtio/virtio-pci.h | 4 ----
+ hw/virtio/virtio-pci.c         | 8 ++------
+ 2 files changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 0d6ad9db627..5c7d0c50f8e 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -737,15 +737,6 @@ static void pc_i440fx_machine_2_10_options(MachineClass *m)
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 8abc5f8f20d..ed142932f7b 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -34,7 +34,6 @@ enum {
+     VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
+     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
+     VIRTIO_PCI_FLAG_ATS_BIT,
+-    VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
+     VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT,
+     VIRTIO_PCI_FLAG_INIT_PM_BIT,
+     VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+@@ -62,9 +61,6 @@ enum {
+ /* address space translation service */
+ #define VIRTIO_PCI_FLAG_ATS (1 << VIRTIO_PCI_FLAG_ATS_BIT)
  
- DEFINE_I440FX_MACHINE(2, 10);
+-/* Init error enabling flags */
+-#define VIRTIO_PCI_FLAG_INIT_DEVERR (1 << VIRTIO_PCI_FLAG_INIT_DEVERR_BIT)
+-
+ /* Init Link Control register */
+ #define VIRTIO_PCI_FLAG_INIT_LNKCTL (1 << VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT)
  
--static void pc_i440fx_machine_2_9_options(MachineClass *m)
--{
--    pc_i440fx_machine_2_10_options(m);
--    compat_props_add(m->compat_props, hw_compat_2_9, hw_compat_2_9_len);
--    compat_props_add(m->compat_props, pc_compat_2_9, pc_compat_2_9_len);
--}
--
--DEFINE_I440FX_MACHINE(2, 9);
--
- #ifdef CONFIG_ISAPC
- static void isapc_machine_options(MachineClass *m)
- {
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 54c18100122..d66d64b3b62 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -630,12 +630,3 @@ static void pc_q35_machine_2_10_options(MachineClass *m)
- }
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 4e0d4bda6ed..0075ae590db 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2215,10 +2215,8 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+             last_pcie_cap_offset += PCI_ERR_SIZEOF;
+         }
  
- DEFINE_Q35_MACHINE(2, 10);
--
--static void pc_q35_machine_2_9_options(MachineClass *m)
--{
--    pc_q35_machine_2_10_options(m);
--    compat_props_add(m->compat_props, hw_compat_2_9, hw_compat_2_9_len);
--    compat_props_add(m->compat_props, pc_compat_2_9, pc_compat_2_9_len);
--}
--
--DEFINE_Q35_MACHINE(2, 9);
+-        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_DEVERR) {
+-            /* Init error enabling flags */
+-            pcie_cap_deverr_init(pci_dev);
+-        }
++        /* Init error enabling flags */
++        pcie_cap_deverr_init(pci_dev);
+ 
+         if (proxy->flags & VIRTIO_PCI_FLAG_INIT_LNKCTL) {
+             /* Init Link Control Register */
+@@ -2349,8 +2347,6 @@ static const Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_ATS_BIT, false),
+     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT, true),
+-    DEFINE_PROP_BIT("x-pcie-deverr-init", VirtIOPCIProxy, flags,
+-                    VIRTIO_PCI_FLAG_INIT_DEVERR_BIT, true),
+     DEFINE_PROP_BIT("x-pcie-lnkctl-init", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
+     DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
 -- 
 2.47.1
 
