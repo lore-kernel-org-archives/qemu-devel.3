@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BAF6C369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9FF4C369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:40:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAYpX-0004bG-I5; Thu, 01 May 2025 14:40:19 -0400
+	id 1uAYpQ-0004GB-6g; Thu, 01 May 2025 14:40:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnx-0002hk-Mp
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:46 -0400
-Received: from mail-io1-xd35.google.com ([2607:f8b0:4864:20::d35])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnp-0002Tj-1s
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:35 -0400
+Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnv-0008KF-Sj
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:41 -0400
-Received: by mail-io1-xd35.google.com with SMTP id
- ca18e2360f4ac-861d7a09c88so40192639f.2
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:38:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYnn-0008JI-9D
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:38:32 -0400
+Received: by mail-io1-xd32.google.com with SMTP id
+ ca18e2360f4ac-85b41281b50so43766939f.3
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:38:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746124718; x=1746729518; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746124710; x=1746729510; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YNiEylsO3oY9vgtqAxWvkDME/V5ix0NbPvey475+kvI=;
- b=rn/iI7UDZbYMHSCkBCKjbT4jk6oqEdBsaU50nfTY3rbgWen7eNfJ+R7WqbG34NctRm
- cN7YrgO3bZvppPoLu2a3pxIomMajXRfnkc7TaEwlSaPqQ2QC2PK07Gk1jZ82c/G8ZbIt
- tCwi2WO2OJdWRM7o+dvQVD8ORglorp+hq4D1gg6sBiLwNX/tNdtcASv9YG81ZdxvFIOf
- UZ3WyQXIA2NsUGuDMNt4k22gRutDaox0mCw2JJp7BkN9Ak0KQza9nT/ZdxfIjuPYhQpt
- traKkRp+t40iWprr+M8kq/ffLGS+8na3/QAaN/98q2WEGZ90+smTrEmyZ5EFOSsdAKOD
- nb1w==
+ bh=3wudwU0Mjh7FMfb66kwc7bqI37P6PrLMFSD6vy2kDJU=;
+ b=zN1hRrga4n7cOC7r+LfFj01SA7Tq0gcFX4Owf/sUUkP/ADH77nXb5A1zxjb8YnPCmh
+ wkNzKyDjvYs9nfaHB70fZ9O9D0NvSxrT2pngvMk6vBxUmXtN5ljpIl+sVmEux/XUEFWo
+ wRm1MzPXRfAoYimq6hNbAyus3WP5ywDV5V+2IUbdtSf/62fbVlhaAqYC88UppgBR8BPH
+ GKHfQbugjBlg0VUhqtyc8b+oFcN3tR130quohQcBEhlTUXAPt7U6iDQUjDw1iSU62UqH
+ Wqe58tr41wyP6RYeGmeRsYJ5JuLd1R+6rEtBO29Sq6JhND4rea8cvcr+m0FvmoiPbtaJ
+ yZNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746124718; x=1746729518;
+ d=1e100.net; s=20230601; t=1746124710; x=1746729510;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YNiEylsO3oY9vgtqAxWvkDME/V5ix0NbPvey475+kvI=;
- b=eB15i9Ggl2ewCQfgJKXr9o/xJjZqGJD/Fre6ss8rBnUITJ4qrBUrfhmbXAacXSn1+L
- P5RBrBJVydu6FtajSOfGkBTw1GAtS0aPfVmOj7w5sv2k/83WOQ+95ug8rWjl+34U3yPV
- uvIumYt3wQWvCNYPfvgmflyQ8WF21V5BOtBL+T4lekjzzgfW2iVebQXUh6g0orZ9iWnd
- LWnbA1sKT4r/SY/b7Hz1nYnLYZoBL4shzBNoEP4UEx4Nu7ogqzT6fn2RSaykdxoxJCIk
- jITEixK2MA0u0I6R2MiQISIlAP9nLECkyQgayFE8kg8DPbfiM+t33sA9wdqNf4uAPjFU
- AEvg==
-X-Gm-Message-State: AOJu0YyktAF/+30igTEYBn7nXdfJjDvTa3KDJ7WK6h1RojR4LrKPbB7g
- ejwqZDwLpl9WvTWtirGS+W60qMD8VtsC5Z3IutpxlxlNqpx1O5jms4AZdiuFnU15hnXoYQWu6gU
- O
-X-Gm-Gg: ASbGncvIrXo9GNPKQz6grv8rsgvDoUJXhozef4JPxo7Ni1V0SqBLY+hMhxEsx9Cj+AW
- FEF5LgCsr/gKPPLI7bY5xPSMRuT0J5jlOd32a6JbGMGxvQ5T0cM5xP/q5N8SRSo5LYsQHVW6wRG
- Oqwsbzbe5Tg+FNaCl2Ddep5pHMgEPUo/pOVM+bv1duRHULZUdzD+ILlR93GMSUyUs0vWa+oH9hZ
- wc0ZGCvLSIOUx3qQ8xfoccXhs+Rb9WrK8zIivcmwaXoIAXlAw6aQaiSE830YSn9rfuoOFTAIBs2
- w/qPPVLsxA+IM1DcReaRnYieY2xaLMqj7p8t/wAVUcBS7v/QnuW/5T1fyvB5Wwb3pkqatnNcjdD
- EmV7LAb5qE6hXpHiA65SF
-X-Google-Smtp-Source: AGHT+IEuPA22mre3z/zUSoY8T34jawnc11RnvdBmQ3Gvm9mmX0Lrg/qtlzLZ+DY2deYw18G/xAlu+A==
-X-Received: by 2002:a05:6602:720e:b0:864:4911:f463 with SMTP id
- ca18e2360f4ac-866b348c723mr29008939f.10.1746124718559; 
- Thu, 01 May 2025 11:38:38 -0700 (PDT)
+ bh=3wudwU0Mjh7FMfb66kwc7bqI37P6PrLMFSD6vy2kDJU=;
+ b=PVpOrOHad5n6x+yUECZEAQAD3q+8cnPqLQIkYatU6pEHvHDuPRPUJWBUkpvPbfVLQu
+ a8WuK/gX6Zu71QdUTiVDxWlwzmEEWfS6jOr279Fd1hxva2dOnvMs4Iu6nn9Ui9lKELMd
+ sCY4d0GkX4sBm4kMY+LnAshzQEbKS/Z+JSZwcIF8WXpDtgSimY5fjcewWxqqkAr5Astu
+ lEyBTWdOjk2GXJ3od0ISDQ33Slzj/ISCP6yZzB2iEk6Yr0nZAveXukYOXboE0h3E1GzN
+ hpNcauaXGNSx/Ic5Lkl9GtunRiUAPwxwMu/lmkzD0pCh8p/cEIihKZCDwVNsUSYRZsD1
+ x50A==
+X-Gm-Message-State: AOJu0Yz3s2AwWku7XhUeKWGtHJQL85PnxFzraLqpFdUjXR0wHJpwQMi8
+ TEIh601c/2Q7Ek3SzD4N7tJCMt+5RRJWAY6mDvOafMtIiJ1UI/cKXb9p/TB+EZ8Ul/BGbEvF/uR
+ j
+X-Gm-Gg: ASbGncvVcY5E+eec1/FRFI0ZvA070eFOsRs28b94ueSYw6RJik7DfHUY7eDDO6RPyAN
+ WARb5ETWE9GPqrvwN2rrU5vFw+VgHGrMNLGB7Fw32N/7xGUB/LdXgyDdzn9etlb/dqjPLfxQPdE
+ Iyx7zCPqy5RlsxbQ9Ggasp2xT5wN8OIRfABrhs1onU/+/DYj9oegnEelml4WJ266h66kBrPhsEg
+ vwLIVUv0r+Np8nvFcrDsJP12IoLLATJ65SOLCxJcWG3xu0In2roPswCeKM3PZ4VDHn8QT2eiMcY
+ AbM6KYpENwS/xd/CNFdynSGVfvnOsLkHnc4yf2H4Pr2mk1dn8GoRDmO3T9BzOlslPJroSbgGj/F
+ iDOhulxcpAn82J6HvaQJL
+X-Google-Smtp-Source: AGHT+IGfc7WsuNYh2S9L4QJeB5B/x5wvmpw48oN35C7vYywPW56/D8NAFcMFU58BG1HXgdDPG5SKsg==
+X-Received: by 2002:a05:6602:2748:b0:855:5e3a:e56b with SMTP id
+ ca18e2360f4ac-866b466c79cmr34962939f.12.1746124709895; 
+ Thu, 01 May 2025 11:38:29 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f882ee3c6dsm309761173.44.2025.05.01.11.38.35
+ ca18e2360f4ac-864aa43a9f1sm21350039f.35.2025.05.01.11.38.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 11:38:38 -0700 (PDT)
+ Thu, 01 May 2025 11:38:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
@@ -78,18 +78,18 @@ Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 14/16] hw/virtio/virtio-pci: Remove
- VirtIOPCIProxy::ignore_backend_features field
-Date: Thu,  1 May 2025 20:36:26 +0200
-Message-ID: <20250501183628.87479-15-philmd@linaro.org>
+Subject: [PATCH v2 13/16] hw/intc/ioapic: Remove IOAPICCommonState::version
+ field
+Date: Thu,  1 May 2025 20:36:25 +0200
+Message-ID: <20250501183628.87479-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501183628.87479-1-philmd@linaro.org>
 References: <20250501183628.87479-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d35;
- envelope-from=philmd@linaro.org; helo=mail-io1-xd35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d32;
+ envelope-from=philmd@linaro.org; helo=mail-io1-xd32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,52 +112,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VirtIOPCIProxy::ignore_backend_features boolean was only set
-in the hw_compat_2_7[] array, via the 'x-ignore-backend-features=on'
-property. We removed all machines using that array, lets remove
-that property, simplify by only using the default version.
+The IOAPICCommonState::version integer was only set
+in the hw_compat_2_7[] array, via the 'version=0x11'
+property. We removed all machines using that array,
+lets remove that property, simplify by only using the
+default version (defined as IOAPIC_VER_DEF).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/virtio/virtio-pci.h | 1 -
- hw/virtio/virtio-pci.c         | 5 +----
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ hw/intc/ioapic_internal.h |  3 +--
+ hw/intc/ioapic.c          | 18 ++----------------
+ hw/intc/ioapic_common.c   |  2 +-
+ 3 files changed, 4 insertions(+), 19 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index f962c9116c1..9838e8650a6 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -149,7 +149,6 @@ struct VirtIOPCIProxy {
-     int config_cap;
-     uint32_t flags;
-     bool disable_modern;
--    bool ignore_backend_features;
-     OnOffAuto disable_legacy;
-     /* Transitional device id */
-     uint16_t trans_devid;
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 8d68e56641a..7c965771907 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -1965,8 +1965,7 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
-      * Virtio capabilities present without
-      * VIRTIO_F_VERSION_1 confuses guests
-      */
--    if (!proxy->ignore_backend_features &&
--            !virtio_has_feature(vdev->host_features, VIRTIO_F_VERSION_1)) {
-+    if (!virtio_has_feature(vdev->host_features, VIRTIO_F_VERSION_1)) {
-         virtio_pci_disable_modern(proxy);
+diff --git a/hw/intc/ioapic_internal.h b/hw/intc/ioapic_internal.h
+index 51205767f44..330ce195222 100644
+--- a/hw/intc/ioapic_internal.h
++++ b/hw/intc/ioapic_internal.h
+@@ -82,7 +82,7 @@
+ #define IOAPIC_ID_MASK                  0xf
  
-         if (!legacy) {
-@@ -2351,8 +2350,6 @@ static const Property virtio_pci_properties[] = {
-                     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
-     DEFINE_PROP_BIT("page-per-vq", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT, false),
--    DEFINE_PROP_BOOL("x-ignore-backend-features", VirtIOPCIProxy,
--                     ignore_backend_features, false),
-     DEFINE_PROP_BIT("ats", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_ATS_BIT, false),
-     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
+ #define IOAPIC_VER_ENTRIES_SHIFT        16
+-
++#define IOAPIC_VER_DEF                  0x20
+ 
+ #define TYPE_IOAPIC_COMMON "ioapic-common"
+ OBJECT_DECLARE_TYPE(IOAPICCommonState, IOAPICCommonClass, IOAPIC_COMMON)
+@@ -104,7 +104,6 @@ struct IOAPICCommonState {
+     uint32_t irr;
+     uint64_t ioredtbl[IOAPIC_NUM_PINS];
+     Notifier machine_done;
+-    uint8_t version;
+     uint64_t irq_count[IOAPIC_NUM_PINS];
+     int irq_level[IOAPIC_NUM_PINS];
+     int irq_eoi[IOAPIC_NUM_PINS];
+diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
+index 133bef852d1..5cc97767d9d 100644
+--- a/hw/intc/ioapic.c
++++ b/hw/intc/ioapic.c
+@@ -315,7 +315,7 @@ ioapic_mem_read(void *opaque, hwaddr addr, unsigned int size)
+             val = s->id << IOAPIC_ID_SHIFT;
+             break;
+         case IOAPIC_REG_VER:
+-            val = s->version |
++            val = IOAPIC_VER_DEF |
+                 ((IOAPIC_NUM_PINS - 1) << IOAPIC_VER_ENTRIES_SHIFT);
+             break;
+         default:
+@@ -411,8 +411,7 @@ ioapic_mem_write(void *opaque, hwaddr addr, uint64_t val,
+         }
+         break;
+     case IOAPIC_EOI:
+-        /* Explicit EOI is only supported for IOAPIC version 0x20 */
+-        if (size != 4 || s->version != 0x20) {
++        if (size != 4) {
+             break;
+         }
+         ioapic_eoi_broadcast(val);
+@@ -444,18 +443,10 @@ static void ioapic_machine_done_notify(Notifier *notifier, void *data)
+ #endif
+ }
+ 
+-#define IOAPIC_VER_DEF 0x20
+-
+ static void ioapic_realize(DeviceState *dev, Error **errp)
+ {
+     IOAPICCommonState *s = IOAPIC_COMMON(dev);
+ 
+-    if (s->version != 0x11 && s->version != 0x20) {
+-        error_setg(errp, "IOAPIC only supports version 0x11 or 0x20 "
+-                   "(default: 0x%x).", IOAPIC_VER_DEF);
+-        return;
+-    }
+-
+     memory_region_init_io(&s->io_memory, OBJECT(s), &ioapic_io_ops, s,
+                           "ioapic", 0x1000);
+ 
+@@ -476,10 +467,6 @@ static void ioapic_unrealize(DeviceState *dev)
+     timer_free(s->delayed_ioapic_service_timer);
+ }
+ 
+-static const Property ioapic_properties[] = {
+-    DEFINE_PROP_UINT8("version", IOAPICCommonState, version, IOAPIC_VER_DEF),
+-};
+-
+ static void ioapic_class_init(ObjectClass *klass, const void *data)
+ {
+     IOAPICCommonClass *k = IOAPIC_COMMON_CLASS(klass);
+@@ -493,7 +480,6 @@ static void ioapic_class_init(ObjectClass *klass, const void *data)
+      */
+     k->post_load = ioapic_update_kvm_routes;
+     device_class_set_legacy_reset(dc, ioapic_reset_common);
+-    device_class_set_props(dc, ioapic_properties);
+ }
+ 
+ static const TypeInfo ioapic_info = {
+diff --git a/hw/intc/ioapic_common.c b/hw/intc/ioapic_common.c
+index fce3486e519..8b3e2ba9384 100644
+--- a/hw/intc/ioapic_common.c
++++ b/hw/intc/ioapic_common.c
+@@ -83,7 +83,7 @@ static void ioapic_print_redtbl(GString *buf, IOAPICCommonState *s)
+     int i;
+ 
+     g_string_append_printf(buf, "ioapic0: ver=0x%x id=0x%02x sel=0x%02x",
+-                           s->version, s->id, s->ioregsel);
++                           IOAPIC_VER_DEF, s->id, s->ioregsel);
+     if (s->ioregsel) {
+         g_string_append_printf(buf, " (redir[%u])\n",
+                                (s->ioregsel - IOAPIC_REG_REDTBL_BASE) >> 1);
 -- 
 2.47.1
 
