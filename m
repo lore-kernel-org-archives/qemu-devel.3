@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35B8BC3ABA3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 259C3C369DC
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 18:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAYnb-0001VF-VB; Thu, 01 May 2025 14:38:20 -0400
+	id 1uAYnP-0000NN-LC; Thu, 01 May 2025 14:38:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYmr-0008BR-Tz
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:37:37 -0400
-Received: from mail-io1-xd2a.google.com ([2607:f8b0:4864:20::d2a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYmH-0006lr-3U
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:36:58 -0400
+Received: from mail-io1-xd2e.google.com ([2607:f8b0:4864:20::d2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYmo-000874-FJ
- for qemu-devel@nongnu.org; Thu, 01 May 2025 14:37:31 -0400
-Received: by mail-io1-xd2a.google.com with SMTP id
- ca18e2360f4ac-86135ad7b4cso45849139f.1
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:37:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAYm4-0007uh-Rs
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 14:36:46 -0400
+Received: by mail-io1-xd2e.google.com with SMTP id
+ ca18e2360f4ac-85b41281b50so43688639f.3
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 11:36:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746124649; x=1746729449; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746124603; x=1746729403; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1oEZ8pcFL0QpEheuXUBBXfN5IHyToSd/0wmZn4AbYIQ=;
- b=fGaBVytxzxAuWA9JvLK6PXvZVoQdxLdKxrgwDbWtso+ixf8RN85HORsPEdJPZU36ic
- FexaJt6Ij82KkHHis0cCnQVplna9XmcgJ4D9x/X/wH6+HdYA7NCR6GJdk44o2CUGMtdd
- Rbe2QTcr0qb0gTCJqFYapP7Ux2eVB92NVyh3LmmGXpmInRboJPpbkjSzamXrmcMTgI+s
- SVMd4M/sCwLKW6bJATVEhOh48M+1Eaq1rlhOkm98Bx4cdKdEi2GV8N4R8uuhWM3pgs0m
- DXOZZaA5y68zxPxfvnBFx06le9tUWE9NFEov69f60E5cLBk0TfZBraURGZWu+fgwOjvH
- bssw==
+ bh=+ppxPoByuVGLWvliwBsIadaJ9pT2YSnGBDzsW7kKKos=;
+ b=YeCEHs1sam2dJ0PFYaARpBQm5vvL2c22luPgu+7rtqJ7v6OEx4pF0WtJvXBaxma9aq
+ SLPfFhYDG5tW+rJ0pOfccXscKUlSJDDdSnBfNpvnooeKaYE/PgRPvE1rw8WLRv4lh35N
+ 76B4GbPu5S9Nd4vlsr/NmFTIc/VLg6/802HecgqDOvt6Q8iAUwKovmyvBDTYBWSDo4CA
+ +YaJ8ezl9ymUAei06AhnUxfBZs4rzwn4t45EwOTapWK8rYZCI+PUUSA1L5vDqr1TZw0l
+ uSH+6+qlmboJ0D1BLQMaD5rGX3u19/oJj0sJPc4ebwXG5RD5roO7VL5SxqkVZuwyxKYm
+ Vneg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746124649; x=1746729449;
+ d=1e100.net; s=20230601; t=1746124603; x=1746729403;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1oEZ8pcFL0QpEheuXUBBXfN5IHyToSd/0wmZn4AbYIQ=;
- b=kjnspykLXqipZCLVzciGMVEN2i5dnCvQDm1WbF8/lyoosXnBZx1mUnwmT2eUzZOc65
- Sr4twLYUVjooVHLDJbXVILI9uYRkGKHhQCXcDl/ir0EaPR7UjbTSI2ROaFK7VzY0Zaro
- TfcCGoV8PVMdyNAblUAqnmX0zc5Djl9k9TRtqGr5D+eDDNzmDM95S01cFU1yxWkL7KGc
- L1FP7IRZsGO8LWtbkX5ImH4Pg1yQKCG0s75mZ9ep89AZVITieZFgvi+W4xOIupMBOF/b
- NSZIKBu6/Sej0RPAKjkP6kEZ/rD4B/7X+3nX+REK6j1d8MdAwhXydnsOgxKpw5G9hXTB
- U12g==
-X-Gm-Message-State: AOJu0Yzmaa3asTYSbuBzqJergrRIFczvL+pm/8Wg1yQtwUxLUjcKErQ+
- C9Fr+dAvhGV9OxtN0ljqkx2o1QEwIW27xWcJcEhsPek7xepztTPOrMBPdXr6ofw6jPRW+JPVHVn
- h
-X-Gm-Gg: ASbGncvehENs1Jnt4c/f8AVZE6EZwdKdSyuZImpXO82hGSjfFSqfDYzqEUGo0LJE3ag
- aJuOwJ4xdHCw/KnDaGdoPC5RIrvuwYrsgnQmPE4OTz4w2nM9gt4ghkr11TYLicXtz24qp92pWGp
- dgUbdxstgGiDnBQ/XMiYax19H4mex/KJJqmMax4yi5pvnMaUIoYZojfnsOBeAWrCylPMyygt7Kn
- 4Z2xNPkK+/IfNkq+XOZtD1LY0zrqx8HfkrjYkTfjbC/cZP0NmSEB/UMBAWI4SsKMTNI350ucBYq
- NRb5qcEKAf1KHEwgUBzuMSTxAmQXDVkBgh+HzM0Mrl4FbJou26rTXtZ9+Or79EY40A/vohTNZSF
- nTmrgJT6eWv2+IUsGTRAJiOL0ZJMwmh8=
-X-Google-Smtp-Source: AGHT+IHEoLmcU7pFCRgcEcxBtRCx1q/dYH/LtK4QVox6ESPbw8xzGEhMoWVUR6VP05yqT75tvB++yQ==
-X-Received: by 2002:a05:6602:3890:b0:861:7d39:d4d3 with SMTP id
- ca18e2360f4ac-8669f967ce1mr37488939f.3.1746124648901; 
- Thu, 01 May 2025 11:37:28 -0700 (PDT)
+ bh=+ppxPoByuVGLWvliwBsIadaJ9pT2YSnGBDzsW7kKKos=;
+ b=S1zX32GLOveMmmJGunJwmOxdxrBUigD88qcZOH8BXPWfT/5Z5oSEBN8bK6EiL7lAyT
+ +BucFNaF+t6eMGXQxS6Qx+9fCvhA1aweYofHdu+BC66oOhAfS0n3DP8iYTN0d0qVP8z4
+ ukEK9+w/GmDE92FWscCyW9A3yhjrx15qbtKpM/oJVsSJL6hMXzST3+h/EaJCUn2FpZrR
+ Di48mgsXGhq0CsSTl7B8lQ4FjTGhhuqTkl91MHA1tm9OkCqMHRlFgBw2tHpfbp1iDWdi
+ haZYkN5tdI0Ux4Fs3592IQBBVoWWk10zxFEBQp+sLJyLlW0gqEsc1sk1hooqwKpqLVxY
+ WtnA==
+X-Gm-Message-State: AOJu0YyTIHqlE8PuyGbRwKrr89zWSJGR0QKvzWjll13zySua3Hkby69e
+ uzm6/GrZRS1uvS1ySKvITwLXl059/wnj58r/cz97sQ5HFItzF1X291ycltyUg+TUVz/BsJi5D1n
+ P
+X-Gm-Gg: ASbGnctFRSfLy2kwCuf58I/0Gr2cZZvygVCap+FJUUaklGL+erF9Pp4ypnn49XlVaaj
+ ppkbPpPNIjO/pRZQhnI2g5k38h0T16yfcs/JBj1LcrsCzDEQIVRY6na4zTR5wJWxh5ELtLOoVes
+ Camg7vZObZEUtkhlWw6gqxFV5I9gaTGugRaLMr9R/uYRCq4710AKKMJ/xx0YG1eVpa+HrRe2X9V
+ eJFfNCdn4ljY1SolzAs3d1lKUtklh59263ng6LlYQ0224jDGmZX+YFll6fHjwMt6/BCSoloXN+w
+ dx5H96T5hZAjYZoBjlf4WTc9rcmUiMsNbD9CpuCMZZYPo9iSgZ8x4PLCZ/X6SC5lrj3qK+1NjsU
+ z7LV6a5eBtVnoMOvBBYGx
+X-Google-Smtp-Source: AGHT+IEkDox/adfLJYQ2JgU/AdYD+FVuU2ph9ZSnt0DXIPfmiRqwGmaHZDJRFhOMqvmufehOOhvYag==
+X-Received: by 2002:a05:6602:2983:b0:864:4a9c:1bd7 with SMTP id
+ ca18e2360f4ac-8668c263a5dmr41655939f.0.1746124603367; 
+ Thu, 01 May 2025 11:36:43 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-864aa32f7cbsm21510239f.28.2025.05.01.11.37.25
+ 8926c6da1cb9f-4f883014747sm295913173.107.2025.05.01.11.36.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 11:37:28 -0700 (PDT)
+ Thu, 01 May 2025 11:36:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
@@ -78,17 +78,18 @@ Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v2 06/16] hw/core/machine: Remove hw_compat_2_6[] array
-Date: Thu,  1 May 2025 20:36:18 +0200
-Message-ID: <20250501183628.87479-7-philmd@linaro.org>
+Subject: [PATCH v2 01/16] hw/i386/pc: Remove deprecated pc-q35-2.6 and
+ pc-i440fx-2.6 machines
+Date: Thu,  1 May 2025 20:36:13 +0200
+Message-ID: <20250501183628.87479-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501183628.87479-1-philmd@linaro.org>
 References: <20250501183628.87479-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2a;
- envelope-from=philmd@linaro.org; helo=mail-io1-xd2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2e;
+ envelope-from=philmd@linaro.org; helo=mail-io1-xd2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,46 +112,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The hw_compat_2_6[] array was only used by the pc-q35-2.6 and
-pc-i440fx-2.6 machines, which got removed. Remove it.
+These machines has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") they can now be removed.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/boards.h | 3 ---
- hw/core/machine.c   | 8 --------
- 2 files changed, 11 deletions(-)
+ hw/i386/pc_piix.c | 14 --------------
+ hw/i386/pc_q35.c  | 14 --------------
+ 2 files changed, 28 deletions(-)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 5f1a0fb7e28..a881db8e7d6 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -841,7 +841,4 @@ extern const size_t hw_compat_2_8_len;
- extern GlobalProperty hw_compat_2_7[];
- extern const size_t hw_compat_2_7_len;
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 7a62bb06500..98a118fd4a0 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -764,20 +764,6 @@ static void pc_i440fx_machine_2_7_options(MachineClass *m)
  
--extern GlobalProperty hw_compat_2_6[];
--extern const size_t hw_compat_2_6_len;
+ DEFINE_I440FX_MACHINE(2, 7);
+ 
+-static void pc_i440fx_machine_2_6_options(MachineClass *m)
+-{
+-    X86MachineClass *x86mc = X86_MACHINE_CLASS(m);
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
 -
- #endif
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index e7001bf92cd..ce98820f277 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -275,14 +275,6 @@ GlobalProperty hw_compat_2_7[] = {
- };
- const size_t hw_compat_2_7_len = G_N_ELEMENTS(hw_compat_2_7);
- 
--GlobalProperty hw_compat_2_6[] = {
--    { "virtio-mmio", "format_transport_address", "off" },
--    /* Optional because not all virtio-pci devices support legacy mode */
--    { "virtio-pci", "disable-modern", "on",  .optional = true },
--    { "virtio-pci", "disable-legacy", "off", .optional = true },
--};
--const size_t hw_compat_2_6_len = G_N_ELEMENTS(hw_compat_2_6);
+-    pc_i440fx_machine_2_7_options(m);
+-    pcmc->legacy_cpu_hotplug = true;
+-    x86mc->fwcfg_dma_enabled = false;
+-    compat_props_add(m->compat_props, hw_compat_2_6, hw_compat_2_6_len);
+-    compat_props_add(m->compat_props, pc_compat_2_6, pc_compat_2_6_len);
+-}
 -
- MachineState *current_machine;
+-DEFINE_I440FX_MACHINE(2, 6);
+-
+ #ifdef CONFIG_ISAPC
+ static void isapc_machine_options(MachineClass *m)
+ {
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 33211b1876f..b7ffb5f1216 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -658,17 +658,3 @@ static void pc_q35_machine_2_7_options(MachineClass *m)
+ }
  
- static char *machine_get_kernel(Object *obj, Error **errp)
+ DEFINE_Q35_MACHINE(2, 7);
+-
+-static void pc_q35_machine_2_6_options(MachineClass *m)
+-{
+-    X86MachineClass *x86mc = X86_MACHINE_CLASS(m);
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-
+-    pc_q35_machine_2_7_options(m);
+-    pcmc->legacy_cpu_hotplug = true;
+-    x86mc->fwcfg_dma_enabled = false;
+-    compat_props_add(m->compat_props, hw_compat_2_6, hw_compat_2_6_len);
+-    compat_props_add(m->compat_props, pc_compat_2_6, pc_compat_2_6_len);
+-}
+-
+-DEFINE_Q35_MACHINE(2, 6);
 -- 
 2.47.1
 
