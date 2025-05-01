@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 637C2C369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D90AC3ABA9
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:30:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAbPl-0007Wd-Bd; Thu, 01 May 2025 17:25:53 -0400
+	id 1uAbPh-00071D-5k; Thu, 01 May 2025 17:25:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbOs-00052Y-QZ
+ id 1uAbOs-00052F-QZ
  for qemu-devel@nongnu.org; Thu, 01 May 2025 17:24:58 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbOp-0002DL-QV
+ id 1uAbOq-0002DY-ET
  for qemu-devel@nongnu.org; Thu, 01 May 2025 17:24:58 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7376dd56eccso1660514b3a.0
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7399838db7fso1599699b3a.0
  for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:24:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746134694; x=1746739494; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746134695; x=1746739495; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dLPkA6JOnUOzci2wJy576ikVBoJf3Va9Je+srdX0Qbc=;
- b=sByrXzekG7JpRmFSAuNqaWQFGoY2I1i5d0P98bf9ppq2yPPyG5OO7LVEkzhQGkXX7L
- i9LMtzB48RjySSAbLapWIg0Hgmr/R79dNT6UhrvOAriWq5vCm0Jl39h/W2m5ogJ0WPTC
- rg+Jpe1hZ9oKCLQEEGTu6+BmvtLjPn469YcoYINeEjJHj3jQycM/UISVoMlS2zgj8Pu6
- PIZO2wBNTb8DxdNOA24PxKZE7Hq8b1UW5UWz8i1j2mLlanpDIlkUyLgPEijn7ggPB4Af
- UA1ubRhPVz2Z+Qi/DvSGsLK8J9p/90V94F8sxiEkTSpjxW99c/MIhWjw9i0OspC9opnG
- f0Uw==
+ bh=amMbIE3MgXWFQc6lqx2Am7OVt3Xrarb0bolyFSXxa5E=;
+ b=iFaFqk3m+KNe8s+XT4E0To77ROBN6FFH7ryf3jZiugRqRHIi4resb4FsxNF04zVepY
+ B5DFzCYw4ebeIVblNs0iOakLYkp7WpbwJatiJ5CTFPPxnLJ8LpH/9zOQN9Vc4OlHWQQ2
+ Gpudy/UPyeM1/eTDkQ9tTgE7BQiS4CdUmxyQucxuSPOQkuM3heu98U4HwSuWABcpuAB2
+ 2RwBfnOBaOaD3Tmfnctl1RQwlm1Z+H8wfcUUkOO2vWIzdgwWuE7XXiOx8MtSqBf0fFks
+ pIHJZJWDGgySm3W1Vm7ooC76YB8kbB1ZixCPa1dgWko2d1G6vXmrPjrybwDSKlLzJ/Jy
+ qsIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746134694; x=1746739494;
+ d=1e100.net; s=20230601; t=1746134695; x=1746739495;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dLPkA6JOnUOzci2wJy576ikVBoJf3Va9Je+srdX0Qbc=;
- b=j6USW6EtxxWvDxcQzs5fhN8LAobQ2yTNrw/+sJx7j+s7ABezK0kn/rnmPKwvh8TF9A
- wcOrVTdAi47/dYI+fdUbzNBrSQ0SwHHOJY1p+oikqFP+yZJV+xF3IkHnaRWhHC+w+pGU
- 0juvLJJrAnaxhiz9j3pX2o7C/HRAlyislhSE56+Ef6FkCLAqXDkcJ7khy8QApEjvWO8d
- cqda/OkNX4fsJ/gzjWanrtCJei4vNWHR5ji5sUPyR3w8m9Z1lBLz3vCvibcxsb/UNFx+
- tBCvNA0zDFoJNtjxUntHY5PBqs5XYI8G4wXJ8du5Vml/dBCwajYOMfvBIW7Zv4RfB/U5
- E4Sg==
-X-Gm-Message-State: AOJu0YypwUQQmirI9ku648LsC8HfpSW3ZWNQOWgsJz/RezirycfWxNrZ
- zZe3BatFzJgdTpB7vd0aLwk7/DgpWqNOVrC5/Cunb8gHvwm5lBuzHT/puDzdiDJxWDrjK8S8YSh
- T
-X-Gm-Gg: ASbGnctwRe6yG2O0j5982E6CslvlU7+sh2dkCf2smXL2ZesQ6kOwHAaGPkLJ/PEBNbT
- hxF1Mi7Fe/JbqkHo99yzF+nzJwpM6AUQo9B6VjPR7lkUaK1ocVtetIIClAHt+fvhilLiCfhgS4h
- VQOWAtqF9znffFVEjkuVmuhpJXt2zAvZG52fKx0XQyHBuZZ7datasonFkewcVmCkIwBNy3K8Z9q
- KXRbqiYRshsKvYdqO/gxogZZymupuDdtNXEhZfYCb8A55n0jjrxMULJEuiLfgevKsON9OrxqNay
- K7g8UnT0WgIQrFzNJr3PmPc2ZfQfaDMttFgCnLnp+/7GAx6iEjtnWP1gwn1x7sX2bdQKsOXc2Ts
+ bh=amMbIE3MgXWFQc6lqx2Am7OVt3Xrarb0bolyFSXxa5E=;
+ b=DIAMKd8mYEAlPHboZib8bMqzcNsM27RPSZ3dEIWpS7wJe4gYSFIbdpjM6KQ6fFdcGp
+ Tjq7F+JvB17rUnEDH5nEnuFQkGAHA3MIMAurN7hSUjIapxXtky5RToV8PRgrLau7HXkk
+ dt5UtfU2uulXednt/awUtGhLMoMVVsNjPb9GowVulq3DnoVn+Ec+Uae0qiqX6YPexatb
+ ylXqvR2IbMQVcWHQfIbzAEl2DSbF2tCRmB+Iwj4RZTAeE/zxTEF/Lz/aUfT8uWuKdUfI
+ zAgwMWak+dNvWxmg9BFbuC4bFxpUHwJuEU/B3qlyPf6XHqvIRgIb9aIG5CyqTaggI5+j
+ ZiYQ==
+X-Gm-Message-State: AOJu0YwhsgSqN1GL+iHDg2IsRVqXmuWeHawz1Ijot2UnKmrYg449TWKo
+ 9ClsQhbc64ZrP18dBUzV3pL3iP9w8I3slqtofrJbFnr0timFUHapD3FvDIOHqfCTI+w/4G01NX7
+ o
+X-Gm-Gg: ASbGncvjHeWiI+K1+84zc5PtHqMu87yE7QQbo0egn3pulyf+dvMM3kCfo4S5Wm4J9JX
+ Bntz7Yf2oS2W277aVLXt2hbIuUGNNqAoHdUVDThFLKP/AzHuU1L2HzqcJAx0UVdw0a/peFI5EqB
+ xYO9EVipVrmVd8fj1OVNWP/C4soxt3aMRhaOC7Ck382NOlbedUb/I2Wfe6q2cFfpmiF3nLMLO6/
+ JwM2cNHOkh6RsnkXZMiKP7cbaIIJWUt3PD2m4rtLMSYxG1ok72ghZ4rpih5902dpgwUiyL/nuS2
+ 2BntxnyBVIPABa95pkaACQO2tDGgUR2Y7ECYlbqdQw/kn6gaudT84mmPHP1+n+115uT1l121xMs
  =
-X-Google-Smtp-Source: AGHT+IH8FVdQwjBao55PZS0VSDl4tdpYSTTq3jGHsuVpKpRb5vsE53KSalB40MUFFqGyko86vH6Y3g==
-X-Received: by 2002:a05:6a00:448c:b0:736:592e:795f with SMTP id
- d2e1a72fcca58-74058a20d67mr624109b3a.9.1746134694358; 
+X-Google-Smtp-Source: AGHT+IH3CZiJrRCfeNBuqlafLbp1OLELbAOmRMadByF4HD65Cz4lvruJ2E60qaHtQKP24i4VrOUrKg==
+X-Received: by 2002:a05:6a00:440e:b0:73d:fdd9:a55 with SMTP id
+ d2e1a72fcca58-74057beac3fmr1014589b3a.8.1746134694985; 
  Thu, 01 May 2025 14:24:54 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-740590610desm135897b3a.146.2025.05.01.14.24.53
+ d2e1a72fcca58-740590610desm135897b3a.146.2025.05.01.14.24.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 01 May 2025 14:24:54 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 51/59] accel/tcg: Use target_long_bits() in cputlb.c
-Date: Thu,  1 May 2025 14:21:05 -0700
-Message-ID: <20250501212113.2961531-52-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 52/59] accel/tcg: Use vaddr for plugin_{load,store}_cb
+Date: Thu,  1 May 2025 14:21:06 -0700
+Message-ID: <20250501212113.2961531-53-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250501212113.2961531-1-richard.henderson@linaro.org>
 References: <20250501212113.2961531-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,76 +102,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Avoid the use of abi_ptr within ldst_common.c.inc.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- accel/tcg/cputlb.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ accel/tcg/ldst_common.c.inc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 5b6d6f7975..35c467aace 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -19,6 +19,7 @@
+diff --git a/accel/tcg/ldst_common.c.inc b/accel/tcg/ldst_common.c.inc
+index 9791a4e9ef..57f3e06192 100644
+--- a/accel/tcg/ldst_common.c.inc
++++ b/accel/tcg/ldst_common.c.inc
+@@ -123,7 +123,7 @@ void helper_st_i128(CPUArchState *env, uint64_t addr, Int128 val, MemOpIdx oi)
+  * Load helpers for cpu_ldst.h
+  */
  
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
-+#include "qemu/target-info.h"
- #include "accel/tcg/cpu-ops.h"
- #include "accel/tcg/iommu.h"
- #include "accel/tcg/probe.h"
-@@ -771,19 +772,19 @@ void tlb_flush_range_by_mmuidx(CPUState *cpu, vaddr addr,
+-static void plugin_load_cb(CPUArchState *env, abi_ptr addr,
++static void plugin_load_cb(CPUArchState *env, vaddr addr,
+                            uint64_t value_low,
+                            uint64_t value_high,
+                            MemOpIdx oi)
+@@ -193,7 +193,7 @@ Int128 cpu_ld16_mmu(CPUArchState *env, vaddr addr,
+  * Store helpers for cpu_ldst.h
+  */
  
-     assert_cpu_is_self(cpu);
- 
-+    /* If no page bits are significant, this devolves to tlb_flush. */
-+    if (bits < TARGET_PAGE_BITS) {
-+        tlb_flush_by_mmuidx(cpu, idxmap);
-+        return;
-+    }
-     /*
-      * If all bits are significant, and len is small,
-      * this devolves to tlb_flush_page.
-      */
--    if (bits >= TARGET_LONG_BITS && len <= TARGET_PAGE_SIZE) {
-+    if (len <= TARGET_PAGE_SIZE && bits >= target_long_bits()) {
-         tlb_flush_page_by_mmuidx(cpu, addr, idxmap);
-         return;
-     }
--    /* If no page bits are significant, this devolves to tlb_flush. */
--    if (bits < TARGET_PAGE_BITS) {
--        tlb_flush_by_mmuidx(cpu, idxmap);
--        return;
--    }
- 
-     /* This should already be page aligned */
-     d.addr = addr & TARGET_PAGE_MASK;
-@@ -809,19 +810,19 @@ void tlb_flush_range_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
-     TLBFlushRangeData d, *p;
-     CPUState *dst_cpu;
- 
-+    /* If no page bits are significant, this devolves to tlb_flush. */
-+    if (bits < TARGET_PAGE_BITS) {
-+        tlb_flush_by_mmuidx_all_cpus_synced(src_cpu, idxmap);
-+        return;
-+    }
-     /*
-      * If all bits are significant, and len is small,
-      * this devolves to tlb_flush_page.
-      */
--    if (bits >= TARGET_LONG_BITS && len <= TARGET_PAGE_SIZE) {
-+    if (len <= TARGET_PAGE_SIZE && bits >= target_long_bits()) {
-         tlb_flush_page_by_mmuidx_all_cpus_synced(src_cpu, addr, idxmap);
-         return;
-     }
--    /* If no page bits are significant, this devolves to tlb_flush. */
--    if (bits < TARGET_PAGE_BITS) {
--        tlb_flush_by_mmuidx_all_cpus_synced(src_cpu, idxmap);
--        return;
--    }
- 
-     /* This should already be page aligned */
-     d.addr = addr & TARGET_PAGE_MASK;
+-static void plugin_store_cb(CPUArchState *env, abi_ptr addr,
++static void plugin_store_cb(CPUArchState *env, vaddr addr,
+                             uint64_t value_low,
+                             uint64_t value_high,
+                             MemOpIdx oi)
 -- 
 2.43.0
 
