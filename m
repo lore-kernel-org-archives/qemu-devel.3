@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C22EC369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:08:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A44E8C369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAb6E-0001AB-7T; Thu, 01 May 2025 17:05:42 -0400
+	id 1uAb8k-0005dI-6f; Thu, 01 May 2025 17:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6C-00019Y-95
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:40 -0400
-Received: from mail-il1-x131.google.com ([2607:f8b0:4864:20::131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb83-00041f-9l
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:07:35 -0400
+Received: from mail-io1-xd2d.google.com ([2607:f8b0:4864:20::d2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb6A-0006XP-Jq
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:05:40 -0400
-Received: by mail-il1-x131.google.com with SMTP id
- e9e14a558f8ab-3d81768268dso11950385ab.3
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:05:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAb80-0006rO-Fg
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:07:34 -0400
+Received: by mail-io1-xd2d.google.com with SMTP id
+ ca18e2360f4ac-85b3f92c8f8so164499739f.1
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:07:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746133537; x=1746738337; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746133650; x=1746738450; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=F+9tG6D5CrQpBCxb8rCcSa1c4gmLBRkbtI6i0IG/w1E=;
- b=eJAPIuGoHz+Os1ioFy6Diov6MpfVL59X1ly52+VBSCl7qsfIwbMwkkKLb43kohHlBU
- LXpuEdY5hLoBK7moDYFkrnHUcSY67fK9PE8DjLC3pnpmCwf2+B1eJpzDEAB6vk4Wrevc
- KP9LID+1ezZP7sR9bXtbARcaC/WMgUsyb6/H9/IvCFzBzFhP0f+E5K9hWc/q4nlc2Ppn
- i5M6cK4+0veskFSm0vtYEhHI+zYuu7kdqTwVh+qljNZCAjoo/cRjxuZVi53EFX5wCeFe
- LULiJlK4Cgja+/u5iVYAvbsTaKEqAX2IZXKjLyPygWBjHcxTY3wMjlmY/FtGu5LW1/4l
- SWEw==
+ bh=KzLE2lKYGYuJ3IoUvDO5W4ZXh+AwpN8VPQtHB7fCw5w=;
+ b=LjPtNiwUTXlEwqq5gFaPJ+bGimccjIWzgjGAQcbZ5O1kItHlcGp161yX/ic4BJlxDJ
+ 9s7TuGUzNq1kSsGDJHMuoyF4ay4wsDTqOvmggxouVQG+Ytelz9ZFZFY/Og+4YjIwPt6S
+ QCK+geQiWn/IeN2OGVLfi+WbYNJ1FiSFmMQn/+FCj5+GRyi0tqjJ9Hyt6zgiDmXoK8Z9
+ jCrt6U7K0duJslxLo7HYhs/uOADkOLsrmQmRU5sYiwR9w7D9cc9LdPtCEYqVgE0dM5TB
+ m/EcPigztFqH16CWLCL6jm/vKAF61FrM4usXfYm9Tyfu/KnmRRT90zR6C1+zQhI3SwZl
+ nATA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746133537; x=1746738337;
+ d=1e100.net; s=20230601; t=1746133650; x=1746738450;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=F+9tG6D5CrQpBCxb8rCcSa1c4gmLBRkbtI6i0IG/w1E=;
- b=ttdT5BtAnpIH5I9/K0hXZ5ZnvPWJW5VOtJw9d79hn9z+BaGWA/0Ks16mItwNOuPfZl
- nZXqu1SZ3v0FKTkBwWB/mX5LG20/OIRG54pGqFwFS5MjF/KKjj7PJ5mOS0jqMb1o+NfG
- xul9z68ZgQtDxp+7fONpQPzfzHEYejPLgdemFWEg67PHDFgiIYocE5V7qHpK40GdA5/0
- K3wBpNiHleAMkwW5jvIDXIqfk5RMaYUjvGvg9AZSe8l4qLKSAKGeGNtaPQ3gNj+E6X2w
- sr15uo5gwJWHM6HZkCDgqZUcEDGW2znBzGbPB6KJY+h7BXA9aBR6JSOCPqPdjBgvxtGx
- hdvA==
-X-Gm-Message-State: AOJu0YyOsRyUKiNb5uUgpPSD0ex1TXCHVol9NQUO+tFcSwSGD9sSuVyK
- Isbq3gyp2x5K3f0HQgnWl2i8OPc+fvqJLZ4gsU8ZEMfW/kStu4c0iAiyywBe1Juaed7lPKu4sE2
- T
-X-Gm-Gg: ASbGncvjq5typ2P/IJR9uBzCqUgNhh7NVdJLzzAuKAvkUOUo+QzIdqUhohpOQcEmVzW
- 3DF+LktaHLqUZTE9Vk50bF2T7EwEKzi16na2Q4jTTRlo3k0H6tsF1CaREYShHzT8qghKrN2NVs3
- m4gTd+14WugsOG4RfAx8VmiVCMJ63nKqPA4hUCjH4ImsegKDipl+n4fV1+Jq9ysca79tK5nFJ2s
- PIaHiV4VU/T0QATILqJWvuKYLm5HLSDtudjQ/VrSgB3DQHpUsKZI+u4RCfJBq6Pm9vLc3PMVeme
- jWYD+aqND8w3DLCVlaeS2sddRkGkijcsZkBFsb9C6/wpgylGrWQc3R5NJ4Ea+i5WbKBU8oaGhjS
- rWQKR4Iz0ZOBWIpQ=
-X-Google-Smtp-Source: AGHT+IH+u44+gr3VhAkwNxNdek+w2gvKkYRpBzQeqoif+zOyBP4Kz54Rrnu1ivOMXpo9f6cHu3CQ5A==
-X-Received: by 2002:a05:6e02:1529:b0:3d9:3e8e:60da with SMTP id
- e9e14a558f8ab-3d97c237917mr4932745ab.17.1746133536916; 
- Thu, 01 May 2025 14:05:36 -0700 (PDT)
+ bh=KzLE2lKYGYuJ3IoUvDO5W4ZXh+AwpN8VPQtHB7fCw5w=;
+ b=P6ka7alY4YWfSAvP9XXhfUskYHYaRt6SywHlu1mqs2FnkdjGAfpztADlqUMmJ6kBSF
+ A97CPKKFwqWgoG2iZVN+IIIBmHy0MyuVLWMwoioWVhBf6GyACMiawzKqFNydpiOjjcJh
+ 0cqxx2escVoqoKCd/r1Lv7aBW3QXpkzNMVMgjmAZomF8M2kQT5SmU8dFnw53nN40uIgp
+ u88YgNNeH46M1eRLYwXgHmu1zJwR6Su+DOK83CC2r+2EIGtBA+D4yl9FZEdkjwuV1Kt7
+ gYH+XU2PiG23cJZNQef/AKj+6+l5RZifPG0j28Hl78dQwkLvd7pww157j1utML/23bov
+ tbtg==
+X-Gm-Message-State: AOJu0YxA2MeU/6Tskjaztge0jDHrqo8JqMk1sANPNsulpvPwhac544Ut
+ EsxRcFmWIzm7av2vUGzU5AYzEIC4+3Z4JU3z9oGjaF0OAHVpbxWC+2Ul9ZUHKu36h9ldUlm6fe2
+ E
+X-Gm-Gg: ASbGnctBN3j8aZ4yxmFJoSboyDLVEPKphfOz7+xUuunrHQI4ykazsYMaI3eRFdavzVE
+ wVpWW6hs7xDt6eBSablz0IolVF4InCMS9lgLfR4uAj0s4UH5FJVr+N4uZaIU7+H8CuqQNw4qsr9
+ jzZtqRxlCnVM1dOeo3VI/rNkYqgPupGwYP1ADEq0MgUeWJCAAj8dr+UJOz4QJZYuS6CDk6uVlQO
+ rk/PXPBUw+e2gHx8Cn79BAYcxUbuDzv+OevzGQOPBdkktOa+ehKecr7OLNrhOqGbFnWmSgxIrxD
+ te4btijoCV2pHnAmLxNGTo7/Meadruuh4ouqN5oPe4kERVd1I769dvEi0A1EvXzMOQxXxKfrb+a
+ 5XWeEfQ103+8qfjk=
+X-Google-Smtp-Source: AGHT+IEnxBq1ThHL+mZWJMXZMQb0WMT3kYAky685C7sB7D2ferkDcLHO5nZpr0r6mThfuRqkUbLWpw==
+X-Received: by 2002:a05:6e02:87:b0:3d9:5d50:e3b1 with SMTP id
+ e9e14a558f8ab-3d97c295980mr6542775ab.18.1746133650032; 
+ Thu, 01 May 2025 14:07:30 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4f88a918039sm48520173.55.2025.05.01.14.05.33
+ 8926c6da1cb9f-4f88a915f23sm49076173.39.2025.05.01.14.07.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 14:05:36 -0700 (PDT)
+ Thu, 01 May 2025 14:07:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
@@ -77,25 +77,25 @@ Cc: =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?=
  "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>
-Subject: [PATCH 04/18] hw/i386/kvm: Remove
- KVMClockState::mach_use_reliable_get_clock field
-Date: Thu,  1 May 2025 23:04:42 +0200
-Message-ID: <20250501210456.89071-5-philmd@linaro.org>
+Subject: [PATCH 17/18] hw/pci-bridge/gen_pcie_rp: Remove
+ GenPCIERootPort::migrate_msix field
+Date: Thu,  1 May 2025 23:04:55 +0200
+Message-ID: <20250501210456.89071-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501210456.89071-1-philmd@linaro.org>
 References: <20250501210456.89071-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::131;
- envelope-from=philmd@linaro.org; helo=mail-il1-x131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2d;
+ envelope-from=philmd@linaro.org; helo=mail-io1-xd2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,75 +111,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The KVMClockState::mach_use_reliable_get_clock boolean was only
-used by the pc-q35-2.8 and pc-i440fx-2.8 machines, which got removed.
-Remove it, along with the 'x-mach-use-reliable-get-clock' property.
+The GenPCIERootPort::migrate_msix boolean was only set in
+the hw_compat_2_9[] array, via the 'x-migrate-msix=false'
+property. We removed all machines using that array, lets
+remove that property and all the code around it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/kvm/clock.c | 18 ------------------
- 1 file changed, 18 deletions(-)
+ hw/pci-bridge/gen_pcie_root_port.c | 16 ++--------------
+ 1 file changed, 2 insertions(+), 14 deletions(-)
 
-diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
-index f56382717f7..726ebfcb0cb 100644
---- a/hw/i386/kvm/clock.c
-+++ b/hw/i386/kvm/clock.c
-@@ -23,7 +23,6 @@
- #include "migration/vmstate.h"
- #include "hw/sysbus.h"
- #include "hw/i386/kvm/clock.h"
--#include "hw/qdev-properties.h"
- #include "qapi/error.h"
+diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
+index d9078e783bf..831d21225e9 100644
+--- a/hw/pci-bridge/gen_pcie_root_port.c
++++ b/hw/pci-bridge/gen_pcie_root_port.c
+@@ -35,8 +35,6 @@ struct GenPCIERootPort {
+     PCIESlot parent_obj;
+     /*< public >*/
  
- #include <linux/kvm.h>
-@@ -43,9 +42,6 @@ struct KVMClockState {
-     /* whether the 'clock' value was obtained in the 'paused' state */
-     bool runstate_paused;
- 
--    /* whether machine type supports reliable KVM_GET_CLOCK */
--    bool mach_use_reliable_get_clock;
+-    bool migrate_msix;
 -
-     /* whether the 'clock' value was obtained in a host with
-      * reliable KVM_GET_CLOCK */
-     bool clock_is_reliable;
-@@ -232,18 +228,10 @@ static void kvmclock_realize(DeviceState *dev, Error **errp)
-     qemu_add_vm_change_state_handler(kvmclock_vm_state_change, s);
+     /* additional resources to reserve */
+     PCIResReserve res_reserve;
+ };
+@@ -66,13 +64,6 @@ static void gen_rp_interrupts_uninit(PCIDevice *d)
+     msix_uninit_exclusive_bar(d);
  }
  
--static bool kvmclock_clock_is_reliable_needed(void *opaque)
+-static bool gen_rp_test_migrate_msix(void *opaque, int version_id)
 -{
--    KVMClockState *s = opaque;
+-    GenPCIERootPort *rp = opaque;
 -
--    return s->mach_use_reliable_get_clock;
+-    return rp->migrate_msix;
 -}
 -
- static const VMStateDescription kvmclock_reliable_get_clock = {
-     .name = "kvmclock/clock_is_reliable",
-     .version_id = 1,
-     .minimum_version_id = 1,
--    .needed = kvmclock_clock_is_reliable_needed,
-     .fields = (const VMStateField[]) {
-         VMSTATE_BOOL(clock_is_reliable, KVMClockState),
+ static void gen_rp_realize(DeviceState *dev, Error **errp)
+ {
+     PCIDevice *d = PCI_DEVICE(dev);
+@@ -121,16 +112,13 @@ static const VMStateDescription vmstate_rp_dev = {
+         VMSTATE_PCI_DEVICE(parent_obj.parent_obj.parent_obj, PCIESlot),
+         VMSTATE_STRUCT(parent_obj.parent_obj.parent_obj.exp.aer_log,
+                        PCIESlot, 0, vmstate_pcie_aer_log, PCIEAERLog),
+-        VMSTATE_MSIX_TEST(parent_obj.parent_obj.parent_obj.parent_obj,
+-                          GenPCIERootPort,
+-                          gen_rp_test_migrate_msix),
++        VMSTATE_MSIX(parent_obj.parent_obj.parent_obj.parent_obj,
++                     GenPCIERootPort),
          VMSTATE_END_OF_LIST()
-@@ -304,18 +292,12 @@ static const VMStateDescription kvmclock_vmsd = {
      }
  };
  
--static const Property kvmclock_properties[] = {
--    DEFINE_PROP_BOOL("x-mach-use-reliable-get-clock", KVMClockState,
--                      mach_use_reliable_get_clock, true),
--};
--
- static void kvmclock_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     dc->realize = kvmclock_realize;
-     dc->vmsd = &kvmclock_vmsd;
--    device_class_set_props(dc, kvmclock_properties);
- }
- 
- static const TypeInfo kvmclock_info = {
+ static const Property gen_rp_props[] = {
+-    DEFINE_PROP_BOOL("x-migrate-msix", GenPCIERootPort,
+-                     migrate_msix, true),
+     DEFINE_PROP_UINT32("bus-reserve", GenPCIERootPort,
+                        res_reserve.bus, -1),
+     DEFINE_PROP_SIZE("io-reserve", GenPCIERootPort,
 -- 
 2.47.1
 
