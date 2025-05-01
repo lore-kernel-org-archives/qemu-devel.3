@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF845C369DC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1F8DC3DA4A
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 22:36:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAcVK-000200-Gx; Thu, 01 May 2025 18:35:42 -0400
+	id 1uAcVf-0002EG-95; Thu, 01 May 2025 18:36:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAcVH-0001z1-6V
- for qemu-devel@nongnu.org; Thu, 01 May 2025 18:35:39 -0400
-Received: from mail-io1-xd35.google.com ([2607:f8b0:4864:20::d35])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAcVa-0002CM-Rv
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 18:35:58 -0400
+Received: from mail-il1-x12b.google.com ([2607:f8b0:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAcVF-0002tF-CN
- for qemu-devel@nongnu.org; Thu, 01 May 2025 18:35:38 -0400
-Received: by mail-io1-xd35.google.com with SMTP id
- ca18e2360f4ac-85d9a87660fso156762539f.1
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 15:35:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAcVZ-0002wu-CD
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 18:35:58 -0400
+Received: by mail-il1-x12b.google.com with SMTP id
+ e9e14a558f8ab-3d57143ee39so12997205ab.1
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 15:35:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746138934; x=1746743734; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746138956; x=1746743756; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7fMEL/bKEw56xzMAth9BU+Ho0n9YaM0fXYJdD76Bau4=;
- b=EOQn7PDJfjdczDon3Uy6VzDSo28yCyz5oY2oE4oWwtpr6ukt+c/OJLJ24o+SQXWlAL
- 7zEEVZASOWy+RrZkeaM0K0PX4lnLXGrwlY5UpSb6hKqsL+u/tfQm740IWoJWX/GJ9EH5
- O5nLRYUunkoXP5xlHrTCewLB0GkMGfgUhBujLsj3O9NiBgOY/JjhRWHw8PAzy5DaneRZ
- vhMgskuw7PjcJHDgegY2F92zaLEc/I/qcp07wKZzg8XYsmOY/FMqm4D5CWMyvJR0Cy4V
- 2bCdbHa5gF7dC25uWSAiX5vXbce0wSfXWsn9lXbI76SeUHqUMP3iPAvYPhZn8fwwg2zG
- TqBA==
+ bh=6mUzjya4/yrCYE5fBr0m8sscOfk57w9pos5S926FUF4=;
+ b=a0c3W5IHuAMH85pADD4m/jUkG/eSfeogJORzmKpOFDGih7Hh4Ll5EmmKnW2Dj4HRvx
+ 5oPiakGwopZrQ9yQPBtLHThA4ckdYWgKPAqmLBI+8Ia3GTizApacHGtym1ut1h1dKGU2
+ 4imvYkQDGXu5nDQAz9QcHBn/dUMSlmlZfPAe/Rkcxrvb+u4b+yrPSN0X34kIK6uEziWW
+ sB73gCS2Dy9/hm14aGAypVe9rqhSLXI/VwBI5ZZXPcV4K1aGlEsB3xM2ZsFrNQi2s7t0
+ WsIC/dIlNW1xYSI9GDpyXSinGKAFPYptV62TDjvWOfuG4L3rmP8SbKs1vOhVjHuj7sVM
+ wJUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746138934; x=1746743734;
+ d=1e100.net; s=20230601; t=1746138956; x=1746743756;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7fMEL/bKEw56xzMAth9BU+Ho0n9YaM0fXYJdD76Bau4=;
- b=pTPKDD0CIeLz9vdGySgKi9fTlPn5w5uek9V3Td4+qsE3tuZrzQAxB/kURxjIER11i/
- J9tfv39oSqYPj9Psa5cav7ZUwHKshorCGKSPSatq1ee5YF+nFCe26L7YZdha0vilA+bN
- k9G6TmTpxt4AgCqnNGShPkfFhzoy0N9YnXcjCQmdUOC+hK8H7wsBmQt1PaLaeSr28jsd
- uLh9WwKklQw5Liwf3ZjEsVwMesfyk4CDWSB7EpPHBCGxSNNTYsst2Ej3ejBMHZd4XQIu
- fZhm5cXtRhOrW3n+Iqc5O0136DtmOFqhkCFNrX1TexVAvxyAVSG52ZsSCHQJo/WCd3/8
- V44w==
-X-Gm-Message-State: AOJu0YwqiV4e3AWvgEVXF1tlg7HX+vuTbUHCjdpq4pWNu0lSG8OlKjVX
- NDpX92O1/mqji3k5/vv3K7+GtFRkqd7dMzPVbcHcIULwVTB0J1UNt2WTU/hY0qP0gl8MkDSsCDf
- Q
-X-Gm-Gg: ASbGnctJNwe2uecWRTzUI0aQ+v/JZKUqq9Ww0DvdIDpD08rMycPW6gW/9bvbPImyRzq
- QJQSvlQ0uESNoSgDeHCFOqvHmPTJ6fLYYIHIpEKFiFVAqAqdjHLfU/CoJF5Kcc6ojM3qnevtnxk
- 8y0iJBgZP37Tlsxcq/KaIEerxLlWHq2bA7O7iqEtTzkxeB+N2HX8a9CaH15thUi7DV5DSO3CXBe
- HoGZ0JnzeEp4CzadWCvSFEuJNHWoPAlhxMKCFuxDHd7jQ1y7Q+4U7Ql4UO54sZigLV+L1+DmGk8
- hxE3VcB/mBX7qU9i5n2/6PYsPBrBjJobbSA00eCnQWLYtwq372UkcMgB7gPgAASt03hT6m+gSQv
- AHK3QJu9mQA1A8GR9EUztj/i0XYI2ymU=
-X-Google-Smtp-Source: AGHT+IGre5NHqR9i3g7IZll1f2kWgnfs/k26eoluII/Ac1Pl6PWskfFuwiZX3igz/Wn3PJHJ7hUwMA==
-X-Received: by 2002:a05:6602:408e:b0:85b:35b1:53b4 with SMTP id
- ca18e2360f4ac-866b4434281mr153935239f.12.1746138934655; 
- Thu, 01 May 2025 15:35:34 -0700 (PDT)
+ bh=6mUzjya4/yrCYE5fBr0m8sscOfk57w9pos5S926FUF4=;
+ b=WDm64AOyVQPzVwfRCZAgdaWeogaiNd2Sz0MgHGBsULHSBwQSJxGjqOkWng4XOwxMKd
+ MmvrMzep94phPBIx3c2zLkATWxdShfkCZUwfcd4XwxhGnoMzWql8oEewlOCQNiMzOn+m
+ jJhLVCl0IMbHE3e6gt5jpq6GtLiv4nVKcK1jtQRIRA00LM6Krqq9Z2qik8DjuTkgrI85
+ uKV1pic8EiLiUTOElQCpWU/ELIpZNwc+XY6ak8PjrpspMUBeeuO2TgbyN+QifNLkKGS2
+ bBJfTCm12qzS55TCYv7ewLtCxbl6bFCiO1EnyjTFtxJ57jDkY8jv6HaF8OJ+K7V2VqZg
+ kUMw==
+X-Gm-Message-State: AOJu0Yxgnop5Tn0/rWMhywtBzST3ItVLs1ft5MmkHzldPDPrbp65Yy2d
+ GfBeVQd8ug3kv/0e/EaCiG3wWUqc7vZnN0lxJRiHzMKkHmVIq7/fO2a7XeV+6Pn6ZjH2GIYCluY
+ L
+X-Gm-Gg: ASbGncsbaYpMlc0h3RiBx+MqFjUcUfy/nqDDqAaU0JZKi9BBZoC+2Bwd368cYfXmSZH
+ KJVOYonSRIOuvG41cHjqiX0C0KmrmmukYu0yHsTmcHfuYwNmOymPhE5DNK+RyWMHht/Nm2TtSz3
+ oKtEABUb+v5oemFBy2zG7sXWrKOznDPPEVOUewHei+Cq3etcHBqNljVkRKaHqMtb+u/lOEZopwJ
+ H5njj7r5fQJqr5ObLcrPNIV98O6PG9k19bijNk6FMJV8U7t9vfNykKjoTn9wpoOTgYrz/NQr1yR
+ HEDfOsAkSZDUacVvS4ZXYDhzyObfTr3ZJzjCzCVAFCsVkCiaxuJRVySybJdroOmPMZtABMiiUGC
+ oYB2Z9+owEbronUKO67jE
+X-Google-Smtp-Source: AGHT+IHtgiNdtUtG8DfyMmt0afRMDwGmQlH0wsVfZTTJmkV8HFCPjDLceX7GiB5cBPMAh/FuhO1O7A==
+X-Received: by 2002:a05:6e02:2307:b0:3d9:2aa3:fe2e with SMTP id
+ e9e14a558f8ab-3d97c184cbemr8165855ab.10.1746138955788; 
+ Thu, 01 May 2025 15:35:55 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-864aa43a977sm27633739f.32.2025.05.01.15.35.31
+ 8926c6da1cb9f-4f88a9416edsm78326173.64.2025.05.01.15.35.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 May 2025 15:35:33 -0700 (PDT)
+ Thu, 01 May 2025 15:35:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -71,18 +71,17 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/8] hw/i386/pc: Remove deprecated pc-q35-2.10 and
- pc-i440fx-2.10 machines
-Date: Fri,  2 May 2025 00:35:15 +0200
-Message-ID: <20250501223522.99772-2-philmd@linaro.org>
+Subject: [PATCH 4/8] hw/pci-host/q35: Remove Q35PCIHost::pci_hole64_fix field
+Date: Fri,  2 May 2025 00:35:18 +0200
+Message-ID: <20250501223522.99772-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250501223522.99772-1-philmd@linaro.org>
 References: <20250501223522.99772-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d35;
- envelope-from=philmd@linaro.org; helo=mail-io1-xd35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12b;
+ envelope-from=philmd@linaro.org; helo=mail-il1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,56 +104,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These machines has been supported for a period of more than 6 years.
-According to our versioned machine support policy (see commit
-ce80c4fa6ff "docs: document special exception for machine type
-deprecation & removal") they can now be removed.
+The Q35PCIHost::pci_hole64_fix boolean was only set in
+the pc_compat_2_10[] array, via the 'x-pci-hole64-fix=off'
+property. We removed all machines using that array, lets
+remove that property and all the code around it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/pc_piix.c | 10 ----------
- hw/i386/pc_q35.c  | 10 ----------
- 2 files changed, 20 deletions(-)
+ include/hw/pci-host/q35.h | 1 -
+ hw/pci-host/q35.c         | 6 ++----
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 5c7d0c50f8e..f0f71de4405 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -727,16 +727,6 @@ static void pc_i440fx_machine_2_11_options(MachineClass *m)
+diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
+index ddafc3f2e3d..75810528205 100644
+--- a/include/hw/pci-host/q35.h
++++ b/include/hw/pci-host/q35.h
+@@ -63,7 +63,6 @@ struct Q35PCIHost {
+     PCIExpressHost parent_obj;
+     /*< public >*/
  
- DEFINE_I440FX_MACHINE(2, 11);
+-    bool pci_hole64_fix;
+     MCHPCIState mch;
+ };
  
--static void pc_i440fx_machine_2_10_options(MachineClass *m)
--{
--    pc_i440fx_machine_2_11_options(m);
--    compat_props_add(m->compat_props, hw_compat_2_10, hw_compat_2_10_len);
--    compat_props_add(m->compat_props, pc_compat_2_10, pc_compat_2_10_len);
--    m->auto_enable_numa_with_memhp = false;
--}
--
--DEFINE_I440FX_MACHINE(2, 10);
--
- #ifdef CONFIG_ISAPC
- static void isapc_machine_options(MachineClass *m)
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index 1951ae440cc..f6e29cc4fc8 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -116,13 +116,12 @@ static void q35_host_get_pci_hole_end(Object *obj, Visitor *v,
+ static uint64_t q35_host_get_pci_hole64_start_value(Object *obj)
  {
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index d66d64b3b62..1bbf2385431 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -620,13 +620,3 @@ static void pc_q35_machine_2_11_options(MachineClass *m)
- }
+     PCIHostState *h = PCI_HOST_BRIDGE(obj);
+-    Q35PCIHost *s = Q35_HOST_DEVICE(obj);
+     Range w64;
+     uint64_t value;
  
- DEFINE_Q35_MACHINE(2, 11);
--
--static void pc_q35_machine_2_10_options(MachineClass *m)
--{
--    pc_q35_machine_2_11_options(m);
--    compat_props_add(m->compat_props, hw_compat_2_10, hw_compat_2_10_len);
--    compat_props_add(m->compat_props, pc_compat_2_10, pc_compat_2_10_len);
--    m->auto_enable_numa_with_memhp = false;
--}
--
--DEFINE_Q35_MACHINE(2, 10);
+     pci_bus_get_w64_range(h->bus, &w64);
+     value = range_is_empty(&w64) ? 0 : range_lob(&w64);
+-    if (!value && s->pci_hole64_fix) {
++    if (!value) {
+         value = pc_pci_hole64_start();
+     }
+     return value;
+@@ -156,7 +155,7 @@ static void q35_host_get_pci_hole64_end(Object *obj, Visitor *v,
+     pci_bus_get_w64_range(h->bus, &w64);
+     value = range_is_empty(&w64) ? 0 : range_upb(&w64) + 1;
+     hole64_end = ROUND_UP(hole64_start + s->mch.pci_hole64_size, 1ULL << 30);
+-    if (s->pci_hole64_fix && value < hole64_end) {
++    if (value < hole64_end) {
+         value = hole64_end;
+     }
+     visit_type_uint64(v, name, &value, errp);
+@@ -181,7 +180,6 @@ static const Property q35_host_props[] = {
+                      mch.above_4g_mem_size, 0),
+     DEFINE_PROP_BOOL(PCI_HOST_PROP_SMM_RANGES, Q35PCIHost,
+                      mch.has_smm_ranges, true),
+-    DEFINE_PROP_BOOL("x-pci-hole64-fix", Q35PCIHost, pci_hole64_fix, true),
+ };
+ 
+ static void q35_host_class_init(ObjectClass *klass, const void *data)
 -- 
 2.47.1
 
