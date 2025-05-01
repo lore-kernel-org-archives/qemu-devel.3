@@ -4,93 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C66D0C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 17:29:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47515C369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 17:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAXj1-0003Ti-IF; Thu, 01 May 2025 13:29:31 -0400
+	id 1uAXms-0005Bi-17; Thu, 01 May 2025 13:33:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAXix-0003TM-9X
- for qemu-devel@nongnu.org; Thu, 01 May 2025 13:29:27 -0400
-Received: from mail-il1-x12d.google.com ([2607:f8b0:4864:20::12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAXiv-0004Ik-9z
- for qemu-devel@nongnu.org; Thu, 01 May 2025 13:29:27 -0400
-Received: by mail-il1-x12d.google.com with SMTP id
- e9e14a558f8ab-3d817bc6eb0so3921115ab.1
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 10:29:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746120563; x=1746725363; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uHrmqxi8sd8InAMCIwenUyUSTKfoTxUcgLW7uwOrWAQ=;
- b=SWu/1phlM4TIkpkVe5Yic464IhZex63egmUwziZ8TBgT8L/PWGQAkpxcZ0J/AOm7Kr
- VQRwgqt8pAXOHfTOTBhY578bF9EYICcGNkX4mSF1sCpchcmmJXh2ds7be5WNeW7jAHbr
- Ez3dt1OA7uZ8wvPiRKDiHwXpaQmjuqgRGWtZBn0a2sq7j+2gDs82avnm4Ixkq6DxB59m
- qfsXywkjWUXLpxhZ2lPgL5Yaovy1Sk0px4hkK7aslCTuJjQo9BsD4lp2AD4DqkdGzJOj
- jEIVktb3Jzw7M3IduzLsggqDk7WYEBW5XnV9IVVQXid/UzTENNm7C3X6K8nl6QV3HZOD
- maOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746120563; x=1746725363;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uHrmqxi8sd8InAMCIwenUyUSTKfoTxUcgLW7uwOrWAQ=;
- b=sHPdCjbgtqSEHwNQCRsJYZBo794QM5ussLN4sXB3mmRZ39VOAV99GeKdWH/bXX8/ny
- d/ouqLOrpdJYEZUHA8NcFftfXtXW4GfttVEp5YAyz6ImLlLbf4m8utmeLG3eszBdV/sa
- BgnzCNCNWhelq0b0emT1n9P3PUegpkxHnRwHvYsSjSXOxLkHp1NsAZCKFdN2IcA/oJh2
- Xlz0OQnIIF8fK3E2OGcf0rww5TKuPwpX+Ac9kkBOcPQGdxn7k0hCjH2rZP2LRwhxm9vp
- SvecKPggugFAiS3el2iQJ0Tp/V+0/sSILGgs0SfQG7wHyC/aImsi4OZU+QRTFc9xxbVG
- BjAA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXpl6eZ4ycfB2QPhNo9CYz5z6vrHQJtCFo/JbMe2wF325sMuf7lgyhqYuaAVRJTYE+spaaFeq+KXKGR@nongnu.org
-X-Gm-Message-State: AOJu0YzHyLYUzkBV5wNyUd/LkRm+OWYdCpyzzEIc4SzNXaK6WRowX1w3
- 7hHGJLbjZyynus4e/kteRkZXn91RzYnGHEwkd2ZrtuahGNL23BXR89+OBa/gMoA=
-X-Gm-Gg: ASbGncuwcU8AEBmS0+X1F7OusGPXBEQI3MDgstHkHPhsrwkVE244++/24OFUbjdjjIj
- 70zdsyXWEx0j0/Rrbskd9FKvgGfylY1VU4MzJiwEUnpxQb9ee/hYNZ9adYHutWzUOqeHL4U5WHz
- 8wQGZZuq7qLJZx3Z5s0W6WiqLB+tnot/wsYoir8My5ODwvwX7a4S89k7eoEhkG3zmBAOlANoTwt
- dLo+ueJtqapkv7FcoRqmUrFIj5ONoXOrrEQUfsLnq2DcZaeCXOwVHWDQqXBh7KY3auPINnU4AFo
- zB/3dgKDnA8JhOefcbL+tDGSUeP9319FCiYJqIitoR1CTuByqdxr1rUKIqCGkYC/fC2vRrLuWTJ
- Zx2xPDKfodpvHf52hKfY=
-X-Google-Smtp-Source: AGHT+IFpUAzMl9CmQAiD81iS9Y8wRJuJIjfwv99Y6VJddWv3tpd8XzT53DwX0l0wyWRqhmjYacA53g==
-X-Received: by 2002:a05:6e02:1c0b:b0:3d4:337f:121c with SMTP id
- e9e14a558f8ab-3d96f1b2017mr45573075ab.10.1746120563540; 
- Thu, 01 May 2025 10:29:23 -0700 (PDT)
-Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3d975eca7b6sm2266665ab.38.2025.05.01.10.29.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 May 2025 10:29:22 -0700 (PDT)
-Message-ID: <24e572c1-7000-40ef-b006-a346a2e39792@linaro.org>
-Date: Thu, 1 May 2025 19:29:20 +0200
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uAXmq-0005AI-Cm
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 13:33:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uAXmo-0004z7-Ic
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 13:33:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746120805;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Xt8ToVu5X4DE2pvr6+jXx4u3GB25x2oj60FdoWCghFM=;
+ b=IuuqwNqxuB1Vl4h2V6X4LxlalYFH0DquJfzJsy61WVyioMxPpZ082cLXXqTmbajMj6LYTc
+ TtdLM4QjiI+1i/ZCO6FZwXwnGL18XL8I27VldILv2vIcaCzkTzh5t0cg7LDGfBAXw63GmB
+ g1tx9fxP0aKz+RdoYlFsaP0mkavsv7c=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-aWh2nuekM0K-HsSSiw-DBQ-1; Thu,
+ 01 May 2025 13:33:22 -0400
+X-MC-Unique: aWh2nuekM0K-HsSSiw-DBQ-1
+X-Mimecast-MFC-AGG-ID: aWh2nuekM0K-HsSSiw-DBQ_1746120801
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B57011956094; Thu,  1 May 2025 17:33:20 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.84])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 96C0919560A3; Thu,  1 May 2025 17:33:17 +0000 (UTC)
+Date: Thu, 1 May 2025 12:33:14 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Sunny Zhu <sunnyzhyy@qq.com>
+Cc: hreitz@redhat.com, jsnow@redhat.com, kwolf@redhat.com, 
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, stefanha@redhat.com, 
+ vsementsov@yandex-team.ru
+Subject: Re: [PATCH v3 07/11] mirror: Skip pre-zeroing destination if it is
+ already zero
+Message-ID: <62z5r3pt24o3ng2iumeoz4hmzavveucs3o56yj5mlg3quinkv6@keliqtsk3c54>
+References: <20250425005439.2252467-20-eblake@redhat.com>
+ <tencent_5A9BAC6959E81AE41E493B07736535CE7608@qq.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/1] Optimizing the print format of the QEMU monitor
- 'info mtree'
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Chao Liu <lc00631@tecorigin.com>, pbonzini@redhat.com, peterx@redhat.com, 
- david@redhat.com, armbru@redhat.com, zhangtj@tecorigin.com,
- zqz00548@tecorigin.com, qemu-devel@nongnu.org
-References: <cover.1746065388.git.lc00631@tecorigin.com>
- <6d17f9a1-67d9-4a97-ae1d-21a78d2592a4@linaro.org>
- <5d1cef0e-a8b8-77ed-0ad8-ab7c4e15fbdb@eik.bme.hu>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5d1cef0e-a8b8-77ed-0ad8-ab7c4e15fbdb@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12d;
- envelope-from=philmd@linaro.org; helo=mail-il1-x12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <tencent_5A9BAC6959E81AE41E493B07736535CE7608@qq.com>
+User-Agent: NeoMutt/20250404
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.644,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,83 +86,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/5/25 15:49, BALATON Zoltan wrote:
-> On Thu, 1 May 2025, Philippe Mathieu-Daudé wrote:
->> Hi Chao,
->>
->> On 1/5/25 04:24, Chao Liu wrote:
->>> Hi, all:
->>>
->>> Thanks to BALATON, and David for their reviews.
->>>
->>> In PATCH v6:
->>> 1. Replaced the bool type with enum mtree_node_type to improve code 
->>> readability.
->>> 2. Modified the output to use only one horizontal dash instead of 
->>> two, and
->>>     aligned character printing for a cleaner look.
->>>
->>> like this:
->>>
->>> ```
->>> $ ./qemu-system-aarch64 -S -monitor stdio -M raspi4b
->>> (qemu) info mtree
->>> address-space: memory
->>> `- 0000000000000000-ffffffffffffffff (prio 0, i/o): system
->>>     |- 0000000000000000-000000007fffffff (prio 0, ram): ram
->>> ...
->>>     |- 00000000fe000000-00000000ff7fffff (prio 1, i/o): bcm2835- 
->>> peripherals
->>>     |  |- 00000000fe900000-00000000fe907fff (prio -1000, i/o): 
->>> bcm2835-dbus
->>>     |  |- 00000000fe910000-00000000fe917fff (prio -1000, i/o): 
->>> bcm2835-ave0
->>>     |  |- 00000000fe980000-00000000fe990fff (prio 0, i/o): dwc2
->>>     |  |  |- 00000000fe980000-00000000fe980fff (prio 0, i/o): dwc2-io
->>>     |  |  `- 00000000fe981000-00000000fe990fff (prio 0, i/o): dwc2-fifo
->>>     |  |- 00000000fec00000-00000000fec00fff (prio -1000, i/o): 
->>> bcm2835-v3d
->>>     |  |- 00000000fec11000-00000000fec110ff (prio -1000, i/o): 
->>> bcm2835-clkisp
->>>     |  |- 00000000fee00000-00000000fee000ff (prio -1000, i/o): 
->>> bcm2835-sdramc
->>>     |  `- 00000000fee05000-00000000fee050ff (prio 0, i/o): bcm2835- 
->>> dma-chan15
->>>     |- 00000000ff800000-00000000ff8000ff (prio 0, i/o): bcm2836-control
->>> ...
->>>     |- 00000000ff845600-00000000ff8456ff (prio 0, i/o): gic_cpu
->>>     `- 00000000ff846000-00000000ff847fff (prio 0, i/o): gic_vcpu
->>> ```
->>
->> Could we keep the address ranges aligned? I.e.:
->>
->>>   |--+     00000000fe000000-00000000ff7fffff (prio 1, i/o): 
->> bcm2835-peripherals
->>>   |  |---- 00000000fe900000-00000000fe907fff (prio -1000, i/o): 
->> bcm2835-dbus
->>>   |  |---- 00000000fe910000-00000000fe917fff (prio -1000, i/o): 
->> bcm2835-ave0
->>>   |  |--+  00000000fe980000-00000000fe990fff (prio 0, i/o): dwc2
->>>   |  |  |- 00000000fe980000-00000000fe980fff (prio 0, i/o): dwc2-io
->>>   |  |  `- 00000000fe981000-00000000fe990fff (prio 0, i/o): dwc2-fifo
->>>   |  |---- 00000000fec00000-00000000fec00fff (prio -1000, i/o): 
->>> bcm2835-v3d
->>>   |  |---- 00000000fec11000-00000000fec110ff (prio -1000, i/o): 
->> bcm2835-clkisp
->>>   |  |---- 00000000fee00000-00000000fee000ff (prio -1000, i/o): 
->> bcm2835-sdramc
->>>   |  `---- 00000000fee05000-00000000fee050ff (prio 0, i/o): 
->> bcm2835-dma-chan15
->>>   |------- 00000000ff800000-00000000ff8000ff (prio 0, i/o): bcm2836- 
->>> control
+On Thu, May 01, 2025 at 12:09:26AM +0800, Sunny Zhu wrote:
+> > When doing a sync=full mirroring, QMP drive-mirror requests full
+> > zeroing if it did not just create the destination, and blockdev-mirror
+> > requests full zeroing unconditionally.  This is because during a full
+> > sync, we must ensure that the portions of the disk that are not
+> > otherwise touched by the source still read as zero upon completion.
+> > 
+> > However, in mirror_dirty_init(), we were blindly assuming that if the
+> > destination allows punching holes, we should pre-zero the entire
+> > image; and if it does not allow punching holes, then treat the entire
+> > source as dirty rather than mirroring just the allocated portions of
+> > the source.  Without the ability to punch holes, this results in the
+> > destination file being fully allocated; and even when punching holes
+> > is supported, it causes duplicate I/O to the portions of the
+> > destination corresponding to chunks of the source that are allocated
+> > but read as zero.
+> > 
+> > Smarter is to avoid the pre-zeroing pass over the destination if it
+> > can be proved the destination already reads as zero.  Note that a
+> > later patch will then further improve things to skip writing to the
+> > destination for parts of the image where the source is zero; but even
+> > with just this patch, it is possible to see a difference for any BDS
+> > that can quickly report that it already reads as zero.
+> > 
+> > Note, however, that if the destination was opened with
+> > "detect-zeroes": "unmap", then the user wants us to punch holes where
+> > possible for any zeroes in the source; in that case, we are better off
+> > doing unmap up front in bulk.
+> > 
+> > Signed-off-by: Eric Blake <eblake@redhat.com>
+> > 
+> > ---
+> > 
+> > v3: add exemption for "detect-zeroes":"unmap" on destination
+> > ---
+> >  block/mirror.c | 19 ++++++++++++++++++-
+> >  1 file changed, 18 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/block/mirror.c b/block/mirror.c
+> > index 34c6c5252e1..4059bf96854 100644
+> > --- a/block/mirror.c
+> > +++ b/block/mirror.c
+> > @@ -849,13 +849,30 @@ static int coroutine_fn GRAPH_UNLOCKED mirror_dirty_init(MirrorBlockJob *s)
+> >      bdrv_graph_co_rdunlock();
+> > 
+> >      if (s->zero_target) {
+> > +        offset = 0;
+> > +        bdrv_graph_co_rdlock();
+> > +        ret = bdrv_co_is_all_zeroes(target_bs);
+> > +        bdrv_graph_co_rdunlock();
+> > +        if (ret < 0) {
+> > +            return ret;
+> > +        }
+> > +        /*
+> > +         * If the destination already reads as zero, and we are not
+> > +         * requested to punch holes into existing zeroes, then we can
+> > +         * skip pre-zeroing the destination.
+> > +         */
+> > +        if (ret > 0 &&
+> > +            (target_bs->detect_zeroes != BLOCKDEV_DETECT_ZEROES_OPTIONS_UNMAP ||
+> > +             !bdrv_can_write_zeroes_with_unmap(target_bs))) {
+> > +            offset = s->bdev_length;
 > 
-> I don't think that helps. I was OK with just indents and adding graphics 
-> does not change that but this would actually make it harder to see what 
-> is below what as you'd have to trace back to the beginning of the line 
-> and not just look at the right end where it would not be clear where a 
-> sub region starts so it't less readable even if it looks more organised. 
-> So I'd keep the indent.
+> If when bdrv_can_write_zeroes_with_unmap(target_bs) == true, we prefer to
+> punch holes regardless of whether target_bs already reads as zero, then
+> execute bdrv_co_is_all_zeroes() in advance might be wasteful.
 
-Maybe add the '-t' option then, to display as tree, and not disturb
-the previous command output.
+Hmm.  bdrv_co_is_all_zeroes() is supposed to be fast, but you're right
+that even faster than a syscall or two is no syscalls at all.
+
+> 
+>     if (bdrv_can_write_zeroes_with_unmap(target_bs)) {
+>         initial_zeroing();
+>     } else {
+>         ret = bdrv_co_is_all_zeroes(target_bs);
+>         ...
+>     }
+
+That's a bigger refactoring; probably worth doing in a separate patch.
+It looks like I should probably do a v4 along those lines, to see how
+it compares.
+
+> 
+> > +        }
+> >          if (!bdrv_can_write_zeroes_with_unmap(target_bs)) {
+> >              bdrv_set_dirty_bitmap(s->dirty_bitmap, 0, s->bdev_length);
+> >              return 0;
+> 
+> When ret > 0, We should not return directly here.
+
+That's pre-existing, but correct.  If we can't write zeroes with
+unmap, then we mark the entire image dirty (every zero in the source
+will result in zeroes in the dest - as it was before this series); and
+we have also marked the zero bitmap (writing zeroes will be a no-op if
+the zero bitmap says that is safe).  The rest of this function has two
+purposes: finish pre-zeroing (well, there's nothing to pre-zero if we
+can't punch holes, and especially nothing to pre-zero if we already
+know the image reads as all zero), and populate the dirty bitmap (we
+just populated the entire map here, so it's not worth trying to
+populate the map with finer granularity later), so returning here is
+the right thing to do.
+
+> 
+> >          }
+> > 
+> >          s->initial_zeroing_ongoing = true;
+> > -        for (offset = 0; offset < s->bdev_length; ) {
+> > +        while (offset < s->bdev_length) {
+> >              int bytes = MIN(s->bdev_length - offset,
+> >                              QEMU_ALIGN_DOWN(INT_MAX, s->granularity));
+> 
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
+
 
