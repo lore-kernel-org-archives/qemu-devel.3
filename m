@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22366C369DC
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 23:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B90CC369DC
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 23:22:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAdDK-00054x-KD; Thu, 01 May 2025 19:21:10 -0400
+	id 1uAdDH-0004zn-2W; Thu, 01 May 2025 19:21:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uAdCx-0004lP-7P; Thu, 01 May 2025 19:20:47 -0400
+ id 1uAdD1-0004mp-0v; Thu, 01 May 2025 19:20:52 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uAdCv-0007H4-7d; Thu, 01 May 2025 19:20:46 -0400
+ id 1uAdCx-0007IV-EU; Thu, 01 May 2025 19:20:48 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 99ABF55D25A;
- Fri, 02 May 2025 01:20:43 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id B47BA55D25F;
+ Fri, 02 May 2025 01:20:45 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Rjs2A4OJkx81; Fri,  2 May 2025 01:20:41 +0200 (CEST)
+ with ESMTP id MBTiza-hyQCr; Fri,  2 May 2025 01:20:43 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A7A5655D265; Fri, 02 May 2025 01:20:41 +0200 (CEST)
-Message-ID: <8ca9de03b3c7152fa30703eb9088f164c7a52a9d.1746139668.git.balaton@eik.bme.hu>
+ id C371A55D261; Fri, 02 May 2025 01:20:43 +0200 (CEST)
+Message-ID: <c3ec8e093d5922374c5c2515dad797a6073a281a.1746139668.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1746139668.git.balaton@eik.bme.hu>
 References: <cover.1746139668.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 09/13] hw/ppc/pegasos2: Move hardware specific parts out of
- machine reset
+Subject: [PATCH 11/13] hw/ppc/pegasos2: Add bus frequency to machine state
 To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>
-Date: Fri, 02 May 2025 01:20:41 +0200 (CEST)
+Date: Fri, 02 May 2025 01:20:43 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -60,164 +59,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the chipset reset which is pegasos2 specific out from machine
-reset to a separate function and move parts not specific to pegasos2
-form build_fdt in machine reset so now build_fdt contains pegasos2
-specific parts and renamed accordingly.
+Store the bus frequency in the machine state and set it from instance
+init method.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/ppc/pegasos2.c | 79 ++++++++++++++++++++++++-----------------------
- 1 file changed, 41 insertions(+), 38 deletions(-)
+ hw/ppc/pegasos2.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
 diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index 26a571f82e..e3c1ee9347 100644
+index f7999520e4..ae3f01231d 100644
 --- a/hw/ppc/pegasos2.c
 +++ b/hw/ppc/pegasos2.c
-@@ -57,10 +57,6 @@
+@@ -55,8 +55,6 @@
+ #define H_PRIVILEGE  -3  /* Caller not privileged */
+ #define H_PARAMETER  -4  /* Parameter invalid, out-of-range or conflicting */
  
- #define BUS_FREQ_HZ 133333333
- 
--#define PCI0_CFG_ADDR 0xcf8
--#define PCI1_CFG_ADDR 0xc78
--#define PCI1_IO_BASE  0xfe000000
+-#define BUS_FREQ_HZ 133333333
 -
- #define TYPE_PEGASOS2_MACHINE  MACHINE_TYPE_NAME("pegasos2")
- OBJECT_DECLARE_TYPE(Pegasos2MachineState, MachineClass, PEGASOS2_MACHINE)
+ #define TYPE_PEGASOS_MACHINE MACHINE_TYPE_NAME("pegasos")
+ OBJECT_DECLARE_SIMPLE_TYPE(PegasosMachineState, PEGASOS_MACHINE)
  
-@@ -82,7 +78,7 @@ struct Pegasos2MachineState {
-     uint64_t initrd_size;
- };
- 
--static void *build_fdt(MachineState *machine, int *fdt_size);
-+static void *pegasos2_build_fdt(Pegasos2MachineState *pm, int *fdt_size);
- 
- static void pegasos2_cpu_reset(void *opaque)
- {
-@@ -284,6 +280,9 @@ static void pegasos2_mv_reg_write(Pegasos2MachineState *pm, uint32_t addr,
-                                  MEMTXATTRS_UNSPECIFIED);
+@@ -66,6 +64,7 @@ struct PegasosMachineState {
+     PowerPCCPU *cpu;
+     DeviceState *nb; /* north bridge */
+     DeviceState *sb; /* south bridge */
++    int bus_freq_hz;
+     IRQState pci_irqs[PCI_NUM_PINS];
+     OrIRQState orirq[PCI_NUM_PINS];
+     qemu_irq mv_pirq[PCI_NUM_PINS];
+@@ -135,7 +134,7 @@ static void pegasos2_setup_pci_irq(PegasosMachineState *pm)
+                                 qdev_get_gpio_in_named(pm->nb, "gpp", 31));
  }
  
-+#define PCI0_CFG_ADDR 0xcf8
-+#define PCI1_CFG_ADDR 0xc78
+-static void pegasos2_init(MachineState *machine)
++static void pegasos_init(MachineState *machine)
+ {
+     PegasosMachineState *pm = PEGASOS_MACHINE(machine);
+     CPUPPCState *env;
+@@ -158,7 +157,7 @@ static void pegasos2_init(MachineState *machine)
+     }
+ 
+     /* Set time-base frequency */
+-    cpu_ppc_tb_init(env, BUS_FREQ_HZ / 4);
++    cpu_ppc_tb_init(env, pm->bus_freq_hz / 4);
+     qemu_register_reset(pegasos2_cpu_reset, pm->cpu);
+ 
+     /* RAM */
+@@ -603,6 +602,13 @@ static bool pegasos2_setprop(MachineState *ms, const char *path,
+     return true;
+ }
+ 
++static void pegasos2_init(Object *obj)
++{
++    PegasosMachineState *pm = PEGASOS_MACHINE(obj);
 +
- static uint32_t pegasos2_pci_config_read(Pegasos2MachineState *pm, int bus,
-                                          uint32_t addr, uint32_t len)
- {
-@@ -308,23 +307,12 @@ static void pegasos2_pci_config_write(Pegasos2MachineState *pm, int bus,
- 
- static void pegasos2_superio_write(uint8_t addr, uint8_t val)
- {
--    cpu_physical_memory_write(PCI1_IO_BASE + 0x3f0, &addr, 1);
--    cpu_physical_memory_write(PCI1_IO_BASE + 0x3f1, &val, 1);
-+    cpu_physical_memory_write(0xfe0003f0, &addr, 1);
-+    cpu_physical_memory_write(0xfe0003f1, &val, 1);
- }
- 
--static void pegasos2_machine_reset(MachineState *machine, ResetType type)
-+static void pegasos2_chipset_reset(Pegasos2MachineState *pm)
- {
--    Pegasos2MachineState *pm = PEGASOS2_MACHINE(machine);
--    void *fdt;
--    uint64_t d[2];
--    int sz;
--
--    qemu_devices_reset(type);
--    if (!pm->vof) {
--        return; /* Firmware should set up machine so nothing to do */
--    }
--
--    /* Otherwise, set up devices that board firmware would normally do */
-     pegasos2_mv_reg_write(pm, 0, 4, 0x28020ff);
-     pegasos2_mv_reg_write(pm, 0x278, 4, 0xa31fc);
-     pegasos2_mv_reg_write(pm, 0xf300, 4, 0x11ff0400);
-@@ -387,6 +375,23 @@ static void pegasos2_machine_reset(MachineState *machine, ResetType type)
- 
-     pegasos2_pci_config_write(pm, 1, (PCI_DEVFN(12, 6) << 8) |
-                               PCI_INTERRUPT_LINE, 2, 0x309);
++    pm->bus_freq_hz = 133333333;
 +}
 +
-+static void pegasos2_machine_reset(MachineState *machine, ResetType type)
-+{
-+    Pegasos2MachineState *pm = PEGASOS2_MACHINE(machine);
-+    void *fdt;
-+    uint32_t c[2];
-+    uint64_t d[2];
-+    int sz;
-+
-+    qemu_devices_reset(type);
-+    if (!pm->vof) {
-+        return; /* Firmware should set up machine so nothing to do */
-+    }
-+
-+    /* Otherwise, set up devices that board firmware would normally do */
-+    pegasos2_chipset_reset(pm);
+ static void pegasos2_machine_class_init(ObjectClass *oc, const void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -610,7 +616,7 @@ static void pegasos2_machine_class_init(ObjectClass *oc, const void *data)
+     VofMachineIfClass *vmc = VOF_MACHINE_CLASS(oc);
  
-     /* Device tree and VOF set up */
-     vof_init(pm->vof, machine->ram_size, &error_fatal);
-@@ -405,10 +410,25 @@ static void pegasos2_machine_reset(MachineState *machine, ResetType type)
-         exit(1);
-     }
- 
--    fdt = build_fdt(machine, &sz);
-+    fdt = pegasos2_build_fdt(pm, &sz);
-     if (!fdt) {
-         exit(1);
-     }
-+
-+    /* Set memory size */
-+    c[0] = 0;
-+    c[1] = cpu_to_be32(machine->ram_size);
-+    qemu_fdt_setprop(fdt, "/memory@0", "reg", c, sizeof(c));
-+
-+    /* Boot parameters */
-+    if (pm->initrd_addr && pm->initrd_size) {
-+        qemu_fdt_setprop_cell(fdt, "/chosen", "linux,initrd-end",
-+                              pm->initrd_addr + pm->initrd_size);
-+        qemu_fdt_setprop_cell(fdt, "/chosen", "linux,initrd-start",
-+                              pm->initrd_addr);
-+    }
-+    qemu_fdt_setprop_string(fdt, "/chosen", "bootargs",
-+                            machine->kernel_cmdline ?: "");
-     /* FIXME: VOF assumes entry is same as load address */
-     d[0] = cpu_to_be64(pm->kernel_entry);
-     d[1] = cpu_to_be64(pm->kernel_size - (pm->kernel_entry - pm->kernel_addr));
-@@ -828,12 +848,10 @@ static void *load_dtb(const char *filename, int *fdt_size)
-     return fdt;
+     mc->desc = "Genesi/bPlan Pegasos II";
+-    mc->init = pegasos2_init;
++    mc->init = pegasos_init;
+     mc->reset = pegasos2_machine_reset;
+     mc->block_default_type = IF_IDE;
+     mc->default_boot_order = "cd";
+@@ -640,6 +646,7 @@ static const TypeInfo pegasos_machine_types[] = {
+         .name          = MACHINE_TYPE_NAME("pegasos2"),
+         .parent        = TYPE_PEGASOS_MACHINE,
+         .class_init    = pegasos2_machine_class_init,
++        .instance_init = pegasos2_init,
+         .interfaces = (const InterfaceInfo[]) {
+               { TYPE_PPC_VIRTUAL_HYPERVISOR },
+               { TYPE_VOF_MACHINE_IF },
+@@ -777,7 +784,7 @@ static void add_pci_device(PCIBus *bus, PCIDevice *d, void *opaque)
+     g_string_free(node, TRUE);
  }
  
--static void *build_fdt(MachineState *machine, int *fdt_size)
-+static void *pegasos2_build_fdt(Pegasos2MachineState *pm, int *fdt_size)
+-static void add_cpu_info(void *fdt, PowerPCCPU *cpu)
++static void add_cpu_info(void *fdt, PowerPCCPU *cpu, int bus_freq)
  {
--    Pegasos2MachineState *pm = PEGASOS2_MACHINE(machine);
-     FDTInfo fi;
-     PCIBus *pci_bus;
--    uint32_t cells[2];
-     void *fdt = load_dtb("pegasos2.dtb", fdt_size);
+     uint32_t cells[2];
  
-     if (!fdt) {
-@@ -841,21 +859,6 @@ static void *build_fdt(MachineState *machine, int *fdt_size)
+@@ -824,8 +831,8 @@ static void add_cpu_info(void *fdt, PowerPCCPU *cpu)
+     qemu_fdt_setprop_cell(fdt, cp, "reservation-granule-size", 4);
+     qemu_fdt_setprop_cell(fdt, cp, "timebase-frequency",
+                           cpu->env.tb_env->tb_freq);
+-    qemu_fdt_setprop_cell(fdt, cp, "bus-frequency", BUS_FREQ_HZ);
+-    qemu_fdt_setprop_cell(fdt, cp, "clock-frequency", BUS_FREQ_HZ * 7.5);
++    qemu_fdt_setprop_cell(fdt, cp, "bus-frequency", bus_freq);
++    qemu_fdt_setprop_cell(fdt, cp, "clock-frequency", bus_freq * 7.5);
+     qemu_fdt_setprop_cell(fdt, cp, "cpu-version", cpu->env.spr[SPR_PVR]);
+     cells[0] = 0;
+     cells[1] = 0;
+@@ -861,7 +868,7 @@ static void *pegasos2_build_fdt(PegasosMachineState *pm, int *fdt_size)
      }
      qemu_fdt_setprop_string(fdt, "/", "name", "bplan,Pegasos2");
  
--    /* Set memory size */
--    cells[0] = 0;
--    cells[1] = cpu_to_be32(machine->ram_size);
--    qemu_fdt_setprop(fdt, "/memory@0", "reg", cells, 2 * sizeof(cells[0]));
--
--    /* Boot parameters */
--    if (pm->initrd_addr && pm->initrd_size) {
--        qemu_fdt_setprop_cell(fdt, "/chosen", "linux,initrd-end",
--                              pm->initrd_addr + pm->initrd_size);
--        qemu_fdt_setprop_cell(fdt, "/chosen", "linux,initrd-start",
--                              pm->initrd_addr);
--    }
--    qemu_fdt_setprop_string(fdt, "/chosen", "bootargs",
--                            machine->kernel_cmdline ?: "");
--
-     add_cpu_info(fdt, pm->cpu);
+-    add_cpu_info(fdt, pm->cpu);
++    add_cpu_info(fdt, pm->cpu, pm->bus_freq_hz);
  
      fi.fdt = fdt;
+     fi.path = "/pci@c0000000";
 -- 
 2.41.3
 
