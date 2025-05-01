@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0457C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:14:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34386C3ABA3
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 21:22:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAbEh-00067T-Na; Thu, 01 May 2025 17:14:27 -0400
+	id 1uAbLl-0000z8-Fx; Thu, 01 May 2025 17:21:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbEf-00066m-7B
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:14:25 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1uAbLf-0000ru-3a
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:39 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uAbEd-00086g-8h
- for qemu-devel@nongnu.org; Thu, 01 May 2025 17:14:24 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2243803b776so24382575ad.0
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:14:22 -0700 (PDT)
+ id 1uAbLd-0001Wn-5Q
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 17:21:38 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-b061a775ac3so1427836a12.0
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 14:21:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746134061; x=1746738861; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IjAzNRLbOrsoMtq/EPdzdknnHjpmqyE7LPvsWSwmdj8=;
- b=Zy/7VQjIEzH1X+U+aGj9Bazd4yzMqG3jAVSK2QRWE1qHlIDVTNSxktxmQ0//MfKE3G
- 7GX5eVMjt/vkRPC5r3y/c9y+6TqvDUeKe2bmxX4SFftFuBZQAM+64X+USaGkg9fEmKFZ
- PbnWjmiW/iZZm1rNopT/HxgXPnc1326f7lr7IknBW2cAUs4nORXbCXmP+YS03ANx2GyG
- 9JsB3sRGIXS8Vp/0xt3ST6LmYaZDRFGelWJEqkuEbOijDK8xAVzk0FCf2oFcgWp3LLEe
- 0JaSxGVuxW6+sOJP6xulz1y9Tk8ziS+jKwoPrVeVxOwZlejlglvfqkkHCSCNGKFThasM
- Krrw==
+ d=linaro.org; s=google; t=1746134495; x=1746739295; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qEe9bxPY78rzldhxeSl0yGcr1LEt/gfI/ABj5JQK6lg=;
+ b=v+euWi3ZrxYOrpni3BZDUjJv6pk3I4SIUWrrRElvqUf5DK38MoWXlIh9VQwL9mSNWi
+ ua7g7I/vC4GQIWmqSir70xsIYCLJsnD1YVztPTpVCZLvkgHH7OQ0p8rWsBToMj6fAykg
+ sHV0SFD8OENWtb+2B0rrlCommZuXtMFiTBv8/TRlrWgQMaPVk2g17Ci15QXTAnGadBoU
+ pI4nadu22zdIijUQwMBF9u/C0mYfKP91LyNZTMUV1KKQerwLWF0099Jx4njl0XbqQgJJ
+ Dv6svrAgzvOAwEk5Epcl3ZRwD3kV7uShHGGd1/fl5poTUixQ9eiwV5hqtEm3FJ+eBHCc
+ hQZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746134061; x=1746738861;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IjAzNRLbOrsoMtq/EPdzdknnHjpmqyE7LPvsWSwmdj8=;
- b=nxiOyqet6G/mhlG1b1DC6GK4G575H22Rcl5yWoBzqDgYd7Y0HubkTZu571pLVg4B2Y
- ntQGKv35cTBN2IBEZDiU4his7sHlsMj6jwCSefRIbezRFbH/8MSTFzRsHNYjgEUn7rRI
- NWgS2Y3RY9jwZqbzQjRPgDeIo2uUhGCGl0ZuY+xVAXwGD5KUHGrDgoYv5dBtpqh3ytoB
- /glqF143fggG5wxFCLJTAJ5eh4mNhbIM+Sbt7/NoMWNZ1S748ttD/Jkju6GvSpraRAUa
- l3YpLLJYXkslMzoFrA278O9BrofobHXqX3Ml0B40jcJQxzfJnFzH+4auvOrk8sgjIDF1
- MByA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXdaUq/A2/ylp39aIQLhblKwE9mWozP5JdKY91YVv1wgTcI8uwZWYJnsJm8GhbhPoaPvp3Hhxf6Dcc2@nongnu.org
-X-Gm-Message-State: AOJu0YxfGIAP17NeBNb58t89emLayQG9jQe9OnOUw7EiE9CAmHEVfYKW
- HCo8mi1aDMR3v98IDhmNmf9iSvQGDA6uhG7QTebwYmQfX8QNJnaEV75x5K9inv4=
-X-Gm-Gg: ASbGncvXWPscpIFCXnq6rXYiQGm37mIQx1NpJg78np1ODiTLdwbn796vJVyvTJ6umKL
- zy4XzoeomHDG1yhm1dLjvsYZbdlDWfzARvEr6lPoM1cgUVfHZhkiWwdNUgNqoJImIELFrVvBRG/
- 05zDR3SihGeAL+W0BDYvpcZ5YA35j5S6+So29VDU9yxqCyCaWMyah5pG4dZKVjr/WgxWWG3eVFL
- iHQP3TktI7j7xznEzZZhAuHe13LlO+/nLLzDypa2qiLu6EiBNN02PXLoiNOEiESjYAIivbYz5pm
- BcsBykpd3cl8d4JbmJ+8a2LbLp/YX61MwWrjFlpxpHJOC+d8l/WJ9eNFD7mt2uSA71iizaNYL7C
- iLb9Ligg=
-X-Google-Smtp-Source: AGHT+IHrnRruNGSrJshHmWNz0Xu2ccGJ1f+1U8k2VE3mc5qFlXIZViS2LGp1pbaM8OTkQ1Dqx2jCgg==
-X-Received: by 2002:a17:903:2f91:b0:223:90ec:80f0 with SMTP id
- d9443c01a7336-22e10344ebamr9025215ad.22.1746134060854; 
- Thu, 01 May 2025 14:14:20 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ d=1e100.net; s=20230601; t=1746134495; x=1746739295;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qEe9bxPY78rzldhxeSl0yGcr1LEt/gfI/ABj5JQK6lg=;
+ b=cNrAYNNqY8DRjMq6GnUJzEBIFcMelskl6Dd38djUNtVe4Pc/bdHqX31GH80VcA9puv
+ /Um/ybfoYT9TaeqCuOemPnXuBb7kHIKb/BDzAyQnu+P+cphqvGHWDzFsT/+647KFd2To
+ jTEhO0f63fUQ2MK2WrLM/3HUGkEe53k+H7rHq8XAkevLh0FhiWzoBjkp6W4//6UVvw3z
+ 3XwjjK+HJrKBhZzxq8Tiehn1SUqlGBKIJZBRxBcv8uksivrwQyfaWyG5dnerMnjKyC9u
+ 2ffhAEYpEYifb06UNqs/gzHWr8X1n9SXdoJADLoeVh2nAX9NE2gtYRgesQLzQb8lsK90
+ MpZg==
+X-Gm-Message-State: AOJu0YxmQdlLu4YULHpzHlYliXiTvPuXPH/uo0XEwAswKii+IGSwqhQu
+ CQUKjOrjBrFVeEWkBmKEZUDrFjRRrJVziAh2fYYv9BZAbMgrsxNkQatgG5MTRn8ngiqdEeHbNFm
+ u
+X-Gm-Gg: ASbGncspXiQw9xvke48Oe3Imu6zckzhPtWKkmimhnAP8VR71zCx5kwhMyHM0StBQmSv
+ AWZk/15PG6xA6PBO8xP5Y12GIToqcepxRl+Xh6HPWebqqVMOcUjmdC7J48TTuHUgikHfOWpuSJA
+ 9Vj7qpj1pSLXFTDj3TFnygAGY8CGq2H0TZ5hVInqbtU49GRs0VMPUCbhv40W9uhddE0VYAXA7YK
+ BXiZQuV1bqsvGHfwIsbIL8Ej0HBEOX2RfS1kPb2g9XUPiFUTI4tsvH82HNOLffM2kHoJRnOv1Rf
+ pc2A4Xd0FxjxC93tcKiygXNaYE2R9QsjJi7WtwZsK7+qqI9rbwDa5ltI7oZy3bxihUaWL+04Y+s
+ =
+X-Google-Smtp-Source: AGHT+IHAopIn5+8ItdZXk/VxBHbxag8ev8c1fz0ijh6faLJmFQBIIZDRGaMIh0uQP0onjke6xZ0QHQ==
+X-Received: by 2002:a17:90b:514b:b0:2ff:6f88:b04a with SMTP id
+ 98e67ed59e1d1-30a4e5c5ec1mr870218a91.15.1746134495367; 
+ Thu, 01 May 2025 14:21:35 -0700 (PDT)
+Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e1091702asm819235ad.206.2025.05.01.14.14.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 May 2025 14:14:20 -0700 (PDT)
-Message-ID: <757f10a3-712b-44a0-9914-5b221e185a20@linaro.org>
-Date: Thu, 1 May 2025 14:14:18 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 29/33] target/arm/ptw: replace target_ulong with
- uint64_t
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>, anjo@rev.ng,
- kvm@vger.kernel.org
-References: <20250501062344.2526061-1-pierrick.bouvier@linaro.org>
- <20250501062344.2526061-30-pierrick.bouvier@linaro.org>
- <21d32a4f-8954-4a36-ba0d-6cb7a50f242d@linaro.org>
-Content-Language: en-US
+ 98e67ed59e1d1-30a476267e0sm1384573a91.39.2025.05.01.14.21.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 May 2025 14:21:34 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <21d32a4f-8954-4a36-ba0d-6cb7a50f242d@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 24/59] accel/tcg: Generalize fake_user_interrupt test
+Date: Thu,  1 May 2025 14:20:38 -0700
+Message-ID: <20250501212113.2961531-25-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250501212113.2961531-1-richard.henderson@linaro.org>
+References: <20250501212113.2961531-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,32 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/1/25 12:35, Philippe Mathieu-Daudé wrote:
-> On 1/5/25 08:23, Pierrick Bouvier wrote:
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   target/arm/ptw.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
->> index d0a53d0987f..424d1b54275 100644
->> --- a/target/arm/ptw.c
->> +++ b/target/arm/ptw.c
->> @@ -1660,7 +1660,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
->>       uint64_t ttbr;
->>       hwaddr descaddr, indexmask, indexmask_grainsize;
->>       uint32_t tableattrs;
->> -    target_ulong page_size;
->> +    uint64_t page_size;
-> 
-> Alternatively size_t.
+Test for the hook being present instead of ifdef TARGET_I386.
 
-No, this is not related to the size of any host-side object.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ accel/tcg/cpu-exec.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Bear in mind this particular page_size is used for the sizes of the intermediate page 
-table levels.  So, at the very top level of the page table walk this will be quite large.
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 279df5fae7..8ff4a34509 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -732,10 +732,10 @@ static inline bool cpu_handle_exception(CPUState *cpu, int *ret)
+      * If user mode only, we simulate a fake exception which will be
+      * handled outside the cpu execution loop.
+      */
+-#if defined(TARGET_I386)
+     const TCGCPUOps *tcg_ops = cpu->cc->tcg_ops;
+-    tcg_ops->fake_user_interrupt(cpu);
+-#endif /* TARGET_I386 */
++    if (tcg_ops->fake_user_interrupt) {
++        tcg_ops->fake_user_interrupt(cpu);
++    }
+     *ret = cpu->exception_index;
+     cpu->exception_index = -1;
+     return true;
+-- 
+2.43.0
 
-
-
-r~
 
