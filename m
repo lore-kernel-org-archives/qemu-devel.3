@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B2C3C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:33:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E65E6C3ABA3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:34:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAh8g-0005iz-Fh; Thu, 01 May 2025 23:32:39 -0400
+	id 1uAh7l-0004CO-2T; Thu, 01 May 2025 23:31:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh8U-0005VL-6W
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:32:26 -0400
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh7T-00049I-LZ
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:31:28 -0400
 Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh8Q-0001LQ-UF
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:32:25 -0400
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh7R-0001FQ-0K
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:31:23 -0400
 Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7399a2dc13fso2422365b3a.2
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:32:22 -0700 (PDT)
+ d2e1a72fcca58-736c1138ae5so1710947b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:31:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746156741; x=1746761541; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746156679; x=1746761479; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n8tiJsmXmh7ujz+DQwMqz4CAbXuxxW7Y55FvEeVv1vo=;
- b=T7MfQzMdf29FUG2K5su68PtPmIctgpGpkhIbW6+IXyJwXMjJj44oe72Ct2hcGfYaHN
- EgtmJuVqo4F9Zq5aLs4dHMrOjCbnnoex8WHMR0xfUfnRo0CTxDrQiOfMAygC7ranTqkI
- 8fI1xwc1uNku5wscl4NzcFTtyru4aKQtMCLJl7qJ5W0dy2YVtndU72olY12KuS9Qm4Wh
- wxL25ZAMDfKZ0wF/BmQ8ij/Xg2APcpB6Y1C4TFFro88pFI1M2+cOph9vT/Z7tTajhY5c
- PeLrq7qpsHV5bVIRYb8ASyn9GsJQE5i+zhKE4dA9bFafa3I8aPGLDToS9XiuJsKqPoWs
- Q9mQ==
+ bh=pyx6RarOeQbfyFAQ0Udrqez9p+XhUS2Q4KG6PVcPYIE=;
+ b=Gf2qCGigkrjIQU24mauowtQUpJn6ZvyVukQjAIuDPecBde4NK0iKR2yW5EKywPJrNR
+ bdhYVSDFQpw8CB5jHu/pi8eoG6nKS44IMK1NHQJMXToVK1/gFOT+fOdEuXJrSkOERQyS
+ 7kqYCL8ZLMqirVPnMMQyggXZWGKJP8HlLYaQZnsHMqmwUJtA06A6YECLr74R27Q/eBHT
+ p9mhhbCb1tDsqNxRYA6apRrvUGOF4bRiljSZKi0Ps8a25FLcoHvrTGoy9v6To3/vVsPY
+ TY84DmJNKKpRXZDuYEJ2k74xV5pwhscujFDOIa4eBBiHAd4wpW9f/SYz0P2vVjElTEmC
+ 6KUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746156741; x=1746761541;
+ d=1e100.net; s=20230601; t=1746156679; x=1746761479;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=n8tiJsmXmh7ujz+DQwMqz4CAbXuxxW7Y55FvEeVv1vo=;
- b=LhNySGlnlIcLxqZd8O6IslsxjTIULrywQTN+Vz3OfB0/owUCniqRv3vCYv6TourWdF
- U6MgOLLTyVTyNuhmlJ5ao1yyXWDqq7x+BiqIXfoDDojmm4uich5i7FcmpFWtUoedXL1b
- phTOJLbGHrA2qER5WgovkzLGokuZWb4o6PbNoBjl6meoQxqVahLlHicpNwkzVbzQTJ9o
- A2qPP2EXnAIT56N5qyUCBlpcvRZZ3LGfaBto/c3hHKKn4gSUhZwsOD0zt/sHrgtYI6T+
- 5Pp8nMb+xUMi15t0lMX7Cq/lB0mUvaya8gOUOobFdfr5XOHydLJ5hk2lvOflbWYNaNiy
- Qnhg==
+ bh=pyx6RarOeQbfyFAQ0Udrqez9p+XhUS2Q4KG6PVcPYIE=;
+ b=m6y1gvKiQPZD884GH6kRldObBTGtOLS2FimEcExagoTW6Gix6+nKCwMubC5sQaj1/v
+ zr9pP/49q6XjlKsrFJRIQx5JqyIdUehpFrr70QS5YjCeTUfGzqjswD0LZyjNiQgwCDW+
+ MWvKzu0X3sNueghZPHVbNcBXrYHMqftkCAQAagmQQ0isu9FyC8IlmvtKnG51/xLwJk9e
+ TZ4Rfo8ySukVEU/eAxBlzAT1yaUnHxgKN4mfCTWrl2Tdq4bvhNPwpgRVLamM+TYDcJ0Y
+ bhpj6FGJqjx+T2PMe07CPVuGzFYMFbVVEtM5zrOvlUg6dQfiyhgz+96CfbCmxQjET1lj
+ gayw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWAKwysDQF6DLdznWj8W/piXxEProkMPO1VbdRvH8oKKT60CGIJubVQVonY6sv6Nl+KwD2+h9vQ5p3e@nongnu.org
-X-Gm-Message-State: AOJu0YxQbuDNvGmBd56Tyce1TcHX4FAOZXjVLIkem1dHcj6/nE7wIfDM
- hzr+69i6qwprLI00yJFLOCW3St2I44hnp5aqjImpQ4ig3BhPoCO+
-X-Gm-Gg: ASbGncsIHdV+ZGBAVZ+jKdntm1NyN00eg1kPpGWyVMjHsbvZ31qbDtwXvLMZNwxPCbP
- gdRTZpKEZWNTHxMEZtEiA4iwr0MiEEzcKFd7xswXgArXfY668HX8DWmXfjDi5cJybIL5w/6tD9c
- 9A8PxB//69OB+bA3XAAGSPI/7r5JNmY5tKZB99e64EcFaqXFVN3sS0KxQQZBPqddT39AebBsB3a
- +7BihEOpGbKWQ4nfWPEi7vMZBLlgXbqGwTPoehHuv1P/Dikw6W/5bq6VwLutgIFkVXVROjLVy8d
- VH43yqHyObkyuywLGX5kRrbBstjpzv0Hp5NuqjHehUzQ
-X-Google-Smtp-Source: AGHT+IHHF6hsA3Q6P8LNTJuBIVfyPAPy4Ys2pteSMpn1iDUMVXZnZpEy3KPe3JAZGErZwZEA68quWg==
-X-Received: by 2002:a05:6a21:108c:b0:1fe:61a4:71d8 with SMTP id
- adf61e73a8af0-20cdee3ae3emr1975044637.22.1746156741504; 
- Thu, 01 May 2025 20:32:21 -0700 (PDT)
+ AJvYcCUGnaH1y3RpPyLz8ae2DOc8YpkdWpTxra8zv+QPhOD5OzmbvUEL1EVIWvXap8ywjUS8u8Gv6At9t1gJ@nongnu.org
+X-Gm-Message-State: AOJu0Yxb/81Q9ST+5FWg1jQyOkaAPU7/uDasXSmGXQmdWo54J6ntdRvT
+ UmQwvSuunqWMs5j5JLNh7eRyuWWA0sjT2NNw0dNcOoST4HoqcmKL
+X-Gm-Gg: ASbGncs1D6LWUpm+JMf5d/zhrc96hWlDP/zKZcT6R6m8D/9U5EVRNQX3B5XE/8NUIv5
+ OOlzSrpCP/vZ9sKPG3eYOnBG8TeKBPWhQp1hf9Zn74gmeVKjgapPYZBRU7Y5NyR4K9WyPUFxp6H
+ MnLt8Zidng2zg+lzNm/DIBCQ1dwDVkcvzVZIuAY6vXc/SL4jf+h7f1pkKJqSggk9acUQVcrfkFQ
+ zIYZg1go9JEKA9XGBuUhhkHU7UYsdqdlNcaOGe31eewmJuaWEbScQZvJgPNRDokOdmdxWdy8sm7
+ 6UozkNHosn+D1216w4yqvlJx9vspjEM6WUfJt0yb1WQc
+X-Google-Smtp-Source: AGHT+IH4BJN80gWH8MS7zfoXc/RelSfvAIuXQSqmVphRO0k92l9u45dj1o7POMFYQKK7zNkHcrmsUw==
+X-Received: by 2002:aa7:8e0e:0:b0:740:595b:c2f4 with SMTP id
+ d2e1a72fcca58-740595bc464mr1049281b3a.5.1746156679286; 
+ Thu, 01 May 2025 20:31:19 -0700 (PDT)
 Received: from wheely.local0.net ([220.253.99.94])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74059063f6esm488055b3a.139.2025.05.01.20.32.16
+ d2e1a72fcca58-74059063f6esm488055b3a.139.2025.05.01.20.31.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 20:32:21 -0700 (PDT)
+ Thu, 01 May 2025 20:31:18 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Gerd Hoffmann <kraxel@redhat.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
@@ -73,10 +73,10 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 16/22] usb/msd: Split async packet tracking into data and
- csw
-Date: Fri,  2 May 2025 13:30:40 +1000
-Message-ID: <20250502033047.102465-17-npiggin@gmail.com>
+Subject: [PATCH v4 04/22] tests/qtest/xhci: Add controller and device setup
+ and ring tests
+Date: Fri,  2 May 2025 13:30:28 +1000
+Message-ID: <20250502033047.102465-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250502033047.102465-1-npiggin@gmail.com>
 References: <20250502033047.102465-1-npiggin@gmail.com>
@@ -106,257 +106,443 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The async packet handling logic has places that infer whether the
-async packet is data or CSW, based on context. This is not wrong,
-it just makes the logic easier to follow if they are categorised
-when they are accepted.
+Add tests which init the host controller registers to the point where
+command and event rings, irqs are operational. Enumerate ports and set
+up an attached device context that enables device transfer ring to be
+set up and tested.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- include/hw/usb/msd.h |   5 +-
- hw/usb/dev-storage.c | 121 +++++++++++++++++++++++++++----------------
- 2 files changed, 79 insertions(+), 47 deletions(-)
+ hw/usb/hcd-xhci.h               |   7 +
+ hw/usb/hcd-xhci.c               |   7 -
+ tests/qtest/usb-hcd-xhci-test.c | 336 ++++++++++++++++++++++++++++++++
+ 3 files changed, 343 insertions(+), 7 deletions(-)
 
-diff --git a/include/hw/usb/msd.h b/include/hw/usb/msd.h
-index f9fd862b529..a40d15f5def 100644
---- a/include/hw/usb/msd.h
-+++ b/include/hw/usb/msd.h
-@@ -33,8 +33,11 @@ struct MSDState {
-     struct usb_msd_csw csw;
-     SCSIRequest *req;
-     SCSIBus bus;
+diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
+index 20059fcf66c..02a005ce78d 100644
+--- a/hw/usb/hcd-xhci.h
++++ b/hw/usb/hcd-xhci.h
+@@ -350,6 +350,13 @@ typedef struct XHCIRing {
+     bool ccs;
+ } XHCIRing;
+ 
++typedef struct XHCIEvRingSeg {
++    uint32_t addr_low;
++    uint32_t addr_high;
++    uint32_t size;
++    uint32_t rsvd;
++} XHCIEvRingSeg;
 +
-     /* For async completion.  */
--    USBPacket *packet;
-+    USBPacket *data_packet;
-+    USBPacket *csw_in_packet;
-+
-     /* usb-storage only */
-     BlockConf conf;
-     bool removable;
-diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
-index fe8955bf212..66fffda3713 100644
---- a/hw/usb/dev-storage.c
-+++ b/hw/usb/dev-storage.c
-@@ -185,18 +185,33 @@ static const USBDesc desc = {
-     .str   = desc_strings,
+ typedef struct XHCIPort {
+     XHCIState *xhci;
+     uint32_t portsc;
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index c12b72cb9d8..ef9f2a7db41 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -128,13 +128,6 @@ struct XHCIEPContext {
+     QEMUTimer *kick_timer;
  };
  
--static void usb_msd_packet_complete(MSDState *s, int status)
-+static void usb_msd_data_packet_complete(MSDState *s, int status)
- {
--    USBPacket *p = s->packet;
-+    USBPacket *p = s->data_packet;
+-typedef struct XHCIEvRingSeg {
+-    uint32_t addr_low;
+-    uint32_t addr_high;
+-    uint32_t size;
+-    uint32_t rsvd;
+-} XHCIEvRingSeg;
+-
+ static void xhci_kick_ep(XHCIState *xhci, unsigned int slotid,
+                          unsigned int epid, unsigned int streamid);
+ static void xhci_kick_epctx(XHCIEPContext *epctx, unsigned int streamid);
+diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
+index abdd52c444c..291d1dfc36e 100644
+--- a/tests/qtest/usb-hcd-xhci-test.c
++++ b/tests/qtest/usb-hcd-xhci-test.c
+@@ -8,6 +8,7 @@
+  */
  
-     /*
--     * Set s->packet to NULL before calling usb_packet_complete
--     * because another request may be issued before
--     * usb_packet_complete returns.
-+     * Set s->data_packet to NULL before calling usb_packet_complete
-+     * because another request may be issued before usb_packet_complete
-+     * returns.
-      */
-     trace_usb_msd_packet_complete();
-+    s->data_packet = NULL;
-+    p->status = status;
-+    usb_packet_complete(&s->dev, p);
+ #include "qemu/osdep.h"
++#include "qemu/bswap.h"
+ #include "libqtest.h"
+ #include "libqtest-single.h"
+ #include "libqos/libqos.h"
+@@ -15,6 +16,8 @@
+ #include "libqos/usb.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci/pci_ids.h"
++#include "hw/pci/pci_regs.h"
++#include "hw/usb/hcd-xhci.h"
+ 
+ typedef struct TestData {
+     const char *device;
+@@ -22,6 +25,22 @@ typedef struct TestData {
+ } TestData;
+ 
+ /*** Test Setup & Teardown ***/
++
++/* Transfer-Ring state */
++typedef struct XHCIQTRState {
++    uint64_t addr; /* In-memory ring */
++
++    uint32_t trb_entries;
++    uint32_t trb_idx;
++    uint32_t trb_c;
++} XHCIQTRState;
++
++typedef struct XHCIQSlotState {
++    /* In-memory device context array */
++    uint64_t device_context;
++    XHCIQTRState transfer_ring[31]; /* 1 for each EP */
++} XHCIQSlotState;
++
+ typedef struct XHCIQState {
+     /* QEMU PCI variables */
+     QOSState *parent;
+@@ -29,6 +48,21 @@ typedef struct XHCIQState {
+     QPCIBar bar;
+     uint64_t barsize;
+     uint32_t fingerprint;
++
++    /* In-memory arrays */
++    uint64_t dc_base_array;
++    uint64_t event_ring_seg;
++    XHCIQTRState command_ring;
++    XHCIQTRState event_ring;
++
++    /* Host controller properties */
++    uint32_t rtoff, dboff;
++    uint32_t maxports, maxslots, maxintrs;
++
++    /* Current properties */
++    uint32_t slotid; /* enabled slot id (only enable one) */
++
++    XHCIQSlotState slots[32];
+ } XHCIQState;
+ 
+ #define XHCI_QEMU_ID (PCI_DEVICE_ID_REDHAT_XHCI << 16 | \
+@@ -160,6 +194,8 @@ static void test_usb_uas_hotplug(const void *arg)
+ 
+     qtest_qmp_device_del(qts, "scsihd");
+     qtest_qmp_device_del(qts, "uas");
++
++    xhci_shutdown(s);
+ }
+ 
+ static void test_usb_ccid_hotplug(const void *arg)
+@@ -176,6 +212,305 @@ static void test_usb_ccid_hotplug(const void *arg)
+     /* check the device can be added again */
+     qtest_qmp_device_add(qts, "usb-ccid", "ccid", "{}");
+     qtest_qmp_device_del(qts, "ccid");
++
++    xhci_shutdown(s);
 +}
 +
-+static void usb_msd_csw_packet_complete(MSDState *s, int status)
++static uint64_t xhci_guest_zalloc(XHCIQState *s, uint64_t size)
 +{
-+    USBPacket *p = s->csw_in_packet;
++    uint64_t ret;
 +
-+    /*
-+     * Set s->csw_in_packet to NULL before calling usb_packet_complete
-+     * because another request may be issued before usb_packet_complete
-+     * returns.
-+     */
-+    trace_usb_msd_packet_complete();
-+    s->csw_in_packet = NULL;
-     p->status = status;
--    s->packet = NULL;
-     usb_packet_complete(&s->dev, p);
- }
- 
-@@ -204,8 +219,12 @@ static void usb_msd_fatal_error(MSDState *s)
- {
-     trace_usb_msd_fatal_error();
- 
--    if (s->packet) {
--        usb_msd_packet_complete(s, USB_RET_STALL);
-+    if (s->data_packet) {
-+        usb_msd_data_packet_complete(s, USB_RET_STALL);
++    ret = guest_alloc(&s->parent->alloc, size);
++    g_assert(ret);
++    qtest_memset(s->parent->qts, ret, 0, size);
++
++    return ret;
++}
++
++static uint32_t xhci_cap_readl(XHCIQState *s, uint64_t addr)
++{
++    return qpci_io_readl(s->dev, s->bar, XHCI_REGS_OFFSET_CAP + addr);
++}
++
++static uint32_t xhci_op_readl(XHCIQState *s, uint64_t addr)
++{
++    return qpci_io_readl(s->dev, s->bar, XHCI_REGS_OFFSET_OPER + addr);
++}
++
++static void xhci_op_writel(XHCIQState *s, uint64_t addr, uint32_t value)
++{
++    qpci_io_writel(s->dev, s->bar, XHCI_REGS_OFFSET_OPER + addr, value);
++}
++
++static uint32_t xhci_port_readl(XHCIQState *s, uint32_t port, uint64_t addr)
++{
++    return qpci_io_readl(s->dev, s->bar,
++                         XHCI_REGS_OFFSET_PORT + port * XHCI_PORT_PR_SZ + addr);
++}
++
++static uint32_t xhci_rt_readl(XHCIQState *s, uint64_t addr)
++{
++    return qpci_io_readl(s->dev, s->bar, s->rtoff + addr);
++}
++
++static void xhci_rt_writel(XHCIQState *s, uint64_t addr, uint32_t value)
++{
++    qpci_io_writel(s->dev, s->bar, s->rtoff + addr, value);
++}
++
++static uint32_t xhci_intr_readl(XHCIQState *s, uint32_t intr, uint64_t addr)
++{
++    return xhci_rt_readl(s, XHCI_INTR_REG_IR0 +
++                            intr * XHCI_INTR_IR_SZ + addr);
++}
++
++
++static void xhci_intr_writel(XHCIQState *s, uint32_t intr, uint64_t addr,
++                             uint32_t value)
++{
++    xhci_rt_writel(s, XHCI_INTR_REG_IR0 +
++                      intr * XHCI_INTR_IR_SZ + addr, value);
++}
++
++static void xhci_db_writel(XHCIQState *s, uint32_t db, uint32_t value)
++{
++    qpci_io_writel(s->dev, s->bar, s->dboff + db * XHCI_DBELL_DB_SZ, value);
++}
++
++static bool xhci_test_isr(XHCIQState *s)
++{
++    return xhci_op_readl(s, XHCI_OPER_REG_USBSTS) & XHCI_USBSTS_EINT;
++}
++
++static void wait_event_trb(XHCIQState *s, XHCITRB *trb)
++{
++    XHCITRB t;
++    XHCIQTRState *tr = &s->event_ring;
++    uint64_t er_addr = tr->addr + tr->trb_idx * TRB_SIZE;
++    uint32_t value;
++    guint64 end_time = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
++
++    /* Wait for event interrupt  */
++    while (!xhci_test_isr(s)) {
++        if (g_get_monotonic_time() >= end_time) {
++            g_error("Timeout expired");
++        }
++        qtest_clock_step(s->parent->qts, 10000);
 +    }
 +
-+    if (s->csw_in_packet) {
-+        usb_msd_csw_packet_complete(s, USB_RET_STALL);
-     }
- 
-     /*
-@@ -250,7 +269,7 @@ static void usb_msd_send_status(MSDState *s, USBPacket *p)
- void usb_msd_transfer_data(SCSIRequest *req, uint32_t len)
- {
-     MSDState *s = DO_UPCAST(MSDState, dev.qdev, req->bus->qbus.parent);
--    USBPacket *p = s->packet;
-+    USBPacket *p = s->data_packet;
- 
-     if ((s->mode == USB_MSDM_DATAOUT) != (req->cmd.mode == SCSI_XFER_TO_DEV)) {
-         usb_msd_fatal_error(s);
-@@ -261,10 +280,10 @@ void usb_msd_transfer_data(SCSIRequest *req, uint32_t len)
-     s->scsi_off = 0;
-     if (p) {
-         usb_msd_copy_data(s, p);
--        p = s->packet;
-+        p = s->data_packet;
-         if (p && p->actual_length == p->iov.size) {
-             /* USB_RET_SUCCESS status clears previous ASYNC status */
--            usb_msd_packet_complete(s, USB_RET_SUCCESS);
-+            usb_msd_data_packet_complete(s, USB_RET_SUCCESS);
-         }
-     }
- }
-@@ -272,7 +291,7 @@ void usb_msd_transfer_data(SCSIRequest *req, uint32_t len)
- void usb_msd_command_complete(SCSIRequest *req, size_t resid)
- {
-     MSDState *s = DO_UPCAST(MSDState, dev.qdev, req->bus->qbus.parent);
--    USBPacket *p = s->packet;
-+    USBPacket *p = s->data_packet;
- 
-     trace_usb_msd_cmd_complete(req->status, req->tag);
- 
-@@ -281,35 +300,37 @@ void usb_msd_command_complete(SCSIRequest *req, size_t resid)
-     s->csw.residue = cpu_to_le32(s->data_len);
-     s->csw.status = req->status != 0;
- 
--    if (s->packet) {
--        if (s->data_len == 0 && s->mode == USB_MSDM_DATAOUT) {
--            /* A deferred packet with no write data remaining must be
--               the status read packet.  */
--            usb_msd_send_status(s, p);
--            s->mode = USB_MSDM_CBW;
--        } else if (s->mode == USB_MSDM_CSW) {
--            usb_msd_send_status(s, p);
--            s->mode = USB_MSDM_CBW;
--        } else {
--            if (s->data_len) {
--                int len = (p->iov.size - p->actual_length);
--                usb_packet_skip(p, len);
--                if (len > s->data_len) {
--                    len = s->data_len;
--                }
--                s->data_len -= len;
--            }
--            if (s->data_len == 0) {
--                s->mode = USB_MSDM_CSW;
-+    scsi_req_unref(req);
-+    s->req = NULL;
++    /* With MSI-X enabled, IMAN IP is cleared after raising the interrupt */
++    value = xhci_intr_readl(s, 0, XHCI_INTR_REG_IMAN);
++    g_assert(!(value & XHCI_IMAN_IP));
 +
-+    if (p) {
-+        g_assert(s->mode == USB_MSDM_DATAIN || s->mode == USB_MSDM_DATAOUT);
-+        if (s->data_len) {
-+            int len = (p->iov.size - p->actual_length);
-+            usb_packet_skip(p, len);
-+            if (len > s->data_len) {
-+                len = s->data_len;
-             }
-+            s->data_len -= len;
-+        }
-+        if (s->data_len == 0) {
-+            s->mode = USB_MSDM_CSW;
-         }
-         /* USB_RET_SUCCESS status clears previous ASYNC status */
--        usb_msd_packet_complete(s, USB_RET_SUCCESS);
-+        usb_msd_data_packet_complete(s, USB_RET_SUCCESS);
-     } else if (s->data_len == 0) {
-         s->mode = USB_MSDM_CSW;
-     }
--    scsi_req_unref(req);
--    s->req = NULL;
++    xhci_op_writel(s, XHCI_OPER_REG_USBSTS, XHCI_USBSTS_EINT); /* clear EINT */
 +
-+    if (s->mode == USB_MSDM_CSW) {
-+        p = s->csw_in_packet;
-+        if (p) {
-+            usb_msd_send_status(s, p);
-+            s->mode = USB_MSDM_CBW;
-+            /* USB_RET_SUCCESS status clears previous ASYNC status */
-+            usb_msd_csw_packet_complete(s, USB_RET_SUCCESS);
-+        }
++    qtest_memread(s->parent->qts, er_addr, &t, TRB_SIZE);
++
++    trb->parameter = le64_to_cpu(t.parameter);
++    trb->status = le32_to_cpu(t.status);
++    trb->control = le32_to_cpu(t.control);
++
++    g_assert((trb->status >> 24) == CC_SUCCESS);
++    g_assert((trb->control & TRB_C) == tr->trb_c); /* C bit has been set */
++
++    tr->trb_idx++;
++    if (tr->trb_idx == tr->trb_entries) {
++        tr->trb_idx = 0;
++        tr->trb_c ^= 1;
 +    }
- }
- 
- void usb_msd_request_cancelled(SCSIRequest *req)
-@@ -339,8 +360,12 @@ void usb_msd_handle_reset(USBDevice *dev)
-     }
-     assert(s->req == NULL);
- 
--    if (s->packet) {
--        usb_msd_packet_complete(s, USB_RET_STALL);
-+    if (s->data_packet) {
-+        usb_msd_data_packet_complete(s, USB_RET_STALL);
++    /* Update ERDP to processed TRB addr and EHB bit, which clears EHB */
++    er_addr = tr->addr + tr->trb_idx * TRB_SIZE;
++    xhci_intr_writel(s, 0, XHCI_INTR_REG_ERDP_LO,
++                     (er_addr & 0xffffffff) | XHCI_ERDP_EHB);
++}
++
++static void set_link_trb(XHCIQState *s, uint64_t ring, uint32_t c,
++                         uint32_t entries)
++{
++    XHCITRB trb;
++
++    g_assert(entries > 1);
++
++    memset(&trb, 0, TRB_SIZE);
++    trb.parameter = ring;
++    trb.control = cpu_to_le32(c | /* C */
++                              (TR_LINK << TRB_TYPE_SHIFT) |
++                              TRB_LK_TC);
++    qtest_memwrite(s->parent->qts, ring + TRB_SIZE * (entries - 1),
++                   &trb, TRB_SIZE);
++}
++
++static uint64_t queue_trb(XHCIQState *s, XHCIQTRState *tr, const XHCITRB *trb)
++{
++    uint64_t tr_addr = tr->addr + tr->trb_idx * TRB_SIZE;
++    XHCITRB t;
++
++    t.parameter = cpu_to_le64(trb->parameter);
++    t.status = cpu_to_le32(trb->status);
++    t.control = cpu_to_le32(trb->control | tr->trb_c);
++
++    qtest_memwrite(s->parent->qts, tr_addr, &t, TRB_SIZE);
++    tr->trb_idx++;
++    /* Last entry contains the link, so wrap back */
++    if (tr->trb_idx == tr->trb_entries - 1) {
++        set_link_trb(s, tr->addr, tr->trb_c, tr->trb_entries);
++        tr->trb_idx = 0;
++        tr->trb_c ^= 1;
 +    }
 +
-+    if (s->csw_in_packet) {
-+        usb_msd_csw_packet_complete(s, USB_RET_STALL);
-     }
- 
-     memset(&s->csw, 0, sizeof(s->csw));
-@@ -395,11 +420,15 @@ static void usb_msd_cancel_io(USBDevice *dev, USBPacket *p)
- {
-     MSDState *s = USB_STORAGE_DEV(dev);
- 
--    assert(s->packet == p);
--    s->packet = NULL;
--
--    if (s->req) {
--        scsi_req_cancel(s->req);
-+    if (p == s->data_packet) {
-+        s->data_packet = NULL;
-+        if (s->req) {
-+            scsi_req_cancel(s->req);
-+        }
-+    } else if (p == s->csw_in_packet) {
-+        s->csw_in_packet = NULL;
-+    } else {
-+        g_assert_not_reached();
-     }
++    return tr_addr;
++}
++
++static uint64_t submit_cr_trb(XHCIQState *s, const XHCITRB *trb)
++{
++    XHCIQTRState *tr = &s->command_ring;
++    uint64_t ret;
++
++    ret = queue_trb(s, tr, trb);
++
++    xhci_db_writel(s, 0, 0); /* doorbell host, doorbell 0 (command) */
++
++    return ret;
++}
++
++static void xhci_enable_device(XHCIQState *s)
++{
++    XHCIQTRState *tr;
++    XHCIEvRingSeg ev_seg;
++    uint32_t hcsparams1;
++    uint32_t value;
++    int i;
++
++    qpci_msix_enable(s->dev);
++
++    hcsparams1 = xhci_cap_readl(s, XHCI_HCCAP_REG_HCSPARAMS1);
++    s->maxports = (hcsparams1 >> 24) & 0xff;
++    s->maxintrs = (hcsparams1 >> 8) & 0x3ff;
++    s->maxslots = hcsparams1 & 0xff;
++
++    s->dboff = xhci_cap_readl(s, XHCI_HCCAP_REG_DBOFF);
++    s->rtoff = xhci_cap_readl(s, XHCI_HCCAP_REG_RTSOFF);
++
++    s->dc_base_array = xhci_guest_zalloc(s, 0x800);
++    s->event_ring_seg = xhci_guest_zalloc(s, 0x100);
++
++    /* Arbitrary small sizes so we can make them wrap */
++    tr = &s->command_ring;
++    tr->addr = xhci_guest_zalloc(s, 0x1000);
++    tr->trb_entries = 0x20;
++    tr->trb_c = 1;
++
++    tr = &s->event_ring;
++    tr->addr = xhci_guest_zalloc(s, 0x1000);
++    tr->trb_entries = 0x10;
++    tr->trb_c = 1;
++
++    tr = &s->event_ring;
++    ev_seg.addr_low = cpu_to_le32(tr->addr & 0xffffffff);
++    ev_seg.addr_high = cpu_to_le32(tr->addr >> 32);
++    ev_seg.size = cpu_to_le32(tr->trb_entries);
++    ev_seg.rsvd = 0;
++    qtest_memwrite(s->parent->qts, s->event_ring_seg, &ev_seg, sizeof(ev_seg));
++
++    xhci_op_writel(s, XHCI_OPER_REG_USBCMD, XHCI_USBCMD_HCRST);
++    do {
++        value = xhci_op_readl(s, XHCI_OPER_REG_USBSTS);
++    } while (value & XHCI_USBSTS_CNR);
++
++    xhci_op_writel(s, XHCI_OPER_REG_CONFIG, s->maxslots);
++
++    xhci_op_writel(s, XHCI_OPER_REG_DCBAAP_LO, s->dc_base_array & 0xffffffff);
++    xhci_op_writel(s, XHCI_OPER_REG_DCBAAP_HI, s->dc_base_array >> 32);
++
++    tr = &s->command_ring;
++    xhci_op_writel(s, XHCI_OPER_REG_CRCR_LO,
++                   (tr->addr & 0xffffffff) | tr->trb_c);
++    xhci_op_writel(s, XHCI_OPER_REG_CRCR_HI, tr->addr >> 32);
++
++    xhci_intr_writel(s, 0, XHCI_INTR_REG_ERSTSZ, 1);
++
++    xhci_intr_writel(s, 0, XHCI_INTR_REG_ERSTBA_LO,
++                     s->event_ring_seg & 0xffffffff);
++    xhci_intr_writel(s, 0, XHCI_INTR_REG_ERSTBA_HI,
++                     s->event_ring_seg >> 32);
++
++    /* ERDP */
++    tr = &s->event_ring;
++    xhci_intr_writel(s, 0, XHCI_INTR_REG_ERDP_LO, tr->addr & 0xffffffff);
++    xhci_intr_writel(s, 0, XHCI_INTR_REG_ERDP_HI, tr->addr >> 32);
++
++    xhci_op_writel(s, XHCI_OPER_REG_USBCMD, XHCI_USBCMD_RS | XHCI_USBCMD_INTE);
++
++    /* Enable interrupts on ER IMAN */
++    xhci_intr_writel(s, 0, XHCI_INTR_REG_IMAN, XHCI_IMAN_IE);
++
++    /* Ensure there is no interrupt pending */
++    g_assert(!xhci_test_isr(s));
++
++    /* Query ports */
++    for (i = 0; i < s->maxports; i++) {
++        value = xhci_port_readl(s, i, 0); /* PORTSC */
++
++        /* All ports should be disabled */
++        g_assert(!(value & XHCI_PORTSC_CCS));
++        g_assert(!(value & XHCI_PORTSC_PED));
++        g_assert(((value >> XHCI_PORTSC_PLS_SHIFT) &
++                  XHCI_PORTSC_PLS_MASK) == 5);
++    }
++}
++
++static void xhci_disable_device(XHCIQState *s)
++{
++    int i;
++
++    /* Shut it down */
++    qpci_msix_disable(s->dev);
++
++    guest_free(&s->parent->alloc, s->slots[s->slotid].device_context);
++    for (i = 0; i < 31; i++) {
++        guest_free(&s->parent->alloc,
++                   s->slots[s->slotid].transfer_ring[i].addr);
++    }
++    guest_free(&s->parent->alloc, s->event_ring.addr);
++    guest_free(&s->parent->alloc, s->command_ring.addr);
++    guest_free(&s->parent->alloc, s->event_ring_seg);
++    guest_free(&s->parent->alloc, s->dc_base_array);
++}
++
++/*
++ * This test brings up an endpoint and runs some noops through its command
++ * ring and gets responses back on the event ring, then brings up a device
++ * context and runs some noops through its transfer ring (if available).
++ */
++static void test_xhci_stress_rings(const void *arg)
++{
++    const TestData *td = arg;
++    XHCIQState *s;
++    XHCITRB trb;
++    uint64_t tag;
++    int i;
++
++    s = xhci_boot("-M q35 "
++                  "-device %s,id=xhci,bus=pcie.0,addr=1d.0 ",
++                  td->device);
++    g_assert_cmphex(s->fingerprint, ==, td->fingerprint);
++
++    xhci_enable_device(s);
++
++    /* Wrap the command and event rings with no-ops a few times */
++    for (i = 0; i < 100; i++) {
++        /* Issue a command ring no-op */
++        memset(&trb, 0, TRB_SIZE);
++        trb.control |= CR_NOOP << TRB_TYPE_SHIFT;
++        trb.control |= TRB_TR_IOC;
++        tag = submit_cr_trb(s, &trb);
++        wait_event_trb(s, &trb);
++        g_assert_cmphex(trb.parameter , ==, tag);
++        g_assert_cmpint(TRB_TYPE(trb), ==, ER_COMMAND_COMPLETE);
++    }
++
++    xhci_disable_device(s);
++    xhci_shutdown(s);
  }
  
-@@ -500,7 +529,7 @@ static void usb_msd_handle_data_out(USBDevice *dev, USBPacket *p)
-         }
-         if (p->actual_length < p->iov.size) {
-             trace_usb_msd_packet_async();
--            s->packet = p;
-+            s->data_packet = p;
-             p->status = USB_RET_ASYNC;
-         }
-         break;
-@@ -532,7 +561,7 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
+ static void add_test(const char *name, TestData *td, void (*fn)(const void *))
+@@ -194,6 +529,7 @@ static void add_tests(TestData *td)
+     if (qtest_has_device("usb-ccid")) {
+         add_test("usb-ccid", td, test_usb_ccid_hotplug);
+     }
++    add_test("xhci-stress-rings", td, test_xhci_stress_rings);
+ }
  
-         /* Waiting for SCSI write to complete.  */
-         trace_usb_msd_packet_async();
--        s->packet = p;
-+        s->csw_in_packet = p;
-         p->status = USB_RET_ASYNC;
-         break;
- 
-@@ -544,7 +573,7 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
-         if (s->req) {
-             /* still in flight */
-             trace_usb_msd_packet_async();
--            s->packet = p;
-+            s->csw_in_packet = p;
-             p->status = USB_RET_ASYNC;
-         } else {
-             usb_msd_send_status(s, p);
-@@ -572,7 +601,7 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
-         }
-         if (p->actual_length < p->iov.size && s->mode == USB_MSDM_DATAIN) {
-             trace_usb_msd_packet_async();
--            s->packet = p;
-+            s->data_packet = p;
-             p->status = USB_RET_ASYNC;
-         }
-         break;
+ /* tests */
 -- 
 2.47.1
 
