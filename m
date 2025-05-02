@@ -4,69 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7533FC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 May 2025 23:36:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECE31C3ABA9
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 00:17:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAdRA-0002aO-Vr; Thu, 01 May 2025 19:35:29 -0400
+	id 1uAe4m-0007IH-1D; Thu, 01 May 2025 20:16:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uAdR4-0002ZA-SI
- for qemu-devel@nongnu.org; Thu, 01 May 2025 19:35:23 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1uAe4b-0007GB-Ea
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 20:16:16 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uAdR1-00043p-So
- for qemu-devel@nongnu.org; Thu, 01 May 2025 19:35:22 -0400
+ id 1uAe4Y-0000Mn-Kn
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 20:16:13 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 3EA7F55D25C;
- Fri, 02 May 2025 01:35:15 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4524D55D25C;
+ Fri, 02 May 2025 02:16:07 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id tHK8x78EK4YV; Fri,  2 May 2025 01:35:12 +0200 (CEST)
+ with ESMTP id bXlgPmXHlMJ2; Fri,  2 May 2025 02:16:05 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E2CAF55D25A; Fri, 02 May 2025 01:35:12 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E0B82745682;
- Fri, 02 May 2025 01:35:12 +0200 (CEST)
-Date: Fri, 2 May 2025 01:35:12 +0200 (CEST)
+ id 45A3B55D25A; Fri, 02 May 2025 02:16:05 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-cc: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
- Anton Johansson <anjo@rev.ng>
-Subject: Re: [RFC PATCH v5 08/21] hw/arm: Add DEFINE_MACHINE_[ARM_]AARCH64()
- macros
-In-Reply-To: <afe9878a-1710-4994-81ee-f308f5be2900@linaro.org>
-Message-ID: <164fe2df-50a5-79ce-597c-0c5aed6f0365@eik.bme.hu>
-References: <20250424222112.36194-1-philmd@linaro.org>
- <20250424222112.36194-9-philmd@linaro.org>
- <1332b395-1e3e-2be7-83f2-15f2d89b0449@eik.bme.hu>
- <51f3a96b-9c7a-4242-a822-145d68e068d9@linaro.org>
- <f84a52af-aecf-5235-7971-689580ffb71f@eik.bme.hu>
- <29f67d66-9eef-493a-9d96-99240ca25a14@linaro.org>
- <75b7e110-9293-32b2-64c8-26eabaace8b7@eik.bme.hu>
- <033d94c7-ac74-4a44-87ae-aeac964afd10@linaro.org>
- <c4479348-00b2-4604-adad-e8d8911c75a6@linaro.org>
- <21e6cbae-54fe-2d11-307f-2fe36a08c97b@eik.bme.hu>
- <6d7f8b57-b8d4-49cd-b0fd-72e5428bc94a@linaro.org>
- <29bf183a-957b-6c03-be66-bee38f106fc5@eik.bme.hu>
- <b711cddb-0a68-4dba-a492-4c51683eb116@linaro.org>
- <d454c53d-dba3-e665-39c6-267bbbab8aed@eik.bme.hu>
- <afe9878a-1710-4994-81ee-f308f5be2900@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Subject: [PATCH] hw/char/serial: Remove unused prog_if compat property
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael S. Tsirkin <mst@redhat.com>, philmd@linaro.org
+Message-Id: <20250502001605.45A3B55D25A@zero.eik.bme.hu>
+Date: Fri, 02 May 2025 02:16:05 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,110 +60,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 28 Apr 2025, Pierrick Bouvier wrote:
-> On 4/28/25 6:10 PM, BALATON Zoltan wrote:
->> On Mon, 28 Apr 2025, Pierrick Bouvier wrote:
->>> On 4/28/25 11:44 AM, BALATON Zoltan wrote:
->>>> On Mon, 28 Apr 2025, Pierrick Bouvier wrote:
->>>>> On 4/28/25 3:31 AM, BALATON Zoltan wrote:
->>>>>> Since you are touching the lines using DEFINE_MACHINE it's a good
->>>>>> opportunity to change the macro to be more general to be able to keep
->>>>>> using it instead of replacing it with the boiler plate it's supposed to
->>>>>> hide. Adding one or two more parameters to the macro is not a big 
->>>>>> change
->>>>>> so I don't see why you don't want to do it. This could be addressed 
->>>>>> later
->>>>>> to revert to use the macro again but in practice it will not be 
->>>>>> addressed
->>>>>> because everybody will be busy doing other things and doing that now
->>>>>> would
->>>>>> prevent some churn. I too, don't like doing unrelated clean up which is
->>>>>> not the main goal, but if it's not much more work then it's not
->>>>>> unreasonable to do it. I only oppose to that if it's a lot of work so I
->>>>>> would not ask such change but what I asked is not unrelated and quite
->>>>>> simple change.
->>>>>> 
->>>>>> That said, I can't stop you so if you still don't want to do it now 
->>>>>> then
->>>>>> you can move on. I don't care that much as long as you stay within
->>>>>> hw/arm,
->>>>>> but will raise my concern again when you submit a similar patch that
->>>>>> touches parts I care more about. If others don't think it's a problem 
->>>>>> and
->>>>>> not bothered by the boiler plate code then it's not so important but
->>>>>> otherwise I think I have a valid point. I remember when I started to 
->>>>>> get
->>>>>> to know QEMU it was quite difficult to wade through all the QOM boiler
->>>>>> plate just to see what is related to the actual functionality. These
->>>>>> macros help to make code more readable and accessible for new people.
->>>>> 
->>>>> Having been through that recently, I agree with you that it can be hard 
->>>>> to
->>>>> follow at first. Luckily, we have perfect compiler based completion for
->>>>> all
->>>>> editors those days (I sincerely hope everyone spent 2 hours configuring
->>>>> this
->>>>> on their own favorite one), and it's easy to see where things are 
->>>>> defined
->>>>> and
->>>>> used, even when code is cryptic.
->>>> 
->>>> It's not about typing but reading it. The verbose struct definitions are
->>>> hard to follow and makes board code look more complex than it should be.
->>>> 
->>>>> That said, pushing to someone adding a new field the responsibility of
->>>>> cleaning up the whole thing is not a fair request. You can't expect your
->>>>> friends to clean your shared house because they brought a cake for 
->>>>> dinner.
->>>> 
->>>> I tend to get such requests to clean up unrelated things whenever I try 
->>>> to
->>>> change anything in PPC Mac emulation which I also complain about and 
->>>> think
->>>> is not reasonable to ask. But I did not ask for unrelated cleanup here 
->>>> and
->>>> changing the patch so you don't do this:
->>>> 
->>>> -DEFINE_MACHINE("none", machine_none_machine_init)
->>>> +static const TypeInfo null_machine_types[] = {
->>>> +    {
->>>> +        .name           = MACHINE_TYPE_NAME("none"),
->>>> +        .parent         = TYPE_MACHINE,
->>>> +        .class_init     = null_machine_class_init,
->>>> +    },
->>>> +};
->>>> +
->>>> +DEFINE_TYPES(null_machine_types)
->>>> 
->>>> but instead add the .interfaces field to a variant of DEFINE_MACHINE once
->>>> and keep the one line definition is not something unreasonable to ask. I
->>>> think you can ask your friends to not make a mess in the shared house
->>>> while having a party or at least clean up after that. Adding one more
->>>> parameter to the macro is also simple to do so I don't get why you're so
->>>> opposed to this.
->>>> 
->>> 
->>> Maybe there is a misunderstanding on my side, but it seems that what you
->>> asked is exactly patch 7, which introduce DEFINE_MACHINE_WITH_INTERFACES.
->> 
->> Almost but not quite. I don't know why I can't get this through to you. If
->> you compare patch 7 to how DO_OBJECT_DEFINE_TYPE_EXTENDED is defined do
->> you notice the difference in how .interfaces is set? With the same way as
->> in DO_OBJECT_DEFINE_TYPE_EXTENDED you don't need separate InterfaceInfo
->> arm_aarch64_machine_interfaces[] definitions or different macros in the
->> next patch just list the needed interfaces in the machine definitions.
->> 
->
-> I'm sorry, I don't understand what you want exactly, despite asking several 
-> times.
-> I think it would be more clear if you could apply this series on your side, 
-> write a small patch showing *exactly* what you expect, and applying this to 
-> one of the board concerned. Then, we can do the change you request.
+This property was added to preserve previous value when this was fixed
+in version 2.1 but the 2.0 machine using it was already removed
+leaving this property unused and unnecessary. This was also copy &
+pasted into diva-gsp where it was probably never used so get rid of
+this property at last.
 
-You can pick the patch from this series I've just posted:
-https://patchew.org/QEMU/cover.1746139668.git.balaton@eik.bme.hu/ad355178b2a3fe285854ed2e25b288baf0fd6e05.1746139668.git.balaton@eik.bme.hu/
-it is used in patch 12 of that series for an example.
+Fixes: dbe442ad48 (hw/i386/pc: Remove deprecated pc-i440fx-2.0 machine)
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+ hw/char/diva-gsp.c         |  6 ++----
+ hw/char/serial-pci-multi.c |  7 ++-----
+ hw/char/serial-pci.c       | 10 ++--------
+ 3 files changed, 6 insertions(+), 17 deletions(-)
 
-Regards,
-BALATON Zoltan
+diff --git a/hw/char/diva-gsp.c b/hw/char/diva-gsp.c
+index 60f933191d..e1f0713cb7 100644
+--- a/hw/char/diva-gsp.c
++++ b/hw/char/diva-gsp.c
+@@ -51,7 +51,6 @@ typedef struct PCIDivaSerialState {
+     SerialState  state[PCI_SERIAL_MAX_PORTS];
+     uint32_t     level[PCI_SERIAL_MAX_PORTS];
+     qemu_irq     *irqs;
+-    uint8_t      prog_if;
+     bool         disable;
+ } PCIDivaSerialState;
+ 
+@@ -124,8 +123,8 @@ static void diva_pci_realize(PCIDevice *dev, Error **errp)
+     size_t i, offset = 0;
+     size_t portmask = di.omask;
+ 
+-    pci->dev.config[PCI_CLASS_PROG] = pci->prog_if;
+-    pci->dev.config[PCI_INTERRUPT_PIN] = 0x01;
++    pci->dev.config[PCI_CLASS_PROG] = 2; /* 16550 compatible */
++    pci->dev.config[PCI_INTERRUPT_PIN] = 1;
+     memory_region_init(&pci->membar, OBJECT(pci), "serial_ports", 4096);
+     pci_register_bar(&pci->dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &pci->membar);
+     pci->irqs = qemu_allocate_irqs(multi_serial_irq_mux, pci, di.nports);
+@@ -178,7 +177,6 @@ static const Property diva_serial_properties[] = {
+     DEFINE_PROP_CHR("chardev2",  PCIDivaSerialState, state[1].chr),
+     DEFINE_PROP_CHR("chardev3",  PCIDivaSerialState, state[2].chr),
+     DEFINE_PROP_CHR("chardev4",  PCIDivaSerialState, state[3].chr),
+-    DEFINE_PROP_UINT8("prog_if",  PCIDivaSerialState, prog_if, 0x02),
+     DEFINE_PROP_UINT32("subvendor", PCIDivaSerialState, subvendor,
+                                     PCI_DEVICE_ID_HP_DIVA_TOSCA1),
+ };
+diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
+index fb184c2e6d..13df272691 100644
+--- a/hw/char/serial-pci-multi.c
++++ b/hw/char/serial-pci-multi.c
+@@ -46,7 +46,6 @@ typedef struct PCIMultiSerialState {
+     SerialState  state[PCI_SERIAL_MAX_PORTS];
+     uint32_t     level[PCI_SERIAL_MAX_PORTS];
+     IRQState     irqs[PCI_SERIAL_MAX_PORTS];
+-    uint8_t      prog_if;
+ } PCIMultiSerialState;
+ 
+ static void multi_serial_pci_exit(PCIDevice *dev)
+@@ -97,8 +96,8 @@ static void multi_serial_pci_realize(PCIDevice *dev, Error **errp)
+     SerialState *s;
+     size_t i, nports = multi_serial_get_port_count(pc);
+ 
+-    pci->dev.config[PCI_CLASS_PROG] = pci->prog_if;
+-    pci->dev.config[PCI_INTERRUPT_PIN] = 0x01;
++    pci->dev.config[PCI_CLASS_PROG] = 2; /* 16550 compatible */
++    pci->dev.config[PCI_INTERRUPT_PIN] = 1;
+     memory_region_init(&pci->iobar, OBJECT(pci), "multiserial", 8 * nports);
+     pci_register_bar(&pci->dev, 0, PCI_BASE_ADDRESS_SPACE_IO, &pci->iobar);
+ 
+@@ -133,7 +132,6 @@ static const VMStateDescription vmstate_pci_multi_serial = {
+ static const Property multi_2x_serial_pci_properties[] = {
+     DEFINE_PROP_CHR("chardev1",  PCIMultiSerialState, state[0].chr),
+     DEFINE_PROP_CHR("chardev2",  PCIMultiSerialState, state[1].chr),
+-    DEFINE_PROP_UINT8("prog_if",  PCIMultiSerialState, prog_if, 0x02),
+ };
+ 
+ static const Property multi_4x_serial_pci_properties[] = {
+@@ -141,7 +139,6 @@ static const Property multi_4x_serial_pci_properties[] = {
+     DEFINE_PROP_CHR("chardev2",  PCIMultiSerialState, state[1].chr),
+     DEFINE_PROP_CHR("chardev3",  PCIMultiSerialState, state[2].chr),
+     DEFINE_PROP_CHR("chardev4",  PCIMultiSerialState, state[3].chr),
+-    DEFINE_PROP_UINT8("prog_if",  PCIMultiSerialState, prog_if, 0x02),
+ };
+ 
+ static void multi_2x_serial_pci_class_initfn(ObjectClass *klass,
+diff --git a/hw/char/serial-pci.c b/hw/char/serial-pci.c
+index 8707e81914..46efabc4cb 100644
+--- a/hw/char/serial-pci.c
++++ b/hw/char/serial-pci.c
+@@ -38,7 +38,6 @@
+ struct PCISerialState {
+     PCIDevice dev;
+     SerialState state;
+-    uint8_t prog_if;
+ };
+ 
+ #define TYPE_PCI_SERIAL "pci-serial"
+@@ -53,8 +52,8 @@ static void serial_pci_realize(PCIDevice *dev, Error **errp)
+         return;
+     }
+ 
+-    pci->dev.config[PCI_CLASS_PROG] = pci->prog_if;
+-    pci->dev.config[PCI_INTERRUPT_PIN] = 0x01;
++    pci->dev.config[PCI_CLASS_PROG] = 2; /* 16550 compatible */
++    pci->dev.config[PCI_INTERRUPT_PIN] = 1;
+     s->irq = pci_allocate_irq(&pci->dev);
+ 
+     memory_region_init_io(&s->io, OBJECT(pci), &serial_io_ops, s, "serial", 8);
+@@ -81,10 +80,6 @@ static const VMStateDescription vmstate_pci_serial = {
+     }
+ };
+ 
+-static const Property serial_pci_properties[] = {
+-    DEFINE_PROP_UINT8("prog_if",  PCISerialState, prog_if, 0x02),
+-};
+-
+ static void serial_pci_class_initfn(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -96,7 +91,6 @@ static void serial_pci_class_initfn(ObjectClass *klass, const void *data)
+     pc->revision = 1;
+     pc->class_id = PCI_CLASS_COMMUNICATION_SERIAL;
+     dc->vmsd = &vmstate_pci_serial;
+-    device_class_set_props(dc, serial_pci_properties);
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+ }
+ 
+-- 
+2.41.3
+
 
