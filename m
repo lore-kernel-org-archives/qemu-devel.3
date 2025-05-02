@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54416C3ABAA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA51C3ABB0
 	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 19:01:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAvcD-0001mw-Ok; Fri, 02 May 2025 15:00:16 -0400
+	id 1uAvZf-0004sn-9b; Fri, 02 May 2025 14:57:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvat-0007WS-Dk
- for qemu-devel@nongnu.org; Fri, 02 May 2025 14:58:43 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvZb-0004oR-BW
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 14:57:23 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvar-0005iI-LB
- for qemu-devel@nongnu.org; Fri, 02 May 2025 14:58:43 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5f4d28d9fd8so3268052a12.3
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 11:58:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvZZ-0005Pi-8M
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 14:57:22 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-ac29fd22163so402092066b.3
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 11:57:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746212320; x=1746817120; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746212239; x=1746817039; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ns6abkUGaM6ukyij9Yk70LzU+Vns27nmI4rpIretkkk=;
- b=GjB5VlRJwG2MFEdyIm2nevJQf3UlnnEJhs2ykew65Leh2t8PluWMdUkmew2dJ7bUW9
- dtVGfeMYLEak9vyEBN0OaJ4ChMP7yTNDgrAQSHGIjbBvXAz28vyKH3PPxv2mwRxf2cIV
- VLrpyXYeIyQirhYxh5/lUkkqy1N2jrjExLUza+AIPZ0p/oESX6z4rtJ+2TGtSZ46Qo6+
- a0Ou/uGZDVdDKFCfSP9BU4RKIJz/p3p98YelowUUURGFAYinGp2m7DCv0Fht4gX1wglB
- v3IlYlkG62N6b/ovA22jxHsPbK23ZSVpo/RGm0nVx9yGqICKGxfnLhTEtTtRmOOEYe+n
- /gGQ==
+ bh=ksLm8Hbb5N8Btg8hJJq48kxuL5GRhX/1Dl4RQBlOi+Q=;
+ b=CeBxNecBb7II4FgXONKuyCX6Ox3xOhW5ETBJot7ExX2rskH23D1gdEBwM5xaFoVYB2
+ mESOD3HbGfbVTweveHzxIspv+8rXyIdEWvSHSQMIUdFC1+QRoupib4+hzt5ejYJ+hUXf
+ 1h/EaWYygWKDxJFT1aFIaatsEeoJ4FqTTQGPaJql4gTa2wBaPsLFliYGoJxYAMZx/6EU
+ GBA3Ut2BI4nt8Gbjw1FNpM7wh4jpueDYSXsgnC2qhxDJ7fd++eANbfUs48b4VSTqbD5q
+ F1Z/GBne9889T1zZ02cOSXvr9v3J2KfBglGUi+95rwSN6LzZ+cDy25PBIxOvVi/bH/TJ
+ nLRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746212320; x=1746817120;
+ d=1e100.net; s=20230601; t=1746212239; x=1746817039;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ns6abkUGaM6ukyij9Yk70LzU+Vns27nmI4rpIretkkk=;
- b=V9CsSGZ5fItVmBdkDnehzeYUkuRy1cs6xp6NWZQ21HDKFuLju0Xf4uUToNTIfeiHwq
- 9EBeFFXHW+RzLNt5EuS//JhPoukeR93VdjLVVkiTowylFNcbf07gieTF4kZZkHBJ33BY
- qre/oXa57KUrqWDjwRDv2gaO5QJ7U3p0+MAGOkG8rhBIn91oMoRUIxwUVA4o8tsw/2rG
- Pbl9bTgRzzvSJnXjBD4au7uv2zdUIwCg39DHpdjMZ1NrZCl1lwTENMOQNzy/ex0IL6mq
- xfmFcM9PJEwk3//8iIRygTaGn0hGElmfV3knMRTqm/EEtIFEBHOPkJhAnRBG9UmaLMnm
- /Lrw==
-X-Gm-Message-State: AOJu0Yx9vgMbwSu/rZ8CHIMvIo4tTrn/KiytM8Ib+cxcV1jwwem/YoyH
- hNtGNZqlmVCX5tcpOmRAmPQMxyFKgE3rXBKTGBjqmASsGuvEkk1e7CUNFsGhwkKG9wODVoPFwlq
- i
-X-Gm-Gg: ASbGncsqjmz4ri4k3cvDJQHFYTg2YpZkKXx1E53LBr2FHh6Zeyl4WPYz+Jdms/GCN+A
- 0zNCrBicGur89kXyZjoBWQdJZd8mFW41Lou4L1PxZvawgXNDApEY3B9aYkenzbUFpchpmVAh/OA
- Cr74t1AEXL2ZohhNYbMU3RywtdoXevtlIqFby71yv+QjQnHLAu3slvwEJo/9a1WXUKvyLtUqSnG
- 9+Kmi3AdWXdAIyIw9TTYS2ZnfnJyIXAv0IJS+oMYfrpVQX1WA+o0P76Hm7Y49GvW7uGmiaMYRws
- Y1sz40YwMKCmy3CzKdPC9HUYjlBqNqQvdhu7mGeItYbuNA67UNPxIOAo4VkkkqNpWoLCqRLY4/O
- nzQiHiOEbgellIrBghI4p
-X-Google-Smtp-Source: AGHT+IGfsIrdFbhprmcGkjN7nBsEbzpBtce/Ct00AnBiJYlS7w4X2H4GU7jTA1vXIeP2OEYtXHKkZQ==
-X-Received: by 2002:a05:6402:84c:b0:5fa:82a4:4c03 with SMTP id
- 4fb4d7f45d1cf-5fa82a44cc2mr2325996a12.13.1746212319716; 
- Fri, 02 May 2025 11:58:39 -0700 (PDT)
+ bh=ksLm8Hbb5N8Btg8hJJq48kxuL5GRhX/1Dl4RQBlOi+Q=;
+ b=FVtzQLIct1YGMDhtj09qPdxITtWHOQueskdKxaCRZfAZAI+zvNgOjBRMQ6fiMFofDZ
+ MLjR6oihZ+VKUGHuCImK7KmQp3nnuv3ERuFw4IAVr+WqSvKTJBkYnVcrAZgONlWw632S
+ SgVS4jsIENeIdDASmxzMV/UXaYQ1aiypUIzGfNgvFmvoRMZt5zW0epvG732GF+GTtt90
+ fso5WvlkDYvG4/4+cxrZrEoVG6itsw2I2aG9eHRfEn9lOH1AzdIkRT65RTbl16nYv5jE
+ Wrg0EY8qg+4jHai1dy1aFHO2t898V5YIDaMZZAidQYHQyxzmojqGwT52z60FHjJt/SSS
+ JK3Q==
+X-Gm-Message-State: AOJu0Yzaz0Xz8fZvF5WdSZKbC0l0W0AUgEuVu7ysgKXfunJdD334Pe1w
+ Eb8Wwt7aCRU5NjHFbJjE4+UCQ2lhRssvTysi5jKJwYhS7lEmBztdqjPOJ8r0gd0lxSrcQbcv8FD
+ m
+X-Gm-Gg: ASbGncuKNbXU+G57HpwfUGdoCOyKYhvRAueHrx8jHMXgDzRlXTewMrkOsc/Db5rrpbO
+ hweoHjJcxyx9pGZ3091t4tNFjVXiWEE2JDXa3Lsz+3Z0BBaKcaqTFrTLFI1cGE2ec8pNQ/RHgsL
+ LtY+CR+zVtBpTUlQWESH4+625SWy297OVOtqEp+o9pMO0NYsjVwhWf4nL2e6XhI3t6j2lHdjhiV
+ pHFKbnuF/y1zWEF6ho/SM70ZDYGV2QLeuWTbLh3nN47weyncVGBZYJ9H/byLvPmvU8OdI+Ftfar
+ c4f/BAXV0DGdYw0/DPzU8GBprLdaFZlz+kzNnCsqDBkoHsvGmlEtglVxbAP2QGOL5xz8RyzCUvv
+ J4vRPQ4ZapLdKEU00m3KG
+X-Google-Smtp-Source: AGHT+IF64ZWhIWsiGX5oz2cpTj0cDIKYneInRJynvtE0nzBQ7o9ZRfkMwXwKsDh34cDk/QZPJZaYAA==
+X-Received: by 2002:a17:907:a05:b0:ac7:b368:b193 with SMTP id
+ a640c23a62f3a-ad17adbf7fbmr463741066b.27.1746212238974; 
+ Fri, 02 May 2025 11:57:18 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5fa77816ffbsm1558875a12.34.2025.05.02.11.58.37
+ a640c23a62f3a-ad1891f6b05sm86006066b.86.2025.05.02.11.57.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 02 May 2025 11:58:39 -0700 (PDT)
+ Fri, 02 May 2025 11:57:18 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -78,18 +78,18 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v3 18/19] hw/char/virtio-serial: Do not expose the
- 'emergency-write' property
-Date: Fri,  2 May 2025 20:56:50 +0200
-Message-ID: <20250502185652.67370-19-philmd@linaro.org>
+Subject: [PATCH v3 04/19] hw/nvram/fw_cfg: Factor fw_cfg_init_mem_internal()
+ out
+Date: Fri,  2 May 2025 20:56:36 +0200
+Message-ID: <20250502185652.67370-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250502185652.67370-1-philmd@linaro.org>
 References: <20250502185652.67370-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,73 +112,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VIRTIO_CONSOLE_F_EMERG_WRITE feature bit was only set
-in the hw_compat_2_7[] array, via the 'emergency-write=off'
-property. We removed all machines using that array, lets remove
-that property. All instances have this feature bit set and
-it can not be disabled. VirtIOSerial::host_features mask is
-now unused, remove it.
+Factor fw_cfg_init_mem_internal() out of fw_cfg_init_mem_wide().
+In fw_cfg_init_mem_wide(), assert DMA arguments are provided.
+Callers without DMA have to use the fw_cfg_init_mem() helper.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/virtio/virtio-serial.h | 2 --
- hw/char/virtio-serial-bus.c       | 9 +++------
- 2 files changed, 3 insertions(+), 8 deletions(-)
+ hw/nvram/fw_cfg.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-serial.h b/include/hw/virtio/virtio-serial.h
-index d87c62eab7a..e6ceacec309 100644
---- a/include/hw/virtio/virtio-serial.h
-+++ b/include/hw/virtio/virtio-serial.h
-@@ -185,8 +185,6 @@ struct VirtIOSerial {
-     struct VirtIOSerialPostLoad *post_load;
+diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
+index 54cfa07d3f5..d119c10d308 100644
+--- a/hw/nvram/fw_cfg.c
++++ b/hw/nvram/fw_cfg.c
+@@ -1053,9 +1053,9 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
+     return s;
+ }
  
-     virtio_serial_conf serial;
--
--    uint64_t host_features;
- };
+-FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
+-                                 hwaddr data_addr, uint32_t data_width,
+-                                 hwaddr dma_addr, AddressSpace *dma_as)
++static FWCfgState *fw_cfg_init_mem_internal(hwaddr ctl_addr,
++                                         hwaddr data_addr, uint32_t data_width,
++                                         hwaddr dma_addr, AddressSpace *dma_as)
+ {
+     DeviceState *dev;
+     SysBusDevice *sbd;
+@@ -1087,11 +1087,19 @@ FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
+     return s;
+ }
  
- /* Interface to the virtio-serial bus */
-diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-index eb79f5258b6..cfc8fa42186 100644
---- a/hw/char/virtio-serial-bus.c
-+++ b/hw/char/virtio-serial-bus.c
-@@ -557,7 +557,7 @@ static uint64_t get_features(VirtIODevice *vdev, uint64_t features,
++FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
++                                 hwaddr data_addr, uint32_t data_width,
++                                 hwaddr dma_addr, AddressSpace *dma_as)
++{
++    assert(dma_iobase && dma_as);
++    fw_cfg_init_mem_internal(ctl_addr, data_addr, data_addr, dma_addr, dma_as);
++}
++
+ FWCfgState *fw_cfg_init_mem(hwaddr ctl_addr, hwaddr data_addr)
+ {
+-    return fw_cfg_init_mem_wide(ctl_addr, data_addr,
+-                                fw_cfg_data_mem_ops.valid.max_access_size,
+-                                0, NULL);
++    return fw_cfg_init_mem_internal(ctl_addr, data_addr,
++                                    fw_cfg_data_mem_ops.valid.max_access_size,
++                                    0, NULL);
+ }
  
-     vser = VIRTIO_SERIAL(vdev);
  
--    features |= vser->host_features;
-+    features |= BIT_ULL(VIRTIO_CONSOLE_F_EMERG_WRITE);
-     if (vser->bus.max_nr_ports > 1) {
-         virtio_add_feature(&features, VIRTIO_CONSOLE_F_MULTIPORT);
-     }
-@@ -587,8 +587,7 @@ static void set_config(VirtIODevice *vdev, const uint8_t *config_data)
-     VirtIOSerialPortClass *vsc;
-     uint8_t emerg_wr_lo;
- 
--    if (!virtio_has_feature(vser->host_features,
--        VIRTIO_CONSOLE_F_EMERG_WRITE) || !config->emerg_wr) {
-+    if (!config->emerg_wr) {
-         return;
-     }
- 
-@@ -1039,7 +1038,7 @@ static void virtio_serial_device_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    if (!virtio_has_feature(vser->host_features,
-+    if (!virtio_has_feature(vdev->host_features,
-                             VIRTIO_CONSOLE_F_EMERG_WRITE)) {
-         config_size = offsetof(struct virtio_console_config, emerg_wr);
-     }
-@@ -1155,8 +1154,6 @@ static const VMStateDescription vmstate_virtio_console = {
- static const Property virtio_serial_properties[] = {
-     DEFINE_PROP_UINT32("max_ports", VirtIOSerial, serial.max_virtserial_ports,
-                                                   31),
--    DEFINE_PROP_BIT64("emergency-write", VirtIOSerial, host_features,
--                      VIRTIO_CONSOLE_F_EMERG_WRITE, true),
- };
- 
- static void virtio_serial_class_init(ObjectClass *klass, const void *data)
 -- 
 2.47.1
 
