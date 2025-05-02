@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A938CC3ABA9
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE092C3ABA5
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:34:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAh8l-00066f-At; Thu, 01 May 2025 23:32:43 -0400
+	id 1uAh8Q-0005Kx-V3; Thu, 01 May 2025 23:32:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh8X-0005f4-Gj
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:32:31 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh8N-00059c-IJ
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:32:19 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh8V-0001Ln-Se
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:32:29 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7369ce5d323so1540548b3a.1
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:32:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh8L-0001Kj-US
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:32:19 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-7399838db7fso1785829b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:32:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746156746; x=1746761546; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746156736; x=1746761536; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RcPVYeeQT1GwwWrtzjsEjtZuBAgtjHa2HHwNwJdBE50=;
- b=VUmx/zBtCvqEwGDwLuhhCqftExFPF3YUcQA8MFe/0OoL/2P9fIX6beMG/k6Dc6Puxc
- A8bvcP7jQWoADgHjS4emwipgMNfQhT/bnHeCNeFjDqs+xw6hZvXp0tmn1xAFQwur+ir3
- vmdVatCl9VvF0DKFk31SE1qpv2wrW9lAJYJullptQ0EGNLn+LfS0Lauc6pIequJdEo6k
- t85H+l3BcCf4uTM2OKZ45uUV3K6LeQEO03006BAQhX8rN4hX+A0pj4wVWkSeFa4tEcxC
- YaNaK7cr263aI6ttne8PAyzOtH8Pnom1Xrho/GZ+mc4sHQbkg5azNK5x+15B2GnPJK9V
- SCgQ==
+ bh=3HVBXIr+NBzPaHLCzg4OvS7X3MwM/imJu6rPVdSQDDI=;
+ b=Srr/AOkdD/Yd0U0rnXvqDkgENBIuUF4AY0B2r6U+QJpdelONWMP2+z+UWimPh4KeKh
+ 9JHahpukseh5fz5kLpCDRKIXodSo1eAJkQYpN/jXNZPr+24avXfqBdI6QUPGOZ/DxkGi
+ K0S1artHzbvCtpDtvrKBmzkKoUjj7+sgSWmdH60iSzKD4EPyoVs327M+0PdTefKZmsts
+ JixS6xhoaV1TXgMYE39w/1l2Ywo7fsXH0B1N4b/EKy+M9cl5lZwGdF8ZMaWhDf7tjxmz
+ VSD4t5jFGuh0DMHzFCPKsTaBIcnt8G3MCs+8DINpKX40rxIb3qIML3GpxgATPRtynamO
+ Bgsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746156746; x=1746761546;
+ d=1e100.net; s=20230601; t=1746156736; x=1746761536;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RcPVYeeQT1GwwWrtzjsEjtZuBAgtjHa2HHwNwJdBE50=;
- b=Dvv0EIFUGL7Qd+6BDKHlVlf4vLRvviAMmUbUgd84VbJ493e3hXFLTvdFLeTrNsSfB9
- TZHbwA/2iBiR4tc4MbmD+R9vcFTgG/BqgsC2QyUl2geI1AeAHy28sMtKjomWbLzv/JJq
- xXYfv6E2p6zBACXtU7wcCr2aRPcoANS1hZiOPwde3vKPNT21JSTlbfxilqWK69QYkt2W
- HL+fnZ/Wpuk/qV+MZxDYejycwFBhACo2E+Pcy7xOMcbfiQKADtEyHkR2ym5kJwyqhGgA
- Bp0y2DzZvg1pRunMQMyRIY8EH7k9oEVVnIwvpVGBT8fI09SjpWv8qdM+s4NNgfMQ6dVZ
- VNXw==
+ bh=3HVBXIr+NBzPaHLCzg4OvS7X3MwM/imJu6rPVdSQDDI=;
+ b=G2dmwXbqQ6wvk751NLoPttYQOmoEJKzxaEjcvuDY9f0BmAxWNa7lWiDOZ28jtKLnWP
+ TlV3NUnNTTl0PD959y6TMbe9kjdfskVLSkyeoqE1G3E195MFsmiIfe1S9xKLnWsXHfZh
+ w6tU4YvpbSfDsJroR1i1CpCGch9xDSvQqk72GsWBV5t6mvZGOz4XVvnE6xbSAxrR54Ba
+ HiaTz2C+qwBS760uo8uhTocUomVU4h0gS7b6O2UV7FVpx29JvnBGNH+uVpIaT7DFDJ0P
+ Ea+VHhVUih/oAoh6ZNNuFHMQ1AVGOcdzeonSIm8liT+S7FrRbWygdvxlgSyTYceK8CGF
+ y1xA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVfTXdsHJ45+yC4O6lQDlYUhh4ENejadpYcglW6pYCX+PzillR2c2/Z4YqvP8IlysAzvGlbWXUa/Aiu@nongnu.org
-X-Gm-Message-State: AOJu0Yx0+3GiQ2iEWVe5P4QBUg7kMWjbn7E6rL+z+8xXQWFUpMpyGPDb
- pmDX68KsOVTIxqHCPqTs28QyhM7co1/WVBwt5YUTRajzljOoRLI5
-X-Gm-Gg: ASbGncvRmV+m5WIgBYb8tfelRCTQ0A3rVs6zhYsZzxmlVXmI7oIrbeiUhCrLoJrXOCZ
- DiihuQFv1SACsI3qKu3lBFNMEFVrt6WXyyyYvHsN6XVaBlLwOADOa73chnUahp0sC6VCCKdy7Kz
- EIjwde1gSnQJm1DFR82p/B0sYzWy0FOle48vJiHR5WAZEcaPkuUxO7fSmu+mZ6ke/wms6tznd1u
- Unnhg16Hqas/8x5xGQdQt5UrYTxaxmnqD53SQbaHXEN/PzquE/eYdO/gyLPaBFKnUKeiHduQtys
- EhKCFtrtRY6oFMn4aw9oM6fMLqVuLxg9lrcUyj3Q4Ctg
-X-Google-Smtp-Source: AGHT+IGHUzCQEK2l4Q1hKUH4O18BZ5dvIKwp1u0MPThZChab+Vu/BFhbVVJTWGl2oXoUler738BCnw==
-X-Received: by 2002:a05:6a00:6c9b:b0:736:3979:369e with SMTP id
- d2e1a72fcca58-74058a1af4cmr1682748b3a.9.1746156746609; 
- Thu, 01 May 2025 20:32:26 -0700 (PDT)
+ AJvYcCUyktOzlCxavq0r+5j0Q3kCO1rI69h4pEy4N1rxHGqvQUZr/iPz8yTev52+VG4y6pCZP7nGvz6b6Cnd@nongnu.org
+X-Gm-Message-State: AOJu0YzoA2x61057cxVHn8TOOuBai96/u6EzN38CE4p8Xdn6zzvuefWL
+ wRntj5dt70P75dM4yPprKNjVVasW9PwtUp73Y5pLA+zSWRXKnqkY
+X-Gm-Gg: ASbGncvI/GLlgfxhvX80iTJnmNdGy3pwIIAx6M4UYLX54NKv+U2PyoSYtiT2F+01917
+ CvfoOZxYUWRo0NSMz+dH1Neu2ZVlxX41iXslchGCfMXROdHD++hPXHwYtkE+MHBj+W1i56uVAEG
+ RbFgKv1PHbdwTfAVt0iMBwOI2g6+xOkKaHa1Lx1spaiiHyO+FuKLVsqjW9mrf4ABzHmlBBoXoMF
+ 7bNBits1VhuZxn3GdVnibOd22urpREtSpbm1M3S5+PPsD9P3/CwCVYJFtY2J+B8ohxT/9TPRjM0
+ psi5+dnxfCdlog7hDlFC1z1qKDtVic4sSkzgpcSMn955EMTowqOG0Fw=
+X-Google-Smtp-Source: AGHT+IGyAtPi4xyXYIHGt+OQHSSh5M5SnuMk2PEz/T6JNNt51QeQv3YslSZv1gOpro1A+NTdiRommw==
+X-Received: by 2002:a05:6a00:3774:b0:732:56a7:a935 with SMTP id
+ d2e1a72fcca58-74049265f69mr7089525b3a.12.1746156736358; 
+ Thu, 01 May 2025 20:32:16 -0700 (PDT)
 Received: from wheely.local0.net ([220.253.99.94])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74059063f6esm488055b3a.139.2025.05.01.20.32.21
+ d2e1a72fcca58-74059063f6esm488055b3a.139.2025.05.01.20.32.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 20:32:26 -0700 (PDT)
+ Thu, 01 May 2025 20:32:16 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Gerd Hoffmann <kraxel@redhat.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
@@ -73,17 +73,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 17/22] usb/msd: Add some additional assertions
-Date: Fri,  2 May 2025 13:30:41 +1000
-Message-ID: <20250502033047.102465-18-npiggin@gmail.com>
+Subject: [PATCH v4 15/22] usb/msd: Allow CBW packet size greater than 31
+Date: Fri,  2 May 2025 13:30:39 +1000
+Message-ID: <20250502033047.102465-16-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250502033047.102465-1-npiggin@gmail.com>
 References: <20250502033047.102465-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,66 +105,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add more assertions to help verify internal logic.
+The CBW structure is 31 bytes, so CBW DATAOUT packets must be at least
+31 bytes. QEMU enforces exactly 31 bytes, but this is inconsistent with
+how it handles CSW packets (where it allows greater than or equal to 13
+bytes) despite wording in the spec[*] being similar for both packet
+types: "shall end as a short packet with exactly 31 bytes transferred".
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+  [*] USB MSD Bulk-Only Transport 1.0
+
+For consistency, and on the principle of being tolerant in accepting
+input, relax the CBW size check.
+
+Alternatively, both checks could be tightened to exact. Or a message
+could be printed warning of possible guest error if size is not exact,
+but still accept the packets.
+
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/usb/dev-storage.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ hw/usb/dev-storage.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
-index 66fffda3713..81bfdf08992 100644
+index 7bc2f7664b2..fe8955bf212 100644
 --- a/hw/usb/dev-storage.c
 +++ b/hw/usb/dev-storage.c
-@@ -271,13 +271,24 @@ void usb_msd_transfer_data(SCSIRequest *req, uint32_t len)
-     MSDState *s = DO_UPCAST(MSDState, dev.qdev, req->bus->qbus.parent);
-     USBPacket *p = s->data_packet;
+@@ -407,7 +407,7 @@ static bool try_get_valid_cbw(USBPacket *p, struct usb_msd_cbw *cbw)
+ {
+     uint32_t sig;
  
--    if ((s->mode == USB_MSDM_DATAOUT) != (req->cmd.mode == SCSI_XFER_TO_DEV)) {
--        usb_msd_fatal_error(s);
--        return;
-+    if (s->mode == USB_MSDM_DATAIN) {
-+        if (req->cmd.mode == SCSI_XFER_TO_DEV) {
-+            usb_msd_fatal_error(s);
-+            return;
-+        }
-+    } else if (s->mode == USB_MSDM_DATAOUT) {
-+        if (req->cmd.mode != SCSI_XFER_TO_DEV) {
-+            usb_msd_fatal_error(s);
-+            return;
-+        }
-+    } else {
-+        g_assert_not_reached();
-     }
- 
-+    assert(s->scsi_len == 0);
-     s->scsi_len = len;
-     s->scsi_off = 0;
-+
-     if (p) {
-         usb_msd_copy_data(s, p);
-         p = s->data_packet;
-@@ -295,6 +306,10 @@ void usb_msd_command_complete(SCSIRequest *req, size_t resid)
- 
-     trace_usb_msd_cmd_complete(req->status, req->tag);
- 
-+    g_assert(s->req);
-+    /* The CBW is what starts the SCSI request */
-+    g_assert(s->mode != USB_MSDM_CBW);
-+
-     s->csw.sig = cpu_to_le32(0x53425355);
-     s->csw.tag = cpu_to_le32(req->tag);
-     s->csw.residue = cpu_to_le32(s->data_len);
-@@ -493,7 +508,7 @@ static void usb_msd_handle_data_out(USBDevice *dev, USBPacket *p)
-         trace_usb_msd_cmd_submit(cbw.lun, tag, cbw.flags,
-                                  cbw.cmd_len, s->data_len);
-         assert(le32_to_cpu(s->csw.residue) == 0);
--        s->scsi_len = 0;
-+        assert(s->scsi_len == 0);
-         s->req = scsi_req_new(scsi_dev, tag, cbw.lun,
-                               cbw.cmd, cbw.cmd_len, NULL);
-         if (s->commandlog) {
+-    if (p->iov.size != CBW_SIZE) {
++    if (p->iov.size < CBW_SIZE) {
+         qemu_log_mask(LOG_GUEST_ERROR, "usb-msd: Bad CBW size %zu\n",
+                                        p->iov.size);
+         return false;
 -- 
 2.47.1
 
