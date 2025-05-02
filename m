@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CABDCC3ABAC
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 16:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 225C2C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 16:43:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAtSy-0007v6-5Q; Fri, 02 May 2025 12:42:24 -0400
+	id 1uAtT1-0007zr-72; Fri, 02 May 2025 12:42:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtSf-0007nV-V5
- for qemu-devel@nongnu.org; Fri, 02 May 2025 12:42:09 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtSi-0007ni-Hs
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 12:42:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtSd-0006U0-5I
- for qemu-devel@nongnu.org; Fri, 02 May 2025 12:42:04 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtSg-0006Uc-9m
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 12:42:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746204122;
+ s=mimecast20190719; t=1746204125;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=z5iX6m9+qrQrDzgZbzFt+Gv7DkVpFoyTApZijRzVBoA=;
- b=JFuw674F4HfbTKA1YajnVf+uSGhfA2zL/jX0FvoDJSbw4oRH/V6LaO5Fr4INAr7hZdTdqE
- OEt2ReL5k3W/3tIsds0JbWZRdBUjdmRDCoInkA3gvdQXHbk2tcD3CpsUtOIHZ/BMT0/FGb
- 7dI9wPxLURcvTGmyjiqtUzqFd/rNC1g=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KYwm/MwdS+WEwVvT8ZltgPHE/zV2f/JvznZHRlv4PP4=;
+ b=e3eg6NkQX/CaiOhbJYxTLCngggpkmoSPRt2wuALZbt+xxHFEIMvFED+gGCMsjKAxkc1FnR
+ psv2zEHbn4gmBtFFu2VRZunXlrHnzYY7bvdsBXjkxRgKthp+kJ/tPhvVGJiknjAY10045s
+ +t1jA4PqUTHFS9zXpZouOlm9jw+Y7wc=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-581-SN1wn0LuNXioNoJxHk6uWQ-1; Fri, 02 May 2025 12:42:01 -0400
-X-MC-Unique: SN1wn0LuNXioNoJxHk6uWQ-1
-X-Mimecast-MFC-AGG-ID: SN1wn0LuNXioNoJxHk6uWQ_1746204120
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7c5c77aff55so492507185a.3
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 09:42:01 -0700 (PDT)
+ us-mta-665-HasCnh74ODWniGYQq9V_uw-1; Fri, 02 May 2025 12:42:04 -0400
+X-MC-Unique: HasCnh74ODWniGYQq9V_uw-1
+X-Mimecast-MFC-AGG-ID: HasCnh74ODWniGYQq9V_uw_1746204124
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7c3c8f8ab79so342609885a.2
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 09:42:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746204120; x=1746808920;
+ d=1e100.net; s=20230601; t=1746204123; x=1746808923;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=z5iX6m9+qrQrDzgZbzFt+Gv7DkVpFoyTApZijRzVBoA=;
- b=NzqkBMhGFOifqKViG2nk8kRMjmlNCinUjxKs2Oml41pKxgzrvgBVX37uSVbR8GRgMA
- IojEvVHqZX5hgs/Nmr0JgMZlmqfiL83+x7BgKwBrCH+uQ+wsHeR51CqG1EsK/mXenBds
- n4dXuAL12QB0z53m4v/XqOQqOlKhSMNBmFnifM98yhV+dzexuvTK29LncTByFid67cDL
- 4spCoNB3UCdh6bkrVBGqy6/tLxfze+l8U5kdLxn8B2RT8Wdxx7vI5EVsOo8GeP8vfd60
- 9JvW5KsM8ooBpR+yFUYZNO6XbVfAtExR8PcBlDw/zk+L60XzC661FArcM7FcgdlQvtMk
- SAZw==
-X-Gm-Message-State: AOJu0Yxokf0SmtjzncEK3RT8D/fNHSAFltXyX8jwcgSjKGzit0ZAuBgi
- 4yDSCSuxPU423xx2Gz+25ygQSwrPCizZLKOhCz9usJKzU+CBKF4rZekJlr+MkxRK0w92y2xXyoH
- hCYFH+prkU0A+QO9M4EygKl928zJUVoihcX3TBXT2PlF2SxOOPi84ONSvFSqJS9fNC/8TtMy5xY
- yFqHzDKqoNcVbEsoG6GJV0lUF6DeqFnjW7Hg==
-X-Gm-Gg: ASbGnctKOJWQ24GkQjUwEyoPZUODejXOdrOSkaNOlfzxtzh+Ho43Ie7xRZnLKpUaiGv
- LngeyHRvF5J2zpewLtWpPh4JVikfxy7wkSyA3dcu+mIgVgp10T2iCWjwOOu5d0pHqyASKSmif5e
- jM4CvfallM+Tt4jJQoyjMxUToCok6sGSt9XOm2AH6O5jaRQ8R7MLVy1CPENKilFnvlJchvKK1HW
- g5NFd0BRxMDpixVuep9vlmy7qm+ohWTKFypOD2kEiOU/pTZZPH8ikHU5yjdoVyj5J8P2J3wHljk
-X-Received: by 2002:a05:620a:4442:b0:7c5:9a4e:7b8a with SMTP id
- af79cd13be357-7cad5ba5b8emr628657285a.54.1746204119924; 
- Fri, 02 May 2025 09:41:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHE1lvHcDGV72kGzDKze0OlkIDIUP483PHYina4WYWOwFFIJsgZFF/F53YSuHwwwpe22G2qrQ==
-X-Received: by 2002:a05:620a:4442:b0:7c5:9a4e:7b8a with SMTP id
- af79cd13be357-7cad5ba5b8emr628651785a.54.1746204119443; 
- Fri, 02 May 2025 09:41:59 -0700 (PDT)
+ bh=KYwm/MwdS+WEwVvT8ZltgPHE/zV2f/JvznZHRlv4PP4=;
+ b=A3N5SqwXXpU+pxestO0aw9+0LuWrF2gqUPwIw48YwZw62jgCAXa+daxfrTTL/x8fPd
+ R+uldKQX6ayFC+skkEBvZj46zzcRy6cexIfL5E8itIog7WPTGW5KvYNq25LVCHJdnjbT
+ zycCGnW3+Fj+txJ6a72qof1ef8n6W6XtWl658jzXQ6F+AADW5xyCfoep8R1b9BOPKFD1
+ HC9JCx8F+So00uB3Xspc2Ucr3qxZutlwvxRtoCymOGCKmzVZmw55VMIvpF7IdmQDFLfz
+ CW9zKhjSeg/hTEHMFGLWzMsWPtB1VKRpTnNcZze8he3I9pI2j6vJB4606iTIQlwTzMq/
+ akHg==
+X-Gm-Message-State: AOJu0YxWuz6SEwBgdEYS5VOcZQSitZXmo6jN6OQyseHjSWs77JivzxXd
+ rGdaQ4TwgSoUcT4t0N12qkE5pmDAukxMNYHo6CkAlAERImwOOkK8Qk92x4fU2XFCs9QjH930ZOk
+ 5K2c65hmshxi1Thbswzo2+2MwHpHKtvV6zkbzEbslK09g1F67NO22hxvibTy8TLMyUoLKak6smB
+ GeKWPyKC8m6WnBCyReILyZ0OIWq/7630OCQg==
+X-Gm-Gg: ASbGncvJOjn7Z13ma1611NdgozEmOVRn+9X7qvSr0LRoyx2+sQ46bRrJhLFnsZ2wa5C
+ Xe6UAk0RyzO0wCi5FkTMlXTM6SxYtK9S5c1Rs9xOHsGiP8kRg/1GR1Tf2TBRM3Nq3dIGApkhGIQ
+ MPwjcRNM7kvWUDVNaau8r4NQeEMpIOUdZ1cqFYba575+uS5xUQeWaPA0npPOOREqNeqsHJ4YiPd
+ 7CU008h2cYXdNJc6WTx1VF9i75FDo2vqTjnv6lHpPqOBmMOsXlDtzCTuIIIfgptMIMaciJt4/5v
+X-Received: by 2002:a05:620a:19a6:b0:7c7:93ae:fe56 with SMTP id
+ af79cd13be357-7cad5bc0a1dmr500726785a.51.1746204122792; 
+ Fri, 02 May 2025 09:42:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHiu3LgihU8stdZhmxLqzpzMm0DhsIEMmRTHTRV76IeMlKh5vLc6WWhd1F6obUdpJnvnw7LVA==
+X-Received: by 2002:a05:620a:19a6:b0:7c7:93ae:fe56 with SMTP id
+ af79cd13be357-7cad5bc0a1dmr500721985a.51.1746204122154; 
+ Fri, 02 May 2025 09:42:02 -0700 (PDT)
 Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cad23d1c8dsm203108385a.60.2025.05.02.09.41.58
+ af79cd13be357-7cad23d1c8dsm203108385a.60.2025.05.02.09.42.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 May 2025 09:41:58 -0700 (PDT)
+ Fri, 02 May 2025 09:42:01 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
- peterx@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PULL 10/14] migration/ram: Implement save_postcopy_prepare()
-Date: Fri,  2 May 2025 12:41:37 -0400
-Message-ID: <20250502164141.747202-11-peterx@redhat.com>
+ peterx@redhat.com, Xiaohui Li <xiaohli@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: [PULL 12/14] migration/postcopy: Spatial locality page hint for
+ preempt mode
+Date: Fri,  2 May 2025 12:41:39 -0400
+Message-ID: <20250502164141.747202-13-peterx@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250502164141.747202-1-peterx@redhat.com>
 References: <20250502164141.747202-1-peterx@redhat.com>
@@ -82,14 +84,15 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.644,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.644,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URG_BIZ=0.573 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,73 +108,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement save_postcopy_prepare(), preparing for the enablement
-of both multifd and postcopy.
+The preempt mode postcopy has been introduced for a while.  From latency
+POV, it should always win the vanilla postcopy.
 
+However there's one thing missing when preempt mode is enabled right now,
+which is the spatial locality hint when there're page requests from the
+destination side.
+
+In vanilla postcopy, as long as a page request was unqueued, it will update
+the PSS of the precopy background stream, so that after a page request the
+background thread will move the pages after whatever was requested.  It's
+pretty much a natural behavior when there's only one channel anyway, and
+one scanner to send the pages.
+
+Preempt mode didn't follow that, because preempt mode has its own channel
+and its own PSS (which doesn't linearly scan the guest memory, but
+dedicated to resolve page requested from destination).  So the page request
+process and the background migration process are completely separate.
+
+This patch adds the hint explicitly for preempt mode.  With that, whenever
+the preempt mode receives a page request on the source, it will service the
+remote page fault in the return path, then it'll provide a hint to the
+background thread so that we'll start sending the pages right after the
+requested ones in the background, assuming the follow up pages have a
+higher chance to be accessed later.
+
+NOTE: since the background migration thread and return path thread run
+completely concurrently, it doesn't always mean the hint will be applied
+every single time.  For example, it's possible that the return path thread
+receives multiple page requests in a row without the background thread
+getting the chance to consume one.  In such case, the preempt thread only
+provide the hint if the previous hint has been consumed.  After all,
+there's no point queuing hints when we only have one linear scanner.
+
+This could measureably improve the simple sequential memory access pattern
+during postcopy (when preempt is on).  For random accesses, I can measure a
+slight increase of remote page fault latency from ~500us -> ~600us, that
+could be a trade-off to have such hint mechanism, and after all that's
+still greatly improved comparing to vanilla postcopy on random (~10ms).
+
+The patch is verified by our QE team in a video streaming test case, to
+reduce the pause of the video from ~1min to a few seconds when switching
+over to postcopy with preempt mode.
+
+Reported-by: Xiaohui Li <xiaohli@redhat.com>
+Tested-by: Xiaohui Li <xiaohli@redhat.com>
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Link: https://lore.kernel.org/r/20250424220705.195544-1-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Message-ID: <20250411114534.3370816-5-ppandit@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/ram.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ migration/ram.c | 97 ++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 96 insertions(+), 1 deletion(-)
 
 diff --git a/migration/ram.c b/migration/ram.c
-index 1181a99cf6..a749e4a421 100644
+index a749e4a421..e12913b43e 100644
 --- a/migration/ram.c
 +++ b/migration/ram.c
-@@ -4398,6 +4398,42 @@ static int ram_resume_prepare(MigrationState *s, void *opaque)
-     return 0;
+@@ -91,6 +91,36 @@
+ 
+ XBZRLECacheStats xbzrle_counters;
+ 
++/*
++ * This structure locates a specific location of a guest page.  In QEMU,
++ * it's described in a tuple of (ramblock, offset).
++ */
++struct PageLocation {
++    RAMBlock *block;
++    unsigned long offset;
++};
++typedef struct PageLocation PageLocation;
++
++/**
++ * PageLocationHint: describes a hint to a page location
++ *
++ * @valid     set if the hint is vaild and to be consumed
++ * @location: the hint content
++ *
++ * In postcopy preempt mode, the urgent channel may provide hints to the
++ * background channel, so that QEMU source can try to migrate whatever is
++ * right after the requested urgent pages.
++ *
++ * This is based on the assumption that the VM (already running on the
++ * destination side) tends to access the memory with spatial locality.
++ * This is also the default behavior of vanilla postcopy (preempt off).
++ */
++struct PageLocationHint {
++    bool valid;
++    PageLocation location;
++};
++typedef struct PageLocationHint PageLocationHint;
++
+ /* used by the search for pages to send */
+ struct PageSearchStatus {
+     /* The migration channel used for a specific host page */
+@@ -395,6 +425,13 @@ struct RAMState {
+      * RAM migration.
+      */
+     unsigned int postcopy_bmap_sync_requested;
++    /*
++     * Page hint during postcopy when preempt mode is on.  Return path
++     * thread sets it, while background migration thread consumes it.
++     *
++     * Protected by @bitmap_mutex.
++     */
++    PageLocationHint page_hint;
+ };
+ typedef struct RAMState RAMState;
+ 
+@@ -2019,6 +2056,21 @@ static void pss_host_page_finish(PageSearchStatus *pss)
+     pss->host_page_start = pss->host_page_end = 0;
  }
  
-+static bool ram_save_postcopy_prepare(QEMUFile *f, void *opaque, Error **errp)
++static void ram_page_hint_update(RAMState *rs, PageSearchStatus *pss)
 +{
-+    int ret;
++    PageLocationHint *hint = &rs->page_hint;
 +
-+    if (migrate_multifd()) {
-+        /*
-+         * When multifd is enabled, source QEMU needs to make sure all the
-+         * pages queued before postcopy starts have been flushed.
-+         *
-+         * The load of these pages must happen before switching to postcopy.
-+         * It's because loading of guest pages (so far) in multifd recv
-+         * threads is still non-atomic, so the load cannot happen with vCPUs
-+         * running on the destination side.
-+         *
-+         * This flush and sync will guarantee that those pages are loaded
-+         * _before_ postcopy starts on the destination. The rationale is,
-+         * this happens before VM stops (and before source QEMU sends all
-+         * the rest of the postcopy messages).  So when the destination QEMU
-+         * receives the postcopy messages, it must have received the sync
-+         * message on the main channel (either RAM_SAVE_FLAG_MULTIFD_FLUSH,
-+         * or RAM_SAVE_FLAG_EOS), and such message would guarantee that
-+         * all previous guest pages queued in the multifd channels are
-+         * completely loaded.
-+         */
-+        ret = multifd_ram_flush_and_sync(f);
-+        if (ret < 0) {
-+            error_setg(errp, "%s: multifd flush and sync failed", __func__);
-+            return false;
-+        }
++    /* If there's a pending hint not consumed, don't bother */
++    if (hint->valid) {
++        return;
 +    }
 +
-+    qemu_put_be64(f, RAM_SAVE_FLAG_EOS);
-+
-+    return true;
++    /* Provide a hint to the background stream otherwise */
++    hint->location.block = pss->block;
++    hint->location.offset = pss->page;
++    hint->valid = true;
 +}
 +
- void postcopy_preempt_shutdown_file(MigrationState *s)
- {
-     qemu_put_be64(s->postcopy_qemufile_src, RAM_SAVE_FLAG_EOS);
-@@ -4417,6 +4453,7 @@ static SaveVMHandlers savevm_ram_handlers = {
-     .load_setup = ram_load_setup,
-     .load_cleanup = ram_load_cleanup,
-     .resume_prepare = ram_resume_prepare,
-+    .save_postcopy_prepare = ram_save_postcopy_prepare,
- };
+ /*
+  * Send an urgent host page specified by `pss'.  Need to be called with
+  * bitmap_mutex held.
+@@ -2064,6 +2116,7 @@ out:
+     /* For urgent requests, flush immediately if sent */
+     if (sent) {
+         qemu_fflush(pss->pss_channel);
++        ram_page_hint_update(rs, pss);
+     }
+     return ret;
+ }
+@@ -2151,6 +2204,30 @@ static int ram_save_host_page(RAMState *rs, PageSearchStatus *pss)
+     return (res < 0 ? res : pages);
+ }
  
- static void ram_mig_ram_block_resized(RAMBlockNotifier *n, void *host,
++static bool ram_page_hint_valid(RAMState *rs)
++{
++    /* There's only page hint during postcopy preempt mode */
++    if (!postcopy_preempt_active()) {
++        return false;
++    }
++
++    return rs->page_hint.valid;
++}
++
++static void ram_page_hint_collect(RAMState *rs, RAMBlock **block,
++                                  unsigned long *page)
++{
++    PageLocationHint *hint = &rs->page_hint;
++
++    assert(hint->valid);
++
++    *block = hint->location.block;
++    *page = hint->location.offset;
++
++    /* Mark the hint consumed */
++    hint->valid = false;
++}
++
+ /**
+  * ram_find_and_save_block: finds a dirty page and sends it to f
+  *
+@@ -2167,6 +2244,8 @@ static int ram_save_host_page(RAMState *rs, PageSearchStatus *pss)
+ static int ram_find_and_save_block(RAMState *rs)
+ {
+     PageSearchStatus *pss = &rs->pss[RAM_CHANNEL_PRECOPY];
++    unsigned long next_page;
++    RAMBlock *next_block;
+     int pages = 0;
+ 
+     /* No dirty page as there is zero RAM */
+@@ -2186,7 +2265,14 @@ static int ram_find_and_save_block(RAMState *rs)
+         rs->last_page = 0;
+     }
+ 
+-    pss_init(pss, rs->last_seen_block, rs->last_page);
++    if (ram_page_hint_valid(rs)) {
++        ram_page_hint_collect(rs, &next_block, &next_page);
++    } else {
++        next_block = rs->last_seen_block;
++        next_page = rs->last_page;
++    }
++
++    pss_init(pss, next_block, next_page);
+ 
+     while (true){
+         if (!get_queued_page(rs, pss)) {
+@@ -2319,6 +2405,13 @@ static void ram_save_cleanup(void *opaque)
+     ram_state_cleanup(rsp);
+ }
+ 
++static void ram_page_hint_reset(PageLocationHint *hint)
++{
++    hint->location.block = NULL;
++    hint->location.offset = 0;
++    hint->valid = false;
++}
++
+ static void ram_state_reset(RAMState *rs)
+ {
+     int i;
+@@ -2331,6 +2424,8 @@ static void ram_state_reset(RAMState *rs)
+     rs->last_page = 0;
+     rs->last_version = ram_list.version;
+     rs->xbzrle_started = false;
++
++    ram_page_hint_reset(&rs->page_hint);
+ }
+ 
+ #define MAX_WAIT 50 /* ms, half buffered_file limit */
 -- 
 2.48.1
 
