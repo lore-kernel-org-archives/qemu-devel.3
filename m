@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D830C369DC
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B73A8C3ABA9
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAguh-0004Fy-B2; Thu, 01 May 2025 23:18:13 -0400
+	id 1uAguY-00043E-Uw; Thu, 01 May 2025 23:18:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAgua-00045e-FO
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:18:05 -0400
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAguQ-0003v5-Sw
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:17:55 -0400
 Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAguY-0003zd-Ti
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:18:04 -0400
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAguP-0003ky-Bi
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:17:54 -0400
 Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-7394945d37eso1433057b3a.3
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:18:02 -0700 (PDT)
+ d2e1a72fcca58-72d3b48d2ffso1842108b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:17:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746155881; x=1746760681; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746155871; x=1746760671; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=c4QqPt240JeB7hjh0OkecHrTdb+ZtBLKIB7bPU4Cqdw=;
- b=R6iHV9QwqxA1HCEDjYd6Pmmb+TWzYKxY1SQbP8lSSoO9q4/E62G5iACfsK7ccGme2i
- OTEnHF3ooWWESS4NHTwnR068G13pozc3lr1sr6Tt3BwWk0IIUHUVUewNwDbtr47SPv+S
- vl4HC1b8Qk3F5b19gXMuig2QdUrOnJb9HEAe3NJXQWZyh+xWvvQEsB2EfD6IQZZBFRtD
- 8Ubj+Bk7NnQHnNezuP5t1HL7SN9aJ6ePnbKPcAd1cAIAKT1TPH7n+qRL5F2pS2IhO48t
- w+EaHUk6Jj2nNr80xmwJ/54TuX67Kx22Yn/UVHbVl43nV8KTNmwuenjYAtaAE7/LuWs0
- 3mkg==
+ bh=0ZHn8bqcj4q9CJJxCqBE9dI5/6R1oiuiTmmuYFd25J4=;
+ b=iUpcMBxgQQL6I7dI+TEf+9U3RO9HKYAbXe2X7aqKfCrq01hMdoN53t/TdlUz5B1tzN
+ MuQQCFm5VsyUisrRhZF8lVY7Fe9Lr9gu8EVnz9TPLA0Mkw/s6ZaQxkq0Dzo0ypTwI0xR
+ 0KYhLoTPqbe/4gHciUaUYHqbpDXF1/xEzZbTwb0voj6nfYcNBqzUrNymVoJTGbV1D+CF
+ qZfVHj9Z4Ffz0O1J/B4hflK8i4gU+wt2VItQMHJqrGXJT4EAiNn3qhXfpHH3hMi3EG/9
+ nCCURw2bUmCzyG2QIcifTPrWWTzDeuG2sCs03Sz05L7Br8z5Fa9rA3uB04e+yn261ZIR
+ QZPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746155881; x=1746760681;
+ d=1e100.net; s=20230601; t=1746155871; x=1746760671;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=c4QqPt240JeB7hjh0OkecHrTdb+ZtBLKIB7bPU4Cqdw=;
- b=bzIwze0v0YY8AcJ+17jmzaXYIus0e4Y2viwhNafxRL7W7IvoZUeedvRB5uiu9Onwtl
- w2NFdmkE8x2stE3BF+R03zm1vE4MiNgHM4rGETv+cfiSAuCWhoJjyvTpICNvZvef6k7+
- /zAuQjq3UJ/nLAazb3ohrhO7ZDl2+zx3OWjMVo3nSD1kwz4ckFyCKLNcESA5FqgHOFTi
- xDM2FU01I45NR297zNqFSTQAUXgaYGPqhywoOn3msMNfIl9MkSDBK6jIhwubDHY3bYbL
- OZcy8FJSlJBDo5PxjmbYEiEmDwdeKFcFIEYNgYL/8kxEtbI8+3A7flSUyytXviLnATzr
- ckBg==
+ bh=0ZHn8bqcj4q9CJJxCqBE9dI5/6R1oiuiTmmuYFd25J4=;
+ b=f/y/MVTrBiZvB4gvUp3RUUejhJNWsiIHFmkNN+FuFoEoEDIuR+YuIHkZilxQCpv4mu
+ w7xwujaDONvJls1QgpGkjQOVrzNcKr8WqQFDF7QEiZsysWKFnCSNKhsqjX8UJIQjQeh/
+ cclgAJSaIQUShEuJhXXpmYNmoUSqwivaW9Dc6sRl2ZDmYdk3CekYO6RwgAhpCaPpYGy5
+ 8y5fhZGCvMcudRbljxBiQpeG7058ZArAfjelOU0Z9ELT0ukSPEHEZ06bXeWBG+Pl6IQF
+ z/u2bUlecjuAFo6gv0dWPgz65b1aR/q0yjXY4pUumNIDYTw0+irP93/O2SLlwIJZuWod
+ FwyQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX9lhwp0jdezUjjRHhQUVRZysCmjVGfo9TWUqrngpQdJZ3UEQQd4kM8vPQHAm3s0wAySswuEDOa/H22@nongnu.org
-X-Gm-Message-State: AOJu0YykK6T0RqzjjXr88SI5DzJZ/szzhEp8D5YBnGrR1W11abyZd+q0
- XmhA38rnhjAtcQuwAgqBUgT04phTlk1y9QqqtyK1z6gGaxUg64sQ
-X-Gm-Gg: ASbGncv9i23iHUTMcWJuH3REZWInsLt+kZyCXzMrHemPukmhcS0UoNidywL5xkm2PJY
- r7MlkquXpE0SgrZ/GuaN7VTvqDzQqmCqd0zqfmtyGaJkOGy1nMWZfZGyUKR430TQrGTPoQhk3gk
- ijX6q+uN2gHUEmVkdLIaOIsN9+Hu1ASxL5HT3ZXTqqI8TQqDOH/JZmpR0P4qFpcIwe+Fxuu0hNF
- WPz4Ydgf6jGgU0imIVQr3OTxGNP1x+ICT7jj6qshDKatapjJ960nHBKI/2WEFEY3tw6E0WwR9FJ
- 0DKSPS3ANlmALWCRwBUYl18PjpuwrlhhDtFcPI5Ejfb6
-X-Google-Smtp-Source: AGHT+IF3FZRxTD8+cRIoOYfIktJ0/OnEm+G4+fcejmszQ8lCw6Txqk02bWPbqJfl/CFa2LIfrdV67w==
-X-Received: by 2002:a05:6a21:78d:b0:1f5:8622:5ecb with SMTP id
- adf61e73a8af0-20ce04e7581mr2186136637.34.1746155881616; 
- Thu, 01 May 2025 20:18:01 -0700 (PDT)
+ AJvYcCWX1n11yAyDTbVB7CFCJGeW2jvTYDue2D317FcgIR4swrYaEU4Wt/DEcybciisgrYlj7XCpuRy7WlPY@nongnu.org
+X-Gm-Message-State: AOJu0YzH/l3v559jhDWujEKiZqyKiVeo23EXlc6M0YQ5E0yZSoni7Bf7
+ YQ7PfDhh0r5kYhXW2y51sPAdXLZCQIaMZ+3pmSAv46Zeh4sh7GpQ
+X-Gm-Gg: ASbGncsdQEmPukg3f2j+ogyP+k9D29sbe4LxP5Os2IftzFhw5lU/X1gGV350yJFK8Uc
+ e0+cel4EHWtCgp8xgjBNE7fpo3NDeHAs+WPT4txN17P3og95/VAhZ3aarBPs0SNPUYGp6lyBFC5
+ ZaKbMLUITpBK335cRVPEkrizHuKDrcMD+M18aJ++5NoMOayS2cCytoxuNKRFG91WMc3oksZOjk8
+ ZR6MQ5F13pznaR1sZ0a8pd21ZXrC6Z+y5jDHQBcT4yO+e8AxzsyTDBPSKRomzBJ7UbKivI0SvwX
+ na4VQ1yVqbSjgxGzT4ZVaU+WYnbgQm7nqh86jOriRtyc
+X-Google-Smtp-Source: AGHT+IFz3WvjRR3ebp/n+kH3zxPdAK8r5G7wCeua16UPCMAPBiYLFVZnBEEhNOeGGr2ypZ1dZHL8dw==
+X-Received: by 2002:a05:6a00:420a:b0:72d:3b2e:fef9 with SMTP id
+ d2e1a72fcca58-74058b4e8eamr1817262b3a.20.1746155871190; 
+ Thu, 01 May 2025 20:17:51 -0700 (PDT)
 Received: from wheely.local0.net ([220.253.99.94])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74058ded48fsm467883b3a.83.2025.05.01.20.17.56
+ d2e1a72fcca58-74058ded48fsm467883b3a.83.2025.05.01.20.17.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 20:18:01 -0700 (PDT)
+ Thu, 01 May 2025 20:17:50 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
@@ -71,10 +71,10 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 09/12] hw/net/e1000e: Do not auto-clear cause on postponed
- msix interrupt
-Date: Fri,  2 May 2025 13:17:01 +1000
-Message-ID: <20250502031705.100768-10-npiggin@gmail.com>
+Subject: [PATCH v3 07/12] igb: Add a note about re-loading timers breaking
+ deterministic replay
+Date: Fri,  2 May 2025 13:16:59 +1000
+Message-ID: <20250502031705.100768-8-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250502031705.100768-1-npiggin@gmail.com>
 References: <20250502031705.100768-1-npiggin@gmail.com>
@@ -104,33 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If an interrupt is postponed, it should not do cause auto-clearing
-or auto-masking. That is done when the interrupt processing occurs.
+Add a note about the problem re-loading timers with default values.
+Deterministic replay requires the timers be migrated with the same
+value.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/net/e1000e_core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ hw/net/igb_core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-index 5969f49e8fd..022884a2ea0 100644
---- a/hw/net/e1000e_core.c
-+++ b/hw/net/e1000e_core.c
-@@ -2057,10 +2057,11 @@ e1000e_msix_notify_one(E1000ECore *core, uint32_t cause, uint32_t int_cfg)
-     if (E1000_IVAR_ENTRY_VALID(int_cfg)) {
-         uint32_t vec = E1000_IVAR_ENTRY_VEC(int_cfg);
-         if (vec < E1000E_MSIX_VEC_NUM) {
--            if (!e1000e_eitr_should_postpone(core, vec)) {
--                trace_e1000e_irq_msix_notify_vec(vec);
--                msix_notify(core->owner, vec);
-+            if (e1000e_eitr_should_postpone(core, vec)) {
-+                return;
-             }
-+            trace_e1000e_irq_msix_notify_vec(vec);
-+            msix_notify(core->owner, vec);
-         } else {
-             trace_e1000e_wrn_msix_vec_wrong(cause, int_cfg);
-         }
+diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
+index eedc341f298..3ae3e53530b 100644
+--- a/hw/net/igb_core.c
++++ b/hw/net/igb_core.c
+@@ -4589,7 +4589,9 @@ igb_core_post_load(IGBCore *core)
+ 
+     /*
+      * we need to restart intrmgr timers, as an older version of
+-     * QEMU can have stopped them before migration
++     * QEMU can have stopped them before migration.
++     * XXX: re-setting timers with fresh values breaks deterministic
++     * replay.
+      */
+     igb_intrmgr_resume(core);
+     igb_autoneg_resume(core);
 -- 
 2.47.1
 
