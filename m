@@ -4,92 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F12CC3ABA3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 12:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EB5FC3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 12:56:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAptS-0007vV-M6; Fri, 02 May 2025 08:53:30 -0400
+	id 1uApvy-00013F-Go; Fri, 02 May 2025 08:56:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uAptQ-0007vH-8I
- for qemu-devel@nongnu.org; Fri, 02 May 2025 08:53:28 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uApvw-00010Q-8v
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 08:56:04 -0400
+Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uAptO-0000bW-84
- for qemu-devel@nongnu.org; Fri, 02 May 2025 08:53:28 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-ac345bd8e13so332820666b.0
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 05:53:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uApvu-0001Oy-FK
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 08:56:04 -0400
+Received: by mail-yw1-x1132.google.com with SMTP id
+ 00721157ae682-7082ad1355bso15491827b3.1
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 05:56:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746190404; x=1746795204; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aKTCUo16RGCEv7+YHxIHGL7zLzA8SixBikNRyxni/tY=;
- b=cKM5mHcbmvWUVi40RrPTNmJb9cgKWk/6vaGFuf19fk0ujYJRUvyzQRbDLaZ+H52Uod
- r3OfJEt0+bqnxRcncbPlawv9Jmn/U7UPoSMTt6IIUWlijtsx/YwP73ODiucv+6K21ynm
- F6IY/VLjvJDcjQscuG/IPXRNe6xGbqDPaPsu8MVzXrMwby9EoTsKhW+e3xRKg89s+dj8
- zWkDrrzmz8rkA4OZ44qRNwIuacx4BFM7vLZHsm561Cx8y4d1gYyZ+j1pR1gU/Sf/TZIs
- tctuDbJqka2Hy5RT5Sw2zgdtvXAQ+S2LIgkZwd0Z8a1DYRVzvMj7Dg/fjItLf4/D606P
- Mwnw==
+ d=linaro.org; s=google; t=1746190561; x=1746795361; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=7mXFSvhaukdJK+iayCwvss7NQ9GSRN8lcF0pHMoDFDc=;
+ b=Fw5xpYl1EpK3tKpykaheWFOVHJEDoIzvM2y9fmaZKcTPi3ZVCtyOYGLnnL74nQy3Xy
+ 8LM3duW35TJXiojrCTk+rEutMl+DQk8gF30tC/POdhU0na6lS4kUyA4KM5Ld1cVu1PKy
+ SZAMXrEP/mAY3mbKK3T5GhUmSmEl1ttnniSMgyRqpy7LB+92BYzkM7nEtw8O7v8nJLP2
+ Jamw0Z55KHVM7YS3s3VVNreO27MILXViJ9YAMMHsTmRogvjnCxj9/lzo9HA+WIv1595m
+ AL46aR7qNx5ODQZzggn5Ck7l7pgjJSB+fXG86e7VCg/CtQzRr8I1pd0GN5US9o69HPTy
+ 2mMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746190404; x=1746795204;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=aKTCUo16RGCEv7+YHxIHGL7zLzA8SixBikNRyxni/tY=;
- b=DwkgR6TaG2qn6NohgE59JZ7G3ZmAsYpXKcf5BmAfVmwt+Q3wRxXYrpk+xlvO/BIPUO
- 2Bi1fTw8518Yc5a7okXZZ26ByDoCCQwVemX3u3pvJjcPYNdjBHPetyR3D704r3CWjwok
- YqktBeol2XP7FEe0kPOl9E58oOy/jYrneRH0XP9YuxWQZiAaBYbnrlawokFaXjsoY3hY
- pnlHUmU5/mcsoidkIhiQBHltAVP/lbEmRN0v0BNxYbXCYeMPua7QkMQ0E5AMdLS4LN4N
- /nOgwa6bE14Ok2oQbNMJWDMqWbm8I5fbn2CZihr8qFZ5ntj/f+S4La33f0Thiw6d6crm
- WkSw==
-X-Gm-Message-State: AOJu0YyZp13rLzxMgA2CDV+KM06AluCVBqOHAn3nTyZGLs/I7Fe292nv
- Ui2GmbwN49fg6vfpaz7eL3iDsPzb/YBFemaW3KEuYbuPdrORRkqRKsKBRj3+FDc=
-X-Gm-Gg: ASbGncto4cI2L9Ik0ZwPZr4XY5+MVqPxz5nDPjNxH8hvCUW6WXE4Y0LsBQUxp/eC5S/
- F89jv82vpmM2JnGu6KNyB2oP0B0Vx5+Fcb2OwQmqFUgOqkYaPzlJIpNka7c9ceAAWO7Yyx+WQvR
- W+9va71C6UIdtI/K0J5Wwb8lnBl6hkvm/TREVOr1CZp/5gIN3AG8iTD40tj4LNODrxaHd6sDgfX
- 57/rgdEfYMKX3HNQ87G7/hjyxHJBtxJIMBQSnvVlGxizIh2Jy7eJJBiKIUYK/Adsjky84X9dfTC
- CZMMdFetBHDjPCpcbP+Jr5/8uyODK5IkYNCky5EwaGc=
-X-Google-Smtp-Source: AGHT+IHh1anvBWUyq2ugYzA7nMVs3wRnM35wLZOMUnLJLVjl2sZRg9HBUnpxjIj7v0umkn+Wl8GViA==
-X-Received: by 2002:a17:906:dc90:b0:aca:a347:c050 with SMTP id
- a640c23a62f3a-ad17a85cd42mr266286666b.0.1746190403870; 
- Fri, 02 May 2025 05:53:23 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad18950973bsm45791466b.142.2025.05.02.05.53.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 May 2025 05:53:23 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 651725F86B;
- Fri,  2 May 2025 13:53:22 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
-Cc: qemu-devel@nongnu.org,  gustavo.romero@linaro.org,
- richard.henderson@linaro.org,  philmd@linaro.org,
- manos.pitsidianakis@linaro.org,  Patryk 'patryk4815' Sondej
- <patryk.sondej@gmail.com>
-Subject: Re: [PATCH] gdbstub: Implement qGDBServerVersion packet
-In-Reply-To: <20250403191340.53343-1-dominik.b.czarnota@gmail.com> (Dominik
- Czarnota's message of "Thu, 3 Apr 2025 21:13:40 +0200")
-References: <20250403191340.53343-1-dominik.b.czarnota@gmail.com>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Fri, 02 May 2025 13:53:22 +0100
-Message-ID: <87jz6zw4vx.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1746190561; x=1746795361;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7mXFSvhaukdJK+iayCwvss7NQ9GSRN8lcF0pHMoDFDc=;
+ b=YZPGh25el9g/60If3Nf7N1QaKeNPWd0uMf5J4TXKFOxbcwS0D1Sn7BXZMzKbAZDF3g
+ FrghdEWc3SPjqS+MN76fD1GqhWqxIupF9xUXWdS7nbjEh9dnQkoRWV1CPE9Bh+9P+bUG
+ wOzMaT7stH/G6kHTCxzlQm3oeu5qBA7k7ldUoenOEhwkOO2Cc+f6H3Di873OIDwbIt00
+ LlGkTqs36wzqUtmxKq37gtbxKTd37GfA8R0SJrMjwY9eFDxxnGGIs/WXtpPhuNQmO1YB
+ pDf4ujSi2XIR2hqAVpS7khOR7tji8TJHDkRpIM21Z+bSpYLU9Q3cA0aGAxfWYoHram0g
+ Xzpw==
+X-Gm-Message-State: AOJu0YzSOkkzdOVuew0PlYU7vliLl6pAsVjyWkghBDG0ypXNuC6LAyf5
+ TOukhbYfBcwRS9YHbL+HBQc83pZ+YoYjabq08119uL7iWQAejgkScgosVbZpNVCcjCXKP+NnVu5
+ B72raRvY6nZUHB7iiE+a2/hKQM1dEqrL36yU6eg==
+X-Gm-Gg: ASbGncu3ImIaBoemzp7kfwMJMVVilBUS2u0idMy4VNvBeKFDzBcyeD1UwRDn7q59AXy
+ BKJ7LEGzq6iRrqtbxaHaTvru0RU5GySzfCMnwn1YxW16HCWhWyiNTrXgy5iQhk4f6mjJNmNO1dL
+ bEq1wsY8A8Aobje3mFHLiyKmE=
+X-Google-Smtp-Source: AGHT+IH/VWx+ZkU4B7yFZ+VYwLqZZgxbg/rui5KRZGFi6vhrl/cEBh0g8HPNlm6SPDuOsWOMidtf8k229/UNftraBiw=
+X-Received: by 2002:a81:d849:0:b0:6fe:b88e:4d94 with SMTP id
+ 00721157ae682-708cf167f41mr33323397b3.19.1746190561116; Fri, 02 May 2025
+ 05:56:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20250402135229.28143-1-mads@ynddal.dk>
+ <20250402135229.28143-3-mads@ynddal.dk>
+In-Reply-To: <20250402135229.28143-3-mads@ynddal.dk>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 2 May 2025 13:55:48 +0100
+X-Gm-Features: ATxdqUFcZ2V1VvpUxM0hFFg8rlhOByQLMDwlT-mOQ6SAD6rycE17-XVo_jBjQO4
+Message-ID: <CAFEAcA8Hgmt_ph1Sv1Sbhvf+CnXRrw1jwE67_uJKFt2AqRFZng@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hvf: only update sysreg from owning thread
+To: Mads Ynddal <mads@ynddal.dk>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Phil Dennis-Jordan <phil@philjordan.eu>, Cameron Esfahani <dirty@apple.com>, 
+ Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
+ Mads Ynddal <m.ynddal@samsung.com>, Daniel Gomez <da.gomez@samsung.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,114 +95,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com> writes:
-
-> This commit adds support for the `qGDBServerVersion` packet to the qemu
-> gdbstub  which could be used by clients to detect the QEMU version
-> (and, e.g., use a workaround for known bugs).
+On Wed, 2 Apr 2025 at 14:52, Mads Ynddal <mads@ynddal.dk> wrote:
 >
-> This packet is not documented/standarized by GDB but it was implemented
-> by LLDB gdbstub [0] and is helpful for projects like Pwndbg [1].
+> From: Mads Ynddal <m.ynddal@samsung.com>
 >
-> This has been implemented by Patryk, who I included in Co-authored-by
-> and who asked me to send the patch.
+> hv_vcpu_set_sys_reg should only be called from the owning thread of the
+> vCPU, so to avoid crashes, the call to hvf_update_guest_debug is
+> dispatched to the individual threads.
 >
-> [0] https://lldb.llvm.org/resources/lldbgdbremote.html#qgdbserverversion
-> [1] https://github.com/pwndbg/pwndbg/issues/2648
->
-> Co-authored-by: Patryk 'patryk4815' Sondej <patryk.sondej@gmail.com>
-> Signed-off-by: Dominik 'Disconnect3d' Czarnota
-> <dominik.b.czarnota@gmail.com>
-
-Hmm:
-
-cc -m64 -Ilibuser.a.p -I. -I../.. -Iqapi -Itrace -Iui -Iui/shader -I/usr/in=
-clude/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -fdiagnostics-c=
-olor=3Dauto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O2 -g -fstack-protect=
-or-strong -Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-secur=
-ity -Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-sel=
-f -Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs -Wold-st=
-yle-declaration -Wold-style-definition -Wredundant-decls -Wshadow=3Dlocal -=
-Wstrict-prototypes -Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing=
--include-dirs -Wno-psabi -Wno-shift-negative-value -isystem /home/alex/lsrc=
-/qemu.git/linux-headers -isystem linux-headers -iquote . -iquote /home/alex=
-/lsrc/qemu.git -iquote /home/alex/lsrc/qemu.git/include -iquote /home/alex/=
-lsrc/qemu.git/host/include/x86_64 -iquote /home/alex/lsrc/qemu.git/host/inc=
-lude/generic -iquote /home/alex/lsrc/qemu.git/tcg/i386 -pthread -mcx16 -mss=
-e2 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE -fno-strict-a=
-liasing -fno-common -fwrapv -ftrivial-auto-var-init=3Dzero -fzero-call-used=
--regs=3Dused-gpr -fPIE -DCONFIG_USER_ONLY -DCOMPILING_SYSTEM_VS_USER -MD -M=
-Q libuser.a.p/gdbstub_gdbstub.c.o -MF libuser.a.p/gdbstub_gdbstub.c.o.d -o =
-libuser.a.p/gdbstub_gdbstub.c.o -c ../../gdbstub/gdbstub.c
-../../gdbstub/gdbstub.c: In function =E2=80=98handle_query_gdb_server_versi=
-on=E2=80=99:
-../../gdbstub/gdbstub.c:1603:74: error: implicit declaration of function =
-=E2=80=98target_name=E2=80=99 [-Werror=3Dimplicit-function-declaration]
- 1603 |     g_string_printf(gdbserver_state.str_buf, "name:qemu-%s;version:=
-%s;", target_name(), QEMU_VERSION);
-      |                                                                    =
-      ^~~~~~~~~~~
-../../gdbstub/gdbstub.c:1603:74: error: nested extern declaration of =E2=80=
-=98target_name=E2=80=99 [-Werror=3Dnested-externs]
-../../gdbstub/gdbstub.c:1603:46: error: format =E2=80=98%s=E2=80=99 expects=
- argument of type =E2=80=98char *=E2=80=99, but argument 3 has type =E2=80=
-=98int=E2=80=99 [-Werror=3Dformat=3D]
- 1603 |     g_string_printf(gdbserver_state.str_buf, "name:qemu-%s;version:=
-%s;", target_name(), QEMU_VERSION);
-      |                                              ^~~~~~~~~~~~~~~~~~~~~~=
-~~~~  ~~~~~~~~~~~~~
-      |                                                                    =
-      |
-      |                                                                    =
-      int
-cc1: all warnings being treated as errors
-
-where did target_name() come from and/or go to?
-
+> Tested-by: Daniel Gomez <da.gomez@samsung.com>
+> Signed-off-by: Mads Ynddal <m.ynddal@samsung.com>
 > ---
->  gdbstub/gdbstub.c | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+>  accel/hvf/hvf-all.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 >
-> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-> index 282e13e163..8d616a7f52 100644
-> --- a/gdbstub/gdbstub.c
-> +++ b/gdbstub/gdbstub.c
-> @@ -1582,6 +1582,16 @@ static void handle_query_threads(GArray *params, v=
-oid *user_ctx)
->      gdbserver_state.query_cpu =3D gdb_next_attached_cpu(gdbserver_state.=
-query_cpu);
+> diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+> index d404e01ade..3fc65d6b23 100644
+> --- a/accel/hvf/hvf-all.c
+> +++ b/accel/hvf/hvf-all.c
+> @@ -58,8 +58,13 @@ int hvf_sw_breakpoints_active(CPUState *cpu)
+>      return !QTAILQ_EMPTY(&hvf_state->hvf_sw_breakpoints);
 >  }
->=20=20
-> +static void handle_query_gdb_server_version(GArray *params, void *user_c=
-tx)
-> +{
-> +#if defined(CONFIG_USER_ONLY)
-> +    g_string_printf(gdbserver_state.str_buf, "name:qemu-%s;version:%s;",=
- target_name(), QEMU_VERSION);
-> +#else
-> +    g_string_printf(gdbserver_state.str_buf, "name:qemu-system-%s;versio=
-n:%s;", target_name(), QEMU_VERSION);
-> +#endif
-> +    gdb_put_strbuf();
+>
+> -int hvf_update_guest_debug(CPUState *cpu)
+> +static void do_hvf_update_guest_debug(CPUState *cpu, run_on_cpu_data arg)
+>  {
+>      hvf_arch_update_guest_debug(cpu);
 > +}
 > +
->  static void handle_query_first_threads(GArray *params, void *user_ctx)
->  {
->      gdbserver_state.query_cpu =3D gdb_first_attached_cpu();
-> @@ -1827,6 +1837,10 @@ static const GdbCmdParseEntry gdb_gen_query_table[=
-] =3D {
->          .handler =3D handle_query_threads,
->          .cmd =3D "sThreadInfo",
->      },
-> +    {
-> +        .handler =3D handle_query_gdb_server_version,
-> +        .cmd =3D "GDBServerVersion",
-> +    },
->      {
->          .handler =3D handle_query_first_threads,
->          .cmd =3D "fThreadInfo",
+> +int hvf_update_guest_debug(CPUState *cpu)
+> +{
+> +    run_on_cpu(cpu, do_hvf_update_guest_debug, RUN_ON_CPU_NULL);
+>      return 0;
+>  }
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+run_on_cpu() implicitly drops the BQL, so it is a potential
+really nasty footgun in this kind of situation where callers
+to update_guest_debug aren't expecting the BQL to be dropped
+on them. But we already use run_on_cpu() in the KVM equivalent
+kvm_update_guest_debug(), so presumably it's also OK here...
+
+-- PMM
 
