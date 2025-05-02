@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36C49C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 18:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4031FC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 18:18:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAus1-0003uN-Hs; Fri, 02 May 2025 14:12:21 -0400
+	id 1uAuxB-0005mt-Pd; Fri, 02 May 2025 14:17:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1uAurt-0003tA-4v
- for qemu-devel@nongnu.org; Fri, 02 May 2025 14:12:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uAux4-0005ld-6I
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 14:17:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1uAurq-0003eb-16
- for qemu-devel@nongnu.org; Fri, 02 May 2025 14:12:12 -0400
+ id 1uAux0-0006Y6-L5
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 14:17:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746209526;
+ s=mimecast20190719; t=1746209849;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2lcyWJgX6KhwhEcmIjoCl+j1dVQGsMJsV8mYGlMqhk0=;
- b=Aez86Z1dUPmL6b/fGRiaoU6ZSXJocT3GPNp6PkRG5yK6ELT81egjGDkHQmNXv2K3+Nczap
- D5p12xSf+092KsAn37l5uOmEmmjmOl9wgB9kU6YtdP6ouAvtcOKW8GPLw6ZyuMNHCotNgY
- gRC1fCR6sgASE2YNfEHhjwAcCqIzLIA=
+ bh=DJnKAunZ1Djkl7EOu7Ew/I8Ps+gfCr9/BDa7pBfgzXo=;
+ b=fm+rE+cWt2gEI7GJE4NhWIlTlOhMWRybNVldocdhQD79OguPv/veAalpc1LePIv5n0U4rn
+ R8m9SLQzEMELPawUKxpmE9YQCyoBxP/QSH1Ut919PSXmV9eDz4OijZOAOqqeXfnk84EbpS
+ Hgv5AKKIqCn6QU3VSbFxLDixN7pHiNc=
 Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
  [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-493-E20NLaAyMZaIkPJMw021cg-1; Fri, 02 May 2025 14:12:05 -0400
-X-MC-Unique: E20NLaAyMZaIkPJMw021cg-1
-X-Mimecast-MFC-AGG-ID: E20NLaAyMZaIkPJMw021cg_1746209525
+ us-mta-270-pinFxsA-PHOC3bkyaYU8iA-1; Fri, 02 May 2025 14:17:28 -0400
+X-MC-Unique: pinFxsA-PHOC3bkyaYU8iA-1
+X-Mimecast-MFC-AGG-ID: pinFxsA-PHOC3bkyaYU8iA_1746209848
 Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7c5750ca8b2so349848185a.0
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 11:12:05 -0700 (PDT)
+ af79cd13be357-7c09f73873fso351431185a.1
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 11:17:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746209525; x=1746814325;
+ d=1e100.net; s=20230601; t=1746209848; x=1746814648;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2lcyWJgX6KhwhEcmIjoCl+j1dVQGsMJsV8mYGlMqhk0=;
- b=DUdBv8zS6VxkJqG8tS/8oJMlFd9DauiftgT1JLeBfyTz7EqjRjiZlcQ7NVWljDvQxB
- AaRjDpVG6YwoCrfPu4Uzj/yohNpMO4seFzRm0PPqNvICH4HcXKlxo2Tj2pNsxQnAbpMe
- cMMTGTFsuDKbu2xvRu/hL07pJeX7e7SNKP3JmvImbIrDE/9WfqhkBz6jg/vvl/R6c/Q/
- UwneZpZkU/taC/wVbmYWnAItpQOBOyrZ7IcepLI0ISEmhxo9D65MDwNQRMpHIdhqcned
- L9CAzoy5zVU+KRh8VM/r7U9tJYFHyJh4JkdT7YOqtQJMwhoh3Adl278lAcMql5ixTPdY
- H/tA==
+ bh=DJnKAunZ1Djkl7EOu7Ew/I8Ps+gfCr9/BDa7pBfgzXo=;
+ b=vjotMSPf/HJcQ6v+n3e01gRY7XohQDLeii7uT+JcqCv7mMQU5XazBjowZsIVH0+1BG
+ +9C6OsbaT0VJttr20XKWWGE6KdJjzyH+jzReh6j2YlXSh+wEJk4DtKMWOjx3CYSg9LRP
+ R1MUEeDBFfk/ZgKK/+Lv//e5kHwZbPeaEi2n5AR7W+5RbpAvMN3bbzM+b+VgvUrG5Ohe
+ TmNPLrea6Le5vbUXAJAFAFk5SCOW/Z4ulxhh+GgcPe8kuGcUHgztbYvzjOF4KRDF+NpG
+ b2Ggy4bMiOuhVnn46zs4W5wSjLmDEJu4GoJhfMN5pRPgvla5V0apFa8TxmCygF3uE2kw
+ z/tg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXO7bwx+jg16jAh8PFz3rXMm0OpuKGf+lJ9lAlP5CtcjQuoo+zuFaIfReeYVgWvR3uC8fi2x3GuKHXp@nongnu.org
-X-Gm-Message-State: AOJu0YxBgfQyAh/raBslLv7gAPpUCsNz28jv34p91UzznzPGQymOhgbV
- Nou50Npz814isN0hIqdb2PIg1941V+I4MUdo+r4kf3tzVmeIX9FIj5bVnGGsT8dlOPbjxc/eV67
- Qap1iwUztzh/54s0zLrLdsoClFtv+ZQDG3iP2ds/G9D/l71KsAP2Q
-X-Gm-Gg: ASbGncthkK5m7SCpX6i8d++oOCC0QwgLQDp4NF5Hc/Y+1GomV0mici3PoVrK5YpuwRD
- /2bvYhT6IJHMgzytB1AvQ2EuSvHaM7vs2ltdS5lJ6Djn0mXZADZ8ZcA0mSHx37ElDUtyHZpHnKW
- AnFIlUqaL3G3LmQ1xvfBXKSh9/AkZK6rtTMCPlSXAkVHCZw95dayENimLa8rnLpUL0FlxVpdb1e
- nTA2Iy7uCPh96TuCyx0MunODdx7WTHm2kfeCohzXPbKJL6G00XKaFW5NY4gU8noDdPaAQJh0p85
- 3R1CLz4i7OyV
-X-Received: by 2002:ac8:7f45:0:b0:476:884e:52f4 with SMTP id
- d75a77b69052e-48d5bf6e0a4mr1225301cf.12.1746209525073; 
- Fri, 02 May 2025 11:12:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGzBds/R1iKGEWb4Vz1XzGA1IIdodCP9L87BaOdHn/rSUNRYqm05cXbAN207va439v4UPK8RQ==
-X-Received: by 2002:ac8:7f45:0:b0:476:884e:52f4 with SMTP id
- d75a77b69052e-48d5bf6e0a4mr1224881cf.12.1746209524632; 
- Fri, 02 May 2025 11:12:04 -0700 (PDT)
+ AJvYcCUWbOdxBCpm1nvbS9AaIttbNjkvs7nFL9DHqdrx6oN8+XcvgU24mdhkEzxggyv4DE+GAcF6TnhQ95dG@nongnu.org
+X-Gm-Message-State: AOJu0YxzJqhGlH2m06XdP5o+4abdObwNGTfSbcZSDt4fRAINQk7YZ/Ns
+ LJFJrLPkJl69bZ5uNaRrHcmgij2+AMuf0PdsL8/ymsYTs40LCx7LYZd1x0qMatB/6Z6YyS6jv5q
+ bJLsSXGmlMvZ/nNdQpRDkN6hD/33Uij4n2/wKzDkMo/8aZ+yXB4Gm
+X-Gm-Gg: ASbGncubMGDAIXR3d4aH9IpHu+7FeQK1SRjW7es4YSvVjEUCXulT3KSYdpyU4p/MEnv
+ A/rEEDGFURRAKeTiS6nl16qZTJ/VPbkodIjC88z/k6w1Jj3frVT4kzWcUraJAmGwwFDlqXI9Rep
+ +QvRX32ivLEPLVCiNfDKr3QD5FdhjPZitrmH8O7DUxsaxA3CQQFALTPrqzUKMpC04horCiF/Tf8
+ 2YR8q8oaxcAmiAMYWnGijxv5EMZNaBjNq/9plz68JbkL3eSpSkXn2iHDWrAYIZmiZa5DlFMNVIf
+ SFaaBzxEY3Fg
+X-Received: by 2002:a05:622a:5585:b0:479:2509:528a with SMTP id
+ d75a77b69052e-48c32ac7333mr58708101cf.42.1746209847982; 
+ Fri, 02 May 2025 11:17:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFR+KliBMOy+ZyDdiVaubEILS4dM3R5wu6AwSglnNS1l/jR66arUKJ4Ro233+sWgGGr2E8+LQ==
+X-Received: by 2002:a05:622a:5585:b0:479:2509:528a with SMTP id
+ d75a77b69052e-48c32ac7333mr58707841cf.42.1746209847697; 
+ Fri, 02 May 2025 11:17:27 -0700 (PDT)
 Received: from [192.168.40.164] ([70.105.235.240])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-48b98c1a459sm20940611cf.69.2025.05.02.11.12.03
+ d75a77b69052e-48b98d0fb2dsm20974591cf.77.2025.05.02.11.17.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 May 2025 11:12:04 -0700 (PDT)
-Message-ID: <9cdb3f09-0925-4e10-b607-8fe1028b2ce0@redhat.com>
-Date: Fri, 2 May 2025 14:11:32 -0400
+ Fri, 02 May 2025 11:17:27 -0700 (PDT)
+Message-ID: <03c31d89-ad24-4470-99d0-a77e693e3ba2@redhat.com>
+Date: Fri, 2 May 2025 14:16:55 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/6] Add support for user creatable SMMUv3 device
+Subject: Re: [PATCH v2 1/6] hw/arm/smmuv3: Add support to associate a PCIe RC
 Content-Language: en-US
 To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
  qemu-arm@nongnu.org, qemu-devel@nongnu.org
@@ -87,11 +87,12 @@ Cc: eric.auger@redhat.com, peter.maydell@linaro.org, jgg@nvidia.com,
  wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
  jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
 References: <20250502102707.110516-1-shameerali.kolothum.thodi@huawei.com>
+ <20250502102707.110516-2-shameerali.kolothum.thodi@huawei.com>
 From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <20250502102707.110516-1-shameerali.kolothum.thodi@huawei.com>
+In-Reply-To: <20250502102707.110516-2-shameerali.kolothum.thodi@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ddutile@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ddutile@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -100,7 +101,7 @@ X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.644,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,84 +120,97 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 5/2/25 6:27 AM, Shameer Kolothum wrote:
-> Hi All,
+> Although this change does not affect functionality at present, it lays
+> the groundwork for enabling user-created SMMUv3 devices in
+> future patches
 > 
-> Changes from v1:
-> https://lore.kernel.org/qemu-devel/20250415081104.71708-1-shameerali.kolothum.thodi@huawei.com/
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>   hw/arm/smmuv3.c | 26 ++++++++++++++++++++++++++
+>   hw/arm/virt.c   |  3 ++-
+>   2 files changed, 28 insertions(+), 1 deletion(-)
 > 
-> Addressed feedback on v1. Thanks to all.
-> 1. Retained the same name as the legacy SMMUv3(arm-smmuv3) for new
->     device type as well (instead of arm-smmuv3-dev type usage in v1).
-> 2. Changes to ACPI IORT to use the same struct SMMUv3Device for both
->     legacy SMMUv3 and the new SMMUV3 device
-> 3. Removed the restriction of creating SMMUv3 dev if virt ver > 9.2.
-> 
-> Cover letter from v1:
-> 
-> This patch series introduces support for a user-creatable SMMUv3 device
-> (-device arm-smmuv3) in QEMU.
-> 
-> The implementation is based on feedback received from the RFCv2[0]:
-> "hw/arm/virt: Add support for user-creatable accelerated SMMUv3"
-> 
-> Currently, QEMU's SMMUv3 emulation (iommu=smmuv3) is tied to the machine
-should it be clarified as 'to the machine's sysbus' ?
-> and does not support instantiating multiple SMMUv3 devices—each associated
-> with a separate PCIe root complex. In contrast, real-world ARM systems
-> often include multiple SMMUv3 instances, each bound to a different PCIe
-> root complex.
-> 
-> This also lays the groundwork for supporting accelerated SMMUv3, as
-> proposed in the aforementioned RFC. Please note, the accelerated SMMUv3
-> support is not part of this series and will be sent out as a separate
-> series later on top of this one.
-> 
-> Summary of changes:
-> 
->   -Introduces support for multiple -device arm-smmuv3-dev,bus=pcie.x
-Drop, as you've done elsewhere.........................^^^^
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index ab67972353..605de9b721 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -24,6 +24,7 @@
+>   #include "hw/qdev-properties.h"
+>   #include "hw/qdev-core.h"
+>   #include "hw/pci/pci.h"
+> +#include "hw/pci/pci_bridge.h"
+>   #include "cpu.h"
+>   #include "exec/target_page.h"
+>   #include "trace.h"
+> @@ -1874,6 +1875,25 @@ static void smmu_reset_exit(Object *obj, ResetType type)
+>       smmuv3_init_regs(s);
+>   }
+>   
+> +static int smmuv3_pcie_bus(Object *obj, void *opaque)
+> +{
+> +    DeviceState *d = opaque;
+> +    PCIBus *bus;
+> +
+> +    if (!object_dynamic_cast(obj, TYPE_PCI_HOST_BRIDGE)) {
+> +        return 0;
+> +    }
+> +
+> +    bus = PCI_HOST_BRIDGE(obj)->bus;
+> +    if (d->parent_bus && !strcmp(bus->qbus.name, d->parent_bus->name)) {
+> +        object_property_set_link(OBJECT(d), "primary-bus", OBJECT(bus),
+> +                                 &error_abort);
+> +        /* Return non-zero as we got the bus and don't need further iteration.*/
+> +        return 1;
+> +    }
+> +    return 0;
+> +}
+> +
+>   static void smmu_realize(DeviceState *d, Error **errp)
+>   {
+>       SMMUState *sys = ARM_SMMU(d);
+> @@ -1882,6 +1902,10 @@ static void smmu_realize(DeviceState *d, Error **errp)
+>       SysBusDevice *dev = SYS_BUS_DEVICE(d);
+>       Error *local_err = NULL;
+>   
+> +    if (!object_property_get_link(OBJECT(d), "primary-bus", &error_abort)) {
+> +        object_child_foreach_recursive(object_get_root(), smmuv3_pcie_bus, d);
+> +    }
+> +
+>       c->parent_realize(d, &local_err);
+>       if (local_err) {
+>           error_propagate(errp, local_err);
+> @@ -1996,6 +2020,8 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+>       device_class_set_parent_realize(dc, smmu_realize,
+>                                       &c->parent_realize);
+>       device_class_set_props(dc, smmuv3_properties);
+> +    dc->hotpluggable = false;
+> +    dc->bus_type = TYPE_PCIE_BUS;
+Does this force legacy SMMUv3 to be tied to a PCIe bus now?
+if so, will that break some existing legacy smmuv3 configs?, i.e., virtio-scsi attached to a legacy smmuv3.
 
->    instances.
-> 
->    Example usage:
-> 
->    -device arm-smmuv3,bus=pcie.0
->    -device virtio-net-pci,bus=pcie.0
->    -device pxb-pcie,id=pcie.1,bus_nr=2
->    -device arm-smmuv3,bus=pcie.1
->    -device pcie-root-port,id=pcie.port1,bus=pcie.1
->    -device virtio-net-pci,bus=pcie.port1
-> 
->    -Supports either the legacy iommu=smmuv3 option or the new
->    "-device arm-smmuv3" model.> 
->    -Adds device tree bindings for the new SMMUv3 device on the arm/virt
->     machine only, and only for the default pcie.0 root complex.
->     (Note: pxb-pcie root complexes are currently not supported with the
->      device tree due to known limitations[1].)
-> 
-> Please take a look and let me know your feedback.
-> 
-> Thanks,
-> Shameer
-> [0]:https://lore.kernel.org/qemu-devel/20250311141045.66620-1-shameerali.kolothum.thodi@huawei.com/
-> [1]:https://lore.kernel.org/qemu-devel/20230421165037.2506-1-Jonathan.Cameron@huawei.com/
-> 
-> Nicolin Chen (1):
->    hw/arm/virt: Add an SMMU_IO_LEN macro
-> 
-> Shameer Kolothum (5):
->    hw/arm/smmuv3: Add support to associate a PCIe RC
->    hw/arm/virt-acpi-build: Update IORT for multiple smmuv3 devices
->    hw/arm/virt: Factor out common SMMUV3 dt bindings code
->    hw/arm/virt: Add support for smmuv3 device
->    hw/arm/smmuv3: Enable smmuv3 device creation
-> 
->   hw/arm/smmuv3.c          |  27 +++++++
->   hw/arm/virt-acpi-build.c | 162 +++++++++++++++++++++++++++++++--------
->   hw/arm/virt.c            | 112 ++++++++++++++++++++-------
->   hw/core/sysbus-fdt.c     |   3 +
->   include/hw/arm/virt.h    |   1 +
->   5 files changed, 244 insertions(+), 61 deletions(-)
-> 
+>   }
+>   
+>   static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 177f3dd22c..3bae4e374f 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -56,6 +56,7 @@
+>   #include "qemu/cutils.h"
+>   #include "qemu/error-report.h"
+>   #include "qemu/module.h"
+> +#include "hw/pci/pci_bus.h"
+>   #include "hw/pci-host/gpex.h"
+>   #include "hw/virtio/virtio-pci.h"
+>   #include "hw/core/sysbus-fdt.h"
+> @@ -1442,7 +1443,7 @@ static void create_smmu(const VirtMachineState *vms,
+>       }
+>       object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
+>                                &error_abort);
+> -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> +    qdev_realize_and_unref(dev, &bus->qbus, &error_fatal);
+>       sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
+>       for (i = 0; i < NUM_SMMU_IRQS; i++) {
+>           sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
 
 
