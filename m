@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D63C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF7A3C3ABA5
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAh80-0004Zb-9k; Thu, 01 May 2025 23:31:56 -0400
+	id 1uAh7w-0004TT-Ry; Thu, 01 May 2025 23:31:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh7y-0004WX-F2
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:31:54 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh7s-0004Ob-Q9
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:31:49 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh7v-0001IU-R2
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:31:54 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-73bf1cef6ceso1737948b3a.0
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:31:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh7q-0001IC-SG
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:31:48 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7403f3ece96so2263225b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:31:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746156710; x=1746761510; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746156705; x=1746761505; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+bwaHMNOhN5/3SiuCmSg59LLWnyBqFKfT3s/956qIKI=;
- b=naXZOCuKMbln2EwyNdzPTxi2OdpR/f+ULwHYmGxNuUwvsFTOKHk892hkvOM4QmV98c
- F8ZDWd1R+YKu4uh10ImIQxs2snRfy90yXtbf30wIHL8/jXOGaKCUFdSRJZz5VsULZglG
- /iI7Tgf6ee9vf3wdDzeDapyhJDFS7EfC1JSSTmBrLDMQ2/IWywyXn0qudzHJ9USJ7eWy
- MiBPfDOnceOT8ySApCuk4bs1V9fPYIK2gErV3UKfB2EwkNPHc8kT2uZ90CaYHtbzLJUq
- g8Tv0fSuGG7a6G1LzbemWz5EwriGyuCgDnH9gz5iFRHj2RabdCdCTMyN3KYuqkaKVvWl
- 11bQ==
+ bh=UeR84shn1uCIwX+MVAuYfPQUwyqvqMWtDUSdpiM/Vf0=;
+ b=Yx8ZgMq34MkA1SM/rlXpxDwRX7zQzHEmC09AGqbagWb2rkf+Nzv2B7/W6OKoZxsRCS
+ /whsiRmhgd15xEkFYPeH/huLwg3e/Sf65y7qkws/91NDgqfSSzJUStJzlNVkkAgrHr/5
+ s6yK6mAY2x6E2tiRaAwqcy5kiGTiwDKv8XFPyVibjWnqfh2D7vZjr75sSnDnU2185VSn
+ Ek/EqTUIOAssh0G9Zwo6oJYYMnVlkG7XdKK3G3pJ9w7eDuDVNVJOn+G2lTyFs49pGFof
+ qUJdWJbQjaDV7C4voYpFhQbIz66qaHdKm6oBKxNYdwXfYX/n7j4oPuZrsl5WYd/vUw0B
+ alxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746156710; x=1746761510;
+ d=1e100.net; s=20230601; t=1746156705; x=1746761505;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+bwaHMNOhN5/3SiuCmSg59LLWnyBqFKfT3s/956qIKI=;
- b=T9Rky0G68Ru2wvG18O3oL5PIMw8V4T4OF9bUUewHqvI9dwI7O5rY9wTJEmnId+3Evq
- puxHWSmwD8oJXCgd7q4/fo4HvHdguT6kuYMaHP1rpce37Iingsh/pncUnc7KdZa+ZBay
- 7hIuDtRB6ZHFXcrFwy3ABGI/07MrtrOODaSaYtLJn4BDO5NyswA71edqfuaUxcSM6LZR
- jtP5SchTblxCrmuKGJid5UEjdlQI3CE+mE9LbrjdJahU2QNX7gWW7b0GqO+ZD5QVKQp0
- H0DkGsgfyTPQBPBZxWWw6tI3xklfhPJKz+fWKJHZjFe3QOIb6PI74x5zOojEQfdkwvA1
- m5tA==
+ bh=UeR84shn1uCIwX+MVAuYfPQUwyqvqMWtDUSdpiM/Vf0=;
+ b=mkYFarbdI+oBgZMqcgYC7swtHbSKg1lhkIM6QGNqAtD4H5M/1l/emSc5sZIqd31UdV
+ fcdejD6HBbUyhT9t8/lc0ZRq7HBI82whsPH4y/CK3aDCemIKIYb3uVMnJkdgfnWJUjPj
+ rlhsO3V8fFZ3zpRqecGKo+zK4ofz4FH91ApusoZgqzy6eNfKJvpZR/DauX001CSLb0Mq
+ zb32xXhjxcAkiUPH+86BXp0civAxs24+72thf3lGbgXkgocN0JGky7bYq5LLumsh4EEV
+ i5khf9cVN6oX+hNhRXWHI2kQabuOjEXqDB2s7mglPvPRu1gSxn0/aTLVW2JHZakrlExf
+ wB2g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+YlQmgxVxsafdm9lGcTZtEjGG42c/SL/wIycbwPPVUSrV1h/KgtSYSAbBeq7jwRZ/E/8aGcobV1Fv@nongnu.org
-X-Gm-Message-State: AOJu0YzSFxG8sSpOoYDJW5gknIl6B8926zfb3AXPLleuOo9YYkI36Uec
- nfiDIn7ksmsqk4Hb++wwBmEVliy1nYtJU/FoGvy6hQovMXIo4m1ghaxJZg==
-X-Gm-Gg: ASbGncvfZ6RBtHuoJR5Xg38AvJAXTWAlcTgQdGfPqmssAXOD8O4GF4Ya52LEBkFQqSG
- HX9nUgesxcH5lyho9L8/StaMVPzyP6z3IUWZEqKv1anuKb94tjQcNV1/OgUIy2t1R8/u7Q9NS6H
- rUT8zIu09E/IiU+wNgmSbmkVwVBip9OMWFBH4Cc0WvIff5ImP8m9N3HuOKDXCZOofZrqlbqDPbS
- uOFgiSW4z8KhaWHbW3EzAa6yTj5T+caybXrtCKqyU/RpQX/RvT26MBWFzxFNUCgo+XwMRtkl6m7
- tMkg0WkgMAKay+vlFrlMWmcE2MYV14CqF+6yNghzrtvS
-X-Google-Smtp-Source: AGHT+IHjrZ7ck+RMRIwwbbdv/PdV8MsbmCit/9MQ2zf4wf4kR5zJEBrh7MGlKCFk/VCr2QlY08E2Kw==
-X-Received: by 2002:a05:6a00:428f:b0:736:6ac4:d204 with SMTP id
- d2e1a72fcca58-74058a4e54amr1659312b3a.11.1746156710501; 
- Thu, 01 May 2025 20:31:50 -0700 (PDT)
+ AJvYcCWGntsEWOLuLJGCDnXbVOqskySQYh8XCUCCFikd4uvN0h2XLmB9ZiyBHR7LW7dO7fxRswGpYQun/0jK@nongnu.org
+X-Gm-Message-State: AOJu0YwQyYw4CAkdGiYXQKvcjUmCNK6PbwOocIwREt1W0HWgk/AaemVY
+ UzlLF+mcMhXcrbQUnNoLY0hXtDte7pMSibLtjbXc5HvpitKNTuio
+X-Gm-Gg: ASbGncvSEpF9g49vOYTN11enF81VXcq3Hb2k6IOaXMWJbYAThWrCq89VpG03UfR9QtX
+ XR6GRLdi76UciAdaBY8DXMJjmYc+ZL10QQDWPB0wDEaVkTk3w7IZVz3r1IQtTrL67TdeHRg/clx
+ JguTlzgImv6MSiMHHXO9de7Hi0OwBx14S66HM/u1YGSJXI/+diEYXKQGdtX5SZYbNVnB4JPHR4l
+ iQ5un5KUW7ymX/SSkC1VpO+DvQIIklkD4xnXpMcG9W5ShvrX+rGmhGL50FqZbXw7iXqFu25rYax
+ YDxNeSnnghITYjqJqRLOHKVfCWB2ZMKZxgTczyK9JK7X
+X-Google-Smtp-Source: AGHT+IFsoaqa8a+O0tlV+R8CFEkKBC9rnE5eKSdU7jYSs9xg/eDrN8FqkdfzrN+TWgg0WDGCC8f+hg==
+X-Received: by 2002:a05:6a00:2992:b0:736:3d7c:236c with SMTP id
+ d2e1a72fcca58-74058a55711mr1749434b3a.14.1746156705382; 
+ Thu, 01 May 2025 20:31:45 -0700 (PDT)
 Received: from wheely.local0.net ([220.253.99.94])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74059063f6esm488055b3a.139.2025.05.01.20.31.45
+ d2e1a72fcca58-74059063f6esm488055b3a.139.2025.05.01.20.31.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 20:31:50 -0700 (PDT)
+ Thu, 01 May 2025 20:31:44 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Gerd Hoffmann <kraxel@redhat.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
@@ -73,17 +73,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 10/22] hw/usb/hcd-xhci-pci: Add TI TUSB73X0 XHCI controller
- model
-Date: Fri,  2 May 2025 13:30:34 +1000
-Message-ID: <20250502033047.102465-11-npiggin@gmail.com>
+Subject: [PATCH v4 09/22] hw/usb/hcd-xhci-pci: Make PCI device more
+ configurable
+Date: Fri,  2 May 2025 13:30:33 +1000
+Message-ID: <20250502033047.102465-10-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250502033047.102465-1-npiggin@gmail.com>
 References: <20250502033047.102465-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,184 +106,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TI TUSB73X0 controller has some interesting differences from NEC,
-notably a separate BAR for MSIX, and PM capabilities. The spec is freely
-available without sign-up.
-
-This controller is accepted by IBM Power proprietary firmware and
-software (when the subsystem IDs are set to Power servers, which is not
-done here). IBM code is picky about device support, so the NEC device
-can not be used.
-
-xhci qtests are enabled for this device.
+To prepare to support another USB PCI Host Controller, make some PCI
+configuration dynamic.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- include/hw/pci/pci_ids.h        |  1 +
- include/hw/usb/xhci.h           |  1 +
- hw/usb/hcd-xhci-ti.c            | 77 +++++++++++++++++++++++++++++++++
- tests/qtest/usb-hcd-xhci-test.c |  3 ++
- hw/usb/Kconfig                  |  5 +++
- hw/usb/meson.build              |  1 +
- 6 files changed, 88 insertions(+)
- create mode 100644 hw/usb/hcd-xhci-ti.c
+ hw/usb/hcd-xhci-pci.h |   9 ++++
+ hw/usb/hcd-xhci-pci.c | 118 +++++++++++++++++++++++++++++++++---------
+ 2 files changed, 103 insertions(+), 24 deletions(-)
 
-diff --git a/include/hw/pci/pci_ids.h b/include/hw/pci/pci_ids.h
-index 33e2898be95..99fe751703f 100644
---- a/include/hw/pci/pci_ids.h
-+++ b/include/hw/pci/pci_ids.h
-@@ -182,6 +182,7 @@
- #define PCI_VENDOR_ID_HP                 0x103c
+diff --git a/hw/usb/hcd-xhci-pci.h b/hw/usb/hcd-xhci-pci.h
+index 5b61ae84555..09aabae6e01 100644
+--- a/hw/usb/hcd-xhci-pci.h
++++ b/hw/usb/hcd-xhci-pci.h
+@@ -41,6 +41,15 @@ typedef struct XHCIPciState {
+     OnOffAuto msi;
+     OnOffAuto msix;
+     bool conditional_intr_mapping;
++    uint8_t cache_line_size;
++    uint8_t pm_cap_off;
++    uint8_t pcie_cap_off;
++    uint8_t msi_cap_off;
++    uint8_t msix_cap_off;
++    int msix_bar_nr;
++    uint64_t msix_bar_size;
++    uint32_t msix_table_off;
++    uint32_t msix_pba_off;
+ } XHCIPciState;
  
- #define PCI_VENDOR_ID_TI                 0x104c
-+#define PCI_DEVICE_ID_TI_TUSB73X0        0x8241
+ #endif
+diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+index b93c80b09d8..911daf7e51f 100644
+--- a/hw/usb/hcd-xhci-pci.c
++++ b/hw/usb/hcd-xhci-pci.c
+@@ -32,9 +32,6 @@
+ #include "trace.h"
+ #include "qapi/error.h"
  
- #define PCI_VENDOR_ID_MOTOROLA           0x1057
- #define PCI_DEVICE_ID_MOTOROLA_MPC106    0x0002
-diff --git a/include/hw/usb/xhci.h b/include/hw/usb/xhci.h
-index 5c90e1373e5..203ec1fca32 100644
---- a/include/hw/usb/xhci.h
-+++ b/include/hw/usb/xhci.h
-@@ -3,6 +3,7 @@
+-#define OFF_MSIX_TABLE  0x3000
+-#define OFF_MSIX_PBA    0x3800
+-
+ static void xhci_pci_intr_update(XHCIState *xhci, int n, bool enable)
+ {
+     XHCIPciState *s = container_of(xhci, XHCIPciState, xhci);
+@@ -120,6 +117,31 @@ static int xhci_pci_vmstate_post_load(void *opaque, int version_id)
+    return 0;
+ }
  
- #define TYPE_XHCI "base-xhci"
- #define TYPE_NEC_XHCI "nec-usb-xhci"
-+#define TYPE_TI_XHCI "ti-usb-xhci"
- #define TYPE_QEMU_XHCI "qemu-xhci"
- #define TYPE_XHCI_SYSBUS "sysbus-xhci"
- 
-diff --git a/hw/usb/hcd-xhci-ti.c b/hw/usb/hcd-xhci-ti.c
-new file mode 100644
-index 00000000000..b7bb71c62e8
---- /dev/null
-+++ b/hw/usb/hcd-xhci-ti.c
-@@ -0,0 +1,77 @@
-+/*
-+ * USB xHCI TI TUSB73X0 controller emulation
-+ * Datasheet https://www.ti.com/product/TUSB7340
-+ *
-+ * Copyright (c) 2025 IBM Corporation
-+ * Derived from hcd-xhci-nec.c, copyright accordingly.
-+ *
-+ * SPDX-License-Identifier: LGPL-2.1-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/usb.h"
-+#include "qemu/module.h"
-+#include "hw/pci/pci.h"
-+#include "hw/qdev-properties.h"
-+
-+#include "hcd-xhci-pci.h"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(XHCITiState, TI_XHCI)
-+
-+struct XHCITiState {
-+    XHCIPciState parent_obj;
-+
-+    uint32_t intrs;
-+    uint32_t slots;
-+};
-+
-+static const Property ti_xhci_properties[] = {
-+    DEFINE_PROP_UINT32("intrs", XHCITiState, intrs, 8),
-+    DEFINE_PROP_UINT32("slots", XHCITiState, slots, XHCI_MAXSLOTS),
-+};
-+
-+static void ti_xhci_instance_init(Object *obj)
++static int xhci_pci_add_pm_capability(PCIDevice *pci_dev, uint8_t offset,
++                                      Error **errp)
 +{
-+    XHCIPciState *pci = XHCI_PCI(obj);
-+    XHCITiState *ti = TI_XHCI(obj);
++    int err;
 +
-+    pci->xhci.numintrs = ti->intrs;
-+    pci->xhci.numslots = ti->slots;
++    err = pci_add_capability(pci_dev, PCI_CAP_ID_PM, offset,
++                             PCI_PM_SIZEOF, errp);
++    if (err < 0) {
++        return err;
++    }
 +
-+    /* Taken from datasheet */
-+    pci->cache_line_size = 0x0;
-+    pci->pm_cap_off = 0x40;
-+    pci->pcie_cap_off = 0x70;
-+    pci->msi_cap_off = 0x48;
-+    pci->msix_cap_off = 0xc0;
-+    pci->msix_bar_nr = 0x2;
-+    pci->msix_bar_size = 0x800000;
-+    pci->msix_table_off = 0x0;
-+    pci->msix_pba_off = 0x1000;
++    pci_set_word(pci_dev->config + offset + PCI_PM_PMC,
++                 PCI_PM_CAP_VER_1_2 |
++                 PCI_PM_CAP_D1 | PCI_PM_CAP_D2 |
++                 PCI_PM_CAP_PME_D0 | PCI_PM_CAP_PME_D1 |
++                 PCI_PM_CAP_PME_D2 | PCI_PM_CAP_PME_D3hot);
++    pci_set_word(pci_dev->wmask + offset + PCI_PM_PMC, 0);
++    pci_set_word(pci_dev->config + offset + PCI_PM_CTRL,
++                 PCI_PM_CTRL_NO_SOFT_RESET);
++    pci_set_word(pci_dev->wmask + offset + PCI_PM_CTRL,
++                 PCI_PM_CTRL_STATE_MASK);
++
++    return 0;
 +}
 +
-+static void ti_xhci_class_init(ObjectClass *klass, const void *data)
-+{
-+    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    device_class_set_props(dc, ti_xhci_properties);
-+    k->vendor_id    = PCI_VENDOR_ID_TI;
-+    k->device_id    = PCI_DEVICE_ID_TI_TUSB73X0;
-+    k->revision     = 0x02;
-+}
-+
-+static const TypeInfo ti_xhci_info = {
-+    .name          = TYPE_TI_XHCI,
-+    .parent        = TYPE_XHCI_PCI,
-+    .instance_size = sizeof(XHCITiState),
-+    .instance_init = ti_xhci_instance_init,
-+    .class_init    = ti_xhci_class_init,
-+};
-+
-+static void ti_xhci_register_types(void)
-+{
-+    type_register_static(&ti_xhci_info);
-+}
-+
-+type_init(ti_xhci_register_types)
-diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
-index 2eecc8d9f26..428200d9e41 100644
---- a/tests/qtest/usb-hcd-xhci-test.c
-+++ b/tests/qtest/usb-hcd-xhci-test.c
-@@ -71,6 +71,8 @@ typedef struct XHCIQState {
-                       PCI_VENDOR_ID_REDHAT)
- #define XHCI_NEC_ID (PCI_DEVICE_ID_NEC_UPD720200 << 16 | \
-                      PCI_VENDOR_ID_NEC)
-+#define XHCI_TI_ID  (PCI_DEVICE_ID_TI_TUSB73X0 << 16 | \
-+                     PCI_VENDOR_ID_TI)
+ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
+ {
+     int ret;
+@@ -128,7 +150,7 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
  
- /**
-  * Locate, verify, and return a handle to the XHCI device.
-@@ -932,6 +934,7 @@ int main(int argc, char **argv)
-     TestData td[] = {
-         { .device = "qemu-xhci", .fingerprint = XHCI_QEMU_ID, },
-         { .device = "nec-usb-xhci", .fingerprint = XHCI_NEC_ID, },
-+        { .device = "ti-usb-xhci", .fingerprint = XHCI_TI_ID, },
-     };
+     dev->config[PCI_CLASS_PROG] = 0x30;    /* xHCI */
+     dev->config[PCI_INTERRUPT_PIN] = 0x01; /* interrupt pin 1 */
+-    dev->config[PCI_CACHE_LINE_SIZE] = 0x10;
++    dev->config[PCI_CACHE_LINE_SIZE] = s->cache_line_size;
+     dev->config[0x60] = 0x30; /* release number */
  
-     g_test_init(&argc, &argv, NULL);
-diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
-index 69c663be52f..00d82a97211 100644
---- a/hw/usb/Kconfig
-+++ b/hw/usb/Kconfig
-@@ -49,6 +49,11 @@ config USB_XHCI_NEC
-     default y if PCI_DEVICES
-     select USB_XHCI_PCI
+     object_property_set_link(OBJECT(&s->xhci), "host", OBJECT(s), NULL);
+@@ -144,40 +166,78 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
+         s->xhci.nec_quirks = true;
+     }
  
-+config USB_XHCI_TI
-+    bool
-+    default y if PCI_DEVICES
-+    select USB_XHCI_PCI
+-    if (s->msi != ON_OFF_AUTO_OFF) {
+-        ret = msi_init(dev, 0x70, s->xhci.numintrs, true, false, &err);
+-        /*
+-         * Any error other than -ENOTSUP(board's MSI support is broken)
+-         * is a programming error
+-         */
+-        assert(!ret || ret == -ENOTSUP);
+-        if (ret && s->msi == ON_OFF_AUTO_ON) {
+-            /* Can't satisfy user's explicit msi=on request, fail */
+-            error_append_hint(&err, "You have to use msi=auto (default) or "
+-                    "msi=off with this machine type.\n");
++    if (s->pm_cap_off) {
++        if (xhci_pci_add_pm_capability(dev, s->pm_cap_off, &err)) {
+             error_propagate(errp, err);
+             return;
+         }
+-        assert(!err || s->msi == ON_OFF_AUTO_AUTO);
+-        /* With msi=auto, we fall back to MSI off silently */
+-        error_free(err);
+     }
 +
- config USB_XHCI_SYSBUS
-     bool
-     select USB_XHCI
-diff --git a/hw/usb/meson.build b/hw/usb/meson.build
-index 17360a5b5a4..375fa420be6 100644
---- a/hw/usb/meson.build
-+++ b/hw/usb/meson.build
-@@ -23,6 +23,7 @@ system_ss.add(when: 'CONFIG_USB_XHCI', if_true: files('hcd-xhci.c'))
- system_ss.add(when: 'CONFIG_USB_XHCI_PCI', if_true: files('hcd-xhci-pci.c'))
- system_ss.add(when: 'CONFIG_USB_XHCI_SYSBUS', if_true: files('hcd-xhci-sysbus.c'))
- system_ss.add(when: 'CONFIG_USB_XHCI_NEC', if_true: files('hcd-xhci-nec.c'))
-+system_ss.add(when: 'CONFIG_USB_XHCI_TI', if_true: files('hcd-xhci-ti.c'))
- system_ss.add(when: 'CONFIG_USB_DWC2', if_true: files('hcd-dwc2.c'))
- system_ss.add(when: 'CONFIG_USB_DWC3', if_true: files('hcd-dwc3.c'))
- system_ss.add(when: 'CONFIG_USB_CHIPIDEA', if_true: files('chipidea.c'))
++    if (s->msi != ON_OFF_AUTO_OFF) {
++        ret = msi_init(dev, s->msi_cap_off, s->xhci.numintrs,
++                       true, false, &err);
++        if (ret) {
++            if (ret != -ENOTSUP) {
++                /* Programming error */
++                error_propagate(errp, err);
++                return;
++            }
++            if (s->msi == ON_OFF_AUTO_ON) {
++                /* Can't satisfy user's explicit msi=on request, fail */
++                error_append_hint(&err, "You have to use msi=auto (default) "
++                                  "or msi=off with this machine type.\n");
++                error_propagate(errp, err);
++                return;
++            }
++            error_free(err);
++            err = NULL; /* With msi=auto, we fall back to MSI off silently */
++        }
++    }
++
+     pci_register_bar(dev, 0,
+                      PCI_BASE_ADDRESS_SPACE_MEMORY |
+                      PCI_BASE_ADDRESS_MEM_TYPE_64,
+                      &s->xhci.mem);
+ 
+     if (pci_bus_is_express(pci_get_bus(dev))) {
+-        ret = pcie_endpoint_cap_init(dev, 0xa0);
++        ret = pcie_endpoint_cap_init(dev, s->pcie_cap_off);
+         assert(ret > 0);
+     }
+ 
+     if (s->msix != ON_OFF_AUTO_OFF) {
+-        /* TODO check for errors, and should fail when msix=on */
+-        msix_init(dev, s->xhci.numintrs,
+-                  &s->xhci.mem, 0, OFF_MSIX_TABLE,
+-                  &s->xhci.mem, 0, OFF_MSIX_PBA,
+-                  0x90, NULL);
++        MemoryRegion *msix_bar = &s->xhci.mem;
++
++        if (s->msix_bar_nr != 0) {
++            memory_region_init(&dev->msix_exclusive_bar, OBJECT(dev),
++                               "xhci-msix", s->msix_bar_size);
++            msix_bar = &dev->msix_exclusive_bar;
++            pci_register_bar(dev, s->msix_bar_nr,
++                             PCI_BASE_ADDRESS_SPACE_MEMORY |
++                             PCI_BASE_ADDRESS_MEM_TYPE_64,
++                             msix_bar);
++        }
++
++        ret = msix_init(dev, s->xhci.numintrs,
++                        msix_bar, s->msix_bar_nr, s->msix_table_off,
++                        msix_bar, s->msix_bar_nr, s->msix_pba_off,
++                        s->msix_cap_off, &err);
++        if (ret) {
++            if (ret != -ENOTSUP) {
++                /* Programming error */
++                error_propagate(errp, err);
++                return;
++            }
++            if (s->msix == ON_OFF_AUTO_ON) {
++                /* Can't satisfy user's explicit msix=on request, fail */
++                error_append_hint(&err, "You have to use msix=auto (default) "
++                                  "or msix=off with this machine type.\n");
++                error_propagate(errp, err);
++                return;
++            }
++            error_free(err);
++            err = NULL; /* With msix=auto, we fall back to MSI-X off silently */
++            /* Should we unregister BAR and memory region here? */
++        }
+     }
+     s->xhci.as = pci_get_address_space(dev);
+ }
+@@ -214,6 +274,16 @@ static void xhci_instance_init(Object *obj)
+     PCI_DEVICE(obj)->cap_present |= QEMU_PCI_CAP_EXPRESS;
+     object_initialize_child(obj, "xhci-core", &s->xhci, TYPE_XHCI);
+     qdev_alias_all_properties(DEVICE(&s->xhci), obj);
++
++    s->cache_line_size = 0x10;
++    s->pm_cap_off = 0;
++    s->pcie_cap_off = 0xa0;
++    s->msi_cap_off = 0x70;
++    s->msix_cap_off = 0x90;
++    s->msix_bar_nr = 0;
++    s->msix_bar_size = 0;
++    s->msix_table_off = 0x3000;
++    s->msix_pba_off = 0x3800;
+ }
+ 
+ static const Property xhci_pci_properties[] = {
 -- 
 2.47.1
 
