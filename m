@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EB5FC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 12:56:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C11CC3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 12:58:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uApvy-00013F-Go; Fri, 02 May 2025 08:56:06 -0400
+	id 1uApyE-0003BR-Un; Fri, 02 May 2025 08:58:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uApvw-00010Q-8v
- for qemu-devel@nongnu.org; Fri, 02 May 2025 08:56:04 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ id 1uApxQ-0002Vi-Gc
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 08:57:39 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uApvu-0001Oy-FK
- for qemu-devel@nongnu.org; Fri, 02 May 2025 08:56:04 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-7082ad1355bso15491827b3.1
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 05:56:01 -0700 (PDT)
+ id 1uApxO-0001fy-U3
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 08:57:36 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-7082ce1e47cso15932297b3.2
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 05:57:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746190561; x=1746795361; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746190654; x=1746795454; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7mXFSvhaukdJK+iayCwvss7NQ9GSRN8lcF0pHMoDFDc=;
- b=Fw5xpYl1EpK3tKpykaheWFOVHJEDoIzvM2y9fmaZKcTPi3ZVCtyOYGLnnL74nQy3Xy
- 8LM3duW35TJXiojrCTk+rEutMl+DQk8gF30tC/POdhU0na6lS4kUyA4KM5Ld1cVu1PKy
- SZAMXrEP/mAY3mbKK3T5GhUmSmEl1ttnniSMgyRqpy7LB+92BYzkM7nEtw8O7v8nJLP2
- Jamw0Z55KHVM7YS3s3VVNreO27MILXViJ9YAMMHsTmRogvjnCxj9/lzo9HA+WIv1595m
- AL46aR7qNx5ODQZzggn5Ck7l7pgjJSB+fXG86e7VCg/CtQzRr8I1pd0GN5US9o69HPTy
- 2mMg==
+ bh=jud06qPeZcXPv8io0aY7bnQqJL5aqwCl4h6qzivT1eI=;
+ b=sIrFB2enseezVLl67482fV8PQl7ulmrsdrw9V6Usr9vbyU6AlbbpotpY6g6O4bjhRh
+ 1FmcX4jeXZxO+E7psybyITT2rwCLgJAg7CJeEhR9uOXioVj5cuEufG4meCzHBQn1t4G7
+ WJoP03jYz5TrEm86d7f+f1W243gDXAA/OqoNgKhG3KaSL5hDkTw8vypqSDztIK61Gc8f
+ cMXNcHaOM8yDl1ht8jBpxBEwHNb4LLkEN3VOQ/yYSZg0/Q4JH03gTXenUy2suwfStvUt
+ BeOdhrlptmpSJ2AI8Ztk69I5kp2cVFJd4iSWj/0t+8zdA6RYRFKufBDi2B9O9q2lwfSi
+ WeAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746190561; x=1746795361;
+ d=1e100.net; s=20230601; t=1746190654; x=1746795454;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7mXFSvhaukdJK+iayCwvss7NQ9GSRN8lcF0pHMoDFDc=;
- b=YZPGh25el9g/60If3Nf7N1QaKeNPWd0uMf5J4TXKFOxbcwS0D1Sn7BXZMzKbAZDF3g
- FrghdEWc3SPjqS+MN76fD1GqhWqxIupF9xUXWdS7nbjEh9dnQkoRWV1CPE9Bh+9P+bUG
- wOzMaT7stH/G6kHTCxzlQm3oeu5qBA7k7ldUoenOEhwkOO2Cc+f6H3Di873OIDwbIt00
- LlGkTqs36wzqUtmxKq37gtbxKTd37GfA8R0SJrMjwY9eFDxxnGGIs/WXtpPhuNQmO1YB
- pDf4ujSi2XIR2hqAVpS7khOR7tji8TJHDkRpIM21Z+bSpYLU9Q3cA0aGAxfWYoHram0g
- Xzpw==
-X-Gm-Message-State: AOJu0YzSOkkzdOVuew0PlYU7vliLl6pAsVjyWkghBDG0ypXNuC6LAyf5
- TOukhbYfBcwRS9YHbL+HBQc83pZ+YoYjabq08119uL7iWQAejgkScgosVbZpNVCcjCXKP+NnVu5
- B72raRvY6nZUHB7iiE+a2/hKQM1dEqrL36yU6eg==
-X-Gm-Gg: ASbGncu3ImIaBoemzp7kfwMJMVVilBUS2u0idMy4VNvBeKFDzBcyeD1UwRDn7q59AXy
- BKJ7LEGzq6iRrqtbxaHaTvru0RU5GySzfCMnwn1YxW16HCWhWyiNTrXgy5iQhk4f6mjJNmNO1dL
- bEq1wsY8A8Aobje3mFHLiyKmE=
-X-Google-Smtp-Source: AGHT+IH/VWx+ZkU4B7yFZ+VYwLqZZgxbg/rui5KRZGFi6vhrl/cEBh0g8HPNlm6SPDuOsWOMidtf8k229/UNftraBiw=
-X-Received: by 2002:a81:d849:0:b0:6fe:b88e:4d94 with SMTP id
- 00721157ae682-708cf167f41mr33323397b3.19.1746190561116; Fri, 02 May 2025
- 05:56:01 -0700 (PDT)
+ bh=jud06qPeZcXPv8io0aY7bnQqJL5aqwCl4h6qzivT1eI=;
+ b=HtXvEheggx5q406pTKymVGTcqwt41yQeqmeBTOvnI512eB10wIHD87qone+puFn0yd
+ Js35lhQtaYTTFcEp9cjeCTw+Tr/Ka3EZ/uCbn23b0eACMC2JxB+3PoNKblytOUGCiK+X
+ JeJATHN9oOyOLrUzBim6+FvRE7tddRbg7yYOC2MNMCPtRcUxrthXqr8OxWzDAegmDWff
+ sC0s5ed8suDLsAvIamqL6M9i0Pwa9Y3jNPWmj7b5MJvPAPUrYp3ahPaCpJcBqpclw/wd
+ T5Bnr9pjiUxKqcmT6h074AWmeszHlw9Wk4y6Npcu9Gw9tu/Xwc8Bv+oCcn+z25deuqJL
+ fMjw==
+X-Gm-Message-State: AOJu0Yy47Rd4QSEr4nLjpSGLoBe8knUx1sJ5Fz6CKq53rAs14+eoyTci
+ OGdDKRU+dPbY2xuii9GX3YQarYxs6UdiIvEFZsSBv8vxYRRrMwpPBzJDA3VhvhvIcftXbWbI19m
+ GLkjSvlY79C9RV4efWQLhjZZLDSJniqVFPC4IGisgXH1YnRhq
+X-Gm-Gg: ASbGncvKlb6aAFA0lgQdfqN4dYo8oBuOdTBMN2alXSdE529X0KqRfZMPvx0IlH1rBYM
+ oXKidrVrabYLaERqot2nqLp6+NIGf7Ol/ICR4USEDBHt5LRYsTMS7kT0T5LemHM27KayA8FGPrO
+ X2P5Yg/N7XPa/+T/p1hHgmx3c=
+X-Google-Smtp-Source: AGHT+IEjiZB1hP2tot5WRx2UlA0+yO8gjQ7B7AsWoNQEnG95xEB8S6YEc3bj2neD9N5X2xMqHuMjNfhpGrTZqk88qrg=
+X-Received: by 2002:a05:690c:4a0d:b0:6fd:6589:7957 with SMTP id
+ 00721157ae682-708cee17dccmr42816337b3.32.1746190653780; Fri, 02 May 2025
+ 05:57:33 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250402135229.28143-1-mads@ynddal.dk>
- <20250402135229.28143-3-mads@ynddal.dk>
-In-Reply-To: <20250402135229.28143-3-mads@ynddal.dk>
+In-Reply-To: <20250402135229.28143-1-mads@ynddal.dk>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 2 May 2025 13:55:48 +0100
-X-Gm-Features: ATxdqUFcZ2V1VvpUxM0hFFg8rlhOByQLMDwlT-mOQ6SAD6rycE17-XVo_jBjQO4
-Message-ID: <CAFEAcA8Hgmt_ph1Sv1Sbhvf+CnXRrw1jwE67_uJKFt2AqRFZng@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hvf: only update sysreg from owning thread
+Date: Fri, 2 May 2025 13:57:22 +0100
+X-Gm-Features: ATxdqUGAf83SQnlNk5H7J17wVTf0-VJZICRohSKvi1cqEXkGHa5YU8P_IJwHp-Y
+Message-ID: <CAFEAcA-v11LC=uVXcQuZR07QanDPPZ4zJ6egCk2Y463-2aDk7Q@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Fix GDB support for macOS hvf
 To: Mads Ynddal <mads@ynddal.dk>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
  Phil Dennis-Jordan <phil@philjordan.eu>, Cameron Esfahani <dirty@apple.com>, 
  Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
- Mads Ynddal <m.ynddal@samsung.com>, Daniel Gomez <da.gomez@samsung.com>
+ Mads Ynddal <m.ynddal@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,41 +98,17 @@ On Wed, 2 Apr 2025 at 14:52, Mads Ynddal <mads@ynddal.dk> wrote:
 >
 > From: Mads Ynddal <m.ynddal@samsung.com>
 >
-> hv_vcpu_set_sys_reg should only be called from the owning thread of the
-> vCPU, so to avoid crashes, the call to hvf_update_guest_debug is
-> dispatched to the individual threads.
+> In (recent versions of?) macOS, calls to hv_vcpu_set_sys_reg were failing if
+> they were issued outside of the specific thread that owns the vCPU.
 >
-> Tested-by: Daniel Gomez <da.gomez@samsung.com>
-> Signed-off-by: Mads Ynddal <m.ynddal@samsung.com>
-> ---
->  accel/hvf/hvf-all.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
+> This caused a crash when attaching a debugger through the GDB stub.
 >
-> diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-> index d404e01ade..3fc65d6b23 100644
-> --- a/accel/hvf/hvf-all.c
-> +++ b/accel/hvf/hvf-all.c
-> @@ -58,8 +58,13 @@ int hvf_sw_breakpoints_active(CPUState *cpu)
->      return !QTAILQ_EMPTY(&hvf_state->hvf_sw_breakpoints);
->  }
->
-> -int hvf_update_guest_debug(CPUState *cpu)
-> +static void do_hvf_update_guest_debug(CPUState *cpu, run_on_cpu_data arg)
->  {
->      hvf_arch_update_guest_debug(cpu);
-> +}
-> +
-> +int hvf_update_guest_debug(CPUState *cpu)
-> +{
-> +    run_on_cpu(cpu, do_hvf_update_guest_debug, RUN_ON_CPU_NULL);
->      return 0;
->  }
+> This GDB stub has worked before, so it is unclear if Apple changed the
+> behavior of the function in a release of macOS.
 
-run_on_cpu() implicitly drops the BQL, so it is a potential
-really nasty footgun in this kind of situation where callers
-to update_guest_debug aren't expecting the BQL to be dropped
-on them. But we already use run_on_cpu() in the KVM equivalent
-kvm_update_guest_debug(), so presumably it's also OK here...
+
+
+Applied to target-arm.next, thanks.
 
 -- PMM
 
