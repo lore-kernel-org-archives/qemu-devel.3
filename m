@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C51D0C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 16:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91DF3C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 16:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAtSV-0007eZ-8y; Fri, 02 May 2025 12:41:55 -0400
+	id 1uAtSW-0007j5-Vr; Fri, 02 May 2025 12:41:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtST-0007dx-MS
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtST-0007dk-8X
  for qemu-devel@nongnu.org; Fri, 02 May 2025 12:41:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtSR-0006R8-U3
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtSP-0006Ql-Ov
  for qemu-devel@nongnu.org; Fri, 02 May 2025 12:41:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746204110;
+ s=mimecast20190719; t=1746204109;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YhEfo/crAEyxYhDSWP1l8LRwgjE5vzXQPMbrfXIzcrY=;
- b=VXGprtUjKCUuMavORY1AI60jA9wLegbTdhafOaydeTXQ6uBlQ2IwjZOVZbFtl+rnJQcCde
- VFqXmbdmpRS+6BnEJG+W3QPjOddlRNSei6fv1AKLXl3VUJJUu4PQ8OilSjeYlGuNXK/Vqi
- 0a6WwRqxMGbaA8EPEdTgMgW/zMu4Ex0=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9pnkzXpeaKPG6Ox9+z33hGrFEPUQdEVIPBVoCdXCEVQ=;
+ b=UQc1qnqsSQzvwr5B1hgoShjKwZuhZdkIJZGGA2e5gPIGijEy3WsEW88J7mTBWWrpZvNfpn
+ jZAA/48ouNriu86zu9qe9XU5Qq9yTfh3aEax4B5nY/wwoHrIKKvP6AC1VngSnmX2VX+7Uj
+ HgNUlooMmc4SJic9cvbwQNBV6cr8CSE=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-106-Ug5r5DfdMm2ROm0FPQIX7A-1; Fri, 02 May 2025 12:41:49 -0400
-X-MC-Unique: Ug5r5DfdMm2ROm0FPQIX7A-1
-X-Mimecast-MFC-AGG-ID: Ug5r5DfdMm2ROm0FPQIX7A_1746204109
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7c3c8f8ab79so342584585a.2
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 09:41:49 -0700 (PDT)
+ us-mta-690-g2yz11KcOW-IzCRSkEPpAA-1; Fri, 02 May 2025 12:41:48 -0400
+X-MC-Unique: g2yz11KcOW-IzCRSkEPpAA-1
+X-Mimecast-MFC-AGG-ID: g2yz11KcOW-IzCRSkEPpAA_1746204107
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7c0a3ff7e81so395713485a.3
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 09:41:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746204108; x=1746808908;
+ d=1e100.net; s=20230601; t=1746204107; x=1746808907;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YhEfo/crAEyxYhDSWP1l8LRwgjE5vzXQPMbrfXIzcrY=;
- b=ZF5srgpPMOqRIvVjjSU8/3llFXrxMikWyCyPuL2BdgJn3eTPavDXo4MhZDRijiuwLu
- GeU8l3mSrw5tzxNHPes1o5olZ6ADQqA0IyofuGoHHiMUHfmTLDis8psHd8/hosfFiP4P
- 5ExXpi6S/vNpXNrfqaUfD/KoJCxenVSbp9cPj4KtUqXS1Vdygi0MCn32+ZYq+StyUY2W
- pUtrG+cxtwLWJ6Kwp/RruCoxuClNVZFAas8nXUuGnwkHLIbeBx4Xtku/BKmXk1BTSWlK
- pB8ICCMnk4GGhdCuQH/rzeN0tZT/DYfa9ysduAyP0UJxEU96+wMg7Q9VosFv0CK1JHA4
- 8v4w==
-X-Gm-Message-State: AOJu0Yx1q2k5dtC2WJZzPeqNqeW1Y3k3jMdytfH1V4GCEzOe6KmKkhgL
- r0FNeMyeu1qJHwN386W/kU/mVzrCcmQqjB9cY7DU1iUom3ykf59645tTXcEwsiAoTwI2dFShw4E
- l9fFaQKvicEjGF17a3r/Dhzw8V2T/2+guFLxpGnqiGAwJPbzTPNH6LRCSJTymzcUst51R0L6BaO
- EO4zjP9wBEtQb/cvgXwr+2rU2PxWtxODiaFQ==
-X-Gm-Gg: ASbGncti/j/UBJjsZgvAulNP6x9hbRx810gayS97CCUZVG+d/9V+sWLsMnQfrNCECke
- JVf8yHkkSSiaTQ4PYM6Djx9LzIFUFIf592TCqQ9vrjMiCQcTIzUS8QX2wjp0wGkxeFgOZsN7P6+
- NxkrDzRgW9KcOf9KwBETcUNAxSsz365sP8jkKBCBNecgGB+jK1ggOIgV9feI8dN8AYF/vWD/i2l
- 00Osmh8DbWyFFO+Z4bNZprGQgqU4e3Am+fHE+IE30abbsM1d/SL+yZWoLQ/lOx3xf342uByUHhb
-X-Received: by 2002:a05:620a:4111:b0:7c7:747f:89d0 with SMTP id
- af79cd13be357-7cad5b3e38cmr506280585a.18.1746204108477; 
- Fri, 02 May 2025 09:41:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGs14xF8eu3NbGT/nPm0RNHfb80OXKRMVtgmQMULhElkPHy0CTxprx+fNpHHb2qr+h40WjWfw==
-X-Received: by 2002:a05:620a:4111:b0:7c7:747f:89d0 with SMTP id
- af79cd13be357-7cad5b3e38cmr506277785a.18.1746204108152; 
- Fri, 02 May 2025 09:41:48 -0700 (PDT)
-Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cad23d1c8dsm203108385a.60.2025.05.02.09.41.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=9pnkzXpeaKPG6Ox9+z33hGrFEPUQdEVIPBVoCdXCEVQ=;
+ b=MqCpjJNMbCfYlCwPD+KwpFDwhNd0CYKlbChEtF5YpcVZ1gFRIDMKLkhX3XdMJ7s+Wd
+ bKtEYH5aBF7WpUwFJVFDqN6JxhhseV91iTwJTyGn4FpvrXSFwSVy+hnxdgYAtOg+omGo
+ qvBwy7iLWo0FoRSoApiZoDC2OYawFTdDXJpLQWxbA1psbthwPL5Ydcp2gkl5BWasemO6
+ Hp55COcqbx6FoLAWf/Dwf1Wnfj2Bn/RU/+pJWl/VvYbqAFSg3DkNON6CX0P4Pj9jRqcF
+ CVES4r9dXfYp0/NJVIAoiUtnHSF65gEQFBtPwLa/BBzRlChfEwm2gTL9pAMLn3vf714M
+ EvLw==
+X-Gm-Message-State: AOJu0Yy8fkTjRBkTry63TTDOPl//iDAFp+a3mXhAsilJGjtta4+4dK3M
+ VEHcPnOXlN7ZIyOEvQ7oqtNCI4VHNQ+Bcqy3iwaxYIHu8/VXCFWQ3Ah7ZrUeil0R8Qn//lMljJK
+ h1jZUrxnj4/hStQUQTv4Sw+bDF5ekqFIhI1RFGApRKC7rozTppanX3e/+mfi4z1zNLfXJmJA7aD
+ u+H7draWbu1ksNusq3RRNIm1BlduwW2Nh/Yw==
+X-Gm-Gg: ASbGncuvOW+9tZDvClxRZGm219me6Fylc5nR6u5IKyPEHAVQAsYpAv1OoZ+WBph+StX
+ uQAPQ6i1MxgJEjZiwtowuwunF5qFKV9/5947hrzxT9YVL2Lv+viwXQm58elymsalJjSGQ9gs4C+
+ N9sZUTdSfvs5XobyaTRdTwC8GEEZty8Y2QdbfcSo345JqXjvL1EocrDMItDVzsQ2+mu2kHLJx/O
+ YIXFmlJ9urvdBrLkCyFs9A158A564YDrkl16tuNHnz1xe7UkHjSDuB+IgU6vbrk5D/XAVKauiJf
+X-Received: by 2002:a05:620a:3708:b0:7c7:a614:7214 with SMTP id
+ af79cd13be357-7cad5b2e1d3mr561914985a.5.1746204106800; 
  Fri, 02 May 2025 09:41:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFXXM/AI0yfy6HMeUvntalKHhg4ddS4pVx2PIBD/QE9ccJru6qYOey9GYC+BvKDBJ6iSxLNHA==
+X-Received: by 2002:a05:620a:3708:b0:7c7:a614:7214 with SMTP id
+ af79cd13be357-7cad5b2e1d3mr561910885a.5.1746204106392; 
+ Fri, 02 May 2025 09:41:46 -0700 (PDT)
+Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7cad23d1c8dsm203108385a.60.2025.05.02.09.41.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 02 May 2025 09:41:45 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
  peterx@redhat.com, Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PULL 02/14] migration: disable RDMA + postcopy-ram
-Date: Fri,  2 May 2025 12:41:29 -0400
-Message-ID: <20250502164141.747202-3-peterx@redhat.com>
+Subject: [PULL 01/14] migration: check RDMA and capabilities are compatible on
+ both sides
+Date: Fri,  2 May 2025 12:41:28 -0400
+Message-ID: <20250502164141.747202-2-peterx@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250502164141.747202-1-peterx@redhat.com>
 References: <20250502164141.747202-1-peterx@redhat.com>
@@ -107,33 +108,146 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Li Zhijian <lizhijian@fujitsu.com>
 
-It's believed that RDMA + postcopy-ram has been broken for a while.
-Rather than spending time re-enabling it, let's simply disable it as a
-trade-off.
+Depending on the order of starting RDMA and setting capability,
+they can be categorized into the following scenarios:
+Source:
+ S1: [set capabilities] -> [Start RDMA outgoing]
+Destination:
+ D1: [set capabilities] -> [Start RDMA incoming]
+ D2: [Start RDMA incoming] -> [set capabilities]
+
+Previously, compatibility between RDMA and capabilities was verified only
+in scenario D1, potentially causing migration failures in other situations.
+
+For scenarios S1 and D1, we can seamlessly incorporate
+migration_transport_compatible() to address compatibility between
+channels and capabilities vs transport.
+
+For scenario D2, ensure compatibility within migrate_caps_check().
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Message-ID: <20250305062825.772629-4-lizhijian@fujitsu.com>
+Message-ID: <20250305062825.772629-3-lizhijian@fujitsu.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/options.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ migration/options.h   |  1 +
+ migration/migration.c | 30 ++++++++++++++++++++----------
+ migration/options.c   | 21 +++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 10 deletions(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index 1f3602839d..4ba8fcb7dc 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -458,6 +458,10 @@ bool migrate_rdma_caps_check(bool *caps, Error **errp)
-         error_setg(errp, "RDMA and multifd can't be used together");
-         return false;
-     }
-+    if (caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
-+        error_setg(errp, "RDMA and postcopy-ram can't be used together");
-+        return false;
-+    }
+diff --git a/migration/options.h b/migration/options.h
+index 762be4e641..82d839709e 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -57,6 +57,7 @@ bool migrate_tls(void);
  
+ /* capabilities helpers */
+ 
++bool migrate_rdma_caps_check(bool *caps, Error **errp);
+ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp);
+ 
+ /* parameters */
+diff --git a/migration/migration.c b/migration/migration.c
+index 55ec4bfab6..54fce997aa 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -259,6 +259,24 @@ migration_channels_and_transport_compatible(MigrationAddress *addr,
      return true;
  }
+ 
++static bool
++migration_capabilities_and_transport_compatible(MigrationAddress *addr,
++                                                Error **errp)
++{
++    if (addr->transport == MIGRATION_ADDRESS_TYPE_RDMA) {
++        return migrate_rdma_caps_check(migrate_get_current()->capabilities,
++                                       errp);
++    }
++
++    return true;
++}
++
++static bool migration_transport_compatible(MigrationAddress *addr, Error **errp)
++{
++    return migration_channels_and_transport_compatible(addr, errp) &&
++           migration_capabilities_and_transport_compatible(addr, errp);
++}
++
+ static gint page_request_addr_cmp(gconstpointer ap, gconstpointer bp)
+ {
+     uintptr_t a = (uintptr_t) ap, b = (uintptr_t) bp;
+@@ -750,7 +768,7 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
+     }
+ 
+     /* transport mechanism not suitable for migration? */
+-    if (!migration_channels_and_transport_compatible(addr, errp)) {
++    if (!migration_transport_compatible(addr, errp)) {
+         return;
+     }
+ 
+@@ -769,14 +787,6 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
+         }
+ #ifdef CONFIG_RDMA
+     } else if (addr->transport == MIGRATION_ADDRESS_TYPE_RDMA) {
+-        if (migrate_xbzrle()) {
+-            error_setg(errp, "RDMA and XBZRLE can't be used together");
+-            return;
+-        }
+-        if (migrate_multifd()) {
+-            error_setg(errp, "RDMA and multifd can't be used together");
+-            return;
+-        }
+         rdma_start_incoming_migration(&addr->u.rdma, errp);
+ #endif
+     } else if (addr->transport == MIGRATION_ADDRESS_TYPE_EXEC) {
+@@ -2208,7 +2218,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+     }
+ 
+     /* transport mechanism not suitable for migration? */
+-    if (!migration_channels_and_transport_compatible(addr, errp)) {
++    if (!migration_transport_compatible(addr, errp)) {
+         return;
+     }
+ 
+diff --git a/migration/options.c b/migration/options.c
+index b0ac2ea408..1f3602839d 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -448,6 +448,20 @@ static bool migrate_incoming_started(void)
+     return !!migration_incoming_get_current()->transport_data;
+ }
+ 
++bool migrate_rdma_caps_check(bool *caps, Error **errp)
++{
++    if (caps[MIGRATION_CAPABILITY_XBZRLE]) {
++        error_setg(errp, "RDMA and XBZRLE can't be used together");
++        return false;
++    }
++    if (caps[MIGRATION_CAPABILITY_MULTIFD]) {
++        error_setg(errp, "RDMA and multifd can't be used together");
++        return false;
++    }
++
++    return true;
++}
++
+ /**
+  * @migration_caps_check - check capability compatibility
+  *
+@@ -611,6 +625,13 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+         }
+     }
+ 
++    /*
++     * On destination side, check the cases that capability is being set
++     * after incoming thread has started.
++     */
++    if (migrate_rdma() && !migrate_rdma_caps_check(new_caps, errp)) {
++        return false;
++    }
+     return true;
+ }
+ 
 -- 
 2.48.1
 
