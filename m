@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BBFFC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 12:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C5A0C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 12:48:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAplW-000627-Ky; Fri, 02 May 2025 08:45:18 -0400
+	id 1uApnv-0006vV-M7; Fri, 02 May 2025 08:47:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uAplS-00061j-5R
- for qemu-devel@nongnu.org; Fri, 02 May 2025 08:45:14 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1uApnq-0006uq-60
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 08:47:42 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uAplP-0007bq-L1
- for qemu-devel@nongnu.org; Fri, 02 May 2025 08:45:12 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-43cf680d351so16429025e9.0
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 05:45:11 -0700 (PDT)
+ id 1uApno-0007vl-C8
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 08:47:41 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-39ac8e7688aso1375232f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 05:47:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746189909; x=1746794709; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746190058; x=1746794858; darn=nongnu.org;
  h=mime-version:message-id:in-reply-to:references:user-agent:subject
  :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=wbPnSyO/WCbfKavlxLxWhGakah80+RQ81JjBl7ovjQA=;
- b=aKzqI+KgDfSOtuu7f011GLnYy6MRSByXRuj/0e8NbVboV9BM5T7dB+9tOn+Q/1rDN5
- fsQ61CmPrx/UE7C1T/hlN1NkY37x4ySkvjOsSwLGka6FNw+03CgMoFa6sQH6ctHkbLxP
- BSgDr9hmwrJWG/DGJgnQND0vDCVNtuJ60iGRdKPpskVs5DYqZ9uElMdnVa7AmCVT1xgC
- UAv0XTVEdKe/O03zVdfKBBOAoHae3JiH+Lh8kinp8aNW9njYU+uWkx8qd90CP9bSTC2u
- hwcAHu2MQmuQXoyrpS/dPXKTjKifDEJN9c6pM9VyVxxYgM0LxORYtx9LP4py0fbmgsB9
- er6Q==
+ bh=7s8A52G4FFIf4gsa/3QPjcg6BWvLhHTy9zX8xBcoRuc=;
+ b=NnxBie/mG5QyvI3Xd1PZzFrc6ULiEN1udYkwFVoHZL09g/QgPLHw8ZdmeOEnInEKPa
+ ZwJ/8B87cNJBxAFTdcv/g96VZkExrZaMW5yGCvyJGq/l/SLhsGe6lanPLrhownoaKWvP
+ SuIZkXB6DO8CaAsU6vbVmDvoGKy2wD9Ls0ZiFBpjlujo8m8YDMJXSF/99Sz8Wtg/23OR
+ 9JFiOgcRl3kXxk7DuG6nMAChtBTq7bx2GRVGotZowxh/W54gvsVcwksau4GnfTyBOiWF
+ 1BRrCDT+WZAFm1aLOuvFAj1fh5CffR+ntCOIYffC5qIKnZTNDLNsRDO/lnIYJyGuhg/X
+ ZZGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746189909; x=1746794709;
+ d=1e100.net; s=20230601; t=1746190058; x=1746794858;
  h=mime-version:message-id:in-reply-to:references:user-agent:subject
  :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wbPnSyO/WCbfKavlxLxWhGakah80+RQ81JjBl7ovjQA=;
- b=q3KdTQrgTtvxTJJRWGseGRwzpBFT6RSN+P+qlthNfKs1sCIGDapILmd0inPSOijt/p
- uPdTY5fWOdZkCn1O87RBhn2rtgyHD6PskPHuBuh1MXwlbiIGt4iSGcUjRE++nLpcb7rF
- 0Rr5j8qkS7PkxkktkDiHCgtnGPMLdJnWOS3UypcTdKNcgEh2FAv9ODJ6yx4LYoqDog6e
- cpMXMFAaore6aHff4gQpeqJagMMQ0gBJEhk6W5AAfjvJhRk5QretXy96P3+6PTBvtGXE
- lNoyzY5uq9X+J1XxnlZhdz/dxjCWGrGUyOJZNpKelv0sTXp5/0rcCNeH6+P5kSpal3nQ
- fcjA==
-X-Gm-Message-State: AOJu0YyWFCNUojNyY/OW6FxeSbcxMSd+Op7j9Z6fSGJoa/2y5M2QvHYO
- JwQwfdjKqMT9WqY9EbqTp1PPc6JlaUl78h//CiQyBKPvvG+01OmqFsOEhxu6Ext5xonP9Il9S1p
- x8gg=
-X-Gm-Gg: ASbGncvuWeM/Ec/dmWbk6WpU9Z7C0D5VFz3gBj06q00osbo4wAWDP41xQbzGMeoqVAO
- +DlpZu6RhEdMGdl3rPpt7e2sEEarZxX9OfvUtbOMoiLD3bFJxM1DvAdNyvWDnrnelN9JFTVAmFM
- LUCrTFix8GYj8lz2RKwkU/cLAodcxdIzii+dYI/cmS8sMPfI4GNp4IcoJpfKAi45ZOFZ0NmWylo
- +M1Gju9L11/m0ldN11Ci58oEkKeb+WdBOeyGCfi4ounPGZd+leJ+FowE/amLtu+59wALfuYc11C
- MwBM00XGDKUTxmvfSUGNZY5VNRdODPZqkRn9QA2SaAJ+jpmgitjJWPNohIfzqZ1ojjtZaMBQPUL
- oB3MiXA==
-X-Google-Smtp-Source: AGHT+IFf6K/LWUxWTHV2+GpbF2DvBxr7xZ+hv7E7lNLI+m2chz0Hl8gyq04akU7Q6VZxRO1MzqZeaA==
-X-Received: by 2002:a05:600c:828e:b0:441:b3eb:570c with SMTP id
- 5b1f17b1804b1-441bb852676mr27417045e9.6.1746189909079; 
- Fri, 02 May 2025 05:45:09 -0700 (PDT)
+ bh=7s8A52G4FFIf4gsa/3QPjcg6BWvLhHTy9zX8xBcoRuc=;
+ b=qKembWCmhYqG7Kz0zDrGaGgiI0kXWGS6w1rL0p1h/hhhahK9HXet0NaofuwgSpxTJH
+ KGwy4xbW2uKvuhyt2UnVnXeYMLduPP9rtkfzyoJ1nwkH6vs7rI5/T91EHujgGb8mJ+5x
+ 9/OXOn6jNEcqjKhpiCyZae3erRiRkGXhPpj1MnkXQnqwQSLiX6V32mrVoj4k7Sh+oUE8
+ f5Ucz1KxqxpwL192Ayzkj4H7sfbkkFYsghfggpTnV7XoP75sg53FJykord7qJLYGkI9i
+ JoeJF8dR7Xu8IH0awZyADSSpVuNuEHsvU/kiNJbNEMJhm6IFDiVsb/iXmDJEYJjnJewD
+ o76w==
+X-Gm-Message-State: AOJu0YzVsUSCGCkkFzCNlkUAG9IXvq6/XwO6u/vKry02twW/1NsqddmN
+ Y++shutLAF9ug7NcQfrRovLTdXnoSzmITDtxuBy1I9CN7Z1QFeD/4RlHFcy6NnrczBGifu7NESj
+ ghFg=
+X-Gm-Gg: ASbGncvvg2zS5SKCU+TE9To6bdJpmtOJ2B8GPUKGCmkCxogsmKxKSWcnLrvcAbLpnYv
+ hNUkOixmsHFXqrXN+hXzINf18eViEj/OxeBKHAvk+Xu/UhVwblNG9EgoDIqkfB66skwcFPaEvXa
+ JCtiI1o9FG/zpLgIxGZ9DwNIxJNmTNUMZ98vfZyPKao6joj2M6DmgyNncef+V2DTbzWCVatAlgN
+ bDaLwV8RNLzC2iUSM7h/uCp/mhWpG3DSlUOMXosmMvO6EkYMwqc1QigjsWxVeGBs2eg8uVhFiMW
+ i6A5jWzHPQHGEkSWIF7A5rRdrt4ojzrTcXVB37a3SoOLoUJgYpHm1hKwz+v/sJMQPDBjtbddlBq
+ Cod7oHQ==
+X-Google-Smtp-Source: AGHT+IEk+vS0zK4/AbjgnBXSQz3ZaCLrGkP9Fe5NXQHXPqWZqs8p6UYJNRx0L1Sq6+uBsqOusrT6Jg==
+X-Received: by 2002:a05:6000:250e:b0:39c:142c:e889 with SMTP id
+ ffacd0b85a97d-3a099ade119mr2003182f8f.27.1746190058441; 
+ Fri, 02 May 2025 05:47:38 -0700 (PDT)
 Received: from meli-email.org (adsl-37.37.6.161.tellas.gr. [37.6.161.37])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b8a315d3sm43996935e9.36.2025.05.02.05.45.08
+ ffacd0b85a97d-3a099ae0d15sm2132881f8f.13.2025.05.02.05.47.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 May 2025 05:45:08 -0700 (PDT)
-Date: Fri, 02 May 2025 15:44:10 +0300
+ Fri, 02 May 2025 05:47:38 -0700 (PDT)
+Date: Fri, 02 May 2025 15:45:23 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-rust@nongnu.org
-Subject: Re: [PATCH 3/9] rust: let bilge use "let ... else"
+Subject: Re: [PATCH 4/9] rust: qemu_api_macros: use "let ... else"
 User-Agent: meli/0.8.12
 References: <20250502102323.104815-1-pbonzini@redhat.com>
- <20250502102323.104815-4-pbonzini@redhat.com>
-In-Reply-To: <20250502102323.104815-4-pbonzini@redhat.com>
-Message-ID: <svmwr7.46e2vcedtq0m@linaro.org>
+ <20250502102323.104815-5-pbonzini@redhat.com>
+In-Reply-To: <20250502102323.104815-5-pbonzini@redhat.com>
+Message-ID: <svmwvd.2r122ko0uqc0j@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,14 +101,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Fri, 02 May 2025 13:23, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>"let ... else" is useful when visiting syntax trees, to avoid multiple
+>levels of indentation.
+>
 >Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 >---
-> docs/devel/rust.rst                           |  3 --
-> subprojects/bilge-impl-0.2-rs.wrap            |  2 -
-> .../packagefiles/bilge-impl-1.63.0.patch      | 45 -------------------
-> 3 files changed, 50 deletions(-)
-> delete mode 100644 subprojects/packagefiles/bilge-impl-1.63.0.patch
+> rust/qemu-api-macros/src/lib.rs | 84 ++++++++++++++++-----------------
+> 1 file changed, 40 insertions(+), 44 deletions(-)
 >
+
 
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
