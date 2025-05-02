@@ -4,72 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9560BC3ABAC
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 21:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62415C3ABB0
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 22:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAyHD-0001K6-2E; Fri, 02 May 2025 17:50:35 -0400
+	id 1uAyVk-0000vW-BD; Fri, 02 May 2025 18:05:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uAyHB-0001Ja-CW
- for qemu-devel@nongnu.org; Fri, 02 May 2025 17:50:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uAyH8-0004d6-Tr
- for qemu-devel@nongnu.org; Fri, 02 May 2025 17:50:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746222630;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=sWABGgxjvbA6qtuPk7KUDuM6Cr0FJSr9uoOSL7pB6ko=;
- b=cCcxS9DVDbU2BVuuU0f1/wYfuAddE3QQfyBPlDUW1vXnCw6F8rGQQl+Laz2UuRaSMV2s5f
- H/+l9QQO1IUccsEv7Kh3he37XfdAbOCS+GkEGiRE0GPF9Mezf3ryCo0vy4wzcYZfsmxOKq
- ciI5NTIfuf2dethiM5KFO6E6gFmEkE4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-212-WZduGcQ-MCezO5yUNmhL-w-1; Fri,
- 02 May 2025 17:50:28 -0400
-X-MC-Unique: WZduGcQ-MCezO5yUNmhL-w-1
-X-Mimecast-MFC-AGG-ID: WZduGcQ-MCezO5yUNmhL-w_1746222627
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E1A461800360; Fri,  2 May 2025 21:50:26 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.86])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9586119560A3; Fri,  2 May 2025 21:50:24 +0000 (UTC)
-Date: Fri, 2 May 2025 23:50:21 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: "Denis V. Lunev" <den@virtuozzo.com>
-Cc: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: Re: [BUG, RFC] Block graph deadlock on job-dismiss
-Message-ID: <aBU-HT66stdexqgI@redhat.com>
-References: <73839c04-7616-407e-b057-80ca69e63f51@virtuozzo.com>
- <aBUCJ0JKiSmegNDT@redhat.com>
- <30875f3e-9535-4d9d-b671-a4f9cd0d4b82@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAyVh-0000v3-D3
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 18:05:33 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAyVf-0003oc-Nc
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 18:05:33 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5e8274a74so3874150a12.1
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 15:05:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746223527; x=1746828327; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IsMUYnogdmL7s+3MaC0hOHrKPErOWAovTUQEl/M2OxY=;
+ b=NwmaquY73U+N26+tvn+4WDcTpX9AQLH3YkOAxLO3VlmrLbO8sF1S2RgoVbt4VdoVd3
+ f8aEa6FegZNJV6sawXyLgmBSTVo/9N2kX/f1oHXQcV2lulNMrbSpbS7vYGCnWIqregAT
+ Pbo5cLtvx5syAKCtxFxVzkQdVZfxd9BrVKVT3J3LwTPdqVtTC06cPs4jQhfx3QOgrLEo
+ zwBiLeiLm4ZISq1ur1vDTKUu26ILCf7bDJVc29PSiSGlkpzrYSKpygnwvCoBiarMITer
+ Mp+ldPhfnhaCar0XaXEMZ+tkyRgdblZlZlIe+1hleLfE/PZ1z9N4l0z7pXG1b+fofDyc
+ xZ+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746223527; x=1746828327;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IsMUYnogdmL7s+3MaC0hOHrKPErOWAovTUQEl/M2OxY=;
+ b=RgCoNF6thCyhtncPKaP0EV3mwAhOoNjtkOM1GiH01rIHXvWDw6ownDdHxe82+3/kCa
+ ZQosAgoHqasduA7ZOsp/BR9a8Fqg2D3mm18nCWSA+JlvER7sfyw4rbtJSlsEk7nFIIHe
+ YSJSOss2f8ScqBB46mE9mzSn6mcmH9coFru8hXhHJ7U7t97HC50Bws84evu8MsmwgwDa
+ PCx0W66yZt1jNpEdCdvlkWYgweoEVG2RT3rrsuFIZz88cz5N8+P1NuRptW5Nj+8LpdP+
+ 3uXoaPz0OuTWoxFrGgeDARn1J24+NGs0VTmPyHq3niWvoVOGsWtzgeHAIweTl2dpznv8
+ 8MsA==
+X-Gm-Message-State: AOJu0YzHLgkiPJKcD2D9Gb8sLrLVbQZu1ZiM2VP1pz+iTJeRSA5equqb
+ MBZSzXrV1bXYwrqx2D/svUQlXXCStlX7V4644G6NzD/HfYaaMfcBMpo1eznosdJO0Ds8cRtfGjJ
+ r
+X-Gm-Gg: ASbGncsQEqibdlpj3qG/3uKtiHveMw766vw/255Arf6Zp9AUdyRzARYHaXDRXu8cXnt
+ p5FBRbF081er32idIKyrtCgocSqYIYA4owOfgo73ivjtBSsS4auR8GhlHp00n3e0xbUd64Rr1wD
+ VObVc8gs4Omtw77HnUMarSdNzDUtrXrKyhSBOMgsT6/jNtJ9q2uSfOxsYzECCqOTzs9ocjqrOdh
+ LiLLf9MYIP+FP/chXiR66omWvpvAsfLsb+4/7tfCXjooLs/yCo9qEsj4GdKdsVNAq1C7pr6r7VV
+ xxo8ZfkEUKH7NqdksCjQW1m2W9L94/TTAktnVxDxgZ6O3LnTA8FLMovLIxQRqggcK94EQZ/Nu82
+ gAAThQb3d0pZobsqXXmnQH613JQ==
+X-Google-Smtp-Source: AGHT+IHrPh1jlMPCajWtQ7bclKNvl4utfQvmg7Xa2OTgjC5MJ3YaDXYHJG3rLdzDP0H9Trt/zQsFIQ==
+X-Received: by 2002:a05:6402:35c5:b0:5f8:e07c:7746 with SMTP id
+ 4fb4d7f45d1cf-5fa77d4e286mr3743187a12.0.1746223527586; 
+ Fri, 02 May 2025 15:05:27 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5fa7775cb74sm1789030a12.1.2025.05.02.15.05.25
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 02 May 2025 15:05:26 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Anton Johansson <anjo@rev.ng>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/2] semihosting/uaccess: Compile once
+Date: Sat,  3 May 2025 00:05:22 +0200
+Message-ID: <20250502220524.81548-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <30875f3e-9535-4d9d-b671-a4f9cd0d4b82@virtuozzo.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.644,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,173 +100,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 02.05.2025 um 19:52 hat Denis V. Lunev geschrieben:
-> On 5/2/25 19:34, Kevin Wolf wrote:
-> > Am 24.04.2025 um 19:32 hat Andrey Drobyshev geschrieben:
-> > > Hi all,
-> > > 
-> > > There's a bug in block layer which leads to block graph deadlock.
-> > > Notably, it takes place when blockdev IO is processed within a separate
-> > > iothread.
-> > > 
-> > > This was initially caught by our tests, and I was able to reduce it to a
-> > > relatively simple reproducer.  Such deadlocks are probably supposed to
-> > > be covered in iotests/graph-changes-while-io, but this deadlock isn't.
-> > > 
-> > > Basically what the reproducer does is launches QEMU with a drive having
-> > > 'iothread' option set, creates a chain of 2 snapshots, launches
-> > > block-commit job for a snapshot and then dismisses the job, starting
-> > > from the lower snapshot.  If the guest is issuing IO at the same time,
-> > > there's a race in acquiring block graph lock and a potential deadlock.
-> > > 
-> > > Here's how it can be reproduced:
-> > > 
-> > > 1. Run QEMU:
-> > > > SRCDIR=/path/to/srcdir
-> > > > $SRCDIR/build/qemu-system-x86_64 -enable-kvm \
-> > > >    -machine q35 -cpu Nehalem \
-> > > >    -name guest=alma8-vm,debug-threads=on \
-> > > >    -m 2g -smp 2 \
-> > > >    -nographic -nodefaults \
-> > > >    -qmp unix:/var/run/alma8-qmp.sock,server=on,wait=off \
-> > > >    -serial unix:/var/run/alma8-serial.sock,server=on,wait=off \
-> > > >    -object iothread,id=iothread0 \
-> > > >    -blockdev node-name=disk,driver=qcow2,file.driver=file,file.filename=/path/to/img/alma8.qcow2 \
-> > > >    -device virtio-blk-pci,drive=disk,iothread=iothread0
-> > > 2. Launch IO (random reads) from within the guest:
-> > > > nc -U /var/run/alma8-serial.sock
-> > > > ...
-> > > > [root@alma8-vm ~]# fio --name=randread --ioengine=libaio --direct=1 --bs=4k --size=1G --numjobs=1 --time_based=1 --runtime=300 --group_reporting --rw=randread --iodepth=1 --filename=/testfile
-> > > 3. Run snapshots creation & removal of lower snapshot operation in a
-> > > loop (script attached):
-> > > > while /bin/true ; do ./remove_lower_snap.sh ; done
-> > > And then it occasionally hangs.
-> > > 
-> > > Note: I've tried bisecting this, and looks like deadlock occurs starting
-> > > from the following commit:
-> > > 
-> > > (BAD)  5bdbaebcce virtio: Re-enable notifications after drain
-> > > (GOOD) c42c3833e0 virtio-scsi: Attach event vq notifier with no_poll
-> > > 
-> > > On the latest v10.0.0 it does hang as well.
-> > > 
-> > > 
-> > > Here's backtrace of the main thread:
-> > > 
-> > > > #0  0x00007fc547d427ce in __ppoll (fds=0x557eb79657b0, nfds=1, timeout=<optimized out>, sigmask=0x0) at ../sysdeps/unix/sysv/linux/ppoll.c:43
-> > > > #1  0x0000557eb47d955c in qemu_poll_ns (fds=0x557eb79657b0, nfds=1, timeout=-1) at ../util/qemu-timer.c:329
-> > > > #2  0x0000557eb47b2204 in fdmon_poll_wait (ctx=0x557eb76c5f20, ready_list=0x7ffd94b4edd8, timeout=-1) at ../util/fdmon-poll.c:79
-> > > > #3  0x0000557eb47b1c45 in aio_poll (ctx=0x557eb76c5f20, blocking=true) at ../util/aio-posix.c:730
-> > > > #4  0x0000557eb4621edd in bdrv_do_drained_begin (bs=0x557eb795e950, parent=0x0, poll=true) at ../block/io.c:378
-> > > > #5  0x0000557eb4621f7b in bdrv_drained_begin (bs=0x557eb795e950) at ../block/io.c:391
-> > > > #6  0x0000557eb45ec125 in bdrv_change_aio_context (bs=0x557eb795e950, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
-> > > >      at ../block.c:7682
-> > > > #7  0x0000557eb45ebf2b in bdrv_child_change_aio_context (c=0x557eb7964250, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
-> > > >      at ../block.c:7608
-> > > > #8  0x0000557eb45ec0c4 in bdrv_change_aio_context (bs=0x557eb79575e0, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
-> > > >      at ../block.c:7668
-> > > > #9  0x0000557eb45ebf2b in bdrv_child_change_aio_context (c=0x557eb7e59110, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
-> > > >      at ../block.c:7608
-> > > > #10 0x0000557eb45ec0c4 in bdrv_change_aio_context (bs=0x557eb7e51960, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
-> > > >      at ../block.c:7668
-> > > > #11 0x0000557eb45ebf2b in bdrv_child_change_aio_context (c=0x557eb814ed80, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
-> > > >      at ../block.c:7608
-> > > > #12 0x0000557eb45ee8e4 in child_job_change_aio_ctx (c=0x557eb7c9d3f0, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
-> > > >      at ../blockjob.c:157
-> > > > #13 0x0000557eb45ebe2d in bdrv_parent_change_aio_context (c=0x557eb7c9d3f0, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
-> > > >      at ../block.c:7592
-> > > > #14 0x0000557eb45ec06b in bdrv_change_aio_context (bs=0x557eb7d74310, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
-> > > >      at ../block.c:7661
-> > > > #15 0x0000557eb45dcd7e in bdrv_child_cb_change_aio_ctx
-> > > >      (child=0x557eb8565af0, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0) at ../block.c:1234
-> > > > #16 0x0000557eb45ebe2d in bdrv_parent_change_aio_context (c=0x557eb8565af0, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
-> > > >      at ../block.c:7592
-> > > > #17 0x0000557eb45ec06b in bdrv_change_aio_context (bs=0x557eb79575e0, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
-> > > >      at ../block.c:7661
-> > > > #18 0x0000557eb45ec1f3 in bdrv_try_change_aio_context (bs=0x557eb79575e0, ctx=0x557eb76c5f20, ignore_child=0x0, errp=0x0) at ../block.c:7715
-> > > > #19 0x0000557eb45e1b15 in bdrv_root_unref_child (child=0x557eb7966f30) at ../block.c:3317
-> > > > #20 0x0000557eb45eeaa8 in block_job_remove_all_bdrv (job=0x557eb7952800) at ../blockjob.c:209
-> > > > #21 0x0000557eb45ee641 in block_job_free (job=0x557eb7952800) at ../blockjob.c:82
-> > > > #22 0x0000557eb45f17af in job_unref_locked (job=0x557eb7952800) at ../job.c:474
-> > > > #23 0x0000557eb45f257d in job_do_dismiss_locked (job=0x557eb7952800) at ../job.c:771
-> > > > #24 0x0000557eb45f25fe in job_dismiss_locked (jobptr=0x7ffd94b4f400, errp=0x7ffd94b4f488) at ../job.c:783
-> > > > --Type <RET> for more, q to quit, c to continue without paging--
-> > > > #25 0x0000557eb45d8e84 in qmp_job_dismiss (id=0x557eb7aa42b0 "commit-snap1", errp=0x7ffd94b4f488) at ../job-qmp.c:138
-> > > > #26 0x0000557eb472f6a3 in qmp_marshal_job_dismiss (args=0x7fc52c00a3b0, ret=0x7fc53c880da8, errp=0x7fc53c880da0) at qapi/qapi-commands-job.c:221
-> > > > #27 0x0000557eb47a35f3 in do_qmp_dispatch_bh (opaque=0x7fc53c880e40) at ../qapi/qmp-dispatch.c:128
-> > > > #28 0x0000557eb47d1cd2 in aio_bh_call (bh=0x557eb79568f0) at ../util/async.c:172
-> > > > #29 0x0000557eb47d1df5 in aio_bh_poll (ctx=0x557eb76c0200) at ../util/async.c:219
-> > > > #30 0x0000557eb47b12f3 in aio_dispatch (ctx=0x557eb76c0200) at ../util/aio-posix.c:436
-> > > > #31 0x0000557eb47d2266 in aio_ctx_dispatch (source=0x557eb76c0200, callback=0x0, user_data=0x0) at ../util/async.c:361
-> > > > #32 0x00007fc549232f4f in g_main_dispatch (context=0x557eb76c6430) at ../glib/gmain.c:3364
-> > > > #33 g_main_context_dispatch (context=0x557eb76c6430) at ../glib/gmain.c:4079
-> > > > #34 0x0000557eb47d3ab1 in glib_pollfds_poll () at ../util/main-loop.c:287
-> > > > #35 0x0000557eb47d3b38 in os_host_main_loop_wait (timeout=0) at ../util/main-loop.c:310
-> > > > #36 0x0000557eb47d3c58 in main_loop_wait (nonblocking=0) at ../util/main-loop.c:589
-> > > > #37 0x0000557eb4218b01 in qemu_main_loop () at ../system/runstate.c:835
-> > > > #38 0x0000557eb46df166 in qemu_default_main (opaque=0x0) at ../system/main.c:50
-> > > > #39 0x0000557eb46df215 in main (argc=24, argv=0x7ffd94b4f8d8) at ../system/main.c:80
-> > > 
-> > > And here's coroutine trying to acquire read lock:
-> > > 
-> > > > (gdb) qemu coroutine reader_queue->entries.sqh_first
-> > > > #0  0x0000557eb47d7068 in qemu_coroutine_switch (from_=0x557eb7aa48b0, to_=0x7fc537fff508, action=COROUTINE_YIELD) at ../util/coroutine-ucontext.c:321
-> > > > #1  0x0000557eb47d4d4a in qemu_coroutine_yield () at ../util/qemu-coroutine.c:339
-> > > > #2  0x0000557eb47d56c8 in qemu_co_queue_wait_impl (queue=0x557eb59954c0 <reader_queue>, lock=0x7fc53c57de50, flags=0) at ../util/qemu-coroutine-lock.c:60
-> > > > #3  0x0000557eb461fea7 in bdrv_graph_co_rdlock () at ../block/graph-lock.c:231
-> > > > #4  0x0000557eb460c81a in graph_lockable_auto_lock (x=0x7fc53c57dee3) at /home/root/src/qemu/master/include/block/graph-lock.h:213
-> > > > #5  0x0000557eb460fa41 in blk_co_do_preadv_part
-> > > >      (blk=0x557eb84c0810, offset=6890553344, bytes=4096, qiov=0x7fc530006988, qiov_offset=0, flags=BDRV_REQ_REGISTERED_BUF) at ../block/block-backend.c:1339
-> > > > #6  0x0000557eb46104d7 in blk_aio_read_entry (opaque=0x7fc530003240) at ../block/block-backend.c:1619
-> > > > #7  0x0000557eb47d6c40 in coroutine_trampoline (i0=-1213577040, i1=21886) at ../util/coroutine-ucontext.c:175
-> > > > #8  0x00007fc547c2a360 in __start_context () at ../sysdeps/unix/sysv/linux/x86_64/__start_context.S:91
-> > > > #9  0x00007ffd94b4ea40 in  ()
-> > > > #10 0x0000000000000000 in  ()
-> > > 
-> > > So it looks like main thread is processing job-dismiss request and is
-> > > holding write lock taken in block_job_remove_all_bdrv() (frame #20
-> > > above).  At the same time iothread spawns a coroutine which performs IO
-> > > request.  Before the coroutine is spawned, blk_aio_prwv() increases
-> > > 'in_flight' counter for Blk.  Then blk_co_do_preadv_part() (frame #5) is
-> > > trying to acquire the read lock.  But main thread isn't releasing the
-> > > lock as blk_root_drained_poll() returns true since blk->in_flight > 0.
-> > > Here's the deadlock.
-> > > 
-> > > Any comments and suggestions on the subject are welcomed.  Thanks!
-> > I think this is what the blk_wait_while_drained() call was supposed to
-> > address in blk_co_do_preadv_part(). However, with the use of multiple
-> > I/O threads, this is racy.
-> > 
-> > Do you think that in your case we hit the small race window between the
-> > checks in blk_wait_while_drained() and GRAPH_RDLOCK_GUARD()? Or is there
-> > another reason why blk_wait_while_drained() didn't do its job?
-> > 
-> At my opinion there is very big race window. Main thread has
-> eaten graph write lock. After that another coroutine is stalled
-> within GRAPH_RDLOCK_GUARD() as there is no drain at the moment and only
-> after that main thread has started drain.
+Replace target_ulong -> vaddr/size_t to compile once.
 
-You're right, I confused taking the write lock with draining there.
+Philippe Mathieu-Daudé (2):
+  semihosting/uaccess: Remove uses of target_ulong type
+  semihosting/uaccess: Compile once
 
-> That is why Fiona's idea is looking working. Though this would mean
-> that normally we should always do that at the moment when we acquire
-> write lock. May be even inside this function.
+ include/semihosting/uaccess.h | 12 ++++++------
+ semihosting/uaccess.c         | 10 +++++-----
+ semihosting/meson.build       |  4 +---
+ 3 files changed, 12 insertions(+), 14 deletions(-)
 
-I actually see now that not all of my graph locking patches were merged.
-At least I did have the thought that bdrv_drained_begin() must be marked
-GRAPH_UNLOCKED because it polls. That means that calling it from inside
-bdrv_try_change_aio_context() is actually forbidden (and that's the part
-I didn't see back then because it doesn't have TSA annotations).
-
-If you refactor the code to move the drain out to before the lock is
-taken, I think you end up with Fiona's patch, except you'll remove the
-forbidden inner drain and add more annotations for some functions and
-clarify the rules around them. I don't know, but I wouldn't be surprised
-if along the process we find other bugs, too.
-
-So Fiona's drain looks right to me, but we should probably approach it
-more systematically.
-
-Kevin
+-- 
+2.47.1
 
 
