@@ -4,57 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1539C3ABAD
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 10:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51B91C3ABA3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 10:36:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAndK-0000gE-FC; Fri, 02 May 2025 06:28:42 -0400
+	id 1uAnjU-00080v-Vf; Fri, 02 May 2025 06:35:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uAnd0-0000FX-Tv; Fri, 02 May 2025 06:28:23 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1uAnjQ-0007xo-El; Fri, 02 May 2025 06:35:01 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uAncz-0002At-A9; Fri, 02 May 2025 06:28:22 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZpnBm1zHXz67mJg;
- Fri,  2 May 2025 18:26:08 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 7908F1403A8;
- Fri,  2 May 2025 18:28:19 +0800 (CST)
-Received: from A2303104131.china.huawei.com (10.203.177.241) by
- frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 2 May 2025 12:28:11 +0200
-To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
- <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
- <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
- <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: [PATCH v2 6/6] hw/arm/smmuv3: Enable smmuv3 device creation
-Date: Fri, 2 May 2025 11:27:07 +0100
-Message-ID: <20250502102707.110516-7-shameerali.kolothum.thodi@huawei.com>
-X-Mailer: git-send-email 2.12.0.windows.1
-In-Reply-To: <20250502102707.110516-1-shameerali.kolothum.thodi@huawei.com>
-References: <20250502102707.110516-1-shameerali.kolothum.thodi@huawei.com>
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1uAnjN-0005yi-Ee; Fri, 02 May 2025 06:35:00 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 2 May
+ 2025 18:34:49 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Fri, 2 May 2025 18:34:49 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <longzl2@lenovo.com>,
+ <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>
+Subject: [PATCH v4 0/9] Introduce AST27x0 multi-SoC machine
+Date: Fri, 2 May 2025 18:34:36 +0800
+Message-ID: <20250502103449.3091642-1-steven_lee@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Originating-IP: [10.203.177.241]
-X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=steven_lee@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,28 +59,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-From:  Shameer Kolothum via <qemu-devel@nongnu.org>
+Reply-to:  Steven Lee <steven_lee@aspeedtech.com>
+From:  Steven Lee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
----
- hw/arm/smmuv3.c | 1 +
- 1 file changed, 1 insertion(+)
+This patch series introduces full core support for the AST27x0 SoC, along with necessary updates to the ASPEED AST27x0 SOC.
+The AST27x0 SoC is a new family of ASPEED SoCs featuring 4 Cortex-A35 cores and 2 Cortex-M4 cores.
 
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 605de9b721..e13950b7c5 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -2022,6 +2022,7 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
-     device_class_set_props(dc, smmuv3_properties);
-     dc->hotpluggable = false;
-     dc->bus_type = TYPE_PCIE_BUS;
-+    dc->user_creatable = true;
- }
- 
- static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
+v1:
+  - Map unimplemented devices in SoC memory
+  - Intruduce AST2700 CM4 SoC
+  - Introduce AST27x0FC Machine
+
+v2:
+  - Remove unused functions
+  - Correct hex notation for device addresses in AST27x0 SoC
+  - Add AST2700 SSP INTC and AST2700 TSP INTC
+  - Split AST27x0 CM4 SoC to AST27x0 SSP SoC and AST27x0 TSP SoC
+  - Add AST27x0 A0 SSP SoC and AST27x0 A1 SSP SoC
+  - Add AST27x0 A0 TSP SoC and AST27x0 A1 TSP SoC
+  - Add functional tests for AST2700FC A0 and AST2700FC A1
+  - Add Documentation for AST2700FC
+
+v3:
+  - Remove A0 SoC support
+
+v4:
+  - Rebase on upstream QEMU.
+  - Remove the redundant abstract class.
+  - Simplify the functional test for AST2700FC.
+  - Fix the document formatting issue.
+
+Steven Lee (9):
+  aspeed: ast27x0: Map unimplemented devices in SoC memory
+  aspeed: ast27x0: Correct hex notation for device addresses
+  hw/intc/aspeed: Add support for AST2700 SSP INTC
+  hw/intc/aspeed: Add support for AST2700 TSP INTC
+  hw/arm/aspeed_ast27x0-ssp: Introduce AST27x0 A1 SSP SoC
+  hw/arm/aspeed_ast27x0-tsp: Introduce AST27x0 A1 TSP SoC
+  hw/arm: Introduce ASPEED AST2700 A1 full core machine
+  tests/function/aspeed: Add functional test for AST2700FC
+  docs: Add support for ast2700fc machine
+
+ docs/system/arm/aspeed.rst              |  69 +++-
+ include/hw/arm/aspeed_soc.h             |  32 ++
+ include/hw/intc/aspeed_intc.h           |   5 +
+ hw/arm/aspeed_ast27x0-fc.c              | 192 +++++++++++
+ hw/arm/aspeed_ast27x0-ssp.c             | 295 +++++++++++++++++
+ hw/arm/aspeed_ast27x0-tsp.c             | 295 +++++++++++++++++
+ hw/arm/aspeed_ast27x0.c                 |  80 +++--
+ hw/intc/aspeed_intc.c                   | 416 ++++++++++++++++++++++++
+ hw/arm/meson.build                      |   6 +-
+ tests/functional/test_aarch64_aspeed.py |  83 +++++
+ 10 files changed, 1448 insertions(+), 25 deletions(-)
+ create mode 100644 hw/arm/aspeed_ast27x0-fc.c
+ create mode 100644 hw/arm/aspeed_ast27x0-ssp.c
+ create mode 100644 hw/arm/aspeed_ast27x0-tsp.c
+
 -- 
 2.34.1
 
