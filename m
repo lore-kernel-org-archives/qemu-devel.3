@@ -4,92 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC92FC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 13:19:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D7A4C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 13:25:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAqHS-00049X-Mq; Fri, 02 May 2025 09:18:18 -0400
+	id 1uAqNs-0005jS-18; Fri, 02 May 2025 09:24:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uAqHR-00049F-EP
- for qemu-devel@nongnu.org; Fri, 02 May 2025 09:18:17 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAqNl-0005iT-Rq
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 09:24:50 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uAqHP-00038s-Hw
- for qemu-devel@nongnu.org; Fri, 02 May 2025 09:18:17 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-ac2bdea5a38so289879466b.0
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 06:18:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAqNj-0004WI-FM
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 09:24:49 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5f5bef591d6so3900653a12.1
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 06:24:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746191893; x=1746796693; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CDnEZaw1i50J3F1JCHo9UkiE+YykqkVLRZGQGvOgAdU=;
- b=hTjAKNwJV5/M9nfT8lMRNjxTEh8uY7hlslvkYGMO4pydZRbgwgIqoBK+MwxXoqXFnt
- vAcErl+Vs69wsUdf9pTDI5Pp+9RMtPJYiP3IOP89ep7aeYKTyTgScOdxjAh4e5l2o4as
- wBqG9HCzOVecFADhAxF8Xvyjv8lZ/B2/HL8bNzq3ipr5AfUAjmK6ZYTzVQLd9RNQOGPp
- CJK0/plR4sQPH9qQiGx3MPKobsyBw7Bi1WjAfdLP2AaTyjmWPyykH4DKnZ25zN6KPh84
- wTWY3ROdUOPFtZHlaBxCPrNrLy4C27Kjqy3gAwQ5e2dWgPqjSgHYlFuZTkuWZb9irn1y
- Tr4Q==
+ d=linaro.org; s=google; t=1746192285; x=1746797085; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=LYAUx9DJ6xKy5d584zL5N/phNdMDhpbOBcPpyre3rSg=;
+ b=a95CsSyAPnAw4Y4JjzPIaCrqwFx+4N6tK6QI6XOVbZn5PSPlzWadlL985SnQ3/vnOQ
+ 3frcF+2QUFp1+NF2YEzUIxnzacq/Mb+6pEbfht4Hs8eRvMtApvLJZdYGxQaLgosL1ACq
+ TDdNyFt8JLuGe6zuTdAS6WvTj9KtTXMHO/DQtfPwvbh42bpzMTxsKAt7JV0Bqj8o8aUg
+ 5vcAyxl60WH5GjMc0uPKeBMPavxFkEa+nogfZ88pXcTOe2D9h2VpCYVL1beUhBzyI4VO
+ FV7GQgLqgYg48HOSAuw7qMk4VdDOOoCUffFYj64Us3TciKeK5DCU+HyNSMyzYuUakDdq
+ 1zZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746191893; x=1746796693;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=CDnEZaw1i50J3F1JCHo9UkiE+YykqkVLRZGQGvOgAdU=;
- b=ZzxJdTSgnRgnMP855Lr4Caxonban9/5/fjQQhYt2GrJ6Iq6jIrNSrK4hmZxa2SCViY
- DVGYtCMoCmIA4zOld7p5Y10LYOPFa0mdaNNvRA0g60lX7L+lnfoiZ1zytDpvQAGo/wIT
- gxjlS9CkFJUA7ESFBgKUHVuU+gyiMea6HFhBVr93IvuEuKoL4G35W1qRrtibRxFKYdn1
- UA7lEH2BNS9U6A5RIOHeTifQsFc84saH35x+/zIRi4cBTcmMXiLV1U7/Ea64mQtV1skN
- mx6drcFszs7fecDonszZBPmOT0tQlhV7ih+capF+TvPUy417guGYmDBVXOuctv1QiPym
- RKiw==
-X-Gm-Message-State: AOJu0YyVCBAdWS84yujtDOvKfbYEDuNKDngZrXDrEp0V2nFyiAG4GWRN
- A/LmAImzCBnPELzD8AbnWdKIN9O0lpbeyF52mMnO5sELmWizIEOrBU4q34cSSpQ=
-X-Gm-Gg: ASbGncs3oDH+BiD0IZCpTG2xVFL/9i2FwJJuf0MOHiSdS7vN0q5t6yefoMdkHfirLxu
- u4w1NHh+Ui3Rv2m+dMAbuEMO7/hLpftxAo56TY8OTsK+QIY/s1OoUPLpLq2Tng+fNqzf/CDYmDL
- aP/4yetXFC1cNZBfpDhrA84q4F+N9T9HkF4f4WTBCTmNssUSe3JzKM+2RGTHDekm4/gXjmk7pMs
- ZaOwNoTtAAUwWkmb7SblGxmVS0UfF9UyVZNZTjqtcotkgCrv8oun//8h0b97IJaUkqs8CzhYh52
- YvaaQQquK2BqmMoF9rDyFOjzXBB/xws0RBngskJStpw=
-X-Google-Smtp-Source: AGHT+IFNnoNtGM40HwIJYvzVqN6Q4Su3kIxI+LciIEnbW/lhxcN0T6yFBzWpTE5qhC57L1FW6SoesA==
-X-Received: by 2002:a17:907:3f8a:b0:aca:d6f0:af0c with SMTP id
- a640c23a62f3a-ad17afb8178mr301974566b.59.1746191893193; 
- Fri, 02 May 2025 06:18:13 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad1894c02a8sm47726066b.122.2025.05.02.06.18.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 May 2025 06:18:12 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B64745F86B;
- Fri,  2 May 2025 14:18:11 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
-Cc: qemu-devel@nongnu.org,  gustavo.romero@linaro.org,
- richard.henderson@linaro.org,  philmd@linaro.org,
- manos.pitsidianakis@linaro.org,  Patryk 'patryk4815' Sondej
- <patryk.sondej@gmail.com>
-Subject: Re: [PATCH] gdbstub: Implement qqemu.Pid packet
-In-Reply-To: <20250404102603.59936-1-dominik.b.czarnota@gmail.com> (Dominik
- Czarnota's message of "Fri, 4 Apr 2025 12:26:03 +0200")
-References: <20250404102603.59936-1-dominik.b.czarnota@gmail.com>
-User-Agent: mu4e 1.12.9; emacs 30.1
-Date: Fri, 02 May 2025 14:18:11 +0100
-Message-ID: <87ecx7w3qk.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1746192285; x=1746797085;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LYAUx9DJ6xKy5d584zL5N/phNdMDhpbOBcPpyre3rSg=;
+ b=JOxfp4TwbgA1xbWREzE3ynN0VpOqJdiNLYrd+LZvJuZnFP0orYIfKsPDaAXHklM9oz
+ gFnDnCG8U3vhQt3m7ahxv+0xg46Xaykxxyv4JFuVKAgwyhjtL9U9XQeJZsliJTjV6AI4
+ a5/c4fRKyIUdS/Qglbl6erIysjGYMgvUIgFD3i/rk8nQGGcT7p+3VAMVKQljpTfmYCke
+ 2inoDkhS7FP3PwocSCsgAiEL0L3ZkEHvsyr4NoT3WM6mtT+UFbxhkLjhWPkquS2nXinn
+ B7G6i6vE4nrmQQz1b6fsTskqZvB25NZsU6Egye8WSZ6iY8PgzJN5CMnckAV/w2hFa3Xm
+ dBFQ==
+X-Gm-Message-State: AOJu0Ywc8Bs1TZlM3/suoejp60BrR8b9fbYotzvKQndGUzBg6lKnzx1h
+ cnWqZxt5BkSUN3assKKjNfz4dEIem6k8Yx37ATbsgRQQnj9myxXqfFM2kIQsWfUcouIIVFsK7uY
+ P
+X-Gm-Gg: ASbGncvsbetGehEHWPKSd5xi01odkHYeDjz6TU4TR+STMGH16ZkK0fjpL20Nq1ZCvHb
+ jlEpIqW60bbzSi1SQLNzp5gyEs8HBT1Lyt7e2GwLxvfBzssoc5Be9H7uj2Ddh/u6eCpMsvBvhCH
+ eFKhmTeIevzIw2ddLuvRezD8fgEDriiwU+6aFUe6o1V/mYGU7yJp5d9JgghFkOeZ+MZkoy0hUlS
+ 9HsGnzR+kH2AObE7gTcknrFnEBARLXawa3PL1LRXbEKdMVWQ/guwo4+rNC5KObFS7gNyRzXb1BO
+ OAUrJ+rh+TUo1P0n9G1RwpmwzES1tYc5Y+urvuPfwctbyX2qn1Lq1EKzMTOwsE+Ejzo8tMdFb3T
+ FjfWyrGQ2aShK8dA=
+X-Google-Smtp-Source: AGHT+IHZP86Pk/cWePeuc+ChNq3UewIyPTncUnZWBpQMeMMMROeNkB0WO7L4GdyAjsvKlxmFvmFdNA==
+X-Received: by 2002:a05:6402:4408:b0:5f0:9eb3:8e71 with SMTP id
+ 4fb4d7f45d1cf-5fa788c0b0dmr2326404a12.27.1746192285025; 
+ Fri, 02 May 2025 06:24:45 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5fa77756206sm1236041a12.3.2025.05.02.06.24.41
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 02 May 2025 06:24:43 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Jonah Palmer <jonah.palmer@oracle.com>,
+ Raphael Norwitz <raphael.norwitz@nutanix.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-ppc@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Anton Johansson <anjo@rev.ng>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH] hw/virtio: Introduce CONFIG_VIRTIO_LEGACY to disable
+ legacy support
+Date: Fri,  2 May 2025 15:24:41 +0200
+Message-ID: <20250502132441.64723-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,70 +116,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com> writes:
+Legacy VirtIO devices don't have their endianness clearly defined.
+QEMU infers it taking the endianness of the (target) binary, or,
+when a target support switching endianness at runtime, taking the
+endianness of the vCPU accessing the device.
 
-> This patch adds support for the `qqemu.Pid` packet to the qemu
-> gdbstub which can be used by clients to get the QEMU process PID.
->
-> This is useful for plugins like Pwndbg [0] or gdb-pt-dump in order to
-> inspect the QEMU process memory through the /proc/self/{maps,mem}
-> interfaces. Without this feature, they have to rely on doing an
-> unreliable pgrep/ps output processing.
+Devices modelling shouldn't really change depending on a property
+of a CPU accessing it.
 
-That seems a little thin a reason for QEMU to expose its own PID. For
-user-mode you can already get that detail through anything using
-gdb_append_thread_id().
+For heterogeneous systems, it is simpler to break such dev <-> cpu
+dependency, only allowing generic device models, with no knowledge
+of CPU (or DMA controller) accesses.
 
-For system-mode leaking QEMU's own pid seems like an information leak at
-best. There are modes like semihosting which give a remote even more
-power but you need to at least opt in to that.
+Therefore we introduce the VIRTIO_LEGACY Kconfig key. We keep the
+current default (enabled).
+New binaries can set CONFIG_VIRTIO_LEGACY=n to restrict models to
+the VirtIO version 1 spec.
 
->
-> This patch has been developed by Patryk, who I included in the
-> Co-authored-by and who asked me to send the patch.
->
-> [0] https://github.com/pwndbg/pwndbg
-> [1] https://github.com/martinradev/gdb-pt-dump
->
-> Co-authored-by: Patryk 'patryk4815' Sondej <patryk.sondej@gmail.com>
-> Signed-off-by: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.=
-com>
-> ---
->  gdbstub/gdbstub.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-> index 282e13e163..a077c2c5ed 100644
-> --- a/gdbstub/gdbstub.c
-> +++ b/gdbstub/gdbstub.c
-> @@ -1746,6 +1746,12 @@ static void handle_query_qemu_supported(GArray *pa=
-rams, void *user_ctx)
->      gdb_put_strbuf();
->  }
->=20=20
-> +static void handle_query_qemu_pid(GArray *params, void *user_ctx)
-> +{
-> +    g_string_printf(gdbserver_state.str_buf, "F%x", getpid());
-> +    gdb_put_strbuf();
-> +}
-> +
->  static const GdbCmdParseEntry gdb_gen_query_set_common_table[] =3D {
->      /* Order is important if has same prefix */
->      {
-> @@ -1902,6 +1908,10 @@ static const GdbCmdParseEntry gdb_gen_query_table[=
-] =3D {
->          .handler =3D handle_query_qemu_supported,
->          .cmd =3D "qemu.Supported",
->      },
-> +    {
-> +        .handler =3D handle_query_qemu_pid,
-> +        .cmd =3D "qemu.Pid",
-> +    },
->  #ifndef CONFIG_USER_ONLY
->      {
->          .handler =3D gdb_handle_query_qemu_phy_mem_mode,
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/virtio/virtio-access.h | 5 ++++-
+ hw/virtio/virtio.c                | 8 ++++++++
+ target/arm/cpu.c                  | 5 +++++
+ target/ppc/cpu_init.c             | 5 +++++
+ hw/virtio/Kconfig                 | 5 +++++
+ 5 files changed, 27 insertions(+), 1 deletion(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
+index 07aae69042a..b5b471711a6 100644
+--- a/include/hw/virtio/virtio-access.h
++++ b/include/hw/virtio/virtio-access.h
+@@ -20,7 +20,10 @@
+ #include "hw/virtio/virtio.h"
+ #include "hw/virtio/virtio-bus.h"
+ 
+-#if defined(TARGET_PPC64) || defined(TARGET_ARM)
++#include CONFIG_DEVICES
++
++#if defined(CONFIG_VIRTIO_LEGACY) && \
++    (defined(TARGET_PPC64) || defined(TARGET_ARM))
+ #define LEGACY_VIRTIO_IS_BIENDIAN 1
+ #endif
+ 
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 480c2e50365..659ab3cb969 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -47,6 +47,8 @@
+ #include "standard-headers/linux/virtio_mem.h"
+ #include "standard-headers/linux/virtio_vsock.h"
+ 
++#include CONFIG_DEVICES
++
+ /*
+  * Maximum size of virtio device config space
+  */
+@@ -3502,6 +3504,7 @@ void virtio_init(VirtIODevice *vdev, uint16_t device_id, size_t config_size)
+ bool virtio_legacy_allowed(VirtIODevice *vdev)
+ {
+     switch (vdev->device_id) {
++#ifdef CONFIG_VIRTIO_LEGACY
+     case VIRTIO_ID_NET:
+     case VIRTIO_ID_BLOCK:
+     case VIRTIO_ID_CONSOLE:
+@@ -3513,6 +3516,7 @@ bool virtio_legacy_allowed(VirtIODevice *vdev)
+     case VIRTIO_ID_RPROC_SERIAL:
+     case VIRTIO_ID_CAIF:
+         return true;
++#endif
+     default:
+         return false;
+     }
+@@ -4014,8 +4018,10 @@ static const Property virtio_properties[] = {
+     DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, host_features),
+     DEFINE_PROP_BOOL("use-started", VirtIODevice, use_started, true),
+     DEFINE_PROP_BOOL("use-disabled-flag", VirtIODevice, use_disabled_flag, true),
++#ifdef CONFIG_VIRTIO_LEGACY
+     DEFINE_PROP_BOOL("x-disable-legacy-check", VirtIODevice,
+                      disable_legacy_check, false),
++#endif
+ };
+ 
+ static int virtio_device_start_ioeventfd_impl(VirtIODevice *vdev)
+@@ -4151,7 +4157,9 @@ static void virtio_device_class_init(ObjectClass *klass, const void *data)
+     vdc->start_ioeventfd = virtio_device_start_ioeventfd_impl;
+     vdc->stop_ioeventfd = virtio_device_stop_ioeventfd_impl;
+ 
++#ifdef CONFIG_VIRTIO_LEGACY
+     vdc->legacy_features |= VIRTIO_LEGACY_FEATURES;
++#endif
+ }
+ 
+ bool virtio_device_ioeventfd_enabled(VirtIODevice *vdev)
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 5e951675c60..d01fcb9fd1a 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -39,6 +39,7 @@
+ #if !defined(CONFIG_USER_ONLY)
+ #include "hw/loader.h"
+ #include "hw/boards.h"
++#include CONFIG_DEVICES
+ #ifdef CONFIG_TCG
+ #include "hw/intc/armv7m_nvic.h"
+ #endif /* CONFIG_TCG */
+@@ -1130,6 +1131,7 @@ static void arm_cpu_kvm_set_irq(void *opaque, int irq, int level)
+ #endif
+ }
+ 
++#ifdef CONFIG_VIRTIO_LEGACY
+ static bool arm_cpu_virtio_is_big_endian(CPUState *cs)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
+@@ -1138,6 +1140,7 @@ static bool arm_cpu_virtio_is_big_endian(CPUState *cs)
+     cpu_synchronize_state(cs);
+     return arm_cpu_data_is_big_endian(env);
+ }
++#endif
+ 
+ #ifdef CONFIG_TCG
+ bool arm_cpu_exec_halt(CPUState *cs)
+@@ -2681,7 +2684,9 @@ static const struct SysemuCPUOps arm_sysemu_ops = {
+     .asidx_from_attrs = arm_asidx_from_attrs,
+     .write_elf32_note = arm_cpu_write_elf32_note,
+     .write_elf64_note = arm_cpu_write_elf64_note,
++#ifdef CONFIG_VIRTIO_LEGACY
+     .virtio_is_big_endian = arm_cpu_virtio_is_big_endian,
++#endif
+     .legacy_vmsd = &vmstate_arm_cpu,
+ };
+ #endif
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index b0973b6df95..4b6c347bda8 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -50,6 +50,7 @@
+ #include "hw/boards.h"
+ #include "hw/intc/intc.h"
+ #include "kvm_ppc.h"
++#include CONFIG_DEVICES
+ #endif
+ 
+ #include "cpu_init.h"
+@@ -7352,12 +7353,14 @@ static void ppc_cpu_reset_hold(Object *obj, ResetType type)
+ 
+ #ifndef CONFIG_USER_ONLY
+ 
++#ifdef CONFIG_VIRTIO_LEGACY
+ static bool ppc_cpu_is_big_endian(CPUState *cs)
+ {
+     cpu_synchronize_state(cs);
+ 
+     return !FIELD_EX64(cpu_env(cs)->msr, MSR, LE);
+ }
++#endif
+ 
+ static bool ppc_get_irq_stats(InterruptStatsProvider *obj,
+                               uint64_t **irq_counts, unsigned int *nb_irqs)
+@@ -7470,7 +7473,9 @@ static const struct SysemuCPUOps ppc_sysemu_ops = {
+     .get_phys_page_debug = ppc_cpu_get_phys_page_debug,
+     .write_elf32_note = ppc32_cpu_write_elf32_note,
+     .write_elf64_note = ppc64_cpu_write_elf64_note,
++#ifdef CONFIG_VIRTIO_LEGACY
+     .virtio_is_big_endian = ppc_cpu_is_big_endian,
++#endif
+     .legacy_vmsd = &vmstate_ppc_cpu,
+ };
+ #endif
+diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
+index 7648a2d68da..314185f0016 100644
+--- a/hw/virtio/Kconfig
++++ b/hw/virtio/Kconfig
+@@ -1,6 +1,11 @@
+ config VIRTIO
+     bool
+ 
++config VIRTIO_LEGACY
++    bool
++    default y
++    depends on VIRTIO
++
+ config VIRTIO_RNG
+     bool
+     default y
+-- 
+2.47.1
+
 
