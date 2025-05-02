@@ -4,90 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E726CC3ABA9
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 06:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01ED2C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 07:44:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAjw5-0003zv-0V; Fri, 02 May 2025 02:31:49 -0400
+	id 1uAl3p-0001OQ-VO; Fri, 02 May 2025 03:43:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonwilson030981@googlemail.com>)
- id 1uAjw2-0003u5-OI
- for qemu-devel@nongnu.org; Fri, 02 May 2025 02:31:46 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jonwilson030981@googlemail.com>)
- id 1uAjvz-00065y-Rp
- for qemu-devel@nongnu.org; Fri, 02 May 2025 02:31:45 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-43cfe574976so9484345e9.1
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 23:31:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=googlemail.com; s=20230601; t=1746167501; x=1746772301; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=r9inCl48n/FEUF/d0F8bp05qecaBbZEla9jkg9JMco4=;
- b=lSFRk+TvHT6W3dlHitSyVfHF+FddHNbANhl+OF50fNxt0+nAQFCDiKSkhMXQ4KKJNV
- 1/ZPt0MJdF6XjJeEwLMhGjmWLfak6mnNMufF/VPkIedWvaOPX7zxMlV06n5DqAufISg8
- WSU3KIIZDRvbGuNkWF6KMQBNuza7Dg1c0KfqJmZdeuL+xcOQWbzqQYtw6FtzGKLQwQZ4
- X+VFDXVPLIavQgD7fav/LNbn+ZNbSkg1SliiWY9vnZhmFee9xHChgMDUk82vuB7Ne0rv
- 7pOxHMgQIXk/hM+criXXDp+ywgCos+fTfpnJ1EBvCs+CmZ0RhWlSgp7+lhERmRFNisM+
- sgnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746167501; x=1746772301;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=r9inCl48n/FEUF/d0F8bp05qecaBbZEla9jkg9JMco4=;
- b=OeaXefx9xAAFXWdnTNHS5pQ2gxge+C7ILyCD8mEVN46q3FeMFH0nrxaDasDibUj6Q+
- 38GXSjYbX+w5ETo6Xr6/ahIQ8VjIb54J2V5yVxU0TM9NPXZ4ehQPS0IJxG2qC32cIAQB
- xWFmjvyxCYEk7FZfpvfxpC/f+RnMO3ieus0c2HI8i/LaCcDfiBpde3Wos9JF0MCf2MY5
- gvs6MsM91geVLEwNicI64FwZ4rN2uwF9S+Q4E3BOKuqtPO8GC47Ls0KXDkbG7uAlu5KV
- GtZQo/iXLlwB6vHrWEhZ7d/fWmyxVxnZeF6p7mTNmBON5M2djSOVa+NujsRQjgkAvk0U
- QSPQ==
-X-Gm-Message-State: AOJu0YyAeAvV7eEvU+bEGYL/9iycleUfhEmbaDuIxQvkrEDIhNCZKOHQ
- VzqSqrlK0yzaVcn/E5ZUPlE8MbX/p0lCcCKjs3zhz0iJeTeZJm4WWqrIz/mf1YY=
-X-Gm-Gg: ASbGnctUwcdANHXuW+FHKpoIrM04kW4/TmDeJ1grlNF9w7pl1xzpqjBoa7xc0s3Yjlm
- l5lX742qLtHEeFSrjHUEGrAxM38PbSuhxQBNEjHelkhX8P+Ui/8m6BwXkjPTejcQ0scfADsmcD4
- /WznE86kCxj954gZJPoIq/efcQud4T5QmfUG3+CF/BY6UDwLcllMeaFt15lK3qjfYJjnVim5l6e
- 3RFWHo7YsEEGML4JrDJULALJrsZVYsWe0tAqiCBv3izbtkwY/2fdOrrwjir4Nw/GV8og8l2xzZs
- 92L3gs5VCRkjznOdbHizpxYKWgZVWcM3PdlNM5EUxlTKt5lNoKr0mWVL2osx+jz8Kvl2tdXfTqd
- ZiHBDFqwOrzAlWJVuhOJmQqMla6YmSsEUo1Y=
-X-Google-Smtp-Source: AGHT+IFetOIxjtohMyFBIhkkrElFUPug/X18R8L60ByKurSTPsZFNLJugb+0G8901KQO1uGeJX7QFw==
-X-Received: by 2002:a05:6000:1843:b0:3a0:8c3d:d7ed with SMTP id
- ffacd0b85a97d-3a099adcf68mr880319f8f.30.1746167500833; 
- Thu, 01 May 2025 23:31:40 -0700 (PDT)
-Received: from outlast.lan (97e5422b.skybroadband.com. [151.229.66.43])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b8a315fdsm33495825e9.34.2025.05.01.23.31.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 23:31:40 -0700 (PDT)
-From: WorksButNotTested <jonwilson030981@googlemail.com>
-X-Google-Original-From: WorksButNotTested
- <62701594+WorksButNotTested@users.noreply.github.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- WorksButNotTested <62701594+WorksButNotTested@users.noreply.github.com>
-Subject: [PATCH v2] Support madvise(MADV_DONTDUMP) when creating core dumps
- for qemu-user
-Date: Fri,  2 May 2025 07:31:40 +0100
-Message-ID: <20250502063140.1098807-1-62701594+WorksButNotTested@users.noreply.github.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <SRS0=zHgX=XS=kaod.org=clg@ozlabs.org>)
+ id 1uAl3n-0001OC-2u; Fri, 02 May 2025 03:43:51 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=zHgX=XS=kaod.org=clg@ozlabs.org>)
+ id 1uAl3k-0001lT-O8; Fri, 02 May 2025 03:43:50 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZpjbN0Qqyz4x5g;
+ Fri,  2 May 2025 17:43:44 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZpjbJ3h4hz4x0s;
+ Fri,  2 May 2025 17:43:40 +1000 (AEST)
+Message-ID: <7069b98c-5099-4264-bb9c-da60bae04482@kaod.org>
+Date: Fri, 2 May 2025 09:43:38 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/9] Introduce AST27x0 multi-SoC machine
+To: Steven Lee <steven_lee@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>,
+ "longzl2@lenovo.com" <longzl2@lenovo.com>,
+ Yunlin Tang <yunlin.tang@aspeedtech.com>
+References: <20250429091855.1948374-1-steven_lee@aspeedtech.com>
+ <cdcf1ec9-9b67-42f5-970c-db82c91cf0bb@kaod.org>
+ <KL1PR0601MB418091FFA5FBCB0159A577C9858D2@KL1PR0601MB4180.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <KL1PR0601MB418091FFA5FBCB0159A577C9858D2@KL1PR0601MB4180.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=jonwilson030981@googlemail.com; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=zHgX=XS=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,70 +115,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When running applications which make large (sparsely populated) address ranges
-(e.g. when using address sanitizer with LibAFL) the inability to exclude these
-regions from any core dump can result in very large files which fill the disk.
-A coredump is obvously very useful for performing a post-mortem when fuzzing.
+On 5/2/25 03:22, Steven Lee wrote:
+> Hi Cédric,
+> 
+>> -----Original Message-----
+>> From: Cédric Le Goater <clg@kaod.org>
+>> Sent: Wednesday, April 30, 2025 5:31 PM
+>> To: Steven Lee <steven_lee@aspeedtech.com>; Peter Maydell
+>> <peter.maydell@linaro.org>; Troy Lee <leetroy@gmail.com>; Jamin Lin
+>> <jamin_lin@aspeedtech.com>; Andrew Jeffery
+>> <andrew@codeconstruct.com.au>; Joel Stanley <joel@jms.id.au>; open
+>> list:ASPEED BMCs <qemu-arm@nongnu.org>; open list:All patches CC here
+>> <qemu-devel@nongnu.org>
+>> Cc: Troy Lee <troy_lee@aspeedtech.com>; longzl2@lenovo.com; Yunlin Tang
+>> <yunlin.tang@aspeedtech.com>
+>> Subject: Re: [PATCH v3 0/9] Introduce AST27x0 multi-SoC machine
+>>
+>> Hello Steven,
+>>
+>> On 4/29/25 11:18, Steven Lee wrote:
+>>> This patch series introduces full core support for the AST27x0 SoC, along with
+>> necessary updates to the ASPEED AST27x0 SOC.
+>>> The AST27x0 SoC is a new family of ASPEED SoCs featuring 4 Cortex-A35
+>> cores and 2 Cortex-M4 cores.
+>>>
+>>> v1:
+>>>     - Map unimplemented devices in SoC memory
+>>>     - Intruduce AST2700 CM4 SoC
+>>>     - Introduce AST27x0FC Machine
+>>>
+>>> v2:
+>>>     - Remove unused functions
+>>>     - Correct hex notation for device addresses in AST27x0 SoC
+>>>     - Add AST2700 SSP INTC and AST2700 TSP INTC
+>>>     - Split AST27x0 CM4 SoC to AST27x0 SSP SoC and AST27x0 TSP SoC
+>>>     - Add AST27x0 A0 SSP SoC and AST27x0 A1 SSP SoC
+>>>     - Add AST27x0 A0 TSP SoC and AST27x0 A1 TSP SoC
+>>>     - Add functional tests for AST2700FC A0 and AST2700FC A1
+>>>     - Add Documentation for AST2700FC
+>>>
+>>> v3:
+>>>     - Remove A0 SoC support and related functional tests
+>>
+>> Please rebase on upstream QEMU before resending. There are new changes
+>> breaking this series (meson, class_init).
+>>
+>> Also, try compiling the documentation too. The last patch has formatting
+>> issues.
+>>
+> 
+> Thanks for the review.
+> I'll rebase the series on the top of https://github.com/legoater/qemu/commits/aspeed-next/
+> and fix the documentation formatting issues in the v4 patch series.
+perfect.
 
-Whilst the man pages state that madvise provides only a hint (and hence can be
-ignored), this patch adds support to handle MADV_DONTDUMP and set a
-corresponding flag in the page flags, thus allowing QEMU to exclude these
-regions from the core file.
+I should merge it on top then.
 
-Signed-off-by: WorksButNotTested <62701594+WorksButNotTested@users.noreply.github.com>
----
- include/exec/page-protection.h | 6 ++++++
- linux-user/elfload.c           | 4 ++++
- linux-user/mmap.c              | 5 +++++
- 3 files changed, 15 insertions(+)
 
-diff --git a/include/exec/page-protection.h b/include/exec/page-protection.h
-index c43231af8b..f8826d917e 100644
---- a/include/exec/page-protection.h
-+++ b/include/exec/page-protection.h
-@@ -38,4 +38,10 @@
-  */
- #define PAGE_PASSTHROUGH 0x0800
- 
-+/*
-+ * For linux-user, indicates that the page should not be included in a core 
-+ * dump.
-+ */
-+#define PAGE_DONTDUMP   0x1000
-+
- #endif
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index fbfdec2f17..41c46da055 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -4067,6 +4067,10 @@ static size_t vma_dump_size(target_ulong start, target_ulong end,
-         return 0;
-     }
- 
-+    if (flags & PAGE_DONTDUMP) {
-+        return 0;
-+    }
-+
-     /*
-      * Usually we don't dump executable pages as they contain
-      * non-writable code that debugger can read directly from
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index f88a80c31e..62fc8ac921 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1247,6 +1247,11 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
-      */
-     mmap_lock();
-     switch (advice) {
-+    case MADV_DONTDUMP:
-+        if (len > 0) {
-+            page_set_flags(start, start + len - 1, PAGE_DONTDUMP);
-+        }
-+        break;
-     case MADV_WIPEONFORK:
-     case MADV_KEEPONFORK:
-         ret = -EINVAL;
--- 
-2.43.0
+Thanks,
+
+C.
+
 
 
