@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6CA7C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 11:11:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7B2EC3ABA3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 11:11:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAoIG-000090-Pv; Fri, 02 May 2025 07:11:00 -0400
+	id 1uAoIw-00019k-CS; Fri, 02 May 2025 07:11:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=zHgX=XS=kaod.org=clg@ozlabs.org>)
- id 1uAoIE-00008A-HQ; Fri, 02 May 2025 07:10:58 -0400
+ id 1uAoIr-0000zi-Bv; Fri, 02 May 2025 07:11:37 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=zHgX=XS=kaod.org=clg@ozlabs.org>)
- id 1uAoIB-0004f1-7u; Fri, 02 May 2025 07:10:58 -0400
+ id 1uAoIo-0004nQ-Ft; Fri, 02 May 2025 07:11:36 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZppBK6M17z4x5g;
- Fri,  2 May 2025 21:10:49 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZppC76Fnfz4x5g;
+ Fri,  2 May 2025 21:11:31 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZppBF6TZzz4wvb;
- Fri,  2 May 2025 21:10:45 +1000 (AEST)
-Message-ID: <c98adfb7-8fde-4672-a3cc-aac91b18fab7@kaod.org>
-Date: Fri, 2 May 2025 13:10:43 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZppC40KJdz4x4d;
+ Fri,  2 May 2025 21:11:27 +1000 (AEST)
+Message-ID: <ed19f710-3f25-4138-bc1a-7d6347d0ba24@kaod.org>
+Date: Fri, 2 May 2025 13:11:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/9] hw/arm/aspeed_ast27x0-ssp: Introduce AST27x0 A1
- SSP SoC
+Subject: Re: [PATCH v4 6/9] hw/arm/aspeed_ast27x0-tsp: Introduce AST27x0 A1
+ TSP SoC
 To: Steven Lee <steven_lee@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
@@ -41,7 +41,7 @@ To: Steven Lee <steven_lee@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
 References: <20250502103449.3091642-1-steven_lee@aspeedtech.com>
- <20250502103449.3091642-6-steven_lee@aspeedtech.com>
+ <20250502103449.3091642-7-steven_lee@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,7 +86,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250502103449.3091642-6-steven_lee@aspeedtech.com>
+In-Reply-To: <20250502103449.3091642-7-steven_lee@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -113,14 +113,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/2/25 12:34, Steven Lee wrote:
-> The AST2700 SSP (Secondary Service Processor) is a Cortex-M4 coprocessor.
-> This patch adds support for A1 SSP with the following updates:
+> AST2700 TSP(Tertiary Service Processor) is a Cortex-M4 coprocessor
+> The patch adds support for TSP with following update:
 > 
-> - Introduce Aspeed27x0SSPSoCState structure in aspeed_soc.h
-> - Define memory map and IRQ map for AST27x0 A1 SSP SoC
+> - Introduce Aspeed27x0TSPSoCState structure in aspeed_soc.h
 > - Implement initialization and realization functions
 > - Add support for UART, INTC, and SCU devices
 > - Map unimplemented devices for IPC and SCUIO
+> - Defined memory map and IRQ maps for AST27x0 A1 TSP SoC
 > 
 > The IRQ mapping is similar to AST2700 CA35 SoC, featuring a two-level
 > interrupt controller.
@@ -136,33 +136,33 @@ On 5/2/25 12:34, Steven Lee wrote:
 >            Bit 3 -> GIC 195
 >            Bit 4 -> GIC 196
 > 
->      - AST2700-ssp
->        - Support SSPINT128 to SSPINT136 in INTC
->        - The INTCIO SSPINT_160_169 has 10 output pins, mapped as follows:
->            Bit 0 -> SSPINT 160
->            Bit 1 -> SSPINT 161
->            Bit 2 -> SSPINT 162
->            Bit 3 -> SSPINT 163
->            Bit 4 -> SSPINT 164
+>      - AST2700-tsp
+>        - Support TSPINT128 to TSPINT136 in INTC
+>        - The INTCIO TSPINT_160_169 has 10 output pins, mapped as follows:
+>            Bit 0 -> TSPINT 160
+>            Bit 1 -> TSPINT 161
+>            Bit 2 -> TSPINT 162
+>            Bit 3 -> TSPINT 163
+>            Bit 4 -> TSPINT 164
 > 
 > Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-> Change-Id: I924bf1a657f1e83f9e16d6673713f4a06ecdb496
+> Change-Id: I69eec2b68b26ef04187b2922c5f2e584b9076c66
 > ---
->   include/hw/arm/aspeed_soc.h |  14 ++
->   hw/arm/aspeed_ast27x0-ssp.c | 295 ++++++++++++++++++++++++++++++++++++
+>   include/hw/arm/aspeed_soc.h |  12 ++
+>   hw/arm/aspeed_ast27x0-tsp.c | 295 ++++++++++++++++++++++++++++++++++++
 >   hw/arm/meson.build          |   1 +
->   3 files changed, 310 insertions(+)
->   create mode 100644 hw/arm/aspeed_ast27x0-ssp.c
+>   3 files changed, 308 insertions(+)
+>   create mode 100644 hw/arm/aspeed_ast27x0-tsp.c
 > 
 > diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-> index 5fcfd2fe2e..32be90bc35 100644
+> index 32be90bc35..217ef0eafd 100644
 > --- a/include/hw/arm/aspeed_soc.h
 > +++ b/include/hw/arm/aspeed_soc.h
-> @@ -146,6 +146,18 @@ struct Aspeed10x0SoCState {
->       ARMv7MState armv7m;
->   };
+> @@ -158,6 +158,18 @@ struct Aspeed27x0SSPSoCState {
+>   #define TYPE_ASPEED27X0SSP_SOC "aspeed27x0ssp-soc"
+>   OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0SSPSoCState, ASPEED27X0SSP_SOC)
 >   
-> +struct Aspeed27x0SSPSoCState {
+> +struct Aspeed27x0TSPSoCState {
 > +    AspeedSoCState parent;
 > +    AspeedINTCState intc[2];
 > +    UnimplementedDeviceState ipc[2];
@@ -171,29 +171,20 @@ On 5/2/25 12:34, Steven Lee wrote:
 > +    ARMv7MState armv7m;
 > +};
 > +
-> +#define TYPE_ASPEED27X0SSP_SOC "aspeed27x0ssp-soc"
-> +OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0SSPSoCState, ASPEED27X0SSP_SOC)
+> +#define TYPE_ASPEED27X0TSP_SOC "aspeed27x0tsp-soc"
+> +OBJECT_DECLARE_SIMPLE_TYPE(Aspeed27x0TSPSoCState, ASPEED27X0TSP_SOC)
 > +
 >   #define TYPE_ASPEED10X0_SOC "aspeed10x0-soc"
 >   OBJECT_DECLARE_SIMPLE_TYPE(Aspeed10x0SoCState, ASPEED10X0_SOC)
 >   
-> @@ -259,6 +271,8 @@ enum {
->       ASPEED_DEV_SLIIO,
->       ASPEED_GIC_DIST,
->       ASPEED_GIC_REDIST,
-> +    ASPEED_DEV_IPC0,
-> +    ASPEED_DEV_IPC1,
->   };
->   
->   qemu_irq aspeed_soc_get_irq(AspeedSoCState *s, int dev);
-> diff --git a/hw/arm/aspeed_ast27x0-ssp.c b/hw/arm/aspeed_ast27x0-ssp.c
+> diff --git a/hw/arm/aspeed_ast27x0-tsp.c b/hw/arm/aspeed_ast27x0-tsp.c
 > new file mode 100644
-> index 0000000000..8b6539e4ce
+> index 0000000000..5d66d2609d
 > --- /dev/null
-> +++ b/hw/arm/aspeed_ast27x0-ssp.c
+> +++ b/hw/arm/aspeed_ast27x0-tsp.c
 > @@ -0,0 +1,295 @@
 > +/*
-> + * ASPEED Ast27x0 SSP SoC
+> + * ASPEED Ast27x0 TSP SoC
 > + *
 > + * Copyright (C) 2025 ASPEED Technology Inc.
 > + *
@@ -209,9 +200,9 @@ On 5/2/25 12:34, Steven Lee wrote:
 > +#include "hw/misc/unimp.h"
 > +#include "hw/arm/aspeed_soc.h"
 > +
-> +#define AST2700_SSP_RAM_SIZE (32 * MiB)
+> +#define AST2700_TSP_RAM_SIZE (32 * MiB)
 > +
-> +static const hwaddr aspeed_soc_ast27x0ssp_memmap[] = {
+> +static const hwaddr aspeed_soc_ast27x0tsp_memmap[] = {
 > +    [ASPEED_DEV_SRAM]      =  0x00000000,
 > +    [ASPEED_DEV_INTC]      =  0x72100000,
 > +    [ASPEED_DEV_SCU]       =  0x72C02000,
@@ -235,7 +226,7 @@ On 5/2/25 12:34, Steven Lee wrote:
 > +    [ASPEED_DEV_TIMER1]    =  0x72C10000,
 > +};
 > +
-> +static const int aspeed_soc_ast27x0ssp_irqmap[] = {
+> +static const int aspeed_soc_ast27x0tsp_irqmap[] = {
 > +    [ASPEED_DEV_SCU]       = 12,
 > +    [ASPEED_DEV_UART0]     = 164,
 > +    [ASPEED_DEV_UART1]     = 164,
@@ -253,8 +244,8 @@ On 5/2/25 12:34, Steven Lee wrote:
 > +    [ASPEED_DEV_TIMER1]    = 16,
 > +};
 > +
-> +/* SSPINT 164 */
-> +static const int ast2700_ssp132_ssp164_intcmap[] = {
+> +/* TSPINT 164 */
+> +static const int ast2700_tsp132_tsp164_intcmap[] = {
 > +    [ASPEED_DEV_UART0]     = 7,
 > +    [ASPEED_DEV_UART1]     = 8,
 > +    [ASPEED_DEV_UART2]     = 9,
@@ -276,12 +267,12 @@ On 5/2/25 12:34, Steven Lee wrote:
 > +    const int *ptr;
 > +};
 > +
-> +static struct nvic_intc_irq_info ast2700_ssp_intcmap[] = {
+> +static struct nvic_intc_irq_info ast2700_tsp_intcmap[] = {
 > +    {160, 1, 0, NULL},
 > +    {161, 1, 1, NULL},
 > +    {162, 1, 2, NULL},
 > +    {163, 1, 3, NULL},
-> +    {164, 1, 4, ast2700_ssp132_ssp164_intcmap},
+> +    {164, 1, 4, ast2700_tsp132_tsp164_intcmap},
 > +    {165, 1, 5, NULL},
 > +    {166, 1, 6, NULL},
 > +    {167, 1, 7, NULL},
@@ -291,38 +282,38 @@ On 5/2/25 12:34, Steven Lee wrote:
 > +    {129, 0, 2, NULL},
 > +    {130, 0, 3, NULL},
 > +    {131, 0, 4, NULL},
-> +    {132, 0, 5, ast2700_ssp132_ssp164_intcmap},
+> +    {132, 0, 5, ast2700_tsp132_tsp164_intcmap},
 > +    {133, 0, 6, NULL},
 > +    {134, 0, 7, NULL},
 > +    {135, 0, 8, NULL},
 > +    {136, 0, 9, NULL},
 > +};
 > +
-> +static qemu_irq aspeed_soc_ast27x0ssp_get_irq(AspeedSoCState *s, int dev)
+> +static qemu_irq aspeed_soc_ast27x0tsp_get_irq(AspeedSoCState *s, int dev)
 > +{
-> +    Aspeed27x0SSPSoCState *a = ASPEED27X0SSP_SOC(s);
+> +    Aspeed27x0TSPSoCState *a = ASPEED27X0TSP_SOC(s);
 > +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
 > +
 > +    int or_idx;
 > +    int idx;
 > +    int i;
 > +
-> +    for (i = 0; i < ARRAY_SIZE(ast2700_ssp_intcmap); i++) {
-> +        if (sc->irqmap[dev] == ast2700_ssp_intcmap[i].irq) {
-> +            assert(ast2700_ssp_intcmap[i].ptr);
-> +            or_idx = ast2700_ssp_intcmap[i].orgate_idx;
-> +            idx = ast2700_ssp_intcmap[i].intc_idx;
+> +    for (i = 0; i < ARRAY_SIZE(ast2700_tsp_intcmap); i++) {
+> +        if (sc->irqmap[dev] == ast2700_tsp_intcmap[i].irq) {
+> +            assert(ast2700_tsp_intcmap[i].ptr);
+> +            or_idx = ast2700_tsp_intcmap[i].orgate_idx;
+> +            idx = ast2700_tsp_intcmap[i].intc_idx;
 > +            return qdev_get_gpio_in(DEVICE(&a->intc[idx].orgates[or_idx]),
-> +                                    ast2700_ssp_intcmap[i].ptr[dev]);
+> +                                    ast2700_tsp_intcmap[i].ptr[dev]);
 > +        }
 > +    }
 > +
 > +    return qdev_get_gpio_in(DEVICE(&a->armv7m), sc->irqmap[dev]);
 > +}
 > +
-> +static void aspeed_soc_ast27x0ssp_init(Object *obj)
+> +static void aspeed_soc_ast27x0tsp_init(Object *obj)
 > +{
-> +    Aspeed27x0SSPSoCState *a = ASPEED27X0SSP_SOC(obj);
+> +    Aspeed27x0TSPSoCState *a = ASPEED27X0TSP_SOC(obj);
 > +    AspeedSoCState *s = ASPEED_SOC(obj);
 > +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
 > +    int i;
@@ -337,9 +328,9 @@ On 5/2/25 12:34, Steven Lee wrote:
 > +    }
 > +
 > +    object_initialize_child(obj, "intc0", &a->intc[0],
-> +                            TYPE_ASPEED_2700SSP_INTC);
+> +                            TYPE_ASPEED_2700TSP_INTC);
 > +    object_initialize_child(obj, "intc1", &a->intc[1],
-> +                            TYPE_ASPEED_2700SSP_INTCIO);
+> +                            TYPE_ASPEED_2700TSP_INTCIO);
 > +
 > +    object_initialize_child(obj, "timerctrl", &s->timerctrl,
 > +                            TYPE_UNIMPLEMENTED_DEVICE);
@@ -351,9 +342,9 @@ On 5/2/25 12:34, Steven Lee wrote:
 > +                            TYPE_UNIMPLEMENTED_DEVICE);
 > +}
 > +
-> +static void aspeed_soc_ast27x0ssp_realize(DeviceState *dev_soc, Error **errp)
+> +static void aspeed_soc_ast27x0tsp_realize(DeviceState *dev_soc, Error **errp)
 > +{
-> +    Aspeed27x0SSPSoCState *a = ASPEED27X0SSP_SOC(dev_soc);
+> +    Aspeed27x0TSPSoCState *a = ASPEED27X0TSP_SOC(dev_soc);
 > +    AspeedSoCState *s = ASPEED_SOC(dev_soc);
 > +    AspeedSoCClass *sc = ASPEED_SOC_GET_CLASS(s);
 > +    DeviceState *armv7m;
@@ -366,7 +357,7 @@ On 5/2/25 12:34, Steven Lee wrote:
 > +        return;
 > +    }
 > +
-> +    /* AST27X0 SSP Core */
+> +    /* AST27X0 TSP Core */
 > +    armv7m = DEVICE(&a->armv7m);
 > +    qdev_prop_set_uint32(armv7m, "num-irq", 256);
 > +    qdev_prop_set_string(armv7m, "cpu-type", aspeed_soc_cpu_type(sc));
@@ -381,9 +372,7 @@ On 5/2/25 12:34, Steven Lee wrote:
 > +    if (!memory_region_init_ram(&s->sram, OBJECT(s), sram_name, sc->sram_size,
 > +                                &err)) {
 
-Looks like a typo. errp should be used instead.
-
-I can fix when applying, so :
+Same comment as on patch 5. I will fix. So
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
@@ -391,9 +380,6 @@ Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Thanks,
 
 C.
-
-
-
 
 
 > +        return;
@@ -424,18 +410,18 @@ C.
 > +    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->intc[1]), 0,
 > +                    sc->memmap[ASPEED_DEV_INTCIO]);
 > +
-> +    /* irq source orgates -> INTC0 */
+> +    /* irq source orgates -> INTC */
 > +    for (i = 0; i < ASPEED_INTC_GET_CLASS(&a->intc[0])->num_inpins; i++) {
 > +        qdev_connect_gpio_out(DEVICE(&a->intc[0].orgates[i]), 0,
 > +                              qdev_get_gpio_in(DEVICE(&a->intc[0]), i));
 > +    }
 > +    for (i = 0; i < ASPEED_INTC_GET_CLASS(&a->intc[0])->num_outpins; i++) {
-> +        assert(i < ARRAY_SIZE(ast2700_ssp_intcmap));
+> +        assert(i < ARRAY_SIZE(ast2700_tsp_intcmap));
 > +        sysbus_connect_irq(SYS_BUS_DEVICE(&a->intc[0]), i,
 > +                           qdev_get_gpio_in(DEVICE(&a->armv7m),
-> +                                            ast2700_ssp_intcmap[i].irq));
+> +                                            ast2700_tsp_intcmap[i].irq));
 > +    }
-> +    /* irq source orgates -> INTCIO */
+> +    /* irq source orgates -> INTC */
 > +    for (i = 0; i < ASPEED_INTC_GET_CLASS(&a->intc[1])->num_inpins; i++) {
 > +        qdev_connect_gpio_out(DEVICE(&a->intc[1].orgates[i]), 0,
 > +                              qdev_get_gpio_in(DEVICE(&a->intc[1]), i));
@@ -464,10 +450,10 @@ C.
 > +                                  sc->memmap[ASPEED_DEV_SCUIO], 0x1000);
 > +}
 > +
-> +static void aspeed_soc_ast27x0ssp_class_init(ObjectClass *klass, const void *data)
+> +static void aspeed_soc_ast27x0tsp_class_init(ObjectClass *klass, const void *data)
 > +{
 > +    static const char * const valid_cpu_types[] = {
-> +        ARM_CPU_TYPE_NAME("cortex-m4"), /* TODO: cortex-m4f */
+> +        ARM_CPU_TYPE_NAME("cortex-m4"), /* TODO cortex-m4f */
 > +        NULL
 > +    };
 > +    DeviceClass *dc = DEVICE_CLASS(klass);
@@ -475,43 +461,43 @@ C.
 > +
 > +    /* Reason: The Aspeed SoC can only be instantiated from a board */
 > +    dc->user_creatable = false;
-> +    dc->realize = aspeed_soc_ast27x0ssp_realize;
+> +    dc->realize = aspeed_soc_ast27x0tsp_realize;
 > +
 > +    sc->valid_cpu_types = valid_cpu_types;
 > +    sc->silicon_rev = AST2700_A1_SILICON_REV;
-> +    sc->sram_size = AST2700_SSP_RAM_SIZE;
+> +    sc->sram_size = AST2700_TSP_RAM_SIZE;
 > +    sc->spis_num = 0;
 > +    sc->ehcis_num = 0;
 > +    sc->wdts_num = 0;
 > +    sc->macs_num = 0;
 > +    sc->uarts_num = 13;
 > +    sc->uarts_base = ASPEED_DEV_UART0;
-> +    sc->irqmap = aspeed_soc_ast27x0ssp_irqmap;
-> +    sc->memmap = aspeed_soc_ast27x0ssp_memmap;
+> +    sc->irqmap = aspeed_soc_ast27x0tsp_irqmap;
+> +    sc->memmap = aspeed_soc_ast27x0tsp_memmap;
 > +    sc->num_cpus = 1;
-> +    sc->get_irq = aspeed_soc_ast27x0ssp_get_irq;
+> +    sc->get_irq = aspeed_soc_ast27x0tsp_get_irq;
 > +}
 > +
-> +static const TypeInfo aspeed_soc_ast27x0ssp_types[] = {
+> +static const TypeInfo aspeed_soc_ast27x0tsp_types[] = {
 > +    {
-> +        .name           = TYPE_ASPEED27X0SSP_SOC,
+> +        .name           = TYPE_ASPEED27X0TSP_SOC,
 > +        .parent         = TYPE_ASPEED_SOC,
-> +        .instance_size  = sizeof(Aspeed27x0SSPSoCState),
-> +        .instance_init  = aspeed_soc_ast27x0ssp_init,
-> +        .class_init     = aspeed_soc_ast27x0ssp_class_init,
+> +        .instance_size  = sizeof(Aspeed27x0TSPSoCState),
+> +        .instance_init  = aspeed_soc_ast27x0tsp_init,
+> +        .class_init     = aspeed_soc_ast27x0tsp_class_init,
 > +    },
 > +};
 > +
-> +DEFINE_TYPES(aspeed_soc_ast27x0ssp_types)
+> +DEFINE_TYPES(aspeed_soc_ast27x0tsp_types)
 > diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index 09b1cfe5b5..39b74a89ed 100644
+> index 39b74a89ed..98c5631506 100644
 > --- a/hw/arm/meson.build
 > +++ b/hw/arm/meson.build
-> @@ -44,6 +44,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
->     'aspeed_soc_common.c',
+> @@ -45,6 +45,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
 >     'aspeed_ast2400.c',
 >     'aspeed_ast2600.c',
-> +  'aspeed_ast27x0-ssp.c',
+>     'aspeed_ast27x0-ssp.c',
+> +  'aspeed_ast27x0-tsp.c',
 >     'aspeed_ast10x0.c',
 >     'aspeed_eeprom.c',
 >     'fby35.c'))
