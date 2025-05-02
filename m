@@ -4,92 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F17E0C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 16:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3124C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 16:48:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAtSx-0007tB-9c; Fri, 02 May 2025 12:42:23 -0400
+	id 1uAtYj-0008Tu-2j; Fri, 02 May 2025 12:48:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtSb-0007mY-R0
- for qemu-devel@nongnu.org; Fri, 02 May 2025 12:42:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtSZ-0006T0-TG
- for qemu-devel@nongnu.org; Fri, 02 May 2025 12:42:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746204119;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wWyBexoIRamceh81lwn3HjKOZqVQpjEmVJQs01FKpAY=;
- b=QB/S1ybB50ldWk0iPXKIaY/zBxgjDsQYsDDJC+/hchMbYINcnBMcNdalw4baJJzL4O2FNW
- ge8RFOC8R9xpr+TItLbjSJkoow/eqzcU77ntehp7/EpoxaV4q8tvL3dF3f+9C7d6UdDyTy
- qQ2W6nb+TWlA+nn59k8c6D8RQbDCSDo=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-197-VN9kUWymNd2kaz8XCCclCw-1; Fri, 02 May 2025 12:41:58 -0400
-X-MC-Unique: VN9kUWymNd2kaz8XCCclCw-1
-X-Mimecast-MFC-AGG-ID: VN9kUWymNd2kaz8XCCclCw_1746204117
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7c0a3ff7e81so395724685a.3
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 09:41:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uAtYe-0008TL-PL
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 12:48:16 -0400
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uAtYc-00083R-Tk
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 12:48:16 -0400
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e756416045bso1169211276.2
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 09:48:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746204493; x=1746809293; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iglvjjFZCtDTPF4Jg1I9knCUgQ1snHxkQwUXNZrdWwM=;
+ b=dq58hkSLy/yqbPTKX8L9JW7Nui4xYTsH9TWJI5Efz7WbCXHqXrBtnOUDlg34Bhp1eW
+ 4TE0aqWTm5PjCjBQISpPIXQS9OBQG+YJ2goMe0brCU9HXxpLkexdJ7fy2OvFvbDRbflP
+ tgp9ZNNBFapdMIh2dknxzjYCc2dW0wfcUf0fGs1isXSLLo/dHSTDEIuq7vKqRhaENsW/
+ y7kRlmecuXWY6M6rEq182H5gTlZg81GzhFL8XSUgSDT0I4dkYT5bXrbpS/bmwdqRa3wo
+ pLOe0AFx88VstRaTr1+5OXHHirtG364apVg7VbPmqJtoz2zBrv+zZOWqadrSMRcSLlXX
+ cItw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746204117; x=1746808917;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1746204493; x=1746809293;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wWyBexoIRamceh81lwn3HjKOZqVQpjEmVJQs01FKpAY=;
- b=c8XmgHx4whyCjkp7XViuuzD5N5n3cUyfH3ulNywmboxqtr+92H4E2c1Uqn9AISyuGi
- Z6gQENDyJsnv/PlQHmLJV9ZtHjFTo6MjNz2fbtVNN8//HoapjJD5YI1nAKn7v0Hn7Hi3
- RMKD54H5U5tiZz9Y4ceYQgMaz9/Io49AEyvmTbvY6HW38InzriIrsKpKSkcJgYTzQgXy
- ldENZCkhgGCOno8TlnGGWx6ecXeANcpzGXm6myzRO+BKfkUTv743oJV/1LhAfToiG5Lf
- VkveQYV//3ZmzmEH5gspM1mNMjwLCN/8Mqa0qTqx6OrcPVASRPLs699RkUgBXq/erMCX
- csIA==
-X-Gm-Message-State: AOJu0YyixUOVzf461XWtSuJyKWk3w/Dh0UDPAusfQY6ZHcZTpEwqc4Bs
- UznnVRzEWi8l9Zuui6ypYLx2zCSJXskRuwUMxouw2MRLvfQTDrDCIhJE7LD88BBnoJt6kEBReWb
- r4p6X4YS/9xLmMIezlnPhXLrTI+0zYwXGjfduiP5YIycBNFRvPe3p3kUvaDy//+no+qiOjLcfwp
- kN+qwzkzbKL5bcD6AsHoCQuJmWgMzNruCbUQ==
-X-Gm-Gg: ASbGnctje8L70CVaOCvp+lYoYBTiRVyUL/hHLTOC8r3tIddJfkFuxcPAcSuGvtXrgoo
- 9pI+t+wSFEcg8N+ypuCEixZ+RLrLnbIT90raILcIyIThcwYUyiciGtRdifNwrcWz+bs3bfKvG/7
- 6ZibwQyrm2ZqYjpaaFZlN1DgAAOeJXP9RgV082Ve0Mx/TnwakO2WdD2vcCLhzEEqFirn39Grl6Q
- flYVNvfAQzihaE00s17Gqi3V+eOIwudelxQJVaVfN7G/7POfQoSrHt6Zv2WPuYKwynVLqxqGwzw
-X-Received: by 2002:a05:620a:4250:b0:7ca:cb02:7942 with SMTP id
- af79cd13be357-7cad5b2ceefmr543326985a.1.1746204117149; 
- Fri, 02 May 2025 09:41:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEKqEkhHjvg0mCk6OQPEWL8nZ6Q7kStsPaPjAIduQB21nCkakaVJnePEOgLpO2KhMSeHtEWPw==
-X-Received: by 2002:a05:620a:4250:b0:7ca:cb02:7942 with SMTP id
- af79cd13be357-7cad5b2ceefmr543323185a.1.1746204116734; 
- Fri, 02 May 2025 09:41:56 -0700 (PDT)
-Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cad23d1c8dsm203108385a.60.2025.05.02.09.41.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 May 2025 09:41:55 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
- peterx@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PULL 08/14] migration: refactor channel discovery mechanism
-Date: Fri,  2 May 2025 12:41:35 -0400
-Message-ID: <20250502164141.747202-9-peterx@redhat.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250502164141.747202-1-peterx@redhat.com>
-References: <20250502164141.747202-1-peterx@redhat.com>
+ bh=iglvjjFZCtDTPF4Jg1I9knCUgQ1snHxkQwUXNZrdWwM=;
+ b=pPxheonpW0oCre0MH7JmHChw85BcLL9KKam9Z2zxKP4Y3XAe1zb69SLw+66i1z1HUx
+ yt0my1KCA8L2ZjoSYbEj8+j36Mbq7U2g8AYjySov/clqqERj+62TsjLTAd5K7Ap2vUiq
+ rWowBEJvcrrMEUX7MA4sB6YSq4sPYFf54wkYe5RZx/VXt1/70506O9dNevZnuR/Xz0Z+
+ 0vnLuuhtDoxPTx7zkO67BjWBnDvBndOde/zGOkoyVStUB71/hF0z/PgoCrH9kutYF+hz
+ EyM6w8ew7VJshQY9Zclnly41xqHQ8GiGBB5WzmuNeOl6GEsQk+qmMtkqIvIWDGIzQWPc
+ a73w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCViC6atAD8+0agtQp9RZIcJU8Pp6lZY0keKmxSIl5N9tmMC5RcW/UDCZNIMDK7az0I4U/S5gxHuQD8b@nongnu.org
+X-Gm-Message-State: AOJu0YznznkT28Z+2JgOTfe/ba4y6Wha5W4sivi6QpSAR0lZ5i4jOrjf
+ pTiHPSv+fXhdqWn6UoxV3lB/ZHWiHZzRLAZnMhbAwX00LICZ1TFEbyChQp2RSb6kKwWxdagrEbM
+ riwh6TM+1zL4AD4RTry+fD1MuDvdV2QXs1KyuVA==
+X-Gm-Gg: ASbGncsGn81SXBcDiZyv7WOQOn7nYC86ktHC+DFnwVgR+OvmhSzrBVSl+/D9J0IsQ9X
+ 2FEEiVnW8RDcJlNeCCMeI50CLVFmqm9vUhcyolx7ipP5z6wMMVPFwnliPPdv+2y6vdHVoUglJx8
+ GupI/LuDZKTu6vIvnNVi1QIRVTTKE1s5kDMA==
+X-Google-Smtp-Source: AGHT+IG/CykXw4Z4KB8lba2JmLeszRv/c8xBv3P1os8lk/nrvqn8px5qc4rNv61oHRiWTQwM2tT9hnmGbYVqrSRqDmY=
+X-Received: by 2002:a05:6902:102d:b0:e74:f068:4df1 with SMTP id
+ 3f1490d57ef6-e756557bb23mr4678755276.22.1746204493399; Fri, 02 May 2025
+ 09:48:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250330205857.1615-1-shentey@gmail.com>
+ <20250330205857.1615-3-shentey@gmail.com>
+ <Z-pdzUBa4CrBourR@redhat.com> <318E2A13-A163-434B-B18A-8A260CD3BC27@gmail.com>
+ <Z-07WTw4PHHKhfxU@redhat.com>
+In-Reply-To: <Z-07WTw4PHHKhfxU@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 2 May 2025 17:48:02 +0100
+X-Gm-Features: ATxdqUGP4hgFxPc-D-fAywPIfuF2mfKE4VajHVlMt_HICWPwsOAT2kZ0nB7tC3Q
+Message-ID: <CAFEAcA-_eaPF16f5rBhPar_kHpW49JZ4fQNPGUtd3qbNs+ktJA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] rust/hw/char/pl011/src/device: Implement logging
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.644,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,230 +100,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+On Wed, 2 Apr 2025 at 14:28, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
+wrote:
+> On Wed, Apr 02, 2025 at 09:33:16AM +0000, Bernhard Beschow wrote:
+> > Am 31. M=C3=A4rz 2025 09:18:05 UTC schrieb "Daniel P. Berrang=C3=A9" <b=
+errange@redhat.com>:
+> > >General conceptual question .....  I've never understood what the divi=
+ding
+> > >line is between use of 'qemu_log_mask' and trace points.
+> >
+> > I *think* it's the perspective: If you want to see any issues, regardle=
+ss
+> > of which device, use the -l option, i.e. qemu_log_mask(). If, however,
+> > you want to see what a particular device does, use tracepoints.
+>
+> I guess I'd say that the latter ought to be capable of satisfying the
+> former use case too, given a suitable trace point selection. If it
+> can't, then perhaps that's telling us the way we select trace points
+> is insufficiently expressive ?
 
-The various logical migration channels don't have a
-standardized way of advertising themselves and their
-connections may be seen out of order by the migration
-destination. When a new connection arrives, the incoming
-migration currently make use of heuristics to determine
-which channel it belongs to.
+Yeah; you can turn on and off a tracepoint, and you can select
+them by wildcard, but there's no categorization of them
+(into eg "this is basically the equivalent of a debug printf"
+vs "this is something that is a guest error you probably
+want to know about"). There's also no way to say "turn on
+this logging with one switch, and it will print multiple lines
+or more than one thing" (at least not in the spirit of what
+the tracepoint API expects; you could have a trace_in_asm
+tracepoint that took a "%s" and output whatever you liked as
+the string, of course). And debug-logging is more documented:
+'-d help' shows what you can turn on and off and has at least
+a brief description of what it is you're getting. For tracepoints
+you're hoping that the name is vaguely descriptive and also
+hoping that the device/subsystem/etc named its tracepoints in
+a way that lets you usefully wildcard them.
 
-The next few patches will need to change how the multifd
-and postcopy capabilities interact and that affects the
-channel discovery heuristic.
+Also, the qemu_log() logging assumes "we're sending text to
+a logfile, we can format e.g. register dumps and disassembly
+as arbitrary laid out plaintext". That's fine if your tracepoint
+backend is also "we just send the text to a logfile/etc", but
+I don't know if all of the tracepoint backends would be so happy
+with that.
 
-Refactor the channel discovery heuristic to make it less
-opaque and simplify the subsequent patches.
-
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Message-ID: <20250411114534.3370816-3-ppandit@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/migration.c | 130 +++++++++++++++++++++++-------------------
- 1 file changed, 70 insertions(+), 60 deletions(-)
-
-diff --git a/migration/migration.c b/migration/migration.c
-index 54fce997aa..f18cadcc5e 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -95,6 +95,9 @@ enum mig_rp_message_type {
-     MIG_RP_MSG_MAX
- };
- 
-+/* Migration channel types */
-+enum { CH_MAIN, CH_MULTIFD, CH_POSTCOPY };
-+
- /* When we add fault tolerance, we could have several
-    migrations at once.  For now we don't need to add
-    dynamic creation of migration */
-@@ -941,9 +944,8 @@ static void migration_incoming_setup(QEMUFile *f)
- {
-     MigrationIncomingState *mis = migration_incoming_get_current();
- 
--    if (!mis->from_src_file) {
--        mis->from_src_file = f;
--    }
-+    assert(!mis->from_src_file);
-+    mis->from_src_file = f;
-     qemu_file_set_blocking(f, false);
- }
- 
-@@ -995,28 +997,19 @@ void migration_fd_process_incoming(QEMUFile *f)
-     migration_incoming_process();
- }
- 
--/*
-- * Returns true when we want to start a new incoming migration process,
-- * false otherwise.
-- */
--static bool migration_should_start_incoming(bool main_channel)
-+static bool migration_has_main_and_multifd_channels(void)
- {
--    /* Multifd doesn't start unless all channels are established */
--    if (migrate_multifd()) {
--        return migration_has_all_channels();
-+    MigrationIncomingState *mis = migration_incoming_get_current();
-+    if (!mis->from_src_file) {
-+        /* main channel not established */
-+        return false;
-     }
- 
--    /* Preempt channel only starts when the main channel is created */
--    if (migrate_postcopy_preempt()) {
--        return main_channel;
-+    if (migrate_multifd() && !multifd_recv_all_channels_created()) {
-+        return false;
-     }
- 
--    /*
--     * For all the rest types of migration, we should only reach here when
--     * it's the main channel that's being created, and we should always
--     * proceed with this channel.
--     */
--    assert(main_channel);
-+    /* main and all multifd channels are established */
-     return true;
- }
- 
-@@ -1025,59 +1018,81 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
-     MigrationIncomingState *mis = migration_incoming_get_current();
-     Error *local_err = NULL;
-     QEMUFile *f;
--    bool default_channel = true;
-+    uint8_t channel;
-     uint32_t channel_magic = 0;
-     int ret = 0;
- 
--    if (migrate_multifd() && !migrate_mapped_ram() &&
--        !migrate_postcopy_ram() &&
--        qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
--        /*
--         * With multiple channels, it is possible that we receive channels
--         * out of order on destination side, causing incorrect mapping of
--         * source channels on destination side. Check channel MAGIC to
--         * decide type of channel. Please note this is best effort, postcopy
--         * preempt channel does not send any magic number so avoid it for
--         * postcopy live migration. Also tls live migration already does
--         * tls handshake while initializing main channel so with tls this
--         * issue is not possible.
--         */
--        ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
--                                          sizeof(channel_magic), errp);
-+    if (!migration_has_main_and_multifd_channels()) {
-+        if (qio_channel_has_feature(ioc, QIO_CHANNEL_FEATURE_READ_MSG_PEEK)) {
-+            /*
-+             * With multiple channels, it is possible that we receive channels
-+             * out of order on destination side, causing incorrect mapping of
-+             * source channels on destination side. Check channel MAGIC to
-+             * decide type of channel. Please note this is best effort,
-+             * postcopy preempt channel does not send any magic number so
-+             * avoid it for postcopy live migration. Also tls live migration
-+             * already does tls handshake while initializing main channel so
-+             * with tls this issue is not possible.
-+             */
-+            ret = migration_channel_read_peek(ioc, (void *)&channel_magic,
-+                                              sizeof(channel_magic), errp);
-+            if (ret != 0) {
-+                return;
-+            }
- 
--        if (ret != 0) {
-+            channel_magic = be32_to_cpu(channel_magic);
-+            if (channel_magic == QEMU_VM_FILE_MAGIC) {
-+                channel = CH_MAIN;
-+            } else if (channel_magic == MULTIFD_MAGIC) {
-+                assert(migrate_multifd());
-+                channel = CH_MULTIFD;
-+            } else if (!mis->from_src_file &&
-+                        mis->state == MIGRATION_STATUS_POSTCOPY_PAUSED) {
-+                /* reconnect main channel for postcopy recovery */
-+                channel = CH_MAIN;
-+            } else {
-+                error_setg(errp, "unknown channel magic: %u", channel_magic);
-+                return;
-+            }
-+        } else if (mis->from_src_file && migrate_multifd()) {
-+            /*
-+             * Non-peekable channels like tls/file are processed as
-+             * multifd channels when multifd is enabled.
-+             */
-+            channel = CH_MULTIFD;
-+        } else if (!mis->from_src_file) {
-+            channel = CH_MAIN;
-+        } else {
-+            error_setg(errp, "non-peekable channel used without multifd");
-             return;
-         }
--
--        default_channel = (channel_magic == cpu_to_be32(QEMU_VM_FILE_MAGIC));
-     } else {
--        default_channel = !mis->from_src_file;
-+        assert(migrate_postcopy_preempt());
-+        channel = CH_POSTCOPY;
-     }
- 
-     if (multifd_recv_setup(errp) != 0) {
-         return;
-     }
- 
--    if (default_channel) {
-+    if (channel == CH_MAIN) {
-         f = qemu_file_new_input(ioc);
-         migration_incoming_setup(f);
--    } else {
-+    } else if (channel == CH_MULTIFD) {
-         /* Multiple connections */
--        assert(migration_needs_multiple_sockets());
--        if (migrate_multifd()) {
--            multifd_recv_new_channel(ioc, &local_err);
--        } else {
--            assert(migrate_postcopy_preempt());
--            f = qemu_file_new_input(ioc);
--            postcopy_preempt_new_channel(mis, f);
--        }
-+        multifd_recv_new_channel(ioc, &local_err);
-         if (local_err) {
-             error_propagate(errp, local_err);
-             return;
-         }
-+    } else if (channel == CH_POSTCOPY) {
-+        assert(!mis->postcopy_qemufile_dst);
-+        f = qemu_file_new_input(ioc);
-+        postcopy_preempt_new_channel(mis, f);
-+        return;
-     }
- 
--    if (migration_should_start_incoming(default_channel)) {
-+    if (migration_has_main_and_multifd_channels()) {
-         /* If it's a recovery, we're done */
-         if (postcopy_try_recover()) {
-             return;
-@@ -1094,18 +1109,13 @@ void migration_ioc_process_incoming(QIOChannel *ioc, Error **errp)
-  */
- bool migration_has_all_channels(void)
- {
--    MigrationIncomingState *mis = migration_incoming_get_current();
--
--    if (!mis->from_src_file) {
-+    if (!migration_has_main_and_multifd_channels()) {
-         return false;
-     }
- 
--    if (migrate_multifd()) {
--        return multifd_recv_all_channels_created();
--    }
--
--    if (migrate_postcopy_preempt()) {
--        return mis->postcopy_qemufile_dst != NULL;
-+    MigrationIncomingState *mis = migration_incoming_get_current();
-+    if (migrate_postcopy_preempt() && !mis->postcopy_qemufile_dst) {
-+        return false;
-     }
- 
-     return true;
--- 
-2.48.1
-
+thanks
+-- PMM
 
