@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E31BDC369DC
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:06:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44E9CC3ABA9
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAgiv-0002HV-1a; Thu, 01 May 2025 23:06:01 -0400
+	id 1uAgiK-0001MB-29; Thu, 01 May 2025 23:05:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uAgit-0002Fo-Gq; Thu, 01 May 2025 23:05:59 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1uAgiG-0001Lf-9B; Thu, 01 May 2025 23:05:21 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uAgir-0000mA-OA; Thu, 01 May 2025 23:05:59 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-73c17c770a7so2376638b3a.2; 
- Thu, 01 May 2025 20:05:56 -0700 (PDT)
+ id 1uAgiC-00089g-R5; Thu, 01 May 2025 23:05:20 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-739525d4e12so1641171b3a.3; 
+ Thu, 01 May 2025 20:05:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746155155; x=1746759955; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746155113; x=1746759913; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rbWiZk9FIuTQk1R1l7yjGMAZNpLJl/v15pcW+S5JT5Q=;
- b=D7KdES1SV5TQoe4833/Slu/C6paTJmHrRRxXjcnMgOgBM37UzsCIM4+7jMXxWIntYv
- TkV1UFPyNGBlWvPkH2nVwkH3boicUTzzQu0Gj/NJgFSpWojoT5oGc08Sg1k6nZBu7pzP
- y7l4KKFyATniBM8dP81APZ5tP9m92aQITn0R7I0NaxOr8DeVQ9jZ1fc5JW9JIUiO88dd
- 1sxyu0BjgoQDmJSNPbUJf9bVGK1vRVrazubEAYKaYhCz8EkYzJf1RcP9w3ofik8uDK3F
- EBoWS7aHXzXFfZzex0qYRmFalxwBKnE9lqBzpB1MNZH+7ytS55wsEbBTTN/pf9d15liC
- noxw==
+ bh=W77vlivYJ42VB0S6zdFNj4APmV0zHeYCYhnqX6BBAyE=;
+ b=WMfdRQaeakMvJFfyWsbDryd8ZMVxXr1xAHusW1GjOd6YqE43YFVQ7lxY7YjZgqr7tB
+ 2RKpvFuWWhAy0Bs6GODfBiQMU8IbU4/D0xoY3hxB/1LdLUSwrKMBKZlWOnPqQhI4YKcX
+ eyFMVMDYA2PBNCvEkSlz0dbEklO0CHoARjNe8YL8Pyhi/5TC9nEzqL9ioHFYcGS1Wj2j
+ yPAU3PwmqxuCCW3u671/EitCLznEg15fEXHo37fFi1J8UVkR2yYcvdF+eghLh7oEbsLl
+ KQvJMZ+pVQo0y/OtEaX8KMJpUbXuf1Yjb7uBsezhkKxHXj6rXsF0X+QfYhkZhGHeRMAL
+ TxBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746155155; x=1746759955;
+ d=1e100.net; s=20230601; t=1746155113; x=1746759913;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rbWiZk9FIuTQk1R1l7yjGMAZNpLJl/v15pcW+S5JT5Q=;
- b=RN6Xqjk/QcHgLlQvQfM9IhWh53AUlyxa3LSdx5fUWqY3jv4o3WZPqdRjzmhuDxExTn
- ddFTjZncLkqes488kdPAychpMdvno6yQv3k6/aE/xOcrHLvGosjiu5uymdwTZk883NIu
- VMGcPQWGHTw6Yrct/X7cbTfB5thPyM+BlnBMAoKh78Ax1r3VbJoxaMOPghi/HrT2VRzw
- UG5x2p9tVowST+mLhFoSDIm2W+2Wz+av35ZVnwaBwUszzzh8LL4hYZfqpfXBTV4rfHJ/
- sGDJo/jHOIrv4V929z97Go4MErHajtqeMX6vnOl1pHK5+gMvz7LubY6Jd7Gt3GjmpdWh
- LiQQ==
+ bh=W77vlivYJ42VB0S6zdFNj4APmV0zHeYCYhnqX6BBAyE=;
+ b=igJ6Y4to8Taqb0VVVt5Zmn4aan4DjWVfnfpPqEvEA8kOMv7zuFl53eZ6WNm5rujP2m
+ g54BpVgmCekngrcHcNCzBJrUN3wFH1YjwLKgUKiDBjXGlfcdn0+ggvMw4myTKvFUgwy/
+ 3+U9MGitNDrN6AdMNowpbz9Hmrd6/cs4Ui14jIcMj0IXU7PQRt/h326y9WHWsf4Ocxas
+ XsCTv2w8IM0pfxIC0B28ou+oKU2EZXuCaXzMVirvoX6n0IACYGvuv56owIf61FGToQfo
+ Ey9id7DIcKsQATA4OdXjqtjEEJmj6+NWs73BixiDgWuOAo3hzi/QTCoy7tJNl7vaF85y
+ 15yQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4xnDJSJaiGMQgOWtwX8gMwyvsaBktxViccEQEwfVegcXlyovbIuZNPSqWzseOtcDXe2dbb+Wfb8NG@nongnu.org,
- AJvYcCXZZJ3jXhi/KnDF3m3Bkf0AOMRZqK2o0jWwGX8zFDDNOm0Qff0vQj1wsSevmQaDvjCGhDphyN9hhjU=@nongnu.org
-X-Gm-Message-State: AOJu0YyrnHOk1QoRc71evlpuwOQeLqWAQUEqmspleK+RDzZrEd/gkkgu
- Sw04WhB2K6QNGxcjkiEkkzs3VbUKOFjizS6m420+sd1Ax7qqdTe4/gwV5w==
-X-Gm-Gg: ASbGncsbneI6E6lQlOPgzDquCGlrA9ehBpbUfyagKgoHZBOQ7XeIKDVI1juXgUQJtTl
- gREqKYkfl/j0ul4KcZoqU00SS3tyk9kBSFv1oHHcvkqMBmxBs1iM2ITnC9GRMe2muEQzuTghYLU
- lSbnADm/Bj04VxwDF0wj32W8KIUUfuQWtYtfEtDR/qxn7+tuEEJklDSHhqHVJoSM56ajqsmWKO0
- 0BPhLV1G3u/Qelt8VuwRyoOoQCgHeAKIZVNTimYlKVGaVLWNPCM5OCuoKUnOWJOY9yjX4oR4Ami
- JzwV8Co+PAmxU41grXCYGbvRRa9EhPzmrLeJ83D0ZxXDhVXAWunpj8c=
-X-Google-Smtp-Source: AGHT+IEAIMZrsKspe0rfYw8VBj6Q0CSBkdZtaWfOdr9njWtGSnLTMAaJKA7qd7+jMFpKbKZihFi2BQ==
-X-Received: by 2002:a05:6a20:d50a:b0:1f5:8d91:293a with SMTP id
- adf61e73a8af0-20ce03ee7bemr2173969637.41.1746155155059; 
- Thu, 01 May 2025 20:05:55 -0700 (PDT)
+ AJvYcCVPptWM8m/datVtQAWPptZC9Jf/4z+3S3RwWzNDdweuxCcoIP9xFL0jADyIpjgCz5HjRRMoUsj00mU=@nongnu.org,
+ AJvYcCWPQavb3SXEIcSzT3xJ6Zk4OpQuOkMj3KhWeLzklgEttmbfoh3ki49NVkqa1kbaLkp+kZjHEtfHievl@nongnu.org
+X-Gm-Message-State: AOJu0YwstvgfBFjTvkCFsC2yRzaiYSb705cQ3wknDBBSxNGAdsjd/82J
+ VtbC/K7iHVPjTT6Jk9mzwFs4XpNM2FxYMvRMU81am8dB3ctaK0lvmxNuQg==
+X-Gm-Gg: ASbGncuFMoQjqB0wIwh4efwIg9CuPQCqDh75C+BG/nSZ3qUlZTlXYlWXCaUzzoAIhIr
+ zO73EilxUeMHkFbwc0Fx0lJIupr8Mgw4lIV7bWitgPyEwZSCpUmmoSWS/iIYY9gXr37TLDNVQx/
+ SYepeXrEMjsA3hQI6P77Ms0IPY0lFDc9EDrN+fKBXxU+LpbRxUnsPpEq4QksWDnYriC/+tgboNP
+ FrjB3ZPnw4wXQys18heJ2b5aCTCeNnQRfi7tL/MUwA1D2w/tcROBPvZZn2Bo5UvD//NZ1Ek6pAd
+ WUOyYjCpscr+YZ6ENiwuKMCae62r6aVCzTsd7ikhIQGQ
+X-Google-Smtp-Source: AGHT+IH7vM94N//YGGTTZRY6IMwqmnn4tB75npsy3PW818+r0wUdbnicD+dmvvYB+H5xSw/eUY53Aw==
+X-Received: by 2002:a05:6a20:939d:b0:1f5:6e71:e45 with SMTP id
+ adf61e73a8af0-20cdfee995bmr1880681637.27.1746155113434; 
+ Thu, 01 May 2025 20:05:13 -0700 (PDT)
 Received: from wheely.local0.net ([220.253.99.94])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74059020932sm463382b3a.92.2025.05.01.20.05.49
+ d2e1a72fcca58-74059020932sm463382b3a.92.2025.05.01.20.05.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 20:05:54 -0700 (PDT)
+ Thu, 01 May 2025 20:05:12 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -74,16 +74,18 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-block@nongnu.org, qemu-ppc@nongnu.org
-Subject: [PATCH v5 10/11] qtest/libqos/pci: Fix qpci_msix_enable sharing bar0
-Date: Fri,  2 May 2025 13:04:44 +1000
-Message-ID: <20250502030446.88310-11-npiggin@gmail.com>
+Subject: [PATCH v5 03/11] tests/qtest: Add libqos function for testing msix
+ interrupt status
+Date: Fri,  2 May 2025 13:04:37 +1000
+Message-ID: <20250502030446.88310-4-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250502030446.88310-1-npiggin@gmail.com>
 References: <20250502030446.88310-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,109 +108,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Devices where the MSI-X addresses are shared with other MMIO on BAR0
-can not use msi_enable because it unmaps and remaps BAR0, which
-interferes with device MMIO mappings. xhci-nec is one such device we
-would like to test with msix.
+This function is duplicated 3 times, with more potential future users.
+Factor it into libqos, using qtest_memset instead of qtest_writel to
+clear the message just because that looks nicer with the qtest_memread
+used to read it.
 
-Use the BAR iomap tracking structure introduced in the previous change
-to have qpci_misx_enable() use existing iomaps if msix bars are
-already mapped.
-
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- tests/qtest/libqos/pci.h |  1 +
- tests/qtest/libqos/pci.c | 40 ++++++++++++++++++++++++++++++++++------
- 2 files changed, 35 insertions(+), 6 deletions(-)
+ tests/qtest/libqos/pci.h               |  2 ++
+ tests/qtest/libqos/pci.c               | 48 ++++++++++++++++++++++++++
+ tests/qtest/libqos/virtio-pci-modern.c | 31 +++--------------
+ tests/qtest/libqos/virtio-pci.c        | 40 ++++-----------------
+ 4 files changed, 62 insertions(+), 59 deletions(-)
 
 diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
-index a51bf60620f..852d4a85f6f 100644
+index 83896145235..9f8f154c301 100644
 --- a/tests/qtest/libqos/pci.h
 +++ b/tests/qtest/libqos/pci.h
-@@ -74,6 +74,7 @@ struct QPCIDevice
-     bool bars_mapped[QPCI_NUM_REGIONS];
-     QPCIBar bars[QPCI_NUM_REGIONS];
-     bool msix_enabled;
-+    bool msix_table_bar_iomap, msix_pba_bar_iomap;
-     QPCIBar msix_table_bar, msix_pba_bar;
-     uint64_t msix_table_off, msix_pba_off;
- };
+@@ -92,6 +92,8 @@ void qpci_msix_enable(QPCIDevice *dev);
+ void qpci_msix_disable(QPCIDevice *dev);
+ bool qpci_msix_pending(QPCIDevice *dev, uint16_t entry);
+ bool qpci_msix_masked(QPCIDevice *dev, uint16_t entry);
++bool qpci_msix_test_interrupt(QPCIDevice *dev, uint32_t msix_entry,
++                              uint64_t msix_addr, uint32_t msix_data);
+ uint16_t qpci_msix_table_size(QPCIDevice *dev);
+ 
+ uint8_t qpci_config_readb(QPCIDevice *dev, uint8_t offset);
 diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
-index 694f1458f46..cc83dcc163a 100644
+index a59197b9922..773fd1fb6cf 100644
 --- a/tests/qtest/libqos/pci.c
 +++ b/tests/qtest/libqos/pci.c
-@@ -274,15 +274,21 @@ void qpci_msix_enable(QPCIDevice *dev)
- 
-     table = qpci_config_readl(dev, addr + PCI_MSIX_TABLE);
-     bir_table = table & PCI_MSIX_FLAGS_BIRMASK;
--    dev->msix_table_bar = qpci_iomap(dev, bir_table, NULL);
-+    if (dev->bars_mapped[bir_table]) {
-+        dev->msix_table_bar = dev->bars[bir_table];
-+    } else {
-+        dev->msix_table_bar_iomap = true;
-+        dev->msix_table_bar = qpci_iomap(dev, bir_table, NULL);
-+    }
-     dev->msix_table_off = table & ~PCI_MSIX_FLAGS_BIRMASK;
- 
-     table = qpci_config_readl(dev, addr + PCI_MSIX_PBA);
-     bir_pba = table & PCI_MSIX_FLAGS_BIRMASK;
--    if (bir_pba != bir_table) {
--        dev->msix_pba_bar = qpci_iomap(dev, bir_pba, NULL);
-+    if (dev->bars_mapped[bir_pba]) {
-+        dev->msix_pba_bar = dev->bars[bir_pba];
-     } else {
--        dev->msix_pba_bar = dev->msix_table_bar;
-+        dev->msix_pba_bar_iomap = true;
-+        dev->msix_pba_bar = qpci_iomap(dev, bir_pba, NULL);
+@@ -351,6 +351,54 @@ bool qpci_msix_masked(QPCIDevice *dev, uint16_t entry)
      }
-     dev->msix_pba_off = table & ~PCI_MSIX_FLAGS_BIRMASK;
+ }
  
-@@ -293,6 +299,7 @@ void qpci_msix_disable(QPCIDevice *dev)
- {
-     uint8_t addr;
-     uint16_t val;
-+    uint32_t table;
- 
-     g_assert(dev->msix_enabled);
-     addr = qpci_find_capability(dev, PCI_CAP_ID_MSIX, 0);
-@@ -301,10 +308,31 @@ void qpci_msix_disable(QPCIDevice *dev)
-     qpci_config_writew(dev, addr + PCI_MSIX_FLAGS,
-                                                 val & ~PCI_MSIX_FLAGS_ENABLE);
- 
--    if (dev->msix_pba_bar.addr != dev->msix_table_bar.addr) {
-+    if (dev->msix_pba_bar_iomap) {
-+        dev->msix_pba_bar_iomap = false;
-         qpci_iounmap(dev, dev->msix_pba_bar);
-+    } else {
-+        /*
-+         * If we had reused an existing iomap, ensure it is still mapped
-+         * otherwise it would be a bug if it were unmapped before msix is
-+         * disabled. A refcounting iomap implementation could avoid this
-+         * issue entirely, but let's wait until that's needed.
-+         */
-+        uint8_t bir_pba;
-+        table = qpci_config_readl(dev, addr + PCI_MSIX_PBA);
-+        bir_pba = table & PCI_MSIX_FLAGS_BIRMASK;
-+        g_assert(dev->bars_mapped[bir_pba]);
++/**
++ * qpci_msix_test_interrupt - test whether msix interrupt has been raised
++ * @dev: PCI device
++ * @msix_entry: msix entry to test
++ * @msix_addr: address of msix message
++ * @msix_data: expected msix message payload
++ *
++ * This tests whether the msix source has raised an interrupt. If the msix
++ * entry is masked, it tests the pending bit array for a pending message
++ * and @msix_addr and @msix_data need not be supplied. If the entry is not
++ * masked, it tests the address for corresponding data to see if the interrupt
++ * fired.
++ *
++ * Note that this does not lower the interrupt, however it does clear the
++ * msix message address to 0 if it is found set. This must be called with
++ * the msix address memory containing either 0 or the value of data, otherwise
++ * it will assert on incorrect message.
++ */
++bool qpci_msix_test_interrupt(QPCIDevice *dev, uint32_t msix_entry,
++                              uint64_t msix_addr, uint32_t msix_data)
++{
++    uint32_t data;
++
++    g_assert(dev->msix_enabled);
++    g_assert_cmpint(msix_entry, !=, -1);
++
++    if (qpci_msix_masked(dev, msix_entry)) {
++        /* No ISR checking should be done if masked, but read anyway */
++        return qpci_msix_pending(dev, msix_entry);
 +    }
 +
-+    if (dev->msix_table_bar_iomap) {
-+        dev->msix_table_bar_iomap = false;
-+        qpci_iounmap(dev, dev->msix_table_bar);
-+    } else {
-+        uint8_t bir_table;
-+        table = qpci_config_readl(dev, addr + PCI_MSIX_TABLE);
-+        bir_table = table & PCI_MSIX_FLAGS_BIRMASK;
-+        g_assert(dev->bars_mapped[bir_table]);
-     }
--    qpci_iounmap(dev, dev->msix_table_bar);
++    g_assert_cmpint(msix_addr, !=, 0);
++    g_assert_cmpint(msix_data, !=, 0);
++
++    /* msix payload is written in little-endian format */
++    qtest_memread(dev->bus->qts, msix_addr, &data, 4);
++    data = le32_to_cpu(data);
++    if (data == 0) {
++        return false;
++    }
++
++    /* got a message, ensure it matches expected value then clear it. */
++    g_assert_cmphex(data, ==, msix_data);
++    qtest_memset(dev->bus->qts, msix_addr, 0, 4);
++
++    return true;
++}
++
+ uint16_t qpci_msix_table_size(QPCIDevice *dev)
+ {
+     uint8_t addr;
+diff --git a/tests/qtest/libqos/virtio-pci-modern.c b/tests/qtest/libqos/virtio-pci-modern.c
+index 5dae41e6d74..0d7d89bbcb1 100644
+--- a/tests/qtest/libqos/virtio-pci-modern.c
++++ b/tests/qtest/libqos/virtio-pci-modern.c
+@@ -126,28 +126,6 @@ static void set_status(QVirtioDevice *d, uint8_t status)
+                           status);
+ }
  
-     dev->msix_enabled = 0;
-     dev->msix_table_off = 0;
+-static bool get_msix_status(QVirtioPCIDevice *dev, uint32_t msix_entry,
+-                            uint32_t msix_addr, uint32_t msix_data)
+-{
+-    uint32_t data;
+-
+-    g_assert_cmpint(msix_entry, !=, -1);
+-    if (qpci_msix_masked(dev->pdev, msix_entry)) {
+-        /* No ISR checking should be done if masked, but read anyway */
+-        return qpci_msix_pending(dev->pdev, msix_entry);
+-    }
+-
+-    qtest_memread(dev->pdev->bus->qts, msix_addr, &data, 4);
+-    data = le32_to_cpu(data);
+-    if (data == 0) {
+-        return false;
+-    }
+-    /* got a message, ensure it matches expected value then clear it. */
+-    g_assert_cmphex(data, ==, msix_data);
+-    qtest_writel(dev->pdev->bus->qts, msix_addr, 0);
+-    return true;
+-}
+-
+ static bool get_queue_isr_status(QVirtioDevice *d, QVirtQueue *vq)
+ {
+     QVirtioPCIDevice *dev = container_of(d, QVirtioPCIDevice, vdev);
+@@ -155,8 +133,8 @@ static bool get_queue_isr_status(QVirtioDevice *d, QVirtQueue *vq)
+     if (dev->pdev->msix_enabled) {
+         QVirtQueuePCI *vqpci = container_of(vq, QVirtQueuePCI, vq);
+ 
+-        return get_msix_status(dev, vqpci->msix_entry, vqpci->msix_addr,
+-                               vqpci->msix_data);
++        return qpci_msix_test_interrupt(dev->pdev, vqpci->msix_entry,
++                                        vqpci->msix_addr, vqpci->msix_data);
+     }
+ 
+     return qpci_io_readb(dev->pdev, dev->bar, dev->isr_cfg_offset) & 1;
+@@ -167,8 +145,9 @@ static bool get_config_isr_status(QVirtioDevice *d)
+     QVirtioPCIDevice *dev = container_of(d, QVirtioPCIDevice, vdev);
+ 
+     if (dev->pdev->msix_enabled) {
+-        return get_msix_status(dev, dev->config_msix_entry,
+-                               dev->config_msix_addr, dev->config_msix_data);
++        return qpci_msix_test_interrupt(dev->pdev, dev->config_msix_entry,
++                                        dev->config_msix_addr,
++                                        dev->config_msix_data);
+     }
+ 
+     return qpci_io_readb(dev->pdev, dev->bar, dev->isr_cfg_offset) & 2;
+diff --git a/tests/qtest/libqos/virtio-pci.c b/tests/qtest/libqos/virtio-pci.c
+index 76ea1f45ba9..ea8114e2438 100644
+--- a/tests/qtest/libqos/virtio-pci.c
++++ b/tests/qtest/libqos/virtio-pci.c
+@@ -122,25 +122,12 @@ static void qvirtio_pci_set_status(QVirtioDevice *d, uint8_t status)
+ static bool qvirtio_pci_get_queue_isr_status(QVirtioDevice *d, QVirtQueue *vq)
+ {
+     QVirtioPCIDevice *dev = container_of(d, QVirtioPCIDevice, vdev);
+-    QVirtQueuePCI *vqpci = (QVirtQueuePCI *)vq;
+-    uint32_t data;
+ 
+     if (dev->pdev->msix_enabled) {
+-        g_assert_cmpint(vqpci->msix_entry, !=, -1);
+-        if (qpci_msix_masked(dev->pdev, vqpci->msix_entry)) {
+-            /* No ISR checking should be done if masked, but read anyway */
+-            return qpci_msix_pending(dev->pdev, vqpci->msix_entry);
+-        } else {
+-            qtest_memread(dev->pdev->bus->qts, vqpci->msix_addr, &data, 4);
+-            data = le32_to_cpu(data);
+-            if (data == 0) {
+-                return false;
+-            }
+-            /* got a message, ensure it matches expected value then clear it. */
+-            g_assert_cmphex(data, ==, vqpci->msix_data);
+-            qtest_writel(dev->pdev->bus->qts, vqpci->msix_addr, 0);
+-            return true;
+-        }
++        QVirtQueuePCI *vqpci = (QVirtQueuePCI *)vq;
++
++        return qpci_msix_test_interrupt(dev->pdev, vqpci->msix_entry,
++                                        vqpci->msix_addr, vqpci->msix_data);
+     } else {
+         return qpci_io_readb(dev->pdev, dev->bar, VIRTIO_PCI_ISR) & 1;
+     }
+@@ -149,24 +136,11 @@ static bool qvirtio_pci_get_queue_isr_status(QVirtioDevice *d, QVirtQueue *vq)
+ static bool qvirtio_pci_get_config_isr_status(QVirtioDevice *d)
+ {
+     QVirtioPCIDevice *dev = container_of(d, QVirtioPCIDevice, vdev);
+-    uint32_t data;
+ 
+     if (dev->pdev->msix_enabled) {
+-        g_assert_cmpint(dev->config_msix_entry, !=, -1);
+-        if (qpci_msix_masked(dev->pdev, dev->config_msix_entry)) {
+-            /* No ISR checking should be done if masked, but read anyway */
+-            return qpci_msix_pending(dev->pdev, dev->config_msix_entry);
+-        } else {
+-            qtest_memread(dev->pdev->bus->qts, dev->config_msix_addr, &data, 4);
+-            data = le32_to_cpu(data);
+-            if (data == 0) {
+-                return false;
+-            }
+-            /* got a message, ensure it matches expected value then clear it. */
+-            g_assert_cmphex(data, ==, dev->config_msix_data);
+-            qtest_writel(dev->pdev->bus->qts, dev->config_msix_addr, 0);
+-            return true;
+-        }
++        return qpci_msix_test_interrupt(dev->pdev, dev->config_msix_entry,
++                                        dev->config_msix_addr,
++                                        dev->config_msix_data);
+     } else {
+         return qpci_io_readb(dev->pdev, dev->bar, VIRTIO_PCI_ISR) & 2;
+     }
 -- 
 2.47.1
 
