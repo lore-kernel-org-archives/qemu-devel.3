@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 083D8C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 10:36:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D770BC3ABBA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 10:36:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAnkz-0001Ir-G0; Fri, 02 May 2025 06:36:37 -0400
+	id 1uAnkw-00015V-K1; Fri, 02 May 2025 06:36:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1uAnk2-0008G2-Fi; Fri, 02 May 2025 06:35:39 -0400
+ id 1uAnk6-0008N8-Ku; Fri, 02 May 2025 06:35:43 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1uAnk0-0005yi-O3; Fri, 02 May 2025 06:35:38 -0400
+ id 1uAnk4-0006n4-Qj; Fri, 02 May 2025 06:35:42 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 2 May
@@ -32,10 +32,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <longzl2@lenovo.com>,
  <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>
-Subject: [PATCH v4 8/9] tests/function/aspeed: Add functional test for
- AST2700FC
-Date: Fri, 2 May 2025 18:34:44 +0800
-Message-ID: <20250502103449.3091642-9-steven_lee@aspeedtech.com>
+Subject: [PATCH v4 9/9] docs: Add support for ast2700fc machine
+Date: Fri, 2 May 2025 18:34:45 +0800
+Message-ID: <20250502103449.3091642-10-steven_lee@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250502103449.3091642-1-steven_lee@aspeedtech.com>
 References: <20250502103449.3091642-1-steven_lee@aspeedtech.com>
@@ -67,121 +66,115 @@ From:  Steven Lee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add functional test for AST2700-fc machine.
+- Updated Aspeed family boards list to include `ast2700fc`.
+- Added boot instructions for the `ast2700fc` machine.
+- Detailed the configuration and loading of firmware for the
+  Cortex-A35 and Cortex-M4 processors.
 
 Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-Change-Id: Ieced249cf471515a33f8f5f5386a2f58d431f2f9
+Change-Id: Id41312e9c7cf79bc55c6f24a87a7ad9993dc7261
 ---
- tests/functional/test_aarch64_aspeed.py | 83 +++++++++++++++++++++++++
- 1 file changed, 83 insertions(+)
+ docs/system/arm/aspeed.rst | 69 ++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 66 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index d02dc7991c..0a943b7c54 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -65,6 +65,28 @@ def do_ast2700_i2c_test(self):
-         exec_command_and_wait_for_pattern(self,
-             'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index 014545f444..58a8020eec 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -1,5 +1,5 @@
+-Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
+-==================================================================================================================================================================================================================================================================================================================================================================================================================
++Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``ast2700fc``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
++=================================================================================================================================================================================================================================================================================================================================================================================================================================
  
-+    def do_ast2700fc_ssp_test(self):
-+        self.vm.shutdown()
-+        self.vm.set_console(console_index=1)
-+        self.vm.launch()
-+
-+        exec_command_and_wait_for_pattern(self, '\012', 'ssp:~$')
-+        exec_command_and_wait_for_pattern(self, 'version',
-+                                          'Zephyr version 3.7.1')
-+        exec_command_and_wait_for_pattern(self, 'md 72c02000 1',
-+                                          '[72c02000] 06010103')
-+
-+    def do_ast2700fc_tsp_test(self):
-+        self.vm.shutdown()
-+        self.vm.set_console(console_index=2)
-+        self.vm.launch()
-+
-+        exec_command_and_wait_for_pattern(self, '\012', 'tsp:~$')
-+        exec_command_and_wait_for_pattern(self, 'version',
-+                                          'Zephyr version 3.7.1')
-+        exec_command_and_wait_for_pattern(self, 'md 72c02000 1',
-+                                          '[72c02000] 06010103')
-+
-     def start_ast2700_test(self, name):
-         num_cpu = 4
-         uboot_size = os.path.getsize(self.scratch_file(name,
-@@ -111,6 +133,57 @@ def start_ast2700_test_vbootrom(self, name):
-         self.do_test_aarch64_aspeed_sdk_start(
-                 self.scratch_file(name, 'image-bmc'))
+ The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
+ Aspeed evaluation boards. They are based on different releases of the
+@@ -255,6 +255,7 @@ etc.
+ AST2700 SoC based machines :
  
-+    def start_ast2700fc_test(self, name):
-+        ca35_core = 4
-+        uboot_size = os.path.getsize(self.scratch_file(name,
-+                                                       'u-boot-nodtb.bin'))
-+        uboot_dtb_load_addr = hex(0x400000000 + uboot_size)
-+
-+        load_images_list = [
-+            {
-+                'addr': '0x400000000',
-+                'file': self.scratch_file(name,
-+                                          'u-boot-nodtb.bin')
-+            },
-+            {
-+                'addr': str(uboot_dtb_load_addr),
-+                'file': self.scratch_file(name, 'u-boot.dtb')
-+            },
-+            {
-+                'addr': '0x430000000',
-+                'file': self.scratch_file(name, 'bl31.bin')
-+            },
-+            {
-+                'addr': '0x430080000',
-+                'file': self.scratch_file(name, 'optee',
-+                                          'tee-raw.bin')
-+            }
-+        ]
-+
-+        for load_image in load_images_list:
-+            addr = load_image['addr']
-+            file = load_image['file']
-+            self.vm.add_args('-device',
-+                             f'loader,force-raw=on,addr={addr},file={file}')
-+
-+        for i in range(ca35_core):
-+            self.vm.add_args('-device',
-+                             f'loader,addr=0x430000000,cpu-num={i}')
-+
-+        load_elf_list = {
-+            'ssp': self.scratch_file(name, 'zephyr-aspeed-ssp.elf'),
-+            'tsp': self.scratch_file(name, 'zephyr-aspeed-tsp.elf')
-+        }
-+
-+        for cpu_num, key in enumerate(load_elf_list, start=4):
-+            file = load_elf_list[key]
-+            self.vm.add_args('-device',
-+                             f'loader,file={file},cpu-num={cpu_num}')
-+
-+        self.do_test_aarch64_aspeed_sdk_start(
-+                self.scratch_file(name, 'image-bmc'))
-+
-+
-     def test_aarch64_ast2700_evb_sdk_v09_06(self):
-         self.set_machine('ast2700-evb')
+ - ``ast2700-evb``          Aspeed AST2700 Evaluation board (Cortex-A35)
++- ``ast2700fc``            Aspeed AST2700 Evaluation board (Cortex-A35 + Cortex-M4)
  
-@@ -136,5 +209,15 @@ def test_aarch64_ast2700a1_evb_sdk_vbootrom_v09_06(self):
-         self.verify_openbmc_boot_and_login('ast2700-default')
-         self.do_ast2700_i2c_test()
+ Supported devices
+ -----------------
+@@ -285,7 +286,6 @@ Supported devices
  
-+    def test_aarch64_ast2700fc_sdk_v09_06(self):
-+        self.set_machine('ast2700fc')
+ Missing devices
+ ---------------
+- * Coprocessor support
+  * PWM and Fan Controller
+  * Slave GPIO Controller
+  * Super I/O Controller
+@@ -353,6 +353,69 @@ specified path in the ${HOME} directory.
+ 
+   -bios ${HOME}/ast27x0_bootrom.bin
+ 
++Booting the ast2700fc machine
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 +
-+        self.archive_extract(self.ASSET_SDK_V906_AST2700A1)
-+        self.start_ast2700fc_test('ast2700-default')
-+        self.verify_openbmc_boot_and_login('ast2700-default')
-+        self.do_ast2700_i2c_test()
-+        self.do_ast2700fc_ssp_test()
-+        self.do_ast2700fc_tsp_test()
++AST2700 features four Cortex-A35 primary processors and two Cortex-M4 coprocessors.
++**ast2700-evb** machine focuses on emulating the four Cortex-A35 primary processors,
++**ast2700fc** machine extends **ast2700-evb** by adding support for the two Cortex-M4 coprocessors.
 +
- if __name__ == '__main__':
-     QemuSystemTest.main()
++Steps to boot the AST2700fc machine:
++
++1. Ensure you have the following AST2700A1 binaries available in a directory
++
++ * u-boot-nodtb.bin
++ * u-boot.dtb
++ * bl31.bin
++ * optee/tee-raw.bin
++ * image-bmc
++ * zephyr-aspeed-ssp.elf (for SSP firmware, CPU 5)
++ * zephyr-aspeed-tsp.elf (for TSP firmware, CPU 6)
++
++2. Execute the following command to start ``ast2700fc`` machine:
++
++.. code-block:: bash
++
++  IMGDIR=ast2700-default
++  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
++
++  $ qemu-system-aarch64 -M ast2700fc \
++       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
++       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
++       -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
++       -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
++       -device loader,cpu-num=0,addr=0x430000000 \
++       -device loader,cpu-num=1,addr=0x430000000 \
++       -device loader,cpu-num=2,addr=0x430000000 \
++       -device loader,cpu-num=3,addr=0x430000000 \
++       -drive file=${IMGDIR}/image-bmc,if=mtd,format=raw \
++       -device loader,file=${IMGDIR}/zephyr-aspeed-ssp.elf,cpu-num=4 \
++       -device loader,file=${IMGDIR}/zephyr-aspeed-tsp.elf,cpu-num=5 \
++       -serial pty -serial pty -serial pty \
++       -snapshot \
++       -S -nographic
++
++After launching QEMU, serial devices will be automatically redirected.
++Example output:
++
++.. code-block:: bash
++
++   char device redirected to /dev/pts/55 (label serial0)
++   char device redirected to /dev/pts/56 (label serial1)
++   char device redirected to /dev/pts/57 (label serial2)
++
++- serial0: Console for the four Cortex-A35 primary processors.
++- serial1 and serial2: Consoles for the two Cortex-M4 coprocessors.
++
++Use ``tio`` or another terminal emulator to connect to the consoles:
++
++.. code-block:: bash
++
++   $ tio /dev/pts/55
++   $ tio /dev/pts/56
++   $ tio /dev/pts/57
++
++
+ Aspeed minibmc family boards (``ast1030-evb``)
+ ==================================================================
+ 
 -- 
 2.34.1
 
