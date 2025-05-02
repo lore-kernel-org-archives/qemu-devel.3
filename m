@@ -4,86 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F58C369DC
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5BCEC3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:17:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAgiR-0001Ps-1u; Thu, 01 May 2025 23:05:31 -0400
+	id 1uAgts-0003mw-Ea; Thu, 01 May 2025 23:17:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uAgiP-0001OO-Ao; Thu, 01 May 2025 23:05:29 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAgtq-0003me-Ac
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:17:18 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uAgiN-00005E-Jo; Thu, 01 May 2025 23:05:29 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7376e311086so2381569b3a.3; 
- Thu, 01 May 2025 20:05:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAgto-0003Mb-Fd
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:17:18 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-7370a2d1981so1415760b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:17:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746155125; x=1746759925; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KUOflv3alOGiol4S47wnqGVZoQeo26ssH01OhsbUcno=;
- b=K/0JObhJUXGRz+3D7oMdSdwpZ1eHtrscyLuHL3dazYlJkg2nw/m04xOVFyhWvv/vDu
- VAbdsua7kDXxtBjfBeUB30eFa++cZJr/Co3b2zlW1TKsVGDboxfQvy7m2HlPKyO2xSsS
- J4vXT2sPCkPnh/VAs736kbSaC4fIvJfFinWIW3YVNAiPwjjuNoz1xm+tGK7S2kESDrPF
- 8KSPNoBF5+1w08+YFz7b49GLp6WsDGt3wFVlL9VC/q/c5t/oJv5kUOM/BePKNhYjg+fo
- EBM+wEnsU83cabruPyuT8emdq3UpYFDB0cx10FWSlQ2Ebp3EoCgAgQ+HBlmIDiERBMOL
- IPuQ==
+ d=gmail.com; s=20230601; t=1746155835; x=1746760635; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=OnIlsuN4O7XTcvAMwTRCN5XKFLcv4EJ2BiQJ59Gikn0=;
+ b=EhtnKiZgzQsLfOVqIbbfBF17n0t1IZKkTRw/P8fKRd/TW7z7vvsvyeXbmXcun+cjYF
+ YfCjyEAiEtIm8cVa6jrY76JZ+bxUvDUKmXEOkPTKiShtG5+6l8dTMZzmYAbPUi6WzoY/
+ Ls8UzbAA1LltlHu/pkMi1TfU/dxXARIi0eyCVpIBRnQTawX3hHWi3iwRGEK6VGiROhJN
+ wEdBdAJVgQYy3UHq1Z0vFN422akWDPgRHWoMmx63F+VMO4Dd3Vo2+K/9H39JrvCtnBlw
+ MRAbyNsr2Zms2oAQ+SyjwEz7cfzuZVWU1c5MQDg19PzZIuvdVyMKqYl3eUFn0bwES40x
+ JM2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746155125; x=1746759925;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KUOflv3alOGiol4S47wnqGVZoQeo26ssH01OhsbUcno=;
- b=s+oxEpqtj7CvyF1EEwrli0GiO2VHHQ6iCTtBeRdF6BWteiboF5+2QjAcQUQcSsiTNd
- QM8aGJ+/RX1xBCq5dQ/oCiEq0lc+OHRbwKSc2eSsNiQE0ISWN9lBH4uBK2ChgTLxk5lC
- X9iDRVMDr/SbMKE6zunVa3vbfZlVUaCWZfWEdxx5gfTx5GIz6UN4pY5dNcd+AUgQwpkg
- pOl6e4/UwrpGb0/5460crfVdL7oIdDh5js0FB0xpmM8RJG91TiLYHe7wvQ/mPVdiuquB
- 9EKjVFMWErUMve41Uh8KEfTEx6tuPhM+KIE37c2ul3Ff9wBu0GMhz5XM7wmeYFfV2s9b
- eJYg==
+ d=1e100.net; s=20230601; t=1746155835; x=1746760635;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OnIlsuN4O7XTcvAMwTRCN5XKFLcv4EJ2BiQJ59Gikn0=;
+ b=mxKD5Tn3VSkdmJakW4PpCxObP2E634YfwKkaGY/Xyle53rwUif4S9Hk+8EPGHjTSyC
+ cm6J3KZxou4fMiYG1yUC3i3lunCEFeTH7AoQZWYWKOS/rp0UFnrrfsWGeOjaHk10RGsR
+ ReD4DvwwIzke4eToxuSrub2XeVrMXLbQcxR0C7RCLPxQQIn9uLQ+KYuTjF00MhHU7+xa
+ h4KwBpPvkFL3KHLoNP3R7By9PavYqHs3VffMVM0cwsFRL9LWu8oHevEysQxh4AKeWwM9
+ l6+6zskLfix3n20tSjMMPXBnExU1u4Xwy3oJFGZQvjHEO48ADkMsxlQP1PA7JiqutSKO
+ DwAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUTAKeBYoSt5JaumS7y66j03ABqj69u7/JAKWTYiLcIH+t1XW5SQXz+xUfchAL8HX2HIc05FuQnuX84@nongnu.org,
- AJvYcCUZ4ibpN7sd2cquLKd7p8LdpRno3uGcYJ3odyOhOSAdKnSlf+B6OP2+d7mpO6DvOp+iDS9lxhPgO68=@nongnu.org
-X-Gm-Message-State: AOJu0YxV5yPHec4kM0fwdnqohxo05Po87Cr6kC5j6JMNW/nsoDWwE8mx
- jfuwZeYw+9pZ4WgkPcpTh+hZvBGyMvAF5mH4XGVMunNNK79zSQY4KnKdVg==
-X-Gm-Gg: ASbGncsbJD277f7hkWUWS3j7sXeh8adLeQ/kaqiuXvY1fMMn5/OILOkpsGQSmmCIapd
- unoI4Xqd0q97bcdipeHONSSMmZUk3tDvDJLUOM/zlmFlJYENg1CAoIsfyMQKnRrnm7Xbm0XjnVH
- EYf1ontlBJJPlsUR8mX0ECLANgsl8lKi+uf6ecokMFuM63StnoZIrOdaBSvmcyVP37UlEqI2QgC
- vTA3TVG/wzElue170NDB6yZY9hfc8v+4h+Fk5OnGOK6rvMOBHKtnAxsWPn3ANPqzqGKPikSUReT
- tEkDwT2mkerQ7YluuZiJ4NcJGC2aGcgG3aw/X5/1BD5o
-X-Google-Smtp-Source: AGHT+IFzLp4UxAOXhR1w+7bk9AjQ9dY6f69C/9n9/xsAtdWM8nEWuYAej2Uv1ZNStxs+JuH4bdxqcw==
-X-Received: by 2002:a05:6a00:340c:b0:736:a8db:93b4 with SMTP id
- d2e1a72fcca58-7405890a9f3mr1874428b3a.2.1746155125203; 
- Thu, 01 May 2025 20:05:25 -0700 (PDT)
+ AJvYcCXKvrjunBCs7whLNtF5CA6ySip5oYuP+rEJ2xYqMm/Uz9sEHy2gNT7b7SF/Ow8lDokhkKTBcHIj6leL@nongnu.org
+X-Gm-Message-State: AOJu0YxYAL5atgHh068LytaNyP5kRJQbpP0m8unoEnQ1MBhzFNvlZBjC
+ AmmI+Y3HiDZSsU9CwZ9+gGQN9FjqjbRRprtnYUaDfvT36GIR/wrP
+X-Gm-Gg: ASbGncvu9Y9+oT1/fr2JS5Ci2l8sXB13Cx1+YdH1/dbvT/PJ59c0BYaQgwV4UVo5ZzH
+ +/X8O4L9uY6P8zedB24cZz56BCgKSv/DHoZx4+IU90jsNU1nSSctP5cj7ioE0sFHT88jw2qJUfj
+ eJOWIVeI9sMcH6ytTbY86noHIDbCrEvrrdQksI30+9TcaAAuulgchW6//+dspVeftxjbi9ca670
+ GeNPUWdwFc6UZRG+UC4HkwBvt0QC/OjIoYrhpeUUxzWb8a2FOAqb46WZze7PkXdS0HJEkdgDJpm
+ DFRH+7kR33vlzGTxRmx9M8OBlpIWvfRH754pTpAbwLnq
+X-Google-Smtp-Source: AGHT+IFPXdJSo0RL4DB3hllneCaBxxr8QoWyoqNRt53ABCHvQ9YKdCUQM3JOMa6Or1sTNDEhfUP1uA==
+X-Received: by 2002:a05:6a00:6ca9:b0:73e:2dc8:94f3 with SMTP id
+ d2e1a72fcca58-7405890ad0cmr1743529b3a.1.1746155834998; 
+ Thu, 01 May 2025 20:17:14 -0700 (PDT)
 Received: from wheely.local0.net ([220.253.99.94])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74059020932sm463382b3a.92.2025.05.01.20.05.19
+ d2e1a72fcca58-74058ded48fsm467883b3a.83.2025.05.01.20.17.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 20:05:24 -0700 (PDT)
+ Thu, 01 May 2025 20:17:14 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, Fabiano Rosas <farosas@suse.de>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, John Snow <jsnow@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org
-Subject: [PATCH v5 05/11] tests/qtest/ahci: unmap pci bar before reusing device
-Date: Fri,  2 May 2025 13:04:39 +1000
-Message-ID: <20250502030446.88310-6-npiggin@gmail.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v3 00/12] hw/e1000e|igb: interrupts and qtests fixes
+Date: Fri,  2 May 2025 13:16:52 +1000
+Message-ID: <20250502031705.100768-1-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250502030446.88310-1-npiggin@gmail.com>
-References: <20250502030446.88310-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,100 +100,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ahci-test double-maps the hba bar in the pending_callback test.
-Unmap it first, to keep iomaps balanced.
+Since v2:
+https://lore.kernel.org/qemu-devel/20250411043128.201289-1-npiggin@gmail.com/
 
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- tests/qtest/libqos/ahci.h |  2 ++
- tests/qtest/ahci-test.c   |  4 ++++
- tests/qtest/libqos/ahci.c | 11 +++++++++++
- 3 files changed, 17 insertions(+)
+Mostly fixed comments from Akihiko Odaki
 
-diff --git a/tests/qtest/libqos/ahci.h b/tests/qtest/libqos/ahci.h
-index a0487a1557d..f610bd32a5f 100644
---- a/tests/qtest/libqos/ahci.h
-+++ b/tests/qtest/libqos/ahci.h
-@@ -574,7 +574,9 @@ void ahci_clean_mem(AHCIQState *ahci);
- QPCIDevice *get_ahci_device(QTestState *qts, uint32_t *fingerprint);
- void free_ahci_device(QPCIDevice *dev);
- void ahci_pci_enable(AHCIQState *ahci);
-+void ahci_pci_disable(AHCIQState *ahci);
- void start_ahci_device(AHCIQState *ahci);
-+void stop_ahci_device(AHCIQState *ahci);
- void ahci_hba_enable(AHCIQState *ahci);
- 
- /* Port Management */
-diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-index e8aabfc13f5..36caa7b2999 100644
---- a/tests/qtest/ahci-test.c
-+++ b/tests/qtest/ahci-test.c
-@@ -198,6 +198,7 @@ static void ahci_shutdown(AHCIQState *ahci)
- {
-     QOSState *qs = ahci->parent;
- 
-+    ahci_pci_disable(ahci);
-     ahci_clean_mem(ahci);
-     free_ahci_device(ahci->dev);
-     g_free(ahci);
-@@ -1418,6 +1419,7 @@ static void test_reset(void)
-                                CMD_READ_DMA_EXT,
-                                CMD_WRITE_DMA_EXT);
-         ahci_set(ahci, AHCI_GHC, AHCI_GHC_HR);
-+        stop_ahci_device(ahci);
-         ahci_clean_mem(ahci);
-     }
- 
-@@ -1484,6 +1486,7 @@ static void test_reset_pending_callback(void)
-     sleep(1);
- 
-     /* Start again. */
-+    stop_ahci_device(ahci);
-     ahci_clean_mem(ahci);
-     ahci_pci_enable(ahci);
-     ahci_hba_enable(ahci);
-@@ -1502,6 +1505,7 @@ static void test_reset_pending_callback(void)
-     ahci_free(ahci, ptr1);
-     ahci_free(ahci, ptr2);
- 
-+    stop_ahci_device(ahci);
-     ahci_clean_mem(ahci);
- 
-     ahci_shutdown(ahci);
-diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
-index 34a75b7f43b..bd1994a9208 100644
---- a/tests/qtest/libqos/ahci.c
-+++ b/tests/qtest/libqos/ahci.c
-@@ -205,6 +205,11 @@ void ahci_pci_enable(AHCIQState *ahci)
- 
- }
- 
-+void ahci_pci_disable(AHCIQState *ahci)
-+{
-+    stop_ahci_device(ahci);
-+}
-+
- /**
-  * Map BAR5/ABAR, and engage the PCI device.
-  */
-@@ -217,6 +222,12 @@ void start_ahci_device(AHCIQState *ahci)
-     qpci_device_enable(ahci->dev);
- }
- 
-+void stop_ahci_device(AHCIQState *ahci)
-+{
-+    /* Unmap AHCI's ABAR */
-+    qpci_iounmap(ahci->dev, ahci->hba_bar);
-+}
-+
- /**
-  * Test and initialize the AHCI's HBA memory areas.
-  * Initialize and start any ports with devices attached.
+- e1000e change initial ITR as well as EITR
+- Preserve EITR writable bits
+- Use SCALE_US constant instead of 1000
+- Fix register field definitions to not trample on code from Linux header
+- Split the big fixes patch into several pieces
+
+It is difficult to split the big fix into pieces because some of the
+bugs are inter-dependent. I think I came up with a way to do it.
+
+Thanks,
+Nick
+
+Nicholas Piggin (12):
+  qtest/e1000e|igb: Clear interrupt-cause and msix pending bits after
+    irq
+  net/e1000e: Permit disabling interrupt throttling
+  hw/net/e1000e|igb: Remove xitr_guest_value logic
+  qtest/e1000e|igb: assert irqs are clear before triggering an irq
+  net/igb: Fix interrupt throttling interval calculation
+  net/igb: Implement EITR Moderation Counter
+  igb: Add a note about re-loading timers breaking deterministic replay
+  hw/net/e1000e: Postponed msix interrupt processing should auto-clear
+    cause
+  hw/net/e1000e: Do not auto-clear cause on postponed msix interrupt
+  net/e1000e|igb: Only send delayed msix interrupts that have a cause
+  net/e1000e|igb: Fix interrupt throttling rearming
+  qtest/e1000e|igb: Test interrupt throttling in multiple_transfers test
+
+ hw/net/igb_regs.h           |   9 +++
+ tests/qtest/libqos/e1000e.h |   1 +
+ hw/net/e1000e_core.c        | 146 +++++++++++++++++++++++++-----------
+ hw/net/igb_core.c           | 109 +++++++++++++++++++++------
+ tests/qtest/e1000e-test.c   |  21 +++++-
+ tests/qtest/igb-test.c      |  18 +++++
+ tests/qtest/libqos/e1000e.c |   9 ++-
+ 7 files changed, 246 insertions(+), 67 deletions(-)
+
 -- 
 2.47.1
 
