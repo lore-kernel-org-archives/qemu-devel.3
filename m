@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29A02C3ABA3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61DE6C3ABAA
 	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 13:06:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAq5Q-0007Yz-L9; Fri, 02 May 2025 09:05:52 -0400
+	id 1uAq5I-0007UK-Ir; Fri, 02 May 2025 09:05:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uAq5M-0007XE-LV
- for qemu-devel@nongnu.org; Fri, 02 May 2025 09:05:48 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uAq5G-0007TM-1e
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 09:05:42 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uAq5K-000491-ST
- for qemu-devel@nongnu.org; Fri, 02 May 2025 09:05:48 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-6fead015247so18438037b3.2
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 06:05:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1uAq5B-00047O-04
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 09:05:41 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5f5bef591d6so3859293a12.1
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 06:05:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746191145; x=1746795945; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=U/RoE23ApTjqbVe27klDcTmtWofCycnun26HGiKmoRk=;
- b=U0a5B3GU5bd5K8PExcg1wGZgvzd1jxyFkZPIBesK2MDDn9pXFiMpFWfRZriBGfE8/S
- WOdkY4t/nlG7WoKbafuU6gTrA6+d3Sl7BM496nbFdKvMi1oHXAcrtsnYCg58dz904BQx
- 4ObHpVSaUH309JUmCwsmHKeaSuXYsMA1izpAbD0VGmB3bYkF2zmEDHSZWt9vbJN9VrX/
- a9xkwqztfjAWiftmlkA41niqwI35KteK87fqXCzZyxPA2HdulCoHqLyBnrOyRFFdHm44
- FA9dLGUTv7wXX07nAf0sDsIPYgnBZvF2RAZfqQik63sus9p6zk90asoB1KGfo4YxpKTt
- Y4HA==
+ d=linaro.org; s=google; t=1746191134; x=1746795934; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rpeubmXOH9YAEzoaHh+bQKvZl7yXSx9UCWkBzUJPnPo=;
+ b=vw+w4V4AITYaVkotX9ua5Z/2dyJW/RDaAkMdibR5UEqlDA2vR//cjQOT1/u4LB2jlq
+ 16dXDXsE1mB+KQBMGVyxhEo3ox45zpZd0bE8r/L15lsorB6JXllNN94s+sg9dAUFX7Si
+ ZQ/gw7aai2E8+CzgBpxUSpTQ7klWcStRURSLEX1vT733PNF/ddPDw+tV4kBR1qWFHAWa
+ fYzHDrSccGEnWnEM0ljNxhCIWPIrBKo0hd8r4BJyJTGyyK4VL941PXozqCL3dN8wZMPT
+ bIw2zHJOsblDahA3xtFOAa2bIijGQxobI5HKk8k2FufPOc4z/biqq+p3nvdfgLAgIpX8
+ D1jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746191145; x=1746795945;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=U/RoE23ApTjqbVe27klDcTmtWofCycnun26HGiKmoRk=;
- b=gHpvFLb+BrTiKxgeWtnTFN2/ycTUZ//aZPZDAIU8g11WGFdiAhEDtG+Z6Oc953oAYi
- U5hr48QPCAaUB/e4IOGEhqXx6KKUal14hTcP0gJ0/0D3VepKVG8+2EcOb1/3d8BdHkqE
- byhHhXjNMaj3Vp3o/BzsX6wj/UpILEHhCE6k8McKtsR6jF1Hdhx+1kllZVrJ0VHPNkfF
- bicQDtsmXFXOlIWjuDCXSX+Aps4RtXfw/q7zh35ndeewddoCVv423iMQqXy70k92ObBV
- WJfrGXOkL9GfUxJE9e7AoJu79Bdhhs+nbyJSimc1RPMG0SOsIbNQiFLWdKWa+g68ICxc
- RF4w==
-X-Gm-Message-State: AOJu0YxrT8m/1cq2nKcNsdUXqy5p4g2x2bcEnUl16MvJY9tT0psvIAIR
- sXq3XkEnPEzlc0F2wJCYlptNDcwlnPHE6/Vnq/GpzbXIrwhWBHIP3GaF04+KJLWwKAFrqCqOBYc
- cqgmDSGlRXmXvaSSAs4nyUdojh7Oj4FoE8aDqig==
-X-Gm-Gg: ASbGncvQwP2V00MDRhGen8hW6Kvq/5DYnAftVA54vGXpfdtWxDgPqhUefxA8nYZJKvq
- 3HLBJ/ehanv3Ig7b8fMU+iWQjKHpYxadrcHlVBAn9vjMEt3H1/BFt5n2CoymNFQeLZivJPAPOsb
- Ly1xnO6fjj9GpLC4GofIioXuE=
-X-Google-Smtp-Source: AGHT+IFVwNbgupiVHh1lPAipK/kOSgiFPgV3qiGulbNifcJJZE7uAcsoiPvh6mBwG7oA0j7TKZ7Owz+PZjlaxz5fq7o=
-X-Received: by 2002:a05:690c:6f8f:b0:708:c1a5:ca4e with SMTP id
- 00721157ae682-708ced3b02bmr45645537b3.13.1746191145686; Fri, 02 May 2025
- 06:05:45 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746191134; x=1746795934;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rpeubmXOH9YAEzoaHh+bQKvZl7yXSx9UCWkBzUJPnPo=;
+ b=CKuoLv5tXS7ZdSsvn+YFpr3L9e3JHNDbm0ysLtG6Qdh0Sefj9PiPRRhxdM7dNDu6SX
+ GcJK1/or2QVR2Y3qGUQdEHFKz05LdxlakCsKv9CgRAfZCgC6gx+ex4yv8pvGzxFZ3Aap
+ Ptz0O/RpUG5iUUfAgck3pXXijyV4DW4L8QxeBAShk8E/j97mXDcQZXESE0J8E3GI96IK
+ WGZcJEGsMJGJdMzbux9B5LOIL6kAHZqGRGFRk7edrfHWS2VXHjM8UxejPxT/dbFI5fxE
+ uULvd94sZkTZnLrZExu5bpD78W+Oi7lHxRZwXwdLKV7PQN7f5I8YBlC2nqeMsP7Sex/T
+ Aztw==
+X-Gm-Message-State: AOJu0YzNK61gO0DMvwaJ9H8zq04Xg/huaPowiKoIsOP5Oz5pJqOOIutb
+ s8+mrS0wkT3EtCo9stSEkDBq/BO3IZuKW7Tt1x1WMkzRw8yiFKWcr/FvQ1SRZQXMJGCR8UEFVHS
+ WbZD9qKFG0rAPhR3zTa+Us3fcIpyJtpql+UV65A==
+X-Gm-Gg: ASbGncub3IHiz4Tj01mqzXBdgOVwyof+Izjxk2WJ+PZfNSF2glhuoN87yT5s62KWBBZ
+ cnyxtoIujv2+zK8B+T25Ytta74BfsaP4J7V7qXDXL7aWJSgrmzXkh3T0W0me78FW7vFWWbyMBKO
+ HQxPQm8IgdyGCcJEhXtWo=
+X-Google-Smtp-Source: AGHT+IHQzIg+TUOl9yRWbX67CQQJrR7ArRMZZo1NfSt+jmD3emgNGdYYEC6bIyFpNW6bTxTlA71JL+YNgJvWmtWESUE=
+X-Received: by 2002:a17:907:961f:b0:ace:d68c:2f88 with SMTP id
+ a640c23a62f3a-ad17b5ac57dmr306986166b.20.1746191134292; Fri, 02 May 2025
+ 06:05:34 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250414153027.1486719-1-pierrick.bouvier@linaro.org>
- <21843e8d-cdbc-4f84-a652-01ee467f2dc7@linaro.org>
-In-Reply-To: <21843e8d-cdbc-4f84-a652-01ee467f2dc7@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 2 May 2025 14:05:33 +0100
-X-Gm-Features: ATxdqUE8L9NTXDwVmgb6blgawlDUc9oYjm_w9bucKQJWH0eLXK3MklHJ12F7AWE
-Message-ID: <CAFEAcA8cBUc_iJCA_D6ZDsJad75Rmad6xDz34FPXWrnyEhk4tg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] target/arm: fix arm_cpu_get_phys_page_attrs_debug
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Yannis Bolliger <yannis.bolliger@protonmail.com>, qemu-arm@nongnu.org, 
- alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250502102323.104815-1-pbonzini@redhat.com>
+ <20250502102323.104815-6-pbonzini@redhat.com>
+ <svms9i.274a4or3m08g3@linaro.org>
+ <efc7ef30-002f-4fe7-84dd-1daeedbafaa5@redhat.com>
+In-Reply-To: <efc7ef30-002f-4fe7-84dd-1daeedbafaa5@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Fri, 2 May 2025 16:05:08 +0300
+X-Gm-Features: ATxdqUHgegE00rsA3wYD-WqgC1XESBHRVEluC0vprGLXvq6T42TKMsVcpzoticc
+Message-ID: <CAAjaMXb-28SOS7GyJTV6qRjRVramDHMN7JW-jzB-8Nu97GR4ng@mail.gmail.com>
+Subject: Re: [PATCH 5/9] rust: use MaybeUninit::zeroed() in const context
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,71 +96,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 28 Apr 2025 at 20:34, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+On Fri, May 2, 2025 at 3:23=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
+wrote:
 >
-> On 4/14/25 8:30 AM, Pierrick Bouvier wrote:
-> > It was reported that QEMU monitor command gva2gpa was reporting unmapped
-> > memory for a valid access (qemu-system-aarch64), during a copy from
-> > kernel to user space (__arch_copy_to_user symbol in Linux) [1].
-> > This was affecting cpu_memory_rw_debug also, which
-> > is used in numerous places in our codebase. After investigating, the
-> > problem was specific to arm_cpu_get_phys_page_attrs_debug.
+> On 5/2/25 13:01, Manos Pitsidianakis wrote:
+> > On Fri, 02 May 2025 13:23, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> >> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> >> ---
+> >> docs/devel/rust.rst              |   4 --
+> >> rust/hw/timer/hpet/src/fw_cfg.rs |   6 +-
+> >> rust/qemu-api/src/zeroable.rs    | 104 +++++--------------------------
+> >> 3 files changed, 18 insertions(+), 96 deletions(-)
 > >
-> > [1] https://lists.nongnu.org/archive/html/qemu-discuss/2025-04/msg00013.html
+> > Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 > >
-> > When performing user access from a privileged space, we need to do a
-> > second lookup for user mmu idx, following what get_a64_user_mem_index is
-> > doing at translation time.
+> > BTW There's this TODO in qom.rs, ObjectImpl trait
 > >
-> > This series first extract some functions, and then perform the second lookup
-> > expected using extracted functions.
-> >
-> > Besides running all QEMU tests, it was explicitely checked that during a linux
-> > boot sequence, accesses now report a valid physical address inconditionnally
-> > using this (non sent) patch:
-> >
-> > --- a/accel/tcg/cputlb.c
-> > +++ b/accel/tcg/cputlb.c
-> > @@ -997,9 +997,7 @@ static inline void tlb_set_compare(CPUTLBEntryFull *full, CPUTLBEntry *ent,
-> >       if (enable) {
-> >           address |= flags & TLB_FLAGS_MASK;
-> >           flags &= TLB_SLOW_FLAGS_MASK;
-> > -        if (flags) {
-> >               address |= TLB_FORCE_SLOW;
-> > -        }
-> >       } else {
-> >           address = -1;
-> >           flags = 0;
-> > @@ -1658,6 +1656,10 @@ static bool mmu_lookup1(CPUState *cpu, MMULookupPageData *data, MemOp memop,
-> >           tlb_addr = tlb_read_idx(entry, access_type) & ~TLB_INVALID_MASK;
-> >       }
-> >
-> > +    vaddr page = addr & TARGET_PAGE_MASK;
-> > +    hwaddr physaddr = cpu_get_phys_page_debug(cpu, page);
-> > +    g_assert(physaddr != -1);
-> > +
-> >       full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
-> >       flags = tlb_addr & (TLB_FLAGS_MASK & ~TLB_FORCE_SLOW);
-> >       flags |= full->slow_flags[access_type];
-> >
-> > v2:
-> > - fix style in first commit (philmd)
-> >
-> > Pierrick Bouvier (4):
-> >    target/arm/ptw: extract arm_mmu_idx_to_security_space
-> >    target/arm/ptw: get current security_space for current mmu_idx
-> >    target/arm/ptw: extract arm_cpu_get_phys_page
-> >    target/arm/ptw: fix arm_cpu_get_phys_page_attrs_debug
-> >
-> >   target/arm/ptw.c | 65 +++++++++++++++++++++++++++++++++++-------------
-> >   1 file changed, 48 insertions(+), 17 deletions(-)
-> >
+> >>    /// `&mut T`.  TODO: add a bound of
+> >>    //[`Zeroable`](crate::zeroable::Zeroable)
+> >>    /// to T; this is more easily done once Zeroable does not require a=
+ manual
+> >>    /// implementation (Rust 1.75.0).
+> >>    const CLASS_INIT: fn(&mut Self::Class);
 >
-> Gentle ping on this series.
-> Any plan to queue it to tcg-next @Richard?
+> Yes, good point.  When I wrote the TODO, my idea here was to have some
+> kind of
+>
+>         #[derive(Zeroable)]
+>
+> macro so that the compiler can "confirm" the safety of implementing
+> Zeroable by hand.
+>
+> However, most of the time the class will be just a C-defined class
+> (DeviceClass or SysBusDeviceClass), and then it's not even possible to
+> add the derive attribute to the declaration.
 
-I've queued this series to target-arm.next; thanks.
+Yes this makes sense. A benefit of having `#[derive(Zeroable)]` is
+avoiding blanket unsafe impls of the trait, since the derive macro
+would work only if all fields implement Zeroable (so in a sense, it's
+safe as long as the individual field type impls are safe,
+transitively). And we can still do manual unsafe impls for everything
+from the FFI boundary.
 
--- PMM
+>  So adding the bound to
+> ObjectType::Class is feasible now that one can just add
+>
+>      unsafe impl Zeroable for bindings::ObjectClass {}
+>      unsafe impl Zeroable for bindings::DeviceClass {}
+>      unsafe impl Zeroable for bindings::SysBusDeviceClass {}
+>      unsafe impl Zeroable for bindings::ResettableClass {}
+>
+> etc.; in fact it was already possible when Zhao added the impl_zeroed!
+> macro in commit aaf3778baaa ("rust/zeroable: Implement Zeroable with
+> const_zero macro", 2025-01-28).
+>
+> Paolo
+>
 
