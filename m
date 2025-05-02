@@ -4,51 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 448F6C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 14:30:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0702C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 14:59:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uArO6-0006Q2-B6; Fri, 02 May 2025 10:29:14 -0400
+	id 1uArqR-0003Q8-0f; Fri, 02 May 2025 10:58:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uArO4-0006Pq-IM; Fri, 02 May 2025 10:29:12 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uArO0-0004i1-NH; Fri, 02 May 2025 10:29:11 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1106855D26D;
- Fri, 02 May 2025 16:29:04 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id kU7W5eI0teyi; Fri,  2 May 2025 16:29:01 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 8BC0155D267; Fri, 02 May 2025 16:29:01 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 899C1745682;
- Fri, 02 May 2025 16:29:01 +0200 (CEST)
-Date: Fri, 2 May 2025 16:29:01 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>
-cc: Nicholas Piggin <npiggin@gmail.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, 
- Alex Williamson <alex.williamson@redhat.com>, qemu-devel@nongnu.org, 
- qemu-ppc@nongnu.org
-Subject: vfio vs tcg (was: Re: [RFC PATCH] target/ppc: Inline most of dcbz
- helper)
-Message-ID: <3949473e-6169-69e3-9521-c535d75701fa@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uArqO-0003Oc-Qj
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 10:58:28 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uArqM-0002rn-Ij
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 10:58:28 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-acbb48bad09so373304366b.0
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 07:58:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746197903; x=1746802703; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=J8YzoanIk5Tc3h7ufmslO4S+l5crv4KBw80pyEGyvdo=;
+ b=o831xw2e6pPYej0ygl1BmFFjbgIzKSuU5tENzQIDiCVOjCf50egyiXqno47QpKgj/t
+ WExthDr4TGZp5Fh87otuiOqQfPFO278n7QUyUIXrHJfhAg2sFcPn/OiP+WW49zRUFwex
+ PocRDHs30fBotErmrij+9B1nzxwNR4wCkM8IPqAiCfvtfvAA9AN9hyybAmyoe2ykffZv
+ SqwiNZcEazWtzF4Om3Pn9mdydybxZoTJq4woo5UMUUSJD0m+LfDntk5IW8GJsNuqJOIG
+ 5CZ46ceNvrFBtzuKA+B3YUBrCbcshQP6Au25CYcvhSud1FYus3m0qPjjISgIMJJ0mYCX
+ 52MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746197903; x=1746802703;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=J8YzoanIk5Tc3h7ufmslO4S+l5crv4KBw80pyEGyvdo=;
+ b=rPOMxJq+1rqteLOHUxhgLcEKeoblMwlmdZLH5ckdp18CMsEL2N7HBFanOZAnMQ1CmL
+ i4fpbf140NkUA0nBKNmnAy1ghQHGjjbj/2noLwTMky9+LJfDwTuwTaw/RXEYeiYxf7sJ
+ MzMSwt8TYQwVHbjnar4DAOZDS/sC2nlQikJT5OqB8DZQN3PMpm4tmVe5Z76ep00tlpPb
+ x/X52dUMwnt62myflXLCrG2Qbi4Ni4R3P9IINd+I1e+2Rw5XlsJLZLwMHxcLLFQD3mtO
+ dwPTLueEtScswQbblFNmq9ppnpoLgQ/NgAIsjHKHjdDEVKiLDiiWrGsJLHZxJidJnkOi
+ 43Dg==
+X-Gm-Message-State: AOJu0YzjtOJIIao4Aqn+55YTIMLgLEPnw48l0sKI8B1oSodOGL3GSQd5
+ quvwjInGIgQLabGBKWbC8FTx52dkUrAR30+yzi06mCHCimW8ZnskDSlU3bokfqACg9YX/XZXPGC
+ u
+X-Gm-Gg: ASbGnctD6k3ZW47qxYCu8i0IlMNHkP8l2z0YYczauwfQV9EAcqTVgm4SVK1FJHJId1v
+ QRdAA1CKgTvwCNP49Gc7DhlbNZzBg87sCPlopjdePdkj6FMeKDOZfnf8FX2z3ughlE9W1/4Arfn
+ 5JwxMVbA5fNMlSSrxeu2pgqM8p8k+guqusbxxflm75Qt92xs2dcIwjFC8/Mu9OiIDqRqodemVn7
+ mp15njwcAzCpMPhgjZupGPypmZnpy6mrYav24sOMUc9kLyocpuWNoshOtiKYqsHiTp05kt1yH+v
+ /CmDo4Xf7WaAFJchGzdek8CLwIB8fc6fm8AfDcBUqthKeNSMJNZiUnNy7ZHbtJknbX85y/VbcJG
+ VIwxmBSw2
+X-Google-Smtp-Source: AGHT+IESGAHOjKyvHEicqbK35gMlhd0KHndF1neEyMssJpffZrvCQvz9m5fNRsBd1AVqM3MFSCP3AQ==
+X-Received: by 2002:a17:907:9998:b0:acf:8d:bf9a with SMTP id
+ a640c23a62f3a-ad17aefcb1fmr303274666b.47.1746197903199; 
+ Fri, 02 May 2025 07:58:23 -0700 (PDT)
+Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ad1895087f4sm59030966b.134.2025.05.02.07.58.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 May 2025 07:58:22 -0700 (PDT)
+Message-ID: <c25fad27-df4b-4eba-9dff-217b0ca18941@linaro.org>
+Date: Fri, 2 May 2025 16:58:21 +0200
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="3866299591-69100718-1746196141=:56262"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 v2 00/13] hw/arm: Remove virt-2.6 up to virt-2.12
+ machines
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Andrew Jones <ajones@ventanamicro.com>, Thomas Huth <thuth@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, qemu-arm@nongnu.org
+References: <20250116145944.38028-1-philmd@linaro.org>
+ <CAFEAcA_7KfbhMj4c=HD4m+xivTK4NZcYc0O4NXt6MtVJ6bSitA@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFEAcA_7KfbhMj4c=HD4m+xivTK4NZcYc0O4NXt6MtVJ6bSitA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,154 +105,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 2/5/25 15:37, Peter Maydell wrote:
+> On Thu, 16 Jan 2025 at 14:59, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> The versioned 'virt' machines up to 2.12 been marked as deprecated
+>> two releases ago, and are older than 6 years, so according to our
+>> support policy we can remove them. Remove associated dead code.
+>>
+>> Since v1:
+>> - Corrected disallow_affinity_adjustment removal (Thomas)
+>> - Do not modify docs/about/removed-features.rst (Thomas & Daniel)
+>>
+>> Philippe Mathieu-Daudé (13):
+>>    hw/arm/virt: Remove deprecated virt-2.6 machine
+>>    hw/arm/virt: Remove VirtMachineClass::no_pmu field
+>>    hw/arm/virt: Remove VirtMachineClass::disallow_affinity_adjustment
+>>    hw/arm/virt: Remove deprecated virt-2.7 machine
+>>    hw/arm/virt: Remove VirtMachineClass::no_its field
+>>    hw/arm/virt: Remove deprecated virt-2.8 machine
+>>    hw/arm/virt: Remove VirtMachineClass::claim_edge_triggered_timers
+>>      field
+>>    hw/arm/virt: Remove deprecated virt-2.9 machine
+>>    hw/arm/virt: Remove deprecated virt-2.10 machine
+>>    hw/arm/virt: Remove deprecated virt-2.11 machine
+>>    hw/arm/virt: Remove VirtMachineClass::smbios_old_sys_ver field
+>>    hw/arm/virt: Remove deprecated virt-2.12 machine
+>>    hw/arm/virt: Remove VirtMachineClass::no_highmem_ecam field
+> 
+> Applied to target-arm.next, thanks (with the tweak RTH points
+> out to avoid a compilation failure in patch 3).
 
---3866299591-69100718-1746196141=:56262
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-Adding some vfio people who I hope could give some more insight. The 
-question I try to find out is why accessing VRAM of a graphics card passed 
-through with vfio-pci to a PPC guest running on x86_64 host with TCG is 
-slow.
-
-On Wed, 30 Apr 2025, BALATON Zoltan wrote:
-> On Wed, 30 Apr 2025, Alex Bennée wrote:
->> BALATON Zoltan <balaton@eik.bme.hu> writes:
->>> On Wed, 30 Apr 2025, Nicholas Piggin wrote:
->> Any MMIO access has to come via the slow path. Any MMIO also currently
->> has to be the last instruction in a block in case the operation triggers
->> a change in the translation regime that needs to be picked up by the
->> next instruction you execute.
->> 
->> This is a pathological case when modelling VRAM on a device because its
->> going to be slow either way. At least if you model the multiple byte
->> access with a helper you can amortise some of the cost of the MMU lookup
->> with a single probe_() call.
->
-> I think there is some mix up here because of all the different scenarios I 
-> benchmarked so let me try to clear that up. The goal is to find out why 
-> access to vfio-pci passed through graphics card VRAM is slower than expected 
-> when the host should be faster than those mostly embedded or old PPCs used on 
-> real machines with only 4x PCIe or PCIe to PCI bridges. In this case we are 
-> not emulating VRAM but mapping the framebuffer from the real card and access 
-> that. To find where the slow down comes from I've benchmarked all the cases 
-> upthread but here are the relevant parts again for easier comparison:
->
-> First both src and dst are in RAM (just malloced buffers so this is the base 
-> line):
->
-> src 0xb79c8008 dst 0xb78c7008
-> byte loop: 21.16 sec
-> memset: 3.85 sec
-> memcpy: 5.07 sec
-> copyToVRAMNoAltivec: 2.52 sec
-> copyToVRAMAltivec: 2.42 sec
-> copyFromVRAMNoAltivec: 6.39 sec
-> copyFromVRAMAltivec: 7.02 sec
->
-> The FromVRAM cases use dcbz to avoid loading RAM contents to cache on real 
-> machine that is about to be overwritten so dcbz is never applied to MMIO. 
-> (Arguably it should use dcba but for some reason nobody remembers why it uses 
-> dcbz instead.) The ToVRAM cases have dcbt which is noop on QEMU. I guess the 
-> difference we see here is because of probe_access in dcbz as was shown by 
-> previous profiling. Replacing that with dcba (which is noop in QEMU) makes 
-> ToVRAM and FromVRAM run the about the same (you can find that case in 
-> original message). FromVRAM still a bit slower for some reason but most of 
-> this overhead can be accounted to dcbz.
->
-> In second test dst is mmapped from emulated ati-vga framebuffer BAR. We can 
-> say we emulate vram here but that's just a ram memory region created in vga.c 
-> as:
->
-> memory_region_init_ram_nomigrate(&s->vram, obj, "vga.vram", s->vram_size, 
-> &local_err);
->
-> it also has dirty tracking enabled, I don't know if that has any effect. This 
-> is shown in left column here:
->
-> dst in emulated ati-vga               | dst in real card vfio vram
-> mapping 0x80800000                      mapping 0x80800000
-> src 0xb78e0008 dst 0xb77de000         | src 0xb7ec5008 dst 0xb7dc3000
-> byte loop: 21.2 sec                   | byte loop: 563.98 sec
-> memset: 3.89 sec                      | memset: 39.25 sec
-> memcpy: 5.07 sec                      | memcpy: 140.49 sec
-> copyToVRAMNoAltivec: 2.53 sec         | copyToVRAMNoAltivec: 72.03 sec
-> copyToVRAMAltivec: 12.22 sec          | copyToVRAMAltivec: 78.12 sec
-> copyFromVRAMNoAltivec: 6.43 sec       | copyFromVRAMNoAltivec: 728.52 sec
-> copyFromVRAMAltivec: 35.33 sec        | copyFromVRAMAltivec: 754.95 sec
->
-> Here we see that AltiVec cases have additional overhead which I think is 
-> related to vperm as that's the only op that does not seem to be compiled to 
-> something sensible but calls an unoptimised helper (although that's also 
-> there for RAM so not sure why this is slower). But this shows no other 
-> overhead due to MMIO being involved as the NoAltivec cases are the same as 
-> with RAM.
->
-> Last case, shown in right column above, is when instead of ati-vga I have a 
-> real ATI card passed through with vfio-pci which is much slower than what is 
-> explained only by PCI overhead and I'm trying to find out the source of that 
-> slow down.
-[...]
->>> Why do those trap on MMIO on real machine? These routines were tested
->>> on real machines and the reasoning to use the widest possible access
->>> was that PCI transfer has overhead and that is minimised by
->>> transferring more bits in one op. I think they also verifed that it
->>> works at least for the 32 bit CPUs up to G4 that were used on real
->>> AmigaNG machines. There are some benchmark results here:
->>> https://hdrlab.org.nz/benchmark/gfxbench2d/OS/AmigaOS?start=60 which
->>> is also where the benchmark I used comes from so this should be
->>> similar. I think the MemCopy on that page has plain unoptimised copy
->>> as Copy to/from VRAM and optimised routines similar to this benchmark
->>> as Read/Write Pixel Array, but it's not easy to search. Some of the
->>> machines like Pegasos II and AmigaOne XE were made with both G3 or G4
->>> CPUs so if I find a result from those with same graphics card that
->>> could show if AltiVec is faster (although the G4s were also higher
->>> clock so not directly comparable). Some results there are also from
->>> QEMU, mostly those that are with SiliconMotion 502 but that does not
->>> have this problem only vfio-pci pass through.
->> 
->> They don't - what we need is to have a RAM-like-device model for QEMU
->> where we can relax the translation rules because we know we are writing
->> to RAM like things that don't have registers or other state changing
->> behaviour.
->> 
->> The poor behaviour is because QEMU currently treats all MMIO as
->> potentially system state altering where as for VRAM it doesn't need to.
->
-> This does not seem to be the case with emulated ati-vga, and with vfio-pci it 
-> should also be mapped memory from the graphics card which technically is MMIO 
-> but how does QEMU decides that when it does not seem to consider ati-vga as 
-> IO? Typically in QEMU MMIO is an io memory region that goes through memops 
-> and that's understandably slow but here we should read/write mapped memory 
-> space. Maybe I should try to find out what vfio-pci actually does here but it 
-> is used for gaming with KVM and there people get near native performance so I 
-> don't think there is an overhead in vfio-pci.
-
-After looking at how vfio creates the BARs it seems to use 
-memory_region_io but then also mmaps it but maybe not always. I could not 
-find out how this works but there may be MMIO involved here. With KVM this 
-may not be a problem but it causes TCG to break the TB at the op accessing 
-the IO region and if this is in a loop it can cause freqent exits and 
-looking up a new TB at least that's what I think now. Question if this 
-seems correct and how could it be avoided? Can TBs be chained here to 
-avoid the exit from the loop? Or why do we have io memory regions for the 
-PCI memory bars in the first place when these are then mapped in the guest 
-address space and accessed directly?. In hw/vfio/region.c the 
-vfio_region_{read,write} memop functions seem to do two things: endian 
-conversion and calling eoi to maybe ack an interrupt? Why the endian 
-conversion is needed when the guest should be aware it's talking to a PCI 
-device (and also the memops is defined as DEVICE_LITTLE_ENDIAN so there 
-may be double conversion here)? I don't know how the interrupts work but 
-this maybe only makes sense for MMIO BARs that contain registers and not 
-for VRAM. Typically VRAM is marked as prefetchable so maybe for those BARs 
-we could use memory regions instead of io to avoid this problem?
-
-More details can be found in the original thread here:
-https://lists.nongnu.org/archive/html/qemu-ppc/2025-04/msg00326.html
-
-Regards,
-BALATON Zoltan
---3866299591-69100718-1746196141=:56262--
+Thank you for tweaking :)
 
