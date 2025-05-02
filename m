@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B243FC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 18:59:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D29B4C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 19:00:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAvbH-0008FE-L8; Fri, 02 May 2025 14:59:13 -0400
+	id 1uAvaq-0007HJ-TD; Fri, 02 May 2025 14:58:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvaz-0007ur-Iw
- for qemu-devel@nongnu.org; Fri, 02 May 2025 14:58:49 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvaH-0005xO-7J
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 14:58:16 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvax-0005jD-D0
- for qemu-devel@nongnu.org; Fri, 02 May 2025 14:58:49 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-ace94273f0dso513912066b.3
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 11:58:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvaF-0005ai-2a
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 14:58:04 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5e677f59438so3549542a12.2
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 11:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746212325; x=1746817125; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746212280; x=1746817080; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dAEnpROpQK6DxM6uJJQ1bpWzbrmSzQalAkAVB3r0tgU=;
- b=c9bTdyiSQzZQabGbuFIuF1vr42BCnDGuAJsaSKWYXOXUsUHiEiXArh/oDZT6hBViWH
- qJecubv/rCmnIKoMmixoTQaUNMJ8/gi4MIGXH+pbjQH5qbIJl2vdtGLuKXaeun6sKg1t
- KpbTU4Eel4VUPkds+8ML22LG6tZzw812gaGF5giA720p6BSHj3PzZi9BJNQBLUeMFUf2
- Gr3sZLhmycuaB4kauT4dC0lDguUe4br06keY27cOygtiygIj9te0ps4/QfcPE/8m33kH
- KhdUQVR+pqkvRqI4ssDaLjQIzIkGkxfib7oj2mjgRE+6VDrB5ZV6kfZM2elIlx+fCUUa
- KhDQ==
+ bh=Ym7wSrcTG0iPDZDcZJp5AGoZOnw5NMHUmUvpm+lkeJQ=;
+ b=jqKnH5p6jrCCTxHr+PtCwz0R2xWUSSrSXO5d8xst2UsO0rDejyt/M4kLx60nYBhbC8
+ sXh5WBd73eZK6xcvY3wRwI7EEJ2Hef2RBATDOnhHscS+8HC6nshVTpcuTMmpFYr6tNhe
+ o6SVwQ+lrTYiATwtXJKQzUk1w6t2OKPzraaMafaH7Cwd77JnbN0Th6PgrIUrxld2OW3o
+ DlOzQ7zR12ynDaQRyA6I/1RR1B0uoXOwWD9MPxfzfzFkko9JN6N4+qzpb2dD3FATxYQG
+ gaCp51GBkzuisuCvEqilqLfDWxCI26XqfvJAPx2wZxzu6cHJvFxxrfJ2aEA6rVY4tBvv
+ 5Y5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746212325; x=1746817125;
+ d=1e100.net; s=20230601; t=1746212280; x=1746817080;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dAEnpROpQK6DxM6uJJQ1bpWzbrmSzQalAkAVB3r0tgU=;
- b=rGTW6RtLlZbcBCLpwgMuBHjC/EqhPpew8PKde6gxjrjWADNf7aP67HWywQpY9g8IcC
- ITTd82cFiNK6qo0PM60ZO7Ewvj2bhogufraW1POXEW22TMd7naCOYioukwzYDgFP/L9H
- UEvVUwHbHfwCnFpbLlY7qksSB54oYuKch/hvFYVY/4hoLDtE+sIwmAUHH/r1crX7RSvx
- TutNEDThU9k6AhxWmikd413M5s+6bOExZ6COjqbPCwfNdvSF/33UOoDHOvmBn0AwHAhD
- eHoV2NQBHXhbASHi2ScHedEM27B+zFAuND3pAyVW/hBVUD7fbGBPbRL1hx49XTbVDWRl
- v+vw==
-X-Gm-Message-State: AOJu0Yy15Eqq1s9qO0WZ+767Ag9YpoZ+OG/UAw39IhSlWCGBhdSRNiuC
- 9ru7kZyC43HxxOCozgbBEN7TWfkyF07JfOmvl1yosgWtthSSVOa4ng76/2LReW0b2bpSNqUatUH
- M
-X-Gm-Gg: ASbGncuj0WAruUgZys1twcYGLu3ISJMlzjBpVegx3iXtqD6yTnE7dieRsqG/p6jQfan
- rYExPpbuT+0XPMmNr2199v03DVttSvv0q9x67fVgbOsc19kR48RYI6E3aiRq0/eEXxgJdXQIaCX
- HYOJhDc9h7Mg0iSuPs3LVK60NGoZab21S4uTHSonhP6yLYnhUAVIJZBwBO8iAGlVqdfKFXLGvp4
- zO4pxPuWKwl77+NmgIdkR/Ab1/LpppjwmJUAsKvLk2KH/pvng4TWyQ2NfP7a3YqtkNrpiiHGKNm
- DDeVxBiWEY8R039volpmJ/y/+hNY2/8MOdtQ0HjeDwYPD9Aoc1p9/AS6ogOSf4wqy6IGzTc40jv
- h4SV6Vlfy/lR0CUSxipgD
-X-Google-Smtp-Source: AGHT+IHEzN1oHza48LBvLfGU1yv7hc31xMFZ9Vo3WiynuGtpxIfE+KT5BVKQVxHfrApZPrIR6Re4cA==
-X-Received: by 2002:a17:907:3e87:b0:acb:b966:3a7c with SMTP id
- a640c23a62f3a-ad17af4d344mr389294366b.47.1746212325279; 
- Fri, 02 May 2025 11:58:45 -0700 (PDT)
+ bh=Ym7wSrcTG0iPDZDcZJp5AGoZOnw5NMHUmUvpm+lkeJQ=;
+ b=WFv2p83VoNYXBg/M6JkMEdFDyNrc8L5TVosOW2TIR8spaPc98GHxbvAfi6y1axS3/I
+ xCSmAESb9Ck6p9OCoN7clDTmF/JlBoNpmjMIsihlcylemb9rlzaO8n8Y91Xw9LFnqq3d
+ fC0HFZESfuff+fNnyz9HRLv3SwwEEWuE4EP9iZiGqHnn2lnGnmiecI87pOVLnQLxQb/Z
+ beX8VUfO/lmUkICAESbFDzS1xa0E/buDNl1Q9iKBDfPHNQJwxR36RbjpnafswZcvMAQY
+ d2jvUUnW+7g7HQugTnu88qAXPN4l8lYf3j1cnnnkSjAMJGfAmYbbfB7eI6WNDVkqYw5h
+ Ffzw==
+X-Gm-Message-State: AOJu0YxSjMj4avRDjhOZSqEtnvUD2Ae5RdR7vZ5S183hg8QScS92koHE
+ PNu8xjRZpMAfWQT3U8e9rVRB4CUpxJ5jpdec7nBv2N/yy5nU5qulIs/BLmTWfbcC2CLEu3KrnH5
+ J
+X-Gm-Gg: ASbGncsOFnLAKTMEz3tFPojUNImA9uD6chqHsdHqglMUkPUqH83gW7mnceDCKdFqCYV
+ 2yAaoHkfAbnPpQw9Fn7jVHQSGVhSsvwdH3EAmY4YFYlc//tTTtuIETpqYK5vpEdvG/KawgfJ0Yn
+ jUPZICdYv/t6G6fmYNmI8+cL2tcwxqhFCZiW3zZKbOwrP8pssOck2v97AdG2ej9tdArFdLY3P4/
+ 8xu63yg+PhjSjDse0tRDnmxHyb8vyRFqdccACd5IjjZRtta7TAFIEk27kbV2MJ4ns62EB139aAT
+ GQ5uekAh3CbQcEuoBA6ZccfCKhyowsKnSDMU/PP+8/o4ICgW74S3qXzr9xp4RCyD6lnhpMt3GN3
+ IgKxgMre/TfnsucYRcMcU
+X-Google-Smtp-Source: AGHT+IGK3jqXfFmIbWdZNHBfy2BgmiLJlUD0XPLVsGZaFrMIzOr+dU+YjT/+E9MyCAzXbtNJmk8QnA==
+X-Received: by 2002:a50:c8c2:0:b0:5f8:357e:bb1 with SMTP id
+ 4fb4d7f45d1cf-5fa788ed11dmr2890471a12.22.1746212280005; 
+ Fri, 02 May 2025 11:58:00 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad1891490afsm86709466b.23.2025.05.02.11.58.43
+ 4fb4d7f45d1cf-5fa777c74acsm1637679a12.23.2025.05.02.11.57.56
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 02 May 2025 11:58:44 -0700 (PDT)
+ Fri, 02 May 2025 11:57:58 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -79,18 +79,18 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: [PATCH v3 19/19] hw/virtio/virtio-pci: Remove
- VIRTIO_PCI_FLAG_PAGE_PER_VQ definition
-Date: Fri,  2 May 2025 20:56:51 +0200
-Message-ID: <20250502185652.67370-20-philmd@linaro.org>
+Subject: [PATCH v3 11/19] hw/i386/pc: Remove deprecated pc-q35-2.7 and
+ pc-i440fx-2.7 machines
+Date: Fri,  2 May 2025 20:56:43 +0200
+Message-ID: <20250502185652.67370-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250502185652.67370-1-philmd@linaro.org>
 References: <20250502185652.67370-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,80 +113,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VIRTIO_PCI_FLAG_PAGE_PER_VQ was only used by the hw_compat_2_7[]
-array, via the 'page-per-vq=on' property. We removed all
-machines using that array, lets remove all the code around
-VIRTIO_PCI_FLAG_PAGE_PER_VQ (see commit 9a4c0e220d8 for similar
-VIRTIO_PCI_FLAG_* enum removal).
+These machines has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") they can now be removed.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- include/hw/virtio/virtio-pci.h |  1 -
- hw/display/virtio-vga.c        | 10 ----------
- hw/virtio/virtio-pci.c         |  7 +------
- 3 files changed, 1 insertion(+), 17 deletions(-)
+ hw/i386/pc_piix.c |  9 ---------
+ hw/i386/pc_q35.c  | 10 ----------
+ 2 files changed, 19 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index 9838e8650a6..8abc5f8f20d 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -33,7 +33,6 @@ enum {
-     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
-     VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
-     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
--    VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
-     VIRTIO_PCI_FLAG_ATS_BIT,
-     VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
-     VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT,
-diff --git a/hw/display/virtio-vga.c b/hw/display/virtio-vga.c
-index 40e60f70fcd..83d01f089b5 100644
---- a/hw/display/virtio-vga.c
-+++ b/hw/display/virtio-vga.c
-@@ -141,16 +141,6 @@ static void virtio_vga_base_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
-                                VIRTIO_GPU_SHM_ID_HOST_VISIBLE);
-     }
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 98a118fd4a0..98bd8d0e67b 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -755,15 +755,6 @@ static void pc_i440fx_machine_2_8_options(MachineClass *m)
  
--    if (!(vpci_dev->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ)) {
--        /*
--         * with page-per-vq=off there is no padding space we can use
--         * for the stdvga registers.  Make the common and isr regions
--         * smaller then.
--         */
--        vpci_dev->common.size /= 2;
--        vpci_dev->isr.size /= 2;
--    }
--
-     offset = memory_region_size(&vpci_dev->modern_bar);
-     offset -= vpci_dev->notify.size;
-     vpci_dev->notify.offset = offset;
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 7c965771907..4e0d4bda6ed 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -314,12 +314,9 @@ static bool virtio_pci_ioeventfd_enabled(DeviceState *d)
-     return (proxy->flags & VIRTIO_PCI_FLAG_USE_IOEVENTFD) != 0;
- }
+ DEFINE_I440FX_MACHINE(2, 8);
  
--#define QEMU_VIRTIO_PCI_QUEUE_MEM_MULT 0x1000
+-static void pc_i440fx_machine_2_7_options(MachineClass *m)
+-{
+-    pc_i440fx_machine_2_8_options(m);
+-    compat_props_add(m->compat_props, hw_compat_2_7, hw_compat_2_7_len);
+-    compat_props_add(m->compat_props, pc_compat_2_7, pc_compat_2_7_len);
+-}
 -
- static inline int virtio_pci_queue_mem_mult(struct VirtIOPCIProxy *proxy)
+-DEFINE_I440FX_MACHINE(2, 7);
+-
+ #ifdef CONFIG_ISAPC
+ static void isapc_machine_options(MachineClass *m)
  {
--    return (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ) ?
--        QEMU_VIRTIO_PCI_QUEUE_MEM_MULT : 4;
-+    return 4;
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index b7ffb5f1216..a1f46cd8f03 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -648,13 +648,3 @@ static void pc_q35_machine_2_8_options(MachineClass *m)
  }
  
- static int virtio_pci_ioeventfd_assign(DeviceState *d, EventNotifier *notifier,
-@@ -2348,8 +2345,6 @@ static const Property virtio_pci_properties[] = {
-                     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT, false),
-     DEFINE_PROP_BIT("modern-pio-notify", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
--    DEFINE_PROP_BIT("page-per-vq", VirtIOPCIProxy, flags,
--                    VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT, false),
-     DEFINE_PROP_BIT("ats", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_ATS_BIT, false),
-     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
+ DEFINE_Q35_MACHINE(2, 8);
+-
+-static void pc_q35_machine_2_7_options(MachineClass *m)
+-{
+-    pc_q35_machine_2_8_options(m);
+-    m->max_cpus = 255;
+-    compat_props_add(m->compat_props, hw_compat_2_7, hw_compat_2_7_len);
+-    compat_props_add(m->compat_props, pc_compat_2_7, pc_compat_2_7_len);
+-}
+-
+-DEFINE_Q35_MACHINE(2, 7);
 -- 
 2.47.1
 
