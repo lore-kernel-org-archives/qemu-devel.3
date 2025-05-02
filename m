@@ -4,86 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89B43C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 21:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9560BC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 21:50:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAyFh-0006GA-0m; Fri, 02 May 2025 17:49:01 -0400
+	id 1uAyHD-0001K6-2E; Fri, 02 May 2025 17:50:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uAyFe-0006FY-IO
- for qemu-devel@nongnu.org; Fri, 02 May 2025 17:48:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uAyHB-0001Ja-CW
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 17:50:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uAyFc-00043g-IM
- for qemu-devel@nongnu.org; Fri, 02 May 2025 17:48:58 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uAyH8-0004d6-Tr
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 17:50:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746222535;
+ s=mimecast20190719; t=1746222630;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=XVyqYA/UIpIwYSn5G6i8hJNaxT6gjdlb3GwIRIiPS00=;
- b=Q55MlnpI0VcPDO1aXFgzN8bbL7jdvjSzLMNdGiJb3jd59kp6bULiSjhbgNKuALD0k6WXCq
- fiJFXjbUpDAz4QucouShutxZJ9Ut+Uwk7JgTHDkvsEsFGr3GNzodASu4BkvZ1tY51MJv7T
- 0N6GsPtc5VAHgGa5svjvWMB7lYrc5tg=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-207-MaBeJFjhNqWDgoA-KlwnVA-1; Fri, 02 May 2025 17:48:54 -0400
-X-MC-Unique: MaBeJFjhNqWDgoA-KlwnVA-1
-X-Mimecast-MFC-AGG-ID: MaBeJFjhNqWDgoA-KlwnVA_1746222534
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3912e4e2033so727630f8f.0
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 14:48:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746222533; x=1746827333;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XVyqYA/UIpIwYSn5G6i8hJNaxT6gjdlb3GwIRIiPS00=;
- b=ZFDE8aHt7xebVKtxdxLqGW1RQjjsD8995Nz6eVn6XtE+i0qBEFyP1rF3dCQzSA+4fB
- +uMnWGNuOif2JalnCLTUN8p/7rob+izOJMnHgEGeBhSLECTP6hngrcJEiRh9Y0CQpOHv
- TGCyiOf1EtUUT53N9at9CQQKCrIoa/ukEqrP4mX2Cwg4lAVBB0lRgw1l1Tmto4wLQCJk
- g6ZfjkNt8V+hB7o+Mr8QduQtA+ehXak+0kPmQzeoCXJU5TjQJbEsDoe11q0taswdzdN6
- QSY3Q1EQvROJQqQOjslAU4b/oBlroHVg89ifJs4cvQ5ubJoVwIFy16wU5qr5nrqytVcz
- Y7RQ==
-X-Gm-Message-State: AOJu0YyXep4nRrjRuWlnS3YTh3XpDRVZSjCQCNQjNc/roGwXB3IBa9Wp
- HxEhElUsSLyGixoREZqNuqnIP2Dn+KyqQ4W2XlK9S4bRPWUkk9Ez+M2JafiB0cwIG1DgL3sO/7n
- zQXWqJFV/k35B0UH/UvLKsLPvu9vTxMw4qpBMMAWrEao1RMBrfLc0IaxxQ3sQteiYGjbUY4yThP
- TuqYh40sfuwO9/EQZ7DQjh7T5+sWK+PxDus4An
-X-Gm-Gg: ASbGncsT/+ueS+ZCR0WswwTmym6QjmzwavVeY435bGn2wPsfVqaZHQDOHRS36ARg+Uu
- DeKdaCKneNAt5SkqDh3u2BmyNkftyLbi23s2SHOqO+aYbFaacTWMq+zIqOT0Ta+HZEQxfApewss
- 1wad7/1RsV7NaCOhmSgDlWIpPVALqWac/WGpt1LNO/mAuLp7Ppm2MVPcdiYjU8rBm1RJVG5YEop
- 0yd+NwuMMATMPhOGRP+ed8kQTdR9bvDW9q87RJ/cyOT+ZNPb0KqHgQdPiJTnLX59neC6vhmzJlh
- PDGrwqXE0jAiLPM=
-X-Received: by 2002:a5d:5985:0:b0:3a0:8298:143d with SMTP id
- ffacd0b85a97d-3a099ad635cmr3060607f8f.13.1746222532824; 
- Fri, 02 May 2025 14:48:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFcaat/r3rywmf7jb3o/qoAMn0lDrWiTlQ/IhJEXgQiTWoe8RHfis2jTz+bMau/dYO/jSdrzQ==
-X-Received: by 2002:a5d:5985:0:b0:3a0:8298:143d with SMTP id
- ffacd0b85a97d-3a099ad635cmr3060598f8f.13.1746222532284; 
- Fri, 02 May 2025 14:48:52 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.54.106])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae7a35sm3079066f8f.43.2025.05.02.14.48.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 May 2025 14:48:49 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: wei.liu@kernel.org
-Subject: [PATCH 4/4] target/i386: remove lflags
-Date: Fri,  2 May 2025 23:48:41 +0200
-Message-ID: <20250502214841.242584-5-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250502214841.242584-1-pbonzini@redhat.com>
-References: <20250502214841.242584-1-pbonzini@redhat.com>
+ bh=sWABGgxjvbA6qtuPk7KUDuM6Cr0FJSr9uoOSL7pB6ko=;
+ b=cCcxS9DVDbU2BVuuU0f1/wYfuAddE3QQfyBPlDUW1vXnCw6F8rGQQl+Laz2UuRaSMV2s5f
+ H/+l9QQO1IUccsEv7Kh3he37XfdAbOCS+GkEGiRE0GPF9Mezf3ryCo0vy4wzcYZfsmxOKq
+ ciI5NTIfuf2dethiM5KFO6E6gFmEkE4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-212-WZduGcQ-MCezO5yUNmhL-w-1; Fri,
+ 02 May 2025 17:50:28 -0400
+X-MC-Unique: WZduGcQ-MCezO5yUNmhL-w-1
+X-Mimecast-MFC-AGG-ID: WZduGcQ-MCezO5yUNmhL-w_1746222627
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E1A461800360; Fri,  2 May 2025 21:50:26 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.86])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9586119560A3; Fri,  2 May 2025 21:50:24 +0000 (UTC)
+Date: Fri, 2 May 2025 23:50:21 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: "Denis V. Lunev" <den@virtuozzo.com>
+Cc: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Eric Blake <eblake@redhat.com>
+Subject: Re: [BUG, RFC] Block graph deadlock on job-dismiss
+Message-ID: <aBU-HT66stdexqgI@redhat.com>
+References: <73839c04-7616-407e-b057-80ca69e63f51@virtuozzo.com>
+ <aBUCJ0JKiSmegNDT@redhat.com>
+ <30875f3e-9535-4d9d-b671-a4f9cd0d4b82@virtuozzo.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <30875f3e-9535-4d9d-b671-a4f9cd0d4b82@virtuozzo.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -108,205 +85,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just use cc_dst and cc_src for the same purpose.
+Am 02.05.2025 um 19:52 hat Denis V. Lunev geschrieben:
+> On 5/2/25 19:34, Kevin Wolf wrote:
+> > Am 24.04.2025 um 19:32 hat Andrey Drobyshev geschrieben:
+> > > Hi all,
+> > > 
+> > > There's a bug in block layer which leads to block graph deadlock.
+> > > Notably, it takes place when blockdev IO is processed within a separate
+> > > iothread.
+> > > 
+> > > This was initially caught by our tests, and I was able to reduce it to a
+> > > relatively simple reproducer.  Such deadlocks are probably supposed to
+> > > be covered in iotests/graph-changes-while-io, but this deadlock isn't.
+> > > 
+> > > Basically what the reproducer does is launches QEMU with a drive having
+> > > 'iothread' option set, creates a chain of 2 snapshots, launches
+> > > block-commit job for a snapshot and then dismisses the job, starting
+> > > from the lower snapshot.  If the guest is issuing IO at the same time,
+> > > there's a race in acquiring block graph lock and a potential deadlock.
+> > > 
+> > > Here's how it can be reproduced:
+> > > 
+> > > 1. Run QEMU:
+> > > > SRCDIR=/path/to/srcdir
+> > > > $SRCDIR/build/qemu-system-x86_64 -enable-kvm \
+> > > >    -machine q35 -cpu Nehalem \
+> > > >    -name guest=alma8-vm,debug-threads=on \
+> > > >    -m 2g -smp 2 \
+> > > >    -nographic -nodefaults \
+> > > >    -qmp unix:/var/run/alma8-qmp.sock,server=on,wait=off \
+> > > >    -serial unix:/var/run/alma8-serial.sock,server=on,wait=off \
+> > > >    -object iothread,id=iothread0 \
+> > > >    -blockdev node-name=disk,driver=qcow2,file.driver=file,file.filename=/path/to/img/alma8.qcow2 \
+> > > >    -device virtio-blk-pci,drive=disk,iothread=iothread0
+> > > 2. Launch IO (random reads) from within the guest:
+> > > > nc -U /var/run/alma8-serial.sock
+> > > > ...
+> > > > [root@alma8-vm ~]# fio --name=randread --ioengine=libaio --direct=1 --bs=4k --size=1G --numjobs=1 --time_based=1 --runtime=300 --group_reporting --rw=randread --iodepth=1 --filename=/testfile
+> > > 3. Run snapshots creation & removal of lower snapshot operation in a
+> > > loop (script attached):
+> > > > while /bin/true ; do ./remove_lower_snap.sh ; done
+> > > And then it occasionally hangs.
+> > > 
+> > > Note: I've tried bisecting this, and looks like deadlock occurs starting
+> > > from the following commit:
+> > > 
+> > > (BAD)  5bdbaebcce virtio: Re-enable notifications after drain
+> > > (GOOD) c42c3833e0 virtio-scsi: Attach event vq notifier with no_poll
+> > > 
+> > > On the latest v10.0.0 it does hang as well.
+> > > 
+> > > 
+> > > Here's backtrace of the main thread:
+> > > 
+> > > > #0  0x00007fc547d427ce in __ppoll (fds=0x557eb79657b0, nfds=1, timeout=<optimized out>, sigmask=0x0) at ../sysdeps/unix/sysv/linux/ppoll.c:43
+> > > > #1  0x0000557eb47d955c in qemu_poll_ns (fds=0x557eb79657b0, nfds=1, timeout=-1) at ../util/qemu-timer.c:329
+> > > > #2  0x0000557eb47b2204 in fdmon_poll_wait (ctx=0x557eb76c5f20, ready_list=0x7ffd94b4edd8, timeout=-1) at ../util/fdmon-poll.c:79
+> > > > #3  0x0000557eb47b1c45 in aio_poll (ctx=0x557eb76c5f20, blocking=true) at ../util/aio-posix.c:730
+> > > > #4  0x0000557eb4621edd in bdrv_do_drained_begin (bs=0x557eb795e950, parent=0x0, poll=true) at ../block/io.c:378
+> > > > #5  0x0000557eb4621f7b in bdrv_drained_begin (bs=0x557eb795e950) at ../block/io.c:391
+> > > > #6  0x0000557eb45ec125 in bdrv_change_aio_context (bs=0x557eb795e950, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
+> > > >      at ../block.c:7682
+> > > > #7  0x0000557eb45ebf2b in bdrv_child_change_aio_context (c=0x557eb7964250, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
+> > > >      at ../block.c:7608
+> > > > #8  0x0000557eb45ec0c4 in bdrv_change_aio_context (bs=0x557eb79575e0, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
+> > > >      at ../block.c:7668
+> > > > #9  0x0000557eb45ebf2b in bdrv_child_change_aio_context (c=0x557eb7e59110, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
+> > > >      at ../block.c:7608
+> > > > #10 0x0000557eb45ec0c4 in bdrv_change_aio_context (bs=0x557eb7e51960, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
+> > > >      at ../block.c:7668
+> > > > #11 0x0000557eb45ebf2b in bdrv_child_change_aio_context (c=0x557eb814ed80, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
+> > > >      at ../block.c:7608
+> > > > #12 0x0000557eb45ee8e4 in child_job_change_aio_ctx (c=0x557eb7c9d3f0, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
+> > > >      at ../blockjob.c:157
+> > > > #13 0x0000557eb45ebe2d in bdrv_parent_change_aio_context (c=0x557eb7c9d3f0, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
+> > > >      at ../block.c:7592
+> > > > #14 0x0000557eb45ec06b in bdrv_change_aio_context (bs=0x557eb7d74310, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
+> > > >      at ../block.c:7661
+> > > > #15 0x0000557eb45dcd7e in bdrv_child_cb_change_aio_ctx
+> > > >      (child=0x557eb8565af0, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0) at ../block.c:1234
+> > > > #16 0x0000557eb45ebe2d in bdrv_parent_change_aio_context (c=0x557eb8565af0, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
+> > > >      at ../block.c:7592
+> > > > #17 0x0000557eb45ec06b in bdrv_change_aio_context (bs=0x557eb79575e0, ctx=0x557eb76c5f20, visited=0x557eb7e06b60 = {...}, tran=0x557eb7a87160, errp=0x0)
+> > > >      at ../block.c:7661
+> > > > #18 0x0000557eb45ec1f3 in bdrv_try_change_aio_context (bs=0x557eb79575e0, ctx=0x557eb76c5f20, ignore_child=0x0, errp=0x0) at ../block.c:7715
+> > > > #19 0x0000557eb45e1b15 in bdrv_root_unref_child (child=0x557eb7966f30) at ../block.c:3317
+> > > > #20 0x0000557eb45eeaa8 in block_job_remove_all_bdrv (job=0x557eb7952800) at ../blockjob.c:209
+> > > > #21 0x0000557eb45ee641 in block_job_free (job=0x557eb7952800) at ../blockjob.c:82
+> > > > #22 0x0000557eb45f17af in job_unref_locked (job=0x557eb7952800) at ../job.c:474
+> > > > #23 0x0000557eb45f257d in job_do_dismiss_locked (job=0x557eb7952800) at ../job.c:771
+> > > > #24 0x0000557eb45f25fe in job_dismiss_locked (jobptr=0x7ffd94b4f400, errp=0x7ffd94b4f488) at ../job.c:783
+> > > > --Type <RET> for more, q to quit, c to continue without paging--
+> > > > #25 0x0000557eb45d8e84 in qmp_job_dismiss (id=0x557eb7aa42b0 "commit-snap1", errp=0x7ffd94b4f488) at ../job-qmp.c:138
+> > > > #26 0x0000557eb472f6a3 in qmp_marshal_job_dismiss (args=0x7fc52c00a3b0, ret=0x7fc53c880da8, errp=0x7fc53c880da0) at qapi/qapi-commands-job.c:221
+> > > > #27 0x0000557eb47a35f3 in do_qmp_dispatch_bh (opaque=0x7fc53c880e40) at ../qapi/qmp-dispatch.c:128
+> > > > #28 0x0000557eb47d1cd2 in aio_bh_call (bh=0x557eb79568f0) at ../util/async.c:172
+> > > > #29 0x0000557eb47d1df5 in aio_bh_poll (ctx=0x557eb76c0200) at ../util/async.c:219
+> > > > #30 0x0000557eb47b12f3 in aio_dispatch (ctx=0x557eb76c0200) at ../util/aio-posix.c:436
+> > > > #31 0x0000557eb47d2266 in aio_ctx_dispatch (source=0x557eb76c0200, callback=0x0, user_data=0x0) at ../util/async.c:361
+> > > > #32 0x00007fc549232f4f in g_main_dispatch (context=0x557eb76c6430) at ../glib/gmain.c:3364
+> > > > #33 g_main_context_dispatch (context=0x557eb76c6430) at ../glib/gmain.c:4079
+> > > > #34 0x0000557eb47d3ab1 in glib_pollfds_poll () at ../util/main-loop.c:287
+> > > > #35 0x0000557eb47d3b38 in os_host_main_loop_wait (timeout=0) at ../util/main-loop.c:310
+> > > > #36 0x0000557eb47d3c58 in main_loop_wait (nonblocking=0) at ../util/main-loop.c:589
+> > > > #37 0x0000557eb4218b01 in qemu_main_loop () at ../system/runstate.c:835
+> > > > #38 0x0000557eb46df166 in qemu_default_main (opaque=0x0) at ../system/main.c:50
+> > > > #39 0x0000557eb46df215 in main (argc=24, argv=0x7ffd94b4f8d8) at ../system/main.c:80
+> > > 
+> > > And here's coroutine trying to acquire read lock:
+> > > 
+> > > > (gdb) qemu coroutine reader_queue->entries.sqh_first
+> > > > #0  0x0000557eb47d7068 in qemu_coroutine_switch (from_=0x557eb7aa48b0, to_=0x7fc537fff508, action=COROUTINE_YIELD) at ../util/coroutine-ucontext.c:321
+> > > > #1  0x0000557eb47d4d4a in qemu_coroutine_yield () at ../util/qemu-coroutine.c:339
+> > > > #2  0x0000557eb47d56c8 in qemu_co_queue_wait_impl (queue=0x557eb59954c0 <reader_queue>, lock=0x7fc53c57de50, flags=0) at ../util/qemu-coroutine-lock.c:60
+> > > > #3  0x0000557eb461fea7 in bdrv_graph_co_rdlock () at ../block/graph-lock.c:231
+> > > > #4  0x0000557eb460c81a in graph_lockable_auto_lock (x=0x7fc53c57dee3) at /home/root/src/qemu/master/include/block/graph-lock.h:213
+> > > > #5  0x0000557eb460fa41 in blk_co_do_preadv_part
+> > > >      (blk=0x557eb84c0810, offset=6890553344, bytes=4096, qiov=0x7fc530006988, qiov_offset=0, flags=BDRV_REQ_REGISTERED_BUF) at ../block/block-backend.c:1339
+> > > > #6  0x0000557eb46104d7 in blk_aio_read_entry (opaque=0x7fc530003240) at ../block/block-backend.c:1619
+> > > > #7  0x0000557eb47d6c40 in coroutine_trampoline (i0=-1213577040, i1=21886) at ../util/coroutine-ucontext.c:175
+> > > > #8  0x00007fc547c2a360 in __start_context () at ../sysdeps/unix/sysv/linux/x86_64/__start_context.S:91
+> > > > #9  0x00007ffd94b4ea40 in  ()
+> > > > #10 0x0000000000000000 in  ()
+> > > 
+> > > So it looks like main thread is processing job-dismiss request and is
+> > > holding write lock taken in block_job_remove_all_bdrv() (frame #20
+> > > above).  At the same time iothread spawns a coroutine which performs IO
+> > > request.  Before the coroutine is spawned, blk_aio_prwv() increases
+> > > 'in_flight' counter for Blk.  Then blk_co_do_preadv_part() (frame #5) is
+> > > trying to acquire the read lock.  But main thread isn't releasing the
+> > > lock as blk_root_drained_poll() returns true since blk->in_flight > 0.
+> > > Here's the deadlock.
+> > > 
+> > > Any comments and suggestions on the subject are welcomed.  Thanks!
+> > I think this is what the blk_wait_while_drained() call was supposed to
+> > address in blk_co_do_preadv_part(). However, with the use of multiple
+> > I/O threads, this is racy.
+> > 
+> > Do you think that in your case we hit the small race window between the
+> > checks in blk_wait_while_drained() and GRAPH_RDLOCK_GUARD()? Or is there
+> > another reason why blk_wait_while_drained() didn't do its job?
+> > 
+> At my opinion there is very big race window. Main thread has
+> eaten graph write lock. After that another coroutine is stalled
+> within GRAPH_RDLOCK_GUARD() as there is no drain at the moment and only
+> after that main thread has started drain.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/cpu.h               |  6 ----
- target/i386/emulate/x86_emu.c   |  4 +--
- target/i386/emulate/x86_flags.c | 55 ++++++++++++++++-----------------
- 3 files changed, 29 insertions(+), 36 deletions(-)
+You're right, I confused taking the write lock with draining there.
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 54bf9639f19..8e3323f96f8 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1809,11 +1809,6 @@ typedef struct CPUCaches {
-         CPUCacheInfo *l3_cache;
- } CPUCaches;
- 
--typedef struct X86LazyFlags {
--    target_ulong result;
--    target_ulong auxbits;
--} X86LazyFlags;
--
- typedef struct CPUArchState {
-     /* standard registers */
-     target_ulong regs[CPU_NB_REGS];
-@@ -2106,7 +2101,6 @@ typedef struct CPUArchState {
-     QemuMutex xen_timers_lock;
- #endif
- #if defined(CONFIG_HVF)
--    X86LazyFlags lflags;
-     void *emu_mmio_buf;
- #endif
- 
-diff --git a/target/i386/emulate/x86_emu.c b/target/i386/emulate/x86_emu.c
-index 61bd5af5bb1..4890e0a4e5e 100644
---- a/target/i386/emulate/x86_emu.c
-+++ b/target/i386/emulate/x86_emu.c
-@@ -474,10 +474,10 @@ static inline void string_rep(CPUX86State *env, struct x86_decode *decode,
-     while (rcx--) {
-         func(env, decode);
-         write_reg(env, R_ECX, rcx, decode->addressing_size);
--        if ((PREFIX_REP == rep) && !env->lflags.result) {
-+        if ((PREFIX_REP == rep) && !env->cc_dst) {
-             break;
-         }
--        if ((PREFIX_REPN == rep) && env->lflags.result) {
-+        if ((PREFIX_REPN == rep) && env->cc_dst) {
-             break;
-         }
-     }
-diff --git a/target/i386/emulate/x86_flags.c b/target/i386/emulate/x86_flags.c
-index c347a951889..a4f7af8aacd 100644
---- a/target/i386/emulate/x86_flags.c
-+++ b/target/i386/emulate/x86_flags.c
-@@ -31,10 +31,10 @@
- 
- /*
-  * The algorithms here are similar to those in Bochs.  After an ALU
-- * operation, RESULT can be used to compute ZF, SF and PF, whereas
-- * AUXBITS is used to compute AF, CF and OF.  In reality, SF and PF are the
-- * XOR of the value computed from RESULT and the value found in bits 7 and 2
-- * of AUXBITS; this way the same logic can be used to compute the flags
-+ * operation, CC_DST can be used to compute ZF, SF and PF, whereas
-+ * CC_SRC is used to compute AF, CF and OF.  In reality, SF and PF are the
-+ * XOR of the value computed from CC_DST and the value found in bits 7 and 2
-+ * of CC_SRC; this way the same logic can be used to compute the flags
-  * both before and after an ALU operation.
-  *
-  * Compared to the TCG CC_OP codes, this avoids conditionals when converting
-@@ -65,14 +65,14 @@
-  * place PO and CF in the top two bits.
-  */
- #define SET_FLAGS_OSZAPC_SIZE(size, lf_carries, lf_result) { \
--    env->lflags.result = (target_ulong)(int##size##_t)(lf_result); \
-+    env->cc_dst = (target_ulong)(int##size##_t)(lf_result); \
-     target_ulong temp = (lf_carries); \
-     if ((size) == TARGET_LONG_BITS) { \
-         temp = temp & ~(LF_MASK_PD | LF_MASK_SD); \
-     } else { \
-         temp = (temp & LF_MASK_AF) | (temp << (TARGET_LONG_BITS - (size))); \
-     } \
--    env->lflags.auxbits = temp; \
-+    env->cc_src = temp; \
- }
- 
- /* carries, result */
-@@ -89,15 +89,15 @@
- /* same as setting OSZAPC, but preserve CF and flip PO if the old value of CF
-  * did not match the high bit of lf_carries. */
- #define SET_FLAGS_OSZAP_SIZE(size, lf_carries, lf_result) { \
--    env->lflags.result = (target_ulong)(int##size##_t)(lf_result); \
-+    env->cc_dst = (target_ulong)(int##size##_t)(lf_result); \
-     target_ulong temp = (lf_carries); \
-     if ((size) == TARGET_LONG_BITS) { \
-         temp = (temp & ~(LF_MASK_PD | LF_MASK_SD)); \
-     } else { \
-         temp = (temp & LF_MASK_AF) | (temp << (TARGET_LONG_BITS - (size))); \
-     } \
--    target_ulong cf_changed = ((target_long)(env->lflags.auxbits ^ temp)) < 0; \
--    env->lflags.auxbits = temp ^ (cf_changed * (LF_MASK_PO | LF_MASK_CF)); \
-+    target_ulong cf_changed = ((target_long)(env->cc_src ^ temp)) < 0; \
-+    env->cc_src = temp ^ (cf_changed * (LF_MASK_PO | LF_MASK_CF)); \
- }
- 
- /* carries, result */
-@@ -110,9 +110,9 @@
- 
- void SET_FLAGS_OxxxxC(CPUX86State *env, bool new_of, bool new_cf)
- {
--    env->lflags.auxbits &= ~(LF_MASK_PO | LF_MASK_CF);
--    env->lflags.auxbits |= (-(target_ulong)new_cf << LF_BIT_PO);
--    env->lflags.auxbits ^= ((target_ulong)new_of << LF_BIT_PO);
-+    env->cc_src &= ~(LF_MASK_PO | LF_MASK_CF);
-+    env->cc_src |= (-(target_ulong)new_cf << LF_BIT_PO);
-+    env->cc_src ^= ((target_ulong)new_of << LF_BIT_PO);
- }
- 
- void SET_FLAGS_OSZAPC_SUB32(CPUX86State *env, uint32_t v1, uint32_t v2,
-@@ -208,37 +208,36 @@ void SET_FLAGS_OSZAPC_LOGIC8(CPUX86State *env, uint8_t v1, uint8_t v2,
- 
- static inline uint32_t get_PF(CPUX86State *env)
- {
--    uint8_t temp = env->lflags.result;
--    return ((parity8(temp) - 1) ^ env->lflags.auxbits) & CC_P;
-+    return ((parity8(env->cc_dst) - 1) ^ env->cc_src) & CC_P;
- }
- 
- static inline uint32_t get_OF(CPUX86State *env)
- {
--    return ((env->lflags.auxbits >> (LF_BIT_CF - 11)) + CC_O / 2) & CC_O;
-+    return ((env->cc_src >> (LF_BIT_CF - 11)) + CC_O / 2) & CC_O;
- }
- 
- bool get_CF(CPUX86State *env)
- {
--    return ((target_long)env->lflags.auxbits) < 0;
-+    return ((target_long)env->cc_src) < 0;
- }
- 
- void set_CF(CPUX86State *env, bool val)
- {
-     /* If CF changes, flip PO and CF */
-     target_ulong temp = -(target_ulong)val;
--    target_ulong cf_changed = ((target_long)(env->lflags.auxbits ^ temp)) < 0;
--    env->lflags.auxbits ^= cf_changed * (LF_MASK_PO | LF_MASK_CF);
-+    target_ulong cf_changed = ((target_long)(env->cc_src ^ temp)) < 0;
-+    env->cc_src ^= cf_changed * (LF_MASK_PO | LF_MASK_CF);
- }
- 
- static inline uint32_t get_ZF(CPUX86State *env)
- {
--    return env->lflags.result ? 0 : CC_Z;
-+    return env->cc_dst ? 0 : CC_Z;
- }
- 
- static inline uint32_t get_SF(CPUX86State *env)
- {
--    return ((env->lflags.result >> (LF_SIGN_BIT - LF_BIT_SD)) ^
--            env->lflags.auxbits) & CC_S;
-+    return ((env->cc_dst >> (LF_SIGN_BIT - LF_BIT_SD)) ^
-+            env->cc_src) & CC_S;
- }
- 
- void lflags_to_rflags(CPUX86State *env)
-@@ -246,8 +245,8 @@ void lflags_to_rflags(CPUX86State *env)
-     env->eflags &= ~(CC_C|CC_P|CC_A|CC_Z|CC_S|CC_O);
-     /* rotate left by one to move carry-out bits into CF and AF */
-     env->eflags |= (
--        (env->lflags.auxbits << 1) |
--        (env->lflags.auxbits >> (TARGET_LONG_BITS - 1))) & (CC_C | CC_A);
-+        (env->cc_src << 1) |
-+        (env->cc_src >> (TARGET_LONG_BITS - 1))) & (CC_C | CC_A);
-     env->eflags |= get_SF(env);
-     env->eflags |= get_PF(env);
-     env->eflags |= get_ZF(env);
-@@ -258,17 +257,17 @@ void rflags_to_lflags(CPUX86State *env)
- {
-     target_ulong cf_xor_of;
- 
--    env->lflags.auxbits = CC_P;
--    env->lflags.auxbits ^= env->eflags & (CC_S | CC_P);
-+    env->cc_src = CC_P;
-+    env->cc_src ^= env->eflags & (CC_S | CC_P);
- 
-     /* rotate right by one to move CF and AF into the carry-out positions */
--    env->lflags.auxbits |= (
-+    env->cc_src |= (
-         (env->eflags >> 1) |
-         (env->eflags << (TARGET_LONG_BITS - 1))) & (CC_C | CC_A);
- 
-     cf_xor_of = (env->eflags & (CC_C | CC_O)) + (CC_O - CC_C);
--    env->lflags.auxbits |= -cf_xor_of & LF_MASK_PO;
-+    env->cc_src |= -cf_xor_of & LF_MASK_PO;
- 
-     /* Leave the low byte zero so that parity is not affected.  */
--    env->lflags.result = !(env->eflags & CC_Z) << 8;
-+    env->cc_dst = !(env->eflags & CC_Z) << 8;
- }
--- 
-2.49.0
+> That is why Fiona's idea is looking working. Though this would mean
+> that normally we should always do that at the moment when we acquire
+> write lock. May be even inside this function.
+
+I actually see now that not all of my graph locking patches were merged.
+At least I did have the thought that bdrv_drained_begin() must be marked
+GRAPH_UNLOCKED because it polls. That means that calling it from inside
+bdrv_try_change_aio_context() is actually forbidden (and that's the part
+I didn't see back then because it doesn't have TSA annotations).
+
+If you refactor the code to move the drain out to before the lock is
+taken, I think you end up with Fiona's patch, except you'll remove the
+forbidden inner drain and add more annotations for some functions and
+clarify the rules around them. I don't know, but I wouldn't be surprised
+if along the process we find other bugs, too.
+
+So Fiona's drain looks right to me, but we should probably approach it
+more systematically.
+
+Kevin
 
 
