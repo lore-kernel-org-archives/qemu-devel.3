@@ -4,154 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E54FC3ABAC
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 16:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07975C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 16:41:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAtEw-0003MO-RA; Fri, 02 May 2025 12:27:54 -0400
+	id 1uAtQP-00066c-DD; Fri, 02 May 2025 12:39:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1uAtEv-0003M1-IV
- for qemu-devel@nongnu.org; Fri, 02 May 2025 12:27:53 -0400
-Received: from mout.gmx.net ([212.227.15.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1uAtEt-0006nA-8F
- for qemu-devel@nongnu.org; Fri, 02 May 2025 12:27:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1746203265; x=1746808065; i=deller@gmx.de;
- bh=ar/Yu+me9YfsoJ21xcuRXzzmodcjKoD+2VXb417ffqI=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=EfJeDAVJ6cZ648HZXbvcsE+AVJ42KuP7eJvQAoxhxt1gaKuvQ63Pu3kBG4WaiJj5
- 0taYZVewwNAsf03bxRgoWdnfWVgeFTM54nKQoU8xvAFDpWOX86T8WXZMmFHQX0Ti5
- RE5fVlpbdFcbOZTjlrMntbsWpTkc4hK2ohet0GZ17BbvMw7Jl3p7Kk1A+0Lf/hLod
- hpDp7Rrp5VktVpdLskOVavPATJ6pbVbjl/jmXSlYTAKr3nFUWbTD4TJ5uc0B1mhhx
- 637t+ArgLNrDPTOU1zE3laKEQER0Nap57nH3WKrwjN0QOc0/qjuWgyWPw//pCNPA2
- 9n4GxHkXYU1GYlVu8Q==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.20.173] ([109.250.63.181]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MJVDW-1uUd323fJY-00ITVV; Fri, 02
- May 2025 18:27:44 +0200
-Message-ID: <5aaf6f27-1157-4f2c-b16b-eb28b07a71eb@gmx.de>
-Date: Fri, 2 May 2025 18:27:44 +0200
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uAtQO-00066D-LR
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 12:39:44 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uAtQL-0004Oj-CZ
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 12:39:44 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7369ce5d323so2244629b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 09:39:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746203980; x=1746808780; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ov2+fSeigHznskBWAHFz17Xla4OiPqdPbenXGIwMlQQ=;
+ b=iWXER99N55qyZPyVhViDadA3mAD/krmvorog4E/UZBFqMXv8VyKyhDXV6pfE1Y8LV9
+ Y4VOrmlyrC0JckSdnfNvS/KPWINpKJtAIHXsijv6AA4l54tD3gfBAk1c1ZfHvy5qFgAD
+ k5UZid04l00wvmSFRmOBZe7BnaiIYtWkPBwdByiF72R8dppEZdqGD//bS/a+xmJx8a9I
+ d4QGJxEENAdRZloZti7YmS+tfh2tepM7dWriDj7Zx5ooSNyazwP3vXXfGix1odcO0evV
+ beyp4xmYWd9AcvhQoNeXNO6izLvpAwmhy7rtN0naVAh71+sBsy/3/T88jdwuQN+d/fBD
+ iTvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746203980; x=1746808780;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ov2+fSeigHznskBWAHFz17Xla4OiPqdPbenXGIwMlQQ=;
+ b=qFWic+B55FXcixg1D/I/kzRQ2ul14+2/jOJRaQG05OlSf7BdcSY8VIlpMpMAhvUJy/
+ 9C0rpAM1dmSJKL7umI1PxuTZ30A3RUa4+1AbEcGdzu9jVRn2Xw8aQAYxifxWYmOSosnU
+ nobK/r/tnKpz3S0iGq5ao8B7BGO/grBbeZNt2/bJ92e1YgB2srWgQFtqnEXzTFyzlPmd
+ XgzCoTyruw2XuI9cVNX+Jze0BX+SlTKDUoiHO5vW4OSyUOO1/SdbDr5GLV2YevuurI4M
+ 5i+n0ZluWaR+3u7L+GT1lvQTLpwn+odYE95FetYTgA22bPs9SLsLimFrFkO9Xen4woba
+ nm5g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWIDRWNYWzPsLIoRpmzms/7/ZKbB/EChQcwlMofV8Gl6LfkvIusXjgqUipDLaPajAzSgSRuLATDOQv0@nongnu.org
+X-Gm-Message-State: AOJu0YyD22fuBqRWhLi5SNdUMPDNbI0CcljItRdPYNZvj6jk7fs2hNFY
+ qHzmUphr8zPB9S7XJs5kGBJDjyKqJ1vtSDahjEP/6diVf3W5rHTxF0mGM+5K1YE=
+X-Gm-Gg: ASbGncuV8Hh7gNpPStESgY47SnmyiW+8JVa2yJU+XZ8MG9K3SF9a9+QPg61oVGtU42v
+ mHK1N3sBNhu84rvudlm7E6SOC3ayxzp8RD+GqZsP7s2bArf3vst9lsnqymMRkma+uMM0MNqUWpv
+ OOixhM3DTJFef1+s/xCfpC57+q1tYaFLAEvxzNBV/P5mMlew0WyP5QvHoZ9yW2oXbi/cyL4s8/4
+ tyHfNzF0Ed208F+FUGFczMw4msyWphHosu3DbbMUbuvmlNJD/sxYYyHPmWuOtxAjqZGzmA7yy04
+ KAnjKxhq8ysR+HzdX5ezylXOXqItbR9xqMiBjphUN2YGEHvUPLMzVQ==
+X-Google-Smtp-Source: AGHT+IHmVuFWCI2rlgJozk+6E57xaLTpIykHP1/vDuaDAViicHmCpsOUPQZ2ztzUWD8nXUVxU0xBOA==
+X-Received: by 2002:a05:6a00:4ace:b0:739:50c0:b3fe with SMTP id
+ d2e1a72fcca58-74058a1a76amr5976300b3a.8.1746203979630; 
+ Fri, 02 May 2025 09:39:39 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b1fb3c6d5aasm977527a12.74.2025.05.02.09.39.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 May 2025 09:39:39 -0700 (PDT)
+Message-ID: <ff403231-a36a-46a8-9168-2ac32a44328a@linaro.org>
+Date: Fri, 2 May 2025 09:39:37 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/char/serial: Remove unused prog_if compat property
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- philmd@linaro.org
-References: <20250502095524.DE1F355D264@zero.eik.bme.hu>
+Subject: Re: [RFC PATCH] hw/virtio: Introduce CONFIG_VIRTIO_LEGACY to disable
+ legacy support
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
+ <eperezma@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>,
+ Raphael Norwitz <raphael.norwitz@nutanix.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-ppc@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Anton Johansson <anjo@rev.ng>, qemu-arm@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20250502132441.64723-1-philmd@linaro.org>
 Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <20250502095524.DE1F355D264@zero.eik.bme.hu>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250502132441.64723-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:4I+VYuN3RtkRGxMijqfRmOr/8NqtdHqXaXwgtoFK7P8ymvUfvYS
- XXgBfLsUsoc5RB6o+NPtIGdmc0kmwkrEEwZiNqxQDQSeM7Scldl97kyfzYFQ1B7BygZaYTq
- ANsd0XFvq+7BH1beIA0Z0J2BPkEgc6EmNnLFYe9jsr1R6oqWzA/1Wpi/64v7XAkhzmnybJi
- rAOIpeKlXUVIRrg66/bRg==
-UI-OutboundReport: notjunk:1;M01:P0:h9liClKCSOs=;wkvGYbZqyoEAWvanrugOy5Q7gAJ
- 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
- EI44he6G81gNgzT7jIxUhI=
-Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,23 +119,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/2/25 11:55, BALATON Zoltan wrote:
-> This property was added to preserve previous value when this was fixed
-> in version 2.1 but the last machine using it was already removed when
-> adding diva-gsp leaving this property unused and unnecessary.
->=20
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 5/2/25 6:24 AM, Philippe Mathieu-Daudé wrote:
+> Legacy VirtIO devices don't have their endianness clearly defined.
+> QEMU infers it taking the endianness of the (target) binary, or,
+> when a target support switching endianness at runtime, taking the
+> endianness of the vCPU accessing the device.
+>
+
+Probably it's what you meant, but it is clearly defined by the standard 
+[1]. It's just not fixed.
+
+2.4.3 Legacy Interfaces: A Note on Virtqueue Endianness
+Note that when using the legacy interface, transitional devices and 
+drivers MUST use the native endian of the guest as the endian of fields 
+and in the virtqueue. This is opposed to little-endian for non-legacy 
+interface as specified by this standard. It is assumed that the host is 
+already aware of the guest endian.
+
+[1] 
+https://docs.oasis-open.org/virtio/virtio/v1.0/cs04/virtio-v1.0-cs04.html#x1-250003
+
+> Devices modelling shouldn't really change depending on a property
+> of a CPU accessing it.
+> 
+
+Devices concerning various targets are aware of the cpu and its properties.
+
+> For heterogeneous systems, it is simpler to break such dev <-> cpu
+> dependency, only allowing generic device models, with no knowledge
+> of CPU (or DMA controller) accesses.
+>
+
+At this point, we speculated it could be a problem, without really 
+proving it. In case all accesses are done within a given vcpu thread, 
+there is no ambiguity on the current endianness.
+How about we wait to expose a crash in an heterogeneous system to take a 
+decision?
+
+> Therefore we introduce the VIRTIO_LEGACY Kconfig key. We keep the
+> current default (enabled).
+> New binaries can set CONFIG_VIRTIO_LEGACY=n to restrict models to
+> the VirtIO version 1 spec.
+>
+
+I think it's a good change, regarding the legacy support.
+
+However, if the only goal is to support a custom configuration for 
+heterogeneous emulation, I think it's the wrong direction.
+
+In essence, we are working hard right now to remove compile time 
+configuration for various QEMU targets.
+So seeing a new compile time configuration to solve something looks like 
+the opposite of what we are trying to achive.
+A possible alternative would be to enable virtio legacy support at 
+runtime, based on a specific criteria. From what I remember, legacy vs 
+modern is a property set by disable-modern=bool,disable-legacy=bool, and 
+"modern" is the default.
+Thus, we can simply restrict the disable-legacy=on in case we detect 
+it's an heterogeneous emulation scenario.
+
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
-> v2:
-> Reword commit message, add Rb tag
->=20
->   hw/char/diva-gsp.c         |  6 ++----
->   hw/char/serial-pci-multi.c |  7 ++-----
->   hw/char/serial-pci.c       | 10 ++--------
->   3 files changed, 6 insertions(+), 17 deletions(-)
+>   include/hw/virtio/virtio-access.h | 5 ++++-
+>   hw/virtio/virtio.c                | 8 ++++++++
+>   target/arm/cpu.c                  | 5 +++++
+>   target/ppc/cpu_init.c             | 5 +++++
+>   hw/virtio/Kconfig                 | 5 +++++
+>   5 files changed, 27 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-access.h
+> index 07aae69042a..b5b471711a6 100644
+> --- a/include/hw/virtio/virtio-access.h
+> +++ b/include/hw/virtio/virtio-access.h
+> @@ -20,7 +20,10 @@
+>   #include "hw/virtio/virtio.h"
+>   #include "hw/virtio/virtio-bus.h"
+>   
+> -#if defined(TARGET_PPC64) || defined(TARGET_ARM)
+> +#include CONFIG_DEVICES
+> +
+> +#if defined(CONFIG_VIRTIO_LEGACY) && \
+> +    (defined(TARGET_PPC64) || defined(TARGET_ARM))
+>   #define LEGACY_VIRTIO_IS_BIENDIAN 1
+>   #endif
+>   
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 480c2e50365..659ab3cb969 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -47,6 +47,8 @@
+>   #include "standard-headers/linux/virtio_mem.h"
+>   #include "standard-headers/linux/virtio_vsock.h"
+>   
+> +#include CONFIG_DEVICES
+> +
+>   /*
+>    * Maximum size of virtio device config space
+>    */
+> @@ -3502,6 +3504,7 @@ void virtio_init(VirtIODevice *vdev, uint16_t device_id, size_t config_size)
+>   bool virtio_legacy_allowed(VirtIODevice *vdev)
+>   {
+>       switch (vdev->device_id) {
+> +#ifdef CONFIG_VIRTIO_LEGACY
+>       case VIRTIO_ID_NET:
+>       case VIRTIO_ID_BLOCK:
+>       case VIRTIO_ID_CONSOLE:
+> @@ -3513,6 +3516,7 @@ bool virtio_legacy_allowed(VirtIODevice *vdev)
+>       case VIRTIO_ID_RPROC_SERIAL:
+>       case VIRTIO_ID_CAIF:
+>           return true;
+> +#endif
+>       default:
+>           return false;
+>       }
+> @@ -4014,8 +4018,10 @@ static const Property virtio_properties[] = {
+>       DEFINE_VIRTIO_COMMON_FEATURES(VirtIODevice, host_features),
+>       DEFINE_PROP_BOOL("use-started", VirtIODevice, use_started, true),
+>       DEFINE_PROP_BOOL("use-disabled-flag", VirtIODevice, use_disabled_flag, true),
+> +#ifdef CONFIG_VIRTIO_LEGACY
+>       DEFINE_PROP_BOOL("x-disable-legacy-check", VirtIODevice,
+>                        disable_legacy_check, false),
+> +#endif
+>   };
+>   
+>   static int virtio_device_start_ioeventfd_impl(VirtIODevice *vdev)
+> @@ -4151,7 +4157,9 @@ static void virtio_device_class_init(ObjectClass *klass, const void *data)
+>       vdc->start_ioeventfd = virtio_device_start_ioeventfd_impl;
+>       vdc->stop_ioeventfd = virtio_device_stop_ioeventfd_impl;
+>   
+> +#ifdef CONFIG_VIRTIO_LEGACY
+>       vdc->legacy_features |= VIRTIO_LEGACY_FEATURES;
+> +#endif
+>   }
+>   
+>   bool virtio_device_ioeventfd_enabled(VirtIODevice *vdev)
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 5e951675c60..d01fcb9fd1a 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -39,6 +39,7 @@
+>   #if !defined(CONFIG_USER_ONLY)
+>   #include "hw/loader.h"
+>   #include "hw/boards.h"
+> +#include CONFIG_DEVICES
+>   #ifdef CONFIG_TCG
+>   #include "hw/intc/armv7m_nvic.h"
+>   #endif /* CONFIG_TCG */
+> @@ -1130,6 +1131,7 @@ static void arm_cpu_kvm_set_irq(void *opaque, int irq, int level)
+>   #endif
+>   }
+>   
+> +#ifdef CONFIG_VIRTIO_LEGACY
+>   static bool arm_cpu_virtio_is_big_endian(CPUState *cs)
+>   {
+>       ARMCPU *cpu = ARM_CPU(cs);
+> @@ -1138,6 +1140,7 @@ static bool arm_cpu_virtio_is_big_endian(CPUState *cs)
+>       cpu_synchronize_state(cs);
+>       return arm_cpu_data_is_big_endian(env);
+>   }
+> +#endif
+>   
+>   #ifdef CONFIG_TCG
+>   bool arm_cpu_exec_halt(CPUState *cs)
+> @@ -2681,7 +2684,9 @@ static const struct SysemuCPUOps arm_sysemu_ops = {
+>       .asidx_from_attrs = arm_asidx_from_attrs,
+>       .write_elf32_note = arm_cpu_write_elf32_note,
+>       .write_elf64_note = arm_cpu_write_elf64_note,
+> +#ifdef CONFIG_VIRTIO_LEGACY
+>       .virtio_is_big_endian = arm_cpu_virtio_is_big_endian,
+> +#endif
+>       .legacy_vmsd = &vmstate_arm_cpu,
+>   };
+>   #endif
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index b0973b6df95..4b6c347bda8 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -50,6 +50,7 @@
+>   #include "hw/boards.h"
+>   #include "hw/intc/intc.h"
+>   #include "kvm_ppc.h"
+> +#include CONFIG_DEVICES
+>   #endif
+>   
+>   #include "cpu_init.h"
+> @@ -7352,12 +7353,14 @@ static void ppc_cpu_reset_hold(Object *obj, ResetType type)
+>   
+>   #ifndef CONFIG_USER_ONLY
+>   
+> +#ifdef CONFIG_VIRTIO_LEGACY
+>   static bool ppc_cpu_is_big_endian(CPUState *cs)
+>   {
+>       cpu_synchronize_state(cs);
+>   
+>       return !FIELD_EX64(cpu_env(cs)->msr, MSR, LE);
+>   }
+> +#endif
+>   
+>   static bool ppc_get_irq_stats(InterruptStatsProvider *obj,
+>                                 uint64_t **irq_counts, unsigned int *nb_irqs)
+> @@ -7470,7 +7473,9 @@ static const struct SysemuCPUOps ppc_sysemu_ops = {
+>       .get_phys_page_debug = ppc_cpu_get_phys_page_debug,
+>       .write_elf32_note = ppc32_cpu_write_elf32_note,
+>       .write_elf64_note = ppc64_cpu_write_elf64_note,
+> +#ifdef CONFIG_VIRTIO_LEGACY
+>       .virtio_is_big_endian = ppc_cpu_is_big_endian,
+> +#endif
+>       .legacy_vmsd = &vmstate_ppc_cpu,
+>   };
+>   #endif
+> diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
+> index 7648a2d68da..314185f0016 100644
+> --- a/hw/virtio/Kconfig
+> +++ b/hw/virtio/Kconfig
+> @@ -1,6 +1,11 @@
+>   config VIRTIO
+>       bool
+>   
+> +config VIRTIO_LEGACY
+> +    bool
+> +    default y
+> +    depends on VIRTIO
+> +
+>   config VIRTIO_RNG
+>       bool
+>       default y
 
-Reviewed-by: Helge Deller <deller@gmx.de>
-
-Helge
+If the goal is to condition virtio_legacy, to maybe deprecate it one 
+day, then:
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
