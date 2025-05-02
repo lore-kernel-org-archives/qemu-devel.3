@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DDA1C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 21:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7784AC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 21:47:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAyCw-0000hm-Kq; Fri, 02 May 2025 17:46:10 -0400
+	id 1uAyDB-0000lI-3g; Fri, 02 May 2025 17:46:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAyCu-0000hF-VQ
- for qemu-devel@nongnu.org; Fri, 02 May 2025 17:46:09 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAyDA-0000l6-8C
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 17:46:24 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAyCt-0003W0-0B
- for qemu-devel@nongnu.org; Fri, 02 May 2025 17:46:08 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-acb39c45b4eso384454866b.1
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 14:46:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAyD8-0003Xe-Ns
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 17:46:24 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-ac2c663a3daso467642766b.2
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 14:46:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746222365; x=1746827165; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746222380; x=1746827180; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=N7Hzb0w1jlzsKSiFmuI60CliIwDp64ZHh16gYYLKY+A=;
- b=FIkrvETVpM7/xF+Bqq/Zqmhjna3nhTZpAovxV7z13FoOaLqiC04VzqXoWw4AvDMQgZ
- NZ9kqKX7j4XqrE3GL3LrlmMXIxK4BJ1g9BNivSxphx5l6r5JMO3COQnTrIbEf3dejUgd
- WnSoFHuX0sGPGak3rebxlXI6MD07oObUvKVy9TEX99mCNOx2M2EHWC2Wl+X/JcoTHLCg
- 8I+XjBGRIz4kUlIK7ltDXZau0et3kHMOvhQ+x8lRDH0p3+3yEDnhDUstLI/pESw1B/Av
- ddsHCC4c0QoxKEGapTPa3OwHjz0nftBYAVDUATrdYRm89ouew05OvdNmjnmwmB+dpedw
- bOgQ==
+ bh=DsDN4bksGI+t6Ajgx6lEwHOduZigzfyenP30N9rjdOI=;
+ b=RLC2spLKgwcop4kB/u1cqoTkwAsPI5BI4Yp8fyUTKurk5ZH5iePqpsKujvutBXQyyC
+ mhlrc7wszYMRT/qAAcfGnZ9PRepi9cIzzTq8EGx1APeUw8cXN0xzdSpLLUaoJ3M2NvbR
+ RiKaet4AhOezzy/P5p/3TVd/gaIY5WWhDTNtWnqMPqNP1ld9n6b+fpDcXMy9PUva89AQ
+ Hk64nDz5LWvgfQd1Tv1jEuD+xItgksHTC7OnCPe5ojS60Uxo7RYAuOu9jFKIIWIgBLXY
+ 2SKtx5T4NNJSAx1b+OXavEyF+wqAqyDoXAuOCjbATnGmtthhza+gesWSksmf8J0oYX4p
+ qQpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746222365; x=1746827165;
+ d=1e100.net; s=20230601; t=1746222380; x=1746827180;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=N7Hzb0w1jlzsKSiFmuI60CliIwDp64ZHh16gYYLKY+A=;
- b=NUVcudW1LQd3auFwFmbMlo/zohvSpt6kFKIe9B0VToOUIC53dZhCzseXuMcyT8jIZ7
- Q3fQOH4Xak0DlC5B2ia7Wsn71EfyXdSO69hD61pPyLm0GuQMX3IZvOBq+WJuIeEPIl1U
- 2o+1NhiGtl5+p98LHWwpkp0iHlQyddoz8xhyOLrkVu1oA6N22giSEGx9YS8Cer7s4QpW
- 62EeDx/gS0VyuBES68Tgl7zTAfVn6SgvHbi5Q5Lg/smMrAdnWxFmELHt0LVrw0Fwg+Yi
- MKT/LA90WoxaOgKOrKRmRrHuCRjzAvuspQ5M9/p3sx9EUuM604TynkBoVcnOvCn19Vtp
- rVCQ==
-X-Gm-Message-State: AOJu0YxHWcrxn3OGIOuzOSh2xNdyqJ2g1fYKAEwfTDa5pRrilc0mPD61
- OADd4CatYlj+uOLcim/LkMXyz8zUCdoGGaCxqYKIt0kUiWOIUZUue6aXduZC1UKYIkgKwBxcxc9
- U
-X-Gm-Gg: ASbGncs3gae5NVDNs7FSmjQVZ0eZgCk/T5RD/c2PQkIxoSsVvPbgGgUV6WZALWDal2m
- RKo7K0sdiBbJXX1MtcIeUoeePXjx8A8Nw7qW8r5QeaXjeSBpS2fvIVFmboUYHb0OKVoivnhXQjt
- w2HwEC7mqNl6kgt+lsNwNg0xvKcI0KzcgRSJjbarwjsrE1Z38wxhUQzBaZgl+556ifnm4RUihq3
- VmL2ThQvWMQioxqR2SLlbGryUr6W2dCBzGN68UIzvFrYY2LRVSps5kuuC1HoM8GHauGhT/Hvz7j
- w5XbRlMujIhcCKQB4JemPdMBi3tIEsVWh/W6GjQhlQlWHOSldOFoIcuVh47rqVCpoZ2zJ39t4KH
- Xh0z+dhh7O2vNh8E=
-X-Google-Smtp-Source: AGHT+IHSKjF+MWbA44wjBev1Hm9LEvO6FYp2edyMD03VZ8CX8LAX1Fei8dTHx3IfcxkLW1QyIvSd1A==
-X-Received: by 2002:a17:907:3fa4:b0:abf:73ba:fd60 with SMTP id
- a640c23a62f3a-ad17b5dbc19mr446152966b.29.1746222364621; 
- Fri, 02 May 2025 14:46:04 -0700 (PDT)
+ bh=DsDN4bksGI+t6Ajgx6lEwHOduZigzfyenP30N9rjdOI=;
+ b=CdCiwGI+1Sk72xS4EacbkfCus1WsPa9JQyoqAXcUcH6nBeSSFmry+u0hSYPKqm2NTA
+ O400hYVifAVSyyT70Itk5dcpHkJ/+1LezzSTG6aNwdyf+cKYVpG/oHFPewRUb7XgcC8G
+ n3RimzgG8EnpHxWn3yc64E07adlBXOoQYMXkxEz2bPrrjbqahBgfwtYe4VOCd4zjwCsK
+ okut3jCyr069uAE20L1vjBhSlZMqyAyOVImhx2CZDbQLNj4BBEimf8/1nBsAH3e8YH+3
+ 0p25t2OCgURI2mSUk63eZdhjYYJGv1VOP/sWTfepn6wtMiGhEfb70zILFGLb7+WsHdZE
+ /hMw==
+X-Gm-Message-State: AOJu0Yy//pBtYQNHXqJACfInHTnK5M/cL+6GsDakwMA1SMM41p6/rtMv
+ 7lTasTjFxMjc7ixmeotGQM8+fW0mO0S4eRQ822TEyayzoQcQ+YtSeqVgKuq9e2pnubIhRBvDn/b
+ G
+X-Gm-Gg: ASbGnctPqZ9Q4VwptN560JAlhlHM3BEQIJP1QGF5w2SzkY/4IQ2SF44ExKTOtoneRXk
+ 7cEAWhtFvYLi1ZcFVuFZVj0AtexV3I866/qjZCuZflduCckfYsRSGMhvKgacfhrOwql5YHTnmC7
+ KD9MibtiITxWXqMxNRBSpN24Iv2EeOEeaFGj3Hp6S4ubRnYn3oBaAAlge0KyrVgMJjtokfqodA/
+ F5VdKuZi1ZJARepXWJ0KQehcY1toFilXsLmAZ40kYUIY1EED5PlAasrQaLw42smm/CCfuEIYG6D
+ +VX8ONNGx4wkpPn6TBm1x3eU6xnn64u1IaOxQgzPB/Gk0gSNTRqiV1f5KcMsZ0aUuZy0ex1phmU
+ 63YaN6kAIAZk+T2g=
+X-Google-Smtp-Source: AGHT+IEYBcX/pI3wzQen51X21dbxGKuxteaaxZGI6zLLmUuNwiDzk46eWWBSMsdiidXDbkWZqLpSgw==
+X-Received: by 2002:a17:907:3f88:b0:ace:d811:db25 with SMTP id
+ a640c23a62f3a-ad17b01fe1dmr425125466b.60.1746222380468; 
+ Fri, 02 May 2025 14:46:20 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad1895402c7sm100512466b.164.2025.05.02.14.46.03
+ a640c23a62f3a-ad1895402c7sm100535466b.164.2025.05.02.14.46.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 02 May 2025 14:46:04 -0700 (PDT)
+ Fri, 02 May 2025 14:46:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -75,17 +75,17 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 2/5] qemu/target-info: Add %target_arch field to TargetInfo
-Date: Fri,  2 May 2025 23:45:48 +0200
-Message-ID: <20250502214551.80401-3-philmd@linaro.org>
+Subject: [PATCH v3 5/5] hw/virtio: Compile virtio-mem.c once
+Date: Fri,  2 May 2025 23:45:51 +0200
+Message-ID: <20250502214551.80401-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250502214551.80401-1-philmd@linaro.org>
 References: <20250502214551.80401-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,59 +108,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/qemu/target-info-impl.h | 4 +++-
- target-info-stub.c              | 1 +
- target-info.c                   | 3 +++
- 3 files changed, 7 insertions(+), 1 deletion(-)
+Remove unused "system/ram_addr.h" header. This file doesn't
+use any target specific definitions anymore, compile it once
+by moving it to system_virtio_ss[].
 
-diff --git a/include/qemu/target-info-impl.h b/include/qemu/target-info-impl.h
-index 1b51cbcfe1b..83d584d7dba 100644
---- a/include/qemu/target-info-impl.h
-+++ b/include/qemu/target-info-impl.h
-@@ -9,11 +9,13 @@
- #ifndef QEMU_TARGET_INFO_IMPL_H
- #define QEMU_TARGET_INFO_IMPL_H
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+---
+ hw/virtio/virtio-mem.c | 1 -
+ hw/virtio/meson.build  | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index 4234396f774..f4882c6901b 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -25,7 +25,6 @@
+ #include "hw/virtio/virtio-mem.h"
+ #include "qapi/error.h"
+ #include "qapi/visitor.h"
+-#include "system/ram_addr.h"
+ #include "migration/misc.h"
+ #include "hw/boards.h"
+ #include "hw/qdev-properties.h"
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index 164f6fd995a..525679954ee 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -56,7 +56,7 @@ specific_virtio_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock.c
+ specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_VSOCK', if_true: files('vhost-user-vsock.c'))
+ specific_virtio_ss.add(when: 'CONFIG_VIRTIO_RNG', if_true: files('virtio-rng.c'))
+ specific_virtio_ss.add(when: 'CONFIG_VIRTIO_NSM', if_true: [files('virtio-nsm.c', 'cbor-helpers.c'), libcbor])
+-specific_virtio_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem.c'))
++system_virtio_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem.c'))
+ specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_SCMI', if_true: files('vhost-user-scmi.c'))
+ specific_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_SCMI'], if_true: files('vhost-user-scmi-pci.c'))
  
--#include "qemu/target-info.h"
-+#include "qapi/qapi-types-common.h"
- 
- typedef struct TargetInfo {
-     /* runtime equivalent of TARGET_NAME definition */
-     const char *target_name;
-+    /* related to TARGET_ARCH definition */
-+    SysEmuTarget target_arch;
-     /* runtime equivalent of TARGET_LONG_BITS definition */
-     unsigned long_bits;
-     /* runtime equivalent of CPU_RESOLVING_TYPE definition */
-diff --git a/target-info-stub.c b/target-info-stub.c
-index fecc0e71286..2e4407ff04b 100644
---- a/target-info-stub.c
-+++ b/target-info-stub.c
-@@ -14,6 +14,7 @@
- 
- static const TargetInfo target_info_stub = {
-     .target_name = TARGET_NAME,
-+    .target_arch = SYS_EMU_TARGET__MAX,
-     .long_bits = TARGET_LONG_BITS,
-     .cpu_type = CPU_RESOLVING_TYPE,
-     .machine_typename = TYPE_MACHINE,
-diff --git a/target-info.c b/target-info.c
-index 8232d488870..5f6096606e4 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -25,6 +25,9 @@ SysEmuTarget target_system_arch(void)
- {
-     static SysEmuTarget system_arch = SYS_EMU_TARGET__MAX;
- 
-+    if (system_arch == SYS_EMU_TARGET__MAX) {
-+        system_arch = target_info()->target_arch;
-+    }
-     if (system_arch == SYS_EMU_TARGET__MAX) {
-         system_arch = qapi_enum_parse(&SysEmuTarget_lookup, target_name(), -1,
-                                       &error_abort);
 -- 
 2.47.1
 
