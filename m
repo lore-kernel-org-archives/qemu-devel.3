@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5203C369DC
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9728DC369DC
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:19:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAgva-0005WE-P7; Thu, 01 May 2025 23:19:07 -0400
+	id 1uAguO-0003qc-56; Thu, 01 May 2025 23:17:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAgut-0004dc-TV
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:18:27 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAguG-0003pz-Gx
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:17:45 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAguo-0004Gc-IF
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:18:23 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7403f3ece96so2254720b3a.0
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:18:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAguE-0003UV-UX
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:17:44 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-736aaeed234so1539471b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:17:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746155897; x=1746760697; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746155861; x=1746760661; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mcgWH2x0gAyjXMufV1B2NOlfCFMvX5UXpeLLJX0H558=;
- b=HDICwuy+HMkcWNHr1uW73b+k0YHMVUu9+BoYLi42ARQgsrHttpvR0fBRSh2FlOOAgS
- 55aXlp9mjypfKHb3sFbaCFq6Eint1ackzRGxKyi9rRns5vLp1efcea8mUJa2czIScDAs
- fiLS+H4sau8cLoq7rxvmmj9b0c5q0BQ5Ix5dO64RI2IU1fPpW7WSPFJ73bNC/w29wlZX
- yYzaU+K0Xvpgt4chW9IGXhfRuvMHWLNMMghmyqyMh1f0W4GmHd7AM7hTNCbeLF5v2mLi
- 8fNO/UKMcq0PUEwkyvScgLEbPtejJCNUPa/1PMsArb40HokcrPK2rtUDDOR5jP4cchYJ
- /XRw==
+ bh=Q5no8ddhr8154W5pKhH05o9hD5LHHhM1KYUT49zmTjI=;
+ b=lQrp5tPqeuuNk2jheHGkWxdEbGNfiT6Tk/VnoR4l3IQxiEBskv24o3EKW5mwLIs6BR
+ jbg5/wTJd9q2KJW55mmG4RO5QRJ5pTbl4gf7njIUPqtxBRhJllCuyY6b1e1susvyvrov
+ PnEdquMMkJMXwVVhJg30JPIv3Ftd7/312vJ03HzxUUuy3zLOmKd1xny1EPGpKUwajyET
+ NzO1cap1ZhyeDsMZ94GxIamRZwiPZH6wJGrYDQQR7h9aIQd1f/j1vsVpylKqJoECk+0I
+ FGIXRm1f7vK8cAFBr/8Dbc8TSBAkRkc6P76UNp72+ZfiVW9bpgdGxIILK7iqp14XDym0
+ vRwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746155897; x=1746760697;
+ d=1e100.net; s=20230601; t=1746155861; x=1746760661;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mcgWH2x0gAyjXMufV1B2NOlfCFMvX5UXpeLLJX0H558=;
- b=iyDcTbgC9uSbLdiW9u5CkiMypd/0CPYGNvh4FYd8VQwPnlShB/rUqqJQ+PKUa6VEyK
- mmLiE2eA7w7JW8x0IkrLcDTSIpPqv875MdBzFlfFL+nTF1cbGxB3OE/NjXzUDaUsM+lE
- wOWcXJq1IKtIlMvSMlvn8QWXScvW5uqi7otWnWgwfzyV1Xh/UkC/KOa/6o+79T4WgxYD
- W/8YJGkZ8wCnCKCXEBtVojfFBbNbcSkTZeplOXQoU9hXLMgY1l1eUF+uncKdyhyJKm2L
- 6iGeoFWP4D6X75tFY+TYe4EZNUNTiRRQkJtnZu2CE6CDm8clsVebLvgau5lSek5yzEU2
- Xn0Q==
+ bh=Q5no8ddhr8154W5pKhH05o9hD5LHHhM1KYUT49zmTjI=;
+ b=ijuN2LTn+qBZj7/hNO7U/WvJOs8vWZ0MWJSMu6YXSVsEza9xqlUHDJ8WthDaN4nORD
+ 7UQyHjOO71oqK6Ebk2o1I/wUZamD1Om2tOoTHGyrSD67xh0DgvvnYzMn6Xwmtt5IZMUa
+ Du1HL71K6ad3OVxsGLzP2dKqry2Ag00QMaRimq3AbDw93fKZpmj2TTMgaCWSf5evwem1
+ eHonsJ00zDpWLLrjI5z75ZKQARoGf5V3teJjsTXaxLuPsIkgy4/u+dUJfi312LaoU8l5
+ aGbID6CnJQLAqR/j+pHgjYG/xDhkVmYRTYNJB9pX3AneoI/pg11SDm85HhuAelqEcTmZ
+ YkEg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXhSN3Wz0qUgquOZQuFQuNHi7VhS6B8SgEUJ1t0AAORHDq0xlWnEaW8gKHc6U+jHS1/Evwv4YoRNaIA@nongnu.org
-X-Gm-Message-State: AOJu0Yw8PqK0FRb/FKL9nGQZqrfrj9fx8npnmaQ5E/ZdYB4wOnpMpoPL
- UkYGTNF+us26QCPEg6fi3q2Dl35DvoXplorg/GFnmqMVITa9lpAT
-X-Gm-Gg: ASbGncuF1X5QrJuMr8dXIn/fIvGyFNGPmBOZk1Q0uQa9/jn7NTRs2jIBPUOtWunn4t9
- 5UlrIZnEFprGZpFFyk0+CSm3l7aoJ1AngYQU83oAlQCNCfGJRhi0TIPI/zOnnu2NHqRUWQAtA3P
- dZHcNVZ1Zd5gS5mv19DJGgIvAol7Iow+Gt8xMlHDKvgi3+d/c+NfseGtPSFLGgPga6FMef46Q8C
- wHGJzWK6tdtVot4qSWNaJGxAOhmUuBGqJoF1CGdSiu4o+aIOkmFxVAETHGcG0Ap1q2snC1asZi3
- 38Uo5gpZHgGmbFFazcWlRmf7N+IcnYjYP8jASlK4I8xD
-X-Google-Smtp-Source: AGHT+IHyIQQtZXpq1SpDCms0tMJEDCkUMuT4WHVgLAALpSPQIW+YceC+48iuYcrIQNO3pJ2hkD5whg==
-X-Received: by 2002:a05:6a00:8f0a:b0:736:a973:748 with SMTP id
- d2e1a72fcca58-74058b28595mr1986991b3a.22.1746155897257; 
- Thu, 01 May 2025 20:18:17 -0700 (PDT)
+ AJvYcCXjeiZr5CGOQ2opvGBt5kRgG2i2q02ScvWUqzZZ4cx5E80JMojOy73vYG9+lrMM8Fh4bVUb4Bqhofsx@nongnu.org
+X-Gm-Message-State: AOJu0YyRTw6gazKSLD4eQp/0/iYDW9b6NQxWAxz4fjLg042YPkYO3CyM
+ vh0oyxLfhic7X8r4K+YNC8Wt40uNv5fnIOHOvZMujxKnezFvsUdx401Seg==
+X-Gm-Gg: ASbGncsJq8Vk+Qw6X24zx0uN4i1nSjWNcO8EX1OA9fO6s0mV3LeLVk0qeGiRZo4/ZNF
+ NpdyXxr1qOLm3Su6IoQRdhInCWvNwLsQtx7e5rbOFXkh3QDHc+x+M6RM5B/JbUyCk4676DnXlII
+ 9dim/5AKdHev7goXJFa/vo6xirbwj003GQO63jHmUkO3CUaqUG+TsjvqOwT+t16+YJRhQIFA0GW
+ OXLe0132U9rPye9NH00vkma3nOZeFRDWNDYQUhzL01qiXGlbAV6Wusv5imOdg/Q9c6NBbFAUCb2
+ qaLENrq/v/Dnkm7svC+NCQuD4/WqCn5Ru5t196BRefdr
+X-Google-Smtp-Source: AGHT+IEbWaYjtf0OKUtqDYYT6VEsR8gwVHqNlDvytC7IU6hjb/p/oSP6FTeucW8OeCkc7RkZKVpEmQ==
+X-Received: by 2002:a05:6a00:8d86:b0:730:95a6:375f with SMTP id
+ d2e1a72fcca58-740588fac49mr1891360b3a.3.1746155861307; 
+ Thu, 01 May 2025 20:17:41 -0700 (PDT)
 Received: from wheely.local0.net ([220.253.99.94])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74058ded48fsm467883b3a.83.2025.05.01.20.18.12
+ d2e1a72fcca58-74058ded48fsm467883b3a.83.2025.05.01.20.17.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 20:18:16 -0700 (PDT)
+ Thu, 01 May 2025 20:17:40 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
@@ -71,17 +71,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 12/12] qtest/e1000e|igb: Test interrupt throttling in
- multiple_transfers test
-Date: Fri,  2 May 2025 13:17:04 +1000
-Message-ID: <20250502031705.100768-13-npiggin@gmail.com>
+Subject: [PATCH v3 05/12] net/igb: Fix interrupt throttling interval
+ calculation
+Date: Fri,  2 May 2025 13:16:57 +1000
+Message-ID: <20250502031705.100768-6-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250502031705.100768-1-npiggin@gmail.com>
 References: <20250502031705.100768-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,57 +104,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enable interrupt throtling on one of the two queue interrupts used
-in the multiple_transfers test, to improve coverage. The number of
-interrupts for the e1000e test is reduced because it has a long minimum
-throttling delay so without reducing iterations throttling adds about
-40s to the test runtime.
+IGB throttling granularity is 1us, and interval field is in bits 2..14
+of the EITRx registers.
 
+Fixes: 3a977deebe6b ("Intrdocue igb device emulation")
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- tests/qtest/e1000e-test.c | 6 +++---
- tests/qtest/igb-test.c    | 4 ++++
+ hw/net/igb_regs.h | 3 +++
+ hw/net/igb_core.c | 7 ++++---
  2 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/tests/qtest/e1000e-test.c b/tests/qtest/e1000e-test.c
-index a538c72cc84..645b31127f0 100644
---- a/tests/qtest/e1000e-test.c
-+++ b/tests/qtest/e1000e-test.c
-@@ -181,7 +181,7 @@ static void test_e1000e_rx(void *obj, void *data, QGuestAllocator * alloc)
- static void test_e1000e_multiple_transfers(void *obj, void *data,
-                                            QGuestAllocator *alloc)
- {
--    static const long iterations = 4 * 1024;
-+    static const long iterations = 1 * 1024;
-     long i;
+diff --git a/hw/net/igb_regs.h b/hw/net/igb_regs.h
+index 4dc4c31da27..a87aa44f5f3 100644
+--- a/hw/net/igb_regs.h
++++ b/hw/net/igb_regs.h
+@@ -146,6 +146,9 @@ union e1000_adv_rx_desc {
+ #define IGB_82576_VF_DEV_ID        0x10CA
+ #define IGB_I350_VF_DEV_ID         0x1520
  
-     QE1000E_PCI *e1000e = obj;
-@@ -194,8 +194,8 @@ static void test_e1000e_multiple_transfers(void *obj, void *data,
-         return;
-     }
- 
--    /* Clear EITR because buggy QEMU throttle timer causes superfluous irqs */
--    e1000e_macreg_write(d, E1000_EITR + E1000E_RX0_MSG_ID * 4, 0);
-+    /* Use EITR for one irq and disable it for the other, for testing */
-+    e1000e_macreg_write(d, E1000_EITR + E1000E_RX0_MSG_ID * 4, 500);
-     e1000e_macreg_write(d, E1000_EITR + E1000E_TX0_MSG_ID * 4, 0);
- 
-     for (i = 0; i < iterations; i++) {
-diff --git a/tests/qtest/igb-test.c b/tests/qtest/igb-test.c
-index 12cdd8b498a..c1877a77be4 100644
---- a/tests/qtest/igb-test.c
-+++ b/tests/qtest/igb-test.c
-@@ -198,6 +198,10 @@ static void test_igb_multiple_transfers(void *obj, void *data,
-         return;
-     }
- 
-+    /* Use EITR for one irq and disable it for the other, for testing */
-+    e1000e_macreg_write(d, E1000_EITR(E1000E_RX0_MSG_ID), 0);
-+    e1000e_macreg_write(d, E1000_EITR(E1000E_TX0_MSG_ID), 10 << 2); /* 10us */
++/* Delay increments in nanoseconds for interrupt throttling registers */
++#define IGB_INTR_THROTTLING_NS_RES (1 * SCALE_US)
 +
-     for (i = 0; i < iterations; i++) {
-         igb_send_verify(d, data, alloc);
-         igb_receive_verify(d, data, alloc);
+ /* VLAN info */
+ #define IGB_TX_FLAGS_VLAN_MASK     0xffff0000
+ #define IGB_TX_FLAGS_VLAN_SHIFT    16
+diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
+index 271c54380e9..9e9e6e3354f 100644
+--- a/hw/net/igb_core.c
++++ b/hw/net/igb_core.c
+@@ -142,8 +142,9 @@ static void igb_msix_notify(IGBCore *core, unsigned int cause)
+ static inline void
+ igb_intrmgr_rearm_timer(IGBIntrDelayTimer *timer)
+ {
+-    int64_t delay_ns = (int64_t) timer->core->mac[timer->delay_reg] *
+-                                 timer->delay_resolution_ns;
++    int64_t delay_ns =
++            (int64_t)((timer->core->mac[timer->delay_reg] & 0x7FFC) >> 2) *
++                     timer->delay_resolution_ns;
+ 
+     trace_e1000e_irq_rearm_timer(timer->delay_reg << 2, delay_ns);
+ 
+@@ -180,7 +181,7 @@ igb_intrmgr_initialize_all_timers(IGBCore *core, bool create)
+     for (i = 0; i < IGB_INTR_NUM; i++) {
+         core->eitr[i].core = core;
+         core->eitr[i].delay_reg = EITR0 + i;
+-        core->eitr[i].delay_resolution_ns = E1000_INTR_DELAY_NS_RES;
++        core->eitr[i].delay_resolution_ns = IGB_INTR_THROTTLING_NS_RES;
+     }
+ 
+     if (!create) {
 -- 
 2.47.1
 
