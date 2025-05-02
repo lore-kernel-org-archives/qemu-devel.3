@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA162C369DC
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 02:19:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0355AC3ABA9
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 02:19:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAfx7-0003vk-DO; Thu, 01 May 2025 22:16:37 -0400
+	id 1uAfwz-0003sB-9u; Thu, 01 May 2025 22:16:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1uAfx1-0003tE-0F
- for qemu-devel@nongnu.org; Thu, 01 May 2025 22:16:31 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1uAfwt-0003qj-Or
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 22:16:23 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1uAfwz-0007RM-0z
- for qemu-devel@nongnu.org; Thu, 01 May 2025 22:16:30 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 541KeRSn022623;
- Fri, 2 May 2025 02:16:20 GMT
+ id 1uAfwp-0007Or-JY
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 22:16:22 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 541KeNeN007190;
+ Fri, 2 May 2025 02:16:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=UnbB5
- BpJQd3wr6A0cs//jyZb2f/U7D1aOtqKnVe/+2A=; b=J6GV1TQ/VloQalv2GAl1i
- pPFcdZDQyxU/Tqr4jMAA71PqfL1Slu/dK0l3zSE2gDhNCBHIHXyDiy9JiS4xUepb
- l6lekEhKI4kmIokjwPSLxMgWxLi/lwfIe8RH4lnzbmZG7woxmAQ3oZrVKMlAqwHB
- z/wgWdFuhHe/gxanyQWh1dlLpcUJXeAOR42/BZdwBL80C2XQWHTTKb9jIwtCqbvZ
- BMEkuNQ9m2pH4xvQM4i1NkW6ETBoUhUfNhWRacNB9equ+nWqarOECGJcjHagWeN8
- 0TRDIi+4HP5kxqt2TB/Qz0lBtM4UmnqvVPmJO7Xo2Vw/orMG0zeIpgxjwmI9BU/u
- Q==
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=LtWIZ
+ F24E+i84J6YfKEXoe8ultBSd8eCMI+sgD0k6Xo=; b=Mhri1f+negInTMvtshv/+
+ cg2WsSg6bVYYbQiPwgL1PWW3AlTmLYwAS/FRfldNRzJeg15xqaCxiLTik2Rdx62H
+ Vd/UbQ5GPiniYxqeCbtKo2zmW3fR3JsehxQzFZToiA2F4KAGdZuPCUNeAfafZ9dR
+ 6Cp2tHoknGwzrizqvPll1d9Htar66KvCaT+6mXz/CJZIZaSTwtlF0cBihu2EtgWv
+ ivzUe8AznUVLR7XgJiZ1LpluZaSFnpd5ezRMdWcG+Qa003WLIcfqBsk5TcEEKvH1
+ 7vZKCsbR+MYwRfaeP0bJrzhaG5g0Dwx9SBJC+bTn7xxapTpItvUGApckxjtr1qCd
+ A==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46b6uumdb4-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46b6ucmdv8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 02 May 2025 02:16:20 +0000 (GMT)
+ Fri, 02 May 2025 02:16:09 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 5420RRqB023842; Fri, 2 May 2025 02:16:19 GMT
+ with ESMTP id 541NPfWf023782; Fri, 2 May 2025 02:16:09 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 468nxkh03n-1
+ 468nxkgyx4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 02 May 2025 02:16:19 +0000
+ Fri, 02 May 2025 02:16:09 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5422FEsO011525;
- Fri, 2 May 2025 02:16:18 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5422FEru011525;
+ Fri, 2 May 2025 02:16:08 GMT
 Received: from alaljimee5bm-ol9-20250405.osdevelopmeniad.oraclevcn.com
  (alaljimee5bm-ol9-20250405.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.254.235])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 468nxkgyvr-18; Fri, 02 May 2025 02:16:18 +0000
+ 468nxkgyvr-4; Fri, 02 May 2025 02:16:08 +0000
 From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
@@ -66,10 +66,9 @@ Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
  clement.mathieu--drif@eviden.com, ethan.milon@eviden.com,
  joao.m.martins@oracle.com, boris.ostrovsky@oracle.com,
  alejandro.j.jimenez@oracle.com
-Subject: [PATCH v2 17/20] amd_iommu: Add dma-remap property to AMD vIOMMU
- device
-Date: Fri,  2 May 2025 02:16:02 +0000
-Message-ID: <20250502021605.1795985-18-alejandro.j.jimenez@oracle.com>
+Subject: [PATCH v2 03/20] amd_iommu: Reorder device and page table helpers
+Date: Fri,  2 May 2025 02:15:48 +0000
+Message-ID: <20250502021605.1795985-4-alejandro.j.jimenez@oracle.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250502021605.1795985-1-alejandro.j.jimenez@oracle.com>
 References: <20250502021605.1795985-1-alejandro.j.jimenez@oracle.com>
@@ -83,21 +82,21 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  suspectscore=0 spamscore=0 adultscore=0 mlxscore=0 malwarescore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2504070000 definitions=main-2505020015
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAyMDAxNSBTYWx0ZWRfX9otAGuJHGq83
- HlYeu30YhxRRJguLrP3gfyPYA7NSYX+yDxPVnhiqRr9JfxLehKMIQOIIFDLtt8VBBwW1qhAzmXz
- w1dP10eO0sjdrow8TCbrZuBSRjpqSChjZt9z3pThD6aOwPrjxYh3LSh7rWa/P0dCiVmFfZuvSuE
- vr15WUHXy1Yl5ed+UBVbvokFhkUNBqS4WE7FejwtlFBuLe+SQV60pL+oduLilrTt9NN6dqTNteb
- LKKu5x1YKFNR47iE260WZxzjgKDbLrPjkJ7Njke6I1le6OkWwHLPB+EcfMEN9L3OwkVprNRbIQY
- +zymCvSriwtECtVpEzaqYnFbcQE6arWjuZyDnfDXTP+l74ZuKHIpgn1Td+Je9Wp7d70JPZO7jzB
- HA/+CCCXGHiFHWVTRnAeOHw9mQh9pRS8h2XCovCrm1zhuNEsR8z+piveV5un18JgtLaanV1Y
-X-Authority-Analysis: v=2.4 cv=Ve/3PEp9 c=1 sm=1 tr=0 ts=68142af4 b=1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=ZsHtK87G c=1 sm=1 tr=0 ts=68142ae9 b=1 cx=c_pps
  a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
- a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=lB8vL2C6TGN_h6hMWm0A:9
- a=+jEqtf1s3R9VXZ0wqowq2kgwd+I=:19 cc=ntf awl=host:13130
-X-Proofpoint-ORIG-GUID: Qm6uFplSYo40j_ny2x_mrm7PwjvQrVrK
-X-Proofpoint-GUID: Qm6uFplSYo40j_ny2x_mrm7PwjvQrVrK
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+ a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=0jG7Jb7pV4afCPoZSdkA:9 cc=ntf
+ awl=host:13130
+X-Proofpoint-ORIG-GUID: uf7D6vXjx7kY4SMJgYlcC84WTsIB_sIH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTAyMDAxNSBTYWx0ZWRfXwD8IVsv8rg21
+ rdRLAiyX9WEkWzNfErAGfIA2H+ox2E4tkEFJN97jVz4wdYgP/ptPdtP27lYfRhVCjphFSKrO2lN
+ wWhP36HuvTmsF/m3cLO1cRMFBw3oBbFs2mvePWrudBEAOQhOAKC63JlcaIZ3CnnMuPApiCEju1o
+ GsvWlHeroZOHxLCjJLMESVHzBx+WFtmLEwfg+O1+leYGyn2IhpC5ySbkkhCFTkelau2IJePZRpX
+ OwgE/hiyqEiJg3OTb0t+HZHw25Fx8rKkISQ7v6OMxBEmqyzihQUKhvY3E/lcMXX8VjVLZYV8NTE
+ coGwYg1t9+vx8dHRKbjXbvSf0QXQjCXUSrz1Uupv1qLD6YuVg1tpeK9sbijjqc5Ml9D0NtViZ12
+ u1a3w33OcQGOaOoKnFLAEHyeEBZXnbzFQ8gKxOiaq1Q9NQOy9W+JeeffywWTHNvUC4/KlImm
+X-Proofpoint-GUID: uf7D6vXjx7kY4SMJgYlcC84WTsIB_sIH
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -121,91 +120,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to enable device assignment with IOMMU protection and guest DMA
-address translation, IOMMU MAP notifier support is necessary to allow users
-like VFIO to synchronize the shadow page tables i.e. to receive
-notifications when the guest updates its I/O page tables and replay the
-mappings onto host I/O page tables.
+Move code related to Device Table and Page Table to an earlier location in
+the file, where it does not require forward declarations to be used by the
+various invalidation functions that will need to query the DTE and walk the
+page table in upcoming changes.
 
-Provide a new dma-remap property to govern the ability to register for MAP
-notifications, effectively providing global control over the DMA address
-translation functionality that was implemented in previous changes.
-
-Note that DMA remapping support also requires the vIOMMU is configured with
-the NpCache capability, so a guest driver issues IOMMU invalidations for
-both map() and unmap() operations. This capability is already set by default
-and written to the configuration in amdvi_pci_realize() as part of
-AMDVI_CAPAB_FEATURES.
+This change consist of code movement only, no functional change intended.
 
 Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 ---
- hw/i386/amd_iommu.c | 24 +++++++++++++++++-------
- hw/i386/amd_iommu.h |  3 +++
- 2 files changed, 20 insertions(+), 7 deletions(-)
+ hw/i386/amd_iommu.c | 170 ++++++++++++++++++++++----------------------
+ 1 file changed, 85 insertions(+), 85 deletions(-)
 
 diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 90491367594b..a2df73062bf7 100644
+index 2cf7e24a21d8..9e500121f6e8 100644
 --- a/hw/i386/amd_iommu.c
 +++ b/hw/i386/amd_iommu.c
-@@ -951,7 +951,9 @@ static void amdvi_iommu_address_space_sync_all(AMDVIState *s)
-  */
- static void amdvi_switch_address_space(AMDVIAddressSpace *amdvi_as)
+@@ -407,6 +407,91 @@ static void amdvi_completion_wait(AMDVIState *s, uint64_t *cmd)
+     trace_amdvi_completion_wait(addr, data);
+ }
+ 
++static inline uint64_t amdvi_get_perms(uint64_t entry)
++{
++    return (entry & (AMDVI_DEV_PERM_READ | AMDVI_DEV_PERM_WRITE)) >>
++           AMDVI_DEV_PERM_SHIFT;
++}
++
++/* validate that reserved bits are honoured */
++static bool amdvi_validate_dte(AMDVIState *s, uint16_t devid,
++                               uint64_t *dte)
++{
++    if ((dte[0] & AMDVI_DTE_LOWER_QUAD_RESERVED)
++        || (dte[1] & AMDVI_DTE_MIDDLE_QUAD_RESERVED)
++        || (dte[2] & AMDVI_DTE_UPPER_QUAD_RESERVED) || dte[3]) {
++        amdvi_log_illegaldevtab_error(s, devid,
++                                      s->devtab +
++                                      devid * AMDVI_DEVTAB_ENTRY_SIZE, 0);
++        return false;
++    }
++
++    return true;
++}
++
++/* get a device table entry given the devid */
++static bool amdvi_get_dte(AMDVIState *s, int devid, uint64_t *entry)
++{
++    uint32_t offset = devid * AMDVI_DEVTAB_ENTRY_SIZE;
++
++    if (dma_memory_read(&address_space_memory, s->devtab + offset, entry,
++                        AMDVI_DEVTAB_ENTRY_SIZE, MEMTXATTRS_UNSPECIFIED)) {
++        trace_amdvi_dte_get_fail(s->devtab, offset);
++        /* log error accessing dte */
++        amdvi_log_devtab_error(s, devid, s->devtab + offset, 0);
++        return false;
++    }
++
++    *entry = le64_to_cpu(*entry);
++    if (!amdvi_validate_dte(s, devid, entry)) {
++        trace_amdvi_invalid_dte(entry[0]);
++        return false;
++    }
++
++    return true;
++}
++
++/* get pte translation mode */
++static inline uint8_t get_pte_translation_mode(uint64_t pte)
++{
++    return (pte >> AMDVI_DEV_MODE_RSHIFT) & AMDVI_DEV_MODE_MASK;
++}
++
++static inline uint64_t pte_override_page_mask(uint64_t pte)
++{
++    uint8_t page_mask = 13;
++    uint64_t addr = (pte & AMDVI_DEV_PT_ROOT_MASK) >> 12;
++    /* find the first zero bit */
++    while (addr & 1) {
++        page_mask++;
++        addr = addr >> 1;
++    }
++
++    return ~((1ULL << page_mask) - 1);
++}
++
++static inline uint64_t pte_get_page_mask(uint64_t oldlevel)
++{
++    return ~((1UL << ((oldlevel * 9) + 3)) - 1);
++}
++
++static inline uint64_t amdvi_get_pte_entry(AMDVIState *s, uint64_t pte_addr,
++                                          uint16_t devid)
++{
++    uint64_t pte;
++
++    if (dma_memory_read(&address_space_memory, pte_addr,
++                        &pte, sizeof(pte), MEMTXATTRS_UNSPECIFIED)) {
++        trace_amdvi_get_pte_hwerror(pte_addr);
++        amdvi_log_pagetab_error(s, devid, pte_addr, 0);
++        pte = 0;
++        return pte;
++    }
++
++    pte = le64_to_cpu(pte);
++    return pte;
++}
++
+ /* log error without aborting since linux seems to be using reserved bits */
+ static void amdvi_inval_devtab_entry(AMDVIState *s, uint64_t *cmd)
  {
--    if (amdvi_as->addr_translation) {
-+    AMDVIState *s = amdvi_as->iommu_state;
-+
-+    if (s->dma_remap && amdvi_as->addr_translation) {
-         /* Enabling DMA region */
-         memory_region_set_enabled(&amdvi_as->iommu_nodma, false);
-         memory_region_set_enabled(MEMORY_REGION(&amdvi_as->iommu), true);
-@@ -2126,12 +2128,19 @@ static int amdvi_iommu_notify_flag_changed(IOMMUMemoryRegion *iommu,
-     AMDVIAddressSpace *as = container_of(iommu, AMDVIAddressSpace, iommu);
-     AMDVIState *s = as->iommu_state;
- 
--    if (new & IOMMU_NOTIFIER_MAP) {
--        error_setg(errp,
--                "device %02x.%02x.%x requires iommu notifier which is not "
--                "currently supported", as->bus_num, PCI_SLOT(as->devfn),
--                PCI_FUNC(as->devfn));
--        return -EINVAL;
-+    /*
-+     * Accurate synchronization of the vIOMMU page tables required to support
-+     * MAP notifiers is provided by the dma-remap feature. In addition, this
-+     * also requires that the vIOMMU presents the NpCache capability, so a guest
-+     * driver issues invalidations for both map() and unmap() operations. The
-+     * capability is already set by default as part of AMDVI_CAPAB_FEATURES and
-+     * written to the configuration in amdvi_pci_realize().
-+     */
-+    if (!s->dma_remap && (new & IOMMU_NOTIFIER_MAP)) {
-+        error_setg_errno(errp, ENOTSUP,
-+                "device %02x.%02x.%x requires dma-remap=1",
-+                as->bus_num, PCI_SLOT(as->devfn), PCI_FUNC(as->devfn));
-+        return -ENOTSUP;
+@@ -838,91 +923,6 @@ static void amdvi_mmio_write(void *opaque, hwaddr addr, uint64_t val,
      }
+ }
  
-     /*
-@@ -2281,6 +2290,7 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
- 
- static const Property amdvi_properties[] = {
-     DEFINE_PROP_BOOL("xtsup", AMDVIState, xtsup, false),
-+    DEFINE_PROP_BOOL("dma-remap", AMDVIState, dma_remap, false),
- };
- 
- static const VMStateDescription vmstate_amdvi_sysbus = {
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index a7462b2adb79..fc4d2f7a4575 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -420,6 +420,9 @@ struct AMDVIState {
-     /* Interrupt remapping */
-     bool ga_enabled;
-     bool xtsup;
-+
-+    /* DMA address translation */
-+    bool dma_remap;
- };
- 
- uint64_t amdvi_extended_feature_register(AMDVIState *s);
+-static inline uint64_t amdvi_get_perms(uint64_t entry)
+-{
+-    return (entry & (AMDVI_DEV_PERM_READ | AMDVI_DEV_PERM_WRITE)) >>
+-           AMDVI_DEV_PERM_SHIFT;
+-}
+-
+-/* validate that reserved bits are honoured */
+-static bool amdvi_validate_dte(AMDVIState *s, uint16_t devid,
+-                               uint64_t *dte)
+-{
+-    if ((dte[0] & AMDVI_DTE_LOWER_QUAD_RESERVED)
+-        || (dte[1] & AMDVI_DTE_MIDDLE_QUAD_RESERVED)
+-        || (dte[2] & AMDVI_DTE_UPPER_QUAD_RESERVED) || dte[3]) {
+-        amdvi_log_illegaldevtab_error(s, devid,
+-                                      s->devtab +
+-                                      devid * AMDVI_DEVTAB_ENTRY_SIZE, 0);
+-        return false;
+-    }
+-
+-    return true;
+-}
+-
+-/* get a device table entry given the devid */
+-static bool amdvi_get_dte(AMDVIState *s, int devid, uint64_t *entry)
+-{
+-    uint32_t offset = devid * AMDVI_DEVTAB_ENTRY_SIZE;
+-
+-    if (dma_memory_read(&address_space_memory, s->devtab + offset, entry,
+-                        AMDVI_DEVTAB_ENTRY_SIZE, MEMTXATTRS_UNSPECIFIED)) {
+-        trace_amdvi_dte_get_fail(s->devtab, offset);
+-        /* log error accessing dte */
+-        amdvi_log_devtab_error(s, devid, s->devtab + offset, 0);
+-        return false;
+-    }
+-
+-    *entry = le64_to_cpu(*entry);
+-    if (!amdvi_validate_dte(s, devid, entry)) {
+-        trace_amdvi_invalid_dte(entry[0]);
+-        return false;
+-    }
+-
+-    return true;
+-}
+-
+-/* get pte translation mode */
+-static inline uint8_t get_pte_translation_mode(uint64_t pte)
+-{
+-    return (pte >> AMDVI_DEV_MODE_RSHIFT) & AMDVI_DEV_MODE_MASK;
+-}
+-
+-static inline uint64_t pte_override_page_mask(uint64_t pte)
+-{
+-    uint8_t page_mask = 13;
+-    uint64_t addr = (pte & AMDVI_DEV_PT_ROOT_MASK) >> 12;
+-    /* find the first zero bit */
+-    while (addr & 1) {
+-        page_mask++;
+-        addr = addr >> 1;
+-    }
+-
+-    return ~((1ULL << page_mask) - 1);
+-}
+-
+-static inline uint64_t pte_get_page_mask(uint64_t oldlevel)
+-{
+-    return ~((1UL << ((oldlevel * 9) + 3)) - 1);
+-}
+-
+-static inline uint64_t amdvi_get_pte_entry(AMDVIState *s, uint64_t pte_addr,
+-                                          uint16_t devid)
+-{
+-    uint64_t pte;
+-
+-    if (dma_memory_read(&address_space_memory, pte_addr,
+-                        &pte, sizeof(pte), MEMTXATTRS_UNSPECIFIED)) {
+-        trace_amdvi_get_pte_hwerror(pte_addr);
+-        amdvi_log_pagetab_error(s, devid, pte_addr, 0);
+-        pte = 0;
+-        return pte;
+-    }
+-
+-    pte = le64_to_cpu(pte);
+-    return pte;
+-}
+-
+ static void amdvi_page_walk(AMDVIAddressSpace *as, uint64_t *dte,
+                             IOMMUTLBEntry *ret, unsigned perms,
+                             hwaddr addr)
 -- 
 2.43.5
 
