@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFD51C3ABA5
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:32:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C726C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:32:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAh7s-0004O0-N6; Thu, 01 May 2025 23:31:49 -0400
+	id 1uAh8M-000539-Bo; Thu, 01 May 2025 23:32:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh7n-0004Cy-5y
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:31:43 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh8I-0004px-7w
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:32:14 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh7l-0001Hs-Ey
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:31:42 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-736c3e7b390so1889997b3a.2
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:31:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh8C-0001K6-16
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:32:12 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-7399a2dc13fso2422143b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:32:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746156700; x=1746761500; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746156726; x=1746761526; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FVk6lML4TjYWh+nQHo5STeX9xY8bJ23/rh4J7vefY5w=;
- b=YeuP4jFTO8+yZrDmuBuZR1z8/G4GmpBlVqkKwUONsagYeE6NOXr9xoyEv6tcxZZ0RV
- 42ZLeCFO3jVs/p36+2frNUedtW/UWNo2/RiIAuZ8OH30gIiY5wooVvmmdZa56oCxThkw
- aSnR+4S5/xLBgX2l0auKgivGqYJx8mDDw/OfagNzyAVkliJPY/HPGZ8Cw+l/cPAUIzvd
- M8iBV4LJywzMWTjdN07NqsOV7EcbLlDbL/QIiEYzjTJRHOM1dDHesi7iXdg9+YctTqb4
- VDyvZA012YPmZVThXWMBcbgESTDxEyztRtYsykBB3SInXyLLcA7fxC0UojNY64xxXCKR
- y77A==
+ bh=la/nrh6lZr7amj/W+LQ5Z/E6fUVMMUf0PMLIoeHd1gc=;
+ b=R4zGAZG1GJvhUrU+1pA0Gi7a5CiQZTkyJ+65dV4WBiykTmMI/Qv3axw/ZyMNxvA+Ts
+ X9Ck22pxoNfmqmyucMZl8F/jpTzrVwWc6kN+XuThOhQ9mUkhvyKeeMn52SxihT/a+MVI
+ TofvY/Ni4p2CCqxZi1Bc3b8NduO2HbzuXVuAy/aGMX/FtX0Twg0W4CNk0VHw31Ttpb2w
+ eZP/r6sUwmTuWfY2ej9FTMvsresMAU1P4N3OG91jfx9l0g8TlqoyEpyLQJSV8iczJYsw
+ mQP7OZ1Hh0XLoh2GntGuyoNyiPn54GNLovHxxN6NdLRPpoPf5UBoyq4UjyjTVwU5L50D
+ 4PWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746156700; x=1746761500;
+ d=1e100.net; s=20230601; t=1746156726; x=1746761526;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FVk6lML4TjYWh+nQHo5STeX9xY8bJ23/rh4J7vefY5w=;
- b=HsnVc7ovHUy0JorvcpvQbVFp5acKiQQOXj/utugqse9M9fT9mhZfebnVIx39K6YqdD
- rAGtV2nLAIedg+asuKNAxR0Btn/yYUCXqHVAqDDt17zJGL6ho5RK6+2N65OPEUbgsdrP
- AYyZ1cd62Jh6PAMAO82DaX08rnfxAK28685dsTdYeLT2EhHfmna/sGMXssr/IJyj0tnu
- 0PON9bi78zPIHkTRP2E5u7Vg2FkkRDCm5c20v57n6LCnh65ttXNoLQJNLpDAn2Jdpg1g
- Ge2HApZmTaAbCXRv0VsDZbbBWDCvfFVKV3k8i/+x+yQX0dPvib1RHAlKPTDOXwTqoLNr
- r0rw==
+ bh=la/nrh6lZr7amj/W+LQ5Z/E6fUVMMUf0PMLIoeHd1gc=;
+ b=fRyXqDvynmHZ8zcQvl+4CTE/STSTizP+5I9vF8uH1Qi/V3SrhX0dBMWY+Z2ACN08B5
+ bg7atzyM7Kkh/fsEZyvJNqQLKzaXa2yZh/MPEn/QUA4hF1EMdhYQhVspgLLS9m32JDaa
+ AA8on8sMbbAUCEQCtrNuc2ImAhc9fxV1KPvWUb3OA7+XxTjKjAsy0fdffYXjkbnDKbHT
+ w0qLUoHRcA2DTwga+h+CRSCcgNXT3QdlXHBC5OFma8OovWidIIPkbqHyDxCxzGF9vY9P
+ t2IRxUjD1NURjsyZ3Azm0YthYs7//vnCEvjtemmyhWxzmB0QnwvA05OLqooyOWgXZsXW
+ aInw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWnEoZ7HjphRIUiiCj0Hekwd6zRdemr2wnWBPedl734K3C/F8ir6Dq44vmhUJznHvwwNWRV2yRql/fG@nongnu.org
-X-Gm-Message-State: AOJu0Yxl4cY0mV7qFFe03hxq8d1USiTgIJSbxxpPeDrQ1kaK7clRePB2
- QUBuMT6EbBIqdzpbIOGtDnHDlkOyTo9XTYRwYnFKK/S3QduM5WG7Uu0+9Q==
-X-Gm-Gg: ASbGncvIchMx1lftGcgW1CY/Hu7lwwdWY5tEM5+Jrpvdv4f/TBEuGr1ns2cErU+6Yl1
- Gvdt/WGr14VHzrACOhE4UfC/Kv8tYk8KcgbicsKkZ8Do9+SE4m0EPOC5QD536bryJYhggR70qdG
- B8rVWPpKfg/3ZRicZBH61KfVk9aECWLKb7UybtWDdU0mxywyS1UduFlJN5pnU94hXSYljSICO5W
- gnIFPFApIrINyzYUbT8LdP5ogj3jiW5+L7rf5Kc0sQ0ByIU1ER0WeXihqrkZBYURb1ynmeuqn6Z
- 7p7VB478hioXHDP3tqJtqHO3lbAr5fZZXy7SQ8EcWHvR
-X-Google-Smtp-Source: AGHT+IHmkld8D+py6gnmKdOe8zpsSxUl8v4sfSXMbFeBb5+OGdlFT8qR9UTXUdsALUZUottTZYiNvA==
-X-Received: by 2002:a05:6a00:2985:b0:739:4a30:b902 with SMTP id
- d2e1a72fcca58-740588fa8acmr1844283b3a.2.1746156700004; 
- Thu, 01 May 2025 20:31:40 -0700 (PDT)
+ AJvYcCWiqXdEdVL+lujFc6PxsjIUgWj+fNKNNuPsH2Uq99RZhDgb0wE/b5wYTSwFH5lQEV8m7kiqojvg/SQr@nongnu.org
+X-Gm-Message-State: AOJu0YxRqCpOHuMDVQBJAOFopvECw30fa5fdBgLwbt0vL7kOqGqYG8Sg
+ CjKgSZrWRI7hnnsH2mSB8B7Xjt+hkPZUNBNRGNXe7f/Iq44QahOGbYSUAA==
+X-Gm-Gg: ASbGnctvlDbxMfRQ92QiWJieGikTjxNy2QyIm/NqKV4C4O3SxhU8BF7PIOpuN4giqL+
+ BVdmn7Y0wnN/mla38zMsmWrGbKvG0MM4/VvXaj/G0pJVTd3mqgT1hhrEQZYWTLpGBa4HKb7oB/G
+ VkdV4c++OzvhnAXiiIJtbeQN4X6djdJR//7YaCG9yUBKLdrzZBFIEf/y9292hlfQCwmFYxUeVJS
+ 4Ne2nf9/C85VxJk9HIvaC/19UgOIs/V7HrBEh1eWi2yDWRKNDMoNIbQzcGCEiYP2nLf3qJSmLh0
+ RwTn0YTq8DB+D5ASI74bWj79m01FuOcEsPHEjPZoz4uu
+X-Google-Smtp-Source: AGHT+IH1KsdswN0zKZRDXnauC1VJAkJvyrzy7XJ4Zrzm+EEYdaUcmxx4AHQWNBs45+OhwL/DyzUDSA==
+X-Received: by 2002:a05:6a00:8d8d:b0:736:31cf:2590 with SMTP id
+ d2e1a72fcca58-74058aea47emr1783610b3a.16.1746156726024; 
+ Thu, 01 May 2025 20:32:06 -0700 (PDT)
 Received: from wheely.local0.net ([220.253.99.94])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74059063f6esm488055b3a.139.2025.05.01.20.31.35
+ d2e1a72fcca58-74059063f6esm488055b3a.139.2025.05.01.20.32.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 20:31:39 -0700 (PDT)
+ Thu, 01 May 2025 20:32:05 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Gerd Hoffmann <kraxel@redhat.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
@@ -73,16 +73,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 08/22] tests/qtest/usb-hcd-xhci: Deliver msix interrupts
-Date: Fri,  2 May 2025 13:30:32 +1000
-Message-ID: <20250502033047.102465-9-npiggin@gmail.com>
+Subject: [PATCH v4 13/22] usb/msd: Improved handling of mass storage reset
+Date: Fri,  2 May 2025 13:30:37 +1000
+Message-ID: <20250502033047.102465-14-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250502033047.102465-1-npiggin@gmail.com>
 References: <20250502033047.102465-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,65 +106,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-msix
----
- tests/qtest/usb-hcd-xhci-test.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+The mass storage reset request handling does not reset in-flight
+SCSI requests or USB MSD packets. Implement this by calling the
+device reset handler which should take care of everything.
 
-diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
-index 7f801f8f1a0..2eecc8d9f26 100644
---- a/tests/qtest/usb-hcd-xhci-test.c
-+++ b/tests/qtest/usb-hcd-xhci-test.c
-@@ -48,6 +48,8 @@ typedef struct XHCIQState {
-     QPCIBar bar;
-     uint64_t barsize;
-     uint32_t fingerprint;
-+    uint64_t guest_msix_addr;
-+    uint32_t msix_data;
- 
-     /* In-memory arrays */
-     uint64_t dc_base_array;
-@@ -279,7 +281,8 @@ static void xhci_db_writel(XHCIQState *s, uint32_t db, uint32_t value)
- 
- static bool xhci_test_isr(XHCIQState *s)
- {
--    return xhci_op_readl(s, XHCI_OPER_REG_USBSTS) & XHCI_USBSTS_EINT;
-+    return qpci_msix_test_interrupt(s->dev, 0,
-+                                    s->guest_msix_addr, s->msix_data);
- }
- 
- static void wait_event_trb(XHCIQState *s, XHCITRB *trb)
-@@ -298,6 +301,9 @@ static void wait_event_trb(XHCIQState *s, XHCITRB *trb)
-         qtest_clock_step(s->parent->qts, 10000);
-     }
- 
-+    value = xhci_op_readl(s, XHCI_OPER_REG_USBSTS);
-+    g_assert(value & XHCI_USBSTS_EINT);
-+
-     /* With MSI-X enabled, IMAN IP is cleared after raising the interrupt */
-     value = xhci_intr_readl(s, 0, XHCI_INTR_REG_IMAN);
-     g_assert(!(value & XHCI_IMAN_IP));
-@@ -395,7 +401,12 @@ static void xhci_enable_device(XHCIQState *s)
-     uint32_t value;
-     int i;
- 
-+    s->guest_msix_addr = xhci_guest_zalloc(s, 4);
-+    s->msix_data = 0x1234abcd;
-+
-     qpci_msix_enable(s->dev);
-+    qpci_msix_set_entry(s->dev, 0, s->guest_msix_addr, s->msix_data);
-+    qpci_msix_set_masked(s->dev, 0, false);
- 
-     hcsparams1 = xhci_cap_readl(s, XHCI_HCCAP_REG_HCSPARAMS1);
-     s->maxports = (hcsparams1 >> 24) & 0xff;
-@@ -640,6 +651,7 @@ static void xhci_disable_device(XHCIQState *s)
-     guest_free(&s->parent->alloc, s->command_ring.addr);
-     guest_free(&s->parent->alloc, s->event_ring_seg);
-     guest_free(&s->parent->alloc, s->dc_base_array);
-+    guest_free(&s->parent->alloc, s->guest_msix_addr);
- }
- 
- struct QEMU_PACKED usb_msd_cbw {
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ hw/usb/dev-storage.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
+index 41924b9320e..fda14271eae 100644
+--- a/hw/usb/dev-storage.c
++++ b/hw/usb/dev-storage.c
+@@ -366,7 +366,7 @@ static void usb_msd_handle_control(USBDevice *dev, USBPacket *p,
+         /* Class specific requests.  */
+     case ClassInterfaceOutRequest | MassStorageReset:
+         /* Reset state ready for the next CBW.  */
+-        s->mode = USB_MSDM_CBW;
++        usb_msd_handle_reset(dev);
+         break;
+     case ClassInterfaceRequest | GetMaxLun:
+         maxlun = 0;
 -- 
 2.47.1
 
