@@ -4,93 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0273AC3ABA9
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 07:48:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A93C3ABA3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 08:00:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAl8C-0003t9-PU; Fri, 02 May 2025 03:48:26 -0400
+	id 1uAlIc-0005pr-9M; Fri, 02 May 2025 03:59:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uAl82-0003sb-2t
- for qemu-devel@nongnu.org; Fri, 02 May 2025 03:48:15 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAlIY-0005pY-HY
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 03:59:07 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uAl80-0002tk-EL
- for qemu-devel@nongnu.org; Fri, 02 May 2025 03:48:13 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43cf05f0c3eso8982575e9.0
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 00:48:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAlIV-0007WD-3K
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 03:59:04 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5e8be1bdb7bso2497993a12.0
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 00:59:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746172090; x=1746776890; darn=nongnu.org;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=CNt2gXGmzF4Q8Nkee53erYjQZK/S5DrMJQ0Jwevlp/s=;
- b=XQevJNqO4JIlfxXQ7wlcUh8DvZ+E0srpRNXfFiHbDzTJxsTS6q7C6XT48BJUR7arI4
- RCggRXFeIt8Yu6Lc1y7hkw06CFogQ9VnSY9Hf0rsd8n5EApLn+Xmpn2bII3QRxqul6sb
- eCT9So5w1OLKvL9WSh0BD3Zuscf2UYw2HyFnKvEPfG8vaDoQuunTDcRHE6zTtxiAIj3x
- sMMo0WDvUW0lsS+YF9tbha9HlmdzBqCGj3TjdJ+Qv05sQbLebDWXgyECtfiKvaWFaghH
- lz0lZapSacAjigsnx6rTD2zT5USFoz6/8kvjOM55EySroeZKk/cylWqT04VnBzx+015Y
- kRQA==
+ d=linaro.org; s=google; t=1746172739; x=1746777539; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JcH5rPZ7MEghDtv6JDp01Yt+QvYBS6pqn5wF6nPtJyg=;
+ b=u7jYCRrwbo87rzkaVHuCZDCKR9puuOUADbzy/tLMI/xS+OBcvmXghe8dOIRBIGc2Fn
+ cgGdvJZkzYQSmwfSY1HKT8943E0+GmCvT8VyUeJs6xufZOzmbO+c8aQpSv5+c9AWT1Ds
+ SlxFyNzCLu7ALlvRF7K6CH4kBUh3/vWicYtmTljnwyjMJ1igUzEgx9HLjcm4oQuZQyoh
+ REIjPFnBhzwRbVc+woUDU+C6K+TGdhty7ZbXbm7swhUXcAq1BoNwIXibjyrv4MH7Napq
+ YW+AUDlwGsgpxuQVcmgMhUwr0qUqWhoC5SbkMAt/9vpnVgt3Qq8cfG2JxmM3/HIKGcs4
+ 16Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746172090; x=1746776890;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CNt2gXGmzF4Q8Nkee53erYjQZK/S5DrMJQ0Jwevlp/s=;
- b=cK6bEQtQbGPjCZwHfamS57r8nEcbP2c6B9YXg89U9xSdjZWVNG3EIpUeaUxHnk9n3I
- 52m9TIFbIXS6HkRTbAUhIXK8VoPY844PjVCa+sXrr46YDlVpnyQsufyVbDqqQR+EwS94
- SxGDTy1AeTxIlbE//+M0tTqKx8xNTYY+ccSxl9T+5WBDIEZIyhXno76f6CPY6vQ+zkn+
- Rwgv4FA9U+t3xfL055ASdGni+GTpTn9EnIzxDURc2oWAe/nhL9qLa3CH/0zDUBayg4iO
- Tl1/veETzqrEg80fXaj6rsLgLknQJ515JclklaKliHblJW/NPCuM/hYWBRpTiod/sgzG
- V3Qg==
-X-Gm-Message-State: AOJu0Yx9vfRjfUJoHoahJ1x860N2KR7YJ5ArfViAxndhkS6Yd0UUqn88
- JwIan6VHSc5fx2bvUtP6HpI2xlRB53gb/IY20x9xV7SOkvgnl2lWa0QCpU6O3oiE0wJPsHp92JM
- klTI=
-X-Gm-Gg: ASbGncsQwxtjlW9/13Fzfbh7Xf2/NmzXcMVvVyHyC0cuGf61yqe7LG13jSv4IEqTe60
- McsXlueBnScQUX9VUQ85URSCMYNMcAF3jY26r0e+4qaq8Sk4keD+fNEkQYCkvAtDEWY0/2Xxo5P
- qqW6Vzg/1r70rWvHjTf7xwtvhDnaF1bmr1kJVdukuKaZ4PO5rSMQXGIQl0KaOFo+uGNQMkQDTJ/
- 5x6/XvmMKobZczBTVJemJyKp0bGRTqEdqBKX7qd47KIowk4icD4A+Y0dJ/8aJm8HCq9ED4mJJhO
- gq+HAYBV4Tb4JS0Gjr9l+SzNPbct6jtY5936QIQ27Zi1nAjiS991k0stRZr5fN2ZMXnIaZwgK6i
- zCUi2Cg==
-X-Google-Smtp-Source: AGHT+IEQlLcWEUeoKL5ED9JIrfs0gFYpRKmwgykIWhfu9BuTg67/nLmrWekgx1YLzoSf52lbtUHRvg==
-X-Received: by 2002:a05:600c:8284:b0:440:68db:9fef with SMTP id
- 5b1f17b1804b1-441bbf34546mr11454695e9.20.1746172089982; 
- Fri, 02 May 2025 00:48:09 -0700 (PDT)
-Received: from meli-email.org (adsl-37.37.6.161.tellas.gr. [37.6.161.37])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b8a31695sm35946815e9.40.2025.05.02.00.48.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 May 2025 00:48:09 -0700 (PDT)
-Date: Fri, 02 May 2025 10:45:52 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Cc: Alex Benn=?UTF-8?B?w6k=?=e <alex.bennee@linaro.org>, qemu-devel@nongnu.org,
- Alexandre Iooss <erdnaxe@crans.org>, Michael S. Tsirkin <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
- Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: Re: [PATCH 2/9] gitlab: disable debug info on CI builds
-User-Agent: meli/0.8.12
-References: <20250428125918.449346-1-alex.bennee@linaro.org>
- <20250428125918.449346-3-alex.bennee@linaro.org>
- <294fd9b9-6880-477f-a2b4-773f1e5274c8@redhat.com>
- <CAFEAcA9=YaBw=X+6NUw1D3RPgcSJn0OdmGC2=N=195jjJ7ijRw@mail.gmail.com>
-In-Reply-To: <CAFEAcA9=YaBw=X+6NUw1D3RPgcSJn0OdmGC2=N=195jjJ7ijRw@mail.gmail.com>
-Message-ID: <svmj08.329a1ofve5fwo@linaro.org>
+ d=1e100.net; s=20230601; t=1746172739; x=1746777539;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JcH5rPZ7MEghDtv6JDp01Yt+QvYBS6pqn5wF6nPtJyg=;
+ b=pD69p2iyAkil3CYzj+i2YsbRbUuaMq8nGETC6TMWO8GjAZlwzHc9P43WiedxwJVMkt
+ U89hs+qJnV8fVDNfNByp5Dheetk4FDhnYEZJYpuCu8HaW8OFYpoKihx0hU4gy4l6fKv1
+ xqnYcUzmazgzrtXj3C/5Df16GZ9wpvg9JqwwYGFuMHCvXtNAmJh1AXGB02Qdcx/AOAvp
+ CyCaQdF8J5lf1HQZPn4RXOUXswMBxLju2NVFhFZqwY/Y44PffEGZH5CP0H87E7VYnfJw
+ oILLCIu0U39B8xrE92bzLKy21ccnpeAcNGO2qf9xIPMDkR+4o/rod7dPGWc5h7w2G9vj
+ ZhDw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3f499erRj1FTRs60OYS2pVYb7z2d9pmzWR6gwXOlGp7rt0FIQpPYnFgEgcLwrT4WkjTlxaofg7tep@nongnu.org
+X-Gm-Message-State: AOJu0YwPoHpukKlmfAJ3nohrGy5HEqLaYExM0W6XWuNOky+/TbIZOHNV
+ bNDwZR87mG1RfqDhcay17zVr1PqfKMEZaaZ+W8XwbLLrxT4XYLcN5pZ/xHV3fik=
+X-Gm-Gg: ASbGnctDLKRrmGnpVudqOk/9KZughkgwQDcIKGyVhCGdOWTOXefxFJDSDVaZOprmatr
+ 49E5V+BtTdbtUohfjDxpTMvG+ZgbVcNv/vls6ZQQSx06/1ckOzJodHLI/3EhDS4V/ykYbGHb+dw
+ 0m0KMEuSE283f+7oqfGWljn+TD7RHC/BbYCP9Kw1pIMcSU0rcGl6CBih7wN+iuVs40xuiqf+vYz
+ IN6d1yMnl7oq6zPoHlDlBBlY523Ee4Msq6Xe2PaSnYvFroAU4yUwxpGs8rvppDmCVIIO61eStn9
+ SwHsL6D2JHvBwF4yD9xvoOUMnIk4dfOphbOBvoGlG3akbtL+hlJ5jWBj9GNQ1S5905vzu7SO5nZ
+ jKAlv+7AYzGq1Tdi1ufM=
+X-Google-Smtp-Source: AGHT+IEC20Tt2BNwepPL06ee8vhln1BQhT0IRMHlXydjiC6EDLZjMvDsMI87axhUSAlyqtD5vLUw8A==
+X-Received: by 2002:a05:6402:234e:b0:5f6:21a4:61d5 with SMTP id
+ 4fb4d7f45d1cf-5fa78052cfbmr1396728a12.17.1746172739519; 
+ Fri, 02 May 2025 00:58:59 -0700 (PDT)
+Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5fa77816ffbsm818090a12.34.2025.05.02.00.58.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 May 2025 00:58:58 -0700 (PDT)
+Message-ID: <04218e51-d3be-430e-b1c5-41834cd4ab54@linaro.org>
+Date: Fri, 2 May 2025 09:58:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x329.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/char/serial: Remove unused prog_if compat property
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+References: <20250502001605.45A3B55D25A@zero.eik.bme.hu>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250502001605.45A3B55D25A@zero.eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, CTE_8BIT_MISMATCH=0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,40 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 28 Apr 2025 17:20, Peter Maydell <peter.maydell@linaro.org> wrote:
->On Mon, 28 Apr 2025 at 15:02, Thomas Huth <thuth@redhat.com> wrote:
->>
->> On 28/04/2025 14.59, Alex Bennée wrote:
->> > Our default build enables debug info which adds hugely to the size of
->> > the builds as well as the size of cached objects. Disable debug info
->> > across the board to save space and reduce pressure on the CI system.
->> > We still have a number of builds which explicitly enable debug and
->> > related extra asserts like --enable-debug-tcg.
->> >
->> > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->> > ---
->> >   .gitlab-ci.d/buildtest-template.yml | 1 +
->> >   1 file changed, 1 insertion(+)
->> >
->> > diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
->> > index d4f145fdb5..d9e69c3237 100644
->> > --- a/.gitlab-ci.d/buildtest-template.yml
->> > +++ b/.gitlab-ci.d/buildtest-template.yml
->> > @@ -24,6 +24,7 @@
->> >       - ccache --zero-stats
->> >       - section_start configure "Running configure"
->> >       - ../configure --enable-werror --disable-docs --enable-fdt=system
->> > +          --disable-debug-info
->>
->> Do we have any jobs that might show stack traces in the console output ?
->> build-oss-fuzz comes to my mind, but that uses a separate script, so we
->> should be fine there?
->
->If you build with Rust enabled, and the Rust code panics,
->then you get a Rust backtrace. But I don't know if that
->cares about debug info to get its backtraces: quite
->possibly it's an entirely different mechanism.
+On 2/5/25 02:16, BALATON Zoltan wrote:
+> This property was added to preserve previous value when this was fixed
+> in version 2.1 but the 2.0 machine using it was already removed
+> leaving this property unused and unnecessary. This was also copy &
+> pasted into diva-gsp where it was probably never used so get rid of
+> this property at last.
+> 
+> Fixes: dbe442ad48 (hw/i386/pc: Remove deprecated pc-i440fx-2.0 machine)
 
-It will show addresses and <unknown> instead of symbols if they are 
-stripped.
+Back then we couldn't remove this property because it was used
+by a HPPA machine. Indeed the last use was removed in commit
+c061efca0b6 ("hw/hppa: Wire up Diva GSP card"). "Fixes: dbe442ad48"
+is inappropriate, otherwise:
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>   hw/char/diva-gsp.c         |  6 ++----
+>   hw/char/serial-pci-multi.c |  7 ++-----
+>   hw/char/serial-pci.c       | 10 ++--------
+>   3 files changed, 6 insertions(+), 17 deletions(-)
+
 
