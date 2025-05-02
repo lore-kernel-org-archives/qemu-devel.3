@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED28C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 10:53:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F63FC3ABA3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 10:53:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAo0P-0001T5-9e; Fri, 02 May 2025 06:52:33 -0400
+	id 1uAo1U-0002IN-EH; Fri, 02 May 2025 06:53:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uAo0N-0001Sx-Rw
- for qemu-devel@nongnu.org; Fri, 02 May 2025 06:52:31 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uAo0K-0005e6-GY
- for qemu-devel@nongnu.org; Fri, 02 May 2025 06:52:31 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43cef035a3bso11398665e9.1
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 03:52:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746183147; x=1746787947; darn=nongnu.org;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=oUVzgC11QpKdPu7ROAmRYT/NvXT7iHXXqRw9BzVHRSQ=;
- b=ATHIzmLv0OBbtqdnwvsdMsncOXUfUbwlIeoLJDEAJmCXEEmUx8OOkuyBwfW6mCTd2o
- 67gEM0Eyd+RKIwcngZTgEa7+MO7H+OaxlE4n88CeQq1/caPLqd3tI5Usk+OxJXJj9rB9
- H8NiZhXzc0h4RHYecQUxTT3k5DIs4pjI2I81Ur3OHjdnCCRQAZ6PK5BxNaI3lWsdZnu7
- hLqcFb8kcbcyQhtdMbOv3WNkvlHGOEEnlPoyJOt0BxUlqBoK7v5moj2O2ndOaRHqfg/w
- QLF+kc6Tg2QAT/rSkqkfURK2ptaUh6khoHWohvghfPI6xOpuXWAXxCDnzX0aWrVtBmqr
- JoQw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uAo1O-0002BR-BL
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 06:53:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uAo1L-0005n6-Ne
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 06:53:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746183208;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=RvPeAOUjN/2G8r8d702zIIMXpkYXw6rozy6jk2q02Cc=;
+ b=cK7aOx8LfZRejWkWNfg7aQLdyV0VcxBYHs2IKcUcefltdkhegMGP9YgUF/0F+3hH/MkFU9
+ /E1QaxRky61QWSoFNonP0shpQccvskOcj0533nTr0gnRpQPvrtX7HfSwTrphFkcwD1MIOE
+ umSYuOe3+EPN0MlRzeLrtNdS7NR+KQY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-219-DSL6a46zOySk6ud_WU5nrA-1; Fri, 02 May 2025 06:53:27 -0400
+X-MC-Unique: DSL6a46zOySk6ud_WU5nrA-1
+X-Mimecast-MFC-AGG-ID: DSL6a46zOySk6ud_WU5nrA_1746183206
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43cf3168b87so7463595e9.2
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 03:53:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746183147; x=1746787947;
- h=mime-version:message-id:in-reply-to:references:user-agent:subject
- :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oUVzgC11QpKdPu7ROAmRYT/NvXT7iHXXqRw9BzVHRSQ=;
- b=BdlZGazAh3GAYaLRXajdnt35o5W+g5j4dQs+11WB8T1EhDKU3ubZqQwh3pIV1QQfVv
- H+JgXIVY0wFQBAZFfFocbctspEhT14s0vDIx9lq5HMF7+1cPiJ6fHiekVTGQQns9WNgz
- G17CxhMLdtYjpv1j/IcYE/m9hfbTwJZhsUAOIoxqHf5gG+GcawP1nM+eY/bQa+st5Vdk
- BDz8Obu4AHVBoSgLmjX8iLOHSaFQ0NtRzSnkbBEV/F4sL6WKTPNIF6nEYgcG2M8TRS9l
- ful23wIvLFibG4YBlethHvbdPyvhtHWXMimBiE8hh5AlcTlC4/TtGU8RvGPKCrYdN5DE
- R0UQ==
-X-Gm-Message-State: AOJu0YxCPw5ShtXSYmx64UYnYg4LNb48fpvYfAHmMu23TlETwp84dsgr
- s2bfzr1L1Hh81z98Si1XJvEyh2GIQnY2UmtKALCjAMLQXEUMfBMLlc35/gLCirWET2yhMrWMHbF
- KOGQ=
-X-Gm-Gg: ASbGncuiGcrLB10MPoZXYIRj2Y5MHYcXc33ykGobHdpiBwQvr0DGpsJzjT2JL70zo7F
- hd36lZRnca4QkPEqohQW6s1xe7EfKb8LaIL5Z5nLYpO3krwl9Qde/hwgHCDl6lPwoHGrmf+CU67
- G68Y6dDnSvwKu5i4RVceCCmtBPARd0pi5AlIr566jcw+N70+mobzvmgRMM21fgoqGYCFuoz59Wk
- kMbCBuCK3lY9Jt3hJGN49H7aXOSRhC2EKdMEtippPM+DBO/M3pobwi3o6kySd/Yw2GE0svvTiAJ
- JixYDPBOOdsuEpWlCAO05FRn/9FVFmEuqtDdZkybAECn8+YBPKziis/XVuTCPsbG4QQUkjYvbsi
- X8HHcZQ==
-X-Google-Smtp-Source: AGHT+IHUfcQKuUH+f3wgigbmZlaM2HYe6JpbXOJ+GqesF5Kcs7jrRZHYy+pwIC4xS8fcZBIx0/9Psg==
-X-Received: by 2002:a05:6000:1a89:b0:39c:30c9:822 with SMTP id
- ffacd0b85a97d-3a099add511mr1534614f8f.30.1746183146707; 
- Fri, 02 May 2025 03:52:26 -0700 (PDT)
-Received: from meli-email.org (adsl-37.37.6.161.tellas.gr. [37.6.161.37])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae0b9fsm1783131f8f.4.2025.05.02.03.52.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 May 2025 03:52:26 -0700 (PDT)
-Date: Fri, 02 May 2025 13:47:32 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-rust@nongnu.org
-Subject: Re: [PATCH 7/9] rust: replace c_str! with c"" literals
-User-Agent: meli/0.8.12
+ d=1e100.net; s=20230601; t=1746183205; x=1746788005;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RvPeAOUjN/2G8r8d702zIIMXpkYXw6rozy6jk2q02Cc=;
+ b=cVVWVfXizgF9JIxiIz7MB457HdqdNQyF+s9lrB9ieKQmlvWPnWCsm2AZl3z/+xYz5J
+ mEeyfIc3DyQqkYO81trOOWm2/zl5zCobTxmIhJrynHepQiC/W4wmdWRO2F0ERWpt0w3f
+ N1YVzSnCZx+ULfzWYYbE2qZ0215msqCOulAiEou6Q1GWKZdpuuIqbHpPmuPbWU5C3EFV
+ WO/O4GC0eg7NYAJL8h17tLdiHuJmHwGgu2TH4T7sF3bNRdbHl+ft3rSxoIcCO37kGTZd
+ jNaCnuxeP3ZkJJhOcj0l0iHVLFtKEBEq+aMn1r1FABjvcA1Ki9OgjOwPu/6hakSC5GM8
+ IRUQ==
+X-Gm-Message-State: AOJu0Yw/RXRv9vgM7mh+RsLJJ0CTHNtsml1ee5NFs44M8ppsp2U8Au3K
+ As3cSqxgXXEBTBgY/COruAdhbE2e9rdkH3Lj1aUB8qD3srNeLz5nDHMdGfY4OJ0avPpKqsqKoew
+ 1W1KjJXtYlRta3ltzI4jN8t7Chpi3LdKb20Q2UYPnNzTLpCKaQgbR4NolNjSwXu+P/QMlv2Mh5M
+ 2+zHf4F1HoSSM6NVmBweO8VmjZYzSZQ61S5Xw=
+X-Gm-Gg: ASbGncsQ2/gn+oOoNU8er2Jwzo5Y5us04Nz6fkijJjwqpCVuQTeoIypLD0v+esBZYr/
+ BdXiRfGLoPM+IumJ3SqDrDzIw/JMfvNWvS8nu9wnMu22sh4WmZCnlxI749BUad9PD+XR/
+X-Received: by 2002:a05:600c:5022:b0:43c:e6d1:efe7 with SMTP id
+ 5b1f17b1804b1-441bbf34052mr16078005e9.26.1746183205668; 
+ Fri, 02 May 2025 03:53:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFQPxHCxUTnCuCE+rVzGRuyw6wJlcEfWcdfh3/4glaTpsiXDj7Dc5Y4Y4ZZgMwe8q5OytOIl+FQUcKfCpjioiU=
+X-Received: by 2002:a05:600c:5022:b0:43c:e6d1:efe7 with SMTP id
+ 5b1f17b1804b1-441bbf34052mr16077865e9.26.1746183205364; Fri, 02 May 2025
+ 03:53:25 -0700 (PDT)
+MIME-Version: 1.0
 References: <20250502102323.104815-1-pbonzini@redhat.com>
  <20250502102323.104815-8-pbonzini@redhat.com>
-In-Reply-To: <20250502102323.104815-8-pbonzini@redhat.com>
-Message-ID: <svmrjd.2xrfuqhgty9pb@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ <svmrjd.2xrfuqhgty9pb@linaro.org>
+In-Reply-To: <svmrjd.2xrfuqhgty9pb@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 2 May 2025 12:53:08 +0200
+X-Gm-Features: ATxdqUEH3DDusdJiUF44Ge6r2iRfaZJfN_8dzW9sWwYeyPVdeNrzJPSyZR7OXTY
+Message-ID: <CABgObfaBcG5XA+_hwZ27xhdB-6g0AZ-vx7sBcPzG3K3c3930zg@mail.gmail.com>
+Subject: Re: [PATCH 7/9] rust: replace c_str! with c"" literals
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.644,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,44 +103,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 02 May 2025 13:23, Paolo Bonzini <pbonzini@redhat.com> wrote:
->Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->---
-> docs/devel/rust.rst                    |  8 +---
-> rust/Cargo.lock                        |  1 -
-> rust/hw/char/pl011/src/device_class.rs | 11 +++--
-> rust/hw/char/pl011/src/lib.rs          |  6 +--
-> rust/hw/timer/hpet/src/hpet.rs         | 19 ++++----
-> rust/hw/timer/hpet/src/lib.rs          |  4 +-
-> rust/qemu-api/meson.build              |  1 -
-> rust/qemu-api/src/c_str.rs             | 61 --------------------------
-> rust/qemu-api/src/cell.rs              |  4 +-
-> rust/qemu-api/src/lib.rs               |  1 -
-> rust/qemu-api/src/vmstate.rs           |  2 +-
-> rust/qemu-api/tests/tests.rs           |  9 ++--
-> rust/qemu-api/tests/vmstate_tests.rs   | 15 +++----
-> 13 files changed, 32 insertions(+), 110 deletions(-)
-> delete mode 100644 rust/qemu-api/src/c_str.rs
+On Fri, May 2, 2025 at 12:52=E2=80=AFPM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+> This looks like it should go in the previous patch ("rust: remove
+> offset_of replacement")
 >
+> Otherwise,
+>
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-<-snip->
+You're right! Thanks for the review, and welcome back.
 
->diff --git a/rust/Cargo.lock b/rust/Cargo.lock
->index 2ebf0a11ea4..13d580c693b 100644
->--- a/rust/Cargo.lock
->+++ b/rust/Cargo.lock
->@@ -108,7 +108,6 @@ version = "0.1.0"
-> dependencies = [
->  "libc",
->  "qemu_api_macros",
->- "version_check",
-> ]
+Paolo
 
-
-This looks like it should go in the previous patch ("rust: remove 
-offset_of replacement")
-
-Otherwise,
-
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
