@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B52DC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 10:37:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D623C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 10:37:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAnjr-00085h-Ci; Fri, 02 May 2025 06:35:29 -0400
+	id 1uAnku-0000tI-4d; Fri, 02 May 2025 06:36:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1uAnjU-00080N-AN; Fri, 02 May 2025 06:35:04 -0400
+ id 1uAnjw-0008Ac-MK; Fri, 02 May 2025 06:35:36 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
- id 1uAnjR-0005yi-V1; Fri, 02 May 2025 06:35:03 -0400
+ id 1uAnju-0005yi-Cy; Fri, 02 May 2025 06:35:32 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 2 May
- 2025 18:34:50 +0800
+ 2025 18:34:52 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Fri, 2 May 2025 18:34:50 +0800
+ Transport; Fri, 2 May 2025 18:34:52 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>, Jamin Lin
  <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, <longzl2@lenovo.com>,
- <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v4 1/9] aspeed: ast27x0: Map unimplemented devices in SoC
- memory
-Date: Fri, 2 May 2025 18:34:37 +0800
-Message-ID: <20250502103449.3091642-2-steven_lee@aspeedtech.com>
+ <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>
+Subject: [PATCH v4 7/9] hw/arm: Introduce ASPEED AST2700 A1 full core machine
+Date: Fri, 2 May 2025 18:34:43 +0800
+Message-ID: <20250502103449.3091642-8-steven_lee@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250502103449.3091642-1-steven_lee@aspeedtech.com>
 References: <20250502103449.3091642-1-steven_lee@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=steven_lee@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -68,165 +66,270 @@ From:  Steven Lee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Maps following unimplemented devices in SoC memory
-- dpmcu
-- iomem
-- iomem0
-- iomem1
-- ltpi
+- Added new machine type `ast2700fc` with full core support.
+- Defined `Ast2700FCState` structure for the new machine type.
+- Implemented initialization functions for CA35, SSP, and TSP components.
+- Updated `ast2700fc_types` to include the new machine type.
+- Set machine class properties for `ast2700fc`.
 
-Iomem, Iomem0 and Iomem1 include unimplemented controllers in the memory ranges 0x0 - 0x1000000, 0x120000000 - 0x121000000 and
-0x14000000 - 0x141000000.
+Test Step:
+- Download ast2700-default-obmc.tar.gz from AspeedTech-BMC OpenBmc
+  release page.
+- Run the following QEMU command:
 
-For instance:
-- USB hub at 0x12010000
-- eSPI at 0x14C5000
-- PWM at 0x140C0000
+  ```
+  IMGDIR=~/path/to/image
+  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
 
-DPMCU stands for Display Port MCU controller. LTPI is used to connect to AST1700.
-AST1700 is an I/O expander that supports the DC-SCM 2.1 LTPI protocol.
-It provides AST2700 with additional GPIO, UART, I3C, and other interfaces.
+  ./qemu-system-aarch64 -machine ast2700fc \
+  -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
+  -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
+  -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
+  -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/tee-raw.bin \
+  -device loader,cpu-num=0,addr=0x430000000 \
+  -device loader,cpu-num=1,addr=0x430000000 \
+  -device loader,cpu-num=2,addr=0x430000000 \
+  -device loader,cpu-num=3,addr=0x430000000 \
+  -device loader,file=${IMGDIR}/ast2700-ssp.elf,cpu-num=4 \
+  -device loader,file=${IMGDIR}/ast2700-tsp.elf,cpu-num=5 \
+  -drive file=${IMGDIR}/image-bmc,if=mtd,format=raw \
+  -serial pty -serial pty -serial pty \
+  -snapshot \
+  -S -nographic
+  ```
+
+- After starting QEMU, serial devices will be redirected:
+
+  char device redirected to /dev/pts/51 (label serial0)
+  char device redirected to /dev/pts/52 (label serial1)
+  char device redirected to /dev/pts/53 (label serial2)
+
+- serial0 is the console for the four Cortex-A35 primary processors,
+  serial1 and serial2 are the consoles for the two Cortex-M4 coprocessors.
+
+- Connect to the consoles using a terminal emulator.
 
 Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-Change-Id: Iae4db49a4818af3e2c43c16a27fc76329d2405d6
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Change-Id: I32447b9372a78eb53a07135afef59c2a19202328
 ---
- include/hw/arm/aspeed_soc.h |  6 +++++
- hw/arm/aspeed_ast27x0.c     | 52 ++++++++++++++++++++++++++++++++-----
- 2 files changed, 51 insertions(+), 7 deletions(-)
+ hw/arm/aspeed_ast27x0-fc.c | 192 +++++++++++++++++++++++++++++++++++++
+ hw/arm/meson.build         |   4 +-
+ 2 files changed, 195 insertions(+), 1 deletion(-)
+ create mode 100644 hw/arm/aspeed_ast27x0-fc.c
 
-diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-index 4dcb1010dc..5fcfd2fe2e 100644
---- a/include/hw/arm/aspeed_soc.h
-+++ b/include/hw/arm/aspeed_soc.h
-@@ -91,6 +91,8 @@ struct AspeedSoCState {
-     SerialMM uart[ASPEED_UARTS_NUM];
-     Clock *sysclk;
-     UnimplementedDeviceState iomem;
-+    UnimplementedDeviceState iomem0;
-+    UnimplementedDeviceState iomem1;
-     UnimplementedDeviceState video;
-     UnimplementedDeviceState emmc_boot_controller;
-     UnimplementedDeviceState dpmcu;
-@@ -98,6 +100,7 @@ struct AspeedSoCState {
-     UnimplementedDeviceState espi;
-     UnimplementedDeviceState udc;
-     UnimplementedDeviceState sgpiom;
-+    UnimplementedDeviceState ltpi;
-     UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
-     AspeedAPB2OPBState fsi[2];
- };
-@@ -173,6 +176,9 @@ enum {
-     ASPEED_DEV_VBOOTROM,
-     ASPEED_DEV_SPI_BOOT,
-     ASPEED_DEV_IOMEM,
-+    ASPEED_DEV_IOMEM0,
-+    ASPEED_DEV_IOMEM1,
-+    ASPEED_DEV_LTPI,
-     ASPEED_DEV_UART0,
-     ASPEED_DEV_UART1,
-     ASPEED_DEV_UART2,
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index a289e65e49..21769669df 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -23,9 +23,17 @@
- #include "qobject/qlist.h"
- #include "qemu/log.h"
- 
-+#define AST2700_SOC_IO_SIZE          0x01000000
-+#define AST2700_SOC_IOMEM_SIZE       0x01000000
-+#define AST2700_SOC_DPMCU_SIZE       0x00040000
-+#define AST2700_SOC_LTPI_SIZE        0x01000000
+diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
+new file mode 100644
+index 0000000000..125a3ade40
+--- /dev/null
++++ b/hw/arm/aspeed_ast27x0-fc.c
+@@ -0,0 +1,192 @@
++/*
++ * ASPEED SoC 2700 family
++ *
++ * Copyright (C) 2025 ASPEED Technology Inc.
++ *
++ * This code is licensed under the GPL version 2 or later.  See
++ * the COPYING file in the top-level directory.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- static const hwaddr aspeed_soc_ast2700_memmap[] = {
-+    [ASPEED_DEV_IOMEM]     =  0x00000000,
-     [ASPEED_DEV_VBOOTROM]  =  0x00000000,
-     [ASPEED_DEV_SRAM]      =  0x10000000,
-+    [ASPEED_DEV_DPMCU]     =  0x11000000,
-+    [ASPEED_DEV_IOMEM0]    =  0x12000000,
-     [ASPEED_DEV_EHCI1]     =  0x12061000,
-     [ASPEED_DEV_EHCI2]     =  0x12063000,
-     [ASPEED_DEV_HACE]      =  0x12070000,
-@@ -39,6 +47,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_DEV_TIMER1]    =  0x12C10000,
-     [ASPEED_DEV_SLI]       =  0x12C17000,
-     [ASPEED_DEV_UART4]     =  0X12C1A000,
-+    [ASPEED_DEV_IOMEM1]    =  0x14000000,
-     [ASPEED_DEV_FMC]       =  0x14000000,
-     [ASPEED_DEV_SPI0]      =  0x14010000,
-     [ASPEED_DEV_SPI1]      =  0x14020000,
-@@ -73,6 +82,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
-     [ASPEED_DEV_UART12]    =  0X14C33B00,
-     [ASPEED_DEV_WDT]       =  0x14C37000,
-     [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
-+    [ASPEED_DEV_LTPI]      =  0x300000000,
-     [ASPEED_DEV_SDRAM]     =  0x400000000,
- };
- 
-@@ -507,6 +517,16 @@ static void aspeed_soc_ast2700_init(Object *obj)
- 
-     snprintf(typename, sizeof(typename), "aspeed.hace-%s", socname);
-     object_initialize_child(obj, "hace", &s->hace, typename);
-+    object_initialize_child(obj, "dpmcu", &s->dpmcu,
-+                            TYPE_UNIMPLEMENTED_DEVICE);
-+    object_initialize_child(obj, "ltpi", &s->ltpi,
-+                            TYPE_UNIMPLEMENTED_DEVICE);
-+    object_initialize_child(obj, "iomem", &s->iomem,
-+                            TYPE_UNIMPLEMENTED_DEVICE);
-+    object_initialize_child(obj, "iomem0", &s->iomem0,
-+                            TYPE_UNIMPLEMENTED_DEVICE);
-+    object_initialize_child(obj, "iomem1", &s->iomem1,
-+                            TYPE_UNIMPLEMENTED_DEVICE);
- }
- 
- /*
-@@ -542,8 +562,11 @@ static bool aspeed_soc_ast2700_gic_realize(DeviceState *dev, Error **errp)
-     if (!sysbus_realize(gicbusdev, errp)) {
-         return false;
-     }
--    sysbus_mmio_map(gicbusdev, 0, sc->memmap[ASPEED_GIC_DIST]);
--    sysbus_mmio_map(gicbusdev, 1, sc->memmap[ASPEED_GIC_REDIST]);
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "qapi/error.h"
++#include "system/block-backend.h"
++#include "system/system.h"
++#include "hw/arm/aspeed.h"
++#include "hw/boards.h"
++#include "hw/qdev-clock.h"
++#include "hw/arm/aspeed_soc.h"
++#include "hw/loader.h"
++#include "hw/arm/boot.h"
++#include "hw/block/flash.h"
 +
-+    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->gic), 0,
-+                    sc->memmap[ASPEED_GIC_DIST]);
-+    aspeed_mmio_map(s, SYS_BUS_DEVICE(&a->gic), 1,
-+                    sc->memmap[ASPEED_GIC_REDIST]);
- 
-     for (i = 0; i < sc->num_cpus; i++) {
-         DeviceState *cpudev = DEVICE(&a->cpu[i]);
-@@ -911,11 +934,26 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->hace), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_HACE));
- 
--    create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
--    create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
--    create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
--    create_unimplemented_device("ast2700.ltpi", 0x30000000, 0x1000000);
--    create_unimplemented_device("ast2700.io", 0x0, 0x4000000);
-+    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->dpmcu),
-+                                  "aspeed.dpmcu",
-+                                  sc->memmap[ASPEED_DEV_DPMCU],
-+                                  AST2700_SOC_DPMCU_SIZE);
-+    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->ltpi),
-+                                  "aspeed.ltpi",
-+                                  sc->memmap[ASPEED_DEV_LTPI],
-+                                  AST2700_SOC_LTPI_SIZE);
-+    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem),
-+                                  "aspeed.io",
-+                                  sc->memmap[ASPEED_DEV_IOMEM],
-+                                  AST2700_SOC_IO_SIZE);
-+    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem0),
-+                                  "aspeed.iomem0",
-+                                  sc->memmap[ASPEED_DEV_IOMEM0],
-+                                  AST2700_SOC_IOMEM_SIZE);
-+    aspeed_mmio_map_unimplemented(s, SYS_BUS_DEVICE(&s->iomem1),
-+                                  "aspeed.iomem1",
-+                                  sc->memmap[ASPEED_DEV_IOMEM1],
-+                                  AST2700_SOC_IOMEM_SIZE);
- }
- 
- static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, const void *data)
++
++#define TYPE_AST2700A1FC MACHINE_TYPE_NAME("ast2700fc")
++OBJECT_DECLARE_SIMPLE_TYPE(Ast2700FCState, AST2700A1FC);
++
++static struct arm_boot_info ast2700fc_board_info = {
++    .board_id = -1, /* device-tree-only board */
++};
++
++struct Ast2700FCState {
++    MachineState parent_obj;
++
++    MemoryRegion ca35_memory;
++    MemoryRegion ca35_dram;
++    MemoryRegion ssp_memory;
++    MemoryRegion tsp_memory;
++
++    Clock *ssp_sysclk;
++    Clock *tsp_sysclk;
++
++    Aspeed27x0SoCState ca35;
++    Aspeed27x0SSPSoCState ssp;
++    Aspeed27x0TSPSoCState tsp;
++
++    bool mmio_exec;
++};
++
++#define AST2700FC_BMC_RAM_SIZE (2 * GiB)
++#define AST2700FC_CM4_DRAM_SIZE (32 * MiB)
++
++#define AST2700FC_HW_STRAP1 0x000000C0
++#define AST2700FC_HW_STRAP2 0x00000003
++#define AST2700FC_FMC_MODEL "w25q01jvq"
++#define AST2700FC_SPI_MODEL "w25q512jv"
++
++static void ast2700fc_ca35_init(MachineState *machine)
++{
++    Ast2700FCState *s = AST2700A1FC(machine);
++    AspeedSoCState *soc;
++    AspeedSoCClass *sc;
++
++    object_initialize_child(OBJECT(s), "ca35", &s->ca35, "ast2700-a1");
++    soc = ASPEED_SOC(&s->ca35);
++    sc = ASPEED_SOC_GET_CLASS(soc);
++
++    memory_region_init(&s->ca35_memory, OBJECT(&s->ca35), "ca35-memory",
++                       UINT64_MAX);
++
++    if (!memory_region_init_ram(&s->ca35_dram, OBJECT(&s->ca35), "ca35-dram",
++                                AST2700FC_BMC_RAM_SIZE, &error_abort)) {
++        return;
++    }
++    if (!object_property_set_link(OBJECT(&s->ca35), "memory",
++                                  OBJECT(&s->ca35_memory),
++                                  &error_abort)) {
++        return;
++    };
++    if (!object_property_set_link(OBJECT(&s->ca35), "dram",
++                                  OBJECT(&s->ca35_dram), &error_abort)) {
++        return;
++    }
++    if (!object_property_set_int(OBJECT(&s->ca35), "ram-size",
++                                 AST2700FC_BMC_RAM_SIZE, &error_abort)) {
++        return;
++    }
++    if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
++                                 AST2700FC_HW_STRAP1, &error_abort)) {
++        return;
++    }
++    if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap2",
++                                 AST2700FC_HW_STRAP2, &error_abort)) {
++        return;
++    }
++    aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART12, serial_hd(0));
++    if (!qdev_realize(DEVICE(&s->ca35), NULL, &error_abort)) {
++        return;
++    }
++
++    /*
++     * AST2700 EVB has a LM75 temperature sensor on I2C bus 0 at address 0x4d.
++     */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0), "tmp105", 0x4d);
++
++    aspeed_board_init_flashes(&soc->fmc, AST2700FC_FMC_MODEL, 2, 0);
++    aspeed_board_init_flashes(&soc->spi[0], AST2700FC_SPI_MODEL, 1, 2);
++
++    ast2700fc_board_info.ram_size = machine->ram_size;
++    ast2700fc_board_info.loader_start = sc->memmap[ASPEED_DEV_SDRAM];
++
++    arm_load_kernel(ARM_CPU(first_cpu), machine, &ast2700fc_board_info);
++}
++
++static void ast2700fc_ssp_init(MachineState *machine)
++{
++    AspeedSoCState *soc;
++    Ast2700FCState *s = AST2700A1FC(machine);
++    s->ssp_sysclk = clock_new(OBJECT(s), "SSP_SYSCLK");
++    clock_set_hz(s->ssp_sysclk, 200000000ULL);
++
++    object_initialize_child(OBJECT(s), "ssp", &s->ssp, TYPE_ASPEED27X0SSP_SOC);
++    memory_region_init(&s->ssp_memory, OBJECT(&s->ssp), "ssp-memory",
++                       UINT64_MAX);
++
++    qdev_connect_clock_in(DEVICE(&s->ssp), "sysclk", s->ssp_sysclk);
++    if (!object_property_set_link(OBJECT(&s->ssp), "memory",
++                                  OBJECT(&s->ssp_memory), &error_abort)) {
++        return;
++    }
++
++    soc = ASPEED_SOC(&s->ssp);
++    aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART4, serial_hd(1));
++    if (!qdev_realize(DEVICE(&s->ssp), NULL, &error_abort)) {
++        return;
++    }
++}
++
++static void ast2700fc_tsp_init(MachineState *machine)
++{
++    AspeedSoCState *soc;
++    Ast2700FCState *s = AST2700A1FC(machine);
++    s->tsp_sysclk = clock_new(OBJECT(s), "TSP_SYSCLK");
++    clock_set_hz(s->tsp_sysclk, 200000000ULL);
++
++    object_initialize_child(OBJECT(s), "tsp", &s->tsp, TYPE_ASPEED27X0TSP_SOC);
++    memory_region_init(&s->tsp_memory, OBJECT(&s->tsp), "tsp-memory",
++                       UINT64_MAX);
++
++    qdev_connect_clock_in(DEVICE(&s->tsp), "sysclk", s->tsp_sysclk);
++    if (!object_property_set_link(OBJECT(&s->tsp), "memory",
++                                  OBJECT(&s->tsp_memory), &error_abort)) {
++        return;
++    }
++
++    soc = ASPEED_SOC(&s->tsp);
++    aspeed_soc_uart_set_chr(soc, ASPEED_DEV_UART7, serial_hd(2));
++    if (!qdev_realize(DEVICE(&s->tsp), NULL, &error_abort)) {
++        return;
++    }
++}
++
++static void ast2700fc_init(MachineState *machine)
++{
++    ast2700fc_ca35_init(machine);
++    ast2700fc_ssp_init(machine);
++    ast2700fc_tsp_init(machine);
++}
++
++static void ast2700fc_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->alias = "ast2700fc";
++    mc->desc = "ast2700 full core support";
++    mc->init = ast2700fc_init;
++    mc->no_floppy = 1;
++    mc->no_cdrom = 1;
++    mc->min_cpus = mc->max_cpus = mc->default_cpus = 6;
++}
++
++static const TypeInfo ast2700fc_types[] = {
++    {
++        .name           = MACHINE_TYPE_NAME("ast2700fc"),
++        .parent         = TYPE_MACHINE,
++        .class_init     = ast2700fc_class_init,
++        .instance_size  = sizeof(Ast2700FCState),
++    },
++};
++
++DEFINE_TYPES(ast2700fc_types)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 98c5631506..5098795f61 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -49,7 +49,9 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+   'aspeed_ast10x0.c',
+   'aspeed_eeprom.c',
+   'fby35.c'))
+-arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files('aspeed_ast27x0.c'))
++arm_common_ss.add(when: ['CONFIG_ASPEED_SOC', 'TARGET_AARCH64'], if_true: files(
++  'aspeed_ast27x0.c',
++  'aspeed_ast27x0-fc.c',))
+ arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2.c'))
+ arm_common_ss.add(when: 'CONFIG_MPS2', if_true: files('mps2-tz.c'))
+ arm_common_ss.add(when: 'CONFIG_MSF2', if_true: files('msf2-soc.c'))
 -- 
 2.34.1
 
