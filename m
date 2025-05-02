@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0702C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 14:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74AF8C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 15:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uArqR-0003Q8-0f; Fri, 02 May 2025 10:58:31 -0400
+	id 1uAs5A-0008VM-Lp; Fri, 02 May 2025 11:13:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uArqO-0003Oc-Qj
- for qemu-devel@nongnu.org; Fri, 02 May 2025 10:58:28 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uAs58-0008Ud-Rc
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 11:13:42 -0400
+Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uArqM-0002rn-Ij
- for qemu-devel@nongnu.org; Fri, 02 May 2025 10:58:28 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-acbb48bad09so373304366b.0
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 07:58:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uAs4z-0001fn-8J
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 11:13:42 -0400
+Received: by mail-yb1-xb2c.google.com with SMTP id
+ 3f1490d57ef6-e733b858574so1988914276.2
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 08:13:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746197903; x=1746802703; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=J8YzoanIk5Tc3h7ufmslO4S+l5crv4KBw80pyEGyvdo=;
- b=o831xw2e6pPYej0ygl1BmFFjbgIzKSuU5tENzQIDiCVOjCf50egyiXqno47QpKgj/t
- WExthDr4TGZp5Fh87otuiOqQfPFO278n7QUyUIXrHJfhAg2sFcPn/OiP+WW49zRUFwex
- PocRDHs30fBotErmrij+9B1nzxwNR4wCkM8IPqAiCfvtfvAA9AN9hyybAmyoe2ykffZv
- SqwiNZcEazWtzF4Om3Pn9mdydybxZoTJq4woo5UMUUSJD0m+LfDntk5IW8GJsNuqJOIG
- 5CZ46ceNvrFBtzuKA+B3YUBrCbcshQP6Au25CYcvhSud1FYus3m0qPjjISgIMJJ0mYCX
- 52MQ==
+ d=linaro.org; s=google; t=1746198811; x=1746803611; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=g7UYMjEhnNH7vgGII2Yo9ggSocmhMPsxr4ywyyhf/Hw=;
+ b=jJa8TsAPNlsiaAU3TypROvCtg75tGsT87AvBIHfSX4j/d/bH0zgeqPNajUPRWg3Xn6
+ NUV4DnOhHK+cp5upvKb00DLBvWj8fZB85BR3QgPSCsBKYfljc4r17IrFqKyoKlP++J6g
+ FVeZOrzsZXS2gv1Ke4RryBRnpgSjUpPvHYNmBxISR0RkujfJK0VadAh7VbhyEfWAqEd6
+ WXClHsEX5y+CpzX/a1MJsm90BpRaz8HfXROM1/UamjpmaGTcb74M6543i3aTlRIShQ2F
+ wFprMAzLWhtlrw1Z1Z5CsKp7sVOVGS6/Md1DTjYyXOQFSxUWZI+MmbDt/3B+nTNaL1q4
+ UgSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746197903; x=1746802703;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=J8YzoanIk5Tc3h7ufmslO4S+l5crv4KBw80pyEGyvdo=;
- b=rPOMxJq+1rqteLOHUxhgLcEKeoblMwlmdZLH5ckdp18CMsEL2N7HBFanOZAnMQ1CmL
- i4fpbf140NkUA0nBKNmnAy1ghQHGjjbj/2noLwTMky9+LJfDwTuwTaw/RXEYeiYxf7sJ
- MzMSwt8TYQwVHbjnar4DAOZDS/sC2nlQikJT5OqB8DZQN3PMpm4tmVe5Z76ep00tlpPb
- x/X52dUMwnt62myflXLCrG2Qbi4Ni4R3P9IINd+I1e+2Rw5XlsJLZLwMHxcLLFQD3mtO
- dwPTLueEtScswQbblFNmq9ppnpoLgQ/NgAIsjHKHjdDEVKiLDiiWrGsJLHZxJidJnkOi
- 43Dg==
-X-Gm-Message-State: AOJu0YzjtOJIIao4Aqn+55YTIMLgLEPnw48l0sKI8B1oSodOGL3GSQd5
- quvwjInGIgQLabGBKWbC8FTx52dkUrAR30+yzi06mCHCimW8ZnskDSlU3bokfqACg9YX/XZXPGC
- u
-X-Gm-Gg: ASbGnctD6k3ZW47qxYCu8i0IlMNHkP8l2z0YYczauwfQV9EAcqTVgm4SVK1FJHJId1v
- QRdAA1CKgTvwCNP49Gc7DhlbNZzBg87sCPlopjdePdkj6FMeKDOZfnf8FX2z3ughlE9W1/4Arfn
- 5JwxMVbA5fNMlSSrxeu2pgqM8p8k+guqusbxxflm75Qt92xs2dcIwjFC8/Mu9OiIDqRqodemVn7
- mp15njwcAzCpMPhgjZupGPypmZnpy6mrYav24sOMUc9kLyocpuWNoshOtiKYqsHiTp05kt1yH+v
- /CmDo4Xf7WaAFJchGzdek8CLwIB8fc6fm8AfDcBUqthKeNSMJNZiUnNy7ZHbtJknbX85y/VbcJG
- VIwxmBSw2
-X-Google-Smtp-Source: AGHT+IESGAHOjKyvHEicqbK35gMlhd0KHndF1neEyMssJpffZrvCQvz9m5fNRsBd1AVqM3MFSCP3AQ==
-X-Received: by 2002:a17:907:9998:b0:acf:8d:bf9a with SMTP id
- a640c23a62f3a-ad17aefcb1fmr303274666b.47.1746197903199; 
- Fri, 02 May 2025 07:58:23 -0700 (PDT)
-Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad1895087f4sm59030966b.134.2025.05.02.07.58.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 May 2025 07:58:22 -0700 (PDT)
-Message-ID: <c25fad27-df4b-4eba-9dff-217b0ca18941@linaro.org>
-Date: Fri, 2 May 2025 16:58:21 +0200
+ d=1e100.net; s=20230601; t=1746198811; x=1746803611;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=g7UYMjEhnNH7vgGII2Yo9ggSocmhMPsxr4ywyyhf/Hw=;
+ b=NiR9DmReGf1J6gqj/k9FRzsQiDkMQH4mM47aPOy2LtfcRXFZ0ymmxDykojAoEPEJDC
+ P378tWb8qTV2IcBMVEMHeGylOeQg42s+EryOG8aVdf+czVlwEPST5bhoZpKt7FCX+1bj
+ 93yAamBfw9z/wnE+z4gUnvO5FyAaop8atFNoUUaYfO6VbW9S+fI2Uk3tN6w0KWKLEkmb
+ +P3h9hCAEzKtrvdEJsFzWswXg/7jm8zdQir3aNLnXjgRGq3Q1xP/PFD9Z0+yb2uvEft0
+ x7xCX3+qsFZTrDeW7vVyxiKLFgKF0OER/WgW23LKioR4OwX6G8f2XvFrK9+TatwiPAaB
+ qnDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWw8LaJDwf5iK2II7a4fqD5G0clsnDyO5OLuHtCvkXz13gUcwjhyHvbx+WlC5CqowDPOR7k8zWulMSj@nongnu.org
+X-Gm-Message-State: AOJu0YzJgzOnJytlbaxky/MSN0Pj1o+LbCGkjnUqocAno8ETkx3001G0
+ GCledq5He59FhvzzRyVHevqhZKzBisUDWOF2knguwzb4BT0zsUGUY8oVRXxkOuMy6lWS2K63Tge
+ q8WtHxcskxViec7zZndohvh0lKL0kDwjmVO6oVw==
+X-Gm-Gg: ASbGncsCjDzg7R1gz6MhGXjwrzu6lUo6zlq8J/Ocay8GP8fyA5x+A8CAGvAKq4hV/lb
+ W1wHT6yGc48YiUZirbX01zfby8zwB6n4eYt1jb2Hdw17XEdiQCABPav3ZJd747hdRUp5Q+TwEKt
+ 97DuEJyALRehuzfapBIwqRkzE=
+X-Google-Smtp-Source: AGHT+IG+J6OU6z7N9RRSQib+3qERqyIDMRH94uoU6Klesuwp0GfiM7QnX0TWEZuqGaPCNTuLQo0Bc2tcG2P+mJZpshI=
+X-Received: by 2002:a05:6902:2204:b0:e72:89ac:b7c6 with SMTP id
+ 3f1490d57ef6-e75656760b5mr4548741276.47.1746198811268; Fri, 02 May 2025
+ 08:13:31 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.1 v2 00/13] hw/arm: Remove virt-2.6 up to virt-2.12
- machines
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Andrew Jones <ajones@ventanamicro.com>, Thomas Huth <thuth@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, qemu-arm@nongnu.org
-References: <20250116145944.38028-1-philmd@linaro.org>
- <CAFEAcA_7KfbhMj4c=HD4m+xivTK4NZcYc0O4NXt6MtVJ6bSitA@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA_7KfbhMj4c=HD4m+xivTK4NZcYc0O4NXt6MtVJ6bSitA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
+References: <20250409202630.19667-1-shentey@gmail.com>
+ <aa47d49a-b81a-46cf-811a-2045e453f4bf@redhat.com>
+ <6621A6A6-83F8-476C-973C-FE3D1918E061@gmail.com>
+ <2c725cbc-6ba0-4e07-8863-acacbb45e121@redhat.com>
+ <e3ea2723-126f-45af-8bdd-602ee512b51f@linaro.org>
+In-Reply-To: <e3ea2723-126f-45af-8bdd-602ee512b51f@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 2 May 2025 16:13:19 +0100
+X-Gm-Features: ATxdqUF0amAkHum-tWhxXjDtX0NMijOIdnf-93R9jKjg42ZbYJKu6A6MsXw-goE
+Message-ID: <CAFEAcA9AENXW-YzA6SUaB6D-q9SkMRiq6fsL_Moh-Y_D8rC--w@mail.gmail.com>
+Subject: Re: [PATCH-for-10.0? v2] tests/functional: Add test for imx8mp-evk
+ board with USDHC coverage
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,35 +101,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/25 15:37, Peter Maydell wrote:
-> On Thu, 16 Jan 2025 at 14:59, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> The versioned 'virt' machines up to 2.12 been marked as deprecated
->> two releases ago, and are older than 6 years, so according to our
->> support policy we can remove them. Remove associated dead code.
->>
->> Since v1:
->> - Corrected disallow_affinity_adjustment removal (Thomas)
->> - Do not modify docs/about/removed-features.rst (Thomas & Daniel)
->>
->> Philippe Mathieu-Daudé (13):
->>    hw/arm/virt: Remove deprecated virt-2.6 machine
->>    hw/arm/virt: Remove VirtMachineClass::no_pmu field
->>    hw/arm/virt: Remove VirtMachineClass::disallow_affinity_adjustment
->>    hw/arm/virt: Remove deprecated virt-2.7 machine
->>    hw/arm/virt: Remove VirtMachineClass::no_its field
->>    hw/arm/virt: Remove deprecated virt-2.8 machine
->>    hw/arm/virt: Remove VirtMachineClass::claim_edge_triggered_timers
->>      field
->>    hw/arm/virt: Remove deprecated virt-2.9 machine
->>    hw/arm/virt: Remove deprecated virt-2.10 machine
->>    hw/arm/virt: Remove deprecated virt-2.11 machine
->>    hw/arm/virt: Remove VirtMachineClass::smbios_old_sys_ver field
->>    hw/arm/virt: Remove deprecated virt-2.12 machine
->>    hw/arm/virt: Remove VirtMachineClass::no_highmem_ecam field
-> 
-> Applied to target-arm.next, thanks (with the tweak RTH points
-> out to avoid a compilation failure in patch 3).
+On Wed, 23 Apr 2025 at 12:31, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Hi Thomas,
+>
+> On 23/4/25 11:40, Thomas Huth wrote:
+> > On 23/04/2025 11.31, Bernhard Beschow wrote:
+> >>
+> >>
+> >> Am 10. April 2025 06:05:35 UTC schrieb Thomas Huth <thuth@redhat.com>:
+> >>> On 09/04/2025 22.26, Bernhard Beschow wrote:
+> >>>> Introduce a functional test which boots Debian 12 on the imx8mp-evk
+> >>>> board. Since
+> >>>> the root filesystem resides on an SD card, the test also verifies
+> >>>> the basic
+> >>>> operation of the USDHC.
+> >>>>
+> >>>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> >>>>
+> >>>> --
+> >>>> v2:
+> >>>> * Make test file executable (Thomas)
+> >>>> * Omit fetch() (Thomas)
+> >>>> * Omit "-accel tcg" (Thomas)
+> >>>> * Add "snapshot=3Don" to make potential future tests independent
+> >>>>
+> >>>> Supersedes: 20250405214900.7114-1-shentey@gmail.com
+> >>>> ---
+> >>>>    MAINTAINERS                                 |  1 +
+> >>>>    tests/functional/meson.build                |  1 +
+> >>>>    tests/functional/test_aarch64_imx8mp_evk.py | 66 ++++++++++++++++
+> >>>> +++++
+> >>>>    3 files changed, 68 insertions(+)
+> >>>>    create mode 100755 tests/functional/test_aarch64_imx8mp_evk.py
+> >>>>
+> >>>> diff --git a/MAINTAINERS b/MAINTAINERS
+> >>>> index d54b5578f8..4ceffa89dc 100644
+> >>>> --- a/MAINTAINERS
+> >>>> +++ b/MAINTAINERS
+> >>>> @@ -833,6 +833,7 @@ F: include/hw/arm/fsl-imx8mp.h
+> >>>>    F: include/hw/misc/imx8mp_*.h
+> >>>>    F: include/hw/pci-host/fsl_imx8m_phy.h
+> >>>>    F: docs/system/arm/imx8mp-evk.rst
+> >>>> +F: tests/functional/test_aarch64_imx8mp_evk.py
+> >>>>    F: tests/qtest/rs5c372-test.c
+> >>>>      MPS2 / MPS3
+> >>>> diff --git a/tests/functional/meson.build b/tests/functional/
+> >>>> meson.build
+> >>>> index 0f8be30fe2..aaaf3472f1 100644
+> >>>> --- a/tests/functional/meson.build
+> >>>> +++ b/tests/functional/meson.build
+> >>>> @@ -75,6 +75,7 @@ tests_aarch64_system_quick =3D [
+> >>>>      tests_aarch64_system_thorough =3D [
+> >>>>      'aarch64_aspeed',
+> >>>> +  'aarch64_imx8mp_evk',
+> >>>>      'aarch64_raspi3',
+> >>>>      'aarch64_raspi4',
+> >>>>      'aarch64_replay',
+> >>>> diff --git a/tests/functional/test_aarch64_imx8mp_evk.py b/tests/
+> >>>> functional/test_aarch64_imx8mp_evk.py
+> >>>> new file mode 100755
+> >>>> index 0000000000..62fee74044
+> >>>> --- /dev/null
+> >>>> +++ b/tests/functional/test_aarch64_imx8mp_evk.py
+> >>>> @@ -0,0 +1,66 @@
+> >>>> +#!/usr/bin/env python3
+> >>>> +#
+> >>>> +# Functional test that boots a Linux kernel and checks the console
+> >>>> +#
+> >>>> +# SPDX-License-Identifier: GPL-2.0-or-later
+> >>>> +
+> >>>> +from qemu_test import LinuxKernelTest, Asset
+> >>>> +
+> >>>
+> >>> In case you respin (due to other reasons), please add a second empty
+> >>> line before the "class" statement (that's the style that we use in
+> >>> the other tests, too).
+> >>>
+> >>> Anyway:
+> >>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> >>
+> >> Ping (not for 10.0)
+> >
+> > Peter, should this go through your arm tree, or shall I pick it up with
+> > other functional test patches for my next PR?
+>
+> My preference would be like with previous Avocado tests: when a
+> (functional) test concerns mostly a dedicated subsystem, I'd rather see
+> the dedicated subsystem maintainers to take it, so they get familiar
+> with the test. Except if the maintainers are busy or unresponsive of
+> course.
 
-Thank you for tweaking :)
+I don't care much either way, and in this case I was away, so I'd
+have been happy for Thomas to take this via the test tree in my
+absence.
+
+But I'm back again now, so I've applied this to target-arm.next.
+
+Since on my machine it takes 42s to run on a clang-sanitizer
+build, and 96s on a debug build, I have added this to
+tests/functional/meson.build in the hope of avoiding timeouts
+on slow systems:
+
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -12,6 +12,7 @@ endif
+ # Timeouts for individual tests that can be slow e.g. with debugging enabl=
+ed
+ test_timeouts =3D {
+   'aarch64_aspeed' : 600,
++  'aarch64_imx8mp_evk' : 240,
+   'aarch64_raspi4' : 480,
+   'aarch64_reverse_debug' : 180,
+   'aarch64_rme_virt' : 1200,
+
+
+thanks
+-- PMM
 
