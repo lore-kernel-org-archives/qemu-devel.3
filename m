@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7784AC3ABAC
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 21:47:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABFDBC3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 21:47:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAyDB-0000lI-3g; Fri, 02 May 2025 17:46:25 -0400
+	id 1uAyCn-0000ef-T2; Fri, 02 May 2025 17:46:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAyDA-0000l6-8C
- for qemu-devel@nongnu.org; Fri, 02 May 2025 17:46:24 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAyCl-0000dr-JC
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 17:45:59 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAyD8-0003Xe-Ns
- for qemu-devel@nongnu.org; Fri, 02 May 2025 17:46:24 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-ac2c663a3daso467642766b.2
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 14:46:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAyCj-0003Uq-G1
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 17:45:59 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5f6c3f7b0b0so4898076a12.0
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 14:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746222380; x=1746827180; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DsDN4bksGI+t6Ajgx6lEwHOduZigzfyenP30N9rjdOI=;
- b=RLC2spLKgwcop4kB/u1cqoTkwAsPI5BI4Yp8fyUTKurk5ZH5iePqpsKujvutBXQyyC
- mhlrc7wszYMRT/qAAcfGnZ9PRepi9cIzzTq8EGx1APeUw8cXN0xzdSpLLUaoJ3M2NvbR
- RiKaet4AhOezzy/P5p/3TVd/gaIY5WWhDTNtWnqMPqNP1ld9n6b+fpDcXMy9PUva89AQ
- Hk64nDz5LWvgfQd1Tv1jEuD+xItgksHTC7OnCPe5ojS60Uxo7RYAuOu9jFKIIWIgBLXY
- 2SKtx5T4NNJSAx1b+OXavEyF+wqAqyDoXAuOCjbATnGmtthhza+gesWSksmf8J0oYX4p
- qQpg==
+ d=linaro.org; s=google; t=1746222354; x=1746827154; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=WJue50/VmyGCP58mS6SkkABhk9OOPodCUl+4aWPhSxI=;
+ b=emOprTKkOs2HrtYSWbk3C6e08h0rKsxhW1p2rC2QniII4KEctbw3dgCil1Xl9Wok/d
+ lwiaeZu91ssZZ4z+5smUH8httNRs7VpDqvczsLbPG3tg5ebbSy13IHG7JxdiKKBabWOv
+ 14km5HzRiVe8lE5mImLZ1oe4mJaBxFluJwLlhOnavJMnm4HILXaRqNy/LB2FGNFMtMZW
+ e42G+I6dON91hQAIkP5VbnXcC6V/60MgsTF8Cuh4JGe/0+RkgXNjzedGXoXY+N0cLChw
+ HdOHCog2+ai69rD5Y8M5WHWrFGU//RkuwSugSkAoPFKMjBsVmmJgbjpVHyu6mSd4Cg/u
+ P5qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746222380; x=1746827180;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DsDN4bksGI+t6Ajgx6lEwHOduZigzfyenP30N9rjdOI=;
- b=CdCiwGI+1Sk72xS4EacbkfCus1WsPa9JQyoqAXcUcH6nBeSSFmry+u0hSYPKqm2NTA
- O400hYVifAVSyyT70Itk5dcpHkJ/+1LezzSTG6aNwdyf+cKYVpG/oHFPewRUb7XgcC8G
- n3RimzgG8EnpHxWn3yc64E07adlBXOoQYMXkxEz2bPrrjbqahBgfwtYe4VOCd4zjwCsK
- okut3jCyr069uAE20L1vjBhSlZMqyAyOVImhx2CZDbQLNj4BBEimf8/1nBsAH3e8YH+3
- 0p25t2OCgURI2mSUk63eZdhjYYJGv1VOP/sWTfepn6wtMiGhEfb70zILFGLb7+WsHdZE
- /hMw==
-X-Gm-Message-State: AOJu0Yy//pBtYQNHXqJACfInHTnK5M/cL+6GsDakwMA1SMM41p6/rtMv
- 7lTasTjFxMjc7ixmeotGQM8+fW0mO0S4eRQ822TEyayzoQcQ+YtSeqVgKuq9e2pnubIhRBvDn/b
- G
-X-Gm-Gg: ASbGnctPqZ9Q4VwptN560JAlhlHM3BEQIJP1QGF5w2SzkY/4IQ2SF44ExKTOtoneRXk
- 7cEAWhtFvYLi1ZcFVuFZVj0AtexV3I866/qjZCuZflduCckfYsRSGMhvKgacfhrOwql5YHTnmC7
- KD9MibtiITxWXqMxNRBSpN24Iv2EeOEeaFGj3Hp6S4ubRnYn3oBaAAlge0KyrVgMJjtokfqodA/
- F5VdKuZi1ZJARepXWJ0KQehcY1toFilXsLmAZ40kYUIY1EED5PlAasrQaLw42smm/CCfuEIYG6D
- +VX8ONNGx4wkpPn6TBm1x3eU6xnn64u1IaOxQgzPB/Gk0gSNTRqiV1f5KcMsZ0aUuZy0ex1phmU
- 63YaN6kAIAZk+T2g=
-X-Google-Smtp-Source: AGHT+IEYBcX/pI3wzQen51X21dbxGKuxteaaxZGI6zLLmUuNwiDzk46eWWBSMsdiidXDbkWZqLpSgw==
-X-Received: by 2002:a17:907:3f88:b0:ace:d811:db25 with SMTP id
- a640c23a62f3a-ad17b01fe1dmr425125466b.60.1746222380468; 
- Fri, 02 May 2025 14:46:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746222354; x=1746827154;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WJue50/VmyGCP58mS6SkkABhk9OOPodCUl+4aWPhSxI=;
+ b=iUkRGUaVM42KZ2q+VPRj/nXOtaYLLJkazlOHWRXVloXT7EQDTYk7GAbsE3uHmOZ7MK
+ MkQBrpWbh7mU2+1btXzbkl+y9diEiMP9HV2NjIWTmDHWDP9DOBvuinuatNmHrSk8xbg6
+ Zhb6Etxvq0nn2EZ53SHyZ9qdb62c9lspiRtCu7KN1ZNudoWycBTv0bdHoANrPsRXeQ2g
+ RXyydHjNa6SvWImX5O4T6YSCiljZLBPZGPX4p/brdP7YyT++MZvcruYyodWfueilHJwj
+ rpcC6Ti867pwrxUnurfccflRILaGZm2qjxnPzzLvc4GiFkC1AageshdqfhPlJB6vv5+M
+ 6d9Q==
+X-Gm-Message-State: AOJu0Yzka/gXnF1Gv/P3ibBcjO8UsNWASozlCw7FQgiyRrlP2vaQ/Ntz
+ 1gH0k0yVQF8MLcf7zoiqhNXCxP8QiQnY6mIg3UE+IzqmNICig5yeH6AckVHF3QhTYIDXY9sSsIZ
+ +
+X-Gm-Gg: ASbGnct3aV1626s+mEXwBr6CVTGeNqjaU92REfQJfQ2wnO71V98BaT1suLmZJSJ9Opc
+ 0FG9tnqapZF2S/PJLrPKWwU5irNQ41+CoE3A3vWdzquLsVT8XxO8W3mwCfjUD2EO5FDyr5byNoS
+ +NyMdbK8+mis1hKayE6hLMhsqdEcehK4Rcc1aQPnGPtRnhZxMm6VUz/P9P4uwcjhignr5CZv/yL
+ RVz2LDwA53en27evOY4a8K5OZCpcgwsNO5A349fWwFy4+MIcOQgWAglgJM2KaJJla2JwLtU0sTI
+ +bWdxRc8iwiF0m/kqkfq86l/3jpN7Fo9wQitOaaDNhDgy3EnobXuMm7d3Er91Qprpy2WxXsgeOY
+ tKBdpinlvHGAGSEo=
+X-Google-Smtp-Source: AGHT+IGmmVKp16PbLyG2G6NxkgAfj5BlE4BtwOP1bhtIh4DtDZgIMIW+xg8vzD1/m8K88oKox5tOVg==
+X-Received: by 2002:a05:6402:d08:b0:5ee:497:89fc with SMTP id
+ 4fb4d7f45d1cf-5fa7891aae1mr3832968a12.33.1746222354349; 
+ Fri, 02 May 2025 14:45:54 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad1895402c7sm100535466b.164.2025.05.02.14.46.19
+ 4fb4d7f45d1cf-5fa77bf2893sm1774611a12.71.2025.05.02.14.45.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 02 May 2025 14:46:19 -0700 (PDT)
+ Fri, 02 May 2025 14:45:53 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -75,17 +74,15 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Thomas Huth <thuth@redhat.com>, David Hildenbrand <david@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 5/5] hw/virtio: Compile virtio-mem.c once
-Date: Fri,  2 May 2025 23:45:51 +0200
-Message-ID: <20250502214551.80401-6-philmd@linaro.org>
+Subject: [PATCH v3 0/5] hw/virtio: Build virtio-mem.c once
+Date: Fri,  2 May 2025 23:45:46 +0200
+Message-ID: <20250502214551.80401-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250502214551.80401-1-philmd@linaro.org>
-References: <20250502214551.80401-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,42 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove unused "system/ram_addr.h" header. This file doesn't
-use any target specific definitions anymore, compile it once
-by moving it to system_virtio_ss[].
+Since v2:
+- Use TargetInfo API (Pierrick)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
----
- hw/virtio/virtio-mem.c | 1 -
- hw/virtio/meson.build  | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
+Since v1:
+- Use max extent size of all archs (David)
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index 4234396f774..f4882c6901b 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -25,7 +25,6 @@
- #include "hw/virtio/virtio-mem.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
--#include "system/ram_addr.h"
- #include "migration/misc.h"
- #include "hw/boards.h"
- #include "hw/qdev-properties.h"
-diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-index 164f6fd995a..525679954ee 100644
---- a/hw/virtio/meson.build
-+++ b/hw/virtio/meson.build
-@@ -56,7 +56,7 @@ specific_virtio_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock.c
- specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_VSOCK', if_true: files('vhost-user-vsock.c'))
- specific_virtio_ss.add(when: 'CONFIG_VIRTIO_RNG', if_true: files('virtio-rng.c'))
- specific_virtio_ss.add(when: 'CONFIG_VIRTIO_NSM', if_true: [files('virtio-nsm.c', 'cbor-helpers.c'), libcbor])
--specific_virtio_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem.c'))
-+system_virtio_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem.c'))
- specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_SCMI', if_true: files('vhost-user-scmi.c'))
- specific_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_SCMI'], if_true: files('vhost-user-scmi-pci.c'))
- 
+Based-on: <20250501212113.2961531-1-richard.henderson@linaro.org>
+
+Philippe Mathieu-Daudé (5):
+  qemu/target-info: Factor target_system_arch() out
+  qemu/target-info: Add %target_arch field to TargetInfo
+  hw/virtio/virtio-mem: Convert VIRTIO_MEM_USABLE_EXTENT to runtime
+  hw/virtio/virtio-mem: Convert VIRTIO_MEM_HAS_LEGACY_GUESTS to runtime
+  hw/virtio: Compile virtio-mem.c once
+
+ include/qemu/target-info-impl.h |   4 +-
+ include/qemu/target-info.h      |   9 +++
+ hw/core/machine-qmp-cmds.c      |   6 +-
+ hw/virtio/virtio-mem.c          | 101 +++++++++++++++++++-------------
+ target-info-stub.c              |   1 +
+ target-info.c                   |  15 +++++
+ hw/virtio/meson.build           |   2 +-
+ 7 files changed, 90 insertions(+), 48 deletions(-)
+
 -- 
 2.47.1
 
