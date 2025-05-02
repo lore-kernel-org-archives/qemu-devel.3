@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A93C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 08:00:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB309C3ABA3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 08:03:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAlIc-0005pr-9M; Fri, 02 May 2025 03:59:10 -0400
+	id 1uAlN6-0006rc-LN; Fri, 02 May 2025 04:03:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAlIY-0005pY-HY
- for qemu-devel@nongnu.org; Fri, 02 May 2025 03:59:07 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAlN0-0006qh-US
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 04:03:45 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAlIV-0007WD-3K
- for qemu-devel@nongnu.org; Fri, 02 May 2025 03:59:04 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5e8be1bdb7bso2497993a12.0
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 00:59:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAlMy-0001Wi-Ug
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 04:03:42 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-acec5b99052so281072866b.1
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 01:03:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746172739; x=1746777539; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746173018; x=1746777818; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=JcH5rPZ7MEghDtv6JDp01Yt+QvYBS6pqn5wF6nPtJyg=;
- b=u7jYCRrwbo87rzkaVHuCZDCKR9puuOUADbzy/tLMI/xS+OBcvmXghe8dOIRBIGc2Fn
- cgGdvJZkzYQSmwfSY1HKT8943E0+GmCvT8VyUeJs6xufZOzmbO+c8aQpSv5+c9AWT1Ds
- SlxFyNzCLu7ALlvRF7K6CH4kBUh3/vWicYtmTljnwyjMJ1igUzEgx9HLjcm4oQuZQyoh
- REIjPFnBhzwRbVc+woUDU+C6K+TGdhty7ZbXbm7swhUXcAq1BoNwIXibjyrv4MH7Napq
- YW+AUDlwGsgpxuQVcmgMhUwr0qUqWhoC5SbkMAt/9vpnVgt3Qq8cfG2JxmM3/HIKGcs4
- 16Ww==
+ bh=tiJvtTX5wuZG3YSRsS5RnnZOinfylkMzkNba9BpdC78=;
+ b=dNIl52FMxDUMkoQkt7HJV9M1mzKV4ciTz273hTBYGLn7tQGvplCCUhH2FcImTA3tu1
+ WlYCgpddWZvYw5qmamE+0XRiuBvOjesaOcJBfQiHtV1tZeRFMO3L2dBW9yYD6PAcx6j1
+ 4hn0bgE6A/zfuJkrdD6Hq1hJrWOzljFEIXW0hIQcHovBK6CQFuwyn/IeWfllouhVKVMb
+ fPLMz7mgsOpLq4+4ZObG7vAwDfSB4N73JBBdkWkJtigUQfmHGT8O3csVDOD6kSOlpk7k
+ 9ZYtYfrPn8sE3op5v8gPU/C+eNK3GfXjfyWUf5uuzyASgUPJ+S32vmDRnFI6mLovkr15
+ IYWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746172739; x=1746777539;
+ d=1e100.net; s=20230601; t=1746173018; x=1746777818;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JcH5rPZ7MEghDtv6JDp01Yt+QvYBS6pqn5wF6nPtJyg=;
- b=pD69p2iyAkil3CYzj+i2YsbRbUuaMq8nGETC6TMWO8GjAZlwzHc9P43WiedxwJVMkt
- U89hs+qJnV8fVDNfNByp5Dheetk4FDhnYEZJYpuCu8HaW8OFYpoKihx0hU4gy4l6fKv1
- xqnYcUzmazgzrtXj3C/5Df16GZ9wpvg9JqwwYGFuMHCvXtNAmJh1AXGB02Qdcx/AOAvp
- CyCaQdF8J5lf1HQZPn4RXOUXswMBxLju2NVFhFZqwY/Y44PffEGZH5CP0H87E7VYnfJw
- oILLCIu0U39B8xrE92bzLKy21ccnpeAcNGO2qf9xIPMDkR+4o/rod7dPGWc5h7w2G9vj
- ZhDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW3f499erRj1FTRs60OYS2pVYb7z2d9pmzWR6gwXOlGp7rt0FIQpPYnFgEgcLwrT4WkjTlxaofg7tep@nongnu.org
-X-Gm-Message-State: AOJu0YwPoHpukKlmfAJ3nohrGy5HEqLaYExM0W6XWuNOky+/TbIZOHNV
- bNDwZR87mG1RfqDhcay17zVr1PqfKMEZaaZ+W8XwbLLrxT4XYLcN5pZ/xHV3fik=
-X-Gm-Gg: ASbGnctDLKRrmGnpVudqOk/9KZughkgwQDcIKGyVhCGdOWTOXefxFJDSDVaZOprmatr
- 49E5V+BtTdbtUohfjDxpTMvG+ZgbVcNv/vls6ZQQSx06/1ckOzJodHLI/3EhDS4V/ykYbGHb+dw
- 0m0KMEuSE283f+7oqfGWljn+TD7RHC/BbYCP9Kw1pIMcSU0rcGl6CBih7wN+iuVs40xuiqf+vYz
- IN6d1yMnl7oq6zPoHlDlBBlY523Ee4Msq6Xe2PaSnYvFroAU4yUwxpGs8rvppDmCVIIO61eStn9
- SwHsL6D2JHvBwF4yD9xvoOUMnIk4dfOphbOBvoGlG3akbtL+hlJ5jWBj9GNQ1S5905vzu7SO5nZ
- jKAlv+7AYzGq1Tdi1ufM=
-X-Google-Smtp-Source: AGHT+IEC20Tt2BNwepPL06ee8vhln1BQhT0IRMHlXydjiC6EDLZjMvDsMI87axhUSAlyqtD5vLUw8A==
-X-Received: by 2002:a05:6402:234e:b0:5f6:21a4:61d5 with SMTP id
- 4fb4d7f45d1cf-5fa78052cfbmr1396728a12.17.1746172739519; 
- Fri, 02 May 2025 00:58:59 -0700 (PDT)
+ bh=tiJvtTX5wuZG3YSRsS5RnnZOinfylkMzkNba9BpdC78=;
+ b=ttY2cjYYWtAgc/upq36Oa3va8+Bdx3kvmC67ysDXTPKcm6+rsj9J/1ir6lYxSt1+h9
+ HQndxYwJvZiuVREMrfv5yqEufjng2YlhP6qDqCdb0GYkEFeGUxScf3ocI98ydBV5YdWo
+ 2OyEwyQj02GIrzGqmDKcAE7/73Oz3lF8LvcIBP56NDk57y5utoP2PgHyQpNOETifYlrh
+ ORvi36ZaIPK5Hjjy4Sbk7I/A++K7J6jc+JG/D5PwaQIlz0WZHbKj3W9k+CjKMtbZWdN1
+ GCg2DyhsZvid87Yl8mAxDy2FusDG0ojmJcYVW4Us3sR0qTlwbx2hBFb1ccyfJhzvPCmb
+ IZRg==
+X-Gm-Message-State: AOJu0YyRHaOKx0ArWr38ucu1XqgX6DdKm9K5WDnfB8A2JUWLkMSj8OGo
+ ClWKI1q6ZjHmdjarRYI48pfrEbPc8270UPBAyIpRPFPBVoH7TCFVvsDa8ZLb/ZgHG/1CEkTzdMM
+ u
+X-Gm-Gg: ASbGncv68NysvVG10TkPoc9Tt8XtcEcLw2bqgAKe5MNLnv7Ba1UTr6qa1XwOV9JBQij
+ 3Ms65Jzp5/OK1KbmHvDAFEMd1bREmbl/8vk4R9fTTA0wf6o9aMlZFQXk8tmFSNBGuMaenCxqeW+
+ ZHyL7xfNb3811lNEvppzs5GJVe38rXRjfaAr+OSEYN4uAN8B2cnZMRDk0bTA4Jaxh6JjubXQFH/
+ 0dfEKBE0C1gQEOrLdu0u3us+XyogJKhai0Dazia80ZzJnezWlLXV03M/SLWSOA13e5/pa3XSLT5
+ woG5Btxb/7hQ3KCqSuQjhXgph8/yCx+j9TcPqvKZTpwNZzkv6PAJGZVXRzSNQJkN69a8OFcdYWw
+ NgojCcSdA
+X-Google-Smtp-Source: AGHT+IF6fnskXDe5d9YMwx7vL5ewdGfbnq5Qkvm3i/YGfATPG/cqHQTmhx4+bncc+SvgsPlK+zugWA==
+X-Received: by 2002:a17:907:7206:b0:ace:d95f:6582 with SMTP id
+ a640c23a62f3a-ad17af7f8e1mr193574766b.53.1746173018277; 
+ Fri, 02 May 2025 01:03:38 -0700 (PDT)
 Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5fa77816ffbsm818090a12.34.2025.05.02.00.58.58
+ a640c23a62f3a-ad1891a24a4sm11119466b.41.2025.05.02.01.03.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 May 2025 00:58:58 -0700 (PDT)
-Message-ID: <04218e51-d3be-430e-b1c5-41834cd4ab54@linaro.org>
-Date: Fri, 2 May 2025 09:58:57 +0200
+ Fri, 02 May 2025 01:03:37 -0700 (PDT)
+Message-ID: <7e661024-9d76-4f82-ae4a-144915ff48ff@linaro.org>
+Date: Fri, 2 May 2025 10:03:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/char/serial: Remove unused prog_if compat property
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20250502001605.45A3B55D25A@zero.eik.bme.hu>
+Subject: Re: [PATCH v2] Support madvise(MADV_DONTDUMP) when creating core
+ dumps for qemu-user
+To: qemu-devel@nongnu.org, Jon Wilson <jonwilson030981@googlemail.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ WorksButNotTested <62701594+WorksButNotTested@users.noreply.github.com>
+References: <20250502063140.1098807-1-62701594+WorksButNotTested@users.noreply.github.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250502001605.45A3B55D25A@zero.eik.bme.hu>
+In-Reply-To: <20250502063140.1098807-1-62701594+WorksButNotTested@users.noreply.github.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,27 +105,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/5/25 02:16, BALATON Zoltan wrote:
-> This property was added to preserve previous value when this was fixed
-> in version 2.1 but the 2.0 machine using it was already removed
-> leaving this property unused and unnecessary. This was also copy &
-> pasted into diva-gsp where it was probably never used so get rid of
-> this property at last.
+Hi Jon,
+
+On 2/5/25 08:31, WorksButNotTested wrote:
+> When running applications which make large (sparsely populated) address ranges
+> (e.g. when using address sanitizer with LibAFL) the inability to exclude these
+> regions from any core dump can result in very large files which fill the disk.
+> A coredump is obvously very useful for performing a post-mortem when fuzzing.
 > 
-> Fixes: dbe442ad48 (hw/i386/pc: Remove deprecated pc-i440fx-2.0 machine)
+> Whilst the man pages state that madvise provides only a hint (and hence can be
+> ignored), this patch adds support to handle MADV_DONTDUMP and set a
+> corresponding flag in the page flags, thus allowing QEMU to exclude these
+> regions from the core file.
+> 
+> Signed-off-by: WorksButNotTested <62701594+WorksButNotTested@users.noreply.github.com>
 
-Back then we couldn't remove this property because it was used
-by a HPPA machine. Indeed the last use was removed in commit
-c061efca0b6 ("hw/hppa: Wire up Diva GSP card"). "Fixes: dbe442ad48"
-is inappropriate, otherwise:
+In v1 you use Jon Wilson <jonwilson030981@googlemail.com>,
+is this other address the one you really want to use here?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   hw/char/diva-gsp.c         |  6 ++----
->   hw/char/serial-pci-multi.c |  7 ++-----
->   hw/char/serial-pci.c       | 10 ++--------
->   3 files changed, 6 insertions(+), 17 deletions(-)
+>   include/exec/page-protection.h | 6 ++++++
+>   linux-user/elfload.c           | 4 ++++
+>   linux-user/mmap.c              | 5 +++++
+>   3 files changed, 15 insertions(+)
+> 
+> diff --git a/include/exec/page-protection.h b/include/exec/page-protection.h
+> index c43231af8b..f8826d917e 100644
+> --- a/include/exec/page-protection.h
+> +++ b/include/exec/page-protection.h
+> @@ -38,4 +38,10 @@
+>    */
+>   #define PAGE_PASSTHROUGH 0x0800
+>   
+> +/*
+> + * For linux-user, indicates that the page should not be included in a core
+> + * dump.
+> + */
+> +#define PAGE_DONTDUMP   0x1000
+> +
+>   #endif
+> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+> index fbfdec2f17..41c46da055 100644
+> --- a/linux-user/elfload.c
+> +++ b/linux-user/elfload.c
+> @@ -4067,6 +4067,10 @@ static size_t vma_dump_size(target_ulong start, target_ulong end,
+>           return 0;
+>       }
+>   
+> +    if (flags & PAGE_DONTDUMP) {
+> +        return 0;
+> +    }
+> +
+>       /*
+>        * Usually we don't dump executable pages as they contain
+>        * non-writable code that debugger can read directly from
+> diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+> index f88a80c31e..62fc8ac921 100644
+> --- a/linux-user/mmap.c
+> +++ b/linux-user/mmap.c
+> @@ -1247,6 +1247,11 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
+>        */
+>       mmap_lock();
+>       switch (advice) {
+> +    case MADV_DONTDUMP:
+> +        if (len > 0) {
+> +            page_set_flags(start, start + len - 1, PAGE_DONTDUMP);
+> +        }
+> +        break;
+>       case MADV_WIPEONFORK:
+>       case MADV_KEEPONFORK:
+>           ret = -EINVAL;
 
 
