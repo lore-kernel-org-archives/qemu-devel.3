@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA51C3ABB0
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 19:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6C91C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 19:03:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAvZf-0004sn-9b; Fri, 02 May 2025 14:57:29 -0400
+	id 1uAvZz-0005Sp-3u; Fri, 02 May 2025 14:57:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvZb-0004oR-BW
- for qemu-devel@nongnu.org; Fri, 02 May 2025 14:57:23 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvZx-0005PZ-JQ
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 14:57:45 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvZZ-0005Pi-8M
- for qemu-devel@nongnu.org; Fri, 02 May 2025 14:57:22 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-ac29fd22163so402092066b.3
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 11:57:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvZv-0005UW-Um
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 14:57:45 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5f624291db6so3623086a12.3
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 11:57:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746212239; x=1746817039; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746212262; x=1746817062; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ksLm8Hbb5N8Btg8hJJq48kxuL5GRhX/1Dl4RQBlOi+Q=;
- b=CeBxNecBb7II4FgXONKuyCX6Ox3xOhW5ETBJot7ExX2rskH23D1gdEBwM5xaFoVYB2
- mESOD3HbGfbVTweveHzxIspv+8rXyIdEWvSHSQMIUdFC1+QRoupib4+hzt5ejYJ+hUXf
- 1h/EaWYygWKDxJFT1aFIaatsEeoJ4FqTTQGPaJql4gTa2wBaPsLFliYGoJxYAMZx/6EU
- GBA3Ut2BI4nt8Gbjw1FNpM7wh4jpueDYSXsgnC2qhxDJ7fd++eANbfUs48b4VSTqbD5q
- F1Z/GBne9889T1zZ02cOSXvr9v3J2KfBglGUi+95rwSN6LzZ+cDy25PBIxOvVi/bH/TJ
- nLRg==
+ bh=bJup76xViPoYlcZ6DgY2Il03anUYcrocSLmxC3mshks=;
+ b=hnakHWOLYk2WSEY+1dgT1PIWStT/daysp4VTectjn05QDT0j3ShXb0gkt2TBvyQ9Q1
+ ZFDfEtua/d+iOKC67pIXfJK5buU93OtqbV86fMkEC9V6bFaH/VgK8hYk+S3Tpc/U3Q2/
+ kagaVo12QVyofsYrKyxoOVnDv7DPvKY4vVBx+zLRVppKTrIRpf6YaoR5FhU8iQXBx+sa
+ zN98NcFqhOmW+b6nuX1S4OB1cP0KXbcSsdjOFjgccMBdPwSJKcHg9rTDvKYzsHKdgrht
+ BOff37dGrhXGuom4f/ygevuKXqZrq0RqA25QJTglHdOuGDmLA7GEtKE2XQ476ocPzv6o
+ Dfog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746212239; x=1746817039;
+ d=1e100.net; s=20230601; t=1746212262; x=1746817062;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ksLm8Hbb5N8Btg8hJJq48kxuL5GRhX/1Dl4RQBlOi+Q=;
- b=FVtzQLIct1YGMDhtj09qPdxITtWHOQueskdKxaCRZfAZAI+zvNgOjBRMQ6fiMFofDZ
- MLjR6oihZ+VKUGHuCImK7KmQp3nnuv3ERuFw4IAVr+WqSvKTJBkYnVcrAZgONlWw632S
- SgVS4jsIENeIdDASmxzMV/UXaYQ1aiypUIzGfNgvFmvoRMZt5zW0epvG732GF+GTtt90
- fso5WvlkDYvG4/4+cxrZrEoVG6itsw2I2aG9eHRfEn9lOH1AzdIkRT65RTbl16nYv5jE
- Wrg0EY8qg+4jHai1dy1aFHO2t898V5YIDaMZZAidQYHQyxzmojqGwT52z60FHjJt/SSS
- JK3Q==
-X-Gm-Message-State: AOJu0Yzaz0Xz8fZvF5WdSZKbC0l0W0AUgEuVu7ysgKXfunJdD334Pe1w
- Eb8Wwt7aCRU5NjHFbJjE4+UCQ2lhRssvTysi5jKJwYhS7lEmBztdqjPOJ8r0gd0lxSrcQbcv8FD
- m
-X-Gm-Gg: ASbGncuKNbXU+G57HpwfUGdoCOyKYhvRAueHrx8jHMXgDzRlXTewMrkOsc/Db5rrpbO
- hweoHjJcxyx9pGZ3091t4tNFjVXiWEE2JDXa3Lsz+3Z0BBaKcaqTFrTLFI1cGE2ec8pNQ/RHgsL
- LtY+CR+zVtBpTUlQWESH4+625SWy297OVOtqEp+o9pMO0NYsjVwhWf4nL2e6XhI3t6j2lHdjhiV
- pHFKbnuF/y1zWEF6ho/SM70ZDYGV2QLeuWTbLh3nN47weyncVGBZYJ9H/byLvPmvU8OdI+Ftfar
- c4f/BAXV0DGdYw0/DPzU8GBprLdaFZlz+kzNnCsqDBkoHsvGmlEtglVxbAP2QGOL5xz8RyzCUvv
- J4vRPQ4ZapLdKEU00m3KG
-X-Google-Smtp-Source: AGHT+IF64ZWhIWsiGX5oz2cpTj0cDIKYneInRJynvtE0nzBQ7o9ZRfkMwXwKsDh34cDk/QZPJZaYAA==
-X-Received: by 2002:a17:907:a05:b0:ac7:b368:b193 with SMTP id
- a640c23a62f3a-ad17adbf7fbmr463741066b.27.1746212238974; 
- Fri, 02 May 2025 11:57:18 -0700 (PDT)
+ bh=bJup76xViPoYlcZ6DgY2Il03anUYcrocSLmxC3mshks=;
+ b=IIb5/97HgqSC6j9N16NYYPYbNXoYw0QXGrjbZ+INs9edfaItoN5s6HVyooAGVtVpg3
+ qNT6lKLZHVxuzLWL/ZPgx6/hjC8GlXWT5hqRRAPcRucXrwmDdeuYblUPFP0qDpzYsGK2
+ wqQu2gTzsLLt3jTf4+N872+C1/yWshbrMfqcb3GjJKnOqv45Qs/uZOfKJgofrXhPVoXA
+ tEl5HncSz4bDGdyzrPj7YwuQDDcA8ihPIQM6pABfm0HUdg3F8FAiNe0CChVu6YBXLpNA
+ 6pPSJUpgFR5dRmuHOfRi/EEMx2UmmKxEF66R9PeYPHOGsIOFLTfKT7amDT+kDWF5730Q
+ 94mw==
+X-Gm-Message-State: AOJu0YzPA5tIW3zV4rnCu75+fC24eOHdKt91YC0pujhfSNAJG+HITRdy
+ x1pZ/SWET0LYCBOxkCjYMi75EwTgKtJeM7zMSIdec3IGOZxSF3Nl26xjw2KXpKtSDyNAEopRByq
+ 9
+X-Gm-Gg: ASbGnctdreAbYKNE+SxEa9KUQm6JtSSGakTq16HWHliv2ZZOlrFne4M/cFh9Aj4kaxS
+ 10pmnW9U8x7xQP+Lneu0TpU6iNEJMXVPVBYgo7A+5OD1yl1rOPFQW88B1s3dgJ3ia9xbblB1+p6
+ VvM2+ynDfLegvzc5ILSbQX0tsg4j0AuW2al7Qa2opTYAbMrX0QC5nW1BghnMp633sveZMWT2BbC
+ 7lSo+aD0agTB/orwAyTCXE7xQefGpc+1tC0HUtmU6nO1I5m2xKVeZHxD8dc9T3zs4oD8t/70t4v
+ Z/PCRzp1rUx7cnpqLA05jeQzFNIZNoQeXnsONaM9eksmvZhqVsVSaKQDZd7vjcLdBzjYUrf0zep
+ uMQjYVqGB1V2uJoOqKULMGn5MSLUb4Sg=
+X-Google-Smtp-Source: AGHT+IH5/igCkChzWlVlBAT9HAF6ftX+1s8qZ3Pw5rfboLb09huidH1GiTzWBVXUg8A114AluNMqoA==
+X-Received: by 2002:a05:6402:270b:b0:5f6:ace4:9fa6 with SMTP id
+ 4fb4d7f45d1cf-5fa7804467bmr3246373a12.16.1746212261963; 
+ Fri, 02 May 2025 11:57:41 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad1891f6b05sm86006066b.86.2025.05.02.11.57.17
+ 4fb4d7f45d1cf-5fa777561basm1617455a12.9.2025.05.02.11.57.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 02 May 2025 11:57:18 -0700 (PDT)
+ Fri, 02 May 2025 11:57:41 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -77,19 +77,20 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH v3 04/19] hw/nvram/fw_cfg: Factor fw_cfg_init_mem_internal()
- out
-Date: Fri,  2 May 2025 20:56:36 +0200
-Message-ID: <20250502185652.67370-5-philmd@linaro.org>
+ Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: [PATCH v3 08/19] hw/intc/apic: Remove
+ APICCommonState::legacy_instance_id field
+Date: Fri,  2 May 2025 20:56:40 +0200
+Message-ID: <20250502185652.67370-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250502185652.67370-1-philmd@linaro.org>
 References: <20250502185652.67370-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,55 +113,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor fw_cfg_init_mem_internal() out of fw_cfg_init_mem_wide().
-In fw_cfg_init_mem_wide(), assert DMA arguments are provided.
-Callers without DMA have to use the fw_cfg_init_mem() helper.
+The APICCommonState::legacy_instance_id boolean was only set
+in the pc_compat_2_6[] array, via the 'legacy-instance-id=on'
+property. We removed all machines using that array, lets remove
+that property, simplifying apic_common_realize().
+
+Because instance_id is initialized as initial_apic_id, we can
+not register vmstate_apic_common directly via dc->vmsd.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- hw/nvram/fw_cfg.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ include/hw/i386/apic_internal.h | 1 -
+ hw/intc/apic_common.c           | 5 -----
+ 2 files changed, 6 deletions(-)
 
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index 54cfa07d3f5..d119c10d308 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -1053,9 +1053,9 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
-     return s;
- }
+diff --git a/include/hw/i386/apic_internal.h b/include/hw/i386/apic_internal.h
+index 429278da618..db6a9101530 100644
+--- a/include/hw/i386/apic_internal.h
++++ b/include/hw/i386/apic_internal.h
+@@ -188,7 +188,6 @@ struct APICCommonState {
+     uint32_t vapic_control;
+     DeviceState *vapic;
+     hwaddr vapic_paddr; /* note: persistence via kvmvapic */
+-    bool legacy_instance_id;
+     uint32_t extended_log_dest;
+ };
  
--FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
--                                 hwaddr data_addr, uint32_t data_width,
--                                 hwaddr dma_addr, AddressSpace *dma_as)
-+static FWCfgState *fw_cfg_init_mem_internal(hwaddr ctl_addr,
-+                                         hwaddr data_addr, uint32_t data_width,
-+                                         hwaddr dma_addr, AddressSpace *dma_as)
- {
-     DeviceState *dev;
-     SysBusDevice *sbd;
-@@ -1087,11 +1087,19 @@ FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
-     return s;
- }
+diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
+index 37a7a7019d3..1d259b97e63 100644
+--- a/hw/intc/apic_common.c
++++ b/hw/intc/apic_common.c
+@@ -294,9 +294,6 @@ static void apic_common_realize(DeviceState *dev, Error **errp)
+         info->enable_tpr_reporting(s, true);
+     }
  
-+FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
-+                                 hwaddr data_addr, uint32_t data_width,
-+                                 hwaddr dma_addr, AddressSpace *dma_as)
-+{
-+    assert(dma_iobase && dma_as);
-+    fw_cfg_init_mem_internal(ctl_addr, data_addr, data_addr, dma_addr, dma_as);
-+}
-+
- FWCfgState *fw_cfg_init_mem(hwaddr ctl_addr, hwaddr data_addr)
- {
--    return fw_cfg_init_mem_wide(ctl_addr, data_addr,
--                                fw_cfg_data_mem_ops.valid.max_access_size,
--                                0, NULL);
-+    return fw_cfg_init_mem_internal(ctl_addr, data_addr,
-+                                    fw_cfg_data_mem_ops.valid.max_access_size,
-+                                    0, NULL);
- }
+-    if (s->legacy_instance_id) {
+-        instance_id = VMSTATE_INSTANCE_ID_ANY;
+-    }
+     vmstate_register_with_alias_id(NULL, instance_id, &vmstate_apic_common,
+                                    s, -1, 0, NULL);
  
+@@ -412,8 +409,6 @@ static const Property apic_properties_common[] = {
+     DEFINE_PROP_UINT8("version", APICCommonState, version, 0x14),
+     DEFINE_PROP_BIT("vapic", APICCommonState, vapic_control, VAPIC_ENABLE_BIT,
+                     true),
+-    DEFINE_PROP_BOOL("legacy-instance-id", APICCommonState, legacy_instance_id,
+-                     false),
+ };
  
+ static void apic_common_get_id(Object *obj, Visitor *v, const char *name,
 -- 
 2.47.1
 
