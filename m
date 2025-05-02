@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB309C3ABA3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 08:03:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB220C3ABA3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 08:25:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAlN6-0006rc-LN; Fri, 02 May 2025 04:03:49 -0400
+	id 1uAlhR-0001WZ-Lm; Fri, 02 May 2025 04:24:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAlN0-0006qh-US
- for qemu-devel@nongnu.org; Fri, 02 May 2025 04:03:45 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAlhO-0001Sw-Cc
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 04:24:46 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAlMy-0001Wi-Ug
- for qemu-devel@nongnu.org; Fri, 02 May 2025 04:03:42 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-acec5b99052so281072866b.1
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 01:03:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAlhL-0000lV-5s
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 04:24:46 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5bc066283so2652261a12.0
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 01:24:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746173018; x=1746777818; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746174281; x=1746779081; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tiJvtTX5wuZG3YSRsS5RnnZOinfylkMzkNba9BpdC78=;
- b=dNIl52FMxDUMkoQkt7HJV9M1mzKV4ciTz273hTBYGLn7tQGvplCCUhH2FcImTA3tu1
- WlYCgpddWZvYw5qmamE+0XRiuBvOjesaOcJBfQiHtV1tZeRFMO3L2dBW9yYD6PAcx6j1
- 4hn0bgE6A/zfuJkrdD6Hq1hJrWOzljFEIXW0hIQcHovBK6CQFuwyn/IeWfllouhVKVMb
- fPLMz7mgsOpLq4+4ZObG7vAwDfSB4N73JBBdkWkJtigUQfmHGT8O3csVDOD6kSOlpk7k
- 9ZYtYfrPn8sE3op5v8gPU/C+eNK3GfXjfyWUf5uuzyASgUPJ+S32vmDRnFI6mLovkr15
- IYWg==
+ bh=UtQpI+NCEgKaYzd5ZP106PWh5pc8fWKBb5RVFXL84+k=;
+ b=C2OkMS2YZWv9aifUmKbgk9Fk9mhGSJMuHB0pYg1JOCJD0JxbLmCgU0Yjws+POg3Jdf
+ DHM+3jrnkLAK0vCZbKFg/o74976KyEH6SdiaFHw/O6azMtw/IhLGo60cXu9h96ivo0F8
+ 4Fi9NDAdlQvtaG2zZul+ExfWpyQA3B2uYrOf+/OokLn3PPN2t4RPsYpdOLKCzcMjJK8s
+ l+wBZQYZXW9c1D8dpbzAKfVxWarsVmcHfXTlz2xWRUBL7v+OSBq7siB7nvOut72uEApC
+ VwuNPt+OLeiUiSILlYOy56XNQ9l4p25k9C5YtOhRXL3C77uJpwqY4QZIaPR9VxU5kEnK
+ J14g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746173018; x=1746777818;
+ d=1e100.net; s=20230601; t=1746174281; x=1746779081;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tiJvtTX5wuZG3YSRsS5RnnZOinfylkMzkNba9BpdC78=;
- b=ttY2cjYYWtAgc/upq36Oa3va8+Bdx3kvmC67ysDXTPKcm6+rsj9J/1ir6lYxSt1+h9
- HQndxYwJvZiuVREMrfv5yqEufjng2YlhP6qDqCdb0GYkEFeGUxScf3ocI98ydBV5YdWo
- 2OyEwyQj02GIrzGqmDKcAE7/73Oz3lF8LvcIBP56NDk57y5utoP2PgHyQpNOETifYlrh
- ORvi36ZaIPK5Hjjy4Sbk7I/A++K7J6jc+JG/D5PwaQIlz0WZHbKj3W9k+CjKMtbZWdN1
- GCg2DyhsZvid87Yl8mAxDy2FusDG0ojmJcYVW4Us3sR0qTlwbx2hBFb1ccyfJhzvPCmb
- IZRg==
-X-Gm-Message-State: AOJu0YyRHaOKx0ArWr38ucu1XqgX6DdKm9K5WDnfB8A2JUWLkMSj8OGo
- ClWKI1q6ZjHmdjarRYI48pfrEbPc8270UPBAyIpRPFPBVoH7TCFVvsDa8ZLb/ZgHG/1CEkTzdMM
- u
-X-Gm-Gg: ASbGncv68NysvVG10TkPoc9Tt8XtcEcLw2bqgAKe5MNLnv7Ba1UTr6qa1XwOV9JBQij
- 3Ms65Jzp5/OK1KbmHvDAFEMd1bREmbl/8vk4R9fTTA0wf6o9aMlZFQXk8tmFSNBGuMaenCxqeW+
- ZHyL7xfNb3811lNEvppzs5GJVe38rXRjfaAr+OSEYN4uAN8B2cnZMRDk0bTA4Jaxh6JjubXQFH/
- 0dfEKBE0C1gQEOrLdu0u3us+XyogJKhai0Dazia80ZzJnezWlLXV03M/SLWSOA13e5/pa3XSLT5
- woG5Btxb/7hQ3KCqSuQjhXgph8/yCx+j9TcPqvKZTpwNZzkv6PAJGZVXRzSNQJkN69a8OFcdYWw
- NgojCcSdA
-X-Google-Smtp-Source: AGHT+IF6fnskXDe5d9YMwx7vL5ewdGfbnq5Qkvm3i/YGfATPG/cqHQTmhx4+bncc+SvgsPlK+zugWA==
-X-Received: by 2002:a17:907:7206:b0:ace:d95f:6582 with SMTP id
- a640c23a62f3a-ad17af7f8e1mr193574766b.53.1746173018277; 
- Fri, 02 May 2025 01:03:38 -0700 (PDT)
+ bh=UtQpI+NCEgKaYzd5ZP106PWh5pc8fWKBb5RVFXL84+k=;
+ b=EEebNrI9A7TtMI3xvwp1U6n5bnSHxbrOLvtjI/JG2yoBDlnZHpGvsah15soYkoxEhU
+ QK1whXAsn7x6cZABqr4EtPL0ibix0IeFQe4yK+JOAzIbQWTsR2tf5ty6FFdSRi0VIZfM
+ XCx7zCHewrxq95r2DeOxEL5OJ+Jg1XFZ/RgoJRlWTjztRggn77nTgcEqJUITxd3WCr0s
+ ztrctIfI4ER3RUTDrfHRDZuHGA2WpVVuT5Pn4MCkR/bI2rUPjNYVP7d/mFNKfCUVA95o
+ VhDnd8+8PRcamSwIBkvp8+f1FrTTtXb58vbkgiwmiTsiWd9R2Oom2naJfJg8X1rnTIoq
+ lnmQ==
+X-Gm-Message-State: AOJu0YyfjEVPJ56cSxT0WqHiEJsr861s5ze3ZOzZyFZSt+nV4D862XCw
+ djUaZtnW6kQEDlrBCXAsfQMZsRtumDFfGFThFD9BRPxu/knApgVrD91bVgausNI=
+X-Gm-Gg: ASbGnctmG8W75DCId9oEMBHiFRxSdoGMZThKrSvcIpoCBL674O098naOT45EjPBwnUe
+ tkUPlMmNkeWbT7lOl91HXuKKxScrE9FKB9YBJpAEJsNH89KbPkBjpIUPWDxRoovL+U5BpMFi1wR
+ dPSJ1BSCqwegyCNTHYSaOALrakF1cpJZ4kTHvp1EKrsaVUEyitn+LG1qH9/qpZxYVteM470z4TL
+ 2lyXU7MitVnm+HM53EGJ43L8bHJodW+iVvVFUQYQRZ8a2lsNU1VAIJkM8xugdHuibnHa3h4c+xE
+ j/BiDvrDg0EdIZJdyo2c0ToRcIYysme5ADYdxokgjrDLEtuvaBX5HqJ7cpeBIHpFoDtniGNUh9r
+ odB9AfYVS
+X-Google-Smtp-Source: AGHT+IH9UBgg8/jOi2t+R6VuylmjHdty6gePImkBoeTqpmd4/uV5eXK3UFOiBNT0F1u/IcumUEmSVQ==
+X-Received: by 2002:a17:907:72c6:b0:ac3:bf36:80e2 with SMTP id
+ a640c23a62f3a-ad17ad8024dmr211637366b.20.1746174280845; 
+ Fri, 02 May 2025 01:24:40 -0700 (PDT)
 Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad1891a24a4sm11119466b.41.2025.05.02.01.03.37
+ a640c23a62f3a-ad189540485sm11936066b.168.2025.05.02.01.24.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 May 2025 01:03:37 -0700 (PDT)
-Message-ID: <7e661024-9d76-4f82-ae4a-144915ff48ff@linaro.org>
-Date: Fri, 2 May 2025 10:03:36 +0200
+ Fri, 02 May 2025 01:24:40 -0700 (PDT)
+Message-ID: <14f30ea3-2200-4289-9f66-a23fd77a091f@linaro.org>
+Date: Fri, 2 May 2025 10:24:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] Support madvise(MADV_DONTDUMP) when creating core
- dumps for qemu-user
-To: qemu-devel@nongnu.org, Jon Wilson <jonwilson030981@googlemail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- WorksButNotTested <62701594+WorksButNotTested@users.noreply.github.com>
-References: <20250502063140.1098807-1-62701594+WorksButNotTested@users.noreply.github.com>
+Subject: Re: [PATCH v4 08/22] tests/qtest/usb-hcd-xhci: Deliver msix interrupts
+To: Nicholas Piggin <npiggin@gmail.com>, Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Bernhard Beschow <shentey@gmail.com>
+References: <20250502033047.102465-1-npiggin@gmail.com>
+ <20250502033047.102465-9-npiggin@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250502063140.1098807-1-62701594+WorksButNotTested@users.noreply.github.com>
+In-Reply-To: <20250502033047.102465-9-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,75 +104,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jon,
+On 2/5/25 05:30, Nicholas Piggin wrote:
+> msix
 
-On 2/5/25 08:31, WorksButNotTested wrote:
-> When running applications which make large (sparsely populated) address ranges
-> (e.g. when using address sanitizer with LibAFL) the inability to exclude these
-> regions from any core dump can result in very large files which fill the disk.
-> A coredump is obvously very useful for performing a post-mortem when fuzzing.
-> 
-> Whilst the man pages state that madvise provides only a hint (and hence can be
-> ignored), this patch adds support to handle MADV_DONTDUMP and set a
-> corresponding flag in the page flags, thus allowing QEMU to exclude these
-> regions from the core file.
-> 
-> Signed-off-by: WorksButNotTested <62701594+WorksButNotTested@users.noreply.github.com>
-
-In v1 you use Jon Wilson <jonwilson030981@googlemail.com>,
-is this other address the one you really want to use here?
+Hmm? :)
 
 > ---
->   include/exec/page-protection.h | 6 ++++++
->   linux-user/elfload.c           | 4 ++++
->   linux-user/mmap.c              | 5 +++++
->   3 files changed, 15 insertions(+)
+>   tests/qtest/usb-hcd-xhci-test.c | 14 +++++++++++++-
+>   1 file changed, 13 insertions(+), 1 deletion(-)
 > 
-> diff --git a/include/exec/page-protection.h b/include/exec/page-protection.h
-> index c43231af8b..f8826d917e 100644
-> --- a/include/exec/page-protection.h
-> +++ b/include/exec/page-protection.h
-> @@ -38,4 +38,10 @@
->    */
->   #define PAGE_PASSTHROUGH 0x0800
+> diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
+> index 7f801f8f1a0..2eecc8d9f26 100644
+> --- a/tests/qtest/usb-hcd-xhci-test.c
+> +++ b/tests/qtest/usb-hcd-xhci-test.c
+> @@ -48,6 +48,8 @@ typedef struct XHCIQState {
+>       QPCIBar bar;
+>       uint64_t barsize;
+>       uint32_t fingerprint;
+> +    uint64_t guest_msix_addr;
+> +    uint32_t msix_data;
 >   
-> +/*
-> + * For linux-user, indicates that the page should not be included in a core
-> + * dump.
-> + */
-> +#define PAGE_DONTDUMP   0x1000
-> +
->   #endif
-> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-> index fbfdec2f17..41c46da055 100644
-> --- a/linux-user/elfload.c
-> +++ b/linux-user/elfload.c
-> @@ -4067,6 +4067,10 @@ static size_t vma_dump_size(target_ulong start, target_ulong end,
->           return 0;
+>       /* In-memory arrays */
+>       uint64_t dc_base_array;
+> @@ -279,7 +281,8 @@ static void xhci_db_writel(XHCIQState *s, uint32_t db, uint32_t value)
+>   
+>   static bool xhci_test_isr(XHCIQState *s)
+>   {
+> -    return xhci_op_readl(s, XHCI_OPER_REG_USBSTS) & XHCI_USBSTS_EINT;
+> +    return qpci_msix_test_interrupt(s->dev, 0,
+> +                                    s->guest_msix_addr, s->msix_data);
+>   }
+>   
+>   static void wait_event_trb(XHCIQState *s, XHCITRB *trb)
+> @@ -298,6 +301,9 @@ static void wait_event_trb(XHCIQState *s, XHCITRB *trb)
+>           qtest_clock_step(s->parent->qts, 10000);
 >       }
 >   
-> +    if (flags & PAGE_DONTDUMP) {
-> +        return 0;
-> +    }
+> +    value = xhci_op_readl(s, XHCI_OPER_REG_USBSTS);
+> +    g_assert(value & XHCI_USBSTS_EINT);
 > +
->       /*
->        * Usually we don't dump executable pages as they contain
->        * non-writable code that debugger can read directly from
-> diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-> index f88a80c31e..62fc8ac921 100644
-> --- a/linux-user/mmap.c
-> +++ b/linux-user/mmap.c
-> @@ -1247,6 +1247,11 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
->        */
->       mmap_lock();
->       switch (advice) {
-> +    case MADV_DONTDUMP:
-> +        if (len > 0) {
-> +            page_set_flags(start, start + len - 1, PAGE_DONTDUMP);
-> +        }
-> +        break;
->       case MADV_WIPEONFORK:
->       case MADV_KEEPONFORK:
->           ret = -EINVAL;
+>       /* With MSI-X enabled, IMAN IP is cleared after raising the interrupt */
+>       value = xhci_intr_readl(s, 0, XHCI_INTR_REG_IMAN);
+>       g_assert(!(value & XHCI_IMAN_IP));
+> @@ -395,7 +401,12 @@ static void xhci_enable_device(XHCIQState *s)
+>       uint32_t value;
+>       int i;
+>   
+> +    s->guest_msix_addr = xhci_guest_zalloc(s, 4);
+> +    s->msix_data = 0x1234abcd;
+> +
+>       qpci_msix_enable(s->dev);
+> +    qpci_msix_set_entry(s->dev, 0, s->guest_msix_addr, s->msix_data);
+> +    qpci_msix_set_masked(s->dev, 0, false);
+>   
+>       hcsparams1 = xhci_cap_readl(s, XHCI_HCCAP_REG_HCSPARAMS1);
+>       s->maxports = (hcsparams1 >> 24) & 0xff;
+> @@ -640,6 +651,7 @@ static void xhci_disable_device(XHCIQState *s)
+>       guest_free(&s->parent->alloc, s->command_ring.addr);
+>       guest_free(&s->parent->alloc, s->event_ring_seg);
+>       guest_free(&s->parent->alloc, s->dc_base_array);
+> +    guest_free(&s->parent->alloc, s->guest_msix_addr);
+>   }
+>   
+>   struct QEMU_PACKED usb_msd_cbw {
 
 
