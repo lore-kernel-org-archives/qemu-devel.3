@@ -4,98 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BEA6C3ABAD
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 11:15:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EECCC3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 11:15:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAoLh-0003sS-J8; Fri, 02 May 2025 07:14:33 -0400
+	id 1uAoMb-00057v-GA; Fri, 02 May 2025 07:15:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=zHgX=XS=kaod.org=clg@ozlabs.org>)
- id 1uAoLR-0003gX-61; Fri, 02 May 2025 07:14:24 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=zHgX=XS=kaod.org=clg@ozlabs.org>)
- id 1uAoLO-0005Zk-4r; Fri, 02 May 2025 07:14:16 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZppGC4xM9z4xQv;
- Fri,  2 May 2025 21:14:11 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZppG811b8z4x8S;
- Fri,  2 May 2025 21:14:07 +1000 (AEST)
-Message-ID: <679b3e9b-7e59-406f-b118-16265ceaf631@kaod.org>
-Date: Fri, 2 May 2025 13:14:05 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAoMY-000528-TK
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 07:15:27 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAoMX-0005yO-1I
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 07:15:26 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-acec5b99052so311233266b.1
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 04:15:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746184523; x=1746789323; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/wDY96Mo/oW2XDsRugGi1hBYln+aaBy3TnE6cPG5DZU=;
+ b=M3HzXxD6hKww5xp51ZrqqzvGI+bJX0XkCjoVw6XGbFI6c7PyyvfsecTfntRBPeJIng
+ 62x8ir7TGVszTit5K9KrKmeLMXpuE/b+rZO0izM7Gs47lztj4e2iGZV4JaYCm+ZksiQw
+ 6dOMPi/Sa4QKtJF2tWDVm0iCLwNz1li6ZR9RadXBvNKsJay8OwxVvo8LEMyqi5XcZ7IK
+ /y9BRE/0DQ+yDv0pOVJTfrjOHdjA+dgG5VEkDQVVjzB2ZDsuLTLCWtirIjBnEwDDDuGt
+ +Yjf9lffwEdxlA1H56+qcQRfCY1/SEuWKP4XhQVkGv1Z57PtkzdMwKQr7gfWGsvpaV8x
+ hScw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746184523; x=1746789323;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/wDY96Mo/oW2XDsRugGi1hBYln+aaBy3TnE6cPG5DZU=;
+ b=dROh4nSJmvoEUvK8hx7h7+Kmhr6Nr0OWyj7hG2rqEOWCks2FYOqWIWGGDHvNofQ0fR
+ LSpYtACMMEN8Nif3nEDT9p/MhSyrcjgzO/mEmdUX+gSaruxZUSVWRngukPCgFv4tRYr+
+ H+IJW0UHKGPm4qc0ZtGBjSrXODqVMOGVriFYZHRpA3215V2MwPWx7luYwcG9G8w7W8fj
+ 7UFlyNjsNIozhwIYqWySa6+H1hEMfs89lrJCNzPzg8vNQYdzwtcsXOQnkN3wIta/50+4
+ YCvkiPrAgSJX/BA4ORWNsxBieNIMsicex05+/AKxTNDT7babj5P8BZyyjQDccZWG1fIA
+ EleQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXTvB//I8F3b59wRTi8Rv7Bg7sUb9TQheHp96mYL2f2R/Axefw5rH8b9LYGZSs+yr48xZyJo2ihczt2@nongnu.org
+X-Gm-Message-State: AOJu0YwFfyqATqHXoeYi//CZVWsJ3ZauJp30hWO28t44rQSLI/GImV4Q
+ f3HkDqNxiXpUNAn/YIYpw35gTclEJiicM11gbGAxW4Mud2Dm6FD/nnqcVtjAlJ3DUuhoyJXJ+5/
+ c
+X-Gm-Gg: ASbGncvGtZpX5uPAHlsQ+a5aZjXBTBncvKdn267Zume0mOpuUP4Kg3Ur/WpQiXQZ4J8
+ f9/CBWl/R3ncJcLZWFBZlPIqvhlXt86EmoE/tMOxA9e9fQeuKcv1HhKbANbZzf5Nj0ck3TCJ/Vt
+ 5WYXbV35WzV1Uc6qlZqUrZ/WQRyaA8NC5gR2agFwxPPKaBTFW9lrps3qIEb7BsOd7cAoW0UKHni
+ uthO/xM7U92FM/wC34xy+eed0hTQJ4iSgPmh0TRfaFry7li6dFfC9tA6OkAP3GIP8TnjCij164j
+ pL8cV3izH/4ewrjdnhv5LDOyN59MKzcVH/zb68O1XXtnJdAFf6/lbTMKsGRGLUNtm6TEj2bQpk8
+ lEE88dlS5qvUqw+2PR5k=
+X-Google-Smtp-Source: AGHT+IHIKtngSsk7K+2DTrht0vJLTqaCM3PcOWs6VB5ulkk/VNu8ldKcsh1R6JXH6kOfqp75sn1cOA==
+X-Received: by 2002:a17:907:3e9f:b0:ad1:7858:a769 with SMTP id
+ a640c23a62f3a-ad17adaeca2mr294580166b.26.1746184523195; 
+ Fri, 02 May 2025 04:15:23 -0700 (PDT)
+Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ad1891a2bd8sm35481566b.57.2025.05.02.04.15.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 May 2025 04:15:22 -0700 (PDT)
+Message-ID: <2fc7686d-2feb-4cca-97f8-0bf5c8be7987@linaro.org>
+Date: Fri, 2 May 2025 13:15:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 9/9] docs: Add support for ast2700fc machine
-To: Steven Lee <steven_lee@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
-References: <20250502103449.3091642-1-steven_lee@aspeedtech.com>
- <20250502103449.3091642-10-steven_lee@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250502103449.3091642-10-steven_lee@aspeedtech.com>
+Subject: Re: [PATCH v2 05/16] hw/intc/apic: Remove
+ APICCommonState::legacy_instance_id field
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-devel@nongnu.org
+Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Yi Liu <yi.l.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Amit Shah <amit@kernel.org>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Sergio Lopez <slp@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Ani Sinha <anisinha@redhat.com>, Thomas Huth <thuth@redhat.com>
+References: <20250501183628.87479-1-philmd@linaro.org>
+ <20250501183628.87479-6-philmd@linaro.org>
+ <5c1c0533-190b-44b7-8dba-39ffc2041cfc@nutanix.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5c1c0533-190b-44b7-8dba-39ffc2041cfc@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=zHgX=XS=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,124 +116,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/2/25 12:34, Steven Lee wrote:
-> - Updated Aspeed family boards list to include `ast2700fc`.
-> - Added boot instructions for the `ast2700fc` machine.
-> - Detailed the configuration and loading of firmware for the
->    Cortex-A35 and Cortex-M4 processors.
+Hi Mark,
+
+On 2/5/25 11:14, Mark Cave-Ayland wrote:
+> On 01/05/2025 19:36, Philippe Mathieu-Daudé wrote:
 > 
-> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-> Change-Id: Id41312e9c7cf79bc55c6f24a87a7ad9993dc7261
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-> ---
->   docs/system/arm/aspeed.rst | 69 ++++++++++++++++++++++++++++++++++++--
->   1 file changed, 66 insertions(+), 3 deletions(-)
+>> The APICCommonState::legacy_instance_id boolean was only set
+>> in the pc_compat_2_6[] array, via the 'legacy-instance-id=on'
+>> property. We removed all machines using that array, lets remove
+>> that property, simplifying apic_common_realize().
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/hw/i386/apic_internal.h | 1 -
+>>   hw/intc/apic_common.c           | 5 -----
+>>   2 files changed, 6 deletions(-)
+>>
+>> diff --git a/include/hw/i386/apic_internal.h b/include/hw/i386/ 
+>> apic_internal.h
+>> index 429278da618..db6a9101530 100644
+>> --- a/include/hw/i386/apic_internal.h
+>> +++ b/include/hw/i386/apic_internal.h
+>> @@ -188,7 +188,6 @@ struct APICCommonState {
+>>       uint32_t vapic_control;
+>>       DeviceState *vapic;
+>>       hwaddr vapic_paddr; /* note: persistence via kvmvapic */
+>> -    bool legacy_instance_id;
+>>       uint32_t extended_log_dest;
+>>   };
+>> diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
+>> index 37a7a7019d3..1d259b97e63 100644
+>> --- a/hw/intc/apic_common.c
+>> +++ b/hw/intc/apic_common.c
+>> @@ -294,9 +294,6 @@ static void apic_common_realize(DeviceState *dev, 
+>> Error **errp)
+>>           info->enable_tpr_reporting(s, true);
+>>       }
+>> -    if (s->legacy_instance_id) {
+>> -        instance_id = VMSTATE_INSTANCE_ID_ANY;
+>> -    }
+>>       vmstate_register_with_alias_id(NULL, instance_id, 
+>> &vmstate_apic_common,
+>>                                      s, -1, 0, NULL);
 > 
-> diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
-> index 014545f444..58a8020eec 100644
-> --- a/docs/system/arm/aspeed.rst
-> +++ b/docs/system/arm/aspeed.rst
-> @@ -1,5 +1,5 @@
-> -Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
-> -==================================================================================================================================================================================================================================================================================================================================================================================================================
-> +Aspeed family boards (``ast2500-evb``, ``ast2600-evb``, ``ast2700-evb``, ``ast2700fc``, ``bletchley-bmc``, ``fuji-bmc``, ``fby35-bmc``, ``fp5280g2-bmc``, ``g220a-bmc``, ``palmetto-bmc``, ``qcom-dc-scm-v1-bmc``, ``qcom-firework-bmc``, ``quanta-q71l-bmc``, ``rainier-bmc``, ``romulus-bmc``, ``sonorapass-bmc``, ``supermicrox11-bmc``, ``supermicrox11spi-bmc``, ``tiogapass-bmc``, ``witherspoon-bmc``, ``yosemitev2-bmc``)
-> +=================================================================================================================================================================================================================================================================================================================================================================================================================================
->   
->   The QEMU Aspeed machines model BMCs of various OpenPOWER systems and
->   Aspeed evaluation boards. They are based on different releases of the
-> @@ -255,6 +255,7 @@ etc.
->   AST2700 SoC based machines :
->   
->   - ``ast2700-evb``          Aspeed AST2700 Evaluation board (Cortex-A35)
-> +- ``ast2700fc``            Aspeed AST2700 Evaluation board (Cortex-A35 + Cortex-M4)
->   
->   Supported devices
->   -----------------
-> @@ -285,7 +286,6 @@ Supported devices
->   
->   Missing devices
->   ---------------
-> - * Coprocessor support
->    * PWM and Fan Controller
->    * Slave GPIO Controller
->    * Super I/O Controller
-> @@ -353,6 +353,69 @@ specified path in the ${HOME} directory.
->   
->     -bios ${HOME}/ast27x0_bootrom.bin
->   
-> +Booting the ast2700fc machine
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +AST2700 features four Cortex-A35 primary processors and two Cortex-M4 coprocessors.
-> +**ast2700-evb** machine focuses on emulating the four Cortex-A35 primary processors,
-> +**ast2700fc** machine extends **ast2700-evb** by adding support for the two Cortex-M4 coprocessors.
-> +
-> +Steps to boot the AST2700fc machine:
-> +
-> +1. Ensure you have the following AST2700A1 binaries available in a directory
-> +
-> + * u-boot-nodtb.bin
-> + * u-boot.dtb
-> + * bl31.bin
-> + * optee/tee-raw.bin
-> + * image-bmc
-> + * zephyr-aspeed-ssp.elf (for SSP firmware, CPU 5)
-> + * zephyr-aspeed-tsp.elf (for TSP firmware, CPU 6)
-> +
-> +2. Execute the following command to start ``ast2700fc`` machine:
-> +
-> +.. code-block:: bash
-> +
-> +  IMGDIR=ast2700-default
-> +  UBOOT_SIZE=$(stat --format=%s -L ${IMGDIR}/u-boot-nodtb.bin)
-> +
-> +  $ qemu-system-aarch64 -M ast2700fc \
-> +       -device loader,force-raw=on,addr=0x400000000,file=${IMGDIR}/u-boot-nodtb.bin \
-> +       -device loader,force-raw=on,addr=$((0x400000000 + ${UBOOT_SIZE})),file=${IMGDIR}/u-boot.dtb \
-> +       -device loader,force-raw=on,addr=0x430000000,file=${IMGDIR}/bl31.bin \
-> +       -device loader,force-raw=on,addr=0x430080000,file=${IMGDIR}/optee/tee-raw.bin \
-> +       -device loader,cpu-num=0,addr=0x430000000 \
-> +       -device loader,cpu-num=1,addr=0x430000000 \
-> +       -device loader,cpu-num=2,addr=0x430000000 \
-> +       -device loader,cpu-num=3,addr=0x430000000 \
-> +       -drive file=${IMGDIR}/image-bmc,if=mtd,format=raw \
-> +       -device loader,file=${IMGDIR}/zephyr-aspeed-ssp.elf,cpu-num=4 \
-> +       -device loader,file=${IMGDIR}/zephyr-aspeed-tsp.elf,cpu-num=5 \
-> +       -serial pty -serial pty -serial pty \
-> +       -snapshot \
-> +       -S -nographic
-> +
-> +After launching QEMU, serial devices will be automatically redirected.
-> +Example output:
-> +
-> +.. code-block:: bash
-> +
-> +   char device redirected to /dev/pts/55 (label serial0)
-> +   char device redirected to /dev/pts/56 (label serial1)
-> +   char device redirected to /dev/pts/57 (label serial2)
-> +
-> +- serial0: Console for the four Cortex-A35 primary processors.
-> +- serial1 and serial2: Consoles for the two Cortex-M4 coprocessors.
-> +
-> +Use ``tio`` or another terminal emulator to connect to the consoles:
-> +
-> +.. code-block:: bash
-> +
-> +   $ tio /dev/pts/55
-> +   $ tio /dev/pts/56
-> +   $ tio /dev/pts/57
-> +
-> +
->   Aspeed minibmc family boards (``ast1030-evb``)
->   ==================================================================
->   
+> With the legacy_instance_id removed, is it now also possible to register 
+> vmstate_apic_common directly via dc->vmsd instead?
 
+I don't think so because it still uses initial_apic_id, but I'm not sure:
+
+     uint32_t instance_id = s->initial_apic_id;
 
