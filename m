@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63DC9C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 16:44:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C51D0C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 16:44:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAtT0-0007xG-3D; Fri, 02 May 2025 12:42:26 -0400
+	id 1uAtSV-0007eZ-8y; Fri, 02 May 2025 12:41:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtSn-0007om-DY
- for qemu-devel@nongnu.org; Fri, 02 May 2025 12:42:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtST-0007dx-MS
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 12:41:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtSl-0006VG-I7
- for qemu-devel@nongnu.org; Fri, 02 May 2025 12:42:12 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uAtSR-0006R8-U3
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 12:41:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746204128;
+ s=mimecast20190719; t=1746204110;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yxAXCRgMFBUrR/bs744IU7o+At9NXW4bLRS1vlLvNyo=;
- b=ERICSb7t/7PYLAjIQbHpJ9fApsZX1g3hPG7Z46+iavTBKY6tkdQX1/kU6Z1Y8VKp0zpSMY
- qCcPeTKsbbYQVH+Pcv2/GTEyRoEc7t/Fk1zvtWFQ2FUjjLAqXisdAUJsrnLMpOc2CW8W4Z
- U4b6XhijxtQLt8Jr3tBKpLxFV7ld89c=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YhEfo/crAEyxYhDSWP1l8LRwgjE5vzXQPMbrfXIzcrY=;
+ b=VXGprtUjKCUuMavORY1AI60jA9wLegbTdhafOaydeTXQ6uBlQ2IwjZOVZbFtl+rnJQcCde
+ VFqXmbdmpRS+6BnEJG+W3QPjOddlRNSei6fv1AKLXl3VUJJUu4PQ8OilSjeYlGuNXK/Vqi
+ 0a6WwRqxMGbaA8EPEdTgMgW/zMu4Ex0=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-215-fSMIj9wgNV6FIA_shm3yYQ-1; Fri, 02 May 2025 12:42:07 -0400
-X-MC-Unique: fSMIj9wgNV6FIA_shm3yYQ-1
-X-Mimecast-MFC-AGG-ID: fSMIj9wgNV6FIA_shm3yYQ_1746204127
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7c54a6b0c70so211000985a.0
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 09:42:07 -0700 (PDT)
+ us-mta-106-Ug5r5DfdMm2ROm0FPQIX7A-1; Fri, 02 May 2025 12:41:49 -0400
+X-MC-Unique: Ug5r5DfdMm2ROm0FPQIX7A-1
+X-Mimecast-MFC-AGG-ID: Ug5r5DfdMm2ROm0FPQIX7A_1746204109
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7c3c8f8ab79so342584585a.2
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 09:41:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746204126; x=1746808926;
+ d=1e100.net; s=20230601; t=1746204108; x=1746808908;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yxAXCRgMFBUrR/bs744IU7o+At9NXW4bLRS1vlLvNyo=;
- b=ZJE2CZPfoyiXB00SxAZiPOCIUk2Kq37ML6Y4rsP5yp2mAaB0HGITBJaPPOgHM22o52
- q6z8oUWhhjegyzbgNahb7kJBoqt27cQoHUYnB6YxY/ejLs4bt2zhLGvv+vRkxpzTF8l1
- 7npacnIUYuAVkc6ERQZgpWshVwG0b6HznK1XErBszC5jbzkgunVwgJUDwYH1cByvXUVr
- Gd1+HRKM8i+KBA/qi3INwq8rlGMe0+pDzSfc/dnvhmVskExPbaB+BkSHZAzsaToUbQUh
- +4YBScGIjucW80pYk+SyWwNPzyTBcjEWsVYxgzaeS8NTXubuViCSCUoMn+WdSHUfCbLQ
- h9JQ==
-X-Gm-Message-State: AOJu0YzhVYTota7yI6MbBgriGHgxR5MLQqAWboTlqo8QTrxc8UPenHnl
- c4KD6z4zexatAjoZ9VwCdU+iCSE03aySejX+hULesl7yQaEHOd1OKXPrKh89Pl2mNrhR0cZ3a4n
- 37Lzih0VabFarmlope9WuHLt1oZgEFvHLU5KhS4KfKXh1bRd7oVtgwPaGRRWCoFdO1d53ns6Y5+
- 4e5beqJKHigT0Vzr8IF1vr8RgkbRnUf1mDXQ==
-X-Gm-Gg: ASbGncvHQBTSZUp+aYUMPnNwy1JvWarikuutateAj0BjRvpDz3HJJi1DO2Hx+e+YhpR
- Dd4nmcb5juTl0a5xIO09mnz7+xFromvhfxAdmJ8694zHDOcCLw1TLBsLXqeLgfJjE4eGZR4haR3
- izKwU37CsBaQF31ysSMK5u3kLJjeps6S1JC7FWSHf6DZCFoD0XKOjKHucRwoJ/YwxbcOhx0JFsK
- f4ChxsMpSjgi8T79JFi1RbKNlbliYrAS5bOQ5uNGzV2RHZRwzPJb+/A4VibH1b4VgCBPOsHMjlS
-X-Received: by 2002:a05:620a:2724:b0:7c7:a604:d432 with SMTP id
- af79cd13be357-7cad5b4cc54mr593144285a.30.1746204126459; 
- Fri, 02 May 2025 09:42:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE7wwibhixRfqal2VlS13xB8xJzXoVhjjDXGhxF4DGn/37sb3XmwW07w/mILlQSdjMFyt2Tqw==
-X-Received: by 2002:a05:620a:2724:b0:7c7:a604:d432 with SMTP id
- af79cd13be357-7cad5b4cc54mr593139285a.30.1746204126021; 
- Fri, 02 May 2025 09:42:06 -0700 (PDT)
+ bh=YhEfo/crAEyxYhDSWP1l8LRwgjE5vzXQPMbrfXIzcrY=;
+ b=ZF5srgpPMOqRIvVjjSU8/3llFXrxMikWyCyPuL2BdgJn3eTPavDXo4MhZDRijiuwLu
+ GeU8l3mSrw5tzxNHPes1o5olZ6ADQqA0IyofuGoHHiMUHfmTLDis8psHd8/hosfFiP4P
+ 5ExXpi6S/vNpXNrfqaUfD/KoJCxenVSbp9cPj4KtUqXS1Vdygi0MCn32+ZYq+StyUY2W
+ pUtrG+cxtwLWJ6Kwp/RruCoxuClNVZFAas8nXUuGnwkHLIbeBx4Xtku/BKmXk1BTSWlK
+ pB8ICCMnk4GGhdCuQH/rzeN0tZT/DYfa9ysduAyP0UJxEU96+wMg7Q9VosFv0CK1JHA4
+ 8v4w==
+X-Gm-Message-State: AOJu0Yx1q2k5dtC2WJZzPeqNqeW1Y3k3jMdytfH1V4GCEzOe6KmKkhgL
+ r0FNeMyeu1qJHwN386W/kU/mVzrCcmQqjB9cY7DU1iUom3ykf59645tTXcEwsiAoTwI2dFShw4E
+ l9fFaQKvicEjGF17a3r/Dhzw8V2T/2+guFLxpGnqiGAwJPbzTPNH6LRCSJTymzcUst51R0L6BaO
+ EO4zjP9wBEtQb/cvgXwr+2rU2PxWtxODiaFQ==
+X-Gm-Gg: ASbGncti/j/UBJjsZgvAulNP6x9hbRx810gayS97CCUZVG+d/9V+sWLsMnQfrNCECke
+ JVf8yHkkSSiaTQ4PYM6Djx9LzIFUFIf592TCqQ9vrjMiCQcTIzUS8QX2wjp0wGkxeFgOZsN7P6+
+ NxkrDzRgW9KcOf9KwBETcUNAxSsz365sP8jkKBCBNecgGB+jK1ggOIgV9feI8dN8AYF/vWD/i2l
+ 00Osmh8DbWyFFO+Z4bNZprGQgqU4e3Am+fHE+IE30abbsM1d/SL+yZWoLQ/lOx3xf342uByUHhb
+X-Received: by 2002:a05:620a:4111:b0:7c7:747f:89d0 with SMTP id
+ af79cd13be357-7cad5b3e38cmr506280585a.18.1746204108477; 
+ Fri, 02 May 2025 09:41:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGs14xF8eu3NbGT/nPm0RNHfb80OXKRMVtgmQMULhElkPHy0CTxprx+fNpHHb2qr+h40WjWfw==
+X-Received: by 2002:a05:620a:4111:b0:7c7:747f:89d0 with SMTP id
+ af79cd13be357-7cad5b3e38cmr506277785a.18.1746204108152; 
+ Fri, 02 May 2025 09:41:48 -0700 (PDT)
 Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cad23d1c8dsm203108385a.60.2025.05.02.09.42.04
+ af79cd13be357-7cad23d1c8dsm203108385a.60.2025.05.02.09.41.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 May 2025 09:42:05 -0700 (PDT)
+ Fri, 02 May 2025 09:41:46 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
- peterx@redhat.com, Thomas Huth <thuth@redhat.com>
-Subject: [PULL 14/14] scripts/vmstate-static-checker.py: Allow new name for
- ghes_addr_le field
-Date: Fri,  2 May 2025 12:41:41 -0400
-Message-ID: <20250502164141.747202-15-peterx@redhat.com>
+ peterx@redhat.com, Li Zhijian <lizhijian@fujitsu.com>
+Subject: [PULL 02/14] migration: disable RDMA + postcopy-ram
+Date: Fri,  2 May 2025 12:41:29 -0400
+Message-ID: <20250502164141.747202-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250502164141.747202-1-peterx@redhat.com>
 References: <20250502164141.747202-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -106,32 +105,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-ghes_addr_le has been renamed to hw_error_le in commit 652f6d86cbb
-("acpi/ghes: better name the offset of the hardware error firmware").
-Adjust the checker script to allow that changed field name.
+It's believed that RDMA + postcopy-ram has been broken for a while.
+Rather than spending time re-enabling it, let's simply disable it as a
+trade-off.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20250429152141.294380-3-thuth@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Message-ID: <20250305062825.772629-4-lizhijian@fujitsu.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- scripts/vmstate-static-checker.py | 1 +
- 1 file changed, 1 insertion(+)
+ migration/options.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/scripts/vmstate-static-checker.py b/scripts/vmstate-static-checker.py
-index 9c0e6b81f2..25aca839a0 100755
---- a/scripts/vmstate-static-checker.py
-+++ b/scripts/vmstate-static-checker.py
-@@ -42,6 +42,7 @@ def check_fields_match(name, s_field, d_field):
-     # Some fields changed names between qemu versions.  This list
-     # is used to allow such changes in each section / description.
-     changed_names = {
-+        'acpi-ghes': ['ghes_addr_le', 'hw_error_le'],
-         'apic': ['timer', 'timer_expiry'],
-         'e1000': ['dev', 'parent_obj'],
-         'ehci': ['dev', 'pcidev'],
+diff --git a/migration/options.c b/migration/options.c
+index 1f3602839d..4ba8fcb7dc 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -458,6 +458,10 @@ bool migrate_rdma_caps_check(bool *caps, Error **errp)
+         error_setg(errp, "RDMA and multifd can't be used together");
+         return false;
+     }
++    if (caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
++        error_setg(errp, "RDMA and postcopy-ram can't be used together");
++        return false;
++    }
+ 
+     return true;
+ }
 -- 
 2.48.1
 
