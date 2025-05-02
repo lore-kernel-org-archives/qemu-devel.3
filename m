@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E19CEC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 18:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B243FC3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 18:59:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAvay-0007pQ-H2; Fri, 02 May 2025 14:58:48 -0400
+	id 1uAvbH-0008FE-L8; Fri, 02 May 2025 14:59:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvaR-000614-QP
- for qemu-devel@nongnu.org; Fri, 02 May 2025 14:58:20 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvaz-0007ur-Iw
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 14:58:49 -0400
 Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvaP-0005cC-1V
- for qemu-devel@nongnu.org; Fri, 02 May 2025 14:58:15 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uAvax-0005jD-D0
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 14:58:49 -0400
 Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-acb2faa9f55so300238366b.3
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 11:58:12 -0700 (PDT)
+ a640c23a62f3a-ace94273f0dso513912066b.3
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 11:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746212291; x=1746817091; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746212325; x=1746817125; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iOAW9p4ck3r31lLX8gMavE55BXuL7nNj0tlEn6BG7jc=;
- b=fvAUFww6RIybGhfDfReNzIk+Sy3Hgo7rWd0f5nPap5vNHl49CwGzMIEanq9BQNVWSI
- vluNhVuE25FIu0VuO1AoDHnj+GNXqNDcS955hNhzCYiYHZbr3YNzPKcGO+U5lGKVFXgL
- 2oEVIYYcs9D4CAE4jg99xmvkcT2jUcY7SSN9Gp5uWrZGVeGHtXV3jvzKEY3D+fSQsV4J
- eeCw2flLjRn/cFjN1p4UA9cpOXHSZHyw6gC4NZvW4k4nGvMp+m/aiu0szpmCTNaGU/rh
- 0cSMluXgbprUqQuSxe94jZPGBxfsj2RSggVgGo0w/WY8r7jhiyLsWeScFNPtKHBv0TBJ
- kPog==
+ bh=dAEnpROpQK6DxM6uJJQ1bpWzbrmSzQalAkAVB3r0tgU=;
+ b=c9bTdyiSQzZQabGbuFIuF1vr42BCnDGuAJsaSKWYXOXUsUHiEiXArh/oDZT6hBViWH
+ qJecubv/rCmnIKoMmixoTQaUNMJ8/gi4MIGXH+pbjQH5qbIJl2vdtGLuKXaeun6sKg1t
+ KpbTU4Eel4VUPkds+8ML22LG6tZzw812gaGF5giA720p6BSHj3PzZi9BJNQBLUeMFUf2
+ Gr3sZLhmycuaB4kauT4dC0lDguUe4br06keY27cOygtiygIj9te0ps4/QfcPE/8m33kH
+ KhdUQVR+pqkvRqI4ssDaLjQIzIkGkxfib7oj2mjgRE+6VDrB5ZV6kfZM2elIlx+fCUUa
+ KhDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746212291; x=1746817091;
+ d=1e100.net; s=20230601; t=1746212325; x=1746817125;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iOAW9p4ck3r31lLX8gMavE55BXuL7nNj0tlEn6BG7jc=;
- b=tkn7vBKP+oO1oXAvHu4AlqQtjwNsZnEGXWViraVa3agb2M+jbeZuZUTBqkSfsetD1W
- WtcR7cfm/JuaDAec+PHymJY7yYZHpSqs46ly9Uf1SQPGjGEjxJExJ1mm4SrG+HnPI5i1
- BZV/ObpfqC4cI/CcEJ8um5W2Y+mgPlp8SCmWtJ46qr6eZCSQ5EZXhqls64vGRLzJM3SZ
- 093YRMw0FORJqwMP+2IAbm3Qrs13tq7zXQQff/aKoVwfsm9mQDrDj1s0/nUVB42iEFvk
- zH1aSLfksE59S4HEDi2VNh18mSOMme0mI/MJDtONGkle521cT3MeBqBjDQkSPCzcTZEH
- VWqg==
-X-Gm-Message-State: AOJu0YyQWmZu0b+yXOxzVuh23q+dS1+vq4eci/q0y/AXgbu1Uoe0pK53
- 3Rh4vUVCzfS6sDZA1YnuJr+eVMZH+S20AlLl7QmiD1J/PKx73TZIOAnbz3tv41sjUG6vD5LYmU/
- y
-X-Gm-Gg: ASbGncveLFgQu65Z5BAyjVJBP1iv2L7uh6RbO3UT0uFN9P3Pjcq0fEIJ747tzg1Zez7
- PpPO7LXpGfPb+uhJ2AEuhJxSr4jo3R1+wkrUr3p3/LQb3/4V5wksOV0uchTwMOsaiam7sbde/m/
- TOSXLcUsVOwqDxEMsSZgifDbL4k9nVIbFfJB/gN9soPHepaV1eW+7lkiBhGmop6m1IKqpohK9ha
- b7MgsNlMfUF+OVzUeDilIaSMwwQW2vHHnSkXN7EgkjX0KPE6RciJH99N3YyNKUgQyn7YrMlgSyv
- i4GMfHEdaUbSPCKFj8voG7lXASMxaUY052ugDuxUVzb8MCc0D3VyL5hsS6sSiuVzTuV1ioEHuw7
- ykotH73ZdpXw7OLHbbqr1XltJdzYmfTg=
-X-Google-Smtp-Source: AGHT+IH4Ktw63AefTAMBmPROVmQaYAE+EpJ5gxnleKSO7z4RqmAR6tAeJflz7C5Tpbw44qd1B363lA==
-X-Received: by 2002:a17:907:97c2:b0:ac6:fc40:c996 with SMTP id
- a640c23a62f3a-ad17ada7320mr391516066b.23.1746212291072; 
- Fri, 02 May 2025 11:58:11 -0700 (PDT)
+ bh=dAEnpROpQK6DxM6uJJQ1bpWzbrmSzQalAkAVB3r0tgU=;
+ b=rGTW6RtLlZbcBCLpwgMuBHjC/EqhPpew8PKde6gxjrjWADNf7aP67HWywQpY9g8IcC
+ ITTd82cFiNK6qo0PM60ZO7Ewvj2bhogufraW1POXEW22TMd7naCOYioukwzYDgFP/L9H
+ UEvVUwHbHfwCnFpbLlY7qksSB54oYuKch/hvFYVY/4hoLDtE+sIwmAUHH/r1crX7RSvx
+ TutNEDThU9k6AhxWmikd413M5s+6bOExZ6COjqbPCwfNdvSF/33UOoDHOvmBn0AwHAhD
+ eHoV2NQBHXhbASHi2ScHedEM27B+zFAuND3pAyVW/hBVUD7fbGBPbRL1hx49XTbVDWRl
+ v+vw==
+X-Gm-Message-State: AOJu0Yy15Eqq1s9qO0WZ+767Ag9YpoZ+OG/UAw39IhSlWCGBhdSRNiuC
+ 9ru7kZyC43HxxOCozgbBEN7TWfkyF07JfOmvl1yosgWtthSSVOa4ng76/2LReW0b2bpSNqUatUH
+ M
+X-Gm-Gg: ASbGncuj0WAruUgZys1twcYGLu3ISJMlzjBpVegx3iXtqD6yTnE7dieRsqG/p6jQfan
+ rYExPpbuT+0XPMmNr2199v03DVttSvv0q9x67fVgbOsc19kR48RYI6E3aiRq0/eEXxgJdXQIaCX
+ HYOJhDc9h7Mg0iSuPs3LVK60NGoZab21S4uTHSonhP6yLYnhUAVIJZBwBO8iAGlVqdfKFXLGvp4
+ zO4pxPuWKwl77+NmgIdkR/Ab1/LpppjwmJUAsKvLk2KH/pvng4TWyQ2NfP7a3YqtkNrpiiHGKNm
+ DDeVxBiWEY8R039volpmJ/y/+hNY2/8MOdtQ0HjeDwYPD9Aoc1p9/AS6ogOSf4wqy6IGzTc40jv
+ h4SV6Vlfy/lR0CUSxipgD
+X-Google-Smtp-Source: AGHT+IHEzN1oHza48LBvLfGU1yv7hc31xMFZ9Vo3WiynuGtpxIfE+KT5BVKQVxHfrApZPrIR6Re4cA==
+X-Received: by 2002:a17:907:3e87:b0:acb:b966:3a7c with SMTP id
+ a640c23a62f3a-ad17af4d344mr389294366b.47.1746212325279; 
+ Fri, 02 May 2025 11:58:45 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad1894c028fsm85922566b.97.2025.05.02.11.58.09
+ a640c23a62f3a-ad1891490afsm86709466b.23.2025.05.02.11.58.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 02 May 2025 11:58:10 -0700 (PDT)
+ Fri, 02 May 2025 11:58:44 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -79,9 +79,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: [PATCH v3 13/19] hw/audio/pcspk: Remove PCSpkState::migrate field
-Date: Fri,  2 May 2025 20:56:45 +0200
-Message-ID: <20250502185652.67370-14-philmd@linaro.org>
+Subject: [PATCH v3 19/19] hw/virtio/virtio-pci: Remove
+ VIRTIO_PCI_FLAG_PAGE_PER_VQ definition
+Date: Fri,  2 May 2025 20:56:51 +0200
+Message-ID: <20250502185652.67370-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250502185652.67370-1-philmd@linaro.org>
 References: <20250502185652.67370-1-philmd@linaro.org>
@@ -112,56 +113,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PCSpkState::migrate boolean was only set in the
-pc_compat_2_7[] array, via the 'migrate=off' property.
-We removed all machines using that array, lets remove
-that property, simplifying vmstate_spk[].
+VIRTIO_PCI_FLAG_PAGE_PER_VQ was only used by the hw_compat_2_7[]
+array, via the 'page-per-vq=on' property. We removed all
+machines using that array, lets remove all the code around
+VIRTIO_PCI_FLAG_PAGE_PER_VQ (see commit 9a4c0e220d8 for similar
+VIRTIO_PCI_FLAG_* enum removal).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
- hw/audio/pcspk.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ include/hw/virtio/virtio-pci.h |  1 -
+ hw/display/virtio-vga.c        | 10 ----------
+ hw/virtio/virtio-pci.c         |  7 +------
+ 3 files changed, 1 insertion(+), 17 deletions(-)
 
-diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
-index a419161b5b1..0e83ba0bf73 100644
---- a/hw/audio/pcspk.c
-+++ b/hw/audio/pcspk.c
-@@ -56,7 +56,6 @@ struct PCSpkState {
-     unsigned int play_pos;
-     uint8_t data_on;
-     uint8_t dummy_refresh_clock;
--    bool migrate;
- };
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 9838e8650a6..8abc5f8f20d 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -33,7 +33,6 @@ enum {
+     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
+     VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
+     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
+-    VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
+     VIRTIO_PCI_FLAG_ATS_BIT,
+     VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
+     VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT,
+diff --git a/hw/display/virtio-vga.c b/hw/display/virtio-vga.c
+index 40e60f70fcd..83d01f089b5 100644
+--- a/hw/display/virtio-vga.c
++++ b/hw/display/virtio-vga.c
+@@ -141,16 +141,6 @@ static void virtio_vga_base_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
+                                VIRTIO_GPU_SHM_ID_HOST_VISIBLE);
+     }
  
- static const char *s_spk = "pcspk";
-@@ -196,18 +195,10 @@ static void pcspk_realizefn(DeviceState *dev, Error **errp)
-     pcspk_state = s;
+-    if (!(vpci_dev->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ)) {
+-        /*
+-         * with page-per-vq=off there is no padding space we can use
+-         * for the stdvga registers.  Make the common and isr regions
+-         * smaller then.
+-         */
+-        vpci_dev->common.size /= 2;
+-        vpci_dev->isr.size /= 2;
+-    }
+-
+     offset = memory_region_size(&vpci_dev->modern_bar);
+     offset -= vpci_dev->notify.size;
+     vpci_dev->notify.offset = offset;
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 7c965771907..4e0d4bda6ed 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -314,12 +314,9 @@ static bool virtio_pci_ioeventfd_enabled(DeviceState *d)
+     return (proxy->flags & VIRTIO_PCI_FLAG_USE_IOEVENTFD) != 0;
  }
  
--static bool migrate_needed(void *opaque)
--{
--    PCSpkState *s = opaque;
+-#define QEMU_VIRTIO_PCI_QUEUE_MEM_MULT 0x1000
 -
--    return s->migrate;
--}
--
- static const VMStateDescription vmstate_spk = {
-     .name = "pcspk",
-     .version_id = 1,
-     .minimum_version_id = 1,
--    .needed = migrate_needed,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT8(data_on, PCSpkState),
-         VMSTATE_UINT8(dummy_refresh_clock, PCSpkState),
-@@ -218,7 +209,6 @@ static const VMStateDescription vmstate_spk = {
- static const Property pcspk_properties[] = {
-     DEFINE_AUDIO_PROPERTIES(PCSpkState, card),
-     DEFINE_PROP_UINT32("iobase", PCSpkState, iobase,  0x61),
--    DEFINE_PROP_BOOL("migrate", PCSpkState, migrate,  true),
- };
+ static inline int virtio_pci_queue_mem_mult(struct VirtIOPCIProxy *proxy)
+ {
+-    return (proxy->flags & VIRTIO_PCI_FLAG_PAGE_PER_VQ) ?
+-        QEMU_VIRTIO_PCI_QUEUE_MEM_MULT : 4;
++    return 4;
+ }
  
- static void pcspk_class_initfn(ObjectClass *klass, const void *data)
+ static int virtio_pci_ioeventfd_assign(DeviceState *d, EventNotifier *notifier,
+@@ -2348,8 +2345,6 @@ static const Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT, false),
+     DEFINE_PROP_BIT("modern-pio-notify", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
+-    DEFINE_PROP_BIT("page-per-vq", VirtIOPCIProxy, flags,
+-                    VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT, false),
+     DEFINE_PROP_BIT("ats", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_ATS_BIT, false),
+     DEFINE_PROP_BIT("x-ats-page-aligned", VirtIOPCIProxy, flags,
 -- 
 2.47.1
 
