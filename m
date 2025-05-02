@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E58F7C3ABA9
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:33:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D217C3ABA3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 03:33:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAh8o-0006Ks-8o; Thu, 01 May 2025 23:32:46 -0400
+	id 1uAh7o-0004DJ-Lp; Thu, 01 May 2025 23:31:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh8e-0005ly-0a
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:32:37 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh7c-0004AQ-P5
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:31:32 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh8c-0001M0-3c
- for qemu-devel@nongnu.org; Thu, 01 May 2025 23:32:35 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-736b98acaadso1605189b3a.1
- for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:32:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1uAh7b-0001GP-22
+ for qemu-devel@nongnu.org; Thu, 01 May 2025 23:31:32 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-736c1cf75e4so1530695b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 01 May 2025 20:31:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746156752; x=1746761552; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746156690; x=1746761490; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rCpaksK2rzu3/LnJzfXlQ4odbcCWyWpTcklgGK0MoZU=;
- b=DtxpL1Fu62wXk+C4grmrXTk7nO9wLf760Nv+QLtmrRzb9uSltPumhG4t0mJmHad2St
- TWOSKCZPL7T2Kx1opIZsi3y9Vne2QgTdjJTd4PEz7jFWFrAYvnH9XFT9cL6tZ1qhVqv2
- y3tnhQeIi34qlcbGcDIhzfjwdYz/RcqCkhXmhHU8CqZ8aVAWSN+cm449ZowWWaDw7Tv+
- IZ6/wHkaVapfBfJHssy+QmXjmXIGFRTXYIb+2rU/U/+fwUd1iKa5BbhlYWVk/Igo+QgL
- s1N87oBkBI4yd/knrlfVkXhMg9OBfivDmAfTnYnOprM/nmq7A9+EryPYPql6T/+2i0CG
- IuVg==
+ bh=1lmS65fZf1hovgzPaFQwZvs4bM/iLU2g3QpGdLfzqQg=;
+ b=frU3hhTnhO8zK6M92RKOhGxBtXIDgwb3AtPtob2nChiO/5JKGuYcHQX/nqUtLWuMbX
+ NrCZQC64DfWBkHGA4+5GI/xjQOddVh8jWgK1OB4dpMqoleJ7aGwcM501I5jhSwEXJKIb
+ EsOMZKHdAqbmxEsoPfSlCkMo76GwLDTZh5EmQQgy0ujasyPeL75TRW7fDcT9Ao32xLj5
+ dngVwLRdurFLJH7pNcfF201sS0hIqQP4PjouAqQXIiRTaJjw0XEByzW0sRkvcc4aNrc8
+ V3xeXMDJzicR+pagonX9tBK6vb2DIyT0mSlO+InT9LOOA1ZW/yQeVkIDZyKnMsAw2hss
+ +CBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746156752; x=1746761552;
+ d=1e100.net; s=20230601; t=1746156690; x=1746761490;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rCpaksK2rzu3/LnJzfXlQ4odbcCWyWpTcklgGK0MoZU=;
- b=eUqRN+BLgb6VbTXODYzHCHHs/gf9xbUFE7iPO0Lyp3jVdzEWWBau3Klv7a9Uua7cIG
- iJAv25G7HBclO0yL2Z3bvMeTVqJhQ0cH3hpE5awXADazZUxqDasuwFjD70IFUD0ZoYAB
- Wi9+tc6WpTx+G3nLfCbql0YQGgm88oVlE9TDzhYBOfTtBWs9eFhwfjvG56V3mZcDCBQF
- qwZl74rBwM/7fSKTQX31Wy7WdVp3UoVYRgfnBB49A8x0k4CYUxeKLYnRNyhJ0PIXUFM/
- KKsxDKXoM0CBnTvx2OblqIDu+/B7vO4b0ehw2sPcOXOpUvWXvU+Wi/3AIQQDRK3klNsx
- Na/Q==
+ bh=1lmS65fZf1hovgzPaFQwZvs4bM/iLU2g3QpGdLfzqQg=;
+ b=IkMW/aVZl3xlfhuTCG1JVW9G07a/5Nup31Su+f3llti/8bx/U4KFo1mL7j1LAAMdaD
+ IWV0KzvPejPy+10iQxRRrhWsI/tjfvoGrhz/M5EMLbW03iLROkJtCpomJMapt2pv9RIi
+ Upxc3QUgHarOZ+ukSAxw27CKD/JUT/6rc6D/zUygj1zMvRDn5chfh7EpfH+6oTRmEDRh
+ wJNDxskJJD3S5Ic77veh8lMBSLZ/xA0KKTKU61oZk3u1IbkKyWNPihLPV6y4CWjyRKKE
+ RxZlh5+OTkJNLEOKy0/ctt+Ph1H1WavyTlL7rqC3ft1Te1yXXMoEPH4oCMUanDgJ+wj0
+ 1J+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUiC6emr7z0vI+Oj5Xyj/Nxm0o5LVYQHC8b5oYuhZyRQIdBLTipPrtIZpVLaJlsmBTUvLsLzGoAEsQM@nongnu.org
-X-Gm-Message-State: AOJu0YxDD9qdEpLqoi65dX1aMdbmVwVLCuiYeeGRQFXY/fpS6fS+XdP7
- qgH9bV7+2M5QxgHOjGrqMMmV/cabDo3hvNXGMXbIaHFGrcqOjKnHmrrFLw==
-X-Gm-Gg: ASbGnctao5MBhjFFk9+nDZCcMgkjFKy9pXuW1c0sOSjO1+KT11exNQsVaTWTDRiLNeH
- yXJp7tb7I6bWPTK2eKDGz1UkG/c0dnlfQ2dk+hUO0702NouLgjYpYQRwOT8URZRgkkpzDiD/cHo
- 4mQTM2OcDX4ej0dcc/IFV3zD/o6bU2FtjDS1nIutoDTDcfNSVaEKRFpLjils9/nUN3DNa2Bt6uN
- NE8r1KsERUxMUi/D5zpwWE5xCzk1nMj/BIaOGbhmL2571yaaJR3UNWgcRXVsI/KWSaTAUVvDTbe
- IahSFQxugsnfrVCq7sS9d6wn6mk14+pJoomQppCVR5Ol
-X-Google-Smtp-Source: AGHT+IGs5vssIE+1umDaLVUZpeZZ1yW8JNe9lZuwH4x7fAn02XIGFiw97Ml2hjYH5lYkqbKIAGtyiw==
-X-Received: by 2002:a05:6a00:4143:b0:736:755b:8317 with SMTP id
- d2e1a72fcca58-74058b345d5mr1937524b3a.21.1746156751769; 
- Thu, 01 May 2025 20:32:31 -0700 (PDT)
+ AJvYcCV0A5gBS0cl71RBk/0cykEs4aSjR8/NeqCxa82D/UPmWyTMbycfbrOJfo/pyLg6Cb/jIS5qfERdon/9@nongnu.org
+X-Gm-Message-State: AOJu0Ywb8BxnsQRBHOvYVNTH2NGM4p7tNaxiondtQT3nTzSvA7kVf2Zx
+ 4A3i4HEEaMl07lUPKob4y4ZgKeeawygEEpSEPf3/8L/ROCE9eLlG
+X-Gm-Gg: ASbGncv97atwXS6KUqkxPz0lwlxTQC8rZlcM60pwQE1xCRGnMzeKOFIx3BuKDNzdRWb
+ Nyzy3kYazU31TyoPhCuQBEwHmypV2T/zpmmSwwsrK6YrEsTL3MZVBbyYLSWUUP09VobtCQydSa9
+ woEP7FNP//9D0pz7kNcW+dMlv5glqJZt7oOXcSQcYowPLHRlCrz9mToj5EKdAYFw0iJF/nUa5YP
+ bQ6myrSe5PT9UYsMwyhzCElqbRJXsTMPNd90Aeoodf84RxtCXJRtrqY/fVJs6tt6FnXvb1Zrttt
+ 4WP7Y+ZxunswOtzRKk6laZTCYcXHBnPDmZK9Gajh2WPf
+X-Google-Smtp-Source: AGHT+IEu6VlXM40BhVUfDkOtcaxFsZzttNGo+ZBqotB3iXtqlqr4Prb78Mc+2b7k8vONhS8F2v99UQ==
+X-Received: by 2002:a05:6a21:b8a:b0:1d9:c615:d1e6 with SMTP id
+ adf61e73a8af0-20cdc1ec1d6mr1999394637.0.1746156689651; 
+ Thu, 01 May 2025 20:31:29 -0700 (PDT)
 Received: from wheely.local0.net ([220.253.99.94])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74059063f6esm488055b3a.139.2025.05.01.20.32.27
+ d2e1a72fcca58-74059063f6esm488055b3a.139.2025.05.01.20.31.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 May 2025 20:32:31 -0700 (PDT)
+ Thu, 01 May 2025 20:31:29 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Gerd Hoffmann <kraxel@redhat.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
@@ -73,17 +73,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Phil Dennis-Jordan <phil@philjordan.eu>,
  Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 18/22] usb/msd: Rename mode to cbw_state, and tweak names
-Date: Fri,  2 May 2025 13:30:42 +1000
-Message-ID: <20250502033047.102465-19-npiggin@gmail.com>
+Subject: [PATCH v4 06/22] hw/usb/xhci: Support TR NOOP commands
+Date: Fri,  2 May 2025 13:30:30 +1000
+Message-ID: <20250502033047.102465-7-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250502033047.102465-1-npiggin@gmail.com>
 References: <20250502033047.102465-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,230 +105,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reflects a little better what it does, particularly with a
-subsequent change to relax the order packets are seen in. This
-field is not the general state of the MSD state machine, rather
-it follows packets that are completed as part of a CBW command.
+Implement XHCI TR NOOP commands by setting up then immediately
+completing the packet.
 
-The difference is a bit subtle, so for a concrete example, the
-next change will permit the host to send a CSW packet before it
-sends the associated CBW packet. In that case the CSW packet
-will be tracked and the MSD state machine will move, but this
-mode / cbw_state field would remain unchanged (in the "expecting
-CBW" state), until the CBW packet arrives.
+The IBM AIX XHCI HCD driver uses NOOP commands to check driver and
+hardware health, which works after this change.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- include/hw/usb/msd.h | 14 ++++++-------
- hw/usb/dev-storage.c | 50 +++++++++++++++++++++++---------------------
- 2 files changed, 33 insertions(+), 31 deletions(-)
+ hw/usb/hcd-xhci.c | 28 +++++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/usb/msd.h b/include/hw/usb/msd.h
-index a40d15f5def..af12a16c35f 100644
---- a/include/hw/usb/msd.h
-+++ b/include/hw/usb/msd.h
-@@ -10,12 +10,12 @@
- #include "hw/usb.h"
- #include "hw/scsi/scsi.h"
- 
--enum USBMSDMode {
--    USB_MSDM_CBW, /* Command Block.  */
--    USB_MSDM_DATAOUT, /* Transfer data to device.  */
--    USB_MSDM_DATAIN, /* Transfer data from device.  */
--    USB_MSDM_CSW /* Command Status.  */
--};
-+typedef enum USBMSDCBWState {
-+    USB_MSD_CBW_NONE,    /* Ready, waiting for CBW packet. */
-+    USB_MSD_CBW_DATAOUT, /* Expecting DATA-OUT (to device) packet */
-+    USB_MSD_CBW_DATAIN,  /* Expecting DATA-IN (from device) packet */
-+    USB_MSD_CBW_CSW      /* No more data, expecting CSW packet.  */
-+} USBMSDCBWState;
- 
- struct QEMU_PACKED usb_msd_csw {
-     uint32_t sig;
-@@ -26,7 +26,7 @@ struct QEMU_PACKED usb_msd_csw {
- 
- struct MSDState {
-     USBDevice dev;
--    enum USBMSDMode mode;
-+    USBMSDCBWState cbw_state;
-     uint32_t scsi_off;
-     uint32_t scsi_len;
-     uint32_t data_len;
-diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
-index 81bfdf08992..5b773a22e60 100644
---- a/hw/usb/dev-storage.c
-+++ b/hw/usb/dev-storage.c
-@@ -271,12 +271,12 @@ void usb_msd_transfer_data(SCSIRequest *req, uint32_t len)
-     MSDState *s = DO_UPCAST(MSDState, dev.qdev, req->bus->qbus.parent);
-     USBPacket *p = s->data_packet;
- 
--    if (s->mode == USB_MSDM_DATAIN) {
-+    if (s->cbw_state == USB_MSD_CBW_DATAIN) {
-         if (req->cmd.mode == SCSI_XFER_TO_DEV) {
-             usb_msd_fatal_error(s);
-             return;
-         }
--    } else if (s->mode == USB_MSDM_DATAOUT) {
-+    } else if (s->cbw_state == USB_MSD_CBW_DATAOUT) {
-         if (req->cmd.mode != SCSI_XFER_TO_DEV) {
-             usb_msd_fatal_error(s);
-             return;
-@@ -308,7 +308,7 @@ void usb_msd_command_complete(SCSIRequest *req, size_t resid)
- 
-     g_assert(s->req);
-     /* The CBW is what starts the SCSI request */
--    g_assert(s->mode != USB_MSDM_CBW);
-+    g_assert(s->cbw_state != USB_MSD_CBW_NONE);
- 
-     s->csw.sig = cpu_to_le32(0x53425355);
-     s->csw.tag = cpu_to_le32(req->tag);
-@@ -319,7 +319,8 @@ void usb_msd_command_complete(SCSIRequest *req, size_t resid)
-     s->req = NULL;
- 
-     if (p) {
--        g_assert(s->mode == USB_MSDM_DATAIN || s->mode == USB_MSDM_DATAOUT);
-+        g_assert(s->cbw_state == USB_MSD_CBW_DATAIN ||
-+                 s->cbw_state == USB_MSD_CBW_DATAOUT);
-         if (s->data_len) {
-             int len = (p->iov.size - p->actual_length);
-             usb_packet_skip(p, len);
-@@ -329,19 +330,19 @@ void usb_msd_command_complete(SCSIRequest *req, size_t resid)
-             s->data_len -= len;
-         }
-         if (s->data_len == 0) {
--            s->mode = USB_MSDM_CSW;
-+            s->cbw_state = USB_MSD_CBW_CSW;
-         }
-         /* USB_RET_SUCCESS status clears previous ASYNC status */
-         usb_msd_data_packet_complete(s, USB_RET_SUCCESS);
-     } else if (s->data_len == 0) {
--        s->mode = USB_MSDM_CSW;
-+        s->cbw_state = USB_MSD_CBW_CSW;
-     }
- 
--    if (s->mode == USB_MSDM_CSW) {
-+    if (s->cbw_state == USB_MSD_CBW_CSW) {
-         p = s->csw_in_packet;
-         if (p) {
-             usb_msd_send_status(s, p);
--            s->mode = USB_MSDM_CBW;
-+            s->cbw_state = USB_MSD_CBW_NONE;
-             /* USB_RET_SUCCESS status clears previous ASYNC status */
-             usb_msd_csw_packet_complete(s, USB_RET_SUCCESS);
-         }
-@@ -384,7 +385,7 @@ void usb_msd_handle_reset(USBDevice *dev)
-     }
- 
-     memset(&s->csw, 0, sizeof(s->csw));
--    s->mode = USB_MSDM_CBW;
-+    s->cbw_state = USB_MSD_CBW_NONE;
- 
-     s->needs_reset = false;
+diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+index ef9f2a7db41..6a490a5febf 100644
+--- a/hw/usb/hcd-xhci.c
++++ b/hw/usb/hcd-xhci.c
+@@ -1664,6 +1664,20 @@ static int xhci_fire_transfer(XHCIState *xhci, XHCITransfer *xfer, XHCIEPContext
+     return xhci_submit(xhci, xfer, epctx);
  }
-@@ -485,8 +486,8 @@ static void usb_msd_handle_data_out(USBDevice *dev, USBPacket *p)
-     SCSIDevice *scsi_dev;
-     int len;
  
--    switch (s->mode) {
--    case USB_MSDM_CBW:
-+    switch (s->cbw_state) {
-+    case USB_MSD_CBW_NONE:
-         if (!try_get_valid_cbw(p, &cbw)) {
-             goto fail;
-         }
-@@ -499,11 +500,11 @@ static void usb_msd_handle_data_out(USBDevice *dev, USBPacket *p)
-         tag = le32_to_cpu(cbw.tag);
-         s->data_len = le32_to_cpu(cbw.data_len);
-         if (s->data_len == 0) {
--            s->mode = USB_MSDM_CSW;
-+            s->cbw_state = USB_MSD_CBW_CSW;
-         } else if (cbw.flags & 0x80) {
--            s->mode = USB_MSDM_DATAIN;
-+            s->cbw_state = USB_MSD_CBW_DATAIN;
-         } else {
--            s->mode = USB_MSDM_DATAOUT;
-+            s->cbw_state = USB_MSD_CBW_DATAOUT;
-         }
-         trace_usb_msd_cmd_submit(cbw.lun, tag, cbw.flags,
-                                  cbw.cmd_len, s->data_len);
-@@ -520,7 +521,7 @@ static void usb_msd_handle_data_out(USBDevice *dev, USBPacket *p)
-         }
-         break;
++static int xhci_noop_transfer(XHCIState *xhci, XHCITransfer *xfer)
++{
++    /*
++     * TR NOOP conceptually probably better not call into USB subsystem
++     * (usb_packet_setup() via xhci_setup_packet()). In practice it
++     * works and avoids code duplication.
++     */
++    if (xhci_setup_packet(xfer) < 0) {
++        return -1;
++    }
++    xhci_try_complete_packet(xfer);
++    return 0;
++}
++
+ static void xhci_kick_ep(XHCIState *xhci, unsigned int slotid,
+                          unsigned int epid, unsigned int streamid)
+ {
+@@ -1786,6 +1800,8 @@ static void xhci_kick_epctx(XHCIEPContext *epctx, unsigned int streamid)
  
--    case USB_MSDM_DATAOUT:
-+    case USB_MSD_CBW_DATAOUT:
-         trace_usb_msd_data_out(p->iov.size, s->data_len);
-         if (p->iov.size > s->data_len) {
-             goto fail;
-@@ -538,7 +539,7 @@ static void usb_msd_handle_data_out(USBDevice *dev, USBPacket *p)
-                 }
-                 s->data_len -= len;
-                 if (s->data_len == 0) {
--                    s->mode = USB_MSDM_CSW;
-+                    s->cbw_state = USB_MSD_CBW_CSW;
-                 }
+     epctx->kick_active++;
+     while (1) {
++        bool noop = false;
++
+         length = xhci_ring_chain_length(xhci, ring);
+         if (length <= 0) {
+             if (epctx->type == ET_ISO_OUT || epctx->type == ET_ISO_IN) {
+@@ -1814,10 +1830,20 @@ static void xhci_kick_epctx(XHCIEPContext *epctx, unsigned int streamid)
+                 epctx->kick_active--;
+                 return;
              }
++            if (type == TR_NOOP) {
++                noop = true;
++            }
          }
-@@ -563,8 +564,8 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
-     MSDState *s = (MSDState *)dev;
-     int len;
+         xfer->streamid = streamid;
  
--    switch (s->mode) {
--    case USB_MSDM_DATAOUT:
-+    switch (s->cbw_state) {
-+    case USB_MSD_CBW_DATAOUT:
-         if (!check_valid_csw(p)) {
-             goto fail;
-         }
-@@ -580,7 +581,7 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
-         p->status = USB_RET_ASYNC;
-         break;
- 
--    case USB_MSDM_CSW:
-+    case USB_MSD_CBW_CSW:
-         if (!check_valid_csw(p)) {
-             goto fail;
-         }
-@@ -592,11 +593,11 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
-             p->status = USB_RET_ASYNC;
+-        if (epctx->epid == 1) {
++        if (noop) {
++            if (length != 1) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: NOOP TR TRB within TRB chain!\n", __func__);
++                /* Undefined behavior, we no-op the entire chain */
++            }
++            xhci_noop_transfer(xhci, xfer);
++        } else if (epctx->epid == 1) {
+             xhci_fire_ctl_transfer(xhci, xfer);
          } else {
-             usb_msd_send_status(s, p);
--            s->mode = USB_MSDM_CBW;
-+            s->cbw_state = USB_MSD_CBW_NONE;
-         }
-         break;
- 
--    case USB_MSDM_DATAIN:
-+    case USB_MSD_CBW_DATAIN:
-         trace_usb_msd_data_in(p->iov.size, s->data_len, s->scsi_len);
-         if (s->scsi_len) {
-             usb_msd_copy_data(s, p);
-@@ -610,11 +611,12 @@ static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
-                 }
-                 s->data_len -= len;
-                 if (s->data_len == 0) {
--                    s->mode = USB_MSDM_CSW;
-+                    s->cbw_state = USB_MSD_CBW_CSW;
-                 }
-             }
-         }
--        if (p->actual_length < p->iov.size && s->mode == USB_MSDM_DATAIN) {
-+        if (p->actual_length < p->iov.size &&
-+                s->cbw_state == USB_MSD_CBW_DATAIN) {
-             trace_usb_msd_packet_async();
-             s->data_packet = p;
-             p->status = USB_RET_ASYNC;
-@@ -679,7 +681,7 @@ static const VMStateDescription vmstate_usb_msd = {
-     .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
-         VMSTATE_USB_DEVICE(dev, MSDState),
--        VMSTATE_UINT32(mode, MSDState),
-+        VMSTATE_UINT32(cbw_state, MSDState),
-         VMSTATE_UINT32(scsi_len, MSDState),
-         VMSTATE_UINT32(scsi_off, MSDState),
-         VMSTATE_UINT32(data_len, MSDState),
+             xhci_fire_transfer(xhci, xfer, epctx);
 -- 
 2.47.1
 
