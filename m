@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D41BC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 18:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C87C6C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 18:21:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAuya-00073q-6H; Fri, 02 May 2025 14:19:09 -0400
+	id 1uAv0w-0008CS-T6; Fri, 02 May 2025 14:21:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1uAuyU-00072X-Ir
- for qemu-devel@nongnu.org; Fri, 02 May 2025 14:19:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uAv0v-0008A5-EX
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 14:21:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1uAuyR-0007eK-Pk
- for qemu-devel@nongnu.org; Fri, 02 May 2025 14:19:02 -0400
+ id 1uAv0t-0001TI-Ca
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 14:21:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746209937;
+ s=mimecast20190719; t=1746210090;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vDjWZPuYAZ6fL/XWlHDIG5yQLFlDguF16OfoRgLLhtQ=;
- b=PJL1Z8OCep4JrDDJk2mXrcVDdDyck3y2sv3ZYC3+bUbn9WNPpFaa/PXjMY+PQ3MFYKZX+i
- 8mxIAVQ8o7nLgP37tugl2hkoapK8W9tftkZfvwN7Lcgep3vxVvZOmpUDqVY+obEnm/VDLn
- Ob5rhKWS3BR3mr3p9uHROwTACTrbB88=
+ bh=/RmPeSW+7le8nHKn0KsI9GV7UpivmhOM9DYqwi/JrHo=;
+ b=LhzWcqRw3sH9+4f+0azDF8iu3ObJmDl32JUlhFT8yxpJENCwnfTGyF/AmaDna9+UP36/Wh
+ kg5zkwCUBC+T2NRQ5I4pIrsOZYUzMIdUr8GDv24mMMKdhnvnrM0ci/mWv4MhmoRHo5Ltnm
+ 6LvGixxnEpzk6DekpGD3EhBmyapYh/c=
 Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
  [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-569-x6QuP_DtPcq-v7rWUsHA1A-1; Fri, 02 May 2025 14:18:54 -0400
-X-MC-Unique: x6QuP_DtPcq-v7rWUsHA1A-1
-X-Mimecast-MFC-AGG-ID: x6QuP_DtPcq-v7rWUsHA1A_1746209934
+ us-mta-372-JlvM3IvyPg6UeK8q6G_lEQ-1; Fri, 02 May 2025 14:21:29 -0400
+X-MC-Unique: JlvM3IvyPg6UeK8q6G_lEQ-1
+X-Mimecast-MFC-AGG-ID: JlvM3IvyPg6UeK8q6G_lEQ_1746210089
 Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-47ae8b206a4so41831231cf.0
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 11:18:54 -0700 (PDT)
+ d75a77b69052e-4766afee192so80633961cf.0
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 11:21:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746209934; x=1746814734;
+ d=1e100.net; s=20230601; t=1746210089; x=1746814889;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vDjWZPuYAZ6fL/XWlHDIG5yQLFlDguF16OfoRgLLhtQ=;
- b=JdvIpdaE70hXxpt828TDhsxQELJfUMKxR4v8g9JxCeG5X12weV2sPjc1nm1K6tvsNG
- VGeW2XEhYzytjW2nkLeos8aLkw7VT5OZgQFPI3fER2OlUHMgDNdD9daWvelydT+fCF3E
- j3nZn7yCyv77y8D7JWvTMA9MxNI7SW9BWSOd/b9JXY1TtngTR+lGOYsNwS0Gw4idGLhp
- FMoRoLSbd1L+8RU6wxef5CzAerLFrRXLbs8/H2IGfa4wuFIalXlW+7vECaVGmjiG8IA+
- JmSV9zDTmZlwjFHutLx9cRKrvp9hks9mjUUOqCH56DAauv4Yjwlpamfgd3noUP429iba
- qpzQ==
+ bh=/RmPeSW+7le8nHKn0KsI9GV7UpivmhOM9DYqwi/JrHo=;
+ b=Hn2xlPh5NtRha5PJb6122qawVJDg4z/gVlC9DPV76dI6tFp5NMQh1nbkYkPWwokEEo
+ fNUD210SYuVr909SJe1a8ipGm/GIMg5DUQpbImXOppVTkdVJh4aPujgBE7gEKghruAUf
+ dtFtHohMhLYWGr7G76y5u7SbLkkrZhWG09IkT3H5GF/N3k7umnFFp6EGRJmnKNHqQX4Y
+ NzfEwN+YcL5AwFzceDbyPRdgkCeSUaI4zSduloPKHLtI9T01nozffRxA4vSt+CTcgHA1
+ D2oXJTON3oX4ejfA4SNuuj6q3wHR9dEdZlB+CkhstgRbOAlsykabdydLpDeCHzp92evH
+ 9xOA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX22P1uFJ7XQh4yZyYa5m9KrV+4RTJ8tCzxsx63bV2aBMciXDsNHURrm8xVr4ANbIpG3SCkCpOvvHn3@nongnu.org
-X-Gm-Message-State: AOJu0YwhFu+VfZZtrbAVMJ4yyeHIN5TCzXROelXPLYPU+zw0fERpxMs5
- RS52Mit+nuHg8iSALyep3JQogV2pcXnB/d9/Mq5cqEiVUktTeYsUyU9fKE0bd6N9olD1iR6I64Q
- +6Miz3LAPFIoLBO62LyofCG3ik/LndKrOL9mEO/0edwdxpsAeaCS6
-X-Gm-Gg: ASbGnct2cYyPDD18+2qyNEKPfVdmc248WwLo5fuvehvKlabLtTHSrENLO3S/tslmLmY
- qpTXlEfFTp5cPJUye8uOBOQ75kj3/b3Gh9wui/wj+sjDvMqGoCtm1tD6S9dfUOu0M6VAziHEfEs
- MRFZpt3XKIER7KjL8xqilS9QzqseUHkzjpAfkCY7OKRAb2Bx9Iqu+Q+9yexS8xXrIBCa93zWGjh
- qZ+sFCJPwRBvDOn11RE5gTg4K5vmjCGfkUuE1ZBB2qh0LXKxhql4J+4X9cshyiI5tpP2RFhspJj
- AvYVVgLSQS7U
-X-Received: by 2002:a05:622a:2444:b0:476:8825:99ba with SMTP id
- d75a77b69052e-48c31353328mr56499631cf.12.1746209934092; 
- Fri, 02 May 2025 11:18:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHPeRCXjRVsfQzLvSHRKOwbqqgBOt60MslhJERbAhfvjAL4GFoPiO0WnS03qZDbORstq4yWEg==
-X-Received: by 2002:a05:622a:2444:b0:476:8825:99ba with SMTP id
- d75a77b69052e-48c31353328mr56499381cf.12.1746209933799; 
- Fri, 02 May 2025 11:18:53 -0700 (PDT)
+ AJvYcCXj2mYOixAEGgAEMGD+rowGgNf0nLla8bUVqoC3UrobBCP/NpO9QJHc+fJoJ2N/KPIwuF4NchJlM+r8@nongnu.org
+X-Gm-Message-State: AOJu0YxxMWOGdwwitX9Y5eFXTxAABujh3ytFpvXT3+cSuBopfoa31+6q
+ UfxZlT/mHibStyu8R+B2p8xRg8yVmvw4/GCYVdOAioIC8uhc6mgvJQ8x9Boa2W6/CrIIlAB5zpx
+ Ey1pOMGw0jMJavOnQyBipT6am0ogoWtPMgK2lZjKNbNl9yg9B3cvM
+X-Gm-Gg: ASbGncsyZpmBQcLFM59kwNhyWfcVSAHd2e4sndL20uDhfb1Ec2OMAWAlavuuvvPlS6E
+ Sfw/XTreJY1k04nHkqtD85Z9PQKEZ5opEJhRbyAGI8DtVytnTc3vS7lfDr+XF1JwoHzmeofOj2r
+ QwIRuGZEZbPmWOnZDSafj6ukdMJopjxyq2yLkP69fQSGFeDCUX+R8tlTp4Kq72SJotVXhv7NE/5
+ RO95Nx1x08u/gz6ZdpSTbeBkoqN4dU3DvfZcxkhEB2HVXAn1CAzFIkrvK3VdKfN1ZQ34UEXnJev
+ NQjXP9P+kYEY
+X-Received: by 2002:ac8:6f1b:0:b0:474:fee1:7915 with SMTP id
+ d75a77b69052e-48c31c17c0cmr66004451cf.31.1746210089141; 
+ Fri, 02 May 2025 11:21:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG1rxNHWuCL01I7+9dR+Xevz8xwwRZMvXD2AoEsvIvqG3bhpJwD6lE77eBDrTyA2FDFUf93Ng==
+X-Received: by 2002:ac8:6f1b:0:b0:474:fee1:7915 with SMTP id
+ d75a77b69052e-48c31c17c0cmr66004031cf.31.1746210088817; 
+ Fri, 02 May 2025 11:21:28 -0700 (PDT)
 Received: from [192.168.40.164] ([70.105.235.240])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-48b98d0fb2dsm20974591cf.77.2025.05.02.11.18.51
+ d75a77b69052e-48b966d8b1asm20941761cf.31.2025.05.02.11.21.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 May 2025 11:18:53 -0700 (PDT)
-Message-ID: <29e1775b-b35d-4510-a3a6-d49af81cca06@redhat.com>
-Date: Fri, 2 May 2025 14:18:21 -0400
+ Fri, 02 May 2025 11:21:28 -0700 (PDT)
+Message-ID: <49fad744-e9fd-4914-ae37-fc12d1da55c6@redhat.com>
+Date: Fri, 2 May 2025 14:20:54 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] hw/arm/virt-acpi-build: Update IORT for multiple
- smmuv3 devices
+Subject: Re: [PATCH v2 4/6] hw/arm/virt: Add an SMMU_IO_LEN macro
 Content-Language: en-US
-To: Nicolin Chen <nicolinc@nvidia.com>,
- Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com,
- peter.maydell@linaro.org, jgg@nvidia.com, berrange@redhat.com,
- nathanc@nvidia.com, mochs@nvidia.com, smostafa@google.com,
- linuxarm@huawei.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: eric.auger@redhat.com, peter.maydell@linaro.org, jgg@nvidia.com,
+ nicolinc@nvidia.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
  jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
 References: <20250502102707.110516-1-shameerali.kolothum.thodi@huawei.com>
- <20250502102707.110516-3-shameerali.kolothum.thodi@huawei.com>
- <aBT9S25tQTVGKkii@Asurada-Nvidia>
+ <20250502102707.110516-5-shameerali.kolothum.thodi@huawei.com>
 From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <aBT9S25tQTVGKkii@Asurada-Nvidia>
+In-Reply-To: <20250502102707.110516-5-shameerali.kolothum.thodi@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ddutile@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ddutile@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -103,7 +101,7 @@ X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.644,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,57 +119,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 5/2/25 1:13 PM, Nicolin Chen wrote:
-> On Fri, May 02, 2025 at 11:27:03AM +0100, Shameer Kolothum wrote:
->> @@ -43,6 +43,7 @@
->>   #include "hw/acpi/generic_event_device.h"
->>   #include "hw/acpi/tpm.h"
->>   #include "hw/acpi/hmat.h"
->> +#include "hw/arm/smmuv3.h"
->>   #include "hw/pci/pcie_host.h"
->>   #include "hw/pci/pci.h"
->>   #include "hw/pci/pci_bus.h"
->> @@ -266,6 +267,75 @@ static int iort_idmap_compare(gconstpointer a, gconstpointer b)
->>       return idmap_a->input_base - idmap_b->input_base;
->>   }
->>   
->> +struct SMMUv3Device {
->> +    int irq;
->> +    hwaddr base;
->> +    GArray *smmu_idmaps;
->> +    size_t offset;
->> +};
->> +typedef struct SMMUv3Device SMMUv3Device;
+On 5/2/25 6:27 AM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
 > 
-> "SMMUv3Device" sounds too general, like coming from smmuv3.h :-/
+> This is useful as the subsequent support for new SMMUv3 dev will also
+> use the same.
 > 
-> Given this describes SMMUv3's IORT node, I still think we should
-> name it something like "IortSMMUv3Node" or so.
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>   hw/arm/virt.c | 8 +++++---
+>   1 file changed, 5 insertions(+), 3 deletions(-)
 > 
-+1.. the more generic name had me thinking it was broader than IORT..
-the IORT-related naming is an improvement.
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 464e84ae67..e178282d71 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -147,6 +147,9 @@ static void arm_virt_compat_set(MachineClass *mc)
+>   #define LEGACY_RAMLIMIT_GB 255
+>   #define LEGACY_RAMLIMIT_BYTES (LEGACY_RAMLIMIT_GB * GiB)
+>   
+> +/* MMIO region size for SMMUv3 */
+> +#define SMMU_IO_LEN 0x20000
+> +
+>   /* Addresses and sizes of our components.
+>    * 0..128MB is space for a flash device so we can run bootrom code such as UEFI.
+>    * 128MB..256MB is used for miscellaneous device I/O.
+> @@ -178,7 +181,7 @@ static const MemMapEntry base_memmap[] = {
+>       [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
+>       [VIRT_GPIO] =               { 0x09030000, 0x00001000 },
+>       [VIRT_UART1] =              { 0x09040000, 0x00001000 },
+> -    [VIRT_SMMU] =               { 0x09050000, 0x00020000 },
+> +    [VIRT_SMMU] =               { 0x09050000, SMMU_IO_LEN },
+>       [VIRT_PCDIMM_ACPI] =        { 0x09070000, MEMORY_HOTPLUG_IO_LEN },
+>       [VIRT_ACPI_GED] =           { 0x09080000, ACPI_GED_EVT_SEL_LEN },
+>       [VIRT_NVDIMM_ACPI] =        { 0x09090000, NVDIMM_ACPI_IO_LEN},
+> @@ -1453,7 +1456,6 @@ static void create_smmu(const VirtMachineState *vms,
+>       int irq =  vms->irqmap[VIRT_SMMU];
+>       int i;
+>       hwaddr base = vms->memmap[VIRT_SMMU].base;
+> -    hwaddr size = vms->memmap[VIRT_SMMU].size;
+>       DeviceState *dev;
+>   
+>       if (vms->iommu != VIRT_IOMMU_SMMUV3 || !vms->iommu_phandle) {
+> @@ -1473,7 +1475,7 @@ static void create_smmu(const VirtMachineState *vms,
+>           sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
+>                              qdev_get_gpio_in(vms->gic, irq + i));
+>       }
+> -    create_smmuv3_dt_bindings(vms, base, size, irq);
+> +    create_smmuv3_dt_bindings(vms, base, SMMU_IO_LEN, irq);
+>   }
+>   
+>   static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
 
->> +static int smmuv3_dev_idmap_compare(gconstpointer a, gconstpointer b)
->> +{
->> +    SMMUv3Device *sdev_a = (SMMUv3Device *)a;
->> +    SMMUv3Device *sdev_b = (SMMUv3Device *)b;
->> +    AcpiIortIdMapping *map_a = &g_array_index(sdev_a->smmu_idmaps,
->> +                                              AcpiIortIdMapping, 0);
->> +    AcpiIortIdMapping *map_b = &g_array_index(sdev_b->smmu_idmaps,
->> +                                              AcpiIortIdMapping, 0);
->> +    return map_a->input_base - map_b->input_base;
->> +}
->> +
->> +static void
->> +get_smmuv3_legacy_dev(VirtMachineState *vms, GArray * smmuv3_devices)
-> 
-> GArray *smmuv3_devices
-> 
-> Or maybe align with the non-legacy path, i.e. "sdev_blob"? Or the
-> other way around.
-> 
-> Otherwise, lgtm
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-> 
+Reviewed-by: Donald Dutile <ddutile@redhat.com>
 
 
