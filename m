@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00D55C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 10:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FE34C3ABA3
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 11:00:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAo4r-0003N1-9f; Fri, 02 May 2025 06:57:09 -0400
+	id 1uAo7i-0004Un-A3; Fri, 02 May 2025 07:00:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uAo4p-0003Mp-3P
- for qemu-devel@nongnu.org; Fri, 02 May 2025 06:57:07 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1uAo7d-0004SH-U6
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 07:00:01 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uAo4m-0007Q1-PK
- for qemu-devel@nongnu.org; Fri, 02 May 2025 06:57:06 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43690d4605dso13452335e9.0
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 03:57:04 -0700 (PDT)
+ id 1uAo7b-0008Px-Qp
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 07:00:01 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-39c1efc457bso1308126f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 03:59:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746183423; x=1746788223; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746183598; x=1746788398; darn=nongnu.org;
  h=mime-version:message-id:in-reply-to:references:user-agent:subject
  :cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=vj5HuKv9glVT8gzdZRhVYIHfs8SfQJDKua/Qa0b7zos=;
- b=cZFAphMMeaS8jPpEEi/9WA8ROpSVnkZN6bpX/svpD1MsHpsumIAnwWhZsszL3QoWJ6
- dxlbMydhpDSD+TcWqjEQvM13YhNOTWj/j0GCwSXAxoYa+CN1hUm/OrNnrJyJJ60UR8wy
- J3EEiUIwCCh55ehJq5hsnV2iHEZuddV6XH4vjH14VPG0zL6JOxUF1S+UVeiY5EoBRfdV
- qHf5BbPUQdVYnwcXRLMyyYdRN6JSFPvItmuv4F70cdmAeMZRqllZmWAu0szKEP6bN4Bo
- 98BmBSRjdbxVxDSSernkluomouRU2bNEGNwCU/9YQroG9Ritd8MTgvE+pBGSrvD8/RZm
- 6tPQ==
+ bh=boH7AIppjrghdlxAs034b0zl0rG1O29gtQppRK5A2vY=;
+ b=uIVfp2xYLtdEGD9uQO8Vm7ZERPGhS3M+zTTFlvFVEAod+mJjJmlqL+POEbeeG21wUL
+ EbM2vz1FA+6Q446S1F2gBmg6Fjp/0EFFzjU76iC2RvEZn9EJZi5kfYgM5Q4XXrFgwp7k
+ bMlL0asiLLkkn7RxsQ2fBdGhI2bncuc7C+Te8h5J1fuGbrf7leKKPPMVY4I/YmnEgLyE
+ PPSNF/dYCAZoyE4NRmDJiI0Guw5PlV7V6RQ/f8rn39H7OO7LytvIf+MkUZIXSJ3dXqHK
+ Orki0vsvsttnQH+oHrRK9AO4T5k/Ad6yWY1j4uLBbfRn/qVkGRUkfXXlFIXFAQ5UNGU4
+ 3+wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746183423; x=1746788223;
+ d=1e100.net; s=20230601; t=1746183598; x=1746788398;
  h=mime-version:message-id:in-reply-to:references:user-agent:subject
  :cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vj5HuKv9glVT8gzdZRhVYIHfs8SfQJDKua/Qa0b7zos=;
- b=ppIiiDrzchDKOxUsDA2WZj1dG2LXlOrsjJ6UsjspA+5W2Fywcwwac94Oi2AjsuaQ7O
- srH6I+HAdoipALM/cUMJl95EdAylSrR8G0be9XK61bTuKRtszs1E/EwlyUtX/PDYrgIJ
- 8lJlbvy7Fc7zAN9ig0Dt4wrdrtKOWZsm+80JkAC0DPn3yycXyU5+qUYWF1faev3MWE8w
- WhTqKC2kvMlA0gUFafC5hocI83abOVpsQBu+9NEKuSmuvcfQiUXirvInDd1MetHV0d6n
- ctkNjGkfOFXskMo3Yl1/NoT261KwEOq2jPcKfxF3jwM/FZj8f8Ja4XajB/fF8XXL7fzX
- 0tng==
-X-Gm-Message-State: AOJu0YxVvEIaGbbyPicVZm0FjPPS8u/ZePa6z6sEiMAGzB2Tk0TdHG7b
- C24BTapcZf6zBA6nhLgWn5r8WgjpRP5yQN+bmoWzJPDGbEv3gC2ogF4NGOR5asMsV/37sC2Yqvj
- 28s0=
-X-Gm-Gg: ASbGncvGbbVmq6iXxPFjpKtLGyI6dCcdGlxqprTzvyfUcxqAswAK8VuCON5A71LjoSg
- UO3WM6l+i3vLq2RfIV42T3i3wLq3s4s+0VyZ4lk4+FUQZW1ol06x/8zd/qlLSAemDEX0YQH8CUe
- osrIv7RwsFuLn68kIX6wY46Bzp9QhzycEbwfAFggwaN+D38J7ecB2hfKPkO9gI7OKd4G6fDf5Sq
- eQWlzRyiBwgkfTzMfKV2fzBnK+L89Fk/TJ0mmLs/6/8J9pg+vPMLxkBNZfUOPASNBmEq39pkYAP
- ygf4RIPaRgw7lTevEnaAYPL74wJm8Dpg1oAHT/bNKCMVx/YODtflCIDLkQ6X2TbwiuLyphgdilx
- JGa6lvg==
-X-Google-Smtp-Source: AGHT+IHGNTBBOgX82T5ORi3HjaUolZAwYOXAL04GOhkaDD5BCgmTQRERhnqDM+cnpKptc27ZxKtu6A==
-X-Received: by 2002:a05:600d:10:b0:441:bf4e:89c8 with SMTP id
- 5b1f17b1804b1-441bf4e8b11mr10844085e9.3.1746183422702; 
- Fri, 02 May 2025 03:57:02 -0700 (PDT)
-Received: from meli-email.org (adsl-37.37.6.161.tellas.gr. [37.6.161.37])
+ bh=boH7AIppjrghdlxAs034b0zl0rG1O29gtQppRK5A2vY=;
+ b=S+7wSQH4rJ5tk5HSBqWfBP3iyUE3/iUnWlQLSImNTq5FHwYk8vd6nrxHOIpNz5mpaY
+ duhdALmMh8G9nzhuIfshvKJRshpWlstwV4PapSHxAMiQhI9wxLCm+VU0ZM2WaGbGwPcj
+ /rGdOOCwXeNblEfmem1+7x4SkW6Z03Mne1b/JZajJGy49FvkmKmsPwb2F86yQdocr9ey
+ DFwrhoR9BEO3HqCKqzWUYewGDtzINlTSaTNV9XY9N+5hPm+s/LE1DiI1HdbJbcFHywWO
+ qn4jOaOJTxsNbSCS3HWzFeF6WkBSmyb/VZG3rl95rxAcR7yEayVHE/Xhwwzug7j84wqY
+ 3H3g==
+X-Gm-Message-State: AOJu0Yx3B7IRumdqZgmZsLrN8Jc3kOmjiysRZex4acUUcM7n0K4F/l1y
+ LGrEfeoeD3wcmgumy0ActGbHf9f1nY8JVm1eR9GpRt78Ipdkt4TMxkLW2hgig7051fZjRNid+Bz
+ c8oE=
+X-Gm-Gg: ASbGncvOURi3EOi7sn2qHaOa85Ub8XMiWnKDLS+VkcStOVNCIgs3X2sKelJOVCxcHVK
+ W2aLNL7G5B/Jrwc5Dpdc5K8amAajttxtDJrkevJK5aA3C6J76CxNnp5XwJK4H+IfTZEbljjzINL
+ H73jxJXcG7p/4T2k4TcRjzxSz4z/WY6XvlU1eqoa68bf2a/JGbmGg87gU8Wp8wJpTDDEg3y1Koe
+ aksVV3imrsnFWnJcLYRYP4j6eJgVSJEAbgCYmO6WA0wgHzEwi1ZpzuItdg96NuCOP48DlQTC1Ix
+ HHCmKeqBipU9m36H5JJNOhMzodJcA3g45kO+iHhCIGTo5bo8lWcn4cBZW8MWa3McLc4EII+Ek43
+ 70401OBNqKj1psA==
+X-Google-Smtp-Source: AGHT+IE5CsmfC7BODIIF7WjOxoo1NJOYEPJuZY0HD8RFjQUsjxB9qhvep5mzw8AwtcTsnm+FguM17g==
+X-Received: by 2002:a05:6000:2a6:b0:39e:cc10:3945 with SMTP id
+ ffacd0b85a97d-3a099ad2788mr1852261f8f.2.1746183597943; 
+ Fri, 02 May 2025 03:59:57 -0700 (PDT)
+Received: from meli-email.org (adsl-194.109.242.94.tellas.gr. [109.242.94.194])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b2b20a65sm85968975e9.32.2025.05.02.03.57.02
+ ffacd0b85a97d-3a099ae0c5esm1807099f8f.1.2025.05.02.03.59.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 May 2025 03:57:02 -0700 (PDT)
-Date: Fri, 02 May 2025 13:54:13 +0300
+ Fri, 02 May 2025 03:59:57 -0700 (PDT)
+Date: Fri, 02 May 2025 13:57:21 +0300
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-rust@nongnu.org
-Subject: Re: [PATCH 0/9] rust: allow minimum version of 1.77
+Subject: Re: [PATCH 2/9] rust: use std::ffi instead of std::os::raw
 User-Agent: meli/0.8.12
 References: <20250502102323.104815-1-pbonzini@redhat.com>
-In-Reply-To: <20250502102323.104815-1-pbonzini@redhat.com>
-Message-ID: <svmrr1.1reefsjrvnmr2@linaro.org>
+ <20250502102323.104815-3-pbonzini@redhat.com>
+In-Reply-To: <20250502102323.104815-3-pbonzini@redhat.com>
+Message-ID: <svmrvw.3kjuhwophzwbc@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,21 +100,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey Paolo,
+On Fri, 02 May 2025 13:23, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>This is allowed since Rust 1.64.0.
+>
+>Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>---
+> docs/devel/rust.rst                    | 2 --
+> rust/hw/char/pl011/src/device_class.rs | 2 +-
+> rust/hw/timer/hpet/src/hpet.rs         | 3 +--
+> rust/qemu-api/src/chardev.rs           | 3 +--
+> rust/qemu-api/src/irq.rs               | 6 +++++-
+> rust/qemu-api/src/lib.rs               | 2 +-
+> rust/qemu-api/src/memory.rs            | 3 +--
+> rust/qemu-api/src/qdev.rs              | 3 +--
+> rust/qemu-api/src/qom.rs               | 3 +--
+> rust/qemu-api/src/timer.rs             | 2 +-
+> rust/qemu-api/src/vmstate.rs           | 2 +-
+> rust/qemu-api/tests/vmstate_tests.rs   | 7 ++++++-
+> 12 files changed, 20 insertions(+), 18 deletions(-)
+>
 
-We should update the version check in the root meson.build in the first 
-patch of this series:
-
-> if have_rust
->   rustc = meson.get_compiler('rust')
->   if rustc.version().version_compare('<1.63.0')
->     if get_option('rust').enabled()
->       error('rustc version ' + rustc.version() + ' is unsupported. Please upgrade to at least 1.63.0')
->     else
->       warning('rustc version ' + rustc.version() + ' is unsupported, disabling Rust compilation.')
->       message('Please upgrade to at least 1.63.0 to use Rust.')
->       have_rust = false
->     endif
->   endif
-> endif
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
