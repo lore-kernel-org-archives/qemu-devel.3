@@ -4,46 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DB8DC3ABA3
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 09:56:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE853C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 10:07:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAn7J-0002y5-8Y; Fri, 02 May 2025 05:55:37 -0400
+	id 1uAnIc-0005KD-Lg; Fri, 02 May 2025 06:07:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uAn7G-0002xc-54
- for qemu-devel@nongnu.org; Fri, 02 May 2025 05:55:34 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uAn7D-0000UR-5l
- for qemu-devel@nongnu.org; Fri, 02 May 2025 05:55:33 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E1C4E55D265;
- Fri, 02 May 2025 11:55:26 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id FyfRR8clzg1T; Fri,  2 May 2025 11:55:24 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id DE1F355D264; Fri, 02 May 2025 11:55:24 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2] hw/char/serial: Remove unused prog_if compat property
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Michael S. Tsirkin <mst@redhat.com>, philmd@linaro.org
-Message-Id: <20250502095524.DE1F355D264@zero.eik.bme.hu>
-Date: Fri, 02 May 2025 11:55:24 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, PP_MIME_FAKE_ASCII_TEXT=0.24,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uAnIa-0005K1-VU
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 06:07:17 -0400
+Received: from mail-yb1-xb33.google.com ([2607:f8b0:4864:20::b33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uAnIZ-00052h-Bp
+ for qemu-devel@nongnu.org; Fri, 02 May 2025 06:07:16 -0400
+Received: by mail-yb1-xb33.google.com with SMTP id
+ 3f1490d57ef6-e6e2971f79fso1505365276.0
+ for <qemu-devel@nongnu.org>; Fri, 02 May 2025 03:07:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746180433; x=1746785233; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yFQOllJhwDRk6rW6UVZecghyVT5hmuc8pI8hDgMO/lk=;
+ b=QyoFzvQOzb4DLtqfSgADq5AfU6yG1Dof12xWssjNT7TsXAI2DiF6aI1E1yuzo/Bbzp
+ 3fXTyy6DSMtVYz/XqolFVihVndNUAf74e5OHjMllGX38YHDBTP7w4aMHv8DzRXcWxv86
+ xYYazSuW5Gp8T7gd3DUWr3YVlvaMVjUksMFTQVP/iYXt3l3TI4hUdf9QHzTo5IkRA36C
+ LG4+/9Sn7RNbzxi4lQ1rJ+lPRePUFf3O/rZ23d4lCFcSoImrN+onbNNzg/shhwHsQC1j
+ QirfOepsoUTq8VvZuA5/xZNXpZElwYFWXFWGeNuyP2zLCqh9ODvQ0MsFg27XEe1Q3OKv
+ FXEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746180433; x=1746785233;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yFQOllJhwDRk6rW6UVZecghyVT5hmuc8pI8hDgMO/lk=;
+ b=ZSfYlX6S/Nf83cxBZ9hhT+c0VfNRmpxTMCPGpbOkCAbU4xnbWeRdwXyLp8ytGvf2y7
+ lcviOhiYaO5Yn1aLACeizLrSi1HoPISN7k5Fbe7byUXGdB+TOYZEi/jEhHIZWBT3wQbt
+ fnG48jx8g15T/Z46Z4c5l5totXTIKpZJMuyA4PwbbIVqTQdoYQlHFW/VRwcrlRtfw40S
+ 3BwKTPzQ+SnYY3et1no2rq0YEgeycS31zKQGQuhO2fQhXMO9yc0uvJVsArteH8tYXWOl
+ p9HXK07uUs28Lftq4g2ABI4slXAkPBFeYWy12w/bTQuwDu2Yw2HXY3C6zteJ5Jz9PYvn
+ Ivgg==
+X-Gm-Message-State: AOJu0YyskMW+4DVlYZB5G+s0hroNF/xtqOZkGxRdTVQRmjy85Y5n1yVB
+ 9IAws04BO3VUPUsJOQUDVTIreFUoU5vBUxDnCqa5uJ2fRWEooQ5sfLQNVAEkhheqa99wlcIPfBY
+ nI3xSwYW+UIe8y9zI3OuX4r/neqiZ+IvQKu6Opg==
+X-Gm-Gg: ASbGncuM+gd0fz122Hq8YXRTfDGQPjmHvzUlNccjnLdRp4YGdE9L2SroxAzacrpCVdx
+ D7h0Vh4xaiyYgzyyKrmABfU2E9iTFpyj4IjJP1JNv5qJiG6TUjZ1WSSQVKNuO7qn+J3dwDd1dRj
+ iPapfQ7E38SscqvwKVZidWVoQvDTcaTwlW3w==
+X-Google-Smtp-Source: AGHT+IE6ECMylJmyBOAyESC0uTebT66est+Z4Aq3mvxOlazySf400HWwOJWTiY7mHFot5mVpXQZaEkpXuZx+pp0TGs8=
+X-Received: by 2002:a05:690c:6f85:b0:708:bfc7:48fa with SMTP id
+ 00721157ae682-708ced6dd34mr36860147b3.20.1746180433341; Fri, 02 May 2025
+ 03:07:13 -0700 (PDT)
+MIME-Version: 1.0
+References: <CAOw3OrFVZbhMbuuAFpL8uZYRYc-MTrpE2Do7Efa4LG0FYoDdmw@mail.gmail.com>
+In-Reply-To: <CAOw3OrFVZbhMbuuAFpL8uZYRYc-MTrpE2Do7Efa4LG0FYoDdmw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 2 May 2025 11:07:02 +0100
+X-Gm-Features: ATxdqUH6w5sJ5ENsfBH-D1nuY4HlKKigalXxo7tvfNxJvpdMNwaTlyjUdt5T2is
+Message-ID: <CAFEAcA_R=bEh-osDTR9KuJ3qy5NZ1QquXzDY80dUCmymCi5zgQ@mail.gmail.com>
+Subject: Re: new contributor
+To: =?UTF-8?Q?souleymane_cont=C3=A9?= <conte.souleymane@gmail.com>
+Cc: qemu-devel@nongnu.org, "eblake@redhat.com" <eblake@redhat.com>, 
+ "jsnow@redhat.com" <jsnow@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b33;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,134 +94,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This property was added to preserve previous value when this was fixed
-in version 2.1 but the last machine using it was already removed when
-adding diva-gsp leaving this property unused and unnecessary.
+On Fri, 2 May 2025 at 09:52, souleymane cont=C3=A9
+<conte.souleymane@gmail.com> wrote:
+> I am interested in contributing to the QEMU project. I would like
+> to begin by working on the task described in Issue #527 on GitLab:
+> https://gitlab.com/qemu-project/qemu/-/issues/527.
+>
+> The task involves Plain text files in docs/ should be converted to rst:
+>
+> docs/igd-assign.txt
+> docs/image-fuzzer.txt
+>
+>
+> I would appreciate it if you could confirm that this task is still availa=
+ble to work on.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-v2:
-Reword commit message, add Rb tag
+Hi; yes, this task is still available to work on. We've been
+gradually converting the remaining text files in docs/ to RST,
+but there are still some left, including the two you list.
 
- hw/char/diva-gsp.c         |  6 ++----
- hw/char/serial-pci-multi.c |  7 ++-----
- hw/char/serial-pci.c       | 10 ++--------
- 3 files changed, 6 insertions(+), 17 deletions(-)
+I would note that as we've done the conversions we've mostly
+done the easier ones first, so the files that are left are
+getting a bit trickier to do. In particular, anything in docs/
+needs not just to be converted in format, but also it needs
+to live in the correct sub-part of the manual (system/,
+devel/, interop/, etc), and sometimes a single txt file
+combines information that needs to be split into several
+different places.
 
-diff --git a/hw/char/diva-gsp.c b/hw/char/diva-gsp.c
-index 60f933191d..e1f0713cb7 100644
---- a/hw/char/diva-gsp.c
-+++ b/hw/char/diva-gsp.c
-@@ -51,7 +51,6 @@ typedef struct PCIDivaSerialState {
-     SerialState  state[PCI_SERIAL_MAX_PORTS];
-     uint32_t     level[PCI_SERIAL_MAX_PORTS];
-     qemu_irq     *irqs;
--    uint8_t      prog_if;
-     bool         disable;
- } PCIDivaSerialState;
- 
-@@ -124,8 +123,8 @@ static void diva_pci_realize(PCIDevice *dev, Error **errp)
-     size_t i, offset = 0;
-     size_t portmask = di.omask;
- 
--    pci->dev.config[PCI_CLASS_PROG] = pci->prog_if;
--    pci->dev.config[PCI_INTERRUPT_PIN] = 0x01;
-+    pci->dev.config[PCI_CLASS_PROG] = 2; /* 16550 compatible */
-+    pci->dev.config[PCI_INTERRUPT_PIN] = 1;
-     memory_region_init(&pci->membar, OBJECT(pci), "serial_ports", 4096);
-     pci_register_bar(&pci->dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &pci->membar);
-     pci->irqs = qemu_allocate_irqs(multi_serial_irq_mux, pci, di.nports);
-@@ -178,7 +177,6 @@ static const Property diva_serial_properties[] = {
-     DEFINE_PROP_CHR("chardev2",  PCIDivaSerialState, state[1].chr),
-     DEFINE_PROP_CHR("chardev3",  PCIDivaSerialState, state[2].chr),
-     DEFINE_PROP_CHR("chardev4",  PCIDivaSerialState, state[3].chr),
--    DEFINE_PROP_UINT8("prog_if",  PCIDivaSerialState, prog_if, 0x02),
-     DEFINE_PROP_UINT32("subvendor", PCIDivaSerialState, subvendor,
-                                     PCI_DEVICE_ID_HP_DIVA_TOSCA1),
- };
-diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
-index fb184c2e6d..13df272691 100644
---- a/hw/char/serial-pci-multi.c
-+++ b/hw/char/serial-pci-multi.c
-@@ -46,7 +46,6 @@ typedef struct PCIMultiSerialState {
-     SerialState  state[PCI_SERIAL_MAX_PORTS];
-     uint32_t     level[PCI_SERIAL_MAX_PORTS];
-     IRQState     irqs[PCI_SERIAL_MAX_PORTS];
--    uint8_t      prog_if;
- } PCIMultiSerialState;
- 
- static void multi_serial_pci_exit(PCIDevice *dev)
-@@ -97,8 +96,8 @@ static void multi_serial_pci_realize(PCIDevice *dev, Error **errp)
-     SerialState *s;
-     size_t i, nports = multi_serial_get_port_count(pc);
- 
--    pci->dev.config[PCI_CLASS_PROG] = pci->prog_if;
--    pci->dev.config[PCI_INTERRUPT_PIN] = 0x01;
-+    pci->dev.config[PCI_CLASS_PROG] = 2; /* 16550 compatible */
-+    pci->dev.config[PCI_INTERRUPT_PIN] = 1;
-     memory_region_init(&pci->iobar, OBJECT(pci), "multiserial", 8 * nports);
-     pci_register_bar(&pci->dev, 0, PCI_BASE_ADDRESS_SPACE_IO, &pci->iobar);
- 
-@@ -133,7 +132,6 @@ static const VMStateDescription vmstate_pci_multi_serial = {
- static const Property multi_2x_serial_pci_properties[] = {
-     DEFINE_PROP_CHR("chardev1",  PCIMultiSerialState, state[0].chr),
-     DEFINE_PROP_CHR("chardev2",  PCIMultiSerialState, state[1].chr),
--    DEFINE_PROP_UINT8("prog_if",  PCIMultiSerialState, prog_if, 0x02),
- };
- 
- static const Property multi_4x_serial_pci_properties[] = {
-@@ -141,7 +139,6 @@ static const Property multi_4x_serial_pci_properties[] = {
-     DEFINE_PROP_CHR("chardev2",  PCIMultiSerialState, state[1].chr),
-     DEFINE_PROP_CHR("chardev3",  PCIMultiSerialState, state[2].chr),
-     DEFINE_PROP_CHR("chardev4",  PCIMultiSerialState, state[3].chr),
--    DEFINE_PROP_UINT8("prog_if",  PCIMultiSerialState, prog_if, 0x02),
- };
- 
- static void multi_2x_serial_pci_class_initfn(ObjectClass *klass,
-diff --git a/hw/char/serial-pci.c b/hw/char/serial-pci.c
-index 8707e81914..46efabc4cb 100644
---- a/hw/char/serial-pci.c
-+++ b/hw/char/serial-pci.c
-@@ -38,7 +38,6 @@
- struct PCISerialState {
-     PCIDevice dev;
-     SerialState state;
--    uint8_t prog_if;
- };
- 
- #define TYPE_PCI_SERIAL "pci-serial"
-@@ -53,8 +52,8 @@ static void serial_pci_realize(PCIDevice *dev, Error **errp)
-         return;
-     }
- 
--    pci->dev.config[PCI_CLASS_PROG] = pci->prog_if;
--    pci->dev.config[PCI_INTERRUPT_PIN] = 0x01;
-+    pci->dev.config[PCI_CLASS_PROG] = 2; /* 16550 compatible */
-+    pci->dev.config[PCI_INTERRUPT_PIN] = 1;
-     s->irq = pci_allocate_irq(&pci->dev);
- 
-     memory_region_init_io(&s->io, OBJECT(pci), &serial_io_ops, s, "serial", 8);
-@@ -81,10 +80,6 @@ static const VMStateDescription vmstate_pci_serial = {
-     }
- };
- 
--static const Property serial_pci_properties[] = {
--    DEFINE_PROP_UINT8("prog_if",  PCISerialState, prog_if, 0x02),
--};
--
- static void serial_pci_class_initfn(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -96,7 +91,6 @@ static void serial_pci_class_initfn(ObjectClass *klass, const void *data)
-     pc->revision = 1;
-     pc->class_id = PCI_CLASS_COMMUNICATION_SERIAL;
-     dc->vmsd = &vmstate_pci_serial;
--    device_class_set_props(dc, serial_pci_properties);
-     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
- }
- 
--- 
-2.41.3
+If you don't mind which docs you're looking at, these two
+are simple format conversions that are already in the right
+place in the manual and don't need splitting up:
+  docs/interop/qcow2.txt
+  docs/interop/qed_spec.txt
+(You can look at other files in that directory and at the commits
+in the git history that converted them from txt to rst to get
+ideas on how to handle some of the things like ASCII art diagrams
+and tables.)
 
+Of the two files you list, I think docs/image-fuzzer.txt can
+probably reasonably become docs/devel/image-fuzzer.rst without
+needing to be split up. docs/igd-assign.txt is a bit trickier,
+but I think most of the content belongs somewhere under system/.
+
+thanks
+-- PMM
 
