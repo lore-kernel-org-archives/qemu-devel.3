@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E933C369C2
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 May 2025 21:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6693C369C2
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 May 2025 21:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBKOB-00050h-QL; Sat, 03 May 2025 17:27:15 -0400
+	id 1uBKou-0005Qj-Am; Sat, 03 May 2025 17:54:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uBKO9-0004zy-El
- for qemu-devel@nongnu.org; Sat, 03 May 2025 17:27:13 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uBKos-0005QN-NJ
+ for qemu-devel@nongnu.org; Sat, 03 May 2025 17:54:50 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uBKO7-0006gO-Ls
- for qemu-devel@nongnu.org; Sat, 03 May 2025 17:27:13 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-af908bb32fdso2880999a12.1
- for <qemu-devel@nongnu.org>; Sat, 03 May 2025 14:27:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uBKoq-0001Iu-Vn
+ for qemu-devel@nongnu.org; Sat, 03 May 2025 17:54:50 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-227d6b530d8so30291585ad.3
+ for <qemu-devel@nongnu.org>; Sat, 03 May 2025 14:54:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746307629; x=1746912429; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=dpD2X/N2/eUTIVGHaEd0dhhaplJWtNKEoeYbSNFy2KA=;
- b=kJ5ogs2f+rDeX7zMvFHqdKU4BJwPgHEsmHN0lANTTlvetxmXD5ySc8R+RFU/1XzYB3
- pwZgs9Ju9PtTOD25h1eB7GeR6eJppDv4YaxstC/pR+tyy+bL9pZ5ZZERvth2rVjECcIs
- 0PAGOwP9l07oI5YoB97alzAIObr2+OWtIUKY71R6Bej6LqaMgw8rxB8q1X5ioyYzRBLB
- LpBFjyiiCs0/t2Z2wFOmDHKfacvZbFMd9i03b48OjILzPF4kHQe9jN0jvgVJ8GVvkpdq
- 9UyI1vlezGB3ZW6g0/iNR1rlnSu4bemZIWbNTooGuRPds42g3312tkc+NOf2mf5GBBLc
- lWuw==
+ d=linaro.org; s=google; t=1746309286; x=1746914086; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8egesxN17cqZ0dc6fp9Kc2LxbU+ZhDHFMjM3QWxIJTo=;
+ b=MGtxzfRhnKNeh90ze6TzU82BWoUVcYHteh1Zmw8rrDOVpXRPGNozyi4SdR0ECp1VTz
+ zfDRTxqaBuZra6beZdJcMVeSyQxFbbrJtDH6WYfb62vusfvN9U7HjzwoVY4HHtlUQD2M
+ KhWpV/l4b3R7lVjQXr7iz1f6ahexohGsXomBc2qTldh6TKRz2qcV1hFuroibcioTJ6Cs
+ VXc5B3kcW35MNkKHNQIXsymjkMfxtMAAm1PsVrmo/Lig0merzeaFgETeFqvQoJpFeDXv
+ cobYycb4tqzUnqWSY6TK9HybzkxefqihuU4cAnGehNQ1oB9HFLz4HdXA8Kf/bvlMT1ec
+ Y72Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746307629; x=1746912429;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dpD2X/N2/eUTIVGHaEd0dhhaplJWtNKEoeYbSNFy2KA=;
- b=k/omfSN/KtFFrfewrXZe7nvm157QKentLTaepb6MPWxieiR97r6lz4fZuG+aFX4EsI
- mHKERGFrDvzhJbjYTpITwrO1ZYqLlyZjaxJ39akoYP1OZBkIqIlvPiw46R9KTOV9wBV/
- xr68ge6jlB9i3UH77jldeBQnJwP0XmsSo3QIUnB83341IbP3O16K4u5T3+mDqTeZLAK4
- XGytnKkKRtKchVMElt+oCRsG7jamASBAtyAhWTJGF/CZOFB6YwTvThAJkDlZwt65kzHG
- qnTCXZ9C7acOMCd/g5JZBkuCPmGIVtAJNza7Gxz8eN6p2DU7sSGnfTOeQCKW4e4Uvmke
- KS9g==
-X-Gm-Message-State: AOJu0YwYF77AegciG3j+ANNKqduUV/FCt/n9XJOnaOQ/7qLrAzIh4WQ0
- NZIs+bWnUeWnM755jV3BL4LIS8bmlD+uv+oFTm8xoDyUfKk6z1LrkNYjzb3Zhk/WxtdvvlZ93eO
- O
-X-Gm-Gg: ASbGncscfov4jl6PXaPZcGjBGgcqAQyHUFOva0bsxcjaP+ADtqtDTSHYfejnqBmQhm8
- 3UqE3ruC9PrBaftOIDQtEi48YZAjaZqzO7Td29mOfegmXOR3ykbO1UdN6wE4vUOIiCrxGJqWinS
- CEKlgjVmZqJ4YIeuf0GS1hDWyiNrocae8IgoccfL94XQ3VmtJK5saw8O2OFR7Upilu1cnQcrUKB
- K+JUTtyQqzmNKfBe1rC+pCrETXTbVaxnofAvl7iXCHnUdXIoaOe4nB6QfFStH0zJC5lerB0Rgk1
- v8kV8NfJ2NYwKz2F11dcVS8VvXLRrEdbWlUcL0KXYZuCGbsQi0vXY5GmhBfqTGwKisJHebhbTfU
- =
-X-Google-Smtp-Source: AGHT+IHUl/mXDKAKQfb3QXVWkK5mPun9gAU4KJHVj4nRRoG5FDX6ufHB3zc2dQRMjhB9KRzQbKqI0Q==
-X-Received: by 2002:a17:902:d486:b0:21f:40de:ae4e with SMTP id
- d9443c01a7336-22e100563eemr104409825ad.9.1746307629354; 
- Sat, 03 May 2025 14:27:09 -0700 (PDT)
-Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ d=1e100.net; s=20230601; t=1746309286; x=1746914086;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8egesxN17cqZ0dc6fp9Kc2LxbU+ZhDHFMjM3QWxIJTo=;
+ b=WVY+fh02HKnleA13Z4d6k6ZPbs9UQoIfaQrX9gfA1TlqRvopLzWlgsBRK/B1Sf6k3/
+ OUpiFPEAKok7DJIZWG/3WMjqHklRIbRCQ5G/mJIFJd0oFGZk4KIbWZpRvAwwGaRPBfw1
+ 3V2RQVitMxD6SQxCIcYCtIJP3UVszNu2bZq6fQdZMskuqDLbUNObtmkdpZAUmDi7AFsj
+ 1yOjZ8+gwdHTBqceGsoQEWYjFeKBpVkrvKUofLCVKcHYVa3rFjk8ZcTUlv25714Rxay2
+ bDhYpQcHzHMvq3InrQnLHf+iOVEGrAet4f9N0ehxX4fXEXrHOddhR4RoRhn/o7GKQOHP
+ 1hzQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXz5LImSFdMGftUFxdC2kNwOhesLEZz8urMnOtZmJpiIX1LYx8E/cz0rdFMVxqlIbDo+1dihjQXZFd7@nongnu.org
+X-Gm-Message-State: AOJu0YzlQ7ZbYiTwzvVymbMRXha+ozbffjrm7574wNNJJx5ZP5YQOvwV
+ Ef9Q8T1GChsZvsctS1WWKc+a4ZmuhstGDOqFD8FFEVh+xuPVuKsAkG1NPFeNGGYy/YKgUoFIG6O
+ osxQ=
+X-Gm-Gg: ASbGnculBBqkmoB3FdQSPG5mA8jZ9rRtwbTNQb9jvv9HmR0Izmz9op1auThP7ybzgmd
+ WeWQdmeE5i25FwlIS7FauFR0D1EkKgLujyr6QXpqB1ka+rAsJY6kkwQbKC2HpNstVOLxz9sA2ob
+ meWrg+I4y5TEPrD8OaqPdJ3Bx1ZrNqVb3HZk++l4sDOl8mwtFj9naVZZitk4JhPnW/vKRAY2Vl9
+ 9I7xPgD2oixOf8W081n8SXB62AyRmOIGZS7YBw2PsSB9aCDV1JKaL05uNhgDl2gLltd7xHLDLfM
+ qmiRFgMn0oSrnGxRj3qCytC0nQ0KTjCULjoiD7A02AxPepHm1MBkQQ==
+X-Google-Smtp-Source: AGHT+IHqUyTV2oPY7FFs0inwI6ot7R54RcFhDq+LlJmRZ42OcG4Hr0D1+iatFhY+CtsMiQhL5RHdqg==
+X-Received: by 2002:a17:902:f70e:b0:226:3781:379d with SMTP id
+ d9443c01a7336-22e10353e7cmr118719275ad.33.1746309286678; 
+ Sat, 03 May 2025 14:54:46 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e1521fa1csm28334885ad.133.2025.05.03.14.27.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 03 May 2025 14:27:08 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: ysato@users.sourceforge.jp
-Subject: [PATCH] target/sh4: Use MO_ALIGN for system UNALIGN()
-Date: Sat,  3 May 2025 14:27:08 -0700
-Message-ID: <20250503212708.3235806-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d9443c01a7336-22e1521fc49sm28331845ad.134.2025.05.03.14.54.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 03 May 2025 14:54:46 -0700 (PDT)
+Message-ID: <561ee7fc-a288-4fae-93ef-086af8857fd5@linaro.org>
+Date: Sat, 3 May 2025 14:54:45 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 13/33] target/arm/helper: use i64 for
+ exception_pc_alignment
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ alex.bennee@linaro.org, Paolo Bonzini <pbonzini@redhat.com>, anjo@rev.ng,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ kvm@vger.kernel.org
+References: <20250501062344.2526061-1-pierrick.bouvier@linaro.org>
+ <20250501062344.2526061-14-pierrick.bouvier@linaro.org>
+ <1844146d-18cd-42c7-a095-6d1b64ad6293@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <1844146d-18cd-42c7-a095-6d1b64ad6293@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,29 +109,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This should have been done before removing TARGET_ALIGNED_ONLY,
-as we did for hppa and alpha.
+On 5/1/25 9:30 AM, Richard Henderson wrote:
+> On 4/30/25 23:23, Pierrick Bouvier wrote:
+>> --- a/target/arm/helper.h
+>> +++ b/target/arm/helper.h
+>> @@ -49,7 +49,7 @@ DEF_HELPER_3(exception_with_syndrome, noreturn, env, i32, i32)
+>>    DEF_HELPER_4(exception_with_syndrome_el, noreturn, env, i32, i32, i32)
+>>    DEF_HELPER_2(exception_bkpt_insn, noreturn, env, i32)
+>>    DEF_HELPER_2(exception_swstep, noreturn, env, i32)
+>> -DEF_HELPER_2(exception_pc_alignment, noreturn, env, tl)
+>> +DEF_HELPER_2(exception_pc_alignment, noreturn, env, i64)
+>>    DEF_HELPER_1(setend, void, env)
+>>    DEF_HELPER_2(wfi, void, env, i32)
+>>    DEF_HELPER_1(wfe, void, env)
+>> diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
+>> index 8841f039bc6..943b8438fc7 100644
+>> --- a/target/arm/tcg/tlb_helper.c
+>> +++ b/target/arm/tcg/tlb_helper.c
+>> @@ -277,7 +277,7 @@ void arm_cpu_do_unaligned_access(CPUState *cs, vaddr vaddr,
+>>        arm_deliver_fault(cpu, vaddr, access_type, mmu_idx, &fi);
+>>    }
+>>    
+>> -void helper_exception_pc_alignment(CPUARMState *env, target_ulong pc)
+>> +void helper_exception_pc_alignment(CPUARMState *env, uint64_t pc)
+>>    {
+>>        ARMMMUFaultInfo fi = { .type = ARMFault_Alignment };
+>>        int target_el = exception_target_el(env);
+> 
+> I think for this and the next patch, it would be worth extending
+> include/exec/helper-head.h.inc and include/tcg/ to allow vaddr.
+>
 
-Fixes: 8244189419f9 ("target/sh4: Remove TARGET_ALIGNED_ONLY")
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/sh4/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ok, I'll add it.
 
-diff --git a/target/sh4/translate.c b/target/sh4/translate.c
-index bf8828fce8..70fd13aa3f 100644
---- a/target/sh4/translate.c
-+++ b/target/sh4/translate.c
-@@ -54,7 +54,7 @@ typedef struct DisasContext {
- #define UNALIGN(C)   (ctx->tbflags & TB_FLAG_UNALIGN ? MO_UNALN : MO_ALIGN)
- #else
- #define IS_USER(ctx) (!(ctx->tbflags & (1u << SR_MD)))
--#define UNALIGN(C)   0
-+#define UNALIGN(C)   MO_ALIGN
- #endif
- 
- /* Target-specific values for ctx->base.is_jmp.  */
--- 
-2.43.0
+> 
+> r~
 
 
