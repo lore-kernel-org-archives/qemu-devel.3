@@ -4,96 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C943C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 May 2025 22:50:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88CBDC3ABAD
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 May 2025 05:40:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uAzC3-00084f-QO; Fri, 02 May 2025 18:49:20 -0400
+	id 1uB5al-0005Ku-0h; Sat, 03 May 2025 01:39:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uAzBw-000849-Kq
- for qemu-devel@nongnu.org; Fri, 02 May 2025 18:49:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1uB5aZ-0005Kc-UM
+ for qemu-devel@nongnu.org; Sat, 03 May 2025 01:39:04 -0400
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uAzBu-0007Em-6a
- for qemu-devel@nongnu.org; Fri, 02 May 2025 18:49:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746226148;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=avJ5Ck0Ck+8ZrjsXozXEWkhWTMEE1Tb5bVb08TH/1YA=;
- b=ERWGs4L8WApwXvqNXOPyeuKVauP5CvXerbQ8SP7T7n6ab5BsJcrbwwpfqlb7N2Q/iDjDmF
- Z2Vev3Dme6m/hIJXowgNqLw45dAOmczKxmcm3xj/LQCPpII0PJco/fyqozUXstAP7uDI4p
- di7PRjpEyTQyIfp8ORwldNye2LRsfVk=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-436-omws2AwcMWSZ8olxEvBhNA-1; Fri, 02 May 2025 18:49:07 -0400
-X-MC-Unique: omws2AwcMWSZ8olxEvBhNA-1
-X-Mimecast-MFC-AGG-ID: omws2AwcMWSZ8olxEvBhNA_1746226146
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3912539665cso1436504f8f.1
- for <qemu-devel@nongnu.org>; Fri, 02 May 2025 15:49:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746226146; x=1746830946;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=avJ5Ck0Ck+8ZrjsXozXEWkhWTMEE1Tb5bVb08TH/1YA=;
- b=qtZK1dgdt8WSKptJhlqvP2DHhWoCIj8u3lJtbPv4fmF1meuUu5zbzA4kPJ91lO2bp0
- 0bZhhKwWTjFQoab6yHSovv0AFFqy+k/2hT+PsuDGwrvOk8yv1RlNzPoSrRyMu4gw3RP3
- 5NbX6Qan1Ul8xGF/ZaXs1B9/jYfe0yAi6szCLTDUrCfhvxbowwwxpq5XD9vKtBEqq9bY
- KArvyCTYVP7qqon75btZyacfUfuL2PwHYX1APv1pUNg5a7HMr5tvqt+lL8GtSTShqTlg
- 3KhMlmczazd/n6JezTYU3YyQWYf5ZLwFQsQTvWxLRcNKiEeuO/oNYW0koEKcH4xSTn0z
- lRng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVmk09zG9K3FSPZsqsnZkC+MlcVRchwytPaJvQkXzNYJjhHe5vlJ13pKTdrg1B3cTpVTGJIuYuAbYM0@nongnu.org
-X-Gm-Message-State: AOJu0YyBYbCrXadE/Mo82Oa+ggrGRME8TAu21ZfTk+U7nozWfkSQ+gPw
- ucFWn8XZv/uBnciU5bXvt40/PnqDMrLw9DaPjIgSpbPaVFtCESX7hMneH9pILe2p6mb2yZqSRvz
- GeV28Mb0wDsX/ccB+wWZNiSWwCfS3lt/Z2+KhKcrIdSDVUVWV2i/Z6baehUhd2R0sHu1cdR7uVb
- s3ubMnSHjzmUpf8VKqSzyMH412WyI=
-X-Gm-Gg: ASbGnctofsre3YzUmhvKigw+SNYOiRtIKHj5Ow8oAOuQl02tX0ZmeI2t+bYSzn7HRAV
- fCgMkslR0g8S+MMqjK/n0Ebfo70d5/ZvrqfKb4v8dbcmeRrzpiRoeZH2LWwULRAjD0Er3
-X-Received: by 2002:a05:6000:2ab:b0:3a0:6c56:9fb5 with SMTP id
- ffacd0b85a97d-3a0984640d8mr4176817f8f.19.1746226145753; 
- Fri, 02 May 2025 15:49:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH6mUbuzOIrdZ4+JrDKOO5WMH5P9K8M2HFvMkxlFLqEHt4KQPit/plEcz1YiXopgca+wjIndGT1lnXK6vhsJe4=
-X-Received: by 2002:a05:6000:2ab:b0:3a0:6c56:9fb5 with SMTP id
- ffacd0b85a97d-3a0984640d8mr4176806f8f.19.1746226145465; Fri, 02 May 2025
- 15:49:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1uB5aV-0000J2-Hj
+ for qemu-devel@nongnu.org; Sat, 03 May 2025 01:39:02 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 9B2B0A49EF3;
+ Sat,  3 May 2025 05:33:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F821C4CEE3;
+ Sat,  3 May 2025 05:38:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1746250737;
+ bh=ZfbRiN612nH3UzzW4BBK6LY7PUmEaUae03Uc84/hEpM=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=YK+1ZYbz9MU/l2UG3QiLrH9eNVLS2GQX5rJR2LsYccSsDQG7UxvBLW3HJ275TvWyU
+ VVIy1N/sBRrWgZ+YcorA0wWa+zIf3PptX4sT+xByzzfk8BX9L+Y/ZM7sm0pKHy3wQL
+ XzAYtiLAr13CUGwtq4fKtT2CR0qhad03eFoL1NPpgO8WO6BLMFMRjsM9udWrf52O2I
+ +mtU5rt5DkiZSqqlsM8gY3sh3np66l8YkLvIBOqbLj2z0dP9jQcBAwLDibsAKHTYPt
+ 7bxrE/dnsKhborry7RiDrn05Q0cI/B7FSb+A+GOpwigxCMuTW7VE3z6kDYEK4z7r8g
+ Bau/0JpCUHqRg==
+Date: Sat, 3 May 2025 05:38:56 +0000
+From: Wei Liu <wei.liu@kernel.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, wei.liu@kernel.org
+Subject: Re: [CFT PATCH 0/4] target/i386/emulate: cleanups
+Message-ID: <aBWr8FH9otBP5dqd@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+References: <20250502214841.242584-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20250429093319.5010-1-magnuskulke@linux.microsoft.com>
- <CABgObfaxzxdBf3f-JwKA8osOwZZQf-dqpsambpAFhPvkvjDo8w@mail.gmail.com>
- <aBDBExDzR57PcRre@example.com>
- <aBT7GuLHnnS8cQCB@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
-In-Reply-To: <aBT7GuLHnnS8cQCB@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Sat, 3 May 2025 00:48:52 +0200
-X-Gm-Features: ATxdqUF9bveqz3YJBc517Sa_zupwFw9ArNY7p6bqyL4JSb2a8FtirmbcltTBUA8
-Message-ID: <CABgObfbU43nyRfEZzFTos6ko9pfJgAE38iYyOe3DWip5v8VzNw@mail.gmail.com>
-Subject: Re: [PATCH v3] target/i386/emulate: remove rflags leftovers
-To: Wei Liu <wei.liu@kernel.org>
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
- qemu-devel <qemu-devel@nongnu.org>, 
- Roman Bolshakov <rbolshakov@ddn.com>, Cameron Esfahani <dirty@apple.com>, 
- Phil Dennis-Jordan <phil@philjordan.eu>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.644,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250502214841.242584-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=147.75.193.91; envelope-from=wei.liu@kernel.org;
+ helo=nyc.source.kernel.org
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.644,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,17 +71,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 2, 2025 at 7:04=E2=80=AFPM Wei Liu <wei.liu@kernel.org> wrote:
-> I still have my loaner Macbook for a few more days. If I have not
-> returned it when Paolo posts his patches I can build test HVF.
+On Fri, May 02, 2025 at 11:48:37PM +0200, Paolo Bonzini wrote:
+> These are some improvements to the x86 emulator that I wrote but have no
+> way of testing (right now).
+> 
+> I tried to place them in order of importance so that, if something breaks,
+> it is possible to commit a subset.  I tried to compile the resulting code
+> on Linux but I have not run it.
+> 
+> Patch 1 is just to fix warnings on Linux.
+> 
+> Patch 2 is the most important, as it fixes some real horrors in the code.
+> 
+> Patch 3 makes flags handling use algorithms somewhat similar to TCG.
+> It should fix issues with 64-bit ALU operations, but it's also the one
+> where it's more likely to have a mistake.
+> 
+> Patch 4 is comparatively trivial, though I cannot exclude any screwups.
+> 
+> It should be possible to test this with both HVF and Hyper-V.
+> 
+> Paolo
 
-I have posted them now
-(https://lore.kernel.org/qemu-devel/20250502214841.242584-1-pbonzini@redhat=
-.com/).
-They apply on top of tags/for-upstream from
-https://gitlab.com/bonzini/qemu.git, which includes the other pending
-bugfixes and has already passed CI.
+FWIW this series builds fine on for x86 HVF.
 
-Paolo
+Thanks,
+Wei.
 
+> 
+> Paolo Bonzini (4):
+>   target/i386/emulate: fix target_ulong format strings
+>   target/i386/emulate: stop overloading decode->op[N].ptr
+>   target/i386/emulate: mostly rewrite flags handling
+>   target/i386: remove lflags
+> 
+>  target/i386/cpu.h                |   6 -
+>  target/i386/emulate/x86_decode.h |   9 +-
+>  target/i386/emulate/x86_emu.h    |   8 +-
+>  target/i386/emulate/x86_flags.h  |  12 +-
+>  target/i386/emulate/x86_decode.c |  76 ++++++------
+>  target/i386/emulate/x86_emu.c    | 125 +++++++++----------
+>  target/i386/emulate/x86_flags.c  | 198 +++++++++++++------------------
+>  7 files changed, 197 insertions(+), 237 deletions(-)
+> 
+> -- 
+> 2.49.0
+> 
 
