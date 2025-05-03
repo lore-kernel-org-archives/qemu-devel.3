@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE42C369D9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB6DAC3ABAD
 	for <qemu-devel@archiver.kernel.org>; Sat,  3 May 2025 07:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uB7mU-00086Y-Rk; Sat, 03 May 2025 03:59:31 -0400
+	id 1uB7mF-000831-0W; Sat, 03 May 2025 03:59:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uB7mO-00085g-Ng
- for qemu-devel@nongnu.org; Sat, 03 May 2025 03:59:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uB7mB-00082c-PO
+ for qemu-devel@nongnu.org; Sat, 03 May 2025 03:59:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uB7mM-0006en-BK
- for qemu-devel@nongnu.org; Sat, 03 May 2025 03:59:24 -0400
+ id 1uB7m9-0006c3-5M
+ for qemu-devel@nongnu.org; Sat, 03 May 2025 03:59:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746259161;
+ s=mimecast20190719; t=1746259146;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=toxRje+xxVT+nxJgLRSzPIeanmmnkchIayeKIhpjgVE=;
- b=gbG+iVvrjPH2DbZcqIzSv4R96BCmAaE4xMOwsMDczk5KAq0W2nqvIrSGS1R0pOH3rnIHw7
- /cADgOYVjZDoEsQWNcF0XT9X6RA7EOniYocHg1kVZvqYmxGyuBbcAMtRM/r1pdJrV5sUAn
- rEGhPvWK0aNDA2OrPbv7jpTNE4X7kms=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u7aiabvalma8/ssAKdGg3gUinofOerC+pA/wzQHL28g=;
+ b=i5IxafJ48RZPpqiSsQ9uCjl8GYH17BrWh3ta+2lQIoFXBJCHJyhrpvumdSXLRI+s5QlCU4
+ XF7O4ZkQqOrkOLldfb9Ur7cqrg8JvXX6Yc3uTyqH0NzQ7hYIy/Lxh062L71Qct9l3MCLhE
+ EhyzFOZXSz2Ic6dGliwaKGGs0bR/sYk=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-620-UwYcyAVCOHW4H3cInofZ5g-1; Sat, 03 May 2025 03:59:20 -0400
-X-MC-Unique: UwYcyAVCOHW4H3cInofZ5g-1
-X-Mimecast-MFC-AGG-ID: UwYcyAVCOHW4H3cInofZ5g_1746259159
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43efa869b19so16354015e9.2
- for <qemu-devel@nongnu.org>; Sat, 03 May 2025 00:59:19 -0700 (PDT)
+ us-mta-263-otg2MYVZOk-XBuu9a7xl0A-1; Sat, 03 May 2025 03:59:05 -0400
+X-MC-Unique: otg2MYVZOk-XBuu9a7xl0A-1
+X-Mimecast-MFC-AGG-ID: otg2MYVZOk-XBuu9a7xl0A_1746259144
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-39126c3469fso779849f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 03 May 2025 00:59:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746259158; x=1746863958;
+ d=1e100.net; s=20230601; t=1746259142; x=1746863942;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=toxRje+xxVT+nxJgLRSzPIeanmmnkchIayeKIhpjgVE=;
- b=Ni+5x6lnq1TFNuJc3nl8oU2izVf0VC10R99ucDZnryEd1vt/dcmLfgqAQu+cOVLsZL
- SrQNRoVCLzRpkY8RodRiAADXxptlIShUhejdmhFAood53UV2pdelYFyMLlohWkubCjay
- aZKYiMlFIfBL42doh3uLLOBYfFR9+5cE7wZoUFo4q2mYXGDsIQiEOdZsTtSkww6nG73Z
- MgjiGTnYlDmsrUg0uxwIoRVH3ZuqZk3Z2DirNdaFleFAi9TN5S3cUy5KVjqNRTvBm1io
- 0hjC2JbPr4QQiPawckg7cTMex/N9yQy0V9pdvX+KnH7mGSIZEHoLnup8HhBkks+bQS4Q
- DwTg==
-X-Gm-Message-State: AOJu0Yw3REZ1owP1oWMNC5Db8AiH5Xn6tfHCLjb//BPzJTxYfUoBfqyI
- SGIj+sboGK9vFrwzphNef6Q8zGVX/BFAmjdeJEThtftfoKarx3DY211jpw0YOerAq3rsZ+VEyM/
- o3Ks/ObDz8dTRjrUnRF6rKvvLtS6RZ6Jfk3ojGDmru2kIuDbjUh80E2F1o8KT/UjAv9lKge5JIt
- h4IQ9hfqQO8x9pfeEhjDpJyutw+n2L0LU93qlw
-X-Gm-Gg: ASbGnctjPl0RaoOz0MW/r/RM3O3Q8FtNugptlz2iY82aWPugzAO6xA2lRfqnmzKZZri
- L7p3xSAt9cj2pa9048LH9vzcgh08iCUSvLWvICtEsCMsYMIiG8fRpkhKdodCxVmLDDc3/xecpUm
- MxNvTENOXhk6Qs53wFE9iLPHcWluLVeUo9BoXUqIuSECJE82fFVanU+pvW9DisVpa7IAD/4/g1Z
- rlEgixpXxcvQxW1QU1+Kbo6vdGYd3kD2ipFaCJOuNQRWeIq6/kzg84PLJ60Szux2vxzZj4PPECl
- WJjs6SJDTYsXKJs=
-X-Received: by 2002:a05:600c:45d1:b0:43c:f3e4:d6f7 with SMTP id
- 5b1f17b1804b1-441c4938d58mr1919835e9.31.1746259157812; 
- Sat, 03 May 2025 00:59:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLP8J9soxClfcOJZJGIONXqNi6lgTLOv5Z5EHIbB1ofzavcdoAtrpbUiIS48do9iA6JnwnRg==
-X-Received: by 2002:a05:600c:45d1:b0:43c:f3e4:d6f7 with SMTP id
- 5b1f17b1804b1-441c4938d58mr1919615e9.31.1746259157328; 
- Sat, 03 May 2025 00:59:17 -0700 (PDT)
+ bh=u7aiabvalma8/ssAKdGg3gUinofOerC+pA/wzQHL28g=;
+ b=Q4RCYnGSegvOE/R+Bfwh/zu7p48dyyY+A3rLU2EtVEIGvggBMyVXLah1Ny5U8zKYAy
+ 8jLNG/93hLu7kzbibWSVTUKceNnuLh5dKOE3jhvqPpY5+rJI40P1fZ9Vd/Gn1Vno1zYB
+ lxYmgkbfoaLzbIdomkMysXmgGJPacvlK2AEteMdEhRxNd68QOVYq+pm6jEt6XXkg5UXS
+ s2F9SvqWOUZh0iyjUkj2h/oLxYVl5w2oE5XviZM7Xkamx60Q8LAqCRJZ+rlTw11dFiT4
+ O5GNwxkBXUUKu3ERCfFfSMPX4AULpi/IEp4NWL8RYe6fqfQUld2n6z/tePxefrIcFGIu
+ cflw==
+X-Gm-Message-State: AOJu0YysekUHuZIGMkZ69YE1GafeGrJvBlPfNBz6qkdVIkDNs9gHv3lc
+ 4g+dnqLBNLOw1Z4ynsq3lN0EeGQ9LxloN4rJnD+siGcRWo5jE1cvtH0Y7VGysZdLT4smS2CtW+I
+ kGN3mq2Cte+eSeHA1K1RXr30OpeUDKx42urnQHsgnagxGDiT3iF5f1mApVAcoQRljIIbdcO952Y
+ TdINjOaWNXE+zbujwg1sU6N8Qjg/kWkLY7JkRc
+X-Gm-Gg: ASbGncvOLojQIeOf6AMBjwFH4CjBzMtzhonwMKdvA1sHf4Os9Rw9ZR+EE44c5kMP10d
+ ZuHQBtNNG8CZnn4Tx3HfCj6vEAro8h/bhL0cwl8bnffJbZcuo6oQjcIp2oAJQcp1+9Ioa2OG14H
+ u5sSZ5+ySqUdpmx85R59Es4zjtui7T9dusLXiUJbL12eDlIGnzPXsvlYU4PCw/3WQ61/YioNMHf
+ sUMeIGcW+38dOA1OHM9eZ3b1F/Vo747fWh38ZopxeS461BjDyCQ/JslrQgm4/euU96RieR3ZlBr
+ JYKDK2nADgxQBJc=
+X-Received: by 2002:a05:6000:240b:b0:3a0:8020:c5c5 with SMTP id
+ ffacd0b85a97d-3a099aef8e6mr4176870f8f.58.1746259142470; 
+ Sat, 03 May 2025 00:59:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHDMeYvmICphnYKVr5xX1J98nvgeO4cjNuU9mY++NKd/jXoM4l4DBIdfwJy0qQAKfNIOFBzUQ==
+X-Received: by 2002:a05:6000:240b:b0:3a0:8020:c5c5 with SMTP id
+ ffacd0b85a97d-3a099aef8e6mr4176853f8f.58.1746259142008; 
+ Sat, 03 May 2025 00:59:02 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b89cc441sm67909535e9.3.2025.05.03.00.59.15
+ ffacd0b85a97d-3a099ae3ccdsm4211887f8f.38.2025.05.03.00.59.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 03 May 2025 00:59:15 -0700 (PDT)
+ Sat, 03 May 2025 00:59:01 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 06/13] rust/hpet: Support migration
-Date: Sat,  3 May 2025 09:58:51 +0200
-Message-ID: <20250503075858.277375-7-pbonzini@redhat.com>
+Subject: [PULL 01/13] rust/vmstate: Add support for field_exists checks
+Date: Sat,  3 May 2025 09:58:46 +0200
+Message-ID: <20250503075858.277375-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250503075858.277375-1-pbonzini@redhat.com>
 References: <20250503075858.277375-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -92,7 +92,8 @@ X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.644,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,238 +111,149 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Based on commit 1433e38cc8 ("hpet: do not overwrite properties on
-post_load"), add the basic migration support to Rust HPET.
+Unfortunately, at present it's not possible to have a const
+"with_exist_check" method to append test_fn after vmstate_struct (due
+to error on "constant functions cannot evaluate destructors" for `F`).
 
-The current migration implementation introduces multiple unsafe
-callbacks. Before the vmstate builder, one possible cleanup approach is
-to wrap callbacks in the vmstate binding using a method similar to the
-vmstate_exist_fn macro.
+Before the vmstate builder, the only way to support "test_fn" is to
+extend vmstate_struct macro to add the such new optional member (and
+fortunately, Rust can still parse the current expansion!).
 
-However, this approach would also create a lot of repetitive code (since
-vmstate has so many callbacks: pre_load, post_load, pre_save, post_save,
-needed and dev_unplug_pending). Although it would be cleaner, it would
-somewhat deviate from the path of the vmstate builder.
+Abstract the previous callback implementation of vmstate_validate into
+a separate macro, and moves it before vmstate_struct for vmstate_struct
+to call.
 
-Therefore, firstly focus on completing the functionality of HPET, and
-those current unsafe callbacks can at least clearly indicate the needed
-functionality of vmstate. The next step is to consider refactoring
-vmstate to move towards the vmstate builder direction.
-
-Additionally, update rust.rst about Rust HPET can support migration.
+Note that there's no need to add any extra flag for a new test_fn added
+in the VMStateField.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250414144943.1112885-9-zhao1.liu@intel.com
+Link: https://lore.kernel.org/r/20250414144943.1112885-2-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/rust.rst            |   3 +-
- rust/hw/timer/hpet/src/hpet.rs | 146 ++++++++++++++++++++++++++++++++-
- 2 files changed, 146 insertions(+), 3 deletions(-)
+ rust/qemu-api/src/vmstate.rs | 70 +++++++++++++++++++-----------------
+ 1 file changed, 37 insertions(+), 33 deletions(-)
 
-diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
-index 88bdec1eb28..3cc2841d4d1 100644
---- a/docs/devel/rust.rst
-+++ b/docs/devel/rust.rst
-@@ -153,8 +153,7 @@ QEMU includes four crates:
- 
- .. [#issues] The ``pl011`` crate is synchronized with ``hw/char/pl011.c``
-    as of commit 02b1f7f61928.  The ``hpet`` crate is synchronized as of
--   commit f32352ff9e.  Both are lacking tracing functionality; ``hpet``
--   is also lacking support for migration.
-+   commit 1433e38cc8.  Both are lacking tracing functionality.
- 
- This section explains how to work with them.
- 
-diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
-index cbd2ed4f6bf..12de2ba59a1 100644
---- a/rust/hw/timer/hpet/src/hpet.rs
-+++ b/rust/hw/timer/hpet/src/hpet.rs
-@@ -4,6 +4,7 @@
- 
- use std::{
-     ffi::CStr,
-+    os::raw::{c_int, c_void},
-     pin::Pin,
-     ptr::{addr_of_mut, null_mut, NonNull},
-     slice::from_ref,
-@@ -25,7 +26,10 @@
-     qom::{ObjectImpl, ObjectType, ParentField},
-     qom_isa,
-     sysbus::{SysBusDevice, SysBusDeviceImpl},
--    timer::{Timer, CLOCK_VIRTUAL},
-+    timer::{Timer, CLOCK_VIRTUAL, NANOSECONDS_PER_SECOND},
-+    vmstate::VMStateDescription,
-+    vmstate_fields, vmstate_of, vmstate_struct, vmstate_subsections, vmstate_validate,
-+    zeroable::Zeroable,
- };
- 
- use crate::fw_cfg::HPETFwConfig;
-@@ -561,6 +565,7 @@ pub struct HPETState {
-     #[doc(alias = "timer")]
-     timers: [BqlRefCell<HPETTimer>; HPET_MAX_TIMERS as usize],
-     num_timers: BqlCell<u8>,
-+    num_timers_save: BqlCell<u8>,
- 
-     /// Instance id (HPET timer block ID).
-     hpet_id: BqlCell<usize>,
-@@ -839,6 +844,49 @@ fn write(&self, addr: hwaddr, value: u64, size: u32) {
-             }
-         }
-     }
-+
-+    fn pre_save(&self) -> i32 {
-+        if self.is_hpet_enabled() {
-+            self.counter.set(self.get_ticks());
-+        }
-+
-+        /*
-+         * The number of timers must match on source and destination, but it was
-+         * also added to the migration stream.  Check that it matches the value
-+         * that was configured.
-+         */
-+        self.num_timers_save.set(self.num_timers.get());
-+        0
-+    }
-+
-+    fn post_load(&self, _version_id: u8) -> i32 {
-+        for timer in self.timers.iter().take(self.get_num_timers()) {
-+            let mut t = timer.borrow_mut();
-+
-+            t.cmp64 = t.calculate_cmp64(t.get_state().counter.get(), t.cmp);
-+            t.last = CLOCK_VIRTUAL.get_ns() - NANOSECONDS_PER_SECOND;
-+        }
-+
-+        // Recalculate the offset between the main counter and guest time
-+        if !self.hpet_offset_saved {
-+            self.hpet_offset
-+                .set(ticks_to_ns(self.counter.get()) - CLOCK_VIRTUAL.get_ns());
-+        }
-+
-+        0
-+    }
-+
-+    fn is_rtc_irq_level_needed(&self) -> bool {
-+        self.rtc_irq_level.get() != 0
-+    }
-+
-+    fn is_offset_needed(&self) -> bool {
-+        self.is_hpet_enabled() && self.hpet_offset_saved
-+    }
-+
-+    fn validate_num_timers(&self, _version_id: u8) -> bool {
-+        self.num_timers.get() == self.num_timers_save.get()
-+    }
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index 1b2b12eadd6..8c4a5bee3c1 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -200,13 +200,14 @@ pub const fn vmstate_varray_flag<T: VMState>(_: PhantomData<T>) -> VMStateFlags
+ /// and [`impl_vmstate_forward!`](crate::impl_vmstate_forward) help with this.
+ #[macro_export]
+ macro_rules! vmstate_of {
+-    ($struct_name:ty, $field_name:ident $([0 .. $num:ident $(* $factor:expr)?])? $(,)?) => {
++    ($struct_name:ty, $field_name:ident $([0 .. $num:ident $(* $factor:expr)?])? $(, $test_fn:expr)? $(,)?) => {
+         $crate::bindings::VMStateField {
+             name: ::core::concat!(::core::stringify!($field_name), "\0")
+                 .as_bytes()
+                 .as_ptr() as *const ::std::os::raw::c_char,
+             offset: $crate::offset_of!($struct_name, $field_name),
+             $(num_offset: $crate::offset_of!($struct_name, $num),)?
++            $(field_exists: $crate::vmstate_exist_fn!($struct_name, $test_fn),)?
+             // The calls to `call_func_with_field!` are the magic that
+             // computes most of the VMStateField from the type of the field.
+             info: $crate::info_enum_to_ref!($crate::call_func_with_field!(
+@@ -435,6 +436,38 @@ macro_rules! vmstate_unused {
+     }};
  }
  
- qom_isa!(HPETState: SysBusDevice, DeviceState, Object);
-@@ -895,11 +943,107 @@ impl ObjectImpl for HPETState {
-     ),
- }
- 
-+unsafe extern "C" fn hpet_rtc_irq_level_needed(opaque: *mut c_void) -> bool {
-+    // SAFETY:
-+    // the pointer is convertible to a reference
-+    let state: &HPETState = unsafe { NonNull::new(opaque.cast::<HPETState>()).unwrap().as_ref() };
-+    state.is_rtc_irq_level_needed()
-+}
-+
-+unsafe extern "C" fn hpet_offset_needed(opaque: *mut c_void) -> bool {
-+    // SAFETY:
-+    // the pointer is convertible to a reference
-+    let state: &HPETState = unsafe { NonNull::new(opaque.cast::<HPETState>()).unwrap().as_ref() };
-+    state.is_offset_needed()
-+}
-+
-+unsafe extern "C" fn hpet_pre_save(opaque: *mut c_void) -> c_int {
-+    // SAFETY:
-+    // the pointer is convertible to a reference
-+    let state: &mut HPETState =
-+        unsafe { NonNull::new(opaque.cast::<HPETState>()).unwrap().as_mut() };
-+    state.pre_save() as c_int
-+}
-+
-+unsafe extern "C" fn hpet_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
-+    // SAFETY:
-+    // the pointer is convertible to a reference
-+    let state: &mut HPETState =
-+        unsafe { NonNull::new(opaque.cast::<HPETState>()).unwrap().as_mut() };
++pub extern "C" fn rust_vms_test_field_exists<T, F: for<'a> FnCall<(&'a T, u8), bool>>(
++    opaque: *mut c_void,
++    version_id: c_int,
++) -> bool {
++    // SAFETY: the opaque was passed as a reference to `T`.
++    let owner: &T = unsafe { &*(opaque.cast::<T>()) };
 +    let version: u8 = version_id.try_into().unwrap();
-+    state.post_load(version) as c_int
++    F::call((owner, version))
 +}
 +
-+static VMSTATE_HPET_RTC_IRQ_LEVEL: VMStateDescription = VMStateDescription {
-+    name: c_str!("hpet/rtc_irq_level").as_ptr(),
-+    version_id: 1,
-+    minimum_version_id: 1,
-+    needed: Some(hpet_rtc_irq_level_needed),
-+    fields: vmstate_fields! {
-+        vmstate_of!(HPETState, rtc_irq_level),
-+    },
-+    ..Zeroable::ZERO
-+};
++pub type VMSFieldExistCb = unsafe extern "C" fn(
++    opaque: *mut std::os::raw::c_void,
++    version_id: std::os::raw::c_int,
++) -> bool;
 +
-+static VMSTATE_HPET_OFFSET: VMStateDescription = VMStateDescription {
-+    name: c_str!("hpet/offset").as_ptr(),
-+    version_id: 1,
-+    minimum_version_id: 1,
-+    needed: Some(hpet_offset_needed),
-+    fields: vmstate_fields! {
-+        vmstate_of!(HPETState, hpet_offset),
-+    },
-+    ..Zeroable::ZERO
-+};
++#[macro_export]
++macro_rules! vmstate_exist_fn {
++    ($struct_name:ty, $test_fn:expr) => {{
++        const fn test_cb_builder__<T, F: for<'a> $crate::callbacks::FnCall<(&'a T, u8), bool>>(
++            _phantom: ::core::marker::PhantomData<F>,
++        ) -> $crate::vmstate::VMSFieldExistCb {
++            let _: () = F::ASSERT_IS_SOME;
++            $crate::vmstate::rust_vms_test_field_exists::<T, F>
++        }
 +
-+static VMSTATE_HPET_TIMER: VMStateDescription = VMStateDescription {
-+    name: c_str!("hpet_timer").as_ptr(),
-+    version_id: 1,
-+    minimum_version_id: 1,
-+    fields: vmstate_fields! {
-+        vmstate_of!(HPETTimer, index),
-+        vmstate_of!(HPETTimer, config),
-+        vmstate_of!(HPETTimer, cmp),
-+        vmstate_of!(HPETTimer, fsb),
-+        vmstate_of!(HPETTimer, period),
-+        vmstate_of!(HPETTimer, wrap_flag),
-+        vmstate_of!(HPETTimer, qemu_timer),
-+    },
-+    ..Zeroable::ZERO
-+};
++        const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> {
++            ::core::marker::PhantomData
++        }
++        Some(test_cb_builder__::<$struct_name, _>(phantom__(&$test_fn)))
++    }};
++}
 +
-+const VALIDATE_TIMERS_NAME: &CStr = c_str!("num_timers must match");
-+
-+static VMSTATE_HPET: VMStateDescription = VMStateDescription {
-+    name: c_str!("hpet").as_ptr(),
-+    version_id: 2,
-+    minimum_version_id: 1,
-+    pre_save: Some(hpet_pre_save),
-+    post_load: Some(hpet_post_load),
-+    fields: vmstate_fields! {
-+        vmstate_of!(HPETState, config),
-+        vmstate_of!(HPETState, int_status),
-+        vmstate_of!(HPETState, counter),
-+        vmstate_of!(HPETState, num_timers_save).with_version_id(2),
-+        vmstate_validate!(HPETState, VALIDATE_TIMERS_NAME, HPETState::validate_num_timers),
-+        vmstate_struct!(HPETState, timers[0 .. num_timers], &VMSTATE_HPET_TIMER, BqlRefCell<HPETTimer>, HPETState::validate_num_timers).with_version_id(0),
-+    },
-+    subsections: vmstate_subsections! {
-+        VMSTATE_HPET_RTC_IRQ_LEVEL,
-+        VMSTATE_HPET_OFFSET,
-+    },
-+    ..Zeroable::ZERO
-+};
-+
- impl DeviceImpl for HPETState {
-     fn properties() -> &'static [Property] {
-         &HPET_PROPERTIES
-     }
- 
-+    fn vmsd() -> Option<&'static VMStateDescription> {
-+        Some(&VMSTATE_HPET)
-+    }
-+
-     const REALIZE: Option<fn(&Self)> = Some(Self::realize);
+ // FIXME: including the `vmsd` field in a `const` is not possible without
+ // the const_refs_static feature (stabilized in Rust 1.83.0).  Without it,
+ // it is not possible to use VMS_STRUCT in a transparent manner using
+@@ -445,7 +478,7 @@ macro_rules! vmstate_unused {
+ #[doc(alias = "VMSTATE_STRUCT")]
+ #[macro_export]
+ macro_rules! vmstate_struct {
+-    ($struct_name:ty, $field_name:ident $([0 .. $num:ident $(* $factor:expr)?])?, $vmsd:expr, $type:ty $(,)?) => {
++    ($struct_name:ty, $field_name:ident $([0 .. $num:ident $(* $factor:expr)?])?, $vmsd:expr, $type:ty $(, $test_fn:expr)? $(,)?) => {
+         $crate::bindings::VMStateField {
+             name: ::core::concat!(::core::stringify!($field_name), "\0")
+                 .as_bytes()
+@@ -458,6 +491,7 @@ macro_rules! vmstate_struct {
+             size: ::core::mem::size_of::<$type>(),
+             flags: $crate::bindings::VMStateFlags::VMS_STRUCT,
+             vmsd: $vmsd,
++            $(field_exists: $crate::vmstate_exist_fn!($struct_name, $test_fn),)?
+             ..$crate::zeroable::Zeroable::ZERO
+          } $(.with_varray_flag_unchecked(
+                   $crate::call_func_with_field!(
+@@ -514,43 +548,13 @@ macro_rules! vmstate_fields {
+     }}
  }
  
+-pub extern "C" fn rust_vms_test_field_exists<T, F: for<'a> FnCall<(&'a T, u8), bool>>(
+-    opaque: *mut c_void,
+-    version_id: c_int,
+-) -> bool {
+-    let owner: &T = unsafe { &*(opaque.cast::<T>()) };
+-    let version: u8 = version_id.try_into().unwrap();
+-    // SAFETY: the opaque was passed as a reference to `T`.
+-    F::call((owner, version))
+-}
+-
+-pub type VMSFieldExistCb = unsafe extern "C" fn(
+-    opaque: *mut std::os::raw::c_void,
+-    version_id: std::os::raw::c_int,
+-) -> bool;
+-
+ #[doc(alias = "VMSTATE_VALIDATE")]
+ #[macro_export]
+ macro_rules! vmstate_validate {
+     ($struct_name:ty, $test_name:expr, $test_fn:expr $(,)?) => {
+         $crate::bindings::VMStateField {
+             name: ::std::ffi::CStr::as_ptr($test_name),
+-            field_exists: {
+-                const fn test_cb_builder__<
+-                    T,
+-                    F: for<'a> $crate::callbacks::FnCall<(&'a T, u8), bool>,
+-                >(
+-                    _phantom: ::core::marker::PhantomData<F>,
+-                ) -> $crate::vmstate::VMSFieldExistCb {
+-                    let _: () = F::ASSERT_IS_SOME;
+-                    $crate::vmstate::rust_vms_test_field_exists::<T, F>
+-                }
+-
+-                const fn phantom__<T>(_: &T) -> ::core::marker::PhantomData<T> {
+-                    ::core::marker::PhantomData
+-                }
+-                Some(test_cb_builder__::<$struct_name, _>(phantom__(&$test_fn)))
+-            },
++            field_exists: $crate::vmstate_exist_fn!($struct_name, $test_fn),
+             flags: $crate::bindings::VMStateFlags(
+                 $crate::bindings::VMStateFlags::VMS_MUST_EXIST.0
+                     | $crate::bindings::VMStateFlags::VMS_ARRAY.0,
 -- 
 2.49.0
 
