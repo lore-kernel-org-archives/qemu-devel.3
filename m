@@ -4,53 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79637C369D9
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 May 2025 10:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFF15C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 May 2025 19:37:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBAOe-00057W-V6; Sat, 03 May 2025 06:47:05 -0400
+	id 1uBIel-000850-0A; Sat, 03 May 2025 15:36:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uBAOc-000575-Ma
- for qemu-devel@nongnu.org; Sat, 03 May 2025 06:47:02 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uBAOa-0006qO-6H
- for qemu-devel@nongnu.org; Sat, 03 May 2025 06:47:02 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A57BF55D26C;
- Sat, 03 May 2025 12:46:55 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 53dVJEWUMVC9; Sat,  3 May 2025 12:46:53 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id AF17155D267; Sat, 03 May 2025 12:46:53 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id AD619745682;
- Sat, 03 May 2025 12:46:53 +0200 (CEST)
-Date: Sat, 3 May 2025 12:46:53 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Paolo Bonzini <pbonzini@redhat.com>
-cc: qemu-devel@nongnu.org, wei.liu@kernel.org
-Subject: Re: [PATCH 2/4] target/i386/emulate: stop overloading
- decode->op[N].ptr
-In-Reply-To: <20250502214841.242584-3-pbonzini@redhat.com>
-Message-ID: <e3fe51ee-5953-e8f1-42b9-95cd857ed9da@eik.bme.hu>
-References: <20250502214841.242584-1-pbonzini@redhat.com>
- <20250502214841.242584-3-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uBIei-00084e-4y
+ for qemu-devel@nongnu.org; Sat, 03 May 2025 15:36:12 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uBIef-00076g-5F
+ for qemu-devel@nongnu.org; Sat, 03 May 2025 15:36:11 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-225477548e1so33886655ad.0
+ for <qemu-devel@nongnu.org>; Sat, 03 May 2025 12:36:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746300967; x=1746905767; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=46poKVfyXcj1Zy6VBI+f3TapzLJdZeetv6cFKL1lOFs=;
+ b=BxauF/Sbj0irmJxPgrqPU7GqIUe4+GTH59odNxXYYx4ORwExfh9na9Ih1Cm+d9tknv
+ cg2lV1lCUQlMswLk4SM2ljjOkL17YO9ic9lhlyZwlvusbuL8R1tr1gnSm6sQa0u0bB5S
+ 0Z0iNC/NgWJ/WsU+KWKqRxBekAJ4nQxqj9ZABLudWY2zi5GUqY0iRgMLa1+tqiRGIM+a
+ o5vSdVyyTrkAbrQu7ngi9Dde9D3b8NMsxJ/+OWNYriWV/9abRwj5qVGNEbxD+K5ioE/I
+ g/mNW1QYf3YmnBDpiA672kH6rt6LgrJ1UV0WYwLNw8Oweubl9VpVcKMNC5/q3f7u+RzS
+ Tyow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746300967; x=1746905767;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=46poKVfyXcj1Zy6VBI+f3TapzLJdZeetv6cFKL1lOFs=;
+ b=hLxYDJ6jZXAaGmkkkHfut8LJoxBatIdwGVoI8i0ZxQV01Va9KwAGrHOIQmqfCXsEZ7
+ mJcWYMzlSVG9Ar5cEjXyg8CTGe0+UUTp0OAYMwt9A5tH3dNTxb5PeIMv6R7F8/Jnefug
+ GPNohG5qOIFgHtCfXIVftvhnJYgtwS5U9acUQGkxcc+320ei3hNCU63OMQAmgrc3qTKY
+ 1WmTitA6PVCcVYL7oswgDKvoAICTz4IBrPb9kpRTTjbugcDy9cUEfq+BZcSkAa3rU41W
+ xH5e7YKtENhYGkidlVkn+DeXUfyTOQD+GKO+NefVv82cThGVtGtIYntyC4m3gEFI04LF
+ Atdg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXg5mEWfElPR4kSJIuKp+MUqpPY8Rel2cq2o1sJ0xorYnYS3CdZJ7RIsetvzKRvxAhtY4UCnkIFVg+6@nongnu.org
+X-Gm-Message-State: AOJu0Yy4auhwlnhutF8h1yjv5fvs9TniV2YUBx27ZskLhlgBM13TeSDa
+ JvS6Kmo+7y83Y3QzLYZdi/N4DS/+cN9vylqOpnqM8jma6MKWbjd93UCrivBAfO8=
+X-Gm-Gg: ASbGnctGNVw6SGHffNGTIV5VH8G5R42aUu4/3W2fLvBKSTBXzaC4Oz2ch3tfeovqshF
+ TLQMjctvb9XdA0V+FueILEqM1RqyEKkCYJogCqd2IbgdQyrI1PPCOORYnIIXfkk5K363SGo5aGa
+ fhWawKvkDKCPe2IM4tZCpjB0dU/A7IwQ09jdsH3mX96igGwczUo7Vz8zLU/Hgug0FJbmq0uvWCQ
+ VF+wv//BG5xafjISqDS+pp1WsJpoWcmR6ir+ixqaKBbeTO3qvqZtmVxya0s2PWn/esvw7Pj7skB
+ DRNwgGNWhRqWedU9B+mjnfv/OfvIs+WEEe7leAKJBPAf9s7/DGbuHA==
+X-Google-Smtp-Source: AGHT+IG7YClw5tK9D0RNIsYZNqILBlESABp1fCfoFx4l1RRyEom4+a5C2VRjhcLwSyIOuIE/XQ7rqQ==
+X-Received: by 2002:a17:903:2ac3:b0:223:3b76:4e22 with SMTP id
+ d9443c01a7336-22e1e8d33f1mr25488695ad.6.1746300966896; 
+ Sat, 03 May 2025 12:36:06 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22e1522f987sm27346875ad.232.2025.05.03.12.36.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 03 May 2025 12:36:06 -0700 (PDT)
+Message-ID: <f35f97fa-8fb5-400f-b126-10055a0bffe4@linaro.org>
+Date: Sat, 3 May 2025 12:36:05 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs: Don't define duplicate label in
+ qemu-block-drivers.rst.inc
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Dario Faggioli <dfaggioli@suse.com>
+References: <20250501093126.716667-1-peter.maydell@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250501093126.716667-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,47 +104,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2 May 2025, Paolo Bonzini wrote:
-> decode->op[N].ptr can contain either a host pointer (!) in CPUState
-> or a guest virtual address.  Pass the whole struct to read_val_ext
-> and write_val_ext, so that it can decide the contents based on the
-> operand type.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+On 5/1/25 2:31 AM, Peter Maydell wrote:
+> Sphinx requires that labels within documents are unique across the
+> whole manual.  This is because the "create a hyperlink" directive
+> specifies only the name of the label, not a filename+label.  Some
+> Sphinx versions will warn about duplicate labels, but even if there
+> is no warning there is still an ambiguity and no guarantee that the
+> hyperlink will be created to the right target.
+> 
+> For QEMU this is awkward, because we have various .rst.inc fragments
+> which we include into multiple .rst files.  If you define a label in
+> the .rst.inc file then it will be a duplicate label.  We have mostly
+> worked around this by not putting labels into those .rst.inc files,
+> or by adding "insert a label" functionality into the hxtool extension
+> (see commit 1eeb432a953b0 "doc/sphinx/hxtool.py: add optional label
+> argument to SRST directive").
+> 
+> Unfortunately in commit 7f6314427e78 ("docs/devel: add a codebase
+> section") we accidentally added a duplicate label, because not all
+> Sphinx versions warn about the mistake.
+> 
+> In this case the link was only from the developer docs codebase
+> summary, so as the simplest fix for the stable branch, we drop
+> the link entirely.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 1eeb432a953b0 "doc/sphinx/hxtool.py: add optional label argument to SRST directive"
+> Reported-by: Dario Faggioli <dfaggioli@suse.com>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
-> target/i386/emulate/x86_decode.h |   9 ++-
-> target/i386/emulate/x86_emu.h    |   8 +--
-> target/i386/emulate/x86_decode.c |  74 +++++++++----------
-> target/i386/emulate/x86_emu.c    | 119 ++++++++++++++++---------------
-> 4 files changed, 109 insertions(+), 101 deletions(-)
->
-> diff --git a/target/i386/emulate/x86_decode.h b/target/i386/emulate/x86_decode.h
-> index 87cc728598d..497cbdef9c7 100644
-> --- a/target/i386/emulate/x86_decode.h
-> +++ b/target/i386/emulate/x86_decode.h
-> @@ -266,7 +266,10 @@ typedef struct x86_decode_op {
->     int reg;
->     target_ulong val;
->
-> -    target_ulong ptr;
-> +    union {
-> +        target_ulong addr;
-> +        void *regptr;
-> +    };
-> } x86_decode_op;
->
-> typedef struct x86_decode {
-> @@ -301,8 +304,8 @@ uint64_t sign(uint64_t val, int size);
->
-> uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode);
->
-> -target_ulong get_reg_ref(CPUX86State *env, int reg, int rex_present,
-> -                         int is_extended, int size);
-> +void * get_reg_ref(CPUX86State *env, int reg, int rex_present,
-> +                    int is_extended, int size);
+> I have a proposal for how we could permit this link:
+>   https://patchew.org/QEMU/20250429163212.618953-1-peter.maydell@linaro.org/
+> but since that adds a new Sphinx extension it's a little heavyweight
+> to backport to the stable branches, so I thought I'd send out
+> this "just drop the link" patch as our fix for stable.
+> 
+>   docs/devel/codebase.rst                | 2 +-
+>   docs/system/qemu-block-drivers.rst.inc | 2 --
+>   2 files changed, 1 insertion(+), 3 deletions(-)
 
-Stray space after *, checkpatch should have cought it.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Regards,
-BALATON Zoltan
 
