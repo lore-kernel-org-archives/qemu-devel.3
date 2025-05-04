@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4693EC369DC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 05:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2306C369DC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 05:39:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBRv6-0002Ac-To; Sun, 04 May 2025 01:29:44 -0400
+	id 1uBRvL-0002Rx-To; Sun, 04 May 2025 01:29:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBRv2-00027R-Lm
- for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:40 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1uBRvB-0002GH-Ui
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:49 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBRuz-0004Lw-OW
- for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:40 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-73972a54919so3272945b3a.3
- for <qemu-devel@nongnu.org>; Sat, 03 May 2025 22:29:37 -0700 (PDT)
+ id 1uBRvA-0004Qe-4v
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:49 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-22e15aea506so21472225ad.1
+ for <qemu-devel@nongnu.org>; Sat, 03 May 2025 22:29:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746336576; x=1746941376; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746336586; x=1746941386; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=92Ra51BscJ7plqFLljDp4Imt4ck5QTPqHgH4Y/GteZ4=;
- b=aj+ZjZi3wTMYDOeMfsbqWz/WERjasSOiSrSuja024hS34Hk91QnlKiEmswbDdqtM0u
- UZE7OrqnXXP6qk74LlhqK/3KEl1N8/mvAE7nSeVQd2aexfaPsWTJ3olGSIXNi5CP9V0r
- JG8kIdy/o2R0IQ05i2C0k23YNJd9QTYjVv0A0qASDfcj2vDeCsXgLmla7V/NCbAnX8LE
- YEVXtQWBJxz4W0WRuOYK+MS3IgGec2iyVHoeqhFc5rOCZQ0dMciw6fBz164dqtLsx7zF
- HURAUpaoed9ceQ/xYh4pGHtKUTlNfOa2ve9pCJeY535iBqq26lMzadpVTTdPaChYmdb0
- GJGA==
+ bh=rVtP/RnhHG9awohdmhc7BZy6oUycGDI8ImSQa94LuXo=;
+ b=mYiHn8FuADTFGSnuB+i4vD4BqdpLpjVrQ78I9L8+sG76wR/vJAEin5Wlcr2doBolA/
+ dyYVOfqSUcgNpIvB5lYu/Z085O2w2mbJ/giinSWo7OksvrLJGWrN5fZ2uFHgeZGl+yn/
+ M7bxy+J/S3r8M7aHqPjuKFwKUgwKxZZ4G4TVLvAaH0/oVQ1NKRZ8bV5v6PHCr4Htrd3J
+ Ogy2PmO3sY737LC7GMBirXi8ozGyxWvTU5dOFsXWRrmp0efjUjyOZfaFUSgrOMS7C2Zd
+ Rc1hbVymUXbqYrPGNm/Z79qOpREuJH9xPrk+MGFLb4AgV2QvijB1v8r1UVj3HE2RW94+
+ Hanw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746336576; x=1746941376;
+ d=1e100.net; s=20230601; t=1746336586; x=1746941386;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=92Ra51BscJ7plqFLljDp4Imt4ck5QTPqHgH4Y/GteZ4=;
- b=c6paiIGdEPGQUz2zW8Ov8mfKzvMprSamnzZsNf1T1Y7oFNmLb/bMVTq9MCvilzd6kN
- ApKmQ7U4y2VzrvEnLsirme9MMrvTPv+4dflTm7qmTkaJDsZGBdFykN1F3ROBMSGLjHTr
- NJ9/62kvUlQx6akILzN9//0ByuFo/TbcuUPnMHi01KPwKIckqd4GTWN2U0LrDxha/+jn
- WavCglfkkapKoMTpsGvU9ekRJsv6TBJH2BdIor00f2yztajUMtEqK1p7yRQUboIdWtr6
- zXBlzZmLLLomhg+dXvkmPBRGgBFEFdDmN/jkRd4N5yrHu4UVA3XoKCFn6SdQJI7cN/hs
- Xdig==
-X-Gm-Message-State: AOJu0Yy+esCzY32c4ZzgPRJZHuBZeAfLJd4dyIAATUT7IK2J+fEA1+fe
- 4R9Vuld2fpWbsXxv9VJneMa7RyKhSSt0Qi7wtFd/MmSTopVj1OUESIPjspbyVF7Gq8LIA+GSz4i
- X++8=
-X-Gm-Gg: ASbGnct8IA4fEKu4FthHaundpHnaBtzOdfhlCnlySWodV8cBzrezyuA1Gp3TMbYg9vo
- NDLsSCU6/saXyeahL0Oh44B9p6HDrLQkJx++D4jEiUrXnF1AmrbkOvUgeAdyvUJ5Ml437kcv8p/
- FeqHkv2Y5M1v8QQkzDmcmy2Gjud/5vFyhCxtpqHVnQ26+UWwllu2oWkCWuoNHwM/av/E6Y436bK
- ZFKBLk9OSxx/8Om6447wP35ebpT6+Ps+usg7oNMbO3kkopLhlJ2IQrEZRJByum8J3OQQVKwjK9d
- ehHMrrl17p7NOh/4lXK6P73Tsp+QKCT8ei0+jAmG
-X-Google-Smtp-Source: AGHT+IHt0nxDsMjHoseXmw2UOIivIDWLffGkOy9QVpGII4Ziv7ZjjANeetTaX9aqaJQD3dqm3X0F7A==
-X-Received: by 2002:a05:6a00:279e:b0:73d:fa54:afb9 with SMTP id
- d2e1a72fcca58-7406f0ace76mr4520291b3a.7.1746336576180; 
- Sat, 03 May 2025 22:29:36 -0700 (PDT)
+ bh=rVtP/RnhHG9awohdmhc7BZy6oUycGDI8ImSQa94LuXo=;
+ b=WBlG1g/c7G99E27MvPIJ81loem8C6X907hVIeC59QTclICEtQJjsTbP8GyriaIeofi
+ nC86SU+ocCZWmHxm5oiqjuhgzSvVY6bx7hWjJoUbPzWP1AB0zVYncW4QNXTdqEqFYe+r
+ hzkLgfiIrsfFjibGfzgWaV1CSAS19Xn4/P7whCOijfeZtUKgQxujRJMhOjbpEkGBGnx0
+ TlgEaaLkm0rgf/IP7OhKTue6riTtpDYtNy19oqTFKJ6guoGlJl9QP7Zy0bBOKLzlu41X
+ LoE0tIb+x9GJPXrMMADoNssuUSc/4kvRglzi0EZg3BTuPrT5p+747m6Y2KeCbwOLCFOC
+ 6tFw==
+X-Gm-Message-State: AOJu0YwxRhs8o0dcHhj/WjsYGyaKoR+GVEwDBoZi79+KyMo5M+Ojrb4F
+ 94xhlGmAWkQ+c2/PfLpZcdc+d16FOe1LES5/myJVvxXeg0IB8x20wKVN6Pf1QgF8B9nZiW2dWtJ
+ 0ngg=
+X-Gm-Gg: ASbGncvH6zB+lrNGpkzyAfk060Pp2XZ0b/rkmUrUNw5cETP4sT+aOpjIhbX42uG4pYQ
+ EVoh1QNtTKo7zZxip1RhAP5ibVqhjYGXeNKXVj7ZxvRjMdosVVwC7Jt1EjDS1gZi4Pve89J3lKd
+ 3faI+OjN306eJRc5vZGIqX+UH+Xlt0PXkEVvgQ3nuJK/Vuah5HLdBVrwElmk0lleAUf6fqcvkj3
+ P14tF5PaPfQMsEyeXZT1ySkB/9G1KCB5EmaWu2InHGMMaIOCRkzSFOoclduU58+Ox8uJjxTP6NY
+ lDXF4rQDmV8owdy42ECR2xgJ0xU9mrARzYmaH0ZH
+X-Google-Smtp-Source: AGHT+IH8pStqcZBvvYFFxKQxcdicD1/a/lfc9xhDUZ+J9NMLqS3FmKOe7ccMNbifujt3rX7vnt1Q1Q==
+X-Received: by 2002:a17:902:d2d1:b0:224:194c:6942 with SMTP id
+ d9443c01a7336-22e1eaabf6amr44782545ad.34.1746336586599; 
+ Sat, 03 May 2025 22:29:46 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-740590207e3sm4400511b3a.94.2025.05.03.22.29.35
+ d2e1a72fcca58-740590207e3sm4400511b3a.94.2025.05.03.22.29.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 03 May 2025 22:29:35 -0700 (PDT)
+ Sat, 03 May 2025 22:29:46 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, anjo@rev.ng,
@@ -70,16 +70,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, anjo@rev.ng,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  alex.bennee@linaro.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 18/40] target/arm/debug_helper: only include common helpers
-Date: Sat,  3 May 2025 22:28:52 -0700
-Message-ID: <20250504052914.3525365-19-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 30/40] target/arm/cortex-regs: compile file once (system)
+Date: Sat,  3 May 2025 22:29:04 -0700
+Message-ID: <20250504052914.3525365-31-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250504052914.3525365-1-pierrick.bouvier@linaro.org>
 References: <20250504052914.3525365-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,32 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid pulling helper.h which contains TARGET_AARCH64.
-
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/debug_helper.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ target/arm/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
-index 473ee2af38e..357bc2141ae 100644
---- a/target/arm/debug_helper.c
-+++ b/target/arm/debug_helper.c
-@@ -12,10 +12,12 @@
- #include "cpu-features.h"
- #include "cpregs.h"
- #include "exec/exec-all.h"
--#include "exec/helper-proto.h"
- #include "exec/watchpoint.h"
- #include "system/tcg.h"
- 
-+#define HELPER_H "tcg/helper.h"
-+#include "exec/helper-proto.h.inc"
-+
- #ifdef CONFIG_TCG
- /* Return the Exception Level targeted by debug exceptions. */
- static int arm_debug_target_el(CPUARMState *env)
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 7db573f4a97..6e0327b6f5b 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -16,7 +16,6 @@ arm_system_ss = ss.source_set()
+ arm_common_system_ss = ss.source_set()
+ arm_system_ss.add(files(
+   'arm-qmp-cmds.c',
+-  'cortex-regs.c',
+   'machine.c',
+   'ptw.c',
+ ))
+@@ -38,6 +37,7 @@ arm_common_system_ss.add(when: 'TARGET_AARCH64', if_false: files(
+ arm_common_system_ss.add(files(
+   'arch_dump.c',
+   'arm-powerctl.c',
++  'cortex-regs.c',
+   'debug_helper.c',
+   'helper.c',
+   'vfp_fpscr.c',
 -- 
 2.47.2
 
