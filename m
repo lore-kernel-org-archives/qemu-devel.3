@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 236F7C3ABB7
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 21:59:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F204BC369DC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 21:59:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBhLM-0007QO-Ba; Sun, 04 May 2025 17:57:52 -0400
+	id 1uBhLc-0007fw-Mw; Sun, 04 May 2025 17:58:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uBhLJ-0007PJ-Fo
- for qemu-devel@nongnu.org; Sun, 04 May 2025 17:57:49 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1uBhLb-0007f9-2g
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 17:58:07 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uBhLI-0005Ay-04
- for qemu-devel@nongnu.org; Sun, 04 May 2025 17:57:49 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-225477548e1so38453785ad.0
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 14:57:47 -0700 (PDT)
+ id 1uBhLZ-0005EW-FF
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 17:58:06 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-22c33677183so43680535ad.2
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 14:58:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746395866; x=1747000666; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746395884; x=1747000684; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=70eq9g6WHBoTjhXQzmX0KiM0KlARnQpKuNIYy55yJxM=;
- b=lcTyW13cMyMAJMDOaoejvAAXrLtOHiObyA4CWnphunjA4KwTBUaSEypQJa2TjJvf3s
- AV0caAfzni2BMTWA+HqVadLWtSTGlhmMC6nSNckRo1llm/Oi6GO6dQub9TmOtRWSf50Q
- eya3I00gY6GaxQrrHcki/opqDGWj/kzM9zcLmUZESnGaEjQAvRmFwsVgoJWabsZ3Ws9B
- SUXqgiYfzjB1ENoOjaAPK/9POcAemk1Ds2mTvwVISAsWaC53L6JDeYy2vgmURTrjFE8O
- 8vdPXAo2PNlvC4Ns+Tu69oeDKWf2Bek+5WUkxbwT/bnev/aDXbfptB0LokYqovirZVGL
- bR2Q==
+ bh=yJ6sh3pLgJKtEU3rXRYV5JYEmSVW7VzWbjTxsoRblQU=;
+ b=u6TGHhkHWr6roR1I8L+WO2zNeAYMIBxw3xLct50spBmYj3YqnWtEs0DQlyZHzQRj2c
+ 21tu0glO8zo32/L73xqCvfTMdD3syDtsLB4GG7mkjGhe6/KlBEIWJlswXXAZxUaHEuvv
+ tYaOLmPHzO8cIfPBCr2oI+LfbWxE3W60ZMs4QBB845UR074DKcndiW6vUevadsofkK6k
+ SkqCNcRsH4ZgDjFmGhqJtj9PfQeGKzWTKQE9ovm6gu/GjvB4wUw//81UWBJI1M0E3H2r
+ v2/0MxbcR/g/PjE91DtTNxDS+aKYsg2tAPbFZFc47SHt4GkEmL0SsPGRTtC8zW9po0+e
+ k7XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746395866; x=1747000666;
+ d=1e100.net; s=20230601; t=1746395884; x=1747000684;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=70eq9g6WHBoTjhXQzmX0KiM0KlARnQpKuNIYy55yJxM=;
- b=oUaeLSEyAZJ9kiJ8a5A+8AEgX3QXG/eZ1l/9oUGAlbDeVs6foSJ3a5SC61kR3O2M7z
- yNdRldOmh7Cn4PvxN2B6VDr3c1moyAC7yJ5hnabNW3pgTUd7eMvevUOM4IvGZ9WjZdG2
- dxck4Oi68jEQKV5/pUshjdQR/K40coJzamJJX2/F8N6+kA8XC+S8xoD5yeZFv8i5JfbB
- 5QF7amjY7y7kk73RsyXnpgr6KaYKwQbVYnBLCd1klFKouKxOBPKotkstN8nlNEu+bvvf
- NUMMXec2WN3Y46md87G9IfrX2aSxN0V6r/TQIHvwcNHgQspgwwqR7Ss07Iw18j/s/Zdn
- Ol2w==
-X-Gm-Message-State: AOJu0YxFaeddy/zMax76ZxpG+tsp/rD6mLowflqoCEE1DSaUHWEWsT0I
- ZI9KcNgKGNCvHqbCm22Ux8IN2BWVLwjBjC2Um7p/UUlEl2RGf0kSvWanCguSE8Xz7iTb/WPCkCY
- h+5Y=
-X-Gm-Gg: ASbGncvZkz478Td4zRchzg6/EfTG+jHZ/eg3c+D92/nO5D9ZUU9BVr4bia8oK5t6aD1
- swE9MV4mrfzX5WaI6NlZQWK1cz8CVmi0UdRJSkqlRcH8zcxk2AMZfTTusZLXo8mDOvBKmI7ikHd
- OaMn22MTAwSgY81HtHHoRaG/UOA7GU1NcAjUTysUmsO/n772bHwcHbfVi1h/7oQATv3jOM5+sFn
- iMSeRBO0PwsaF+ZqtVF2oVBFjcYt20atqb1FjFAcdBQxsJvZvUaGVNnIM6BS9P8qNj2BlawgP34
- 1SLgXQ+1SvkDyW2uAR8fiP5RCpuQOQBbsQmAkdUMGHLH5LiL
-X-Google-Smtp-Source: AGHT+IH8qtHtLj8WpGKYcYxJcW8v5JenW5jMtdxO9YS6Ha1A7cnpPdznd6vRtZLIj+Z+zaK9MBxQyQ==
-X-Received: by 2002:a17:903:2f07:b0:21a:8300:b9d5 with SMTP id
- d9443c01a7336-22e1e918571mr73488125ad.23.1746395866010; 
- Sun, 04 May 2025 14:57:46 -0700 (PDT)
+ bh=yJ6sh3pLgJKtEU3rXRYV5JYEmSVW7VzWbjTxsoRblQU=;
+ b=i9MJ7jR4NTTwE8ErwoybaTF0d06SD4Zkr1jsR94JC1FoWhZBqQnaPDay67EorrYbpx
+ +1fouyRrWZhjCAgAOwfbykDxENGfefKfyUB71JT+aOCbHzMJ/3hgR8arsY9KZFzce1Lr
+ g4Xbx/EGtfroiT0jYyjvpHRwPQJUjt8zZ0/C51yEMgXxOgLwSm3nkPtZ/J0xiAd1LSQV
+ 2LQPXL2W1MghBfrsugJyY72+6FruJyth09qlDdmgh+ANA+HVOtKhBOaUPv3CnNu+y/W3
+ DjtO9sKJ7pi9JKhdOb1E/mhbtVzxBzZVwrrR7PAlab/39vdKn+prPwPfbON1D14T0qwp
+ vprQ==
+X-Gm-Message-State: AOJu0YyRxEkXRp66s9HOVo3KovywD1inVfx8VH9fX9BfpcBqRvDyXmQl
+ Seml5Y9YHUalEQPZNVJo0H47J/9CKZw1qUY1syumQSd4ZDOCALrMbWNTL3sL5ADPnBa8L6Ydzsj
+ DE+4=
+X-Gm-Gg: ASbGncuq5lqFLeCSaadbvEIzS+0+oHLAp0mRON692OylMmdJ72yF0D9hPQJNZ4PAML9
+ PkC5w6dd50rFVMZrd671YCe2/AxuIIHPl7GcquHqnnEzPLqlQMaesOs9XGW5ykjgbyL9OJeUI7O
+ YEEj5sr1221V9+XIxkmyeD0LuyCFG+tWLEdQJfcG1kWRLLl/ARze07ZD4dpLuj8jAoH6/NmSEBb
+ LJDVKmJfTV0rz0GYNxQmspUVHamXRw8ALuoJ7KmQSzHqMLLJ+8SKFnIQon+Thnkd5zhYi+GKZDF
+ yMA1ft8OvjuWFBLjt61EKGEu4IWSxlaZnF/eAs0K9Kafehte
+X-Google-Smtp-Source: AGHT+IFTAEMZjB78zEYVogYT/aTb+2aaCMQnggNO7XDMlAjClzSVCXsoxQzjdCAaycYD5MfxMW7g2w==
+X-Received: by 2002:a17:903:120e:b0:223:5241:f5ca with SMTP id
+ d9443c01a7336-22e1ea7c4cbmr63451245ad.20.1746395883827; 
+ Sun, 04 May 2025 14:58:03 -0700 (PDT)
 Received: from gromero0.. ([200.150.181.215]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e152204fesm41664875ad.137.2025.05.04.14.57.44
+ d9443c01a7336-22e152204fesm41664875ad.137.2025.05.04.14.58.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 May 2025 14:57:45 -0700 (PDT)
+ Sun, 04 May 2025 14:58:03 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org,
  gustavo.romero@linaro.org
-Subject: [PATCH] hw/isa/ich9: Remove stray empty comment
-Date: Sun,  4 May 2025 21:56:31 +0000
-Message-Id: <20250504215639.54860-3-gustavo.romero@linaro.org>
+Subject: [PATCH] hw/acpi/ich9: Remove ICH9_DEBUG macro
+Date: Sun,  4 May 2025 21:56:39 +0000
+Message-Id: <20250504215639.54860-11-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,25 +96,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove stray empty comment in IRQ routing function.
+Remove the ICH9_DEBUG macro, which is only used to dump the value of the
+pm_io_base parameter, passed to ich9_pm_iospace_update(). It provides
+little to no value and is not worth converting to a trace event.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- hw/isa/lpc_ich9.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/acpi/ich9.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-index 71afb45b63..304dffac32 100644
---- a/hw/isa/lpc_ich9.c
-+++ b/hw/isa/lpc_ich9.c
-@@ -182,7 +182,6 @@ static uint64_t ich9_cc_read(void *opaque, hwaddr addr,
- }
+diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
+index a07c9d115b..967b67485e 100644
+--- a/hw/acpi/ich9.c
++++ b/hw/acpi/ich9.c
+@@ -41,15 +41,6 @@
+ #include "hw/mem/pc-dimm.h"
+ #include "hw/mem/nvdimm.h"
  
- /* IRQ routing */
--/* */
- static void ich9_lpc_rout(uint8_t pirq_rout, int *pic_irq, int *pic_dis)
+-//#define DEBUG
+-
+-#ifdef DEBUG
+-#define ICH9_DEBUG(fmt, ...) \
+-do { printf("%s "fmt, __func__, ## __VA_ARGS__); } while (0)
+-#else
+-#define ICH9_DEBUG(fmt, ...)    do { } while (0)
+-#endif
+-
+ static void ich9_pm_update_sci_fn(ACPIREGS *regs)
  {
-     *pic_irq = pirq_rout & ICH9_LPC_PIRQ_ROUT_MASK;
+     ICH9LPCPMRegs *pm = container_of(regs, ICH9LPCPMRegs, acpi_regs);
+@@ -135,8 +126,6 @@ static const MemoryRegionOps ich9_smi_ops = {
+ 
+ void ich9_pm_iospace_update(ICH9LPCPMRegs *pm, uint32_t pm_io_base)
+ {
+-    ICH9_DEBUG("to 0x%x\n", pm_io_base);
+-
+     assert((pm_io_base & ICH9_PMIO_MASK) == 0);
+ 
+     pm->pm_io_base = pm_io_base;
 -- 
 2.34.1
 
