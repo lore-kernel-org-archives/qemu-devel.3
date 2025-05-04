@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8BDAC369DC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 16:07:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64F49C3ABB6
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 16:07:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBbms-0005LG-LC; Sun, 04 May 2025 12:01:54 -0400
+	id 1uBbms-0005KQ-2a; Sun, 04 May 2025 12:01:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uBbmj-00054e-Ru; Sun, 04 May 2025 12:01:46 -0400
+ id 1uBbmf-0004xA-4C; Sun, 04 May 2025 12:01:41 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uBbmh-0004DM-Rn; Sun, 04 May 2025 12:01:45 -0400
+ id 1uBbmb-0004BJ-JV; Sun, 04 May 2025 12:01:40 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 399C455D233;
- Sun, 04 May 2025 18:01:42 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id EF7EA55D238;
+ Sun, 04 May 2025 18:01:35 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id tjCJE73rT7ND; Sun,  4 May 2025 18:01:40 +0200 (CEST)
+ with ESMTP id LteAur2GItcj; Sun,  4 May 2025 18:01:33 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 43B3D55D230; Sun, 04 May 2025 18:01:40 +0200 (CEST)
-Message-ID: <46d59935aa5be7b14260dc480b8b917d44bdaaf1.1746374076.git.balaton@eik.bme.hu>
+ id EF04E55D23A; Sun, 04 May 2025 18:01:33 +0200 (CEST)
+Message-ID: <cdd698572440e376cb38b9ff96fc22b650101725.1746374076.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1746374076.git.balaton@eik.bme.hu>
 References: <cover.1746374076.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 13/16] hw/pci-host/raven: Simpify discontiguous IO access
+Subject: [PATCH 07/16] hw/pci-host/raven: Simplify PCI interrupt routing
 To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
-Date: Sun, 04 May 2025 18:01:40 +0200 (CEST)
+Date: Sun, 04 May 2025 18:01:33 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -60,158 +60,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PREP allows remapping of the 64k ISA IO addresses from the normal
-contiguous IO space into a discontiguous 8MB region and can switch
-between the two modes. We can implement this in a simpler way than is
-done currently using an io region that forwards access to the
-contiguous pci_io region and enabling/disabling the discontiguous
-region as needed.
+No need to use an or-irq to map interrupt lines to a single IRQ as the
+PCI code can handle this internally so simplify by dropping the or-irq.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/pci-host/raven.c | 88 ++++++++++++---------------------------------
- 1 file changed, 22 insertions(+), 66 deletions(-)
+ hw/pci-host/raven.c | 39 +++++++++++++++------------------------
+ hw/ppc/prep.c       |  5 ++++-
+ 2 files changed, 19 insertions(+), 25 deletions(-)
 
 diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-index 318400c595..476ae5bc65 100644
+index 51427553b2..a400a22df3 100644
 --- a/hw/pci-host/raven.c
 +++ b/hw/pci-host/raven.c
-@@ -42,17 +42,14 @@ struct PREPPCIState {
+@@ -30,11 +30,8 @@
+ #include "hw/pci/pci_device.h"
+ #include "hw/pci/pci_bus.h"
+ #include "hw/pci/pci_host.h"
+-#include "hw/qdev-properties.h"
+ #include "hw/intc/i8259.h"
+ #include "hw/irq.h"
+-#include "hw/or-irq.h"
+-#include "qom/object.h"
+ 
+ #define TYPE_RAVEN_PCI_DEVICE "raven"
+ #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
+@@ -44,8 +41,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PREPPCIState, RAVEN_PCI_HOST_BRIDGE)
+ struct PREPPCIState {
      PCIHostState parent_obj;
  
-     qemu_irq irq;
--    AddressSpace pci_io_as;
+-    OrIRQState *or_irq;
+-    qemu_irq pci_irqs[PCI_NUM_PINS];
++    qemu_irq irq;
+     AddressSpace pci_io_as;
      MemoryRegion pci_io;
--    MemoryRegion pci_io_non_contiguous;
-+    MemoryRegion pci_discontiguous_io;
-     MemoryRegion pci_memory;
-     MemoryRegion pci_intack;
-     MemoryRegion bm;
-     MemoryRegion bm_ram_alias;
-     MemoryRegion bm_pci_memory_alias;
-     AddressSpace bm_as;
--
--    int contiguous_map;
+     MemoryRegion pci_io_non_contiguous;
+@@ -183,16 +179,25 @@ static const MemoryRegionOps raven_io_ops = {
+     .valid.unaligned = true,
  };
  
- #define PCI_IO_BASE_ADDR    0x80000000  /* Physical address on main bus */
-@@ -99,63 +96,28 @@ static const MemoryRegionOps raven_intack_ops = {
-     },
- };
- 
--static inline hwaddr raven_io_address(PREPPCIState *s,
--                                      hwaddr addr)
-+/* Convert 8 MB non-contiguous address to 64k ISA IO address */
-+static inline hwaddr raven_io_addr(hwaddr addr)
++/*
++ * All four IRQ[ABCD] pins from all slots are tied to a single board
++ * IRQ, so our mapping function here maps everything to IRQ 0.
++ * The code in pci_change_irq_level() tracks the number of times
++ * the mapped IRQ is asserted and deasserted, so if multiple devices
++ * assert an IRQ at the same time the behaviour is correct.
++ *
++ * This may need further refactoring for boards that use multiple IRQ lines.
++ */
+ static int raven_map_irq(PCIDevice *pci_dev, int irq_num)
  {
--    if (s->contiguous_map == 0) {
--        /* 64 KB contiguous space for IOs */
--        addr &= 0xFFFF;
--    } else {
--        /* 8 MB non-contiguous space for IOs */
--        addr = (addr & 0x1F) | ((addr & 0x007FFF000) >> 7);
--    }
--
--    /* FIXME: handle endianness switch */
--
--    return addr;
-+    return ((addr & 0x007FFF000) >> 7) | (addr & 0x1F);
+-    return (irq_num + (pci_dev->devfn >> 3)) & 1;
++    return 0;
  }
  
--static uint64_t raven_io_read(void *opaque, hwaddr addr,
--                              unsigned int size)
-+static uint64_t raven_io_read(void *opaque, hwaddr addr, unsigned int size)
+ static void raven_set_irq(void *opaque, int irq_num, int level)
  {
 -    PREPPCIState *s = opaque;
--    uint8_t buf[4];
--
--    addr = raven_io_address(s, addr);
--    address_space_read(&s->pci_io_as, addr + PCI_IO_BASE_ADDR,
--                       MEMTXATTRS_UNSPECIFIED, buf, size);
--
--    if (size == 1) {
--        return buf[0];
--    } else if (size == 2) {
--        return lduw_le_p(buf);
--    } else if (size == 4) {
--        return ldl_le_p(buf);
--    } else {
--        g_assert_not_reached();
--    }
-+    uint64_t val = 0xffffffffULL;
-+
-+    memory_region_dispatch_read(opaque, raven_io_addr(addr), &val,
-+                                size_memop(size) | MO_LE,
-+                                MEMTXATTRS_UNSPECIFIED);
-+    return val;
++    qemu_irq *irq = opaque;
+ 
+-    qemu_set_irq(s->pci_irqs[irq_num], level);
++    qemu_set_irq(*irq, level);
  }
  
--static void raven_io_write(void *opaque, hwaddr addr,
--                           uint64_t val, unsigned int size)
-+static void raven_io_write(void *opaque, hwaddr addr, uint64_t val,
-+                           unsigned int size)
- {
--    PREPPCIState *s = opaque;
--    uint8_t buf[4];
--
--    addr = raven_io_address(s, addr);
--
--    if (size == 1) {
--        buf[0] = val;
--    } else if (size == 2) {
--        stw_le_p(buf, val);
--    } else if (size == 4) {
--        stl_le_p(buf, val);
--    } else {
--        g_assert_not_reached();
--    }
--
--    address_space_write(&s->pci_io_as, addr + PCI_IO_BASE_ADDR,
--                        MEMTXATTRS_UNSPECIFIED, buf, size);
-+    memory_region_dispatch_write(opaque, raven_io_addr(addr), val,
-+                                 size_memop(size) | MO_LE,
-+                                 MEMTXATTRS_UNSPECIFIED);
- }
- 
- static const MemoryRegionOps raven_io_ops = {
-@@ -204,7 +166,7 @@ static void raven_change_gpio(void *opaque, int n, int level)
- {
-     PREPPCIState *s = opaque;
- 
--    s->contiguous_map = level;
-+    memory_region_set_enabled(&s->pci_discontiguous_io, !!level);
- }
- 
- static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
-@@ -250,23 +212,17 @@ static void raven_pcihost_initfn(Object *obj)
+ static AddressSpace *raven_pcihost_set_iommu(PCIBus *bus, void *opaque,
+@@ -220,26 +225,12 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+     PCIHostState *h = PCI_HOST_BRIDGE(dev);
+     PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(dev);
      MemoryRegion *address_space_mem = get_system_memory();
- 
-     memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
--    memory_region_init_io(&s->pci_io_non_contiguous, obj, &raven_io_ops, s,
--                          "pci-io-non-contiguous", 0x00800000);
-+    memory_region_init_io(&s->pci_discontiguous_io, obj,
-+                          &raven_io_ops, &s->pci_io,
-+                          "pci-discontiguous-io", 8 * MiB);
-     memory_region_init(&s->pci_memory, obj, "pci-memory", 0x3f000000);
--    address_space_init(&s->pci_io_as, &s->pci_io, "raven-io");
+-    int i;
 -
 -    /*
--     * Raven's raven_io_ops use the address-space API to access pci-conf-idx
--     * (which is also owned by the raven device). As such, mark the
--     * pci_io_non_contiguous as re-entrancy safe.
+-     * According to PReP specification section 6.1.6 "System Interrupt
+-     * Assignments", all PCI interrupts are routed via IRQ 15
 -     */
--    s->pci_io_non_contiguous.disable_reentrancy_guard = true;
+-    s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
+-    object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
+-                            &error_fatal);
+-    qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
+-    sysbus_init_irq(dev, &s->or_irq->out_irq);
+-
+-    for (i = 0; i < PCI_NUM_PINS; i++) {
+-        s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
+-    }
  
-     /* CPU address space */
-     memory_region_add_subregion(address_space_mem, PCI_IO_BASE_ADDR,
-                                 &s->pci_io);
-     memory_region_add_subregion_overlap(address_space_mem, PCI_IO_BASE_ADDR,
--                                        &s->pci_io_non_contiguous, 1);
-+                                        &s->pci_discontiguous_io, 1);
-+    memory_region_set_enabled(&s->pci_discontiguous_io, false);
-     memory_region_add_subregion(address_space_mem, 0xc0000000, &s->pci_memory);
+     qdev_init_gpio_in(d, raven_change_gpio, 1);
  
-     /* Bus master address space */
++    sysbus_init_irq(dev, &s->irq);
+     h->bus = pci_register_root_bus(d, NULL, raven_set_irq, raven_map_irq,
+-                                   s, &s->pci_memory, &s->pci_io, 0, 4,
++                                   &s->irq, &s->pci_memory, &s->pci_io, 0, 1,
+                                    TYPE_PCI_BUS);
+ 
+     memory_region_init_io(&h->conf_mem, OBJECT(h), &pci_host_conf_le_ops, s,
+diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
+index 982e40e53e..d3365414d2 100644
+--- a/hw/ppc/prep.c
++++ b/hw/ppc/prep.c
+@@ -304,7 +304,10 @@ static void ibm_40p_init(MachineState *machine)
+     qdev_realize_and_unref(i82378_dev, BUS(pci_bus), &error_fatal);
+     qdev_connect_gpio_out(i82378_dev, 0,
+                           qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_INT));
+-
++    /*
++     * According to PReP specification section 6.1.6 "System Interrupt
++     * Assignments", all PCI interrupts are routed via IRQ 15
++     */
+     sysbus_connect_irq(pcihost, 0, qdev_get_gpio_in(i82378_dev, 15));
+     isa_bus = ISA_BUS(qdev_get_child_bus(i82378_dev, "isa.0"));
+ 
 -- 
 2.41.3
 
