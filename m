@@ -4,94 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E6FFC3ABAC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 16:17:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A4CAC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 16:17:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBc1k-00045L-14; Sun, 04 May 2025 12:17:17 -0400
+	id 1uBc28-0004Ek-Cw; Sun, 04 May 2025 12:17:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uBc1g-00044y-02
- for qemu-devel@nongnu.org; Sun, 04 May 2025 12:17:12 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uBc1e-0006vo-3A
- for qemu-devel@nongnu.org; Sun, 04 May 2025 12:17:11 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-74019695377so2960040b3a.3
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 09:17:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746375428; x=1746980228; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gPGn+MwZnc8xQd76t/xYLdPoUTnlVwwJ6Dg5FznPQUQ=;
- b=ydHiTSg+SbjbxN2PelS0QBIIvuv5kCH6EgRmhKn0LRr1d4+x4aRl59yu0Dk5aLP+Qv
- HbJHQ5VmHBtPLES8nLppP+MrsHXoJx6dTwBkvIvty7467xLPLXooHaUgJ4WEdDcXKPoM
- tbz/IgqBa8egSQ85pUPiLL2p6actqd7oJbwbK0tL1YtWPKkrDFwzqjOI1IpBXI/M2nS4
- HynSOKFvxnDiu/jeL+ow4knI1lG5LmGPThjTkX4w5r1kGjlblG4czwA02ktZ7AII/HJ8
- Gf3sxTFocTJ6Q9Zxq5xyb1YYh1gPX0qT1n723w5AsRZCWLKDxMRiyAvli8fmqB3g79no
- l4nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746375428; x=1746980228;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gPGn+MwZnc8xQd76t/xYLdPoUTnlVwwJ6Dg5FznPQUQ=;
- b=sZeUodnSJFDv1o/tyC6OF53CwJ5FlDT/wf/+ylL3zEwyam+EWkbh3ha/Y5guRtZx2l
- A+aUoXWM5lZEbXczl9IZaxo7uwUD05UuhEDxWtBWuU4wrkoPOVV3cbQ3D880/cteoVoe
- tK5YKB31YYef5X8JYhygNN2b0jKXOe/u0/eRPDKBLt5HTBz1Gz4vBGNzCFwwuf4l+kd3
- +iK23EROBiJwUJV3AGYJTbLQOwjfRjZIJE8cRuAg21NweNbq53iqUZJ/nEzXAIiuSVUh
- 15g8/fE2rK5ztVSIYyd8FSK1L1kPLRIdirvKDxKlJ3ah6tQKJbgaGnRhL+Zh3t1q76pi
- Ox4g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXFddSgt9ELp8XvReQoIabsch8X/ZciNq1sjSYOrdI4K0rQFkFJZcuUJWedtYURTjo1nqocCSAAFc1h@nongnu.org
-X-Gm-Message-State: AOJu0YwDu289T/dEeZR9HQWGPRNBwEtGFaM6kMi9k/Xfb8v+NpwPUKMs
- 52rNCqA0MMJfgEPYhZE5puqscQUnzF+D0hiaSPc5eRUTJ4hm6k0xcyxMBJj03uE=
-X-Gm-Gg: ASbGncuMBjnuYq7GPTg6ijdYK1xPZBDYU993E0WqJPCFb0iFKESZukW9kZ09BPF+ayG
- yOG9MXIb7wRdCl6kU5kzb6Wauql3AIWaxrTom9goE0bLc79e5NgA8AgV+2BXT9kDUzBtf1MIyG3
- 2cseWUGHsyVz5d2VHxAXpRfwX9OhpeMEjVULItw20IIS4yDGuV3Hvp1LffAap5J+i+f5qcT7Fd+
- XL3pMULVbG5BmUTcFd7zbIHbVXQQ81Ujmd+7jf/9inEh7vXk+wio+NtO05M/Sv07p4v5nEcleoz
- 4Jvs81HKEu31l1LJjlgN5u9GEwf9obknZlZwKbYK3udr1NJiZ5TAgUmCBjmzwrVrR7ueUJO1BXZ
- kd6tdEgU=
-X-Google-Smtp-Source: AGHT+IF3G5/bfGBl5sy8J3dBUbGQQ6KrLbeTzkDrhzSDPBYgiKocLSfoMUYlYUoHUsjZG5gmsH1W8g==
-X-Received: by 2002:a05:6a21:9614:b0:1f5:769a:a4bf with SMTP id
- adf61e73a8af0-20e97eaa02amr6564145637.36.1746375428049; 
- Sun, 04 May 2025 09:17:08 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b1fb3b7afd4sm3293173a12.33.2025.05.04.09.17.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 May 2025 09:17:07 -0700 (PDT)
-Message-ID: <5b152664-a752-4be8-aa15-8c71c040b026@linaro.org>
-Date: Sun, 4 May 2025 09:17:05 -0700
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uBc26-0004DV-OB
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 12:17:38 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uBc24-0006yu-4r
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 12:17:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746375456; x=1777911456;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=XL4KqaA98CFbohx2F7VXhlRfmY/0MsG/v9FlzpoYTxQ=;
+ b=YuAJWPY/Ci2E2Wp93nnqkotE98LQGgczI/qf3n9iCLAZ56xmPMr/QEQS
+ EkZPpYCxZ6e9O91K2OdlZF24zlok5kiLAaCvoFuvktPPK3SDGzuX+qtJL
+ +ozY9fYl4z442ltZLZsk08DDSDG1BYpB29c4KO/2+a6rjemVSE6WAe8hA
+ 7Gk1tj4048Z1kqFmmD/9JsaRFVzjUgA7d+gsQF97uTcsG1MUc0EVnyF0A
+ MZiqJx7rcjKob4Q5FdhOF82ThtXv8HEUl5ERG1GLfVOEKd/N23j5+CzGG
+ 5WxXTy5HEUX3sJnNaSl0y8YMscSClxZwUImlGhZpPwXgsRXPlz8wf2xX1 Q==;
+X-CSE-ConnectionGUID: LMXMJfJZS5i+rsjNsAXsQQ==
+X-CSE-MsgGUID: uG1nTGjUTa+uvlp3oIUHfw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11423"; a="51643718"
+X-IronPort-AV: E=Sophos;i="6.15,262,1739865600"; d="scan'208";a="51643718"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 May 2025 09:17:32 -0700
+X-CSE-ConnectionGUID: 3o9nrQ5KS22DSyItOtFSkQ==
+X-CSE-MsgGUID: qU3PEyUBS8WlyItRShmf5g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,262,1739865600"; d="scan'208";a="135015103"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa007.fm.intel.com with ESMTP; 04 May 2025 09:17:30 -0700
+Date: Mon, 5 May 2025 00:38:30 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: Re: [PATCH v8 45/55] i386/tdx: Add TDX fixed1 bits to supported CPUIDs
+Message-ID: <aBeYBtWcteGBDsuN@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-46-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 16/40] target/arm/helper: use vaddr instead of
- target_ulong for probe_access
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, anjo@rev.ng,
- kvm@vger.kernel.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- alex.bennee@linaro.org
-References: <20250504052914.3525365-1-pierrick.bouvier@linaro.org>
- <20250504052914.3525365-17-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250504052914.3525365-17-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250401130205.2198253-46-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.411,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,28 +90,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/3/25 22:28, Pierrick Bouvier wrote:
-> +++ b/target/arm/tcg/translate-a64.c
-> @@ -258,7 +258,7 @@ static void gen_address_with_allocation_tag0(TCGv_i64 dst, TCGv_i64 src)
->   static void gen_probe_access(DisasContext *s, TCGv_i64 ptr,
->                                MMUAccessType acc, int log2_size)
->   {
-> -    gen_helper_probe_access(tcg_env, ptr,
-> +    gen_helper_probe_access(tcg_env, (TCGv_vaddr) ptr,
->                               tcg_constant_i32(acc),
->                               tcg_constant_i32(get_mem_index(s)),
->                               tcg_constant_i32(1 << log2_size));
+On Tue, Apr 01, 2025 at 09:01:55AM -0400, Xiaoyao Li wrote:
+> Date: Tue,  1 Apr 2025 09:01:55 -0400
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: [PATCH v8 45/55] i386/tdx: Add TDX fixed1 bits to supported CPUIDs
+> X-Mailer: git-send-email 2.34.1
+> 
+> TDX architecture forcibly sets some CPUID bits for TD guest that VMM
+> cannot disable it. They are fixed1 bits.
+> 
+> Fixed1 bits are not covered by tdx_caps.cpuid (which only contians the
+> directly configurable bits), while fixed1 bits are supported for TD guest
+> obviously.
+> 
+> Add fixed1 bits to tdx_supported_cpuid. Besides, set all the fixed1
+> bits to the initial set of KVM's support since KVM might not report them
+> as supported.
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+>  target/i386/cpu.h          |   2 +
+>  target/i386/kvm/kvm_i386.h |   7 ++
+>  target/i386/kvm/tdx.c      | 132 +++++++++++++++++++++++++++++++++++++
+>  target/i386/sev.c          |   5 --
+>  4 files changed, 141 insertions(+), 5 deletions(-)
+ 
+LGTM, (only some nits)
 
-This cast is incorrect.
-You need something akin to tcg_gen_trunc_i64_ptr.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-Alternately, do not create TCGv_vaddr as a distinct type,
-but simply a #define for either TCGv_{i32,i64}.
+> +    .entries[3] = {
+> +        .function = 0x7,
+> +        .index = 2,
+> +        .flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX,
+> +        .edx = (1U << 0) | (1U << 1) | (1U << 2) | (1U << 4),
 
-In this case, it'll be TCGv_i64 and everything will match.
+Missed to use macro?
 
+.edx = CPUID_7_2_EDX_PSFD | CPUID_7_2_EDX_IPRED_CTRL |
+       CPUID_7_2_EDX_RRSBA_CTRL | CPUID_7_2_EDX_BHI_CTRL
 
-r~
+> +    },
+> +    .entries[4] = {
+> +        .function = 0xD,
+> +        .index = 0,
+> +        .flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX,
+> +        .eax = XSTATE_FP_MASK | XSTATE_SSE_MASK,
+> +    },
+> +    .entries[5] = {
+> +        .function = 0xD,
+> +        .index = 1,
+> +        .flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX,
+> +        .eax = CPUID_XSAVE_XSAVEOPT | CPUID_XSAVE_XSAVEC|
+> +               CPUID_XSAVE_XGETBV1 | CPUID_XSAVE_XSAVES,
+> +    },
+> +    .entries[6] = {
+> +        .function = 0x80000001,
+> +        .index = 0,
+> +        .ecx = CPUID_EXT3_LAHF_LM | CPUID_EXT3_ABM | CPUID_EXT3_3DNOWPREFETCH,
+> +        /* strictly speaking, SYSCALL is not fixed1 bit since it depends on
 
+style nit?
+
+/*
+ * strictly ...
+ */
+
+> +         * the CPU to be in 64-bit mode. But here fixed1 is used to serve the
+> +         * purpose of supported bits for TDX. In this sense, SYACALL is always
+> +         * supported.
+> +         */
+> +        .edx = CPUID_EXT2_SYSCALL | CPUID_EXT2_NX | CPUID_EXT2_PDPE1GB |
+> +               CPUID_EXT2_RDTSCP | CPUID_EXT2_LM,
+> +    },
+> +    .entries[7] = {
+> +        .function = 0x80000007,
+> +        .index = 0,
+> +        .edx = CPUID_APM_INVTSC,
+> +    },
+> +};
+> +
+
+...
+
+> diff --git a/target/i386/sev.c b/target/i386/sev.c
+> index a6c0a697250b..217b19ad7bc6 100644
+> --- a/target/i386/sev.c
+> +++ b/target/i386/sev.c
+> @@ -214,11 +214,6 @@ static const char *const sev_fw_errlist[] = {
+>  /* <linux/kvm.h> doesn't expose this, so re-use the max from kvm.c */
+>  #define KVM_MAX_CPUID_ENTRIES 100
+
+This macro can also be cleaned up in this patch or in your patch 5.
 
 
