@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98D3FC369DC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 20:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9CEBC3ABB0
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 20:57:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBgOr-0008Mz-L4; Sun, 04 May 2025 16:57:27 -0400
+	id 1uBgOx-0008PA-CI; Sun, 04 May 2025 16:57:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uBgOl-0008Kx-7n
- for qemu-devel@nongnu.org; Sun, 04 May 2025 16:57:20 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1uBgOo-0008LS-BW
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 16:57:23 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uBgOj-0006vo-Bz
- for qemu-devel@nongnu.org; Sun, 04 May 2025 16:57:18 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-22928d629faso34754075ad.3
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 13:57:16 -0700 (PDT)
+ id 1uBgOm-0006wF-DK
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 16:57:21 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-224100e9a5cso51794745ad.2
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 13:57:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746392235; x=1746997035; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HD+imtZlzHGDOgF1Aio82lZgJj3Y9FMrRVGZbJJ31CM=;
- b=M1XQ//+SCPN413TrWuLt1eBBbtc1ObLQ6MnHkrgY0p17NVORsjJj7ynYDLXItMt73z
- MhmNmrK4FnVuAGsbMScUlOzZkKFEC2nZetBsVpXixSTa/u+h+E1PZWwDK9al/hdGi3AM
- vQOFpHLA2bMqx70V9dEk8OFV/BdacS8anlAZODh9dx0ciWKUI40LOz8piEqIxhQfErVj
- +MscB6GPFmVfpbeuh0vpaXzdFPrZzUC1ly/BnoIXDvm7saUeQ9pqQ5adoAqY04Ncuy8L
- y0MpFE3u41dplzOWF0bwYGdqTeZVrzx8l3wLJI8BenoBbxV+UypvsUieNW9weV+h10JT
- WWIQ==
+ d=linaro.org; s=google; t=1746392239; x=1746997039; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=el8ZwnuFADKnWT5Jx67GSOlo5+a9PaEYQq8A/ViamLA=;
+ b=UttDiJsLtPOGIV2Nk034IRbQb1wUNDHsuv1rmrapK0+kzKfbqmgGY3x13JndfNFtRf
+ fOBne8X7dTHvTOj2+dJTJD7YhXGkFIgjT9gWS+zlEJ/bWX/7QFits31wanKC+ocGk0cV
+ US3wiVaXdnfb7aAfpXPJtPMNrvxXL8kauolkEKdJPI7O1PXqDrZUHToNlgumHMQ+cgeG
+ V/cVqxS0ePEVxaPrd9bcpumaCYJ38RfYWNia3PZFmPyEI98K2q6/A65S3n5WufDgD/CI
+ YjpZHPNABGp9uoukgyGZN8kcyMfPI1fV/8yYAsvoFA5g7AiF3Sr62JXCssKyv91OX7IP
+ O+AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746392235; x=1746997035;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HD+imtZlzHGDOgF1Aio82lZgJj3Y9FMrRVGZbJJ31CM=;
- b=rTjOmL65e+a2oOosI8b4RVlMyaIGNIncWZvlUF205u4exINjBqrLzQn+L0lEdXVVO7
- Lr0G2AeKwvQSAdpW41NkkuYjg6GL+7opEDqXFQdMadgStqIRo2OJ7hoFPMFq+e99ub4K
- SO73PgcgG+8Sc0+UADrCbnzRrVs2g0q+5WjPqrbCkvJC/YuYOLeUN2v1XkHjws8o+8+x
- /l8ihD2l0t8GerNJI8xCC5govsdbJVhQ6D3iM6zMKSsfr3SDNsqjx5nk6XfB50iiIFh0
- Mf4CU6GTLDRQwG3szv5lllyj9Q8yEsEZg1YKmwWtDFwOYHf8xthUUWVIueh07NNP7kwr
- 8ZcA==
-X-Gm-Message-State: AOJu0Yw5MTverlf6d4rYtQ37QB+auEJL4TSz6Z0p7BAdobTrh+8iSYOG
- cvYAHB8TisivoZPBE6yXJhvCf/04LZDHeoaZO8P8LoDBnOTd5EtcN4+xFUw/P9tVD7ZX0kRR1us
- j
-X-Gm-Gg: ASbGncuPoIOHp3fzcA4mSNnCgewDlnPjDPa8UnkGqYBYvslGjjTQWDqBcQ//5HqJL1z
- kYrAJNobq5cEz1Y4BEQGsNHj18Wbci78Ua+SmxBo5VqLt/TJXmqO7PX/iQanKfi5QGeUfhtvNCQ
- ZkyoZ/vm/uHFTP0ATXfeDa/G5jziDkn97eKlGDFSbe92D4qFuBlTlQl/IndnjTEXMLX/dQC/wO/
- cODiQHnKFXJR2H1Tu5QZz0o1HHnFwBXeDrhnMkhMbwNxH5fTFnWINI+bqXaY115/TPJzZ9pOUgz
- kozTB5oGmpffnj/SFlS3QiqPKPJN/wKzBxotB63GOVZEC4E1ncdrLC8+QMPnDJJ1sXE/eI6DTXK
- 6uhKozXupUw==
-X-Google-Smtp-Source: AGHT+IEJRPPx1t7sQfQkaHKwDtwXU9RMS6U7H3RrJWUd6onfWc1kP82ICfmTGrLN8uRzxmNtXapoVA==
-X-Received: by 2002:a17:902:ce89:b0:224:826:277f with SMTP id
- d9443c01a7336-22e1ea61bddmr65100935ad.33.1746392235393; 
- Sun, 04 May 2025 13:57:15 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746392239; x=1746997039;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=el8ZwnuFADKnWT5Jx67GSOlo5+a9PaEYQq8A/ViamLA=;
+ b=Wm1AIhi1BOYwyUHBxIE3HArJDTGIDj2fzh8GJMgyVSuX7znHiNbYcFO6awZdy0tjsx
+ B2B+Y82r+sV7p5/rSqQ8H/rSMyDpuWJTtWVdSZM6cNrA4bgGjeSHXF3VXlyA9EF6qcEs
+ L/A/eCgBB5Dg46QtFyGGbd/U4wW0qUIk3YaYh/8sr4ZBrka8lmZVyP5CB/6dGmZNzm8R
+ i22PYxdKdlZz6h0tWpZsi5IqeYx5wuiVA2/kJjhN5YvgU8Vp79oYld3fqtK4fEyzh54/
+ zjhJaQ4IGUdLe55LZWOPuvr9o5fQcvzkaVze4kPvI+osF/UrxiIGEH1PfdU0hB/dA+BC
+ 9F+g==
+X-Gm-Message-State: AOJu0Yzii+I9Kaebgt3Q1oil4izahOjTYbM9xe0AH5XQUHivzF5R5zYl
+ Lbok3ggThEKALTJSJIQKyXmOaTcvXzes95bnB1IM9Mf3KfkUjh7lIKwprOF8dCoPAJFV1YXDi8D
+ O
+X-Gm-Gg: ASbGncsZeu7B+FxoD993IfzapZypqjNoHh4sUciCur37uy1YvThCexaHtWbf4MsjWjJ
+ sDD9xqgmzr7CH6QSjKmB7UmZhgkeGWMVobLvUvyqgU2rq42vk1ShEqT9uEN8hZmuK84tDH20Gmc
+ gxNwWI7nmFCCnpcwbI9154d3AMc8o576NRBimUC9J1FKvCou5pOPXXEvHdG9hb8XCo96oTyRsDM
+ 9cwVhHKl+RERqGUjboauMy/zR269HjvGVs9jhX+NXl5+MVsFJshM6EmcYi/NyUCbDjsW0ebr0Mn
+ DlD3lxTbvWd01T2/rosgjo3QrSsYPf8TIhIzhkaLT+tP40UH5hE/PFEVoDxSA7dkJPMnZtoyx0M
+ =
+X-Google-Smtp-Source: AGHT+IHFqNOGFupG6vZZ04mTDkDLvR6mLVxc6zcIXa1r5VBpqbhjhIcrcaMe6SE/huYdsORxybyxRA==
+X-Received: by 2002:a17:902:ec85:b0:21f:988d:5758 with SMTP id
+ d9443c01a7336-22e1ea61942mr69746255ad.35.1746392238999; 
+ Sun, 04 May 2025 13:57:18 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e150eadfcsm41346425ad.32.2025.05.04.13.57.14
+ d9443c01a7336-22e150eadfcsm41346425ad.32.2025.05.04.13.57.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 May 2025 13:57:14 -0700 (PDT)
+ Sun, 04 May 2025 13:57:18 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: foss@percivaleng.com
-Subject: [PATCH 00/12] accel/tcg: Fix cross-page pointer wrapping issue
-Date: Sun,  4 May 2025 13:57:01 -0700
-Message-ID: <20250504205714.3432096-1-richard.henderson@linaro.org>
+Cc: foss@percivaleng.com,
+	qemu-arm@nongnu.org
+Subject: [PATCH 04/12] target/arm: Fill in TCGCPUOps.pointer_wrap
+Date: Sun,  4 May 2025 13:57:05 -0700
+Message-ID: <20250504205714.3432096-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250504205714.3432096-1-richard.henderson@linaro.org>
+References: <20250504205714.3432096-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,60 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As detailed in
+For a-profile, check A32 vs A64 state.
+For m-profile, use cpu_pointer_wrap_uint32.
 
-https://lore.kernel.org/qemu-devel/174595764300.3422.13156465553505851834-0@git.sr.ht/
+Cc: qemu-arm@nongnu.org
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/cpu.c         | 24 ++++++++++++++++++++++++
+ target/arm/tcg/cpu-v7m.c |  1 +
+ 2 files changed, 25 insertions(+)
 
-there's an issue with an unaligned access that falls off
-the end of the last page.  To solve this, we need to know
-about the state of the cpu, so add a new target hook.
-
-There are arguments to the hook that are currently unused,
-but would appear to come in handy for AArch64 v9.5 FEAT_CPA2,
-which we do not yet implement.
-
-
-r~
-
-
-Richard Henderson (12):
-  accel/tcg: Add TCGCPUOps.pointer_wrap
-  target: Use cpu_pointer_wrap_notreached for strict align targets
-  target: Use cpu_pointer_wrap_uint32 for 32-bit targets
-  target/arm: Fill in TCGCPUOps.pointer_wrap
-  target/i386: Fill in TCGCPUOps.pointer_wrap
-  target/loongarch: Fill in TCGCPUOps.pointer_wrap
-  target/mips: Fill in TCGCPUOps.pointer_wrap
-  target/ppc: Fill in TCGCPUOps.pointer_wrap
-  target/riscv: Fill in TCGCPUOps.pointer_wrap
-  target/s390x: Fill in TCGCPUOps.pointer_wrap
-  target/sparc: Fill in TCGCPUOps.pointer_wrap
-  accel/tcg: Assert TCGCPUOps.pointer_wrap is set
-
- include/accel/tcg/cpu-ops.h | 13 +++++++++++++
- accel/tcg/cpu-exec.c        |  1 +
- accel/tcg/cputlb.c          | 22 ++++++++++++++++++++++
- target/alpha/cpu.c          |  1 +
- target/arm/cpu.c            | 24 ++++++++++++++++++++++++
- target/arm/tcg/cpu-v7m.c    |  1 +
- target/avr/cpu.c            |  6 ++++++
- target/hppa/cpu.c           |  1 +
- target/i386/tcg/tcg-cpu.c   |  7 +++++++
- target/loongarch/cpu.c      |  7 +++++++
- target/m68k/cpu.c           |  1 +
- target/microblaze/cpu.c     |  1 +
- target/mips/cpu.c           |  9 +++++++++
- target/openrisc/cpu.c       |  1 +
- target/ppc/cpu_init.c       |  7 +++++++
- target/riscv/tcg/tcg-cpu.c  | 26 ++++++++++++++++++++++++++
- target/rx/cpu.c             |  1 +
- target/s390x/cpu.c          |  9 +++++++++
- target/sh4/cpu.c            |  1 +
- target/sparc/cpu.c          | 13 +++++++++++++
- target/tricore/cpu.c        |  1 +
- target/xtensa/cpu.c         |  1 +
- 22 files changed, 154 insertions(+)
-
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 45cb6fd7ee..18edcf49c6 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2710,6 +2710,29 @@ static const struct SysemuCPUOps arm_sysemu_ops = {
+ #endif
+ 
+ #ifdef CONFIG_TCG
++#ifndef CONFIG_USER_ONLY
++static vaddr aprofile_pointer_wrap(CPUState *cs, int mmu_idx,
++                                   vaddr result, vaddr base)
++{
++    /*
++     * The Stage2 and Phys indexes are only used for ptw on arm32,
++     * and all pte's are aligned, so we never produce a wrap for these.
++     * Double check that we're not truncating a 40-bit physical address.
++     */
++    assert((unsigned)mmu_idx < (ARMMMUIdx_Stage2_S & ARM_MMU_IDX_COREIDX_MASK));
++
++    if (!is_a64(cpu_env(cs))) {
++        return (uint32_t)result;
++    }
++
++    /*
++     * TODO: For FEAT_CPA2, decide how to we want to resolve
++     * Unpredictable_CPACHECK in AddressIncrement.
++     */
++    return result;
++}
++#endif /* !CONFIG_USER_ONLY */
++
+ static const TCGCPUOps arm_tcg_ops = {
+     .mttcg_supported = true,
+     /* ARM processors have a weak memory model */
+@@ -2729,6 +2752,7 @@ static const TCGCPUOps arm_tcg_ops = {
+     .untagged_addr = aarch64_untagged_addr,
+ #else
+     .tlb_fill_align = arm_cpu_tlb_fill_align,
++    .pointer_wrap = aprofile_pointer_wrap,
+     .cpu_exec_interrupt = arm_cpu_exec_interrupt,
+     .cpu_exec_halt = arm_cpu_exec_halt,
+     .cpu_exec_reset = cpu_reset,
+diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+index 95b23d9b55..8e1a083b91 100644
+--- a/target/arm/tcg/cpu-v7m.c
++++ b/target/arm/tcg/cpu-v7m.c
+@@ -249,6 +249,7 @@ static const TCGCPUOps arm_v7m_tcg_ops = {
+     .record_sigbus = arm_cpu_record_sigbus,
+ #else
+     .tlb_fill_align = arm_cpu_tlb_fill_align,
++    .pointer_wrap = cpu_pointer_wrap_uint32,
+     .cpu_exec_interrupt = arm_v7m_cpu_exec_interrupt,
+     .cpu_exec_halt = arm_cpu_exec_halt,
+     .cpu_exec_reset = cpu_reset,
 -- 
 2.43.0
 
