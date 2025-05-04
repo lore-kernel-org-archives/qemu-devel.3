@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F9D7C369DC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 21:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A0FEC3ABB0
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 21:59:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBhLH-0007Nm-05; Sun, 04 May 2025 17:57:47 -0400
+	id 1uBhLS-0007W8-92; Sun, 04 May 2025 17:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uBhLF-0007NV-3U
- for qemu-devel@nongnu.org; Sun, 04 May 2025 17:57:45 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1uBhLP-0007T2-Ho
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 17:57:55 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uBhLD-0005AR-FR
- for qemu-devel@nongnu.org; Sun, 04 May 2025 17:57:44 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-22401f4d35aso42950245ad.2
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 14:57:42 -0700 (PDT)
+ id 1uBhLO-0005CE-2G
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 17:57:55 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2264aefc45dso58852965ad.0
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 14:57:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746395861; x=1747000661; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746395872; x=1747000672; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8rB/8xBZmswHJCiwCgkX6MTRXJBKKdtzkzYjbWxeAqk=;
- b=jeFTCCw12a3RJuZ+DgZN/3LgS1MK0jokN9K431a1Rir09ZOvJGaDMXmkauMms82tFB
- swNq0Q3rW/XWBEONoqa+G+JT08PFxb+n2BfTYrkDLELYvZnCTk+8gZ6//qtVKDp6b4jx
- 3/EXqm67Rru+7oqWat3t8afTy/N1A9kqfAsowrHhypjcRb+XvSbwag0eWoIxNcAh1nBb
- cPBsCV/UfuaJLNy4MpJeZ1DlJDlK+rDgiCCz3ffAy+JOlLFM2F1hF3E1BI331s418gZ0
- IUwptu8LPQ5wRkc2PHZnYoLE5YLZwOCdfieSNK7/hMFtPpHINYEDgYxHbLyboHpVTgo7
- qMKw==
+ bh=/tk0gbWoG4ApvXZ5c0JKBgUdcITDobE9RIrWnb6spIQ=;
+ b=uQ+eRlOtBzBq7CikOTB055G8LygEOkXihgGfPUQMtIW3HLQaDquot6F5pHZbqBFVC2
+ chgyJYwYWWgngWLvLgVF0bIWiN2l+o77dngAONAF1MqJHee81nJDld/979Ij8wB23iV9
+ RtoqZlDdyEezkUlIG08ddtZpHTJlHis9ijHT2oDMuvP8/02kbV4/qczWZdDsDzhGq7K5
+ ueWg+HF812GxrZLkIuQKXuJr0WcnjmCPSBjU1eNA8zGoQjCVffPGvOuPcj5XV9Io2awU
+ E6dKii4w/IHYNG7F02YbFI/A6AOkI6M+wvEsKaNUU4pgJjOEY749HGwP3O7YDduGE76r
+ vjfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746395861; x=1747000661;
+ d=1e100.net; s=20230601; t=1746395872; x=1747000672;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=8rB/8xBZmswHJCiwCgkX6MTRXJBKKdtzkzYjbWxeAqk=;
- b=QQnzLAwLud2/AzYzaO27p8wY1cqKBvUDLz2f/ErUFQnVTHdNNJ0XdPmLF3KoC2TJDE
- pERIDuH07aq4eFeiVxHG8JnEL4XJ8imcwLzQCNu91XzKuTUI8WDtdOldg+DCqEHjq6ca
- 3Vz3+3D9aPr4+Y9/TeYAO/E3VuWHZnOqSpje2Y2FJbx7uHt18Jl+UqCq0teDfcNXbSaO
- FFpEadxyge6ujrbR49NSD7zzg/ICF4ntmyF7ma3R+XCSrFuN4Om1Ckj7Si7NAMALooHM
- 0SLLZ81iFw4+iUumtJD/8e2ksdOyyuV+afoTbQyRBnZJiOyamCXzipX/GdccsvhdEpyw
- dC1Q==
-X-Gm-Message-State: AOJu0YzguKE8rtf/5RmTqZUKp2Fh0Lr22b1s0Ysx4G5cB/HM7YtIbpW8
- IcJF2Do4Nwnhgc/Ca7Q9tGQZMpwoLERYG8FdGxycrXPv26cGZ7/XapgHTAybmqCOsDEP93sgsWY
- Zuz4=
-X-Gm-Gg: ASbGncuMPW5VwvjupqAukEiG2HU19N0X6Pa102ifkHku9eXvUcJKu+vjAnYak4zBBGW
- cu0j9CL6H22zYtAryoSde3Og7oX4TKAc6/xn1+Vo3tkCbIDf2mpDrkBITymkdoUCGkG/aqgq78O
- zCRAMeH7fVjVH2eHgbh4MduueEYeINLmUh91pRoRUcke+NUunFrgRVS2f3fmwojiEORMjxI2zjr
- 2uwWh1pQXAbrOWgqH1PCHQ+dWRq/xbpheKwYWs2eWaw5is4T9cI9XKi+tpql1bq+jOPAU08DmYM
- 3DkYXszIopbRI3szdlRwIiyRnA3oZ44iB/gQoLl1yfdzVHMh
-X-Google-Smtp-Source: AGHT+IGOfoUo5R8E50tqvpsstcNS8aNq+ltwe2IyoE4AGKB02pjVb7B7iD67sPWlh3UNySXRCQkILQ==
-X-Received: by 2002:a17:903:1a30:b0:220:e156:63e0 with SMTP id
- d9443c01a7336-22e18b8612cmr87433525ad.8.1746395861469; 
- Sun, 04 May 2025 14:57:41 -0700 (PDT)
+ bh=/tk0gbWoG4ApvXZ5c0JKBgUdcITDobE9RIrWnb6spIQ=;
+ b=tpJe3S+toVeYfxdO7MXkWScWAdFCnI4hX/fDtkrmvk5cbP1zyRa6lFICsQw7JiHDtJ
+ zuini6n5xTH5zLmqqrhIRD2bnB9RoxxjlBn1r/e+QYHQCE9urBvERrbn7OioJaMOfAXJ
+ ibOZQ4/8+h20N3AMHbfm+jX7qhPy7fBG3q3H7lrCAXIF7qDdgttIuP/i7MzuQt3BrBMB
+ 1fF6KmvrUqvOZvm8a2RJVA91G5t+5qRe+vA1Q+7CRsQeYCKP55dLjkVRr+je6rD2JDhx
+ CrEyWMVzwD7fkrQpHnqmMZ7egPX2ABgKTEvi1GHrMhzbc1W4I3GGOwl8/cIVHNhcjkCI
+ YRVA==
+X-Gm-Message-State: AOJu0Yx5WBYzSsRheUmo8y7jpfhQXh3RT6SIhnwJ26E43ea+6WNX8FG4
+ pgnZHnwebSL8xhk2GCNOASunWttDXpBaakLp8JRXHeAj8Hgq6X19RPiwnXR6QpjDXPzw04euo1m
+ gbk4=
+X-Gm-Gg: ASbGnctl73+nP4unaBpYX43wqNDZENAl3yUG1SQL9I8KtOS7F/HJVzsUwVUKGp0dtAD
+ ruoPpKR8xTHwReBnZKnTZpEwOXGCsZeKi1Q89epjr54OonDgSecieFb247HJGrTU9ol1LFECS/P
+ vUumYUNPs13uas73jYJ9Nkk5uHtEdbEEtvxxXRQYcZdDRF7ONNiKRZQvElT1nA5mRVHZvz04zHc
+ 5A3H6YiiBo/R7Y5EXW4zYwZoQeifuifS25/6NTaOwBN2hwIJRIex8byT3wsrw7n5Ju/AUlcYlJN
+ Ul0oWgrLDvD75BVcLiGdNcZM7NggD2cI04j3cYDFYt4FXdLs
+X-Google-Smtp-Source: AGHT+IHX4B3MtSbPeoHfu5rcPv/UTsigKurblHN2gBuy1xugWg/RnALJkq6fkZSYL6exMOXH8S9yiA==
+X-Received: by 2002:a17:902:ef02:b0:224:2717:7993 with SMTP id
+ d9443c01a7336-22e1eadac90mr79083055ad.45.1746395872673; 
+ Sun, 04 May 2025 14:57:52 -0700 (PDT)
 Received: from gromero0.. ([200.150.181.215]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e152204fesm41664875ad.137.2025.05.04.14.57.39
+ d9443c01a7336-22e152204fesm41664875ad.137.2025.05.04.14.57.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 May 2025 14:57:40 -0700 (PDT)
+ Sun, 04 May 2025 14:57:52 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org,
  gustavo.romero@linaro.org
-Subject: [PATCH] hw/pci-host/gpex-acpi: Fix typo in comment
-Date: Sun,  4 May 2025 21:56:29 +0000
-Message-Id: <20250504215639.54860-1-gustavo.romero@linaro.org>
+Subject: [PATCH] hw/core/machine: Fix indentation
+Date: Sun,  4 May 2025 21:56:34 +0000
+Message-Id: <20250504215639.54860-6-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,26 +96,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix typo in a comment about the creation of the ACPI CRS method.
+Fix indentation for some elements in the hardware compat arrays.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- hw/pci-host/gpex-acpi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/core/machine.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
-index e8b4c64c5f..0aba47c71c 100644
---- a/hw/pci-host/gpex-acpi.c
-+++ b/hw/pci-host/gpex-acpi.c
-@@ -182,7 +182,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index ed01798d37..b8ae155dfa 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -41,7 +41,7 @@ GlobalProperty hw_compat_10_0[] = {};
+ const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
  
-             /*
-              * Resources defined for PXBs are composed of the following parts:
--             * 1. The resources the pci-brige/pcie-root-port need.
-+             * 1. The resources the pci-bridge/pcie-root-port need.
-              * 2. The resources the devices behind pxb need.
-              */
-             crs = build_crs(PCI_HOST_BRIDGE(BUS(bus)->parent), &crs_range_set,
+ GlobalProperty hw_compat_9_2[] = {
+-    {"arm-cpu", "backcompat-pauth-default-use-qarma5", "true"},
++    { "arm-cpu", "backcompat-pauth-default-use-qarma5", "true"},
+     { "virtio-balloon-pci", "vectors", "0" },
+     { "virtio-balloon-pci-transitional", "vectors", "0" },
+     { "virtio-balloon-pci-non-transitional", "vectors", "0" },
+@@ -58,12 +58,12 @@ GlobalProperty hw_compat_9_1[] = {
+ const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
+ 
+ GlobalProperty hw_compat_9_0[] = {
+-    {"arm-cpu", "backcompat-cntfrq", "true" },
++    { "arm-cpu", "backcompat-cntfrq", "true" },
+     { "scsi-hd", "migrate-emulated-scsi-request", "false" },
+     { "scsi-cd", "migrate-emulated-scsi-request", "false" },
+-    {"vfio-pci", "skip-vsc-check", "false" },
++    { "vfio-pci", "skip-vsc-check", "false" },
+     { "virtio-pci", "x-pcie-pm-no-soft-reset", "off" },
+-    {"sd-card", "spec_version", "2" },
++    { "sd-card", "spec_version", "2" },
+ };
+ const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
+ 
 -- 
 2.34.1
 
