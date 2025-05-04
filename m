@@ -4,76 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A4CAC3ABAC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 16:17:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0A0DC369DC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 16:19:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBc28-0004Ek-Cw; Sun, 04 May 2025 12:17:40 -0400
+	id 1uBc32-0005Lr-AV; Sun, 04 May 2025 12:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uBc26-0004DV-OB
- for qemu-devel@nongnu.org; Sun, 04 May 2025 12:17:38 -0400
-Received: from mgamail.intel.com ([198.175.65.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uBc24-0006yu-4r
- for qemu-devel@nongnu.org; Sun, 04 May 2025 12:17:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746375456; x=1777911456;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=XL4KqaA98CFbohx2F7VXhlRfmY/0MsG/v9FlzpoYTxQ=;
- b=YuAJWPY/Ci2E2Wp93nnqkotE98LQGgczI/qf3n9iCLAZ56xmPMr/QEQS
- EkZPpYCxZ6e9O91K2OdlZF24zlok5kiLAaCvoFuvktPPK3SDGzuX+qtJL
- +ozY9fYl4z442ltZLZsk08DDSDG1BYpB29c4KO/2+a6rjemVSE6WAe8hA
- 7Gk1tj4048Z1kqFmmD/9JsaRFVzjUgA7d+gsQF97uTcsG1MUc0EVnyF0A
- MZiqJx7rcjKob4Q5FdhOF82ThtXv8HEUl5ERG1GLfVOEKd/N23j5+CzGG
- 5WxXTy5HEUX3sJnNaSl0y8YMscSClxZwUImlGhZpPwXgsRXPlz8wf2xX1 Q==;
-X-CSE-ConnectionGUID: LMXMJfJZS5i+rsjNsAXsQQ==
-X-CSE-MsgGUID: uG1nTGjUTa+uvlp3oIUHfw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11423"; a="51643718"
-X-IronPort-AV: E=Sophos;i="6.15,262,1739865600"; d="scan'208";a="51643718"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 May 2025 09:17:32 -0700
-X-CSE-ConnectionGUID: 3o9nrQ5KS22DSyItOtFSkQ==
-X-CSE-MsgGUID: qU3PEyUBS8WlyItRShmf5g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,262,1739865600"; d="scan'208";a="135015103"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 04 May 2025 09:17:30 -0700
-Date: Mon, 5 May 2025 00:38:30 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Francesco Lavra <francescolavra.fl@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 45/55] i386/tdx: Add TDX fixed1 bits to supported CPUIDs
-Message-ID: <aBeYBtWcteGBDsuN@intel.com>
-References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-46-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uBc31-0005Lb-75
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 12:18:35 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uBc2z-00078V-DD
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 12:18:34 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-30332dfc820so4324270a91.2
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 09:18:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746375512; x=1746980312; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GVgHVjCZAzrnk6Yz+gPuLZDT9JxPN58KFxsJBrzHsuY=;
+ b=OjaHIv0gvcaWoFUqNsHd3gGnIjjkJPTIQmx6Ecn6I1ybt8StHhWPjNERKMiIlsI0Zj
+ VRucNAE4ppNHMBLp07L8THUnK2Hr4SFfpMHsSWVY8UQGh8Qv1nj8AgErIKRVcrd5WdRG
+ aZ4B9DPuZvufwJp5a496lngkoPg/YdYWrmVOnkv93UHZbl3EX4qYFG0Ut9eOpcTDAmLD
+ g+GdyGob31eOw1Y94GC6Io3lqECFac3uypPD2Ihp5AeEpHdCya/IkxXzbuquoYxZ3Dlu
+ FaOj6N2ay9k7mUaDZUivNdXordxXzPzKRz0I0aOXzSomeSnXF+Tjuzrcbpk6LFKNNeiM
+ 1W/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746375512; x=1746980312;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GVgHVjCZAzrnk6Yz+gPuLZDT9JxPN58KFxsJBrzHsuY=;
+ b=UGjxkI/VO7hKOKJKhovTqDH3XbJqYi8rYbHyX8Y/6gFLwnAUHO6QjaW7xuqNu6Pp51
+ JAsh7WN5Ul9S07/AkdPkYm9GbYkMXJ3OesiqIgoYc0IzdC3z61mMGDkTjjHhgvLahiZA
+ AGadstL4KycNMdF2QTHEjQwB/J0Vq1qu2EYtYU8ApB7z89aiqXCBKus/XnVoApbDp5Ye
+ P2clQQKOkYjvEqr2qGNKbCxmp7tejd5DBkCRfZU/mUYwBha7r0o2GlwlF0I/qnvPVrZ0
+ FiSXRFo8rsahgiEyrobeEiTUbjb0wGHTlIzKeCPSooMzA6kP5NYwYFUz2nqYWY8b0Mwa
+ Ijow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVpmkKRzOLDWA4ELHD2ah6ZewaQTFuGLX1FD4p/dMeShWmKRZlrOU4m1G3KV7HXUnTjSKvShu0JpvSE@nongnu.org
+X-Gm-Message-State: AOJu0YyF1ZC4oKUxkYUMvPW7n2HETi7Eu9SpKOMskc54neVuACbAac3N
+ RYAZj0z9eRsuKmM3+XYsvayAEDWSAlNvV3xpyOMFlqRn5feWoxbo9DvRvqbvxmA=
+X-Gm-Gg: ASbGnctSLwi3M1Nzsoj4i4/HJi/sLhQyJSFz1RCgpWNKYjNCt2o5/9vP6qTxp/3Le4f
+ qpm+RjoDLoyITcJrUe2kNbSNyeEunDqPWQ7//LOlRoPZV/Bvt6XkoKQTYjVRpkLG4PiLFq/k2SN
+ UDh5x/Dzu9qrrD7E3TNZzf+/1+kViGM6S5Vk+rGnTcJ1y1wfMeskE93RpYWs0v4LWmzeLiloRXH
+ Krn3c66Q9Yq0LuVxGf/2TtsR4/Q0jDNqCzQ9sh4b/sAgsQWwuGpbxmnokA77D3oebESjFI8FbpD
+ xb4NH3d1q9Dj62EXybxyd11MAIUT5Eb5NIwwR0WAURMNXSwvA00OMhulj3/KG5Uu3CUzm4NJjCe
+ yNAX7z7U=
+X-Google-Smtp-Source: AGHT+IFDVehLEijp7OUzeIAXqkg+5iC8+kDb1Uvyac3I7ayEa8psrutgXlbFuIS85v5QsmgH3zDmYw==
+X-Received: by 2002:a17:90b:3d45:b0:305:5f33:980f with SMTP id
+ 98e67ed59e1d1-30a5aeb69f2mr9376272a91.27.1746375511926; 
+ Sun, 04 May 2025 09:18:31 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-30a263f4324sm7897339a91.1.2025.05.04.09.18.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 04 May 2025 09:18:31 -0700 (PDT)
+Message-ID: <a50b2d4e-011d-447a-ad15-6165598a865f@linaro.org>
+Date: Sun, 4 May 2025 09:18:29 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250401130205.2198253-46-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -57
-X-Spam_score: -5.8
-X-Spam_bar: -----
-X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.411,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 32/40] target/arm/ptw: replace TARGET_AARCH64 by
+ CONFIG_ATOMIC64 from arm_casq_ptw
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, anjo@rev.ng,
+ kvm@vger.kernel.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ alex.bennee@linaro.org
+References: <20250504052914.3525365-1-pierrick.bouvier@linaro.org>
+ <20250504052914.3525365-33-pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250504052914.3525365-33-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,97 +108,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:55AM -0400, Xiaoyao Li wrote:
-> Date: Tue,  1 Apr 2025 09:01:55 -0400
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH v8 45/55] i386/tdx: Add TDX fixed1 bits to supported CPUIDs
-> X-Mailer: git-send-email 2.34.1
+On 5/3/25 22:29, Pierrick Bouvier wrote:
+> This function needs 64 bit compare exchange, so we hide implementation
+> for hosts not supporting it (some 32 bit target, which don't run 64 bit
+> guests anyway).
 > 
-> TDX architecture forcibly sets some CPUID bits for TD guest that VMM
-> cannot disable it. They are fixed1 bits.
-> 
-> Fixed1 bits are not covered by tdx_caps.cpuid (which only contians the
-> directly configurable bits), while fixed1 bits are supported for TD guest
-> obviously.
-> 
-> Add fixed1 bits to tdx_supported_cpuid. Besides, set all the fixed1
-> bits to the initial set of KVM's support since KVM might not report them
-> as supported.
-> 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->  target/i386/cpu.h          |   2 +
->  target/i386/kvm/kvm_i386.h |   7 ++
->  target/i386/kvm/tdx.c      | 132 +++++++++++++++++++++++++++++++++++++
->  target/i386/sev.c          |   5 --
->  4 files changed, 141 insertions(+), 5 deletions(-)
- 
-LGTM, (only some nits)
+>   target/arm/ptw.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+> index 424d1b54275..f3e5226bac5 100644
+> --- a/target/arm/ptw.c
+> +++ b/target/arm/ptw.c
+> @@ -737,7 +737,7 @@ static uint64_t arm_casq_ptw(CPUARMState *env, uint64_t old_val,
+>                                uint64_t new_val, S1Translate *ptw,
+>                                ARMMMUFaultInfo *fi)
+>   {
+> -#if defined(TARGET_AARCH64) && defined(CONFIG_TCG)
+> +#if defined(CONFIG_ATOMIC64) && defined(CONFIG_TCG)
+>       uint64_t cur_val;
+>       void *host = ptw->out_host;
+>   
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> +    .entries[3] = {
-> +        .function = 0x7,
-> +        .index = 2,
-> +        .flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX,
-> +        .edx = (1U << 0) | (1U << 1) | (1U << 2) | (1U << 4),
-
-Missed to use macro?
-
-.edx = CPUID_7_2_EDX_PSFD | CPUID_7_2_EDX_IPRED_CTRL |
-       CPUID_7_2_EDX_RRSBA_CTRL | CPUID_7_2_EDX_BHI_CTRL
-
-> +    },
-> +    .entries[4] = {
-> +        .function = 0xD,
-> +        .index = 0,
-> +        .flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX,
-> +        .eax = XSTATE_FP_MASK | XSTATE_SSE_MASK,
-> +    },
-> +    .entries[5] = {
-> +        .function = 0xD,
-> +        .index = 1,
-> +        .flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX,
-> +        .eax = CPUID_XSAVE_XSAVEOPT | CPUID_XSAVE_XSAVEC|
-> +               CPUID_XSAVE_XGETBV1 | CPUID_XSAVE_XSAVES,
-> +    },
-> +    .entries[6] = {
-> +        .function = 0x80000001,
-> +        .index = 0,
-> +        .ecx = CPUID_EXT3_LAHF_LM | CPUID_EXT3_ABM | CPUID_EXT3_3DNOWPREFETCH,
-> +        /* strictly speaking, SYSCALL is not fixed1 bit since it depends on
-
-style nit?
-
-/*
- * strictly ...
- */
-
-> +         * the CPU to be in 64-bit mode. But here fixed1 is used to serve the
-> +         * purpose of supported bits for TDX. In this sense, SYACALL is always
-> +         * supported.
-> +         */
-> +        .edx = CPUID_EXT2_SYSCALL | CPUID_EXT2_NX | CPUID_EXT2_PDPE1GB |
-> +               CPUID_EXT2_RDTSCP | CPUID_EXT2_LM,
-> +    },
-> +    .entries[7] = {
-> +        .function = 0x80000007,
-> +        .index = 0,
-> +        .edx = CPUID_APM_INVTSC,
-> +    },
-> +};
-> +
-
-...
-
-> diff --git a/target/i386/sev.c b/target/i386/sev.c
-> index a6c0a697250b..217b19ad7bc6 100644
-> --- a/target/i386/sev.c
-> +++ b/target/i386/sev.c
-> @@ -214,11 +214,6 @@ static const char *const sev_fw_errlist[] = {
->  /* <linux/kvm.h> doesn't expose this, so re-use the max from kvm.c */
->  #define KVM_MAX_CPUID_ENTRIES 100
-
-This macro can also be cleaned up in this patch or in your patch 5.
-
+r~
 
