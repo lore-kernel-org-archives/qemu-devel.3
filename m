@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6C36C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 05:37:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CFEDC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 05:37:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBRvR-0002WV-Lm; Sun, 04 May 2025 01:30:05 -0400
+	id 1uBRut-00020d-1E; Sun, 04 May 2025 01:29:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBRvI-0002Ou-Qk
- for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:56 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1uBRun-0001xP-WF
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:26 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBRvG-0004Tr-UF
- for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:56 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7370a2d1981so2802065b3a.2
- for <qemu-devel@nongnu.org>; Sat, 03 May 2025 22:29:54 -0700 (PDT)
+ id 1uBRuk-0004FM-TS
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:25 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2260c91576aso30454995ad.3
+ for <qemu-devel@nongnu.org>; Sat, 03 May 2025 22:29:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746336593; x=1746941393; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746336561; x=1746941361; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=z/CSUL0IAfSicZGUxwfQSMF+CcpH0uxTg/tJpwo9blQ=;
- b=CEHGbXTsOzVA3ox+2otz3pbAPvc68Ei89+rJhY39sTWIcX0puF/Kud/AcJhrKYi6Gr
- FZoWv2MCwV+/FhQ1z7SmslWYcgBAw2fxMWV5QB6J+DexUwpCDMeLzaqulPz0SP6t88zD
- 4FT/BG/RTU/1oCfhhpmyj+Uml17TbXRmiAA0xQUtV3kDDdh/yS3LRc4cB6LHowbpUVOh
- sqehcx1U1d9V8byUIeaHkebXbte/xRthvCNRHqzzhb7s9Shod2auNh1JsfyWYBiePQF4
- tSklaQcA7tvKuRkz100F50pszGm5xKMP/pIn5WW4pQa7QbY2+7v7iswBAkljXA41lj3R
- FJAA==
+ bh=v1JmSJqnxYquNU/v4UOEtwOcqbxnEb6aDiKyyBWqJ6s=;
+ b=DK5EXCDBdOpqJ/Y0yEOXTOV5HFi9J/+h6fDak49CwfokFk62mPToaxvmhIqSUCTav0
+ XfTsn+hMNHPsPHe+KM3BOrVC+GiiMASTcDPUb36rqUBX48QmYZDrtyFHLM6nNNWgYjIL
+ mICeVM9cmGT58GkFo+S1HCdKBe3SZMGc+tuLUSIBPLl1mQimd4Rm6aIOW93l0pGCOEKt
+ VjMHLCCb+f2SIAkF+4u/Xqp3yzrhYUhAn7KdF5Bcke79mgMYNTv48v9BEB5xtSwZ4nV4
+ jY/qIrATpGInPb/WmfoWxff920qPrLZ1IheLNvXYf8BC6MwpMY1Asp1svN7UGu7bhHtK
+ +hIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746336593; x=1746941393;
+ d=1e100.net; s=20230601; t=1746336561; x=1746941361;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=z/CSUL0IAfSicZGUxwfQSMF+CcpH0uxTg/tJpwo9blQ=;
- b=dB9fBca5sBAopjL7vqaJxsmWBX6+Cxi5tN3TU0C8JU9uaxeeM2W2CBypYOr48jDLSQ
- tT5jgL9BGHvue/kL0GHA8GpCA2Om9mi9o12RFnBhMGGC6jF2MJ+9UTlNhKiIkLRUD9ZB
- 7kJ+b0Z0ln6/cjQ2ifxIW4dB69PfokZsYDGeVcD4e9mfxAmQqFBMFV7g+WTDU0gyJ9hg
- Qx7IxjnOWCES7CWdWgLbOOozcUQdcnzNdEuPaOY/dCH77rSaoOzwHF0192nbkUafb45M
- bRovzOcnuMv/yv3cTpjWnPPgblQ1qCIBO2ep/vK2uNt03pRH9fmFTS6LTt7bxu5VoFb5
- M7HQ==
-X-Gm-Message-State: AOJu0YwVuVzhuIx5QJ7BQvtSf9u50bd8ZJ+cYc4BnZbG2JaZN9VvJgwD
- p97ztXmE6+VX0WMDFaLn1WDGeu4mW2g/S3cBGVA1mHiGTo3MlT1G0uhjJbv0/RSs9rmD93lzc3a
- aajw=
-X-Gm-Gg: ASbGncuSRjQ3USBgDbHkYYuD89xpXcUNIZlXcpNTK5OgIRCCnmFuwzInVSFijnC+ZPs
- /XWT8TmI938rVvmEsCnBGm1UKZ76tbsccihh6DSGeuq+LXAqMIOVr1//gACc5w1TJlx7Cqtz3N+
- KwhpKhYXDh4MHryQL/jsRzZDFXZV+apfYoIO/w0IJOaNrGRnnOKwwuqrDEPlNd59dLsa8JyG9mh
- n0G0iCndYecDEMGsXSLSMwi0hPxoS22nYDoI6jPZToLoq8Bo8jhc0+cvagGWcGZmIf/itSeltV2
- z1AGajvypPux+b0bAbm9R4F8uY4u49E8X3MIa5T6
-X-Google-Smtp-Source: AGHT+IHywaMkGvwrUiu+pF63431wfSDN2JgGeySP4RmqHLBWsgAcUe/WGEW4xlqLjZ4SRwwgqz4yuQ==
-X-Received: by 2002:a05:6a00:414a:b0:736:3ea8:4805 with SMTP id
- d2e1a72fcca58-7406f0aca49mr4036802b3a.7.1746336593306; 
- Sat, 03 May 2025 22:29:53 -0700 (PDT)
+ bh=v1JmSJqnxYquNU/v4UOEtwOcqbxnEb6aDiKyyBWqJ6s=;
+ b=XlmgaONDqxjIIe1IYrktvxdPHz2YXm7FMwVUmgXc3yTvr5Cnlsv2R0w9Sy6m/4kyBp
+ AiQv6S1JT43yB4rsfW7nMbvAjfPdXUDRShdx3Rq4bUxjJLjfdT6Lj45Nz/VuBA02BNSI
+ aNzl4g8jmWxyRGxneLXuljpZCqcvmgy16XZSDCIbGAzPAsT0t18zzutN86UW8/NbesL8
+ T+LqQ0C5G5RBj3mxv/fQIQd7lxJ03MjSK325tyaX8AVNBWuFXEwpCk3pOTc1azsFIHyv
+ 9xtymrZ7HR2XX9lol7BC/bPNgqHBbGt1z3UDxkc27ulPhsa2ofdXxZu4v5v5ufgAQ8uP
+ 6Rug==
+X-Gm-Message-State: AOJu0YzsQHryO8npyawl1otyPVqjl2MN+vR0WMUKoeQKng/GuOzo9hlY
+ AVDNcj6YY/gxCGbh2hOR/8E/iDoDyyBaXYmW7wFpfFhNsgqXrw52F73wJMcGuV1nPPeUHJyJplY
+ rpzo=
+X-Gm-Gg: ASbGncuwWIxG926cSVrtd+9+Q1UUGHcCsjdAhXDEgZBNWzuvOtA13mz6ASxf1AbHAkZ
+ tFtkDXkO9ObLhWZUBREhtHIwX9ZKkoweTZ6B7BW3BXS+o3CuH2xK+WSc/+KjdqpCuZZD3RRpeTv
+ HuMAKk3v2Yr8s8spy91UZtGarxIvsMKMDTqA7bTbzn7VZ1D0nK7RWA3OEFdEZy5tqPJyo4EI9hT
+ +97DQ/OIji+pSC5GslJpBC6F5i5IonKyEk5ycSfJJBeRSZFLdTn9XR5bFS/UhuifxcsEH4zFr56
+ 3GWuT+dCk245iTO6WEBJOKMLMhe8XNSnVT6fbaR4
+X-Google-Smtp-Source: AGHT+IHXnjnzTW6tdaUx2wqRb/N+J0DcR77Y5QyXk4o/4S99YU+4N55bxZt8UGnvoRa5cSJGoQ9fYw==
+X-Received: by 2002:a17:903:1246:b0:224:e33:889b with SMTP id
+ d9443c01a7336-22e1ea3ced2mr48331655ad.12.1746336561460; 
+ Sat, 03 May 2025 22:29:21 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-740590207e3sm4400511b3a.94.2025.05.03.22.29.52
+ d2e1a72fcca58-740590207e3sm4400511b3a.94.2025.05.03.22.29.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 03 May 2025 22:29:52 -0700 (PDT)
+ Sat, 03 May 2025 22:29:21 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, anjo@rev.ng,
@@ -70,17 +70,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, anjo@rev.ng,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  alex.bennee@linaro.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 38/40] target/arm/machine: move cpu_post_load kvm bits to
- kvm_arm_cpu_post_load function
-Date: Sat,  3 May 2025 22:29:12 -0700
-Message-ID: <20250504052914.3525365-39-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 01/40] target/arm: Replace target_ulong -> uint64_t for
+ HWBreakpoint
+Date: Sat,  3 May 2025 22:28:35 -0700
+Message-ID: <20250504052914.3525365-2-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250504052914.3525365-1-pierrick.bouvier@linaro.org>
 References: <20250504052914.3525365-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,80 +104,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+CPUARMState::pc is of type uint64_t.
+
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/kvm_arm.h |  4 +++-
- target/arm/kvm.c     | 13 ++++++++++++-
- target/arm/machine.c |  8 +-------
- 3 files changed, 16 insertions(+), 9 deletions(-)
+ target/arm/internals.h   | 6 +++---
+ target/arm/hyp_gdbstub.c | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index d156c790b66..00fc82db711 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -83,8 +83,10 @@ void kvm_arm_cpu_pre_save(ARMCPU *cpu);
-  * @cpu: ARMCPU
-  *
-  * Called from cpu_post_load() to update KVM CPU state from the cpreg list.
-+ *
-+ * Returns: true on success, or false if write_list_to_kvmstate failed.
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 4d3d84ffebd..c30689c9fcd 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1949,9 +1949,9 @@ extern GArray *hw_breakpoints, *hw_watchpoints;
+ #define get_hw_bp(i)    (&g_array_index(hw_breakpoints, HWBreakpoint, i))
+ #define get_hw_wp(i)    (&g_array_index(hw_watchpoints, HWWatchpoint, i))
+ 
+-bool find_hw_breakpoint(CPUState *cpu, target_ulong pc);
+-int insert_hw_breakpoint(target_ulong pc);
+-int delete_hw_breakpoint(target_ulong pc);
++bool find_hw_breakpoint(CPUState *cpu, uint64_t pc);
++int insert_hw_breakpoint(uint64_t pc);
++int delete_hw_breakpoint(uint64_t pc);
+ 
+ bool check_watchpoint_in_range(int i, vaddr addr);
+ CPUWatchpoint *find_hw_watchpoint(CPUState *cpu, vaddr addr);
+diff --git a/target/arm/hyp_gdbstub.c b/target/arm/hyp_gdbstub.c
+index 0512d67f8cf..4d8fd933868 100644
+--- a/target/arm/hyp_gdbstub.c
++++ b/target/arm/hyp_gdbstub.c
+@@ -54,7 +54,7 @@ GArray *hw_breakpoints, *hw_watchpoints;
+  * here so future PC comparisons will work properly.
   */
--void kvm_arm_cpu_post_load(ARMCPU *cpu);
-+bool kvm_arm_cpu_post_load(ARMCPU *cpu);
  
- /**
-  * kvm_arm_reset_vcpu:
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 8f68aa10298..8132f2345c5 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -977,13 +977,24 @@ void kvm_arm_cpu_pre_save(ARMCPU *cpu)
-     }
- }
- 
--void kvm_arm_cpu_post_load(ARMCPU *cpu)
-+bool kvm_arm_cpu_post_load(ARMCPU *cpu)
+-int insert_hw_breakpoint(target_ulong addr)
++int insert_hw_breakpoint(uint64_t addr)
  {
-+    if (!write_list_to_kvmstate(cpu, KVM_PUT_FULL_STATE)) {
-+        return false;
-+    }
-+    /* Note that it's OK for the TCG side not to know about
-+     * every register in the list; KVM is authoritative if
-+     * we're using it.
-+     */
-+    write_list_to_cpustate(cpu);
-+
-     /* KVM virtual time adjustment */
-     if (cpu->kvm_adjvtime) {
-         cpu->kvm_vtime = *kvm_arm_get_cpreg_ptr(cpu, KVM_REG_ARM_TIMER_CNT);
-         cpu->kvm_vtime_dirty = true;
-     }
-+
-+    return true;
+     HWBreakpoint brk = {
+         .bcr = 0x1,                             /* BCR E=1, enable */
+@@ -80,7 +80,7 @@ int insert_hw_breakpoint(target_ulong addr)
+  * Delete a breakpoint and shuffle any above down
+  */
+ 
+-int delete_hw_breakpoint(target_ulong pc)
++int delete_hw_breakpoint(uint64_t pc)
+ {
+     int i;
+     for (i = 0; i < hw_breakpoints->len; i++) {
+@@ -226,7 +226,7 @@ int delete_hw_watchpoint(vaddr addr, vaddr len, int type)
+     return -ENOENT;
  }
  
- void kvm_arm_reset_vcpu(ARMCPU *cpu)
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index 868246a98c0..e442d485241 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -976,15 +976,9 @@ static int cpu_post_load(void *opaque, int version_id)
-     }
+-bool find_hw_breakpoint(CPUState *cpu, target_ulong pc)
++bool find_hw_breakpoint(CPUState *cpu, uint64_t pc)
+ {
+     int i;
  
-     if (kvm_enabled()) {
--        if (!write_list_to_kvmstate(cpu, KVM_PUT_FULL_STATE)) {
-+        if (!kvm_arm_cpu_post_load(cpu)) {
-             return -1;
-         }
--        /* Note that it's OK for the TCG side not to know about
--         * every register in the list; KVM is authoritative if
--         * we're using it.
--         */
--        write_list_to_cpustate(cpu);
--        kvm_arm_cpu_post_load(cpu);
-     } else {
-         if (!write_list_to_cpustate(cpu)) {
-             return -1;
 -- 
 2.47.2
 
