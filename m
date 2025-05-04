@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC05C3ABAC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76587C369DC
 	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 05:47:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBRus-00020S-JO; Sun, 04 May 2025 01:29:30 -0400
+	id 1uBRv2-00027H-3F; Sun, 04 May 2025 01:29:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBRuo-0001xW-6P
- for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:26 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1uBRuv-00023H-NR
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:33 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBRum-0004G5-8e
- for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:25 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-736c1cf75e4so3044275b3a.2
- for <qemu-devel@nongnu.org>; Sat, 03 May 2025 22:29:23 -0700 (PDT)
+ id 1uBRut-0004Jf-Gy
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:33 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-22e033a3a07so34878735ad.0
+ for <qemu-devel@nongnu.org>; Sat, 03 May 2025 22:29:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746336562; x=1746941362; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746336570; x=1746941370; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PFP3MpqDIAT/Xkpc6JOppR3V5lexoIXt45Qw9vGPUlk=;
- b=jrRdu5o/0ZL16OHkmqtGQSAJrcUn+04DlMRTXpK+K0/oixYRONsFAtiQDLnqLNyZF5
- MSPLI9yXux0I0xueNW0e6Xx60CU3TaR6o2uhHhmwNYKYVrU0i3mKNdIp58WnOhUXbvlP
- IlyOR/pmYndPHnTU65XaYuVx/eTiQHzZHqOC2YaX11UuCKNSmVs5erA+bVvkd3RO9OVG
- PW2ViAUp4yi1flvnkgnswdNwbyRnq29CK/Ndq6+VWD2Q32T6QR68bx1D/ttt2XGeays9
- wKdjjWSDZo2tgZIxcc+mvZ+PWXhv+FqgDKr8kvK5lAbSwk0OwV+qbWidMFsV/aJorp2P
- Pszg==
+ bh=xML4J0OK01b5ZM+8qKTIYRySQNd3gi0WVCRNgOjS4SA=;
+ b=HO7NUhSpWGW3sqS5z2fuDXmSJhdzOYSxk8IfJUq1QHRnturIPATl6tgHC2mEXVlBg0
+ FJnA/ueVGIsZTyj98N/+LHi0vkO+F9DoKYgMBkJiWbItfp39JUvsLTTW4dkaN8yan5VX
+ dwjmwpWyNEfwWPx700kGux7k0RR1lg/b4AiBQKCO/cYm+dlSnC5GTVeeO5GdDDWfGSPi
+ NeCXrmg/0Q5neJvYl+Dej85vQ/84wVzALgvnmcyegZCQIesYZLNG/9U2Ods6F+dgDYy5
+ 3uDj6aFI9Zl36Ed36OoK1z59r/1oY9gvOXGwMRTfArbVFAAbpAEa2FHsUrFFKXG6ioz9
+ rSGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746336562; x=1746941362;
+ d=1e100.net; s=20230601; t=1746336570; x=1746941370;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PFP3MpqDIAT/Xkpc6JOppR3V5lexoIXt45Qw9vGPUlk=;
- b=AndP+OtJCAIxV9B8Qj4Q6GRjJnEhg5s9REbGjZf0O2pRJgcHz0liYg+Pq7MJ0NbSCc
- crMvt9HUaZ/sOODZLT76m+OCvL8dr3GuWqSsC+rh3X4a1/Kyoyv1B6OsYOdn1wi4tU5K
- s768//n/XnbgQIpKPzoHGud2v4L53lvrSAo1XOWkAZZ66ZJNp9Pe9fLJQ5dCyaksHPwl
- sAVP3xol4aDQpEeDw6blQlq6xw0jL92zpD+Tf0DHTVgFI1ixCrMBM64E/gxlwe12xDkx
- BvwvjHcokfGYeDdxWz0tpEAyRNNollEfYLb47H/5cyxezo0IHnUm5oRk4Sr3td+/p9lZ
- 5gew==
-X-Gm-Message-State: AOJu0YyV9/30KeAVa5/LhpBq6bGaWgZK2urvnSGM7L66gmKjFDq4dIj0
- LMlKctFh91TALYQtQjzm66UxVtz8rp9z5Z6QE5OzE/yCn5F1AZii0SkPo2s2/McRKZXcM+2tDpp
- LNes=
-X-Gm-Gg: ASbGnct97BndGATbY31YNt1X961ENyX2aknSob9YgA+E6OAVnZCFnqeoK5oe8dgUv8j
- tJiO+1Kk5TT8j1/4NxDK+3pcBn2q8U0hzAIZ4EXa53R8/TOfK6R/vzMtHwpepcd0HZ7JVH2V8cV
- TFdGhzpzjNRdnKAqbbcC4+WG3m4pTGB6/rqHSAhYEvbpNgw3CcEfyv42zbxy97ohu1YCf49i/CW
- B+HeI0KOCcd47najlAHnhR6cupGFkrPCRoD/1emBr6tDUKbvTUK0j2ojqvv6E4BofKK9A76Gwx5
- vz8TvR7unZ2pzkZ/uZMcGYzMWr/x7gJuPBBr3jtz
-X-Google-Smtp-Source: AGHT+IGVK6o8RnQD2bGJOKl+UHtGTQnnp3KoDBZBcEbovmyUrpyvzVjbZzuPCUjgGT+PmS29OCZQbg==
-X-Received: by 2002:a05:6a20:d524:b0:1f5:8605:9530 with SMTP id
- adf61e73a8af0-20e97ac0020mr4372318637.28.1746336562311; 
- Sat, 03 May 2025 22:29:22 -0700 (PDT)
+ bh=xML4J0OK01b5ZM+8qKTIYRySQNd3gi0WVCRNgOjS4SA=;
+ b=W8htgbhEU6xgRgQUCT0AGi2aXFThEZlGAuANG0DxkeRB8GfLthQijtmdnxaUOCggmI
+ 9+fzOLFig0P5rhKB5a37rBxaybGCrJUgXdqkHyl/IELw0Ef8e9gXe+1Q+M0CgJG+EB4q
+ 62OG8Y8V8PuGB2pTF3IojFe52e/C8dFAsGXkRl6aL+6nGeNqZ6IbraSqLCtG3ewjxOb5
+ V7pyPD/oqG5KnG/Sm++L4gidCG38XgoYdRtDnN6SA9VE1dGpz3gx+oJmbgLoqbch3TOP
+ gcop/sFObYKuxrYI0+bY2vaUSuU9ZqfRxvz0sT6uXM/7WawNBw7BP4E7Tx/zU8Ly4ytF
+ /4mg==
+X-Gm-Message-State: AOJu0YzJNl6VMWvwgnsODHNqU5SQ1/bHGpRMOc3rVEg5x7Oc818rRqAD
+ LaEtkvD4lqU3VIYyGX8oqTptLloeYnDqbgFCfqWitWoFcBrv6zW0YSQNLQi4HMIJiryhjTTFXg3
+ zN5k=
+X-Gm-Gg: ASbGnctBUs4IZk1KDUQZ2rhc7/FUtoZ1d0s68H+X4cQW8J31Y/zcNkj2rTQ4pdYIYgg
+ FJQiNtK/Wm71FmAI/ns9WBRXYAZzXhXNQQr8gn9WqdMnSNl1RDBgGkg444st6S/GVFaLIQfGbWm
+ R+t9tKm0OlDgfvq6Bw32ItlVNq8rS0pibxyBnrTEcgwDDeonH7x2aznGPpIfvrKwh56aImMgGX6
+ AjrXIb131x5ICbYHH1raz9f6SV0ScAnRdw8mwQ936yizzIFBT6Zv5tGCa7xWlXA5DWkino46Ods
+ w2BqM+apPiNpa0yWhrLOj7bgNMG0DCoF/NsJXbM7
+X-Google-Smtp-Source: AGHT+IGNaTTaB8sCjmP0kKNqXdhjM/rwql0XWgva5vnqXht3KrNf9a4sAy7Da4m17fBBAvj9OgJobQ==
+X-Received: by 2002:a17:903:2452:b0:225:abd2:5e39 with SMTP id
+ d9443c01a7336-22e18bfb5e1mr69676795ad.30.1746336569982; 
+ Sat, 03 May 2025 22:29:29 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-740590207e3sm4400511b3a.94.2025.05.03.22.29.21
+ d2e1a72fcca58-740590207e3sm4400511b3a.94.2025.05.03.22.29.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 03 May 2025 22:29:21 -0700 (PDT)
+ Sat, 03 May 2025 22:29:29 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, anjo@rev.ng,
@@ -70,17 +70,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, anjo@rev.ng,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  alex.bennee@linaro.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 02/40] include/system/hvf: missing vaddr include
-Date: Sat,  3 May 2025 22:28:36 -0700
-Message-ID: <20250504052914.3525365-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 11/40] target/arm/cpu: remove TARGET_AARCH64 in
+ arm_cpu_finalize_features
+Date: Sat,  3 May 2025 22:28:45 -0700
+Message-ID: <20250504052914.3525365-12-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250504052914.3525365-1-pierrick.bouvier@linaro.org>
 References: <20250504052914.3525365-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,42 +104,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On MacOS x86_64:
-In file included from ../target/i386/hvf/x86_task.c:13:
-/Users/runner/work/qemu/qemu/include/system/hvf.h:42:5: error: unknown type name 'vaddr'
-    vaddr pc;
-    ^
-/Users/runner/work/qemu/qemu/include/system/hvf.h:43:5: error: unknown type name 'vaddr'
-    vaddr saved_insn;
-    ^
-/Users/runner/work/qemu/qemu/include/system/hvf.h:45:5: error: type name requires a specifier or qualifier
-    QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
-    ^
-/Users/runner/work/qemu/qemu/include/system/hvf.h:45:18: error: a parameter list without types is only allowed in a function definition
-    QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
-                 ^
-/Users/runner/work/qemu/qemu/include/system/hvf.h:45:36: error: expected ';' at end of declaration list
-    QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
+Need to stub cpu64 finalize functions.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/system/hvf.h | 1 +
- 1 file changed, 1 insertion(+)
+ target/arm/cpu.c         |  2 --
+ target/arm/cpu32-stubs.c | 26 ++++++++++++++++++++++++++
+ target/arm/meson.build   | 11 +++++++----
+ 3 files changed, 33 insertions(+), 6 deletions(-)
+ create mode 100644 target/arm/cpu32-stubs.c
 
-diff --git a/include/system/hvf.h b/include/system/hvf.h
-index 730f927f034..356fced63e3 100644
---- a/include/system/hvf.h
-+++ b/include/system/hvf.h
-@@ -15,6 +15,7 @@
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 00ae2778058..c3a1e8e284d 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1878,7 +1878,6 @@ void arm_cpu_finalize_features(ARMCPU *cpu, Error **errp)
+ {
+     Error *local_err = NULL;
  
- #include "qemu/accel.h"
- #include "qom/object.h"
-+#include "exec/vaddr.h"
+-#ifdef TARGET_AARCH64
+     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
+         arm_cpu_sve_finalize(cpu, &local_err);
+         if (local_err != NULL) {
+@@ -1914,7 +1913,6 @@ void arm_cpu_finalize_features(ARMCPU *cpu, Error **errp)
+             return;
+         }
+     }
+-#endif
  
- #ifdef COMPILING_PER_TARGET
- #include "cpu.h"
+     if (kvm_enabled()) {
+         kvm_arm_steal_time_finalize(cpu, &local_err);
+diff --git a/target/arm/cpu32-stubs.c b/target/arm/cpu32-stubs.c
+new file mode 100644
+index 00000000000..81be44d8462
+--- /dev/null
++++ b/target/arm/cpu32-stubs.c
+@@ -0,0 +1,26 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include "qemu/osdep.h"
++#include "target/arm/cpu.h"
++#include "target/arm/internals.h"
++#include <glib.h>
++
++void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++void arm_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++void arm_cpu_pauth_finalize(ARMCPU *cpu, Error **errp)
++{
++    g_assert_not_reached();
++}
++
++void arm_cpu_lpa2_finalize(ARMCPU *cpu, Error **errp)
++{
++    g_assert_not_reached();
++}
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 3065081d241..c39ddc4427b 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -11,10 +11,13 @@ arm_ss.add(zlib)
+ arm_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'), if_false: files('kvm-stub.c'))
+ arm_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
+ 
+-arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+-  'cpu64.c',
+-  'gdbstub64.c',
+-))
++arm_ss.add(when: 'TARGET_AARCH64',
++  if_true: files(
++    'cpu64.c',
++    'gdbstub64.c'),
++  if_false: files(
++    'cpu32-stubs.c'),
++)
+ 
+ arm_system_ss = ss.source_set()
+ arm_system_ss.add(files(
 -- 
 2.47.2
 
