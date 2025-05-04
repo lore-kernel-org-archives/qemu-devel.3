@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2DE6C3ABB0
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 21:59:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C94D9C369DC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 21:59:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBhLJ-0007Ox-0x; Sun, 04 May 2025 17:57:49 -0400
+	id 1uBhLT-0007Wi-Uh; Sun, 04 May 2025 17:57:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uBhLH-0007Nq-C6
- for qemu-devel@nongnu.org; Sun, 04 May 2025 17:57:47 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1uBhLR-0007Vq-Ql
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 17:57:57 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uBhLF-0005Ac-HI
- for qemu-devel@nongnu.org; Sun, 04 May 2025 17:57:47 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-22c33e5013aso38879885ad.0
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 14:57:45 -0700 (PDT)
+ id 1uBhLQ-0005Cm-DO
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 17:57:57 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2260c91576aso33276035ad.3
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 14:57:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746395864; x=1747000664; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746395875; x=1747000675; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Fwa6vL14YZTfst2loVGLMHYQVKFZcNKU8l3yQjztZTQ=;
- b=pmJUQiSxXFsAnEGLrouWwFlwbX9g9bL3IecR4U385nF7NIRq9j/1+bMFlKldGAdAIC
- p3q8ZR40xVqogHJF4TqR5ztfqsFB5FprYRl6q5olQcjQQgoh7tPF4yOqJmGgzlr1+c9G
- lCT3i9sUhTvXG2QGCG65lBpMGEj2ctoa/JLNv3nv7620RNimSHSETbZheayU404YSO1I
- 7P8UgCokiPw9TtZ4NGirTwZwAcecnbLsgBSeHw8zk6EDGh6LZB/zUEVVLtRyiMHBvyZ8
- rM7KAM1Jnz1MSS2gRmP2s+IFGXaFOROQBqCgS0mPm+Ao/DN0APTE/XgjmZ6gfZ9wWV/W
- x1PQ==
+ bh=4IkZ6rX56LKQaeRF12GcjWtnMJwwMH7mXS6+CURuUmU=;
+ b=Af4ooutyageaA+AS8szEtxgGcs7sFYLyBiX4iSq3vxxCF9lZs0rc7aut5t7dhzCuUD
+ jve0dFcm8ObnXuVTjHCng8lT8eG1C2EEx7EEkNRKE/5SpNHv0pMG9Q+XONXXQsQkrHPI
+ eNyEJl+RGgszU2t8BjBLVntoIaKv9xuubX1jN2c7v8GGDF1X0CCKSXkf8UKmKRUTKi7I
+ r3N5YeurCpa2KyrzEgNihHVl8ke8Pag6yQRPKUKwneOkwyfUV1qCIBsiVhfTF1qB7Rwj
+ uivSX5vqWVTXhnxXKtYPN2Sy6R28rqh/pZ8lfi+eUAd+DqcKzhS3i+9kOZlxV2ONvTWX
+ SGcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746395864; x=1747000664;
+ d=1e100.net; s=20230601; t=1746395875; x=1747000675;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Fwa6vL14YZTfst2loVGLMHYQVKFZcNKU8l3yQjztZTQ=;
- b=ZBqtGuoILqRYpBcDWz3o2qYSSKY5IXiIT1Vyoi5RHZEqsIaQRzqgxzPwmk3smF6iXP
- IN+ajwuA8JjcJL6tdJlpAwcThxDwJnV8AFDZcAkSJQDseWe1zXKqyN70j9cGpg+df6IB
- JsRe2m8P4JSKYosVLR1yOcRvOwHpYGRtNk+oHFv6GAbazL+fcGgOB/tWYzzK3P3FbYsJ
- umS57hoK3Wq0Ze32IQeIXkvpKZqhqNw6Y+HTyVSKeIdu5h7WiFiHXVDkg7Asu8avxC0b
- lGMTCt0i5etVbvu0VtPd3fmRaXVusLEBJ00WwG+mLywpCKyN3RIyTlhCaA8o0vBLi76c
- KxQg==
-X-Gm-Message-State: AOJu0Yw7JyVjbDq0g2C9VKBi1xT95/qO7046zmJGq+1pMflgeacZ/FaG
- 1/XFz2niWm9L3V7Kybg3C/wb8leuaU8UeN80XwYIb12r9DFtnHXuiEpEekuYxgHSdQjmVdJr8MB
- pelU=
-X-Gm-Gg: ASbGncsAROQnTZSPaR2W0gb75GRFamjGw46Ny2P7SNDzze4T3mM/ojI5Lx5UwT1ZMdo
- frhpBsmdbUx+dzfOSGL6m1xXwyuUp7zSWjZBoflS1njifQjozUygCcc7NwqINu6nQ918mteMnVa
- AVOGGogB163EE7trAa2mupgLGfITVQ4Q9rRZS9BB/7vFq5q1H2X+mc8XgLbGBrqt2rwSGH5qgZg
- QR6dg6Ye1pANRiL+iSyN54xUOOle0mcbqcZM05jXh2qfbmDqPvsqeOyUCnH53UV303z5wQEdek1
- qT3/4DJpqvzjXxJv3iRqBedp/x96zQLoA/KPrAxuFfyrrbHh
-X-Google-Smtp-Source: AGHT+IGQT6GPAkKoXGz9SNSn4/Ag1yM9bhq9courAlNnN3GPAxPb4sdccxa10oDnwKBUwHRRrLTVag==
-X-Received: by 2002:a17:903:2b0c:b0:21f:2ded:76ea with SMTP id
- d9443c01a7336-22e1eae4269mr91622705ad.36.1746395863786; 
- Sun, 04 May 2025 14:57:43 -0700 (PDT)
+ bh=4IkZ6rX56LKQaeRF12GcjWtnMJwwMH7mXS6+CURuUmU=;
+ b=fDqxOoKfOjIb+sRk48gXHoWs0vT5Yvd5wGgnog0YbvgzFBwmrCDGY+BQcIkSzGjOBY
+ WTNz3VDGsODOZ5UNDdX9WHz/Z34lZGtJxettKvOfPdaHKcHgK5IatW2XtwcW3J3tmXe+
+ 8MgINXTpQzoCWznVbW0Q07V9jBVQw3cEcb49sAOE1i7pz8AGXlaTLAbP+jyW9MgaOxto
+ BW01+9lN8k/iraKWvrqW/p5pbJ2SjWh4LYSm+U2KwtZl8zMZbM0Y8QeJKJo/S0Vke1kC
+ N2m2feTnXDgs9RQCnrJLOgP8F2DevMTfkMt0V4oOyB1AGbHbSlj85An0bKLZDXsrk7YB
+ FROw==
+X-Gm-Message-State: AOJu0Yyjb7sjULN/zAna/7Kq78i8TGqloVsvIDrIxOXvXLDIyK569h37
+ 5Iolc5e6gXiKpCXjmMZbWRnfI1VCghRxwDe+Eb0BVAfE7mAJt4fdqnkCGVZZePFVadj1PikdyOE
+ KFCE=
+X-Gm-Gg: ASbGncs1bhlRHZcOlZOr9syXYNLO6F02oJylbnjB9cgcUip7R+XavL5b4K22zqo+wep
+ vwTL3GSoU8WRmHp0FZjV0RM72fYmhkMkAmeLOjfJwhcFEoU1hk8jLbOsL+KLDAhNsqVPk3yx5BX
+ FBOk3cJJbsLZYfNXrM5eBTctVI2i5Fi4KEFhbb5OTihK1zlmpzLOoevvh0kq9DUVioQ8kFM26o4
+ XleWBokH/nznjcseg0X4qO/Qqrr6Y2F8P1K6f/GXdZlROKOfk9JDL2tlR+F+WrWvVWrKcY3pMmR
+ wT3AzVXPN909YlCecTeefgg4DM8tjUv6Nrf1BN+Jqr5ZKp5W
+X-Google-Smtp-Source: AGHT+IH3Dy6ZWpC1LCQVSAT5pW0VCitpjDb+UBJtRpZwdsHcgCtkN8WOEsYnwb/qSI0lPJ99iNC9Pw==
+X-Received: by 2002:a17:902:e750:b0:227:e7c7:d451 with SMTP id
+ d9443c01a7336-22e1eaa4478mr76337595ad.29.1746395874851; 
+ Sun, 04 May 2025 14:57:54 -0700 (PDT)
 Received: from gromero0.. ([200.150.181.215]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e152204fesm41664875ad.137.2025.05.04.14.57.41
+ d9443c01a7336-22e152204fesm41664875ad.137.2025.05.04.14.57.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 May 2025 14:57:43 -0700 (PDT)
+ Sun, 04 May 2025 14:57:54 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org,
  gustavo.romero@linaro.org
-Subject: [PATCH] hw/pci/pci.c: Turn DPRINTF into trace events
-Date: Sun,  4 May 2025 21:56:30 +0000
-Message-Id: <20250504215639.54860-2-gustavo.romero@linaro.org>
+Subject: [PATCH] hw/i386/acpi-build: Fix typo and grammar in comment
+Date: Sun,  4 May 2025 21:56:35 +0000
+Message-Id: <20250504215639.54860-7-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,91 +96,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove PCI_DPRINTF() macro and use trace events instead.
+Fix typo and verb conjugation in a comment about FADT initialization.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- hw/pci/pci.c        | 19 ++++++-------------
- hw/pci/trace-events |  4 ++++
- 2 files changed, 10 insertions(+), 13 deletions(-)
+ hw/i386/acpi-build.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index fe38c4c028..352b3d12c8 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -54,13 +54,6 @@
- #include "hw/xen/xen.h"
- #include "hw/i386/kvm/xen_evtchn.h"
- 
--//#define DEBUG_PCI
--#ifdef DEBUG_PCI
--# define PCI_DPRINTF(format, ...)       printf(format, ## __VA_ARGS__)
--#else
--# define PCI_DPRINTF(format, ...)       do { } while (0)
--#endif
--
- bool pci_available = true;
- 
- static char *pcibus_get_dev_path(DeviceState *dev);
-@@ -2439,12 +2432,12 @@ static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
-     /* Only a valid rom will be patched. */
-     rom_magic = pci_get_word(ptr);
-     if (rom_magic != 0xaa55) {
--        PCI_DPRINTF("Bad ROM magic %04x\n", rom_magic);
-+        trace_pci_bad_rom_magic(rom_magic, 0xaa55);
-         return;
-     }
-     pcir_offset = pci_get_word(ptr + 0x18);
-     if (pcir_offset + 8 >= size || memcmp(ptr + pcir_offset, "PCIR", 4)) {
--        PCI_DPRINTF("Bad PCIR offset 0x%x or signature\n", pcir_offset);
-+        trace_pci_bad_pcir_offset(pcir_offset);
-         return;
-     }
- 
-@@ -2453,8 +2446,8 @@ static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
-     rom_vendor_id = pci_get_word(ptr + pcir_offset + 4);
-     rom_device_id = pci_get_word(ptr + pcir_offset + 6);
- 
--    PCI_DPRINTF("%s: ROM id %04x%04x / PCI id %04x%04x\n", pdev->romfile,
--                vendor_id, device_id, rom_vendor_id, rom_device_id);
-+    trace_pci_rom_and_pci_ids(pdev->romfile, vendor_id, device_id,
-+                              rom_vendor_id, rom_device_id);
- 
-     checksum = ptr[6];
- 
-@@ -2462,7 +2455,7 @@ static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
-         /* Patch vendor id and checksum (at offset 6 for etherboot roms). */
-         checksum += (uint8_t)rom_vendor_id + (uint8_t)(rom_vendor_id >> 8);
-         checksum -= (uint8_t)vendor_id + (uint8_t)(vendor_id >> 8);
--        PCI_DPRINTF("ROM checksum %02x / %02x\n", ptr[6], checksum);
-+        trace_pci_rom_checksum_change(ptr[6], checksum);
-         ptr[6] = checksum;
-         pci_set_word(ptr + pcir_offset + 4, vendor_id);
-     }
-@@ -2471,7 +2464,7 @@ static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
-         /* Patch device id and checksum (at offset 6 for etherboot roms). */
-         checksum += (uint8_t)rom_device_id + (uint8_t)(rom_device_id >> 8);
-         checksum -= (uint8_t)device_id + (uint8_t)(device_id >> 8);
--        PCI_DPRINTF("ROM checksum %02x / %02x\n", ptr[6], checksum);
-+        trace_pci_rom_checksum_change(ptr[6], checksum);
-         ptr[6] = checksum;
-         pci_set_word(ptr + pcir_offset + 6, device_id);
-     }
-diff --git a/hw/pci/trace-events b/hw/pci/trace-events
-index 6a9968962f..02c80d3ec8 100644
---- a/hw/pci/trace-events
-+++ b/hw/pci/trace-events
-@@ -6,6 +6,10 @@ pci_pm_transition(const char *dev, uint32_t bus, uint32_t slot, uint32_t func, u
- pci_update_mappings_del(const char *dev, uint32_t bus, uint32_t slot, uint32_t func, int bar, uint64_t addr, uint64_t size) "%s %02x:%02x.%x %d,0x%"PRIx64"+0x%"PRIx64
- pci_update_mappings_add(const char *dev, uint32_t bus, uint32_t slot, uint32_t func, int bar, uint64_t addr, uint64_t size) "%s %02x:%02x.%x %d,0x%"PRIx64"+0x%"PRIx64
- pci_route_irq(int dev_irq, const char *dev_path, int parent_irq, const char *parent_path) "IRQ %d @%s -> IRQ %d @%s"
-+pci_bad_rom_magic(uint16_t bad_rom_magic, uint16_t good_rom_magic) "Bad ROM magic number: %04"PRIX16". Should be: %04"PRIX16
-+pci_bad_pcir_offset(uint16_t pcir_offset) "Bad PCIR offset 0x%"PRIx16" or signature"
-+pci_rom_and_pci_ids(char *romfile, uint16_t vendor_id, uint16_t device_id, uint16_t rom_vendor_id, uint16_t rom_device_id) "%s: ROM ID %04"PRIx16":%04"PRIx16" | PCI ID %04"PRIx16":%04"PRIx16
-+pci_rom_checksum_change(uint8_t old_checksum, uint8_t new_checksum) "ROM checksum changed from %02"PRIx8" to %02"PRIx8
- 
- # pci_host.c
- pci_cfg_read(const char *dev, uint32_t bus, uint32_t slot, uint32_t func, unsigned offs, unsigned val) "%s %02x:%02x.%x @0x%x -> 0x%x"
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 3fffa4a332..b5836417a0 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -139,7 +139,7 @@ static void init_common_fadt_data(MachineState *ms, Object *o,
+     /*
+      * "ICH9-LPC" or "PIIX4_PM" has "smm-compat" property to keep the old
+      * behavior for compatibility irrelevant to smm_enabled, which doesn't
+-     * comforms to ACPI spec.
++     * conform to the ACPI spec.
+      */
+     bool smm_enabled = object_property_get_bool(o, "smm-compat", NULL) ?
+         true : x86_machine_is_smm_enabled(x86ms);
 -- 
 2.34.1
 
