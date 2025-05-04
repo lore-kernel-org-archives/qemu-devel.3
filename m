@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E739C369DC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 05:42:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D35C9C369DC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 05:42:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBRvO-0002TM-FE; Sun, 04 May 2025 01:30:02 -0400
+	id 1uBRuu-00022d-Pt; Sun, 04 May 2025 01:29:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBRvF-0002LL-Vg
- for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:53 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1uBRut-00021K-6w
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:31 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBRvE-0004Si-75
- for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:53 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-22c33677183so39687195ad.2
- for <qemu-devel@nongnu.org>; Sat, 03 May 2025 22:29:51 -0700 (PDT)
+ id 1uBRur-0004Il-Hf
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 01:29:30 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-739525d4e12so3346306b3a.3
+ for <qemu-devel@nongnu.org>; Sat, 03 May 2025 22:29:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746336591; x=1746941391; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746336568; x=1746941368; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rXLXuVNGEyfjK9Yd01QUJZvt/uyYRhxbr8cOAxNhYLE=;
- b=iLtjL+pgKKaOB7mYYIADOtOkeAQHhRhxRBXoWtevVtj1ajmyWfEp8kzl9jffjJ7tVo
- 5/L4KLraKbanJPP/djhfcevuBbemz6CqtUgEDXwtxJFq49c0yRXFrzOrWQJWkeVgIs1x
- yzmYpSMriH/AoqRdVHIl28ZyHUgB7pJUrjLpz6cu6cOQljd/wj94XIbkFj7/iBEx+WbC
- 5MHdX5aXxdDnQAeMt/5j3ivQZwRdVsNWH97qfALX3jmKYB8flzaIlIC7rCfiJkKn8wOF
- OGSZf2CmGivZotrP85E5Y4xS6TgGMT1A4yo5E5qCHP8V78oC542euVIZGBcJCHUlaesG
- O/0Q==
+ bh=LuLpPX6X06+NE7HHzhZQmUoQgosCpwXTe/wCgu+rNqA=;
+ b=bMkKxDWnpEPxNsgfs/tFPNN4aqrWwPOVDVa3IW6eWmCVCoE1Tk4QLko7GE+PmSw2wA
+ orDS4dKpNTFqOKeu4jo8FyAYzq1S58IGHlRF3IHHUZztrROs9NTt1IspO+MAVUzFNtVj
+ I7SZ2XlrdaFAAGwMtORA2rYZpIh44+5MMjvLWPNUQfL0Q0dxmdp3mT0oSmdVV6RuWeoY
+ Un5x/gK6SugcU1dpq3HDmb6ZftedXOa6wfc+tWjt4QSgmarrm/nPbCyMTraVlNfzzwco
+ XZYevE7tQru+5W7GZMiRRehmKH3YOsrw2AlwiLBZY9sliKshIoAcR+VyQtgVlB2R2mtI
+ Nbvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746336591; x=1746941391;
+ d=1e100.net; s=20230601; t=1746336568; x=1746941368;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rXLXuVNGEyfjK9Yd01QUJZvt/uyYRhxbr8cOAxNhYLE=;
- b=eWIuanFUWJ3eEmwrvM2JIbBmjj6uBRll+L6drO5M1OOuCaTfCACS0tg5+LdADNL3xJ
- Pca1tfv8qsP1PvdCULC6uhUt7gSIraSkvNm2zapujdiWPa2pmhGYLANXmwPfWzJjMZCx
- bdwy3djBvDdoXkq7b5YNqZ068xQcxxxMBSjF+3pmJ2CVMIKxuQ5H4DMMFnuLPa8I+z+E
- 4Hn/Y+Zt3DmyGWwT1jokNH0UdTlC6FTT8J62d7vg/fjdh8X/rBIuPVBS6lTGeYEwLQZ7
- I5n+EkQZ+FQP899dV3tCrNDjyYJM1vbioB4Lha0lY3teE5igA99OSBsWneMWvHSOmUtW
- d/Yw==
-X-Gm-Message-State: AOJu0Yzc0EmughDzmRqmYPONmw+vQzTKhW+V7KVVAzD1ZlkfS/cuLOvQ
- XdADJig/7TW1Od/bFWz8Atawya9ZD2e5IOrdKK3MOYpArp1aNvYtE/mix0ntJ4v3mFmCyv1BWYl
- kDCw=
-X-Gm-Gg: ASbGnctaSLPjxYhNrJz17TKcuSbPkgn1pVt8TmXNqVj+OgHvrbELiX6ZgRVSb9vWmHq
- kmEHx+8BipCetRE5kHk+0rplPXTezEg4OJI/yqZoHwZJBiul5AChge7ISO0X0J6XmDoIFiC/B7x
- IaDYa77rfoSULO62Yflhv+/AIG1cd43lWjp8pDLP5GVw/gbsNqhxVrwH0lLbKSJt2kVPl2fos1d
- 9fNxVc0xBUFVnWnw1BRU0IJWzMCM87EIiex8A9XVCh9o41u2+peTwKwEfs3TNXy3mr8bALyuJJ3
- GOrZ13h1WTvZR+N1oemX7p9PP8HWGVm9yy45/7/l
-X-Google-Smtp-Source: AGHT+IEw7LdFolSK1L01aWRSXu0ZYhSFBV06ZwXjbG/l61w2CauR9M4H+Y+brnPiGKAodZUYp8tXtg==
-X-Received: by 2002:a17:903:19eb:b0:224:1eab:97b2 with SMTP id
- d9443c01a7336-22e1ec3e7c7mr45995215ad.53.1746336590793; 
- Sat, 03 May 2025 22:29:50 -0700 (PDT)
+ bh=LuLpPX6X06+NE7HHzhZQmUoQgosCpwXTe/wCgu+rNqA=;
+ b=ZU6D1dO1dwLAfIHssCLBhUyCaVNUmVk6+v/6rs6dNyajB5YP5LkAU3midGVN3wJVN+
+ kTt8ArzFTotlbethEW4nlhUDCdfxygn57mHIAFw3PEFLC/ooIgP4F+tZR/MHAWhNFACr
+ AEZ8L6QSdJEbTkl4iYN7IXnH2KCVwRIG5va4N4XOeT5J2lHC7JKv6qMzU8ASFZWtH7wX
+ u6m4zF+JYaRrCcjBV9wH4pCqbspRxMtXjMXCuQNptQvTY8+j6wOkvxqwL4HCNjdlXifp
+ JEB08r9hz5664JRYRi1M8x3PKgBcpL+WkdsLZ9ivyAiOis89Bq/WKzvdSPEuNr08BTvG
+ TC+Q==
+X-Gm-Message-State: AOJu0YxoQH4x2aZs4dAogR1/0hfadnKjnDBBNqPFVN8mBAzUyUSTYssg
+ 591iCKXEjJCBpdmx5w+3McyL1+Pw+3gqADZxNwoMiRR+iGqH2OhCPESd1PY8eHvXt0wslrklMrz
+ 95/o=
+X-Gm-Gg: ASbGncvoBdwjWuwprQPbzO8G8GFiUMWIUWy1FbEGS11tunOYDN9+CXPvAII0u2wvwuK
+ OPLKU8gLa1Eo69Q6jDAR/xA/xxlxJPdwYWkE+NJQM2QhQC7xpAJiWAqvsV53oe4rN+mhrQf8SU6
+ NjjaotGfIW92RaQ5n6h6KGHe+sEMj2LLUegC32uLYxsMlboY8f2TXznV/XW4trVGB3QhGhEq2nj
+ +uHxHRz0xHCyRU/Ak9qZaibYfjmwmNckxFVuLeqnTYeLBO1JGY4IBphddPDTpTK4cwDwSfhUzDR
+ oUXuNfOwK+wJID9mJgnMMU8I74YCGAipJ7cJqNBn
+X-Google-Smtp-Source: AGHT+IGu15PBf2rG0jV3bfDUJnP/9reL3xvY3YvbbIU6AzYvR6V/RBuTvzsbzlIgf0athadGHRLk8A==
+X-Received: by 2002:a05:6300:218a:b0:1ee:c7c8:ca4 with SMTP id
+ adf61e73a8af0-20ce04e699cmr13507222637.36.1746336568319; 
+ Sat, 03 May 2025 22:29:28 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-740590207e3sm4400511b3a.94.2025.05.03.22.29.50
+ d2e1a72fcca58-740590207e3sm4400511b3a.94.2025.05.03.22.29.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 03 May 2025 22:29:50 -0700 (PDT)
+ Sat, 03 May 2025 22:29:27 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, anjo@rev.ng,
@@ -70,17 +70,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, anjo@rev.ng,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  alex.bennee@linaro.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 35/40] target/arm/kvm-stub: compile file once (system)
-Date: Sat,  3 May 2025 22:29:09 -0700
-Message-ID: <20250504052914.3525365-36-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 09/40] target/arm/cpu: remove TARGET_BIG_ENDIAN dependency
+Date: Sat,  3 May 2025 22:28:43 -0700
+Message-ID: <20250504052914.3525365-10-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250504052914.3525365-1-pierrick.bouvier@linaro.org>
 References: <20250504052914.3525365-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,34 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/meson.build | 3 ++-
+ target/arm/cpu.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 29a36fb3c5e..bb1c09676d5 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -15,7 +15,7 @@ arm_system_ss.add(files(
-   'arm-qmp-cmds.c',
-   'machine.c',
- ))
--arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'), if_false: files('kvm-stub.c'))
-+arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'))
- arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 07f279fec8c..37b11e8866f 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -23,6 +23,7 @@
+ #include "qemu/timer.h"
+ #include "qemu/log.h"
+ #include "exec/page-vary.h"
++#include "exec/tswap.h"
+ #include "target/arm/idau.h"
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+@@ -1172,7 +1173,7 @@ static void arm_disas_set_info(CPUState *cpu, disassemble_info *info)
  
- arm_user_ss = ss.source_set()
-@@ -32,6 +32,7 @@ arm_user_ss.add(files(
- arm_common_system_ss.add(files('cpu.c'), capstone)
- arm_common_system_ss.add(when: 'TARGET_AARCH64', if_false: files(
-   'cpu32-stubs.c'))
-+arm_common_system_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
- arm_common_system_ss.add(files(
-   'arch_dump.c',
-   'arm-powerctl.c',
+     info->endian = BFD_ENDIAN_LITTLE;
+     if (bswap_code(sctlr_b)) {
+-        info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_LITTLE : BFD_ENDIAN_BIG;
++        info->endian = target_big_endian() ? BFD_ENDIAN_LITTLE : BFD_ENDIAN_BIG;
+     }
+     info->flags &= ~INSN_ARM_BE32;
+ #ifndef CONFIG_USER_ONLY
 -- 
 2.47.2
 
