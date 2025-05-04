@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5A42C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 16:03:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E7AC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 16:04:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBbmt-0005Ps-T3; Sun, 04 May 2025 12:01:55 -0400
+	id 1uBbmp-0005GG-9v; Sun, 04 May 2025 12:01:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uBbmf-0004xB-8F; Sun, 04 May 2025 12:01:41 -0400
+ id 1uBbmk-00055s-KC; Sun, 04 May 2025 12:01:46 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uBbmc-0004Bc-GN; Sun, 04 May 2025 12:01:40 -0400
+ id 1uBbmi-0004DY-Pd; Sun, 04 May 2025 12:01:46 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id EA3BD55D235;
- Sun, 04 May 2025 18:01:36 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 4BABE55D230;
+ Sun, 04 May 2025 18:01:43 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id cw3LaJhPX7XG; Sun,  4 May 2025 18:01:35 +0200 (CEST)
+ with ESMTP id RLM8-tPklq4S; Sun,  4 May 2025 18:01:41 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 060E055D23B; Sun, 04 May 2025 18:01:35 +0200 (CEST)
-Message-ID: <bec3e9df822955c83150ecc7fc13bb7063a5accb.1746374076.git.balaton@eik.bme.hu>
+ id 5168B55D234; Sun, 04 May 2025 18:01:41 +0200 (CEST)
+Message-ID: <2c0cea500b892a5d677547c2c8de8c268ddfff01.1746374076.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1746374076.git.balaton@eik.bme.hu>
 References: <cover.1746374076.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 08/16] hw/pci-host/raven: Simplify direct config access
- address decoding
+Subject: [PATCH 14/16] hw/pci-host/raven: Move bus master address space
+ creation to one place
 To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
-Date: Sun, 04 May 2025 18:01:35 +0200 (CEST)
+Date: Sun, 04 May 2025 18:01:41 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -60,55 +60,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use ctz instead of an open coded version and rename function to better
-show what it does.
+Move the lines related to creating the bus master address space
+together and reduce the number of memory regions stored in the device
+state. These are used once to create the address space and can be
+tracked with their owner object so no need to keep track of them in
+the device state. Keep only the address space that is used later in a
+callback.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/pci-host/raven.c | 15 ++++-----------
- 1 file changed, 4 insertions(+), 11 deletions(-)
+ hw/pci-host/raven.c | 37 ++++++++++++++++++-------------------
+ 1 file changed, 18 insertions(+), 19 deletions(-)
 
 diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-index a400a22df3..66dab28a29 100644
+index 476ae5bc65..68d64e3a97 100644
 --- a/hw/pci-host/raven.c
 +++ b/hw/pci-host/raven.c
-@@ -57,16 +57,9 @@ struct PREPPCIState {
+@@ -46,9 +46,6 @@ struct PREPPCIState {
+     MemoryRegion pci_discontiguous_io;
+     MemoryRegion pci_memory;
+     MemoryRegion pci_intack;
+-    MemoryRegion bm;
+-    MemoryRegion bm_ram_alias;
+-    MemoryRegion bm_pci_memory_alias;
+     AddressSpace bm_as;
+ };
  
- #define PCI_IO_BASE_ADDR    0x80000000  /* Physical address on main bus */
+@@ -174,7 +171,8 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+     SysBusDevice *dev = SYS_BUS_DEVICE(d);
+     PCIHostState *h = PCI_HOST_BRIDGE(dev);
+     PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(dev);
+-    MemoryRegion *mr, *address_space_mem = get_system_memory();
++    Object *o = OBJECT(d);
++    MemoryRegion *mr, *bm, *address_space_mem = get_system_memory();
  
--static inline uint32_t raven_pci_io_config(hwaddr addr)
-+static inline uint32_t raven_idsel_to_addr(hwaddr addr)
- {
--    int i;
+     qdev_init_gpio_in(d, raven_change_gpio, 1);
+ 
+@@ -183,26 +181,37 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+                                    &s->irq, &s->pci_memory, &s->pci_io, 0, 1,
+                                    TYPE_PCI_BUS);
+ 
+-    memory_region_init_io(&h->conf_mem, OBJECT(h), &pci_host_conf_le_ops, s,
++    memory_region_init_io(&h->conf_mem, o, &pci_host_conf_le_ops, s,
+                           "pci-conf-idx", 4);
+     memory_region_add_subregion(&s->pci_io, 0xcf8, &h->conf_mem);
+ 
+-    memory_region_init_io(&h->data_mem, OBJECT(h), &pci_host_data_le_ops, s,
++    memory_region_init_io(&h->data_mem, o, &pci_host_data_le_ops, s,
+                           "pci-conf-data", 4);
+     memory_region_add_subregion(&s->pci_io, 0xcfc, &h->data_mem);
+ 
+     mr = g_new0(MemoryRegion, 1);
+-    memory_region_init_io(mr, OBJECT(h), &raven_mmcfg_ops, h->bus,
++    memory_region_init_io(mr, o, &raven_mmcfg_ops, h->bus,
+                           "pci-mmcfg", 8 * MiB);
+     memory_region_add_subregion(&s->pci_io, 0x800000, mr);
+ 
+-    memory_region_init_io(&s->pci_intack, OBJECT(s), &raven_intack_ops, s,
++    memory_region_init_io(&s->pci_intack, o, &raven_intack_ops, s,
+                           "pci-intack", 1);
+     memory_region_add_subregion(address_space_mem, 0xbffffff0, &s->pci_intack);
+ 
+     pci_create_simple(h->bus, PCI_DEVFN(0, 0), TYPE_RAVEN_PCI_DEVICE);
+ 
+-    address_space_init(&s->bm_as, &s->bm, "raven-bm");
++    /* Bus master address space */
++    bm = g_new0(MemoryRegion, 1);
++    memory_region_init(bm, o, "raven-bm", 4 * GiB);
++    mr = g_new0(MemoryRegion, 1);
++    memory_region_init_alias(mr, o, "bm-pci-memory", &s->pci_memory, 0,
++                             memory_region_size(&s->pci_memory));
++    memory_region_add_subregion(bm, 0, mr);
++    mr = g_new0(MemoryRegion, 1);
++    memory_region_init_alias(mr, o, "bm-system", get_system_memory(),
++                             0, 0x80000000);
++    memory_region_add_subregion(bm, 0x80000000, mr);
++    address_space_init(&s->bm_as, bm, "raven-bm-as");
+     pci_setup_iommu(h->bus, &raven_iommu_ops, s);
+ }
+ 
+@@ -224,16 +233,6 @@ static void raven_pcihost_initfn(Object *obj)
+                                         &s->pci_discontiguous_io, 1);
+     memory_region_set_enabled(&s->pci_discontiguous_io, false);
+     memory_region_add_subregion(address_space_mem, 0xc0000000, &s->pci_memory);
 -
--    for (i = 0; i < 11; i++) {
--        if ((addr & (1 << (11 + i))) != 0) {
--            break;
--        }
--    }
--    return (addr & 0x7ff) |  (i << 11);
-+    return (ctz16(addr >> 11) << 11) | (addr & 0x7ff);
+-    /* Bus master address space */
+-    memory_region_init(&s->bm, obj, "bm-raven", 4 * GiB);
+-    memory_region_init_alias(&s->bm_pci_memory_alias, obj, "bm-pci-memory",
+-                             &s->pci_memory, 0,
+-                             memory_region_size(&s->pci_memory));
+-    memory_region_init_alias(&s->bm_ram_alias, obj, "bm-system",
+-                             get_system_memory(), 0, 0x80000000);
+-    memory_region_add_subregion(&s->bm, 0         , &s->bm_pci_memory_alias);
+-    memory_region_add_subregion(&s->bm, 0x80000000, &s->bm_ram_alias);
  }
  
- static void raven_pci_io_write(void *opaque, hwaddr addr,
-@@ -74,7 +67,7 @@ static void raven_pci_io_write(void *opaque, hwaddr addr,
- {
-     PREPPCIState *s = opaque;
-     PCIHostState *phb = PCI_HOST_BRIDGE(s);
--    pci_data_write(phb->bus, raven_pci_io_config(addr), val, size);
-+    pci_data_write(phb->bus, raven_idsel_to_addr(addr), val, size);
- }
- 
- static uint64_t raven_pci_io_read(void *opaque, hwaddr addr,
-@@ -82,7 +75,7 @@ static uint64_t raven_pci_io_read(void *opaque, hwaddr addr,
- {
-     PREPPCIState *s = opaque;
-     PCIHostState *phb = PCI_HOST_BRIDGE(s);
--    return pci_data_read(phb->bus, raven_pci_io_config(addr), size);
-+    return pci_data_read(phb->bus, raven_idsel_to_addr(addr), size);
- }
- 
- static const MemoryRegionOps raven_pci_io_ops = {
+ static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
 -- 
 2.41.3
 
