@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0428C369DC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 21:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23419C3ABB0
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 21:59:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBhLP-0007Tb-PJ; Sun, 04 May 2025 17:57:55 -0400
+	id 1uBhLX-0007ct-2U; Sun, 04 May 2025 17:58:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uBhLN-0007SM-Su
- for qemu-devel@nongnu.org; Sun, 04 May 2025 17:57:53 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1uBhLU-0007Xo-NB
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 17:58:00 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uBhLM-0005Bw-EG
- for qemu-devel@nongnu.org; Sun, 04 May 2025 17:57:53 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2264aefc45dso58852805ad.0
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 14:57:51 -0700 (PDT)
+ id 1uBhLT-0005D9-7U
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 17:58:00 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-22438c356c8so35080705ad.1
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 14:57:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746395870; x=1747000670; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746395877; x=1747000677; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=zwc13b8kC9Z5he0z0xvhp1yrhhR7Vt1vlSABNOYVc1M=;
- b=LGQzhjBgt2ttE9oJZgT7ocBsB0XIUL8ipEyqdR4Z1JNyf9vZI0sdwavhYBSpqwJTRc
- D2C4sz7FkFFvssT7mKatxvoa8iVVetQV+gV0TX6wvmrhwLUIs3Ux3/gFlo2bmYH5G8L0
- fyWZuycALRVIKvleHBrdrRxHSuhGLQanxiVKFN3SbVCatkG8V8sZI94deCc7pmBni4BK
- +/oJcOOMgDjQcTFkTgg6Gr7YmFsuct9gh4A+d98YgKkpSeSned1+KZtOaU+eKFiRZiE8
- phlDSf1toMTqljM+rdDb9NLa/i69xwk0Rgu28zG3byM8XhzlkMb2+V0B/kk8H/7AgHnj
- l3NQ==
+ bh=T30H+Xqi+D11ghfM6nKfQX3kyu+3U71s0mbiqhW/0/s=;
+ b=Pdql+r8rx25wcbdLqYhCuGSz5nCZ5G8dLSku0WrvlGhXkJ/BttljvjXgoxNtRYqQUK
+ 4C8aVqjomPJoDcA6MOAx4DQLIT2o+AxAu6NH98neUaiOaeRZv2ugd3/L7vrioKeSrKI/
+ RPL66q+R/xaM5NPcwNHLcmpap5+TGCHr1xcBCsKtlJxR2UETAk0sWTkiUnSeJrLwI4a0
+ 6vMDsRllX3R8AXkENmqXG3WpnT2DkW05nS7tVrpRHKExODQcGn2eRErtO/+w+sUBvEes
+ nY0zqHqA9r+zExtp18gbcShs7uAhIzxQzQ++NGo7eIgU6ItnpAn+pccU4K7L8xXt3eHU
+ z2kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746395870; x=1747000670;
+ d=1e100.net; s=20230601; t=1746395877; x=1747000677;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zwc13b8kC9Z5he0z0xvhp1yrhhR7Vt1vlSABNOYVc1M=;
- b=j229XyAZy9fim0yRA7B/V59i9fc89pfUxtt4CjKKTztKrs7LlCd0EHV41ZkJvCKD8W
- +cJ5gfUOAzUsORI7pg2PcrVmHyuRQHdNalu6JadaNUXnen7XfSb2tpVcIK1+q1mYyXs+
- 4ya/bwNBCD9OKs8IOdgsnZJ0Zd7QsEJd8dbYoeOHVIa9OBa/ft05VTwCUCMudrJHMB6p
- gHgW08/gRCEDYs66v9xjkT3fYt5JxnSEttfTApNN3LUal5Wm7vsvxwXSkPzPgm1eYElZ
- c0csqq8KI0Rxdvw9Ere4w5kaH28KR2HSazSCDJwc15hIGTK0FDpK5PNDtaz3zWOx0KDU
- EwCw==
-X-Gm-Message-State: AOJu0Yw5ZTfKCr/ffj7v6/0AlPgbLjSsHnW0FB4m6Ox39HLdodYM9pR7
- jSbpCztQRG9lBTpzvzugg2Lp6JO+pe3pKoF33Ig1h6YGTewcOIOdzZemogFh3bLOFrTrkVqAxLc
- YClQ=
-X-Gm-Gg: ASbGncsb8F0TLadHLy4uSUOv/i/Ksv8tUvCEpBi/E2VgwnOZx10y1lJ4uylYAJ2laLe
- fbEp3EEureORqxw5j5q4fY2NnPURe4hrn7FYcz3B88hRhxSXnKvAYImgmxpRezocZEe3Pk2mZEJ
- /a+hYgr3l+2OBfiTyORGA+QI9Kt6iFaHH5F+68KUEFk5qJDZtmidJNOw4gc7T6TzahFP6gHO6GF
- v5Vz9fSyu2j6Aj6lV7FwwAON0giQ9y7nPknZ/RHrWzIaT2XJ7fc7My0/b0E6yIXMbdP2nXrR/Pw
- CGgitLC1hLD+7R4ShvX3MVx275lOIwBxSULgSfYxpdCkBBQ8
-X-Google-Smtp-Source: AGHT+IECbiCHIB9yXeZyP/73ydQgOkmKcL7fDhfifpt8nRB3vdpLxi/bJq0+dAIeGnkTNsGzJmDT0w==
-X-Received: by 2002:a17:902:dacf:b0:224:24d5:f20a with SMTP id
- d9443c01a7336-22e1eaeecf4mr93104875ad.48.1746395870493; 
- Sun, 04 May 2025 14:57:50 -0700 (PDT)
+ bh=T30H+Xqi+D11ghfM6nKfQX3kyu+3U71s0mbiqhW/0/s=;
+ b=RqX5jka92Rl/jQrE3Gkfc4P07GvydSbYI8jHNUjIuoI10QaCRTdFj2FTzHMNcXS8Le
+ OPNBrVBLZTHH6mX48+qb2nqaRBz7T5U5xPncg00abU8BzYxtGnKtF+1hzkQIDMZsf/4z
+ hGVuPpEjUUH052muAYbqQ3nha65tG/+cz/ET2aDIH1ko2xrn4wM6XKp5ljyWl+k16CcL
+ 4mIFRF1IatFLIUNJuBQbHpzx/d19+Lf6ieEaMrU5GJHG6DRFWBRHF9xVjbZGS5jxzjHd
+ BsFcd1UDxl2g/PLVYgd0yV5KzS7HWD4jWQKdJavCcXlvgPnOwttn2a9vlVNAx1o+Zshe
+ LxAw==
+X-Gm-Message-State: AOJu0YygmJxw1ocTig8zAgv9nnQoLQOkvvXU+6J9kXrEtacaOBLovkPG
+ BMdo1Q39Gx0263ev+xT+nmV16JlTp+PH8nJC+sXBs62X+CDxYOmqwPgoDxU7/pfc3A3lmYam1We
+ +08s=
+X-Gm-Gg: ASbGncskR0wu6O3/f1YimiURPdnNdsbH/a/XX4WFUnmGfibkM6nxxhMCv2eTDbqdnaQ
+ 6OTkSbpdh6E5xzdQ+9CUxuiXFJFZAwIAvJSymKhUMet5Y3NpMR4V/aKWxPvp4npp5L3Xjca+2v6
+ LtoxVh3AbckP6KTnffn47TCInRV4huSSIf9YqNQzftYF0rBfEx3GgbYBe40T4iPpaawvSv1/6ge
+ 2nnF+cJtZVaIgwMcd9/CiDUMOxxOfOoAkC3p43q1hn++XV46LxFbrGb0myH186IY03VzCvneOxK
+ I9j7X0KlYKIbUY7UXHxiogKYphVGuZgb0uPREXUndES0DVod
+X-Google-Smtp-Source: AGHT+IFLOYo2VF9CCIcRfjuhSTmt7XVXCxZ/TEOLp6sfRYPRnAGNb5E/aa3DrqbfoYXE3MAPRWeKPA==
+X-Received: by 2002:a17:902:f686:b0:223:635d:3e2a with SMTP id
+ d9443c01a7336-22e1e909934mr73071745ad.23.1746395877119; 
+ Sun, 04 May 2025 14:57:57 -0700 (PDT)
 Received: from gromero0.. ([200.150.181.215]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e152204fesm41664875ad.137.2025.05.04.14.57.48
+ d9443c01a7336-22e152204fesm41664875ad.137.2025.05.04.14.57.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 May 2025 14:57:50 -0700 (PDT)
+ Sun, 04 May 2025 14:57:56 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org,
  gustavo.romero@linaro.org
-Subject: [PATCH] qom/object: Fix typo in comment
-Date: Sun,  4 May 2025 21:56:33 +0000
-Message-Id: <20250504215639.54860-5-gustavo.romero@linaro.org>
+Subject: [PATCH] hw/i386/acpi-build: Fix typo in function name
+Date: Sun,  4 May 2025 21:56:36 +0000
+Message-Id: <20250504215639.54860-8-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,26 +96,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix duplicate preposition in comment.
+Fix missing "i" in the name of the function responsible for adding the call to
+the PCI notification method (PCNT) in the ACPI table.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- qom/object.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/i386/acpi-build.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/qom/object.c b/qom/object.c
-index 664f0f24ae..7b013f40a0 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -485,7 +485,7 @@ bool object_apply_global_props(Object *obj, const GPtrArray *props,
-  * Slot 0: accelerator's global property defaults
-  * Slot 1: machine's global property defaults
-  * Slot 2: global properties from legacy command line option
-- * Each is a GPtrArray of of GlobalProperty.
-+ * Each is a GPtrArray of GlobalProperty.
-  * Applied in order, later entries override earlier ones.
-  */
- static GPtrArray *object_compat_props[3];
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index b5836417a0..f40ad062f9 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -589,8 +589,8 @@ void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus)
+     }
+ }
+ 
+-static bool build_append_notfication_callback(Aml *parent_scope,
+-                                              const PCIBus *bus)
++static bool build_append_notification_callback(Aml *parent_scope,
++                                               const PCIBus *bus)
+ {
+     Aml *method;
+     PCIBus *sec;
+@@ -604,7 +604,7 @@ static bool build_append_notfication_callback(Aml *parent_scope,
+             continue;
+         }
+         nr_notifiers = nr_notifiers +
+-                       build_append_notfication_callback(br_scope, sec);
++                       build_append_notification_callback(br_scope, sec);
+         /*
+          * add new child scope to parent
+          * and keep track of bus that have PCNT,
+@@ -1773,7 +1773,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+         PCIBus *b = PCI_HOST_BRIDGE(pci_host)->bus;
+ 
+         scope = aml_scope("\\_SB.PCI0");
+-        has_pcnt = build_append_notfication_callback(scope, b);
++        has_pcnt = build_append_notification_callback(scope, b);
+         if (has_pcnt) {
+             aml_append(dsdt, scope);
+         }
 -- 
 2.34.1
 
