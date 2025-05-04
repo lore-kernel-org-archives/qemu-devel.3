@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E4C2C3ABB0
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 20:58:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E53A0C369DC
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 20:58:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBgP0-0008Qr-7r; Sun, 04 May 2025 16:57:34 -0400
+	id 1uBgP1-0008S8-RJ; Sun, 04 May 2025 16:57:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uBgOl-0008Ky-HB
- for qemu-devel@nongnu.org; Sun, 04 May 2025 16:57:20 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1uBgOv-0008P5-UI
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 16:57:31 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uBgOj-0006vq-Pq
- for qemu-devel@nongnu.org; Sun, 04 May 2025 16:57:19 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-227b828de00so40210655ad.1
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 13:57:17 -0700 (PDT)
+ id 1uBgOr-0006xF-Kf
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 16:57:28 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-af52a624283so3180013a12.0
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 13:57:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746392236; x=1746997036; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746392243; x=1746997043; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GmYZsTnUMl5IM410FTxmeaTfbTLbZEPczwGnLZA+ci8=;
- b=ZlXj37l1cH6WkCgYG0biKDsGVOZekxarHbhS+2En9ybbCOVN9eXZdQXoHapx8Y7qep
- WBJ3asQJaKTdXoE2GO5eQuerJuI8NlXRK/PPYYTXl5X5I18hJxvWeQSL/i3maGa6LFpW
- V0RhR1BlzQwvT8JPFNGMBh55T4RTJpNpWCW44aIfiTZIiZq3zkGxPTkXfnkqEniol6o3
- KcfqdBvP4ZKB73CHCh8s0ZeFNBwp6QfnJgU2EIcVWMsKPKbm4v3b9+FVlUFpvygGd1U5
- hi1nI2RPyIfyzNkCt+P6fFy/0z5uMnKM/o8ybP8+rndyeKwYyM9zB8wwKqskjs1v11N0
- RLHQ==
+ bh=l9IAKV9LJlCW9c1xiMOYV7AbY7Z625Fdb9+xsHG0s8M=;
+ b=cwM6W7K3No4yWVxfAaZAq4Pds8jmeTkdO2f+d0KlYDcfk+4B+KfE6aTkFtYoj3U9Xn
+ 0EB5GT1RyLSQLK6z6evzGViN8/34k3eSslNbWGgqrrDL4Ls0fXzNOwRKFlv6poKX25fH
+ vyDwY+kOqhsoUcrjLWVSA+0rb5EM+8Rhe8Ye52UVppvHx91qC7a5KJgt8u0XC64BboxK
+ Wd9RYi1cp+HvxKlJT4be7SPjHUDw4QMuo9h8MYL964ECA0pFKTvcOY54DgJkV6g/6SAx
+ hpzTRWekgcZf6SE/Z7sSm/Usz3rL6xCs5JlT3iqfJi0zfLtzirUBL79hfBOfQE08YmG0
+ aAuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746392236; x=1746997036;
+ d=1e100.net; s=20230601; t=1746392243; x=1746997043;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GmYZsTnUMl5IM410FTxmeaTfbTLbZEPczwGnLZA+ci8=;
- b=jesl7MVdHQ8H0jmu5onapFkw+HlfTOjB9EZij/mcSvoTLmRz4tT0Ncy3nz9orjORhx
- BBN32g+srrTFFrZS/tPxCDf956vfS5E3O9wrcXtzNodXmFMJtj9MNZb9OcpXjo7wsc2k
- 9GcHFzIOk2Qf3i8abr4tTHiz8H8Wee3NFAx579dQNyPFlDYrr+xKKObLx9ppMA+Wh3Hj
- eYRw4wFOxb5YT1JvrePv2G4J8uYBU7GuPgDiF65cvfsAvpaAmThw7szJkwtpWoqW1lci
- LAACWHWpzzmwPqktoHNqaTablKD56FzoYhT2riZZ8yabq6X3fPixA9ST5wUZad99iD5X
- vHVw==
-X-Gm-Message-State: AOJu0Yzg0i1/1XGucarXXVPpjSTr1NJ+yk+53m0+7kTGREuoA6Gv3eln
- EGzPcVx2YFDyeDMY0FL3j4kQmQ4Xo1fNMDcjuXg3GsQM+B+NN0pRT9WjvFzJ3AUZEvY7us+CAAv
- L
-X-Gm-Gg: ASbGncu8Iq694X4QchN6eelvq9spnQU6gTg/djwp1gyhx3oXpp66ZC3FfA36PDPUgbM
- Z+j8CvOunvmzK3oGkqd8idxnYTjeEzYTUUfhc3Yj7KxIlPtinVt74xg+iJMSuVVauWHufgjPhO+
- not0EZHdrYH4/dS1QsekFug1kxY9wBm/eCuqrh+6p7uMYoA39LNbd5D0Bgftmq9EYxDW4IfJ+2P
- tSetttj/bbL0VR2R1BskheZflq2PMGDOYMMOgVcr30zxLIQnlRtKpg5Bf+iVgLMU1K0qTQHcwna
- arZlYg/RPdpVC/Muwb3vMkd5NzZjmXuc51KDlBmtcQ9UH4wb9tnos+sWG5sUvI/+VM+0RQ1QmmW
- cdiaRU8TGCQ==
-X-Google-Smtp-Source: AGHT+IGuoAZumEs9l6mRec7LrlKGjZQ8Ll6m00v1ZFPiZy10gN3SMeOpS054wvkS0piQgmMAB0AS1Q==
-X-Received: by 2002:a17:903:4403:b0:224:1eaa:5de1 with SMTP id
- d9443c01a7336-22e18bcac92mr83986955ad.18.1746392236258; 
- Sun, 04 May 2025 13:57:16 -0700 (PDT)
+ bh=l9IAKV9LJlCW9c1xiMOYV7AbY7Z625Fdb9+xsHG0s8M=;
+ b=pQEdr4CAQ28kT6haxnDsUgsyQM85Q6O7qFNcQuNG3ww+MCzndolW9DJHpmN4rHfdLk
+ OhDh6lXuQvVBQKLNa7MVh5WA1tlFM71k0X1Nc+oI5U7/9OmngfwYfow96ocjhM2lA5EC
+ GT9KXAsh38EAgJGdOvU1Z9vSTvqSCThDRfwT6kLlerYo3T9Vxoi/ERyw0qKGYvRrPnDT
+ 0NdCrJdoWDD57m8O0kStNmnDFUBeO98qgZ+PnbC935ujL2iqMM9PY0m+PLyAjX8TvF2O
+ WVnhSJvbH4wxscI33u8kCRW454m1Xia67BezMHUKcCMpEH+cf3jOeHO1HvN9WLNPKC0P
+ mgDg==
+X-Gm-Message-State: AOJu0Ywfbx7RZ/jPJ+gy0xsrMghUcYRMRzBbFYh0KiOXwwbX2JXQiADv
+ XxlbzQ6GHcRI7ueFM5kzynZHOt7KQ1yAj7rG5QnrvzJFdjuoQtbdrKi9vwIZB//yvrIHglscloI
+ G
+X-Gm-Gg: ASbGncuHW5BVrHsexmN4vRteea+pY47/bmBcqUIMWIT64sjMuLSHLwwhBjLqvQX7hxg
+ RJ1V1xAG3VMpYyVrf8dhYZuER4NsPg7IvSQlwV97Qgh0ZUgvWFEc4XZv9BTxFX+Rp6bxzSc6MwC
+ LzMuYaKbP7hlif1wvpziTdLJIixjOknNYtw1VDBu4UhklkuDqrjCKUdSAbq5tqfepDGbHyz74Xj
+ iIA5qkMb+lyktrQs//FEv2a/EOXVkjWa8Jo3h68psy6pk7ErsbeASHvcwnnVGTJVEf63h1Cw7JL
+ T77OW77GopTiZuzvkGJX78buBJAEyLfXsB9zgt06dK9LkhT4yzMdiVHxCduw1qIxMEYbh944ZrE
+ =
+X-Google-Smtp-Source: AGHT+IGjcLDUeO+TxdL2cpp2KU0VERd2p9720NngUoGzQTQ0WkBrkMr5zIPuwkcrdyTwZSGS3p8a7Q==
+X-Received: by 2002:a17:902:f0d4:b0:22e:23c1:d711 with SMTP id
+ d9443c01a7336-22e23c1d7cfmr29261005ad.16.1746392243571; 
+ Sun, 04 May 2025 13:57:23 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e150eadfcsm41346425ad.32.2025.05.04.13.57.15
+ d9443c01a7336-22e150eadfcsm41346425ad.32.2025.05.04.13.57.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 May 2025 13:57:15 -0700 (PDT)
+ Sun, 04 May 2025 13:57:23 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: foss@percivaleng.com
-Subject: [PATCH 01/12] accel/tcg: Add TCGCPUOps.pointer_wrap
-Date: Sun,  4 May 2025 13:57:02 -0700
-Message-ID: <20250504205714.3432096-2-richard.henderson@linaro.org>
+Cc: foss@percivaleng.com,
+	qemu-s390x@nongnu.org
+Subject: [PATCH 10/12] target/s390x: Fill in TCGCPUOps.pointer_wrap
+Date: Sun,  4 May 2025 13:57:11 -0700
+Message-ID: <20250504205714.3432096-11-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250504205714.3432096-1-richard.henderson@linaro.org>
 References: <20250504205714.3432096-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,47 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Use the existing wrap_address function.
+
+Cc: qemu-s390x@nongnu.org
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/accel/tcg/cpu-ops.h | 7 +++++++
- accel/tcg/cputlb.c          | 6 ++++++
- 2 files changed, 13 insertions(+)
+ target/s390x/cpu.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
-index cd22e5d5b9..83b2c2c864 100644
---- a/include/accel/tcg/cpu-ops.h
-+++ b/include/accel/tcg/cpu-ops.h
-@@ -222,6 +222,13 @@ struct TCGCPUOps {
-     bool (*tlb_fill)(CPUState *cpu, vaddr address, int size,
-                      MMUAccessType access_type, int mmu_idx,
-                      bool probe, uintptr_t retaddr);
-+    /**
-+     * @pointer_wrap:
-+     *
-+     * We have incremented @base to @result, resulting in a page change.
-+     * For the current cpu state, adjust @result for possible overflow.
-+     */
-+    vaddr (*pointer_wrap)(CPUState *cpu, int mmu_idx, vaddr result, vaddr base);
-     /**
-      * @do_transaction_failed: Callback for handling failed memory transactions
-      * (ie bus faults or external aborts; not MMU faults)
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 5f6d7c601c..c394293d33 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -1773,6 +1773,12 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-         l->page[1].size = l->page[0].size - size0;
-         l->page[0].size = size0;
+diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+index 9c1158ebcc..f05ce317da 100644
+--- a/target/s390x/cpu.c
++++ b/target/s390x/cpu.c
+@@ -347,6 +347,14 @@ static TCGTBCPUState s390x_get_tb_cpu_state(CPUState *cs)
+     };
+ }
  
-+        if (cpu->cc->tcg_ops->pointer_wrap) {
-+            l->page[1].addr = cpu->cc->tcg_ops->pointer_wrap(cpu, l->mmu_idx,
-+                                                             l->page[1].addr,
-+                                                             addr);
-+        }
++#ifndef CONFIG_USER_ONLY
++static vaddr s390_pointer_wrap(CPUState *cs, int mmu_idx,
++                               vaddr result, vaddr base)
++{
++    return wrap_address(cpu_env(cs), result);
++}
++#endif
 +
-         /*
-          * Lookup both pages, recognizing exceptions from either.  If the
-          * second lookup potentially resized, refresh first CPUTLBEntryFull.
+ static const TCGCPUOps s390_tcg_ops = {
+     .mttcg_supported = true,
+     .precise_smc = true,
+@@ -367,6 +375,7 @@ static const TCGCPUOps s390_tcg_ops = {
+     .record_sigbus = s390_cpu_record_sigbus,
+ #else
+     .tlb_fill = s390_cpu_tlb_fill,
++    .pointer_wrap = s390_pointer_wrap,
+     .cpu_exec_interrupt = s390_cpu_exec_interrupt,
+     .cpu_exec_halt = s390_cpu_has_work,
+     .cpu_exec_reset = cpu_reset,
 -- 
 2.43.0
 
