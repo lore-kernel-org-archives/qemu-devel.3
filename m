@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF9B1C369DC
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 16:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BEF7C3ABB6
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 16:02:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBbmd-0004sI-C4; Sun, 04 May 2025 12:01:39 -0400
+	id 1uBbmc-0004p8-9p; Sun, 04 May 2025 12:01:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uBbmb-0004p0-Li; Sun, 04 May 2025 12:01:37 -0400
+ id 1uBbma-0004oH-5R; Sun, 04 May 2025 12:01:36 -0400
 Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uBbmY-0004AN-0U; Sun, 04 May 2025 12:01:37 -0400
+ id 1uBbmY-0004AH-0K; Sun, 04 May 2025 12:01:35 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id AE03155D21A;
- Sun, 04 May 2025 18:01:30 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9F72055D235;
+ Sun, 04 May 2025 18:01:29 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id s2T_LI7CItth; Sun,  4 May 2025 18:01:28 +0200 (CEST)
+ with ESMTP id pWIEvT65vKHl; Sun,  4 May 2025 18:01:27 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id B2D5555D234; Sun, 04 May 2025 18:01:28 +0200 (CEST)
-Message-ID: <4ca4f71bf661923d9a91b7e6776a0e40726e2337.1746374076.git.balaton@eik.bme.hu>
+ id A5E8E55D233; Sun, 04 May 2025 18:01:27 +0200 (CEST)
+Message-ID: <0d41c18a8831bd4c8b0948eda3ef8f60f5a311f3.1746374076.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1746374076.git.balaton@eik.bme.hu>
 References: <cover.1746374076.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 02/16] hw/pci-host/raven: Revert "raven: Move BIOS loading
- from board code to PCI host"
+Subject: [PATCH 01/16] hw/pci-host/raven: Remove is-legacy-prep property
 To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
-Date: Sun, 04 May 2025 18:01:28 +0200 (CEST)
+Date: Sun, 04 May 2025 18:01:27 +0200 (CEST)
 Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
  helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -61,192 +60,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit d0b25425749d5525b2ba6d9d966d8800a5643b35.
+This was a workaround for the prep machine that was removed 5 years
+ago so this is no longer needed.
 
-Loading firmware from the PCI host is unusual and raven is only used
-by one board so this does not simplify anything but rather complicates
-it. Revert to loading firmware from board code as that is the usual
-way and also because raven has nothing to do with ROM so it is not a
-good place for this.
-
+Fixes: b2ce76a073 (hw/ppc/prep: Remove the deprecated "prep" machine
+       and the OpenHackware BIOS)
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/pci-host/raven.c | 55 ---------------------------------------------
- hw/ppc/prep.c       | 27 ++++++++++++++++++++--
- 2 files changed, 25 insertions(+), 57 deletions(-)
+ hw/pci-host/raven.c | 32 ++++++++++++--------------------
+ 1 file changed, 12 insertions(+), 20 deletions(-)
 
 diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-index b78a8f32d3..f8c0be5d21 100644
+index 21f7ca65e0..b78a8f32d3 100644
 --- a/hw/pci-host/raven.c
 +++ b/hw/pci-host/raven.c
-@@ -24,7 +24,6 @@
-  */
+@@ -75,7 +75,6 @@ struct PRePPCIState {
+     RavenPCIState pci_dev;
  
- #include "qemu/osdep.h"
--#include "qemu/datadir.h"
- #include "qemu/units.h"
- #include "qemu/log.h"
- #include "qapi/error.h"
-@@ -35,9 +34,7 @@
- #include "migration/vmstate.h"
- #include "hw/intc/i8259.h"
- #include "hw/irq.h"
--#include "hw/loader.h"
- #include "hw/or-irq.h"
--#include "elf.h"
- #include "qom/object.h"
- 
- #define TYPE_RAVEN_PCI_DEVICE "raven"
-@@ -47,10 +44,6 @@ OBJECT_DECLARE_SIMPLE_TYPE(RavenPCIState, RAVEN_PCI_DEVICE)
- 
- struct RavenPCIState {
-     PCIDevice dev;
--
--    uint32_t elf_machine;
--    char *bios_name;
--    MemoryRegion bios;
- };
- 
- typedef struct PRePPCIState PREPPCIState;
-@@ -77,8 +70,6 @@ struct PRePPCIState {
      int contiguous_map;
+-    bool is_legacy_prep;
  };
  
--#define BIOS_SIZE (1 * MiB)
--
- #define PCI_IO_BASE_ADDR    0x80000000  /* Physical address on main bus */
+ #define BIOS_SIZE (1 * MiB)
+@@ -243,22 +242,18 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+     MemoryRegion *address_space_mem = get_system_memory();
+     int i;
  
- static inline uint32_t raven_pci_io_config(hwaddr addr)
-@@ -333,48 +324,9 @@ static void raven_pcihost_initfn(Object *obj)
- 
- static void raven_realize(PCIDevice *d, Error **errp)
- {
--    RavenPCIState *s = RAVEN_PCI_DEVICE(d);
--    char *filename;
--    int bios_size = -1;
--
-     d->config[PCI_CACHE_LINE_SIZE] = 0x08;
-     d->config[PCI_LATENCY_TIMER] = 0x10;
-     d->config[PCI_CAPABILITY_LIST] = 0x00;
--
--    if (!memory_region_init_rom_nomigrate(&s->bios, OBJECT(s), "bios",
--                                          BIOS_SIZE, errp)) {
--        return;
--    }
--    memory_region_add_subregion(get_system_memory(), (uint32_t)(-BIOS_SIZE),
--                                &s->bios);
--    if (s->bios_name) {
--        filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, s->bios_name);
--        if (filename) {
--            if (s->elf_machine != EM_NONE) {
--                bios_size = load_elf(filename, NULL, NULL, NULL, NULL,
--                                     NULL, NULL, NULL,
--                                     ELFDATA2MSB, s->elf_machine, 0, 0);
--            }
--            if (bios_size < 0) {
--                bios_size = get_image_size(filename);
--                if (bios_size > 0 && bios_size <= BIOS_SIZE) {
--                    hwaddr bios_addr;
--                    bios_size = (bios_size + 0xfff) & ~0xfff;
--                    bios_addr = (uint32_t)(-BIOS_SIZE);
--                    bios_size = load_image_targphys(filename, bios_addr,
--                                                    bios_size);
--                }
--            }
+-    if (s->is_legacy_prep) {
+-        for (i = 0; i < PCI_NUM_PINS; i++) {
+-            sysbus_init_irq(dev, &s->pci_irqs[i]);
 -        }
--        g_free(filename);
--        if (bios_size < 0 || bios_size > BIOS_SIZE) {
--            memory_region_del_subregion(get_system_memory(), &s->bios);
--            error_setg(errp, "Could not load bios image '%s'", s->bios_name);
--            return;
+-    } else {
+-        /* According to PReP specification section 6.1.6 "System Interrupt
+-         * Assignments", all PCI interrupts are routed via IRQ 15 */
+-        s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
+-        object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
+-                                &error_fatal);
+-        qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
+-        sysbus_init_irq(dev, &s->or_irq->out_irq);
+-
+-        for (i = 0; i < PCI_NUM_PINS; i++) {
+-            s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
 -        }
--    }
--
--    vmstate_register_ram_global(&s->bios);
- }
- 
- static const VMStateDescription vmstate_raven = {
-@@ -417,19 +369,12 @@ static const TypeInfo raven_info = {
-     },
- };
- 
--static const Property raven_pcihost_properties[] = {
--    DEFINE_PROP_UINT32("elf-machine", PREPPCIState, pci_dev.elf_machine,
--                       EM_NONE),
--    DEFINE_PROP_STRING("bios-name", PREPPCIState, pci_dev.bios_name),
--};
--
- static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-     dc->realize = raven_pcihost_realizefn;
--    device_class_set_props(dc, raven_pcihost_properties);
-     dc->fw_name = "pci";
- }
- 
-diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
-index 739526335c..982e40e53e 100644
---- a/hw/ppc/prep.c
-+++ b/hw/ppc/prep.c
-@@ -35,6 +35,7 @@
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qemu/log.h"
-+#include "qemu/datadir.h"
- #include "hw/loader.h"
- #include "hw/rtc/mc146818rtc.h"
- #include "hw/isa/pc87312.h"
-@@ -55,6 +56,8 @@
- #define KERNEL_LOAD_ADDR 0x01000000
- #define INITRD_LOAD_ADDR 0x01800000
- 
-+#define BIOS_ADDR         0xfff00000
-+#define BIOS_SIZE         (1 * MiB)
- #define NVRAM_SIZE        0x2000
- 
- static void fw_cfg_boot_set(void *opaque, const char *boot_device,
-@@ -241,6 +244,9 @@ static void ibm_40p_init(MachineState *machine)
-     ISADevice *isa_dev;
-     ISABus *isa_bus;
-     void *fw_cfg;
-+    MemoryRegion *bios = g_new(MemoryRegion, 1);
-+    char *filename;
-+    ssize_t bios_size = -1;
-     uint32_t kernel_base = 0, initrd_base = 0;
-     long kernel_size = 0, initrd_size = 0;
-     char boot_device;
-@@ -263,10 +269,27 @@ static void ibm_40p_init(MachineState *machine)
-     cpu_ppc_tb_init(env, 100UL * 1000UL * 1000UL);
-     qemu_register_reset(ppc_prep_reset, cpu);
- 
-+    /* allocate and load firmware */
-+    filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, bios_name);
-+    if (!filename) {
-+        error_report("Could not find bios image '%s'", bios_name);
-+        exit(1);
-+    }
-+    memory_region_init_rom(bios, NULL, "bios", BIOS_SIZE, &error_fatal);
-+    memory_region_add_subregion(get_system_memory(), BIOS_ADDR, bios);
-+    bios_size = load_elf(filename, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
-+                         ELFDATA2MSB, PPC_ELF_MACHINE, 0, 0);
-+    if (bios_size < 0) {
-+        bios_size = load_image_targphys(filename, BIOS_ADDR, BIOS_SIZE);
-+    }
-+    if (bios_size < 0 || bios_size > BIOS_SIZE) {
-+        error_report("Could not load bios image '%s'", filename);
-+        return;
-+    }
-+    g_free(filename);
++    /*
++     * According to PReP specification section 6.1.6 "System Interrupt
++     * Assignments", all PCI interrupts are routed via IRQ 15
++     */
++    s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
++    object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
++                            &error_fatal);
++    qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
++    sysbus_init_irq(dev, &s->or_irq->out_irq);
 +
-     /* PCI host */
-     dev = qdev_new("raven-pcihost");
--    qdev_prop_set_string(dev, "bios-name", bios_name);
--    qdev_prop_set_uint32(dev, "elf-machine", PPC_ELF_MACHINE);
-     pcihost = SYS_BUS_DEVICE(dev);
-     object_property_add_child(qdev_get_machine(), "raven", OBJECT(dev));
-     sysbus_realize_and_unref(pcihost, &error_fatal);
++    for (i = 0; i < PCI_NUM_PINS; i++) {
++        s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
+     }
+ 
+     qdev_init_gpio_in(d, raven_change_gpio, 1);
+@@ -426,9 +421,6 @@ static const Property raven_pcihost_properties[] = {
+     DEFINE_PROP_UINT32("elf-machine", PREPPCIState, pci_dev.elf_machine,
+                        EM_NONE),
+     DEFINE_PROP_STRING("bios-name", PREPPCIState, pci_dev.bios_name),
+-    /* Temporary workaround until legacy prep machine is removed */
+-    DEFINE_PROP_BOOL("is-legacy-prep", PREPPCIState, is_legacy_prep,
+-                     false),
+ };
+ 
+ static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
 -- 
 2.41.3
 
