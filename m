@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BEF7C3ABB6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C350AC3ABBA
 	for <qemu-devel@archiver.kernel.org>; Sun,  4 May 2025 16:02:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBbmc-0004p8-9p; Sun, 04 May 2025 12:01:38 -0400
+	id 1uBbmf-0004wr-LF; Sun, 04 May 2025 12:01:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uBbma-0004oH-5R; Sun, 04 May 2025 12:01:36 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ id 1uBbmb-0004ow-FS; Sun, 04 May 2025 12:01:37 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uBbmY-0004AH-0K; Sun, 04 May 2025 12:01:35 -0400
+ id 1uBbmY-0004Ad-CY; Sun, 04 May 2025 12:01:37 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 9F72055D235;
- Sun, 04 May 2025 18:01:29 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id B404155D237;
+ Sun, 04 May 2025 18:01:32 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id pWIEvT65vKHl; Sun,  4 May 2025 18:01:27 +0200 (CEST)
+ with ESMTP id rDJsTQnawBZ5; Sun,  4 May 2025 18:01:30 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id A5E8E55D233; Sun, 04 May 2025 18:01:27 +0200 (CEST)
-Message-ID: <0d41c18a8831bd4c8b0948eda3ef8f60f5a311f3.1746374076.git.balaton@eik.bme.hu>
+ id C935E55D230; Sun, 04 May 2025 18:01:30 +0200 (CEST)
+Message-ID: <04bbdb7bcec7a4f1f88a903d782fd8737c7b8036.1746374076.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1746374076.git.balaton@eik.bme.hu>
 References: <cover.1746374076.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 01/16] hw/pci-host/raven: Remove is-legacy-prep property
+Subject: [PATCH 04/16] hw/pci-host/raven: Simplify host bridge type declaration
 To: qemu-devel@nongnu.org,
     qemu-ppc@nongnu.org
 Cc: =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
-Date: Sun, 04 May 2025 18:01:27 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
+Date: Sun, 04 May 2025 18:01:30 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,73 +59,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This was a workaround for the prep machine that was removed 5 years
-ago so this is no longer needed.
+Use OBJECT_DECLARE_SIMPLE_TYPE macro instead of open coding it.
 
-Fixes: b2ce76a073 (hw/ppc/prep: Remove the deprecated "prep" machine
-       and the OpenHackware BIOS)
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/pci-host/raven.c | 32 ++++++++++++--------------------
- 1 file changed, 12 insertions(+), 20 deletions(-)
+ hw/pci-host/raven.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-index 21f7ca65e0..b78a8f32d3 100644
+index 172f01694c..878c915de5 100644
 --- a/hw/pci-host/raven.c
 +++ b/hw/pci-host/raven.c
-@@ -75,7 +75,6 @@ struct PRePPCIState {
-     RavenPCIState pci_dev;
+@@ -39,11 +39,9 @@
+ #define TYPE_RAVEN_PCI_DEVICE "raven"
+ #define TYPE_RAVEN_PCI_HOST_BRIDGE "raven-pcihost"
  
-     int contiguous_map;
--    bool is_legacy_prep;
- };
+-typedef struct PRePPCIState PREPPCIState;
+-DECLARE_INSTANCE_CHECKER(PREPPCIState, RAVEN_PCI_HOST_BRIDGE,
+-                         TYPE_RAVEN_PCI_HOST_BRIDGE)
++OBJECT_DECLARE_SIMPLE_TYPE(PREPPCIState, RAVEN_PCI_HOST_BRIDGE)
  
- #define BIOS_SIZE (1 * MiB)
-@@ -243,22 +242,18 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
-     MemoryRegion *address_space_mem = get_system_memory();
-     int i;
+-struct PRePPCIState {
++struct PREPPCIState {
+     PCIHostState parent_obj;
  
--    if (s->is_legacy_prep) {
--        for (i = 0; i < PCI_NUM_PINS; i++) {
--            sysbus_init_irq(dev, &s->pci_irqs[i]);
--        }
--    } else {
--        /* According to PReP specification section 6.1.6 "System Interrupt
--         * Assignments", all PCI interrupts are routed via IRQ 15 */
--        s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
--        object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
--                                &error_fatal);
--        qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
--        sysbus_init_irq(dev, &s->or_irq->out_irq);
--
--        for (i = 0; i < PCI_NUM_PINS; i++) {
--            s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
--        }
-+    /*
-+     * According to PReP specification section 6.1.6 "System Interrupt
-+     * Assignments", all PCI interrupts are routed via IRQ 15
-+     */
-+    s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
-+    object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
-+                            &error_fatal);
-+    qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
-+    sysbus_init_irq(dev, &s->or_irq->out_irq);
-+
-+    for (i = 0; i < PCI_NUM_PINS; i++) {
-+        s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
-     }
- 
-     qdev_init_gpio_in(d, raven_change_gpio, 1);
-@@ -426,9 +421,6 @@ static const Property raven_pcihost_properties[] = {
-     DEFINE_PROP_UINT32("elf-machine", PREPPCIState, pci_dev.elf_machine,
-                        EM_NONE),
-     DEFINE_PROP_STRING("bios-name", PREPPCIState, pci_dev.bios_name),
--    /* Temporary workaround until legacy prep machine is removed */
--    DEFINE_PROP_BOOL("is-legacy-prep", PREPPCIState, is_legacy_prep,
--                     false),
- };
- 
- static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
+     OrIRQState *or_irq;
 -- 
 2.41.3
 
