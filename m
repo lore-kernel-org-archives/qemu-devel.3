@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFECAC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 17:04:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7056C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 17:04:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBzEY-0005RY-9o; Mon, 05 May 2025 13:04:02 -0400
+	id 1uBzEH-0005Ju-1C; Mon, 05 May 2025 13:03:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uBzE8-0005JB-Vo
- for qemu-devel@nongnu.org; Mon, 05 May 2025 13:03:37 -0400
-Received: from mail-pg1-x544.google.com ([2607:f8b0:4864:20::544])
+ id 1uBzDv-0005HV-SN
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 13:03:24 -0400
+Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uBzE6-0003ZO-EG
- for qemu-devel@nongnu.org; Mon, 05 May 2025 13:03:36 -0400
-Received: by mail-pg1-x544.google.com with SMTP id
- 41be03b00d2f7-af579e46b5dso3118507a12.3
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 10:03:34 -0700 (PDT)
+ id 1uBzDt-0003Ww-9i
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 13:03:23 -0400
+Received: by mail-pl1-x644.google.com with SMTP id
+ d9443c01a7336-22d95f0dda4so67069045ad.2
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 10:03:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746464613; x=1747069413; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1xvzD+hKZ5iB1XZ0subi7aM6hNe8/NYN2Y8J3TcC1UM=;
- b=Y1bRPFTRwuy6QeSq+lOCDBwRXW4rNfFJsT6Us+ZERi8LFzIg1DUN21LPoOYCd4rghU
- rdROJDISw/9TsMtbXZZw2BpvgWdSdP+vqw0zMOTVXU1psCrPHA3LkFWZpckij03qr+9U
- qPVmUGGcqQf/TcBkHhsA/0yoC3U0krfsnllA108EpLTvXl9PGMPW0dL1kcjV+0vlYp9p
- wZXoGf8JJvH1zBXEN9VslODMJ7yJVLLcDZjMGr0TDIUh4RBn5d6BrG+UBh6mRbBY0x/w
- pnmvHS/sk68nYrldo7WHS/k8OLLWLG4AmAdEOJa65taxdpqhiN4dfdFPNfLRCIqQHFzC
- qLwQ==
+ d=gmail.com; s=20230601; t=1746464598; x=1747069398; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=E+Ze121Upacfoz8IaBGcogAwWWb1bzoTy2H3UXVQ56c=;
+ b=R0CJrhRcDEEgJP2hBNQah5jk9uWWFrlTQ4mvhYb/tPhCejX7PTvGBS2OGKmCPxHBC2
+ od1w5WjiUh8vs13GotcXYfluLSYo2eu/ixP/0WtLv9k/6VKCnaYLEN2U21KofKpCvLrQ
+ ow78CWZxYUUoHP6wnYNHKcz4VJAQsse18O7TewgjTpJ0S31udFKEm4ghYOsKGKLpBuR5
+ FtuWUsSuyX3fdJ5ZkO21MDc2x9b00ooV73Ai/CCexpEEsAX/lR4oLYp3U+fwmrn9mgYj
+ ELeL5k5ymkXrxCg64SKTMAEQvpGB9V6KgiBZJ2R7w+jXB3fJfkE0aV4E3wQIrqH/KDB0
+ G+sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746464613; x=1747069413;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1xvzD+hKZ5iB1XZ0subi7aM6hNe8/NYN2Y8J3TcC1UM=;
- b=e95CCknK02zm18Fqnhp4xwKyTsXQhHQuZZNOLtwO6IRXugiIshcP3PK4XTL7rE7iKm
- jAkOe+oe0DazYZiDsDTW+sikfEoTjIihmIrsCSg9mfLogMyHeHYWPSuYRP+P7R7SXZZq
- matH2lZaQgtaO6R7AZvJeAhmEQKMv8j6NxujM5uZz09XNfDP2EUYX/hPaN/DBnWMlAQT
- i8UvoH+nOPUsEpyeQ3Y5YYHcUOuASl4Wr/0bxsXyOipBNqxlDVd9UpuMt3j+sIEQghbc
- xknyeFKAPcz4SfYdFknOEtw073vEmQNqgZSo17N8lO26UTIN5f7f/czQboPsRDbp5RJu
- Cbuw==
-X-Gm-Message-State: AOJu0Yz9K6wltdis0fnqDeJOQlByoLXJHJiQ3p4HuvklI9jlFiGTFtEK
- hYMRqA5rpVReWKbRmxIps3bJn2VI7MAUgetmZQjtsz6n6kG5vSs=
-X-Gm-Gg: ASbGnct+LHtLWNaSOA1WbT2G+Q4fGbY1hkhvO22RhlCuUj4TbuocNfV+FGYg0yFbPsA
- e2bZuetxTgvUcuK9n/kWimTV+8b/wttrXUDX4vEcSFBvaclLilxPPBOIvoqsIO/HXVDhN2cuCEv
- t4M5K2elsd3CXDKpI31dLcIft5RPAIYOW+EY/tWSozAKhI2U3pmMsUML73PvdhfUFpfw1drvVyM
- 2R7Drc78r8yHfs+xUFixQQtJgds3sRlJXnM1GIQ9usSI9CzO7N9rfwyoUQJgZiYvZr4lrvkf6rg
- ZGiS/gMaKadj29VfxsO8b+s+hYzVas+dS1Kc1UIeezRdiuuEPm+UHxcZ
-X-Google-Smtp-Source: AGHT+IGkl99tcbtV/fZKiQX7C0vpnhFv1VQI0UrQdweoHF1Q2UGUOMA7xsG8ZKMVpbk7v1jKsy1Y5w==
-X-Received: by 2002:a17:90b:6c4:b0:305:2d68:8d55 with SMTP id
- 98e67ed59e1d1-30a6197c0bemr12975820a91.8.1746464612785; 
- Mon, 05 May 2025 10:03:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746464598; x=1747069398;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=E+Ze121Upacfoz8IaBGcogAwWWb1bzoTy2H3UXVQ56c=;
+ b=WX+w009S6lVps0yvWK6nCGCrH/Q5Fr85uqupSCVn9Wc+vEQw6YdQrPhZqNC2uK3wsF
+ aywjZVzU4Mm0bULLtdfPKZeLgzXCclrTdF9qCkOpRu4w5F3TnZvcpFLe/QDHrtxxZ3Rv
+ 2vND2AjlF1qkyX5k64cBSRJ18S7BWywKQWB7aGjMECP2Fl1kO1fVaZ+TNpoLMvzz/6a8
+ 0cbqxhINjeX2OOIPI0NXoQkw/tIWq+6yHF99rX97nGGCc2n7N7VLZm4MRO+xLq/aRbL3
+ +DLL60ZXLkLXnIIVUofECCjOiSW59NvqyPpyuyZEl+7OBg8ZUBAaz5hgYVHBn8PMdv1o
+ A3Nw==
+X-Gm-Message-State: AOJu0YyaU9sl/7eTahCED+CuydZih8s/2S+m81CwK1E8W6gBqnMefFem
+ TfYptb0gwkBhp6/BLeJHlLGL+W6UkJkLTwQtGB0J9SK01sTMPwCdibp5F1jxX7w6
+X-Gm-Gg: ASbGnctl+rf6phZeBYxvYNTX8zjL6ab/m5FlWQ3Dz8zqHnzv/SAwlXUSvkpRs0qZ5jS
+ JMhbGTpNH4CR/jbXbGRw1Dj2t/67nL4kP+PfSRdH1mKKA7DOqKT45Pj+qRLxVumu3DygVfewGh3
+ VBc9vujBuVXtJ0VB/9iXyosUy+M8d0SZRW1UWcB3p3nw4YJr8WVHyAR87I0dN4LFA9sL0d3MjJ+
+ ba/EiLFyI2sS1SpG7hUNDQgBN70E9fIp9G4NWLx0H6Tx1w8wWkFgu4lsq8DFc7+3h0zuZdl1fPF
+ Nqit/c2mRgwxTaE4BDRFUClMwmcj3+d7v6jezcoWzXajeoCit9Uspw9A
+X-Google-Smtp-Source: AGHT+IETM5X+ddqNxGm5o5IZzifYLeGgckQPh1iMccPiOGJN9ko+QiKkRrzWRjAjD53h6JCTkdFPWA==
+X-Received: by 2002:a17:902:fc86:b0:223:635d:3e38 with SMTP id
+ d9443c01a7336-22e18b94ab5mr145407795ad.15.1746464596879; 
+ Mon, 05 May 2025 10:03:16 -0700 (PDT)
 Received: from localhost.localdomain ([139.227.182.131])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e151e9e9dsm57335135ad.83.2025.05.05.10.03.30
+ d9443c01a7336-22e151e9e9dsm57335135ad.83.2025.05.05.10.03.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 May 2025 10:03:32 -0700 (PDT)
+ Mon, 05 May 2025 10:03:16 -0700 (PDT)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Tomita Moeko <tomitamoeko@gmail.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 Cc: qemu-devel@nongnu.org,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>
-Subject: [PATCH v3 5/9] vfio/igd: Check OpRegion support on GVT-g mdev
-Date: Tue,  6 May 2025 01:03:01 +0800
-Message-ID: <20250505170305.23622-6-tomitamoeko@gmail.com>
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>
+Subject: [PATCH v3 0/9] vfio/igd: Detect IGD by OpRegion and enable OpRegion
+ automatically
+Date: Tue,  6 May 2025 01:02:56 +0800
+Message-ID: <20250505170305.23622-1-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250505170305.23622-1-tomitamoeko@gmail.com>
-References: <20250505170305.23622-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::544;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pg1-x544.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x644.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,39 +100,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Intel GVT-g backend `kvmgt` always emulates OpRegion for vGPU,
-make sure the OpRegion is present for enabling access to it
-automatically later.
+As proposed in a previous discussion [1], detect IGD devices based on
+whether it has VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION exposed by kernel
+and enables OpRegion access by default. This enables out-of-the-box
+display output support for IGD passthrough without having to manually
+set x-igd-opregion=on, which probably saves effort for libvirt users.
 
-Also, hotplugging GVT-g vGPU is now always disallowed regardless of
-OpRegion to prevent potential issues. Intel has never claimed support
-for GVT-g hotplugging.
+This patchset also limits legacy mode to Gen6-9 devices, as Intel no
+longer provides CSM support and VBIOS on newer IGD, and Seabios does not
+support setting up the 64 bit BDSM register on Gen 11+ devices. Exposing
+VGA ranges to guests by default on platforms without VGA mode support is
+undesirable.
 
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
----
- hw/vfio/igd.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+Additionally, as we enables OpRegion on IGD devices by default, and
+Intel removes the BDSM register from Meteor Lake [2]. There seems to be
+no extra register quirks rather than OpRegion required on newer devices.
+To support them (and probably future devices), the generation limit is
+removed, with BDSM quirk only applied to known Gen 6-12 devices. 
 
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index f5dd475028..9dec32818c 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -685,9 +685,13 @@ static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-         return true;
-     }
- 
-+    if (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp)) {
-+        /* Should never reach here, KVMGT always emulates OpRegion */
-+        return false;
-+    }
-+
-     if ((vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION) &&
--        (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp) ||
--         !vfio_pci_igd_opregion_init(vdev, opregion, errp))) {
-+        !vfio_pci_igd_opregion_init(vdev, opregion, errp)) {
-         return false;
-     }
- 
+Note: I have not been able to test this on Meteor Lake or newer
+platforms due to lack of hardware.
+
+
+[1] https://lore.kernel.org/qemu-devel/20250325172239.27926-1-tomitamoeko@gmail.com
+[2] https://edc.intel.com/content/www/us/en/design/publications/14th-generation-core-processors-cfg-and-mem-registers/d2-f0-processor-graphics-registers/
+
+
+Changelog:
+v3:
+* Addressed a nit in patch #8
+Link: https://lore.kernel.org/qemu-devel/20250428161004.35613-1-tomitamoeko@gmail.com
+v2:
+* Removed "Allow hotplugging with OpRegion enabled", hotplugging is
+  always forbidden.
+* Test device is not hotplugged and get opregion in a single function.
+* Update documentation along with code changes.
+* Minor code style fixes.
+Link: https://lore.kernel.org/qemu-devel/20250421163112.21316-1-tomitamoeko@gmail.com
+
+
+Tomita Moeko (9):
+  vfio/igd: Restrict legacy mode to Gen6-9 devices
+  vfio/igd: Always emulate ASLS (OpRegion) register
+  vfio/igd: Detect IGD device by OpRegion
+  vfio/igd: Check vendor and device ID on GVT-g mdev
+  vfio/igd: Check OpRegion support on GVT-g mdev
+  vfio/igd: Enable OpRegion by default
+  vfio/igd: Allow overriding GMS with 0xf0 to 0xfe on Gen9+
+  vfio/igd: Only emulate GGC register when x-igd-gms is set
+  vfio/igd: Remove generation limitation for IGD passthrough
+
+ docs/igd-assign.txt |  11 ++-
+ hw/vfio/igd.c       | 220 ++++++++++++++++++++++++++------------------
+ hw/vfio/pci.c       |   2 +-
+ 3 files changed, 138 insertions(+), 95 deletions(-)
+
 -- 
 2.47.2
 
