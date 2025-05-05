@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68718C3ABB7
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00594C3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:01:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBrdq-0008GG-4u; Mon, 05 May 2025 04:57:38 -0400
+	id 1uBrhF-0000sy-P4; Mon, 05 May 2025 05:01:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1uBrdn-0008Fq-OJ; Mon, 05 May 2025 04:57:35 -0400
-Received: from netsrv01.beckhoff.com ([62.159.14.10])
+ id 1uBrhC-0000s9-HV
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:01:07 -0400
+Received: from internet2.beckhoff.com ([194.25.186.210])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1uBrdk-0004Ua-Ky; Mon, 05 May 2025 04:57:34 -0400
+ id 1uBrhA-00059s-7N
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:01:06 -0400
 DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022e; 
- t=1746435450; bh=xWxa5P7luR+paqOHTEZpEHOhd6NdPfg3m21va3t0F3M=; h=
+ t=1746435662; bh=dUeCWjSsAKI4X2G4Rtr/7CFIwB6ociNrRe/ukQ+pkYQ=; h=
  Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
  a=ed25519-sha256; b=
- a/MEsuMu2uwfax2W5qFp+xmvqWejg3ge3UG3qCrBoV99+XNo4XPa5CHnwwFGtX4KKs0BSYf4ZukrEUYNZH8DDw==
+ mOiSuWOjL7A7NWzmbRzW7r1DLFhl9Bog0nf3q7sm4HZl1Ie+aMrjC2kZCE4zeLrcXgaUkQppf/ESXHkZIdgQCA==
 DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022r; 
- t=1746435450; bh=xWxa5P7luR+paqOHTEZpEHOhd6NdPfg3m21va3t0F3M=; h=
+ t=1746435662; bh=dUeCWjSsAKI4X2G4Rtr/7CFIwB6ociNrRe/ukQ+pkYQ=; h=
  Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
  a=rsa-sha256; b=
- Hsd1aNF7M6LR43XW72VXTNos22dFzYbZmzmQvEazIoWf+knjG6sHl/2ahbDyMDoxU2ojuhAl8K+n6Df1oHpenbvrkQzyKRF6CjpsXx3PS2bYcFCVYy9DBzdj0Z6vwpB4JW85xpRq3VOReUAJNSldKcje3eNGtm1Ha1Ij/sUBmYBmdRQGW8CaILAuTnukekkfh5kgCaAGEO339Ot+df6+R03FB7+aiTMRlJfd24eoE+QSAEQ6OKN6FeIDrAHESeKIVkndcWSSFUrbPu7+pFET3VmA5/gIoc01QomX7GTq4G9/Ac2rGtmBfut4Hc4s3Ocg+ad5ppAxUMSUEOM3d22E5w==
-Received: from 172.17.6.19 by netsrv01.beckhoff.com
- (TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384); Mon, 05 May 2025 08:57:29 GMT
-Received: from ex10.beckhoff.com (172.17.2.111) by ex13.beckhoff.com
- (172.17.6.19) with Microsoft SMTP Server (version=TLS1_2,
+ G9zVQMKweArfQOANjx2+4ZicylB9lB5+bGIVO9dLmGUVN/hvlvW6ffUQt62xNlClDF3U3w0NZ+AhjdO4rLAZPlfINjerhIHBfjrZ6yyyVsXpJYV1ZLRbFCBztu9JFI5FKu1RAf9eRKXTjMlr7qVsLYUK6aGa3JaO8PYOJEW/xWopWPGmVZDZo1BkUGb0qOHF+Fc2E5qu2LaFsC+KJgiX96oR7w7xEHtEmosDAl14y97JijGfTcnHeXErXBxj0eTWO7/gHuaP4FKlCVjRkkly8aQkX8mCM0ihUvxhVUXAGjPE2a5GdGkNOtxpSnQxOisM9oYLHLO5VVOlUcq9HRokoA==
+Received: from 172.17.6.17 by INTERNET2.beckhoff.com
+ (TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384); Mon, 05 May 2025 09:01:01 GMT
+Received: from ex10.beckhoff.com (172.17.2.111) by ex09.beckhoff.com
+ (172.17.6.17) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 5 May
- 2025 10:57:28 +0200
+ 2025 11:01:00 +0200
 Received: from ex10.beckhoff.com ([fe80::3762:2101:fb4e:8ffa]) by
  ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b%12]) with mapi id
- 15.02.1748.010; Mon, 5 May 2025 10:57:28 +0200
+ 15.02.1748.010; Mon, 5 May 2025 11:01:00 +0200
 From: =?utf-8?B?Q29ydmluIEvDtmhuZQ==?= <C.Koehne@beckhoff.com>
 To: "edgar.iglesias@gmail.com" <edgar.iglesias@gmail.com>
 CC: =?utf-8?B?WWFubmljayBWb8OfZW4=?= <Y.Vossen@beckhoff.com>,
@@ -44,25 +46,25 @@ CC: =?utf-8?B?WWFubmljayBWb8OfZW4=?= <Y.Vossen@beckhoff.com>,
  <pbonzini@redhat.com>, "alistair@alistair23.me" <alistair@alistair23.me>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
  <qemu-arm@nongnu.org>
-Subject: Re: [PATCH 00/21] hw/arm: add CX7200 board emulation
-Thread-Topic: [PATCH 00/21] hw/arm: add CX7200 board emulation
-Thread-Index: AQHbtQZjoxBVL03fhEyFDr1uFHQy2LO0rXSAgA7+agA=
-Date: Mon, 5 May 2025 08:57:27 +0000
-Message-ID: <ad0470842bc7e1fdc17edc6cc1d13668d916456e.camel@beckhoff.com>
+Subject: Re: [PATCH 09/21] hw/misc: Add dummy ZYNQ DDR controller
+Thread-Topic: [PATCH 09/21] hw/misc: Add dummy ZYNQ DDR controller
+Thread-Index: AQHbmAcxfuzxPG0yy0uSfOogPp6ZurO0sVoAgA81fwA=
+Date: Mon, 5 May 2025 09:01:00 +0000
+Message-ID: <ae05465c5abf5049424242d089b7a984c988f93a.camel@beckhoff.com>
 References: <20250318130817.119636-1-corvin.koehne@gmail.com>
- <b4a0daac7b200e4ffc08879977dbde120a8d5f73.camel@beckhoff.com>
- <aAvpkV1ExuLthoH9@zapote>
-In-Reply-To: <aAvpkV1ExuLthoH9@zapote>
+ <20250318130817.119636-10-corvin.koehne@gmail.com>
+ <aAu8MIQTmTPoRjIm@zapote>
+In-Reply-To: <aAu8MIQTmTPoRjIm@zapote>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: yes
 X-MS-TNEF-Correlator: 
 x-originating-ip: [172.17.62.149]
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="=-8D6COArMecV0LJbJ0okm"
+ protocol="application/pgp-signature"; boundary="=-+pETYegAOq3y8GhFK0Vq"
 MIME-Version: 1.0
-Received-SPF: pass client-ip=62.159.14.10; envelope-from=C.Koehne@beckhoff.com;
- helo=netsrv01.beckhoff.com
+Received-SPF: pass client-ip=194.25.186.210;
+ envelope-from=C.Koehne@beckhoff.com; helo=INTERNET2.beckhoff.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -86,166 +88,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-8D6COArMecV0LJbJ0okm
+--=-+pETYegAOq3y8GhFK0Vq
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, 2025-04-25 at 21:59 +0200, Edgar E. Iglesias wrote:
+On Fri, 2025-04-25 at 18:45 +0200, Edgar E. Iglesias wrote:
 > CAUTION: External Email!!
-> On Thu, Apr 24, 2025 at 10:48:17AM +0000, Corvin K=C3=B6hne wrote:
-> > On Tue, 2025-03-18 at 14:07 +0100, Corvin K=C3=B6hne wrote:
-> > > CAUTION: External Email!!
-> > > From: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
-> > >=20
-> > > Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A=
-9
-> > > platform. This commit series adds the Beckhoff CX7200 as new board va=
-riant
-> > > to
-> > > QEMU.
-> > >=20
-> > > The emulation is able to successfully boot an CX7200 image. The image
-> > > includes
-> > > some self tests executed on every boot. Only the cache self test fail=
-s due
-> > > to
-> > > QEMU emulating the cache as always being coherent. The self tests inc=
-lude
-> > > f.e.:
-> > >=20
-> > > * Network
-> > > * Flash
-> > > * CCAT DMA + EEPROM [1]
-> > > * TwinCAT (Beckhoff's automation control software [2])
-> > >=20
-> > > [1] https://github.com/beckhoff/ccat
-> > > [2] https://www.beckhoff.com/en-us/products/automation/
-> > >=20
-> > > Corvin K=C3=B6hne (1):
-> > > =C2=A0 MAINTAINERS: add myself as reviewer for Beckhoff devices
-> > >=20
-> > > YannickV (20):
-> > > =C2=A0 hw/timer: Make frequency configurable
-> > > =C2=A0 hw/timer: Make PERIPHCLK period configurable
-> > > =C2=A0 hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffff=
-ffff
-> > > =C2=A0 hw/arm/zynq-devcfg: Prevent unintended unlock during initializ=
-ation
-> > > =C2=A0 hw/dma/zynq: Notify devcfg on FPGA reset via SLCR control
-> > > =C2=A0 hw/dma/zynq-devcfg: Simulate dummy PL reset
-> > > =C2=A0 hw/dma/zynq-devcfg: Indicate power-up status of PL
-> > > =C2=A0 hw/dma/zynq-devcfg: Fix register memory
-> > > =C2=A0 hw/misc: Add dummy ZYNQ DDR controller
-> > > =C2=A0 hw/misc/zynq_slcr: Add logic for DCI configuration
-> > > =C2=A0 hw/misc: Add Beckhoff CCAT device
-> > > =C2=A0 hw/arm: Add new machine based on xilinx-zynq-a9 for Beckhoff C=
-X7200
-> > > =C2=A0 hw/arm/beckhoff_CX7200: Remove second SD controller
-> > > =C2=A0 hw/arm/beckhoff_CX7200: Remove second GEM
-> > > =C2=A0 hw/arm/beckhoff_CX7200: Adjust Flashes and Busses
-> > > =C2=A0 hw/arm/beckhoff_CX7200: Remove usb interfaces
-> > > =C2=A0 hw/arm/beckhoff_CX7200: Remove unimplemented devices
-> > > =C2=A0 hw/arm/beckhoff_CX7200: Set CPU frequency and PERIPHCLK period
-> > > =C2=A0 hw/arm/beckhoff_CX7200: Add CCAT to CX7200
-> > > =C2=A0 hw/arm/beckhoff_CX7200: Add dummy DDR CTRL to CX7200
-> > >=20
-> > > =C2=A0MAINTAINERS=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 |=C2=A0=C2=A0 7 +
-> > > =C2=A0hw/arm/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 =
-18 ++
-> > > =C2=A0hw/arm/beckhoff_CX7200.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 | 440 ++++++++++++++++++++++++++++++
-> > > =C2=A0hw/arm/
-> > > https://nospamproxywebp.beckhoff.com/enQsig/link?id=3DBAgAAACF1PqAcgZ=
-XNGoAAACSdE
-> > > 7DUYKKiipqQsJl32BC_vIVe3kQ23Cr-DKSrQn5Y_I0ZnsAu8qZHVUsGVmYwKL0amQboD-
-> > > LYv9rWN-
-> > > mvEPUf2y-CZ1qrggzKI9xgbKnOi8XSPZVd2G0Lro-8fGR9tAuNB-
-> > > 3CWjEaKli0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
-> > > > =C2=A0=C2=A0 1 +
-> > > =C2=A0hw/dma/xlnx-zynq-devcfg.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 |=C2=A0 36 ++-
-> > > =C2=A0hw/misc/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 =
-6 +
-> > > =C2=A0hw/misc/beckhoff_ccat.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 | 365 +++++++++++++++++++++++++
-> > > =C2=A0hw/misc/
-> > > https://nospamproxywebp.beckhoff.com/enQsig/link?id=3DBAgAAACF1PqAcgZ=
-XNGoAAACSdE
-> > > 7DUYKKiipqQsJl32BC_vIVe3kQ23Cr-DKSrQn5Y_I0ZnsAu8qZHVUsGVmYwKL0amQboD-
-> > > LYv9rWN-
-> > > mvEPUf2y-CZ1qrggzKI9xgbKnOi8XSPZVd2G0Lro-8fGR9tAuNB-
-> > > 3CWjEaKli0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
-> > > > =C2=A0=C2=A0 2 +
-> > > =C2=A0hw/misc/zynq_ddr-ctrl.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 | 331 ++++++++++++++++++++++
-> > > =C2=A0hw/misc/zynq_slcr.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 47 ++++
-> > > =C2=A0hw/timer/a9gtimer.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 25 +-
-> > > =C2=A0hw/timer/arm_mptimer.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 33 ++-
-> > > =C2=A0include/hw/dma/xlnx-zynq-devcfg.h |=C2=A0=C2=A0 3 +
-> > > =C2=A0include/hw/timer/a9gtimer.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- |=C2=A0=C2=A0 2 +
-> > > =C2=A0include/hw/timer/arm_mptimer.h=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 =
-4 +
-> > > =C2=A015 files changed, 1309 insertions(+), 11 deletions(-)
-> > > =C2=A0create mode 100644 hw/arm/beckhoff_CX7200.c
-> > > =C2=A0create mode 100644 hw/misc/beckhoff_ccat.c
-> > > =C2=A0create mode 100644 hw/misc/zynq_ddr-ctrl.c
+> On Tue, Mar 18, 2025 at 02:08:00PM +0100, Corvin K=C3=B6hne wrote:
+> > From: YannickV <Y.Vossen@beckhoff.com>
 > >=20
-> > Hi,
+> > A dummy DDR controller for ZYNQ has been added. While all registers are
+> > present,
+> > not all are functional. Read and write access is validated, and the use=
+r
+> > mode
+> > can be set. This provides a basic DDR controller initialization, preven=
+ting
+> > system hangs due to endless polling or similar issues.
 > >=20
-> > any feedback for those commits?
+> > Signed-off-by: Yannick Vo=C3=9Fen <y.vossen@beckhoff.com>
+> > ---
+> > =C2=A0hw/misc/Kconfig=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
+=C2=A0=C2=A0 3 +
+> > =C2=A0hw/misc/
+> > https://nospamproxywebp.beckhoff.com/enQsig/link?id=3DBAgAAADa4z1g3ukVn=
+moAAAAr
+> > l_jkhWbCv_PHtUJpY7yEY601k79a77UyCbfaGco2JPpcaCOybQdhjR0cGnyWEZqCNC3PiEC=
+WlYa1
+> > 3TZ7D5x6Yi5GY1Ud-M0zCSTuJ2WblH0OX92Mv4EAFobjbqz_a8r85TtpkZfrrOoa0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1
+> > +
+> > =C2=A0hw/misc/zynq_ddr-ctrl.c | 331 +++++++++++++++++++++++++++++++++++=
++++++
+> > =C2=A03 files changed, 335 insertions(+)
+> > =C2=A0create mode 100644 hw/misc/zynq_ddr-ctrl.c
 > >=20
+> > diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+> > index ec0fa5aa9f..1bc4228572 100644
+> > --- a/hw/misc/Kconfig
+> > +++ b/hw/misc/Kconfig
+> > @@ -222,4 +222,7 @@ config IOSB
+> > =C2=A0config XLNX_VERSAL_TRNG
+> > =C2=A0=C2=A0=C2=A0=C2=A0 bool
+> > =C2=A0
+> > +config DDR_CTRLR
 >=20
-> Hi Corvin,
+> I suggest XLNX_ZYNQ_DDRC ?
 >=20
-> Thanks for the reminder and sorry for the delay! I started reviewing and
-> sending comments today. Cool work!
+> And name the file accordingly, e.g xlnx-zynq-ddrc.c.
 >=20
-> It would be great if you could include a patch to docs/system/arm/
-> describing how to test this machine.
+> You may also want to consider using the register API, see for example
+> hw/misc/xlnx-versal-xramc.c, modelling another memory controller.
 >=20
-> Cheers,
-> Edgar
+>=20
 
-Hi Edgar,
-
-thanks for your review! I'm going to add some instructions in v2.
+Thanks for the hint. Will take a look into it.
 
 
 --=20
 Kind regards,
 Corvin
 
---=-8D6COArMecV0LJbJ0okm
+--=-+pETYegAOq3y8GhFK0Vq
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmgYfXYACgkQ2FTaVjFe
-AmpInA//XTtzqbwnNAH8aSJb5YJ+MgGBPkDcNENT9UHyFI/1hserPdXfd4V2lb5E
-M6JFvGYBIanIo+80oxlErD5KAsq9Y0gFTmvPM/EdN7xrv3CZiE+rzBB9CZ8tvakC
-/5TwlWUQ8AN+r6wB10dP1kFNri/svGuDuXdTf2yN/3pOBW6ZjcKlY6PliBSxyDqr
-tE/9ViRip+sFrwAt0tef1mk/HBVnDm4OlUTsj1ZbmfX92JEEXcSPMyZEFfQ3tXTr
-wCUrWPlNAehCl8W6BlSA+xt2/YcQTF/kEnK6/DkdgCb4lt3lWfm7ZKi1X9RMGxUK
-1SbYTOGanzf1wrmFEhVteyWaN6b7TW/8/3SPB2tlP4rs1zCIOZznogF6Xn2IwZw+
-PerMF8dsknurRvne7IC0CmIeOUgItIxA2Z5K9MQAK0syt0FemazCyMtCd/Ng+kfK
-0AeGfY/jxjqUNoDWvxNFWfvpqKWwXGW/buEPOCU9Mo1XK8/dgJTySYqFBy3JueQc
-LJouaLui+eLLwfqdPr5XyJ0usaP8W6cbq9OwENtH3Ph5mcaJ/6Qn4eoDwy9Kv6Ig
-j13ihKHJWoMpJiXadsfmlXZZxMP0U/PvtbXBz7mHhGS5Qsabph1Jru77MeXcbEDu
-gDYfZ9+izjQiuoXiSUqcWKQGmIeb93rn/uxTMEu8hxO5YJLPpRY=
-=iqd7
+iQIzBAABCAAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmgYfkoACgkQ2FTaVjFe
+AmoOfg//fbRARHbL7fUklSF4n3ucDAiWKKtumkasDyui/r2NT4xnELcsAmYykaxy
+2XvkXzj0OzhaPfN3ZUqLqnbnss67rfqiUIwg1a1RylYCrFhyY+/rhVwkwF4XwWI1
+/4cHJjWg4fPzXHfEBi9aA9NUyvuNnEedE8L9NS6TPYt6Pb33p4TRAtOGEYKSmjvh
+6qJnu6sb23Wbc+mDjevWWnPjw7CCDmHoSNQBdLeqpa9NWoI8qnBjO9vMb0Z2Ppat
+Fp0m/uRueez/r7dAsdh36ovh5FgFbaLahb7dDvBYGIbtKUIawX0/vle3oAfhZUdS
+cBksIrLLcQTOyy9LTAwmItVL/aePmv+1jNSRe6g32988vnI3GwrSey7MfwTa8Pop
+/HhPNRax0INqoNrhsIJZdJlgf8K/juAbsrWt6bAO7TRm5snM1yziavRdFIu1YooB
+LAhIbIyhd/wudglR2h2vmbzDQMlJJ5nSmSGZyTXXuZ0uIBNN+1RqhGtvPMmMp7Io
+aQ73KfyzaCYU8wOKU7j07EdrEhxYVI4dxPKbMRJ09oNoij1adDiMNviRimVxHvwJ
+J+WoZtcSD+VjWuyMq3FUAgeO7svVCmZnCXXKysfBatF6a5Z5EHjYSzJX+bqv1aqy
+XVxMBemH8+nFLwqqdkt9lENJkFsuxO4eKJqrYg63YL1JwJuREcI=
+=M5IA
 -----END PGP SIGNATURE-----
 
---=-8D6COArMecV0LJbJ0okm--
+--=-+pETYegAOq3y8GhFK0Vq--
 
 
