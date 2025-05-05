@@ -4,72 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B7DCC3ABB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:16:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04D7DC3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:19:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBron-0001Nf-N5; Mon, 05 May 2025 05:08:59 -0400
+	id 1uBryS-0005HE-BP; Mon, 05 May 2025 05:18:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrn9-0007Ez-Jk
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:07:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrn7-0006Hs-JX
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:07:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746436032;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UQby9HdA+LJtastqMCA8AHgvyVtDCLBO7crDwNC05Gg=;
- b=ELZFS/nhf4fX0+QlWAitPZczdmCUCjt/9WgjHLTJQPTPYuu4qP4klN07u0HLsYfATK+AdJ
- Ta4rZDGyq9g52aLUpDZ/7qdR7gfJN+KrhW7SnYYk8jqzBcUtxA7XcbAzpMtAP3fnuXAMQF
- ltwkquPyn1llYtfk2A4+uH2ZC1+vfOQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-116-56qlxUdKNMCrKc9zeFGDZw-1; Mon,
- 05 May 2025 05:07:09 -0400
-X-MC-Unique: 56qlxUdKNMCrKc9zeFGDZw-1
-X-Mimecast-MFC-AGG-ID: 56qlxUdKNMCrKc9zeFGDZw_1746436028
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 43E091956048; Mon,  5 May 2025 09:07:08 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.38])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9F4FF30001A2; Mon,  5 May 2025 09:07:06 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 09/23] tests/functional/aspeed: extract boot and login sequence
- into helper function
-Date: Mon,  5 May 2025 11:06:21 +0200
-Message-ID: <20250505090635.778785-10-clg@redhat.com>
-In-Reply-To: <20250505090635.778785-1-clg@redhat.com>
-References: <20250505090635.778785-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBryQ-0005Gy-W7
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:18:55 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBryO-0008Tx-9F
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:18:53 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43ce71582e9so26412225e9.1
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:18:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746436729; x=1747041529; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=I1nmhLuQ8lgrbqA1dZmAZjtop7KjR2iFv+3I0rdib2c=;
+ b=f97dpo0J0jj2NqBZ4GyYppywKpFxLMOCfxKHLam/ZFBvdcbpfXb/N6rp58R0rmtZ0D
+ n978lIM0lWAUKIUv9//f0e2vcJKuNUb9IlJip66m82HVS87z3akX5wvqqvTbSbN80++o
+ +ua69V9j/2ItBaOdvSx5zM512h+bRbpZsqRGS04kDEvLANzYKPbh3hY5esTBSdfl2QNg
+ 4fAzKNYLSPpV6EuzYdIzw6+7ZYfAFWVaflP8ER6P/tYgvNdqMf+ddrmeiI/ylRZFd2p7
+ BLoTLkkMffF2G5kXIzwHOVvLCPlNioygmEnh8icaK7nbuhP4OF2xXYWuGiAHtd9reZk4
+ M9FQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746436729; x=1747041529;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=I1nmhLuQ8lgrbqA1dZmAZjtop7KjR2iFv+3I0rdib2c=;
+ b=uEt9qQ8oEP3qaZTMci4L+az8kGG7MzLH+KbIK3xi8ZqgWYFNc3DoBGm78pOwJoxdzn
+ iVjP/9ylZ9IUkHPYKGou0YEJ4YPb5g3Q6xfNPV0LNaIOoAnZUVOs8Mf5alsM7z7qhBCV
+ GumKZAIG74qOYGdQu4WlZ0vc2nN0GPJWOX+x+HOx67CQ2sRUuSrRmtqxWBZikrEz1JFd
+ dAhA8gKijI6XU3PEDFc2SfvMXXtK/3f2hsosUUNL4ZUbWuhPN9riKSHEldUWLVZP3hVZ
+ WI6zi7BsDq6ZvGyojA3Ybtq566zmGSLonu/NnKUbXwLTv7irFkAPeE1hIFwA/vUDazpu
+ /KhQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXfYP3V8nlRfnTv0SDwf/v42FHqhw9Zogtz+u83eU2EWMoS6RqfD2yGvjS8JHfxg+BzymN1/xfGfafy@nongnu.org
+X-Gm-Message-State: AOJu0YytfHdNepXzQFvM4W9aEyCCq185y+cllZWdQpul75/A8OaW1rW4
+ IfKVFl0JFGtGg46WIoEYTUNDTK6WhmT2phXwJ34NVWRgywuvTu3wE3SsONiZ74QJYPXz4LZgIyr
+ e
+X-Gm-Gg: ASbGncuU5+G4+7dH4Kx83uCxai76g28MTJ3/ojTawLetIFNbWO32MY0WWsexjfk/z/y
+ u2PsYcD5rUijPSyLtYDb40/RR4lISpeBWO9vl1MTA4/Yb8tDhLBC6z+XlZvEYqHTJO81t2eFqVh
+ pxNW7dVb7g979a1qLI0U9DC8jSksXJdewu3XrGTW46EGenj+taaA8iUkFtTIA7R8RMZ37TvweYy
+ ZhCOZSOi5YN3Drcj53/huX562gJ6Nr2Y6FzA7/r/v6wDIN9DUrzLWDumHC8rp9fFOMtepAHrum6
+ tUzo1SqSSpj/PWAs5NB+LtPt2mu/ZDbt+hLAxjtFHuh8zfwyx4q5xEzVe/Tk17hdjdk3lGLBn8T
+ tR3r+S6Fco7cq2CSoxTJtGCo=
+X-Google-Smtp-Source: AGHT+IE5cB+lXVNR6kl0fXmxqLXPygeXuoNfOaNDyLtGV0iGK03zTTQ8e+3MWnDYcMsBMuie9CqFJQ==
+X-Received: by 2002:a05:600c:512a:b0:43d:17f1:2640 with SMTP id
+ 5b1f17b1804b1-441c492381emr48345955e9.26.1746436729199; 
+ Mon, 05 May 2025 02:18:49 -0700 (PDT)
+Received: from [10.194.152.213] (29.red-88-28-18.dynamicip.rima-tde.net.
+ [88.28.18.29]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a099ae0ca4sm9949444f8f.14.2025.05.05.02.18.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 May 2025 02:18:48 -0700 (PDT)
+Message-ID: <9375396a-66a4-4744-9b7b-2976016846f3@linaro.org>
+Date: Mon, 5 May 2025 08:45:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/sh4: Use MO_ALIGN for system UNALIGN()
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: ysato@users.sourceforge.jp
+References: <20250503212708.3235806-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250503212708.3235806-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.411,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,66 +102,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+On 3/5/25 23:27, Richard Henderson wrote:
+> This should have been done before removing TARGET_ALIGNED_ONLY,
+> as we did for hppa and alpha.
+> 
+> Fixes: 8244189419f9 ("target/sh4: Remove TARGET_ALIGNED_ONLY")
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/sh4/translate.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Extracted repeated boot and login steps into a new helper function.
-No change in functional behavior.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250423072350.541742-10-jamin_lin@aspeedtech.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- tests/functional/test_aarch64_aspeed.py | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index b6e2be1f8292..1e1f3f9ecece 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -25,10 +25,15 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
- 
-         self.vm.launch()
- 
-+    def verify_openbmc_boot_and_login(self, name):
-         wait_for_console_pattern(self, 'U-Boot 2023.10')
-         wait_for_console_pattern(self, '## Loading kernel from FIT Image')
-         wait_for_console_pattern(self, 'Starting kernel ...')
- 
-+        wait_for_console_pattern(self, f'{name} login:')
-+        exec_command_and_wait_for_pattern(self, 'root', 'Password:')
-+        exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
-+
-     ASSET_SDK_V906_AST2700 = Asset(
-             'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2700-a0-default-obmc.tar.gz',
-             '7247b6f19dbfb700686f8d9f723ac23f3eb229226c0589cb9b06b80d1b61f3cb')
-@@ -89,16 +94,12 @@ def start_ast2700_test(self, name):
-         self.do_test_aarch64_aspeed_sdk_start(
-             self.scratch_file(name, 'image-bmc'))
- 
--        wait_for_console_pattern(self, f'{name} login:')
--
--        exec_command_and_wait_for_pattern(self, 'root', 'Password:')
--        exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
--
-     def test_aarch64_ast2700_evb_sdk_v09_06(self):
-         self.set_machine('ast2700-evb')
- 
-         self.archive_extract(self.ASSET_SDK_V906_AST2700)
-         self.start_ast2700_test('ast2700-a0-default')
-+        self.verify_openbmc_boot_and_login('ast2700-a0-default')
-         self.do_ast2700_i2c_test()
- 
-     def test_aarch64_ast2700a1_evb_sdk_v09_06(self):
-@@ -106,6 +107,7 @@ def test_aarch64_ast2700a1_evb_sdk_v09_06(self):
- 
-         self.archive_extract(self.ASSET_SDK_V906_AST2700A1)
-         self.start_ast2700_test('ast2700-default')
-+        self.verify_openbmc_boot_and_login('ast2700-default')
-         self.do_ast2700_i2c_test()
- 
- if __name__ == '__main__':
--- 
-2.49.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
