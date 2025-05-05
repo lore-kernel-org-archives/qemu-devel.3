@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21600C3ABBF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21632C3ABC0
 	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 23:31:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uC5EH-0003bi-Ga; Mon, 05 May 2025 19:28:09 -0400
+	id 1uC574-0006K2-Rr; Mon, 05 May 2025 19:20:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC5Db-0007tY-Aj
- for qemu-devel@nongnu.org; Mon, 05 May 2025 19:27:28 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1uC56w-0006Bw-65
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:34 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC5DY-0004Ox-HN
- for qemu-devel@nongnu.org; Mon, 05 May 2025 19:27:27 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-30863b48553so5653306a91.0
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 16:27:23 -0700 (PDT)
+ id 1uC56t-0003X1-0K
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:33 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-223fd89d036so56056605ad.1
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 16:20:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746487642; x=1747092442; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DColEmLeOznk74rz9KqevCsTLWb7uFfsWuQwws4WyvU=;
- b=WD+UuSvnpeLes2Iy/FTAKPcVXPmY6B6Nujutl+7G10AMO5UexrW13F/NwjyoKvWvEa
- uS7sZg2hJFamweRmhL7KkVhT7Eal4M4YH8eFlFMSNBY7BPDqCNkszqYYfrJ9D3myL+Be
- Il9V201ZS3VSANZzj9lAxI2UjoZWePPdbXa6FY4PvNYEW3chGCQsEWlf9mk006h393MY
- 7+JTRqjngTcX7yMqylwF5qglYXhyJoqBAgGvfedEdS3XVmXsI8OrgMmJ7cQKBQqn+WV5
- SoDlE5JxlwKZkTKIAzry9/XnJvZHlFsa1fdujlO3BIbMA+w8DXj5CVTQeQzg2hlcGCGp
- R+gQ==
+ d=linaro.org; s=google; t=1746487229; x=1747092029; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8+98FJCPUkZxLytRMJNRmc7jhTB2VJSy0tbuhiYCP08=;
+ b=riX4BfyviGDNrYMsd2+RDXBekRdeJjJdFN4Q5Qe/iDlIJuL8Lew40oEp7aSca8xcbf
+ klcCKwc5gHh79AfcNvNSElDego1mlnWhjjdXxFR9LT5aonH7C/9sHeRKZPFS4GLRX61f
+ aWG/LxutTsU/Hpv9q6zi9+r/TXTQcyPGu9M7XlJ2RVt5WTrP5xG+QFKhTq3glEAUIOGo
+ JlgP3PCK4dka7s/ZYw43g/ueAF1jTUbsr6uTmcg3qW1qsNLHHbjds0Ng484ncMDvZ8/s
+ vS1Bn8oFshVC9FEOMGmbvqVn9Sez40w59G3kpqTEiWsY5HYX6dEQ3gT+hp2TblnlVVG3
+ ZbhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746487642; x=1747092442;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DColEmLeOznk74rz9KqevCsTLWb7uFfsWuQwws4WyvU=;
- b=VrMlLVQwRBGslKDYHBt243vfRaXXiIEB1Y0A8bTZ3aEStuy5eIlib5+39yWTP74c5P
- UnzgrO4FccN63gn0KgQK0z1CintHULn3KIdc/iF7dkDKCbQu+MbXwwWpJaNw2SdeYdD7
- Reo5gnC2kawpLv4Xta6AV+WdL14mXzlaECtxPTr3fgX519/2wvPSKQ9rB5g43LLpQPUd
- AGlcUUBMMOIc7TIHZBydDjYBMBId0ddEicG6xXbhi+F2SolUh+RG/nY5NsdkzyBIjMSM
- WpP/tx+yJ4v7uZFzZ2qUuKZvBq92sWbnkauF3FMoWSCBlSehKXhJ8UPJPwdRr4Kojw3Q
- v1JQ==
-X-Gm-Message-State: AOJu0YxPnWL+XrIWp1tCuk+NzDqVM8lQM2DPxPTBqRcM2HAjH1dWhpuP
- 9mWN5rVzWV/FqBzWwR4yQIO7BLffcFlOUVHEtaGenSwkSApiGIleO76T6xCef37jEmGe/r6Z/ci
- CxsU=
-X-Gm-Gg: ASbGncsHfoksU5lTFQYEZGR25t0IuGd6PNFHoufdAWPTD5jJDNhbsK0fNdiS2lZiVzx
- HQIPH/u9Es369rxO7AGSRFnlA+bOGvjTiYLLtP82K2EMYQJTyNdA3tT2dTvigHYYD+WNMZdOlJq
- LdvRiciONlOjLyI1bg/vIDSMQ1z34aInMj80cyUrrxGx5r6XB5Arp+2lEM72+Z1+EGtJtuLVWM/
- FxM0cbfWGomijMe5jvwUN38jKtEGQtFP1VeUgXsA8oytb4WvbsI++2dWrrHoSLbU/medK6ytgfU
- x3GiWk+iFvzmzQ+go98ABHZaiYuwDfHnto4spQSjWrYilqc0KT0mYw==
-X-Google-Smtp-Source: AGHT+IFgstfeaoCNVrbCHdFFeS0ZpKEX0NF2KwZsdipdG+8jwM/CES45trboYz2SF8VajkqqYc5+hw==
-X-Received: by 2002:a17:90b:544e:b0:2fa:3174:e344 with SMTP id
- 98e67ed59e1d1-30a7bb28833mr2046495a91.14.1746487642685; 
- Mon, 05 May 2025 16:27:22 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30a4745f920sm9649121a91.8.2025.05.05.16.27.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 16:27:22 -0700 (PDT)
-Message-ID: <c009277c-4777-4a80-94ed-922f40147700@linaro.org>
-Date: Mon, 5 May 2025 16:27:21 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/50] single-binary: compile target/arm twice
-Content-Language: en-US
+ d=1e100.net; s=20230601; t=1746487229; x=1747092029;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8+98FJCPUkZxLytRMJNRmc7jhTB2VJSy0tbuhiYCP08=;
+ b=VPnga9hjNgWuqXwuvVgY9ZSPPQW9cfmVtkyPPHvDDytBxuEdSkZsbF0rSYzTAyfA6I
+ 5pRz8liNH+B97FKRb7BWnPZL7K8MN1YcAZhWN4oOmK60EV0e/sHErt81tQz4flVM+OAq
+ pXj2GBK3vtIEcgd35PuhN60XfsoyEP84D3uQRlQx7uNIE988X4OUieDBWez61tD3Xh/R
+ mWI0/Z2RBUceXWSRdvjwyuKP4pEk7ZC/dGHnDe0A39c37y9IhiIHNRxeyGKVpe22GY2F
+ xHSgf6Oa2D7+tsahoqpGoJ7TV6NZIaqJLiNpefSMm0bLe0nOSrmTPDMi+Rcqkq7hA8zE
+ FLcA==
+X-Gm-Message-State: AOJu0Yyv8wfOM3Sagg3xhMR+g+LYUOtp3UF3plnFZ7J7U9124yXAsk2R
+ skMus2lebLrWtDgBQIHdFb1hSGhjoeVhpE8QyKeoNmnhNCCxoL4HIf9I6Mz6VI0huod40t2nlkE
+ NOy4=
+X-Gm-Gg: ASbGncuYjQJoDebVFeSUYTBXv2TK57aqA9P3vkxL0AhcLxbBVDbbgEOaSlWmNYngRfw
+ qISpzF9JCkJ6xMytgvPg1YJ0ymVqo5j44FIfqjGDb3g2Vwj3USJ/esVmnCCzGRhKyLCgBkFDcFl
+ PtSZq2szjWLOZWr6pV7SvF1+w+kauuqOMgbl0j6p/y3aFbXFWwFYchWcePTPr2f9LMzA2vUPklz
+ 2UAbkWIR71fWWvG8jNQRkt+J1BSOm8tHXbmu85qUgUNuawjKgK+zunDSWW8PniD72k02Z+ROz1Q
+ wcHJulIhkZQMAypmFKOlKaL+fNVXJ98r+XEHWUmw
+X-Google-Smtp-Source: AGHT+IGafCDnzbl4XsOgKn16x55qDqZR3cRsQY1YC271VQ2ahGmfB+GhbWbfsVVZQQMU78koO3U2SA==
+X-Received: by 2002:a17:902:ea0b:b0:216:6283:5a8c with SMTP id
+ d9443c01a7336-22e32f08e17mr13948765ad.39.1746487229414; 
+ Mon, 05 May 2025 16:20:29 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22e1522917asm60981715ad.201.2025.05.05.16.20.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 May 2025 16:20:29 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, anjo@rev.ng,
  Peter Maydell <peter.maydell@linaro.org>, alex.bennee@linaro.org,
  kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org
-References: <20250505232015.130990-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v6 10/50] target/arm/cpu: remove TARGET_AARCH64 around
+ aarch64_cpu_dump_state common
+Date: Mon,  5 May 2025 16:19:35 -0700
+Message-ID: <20250505232015.130990-11-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250505232015.130990-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
+References: <20250505232015.130990-1-pierrick.bouvier@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,18 +103,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Patches left for review:
+Call is guarded by is_a64(env), so it's safe to expose without needing
+to assert anything.
 
-- [PATCH v6 04/50] meson: apply target config for picking files from 
-libsystem and libuser
-- [PATCH v6 41/50] target/arm/tcg/vec_internal: use forward declaration 
-for CPUARMState
-- [PATCH v6 42/50] target/arm/tcg/crypto_helper: compile file once
-- [PATCH v6 47/50] target/arm/helper: restrict define_tlb_insn_regs to 
-system target
-- [PATCH v6 50/50] target/arm/tcg/vfp_helper: compile file twice 
-(system, user)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ target/arm/cpu.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-Regards,
-Pierrick
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 37b11e8866f..00ae2778058 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1183,8 +1183,6 @@ static void arm_disas_set_info(CPUState *cpu, disassemble_info *info)
+ #endif
+ }
+ 
+-#ifdef TARGET_AARCH64
+-
+ static void aarch64_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
+@@ -1342,15 +1340,6 @@ static void aarch64_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+     }
+ }
+ 
+-#else
+-
+-static inline void aarch64_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+-{
+-    g_assert_not_reached();
+-}
+-
+-#endif
+-
+ static void arm_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
+-- 
+2.47.2
+
 
