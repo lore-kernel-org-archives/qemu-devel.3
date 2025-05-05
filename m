@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1D1FC3ABB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 14:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE0CCC3ABB8
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 14:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBx7p-0001wb-J9; Mon, 05 May 2025 10:48:57 -0400
+	id 1uBx9s-0002kX-4G; Mon, 05 May 2025 10:51:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uBx7n-0001wS-W1
- for qemu-devel@nongnu.org; Mon, 05 May 2025 10:48:56 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
+ id 1uBx9p-0002k2-G0
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 10:51:02 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uBx7i-0004yH-LV
- for qemu-devel@nongnu.org; Mon, 05 May 2025 10:48:55 -0400
+ id 1uBx9n-0005Gr-9i
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 10:51:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746456530; x=1777992530;
+ t=1746456659; x=1777992659;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=SpOTjgfL6A6BCgzuuMsoy5mgDqVlCT3WlYWMwOsXhLM=;
- b=PSY3ZIPbBT0aVrig1TnQ5//BibCbRAaCEjrVBj5r0ZXa6hSH+tU7Y00I
- lOdy8STmnrlc8Lq2OrkibvcNuktiN0u1zbjMLPKBgSaQTD1pTnHkjsFYE
- uMHrBIIsyV07rEzjP/RrbI0hnbE7BUHxo4ncIQGe2a1OWu9Kk9TyF3p8U
- Y7ZTR8zigI1GBi9HGB9RijTdRIzl6+W2ovs8J6W+2b9Db/gt1Gl/8L3Co
- wzPu7bq2t+vqJUQRlDlbClWEUZA50w4aQ6clGsxUc2JXRjrk+Wjd3iBwa
- SJ4Q+V/HArutyfqTetaGZcCjaQ5c/IchV+1ugDomJwQ+6Qpdllfhge1/B w==;
-X-CSE-ConnectionGUID: ty4nENOWTzmnxSbEZkH41A==
-X-CSE-MsgGUID: RFHIbeneSCOOE9pJRMhD2A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11424"; a="58696948"
-X-IronPort-AV: E=Sophos;i="6.15,262,1739865600"; d="scan'208";a="58696948"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 May 2025 07:48:31 -0700
-X-CSE-ConnectionGUID: v+VYAoBHSO+Vn5wYafiBQA==
-X-CSE-MsgGUID: 9Ouf/5HMTFumEmAqICHIhQ==
+ bh=UpQhLtyKILoGDwAGkNb0qEyJDlTnIuNmPqIzOfU81FE=;
+ b=Vutts8VnosoP+sYzST1Cuwq8F+YAXBMwI9wMlnZ6jp9clCVHo4ArUu2i
+ loWLl8oqMYRpP3FXZzO/HXoVnXXiG13xgvPG1Vs29QBMJ6Wp/3ig4aNhv
+ H3TyH36xxT3HVGEYePotw5Urramk1KZ7H1yiEt8cvOQpXV2oif5feDOR7
+ PF5iTz5lVzn74bqjNVzzMpV2+EtNhgg/mLTa4/mInq3Ns/Lrh1/YE5QvX
+ dliax4TDekqmzIGIND0xbbz27UZLh1Bu5FKqOVFcNUg2NDhm/VZUwC521
+ ANEae+/BLS94fT05Xwxyi4NA97dyyXwHEQ3GR9OuTtKpdNhzoyBuxA/Wf A==;
+X-CSE-ConnectionGUID: hA+PbBttTROLNYMhCexw0g==
+X-CSE-MsgGUID: otHWmhBrQ2uzFiuGNz4WUw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11424"; a="35688152"
+X-IronPort-AV: E=Sophos;i="6.15,262,1739865600"; d="scan'208";a="35688152"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 May 2025 07:50:56 -0700
+X-CSE-ConnectionGUID: tGu0cY40RQ2vtlq2N4a96w==
+X-CSE-MsgGUID: Wjyvn+yuRIOW5zyLsRdyuA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,262,1739865600"; d="scan'208";a="140065743"
+X-IronPort-AV: E=Sophos;i="6.15,262,1739865600"; d="scan'208";a="135011432"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa005.fm.intel.com with ESMTP; 05 May 2025 07:48:29 -0700
-Date: Mon, 5 May 2025 23:09:29 +0800
+ by orviesa009.jf.intel.com with ESMTP; 05 May 2025 07:50:54 -0700
+Date: Mon, 5 May 2025 23:11:54 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
@@ -57,15 +57,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>
-Subject: Re: [PATCH v8 49/55] i386/tdx: Define supported KVM features for TDX
-Message-ID: <aBjUqTpUVFrCb/vd@intel.com>
+Subject: Re: [PATCH v8 50/55] i386/cgs: Introduce
+ x86_confidential_guest_check_features()
+Message-ID: <aBjVOqNbBCcCnTwy@intel.com>
 References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
- <20250401130205.2198253-50-xiaoyao.li@intel.com>
+ <20250401130205.2198253-51-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250401130205.2198253-50-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250401130205.2198253-51-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -57
 X-Spam_score: -5.8
@@ -90,18 +91,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 01, 2025 at 09:01:59AM -0400, Xiaoyao Li wrote:
-> Date: Tue,  1 Apr 2025 09:01:59 -0400
+On Tue, Apr 01, 2025 at 09:02:00AM -0400, Xiaoyao Li wrote:
+> Date: Tue,  1 Apr 2025 09:02:00 -0400
 > From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH v8 49/55] i386/tdx: Define supported KVM features for TDX
+> Subject: [PATCH v8 50/55] i386/cgs: Introduce
+>  x86_confidential_guest_check_features()
 > X-Mailer: git-send-email 2.34.1
 > 
-> For TDX, only limited KVM PV features are supported.
+> To do cgs specific feature checking. Note the feature checking in
+> x86_cpu_filter_features() is valid for non-cgs VMs. For cgs VMs like
+> TDX, what features can be supported has more restrictions.
 > 
 > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > ---
->  target/i386/kvm/tdx.c | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
+>  target/i386/confidential-guest.h | 13 +++++++++++++
+>  target/i386/kvm/kvm.c            |  8 ++++++++
+>  2 files changed, 21 insertions(+)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
