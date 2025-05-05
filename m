@@ -4,140 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33294C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:26:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1043AC3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBr9I-0001dN-4S; Mon, 05 May 2025 04:26:04 -0400
+	id 1uBrIb-0005pW-Nv; Mon, 05 May 2025 04:35:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBr6r-0004ru-Cn
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:23:34 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrIV-0005os-Gc
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:35:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBr6l-0005Tn-Bg
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:23:30 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrIT-0001ND-Lz
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:35:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746433404;
+ s=mimecast20190719; t=1746434131;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=HkasCgwT3vDM5F18qpcv2bNXqYAjRrnEvKHPnV1/qvM=;
- b=V9b0Vrp0pfzWO9i/MsPWn8BVGc/RSaszmmEgNFApfMIN+jT86beBGPKqUJ0JGO/mLAzfCI
- 1BYKwHc8nnda4XXk0k6oKR9ClKmtv4CPk1VCg9TrhBuRvVL9wL140EC2V4EKaJnUzoOyY6
- OUD+g8enn+DpG23/YnicY/Z2hQiEQ3g=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=zX6C0F4CH99oFQbRvdXTnbdWJLbSIb0kt1DAHT3KjBE=;
+ b=QcKsQ8C6CNepNjDc8NAMPfzJNlw4XY/ATvIc92H798j3xzxRES1gxE4qvzLb6S7MD27ag5
+ 7kdwCZEa+zGEcOn9y1BwoBIg8Vj126w+9Fe+zfYbbcSD/fWicqDpup89XSbdr+HmBJh3QS
+ b93dBsBd1DhMglXNbnAdjHXp+ueTVEs=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-383-3uzmeSXCNRO_VyC8MHrSzA-1; Mon, 05 May 2025 04:23:23 -0400
-X-MC-Unique: 3uzmeSXCNRO_VyC8MHrSzA-1
-X-Mimecast-MFC-AGG-ID: 3uzmeSXCNRO_VyC8MHrSzA_1746433402
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43e9a3d2977so29590035e9.1
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 01:23:22 -0700 (PDT)
+ us-mta-515-kPPnLr_uOISRBvirJUZ1dQ-1; Mon, 05 May 2025 04:35:30 -0400
+X-MC-Unique: kPPnLr_uOISRBvirJUZ1dQ-1
+X-Mimecast-MFC-AGG-ID: kPPnLr_uOISRBvirJUZ1dQ_1746434129
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-39d9243b1c2so1031627f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 01:35:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746433402; x=1747038202;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HkasCgwT3vDM5F18qpcv2bNXqYAjRrnEvKHPnV1/qvM=;
- b=Qb75M2wwQ7jSj4GhM0Wh1EV+FLAs9re+eZJmFeBVWAytwIeDdBWdLlCpU6p9A6IgYr
- xBXfanL8mZpftuez6iYMP06PkVxhwWx0V+pNU5y9U6B59MsoAf3th/4879oGdofRRuD5
- oIudc6iAaHzXYd5J1N6AS+BjO18AiQohPrG0URWyylklsItLFJ1Yw1ivdVsBWDyBtob5
- rWop2w/DMVMF0Xb+TlL0dOrr+k39uoYfcApgBE/ivrBkTg2j1NZUSMA8acZOJpIoThv7
- GKstrzu8guXLGCMD+j8wwf1CVDthONHkqp0kj853qSII4/oOcSftYdIyLcd1a3zWQ1EM
- MqOA==
+ d=1e100.net; s=20230601; t=1746434129; x=1747038929;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zX6C0F4CH99oFQbRvdXTnbdWJLbSIb0kt1DAHT3KjBE=;
+ b=sNI0HW/ogwg8lP63++KE7l6udt+wYASayMDDR7TrpH6Sq9fd9r5kFMoeFy1UxpoerM
+ BYvgmCnfoIHC5hF15Hni2WYVx5Pk77K4JKfyAD7zk+bfSE2iCjX1qzVXT79RWNqWjUjA
+ WDf3GPOSCM2OnekVkoF1QInNBKSKfjGw7fIM5b2ScHxPciNP+ESY6suK8SOSWtKDKOAA
+ QUTxFwqdZnqq1DZ2TWC/8uD7EfJ/eP++PWSDfStCfWmxy64Cuvd4QUCGtKXuKbtHVR6s
+ gk6nvF4t+gRAfAREwGy2GI6IKs2Ssqxe3tIqha+e8oFd3+29hW8lebrcRBcz5CoHnIp7
+ prNw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXAAsCQJrVJyYT8BfkgicSnYLQQD3Vl3KdAaaRMGbu6lsK25UnGK+3zofWJtJv5WHIYW7O9trZDH7kP@nongnu.org
-X-Gm-Message-State: AOJu0YwfKSoTp54vIrpG9J8jcq79K2Q0VQOeNOBtkumfdF4MQ41YLPiR
- OtA9tP/OH6lkgB4MCh1nG1xbxE4pICTOUL9xc7erGaHa9Y4N+KlC0S86EiGrKVA95vl8Vp2NIFT
- IpoKIM3XKBnYGru7XAx3CYA5fYPYr5+GqMNQnRDEUmvYUzX+Ec9Km
-X-Gm-Gg: ASbGncvn6p+lkH9AhrkrQI/1QgzoDnpDcBh4tHPMIGoxXHewk48ehPc7KGnCKsxQutn
- IRTCBEkhyXPXssdLN7Gg8c+xGWI17fYTgqdA+pVuMfKWnWJfphNF9dotuxPZ9Ty9uVEMMdKaeoG
- 7BtszH/8cfWeZcW8JJbVbZYitPHTQgc/6kIavhDoBWS58stqLf/RtAODqUSGSHK+QK48KfSjqsQ
- saVswlyUICfdvdqxl3VUQcKBVvnhkTFn379FktDs5erNLl8xk/yZPxMamO6I1AhSxIYY60srB8s
- P6b7tlIPbnKv2k7xKgdZwjmG3EOXqmLyQbIrqclc
-X-Received: by 2002:a05:600c:3e09:b0:43d:82c:2b23 with SMTP id
- 5b1f17b1804b1-441c49236ecmr40071255e9.23.1746433402011; 
- Mon, 05 May 2025 01:23:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDmODba8rI5LVIElRzoCf56Ez8ntTsOdP8jiz5R0qJQitpz+RM5YH6okzwJNTOwJ/2dOrL3w==
-X-Received: by 2002:a05:600c:3e09:b0:43d:82c:2b23 with SMTP id
- 5b1f17b1804b1-441c49236ecmr40071085e9.23.1746433401647; 
- Mon, 05 May 2025 01:23:21 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
+ AJvYcCVi5h5g8pGFyeYw1oOqUj+cSqGoordT5FCvNJ+rSjyxSiW0f+jR9Qel3a1YAuzo/VTBCxzySsAVSg8U@nongnu.org
+X-Gm-Message-State: AOJu0Yxe06J5SpbnNHQ9TGHSROsZiiNwlzjqlECn5ShLqmwQk01NA/5I
+ 3PDpt0HptCoJ0Ye1BsQ5pQxjvNI78SaPLFfAn/Qhaat22R/uOhVo81K6+xriK4MfSgHHvDGCtlF
+ KJI4K31cgNxbHzwk7+eqWGuWUDl3qEyCT6BJHQfJwgayhqhALZlM2
+X-Gm-Gg: ASbGncs4bXiait51Bym7IswtBjxuC+ePGUcDLI7+iS0uGOgGf9XbTsBfpO8oM660Lkg
+ 5bBruDFSWXMJqRC05VRc4cB7AP8Mabw+lqblQISfLLo0jP7y9MHLCDz9d/CII2eIU7fUuo5A0UN
+ oEum3SocGUKzRaCC27weuaPpMQqtiAB7CJe5m6jegaQQ8r2HqzllS7Fuhx4mDtCt9G96TbvlEL+
+ mwKnGO2IXKmeSzCLZt3L0zKN7xdcU9i9hAEmNpeTlqnPEPTvuZmbGJkWBM7KCOvXPbBgyDUc2pP
+ yEepnoyZ5LT2btH6byXbHfZHKyd+nSTc5rcld1zA6/5xIO8BYw==
+X-Received: by 2002:a05:6000:1785:b0:39c:1f11:ead with SMTP id
+ ffacd0b85a97d-3a09fd87a2cmr4185334f8f.26.1746434128827; 
+ Mon, 05 May 2025 01:35:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHCyyp19+hkqZJgawe9errPsiPlIBJa+lnA777YOOwTHwmWAiEFLNJz1kLZGYK645tW21BEFA==
+X-Received: by 2002:a05:6000:1785:b0:39c:1f11:ead with SMTP id
+ ffacd0b85a97d-3a09fd87a2cmr4185313f8f.26.1746434128444; 
+ Mon, 05 May 2025 01:35:28 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441c8631256sm40251025e9.20.2025.05.05.01.23.19
+ ffacd0b85a97d-3a099b0feb3sm9707451f8f.67.2025.05.05.01.35.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 01:23:21 -0700 (PDT)
-Message-ID: <eb7983a7-b6c4-4dc2-8143-6301b19fde1e@redhat.com>
-Date: Mon, 5 May 2025 10:23:19 +0200
+ Mon, 05 May 2025 01:35:27 -0700 (PDT)
+Message-ID: <c0996139-034d-41f5-b4a9-fc8c3f9a2508@redhat.com>
+Date: Mon, 5 May 2025 10:35:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/19] hw/i386/pc: Remove deprecated 2.4 and 2.5 PC
- machines
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>, Fam Zheng <fam@euphon.net>,
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Jason Wang <jasowang@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>
-References: <20250429140825.25964-1-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250429140825.25964-1-philmd@linaro.org>
+Subject: Re: [PATCH v2 01/15] vfio: add vfio_prepare_device()
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, qemu-s390x@nongnu.org,
+ Jason Herne <jjherne@linux.ibm.com>, Tomita Moeko <tomitamoeko@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Tony Krowiak
+ <akrowiak@linux.ibm.com>, Alex Williamson <alex.williamson@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
+References: <20250430194003.2793823-1-john.levon@nutanix.com>
+ <20250430194003.2793823-2-john.levon@nutanix.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250430194003.2793823-2-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -146,7 +148,7 @@ X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.411,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,23 +164,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/04/2025 16.08, Philippe Mathieu-Daudé wrote:
-> Since v1:
-> - Fixed issues noticed by Thomas
-> 
-> The versioned 'pc' and 'q35' machines up to 2.12 been marked
-> as deprecated two releases ago, and are older than 6 years,
-> so according to our support policy we can remove them.
-> 
-> This series only includes the 2.4 and 2.5 machines removal,
-> as it is a big enough number of LoC removed. Rest will
-> follow. Highlight is the legacy fw_cfg API removal :)
+John,
 
-There is one more occurance of "pc-i440fx-2.4" in 
-tests/qtest/test-x86-cpuid-compat.c which could get removed now, too. But 
-this can also be done in a separate patch later, this patch series here 
-should now be good to go, I think.
+On 4/30/25 21:39, John Levon wrote:
+> Commonize some initialization code shared by the legacy and iommufd vfio
+> implementations.
+> 
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: John Levon <john.levon@nutanix.com>
+> ---
+>   hw/vfio/container.c           | 14 ++------------
+>   hw/vfio/device.c              | 14 ++++++++++++++
+>   hw/vfio/iommufd.c             |  9 +--------
+>   include/hw/vfio/vfio-device.h |  3 +++
+>   4 files changed, 20 insertions(+), 20 deletions(-)
+> 
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 77ff56b43f..aa9d5b731b 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -811,18 +811,14 @@ static bool vfio_device_get(VFIOGroup *group, const char *name,
+>           }
+>       }
+>   
+> +    vfio_device_prepare(vbasedev, &group->container->bcontainer, info);
+> +
+>       vbasedev->fd = fd;
+>       vbasedev->group = group;
+>       QLIST_INSERT_HEAD(&group->device_list, vbasedev, next);
+>   
+> -    vbasedev->num_irqs = info->num_irqs;
+> -    vbasedev->num_regions = info->num_regions;
+> -    vbasedev->flags = info->flags;
+> -
+>       trace_vfio_device_get(name, info->flags, info->num_regions, info->num_irqs);
+>   
+> -    vbasedev->reset_works = !!(info->flags & VFIO_DEVICE_FLAGS_RESET);
+> -
+>       return true;
+>   }
+>   
+> @@ -875,7 +871,6 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+>       int groupid = vfio_device_get_groupid(vbasedev, errp);
+>       VFIODevice *vbasedev_iter;
+>       VFIOGroup *group;
+> -    VFIOContainerBase *bcontainer;
+>   
+>       if (groupid < 0) {
+>           return false;
+> @@ -904,11 +899,6 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
+>           goto device_put_exit;
+>       }
+>   
+> -    bcontainer = &group->container->bcontainer;
+> -    vbasedev->bcontainer = bcontainer;
+> -    QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
+> -    QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
+> -
+>       return true;
+>   
+>   device_put_exit:
+> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> index d625a7c4db..f3b9902d21 100644
+> --- a/hw/vfio/device.c
+> +++ b/hw/vfio/device.c
+> @@ -398,3 +398,17 @@ void vfio_device_detach(VFIODevice *vbasedev)
+>       }
+>       VFIO_IOMMU_GET_CLASS(vbasedev->bcontainer)->detach_device(vbasedev);
+>   }
+> +
+> +void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
+> +                         struct vfio_device_info *info)
+> +{
+> +    vbasedev->num_irqs = info->num_irqs;
+> +    vbasedev->num_regions = info->num_regions;
+> +    vbasedev->flags = info->flags;
+> +    vbasedev->reset_works = !!(info->flags & VFIO_DEVICE_FLAGS_RESET);
+> +
+> +    vbasedev->bcontainer = bcontainer;
+> +    QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
+> +
+> +    QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
+> +}
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 232c06dd15..83033c352a 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -588,14 +588,7 @@ found_container:
+>           iommufd_cdev_ram_block_discard_disable(false);
+>       }
+>   
+> -    vbasedev->group = 0;
+> -    vbasedev->num_irqs = dev_info.num_irqs;
+> -    vbasedev->num_regions = dev_info.num_regions;
+> -    vbasedev->flags = dev_info.flags;
+> -    vbasedev->reset_works = !!(dev_info.flags & VFIO_DEVICE_FLAGS_RESET);
+> -    vbasedev->bcontainer = bcontainer;
+> -    QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
+> -    QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
+> +    vfio_device_prepare(vbasedev, bcontainer, &dev_info);
+>   
+>       trace_iommufd_cdev_device_info(vbasedev->name, devfd, vbasedev->num_irqs,
+>                                      vbasedev->num_regions, vbasedev->flags);
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index 81c95bb51e..9cb5671ab5 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -130,6 +130,9 @@ bool vfio_device_attach(char *name, VFIODevice *vbasedev,
+>   void vfio_device_detach(VFIODevice *vbasedev);
+>   VFIODevice *vfio_get_vfio_device(Object *obj);
+>   
+> +void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
+> +                         struct vfio_device_info *info);
+> +
+>   typedef QLIST_HEAD(VFIODeviceList, VFIODevice) VFIODeviceList;
+>   extern VFIODeviceList vfio_device_list;
+>   
 
-  Thomas
+Please add to your .git/config file :
+
+[diff]
+	orderFile = /path/to/qemu/scripts/git.orderfile
+
+Thanks,
+
+C.
+
+
 
 
