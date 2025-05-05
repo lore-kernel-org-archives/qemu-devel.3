@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7614FC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 23:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98DD9C3ABB6
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 23:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uC56v-0006Bg-KF; Mon, 05 May 2025 19:20:33 -0400
+	id 1uC5Ck-0004EC-AY; Mon, 05 May 2025 19:26:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC56r-00067l-FW
- for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:29 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1uC5AV-0006vR-Mu
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 19:24:16 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC56o-0003Up-4u
- for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:29 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-223f4c06e9fso45716745ad.1
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 16:20:25 -0700 (PDT)
+ id 1uC5AT-0003wt-3h
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 19:24:15 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-22401f4d35aso59091355ad.2
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 16:24:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746487224; x=1747092024; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746487451; x=1747092251; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oMNeg3Y4FuUndpYOZQCJwSPCGo/Nsl7SC/sGcqIL57A=;
- b=nPxqq+FaLGh9bTUB9lu7gYlyU1XF9ZKeayU8n3qV2OvgzmDhkgQaQJn4H/osNC8ryi
- Q+eBYbbxhAYN1BcZJSgDgPMMq8lfEs7/FguxjaA8ygzL02DvaExbyrEJ22ROOUjBd4Nx
- rfQ0vfMTA101tfzOyFIBPo/k7JZL6L4ouxvnxlcOMIFJNK5y2+nxWq2xUJ+tozBVW+Dx
- 3Vq8GoHlyRekOZ6PCVYZrDBJbTqbIsSU1rPLJXJuIxYeOWdInfUPFhd084xffKijnNhA
- 9FJ1i5RKcVaCbM5NeX8rxuaazKqAllaL7JLP9NvcAySrVtFN9tlxeiYblpxHK/F8YjI9
- KY4g==
+ bh=wE+ks75IW4zuYyzk7c3HX2M0GM7VkI4W6D0uip1dkOg=;
+ b=mbo93jC5/evc0SJ9WFGVUHTOMOAp9dyVJ3H1YL3cJ0Ek2zgEn1bazD8KSjPD6GDLj6
+ 47POmroDWDzJRvoebk8Gu21+vARdj9WlQflGPwqbMfQc6LkaBFuCAjJpxvrjIC7yehY8
+ HWUNrXjOVk9EtN+njl6g7HzsrhXSym90xrUfT9ti1G+9njva9Oq6TyshVULbJISlYC2f
+ UfOeo/DJiTjz1rXZr4sf0Ydsxz2ogD64wveSEko4pvUdAC5rXIzlvtM6PmJ3lTUGKlVn
+ iXAQBjaVe2vTfvv6ZkxTnj0HHU+/H9t+dka5dAom4UhIwS+TBEhLFOORh7Et2t+v+ywr
+ NSjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746487224; x=1747092024;
+ d=1e100.net; s=20230601; t=1746487451; x=1747092251;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oMNeg3Y4FuUndpYOZQCJwSPCGo/Nsl7SC/sGcqIL57A=;
- b=DgCTrnQu14Ii+6wkQw7mnxjvOZAP67AHrLyqvcMnd72gUf166IRklkpy9aVjYWc/e4
- xA5e0cyDl5e1IVBRHlLyjk1m4p245yUsHT/TKExmZCbglqD47KmP92AW7qX70D+sFXOV
- 1YSH3jnigRmuM5lU1wReaQwtH6nPR+Or/VYEBLStpu7HBJ7ISDoIPmG3J+J1O2/DB11k
- H/sVxa3Rqx83/9mQSR19DpCNUZFm7kZUp6Dz8WtRybqYqphvnXF6xj6mfkUlNQ6J5X+k
- VGwrZHr4DQnQzvV2zwFRnQLJHaKrqKLFNuP+dS0ElwKCwXYCoJX9mtdynjb8p2vjFpfx
- 66GA==
-X-Gm-Message-State: AOJu0YwEGUfrALxBXzIE/ZBkgtgOO9jqSS1QNKQc/cXeYWYeKdzJN9VF
- ftGh+NNg4XJ/O2MJaN8Hey1SN6ZuuDLERgYEGsdM+0LjncGl2n+XSEuFcbBKXYRzIIkpvEZV5Nv
- /uYE=
-X-Gm-Gg: ASbGnctl0T5w3JoxTg5cs2hokZrTyoY3L1xssR7KzMIPIb1KZH1IWheOh4KqzgWzl0D
- coOCqYyayStqVult5zvKc5ovCOubw/K2UnX+BLlx0JmXP8qx1qrp9Ai0y1EdNv8eXUXXv95wrq+
- poPjCbmFjWSh8d4sVIy3nUUv5jSu+sIuviXzNqXrX31gv32pTCUcIPtvckrXQjbpESSKYjcFOBh
- OGM7uNR9Ys2F4zW/iugziPd9GkbKSbYrfgSM4sX19CkTWZI8ZrquczRP848kbpyPIXIIsZFB3U5
- 90ZD/e02eLsl4NtZtANaKGfe/kmxZG2CgqRK1X13
-X-Google-Smtp-Source: AGHT+IHoFN+rr8Lwq19Sx2mB1Yb2Gf6GH5Yb4OTaXFvREpHxBgl5rUjVxpoL1Lsyqn6N2c59nXy8cg==
-X-Received: by 2002:a17:902:daca:b0:224:3d:2ffd with SMTP id
- d9443c01a7336-22e3285f134mr16144225ad.17.1746487224186; 
- Mon, 05 May 2025 16:20:24 -0700 (PDT)
+ bh=wE+ks75IW4zuYyzk7c3HX2M0GM7VkI4W6D0uip1dkOg=;
+ b=hhNeIqRbZXnmm+HNr+ST++4rxRQvMvc+PbLIlctwoAFLihvm8FjvWSZI0LpthmUEtJ
+ IdfAudwkJgrK58De7hxUEAuz3OwFsQdr27znwEwYJNVfLI9KV0vZaogmzj0Bt3PniyuU
+ nFMENUhZMxBUitPCIC7yGcLC3H2dyD/4HdjYtLSNIiHfaz0Nwo7b93lf/CtN6L4YaNQe
+ jkAyHqS1zosMmg9NtGyP1qBf91t25SEhMgDqZ+ms8xXi6dAj8ogQJcvALqoy3LWJXcK5
+ 6zlbFLWj77kWf+gIOsuKSK854Hsrxj84rRKDUM/aBDQyxRFNXEfsumc2tAsw3AGuNx+Q
+ JrRw==
+X-Gm-Message-State: AOJu0YyWj53fraoe3kucdCC3I2QX7RPKBSBmP1+5OLpcf/UrChTO0CNv
+ bDkC0TLs1TEFSn3Sig0MjTXjPYj1CK/Fvnv6Hak+LyrxF0eMEyeaiQ+T4qHYQVCAUxxhoytGDVS
+ G6U4=
+X-Gm-Gg: ASbGnctlX+5tJ0HZ13X//tKrYq/66w/JPiEA0LmDH3onnESJqTMIwNPG/MJ1JJvRP/n
+ Oysu8sviaRmnw+97ros3i/QpwcFSA3N7TAVfS+BTqTcDr3SV35XYGTwRlyGWCe0pCboHNLw/35S
+ 54Ztqgnx9Bo1u/I+3nYunYtkMYqJaGF3T2yGvJMcvz8t/to/ZUOClygJkmADA18T+/NQSz99eC7
+ bMg03L6g8IENDOS6Bvza87YhguG81TF1UGc5Schvvu3Er3iFqCFKby38XSEJV4dyd7psDFvXZMq
+ RrKDwlfuDGNCBYsdVSxBgWB/ZpFxdhmvI8czUWGGzioNz0iAZL4=
+X-Google-Smtp-Source: AGHT+IHFYgo3dGI6oymiueOZq/2WBNSFS6bNBMqt9jfge9pyyjbKnOcspVMZnv8e5GSJtvTzFP61hg==
+X-Received: by 2002:a17:902:e80a:b0:220:c813:dfce with SMTP id
+ d9443c01a7336-22e363ac721mr10768215ad.39.1746487450836; 
+ Mon, 05 May 2025 16:24:10 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e1522917asm60981715ad.201.2025.05.05.16.20.23
+ d9443c01a7336-22e16348edasm58705265ad.28.2025.05.05.16.24.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 May 2025 16:20:23 -0700 (PDT)
+ Mon, 05 May 2025 16:24:10 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, anjo@rev.ng,
@@ -70,24 +70,24 @@ Cc: richard.henderson@linaro.org, anjo@rev.ng,
  kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v6 04/50] meson: apply target config for picking files from
- libsystem and libuser
-Date: Mon,  5 May 2025 16:19:29 -0700
-Message-ID: <20250505232015.130990-5-pierrick.bouvier@linaro.org>
+Subject: [PATCH v6 43/50] target/arm/tcg/hflags: compile file twice (system,
+ user)
+Date: Mon,  5 May 2025 16:20:08 -0700
+Message-ID: <20250505232015.130990-44-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250505232015.130990-1-pierrick.bouvier@linaro.org>
 References: <20250505232015.130990-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,69 +103,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-semihosting code needs to be included only if CONFIG_SEMIHOSTING is set.
-However, this is a target configuration, so we need to apply it to the
-libsystem libuser source sets.
-
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- meson.build | 26 ++++++++++++++------------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ target/arm/tcg/hflags.c    | 4 +++-
+ target/arm/tcg/meson.build | 8 +++++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index b2c79a7a928..1b365dcae17 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4049,27 +4049,19 @@ common_ss.add(qom, qemuutil)
- common_ss.add_all(when: 'CONFIG_SYSTEM_ONLY', if_true: [system_ss])
- common_ss.add_all(when: 'CONFIG_USER_ONLY', if_true: user_ss)
+diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+index e51d9f7b159..9fdc18d5ccb 100644
+--- a/target/arm/tcg/hflags.c
++++ b/target/arm/tcg/hflags.c
+@@ -9,9 +9,11 @@
+ #include "cpu.h"
+ #include "internals.h"
+ #include "cpu-features.h"
+-#include "exec/helper-proto.h"
+ #include "cpregs.h"
  
--libuser_ss = libuser_ss.apply({})
- libuser = static_library('user',
--                         libuser_ss.sources() + genh,
-+                         libuser_ss.all_sources() + genh,
-                          c_args: ['-DCONFIG_USER_ONLY',
-                                   '-DCOMPILING_SYSTEM_VS_USER'],
--                         dependencies: libuser_ss.dependencies(),
-+                         dependencies: libuser_ss.all_dependencies(),
-                          build_by_default: false)
--libuser = declare_dependency(objects: libuser.extract_all_objects(recursive: false),
--                             dependencies: libuser_ss.dependencies())
--common_ss.add(when: 'CONFIG_USER_ONLY', if_true: libuser)
- 
--libsystem_ss = libsystem_ss.apply({})
- libsystem = static_library('system',
--                           libsystem_ss.sources() + genh,
-+                           libsystem_ss.all_sources() + genh,
-                            c_args: ['-DCONFIG_SOFTMMU',
-                                     '-DCOMPILING_SYSTEM_VS_USER'],
--                           dependencies: libsystem_ss.dependencies(),
-+                           dependencies: libsystem_ss.all_dependencies(),
-                            build_by_default: false)
--libsystem = declare_dependency(objects: libsystem.extract_all_objects(recursive: false),
--                               dependencies: libsystem_ss.dependencies())
--common_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: libsystem)
- 
- # Note that this library is never used directly (only through extract_objects)
- # and is not built by default; therefore, source files not used by the build
-@@ -4308,6 +4300,16 @@ foreach target : target_dirs
-   target_common = common_ss.apply(config_target, strict: false)
-   objects = [common_all.extract_objects(target_common.sources())]
-   arch_deps += target_common.dependencies()
-+  if target_type == 'system'
-+    src = libsystem_ss.apply(config_target, strict: false)
-+    objects += libsystem.extract_objects(src.sources())
-+    arch_deps += src.dependencies()
-+  endif
-+  if target_type == 'user'
-+    src = libuser_ss.apply(config_target, strict: false)
-+    objects += libuser.extract_objects(src.sources())
-+    arch_deps += src.dependencies()
-+  endif
-   if target_base_arch in target_common_arch_libs
-     src = target_common_arch[target_base_arch].apply(config_target, strict: false)
-     lib = target_common_arch_libs[target_base_arch]
++#define HELPER_H "tcg/helper.h"
++#include "exec/helper-proto.h.inc"
++
+ static inline bool fgt_svc(CPUARMState *env, int el)
+ {
+     /*
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 2f73eefe383..cee00b24cda 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -30,7 +30,6 @@ arm_ss.add(files(
+   'translate-mve.c',
+   'translate-neon.c',
+   'translate-vfp.c',
+-  'hflags.c',
+   'iwmmxt_helper.c',
+   'm_helper.c',
+   'mve_helper.c',
+@@ -66,3 +65,10 @@ arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files('cpu-v7m.c'))
+ arm_common_ss.add(files(
+   'crypto_helper.c',
+ ))
++
++arm_common_system_ss.add(files(
++  'hflags.c',
++))
++arm_user_ss.add(files(
++  'hflags.c',
++))
 -- 
 2.47.2
 
