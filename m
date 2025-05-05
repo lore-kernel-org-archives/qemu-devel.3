@@ -4,109 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B63C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 21:52:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72EECC3ABB9
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 22:23:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uC3jM-000643-9U; Mon, 05 May 2025 17:52:08 -0400
+	id 1uC4DA-0003fk-Bi; Mon, 05 May 2025 18:22:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uC3jL-00063r-0m
- for qemu-devel@nongnu.org; Mon, 05 May 2025 17:52:07 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from
+ <3LToZaAcKCk404214tyw44w1u.s426u2A-tuBu1343w3A.47w@flex--komlodi.bounces.google.com>)
+ id 1uC4D1-0003dS-M9
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 18:22:47 -0400
+Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uC3jJ-0001Ya-01
- for qemu-devel@nongnu.org; Mon, 05 May 2025 17:52:06 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 1E1101F387;
- Mon,  5 May 2025 21:52:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1746481922; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0OXFqyS56wcZYqGFOsYAH45KX2G69kp5oak3JkI6DIc=;
- b=pji6YwXORaNkYyvDE6H5Vpu6tujLSz/G0ZpDph/GiNjcfyTqFuZhrSeqoy6c73gTCFdPVs
- EdkrUnZCB1DR4GJc7TrzJvUHnzXxKMzzLOuiXUd6+HggC5YOXJs/yrvZWkO/qByDCB3hVK
- BuUMrh7IJNwSHUrLCSzEXGaV/1eJNd0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1746481922;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0OXFqyS56wcZYqGFOsYAH45KX2G69kp5oak3JkI6DIc=;
- b=6pTyXYGDrdZnE460XD2NXCylu1J0dwTFT3zDzLsnY4AqZJ+sBloffMxs+9Xhnqlg/JveTq
- CZuzluOprQo87CBg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=pji6YwXO;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=6pTyXYGD
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1746481922; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0OXFqyS56wcZYqGFOsYAH45KX2G69kp5oak3JkI6DIc=;
- b=pji6YwXORaNkYyvDE6H5Vpu6tujLSz/G0ZpDph/GiNjcfyTqFuZhrSeqoy6c73gTCFdPVs
- EdkrUnZCB1DR4GJc7TrzJvUHnzXxKMzzLOuiXUd6+HggC5YOXJs/yrvZWkO/qByDCB3hVK
- BuUMrh7IJNwSHUrLCSzEXGaV/1eJNd0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1746481922;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0OXFqyS56wcZYqGFOsYAH45KX2G69kp5oak3JkI6DIc=;
- b=6pTyXYGDrdZnE460XD2NXCylu1J0dwTFT3zDzLsnY4AqZJ+sBloffMxs+9Xhnqlg/JveTq
- CZuzluOprQo87CBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9142013883;
- Mon,  5 May 2025 21:52:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id hBvmFAEzGWiuQAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 05 May 2025 21:52:01 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/2] migration/multifd: Fix received packets tracepoint
-In-Reply-To: <aBknIwPX0IXdcAkL@x1.local>
-References: <20250416134356.29879-1-farosas@suse.de>
- <20250416134356.29879-2-farosas@suse.de> <aBknIwPX0IXdcAkL@x1.local>
-Date: Mon, 05 May 2025 18:51:58 -0300
-Message-ID: <87selig1z5.fsf@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 1E1101F387
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- TO_DN_SOME(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3LToZaAcKCk404214tyw44w1u.s426u2A-tuBu1343w3A.47w@flex--komlodi.bounces.google.com>)
+ id 1uC4Cz-0005jp-Oc
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 18:22:47 -0400
+Received: by mail-pl1-x649.google.com with SMTP id
+ d9443c01a7336-22e3abea7e8so1070495ad.2
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 15:22:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1746483758; x=1747088558; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=jqO0x5cXWHJt1XEFG6wC08SK3tI3idJSXE7AdIKbSX4=;
+ b=KhxazOFuhawJV66Z1pjAxqkxuNjFPTUWx+do6lGUlUDBy6uD0irkLNLeEQ4JjtYekK
+ QAHxeiB+MOdm2tf+DUf1/91HYEeN3Sp+LH4JYboN6ZnQr0uuStxTc856oFP7mEy4bYjE
+ 52G/l+frwoJfkmYtL7MtoQ8739fvWMelUwIlacfZ+78+lsbzcXvc3sLknArgHS1C4Fum
+ Y31TtAF/WVwvmPaLGCsLa0j/jD82MXJ8gnZUQLGwPO96ErB/FlRiYRHgEaJyjH7fbMYK
+ +cggSqJ339efhEGzPr0r7KQOB29YDxtgniV4hOQbCEMVifPJkJ9391gvtBKfQTfIarbE
+ YDyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746483758; x=1747088558;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jqO0x5cXWHJt1XEFG6wC08SK3tI3idJSXE7AdIKbSX4=;
+ b=A9/ZSaaW9HmYo9Nu/U7q9JvAW06iKzxzH2+L9agbsJh0M+1GqPtQPMIMl1mUsSXJw0
+ URbNmagFoSCpvDrfwG+enHFV10Vdqjg5ogQsPFobqCVfrFroohTaz/666uG4/YjIbHwT
+ OIramKZhjv/W4uWl6LNpVvsJNnoG+a7evOB7ZSb+/AjCnPzkf06rciqhZWO95mKmj0Qt
+ BIE5sEbdWQjXVAAM1zDcD7oe5knEgeUsbOyrI8QAhqU8DBuPB3KUzRBoLploDtbFes7a
+ ii87dSAJNxDgPhs/e3SHZS/x5J10ms/vfDw9Mrs2otdWQOidOukypmxgUTGcqdVZeg3l
+ cjIA==
+X-Gm-Message-State: AOJu0YzSKP8y3324RQJEoLmTdTTJW8dlwI92b8SfiJJ63zWPgsKqSpHJ
+ MLoyn0h4bYZNAbTsLM1yLVhd+roXY5pnk2zVscfQbLcqsCPIDp6ZL+FaxM2RuSOcNBO4rpRtwfU
+ 0iiEika3zlKxQy7GqPN8WQzMLx9AqBkDHcawn38M/1RiMgXlallYF0/5wbXHA0y+1S+9kF/qls3
+ 09a5KnjAaHOrAHnzGG+JhNioi+dXUhteYL8nwG
+X-Google-Smtp-Source: AGHT+IGcRvcRCAKo2hSX5zf0jl5hVOLm72z+/ikED2ckElCXdviuBa6P1/2ny1xonP5hcwXE9up4ZQuj7syT
+X-Received: from plhs15.prod.google.com ([2002:a17:903:320f:b0:21f:b748:a1c8])
+ (user=komlodi job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:902:ebc3:b0:22d:c605:a30c
+ with SMTP id d9443c01a7336-22e1e8d326cmr132866555ad.11.1746483757977; Mon, 05
+ May 2025 15:22:37 -0700 (PDT)
+Date: Mon,  5 May 2025 22:22:36 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.49.0.967.g6a0df3ecc3-goog
+Message-ID: <20250505222236.1616628-1-komlodi@google.com>
+Subject: [PATCH] system/physmem: Fix UBSan finding in
+ address_space_write_rom_internal
+From: Joe Komlodi <komlodi@google.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com, 
+ philmd@linaro.org, venture@google.com, pefoley@google.com, komlodi@google.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
+ envelope-from=3LToZaAcKCk404214tyw44w1u.s426u2A-tuBu1343w3A.47w@flex--komlodi.bounces.google.com;
+ helo=mail-pl1-x649.google.com
+X-Spam_score_int: -100
+X-Spam_score: -10.1
+X-Spam_bar: ----------
+X-Spam_report: (-10.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.5,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,98 +93,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+address_space_write_rom_internal can take in a NULL pointer for ptr if
+it's only doing cache flushes instead of populating the ROM.
 
-> On Wed, Apr 16, 2025 at 10:43:55AM -0300, Fabiano Rosas wrote:
->> When qatomic_fetch_inc() started being used to count the number of
->> packets sent, the printing of the number of packets received stopped
->> matching the number of packets sent.
->> 
->> Fix by moving the increment of the number of packets on the recv side
->> to multifd_recv_unfill_packet().
->> 
->> Also change the tracepoint text because "packet num" is ambiguous for
->> the sync since the packet number of the actual sync packet will be one
->> less than the total number of packets seen so far.
->
-> Would this be a hint that the recv side may not really need a global
-> packet_num counter, at all?
->
-> On source, it needs to be there if we want to have an unified unique ID for
-> each multifd packet, so that when allcating a packet we need them to be
-> assigned properly.
->
-> On dest, it almost only receives packets, it's still unclear to me how the
-> recv packet_num global var could help us considering we have the per-packet
-> trace in trace_multifd_recv_unfill() dumping the unique ID for each..
->
-> So.. would it be of any use?  Would it be better if we remove it instead?
->
+However, if building with --enable-ubsan, incrementing buf causes ubsan
+to go off when doing cache flushes, since it will trigger on pointer
+arithmetic on a NULL pointer, even if that NULL pointer doesn't get
+dereferenced.
 
-It's good for debugging. The p->packet_num on the recv side will at some
-point contain the total number of packets sent, but it's hard to answer
-how many packets have arrived at any given moment just by looking at
-trace_multifd_recv_unfill(). Packets could arrive out of order.
+To fix this, we can move the buf incrementing to only be done when
+writing data to ROM, since that's the only point where it gets
+dereferenced and should be non-NULL.
 
-I'm inclined to say that p->packet_num is the one that's useless. After
-this patch, it's only there to hold an endianness swap. We can reach the
-BE value via p->packet->packet_num already.
+Found by running:
+qemu-system-aarch64 \
+-machine virt \
+-accel kvm
 
->> 
->> Fixes: 98ea497d8b ("migration/multifd: Fix MultiFDSendParams.packet_num race")
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  migration/multifd.c    | 6 +-----
->>  migration/trace-events | 4 ++--
->>  2 files changed, 3 insertions(+), 7 deletions(-)
->> 
->> diff --git a/migration/multifd.c b/migration/multifd.c
->> index dfb5189f0e..1a16155864 100644
->> --- a/migration/multifd.c
->> +++ b/migration/multifd.c
->> @@ -310,6 +310,7 @@ static int multifd_recv_unfill_packet_ram(MultiFDRecvParams *p, Error **errp)
->>  
->>  static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
->>  {
->> +    qatomic_inc(&multifd_recv_state->packet_num);
->>      p->packets_recved++;
->>  
->>      if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
->> @@ -1222,11 +1223,6 @@ void multifd_recv_sync_main(void)
->>      for (i = 0; i < thread_count; i++) {
->>          MultiFDRecvParams *p = &multifd_recv_state->params[i];
->>  
->> -        WITH_QEMU_LOCK_GUARD(&p->mutex) {
->> -            if (multifd_recv_state->packet_num < p->packet_num) {
->> -                multifd_recv_state->packet_num = p->packet_num;
->> -            }
->> -        }
->>          trace_multifd_recv_sync_main_signal(p->id);
->>          qemu_sem_post(&p->sem_sync);
->>      }
->> diff --git a/migration/trace-events b/migration/trace-events
->> index c506e11a2e..48acb126f5 100644
->> --- a/migration/trace-events
->> +++ b/migration/trace-events
->> @@ -133,7 +133,7 @@ multifd_new_send_channel_async(uint8_t id) "channel %u"
->>  multifd_new_send_channel_async_error(uint8_t id, void *err) "channel=%u err=%p"
->>  multifd_recv_unfill(uint8_t id, uint64_t packet_num, uint32_t flags, uint32_t next_packet_size) "channel %u packet_num %" PRIu64 " flags 0x%x next packet size %u"
->>  multifd_recv_new_channel(uint8_t id) "channel %u"
->> -multifd_recv_sync_main(long packet_num) "packet num %ld"
->> +multifd_recv_sync_main(long packet_num) "packets before sync %ld"
->>  multifd_recv_sync_main_signal(uint8_t id) "channel %u"
->>  multifd_recv_sync_main_wait(uint8_t id) "iter %u"
->>  multifd_recv_terminate_threads(bool error) "error %d"
->> @@ -142,7 +142,7 @@ multifd_recv_thread_start(uint8_t id) "%u"
->>  multifd_send_fill(uint8_t id, uint64_t packet_num, uint32_t flags, uint32_t next_packet_size) "channel %u packet_num %" PRIu64 " flags 0x%x next packet size %u"
->>  multifd_send_ram_fill(uint8_t id, uint32_t normal, uint32_t zero) "channel %u normal pages %u zero pages %u"
->>  multifd_send_error(uint8_t id) "channel %u"
->> -multifd_send_sync_main(long packet_num) "packet num %ld"
->> +multifd_send_sync_main(long packet_num) "packets before sync %ld"
->>  multifd_send_sync_main_signal(uint8_t id) "channel %u"
->>  multifd_send_sync_main_wait(uint8_t id) "channel %u"
->>  multifd_send_terminate_threads(void) ""
->> -- 
->> 2.35.3
->> 
+When built with --enable-ubsan.
+
+Signed-off-by: Joe Komlodi <komlodi@google.com>
+---
+ system/physmem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/system/physmem.c b/system/physmem.c
+index 16cf557d1a..ccd2b50da3 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3204,6 +3204,7 @@ static inline MemTxResult address_space_write_rom_internal(AddressSpace *as,
+             case WRITE_DATA:
+                 memcpy(ram_ptr, buf, l);
+                 invalidate_and_set_dirty(mr, addr1, l);
++                buf += l;
+                 break;
+             case FLUSH_CACHE:
+                 flush_idcache_range((uintptr_t)ram_ptr, (uintptr_t)ram_ptr, l);
+@@ -3211,7 +3212,6 @@ static inline MemTxResult address_space_write_rom_internal(AddressSpace *as,
+             }
+         }
+         len -= l;
+-        buf += l;
+         addr += l;
+     }
+     return MEMTX_OK;
+-- 
+2.49.0.967.g6a0df3ecc3-goog
+
 
