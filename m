@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6516BC3ABB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:10:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D9ABC3ABB6
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:10:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBrnt-0000QU-76; Mon, 05 May 2025 05:08:04 -0400
+	id 1uBrno-0000O6-St; Mon, 05 May 2025 05:07:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrmy-0006Nc-Hw
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:07:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrmq-00069W-Qs
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:07:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrmw-0006FE-Cv
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:07:04 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrmn-0006Cm-U6
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:06:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746436020;
+ s=mimecast20190719; t=1746436012;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VttgU5Ogb+E15+62yOSNxVyme/J52fkZq7Xe4br9KnY=;
- b=Kpyqrr/5loBt70X6jQRsD6InysxEfM2V8loqAQRLrNxSyY52rCjoXGP26w8sd0YtZj9qEz
- nmdZH2j9ZjQLzfdt9fruDJEqr8h87/4vxzfuDbZ96uHv351IUFb3l0+JxeDcse9Hj01STw
- 28mhtOnFlUanxnA6y4g0oVbRhlaC48E=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=8/LgbK9aXh6E9duZWTO2B6O0ErU1RvCLEKiAekF5JPM=;
+ b=RgGCbtUfG9UJRmea4HA9eP6n85+LM8x5ZtSJ9w/e0rttwm34+/thQVYyITR22s21gzsMnV
+ gZ4zFu7baK8f1oBkCYihd7KCp3QL30B2mkvq4Ip4P50kdeNYCgnYO2ySZ0GecVi5YwZ54d
+ x1LF9Sn7OBuz7GCuvQJ2HT3s4NyNB8o=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-176-ZoF_uuQNMpys82QATcg-tg-1; Mon,
- 05 May 2025 05:06:58 -0400
-X-MC-Unique: ZoF_uuQNMpys82QATcg-tg-1
-X-Mimecast-MFC-AGG-ID: ZoF_uuQNMpys82QATcg-tg_1746436017
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-7-CKk1suCaMsqit2NsMono3w-1; Mon,
+ 05 May 2025 05:06:49 -0400
+X-MC-Unique: CKk1suCaMsqit2NsMono3w-1
+X-Mimecast-MFC-AGG-ID: CKk1suCaMsqit2NsMono3w_1746436008
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BEECF18001D5; Mon,  5 May 2025 09:06:57 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1ECB51956048; Mon,  5 May 2025 09:06:48 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.44.32.38])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BA49930001A2; Mon,  5 May 2025 09:06:55 +0000 (UTC)
+ id D0C7930001A2; Mon,  5 May 2025 09:06:45 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- Nabih Estefan <nabihestefan@google.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 07/23] tests/functional/aspeed: Move I2C test into shared
- helper for AST2700 reuse
-Date: Mon,  5 May 2025 11:06:19 +0200
-Message-ID: <20250505090635.778785-8-clg@redhat.com>
+Subject: [PULL 03/23] tests/functional/aspeed: Update test ASPEED SDK v09.06
+ for AST2500
+Date: Mon,  5 May 2025 11:06:15 +0200
+Message-ID: <20250505090635.778785-4-clg@redhat.com>
 In-Reply-To: <20250505090635.778785-1-clg@redhat.com>
 References: <20250505090635.778785-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -88,90 +87,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Move the I2C test case into a common helper function (do_ast2700_i2c_test) so it
-can be reused across multiple AST2700-based test cases. This reduces duplication
-and improves maintainability.
-
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Nabih Estefan <nabihestefan@google.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250423072350.541742-8-jamin_lin@aspeedtech.com
+Link: https://lore.kernel.org/qemu-devel/20250423014008.147542-2-jamin_lin@aspeedtech.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/functional/test_aarch64_aspeed.py | 28 +++++++++++++------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ tests/functional/test_arm_aspeed_ast2500.py | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index c7f3b3b319fd..4b6851db2add 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -18,6 +18,8 @@ class AST2x00MachineSDK(QemuSystemTest):
-     def do_test_aarch64_aspeed_sdk_start(self, image):
-         self.require_netdev('user')
-         self.vm.set_console()
-+        self.vm.add_args('-device',
-+                         'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
-         self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
-                          '-net', 'nic', '-net', 'user', '-snapshot')
+diff --git a/tests/functional/test_arm_aspeed_ast2500.py b/tests/functional/test_arm_aspeed_ast2500.py
+index a3b44572fcf6..6923fe870170 100755
+--- a/tests/functional/test_arm_aspeed_ast2500.py
++++ b/tests/functional/test_arm_aspeed_ast2500.py
+@@ -37,14 +37,14 @@ def test_arm_ast2500_evb_buildroot(self):
  
-@@ -35,6 +37,17 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
-             'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.05/ast2700-default-obmc.tar.gz',
-             'c1f4496aec06743c812a6e9a1a18d032f34d62f3ddb6956e924fef62aa2046a5')
+         self.do_test_arm_aspeed_buildroot_poweroff()
  
-+    def do_ast2700_i2c_test(self):
-+        exec_command_and_wait_for_pattern(self,
-+            'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
-+            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d')
-+        exec_command_and_wait_for_pattern(self,
-+            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '0')
-+        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
-+                    property='temperature', value=18000)
-+        exec_command_and_wait_for_pattern(self,
-+            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
-+
-     def start_ast2700_test(self, name):
-         num_cpu = 4
-         uboot_size = os.path.getsize(self.scratch_file(name,
-@@ -73,8 +86,6 @@ def start_ast2700_test(self, name):
-                              f'loader,addr=0x430000000,cpu-num={i}')
+-    ASSET_SDK_V806_AST2500 = Asset(
+-        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v08.06/ast2500-default-obmc.tar.gz',
+-        'e1755f3cadff69190438c688d52dd0f0d399b70a1e14b1d3d5540fc4851d38ca')
++    ASSET_SDK_V906_AST2500 = Asset(
++        'https://github.com/AspeedTech-BMC/openbmc/releases/download/v09.06/ast2500-default-obmc.tar.gz',
++        '542db84645b4efd8aed50385d7f4dd1caff379a987032311cfa7b563a3addb2a')
  
-         self.vm.add_args('-smp', str(num_cpu))
--        self.vm.add_args('-device',
--                         'tmp105,bus=aspeed.i2c.bus.1,address=0x4d,id=tmp-test')
-         self.do_test_aarch64_aspeed_sdk_start(
-             self.scratch_file(name, 'image-bmc'))
+     def test_arm_ast2500_evb_sdk(self):
+         self.set_machine('ast2500-evb')
  
-@@ -83,28 +94,19 @@ def start_ast2700_test(self, name):
-         exec_command_and_wait_for_pattern(self, 'root', 'Password:')
-         exec_command_and_wait_for_pattern(self, '0penBmc', f'root@{name}:~#')
+-        self.archive_extract(self.ASSET_SDK_V806_AST2500)
++        self.archive_extract(self.ASSET_SDK_V906_AST2500)
  
--        exec_command_and_wait_for_pattern(self,
--            'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
--            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d')
--        exec_command_and_wait_for_pattern(self,
--            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '0')
--        self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
--                    property='temperature', value=18000)
--        exec_command_and_wait_for_pattern(self,
--            'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '18000')
--
-     def test_aarch64_ast2700_evb_sdk_v09_05(self):
-         self.set_machine('ast2700-evb')
- 
-         self.archive_extract(self.ASSET_SDK_V905_AST2700)
-         self.start_ast2700_test('ast2700-a0-default')
-+        self.do_ast2700_i2c_test()
- 
-     def test_aarch64_ast2700a1_evb_sdk_v09_05(self):
-         self.set_machine('ast2700a1-evb')
- 
-         self.archive_extract(self.ASSET_SDK_V905_AST2700A1)
-         self.start_ast2700_test('ast2700-default')
--
-+        self.do_ast2700_i2c_test()
- 
- if __name__ == '__main__':
-     QemuSystemTest.main()
+         self.do_test_arm_aspeed_sdk_start(
+             self.scratch_file("ast2500-default", "image-bmc"))
 -- 
 2.49.0
 
