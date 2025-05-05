@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32907C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 01:55:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3791CC369DC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 01:55:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBl16-0004FO-SZ; Sun, 04 May 2025 21:53:13 -0400
+	id 1uBl1X-0005s7-JV; Sun, 04 May 2025 21:53:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBl0i-0003ut-LH
- for qemu-devel@nongnu.org; Sun, 04 May 2025 21:52:50 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1uBl0z-000441-38
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 21:53:05 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBl0Z-0002Vb-Q9
- for qemu-devel@nongnu.org; Sun, 04 May 2025 21:52:48 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-22e16234307so17451065ad.0
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 18:52:39 -0700 (PDT)
+ id 1uBl0t-0002ds-9j
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 21:53:02 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-739b3fe7ce8so3407120b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 18:52:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746409958; x=1747014758; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746409978; x=1747014778; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xML4J0OK01b5ZM+8qKTIYRySQNd3gi0WVCRNgOjS4SA=;
- b=gyxGooicRajWLobYPeCsOYnDu/1pnA5q96DbVSye1orCzn/hAyTayR6vmJVXo4mlKj
- 8BKtnbXI+QqZERZ87v33NyMJZQKD+Mn1Ttc/aOIiSp/QHej/86ijo/8mJXH4PqNjzAN4
- jf/rGhPb5+QEsc5sKFUF6LZafhxa4WHkZWfDBd0T42h8HukoVsAlIlzDElposK2Gsqxx
- tDE+dgfNZNpFiwku/i5Rie41HwLWoZBgUMW9Pyt2mE5Ih7h0KoctMooIOLYp2amTCxd+
- RY2+9pGKqRExholDaFZJOUm+n1wcdBjTMt/Apy7J4aJMK4nRt5JpR+VPuqVI8bVK6EO7
- dnfA==
+ bh=JUmj3qtC0Uxjt25GgPIz4kBx9RjJCUcgOSDgbgc2pqU=;
+ b=LKTarpBEapQPkzc2xdgulb3d//08aVWgKVhhlGnSLJpzQXNezHuzc4m8KeGOfFxW4+
+ VYIcL4c8k0+Tiy8SmSgQwCPlQWCLIWcM6l59JhxrsJWpkMSkOl3+CZhpU6KIvi8jPf2C
+ a/6Cg89LAnj9dofG7UEmNywbgpMnAajut0eTsJznON4Ox5qyRYA3XXp5E9AKfHSZ6rqJ
+ F97imceeeP6p9uZwZwtw21kYyMRLHNrm99xkW/Gui6j9nVUREL8uIEWpqSqf6FP+XzAK
+ yxMLSvUPybaoGBlNsm5fNoCqMaCsl1r59xsBq7CqSr16/T2z6/5Lm/vUipu27AOlB1hL
+ kPag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746409958; x=1747014758;
+ d=1e100.net; s=20230601; t=1746409978; x=1747014778;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xML4J0OK01b5ZM+8qKTIYRySQNd3gi0WVCRNgOjS4SA=;
- b=e8xotB+0jc02D7ijGorIVh4k6McwQXznsjWPV+yv9pe9tO9kCHedEeLFTHbfO8/pLX
- 91+Q11oZgeIpq6bDOgruz7Spnd8qDbSSru63kSbwbC/1mldGeKQmJOUNQKpj9v4Q+A/I
- vmT3sl3sgpCzkOZWdNtRNQhFsHf4t/3LM0NAfVrFlclxvwX8v4flg8UA4i4AgM9AAxev
- PKRwv3ZfcMygkP2NKaNhBEOaJRNXoILVnsR8JhGRJIMhiGyxDeF/0cibZ9y6TpJq//C+
- GdoCGMHv/ZwNL6ytuJhzYleqQMj0BvCXkVEaykcJGiZBnTLbKJ/4yPwYqhfjUNbLaD2Z
- 9IbQ==
-X-Gm-Message-State: AOJu0YxW7GtCRAqA1Zs3d4FrSc5mYaGU6v1GouwJD0yKeb/r0qwRzWkM
- uWGUnHVICIMpoe4OpLAVUtf6QiYnZrZYvwTAF6g3N6jl7U226mW/KTegncVHLPnX7u6UezGdiKi
- UeQg=
-X-Gm-Gg: ASbGncuNj0onwod6ZcoMCg9xwTO6qsB8WA33/V8UZC3ALuHgT8Ii0WSfwFsnnLCTYXb
- PVH/yPoW9MLUBBTPzWtDG88Dt/dqdBBVXEkDJFSi8S5xc6K/G5rvCJ95svBLSTf474AZYPNBzzp
- Km13raLEWqyIyPSb7FbeN83Rd9DjDwXXEypG6vg4mn8fnYqYZjYnbyC4ivtnr9l9t2JSy16SPG4
- 3z4u/oZinPeFaoSAqDM00DA5pzoKYJCH8nPESRyXov0Vz/5hjALqHwMJoXsnB2lZ5IfNE73YzJB
- Hxb7/AxX/tIi5MUbF1qdvF40d/JO0eRTaeGBZhrL
-X-Google-Smtp-Source: AGHT+IEtIVHuMX4JePWDBmODChoDsS023u64Klr4UMTovaWNd58dYG/vCBHgFErrNE7uDGnIEc9MDA==
-X-Received: by 2002:a17:902:e541:b0:21f:5063:d3ca with SMTP id
- d9443c01a7336-22e0863a1cbmr212774085ad.16.1746409958142; 
- Sun, 04 May 2025 18:52:38 -0700 (PDT)
+ bh=JUmj3qtC0Uxjt25GgPIz4kBx9RjJCUcgOSDgbgc2pqU=;
+ b=TwVPYMaFU3yAcjauPwKgU39VfGK1RpE/GeymOmiA1sgT+56V1qfwDbpVECACygO0Jk
+ KIeOlRiJDKBekqKosdpKXf9oOwIzvNO/U5JNHKj72NW1NBXgsurfdW3QS0tdd/MnTJl5
+ IlUZpvmmtRZfDutAobCnBfPW29XWlYdUHtNuDrm4IfEvwICgMBhe0gKVv2JOCqkIDCcj
+ uAz48rIVbWUkGrg4bAGUwwnBpVyokw9bUqleHu61MWYZ+C3w7g3Zur6oClBojDyo81RM
+ ySRK1BAuDtojPj9r+U7KhM52DNPdKZtEVmAMA5B3BYe4EpMz7dcGILFZ9WRg9AztM7s1
+ JG3w==
+X-Gm-Message-State: AOJu0YzNGnGlU7LMBvxqLRX+mqjkvq0n9rBMKqPNGZo9wRUq5VqpBIA5
+ qoKeu/qTJgqvJuafIYx+LPdUl8OIunnuzXMO/toRePXTLh0ktIFLdRY5q6lE8r1d7ehunfv24oi
+ pVaU=
+X-Gm-Gg: ASbGncuI+cu4dUU6GWk1IUG0BcccSqKm9ByWn4N8lc/UJ++PcPF5CxbDRoiq4npNrnd
+ 3JG3grelQovnMjgZQsKI9FiAHXgED+GOGR/qXylfquGYXsQc1QTb/iB8c4gqOsoJI75Bqj72hdi
+ dPEhogdC3Vr4B+atcTer7vum9bS8XIFCmnRTwCZfpeZF3HZB0X6zUsNJmH57ZpXceLSuUVyK8yM
+ lbUXtuBdIwAhsbm7gQb6LZqkg17ELxvo+aFAUdvqYz2wHJDrXDjuU4dK9jG8hpNydr/FYqx9M5U
+ /yys5cZetGUrhvV6XFZ6MNMKU7gghH9IEBHoCbTj
+X-Google-Smtp-Source: AGHT+IF14+GzXOzwvwVQdwpLvUHkW1dbYN6i+zycvVgUNiek3xtVEptqaBbxaSd7q1Ze+Ybp/RH0Gg==
+X-Received: by 2002:a05:6a20:6a26:b0:1f5:8c05:e8f8 with SMTP id
+ adf61e73a8af0-20e0692b072mr11046667637.25.1746409977987; 
+ Sun, 04 May 2025 18:52:57 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b1fb3920074sm4462101a12.11.2025.05.04.18.52.37
+ 41be03b00d2f7-b1fb3920074sm4462101a12.11.2025.05.04.18.52.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 May 2025 18:52:37 -0700 (PDT)
+ Sun, 04 May 2025 18:52:57 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
@@ -70,18 +70,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>, anjo@rev.ng,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v5 11/48] target/arm/cpu: remove TARGET_AARCH64 in
- arm_cpu_finalize_features
-Date: Sun,  4 May 2025 18:51:46 -0700
-Message-ID: <20250505015223.3895275-12-pierrick.bouvier@linaro.org>
+Subject: [PATCH v5 32/48] target/arm/ptw: replace TARGET_AARCH64 by
+ CONFIG_ATOMIC64 from arm_casq_ptw
+Date: Sun,  4 May 2025 18:52:07 -0700
+Message-ID: <20250505015223.3895275-33-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250505015223.3895275-1-pierrick.bouvier@linaro.org>
 References: <20250505015223.3895275-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,92 +103,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Need to stub cpu64 finalize functions.
+This function needs 64 bit compare exchange, so we hide implementation
+for hosts not supporting it (some 32 bit target, which don't run 64 bit
+guests anyway).
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/cpu.c         |  2 --
- target/arm/cpu32-stubs.c | 26 ++++++++++++++++++++++++++
- target/arm/meson.build   | 11 +++++++----
- 3 files changed, 33 insertions(+), 6 deletions(-)
- create mode 100644 target/arm/cpu32-stubs.c
+ target/arm/ptw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 00ae2778058..c3a1e8e284d 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1878,7 +1878,6 @@ void arm_cpu_finalize_features(ARMCPU *cpu, Error **errp)
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 26c52e6b03e..c144516aaba 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -737,7 +737,7 @@ static uint64_t arm_casq_ptw(CPUARMState *env, uint64_t old_val,
+                              uint64_t new_val, S1Translate *ptw,
+                              ARMMMUFaultInfo *fi)
  {
-     Error *local_err = NULL;
+-#if defined(TARGET_AARCH64) && defined(CONFIG_TCG)
++#if defined(CONFIG_ATOMIC64) && defined(CONFIG_TCG)
+     uint64_t cur_val;
+     void *host = ptw->out_host;
  
--#ifdef TARGET_AARCH64
-     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-         arm_cpu_sve_finalize(cpu, &local_err);
-         if (local_err != NULL) {
-@@ -1914,7 +1913,6 @@ void arm_cpu_finalize_features(ARMCPU *cpu, Error **errp)
-             return;
-         }
-     }
--#endif
- 
-     if (kvm_enabled()) {
-         kvm_arm_steal_time_finalize(cpu, &local_err);
-diff --git a/target/arm/cpu32-stubs.c b/target/arm/cpu32-stubs.c
-new file mode 100644
-index 00000000000..81be44d8462
---- /dev/null
-+++ b/target/arm/cpu32-stubs.c
-@@ -0,0 +1,26 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "target/arm/cpu.h"
-+#include "target/arm/internals.h"
-+#include <glib.h>
-+
-+void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void arm_cpu_sve_finalize(ARMCPU *cpu, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void arm_cpu_pauth_finalize(ARMCPU *cpu, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void arm_cpu_lpa2_finalize(ARMCPU *cpu, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 3065081d241..c39ddc4427b 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -11,10 +11,13 @@ arm_ss.add(zlib)
- arm_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'), if_false: files('kvm-stub.c'))
- arm_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
- 
--arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
--  'cpu64.c',
--  'gdbstub64.c',
--))
-+arm_ss.add(when: 'TARGET_AARCH64',
-+  if_true: files(
-+    'cpu64.c',
-+    'gdbstub64.c'),
-+  if_false: files(
-+    'cpu32-stubs.c'),
-+)
- 
- arm_system_ss = ss.source_set()
- arm_system_ss.add(files(
 -- 
 2.47.2
 
