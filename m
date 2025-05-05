@@ -4,92 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9647C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 10:45:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F18C3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 10:51:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBtJu-0007nc-EG; Mon, 05 May 2025 06:45:11 -0400
+	id 1uBtPQ-0002Qe-Ij; Mon, 05 May 2025 06:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBtJr-0007nC-J3
- for qemu-devel@nongnu.org; Mon, 05 May 2025 06:45:07 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBtJp-0003jx-On
- for qemu-devel@nongnu.org; Mon, 05 May 2025 06:45:07 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-440685d6afcso36990255e9.0
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 03:45:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746441904; x=1747046704; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=G/Cs1RSBUq2rji5ltplqN53a1rlV5nJ16F1SyWjYlF0=;
- b=wiJfyGWWyL1Fg/9NQY3C8ujogP6odRYvA6/lf7mBs/q511rKLf9lmQS4sBA5CHmKky
- ajdpLL0SXqSJPjeX7BRpfs3Z5WnYdx43uqPolSGT4d+pR/ish95trxsUiJ9FlO/Nqzwr
- 2z5m4FRlCEzrQR3JGhtTJGSZKu4/fvRvdbxgbaXbBByR0VB8yq4E8dROlM4wbtTnZ3aY
- Gthg+EQOqRgWDMm+/+KAxRmCY18SnW4RoVmi9+U81hzQd1ms2rHssoltdbh8TPtxiK8J
- UtY3jn3qorW8YBrYcqss5OvzReSPbRXgHQmjDLkg+CQNKZ4cCZw043YjmwNxWARi5dQD
- odCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746441904; x=1747046704;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=G/Cs1RSBUq2rji5ltplqN53a1rlV5nJ16F1SyWjYlF0=;
- b=Z12oNlI9jstfSGLEqYIec8sLwlgdhvB44kvzAhVLj30dqVf3/obTLW/LJwiM/Ih/rn
- Ah4c5Q8VDk0ejQEtIJdgsF04c9SXOuwf2cSz7kGN5U4ev9JCLcjE1Bbl7YxWknejxY9a
- TxMT+wVhjcuAVuRJgZlpmlgUjHoxqmX4CSW/rEatEPWJNVG0GnLCLn7b+UdTIzd2ETv2
- iDY6AOyu+/Pq8VkpQOIW40Ze/SNZ1Fvn+TIYvi+Fkam9rysTPG2B/lzBYG3exwBt2CMI
- TUffDLH+7u0O9Mv5K2cimeHCih4rwkB7E+ziym8IkPKYwBw0Z2MMqY0hL+qxZ6dPHcUE
- glcQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXF5lwhbI8MRE3X8gLkx+jowGkBqQqEy0ORHvQFDnga/oxFOKXEaqTgqiO3xkqjlnjUrz/oJezrfi3K@nongnu.org
-X-Gm-Message-State: AOJu0YxbDrqdMBZ3TAwQm6uBul3S0Z8lvDPvggTIGIMfLmFlgZMutnnS
- ztpDx4GWZLGHQVcugF7X37L6IX275CpiMofcPrutLlLxpav+o3FWIzJxEhReChc=
-X-Gm-Gg: ASbGncvdF3TNunEusegzJFEzW7a2ffkRiXnGOdCGkPj/zBCUJeC6Foa1vthYSeW2v67
- 7QAfb72X0PZyc+KSF6blJqI17YVV3Ytdwy8blWpWDHg9KkBDMZmEp41eJq1jqomJY8yuLIlFcXI
- wAzQ1GxqGx1Ke1fpY7q6dAI1T4kzM5MGM2ht5DRmz6VWBaTYU/pA1qfYtpeCF+tls++9xdC3LyT
- srrDIBGLFzrWixfZrCdcx2gjFHc4RMToxTUtj3lHolP1Yz5qX6Xdpt2jFlZxR0xxIL02omqHMvJ
- 6EyCgMjzEh2gF7D5OFOPvdCZobDzsMdYXWTaoENI06lP8V0EVq9xQcCDhenPQcoEpSkZGZCEWrV
- 7jam7TMN3DBtp5X97QfAHm22w+MNgze5Q+A==
-X-Google-Smtp-Source: AGHT+IFtgkvljn/LkdGPid9VuERQ3zMCyCG7gCBmTMCWKhbiDFjLcP/CnujP0cpUmTX1PJ7YhzH3jg==
-X-Received: by 2002:a05:600c:1e1c:b0:43d:b85:1831 with SMTP id
- 5b1f17b1804b1-441c47d3b12mr68549295e9.0.1746441904183; 
- Mon, 05 May 2025 03:45:04 -0700 (PDT)
-Received: from [10.194.152.213] (219.red-95-127-56.dynamicip.rima-tde.net.
- [95.127.56.219]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae7a46sm9856690f8f.44.2025.05.05.03.45.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 03:45:03 -0700 (PDT)
-Message-ID: <dc27e3f6-ceac-4e05-9652-28634d4fe73c@linaro.org>
-Date: Mon, 5 May 2025 12:44:59 +0200
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uBtPJ-0002Pr-Kj
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 06:50:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uBtPG-0004e3-3N
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 06:50:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746442239;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QI8Fcj2OLtdYqeOnGrDpVvaBpR8shh472/u1EtqnPWY=;
+ b=d8MjYgMzOhocZKJx10vcJ5eRMkri23Xn+pyZAbPNEieEZe96Myr3q3fVSu8Vk7S18CYfbI
+ VGTJCzTy8hXLDcZCT5rmc1orV40x088dtcc964ptN57Snh1puOvsCxmHhA5sw8ZxhQQfFg
+ vIojUvjfskE15T2LNNv32isSdvwozxY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-iK4r7DngNBC_8udsOyTQwA-1; Mon,
+ 05 May 2025 06:50:38 -0400
+X-MC-Unique: iK4r7DngNBC_8udsOyTQwA-1
+X-Mimecast-MFC-AGG-ID: iK4r7DngNBC_8udsOyTQwA_1746442237
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EEC491800877; Mon,  5 May 2025 10:50:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.8])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DA9911956094; Mon,  5 May 2025 10:50:32 +0000 (UTC)
+Date: Mon, 5 May 2025 12:50:30 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 15/22] usb/msd: Allow CBW packet size greater than 31
+Message-ID: <aBiX9sg56lcNIjDn@redhat.com>
+References: <20250502033047.102465-1-npiggin@gmail.com>
+ <20250502033047.102465-16-npiggin@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/48] target/arm: Replace target_ulong -> uint64_t for
- HWBreakpoint
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- richard.henderson@linaro.org, alex.bennee@linaro.org, kvm@vger.kernel.org,
- Peter Maydell <peter.maydell@linaro.org>, anjo@rev.ng
-References: <20250505015223.3895275-1-pierrick.bouvier@linaro.org>
- <20250505015223.3895275-2-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250505015223.3895275-2-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250502033047.102465-16-npiggin@gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,22 +88,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/25 03:51, Pierrick Bouvier wrote:
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Am 02.05.2025 um 05:30 hat Nicholas Piggin geschrieben:
+> The CBW structure is 31 bytes, so CBW DATAOUT packets must be at least
+> 31 bytes. QEMU enforces exactly 31 bytes, but this is inconsistent with
+> how it handles CSW packets (where it allows greater than or equal to 13
+> bytes) despite wording in the spec[*] being similar for both packet
+> types: "shall end as a short packet with exactly 31 bytes transferred".
 > 
-> CPUARMState::pc is of type uint64_t.
-
-Richard made a comment on this description:
-https://lore.kernel.org/qemu-devel/655c920b-8204-456f-91a3-85129c5e3b06@linaro.org/
-
+>   [*] USB MSD Bulk-Only Transport 1.0
 > 
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   target/arm/internals.h   | 6 +++---
->   target/arm/hyp_gdbstub.c | 6 +++---
->   2 files changed, 6 insertions(+), 6 deletions(-)
+> For consistency, and on the principle of being tolerant in accepting
+> input, relax the CBW size check.
+> 
+> Alternatively, both checks could be tightened to exact. Or a message
+> could be printed warning of possible guest error if size is not exact,
+> but still accept the packets.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+
+This doesn't look right to me.
+
+CBW is a message from the host to the device. The device must fully
+validate the data in it (see "6.2 Valid and Meaningful CBW"). My
+understanding is that a wrong CBW size is an error.
+
+CSW is a message from the device to the host, i.e. the iovec doesn't
+really have any content when we get it. It's essentially just a buffer
+in which usb-storage has to construct a valid CSW (of the exact size
+13). If the buffer is larger than it has to be, that's a different case
+than receiving a CBW of the wrong size. I'm not entirely sure what the
+mechanism is to send exactly 13 bytes, but I assume it's related to
+p->actual_length, which is updated in usb_packet_copy().
+
+Actually, if we reject too small buffers, why do we even need the MIN()
+in usb_msd_send_status()? Shouldn't len be an unconditional CSW_SIZE?
+
+Kevin
 
 
