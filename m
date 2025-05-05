@@ -4,88 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48077C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 15:00:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC01C3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 15:09:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBxIn-0006OZ-Hk; Mon, 05 May 2025 11:00:18 -0400
+	id 1uBxQh-0001Yq-OR; Mon, 05 May 2025 11:08:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBxIi-0006LQ-KV
- for qemu-devel@nongnu.org; Mon, 05 May 2025 11:00:12 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBxIc-0006JK-34
- for qemu-devel@nongnu.org; Mon, 05 May 2025 11:00:07 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-ac29fd22163so763879866b.3
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 08:00:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746457204; x=1747062004; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lxhLTXmJ0AJQAwAnZJU2eDKfxi5IxqiJLmQpm7J5aNc=;
- b=Uw6D2R0MBQ1PFGnqjwhHVTrCo9RZSmYqzpK9vuGyjbC5eSOSujabDfSRQSa3BjYF80
- wGEpn3xaotAakAG9cAKqWOloFyx5GIxwWagJO+0Ggi07hc7fvwSbwh+TV9Hi5V3J8VhX
- LMeY0Rba9kKGaQRCNZnVbWLuNxtnIDZdwwsI4NQyaON5EAhkYYXC6f86wfAe7N/pAeIT
- m943khvgc7TVBBdRJFNc6ICLmiFUaD4Smt8aOJH7ugIqz9gQgpNlnn1bWJlixbFHYy5i
- XczrpWSxyoGTBNvZZCJS03H2PY3DAA/WvAsYi8/HDet5mEqrN6iLECX78IW0K1IvTnvI
- t1JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746457204; x=1747062004;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lxhLTXmJ0AJQAwAnZJU2eDKfxi5IxqiJLmQpm7J5aNc=;
- b=tSWNY/YrlmICSOXwWf7jhucy5LQi0WF7YDDZWGuL0k6/4AjCp8bTNv8vXPm8d8kvh1
- sXgl2Dt8cPVR9ZPImAC9q1GgNi6MHBY+rVKFj9yKP+cHj0ARbHNpR/aRCmcz0yzbLauX
- KRDp3V0cBSnpwp8esxaDK+VGh5yDkLvrkhxJF9L4z7OsVawDtdCPudep8a6+2dZjzHmQ
- p4fcgg/okxMxuL+X6Qv3E0eJ2aexVVsjSTrql6/QgbCk7WAGKM/b7M/TCRsCtgkJRx9m
- oaW3g+PieL0Lfkf89TG/36K4A+1ZDzBQGSzaHYsgZGRfwDw0HT7jJPoJLtkYUMaGeeyF
- A8mQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0v0VHZZNVXNmsLKNaV7SQ0/EvR0Qo7KlqvaNbmRECprepkEwPPTpf0PAV173IQqG92wlZR4apjIxz@nongnu.org
-X-Gm-Message-State: AOJu0YyevfYGEb0JVkewKkQFps7CoHbCUFSdFaIcz6z6mi0H9Fl9nEu1
- TaSnPBT5//pZ0JnLJX30G5XZe4RoUybQnvzk/OVaeCRKzBzhw6peBCx9lMC0CrU=
-X-Gm-Gg: ASbGnctyxxTtCvhor5+Wv++FONLNwivTc+0QgU3sMQtemc4QJOLD5gwEXkMOT496AB+
- bmB4BwyZmxVt7clldjcOplb+jkSxQvtGl+13cNaDKDTIQh48Fxc/9FUJxGsELimm8slbOFoLhF8
- PFRU6gvWS8AKT/rIQLSJP6a5JcwHXuI8afR5XJyvAD6g9s/tqHXTe/8Z7uCrHLCcDkBFx/33h2h
- JzBJfCwV0ZRgjyRwIPWnWI0vjDNVCo7iPnfwyTzKjs/YlRDW9M0kZ+H06drActykOtM3YYy+HU1
- ZnfGhnVVmqW9Jwxpde4Yi3z3YlmbNQ5MRdiMqxIPoxqRLZbZq5iDrPTowf5fkvpGzN7/syLUR/z
- 1whY=
-X-Google-Smtp-Source: AGHT+IGOntcp2l3f3Nm9fhgijCDbbZLcb+qL63wWRkH8KANa1xS30JcpaW7u4IaTjz6tZp/vB9SK1A==
-X-Received: by 2002:a17:907:94c5:b0:acb:32c5:43ff with SMTP id
- a640c23a62f3a-ad1a45beadcmr688074366b.0.1746457204050; 
- Mon, 05 May 2025 08:00:04 -0700 (PDT)
-Received: from [10.194.152.213] (129.21.205.77.rev.sfr.net. [77.205.21.129])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad1891a2d87sm503791966b.45.2025.05.05.08.00.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 08:00:03 -0700 (PDT)
-Message-ID: <c04dad69-7727-4e16-ab19-6f8188e3738b@linaro.org>
-Date: Mon, 5 May 2025 16:59:59 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uBxQd-0001XD-3o
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 11:08:23 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uBxQa-0007CJ-Gd
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 11:08:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746457700; x=1777993700;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=+p5FCm6DQ9MAGyEbIwegXKJjpMiJfd6UklRI3XleVpQ=;
+ b=Q4RL3jmTw6blBQ1afOzsci1aHhxQdO5KpgouWrcExA2USXdWOtMI7bTG
+ 2DI3DO6bgixr9E+XTjFZtg9ylEfNuG647jYSusZ5a5v3/bPKrJPCO47jg
+ TaH+5BXFzlaJpNv1JaJFrlA634kg3Qx2NfkrIVQW1oltMD+tBvgdzIhk2
+ HzeGhXYGuWMp40E5Mf0O97WU6SEQvTodSsRSQWdOh5lcNCsFd6xPgKCZr
+ I5xJsxZ8/E36bCdCMQZjNjYBa5cwuFYyceJ4dsQawm3ZzL9OQZQp0c+Nf
+ VMZEucyEZhywP7KG+busnbK+O5HpanqjDC7VvMRmbhWKuyLgDaREL1+wp w==;
+X-CSE-ConnectionGUID: YKZ0Vy+tToSd1go6o337XQ==
+X-CSE-MsgGUID: Slt2CbWZQcuxV9ikeN6RXw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11424"; a="50723965"
+X-IronPort-AV: E=Sophos;i="6.15,262,1739865600"; d="scan'208";a="50723965"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 May 2025 08:08:12 -0700
+X-CSE-ConnectionGUID: 4jsSXWe1S7aIZkBKIh/lwg==
+X-CSE-MsgGUID: 0wTOGyh7QZWai9cmAMTAyw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,262,1739865600"; d="scan'208";a="140267138"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa004.jf.intel.com with ESMTP; 05 May 2025 08:08:10 -0700
+Date: Mon, 5 May 2025 23:29:10 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: Re: [PATCH v8 54/55] i386/tdx: Validate phys_bits against host value
+Message-ID: <aBjZRsgEkDFc9JgE@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-55-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/12] target/mips: Fill in TCGCPUOps.pointer_wrap
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: foss@percivaleng.com
-References: <20250504205714.3432096-1-richard.henderson@linaro.org>
- <20250504205714.3432096-8-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250504205714.3432096-8-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250401130205.2198253-55-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,14 +90,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/5/25 22:57, Richard Henderson wrote:
-> Check 32 vs 64-bit addressing state.
+> @e -875,6 +876,13 @@ static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
+>          return -1;
+
+Here you has already used "return -1", so...
+
+>      }
+>  
+> +    if (cpu->phys_bits != host_cpu_phys_bits()) {
+> +        error_report("TDX requires guest CPU physical bits (%u) "
+> +                     "to match host CPU physical bits (%u)",
+> +                     cpu->phys_bits, host_cpu_phys_bits());
+> +        exit(1);
+
+...what about "return -1"?
+
+kvm_init_vcpu() missed a "goto err", but it is not a big deal:
+
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 9862d8ff1d38..05034f622f20 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -595,6 +595,7 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
+         error_setg_errno(errp, -ret,
+                          "kvm_init_vcpu: kvm_arch_init_vcpu failed (%lu)",
+                          kvm_arch_vcpu_id(cpu));
++        goto err;
+     }
+     cpu->kvm_vcpu_stats_fd = kvm_vcpu_ioctl(cpu, KVM_GET_STATS_FD, NULL);
+---
+
+Overall, LGTM,
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
+> +    }
+> +
+>      return 0;
+>  }
+>  
+> -- 
+> 2.34.1
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   target/mips/cpu.c | 9 +++++++++
->   1 file changed, 9 insertions(+)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+> 
 
