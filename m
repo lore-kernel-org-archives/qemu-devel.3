@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B95DC3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FBCCC3ABB9
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBs0y-0008GT-2Z; Mon, 05 May 2025 05:21:32 -0400
+	id 1uBs22-0000RC-Uy; Mon, 05 May 2025 05:22:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBs0q-0008Ek-6u
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:21:25 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBs1r-0000QO-8f
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:22:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBs0n-0000XP-NP
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:21:23 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBs1p-0000er-K2
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:22:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746436880;
+ s=mimecast20190719; t=1746436943;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=73NXrLSdcVj93SspApSGJKVSIn8QTdEKgPRzQQsvRAg=;
- b=QQsk2XoJ+uv0rJbUJSXEdhNgSeZ9ItXmcJpi8a9FF5ZKhhAOg9erDTRW8HzQFdEEuyzDNq
- 1J7P1RguGVy/Vryhb21FhDZZv/r9ascMw9oSxOSku1ZupZqfl/JR+WLcw06a4izkw4+i/K
- EcWjGVHEhNu+WBYnESL2TsuUUinvXzc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GnMPWROq6ZDY0EtEAewmW17FtFVGdXTNywr9FJW+So0=;
+ b=A+KSLLaScMpCWtLaaK8mni8Br3hfhxbYkYsXdjJuSSWpJ5ax9EftRz+m8oHPyHVcM8P4xy
+ OfQEJckOWudTKZmookWnLVIC1KByXx6F+s02hRNr9woBrf2+nKRFMBZyI7A9sLO10yA0f3
+ J224E/m4d46Q1RwOPMAZe+XkGID/zq0=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-Ip7Y356qM62vMLMOHBxYKA-1; Mon, 05 May 2025 05:21:18 -0400
-X-MC-Unique: Ip7Y356qM62vMLMOHBxYKA-1
-X-Mimecast-MFC-AGG-ID: Ip7Y356qM62vMLMOHBxYKA_1746436877
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-440667e7f92so24506795e9.3
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:21:18 -0700 (PDT)
+ us-mta-332-zZInbDSPN4y6-OLDpx3HUA-1; Mon, 05 May 2025 05:22:22 -0400
+X-MC-Unique: zZInbDSPN4y6-OLDpx3HUA-1
+X-Mimecast-MFC-AGG-ID: zZInbDSPN4y6-OLDpx3HUA_1746436941
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-39130f02631so1040416f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:22:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746436877; x=1747041677;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=73NXrLSdcVj93SspApSGJKVSIn8QTdEKgPRzQQsvRAg=;
- b=Z9oXAU5oEPRCYhex0WQDLsQcR1NxwhmH5aTBqyk+1WnPKGYESyMGcuOHrnO+snEWh8
- +SA1SivEcMw/zAFL8ii8Y5faQXKTSKubSuNnnds9T7B+cRvUsXX0pSoh3KffLNt9lgF6
- J5KScFDCqMyFJGB7YNDYck55PrtNNIhp8WdFiv4FREYFZEd6jel+hB+obQ5oEmR2g7VW
- uahkcIQApIl1oGsXZ00nu+ct+G//T4q/YepZbOHSOrBfFIHHKBSZMwnDylWBAXHeTyDx
- jH77mHX2PYLpnqkxpfyhctmoafGZ8de1Btw28oVgWAeoMmpjdO0awhglILiT2PvenVlt
- /DxQ==
+ d=1e100.net; s=20230601; t=1746436941; x=1747041741;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GnMPWROq6ZDY0EtEAewmW17FtFVGdXTNywr9FJW+So0=;
+ b=gLaU6rr4rtLW/TRD854V6gzFv+DzpgAzUsDJOwc6iPQR/aHmDnFzH4GUWENOrgrUDq
+ ZOzxkSyGBzu/R+f71Cw0Q8JhMjIsduw4q3ccAdrojf7Ewr3Ov3hOvu1BxY+ufFphZwek
+ tb3UyYb+zEBUzs0mVHYrzPCsJgG0f/FhAsX1RFDV/pXAn1yov3GC4s9h3n3lu4InwM1p
+ aNizhnC4Rbox+bqRsDgHE9BVlse2QTBvgZrKrEOavcfApP90+m+jqxerx25EXAJflL6p
+ V5HJJRxFk786gIG7vt1xk07enxquU9mxGYhpp/8pinkZ7At3YVHKfPIv80nbI54C+hni
+ kc9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXVbt4ibs0gKfOATrHDn+OTzPu8gYp1dxOKMD5jQIvZPxSQKRJvMXfyU1MihY/99bfU5UX1G1ZrcnHh@nongnu.org
-X-Gm-Message-State: AOJu0YyH2sffXO5Y5mxR3G7sas+mPoUzV0VDlKOcidNL3TqSNY9+oz8D
- zKqbR+yh4oAZgT7mU+W7isgq3IBAXno+yi+2ZfqHs9CruqPCxyDCzwKB0BpjOJ1GdUCaUhrBl1t
- FrDF1pWX0+961T2gppxw5UZi+f8D/bpqXoS7lg30g8nRDqg+JERpW
-X-Gm-Gg: ASbGncvjBRqppUPx9LpWw3yXp6+QmuVrV6fc+KAsqDAg8tReM+SGJJOIiyXpZnCSld3
- kaasMSkcxV+uVtH+S9Sqo3nILJo/M3BAO+1VMv/50km3MtN8GPLLJ3zt5jgzrUqbRc/okmFXu6k
- 4IFxD3i5RGJVaStiIFNi4BGEHKOyc8BJiD8bcDa/WIKH7guXHc108k0aDAOiVpgJDY4vOo8PDkq
- m8jH7/nZpiAiC91eXhApEytllKwps9ruu4byblRoxnAhCtA6jn5CcWe/P/w3lgRz6EILc30Mldk
- crSvtTA/Rl1Bw9RgYDh3nLfmgK/lGhNMwwBT/Ull
-X-Received: by 2002:a05:600c:5027:b0:441:b698:3431 with SMTP id
- 5b1f17b1804b1-441c4948315mr47481405e9.28.1746436877230; 
- Mon, 05 May 2025 02:21:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHsI90qglqcNTka4r2HR1TAQbnYsvaOpJxy/5zGO3t+WMddaxvMzdSdSpy4b4s7yD051sDo4g==
-X-Received: by 2002:a05:600c:5027:b0:441:b698:3431 with SMTP id
- 5b1f17b1804b1-441c4948315mr47481265e9.28.1746436876929; 
- Mon, 05 May 2025 02:21:16 -0700 (PDT)
+ AJvYcCXurEwdo1yiPRdYzNk/2Kam52b2rZQGgkYRAUKo9+ha6bgSEeaJo/1DDCKY3hdnT+W8sS9+rHuedJVD@nongnu.org
+X-Gm-Message-State: AOJu0Yz74PJLzjqukkYJcaqaRPUdbKPdqCOVno6kuiZLP/aMeTihIKZg
+ U0+J+3vQG3UC7Ml6dnfEw759hgJ/hbtTyplafv1sxEhO+yP0xobthM7CBRPuOr7SIzgnTabbAz6
+ 9BX+f6d7O9z9n9Z2sXJLf8Sj1uezZD072xdLaxoYpn34C75e9en8u
+X-Gm-Gg: ASbGncubC2esRRRzJWwEt5tSGuwK/HirpoK3KomwOgvJjeY5qA5dLnfEv8YtdxiRkcA
+ HxikapUdaqx4T6F6qBchJ2W81Koz9UZTYlPq173dtGxEsiXZPFRnTpt4mCUJmnYo7beA2TA9z/V
+ luak2BgyPhXekgkiBevIlfZUb23ip2L8ck0IXSLT46/ZoGWbfmyTxZcSMxzQy7vltkqSb0fdnzE
+ aVNZzGKiDEwpRvwMBAN8b7vj+otsjId2XOT8LxJJvgLLCFmaHJK48aRFkYfybTrP9PIXA1PurvZ
+ BRk/+x1uYqkhqZoWtJUJfZTYU57UbUN1d007wSrz
+X-Received: by 2002:a05:6000:4304:b0:39f:e7b:2c87 with SMTP id
+ ffacd0b85a97d-3a099adcdcfmr6987811f8f.29.1746436941044; 
+ Mon, 05 May 2025 02:22:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFckhHzD0e8glNCPO/gYGBKElLw1pM81/Ekl0pAIUe1cdwFpnbAnfs3il4Mb/zS7L6CtHLzdw==
+X-Received: by 2002:a05:6000:4304:b0:39f:e7b:2c87 with SMTP id
+ ffacd0b85a97d-3a099adcdcfmr6987796f8f.29.1746436940629; 
+ Mon, 05 May 2025 02:22:20 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b89cc67fsm129475395e9.5.2025.05.05.02.21.15
+ ffacd0b85a97d-3a099ae0cd6sm9716958f8f.5.2025.05.05.02.22.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 02:21:16 -0700 (PDT)
-Message-ID: <3af89f1f-4bda-4ed5-bb94-46df48f321c0@redhat.com>
-Date: Mon, 5 May 2025 11:21:14 +0200
+ Mon, 05 May 2025 02:22:20 -0700 (PDT)
+Message-ID: <91118646-7a6d-484c-84a9-9f35728f656b@redhat.com>
+Date: Mon, 5 May 2025 11:22:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/16] hw/i386/pc: Remove pc_compat_2_7[] array
+Subject: Re: [PATCH v2 10/16] hw/audio/pcspk: Remove PCSpkState::migrate field
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
@@ -92,9 +92,9 @@ Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Ani Sinha <anisinha@redhat.com>
 References: <20250501183628.87479-1-philmd@linaro.org>
- <20250501183628.87479-10-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+ <20250501183628.87479-11-philmd@linaro.org>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -137,7 +137,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250501183628.87479-10-philmd@linaro.org>
+In-Reply-To: <20250501183628.87479-11-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -166,49 +166,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 01/05/2025 20.36, Philippe Mathieu-Daudé wrote:
-> The pc_compat_2_7[] array was only used by the pc-q35-2.7
-> and pc-i440fx-2.7 machines, which got removed. Remove it.
+> The PCSpkState::migrate boolean was only set in the
+> pc_compat_2_7[] array, via the 'migrate=off' property.
+> We removed all machines using that array, lets remove
+> that property, simplifying vmstate_spk[].
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/i386/pc.h |  3 ---
->   hw/i386/pc.c         | 10 ----------
->   2 files changed, 13 deletions(-)
-> 
-> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-> index 4fb2033bc54..319ec82f709 100644
-> --- a/include/hw/i386/pc.h
-> +++ b/include/hw/i386/pc.h
-> @@ -289,9 +289,6 @@ extern const size_t pc_compat_2_9_len;
->   extern GlobalProperty pc_compat_2_8[];
->   extern const size_t pc_compat_2_8_len;
->   
-> -extern GlobalProperty pc_compat_2_7[];
-> -extern const size_t pc_compat_2_7_len;
-> -
->   #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
->       static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
->                                                    const void *data) \
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index 7573b880905..ee7095c89a8 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -241,16 +241,6 @@ GlobalProperty pc_compat_2_8[] = {
->   };
->   const size_t pc_compat_2_8_len = G_N_ELEMENTS(pc_compat_2_8);
->   
-> -GlobalProperty pc_compat_2_7[] = {
-> -    { TYPE_X86_CPU, "l3-cache", "off" },
-> -    { TYPE_X86_CPU, "full-cpuid-auto-level", "off" },
-> -    { "Opteron_G3" "-" TYPE_X86_CPU, "family", "15" },
-> -    { "Opteron_G3" "-" TYPE_X86_CPU, "model", "6" },
-> -    { "Opteron_G3" "-" TYPE_X86_CPU, "stepping", "1" },
-> -    { "isa-pcspk", "migrate", "off" },
-> -};
-> -const size_t pc_compat_2_7_len = G_N_ELEMENTS(pc_compat_2_7);
+>   hw/audio/pcspk.c | 10 ----------
+>   1 file changed, 10 deletions(-)
 
-Missing clean-up patches for l3-cache and full-cpuid-auto-level?
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
