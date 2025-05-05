@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B93AC3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43205C3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:05:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBrlJ-0003ex-8F; Mon, 05 May 2025 05:05:25 -0400
+	id 1uBrlZ-00042U-Rj; Mon, 05 May 2025 05:05:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uBrl3-0003c3-GY
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:05:05 -0400
+ id 1uBrky-0003Yv-RV
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:05:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uBrkz-0005m5-9x
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:05:03 -0400
+ id 1uBrku-0005kw-7X
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:04:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746435900;
+ s=mimecast20190719; t=1746435895;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vRtlT+rfQp/A6Zs87LxR8mcqRVthqez4BmiYWwSHafw=;
- b=e1Zzg4tbX09QbcOs/xPwcqGuHa4QNul7eI4q/1CTBL2gi8nUlO6qy8mBxY04urkqJwPI61
- degWQMWmb49DZ/YuAD9978eizHg+VXPsBT6an/MaWIdfzth5ckrILjm53dIBJK01AO6HBd
- nIZKctwRi5FK1pT3XBhxxrOqpIyENVA=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ya2k66L69MguUJ7e/92cimrey+KKi+WpqMAX7zuo+gA=;
+ b=N07bl3Kz97+4g8lbVbV+tWTrVOOEFKFxX74zHmXdiJ9ojRmAPV1p2mCbjzsEWb9iS3xtdE
+ 7dIq94IMpPpx2+/X5UPARS1TakIelO6P9bQc6Iu8/sPKgrMmVhq5GAFvRWfLXiqw6c5DbQ
+ nXUVm4STwlK9mxV7D1gFkuDvwQ1AO/4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-306-O_kU_q-WP_OJvkCb0ekMNQ-1; Mon, 05 May 2025 05:04:59 -0400
-X-MC-Unique: O_kU_q-WP_OJvkCb0ekMNQ-1
-X-Mimecast-MFC-AGG-ID: O_kU_q-WP_OJvkCb0ekMNQ_1746435898
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-39130f02631so1034030f8f.2
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:04:59 -0700 (PDT)
+ us-mta-176-0Tybdb6UNLaW_vztsMHiPA-1; Mon, 05 May 2025 05:04:54 -0400
+X-MC-Unique: 0Tybdb6UNLaW_vztsMHiPA-1
+X-Mimecast-MFC-AGG-ID: 0Tybdb6UNLaW_vztsMHiPA_1746435893
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43e9b0fd00cso17492485e9.0
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:04:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746435897; x=1747040697;
+ d=1e100.net; s=20230601; t=1746435892; x=1747040692;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vRtlT+rfQp/A6Zs87LxR8mcqRVthqez4BmiYWwSHafw=;
- b=MBQOc6wVpi/w7eNvT8edhxL0nCFjpGjiBA3aQgZa33G1M11w7AW9k8em6J0kWaAk8D
- wHyWBWzYS2qhT3fl+UnJAgoUQeeExBI3z1jfiCYQNTTX+u09ptG5QDw5N1dmRO8NT4FC
- rQgFwdZ2nJzowWtasZQESO/u0poxaO+UG8QsNHmofVTdVPQgftN8uaN+yGipwUyE1hrv
- DCkMSLRT/XjCJAVzoC2c/3Q32lhYd0juyFjZnJl41r9aGdUKv4X4vmRVjkRg+2gM3vjT
- UbetoXtV0+VYFeibjZsGsO7GkTl0TUkXTrniQ/73RsKUp+2MB5K7tMyB+7En07Vxm+15
- wy8g==
-X-Gm-Message-State: AOJu0YxZXY3PEdxreIhMkftpRphv3VIwW6Bmq4Fv1CZ3gmY9MFN1zvmX
- 0UQDE77PsvgYjdBo59AfeCaWSc1PSJPofJxKOc7lXLmmBYIPuLkGVfW+QU5+k5oLqp1m6w8wEEe
- 9iqwfi0Q7lV8h1zq7uZhw+hSXKsR4KhRC+S5OHe49dkCyP1rA93xcrbKv+XWuVCzitd09g283vt
- 4eNnOIYi3wim8+yBc4Tcr/Mzfx+P4d35CfI+uF
-X-Gm-Gg: ASbGncvyNfWoT490/pJhR75nUBVxZuy/ERKxLksqw4J8hMYeyLWS75vJVfb+eUSI/5a
- qQjF4gczV8X9IkcV8Yxuki7U7Aek9zNmgfiWMQp64fY8HU8VZ9JBWULpGFmU8Tofh/VYUsi2Gwr
- U4GCICP2nnLw6sF3Iou8usOrRR2exjZa21Cji5lgXv5yHPi9vfboI8hKCIL9CCmC8aP8jIOZThu
- eu78VBakfag22JcHjkGGK9j+F2ctDiuUGrMd20Pz3f3zb7RaWcKogECrGhqx/iYI2boTD0GsFN0
- V+eBdm8hK+y81DA=
-X-Received: by 2002:a05:6000:3113:b0:390:f9d0:5e3 with SMTP id
- ffacd0b85a97d-3a099ad1aa7mr10556841f8f.1.1746435896897; 
- Mon, 05 May 2025 02:04:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHoTVyw8OSZzdXGEOBTSx3zPlsaB4qmHKSedrUa2N0vO7aivae0TFHtWZww5UkTGV9cxyFYyA==
-X-Received: by 2002:a05:6000:3113:b0:390:f9d0:5e3 with SMTP id
- ffacd0b85a97d-3a099ad1aa7mr10556810f8f.1.1746435896554; 
- Mon, 05 May 2025 02:04:56 -0700 (PDT)
+ bh=Ya2k66L69MguUJ7e/92cimrey+KKi+WpqMAX7zuo+gA=;
+ b=vHZiQZzVrpcWiKFUIA8G00Degy3xSxOBxGE31ZRrUF6wyT2Kd4RI2wS2xE+x0ytuow
+ JNRQc8ekS0RCk0qiBJAVQEICwOP63HKaRYUlEK7O4/6SJjSFFz8/2fOwTDRblc/4I1Uj
+ UyY/HzGJxdvwiMWL8AWrrqxERuM2ZLJKn5JgtSTOaHGZPZdYe6QZLepFGizKomiXjUN0
+ VAYDCa2uAAd4Tg7Xmj/YEQBQuMNo164yqQsjBNeArp3WBvXzqLCaskM55ccTkkTCHCu1
+ C/4CW3g2HlP4juB9mTd71s9T6rl0AkqX7KVowHsl83lALMN6oUEXCfgPetdpidRV/UtZ
+ Hx8g==
+X-Gm-Message-State: AOJu0YzDbDLuYMy/7ZqBK0HzPoomseykqBRZdoKPbZI3pXWY+E2IG3gC
+ o4K5KdT5xbIPhncZmKvApH8xGwqAV7kHki7PZ+nDHVA1lYc7AQqXIWpZc/dKihJy/D+ikM7+9Eq
+ 66mfK1gM4SdJc7TKB8p1ONQrSnFYqNTfiqkQtBIJQT/T1qLh0rdQJQDnpAYuCick2YAHUu4bsta
+ +1EeElRnbfg80+f/upCgbJu6//OwN/WTswVqb0
+X-Gm-Gg: ASbGncv8/A7qcVG336nUkrfG72pb2Z8u96cH3TQoUXTqm+4Zsxte1ICIrcGZI25K8VP
+ Z9ABa+bG4wOr+hPUno7PAIQEwHot0liq5Bfnuii9/lxoSlLEcXxw3nFDS6VSjnoRxTlnre75f3c
+ sIIE549d2BpjJtcllACiKmBxkMKjf8yjTSohITLl+VE1uq0Eo14hhhqWr65/Rzvr96XsO8Bq7Ii
+ E/K9r5F2MJ6IsgGW3FWepNedIXnwZTvuYo3OhBhSuiUqntZYK7+gIERVLvnL/mh490Us1YV16a4
+ lUiJbPTFpYYSPDQ=
+X-Received: by 2002:a05:600c:3acd:b0:43b:c6a7:ac60 with SMTP id
+ 5b1f17b1804b1-441bb88c9f1mr92244435e9.10.1746435892018; 
+ Mon, 05 May 2025 02:04:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFVe8c/SXPKpUkmPyijE1jDB1zNxdbJ/AaUB37n6Rffwj3hvKuLJVKKEiaOAleaEtbv4n76JQ==
+X-Received: by 2002:a05:600c:3acd:b0:43b:c6a7:ac60 with SMTP id
+ 5b1f17b1804b1-441bb88c9f1mr92244075e9.10.1746435891520; 
+ Mon, 05 May 2025 02:04:51 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099b0ffcasm9765797f8f.74.2025.05.05.02.04.54
+ 5b1f17b1804b1-441b89d150fsm125522215e9.15.2025.05.05.02.04.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 May 2025 02:04:54 -0700 (PDT)
+ Mon, 05 May 2025 02:04:49 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: manos.pitsidianakis@linaro.org,
 	qemu-rust@nongnu.org
-Subject: [PATCH 07/11] rust: qom: fix TODO about zeroability of classes
-Date: Mon,  5 May 2025 11:04:32 +0200
-Message-ID: <20250505090438.24992-8-pbonzini@redhat.com>
+Subject: [PATCH 05/11] rust: qemu_api_macros: make pattern matching more
+ readable and efficient
+Date: Mon,  5 May 2025 11:04:30 +0200
+Message-ID: <20250505090438.24992-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250505090438.24992-1-pbonzini@redhat.com>
 References: <20250505090438.24992-1-pbonzini@redhat.com>
@@ -109,38 +110,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The proposed suggestion is not correct.  First it is not necessary for
-*all* classes to be Zeroable, only for Rust-defined ones; classes
-defined in C never implement ObjectImpl.
+"let ... else" is useful when visiting syntax trees; it avoids multiple
+levels of indentation and places the error close to the pattern.
 
-Second, the parent class field need not be Zeroable.  For example,
-ChardevClass's chr_write and chr_be_event fields cannot be NULL,
-therefore ChardevClass cannot be Zeroable.  However, char_class_init()
-initializes them, therefore ChardevClass could be subclassed by Rust code.
+While at it, use "ref" to avoid moving the syntax tree objects.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/qom.rs | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ rust/qemu-api-macros/src/lib.rs | 84 +++++++++++++++------------------
+ 1 file changed, 37 insertions(+), 47 deletions(-)
 
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index 6929e4d33ae..52e3a1ec981 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -534,9 +534,10 @@ pub trait ObjectImpl: ObjectType + IsA<Object> {
-     /// While `klass`'s parent class is initialized on entry, the other fields
-     /// are all zero; it is therefore assumed that all fields in `T` can be
-     /// zeroed, otherwise it would not be possible to provide the class as a
--    /// `&mut T`.  TODO: add a bound of [`Zeroable`](crate::zeroable::Zeroable)
--    /// to T; this is more easily done once Zeroable does not require a manual
--    /// implementation (Rust 1.75.0).
-+    /// `&mut T`.  TODO: it may be possible to add an unsafe trait that checks
-+    /// that all fields *after the parent class* (but not the parent class
-+    /// itself) are Zeroable.  This unsafe trait can be added via a derive
-+    /// macro.
-     const CLASS_INIT: fn(&mut Self::Class);
+diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
+index eda0d46d122..0bffd2691b4 100644
+--- a/rust/qemu-api-macros/src/lib.rs
++++ b/rust/qemu-api-macros/src/lib.rs
+@@ -16,50 +16,41 @@ fn get_fields<'a>(
+     input: &'a DeriveInput,
+     msg: &str,
+ ) -> Result<&'a Punctuated<Field, Comma>, MacroError> {
+-    if let Data::Struct(s) = &input.data {
+-        if let Fields::Named(fs) = &s.fields {
+-            Ok(&fs.named)
+-        } else {
+-            Err(MacroError::Message(
+-                format!("Named fields required for {}", msg),
+-                input.ident.span(),
+-            ))
+-        }
+-    } else {
+-        Err(MacroError::Message(
++    let Data::Struct(ref s) = &input.data else {
++        return Err(MacroError::Message(
+             format!("Struct required for {}", msg),
+             input.ident.span(),
+-        ))
+-    }
++        ));
++    };
++    let Fields::Named(ref fs) = &s.fields else {
++        return Err(MacroError::Message(
++            format!("Named fields required for {}", msg),
++            input.ident.span(),
++        ));
++    };
++    Ok(&fs.named)
  }
  
+ fn get_unnamed_field<'a>(input: &'a DeriveInput, msg: &str) -> Result<&'a Field, MacroError> {
+-    if let Data::Struct(s) = &input.data {
+-        let unnamed = match &s.fields {
+-            Fields::Unnamed(FieldsUnnamed {
+-                unnamed: ref fields,
+-                ..
+-            }) => fields,
+-            _ => {
+-                return Err(MacroError::Message(
+-                    format!("Tuple struct required for {}", msg),
+-                    s.fields.span(),
+-                ))
+-            }
+-        };
+-        if unnamed.len() != 1 {
+-            return Err(MacroError::Message(
+-                format!("A single field is required for {}", msg),
+-                s.fields.span(),
+-            ));
+-        }
+-        Ok(&unnamed[0])
+-    } else {
+-        Err(MacroError::Message(
++    let Data::Struct(ref s) = &input.data else {
++        return Err(MacroError::Message(
+             format!("Struct required for {}", msg),
+             input.ident.span(),
+-        ))
++        ));
++    };
++    let Fields::Unnamed(FieldsUnnamed { ref unnamed, .. }) = &s.fields else {
++        return Err(MacroError::Message(
++            format!("Tuple struct required for {}", msg),
++            s.fields.span(),
++        ));
++    };
++    if unnamed.len() != 1 {
++        return Err(MacroError::Message(
++            format!("A single field is required for {}", msg),
++            s.fields.span(),
++        ));
+     }
++    Ok(&unnamed[0])
+ }
+ 
+ fn is_c_repr(input: &DeriveInput, msg: &str) -> Result<(), MacroError> {
+@@ -210,20 +201,19 @@ fn get_repr_uN(input: &DeriveInput, msg: &str) -> Result<Path, MacroError> {
+ }
+ 
+ fn get_variants(input: &DeriveInput) -> Result<&Punctuated<Variant, Comma>, MacroError> {
+-    if let Data::Enum(e) = &input.data {
+-        if let Some(v) = e.variants.iter().find(|v| v.fields != Fields::Unit) {
+-            return Err(MacroError::Message(
+-                "Cannot derive TryInto for enum with non-unit variants.".to_string(),
+-                v.fields.span(),
+-            ));
+-        }
+-        Ok(&e.variants)
+-    } else {
+-        Err(MacroError::Message(
++    let Data::Enum(ref e) = &input.data else {
++        return Err(MacroError::Message(
+             "Cannot derive TryInto for union or struct.".to_string(),
+             input.ident.span(),
+-        ))
++        ));
++    };
++    if let Some(v) = e.variants.iter().find(|v| v.fields != Fields::Unit) {
++        return Err(MacroError::Message(
++            "Cannot derive TryInto for enum with non-unit variants.".to_string(),
++            v.fields.span(),
++        ));
+     }
++    Ok(&e.variants)
+ }
+ 
+ #[rustfmt::skip::macros(quote)]
 -- 
 2.49.0
 
