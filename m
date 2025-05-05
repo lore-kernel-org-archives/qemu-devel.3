@@ -4,114 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C24CBC3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:55:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B251C3ABB6
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBrat-0006hK-89; Mon, 05 May 2025 04:54:35 -0400
+	id 1uBrca-0007YE-Au; Mon, 05 May 2025 04:56:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1uBraq-0006gJ-Hz; Mon, 05 May 2025 04:54:32 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1uBrcU-0007VI-7T
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:56:17 -0400
+Received: from internet2.beckhoff.com ([194.25.186.210])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1uBrao-00041u-MR; Mon, 05 May 2025 04:54:32 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 544L3IVf029483;
- Mon, 5 May 2025 08:54:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=ro6hK9
- NCty/JFCBmbBxr6KjDirMh4JB4yDH2q6H299o=; b=LPTVPbjc9JsmvxK4HsOCst
- K7pJPPvkb4kkLsu+rbte8gprHnGCofVFS7B33q7LIOPfiX6Z500CMALTYHxMZHaF
- ELVq0g5Fy/vAwbhd0qDJTs1y6NWI5jIeBJ2KI/ob9Hvy8aA0NvyDVP8D+9icSOYh
- BkbKsJfRBu4R0HLXz3h9/aIkUdR6Q86EJuBZe8s5s73jaE2Ctug56CENh/EoTE8V
- WlO04y5c+oMdDaj6/J4ZY7f3SxLtLNiiXDjKIbi8pu6FJc6PQbkQOzxCBngNdW8y
- CRn/6jF22i8UkVYQDZhf4stX5AoYLoe3+o4n341xrMLbGe1X68HJOnT3sA64AJ8A
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46eftkj2gd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 May 2025 08:54:28 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5455LKiU013765;
- Mon, 5 May 2025 08:54:27 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 46e06252xv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 May 2025 08:54:27 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5458sQ1226018440
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 5 May 2025 08:54:26 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E5DBC5805C;
- Mon,  5 May 2025 08:54:25 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 50B4158064;
- Mon,  5 May 2025 08:54:25 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  5 May 2025 08:54:25 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1uBrcR-0004Mh-AY
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:56:13 -0400
+DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022e; 
+ t=1746435369; bh=8BzuENbKShH3AHbcavHN++ZSC7NBz5ZnJh4xW1NaCOI=; h=
+ Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
+ a=ed25519-sha256; b=
+ n9FObu3hr3BHj2f3CnFceXDHwMuK1XZImMvMBXPPTxVf5FVGoPLfJb2xbnCC/QPthn8/yNUp5jKIKSxmEIXNAA==
+DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022r; 
+ t=1746435369; bh=8BzuENbKShH3AHbcavHN++ZSC7NBz5ZnJh4xW1NaCOI=; h=
+ Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
+ a=rsa-sha256; b=
+ WKqKGGayVN7E41DY7sxojDIpXUu2lmvYWaJj5h4AIltO2I8vk31ZlvUcKSyXCohwAkFV0ae2Nd34rkfN3W9jE67f+Cpxyj3+O/UhKO+uYXJ1hA0mvO6AUTG04xutsEns2BDnYwQAzBZDMcAAjKurzC7eZje0fh/236aktQP0eQJE5fpdww5VFwSLpr+aX2dPumTkykrsrxatXQCBSh55SqIjddqEc/5ZQB94zGYttAwyC7vm/sLse1ED/VDSCUk5brsqXk0+02uW51pZIOBmHo/UwOCGC/bOAi28nnnWZ7rvrcTjHn5jVeJP7xTtYV4GCJDJj994B/Z6BD3zyPvtOQ==
+Received: from 172.17.6.17 by INTERNET2.beckhoff.com
+ (TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384); Mon, 05 May 2025 08:56:08 GMT
+Received: from ex10.beckhoff.com (172.17.2.111) by ex09.beckhoff.com
+ (172.17.6.17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 5 May
+ 2025 10:56:07 +0200
+Received: from ex10.beckhoff.com ([fe80::3762:2101:fb4e:8ffa]) by
+ ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b%12]) with mapi id
+ 15.02.1748.010; Mon, 5 May 2025 10:56:07 +0200
+From: =?utf-8?B?Q29ydmluIEvDtmhuZQ==?= <C.Koehne@beckhoff.com>
+To: "tomitamoeko@gmail.com" <tomitamoeko@gmail.com>, "clg@redhat.com"
+ <clg@redhat.com>, "alex.williamson@redhat.com" <alex.williamson@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 8/9] vfio/igd: Only emulate GGC register when x-igd-gms is
+ set
+Thread-Topic: [PATCH 8/9] vfio/igd: Only emulate GGC register when x-igd-gms
+ is set
+Thread-Index: AQHbuFgfypfvonHOrUuwJtuFtfUFZrPDpNqA
+Date: Mon, 5 May 2025 08:56:07 +0000
+Message-ID: <014ada7ee85d82257bdc8fd9cce5818b66fcb54c.camel@beckhoff.com>
+References: <20250428161004.35613-1-tomitamoeko@gmail.com>
+ <20250428161004.35613-9-tomitamoeko@gmail.com>
+In-Reply-To: <20250428161004.35613-9-tomitamoeko@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.17.62.149]
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="=-jOIBVtBU1P7x6M4aYnYL"
 MIME-Version: 1.0
-Date: Mon, 05 May 2025 10:54:24 +0200
-From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>, Thomas Huth
- <thuth@redhat.com>, Daniel Berrange <berrange@redhat.com>, qemu-devel
- mailing list <qemu-devel@nongnu.org>, Hendrik Brueckner
- <brueckner@linux.ibm.com>, "<Shalini Chellathurai Saroja"
- <shalini@linux.ibm.com>
-Subject: Re: [PATCH v4 4/4] hw/s390x: compat handling for backward migration
-In-Reply-To: <cabf1f945a3072e3eada75ceae828bd346855e9d.camel@linux.ibm.com>
-References: <20250410150934.1331433-1-shalini@linux.ibm.com>
- <20250410150934.1331433-5-shalini@linux.ibm.com>
- <cabf1f945a3072e3eada75ceae828bd346855e9d.camel@linux.ibm.com>
-Message-ID: <7390ada124fe80862e7661672c75fda4@linux.ibm.com>
-X-Sender: shalini@linux.ibm.com
-Organization: IBM Deutschland Research & Development GmbH
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDA4MSBTYWx0ZWRfX9otXi8UvdKlS
- sF+Ysysyf34H5YJ51mJK1oWG9U7keDYSnULpGCWOM80XqqABk4cFBWr1I/eVgsVtzuPbjCBdiq4
- gKkYTi28PxKhpQpTehGtz7ySf8qSOjlVCIo3mI8zE8aG5L71k7NHZXkwOPKTpkDD2p1mqarEXFb
- KNbmbKgFtIngrz7F1avhPQ5Q/La9/ntjoXyDozaBpIItQQVp3Fr3lgPc9RrFsmExfOc6w5OOPhX
- aK3CmAUwTPMNmycO4DDJrJhzeNWO7zliSnG0hh7gnXBmHhhtisCbxg5BdKhdBrkPNZbFkYQU8TV
- r30So4pBgaWGh9mQIzJAuCASe+XdKNcm+I9N88kV8zGpPd7OydMPsCyzZqO6MYKh+BSZLhUoADQ
- jw/DYZT65o0Z/U65WeZle6N/4TsIb1K9F4hubsOI2Gd9+luT3eoLmAcsP2d1oDy5/d7lxEN1
-X-Proofpoint-GUID: NK-B6oE-rOziyyBNIv-aSPITAeIr8tvZ
-X-Authority-Analysis: v=2.4 cv=Q7vS452a c=1 sm=1 tr=0 ts=68187cc4 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=bWfykSnRqgQD1k4gbUEA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: NK-B6oE-rOziyyBNIv-aSPITAeIr8tvZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-05_04,2025-04-30_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- malwarescore=0 phishscore=0 bulkscore=0 spamscore=0 impostorscore=0
- suspectscore=0 mlxscore=0 mlxlogscore=999 clxscore=1015 adultscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505050081
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=shalini@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=194.25.186.210;
+ envelope-from=C.Koehne@beckhoff.com; helo=INTERNET2.beckhoff.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,114 +86,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-04-28 14:05, Nina Schoetterl-Glausch wrote:
-> On Thu, 2025-04-10 at 17:09 +0200, Shalini Chellathurai Saroja wrote:
->> Add Control-Program Identification (CPI) device to QOM only when the 
->> virtual
->> machine supports CPI. CPI is supported from "s390-ccw-virtio-10.0" 
->> machine
->> and higher.
->> 
->> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
->> ---
->>  hw/s390x/s390-virtio-ccw.c         | 10 +++++++++-
->>  include/hw/s390x/s390-virtio-ccw.h |  1 +
->>  2 files changed, 10 insertions(+), 1 deletion(-)
->> 
->> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
->> index 7f28cbd1de..81832ee638 100644
->> --- a/hw/s390x/s390-virtio-ccw.c
->> +++ b/hw/s390x/s390-virtio-ccw.c
->> @@ -274,6 +274,7 @@ static void s390_create_sclpcpi(SCLPDevice *sclp)
->>  static void ccw_init(MachineState *machine)
->>  {
->>      MachineClass *mc = MACHINE_GET_CLASS(machine);
->> +    S390CcwMachineClass *s390mc = S390_CCW_MACHINE_CLASS(mc);
->>      S390CcwMachineState *ms = S390_CCW_MACHINE(machine);
->>      int ret;
->>      VirtualCssBus *css_bus;
->> @@ -336,7 +337,10 @@ static void ccw_init(MachineState *machine)
->>      s390_init_tod();
->> 
->>      /* init SCLP event Control-Program Identification */
->> -    s390_create_sclpcpi(ms->sclp);
->> +    if (s390mc->use_cpi) {
->> +        s390_create_sclpcpi(ms->sclp);
->> +    }
-> 
-> Fixing this in a separate commit could be bad for bisecting.
+--=-jOIBVtBU1P7x6M4aYnYL
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-Ok.
+T24gVHVlLCAyMDI1LTA0LTI5IGF0IDAwOjEwICswODAwLCBUb21pdGEgTW9la28gd3JvdGU6Cj4g
+77u/Q0FVVElPTjogRXh0ZXJuYWwgRW1haWwhIQo+IHgtaWdkLWdtcyBpcyB1c2VkIGZvciBvdmVy
+cmlkaW5nIERTTSByZWdpb24gc2l6ZSBpbiBHR0MgcmVnaXN0ZXIgaW4KPiBib3RoIGNvbmZpZyBz
+cGFjZSBhbmQgTU1JTyBCQVIwLCBieSBkZWZhdWx0IGhvc3QgdmFsdWUgaXMgdXNlZC4KPiBUaGVy
+ZSBpcyBubyBuZWVkIHRvIGVtdWxhdGUgaXQgaW4gZGVmYXVsdCBjYXNlLgo+IAo+IFNpZ25lZC1v
+ZmYtYnk6IFRvbWl0YSBNb2VrbyA8dG9taXRhbW9la29AZ21haWwuY29tPgo+IC0tLQo+IMKgaHcv
+dmZpby9pZ2QuYyB8IDQ5ICsrKysrKysrKysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0KPiDCoDEgZmlsZSBjaGFuZ2VkLCAyNiBpbnNlcnRpb25zKCspLCAyMyBkZWxldGlv
+bnMoLSkKPiAKPiBkaWZmIC0tZ2l0IGEvaHcvdmZpby9pZ2QuYyBiL2h3L3ZmaW8vaWdkLmMKPiBp
+bmRleCA3ZjI4OWE2MmEzLi41ZDEyZjc1M2FiIDEwMDY0NAo+IC0tLSBhL2h3L3ZmaW8vaWdkLmMK
+PiArKysgYi9ody92ZmlvL2lnZC5jCj4gQEAgLTQ3NywyMiArNDc3LDI0IEBAIHZvaWQgdmZpb19w
+cm9iZV9pZ2RfYmFyMF9xdWlyayhWRklPUENJRGV2aWNlICp2ZGV2LCBpbnQKPiBucikKPiDCoMKg
+wqDCoMKgwqDCoMKgIHJldHVybjsKPiDCoMKgwqDCoCB9Cj4gwqAKPiAtwqDCoMKgIGdnY19xdWly
+ayA9IHZmaW9fcXVpcmtfYWxsb2MoMSk7Cj4gLcKgwqDCoCBnZ2NfbWlycm9yID0gZ2djX3F1aXJr
+LT5kYXRhID0gZ19tYWxsb2MwKHNpemVvZigqZ2djX21pcnJvcikpOwo+IC3CoMKgwqAgZ2djX21p
+cnJvci0+bWVtID0gZ2djX3F1aXJrLT5tZW07Cj4gLcKgwqDCoCBnZ2NfbWlycm9yLT52ZGV2ID0g
+dmRldjsKPiAtwqDCoMKgIGdnY19taXJyb3ItPmJhciA9IG5yOwo+IC3CoMKgwqAgZ2djX21pcnJv
+ci0+b2Zmc2V0ID0gSUdEX0dHQ19NTUlPX09GRlNFVDsKPiAtwqDCoMKgIGdnY19taXJyb3ItPmNv
+bmZpZ19vZmZzZXQgPSBJR0RfR01DSDsKPiAtCj4gLcKgwqDCoCBtZW1vcnlfcmVnaW9uX2luaXRf
+aW8oZ2djX21pcnJvci0+bWVtLCBPQkpFQ1QodmRldiksCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICZ2ZmlvX2dlbmVyaWNfbWlycm9yX3F1aXJr
+LCBnZ2NfbWlycm9yLAo+IC3CoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCAidmZpby1pZ2QtZ2djLXF1aXJrIiwgMik7Cj4gLcKgwqDCoCBtZW1vcnlfcmVn
+aW9uX2FkZF9zdWJyZWdpb25fb3ZlcmxhcCh2ZGV2LT5iYXJzW25yXS5yZWdpb24ubWVtLAo+IC3C
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAgZ2djX21pcnJvci0+b2Zmc2V0LCBnZ2NfbWlycm9yLT5tZW0s
+Cj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAxKTsKPiArwqDCoMKgIGlmICh2ZGV2LT5pZ2RfZ21z
+KSB7Cj4gK8KgwqDCoMKgwqDCoMKgIGdnY19xdWlyayA9IHZmaW9fcXVpcmtfYWxsb2MoMSk7Cj4g
+K8KgwqDCoMKgwqDCoMKgIGdnY19taXJyb3IgPSBnZ2NfcXVpcmstPmRhdGEgPSBnX21hbGxvYzAo
+c2l6ZW9mKCpnZ2NfbWlycm9yKSk7Cj4gK8KgwqDCoMKgwqDCoMKgIGdnY19taXJyb3ItPm1lbSA9
+IGdnY19xdWlyay0+bWVtOwo+ICvCoMKgwqDCoMKgwqDCoCBnZ2NfbWlycm9yLT52ZGV2ID0gdmRl
+djsKPiArwqDCoMKgwqDCoMKgwqAgZ2djX21pcnJvci0+YmFyID0gbnI7Cj4gK8KgwqDCoMKgwqDC
+oMKgIGdnY19taXJyb3ItPm9mZnNldCA9IElHRF9HR0NfTU1JT19PRkZTRVQ7Cj4gK8KgwqDCoMKg
+wqDCoMKgIGdnY19taXJyb3ItPmNvbmZpZ19vZmZzZXQgPSBJR0RfR01DSDsKPiDCoAo+IC3CoMKg
+wqAgUUxJU1RfSU5TRVJUX0hFQUQoJnZkZXYtPmJhcnNbbnJdLnF1aXJrcywgZ2djX3F1aXJrLCBu
+ZXh0KTsKPiArwqDCoMKgwqDCoMKgwqAgbWVtb3J5X3JlZ2lvbl9pbml0X2lvKGdnY19taXJyb3It
+Pm1lbSwgT0JKRUNUKHZkZXYpLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICZ2ZmlvX2dlbmVyaWNfbWlycm9yX3F1aXJrLCBnZ2Nf
+bWlycm9yLAo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgICJ2ZmlvLWlnZC1nZ2MtcXVpcmsiLCAyKTsKPiArwqDCoMKgwqDCoMKgwqAg
+bWVtb3J5X3JlZ2lvbl9hZGRfc3VicmVnaW9uX292ZXJsYXAodmRldi0+YmFyc1tucl0ucmVnaW9u
+Lm1lbSwKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgZ2djX21pcnJvci0+b2Zmc2V0
+LCBnZ2NfbWlycm9yLQo+ID5tZW0sCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIDEp
+Owo+ICsKPiArwqDCoMKgwqDCoMKgwqAgUUxJU1RfSU5TRVJUX0hFQUQoJnZkZXYtPmJhcnNbbnJd
+LnF1aXJrcywgZ2djX3F1aXJrLCBuZXh0KTsKPiArwqDCoMKgIH0KPiDCoAo+IMKgwqDCoMKgIGJk
+c21fcXVpcmsgPSB2ZmlvX3F1aXJrX2FsbG9jKDEpOwo+IMKgwqDCoMKgIGJkc21fbWlycm9yID0g
+YmRzbV9xdWlyay0+ZGF0YSA9IGdfbWFsbG9jMChzaXplb2YoKmJkc21fbWlycm9yKSk7Cj4gQEAg
+LTYzMSw5ICs2MzMsMTUgQEAgc3RhdGljIGJvb2wgdmZpb19wY2lfaWdkX2NvbmZpZ19xdWlyayhW
+RklPUENJRGV2aWNlCj4gKnZkZXYsIEVycm9yICoqZXJycCkKPiDCoMKgwqDCoMKgICogMzJNaUIu
+IFRoaXMgb3B0aW9uIHNob3VsZCBvbmx5IGJlIHVzZWQgd2hlbiB0aGUgZGVzaXJlZCBzaXplIGNh
+bm5vdCBiZQo+IMKgwqDCoMKgwqAgKiBzZXQgZnJvbSBEVk1UIFByZS1BbGxvY2F0ZWQgb3B0aW9u
+IGluIGhvc3QgQklPUy4KPiDCoMKgwqDCoMKgICovCj4gLcKgwqDCoCBpZiAodmRldi0+aWdkX2dt
+cyAmJgo+IC3CoMKgwqDCoMKgwqDCoCAhdmZpb19wY2lfaWdkX292ZXJyaWRlX2dtcyhnZW4sIHZk
+ZXYtPmlnZF9nbXMsICZnbWNoKSkgewo+IC3CoMKgwqDCoMKgwqDCoCByZXR1cm4gZmFsc2U7Cj4g
+K8KgwqDCoCBpZiAodmRldi0+aWdkX2dtcykgewo+ICvCoMKgwqDCoMKgwqDCoCBpZiAodmZpb19w
+Y2lfaWdkX292ZXJyaWRlX2dtcyhnZW4sIHZkZXYtPmlnZF9nbXMsICZnbWNoKSkgewo+ICvCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgIC8qIEdNQ0ggaXMgcmVhZC1vbmx5LCBlbXVsYXRlZCAqLwo+ICvC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHBjaV9zZXRfbG9uZyh2ZGV2LT5wZGV2LmNvbmZpZyArIElH
+RF9HTUNILCBnbWNoKTsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBwY2lfc2V0X2xvbmcodmRl
+di0+cGRldi53bWFzayArIElHRF9HTUNILCAwKTsKPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBw
+Y2lfc2V0X2xvbmcodmRldi0+ZW11bGF0ZWRfY29uZmlnX2JpdHMgKyBJR0RfR01DSCwgfjApOwo+
+ICvCoMKgwqDCoMKgwqDCoCB9IGVsc2Ugewo+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHJldHVy
+biBmYWxzZTsKPiArwqDCoMKgwqDCoMKgwqAgfQoKbml0IHN1Z2dlc3Rpb246IFlvdSBjb3VsZCBh
+dm9pZCBhIGxldmVsIG9mIGluZGVudGF0aW9uIGJ5IHVzaW5nIHRoaXMgc3R5bGU6CgppZiAoIXZm
+aW9fcGNpX2lnZF9vdmVycmlkZV9nbXMoLi4uKSkgewogICAgcmV0dXJuIGZhbHNlOwp9CgovKiBH
+TUNIIGlzIHJlYWQtb25seSwgZW11bGF0ZWQgKi8KcGNpX3NldF9sb25nKC4uLikKCj4gwqDCoMKg
+wqAgfQo+IMKgCj4gwqDCoMKgwqAgZ21zX3NpemUgPSBpZ2Rfc3RvbGVuX21lbW9yeV9zaXplKGdl
+biwgZ21jaCk7Cj4gQEAgLTY1MSwxMSArNjU5LDYgQEAgc3RhdGljIGJvb2wgdmZpb19wY2lfaWdk
+X2NvbmZpZ19xdWlyayhWRklPUENJRGV2aWNlCj4gKnZkZXYsIEVycm9yICoqZXJycCkKPiDCoMKg
+wqDCoCBmd19jZmdfYWRkX2ZpbGUoZndfY2ZnX2ZpbmQoKSwgImV0Yy9pZ2QtYmRzbS1zaXplIiwK
+PiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGJkc21fc2l6ZSwgc2l6
+ZW9mKCpiZHNtX3NpemUpKTsKPiDCoAo+IC3CoMKgwqAgLyogR01DSCBpcyByZWFkLW9ubHksIGVt
+dWxhdGVkICovCj4gLcKgwqDCoCBwY2lfc2V0X2xvbmcodmRldi0+cGRldi5jb25maWcgKyBJR0Rf
+R01DSCwgZ21jaCk7Cj4gLcKgwqDCoCBwY2lfc2V0X2xvbmcodmRldi0+cGRldi53bWFzayArIElH
+RF9HTUNILCAwKTsKPiAtwqDCoMKgIHBjaV9zZXRfbG9uZyh2ZGV2LT5lbXVsYXRlZF9jb25maWdf
+Yml0cyArIElHRF9HTUNILCB+MCk7Cj4gLQo+IMKgwqDCoMKgIC8qIEJEU00gaXMgcmVhZC13cml0
+ZSwgZW11bGF0ZWQuwqAgVGhlIEJJT1MgbmVlZHMgdG8gYmUgYWJsZSB0byB3cml0ZSBpdAo+ICov
+Cj4gwqDCoMKgwqAgaWYgKGdlbiA8IDExKSB7Cj4gwqDCoMKgwqDCoMKgwqDCoCBwY2lfc2V0X2xv
+bmcodmRldi0+cGRldi5jb25maWcgKyBJR0RfQkRTTSwgMCk7CgpSZXZpZXdlZC1ieTogQ29ydmlu
+IEvDtmhuZSA8Yy5rb2VobmVAYmVja2hvZmYuY29tPgoKCi0tIApLaW5kIHJlZ2FyZHMsCkNvcnZp
+bgo=
 
-> You introduce use_cpi in an earlier commit set to false and
-> then flipping it in the migration patch for new machines.
-> This way there is no broken intermediate state.
-> 
-> I would also squash the compat migration changes into the previous
-> patch.
-> 
 
-Hello Nina,
+--=-jOIBVtBU1P7x6M4aYnYL
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
-If use_cpi is set to false in patch 1, then the sclpcpi device will not 
-be instantiated even for new machines at that point. The sclpcpi device 
-will only be instantiated when the use_cpi is set to true in the 
-migration patch.
+-----BEGIN PGP SIGNATURE-----
 
-I prefer to squash this entire patch to patch 1, then the sclpcpi device 
-will only be instantiated for new machines with the code in patch 1 
-itself and will not be dependent on the migration patch. I like this 
-approach as the logic to add sclpcpi device is complete in patch 1.
+iQIzBAABCAAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmgYfSUACgkQ2FTaVjFe
+AmoEYA/+PKJGSZOaXg3DRx+LuqZga8po78++na1YCdhjaFHqWv1cjzPAJ5nCJRTN
+2V6s4OW532FfrqtALqqAloC/6bvhPQYE4TdCr7wrqnNPPl50AZeSADf8t9dI5EQD
+Hd8ECZ0bpiNtJLutZImXht/ctkFUEk9LuGrWrdKAznx4qWiLGf1viEb3LUizuyxH
+0fPEKGGP9srqAZy4p142L6+YH48/7D9v+j3hQ/Q7YKxc1JczdAXAsAYbC1mK36V1
+xIRHmgUE97KvnExmyu5XCU3Uku8pQ/QEtG2zlgjFq5M6+2EsmmnlyPuS0zZW9AV2
+pn3AePlpoElec/WjMe6lm82ZvkQQ7k9xi1lMZEwV4nAkKqaYKu9QaQzHouVhqn7v
+pH2rgIGsYcwTwL9xZJD3OPJ50uSrWUIt/jIH0Dg6AEtyNT237Sa3E9T2GRM5zea/
+9v9PPvb+qMSb6gdTXg1lPNYL78GJJVo9G7I7eeQhXiYLgyHgkxfUUzfSnAV0ycQ7
+7KAUqjK7uiCJ2tVvubFueGGFH9x4pDL+XSPgs6HjxmOWeSsLY2p++dYUK3WFyB9z
+PVJVfKxaN1K/6AB0yO6RPMRqksTckFYSwdSTsJauM7UWVgcW7cj+qT43UWylEf+D
+hACubszG4Z8fdG1E1HF5hm+Na0E4ggC9RPAHLUlqO/V7fYR8OxA=
+=F1cY
+-----END PGP SIGNATURE-----
 
-What do you think?, thank you.
+--=-jOIBVtBU1P7x6M4aYnYL--
 
->>  }
->> 
->>  static void s390_cpu_plug(HotplugHandler *hotplug_dev,
->> @@ -827,6 +831,7 @@ static void ccw_machine_class_init(ObjectClass 
->> *oc, void *data)
->> 
->>      s390mc->hpage_1m_allowed = true;
->>      s390mc->max_threads = 1;
->> +    s390mc->use_cpi = true;
->>      mc->reset = s390_machine_reset;
->>      mc->block_default_type = IF_VIRTIO;
->>      mc->no_cdrom = 1;
->> @@ -955,6 +960,9 @@ static void 
->> ccw_machine_9_2_class_options(MachineClass *mc)
->>          { TYPE_S390_PCI_DEVICE, "relaxed-translation", "off", },
->>      };
->> 
->> +    S390CcwMachineClass *s390mc = S390_CCW_MACHINE_CLASS(mc);
->> +    s390mc->use_cpi = false;
->> +
->>      ccw_machine_10_0_class_options(mc);
->>      compat_props_add(mc->compat_props, hw_compat_9_2, 
->> hw_compat_9_2_len);
->>      compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
->> diff --git a/include/hw/s390x/s390-virtio-ccw.h 
->> b/include/hw/s390x/s390-virtio-ccw.h
->> index 686d9497d2..fc4112fbf5 100644
->> --- a/include/hw/s390x/s390-virtio-ccw.h
->> +++ b/include/hw/s390x/s390-virtio-ccw.h
->> @@ -55,6 +55,7 @@ struct S390CcwMachineClass {
->>      /*< public >*/
->>      bool hpage_1m_allowed;
->>      int max_threads;
->> +    bool use_cpi;
->>  };
->> 
->>  /* 1M huge page mappings allowed by the machine */
-
--- 
-Mit freundlichen Grüßen / Kind regards
-Shalini Chellathurai Saroja
-Software Developer
-Linux on IBM Z & KVM Development
-IBM Deutschland Research & Development GmbH
-Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
-Vorsitzender des Aufsichtsrats: Wolfgang Wendt
-Geschäftsführung: David Faller
-Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
-Stuttgart, HRB 243294
 
