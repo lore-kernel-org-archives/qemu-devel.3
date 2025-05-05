@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A2E1C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:51:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1EDC3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBrXN-0003RO-8A; Mon, 05 May 2025 04:50:57 -0400
+	id 1uBrY2-0004M4-AV; Mon, 05 May 2025 04:51:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1uBrXJ-0003Qz-CJ
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:50:53 -0400
-Received: from netsrv01.beckhoff.com ([62.159.14.10])
+ id 1uBrXy-0004HW-Tk
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:51:34 -0400
+Received: from internet2.beckhoff.com ([194.25.186.210])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1uBrXH-0003WO-D1
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:50:53 -0400
+ id 1uBrXw-0003a2-VO
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:51:34 -0400
 DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022e; 
- t=1746435048; bh=8ec+EroGjSwybhsy/4rYBy6Myiua0EtrMwLAliuiTg8=; h=
+ t=1746435091; bh=IyANnXf3ryRMXn2P8sC/u0FGSmkXpblCiW6k3SwfpDw=; h=
  Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
  a=ed25519-sha256; b=
- IEX6jYHc8xugBarvaR7L3kdTFz0mfK8HMLydfKLbtpyQYOnqKFoMAund/IXneEVlKV2E8uAdkENoVr5JbEWuCg==
+ qdwoEDh0S7j7QOvXjFqdUpxGby4CeTqTd0rmnNKHwKI44hZp8/QxiaoZme7Ad9NO6CHuj+Yi9aRgdKyThj5kCg==
 DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022r; 
- t=1746435048; bh=8ec+EroGjSwybhsy/4rYBy6Myiua0EtrMwLAliuiTg8=; h=
+ t=1746435091; bh=IyANnXf3ryRMXn2P8sC/u0FGSmkXpblCiW6k3SwfpDw=; h=
  Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
  a=rsa-sha256; b=
- ApRvovEhAsY36GchLeRpu+LOaQnKgkloz2DmeARr2LnwOWWGYqXlJmS0feu0FnnqW0L6kecsjRUN2PTsZ83xZ84tDNOnAbbd5KNZmcnF1HXvURx4yzeCHD0KW0HLtQB/DW4MfgbOHtBmupvpcm+Ph2jMXmSMW1cdaVAdAc9EnfL+84r+LiOaQaQ3ymLfgazKHgs8Wy9W9BYJC3ZdCDHmDD85n/++0Ywe/n8dAHa2d3RW/bORKOJbBXtw6jMhZR3tRj0YJCM9mGDth0HuLSpI8ZgimgbpyJX2qaj2PQCuQZwVyBhMSyHLDCl8cMLTsC59K2pn0Bo/QbOEuP6a85WtEw==
-Received: from 172.17.2.111 by netsrv01.beckhoff.com
- (TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384); Mon, 05 May 2025 08:50:48 GMT
-Received: from ex10.beckhoff.com (172.17.2.111) by ex10.beckhoff.com
- (172.17.2.111) with Microsoft SMTP Server (version=TLS1_2,
+ ovzn2b9+c2q+GRsFQoC2z8MMVMYZgX7N+YgZ/SuP/02Q2d7/knxIDJ9SoiQRZq6AmVviv69UahV0NBeR9BJ5GY9vpDn9wOG1fGkisjR+h9dwQ3+XXEMlmef/FHkYz6KnAh6uSYmJknMTD800Q3AUs0xaevpbcovDArv9pe9mLeiuE+cYpb31+I0CDCqTUExidxfnLOop0PxB/a74SMGa3R5/zWb17y2sAa8sTKjTN0BGAJOhQgwh51x0zw4iybOGyIIDSA5bI/a50cWK28AZ5k3prO3zvhBjAXP5mOctVSleLXmnLkzEzWFvYksG4fgAetIst+6wG5rko2ki1tVvoQ==
+Received: from 172.17.3.7 by INTERNET2.beckhoff.com
+ (TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384); Mon, 05 May 2025 08:51:31 GMT
+Received: from ex10.beckhoff.com (172.17.2.111) by ex14.beckhoff.com
+ (172.17.3.7) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 5 May
- 2025 10:50:47 +0200
+ 2025 10:51:08 +0200
 Received: from ex10.beckhoff.com ([fe80::3762:2101:fb4e:8ffa]) by
  ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b%12]) with mapi id
- 15.02.1748.010; Mon, 5 May 2025 10:50:47 +0200
+ 15.02.1748.010; Mon, 5 May 2025 10:51:08 +0200
 From: =?utf-8?B?Q29ydmluIEvDtmhuZQ==?= <C.Koehne@beckhoff.com>
 To: "tomitamoeko@gmail.com" <tomitamoeko@gmail.com>, "clg@redhat.com"
  <clg@redhat.com>, "alex.williamson@redhat.com" <alex.williamson@redhat.com>
 CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 4/9] vfio/igd: Check vendor and device ID on GVT-g mdev
-Thread-Topic: [PATCH 4/9] vfio/igd: Check vendor and device ID on GVT-g mdev
-Thread-Index: AQHbuFgVqZDxtLxvYUS+TKuxD7niRrPDo1yA
-Date: Mon, 5 May 2025 08:50:47 +0000
-Message-ID: <808c3c34c617b6202b5b077f3b3e24b604e29a76.camel@beckhoff.com>
+Subject: Re: [PATCH 5/9] vfio/igd: Check OpRegion support on GVT-g mdev
+Thread-Topic: [PATCH 5/9] vfio/igd: Check OpRegion support on GVT-g mdev
+Thread-Index: AQHbuFgWMMFgEbOUzUG5e5DneKZadLPDo3UA
+Date: Mon, 5 May 2025 08:51:08 +0000
+Message-ID: <cf0f9cebcf5b2997351d2963e72fdd9f5eafe2c5.camel@beckhoff.com>
 References: <20250428161004.35613-1-tomitamoeko@gmail.com>
- <20250428161004.35613-5-tomitamoeko@gmail.com>
-In-Reply-To: <20250428161004.35613-5-tomitamoeko@gmail.com>
+ <20250428161004.35613-6-tomitamoeko@gmail.com>
+In-Reply-To: <20250428161004.35613-6-tomitamoeko@gmail.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: yes
 X-MS-TNEF-Correlator: 
 x-originating-ip: [172.17.62.149]
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="=-EvtoZ1+iWYf2iTx7SEiH"
+ protocol="application/pgp-signature"; boundary="=-pjgyI/Suy9N/TXy3oapV"
 MIME-Version: 1.0
-Received-SPF: pass client-ip=62.159.14.10; envelope-from=C.Koehne@beckhoff.com;
- helo=netsrv01.beckhoff.com
+Received-SPF: pass client-ip=194.25.186.210;
+ envelope-from=C.Koehne@beckhoff.com; helo=INTERNET2.beckhoff.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -84,63 +84,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-EvtoZ1+iWYf2iTx7SEiH
+--=-pjgyI/Suy9N/TXy3oapV
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, 2025-04-29 at 00:09 +0800, Tomita Moeko wrote:
+On Tue, 2025-04-29 at 00:10 +0800, Tomita Moeko wrote:
 > =EF=BB=BFCAUTION: External Email!!
-> Check the vendor and device ID on GVT-g mdev to ensure it is a supported
-> device [1]. This extra check is required for automatically enabling
-> OpRegion access later.
+> The Intel GVT-g backend `kvmgt` always emulates OpRegion for vGPU,
+> make sure the OpRegion is present for enabling access to it
+> automatically later.
 >=20
-> Note that Cherryview and Gemini Lake are marked as supported here since
-> current code cannot distinguish them with other Gen8 and Gen9 devices.
-> Since mdev cannot be created on these devices, this has no functional
-> impact.
->=20
-> [1]
-> https://nospamproxywebp.beckhoff.com/enQsig/link?id=3DBAgAAAC7d6njJfw46ss=
-AAADF-nyovaDPsQJyKOV5T7sLGnzTfabj4BLcrjbmZT8baVh1nRPWc5X1Mlcgmchoiq4Ame7F9p=
-v8Dm3p32EVUqXHVZUZ4ydwKGK8058NOSzZdk88Xvq87l3akIni9zsivM8SufPB80Ps4QQhkcFR2=
-xjFsyp1doPFX7-vdSDEuv_KSFgq4SZ6UXxq6JDwaLRbsVEkIog7tW-TROEpexsHJm7QzPVbqSCu=
-oHky-Rb7fvkEimsF6AGSvCpAEejUDe78EDkE1k4RSw53IT6Ohg2
-> =C2=A0
+> Also, hotplugging GVT-g vGPU is now always disallowed regardless of
+> OpRegion to prevent potential issues. Intel has never claimed support
+> for GVT-g hotplugging.
 >=20
 > Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 > ---
-> =C2=A0hw/vfio/igd.c | 12 ++++++++++++
-> =C2=A01 file changed, 12 insertions(+)
+> =C2=A0hw/vfio/igd.c | 8 ++++++--
+> =C2=A01 file changed, 6 insertions(+), 2 deletions(-)
 >=20
 > diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index d6880cbff7..c6ecbefb35 100644
+> index c6ecbefb35..496d3df598 100644
 > --- a/hw/vfio/igd.c
 > +++ b/hw/vfio/igd.c
-> @@ -671,6 +671,18 @@ error:
-> =C2=A0static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDevice *vdev, Error =
-**errp)
-> =C2=A0{
-> =C2=A0=C2=A0=C2=A0=C2=A0 g_autofree struct vfio_region_info *opregion =3D=
- NULL;
-> +=C2=A0=C2=A0=C2=A0 int gen;
-> +
-> +=C2=A0=C2=A0=C2=A0 if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_I=
-D) ||
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !vfio_is_vga(vdev)) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return true;
-> +=C2=A0=C2=A0=C2=A0 }
-> +
-> +=C2=A0=C2=A0=C2=A0 /* FIXME: Cherryview is Gen8, but don't support GVT-g=
- */
-> +=C2=A0=C2=A0=C2=A0 gen =3D igd_gen(vdev);
-> +=C2=A0=C2=A0=C2=A0 if (gen !=3D 8 && gen !=3D 9) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return true;
-> +=C2=A0=C2=A0=C2=A0 }
+> @@ -684,9 +684,13 @@ static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDevic=
+e
+> *vdev, Error **errp)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return true;
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
 > =C2=A0
+> +=C2=A0=C2=A0=C2=A0 if (!vfio_pci_igd_opregion_detect(vdev, &opregion, er=
+rp)) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Should never reach here, K=
+VMGT always emulates OpRegion */
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
+> +=C2=A0=C2=A0=C2=A0 }
+> +
 > =C2=A0=C2=A0=C2=A0=C2=A0 if ((vdev->features & VFIO_FEATURE_ENABLE_IGD_OP=
 REGION) &&
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (!vfio_pci_igd_opregion_=
-detect(vdev, &opregion, errp) ||
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (!vfio_pci_igd_opregion_detec=
+t(vdev, &opregion, errp) ||
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !vfio_pci_igd_opregion_=
+init(vdev, opregion, errp))) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !vfio_pci_igd_opregion_init(v=
+dev, opregion, errp)) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0
 
 Reviewed-by: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
 
@@ -149,27 +139,27 @@ Reviewed-by: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
 Kind regards,
 Corvin
 
---=-EvtoZ1+iWYf2iTx7SEiH
+--=-pjgyI/Suy9N/TXy3oapV
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmgYe+UACgkQ2FTaVjFe
-Amo+Yw//TdYbwNw6latCjLZkXELBu+unsVHhTWZVIwYfOjSR6L/w3r6IR+UgUdti
-lOfLbJslU6+fsny+nAs5+eRSZabkF2tiit43iOxOlk0izdb6xg0PsUfceNUOH63J
-YzOlIlsWqDtxNAWeiAeFsX7TIs87T1zdSSr9SfB4M8VtZ2Ltxz2Bg33uEpRH/4Q+
-W9XiZCibCcycSu5K91mCdbDDYKEuAmU4K6T0SayakW/tMYsTlNDw7PQaOfFdKGtr
-iG0QUaoSwZ7BtES0fxoD/qz10FP3XDuAwRyt2iqs7enIyoY2kg5WZH2lnrl+o6oP
-By4OyTVe/iLWhsBHw49TU4E4aEohk2RN2RmjvTXySxZJxat8+M6DCgLCe+EawJpe
-LqTZFLToG/GFWSsJINfdiQShPzwbXH9p0qkBgFBbwEjEuh4kWBGmeTQk9ND7tPsg
-M4bLTMEKM7KreBXlZkeTphX1YLbkoXTLS6o4QlEbLET0ZTnq75VSCYWWWlCFSmsn
-QZFoB5F6H+7zr52O/ZROk9r8vE37OaZfXVANkAjNXZ4QkIYzBH6Kqlq21Q8QMGbp
-pagA4LNxlSeiyMsaEn5E9wUPaXx6/V78Z+qyDYntBkqrxq7qg/VWISxgfrnhSP5d
-d5p/8cSru4IHWT0LMY6SJ84N/1c2kysjdcCYJpXgRpPQeXCO8uE=
-=TSZu
+iQIzBAABCAAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmgYe/oACgkQ2FTaVjFe
+Ampg9g/6A33UR9VExH5rLDdXW6wBs3v2JvldN6t9AmdRCsT1JJNBPQlaJgl7cbIm
+Xt4HUe6TMvF6MiOhjtxvT9lAD4x3m0e6qcoAbEj5nj8H0TEBl53o6spuvN+uHX2i
+Y8f71HYZL+wJth/WgKoQfyu5tWCZywYNLhOJ5uZ9BgzF6PUmQLCdTupklI6lK4Vy
+buf9gNPIC5JfmUm5CBqUw103NujtmxiIgdGkLtqXhcyZDDd4sGoZUBK0rAfVOxW2
+CSl1CacK0nIP7oPnyXRVevWvZpExNGwxxg/HQ1fVx1jY53RUcD/vUJ/hR4dZxr6c
+JZD6rGtI/aqsGCfCwsJrQK7IeBdqdXcqOHaOly9pzxKqQKBOdQfnsfDz5ujGsMFb
+8+aBBuKROaQca4kdv9aBN81VCSBzhr39jWIHF00fYnUbolPUm11uvPEzOmg3jIY3
+HHWIZZWA0id4cNdt7wNkEo1mgDwxb5mpKcx27PK1DYcfPEEEz2JnW7LYBJGHn22I
+isG5bOi9Zcu3JyGgoRlqhCQl6uRX+SJ4BtQ+sV69Gq63HzhcHkZIzZuYhZfIg/3X
+wJUZr6fNFkSRcg73RUJcu+1GoFcsq7RTDJO+Oxw+2a+4gjWsrg/wLvb0l6oGzGn1
+p6BON4b81BjwNmfrX54Px/13p9Zn3PXKwvdqjjPwLrKPkredhDk=
+=KYWT
 -----END PGP SIGNATURE-----
 
---=-EvtoZ1+iWYf2iTx7SEiH--
+--=-pjgyI/Suy9N/TXy3oapV--
 
 
