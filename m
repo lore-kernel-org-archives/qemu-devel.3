@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C02CC3ABB9
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:06:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A55FC3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:07:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBrmC-0004rD-Ap; Mon, 05 May 2025 05:06:16 -0400
+	id 1uBrlQ-0003qS-Km; Mon, 05 May 2025 05:05:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uBrl0-0003Zc-OT
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:05:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uBrkq-0003Vy-Me
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:04:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uBrkw-0005lW-Rf
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:05:01 -0400
+ id 1uBrkk-0005j8-Ii
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:04:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746435897;
+ s=mimecast20190719; t=1746435885;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9uG+eMff4v/DO/91eYXSXdK5N45eASxvptJIXXsF3tI=;
- b=LaihZVYh0sp27qBBquXJ7hW7yEHcUih8DS4JF2yRX54Tq7Wn+N5K1gCJ250hwIsaNgWCPf
- xdQRqQ4PKWAbZaZVyTnYNCLxvtwMMnEJlOsURJHw+IeE+VHV1aqc0zMEO88hSbr6ApDQcF
- wudg9RCApaBu5lnI9xT0oS3lSzHHiyQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Mw4zjX331whPZydElb6cuU4EVi3NIpMKv0u+/LVyEAw=;
+ b=NNDoAIFzJYC+V1XWq1RIr6mJ9TRioKdrbQ44RdkjuRxfUWS/GbdcCBis+1C1zFbNJrVDsv
+ yDKz6GadDzKdMK0UHUWS6kANijz1r9pjh+ASjY02haQqAyKG/3evRcQuy/ndE2mYd65lm7
+ phaxTj6Gcm9OplxuY15AlQT6uqo/ElE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-657-XB73IaDLOyKKfNF8UU3NHg-1; Mon, 05 May 2025 05:04:56 -0400
-X-MC-Unique: XB73IaDLOyKKfNF8UU3NHg-1
-X-Mimecast-MFC-AGG-ID: XB73IaDLOyKKfNF8UU3NHg_1746435895
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43d734da1a3so18263405e9.0
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:04:56 -0700 (PDT)
+ us-mta-520--I69-UzWNmmT1_bwcVRxdw-1; Mon, 05 May 2025 05:04:44 -0400
+X-MC-Unique: -I69-UzWNmmT1_bwcVRxdw-1
+X-Mimecast-MFC-AGG-ID: -I69-UzWNmmT1_bwcVRxdw_1746435883
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3912fe32b08so1757502f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:04:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746435894; x=1747040694;
+ d=1e100.net; s=20230601; t=1746435882; x=1747040682;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9uG+eMff4v/DO/91eYXSXdK5N45eASxvptJIXXsF3tI=;
- b=Fpnusz7ZwH5rrDqSkHg4HFbVgPO//ncjKjtYO1ueCUQOJqkUWw/+CroWI15DsiATWW
- 6hMP6DqFL3Zgj5OXCjgANK1lKrF7adZvJ37X+Q+yCPWCESwFpX/xzJutItnc6AtmmmXq
- kz7UP9Zeo7DGWP03DqKkFB4Dpc1XfN24jvL4vQVe9lD5Hkcdvt+/647q7Q30gyKNHAiq
- V02PFzjoLVV/ewwbbK/0olcvdguFDq651PhMkBCO+y18e+vo3/pmwPEEOKiM73zm2dKY
- y/3QhthP4lPxB3AYFnFoaHqdgpwamBZc5gD5Lo1bFVaIhMXRg2j9Ri6aKbBS1fo6woeQ
- 13IA==
-X-Gm-Message-State: AOJu0YzBn7aNMc6m4Hp85mt6N5xh0IC4fmDrqyKrDGfkPQoptbAgjJql
- +b+PKH/DAy6SiVTDgoO/om3L2kUsYrC36zHgSSa6YuKkzqQrQNxgJq7z0ByJaYviiTYMbn9cqxe
- ZZcv6+w9j5gkFsh9xr81RknhjLkz2WEtB0WpZw1S66w1ZyFLfs1GVOMW1mOpPwPjvh47G/kobAc
- YxR7aSKSGmCy7Z2dQSsqTVvw3MWcT+DQrq9mCG
-X-Gm-Gg: ASbGncsre1NhDIHo9iNXd3juamyOAC6ImbC/5n0y35sTM8Glyw9s+vUPy3LITvbNL4i
- luLZqPPBrq2+dR60AloSO1X8HLIPsrtEDCyvfZsZMjtJXuxA15KUhiDwrd+CtNdePQa7QRFiq0J
- BfCtgAXrht4KVjyVjFbt9Nj6/hBNepIfPI8N6DLasSvF3g5d8kSrjOKiTsPb7EUTfuncFwmnzXx
- iIaUGRxI/1gffb32J80SVW+Z+HAX6EfClc7DTw2ValYvVxmTwbZkpPTL1q3j70sAsWQVUtVT2UB
- Srtf9o+otNfvr20=
-X-Received: by 2002:a05:600c:4e13:b0:440:54ef:dfdc with SMTP id
- 5b1f17b1804b1-441c48bdf70mr52568775e9.8.1746435894383; 
- Mon, 05 May 2025 02:04:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHmmV4LvsQ2cKHtXkGBI0WXsvIvJNS1zQFrMpCWRXBfVKswm8fM86s/Mj7lnZfoCC8EqHzlBw==
-X-Received: by 2002:a05:600c:4e13:b0:440:54ef:dfdc with SMTP id
- 5b1f17b1804b1-441c48bdf70mr52568405e9.8.1746435893850; 
- Mon, 05 May 2025 02:04:53 -0700 (PDT)
+ bh=Mw4zjX331whPZydElb6cuU4EVi3NIpMKv0u+/LVyEAw=;
+ b=lJRJAHvgY2xdwZH6A+63nK8z+s9l8d6vg2j7X1gvfN/eM7Ou5STqsx1zFN4fwPUwsN
+ O0SF9qUlG+E1KYR8siH09evkQd8utqs3Bh87tQ5woENBZ2gkXTIRUdfagiVhyzCBDjAP
+ IjmYjpdhC3d0/1OL2aMUEl8YoMS6C5pefKYrKuHQIwEhZVXo9+yLeoy07aSGUCQnzCLM
+ NMu20jll+yuCXQfserK1TgHugycoMUZ/Gsn0zmnOTCd7C9w36HH+R9ADgCVg5dNiV3B0
+ s1fGNIH3Krq4XMCs8zIRne3d+BpKUdchf1BYfH3Sjg1h7/iy6bFO2+McBcHKQ39msCU+
+ z0Ig==
+X-Gm-Message-State: AOJu0Yw2huiTJ/2OjSakLmwtuj+UJ9YX43BDkRk9FnmWLhP2+UiP0z3g
+ xi2DE30J1iILqdB5wRbAwmPjJkM4+mEGtzhO4Lv8KyEfvmtYSCU0TKywziFFIiUt0hmrv8FILVi
+ 459Ma7DduEKVZpBMXB2F0jGI3fIkMnm0rTdKOAN2ZQsL3+mOz2VfZ8vdyUcXHgfrb8201JuIJzY
+ hQwR+1C+X+YRHL/6TIf3T8KxGTgbD+EL0MxNKd
+X-Gm-Gg: ASbGncst9LY/zWMlzNs6cLwM9fFOBR+2o3NpffXT4EEOkXlweKdrZt/JY4KXtu55StF
+ iA+iWtQB7IzFv0cHDJVyhEYHuJVzaWV+0ejLxwKTXP1fRBUjy3xOuKyoImtqP435zJ0azTi+fqE
+ 9sUHPPUWK6aZ12fUzgJ8kQpctc8t9+om7AonDWrCkY8rkKj9g9CvA/gpcAJgmh6eTPVcRpzlF0n
+ ihZOBbALMttmqdOxMMNuL1B+5Umu75gZFYz3er1STMmRPvrWZ72P3FpAfTqGgPoSbZhDB92XmQL
+ LHMt0ZKq30jb0C0=
+X-Received: by 2002:a05:6000:2503:b0:3a0:6c62:8169 with SMTP id
+ ffacd0b85a97d-3a09ceb8cb3mr5636886f8f.25.1746435882526; 
+ Mon, 05 May 2025 02:04:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEd/eVO2/BC8UeW5ZbWiCh3HKSqvPohpKpqLahcQsUiWJTOVr7kWLStVgUomPKNyCU6cTaiHg==
+X-Received: by 2002:a05:6000:2503:b0:3a0:6c62:8169 with SMTP id
+ ffacd0b85a97d-3a09ceb8cb3mr5636831f8f.25.1746435882032; 
+ Mon, 05 May 2025 02:04:42 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b8a315c8sm125948095e9.35.2025.05.05.02.04.52
+ ffacd0b85a97d-3a099ae0bc0sm9614734f8f.20.2025.05.05.02.04.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 May 2025 02:04:52 -0700 (PDT)
+ Mon, 05 May 2025 02:04:40 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: manos.pitsidianakis@linaro.org,
 	qemu-rust@nongnu.org
-Subject: [PATCH 06/11] rust: use MaybeUninit::zeroed() in const context
-Date: Mon,  5 May 2025 11:04:31 +0200
-Message-ID: <20250505090438.24992-7-pbonzini@redhat.com>
+Subject: [PATCH 01/11] lcitool: use newer Rust for Debian and Ubuntu
+Date: Mon,  5 May 2025 11:04:26 +0200
+Message-ID: <20250505090438.24992-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250505090438.24992-1-pbonzini@redhat.com>
 References: <20250505090438.24992-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -93,7 +93,7 @@ X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.411,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,183 +109,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+On Debian, the rustc-web package provides a newer Rust compiler (1.78)
+for all architectures except mips64el.
+
+On Ubuntu, Rust versions up to 1.80 (?) are available as of this writing
+for both Jammy (22.04) and Noble (24.04).  However, the path to rustc
+and rustdoc must be provided by hand to the configure script using
+either command line arguments or environment variables.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/rust.rst              |   4 --
- rust/hw/timer/hpet/src/fw_cfg.rs |   6 +-
- rust/qemu-api/src/zeroable.rs    | 104 +++++--------------------------
- 3 files changed, 18 insertions(+), 96 deletions(-)
+ docs/about/build-platforms.rst                        | 11 ++++++++---
+ scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml      |  2 +-
+ scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml        |  2 +-
+ tests/docker/dockerfiles/debian-amd64-cross.docker    |  2 +-
+ tests/docker/dockerfiles/debian-arm64-cross.docker    |  2 +-
+ tests/docker/dockerfiles/debian-armhf-cross.docker    |  2 +-
+ tests/docker/dockerfiles/debian-i686-cross.docker     |  2 +-
+ tests/docker/dockerfiles/debian-mips64el-cross.docker |  2 +-
+ tests/docker/dockerfiles/debian-mipsel-cross.docker   |  2 +-
+ tests/docker/dockerfiles/debian-ppc64el-cross.docker  |  2 +-
+ tests/docker/dockerfiles/debian-s390x-cross.docker    |  2 +-
+ tests/docker/dockerfiles/debian.docker                |  2 +-
+ tests/docker/dockerfiles/ubuntu2204.docker            |  3 ++-
+ tests/lcitool/mappings.yml                            |  5 +++++
+ tests/lcitool/refresh                                 |  5 +++--
+ 15 files changed, 29 insertions(+), 17 deletions(-)
 
-diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
-index 8167ff49aa9..13a002cfe69 100644
---- a/docs/devel/rust.rst
-+++ b/docs/devel/rust.rst
-@@ -83,10 +83,6 @@ are missing:
- * "Return position ``impl Trait`` in Traits" (1.75.0, blocker for including
-   the pinned-init create).
+diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
+index 52521552c8a..29f36f8eb42 100644
+--- a/docs/about/build-platforms.rst
++++ b/docs/about/build-platforms.rst
+@@ -118,9 +118,14 @@ Rust build dependencies
+   include bindgen or have an older version, it is recommended to install
+   a newer version using ``cargo install bindgen-cli``.
  
--* ``MaybeUninit::zeroed()`` as a ``const`` function (1.75.0).  QEMU's
--  ``Zeroable`` trait can be implemented without ``MaybeUninit::zeroed()``,
--  so this would be just a cleanup.
--
- * ``c"" literals`` (stable in 1.77.0).  QEMU provides a ``c_str!()`` macro
-   to define ``CStr`` constants easily
+-  Developers may want to use Cargo-based tools in the QEMU source tree;
+-  this requires Cargo 1.74.0.  Note that Cargo is not required in order
+-  to build QEMU.
++  QEMU requires Rust 1.77.0.  This is available on all supported platforms
++  with one exception, namely the ``mips64el`` architecture on Debian bookworm.
++  For all other architectures, Debian bookworm provides a new-enough Rust
++  compiler in the ``rustc-web`` package.
++
++  Also, on Ubuntu 22.04 or 24.04 this requires the ``rustc-1.77``
++  (or newer) package.  The path to ``rustc`` and ``rustdoc`` must be
++  provided manually to the configure script.
  
-diff --git a/rust/hw/timer/hpet/src/fw_cfg.rs b/rust/hw/timer/hpet/src/fw_cfg.rs
-index bef03727ea3..aa08d283519 100644
---- a/rust/hw/timer/hpet/src/fw_cfg.rs
-+++ b/rust/hw/timer/hpet/src/fw_cfg.rs
-@@ -4,7 +4,7 @@
+ Optional build dependencies
+   Build components whose absence does not affect the ability to build QEMU
+diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml b/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
+index dbcd2e076de..f11e9808267 100644
+--- a/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
++++ b/scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml
+@@ -114,7 +114,7 @@ packages:
+   - python3-venv
+   - python3-yaml
+   - rpm2cpio
+-  - rustc
++  - rustc-1.77
+   - sed
+   - socat
+   - sparse
+diff --git a/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml b/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
+index 4b8ee3d885d..6559cb29343 100644
+--- a/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
++++ b/scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml
+@@ -112,7 +112,7 @@ packages:
+   - python3-venv
+   - python3-yaml
+   - rpm2cpio
+-  - rustc
++  - rustc-1.77
+   - sed
+   - socat
+   - sparse
+diff --git a/tests/docker/dockerfiles/debian-amd64-cross.docker b/tests/docker/dockerfiles/debian-amd64-cross.docker
+index 05355854285..081f3e00f7b 100644
+--- a/tests/docker/dockerfiles/debian-amd64-cross.docker
++++ b/tests/docker/dockerfiles/debian-amd64-cross.docker
+@@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-venv \
+                       python3-yaml \
+                       rpm2cpio \
+-                      rustc \
++                      rustc-web \
+                       sed \
+                       socat \
+                       sparse \
+diff --git a/tests/docker/dockerfiles/debian-arm64-cross.docker b/tests/docker/dockerfiles/debian-arm64-cross.docker
+index 6b1e4fc8279..91c555a36e9 100644
+--- a/tests/docker/dockerfiles/debian-arm64-cross.docker
++++ b/tests/docker/dockerfiles/debian-arm64-cross.docker
+@@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-venv \
+                       python3-yaml \
+                       rpm2cpio \
+-                      rustc \
++                      rustc-web \
+                       sed \
+                       socat \
+                       sparse \
+diff --git a/tests/docker/dockerfiles/debian-armhf-cross.docker b/tests/docker/dockerfiles/debian-armhf-cross.docker
+index cf0fe63af91..f0e2efcda09 100644
+--- a/tests/docker/dockerfiles/debian-armhf-cross.docker
++++ b/tests/docker/dockerfiles/debian-armhf-cross.docker
+@@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-venv \
+                       python3-yaml \
+                       rpm2cpio \
+-                      rustc \
++                      rustc-web \
+                       sed \
+                       socat \
+                       sparse \
+diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
+index 1c84dfb9456..025beb1ce25 100644
+--- a/tests/docker/dockerfiles/debian-i686-cross.docker
++++ b/tests/docker/dockerfiles/debian-i686-cross.docker
+@@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-venv \
+                       python3-yaml \
+                       rpm2cpio \
+-                      rustc \
++                      rustc-web \
+                       sed \
+                       socat \
+                       sparse \
+diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+index 257204eae48..4a941dd870e 100644
+--- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
++++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+@@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-venv \
+                       python3-yaml \
+                       rpm2cpio \
+-                      rustc \
++                      rustc-web \
+                       sed \
+                       socat \
+                       sparse \
+diff --git a/tests/docker/dockerfiles/debian-mipsel-cross.docker b/tests/docker/dockerfiles/debian-mipsel-cross.docker
+index 395c84d65bc..4d3e5d711bd 100644
+--- a/tests/docker/dockerfiles/debian-mipsel-cross.docker
++++ b/tests/docker/dockerfiles/debian-mipsel-cross.docker
+@@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-venv \
+                       python3-yaml \
+                       rpm2cpio \
+-                      rustc \
++                      rustc-web \
+                       sed \
+                       socat \
+                       sparse \
+diff --git a/tests/docker/dockerfiles/debian-ppc64el-cross.docker b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
+index 1ae227ccded..22b4457ba99 100644
+--- a/tests/docker/dockerfiles/debian-ppc64el-cross.docker
++++ b/tests/docker/dockerfiles/debian-ppc64el-cross.docker
+@@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-venv \
+                       python3-yaml \
+                       rpm2cpio \
+-                      rustc \
++                      rustc-web \
+                       sed \
+                       socat \
+                       sparse \
+diff --git a/tests/docker/dockerfiles/debian-s390x-cross.docker b/tests/docker/dockerfiles/debian-s390x-cross.docker
+index afa81a57ba8..13ec52c8ad0 100644
+--- a/tests/docker/dockerfiles/debian-s390x-cross.docker
++++ b/tests/docker/dockerfiles/debian-s390x-cross.docker
+@@ -50,7 +50,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-venv \
+                       python3-yaml \
+                       rpm2cpio \
+-                      rustc \
++                      rustc-web \
+                       sed \
+                       socat \
+                       sparse \
+diff --git a/tests/docker/dockerfiles/debian.docker b/tests/docker/dockerfiles/debian.docker
+index 5b3bac43ccb..0a57c1a1d37 100644
+--- a/tests/docker/dockerfiles/debian.docker
++++ b/tests/docker/dockerfiles/debian.docker
+@@ -122,7 +122,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-venv \
+                       python3-yaml \
+                       rpm2cpio \
+-                      rustc \
++                      rustc-web \
+                       sed \
+                       socat \
+                       sparse \
+diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
+index 88ce4ef9a9d..4a1cf2bdff3 100644
+--- a/tests/docker/dockerfiles/ubuntu2204.docker
++++ b/tests/docker/dockerfiles/ubuntu2204.docker
+@@ -121,7 +121,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       python3-venv \
+                       python3-yaml \
+                       rpm2cpio \
+-                      rustc \
++                      rustc-1.77 \
+                       sed \
+                       socat \
+                       sparse \
+@@ -150,6 +150,7 @@ ENV LANG "en_US.UTF-8"
+ ENV MAKE "/usr/bin/make"
+ ENV NINJA "/usr/bin/ninja"
+ ENV PYTHON "/usr/bin/python3"
++ENV RUSTC=/usr/bin/rustc-1.77
+ ENV CARGO_HOME=/usr/local/cargo
+ ENV PATH=$CARGO_HOME/bin:$PATH
+ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
+index 74eb13d62b6..673baf39367 100644
+--- a/tests/lcitool/mappings.yml
++++ b/tests/lcitool/mappings.yml
+@@ -64,6 +64,11 @@ mappings:
+   python3-wheel:
+     OpenSUSELeap15: python311-pip
  
- use std::ptr::addr_of_mut;
++  rust:
++    Debian12: rustc-web
++    Ubuntu2204: rustc-1.77
++    Ubuntu2404: rustc-1.77
++
+ pypi_mappings:
+   # Request more recent version
+   meson:
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index aa551aca9be..8474ea822f4 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -141,7 +141,8 @@ fedora_rustup_nightly_extras = [
+     'RUN $CARGO --list\n',
+ ]
  
--use qemu_api::{cell::bql_locked, impl_zeroable, zeroable::Zeroable};
-+use qemu_api::{cell::bql_locked, zeroable::Zeroable};
+-ubuntu2204_bindgen_extras = [
++ubuntu2204_rust_extras = [
++    "ENV RUSTC=/usr/bin/rustc-1.77\n",
+     "ENV CARGO_HOME=/usr/local/cargo\n",
+     'ENV PATH=$CARGO_HOME/bin:$PATH\n',
+     "RUN DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
+@@ -170,7 +171,7 @@ try:
+     generate_dockerfile("fedora", "fedora-40")
+     generate_dockerfile("opensuse-leap", "opensuse-leap-15")
+     generate_dockerfile("ubuntu2204", "ubuntu-2204",
+-                        trailer="".join(ubuntu2204_bindgen_extras))
++                        trailer="".join(ubuntu2204_rust_extras))
  
- /// Each `HPETState` represents a Event Timer Block. The v1 spec supports
- /// up to 8 blocks. QEMU only uses 1 block (in PC machine).
-@@ -18,7 +18,7 @@ pub struct HPETFwEntry {
-     pub min_tick: u16,
-     pub page_prot: u8,
- }
--impl_zeroable!(HPETFwEntry);
-+unsafe impl Zeroable for HPETFwEntry {}
- 
- #[repr(C, packed)]
- #[derive(Copy, Clone, Default)]
-@@ -26,7 +26,7 @@ pub struct HPETFwConfig {
-     pub count: u8,
-     pub hpet: [HPETFwEntry; HPET_MAX_NUM_EVENT_TIMER_BLOCK],
- }
--impl_zeroable!(HPETFwConfig);
-+unsafe impl Zeroable for HPETFwConfig {}
- 
- #[allow(non_upper_case_globals)]
- #[no_mangle]
-diff --git a/rust/qemu-api/src/zeroable.rs b/rust/qemu-api/src/zeroable.rs
-index a3415a2ebcc..e0720345495 100644
---- a/rust/qemu-api/src/zeroable.rs
-+++ b/rust/qemu-api/src/zeroable.rs
-@@ -4,89 +4,15 @@
- 
- /// Encapsulates the requirement that
- /// `MaybeUninit::<Self>::zeroed().assume_init()` does not cause undefined
--/// behavior.  This trait in principle could be implemented as just:
--///
--/// ```
--/// pub unsafe trait Zeroable: Default {
--///     const ZERO: Self = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
--/// }
--/// ```
--///
--/// The need for a manual implementation is only because `zeroed()` cannot
--/// be used as a `const fn` prior to Rust 1.75.0. Once we can assume a new
--/// enough version of the compiler, we could provide a `#[derive(Zeroable)]`
--/// macro to check at compile-time that all struct fields are Zeroable, and
--/// use the above blanket implementation of the `ZERO` constant.
-+/// behavior.
- ///
- /// # Safety
- ///
--/// Because the implementation of `ZERO` is manual, it does not make
--/// any assumption on the safety of `zeroed()`.  However, other users of the
--/// trait could use it that way.  Do not add this trait to a type unless
--/// all-zeroes is a valid value for the type.  In particular, remember that
--/// raw pointers can be zero, but references and `NonNull<T>` cannot
-+/// Do not add this trait to a type unless all-zeroes is a valid value for the
-+/// type.  In particular, raw pointers can be zero, but references and
-+/// `NonNull<T>` cannot.
- pub unsafe trait Zeroable: Default {
--    const ZERO: Self;
--}
--
--/// A macro that acts similarly to [`core::mem::zeroed()`], only is const
--///
--/// ## Safety
--///
--/// Similar to `core::mem::zeroed()`, except this zeroes padding bits. Zeroed
--/// padding usually isn't relevant to safety, but might be if a C union is used.
--///
--/// Just like for `core::mem::zeroed()`, an all zero byte pattern might not
--/// be a valid value for a type, as is the case for references `&T` and `&mut
--/// T`. Reference types trigger a (denied by default) lint and cause immediate
--/// undefined behavior if the lint is ignored
--///
--/// ```rust compile_fail
--/// use const_zero::const_zero;
--/// // error: any use of this value will cause an error
--/// // note: `#[deny(const_err)]` on by default
--/// const STR: &str = unsafe{const_zero!(&'static str)};
--/// ```
--///
--/// `const_zero` does not work on unsized types:
--///
--/// ```rust compile_fail
--/// use const_zero::const_zero;
--/// // error[E0277]: the size for values of type `[u8]` cannot be known at compilation time
--/// const BYTES: [u8] = unsafe{const_zero!([u8])};
--/// ```
--/// ## Differences with `core::mem::zeroed`
--///
--/// `const_zero` zeroes padding bits, while `core::mem::zeroed` doesn't
--#[macro_export]
--macro_rules! const_zero {
--    // This macro to produce a type-generic zero constant is taken from the
--    // const_zero crate (v0.1.1):
--    //
--    //     https://docs.rs/const-zero/latest/src/const_zero/lib.rs.html
--    //
--    // and used under MIT license
--    ($type_:ty) => {{
--        const TYPE_SIZE: ::core::primitive::usize = ::core::mem::size_of::<$type_>();
--        union TypeAsBytes {
--            bytes: [::core::primitive::u8; TYPE_SIZE],
--            inner: ::core::mem::ManuallyDrop<$type_>,
--        }
--        const ZERO_BYTES: TypeAsBytes = TypeAsBytes {
--            bytes: [0; TYPE_SIZE],
--        };
--        ::core::mem::ManuallyDrop::<$type_>::into_inner(ZERO_BYTES.inner)
--    }};
--}
--
--/// A wrapper to implement the `Zeroable` trait through the `const_zero` macro.
--#[macro_export]
--macro_rules! impl_zeroable {
--    ($type:ty) => {
--        unsafe impl $crate::zeroable::Zeroable for $type {
--            const ZERO: Self = unsafe { $crate::const_zero!($type) };
--        }
--    };
-+    const ZERO: Self = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
- }
- 
- // bindgen does not derive Default here
-@@ -97,13 +23,13 @@ fn default() -> Self {
-     }
- }
- 
--impl_zeroable!(crate::bindings::Property__bindgen_ty_1);
--impl_zeroable!(crate::bindings::Property);
--impl_zeroable!(crate::bindings::VMStateFlags);
--impl_zeroable!(crate::bindings::VMStateField);
--impl_zeroable!(crate::bindings::VMStateDescription);
--impl_zeroable!(crate::bindings::MemoryRegionOps__bindgen_ty_1);
--impl_zeroable!(crate::bindings::MemoryRegionOps__bindgen_ty_2);
--impl_zeroable!(crate::bindings::MemoryRegionOps);
--impl_zeroable!(crate::bindings::MemTxAttrs);
--impl_zeroable!(crate::bindings::CharBackend);
-+unsafe impl Zeroable for crate::bindings::Property__bindgen_ty_1 {}
-+unsafe impl Zeroable for crate::bindings::Property {}
-+unsafe impl Zeroable for crate::bindings::VMStateFlags {}
-+unsafe impl Zeroable for crate::bindings::VMStateField {}
-+unsafe impl Zeroable for crate::bindings::VMStateDescription {}
-+unsafe impl Zeroable for crate::bindings::MemoryRegionOps__bindgen_ty_1 {}
-+unsafe impl Zeroable for crate::bindings::MemoryRegionOps__bindgen_ty_2 {}
-+unsafe impl Zeroable for crate::bindings::MemoryRegionOps {}
-+unsafe impl Zeroable for crate::bindings::MemTxAttrs {}
-+unsafe impl Zeroable for crate::bindings::CharBackend {}
+     #
+     # Non-fatal Rust-enabled build
 -- 
 2.49.0
 
