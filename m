@@ -4,86 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E993CC369C2
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 06:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8EA9C369C2
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 06:31:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBpGj-0005OP-Tc; Mon, 05 May 2025 02:25:37 -0400
+	id 1uBpLw-0007dq-MA; Mon, 05 May 2025 02:31:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBpGi-0005Kf-Ij
- for qemu-devel@nongnu.org; Mon, 05 May 2025 02:25:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBpLq-0007Zp-0Z
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 02:30:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBpGg-00058D-MU
- for qemu-devel@nongnu.org; Mon, 05 May 2025 02:25:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBpLo-0005q1-2l
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 02:30:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746426331;
+ s=mimecast20190719; t=1746426650;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=NDjNWi1nYNj24U0zfPau2OvKn6QiG7v2EYXPjnjqWRQ=;
- b=WUVFCgBS8JFdLzi9jE/F7qVWIg/OvdGIinVpvkra09CWT8ccTMQ0Njvt8Itg27Z+b17O2D
- ST0JX3AhnFaGrMZ0ptQz6RLEMkjnm9q+LZaNEWdsLto7pZoJ/vFP/fJ+xiLASjdnQBhKQ8
- h3le8Goq1NOzFNCHG+/PuN4cVEkzXjw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yhmov5sG/ORFAuU3Rz84jzJd1UvHHfeVH5RvRrWsaOw=;
+ b=gM5qgQFhbWqwApPq/ySvjq7vN5VixHZuMn8rbxL78xrju/VBC7SWqjHsfiHDcCSIBKZv5c
+ cdB04HY2VI2wcUVf4FwHZv22aYfvH7yNkUtzfYjJSspT3cL/CU3B2D7EkIxSCXhZDicLUJ
+ SbXzz+ZBV9k/liDvSZpqAqDNS6RDAj8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-XX8dsm2CMzKW8j2aRVsd_A-1; Mon, 05 May 2025 02:25:29 -0400
-X-MC-Unique: XX8dsm2CMzKW8j2aRVsd_A-1
-X-Mimecast-MFC-AGG-ID: XX8dsm2CMzKW8j2aRVsd_A_1746426329
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3912a0439afso1076552f8f.3
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 23:25:29 -0700 (PDT)
+ us-mta-160-sfB9zuj9OX2H5lEve-agOw-1; Mon, 05 May 2025 02:30:48 -0400
+X-MC-Unique: sfB9zuj9OX2H5lEve-agOw-1
+X-Mimecast-MFC-AGG-ID: sfB9zuj9OX2H5lEve-agOw_1746426646
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3912fc9861cso936123f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 23:30:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746426329; x=1747031129;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NDjNWi1nYNj24U0zfPau2OvKn6QiG7v2EYXPjnjqWRQ=;
- b=mBljxe804AuDd8qyYw7HKcu06wv0NKjKLgncbzBZ5lxQd9GQEaUCy76HhX5xdfrbWD
- 7LobsSrhQ0oFVCIWi+HUjsup0HIUW3eTRd6ljLrGpJNfxwin0sIZj6pgedh6+lAVwj/g
- NH3MCUIrwzoP8/CJGc7p4DbeteJhDbCqiSGhx/mRPuweJjiPXIUN7Ud4DR7VwY5F6L7Q
- QPT9CrOLwVR+Ad7ASR6Mcktiy5oD3zTKbPQnh3NkiiyL6ghwI9Y13lKbVeS1lEkKnTZ+
- FjWO1R+qjOJ+t6dlBz46biA7Cl+PjNaKVO4gCctgkB4ECOR6Mxe2YPg6aTgdiYcLUxid
- YRnQ==
+ d=1e100.net; s=20230601; t=1746426646; x=1747031446;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yhmov5sG/ORFAuU3Rz84jzJd1UvHHfeVH5RvRrWsaOw=;
+ b=jQK7ghkpx6Z9ggQYud1t1IZAHtnYn0bAlQSbAFxSjtmWY/e77BvQBovFUinVLn04KZ
+ OM9BBCEe1nOPap1FDr0+uddX1PXcfcNwhA5S6SGV4lk1mgBgux9LZN8xZZiHLMsfreJi
+ FEU1A2+vaIa0EF8ekQYrcJQQ4AEd/pzWLtBowvEE9aWVQn/YN6rdXwVhSBSEy1MArEZp
+ TWw2Xqp6IZTNEJgigzexi+pFIKM8Padh1nQR+s1C/8mUTq1iIQW+ZZDVDbZ5k3L9vX+A
+ BNsf66mW9whYtsPW0sM3ZP1lyDhWf+8ohuOoZbNaTxaPlBpzeDCweFrRvEoBXE3Ry+Rh
+ tSIQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQaUl4QZLn7rQL/fzGwBrG5WIwSoRlfd45illjJA7pdr0Gei6Uf4gWLiB+kqhvQQHkBSl+2QATJryQ@nongnu.org
-X-Gm-Message-State: AOJu0YyJpusVJ9NaWm9mi7mrZ/e30frtSDh9wjuDGzfN4aa1EY1/0KGx
- VMEYIbV7afzgqr5z0bsNrB8MeE2uE73KKViizKlgOdjGZ6plnAGcW4YnKMsExJyiiF+LhkGeLlK
- hDF6vV31PrPNc/JG8duzWNBjSClcTjSy99meEyw2GqGdeV3L18GYa
-X-Gm-Gg: ASbGncvXMR5b1BF+S4QSv6tMIXcPQBiIeSw1vuSTGznZ3W52Qz1kG4xMyXL5RBQGSSh
- PiaShvi18DBSlGjUtMBE3qCV83mQb5y+tYKcr7f2BUxgfzK6JQ4tYbGHD8c19YClNzYpf7RA5pO
- uyl0L1Edq69xR/QIWMoWBHmZXv3DVAUTU9P4Vr4fv0fee+mUbFPKDgvLnC2g5fpXr72PaOSpC8E
- mVmazmsWOJF9NqiZplFRec8uR8oxwTTvRhmnFJELsq3RYJyLoZjCkszyWNSIU/A3QdRxhJidLh5
- zHvcGCZRB1njtLIVFDpUv/E3Lt+cVB+xJ+diH5EA
-X-Received: by 2002:a05:6000:400a:b0:3a0:8295:9e0f with SMTP id
- ffacd0b85a97d-3a09cf3dc16mr5524014f8f.54.1746426328785; 
- Sun, 04 May 2025 23:25:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGEv96mwvg2BFvZ5VG6iUnjyj0zAmLUb3SaaXsC8tpRHdgMWQP4t+3MReehurWm3W0sYqMM8A==
-X-Received: by 2002:a05:6000:400a:b0:3a0:8295:9e0f with SMTP id
- ffacd0b85a97d-3a09cf3dc16mr5523994f8f.54.1746426328420; 
- Sun, 04 May 2025 23:25:28 -0700 (PDT)
+ AJvYcCW3JD5n7++FAoTNlNq74dVAHc2Da/1cR+44smrnb6mlY7A1ahXWWGrcTtQWLB40M6YYSHK0YEYtiYqH@nongnu.org
+X-Gm-Message-State: AOJu0YyCnkPNiiJhLTs2zu8lDyL0e8y+XQEEWfofKu+AAZQL2YBna57Q
+ vGO7V91VXHpXfiGrdRXR1B7c+xcSBzJwqdrFpJ6LBMZke0X3VpIKdP4qXQCZihdbxtIKnFncCYw
+ zC/AUW/cpNHdtFLu6Q8/k4BKcu/Iq5qJvgn8YIWXaFweJGG2P6Vgl
+X-Gm-Gg: ASbGncu3RZ3s9jIy8juoabkl2Kmeded9iBY1+yJBmVibyhKFIgGranRZK7EdJG8OKos
+ gTrUW8nPF2cGZAwCkQolboalbuhrxapHSnH9HYPBYIA+E/pmeWRKJHs+W+NWF7Hvdt102RXrzxz
+ R37m1ldyNR9+tGf27z++NcwDi3CX5atRvLdtF5VFbw0HbIO9cUZDv8hYtb7VO0lBCwFH66gEB+k
+ YQtVrcUYx81xCgWw9GA4ITDu0HXAFFCfrNduvx0yeiuGmiGo12O0cj1A0WJb1MH0/lVbEPcyllJ
+ bq8feG5TfBjeClBCCo92ylIEOPl3xP3P7neVZbSk
+X-Received: by 2002:a05:6000:2585:b0:3a0:8acc:1df4 with SMTP id
+ ffacd0b85a97d-3a09fd6bc3cmr3879209f8f.7.1746426646112; 
+ Sun, 04 May 2025 23:30:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFu3Lehe04f1YTTzpbG0RYfm4t5YAUfCPOQ+WBTj5sHgAQvke26n7rc7lNUTqi0tUziBdA/hg==
+X-Received: by 2002:a05:6000:2585:b0:3a0:8acc:1df4 with SMTP id
+ ffacd0b85a97d-3a09fd6bc3cmr3879174f8f.7.1746426645610; 
+ Sun, 04 May 2025 23:30:45 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae0ca4sm9489126f8f.14.2025.05.04.23.25.27
+ ffacd0b85a97d-3a099ae796esm9204438f8f.41.2025.05.04.23.30.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 May 2025 23:25:27 -0700 (PDT)
-Message-ID: <fb8991c6-c9e9-4e6c-a852-02977942eb28@redhat.com>
-Date: Mon, 5 May 2025 08:25:25 +0200
+ Sun, 04 May 2025 23:30:45 -0700 (PDT)
+Message-ID: <41eff78d-db42-4391-a243-ec40e2356627@redhat.com>
+Date: Mon, 5 May 2025 08:30:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scripts/vmstate-static-checker.py: Add new hpet entry for
- num_timers
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250501151235.636709-1-peterx@redhat.com>
-Content-Language: en-US
+Subject: Re: [PATCH v15 2/6] qmp: add QMP command x-query-virtio-status
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jonah Palmer <jonah.palmer@oracle.com>, qemu-devel@nongnu.org,
+ armbru@redhat.com
+Cc: mst@redhat.com, qemu_oss@crudebyte.com, kraxel@redhat.com,
+ si-wei.liu@oracle.com, joao.m.martins@oracle.com, eblake@redhat.com,
+ qemu-block@nongnu.org, david@redhat.com, arei.gonglei@huawei.com,
+ marcandre.lureau@redhat.com, lvivier@redhat.com, michael.roth@amd.com,
+ groug@kaod.org, dgilbert@redhat.com, eric.auger@redhat.com,
+ stefanha@redhat.com, boris.ostrovsky@oracle.com, kwolf@redhat.com,
+ mathieu.poirier@linaro.org, raphael.norwitz@nutanix.com,
+ pbonzini@redhat.com, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <1660220684-24909-1-git-send-email-jonah.palmer@oracle.com>
+ <1660220684-24909-3-git-send-email-jonah.palmer@oracle.com>
+ <7de79c4d-57f2-4103-a22e-748cfbe08974@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -126,10 +136,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250501151235.636709-1-peterx@redhat.com>
+In-Reply-To: <7de79c4d-57f2-4103-a22e-748cfbe08974@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -138,7 +148,7 @@ X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.411,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,31 +164,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/05/2025 17.12, Peter Xu wrote:
-> The old "num_timers" got a rename.  See commit 1433e38cc8 ("hpet: do not
-> overwrite properties on post_load") for more details.  Teach the script to
-> accept the new name.
+On 02/05/2025 00.09, Philippe Mathieu-Daudé wrote:
+> Hello,
 > 
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->   scripts/vmstate-static-checker.py | 1 +
->   1 file changed, 1 insertion(+)
+> (patch merged as commit 90c066cd682).
 > 
-> diff --git a/scripts/vmstate-static-checker.py b/scripts/vmstate-static-checker.py
-> index 25aca839a0..2335e25f94 100755
-> --- a/scripts/vmstate-static-checker.py
-> +++ b/scripts/vmstate-static-checker.py
-> @@ -91,6 +91,7 @@ def check_fields_match(name, s_field, d_field):
->                         'mem_win_size', 'mig_mem_win_size',
->                         'io_win_addr', 'mig_io_win_addr',
->                         'io_win_size', 'mig_io_win_size'],
-> +        'hpet': ['num_timers', 'num_timers_save'],
->       }
->   
->       if not name in changed_names:
+> On 11/8/22 14:24, Jonah Palmer wrote:
+>> From: Laurent Vivier <lvivier@redhat.com>
+>>
+>> This new command shows the status of a VirtIODevice, including
+>> its corresponding vhost device's status (if active).
+>>
+>> Next patch will improve output by decoding feature bits, including
+>> vhost device's feature bits (backend, protocol, acked, and features).
+>> Also will decode status bits of a VirtIODevice.
+>>
+>> [Jonah: From patch v12; added a check to @virtio_device_find to ensure
+>>   synchronicity between @virtio_list and the devices in the QOM
+>>   composition tree.]
+>>
+>> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+>> Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+>> ---
+>>   hw/virtio/virtio-stub.c |   5 +
+>>   hw/virtio/virtio.c      | 104 +++++++++++++++++++
+>>   qapi/virtio.json        | 222 ++++++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 331 insertions(+)
+>>
+>> diff --git a/hw/virtio/virtio-stub.c b/hw/virtio/virtio-stub.c
+>> index 05a81edc92..0b432e8de7 100644
+>> --- a/hw/virtio/virtio-stub.c
+>> +++ b/hw/virtio/virtio-stub.c
+>> @@ -12,3 +12,8 @@ VirtioInfoList *qmp_x_query_virtio(Error **errp)
+>>   {
+>>       return qmp_virtio_unsupported(errp);
+>>   }
+>> +
+>> +VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
+>> +{
+>> +    return qmp_virtio_unsupported(errp);
+>> +}
+>> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+>> index bdfa82e9c0..3e0a484660 100644
+>> --- a/hw/virtio/virtio.c
+>> +++ b/hw/virtio/virtio.c
+>> @@ -3939,6 +3939,110 @@ VirtioInfoList *qmp_x_query_virtio(Error **errp)
+>>       return list;
+>>   }
+>> +static VirtIODevice *virtio_device_find(const char *path)
+>> +{
+>> +    VirtIODevice *vdev;
+>> +
+>> +    QTAILQ_FOREACH(vdev, &virtio_list, next) {
+>> +        DeviceState *dev = DEVICE(vdev);
+>> +
+>> +        if (strcmp(dev->canonical_path, path) != 0) {
+>> +            continue;
+>> +        }
+>> +
+>> +        Error *err = NULL;
+>> +        QObject *obj = qmp_qom_get(dev->canonical_path, "realized", &err);
+>> +        if (err == NULL) {
+>> +            GString *is_realized = qobject_to_json_pretty(obj, true);
+>> +            /* virtio device is NOT realized, remove it from list */
+>> +            if (!strncmp(is_realized->str, "false", 4)) {
+>> +                g_string_free(is_realized, true);
+>> +                qobject_unref(obj);
+>> +                QTAILQ_REMOVE(&virtio_list, vdev, next);
+>> +                return NULL;
+>> +            }
+>> +            g_string_free(is_realized, true);
+>> +        } else {
+>> +            /* virtio device doesn't exist in QOM tree */
+>> +            QTAILQ_REMOVE(&virtio_list, vdev, next);
+>> +            qobject_unref(obj);
+>> +            return NULL;
+>> +        }
+>> +        /* device exists in QOM tree & is realized */
+>> +        qobject_unref(obj);
+>> +        return vdev;
+>> +    }
+>> +    return NULL;
+>> +}
+>> +
+>> +VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
+>> +{
+>> +    VirtIODevice *vdev;
+>> +    VirtioStatus *status;
+>> +
+>> +    vdev = virtio_device_find(path);
+>> +    if (vdev == NULL) {
+>> +        error_setg(errp, "Path %s is not a VirtIODevice", path);
+>> +        return NULL;
+>> +    }
+>> +
+>> +    status = g_new0(VirtioStatus, 1);
+>> +    status->name = g_strdup(vdev->name);
+>> +    status->device_id = vdev->device_id;
+>> +    status->vhost_started = vdev->vhost_started;
+>> +    status->guest_features = vdev->guest_features;
+>> +    status->host_features = vdev->host_features;
+>> +    status->backend_features = vdev->backend_features;
+>> +
+>> +    switch (vdev->device_endian) {
+>> +    case VIRTIO_DEVICE_ENDIAN_LITTLE:
+>> +        status->device_endian = g_strdup("little");
+>> +        break;
+>> +    case VIRTIO_DEVICE_ENDIAN_BIG:
+>> +        status->device_endian = g_strdup("big");
+>> +        break;
+>> +    default:
+>> +        status->device_endian = g_strdup("unknown");
+>> +        break;
+>> +    }
+>> +
+>> +    status->num_vqs = virtio_get_num_queues(vdev);
+>> +    status->status = vdev->status;
+>> +    status->isr = vdev->isr;
+>> +    status->queue_sel = vdev->queue_sel;
+>> +    status->vm_running = vdev->vm_running;
+>> +    status->broken = vdev->broken;
+>> +    status->disabled = vdev->disabled;
+>> +    status->use_started = vdev->use_started;
+>> +    status->started = vdev->started;
+>> +    status->start_on_kick = vdev->start_on_kick;
+>> +    status->disable_legacy_check = vdev->disable_legacy_check;
+>> +    status->bus_name = g_strdup(vdev->bus_name);
+>> +    status->use_guest_notifier_mask = vdev->use_guest_notifier_mask;
+>> +    status->has_vhost_dev = vdev->vhost_started;
+>> +
+>> +    if (vdev->vhost_started) {
+>> +        VirtioDeviceClass *vdc = VIRTIO_DEVICE_GET_CLASS(vdev);
+>> +        struct vhost_dev *hdev = vdc->get_vhost(vdev);
+>> +
+>> +        status->vhost_dev = g_new0(VhostStatus, 1);
+>> +        status->vhost_dev->n_mem_sections = hdev->n_mem_sections;
+>> +        status->vhost_dev->n_tmp_sections = hdev->n_tmp_sections;
+>> +        status->vhost_dev->nvqs = hdev->nvqs;
+>> +        status->vhost_dev->vq_index = hdev->vq_index;
+>> +        status->vhost_dev->features = hdev->features;
+>> +        status->vhost_dev->acked_features = hdev->acked_features;
+>> +        status->vhost_dev->backend_features = hdev->backend_features;
+>> +        status->vhost_dev->protocol_features = hdev->protocol_features;
+>> +        status->vhost_dev->max_queues = hdev->max_queues;
+>> +        status->vhost_dev->backend_cap = hdev->backend_cap;
+>> +        status->vhost_dev->log_enabled = hdev->log_enabled;
+>> +        status->vhost_dev->log_size = hdev->log_size;
+>> +    }
+>> +
+>> +    return status;
+>> +}
+>> +
+>>   static const TypeInfo virtio_device_info = {
+>>       .name = TYPE_VIRTIO_DEVICE,
+>>       .parent = TYPE_DEVICE,
+>> diff --git a/qapi/virtio.json b/qapi/virtio.json
+>> index 03896e423f..c86b3bc635 100644
+>> --- a/qapi/virtio.json
+>> +++ b/qapi/virtio.json
+>> @@ -66,3 +66,225 @@
+>>   { 'command': 'x-query-virtio',
+>>     'returns': [ 'VirtioInfo' ],
+>>     'features': [ 'unstable' ] }
+> 
+> When a structure is only used by an unstable command, is it considered
+> unstable too? IOW is it OK to modify it?
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+IMHO yes. If there is no other user of the struct, why should it considered 
+to be stable if the only command that uses it is unstable?
+
+  Thomas
 
 
