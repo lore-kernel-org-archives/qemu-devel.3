@@ -4,144 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49487C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA065C3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:16:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBruS-0008Dw-8D; Mon, 05 May 2025 05:14:48 -0400
+	id 1uBrr0-0004S6-K7; Mon, 05 May 2025 05:11:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBruP-00082P-Lf
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:14:46 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrnL-0007i4-1N
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:07:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBruO-0007Wr-4q
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:14:45 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrnI-0006MW-Sk
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:07:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746436483;
+ s=mimecast20190719; t=1746436044;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZzSiUFQIzs2VJmzP8Z40Z1CICWY4djj1SXJoME0sagw=;
- b=E87tRcxfndkbcYDm8SsJAaD7+VFYfpDV+dXKVvnHKGHQk8MuwNNBpeN2mCc1x7QE85/qQN
- oOywJSbEwb6JoMII5+lHKMhrDQhOrCUoZvmdn+gbKDDKGTRyooHCQYZtyAzEo7NJ6yNec5
- 4iGqvSnXU5sCa2E640qxPTi/zOxF6Ug=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-102-2URl-gbuPKyn5x6H0M5QmA-1; Mon, 05 May 2025 05:14:41 -0400
-X-MC-Unique: 2URl-gbuPKyn5x6H0M5QmA-1
-X-Mimecast-MFC-AGG-ID: 2URl-gbuPKyn5x6H0M5QmA_1746436480
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3913aaf1e32so2020310f8f.0
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:14:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746436480; x=1747041280;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZzSiUFQIzs2VJmzP8Z40Z1CICWY4djj1SXJoME0sagw=;
- b=RLYurVARmcUsA9u6Lc4MS7Gn/XkypmaP+9MgkBjTvmaycXa0wSJvGGzqsdse5AL9Rb
- 9S3ZIVwXO0qIS+RxWxk6ADHHlADrpljFizRrLn3MdomwWEsK2rsC2dggeXThHtlqI2xL
- N0rrugQseveC+R4JUDAJBTL1iKBB3o+RCFkpXKjskjAodhXxVziv8wYPqCQE9O35Bs2Q
- lsWq9eZ7bXBy5bG7H1KTMCHzuvp+1pNuuXAnNZMfQX14SzlLoLxrMalLJm6TLQeE4e2B
- y68MSyxx44i5Ek0GdCAt/8fagCvDBdJ1I3zvQA3xU7UkECS0vWWR6P6cowgSYRz9RZvD
- xCoA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVguCULeEBio0HGcA8lFPwYUXoODckxKJ1eknSme0amNPCWn3whAkhZ5F4uMEXO6fNjzox7X9/1OyJR@nongnu.org
-X-Gm-Message-State: AOJu0Yzz3owpTB/Yib0b6sHo3RUblHgpuHxct0YSjLK/RWgzfVLnK6dy
- 2fsXXMy2gleWSGabERIHBjoCst4f4qxyAoo3tvQZu9EIu/kZSLgABIy7yAn0wZxrs5SNjUQjdg2
- vAnmy6kQaV40EunReKGzy4nBMMVByGO1ee3+QIf8NoMvlqVpfqx00
-X-Gm-Gg: ASbGncuzHq+RgpzEjLZqtCpJIy8RVYwSy4/QLCcF53U9KNDh4m4gpCto42oTuMeOlbt
- XZbOIsVhCbZWsHPvxZXgQ47zPOCrNUG5LE/iDC9kwxvzOdwwhca6Xvh2W3+b1Y1hkyoFnbHNiwd
- fL1HZteJJRimHpVsDlZyIYJsA+7J8tZtU7joBuECZjT0dlWOd2wSAzxMF3SsR2sYbdDMiwQf6OK
- XdWC52WqeWfDnfw9eX/4KxhB0p+CF3HHFM4O8dejWNUsYEkTiF+cje7zVNbquqXZfMGFXI+zPVK
- KcUGVpcOWGl8u0nlb0rhtLbI3EccMK5EvJRG2fUH
-X-Received: by 2002:a5d:5f48:0:b0:39c:13fd:e50e with SMTP id
- ffacd0b85a97d-3a09fd79f75mr5085860f8f.10.1746436480595; 
- Mon, 05 May 2025 02:14:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHvl183LY6cLBwTIign6zq0gQD6YG0HY6tA1LKVxyK/vsO1/VJuXPyfbhcvuaPCkVASTitLUw==
-X-Received: by 2002:a5d:5f48:0:b0:39c:13fd:e50e with SMTP id
- ffacd0b85a97d-3a09fd79f75mr5085835f8f.10.1746436480288; 
- Mon, 05 May 2025 02:14:40 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae338bsm9617864f8f.27.2025.05.05.02.14.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 02:14:39 -0700 (PDT)
-Message-ID: <960ec1d5-292d-4ae2-b395-979a0d630d76@redhat.com>
-Date: Mon, 5 May 2025 11:14:38 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=ZsiOM7q8g3d4IdE4tuHhf5VrIKTQ9VH185clY0vz75s=;
+ b=Nt70SF8+GoJZlhsdynA6HYQtUgR3IJdwl1e9x2T3SZKDA8v0Z1EcwySrEyXgysAyEN0vSZ
+ JsrrJDEtTuQNAPnC7fdA4GxBkaKA7W+WrGl3gWlBIhUObH7cxjl4Bzvs6sZlS+nzx13n/1
+ Ig7+FAG2kQ11r3pijkR4htaptr6lDlI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-7vaVNXmjNNCpRVfL7dmQEw-1; Mon,
+ 05 May 2025 05:07:21 -0400
+X-MC-Unique: 7vaVNXmjNNCpRVfL7dmQEw-1
+X-Mimecast-MFC-AGG-ID: 7vaVNXmjNNCpRVfL7dmQEw_1746436040
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 09F931956096; Mon,  5 May 2025 09:07:20 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.38])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1677330001A2; Mon,  5 May 2025 09:07:17 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Nabih Estefan <nabihestefan@google.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 14/23] docs/system/arm/aspeed: Support vbootrom for AST2700
+Date: Mon,  5 May 2025 11:06:26 +0200
+Message-ID: <20250505090635.778785-15-clg@redhat.com>
+In-Reply-To: <20250505090635.778785-1-clg@redhat.com>
+References: <20250505090635.778785-1-clg@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/16] hw/i386/pc: Remove deprecated pc-q35-2.7 and
- pc-i440fx-2.7 machines
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- Yi Liu <yi.l.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Amit Shah <amit@kernel.org>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Sergio Lopez <slp@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Yanan Wang <wangyanan55@huawei.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Ani Sinha <anisinha@redhat.com>
-References: <20250501183628.87479-1-philmd@linaro.org>
- <20250501183628.87479-9-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250501183628.87479-9-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -166,18 +85,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/05/2025 20.36, Philippe Mathieu-Daudé wrote:
-> These machines has been supported for a period of more than 6 years.
-> According to our versioned machine support policy (see commit
-> ce80c4fa6ff "docs: document special exception for machine type
-> deprecation & removal") they can now be removed.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/i386/pc_piix.c |  9 ---------
->   hw/i386/pc_q35.c  | 10 ----------
->   2 files changed, 19 deletions(-)
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Using the vbootrom image support and the boot ROM binary is
+now passed via the -bios option, using the image located in
+pc-bios/ast27x0_bootrom.bin.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Nabih Estefan <nabihestefan@google.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250424075135.3715128-7-jamin_lin@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ docs/system/arm/aspeed.rst | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
+
+diff --git a/docs/system/arm/aspeed.rst b/docs/system/arm/aspeed.rst
+index 08a33b7008b7..014545f4440f 100644
+--- a/docs/system/arm/aspeed.rst
++++ b/docs/system/arm/aspeed.rst
+@@ -306,7 +306,14 @@ Images can be downloaded from the ASPEED Forked OpenBMC GitHub release repositor
+ Booting the ast2700-evb machine
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+-Boot the AST2700 machine from the flash image, use an MTD drive :
++Boot the AST2700 machine from the flash image.
++
++There are two supported methods for booting the AST2700 machine with a flash image:
++
++Manual boot using ``-device loader``:
++
++It causes all 4 CPU cores to start execution from address ``0x430000000``, which
++corresponds to the BL31 image load address.
+ 
+ .. code-block:: bash
+ 
+@@ -326,6 +333,26 @@ Boot the AST2700 machine from the flash image, use an MTD drive :
+        -drive file=${IMGDIR}/image-bmc,format=raw,if=mtd \
+        -nographic
+ 
++Boot using a virtual boot ROM (``-bios``):
++
++If users do not specify the ``-bios option``, QEMU will attempt to load the
++default vbootrom image ``ast27x0_bootrom.bin`` from either the current working
++directory or the ``pc-bios`` directory within the QEMU source tree.
++
++.. code-block:: bash
++
++  $ qemu-system-aarch64 -M ast2700-evb \
++      -drive file=image-bmc,format=raw,if=mtd \
++      -nographic
++
++The ``-bios`` option allows users to specify a custom path for the vbootrom
++image to be loaded during boot. This will load the vbootrom image from the
++specified path in the ${HOME} directory.
++
++.. code-block:: bash
++
++  -bios ${HOME}/ast27x0_bootrom.bin
++
+ Aspeed minibmc family boards (``ast1030-evb``)
+ ==================================================================
+ 
+-- 
+2.49.0
 
 
