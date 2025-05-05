@@ -4,132 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B764EC3ABB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA7ADC3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:50:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBrSa-0001l1-10; Mon, 05 May 2025 04:46:00 -0400
+	id 1uBrX5-0003Q6-Ua; Mon, 05 May 2025 04:50:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrST-0001aG-Mq
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:45:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBrX3-0003Pd-Ae
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:50:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrSR-0002ur-C7
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:45:52 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBrX1-0003Uz-UJ
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:50:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746434749;
+ s=mimecast20190719; t=1746435030;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fkQSFRp4yHTXJnQw4G4QPCgf5vbvjL2V7nc/NXLjlhs=;
- b=EAUTqdqRQdhRttOe4AWYwMUUPmVgiMx+3MUFzGJvMMinj2Y0G8zj3ObIUphuoAkvcyayL3
- Xd3LG8dBi0bUoNALyb83fmOnnISEWKe4kQGc8BUnex/uqgrxwP9ZXGyxgrF7RXDqEwszOh
- e7z77nL6QSBURGe6eZY+LCwJw8RVb/E=
+ bh=oG4hQiP8f+59SuFjR1ICOXGK83EjjHtamJsTV8KD0rg=;
+ b=CzozsGcZac0DE5UX11vDBjBgELzU9te9BKWS+H5ZKzCVXAaxGzkb2FVq5RWjJdbWA/Kc4/
+ WKyxtvuhiaCu+DyzTvO17SF8uRgZAjSMP7XWeU3XJ+J57e76cGVnN3nSg+tTiAJ+nFQMbv
+ +xCb+BDtB+7IujloSVeYMCdLRJyfW+4=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-301-OHi-MY8bN2i8KHoBLnvGNw-1; Mon, 05 May 2025 04:45:48 -0400
-X-MC-Unique: OHi-MY8bN2i8KHoBLnvGNw-1
-X-Mimecast-MFC-AGG-ID: OHi-MY8bN2i8KHoBLnvGNw_1746434747
+ us-mta-646-34mfmlgnO6eG95ZYCONHzA-1; Mon, 05 May 2025 04:50:22 -0400
+X-MC-Unique: 34mfmlgnO6eG95ZYCONHzA-1
+X-Mimecast-MFC-AGG-ID: 34mfmlgnO6eG95ZYCONHzA_1746435021
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-441c122fa56so6238595e9.2
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 01:45:48 -0700 (PDT)
+ 5b1f17b1804b1-43d3b211d0eso20237905e9.1
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 01:50:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746434747; x=1747039547;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fkQSFRp4yHTXJnQw4G4QPCgf5vbvjL2V7nc/NXLjlhs=;
- b=h6XqkHWjlMhV5h1WJ/xg+C3C4KgzuTfNir1UCGZ7KdYGyIe2f4C+ITksO0oyEvRlrU
- vqnmsa4LsHBjbbqvo+vtS0goFFMhfpGZ8Xbr3sRjGp+7f98L5H86Nnq9AmvtedMbwyq2
- SI9R4gADjOMh6mbxEteYcr8pwOon8gVthcKx9ATIUFVr0/fw5oI/qVATJvqwzUqB4/Mh
- Ks1ve1Ed9s05OGkMxawa+N/RqDbybp9W+GJwFSobx9qVcpmHFG6GSOeFVKComdmFz0vE
- EYQLEJd4k1vnk54cdtZnGehdSgZnEFd8EKUH6u7d2M+3Dtokw7rbmSVEZYkAL+IIHjq7
- 5Sqw==
+ d=1e100.net; s=20230601; t=1746435021; x=1747039821;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oG4hQiP8f+59SuFjR1ICOXGK83EjjHtamJsTV8KD0rg=;
+ b=EkTbOyqhY2baforM7Fpkt+Act0nlr/Oft9OTnWwRMistdUrsGfhIbRHkmbSByPyNMq
+ sNHxvfnYMUzyo3+FLRoTCglBCAWjYWarTKg/o+x6qqkOP9e/jeNCyHt/ZjIkJ9E5m+Ca
+ GficMr6byIOxC1ibrYbYzaSymAZtWBjINx2CcTAiRcVus+UoqlghEL5uKlgDsE0BBwWP
+ 6DL0T1/e05qlt6d6ZmeUu2hOC0jB7ewAxqClp2AD/GBMITx6YU6+AtJmqPrGJe5J/kBl
+ UY21Pqr+PbAdQ9IYF+MtGnTVu5EFJ4Wu7yKnvBKpNe1QB3RqrxU0LlBlniQuo5OTA6HK
+ Rzig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXgL1qFvHeCJ8pG9uGyAvErcDYtYRgJ6ZrqzeU2UvLyKmK458orPcdU2QisDJZnDFINtpCMf4Ncaq+L@nongnu.org
-X-Gm-Message-State: AOJu0Yw7Lg5GdUU//KC/Ghn0RWrGHL8IHDiTwOmYTQcLgmJAKeFX5i4R
- ClKvqDQUp3/i9UAX2Xd+6hTUQxxNbJj/zvFoT5YPFDIom8Cajd2n8ug9mAZ5sRjVSvabfL35Z6t
- FDGaTjbuFjOnagtzGVKeagvxCmAcs2DQfQq/RBoxkSStfZiBNg4mZlMEZSg+e
-X-Gm-Gg: ASbGncu1bcZxKEEOXKm8jJfKT1ZRA6I0s5miDeLtLlskJ+FJm2DIEHW7fa9laZbLhBd
- somYddwovC6mB2b6pCPLD75DNoDhuGqZphe4VFvZShIf1REy6vpvvYWbm03nCNOh/N+PfgnpugQ
- tc2R2sH7TGamPPWnCi21yzE1vzzm+OBG/rOf4xQdaPuabIGHj4dkb5YKQrtN6/vSfLmAYC+G/UK
- YpmVLOqVDu5PMh8Q/nJonngHbcCzz+qYyLrF1I3TdeAFjDoRNxlgkmvvtPiRYln0JRTUyd52dlT
- KyR7+MwWdpDT3s8/ZxxpanrXh8Csy0zPuBWXQGetuiEdYrggqQ==
-X-Received: by 2002:a05:600c:5303:b0:43d:cc9:b09d with SMTP id
- 5b1f17b1804b1-441c1d5c568mr52179275e9.20.1746434747083; 
- Mon, 05 May 2025 01:45:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFh8LZxiJFaGg5p40O8NiVqScdlZNFvY7sWqkJupwZgXhSRan6xZAOLUfdQMNKvyCR/caarVg==
-X-Received: by 2002:a05:600c:5303:b0:43d:cc9:b09d with SMTP id
- 5b1f17b1804b1-441c1d5c568mr52179125e9.20.1746434746720; 
- Mon, 05 May 2025 01:45:46 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ AJvYcCVv6XNhz8cgbRbVt88MPHyw1gDv5vD5ftsj8hDiA2FVfTmNGrnFyz9alrfia0F93SKqFMZ1yTiOttTb@nongnu.org
+X-Gm-Message-State: AOJu0YxXPSPIadN0VSeEY3X6pROBbBNxTlpXzQd7pTOrORqOqlyLBbfs
+ PogqPVKts23z7aKneXHjpXBni/9Ot8tNRSBJiUtyx4NtUPvteQ3XllXz1KaKnsDCFt2fjglqEA7
+ 0tCAzeweo+IgMxevkDKZwxOnqW8Dv/y6sTyOu3j97emrvUBgjhiey
+X-Gm-Gg: ASbGncsUdG5k0vJ4Bt1qAhVnyBznSrK7WSnNYBi7FIH7bfkxtgXffEvSHoOKBY9YxH5
+ 4YAB9SsdPEJmQznbyoHae9mO9SLGeQWSNwzbSZnyQPywGqbFM1eIrvQiALnz0xFYXz7S77c0rDm
+ R2hxCKZZGBj1Wc0x2XQ24ygrUCzS0lRcsMZHB+NkiowHwnPGWL/UPd4Y5mCDnmfakW53xmkvr5d
+ f4LzpA11kAbeDxy7EDcWPii6LwB+A9YLqHDYKLZ2rcxVdGTYWWQDxgQdysTj9HZGkb6W2K0K6Kb
+ T+EEqHgNG+ar4LjozrUgbogO/2zPGi1LwtmKNumc
+X-Received: by 2002:a05:600c:628b:b0:43b:c592:7e16 with SMTP id
+ 5b1f17b1804b1-441b72b10f2mr144990585e9.3.1746435021048; 
+ Mon, 05 May 2025 01:50:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHFgC+slSZ22yGaDK0lc5Lk2UkvcFpZhwkcRzEibFi62bhQhKlDR/IEvR3cN/0J20kS9yvVRw==
+X-Received: by 2002:a05:600c:628b:b0:43b:c592:7e16 with SMTP id
+ 5b1f17b1804b1-441b72b10f2mr144990165e9.3.1746435020575; 
+ Mon, 05 May 2025 01:50:20 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b8a286b9sm125289735e9.28.2025.05.05.01.45.46
+ 5b1f17b1804b1-441b89cc4f8sm128436425e9.1.2025.05.05.01.50.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 01:45:46 -0700 (PDT)
-Message-ID: <a32344c7-85ff-4611-afd0-dac1b3e33497@redhat.com>
-Date: Mon, 5 May 2025 10:45:45 +0200
+ Mon, 05 May 2025 01:50:20 -0700 (PDT)
+Message-ID: <242f8d82-6afd-47bc-9d37-e17b5fd66c16@redhat.com>
+Date: Mon, 5 May 2025 10:50:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 0/3] vfio cleanup, pre-cpr
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>
-References: <1746195760-101443-1-git-send-email-steven.sistare@oracle.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1746195760-101443-1-git-send-email-steven.sistare@oracle.com>
+Subject: Re: [PATCH v2 02/16] hw/i386/pc: Remove
+ PCMachineClass::legacy_cpu_hotplug field
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Yi Liu <yi.l.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Amit Shah <amit@kernel.org>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Sergio Lopez <slp@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Ani Sinha <anisinha@redhat.com>
+References: <20250501183628.87479-1-philmd@linaro.org>
+ <20250501183628.87479-3-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250501183628.87479-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -154,34 +166,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/2/25 16:22, Steve Sistare wrote:
-> Cleanup a few vfio functions prior to the introduction of CPR.
+On 01/05/2025 20.36, Philippe Mathieu-Daudé wrote:
+> The PCMachineClass::legacy_cpu_hotplug boolean was only used
+> by the pc-q35-2.6 and pc-i440fx-2.6 machines, which got
+> removed. Remove it and simplify build_dsdt(), removing
+> build_legacy_cpu_hotplug_aml() altogether.
 > 
-> These were extracted from
->    https://lore.kernel.org/qemu-devel/1739542467-226739-1-git-send-email-steven.sistare@oracle.com/
-> 
-> Changes in V3:
->    * update to master
-> 
-> Steve Sistare (3):
->    vfio/container: ram discard disable helper
->    vfio/container: reform vfio_container_connect cleanup
->    vfio/container: vfio_container_group_add
-> 
->   hw/vfio/container.c | 131 +++++++++++++++++++++++++++++-----------------------
->   1 file changed, 73 insertions(+), 58 deletions(-)
-> 
-> base-commit: 73d29ea2417b58ca55fba1aa468ba38e3607b583
-> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/hw/acpi/cpu_hotplug.h |   3 -
+>   include/hw/i386/pc.h          |   3 -
+>   hw/acpi/cpu_hotplug.c         | 230 ----------------------------------
+>   hw/i386/acpi-build.c          |   4 +-
+>   4 files changed, 1 insertion(+), 239 deletions(-)
 
-
-Applied to vfio-next with this change :
-
-  vfio_attach_discard_disable() -> vfio_container_attach_discard_disable()
-
-Thanks,
-
-C.
-
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
