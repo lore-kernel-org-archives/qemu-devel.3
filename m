@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98DD9C3ABB6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1171C3ABC0
 	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 23:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uC5Ck-0004EC-AY; Mon, 05 May 2025 19:26:35 -0400
+	id 1uC5Ct-000536-DN; Mon, 05 May 2025 19:26:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC5AV-0006vR-Mu
- for qemu-devel@nongnu.org; Mon, 05 May 2025 19:24:16 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1uC5AY-0006z8-FF
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 19:24:22 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC5AT-0003wt-3h
- for qemu-devel@nongnu.org; Mon, 05 May 2025 19:24:15 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-22401f4d35aso59091355ad.2
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 16:24:12 -0700 (PDT)
+ id 1uC5AV-0003y7-Ti
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 19:24:18 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2295d78b45cso65362425ad.0
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 16:24:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746487451; x=1747092251; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746487454; x=1747092254; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wE+ks75IW4zuYyzk7c3HX2M0GM7VkI4W6D0uip1dkOg=;
- b=mbo93jC5/evc0SJ9WFGVUHTOMOAp9dyVJ3H1YL3cJ0Ek2zgEn1bazD8KSjPD6GDLj6
- 47POmroDWDzJRvoebk8Gu21+vARdj9WlQflGPwqbMfQc6LkaBFuCAjJpxvrjIC7yehY8
- HWUNrXjOVk9EtN+njl6g7HzsrhXSym90xrUfT9ti1G+9njva9Oq6TyshVULbJISlYC2f
- UfOeo/DJiTjz1rXZr4sf0Ydsxz2ogD64wveSEko4pvUdAC5rXIzlvtM6PmJ3lTUGKlVn
- iXAQBjaVe2vTfvv6ZkxTnj0HHU+/H9t+dka5dAom4UhIwS+TBEhLFOORh7Et2t+v+ywr
- NSjQ==
+ bh=Lxiqm18+sn4NfhFWpGsu8e9acXNWibaUDGV6AOwg284=;
+ b=TjJUDY3LsOwYGRPL6Lweg6VRkTy2xcEd8GGwKXAP4MvlTg5hmq+4gsxmBQ4TSBmwCF
+ i9jBiKnFb6tn8BNuRdFC6zesDkOOwXdvLhwbBSaYf995cKNBurM0MoT/EA7rFWEDCQFw
+ KD0IDjh2p45wxUDnTNojC8IUJYbPDkcmVQry5KZgVeHcEcqMcMITK0a+7X+gPwzZRvrq
+ 5R2EaoFlHoCiykdFpotXb2uYlUyR9f0bfuUTu7BCuucD7hGcVOzpszfrQMe+eADKO1kA
+ xSr1M2CyDHmqhj4bKIomwq3G4/uauHQ723YVLg7m5KLiA1i2pa14lzL0ey7012fYJvOK
+ IZEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746487451; x=1747092251;
+ d=1e100.net; s=20230601; t=1746487454; x=1747092254;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wE+ks75IW4zuYyzk7c3HX2M0GM7VkI4W6D0uip1dkOg=;
- b=hhNeIqRbZXnmm+HNr+ST++4rxRQvMvc+PbLIlctwoAFLihvm8FjvWSZI0LpthmUEtJ
- IdfAudwkJgrK58De7hxUEAuz3OwFsQdr27znwEwYJNVfLI9KV0vZaogmzj0Bt3PniyuU
- nFMENUhZMxBUitPCIC7yGcLC3H2dyD/4HdjYtLSNIiHfaz0Nwo7b93lf/CtN6L4YaNQe
- jkAyHqS1zosMmg9NtGyP1qBf91t25SEhMgDqZ+ms8xXi6dAj8ogQJcvALqoy3LWJXcK5
- 6zlbFLWj77kWf+gIOsuKSK854Hsrxj84rRKDUM/aBDQyxRFNXEfsumc2tAsw3AGuNx+Q
- JrRw==
-X-Gm-Message-State: AOJu0YyWj53fraoe3kucdCC3I2QX7RPKBSBmP1+5OLpcf/UrChTO0CNv
- bDkC0TLs1TEFSn3Sig0MjTXjPYj1CK/Fvnv6Hak+LyrxF0eMEyeaiQ+T4qHYQVCAUxxhoytGDVS
- G6U4=
-X-Gm-Gg: ASbGnctlX+5tJ0HZ13X//tKrYq/66w/JPiEA0LmDH3onnESJqTMIwNPG/MJ1JJvRP/n
- Oysu8sviaRmnw+97ros3i/QpwcFSA3N7TAVfS+BTqTcDr3SV35XYGTwRlyGWCe0pCboHNLw/35S
- 54Ztqgnx9Bo1u/I+3nYunYtkMYqJaGF3T2yGvJMcvz8t/to/ZUOClygJkmADA18T+/NQSz99eC7
- bMg03L6g8IENDOS6Bvza87YhguG81TF1UGc5Schvvu3Er3iFqCFKby38XSEJV4dyd7psDFvXZMq
- RrKDwlfuDGNCBYsdVSxBgWB/ZpFxdhmvI8czUWGGzioNz0iAZL4=
-X-Google-Smtp-Source: AGHT+IHFYgo3dGI6oymiueOZq/2WBNSFS6bNBMqt9jfge9pyyjbKnOcspVMZnv8e5GSJtvTzFP61hg==
-X-Received: by 2002:a17:902:e80a:b0:220:c813:dfce with SMTP id
- d9443c01a7336-22e363ac721mr10768215ad.39.1746487450836; 
- Mon, 05 May 2025 16:24:10 -0700 (PDT)
+ bh=Lxiqm18+sn4NfhFWpGsu8e9acXNWibaUDGV6AOwg284=;
+ b=PGQloaERBeiGQksScOYKkw4VRXcVCHJEM9PbFgmC1PHz1U9UJYPKvTeahnr3DP99NJ
+ XON8P90DEdBvA84i14p8d8ixQ/TeM7zGTI6it8ccP3r/YWRuILYEnffnTkUQw6B0K1bD
+ Nj+QzX5IpvnenXDNtu8KA8kqdo86dWkwKaOlcohdqpI1izSaheecS7S9Fe2A4CI2TGov
+ Deby++QIF8Zul6PWb2+EX6lfRpieY0lf08zpsOXM96OPlzkVBQ1emVCabFlCDjMVBBYc
+ IF89weMbptvcSIiXt04WkM8pQ1+WfOT10DbM7XmhfDF1Z1Co0HymyyQ5pIXHIHIxaCgc
+ v2FA==
+X-Gm-Message-State: AOJu0Yw1tsQchTnYLDFJcEQxVe+GHANb/iiwNNbQZaYnzffsJmrgQKhB
+ aiqrtLCGnfJ+NYu+NQEAb/lEvwPn/beA2Hs/mtfs+hbqKfJcUDOrIFikBcUUYPv/Na4bRQonyyd
+ kPd4=
+X-Gm-Gg: ASbGncubpHqnhYTNjREFwt25T46jlcn8dO5JwIII0/yiul+YZSOEYY4hu6zB0LKiGil
+ x/nBbbt1cFeF2BnbcfYuWJK45oWQbBTFgHjhAzZ39hM5s/d37pSSbpPR0B75SPEY9lbpJED8oOZ
+ 2+ySL62E2Gs+HTBa99Mt3+NDzSUfPFD2w/65zhfD6bCTTNTY1qngYrGloIL0AdV3NsF0sxhhEUN
+ y3Iru4y4fzFFDzYjV5OrmrcEPxiyx0qsEirTvMGTAIbNUsZ1D1Df9hgoSx7aO1/0Y9y1aavxLAe
+ dNNn21qOw8iG9z4poWhgEgxkVBzm5+pbaiuWmRFk
+X-Google-Smtp-Source: AGHT+IH+n+7t3z29C7R6sRRD9PrLWdyQFgHaAF6qg00b9P4xkufJ3wIXXkW4T544/tooWyNTVIcfsw==
+X-Received: by 2002:a17:902:e54c:b0:215:7421:262 with SMTP id
+ d9443c01a7336-22e328cf694mr20675215ad.12.1746487454294; 
+ Mon, 05 May 2025 16:24:14 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e16348edasm58705265ad.28.2025.05.05.16.24.10
+ d9443c01a7336-22e16348edasm58705265ad.28.2025.05.05.16.24.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 May 2025 16:24:10 -0700 (PDT)
+ Mon, 05 May 2025 16:24:13 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, anjo@rev.ng,
@@ -70,17 +70,17 @@ Cc: richard.henderson@linaro.org, anjo@rev.ng,
  kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v6 43/50] target/arm/tcg/hflags: compile file twice (system,
- user)
-Date: Mon,  5 May 2025 16:20:08 -0700
-Message-ID: <20250505232015.130990-44-pierrick.bouvier@linaro.org>
+Subject: [PATCH v6 47/50] target/arm/helper: restrict define_tlb_insn_regs to
+ system target
+Date: Mon,  5 May 2025 16:20:12 -0700
+Message-ID: <20250505232015.130990-48-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250505232015.130990-1-pierrick.bouvier@linaro.org>
 References: <20250505232015.130990-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,53 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Allows to include target/arm/tcg/tlb-insns.c only for system targets.
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/tcg/hflags.c    | 4 +++-
- target/arm/tcg/meson.build | 8 +++++++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ target/arm/helper.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
-index e51d9f7b159..9fdc18d5ccb 100644
---- a/target/arm/tcg/hflags.c
-+++ b/target/arm/tcg/hflags.c
-@@ -9,9 +9,11 @@
- #include "cpu.h"
- #include "internals.h"
- #include "cpu-features.h"
--#include "exec/helper-proto.h"
- #include "cpregs.h"
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index ef9594eec29..6eaf6b3a04e 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -7763,7 +7763,9 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+         define_arm_cp_regs(cpu, not_v8_cp_reginfo);
+     }
  
-+#define HELPER_H "tcg/helper.h"
-+#include "exec/helper-proto.h.inc"
-+
- static inline bool fgt_svc(CPUARMState *env, int el)
- {
-     /*
-diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
-index 2f73eefe383..cee00b24cda 100644
---- a/target/arm/tcg/meson.build
-+++ b/target/arm/tcg/meson.build
-@@ -30,7 +30,6 @@ arm_ss.add(files(
-   'translate-mve.c',
-   'translate-neon.c',
-   'translate-vfp.c',
--  'hflags.c',
-   'iwmmxt_helper.c',
-   'm_helper.c',
-   'mve_helper.c',
-@@ -66,3 +65,10 @@ arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files('cpu-v7m.c'))
- arm_common_ss.add(files(
-   'crypto_helper.c',
- ))
-+
-+arm_common_system_ss.add(files(
-+  'hflags.c',
-+))
-+arm_user_ss.add(files(
-+  'hflags.c',
-+))
++#ifndef CONFIG_USER_ONLY
+     define_tlb_insn_regs(cpu);
++#endif
+ 
+     if (arm_feature(env, ARM_FEATURE_V6)) {
+         /* The ID registers all have impdef reset values */
 -- 
 2.47.2
 
