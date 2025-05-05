@@ -4,107 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CBBDC369AB
-	for <qemu-devel@archiver.kernel.org>; Thu, 24 Apr 2025 09:51:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CEC1C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 18:38:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1u7tES-00009S-62; Thu, 24 Apr 2025 05:51:00 -0400
+	id 1uC0he-00071F-0i; Mon, 05 May 2025 14:38:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1u7tEQ-00008b-NB
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:50:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1u7tEO-0002wA-U1
- for qemu-devel@nongnu.org; Thu, 24 Apr 2025 05:50:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1745488252;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- resent-to:resent-from:resent-message-id:in-reply-to:in-reply-to:
- references:references; bh=ctzATEo3wfKk0LkewVzzIrTODGgfX/lcFqq8uVOTXmQ=;
- b=bMZjERpeZp2MKHbsm3O3sEFspkXioXB4hmrwo5Vj5pldR8/+uKOHh6FU7eZjsfFp+pSJuD
- RZ0w7jgiqx8vujiKAn+CsX0+ee2EKUtmn0zGf2kyaCOn+EVLMwK7eFG+oTZwN/ctdd9wiD
- OEDcj/Tfd0IicRWVUwR3QlVSbKnww2k=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-590-3fWzFL20Mj2LaltMFOFYjA-1; Thu, 24 Apr 2025 05:50:50 -0400
-X-MC-Unique: 3fWzFL20Mj2LaltMFOFYjA-1
-X-Mimecast-MFC-AGG-ID: 3fWzFL20Mj2LaltMFOFYjA_1745488248
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43d007b2c79so3204985e9.2
- for <qemu-devel@nongnu.org>; Thu, 24 Apr 2025 02:50:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uC0hb-0006wF-TS
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 14:38:07 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uC0ha-0005dk-5B
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 14:38:07 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-22e331215dbso1306145ad.1
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 11:38:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746470284; x=1747075084; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RwYDd4RfhGaF/Wo06IyJthgZAfsIBE7MtgTVTQlqvLA=;
+ b=G4bN7r0xAI6WVWnr8IC6gFOat2lSyTRFD8QDlaqhRTCG/T0eUe6HhXEHGGjrqaAQsq
+ S3lf6DmbAcrVk5u9NBpWFh5dHzKJ7bKONLAGyGf9loEd9gYfjiyWGrJftash8fjXCR6N
+ 5rx3A2LuuE7NSR3vn73EDDPDN/Fu3VVzMQhQ/kY4MZTb0QAkXt2JRL0NeQcSdMSXj+O8
+ nzE5PdwC1eTbBtMhAo0uXcs9lhpohJLgc+/AopvwJIqe2kESaqD6drLJZ18djjsuRe5m
+ ZxJJJThl7TglFJcaSC6KupW6AUwlDwhaECfMCHLVEDFa2hN3YOYykTN7oP66qGbQ3EuC
+ pUJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1745488248; x=1746093048;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:to:from:date:resent-to:resent-message-id:resent-date
- :resent-from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ctzATEo3wfKk0LkewVzzIrTODGgfX/lcFqq8uVOTXmQ=;
- b=uQ88JQtYW8ZlEPn1G05V5W8PdGPGm9p2efaCBVnd9OGrkFDA/qeGDlYLE4CFmgexa6
- X0CwdCI+D9DerN7IV9erTejSmFhAQa2ucCi0EvUVRyFmEXJzlVbZ8OWQ7dZWz5Bg74KV
- aWv9fC9thFxhtu54AfNPa7Vxq3+GpphIT4f6cWm0dvVzT18UHkZ7++HHwKT4S2Fqtd4L
- W1EFmbVThJ3ftkrvrpJ+KUmZfzMIWGoS2pmtt/m5McztjOxQXMHV7Fcx7cdPahQs0ODv
- 9c9gE+lFYACb/+GafN5esPqiaPtdxUUSur2FcaoV30Yj9EEbUoORDNdmtho9Rocc1KEh
- Tgkw==
+ d=1e100.net; s=20230601; t=1746470284; x=1747075084;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RwYDd4RfhGaF/Wo06IyJthgZAfsIBE7MtgTVTQlqvLA=;
+ b=VghkS5IRTyG/koi3fqj2fVYITEHC00Yi41Ozfu/NKaT9UmAybQ0H0pOW9xrQnFVCyf
+ /dE1bAPdK9spEiM/Cv9XhnwqsBigQ6kTKjo2C920DyuFKbuCAo+YcTQD2XmvorGR5vMB
+ b7xbbmo+XYXC2gftMaFjprXV2UOThq4ZwVdjw5wdssp1dY2ne2O/Ek1kfQvYsoNz/YBs
+ Wa31TSOde/ySuoei2lJ8PL1FKjiNZ73fAz4U0BV+6ib4pCGskKg7I8sS4/a07mD97Bre
+ t04mpCq4EYP7oRDfSQtmpnSZzRC7rtXaxiFCqPnl132VKpjiuRSPUl9L9Qmu6ShS2HeV
+ p8JA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVA67vDfX3VcIt1984EwrwTYupMN6Km5MaS0PWyxj1G094MGgmnjddQ8tRy5JCVvsfOZaDRseyIhMDg@nongnu.org
-X-Gm-Message-State: AOJu0YznKd0klvXw2aJ2SKAauJ5UZhkz2C/2LB9yPgBEbWOz9B10j19A
- dCytFYvlZLPKBROoUJpAtjy06W57tb/XrYUNe7jZ26dbzjBpoPNsENG5XZxqBeDUCtklodyQeRM
- BlAOEZxqnGdNMtqVm3MTig5/7tPKUaoQkotJnN4ck4NJpXOCXAtRmGP2Kq404fMfpmmZJO3rI5I
- lhBrw4J/mshR1Pslv47FaRBs8SLeRcHHv1RJ0=
-X-Gm-Gg: ASbGncsV+YVWJ+rLl7+yWKKABcxKLrIjls5mkFpCLnfsWy7NsgIgVszqwc9GBpYUYvO
- Kmdqju9rwqKBBVtKgR/o4sKE05A83wreL3fEw3tX1zbt22kRSqMMxvhtBmx/VTX8vghyZWxqIbp
- FoBaHOAYJS9J4+YvqoWwslGkA1uofl3pY3T7zvQAbBHvqEI2bNvhRLZjGaga2kXNCUW8orcmtpl
- 8AcONn98NnGBs/2dfjaPTqdzU4SGtlNh3LfqHN5K7Ttng9/JRhOaI9gU+sgqdTwCTWq0+KxyLJs
- fvFC3999NsAhYY6NIGXCcroyedD8
-X-Received: by 2002:a05:600c:b8e:b0:43c:fa24:873e with SMTP id
- 5b1f17b1804b1-4409bd0fd4cmr19798835e9.13.1745488248104; 
- Thu, 24 Apr 2025 02:50:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFK/en76t9Y/Efke962Sxvdvpuh4X+SruFNN3sv2RdeD7Cyv7QT/s3q66iAMAdI8XiwG/tOQA==
-X-Received: by 2002:a05:600c:b8e:b0:43c:fa24:873e with SMTP id
- 5b1f17b1804b1-4409bd0fd4cmr19798575e9.13.1745488247648; 
- Thu, 24 Apr 2025 02:50:47 -0700 (PDT)
-Received: from fedora (nat-88-212-16-204.antik.sk. [88.212.16.204])
+ AJvYcCXt1qn9nnO70A3qU3rLx48/6s80eWu4XGZaKofGZCIhlrHpZcrV8JeZxlNpWqM2pNDCaDP2yn2NlvAb@nongnu.org
+X-Gm-Message-State: AOJu0Yy0naspH2wEYFfrxVwDcZeNKGkY5R/6d7ehIs6DOekUNlutivm1
+ OxV04IInQ+MJAI+rdLs0WIJxIJyFPZVktr4iXuAbs1bYoNkvUKhakb59xPAXQKo=
+X-Gm-Gg: ASbGncvByXhD2iqnv5xVJ8BRtP0d53W6e5bsOES5EGwxzGermTGO/ZfIQRPzqj4wjOs
+ F6XKt29MMVpSFMYALZYYV2UMaC3s32ojsNOgd7A8Bq3IaS5Y269E2dcKofjIn02obF2tbL57Xd/
+ lBNYzXa+Cnkb3G0b5RgClgLYmJcIoXrAzy1ON6t8qaqZifEQB57EvKMIRhBgh7c+16WDruiFA0d
+ s8Vz/RH9GpuwKHfDERFXyp5Z+uLeCCmPCDVRjAStP2pgH+XLKEm4olL2LsXwxbsY7a940Y06oRb
+ aZ+mDoflluIaZKpGhzexw+5OqNC+gn3oH84wuLLmn4cE879Sx9BuViYb6CzyIvSa
+X-Google-Smtp-Source: AGHT+IHSCj6ho5NZbU6RnDbPmPsi2o/RSDYxs4tShAHE0kZUhd/TIDJiPd6vgJRtvzRbj4twnWAPEw==
+X-Received: by 2002:a17:903:1ce:b0:223:517a:d4ed with SMTP id
+ d9443c01a7336-22e3279fc6cmr6808815ad.15.1746470283962; 
+ Mon, 05 May 2025 11:38:03 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4409d29bfa6sm14250795e9.3.2025.04.24.02.50.47
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 24 Apr 2025 02:50:47 -0700 (PDT)
-Resent-From: Juraj Marcin <jmarcin@redhat.com>
-Resent-Date: Thu, 24 Apr 2025 11:50:45 +0200
-Resent-Message-ID: <3gmcd5fups75kbewe4cxqnykmvhykglnprmi7zzdqizeim2o76@aogr7flp2355>
-Resent-To: qemu-devel@nongnu.org
-Received: from fedora (nat-88-212-16-204.antik.sk. [88.212.16.204])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5f625a3e4bbsm7286293a12.72.2025.04.23.04.02.52
- for <farosas@suse.de>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 23 Apr 2025 04:02:54 -0700 (PDT)
-Date: Wed, 23 Apr 2025 13:02:50 +0200
-From: Juraj Marcin <jmarcin@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 0/2] migration: A couple of cleanups
-Message-ID: <4oydcm2b533xl2tz2uujgjrmxodhrjigm5ugijwvlwxsqr7pks@qpmvfrtlx73f>
-References: <20250416134356.29879-1-farosas@suse.de>
+ d9443c01a7336-22e151e998bsm58599915ad.67.2025.05.05.11.38.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 May 2025 11:38:03 -0700 (PDT)
+Message-ID: <0a765d57-0c9a-4732-b560-203f03f903e9@linaro.org>
+Date: Mon, 5 May 2025 11:38:02 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250416134356.29879-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] bsd-user: add option to enable plugins
+Content-Language: en-US
+To: Kyle Evans <kevans@FreeBSD.org>, qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, richard.henderson@linaro.org,
+ alex.bennee@linaro.org
+References: <20250331234228.3475706-1-pierrick.bouvier@linaro.org>
+ <0a39e805-eb75-4b88-b316-189acad38efa@linaro.org>
+ <a7cc7e54-b84d-44e1-8c75-df39b44dd28f@FreeBSD.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <a7cc7e54-b84d-44e1-8c75-df39b44dd28f@FreeBSD.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.294,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,28 +105,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Fabiano
+On 4/28/25 3:57 PM, Kyle Evans wrote:
+> On 4/28/25 14:36, Pierrick Bouvier wrote:
+>> On 3/31/25 4:42 PM, Pierrick Bouvier wrote:
+>>> Nothing prevent plugins to be enabled on this platform for user
+>>> binaries, only the option in the driver is missing.
+>>>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>> ---
+>>>    bsd-user/main.c | 12 ++++++++++++
+>>>    1 file changed, 12 insertions(+)
+>>>
+>>> diff --git a/bsd-user/main.c b/bsd-user/main.c
+>>> index fdb160bed0f..329bd1acc02 100644
+>>> --- a/bsd-user/main.c
+>>> +++ b/bsd-user/main.c
+>>> @@ -175,6 +175,9 @@ static void usage(void)
+>>>               "-strace           log system calls\n"
+>>>               "-trace            [[enable=]<pattern>][,events=<file>]
+>>> [,file=<file>]\n"
+>>>               "                  specify tracing options\n"
+>>> +#ifdef CONFIG_PLUGIN
+>>> +           "-plugin           [file=]<file>[,<argname>=<argvalue>]\n"
+>>> +#endif
+>>>               "\n"
+>>>               "Environment variables:\n"
+>>>               "QEMU_STRACE       Print system calls and arguments
+>>> similar to the\n"
+>>> @@ -225,6 +228,8 @@ static void init_task_state(TaskState *ts)
+>>>        };
+>>>    }
+>>> +static QemuPluginList plugins = QTAILQ_HEAD_INITIALIZER(plugins);
+>>> +
+>>>    void gemu_log(const char *fmt, ...)
+>>>    {
+>>>        va_list ap;
+>>> @@ -307,6 +312,7 @@ int main(int argc, char **argv)
+>>>        cpu_model = NULL;
+>>>        qemu_add_opts(&qemu_trace_opts);
+>>> +    qemu_plugin_add_opts();
+>>>        optind = 1;
+>>>        for (;;) {
+>>> @@ -399,6 +405,11 @@ int main(int argc, char **argv)
+>>>                do_strace = 1;
+>>>            } else if (!strcmp(r, "trace")) {
+>>>                trace_opt_parse(optarg);
+>>> +#ifdef CONFIG_PLUGIN
+>>> +        } else if (!strcmp(r, "plugin")) {
+>>> +            r = argv[optind++];
+>>> +            qemu_plugin_opt_parse(r, &plugins);
+>>> +#endif
+>>>            } else if (!strcmp(r, "0")) {
+>>>                argv0 = argv[optind++];
+>>>            } else {
+>>> @@ -433,6 +444,7 @@ int main(int argc, char **argv)
+>>>            exit(1);
+>>>        }
+>>>        trace_init_file();
+>>> +    qemu_plugin_load_list(&plugins, &error_fatal);
+>>>        /* Zero out regs */
+>>>        memset(regs, 0, sizeof(struct target_pt_regs));
+>>
+>> Gentle ping on this series.
+>> As we didn't have any feedback from BSD side, could we consider to
+>> enable this upstream?
+>>
+> 
+> Sorry- I have no strong opinion on plugins, but the diff looks
+> incredibly reasonable and non-invasive.  I'm not really seeing any
+> reason we'd object, but I don't personally feel qualified to review this
+> (except as a basic human C linter- I can't imagine the added calls
+> breaking anything we rely on).
+> 
 
-On 2025-04-16 10:43, Fabiano Rosas wrote:
-> Postcopy code was moved and some if postcopy were left behind.
-> 
-> Multifd has an accounting issue in tracepoints.
-> 
-> Fabiano Rosas (2):
->   migration/multifd: Fix received packets tracepoint
->   migration: Trivial cleanups for postcopy
-> 
->  migration/migration.c  | 28 ++++++++++------------------
->  migration/multifd.c    |  6 +-----
->  migration/trace-events |  4 ++--
->  3 files changed, 13 insertions(+), 25 deletions(-)
-> 
-> -- 
-> 2.35.3
-> 
+@Alex, would you be open to enable this, as it concerns plugins?
 
-Both patches look good to me.
-
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+> Thanks,
+> 
+> Kyle Evans
 
 
