@@ -4,88 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63294C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:07:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2D71C3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:18:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBqql-0002ur-Jj; Mon, 05 May 2025 04:06:55 -0400
+	id 1uBr0d-0006zr-Ah; Mon, 05 May 2025 04:17:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBqqj-0002uK-1z
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:06:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBr0O-0006yZ-6G
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:16:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBqqh-0002FO-Cr
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:06:52 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBr0L-0003kc-Vv
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:16:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746432408;
+ s=mimecast20190719; t=1746433008;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3cWGKy8Ph/aNn3T518rHxHvC3K2U91HBVqyT3Q9z9tM=;
- b=F2Eh4U02QB0uhG+FGM8Adyc4PBpylbU96MktcePhsCpI+NupaJrCvlNHFfFLSSBOc6ZOTt
- TLSGSScFwc1cw1hDFS187NccDL2KR7D4KV6AJjxfkDq+uco4Sa6bK9nh8sA6VnQfnNzhn+
- nmmRF948rMxPUSs4jLo3ZOwpSwbFBsI=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bLNgte6CoUt/Z3diEpoLnAR8h/0E3/lAAALtpiU8s88=;
+ b=T950rQFwTB0nmQ8XGn01AKKXvFRch5e7B+YOAvwjW4cnmPKXP+DrEqgJoK9h1v/tbjPY5j
+ 3UzGWvxITb9yq+BO3YEoDteLfl9QSNm5BagFg6YTyMmyH8OHgbm63a7JaKRxkoyiOnJpAQ
+ fy26A+6orW3qNIdi78hjlYgRVLRA1iY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-581-Q_17BNhBPfOtiVlZm_xOAQ-1; Mon, 05 May 2025 04:06:47 -0400
-X-MC-Unique: Q_17BNhBPfOtiVlZm_xOAQ-1
-X-Mimecast-MFC-AGG-ID: Q_17BNhBPfOtiVlZm_xOAQ_1746432406
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43ce8f82e66so21404675e9.3
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 01:06:47 -0700 (PDT)
+ us-mta-543-hp9yZAyFNROtULcT0B3Nqg-1; Mon, 05 May 2025 04:16:44 -0400
+X-MC-Unique: hp9yZAyFNROtULcT0B3Nqg-1
+X-Mimecast-MFC-AGG-ID: hp9yZAyFNROtULcT0B3Nqg_1746433003
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43cf446681cso24043395e9.1
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 01:16:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746432406; x=1747037206;
- h=content-transfer-encoding:in-reply-to:autocrypt:cc:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3cWGKy8Ph/aNn3T518rHxHvC3K2U91HBVqyT3Q9z9tM=;
- b=vXQgq7Nb3cqUFeCaeaR58Z/ltgp/7ahRxtnGz7XhMVJa5E5X533BGcKelSB222WKpr
- kr4JpBxPRMuA8gELO72MAmYwbsXpn9tDBP+iH5SrqOkUWkB0y5MOIoSerwaZnwYk/4cp
- q627TmMGe3d6QTQ4szl31vdTzrUA7ro0fAOzPJZAzwt6hUWdFuDFu/+z2BW6YdXaVDwX
- ha1yHv+n/WXUmXnpxG63UogWMAAnOCgE/b3KOexASndoyV0W5hcGL/4Mi4gprIT3WeI7
- XBa/2/ML4D19xHUib30y9Nq380sdO9rcZ41IjDeQ61uc1wzczsn5CrgPrROql+LUb6ZK
- dIDA==
+ d=1e100.net; s=20230601; t=1746433003; x=1747037803;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bLNgte6CoUt/Z3diEpoLnAR8h/0E3/lAAALtpiU8s88=;
+ b=s3wM0ts5zdKgy9wcRjtY1r1JFiD5hX2jfYhjjIUN9jlNH7PHH5M96kfNu9Q8oQzi9B
+ laVjSV6ncFnBpc4cd5CXUPjNJe6OlVCs9/M+gtjA3PQ2cXgiqJZkIboNqJoRmHCcgM9/
+ 1JX6B0bv1kD3ESvxe1gbt1lhO1Eh8uVeGhUhrWyDXQX1eA469JepC8Ei0eMpOiRVgZUX
+ /M7gKWjA955MIZ5wvXQPEDWEJHa3WUKCRsWkUiOp66wHpQSts2zV2QakLr4m0v/zqdoU
+ FfUawikC8oImmqC+lj7ZxMBVCNTL30IHHsLZxEhOpqYjHbhc2WLUUxhuw6djeDGZdI2f
+ BNOg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXCiP29R1aS1dg8NuBioquhkGJtcsPlggAHPcIxo6nKsei6UboEp7I9fDl7oU8Ce79mEPA/8eYe7IDC@nongnu.org
-X-Gm-Message-State: AOJu0YysPvEDfgw4bvmxGDS9xoohdWZmxGpNguBeKyHrtGxLURubeJ1n
- pTWyMk1PsmbSh11vKbSJsV1lX26kkb1kFi3zyOnecwLYvKd+zcD+k5NPUya8vzh/nNms1YMAfTL
- xsfRgLnEPHSuSuA1WcIcQXnnuEY8Lqm/kMYkcsnKwN65mMnlXIenJ
-X-Gm-Gg: ASbGncvxR9pN4NNDDwJuNVNZK02DkNlBTnZRRKV4hLcPTzN4HYN3n4PfDq9M660rIIw
- 5H5hEXQzFRqPGq46u5HVXSkoxDVZj6K+6bN+gdP2IO707etzMeTLz/En1wuC2fRJLJzV4mMRX8Q
- TINmBZYGLIgDc1dUE5KeMkLYlLKs/UT6Ywr+ApZB831StMzZg1RKuwDwXi0khrwPCnHX92RY2+Z
- LePkuN8+AyzwFFprzxoGv8zcsgq+4arAQ8mrYoCx3qc5EJ99a8nLIaCOjmUP2fjKNo4ytYV1kqV
- tHgdttGZfmlQKMLAbjEGyvlkOp3jC9Twd+Zy9g/F
-X-Received: by 2002:a05:600c:3492:b0:43d:683:8caa with SMTP id
- 5b1f17b1804b1-441c48dc057mr60997375e9.15.1746432406226; 
- Mon, 05 May 2025 01:06:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFfPELW8rQmM11D6q6IY7FsjRLOcptsrh1uAGNzTd+fPYTsq77wUrsKG64/kYh+l1P61d7gQQ==
-X-Received: by 2002:a05:600c:3492:b0:43d:683:8caa with SMTP id
- 5b1f17b1804b1-441c48dc057mr60997045e9.15.1746432405796; 
- Mon, 05 May 2025 01:06:45 -0700 (PDT)
+ AJvYcCWfOFc/CYrjU4xmi5gKGY0yiQz3hN45M1qTS9f6TfTUeOgf5rdTMqMi1RBcSrzJ2DfrNjRXCj/AxKMD@nongnu.org
+X-Gm-Message-State: AOJu0YzknZ1ugYqEZgd64+EhMg09X/Trlei3WSvHan3h5vJzR7EZmkvf
+ z0YDVALX69X9pAxYj9C+/qyCJqsxKDMBTxFPdZWZ6ELZfF69OzKgElrJiMNZkPMhA9CT2rX8gNv
+ SPIDjianG1QRGHuLqkEHaqqkMdj87alsXyASupFMiWS4WFeGDd+L6
+X-Gm-Gg: ASbGnctQoO91Zqj7NjskctXard3BD9kZG1D9On18CNg5RmmMMm0SwWqSgmTPljfYHsD
+ bZ6zdvGp66bsVyCF9z6kPh+sLubMYQVrai/MW4dZJH7SAvScamMuzwiF56j7uJwbEtFUaCI0yJl
+ q47KeIWlEzbfdffztbfDQ/QgQ4NhWz8mPpqGGprXhRwl9KOjM7lE8kyvl5Cwu+U79M8o3aJT6uq
+ 9zxOktnmMJpcH052nUWcVY/YAS5lKACV/2k/KtiS+DRmjBpPnIEXSc5qDhpvXvyceuC28MVryW0
+ uiGhjzWUVyaWTT9+ISEMy9bRPJucW1WdpcJiMwH1
+X-Received: by 2002:a05:600c:468c:b0:43d:82c:2b11 with SMTP id
+ 5b1f17b1804b1-441c4923885mr43655685e9.23.1746433003435; 
+ Mon, 05 May 2025 01:16:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG1C33xuFNAQyHinWPn758Kvp6SC1nGZcVQDKIhMky6Qm/OH83oWBU8EUiUUcLsVQog+aes/A==
+X-Received: by 2002:a05:600c:468c:b0:43d:82c:2b11 with SMTP id
+ 5b1f17b1804b1-441c4923885mr43655425e9.23.1746433003102; 
+ Mon, 05 May 2025 01:16:43 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b2b287desm170865355e9.38.2025.05.05.01.06.44
+ 5b1f17b1804b1-441b8a31576sm124390625e9.37.2025.05.05.01.16.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 01:06:45 -0700 (PDT)
-Message-ID: <66c69049-efb1-4d40-ac76-f66e92d33b95@redhat.com>
-Date: Mon, 5 May 2025 10:06:43 +0200
+ Mon, 05 May 2025 01:16:42 -0700 (PDT)
+Message-ID: <c00c2798-3128-4257-933a-e1120533b0b6@redhat.com>
+Date: Mon, 5 May 2025 10:16:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: madvise(MADV_DONTDUMP)
-To: Jon Wilson <jonwilson030981@googlemail.com>, qemu-devel@nongnu.org
-References: <e703e0e8-8207-41b6-b2a5-6d6544816fd3@gmail.com>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v2 01/19] hw/i386/pc: Remove deprecated pc-q35-2.4 and
+ pc-i440fx-2.4 machines
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ qemu-block@nongnu.org, John Snow <jsnow@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Jason Wang <jasowang@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20250429140825.25964-1-philmd@linaro.org>
+ <20250429140825.25964-2-philmd@linaro.org>
 Content-Language: en-US
-Cc: Laurent Vivier <laurent@vivier.eu>, Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alexander Bulekov <alxndr@bu.edu>, Stefan Hajnoczi <stefanha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Darren Kenny <darren.kenny@oracle.com>, Qiuhao Li <Qiuhao.Li@outlook.com>,
- Bandan Das <bsd@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -128,7 +136,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <e703e0e8-8207-41b6-b2a5-6d6544816fd3@gmail.com>
+In-Reply-To: <20250429140825.25964-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -156,41 +164,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/05/2025 10.42, Jon Wilson wrote:
-> Hi, I'm a first time contributor to QEMU. I am using qemu-user for fuzzing 
-> using LibAFL and as part of that including support for address sanitizer 
-> (https://github.com/google/sanitizers/wiki/addresssanitizeralgorithm). In 
-> essence, this requires that my process running in QEMU requires very large 
-> (albeit sparsely populated) memory ranges (terrabytes in size) for the 
-> shadow maps. When ASAN detects  an error, it causes the target to crash. As 
-> a result a coredump is generated (which would usually provide a very welcome 
-> opportunity to perform a post mortem), but QEMU includes these shadow maps 
-> in the core dump which it generates quickly exhausting disk space.
+On 29/04/2025 16.08, Philippe Mathieu-Daudé wrote:
+> These machines has been supported for a period of more than 6 years.
+> According to our versioned machine support policy (see commit
+> ce80c4fa6ff "docs: document special exception for machine type
+> deprecation & removal") they can now be removed.
 > 
-> The function vma_dump_size performs only basic filtering of the ranges 
-> included in the core dump and the implementation of target_madvise 
-> disregards MADV_DONTDUMP (which per the spec it is at liberty to do). 
-> However, it would be very helpful if QEMU were able to exclude ranges marked 
-> with MADV_DONTDUMP. I believe it should be a simple case of adding a flag to 
-> page-protection.h and using pageflags_find to update the flags in 
-> target_madvise. Then the logic in vma_dump_size could be updated 
-> accordingly. A more colourful and easier to read description of this is in 
-> the following markdown gist (with references to the code in question):
-> 
-> https://gist.github.com/WorksButNotTested/becd7a1f89690fad89b3e8b44ed7192d
-> 
-> Would you be receptive to such a modification? Is my strategy for the fix 
-> correct?
-> 
-> Many thanks for your advice.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   hw/i386/pc_piix.c | 13 -------------
+>   hw/i386/pc_q35.c  | 13 -------------
+>   2 files changed, 26 deletions(-)
 
-  Hi Jon,
-
-no clue from my side, but qemu-devel is a high-traffic mailing list ... in 
-case you don't get an answer, please try to CC: the people who are marked as 
-maintainers for the linux-user code, that might increase your chances to get 
-an answer (done now).
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
