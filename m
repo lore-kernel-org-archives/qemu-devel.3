@@ -4,88 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36785C369C2
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 07:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B5ECC369C2
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 07:34:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBqKD-0000WT-63; Mon, 05 May 2025 03:33:17 -0400
+	id 1uBqKz-0001rM-FQ; Mon, 05 May 2025 03:34:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uBqKB-0000Q7-Ba; Mon, 05 May 2025 03:33:15 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1uBqKy-0001ov-8l
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 03:34:04 -0400
+Received: from mail-pg1-x543.google.com ([2607:f8b0:4864:20::543])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uBqK9-0005LJ-DR; Mon, 05 May 2025 03:33:15 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-736ab1c43c4so4065322b3a.1; 
- Mon, 05 May 2025 00:33:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1uBqKw-0005Ob-BA
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 03:34:03 -0400
+Received: by mail-pg1-x543.google.com with SMTP id
+ 41be03b00d2f7-af6a315b491so3818302a12.1
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 00:34:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746430389; x=1747035189; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pX1/R0BwZvK/hATHy4WCF4UxfTxafJoEm7vzhjt6VsE=;
- b=mUiMUH08z5Mw1VwO2Oe67qJX0EEkcnEcOOEPenfBwNcsHSHAhe3BvMxoNFPwGjKrth
- IT2YZ1KggZP7WSPEvreNisk3ulw4DdV9w2DEuUwb4otKvOdkZLKEK3gi138qCJ6zqnOA
- 3EBrnCUMvD3H7Ww/f/rXBd8YWlNfo8qGYJqniXyDdgNpslFjCuaqHn446AJ4WLhQuuUM
- FKK778mfWsvLR5dNEILSLWCZQwrvrIAnBW/KumWAiFXcGngR6P5Bkh9d2bBxsiDcok0g
- DnY9WHC0b5kC4l145fvTVWQ91qhzAFZ/kSlJweXIBF/SGczAj3MavSVKXU6Z7j6V+4G3
- ELaQ==
+ d=gmail.com; s=20230601; t=1746430440; x=1747035240; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=6hl9Fr5Uut2e5yH4oyz2jftsKh3FXLn7pkoz9p3lp0k=;
+ b=UGBPYlkisoRCYhIn8mF+HN68iiW2sN1oGbyHfPoC41hxI09cjKVE5kmgRfONcT+k7Q
+ Q1I1WP43j3+CyCZ7QEA+PCGPqw5GnNJrktYYd2TPFIPCc1CA0d6x4OBOAcZhbn9XwQwT
+ TfoUrrHn8dVvDN8LgIetTy9PxXiuygOJuUIREkuFEAu0SenDQp4rD/w/Lrb489VZcWUD
+ /qEeQRm4eiesUvDVqdquU39ovoF7T/11IO+shT63T3BUpU3WiNiZiTDa4t3uNnJ9MKd2
+ zFBtOplni4eMNsspdyizVijsLsbjtbVqkb0bMFuWdQRviMSMUowMNytK5KjdCQKpVLD0
+ +D1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746430389; x=1747035189;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=pX1/R0BwZvK/hATHy4WCF4UxfTxafJoEm7vzhjt6VsE=;
- b=VzKDEp/E+ROiu/xZqIaKb90mBYE+eus/Nf46ywh7KowLN4hY4quItSmVkZTLzCBoOR
- BhJIi+8YemUDN4zC1z1MB8IV7drg0Z0KZ6/uyEfv7vWC3Kl/3Az5cSSdAinJTXL1XewX
- 7mlkZk+LNwY/2zvXuzTQAjg8iO42loXZ++ZZ+LWn8bQwp6YFGY2XHrJo1tz0tWi/W5Tf
- Dlh6wlfGlzoSaI0xh/+NpvlQzO2QoWFgeei2Kw1ierEUM0v9bcv2Qzgppeyo1A6SYAZA
- VRZpvf6DnnNct+OMw4rQcbNaKNxWnnuA+hgIWegb32ke5CrRVAXa6oYm66eH4Nuyp5Go
- 9ZMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVR8PoLtQQ1cyOWdz/hzzboeYiJg2mIUNnGmMQkxk3HlPvGzfvDZcvov4f7XcSt+ojw/0ZkAM5KG8eq@nongnu.org,
- AJvYcCVWUYIeWGO5zPFkdN7jpjEgTkN5ktvtuo9/N9+WPk2zFGldMRw+MDp5UvwlxcYj56kZtEVETRs8oCwQLQ==@nongnu.org,
- AJvYcCW5gTEmruiE27A/mMSv3K5egxPOvCHOFdYSCp3qbKurn8T1ooj/pR8iiZfuVf9HkcDoL60km7ounrI=@nongnu.org
-X-Gm-Message-State: AOJu0YzRmp5WBoxlE9peKyR3WvWUK15mxGZO/lXVoq3JMvM8h2NpSpap
- IiMPA2/UZ7jaweGWZv+psSWhl2vNkmY36qSw+n1gJBlFETCh3EhJ
-X-Gm-Gg: ASbGnctMv4mSoGcAxRJWP9axONLQW0GVRBxMjjNyzu36Y3e6jm8DzN+4YsayM/cGlCy
- giTbstYmihYYnAqtWptcXL812wkZOXq2FwvjhsZIdehLRuc+AQ0qWXz5Z+2Y2BJ7YVwfh1pNl2R
- 69js3YhTK4ohuLHIffN+JOQklzMnVn4Jf4Sz6KXbEvjZ/Yodu9d5bZponqzxmq2uI1ZBdY3D7Kj
- 32iX9kgdB9ngMEYOp1KBHIoh9G7TtCPciuM4QMl7NAsf/WHNldmTSa/T3zPEJRv0QqNhFT60q3I
- Gg1JKi8iYp2kuOtxRlqB+2Ly01yKUbem
-X-Google-Smtp-Source: AGHT+IG3S7bJz+sph9Jatx0f5W3nPF8lzZUqKR8FO7NYfh6kig/719kZP6AGjL33QZmwDmBK/bsNxQ==
-X-Received: by 2002:a05:6a00:2e9d:b0:740:6f7f:7645 with SMTP id
- d2e1a72fcca58-7406f7f7a1amr10170397b3a.8.1746430389658; 
- Mon, 05 May 2025 00:33:09 -0700 (PDT)
-Received: from localhost ([1.146.78.151]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b1fb3924df3sm4046419a12.3.2025.05.05.00.33.04
+ d=1e100.net; s=20230601; t=1746430440; x=1747035240;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6hl9Fr5Uut2e5yH4oyz2jftsKh3FXLn7pkoz9p3lp0k=;
+ b=vlr7yf9SEpJZC4JvyHn9MRFXvuUvqXH5XzUqsmHXB8M4sx+OQuAknX5BgABZHl3VaD
+ stJT7SGhI4HGTkvQM+K3P4l8pWlKS+HHjlAFeyqbsUMcAVIkvhew1bvHSwmJ8Z15djyU
+ epoBVbGMn5rNLgEPm+nc11CsOJJ6MC4FqS46hJm9YpDg0QNyApb3pOsy20+1/KelT+JU
+ zx9gSmT61Y0iqbAQZOmRaEVYhMAXfVhXmlu3/O6n29Vm2gNOcGdlykzoQKPWnd3I1VjN
+ fMEO9Je0lRFxN8eUWlYAkCDD2/8CMgHfthBsLgeOPeXEgAvTDGcQv4nccn0lnsvSr6DU
+ Y7SQ==
+X-Gm-Message-State: AOJu0YyZNUUBOoRGlrVGAJbWFoNgSa4EHmqQfBBYE9tmkfuGnNp0ODHS
+ Dw65zSSSqLjTEbyVT+0VHcVypteS/nZw5KmiN3tZH/CPhqs2xVM=
+X-Gm-Gg: ASbGncsrCEI8ntIO4/FmTPMswzowzoIG3cVyUMNqTINaOu65sojbNnbxBwExDbvs8/f
+ uRBXS81CJng2gwzo6VnGCKxTjAqjVUb24ZAUGSYdQLxvppECfPLRY/DmG7gkJgH59OhP1+UrBuX
+ 8A6HVL8M73aEvLDh8cRa/qdyom8PS4GodvbtRcRkHVLRTRvPsSMU0YFZcmVDosBqHHeIJBh3mfw
+ xkFlyo6zmTC4xN+4DCrPrdGpOXE7pY8+8BfZnSXmoVlFtrXoUabjallDBox6AxBUkdfl5j9cfrF
+ EOqpe7YpxyPZ5jP2SQnVW7/UrEBW5F+HyH8JBj5tdfkWpbU=
+X-Google-Smtp-Source: AGHT+IFBlKvJ77NDrDIfTPOChZIo9r0WK7zWLP7MkdJsOhsxtR08ERw8/462fL7qnC+UOfpEF0/7WQ==
+X-Received: by 2002:a05:6a21:6801:b0:1f5:7280:1cdb with SMTP id
+ adf61e73a8af0-20e96605cc6mr8599548637.16.1746430440391; 
+ Mon, 05 May 2025 00:34:00 -0700 (PDT)
+Received: from [192.168.0.113] ([139.227.17.250])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b1fb3b62502sm4909155a12.32.2025.05.05.00.33.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 00:33:09 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+ Mon, 05 May 2025 00:33:59 -0700 (PDT)
+Message-ID: <92f3d3f6-d90a-4010-b67f-b282ed5f3c91@gmail.com>
+Date: Mon, 5 May 2025 15:33:48 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/9] vfio/igd: Detect IGD by OpRegion and enable OpRegion
+ automatically
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?=
+ <c.koehne@beckhoff.com>
+References: <20250428161004.35613-1-tomitamoeko@gmail.com>
+Content-Language: en-US
+From: Tomita Moeko <tomitamoeko@gmail.com>
+Autocrypt: addr=tomitamoeko@gmail.com; keydata=
+ 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
+In-Reply-To: <20250428161004.35613-1-tomitamoeko@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 05 May 2025 17:33:01 +1000
-Message-Id: <D9O1WH9RPAPP.UZ3PGQUKX3OC@gmail.com>
-Cc: "Fabiano Rosas" <farosas@suse.de>, "Harsh Prateek Bora"
- <harshpb@linux.ibm.com>, "John Snow" <jsnow@redhat.com>, "Laurent Vivier"
- <lvivier@redhat.com>, "Paolo Bonzini" <pbonzini@redhat.com>, "Michael S .
- Tsirkin" <mst@redhat.com>, "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- <qemu-block@nongnu.org>, <qemu-ppc@nongnu.org>
-Subject: Re: [PATCH v5 06/11] tests/qtest/ahci: don't unmap pci bar if it
- wasn't mapped
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Akihiko Odaki" <akihiko.odaki@daynix.com>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.19.0
-References: <20250502030446.88310-1-npiggin@gmail.com>
- <20250502030446.88310-7-npiggin@gmail.com>
- <20b79b43-71ab-438c-9617-ff95bbf5eef1@daynix.com>
-In-Reply-To: <20b79b43-71ab-438c-9617-ff95bbf5eef1@daynix.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::543;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pg1-x543.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,47 +147,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon May 5, 2025 at 3:25 PM AEST, Akihiko Odaki wrote:
-> On 2025/05/02 12:04, Nicholas Piggin wrote:
->> ahci-test has a bunch of tests where the pci bar was not mapped. Avoid
->> unmapping it in these cases, to keep iomaps balanced.
->>=20
->> Cc: Michael S. Tsirkin <mst@redhat.com>
->> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
->> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
->> Cc: Fabiano Rosas <farosas@suse.de>
->> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->> ---
->>   tests/qtest/libqos/ahci.h | 1 +
->>   tests/qtest/ahci-test.c   | 7 ++++++-
->>   tests/qtest/libqos/ahci.c | 9 +++++++++
->>   3 files changed, 16 insertions(+), 1 deletion(-)
->>=20
->> diff --git a/tests/qtest/libqos/ahci.h b/tests/qtest/libqos/ahci.h
->> index f610bd32a5f..d639692aac4 100644
->> --- a/tests/qtest/libqos/ahci.h
->> +++ b/tests/qtest/libqos/ahci.h
->> @@ -342,6 +342,7 @@ typedef struct AHCIQState {
->>       uint32_t cap;
->>       uint32_t cap2;
->>       AHCIPortQState port[32];
->> +    bool pci_enabled;
->
-> The following patch also adds a similar variable for virtio and has a=20
-> slightly different semantics; qvirtio_pci_device_disable() is no-op but=
-=20
-> ahci_pci_disable() aborts when no-op.
->
-> A bool flag can be added to QPCIBar instead so that we can enforce the=20
-> "no-op if not mapped" semantics everywhere consistently with less code.
+I forgot adding v2 in subject, sorry for my mistake.
 
-Now I think about it, the reason for the patch in the first place is
-to ensure tests balance their maps and unmaps.
+Moeko
 
-If we want to just keep allowing iounmap() of not-mapped bar to simplify
-error handling and cleanup cases that's fine, I think I can just drop
-these patches and remove assert in iounmap.
+On 4/29/25 00:09, Tomita Moeko wrote:
+> As proposed in a previous discussion [1], detect IGD devices based on
+> whether it has VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION exposed by kernel
+> and enables OpRegion access by default. This enables out-of-the-box
+> display output support for IGD passthrough without having to manually
+> set x-igd-opregion=on, which probably saves effort for libvirt users.
+> 
+> This patchset also limits legacy mode to Gen6-9 devices, as Intel no
+> longer provides CSM support and VBIOS on newer IGD, and Seabios does not
+> support setting up the 64 bit BDSM register on Gen 11+ devices. Exposing
+> VGA ranges to guests by default on platforms without VGA mode support is
+> undesirable.
+> 
+> Additionally, as we enables OpRegion on IGD devices by default, and
+> Intel removes the BDSM register from Meteor Lake [2]. There seems to be
+> no extra register quirks rather than OpRegion required on newer devices.
+> To support them (and probably future devices), the generation limit is
+> removed, with BDSM quirk only applied to known Gen 6-12 devices. 
+> 
+> Note: I have not been able to test this on Meteor Lake or newer
+> platforms due to lack of hardware.
+> 
+> 
+> [1] https://lore.kernel.org/qemu-devel/20250325172239.27926-1-tomitamoeko@gmail.com
+> [2] https://edc.intel.com/content/www/us/en/design/publications/14th-generation-core-processors-cfg-and-mem-registers/d2-f0-processor-graphics-registers/
+> 
+> Changelog:
+> v2:
+> * Removed "Allow hotplugging with OpRegion enabled", hotplugging is
+>   always forbidden.
+> * Test device is not hotplugged and get opregion in a single function.
+> * Update documentation along with code changes.
+> * Minor code style fixes.
+> Link: https://lore.kernel.org/qemu-devel/20250421163112.21316-1-tomitamoeko@gmail.coms
+> 
+> Tomita Moeko (9):
+>   vfio/igd: Restrict legacy mode to Gen6-9 devices
+>   vfio/igd: Always emulate ASLS (OpRegion) register
+>   vfio/igd: Detect IGD device by OpRegion
+>   vfio/igd: Check vendor and device ID on GVT-g mdev
+>   vfio/igd: Check OpRegion support on GVT-g mdev
+>   vfio/igd: Enable OpRegion by default
+>   vfio/igd: Allow overriding GMS with 0xf0 to 0xfe on Gen9+
+>   vfio/igd: Only emulate GGC register when x-igd-gms is set
+>   vfio/igd: Remove generation limitation for IGD passthrough
+> 
+>  docs/igd-assign.txt |  11 ++-
+>  hw/vfio/igd.c       | 218 ++++++++++++++++++++++++++------------------
+>  hw/vfio/pci.c       |   2 +-
+>  3 files changed, 137 insertions(+), 94 deletions(-)
+> 
 
-Thanks,
-Nick
 
