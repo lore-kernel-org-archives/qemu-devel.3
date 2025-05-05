@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7388AC3ABBF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7614FC3ABC0
 	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 23:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uC57O-0006ep-Hs; Mon, 05 May 2025 19:21:02 -0400
+	id 1uC56v-0006Bg-KF; Mon, 05 May 2025 19:20:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC57D-0006Sw-JG
- for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:51 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1uC56r-00067l-FW
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:29 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC57B-0003es-M8
- for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:51 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-224171d6826so73674935ad.3
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 16:20:49 -0700 (PDT)
+ id 1uC56o-0003Up-4u
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:29 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-223f4c06e9fso45716745ad.1
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 16:20:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746487248; x=1747092048; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746487224; x=1747092024; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oEdUza85WO+DzwzEMeWL7z4M0hhaS2RgQrae4P4VTDk=;
- b=vJMuj1K1wfqBPSSUiWnkvT+yN67BKsoHG24Lf8eOwvLAHZRgtviKRs8Pv7tvXnRyRE
- b6TLYxDptHMSAaSy73SByuwLdOrVp5EhWk+YK3ehd4rNex9SsKzdfOpvji4SWkBEDZxM
- oItXhI0a3KuqbfpiIAt5aSHr2zEGVfW3INL9aSQt2kLLXAv5m872ZDA8BWkYXbUCgRXs
- PKTdxYGGytVyZ56xSmSkGxB5N1e0DNMV1gkvWAouZ7oyVCQgd68RVUmNdE97u5WKQLiQ
- gV5z1ABLp1ak8yEdKF765UvCp9Hrfoj6FM9zUcTBpLhzVlOw+TBzF/J7PldOVOpaZCDm
- SA5Q==
+ bh=oMNeg3Y4FuUndpYOZQCJwSPCGo/Nsl7SC/sGcqIL57A=;
+ b=nPxqq+FaLGh9bTUB9lu7gYlyU1XF9ZKeayU8n3qV2OvgzmDhkgQaQJn4H/osNC8ryi
+ Q+eBYbbxhAYN1BcZJSgDgPMMq8lfEs7/FguxjaA8ygzL02DvaExbyrEJ22ROOUjBd4Nx
+ rfQ0vfMTA101tfzOyFIBPo/k7JZL6L4ouxvnxlcOMIFJNK5y2+nxWq2xUJ+tozBVW+Dx
+ 3Vq8GoHlyRekOZ6PCVYZrDBJbTqbIsSU1rPLJXJuIxYeOWdInfUPFhd084xffKijnNhA
+ 9FJ1i5RKcVaCbM5NeX8rxuaazKqAllaL7JLP9NvcAySrVtFN9tlxeiYblpxHK/F8YjI9
+ KY4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746487248; x=1747092048;
+ d=1e100.net; s=20230601; t=1746487224; x=1747092024;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oEdUza85WO+DzwzEMeWL7z4M0hhaS2RgQrae4P4VTDk=;
- b=wnn98lrCruTIgoV3CNmImgZ9B+aDNtmf7Lwx/BV9UMkhHYygJbiyy7b0WDEe+C5lGv
- jvZXY9Hiqx2pffg+geqPeZvUHHxvQlggFerF6kK4CV6PMjuNcDigEmkaHSOzNhJYAne6
- WDiF33rmz580vJG9TiOFtvA9vmSWX7v8kNtT0fnf4kEZHW/KmrIFmYnegtePOcP2N461
- ev5rw+FdLJfWFfuzlyy++euzxBq7POEGiUqVPsOzsl8EwRB2DloU81WQM8amRqL2YKhE
- OfN9mu+GrAJQgIpIJIr+WlWB1AooSCE7mIruXeDWldEdOg3D8B/sTe53Ok+qKbo8wiHk
- Ys1A==
-X-Gm-Message-State: AOJu0Yxt97ZUhjBpggl6tTLqPyOHSffYx440rjgyUErmfKu1cRvFyFh9
- 7flzg9ExI9aPvuBHuqK6st4nOmRV0vRaNmnj5T0pzYiSqi7gMCeuKDxOCWbeIFw+D5wLBbcQ8uA
- tZzI=
-X-Gm-Gg: ASbGncswnTrSoLwAjDXU9peELWgHaKIIDx5Z6XuxZqAoIZk4CNozG5kQs71Yp6oAwWs
- wE7kAiyjuC/PtviNwQ8dpqlLYTyS3ydqRiR/Y3fKz1QWlORzm99AQ0pFTBcQmCvPd6Psg2Z4GTw
- 4vMU4WyVB6pcSUnHihTMItGGgzC6IoNRipKj37aLmzYSLal6EhrXyQbi+RFjUPhqbIHsG7rFzGJ
- 24RnO1BQz69Fbdw4/Ij4RS6eLqCcaLiMv6NDMkFqA0I2M7/n3cDJ+kbah8o0hCMnMQFITjqKBi8
- Tchfg6EwclP8MVoTb+s5jMIMssDtMVtPWpkp6nMV
-X-Google-Smtp-Source: AGHT+IG1jiJQxBbzAHV3mqZ6REtUe8lv1QX9zvdPySzs6EmfZn2E2GCfq+CiMq6MLVUXpnJYHzmN+w==
-X-Received: by 2002:a17:903:1a8b:b0:224:1acc:14db with SMTP id
- d9443c01a7336-22e32baa0b1mr16580805ad.29.1746487248068; 
- Mon, 05 May 2025 16:20:48 -0700 (PDT)
+ bh=oMNeg3Y4FuUndpYOZQCJwSPCGo/Nsl7SC/sGcqIL57A=;
+ b=DgCTrnQu14Ii+6wkQw7mnxjvOZAP67AHrLyqvcMnd72gUf166IRklkpy9aVjYWc/e4
+ xA5e0cyDl5e1IVBRHlLyjk1m4p245yUsHT/TKExmZCbglqD47KmP92AW7qX70D+sFXOV
+ 1YSH3jnigRmuM5lU1wReaQwtH6nPR+Or/VYEBLStpu7HBJ7ISDoIPmG3J+J1O2/DB11k
+ H/sVxa3Rqx83/9mQSR19DpCNUZFm7kZUp6Dz8WtRybqYqphvnXF6xj6mfkUlNQ6J5X+k
+ VGwrZHr4DQnQzvV2zwFRnQLJHaKrqKLFNuP+dS0ElwKCwXYCoJX9mtdynjb8p2vjFpfx
+ 66GA==
+X-Gm-Message-State: AOJu0YwEGUfrALxBXzIE/ZBkgtgOO9jqSS1QNKQc/cXeYWYeKdzJN9VF
+ ftGh+NNg4XJ/O2MJaN8Hey1SN6ZuuDLERgYEGsdM+0LjncGl2n+XSEuFcbBKXYRzIIkpvEZV5Nv
+ /uYE=
+X-Gm-Gg: ASbGnctl0T5w3JoxTg5cs2hokZrTyoY3L1xssR7KzMIPIb1KZH1IWheOh4KqzgWzl0D
+ coOCqYyayStqVult5zvKc5ovCOubw/K2UnX+BLlx0JmXP8qx1qrp9Ai0y1EdNv8eXUXXv95wrq+
+ poPjCbmFjWSh8d4sVIy3nUUv5jSu+sIuviXzNqXrX31gv32pTCUcIPtvckrXQjbpESSKYjcFOBh
+ OGM7uNR9Ys2F4zW/iugziPd9GkbKSbYrfgSM4sX19CkTWZI8ZrquczRP848kbpyPIXIIsZFB3U5
+ 90ZD/e02eLsl4NtZtANaKGfe/kmxZG2CgqRK1X13
+X-Google-Smtp-Source: AGHT+IHoFN+rr8Lwq19Sx2mB1Yb2Gf6GH5Yb4OTaXFvREpHxBgl5rUjVxpoL1Lsyqn6N2c59nXy8cg==
+X-Received: by 2002:a17:902:daca:b0:224:3d:2ffd with SMTP id
+ d9443c01a7336-22e3285f134mr16144225ad.17.1746487224186; 
+ Mon, 05 May 2025 16:20:24 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e1522917asm60981715ad.201.2025.05.05.16.20.47
+ d9443c01a7336-22e1522917asm60981715ad.201.2025.05.05.16.20.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 May 2025 16:20:47 -0700 (PDT)
+ Mon, 05 May 2025 16:20:23 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, anjo@rev.ng,
@@ -70,24 +70,24 @@ Cc: richard.henderson@linaro.org, anjo@rev.ng,
  kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v6 31/50] target/arm/ptw: replace target_ulong with int64_t
-Date: Mon,  5 May 2025 16:19:56 -0700
-Message-ID: <20250505232015.130990-32-pierrick.bouvier@linaro.org>
+Subject: [PATCH v6 04/50] meson: apply target config for picking files from
+ libsystem and libuser
+Date: Mon,  5 May 2025 16:19:29 -0700
+Message-ID: <20250505232015.130990-5-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250505232015.130990-1-pierrick.bouvier@linaro.org>
 References: <20250505232015.130990-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,37 +103,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sextract64 returns a signed value.
+semihosting code needs to be included only if CONFIG_SEMIHOSTING is set.
+However, this is a target configuration, so we need to apply it to the
+libsystem libuser source sets.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/ptw.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ meson.build | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index e0e82ae507f..26c52e6b03e 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -1660,7 +1660,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-     uint64_t ttbr;
-     hwaddr descaddr, indexmask, indexmask_grainsize;
-     uint32_t tableattrs;
--    target_ulong page_size;
-+    uint64_t page_size;
-     uint64_t attrs;
-     int32_t stride;
-     int addrsize, inputsize, outputsize;
-@@ -1733,7 +1733,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-      * validation to do here.
-      */
-     if (inputsize < addrsize) {
--        target_ulong top_bits = sextract64(address, inputsize,
-+        uint64_t top_bits = sextract64(address, inputsize,
-                                            addrsize - inputsize);
-         if (-top_bits != param.select) {
-             /* The gap between the two regions is a Translation fault */
+diff --git a/meson.build b/meson.build
+index b2c79a7a928..1b365dcae17 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4049,27 +4049,19 @@ common_ss.add(qom, qemuutil)
+ common_ss.add_all(when: 'CONFIG_SYSTEM_ONLY', if_true: [system_ss])
+ common_ss.add_all(when: 'CONFIG_USER_ONLY', if_true: user_ss)
+ 
+-libuser_ss = libuser_ss.apply({})
+ libuser = static_library('user',
+-                         libuser_ss.sources() + genh,
++                         libuser_ss.all_sources() + genh,
+                          c_args: ['-DCONFIG_USER_ONLY',
+                                   '-DCOMPILING_SYSTEM_VS_USER'],
+-                         dependencies: libuser_ss.dependencies(),
++                         dependencies: libuser_ss.all_dependencies(),
+                          build_by_default: false)
+-libuser = declare_dependency(objects: libuser.extract_all_objects(recursive: false),
+-                             dependencies: libuser_ss.dependencies())
+-common_ss.add(when: 'CONFIG_USER_ONLY', if_true: libuser)
+ 
+-libsystem_ss = libsystem_ss.apply({})
+ libsystem = static_library('system',
+-                           libsystem_ss.sources() + genh,
++                           libsystem_ss.all_sources() + genh,
+                            c_args: ['-DCONFIG_SOFTMMU',
+                                     '-DCOMPILING_SYSTEM_VS_USER'],
+-                           dependencies: libsystem_ss.dependencies(),
++                           dependencies: libsystem_ss.all_dependencies(),
+                            build_by_default: false)
+-libsystem = declare_dependency(objects: libsystem.extract_all_objects(recursive: false),
+-                               dependencies: libsystem_ss.dependencies())
+-common_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: libsystem)
+ 
+ # Note that this library is never used directly (only through extract_objects)
+ # and is not built by default; therefore, source files not used by the build
+@@ -4308,6 +4300,16 @@ foreach target : target_dirs
+   target_common = common_ss.apply(config_target, strict: false)
+   objects = [common_all.extract_objects(target_common.sources())]
+   arch_deps += target_common.dependencies()
++  if target_type == 'system'
++    src = libsystem_ss.apply(config_target, strict: false)
++    objects += libsystem.extract_objects(src.sources())
++    arch_deps += src.dependencies()
++  endif
++  if target_type == 'user'
++    src = libuser_ss.apply(config_target, strict: false)
++    objects += libuser.extract_objects(src.sources())
++    arch_deps += src.dependencies()
++  endif
+   if target_base_arch in target_common_arch_libs
+     src = target_common_arch[target_base_arch].apply(config_target, strict: false)
+     lib = target_common_arch_libs[target_base_arch]
 -- 
 2.47.2
 
