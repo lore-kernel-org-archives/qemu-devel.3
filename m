@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 658F9C369C2
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 07:03:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 661B7C369C2
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 07:04:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBpqv-0004so-FT; Mon, 05 May 2025 03:03:01 -0400
+	id 1uBprw-00063R-RT; Mon, 05 May 2025 03:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uBpqq-0004nE-9a
- for qemu-devel@nongnu.org; Mon, 05 May 2025 03:02:57 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uBprv-00063E-MN
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 03:04:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uBpqo-0000wv-NC
- for qemu-devel@nongnu.org; Mon, 05 May 2025 03:02:56 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uBpru-00017G-72
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 03:04:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746428572;
+ s=mimecast20190719; t=1746428641;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wQKsWnLD3bX3Ut2rQ4qFJoe6UJw/i7mpvoMicwGU/Vk=;
- b=NgbXZr9r19AsCfrdQvYprHsiH+mtL9FXjdojHOaAJ7Dc7LETqCUjxCrMBQeIN/mZ3a5bx4
- kj/TbB992rNHO3c/L1NMSVsviLCYnLuhZebIOt7zbcMf/dUPMir6upIISWAkNAREnlrC/u
- jIoK2OwRyUzeok+oZvW8Z2hHSlzHw5I=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=csdtgpj57tWVPqtNCVqvudXuYd5/py1Je/kYa5zqJBc=;
+ b=X+ZxBwWvpXIzQa1Qp+K/Q+DqtV7GdlMBWL5NO2RFr4z67Dvc29T9CbTkmKSImAdkMBX1py
+ VkOMIZIkN1+xX2F+As5I6HdS+gvaOmVStTlOpE1/dfaNfSdb5SPfCrao0WntIYYXndB3ws
+ 15GWatd/An6VzLSeD/HRWBfTJCUknJE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-581-wNBLSb_2MPikEMrGiwSm_w-1; Mon, 05 May 2025 03:02:51 -0400
-X-MC-Unique: wNBLSb_2MPikEMrGiwSm_w-1
-X-Mimecast-MFC-AGG-ID: wNBLSb_2MPikEMrGiwSm_w_1746428570
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-39ee57e254aso2117597f8f.1
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 00:02:50 -0700 (PDT)
+ us-mta-517-a3cE1IPyPU-xjS3zSyBg3w-1; Mon, 05 May 2025 03:04:00 -0400
+X-MC-Unique: a3cE1IPyPU-xjS3zSyBg3w-1
+X-Mimecast-MFC-AGG-ID: a3cE1IPyPU-xjS3zSyBg3w_1746428639
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3912fe32a30so1117311f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 00:03:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746428570; x=1747033370;
+ d=1e100.net; s=20230601; t=1746428639; x=1747033439;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=wQKsWnLD3bX3Ut2rQ4qFJoe6UJw/i7mpvoMicwGU/Vk=;
- b=C0p3qezez0vua892qIfk6BEK7x0cRqBb7ldrY+jttWsS02Bwsaw9SC0KFrDg7l2fks
- 8FuD7WJMSu/0hGXiS4guKMut7uKrSToCRnWcBjegh9wbVKAI/YhwuVX6nrdCbF1iaEc5
- pLpVQOK3s1e623UE0pS05vxRgKpeIeBdsjA+7ZX/QVmTR5PyYOxWq0gGbrWvJziDT3Fd
- zyV7V5nE9xnB3pi7RggFWEqzKd2FR4J2ymwuAVJuNQSJQzuiASHAt9UB/ROqP1WLaq5g
- AvmDvem3yiUbdzdLRkl+9Yc1hx51rrBo4iN967Odak7T8qFUJlevjZAkjpkYyl5xmNWA
- Tz1Q==
+ bh=csdtgpj57tWVPqtNCVqvudXuYd5/py1Je/kYa5zqJBc=;
+ b=XkwhF/o1UzogneWWCwcW+HQyfU2Qw6bVfeoebWaegBQ3DzTDOPl5EGu9RTxkNVc81N
+ ZotPNhDqci+yGw3c92iZc5kgLEnn/e36OxqDTFHFDNDC1iv0K3/+Kb9h7uLR+F/J71uA
+ yXV+9QR2VGswzQPq72vXMYhULZCONMCzIdpKdj56gZdW/6Kj+iSuModPevFNtCs6GPjC
+ FtuyfD+ImkGuEAh4yn8LW8TI+4u1rSA3WwpNkDofxvnLCQZ/djyMoFKhCc4Y4aFLMCTS
+ LhL/qhzh2UV614cf6891a9uTOICutx2/M15eYqn9/SCMgF9pgTKepRblEgJbzgy4bz5U
+ Ifwg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXXzNplQPZ8kaJOoblmDPlKWy1jD691ZSMdl+wqmRqN5Ur+sIZJK/iNCPFx6guhfOJ63UsyyL3O6hY8@nongnu.org
-X-Gm-Message-State: AOJu0Yzr0UzeyDX7AV+7AWK6x97lduPnJuqwW10t3gzm14SvJZUDsD3B
- Y2mwKgUEyKUoUQbCqFu4MGbNbNUJl912JmUtC56jP8dsHZ4IheIFnKAcMazy4ufZ4tj1WPX5zVd
- 8cJZx8XkfIXY4YqOz2bwR73VZUlEk/zEULvNVwbCuJEYPETqkC+k4
-X-Gm-Gg: ASbGncuj2+N8gdbXAoNtmF9NjDmSnDgiEwuQC111wWJTDW9zCEi1GSOqqp1YKmEbiRY
- WcMhHqRO6MLOVUeARzpkAN79sAd/jApAlApY2Lg0IHR6HRcHg0xKcVgX29ZvbWvX8XKuBBut3L4
- mO25jB25Zm4SXpYCqlg/0ewCF8boOwXaaqA6ngsgql/eRg8y4kPTKTzz72wWMdjBkafcoGQWLFX
- 71B8zW+uuAowJZHhT1Lv+XM30Tded/5wRWxmJjk4dERbEZAFq8VUh6mZBNndYx2cfQuShbXSdEH
- umyWWVfDyCTfZdYCod4/9qk1BNc4BFFwONrpbCWHo8WzN1sHzIs/4kABhnKcZ3VLCzJLRjNxrOb
- 32lP7+mb9/ho2z6sKxyU/D24zXG3dRu3Jm8wuvy4=
-X-Received: by 2002:a05:6000:310d:b0:390:fbdd:994d with SMTP id
- ffacd0b85a97d-3a09ceb989amr5702609f8f.27.1746428569903; 
- Mon, 05 May 2025 00:02:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCeFJojRht9QxqEi2cw7WnULgFXBwPC9OSflQ3nYUooOk0HQRS6jFOpWp+vHuIjBOM0WkbVw==
-X-Received: by 2002:a05:6000:310d:b0:390:fbdd:994d with SMTP id
- ffacd0b85a97d-3a09ceb989amr5702584f8f.27.1746428569592; 
- Mon, 05 May 2025 00:02:49 -0700 (PDT)
+ AJvYcCU9SRlZDM3Nb+hm3SinqpMhJW1iITDt0sT2xmYG0vaxK4VSEWdEpHSgepriFxcXNcQghdc/cT/PU2cv@nongnu.org
+X-Gm-Message-State: AOJu0YxMggxiHT0aNleEQYpVI/IhXsn4Uvrco5BDY7IwpiSsgPjIVwjj
+ Ktj0q4Y54+JXc7zVn1tNr8Ex73yeuCOMVyLQINA3fN6pIWWZ+bAgV4OQlpTIE517OQGPsWHW+9R
+ yfxZ8mikeKf/ovSGrKlVmWhoss79XKdQKswVAXz5Jv5StuQ7pvFmvJS65YMPB2HY=
+X-Gm-Gg: ASbGnctZQKsy/lF9M894aEVVbgvF7kOtLwwjhxLNvdC9lDabl7qSeiFz3vlqVbTakIB
+ 9AGe3KgTVtm3bpXsVgl6LjRIbWG3fUhiZ3BwacDuEAY4NpbK3uunxGxWbFtSz6nosOj04E1TQDM
+ lb2SrpBK0gH6X0pqiV23c1cTTBT0dxfjU1a8I9Zcyrrf2A9O3Ku9WrRA+IO2zCR3pXA/BqZNaPw
+ UyfsrW/d8FJlPDldU+KlvKGVC/xOPRuvVn3JSYu+AWhPRGnRN3HtvSPsIIWwk3r76S1CjGHYZre
+ CkqhFL0uyfOCCPT0i3vf4eDiKLcGctxRop+sY+ovMN4d834OIW/qI/e7zhz5OYhHlz4G2JeeN2D
+ t2g4g34u6F+kaUFezCmpofmxUtEGD/AUDdu7/DQU=
+X-Received: by 2002:a05:6000:420f:b0:3a0:825e:8559 with SMTP id
+ ffacd0b85a97d-3a099aef887mr8076465f8f.53.1746428638989; 
+ Mon, 05 May 2025 00:03:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFC4FANyPZd5PdOy5njotv39zm1ijCfLdBx7DeBJXLSy1hMElG6DW8AwF4kXyOqhARIdodqkg==
+X-Received: by 2002:a05:6000:420f:b0:3a0:825e:8559 with SMTP id
+ ffacd0b85a97d-3a099aef887mr8076434f8f.53.1746428638567; 
+ Mon, 05 May 2025 00:03:58 -0700 (PDT)
 Received: from ?IPV6:2003:cb:c73d:2400:3be1:a856:724c:fd29?
  (p200300cbc73d24003be1a856724cfd29.dip0.t-ipconnect.de.
  [2003:cb:c73d:2400:3be1:a856:724c:fd29])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099b0f09dsm9516272f8f.63.2025.05.05.00.02.48
+ ffacd0b85a97d-3a099ae0ce2sm9586668f8f.16.2025.05.05.00.03.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 00:02:49 -0700 (PDT)
-Message-ID: <b887672c-7592-4cc1-98b3-f11ad48c8381@redhat.com>
-Date: Mon, 5 May 2025 09:02:48 +0200
+ Mon, 05 May 2025 00:03:58 -0700 (PDT)
+Message-ID: <bf6b5120-19d7-4987-9b37-5843b0392362@redhat.com>
+Date: Mon, 5 May 2025 09:03:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/5] hw/virtio/virtio-mem: Convert
- VIRTIO_MEM_USABLE_EXTENT to runtime
+Subject: Re: [PATCH v3 4/5] hw/virtio/virtio-mem: Convert
+ VIRTIO_MEM_HAS_LEGACY_GUESTS to runtime
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>,
@@ -92,7 +92,7 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Thomas Huth
  <thuth@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20250502214551.80401-1-philmd@linaro.org>
- <20250502214551.80401-4-philmd@linaro.org>
+ <20250502214551.80401-5-philmd@linaro.org>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -140,7 +140,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20250502214551.80401-4-philmd@linaro.org>
+In-Reply-To: <20250502214551.80401-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
@@ -169,10 +169,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 02.05.25 23:45, Philippe Mathieu-Daudé wrote:
-> Use target_system_arch() to check at runtime which target
-> architecture is being run.
-> Note, since TARGET_ARM is defined for TARGET_AARCH64, we
-> check for both ARM & AARCH64 enum values.
+> Check legacy guests support at runtime: instead of evaluating
+> the VIRTIO_MEM_HAS_LEGACY_GUESTS definition at compile time,
+> call target_system_arch() to detect which target is being run at
+> runtime. Register virtio_mem_legacy_guests_properties[] at runtime.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
