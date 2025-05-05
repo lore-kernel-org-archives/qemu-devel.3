@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2EEFC3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:55:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81EF6C3ABB6
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:55:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBsX0-0002ot-FQ; Mon, 05 May 2025 05:54:38 -0400
+	id 1uBsXT-0003mD-Ah; Mon, 05 May 2025 05:55:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <0c798dd52355f3489b29bba0dfd7df0e24cfa1dd@kylie.crudebyte.com>)
- id 1uBsWw-0002nl-D9
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:54:35 -0400
+ (envelope-from <cdafeda35709ddf8cd982a7eb653c2a5028c8074@kylie.crudebyte.com>)
+ id 1uBsXI-0003ZL-Lk
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:54:58 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <0c798dd52355f3489b29bba0dfd7df0e24cfa1dd@kylie.crudebyte.com>)
- id 1uBsWu-0005GJ-Is
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:54:34 -0400
+ (envelope-from <cdafeda35709ddf8cd982a7eb653c2a5028c8074@kylie.crudebyte.com>)
+ id 1uBsXG-0005Iy-SI
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:54:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=c6TuOckUB+xdLBrg0kI5CktW0lfDyX0RaJSYWF+/QF4=; b=QysC7
- c9rd4GvNuOzTS4ylJBifv091BnQMw0Oa6EkxjUbOh5i2GfaVPztMQt8pjZ5eR0zb768+Sh4ctHWZk
- Jl6fb4+oXJNggmqbYj9lfeiKOSj4f5WThzrScvTbsQrYtTxK583tNFRpV+2ceOsC+kcN/npcSlEhV
- pqk7IrP8ZBrrhYvtXgvKHN2cdGre32gSwGi6c8CnKasCAyVi6mRCRFN9Cnk+S6pptJz7pXgmsTnZh
- QtlovZcJZMHBC/mjLQXTIwYEMsIphROuNg234IaGAaftiwa4TSk49wMQdkty1c29dYAFVuIFh1hnW
- 4ejpQY5I5hFqUYDxIA0ydRMEEAAMtAdMMcvKlQp9iF+zvr9Q25lSLONOyab4WBXEeBLu0dg5WRXS2
- b8TZpyST7udvDea3Z1LYkzbFke8hmpOjZfQbBCM2cV7vRl78GUnOjInx5sD++KwoHxUdIEPrNCbkD
- rFAvf6BG48RHXM1Mz+wgEQ5QFqS1qR+R0+VzHicAjvXPpc37dYKBx/24VXakQ4hazaFKLlz247t2+
- 6Ff1H064etVuwb7Zo+B2xfN6f33b8+rm5Ol0+fYAB2T/6nNDm8EY4XvBwsZU8GheQD8slDFyUA4jr
- AGePRS4DBYsnXlv18VKrTEGWuiKDxh4UrEpABf1fDEDDjwhh1QtHvnTmrhqL9Q=;
-Message-Id: <0c798dd52355f3489b29bba0dfd7df0e24cfa1dd.1746438650.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=Mp2Eg6CkyW+uhuWyA5G7O36YvvWOJfgQ0Dp3mofC4KE=; b=vY3uq
+ BLNH9KOHm/heySeau1nJ67ntbJMwz/9cgmMziVNP08x72HB9emvYtmKvNsHcXdTyV8HJkocKYB4xD
+ OJDSt9CQ0IU63UyWrjtIcej+TEshECgbWI1Wf04ET8exPVJ/YAjR60PfUfp/dhwJwdzETcwWCPZuT
+ V006yoBkDc+9PPQf9mWpvJxsVv4SaE9EcIyammQr37pXD6sDq7u92xnbLuR3nt0j1iZINvvut7a0U
+ 1k8NDEANm5iodLKIn32DpUHSUhJkW8hUY68Crh/sQhNbMjfHs3wjFf1Wm0CCFeS1V48m5nzLUNG5P
+ MBBNl9wx6MUX5CshSaJDJ1+Wxiid/Bz26QL13BARy7A3IaiZCFgf0PCFtboNhHT/FXvHCyMpaCLRK
+ 1T6aP8jE9BGh1JwRriIg63CJuiugiqA7DcogVw16PfWPZ5+t7yT0Xfr5w5jl5Sst8TVLa5ndWinog
+ wOnUg+qTfWXSCEVUChSsPbj/HrcEyz1myjx+2Y8bilUpv8DVUMmCYFqi5R2y7XDqjGlP+XlRMAxLg
+ bFuNPomU+OA1MXDuRPJWQm42AG5UMxvMssGm7qED+yyHc9XNEPtkd/8Aiy7jqxoLjncQL22CswOu+
+ eN6pv/+qrgBw8Fin67Y8Tz9lPWW5vatf/tanTWjh9uNOZIuoT97BR1VHrVjgy4=;
+Message-Id: <cdafeda35709ddf8cd982a7eb653c2a5028c8074.1746438650.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1746438650.git.qemu_oss@crudebyte.com>
 References: <cover.1746438650.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Mon, 05 May 2025 11:50:51 +0200
-Subject: [PULL 5/9] 9pfs: Introduce ftruncate file op
+Subject: [PULL 9/9] 9pfs: fix 'total_open_fd' decrementation
 To: qemu-devel@nongnu.org,
     Peter Maydell <peter.maydell@linaro.org>
 Cc: Greg Kurz <groug@kaod.org>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=0c798dd52355f3489b29bba0dfd7df0e24cfa1dd@kylie.crudebyte.com;
+ envelope-from=cdafeda35709ddf8cd982a7eb653c2a5028c8074@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -69,149 +69,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Greg Kurz <groug@kaod.org>
+According to 'man 2 close' errors returned by close() should only be used
+for either diagnostic purposes or for catching data loss due to a previous
+write error, as an error result of close() usually indicates a deferred
+error of a previous write operation.
 
-Add an ftruncate operation to the fs driver and use if when a fid has
-a valid file descriptor. This is required to support more cases where
-the client wants to do an action on an unlinked file which it still
-has an open file decriptor for.
+Therefore not decrementing 'total_open_fd' on a close() error is wrong
+and would yield in a higher open file descriptor count than actually the
+case, leading to 9p server reclaiming open file descriptors too soon.
 
-Only 9P2000.L was considered.
-
-Signed-off-by: Greg Kurz <groug@kaod.org>
-Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Message-Id: <20250312152933.383967-4-groug@kaod.org>
+Based-on: <20250312152933.383967-7-groug@kaod.org>
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+Message-Id: <E1tvEyJ-004dMa-So@kylie.crudebyte.com>
 ---
- fsdev/file-op-9p.h |  2 ++
- hw/9pfs/9p-local.c |  9 +++++++++
- hw/9pfs/9p-synth.c |  8 ++++++++
- hw/9pfs/9p.c       |  6 +++++-
- hw/9pfs/cofs.c     | 18 ++++++++++++++++++
- hw/9pfs/coth.h     |  2 ++
- 6 files changed, 44 insertions(+), 1 deletion(-)
+ hw/9pfs/9p.c     | 10 +++++++++-
+ hw/9pfs/codir.c  |  7 ++++++-
+ hw/9pfs/cofile.c |  7 ++++++-
+ 3 files changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index b815cea44e..26ba1438c0 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -152,6 +152,8 @@ struct FileOperations {
-     int (*fstat)(FsContext *, int, V9fsFidOpenState *, struct stat *);
-     int (*rename)(FsContext *, const char *, const char *);
-     int (*truncate)(FsContext *, V9fsPath *, off_t);
-+    int (*ftruncate)(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
-+                     off_t size);
-     int (*fsync)(FsContext *, int, V9fsFidOpenState *, int);
-     int (*statfs)(FsContext *s, V9fsPath *path, struct statfs *stbuf);
-     ssize_t (*lgetxattr)(FsContext *, V9fsPath *,
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index b16132299f..0b33da8d2a 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -1042,6 +1042,14 @@ static int local_truncate(FsContext *ctx, V9fsPath *fs_path, off_t size)
-     return ret;
- }
- 
-+static int local_ftruncate(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
-+                           off_t size)
-+{
-+    int fd = local_fid_fd(fid_type, fs);
-+
-+    return ftruncate(fd, size);
-+}
-+
- static int local_chown(FsContext *fs_ctx, V9fsPath *fs_path, FsCred *credp)
- {
-     char *dirpath = g_path_get_dirname(fs_path->data);
-@@ -1617,4 +1625,5 @@ FileOperations local_ops = {
-     .renameat  = local_renameat,
-     .unlinkat = local_unlinkat,
-     .has_valid_file_handle = local_has_valid_file_handle,
-+    .ftruncate = local_ftruncate,
- };
-diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-index be0492b400..3d28afc4d0 100644
---- a/hw/9pfs/9p-synth.c
-+++ b/hw/9pfs/9p-synth.c
-@@ -356,6 +356,13 @@ static int synth_truncate(FsContext *ctx, V9fsPath *path, off_t offset)
-     return -1;
- }
- 
-+static int synth_ftruncate(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
-+                           off_t size)
-+{
-+    errno = ENOSYS;
-+    return -1;
-+}
-+
- static int synth_chmod(FsContext *fs_ctx, V9fsPath *path, FsCred *credp)
- {
-     errno = EPERM;
-@@ -656,4 +663,5 @@ FileOperations synth_ops = {
-     .renameat     = synth_renameat,
-     .unlinkat     = synth_unlinkat,
-     .has_valid_file_handle = synth_has_valid_file_handle,
-+    .ftruncate    = synth_ftruncate,
- };
 diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 4586822d24..c96f2d2d3d 100644
+index b22df3aa2b..8b001b9112 100644
 --- a/hw/9pfs/9p.c
 +++ b/hw/9pfs/9p.c
-@@ -1752,7 +1752,11 @@ static void coroutine_fn v9fs_setattr(void *opaque)
-         }
+@@ -510,7 +510,15 @@ void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu)
+             err = (f->fid_type == P9_FID_DIR) ?
+                 s->ops->closedir(&s->ctx, &f->fs_reclaim) :
+                 s->ops->close(&s->ctx, &f->fs_reclaim);
+-            if (!err) {
++
++            /* 'man 2 close' suggests to ignore close() errors except of EBADF */
++            if (unlikely(err && errno == EBADF)) {
++                /*
++                 * unexpected case as FIDs were picked above by having a valid
++                 * file descriptor
++                 */
++                error_report("9pfs: v9fs_reclaim_fd() WARNING: close() failed with EBADF");
++            } else {
+                 /* total_open_fd must only be mutated on main thread */
+                 nclosed++;
+             }
+diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
+index 2068a4779d..bce7dd96e9 100644
+--- a/hw/9pfs/codir.c
++++ b/hw/9pfs/codir.c
+@@ -20,6 +20,7 @@
+ #include "fsdev/qemu-fsdev.h"
+ #include "qemu/thread.h"
+ #include "qemu/main-loop.h"
++#include "qemu/error-report.h"
+ #include "coth.h"
+ #include "9p-xattr.h"
+ #include "9p-util.h"
+@@ -353,7 +354,11 @@ int coroutine_fn v9fs_co_closedir(V9fsPDU *pdu, V9fsFidOpenState *fs)
+                 err = -errno;
+             }
+         });
+-    if (!err) {
++    /* 'man 2 close' suggests to ignore close() errors except of EBADF */
++    if (unlikely(err && errno == EBADF)) {
++        /* unexpected case as we should have checked for a valid file handle */
++        error_report("9pfs: WARNING: v9fs_co_closedir() failed with EBADF");
++    } else {
+         total_open_fd--;
      }
-     if (v9iattr.valid & (P9_ATTR_SIZE)) {
--        err = v9fs_co_truncate(pdu, &fidp->path, v9iattr.size);
-+        if (fid_has_valid_file_handle(pdu->s, fidp)) {
-+            err = v9fs_co_ftruncate(pdu, fidp, v9iattr.size);
-+        } else {
-+            err = v9fs_co_truncate(pdu, &fidp->path, v9iattr.size);
-+        }
-         if (err < 0) {
-             goto out;
-         }
-diff --git a/hw/9pfs/cofs.c b/hw/9pfs/cofs.c
-index 67e3ae5c5c..893466fb1a 100644
---- a/hw/9pfs/cofs.c
-+++ b/hw/9pfs/cofs.c
-@@ -184,6 +184,24 @@ int coroutine_fn v9fs_co_truncate(V9fsPDU *pdu, V9fsPath *path, off_t size)
      return err;
- }
+diff --git a/hw/9pfs/cofile.c b/hw/9pfs/cofile.c
+index 71174c3e4a..6e775c8e41 100644
+--- a/hw/9pfs/cofile.c
++++ b/hw/9pfs/cofile.c
+@@ -20,6 +20,7 @@
+ #include "fsdev/qemu-fsdev.h"
+ #include "qemu/thread.h"
+ #include "qemu/main-loop.h"
++#include "qemu/error-report.h"
+ #include "coth.h"
  
-+int coroutine_fn v9fs_co_ftruncate(V9fsPDU *pdu, V9fsFidState *fidp, off_t size)
-+{
-+    int err;
-+    V9fsState *s = pdu->s;
-+
-+    if (v9fs_request_cancelled(pdu)) {
-+        return -EINTR;
-+    }
-+    v9fs_co_run_in_worker(
-+        {
-+            err = s->ops->ftruncate(&s->ctx, fidp->fid_type, &fidp->fs, size);
-+            if (err < 0) {
-+                err = -errno;
-+            }
-+        });
-+    return err;
-+}
-+
- int coroutine_fn v9fs_co_mknod(V9fsPDU *pdu, V9fsFidState *fidp,
-                                V9fsString *name, uid_t uid, gid_t gid,
-                                dev_t dev, mode_t mode, struct stat *stbuf)
-diff --git a/hw/9pfs/coth.h b/hw/9pfs/coth.h
-index 2c54249b35..62e922dc12 100644
---- a/hw/9pfs/coth.h
-+++ b/hw/9pfs/coth.h
-@@ -73,6 +73,8 @@ int coroutine_fn v9fs_co_chmod(V9fsPDU *, V9fsPath *, mode_t);
- int coroutine_fn v9fs_co_utimensat(V9fsPDU *, V9fsPath *, struct timespec [2]);
- int coroutine_fn v9fs_co_chown(V9fsPDU *, V9fsPath *, uid_t, gid_t);
- int coroutine_fn v9fs_co_truncate(V9fsPDU *, V9fsPath *, off_t);
-+int coroutine_fn v9fs_co_ftruncate(V9fsPDU *pdu, V9fsFidState *fidp,
-+                                   off_t size);
- int coroutine_fn v9fs_co_llistxattr(V9fsPDU *, V9fsPath *, void *, size_t);
- int coroutine_fn v9fs_co_lgetxattr(V9fsPDU *, V9fsPath *,
-                                    V9fsString *, void *, size_t);
+ int coroutine_fn v9fs_co_st_gen(V9fsPDU *pdu, V9fsPath *path, mode_t st_mode,
+@@ -197,7 +198,11 @@ int coroutine_fn v9fs_co_close(V9fsPDU *pdu, V9fsFidOpenState *fs)
+                 err = -errno;
+             }
+         });
+-    if (!err) {
++    /* 'man 2 close' suggests to ignore close() errors except of EBADF */
++    if (unlikely(err && errno == EBADF)) {
++        /* unexpected case as we should have checked for a valid file handle */
++        error_report("9pfs: WARNING: v9fs_co_close() failed with EBADF");
++    } else {
+         total_open_fd--;
+     }
+     return err;
 -- 
 2.30.2
 
