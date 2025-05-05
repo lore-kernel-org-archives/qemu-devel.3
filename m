@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4AA2C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 01:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA0B8C369DC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 01:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBl1W-0005lL-2K; Sun, 04 May 2025 21:53:38 -0400
+	id 1uBl1N-0005Ds-R2; Sun, 04 May 2025 21:53:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBl11-000481-Uk
- for qemu-devel@nongnu.org; Sun, 04 May 2025 21:53:08 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1uBl0z-000443-3c
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 21:53:05 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBl0y-0002fc-RT
- for qemu-devel@nongnu.org; Sun, 04 May 2025 21:53:07 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-7376dd56eccso4378519b3a.0
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 18:53:03 -0700 (PDT)
+ id 1uBl0s-0002dD-SL
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 21:53:02 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-73712952e1cso3714343b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 18:52:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746409983; x=1747014783; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746409977; x=1747014777; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iyeC1dYqzIyRbq0U6QJpnfGNVlqEyh7oNHL1QwbMptA=;
- b=zrOEmSxYj6vHRjSVlC7KXHHNUdDpjqLjxbon28NcmqRq2BlXhnz0xUzwiQAe3LGROz
- NyJ1To49t5SFDKO6IEq4oHmHzVcB+FgKvO79mKeX43LXrpFZtKt8dXv2FOEqd6pfUrAU
- Bw1m4GU1i5C18ie2N7dcul+DAd/JZjXm8npB9z6pkZaSqwo44EwB2Gr8b3H56JyBCo0g
- jvUWlJ8tTaOie0Q6Ovc8rOglbT7or9EOvebgdTnHtqkCTRdb2hNzjE+TbLuYQ5WIRClx
- xHNNC2M6jBxJxM/7C+zCdoMSdOW+3RLpya1sLC2NJgptZdpHd1sm8jfK6iHZtJdcn3jV
- voeg==
+ bh=oEdUza85WO+DzwzEMeWL7z4M0hhaS2RgQrae4P4VTDk=;
+ b=Z77uDWrEcpVPeKxEJVuQOVcbsJDBavL62GwquNzONKNvHzMVftq59D1r6t/gGS2ggJ
+ RKmo2Cd714vE1i1AbGBsQTLtpVAehDRRQqFoBYVbBYY2aaRAXYZuLwu5lS0BsRT5VFs3
+ mlHH6XjaymbiiSihD9pDfmZO2YhYuAJiNbjN6stABk1f7sch1G0+Qyn6k8gkDwBBt+gm
+ BpGBRlGkn5b1YJ3z5276V5u4gDICtYcsg54nmbJlAzwYkDUhD5D53T9xoDIXWqdpMpXt
+ 5wgOvyBWcSMe2yzCzsByWPLATRsFfGFcCS3pkc0so6IxroIt3rNRSZYBRSTgqI8epxLf
+ 82iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746409983; x=1747014783;
+ d=1e100.net; s=20230601; t=1746409977; x=1747014777;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iyeC1dYqzIyRbq0U6QJpnfGNVlqEyh7oNHL1QwbMptA=;
- b=v1Akvqi6yOtnHs9MjBHMCuKYTC3KR43/+jDUB46CQNAVbdDtgXH/rk0iH3KK0JUipM
- IFltxVKxD4eApDB2fRNbQcxOpJpQvAWdsEsjo6cxEC7NJ7jiLgFRN/yd+vSVBopM3k6a
- eYvJOJEpH6MsroPfbc8LqcEoR5PYdr9GhP1SELw+6XO55eqjgRW8skho102PdeqCXkUM
- oQM5E02Ufi3t83//q51jOkVoL+P+/6Ykk3sVI/kwZM+kaUR8fgsGjNK2aceUz+RJFbRL
- fWlljT6cJ3l3nlENCgAVy1xSV52EjTXj1zOz9ESDuawbqGgyUmU8Abs+yhns5P76e/6G
- XxJA==
-X-Gm-Message-State: AOJu0Yx/MYaXcs8XnmLVlty9Xq7FD0Am8e19maTrbTUHKhS6+djosSKB
- yPs9k7JRGyAhCDZso9wfYlw5FcyzgQH6bjPkOf5Th4PUVeHnMveUlyQdxaR/J2JRBU7xAaqDFSq
- ST8s=
-X-Gm-Gg: ASbGncuC8Je29ezqCHfaRaGFzs77KsCeNDmdzEnUb+E3QjxSDGM74ld+kiFlLled3zG
- DNG6uoygfULYmaXeHcgGUU9xrUMlXKq7aw69dR832WFjr7IkbFiikai6Kg+qO/GlAS3stwppmK4
- DUE1SORx59aOx5B9HGN2R5gKU1AYPmPjFUhmnhecMXHZmtd19HncMvEg/4W8KEFRF5YKI5dAOIA
- nsJO/zkwF4PgnvJR76hiKNvWjxDd1HfeCotpcBm2IpJrinr1a+Icw522ojddHjQaPoM3Uht+m7O
- hbozFaequeZVN+ttS0ua9oSk1JbxE7mXwq41Yi5W
-X-Google-Smtp-Source: AGHT+IEGCmE06PM830ZmSDQRZ5/eVfg6TQfwRHwBXfC+nvoumfTt9BR5P8zxI964fF7NFvhtkt5Slw==
-X-Received: by 2002:a05:6a20:c995:b0:1f5:8153:9407 with SMTP id
- adf61e73a8af0-20e96ae202cmr7538720637.20.1746409982788; 
- Sun, 04 May 2025 18:53:02 -0700 (PDT)
+ bh=oEdUza85WO+DzwzEMeWL7z4M0hhaS2RgQrae4P4VTDk=;
+ b=Huv9bi7yGKLteMSnojsxC0Y37oa770EdFBCbd7SPb7rA6q2x8iTIfZD/3MMltWYr17
+ AWg5mxQRaI0nTqdbJAdCMb4Ic0lOyHoaCYRLhPSgP+lRv1UF09QZV+wShmz8ppl2JfEE
+ vwueRDMcKgqlCPrmPgkg3Qsfq0MfmOnU3Hw1jhC/R0tKlxC7CHLJPpan5LX+07pYY79L
+ 1c/q3uyypsZsimdivKJhU+40exxmXSOb+hSyEnO3diaMeY5iZchpyPFMQ6RKFnxKjgzT
+ TxDNSQSmW9fidn6PaELvuQirXP2buBNjM79k8kx7M+VUnYr5xqndeuPui4V0v196l2VR
+ NskQ==
+X-Gm-Message-State: AOJu0Yx0lUUGhvhBGddWWMH+d0U5rSYL7Is6uIB6iqZp2CEJCmDw8y+d
+ KqGhnK8+dZKRofwu+HsxfdXxvzLss0JANVYzSiwrN1Yb4DHsYVC11+GOTh5Tucid1jbp0Qqt0pJ
+ gFFk=
+X-Gm-Gg: ASbGncsrFd6e4VWzKPz6oNxzlTnmcVUN+y+NLcR63+GL74N2GfPX+/EmpzB/w47r//t
+ 4GCPGoleHHuaBh7DWl2hdZPu7eOlpj9A7D2TGKU94pYxs9PQamo5a98BnGzdC4mSJ+Am74I65Pa
+ c+CnI9E8Kpn/JRujCXqd/5hbEIkMRkBpDwmTIi1Wp4kn3byyxFwNJ8sQ4pBzzP6W3VCs8aswHIE
+ ciF8RL+QgTVla5u92jpW+aC5XcqMPZETJ3CwcWFTGXiqc8qoghbkIN2JsgFqalnHbLOtVZVOBOM
+ G8atgcCk6NHhrwpi35pEqmfV29G7J5qBLvtsCtM+
+X-Google-Smtp-Source: AGHT+IGxlO9gTykq6ulNB0WPj1QemoIP4SS2JOIADwz2/WJQVG/BKVmUJZdt8lSEKyp+6CHlJm1dyw==
+X-Received: by 2002:a05:6a20:7350:b0:1f5:535c:82dc with SMTP id
+ adf61e73a8af0-20e97ea92ffmr6762334637.42.1746409977012; 
+ Sun, 04 May 2025 18:52:57 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b1fb3920074sm4462101a12.11.2025.05.04.18.53.02
+ 41be03b00d2f7-b1fb3920074sm4462101a12.11.2025.05.04.18.52.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 May 2025 18:53:02 -0700 (PDT)
+ Sun, 04 May 2025 18:52:56 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
@@ -70,24 +70,24 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>, anjo@rev.ng,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v5 37/48] target/arm/machine: remove TARGET_AARCH64 from
- migration state
-Date: Sun,  4 May 2025 18:52:12 -0700
-Message-ID: <20250505015223.3895275-38-pierrick.bouvier@linaro.org>
+Subject: [PATCH v5 31/48] target/arm/ptw: replace target_ulong with int64_t
+Date: Sun,  4 May 2025 18:52:06 -0700
+Message-ID: <20250505015223.3895275-32-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250505015223.3895275-1-pierrick.bouvier@linaro.org>
 References: <20250505015223.3895275-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,50 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This exposes two new subsections for arm: vmstate_sve and vmstate_za.
-Those sections have a ".needed" callback, which already allow to skip
-them when not needed.
-
-vmstate_sve .needed is checking cpu_isar_feature(aa64_sve, cpu).
-vmstate_za .needed is checking ZA flag in cpu->env.svcr.
+sextract64 returns a signed value.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/machine.c | 4 ----
- 1 file changed, 4 deletions(-)
+ target/arm/ptw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index f7956898fa1..868246a98c0 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -241,7 +241,6 @@ static const VMStateDescription vmstate_iwmmxt = {
-     }
- };
- 
--#ifdef TARGET_AARCH64
- /* The expression ARM_MAX_VQ - 2 is 0 for pure AArch32 build,
-  * and ARMPredicateReg is actively empty.  This triggers errors
-  * in the expansion of the VMSTATE macros.
-@@ -321,7 +320,6 @@ static const VMStateDescription vmstate_za = {
-         VMSTATE_END_OF_LIST()
-     }
- };
--#endif /* AARCH64 */
- 
- static bool serror_needed(void *opaque)
- {
-@@ -1102,10 +1100,8 @@ const VMStateDescription vmstate_arm_cpu = {
-         &vmstate_pmsav7,
-         &vmstate_pmsav8,
-         &vmstate_m_security,
--#ifdef TARGET_AARCH64
-         &vmstate_sve,
-         &vmstate_za,
--#endif
-         &vmstate_serror,
-         &vmstate_irq_line_state,
-         &vmstate_wfxt_timer,
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index e0e82ae507f..26c52e6b03e 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -1660,7 +1660,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+     uint64_t ttbr;
+     hwaddr descaddr, indexmask, indexmask_grainsize;
+     uint32_t tableattrs;
+-    target_ulong page_size;
++    uint64_t page_size;
+     uint64_t attrs;
+     int32_t stride;
+     int addrsize, inputsize, outputsize;
+@@ -1733,7 +1733,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+      * validation to do here.
+      */
+     if (inputsize < addrsize) {
+-        target_ulong top_bits = sextract64(address, inputsize,
++        uint64_t top_bits = sextract64(address, inputsize,
+                                            addrsize - inputsize);
+         if (-top_bits != param.select) {
+             /* The gap between the two regions is a Translation fault */
 -- 
 2.47.2
 
