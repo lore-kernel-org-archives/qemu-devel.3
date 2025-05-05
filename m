@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77F41C3ABB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:55:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2EEFC3ABB6
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBsWl-0002jg-M5; Mon, 05 May 2025 05:54:23 -0400
+	id 1uBsX0-0002ot-FQ; Mon, 05 May 2025 05:54:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <4f82ce8cd94f2601fb2b2e4cfe0cf5b44131817e@kylie.crudebyte.com>)
- id 1uBsWk-0002iy-2c
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:54:22 -0400
+ (envelope-from <0c798dd52355f3489b29bba0dfd7df0e24cfa1dd@kylie.crudebyte.com>)
+ id 1uBsWw-0002nl-D9
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:54:35 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <4f82ce8cd94f2601fb2b2e4cfe0cf5b44131817e@kylie.crudebyte.com>)
- id 1uBsWi-0005Ei-FZ
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:54:21 -0400
+ (envelope-from <0c798dd52355f3489b29bba0dfd7df0e24cfa1dd@kylie.crudebyte.com>)
+ id 1uBsWu-0005GJ-Is
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:54:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=I9J7ICrc3UB3XRzyZc1GoptV6oz460tI1yHeYDw7OSo=; b=HWrKz
- mqIP4fuwxvpbv6JDPO+ZjUI8uar4xzYVON3JjOIEIFvYCw8VMhCnSCGONPC5J8oqXL1p0yaIq0Wtg
- ZdbkTw5BeiO/SAdUieaAK4nObdREAPhkGqe0RuHiPgtqO/UpRAXcWC2GWqvPmZ6nGJTZEc83PFuTQ
- dnE5YgRSOh3LiBOtgFPQo11FaYERz78PbMr8Gb3xXkHrSaWPzZhRaleL7apF6hnUOTsYqlOuOyoZF
- adwgsQp2KJ55ff4bf1a+JyvWyNjnn51nI3czBJ+8ljWgI3oq4wuIDHx0/6uMnYg6qU7iY8kZkexMx
- Kkrn+lE6Qcz6mth8CIOrvNvu+tzuulhtNp1Fo8Q9EEWZubA7STIwvTz5PAyyAEV+QdFCCuB/PStZP
- xZYeSSVLmmh2BSoj2gN8Z/Y6DXwMip2mqSwUxu2GvKUobwCip1/SccZLoOak04QqN0Uu0/KdUPwVy
- ciNhJFZaKxjerXHhNGhPTbQRxXcNSshiTe3D+Q7o9drY+BREeLdNwrmrw8EF3rA8WDIWSjfbZFjs9
- otwbrVAHaE0FslY86Bzn5oA+QE2HtgQjisglw8XoTMNyHs+44ViRkC0P9dRXu/GCsJNpmgEoWHpom
- LDJMkqixtLfTs9Tmzuooj8tsknCLFglX51s5GrSGniaq3OrgvPEWHIwgmOQ788=;
-Message-Id: <4f82ce8cd94f2601fb2b2e4cfe0cf5b44131817e.1746438650.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=c6TuOckUB+xdLBrg0kI5CktW0lfDyX0RaJSYWF+/QF4=; b=QysC7
+ c9rd4GvNuOzTS4ylJBifv091BnQMw0Oa6EkxjUbOh5i2GfaVPztMQt8pjZ5eR0zb768+Sh4ctHWZk
+ Jl6fb4+oXJNggmqbYj9lfeiKOSj4f5WThzrScvTbsQrYtTxK583tNFRpV+2ceOsC+kcN/npcSlEhV
+ pqk7IrP8ZBrrhYvtXgvKHN2cdGre32gSwGi6c8CnKasCAyVi6mRCRFN9Cnk+S6pptJz7pXgmsTnZh
+ QtlovZcJZMHBC/mjLQXTIwYEMsIphROuNg234IaGAaftiwa4TSk49wMQdkty1c29dYAFVuIFh1hnW
+ 4ejpQY5I5hFqUYDxIA0ydRMEEAAMtAdMMcvKlQp9iF+zvr9Q25lSLONOyab4WBXEeBLu0dg5WRXS2
+ b8TZpyST7udvDea3Z1LYkzbFke8hmpOjZfQbBCM2cV7vRl78GUnOjInx5sD++KwoHxUdIEPrNCbkD
+ rFAvf6BG48RHXM1Mz+wgEQ5QFqS1qR+R0+VzHicAjvXPpc37dYKBx/24VXakQ4hazaFKLlz247t2+
+ 6Ff1H064etVuwb7Zo+B2xfN6f33b8+rm5Ol0+fYAB2T/6nNDm8EY4XvBwsZU8GheQD8slDFyUA4jr
+ AGePRS4DBYsnXlv18VKrTEGWuiKDxh4UrEpABf1fDEDDjwhh1QtHvnTmrhqL9Q=;
+Message-Id: <0c798dd52355f3489b29bba0dfd7df0e24cfa1dd.1746438650.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1746438650.git.qemu_oss@crudebyte.com>
 References: <cover.1746438650.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Mon, 05 May 2025 11:50:51 +0200
-Subject: [PULL 3/9] 9pfs: local : Introduce local_fid_fd() helper
+Subject: [PULL 5/9] 9pfs: Introduce ftruncate file op
 To: qemu-devel@nongnu.org,
     Peter Maydell <peter.maydell@linaro.org>
 Cc: Greg Kurz <groug@kaod.org>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=4f82ce8cd94f2601fb2b2e4cfe0cf5b44131817e@kylie.crudebyte.com;
+ envelope-from=0c798dd52355f3489b29bba0dfd7df0e24cfa1dd@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -71,62 +71,147 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Greg Kurz <groug@kaod.org>
 
-Factor out duplicated code to a single helper. More users to come.
+Add an ftruncate operation to the fs driver and use if when a fid has
+a valid file descriptor. This is required to support more cases where
+the client wants to do an action on an unlinked file which it still
+has an open file decriptor for.
+
+Only 9P2000.L was considered.
 
 Signed-off-by: Greg Kurz <groug@kaod.org>
 Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Message-Id: <20250312152933.383967-2-groug@kaod.org>
+Message-Id: <20250312152933.383967-4-groug@kaod.org>
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/9p-local.c | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ fsdev/file-op-9p.h |  2 ++
+ hw/9pfs/9p-local.c |  9 +++++++++
+ hw/9pfs/9p-synth.c |  8 ++++++++
+ hw/9pfs/9p.c       |  6 +++++-
+ hw/9pfs/cofs.c     | 18 ++++++++++++++++++
+ hw/9pfs/coth.h     |  2 ++
+ 6 files changed, 44 insertions(+), 1 deletion(-)
 
+diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
+index b815cea44e..26ba1438c0 100644
+--- a/fsdev/file-op-9p.h
++++ b/fsdev/file-op-9p.h
+@@ -152,6 +152,8 @@ struct FileOperations {
+     int (*fstat)(FsContext *, int, V9fsFidOpenState *, struct stat *);
+     int (*rename)(FsContext *, const char *, const char *);
+     int (*truncate)(FsContext *, V9fsPath *, off_t);
++    int (*ftruncate)(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
++                     off_t size);
+     int (*fsync)(FsContext *, int, V9fsFidOpenState *, int);
+     int (*statfs)(FsContext *s, V9fsPath *path, struct statfs *stbuf);
+     ssize_t (*lgetxattr)(FsContext *, V9fsPath *,
 diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index 928523afcc..99b9560a52 100644
+index b16132299f..0b33da8d2a 100644
 --- a/hw/9pfs/9p-local.c
 +++ b/hw/9pfs/9p-local.c
-@@ -766,16 +766,19 @@ out:
+@@ -1042,6 +1042,14 @@ static int local_truncate(FsContext *ctx, V9fsPath *fs_path, off_t size)
+     return ret;
+ }
+ 
++static int local_ftruncate(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
++                           off_t size)
++{
++    int fd = local_fid_fd(fid_type, fs);
++
++    return ftruncate(fd, size);
++}
++
+ static int local_chown(FsContext *fs_ctx, V9fsPath *fs_path, FsCred *credp)
+ {
+     char *dirpath = g_path_get_dirname(fs_path->data);
+@@ -1617,4 +1625,5 @@ FileOperations local_ops = {
+     .renameat  = local_renameat,
+     .unlinkat = local_unlinkat,
+     .has_valid_file_handle = local_has_valid_file_handle,
++    .ftruncate = local_ftruncate,
+ };
+diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
+index be0492b400..3d28afc4d0 100644
+--- a/hw/9pfs/9p-synth.c
++++ b/hw/9pfs/9p-synth.c
+@@ -356,6 +356,13 @@ static int synth_truncate(FsContext *ctx, V9fsPath *path, off_t offset)
+     return -1;
+ }
+ 
++static int synth_ftruncate(FsContext *ctx, int fid_type, V9fsFidOpenState *fs,
++                           off_t size)
++{
++    errno = ENOSYS;
++    return -1;
++}
++
+ static int synth_chmod(FsContext *fs_ctx, V9fsPath *path, FsCred *credp)
+ {
+     errno = EPERM;
+@@ -656,4 +663,5 @@ FileOperations synth_ops = {
+     .renameat     = synth_renameat,
+     .unlinkat     = synth_unlinkat,
+     .has_valid_file_handle = synth_has_valid_file_handle,
++    .ftruncate    = synth_ftruncate,
+ };
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 4586822d24..c96f2d2d3d 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -1752,7 +1752,11 @@ static void coroutine_fn v9fs_setattr(void *opaque)
+         }
+     }
+     if (v9iattr.valid & (P9_ATTR_SIZE)) {
+-        err = v9fs_co_truncate(pdu, &fidp->path, v9iattr.size);
++        if (fid_has_valid_file_handle(pdu->s, fidp)) {
++            err = v9fs_co_ftruncate(pdu, fidp, v9iattr.size);
++        } else {
++            err = v9fs_co_truncate(pdu, &fidp->path, v9iattr.size);
++        }
+         if (err < 0) {
+             goto out;
+         }
+diff --git a/hw/9pfs/cofs.c b/hw/9pfs/cofs.c
+index 67e3ae5c5c..893466fb1a 100644
+--- a/hw/9pfs/cofs.c
++++ b/hw/9pfs/cofs.c
+@@ -184,6 +184,24 @@ int coroutine_fn v9fs_co_truncate(V9fsPDU *pdu, V9fsPath *path, off_t size)
      return err;
  }
  
-+static int local_fid_fd(int fid_type, V9fsFidOpenState *fs)
++int coroutine_fn v9fs_co_ftruncate(V9fsPDU *pdu, V9fsFidState *fidp, off_t size)
 +{
-+    if (fid_type == P9_FID_DIR) {
-+        return dirfd(fs->dir.stream);
-+    } else {
-+        return fs->fd;
++    int err;
++    V9fsState *s = pdu->s;
++
++    if (v9fs_request_cancelled(pdu)) {
++        return -EINTR;
 +    }
++    v9fs_co_run_in_worker(
++        {
++            err = s->ops->ftruncate(&s->ctx, fidp->fid_type, &fidp->fs, size);
++            if (err < 0) {
++                err = -errno;
++            }
++        });
++    return err;
 +}
 +
- static int local_fstat(FsContext *fs_ctx, int fid_type,
-                        V9fsFidOpenState *fs, struct stat *stbuf)
- {
--    int err, fd;
--
--    if (fid_type == P9_FID_DIR) {
--        fd = dirfd(fs->dir.stream);
--    } else {
--        fd = fs->fd;
--    }
-+    int err, fd = local_fid_fd(fid_type, fs);
- 
-     err = fstat(fd, stbuf);
-     if (err) {
-@@ -1167,13 +1170,7 @@ out:
- static int local_fsync(FsContext *ctx, int fid_type,
-                        V9fsFidOpenState *fs, int datasync)
- {
--    int fd;
--
--    if (fid_type == P9_FID_DIR) {
--        fd = dirfd(fs->dir.stream);
--    } else {
--        fd = fs->fd;
--    }
-+    int fd = local_fid_fd(fid_type, fs);
- 
-     if (datasync) {
-         return qemu_fdatasync(fd);
+ int coroutine_fn v9fs_co_mknod(V9fsPDU *pdu, V9fsFidState *fidp,
+                                V9fsString *name, uid_t uid, gid_t gid,
+                                dev_t dev, mode_t mode, struct stat *stbuf)
+diff --git a/hw/9pfs/coth.h b/hw/9pfs/coth.h
+index 2c54249b35..62e922dc12 100644
+--- a/hw/9pfs/coth.h
++++ b/hw/9pfs/coth.h
+@@ -73,6 +73,8 @@ int coroutine_fn v9fs_co_chmod(V9fsPDU *, V9fsPath *, mode_t);
+ int coroutine_fn v9fs_co_utimensat(V9fsPDU *, V9fsPath *, struct timespec [2]);
+ int coroutine_fn v9fs_co_chown(V9fsPDU *, V9fsPath *, uid_t, gid_t);
+ int coroutine_fn v9fs_co_truncate(V9fsPDU *, V9fsPath *, off_t);
++int coroutine_fn v9fs_co_ftruncate(V9fsPDU *pdu, V9fsFidState *fidp,
++                                   off_t size);
+ int coroutine_fn v9fs_co_llistxattr(V9fsPDU *, V9fsPath *, void *, size_t);
+ int coroutine_fn v9fs_co_lgetxattr(V9fsPDU *, V9fsPath *,
+                                    V9fsString *, void *, size_t);
 -- 
 2.30.2
 
