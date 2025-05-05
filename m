@@ -4,85 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37F1CC3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 10:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 332CBC3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 10:35:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBt7h-00040v-A4; Mon, 05 May 2025 06:32:33 -0400
+	id 1uBtAl-000629-CN; Mon, 05 May 2025 06:35:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBt7e-0003vs-VC
- for qemu-devel@nongnu.org; Mon, 05 May 2025 06:32:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBtAj-00061f-K3
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 06:35:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBt7d-0002Di-5m
- for qemu-devel@nongnu.org; Mon, 05 May 2025 06:32:30 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBtAh-0002dE-VB
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 06:35:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746441148;
+ s=mimecast20190719; t=1746441339;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=U95sJgWM05MANjMDloUPTr2wmup9bauuy1bE832hTUY=;
- b=W4wBiQSEqfRftHifVe41oSdFK8vjIBhP0dHvbahac6RpiGBhJOCZ9x51MWphtQct6T0386
- Su1Y3vDuluPxeONmuajo4UmcfadMI/3xyYufAh71ErzPXbdMSpKDqYr7WPxmwXB3Mx5eE4
- zcxHFNw9RxZRx+UibEaC2mKxHbeIMOE=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=U8Sw786S0KTXcs82TUEFV6hunkUj6V4UcV8nJctM6IQ=;
+ b=Ee+rb68ve4wPL49gHJM06e+CweGe7s7qbA7CcYM3BXL1NB9bkRdZfOePHRsLg1Y5uEwaUJ
+ JZxr73fEt4q4koWfW0NscBBSZIBZUwFbrr8p/XttRgNI17HLGCBqqzBT5GZNOkc8W6TA8u
+ VIgPisFDH9b2ofCdnFo37GOYbrLV7gc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-668-KH3Ex4YhMk26USnBdq9eaA-1; Mon, 05 May 2025 06:32:27 -0400
-X-MC-Unique: KH3Ex4YhMk26USnBdq9eaA-1
-X-Mimecast-MFC-AGG-ID: KH3Ex4YhMk26USnBdq9eaA_1746441146
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-391315098b2so1252526f8f.2
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 03:32:26 -0700 (PDT)
+ us-mta-370-NgKU9yUvO6K0s57bCRMziQ-1; Mon, 05 May 2025 06:35:37 -0400
+X-MC-Unique: NgKU9yUvO6K0s57bCRMziQ-1
+X-Mimecast-MFC-AGG-ID: NgKU9yUvO6K0s57bCRMziQ_1746441337
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43ced8c2eb7so33065085e9.1
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 03:35:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746441146; x=1747045946;
+ d=1e100.net; s=20230601; t=1746441336; x=1747046136;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=U95sJgWM05MANjMDloUPTr2wmup9bauuy1bE832hTUY=;
- b=Vx+AEkD6TAQn1L4pYYW1YPJFK109RO/Xtzlw20aJwMjYm5BBM2cD82F0e+23LowJoO
- zQsHpqnzP0tzZScAvDJvS8qSo9BAulm0FajHeN6s4up3BYby86DI/Njkh1zMqOLNVyVF
- G3/ArYrXakW0bYu/ot5LbaVp7y2OX46ZmgSzZEIl5DraWkm1P0doScXjbd0TXIWTESkZ
- cCrSKCQTFz9gg5Uv87Qn0rI7+oLAlhLaKB62GwgoN4YZMyarNiq3JIlvVRuE/IgHjW/+
- wmnoRIFVY8dZAYm/MsXw2bbgUZndfAI46DXjRdawn5/rKLudl8t2UDIwpZSKyDC74y5Q
- aMEA==
+ bh=U8Sw786S0KTXcs82TUEFV6hunkUj6V4UcV8nJctM6IQ=;
+ b=BZYRzL3mHP6qPuDdOEdbZrJTexP2FCxyqoU7vx9GTWOd6FT0L1mzrk6Ce4Hl2iOhoZ
+ ZhPhT5NYLsHOQ4J0ZMcRVmQcj/xqUICgU00DUMW1cv76K9ChH9eDz1Y2kEEjqjyxzBSC
+ HYNo5dsN+mrjnTGdULvb2lSjTJ2WOD2fkjduILUXqAe9Q4YGDFCYQfWRA0lSboWiKpvZ
+ 8efjSLZ2WnSnwljLBX3SuDm1BJvPY/8CxpkP7EoTdrH2EZUY+0Q+GE23u6y5cgWDV1K+
+ c38ljb3LOIooQ4ZGEe3fVbzq1lzVyEPyKTxLb2pBgqsrG+mZd2c+xJuIE5EaJjG5dvu9
+ MIcg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZ+UUaPKLuIcP+042sP6uE4WU3SryLS4591iIJu+eETKPch4TmpLV1vt/rXRUga3tzfVvr0EJCDjxz@nongnu.org
-X-Gm-Message-State: AOJu0YwMbqKaz4CyzZV1JLFErv/M1cKHlWumKaA9sLkVrUHWSsOhpeOs
- /drByNoCziY/VxhlaCpX9q3rERBbv+R5lBhVzJUAirt0IxwgSN7m7+LCh7O3bijoojKZqDBJgQy
- phugbjZjS39xo6Pqv/NYoWZugHdPNwc/7cXxqu57EAKg2e/eJyRAC
-X-Gm-Gg: ASbGnct3hJH17KcyBUEjjcUG2N0/7ufarZapT8+MpI1Cn6vYhzyFE0En4mEmUL1qO5y
- oYB/UUxj3zq+ZMOoHI1cCXm3DghBJvh0LV+39iXduLQQwIsMFyvtSeSTpROxU6XdEniHo8DyPXQ
- UD32XlfvnlSNGi4kKKArADp2s45Gh4KqcVWOw4ONBuePi3m3RUBMdAKAC5a9PXGqfE902E9l9d9
- i2mOhyBonb5PC2HzZnVuhICUl8lJVFM3KgfxozHmCcMDQNJEMX5+gj44LrNo1KfOxNQnNR+ot91
- nHbP0MJ3c0AyjSRcuz+/vxDUlx9Y4XckJlZ+MRjL
-X-Received: by 2002:a05:6000:4387:b0:390:df75:ddc4 with SMTP id
- ffacd0b85a97d-3a09fdbc112mr5706147f8f.44.1746441145892; 
- Mon, 05 May 2025 03:32:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG4oi8zdGUTPEp5eiFZx1SK/MpEM0MAZkK/Ho4Ebcp2uDHfS8pPlpFER+aksYoJoTXC8jhpKQ==
-X-Received: by 2002:a05:6000:4387:b0:390:df75:ddc4 with SMTP id
- ffacd0b85a97d-3a09fdbc112mr5706127f8f.44.1746441145515; 
- Mon, 05 May 2025 03:32:25 -0700 (PDT)
+ AJvYcCUMRLmX83QtuYSjBQPRzI4LGiLGVRSTboBnTgJH4rZYIFzHbNaRF2AqOfQWhwS3YoqTr+6HNW+glzvj@nongnu.org
+X-Gm-Message-State: AOJu0YzmJh1UL2vP4H7IU/fAfkCU7/Yr3OogE4PNgOMdrQRcyUDiz0q6
+ Jkg1p2I6WpyvC8vzRTNHTZWnCsSvHJp/PfVLIWLKniL0AJi0hOHrSwQV/v6O2GdVXoeDdin6L26
+ 4LyywaDU8P1Ket7TQrCmaEip0rFHHKZdCDafZ1u4G/dg3wYRIYCun
+X-Gm-Gg: ASbGncv1XmvHlv+QMrxJBNxlUr7gbLII7CMiAarTRS777S75RFVTae9MSbpzVeIYx2q
+ UdySGTmbDlDt3GzUQyaz4NvDG/8V71ffPKjdY5BZnO4HPPbCSD8OeIzOmmivspr8cgCYT1FIEFa
+ 0oVkEVIF45k0yzlJCv6GNC9CifSH1mY0EsB7dRRR+aGmzkjnDALca9XsG3icg2FKIFUnv0hLR1D
+ VbaO4K8X+XsX/k/r2wlfdY6xj4OIUfg5c16nJMYCXknI/Y2zgX3Pu8aX4oIc79LtqBtJCDwMjUF
+ cDdtvhv/4+qX3CA1P8i8nznizvaEM+LSkBPYnGuQ
+X-Received: by 2002:a05:600c:5111:b0:43c:fb95:c76f with SMTP id
+ 5b1f17b1804b1-441c96a2795mr38203875e9.9.1746441336615; 
+ Mon, 05 May 2025 03:35:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEYDrvGkakuN27dWjo03p0XLwSvyyeaoxlALGx+w6DlGfYia5OkJj8VtCnToCRvu26HtTnnfw==
+X-Received: by 2002:a05:600c:5111:b0:43c:fb95:c76f with SMTP id
+ 5b1f17b1804b1-441c96a2795mr38203495e9.9.1746441336228; 
+ Mon, 05 May 2025 03:35:36 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099b17074sm10156696f8f.95.2025.05.05.03.32.24
+ 5b1f17b1804b1-441b2b20c3fsm176601645e9.28.2025.05.05.03.35.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 03:32:25 -0700 (PDT)
-Message-ID: <f7da46dd-0e8f-42d8-b555-300c088f605e@redhat.com>
-Date: Mon, 5 May 2025 12:32:23 +0200
+ Mon, 05 May 2025 03:35:35 -0700 (PDT)
+Message-ID: <fe7f930d-e729-4ba7-b19a-342bd47048d4@redhat.com>
+Date: Mon, 5 May 2025 12:35:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson: use thorough test setup as default
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20250503201806.3045723-1-pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v2 08/16] hw/i386/pc: Remove deprecated pc-q35-2.7 and
+ pc-i440fx-2.7 machines
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Yi Liu <yi.l.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Amit Shah <amit@kernel.org>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Sergio Lopez <slp@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Ani Sinha <anisinha@redhat.com>
+References: <20250501183628.87479-1-philmd@linaro.org>
+ <20250501183628.87479-9-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -127,9 +138,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250503201806.3045723-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20250501183628.87479-9-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -44
@@ -155,41 +166,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/05/2025 22.18, Pierrick Bouvier wrote:
-> Allows all tests to be visible by default when using meson test
-> directly.
+On 01/05/2025 20.36, Philippe Mathieu-Daudé wrote:
+> These machines has been supported for a period of more than 6 years.
+> According to our versioned machine support policy (see commit
+> ce80c4fa6ff "docs: document special exception for machine type
+> deprecation & removal") they can now be removed.
 > 
-> This has no impact on make check-* commands, which use SPEED=quick by
-> default (see scripts/mtest2make.py).
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   meson.build | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index f8bf6e7bb66..57ff3f722d8 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -5,12 +5,13 @@ project('qemu', ['c'], meson_version: '>=1.5.0',
->   
->   meson.add_devenv({ 'MESON_BUILD_ROOT' : meson.project_build_root() })
->   
-> -add_test_setup('quick', exclude_suites: ['slow', 'thorough'], is_default: true,
-> +add_test_setup('quick', exclude_suites: ['slow', 'thorough'],
->                  env: ['RUST_BACKTRACE=1'])
->   add_test_setup('slow', exclude_suites: ['thorough'],
->                  env: ['G_TEST_SLOW=1', 'SPEED=slow', 'RUST_BACKTRACE=1'])
->   add_test_setup('thorough',
-> -               env: ['G_TEST_SLOW=1', 'SPEED=thorough', 'RUST_BACKTRACE=1'])
-> +               env: ['G_TEST_SLOW=1', 'SPEED=thorough', 'RUST_BACKTRACE=1'],
-> +               is_default: true)
+>   hw/i386/pc_piix.c |  9 ---------
+>   hw/i386/pc_q35.c  | 10 ----------
+>   2 files changed, 19 deletions(-)
 
-I'd rather not make it the default: The thorough functional tests download a 
-lot of assets from the internet, so if someone just runs "meson test" 
-without further parameters, I think we should not trigger these downloads in 
-that case.
+Please also remove the related code from tests/qtest/test-x86-cpuid-compat.c!
 
-  Thomas
+  Thanks,
+   Thomas
 
 
