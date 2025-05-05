@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7480C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 23:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E7C3C3ABBF
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 23:23:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uC57N-0006eg-TR; Mon, 05 May 2025 19:21:01 -0400
+	id 1uC57e-0007Fv-Ck; Mon, 05 May 2025 19:21:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC57I-0006XG-ME
- for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:56 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1uC57F-0006UR-Rt
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:53 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC57G-0003hJ-N2
- for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:56 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2295d78b45cso65339315ad.0
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 16:20:54 -0700 (PDT)
+ id 1uC57E-0003gB-5V
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:53 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-224341bbc1dso65407535ad.3
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 16:20:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746487253; x=1747092053; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746487250; x=1747092050; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iyeC1dYqzIyRbq0U6QJpnfGNVlqEyh7oNHL1QwbMptA=;
- b=yKJNAwZUYYHLjzjp9IVz7VKpQewPrTqb4L441Fhuysad55lejtkLmZfMLZtcCCh4Mp
- +BTGYG034e2wsla9i9ANkLbWpHlLiszE1E4Iv4yrJFgCGHWaEtHlMyBmJlFJ3iBzUYP4
- Zwda4DfQFPFuS1EDnvX2yz5wbFF+gcvJrYbKtmUzYUbB/3HJLjLYlEPyxIEas5cEdPJw
- wD6A4JWZoncroZ21bz6DcD82bdhslQArxr5+cJiEnyZ6YfvD6nY1SCXDvZyLsVhcrfz4
- G77vNwTNDoUopVDbgIHOGu9Kzca6jD64XmdakTAWvR4WO2BUfvFaK3h+NABnc1Fm6Cjo
- L6BQ==
+ bh=vzXXutq4wGalZELe39I44dxOL/4dV/vBf09UEOe1qt8=;
+ b=H62mNgqFLUWQ5GzdqZREIpWSP2WZ73uc/5SA0e95BGT2TRchL0A60kolCL5SQ1kcvg
+ i5evg0OeTywnICXvJVRdXHf9pQlYCN+Dh732/naHZFptuJUxHJI9+qjOhxXp4HftBsY2
+ /ebskNaJ25/CHa42CSgWDRDRzzxMB/+yXVzLWKune3qrQeWeYrhMVFqN81mm3oM92RlL
+ pXYJkp6i1I6fdAJ6XkuTGFbP+/XWH582rBxCg4AzSQfx0PSlcXZ/f7hP5LOTl/0ZmTrI
+ /WzAuv0Hv2hDflQ/JxDL05OOer4zN/qZH9XLhs0oXw7G5u0G+BMo6k5/EYA+E71SspAD
+ xYlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746487253; x=1747092053;
+ d=1e100.net; s=20230601; t=1746487250; x=1747092050;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iyeC1dYqzIyRbq0U6QJpnfGNVlqEyh7oNHL1QwbMptA=;
- b=wxwNzeNEpIWsFsup5UQqeg/0DhrqsRj2AEXNrnZ+ejGacVAGJdG8ItbfkMX76lUfFh
- FJplW0njIuSwETTffLEwckWwPjQ2pv8bmEyH6YQ+tn4FxNDpPRhTIyljWTA8WXeOi5tb
- Vj/kUbVCjxFhmlKmg+U2AjAiZ6OgzRGcbzyDEfn4TecMw6MYglcCk9g5X3lv0djVMzfL
- vTFMorVUsseSyJOf/8VP3QP2/bOHSiIRFBQHCalXZch3EyOknUE5zIqunK8y8NGA8LUh
- z/Xoo04yJyhctALqcmE0SwJDCdOvkDs6IUoZsVRRrQtONbgle+C9yNqRtIUOgu8hz7Uj
- v0Gg==
-X-Gm-Message-State: AOJu0Yy1HJpz14QtHcvXWoqvm16qGwECWAoHjuI+Gv08xZSXyK4W5F/s
- JdEsvaqp5D9nG9ITtjleqtKRqEUG5YuK2wGUyN9K85efvc/uLT9AqT0IXh/xH+B0REf8j8uoHQ8
- 05Yg=
-X-Gm-Gg: ASbGncv1V6lHvp+YDXAVyiulGRfSUnvXL0GhuZT7RbIXIgbvmIMPyiWDFFSVAVDSyat
- PI+ostWL/ZbMC0gGKJVCVaXDKizFmDa1SYXgLyF/QnyK90bbEVGitWQMuZF0hN5aM1q2i05CDuL
- vjmcEkE5Y2as3iIwthtN1PDrdEKMb+Xtomqz6wYb8sflPDvd/j4er2uwO64Sg8brjC7KkhxaBq/
- uwrnqsULNRZTwJs3ukIR1Tqfg0ngskBy2QWqumr6MzZFvwlWX9J6P3klVu9vME97mAmWF8OYOPA
- HgYGVszO6UVKaiypIxdaO3VIJ4E6wh+rjbMZvHKH
-X-Google-Smtp-Source: AGHT+IEQz1uooxmmnU26y3jx3diyYO9Qb7x/IWS7jSUjRxMekEpaYNdIascgkfukWRRtAFkV+bb+RA==
-X-Received: by 2002:a17:903:2349:b0:220:be86:a421 with SMTP id
- d9443c01a7336-22e32f00884mr19329055ad.38.1746487253295; 
- Mon, 05 May 2025 16:20:53 -0700 (PDT)
+ bh=vzXXutq4wGalZELe39I44dxOL/4dV/vBf09UEOe1qt8=;
+ b=Fpn9QFK0bBfN4yKIlvWTUIENN/I8VW6UFZAYZXn9kmG2slg7UEeat6FGFX/5wUMb3u
+ qEaWgcroiZCRIVWBdWgu4rTLp4RsgWDsSOVjifoJxdIUAieiyVwSv7p2Fbm1aFoRsOO+
+ AQChB/Gxtu+4tJ+cjSuf98GAr3vfdNQKp10nPxN9sOL2KzhwfzSplahBVawg9PTYG/1c
+ z+G2nOadCaS+XYytX0jSXD6lPAMal2ZOOWPVOZiuQsBEQXI0HADMjQ9q/tykcOoSt7Br
+ jhJs2w8A/ywHJSWCGXf2K8UILQUCuhMm/2FCQNizBlsuutHIRo7UH/yx6m/miznIZev2
+ 65PA==
+X-Gm-Message-State: AOJu0YwPxrSeotUlwh6YnS1AMIBWknnQE4chZP1n2PmrdrcqQOkZiW+5
+ p0gS0Mel0NuIC+0JCLRAxay3CqvRRXPOSYWczimBZBogTbdn4xtLzako2RNoSBbC9X+nwlfOKqN
+ Rv/o=
+X-Gm-Gg: ASbGncvM+ilDb42uvJpegQvW01bw37xz1Bqy4m+6Iby8mFdWnDYC44WxnCVFp2HANUb
+ WmeVE+yYK2as+zg/3gIUzh/p1sPe1yauTL0KtjdLkdwV9tbAhxTa2zyU/G8vg09h/6hjNgx0yAi
+ eHSNl513o6PY/1+twgW0GKyNNQwY457SEPeAXhbfa644n8BVgSrAam+52PrQIIbgBjHuf1ENt6q
+ SNwakjgjCqj2eBkR6PpVwfM3/W5nqqq4KcUCuNGkY6nxY6/6P8t3dQvkgQv/YfDolODJYYhMyX3
+ a8s+N+RN/QwLh/iHXk0ggwKkR2bfb5+mcMjZ6wC5
+X-Google-Smtp-Source: AGHT+IFVn+o02q7YLHYWbNJDn25BoizahTDh5kkjLLSkKyaYVzM3AQo7VDnS2nKlNPl290g0JQUCiw==
+X-Received: by 2002:a17:902:e752:b0:21f:4c8b:c4de with SMTP id
+ d9443c01a7336-22e363b5382mr9664615ad.42.1746487250712; 
+ Mon, 05 May 2025 16:20:50 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e1522917asm60981715ad.201.2025.05.05.16.20.52
+ d9443c01a7336-22e1522917asm60981715ad.201.2025.05.05.16.20.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 May 2025 16:20:52 -0700 (PDT)
+ Mon, 05 May 2025 16:20:50 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, anjo@rev.ng,
@@ -70,24 +70,24 @@ Cc: richard.henderson@linaro.org, anjo@rev.ng,
  kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v6 37/50] target/arm/machine: remove TARGET_AARCH64 from
- migration state
-Date: Mon,  5 May 2025 16:20:02 -0700
-Message-ID: <20250505232015.130990-38-pierrick.bouvier@linaro.org>
+Subject: [PATCH v6 34/50] target/arm/meson: accelerator files are not needed
+ in user mode
+Date: Mon,  5 May 2025 16:19:59 -0700
+Message-ID: <20250505232015.130990-35-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250505232015.130990-1-pierrick.bouvier@linaro.org>
 References: <20250505232015.130990-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,50 +103,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This exposes two new subsections for arm: vmstate_sve and vmstate_za.
-Those sections have a ".needed" callback, which already allow to skip
-them when not needed.
-
-vmstate_sve .needed is checking cpu_isar_feature(aa64_sve, cpu).
-vmstate_za .needed is checking ZA flag in cpu->env.svcr.
-
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/machine.c | 4 ----
- 1 file changed, 4 deletions(-)
+ target/arm/meson.build | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index f7956898fa1..868246a98c0 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -241,7 +241,6 @@ static const VMStateDescription vmstate_iwmmxt = {
-     }
- };
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 151184da71c..29a36fb3c5e 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -5,9 +5,6 @@ arm_ss.add(files(
+ ))
+ arm_ss.add(zlib)
  
--#ifdef TARGET_AARCH64
- /* The expression ARM_MAX_VQ - 2 is 0 for pure AArch32 build,
-  * and ARMPredicateReg is actively empty.  This triggers errors
-  * in the expansion of the VMSTATE macros.
-@@ -321,7 +320,6 @@ static const VMStateDescription vmstate_za = {
-         VMSTATE_END_OF_LIST()
-     }
- };
--#endif /* AARCH64 */
+-arm_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'), if_false: files('kvm-stub.c'))
+-arm_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
+-
+ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+   'cpu64.c',
+   'gdbstub64.c'))
+@@ -18,6 +15,8 @@ arm_system_ss.add(files(
+   'arm-qmp-cmds.c',
+   'machine.c',
+ ))
++arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'), if_false: files('kvm-stub.c'))
++arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
  
- static bool serror_needed(void *opaque)
- {
-@@ -1102,10 +1100,8 @@ const VMStateDescription vmstate_arm_cpu = {
-         &vmstate_pmsav7,
-         &vmstate_pmsav8,
-         &vmstate_m_security,
--#ifdef TARGET_AARCH64
-         &vmstate_sve,
-         &vmstate_za,
--#endif
-         &vmstate_serror,
-         &vmstate_irq_line_state,
-         &vmstate_wfxt_timer,
+ arm_user_ss = ss.source_set()
+ arm_user_ss.add(files('cpu.c'))
 -- 
 2.47.2
 
