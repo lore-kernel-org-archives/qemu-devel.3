@@ -4,57 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0F84C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64F8CC3ABB6
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:59:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBsWr-0002ls-QQ; Mon, 05 May 2025 05:54:30 -0400
+	id 1uBsax-00017h-LF; Mon, 05 May 2025 05:58:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <f2bb367d2b265c6c0ead1e0d4a8f7c43310b3107@kylie.crudebyte.com>)
- id 1uBsWp-0002lF-Hz
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:54:27 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <f2bb367d2b265c6c0ead1e0d4a8f7c43310b3107@kylie.crudebyte.com>)
- id 1uBsWn-0005Ff-TY
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:54:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
- Message-Id:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=oyO2mqwCHl47iGA7Q3ZhtH/x6hTM+QH2IElqURqdUIg=; b=E1TPt
- ofxOz7ZT4lUeJ7W9lHf0348vLJ8T9Cd1RdHGd9hoOx+uGypOB9C3Tk8eO8OqGJxqQZlcoFJQbFlua
- MyZQ+1NoD7I97mBl9yg9vOfd8kSawEIsA2C/0z2bN9/wk/ZCJ0on5CwMnr63YKrkm4zbrnFFwSrIR
- LLNkirw5w0QA79Dyc4IZiU9GHbPIwLDYPeQOeWCLC8dHVeGez8R1EK0u37QYHHXDybvceRFvPCacH
- bk5dkMbqleoEj5ETqdoAD+D08PAotF8aihVBiA/qYaj6oMWmj1qBYdKsCjL68aZTwY8sNRWokeiVF
- cgcUGY0ZFGG5VBtfgz2Rq4ujrsLxdNB88I6XginWtK/uV5Hk0gYVQ7C8YIPph00++Yd9doQV2nVm9
- I89NE54OCWRb3nBfKUWeDDfWwUt1IRFlbQrBSvWIoj3/GpE30MnuvAtqeUf/oyZ2bpIGYS1w5Q8XJ
- 7gzVeq1dS61rNux++P77spvmKUfn4X/dTSN0wG3GGmo85B+yK/GPuxmh1snGGKXGKBQE5MR+coVzo
- 34n93vwUywzSW+ByCxN6o+Q5uINw9cvx1MzI+/uI25dsOtd/vyEqaPAiFBhjmOqH7tzb38COKCj3/
- eRAzEnFMs2idcrSW5nStfov+x87Tqx0HgzKHEwB1eIiPqexBgSjzSEpo1V/938=;
-Message-Id: <f2bb367d2b265c6c0ead1e0d4a8f7c43310b3107.1746438650.git.qemu_oss@crudebyte.com>
-In-Reply-To: <cover.1746438650.git.qemu_oss@crudebyte.com>
-References: <cover.1746438650.git.qemu_oss@crudebyte.com>
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Date: Mon, 05 May 2025 11:50:51 +0200
-Subject: [PULL 4/9] 9pfs: Don't use file descriptors in core code
-To: qemu-devel@nongnu.org,
-    Peter Maydell <peter.maydell@linaro.org>
-Cc: Greg Kurz <groug@kaod.org>
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=f2bb367d2b265c6c0ead1e0d4a8f7c43310b3107@kylie.crudebyte.com;
- helo=kylie.crudebyte.com
-X-Spam_score_int: 0
-X-Spam_score: -0.1
-X-Spam_bar: /
-X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBsat-00016g-3G
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:58:39 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBsaq-0005rS-3E
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:58:38 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43d0359b1fcso25862765e9.0
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:58:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746439114; x=1747043914; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SpZDlT5cEJosrUV6fxdzIDuupTkbtlUZTawaLOnJ0f4=;
+ b=E4chFs6L0i2Z77ABBldeZh52DYTqqDQkG8mw0RYbeJ8hVoPYmtZGfMWOetTlt2s3Gx
+ POj3RzB+v9OwderVOqbJJvvMQrx7UBkXK0MXSv5V+FqgnxcrOIr/UJdUmSeKZUGNfddl
+ tPE4s5dI4O3+wJc4od74LbfKuHay9FtaT2Uig1TK/+rfNp8bqIzB15TteeXcf7qWN0/j
+ ewlSUVEyOs5i0Sn0JKlDWbXez/aya4n8P1A0QLmevSD9qvyYl+AEwDhtW4RlMPGm4jGF
+ CnPBJS+n/tJtXyZg3QMZ/hXP5rdRf150sFxerVzXQPrT28zuM22a8T9ZqWnA/MceBrtW
+ Hoqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746439114; x=1747043914;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SpZDlT5cEJosrUV6fxdzIDuupTkbtlUZTawaLOnJ0f4=;
+ b=IBvHBo+k12CKbpLRUjn/c2wbAUqphf4W2a8D7xskRuvubM+ggCxBWnq0JXvbwQ6BDs
+ XRQiWGHz6I5E35RfZ+pC20W+/EHDlsK2V+HSA9NRIAlH4DrRfXge0n149NlTEfWkQ5aM
+ MLhKggFSbw0BvMmHmsRZ8hecu3j2RhRbryAWlwBW013mL8JDSyRdYs89XnoSp8zElr/A
+ Flh+ZsPA7L5jK1r5Tc/JOqwem7BXSUrQC9vxTlPAoCYRLpoEmvmISrK9xQIpKAawpeaD
+ paGBLlj+e+LWKYd8l+gHM5nyhstKyNSVl69pjIMhAzE3bVELOYiUB4xKxl8mKyypVUJu
+ EORA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWTA1DF5UF+UWkE3+iVL/5t+pG65ofIEj4wFDNyI9IY+SgiA90JGrHkc6cYl8DZkmE1cNiZE0XB0Msi@nongnu.org
+X-Gm-Message-State: AOJu0Yx6OktQU6Ugi90Y1ENa+aWMmYq2ZQpuCMYmyxmAO/gnVFvVpB6u
+ t7PGYKzUZUNOaZ5AEe+fUecxAfyobaT1+6NFqMPXzpuNPcvhsdqJFJ/fe9bnZL4=
+X-Gm-Gg: ASbGncveKY3zj3qf2+xj0nfGQIMNofyyeW8LuVBEuU0HKzRzjf9crMYMtQWp03OoK3z
+ 1jhWZ06jbRP+xsgu3YFhzW6bJbsoTWufEPicJVk5uRjPmaco8lm83UFGllOd9JmwyNL6GIZ4NJH
+ PTTCD4rn2wyh4KziUKC9IwusVJNQFkCYhTk+LOeYMxpmhasKitKeCpQeOH3qKev9xvZFAQVt2FR
+ 2grGLuqLGcsU1Ps9CDh/hJXgcdAwWajyT+eMXTZLLGhng52kTc/VJDBm9z7Uy4CPzp/NoBoYXSn
+ F2X5MLP1wC6bjM58PqjV0nQH8iiXONhOsMVgKT1Dnv8Vsdp/vTYtoyTe4WsuE6YaXRI3zq6Mjap
+ lc4Hxx6qgTJHQ3A5IqA==
+X-Google-Smtp-Source: AGHT+IFLy6w762y1I40ejkraONKZv5a7YVh7PFtbsREBXUx1xfn35W/HcUP0ryZz7cqmsuvgtUsWvA==
+X-Received: by 2002:a05:600c:698c:b0:439:8878:5029 with SMTP id
+ 5b1f17b1804b1-441bb8483d2mr101548555e9.2.1746439114386; 
+ Mon, 05 May 2025 02:58:34 -0700 (PDT)
+Received: from [10.194.152.213] (29.red-88-28-18.dynamicip.rima-tde.net.
+ [88.28.18.29]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-441b2aed5e8sm172857945e9.16.2025.05.05.02.58.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 May 2025 02:58:33 -0700 (PDT)
+Message-ID: <cc6fbcae-fda6-4ad9-9f7c-b3afd471d151@linaro.org>
+Date: Mon, 5 May 2025 11:58:28 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/16] hw/core/machine: Remove hw_compat_2_6[] array
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Yi Liu <yi.l.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Amit Shah <amit@kernel.org>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Sergio Lopez <slp@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Ani Sinha <anisinha@redhat.com>
+References: <20250501183628.87479-1-philmd@linaro.org>
+ <20250501183628.87479-7-philmd@linaro.org>
+ <fd5da152-cd33-48e6-96f7-7048c631661b@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <fd5da152-cd33-48e6-96f7-7048c631661b@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- PDS_OTHER_BAD_TLD=1.999, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,112 +114,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Greg Kurz <groug@kaod.org>
+On 5/5/25 11:13, Thomas Huth wrote:
+> On 01/05/2025 20.36, Philippe Mathieu-Daudé wrote:
+>> The hw_compat_2_6[] array was only used by the pc-q35-2.6 and
+>> pc-i440fx-2.6 machines, which got removed. Remove it.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/hw/boards.h | 3 ---
+>>   hw/core/machine.c   | 8 --------
+>>   2 files changed, 11 deletions(-)
+> 
+> It's still used in the arm virt machine which has not been removed yet?
 
-v9fs_getattr() currently peeks into V9fsFidOpenState to know if a fid
-has a valid file descriptor or directory stream. Even though the fields
-are accessible, this is an implementation detail of the local backend
-that should not be manipulated directly by the server code.
-
-Abstract that with a new has_valid_file_handle() backend operation.
-
-Signed-off-by: Greg Kurz <groug@kaod.org>
-Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Message-Id: <20250312152933.383967-3-groug@kaod.org>
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
----
- fsdev/file-op-9p.h | 1 +
- hw/9pfs/9p-local.c | 8 ++++++++
- hw/9pfs/9p-synth.c | 6 ++++++
- hw/9pfs/9p.c       | 9 ++++++---
- 4 files changed, 21 insertions(+), 3 deletions(-)
-
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index 4997677460..b815cea44e 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -164,6 +164,7 @@ struct FileOperations {
-     int (*renameat)(FsContext *ctx, V9fsPath *olddir, const char *old_name,
-                     V9fsPath *newdir, const char *new_name);
-     int (*unlinkat)(FsContext *ctx, V9fsPath *dir, const char *name, int flags);
-+    bool (*has_valid_file_handle)(int fid_type, V9fsFidOpenState *fs);
- };
- 
- #endif
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index 99b9560a52..b16132299f 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -1572,6 +1572,13 @@ static int local_parse_opts(QemuOpts *opts, FsDriverEntry *fse, Error **errp)
-     return 0;
- }
- 
-+static bool local_has_valid_file_handle(int fid_type, V9fsFidOpenState *fs)
-+{
-+    return
-+        (fid_type == P9_FID_FILE && fs->fd != -1) ||
-+        (fid_type == P9_FID_DIR && fs->dir.stream != NULL);
-+}
-+
- FileOperations local_ops = {
-     .parse_opts = local_parse_opts,
-     .init  = local_init,
-@@ -1609,4 +1616,5 @@ FileOperations local_ops = {
-     .name_to_path = local_name_to_path,
-     .renameat  = local_renameat,
-     .unlinkat = local_unlinkat,
-+    .has_valid_file_handle = local_has_valid_file_handle,
- };
-diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-index 2abaf3a291..be0492b400 100644
---- a/hw/9pfs/9p-synth.c
-+++ b/hw/9pfs/9p-synth.c
-@@ -615,6 +615,11 @@ static int synth_init(FsContext *ctx, Error **errp)
-     return 0;
- }
- 
-+static bool synth_has_valid_file_handle(int fid_type, V9fsFidOpenState *fs)
-+{
-+    return false;
-+}
-+
- FileOperations synth_ops = {
-     .init         = synth_init,
-     .lstat        = synth_lstat,
-@@ -650,4 +655,5 @@ FileOperations synth_ops = {
-     .name_to_path = synth_name_to_path,
-     .renameat     = synth_renameat,
-     .unlinkat     = synth_unlinkat,
-+    .has_valid_file_handle = synth_has_valid_file_handle,
- };
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 80b190ff5b..4586822d24 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -1593,6 +1593,11 @@ out_nofid:
-     pdu_complete(pdu, err);
- }
- 
-+static bool fid_has_valid_file_handle(V9fsState *s, V9fsFidState *fidp)
-+{
-+    return s->ops->has_valid_file_handle(fidp->fid_type, &fidp->fs);
-+}
-+
- static void coroutine_fn v9fs_getattr(void *opaque)
- {
-     int32_t fid;
-@@ -1615,9 +1620,7 @@ static void coroutine_fn v9fs_getattr(void *opaque)
-         retval = -ENOENT;
-         goto out_nofid;
-     }
--    if ((fidp->fid_type == P9_FID_FILE && fidp->fs.fd != -1) ||
--        (fidp->fid_type == P9_FID_DIR && fidp->fs.dir.stream))
--    {
-+    if (fid_has_valid_file_handle(pdu->s, fidp)) {
-         retval = v9fs_co_fstat(pdu, fidp, &stbuf);
-     } else {
-         retval = v9fs_co_lstat(pdu, &fidp->path, &stbuf);
--- 
-2.30.2
+Sorry, I forgot to mention in the cover this series consider
+ARM virt-2.6 up to virt-2.12 machines removed because the
+series doing that is already queued in target-arm.next:
+https://lore.kernel.org/qemu-devel/20250116145944.38028-1-philmd@linaro.org/
 
 
