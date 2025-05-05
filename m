@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2AC0CD5BD0
-	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 15:25:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26FB5CD6E49
+	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 15:25:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTLYU-0004Pj-K9; Sat, 30 May 2026 11:24:54 -0400
+	id 1wTLYO-0004ML-Uj; Sat, 30 May 2026 11:24:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTLY4-0004Ie-5Z
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTLY4-0004Ig-AA
  for qemu-devel@nongnu.org; Sat, 30 May 2026 11:24:29 -0400
 Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTLY1-0004yH-FN
- for qemu-devel@nongnu.org; Sat, 30 May 2026 11:24:27 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTLY1-0004y8-Eo
+ for qemu-devel@nongnu.org; Sat, 30 May 2026 11:24:28 -0400
 Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-45eedcdaeaaso1776592f8f.3
- for <qemu-devel@nongnu.org>; Sat, 30 May 2026 08:24:20 -0700 (PDT)
+ ffacd0b85a97d-45fe59255beso14625f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 30 May 2026 08:24:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780154659; x=1780759459; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780154658; x=1780759458; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lxhLTXmJ0AJQAwAnZJU2eDKfxi5IxqiJLmQpm7J5aNc=;
- b=EMjwue4B1fwo+Odzkkc9FVHh8LckrY1zgqGseBv6EhnRg3/b5dKuCPEU4DQ6SXhV/i
- KWo0dFgNsLllN2myGrTRmyG/54zgdn+sp7xlw0MXA4xXkX+cPX3HOSwoFWE+Sf7GNVC0
- jfbkwbLID8ZUJIvA7sXnHN8s/3Y0z128rnQpmFjyyuOC6aHnviY9a1wgVmFK+nmB5XjW
- rURj/NR+DCvhP7gH61T08HZbuhMBzqgnUIe11ahGd99yaUy+dOQ+zEuBmVgwMncVZiUp
- xKIBQkLZWR9xI9mJ2KGwD0iC2Ffn88qsh9+zkIo9NR1mDuyQMvNiAmK3Iet6eUwwcULp
- CYYw==
+ bh=miqkmpDkdxvgV3EMp6jZTGZaHE2jYmNI3ZgpaFiZpjg=;
+ b=tX1clzVFGuoFf2WZXmS5yRgGtVZPWG2ZoNAio1dMPpR9fgktwIHjp7HsVTPas5VgpD
+ 7PhVJyuTIh4M7eDV/aUDUZj66hBQIwMl2wen/FMXTzXJ09zOewAdVKck8St8Yh6EK+ni
+ vFfx17Bn8h6azUzBx8ddWvYIuS9sTd62SqhAI47wUnGdH6zH+ZwKIc9EXZd38Twb8Tyu
+ 9n7GjkiCqhAXlbLk6sFlYH3pdrhkhRBq04SHLKtdfknZ4bBaR1lJgRHql7tPl0WRvWjv
+ dr78BBDjw6KB9HWSO5AqPFjCPQ05VyNJcNXQi5dOv/t6AIM1G5PwdgKBz2YTQTvsvn2r
+ wA8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780154659; x=1780759459;
+ d=1e100.net; s=20251104; t=1780154658; x=1780759458;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lxhLTXmJ0AJQAwAnZJU2eDKfxi5IxqiJLmQpm7J5aNc=;
- b=mm/o/UFnP5X4bGgmXypA4uTZ/AH800+qRC6XwVwUhTlEmSXJl40HsyvjfUDJYpf/nk
- 2lvM03UewbKSWijohpSH59gbrJQO2ROf28BqVZ9DLjWpX9MPNMMu8wFeW9yWoH3b029O
- Y0xj0pSwlZtQ4YUNPvbpOWCm0LNathfnU/Rnz+cVu2+8ghN1EP4tHeFoRnJ7EUMs63g8
- KIVzC5cQhzZWiIcmtcPHWJg7NUjICJgdOk9JKHevj04/Gc1xCTO8HvVBY7KXN+OWkb3T
- hUbPN6AULriRXaNukgfavNudm7veM1546DR4vvilYTbpfwSsRdI6ek4qXdhxLQUl1spw
- yGcA==
+ bh=miqkmpDkdxvgV3EMp6jZTGZaHE2jYmNI3ZgpaFiZpjg=;
+ b=R3+m59ZEv/9BRGjDGY/Rp5YkhzqUkOx7wrBLBSD4Gbh3DQVQxk4eM5VzgVjSWwUXiq
+ h9KyiIYkJvnE0H2P8NWEAd8Qi3MDU/JWsMMyrnNDU60jXRbnAcu5G/XRgpCgqoBT19PZ
+ hXPYh0Zsunz1G4FvoNd87uU5pIoWJoHwL8ysMlzufQz7otoh1aIdRoKnQmCMdcaGX/He
+ 0vWvm+DPPS/w/SfZyiplJej7FOyzFJf75p8b7t8akqZHFTI4Iw1/A80lTbnuSnvoWim4
+ jKIHQDCjF72L/YFbC3vMzbebvUvkUnTEBHZND3XzCaPKdePfSeggVMBLCnbj8XhzUNOx
+ jc2w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/DRzuI6VCjptLA+bBROsWiRXbR1ZOedYaBNeoJjoa2wVgXuccAE1kzNbBRApKpgXXRS9veh5t4IDCC@nongnu.org
-X-Gm-Message-State: AOJu0Yxgvb5rM1zbXSluip7A7zrozkb4kbE9NrIbIDb7OyfRJL+KJ1Oj
- JaDmck4w3yb/guIhgAY3JiqaMvQbiHslgBebPLkDtj42IuJuUAA6ggWeYcSdHlRCRDG0ua7aY/6
- qHf3CQT38Fw==
-X-Gm-Gg: Acq92OH3eh/0j7tDRAO4cxVd0TyFj/gkdj42WVLQgg7+FSt4ajgCDk0D7rGWrMdZ59x
- dKqdEED8FjiRCkT5tAgib9OHVCuOP9/X/oTnHFAzj/4b9gPytm0DpGlb6mitYgLE9i8Yrp8wT26
- Mod8lqfTcANkO0QSoSYNF3VsaGBGM6dnsLxwFkiAmaeT8vCwbgcEX6hP+gRZwuGKQJwcYzKN9oD
- NHLYfOTUgkd2HG6IINW/CxQvugwsXM03CzreIp5qSdGa8xHz+SuXjFmA/28ulLZ2kW6vsCHaKwc
- iwJPolRyYu/unBuXrn8ehtiJfqmM4bkdS75frrB9U7IREWfl3MqpWueQGnVvtqgeggB0pdKY6I3
- auLp8YOpE9pjVg9Zj7HUOaJwdb8mSOUbOLGYrwXRDgjOGalnQ51bHLbtFLm3j67qHm9VzAnRxaE
- k1DLXKtCQkvkRmK7ant+8vrHrzuFSdXJviuJxVuoTelS4yvl4DQacL3mhWkqpTu9n/4vje2efeF
- Awn
-X-Received: by 2002:a5d:4a81:0:b0:44a:be4:d0e4 with SMTP id
- ffacd0b85a97d-45ef6b536d3mr5569965f8f.25.1780154659615; 
- Sat, 30 May 2026 08:24:19 -0700 (PDT)
+ AFNElJ9mX7y2QvibJxfGbtzGjxHI337OT/njzqQFtOa58ZYhTF7EHyisetSl8F0ZfokKFUGET/IsLQSaAflG@nongnu.org
+X-Gm-Message-State: AOJu0Ywj6sVOqjTWVCmjNtUnkRv14cEODB/Ka7PrY3J3GSlLjMGDyTQ+
+ DkhI8pd0zj+wzgPDzhYmV+6Vakaf2kSlh8yQfYjskq+VZrhVuXw0ftFj81lU0RIBBFtL+oOIOXn
+ 1OzeUBZVT3w==
+X-Gm-Gg: Acq92OEO1kox6Prz1y9zaqWq8ja6+fcHCDPQ7QmqZuoxF0Nppj6gYZMyEh+R5oIEupF
+ 7JHyX/yTIWOf3LPkU/KznvodZnYiZzimvRg7ZGd1SIgKqflZ332rCZoDDP7oDF70dbTExR2Z1M0
+ hnqvV5Ve2LK535Tsy+HZ+5771H0adhPQ/KRzQGej3ON8dj9joGEEScY1n89pCzm/1UojA4jHnjH
+ Gxbk/yxeZqEovgjfIw2wbKTtIkgNfR4k6TpPiZMtYKYp4lOrMHcBabPoskhNA6AArQGNQoQ/SKL
+ wcrns2TJpSXLiSZ1NKrDgc7rPKkRk9aQds8HOB45pPry3yOxaCxjak3BimPqELUgqn6p+N+VA6R
+ +G0Fqod791H6pimmke0Q2SkcBcytapitVqaCqj7kmRxwj1DG0VKtWlyN4TKdjtM9K3+0hbrhCQW
+ ZfllNv+VIOUDyhSwHI+gLoltmKjoVdzla5mLO1oToUG2trut8Lbk3kGCvRpk2atzwTF6M7nJcN7
+ cfw
+X-Received: by 2002:a05:600c:6592:b0:490:a1dc:e542 with SMTP id
+ 5b1f17b1804b1-490a2904ab0mr78935065e9.6.1780154658330; 
+ Sat, 30 May 2026 08:24:18 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef34b47eesm12638888f8f.9.2026.05.30.08.24.18
+ ffacd0b85a97d-45ef34b47eesm12638888f8f.9.2026.05.30.08.24.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 30 May 2026 08:24:18 -0700 (PDT)
-Message-ID: <a38648fb-35d8-4259-a44b-e3b31ee2318d@linaro.org>
-Date: Mon, 5 May 2025 16:30:48 +0200
+ Sat, 30 May 2026 08:24:16 -0700 (PDT)
+Message-ID: <b115271a-d183-4211-8048-caba34c23a27@linaro.org>
+Date: Mon, 5 May 2025 16:29:40 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/12] target/mips: Fill in TCGCPUOps.pointer_wrap
+Subject: Re: [PATCH 04/12] target/arm: Fill in TCGCPUOps.pointer_wrap
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: foss@percivaleng.com
+Cc: foss@percivaleng.com, qemu-arm@nongnu.org
 References: <20250504205714.3432096-1-richard.henderson@linaro.org>
- <20250504205714.3432096-8-richard.henderson@linaro.org>
+ <20250504205714.3432096-5-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250504205714.3432096-8-richard.henderson@linaro.org>
+In-Reply-To: <20250504205714.3432096-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
  envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: 13
@@ -106,13 +106,81 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/5/25 22:57, Richard Henderson wrote:
-> Check 32 vs 64-bit addressing state.
+> For a-profile, check A32 vs A64 state.
+> For m-profile, use cpu_pointer_wrap_uint32.
 > 
+> Cc: qemu-arm@nongnu.org
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/mips/cpu.c | 9 +++++++++
->   1 file changed, 9 insertions(+)
+>   target/arm/cpu.c         | 24 ++++++++++++++++++++++++
+>   target/arm/tcg/cpu-v7m.c |  1 +
+>   2 files changed, 25 insertions(+)
+> 
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 45cb6fd7ee..18edcf49c6 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -2710,6 +2710,29 @@ static const struct SysemuCPUOps arm_sysemu_ops = {
+>   #endif
+>   
+>   #ifdef CONFIG_TCG
+> +#ifndef CONFIG_USER_ONLY
+> +static vaddr aprofile_pointer_wrap(CPUState *cs, int mmu_idx,
+> +                                   vaddr result, vaddr base)
+> +{
+> +    /*
+> +     * The Stage2 and Phys indexes are only used for ptw on arm32,
+> +     * and all pte's are aligned, so we never produce a wrap for these.
+> +     * Double check that we're not truncating a 40-bit physical address.
+> +     */
+> +    assert((unsigned)mmu_idx < (ARMMMUIdx_Stage2_S & ARM_MMU_IDX_COREIDX_MASK));
+> +
+> +    if (!is_a64(cpu_env(cs))) {
+> +        return (uint32_t)result;
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I see around ARM_MMU_IDX_* definitions:
+
+  * R profile CPUs have an MPU, but can use the same set of MMU indexes
+  * as A profile. They only need to distinguish EL0 and EL1 (and
+  * EL2 for cores like the Cortex-R52).
+
+Maybe rename as ar_profile_pointer_wrap?
+
+Patch seems OK but I'd rather have someone with better ARM MMU
+knowledge to review ;)
+
+> +    }
+> +
+> +    /*
+> +     * TODO: For FEAT_CPA2, decide how to we want to resolve
+> +     * Unpredictable_CPACHECK in AddressIncrement.
+> +     */
+> +    return result;
+> +}
+> +#endif /* !CONFIG_USER_ONLY */
+> +
+>   static const TCGCPUOps arm_tcg_ops = {
+>       .mttcg_supported = true,
+>       /* ARM processors have a weak memory model */
+> @@ -2729,6 +2752,7 @@ static const TCGCPUOps arm_tcg_ops = {
+>       .untagged_addr = aarch64_untagged_addr,
+>   #else
+>       .tlb_fill_align = arm_cpu_tlb_fill_align,
+> +    .pointer_wrap = aprofile_pointer_wrap,
+>       .cpu_exec_interrupt = arm_cpu_exec_interrupt,
+>       .cpu_exec_halt = arm_cpu_exec_halt,
+>       .cpu_exec_reset = cpu_reset,
+> diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+> index 95b23d9b55..8e1a083b91 100644
+> --- a/target/arm/tcg/cpu-v7m.c
+> +++ b/target/arm/tcg/cpu-v7m.c
+> @@ -249,6 +249,7 @@ static const TCGCPUOps arm_v7m_tcg_ops = {
+>       .record_sigbus = arm_cpu_record_sigbus,
+>   #else
+>       .tlb_fill_align = arm_cpu_tlb_fill_align,
+> +    .pointer_wrap = cpu_pointer_wrap_uint32,
+>       .cpu_exec_interrupt = arm_v7m_cpu_exec_interrupt,
+>       .cpu_exec_halt = arm_cpu_exec_halt,
+>       .cpu_exec_reset = cpu_reset,
 
 
