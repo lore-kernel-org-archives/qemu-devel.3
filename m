@@ -4,73 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5B8FC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 14:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D6E2C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 14:14:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBwWp-0007nL-Tv; Mon, 05 May 2025 10:10:43 -0400
+	id 1uBwZs-00008K-RZ; Mon, 05 May 2025 10:13:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1uBwWn-0007n2-QT
- for qemu-devel@nongnu.org; Mon, 05 May 2025 10:10:41 -0400
-Received: from internet2.beckhoff.com ([194.25.186.210])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1uBwWl-0008D6-IL
- for qemu-devel@nongnu.org; Mon, 05 May 2025 10:10:41 -0400
-DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022e; 
- t=1746454236; bh=RXQIO0VF494EcwV3h9r7Kn6JBapX4FKBc/dpvYRYiW0=; h=
- Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
- a=ed25519-sha256; b=
- 8Ke3XUgDaEpNBr2SCRk7iv4zTli1VYskHxPIDDcKF1UfIUhgBjWim0FNoevApUqkB7XFWfh1nBItV/Akz4dXCA==
-DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022r; 
- t=1746454236; bh=RXQIO0VF494EcwV3h9r7Kn6JBapX4FKBc/dpvYRYiW0=; h=
- Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
- a=rsa-sha256; b=
- saWOMKHH7cUnRwNHUdkX1RaLt6AWsRDuVi46bqofugUiJdewnzJTuE8J1Qu7fXFY4fiSDzq7BmRA02yCwxAbEVg4JnOmV5TZdiGXL2ayBcyO3cUhOefuXKyOndboT9jqlYfvmdCrpEiNM0vzG1sIFTm6HKu7UDfTQy0/B8+FjojqPaFfa1y4tC1QtLu0mmZ9oz19VrHEMY3KNH461MiiV7bwXX07x2yVHYU0k3U2RujOkQCwvrdw2vLB7GrOopN2CRQeKI55hp9n6uhIlLGFBZRXXc46tdpoqL/UqgbhimOwPZ4oUmzZ1atFjALYdT8hdElivvkyB9+PiLnH24G9FQ==
-Received: from 172.17.6.17 by INTERNET2.beckhoff.com
- (TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384); Mon, 05 May 2025 14:10:36 GMT
-Received: from ex10.beckhoff.com (172.17.2.111) by ex09.beckhoff.com
- (172.17.6.17) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 5 May
- 2025 16:10:34 +0200
-Received: from ex10.beckhoff.com ([fe80::3762:2101:fb4e:8ffa]) by
- ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b%12]) with mapi id
- 15.02.1748.010; Mon, 5 May 2025 16:10:34 +0200
-From: =?utf-8?B?Q29ydmluIEvDtmhuZQ==?= <C.Koehne@beckhoff.com>
-To: "tomitamoeko@gmail.com" <tomitamoeko@gmail.com>, "clg@redhat.com"
- <clg@redhat.com>, "alex.williamson@redhat.com" <alex.williamson@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 0/9] vfio/igd: Detect IGD by OpRegion and enable OpRegion
- automatically
-Thread-Topic: [PATCH 0/9] vfio/igd: Detect IGD by OpRegion and enable OpRegion
- automatically
-Thread-Index: AQHbuFgLsPDZ7OqaF0CrzzvIIQeNGLPDjd0AgABZewCAABVegA==
-Date: Mon, 5 May 2025 14:10:34 +0000
-Message-ID: <7a2efeff96ac8d2bb62d0eb35c35438551eaba32.camel@beckhoff.com>
-References: <20250428161004.35613-1-tomitamoeko@gmail.com>
- <92f3d3f6-d90a-4010-b67f-b282ed5f3c91@gmail.com>
- <38a01aeb-858d-4d25-b79b-a31d29118ca9@redhat.com>
-In-Reply-To: <38a01aeb-858d-4d25-b79b-a31d29118ca9@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.17.62.149]
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="=-5aVLwWuzRSQuhbr4wG4A"
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uBwZq-00007p-Qp
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 10:13:50 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uBwZn-0008NO-Sc
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 10:13:50 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 421FE2117F;
+ Mon,  5 May 2025 14:13:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1746454423; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7YERdr5J2Q39zYuuXbzjTl7U2XM5u/ImyKuzyjwq26g=;
+ b=pv/7yKbltj9ZVTFvCPpTm2uldlkctqsdW5rILMSmF9abPTcqWVsqEsv3BxhXHwrkOkIQZr
+ DFD+LXp4PEUkDtCTcMf+YFrUvl0LWoANG3PaKIMs7tQ+0ukZeJp+Hx7FburAF9imyuWPDh
+ q1+vLWlv/w5SdIpce8Jh6GIO4H7vX+4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1746454423;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7YERdr5J2Q39zYuuXbzjTl7U2XM5u/ImyKuzyjwq26g=;
+ b=lJXZGghUN10VwU1rXr665VfwLClMsb2GOyl37umGkRRi4NoKdINpi7zdJJgMB5aVmTGkTO
+ GBEJ7jGcRCbNiXCg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1746454423; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7YERdr5J2Q39zYuuXbzjTl7U2XM5u/ImyKuzyjwq26g=;
+ b=pv/7yKbltj9ZVTFvCPpTm2uldlkctqsdW5rILMSmF9abPTcqWVsqEsv3BxhXHwrkOkIQZr
+ DFD+LXp4PEUkDtCTcMf+YFrUvl0LWoANG3PaKIMs7tQ+0ukZeJp+Hx7FburAF9imyuWPDh
+ q1+vLWlv/w5SdIpce8Jh6GIO4H7vX+4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1746454423;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7YERdr5J2Q39zYuuXbzjTl7U2XM5u/ImyKuzyjwq26g=;
+ b=lJXZGghUN10VwU1rXr665VfwLClMsb2GOyl37umGkRRi4NoKdINpi7zdJJgMB5aVmTGkTO
+ GBEJ7jGcRCbNiXCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B1FF513883;
+ Mon,  5 May 2025 14:13:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id zIHbHJbHGGgFQgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 05 May 2025 14:13:42 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org
+Cc: peterx@redhat.com, pbonzini@redhat.com, lvivier@redhat.com,
+ vsementsov@yandex-team.ru
+Subject: Re: [PATCH] [for-10.1] qtest: introduce qtest_init_ext
+In-Reply-To: <20250410162250.329941-1-vsementsov@yandex-team.ru>
+References: <20250410162250.329941-1-vsementsov@yandex-team.ru>
+Date: Mon, 05 May 2025 11:13:39 -0300
+Message-ID: <87a57rgn70.fsf@suse.de>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=194.25.186.210;
- envelope-from=C.Koehne@beckhoff.com; helo=INTERNET2.beckhoff.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,52 +114,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-5aVLwWuzRSQuhbr4wG4A
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-On Mon, 2025-05-05 at 14:54 +0200, C=C3=A9dric Le Goater wrote:
-> CAUTION: External Email!!
-> On 5/5/25 09:33, Tomita Moeko wrote:
-> > I forgot adding v2 in subject, sorry for my mistake.
->=20
-> That's ok. Just use a v3 in the next spin, if needed.
->=20
-> Only one patch, the last, is not reviewed yet. Will there be a v3 ?
->=20
-> Thanks,
->=20
-> C.
->=20
+> Merge qtest_init_with_env_and_capabilities() and qtest_init_with_env()
+> into one qtest_init_ext().
+>
+> Reasons:
+>
+> 1. qtest_init_with_env() is just wrong: it gets do_connect parameter
+>    but always pass true to qtest_init_with_env_and_capabilities().
+>    Happily, all qtest_init_with_env() callers pass true as well.
+>
+> 2. qtest_init_with_env() is not used outside of libqtest.c, so no
+>    reason to keep it as public function
+>
+> 3. and in libqtest.c it's used not often, so no problem to use
+>    more generic function instead.
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+>  tests/qtest/libqtest.c            | 18 +++++-------------
+>  tests/qtest/libqtest.h            | 30 +++++++-----------------------
+>  tests/qtest/migration/framework.c |  7 +++----
+>  3 files changed, 15 insertions(+), 40 deletions(-)
+>
+> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+> index fad307d125..66ff318201 100644
+> --- a/tests/qtest/libqtest.c
+> +++ b/tests/qtest/libqtest.c
+> @@ -574,10 +574,8 @@ void qtest_qmp_handshake(QTestState *s, QList *capabilities)
+>      }
+>  }
+>  
+> -QTestState *qtest_init_with_env_and_capabilities(const char *var,
+> -                                                 const char *extra_args,
+> -                                                 QList *capabilities,
+> -                                                 bool do_connect)
+> +QTestState *qtest_init_ext(const char *var, const char *extra_args,
+> +                           QList *capabilities, bool do_connect)
+>  {
+>      QTestState *s = qtest_init_internal(qtest_qemu_binary(var), extra_args,
+>                                          do_connect);
+> @@ -594,15 +592,9 @@ QTestState *qtest_init_with_env_and_capabilities(const char *var,
+>      return s;
+>  }
+>  
+> -QTestState *qtest_init_with_env(const char *var, const char *extra_args,
+> -                                bool do_connect)
+> -{
+> -    return qtest_init_with_env_and_capabilities(var, extra_args, NULL, true);
+> -}
+> -
+>  QTestState *qtest_init(const char *extra_args)
+>  {
+> -    return qtest_init_with_env(NULL, extra_args, true);
+> +    return qtest_init_ext(NULL, extra_args, NULL, true);
+>  }
+>  
+>  QTestState *qtest_vinitf(const char *fmt, va_list ap)
+> @@ -1662,7 +1654,7 @@ static struct MachInfo *qtest_get_machines(const char *var)
+>  
+>      silence_spawn_log = !g_test_verbose();
+>  
+> -    qts = qtest_init_with_env(qemu_var, "-machine none", true);
+> +    qts = qtest_init_ext(qemu_var, "-machine none", NULL, true);
+>      response = qtest_qmp(qts, "{ 'execute': 'query-machines' }");
+>      g_assert(response);
+>      list = qdict_get_qlist(response, "return");
+> @@ -1717,7 +1709,7 @@ static struct CpuModel *qtest_get_cpu_models(void)
+>  
+>      silence_spawn_log = !g_test_verbose();
+>  
+> -    qts = qtest_init_with_env(NULL, "-machine none", true);
+> +    qts = qtest_init_ext(NULL, "-machine none", NULL, true);
+>      response = qtest_qmp(qts, "{ 'execute': 'query-cpu-definitions' }");
+>      g_assert(response);
+>      list = qdict_get_qlist(response, "return");
+> diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+> index 930a91dcb7..b3f2e7fbef 100644
+> --- a/tests/qtest/libqtest.h
+> +++ b/tests/qtest/libqtest.h
+> @@ -57,37 +57,21 @@ QTestState *qtest_vinitf(const char *fmt, va_list ap) G_GNUC_PRINTF(1, 0);
+>  QTestState *qtest_init(const char *extra_args);
+>  
+>  /**
+> - * qtest_init_with_env:
+> - * @var: Environment variable from where to take the QEMU binary
+> - * @extra_args: Other arguments to pass to QEMU.  CAUTION: these
+> - * arguments are subject to word splitting and shell evaluation.
+> - * @do_connect: connect to qemu monitor and qtest socket.
+> - *
+> - * Like qtest_init(), but use a different environment variable for the
+> - * QEMU binary.
+> - *
+> - * Returns: #QTestState instance.
+> - */
+> -QTestState *qtest_init_with_env(const char *var, const char *extra_args,
+> -                                bool do_connect);
+> -
+> -/**
+> - * qtest_init_with_env_and_capabilities:
+> + * qtest_init_ext:
+>   * @var: Environment variable from where to take the QEMU binary
+>   * @extra_args: Other arguments to pass to QEMU.  CAUTION: these
+>   * arguments are subject to word splitting and shell evaluation.
+>   * @capabilities: list of QMP capabilities (strings) to enable
+>   * @do_connect: connect to qemu monitor and qtest socket.
+>   *
+> - * Like qtest_init_with_env(), but enable specified capabilities during
+> - * hadshake.
+> + * Like qtest_init(), but use a different environment variable for the
+> + * QEMU binary, allow specify capabilities and skip connecting
+> + * to QEMU monitor.
+>   *
+>   * Returns: #QTestState instance.
+>   */
+> -QTestState *qtest_init_with_env_and_capabilities(const char *var,
+> -                                                 const char *extra_args,
+> -                                                 QList *capabilities,
+> -                                                 bool do_connect);
+> +QTestState *qtest_init_ext(const char *var, const char *extra_args,
+> +                           QList *capabilities, bool do_connect);
+>  
+>  /**
+>   * qtest_init_without_qmp_handshake:
+> @@ -102,7 +86,7 @@ QTestState *qtest_init_without_qmp_handshake(const char *extra_args);
+>   * qtest_connect
+>   * @s: #QTestState instance to connect
+>   * Connect to qemu monitor and qtest socket, after skipping them in
+> - * qtest_init_with_env.  Does not handshake with the monitor.
+> + * qtest_init_ext.  Does not handshake with the monitor.
+>   */
+>  void qtest_connect(QTestState *s);
+>  
+> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+> index 10e1d04b58..1802304e1d 100644
+> --- a/tests/qtest/migration/framework.c
+> +++ b/tests/qtest/migration/framework.c
+> @@ -336,8 +336,7 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
+>                                   args->opts_source ? args->opts_source : "",
+>                                   ignore_stderr);
+>      if (!args->only_target) {
+> -        *from = qtest_init_with_env_and_capabilities(QEMU_ENV_SRC, cmd_source,
+> -                                                     capabilities, true);
+> +        *from = qtest_init_ext(QEMU_ENV_SRC, cmd_source, capabilities, true);
+>          qtest_qmp_set_event_callback(*from,
+>                                       migrate_watch_for_events,
+>                                       &src_state);
+> @@ -365,8 +364,8 @@ int migrate_start(QTestState **from, QTestState **to, const char *uri,
+>                                   shmem_opts ? shmem_opts : "",
+>                                   args->opts_target ? args->opts_target : "",
+>                                   ignore_stderr);
+> -    *to = qtest_init_with_env_and_capabilities(QEMU_ENV_DST, cmd_target,
+> -                                               capabilities, !args->defer_target_connect);
+> +    *to = qtest_init_ext(QEMU_ENV_DST, cmd_target, capabilities,
+> +                         !args->defer_target_connect);
+>      qtest_qmp_set_event_callback(*to,
+>                                   migrate_watch_for_events,
+>                                   &dst_state);
 
-Sry, somehow missed the last patch. Have reviewed it now.
-
-
---=20
-Kind regards,
-Corvin
-
---=-5aVLwWuzRSQuhbr4wG4A
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmgYxtkACgkQ2FTaVjFe
-Amp2xw//XwGuOaFxApAxYc259ejuPCpsvBwIv7Lr3BUMMwECJB82ABOa0Yob5Kcu
-QXqUbRtUKCsF2rPm7jhyBCe7Hm/4n7ZJHS2bbMg1A9fx97k/S31K7SdealgQfckm
-3JFwMALhm1NzxcMq0RSanWu65xmt/Hkom3ik1E7REIM/xuzt/S5PPNgIzOMf/Fnl
-buMEAYebEJ3J5kybJ2N4+UdCASiZ+6sVraBZHZ22mIDzb3LiXaLObskdAsyiupXf
-Dsu/WLOKRdWm1aVKVGd9Lee+MVkQJOxTjCjQl0EIFD08pMbajszluylMk28SUQp+
-9WxssyvrIJ//T8gYPiT2/nvTDvPVC/uVUx0evr2RzTYzxhYRv8yMCxeLYJ3tg3hI
-FG0FdOKTMr285ysrEboSNb9Jc8+CRXAaxju30lc0ZDkAByQ1F1CeH/1h3sFpZjZG
-DWCeutJ2i5BSGnI3+H4h2W4LQijZe2AE0D15G2mDu+7L8U0mI+UZma4aBKPViEHW
-TAVLXBzBciwhRvlKTLyQ2ID754PEVZSzuL45NO4JHLZr/G4Dyk4YvE+yyMf0UrOE
-0z2Hi3QkKkBU9mv+nOrkf5hErHpaHNbnBnbIDMygcM/Q+sQ+a7QGedyUV1uo6mDK
-aop2PQb8U9cCAovVui4R3kyhodn/AnkXVDh56RjaEPM3eryF8BI=
-=4qQX
------END PGP SIGNATURE-----
-
---=-5aVLwWuzRSQuhbr4wG4A--
-
+Queued, thanks.
 
