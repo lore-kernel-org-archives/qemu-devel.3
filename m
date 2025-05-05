@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 470F8C3ABB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD7AC3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBs6H-0002PZ-AY; Mon, 05 May 2025 05:27:01 -0400
+	id 1uBs7T-0003pw-JX; Mon, 05 May 2025 05:28:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBs66-0002LA-LN
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:26:53 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBs7H-0003mY-SZ
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:28:04 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBs63-0001IV-41
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:26:49 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43ce71582e9so26483625e9.1
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:26:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBs7E-0001U0-0X
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:28:03 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-39ac56756f6so4469061f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:27:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746437204; x=1747042004; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746437278; x=1747042078; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mvT02RXoHda76DM5TE3n0s4myKM/b8D31YKQZVv7YYM=;
- b=JoVPrNB9K2XWQ6ta0J3RsJPTu8PcA2dhn8IUXoQzNRaCtjXo2g1mXsAJlF1mms5Qn4
- 1N/CKFuzWLwhhB2itgUeqZO13j7aSnfm1yLeD62UjLKnY5zTYKFPGuVxQNIQzgC7ifpP
- 6GTqzuSYoy5dp68tMdPPMGK6Ff/zisk5wN5lYL99GcnmSyhe1yTt+r8Exaa8V8DmxUby
- WA/WTd2IK+e8pAiVE6CU89Gm2xRddTXlmvfSWDP755kYWBcgFmr0nmpsoFMg5QdLW7aP
- a6Oj8OuzNlRy8u4dNVzNrcnI0cauzZ+mQlR9LgkHEJxXz7BWJiIynlL+bZyeCj1t4rni
- phHg==
+ bh=KWBC3mSZ9nkWtKFP0YlbERVtyyCPwfDq/KkYgk7fvl0=;
+ b=u6ePN0B+fKs/1O0BPea8YtpNJDwhtcgQVO30dqlUqTu06UvzoykQaCPWivzwdWW81R
+ e98+/e8QIFGYiqP3zLjTeUYz9303BYShDKqlPRJnSqjXjPUatjOdOxrC/zjxVlYfDUes
+ onTB1kR2cJnL67rzXOVS0eeMcrA2SxCe+ujSqdcQGDoIvNL5iTPZOGB/PrpqyODfzDdK
+ W+PmQXy09WkC1k2D9DIkRaieoZCoLz+jGIWgz38TQ2dxz9i6mUc7gOykYxJys6yAoNGX
+ bShhOYRjKU67F/vhATG0IjC4lSvT8GdflcW562IANOn1CckJSmoSeqUTGdPZuKXEiBsN
+ e3zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746437204; x=1747042004;
+ d=1e100.net; s=20230601; t=1746437278; x=1747042078;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mvT02RXoHda76DM5TE3n0s4myKM/b8D31YKQZVv7YYM=;
- b=EHoohKSguIZZrEcTcb0gKeInVtzm6gCvEokpKTdImq8jPXqWtm64TFgG2Smh5uz37S
- 4xou9s3sgwPgwFxEbELCC8J6ktplbKUwcK6EH1goWqvMvIOJ/PVIAxZ9WF6m8QVrxuyu
- 9z4bMI/Zgz5l9K8Lo93gYnWL/L4O4FCpvvlrhduPBQWe/K/+F8LMADyhKBjUxi6kvSPy
- /qJ8iI9vHM3XVs8MW6sQdhC0PVVKceLP22Ra1NFH9eYEAoe6RrCgKsKkBVUDhv/X8R1f
- O9HzcvV7N1C10CX0ony/cnLa657iJOycXK+/MOHQTHxhASbL6omgmd2loWeTPLsy16t1
- XibQ==
+ bh=KWBC3mSZ9nkWtKFP0YlbERVtyyCPwfDq/KkYgk7fvl0=;
+ b=NBjG5/n9f6ZOlkfSi7dVJE88iqxRbI7JYwRUJuY0CRPJugy2ijB7o7lVWvA7zctc/K
+ muWGOBFHJNb+kT+ihu7e0hY3BzQN8UDxNOEq16RBlc6bqIGRagt+6I9FtGwzjCBTRSgJ
+ gHLMByPkPMOPxr0bchz+SBzMz+Qtl6v81T09SEt+wEboAOQT5XKgK3MzFwcsuScgZKZ0
+ MGgv5qDoiLuWjAqVFYU1GtETpdS9DDkv1/SFcnkAJcYcMetbIgVYYVrnt8gXLXQ9qqlu
+ hkPF2n1UyMkC41s1j8luJGo/6Unh7yMhrS9uSbMaVswiGzyQytX5kuN+hBCsj0FOOb8s
+ TY4g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVLgqaFMKHgWUDh6lY0kfiGLTA1ETeSUyKinT8cohYNv46mkYekCnDr7pUlFdU4hpGo0W4XCxmcgoP3@nongnu.org
-X-Gm-Message-State: AOJu0Yxur8GRQgmVUfIrWhma6kBWGnu0FYeOyWGkpnJlwxV9yTfeeBjg
- qA43hWUCWuCKhPHa27zRiQG3Ek+yVnXFp2zX3CH6QKaYn0UPyHk1mBIO4nARlMI=
-X-Gm-Gg: ASbGnctvd1j1Y83OvF1w/0eQPhd0fhCThLch+0+LQf5ZkVRZUGOjPsM2MtjqMK6Khjm
- FKz7btNApupJqsbSDuNbGBkz0ei2wnfZ5j7xJpOUxsx++rrYH3nbZ476XDIjuqEUfRzhLbak99q
- g0hf/tw8ydCH2uOG0BFDzeUyW2p0aIV1/vZTJ3SWMBH2jOY8IRxj9+yqPVQ2hPT5RmoIk+5TrWH
- kgtAZsH2DORNhg6Rh78CzqbSeNE1juwd+WcO26tsJcq2tLqZ1ayWr0+tZEM6YgkU3BZwscgrWFb
- H8r0gIW8vryp3xqxWj5QFsVFrOsHfx69Z+P5RMXMYHdlQzFNIROINjSihJIQMA/uril4FnB69Ak
- 2SQ0ethcJmzZGh0XVaNpiQs/JaQW9
-X-Google-Smtp-Source: AGHT+IGAnB/IJ/UYtC3Sva/8xxIJEUSE/yYUlo190mqjJHXVQ5ojwswHVZxHbiEqJgQxqDwKOizOOw==
-X-Received: by 2002:a05:600c:3c90:b0:43c:f44c:72b7 with SMTP id
- 5b1f17b1804b1-441c48bdfdamr56088375e9.14.1746437204233; 
- Mon, 05 May 2025 02:26:44 -0700 (PDT)
+ AJvYcCVngOSFw8V1VyYu3fYS7Vg4NNOvUA2OxfArqvvLQrnYD/i7omSrBmb/Ow72hX39VdW/Alv2JLSAfeoE@nongnu.org
+X-Gm-Message-State: AOJu0YyiOUd6Dns94JLtUp8txDNrzXMYneM4JyRaUhnAftE61YDdhU2q
+ VczY+lcF7/1pb9cW3WHPOVsHzD8FJgM8vXfbiMkRIyEbOp0ngbuuKxK/XpBT51E=
+X-Gm-Gg: ASbGnctmbNVuz74VWFIbp4Csie0pxo41jVBwBxpxur9P6fPohzEEMaGQMc4sE1/WgVf
+ r/HXThNGnUrEOyIIgEIRxYKkZQHlLVrlZK8+VrRhjz1/qS5G+Zed7LLMIdrryBUbCKcIgc9QAQT
+ 4dCRMip0vxclsp2BZ3F8FG2fGFkznNZKnXF+KzdYLd37ZUWr/H7VqBqWgfs8yI9eloqPJ4qprdU
+ K/PPAmJZiC7wqwzo4Vzb17U21sDeBZ7whtAGc680CODPgZcCYYJxaPqJ47uAQ/o0lhm6QS7i7ke
+ aQCpWlhO98dKlwcIpZBgBd2e5o9Mr0tOo7RIJs22xrCvWyNzm4/EwxOgeYpZhk1T2k7AMAMq/6s
+ UU12dyz0u9YNNwic+ew==
+X-Google-Smtp-Source: AGHT+IHghgqBydEmynEJR9JO50E0HZLpnXKO2ioLLuwEgpBUQRHEbpWD52qgDk0XqQDr7Du3uSXNZQ==
+X-Received: by 2002:a05:6000:4312:b0:3a0:830e:d1a8 with SMTP id
+ ffacd0b85a97d-3a09fdc06d3mr5422145f8f.46.1746437278467; 
+ Mon, 05 May 2025 02:27:58 -0700 (PDT)
 Received: from [10.194.152.213] (29.red-88-28-18.dynamicip.rima-tde.net.
  [88.28.18.29]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b2aecb54sm171744845e9.10.2025.05.05.02.26.41
+ 5b1f17b1804b1-441b89cc469sm128676155e9.6.2025.05.05.02.27.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 02:26:43 -0700 (PDT)
-Message-ID: <f71e3271-ff26-422a-a9d6-72a6174f0115@linaro.org>
-Date: Mon, 5 May 2025 11:26:39 +0200
+ Mon, 05 May 2025 02:27:57 -0700 (PDT)
+Message-ID: <80cdd651-d7d0-4f99-9399-515e9bd49863@linaro.org>
+Date: Mon, 5 May 2025 11:27:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/12] target: Use cpu_pointer_wrap_uint32 for 32-bit
- targets
+Subject: Re: [PATCH 12/12] accel/tcg: Assert TCGCPUOps.pointer_wrap is set
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: foss@percivaleng.com, Michael Rolnik <mrolnik@gmail.com>,
- Laurent Vivier <laurent@vivier.eu>,
- "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
- Stafford Horne <shorne@gmail.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Bastian Koppelmann <kbastian@mail.uni-paderborn.de>,
- Max Filippov <jcmvbkbc@gmail.com>
+Cc: foss@percivaleng.com
 References: <20250504205714.3432096-1-richard.henderson@linaro.org>
- <20250504205714.3432096-4-richard.henderson@linaro.org>
+ <20250504205714.3432096-13-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250504205714.3432096-4-richard.henderson@linaro.org>
+In-Reply-To: <20250504205714.3432096-13-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,29 +103,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/5/25 22:57, Richard Henderson wrote:
-> M68K, MicroBlaze, OpenRISC, RX, TriCore and Xtensa are
-> all 32-bit targets.  AVR is more complicated, but using
-> a 32-bit wrap preserves current behaviour.
+> All targets now provide the function, so we can
+> make the call unconditional.
 > 
-> Cc: Michael Rolnik <mrolnik@gmail.com>
-> Cc: Laurent Vivier <laurent@vivier.eu>
-> Cc: Edgar E. Iglesias <edgar.iglesias@gmail.com>
-> Cc: Stafford Horne <shorne@gmail.com>
-> Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
-> Cc: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-> Cc: Max Filippov <jcmvbkbc@gmail.com>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/accel/tcg/cpu-ops.h | 1 +
->   accel/tcg/cputlb.c          | 6 ++++++
->   target/avr/cpu.c            | 6 ++++++
->   target/m68k/cpu.c           | 1 +
->   target/microblaze/cpu.c     | 1 +
->   target/openrisc/cpu.c       | 1 +
->   target/rx/cpu.c             | 1 +
->   target/tricore/cpu.c        | 1 +
->   target/xtensa/cpu.c         | 1 +
->   9 files changed, 19 insertions(+)
+>   accel/tcg/cpu-exec.c | 1 +
+>   accel/tcg/cputlb.c   | 7 ++-----
+>   2 files changed, 3 insertions(+), 5 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
