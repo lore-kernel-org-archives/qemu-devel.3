@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6359CC3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 12:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD74AC3ABB9
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 12:54:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBvIN-00080c-A8; Mon, 05 May 2025 08:51:43 -0400
+	id 1uBvKn-0000Kk-Pe; Mon, 05 May 2025 08:54:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBvIK-00080J-Iu
- for qemu-devel@nongnu.org; Mon, 05 May 2025 08:51:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBvKl-0000JQ-Iq
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 08:54:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBvII-0006u8-AO
- for qemu-devel@nongnu.org; Mon, 05 May 2025 08:51:40 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBvKj-0007MI-Hy
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 08:54:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746449497;
+ s=mimecast20190719; t=1746449648;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OxyDiQJ5I5H2do/VyJM55TDBiZhxPow7pX9jouwjFbU=;
- b=NIkSsF+6w3l45+tjS+YgasUVEkGgXi4lSHk/0VE70aRAlVUZuYRejZgH8v8qu8O5u3jcpV
- 9zp6KTgM3kOjg66QqQxydBfD7GnLXy+U7pqaHJkDPaK6SsCj3OltiFrCsg7dAOjfci9THH
- uMQcDLk6pR3PZqE8zS8HeHxQVPnwPAQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pXPeopV/lApjc2BPTdZkm9ufzIQXdIM3MPVNLtQJJz8=;
+ b=CpXrNYGTvhvhmoOgA9UA4HPkhlTQzAr3cDucZWHAs14jJtcfPInbjYiemnjd3L3l2cSiEa
+ QWEwmOMH3jxYtHOCdwWOwAO9hh/oMip9IHQ52moP64YRJjUehUkizqupNgcEZZXhrwR3l3
+ KsbsD4Qk5V0/pU3DDbbN7JiD40exJzA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-7-0Q2tR9FyPnixSQCOQu2trQ-1; Mon, 05 May 2025 08:51:35 -0400
-X-MC-Unique: 0Q2tR9FyPnixSQCOQu2trQ-1
-X-Mimecast-MFC-AGG-ID: 0Q2tR9FyPnixSQCOQu2trQ_1746449495
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43cf44b66f7so24091055e9.1
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 05:51:35 -0700 (PDT)
+ us-mta-574-7M3ZBZ6KOWmBviQmg4X2Gg-1; Mon, 05 May 2025 08:54:07 -0400
+X-MC-Unique: 7M3ZBZ6KOWmBviQmg4X2Gg-1
+X-Mimecast-MFC-AGG-ID: 7M3ZBZ6KOWmBviQmg4X2Gg_1746449646
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43cfda30a3cso21121685e9.3
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 05:54:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746449494; x=1747054294;
+ d=1e100.net; s=20230601; t=1746449646; x=1747054446;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OxyDiQJ5I5H2do/VyJM55TDBiZhxPow7pX9jouwjFbU=;
- b=Pn0byN8l0prww9sN3VO6fJQYfkt4jEmZyXdyJ/W0zkPAaEfXsYmWU/aWns+AhJpDqe
- ceJgEY9KWDmVV8qody89B4rwRcHnuzaE7jUBJNpBHxRBmN+9kl+r8Sr0FvXaBFqCAIti
- BRPinq7W8PpdZIID1AvOEkTKAzLOrUyUqvktaA2V98lIbrDMU2/9eomu/7XMrOeb4+6p
- VO+UlYUPYPOwgqsVxXyDEyl/UK3Duf14jsCl54yFGz4VppWNWONRv6Cs1bbpWq8kw5Lb
- Jar8Zu9EFzb9XdJhzLGBPiVl5VoNggKK86bgSgzf2ExuEv653InohYEmBInNmZFsktug
- yHNA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX21qxO10nkrPtdBmEWVK+a2aIbQJ5jGKa9EL2qnQ86+AHNsqdQTTTChs36SXnVeXaQZLe3xWVhrO87@nongnu.org
-X-Gm-Message-State: AOJu0Yx7xOt9M+1373gyOqKN4LSEBzq8+8og+TEb1AvOLFX/yOIhruxL
- /TRmOW17a/6FRYS6X9+Kxl00v2aqb8OwaLUTB3cTUwuF2mjWUuIt25Sa7hvJEOq/57t7vprTHPY
- YaHnO5SATYh8Bp20rYQ37I+4Un1c9yH0VeJ/V2KCEsMsukvD61YIp
-X-Gm-Gg: ASbGncvfTiDsB0W3lU5yy3p4jI8HiKc/ni9f1owtd0s9ao2SWtHAK2Rn/ssk24gsvH1
- 3bEBYbGhrhJI8ToaroOzAFhQ1DCQEqqMhF4NXaa90zdU/NBMmUx9SZW9HZ8I52wJsKLcYz1ziEF
- Yyu0RTuJwEKed1e3nyrsfsedphexwSIwXLXtW2aUyiUXNZZzvpAW0xCAROFKAiZE6YHeY4n5DFW
- XqwpctcdUxp05PHI0zQT3u6lAwLL3T0KVpHFSf2TGa7i/u6zsR0DGTRwZ6IYCD9w4iOU7IsiPLy
- IAPn3C4I+tCtMSR+UNffKwNWvJ0p7FopIaLBDm+E6wds9QIRFg==
-X-Received: by 2002:a05:600c:4508:b0:43d:209:21fd with SMTP id
- 5b1f17b1804b1-441c1d73992mr72388655e9.30.1746449494715; 
- Mon, 05 May 2025 05:51:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHUmPOt6SL7v247NgobRlVzO3tOrAXTnfRVhK8b4Ur3lfuippLsPkpg9jzYvIqfTjAJOApaQg==
-X-Received: by 2002:a05:600c:4508:b0:43d:209:21fd with SMTP id
- 5b1f17b1804b1-441c1d73992mr72388415e9.30.1746449494375; 
- Mon, 05 May 2025 05:51:34 -0700 (PDT)
+ bh=pXPeopV/lApjc2BPTdZkm9ufzIQXdIM3MPVNLtQJJz8=;
+ b=O9XsnqAJl0QaH4PLxhpJDbGAPvBOryHC9NH7Nk3LuBE6wgMA+cWXAXE0nyQLfv3CW4
+ pj3sg8w5MUeuWd0i7glyWSZoptORTtUr2YyK8lvsa9rdXMFLTZ01pS8o4YiG3zxoxnHE
+ nF/GPQ6AYbMkOspuEbeTAjVnn9jAFzyzaobXoWXy21j7K0qYbXF0sx1QhSnf2ll1XK+B
+ XLjeoCXQQIu6iLWo+QYmIDDLUzcunwggESCsy65NKYPwTzrso++EU756oj6nvw8/LDkY
+ /xGNlkZNfgcJiNK1Q4Qs/BW2In4k0NkqryLE+q1PEwjY0NHR6Zh8Qu0J5GR1vX5c+qxd
+ REUg==
+X-Gm-Message-State: AOJu0YzjiPV9k0Rcxrq57E2Ziw7goO1nKGOn/sQVtGONwluNvdn1gw+e
+ gGKGCKOLlI3AFzWWqZrak6PSZEzByQEr5a8gGoWZOCLptM+xcOQLEh2ZwBMX4zKbkLlcbsJxCLm
+ rGB7UPXmb5kyWudV/AppDTO5sNMxgOR4GpxkPk1RwKWDSvOmkhHQAzwmDEQF5
+X-Gm-Gg: ASbGnct2WMmTa0VY6ItsirlQ/nW74t+tlmxUGDhAhus1Wm5KLd61E60a6QFarww6SF2
+ WdSoe9aj7XstaCOXMAN9RMsyvmUpxaT4lKiwEG9qpcjbZygsC13V1VEfG1DxuL2gPGpe48UyzNF
+ 5c0r0grNC389oH5zcHfbFdht666ly9bQojmjOtHxfBRzylghzLpAM81Ydy7c4Miuc1xLZ4CENV+
+ TbG91peJI2E/Ikjhy8XFXeSa6+bwDyFaDiP7tHYWCvrf73cuaK0v/M12cR6owvjVTXaj3VcdL07
+ VbpcQa7292a+1e+ZP79T3RNqhGayIFuVFKr8COmTZmB28Qakbg==
+X-Received: by 2002:a5d:5f48:0:b0:391:47d8:de3d with SMTP id
+ ffacd0b85a97d-3a09fd78c3amr5566006f8f.16.1746449645881; 
+ Mon, 05 May 2025 05:54:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEylZ8Yr4A9E8iCNnUvsUGrD21zcmaUzW2/JS9X04WQpKzX9JbO63eH3uAbQJ0HLmUitPOnJw==
+X-Received: by 2002:a5d:5f48:0:b0:391:47d8:de3d with SMTP id
+ ffacd0b85a97d-3a09fd78c3amr5565984f8f.16.1746449645478; 
+ Mon, 05 May 2025 05:54:05 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441ae456d7dsm124609275e9.1.2025.05.05.05.51.33
+ ffacd0b85a97d-3a099ae0bc0sm10185307f8f.20.2025.05.05.05.54.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 05:51:33 -0700 (PDT)
-Message-ID: <a29b50e7-1364-4f57-ac31-9827ffddef06@redhat.com>
-Date: Mon, 5 May 2025 14:51:32 +0200
+ Mon, 05 May 2025 05:54:04 -0700 (PDT)
+Message-ID: <38a01aeb-858d-4d25-b79b-a31d29118ca9@redhat.com>
+Date: Mon, 5 May 2025 14:54:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/15] vfio: preparation for vfio-user
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, qemu-s390x@nongnu.org,
- Jason Herne <jjherne@linux.ibm.com>, Tomita Moeko <tomitamoeko@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Tony Krowiak
- <akrowiak@linux.ibm.com>, Alex Williamson <alex.williamson@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
-References: <20250430194003.2793823-1-john.levon@nutanix.com>
+Subject: Re: [PATCH 0/9] vfio/igd: Detect IGD by OpRegion and enable OpRegion
+ automatically
+To: Tomita Moeko <tomitamoeko@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?=
+ <c.koehne@beckhoff.com>
+References: <20250428161004.35613-1-tomitamoeko@gmail.com>
+ <92f3d3f6-d90a-4010-b67f-b282ed5f3c91@gmail.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -135,10 +128,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250430194003.2793823-1-john.levon@nutanix.com>
+In-Reply-To: <92f3d3f6-d90a-4010-b67f-b282ed5f3c91@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -163,78 +156,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello John,
+On 5/5/25 09:33, Tomita Moeko wrote:
+> I forgot adding v2 in subject, sorry for my mistake.
 
-On 4/30/25 21:39, John Levon wrote:
-> Hi, this series is against the vfio-next tree:
-> https://github.com/legoater/qemu/commits/vfio-next
-> 
-> The series contains patches to vfio to prepare for the vfio-user
-> implementation. A previous version of these patches can be found at
-> https://lore.kernel.org/all/20250409134814.478903-1-john.levon@nutanix.com/
-> 
-> The changes have been rebased on vfio-next, and include changes from previous
-> series code review comments.
-> 
-> An old version of the full vfio-user series can be found at
-> https://lore.kernel.org/all/7dd34008-e0f1-4eed-a77e-55b1f68fbe69@redhat.com/T/
-> ("[PATCH v8 00/28] vfio-user client"). Please see that series for justification
-> and context.
+That's ok. Just use a v3 in the next spin, if needed.
 
-We are nearly there. Please address the little issues in v3, the
-build breakage being the most important. Last patch is not under
-the VFIO jurisdiction though.
-
+Only one patch, the last, is not reviewed yet. Will there be a v3 ?
 
 Thanks,
 
 C.
 
 
-
-
-
-
-  
-> thanks
-> john
 > 
-> John Levon (15):
->    vfio: add vfio_prepare_device()
->    vfio: add vfio_unprepare_device()
->    vfio: add vfio_attach_device_by_iommu_type()
->    vfio: add vfio_device_get_irq_info() helper
->    vfio: consistently handle return value for helpers
->    include/qemu: add strread/writeerror()
->    vfio: add vfio_pci_config_space_read/write()
->    vfio: add unmap_all flag to DMA unmap callback
->    vfio: implement unmap all for DMA unmap callbacks
->    vfio: add device IO ops vector
->    vfio: add region info cache
->    vfio: add read/write to device IO ops vector
->    vfio: add vfio-pci-base class
->    vfio/container: pass listener_begin/commit callbacks
->    vfio/container: pass MemoryRegion to DMA operations
+> Moeko
 > 
->   hw/vfio/ap.c                          |  19 +-
->   hw/vfio/ccw.c                         |  25 ++-
->   hw/vfio/container-base.c              |  14 +-
->   hw/vfio/container.c                   |  66 ++++---
->   hw/vfio/device.c                      | 192 +++++++++++++++++--
->   hw/vfio/igd.c                         |   8 +-
->   hw/vfio/iommufd.c                     |  35 ++--
->   hw/vfio/listener.c                    |  82 +++++---
->   hw/vfio/pci.c                         | 257 ++++++++++++++++----------
->   hw/vfio/pci.h                         |  12 +-
->   hw/vfio/platform.c                    |   6 +-
->   hw/vfio/region.c                      |  19 +-
->   hw/virtio/vhost-vdpa.c                |   2 +-
->   include/hw/vfio/vfio-container-base.h |  10 +-
->   include/hw/vfio/vfio-device.h         |  67 +++++++
->   include/qemu/error-report.h           |  14 ++
->   include/system/memory.h               |   4 +-
->   system/memory.c                       |   7 +-
->   18 files changed, 604 insertions(+), 235 deletions(-)
+> On 4/29/25 00:09, Tomita Moeko wrote:
+>> As proposed in a previous discussion [1], detect IGD devices based on
+>> whether it has VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION exposed by kernel
+>> and enables OpRegion access by default. This enables out-of-the-box
+>> display output support for IGD passthrough without having to manually
+>> set x-igd-opregion=on, which probably saves effort for libvirt users.
+>>
+>> This patchset also limits legacy mode to Gen6-9 devices, as Intel no
+>> longer provides CSM support and VBIOS on newer IGD, and Seabios does not
+>> support setting up the 64 bit BDSM register on Gen 11+ devices. Exposing
+>> VGA ranges to guests by default on platforms without VGA mode support is
+>> undesirable.
+>>
+>> Additionally, as we enables OpRegion on IGD devices by default, and
+>> Intel removes the BDSM register from Meteor Lake [2]. There seems to be
+>> no extra register quirks rather than OpRegion required on newer devices.
+>> To support them (and probably future devices), the generation limit is
+>> removed, with BDSM quirk only applied to known Gen 6-12 devices.
+>>
+>> Note: I have not been able to test this on Meteor Lake or newer
+>> platforms due to lack of hardware.
+>>
+>>
+>> [1] https://lore.kernel.org/qemu-devel/20250325172239.27926-1-tomitamoeko@gmail.com
+>> [2] https://edc.intel.com/content/www/us/en/design/publications/14th-generation-core-processors-cfg-and-mem-registers/d2-f0-processor-graphics-registers/
+>>
+>> Changelog:
+>> v2:
+>> * Removed "Allow hotplugging with OpRegion enabled", hotplugging is
+>>    always forbidden.
+>> * Test device is not hotplugged and get opregion in a single function.
+>> * Update documentation along with code changes.
+>> * Minor code style fixes.
+>> Link: https://lore.kernel.org/qemu-devel/20250421163112.21316-1-tomitamoeko@gmail.coms
+>>
+>> Tomita Moeko (9):
+>>    vfio/igd: Restrict legacy mode to Gen6-9 devices
+>>    vfio/igd: Always emulate ASLS (OpRegion) register
+>>    vfio/igd: Detect IGD device by OpRegion
+>>    vfio/igd: Check vendor and device ID on GVT-g mdev
+>>    vfio/igd: Check OpRegion support on GVT-g mdev
+>>    vfio/igd: Enable OpRegion by default
+>>    vfio/igd: Allow overriding GMS with 0xf0 to 0xfe on Gen9+
+>>    vfio/igd: Only emulate GGC register when x-igd-gms is set
+>>    vfio/igd: Remove generation limitation for IGD passthrough
+>>
+>>   docs/igd-assign.txt |  11 ++-
+>>   hw/vfio/igd.c       | 218 ++++++++++++++++++++++++++------------------
+>>   hw/vfio/pci.c       |   2 +-
+>>   3 files changed, 137 insertions(+), 94 deletions(-)
+>>
 > 
 
 
