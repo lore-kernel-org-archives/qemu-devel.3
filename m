@@ -4,95 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A297C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 17:43:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D26CC3ABAA
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 17:47:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBzpx-0003Lf-N8; Mon, 05 May 2025 13:42:42 -0400
+	id 1uBzuC-0005ju-FR; Mon, 05 May 2025 13:47:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBzoz-00038E-7x
- for qemu-devel@nongnu.org; Mon, 05 May 2025 13:41:42 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1uBzu9-0005iz-Vi
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 13:47:02 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBzow-00086Y-Ts
- for qemu-devel@nongnu.org; Mon, 05 May 2025 13:41:40 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-73712952e1cso4673613b3a.1
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 10:41:38 -0700 (PDT)
+ id 1uBzu3-00009F-8j
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 13:47:01 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2ff799d99dcso4860499a91.1
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 10:46:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746466897; x=1747071697; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746467214; x=1747072014; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ew70U3lTDz5hC+3m9yRbzo9z4bHliR8+n+FYQbakwuQ=;
- b=wgoqSoyIuP6t+g1tZcN0A1KQFMPmG9lGB1HEcGWFmAcSZkLD5ZOuZmv20r31q2zU8b
- FoaMHOCLzz/gU74YUBCSoTI7jU7BN1HUz8x0UaU2XgCMuIr1zJ52O9ILCj5RJ7Bqi6/W
- SboRDXTmpqCX4v+M5SW+1kDhuj9cjRND4WYe7v2OFdeiEilhebpI78fhLn7CBabm9+qS
- 4/ABTON/XmAMyEjt/t/QoF0+ZLHaRLlWEahiIglGVSbk/KW/pXeL69YJ+AyP8bFfqfme
- c6j+AytVrixrAqubhDCupIn1wVvpJ5mOIpCsCWn2W050eONXZf8WEej3H+3xXjY/aACM
- fEfA==
+ bh=JkiIBScfndqg7os4hIqHVcBti+HptMS/+YM/TseDweM=;
+ b=KoyksapCUY5XXU6uxSJuzYtveImtT9Bn1jxxLwVhSfi8IN0U0EHsuB6oKt6gAtugcQ
+ 0pHcZsTucbViFu9gbr97IV7ew1I4cRThRyf9R1QlPZTM9RG4AgwsXcdyNIhR2gvJTfGg
+ j4CFE9o8VX9k2UFOVFyVO3/z09Oj3UcRG6+pDNPcyMVICrv4YQGjPulLRenWnP3LwzpU
+ GVH5eZUgVEwEfupEoYvqkOrMUnusl8sVt4tureUl/w2OE+fCRPOlMEBdkutXO5VTJ3wm
+ YdGIUQNNTtvMub4NdX9mEr5XHp6oJuZCKtvgq1EyPD0yXki2guW8wQPgcJFB19Z/cQWV
+ 15sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746466897; x=1747071697;
+ d=1e100.net; s=20230601; t=1746467214; x=1747072014;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ew70U3lTDz5hC+3m9yRbzo9z4bHliR8+n+FYQbakwuQ=;
- b=A5LhM0LJQlAPQ7uR2TzVQy7Pa6JADJxy4ECV352PO/nDdAIauG52dksqDVpxZ7/jMi
- rwndAhD7mQdsBIblv+bbUeaosxeF8DNGKbIG+H2+SjerqBahsg3j0Olna0hsAZS8TBhJ
- Z5Azv0lfanYfsz1wLks8I2Kp0IensL4+Xxke9ZNdFkzbKE1uHCjeCU68Nv5nZQwG/2tH
- PsrqZDZBj+Ko2BTtZYxah7PXiZphWGKixgsksZVJQa7IXEKEl0wuHZioTSSA6o1rofiK
- UEacn52HNxq0lt63Gq5XdguN2nU4BAfugbt2+wLhbZ+SKnnmUSlYR7cpOA+Sn9pW9AP9
- sCQA==
+ bh=JkiIBScfndqg7os4hIqHVcBti+HptMS/+YM/TseDweM=;
+ b=gRgurncDNN60KHaIrhyv4NIPC5IYUZ0PJVuA0aC3+MW2pWd6Gw3vwaVPAbIZ8P2eGu
+ FixirvrtO2A7aOT+Kv5PbGFHu6ICKtTdv4xAqIKCyNZK1ZShvHeDghaMTPn/HuciuIIT
+ hBtCBJ0r86/7yoFMjSK7derQ0VQKZ7SK6THKczYukoqqkoIdPbNQa4o4b4Fv+/SKVtI+
+ H+4uQIbjQh2qMumqwmt+SxXq6ORt8fcfbwd5QZUAODhO7f2xXstTwp+Qkk2Rl/mLF9/m
+ BWBDpFLqjl7HMYRk+zQQqK/SZs2AuQEeSd67UR6XTuUPf9LcTUGHrntlqbMSENwO/Eol
+ XZdg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXx/Q/61phK7gY4HibLK//h34hxq1Cr/hmTYmjOg5H044SrUuPensVnDmBpKu9iflD4a06eIwEVbnSX@nongnu.org
-X-Gm-Message-State: AOJu0YyZwpMZS5/7CwHhvDgibsk5sAX0gvqUt/K/MnPQ+6KyUJa0mRTY
- JNbrty00pscNNpuFv0l+SE2jipFXdvynTNaYuqwtct7tNUoIfVc39nYZDYgT0CY=
-X-Gm-Gg: ASbGncukDz29ri0USkmOGjogJZT+ct4IwEQwCcsu9hRk78/HopQ4YKibfGahh6lw0xE
- SNWd9ZFrp9uBvJLj/qzdvQQfNG83g2IDZsATJmruinP78GF3Ja//tNbS8IWMyB1LhDkwJ95NjYY
- HEXjIO5+nC1bwn6uTSOEE+K29mgpovZxhE5CSySF/ZMjCGhPKO3jZfjPbiDBvxphppwNSmrHO4M
- b4m0/pxevxFnYmUxThMIMX9VMZO7yWThQfT8mzCLd8SXC9qK/CLoqVu29itjq6ba2TKSyEMVa5K
- CYYxH7/Oi9mu6opNYZw+aJg69j6YxlmYxli9nXkqU95wZQojIZEBcA==
-X-Google-Smtp-Source: AGHT+IFXaEzxiofDDELYqsPn04eZnaz8QiBcTf59KURdaK3Y2tALU7ijUKo8RT9o0LZf1B9L0ObdVw==
-X-Received: by 2002:a05:6a00:1d8f:b0:736:6ac4:d204 with SMTP id
- d2e1a72fcca58-7406f0d9ea2mr9996738b3a.11.1746466897088; 
- Mon, 05 May 2025 10:41:37 -0700 (PDT)
+ AJvYcCU+OxMgVmRY4hbnWNBCnNs0TdMuDwnLmXQNvgIoQ2wtOnoSeG81TBCP645yweEzo6WKHP4huMZKEANk@nongnu.org
+X-Gm-Message-State: AOJu0YwN9mCoqQBJDh+NNp23KGfG7RoAXGqfKC9z6eiUVz5ypQOmQ26Z
+ WGr3yPDYZduxuI+C+QQs0mnktAdvPFnAZCPUok1G4FeIF519cSmpI551F9JJcKs=
+X-Gm-Gg: ASbGncvv0sWB7m2h54rMTA+7RE+l2zMlz9/1gEpkzunXlMHWE5ka3t+khnq6oZ/TP5o
+ se1fS/KnNvhcFJSNGJfWVQSYOhQmf+U+o58svkdJOiowQFg7WtevJ0mTRcCGLZuFJAKie3SMjeK
+ m8NojpmLrzXTzxwzzp56Av1x3bgciiABcaMSOpaEB7WuFMNNtsCl3HmO9N0119AnD8SvckXAkOE
+ fO6itiV/a9DRZZvaSMUlY3LXnMWACibh9zmE04rsfmDdGXTLbDMluU2hawsB0O/l5vIuMFIWT/z
+ oU9YmyauVgYDQ52/JtHc3ug6Nd6+iwMJrevJqTjychIVkDVjH7IIEQ==
+X-Google-Smtp-Source: AGHT+IHaZWlfnoO2C1x2ekQ5TyRHDnxf9J5Hkai5LBURFwryLauuaFUDLTxZRvNocWCQfSVoY9IyHw==
+X-Received: by 2002:a17:90b:280b:b0:2ff:64c3:3bd4 with SMTP id
+ 98e67ed59e1d1-30a61a6f845mr10828468a91.31.1746467213723; 
+ Mon, 05 May 2025 10:46:53 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-740590238f5sm7100162b3a.88.2025.05.05.10.41.36
+ 98e67ed59e1d1-30a47476814sm9333900a91.17.2025.05.05.10.46.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 10:41:36 -0700 (PDT)
-Message-ID: <4e7c2d18-dec2-4a49-9f1c-35e057ba8874@linaro.org>
-Date: Mon, 5 May 2025 10:41:35 -0700
+ Mon, 05 May 2025 10:46:53 -0700 (PDT)
+Message-ID: <91cc4370-163e-4bdd-ac1c-b0d6ea3c06cb@linaro.org>
+Date: Mon, 5 May 2025 10:46:52 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 04/48] meson: apply target config for picking files
- from libsystem and libuser
+Subject: Re: [PATCH] meson: use thorough test setup as default
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- alex.bennee@linaro.org, kvm@vger.kernel.org,
- Peter Maydell <peter.maydell@linaro.org>, anjo@rev.ng,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250505015223.3895275-1-pierrick.bouvier@linaro.org>
- <20250505015223.3895275-5-pierrick.bouvier@linaro.org>
- <857f0b9f-e58b-48a1-87af-49c3c52b379a@linaro.org>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20250503201806.3045723-1-pierrick.bouvier@linaro.org>
+ <f7da46dd-0e8f-42d8-b555-300c088f605e@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <857f0b9f-e58b-48a1-87af-49c3c52b379a@linaro.org>
+In-Reply-To: <f7da46dd-0e8f-42d8-b555-300c088f605e@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1029.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,48 +106,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/25 9:59 AM, Richard Henderson wrote:
-> On 5/4/25 18:51, Pierrick Bouvier wrote:
->> semihosting code needs to be included only if CONFIG_SEMIHOSTING is set.
->> However, this is a target configuration, so we need to apply it to the
->> libsystem libuser source sets.
+On 5/5/25 3:32 AM, Thomas Huth wrote:
+> On 03/05/2025 22.18, Pierrick Bouvier wrote:
+>> Allows all tests to be visible by default when using meson test
+>> directly.
+>>
+>> This has no impact on make check-* commands, which use SPEED=quick by
+>> default (see scripts/mtest2make.py).
 >>
 >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >> ---
->>    meson.build | 26 ++++++++++++++------------
->>    1 file changed, 14 insertions(+), 12 deletions(-)
+>>    meson.build | 5 +++--
+>>    1 file changed, 3 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/meson.build b/meson.build
+>> index f8bf6e7bb66..57ff3f722d8 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -5,12 +5,13 @@ project('qemu', ['c'], meson_version: '>=1.5.0',
+>>    
+>>    meson.add_devenv({ 'MESON_BUILD_ROOT' : meson.project_build_root() })
+>>    
+>> -add_test_setup('quick', exclude_suites: ['slow', 'thorough'], is_default: true,
+>> +add_test_setup('quick', exclude_suites: ['slow', 'thorough'],
+>>                   env: ['RUST_BACKTRACE=1'])
+>>    add_test_setup('slow', exclude_suites: ['thorough'],
+>>                   env: ['G_TEST_SLOW=1', 'SPEED=slow', 'RUST_BACKTRACE=1'])
+>>    add_test_setup('thorough',
+>> -               env: ['G_TEST_SLOW=1', 'SPEED=thorough', 'RUST_BACKTRACE=1'])
+>> +               env: ['G_TEST_SLOW=1', 'SPEED=thorough', 'RUST_BACKTRACE=1'],
+>> +               is_default: true)
 > 
-> Acked-by: Richard Henderson <richard.henderson@linaro.org>
-> 
-> I'm not quite sure how this is supposed to work.  It appears this compiles everything in
-> libsystem_ss, and then later selects whether the individual objects should be included in
-> the link.  This is fine for internal CONFIG like SEMIHOSTING, but won't be fine for a
-> CONFIG that implies external dependencies like VNC.
+> I'd rather not make it the default: The thorough functional tests download a
+> lot of assets from the internet, so if someone just runs "meson test"
+> without further parameters, I think we should not trigger these downloads in
+> that case.
 >
 
-The trick used in our build system is that static libraries are never 
-fully compiled (no archive is created), but everything is done by 
-extracting objects matching sources available after config. It's a bit 
-weird, but it works. I understand it was done this way to avoid creating 
-specific static libraries per QEMU target.
+$ cat tests/Makefile.include
+...
+check-functional:
+	@$(NINJA) precache-functional
+	@QEMU_TEST_NO_DOWNLOAD=1 $(MAKE) SPEED=thorough check-func
+...
 
-Before this patch libsystem was including all object files by default 
-(thus the link error with --disable-tcg in Philippe series), while now, 
-it selects them based on target config, so it's a subset.
+What's the rationale to run check-func with SPEED=thorough and 
+QEMU_TEST_NO_DOWNLOAD=1 with precache-functional having cached only 
+quick tests by default?
+Either we should remove SPEED=thorough, or download all tests by default.
 
-In short: Static libraries in QEMU build system are just virtual sets of 
-files (sharing flags and dependencies), and only a subset is included in 
-each binary based on target config.
-
-> I guess we can think about externals later, if it becomes an issue.
-> 
-
-Most of our external dependencies are not set as required, so if no 
-object files selected uses it, it should link fine without the 
-dependency being present on linker command line.
-
-> 
-> r~
+>    Thomas
 > 
 
 
