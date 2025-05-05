@@ -4,194 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E82CC3ABAA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71948C3ABBB
 	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 13:27:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBvqZ-0001No-IL; Mon, 05 May 2025 09:27:03 -0400
+	id 1uBvqG-0001MP-7l; Mon, 05 May 2025 09:26:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uBvqT-0001NP-2h; Mon, 05 May 2025 09:26:57 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uBvqP-00074s-OQ; Mon, 05 May 2025 09:26:56 -0400
-Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 545B91fT009131;
- Mon, 5 May 2025 06:26:47 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=wbJ+rLikF5RAMwLwOBjaQWDD9p8lTwwoJ4+ebpBF5
- Pg=; b=CBI7cy1xy3Dybq74npCt3933ph6G+6lruvMQG9MobtsG/G/UpNth/CwG0
- NF+Kxy1IfkzoKubf1zhXJAkc9ufJa1Ed4gtT1wwzN4NMoViQDDRT/Bx0yfZXcHNL
- 6ICLIa5aCXk8t+1iNZ/tSTz39y3Ys+RqFWA5zJrBEtMmX++ay2EFo3Q9QItgt8U+
- 6P8fy9adUzZJNrmjRQWAo0IUkN3BOn5pXR0iwrpEODv1Wvn00rz05V9C4AxmWOV5
- AOwYX5+YWATarSQFQtHuEbYj/xvDnrBpfjAxI/XGg0I9WAIz2IhGGXMLflJAzBQH
- b0O1ds9+oA+Xv+UR/yPWjqCK8/+5g==
-Received: from nam11-bn8-obe.outbound.protection.outlook.com
- (mail-bn8nam11lp2172.outbound.protection.outlook.com [104.47.58.172])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 46dffukan0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 May 2025 06:26:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mu8wWA1PgOewmYHr/pIC2CIp/is/TQBIpRX/FaSDIi/26F1ruuuom03O+pWpLnsjsPlqKzgxq3M9HnXphcJKfYc50ETg6SKstB6s1s5bshjGlqF0K37DPWNsaxlB3miulQ0gjMcgpFF6bhGdE9abzk6RXx6d7M3QASYyBt4yVsvFOpEGH+k0ajkiOLo1J0/E+3FZSqBtr9oDzdtmHif5zUy9DsoXzlSr/OfZ4j+kcUKLNnZJzniA+FlB9MH8/0FnIprWx7gphc7+ZO8otbT57NU24+4ljLuoZsno0N6J6FvBxGuTAqGgclo7JQ0+xElU6dHyb8RpilE5Tt/j5WZcDw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=217fQLRC06nyhEphD8AeA8K8xyKVzmQeP0D+sjFhfXA=;
- b=hDgN90nhLPaW3KUJh40SKJ+oYaQaEaEFGzKj8s87iu34uefftE/VoRWvWksq9lIGcGiHKAfmnQvKnsq2Txo84l8+QcFl+H7IqmPJds7mMeasMP7QrAeNd7x6XIOxx2gOM5MBxah+/GhrVe259xfhFIsn4mzsq0KgREbI4S5b6uLyrIQ4BliBY+K+3dQlJllXoNq4gPH/US/moBRc59e7vrePpmIJfTxaW92GtyE7UC0L3YgqCWAkIHlG6LLVGbS9X/nuSBxRhIW6xxj6FDEZX5ClPFKDmEj6yxQUu6fP/9dxxyj6gckO1qe8TdcFwAcmOJ3iZi0aNtZaZwF7cGzplg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=217fQLRC06nyhEphD8AeA8K8xyKVzmQeP0D+sjFhfXA=;
- b=JnM/z1XKQqeeBg8T3cYcsEiKFSbL82g5xHmdJ3XaSZGzZ0Usn4C7u3rTqjIiVwiw6cxHb5SgoLs7BW17oHYwzsucaRpS9K/D3Icx2OeXR+qRSE/7348P+lT4OVy6KwL5F8LAav4KOMP1AswrIm2frCHCfBTf0rt6YdNO8P4DjU3mUrdxhXcMpyUsEJkVNEzX5AzSzXjpDF3Rz3lI5jMPbDHteaCT8hsaG5YA9iifAvTM+7Gp13NvR0rWfhPvcrtXbadEUghTE/OT0Ce0r9GrTOn7vioTjnRzCf/YckrjGwwto08Hb+laVY+UOWBg0F4gsGzmnR2TY3Y898SXPkikUw==
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
- by PH0PR02MB8614.namprd02.prod.outlook.com (2603:10b6:510:102::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.18; Mon, 5 May
- 2025 13:26:44 +0000
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51%5]) with mapi id 15.20.8722.011; Mon, 5 May 2025
- 13:26:43 +0000
-Date: Mon, 5 May 2025 14:26:39 +0100
-From: John Levon <john.levon@nutanix.com>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, qemu-s390x@nongnu.org,
- Jason Herne <jjherne@linux.ibm.com>, Tomita Moeko <tomitamoeko@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Tony Krowiak <akrowiak@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>
-Subject: Re: [PATCH v2 08/15] vfio: add unmap_all flag to DMA unmap callback
-Message-ID: <aBi8j0sM_VA0StmY@lent>
-References: <20250430194003.2793823-1-john.levon@nutanix.com>
- <20250430194003.2793823-9-john.levon@nutanix.com>
- <bfeb9363-a33a-4a2f-b0e9-115beebb1fbf@redhat.com>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <bfeb9363-a33a-4a2f-b0e9-115beebb1fbf@redhat.com>
-X-Url: http://www.movementarian.org/
-X-ClientProxiedBy: LO2P265CA0294.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:a5::18) To CH2PR02MB6760.namprd02.prod.outlook.com
- (2603:10b6:610:7f::9)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uBvqD-0001Ln-PK
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 09:26:41 -0400
+Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uBvqB-00072F-3o
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 09:26:41 -0400
+Received: by mail-pl1-x641.google.com with SMTP id
+ d9443c01a7336-22928d629faso40156185ad.3
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 06:26:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746451597; x=1747056397; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0QTPUwEj2WuOHn4mfaxMr2Vz3SFLgvMzMGm+xsMVPRs=;
+ b=c6IKPVV4YGKhtXiDk6adB7ZGYoot65myHynQOJxT8Q8On7n2GIMXSQRvti+rHr1xPD
+ Qjz0qI82Cni5n7FNelKiICS/8QRFFVy3N2eD86QudwiwUPPftTj6t7ylJ2G+Mj7heQ41
+ Gxle6FYan9zzHkF0vMzEggZrqLMqIkXVViVfvasD92fDBcDIjubgakqqKtaSmzk+qbMF
+ 53H5nlivzxGK8A0ZfO9v6K56Snj/oDl5Qmud10a4896L2tbXccJqA8VKvJyMk2KY8ydY
+ QXWB68a9Bj3CNi17XtA4E4e5R6lCoxc6Q39Xn9ACE9p81kbpyMVqGNdxf4S0jPmQLhDD
+ UJoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746451597; x=1747056397;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0QTPUwEj2WuOHn4mfaxMr2Vz3SFLgvMzMGm+xsMVPRs=;
+ b=YTJIXG+GFsUguDa1RgkW+/9OzvsSl3JIaSnSFvDlDyuADZpI92+6jkrNqBGLtVuGOt
+ bm0krA7k3NYmcDFRO+08m2PMVAvE8UoST27fk8qxbR8/dSRhW2Qh+VlJbBhqceUBQ+cC
+ dxB9U9yVpIvGIJ7SBaAW2/ZuNI5LV9J29vnnpVVM38Ul5cmVRQXclEFHkPw/nHV16kLU
+ a3KSdYSaD9OnjyTmOWtmmyQVm9IiouZ3s3VWStCd6Vl73aIKqpSZ0+THCIRSKwc/Syd/
+ k1KzfbLRs6RWZWSZQt5CKyneEhxU8rMfQy7cCHWhClLjv7xA04zpkdINPjBovFPCeLwx
+ QEQw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXFjSVlPTcmHMqBNnXIY3po3YCVoVHNIbSY2kQPqWU6pgJr/8AGq2aVLMYS41OttRmZ7yl4ExHjAs+k@nongnu.org
+X-Gm-Message-State: AOJu0YzLLyeuxKJAmaLjYxjw5t6xHpZLyINst4XNg7FLScP72VZ8MHyv
+ UTQ8rq3XvHB+iaLlkMg+njVhZXblU6MF9KZJbNSyceCQ4o0qh0Y6m+kJPGlRUdsv36BAmIt7zGK
+ SCrPliQ==
+X-Gm-Gg: ASbGncvgY7poc/MnqvjyuxzGgOYRMP6DRK7SwzvTt3xWA3XeE1z96bq5gxwOUUpTjMY
+ XkLvR0ZzNuQ/i8SFRaFDAr+Q6rn9aXQHVAhWhLEeEDUCEWDnWwYKm3jREGS7hBvnd/xN3lY5Tc9
+ F7p3GO+boW6IPWJ9ZsIw8+cUqoyG58mYgsVbuSjew3NE9cQm8cEw31EPFZavXl1tOgpbzkZjaZs
+ GG7HiJavDYJ3amuHuWQw5Ozx1UZFbMVaVkXJ0QX0oqqksDZkee9aae6rGxnD35HFHkQAK2ALAT5
+ /NAh/eirkL2yAL8REVFc3WuyAxnAPp2qC7XQme/K2AxD7FoPQXjQZsLZHiU39fjb9+ExcuEAdiA
+ Y1qdOTblbYlea3+7uHMw=
+X-Google-Smtp-Source: AGHT+IGjUezE/Hhk6x2fCfMkoMfHmbOcvxP8gFblcswbm3fgLzXAeqAkHUn+C+hzfH6tiTFLlYsGGg==
+X-Received: by 2002:a17:902:d505:b0:220:d601:a704 with SMTP id
+ d9443c01a7336-22e1e8eaf8dmr85391285ad.18.1746451596757; 
+ Mon, 05 May 2025 06:26:36 -0700 (PDT)
+Received: from ?IPV6:2804:7f0:b400:8604:7950:93ed:53e9:9290?
+ ([2804:7f0:b400:8604:7950:93ed:53e9:9290])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-30a4748e775sm8881194a91.27.2025.05.05.06.26.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 May 2025 06:26:36 -0700 (PDT)
+Message-ID: <6a52f974-3e13-49ba-bfeb-e30e683e4ce5@linaro.org>
+Date: Mon, 5 May 2025 10:26:31 -0300
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|PH0PR02MB8614:EE_
-X-MS-Office365-Filtering-Correlation-Id: df75ecb7-0b12-4494-6f8d-08dd8bd87a15
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?sKI+92lw616WDtr/MOe1TVux0lwioEn98y9/M9OVolyK9LbJBAylpUOXin?=
- =?iso-8859-1?Q?bwKZX4mE0Dwbhlx/1VSgJos/9T4/ubXuwyqzS02jJ+W7+TS2aq6j+BF54M?=
- =?iso-8859-1?Q?a3bak5CxIC+Bn5QwMGj/jRsjbZyyrP6r5rEe3rfuEl8dU5l3nWvHeTrXrc?=
- =?iso-8859-1?Q?nCXQhc6M5E9qqN892qYMKCv/mBpHZ28XeBSeK4KmCqXDL5ak/mQ5Ft3PRa?=
- =?iso-8859-1?Q?f/Up//c0kZv7SxQ810YL5J2W5iQ5DH4yrPKDxodzFKbJlpGWchIlINgL5h?=
- =?iso-8859-1?Q?1b0m+TajmHopBpR5n4slWst6wG5RRdejeN8+2tZYJ91qTynOJ0Lu0eN28K?=
- =?iso-8859-1?Q?93syVVF/OmywcKHXmT4d1WJrMvVXjHPvlbhD4oKS9Opw6jpHMCeoFPsir3?=
- =?iso-8859-1?Q?r/ZZ0YaRnXYpq4hYlFlAVlnGW0+HmopQLO593VvVjY2r0sQyS6q/eOwYV8?=
- =?iso-8859-1?Q?n0wJzVURG4thYKuaZvyKe519npn6udTC1Fczp9cjMZlCgKFY5KTPr8cpQQ?=
- =?iso-8859-1?Q?9UkUbOTCD2mXg9k99dajFhZfcyUtEj2gNoc/L2uFcWOdwFlEsqSs+jEOO1?=
- =?iso-8859-1?Q?kny/xTcxgTlXPTMvHrmIAcgkOKUriBSk3PhCk3Wpj45KgRqgvZs+qHGLWq?=
- =?iso-8859-1?Q?ce5bpbYiApDxU9o7OnVnjfjCzrPRnkRa5l0vksLcnWdCeYDmi5RhdMxBmJ?=
- =?iso-8859-1?Q?xcH84hKy8yCU1yfNyj3bmxCBlh6Vdbo0LrZkdc0Lz1e2+3l0LyJWPTxFjF?=
- =?iso-8859-1?Q?1RdhWC15+H1xGNW0KaDT9mWM/1tu9EjwzYLhEA+LA4dNEDOJJDA3j5OqLV?=
- =?iso-8859-1?Q?TY3l9RsT55SGQiCW1hrEGv5DsyA/l93G4NBfuPmdv+DFUTNUnSOlOauWIg?=
- =?iso-8859-1?Q?1N084TXUodV6Y7mfLB9fSMpjVc1gDRbMenL2iTOjDQtbzJQtF3CfDcxsYW?=
- =?iso-8859-1?Q?erNxy6eOLvr7k+QZmXOmaiWRpcDBLj/ZeFYEl0+x7ZWwtpmcywaEjsFQKI?=
- =?iso-8859-1?Q?4gcKiBdrcbXGGLiVwvC8X97nKaBvdTwvC8NuUPl0tGpog+SMEfIvxLo4pe?=
- =?iso-8859-1?Q?28q1o2977VYJX8CT+rU2Ea7QDhBoMHZ4hx0ktiM9OKOayDozdlkpZyA62A?=
- =?iso-8859-1?Q?BHus8kofbreBESCos4K0eS4/Qxj2IcJeo3Eu7YUMYb7EOZfCVTV7pzeGTh?=
- =?iso-8859-1?Q?8T3l402q39FRhHFRQ8QNthjT48fzTVvNcWiBGt4TK9Ga9HDPEgyfW/uHi/?=
- =?iso-8859-1?Q?oggaMoK1kwvv9FDQShNuQVGvR3i2KDBGTcytpb7MiYgmbY5SALtbxTiUCn?=
- =?iso-8859-1?Q?lVW4Axtlw3/OOpyfKW2kBPAm8IgBK22Te3Zkq7zjvrdPDpisSrNbRivIQ0?=
- =?iso-8859-1?Q?DvynEAsVYa1lCf3xWIqsfcQZgctrvESE5F3i4LBCdvT2WoJ4VKqzzqvtHY?=
- =?iso-8859-1?Q?vmUOSTaDBLJNLOakQ7Zg1FASCuoT/8mRLBOPEbWw8Ib2SrnBUyJHLsrlIO?=
- =?iso-8859-1?Q?o=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(1800799024)(366016)(376014); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?x+CL/eaUaqBHdmBHXXizVxLjM/dHGbc2D50tgJ73Ctu0jUJaykBsl9yR0o?=
- =?iso-8859-1?Q?7J3AmtHgFzTSyrWUs6W9htYZXIt9ELGe6sLxATSaLDADvZMDfKVaiMZ6bB?=
- =?iso-8859-1?Q?sYfEuqsL4hajrUT3/F+4mL0krJbs0NqBlS19o83h+vcF/Dia6i551eCRuO?=
- =?iso-8859-1?Q?U5C57Yn4bDHh2GwvKlAASkJPS+Om9F1SETjp0BeskB2Gx/+CcmKmyCv4tU?=
- =?iso-8859-1?Q?m5R/Hb4Uq4YMTpDKpmaTfm295SCIpmN7xl4uVMZCpeeawbGy4Ov1YnZzal?=
- =?iso-8859-1?Q?aAZ5GkSuGvwZTvhcUG48D9q7y6A1C8PAnxyWGctIbj68ap68bXvC8ea/L7?=
- =?iso-8859-1?Q?z+u00RYlfa31qy4zTL2OfwwMmAkLXrurjWMK9je3PovawixvLRMbwOQIQI?=
- =?iso-8859-1?Q?REgdONRsqHvgkYWtDPkno+jJydICAruxk+6BwjPyXFOUN3yOYZIS4n2fie?=
- =?iso-8859-1?Q?3Q/1zXBYlgZGohmgk3UzQT6j0BCmmv57ffQu/8AmnHbaRWXKIBNTYNzXKw?=
- =?iso-8859-1?Q?cXVnPolW9J4apWtu9nLq/YTZ1G1h6CTV2dDth+RRtXS7x6oZ+f6m54jYbh?=
- =?iso-8859-1?Q?srT8t/8LVseDvPbt02BObt6anDNzV44CWVYXIBNRo6GVM1dvcdjvh7v/Lz?=
- =?iso-8859-1?Q?NNtAc3yNwMyCpJbBetWXT70dmavBcdZYtG6k9Tl3fA0jSh5kaxMil8EhSQ?=
- =?iso-8859-1?Q?gMvzBevaEvuT90mzqLxwxfaHwYsIZ1e+z4nK+lGrlT8jBm25/+vZYIipQH?=
- =?iso-8859-1?Q?Yi2EVG2X0gG03S6+DnfRiUpbja22KZXmHY4hcvP9apQ/JfAFpuGRRyB250?=
- =?iso-8859-1?Q?zCvsqjoOwp6aA6BMg/wCa25TjLNp1oFuwXe6kQNCnTXngzE9rm6kLiCDdG?=
- =?iso-8859-1?Q?xIGZCUZe2fJIGjCe616ovk4575Gk8V94WT2X9rgBaS8fuGpGor9U1egF8F?=
- =?iso-8859-1?Q?teGa8f770mYWU9Mk14r28NRLWRcNV01hg2ARbl78OKHvMFcNJ9AlF0ZbC4?=
- =?iso-8859-1?Q?TBaH+lAi83gax4uBM2r1jnKZ/fGOTUXOqx0G/aDBCatWens+ZIyvHjOy8W?=
- =?iso-8859-1?Q?hYQdOj6Vroe1Eh1QC37NlNFtZ+zWnaz5JFCx6gqvPL1+PSFY46NA4Je328?=
- =?iso-8859-1?Q?OHdGXYgUd8se0eavzoAHMwFSgqUTjqtVAHZ9YZbuVPzY35j+8RWX3q4P0G?=
- =?iso-8859-1?Q?yV1nyXkEB41TMTwVA0yyU5+lRpLW5FsFtN/c9fPWyFotMuDITL/gbAU5TJ?=
- =?iso-8859-1?Q?vwLDU75gyArN9PGG5EYz9rUONOD9MqRtcME5nq2TPYtIpCpoM0qyqRxFNV?=
- =?iso-8859-1?Q?1soxBFg70+rnSMva1bAsrkdD2eHlzFaek03RWOhTWrOVIVBqQP7L4wlide?=
- =?iso-8859-1?Q?52ZXFzZwhd82M/4ylSdqg8nNHYfoEm7TFdpBZGESVJnE40m4Mkv3nSWf8i?=
- =?iso-8859-1?Q?dP6hiMKXDKcsylrhLzcST+nm5S8+iKOrQt4qKC4attAtfoPiEMX2b9r12J?=
- =?iso-8859-1?Q?b8DDQuI/1KyhfsMn0YSwFf/eRWM/1fJFE9Lm3ixBfIVThqYh+lMoAioOT/?=
- =?iso-8859-1?Q?r4yhaVMuvEgqdAJvY3b6oHi2K4vFhoNfANI/2xTbBNHjvabB+BNgRQ0PtR?=
- =?iso-8859-1?Q?OOeGxMIAMD4krW6LXj+6yMOhaeo0mwB0ID?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: df75ecb7-0b12-4494-6f8d-08dd8bd87a15
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2025 13:26:43.8155 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: SA82FBPEoD4ZLgCkC1uZp/75hbbeyuTM9I+2NE1YawcuguzghzhkqVgwD3kQqM88N8NgXSq7pjtFb6AfQ0Iy2g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR02MB8614
-X-Authority-Analysis: v=2.4 cv=WfYMa1hX c=1 sm=1 tr=0 ts=6818bc97 cx=c_pps
- a=1OKfMEbEQU8cdntNuaz5dg==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
- a=dt9VzEwgFbYA:10 a=0kUYKlekyDsA:10 a=TuS_aRFGRke3ED1qvqoA:9 a=3ZKOabzyN94A:10
- a=wPNLvfGTeEIA:10
-X-Proofpoint-GUID: LxrNqZvB7BKQogHXfG2woBsaU-Lm1tWi
-X-Proofpoint-ORIG-GUID: LxrNqZvB7BKQogHXfG2woBsaU-Lm1tWi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDEyOSBTYWx0ZWRfX3UXVTy1YOSSR
- N8U9IpMOXq990THC+XARlll5sI3fsGxdIDNs8aGj8BGCVv5Z8iobhHNeU3BeOFWCx9/PSsiD8Dp
- HYY1xxUp87vMcjq5svc+SlJbaZprPZWxyYeIKxoT/jWOXdSxtrsCfMxaQqDYgR7jRcICGSjjxnV
- XJJtj+OjJo+sVUEti9ScX6yKXLvwxknyd9DNL+qhny0s7LLXPFQSYOo6KjGQErh84OGl7+WYCDi
- 089wbZL5/h2l8FV9exRdcrSCmHaAi2AYEzrEVksUlMz2gzm7Qn98MjZMZcTKP8uDR8E0AIj6yfd
- e12Bq46NqgUUhuqEY+XpcGtHtabGwZVwumLtknBVwxObZJPrYzwc4I3FEwUv5k0PeVWOtyuLjFt
- 9/JZZuqfYKYsp/h1rr4WaUnD7Q3t3ML5k+Kgyw+cUQsuEQN1Wutwn71pmyCySyM9HpHLp+gD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-05_06,2025-05-05_01,2025-02-21_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=john.levon@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 00/24] APCI PCI Hotplug support on ARM
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com,
+ shannon.zhaosl@gmail.com
+Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com
+References: <20250428102628.378046-1-eric.auger@redhat.com>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20250428102628.378046-1-eric.auger@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x641.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -208,25 +108,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 05, 2025 at 02:06:03PM +0200, Cédric Le Goater wrote:
+Hi Eric,
 
-> !-------------------------------------------------------------------|
->  CAUTION: External Email
+On 4/28/25 07:25, Eric Auger wrote:
+> This series enables APCI PCI hotplug/hotunplug on ARM
+> and makes it default for 10.1 machine type. This aligns with
+> x86 q35 machine. Expected benefits should be similar to
+> those listed in [1].
 > 
-> |-------------------------------------------------------------------!
+> The infrastructure used in x86 is heavily reused and a
+> huge part of the series consists in moving code from
+> hw/i386/acpi-build.c to a generic place and slightly
+> adapting it to make it usable on ARM. The DSDT table is
+> augmented to support ACPI PCI hotplug elements.
 > 
-> On 4/30/25 21:39, John Levon wrote:
-> > We'll use this parameter shortly; this just adds the plumbing.
+> On ARM we use use a GED event to notify the OS about
+> hotplug events.
 > 
-> I am not sure the 'unmap_all' name reflects what the dma_unmap()
-> handler does.
+> I have not noticed any tests/qtest/bios-tables-test failures
+> neither on x86 nor ARM. x86 DSDT table has not changed.
+> ARM DSDT table definitively has but there are no tests
+> impacted. ARM misses hotplug tests that do exist on x86. This
+> most probably should be considered in the future.
+> 
+> Best Regards
+> 
+> Eric
+> 
+> This series can be found at:
+> https://github.com/eauger/qemu/tree/arm-acpi-pcihp-rfc
+> 
+> [1] [PATCH v6 0/6] Use ACPI PCI hot-plug for Q35
+> https://lore.kernel.org/all/20210713004205.775386-1-jusual@redhat.com/
 
-FWIW the vfio API flag that reflects this is already called
-VFIO_DMA_UNMAP_FLAG_ALL so there's precedent for the name.
+I've just started to review your series and went to a quick smoke test
+by hotplugging a net adapter and got the following kernel internal error:
 
-It unmaps the entire address space, right? Do you have a suggestion for a better
-name?
+(qemu) device_add virtio-net-pci,bus=pcie.1,addr=0,id=na
+(qemu) [   64.165411] pci 0000:01:00.0: [1af4:1041] type 00 class 0x020000
+[   64.165895] pci 0000:01:00.0: reg 0x14: [mem 0x00000000-0x00000fff]
+[   64.166259] pci 0000:01:00.0: reg 0x20: [mem 0x00000000-0x00003fff 64bit pref]
+[   64.166658] pci 0000:01:00.0: reg 0x30: [mem 0x00000000-0x0003ffff pref]
+[   64.167153] pci 0000:01:00.0: enabling Extended Tags
+[   64.179972] Internal error: synchronous external abort: 0000000096000050 [#1] SMP
+[   64.180719] Modules linked in: aes_ce_blk aes_ce_cipher polyval_ce polyval_generic ghash_ce gf128mul sha2_ce binfmt_misc sha256_arm64 sha1_ce nls_ascii nls_cp437 vfat fat evdev cfg80211 rfkill loop fuse efi_pstore drm dm_mod dax configfs efivarfs qemu_fw_cfg ip_tables x_tables autofs4 ext4 crc16 mbcache jbd2 crc32c_generic virtio_scsi virtio_net scsi_mod net_failover failover virtio_blk scsi_common crct10dif_ce crct10dif_common virtio_pci virtio_pci_legacy_dev virtio_pci_modern_dev virtio_mmio
+[   64.183656] CPU: 0 PID: 23 Comm: kworker/u2:1 Not tainted 6.1.0-30-arm64 #1  Debian 6.1.124-1
+[   64.184071] Hardware name: QEMU QEMU Virtual Machine, BIOS edk2-stable202408-prebuilt.qemu.org 08/13/2024
+[   64.184759] Workqueue: kacpi_hotplug acpi_hotplug_work_fn
+[   64.185320] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   64.185737] pc : acpi_ex_system_memory_space_handler+0x290/0x300
+[   64.186175] lr : acpi_ev_address_space_dispatch+0x124/0x334
+[   64.186490] sp : ffff80000a6bb3b0
+[   64.186663] x29: ffff80000a6bb3b0 x28: ffff0003fcbb08b8 x27: 0000000000000000
+[   64.187126] x26: ffff0003fcbb0288 x25: ffff80000a6bb568 x24: 0000000000000001
+[   64.187499] x23: ffff80000a6bb568 x22: 0000000000000004 x21: ffff0000c206cb00
+[   64.187885] x20: 00000000090c0014 x19: 0000000000000020 x18: 0000000000000000
+[   64.188265] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+[   64.188640] x14: 0000000000000000 x13: 4d43c3194dea1791 x12: 4d7a3553e5c937d0
+[   64.189003] x11: 0000000000000001 x10: 0000000000000000 x9 : ffff800008735b34
+[   64.189383] x8 : 0000000000000001 x7 : ffff80000873c850 x6 : 00000000000000f8
+[   64.189778] x5 : ffff0000c206cb00 x4 : 0000000000000000 x3 : 00000000090c0018
+[   64.190163] x2 : ffff80000a9af014 x1 : 00000000090c0018 x0 : 0000000000000001
+[   64.190734] Call trace:
+[   64.191086]  acpi_ex_system_memory_space_handler+0x290/0x300
+[   64.191696]  acpi_ev_address_space_dispatch+0x124/0x334
+[   64.192042]  acpi_ex_access_region+0xe4/0x2e0
+[   64.192287]  acpi_ex_field_datum_io+0x88/0x200
+[   64.192509]  acpi_ex_write_with_update_rule+0xd4/0x120
+[   64.192793]  acpi_ex_insert_into_field+0x210/0x2b0
+[   64.193048]  acpi_ex_write_data_to_field+0xa0/0x190
+[   64.193298]  acpi_ex_store_object_to_node+0x150/0x240
+[   64.193527]  acpi_ex_store+0x144/0x300
+[   64.193726]  acpi_ex_opcode_1A_1T_1R+0x218/0x580
+[   64.193971]  acpi_ds_exec_end_op+0x24c/0x4b0
+[   64.194227]  acpi_ps_parse_loop+0x100/0x6a0
+[   64.194477]  acpi_ps_parse_aml+0x94/0x3b0
+[   64.194674]  acpi_ps_execute_method+0x128/0x25c
+[   64.194922]  acpi_ns_evaluate+0x1f0/0x2d0
+[   64.195148]  acpi_evaluate_object+0x138/0x2d0
+[   64.195380]  acpi_evaluate_dsm+0xb8/0x134
+[   64.195613]  acpi_check_dsm+0x34/0xdc
+[   64.195822]  smbios_attr_is_visible+0x5c/0xb0
+[   64.196089]  internal_create_group+0xd0/0x3d0
+[   64.196335]  internal_create_groups+0x58/0xe0
+[   64.196584]  sysfs_create_groups+0x20/0x30
+[   64.196813]  device_add_groups+0x18/0x2c
+[   64.197039]  bus_add_device+0x48/0x160
+[   64.197260]  device_add+0x3a4/0x85c
+[   64.197463]  pci_device_add+0x308/0x660
+[   64.197680]  pci_scan_single_device+0xe4/0x114
+[   64.197941]  pci_scan_slot+0x70/0x1fc
+[   64.198155]  acpiphp_rescan_slot+0x90/0xa4
+[   64.198366]  acpiphp_hotplug_notify+0x2a8/0x300
+[   64.198584]  acpi_device_hotplug+0x138/0x4c0
+[   64.198819]  acpi_hotplug_work_fn+0x2c/0x4c
+[   64.199045]  process_one_work+0x1f4/0x460
+[   64.199277]  worker_thread+0x188/0x4e0
+[   64.199492]  kthread+0xe0/0xe4
+[   64.199671]  ret_from_fork+0x10/0x20
+[   64.200114] Code: f90002e0 52800000 17ffff97 f94002e0 (b9000040)
+[   64.200820] ---[ end trace 0000000000000000 ]---
 
-regards
-john
+(qemu)
+
+This is a Debian Bookworm stock kernel 6.1. I built QEMU from your GH branch.
+
+The machine was started with:
+
+./qemu-system-aarch64 -m 16G -nographic -machine type=virt,gic-version=max -cpu cortex-a57 -initrd /mnt/initrd.img-6.1.0-30-arm64 -kernel /mnt/vmlinuz-6.1.0-30-arm64 -append "root=/dev/vda1 console=ttyAMA0,115200 acpi=force" -device virtio-scsi-pci -device virtio-blk-pci,drive=root -drive if=none,id=root,file=/mnt/debian-12-nocloud-arm64.qcow2 -device pcie-root-port,id=pcie.1,chassis=1,slot=1 -bios ./pc-bios/edk2-aarch64-code.fd
+
+./pc-bios/edk2-aarch64-code.fd is the one found under ./build dir, so nothing special.
+
+It seems Linux acpi crashed when ingesting the _DSM method but I could not
+figure out what exactly in it could cause it.
+
+
+Cheers,
+Gustavo
+
+> 
+> Eric Auger (24):
+>    hw/pci/pcie_port: Fix pcie_slot_is_hotpluggbale_bus typo
+>    hw/acpi/ged: Fix wrong identation
+>    hw/i386/acpi-build: Fix build_append_notfication_callback typo
+>    hw/i386/acpi-build: Make aml_pci_device_dsm() static
+>    hw/arm/virt: Introduce machine state acpi pcihp flags and props
+>    hw/acpi: Rename and move build_x86_acpi_pci_hotplug to pcihp
+>    hw/pci-host/gpex-acpi: Add native_pci_hotplug arg to
+>      acpi_dsdt_add_pci_osc
+>    hw/pci-host/gpex-acpi: Split host bridge OSC and DSM generation
+>    hw/pci-host/gpex-acpi: Propagate hotplug type info from virt machine
+>      downto gpex
+>    hw/i386/acpi-build: Turn build_q35_osc_method into a generic method
+>    hw/pci-host/gpex-acpi: Use build_pci_host_bridge_osc_method
+>    hw/i386/acpi-build: Introduce build_append_pcihp_resources() helper
+>    hw/acpi/pcihp: Add an AmlRegionSpace arg to build_acpi_pci_hotplug
+>    hw/i386/acpi-build: Move build_append_notification_callback to pcihp
+>    hw/i386/acpi-build: Move remaining pcihp generic functions to pcihp
+>    hw/i386/acpi-build: Introduce and use acpi_get_pci_host
+>    hw/arm/virt-acpi-build: Add DSDT additions for PCI hotplug
+>    hw/acpi/ged: Prepare the device to react to PCI hotplug events
+>    hw/acpi/ged: Call pcihp plug callbacks in hotplug handler
+>      implementation
+>    hw/acpi/ged: Support migration of AcpiPciHpState
+>    hw/core/sysbus: Introduce sysbus_mmio_map_name() helper
+>    hw/arm/virt: Let virt support pci hotplug/unplug GED event
+>    hw/arm/virt: Plug pcihp hotplug/hotunplug callbacks
+>    hw/arm/virt: Use ACPI PCI hotplug by default
+> 
+>   hw/i386/acpi-build.h                   |   4 -
+>   include/hw/acpi/aml-build.h            |   2 +
+>   include/hw/acpi/generic_event_device.h |   5 +
+>   include/hw/acpi/pci.h                  |   4 +-
+>   include/hw/acpi/pcihp.h                |  14 +
+>   include/hw/arm/virt.h                  |   4 +
+>   include/hw/pci-host/gpex.h             |   1 +
+>   include/hw/sysbus.h                    |   1 +
+>   hw/acpi/aml-build.c                    |  50 +++
+>   hw/acpi/generic_event_device.c         |  64 +++-
+>   hw/acpi/pci.c                          |  20 ++
+>   hw/acpi/pcihp.c                        | 428 +++++++++++++++++++++-
+>   hw/arm/virt-acpi-build.c               |  26 ++
+>   hw/arm/virt.c                          | 100 +++++-
+>   hw/core/sysbus.c                       |  11 +
+>   hw/i386/acpi-build.c                   | 475 +------------------------
+>   hw/pci-host/gpex-acpi.c                |  75 +---
+>   hw/pci/pcie_port.c                     |   4 +-
+>   hw/arm/Kconfig                         |   2 +
+>   19 files changed, 748 insertions(+), 542 deletions(-)
+> 
+
 
