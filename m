@@ -4,103 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 525B1C369C2
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 06:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C0BDC369C2
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 06:59:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBpji-0002Ah-CD; Mon, 05 May 2025 02:55:34 -0400
+	id 1uBpme-0003lJ-J0; Mon, 05 May 2025 02:58:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1uBpjg-0002AD-GR; Mon, 05 May 2025 02:55:32 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1uBpma-0003kS-Mc; Mon, 05 May 2025 02:58:33 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1uBpje-00005k-6d; Mon, 05 May 2025 02:55:32 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 544KU7At017424;
- Mon, 5 May 2025 06:55:26 GMT
+ id 1uBpmW-0000YL-Sd; Mon, 05 May 2025 02:58:30 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 544CU5gr025949;
+ Mon, 5 May 2025 06:58:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=pp1; bh=r9M5YK2I+25ZZaIwT29BswGx/SjY
- ZZCM/DSIGIWxHfU=; b=eyijREFEzSsPCkAwvmhcC7P1B80OrLPKWePqgeUahku5
- qqomfbVJJ3Rak+cdwLObSFAwGdtZzLgyHLRBQBALmsrIdMoJawc9jPMH/FfoU9HV
- 4EkUm+aHeMrZKGO1dZgM4kF3IB6RH0FIauyJYaG98I1SuCELtHv8fnpCWJvRhZya
- Xu3O55xfLZKp5Hjhr8gnwJOahPA2BqKb4Yet0DD1SxbcAJ16kV9K5n7d2hbEDZxg
- p7E//dEmcC42BQ8mBo6npnonTU0hs00BRyc+UAibHf6tBAfpVhl5Cnv1kp5JzkzN
- xVdpjHXdVbvWN9gTjMDRR2JyZrKmXqfTqDuAv1f0Mg==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46e65hu171-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=xgEjAi
+ fhINb60Y3VmturNxjZqvUuGNhkblarMzhkwu4=; b=V/HQtKgNNsVo7gNyfYp2g/
+ cs3TA40Cau7YLHYI9KJjhDwyvXBlRbPzeP5yS7B13r2mT24R5q7utNrO/7qSa/rT
+ YiOnbKu40On/HNHEhgWmVsvqQEerRg4q73vIckPmzrIVlDoE/HXgG9e0hCggKFGr
+ hYhDFd3ny3eYwp1Z8r3zmhKxV+dOAT7R6zj7UW5jqHFGokbNuUhLtcYnLktRqdq9
+ wiAEy4Jl35gMgVR2DdLd5ZptAjhKYxsTwH1l/BRyCQVLiTvr/i79IvLcW9gdALGD
+ yfvWosaLKBVs1+QzX/alvQ/z3OS1nMV/eD6cAL0anJDkqRtFXDK23FZfUa/XXVMQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46e6pravqb-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 May 2025 06:55:26 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5453IxkP002815;
- Mon, 5 May 2025 06:55:25 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46dxfnn1m5-1
+ Mon, 05 May 2025 06:58:27 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5455LA72013830;
+ Mon, 5 May 2025 06:58:26 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 46e0624p4e-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 05 May 2025 06:55:25 +0000
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5456tNnN27197768
+ Mon, 05 May 2025 06:58:26 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5456wPx431195678
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 5 May 2025 06:55:23 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9D5335805C;
- Mon,  5 May 2025 06:55:23 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 310445805F;
- Mon,  5 May 2025 06:55:23 +0000 (GMT)
+ Mon, 5 May 2025 06:58:25 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 00C5058054;
+ Mon,  5 May 2025 06:58:25 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C99158052;
+ Mon,  5 May 2025 06:58:24 +0000 (GMT)
 Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  5 May 2025 06:55:23 +0000 (GMT)
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  5 May 2025 06:58:24 +0000 (GMT)
 MIME-Version: 1.0
-Date: Mon, 05 May 2025 08:55:22 +0200
+Date: Mon, 05 May 2025 08:58:24 +0200
 From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-To: Janis Schoetterl-Glausch <scgl@linux.vnet.ibm.com>, Nina
- Schoetterl-Glausch <nsg@linux.ibm.com>, Hendrik Brueckner
- <brueckner@linux.ibm.com>
+To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>, Thomas Huth
  <thuth@redhat.com>, Daniel Berrange <berrange@redhat.com>, qemu-devel
- mailing list <qemu-devel@nongnu.org>, "<Shalini Chellathurai Saroja"
+ mailing list <qemu-devel@nongnu.org>, Hendrik Brueckner
+ <brueckner@linux.ibm.com>, "<Shalini Chellathurai Saroja"
  <shalini@linux.ibm.com>
 Subject: Re: [PATCH v4 1/4] hw/s390x: add SCLP event type CPI
-Message-ID: <ad66ac925ff301a945ac1f56fc1d31cc@linux.ibm.com>
+In-Reply-To: <fd8ffc6bf1ba66c0479f6b02bbc747d392d34f1c.camel@linux.ibm.com>
+References: <20250410150934.1331433-1-shalini@linux.ibm.com>
+ <20250410150934.1331433-2-shalini@linux.ibm.com>
+ <fd8ffc6bf1ba66c0479f6b02bbc747d392d34f1c.camel@linux.ibm.com>
+Message-ID: <0b44c22b01e731f584ed278551842abb@linux.ibm.com>
 X-Sender: shalini@linux.ibm.com
 Organization: IBM Deutschland Research & Development GmbH
 Content-Type: text/plain; charset=UTF-8;
  format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=UZ1RSLSN c=1 sm=1 tr=0 ts=681860de cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Authority-Analysis: v=2.4 cv=Cu2/cm4D c=1 sm=1 tr=0 ts=68186193 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=Kn5hTDTUM7iVEbZWKLEA:9 a=3ZKOabzyN94A:10
+ a=Q5H0uIFeTx4jFr_PMnUA:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: GDsZyTawOJ0MwdXPNCkdXAIY9n5j2-NZ
-X-Proofpoint-ORIG-GUID: GDsZyTawOJ0MwdXPNCkdXAIY9n5j2-NZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDA2MCBTYWx0ZWRfXxlbYjVu/0x/M
- MywXuCvQEYzMfDhEV5qShsqG8l8d6+uTUdAkY1+GmVIeBRIaHrilllKHDINYQh5Xl8wV7TB3oYW
- DVfU5ImKaipiV3U1QwbWfIUs+2WWwiN3AN6F7hbBy1GdbuD/vlWsLoJ7V9LiPUpV9vFhtmJz8hA
- IxRYEOVbCrA1Ry+xuVPHK4BvenC0LYkpkFW0mg58fOjLiFoVAHVbD+lkaHyfkQWCXBQT8fjkjoD
- 5zU9bjaJ2aThKniLhxK/7oPkv1uMbwY8/kISjeM2AvnekWbLKQxOGtJwQwPyEtg6RU9ksgPpluo
- vFz5IPqW/7ZOa7YRD6CNYyhnzcscqqZCYZxvnQmNI6sZY7OqvCfZOblmKeb6lFMD7mq17Ol3+pZ
- wzJ8vge7qoM1UUFMuQWY+FHKb+yM9uK40Ar8/hBScWQ+Y4ue3DkqFvQw0K1y017A4h0COksd
+X-Proofpoint-GUID: 5ZzpZpVAM9ZPo7wGf5pZuWnfg3k2YhKQ
+X-Proofpoint-ORIG-GUID: 5ZzpZpVAM9ZPo7wGf5pZuWnfg3k2YhKQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA1MDA2MCBTYWx0ZWRfX1pI7THQVE3hZ
+ Dr963Ukt6RjBnVjNLDFLsKhlDUHiF/QAtl9bUj2C9D3leiBPPPNBPnRO4sATjk0B7iktdail2Kw
+ gIru0gdEvOPG+tTUxahs9jR32xcgDXzoczBsnxGIliOYwc5R7L3s5lG/VG/L8pAzpZdtj+fVkns
+ qnkA4/WXN5rbVW76bpLaAuP50yFQdRt09jepj9+ZPels4h+0rUJL2n+PX/sUB1rjnftizsBYoZW
+ cz6YQ1CJVGdHB5dDQ1oPmXn5V1QRFLrOqJYnO5XZyLHl+VDecP/jETfa/GJbB/r1tTFYA9GZF2O
+ NSjT4Ok7MFjhcHXiVKjjw30Xp3P19liqa3qDi76uzH/K9Xi5s0Fw0Nb98/DfeLegtnP9y/PyxtX
+ QYb0o/trdcx0T9CZDxVSpo/KLaCfDMTTQBRzKErzU43QqBjKWqIOT1ITCsyXFciMubl8940I
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-05_03,2025-04-30_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- suspectscore=0 malwarescore=0 bulkscore=0 priorityscore=1501 adultscore=0
- spamscore=0 impostorscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ clxscore=1015 mlxscore=0
+ spamscore=0 mlxlogscore=999 malwarescore=0 phishscore=0 adultscore=0
+ impostorscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
  definitions=main-2505050060
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=shalini@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=shalini@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
@@ -124,7 +128,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-04-28 11:22, Janis Schoetterl-Glausch wrote:
+On 2025-04-29 11:20, Nina Schoetterl-Glausch wrote:
 > On Thu, 2025-04-10 at 17:09 +0200, Shalini Chellathurai Saroja wrote:
 >> Implement the Service-Call Logical Processor (SCLP) event
 >> type Control-Program Identification (CPI) in QEMU. This
@@ -151,162 +155,39 @@ On 2025-04-28 11:22, Janis Schoetterl-Glausch wrote:
 >>  include/hw/s390x/event-facility.h | 13 +++++
 >>  5 files changed, 122 insertions(+)
 >>  create mode 100644 hw/s390x/sclpcpi.c
->> 
->> diff --git a/hw/s390x/event-facility.c b/hw/s390x/event-facility.c
->> index 2b0332c20e..60237b8581 100644
->> --- a/hw/s390x/event-facility.c
->> +++ b/hw/s390x/event-facility.c
->> @@ -4,6 +4,7 @@
->>   *       handles SCLP event types
->>   *          - Signal Quiesce - system power down
->>   *          - ASCII Console Data - VT220 read and write
->> + *          - Control-Program Identification - Send OS data from 
->> guest to host
->>   *
->>   * Copyright IBM, Corp. 2012
->>   *
->> @@ -40,6 +41,7 @@ struct SCLPEventFacility {
->>      SysBusDevice parent_obj;
->>      SCLPEventsBus sbus;
->>      SCLPEvent quiesce, cpu_hotplug;
->> +    SCLPEventCPI cpi;
->>      /* guest's receive mask */
->>      union {
->>          uint32_t receive_mask_pieces[2];
->> diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
->> index 3bbebfd817..eb7950489c 100644
->> --- a/hw/s390x/meson.build
->> +++ b/hw/s390x/meson.build
->> @@ -13,6 +13,7 @@ s390x_ss.add(files(
->>    's390-skeys.c',
->>    's390-stattrib.c',
->>    'sclp.c',
->> +  'sclpcpi.c',
->>    'sclpcpu.c',
->>    'sclpquiesce.c',
->>    'tod.c',
->> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
->> index 75b32182eb..7f28cbd1de 100644
->> --- a/hw/s390x/s390-virtio-ccw.c
->> +++ b/hw/s390x/s390-virtio-ccw.c
->> @@ -260,6 +260,17 @@ static void s390_create_sclpconsole(SCLPDevice 
->> *sclp,
->>      qdev_realize_and_unref(dev, ev_fac_bus, &error_fatal);
->>  }
->> 
->> +static void s390_create_sclpcpi(SCLPDevice *sclp)
+> 
+> [...]
+> 
+> 
+>>  static void s390_cpu_plug(HotplugHandler *hotplug_dev,
+>> diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
+>> new file mode 100644
+>> index 0000000000..13589459b1
+>> --- /dev/null
+>> +++ b/hw/s390x/sclpcpi.c
+> 
+> [...]
+> 
+>> +static void cpi_class_init(ObjectClass *klass, void *data)
+> 
+> Should be 'const void *data'.
+> 
+
+Ok, thank you.
+
 >> +{
->> +    SCLPEventFacility *ef = sclp->event_facility;
->> +    BusState *ev_fac_bus = sclp_get_event_facility_bus(ef);
->> +    DeviceState *dev;
+>> +    DeviceClass *dc = DEVICE_CLASS(klass);
+>> +    SCLPEventClass *k = SCLP_EVENT_CLASS(klass);
 >> +
->> +    dev = qdev_new(TYPE_SCLP_EVENT_CPI);
->> +    object_property_add_child(OBJECT(ef), "sclpcpi", OBJECT(dev));
->> +    qdev_realize_and_unref(dev, ev_fac_bus, &error_fatal);
-> 
-> I wonder if we should drop this and add control-program-id directly
-> on the event facility. I don't see what purpose having the intermediate
-> level sclpcpi serves.
-> 
-
-Hello Nina,
-
-sclpcpi is the qemu device which handles the SCLP event type 
-Control-Program Identification by performing the following.
-1. The sclpcpi device indicates to the guest OS that QEMU is able to 
-process the event buffers of the SCLP event type Control-Program 
-Identification.
-2. The sclpcpi device receives the data from the event buffers of the 
-SCLP event type Control-Program Identification sent by the guest OS.
-The received data is stored in control-program-id, which is the property 
-of the device sclpcpi. So, the sclpcpi device cannot be dropped.
-
-In addition, Thomas Huth told that the migration data of a device must 
-be stored in the device itself during his review of the previous 
-versions of this patch series. So control-program-id cannot be stored in 
-the event facility.
-
-It is possible to add the identifiers directly as the properties of 
-sclpcpi (eg. system type as shown below) and remove the 
-control-program-id.
-
-virsh # qemu-monitor-command vm --pretty 
-'{"execute":"qom-list","arguments": {"path": 
-"/machine/sclp/s390-sclp-event-facility/sclpcpi"}}'
-{
-   "return": [
-     {
-       "name": "type",
-       "type": "string"
-     },
-     {
-       "name": "parent_bus",
-       "type": "link<bus>"
-     },
-     {
-       "name": "realized",
-       "type": "bool"
-     },
-     {
-       "name": "hotplugged",
-       "type": "bool"
-     },
-     {
-       "name": "hotpluggable",
-       "type": "bool"
-     },
-     {
-       "name": "system_type",
-       "type": "string"
-     },
-     {
-       "name": "control-program-id",
-       "type": "S390ControlProgramId"
-     }
-   ],
-   "id": "libvirt-16"
-}
-
-virsh # qemu-monitor-command vm --pretty '{"execute":"qom-get", 
-"arguments":{"path":"/machine/sclp/s390-sclp-event-facility/sclpcpi", 
-"property":"system_type"}}'
-{
-   "return": "LINUX   ",
-   "id": "libvirt-17"
-}
-
-However, Hendrik Brückner suggested to group the identifiers together 
-during the initial discussion of this line item. So, I would prefer to 
-leave this as it is. Please let me know if you still think otherwise.
-
+>> +    dc->user_creatable = false;
+>> +
+>> +    k->can_handle_event = can_handle_event;
+>> +    k->get_send_mask = send_mask;
+>> +    k->get_receive_mask = receive_mask;
+>> +    k->write_event_data = write_event_data;
 >> +}
 > 
 > [...]
-> 
->> diff --git a/include/hw/s390x/event-facility.h 
->> b/include/hw/s390x/event-facility.h
->> index ff874e792d..ef469e62ae 100644
->> --- a/include/hw/s390x/event-facility.h
->> +++ b/include/hw/s390x/event-facility.h
-> 
-> [...]
->    I.
->> +struct SCLPEventCPI {
->> +    DeviceState qdev;
->> +    SCLPEvent event;
-> 
-> I think you should just inherit from SCLPEvent, which in turn inherits
-> from DeviceState.
-> So without the qdev.
-> 
-
-Ok, I will do so. Thank you very much for the review.
-
->> +};
->> +
->>  #define TYPE_SCLP_EVENT_FACILITY "s390-sclp-event-facility"
->>  typedef struct SCLPEventFacility SCLPEventFacility;
->>  typedef struct SCLPEventFacilityClass SCLPEventFacilityClass;
 
 -- 
 Mit freundlichen Grüßen / Kind regards
