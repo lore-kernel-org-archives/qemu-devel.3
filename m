@@ -4,106 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A60B5C3ABB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 16:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 184FEC3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 16:16:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uByT1-0007Sk-8z; Mon, 05 May 2025 12:14:55 -0400
+	id 1uByUa-0000j4-5R; Mon, 05 May 2025 12:16:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uBySy-0007Rc-3Y
- for qemu-devel@nongnu.org; Mon, 05 May 2025 12:14:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uBySv-0005yx-RQ
- for qemu-devel@nongnu.org; Mon, 05 May 2025 12:14:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746461688;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=auYh6TCnzqXQHJ162cziIEDW3yNR7XzTwCsT2IHigpw=;
- b=K/2XSdMCdfJdnbIiRx4CvTISCyvZCCGChgj/L/NN7CKVSGeArVZRRnp+BcKOt9WH/94Il4
- 7agc5LxvHVG4eLpOUnIRF+5EsIKDTSM/Hgsp91GccUuyCkeMC10pbvo7v+QrHhvEslWT9a
- P1+7K+t9IwpNfh5DZDkJnp/bcqCZdCs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-9IionTGuO8G4y4KGQCWvUg-1; Mon, 05 May 2025 12:14:47 -0400
-X-MC-Unique: 9IionTGuO8G4y4KGQCWvUg-1
-X-Mimecast-MFC-AGG-ID: 9IionTGuO8G4y4KGQCWvUg_1746461686
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43f251dc364so26365435e9.2
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 09:14:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uByUY-0000il-4Z
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 12:16:30 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uByUQ-0006Jd-3L
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 12:16:29 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-72d3b48d2ffso4856878b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 09:16:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746461779; x=1747066579; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CTaCdUmIeV73xmPzDsx1t0Q/XPdcKguN5F8MchSG028=;
+ b=W6dcrlj0fZkGsj4j2cIiMpgDConoCXpwzY0u1HYttgMxcRZxrHIxxeinAJY+FoANZ0
+ Iz5K4XdKIQc1FHQOMSi6MdXxruLZS2NafWPcdo3MmOQ8afF0yFbyD6bY44BVvKUEMZrs
+ vm3vxjf0mVqGE3NfRmI4eeBwsos/c7ctVF4HZUkXD3gmUEq5+JcpA/cS8zENEAer0J/i
+ nxGBQLNWbs/BmzoySa5rPvCdeH8+JvwWZI0vf0IIhCUDC4PC7n6wFfppyKtJRrtLh3+m
+ f7ZQsDvD2oJMU8kyn+qAZmswib9VoUzLasvbF6O4zLEW+zgoncVRjm3TP2hdBuwD2mc/
+ YX7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746461686; x=1747066486;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=auYh6TCnzqXQHJ162cziIEDW3yNR7XzTwCsT2IHigpw=;
- b=bmWx151wG5sxNpyQKfoBI7nSLiYhhrzsTMZ4ibZ8R0hkeGvtXXjT7CK3/uViWiFLNn
- /O+8992bxiyUcAlkgwcR5cuzexMbODblNAZyd9TmMVdfp3IHqX1grODaJS7afV058HsW
- ya4gZiuYzWhG15U/e0FW3b6QmUcUd/cy9xfMtpVtchZz1yI7/jogFxWTbU3bLRwNkdci
- wO0ogwSf/1p9rEfcSnIurvHPuU3I2NeSfi4uznJylsLen9UdTFvBbJGH2Ip0nFP1hxDO
- P5LDylFwLgxe31XTHoIj0zspBXCnu4hLdZ6phwbOGgxQBGyK9gdH+DcEexxqyNQOSNh+
- qK8g==
+ d=1e100.net; s=20230601; t=1746461779; x=1747066579;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CTaCdUmIeV73xmPzDsx1t0Q/XPdcKguN5F8MchSG028=;
+ b=k698jqYmOg0Av+36q+R/FsP0GbXsXARy3pxLs2QP+jPb3YJDDE5Z47YNpO2lLoZG4S
+ GH+BEPebW/R7PyHttMFPacEUHoVQ2K9uZXz0SgHVm4vSQdy9dpfh6nC8+Rno06YTmMTf
+ Ofm2B01faei+mkK3VnznTT65zLVTsgSxdMnCsbRHu3ST3rNzWk8VAlV4pHLWyFq6+Z2N
+ CvpbDNRtGHKf8peXzq4yTUc5MeekifinfOzLOGEJ2fAHYfbgsjJCidGdwpkvBCt480lT
+ AOtODZybWa8bd2u0mLhVJyeN8d1O+81PXflEAKQuIiDm4jsdeuSPu9YBN/wimEpl7DPm
+ R8wQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUK0NQZ3dGrAJIXCFOMsQKk6gCY2w/sT0O8aaNRYwsm+pwdK3bhZEM+Atfxgf5e84fuXh3EBhLC7hd4@nongnu.org
-X-Gm-Message-State: AOJu0YzICoYa4V3jCfwOXcHsNbWMQxhJMDeUryPlg8ZEdbjwKilvnvJO
- DbeNCN0w7om/d4I0sTRYXpSFWm5fVohcsiV2wVhUBqCZT+DrWDskC8eF8gyYowaj0ldLoRIdx7g
- y6Uau1zMXL5+xEPt94yfOnJDNu/Gn6lMHjyy7kyHaNPDJ6p77Qafr
-X-Gm-Gg: ASbGncseuIz2VammYv9UvO6gqVc+tYif1WIn9Nn63Jh9F4qLAExKGvOVExdRa+hj8ys
- BVB4EaaZbgg/q//9QqRr1dhhFn4fB+rWef2vGh240ugAShXkj5w4MQasFZ44RJ6z17qy/5S5kmh
- DST9QZN8WsaG249uj/PABj7m7rftEo9fTe3cVxvF9Ouy8rXWOywE2RqFUXHXwzYTcc6bOyveKEJ
- WlWdCkciK4q2yC+vYYA3o9K3PN11Gs8JBuJjqVI7s5Smqj1NWzskjrcKFPFsSuYomO8+4z3NP/7
- uCDCYzQ+4ruTrmCntWcCMrDtFgMTUeUvxSzaT/AxJXk0VB5VT15uMr7CBzI=
-X-Received: by 2002:a05:600c:3494:b0:43c:f5fe:5c26 with SMTP id
- 5b1f17b1804b1-441c48aa314mr77234145e9.4.1746461686195; 
- Mon, 05 May 2025 09:14:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEG+qKxY6qQTfdmnSBz9OwiHHFeonEqC8c3J3eIYNidhgbVpFuRhIzNpvLbofSUT8b1/dS6zg==
-X-Received: by 2002:a05:600c:3494:b0:43c:f5fe:5c26 with SMTP id
- 5b1f17b1804b1-441c48aa314mr77233885e9.4.1746461685822; 
- Mon, 05 May 2025 09:14:45 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ AJvYcCUdaKuCa5pxtNCIU4ZG6ggsdRFGzB9/aJ1lv0yduhQ2eR2PctTilhd6NZf0EMcxvlxtSiC5xiDj7AAF@nongnu.org
+X-Gm-Message-State: AOJu0Yy45zaefyv/q69qiZ/VF3Csfl9ag3vZsdtcGrK2AwpQ787JdnZ4
+ eRjIX+5ymySHWjVht9v5HX8NppMf5fLulGJC5lL3fOI8ADCR8qIXAOudfA47FOA=
+X-Gm-Gg: ASbGnctpAZ0SwI4m93ctvJrzrh0Duax5UZ5mVa5mj9bC/EUbWNXBtmxsknGvXmsdNNa
+ 9XC+OKUfWDFpdACEwTrlO367eiTM2bBrI6QLNJjdc8IvH3Zi4kv+Rvo7bdjI2cm2dI5QxiOqcRa
+ 7TtEducEiH+4EFC/8CuZ/9CnCUdHwm7PKn3NvxkK7Sg+KkGNx1FgnBo65aqD+MN4YtoEApu4uFq
+ A23vdTACt0eBJ3GrT3kXvgg063sNpbg3gmWXNWo3w7QFpyPasrb5RHGpZktsn3oOBJXE2KW8uTg
+ 26QEL2+uechHd+oIPAZhulQv8asDsYborluKkXIRv2AsJ3WMyH9BRHV9yA/+lqFBuPf0oOZH8X1
+ EqW27CmM=
+X-Google-Smtp-Source: AGHT+IEkO7NEtmeSzaO6GZ08Ie8up/TUhPdl0L0Dr7Ag6SwfxIb/2CDyI7wjO5txwEpyrmPKKeMzsg==
+X-Received: by 2002:a05:6a20:cf83:b0:1f5:a3e8:64dd with SMTP id
+ adf61e73a8af0-20e94437f30mr14376065637.0.1746461778856; 
+ Mon, 05 May 2025 09:16:18 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b2b20a65sm182769135e9.32.2025.05.05.09.14.44
+ d2e1a72fcca58-74058db8befsm6940664b3a.40.2025.05.05.09.16.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 09:14:44 -0700 (PDT)
-Message-ID: <e3882849-c769-4081-9872-7651d7092520@redhat.com>
-Date: Mon, 5 May 2025 18:14:43 +0200
+ Mon, 05 May 2025 09:16:18 -0700 (PDT)
+Message-ID: <aa4579d9-4e15-409a-9cf9-232b94aa7f7d@linaro.org>
+Date: Mon, 5 May 2025 09:16:16 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] vfio/iommufd: Save host iommu capabilities in
- VFIODevice.caps
+Subject: Re: [PATCH 10/12] target/s390x: Fill in TCGCPUOps.pointer_wrap
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: foss@percivaleng.com, qemu-s390x@nongnu.org
+References: <20250504205714.3432096-1-richard.henderson@linaro.org>
+ <20250504205714.3432096-11-richard.henderson@linaro.org>
+ <9aebfbbc-ff29-4af7-8afe-8e0d82c62557@linaro.org>
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, chao.p.peng@intel.com, Yi Liu <yi.l.liu@intel.com>
-References: <20250411101707.3460429-1-zhenzhong.duan@intel.com>
- <20250411101707.3460429-2-zhenzhong.duan@intel.com>
- <08b72d7a-2202-48bc-8b1b-78c93b3e7cfd@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <08b72d7a-2202-48bc-8b1b-78c93b3e7cfd@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <9aebfbbc-ff29-4af7-8afe-8e0d82c62557@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,153 +103,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
-
-On 4/11/25 1:28 PM, Cédric Le Goater wrote:
-> On 4/11/25 12:17, Zhenzhong Duan wrote:
->> The saved caps copy can be used to check dirty tracking capability.
+On 5/5/25 07:41, Philippe Mathieu-Daudé wrote:
+> On 4/5/25 22:57, Richard Henderson wrote:
+>> Use the existing wrap_address function.
 >>
->> The capabilities is gotten through IOMMUFD interface, so define a
->> new structure HostIOMMUDeviceIOMMUFDCaps which contains vendor
->> caps raw data in "include/system/iommufd.h".
->>
->> This is a prepare work for moving .realize() after .attach_device().
->>
->> Suggested-by: Cédric Le Goater <clg@redhat.com>
->> Suggested-by: Eric Auger <eric.auger@redhat.com>
->> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
->> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>> Cc: qemu-s390x@nongnu.org
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 >> ---
->>   include/hw/vfio/vfio-device.h |  1 +
->>   include/system/iommufd.h      | 22 ++++++++++++++++++++++
->>   hw/vfio/iommufd.c             | 10 +++++++++-
->>   3 files changed, 32 insertions(+), 1 deletion(-)
+>>   target/s390x/cpu.c | 9 +++++++++
+>>   1 file changed, 9 insertions(+)
 >>
->> diff --git a/include/hw/vfio/vfio-device.h
->> b/include/hw/vfio/vfio-device.h
->> index 66797b4c92..09a7af891a 100644
->> --- a/include/hw/vfio/vfio-device.h
->> +++ b/include/hw/vfio/vfio-device.h
->> @@ -77,6 +77,7 @@ typedef struct VFIODevice {
->>       bool dirty_tracking; /* Protected by BQL */
->>       bool iommu_dirty_tracking;
->>       HostIOMMUDevice *hiod;
->> +    HostIOMMUDeviceIOMMUFDCaps caps;
->
-> IMO, these capabilities belong to HostIOMMUDevice and not VFIODevice.
-I do agree with Cédric that it looks a wrong place to put this caps. I
-feel this somehow breaks the abstraction layering.
-
-Now "[PATCH v2 0/5] vfio: Move realize after attach_dev" has landed, I
-think it would help if you could respin with a clear functional goal
-such as the one targeted in[PATCH v2 0/5] Check host IOMMU compatilibity
-with vIOMMU
-<https://lore.kernel.org/all/20240408084404.1111628-1-zhenzhong.duan@intel.com/>
-
-Thanks
-
-Eric
->
-> I would simply call iommufd_backend_get_device_info() twice where
-> needed :
-> iommufd_cdev_autodomains_get() and  hiod_iommufd_vfio_realize()
->
->
-> Thanks,
->
-> C.
->
->
->
->>       int devid;
->>       IOMMUFDBackend *iommufd;
->>       VFIOIOASHwpt *hwpt;
->> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
->> index cbab75bfbf..0f337585c9 100644
->> --- a/include/system/iommufd.h
->> +++ b/include/system/iommufd.h
->> @@ -18,6 +18,9 @@
->>   #include "exec/hwaddr.h"
->>   #include "exec/cpu-common.h"
->>   #include "system/host_iommu_device.h"
->> +#ifdef CONFIG_LINUX
->> +#include <linux/iommufd.h>
+>> diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+>> index 9c1158ebcc..f05ce317da 100644
+>> --- a/target/s390x/cpu.c
+>> +++ b/target/s390x/cpu.c
+>> @@ -347,6 +347,14 @@ static TCGTBCPUState s390x_get_tb_cpu_state(CPUState *cs)
+>>       };
+>>   }
+>> +#ifndef CONFIG_USER_ONLY
+>> +static vaddr s390_pointer_wrap(CPUState *cs, int mmu_idx,
+>> +                               vaddr result, vaddr base)
+>> +{
+>> +    return wrap_address(cpu_env(cs), result);
+>> +}
 >> +#endif
->>     #define TYPE_IOMMUFD_BACKEND "iommufd"
->>   OBJECT_DECLARE_TYPE(IOMMUFDBackend, IOMMUFDBackendClass,
->> IOMMUFD_BACKEND)
->> @@ -63,4 +66,23 @@ bool
->> iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
->>                                         Error **errp);
->>     #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE
->> "-iommufd"
 >> +
->> +typedef union VendorCaps {
->> +    struct iommu_hw_info_vtd vtd;
->> +    struct iommu_hw_info_arm_smmuv3 smmuv3;
->> +} VendorCaps;
->> +
->> +/**
->> + * struct HostIOMMUDeviceIOMMUFDCaps - Define host IOMMU device
->> capabilities.
->> + *
->> + * @type: host platform IOMMU type.
->> + *
->> + * @hw_caps: host platform IOMMU capabilities (e.g. on IOMMUFD this
->> represents
->> + *           the @out_capabilities value returned from
->> IOMMU_GET_HW_INFO ioctl)
->> + */
->> +typedef struct HostIOMMUDeviceIOMMUFDCaps {
->> +    uint32_t type;
->> +    uint64_t hw_caps;
->> +    VendorCaps vendor_caps;
->> +} HostIOMMUDeviceIOMMUFDCaps;
->>   #endif
->> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->> index 48db105422..530cde6740 100644
->> --- a/hw/vfio/iommufd.c
->> +++ b/hw/vfio/iommufd.c
->> @@ -324,7 +324,7 @@ static bool
->> iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
->>        * vfio_migration_realize() may decide to use VF dirty tracking
->>        * instead.
->>        */
->> -    if (vbasedev->hiod->caps.hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING) {
->> +    if (vbasedev->caps.hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING) {
->>           flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
->>       }
->>   @@ -475,6 +475,7 @@ static bool iommufd_cdev_attach(const char
->> *name, VFIODevice *vbasedev,
->>       int ret, devfd;
->>       uint32_t ioas_id;
->>       Error *err = NULL;
->> +    HostIOMMUDeviceIOMMUFDCaps *caps = &vbasedev->caps;
->>       const VFIOIOMMUClass *iommufd_vioc =
->>          
->> VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
->>   @@ -505,6 +506,13 @@ static bool iommufd_cdev_attach(const char
->> *name, VFIODevice *vbasedev,
->>           goto err_alloc_ioas;
->>       }
->>   +    if (!iommufd_backend_get_device_info(vbasedev->iommufd,
->> vbasedev->devid,
->> +                                         &caps->type,
->> &caps->vendor_caps,
->> +                                         sizeof(VendorCaps),
->> &caps->hw_caps,
->> +                                         errp)) {
->> +        goto err_alloc_ioas;
->> +    }
->> +
->>       /* try to attach to an existing container in this space */
->>       QLIST_FOREACH(bcontainer, &space->containers, next) {
->>           container = container_of(bcontainer, VFIOIOMMUFDContainer,
->> bcontainer);
->
+>>   static const TCGCPUOps s390_tcg_ops = {
+>>       .mttcg_supported = true,
+>>       .precise_smc = true,
+>> @@ -367,6 +375,7 @@ static const TCGCPUOps s390_tcg_ops = {
+>>       .record_sigbus = s390_cpu_record_sigbus,
+>>   #else
+>>       .tlb_fill = s390_cpu_tlb_fill,
+>> +    .pointer_wrap = s390_pointer_wrap,
+> 
+> As future cleanup, we might now remove the wrap_address() calls
+> in target/s390x/tcg/crypto_helper.c, and target/s390x/tcg/vec_helper.c,
+> is that correct?
+> 
+> Also some uses in target/s390x/tcg/mem_helper.c.
 
+No, not correct.
+
+The new pointer_wrap hook is only used for unaligned accesses that cross page boundaries. 
+It does not apply to a sequence of individual accesses like we have in the s390x helpers.
+
+
+r~
 
