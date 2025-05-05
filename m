@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17C66C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69963C3ABB6
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:22:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBr5H-0001qW-KD; Mon, 05 May 2025 04:21:56 -0400
+	id 1uBr4v-0001Wi-Om; Mon, 05 May 2025 04:21:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBr5C-0001fg-6p
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:21:50 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBr4u-0001WX-3L
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:21:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBr5A-0004XU-G1
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:21:49 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBr4s-0004TS-FM
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:21:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746433307;
+ s=mimecast20190719; t=1746433289;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=nIWKDc7clFoKREo2bBwQ0unbdu7mrRRWwceXBRmufGk=;
- b=NbF3wysjdaArVat+fqla2Fz9/1C3C3ytct7WZ+IGdvqI5QXesf01QxQ5mIzk7xuFR/pEYh
- bGC0fEQ5TmOiyPSLvQnHmnPRZVtc/F6UO+JkGLLT7ZwN2shWRStOMI4/Ao/iJH1YpISQpG
- j6z7AdZ301W+m2aQO9/4Lp5Q+5/GWMI=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4b3iWOQeS0wB16ZvNXFWYujeScLZMoYZG7o/LN7FcmY=;
+ b=Sd1ftugwCuglp9DXW5+/0qck/JXXvGt+xI3UqBUzUgHoNA98LVPzv6KNDxfRQf/QaP52hP
+ Cgh21LUDRgsZFoBD5IXHs5n9to48RG/RsoGviSEUNykyukiEuZUcJcXCbRwqv7ZNqrcgQ1
+ nnjvJQcjk6I14YnN6K6GEGs+QosHYHc=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654-v_cCzZsoM0GwX3lPiy7GpA-1; Mon, 05 May 2025 04:21:46 -0400
-X-MC-Unique: v_cCzZsoM0GwX3lPiy7GpA-1
-X-Mimecast-MFC-AGG-ID: v_cCzZsoM0GwX3lPiy7GpA_1746433305
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43efa869b0aso27121915e9.3
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 01:21:46 -0700 (PDT)
+ us-mta-592-Lt4OgEzKOoWqT8qAbckI8w-1; Mon, 05 May 2025 04:21:28 -0400
+X-MC-Unique: Lt4OgEzKOoWqT8qAbckI8w-1
+X-Mimecast-MFC-AGG-ID: Lt4OgEzKOoWqT8qAbckI8w_1746433287
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-391315098b2so1178276f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 01:21:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746433305; x=1747038105;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nIWKDc7clFoKREo2bBwQ0unbdu7mrRRWwceXBRmufGk=;
- b=PtMI0hrLMzy5850KJu2PsZKXmoZasBYqGHZTDbBR4u0wtYEQrvrAplbMfEEb54U7hd
- ic0ndM+2NBmT7lRv11iPVVoaOpN1HYDKqEprFDY/DtkO3cyxIykQZ8TH1R77O7b9WwQY
- oOPtzhwi06st2qIEzOZWLKLra3mJ5v7CxVSn9Bz2Ph4GsN6Vckt2GA91xGWSACwuolN1
- N8jn9a+o7FA8HGCDtjpSzKJIP75ZiK+liSjSDswruM1VrSXIq1F8b87DAJ5AMk0RqpGC
- RwPIUZNySY5HTmBRiNH9AeGJ3RVlkBhCF/ED/2tWT+LWrLsbFsF08HNcSPrU4EgrlTU2
- t8Eg==
+ d=1e100.net; s=20230601; t=1746433287; x=1747038087;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4b3iWOQeS0wB16ZvNXFWYujeScLZMoYZG7o/LN7FcmY=;
+ b=EqPbOrxzEMWJHinIqNYPPgQOAaVl1FiSe3BLD+ObxyoG0sHqvhNVciIfqHzOmi7o+5
+ DisvIpbhPyn6OaAYfR9UL7aM5us/VGn8ZRmae7/nDSCheq0k+pqFvq4xLONp1tH3+XPv
+ OffaDfOqwsBICMCoVHsptSkBlF/mtBo4vDc+xyOrVnCote+AReXca6iDRzWuMDWyQy5H
+ AdRblcjzdlNd/t3Pm4I3IK0ERm7z/I0naqqAV9SzRHmO3kP7BXcPAVescPPY5X9+YTeU
+ zLr554dforAz/+EOYdxGNIkUOGvv7heVbKgyrj76yngslO7UTBXsoOcrVthhUxcVgdhd
+ WilA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3ZDH6P0/Dy/fcsIz8uRgvSUS5Ia3NsUCESvLjgmMfYUwyfHFvSu+2lcuUe+eLPVIrkLgz6PbDOLvU@nongnu.org
-X-Gm-Message-State: AOJu0YyGC+74em38+eTfhXap1BKBBf9+DgVEOI+tWmh5l4udNdjWPKnB
- DH0je/SDvaF3makD8aP8BbnSZ8ahvccJL3w0xIXBeyfIuIviUgxcBz6uCz/emtYBo6pf40XjNnH
- 9+tpD7lHSmMPKmXRFOdLbIw98XDRvA3AffHNYJtBQqXYaBefaml6h
-X-Gm-Gg: ASbGncuqlOEx/mF7ciKpV0qCG5BtEDbru5e+IJMCn4Ae44D28EjWJnCE0k2hq7OZKS2
- i3nWG1BYsmF/nQ3YCu+QGRM1BeA0zhraMXtedx/K6rJpXpNNwy9COhyIodEpWfQ7HebrTawuIbI
- QTH7EVlInarOg3IbYM6FZavsXv6/mMCdJlfbuTTXdDDCVUgOv7Zlp4B1uug3M/68vbBglaG0qbl
- vq/FrocFFezoI1TDM16UtWEZcP1sH/cOxWmE5UWC5lw5W5cCJcki+2WZmIfTj9F85bIbUsbYdmY
- 1lWDah9A4T9Klld5sgxXu+o5gl2JzoAmQSioeCOt
-X-Received: by 2002:a05:600c:5124:b0:43c:fe15:41cb with SMTP id
- 5b1f17b1804b1-441c48c1d07mr45244255e9.15.1746433305240; 
- Mon, 05 May 2025 01:21:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE5N6LEFpMhiXDwTsx1qGjo0iHsOHWyry6BGZTf6ETcU0c0xwMptOF88YtpZ7/w8uWLqfAxNw==
-X-Received: by 2002:a05:600c:5124:b0:43c:fe15:41cb with SMTP id
- 5b1f17b1804b1-441c48c1d07mr45243985e9.15.1746433304860; 
- Mon, 05 May 2025 01:21:44 -0700 (PDT)
+ AJvYcCXtzeh3MkQQJe4BM5UmzRysU3Vv+Zb3SW8+p7ipvDQE9wHWxggVqZtgKvDc6WpDzU6LsR0PzKquwrfK@nongnu.org
+X-Gm-Message-State: AOJu0YwIJdU4T51HWzOXVKE4ZEa99EIQovSJM6bQGhIiUzkWz4rs2u0H
+ 1e9dQn7qXRjQ/rJKpf0tpHrLXQwHxHnX3URcBNeKT6yJzM5neLSInO4yLergDtQNQ5MyFFJIUSP
+ 6075X5ej4kGzI9brDodio5XbW4sVETUq0b55/GSImtPDWjYIvy5ty
+X-Gm-Gg: ASbGncucRaRDg+PbZ8UbjqrNIqVARsRCObr66NxPc32HLC0hDVtNc/DTUyX3vE9cssr
+ +J5/Dvs+5ylok5M03flPI0JpdJfivSibM1QedctTpm6U5sp+1Fq2qQS6NzG2f0YOMhYQLoBWGPz
+ w2/Xt/mR+yIX/+l1D85ZVV+DfE8MJnZJhEe4dohfloiM/c6CykgBVv+xX1V2Tw4NK0Xqg/5EGib
+ j7NDCWooVAsc0VOzTsMNn8ocT7XyBqaG6kFglZEqbxMtNFvNb3q8nS9gA23Rc6slP1kwWS7Xemi
+ B/MKb/Cy6ygsUwfDaO5Cj0G9tKm5GFK6a8mALYV6
+X-Received: by 2002:a05:6000:4383:b0:391:3f4f:a169 with SMTP id
+ ffacd0b85a97d-3a09fd7c6afmr3750035f8f.32.1746433287228; 
+ Mon, 05 May 2025 01:21:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEde28Bkbnic1ZqeQr/RdvXLwDplGvKvDfSwOQyf2d567kdPOa73OptIkRghBrbqV9fc682PQ==
+X-Received: by 2002:a05:6000:4383:b0:391:3f4f:a169 with SMTP id
+ ffacd0b85a97d-3a09fd7c6afmr3750009f8f.32.1746433286890; 
+ Mon, 05 May 2025 01:21:26 -0700 (PDT)
 Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae796esm9482831f8f.41.2025.05.05.01.21.43
+ ffacd0b85a97d-3a099b0ffb1sm9590745f8f.73.2025.05.05.01.21.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 01:21:44 -0700 (PDT)
-Message-ID: <96b2f6cb-8afc-49e0-a7e1-696998c67bf0@redhat.com>
-Date: Mon, 5 May 2025 10:21:42 +0200
+ Mon, 05 May 2025 01:21:26 -0700 (PDT)
+Message-ID: <c47fab60-554c-4436-ada3-d46063c273b3@redhat.com>
+Date: Mon, 5 May 2025 10:21:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/19] hw/scsi/vmw_pvscsi: Remove
- PVSCSI_COMPAT_DISABLE_PCIE_BIT definition
+Subject: Re: [PATCH v2 14/19] hw/scsi/vmw_pvscsi: Remove
+ PVSCSI_COMPAT_OLD_PCI_CONFIGURATION definition
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
@@ -91,9 +91,9 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Dmitry Fleytman <dmitry.fleytman@gmail.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20250429140825.25964-1-philmd@linaro.org>
- <20250429140825.25964-16-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+ <20250429140825.25964-15-philmd@linaro.org>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -136,7 +136,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250429140825.25964-16-philmd@linaro.org>
+In-Reply-To: <20250429140825.25964-15-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -165,17 +165,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 29/04/2025 16.08, Philippe Mathieu-Daudé wrote:
-> PVSCSI_COMPAT_DISABLE_PCIE_BIT was only used by the
-> hw_compat_2_5[] array, via the 'x-disable-pcie=on' property.
-> We removed all machines using that array, lets remove all the
-> code around PVSCSI_COMPAT_DISABLE_PCIE_BIT, including the now
-> unused PVSCSIState::compat_flags field.
+> PVSCSI_COMPAT_OLD_PCI_CONFIGURATION was only used by the
+> hw_compat_2_5[] array, via the 'x-old-pci-configuration=on'
+> property. We removed all machines using that array, lets remove
+> all the code around PVSCSI_COMPAT_OLD_PCI_CONFIGURATION.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   hw/scsi/vmw_pvscsi.c | 30 +-----------------------------
->   1 file changed, 1 insertion(+), 29 deletions(-)
+>   hw/scsi/vmw_pvscsi.c | 26 +++++++-------------------
+>   1 file changed, 7 insertions(+), 19 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
