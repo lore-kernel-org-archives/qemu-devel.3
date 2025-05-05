@@ -4,62 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F109C3ABB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:12:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0580C3ABB6
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBrrc-0005Yw-Ej; Mon, 05 May 2025 05:11:52 -0400
+	id 1uBrm3-0004aK-4R; Mon, 05 May 2025 05:06:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrnP-00087u-PZ
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:07:32 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uBrlE-0003lC-Dm
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:05:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrnN-0006Nc-E4
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:07:31 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uBrl8-0005yr-0T
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:05:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746436048;
+ s=mimecast20190719; t=1746435907;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hyN8mO5eHNpryPzAY8OWo3baYhXDZOPGGteVl7+2vfg=;
- b=BJdiBTTaRU7HKGbqjDgU3iHD5Nc/FVFVxNKzdm/4dzgsv14sQW2m5Zq6Q58FY2rP+Dmlv6
- +Nz9Je+wq04Pu4M8Npd9oCqJ57k/0+Usf+FmP+ZZvJvjQoGaLiBEHQQj1iFzHFJa4EZCGa
- ftkNkFpRH+s22Q8ezITopJg17pIHc3s=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-lbhY_TUuM2CP0nyvZp3iFQ-1; Mon,
- 05 May 2025 05:07:27 -0400
-X-MC-Unique: lbhY_TUuM2CP0nyvZp3iFQ-1
-X-Mimecast-MFC-AGG-ID: lbhY_TUuM2CP0nyvZp3iFQ_1746436046
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 74AF51800360; Mon,  5 May 2025 09:07:26 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.38])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D086F30001A2; Mon,  5 May 2025 09:07:24 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Steven Lee <steven_lee@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 17/23] hw/intc/aspeed: Add support for AST2700 SSP INTC
-Date: Mon,  5 May 2025 11:06:29 +0200
-Message-ID: <20250505090635.778785-18-clg@redhat.com>
-In-Reply-To: <20250505090635.778785-1-clg@redhat.com>
-References: <20250505090635.778785-1-clg@redhat.com>
+ bh=7J88oCyRyqmwlcOmBvYfmuaIGCYbi8fVE3oSHwEmaGM=;
+ b=NYvHwRZcnFJZzxxU0KmLiscHR6i4y3wPnjcNOvT6wGvM20HxdqdchGGLRXfRDm0w4uMJXd
+ Nygr2NvHH3Id4/jutfm4CTEfsxrao3VfiUnSDg83dL3oY8l6Qk8rDjdtvdMZiuadT6dM/L
+ nJkPEMN8mvv1svwppnsrr+i4K+K6iZI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-504-FxgcmHP4NMqAVzcOZXvaJA-1; Mon, 05 May 2025 05:05:06 -0400
+X-MC-Unique: FxgcmHP4NMqAVzcOZXvaJA-1
+X-Mimecast-MFC-AGG-ID: FxgcmHP4NMqAVzcOZXvaJA_1746435906
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43d5ca7c86aso24552945e9.0
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:05:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746435905; x=1747040705;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7J88oCyRyqmwlcOmBvYfmuaIGCYbi8fVE3oSHwEmaGM=;
+ b=mqoXfLP2ksw/5fzsFtkFEFtyZ4NGBuGKbpZsHVUGc3NdLNds4HkHycKhAVZOigaPIT
+ I2ITB8pBDrcpJwFub2vK/a48TKHp2D83A9fmETCsfl6EyV6UdjqPrCvDqt1OPRv5qTFR
+ c6uSch6ki3CmcttSSwQ7VoCZrgOOaUcj/+n6t058PYLf8ki6x8sw6OFmlyBcR4kwHA8c
+ eB/IAV9R0gJ0VJsEULpxQYJE+DnArrsRDAZ+AT9QfIuc7/msS6aqZ9hD5t28orflA/v3
+ xsxUP8IoSIrM7eZ+dxMXTTdZM0JNyLi+eK+RJZy+ZRXXjF0XDRCNl7+CSUDS1+3W/MAh
+ VpAg==
+X-Gm-Message-State: AOJu0Yxlq4tIhwJeS7JAtd/1612A8z0U3aDCyFKEiTRliGOYRfkD/oi2
+ +iLFSbhDwu4RFO9XwK7za5a1KA8K3F0HmmL4zWGMq+059WrURxjV+/b2J5JHqgecT6fj6bvfT/L
+ ARMejZ7Ag7ErAw5rahCiMEblg/fk608osRy6+8h4fINkkB5dih4kcZaS2hMcbmRZfIpi4lnSAZI
+ q3xYiElDpHXE7d6Y3KBpDibDrZ1gemMf9vBYM+
+X-Gm-Gg: ASbGncvZEKtSgf4SApu/F0r/mx2IFtbZ+mbOlAPraM2XcM5tUDmNLIl4AFj6BKj7f1s
+ FvwmYJmtye3UHy0z8r862s4/yrvoErLYTz6DpxgfimijQ2bdreN2zN0AiivC91eW+1vjs8lNJ+L
+ zy6zxCgXYVN4bJDYFD6ETJtTQfrT5LNApgr2PUvrrqU1ikgwSuKC2DXP1msD7yx73acmuKsBT62
+ WwkuPOg0Nib5/APWChfsSOAMZkwETO/G3G4IWmEmBwg4YiPHTaP2FPux/eKPb1kRrT/H9SCfh17
+ HBr5tNnbUWc5X2o=
+X-Received: by 2002:a05:600c:3507:b0:43c:f8fc:f687 with SMTP id
+ 5b1f17b1804b1-441bbf3bd94mr76075535e9.27.1746435904859; 
+ Mon, 05 May 2025 02:05:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHHpi1yhWG5GUCkyk3wOjAZTAeBmRGnGHOEx8usjAVmRd3etyNocKpplKJH4fhTUtZpskn5oQ==
+X-Received: by 2002:a05:600c:3507:b0:43c:f8fc:f687 with SMTP id
+ 5b1f17b1804b1-441bbf3bd94mr76075155e9.27.1746435904220; 
+ Mon, 05 May 2025 02:05:04 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.54.106])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a099ae3b57sm9952232f8f.36.2025.05.05.02.05.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 May 2025 02:05:03 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: manos.pitsidianakis@linaro.org,
+	qemu-rust@nongnu.org
+Subject: [PATCH 10/11] rust: replace c_str! with c"" literals
+Date: Mon,  5 May 2025 11:04:35 +0200
+Message-ID: <20250505090438.24992-11-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250505090438.24992-1-pbonzini@redhat.com>
+References: <20250505090438.24992-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -84,313 +110,463 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Steven Lee <steven_lee@aspeedtech.com>
-
-- Define new types for ast2700ssp INTC and INTCIO
-- Add register definitions for SSP INTC and INTCIO
-- Implement write handlers for SSP INTC and INTCIO
-- Register new types in aspeed_intc_register_types
-
-The design of the SSP INTC and INTCIO controllers is similar to
-AST2700, with the following differences:
-
-- AST2700
-  Support GICINT128 to GICINT136 in INTC
-  The INTCIO GIC_192_201 has 10 output pins, mapped as follows:
-    Bit 0 -> GIC 192
-    Bit 1 -> GIC 193
-    Bit 2 -> GIC 194
-    Bit 3 -> GIC 195
-    Bit 4 -> GIC 196
-
-- AST2700-ssp
-  Support SSPINT128 to SSPINT136 in INTC
-  The INTCIO SSPINT_160_169 has 10 output pins, mapped as follows:
-    Bit 0 -> SSPINT 160
-    Bit 1 -> SSPINT 161
-    Bit 2 -> SSPINT 162
-    Bit 3 -> SSPINT 163
-    Bit 4 -> SSPINT 164
-
-Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-Change-Id: Ib8cb0e264505cef48e17f173e057f3b2d1ea35c4
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250502103449.3091642-4-steven_lee@aspeedtech.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/intc/aspeed_intc.h |   3 +
- hw/intc/aspeed_intc.c         | 211 ++++++++++++++++++++++++++++++++++
- 2 files changed, 214 insertions(+)
+ docs/devel/rust.rst                    |  6 +--
+ rust/hw/char/pl011/src/device_class.rs | 11 +++--
+ rust/hw/char/pl011/src/lib.rs          |  6 +--
+ rust/hw/timer/hpet/src/hpet.rs         | 19 ++++----
+ rust/hw/timer/hpet/src/lib.rs          |  4 +-
+ rust/qemu-api/meson.build              |  1 -
+ rust/qemu-api/src/c_str.rs             | 61 --------------------------
+ rust/qemu-api/src/cell.rs              |  4 +-
+ rust/qemu-api/src/lib.rs               |  1 -
+ rust/qemu-api/src/vmstate.rs           |  2 +-
+ rust/qemu-api/tests/tests.rs           |  9 ++--
+ rust/qemu-api/tests/vmstate_tests.rs   | 15 +++----
+ 12 files changed, 32 insertions(+), 107 deletions(-)
+ delete mode 100644 rust/qemu-api/src/c_str.rs
 
-diff --git a/include/hw/intc/aspeed_intc.h b/include/hw/intc/aspeed_intc.h
-index 3727ba24be72..746f159bf335 100644
---- a/include/hw/intc/aspeed_intc.h
-+++ b/include/hw/intc/aspeed_intc.h
-@@ -15,6 +15,9 @@
- #define TYPE_ASPEED_INTC "aspeed.intc"
- #define TYPE_ASPEED_2700_INTC TYPE_ASPEED_INTC "-ast2700"
- #define TYPE_ASPEED_2700_INTCIO TYPE_ASPEED_INTC "io-ast2700"
-+#define TYPE_ASPEED_2700SSP_INTC TYPE_ASPEED_INTC "-ast2700ssp"
-+#define TYPE_ASPEED_2700SSP_INTCIO TYPE_ASPEED_INTC "io-ast2700ssp"
-+
- OBJECT_DECLARE_TYPE(AspeedINTCState, AspeedINTCClass, ASPEED_INTC)
+diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
+index 5cfafc532cc..557cee72f39 100644
+--- a/docs/devel/rust.rst
++++ b/docs/devel/rust.rst
+@@ -81,9 +81,6 @@ are missing:
+ * "Return position ``impl Trait`` in Traits" (1.75.0, blocker for including
+   the pinned-init create).
  
- #define ASPEED_INTC_MAX_INPINS 10
-diff --git a/hw/intc/aspeed_intc.c b/hw/intc/aspeed_intc.c
-index be7f516a3b1b..e889246951f7 100644
---- a/hw/intc/aspeed_intc.c
-+++ b/hw/intc/aspeed_intc.c
-@@ -62,6 +62,50 @@ REG32(GICINT196_STATUS,     0x44)
- REG32(GICINT197_EN,         0x50)
- REG32(GICINT197_STATUS,     0x54)
+-* ``c"" literals`` (stable in 1.77.0).  QEMU provides a ``c_str!()`` macro
+-  to define ``CStr`` constants easily
+-
+ * inline const expression (stable in 1.79.0), currently worked around with
+   associated constants in the ``FnCall`` trait.
  
-+/*
-+ * SSP INTC Registers
-+ */
-+REG32(SSPINT128_EN,             0x2000)
-+REG32(SSPINT128_STATUS,         0x2004)
-+REG32(SSPINT129_EN,             0x2100)
-+REG32(SSPINT129_STATUS,         0x2104)
-+REG32(SSPINT130_EN,             0x2200)
-+REG32(SSPINT130_STATUS,         0x2204)
-+REG32(SSPINT131_EN,             0x2300)
-+REG32(SSPINT131_STATUS,         0x2304)
-+REG32(SSPINT132_EN,             0x2400)
-+REG32(SSPINT132_STATUS,         0x2404)
-+REG32(SSPINT133_EN,             0x2500)
-+REG32(SSPINT133_STATUS,         0x2504)
-+REG32(SSPINT134_EN,             0x2600)
-+REG32(SSPINT134_STATUS,         0x2604)
-+REG32(SSPINT135_EN,             0x2700)
-+REG32(SSPINT135_STATUS,         0x2704)
-+REG32(SSPINT136_EN,             0x2800)
-+REG32(SSPINT136_STATUS,         0x2804)
-+REG32(SSPINT137_EN,             0x2900)
-+REG32(SSPINT137_STATUS,         0x2904)
-+REG32(SSPINT138_EN,             0x2A00)
-+REG32(SSPINT138_STATUS,         0x2A04)
-+REG32(SSPINT160_169_EN,         0x2B00)
-+REG32(SSPINT160_169_STATUS,     0x2B04)
-+
-+/*
-+ * SSP INTCIO Registers
-+ */
-+REG32(SSPINT160_EN,         0x180)
-+REG32(SSPINT160_STATUS,     0x184)
-+REG32(SSPINT161_EN,         0x190)
-+REG32(SSPINT161_STATUS,     0x194)
-+REG32(SSPINT162_EN,         0x1A0)
-+REG32(SSPINT162_STATUS,     0x1A4)
-+REG32(SSPINT163_EN,         0x1B0)
-+REG32(SSPINT163_STATUS,     0x1B4)
-+REG32(SSPINT164_EN,         0x1C0)
-+REG32(SSPINT164_STATUS,     0x1C4)
-+REG32(SSPINT165_EN,         0x1D0)
-+REG32(SSPINT165_STATUS,     0x1D4)
-+
- static const AspeedINTCIRQ *aspeed_intc_get_irq(AspeedINTCClass *aic,
-                                                 uint32_t reg)
- {
-@@ -450,6 +494,50 @@ static void aspeed_intc_write(void *opaque, hwaddr offset, uint64_t data,
-     }
+@@ -166,7 +163,6 @@ module           status
+ ``bitops``       complete
+ ``callbacks``    complete
+ ``cell``         stable
+-``c_str``        complete
+ ``errno``        complete
+ ``irq``          complete
+ ``memory``       stable
+@@ -423,7 +419,7 @@ Adding dependencies
+ Generally, the set of dependent crates is kept small.  Think twice before
+ adding a new external crate, especially if it comes with a large set of
+ dependencies itself.  Sometimes QEMU only needs a small subset of the
+-functionality; see for example QEMU's ``assertions`` or ``c_str`` modules.
++functionality; see for example QEMU's ``assertions`` module.
+ 
+ On top of this recommendation, adding external crates to QEMU is a
+ slightly complicated process, mostly due to the need to teach Meson how
+diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
+index cd2dc33c207..d328d846323 100644
+--- a/rust/hw/char/pl011/src/device_class.rs
++++ b/rust/hw/char/pl011/src/device_class.rs
+@@ -9,7 +9,6 @@
+ 
+ use qemu_api::{
+     bindings::{qdev_prop_bool, qdev_prop_chr},
+-    c_str,
+     prelude::*,
+     vmstate::VMStateDescription,
+     vmstate_clock, vmstate_fields, vmstate_of, vmstate_struct, vmstate_subsections, vmstate_unused,
+@@ -25,7 +24,7 @@ extern "C" fn pl011_clock_needed(opaque: *mut c_void) -> bool {
+ 
+ /// Migration subsection for [`PL011State`] clock.
+ static VMSTATE_PL011_CLOCK: VMStateDescription = VMStateDescription {
+-    name: c_str!("pl011/clock").as_ptr(),
++    name: c"pl011/clock".as_ptr(),
+     version_id: 1,
+     minimum_version_id: 1,
+     needed: Some(pl011_clock_needed),
+@@ -46,7 +45,7 @@ extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
  }
  
-+static void aspeed_ssp_intc_write(void *opaque, hwaddr offset, uint64_t data,
-+                                        unsigned size)
-+{
-+    AspeedINTCState *s = ASPEED_INTC(opaque);
-+    const char *name = object_get_typename(OBJECT(s));
-+    uint32_t reg = offset >> 2;
-+
-+    trace_aspeed_intc_write(name, offset, size, data);
-+
-+    switch (reg) {
-+    case R_SSPINT128_EN:
-+    case R_SSPINT129_EN:
-+    case R_SSPINT130_EN:
-+    case R_SSPINT131_EN:
-+    case R_SSPINT132_EN:
-+    case R_SSPINT133_EN:
-+    case R_SSPINT134_EN:
-+    case R_SSPINT135_EN:
-+    case R_SSPINT136_EN:
-+    case R_SSPINT160_169_EN:
-+        aspeed_intc_enable_handler(s, offset, data);
-+        break;
-+    case R_SSPINT128_STATUS:
-+    case R_SSPINT129_STATUS:
-+    case R_SSPINT130_STATUS:
-+    case R_SSPINT131_STATUS:
-+    case R_SSPINT132_STATUS:
-+    case R_SSPINT133_STATUS:
-+    case R_SSPINT134_STATUS:
-+    case R_SSPINT135_STATUS:
-+    case R_SSPINT136_STATUS:
-+        aspeed_intc_status_handler(s, offset, data);
-+        break;
-+    case R_SSPINT160_169_STATUS:
-+        aspeed_intc_status_handler_multi_outpins(s, offset, data);
-+        break;
-+    default:
-+        s->regs[reg] = data;
-+        break;
-+    }
-+
-+    return;
-+}
-+
- static uint64_t aspeed_intcio_read(void *opaque, hwaddr offset,
-                                    unsigned int size)
- {
-@@ -496,6 +584,39 @@ static void aspeed_intcio_write(void *opaque, hwaddr offset, uint64_t data,
-     }
- }
- 
-+static void aspeed_ssp_intcio_write(void *opaque, hwaddr offset, uint64_t data,
-+                                unsigned size)
-+{
-+    AspeedINTCState *s = ASPEED_INTC(opaque);
-+    const char *name = object_get_typename(OBJECT(s));
-+    uint32_t reg = offset >> 2;
-+
-+    trace_aspeed_intc_write(name, offset, size, data);
-+
-+    switch (reg) {
-+    case R_SSPINT160_EN:
-+    case R_SSPINT161_EN:
-+    case R_SSPINT162_EN:
-+    case R_SSPINT163_EN:
-+    case R_SSPINT164_EN:
-+    case R_SSPINT165_EN:
-+        aspeed_intc_enable_handler(s, offset, data);
-+        break;
-+    case R_SSPINT160_STATUS:
-+    case R_SSPINT161_STATUS:
-+    case R_SSPINT162_STATUS:
-+    case R_SSPINT163_STATUS:
-+    case R_SSPINT164_STATUS:
-+    case R_SSPINT165_STATUS:
-+        aspeed_intc_status_handler(s, offset, data);
-+        break;
-+    default:
-+        s->regs[reg] = data;
-+        break;
-+    }
-+
-+    return;
-+}
- 
- static const MemoryRegionOps aspeed_intc_ops = {
-     .read = aspeed_intc_read,
-@@ -517,6 +638,26 @@ static const MemoryRegionOps aspeed_intcio_ops = {
-     }
+ static VMSTATE_PL011_REGS: VMStateDescription = VMStateDescription {
+-    name: c_str!("pl011/regs").as_ptr(),
++    name: c"pl011/regs".as_ptr(),
+     version_id: 2,
+     minimum_version_id: 2,
+     fields: vmstate_fields! {
+@@ -70,7 +69,7 @@ extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
  };
  
-+static const MemoryRegionOps aspeed_ssp_intc_ops = {
-+    .read = aspeed_intc_read,
-+    .write = aspeed_ssp_intc_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    }
-+};
-+
-+static const MemoryRegionOps aspeed_ssp_intcio_ops = {
-+    .read = aspeed_intcio_read,
-+    .write = aspeed_ssp_intcio_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    }
-+};
-+
- static void aspeed_intc_instance_init(Object *obj)
- {
-     AspeedINTCState *s = ASPEED_INTC(obj);
-@@ -674,11 +815,81 @@ static const TypeInfo aspeed_2700_intcio_info = {
-     .class_init = aspeed_2700_intcio_class_init,
- };
+ pub static VMSTATE_PL011: VMStateDescription = VMStateDescription {
+-    name: c_str!("pl011").as_ptr(),
++    name: c"pl011".as_ptr(),
+     version_id: 2,
+     minimum_version_id: 2,
+     post_load: Some(pl011_post_load),
+@@ -87,14 +86,14 @@ extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
+ qemu_api::declare_properties! {
+     PL011_PROPERTIES,
+     qemu_api::define_property!(
+-        c_str!("chardev"),
++        c"chardev",
+         PL011State,
+         char_backend,
+         unsafe { &qdev_prop_chr },
+         CharBackend
+     ),
+     qemu_api::define_property!(
+-        c_str!("migrate-clk"),
++        c"migrate-clk",
+         PL011State,
+         migrate_clock,
+         unsafe { &qdev_prop_bool },
+diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
+index dbae76991c9..5c4fbc9d148 100644
+--- a/rust/hw/char/pl011/src/lib.rs
++++ b/rust/hw/char/pl011/src/lib.rs
+@@ -12,13 +12,11 @@
+ //! See [`PL011State`](crate::device::PL011State) for the device model type and
+ //! the [`registers`] module for register types.
  
-+static AspeedINTCIRQ aspeed_2700ssp_intc_irqs[ASPEED_INTC_MAX_INPINS] = {
-+    {0, 0, 10, R_SSPINT160_169_EN, R_SSPINT160_169_STATUS},
-+    {1, 10, 1, R_SSPINT128_EN, R_SSPINT128_STATUS},
-+    {2, 11, 1, R_SSPINT129_EN, R_SSPINT129_STATUS},
-+    {3, 12, 1, R_SSPINT130_EN, R_SSPINT130_STATUS},
-+    {4, 13, 1, R_SSPINT131_EN, R_SSPINT131_STATUS},
-+    {5, 14, 1, R_SSPINT132_EN, R_SSPINT132_STATUS},
-+    {6, 15, 1, R_SSPINT133_EN, R_SSPINT133_STATUS},
-+    {7, 16, 1, R_SSPINT134_EN, R_SSPINT134_STATUS},
-+    {8, 17, 1, R_SSPINT135_EN, R_SSPINT135_STATUS},
-+    {9, 18, 1, R_SSPINT136_EN, R_SSPINT136_STATUS},
-+};
-+
-+static void aspeed_2700ssp_intc_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
-+
-+    dc->desc = "ASPEED 2700 SSP INTC Controller";
-+    aic->num_lines = 32;
-+    aic->num_inpins = 10;
-+    aic->num_outpins = 19;
-+    aic->mem_size = 0x4000;
-+    aic->nr_regs = 0x2B08 >> 2;
-+    aic->reg_offset = 0x0;
-+    aic->reg_ops = &aspeed_ssp_intc_ops;
-+    aic->irq_table = aspeed_2700ssp_intc_irqs;
-+    aic->irq_table_count = ARRAY_SIZE(aspeed_2700ssp_intc_irqs);
-+}
-+
-+static const TypeInfo aspeed_2700ssp_intc_info = {
-+    .name = TYPE_ASPEED_2700SSP_INTC,
-+    .parent = TYPE_ASPEED_INTC,
-+    .class_init = aspeed_2700ssp_intc_class_init,
-+};
-+
-+static AspeedINTCIRQ aspeed_2700ssp_intcio_irqs[ASPEED_INTC_MAX_INPINS] = {
-+    {0, 0, 1, R_SSPINT160_EN, R_SSPINT160_STATUS},
-+    {1, 1, 1, R_SSPINT161_EN, R_SSPINT161_STATUS},
-+    {2, 2, 1, R_SSPINT162_EN, R_SSPINT162_STATUS},
-+    {3, 3, 1, R_SSPINT163_EN, R_SSPINT163_STATUS},
-+    {4, 4, 1, R_SSPINT164_EN, R_SSPINT164_STATUS},
-+    {5, 5, 1, R_SSPINT165_EN, R_SSPINT165_STATUS},
-+};
-+
-+static void aspeed_2700ssp_intcio_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    AspeedINTCClass *aic = ASPEED_INTC_CLASS(klass);
-+
-+    dc->desc = "ASPEED 2700 SSP INTC IO Controller";
-+    aic->num_lines = 32;
-+    aic->num_inpins = 6;
-+    aic->num_outpins = 6;
-+    aic->mem_size = 0x400;
-+    aic->nr_regs = 0x1d8 >> 2;
-+    aic->reg_offset = 0;
-+    aic->reg_ops = &aspeed_ssp_intcio_ops;
-+    aic->irq_table = aspeed_2700ssp_intcio_irqs;
-+    aic->irq_table_count = ARRAY_SIZE(aspeed_2700ssp_intcio_irqs);
-+}
-+
-+static const TypeInfo aspeed_2700ssp_intcio_info = {
-+    .name = TYPE_ASPEED_2700SSP_INTCIO,
-+    .parent = TYPE_ASPEED_INTC,
-+    .class_init = aspeed_2700ssp_intcio_class_init,
-+};
-+
- static void aspeed_intc_register_types(void)
- {
-     type_register_static(&aspeed_intc_info);
-     type_register_static(&aspeed_2700_intc_info);
-     type_register_static(&aspeed_2700_intcio_info);
-+    type_register_static(&aspeed_2700ssp_intc_info);
-+    type_register_static(&aspeed_2700ssp_intcio_info);
+-use qemu_api::c_str;
+-
+ mod device;
+ mod device_class;
+ mod registers;
+ 
+ pub use device::pl011_create;
+ 
+-pub const TYPE_PL011: &::std::ffi::CStr = c_str!("pl011");
+-pub const TYPE_PL011_LUMINARY: &::std::ffi::CStr = c_str!("pl011_luminary");
++pub const TYPE_PL011: &::std::ffi::CStr = c"pl011";
++pub const TYPE_PL011_LUMINARY: &::std::ffi::CStr = c"pl011_luminary";
+diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
+index 719343a20c5..779681d6509 100644
+--- a/rust/hw/timer/hpet/src/hpet.rs
++++ b/rust/hw/timer/hpet/src/hpet.rs
+@@ -14,7 +14,6 @@
+         address_space_memory, address_space_stl_le, qdev_prop_bit, qdev_prop_bool,
+         qdev_prop_uint32, qdev_prop_uint8,
+     },
+-    c_str,
+     cell::{BqlCell, BqlRefCell},
+     irq::InterruptSource,
+     memory::{
+@@ -908,7 +907,7 @@ impl ObjectImpl for HPETState {
+ qemu_api::declare_properties! {
+     HPET_PROPERTIES,
+     qemu_api::define_property!(
+-        c_str!("timers"),
++        c"timers",
+         HPETState,
+         num_timers,
+         unsafe { &qdev_prop_uint8 },
+@@ -916,7 +915,7 @@ impl ObjectImpl for HPETState {
+         default = HPET_MIN_TIMERS
+     ),
+     qemu_api::define_property!(
+-        c_str!("msi"),
++        c"msi",
+         HPETState,
+         flags,
+         unsafe { &qdev_prop_bit },
+@@ -925,7 +924,7 @@ impl ObjectImpl for HPETState {
+         default = false,
+     ),
+     qemu_api::define_property!(
+-        c_str!("hpet-intcap"),
++        c"hpet-intcap",
+         HPETState,
+         int_route_cap,
+         unsafe { &qdev_prop_uint32 },
+@@ -933,7 +932,7 @@ impl ObjectImpl for HPETState {
+         default = 0
+     ),
+     qemu_api::define_property!(
+-        c_str!("hpet-offset-saved"),
++        c"hpet-offset-saved",
+         HPETState,
+         hpet_offset_saved,
+         unsafe { &qdev_prop_bool },
+@@ -974,7 +973,7 @@ impl ObjectImpl for HPETState {
  }
  
- type_init(aspeed_intc_register_types);
+ static VMSTATE_HPET_RTC_IRQ_LEVEL: VMStateDescription = VMStateDescription {
+-    name: c_str!("hpet/rtc_irq_level").as_ptr(),
++    name: c"hpet/rtc_irq_level".as_ptr(),
+     version_id: 1,
+     minimum_version_id: 1,
+     needed: Some(hpet_rtc_irq_level_needed),
+@@ -985,7 +984,7 @@ impl ObjectImpl for HPETState {
+ };
+ 
+ static VMSTATE_HPET_OFFSET: VMStateDescription = VMStateDescription {
+-    name: c_str!("hpet/offset").as_ptr(),
++    name: c"hpet/offset".as_ptr(),
+     version_id: 1,
+     minimum_version_id: 1,
+     needed: Some(hpet_offset_needed),
+@@ -996,7 +995,7 @@ impl ObjectImpl for HPETState {
+ };
+ 
+ static VMSTATE_HPET_TIMER: VMStateDescription = VMStateDescription {
+-    name: c_str!("hpet_timer").as_ptr(),
++    name: c"hpet_timer".as_ptr(),
+     version_id: 1,
+     minimum_version_id: 1,
+     fields: vmstate_fields! {
+@@ -1011,10 +1010,10 @@ impl ObjectImpl for HPETState {
+     ..Zeroable::ZERO
+ };
+ 
+-const VALIDATE_TIMERS_NAME: &CStr = c_str!("num_timers must match");
++const VALIDATE_TIMERS_NAME: &CStr = c"num_timers must match";
+ 
+ static VMSTATE_HPET: VMStateDescription = VMStateDescription {
+-    name: c_str!("hpet").as_ptr(),
++    name: c"hpet".as_ptr(),
+     version_id: 2,
+     minimum_version_id: 1,
+     pre_save: Some(hpet_pre_save),
+diff --git a/rust/hw/timer/hpet/src/lib.rs b/rust/hw/timer/hpet/src/lib.rs
+index 5e7c961c289..1954584a87e 100644
+--- a/rust/hw/timer/hpet/src/lib.rs
++++ b/rust/hw/timer/hpet/src/lib.rs
+@@ -7,9 +7,7 @@
+ //! This library implements a device model for the IA-PC HPET (High
+ //! Precision Event Timers) device in QEMU.
+ 
+-use qemu_api::c_str;
+-
+ pub mod fw_cfg;
+ pub mod hpet;
+ 
+-pub const TYPE_HPET: &::std::ffi::CStr = c_str!("hpet");
++pub const TYPE_HPET: &::std::ffi::CStr = c"hpet";
+diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+index 95e65643ae1..1696df705bf 100644
+--- a/rust/qemu-api/meson.build
++++ b/rust/qemu-api/meson.build
+@@ -20,7 +20,6 @@ _qemu_api_rs = static_library(
+       'src/callbacks.rs',
+       'src/cell.rs',
+       'src/chardev.rs',
+-      'src/c_str.rs',
+       'src/errno.rs',
+       'src/irq.rs',
+       'src/memory.rs',
+diff --git a/rust/qemu-api/src/c_str.rs b/rust/qemu-api/src/c_str.rs
+deleted file mode 100644
+index 3fa61b59c76..00000000000
+--- a/rust/qemu-api/src/c_str.rs
++++ /dev/null
+@@ -1,61 +0,0 @@
+-// Copyright 2024 Red Hat, Inc.
+-// Author(s): Paolo Bonzini <pbonzini@redhat.com>
+-// SPDX-License-Identifier: GPL-2.0-or-later
+-
+-#![doc(hidden)]
+-//! This module provides a macro to define a constant of type
+-//! [`CStr`](std::ffi::CStr), for compatibility with versions of
+-//! Rust that lack `c""` literals.
+-//!
+-//! Documentation is hidden because it only exposes macros, which
+-//! are exported directly from `qemu_api`.
+-
+-#[macro_export]
+-/// Given a string constant _without_ embedded or trailing NULs, return
+-/// a `CStr`.
+-///
+-/// Needed for compatibility with Rust <1.77.
+-macro_rules! c_str {
+-    ($str:expr) => {{
+-        const STRING: &str = concat!($str, "\0");
+-        const BYTES: &[u8] = STRING.as_bytes();
+-
+-        // "for" is not allowed in const context... oh well,
+-        // everybody loves some lisp.  This could be turned into
+-        // a procedural macro if this is a problem; alternatively
+-        // Rust 1.72 makes CStr::from_bytes_with_nul a const function.
+-        const fn f(b: &[u8], i: usize) {
+-            if i == b.len() - 1 {
+-            } else if b[i] == 0 {
+-                panic!("c_str argument contains NUL")
+-            } else {
+-                f(b, i + 1)
+-            }
+-        }
+-        f(BYTES, 0);
+-
+-        // SAFETY: absence of NULs apart from the final byte was checked above
+-        unsafe { std::ffi::CStr::from_bytes_with_nul_unchecked(BYTES) }
+-    }};
+-}
+-
+-#[cfg(test)]
+-mod tests {
+-    use std::ffi::CStr;
+-
+-    use crate::c_str;
+-
+-    #[test]
+-    fn test_cstr_macro() {
+-        let good = c_str!("🦀");
+-        let good_bytes = b"\xf0\x9f\xa6\x80\0";
+-        assert_eq!(good.to_bytes_with_nul(), good_bytes);
+-    }
+-
+-    #[test]
+-    fn test_cstr_macro_const() {
+-        const GOOD: &CStr = c_str!("🦀");
+-        const GOOD_BYTES: &[u8] = b"\xf0\x9f\xa6\x80\0";
+-        assert_eq!(GOOD.to_bytes_with_nul(), GOOD_BYTES);
+-    }
+-}
+diff --git a/rust/qemu-api/src/cell.rs b/rust/qemu-api/src/cell.rs
+index 1cb9fdcd53f..05ce09f6cb6 100644
+--- a/rust/qemu-api/src/cell.rs
++++ b/rust/qemu-api/src/cell.rs
+@@ -77,13 +77,13 @@
+ //!
+ //! ```
+ //! # use qemu_api::prelude::*;
+-//! # use qemu_api::{c_str, cell::BqlRefCell, irq::InterruptSource, irq::IRQState};
++//! # use qemu_api::{cell::BqlRefCell, irq::InterruptSource, irq::IRQState};
+ //! # use qemu_api::{sysbus::SysBusDevice, qom::Owned, qom::ParentField};
+ //! # const N_GPIOS: usize = 8;
+ //! # struct PL061Registers { /* ... */ }
+ //! # unsafe impl ObjectType for PL061State {
+ //! #     type Class = <SysBusDevice as ObjectType>::Class;
+-//! #     const TYPE_NAME: &'static std::ffi::CStr = c_str!("pl061");
++//! #     const TYPE_NAME: &'static std::ffi::CStr = c"pl061";
+ //! # }
+ //! struct PL061State {
+ //!     parent_obj: ParentField<SysBusDevice>,
+diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
+index 90c19636660..234a94e3c29 100644
+--- a/rust/qemu-api/src/lib.rs
++++ b/rust/qemu-api/src/lib.rs
+@@ -15,7 +15,6 @@
+ 
+ pub mod assertions;
+ pub mod bitops;
+-pub mod c_str;
+ pub mod callbacks;
+ pub mod cell;
+ pub mod chardev;
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index 205f35a21fd..9c8b2398e9d 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -427,7 +427,7 @@ unsafe impl<$base> VMState for $type where $base: VMState $($where)* {
+ macro_rules! vmstate_unused {
+     ($size:expr) => {{
+         $crate::bindings::VMStateField {
+-            name: $crate::c_str!("unused").as_ptr(),
++            name: c"unused".as_ptr(),
+             size: $size,
+             info: unsafe { ::core::ptr::addr_of!($crate::bindings::vmstate_info_unused_buffer) },
+             flags: $crate::bindings::VMStateFlags::VMS_BUFFER,
+diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+index d045808c3a8..a658a49fcfd 100644
+--- a/rust/qemu-api/tests/tests.rs
++++ b/rust/qemu-api/tests/tests.rs
+@@ -6,7 +6,6 @@
+ 
+ use qemu_api::{
+     bindings::{module_call_init, module_init_type, qdev_prop_bool},
+-    c_str,
+     cell::{self, BqlCell},
+     declare_properties, define_property,
+     prelude::*,
+@@ -21,7 +20,7 @@
+ 
+ // Test that macros can compile.
+ pub static VMSTATE: VMStateDescription = VMStateDescription {
+-    name: c_str!("name").as_ptr(),
++    name: c"name".as_ptr(),
+     unmigratable: true,
+     ..Zeroable::ZERO
+ };
+@@ -48,7 +47,7 @@ pub fn class_init<T: DeviceImpl>(self: &mut DummyClass) {
+ declare_properties! {
+     DUMMY_PROPERTIES,
+         define_property!(
+-            c_str!("migrate-clk"),
++            c"migrate-clk",
+             DummyState,
+             migrate_clock,
+             unsafe { &qdev_prop_bool },
+@@ -58,7 +57,7 @@ pub fn class_init<T: DeviceImpl>(self: &mut DummyClass) {
+ 
+ unsafe impl ObjectType for DummyState {
+     type Class = DummyClass;
+-    const TYPE_NAME: &'static CStr = c_str!("dummy");
++    const TYPE_NAME: &'static CStr = c"dummy";
+ }
+ 
+ impl ObjectImpl for DummyState {
+@@ -92,7 +91,7 @@ pub struct DummyChildClass {
+ 
+ unsafe impl ObjectType for DummyChildState {
+     type Class = DummyChildClass;
+-    const TYPE_NAME: &'static CStr = c_str!("dummy_child");
++    const TYPE_NAME: &'static CStr = c"dummy_child";
+ }
+ 
+ impl ObjectImpl for DummyChildState {
+diff --git a/rust/qemu-api/tests/vmstate_tests.rs b/rust/qemu-api/tests/vmstate_tests.rs
+index cc3527a9b6a..ad0fc5cd5dd 100644
+--- a/rust/qemu-api/tests/vmstate_tests.rs
++++ b/rust/qemu-api/tests/vmstate_tests.rs
+@@ -14,7 +14,6 @@
+         vmstate_info_bool, vmstate_info_int32, vmstate_info_int64, vmstate_info_int8,
+         vmstate_info_uint64, vmstate_info_uint8, vmstate_info_unused_buffer, VMStateFlags,
+     },
+-    c_str,
+     cell::{BqlCell, Opaque},
+     impl_vmstate_forward,
+     vmstate::{VMStateDescription, VMStateField},
+@@ -43,7 +42,7 @@ struct FooA {
+ }
+ 
+ static VMSTATE_FOOA: VMStateDescription = VMStateDescription {
+-    name: c_str!("foo_a").as_ptr(),
++    name: c"foo_a".as_ptr(),
+     version_id: 1,
+     minimum_version_id: 1,
+     fields: vmstate_fields! {
+@@ -173,7 +172,7 @@ fn validate_foob(_state: &FooB, _version_id: u8) -> bool {
+ }
+ 
+ static VMSTATE_FOOB: VMStateDescription = VMStateDescription {
+-    name: c_str!("foo_b").as_ptr(),
++    name: c"foo_b".as_ptr(),
+     version_id: 2,
+     minimum_version_id: 1,
+     fields: vmstate_fields! {
+@@ -337,7 +336,7 @@ struct FooC {
+ }
+ 
+ static VMSTATE_FOOC: VMStateDescription = VMStateDescription {
+-    name: c_str!("foo_c").as_ptr(),
++    name: c"foo_c".as_ptr(),
+     version_id: 3,
+     minimum_version_id: 1,
+     fields: vmstate_fields! {
+@@ -452,13 +451,13 @@ fn validate_food_2(_state: &FooD, _version_id: u8) -> bool {
+ }
+ 
+ static VMSTATE_FOOD: VMStateDescription = VMStateDescription {
+-    name: c_str!("foo_d").as_ptr(),
++    name: c"foo_d".as_ptr(),
+     version_id: 3,
+     minimum_version_id: 1,
+     fields: vmstate_fields! {
+-        vmstate_validate!(FooD, c_str!("foo_d_0"), FooD::validate_food_0),
+-        vmstate_validate!(FooD, c_str!("foo_d_1"), FooD::validate_food_1),
+-        vmstate_validate!(FooD, c_str!("foo_d_2"), validate_food_2),
++        vmstate_validate!(FooD, c"foo_d_0", FooD::validate_food_0),
++        vmstate_validate!(FooD, c"foo_d_1", FooD::validate_food_1),
++        vmstate_validate!(FooD, c"foo_d_2", validate_food_2),
+     },
+     ..Zeroable::ZERO
+ };
 -- 
 2.49.0
 
