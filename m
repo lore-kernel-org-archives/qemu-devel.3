@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7BE6C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 11:28:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8651DC3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 12:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBtzh-00058f-9k; Mon, 05 May 2025 07:28:21 -0400
+	id 1uBuaY-0008KP-Fv; Mon, 05 May 2025 08:06:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBtzX-00056e-Va
- for qemu-devel@nongnu.org; Mon, 05 May 2025 07:28:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBuaM-0008JK-M4
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 08:06:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBtzU-00017p-Et
- for qemu-devel@nongnu.org; Mon, 05 May 2025 07:28:10 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBuaH-00069U-Iw
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 08:06:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746444486;
+ s=mimecast20190719; t=1746446767;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=MLaF1gHNRxWgsFDIHvDyb1AM8MxC5hSKUmwplA7jgOg=;
- b=hFdwDPd+d5pmNQEeaRd+JGGFpBvO1MX6fHoNSZ1tOrjySjLlY1tD1e5AfO5Qv0M36Zdhdl
- yYog6wzoBOfCLSoo/0ZZuXnmYsLl7s9EOUaF+rJ13vWSqp0sFNElPWcky5fMt296E3tgaP
- csVJaWW8xjYYNQzO5H4Pau7qPYoSVL0=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GCWre+YiiE1M/xjq50/0b5RxI5pgjZUljUe5DxoqVQw=;
+ b=e3yLd862LjVU8J1Hnr/wmsNrNjZmX2l54UFBa8HUX2kqlLK6e/H5w8mhtwOmeWhR5QMkWj
+ 2iB/Lo6OmG883fTy8+X9/8df5RaMg4qQOsI1Qx1okI94OEbbpqxY5SiPUxCJbPswG74XBu
+ VeiwtIvjNiAl2W3/EjtIi52mr+rs9/Q=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-482-5wcx_SQCPIuhllkKpoJ5og-1; Mon, 05 May 2025 07:28:05 -0400
-X-MC-Unique: 5wcx_SQCPIuhllkKpoJ5og-1
-X-Mimecast-MFC-AGG-ID: 5wcx_SQCPIuhllkKpoJ5og_1746444484
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a064c45f03so1753261f8f.0
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 04:28:05 -0700 (PDT)
+ us-mta-183-TIYWF9aoNLSDERECE_lAtQ-1; Mon, 05 May 2025 08:06:06 -0400
+X-MC-Unique: TIYWF9aoNLSDERECE_lAtQ-1
+X-Mimecast-MFC-AGG-ID: TIYWF9aoNLSDERECE_lAtQ_1746446765
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43cf3168b87so18321875e9.2
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 05:06:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746444484; x=1747049284;
+ d=1e100.net; s=20230601; t=1746446765; x=1747051565;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MLaF1gHNRxWgsFDIHvDyb1AM8MxC5hSKUmwplA7jgOg=;
- b=URQtnA0fXXAx0jaqcfTnawThvOxp9psO5Z42FL/soKe/JHX0hiNCEYD0v4OO3DDEci
- SiCvPu1jW0LWZpzPg3/tV6lgYnZdf9uCdP/KbwizaBOAmlm/IGw6J81kjWOdEYnfKIhP
- 7w8nQmZEM1Gb5Qu0M+ARYZHiCyXq/pqtn7kJEfuNJDF2T8Q8R65qkgbyOArf5iHkR9ge
- tFX0LGfYhXHPUGukJqZXuCsZORCmLBzfNc9ZnySHMByN8M+FmQUqoVnOVoIDE/t+zvsa
- ab0/MdtWlDXbX3jPht3P36HHCdpwJ4tlUeFRJXalLgqsWru0LyAYJuUdqcZnUme0Iw3I
- 4ZJw==
+ bh=GCWre+YiiE1M/xjq50/0b5RxI5pgjZUljUe5DxoqVQw=;
+ b=XlWTW/rrDw5PAzqJwH10pgiZs7cIscdySApBIYEjN+PA3hGVanPMiUIve9dCVbUtpv
+ 6uVuKLp8S7ieynMjCRjcGpjtGii0tjrO87NEGZL/lDke/fEEf5ayuk7wuq622Ee9RCbC
+ N2ObtHlV0+RupzhaixOYMyyIMXrAsmz8vGmCokBWmgiVf70fNE985K+DInJjMwOMzs+4
+ yBlz9fkB00Oa6YcZ0dnlDGXjVlDZlRtIOFenE1ha++bZYaNRfB2IcJMHjn2blHEvQmoF
+ syeEgeSMixwSnSsFcQ3ELlvXEmfzREGtUB58u0JkUy+x0bbglSUjF3CQXcfptNbhQKP8
+ /gDA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWxNL0bYUYYv/AbFyp7WoUwLjCfLKdzHOi9dATI0S7UD9rU12wUPvcCdr3I5GPCxRChp9YaHWHwXklV@nongnu.org
-X-Gm-Message-State: AOJu0Yx6jUSYAw5N5MxugN9a9uz0c5+DHyedshDsXUzdDFtpNiwfHFID
- W/UUXfxRaoD6aP47t0eGLt3qeHdcMWI5xke1qSe+xYfe9gmjYDkMY15TgTql/sSUckhm2JLIRE2
- WDAuTb4gtGW/X2YqKVbM4yucubeBehkHwIEJvu7hnsub6j5nL1Nrz
-X-Gm-Gg: ASbGncsPwrEWnNZeWL/OYiOzJLGJ9Uu3bOqe6tlB9BNrjXlIAutKY6MfIi7JS8EjrCC
- +QRsCj40Ubq74z9IPGVKiEqHhlRe4LdMXf0nmFHgU7GLZptOvkYaR0rb4cDVa2vrjuTm3UEe+pG
- cHvh/7MrbXcZDRotAfCN12StynhTgrV4wuECqdrcp+oCu7Wo3FO+IQo0kWFE6BgRQSY99xVx/rT
- 3cwLbCvXVxkLtKuu2FROjdFaGC5k9YKvwUurJXP0+bYT4+CY5f87UAcEHphRqpjKDkWuns9uef3
- NfE3C4c6O9yFrqTQomJ65DZrXkD+m5mY/hL50TvITOdKZNRPZg==
-X-Received: by 2002:a05:6000:3101:b0:3a0:92d9:dae with SMTP id
- ffacd0b85a97d-3a09402ca45mr11694904f8f.5.1746444484312; 
- Mon, 05 May 2025 04:28:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEUrLl5C++0iKf1MKcbvJMgQf4oV6i9wu7Uo6AbPidkDnzCTK8lEIiFCnnDIzfIE+NL2ihk7A==
-X-Received: by 2002:a05:6000:3101:b0:3a0:92d9:dae with SMTP id
- ffacd0b85a97d-3a09402ca45mr11694883f8f.5.1746444483904; 
- Mon, 05 May 2025 04:28:03 -0700 (PDT)
+ AJvYcCUKPH5gdIbpZAbSna/1bQkcQaYbSOQKcTc/XkKUUr3n4DW1B+BmrtrSsGlcLgPZ0n5jsKSbFNlVx1Rw@nongnu.org
+X-Gm-Message-State: AOJu0YwmCxnx+IGzYx0rbT/fi+mg+ZMDklgSdpkQJ2i5NOLlepwDDp4Z
+ AVzAzZX1pIo0Ws8BFTHsXVCLiGwk8svHqvg+oRTplkSXg7k6teUFWXE+RPr6FEQWNM9n3mh70Im
+ R41uOG6ZUV6AGnN8s2n5hdQvknuIozu7bT+c/aLLeL4W0FURsXRgi
+X-Gm-Gg: ASbGncsLrA68AQ2Xg0n8T+TM4ZA1lOYCKmv4SHjK5g40TJdHmhgJslpjFVPb+yeT72T
+ +upa4hEEGsTgbc1jdBQmdd2e+56NEixpAV1J67Qyg/LVZjoPj662Ioht+iIRjbP9N7mJrdcrKzq
+ 3l0SeQxAahAYdthx1KLxxR9Cqok+KzYngfXxeu5vrVuPxDQk85zxS62GRUFlphsfsHjUuxEUud0
+ MgwrajpnkNJ/5KsNEIZAmyVlKC6WHW9T1jnZICir8Oyj2NPBlB98Dd13HIvGpC8wc889p8pzdA1
+ pFjcG8JWBqvqDO2hnKTbS8x/3y8+lEpaMyzNBv0m2cMHJ2WOYA==
+X-Received: by 2002:a05:600c:1c9e:b0:43b:ca39:6c75 with SMTP id
+ 5b1f17b1804b1-441bbeda8a4mr118766855e9.16.1746446765031; 
+ Mon, 05 May 2025 05:06:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEBPbrjBNtyYkk4oNjjgXielF43GcL/WX5YU3vhsZqOhz6pQUJbj08iq2h4UJik1/7ut1gmaw==
+X-Received: by 2002:a05:600c:1c9e:b0:43b:ca39:6c75 with SMTP id
+ 5b1f17b1804b1-441bbeda8a4mr118766105e9.16.1746446764601; 
+ Mon, 05 May 2025 05:06:04 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae0cc9sm9998887f8f.9.2025.05.05.04.28.02
+ 5b1f17b1804b1-441b89cc7d9sm134868285e9.7.2025.05.05.05.06.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 04:28:03 -0700 (PDT)
-Message-ID: <3d5e7ab7-bd1b-4dca-aba7-3b82a8ee8763@redhat.com>
-Date: Mon, 5 May 2025 13:28:02 +0200
+ Mon, 05 May 2025 05:06:03 -0700 (PDT)
+Message-ID: <bfeb9363-a33a-4a2f-b0e9-115beebb1fbf@redhat.com>
+Date: Mon, 5 May 2025 14:06:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/15] vfio: implement unmap all for DMA unmap callbacks
+Subject: Re: [PATCH v2 08/15] vfio: add unmap_all flag to DMA unmap callback
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, qemu-s390x@nongnu.org,
  Jason Herne <jjherne@linux.ibm.com>, Tomita Moeko <tomitamoeko@gmail.com>,
@@ -90,7 +90,7 @@ Cc: Peter Xu <peterx@redhat.com>, qemu-s390x@nongnu.org,
  Stefano Garzarella <sgarzare@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
 References: <20250430194003.2793823-1-john.levon@nutanix.com>
- <20250430194003.2793823-10-john.levon@nutanix.com>
+ <20250430194003.2793823-9-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -136,10 +136,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250430194003.2793823-10-john.levon@nutanix.com>
+In-Reply-To: <20250430194003.2793823-9-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -165,152 +165,162 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/30/25 21:39, John Levon wrote:
-> Handle unmap_all in the DMA unmap handlers rather than in the caller.
+> We'll use this parameter shortly; this just adds the plumbing.
+
+I am not sure the 'unmap_all' name reflects what the dma_unmap()
+handler does.
+
 > 
 > Signed-off-by: John Levon <john.levon@nutanix.com>
 > ---
->   hw/vfio/container.c | 45 +++++++++++++++++++++++++++++++++++----------
->   hw/vfio/iommufd.c   | 15 ++++++++++++++-
->   hw/vfio/listener.c  | 19 ++++++-------------
->   3 files changed, 55 insertions(+), 24 deletions(-)
+>   hw/vfio/container-base.c              | 4 ++--
+>   hw/vfio/container.c                   | 8 ++++++--
+>   hw/vfio/iommufd.c                     | 6 +++++-
+>   hw/vfio/listener.c                    | 8 ++++----
+>   include/hw/vfio/vfio-container-base.h | 4 ++--
+>   5 files changed, 19 insertions(+), 11 deletions(-)
 > 
-> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-> index 766ba5a275..1000f3c241 100644
-> --- a/hw/vfio/container.c
-> +++ b/hw/vfio/container.c
-> @@ -119,12 +119,9 @@ unmap_exit:
->       return ret;
+> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+> index 09340fd97a..3ff473a45c 100644
+> --- a/hw/vfio/container-base.c
+> +++ b/hw/vfio/container-base.c
+> @@ -85,12 +85,12 @@ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+>   
+>   int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
+>                                hwaddr iova, ram_addr_t size,
+> -                             IOMMUTLBEntry *iotlb)
+> +                             IOMMUTLBEntry *iotlb, bool unmap_all)
+>   {
+>       VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+>   
+>       g_assert(vioc->dma_unmap);
+> -    return vioc->dma_unmap(bcontainer, iova, size, iotlb);
+> +    return vioc->dma_unmap(bcontainer, iova, size, iotlb, unmap_all);
 >   }
 >   
-> -/*
-> - * DMA - Mapping and unmapping for the "type1" IOMMU interface used on x86
-> - */
-> -static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
-> -                                 hwaddr iova, ram_addr_t size,
-> -                                 IOMMUTLBEntry *iotlb, bool unmap_all)
-> +static int vfio_legacy_dma_unmap_one(const VFIOContainerBase *bcontainer,
-> +                                     hwaddr iova, ram_addr_t size,
-> +                                     IOMMUTLBEntry *iotlb)
+>   bool vfio_container_add_section_window(VFIOContainerBase *bcontainer,
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 1dfdc312bd..766ba5a275 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -124,7 +124,7 @@ unmap_exit:
+>    */
+>   static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+>                                    hwaddr iova, ram_addr_t size,
+> -                                 IOMMUTLBEntry *iotlb)
+> +                                 IOMMUTLBEntry *iotlb, bool unmap_all)
 >   {
 >       const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
 >                                                     bcontainer);
-> @@ -138,10 +135,6 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+> @@ -138,6 +138,10 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
 >       int ret;
 >       Error *local_err = NULL;
 >   
-> -    if (unmap_all) {
-> -        return -ENOTSUP;
-> -    }
-> -
+> +    if (unmap_all) {
+> +        return -ENOTSUP;
+> +    }
+> +
 >       if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
 >           if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
 >               bcontainer->dirty_pages_supported) {
-> @@ -185,6 +178,38 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
->       return 0;
->   }
+> @@ -205,7 +209,7 @@ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+>        */
+>       if (ioctl(container->fd, VFIO_IOMMU_MAP_DMA, &map) == 0 ||
+>           (errno == EBUSY &&
+> -         vfio_legacy_dma_unmap(bcontainer, iova, size, NULL) == 0 &&
+> +         vfio_legacy_dma_unmap(bcontainer, iova, size, NULL, false) == 0 &&
+>            ioctl(container->fd, VFIO_IOMMU_MAP_DMA, &map) == 0)) {
+>           return 0;
+>       }
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 62ecb758f1..6b2764c044 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -46,11 +46,15 @@ static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr iova,
 >   
-> +/*
-> + * DMA - Mapping and unmapping for the "type1" IOMMU interface used on x86
-> + */
-> +static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
-> +                                 hwaddr iova, ram_addr_t size,
-> +                                 IOMMUTLBEntry *iotlb, bool unmap_all)
-> +{
-> +    int ret;
-> +
+>   static int iommufd_cdev_unmap(const VFIOContainerBase *bcontainer,
+>                                 hwaddr iova, ram_addr_t size,
+> -                              IOMMUTLBEntry *iotlb)
+> +                              IOMMUTLBEntry *iotlb, bool unmap_all)
+>   {
+>       const VFIOIOMMUFDContainer *container =
+>           container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
+>   
 > +    if (unmap_all) {
-> +        /* The unmap ioctl doesn't accept a full 64-bit span. */
-> +        Int128 llsize = int128_rshift(int128_2_64(), 1);
-> +
-> +        ret = vfio_legacy_dma_unmap_one(bcontainer, 0, int128_get64(llsize),
-> +                                        iotlb);
-> +
-> +        if (ret == 0) {
-> +            ret = vfio_legacy_dma_unmap_one(bcontainer, int128_get64(llsize),
-> +                                            int128_get64(llsize), iotlb);
-> +        }
-> +
-> +    } else {
-> +        ret = vfio_legacy_dma_unmap_one(bcontainer, iova, size, iotlb);
+> +        return -ENOTSUP;
 > +    }
 > +
-> +    if (ret != 0) {
-> +        return -errno;
-> +    }
+>       /* TODO: Handle dma_unmap_bitmap with iotlb args (migration) */
+>       return iommufd_backend_unmap_dma(container->be,
+>                                        container->ioas_id, iova, size);
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index 6f77e18a7a..c5183700db 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -172,7 +172,7 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>           }
+>       } else {
+>           ret = vfio_container_dma_unmap(bcontainer, iova,
+> -                                       iotlb->addr_mask + 1, iotlb);
+> +                                       iotlb->addr_mask + 1, iotlb, false);
+>           if (ret) {
+>               error_setg(&local_err,
+>                          "vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+> @@ -201,7 +201,7 @@ static void vfio_ram_discard_notify_discard(RamDiscardListener *rdl,
+>       int ret;
+>   
+>       /* Unmap with a single call. */
+> -    ret = vfio_container_dma_unmap(bcontainer, iova, size , NULL);
+> +    ret = vfio_container_dma_unmap(bcontainer, iova, size , NULL, false);
+>       if (ret) {
+>           error_report("%s: vfio_container_dma_unmap() failed: %s", __func__,
+>                        strerror(-ret));
+> @@ -638,7 +638,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
+>               /* The unmap ioctl doesn't accept a full 64-bit span. */
+>               llsize = int128_rshift(llsize, 1);
+>               ret = vfio_container_dma_unmap(bcontainer, iova,
+> -                                           int128_get64(llsize), NULL);
+> +                                           int128_get64(llsize), NULL, false);
+>               if (ret) {
+>                   error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+>                                "0x%"HWADDR_PRIx") = %d (%s)",
+> @@ -648,7 +648,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
+>               iova += int128_get64(llsize);
+>           }
+>           ret = vfio_container_dma_unmap(bcontainer, iova,
+> -                                       int128_get64(llsize), NULL);
+> +                                       int128_get64(llsize), NULL, false);
+>           if (ret) {
+>               error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+>                            "0x%"HWADDR_PRIx") = %d (%s)",
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index 5527e02722..92cee54d11 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -81,7 +81,7 @@ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+>                              void *vaddr, bool readonly);
+>   int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
+>                                hwaddr iova, ram_addr_t size,
+> -                             IOMMUTLBEntry *iotlb);
+> +                             IOMMUTLBEntry *iotlb, bool unmap_all);
+>   bool vfio_container_add_section_window(VFIOContainerBase *bcontainer,
+>                                          MemoryRegionSection *section,
+>                                          Error **errp);
+> @@ -122,7 +122,7 @@ struct VFIOIOMMUClass {
+>                      void *vaddr, bool readonly);
+>       int (*dma_unmap)(const VFIOContainerBase *bcontainer,
+>                        hwaddr iova, ram_addr_t size,
+> -                     IOMMUTLBEntry *iotlb);
+> +                     IOMMUTLBEntry *iotlb, bool unmap_all);
+>       bool (*attach_device)(const char *name, VFIODevice *vbasedev,
+>                             AddressSpace *as, Error **errp);
+>       void (*detach_device)(VFIODevice *vbasedev);
 
-the ret value should already be an errno. Shouldn't it ?
-
+Please add documentation to dma_unmap().
 
 Thanks,
 
 C.
 
-
-
-> +    return 0;
-> +}
-> +
->   static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
->                                  ram_addr_t size, void *vaddr, bool readonly)
->   {
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 6b2764c044..af1c7ab10a 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -51,8 +51,21 @@ static int iommufd_cdev_unmap(const VFIOContainerBase *bcontainer,
->       const VFIOIOMMUFDContainer *container =
->           container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
->   
-> +    /* unmap in halves */
->       if (unmap_all) {
-> -        return -ENOTSUP;
-> +        Int128 llsize = int128_rshift(int128_2_64(), 1);
-> +        int ret;
-> +
-> +        ret = iommufd_backend_unmap_dma(container->be, container->ioas_id,
-> +                                        0, int128_get64(llsize));
-> +
-> +        if (ret == 0) {
-> +            ret = iommufd_backend_unmap_dma(container->be, container->ioas_id,
-> +                                            int128_get64(llsize),
-> +                                            int128_get64(llsize));
-> +        }
-> +
-> +        return ret;
->       }
->   
->       /* TODO: Handle dma_unmap_bitmap with iotlb args (migration) */
-> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-> index c5183700db..e7ade7d62e 100644
-> --- a/hw/vfio/listener.c
-> +++ b/hw/vfio/listener.c
-> @@ -634,21 +634,14 @@ static void vfio_listener_region_del(MemoryListener *listener,
->       }
->   
->       if (try_unmap) {
-> +        bool unmap_all = false;
-> +
->           if (int128_eq(llsize, int128_2_64())) {
-> -            /* The unmap ioctl doesn't accept a full 64-bit span. */
-> -            llsize = int128_rshift(llsize, 1);
-> -            ret = vfio_container_dma_unmap(bcontainer, iova,
-> -                                           int128_get64(llsize), NULL, false);
-> -            if (ret) {
-> -                error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
-> -                             "0x%"HWADDR_PRIx") = %d (%s)",
-> -                             bcontainer, iova, int128_get64(llsize), ret,
-> -                             strerror(-ret));
-> -            }
-> -            iova += int128_get64(llsize);
-> +            unmap_all = true;
-> +            llsize = int128_zero();
->           }
-> -        ret = vfio_container_dma_unmap(bcontainer, iova,
-> -                                       int128_get64(llsize), NULL, false);
-> +        ret = vfio_container_dma_unmap(bcontainer, iova, int128_get64(llsize),
-> +                                       NULL, unmap_all);
->           if (ret) {
->               error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
->                            "0x%"HWADDR_PRIx") = %d (%s)",
 
 
