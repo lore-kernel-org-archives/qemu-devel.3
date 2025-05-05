@@ -4,93 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AFC3C369C2
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 06:04:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E993CC369C2
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 06:26:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBovs-0000BO-3m; Mon, 05 May 2025 02:04:04 -0400
+	id 1uBpGj-0005OP-Tc; Mon, 05 May 2025 02:25:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uBovp-0000Aw-U0
- for qemu-devel@nongnu.org; Mon, 05 May 2025 02:04:01 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uBovl-0002e7-Lm
- for qemu-devel@nongnu.org; Mon, 05 May 2025 02:04:01 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7398d65476eso3147654b3a.1
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 23:03:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1746425036; x=1747029836;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iM1h/TiQQKrgq/BZlQRFlCX9fcxamaNQT1oJ7HwKq9Q=;
- b=vjwrRfAGQgdF6d+BaRJ+4PDGteW9bifmmb9n5r4GsR0cJAgM/9MwTXfr7kMLvJFROw
- pfO+wcUiAiJcILSnS0rGqLEZIPXaycNptkIHOn3jXmpbqqP2Y1OwG41Exxm4ORf/lcNQ
- cncSbmBEcWjZcYFMvs95vGBK8lkHw21Srmj+KnHjtObOZh91DhRpI2X/iH6BmolxTV9h
- 3a7U+tMJI9V/+tFYkufdxo7G7CW65cGGi8b2pwKn8fNfV+VYmFYZ3S8+zMLIozYPCOfw
- Xc6Q7npRzLUf7EynceajzKywxm+rxc3WhG0ezjEqKVDo+K4TZTPFFml3gHXBpF9Zotml
- 9wjw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBpGi-0005Kf-Ij
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 02:25:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBpGg-00058D-MU
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 02:25:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746426331;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=NDjNWi1nYNj24U0zfPau2OvKn6QiG7v2EYXPjnjqWRQ=;
+ b=WUVFCgBS8JFdLzi9jE/F7qVWIg/OvdGIinVpvkra09CWT8ccTMQ0Njvt8Itg27Z+b17O2D
+ ST0JX3AhnFaGrMZ0ptQz6RLEMkjnm9q+LZaNEWdsLto7pZoJ/vFP/fJ+xiLASjdnQBhKQ8
+ h3le8Goq1NOzFNCHG+/PuN4cVEkzXjw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-609-XX8dsm2CMzKW8j2aRVsd_A-1; Mon, 05 May 2025 02:25:29 -0400
+X-MC-Unique: XX8dsm2CMzKW8j2aRVsd_A-1
+X-Mimecast-MFC-AGG-ID: XX8dsm2CMzKW8j2aRVsd_A_1746426329
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3912a0439afso1076552f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 23:25:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746425036; x=1747029836;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iM1h/TiQQKrgq/BZlQRFlCX9fcxamaNQT1oJ7HwKq9Q=;
- b=qOzXjxz1zweZiH4CRfZZVoJrMmY6WLYdZqWIlnzrcLpctGhtf6BZxRPksvurw0vQOd
- tVCaVa0Tu8j++USjIr+GCWC1hgzyyD+R6rFvnYlD6rVZwWq8k3xandnaN8MFUzVDDHSq
- 1srLKtxUXomSHuKqCJAF4iViBesicHivB3+6isnwoPOyTWHBYR5S0+0pIfY5yLWFJ4fT
- ePRmnDT8Vf7vzcGZOJ1BB0qLXn3znzj6Ow3UcSfp0Xr0yjrLJgh8I5tgreAQc2uBJ1A/
- bI/oihf7PUpcsTe83dlOiTVwUpp5dgOQMECX5X9kSZ0UciG2PPD+EFjait0VBuAwxFTF
- 4hbg==
-X-Gm-Message-State: AOJu0YwyfiKDh9rYpCEVbSlFvrLV5BqMIwxG0hw37K1WCo+7JpIxznHF
- FxJnTLorhaxo7WYbFPLDA23HBngMKWgDq3mjkjl2RjtIgPaYbJKXcdobB2tU8Hx355sioF7/oSo
- 9
-X-Gm-Gg: ASbGnctP4qrjYBLuHATk4/0fe/qQGofC+qwZj6Q49pukbRJCy9mCE1i25ytnXbs8eH2
- RUegymRgUUalVvVYeml8M3SmyfRpIwPWZ9n3Wedjkm1GVptW9bReQVqlQruPAg0DwxJ6B0mFesx
- 81zjzFU0TSWs/3vnh6D3nOB+yUaVwtC6OdlepKwzpiCE6Kpx8lVQyf4vpdEkKG+8cmxx/JR3kU0
- pki94cXUrveq7CPV8AYPJd8NAOGV1ixFzlGy32gyd4Wt3XoP9lOv0Ee8GTJJQLzMlaZHtZE76em
- YOZeFn/xESwTCSJ7yrsxeq5bbUDk3C/ZguBORzbjAS70zlpwRjo=
-X-Google-Smtp-Source: AGHT+IEwVcWnXW2ZDHRiLjtNDXfX26xz2p4UmSfNSnt27Ojo4cZOO1OpAWf0qX560pLMp9ocu5A1Vw==
-X-Received: by 2002:a05:6a00:8c01:b0:736:4d05:2e35 with SMTP id
- d2e1a72fcca58-74057afb16amr17743215b3a.3.1746425036170; 
- Sun, 04 May 2025 23:03:56 -0700 (PDT)
-Received: from [157.82.207.61] ([157.82.207.61])
+ d=1e100.net; s=20230601; t=1746426329; x=1747031129;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NDjNWi1nYNj24U0zfPau2OvKn6QiG7v2EYXPjnjqWRQ=;
+ b=mBljxe804AuDd8qyYw7HKcu06wv0NKjKLgncbzBZ5lxQd9GQEaUCy76HhX5xdfrbWD
+ 7LobsSrhQ0oFVCIWi+HUjsup0HIUW3eTRd6ljLrGpJNfxwin0sIZj6pgedh6+lAVwj/g
+ NH3MCUIrwzoP8/CJGc7p4DbeteJhDbCqiSGhx/mRPuweJjiPXIUN7Ud4DR7VwY5F6L7Q
+ QPT9CrOLwVR+Ad7ASR6Mcktiy5oD3zTKbPQnh3NkiiyL6ghwI9Y13lKbVeS1lEkKnTZ+
+ FjWO1R+qjOJ+t6dlBz46biA7Cl+PjNaKVO4gCctgkB4ECOR6Mxe2YPg6aTgdiYcLUxid
+ YRnQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWQaUl4QZLn7rQL/fzGwBrG5WIwSoRlfd45illjJA7pdr0Gei6Uf4gWLiB+kqhvQQHkBSl+2QATJryQ@nongnu.org
+X-Gm-Message-State: AOJu0YyJpusVJ9NaWm9mi7mrZ/e30frtSDh9wjuDGzfN4aa1EY1/0KGx
+ VMEYIbV7afzgqr5z0bsNrB8MeE2uE73KKViizKlgOdjGZ6plnAGcW4YnKMsExJyiiF+LhkGeLlK
+ hDF6vV31PrPNc/JG8duzWNBjSClcTjSy99meEyw2GqGdeV3L18GYa
+X-Gm-Gg: ASbGncvXMR5b1BF+S4QSv6tMIXcPQBiIeSw1vuSTGznZ3W52Qz1kG4xMyXL5RBQGSSh
+ PiaShvi18DBSlGjUtMBE3qCV83mQb5y+tYKcr7f2BUxgfzK6JQ4tYbGHD8c19YClNzYpf7RA5pO
+ uyl0L1Edq69xR/QIWMoWBHmZXv3DVAUTU9P4Vr4fv0fee+mUbFPKDgvLnC2g5fpXr72PaOSpC8E
+ mVmazmsWOJF9NqiZplFRec8uR8oxwTTvRhmnFJELsq3RYJyLoZjCkszyWNSIU/A3QdRxhJidLh5
+ zHvcGCZRB1njtLIVFDpUv/E3Lt+cVB+xJ+diH5EA
+X-Received: by 2002:a05:6000:400a:b0:3a0:8295:9e0f with SMTP id
+ ffacd0b85a97d-3a09cf3dc16mr5524014f8f.54.1746426328785; 
+ Sun, 04 May 2025 23:25:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGEv96mwvg2BFvZ5VG6iUnjyj0zAmLUb3SaaXsC8tpRHdgMWQP4t+3MReehurWm3W0sYqMM8A==
+X-Received: by 2002:a05:6000:400a:b0:3a0:8295:9e0f with SMTP id
+ ffacd0b85a97d-3a09cf3dc16mr5523994f8f.54.1746426328420; 
+ Sun, 04 May 2025 23:25:28 -0700 (PDT)
+Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-740590a2921sm6086598b3a.178.2025.05.04.23.03.54
+ ffacd0b85a97d-3a099ae0ca4sm9489126f8f.14.2025.05.04.23.25.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 May 2025 23:03:55 -0700 (PDT)
-Message-ID: <57c9b65a-bfdf-47e6-a438-6559f791f7dd@daynix.com>
-Date: Mon, 5 May 2025 15:03:52 +0900
+ Sun, 04 May 2025 23:25:27 -0700 (PDT)
+Message-ID: <fb8991c6-c9e9-4e6c-a852-02977942eb28@redhat.com>
+Date: Mon, 5 May 2025 08:25:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/12] net/e1000e|igb: Fix interrupt throttling rearming
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-devel@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+Subject: Re: [PATCH] scripts/vmstate-static-checker.py: Add new hpet entry for
+ num_timers
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>
-References: <20250502031705.100768-1-npiggin@gmail.com>
- <20250502031705.100768-12-npiggin@gmail.com>
+References: <20250501151235.636709-1-peterx@redhat.com>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20250502031705.100768-12-npiggin@gmail.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250501151235.636709-1-peterx@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.411,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,136 +154,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/05/02 12:17, Nicholas Piggin wrote:
-> Timer expiry that results in an interrupt does not rearm the timer so
-> an interrupt can appear immediately after the interrupt generated by
-> timer expiry.
+On 01/05/2025 17.12, Peter Xu wrote:
+> The old "num_timers" got a rename.  See commit 1433e38cc8 ("hpet: do not
+> overwrite properties on post_load") for more details.  Teach the script to
+> accept the new name.
 > 
-> Fix this by rearming the throttle timer when a delayed interrupt is
-> processed. e1000e gets this by reusing the e1000e_msix_notify()
-> logic, igb calls igb_intrmgr_rearm_timer() directly.
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Cc: Paolo Bonzini <pbonzini@redhat.com>
+> Cc: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->   hw/net/e1000e_core.c |  5 ++--
->   hw/net/igb_core.c    | 55 ++++++++++++++++++++++++++------------------
->   2 files changed, 35 insertions(+), 25 deletions(-)
+>   scripts/vmstate-static-checker.py | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-> index d53f70065ef..2932122c04b 100644
-> --- a/hw/net/e1000e_core.c
-> +++ b/hw/net/e1000e_core.c
-> @@ -218,7 +218,7 @@ static uint32_t find_msix_causes(E1000ECore *core, int vec)
->   }
->   
->   static void
-> -e1000e_msix_auto_clear_mask(E1000ECore *core, uint32_t cause);
-> +e1000e_msix_notify(E1000ECore *core, uint32_t causes);
->   
->   static void
->   e1000e_intrmgr_on_msix_throttling_timer(void *opaque)
-> @@ -233,8 +233,7 @@ e1000e_intrmgr_on_msix_throttling_timer(void *opaque)
->       causes = find_msix_causes(core, idx) & core->mac[IMS] & core->mac[ICR];
->       if (causes) {
->           trace_e1000e_irq_msix_notify_postponed_vec(idx);
-> -        msix_notify(core->owner, causes);
-> -        e1000e_msix_auto_clear_mask(core, causes);
-> +        e1000e_msix_notify(core, causes);
->       }
->   }
->   
-> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-> index 035637f81f8..cc25a1d5baa 100644
-> --- a/hw/net/igb_core.c
-> +++ b/hw/net/igb_core.c
-> @@ -152,11 +152,14 @@ igb_intrmgr_arm_timer(IGBIntrDelayTimer *timer, int64_t delay_ns)
->   static inline void
->   igb_intrmgr_rearm_timer(IGBIntrDelayTimer *timer)
->   {
-> -    uint32_t interval = (timer->core->mac[timer->delay_reg] &
-> -                         E1000_EITR_INTERVAL) >> 2;
-> -    int64_t delay_ns = (int64_t)interval * timer->delay_resolution_ns;
-> +    uint32_t eitr = timer->core->mac[timer->delay_reg];
->   
-> -    igb_intrmgr_arm_timer(timer, delay_ns);
-> +    if (eitr != 0) {
-> +        uint32_t interval = (eitr & E1000_EITR_INTERVAL) >> 2;
-> +        int64_t delay_ns = (int64_t)interval * timer->delay_resolution_ns;
-> +
-> +        igb_intrmgr_arm_timer(timer, delay_ns);
-> +    }
->   }
->   
->   static void
-> @@ -168,21 +171,7 @@ igb_intmgr_timer_resume(IGBIntrDelayTimer *timer)
->   }
->   
->   static void
-> -igb_intrmgr_on_msix_throttling_timer(void *opaque)
-> -{
-> -    IGBIntrDelayTimer *timer = opaque;
-> -    IGBCore *core = timer->core;
-> -    int vector = timer - &core->eitr[0];
-> -    uint32_t causes;
-> -
-> -    timer->running = false;
-> -
-> -    causes = core->mac[EICR] & core->mac[EIMS];
-> -    if (causes & BIT(vector)) {
-> -        trace_e1000e_irq_msix_notify_postponed_vec(vector);
-> -        igb_msix_notify(core, vector);
-> -    }
-> -}
-> +igb_intrmgr_on_msix_throttling_timer(void *opaque);
->   
->   static void
->   igb_intrmgr_initialize_all_timers(IGBCore *core, bool create)
-> @@ -2258,9 +2247,7 @@ igb_postpone_interrupt(IGBIntrDelayTimer *timer)
->           return true;
+> diff --git a/scripts/vmstate-static-checker.py b/scripts/vmstate-static-checker.py
+> index 25aca839a0..2335e25f94 100755
+> --- a/scripts/vmstate-static-checker.py
+> +++ b/scripts/vmstate-static-checker.py
+> @@ -91,6 +91,7 @@ def check_fields_match(name, s_field, d_field):
+>                         'mem_win_size', 'mig_mem_win_size',
+>                         'io_win_addr', 'mig_io_win_addr',
+>                         'io_win_size', 'mig_io_win_size'],
+> +        'hpet': ['num_timers', 'num_timers_save'],
 >       }
 >   
-> -    if (timer->core->mac[timer->delay_reg] != 0) {
-> -        igb_intrmgr_rearm_timer(timer);
-> -    }
-> +    igb_intrmgr_rearm_timer(timer);
->   
->       return false;
->   }
-> @@ -2284,6 +2271,30 @@ static void igb_send_msix(IGBCore *core, uint32_t causes)
->       }
->   }
->   
-> +static void
-> +igb_intrmgr_on_msix_throttling_timer(void *opaque)
-> +{
-> +    IGBIntrDelayTimer *timer = opaque;
-> +    IGBCore *core = timer->core;
-> +    int vector = timer - &core->eitr[0];
-> +    uint32_t causes;
-> +
-> +    timer->running = false;
-> +
-> +    causes = core->mac[EICR] & core->mac[EIMS];
-> +    if (causes & BIT(vector)) {
-> +        /*
-> +         * The moderation counter is loaded with interval value whenever the
-> +         * interrupt is signaled. This includes when the interrupt is signaled
-> +         * by the counter reaching 0.
-> +         */
-> +        igb_intrmgr_rearm_timer(timer);
-> +
-> +        trace_e1000e_irq_msix_notify_postponed_vec(vector);
-> +        igb_msix_notify(core, vector);
-> +    }
-> +}
-> +
+>       if not name in changed_names:
 
-I wonder why the definition is moved. This patch adds a 
-igb_intrmgr_rearm_timer() call but it's already placed earlier than this 
-function.
-
->   static inline void
->   igb_fix_icr_asserted(IGBCore *core)
->   {
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
