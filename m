@@ -4,83 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0E95C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 12:27:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09196C3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 12:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBuuW-0007Xy-CR; Mon, 05 May 2025 08:27:04 -0400
+	id 1uBuud-0007kv-6c; Mon, 05 May 2025 08:27:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uBuuT-0007WV-LE
- for qemu-devel@nongnu.org; Mon, 05 May 2025 08:27:01 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uBuuN-00012t-Th
- for qemu-devel@nongnu.org; Mon, 05 May 2025 08:27:01 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5edc07c777eso6131994a12.3
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 05:26:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746448011; x=1747052811; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hsjz82emGKzNzQDZyYLEwMR112qBhgO5Mg8R4fMgiV4=;
- b=VlawA2R5z96YymGdBMsodSBiFSSyN2HBBg6fQcP0Ev4VT7944ZBThSpRdw7sddFJ8/
- KVbXcPHxGt5g7a5h0dYPDByOj1Ez6X4Lx2NJEeYQUgMeAMcQ2aZ6dFWShfCEMdN0Jvh1
- Fvu412XkcTDHs5Zbmf/8E3CRFMwITCmp6zdLDD1QzTn9qDkUzUVzyb0PLoOP52VC26XJ
- Yi0Yv+B4LnsvD/8PEJ7GtM+RCT23MsZxYiYtwJurjL4lPt5E8yRkAP6Hksp7pyHcsE0R
- 7wPB4E5O05AYm4ZtJNgwKVoxuqGTClx1eKY27KqO/JU8BK2/xHHWH15Zuto0uhzqt7Tg
- 2tfA==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBuua-0007g8-Ia
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 08:27:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBuuV-000158-WC
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 08:27:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746448022;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=sLFe/UIORjWRgHEf4n3V2eWWNIfuAfatY/vQTyLl8YE=;
+ b=iatSo/lVL51SN5kVewdgaxfsZPOToFMj0bUFH3EQKmQpESVz7moFE9FBcC+sYsQMLfqPk3
+ LPhQfWdX6ZDzCsn+p9kD4emMi/BPeEQuyevemb4AbMAkPOPqldaYEw57hwXkAbVN2RfCfh
+ MzpUdHqSmLgJXnDbBBA66SaDUUqDe3A=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-339-MvhUtQWVNbuI-E6IvywdCQ-1; Mon, 05 May 2025 08:27:01 -0400
+X-MC-Unique: MvhUtQWVNbuI-E6IvywdCQ-1
+X-Mimecast-MFC-AGG-ID: MvhUtQWVNbuI-E6IvywdCQ_1746448020
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43d734da1a3so19107485e9.0
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 05:27:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746448011; x=1747052811;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hsjz82emGKzNzQDZyYLEwMR112qBhgO5Mg8R4fMgiV4=;
- b=sUcO1H0dph1IoEhAbfljQqeeSRpaJRM03s+Lssu4b516xNw5V0CLxtgOxZii7b9PMO
- 9UuIUuMr1BcajAwQNNWTyJSMDZPvgPoepA9/ZOJuWnxUNepJt7efbVbGH8kzbtZv/+Hd
- es1dz/6KbQABIT8TUS45l8RlHnLGc9YsStUwulmG7B1CtCJATZyHRBQvZRm6LhJ8djkV
- hiv8s/Z9I4okyPHKddh5qxni30WbeqyvbdsKAcK+iL0bTOOvdpeQeAbZppapcCOciFdt
- CWY81UItTh0V6poT4I6JohxoxC/eAMGKf4G9Q1OuT0vz0K8t0WwdpIBJd/GnvF5C8SKa
- qLcQ==
-X-Gm-Message-State: AOJu0YxaU+qXun6xHKOGg73mo1OP95I0R6rvy/5EKKTu8gmj35ZWWz/B
- vbFHJyk3JXeQ0Wj5V9dbO28MHglXvIULgL3FQqEkgj0EGRaVcPKSa3aUZm/jn9UXGsotdFAdLN3
- Wy5E5VzxuNDPEgpR58AquQqIc3puHQo6+LvAPZA==
-X-Gm-Gg: ASbGncuA4rpQVADuJakMWbCUqnrP6i7bMEK26jJlUEOEo0kTBGmXRGy4QfDqUX29KGd
- ZpGb684ZC9UAVeZE+cRZCXrdoI/lGgFbLP8DiYwWauSSlGfMmAzoeqAuhMNgK3MOWn4QcSWerE9
- PF20ZYKpW1K3R5yLe2J9GkXcKW
-X-Google-Smtp-Source: AGHT+IG9Kmz2iaFsJEvnEV2zPWmLdzYSxbZVU+9MyAPRQ/TUSCBVs6sdNrdLas4raRWGcGjwR5wA7UeEhSRtjnvR7o8=
-X-Received: by 2002:a05:6402:1e8f:b0:5f7:eaf0:8849 with SMTP id
- 4fb4d7f45d1cf-5faa7f8ae95mr6716657a12.16.1746448010507; Mon, 05 May 2025
- 05:26:50 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746448020; x=1747052820;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sLFe/UIORjWRgHEf4n3V2eWWNIfuAfatY/vQTyLl8YE=;
+ b=T1k52dqBk04+1aEnOI2/LbEkJZFnuOL+hoq4ChbKUKrMhbLwGRmhqwJDDCHqfEvbdc
+ MlvsQqcv8b51vlV+iSPrFunQXdXDdVAYnU3Aht7KD8q4lBla+Ghmr8nVec7X78uedSDc
+ 3w/+5t/kJNRihqgLb9GpdhwJENAxEQRoDgQwKe8vVWs5AaUn3AmwcdLahf2IOtTLw5VO
+ Zw3cW/btLr/WEtfTO2m0xWvyk+OGETFSvnYUMxf2enETK2rZxBsry07PQrkvlqOT4kj+
+ QAxtWlY3COePff/pt96kYDyN5yOKk21VGvpimKO5kWbIGZP4OxX0AQaWjLEGfsNi2AXu
+ 9ZHA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVfT8Jr8z7HIYf+0zTCve5DNuohBcwT5gjsAxD+LaTkRfRu89WQiAX2AgHefRAevRYoa64puNJfP5UD@nongnu.org
+X-Gm-Message-State: AOJu0YyqBU7nX4DEIcIEuNSw8enNoavypXbtFZI8zscv0KJeFX+RJ7pT
+ /g+KxTslw4lgcnxPzZieGf84RI5tQ99JrHg51ef83gV7rbHqLvL3Jehigd7Xce4955BdYHTH57Y
+ 41zM5aNnDoKW2Cl8OzM6mTSqTmPlDkJgaaCNAWh0/rEzB5n8klgOd
+X-Gm-Gg: ASbGncv4sjgVw9crDTXY3UkcQfnq7+BzEaY6q9I3GqreImfiXUWEorkqyQlIEZJsqhU
+ LvLwou53a7Ysi19e3GmN+Oiuj3azU7k+0+qV+EHGM4QnSyG05IgN7KawwiJz6JgPTSchoX67MH2
+ b84lB9EIVJIwWnqqjIMTx7M4u6TVM4Bcz5EBbJpM4Gc849qou+rf+q/fUG/fqlJsBnyyQKTBtLF
+ v/P6BHSI08M5YHUlrjzkNqIu0Ldj7X85WQj3Vh1wGihfK3Xcc2vuo9FYEjsmJeS/05uEQTU/xLn
+ zcRN+XKVdFuUrc4l/X7/+oSo28uWd7G91LpnO26GIXU21hjEpA==
+X-Received: by 2002:a05:600c:b8c:b0:43d:4e9:27ff with SMTP id
+ 5b1f17b1804b1-441c48b2e98mr56941135e9.7.1746448019921; 
+ Mon, 05 May 2025 05:26:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IECZl1OagA4FVHnRllAyJ9V40qh+9zvT1Sr6VCX/hqN6/76wlmhpXVrmDvVBfvRfb+IyCsy+g==
+X-Received: by 2002:a05:600c:b8c:b0:43d:4e9:27ff with SMTP id
+ 5b1f17b1804b1-441c48b2e98mr56940935e9.7.1746448019526; 
+ Mon, 05 May 2025 05:26:59 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-441b89cc480sm135041685e9.2.2025.05.05.05.26.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 May 2025 05:26:59 -0700 (PDT)
+Message-ID: <19c5b117-a572-4d80-90b6-971a186f95d4@redhat.com>
+Date: Mon, 5 May 2025 14:26:57 +0200
 MIME-Version: 1.0
-References: <d3d1944e-2482-4aa7-b621-596246a08107@gnu.org>
-In-Reply-To: <d3d1944e-2482-4aa7-b621-596246a08107@gnu.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 5 May 2025 15:26:23 +0300
-X-Gm-Features: ATxdqUFKC9hcFc-SqyJaywNw2vKh-bdFAHZUbwIvjQRWofKSENMkqYcdg77QmmA
-Message-ID: <CAAjaMXZhq_uv-w_9TT3++HAcO7r_OhriJA0RKWs8YqY_ryjK4w@mail.gmail.com>
-Subject: Re: Rust in QEMU update, April 2025
-To: Paolo Bonzini <bonzini@gnu.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Daniel Berrange <berrange@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 11/15] vfio: add region info cache
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, qemu-s390x@nongnu.org,
+ Jason Herne <jjherne@linux.ibm.com>, Tomita Moeko <tomitamoeko@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Tony Krowiak
+ <akrowiak@linux.ibm.com>, Alex Williamson <alex.williamson@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
+References: <20250430194003.2793823-1-john.levon@nutanix.com>
+ <20250430194003.2793823-12-john.levon@nutanix.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250430194003.2793823-12-john.levon@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,275 +167,253 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 2, 2025 at 3:13=E2=80=AFPM Paolo Bonzini <bonzini@gnu.org> wrot=
-e:
->
-> It's been roughly three months since my previous update on the Rust in
-> QEMU project.  Support for Rust remains experimental, with most of the
-> past three months spent cleaning up the bindings and making more
-> functionality available from safe Rust.
->
-> As before, this mostly covers what I have looked at, which is making
-> it possible to write devices in safe Rust.  Topics such as QAPI and
-> async (block devices) are missing for this reason.
->
-> Overall, I'd say the progress is good: most of the missing features
-> mentioned in the previous update have been fixed or at least have a
-> plan for the next few months.
->
-> Table of contents
-> '''''''''''''''''
->
-> * Status in QEMU 10.0
-> * Build system
-> * Feature parity for devices
-> * Remaining unsafe code
-> * Rust version requirements
-> * A coding style for devices
-> * Next steps
->
->
-> Status in QEMU 10.0
-> '''''''''''''''''''
->
-> QEMU when built with ``--enable-rust`` compiles on all supported
-> build platforms.  It passes CI and ``make check-unit`` runs tests for
-> rust/qemu-api.  ``make check-qtests`` covers the Rust pl011 and HPET
-> device models, including migration of the former.  pl011 is entirely
-> implemented using safe code (minus migration and qdev properties).
-> HPET uses unsafe in some small and fairly well confined cases (see
-> below).
->
-> Since the previous update, some mistakes in the early bindings code
-> have become apparent; in particular, orphan rules made it too hard
-> to implement classes outside the qemu_api crate, and in general to
-> split the qemu_api crate in multiple parts---for example, parts that
-> are of interest to tools and parts that are only used by system
-> emulators.  Another important change is the separation between
-> bindgen-generated types and the structs that are actually used by
-> Rust code.  This allows traits such as Send, Sync or Zeroable to be
-> specified independently for C and Rust structs.
->
-> Thanks to Kevin Wolf's work on the block layer a new module appeared
-> to convert between C success/-errno conventions and ``io::Result``.
-> This module is also used in character device bindings.
->
->
-> Build system
-> ''''''''''''
->
-> Developers can use ninja to easily access clippy, rustfmt and rustdoc.
-> Meson 1.8 supports clippy and rustdoc natively (including doctests),
-> but due to some regressions in 1.8.0 this will have to wait for the
-> next stable release.  This update to Meson will also make it possible
-> to use --enable-modules and --enable-rust together.
->
-> Rust is still not enabled and its presence is not checked for by
-> default.  The main reason is that Rust staticlibs also link statically
-> to the Rust standard library, thus bloating the resulting executable
-> (and making distros hate us as well).  A pending Meson pull request[1]
-> will fix this, as long as system/main.c is rewritten or wrapped in Rust.
->
-> .. [1] https://github.com/mesonbuild/meson/pull/14224
->
->
-> Feature parity for devices
-> ''''''''''''''''''''''''''
->
-> Support for HPET live migration is ready to be merged.
->
-> As before, some recent pl011 commits are missing in the Rust version.
->
-> Logging and tracing were proposed as a project for Google Summer of
-> Code.
->
->
-> Remaining unsafe code
-> '''''''''''''''''''''
->
-> qdev bindings cover basic classes and interfaces, including
-> GPIO pins, timers, clocks and MemoryRegionOps.  VMState
-> still needs unsafe callbacks for pre_save/post_load, with
-> the final version waiting for a bump of the minimum supported
-> Rust version to 1.83.0.
->
-> Apart from VMState, the remaining instances of `unsafe` blocks in the
-> pl011 and HPET code can all be removed without bumping the language
-> version.
->
-> HPET does some very simple memory accesses; a good safe solution
-> for this may be the ``vm-memory`` crate.  While I have not looked into
-> using it, ``vm-memory`` and ``vm-virtio`` were written with QEMU's
-> use cases in mind.
->
-> The ``instance_init`` method is using unsafe code.  There are multiple
-> solutions to this: the one I planned for was to use a crate such as
-> `pin_init <https://docs.rs/pin_init/>`__ or
-> `pinned_init <https://docs.rs/pinned_init/>`__, but
-> I have also worked for self-education on a simpler version based on
-> ``std::mem::MaybeUninit`` field projections.  This one removes ``unsafe``
-> only from the implementation and not from the ``instance_init`` method
-> itself, but it is less invasive and could be a possibility in the
-> short term.
->
-> The amount of functionality available from safe Rust is enough that
-> including new devices should be possible, even if they need some unsafe
-> code for parts of QEMU that do not have bindings yet.  Most devices
-> added to QEMU are simple and do not do any complex DMA; while such
-> simple devices have very little benefit from *rewriting* them in Rust,
-> there will be a substantial benefit to writing *new* devices in Rust as
-> soon as tracing and logging are supported.  Even though unsafe code in
-> migration and ``instance_init`` would count as technical debt for every
-> Rust device that is added to QEMU, I don't expect a flood of Rust devices
-> in the next few months such that this would be a problem.
->
-> There is still no interoperability between QEMU's C data structure and
-> Rust counterparts has no news either.  As before, we'll figure it out
-> as soon as we need a realize() implementation that can fail, or when
-> tackling QAPI.
->
->
-> Rust version requirements
-> '''''''''''''''''''''''''
->
-> Patches are on the list (and have mostly been reviewed) to bump the
-> minimum supported Rust version to 1.77.0.  However, there will probably
-> be at least one more bump to support references to statics in constants,
-> which are stable in 1.83.0 and are important for migration support in
-> safe Rust.
->
-> This will require dropping support for ``--enable-rust`` on Debian
-> bookworm with a distro-provided compiler.  If any devices are contributed
-> that are written in Rust and do not have a C counterpart, it may be
-> worth splitting "enable Rust" from "enable all devices written in Rust".
-> This way, the C versions of the pl011 and HPET devices remain available
-> on bookworm.
->
->
-> A coding style for devices
-> ''''''''''''''''''''''''''
->
-> pl011 and HPET were developed independently and sometimes have different
-> idioms that could be unified.  Peter Maydell made several observations:
->
->    Something I do notice is that there's some inconsistency in
->    how we've structured things between the two devices, e.g.:
->
->    * the pl011 main source file is device.rs, but the hpet one
->      is hpet.rs
->
->    * some places we use the actual names of bits in registers
->      (eg Interrupt's OE, BE, etc consts), and some places we
->      seem to have renamed them (e.g. pl011 Flags has clear_to_send
->      not CTS, etc)
->
->    * pl011 has defined named fields for its registers, but hpet does
->      things like::
->
->         self.config.get() & (1 << HPET_CFG_LEG_RT_SHIFT) !=3D 0
->
->    * pl011 has a split between PL011State and PL011Registers,
->      but HPET does not. As I mentioned in an email thread a
->      little while back, I feel like the State/Registers split
->      is something we should either make a more clear deliberate
->      formalised separation that's part of how we recommend
->      device models should be designed
->
->    [...]
->
->    I think it would be good to figure out what we think is the
->    right, best style, for writing this kind of thing, and be
->    consistent. We have long standing problems in the C device
->    models where there are multiple different styles for how
->    we write them, and it would be good to try to aim for
->    more uniformity on the Rust side.
+On 4/30/25 21:39, John Levon wrote:
+> Instead of requesting region information on demand with
+> VFIO_DEVICE_GET_REGION_INFO, maintain a cache: this will become
+> necessary for performance for vfio-user, where this call becomes a
+> message over the control socket, so is of higher overhead than the
+> traditional path.
+> 
+> We will also need it to generalize region accesses, as that means we
+> can't use ->config_offset for configuration space accesses, but must
+> look up the region offset (if relevant) each time.
 
-The pl011 stuff was deliberate decisions:
+This looks cleaner. One comment below,
 
-- device.rs vs pl011.rs: the device was written as a crate, so it's
-essentially its own library, plus pl011/src/pl011.rs would be
-redundant :)
-  That said, it's not important, we can choose either convention. I
-like the less redundancy and separation of concerns: if pl011 gets
-converted into a module in a future refactor, it could keep its
-functionality split into different submodules and `pl011.rs` or
-`pl011/mod.rs` would be the device module.
-  Rust's concept of files being either a leaf module or parent module
-does not translate to C's "every file is a compilation unit" cleanly.
-- Using typed registers instead of constants: yes coming from C I can
-understand it can feel unfamiliar. I specifically wanted to make the
-register fields typed to avoid making the implementation a "C port",
-and I think it's worthwhile to use the type system as much as
-possible.
-  A straight C port would result into integer constants with integer
-typed fields everywhere for registers/flags.
-  Yes, From/Into aren't const, at least yet, but it's not really a
-hotpath performance wise. I think non-dynamically dispatched trait
-methods can be inlined by annotating the `fn from(..)` impl with a
-`#[inline(always)]` hint but I haven't confirmed this, just
-speculation.
-  Again, no strong opinions here. I like the "everything is typed"
-approach and I think it's worth it to explore it because it allows us
-to "make invalid/illegal states unrepresentable" as one sage article
-goes.
+> 
+> Originally-by: John Johnson <john.g.johnson@oracle.com>
+> Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+> Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+> Signed-off-by: John Levon <john.levon@nutanix.com>
+> ---
+>   hw/vfio/ccw.c                 |  5 -----
+>   hw/vfio/device.c              | 27 +++++++++++++++++++++++----
+>   hw/vfio/igd.c                 |  8 ++++----
+>   hw/vfio/pci.c                 |  6 +++---
+>   hw/vfio/region.c              |  2 +-
+>   include/hw/vfio/vfio-device.h |  1 +
+>   6 files changed, 32 insertions(+), 17 deletions(-)
+> 
+> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+> index ab3fabf991..cea9d6e005 100644
+> --- a/hw/vfio/ccw.c
+> +++ b/hw/vfio/ccw.c
+> @@ -504,7 +504,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
+>   
+>       vcdev->io_region_offset = info->offset;
+>       vcdev->io_region = g_malloc0(info->size);
+> -    g_free(info);
+>   
+>       /* check for the optional async command region */
+>       ret = vfio_device_get_region_info_type(vdev, VFIO_REGION_TYPE_CCW,
+> @@ -517,7 +516,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
+>           }
+>           vcdev->async_cmd_region_offset = info->offset;
+>           vcdev->async_cmd_region = g_malloc0(info->size);
+> -        g_free(info);
+>       }
+>   
+>       ret = vfio_device_get_region_info_type(vdev, VFIO_REGION_TYPE_CCW,
+> @@ -530,7 +528,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
+>           }
+>           vcdev->schib_region_offset = info->offset;
+>           vcdev->schib_region = g_malloc(info->size);
+> -        g_free(info);
+>       }
+>   
+>       ret = vfio_device_get_region_info_type(vdev, VFIO_REGION_TYPE_CCW,
+> @@ -544,7 +541,6 @@ static bool vfio_ccw_get_region(VFIOCCWDevice *vcdev, Error **errp)
+>           }
+>           vcdev->crw_region_offset = info->offset;
+>           vcdev->crw_region = g_malloc(info->size);
+> -        g_free(info);
+>       }
+>   
+>       return true;
+> @@ -554,7 +550,6 @@ out_err:
+>       g_free(vcdev->schib_region);
+>       g_free(vcdev->async_cmd_region);
+>       g_free(vcdev->io_region);
+> -    g_free(info);
+>       return false;
+>   }
+>   
+> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> index 468fb50eac..d08c0ab536 100644
+> --- a/hw/vfio/device.c
+> +++ b/hw/vfio/device.c
+> @@ -205,6 +205,12 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
+>       size_t argsz = sizeof(struct vfio_region_info);
+>       int ret;
+>   
+> +    /* check cache */
+> +    if (vbasedev->reginfo[index] != NULL) {
+> +        *info = vbasedev->reginfo[index];
+> +        return 0;
+> +    }
+> +
+>       *info = g_malloc0(argsz);
+>   
+>       (*info)->index = index;
+> @@ -225,6 +231,9 @@ retry:
+>           goto retry;
+>       }
+>   
+> +    /* fill cache */
+> +    vbasedev->reginfo[index] = *info;
+> +
+>       return 0;
+>   }
+>   
+> @@ -243,7 +252,6 @@ int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
+>   
+>           hdr = vfio_get_region_info_cap(*info, VFIO_REGION_INFO_CAP_TYPE);
+>           if (!hdr) {
+> -            g_free(*info);
+>               continue;
+>           }
+>   
+> @@ -255,8 +263,6 @@ int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
+>           if (cap_type->type == type && cap_type->subtype == subtype) {
+>               return 0;
+>           }
+> -
+> -        g_free(*info);
+>       }
+>   
+>       *info = NULL;
+> @@ -265,7 +271,7 @@ int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
+>   
+>   bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type)
+>   {
+> -    g_autofree struct vfio_region_info *info = NULL;
+> +    struct vfio_region_info *info = NULL;
+>       bool ret = false;
+>   
+>       if (!vfio_device_get_region_info(vbasedev, region, &info)) {
+> @@ -438,10 +444,23 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
+>       QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
+>   
+>       QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
+> +
+> +    if (vbasedev->reginfo == NULL) {
 
->
-> One thing that I noticed is that in Rust QEMU code I tend to rely on
-> ``const`` and ``static`` a lot, and several crates are not friendly
-> to this style, including the ``bilge`` crate that we use for named
-> fields and others such as ``bitflags``.  In both cases, this is
-> related to Rust not having const traits, e.g. for ``from()``/into()``
-> or operator overloading).  I already have a prototype of a bitflags-like
-> macro that is more const friendly, and we also need to make a decision
-> on whether to keep using ``bilge``, fork it, rewrite it or whatever.
->
->
-> Next steps
-> ''''''''''
->
-> With respect to missing functionality, tracepoints and logging remain
-> the highest-priority missing feature, perhaps together with DMA, and the
-> main blocker before implementing new devices in Rust can be encouraged.
-> Hopefully this hole will be closed over the summer.
->
-> On the experimental side, if anybody wants to play with the ``vm-memory``
-> crate for DMA that would be very interesting.  However, the next steps
-> I am suggesting are mostly along the lines of cleaning up what is there,
-> ensuring that we're ready for more widespread usage of Rust in QEMU.
->
-> If someone like menial work, splitting the ``qemu_api`` crate is now
-> possible and a good thing to do.
->
-> If someone has good taste, they might go over the code with Peter's
-> above remarks in mind, cleaning up things so that pl011 and HPET both
-> provide good examples of Rust code in QEMU.
->
-> I also believe it's time to look again at using procedural macros to
-> simplify declaring QOM/qdev classes.  For example::
->
->      #[derive(qemu_api_macros::Object(class_name=3D"pl011", class=3DPL011=
-Class))]
->      #[derive(qemu_api_macros::Device(vmsd=3DVMSTATE_HPET))
->      pub struct PL011State {
->          pub parent_obj: ParentField<SysBusDevice>,
->          pub iomem: MemoryRegion,
->          pub regs: BqlRefCell<PL011Registers>,
->          pub interrupts: [InterruptSource; IRQMASK.len()],
->          pub clock: Owned<Clock>,
->
->          #[qemu_api_macros::property(name=3D"chr")]
->          pub char_backend: CharBackend,
->
->          #[qemu_api_macros::property(name=3D"migrate-clk", default=3Dtrue=
-)]
->          pub migrate_clock: bool,
->      }
->
-> Related to this I have found recently the `attrs crate
-> <https://docs.rs/attrs/>`__, which provides an easy way to parse the
-> contents of attributes in a procedural macro.
+I don't think this test is necessary. Is it ?
 
-I actually have some WIP patches for this I put a pause on and can
-continue e.g. https://gitlab.com/epilys/rust-for-qemu/-/commit/c2c97caaaf03=
-273fabc14aee5a4d1499668ddbe3
+
+Thanks,
+
+C.
+
+
+
+> +        vbasedev->reginfo = g_new0(struct vfio_region_info *,
+> +                                   vbasedev->num_regions);
+> +    }
+>   }
+>   
+>   void vfio_device_unprepare(VFIODevice *vbasedev)
+>   {
+> +    int i;
+> +
+> +    for (i = 0; i < vbasedev->num_regions; i++) {
+> +        g_free(vbasedev->reginfo[i]);
+> +    }
+> +    g_free(vbasedev->reginfo);
+> +    vbasedev->reginfo = NULL;
+> +
+>       QLIST_REMOVE(vbasedev, container_next);
+>       QLIST_REMOVE(vbasedev, global_next);
+>       vbasedev->bcontainer = NULL;
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index d7e4728fdc..c7db74cde4 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -191,7 +191,7 @@ static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
+>   
+>   static bool vfio_pci_igd_setup_opregion(VFIOPCIDevice *vdev, Error **errp)
+>   {
+> -    g_autofree struct vfio_region_info *opregion = NULL;
+> +    struct vfio_region_info *opregion = NULL;
+>       int ret;
+>   
+>       /* Hotplugging is not supported for opregion access */
+> @@ -355,8 +355,8 @@ static int vfio_pci_igd_lpc_init(VFIOPCIDevice *vdev,
+>   
+>   static bool vfio_pci_igd_setup_lpc_bridge(VFIOPCIDevice *vdev, Error **errp)
+>   {
+> -    g_autofree struct vfio_region_info *host = NULL;
+> -    g_autofree struct vfio_region_info *lpc = NULL;
+> +    struct vfio_region_info *host = NULL;
+> +    struct vfio_region_info *lpc = NULL;
+>       PCIDevice *lpc_bridge;
+>       int ret;
+>   
+> @@ -532,7 +532,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>            * - OpRegion
+>            * - Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
+>            */
+> -        g_autofree struct vfio_region_info *rom = NULL;
+> +        struct vfio_region_info *rom = NULL;
+>   
+>           legacy_mode_enabled = true;
+>           info_report("IGD legacy mode enabled, "
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index bbf95215cc..1aeb4d91d2 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -883,8 +883,8 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
+>   
+>   static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+>   {
+> -    g_autofree struct vfio_region_info *reg_info = NULL;
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+> +    struct vfio_region_info *reg_info = NULL;
+>       uint64_t size;
+>       off_t off = 0;
+>       ssize_t bytes;
+> @@ -2710,7 +2710,7 @@ static VFIODeviceOps vfio_pci_ops = {
+>   bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+>   {
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+> -    g_autofree struct vfio_region_info *reg_info = NULL;
+> +    struct vfio_region_info *reg_info = NULL;
+>       int ret;
+>   
+>       ret = vfio_device_get_region_info(vbasedev, VFIO_PCI_VGA_REGION_INDEX, &reg_info);
+> @@ -2775,7 +2775,7 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
+>   static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+>   {
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+> -    g_autofree struct vfio_region_info *reg_info = NULL;
+> +    struct vfio_region_info *reg_info = NULL;
+>       struct vfio_irq_info irq_info;
+>       int i, ret = -1;
+>   
+> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+> index 04bf9eb098..ef2630cac3 100644
+> --- a/hw/vfio/region.c
+> +++ b/hw/vfio/region.c
+> @@ -182,7 +182,7 @@ static int vfio_setup_region_sparse_mmaps(VFIORegion *region,
+>   int vfio_region_setup(Object *obj, VFIODevice *vbasedev, VFIORegion *region,
+>                         int index, const char *name)
+>   {
+> -    g_autofree struct vfio_region_info *info = NULL;
+> +    struct vfio_region_info *info = NULL;
+>       int ret;
+>   
+>       ret = vfio_device_get_region_info(vbasedev, index, &info);
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index e89ed02c0e..b4a28c2a54 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -83,6 +83,7 @@ typedef struct VFIODevice {
+>       IOMMUFDBackend *iommufd;
+>       VFIOIOASHwpt *hwpt;
+>       QLIST_ENTRY(VFIODevice) hwpt_next;
+> +    struct vfio_region_info **reginfo;
+>   } VFIODevice;
+>   
+>   struct VFIODeviceOps {
+
 
