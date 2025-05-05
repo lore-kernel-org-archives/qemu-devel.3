@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F799C3ABB0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C02CC3ABB9
 	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:06:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBrlz-0004Ou-Ie; Mon, 05 May 2025 05:06:03 -0400
+	id 1uBrmC-0004rD-Ap; Mon, 05 May 2025 05:06:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uBrku-0003X7-9z
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:04:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uBrl0-0003Zc-OT
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:05:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uBrkp-0005jq-C2
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:04:54 -0400
+ id 1uBrkw-0005lW-Rf
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:05:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746435889;
+ s=mimecast20190719; t=1746435897;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eJwgErAmU4ckPuc9++qP9v1e1akMhw0OVt15JuOFrhQ=;
- b=Fffrgq5gYfkT9+Q81vCF8q76VPEH5VskSVlQIxyx+QIYklg6YhggTjws8Q9eIb8Gg6wgQ5
- CacUO3nZA7vBUrlZCouNfpAqeb+J7EsCjv3kskCFNY4w/nff0cay9p45p27yDAscBsnCG0
- KoXjiLwvdTczaWZcXqC/QcLyJA1yxbE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9uG+eMff4v/DO/91eYXSXdK5N45eASxvptJIXXsF3tI=;
+ b=LaihZVYh0sp27qBBquXJ7hW7yEHcUih8DS4JF2yRX54Tq7Wn+N5K1gCJ250hwIsaNgWCPf
+ xdQRqQ4PKWAbZaZVyTnYNCLxvtwMMnEJlOsURJHw+IeE+VHV1aqc0zMEO88hSbr6ApDQcF
+ wudg9RCApaBu5lnI9xT0oS3lSzHHiyQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-678-pn3snHaZPeqGX5B6JPcq0A-1; Mon, 05 May 2025 05:04:48 -0400
-X-MC-Unique: pn3snHaZPeqGX5B6JPcq0A-1
-X-Mimecast-MFC-AGG-ID: pn3snHaZPeqGX5B6JPcq0A_1746435887
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-39123912ff0so952582f8f.2
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:04:48 -0700 (PDT)
+ us-mta-657-XB73IaDLOyKKfNF8UU3NHg-1; Mon, 05 May 2025 05:04:56 -0400
+X-MC-Unique: XB73IaDLOyKKfNF8UU3NHg-1
+X-Mimecast-MFC-AGG-ID: XB73IaDLOyKKfNF8UU3NHg_1746435895
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43d734da1a3so18263405e9.0
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:04:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746435887; x=1747040687;
+ d=1e100.net; s=20230601; t=1746435894; x=1747040694;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eJwgErAmU4ckPuc9++qP9v1e1akMhw0OVt15JuOFrhQ=;
- b=nE3EBICn1XEnuOinbH8mit1ZSslj10dmfLyW7qBmKCPL4sGHIcFjO1L2K/saDOX7l0
- M9Fi7Y27p+pGUmYroJGOgJkk2brAY240DZK80g1W1MU32oLbKIm+0vWDxa3ZmtxBJ3B+
- CYA0bXupgKPkFJ29bPH3IDdx8+gIc1bJ+AOP5MGh/00C5df26879Cu48kPOH0qsqVzcR
- I3u4DLSDdqYMDAPH/xi6gIL6W0Zj5wJZiO6CxsAjgvHQUmC9GezFGao4NKqaRDM1ZFzQ
- jJ8CO63hESdJrghfbLoCCXOD03YCionP34bAY/HdHCChn9OB0CtsrByd9nJcjaBi3sS5
- x3RA==
-X-Gm-Message-State: AOJu0YxtgJAbQAMc62zOnBPRR9YAc8yWNXNZErA+V/qKP0bPP7okd3sg
- N1Z9768xxk++bWKbaVNdV8tsViCNfNJf0H3IFIV4tu3rEmVfeXGhjCK3+WzQEvMgkKxNInryWpa
- Iax/EPl+s7jkUN59KZ4L0ZLufvzgCGaVOtGwl7DrpPZEOM1lvtvtFNRZnm9fyWd4l3+dzfEvP/g
- uEmBau0hhiS0flZa20TOSJPnPWg4HmMiaiLmkl
-X-Gm-Gg: ASbGncsp5HuIXE2QcsziTYlDYbTbaQdwkxSAOvVBW7GIG/UhP5Lxa9BLyTY9/VsLTvp
- p/BOOME4gusfmPyFt7dEL16WYCZzwqQYI8N7SDV0Wrj1pzNi2L5dZXo8Gc7Qy7debX3lAs1A9lu
- mrWKpgthARgFocqof7bLWUZbzeFDmbYRghz4MZS01jjfs7e3D9Zsup6DFoRtBaWFXducoUfIiVM
- G7jCer1/TnbqJmQoayKsyriaENYdW5yHzD68spXORJPmTAqPvEU2RrS8scaFGXBubfkpw5QM4zy
- 7LyeZXMTTa5Ys18=
-X-Received: by 2002:adf:a1c6:0:b0:3a0:a19f:2f47 with SMTP id
- ffacd0b85a97d-3a0a19f2f70mr2518221f8f.42.1746435886795; 
- Mon, 05 May 2025 02:04:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHVsD4q3UAKkWSSg6doa0lAIb5qdD0GX3AiRrVmSOI8zmOfmTtQFX90jdzC+B8Bswws+5dlzQ==
-X-Received: by 2002:adf:a1c6:0:b0:3a0:a19f:2f47 with SMTP id
- ffacd0b85a97d-3a0a19f2f70mr2518198f8f.42.1746435886368; 
- Mon, 05 May 2025 02:04:46 -0700 (PDT)
+ bh=9uG+eMff4v/DO/91eYXSXdK5N45eASxvptJIXXsF3tI=;
+ b=Fpnusz7ZwH5rrDqSkHg4HFbVgPO//ncjKjtYO1ueCUQOJqkUWw/+CroWI15DsiATWW
+ 6hMP6DqFL3Zgj5OXCjgANK1lKrF7adZvJ37X+Q+yCPWCESwFpX/xzJutItnc6AtmmmXq
+ kz7UP9Zeo7DGWP03DqKkFB4Dpc1XfN24jvL4vQVe9lD5Hkcdvt+/647q7Q30gyKNHAiq
+ V02PFzjoLVV/ewwbbK/0olcvdguFDq651PhMkBCO+y18e+vo3/pmwPEEOKiM73zm2dKY
+ y/3QhthP4lPxB3AYFnFoaHqdgpwamBZc5gD5Lo1bFVaIhMXRg2j9Ri6aKbBS1fo6woeQ
+ 13IA==
+X-Gm-Message-State: AOJu0YzBn7aNMc6m4Hp85mt6N5xh0IC4fmDrqyKrDGfkPQoptbAgjJql
+ +b+PKH/DAy6SiVTDgoO/om3L2kUsYrC36zHgSSa6YuKkzqQrQNxgJq7z0ByJaYviiTYMbn9cqxe
+ ZZcv6+w9j5gkFsh9xr81RknhjLkz2WEtB0WpZw1S66w1ZyFLfs1GVOMW1mOpPwPjvh47G/kobAc
+ YxR7aSKSGmCy7Z2dQSsqTVvw3MWcT+DQrq9mCG
+X-Gm-Gg: ASbGncsre1NhDIHo9iNXd3juamyOAC6ImbC/5n0y35sTM8Glyw9s+vUPy3LITvbNL4i
+ luLZqPPBrq2+dR60AloSO1X8HLIPsrtEDCyvfZsZMjtJXuxA15KUhiDwrd+CtNdePQa7QRFiq0J
+ BfCtgAXrht4KVjyVjFbt9Nj6/hBNepIfPI8N6DLasSvF3g5d8kSrjOKiTsPb7EUTfuncFwmnzXx
+ iIaUGRxI/1gffb32J80SVW+Z+HAX6EfClc7DTw2ValYvVxmTwbZkpPTL1q3j70sAsWQVUtVT2UB
+ Srtf9o+otNfvr20=
+X-Received: by 2002:a05:600c:4e13:b0:440:54ef:dfdc with SMTP id
+ 5b1f17b1804b1-441c48bdf70mr52568775e9.8.1746435894383; 
+ Mon, 05 May 2025 02:04:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHmmV4LvsQ2cKHtXkGBI0WXsvIvJNS1zQFrMpCWRXBfVKswm8fM86s/Mj7lnZfoCC8EqHzlBw==
+X-Received: by 2002:a05:600c:4e13:b0:440:54ef:dfdc with SMTP id
+ 5b1f17b1804b1-441c48bdf70mr52568405e9.8.1746435893850; 
+ Mon, 05 May 2025 02:04:53 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099b16f9dsm9909520f8f.93.2025.05.05.02.04.44
+ 5b1f17b1804b1-441b8a315c8sm125948095e9.35.2025.05.05.02.04.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 May 2025 02:04:45 -0700 (PDT)
+ Mon, 05 May 2025 02:04:52 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: manos.pitsidianakis@linaro.org,
 	qemu-rust@nongnu.org
-Subject: [PATCH 03/11] rust: use std::ffi instead of std::os::raw
-Date: Mon,  5 May 2025 11:04:28 +0200
-Message-ID: <20250505090438.24992-4-pbonzini@redhat.com>
+Subject: [PATCH 06/11] rust: use MaybeUninit::zeroed() in const context
+Date: Mon,  5 May 2025 11:04:31 +0200
+Message-ID: <20250505090438.24992-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250505090438.24992-1-pbonzini@redhat.com>
 References: <20250505090438.24992-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -109,202 +109,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is allowed since Rust 1.64.0.
-
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/rust.rst                    | 2 --
- rust/hw/char/pl011/src/device_class.rs | 2 +-
- rust/hw/timer/hpet/src/hpet.rs         | 3 +--
- rust/qemu-api/src/chardev.rs           | 3 +--
- rust/qemu-api/src/irq.rs               | 6 +++++-
- rust/qemu-api/src/lib.rs               | 2 +-
- rust/qemu-api/src/memory.rs            | 3 +--
- rust/qemu-api/src/qdev.rs              | 3 +--
- rust/qemu-api/src/qom.rs               | 3 +--
- rust/qemu-api/src/timer.rs             | 2 +-
- rust/qemu-api/src/vmstate.rs           | 2 +-
- rust/qemu-api/tests/vmstate_tests.rs   | 7 ++++++-
- 12 files changed, 20 insertions(+), 18 deletions(-)
+ docs/devel/rust.rst              |   4 --
+ rust/hw/timer/hpet/src/fw_cfg.rs |   6 +-
+ rust/qemu-api/src/zeroable.rs    | 104 +++++--------------------------
+ 3 files changed, 18 insertions(+), 96 deletions(-)
 
 diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
-index 3cc2841d4d1..c7dfba98de1 100644
+index 8167ff49aa9..13a002cfe69 100644
 --- a/docs/devel/rust.rst
 +++ b/docs/devel/rust.rst
-@@ -74,8 +74,6 @@ Supported tools
- QEMU supports rustc version 1.63.0 and newer.  Notably, the following features
- are missing:
+@@ -83,10 +83,6 @@ are missing:
+ * "Return position ``impl Trait`` in Traits" (1.75.0, blocker for including
+   the pinned-init create).
  
--* ``core::ffi`` (1.64.0).  Use ``std::os::raw`` and ``std::ffi`` instead.
+-* ``MaybeUninit::zeroed()`` as a ``const`` function (1.75.0).  QEMU's
+-  ``Zeroable`` trait can be implemented without ``MaybeUninit::zeroed()``,
+-  so this would be just a cleanup.
 -
- * ``cast_mut()``/``cast_const()`` (1.65.0).  Use ``as`` instead.
+ * ``c"" literals`` (stable in 1.77.0).  QEMU provides a ``c_str!()`` macro
+   to define ``CStr`` constants easily
  
- * "let ... else" (1.65.0).  Use ``if let`` instead.  This is currently patched
-diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
-index b4d4a7eb432..cd2dc33c207 100644
---- a/rust/hw/char/pl011/src/device_class.rs
-+++ b/rust/hw/char/pl011/src/device_class.rs
-@@ -3,7 +3,7 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/rust/hw/timer/hpet/src/fw_cfg.rs b/rust/hw/timer/hpet/src/fw_cfg.rs
+index bef03727ea3..aa08d283519 100644
+--- a/rust/hw/timer/hpet/src/fw_cfg.rs
++++ b/rust/hw/timer/hpet/src/fw_cfg.rs
+@@ -4,7 +4,7 @@
  
- use std::{
--    os::raw::{c_int, c_void},
-+    ffi::{c_int, c_void},
-     ptr::NonNull,
- };
+ use std::ptr::addr_of_mut;
  
-diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
-index 12de2ba59a1..d4364f2f2f7 100644
---- a/rust/hw/timer/hpet/src/hpet.rs
-+++ b/rust/hw/timer/hpet/src/hpet.rs
-@@ -3,8 +3,7 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
+-use qemu_api::{cell::bql_locked, impl_zeroable, zeroable::Zeroable};
++use qemu_api::{cell::bql_locked, zeroable::Zeroable};
  
- use std::{
--    ffi::CStr,
--    os::raw::{c_int, c_void},
-+    ffi::{c_int, c_void, CStr},
-     pin::Pin,
-     ptr::{addr_of_mut, null_mut, NonNull},
-     slice::from_ref,
-diff --git a/rust/qemu-api/src/chardev.rs b/rust/qemu-api/src/chardev.rs
-index 11e6c45afaf..146a4852da3 100644
---- a/rust/qemu-api/src/chardev.rs
-+++ b/rust/qemu-api/src/chardev.rs
-@@ -10,11 +10,10 @@
- //! called.
+ /// Each `HPETState` represents a Event Timer Block. The v1 spec supports
+ /// up to 8 blocks. QEMU only uses 1 block (in PC machine).
+@@ -18,7 +18,7 @@ pub struct HPETFwEntry {
+     pub min_tick: u16,
+     pub page_prot: u8,
+ }
+-impl_zeroable!(HPETFwEntry);
++unsafe impl Zeroable for HPETFwEntry {}
  
- use std::{
--    ffi::CStr,
-+    ffi::{c_int, c_void, CStr},
-     fmt::{self, Debug},
-     io::{self, ErrorKind, Write},
-     marker::PhantomPinned,
--    os::raw::{c_int, c_void},
-     ptr::addr_of_mut,
-     slice,
- };
-diff --git a/rust/qemu-api/src/irq.rs b/rust/qemu-api/src/irq.rs
-index 1222d4fde30..1526e6f63a1 100644
---- a/rust/qemu-api/src/irq.rs
-+++ b/rust/qemu-api/src/irq.rs
-@@ -4,7 +4,11 @@
+ #[repr(C, packed)]
+ #[derive(Copy, Clone, Default)]
+@@ -26,7 +26,7 @@ pub struct HPETFwConfig {
+     pub count: u8,
+     pub hpet: [HPETFwEntry; HPET_MAX_NUM_EVENT_TIMER_BLOCK],
+ }
+-impl_zeroable!(HPETFwConfig);
++unsafe impl Zeroable for HPETFwConfig {}
  
- //! Bindings for interrupt sources
+ #[allow(non_upper_case_globals)]
+ #[no_mangle]
+diff --git a/rust/qemu-api/src/zeroable.rs b/rust/qemu-api/src/zeroable.rs
+index a3415a2ebcc..e0720345495 100644
+--- a/rust/qemu-api/src/zeroable.rs
++++ b/rust/qemu-api/src/zeroable.rs
+@@ -4,89 +4,15 @@
  
--use std::{ffi::CStr, marker::PhantomData, os::raw::c_int, ptr};
-+use std::{
-+    ffi::{c_int, CStr},
-+    marker::PhantomData,
-+    ptr,
-+};
+ /// Encapsulates the requirement that
+ /// `MaybeUninit::<Self>::zeroed().assume_init()` does not cause undefined
+-/// behavior.  This trait in principle could be implemented as just:
+-///
+-/// ```
+-/// pub unsafe trait Zeroable: Default {
+-///     const ZERO: Self = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
+-/// }
+-/// ```
+-///
+-/// The need for a manual implementation is only because `zeroed()` cannot
+-/// be used as a `const fn` prior to Rust 1.75.0. Once we can assume a new
+-/// enough version of the compiler, we could provide a `#[derive(Zeroable)]`
+-/// macro to check at compile-time that all struct fields are Zeroable, and
+-/// use the above blanket implementation of the `ZERO` constant.
++/// behavior.
+ ///
+ /// # Safety
+ ///
+-/// Because the implementation of `ZERO` is manual, it does not make
+-/// any assumption on the safety of `zeroed()`.  However, other users of the
+-/// trait could use it that way.  Do not add this trait to a type unless
+-/// all-zeroes is a valid value for the type.  In particular, remember that
+-/// raw pointers can be zero, but references and `NonNull<T>` cannot
++/// Do not add this trait to a type unless all-zeroes is a valid value for the
++/// type.  In particular, raw pointers can be zero, but references and
++/// `NonNull<T>` cannot.
+ pub unsafe trait Zeroable: Default {
+-    const ZERO: Self;
+-}
+-
+-/// A macro that acts similarly to [`core::mem::zeroed()`], only is const
+-///
+-/// ## Safety
+-///
+-/// Similar to `core::mem::zeroed()`, except this zeroes padding bits. Zeroed
+-/// padding usually isn't relevant to safety, but might be if a C union is used.
+-///
+-/// Just like for `core::mem::zeroed()`, an all zero byte pattern might not
+-/// be a valid value for a type, as is the case for references `&T` and `&mut
+-/// T`. Reference types trigger a (denied by default) lint and cause immediate
+-/// undefined behavior if the lint is ignored
+-///
+-/// ```rust compile_fail
+-/// use const_zero::const_zero;
+-/// // error: any use of this value will cause an error
+-/// // note: `#[deny(const_err)]` on by default
+-/// const STR: &str = unsafe{const_zero!(&'static str)};
+-/// ```
+-///
+-/// `const_zero` does not work on unsized types:
+-///
+-/// ```rust compile_fail
+-/// use const_zero::const_zero;
+-/// // error[E0277]: the size for values of type `[u8]` cannot be known at compilation time
+-/// const BYTES: [u8] = unsafe{const_zero!([u8])};
+-/// ```
+-/// ## Differences with `core::mem::zeroed`
+-///
+-/// `const_zero` zeroes padding bits, while `core::mem::zeroed` doesn't
+-#[macro_export]
+-macro_rules! const_zero {
+-    // This macro to produce a type-generic zero constant is taken from the
+-    // const_zero crate (v0.1.1):
+-    //
+-    //     https://docs.rs/const-zero/latest/src/const_zero/lib.rs.html
+-    //
+-    // and used under MIT license
+-    ($type_:ty) => {{
+-        const TYPE_SIZE: ::core::primitive::usize = ::core::mem::size_of::<$type_>();
+-        union TypeAsBytes {
+-            bytes: [::core::primitive::u8; TYPE_SIZE],
+-            inner: ::core::mem::ManuallyDrop<$type_>,
+-        }
+-        const ZERO_BYTES: TypeAsBytes = TypeAsBytes {
+-            bytes: [0; TYPE_SIZE],
+-        };
+-        ::core::mem::ManuallyDrop::<$type_>::into_inner(ZERO_BYTES.inner)
+-    }};
+-}
+-
+-/// A wrapper to implement the `Zeroable` trait through the `const_zero` macro.
+-#[macro_export]
+-macro_rules! impl_zeroable {
+-    ($type:ty) => {
+-        unsafe impl $crate::zeroable::Zeroable for $type {
+-            const ZERO: Self = unsafe { $crate::const_zero!($type) };
+-        }
+-    };
++    const ZERO: Self = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
+ }
  
- use crate::{
-     bindings::{self, qemu_set_irq},
-diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
-index 05f38b51d30..c3641e893b7 100644
---- a/rust/qemu-api/src/lib.rs
-+++ b/rust/qemu-api/src/lib.rs
-@@ -33,7 +33,7 @@
+ // bindgen does not derive Default here
+@@ -97,13 +23,13 @@ fn default() -> Self {
+     }
+ }
  
- use std::{
-     alloc::{GlobalAlloc, Layout},
--    os::raw::c_void,
-+    ffi::c_void,
- };
- 
- #[cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)]
-diff --git a/rust/qemu-api/src/memory.rs b/rust/qemu-api/src/memory.rs
-index fdb1ea11fcf..9ef2694bd62 100644
---- a/rust/qemu-api/src/memory.rs
-+++ b/rust/qemu-api/src/memory.rs
-@@ -5,9 +5,8 @@
- //! Bindings for `MemoryRegion`, `MemoryRegionOps` and `MemTxAttrs`
- 
- use std::{
--    ffi::{CStr, CString},
-+    ffi::{c_uint, c_void, CStr, CString},
-     marker::PhantomData,
--    os::raw::{c_uint, c_void},
- };
- 
- pub use bindings::{hwaddr, MemTxAttrs};
-diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
-index 18b4a9ba687..17c7fecabeb 100644
---- a/rust/qemu-api/src/qdev.rs
-+++ b/rust/qemu-api/src/qdev.rs
-@@ -5,8 +5,7 @@
- //! Bindings to create devices and access device functionality from Rust.
- 
- use std::{
--    ffi::{CStr, CString},
--    os::raw::{c_int, c_void},
-+    ffi::{c_int, c_void, CStr, CString},
-     ptr::NonNull,
- };
- 
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index f1b4022157b..6929e4d33ae 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -93,11 +93,10 @@
- //! without incurring into violations of orphan rules for traits.
- 
- use std::{
--    ffi::CStr,
-+    ffi::{c_void, CStr},
-     fmt,
-     mem::ManuallyDrop,
-     ops::{Deref, DerefMut},
--    os::raw::c_void,
-     ptr::NonNull,
- };
- 
-diff --git a/rust/qemu-api/src/timer.rs b/rust/qemu-api/src/timer.rs
-index e769f8bc910..d697fd742bc 100644
---- a/rust/qemu-api/src/timer.rs
-+++ b/rust/qemu-api/src/timer.rs
-@@ -3,7 +3,7 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
- use std::{
--    os::raw::{c_int, c_void},
-+    ffi::{c_int, c_void},
-     pin::Pin,
- };
- 
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 9ae97c389c1..c0f29f74188 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -25,7 +25,7 @@
- //!   functionality that is missing from `vmstate_of!`.
- 
- use core::{marker::PhantomData, mem, ptr::NonNull};
--use std::os::raw::{c_int, c_void};
-+use std::ffi::{c_int, c_void};
- 
- pub use crate::bindings::{VMStateDescription, VMStateField};
- use crate::{
-diff --git a/rust/qemu-api/tests/vmstate_tests.rs b/rust/qemu-api/tests/vmstate_tests.rs
-index f7a93117e1a..9a56ffd2385 100644
---- a/rust/qemu-api/tests/vmstate_tests.rs
-+++ b/rust/qemu-api/tests/vmstate_tests.rs
-@@ -2,7 +2,12 @@
- // Author(s): Zhao Liu <zhai1.liu@intel.com>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
--use std::{ffi::CStr, mem::size_of, os::raw::c_void, ptr::NonNull, slice};
-+use std::{
-+    ffi::{c_void, CStr},
-+    mem::size_of,
-+    ptr::NonNull,
-+    slice,
-+};
- 
- use qemu_api::{
-     bindings::{
+-impl_zeroable!(crate::bindings::Property__bindgen_ty_1);
+-impl_zeroable!(crate::bindings::Property);
+-impl_zeroable!(crate::bindings::VMStateFlags);
+-impl_zeroable!(crate::bindings::VMStateField);
+-impl_zeroable!(crate::bindings::VMStateDescription);
+-impl_zeroable!(crate::bindings::MemoryRegionOps__bindgen_ty_1);
+-impl_zeroable!(crate::bindings::MemoryRegionOps__bindgen_ty_2);
+-impl_zeroable!(crate::bindings::MemoryRegionOps);
+-impl_zeroable!(crate::bindings::MemTxAttrs);
+-impl_zeroable!(crate::bindings::CharBackend);
++unsafe impl Zeroable for crate::bindings::Property__bindgen_ty_1 {}
++unsafe impl Zeroable for crate::bindings::Property {}
++unsafe impl Zeroable for crate::bindings::VMStateFlags {}
++unsafe impl Zeroable for crate::bindings::VMStateField {}
++unsafe impl Zeroable for crate::bindings::VMStateDescription {}
++unsafe impl Zeroable for crate::bindings::MemoryRegionOps__bindgen_ty_1 {}
++unsafe impl Zeroable for crate::bindings::MemoryRegionOps__bindgen_ty_2 {}
++unsafe impl Zeroable for crate::bindings::MemoryRegionOps {}
++unsafe impl Zeroable for crate::bindings::MemTxAttrs {}
++unsafe impl Zeroable for crate::bindings::CharBackend {}
 -- 
 2.49.0
 
