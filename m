@@ -4,72 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 376D0C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 16:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C76FC3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 16:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uByNM-0004e8-Cq; Mon, 05 May 2025 12:09:04 -0400
+	id 1uBySm-0007M8-LR; Mon, 05 May 2025 12:14:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1uByMt-0004Vt-W1; Mon, 05 May 2025 12:08:38 -0400
-Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1uBySW-0007Iz-DG
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 12:14:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1uByMp-0005Sp-3z; Mon, 05 May 2025 12:08:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1746461282; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=Sa1AHpNozxVqWgAjltW6qxp7lBlPeZRnKiuBAY8gAlS03u/etuH+Ri85yMxbJH6EsbfXHVrLHF3Fds6ACQC7dQc4b2BlhxZ6SxLN+I6+EoSWvAFwqeP5QXhkIiRtG31+GXyoDxnNgA+d4mUHdwcVYtQ38kHz7ECZIGadQeZLizc=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1746461282;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=MRu4koP0AbX4A/Br7S0YZFP5LEHT/gY/8jVoiSA73y4=; 
- b=fRwVyQX95iUeJIin9vW3kiFFvL32CLJ40r05wgXV2NqBQQ1fN+85lHBTKggQPnuTa6OwthQHl7/LfYc+RzrdAgBufSTsowh2w0myoHbWgppPOV227xZL0jvjVHxX64LHYkpFndQ0qyEXXEhONeHkAdSN8Laf1dIlh3L8m/GURqg=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1746461282; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=MRu4koP0AbX4A/Br7S0YZFP5LEHT/gY/8jVoiSA73y4=;
- b=Nif/Sp1ambmfvvmKirH5g1CoshiHECwOFpDvsQ7XxHVc3OR/9rDrGuRp8CzU3aQA
- d83ssG8OFVwUWitPeAcd9QHGCDN3vDbJOmwwraPjnKectIkXFjOJf4PWyVdyUru0rol
- 21om7TSPt8S1uL+sPtPBJKLNeVvcHG+1YM/u+iEU=
-Received: by mx.zohomail.com with SMTPS id 1746461280721249.7034648286616;
- Mon, 5 May 2025 09:08:00 -0700 (PDT)
-Message-ID: <2e72ddae-2198-41ca-a31f-aab583ea4be7@collabora.com>
-Date: Mon, 5 May 2025 19:07:56 +0300
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1uByST-0005x8-QY
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 12:14:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746461656;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rRj8vIahj24I+TAmXNQO246qvWAwwzLtdwkAciwCGi8=;
+ b=hwzxsIbRzfGI/KXSW0gY1rQNJ+W7RHOQA+Se6ij7SV4CQT8ewD6IKzqd4fo2tf2GkjyT5s
+ x2cGC+oMORkepU5phkBdvgi15cCglDI5QeosUKFQ9/R2K3Tx/X0sqjq5vxSOO1QB8mizO+
+ f51HpL0MGL4bcq7ZMWL5/VenkHbLs2o=
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-554-uRA85iUHMMSjYv60GXyF-g-1; Mon, 05 May 2025 12:14:15 -0400
+X-MC-Unique: uRA85iUHMMSjYv60GXyF-g-1
+X-Mimecast-MFC-AGG-ID: uRA85iUHMMSjYv60GXyF-g_1746461655
+Received: by mail-io1-f70.google.com with SMTP id
+ ca18e2360f4ac-85b5c68c390so32758239f.0
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 09:14:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746461655; x=1747066455;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rRj8vIahj24I+TAmXNQO246qvWAwwzLtdwkAciwCGi8=;
+ b=ttCyLRzA3JsMZdgKJ0gmMK+pjLfNOsUAsSPQlERbe54bTjeauRMduBLgmrdhogiGxJ
+ 3ot/PHtRMd5/hQrd+I3BbP7denk21d9eAm9gtzSXui4q3cl/8jPfumyYIqqpRnVKsnzZ
+ gKAobJJPC7geHjKtF6XlciXRTmVAJvkZBgTMmnpxi3o7GSfkB+rS2EClebZ8XuQLA+ng
+ Y4Pd1upjTrtzoinFrEgxAxANToXaGQqi5M4bBNOnekkCfrFSW5FBG+Ep1J1JzM39uVoN
+ GCmVmKY78j2E9hn13KnBghdiEPVJGvnZly50ya5V8lG7G/v1Ptg2Hc/R0Mei7mCZu7md
+ CMuQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXcmcjClpTIJEXJtbNhpuwEx+Mc31tVMqxt47NqkI6wb7u9CpRecCv95k3mV3ESEfVgnsXue0g+sHce@nongnu.org
+X-Gm-Message-State: AOJu0Yx3wcRIR/djNWox6hhV2HSGmN9gz8kjhvzNMo5c9hWBrWGKujra
+ PYXHgY0CyZIITxIqnr35Bpkw2vpzIPMnPcYKbjdmxt22c05Ubjpz5aQOotpxp00haGGKgJrkHnG
+ GIn0Da7vLeWDVhg1qTPQqOXUnqXFc/OyxtwzQOdYuohxQFDD7wUJR
+X-Gm-Gg: ASbGncvHklddm8x4E73rTPlCsKiWiULfjden/h4WXzZU6/CmUJrkuBrWijnWjt3v/Tf
+ 41PnfgRCUEZMw3eiZ2Pi8iFdXTX2xjbdDVNvq+NIjh/7uHCeLVAGZPHwWcba5zWac7w94na50/q
+ 6ippUqitE7owlZfF2XfllNMiH2J1TMc0ixtf+pnuo+T8IL0sV2fuUqbSHg5UCGj/LbDpQZ5Y7sf
+ UgzQV31ZTUexWXWB8F/++ECtETxjiwCADYiiEHs9sZBHPV+xElFAY8+hkFfcH3v19AEILbuj9pq
+ 5u9TpHtPRVN55CI=
+X-Received: by 2002:a05:6e02:2292:b0:3d4:6d6f:6e1f with SMTP id
+ e9e14a558f8ab-3d97c25e579mr34387625ab.6.1746461654848; 
+ Mon, 05 May 2025 09:14:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGAHhVqRDKyF3cbnLeTIleE2Cj6mTAlVd/sPxSDFJbJNuHXgRPt4T+ZZ7lR9/4y/LTD+mwbpQ==
+X-Received: by 2002:a05:6e02:2292:b0:3d4:6d6f:6e1f with SMTP id
+ e9e14a558f8ab-3d97c25e579mr34387505ab.6.1746461654486; 
+ Mon, 05 May 2025 09:14:14 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4f88aa58ec3sm1790355173.94.2025.05.05.09.14.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 May 2025 09:14:13 -0700 (PDT)
+Date: Mon, 5 May 2025 10:14:11 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Tomita Moeko <tomitamoeko@gmail.com>
+Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>,
+ qemu-devel@nongnu.org, Corvin =?UTF-8?B?S8O2aG5l?= <c.koehne@beckhoff.com>
+Subject: Re: [PATCH 0/9] vfio/igd: Detect IGD by OpRegion and enable
+ OpRegion automatically
+Message-ID: <20250505101411.00d1a202.alex.williamson@redhat.com>
+In-Reply-To: <20250428161004.35613-1-tomitamoeko@gmail.com>
+References: <20250428161004.35613-1-tomitamoeko@gmail.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/9] MAINTAINERS: add myself to virtio-gpu for Odd Fixes
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <20250428125918.449346-1-alex.bennee@linaro.org>
- <20250428125918.449346-7-alex.bennee@linaro.org>
- <9115fa7c-ed94-449d-816b-a13125275dac@collabora.com>
- <cdc4d710-2b7a-44fc-b58c-78a81ca83b36@daynix.com>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <cdc4d710-2b7a-44fc-b58c-78a81ca83b36@daynix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.184.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=alex.williamson@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,55 +112,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/4/25 10:20, Akihiko Odaki wrote:
-> On 2025/04/30 3:56, Dmitry Osipenko wrote:
->> On 4/28/25 15:59, Alex BennÃ©e wrote:
->>> Seeing as I've taken a few patches to here now I might as well put
->>> myself forward to maintain virtio-gpu. I've marked it as Odd Fixes as
->>> it's not my core focus. If someone with more GPU experience comes
->>> forward we can always update again.
->>>
->>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>> ---
->>>   MAINTAINERS | 3 ++-
->>>   1 file changed, 2 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/MAINTAINERS b/MAINTAINERS
->>> index 661a47db5a..f67c8edcf6 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -2636,7 +2636,8 @@ F: hw/display/ramfb*.c
->>>   F: include/hw/display/ramfb.h
->>>     virtio-gpu
->>> -S: Orphan
->>> +M: Alex Bennée <alex.bennee@linaro.org>
->>> +M: Odd Fixes
->>>   F: hw/display/virtio-gpu*
->>>   F: hw/display/virtio-vga.*
->>>   F: include/hw/virtio/virtio-gpu.h
->>
->> Thanks a lot for stepping up!
->>
->> This reminded me that I wanted to propose myself as reviewer for the
->> virtio-gpu patches. Will do it soon.
-> 
-> Thank both of you for stepping up.
-> 
->>
->> Akihiko Odaki is also good at reviewing virtio-gpu patches. Wondering if
->> Akihiko would want to be added as reviewer or co-maintainer of virtio-
->> gpu?
->>
-> 
-> Yes, please add me as a reviewer.
-> 
-> I guess it would be better if Alex add you and me with the next version
-> of this patch or add follow-up patches to this to avoid change conflicts.
+On Tue, 29 Apr 2025 00:09:55 +0800
+Tomita Moeko <tomitamoeko@gmail.com> wrote:
 
-+1 Feel free to add us as reviewers in v2 of this patch. Otherwise I'll
-send the separate maintainers-update patch along with nctx v12 patches.
+> As proposed in a previous discussion [1], detect IGD devices based on
+> whether it has VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION exposed by kernel
+> and enables OpRegion access by default. This enables out-of-the-box
+> display output support for IGD passthrough without having to manually
+> set x-igd-opregion=on, which probably saves effort for libvirt users.
+> 
+> This patchset also limits legacy mode to Gen6-9 devices, as Intel no
+> longer provides CSM support and VBIOS on newer IGD, and Seabios does not
+> support setting up the 64 bit BDSM register on Gen 11+ devices. Exposing
+> VGA ranges to guests by default on platforms without VGA mode support is
+> undesirable.
+> 
+> Additionally, as we enables OpRegion on IGD devices by default, and
+> Intel removes the BDSM register from Meteor Lake [2]. There seems to be
+> no extra register quirks rather than OpRegion required on newer devices.
+> To support them (and probably future devices), the generation limit is
+> removed, with BDSM quirk only applied to known Gen 6-12 devices. 
+> 
+> Note: I have not been able to test this on Meteor Lake or newer
+> platforms due to lack of hardware.
+> 
+> 
+> [1] https://lore.kernel.org/qemu-devel/20250325172239.27926-1-tomitamoeko@gmail.com
+> [2] https://edc.intel.com/content/www/us/en/design/publications/14th-generation-core-processors-cfg-and-mem-registers/d2-f0-processor-graphics-registers/
+> 
+> Changelog:
+> v2:
+> * Removed "Allow hotplugging with OpRegion enabled", hotplugging is
+>   always forbidden.
+> * Test device is not hotplugged and get opregion in a single function.
+> * Update documentation along with code changes.
+> * Minor code style fixes.
+> Link: https://lore.kernel.org/qemu-devel/20250421163112.21316-1-tomitamoeko@gmail.coms
+> 
+> Tomita Moeko (9):
+>   vfio/igd: Restrict legacy mode to Gen6-9 devices
+>   vfio/igd: Always emulate ASLS (OpRegion) register
+>   vfio/igd: Detect IGD device by OpRegion
+>   vfio/igd: Check vendor and device ID on GVT-g mdev
+>   vfio/igd: Check OpRegion support on GVT-g mdev
+>   vfio/igd: Enable OpRegion by default
+>   vfio/igd: Allow overriding GMS with 0xf0 to 0xfe on Gen9+
+>   vfio/igd: Only emulate GGC register when x-igd-gms is set
+>   vfio/igd: Remove generation limitation for IGD passthrough
+> 
+>  docs/igd-assign.txt |  11 ++-
+>  hw/vfio/igd.c       | 218 ++++++++++++++++++++++++++------------------
+>  hw/vfio/pci.c       |   2 +-
+>  3 files changed, 137 insertions(+), 94 deletions(-)
+> 
 
--- 
-Best regards,
-Dmitry
+Looks ok to me, my Kaby Lake GVT-g and GVT-d configs still work.
+
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Tested-by: Alex Williamson <alex.williamson@redhat.com>
+
 
