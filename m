@@ -4,86 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30D8CC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 13:00:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91841C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 13:08:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBvQ4-0002K0-Hg; Mon, 05 May 2025 08:59:40 -0400
+	id 1uBvXH-0005AY-9p; Mon, 05 May 2025 09:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uBvQ3-0002Jm-1R
- for qemu-devel@nongnu.org; Mon, 05 May 2025 08:59:39 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uBvXF-0005AC-1s
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 09:07:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uBvQ1-0008RN-5O
- for qemu-devel@nongnu.org; Mon, 05 May 2025 08:59:38 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uBvXD-00023A-0a
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 09:07:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746449976;
+ s=mimecast20190719; t=1746450421;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eP9Sehb2XuJvfRKNgADVlnF7gQcyvw5g2uwOmev3WDY=;
- b=c9faVUtT410IFuLPwdh9zdo52nAZBkeYszfAyCYVLZdq3Lgby/z8yWqT7lf/sOGLWrc2/l
- mgdV+HQLA4/y11G6Nl8d3IqFFI/PJdBaAdSjuH/NGrZ2jNMy/gFqZbsuvTp6PHquVTrl7x
- Lajk17AFCd++UY9tCBojOSrBkqp9bfc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-xHOsHivbPoieA1lCUV4FVw-1; Mon, 05 May 2025 08:59:34 -0400
-X-MC-Unique: xHOsHivbPoieA1lCUV4FVw-1
-X-Mimecast-MFC-AGG-ID: xHOsHivbPoieA1lCUV4FVw_1746449973
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43d3b211d0eso21389395e9.1
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 05:59:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746449973; x=1747054773;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=eP9Sehb2XuJvfRKNgADVlnF7gQcyvw5g2uwOmev3WDY=;
- b=R9OdMf5k8SN9NMQNAXbPGfXpDEdMzk7o7g1Jmui0AByo/BvxYmyTBe3ihA0+5u/cUp
- NzOlVV4cMdbOkYt0+BCXFdnJgcQWSr+4yBfgXouspiCiWzPK71SCkNbeZUJ7XQ3unV8+
- ls+JC6JmIvpxbDxTUoWh0tx1OfUTdsSfAPgS2rF/ro7URUbw63zXh7P8hPwCAmio1DMe
- OQ4sSw376pn1WTuijQ0fJX243vHZ/cywqxN2lfZfnPDvVSoWTbSojMpoRsN83c18h9qW
- x1YuJr3IRyJ6LlUHN82gi6/ndk280w5qHkCYpvK3dTFJpnnD1liIrnxY3xcAr8aMzS6l
- JQfA==
-X-Gm-Message-State: AOJu0Yzhq+I3eIpwMKWQbTSXryfCBhz/CuTH2p3tn3J8ItnphNXDSQxS
- FphtZxh2oC/zzDEGX+zm3A4yMDn0yWglNUKaLR1k98OkJ5W+l3Gj2BYmdOEZMRkk5fkWLv1bRoM
- 3TDoIFHOPM+0i4nQnQsb/ddyPn3s1vegPTi5+ECV1h89XO6XujPrANN26tC7GwL6lHnZIeAVo76
- SOn3Mwj5mVPLSOR2oPybThCmLi0Os=
-X-Gm-Gg: ASbGncv+kRCvqgfo/onMpNNYru0qKvoO0zLopHA05gV25LC3frzP5Zix9XHVrnD2Sln
- NmUiRJhJJ7et/e8hFZzpSDhpcx5sl5tgbKZzBmoHsE6arm2N88GafuANiN/UsI6V6TW6d
-X-Received: by 2002:a05:600c:a06:b0:43b:c7f0:6173 with SMTP id
- 5b1f17b1804b1-441bb85274fmr94384685e9.4.1746449973610; 
- Mon, 05 May 2025 05:59:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE9JH4uGoiy0WjIhu/G3UtUlrIX5BbdAu/jRyaCGd4Ga902WDey9nz68ci13hDKbogZBQVhAxE3qSrR2+m/bJ0=
-X-Received: by 2002:a05:600c:a06:b0:43b:c7f0:6173 with SMTP id
- 5b1f17b1804b1-441bb85274fmr94384545e9.4.1746449973289; Mon, 05 May 2025
- 05:59:33 -0700 (PDT)
+ bh=F3z1fAYDGayz0/0nozHwUc8pL0fC3X0C2tDZuUGybuc=;
+ b=dT8NIXaeULO+HrCwdBSxuFcvhdtZjbG6XAxAlryQE0NBRrUC3Qg5fx/KyLfLYjyC5zp/Ap
+ CDelouNeaj1BmQ8v+o9zdlCeMnDZ45Y4MXsfURjM+2TLFRTgQfykdphwPFJZ83EGH9GQjj
+ C9egmspBR8H67KBZu2HfFGeS9Tmbn5w=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-487-pdKI2fZLMLWkLxCQTFcZmw-1; Mon,
+ 05 May 2025 09:05:34 -0400
+X-MC-Unique: pdKI2fZLMLWkLxCQTFcZmw-1
+X-Mimecast-MFC-AGG-ID: pdKI2fZLMLWkLxCQTFcZmw_1746450332
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6C1A31955DCD; Mon,  5 May 2025 13:05:32 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.8])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 232171800360; Mon,  5 May 2025 13:05:27 +0000 (UTC)
+Date: Mon, 5 May 2025 15:05:25 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ Bernhard Beschow <shentey@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 16/22] usb/msd: Split async packet tracking into data
+ and csw
+Message-ID: <aBi3lUtOUgn6pzGs@redhat.com>
+References: <20250502033047.102465-1-npiggin@gmail.com>
+ <20250502033047.102465-17-npiggin@gmail.com>
 MIME-Version: 1.0
-References: <20250502214841.242584-1-pbonzini@redhat.com>
- <20250502214841.242584-3-pbonzini@redhat.com>
- <5d461945-155b-40e8-bab4-502e57d94b03@linaro.org>
- <674de496-b0fb-486b-b74e-f4f856e6d9bc@redhat.com>
- <120a2e48-ded8-400c-bfd5-83b47c8c17fd@linaro.org>
-In-Reply-To: <120a2e48-ded8-400c-bfd5-83b47c8c17fd@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 5 May 2025 14:59:21 +0200
-X-Gm-Features: ATxdqUE3K4ncwEM0tF8n5iiSVcwYAlZJI1MeuDoTwVPENqzZv9vYEqta6ZirGyo
-Message-ID: <CABgObfaNoytDo5RZwoP3r14DHuVvjmscyH72QfvaWjfOn5E4Xw@mail.gmail.com>
-Subject: Re: [PATCH 2/4] target/i386/emulate: stop overloading
- decode->op[N].ptr
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, wei.liu@kernel.org, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250502033047.102465-17-npiggin@gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -108,27 +89,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 5, 2025 at 12:54=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
-> > I don't think target_long/target_ulong is a big blocker towards single-
-> > binary anyway.  The trick is to confine it to target/, making it
-> > essentially a #define.  That is, let target/* include one of two new
-> > headers target_long_32.h and target_long_64.h.  See lore.kernel.org/
-> > r/68b6c799-6407-43cc-aebc-a0ef6b8b64fa@redhat.com as well.
->
-> Yes, I have this tagged to understand and address. Maybe Pierrick
-> already understood the issue (similar mention from Richard? [1]) and
-> is addressing it, see [2].
+Am 02.05.2025 um 05:30 hat Nicholas Piggin geschrieben:
+> The async packet handling logic has places that infer whether the
+> async packet is data or CSW, based on context. This is not wrong,
+> it just makes the logic easier to follow if they are categorised
+> when they are accepted.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>  include/hw/usb/msd.h |   5 +-
+>  hw/usb/dev-storage.c | 121 +++++++++++++++++++++++++++----------------
+>  2 files changed, 79 insertions(+), 47 deletions(-)
+> 
+> diff --git a/include/hw/usb/msd.h b/include/hw/usb/msd.h
+> index f9fd862b529..a40d15f5def 100644
+> --- a/include/hw/usb/msd.h
+> +++ b/include/hw/usb/msd.h
+> @@ -33,8 +33,11 @@ struct MSDState {
+>      struct usb_msd_csw csw;
+>      SCSIRequest *req;
+>      SCSIBus bus;
+> +
+>      /* For async completion.  */
+> -    USBPacket *packet;
+> +    USBPacket *data_packet;
+> +    USBPacket *csw_in_packet;
 
-Those are different.  TCGv_vaddr is able to store a *host* pointer,
-i.e.  a host uintptr_t.  But target_long/target_ulong are already
-completely absent from tcg/ (there are a couple appearances in
-include/tcg), so I'm proposing to remove them completely and leave
-them as just macros.
+This makes the state more complex, because there is a rule here that
+isn't explicit in the code: At most one of data_packet or csw_in_packet
+can be set at the same time.
 
-Please give me a shout once the target-arm/ series lands, I can look
-into this further.
+Both are quite similar, so most of the patch just duplicates things that
+are currently done for s->packet.
 
-Paolo
+Wouldn't it make more sense to have one USBPacket pointer, but some
+state that explicitly tells us what we're waiting for, data or the
+status? I was thinking of a new bool at first, but on second thoughts,
+s->mode looks quite similar to what we need here.
+
+What if we just introduce a new state in the s->mode state machine for
+"CSW read in progress" as opposed to USB_MSDM_CSW meaning "expecting the
+host to read the CSW next"? Then the cases for which you currently set
+s->csw_in_packet would instead transition to this new state, and
+usb_msd_command_complete() (which has the only real change in this
+patch) could just directly rely on s->mode.
+
+> @@ -395,11 +420,15 @@ static void usb_msd_cancel_io(USBDevice *dev, USBPacket *p)
+>  {
+>      MSDState *s = USB_STORAGE_DEV(dev);
+>  
+> -    assert(s->packet == p);
+> -    s->packet = NULL;
+> -
+> -    if (s->req) {
+> -        scsi_req_cancel(s->req);
+> +    if (p == s->data_packet) {
+> +        s->data_packet = NULL;
+> +        if (s->req) {
+> +            scsi_req_cancel(s->req);
+> +        }
+> +    } else if (p == s->csw_in_packet) {
+> +        s->csw_in_packet = NULL;
+> +    } else {
+> +        g_assert_not_reached();
+>      }
+>  }
+
+I think scsi_req_cancel() is required even in csw_in_packet case.
+Whether someone already asked for the result doesn't change the state of
+the in-flight SCSI request, so we shouldn't try to cancel it in one
+case, but not in the other.
+
+Kevin
 
 
