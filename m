@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1EDC3ABB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:51:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CC3FC3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBrY2-0004M4-AV; Mon, 05 May 2025 04:51:38 -0400
+	id 1uBrYE-0004Xe-5V; Mon, 05 May 2025 04:51:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1uBrXy-0004HW-Tk
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:51:34 -0400
+ id 1uBrY9-0004Rv-J0
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:51:47 -0400
 Received: from internet2.beckhoff.com ([194.25.186.210])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
- id 1uBrXw-0003a2-VO
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:51:34 -0400
+ id 1uBrY7-0003a2-NQ
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:51:45 -0400
 DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022e; 
- t=1746435091; bh=IyANnXf3ryRMXn2P8sC/u0FGSmkXpblCiW6k3SwfpDw=; h=
+ t=1746435102; bh=xQrf2n0azY6cvPfjBc/AdvDNNb4eHCfDqQ9yDjZ8TC4=; h=
  Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
  a=ed25519-sha256; b=
- qdwoEDh0S7j7QOvXjFqdUpxGby4CeTqTd0rmnNKHwKI44hZp8/QxiaoZme7Ad9NO6CHuj+Yi9aRgdKyThj5kCg==
+ 9wBUpJmNRIRXil+m2W59m+Tl4AfaVDl8EsY8QzDneBNIS1BaI+35ICyBDdsK7K7Pn0I2Sy0hMTpVajP7644/BQ==
 DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022r; 
- t=1746435091; bh=IyANnXf3ryRMXn2P8sC/u0FGSmkXpblCiW6k3SwfpDw=; h=
+ t=1746435102; bh=xQrf2n0azY6cvPfjBc/AdvDNNb4eHCfDqQ9yDjZ8TC4=; h=
  Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
  a=rsa-sha256; b=
- ovzn2b9+c2q+GRsFQoC2z8MMVMYZgX7N+YgZ/SuP/02Q2d7/knxIDJ9SoiQRZq6AmVviv69UahV0NBeR9BJ5GY9vpDn9wOG1fGkisjR+h9dwQ3+XXEMlmef/FHkYz6KnAh6uSYmJknMTD800Q3AUs0xaevpbcovDArv9pe9mLeiuE+cYpb31+I0CDCqTUExidxfnLOop0PxB/a74SMGa3R5/zWb17y2sAa8sTKjTN0BGAJOhQgwh51x0zw4iybOGyIIDSA5bI/a50cWK28AZ5k3prO3zvhBjAXP5mOctVSleLXmnLkzEzWFvYksG4fgAetIst+6wG5rko2ki1tVvoQ==
-Received: from 172.17.3.7 by INTERNET2.beckhoff.com
- (TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384); Mon, 05 May 2025 08:51:31 GMT
-Received: from ex10.beckhoff.com (172.17.2.111) by ex14.beckhoff.com
- (172.17.3.7) with Microsoft SMTP Server (version=TLS1_2,
+ L8hAONdscCnIs2DjFRNmV5abway1H0emm6i8jygbfpVYxxz4BQoYnV09nzj1MDw51M3m4SKnVFezKeXvhCjWLCuSbmAAdoWeYgy5XD+/hfNiwFW+Rear4q3FE+TeRFx91GpCB58zapRNNAZloy9yiVC+g43mj7zyUreAgzf+YqqOxWuNre2ultbMizKdplEaeIDVtJaw3z91/+LhUtV2DoWKpniLUik8N+zAb6j5q1m1crKKuGQ+eMP2hkhVFIBoyeq8G6Sl72QcMfgX8Km0hA2d3bknHyzSsJUbgX5QvIWYU7WOb4PKQ1m1GZ7PFjEg75MoF4TVjzccwt0DSyE+qg==
+Received: from 172.17.6.19 by INTERNET2.beckhoff.com
+ (TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384); Mon, 05 May 2025 08:51:42 GMT
+Received: from ex10.beckhoff.com (172.17.2.111) by ex13.beckhoff.com
+ (172.17.6.19) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 5 May
- 2025 10:51:08 +0200
+ 2025 10:51:41 +0200
 Received: from ex10.beckhoff.com ([fe80::3762:2101:fb4e:8ffa]) by
  ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b%12]) with mapi id
- 15.02.1748.010; Mon, 5 May 2025 10:51:08 +0200
+ 15.02.1748.010; Mon, 5 May 2025 10:51:41 +0200
 From: =?utf-8?B?Q29ydmluIEvDtmhuZQ==?= <C.Koehne@beckhoff.com>
 To: "tomitamoeko@gmail.com" <tomitamoeko@gmail.com>, "clg@redhat.com"
  <clg@redhat.com>, "alex.williamson@redhat.com" <alex.williamson@redhat.com>
 CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 5/9] vfio/igd: Check OpRegion support on GVT-g mdev
-Thread-Topic: [PATCH 5/9] vfio/igd: Check OpRegion support on GVT-g mdev
-Thread-Index: AQHbuFgWMMFgEbOUzUG5e5DneKZadLPDo3UA
-Date: Mon, 5 May 2025 08:51:08 +0000
-Message-ID: <cf0f9cebcf5b2997351d2963e72fdd9f5eafe2c5.camel@beckhoff.com>
+Subject: Re: [PATCH 6/9] vfio/igd: Enable OpRegion by default
+Thread-Topic: [PATCH 6/9] vfio/igd: Enable OpRegion by default
+Thread-Index: AQHbuFgZI3dZbvunJ0WooYa+gq15g7PDo52A
+Date: Mon, 5 May 2025 08:51:41 +0000
+Message-ID: <b143206fc9d5ce383d7bcf26082fb0449993414a.camel@beckhoff.com>
 References: <20250428161004.35613-1-tomitamoeko@gmail.com>
- <20250428161004.35613-6-tomitamoeko@gmail.com>
-In-Reply-To: <20250428161004.35613-6-tomitamoeko@gmail.com>
+ <20250428161004.35613-7-tomitamoeko@gmail.com>
+In-Reply-To: <20250428161004.35613-7-tomitamoeko@gmail.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: yes
 X-MS-TNEF-Correlator: 
 x-originating-ip: [172.17.62.149]
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="=-pjgyI/Suy9N/TXy3oapV"
+ protocol="application/pgp-signature"; boundary="=-PmgpEN1sCyupGMSOjgP0"
 MIME-Version: 1.0
 Received-SPF: pass client-ip=194.25.186.210;
  envelope-from=C.Koehne@beckhoff.com; helo=INTERNET2.beckhoff.com
@@ -84,53 +84,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-pjgyI/Suy9N/TXy3oapV
+--=-PmgpEN1sCyupGMSOjgP0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 On Tue, 2025-04-29 at 00:10 +0800, Tomita Moeko wrote:
 > =EF=BB=BFCAUTION: External Email!!
-> The Intel GVT-g backend `kvmgt` always emulates OpRegion for vGPU,
-> make sure the OpRegion is present for enabling access to it
-> automatically later.
+> As the presence of OpRegion is used to detect IGD device now, and
+> guest driver usually depends on OpRegion to work. Enable OpRegion
+> on IGD devices by default for out-of-the-box passthrough experience
+> (except pre-boot display output), especially for libvirt users.
 >=20
-> Also, hotplugging GVT-g vGPU is now always disallowed regardless of
-> OpRegion to prevent potential issues. Intel has never claimed support
-> for GVT-g hotplugging.
+> Example of IGD passthrough with libvirt:
+> <hostdev mode=3D"subsystem" type=3D"pci" managed=3D"yes">
+> =C2=A0 <source>
+> =C2=A0=C2=A0=C2=A0 <address domain=3D"0x0000" bus=3D"0x00" slot=3D"0x02" =
+function=3D"0x0"/>
+> =C2=A0 </source>
+> =C2=A0 <rom file=3D"/path/to/igd/rom"/>
+> =C2=A0 <address type=3D"pci" domain=3D"0x0000" bus=3D"0x00" slot=3D"0x02"=
+ function=3D"0x0"/>
+> =C2=A0</hostdev>
 >=20
 > Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 > ---
-> =C2=A0hw/vfio/igd.c | 8 ++++++--
-> =C2=A01 file changed, 6 insertions(+), 2 deletions(-)
+> =C2=A0docs/igd-assign.txt | 4 ++--
+> =C2=A0hw/vfio/pci.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 2 +-
+> =C2=A02 files changed, 3 insertions(+), 3 deletions(-)
 >=20
-> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-> index c6ecbefb35..496d3df598 100644
-> --- a/hw/vfio/igd.c
-> +++ b/hw/vfio/igd.c
-> @@ -684,9 +684,13 @@ static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDevic=
-e
-> *vdev, Error **errp)
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return true;
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> diff --git a/docs/igd-assign.txt b/docs/igd-assign.txt
+> index 95beb76812..fc444503ff 100644
+> --- a/docs/igd-assign.txt
+> +++ b/docs/igd-assign.txt
+> @@ -102,7 +102,7 @@ digital formats work well.
 > =C2=A0
-> +=C2=A0=C2=A0=C2=A0 if (!vfio_pci_igd_opregion_detect(vdev, &opregion, er=
-rp)) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Should never reach here, K=
-VMGT always emulates OpRegion */
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
-> +=C2=A0=C2=A0=C2=A0 }
-> +
-> =C2=A0=C2=A0=C2=A0=C2=A0 if ((vdev->features & VFIO_FEATURE_ENABLE_IGD_OP=
-REGION) &&
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (!vfio_pci_igd_opregion_detec=
-t(vdev, &opregion, errp) ||
-> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !vfio_pci_igd_opregion_=
-init(vdev, opregion, errp))) {
-> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !vfio_pci_igd_opregion_init(v=
-dev, opregion, errp)) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
-> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0Options
+> =C2=A0=3D=3D=3D=3D=3D=3D=3D
+> -* x-igd-opregion=3D[on|*off*]
+> +* x-igd-opregion=3D[*on*|off]
+> =C2=A0=C2=A0 Copy host IGD OpRegion and expose it to guest with fw_cfg
 > =C2=A0
+> =C2=A0* x-igd-lpc=3D[on|*off*]
+> @@ -124,7 +124,7 @@ Examples
+> =C2=A0
+> =C2=A0* Adding IGD with OpRegion and LPC ID hack, but without VGA ranges
+> =C2=A0=C2=A0 (For UEFI guests)
+> -=C2=A0 -device vfio-pci,host=3D00:02.0,id=3Dhostdev0,addr=3D2.0,x-igd-le=
+gacy-mode=3Doff,x-
+> igd-opregion=3Don,x-igd-lpc=3Don,romfile=3Defi_oprom.rom
+> +=C2=A0 -device vfio-pci,host=3D00:02.0,id=3Dhostdev0,addr=3D2.0,x-igd-le=
+gacy-mode=3Doff,x-
+> igd-lpc=3Don,romfile=3Defi_oprom.rom
+> =C2=A0
+> =C2=A0
+> =C2=A0Guest firmware
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 05a7a62204..38ff231625 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -3361,7 +3361,7 @@ static const Property vfio_pci_dev_properties[] =3D=
+ {
+> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BIT("x-req", VFIOPCIDevice, features=
+,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VFIO_FEATURE_ENABLE_REQ_BI=
+T, true),
+> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BIT("x-igd-opregion", VFIOPCIDevice,=
+ features,
+> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VFIO_FEATURE_ENABLE_IGD_OPREGION=
+_BIT, false),
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VFIO_FEATURE_ENABLE_IGD_OPREGION=
+_BIT, true),
+> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_BIT("x-igd-lpc", VFIOPCIDevice, feat=
+ures,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 VFIO_FEATURE_ENABLE_IGD_LP=
+C_BIT, false),
+> =C2=A0=C2=A0=C2=A0=C2=A0 DEFINE_PROP_ON_OFF_AUTO("x-igd-legacy-mode", VFI=
+OPCIDevice,
 
 Reviewed-by: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
 
@@ -139,27 +172,27 @@ Reviewed-by: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
 Kind regards,
 Corvin
 
---=-pjgyI/Suy9N/TXy3oapV
+--=-PmgpEN1sCyupGMSOjgP0
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmgYe/oACgkQ2FTaVjFe
-Ampg9g/6A33UR9VExH5rLDdXW6wBs3v2JvldN6t9AmdRCsT1JJNBPQlaJgl7cbIm
-Xt4HUe6TMvF6MiOhjtxvT9lAD4x3m0e6qcoAbEj5nj8H0TEBl53o6spuvN+uHX2i
-Y8f71HYZL+wJth/WgKoQfyu5tWCZywYNLhOJ5uZ9BgzF6PUmQLCdTupklI6lK4Vy
-buf9gNPIC5JfmUm5CBqUw103NujtmxiIgdGkLtqXhcyZDDd4sGoZUBK0rAfVOxW2
-CSl1CacK0nIP7oPnyXRVevWvZpExNGwxxg/HQ1fVx1jY53RUcD/vUJ/hR4dZxr6c
-JZD6rGtI/aqsGCfCwsJrQK7IeBdqdXcqOHaOly9pzxKqQKBOdQfnsfDz5ujGsMFb
-8+aBBuKROaQca4kdv9aBN81VCSBzhr39jWIHF00fYnUbolPUm11uvPEzOmg3jIY3
-HHWIZZWA0id4cNdt7wNkEo1mgDwxb5mpKcx27PK1DYcfPEEEz2JnW7LYBJGHn22I
-isG5bOi9Zcu3JyGgoRlqhCQl6uRX+SJ4BtQ+sV69Gq63HzhcHkZIzZuYhZfIg/3X
-wJUZr6fNFkSRcg73RUJcu+1GoFcsq7RTDJO+Oxw+2a+4gjWsrg/wLvb0l6oGzGn1
-p6BON4b81BjwNmfrX54Px/13p9Zn3PXKwvdqjjPwLrKPkredhDk=
-=KYWT
+iQIzBAABCAAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmgYfBsACgkQ2FTaVjFe
+AmroDQ/9GhsvUbpHlczZL55/FegMp5UO8ecAEfbd6uBfBn+bORY3xHHzKJ8NPJC3
+M0I5E/qVdQ2GxmmWWDjN717lfsLXvxQTyxVQhwpP6HAO9iipCBh0DSDL8fgqA71g
+MEVKf+3axuBi7kPdjD8QEICNTH0XkEGiFFufGA1UbaHzYPpLHg2yEEAkgvEtpeH0
+6GZs3/zTnEHE0PAcR2oa2VZth3bjdMbkhkc8ISggtYppsR9d7O8WVU5LwwQefC1M
+yFfNwF4X5A+I9UYmAKRiMWtQkdePLzHx09sh0ZYmgr13gz9sQ4FP+DTxO60y81DJ
+em837gFTVx+GmYXDB0NMSf5fV/go3TTLNB3QI0Kvan2VG6Wh2JE9PLvDrcjRH1QT
+idDyuvYWhbkuybzv5ZPuQ9nPjn/YCwhKWt7WOAMzLlRQPj7xHLQ0mhbQ42xpyYf/
+9tmutNetARfgLjN4iZ0Gk9W9eDQPmDQ/qi2e5iRDtcMbkcq0jmjwcRyKzejPFHU1
+xUSoZ+GUMdCD1zLij3cf62iT92WztrE6CHvxQepB/uJkwYEU3MtQmq6ja//lylRf
+RT5l7n2P+3+s2BqeHuE3tcYUjFVX5Yv48BZeSaRVLMH+mVwcVqcWqqbjicc4YShr
+mtJZfGu9m+7T1BqtxnpcCYU2Yz0to+d/rRM4RfJlxQT2QVPGm74=
+=TAfy
 -----END PGP SIGNATURE-----
 
---=-pjgyI/Suy9N/TXy3oapV--
+--=-PmgpEN1sCyupGMSOjgP0--
 
 
