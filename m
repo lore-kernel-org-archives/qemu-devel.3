@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 734BEC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 18:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8424C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 19:00:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uC10G-0007iW-Qn; Mon, 05 May 2025 14:57:26 -0400
+	id 1uC12N-0000cJ-DW; Mon, 05 May 2025 14:59:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uC10E-0007hd-FE
- for qemu-devel@nongnu.org; Mon, 05 May 2025 14:57:22 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1uC12K-0000bM-KY
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 14:59:32 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uC10C-0007oQ-OQ
- for qemu-devel@nongnu.org; Mon, 05 May 2025 14:57:22 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2240b4de12bso77691205ad.2
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 11:57:20 -0700 (PDT)
+ id 1uC12I-0007u8-Ng
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 14:59:32 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-736b350a22cso4006995b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 11:59:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746471439; x=1747076239; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746471569; x=1747076369; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=D3ND1SAC3lvQohdosheSraL5hqzXXgRa/d3DCKAxaiE=;
- b=zzTCBTL7KRjzpIUweBKZEdgtkRqiQiiucSmS82lm3aA644KhMI9yX+BX2GMuET4Ihk
- JrrcefR/HeJCt56OZJtY/9UebRbf4TA7EqX8dDwwxyPKYhSlSi3/UgVCSNcQIf0i0uII
- c0Cxzot2+Yyo/wn2CVscjhzRhTVd6x5GOBiUVy50C9OtNUCBfe79dpR0FQqOIh2btTwt
- /TOC0YnbnNUfqPGHaoZMA6Jy7yEMayaoUgGkYuXZx+5ip7Cgi1LX2Mzh5qFG/6fv1DlZ
- +QLtPUUhpQUsbOmCGZFsmV6KEmcwmmbeB6McfY8EqY6R/AjDMp3t8yuzLWeJCgRKXle3
- LxZQ==
+ bh=A7CuY77gO+ycPjhJR+jqTUZ/MuIElViaSpNHT9rkCNo=;
+ b=dkwcPCrEKLzyCJPqJdnRSHbzv93vjgitQ69og6M3ILYGelkzNbWv7PvQRdg4lric7e
+ IrgYQAqDEPFyo4jLi8pJ+/8gq8FLw5NaooROeAcDyH2hqpNn9udC5yoGHGdOvLPt4kmi
+ Qr0mzorI7tJX9oWjcVahJONcQS36EiycsEzkAKcyQAc5WUQWMZDrg4nPYmK500UAAatG
+ IRUO8LLmu0z+nWUEp+cS35v5paY3qLimNsiSBiw8pf92+12iGljJgsoFDul+DmbOh/1Z
+ W9b+oLIiM4aNx+5Akaltlbga6Uo+Ez3pcAlKuUfEXVhasNhiYiiQ6QqOSQA8ydj6pKi3
+ jGnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746471439; x=1747076239;
+ d=1e100.net; s=20230601; t=1746471569; x=1747076369;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=D3ND1SAC3lvQohdosheSraL5hqzXXgRa/d3DCKAxaiE=;
- b=YWfDuKs1d9fOt8wB9VRLfh33ro4PCvxNKsU4oOguQ22KOxkLFCPpjRI4UV8N1L7wQP
- 1Y/CyW20X9ArLTrEVHnHoRmkKDZ96O+ljOoYE9WtYcrOEtxhQfYOdiCwxGJ2PbFhtDI/
- A936NxtxfsIBJW5mCtDtskf7oeskO3fFYnsdLqfZ9jtpHZAlhKyVFbyLvayL6kTNggTu
- nzgEq0Pl8RQrnaEvbCJkgIjIHFk0R5rvewmE7igktVWiXMtFB7rkSa6QyLrY7q5vpr/M
- MouSF+EqTWXAx2+8PsY9gA0G6+g+2Eba0RSUtmAJry/az5V1J/WVHnatKuw2CM+Qmhrq
- Ar6w==
+ bh=A7CuY77gO+ycPjhJR+jqTUZ/MuIElViaSpNHT9rkCNo=;
+ b=VaEBM7Thu3+RohqJY/Ywqv93s0wEbWPWhTNqYPegAFQANe3o6/6AFFOLUUltevK2Yu
+ I8qK6QGNLkfjyjJ4PVnjb7w+2Gv768v4YPnz9JsUnEBX9NcQrNuP25P6p5tFHSKg91+Z
+ e4YygilXMqIjMlfjIiwnk/9fs/h+vF6eVSAGbFExoRGzOYxoKYbM/kmK7NRFOboWyLAN
+ REN3jiDqU970BD3oxNpcTt/3taZo/lE45YzvTyq4yYsxHWVFqeO3Efp4V5nSf/OxReNj
+ 53/3IzlNlL5EKTJVNXFEuY6oTc+kL6934pEMbX3iMKMEXIH4LFn60ePSqKB2N9DMlfm4
+ /nfA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV49RqQxCQhl8Pbz+jTixN3oojaK+lSoGfc0vrYVrg26yaoT6OwhM0FvobvuMmxkvPNlDcT8VD4350t@nongnu.org
-X-Gm-Message-State: AOJu0Yw1j3G1VlqqZEsAv/gHU1hBS943Vqs8bJy7TjS8dWiYoyv9h0Kt
- NanNUiFOUm0MqvzOdId+qOrlivTiXHnl8aMoZDieII+x9RsKY1ZRXiYtdFt7yqU=
-X-Gm-Gg: ASbGncvzP+0EIzQVwCLfJ9l+7/KvZLkzDm4xyCoztN+C6a8TvCgZACn1koOxxdWe40K
- LrDRgJCULoghaaZTvqcDu4UyUPnsNOwlELlX6opZwYbR7ClMa3FaSqq0wynIUeWjQgPVRjd2HE3
- ZTAla8WKxyHV+ilXV/PxeMx5dbz8rDBtZ+M1MgfE/PvrNmye1NKSleGcCQvNt/YoDcMAqQrW3u0
- Uo7dQRarJk5+V7OHeZbJXa3MyojQTBHcTUwvREgTAqPO+m5eajBSFJQcGJ2B5PFMAWgaGB/Uht5
- KqJLecwni3mBGNxg4rO+XBSNrh6F0bUZIS15vT01mSdDcTP8sVZ2bUmYVgPtPYg5bJXZ7s1QWcw
- wAqdtE3M=
-X-Google-Smtp-Source: AGHT+IHBbFfWMdx6MOF3TzOMnofsi47UUFpxhoxY+MWXgZWqBLVhK3hrsAlK0As0A+dkEZOmLelXjg==
-X-Received: by 2002:a17:903:1d1:b0:22d:b305:e082 with SMTP id
- d9443c01a7336-22e3311e8c8mr6072235ad.47.1746471439131; 
- Mon, 05 May 2025 11:57:19 -0700 (PDT)
+ AJvYcCVpOkWVrfsNv9Ma0l4dWoKykYU8t3bRM5uav1R+Su/Ky6DN2Mf9a6YhgH5PTe8YTvV1gv56F6okcsag@nongnu.org
+X-Gm-Message-State: AOJu0Yx692vEmEJ8N9h7jatDDi/g9JK4a4BonubInIfSY6t1ZGn01ahw
+ ea1DEkoeUDPqjc+VdFL8z19Ow1Tz/eaTOGwsYNTHSAZiq2EEB7RahWwYTN6W0qE=
+X-Gm-Gg: ASbGncsVzZ8M2mRw5ggdwJLrVCOtJ4mUQGbFF+HnGWAc6Rbt8GQf6zDzF4pbH7nrwKW
+ fGwQYuADwisGjR46kSFpvyrchP2OZP4UzLvJVDkbN46oR2tIAqo3OLVUGAAuOIbb2Ma83+jlypM
+ nsuEtF4dFVI3V+xajy86xy8rdYLgFn7RSl9gzRZ/b2/G8CkuB+jFvqv4RPJSo+cl8MA0LB9vPfv
+ Yz9N/aoU8BunytYv3+ozYiHZUpXQpFAxehQYzYULt7l7yAubFMEj4DtmsFIkCnyCTahYGpm9xaj
+ KjoirYdhi+wEKsaCssJt7RZ325zyQWwCKSvfqdlb/6grmOY408svZ/2ZwvWlZWv8ZtaLbdnhMsJ
+ e4mKavRFGx6bpU0YRLQ==
+X-Google-Smtp-Source: AGHT+IFtx/Xz3ZHyZJ9pqB72YEver0dszK8ydQaxSDRWE6dCehUNlZnNCnmh+KYwqNRHT8NIGtvzkw==
+X-Received: by 2002:a05:6a00:420c:b0:736:5e28:cfba with SMTP id
+ d2e1a72fcca58-74058ae70aemr20715150b3a.18.1746471568944; 
+ Mon, 05 May 2025 11:59:28 -0700 (PDT)
 Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74058dbb5a6sm7188920b3a.45.2025.05.05.11.57.18
+ d2e1a72fcca58-74058d7a3a6sm7193733b3a.2.2025.05.05.11.59.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 11:57:18 -0700 (PDT)
-Message-ID: <3e69a6c2-f759-41f0-87f2-1eb88844e19e@linaro.org>
-Date: Mon, 5 May 2025 11:57:17 -0700
+ Mon, 05 May 2025 11:59:27 -0700 (PDT)
+Message-ID: <702b4c82-653d-4782-8805-c4ff9a1155ae@linaro.org>
+Date: Mon, 5 May 2025 11:59:26 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 48/48] target/arm/tcg/vfp_helper: compile file twice
- (system, user)
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- alex.bennee@linaro.org, kvm@vger.kernel.org,
- Peter Maydell <peter.maydell@linaro.org>, anjo@rev.ng,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250505015223.3895275-1-pierrick.bouvier@linaro.org>
- <20250505015223.3895275-49-pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH 09/12] target/riscv: Fill in TCGCPUOps.pointer_wrap
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: foss@percivaleng.com, qemu-riscv@nongnu.org
+References: <20250504205714.3432096-1-richard.henderson@linaro.org>
+ <20250504205714.3432096-10-richard.henderson@linaro.org>
+ <e8db1ec3-fcb3-42d1-a488-cf55d6060904@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250505015223.3895275-49-pierrick.bouvier@linaro.org>
+In-Reply-To: <e8db1ec3-fcb3-42d1-a488-cf55d6060904@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,15 +106,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/4/25 18:52, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
-> ---
->   target/arm/tcg/vfp_helper.c | 4 +++-
->   target/arm/tcg/meson.build  | 3 ++-
->   2 files changed, 5 insertions(+), 2 deletions(-)
+On 5/5/25 09:47, Philippe Mathieu-Daudé wrote:
+> On 4/5/25 22:57, Richard Henderson wrote:
+>> Check 32 vs 64-bit and pointer masking state.
+>>
+>> Cc: qemu-riscv@nongnu.org
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/riscv/tcg/tcg-cpu.c | 26 ++++++++++++++++++++++++++
+>>   1 file changed, 26 insertions(+)
+>>
+>> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+>> index 55e00972b7..267186e5e3 100644
+>> --- a/target/riscv/tcg/tcg-cpu.c
+>> +++ b/target/riscv/tcg/tcg-cpu.c
+>> @@ -237,6 +237,31 @@ static void riscv_restore_state_to_opc(CPUState *cs,
+>>       env->excp_uw2 = data[2];
+>>   }
+>> +#ifndef CONFIG_USER_ONLY
+>> +static vaddr riscv_pointer_wrap(CPUState *cs, int mmu_idx,
+>> +                                vaddr result, vaddr base)
+>> +{
+>> +    CPURISCVState *env = cpu_env(cs);
+>> +    uint32_t pm_len;
+>> +    bool pm_signext;
+>> +
+>> +    if (cpu_address_xl(env) == MXL_RV32) {
+>> +        return (uint32_t)result;
+>> +    }
+>> +
+>> +    pm_len = riscv_pm_get_pmlen(riscv_pm_get_pmm(env));
+>> +    if (pm_len == 0) {
+>> +        return result;
+>> +    }
+>> +
+>> +    pm_signext = riscv_cpu_virt_mem_enabled(env);
+>> +    if (pm_signext) {
+>> +        return sextract64(result, 0, 64 - pm_len);
+>> +    }
+>> +    return extract64(result, 0, 64 - pm_len);
+> 
+> Is this safe for MXL_RV128?
 
+The RV128 implementation only uses 64-bit pointers, so, yes.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
