@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B953CD5BD0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B922FCD6E49
 	for <qemu-devel@archiver.kernel.org>; Sat, 30 May 2026 15:25:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wTLYK-0004KQ-Rp; Sat, 30 May 2026 11:24:48 -0400
+	id 1wTLYC-0004JN-5w; Sat, 30 May 2026 11:24:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTLY2-0004Gx-RQ
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTLY2-0004Gu-Qj
  for qemu-devel@nongnu.org; Sat, 30 May 2026 11:24:27 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTLY0-0004xr-TT
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wTLY0-0004xk-TM
  for qemu-devel@nongnu.org; Sat, 30 May 2026 11:24:26 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-45fe59255beso14615f8f.1
- for <qemu-devel@nongnu.org>; Sat, 30 May 2026 08:24:17 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4905529b933so64577695e9.0
+ for <qemu-devel@nongnu.org>; Sat, 30 May 2026 08:24:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1780154656; x=1780759456; darn=nongnu.org;
+ d=linaro.org; s=google; t=1780154655; x=1780759455; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0hqgiRMBKGtlNdV4BJds8dgSspVGSRdXfb8rAv6leL0=;
- b=H5BMwk4OgexdR2KlxKhCSYvWQa7ytRllv7ql3H7kBZja9aBLpL/aJToxQS8qGRqPwu
- 7HzRQuyfkrmMKeHeCzJQToPdaS8slUJUIePeFRpTL0pGjyv1sdTmLBi+2pvUnJOPGara
- fz8/aX//J+zwFbG6uQ25yz6fOxyMcFsVIMQzy+og6v8i53EYe/FWIs5nxG7ThaWvDDg2
- HFa7eqIys7LR+0InKzVmWsFaopbTshY3uTT6n2DuQK1CUv8fv5YlmgdWYPmD6kv4gUko
- i5Je0eKgPoxSBTurDW/gZEaQV6nN8AEj83ZJDiWembFgHBJHYGFu0hsHTLPDH4ShHUh2
- OFJg==
+ bh=5lfSFK16M75PShE4mPiUfY0e9E1CdMU/HALcfKSeksU=;
+ b=gtCqIdwhIAWDuzJvT2Ootk7dUob+mMfHFt+ZJE3aeruF68hI5ddh7zjlAWuaXCdkC6
+ LhvHxddKdp3vbMLgmkfEpi4PHi/o2cQyC4QI8p6UoC01IUX4M+pMhjL7RlXypn8JH1X/
+ u5YWxOnwM7kjgmwXBzYxmN834iWbJc5YDZ85T+vGqJqeiIBLLDsXPv9B4L8TVl1OgIDC
+ yDHFYJIHJlZOz2NktWCt31phzJLsop5NL/hEgxmcuoX0KkChvsqbymRKayD7kig1C1x0
+ AzHSWNAiuSzvzfJmLrSHTpEoWoaXMyVUQlmTzL3oWCTNGbSrXLNNRir78o7s07xccaN1
+ Y+EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1780154656; x=1780759456;
+ d=1e100.net; s=20251104; t=1780154655; x=1780759455;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=0hqgiRMBKGtlNdV4BJds8dgSspVGSRdXfb8rAv6leL0=;
- b=AspEh4tyXxx85X1uoY2Rj+phvKb8LY0er+JK3laC3X6wRuhqtz4jLxuk/ambLXHLeV
- /tQVcr9TEI3T8kWzKyI+gu+Pqbii74bkxhHMkZuJrol0zh+l2sbcgsMvJLpWNrWn5A+D
- zgkSjOyUEqk0xzRoYs8DGApoMml3A1BbaDUR8+RlLQTM1NLbXivkMmYi3Dt1l+1TGwao
- fJsNa6cOJhlpawSjmjEuomXEjTkrtUAl7+oCza5FigHnrBWYl4mcYHTD6UqN4bUhnlwe
- 3qbuffIzcs+PhMY8DPUOk+rIlBkcygrQtMYi12AAKpnELOMFWEevZiNaQ8GV29vGBt15
- uMPQ==
+ bh=5lfSFK16M75PShE4mPiUfY0e9E1CdMU/HALcfKSeksU=;
+ b=BZ4awmw4gIqoe44zujVEJ+3EXq8aRm47UOKzWPxZRUywUFhOONcN173qa2D5Yhmnby
+ bKrlTdERaWvA0d69P6fhck+CPYXcWJYduiCnOf6p8icHD2hplYdhG20FpVH2uYYXUvra
+ iuQpPjTW75yRQhstzTB0a48w9en2neVUoYKhYGahs8buua8Msng5fV/vhhGUEm901dNR
+ I7jlhBxc8Iz+DBi8/m1VVYS4sumUgDcWL+hEjZi7QX9kEmACvO5xCl2TZYIWJMXOLEea
+ MiziHN8JaeUjpoTGmq2C9qFOyHGC8k6bv+gxGeCTf2mCCYqPCoa5Ui35JmTmbLGSwEWp
+ RdYQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ++N3VRXPRtZlwOjP1Y2cyHoi70chruousgBvrHXu1QZoujmb2kVx1oc5wKbLsSi+Dkj8Q5BtwXyLIY@nongnu.org
-X-Gm-Message-State: AOJu0Ywd9aHa8BV5DNP90c8gOhqaWoTcDfRyKHUvSG4neV65z9w607XJ
- QsqfG5VYOywCLPxy6hMmdoj9ZrG6P1ntyHpCycWQ067ZjmS60rbRVZJkCXOmk+9wLZ8=
-X-Gm-Gg: Acq92OExMzPBouubyWP1clr7rTfDopMniZAs2oX1x2vNMvkkhroUPng1x90CID4oXhY
- PSgwb8wJ/Djx56Y4+zMQUujQuHxhJ10wD0K7AhQkz6crjXIVWZMJwoTKyUMF3GFw7xrTH7hoR8G
- VO1FxgHrpHDCyT3ely+and9JYG6YzFRiY1q6owU5WarCUg19toHvT0szlHx6o4D0mLetzG5SSTT
- BYA2zHNXxFsdE1F8FZ2FwCURCfxORls9Bjeg4oY78R4WIMR7rCa75eC+4XQNA1QT+9Oj/X+ijIm
- UVbV8U3qPjleEXpBqBnyTgg3uq7S1KL211De6GRiUlB4wawV6V6CspOTCC3XdkJ/2D20icP0s/K
- bKX8n4VR3NkfJObnZhGguTmtTUC3MD4UlsJCkGjbqR1/45u16sppcVSsiCGp5QkmAIj8IOkXI/I
- dhmNfJm+jzG00M/uO+sb9pztTRqPUQ7JXrcGCPNyK4qh7g26gwMmD4BsNHSIkP/BqGdFqRAcno/
- 920
-X-Received: by 2002:a5d:6e11:0:b0:45e:f28e:a00d with SMTP id
- ffacd0b85a97d-45ef6b3aa6cmr5930135f8f.16.1780154656193; 
- Sat, 30 May 2026 08:24:16 -0700 (PDT)
+ AFNElJ99KKMEi707Tit5wdu74xz8yZougNf0/7kD/sDBhd/yTLrIIJD4yM9SmHE8GCTBBAAbw72omJH9MeBH@nongnu.org
+X-Gm-Message-State: AOJu0YzfyzyAXjhtRcwtQFLug7UDXsQYTYZ4JovnrJWzbtEmPtU3Pmlo
+ oqEHLgrPvPU1o4bx94egRA/1beGk6wGYWk1bXCg3iLnrqTFj8xnqUtvS+oGS3f3Ltps=
+X-Gm-Gg: Acq92OFeBDKkGipKHhmcC4ZgiZV9OG+xd/CtYSnHOg/3zS+10DO27KYn1QI6GHjQrgX
+ RPHAsAaVu8Dy3obhx3dRZf6gt0ufD8CIUim9dRL4ZlqKzKeccg+A2xVqT0R0DEDyweU+TwFO9lW
+ UkVCP/Ht7xTeGqen2xGJZQkc5Qml67aU8YoITKi8zk2lQcfPikqfmG0yqBcRcEZ+4hukpON1Vxu
+ fxii2SJk93vFdDIakgP2/0cLu8oKunqz/lyWs8l4m14A86aWrF0eimUybN84uPuIvFMV0s33D3q
+ sOfkHqNFtP4LHXNSvtaqRDRHgd0d4mjoZXCET0fp1icx9Ov1qujthbSJbQk2RoZglluMNyDC7Tq
+ hmF66rG6ZbH0uOtQPUGUm330m9bihRsttpcNc7ILck4XFT4PUTDacvfyi+WZafoifShHNhiRsAg
+ +PgI/V2o9+P29pgbZg1P/neIQwtuNyJfArfgmB1XiDOGuXI+zVGGvHPmgm35tgaOeGMDUGtlbe8
+ R3s
+X-Received: by 2002:a05:600c:8582:b0:488:b187:3c with SMTP id
+ 5b1f17b1804b1-490a29399fcmr55008995e9.14.1780154654892; 
+ Sat, 30 May 2026 08:24:14 -0700 (PDT)
 Received: from [192.168.69.207] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45ef34b47eesm12638888f8f.9.2026.05.30.08.24.15
+ ffacd0b85a97d-45ef34b47eesm12638888f8f.9.2026.05.30.08.24.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 30 May 2026 08:24:15 -0700 (PDT)
-Message-ID: <69baf1f7-417b-4a57-bc72-177c7e1d85c9@linaro.org>
-Date: Mon, 5 May 2025 08:49:28 +0200
+ Sat, 30 May 2026 08:24:13 -0700 (PDT)
+Message-ID: <b304853d-b5e8-47ee-b1c5-cbe466b97abb@linaro.org>
+Date: Mon, 5 May 2025 08:48:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i386/acpi-build: Fix typo in function name
+Subject: Re: [PATCH] hw/acpi/pcihp: Fix typo in function name
 To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, alex.bennee@linaro.org
-References: <20250504215639.54860-8-gustavo.romero@linaro.org>
+References: <20250504215639.54860-10-gustavo.romero@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250504215639.54860-8-gustavo.romero@linaro.org>
+In-Reply-To: <20250504215639.54860-10-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: 13
 X-Spam_score: 1.3
 X-Spam_bar: +
@@ -104,13 +104,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/5/25 23:56, Gustavo Romero wrote:
-> Fix missing "i" in the name of the function responsible for adding the call to
-> the PCI notification method (PCNT) in the ACPI table.
+> Fix typo in QEMU's ACPI PCI hotplug API function name that checks
+> whether a given bus is hotplug-capable.
 > 
 > Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 > ---
->   hw/i386/acpi-build.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+>   hw/acpi/acpi-pci-hotplug-stub.c | 2 +-
+>   hw/acpi/ich9.c                  | 2 +-
+>   hw/acpi/pcihp.c                 | 2 +-
+>   hw/acpi/piix4.c                 | 2 +-
+>   include/hw/acpi/pcihp.h         | 2 +-
+>   5 files changed, 5 insertions(+), 5 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
