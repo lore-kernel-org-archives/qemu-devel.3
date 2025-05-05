@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 119AEC3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 01:54:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E23ACC369DC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 01:54:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBl0Y-0003pi-9X; Sun, 04 May 2025 21:52:38 -0400
+	id 1uBl1B-0004Mk-JK; Sun, 04 May 2025 21:53:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBl0X-0003pE-6A
- for qemu-devel@nongnu.org; Sun, 04 May 2025 21:52:37 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1uBl0q-0003xC-9F
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 21:52:58 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBl0Q-0002Td-5y
- for qemu-devel@nongnu.org; Sun, 04 May 2025 21:52:36 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-736bfa487c3so3406976b3a.1
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 18:52:29 -0700 (PDT)
+ id 1uBl0k-0002ZV-K3
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 21:52:55 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-7376dd56eccso4378426b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 18:52:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746409949; x=1747014749; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746409969; x=1747014769; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PFP3MpqDIAT/Xkpc6JOppR3V5lexoIXt45Qw9vGPUlk=;
- b=DA67N/G1lH1RyVtwa7WUQaqF3lGNSG3b3jPHxk6HyJUZadAC4ZY5ojAPtpXCtFEx+3
- mKUFxRk2KAEez0t56hmmdX65rwyRNn+JoTdNbVMpY2FTo0JNslrDiInV9D/VXMaLPcII
- TM1xGunEa/Qs/y8b8af5l/Rq+Hi/j1LUiganUEW3Zq6m78AXuh+Rzi9tnMvJHf9cKF31
- QdT/GccIzf9VINcjUg6EdJQnBc20PrfCHjv/7oQshPSei2hnYIVYOP7Ty2svHJaGMIeV
- EH3ckMv1a31/sWkNpJi4I8yAR0VFGFViTNvndvL2am6TkZMV+qNriUZtytylkSzZ65iX
- YbHA==
+ bh=p8C01O7GU6PtK/NYVapVL2wa5t0zjMaLo72cjg41Wlg=;
+ b=jmXhW9mLoFn09JPUlhIGRvRxCtkZ97nsbLSdEv0gpDQgJ/DO1SBayYDXgfMYsUx+tR
+ K1A+0j73EuQR8a1TG9dqfP6MNxg67RNMhc2g08XfvyCJ6lmHgrdjhf+gVwaNtR8095Ad
+ 1RI7qKT6laElQxLOTfjqr9yhcoASIGWPqxzWawNSdmW4U1iyimWLXRJcO9A4ms49rLwg
+ Cfdy42l9Lk/U6Vly9SPuIu/IJQ5duugywoFm8qDbCgt2/R0dTS1bp0LO3OpeDg7WyrKb
+ 259p/Ynp+pxtkIDkHCTvtzhTs5BcO8d1L4D/J7v1gTn3g7BuQzA5uQi3hlVoLnt6H3eE
+ KR0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746409949; x=1747014749;
+ d=1e100.net; s=20230601; t=1746409969; x=1747014769;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PFP3MpqDIAT/Xkpc6JOppR3V5lexoIXt45Qw9vGPUlk=;
- b=rbfifRr3fugeEyKryC7Fn3n6PXGGlppAveBxao8gv3n5esyXzKiXPu8mHPOlhGEsOV
- mihFhDFRnNJOfFf/JxbjSO+of+xGmei5urRlgi9pZMRYflqCphg53f97nHgBCaK/p1Ty
- mj73+adMgkp0X6S2vpTXyU9Wt0YugrwEVBhZ4uHT7z5k4XENZ1u3D54EozMHMzqx/H7G
- XdPQvP5h+lBua/QiqZY9FzvYpf2enEGD5iBSY9NCFd9UPbpkBqHvF96bzKvuveJHtHog
- 3XHeASidn5BeQ/kiizrtMzLOGQl7apwPR+esfm2EpQzybOO5D1dZCYcYuFCN8ve6iuRw
- svZg==
-X-Gm-Message-State: AOJu0YwcInAhmdekv234xEtKKLKxvBG4+mDiyDfldS0zdK4NMpEqGjFm
- mV41ubrPBbMudUaGsk3VLq5unB8CgAI1IdBqL7Q1+6HBdGe1CfIj3ddUwgEON5/AB1XOPvvIQPF
- mo7E=
-X-Gm-Gg: ASbGncsXRQIM6yh0DRy2YSp8sxS2Y3sVeeeS+ljyfrit4h/OPiCN0zcC4luUQBoFIcZ
- b/4FM6057oYkKKM/N42u3tXATE7k05j8p2tWM0V8ugRaFFxZ3gxlzTi/ccDQqbLC9fGxguP+29l
- Lc49zmPy0gi6eYa9d7dm6gKOZDw6ddmzXYfBsdU2yoWVL5Ipu3Wmw6ZZlBDiqji2M+UVZbcxdHI
- jAGCi3evnlP/aMLzeruK5LBWZLbuht4Np8kLi2iCyhZ47gwRvUKX/rUo4DYlWUcK/RqF2fprJBA
- hjCgHIpqzBuZzm8CxPdAk2GAegtBx+tEONHwj5ON
-X-Google-Smtp-Source: AGHT+IFC1SHa+o2dht0iDyRVFrIxZhJ91FqkHDCIfZcHBadorNJvzlHZJmoxbvRhIrg0G0wVvQGeMg==
-X-Received: by 2002:a05:6a21:399:b0:1f5:8e94:2e83 with SMTP id
- adf61e73a8af0-20e96206067mr8026628637.8.1746409948979; 
- Sun, 04 May 2025 18:52:28 -0700 (PDT)
+ bh=p8C01O7GU6PtK/NYVapVL2wa5t0zjMaLo72cjg41Wlg=;
+ b=dhFgYcx8UlnTDnZqlDsePDFkpDQMzbaCocoLmnW8+BgkGdqNhwM5aZ0VxgZP9HPXDc
+ iaVq0u4ZcxHhwWswgQS1cybYoqNwVcH6RZwwZAmixeb7VVqDPbbo+2961bu6jZzy9LZp
+ VhbyJVxwkfXmRX9cAPe6/GAD8QW6zvitb3R+lpmuNw7pFFI+4s0Kwf8mPiXWJMDhy9Em
+ HllOWf1yLB9sfIEjSL0b6plNTXTQ+5D0MmnfVVunUGl2TDMT5ps5lPFgBWm3k+Uv3S6r
+ vHo1oBRnqXvFdadBx6wVwb+RA2sbYY0CFoZdCgY7tY7QU9aCwWrbdlVBWIGvmJ2FDZ0K
+ zZ6g==
+X-Gm-Message-State: AOJu0YxlFGrKzPpolNhU6Zs9Lj32NaklLBsZeDrFx0VHH2SKXEqwuFns
+ QDyulPt2oc6vHROYuuwIL32OV5nogIYos6eC1ozUG9GW5ufWkbGqs3GzbytiY3Y26OUJulMNU0c
+ 5vpM=
+X-Gm-Gg: ASbGncuje86jOcmKz1dBXg8BDUkOqIjAlqz/iDegbe4Lc6EvFaET2fc3RAhLqUsK5oW
+ rDXceUMjD75UnX6v9w5Cd31y/aBmeTW8vnfuoqEAPVaRpMiYB1q4t57nmrZzM+aQ5ihoDOC1kdd
+ fmFUI7kB/h72TqmVD3DWxLcrjNWt2wqKwdXk15pxc1NnHS1sBOdytTR5AdoWWlhu4nJ4O5KeB+m
+ +OQJQM4jqR4UZK8WN15MP+cnmXF/KM89kshZ3U/cijuqVpwyBfivfcTcIAbsNFsxUXab1ECLcU8
+ adAc2W+cOwxHZtTWCShYvLPLo7qlGWMSnOk3pcUH
+X-Google-Smtp-Source: AGHT+IHiEk3UOQip9JYyp7dcUAGKcm8K1pFYoaIR5DOLsapNGpbY+g96PPg3mXrgXS7c1B+8FJb02Q==
+X-Received: by 2002:a05:6a20:d046:b0:1f5:8eb1:d5d2 with SMTP id
+ adf61e73a8af0-20e966051a7mr7469413637.13.1746409969294; 
+ Sun, 04 May 2025 18:52:49 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b1fb3920074sm4462101a12.11.2025.05.04.18.52.28
+ 41be03b00d2f7-b1fb3920074sm4462101a12.11.2025.05.04.18.52.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 May 2025 18:52:28 -0700 (PDT)
+ Sun, 04 May 2025 18:52:48 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
@@ -70,17 +70,17 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>, anjo@rev.ng,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v5 02/48] include/system/hvf: missing vaddr include
-Date: Sun,  4 May 2025 18:51:37 -0700
-Message-ID: <20250505015223.3895275-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH v5 23/48] target/arm/helper: expose aarch64 cpu registration
+Date: Sun,  4 May 2025 18:51:58 -0700
+Message-ID: <20250505015223.3895275-24-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250505015223.3895275-1-pierrick.bouvier@linaro.org>
 References: <20250505015223.3895275-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,42 +103,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On MacOS x86_64:
-In file included from ../target/i386/hvf/x86_task.c:13:
-/Users/runner/work/qemu/qemu/include/system/hvf.h:42:5: error: unknown type name 'vaddr'
-    vaddr pc;
-    ^
-/Users/runner/work/qemu/qemu/include/system/hvf.h:43:5: error: unknown type name 'vaddr'
-    vaddr saved_insn;
-    ^
-/Users/runner/work/qemu/qemu/include/system/hvf.h:45:5: error: type name requires a specifier or qualifier
-    QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
-    ^
-/Users/runner/work/qemu/qemu/include/system/hvf.h:45:18: error: a parameter list without types is only allowed in a function definition
-    QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
-                 ^
-/Users/runner/work/qemu/qemu/include/system/hvf.h:45:36: error: expected ';' at end of declaration list
-    QTAILQ_ENTRY(hvf_sw_breakpoint) entry;
+associated define_arm_cp_regs are guarded by
+"cpu_isar_feature(aa64_*)", so it's safe to expose that code for arm
+target (32 bit).
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/system/hvf.h | 1 +
- 1 file changed, 1 insertion(+)
+ target/arm/helper.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/include/system/hvf.h b/include/system/hvf.h
-index 730f927f034..356fced63e3 100644
---- a/include/system/hvf.h
-+++ b/include/system/hvf.h
-@@ -15,6 +15,7 @@
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 7daf44e199d..7e07ed04a5b 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6590,7 +6590,6 @@ static const ARMCPRegInfo zcr_reginfo[] = {
+       .writefn = zcr_write, .raw_writefn = raw_write },
+ };
  
- #include "qemu/accel.h"
- #include "qom/object.h"
-+#include "exec/vaddr.h"
+-#ifdef TARGET_AARCH64
+ static CPAccessResult access_tpidr2(CPUARMState *env, const ARMCPRegInfo *ri,
+                                     bool isread)
+ {
+@@ -6824,7 +6823,6 @@ static const ARMCPRegInfo nmi_reginfo[] = {
+       .writefn = aa64_allint_write, .readfn = aa64_allint_read,
+       .resetfn = arm_cp_reset_ignore },
+ };
+-#endif /* TARGET_AARCH64 */
  
- #ifdef COMPILING_PER_TARGET
- #include "cpu.h"
+ static void define_pmu_regs(ARMCPU *cpu)
+ {
+@@ -7016,7 +7014,6 @@ static const ARMCPRegInfo lor_reginfo[] = {
+       .type = ARM_CP_CONST, .resetvalue = 0 },
+ };
+ 
+-#ifdef TARGET_AARCH64
+ static CPAccessResult access_pauth(CPUARMState *env, const ARMCPRegInfo *ri,
+                                    bool isread)
+ {
+@@ -7509,8 +7506,6 @@ static const ARMCPRegInfo nv2_reginfo[] = {
+       .fieldoffset = offsetof(CPUARMState, cp15.vncr_el2) },
+ };
+ 
+-#endif /* TARGET_AARCH64 */
+-
+ static CPAccessResult access_predinv(CPUARMState *env, const ARMCPRegInfo *ri,
+                                      bool isread)
+ {
+@@ -8951,7 +8946,6 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+         define_one_arm_cp_reg(cpu, &hcrx_el2_reginfo);
+     }
+ 
+-#ifdef TARGET_AARCH64
+     if (cpu_isar_feature(aa64_sme, cpu)) {
+         define_arm_cp_regs(cpu, sme_reginfo);
+     }
+@@ -9012,7 +9006,6 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+     if (cpu_isar_feature(aa64_nmi, cpu)) {
+         define_arm_cp_regs(cpu, nmi_reginfo);
+     }
+-#endif
+ 
+     if (cpu_isar_feature(any_predinv, cpu)) {
+         define_arm_cp_regs(cpu, predinv_reginfo);
 -- 
 2.47.2
 
