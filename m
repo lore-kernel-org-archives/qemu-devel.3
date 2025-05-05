@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E36C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4EE6C3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 09:20:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBryN-0005GN-74; Mon, 05 May 2025 05:18:51 -0400
+	id 1uBrzS-0006Os-9t; Mon, 05 May 2025 05:19:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBryL-0005Fu-D7
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:18:49 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrzE-0006IO-J1
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:19:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBryJ-0008T7-NU
- for qemu-devel@nongnu.org; Mon, 05 May 2025 05:18:49 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uBrzB-00008g-2J
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 05:19:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746436726;
+ s=mimecast20190719; t=1746436775;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dHUB9oOnalUFt71ueYXCrffVdFeIBJ4ftI4AQX6DLTs=;
- b=MzXyGmyS9Vs1vZTD5VgI6SkB11j3XS98B6uRoolQ6g+yn2CSreqUNTFm3t6wBzrNueCLdo
- wVWP66yYPJSlNPlgK8BGmjvFXVQLoAP/WMItSm8rlLHYCAW6V9+kWbHHWJe0lQUp/QmutW
- PYp9sC+6LfR/2zy4+5Puaw7kOaVQ/30=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9yIQtagZ4edPR8j+5qKazsFjcYXA+B5BhIo8uxpk01A=;
+ b=QLJd64MFX3kEtlGQ7tl5w1VbOGg4rnvRD8DRSe9X4dnDIyyJsNh7lSqF6X44A3yUuCrwCY
+ xeEoC5lhr2U6xH58m2loLfuBewDZhqgZRncopUtgJaWTzRQdZJDQAi2eM6WblIn+zS0l9D
+ 7UGxvB+Wk9K5DnpyXFc6ZRKbIYWpqxg=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-GW11B9mANP20vhLa8YtJfQ-1; Mon, 05 May 2025 05:18:43 -0400
-X-MC-Unique: GW11B9mANP20vhLa8YtJfQ-1
-X-Mimecast-MFC-AGG-ID: GW11B9mANP20vhLa8YtJfQ_1746436723
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43d00017e9dso21900275e9.0
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:18:43 -0700 (PDT)
+ us-mta-279-C-44RzjUPDSln072MiF_tQ-1; Mon, 05 May 2025 05:19:33 -0400
+X-MC-Unique: C-44RzjUPDSln072MiF_tQ-1
+X-Mimecast-MFC-AGG-ID: C-44RzjUPDSln072MiF_tQ_1746436772
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-39131f2bbe5so1287834f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 02:19:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746436722; x=1747041522;
+ d=1e100.net; s=20230601; t=1746436772; x=1747041572;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dHUB9oOnalUFt71ueYXCrffVdFeIBJ4ftI4AQX6DLTs=;
- b=LDsHlKmjRQM9e5D1LNdKdhPK/ZhbGA3I6r5g5Iwb5H072leJ6Yy3YIfZNQE3+Gy8ax
- WfO3Th9/zmeDiofaGHeUfo4GAk+VtYD+n8QO36zBfybG8rxk0F7o0P9cGSxBaEpDpo3F
- VRrewMVxuTVWvKN3iJc4oe2zt19X9ZCg2XsxifnXJxii5NDK4X4Hp5nBc86IRDezbCgo
- 9zoHbFHRutHcHVojBwR5/RUHCv8kjBgOB8kgmKIL0Guagz4RN5UTtWmbwSpOpabUK8fC
- TDllKh9qdpWkbxU95XM+t4DmGJQyNSa0+yMNisOp1VZvh/BKQWRtlHUC9Y1XJhR5+1an
- fAWA==
+ bh=9yIQtagZ4edPR8j+5qKazsFjcYXA+B5BhIo8uxpk01A=;
+ b=TI8b5/LDAb5v9obvdJtbZaXKrCg1hSP6zEIziQIs2vA26B4zmgDTrk0ZoOCDRdDVKb
+ TlTAhGhBgMnf1ultO+ym8Q+pLQmSSaaCKsjLicCVwyqAnn/9GlBPAnso8CGjmPn2ccgk
+ hG8EraT43qk4mp+FE27z7HE2CA0KRd7w4ptRnSz5O6Y6MBXNZwm7yGPds/Zp5XzdkFNg
+ EYpJwsU3eWu/NlT6mVEtyEzUaQqeeIsGHNt0wszghQVZaE06aYr6QkuRJpQUfBtqMg2s
+ Xd/pw2l0WMIX2DDR/m3Jl6lwCsOCblamYm7TFJ3bw9iEpX1ZsTzYBVYZ/8cyIQZlwecU
+ 37AQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVBH8Rrvzn/idq/XV8QGc+XmdYDzLL7jI858D5S6xu9ojxXwsU76yfCVaW8pI9PiR8eLBFgLDJ6uoub@nongnu.org
-X-Gm-Message-State: AOJu0YxyICBS6QXw0bHP3WUdxmG7MS3NVqDkWTDWn4Ix1k/vtWF716Sh
- ujIPx2Qg1Bt/xQvN4BjiC9dCi+OsUXA5hBB4Ynurj5ChtpcShuXO2ELdt2FVeg2xD41Y4sQGXZ1
- 6p3uVDrukaqryb14CSIYtaLZ20zpjMfkQ2jvIYa9dTMib4Hc3QsxGHZqGQ8Yq
-X-Gm-Gg: ASbGncvVfMHNljZlB5wAfoZ6dHNHitouIXG0TUMrpFbCugNVOoz0cHpp7uL4rhH8+Ew
- WY7WaMmfHSTROGFh+MlWdXHIwR+W9TPL0NUUTcZ37skGLyKVAlGEDHDaN7piwWli4xcoMiaeaBs
- /xw6jhcTAgWK72ExRx4InYvMLTh0xwj7anz4nkupyj2cFARmNs6SZxQCZonO/7kicHaZq4ugbCc
- zvM3lOVIFH36ruS2fKU22uEEgKOP628Z/i78Q7X4tzVr/hsu4kNDb1wp2D2H0QqhCDOVI6eO5g6
- YGaM1bvin2ERtB/jSnvhafp5nZC3p87c+GgmKA99heXWQrYe+g==
-X-Received: by 2002:a05:600c:a412:b0:43c:e467:d6ce with SMTP id
- 5b1f17b1804b1-441c7a2f001mr38550575e9.4.1746436722468; 
- Mon, 05 May 2025 02:18:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGZ2HwouqfgpLWojea4MU/eapCHlCP3Ml+Zl7X086oBRfNrRgShJKptzVEUN1UF4OMF5FRauA==
-X-Received: by 2002:a05:600c:a412:b0:43c:e467:d6ce with SMTP id
- 5b1f17b1804b1-441c7a2f001mr38550175e9.4.1746436722102; 
- Mon, 05 May 2025 02:18:42 -0700 (PDT)
+ AJvYcCWfKCHdRl9Zvm6xzVAC6/Ylr0RXZp+eU4akThD3nLbp+1G114ZYD+xOKOSktpmd6WwS4R5qpwpfOH/S@nongnu.org
+X-Gm-Message-State: AOJu0YwSkybn0JoNVp3paAo5xPYBMYTYEGW7brk7d5t9HkZK5Zmka4H4
+ aSBEPJUYaIi2I7wfNuOFbr6RxPZJe2o+lK2f7ZHqTwr2muyfNa6bOwablFVA01fOgpjSNhjJml0
+ ly1S6TlCV+BQ7rEYG+61ctR6YxxJ/WrIviAMPu+Ud1oovceW86qli
+X-Gm-Gg: ASbGnctMu0AF3c+wQzP8Jg0MJ9MCuOeklq5bJDii18TVgljF6Iz//4OiZm+8jypR5w1
+ ecvTfD0HsanRgwogtZy6Ab+lwlmJGbT1ozOAtVQS+GIXMT2LUAHuR8XC5en9bNJBOTuADzjwjLh
+ tX4dWKAPJ9/RceD9J8NQrbuGoomeB51YLBM0hX/g0XjVVF6l/1tagV4igIjI3xybLVrll/ADQwa
+ TdJiQGJEwNxjrkEFfri9VE600VkOOg/b15QpiPGMy+PQvi242o2HJ/VBb81W4mvI/tk0QAw7gcG
+ A924qYXm0DbH885/tS4qhEeO//Wy4ej/Ff8evH9MCgoTXOSpcQ==
+X-Received: by 2002:a5d:64e6:0:b0:391:3cb7:d441 with SMTP id
+ ffacd0b85a97d-3a09fd7c5afmr5110413f8f.25.1746436771902; 
+ Mon, 05 May 2025 02:19:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEBrheYt4c7e4TmuPaRBu1SnOBLUE11rTPeNZWjn1GhzWxo6ZNxYNpKuTaXsRTODyCnLRjnsg==
+X-Received: by 2002:a5d:64e6:0:b0:391:3cb7:d441 with SMTP id
+ ffacd0b85a97d-3a09fd7c5afmr5110390f8f.25.1746436771416; 
+ Mon, 05 May 2025 02:19:31 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae3403sm9720460f8f.28.2025.05.05.02.18.41
+ ffacd0b85a97d-3a099ae7b09sm9651058f8f.48.2025.05.05.02.19.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 02:18:41 -0700 (PDT)
-Message-ID: <f1af5260-a55a-424c-9d7b-60166fa55596@redhat.com>
-Date: Mon, 5 May 2025 11:18:40 +0200
+ Mon, 05 May 2025 02:19:30 -0700 (PDT)
+Message-ID: <21e7accb-f5e3-4f8c-aa76-e9e2f2094fb6@redhat.com>
+Date: Mon, 5 May 2025 11:19:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/15] vfio: add vfio_unprepare_device()
+Subject: Re: [PATCH v2 04/15] vfio: add vfio_device_get_irq_info() helper
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, qemu-s390x@nongnu.org,
  Jason Herne <jjherne@linux.ibm.com>, Tomita Moeko <tomitamoeko@gmail.com>,
@@ -90,7 +90,7 @@ Cc: Peter Xu <peterx@redhat.com>, qemu-s390x@nongnu.org,
  Stefano Garzarella <sgarzare@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
 References: <20250430194003.2793823-1-john.levon@nutanix.com>
- <20250430194003.2793823-3-john.levon@nutanix.com>
+ <20250430194003.2793823-5-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -136,7 +136,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250430194003.2793823-3-john.levon@nutanix.com>
+In-Reply-To: <20250430194003.2793823-5-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -165,22 +165,241 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/30/25 21:39, John Levon wrote:
-> Add a helper that's the inverse of vfio_prepare_device().
+> Add a helper similar to vfio_device_get_region_info() and use it
+> everywhere.
 > 
+> Replace a couple of needless allocations with stack variables.
+> 
+> As a side-effect, this fixes a minor error reporting issue in the call
+> from vfio_msix_early_setup().
+> 
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
 > Signed-off-by: John Levon <john.levon@nutanix.com>
 > ---
->   hw/vfio/container.c           | 6 +++---
->   hw/vfio/device.c              | 7 +++++++
->   hw/vfio/iommufd.c             | 4 +---
->   include/hw/vfio/vfio-device.h | 1 +
->   4 files changed, 12 insertions(+), 6 deletions(-)
+>   hw/vfio/ap.c                  | 19 ++++++++++---------
+>   hw/vfio/ccw.c                 | 20 +++++++++++---------
+>   hw/vfio/device.c              | 15 +++++++++++++++
+>   hw/vfio/pci.c                 | 23 +++++++++++------------
+>   hw/vfio/platform.c            |  6 +++---
+>   include/hw/vfio/vfio-device.h |  3 +++
+>   6 files changed, 53 insertions(+), 33 deletions(-)
 > 
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 4f88f80c54..4f97260dac 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -139,10 +139,10 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>                                             unsigned int irq, Error **errp)
+>   {
+>       int fd;
+> -    size_t argsz;
+> +    int ret;
+>       IOHandler *fd_read;
+>       EventNotifier *notifier;
+> -    g_autofree struct vfio_irq_info *irq_info = NULL;
+> +    struct vfio_irq_info irq_info;
+>       VFIODevice *vdev = &vapdev->vdev;
+>   
+>       switch (irq) {
+> @@ -165,14 +165,15 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>           return false;
+>       }
+>   
+> -    argsz = sizeof(*irq_info);
+> -    irq_info = g_malloc0(argsz);
+> -    irq_info->index = irq;
+> -    irq_info->argsz = argsz;
+> +    ret = vfio_device_get_irq_info(vdev, irq, &irq_info);
+> +
+> +    if (ret < 0) {
+> +        error_setg_errno(errp, -ret, "vfio: Error getting irq info");
+> +        return false;
+> +    }
+>   
+> -    if (ioctl(vdev->fd, VFIO_DEVICE_GET_IRQ_INFO,
+> -              irq_info) < 0 || irq_info->count < 1) {
+> -        error_setg_errno(errp, errno, "vfio: Error getting irq info");
+> +    if (irq_info.count < 1) {
+> +        error_setg(errp, "vfio: Error getting irq info, count=0");
+>           return false;
+>       }
+>   
+> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+> index fde0c3fbef..ab3fabf991 100644
+> --- a/hw/vfio/ccw.c
+> +++ b/hw/vfio/ccw.c
+> @@ -376,8 +376,8 @@ static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
+>                                              Error **errp)
+>   {
+>       VFIODevice *vdev = &vcdev->vdev;
+> -    g_autofree struct vfio_irq_info *irq_info = NULL;
+> -    size_t argsz;
+> +    struct vfio_irq_info irq_info;
+> +    int ret;
+>       int fd;
+>       EventNotifier *notifier;
+>       IOHandler *fd_read;
+> @@ -406,13 +406,15 @@ static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
+>           return false;
+>       }
+>   
+> -    argsz = sizeof(*irq_info);
+> -    irq_info = g_malloc0(argsz);
+> -    irq_info->index = irq;
+> -    irq_info->argsz = argsz;
+> -    if (ioctl(vdev->fd, VFIO_DEVICE_GET_IRQ_INFO,
+> -              irq_info) < 0 || irq_info->count < 1) {
+> -        error_setg_errno(errp, errno, "vfio: Error getting irq info");
+> +    ret = vfio_device_get_irq_info(vdev, irq, &irq_info);
+> +
+> +    if (ret < 0) {
+> +        error_setg_errno(errp, -ret, "vfio: Error getting irq info");
+> +        return false;
+> +    }
+> +
+> +    if (irq_info.count < 1) {
+> +        error_setg(errp, "vfio: Error getting irq info, count=0");
+>           return false;
+>       }
+>   
+> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> index 9673b0717e..5d837092cb 100644
+> --- a/hw/vfio/device.c
+> +++ b/hw/vfio/device.c
+> @@ -185,6 +185,21 @@ bool vfio_device_irq_set_signaling(VFIODevice *vbasedev, int index, int subindex
+>       return false;
+>   }
+>   
+> +int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
+> +                             struct vfio_irq_info *info)
+> +{
+> +    int ret;
+> +
+> +    memset(info, 0, sizeof(*info));
+> +
+> +    info->argsz = sizeof(*info);
+> +    info->index = index;
+> +
+> +    ret = ioctl(vbasedev->fd, VFIO_DEVICE_GET_IRQ_INFO, info);
+> +
+> +    return ret < 0 ? -errno : ret;
+> +}
+> +
+>   int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
+>                                   struct vfio_region_info **info)
+>   {
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index 6908bcc0d3..407cf43387 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -1555,8 +1555,7 @@ static bool vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
+>       uint16_t ctrl;
+>       uint32_t table, pba;
+>       int ret, fd = vdev->vbasedev.fd;
+> -    struct vfio_irq_info irq_info = { .argsz = sizeof(irq_info),
+> -                                      .index = VFIO_PCI_MSIX_IRQ_INDEX };
+> +    struct vfio_irq_info irq_info;
+>       VFIOMSIXInfo *msix;
+>   
+>       pos = pci_find_capability(&vdev->pdev, PCI_CAP_ID_MSIX);
+> @@ -1593,7 +1592,8 @@ static bool vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
+>       msix->pba_offset = pba & ~PCI_MSIX_FLAGS_BIRMASK;
+>       msix->entries = (ctrl & PCI_MSIX_FLAGS_QSIZE) + 1;
+>   
+> -    ret = ioctl(vdev->vbasedev.fd, VFIO_DEVICE_GET_IRQ_INFO, &irq_info);
+> +    ret = vfio_device_get_irq_info(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX,
+> +                                   &irq_info);
+>       if (ret < 0) {
+>           error_setg_errno(errp, -ret, "failed to get MSI-X irq info");
+>           g_free(msix);
+> @@ -2736,7 +2736,7 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+>   {
+>       VFIODevice *vbasedev = &vdev->vbasedev;
+>       g_autofree struct vfio_region_info *reg_info = NULL;
+> -    struct vfio_irq_info irq_info = { .argsz = sizeof(irq_info) };
+> +    struct vfio_irq_info irq_info;
+>       int i, ret = -1;
+>   
+>       /* Sanity check device */
+> @@ -2797,12 +2797,10 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+>           }
+>       }
+>   
+> -    irq_info.index = VFIO_PCI_ERR_IRQ_INDEX;
+> -
+> -    ret = ioctl(vdev->vbasedev.fd, VFIO_DEVICE_GET_IRQ_INFO, &irq_info);
+> +    ret = vfio_device_get_irq_info(vbasedev, VFIO_PCI_ERR_IRQ_INDEX, &irq_info);
+>       if (ret) {
+>           /* This can fail for an old kernel or legacy PCI dev */
+> -        trace_vfio_populate_device_get_irq_info_failure(strerror(errno));
+> +        trace_vfio_populate_device_get_irq_info_failure(strerror(-ret));
+>       } else if (irq_info.count == 1) {
+>           vdev->pci_aer = true;
+>       } else {
+> @@ -2911,17 +2909,18 @@ static void vfio_req_notifier_handler(void *opaque)
+>   
+>   static void vfio_register_req_notifier(VFIOPCIDevice *vdev)
+>   {
+> -    struct vfio_irq_info irq_info = { .argsz = sizeof(irq_info),
+> -                                      .index = VFIO_PCI_REQ_IRQ_INDEX };
+> +    struct vfio_irq_info irq_info;
+>       Error *err = NULL;
+>       int32_t fd;
+> +    int ret;
+>   
+>       if (!(vdev->features & VFIO_FEATURE_ENABLE_REQ)) {
+>           return;
+>       }
+>   
+> -    if (ioctl(vdev->vbasedev.fd,
+> -              VFIO_DEVICE_GET_IRQ_INFO, &irq_info) < 0 || irq_info.count < 1) {
+> +    ret = vfio_device_get_irq_info(&vdev->vbasedev, VFIO_PCI_REQ_IRQ_INDEX,
+> +                                   &irq_info);
+> +    if (ret < 0 || irq_info.count < 1) {
+>           return;
+>       }
+>   
+> diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
+> index ffb3681607..9a21f2e50a 100644
+> --- a/hw/vfio/platform.c
+> +++ b/hw/vfio/platform.c
+> @@ -474,10 +474,10 @@ static bool vfio_populate_device(VFIODevice *vbasedev, Error **errp)
+>       QSIMPLEQ_INIT(&vdev->pending_intp_queue);
+>   
+>       for (i = 0; i < vbasedev->num_irqs; i++) {
+> -        struct vfio_irq_info irq = { .argsz = sizeof(irq) };
+> +        struct vfio_irq_info irq;
+> +
+> +        ret = vfio_device_get_irq_info(vbasedev, i, &irq);
+>   
+> -        irq.index = i;
+> -        ret = ioctl(vbasedev->fd, VFIO_DEVICE_GET_IRQ_INFO, &irq);
+>           if (ret) {
+>               error_setg_errno(errp, -ret, "failed to get device irq info");
+>               goto irq_err;
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index 666a0b50b4..5b833868c9 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -146,6 +146,9 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
+>   int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
+>                                        uint32_t subtype, struct vfio_region_info **info);
+>   bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type);
+> +
+> +int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
+> +                                struct vfio_irq_info *info);
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+This is breaking the windows build.
+
 
 Thanks,
 
 C.
 
+
+
+>   #endif
+>   
+>   /* Returns 0 on success, or a negative errno. */
 
 
