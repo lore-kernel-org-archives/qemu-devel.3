@@ -4,93 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71948C3ABBB
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 13:27:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5E01C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 13:45:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBvqG-0001MP-7l; Mon, 05 May 2025 09:26:44 -0400
+	id 1uBw85-0005Z0-E0; Mon, 05 May 2025 09:45:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uBvqD-0001Ln-PK
- for qemu-devel@nongnu.org; Mon, 05 May 2025 09:26:41 -0400
-Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ (Exim 4.90_1) (envelope-from <paolo.bonzini@gmail.com>)
+ id 1uBw83-0005Xf-WD; Mon, 05 May 2025 09:45:08 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uBvqB-00072F-3o
- for qemu-devel@nongnu.org; Mon, 05 May 2025 09:26:41 -0400
-Received: by mail-pl1-x641.google.com with SMTP id
- d9443c01a7336-22928d629faso40156185ad.3
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 06:26:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <paolo.bonzini@gmail.com>)
+ id 1uBw80-0003Kb-TG; Mon, 05 May 2025 09:45:07 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-43cf0d787eeso40676235e9.3; 
+ Mon, 05 May 2025 06:45:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746451597; x=1747056397; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0QTPUwEj2WuOHn4mfaxMr2Vz3SFLgvMzMGm+xsMVPRs=;
- b=c6IKPVV4YGKhtXiDk6adB7ZGYoot65myHynQOJxT8Q8On7n2GIMXSQRvti+rHr1xPD
- Qjz0qI82Cni5n7FNelKiICS/8QRFFVy3N2eD86QudwiwUPPftTj6t7ylJ2G+Mj7heQ41
- Gxle6FYan9zzHkF0vMzEggZrqLMqIkXVViVfvasD92fDBcDIjubgakqqKtaSmzk+qbMF
- 53H5nlivzxGK8A0ZfO9v6K56Snj/oDl5Qmud10a4896L2tbXccJqA8VKvJyMk2KY8ydY
- QXWB68a9Bj3CNi17XtA4E4e5R6lCoxc6Q39Xn9ACE9p81kbpyMVqGNdxf4S0jPmQLhDD
- UJoA==
+ d=gmail.com; s=20230601; t=1746452702; x=1747057502; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=R/BWpzrI2AEDQAX4gOs0GXLgtTs2Bpzo+sRZblVyG+I=;
+ b=WqIQZJfdwEFMqYmBF0pS7KgYiTbCiUe+mTIHyVoNPlT6L1yooMd4q3Np7e5nBZcO3U
+ An/0JLJCq49Po+ipZWa9Fn6sBgNLbjBMSa7Jzz+1kORFnE7DiKKDwYdvNIZttD1bpOWM
+ iX8qE/IMFyUhJM8pOL3TSkL/FpUro13DeCoOiQZiFz/qQh2BxUW15UYkPvsfZkTCCJxv
+ cSaFUeSdRRE8oh2fmdHToYpiG4MZcSTHzogD84sr7skV6nNfaN47/bbVndKb7ExDpagG
+ BayL4IeQ5xZe7v6RQokt84ATNrdAj2O/VjwluMzDylj5LkgjEvGhG8mTy4de4mNpKnxG
+ 3VSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746451597; x=1747056397;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0QTPUwEj2WuOHn4mfaxMr2Vz3SFLgvMzMGm+xsMVPRs=;
- b=YTJIXG+GFsUguDa1RgkW+/9OzvsSl3JIaSnSFvDlDyuADZpI92+6jkrNqBGLtVuGOt
- bm0krA7k3NYmcDFRO+08m2PMVAvE8UoST27fk8qxbR8/dSRhW2Qh+VlJbBhqceUBQ+cC
- dxB9U9yVpIvGIJ7SBaAW2/ZuNI5LV9J29vnnpVVM38Ul5cmVRQXclEFHkPw/nHV16kLU
- a3KSdYSaD9OnjyTmOWtmmyQVm9IiouZ3s3VWStCd6Vl73aIKqpSZ0+THCIRSKwc/Syd/
- k1KzfbLRs6RWZWSZQt5CKyneEhxU8rMfQy7cCHWhClLjv7xA04zpkdINPjBovFPCeLwx
- QEQw==
+ d=1e100.net; s=20230601; t=1746452702; x=1747057502;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R/BWpzrI2AEDQAX4gOs0GXLgtTs2Bpzo+sRZblVyG+I=;
+ b=mE2HlleYHaVvPwBoFE0s0hl2iKCOKdQHWuUjGncWowsLveHov83BL5WtGc4zhyQDrb
+ 7gjRgeC0DGqWBZcl6OFng2xvzyo1QUV/sjebQ1uubcK3V60Irdwa2ezeN8smBu6MwcPg
+ z6QIKAw1N4YxvxfpYjpyq8DPoW+fBx3rzBfrSJpWj1LfYcaQF+mX/dRBHD8M1PslGXjr
+ /m+sS8j5NhabDgPuePRxvcCp0KnR5+6rdxYSpu/6gyLXjUytjuy1yNjyzbTnAIay1E/Y
+ 60jL+LF36hkQM3rZjtVb5rLEKdAAU0cSkTkubzALNRdccqXANfBn+nK3zDVcG22LDomb
+ gl4g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFjSVlPTcmHMqBNnXIY3po3YCVoVHNIbSY2kQPqWU6pgJr/8AGq2aVLMYS41OttRmZ7yl4ExHjAs+k@nongnu.org
-X-Gm-Message-State: AOJu0YzLLyeuxKJAmaLjYxjw5t6xHpZLyINst4XNg7FLScP72VZ8MHyv
- UTQ8rq3XvHB+iaLlkMg+njVhZXblU6MF9KZJbNSyceCQ4o0qh0Y6m+kJPGlRUdsv36BAmIt7zGK
- SCrPliQ==
-X-Gm-Gg: ASbGncvgY7poc/MnqvjyuxzGgOYRMP6DRK7SwzvTt3xWA3XeE1z96bq5gxwOUUpTjMY
- XkLvR0ZzNuQ/i8SFRaFDAr+Q6rn9aXQHVAhWhLEeEDUCEWDnWwYKm3jREGS7hBvnd/xN3lY5Tc9
- F7p3GO+boW6IPWJ9ZsIw8+cUqoyG58mYgsVbuSjew3NE9cQm8cEw31EPFZavXl1tOgpbzkZjaZs
- GG7HiJavDYJ3amuHuWQw5Ozx1UZFbMVaVkXJ0QX0oqqksDZkee9aae6rGxnD35HFHkQAK2ALAT5
- /NAh/eirkL2yAL8REVFc3WuyAxnAPp2qC7XQme/K2AxD7FoPQXjQZsLZHiU39fjb9+ExcuEAdiA
- Y1qdOTblbYlea3+7uHMw=
-X-Google-Smtp-Source: AGHT+IGjUezE/Hhk6x2fCfMkoMfHmbOcvxP8gFblcswbm3fgLzXAeqAkHUn+C+hzfH6tiTFLlYsGGg==
-X-Received: by 2002:a17:902:d505:b0:220:d601:a704 with SMTP id
- d9443c01a7336-22e1e8eaf8dmr85391285ad.18.1746451596757; 
- Mon, 05 May 2025 06:26:36 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:b400:8604:7950:93ed:53e9:9290?
- ([2804:7f0:b400:8604:7950:93ed:53e9:9290])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30a4748e775sm8881194a91.27.2025.05.05.06.26.33
+ AJvYcCWZR5rlU5TYscahaG9XgM9nK3dOijvoGU/R5aqmNQZ8eW7lziPF2QwmxGZjPY3Y2ApfYPk0Q8FNJw0=@nongnu.org
+X-Gm-Message-State: AOJu0YzB7NHQBErghZqZlx8AwFbsata0fdlhlXfv1DB9NhyGm1ow76Ck
+ cQPvCUrbpnWbIuFRd4CjmRX+DM0sLMplJLlFSGPhSVhePVf9y41zbPMeVA==
+X-Gm-Gg: ASbGncsQ1cafj4TQvO6+0iWJpkGbWAUQhM4RmNUfUqQ66vvKTaCN2v7NCu7zR2NZUje
+ DpL/UqESexNymzLhfaM/JuhG4IgtpZralERyw4IVGEZBLn4nFORkO0SQd3/FR1GzPILbzMDuQwk
+ +JJBvGE4utsBq6kO7yEbHlzSdFDKmdEBQAX+DtBcBT3D3Mez4jcT0b6XnWx6y5/hJaO5SOKjtdB
+ z1YSZs7voMxy3DSPohayGcItxXdBPltmEf3LzCZ3KwYfyrt26zaoZfPtuOO8iia+ircDh21T2al
+ /NxqaFDRa7sb47ozEFb7S+1Eo8TOsna9lzzqFzDP8HYT84vpXg==
+X-Google-Smtp-Source: AGHT+IGOiVvOuJ1CvdeyG/+JzO8VNLxmF8VZ1P2oRq2vEuZtfC4kEdfIKfUwqFDEko+Bw7yEWVCNyg==
+X-Received: by 2002:a05:600c:4e88:b0:441:b19c:96fe with SMTP id
+ 5b1f17b1804b1-441c48bdfe5mr63798295e9.10.1746452701678; 
+ Mon, 05 May 2025 06:45:01 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.54.106])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-441b89ee39esm133392855e9.21.2025.05.05.06.44.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 06:26:36 -0700 (PDT)
-Message-ID: <6a52f974-3e13-49ba-bfeb-e30e683e4ce5@linaro.org>
-Date: Mon, 5 May 2025 10:26:31 -0300
+ Mon, 05 May 2025 06:45:00 -0700 (PDT)
+Message-ID: <7101782c-f642-41e6-8f3a-7061ca722c99@gnu.org>
+Date: Mon, 5 May 2025 15:44:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 00/24] APCI PCI Hotplug support on ARM
-To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com,
- shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com
-References: <20250428102628.378046-1-eric.auger@redhat.com>
+Subject: Re: Rust in QEMU update, April 2025
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Daniel Berrange <berrange@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <d3d1944e-2482-4aa7-b621-596246a08107@gnu.org>
+ <CAAjaMXZhq_uv-w_9TT3++HAcO7r_OhriJA0RKWs8YqY_ryjK4w@mail.gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
 Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20250428102628.378046-1-eric.auger@redhat.com>
+Autocrypt: addr=bonzini@gnu.org; keydata=
+ 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
+In-Reply-To: <CAAjaMXZhq_uv-w_9TT3++HAcO7r_OhriJA0RKWs8YqY_ryjK4w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x641.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=paolo.bonzini@gmail.com; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,174 +141,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
-
-On 4/28/25 07:25, Eric Auger wrote:
-> This series enables APCI PCI hotplug/hotunplug on ARM
-> and makes it default for 10.1 machine type. This aligns with
-> x86 q35 machine. Expected benefits should be similar to
-> those listed in [1].
+On 5/5/25 14:26, Manos Pitsidianakis wrote:
+>>     Something I do notice is that there's some inconsistency in
+>>     how we've structured things between the two devices, e.g.:
+>>
+>>     * the pl011 main source file is device.rs, but the hpet one
+>>       is hpet.rs
+>>
+>>     * some places we use the actual names of bits in registers
+>>       (eg Interrupt's OE, BE, etc consts), and some places we
+>>       seem to have renamed them (e.g. pl011 Flags has clear_to_send
+>>       not CTS, etc)
+>>
+>>     * pl011 has defined named fields for its registers, but hpet does
+>>       things like::
+>>
+>>          self.config.get() & (1 << HPET_CFG_LEG_RT_SHIFT) != 0
+>>
+>>     * pl011 has a split between PL011State and PL011Registers,
+>>       but HPET does not. As I mentioned in an email thread a
+>>       little while back, I feel like the State/Registers split
+>>       is something we should either make a more clear deliberate
+>>       formalised separation that's part of how we recommend
+>>       device models should be designed
+>>
+>>     [...]
+>>
+>>     I think it would be good to figure out what we think is the
+>>     right, best style, for writing this kind of thing, and be
+>>     consistent. We have long standing problems in the C device
+>>     models where there are multiple different styles for how
+>>     we write them, and it would be good to try to aim for
+>>     more uniformity on the Rust side.
 > 
-> The infrastructure used in x86 is heavily reused and a
-> huge part of the series consists in moving code from
-> hw/i386/acpi-build.c to a generic place and slightly
-> adapting it to make it usable on ARM. The DSDT table is
-> augmented to support ACPI PCI hotplug elements.
+> The pl011 stuff was deliberate decisions:
 > 
-> On ARM we use use a GED event to notify the OS about
-> hotplug events.
+> - device.rs vs pl011.rs: the device was written as a crate, so it's
+> essentially its own library, plus pl011/src/pl011.rs would be
+> redundant :)
+
+Right, I think Peter's comment was more about moving hpet.rs to 
+device.rs, and merging PL011's device_class.rs into its device.rs.
+
+>    That said, it's not important, we can choose either convention. I
+> like the less redundancy and separation of concerns: if pl011 gets
+> converted into a module in a future refactor, it could keep its
+> functionality split into different submodules and `pl011.rs` or
+> `pl011/mod.rs` would be the device module.
+
+I think it's okay to decide that Rust devices will have mini 
+directories: it's just the style of the language and Cargo more or less 
+relies on having lib.rs.
+
+In a vacuum I would prefer to have hw/char/pl011.rs for what is now 
+rust/hw/char/pl011/lib.rs, and place the other files in hw/char/pl011; 
+IIRC rustc accepts that style.  However we still rely on Cargo for some 
+things(*), and as long as we do there's not much we can do about it.
+
+     (*) notably "cargo fmt".  Everything else is more or less handled
+         by Meson starting with 1.8.0.
+
+> - Using typed registers instead of constants: yes coming from C I can
+> understand it can feel unfamiliar. I specifically wanted to make the
+> register fields typed to avoid making the implementation a "C port",
+> and I think it's worthwhile to use the type system as much as
+> possible.
+
+Peter's comments (especially the second and third) were about two kinds 
+of inconsistencies:
+
+1) HPET not using bilge.  This was because Zhao looked at HPET from the 
+opposite direction compared to what you did on pl011, namely avoiding 
+unsafe and modeling the BQL properly, and sacrificed a bit the usage of 
+idiomatic code like what bilge provides.
+
+I think that you made the right choice for the first device and he made 
+the right choice for the second device.  But now someone should look at 
+HPET and do the work that you did to adopt bilge.
+
+2) The choice between bilge on one side, and bitflags or integers on the 
+other.  For pl011 you kept interrupt bits as integers for example, and 
+this is related to the topic of (non-)availability of const in traits...
+
+>    A straight C port would result into integer constants with integer
+> typed fields everywhere for registers/flags.
+>    Yes, From/Into aren't const, at least yet, but it's not really a
+> hotpath performance wise. I think non-dynamically dispatched trait
+> methods can be inlined by annotating the `fn from(..)` impl with a
+> `#[inline(always)]` hint but I haven't confirmed this, just
+> speculation.
+
+It's not about hot paths, it's more that 1) you cannot use From/Into in 
+a "static"'s initializer 2) bilge relies a lot on non-const methods in 
+its internal implementation, which makes it quite messy to use it in 
+some places.  See for example this thing for which I take all the blame:
+
+     impl Data {
+         // bilge is not very const-friendly, unfortunately
+         pub const BREAK: Self = Self { value: 1 << 10 };
+     }
+
+and the same would be true of interrupt constants and the IRQMASK array.
+
+The separate bilge and bitflags worlds are what bothers me the most in 
+the experimental devices.  I can see why they would be very confusing 
+for someone who's not had much experience with Rust, and therefore 
+doesn't know *why* they are separate.
+
+>    Again, no strong opinions here. I like the "everything is typed"
+> approach and I think it's worth it to explore it because it allows us
+> to "make invalid/illegal states unrepresentable" as one sage article
+> goes.
+
+I agree, and it's why I think you made the right choice using it for 
+pl011.  With all the unsafe code that you had to use, strong-typing at 
+least showed *something* that Rust could provide compared to C(*).  And 
+I like the strong typing too, even if I'm not sure I like bilge's 
+*implementation* that much anymore.
+
+I'm not really up for rewriting it, but then I've also done more stupid 
+rewrites in the past. :)
+
+    (*) when we were discussing safety vs. unsafety last summer, I may
+        have sounded dismissive of this kind of benefit.  My point at the
+        time was that unsafe code was so much more complex than C, that
+        the benefit of strong-typing wasn't enough to *offset* the
+        complexity of unsafe code.  But it is absolutely present.
+
+>> Related to this I have found recently the `attrs crate
+>> <https://docs.rs/attrs/>`__, which provides an easy way to parse the
+>> contents of attributes in a procedural macro.
 > 
-> I have not noticed any tests/qtest/bios-tables-test failures
-> neither on x86 nor ARM. x86 DSDT table has not changed.
-> ARM DSDT table definitively has but there are no tests
-> impacted. ARM misses hotplug tests that do exist on x86. This
-> most probably should be considered in the future.
-> 
-> Best Regards
-> 
-> Eric
-> 
-> This series can be found at:
-> https://github.com/eauger/qemu/tree/arm-acpi-pcihp-rfc
-> 
-> [1] [PATCH v6 0/6] Use ACPI PCI hot-plug for Q35
-> https://lore.kernel.org/all/20210713004205.775386-1-jusual@redhat.com/
+> I actually have some WIP patches for this I put a pause on and can
+> continue e.g. https://gitlab.com/epilys/rust-for-qemu/-/commit/c2c97caaaf03273fabc14aee5a4d1499668ddbe3
 
-I've just started to review your series and went to a quick smoke test
-by hotplugging a net adapter and got the following kernel internal error:
+The repository is private, but I look forward to seeing it!  If you want 
+to post an RFC without even any code, just to show what the device code 
+looks like, that would be helpful as it will catch stuff like lack of 
+type safety.
 
-(qemu) device_add virtio-net-pci,bus=pcie.1,addr=0,id=na
-(qemu) [   64.165411] pci 0000:01:00.0: [1af4:1041] type 00 class 0x020000
-[   64.165895] pci 0000:01:00.0: reg 0x14: [mem 0x00000000-0x00000fff]
-[   64.166259] pci 0000:01:00.0: reg 0x20: [mem 0x00000000-0x00003fff 64bit pref]
-[   64.166658] pci 0000:01:00.0: reg 0x30: [mem 0x00000000-0x0003ffff pref]
-[   64.167153] pci 0000:01:00.0: enabling Extended Tags
-[   64.179972] Internal error: synchronous external abort: 0000000096000050 [#1] SMP
-[   64.180719] Modules linked in: aes_ce_blk aes_ce_cipher polyval_ce polyval_generic ghash_ce gf128mul sha2_ce binfmt_misc sha256_arm64 sha1_ce nls_ascii nls_cp437 vfat fat evdev cfg80211 rfkill loop fuse efi_pstore drm dm_mod dax configfs efivarfs qemu_fw_cfg ip_tables x_tables autofs4 ext4 crc16 mbcache jbd2 crc32c_generic virtio_scsi virtio_net scsi_mod net_failover failover virtio_blk scsi_common crct10dif_ce crct10dif_common virtio_pci virtio_pci_legacy_dev virtio_pci_modern_dev virtio_mmio
-[   64.183656] CPU: 0 PID: 23 Comm: kworker/u2:1 Not tainted 6.1.0-30-arm64 #1  Debian 6.1.124-1
-[   64.184071] Hardware name: QEMU QEMU Virtual Machine, BIOS edk2-stable202408-prebuilt.qemu.org 08/13/2024
-[   64.184759] Workqueue: kacpi_hotplug acpi_hotplug_work_fn
-[   64.185320] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   64.185737] pc : acpi_ex_system_memory_space_handler+0x290/0x300
-[   64.186175] lr : acpi_ev_address_space_dispatch+0x124/0x334
-[   64.186490] sp : ffff80000a6bb3b0
-[   64.186663] x29: ffff80000a6bb3b0 x28: ffff0003fcbb08b8 x27: 0000000000000000
-[   64.187126] x26: ffff0003fcbb0288 x25: ffff80000a6bb568 x24: 0000000000000001
-[   64.187499] x23: ffff80000a6bb568 x22: 0000000000000004 x21: ffff0000c206cb00
-[   64.187885] x20: 00000000090c0014 x19: 0000000000000020 x18: 0000000000000000
-[   64.188265] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-[   64.188640] x14: 0000000000000000 x13: 4d43c3194dea1791 x12: 4d7a3553e5c937d0
-[   64.189003] x11: 0000000000000001 x10: 0000000000000000 x9 : ffff800008735b34
-[   64.189383] x8 : 0000000000000001 x7 : ffff80000873c850 x6 : 00000000000000f8
-[   64.189778] x5 : ffff0000c206cb00 x4 : 0000000000000000 x3 : 00000000090c0018
-[   64.190163] x2 : ffff80000a9af014 x1 : 00000000090c0018 x0 : 0000000000000001
-[   64.190734] Call trace:
-[   64.191086]  acpi_ex_system_memory_space_handler+0x290/0x300
-[   64.191696]  acpi_ev_address_space_dispatch+0x124/0x334
-[   64.192042]  acpi_ex_access_region+0xe4/0x2e0
-[   64.192287]  acpi_ex_field_datum_io+0x88/0x200
-[   64.192509]  acpi_ex_write_with_update_rule+0xd4/0x120
-[   64.192793]  acpi_ex_insert_into_field+0x210/0x2b0
-[   64.193048]  acpi_ex_write_data_to_field+0xa0/0x190
-[   64.193298]  acpi_ex_store_object_to_node+0x150/0x240
-[   64.193527]  acpi_ex_store+0x144/0x300
-[   64.193726]  acpi_ex_opcode_1A_1T_1R+0x218/0x580
-[   64.193971]  acpi_ds_exec_end_op+0x24c/0x4b0
-[   64.194227]  acpi_ps_parse_loop+0x100/0x6a0
-[   64.194477]  acpi_ps_parse_aml+0x94/0x3b0
-[   64.194674]  acpi_ps_execute_method+0x128/0x25c
-[   64.194922]  acpi_ns_evaluate+0x1f0/0x2d0
-[   64.195148]  acpi_evaluate_object+0x138/0x2d0
-[   64.195380]  acpi_evaluate_dsm+0xb8/0x134
-[   64.195613]  acpi_check_dsm+0x34/0xdc
-[   64.195822]  smbios_attr_is_visible+0x5c/0xb0
-[   64.196089]  internal_create_group+0xd0/0x3d0
-[   64.196335]  internal_create_groups+0x58/0xe0
-[   64.196584]  sysfs_create_groups+0x20/0x30
-[   64.196813]  device_add_groups+0x18/0x2c
-[   64.197039]  bus_add_device+0x48/0x160
-[   64.197260]  device_add+0x3a4/0x85c
-[   64.197463]  pci_device_add+0x308/0x660
-[   64.197680]  pci_scan_single_device+0xe4/0x114
-[   64.197941]  pci_scan_slot+0x70/0x1fc
-[   64.198155]  acpiphp_rescan_slot+0x90/0xa4
-[   64.198366]  acpiphp_hotplug_notify+0x2a8/0x300
-[   64.198584]  acpi_device_hotplug+0x138/0x4c0
-[   64.198819]  acpi_hotplug_work_fn+0x2c/0x4c
-[   64.199045]  process_one_work+0x1f4/0x460
-[   64.199277]  worker_thread+0x188/0x4e0
-[   64.199492]  kthread+0xe0/0xe4
-[   64.199671]  ret_from_fork+0x10/0x20
-[   64.200114] Code: f90002e0 52800000 17ffff97 f94002e0 (b9000040)
-[   64.200820] ---[ end trace 0000000000000000 ]---
+BTW, if you need it to model reflection better I think it is acceptable 
+to assume const_refs_to_static is present.
 
-(qemu)
-
-This is a Debian Bookworm stock kernel 6.1. I built QEMU from your GH branch.
-
-The machine was started with:
-
-./qemu-system-aarch64 -m 16G -nographic -machine type=virt,gic-version=max -cpu cortex-a57 -initrd /mnt/initrd.img-6.1.0-30-arm64 -kernel /mnt/vmlinuz-6.1.0-30-arm64 -append "root=/dev/vda1 console=ttyAMA0,115200 acpi=force" -device virtio-scsi-pci -device virtio-blk-pci,drive=root -drive if=none,id=root,file=/mnt/debian-12-nocloud-arm64.qcow2 -device pcie-root-port,id=pcie.1,chassis=1,slot=1 -bios ./pc-bios/edk2-aarch64-code.fd
-
-./pc-bios/edk2-aarch64-code.fd is the one found under ./build dir, so nothing special.
-
-It seems Linux acpi crashed when ingesting the _DSM method but I could not
-figure out what exactly in it could cause it.
-
-
-Cheers,
-Gustavo
-
-> 
-> Eric Auger (24):
->    hw/pci/pcie_port: Fix pcie_slot_is_hotpluggbale_bus typo
->    hw/acpi/ged: Fix wrong identation
->    hw/i386/acpi-build: Fix build_append_notfication_callback typo
->    hw/i386/acpi-build: Make aml_pci_device_dsm() static
->    hw/arm/virt: Introduce machine state acpi pcihp flags and props
->    hw/acpi: Rename and move build_x86_acpi_pci_hotplug to pcihp
->    hw/pci-host/gpex-acpi: Add native_pci_hotplug arg to
->      acpi_dsdt_add_pci_osc
->    hw/pci-host/gpex-acpi: Split host bridge OSC and DSM generation
->    hw/pci-host/gpex-acpi: Propagate hotplug type info from virt machine
->      downto gpex
->    hw/i386/acpi-build: Turn build_q35_osc_method into a generic method
->    hw/pci-host/gpex-acpi: Use build_pci_host_bridge_osc_method
->    hw/i386/acpi-build: Introduce build_append_pcihp_resources() helper
->    hw/acpi/pcihp: Add an AmlRegionSpace arg to build_acpi_pci_hotplug
->    hw/i386/acpi-build: Move build_append_notification_callback to pcihp
->    hw/i386/acpi-build: Move remaining pcihp generic functions to pcihp
->    hw/i386/acpi-build: Introduce and use acpi_get_pci_host
->    hw/arm/virt-acpi-build: Add DSDT additions for PCI hotplug
->    hw/acpi/ged: Prepare the device to react to PCI hotplug events
->    hw/acpi/ged: Call pcihp plug callbacks in hotplug handler
->      implementation
->    hw/acpi/ged: Support migration of AcpiPciHpState
->    hw/core/sysbus: Introduce sysbus_mmio_map_name() helper
->    hw/arm/virt: Let virt support pci hotplug/unplug GED event
->    hw/arm/virt: Plug pcihp hotplug/hotunplug callbacks
->    hw/arm/virt: Use ACPI PCI hotplug by default
-> 
->   hw/i386/acpi-build.h                   |   4 -
->   include/hw/acpi/aml-build.h            |   2 +
->   include/hw/acpi/generic_event_device.h |   5 +
->   include/hw/acpi/pci.h                  |   4 +-
->   include/hw/acpi/pcihp.h                |  14 +
->   include/hw/arm/virt.h                  |   4 +
->   include/hw/pci-host/gpex.h             |   1 +
->   include/hw/sysbus.h                    |   1 +
->   hw/acpi/aml-build.c                    |  50 +++
->   hw/acpi/generic_event_device.c         |  64 +++-
->   hw/acpi/pci.c                          |  20 ++
->   hw/acpi/pcihp.c                        | 428 +++++++++++++++++++++-
->   hw/arm/virt-acpi-build.c               |  26 ++
->   hw/arm/virt.c                          | 100 +++++-
->   hw/core/sysbus.c                       |  11 +
->   hw/i386/acpi-build.c                   | 475 +------------------------
->   hw/pci-host/gpex-acpi.c                |  75 +---
->   hw/pci/pcie_port.c                     |   4 +-
->   hw/arm/Kconfig                         |   2 +
->   19 files changed, 748 insertions(+), 542 deletions(-)
-> 
-
+Paolo
 
