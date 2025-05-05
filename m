@@ -4,103 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42DCCC3ABB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 14:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48077C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 15:00:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBxEK-0005GH-4S; Mon, 05 May 2025 10:55:40 -0400
+	id 1uBxIn-0006OZ-Hk; Mon, 05 May 2025 11:00:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uBxEI-0005G1-BN
- for qemu-devel@nongnu.org; Mon, 05 May 2025 10:55:38 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBxIi-0006LQ-KV
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 11:00:12 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uBxEG-0005s6-E0
- for qemu-devel@nongnu.org; Mon, 05 May 2025 10:55:38 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 7B4401F7B5;
- Mon,  5 May 2025 14:55:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1746456934; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8kuQk06jPlnXHl4jkM1deCABhMuhpcbTGONmxdlOmgQ=;
- b=fI4mAzpHVeLKM/3/ENksvYjrnfUMrz49UODLHvNP8tc9vxXdCBgbJO9Xq+Npazn94lNLwW
- 2K3XAxx4tw68DdxRdMHIW2ky5VBIpOlNKG/bAQNh+tsYa/gSc3ndIrGjaJjBqjlBryroks
- NAVX2NSnX7V2eFFCUmEn+dNkf/7KxKo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1746456934;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8kuQk06jPlnXHl4jkM1deCABhMuhpcbTGONmxdlOmgQ=;
- b=L2Cpm2I3x3gKSCM43gjTPEgx6QV4c30sG/di2DVmpTJ+zi/SkHSD2Ztj/pxn98xabghXkt
- VUJbwVXaKVyp6uDA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1746456934; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8kuQk06jPlnXHl4jkM1deCABhMuhpcbTGONmxdlOmgQ=;
- b=fI4mAzpHVeLKM/3/ENksvYjrnfUMrz49UODLHvNP8tc9vxXdCBgbJO9Xq+Npazn94lNLwW
- 2K3XAxx4tw68DdxRdMHIW2ky5VBIpOlNKG/bAQNh+tsYa/gSc3ndIrGjaJjBqjlBryroks
- NAVX2NSnX7V2eFFCUmEn+dNkf/7KxKo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1746456934;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8kuQk06jPlnXHl4jkM1deCABhMuhpcbTGONmxdlOmgQ=;
- b=L2Cpm2I3x3gKSCM43gjTPEgx6QV4c30sG/di2DVmpTJ+zi/SkHSD2Ztj/pxn98xabghXkt
- VUJbwVXaKVyp6uDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EB94B1372E;
- Mon,  5 May 2025 14:55:33 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id C8JYKWXRGGhYUgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 05 May 2025 14:55:33 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH v2] tests/qtest/libqos: Avoid double swapping when using
- modern virtio
-In-Reply-To: <20250430132817.610903-1-thuth@redhat.com>
-References: <20250430132817.610903-1-thuth@redhat.com>
-Date: Mon, 05 May 2025 11:55:30 -0300
-Message-ID: <877c2vgl99.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uBxIc-0006JK-34
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 11:00:07 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-ac29fd22163so763879866b.3
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 08:00:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746457204; x=1747062004; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lxhLTXmJ0AJQAwAnZJU2eDKfxi5IxqiJLmQpm7J5aNc=;
+ b=Uw6D2R0MBQ1PFGnqjwhHVTrCo9RZSmYqzpK9vuGyjbC5eSOSujabDfSRQSa3BjYF80
+ wGEpn3xaotAakAG9cAKqWOloFyx5GIxwWagJO+0Ggi07hc7fvwSbwh+TV9Hi5V3J8VhX
+ LMeY0Rba9kKGaQRCNZnVbWLuNxtnIDZdwwsI4NQyaON5EAhkYYXC6f86wfAe7N/pAeIT
+ m943khvgc7TVBBdRJFNc6ICLmiFUaD4Smt8aOJH7ugIqz9gQgpNlnn1bWJlixbFHYy5i
+ XczrpWSxyoGTBNvZZCJS03H2PY3DAA/WvAsYi8/HDet5mEqrN6iLECX78IW0K1IvTnvI
+ t1JQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746457204; x=1747062004;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lxhLTXmJ0AJQAwAnZJU2eDKfxi5IxqiJLmQpm7J5aNc=;
+ b=tSWNY/YrlmICSOXwWf7jhucy5LQi0WF7YDDZWGuL0k6/4AjCp8bTNv8vXPm8d8kvh1
+ sXgl2Dt8cPVR9ZPImAC9q1GgNi6MHBY+rVKFj9yKP+cHj0ARbHNpR/aRCmcz0yzbLauX
+ KRDp3V0cBSnpwp8esxaDK+VGh5yDkLvrkhxJF9L4z7OsVawDtdCPudep8a6+2dZjzHmQ
+ p4fcgg/okxMxuL+X6Qv3E0eJ2aexVVsjSTrql6/QgbCk7WAGKM/b7M/TCRsCtgkJRx9m
+ oaW3g+PieL0Lfkf89TG/36K4A+1ZDzBQGSzaHYsgZGRfwDw0HT7jJPoJLtkYUMaGeeyF
+ A8mQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU0v0VHZZNVXNmsLKNaV7SQ0/EvR0Qo7KlqvaNbmRECprepkEwPPTpf0PAV173IQqG92wlZR4apjIxz@nongnu.org
+X-Gm-Message-State: AOJu0YyevfYGEb0JVkewKkQFps7CoHbCUFSdFaIcz6z6mi0H9Fl9nEu1
+ TaSnPBT5//pZ0JnLJX30G5XZe4RoUybQnvzk/OVaeCRKzBzhw6peBCx9lMC0CrU=
+X-Gm-Gg: ASbGnctyxxTtCvhor5+Wv++FONLNwivTc+0QgU3sMQtemc4QJOLD5gwEXkMOT496AB+
+ bmB4BwyZmxVt7clldjcOplb+jkSxQvtGl+13cNaDKDTIQh48Fxc/9FUJxGsELimm8slbOFoLhF8
+ PFRU6gvWS8AKT/rIQLSJP6a5JcwHXuI8afR5XJyvAD6g9s/tqHXTe/8Z7uCrHLCcDkBFx/33h2h
+ JzBJfCwV0ZRgjyRwIPWnWI0vjDNVCo7iPnfwyTzKjs/YlRDW9M0kZ+H06drActykOtM3YYy+HU1
+ ZnfGhnVVmqW9Jwxpde4Yi3z3YlmbNQ5MRdiMqxIPoxqRLZbZq5iDrPTowf5fkvpGzN7/syLUR/z
+ 1whY=
+X-Google-Smtp-Source: AGHT+IGOntcp2l3f3Nm9fhgijCDbbZLcb+qL63wWRkH8KANa1xS30JcpaW7u4IaTjz6tZp/vB9SK1A==
+X-Received: by 2002:a17:907:94c5:b0:acb:32c5:43ff with SMTP id
+ a640c23a62f3a-ad1a45beadcmr688074366b.0.1746457204050; 
+ Mon, 05 May 2025 08:00:04 -0700 (PDT)
+Received: from [10.194.152.213] (129.21.205.77.rev.sfr.net. [77.205.21.129])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ad1891a2d87sm503791966b.45.2025.05.05.08.00.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 May 2025 08:00:03 -0700 (PDT)
+Message-ID: <c04dad69-7727-4e16-ab19-6f8188e3738b@linaro.org>
+Date: Mon, 5 May 2025 16:59:59 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.979]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/12] target/mips: Fill in TCGCPUOps.pointer_wrap
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: foss@percivaleng.com
+References: <20250504205714.3432096-1-richard.henderson@linaro.org>
+ <20250504205714.3432096-8-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250504205714.3432096-8-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,111 +102,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
-
-> From: Thomas Huth <thuth@redhat.com>
->
-> The logic in the qvirtio_read/write function is rather a headache,
-> involving byte-swapping when the target is big endian, just to
-> maybe involve another byte-swapping  in the qtest_read/write
-> function immediately afterwards (on the QEMU side). Let's do it in
-> a more obvious way here: For virtio 1.0, we know that the values have
-> to be little endian, so let's read/write the bytes in that well known
-> order here.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+On 4/5/25 22:57, Richard Henderson wrote:
+> Check 32 vs 64-bit addressing state.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  This also decreases our usage of qtest_big_endian() which might (or
->  might not) get helpful for the universal binary one day...
->
->  v2: Use leXX_to_cpu() / cpu_to_leXX() instead of doing it manually
->
->  tests/qtest/libqos/virtio.c | 44 ++++++++++++++++++++++++-------------
->  1 file changed, 29 insertions(+), 15 deletions(-)
->
-> diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
-> index 2e7979652fd..5a709d0bc59 100644
-> --- a/tests/qtest/libqos/virtio.c
-> +++ b/tests/qtest/libqos/virtio.c
-> @@ -25,49 +25,63 @@
->   */
->  static uint16_t qvirtio_readw(QVirtioDevice *d, QTestState *qts, uint64_t addr)
->  {
-> -    uint16_t val = qtest_readw(qts, addr);
-> +    uint16_t val;
->  
-> -    if (d->features & (1ull << VIRTIO_F_VERSION_1) && qtest_big_endian(qts)) {
-> -        val = bswap16(val);
-> +    if (d->features & (1ull << VIRTIO_F_VERSION_1)) {
-> +        qtest_memread(qts, addr, &val, sizeof(val));
-> +        val = le16_to_cpu(val);
-> +    } else {
-> +        val = qtest_readw(qts, addr);
->      }
-> +
->      return val;
->  }
->  
->  static uint32_t qvirtio_readl(QVirtioDevice *d, QTestState *qts, uint64_t addr)
->  {
-> -    uint32_t val = qtest_readl(qts, addr);
-> +    uint32_t val;
->  
-> -    if (d->features & (1ull << VIRTIO_F_VERSION_1) && qtest_big_endian(qts)) {
-> -        val = bswap32(val);
-> +    if (d->features & (1ull << VIRTIO_F_VERSION_1)) {
-> +        qtest_memread(qts, addr, &val, sizeof(val));
-> +        val = le32_to_cpu(val);
-> +    } else {
-> +        val = qtest_readl(qts, addr);
->      }
-> +
->      return val;
->  }
->  
->  static void qvirtio_writew(QVirtioDevice *d, QTestState *qts,
->                             uint64_t addr, uint16_t val)
->  {
-> -    if (d->features & (1ull << VIRTIO_F_VERSION_1) && qtest_big_endian(qts)) {
-> -        val = bswap16(val);
-> +    if (d->features & (1ull << VIRTIO_F_VERSION_1)) {
-> +        val = cpu_to_le16(val);
-> +        qtest_memwrite(qts, addr, &val, sizeof(val));
-> +    } else {
-> +        qtest_writew(qts, addr, val);
->      }
-> -    qtest_writew(qts, addr, val);
->  }
->  
->  static void qvirtio_writel(QVirtioDevice *d, QTestState *qts,
->                             uint64_t addr, uint32_t val)
->  {
-> -    if (d->features & (1ull << VIRTIO_F_VERSION_1) && qtest_big_endian(qts)) {
-> -        val = bswap32(val);
-> +    if (d->features & (1ull << VIRTIO_F_VERSION_1)) {
-> +        val = cpu_to_le32(val);
-> +        qtest_memwrite(qts, addr, &val, sizeof(val));
-> +    } else {
-> +        qtest_writel(qts, addr, val);
->      }
-> -    qtest_writel(qts, addr, val);
->  }
->  
->  static void qvirtio_writeq(QVirtioDevice *d, QTestState *qts,
->                             uint64_t addr, uint64_t val)
->  {
-> -    if (d->features & (1ull << VIRTIO_F_VERSION_1) && qtest_big_endian(qts)) {
-> -        val = bswap64(val);
-> +    if (d->features & (1ull << VIRTIO_F_VERSION_1)) {
-> +        val = cpu_to_le64(val);
-> +        qtest_memwrite(qts, addr, &val, sizeof(val));
-> +    } else {
-> +        qtest_writeq(qts, addr, val);
->      }
-> -    qtest_writeq(qts, addr, val);
->  }
->  
->  uint8_t qvirtio_config_readb(QVirtioDevice *d, uint64_t addr)
+>   target/mips/cpu.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
 
-Queued to qtest-next, thanks!
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
