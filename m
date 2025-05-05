@@ -4,153 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0F0CC3ABB0
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C434C3ABB0
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 08:44:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBrQ3-0008EL-Bz; Mon, 05 May 2025 04:43:23 -0400
+	id 1uBrQk-0000Fs-7E; Mon, 05 May 2025 04:44:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBrQ1-0008DX-Pm
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:43:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1uBrQS-00009F-6v
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:43:52 -0400
+Received: from internet2.beckhoff.com ([194.25.186.210])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uBrQ0-0002Ve-6A
- for qemu-devel@nongnu.org; Mon, 05 May 2025 04:43:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746434598;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=LENUFBnYS8RBCel73QCj77ITLOtuDQq9zW2t2lZ6EaA=;
- b=OVfTYCE7u+W3HJbj2XQroIjpkbYBhB65vaTo1mZaPzwpEP9WLlJY1ClsiQ/WtwAiyt0+fq
- FzTFa8JezgEeJHxOVRVL1G3/tRa0U2X3yct3Uj+gYF0Fef9Pbr1HisKTTVmGXAwyEWhM7k
- Yne8dqHnpd1ow4zRcl2bJrKZUV4pE+s=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-121-dzxNQhnKO_-vLexXp8mCfA-1; Mon, 05 May 2025 04:43:17 -0400
-X-MC-Unique: dzxNQhnKO_-vLexXp8mCfA-1
-X-Mimecast-MFC-AGG-ID: dzxNQhnKO_-vLexXp8mCfA_1746434596
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43d209dc2d3so18634355e9.3
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 01:43:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746434596; x=1747039396;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LENUFBnYS8RBCel73QCj77ITLOtuDQq9zW2t2lZ6EaA=;
- b=g1Lf9f/yOTeBdWjpy3K5DpZlgYmdVDjdLrnnz4jf4OdA+eiKESGV6Ki9BnDfKLHoJE
- Jx0FdvYLL7usUfiZc6QdDFpgF8hTpnjYA3sS9oI2vlyH40neG9uG8aL/OL/rzb85kRCf
- yWgG9phkKAN+bh4UQZIzK3xdSOwESbdlq+v6vdQ+r058uZPjHwS+K1gDMyfKLb030hl2
- 7j6C7ThmFMCWabb7JhaSk3iwyETguaVK9otzMTC2aMgh6AGYmhLVxqjfjKtv8pE+N3a3
- /DnbUdJhuG7Vqklu8Gxx3jtu7C3zp7ZV50XT6kNpvr1XLmweIN3fwaj43Pvhiw5/jTtW
- pfhg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXi3RGrXE9lWebJg3vY0Ib0mom58CynffzDZ/GzskKOq/hhIgPj5P1i6vZUfAVMjS4KJ6u18zs3mTSr@nongnu.org
-X-Gm-Message-State: AOJu0YyNJLMte6So0prS1iop4zBZ6vyOesfMFbbhAP7wbYvdLav0AlKq
- qPlFD+f9k8xVz9O7X2GlZPq3K9xQWJF0eQZMTbiNGtLep6Huj9lQ4Ibfbxxz1YOpSnjv5j/JgMY
- vxDU0317KrozIklgHI38ZIOWw3S98OQBT6AB6gC/4cqV8JMlAMaOY
-X-Gm-Gg: ASbGncsPtO1Fw6Ekw2AyZ2wkoCV8P2JpM6S9u8FTn/z4SWJPW4Y+geBqPPz56nE7D5v
- GcEpqnylb27EYvoG/KnsvqCN3SANTgGfNoANQhf4NrA+8JO5+OYC/jVh7SgedLIa4pMgsOpkDur
- 38s6YOo9CPe1Tv1Gl6ZXbWjcGr6RquyDqiwHEGBsHbNDb5j5K9xSxv+OdwR2lFiMdFT4ecK5gsw
- 2dATrrR5vU2nJeUWvUmJMrK9BGFaByPoFEK7osUKt7RMH0JoYkrIobFYoO9KUAVtTyr9dBxBZ66
- MRhLvIIb4KFJ0YiZEZm0nLtqnRHHo6E0cSZHYInP
-X-Received: by 2002:a05:600c:1c27:b0:43d:609:b305 with SMTP id
- 5b1f17b1804b1-441c1cfc494mr58813995e9.17.1746434596363; 
- Mon, 05 May 2025 01:43:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGqF4i2uUNUnTBOkAOTt+ipk7O4fiX+7U2GW8bH/A56MaqpqvUBu5Ua4fkcXjoTra+RzJ5k+Q==
-X-Received: by 2002:a05:600c:1c27:b0:43d:609:b305 with SMTP id
- 5b1f17b1804b1-441c1cfc494mr58813745e9.17.1746434595948; 
- Mon, 05 May 2025 01:43:15 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-49-87.web.vodafone.de. [109.42.49.87])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441ae47bf7asm114478775e9.3.2025.05.05.01.43.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 01:43:15 -0700 (PDT)
-Message-ID: <3269869f-e012-4bbf-b02f-05ba619cdad5@redhat.com>
-Date: Mon, 5 May 2025 10:43:12 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/16] hw/i386/pc: Remove deprecated pc-q35-2.6 and
- pc-i440fx-2.6 machines
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- Yi Liu <yi.l.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Amit Shah <amit@kernel.org>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Sergio Lopez <slp@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Yanan Wang <wangyanan55@huawei.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Ani Sinha <anisinha@redhat.com>
-References: <20250501183628.87479-1-philmd@linaro.org>
- <20250501183628.87479-2-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <C.Koehne@beckhoff.com>)
+ id 1uBrQQ-0002Xg-6T
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 04:43:47 -0400
+DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022e; 
+ t=1746434623; bh=EQZjXnptKugQVRCuUneqyDg9xsAxEX1bSlEhEPDPCFw=; h=
+ Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
+ a=ed25519-sha256; b=
+ +eqgQl9Voewx20wrrX8tAD71uVK2oUQ2ZUBwcygoHYtR0GqPetmicGYDqHoqAQkP1V4IN/llog0RsXjSoyC6Ag==
+DKIM-Signature: v=1; c=relaxed/relaxed; d=beckhoff.com; s=mail2022r; 
+ t=1746434623; bh=EQZjXnptKugQVRCuUneqyDg9xsAxEX1bSlEhEPDPCFw=; h=
+ Subject:Subject:From:From:Date:Date:ReplyTo:ReplyTo:Cc:Cc:Message-Id:Message-Id;
+ a=rsa-sha256; b=
+ jDSNDMHwM0R/KkRyXZ1Nc26A3v4UVKL7/ZwfPH/eGqQI8aRWOa84cDLScikLTJRzBU0ciwOVHxrkTwT6xAzgPs25zf2UeIEDJoP7T6GurB+/JZkWJrLCgiDpTH1VxE3NKR1YJcC2C3ImKwPeXnZMAcpOzTbF7j5d7bFhtBtM7gjPUteSksd8SGvDpJgljnLQC0xbUI6HK4lDMUU3h5rhaXnnn7gP018ZY99tzg3musUNdWRGHoQpr2Yt7XBUtwemtR9sZWxFVopJmdlv760hRZOJ+qhnMQ11DJ0Rb8Qig80Wytw70Q/y/DHvvry6FZPLxMwywIY3wlDBd2LBnUgzNA==
+Received: from 172.17.3.7 by INTERNET2.beckhoff.com
+ (TLS-ECDHE-RSA-WITH-AES-256-GCM-SHA384); Mon, 05 May 2025 08:43:43 GMT
+Received: from ex10.beckhoff.com (172.17.2.111) by ex14.beckhoff.com
+ (172.17.3.7) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 5 May
+ 2025 10:43:41 +0200
+Received: from ex10.beckhoff.com ([fe80::3762:2101:fb4e:8ffa]) by
+ ex10.beckhoff.com ([fe80::ab7f:9a91:d220:441b%12]) with mapi id
+ 15.02.1748.010; Mon, 5 May 2025 10:43:41 +0200
+From: =?utf-8?B?Q29ydmluIEvDtmhuZQ==?= <C.Koehne@beckhoff.com>
+To: "tomitamoeko@gmail.com" <tomitamoeko@gmail.com>, "clg@redhat.com"
+ <clg@redhat.com>, "alex.williamson@redhat.com" <alex.williamson@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 2/9] vfio/igd: Always emulate ASLS (OpRegion) register
+Thread-Topic: [PATCH 2/9] vfio/igd: Always emulate ASLS (OpRegion) register
+Thread-Index: AQHbuFgQWEpBCgFRI0WsOJiyNUcWELPDoWIA
+Date: Mon, 5 May 2025 08:43:41 +0000
+Message-ID: <067b7673179229acaea534a58421ac69fa93fe68.camel@beckhoff.com>
+References: <20250428161004.35613-1-tomitamoeko@gmail.com>
+ <20250428161004.35613-3-tomitamoeko@gmail.com>
+In-Reply-To: <20250428161004.35613-3-tomitamoeko@gmail.com>
+Accept-Language: en-US
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250501183628.87479-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.17.62.149]
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="=-ZmGeWQBMnooprOz/qLlJ"
+MIME-Version: 1.0
+Received-SPF: pass client-ip=194.25.186.210;
+ envelope-from=C.Koehne@beckhoff.com; helo=INTERNET2.beckhoff.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.411,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,18 +84,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/05/2025 20.36, Philippe Mathieu-Daudé wrote:
-> These machines has been supported for a period of more than 6 years.
-> According to our versioned machine support policy (see commit
-> ce80c4fa6ff "docs: document special exception for machine type
-> deprecation & removal") they can now be removed.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/i386/pc_piix.c | 14 --------------
->   hw/i386/pc_q35.c  | 14 --------------
->   2 files changed, 28 deletions(-)
+--=-ZmGeWQBMnooprOz/qLlJ
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+On Tue, 2025-04-29 at 00:09 +0800, Tomita Moeko wrote:
+> =EF=BB=BFCAUTION: External Email!!
+> ASLS register represents the base address of OpRegion, and it is
+> programmed with HPA. In IGD passthrough scenario, it needs to be
+> reprogrammed with GPA by guest firmware. To prevent guest accessing
+> wrong memory range, ASLS should always be emulated and cleared.
+>=20
+> In GVT-g scenario, emulating ASLS is unnecessary as access is handled
+> by kvmgt backend [1].
+>=20
+> [1]:
+> https://nospamproxywebp.beckhoff.com/enQsig/link?id=3DBAgAAABJA62ZTEhCO9A=
+AAABrY_qcw0M6GbfmA-k7rdTnC1V9Xvjw6ICEYmTbOt6IWZMsfh2X-PfG-_1bXLcfyp_Hlcdbse=
+t-kq2osW-E9lPT94hoZN2NjovxXaqp2dueSyklxM-bP7ox1AHZkQJVv5lgR-iU3PuZeJMms5zmO=
+uYd9fmL0ePbCC-bv9lN8VEaMAQWUFVb0pGt2t9WWfuMxqO6p0pmItn7Qhonu9rHCbBSelFWN9wb=
+y1aKHKufBkSBgBiuN2lSz9nZ8WTeKQ8ifh8cfOhPiAsVRWSeVpNeuoyV0
+> =C2=A0
+>=20
+> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+> ---
+> =C2=A0hw/vfio/igd.c | 14 +++++++++-----
+> =C2=A01 file changed, 9 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+> index cecc3245b7..ae19456457 100644
+> --- a/hw/vfio/igd.c
+> +++ b/hw/vfio/igd.c
+> @@ -182,10 +182,6 @@ static bool vfio_pci_igd_opregion_init(VFIOPCIDevice
+> *vdev,
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 trace_vfio_pci_igd_opregion_enabled(vdev-
+> >https://nospamproxywebp.beckhoff.com/enQsig/link?id=3DBAgAAABJA62ZTEhCO2=
+wAAADrv
+> lj4V-SebC4SGxyCHAuiWIj2uPV-Sufmo150PAYs9nDhYSQLRd1-
+> LAyUjMsdhaDDdO6n0SKd9uzKZMhYr5A8uAV__w527iEN3jptdWlJNyitq2eScjUl3HLAVTzhe=
+EDnkr
+> yTDojPqVjnFFk1=C2=A0);
+> =C2=A0
+> -=C2=A0=C2=A0=C2=A0 pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
+> -=C2=A0=C2=A0=C2=A0 pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
+> -=C2=A0=C2=A0=C2=A0 pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~=
+0);
+> -
+> =C2=A0=C2=A0=C2=A0=C2=A0 return true;
+> =C2=A0}
+> =C2=A0
+> @@ -583,7 +579,15 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice
+> *vdev, Error **errp)
+> =C2=A0=C2=A0=C2=A0=C2=A0 if ((vdev->features & VFIO_FEATURE_ENABLE_IGD_LP=
+C) &&
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 !vfio_pci_igd_setup_lpc_=
+bridge(vdev, errp)) {
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 goto error;
+> -=C2=A0=C2=A0=C2=A0=C2=A0 }
+> +=C2=A0=C2=A0=C2=A0 }
+> +
+> +=C2=A0=C2=A0=C2=A0 /*
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * ASLS (OpRegion address) is read-only, emulate=
+d
+> +=C2=A0=C2=A0=C2=A0=C2=A0 * It contains HPA, guest firmware need to repro=
+gram it with GPA.
+> +=C2=A0=C2=A0=C2=A0=C2=A0 */
+> +=C2=A0=C2=A0=C2=A0 pci_set_long(vdev->pdev.config + IGD_ASLS, 0);
+> +=C2=A0=C2=A0=C2=A0 pci_set_long(vdev->pdev.wmask + IGD_ASLS, ~0);
+> +=C2=A0=C2=A0=C2=A0 pci_set_long(vdev->emulated_config_bits + IGD_ASLS, ~=
+0);
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 /*
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * Allow user to override dsm size using x-=
+igd-gms option, in multiples
+> of
+
+Reviewed-by: Corvin K=C3=B6hne <c.koehne@beckhoff.com>
+
+
+--=20
+Kind regards,
+Corvin
+
+--=-ZmGeWQBMnooprOz/qLlJ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEgvRSla3m2t/H2U9G2FTaVjFeAmoFAmgYejwACgkQ2FTaVjFe
+Amo4gBAAq7KPo75BM7aoZb4rKazfJuYmFBixjiq2mXxb6Y94luLCN9E6avM+Woa2
+dmaaFtDNxx8qof+eNx7dQNDPRc8auG6Vm6+aegBJ1RmZNVR2ucdz9rE7f6S7ENWW
+QRZ0EXOztfc7SNmiQboCBxldK7S/xe4o8F3xNmmaPa2TkhTb5An5SpMAXcHmVYDm
++/v4qCCSN+xKERdTYOLIoDm5lAzyFHqaETIBVCEads9M/h37IsUcFUYKiWtEUSI2
+oUrg1ZC950w+XwiCVO6p9yd4Zb3zNGWNTQmDXAdG7y7gBqYd4Y8nGii5ANCZ+9VK
+TWSF7mcsiI2fJg78P6OIP/LuigvD5Hy+31Q+FQAJbRtzFakHfHHKgxDUqSD5FSZH
+6asrxo5oD1qblWNZ2cKmlYof2mq5DnlWmcR8VOoE1e8sydXkuomBGZKr5xPKghQS
+FkqEV5ZeNf4gdheT3LOGnycDHOEuAkhj6In4lI1ESoS2DGjiGaOgi1d0/pSiuj/N
+biCjx/Ul5RQH7Uvdw10CB4drnIjYCMgnwsZs54lZOhh/1mAJgLWEHSn7XzPZFzFv
+FbWYc8WRPvBs1QG6LGaTVF4CuokFz1HpAe1ePnwVmbVfoRNu+Du2OMPXQtgYd2J3
+mZLfhxWVD7V3a/2gobU0KUd83XRQHbwqf4YBZGWc9gw7Za/Jtl8=
+=4mzv
+-----END PGP SIGNATURE-----
+
+--=-ZmGeWQBMnooprOz/qLlJ--
 
 
