@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A953CC3ABAA
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 15:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D760C3ABAA
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 15:25:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBxem-0004gW-7n; Mon, 05 May 2025 11:23:00 -0400
+	id 1uBxgr-0005g9-1C; Mon, 05 May 2025 11:25:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uBxej-0004fs-Lp; Mon, 05 May 2025 11:22:57 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1uBxgp-0005fP-80
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 11:25:07 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uBxeh-0000L8-RL; Mon, 05 May 2025 11:22:57 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5f6214f189bso8622987a12.2; 
- Mon, 05 May 2025 08:22:54 -0700 (PDT)
+ id 1uBxgm-0000a0-Bv
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 11:25:06 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5e5c7d6b96fso8445192a12.3
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 08:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746458573; x=1747063373; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746458702; x=1747063502; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8fwRVe8mylFb/HETm6WdFXtSzSfOlSCu9lZYaXy271I=;
- b=JJ0bNP8L2gasxlL1kvNES9M67acCGEUbgY1BICPupbmcau/lFmtB28dnBmcd3EppRl
- YQ2Tktii4qJMnR2wQ8EmOkPDSD6KcpOnVrnzbWV5iSddhgChPbrF/rDIT9iNrbb4QacM
- UO/ETgauyX05f5J0pJyL8peeWtOwXSgVjjsfD1b0wrqvmQaCB2cHPhC2gGJEmgetns97
- enkqjdXFnxCzZow+Fz9l5gwFs2RBV2PU3KUB+NhEtT3fskBXh9ZL5teBW4gyCVMl6EeY
- hBmCq8FBpDZjvggrkQ84tKiXcfCPpBSetLOF6OS23kN7V3CePfPm5ve3GwiGFyPFHThZ
- ABgw==
+ bh=cqpgkJEQuG44aBgrUdUh7xADengRTixbxPrRkQfeC+U=;
+ b=fV1SwGkwrYJATSv5rXpjdkmhOi+KQ2REuM6I/lwDOVv0qtvgWaB8VGb29tuEklDg2X
+ G9B9nspAw6SInNAT51FXu8mcjcIsNc9fbn3CLnUHy6NSaP/jrnm9QGBNoBxy7A1W0n6r
+ xKHR4+XpUnHtY2ajC9Kw3yMONGngI1skUzGfhP1bFAkNIX9VsxQseBnmrpNQ6oujks6r
+ RyPM/DRUW1q4WsuyCdAeJtjzbXTwwJY11skaHeTsxkSaptgU13loZbATnVCsSJwldkad
+ UgEMfH/z6owtuodjl6ABFgzY4aNDykHTMcuQ+V48BQ4oVm5VYBtOV8eZOOX03GRW+dH5
+ vplQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746458573; x=1747063373;
+ d=1e100.net; s=20230601; t=1746458702; x=1747063502;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8fwRVe8mylFb/HETm6WdFXtSzSfOlSCu9lZYaXy271I=;
- b=kXKQqRycbe2qPIgGhv8zap6pqM9dcIxegdxlw4fR29mGZEYPcLw2YfOdpJKoRD1HyY
- U074NK3Qu+/cPHfIGGcVLR9yrXDkmxfDy6WlMEh+IdAcjAFr6d2+9L5w3YGqX+3s3TQ+
- 4v2n7KYTgOg5aOW+Gw9jn1OWc6u7DCwFdhQlqEw479KYs3Yq4IGzw4ay91XhcSVeT3hl
- D6W+zbc2PfjEIEfzgWlyJQyCI/Lb6U4X+KvyfBIkbc8tBKrFze2TL2JN4tfAKGHsyo2K
- dB8UipC+RBjfE3NpvZ8IDp2Gscs9BFlNRlyfEzYyhB25BzgG1+7uBt2rUtqTYsJmXg4t
- V2dQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVtj92slE3w3wTxzB4lgVzLPcdyW/+sxLUvlQxYyTkW1sWPsPq1ZZDKzTh5powooMjX8iZlwODRcTOT@nongnu.org
-X-Gm-Message-State: AOJu0YwoPbA3Tu8gR9du+cM2f0sNCQxDI7Moktvj4aEuUWJz5z8Kwt54
- 2fpvfqh8CtXE01t+5P7TlSwnSp274biTKgYEa26M4ppccJrP8owl0whd1lH/yQUzHRiFrY6CzEr
- G0Xz3zv1kbwFb6BMLFoK8XXTSAf0=
-X-Gm-Gg: ASbGncvF53ocAqCULWkvqglrpQw8goesTT4BKNFrXpRNiPXifqThWevbTjJLWioujFC
- i39RUlN4ZSRy7q4alnrYhL/4PVt3ecJ4ZG9n5CpzztQuTCv/Ur/hwkThuoTYAEzWDSeZDxA6ExK
- j+xb+ilHfrowP6fy7h+sn4ZCxOpCIuBwo=
-X-Google-Smtp-Source: AGHT+IFfXvn4z6bSRiAiXkik081f8SFfHTk6WCdK5GarlruUt2tCAEJD5/FugFMJW7UO6wDdt5lsepliNCOh4BZ0qhc=
-X-Received: by 2002:a05:6402:268c:b0:5fb:3ca1:fb3c with SMTP id
- 4fb4d7f45d1cf-5fb3ca1fcdamr1095633a12.27.1746458573222; Mon, 05 May 2025
- 08:22:53 -0700 (PDT)
+ bh=cqpgkJEQuG44aBgrUdUh7xADengRTixbxPrRkQfeC+U=;
+ b=Ghgspd7gw0uDEjICe8eFRRfMOr+LMhzzauMnFYxygXWdqeGb9kyCel4YUD4bzK7Xiw
+ Bh6XookxM7uQtj0W4f8tlKbT4D4D0dIjrDuEum2PXq0F4KtWAgV8eUN0/viDUDmVo0LX
+ R6FlUE05RwoWScMz99Za+eybIVcL9HuParvzWkbk28z12iO2zBxaFnFNEQYgHddKmV9Y
+ m+8CbD644Mg4RHfwr+uN7xCOSbug6hsbLtiEHABojgVlPFayHGoTnC9XWX3oScrBY+VU
+ iWsS693A3IclkJnzikBFpLNfh9ZSHSwDwPximzwf9bwu30ecJ19EpNosqLxKeita9kLD
+ jxUg==
+X-Gm-Message-State: AOJu0YwUqjfD4Z8JQBTzt4ORIkWd3vqamteG7I5YQ03PF/jXo2dM74Kq
+ n/zfcls53wNssJx+Qte1lsZuLmx3gFmAkptiHGwlG6zFxOcbwaeF8AAwBwzD9RHOT0ClLO9++iT
+ kYXB6q5OYDNzDGs7TfnosWGxTEZc=
+X-Gm-Gg: ASbGncu9rdEUw3pm99pDdXPwIS7nWY8w3viTL64uL9KTCYm9LHp7U6Ad5YGt/5RLYq6
+ hoRs/WZpq1nJd2p6aAcuMtMLXCdbnfXkb9QX/FJMWacncMbgZ116Wa5ktBaTCXRGHPEpNxS5x5T
+ bwzUOwtTtMkp0ErRZpRQs4
+X-Google-Smtp-Source: AGHT+IEC7P++reNlHRUacgQaeuhkVXZBj2923eGInMM4RndaNCwfSh3ApXGAJaz0QYhMMIMtx+AzH7sZ90DdIz1uiIs=
+X-Received: by 2002:a05:6402:13d1:b0:5f7:f55a:e5c8 with SMTP id
+ 4fb4d7f45d1cf-5fab05c131emr5779419a12.21.1746458702183; Mon, 05 May 2025
+ 08:25:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250501092511.24068-1-vsementsov@yandex-team.ru>
-In-Reply-To: <20250501092511.24068-1-vsementsov@yandex-team.ru>
+References: <20250501212113.2961531-1-richard.henderson@linaro.org>
+In-Reply-To: <20250501212113.2961531-1-richard.henderson@linaro.org>
 From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 5 May 2025 11:22:39 -0400
-X-Gm-Features: ATxdqUHWrZuSF81Ny29_hXRP9CzsqaxN5mmc7f_LjQgwwIOzreJSGluVOcucHlo
-Message-ID: <CAJSP0QVwqWFuLcin+bWcjUwxZKMynqTgrGgMO6rrGu97km163g@mail.gmail.com>
-Subject: Re: [PULL v2 0/8] block-job patches 2025-04-29
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
+Date: Mon, 5 May 2025 11:24:49 -0400
+X-Gm-Features: ATxdqUEhuoDMw7_VKPNcvdLMaT7ZGk5nwpa-W1y1Q2EX5DKePeAHzn5qnwFRhBs
+Message-ID: <CAJSP0QV_anbmEZtHp=jjh_Rjg4zmn47L1VP8zgG6Ov1tDEBZ-Q@mail.gmail.com>
+Subject: Re: [PULL 00/59] tcg patch queue
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,83 +93,352 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 1, 2025 at 5:25=E2=80=AFAM Vladimir Sementsov-Ogievskiy
-<vsementsov@yandex-team.ru> wrote:
+On Thu, May 1, 2025 at 5:22=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> The following changes since commit 73d29ea2417b58ca55fba1aa468ba38e3607b5=
-83:
+> The following changes since commit 5134cf9b5d3aee4475fe7e1c1c11b093731073=
+cf:
 >
->   Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging =
-(2025-04-27 12:47:23 -0400)
+>   Merge tag 'block-pull-request' of https://gitlab.com/stefanha/qemu into=
+ staging (2025-04-30 13:34:44 -0400)
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/vsementsov/qemu.git tags/pull-block-jobs-2025-04-29-=
-v2
+>   https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20250501
 >
-> for you to fetch changes up to 35655b2d1b1015e3a6fa99ef9c2afc1826a765ba:
+> for you to fetch changes up to 839129a8f8848d13d44364ca9cb6c042df589c75:
 >
->   blockdev-backup: Add error handling option for copy-before-write jobs (=
-2025-05-01 12:12:19 +0300)
+>   accel/tcg: Build user-exec.c once (2025-05-01 14:15:49 -0700)
 >
 > ----------------------------------------------------------------
-> block-job patches
->
-> - deprecate some old block-job- APIs
-> - on-cbw-error option for backup
-> - more efficient zero handling in block commit
->
-> v2:
-> [03]: move variable declaration to function top, to silence clang and to
->       follow QEMU coding style
+> include: Remove 'exec/exec-all.h'
+> accel/tcg: Build tb-maint.c twice
+> accel/tcg: Build cpu-exec.c twice
+> accel/tcg: Build translate-all.c twice
+> accel/tcg: Build tcg-all.c twice
+> accel/tcg: Build cputlb.c once
+> accel/tcg: Build user-exec.c once
 >
 > ----------------------------------------------------------------
-> Raman Dzehtsiar (1):
->       blockdev-backup: Add error handling option for copy-before-write jo=
-bs
-
-iotests-pylint is failing:
-
-Log file "stdout" content for test "03-tests/iotests-pylint.sh" (FAIL):
-************* Module tests.copy-before-write
-tests/copy-before-write:151:0: C0301: Line too long (94/79) (line-too-long)
-
-https://gitlab.com/qemu-project/qemu/-/jobs/9931080975#L656
-
+> Philippe Mathieu-Daud=C3=A9 (10):
+>       include/exec: Include missing headers in exec-all.h
+>       target/riscv: Include missing 'accel/tcg/getpc.h' in csr.c
+>       accel/tcg: Include 'accel/tcg/getpc.h' in 'exec/helper-proto'
+>       physmem: Move TCG IOTLB methods around
+>       physmem: Restrict TCG IOTLB code to TCG accel
+>       accel/tcg: Extract probe API out of 'exec/exec-all.h'
+>       include: Remove 'exec/exec-all.h'
+>       system/vl: Filter machine list available for a particular target bi=
+nary
+>       qemu/target_info: Add %target_cpu_type field to TargetInfo
+>       qemu: Introduce target_long_bits()
 >
-> Vincent Vanlaer (5):
->       block: get type of block allocation in commit_run
->       block: move commit_run loop to separate function
->       block: refactor error handling of commit_iteration
->       block: allow commit to unmap zero blocks
->       block: add test non-active commit with zeroed data
+> Richard Henderson (49):
+>       accel/tcg: Add CPUState argument to page_unprotect
+>       accel/tcg: Add CPUState argument to tb_invalidate_phys_page_unwind
+>       accel/tcg: Add CPUState arg to tb_invalidate_phys_page_range__locke=
+d
+>       accel/tcg: Merge tb_invalidate_phys_range{__locked}
+>       accel/tcg: Add CPUState arg to tb_invalidate_phys_range
+>       accel/tcg: Add CPUState arg to tb_invalidate_phys_range_fast
+>       accel/tcg: Convert TARGET_HAS_PRECISE_SMC to TCGCPUOps.precise_smc
+>       accel/tcg: Simplify CPU_TLB_DYN_MAX_BITS
+>       accel/tcg: Simplify L1_MAP_ADDR_SPACE_BITS
+>       accel/tcg: Merge internal-target.h into internal-common.h
+>       accel/tcg: Reduce scope of tb_phys_invalidate, tb_set_jmp_target
+>       accel/tcg: Use vaddr for walk_memory_regions callback
+>       accel/tcg: Use vaddr in user/page-protection.h
+>       include/exec: Move tb_invalidate_phys_range to translation-block.h
+>       accel/tcg: Compile tb-maint.c twice
+>       accel/tcg: Remove #error for non-tcg in getpc.h
+>       accel/tcg: Generalize fake_user_interrupt test
+>       accel/tcg: Unconditionally use CPU_DUMP_CCOP in log_cpu_exec
+>       accel/tcg: Introduce TCGCPUOps.cpu_exec_reset
+>       target/i386: Split out x86_cpu_exec_reset
+>       accel/tcg: Hoist cpu_get_tb_cpu_state decl to accl/tcg/cpu-ops.h
+>       target/arm: Move cpu_get_tb_cpu_state to hflags.c
+>       target/arm: Unexport assert_hflags_rebuild_correctly
+>       target/riscv: Move cpu_get_tb_cpu_state to tcg-cpu.c
+>       accel/tcg: Return TCGTBCPUState from cpu_get_tb_cpu_state
+>       accel/tcg: Move cpu_get_tb_cpu_state to TCGCPUOps
+>       accel/tcg: Pass TCGTBCPUState to tb_lookup
+>       accel/tcg: Pass TCGTBCPUState to tb_htable_lookup
+>       accel/tcg: Use TCGTBCPUState in struct tb_desc
+>       accel/tcg: Pass TCGTBCPUState to tb_gen_code
+>       accel/tcg: Split out accel/tcg/helper-retaddr.h
+>       accel/tcg: Compile cpu-exec.c twice
+>       tcg: Define INSN_START_WORDS as constant 3
+>       accel/tcg: Don't use TARGET_LONG_BITS in decode_sleb128
+>       accel/tcg: Use target_long_bits() in translate-all.c
+>       accel/tcg: Build translate-all.c twice
+>       accel/tcg: Build tcg-all.c twice
+>       accel/tcg: Use vaddr in cpu_loop.h
+
+Please check the following CI failure:
+
+../bsd-user/signal.c:1033:6: error: conflicting types for
+'cpu_loop_exit_sigsegv'
+1033 | void cpu_loop_exit_sigsegv(CPUState *cpu, target_ulong addr,
+| ^
+/tmp/cirrus-ci-build/include/user/cpu_loop.h:60:17: note: previous
+declaration is here
+60 | G_NORETURN void cpu_loop_exit_sigsegv(CPUState *cpu, vaddr addr,
+| ^
+../bsd-user/signal.c:1049:6: error: conflicting types for 'cpu_loop_exit_si=
+gbus'
+1049 | void cpu_loop_exit_sigbus(CPUState *cpu, target_ulong addr,
+| ^
+/tmp/cirrus-ci-build/include/user/cpu_loop.h:74:17: note: previous
+declaration is here
+74 | G_NORETURN void cpu_loop_exit_sigbus(CPUState *cpu, vaddr addr,
+| ^
+
+https://gitlab.com/qemu-project/qemu/-/jobs/9931080893#L4953
+
+>       accel/tcg: Move user-only tlb_vaddr_to_host out of line
+>       accel/tcg: Move tlb_vaddr_to_host declaration to probe.h
+>       accel/tcg: Use target_long_bits() in cputlb.c
+>       accel/tcg: Use vaddr for plugin_{load,store}_cb
+>       accel/tcg: Build cputlb.c once
+>       include/user: Convert GUEST_ADDR_MAX to a variable
+>       include/user: Use vaddr in guest-host.h
+>       accel/tcg: Move TARGET_TAGGED_ADDRESSES to TCGCPUOps.untagged_addr
+>       accel/tcg: Remove TARGET_PAGE_DATA_SIZE
+>       accel/tcg: Avoid abi_ptr in user-exec.c
+>       accel/tcg: Build user-exec.c once
 >
-> Vladimir Sementsov-Ogievskiy (2):
->       qapi: synchronize jobs and block-jobs documentation
->       qapi/block-core: deprecate some block-job- APIs
->
->  block/backup.c                                  |   3 +-
->  block/commit.c                                  | 118 +++++++++++++++++-=
+>  accel/tcg/internal-common.h                    |  37 +++++-
+>  accel/tcg/internal-target.h                    |  46 -------
+>  accel/tcg/tb-hash.h                            |   3 +-
+>  accel/tcg/tb-internal.h                        |   8 +-
+>  accel/tcg/tlb-bounds.h                         |  21 +---
+>  bsd-user/qemu.h                                |   1 -
+>  include/accel/tcg/cpu-ldst.h                   |  58 ---------
+>  include/accel/tcg/cpu-ops.h                    |  23 ++++
+>  include/accel/tcg/getpc.h                      |   4 -
+>  include/accel/tcg/helper-retaddr.h             |  43 +++++++
+>  include/accel/tcg/iommu.h                      |  41 +++++++
+>  include/{exec/exec-all.h =3D> accel/tcg/probe.h} |  67 +++-------
+>  include/accel/tcg/tb-cpu-state.h               |  18 +++
+>  include/exec/helper-proto-common.h             |   2 +
+>  include/exec/poison.h                          |   1 -
+>  include/exec/translation-block.h               |   4 +
+>  include/qemu/target-info-impl.h                |   6 +
+>  include/qemu/target-info.h                     |  15 +++
+>  include/system/ram_addr.h                      |   1 -
+>  include/tcg/insn-start-words.h                 |  11 +-
+>  include/tcg/tcg-op.h                           |  17 ++-
+>  include/tcg/tcg-opc.h                          |   3 +-
+>  include/tcg/tcg.h                              |  12 +-
+>  include/user/cpu_loop.h                        |  12 +-
+>  include/user/guest-host.h                      |  49 +++-----
+>  include/user/page-protection.h                 |  30 +++--
+>  linux-user/user-internals.h                    |   1 -
+>  target/alpha/cpu.h                             |  11 --
+>  target/arm/cpu-param.h                         |   7 +-
+>  target/arm/cpu.h                               |  39 +-----
+>  target/arm/internals.h                         |   4 +-
+>  target/arm/tcg/translate.h                     |   1 -
+>  target/avr/cpu.h                               |  18 ---
+>  target/hexagon/cpu.h                           |  15 ---
+>  target/hexagon/mmvec/macros.h                  |   1 +
+>  target/hppa/cpu.h                              |   3 -
+>  target/i386/cpu.h                              |  18 ---
+>  target/i386/tcg/helper-tcg.h                   |   1 -
+>  target/loongarch/cpu.h                         |  12 --
+>  target/m68k/cpu.h                              |  16 ---
+>  target/microblaze/cpu.h                        |   8 --
+>  target/mips/cpu.h                              |   9 --
+>  target/openrisc/cpu.h                          |  10 --
+>  target/ppc/cpu.h                               |  13 --
+>  target/ppc/internal.h                          |   3 +
+>  target/riscv/cpu.h                             |   3 -
+>  target/rx/cpu.h                                |   9 --
+>  target/s390x/cpu.h                             |  11 --
+>  target/sh4/cpu.h                               |  15 ---
+>  target/sparc/cpu.h                             |   3 -
+>  target/tricore/cpu.h                           |  12 --
+>  target/xtensa/cpu.h                            |  68 ----------
+>  accel/hvf/hvf-accel-ops.c                      |   1 -
+>  accel/tcg/cpu-exec.c                           | 164 ++++++++++---------=
 ------
->  block/copy-before-write.c                       |   2 +
->  block/copy-before-write.h                       |   1 +
->  block/replication.c                             |   4 +-
->  blockdev.c                                      |   6 ++
->  docs/about/deprecated.rst                       |  31 +++++++
->  include/block/block_int-global-state.h          |   2 +
->  qapi/block-core.json                            |  95 ++++++++++++++----=
--
->  qapi/job.json                                   |  30 +++++-
->  tests/qemu-iotests/tests/commit-zero-blocks     |  96 ++++++++++++++++++=
-+
->  tests/qemu-iotests/tests/commit-zero-blocks.out |  54 +++++++++++
->  tests/qemu-iotests/tests/copy-before-write      |  90 ++++++++++++++++++
->  tests/qemu-iotests/tests/copy-before-write.out  |   4 +-
->  14 files changed, 471 insertions(+), 65 deletions(-)
->  create mode 100755 tests/qemu-iotests/tests/commit-zero-blocks
->  create mode 100644 tests/qemu-iotests/tests/commit-zero-blocks.out
->
-> --
-> 2.48.1
+>  accel/tcg/cputlb.c                             |  34 ++---
+>  accel/tcg/tb-maint.c                           | 100 ++++++---------
+>  accel/tcg/tcg-all.c                            |   6 +-
+>  accel/tcg/translate-all.c                      |  95 +++++---------
+>  accel/tcg/user-exec.c                          | 145 ++++++++++++-------=
+---
+>  bsd-user/main.c                                |   9 +-
+>  hw/ppc/spapr_nested.c                          |   1 -
+>  hw/riscv/riscv-iommu-sys.c                     |   1 -
+>  hw/sh4/sh7750.c                                |   1 -
+>  linux-user/elfload.c                           |  21 ++--
+>  linux-user/main.c                              |   9 +-
+>  linux-user/signal.c                            |   4 +-
+>  linux-user/syscall.c                           |   8 +-
+>  semihosting/uaccess.c                          |   2 +-
+>  system/physmem.c                               |  58 +++++----
+>  system/vl.c                                    |   3 +-
+>  target-info-stub.c                             |   9 +-
+>  target-info.c                                  |  15 +++
+>  target/alpha/cpu.c                             |  18 ++-
+>  target/alpha/fpu_helper.c                      |   1 -
+>  target/alpha/int_helper.c                      |   1 -
+>  target/alpha/mem_helper.c                      |   1 -
+>  target/alpha/translate.c                       |   1 -
+>  target/alpha/vax_helper.c                      |   1 -
+>  target/arm/cpu.c                               |  30 ++++-
+>  target/arm/debug_helper.c                      |   1 -
+>  target/arm/helper.c                            | 113 +----------------
+>  target/arm/ptw.c                               |   2 +-
+>  target/arm/tcg-stubs.c                         |   4 -
+>  target/arm/tcg/cpu-v7m.c                       |   2 +
+>  target/arm/tcg/helper-a64.c                    |   3 +-
+>  target/arm/tcg/hflags.c                        | 117 +++++++++++++++++-
+>  target/arm/tcg/m_helper.c                      |   1 -
+>  target/arm/tcg/mte_helper.c                    |   6 +-
+>  target/arm/tcg/mve_helper.c                    |   1 -
+>  target/arm/tcg/op_helper.c                     |   2 +-
+>  target/arm/tcg/pauth_helper.c                  |   1 -
+>  target/arm/tcg/sme_helper.c                    |   2 +-
+>  target/arm/tcg/sve_helper.c                    |   3 +-
+>  target/arm/tcg/tlb_helper.c                    |   1 -
+>  target/arm/tcg/translate-a64.c                 |   1 -
+>  target/avr/cpu.c                               |  21 +++-
+>  target/avr/helper.c                            |   1 -
+>  target/avr/translate.c                         |   1 -
+>  target/hexagon/cpu.c                           |  21 +++-
+>  target/hexagon/op_helper.c                     |   2 +-
+>  target/hppa/cpu.c                              |  16 +--
+>  target/hppa/fpu_helper.c                       |   1 -
+>  target/hppa/helper.c                           |   1 -
+>  target/hppa/mem_helper.c                       |   2 +-
+>  target/hppa/op_helper.c                        |   2 +-
+>  target/hppa/sys_helper.c                       |   1 -
+>  target/hppa/translate.c                        |   1 -
+>  target/i386/helper.c                           |   2 +-
+>  target/i386/tcg/access.c                       |   2 +-
+>  target/i386/tcg/excp_helper.c                  |   1 -
+>  target/i386/tcg/int_helper.c                   |   1 -
+>  target/i386/tcg/mem_helper.c                   |   1 -
+>  target/i386/tcg/mpx_helper.c                   |   1 -
+>  target/i386/tcg/seg_helper.c                   |   2 +-
+>  target/i386/tcg/system/bpt_helper.c            |   1 -
+>  target/i386/tcg/system/excp_helper.c           |   1 +
+>  target/i386/tcg/tcg-cpu.c                      |  34 ++++-
+>  target/i386/tcg/translate.c                    |   1 -
+>  target/i386/tcg/user/excp_helper.c             |   1 -
+>  target/i386/tcg/user/seg_helper.c              |   1 -
+>  target/loongarch/cpu.c                         |  20 ++-
+>  target/loongarch/tcg/fpu_helper.c              |   1 -
+>  target/loongarch/tcg/iocsr_helper.c            |   1 -
+>  target/loongarch/tcg/op_helper.c               |   1 -
+>  target/loongarch/tcg/tlb_helper.c              |   1 -
+>  target/loongarch/tcg/vec_helper.c              |   1 -
+>  target/m68k/cpu.c                              |  24 +++-
+>  target/m68k/fpu_helper.c                       |   1 -
+>  target/m68k/helper.c                           |   1 -
+>  target/m68k/op_helper.c                        |   1 -
+>  target/m68k/translate.c                        |   1 -
+>  target/microblaze/cpu.c                        |  17 ++-
+>  target/microblaze/op_helper.c                  |   1 -
+>  target/microblaze/translate.c                  |   1 -
+>  target/mips/cpu.c                              |  14 ++-
+>  target/mips/system/physaddr.c                  |   1 -
+>  target/mips/tcg/exception.c                    |   1 -
+>  target/mips/tcg/fpu_helper.c                   |   1 -
+>  target/mips/tcg/ldst_helper.c                  |   1 -
+>  target/mips/tcg/msa_helper.c                   |   2 +-
+>  target/mips/tcg/op_helper.c                    |   1 -
+>  target/mips/tcg/system/special_helper.c        |   1 -
+>  target/mips/tcg/system/tlb_helper.c            |   1 -
+>  target/openrisc/cpu.c                          |  18 ++-
+>  target/openrisc/exception.c                    |   1 -
+>  target/openrisc/exception_helper.c             |   1 -
+>  target/openrisc/fpu_helper.c                   |   1 -
+>  target/openrisc/interrupt.c                    |   1 -
+>  target/openrisc/interrupt_helper.c             |   1 -
+>  target/openrisc/sys_helper.c                   |   3 +-
+>  target/openrisc/translate.c                    |   1 -
+>  target/ppc/cpu_init.c                          |   3 +-
+>  target/ppc/excp_helper.c                       |   1 -
+>  target/ppc/fpu_helper.c                        |   1 -
+>  target/ppc/helper_regs.c                       |  19 ++-
+>  target/ppc/machine.c                           |   1 -
+>  target/ppc/mem_helper.c                        |   3 +-
+>  target/ppc/misc_helper.c                       |   1 -
+>  target/ppc/mmu-hash32.c                        |   1 -
+>  target/ppc/mmu-hash64.c                        |   1 -
+>  target/ppc/mmu-radix64.c                       |   1 -
+>  target/ppc/mmu_common.c                        |   1 -
+>  target/ppc/mmu_helper.c                        |   1 -
+>  target/ppc/power8-pmu.c                        |   1 -
+>  target/ppc/tcg-excp_helper.c                   |   1 -
+>  target/ppc/timebase_helper.c                   |   1 -
+>  target/ppc/translate.c                         |   1 -
+>  target/ppc/user_only_helper.c                  |   1 -
+>  target/riscv/cpu.c                             |   1 -
+>  target/riscv/cpu_helper.c                      |  98 ---------------
+>  target/riscv/crypto_helper.c                   |   1 -
+>  target/riscv/csr.c                             |   2 +-
+>  target/riscv/debug.c                           |   1 -
+>  target/riscv/fpu_helper.c                      |   1 -
+>  target/riscv/m128_helper.c                     |   1 -
+>  target/riscv/op_helper.c                       |   2 +-
+>  target/riscv/tcg/tcg-cpu.c                     | 101 ++++++++++++++-
+>  target/riscv/translate.c                       |   1 -
+>  target/riscv/vcrypto_helper.c                  |   1 -
+>  target/riscv/vector_helper.c                   |   2 +-
+>  target/riscv/zce_helper.c                      |   1 -
+>  target/rx/cpu.c                                |  16 ++-
+>  target/rx/op_helper.c                          |   1 -
+>  target/rx/translate.c                          |   1 -
+>  target/s390x/cpu.c                             |  18 ++-
+>  target/s390x/interrupt.c                       |   1 -
+>  target/s390x/mmu_helper.c                      |   1 -
+>  target/s390x/sigp.c                            |   1 -
+>  target/s390x/tcg/cc_helper.c                   |   1 -
+>  target/s390x/tcg/crypto_helper.c               |   1 -
+>  target/s390x/tcg/excp_helper.c                 |   1 -
+>  target/s390x/tcg/fpu_helper.c                  |   1 -
+>  target/s390x/tcg/int_helper.c                  |   1 -
+>  target/s390x/tcg/mem_helper.c                  |   3 +-
+>  target/s390x/tcg/misc_helper.c                 |   1 -
+>  target/s390x/tcg/translate.c                   |   1 -
+>  target/s390x/tcg/vec_fpu_helper.c              |   1 -
+>  target/s390x/tcg/vec_helper.c                  |   1 -
+>  target/sh4/cpu.c                               |  29 ++++-
+>  target/sh4/helper.c                            |   1 -
+>  target/sh4/op_helper.c                         |   1 -
+>  target/sh4/translate.c                         |   1 -
+>  target/sparc/cpu.c                             |  20 +--
+>  target/sparc/fop_helper.c                      |   1 -
+>  target/sparc/helper.c                          |   1 -
+>  target/sparc/ldst_helper.c                     |   1 -
+>  target/sparc/machine.c                         |   1 -
+>  target/sparc/translate.c                       |   1 -
+>  target/sparc/win_helper.c                      |   1 -
+>  target/tricore/cpu.c                           |  16 ++-
+>  target/tricore/op_helper.c                     |   1 -
+>  target/tricore/translate.c                     |   1 -
+>  target/xtensa/cpu.c                            |  79 +++++++++++-
+>  target/xtensa/dbg_helper.c                     |   1 -
+>  target/xtensa/exc_helper.c                     |   1 -
+>  target/xtensa/fpu_helper.c                     |   1 -
+>  target/xtensa/mmu_helper.c                     |   2 +-
+>  target/xtensa/op_helper.c                      |   1 -
+>  target/xtensa/translate.c                      |   1 -
+>  target/xtensa/win_helper.c                     |   1 -
+>  tcg/perf.c                                     |   5 +-
+>  tcg/tcg.c                                      |  12 +-
+>  MAINTAINERS                                    |   3 +-
+>  accel/tcg/ldst_common.c.inc                    |   4 +-
+>  accel/tcg/meson.build                          |  20 +--
+>  225 files changed, 1230 insertions(+), 1364 deletions(-)
+>  delete mode 100644 accel/tcg/internal-target.h
+>  create mode 100644 include/accel/tcg/helper-retaddr.h
+>  create mode 100644 include/accel/tcg/iommu.h
+>  rename include/{exec/exec-all.h =3D> accel/tcg/probe.h} (64%)
+>  create mode 100644 include/accel/tcg/tb-cpu-state.h
 >
 
