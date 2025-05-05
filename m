@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8FFEC369DC
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 01:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6453EC369DC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 01:54:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBl0d-0003rx-4i; Sun, 04 May 2025 21:52:43 -0400
+	id 1uBl14-0004BI-Sy; Sun, 04 May 2025 21:53:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBl0b-0003qc-2e
- for qemu-devel@nongnu.org; Sun, 04 May 2025 21:52:41 -0400
+ id 1uBl0h-0003ug-8x
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 21:52:49 -0400
 Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uBl0R-0002Tn-Da
- for qemu-devel@nongnu.org; Sun, 04 May 2025 21:52:40 -0400
+ id 1uBl0X-0002Uw-OT
+ for qemu-devel@nongnu.org; Sun, 04 May 2025 21:52:47 -0400
 Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-736aaeed234so3388618b3a.0
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 18:52:31 -0700 (PDT)
+ d2e1a72fcca58-73bf1cef6ceso3774411b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 18:52:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746409950; x=1747014750; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746409956; x=1747014756; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1mHjwLOmCSZb7+SiNUT87VRUe5PiKHdCHDdwE+42+GQ=;
- b=ZfjFAylNT0MBmi7Jbm20QGSGsUSipgPxEeYEWEUTT/DHhwNwoRpZ5+zwsqKHm+TDjY
- ovMglyqC86Th/t80lBnlrx5Q6OYg9KZ1MCK7zYNmoJjDrQ0WCzpgGTuKvg3kjs7O7sJn
- NpMbBIbZ+GdWZIn37/GpZiJOyLxEEiJ/azq25gTuc3JpbXGOGsQaQKQj/Vz5T+RGreeB
- qCsgLYxtVVEgB6XIr5qJJxHiXoCzPWelxPw17OFcUwMv9LU3Bj8fXpw7dq4iR3y8Co1q
- iXUztg6SQi4p6J6zWAktU9vpjbx/RG7q4Pp4XRSfFlJsWRuidXyr99jpNVdc7fXRhoGO
- d61Q==
+ bh=LuLpPX6X06+NE7HHzhZQmUoQgosCpwXTe/wCgu+rNqA=;
+ b=AYvcAt+I/cEfCFkERwpfV9XZg2cxPk2ej9ZU7TwnTOhvV5Dtbtq60yi6LUjiPuCXOd
+ 9Rjm0A6VaVpIEkXWctv5NOv10NrTEDTTwqihgoTAJt4deJk7sbtpDCPdTfm/qg0IBfBl
+ KQ/GRXEfrpEvT5b4i3llhaUxJvCG2XoeuC1moyz2pLazPIHkFDtVejC0Z14e2cJBSAkF
+ wA5ObYR0ZIFpVasucIhze767+K1RZP7Q14VuqJGHRs2nBbApDDCmwFKdo0/WzeHnV64n
+ RAr70Ba9YhK/JA120QHGGdjODIXmPL5wJ/PVld1TrhVzKUKdHmTxRGmNRVbbYj6Z9HV/
+ GV8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746409950; x=1747014750;
+ d=1e100.net; s=20230601; t=1746409956; x=1747014756;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1mHjwLOmCSZb7+SiNUT87VRUe5PiKHdCHDdwE+42+GQ=;
- b=neDYIeCxukOW239yP8BQpgnTYtaDwOpDDxRFs7FL7q1WCfn47cXcpPDnYe3bWB3l3+
- beK4+fgdeiE65nECp2AfHlKDPPG102Ix2jFA/i84jSz4lM7Imytecn5b97NJrR5FWYQt
- ce5s1DvIsPPpet4HK8WuKxFgXbXyivztQNY09dtbOiiEQXVJD7QzDUYSnmtLb31F1AYG
- +Z7jFN3mglsED6+i3LF9dhf1t6yzU7pKBfCBkSMqNfJsWyx5Nu2Yi9ykpZVpYFWsSHIM
- cVejs6t/HYlVeuwAV/VwkLG265Frps7XslsdJnaDtdsfwnQNQ9BE46I1nUBtOwTk+GVY
- IM/w==
-X-Gm-Message-State: AOJu0YzPCA0SoHnssIIoZhgI6/FomHRt4MfWPsezK84GpUaVGlisQfYy
- a8RcLPTHt572JiFTAZOWuzLMbOkRmYRdT+XE0MT6STXg0noxLw7ld5vmEXf2EEwGWZvF128Z1Rh
- N3OU=
-X-Gm-Gg: ASbGncvCRN+Hc5gt/OoHsnV3IV/4Z4u8fr3omS6CAKh/kL6zR3+xIS3xy1S4InqaZeT
- okgFYu+7og1V8hzpPn0VSGEomta2kUyFa4jvTN2M5Es01z1hJ2v/xRzUv0vvBBCe9PHUmr5RAiX
- wwtnsyzTVMCCWQJHBwyfgu2UMVPTVWZb6u70AxQemjjhBwRtTHSwZdMWgDZNG+G/HGRum3WrkCo
- 9fwqteI50S0WAC2QJ16TFEmK8jq2o4D125jUrQurHNPA7g9M50qjynnFTcY8IfRj/3ztGN7iIx9
- YQ+xEday368F+v0ES2jAXXed3bzA0Yc5pkh2VNKO
-X-Google-Smtp-Source: AGHT+IEnw8VfECoK5fXq9FFAAhr8guvZNgIjGdAHEKIO0OBZTov/PyOJGomE9HYGIk9r8C+GFvgmiQ==
-X-Received: by 2002:a05:6a21:1743:b0:1f5:80a3:b003 with SMTP id
- adf61e73a8af0-20e97ea68fbmr8446109637.37.1746409950025; 
- Sun, 04 May 2025 18:52:30 -0700 (PDT)
+ bh=LuLpPX6X06+NE7HHzhZQmUoQgosCpwXTe/wCgu+rNqA=;
+ b=w6NxK6DMgVEMw/rMwFP/P0QJ8HKRo38tdiC/ssWvxfbtp6LVH5UedfqEPmIXUsDYsN
+ nKZpWv8jnwWnRBhgAFl1pnXg/WPadsp+ghmG9wn5sP+2CWdif8PG0l9RTK9JnYYMBY/1
+ kUomPAws1bxpZhK0uRq075cyoJo0/mIWFayogQDQ6kdAZRwyd5jspGHlK5Dd1ii+4qHv
+ 7T9PgcrimSBjojw6cL6YmVPAXdPPs5NFK9xYr5QQGvxSj1l1hzhDomAAOBAfCFTS57LM
+ h/R8Ii5EWTiteu6sC63xgfIjBHeT9pkb2FNXOHG+irb0+KMF2BJtGNR+UmP3hBmEQMke
+ FAVg==
+X-Gm-Message-State: AOJu0Ywfc+fgjUAirYNiAacHvfI7NhJKCq7d5Vri/8JDSqF4wmGTm5xG
+ /f+hmu2Jbi0MwNl7mDdndDMogLgKauCdjzTOBkexmgfTZyPkvMeXWG3lCz+nudR8JuvfDdvpEXv
+ MTv0=
+X-Gm-Gg: ASbGncuJ9nz0RqHncC6jztxWFPQivZIEhdj9eM7VHXZ79WUxZBgNkCvq5fM7S25nY47
+ pY2MQMSP5p4B4qGt1zRUaHKk1k3yHc8in9tcvMM2bqTC6a4u2dVcJhvYqFASnSWKLJv9jrDDPaO
+ JfVIu6j0YxfIlflfLjWzJYQEwlpdqfbiFh7kJEwscuXZudSHDg9xY1L8rI3h8rUvdts26CTg5O+
+ QAjzkryDTLmZUTXX8BsKjRAICQYzwmXFWgVa8IudB4QhksTAWy21FuqjjQ+NccC6qNEd0/UrzNM
+ Ok8bvOz7pzfucDwNceIqhH34FoMQVFe6T0n+rwnm
+X-Google-Smtp-Source: AGHT+IHzGUohRUeOSCShyTBQEz3+cx/ASVTiK/6WfrdnkCq5fA8tyIn6zcD32STw5IjqBUMIm5B39Q==
+X-Received: by 2002:a05:6a20:d503:b0:1f3:41d5:65f6 with SMTP id
+ adf61e73a8af0-20e979c90f7mr9100293637.32.1746409956419; 
+ Sun, 04 May 2025 18:52:36 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b1fb3920074sm4462101a12.11.2025.05.04.18.52.29
+ 41be03b00d2f7-b1fb3920074sm4462101a12.11.2025.05.04.18.52.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 May 2025 18:52:29 -0700 (PDT)
+ Sun, 04 May 2025 18:52:36 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
@@ -70,9 +70,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>, anjo@rev.ng,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v5 03/48] meson: add common libs for target and target_system
-Date: Sun,  4 May 2025 18:51:38 -0700
-Message-ID: <20250505015223.3895275-4-pierrick.bouvier@linaro.org>
+Subject: [PATCH v5 09/48] target/arm/cpu: remove TARGET_BIG_ENDIAN dependency
+Date: Sun,  4 May 2025 18:51:44 -0700
+Message-ID: <20250505015223.3895275-10-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250505015223.3895275-1-pierrick.bouvier@linaro.org>
 References: <20250505015223.3895275-1-pierrick.bouvier@linaro.org>
@@ -102,134 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Following what we did for hw/, we need target specific common libraries
-for target. We need 2 different libraries:
-- code common to a base architecture
-- system code common to a base architecture
-
-For user code, it can stay compiled per target for now.
-
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Anton Johansson <anjo@rev.ng>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- meson.build | 78 +++++++++++++++++++++++++++++++++++++++++------------
- 1 file changed, 61 insertions(+), 17 deletions(-)
+ target/arm/cpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index abdb2cc33ea..b2c79a7a928 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3678,6 +3678,8 @@ target_arch = {}
- target_system_arch = {}
- target_user_arch = {}
- hw_common_arch = {}
-+target_common_arch = {}
-+target_common_system_arch = {}
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 07f279fec8c..37b11e8866f 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -23,6 +23,7 @@
+ #include "qemu/timer.h"
+ #include "qemu/log.h"
+ #include "exec/page-vary.h"
++#include "exec/tswap.h"
+ #include "target/arm/idau.h"
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+@@ -1172,7 +1173,7 @@ static void arm_disas_set_info(CPUState *cpu, disassemble_info *info)
  
- # NOTE: the trace/ subdirectory needs the qapi_trace_events variable
- # that is filled in by qapi/.
-@@ -4081,29 +4083,59 @@ common_all = static_library('common',
- 
- # construct common libraries per base architecture
- hw_common_arch_libs = {}
-+target_common_arch_libs = {}
-+target_common_system_arch_libs = {}
- foreach target : target_dirs
-   config_target = config_target_mak[target]
-   target_base_arch = config_target['TARGET_BASE_ARCH']
-+  target_inc = [include_directories('target' / target_base_arch)]
-+  inc = [common_user_inc + target_inc]
- 
--  # check if already generated
--  if target_base_arch in hw_common_arch_libs
--    continue
--  endif
-+  # prevent common code to access cpu compile time definition,
-+  # but still allow access to cpu.h
-+  target_c_args = ['-DCPU_DEFS_H']
-+  target_system_c_args = target_c_args + ['-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU']
- 
-   if target_base_arch in hw_common_arch
--    target_inc = [include_directories('target' / target_base_arch)]
--    src = hw_common_arch[target_base_arch]
--    lib = static_library(
--      'hw_' + target_base_arch,
--      build_by_default: false,
--      sources: src.all_sources() + genh,
--      include_directories: common_user_inc + target_inc,
--      implicit_include_directories: false,
--      # prevent common code to access cpu compile time
--      # definition, but still allow access to cpu.h
--      c_args: ['-DCPU_DEFS_H', '-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU'],
--      dependencies: src.all_dependencies())
--    hw_common_arch_libs += {target_base_arch: lib}
-+    if target_base_arch not in hw_common_arch_libs
-+      src = hw_common_arch[target_base_arch]
-+      lib = static_library(
-+        'hw_' + target_base_arch,
-+        build_by_default: false,
-+        sources: src.all_sources() + genh,
-+        include_directories: inc,
-+        c_args: target_system_c_args,
-+        dependencies: src.all_dependencies())
-+      hw_common_arch_libs += {target_base_arch: lib}
-+    endif
-+  endif
-+
-+  if target_base_arch in target_common_arch
-+    if target_base_arch not in target_common_arch_libs
-+      src = target_common_arch[target_base_arch]
-+      lib = static_library(
-+        'target_' + target_base_arch,
-+        build_by_default: false,
-+        sources: src.all_sources() + genh,
-+        include_directories: inc,
-+        c_args: target_c_args,
-+        dependencies: src.all_dependencies())
-+      target_common_arch_libs += {target_base_arch: lib}
-+    endif
-+  endif
-+
-+  if target_base_arch in target_common_system_arch
-+    if target_base_arch not in target_common_system_arch_libs
-+      src = target_common_system_arch[target_base_arch]
-+      lib = static_library(
-+        'target_system_' + target_base_arch,
-+        build_by_default: false,
-+        sources: src.all_sources() + genh,
-+        include_directories: inc,
-+        c_args: target_system_c_args,
-+        dependencies: src.all_dependencies())
-+      target_common_system_arch_libs += {target_base_arch: lib}
-+    endif
-   endif
- endforeach
- 
-@@ -4276,12 +4308,24 @@ foreach target : target_dirs
-   target_common = common_ss.apply(config_target, strict: false)
-   objects = [common_all.extract_objects(target_common.sources())]
-   arch_deps += target_common.dependencies()
-+  if target_base_arch in target_common_arch_libs
-+    src = target_common_arch[target_base_arch].apply(config_target, strict: false)
-+    lib = target_common_arch_libs[target_base_arch]
-+    objects += lib.extract_objects(src.sources())
-+    arch_deps += src.dependencies()
-+  endif
-   if target_type == 'system' and target_base_arch in hw_common_arch_libs
-     src = hw_common_arch[target_base_arch].apply(config_target, strict: false)
-     lib = hw_common_arch_libs[target_base_arch]
-     objects += lib.extract_objects(src.sources())
-     arch_deps += src.dependencies()
-   endif
-+  if target_type == 'system' and target_base_arch in target_common_system_arch_libs
-+    src = target_common_system_arch[target_base_arch].apply(config_target, strict: false)
-+    lib = target_common_system_arch_libs[target_base_arch]
-+    objects += lib.extract_objects(src.sources())
-+    arch_deps += src.dependencies()
-+  endif
- 
-   target_specific = specific_ss.apply(config_target, strict: false)
-   arch_srcs += target_specific.sources()
+     info->endian = BFD_ENDIAN_LITTLE;
+     if (bswap_code(sctlr_b)) {
+-        info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_LITTLE : BFD_ENDIAN_BIG;
++        info->endian = target_big_endian() ? BFD_ENDIAN_LITTLE : BFD_ENDIAN_BIG;
+     }
+     info->flags &= ~INSN_ARM_BE32;
+ #ifndef CONFIG_USER_ONLY
 -- 
 2.47.2
 
