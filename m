@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29B88C369C2
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 05:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 172B7C369C2
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 05:38:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBoKV-0002tH-Mp; Mon, 05 May 2025 01:25:27 -0400
+	id 1uBoWk-0008Bf-Kh; Mon, 05 May 2025 01:38:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uBoKR-0002sG-Uy
- for qemu-devel@nongnu.org; Mon, 05 May 2025 01:25:23 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1uBoWi-0008Aj-9P
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 01:38:04 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uBoKP-0007c7-KA
- for qemu-devel@nongnu.org; Mon, 05 May 2025 01:25:23 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-7fd35b301bdso4843822a12.2
- for <qemu-devel@nongnu.org>; Sun, 04 May 2025 22:25:20 -0700 (PDT)
+ id 1uBoWe-0000E1-0O
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 01:38:04 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-7369ce5d323so3562103b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 04 May 2025 22:37:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1746422720; x=1747027520;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1746423478; x=1747028278;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7Icb106pO7p9hsD0bUB1jArCgCoupBUnXOdnF6Wu4Hg=;
- b=zpkeFb2Fz0ZSuRAoOkrfly0yBlvIswluyQsestXM9Qy1mZCYXgyIWu1OgZMMw1tMGj
- sfLetz+ATKtVew5hjGqT3NrSowj3LbgBs7YMzyteSpWvxVd8rn90B2ohdZ3jn+VJNGpy
- vF94XBRt3Nx29XJPeURBIt1oughBEBGW/aNCDt0dpkBBolcuxmgDpmNn/XRskMoTpdM+
- 3aXsAZ4GfjcHMw/+Qi9DWh+Wd7wed2ACcWUywhKLGZFP7xWQqXUuWq3UWkPYnZNGctAC
- 1P6ncldlYIhwmcrhPW6MfmVeKldFVmMUkOZvhw97YRM8Arpg6sq+Gjt/2ih+ElSE5uNp
- Hrvg==
+ bh=uIPJJls1S1//pR3moNNKF485vDygVJfVyoEewZxgwGE=;
+ b=JpCFDKSebxVWAhLTmB+Ji+1mwi0ZQ9my4ZreSmUCYpop+wV020ywy/znNnoHtCtcPp
+ dSeXCzjEy0LMxDpF7S+sCA9G33a4kp3CgrR5S8vKfajS5t6r/gEQgHVyWl/ZO1T4Z72p
+ Yq1V02nFHHoDtiUUGJL0D4vZcYghCh+BSNrI0dE2YUCTGx4OiPSeaf6e+hYzrFKrQTxd
+ hJxNxoEuOWqlXL8slqdXRl9mYj4HQO5NZLkk/3kP2DSmuMHbShbqd+sF9JEbToz+ad+Q
+ w41Jkyd8FUVCoi8P86e/8REbQ8r37hCL69U1Wf2lcQMFjOLsE/DnLT3oL4xL/fLUzYtq
+ iQLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746422720; x=1747027520;
+ d=1e100.net; s=20230601; t=1746423478; x=1747028278;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7Icb106pO7p9hsD0bUB1jArCgCoupBUnXOdnF6Wu4Hg=;
- b=ptMhLPidMP7k65r/XvKmlpPovN/7rftMY9c5yPFPVrnxzL4QAliy1cFAu/wateXFyL
- x4PZQ1E4Wmrz+ohocAbyW3j2GSa/pyLdgH+J0pjOKj5usDFH00ayup4yYbEROxG4d8Ab
- ujBVueRksVUY1FvfWbF1caV+dGqYCjuhX47OlyAHdWHO3PO2/b15MvCQXQjEDNacEFrx
- hGIQbyWqKcSenXtfFKO7+vHp3oJCy2HFwKU60gWnNQLYFCYSFMKKKBC8LDZjrzV6rBPd
- KwOHjYXA9v9jxej26jp4bYxSjYwUsp3aRSPqsJppSMxyrT6SIGEGZCO/cFBLD2L/V0i5
- cFGg==
+ bh=uIPJJls1S1//pR3moNNKF485vDygVJfVyoEewZxgwGE=;
+ b=qIZ0NWoATSGbkFzlEuoMQ+6VX450AfwbN2/Dfv1lvj2UXubBkr72Rg6Pvy5KqsAOUo
+ +uyUIQk/MnD2EVbp746jdStj/nIVIH2jSW8ddy8tN1dc2MGVqP8M0zcwNc1a2SN2rE4U
+ SJpAdZx02Hx6urfpq+AwGy34LLfOZzHUMiQS4mYtMxNKP/NFlCo3d7EQgrEpfqal61tV
+ CuuxBRsiW+7lslOkpfZoaUvLxuZ76JXeZxrpjlPMldpgkKIuzQnd+GvST1rzVs6YyiRk
+ 2QgRAdlmlidzZeawlSMJc4RbZE8HN19+TJQCSMT9nRzEQFymtrmyc2dwBMqdpKYVQZmm
+ YkxA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwbMkR1x5OW6P/YJm6juvdrxMXUwn4sx+Pt5b5f3rDY8i6xTdRTyDEAXiDOgRVcEaJkoJuhbKGe1Wh@nongnu.org
-X-Gm-Message-State: AOJu0YzSQ7mZqIBa8I7Awml9vG8mgzA5yW0fbbEm1Mx/GiZa55aO7kA3
- wK/hkZ8gxRW8B/YKGBEL27Mjx50Iu5vk0GCodx9zClKbMGqg6OztpPv8S/UO87c=
-X-Gm-Gg: ASbGncuo0Bq9SV2boMhweB81DSdfIzfYM8bGDv2ar6vGnvlhW9Z8xNDw4Auz4Bmx8B9
- KuNPMCX7xjeOzlVwzoCdPWpHkEmjp3aGTj/tVxc2j2phP9JsQnufVtrPKeKrJ+5Lc22sLILjmA1
- /zfSCqo7DNZlSfkTdWxvp2lU1wW6A/xZph3/Q9f42pTjSzzuN2h59QGNRlfSJnntyLMi/9IhvoP
- yLh5JK+Ui84b4qT9VDGPJnzXTWjyGQQcU6XXoQGShRi5ke+slUrXOc/rV/Gj5mSOcTCrlux/Re5
- 5xaHdhZ0Rx6B/9S6c//CxtDWvwE8zH/nSAAvVJjt42USnB1dLRg=
-X-Google-Smtp-Source: AGHT+IGUo4awLCN2gvufVwjPURGXck4ZXbzdO/ZL6HFRz7C3GVeTGY3svdeshijSqh2OPYQm2DwHNw==
-X-Received: by 2002:a17:90b:5287:b0:2fe:a515:4a98 with SMTP id
- 98e67ed59e1d1-30a61a42177mr7169475a91.31.1746422719537; 
- Sun, 04 May 2025 22:25:19 -0700 (PDT)
+ AJvYcCUuMKJNGLPI0Ibo1AnGiLwiEmWNhETU3IZyeE09g1PKCJd1dJ6AnfduTKm9oWoe8+I53aHvJzTlAW41@nongnu.org
+X-Gm-Message-State: AOJu0YzGsZDywokU6ogGkjFeqRtI50/KToJOb6mZ5h5FuLdiAXhoajc1
+ hCyhVuYdcxkjBKzgdttE7OXVKYCBEe7N5zo0pEo+lolf5WMtOYPzyXWDB6bi5B8=
+X-Gm-Gg: ASbGncsqz9bhMFXeCqpZfj1x7tWbOsA3bPZ8+gtqiocV1i/3272DRwzW7dFtn5ng/ki
+ n1hiKHvbP84LOhKbxSZxiQHxpcNQxxe0/N1SIubUZPweGX3FnjmnWQrbpdCvec8MbU35H7xq5iM
+ Or2NnUs+HW5xQiYnqdM1RUEznxR9/X762vhl4eQYsUCHIHxvpZThr46wYE/4qeYKaaT5byLKz8f
+ xXP8QM5va+C9875fxmbIxgvRjetOAT4mnpasmhmHehbB/kjOeNwDWJZyoY0zIMbCU8T2jpjrqzS
+ q37yGOMMpASloyHTcwGOiNKQvzi4gA/1ApI1KVAnsM53bH8LSBU=
+X-Google-Smtp-Source: AGHT+IFKtmDo+eHTfZHhhUxCn88Wo9wtEk7nBeXRgzVrUqmsiq20p8rSpG89NZEecJ1nKnz4G9wBLQ==
+X-Received: by 2002:aa7:9a84:0:b0:736:3979:369e with SMTP id
+ d2e1a72fcca58-7406f0b0e9fmr8005819b3a.9.1746423478058; 
+ Sun, 04 May 2025 22:37:58 -0700 (PDT)
 Received: from [157.82.207.61] ([157.82.207.61])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30a3480ef8dsm10618681a91.31.2025.05.04.22.25.16
+ d2e1a72fcca58-74058d7a225sm5826612b3a.23.2025.05.04.22.37.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 May 2025 22:25:19 -0700 (PDT)
-Message-ID: <20b79b43-71ab-438c-9617-ff95bbf5eef1@daynix.com>
-Date: Mon, 5 May 2025 14:25:15 +0900
+ Sun, 04 May 2025 22:37:57 -0700 (PDT)
+Message-ID: <e9af660f-713a-4bc4-889d-f619e91c01d8@daynix.com>
+Date: Mon, 5 May 2025 14:37:54 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 06/11] tests/qtest/ahci: don't unmap pci bar if it
- wasn't mapped
+Subject: Re: [PATCH v5 03/11] tests/qtest: Add libqos function for testing
+ msix interrupt status
 To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, John Snow <jsnow@redhat.com>,
@@ -81,20 +81,20 @@ Cc: Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-block@nongnu.org, qemu-ppc@nongnu.org
 References: <20250502030446.88310-1-npiggin@gmail.com>
- <20250502030446.88310-7-npiggin@gmail.com>
+ <20250502030446.88310-4-npiggin@gmail.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20250502030446.88310-7-npiggin@gmail.com>
+In-Reply-To: <20250502030446.88310-4-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,109 +111,222 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2025/05/02 12:04, Nicholas Piggin wrote:
-> ahci-test has a bunch of tests where the pci bar was not mapped. Avoid
-> unmapping it in these cases, to keep iomaps balanced.
+> This function is duplicated 3 times, with more potential future users.
+> Factor it into libqos, using qtest_memset instead of qtest_writel to
+> clear the message just because that looks nicer with the qtest_memread
+> used to read it.
 > 
-> Cc: Michael S. Tsirkin <mst@redhat.com>
-> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Cc: Fabiano Rosas <farosas@suse.de>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->   tests/qtest/libqos/ahci.h | 1 +
->   tests/qtest/ahci-test.c   | 7 ++++++-
->   tests/qtest/libqos/ahci.c | 9 +++++++++
->   3 files changed, 16 insertions(+), 1 deletion(-)
+>   tests/qtest/libqos/pci.h               |  2 ++
+>   tests/qtest/libqos/pci.c               | 48 ++++++++++++++++++++++++++
+>   tests/qtest/libqos/virtio-pci-modern.c | 31 +++--------------
+>   tests/qtest/libqos/virtio-pci.c        | 40 ++++-----------------
+>   4 files changed, 62 insertions(+), 59 deletions(-)
 > 
-> diff --git a/tests/qtest/libqos/ahci.h b/tests/qtest/libqos/ahci.h
-> index f610bd32a5f..d639692aac4 100644
-> --- a/tests/qtest/libqos/ahci.h
-> +++ b/tests/qtest/libqos/ahci.h
-> @@ -342,6 +342,7 @@ typedef struct AHCIQState {
->       uint32_t cap;
->       uint32_t cap2;
->       AHCIPortQState port[32];
-> +    bool pci_enabled;
-
-The following patch also adds a similar variable for virtio and has a 
-slightly different semantics; qvirtio_pci_device_disable() is no-op but 
-ahci_pci_disable() aborts when no-op.
-
-A bool flag can be added to QPCIBar instead so that we can enforce the 
-"no-op if not mapped" semantics everywhere consistently with less code.
-
->       bool enabled;
->   } AHCIQState;
+> diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
+> index 83896145235..9f8f154c301 100644
+> --- a/tests/qtest/libqos/pci.h
+> +++ b/tests/qtest/libqos/pci.h
+> @@ -92,6 +92,8 @@ void qpci_msix_enable(QPCIDevice *dev);
+>   void qpci_msix_disable(QPCIDevice *dev);
+>   bool qpci_msix_pending(QPCIDevice *dev, uint16_t entry);
+>   bool qpci_msix_masked(QPCIDevice *dev, uint16_t entry);
+> +bool qpci_msix_test_interrupt(QPCIDevice *dev, uint32_t msix_entry,
+> +                              uint64_t msix_addr, uint32_t msix_data);
+>   uint16_t qpci_msix_table_size(QPCIDevice *dev);
 >   
-> diff --git a/tests/qtest/ahci-test.c b/tests/qtest/ahci-test.c
-> index 36caa7b2999..7d5f73ac40b 100644
-> --- a/tests/qtest/ahci-test.c
-> +++ b/tests/qtest/ahci-test.c
-> @@ -85,6 +85,8 @@ static void verify_state(AHCIQState *ahci, uint64_t hba_old)
->       uint64_t hba_base;
->       AHCICommandHeader cmd;
+>   uint8_t qpci_config_readb(QPCIDevice *dev, uint8_t offset);
+> diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
+> index a59197b9922..773fd1fb6cf 100644
+> --- a/tests/qtest/libqos/pci.c
+> +++ b/tests/qtest/libqos/pci.c
+> @@ -351,6 +351,54 @@ bool qpci_msix_masked(QPCIDevice *dev, uint16_t entry)
+>       }
+>   }
 >   
-> +    g_assert_cmphex(ahci->hba_bar.addr, ==, hba_old);
+> +/**
+> + * qpci_msix_test_interrupt - test whether msix interrupt has been raised
+
+Nitpick: Let's write as "MSI-X" instead of msix in documentation.
+
+> + * @dev: PCI device
+> + * @msix_entry: msix entry to test
+> + * @msix_addr: address of msix message
+
+Perhaps deriving the address in this function may make things simpler by 
+removing the documentation and assertion code and not requiring callers 
+to pass it.
+
+> + * @msix_data: expected msix message payload
+> + *
+> + * This tests whether the msix source has raised an interrupt. If the msix
+
+Another nitpick: "whether the device has raised an MSI-X interrupt" - 
+"msix source" is not a pharsed used elsewhere and it can raise other 
+kind of interrupts too so let's make the kind of interrupt specific.
+
+> + * entry is masked, it tests the pending bit array for a pending message
+> + * and @msix_addr and @msix_data need not be supplied. If the entry is not
+> + * masked, it tests the address for corresponding data to see if the interrupt
+> + * fired.
+> + *
+> + * Note that this does not lower the interrupt, however it does clear the
+> + * msix message address to 0 if it is found set. This must be called with
+> + * the msix address memory containing either 0 or the value of data, otherwise
+> + * it will assert on incorrect message.
+> + */
+> +bool qpci_msix_test_interrupt(QPCIDevice *dev, uint32_t msix_entry,
+> +                              uint64_t msix_addr, uint32_t msix_data)
+> +{
+> +    uint32_t data;
 > +
->       ahci_fingerprint = qpci_config_readl(ahci->dev, PCI_VENDOR_ID);
->       g_assert_cmphex(ahci_fingerprint, ==, ahci->fingerprint);
->   
-> @@ -198,7 +200,9 @@ static void ahci_shutdown(AHCIQState *ahci)
->   {
->       QOSState *qs = ahci->parent;
->   
-> -    ahci_pci_disable(ahci);
-> +    if (ahci->pci_enabled) {
-> +        ahci_pci_disable(ahci);
+> +    g_assert(dev->msix_enabled);
+> +    g_assert_cmpint(msix_entry, !=, -1);
+> +
+> +    if (qpci_msix_masked(dev, msix_entry)) {
+> +        /* No ISR checking should be done if masked, but read anyway */
+> +        return qpci_msix_pending(dev, msix_entry);
 > +    }
->       ahci_clean_mem(ahci);
->       free_ahci_device(ahci->dev);
->       g_free(ahci);
-> @@ -1421,6 +1425,7 @@ static void test_reset(void)
->           ahci_set(ahci, AHCI_GHC, AHCI_GHC_HR);
->           stop_ahci_device(ahci);
->           ahci_clean_mem(ahci);
-> +        start_ahci_device(ahci);
+> +
+> +    g_assert_cmpint(msix_addr, !=, 0);
+> +    g_assert_cmpint(msix_data, !=, 0);
+> +
+> +    /* msix payload is written in little-endian format */
+> +    qtest_memread(dev->bus->qts, msix_addr, &data, 4);
+> +    data = le32_to_cpu(data);
+> +    if (data == 0) {
+> +        return false;
+> +    }
+> +
+> +    /* got a message, ensure it matches expected value then clear it. */
+> +    g_assert_cmphex(data, ==, msix_data);
+> +    qtest_memset(dev->bus->qts, msix_addr, 0, 4);
+> +
+> +    return true;
+> +}
+> +
+>   uint16_t qpci_msix_table_size(QPCIDevice *dev)
+>   {
+>       uint8_t addr;
+> diff --git a/tests/qtest/libqos/virtio-pci-modern.c b/tests/qtest/libqos/virtio-pci-modern.c
+> index 5dae41e6d74..0d7d89bbcb1 100644
+> --- a/tests/qtest/libqos/virtio-pci-modern.c
+> +++ b/tests/qtest/libqos/virtio-pci-modern.c
+> @@ -126,28 +126,6 @@ static void set_status(QVirtioDevice *d, uint8_t status)
+>                             status);
+>   }
+>   
+> -static bool get_msix_status(QVirtioPCIDevice *dev, uint32_t msix_entry,
+> -                            uint32_t msix_addr, uint32_t msix_data)
+> -{
+> -    uint32_t data;
+> -
+> -    g_assert_cmpint(msix_entry, !=, -1);
+> -    if (qpci_msix_masked(dev->pdev, msix_entry)) {
+> -        /* No ISR checking should be done if masked, but read anyway */
+> -        return qpci_msix_pending(dev->pdev, msix_entry);
+> -    }
+> -
+> -    qtest_memread(dev->pdev->bus->qts, msix_addr, &data, 4);
+> -    data = le32_to_cpu(data);
+> -    if (data == 0) {
+> -        return false;
+> -    }
+> -    /* got a message, ensure it matches expected value then clear it. */
+> -    g_assert_cmphex(data, ==, msix_data);
+> -    qtest_writel(dev->pdev->bus->qts, msix_addr, 0);
+> -    return true;
+> -}
+> -
+>   static bool get_queue_isr_status(QVirtioDevice *d, QVirtQueue *vq)
+>   {
+>       QVirtioPCIDevice *dev = container_of(d, QVirtioPCIDevice, vdev);
+> @@ -155,8 +133,8 @@ static bool get_queue_isr_status(QVirtioDevice *d, QVirtQueue *vq)
+>       if (dev->pdev->msix_enabled) {
+>           QVirtQueuePCI *vqpci = container_of(vq, QVirtQueuePCI, vq);
+>   
+> -        return get_msix_status(dev, vqpci->msix_entry, vqpci->msix_addr,
+> -                               vqpci->msix_data);
+> +        return qpci_msix_test_interrupt(dev->pdev, vqpci->msix_entry,
+> +                                        vqpci->msix_addr, vqpci->msix_data);
 >       }
 >   
->       ahci_shutdown(ahci);
-> diff --git a/tests/qtest/libqos/ahci.c b/tests/qtest/libqos/ahci.c
-> index bd1994a9208..cc4f5b7b534 100644
-> --- a/tests/qtest/libqos/ahci.c
-> +++ b/tests/qtest/libqos/ahci.c
-> @@ -215,17 +215,25 @@ void ahci_pci_disable(AHCIQState *ahci)
->    */
->   void start_ahci_device(AHCIQState *ahci)
+>       return qpci_io_readb(dev->pdev, dev->bar, dev->isr_cfg_offset) & 1;
+> @@ -167,8 +145,9 @@ static bool get_config_isr_status(QVirtioDevice *d)
+>       QVirtioPCIDevice *dev = container_of(d, QVirtioPCIDevice, vdev);
+>   
+>       if (dev->pdev->msix_enabled) {
+> -        return get_msix_status(dev, dev->config_msix_entry,
+> -                               dev->config_msix_addr, dev->config_msix_data);
+> +        return qpci_msix_test_interrupt(dev->pdev, dev->config_msix_entry,
+> +                                        dev->config_msix_addr,
+> +                                        dev->config_msix_data);
+>       }
+>   
+>       return qpci_io_readb(dev->pdev, dev->bar, dev->isr_cfg_offset) & 2;
+> diff --git a/tests/qtest/libqos/virtio-pci.c b/tests/qtest/libqos/virtio-pci.c
+> index 76ea1f45ba9..ea8114e2438 100644
+> --- a/tests/qtest/libqos/virtio-pci.c
+> +++ b/tests/qtest/libqos/virtio-pci.c
+> @@ -122,25 +122,12 @@ static void qvirtio_pci_set_status(QVirtioDevice *d, uint8_t status)
+>   static bool qvirtio_pci_get_queue_isr_status(QVirtioDevice *d, QVirtQueue *vq)
 >   {
-> +    g_assert(!ahci->pci_enabled);
-> +
->       /* Map AHCI's ABAR (BAR5) */
->       ahci->hba_bar = qpci_iomap(ahci->dev, 5, &ahci->barsize);
+>       QVirtioPCIDevice *dev = container_of(d, QVirtioPCIDevice, vdev);
+> -    QVirtQueuePCI *vqpci = (QVirtQueuePCI *)vq;
+> -    uint32_t data;
 >   
->       /* turns on pci.cmd.iose, pci.cmd.mse and pci.cmd.bme */
->       qpci_device_enable(ahci->dev);
+>       if (dev->pdev->msix_enabled) {
+> -        g_assert_cmpint(vqpci->msix_entry, !=, -1);
+> -        if (qpci_msix_masked(dev->pdev, vqpci->msix_entry)) {
+> -            /* No ISR checking should be done if masked, but read anyway */
+> -            return qpci_msix_pending(dev->pdev, vqpci->msix_entry);
+> -        } else {
+> -            qtest_memread(dev->pdev->bus->qts, vqpci->msix_addr, &data, 4);
+> -            data = le32_to_cpu(data);
+> -            if (data == 0) {
+> -                return false;
+> -            }
+> -            /* got a message, ensure it matches expected value then clear it. */
+> -            g_assert_cmphex(data, ==, vqpci->msix_data);
+> -            qtest_writel(dev->pdev->bus->qts, vqpci->msix_addr, 0);
+> -            return true;
+> -        }
+> +        QVirtQueuePCI *vqpci = (QVirtQueuePCI *)vq;
 > +
-> +    ahci->pci_enabled = true;
->   }
->   
->   void stop_ahci_device(AHCIQState *ahci)
+> +        return qpci_msix_test_interrupt(dev->pdev, vqpci->msix_entry,
+> +                                        vqpci->msix_addr, vqpci->msix_data);
+>       } else {
+>           return qpci_io_readb(dev->pdev, dev->bar, VIRTIO_PCI_ISR) & 1;
+>       }
+> @@ -149,24 +136,11 @@ static bool qvirtio_pci_get_queue_isr_status(QVirtioDevice *d, QVirtQueue *vq)
+>   static bool qvirtio_pci_get_config_isr_status(QVirtioDevice *d)
 >   {
-> +    g_assert(ahci->pci_enabled);
-> +
->       /* Unmap AHCI's ABAR */
->       qpci_iounmap(ahci->dev, ahci->hba_bar);
-> +
-> +    ahci->pci_enabled = false;
->   }
+>       QVirtioPCIDevice *dev = container_of(d, QVirtioPCIDevice, vdev);
+> -    uint32_t data;
 >   
->   /**
-> @@ -249,6 +257,7 @@ void ahci_hba_enable(AHCIQState *ahci)
->       uint8_t num_cmd_slots;
->   
->       g_assert(ahci != NULL);
-> +    g_assert(ahci->pci_enabled);
->   
->       /* Set GHC.AE to 1 */
->       ahci_set(ahci, AHCI_GHC, AHCI_GHC_AE);
+>       if (dev->pdev->msix_enabled) {
+> -        g_assert_cmpint(dev->config_msix_entry, !=, -1);
+> -        if (qpci_msix_masked(dev->pdev, dev->config_msix_entry)) {
+> -            /* No ISR checking should be done if masked, but read anyway */
+> -            return qpci_msix_pending(dev->pdev, dev->config_msix_entry);
+> -        } else {
+> -            qtest_memread(dev->pdev->bus->qts, dev->config_msix_addr, &data, 4);
+> -            data = le32_to_cpu(data);
+> -            if (data == 0) {
+> -                return false;
+> -            }
+> -            /* got a message, ensure it matches expected value then clear it. */
+> -            g_assert_cmphex(data, ==, dev->config_msix_data);
+> -            qtest_writel(dev->pdev->bus->qts, dev->config_msix_addr, 0);
+> -            return true;
+> -        }
+> +        return qpci_msix_test_interrupt(dev->pdev, dev->config_msix_entry,
+> +                                        dev->config_msix_addr,
+> +                                        dev->config_msix_data);
+>       } else {
+>           return qpci_io_readb(dev->pdev, dev->bar, VIRTIO_PCI_ISR) & 2;
+>       }
 
 
