@@ -4,133 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB35C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 20:59:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B851C3ABB6
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 21:02:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uC2tN-0003cE-2K; Mon, 05 May 2025 16:58:25 -0400
+	id 1uC2wb-0006An-6z; Mon, 05 May 2025 17:01:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uC2tG-0003Zb-EB
- for qemu-devel@nongnu.org; Mon, 05 May 2025 16:58:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uC2wR-000683-5T
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 17:01:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uC2tD-0003QA-GP
- for qemu-devel@nongnu.org; Mon, 05 May 2025 16:58:18 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uC2wO-0003l2-RA
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 17:01:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746478694;
+ s=mimecast20190719; t=1746478891;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8KrntjYaQaqrD6U/X5tQPbaF8+/udiebi34FpRJi7+4=;
- b=OGc7BZMmAbvfvJ3G/18ZFfFsiiywOrznGUQqcghmqbpfUYfWtl1BLKn54tp2xyDXSkUmgi
- BuJE8MFMveks2wiLxYtCYH+/uqC4jsT/f0ZExPZX96OSoeaZ2iRP4afHzBQ7Tq7Y0wseN4
- KzBiPhKdOPpT2mMwF2KjB3mbX+gHwYY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=nPbT98V2CoRxkBusBk6JOM5uHJWvHLndD6YpeBRzqAo=;
+ b=Fdr7aAy7ogc5lQOuYu5EOtBtsJVu45zivoMZZgIr5iuuRSQU6GGub49B+nPgM32kX9OhN/
+ XtOV5ky80uui8+uQbkqLkHI/r7K7wsRMRteWzVejDLe6woZMYlhB/tDQnNwOV430a37D1c
+ EKa5eO2rYVxkN/Yf7pO9lmHSYqh0Mqw=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-558-loNN-3gbNrKrghLXiyhhYw-1; Mon, 05 May 2025 16:58:11 -0400
-X-MC-Unique: loNN-3gbNrKrghLXiyhhYw-1
-X-Mimecast-MFC-AGG-ID: loNN-3gbNrKrghLXiyhhYw_1746478690
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3913b2d355fso1076100f8f.1
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 13:58:10 -0700 (PDT)
+ us-mta-115-08qwFoM7MN6hfHsfHMhjow-1; Mon, 05 May 2025 17:01:27 -0400
+X-MC-Unique: 08qwFoM7MN6hfHsfHMhjow-1
+X-Mimecast-MFC-AGG-ID: 08qwFoM7MN6hfHsfHMhjow_1746478887
+Received: by mail-oi1-f199.google.com with SMTP id
+ 5614622812f47-403290c1620so4711510b6e.0
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 14:01:27 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746478690; x=1747083490;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1746478887; x=1747083687;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8KrntjYaQaqrD6U/X5tQPbaF8+/udiebi34FpRJi7+4=;
- b=PXR7nh3UUXSlDJagy+K3REwo3wOZGsDjSAK9qBs2v9dRzNw8VXyltMuHrsPewAGxWv
- 5hAwJJdAT72IqLHaCp0lJy7bpDF2JPuQg1K1mnRQnArUjH1MaZA1hXu7dI+xYqUCfxxX
- 2+64AJXReAZ+8YirZIo6UQceaxOz+ObIlfh/oJbdk/ODmcowsnZRx2b5R3ZZNdoTqZkB
- 1jVM94toB43YuyDFZ+bvruiaiX/Rg4HzPu1QqeEcT5PqlKnS6+8B2HHcYzkQ+EiBmtj/
- I+aGq9DMmezTi1X+TkA3bUcRVAcHufVrJdOPNOFrVlecGlrOQUEsBDYqPVdavv4m2mec
- cr0w==
-X-Gm-Message-State: AOJu0YxUHzjgmo4S8utDY3MXemRL8u+n57WAskE/FlnEOSigm1vpwwJV
- oY717YPMrBJpAs6duBm0VGgLw28VdBdVm10rRhJXQi0Foygkj5XKR5uLN7NW3B3z7CHuYokXphi
- p1ox2g9ISKUpYK+KqV7wE9MZjVJoYkBEHiOyeGEKlTLhtdaOy8CJb
-X-Gm-Gg: ASbGnct2kPN9uiELD3+pfxwOg5sLmB0Bim8QEQpUgcgUHIO4IX7OvHS4GUUQ979Bjlb
- 6Zlk4ImR9d2mxnTDr4WkVR27ZNAsBCSMXvXL9a8hXHB5h0QOLoqGE+3lGuCfAqVODTdp4tRvy69
- lDif2RSQDS5KbihgS1zrLQEWeYWSyp8lvOgboLdU6ymvcOub1/CRNcpA2N9092HxnoZ47eXxw60
- nSJkURQ2TK/jwQ6r4Dkv8h6NXelLP2MfAhiQpIfZ1g4pda+yM34GnxWxG6vakYtv+c+nEHKsTDm
- c51Y+DPqbshV5IZ/sLe7e8cdgnoWjpwgzBLdNnurygj1w4byMg==
-X-Received: by 2002:a5d:47a6:0:b0:391:4559:8761 with SMTP id
- ffacd0b85a97d-3a09fdd4dc1mr8348905f8f.36.1746478689912; 
- Mon, 05 May 2025 13:58:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEbkfubHQOimKcW0VLQZgAqapXRTk7V786tI4FddxLVMH1sasmbNYVEngjwtZs4kyHSrwNLkw==
-X-Received: by 2002:a5d:47a6:0:b0:391:4559:8761 with SMTP id
- ffacd0b85a97d-3a09fdd4dc1mr8348891f8f.36.1746478689537; 
- Mon, 05 May 2025 13:58:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae3528sm11659298f8f.30.2025.05.05.13.58.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 13:58:09 -0700 (PDT)
-Message-ID: <eb894117-98d4-45e5-a960-68f53ad9406a@redhat.com>
-Date: Mon, 5 May 2025 22:58:08 +0200
+ bh=nPbT98V2CoRxkBusBk6JOM5uHJWvHLndD6YpeBRzqAo=;
+ b=O1xGlx+IECZWIFf419wqkKLF7VgDxculiPfrrjDEs1c7sSGUQVY99R35JE7utNctrO
+ roiWBYg9uGzC+zlOPPk4v7K4oSA1RmBFJNLKTMXSZXMR9ZdHPXFYJa24SrkGSIo1YUCq
+ G5lI6ipsLJ+Q/5WD8P9fpmTV7eqE4W617GZV8kS1R+6O+H1k5xFYR6bX4XeY8FwmOAPC
+ QW5batRAi77IWQ1SAeQTL1OBPD24zT/C9Ybkqw2i8OzT9BvQjWhzUArpa4xwxcylfr34
+ 96iE+VezHq2+pEPvSmC/7bK4vldWRVunCOeIXrNycLF4iBPIo3TaVDSyj/Ux9THvktnt
+ cr/g==
+X-Gm-Message-State: AOJu0YxEOffNJ4Au2Ewaz6Jo77Z2gxHNeJYipdtyXGJOc41dBMHZwsVL
+ yhlxL1q9NaWIQgQF+bjIAnI67DuMnBbbAGcqeziIh4f9D5LeTqRnWnGKnqb9cYhPzZa6C8zVnCk
+ oLvblqatAGePNIbjIn6SHXzBwse/G1QsFz6tKaZagNy3yvnJ9mRXu
+X-Gm-Gg: ASbGnctDnZMxIs49DSTMnVdi5O/TIMovidxrkY6CLJRdml0lha/HZErddL+AfcN5kRK
+ KNKGBbWyg4kIZTtobAVrJEvVkUr/exnwn45q5FRooFM8WNxK3OsNJKu86Va1XIz6RKoA3OZ7nKT
+ /9IvYQyTLHO5PC0In1srHxjAxUwvzAY6iBS/QREiXSSa3AVVcf8EY0OHRb67YorrRZySuUCRfk3
+ qjF+p2zFr33ZPDHWUN+owY6D4oexRBwp+4kOLwB2z32Uv7nQwKYBV3BYx+UHRktloa/YVYD1Ux9
+ 8lU=
+X-Received: by 2002:a05:6808:6a96:b0:401:e6c0:3112 with SMTP id
+ 5614622812f47-403419e01a1mr8247619b6e.15.1746478886909; 
+ Mon, 05 May 2025 14:01:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHQaCXZli82tXjWCosL8m1XCaqBg1kl8FFiabMVuw4wwO3rMkF2Y98HzITawHLf/OcM5qLung==
+X-Received: by 2002:a05:6808:6a96:b0:401:e6c0:3112 with SMTP id
+ 5614622812f47-403419e01a1mr8247592b6e.15.1746478886603; 
+ Mon, 05 May 2025 14:01:26 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6f50f3d2ea3sm60263906d6.61.2025.05.05.14.01.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 May 2025 14:01:26 -0700 (PDT)
+Date: Mon, 5 May 2025 17:01:23 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/2] migration/multifd: Fix received packets tracepoint
+Message-ID: <aBknIwPX0IXdcAkL@x1.local>
+References: <20250416134356.29879-1-farosas@suse.de>
+ <20250416134356.29879-2-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/9] vfio/igd: Detect IGD by OpRegion and enable
- OpRegion automatically
-To: Tomita Moeko <tomitamoeko@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Corvin_K=C3=B6hne?=
- <c.koehne@beckhoff.com>
-References: <20250505170305.23622-1-tomitamoeko@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250505170305.23622-1-tomitamoeko@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250416134356.29879-2-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -155,80 +104,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/25 19:02, Tomita Moeko wrote:
-> As proposed in a previous discussion [1], detect IGD devices based on
-> whether it has VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION exposed by kernel
-> and enables OpRegion access by default. This enables out-of-the-box
-> display output support for IGD passthrough without having to manually
-> set x-igd-opregion=on, which probably saves effort for libvirt users.
+On Wed, Apr 16, 2025 at 10:43:55AM -0300, Fabiano Rosas wrote:
+> When qatomic_fetch_inc() started being used to count the number of
+> packets sent, the printing of the number of packets received stopped
+> matching the number of packets sent.
 > 
-> This patchset also limits legacy mode to Gen6-9 devices, as Intel no
-> longer provides CSM support and VBIOS on newer IGD, and Seabios does not
-> support setting up the 64 bit BDSM register on Gen 11+ devices. Exposing
-> VGA ranges to guests by default on platforms without VGA mode support is
-> undesirable.
+> Fix by moving the increment of the number of packets on the recv side
+> to multifd_recv_unfill_packet().
 > 
-> Additionally, as we enables OpRegion on IGD devices by default, and
-> Intel removes the BDSM register from Meteor Lake [2]. There seems to be
-> no extra register quirks rather than OpRegion required on newer devices.
-> To support them (and probably future devices), the generation limit is
-> removed, with BDSM quirk only applied to known Gen 6-12 devices.
-> 
-> Note: I have not been able to test this on Meteor Lake or newer
-> platforms due to lack of hardware.
-> 
-> 
-> [1] https://lore.kernel.org/qemu-devel/20250325172239.27926-1-tomitamoeko@gmail.com
-> [2] https://edc.intel.com/content/www/us/en/design/publications/14th-generation-core-processors-cfg-and-mem-registers/d2-f0-processor-graphics-registers/
-> 
-> 
-> Changelog:
-> v3:
-> * Addressed a nit in patch #8
-> Link: https://lore.kernel.org/qemu-devel/20250428161004.35613-1-tomitamoeko@gmail.com
-> v2:
-> * Removed "Allow hotplugging with OpRegion enabled", hotplugging is
->    always forbidden.
-> * Test device is not hotplugged and get opregion in a single function.
-> * Update documentation along with code changes.
-> * Minor code style fixes.
-> Link: https://lore.kernel.org/qemu-devel/20250421163112.21316-1-tomitamoeko@gmail.com
-> 
-> 
-> Tomita Moeko (9):
->    vfio/igd: Restrict legacy mode to Gen6-9 devices
->    vfio/igd: Always emulate ASLS (OpRegion) register
->    vfio/igd: Detect IGD device by OpRegion
->    vfio/igd: Check vendor and device ID on GVT-g mdev
->    vfio/igd: Check OpRegion support on GVT-g mdev
->    vfio/igd: Enable OpRegion by default
->    vfio/igd: Allow overriding GMS with 0xf0 to 0xfe on Gen9+
->    vfio/igd: Only emulate GGC register when x-igd-gms is set
->    vfio/igd: Remove generation limitation for IGD passthrough
-> 
->   docs/igd-assign.txt |  11 ++-
->   hw/vfio/igd.c       | 220 ++++++++++++++++++++++++++------------------
->   hw/vfio/pci.c       |   2 +-
->   3 files changed, 138 insertions(+), 95 deletions(-)
-> 
-.
-Since Corvin and Alex had reviewed and tested the previous spin :
+> Also change the tracepoint text because "packet num" is ambiguous for
+> the sync since the packet number of the actual sync packet will be one
+> less than the total number of packets seen so far.
 
-   https://lore.kernel.org/qemu-devel/20250428161004.35613-1-tomitamoeko@gmail.com/
+Would this be a hint that the recv side may not really need a global
+packet_num counter, at all?
 
-let's add the trailers to v3 :
+On source, it needs to be there if we want to have an unified unique ID for
+each multifd packet, so that when allcating a packet we need them to be
+assigned properly.
 
-Reviewed-by: Corvin Köhne <c.koehne@beckhoff.com>
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-Tested-by: Alex Williamson <alex.williamson@redhat.com>
+On dest, it almost only receives packets, it's still unclear to me how the
+recv packet_num global var could help us considering we have the per-packet
+trace in trace_multifd_recv_unfill() dumping the unique ID for each..
 
-Moeko,
+So.. would it be of any use?  Would it be better if we remove it instead?
 
-Please use b4 or equivalent to collect the trailers.
+> 
+> Fixes: 98ea497d8b ("migration/multifd: Fix MultiFDSendParams.packet_num race")
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/multifd.c    | 6 +-----
+>  migration/trace-events | 4 ++--
+>  2 files changed, 3 insertions(+), 7 deletions(-)
+> 
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index dfb5189f0e..1a16155864 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -310,6 +310,7 @@ static int multifd_recv_unfill_packet_ram(MultiFDRecvParams *p, Error **errp)
+>  
+>  static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
+>  {
+> +    qatomic_inc(&multifd_recv_state->packet_num);
+>      p->packets_recved++;
+>  
+>      if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
+> @@ -1222,11 +1223,6 @@ void multifd_recv_sync_main(void)
+>      for (i = 0; i < thread_count; i++) {
+>          MultiFDRecvParams *p = &multifd_recv_state->params[i];
+>  
+> -        WITH_QEMU_LOCK_GUARD(&p->mutex) {
+> -            if (multifd_recv_state->packet_num < p->packet_num) {
+> -                multifd_recv_state->packet_num = p->packet_num;
+> -            }
+> -        }
+>          trace_multifd_recv_sync_main_signal(p->id);
+>          qemu_sem_post(&p->sem_sync);
+>      }
+> diff --git a/migration/trace-events b/migration/trace-events
+> index c506e11a2e..48acb126f5 100644
+> --- a/migration/trace-events
+> +++ b/migration/trace-events
+> @@ -133,7 +133,7 @@ multifd_new_send_channel_async(uint8_t id) "channel %u"
+>  multifd_new_send_channel_async_error(uint8_t id, void *err) "channel=%u err=%p"
+>  multifd_recv_unfill(uint8_t id, uint64_t packet_num, uint32_t flags, uint32_t next_packet_size) "channel %u packet_num %" PRIu64 " flags 0x%x next packet size %u"
+>  multifd_recv_new_channel(uint8_t id) "channel %u"
+> -multifd_recv_sync_main(long packet_num) "packet num %ld"
+> +multifd_recv_sync_main(long packet_num) "packets before sync %ld"
+>  multifd_recv_sync_main_signal(uint8_t id) "channel %u"
+>  multifd_recv_sync_main_wait(uint8_t id) "iter %u"
+>  multifd_recv_terminate_threads(bool error) "error %d"
+> @@ -142,7 +142,7 @@ multifd_recv_thread_start(uint8_t id) "%u"
+>  multifd_send_fill(uint8_t id, uint64_t packet_num, uint32_t flags, uint32_t next_packet_size) "channel %u packet_num %" PRIu64 " flags 0x%x next packet size %u"
+>  multifd_send_ram_fill(uint8_t id, uint32_t normal, uint32_t zero) "channel %u normal pages %u zero pages %u"
+>  multifd_send_error(uint8_t id) "channel %u"
+> -multifd_send_sync_main(long packet_num) "packet num %ld"
+> +multifd_send_sync_main(long packet_num) "packets before sync %ld"
+>  multifd_send_sync_main_signal(uint8_t id) "channel %u"
+>  multifd_send_sync_main_wait(uint8_t id) "channel %u"
+>  multifd_send_terminate_threads(void) ""
+> -- 
+> 2.35.3
+> 
 
-Thanks,
-
-C.
-
+-- 
+Peter Xu
 
 
