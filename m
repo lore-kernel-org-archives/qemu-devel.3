@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD524C3ABAA
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 19:17:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D373CC3ABAA
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 19:18:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uC1JX-0002mV-Ho; Mon, 05 May 2025 15:17:19 -0400
+	id 1uC1Kq-0003u7-3R; Mon, 05 May 2025 15:18:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC1JV-0002kf-QJ
- for qemu-devel@nongnu.org; Mon, 05 May 2025 15:17:17 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1uC1Ko-0003sC-B9
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 15:18:38 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC1JT-0001gP-Ex
- for qemu-devel@nongnu.org; Mon, 05 May 2025 15:17:17 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-22e331215dbso1596895ad.1
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 12:17:14 -0700 (PDT)
+ id 1uC1Km-0001ln-J7
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 15:18:38 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-22e331215dbso1609235ad.1
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 12:18:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746472633; x=1747077433; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=linaro.org; s=google; t=1746472714; x=1747077514; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GW6KVIAEijcEBLlWWBZL706R8iQgdB2ZER5S3nvinZo=;
- b=JCL/L8fE62cyd+F5/18Fd9PDlmPAO6TmU4WMWZr+ceus9z4CLWNc98nPIsgKbAJ8Tc
- wZOfKds42joqtO3u+c1LiScH1n5Im+61zRVzC7epI3KFpGqR2wweNs966yjfmhjjFA+1
- NtUyCN1l/eGaaG/p2AheQfVXmp0jsisCfqHAbGAtxAcScuyZh0zh98bfZZS9mSlVGDCG
- clBIIdQatOwwXoy8Piahauyfr8B1um/QtQH1LVOoxW9zqwgf0f30udZi5tqrA7lNTciz
- 0KSSO/oHhdO8HmGQTlHudYvLUYAcekGRbWItDtLJgxov5vcrQEAwxka0mLczjPAUtNVf
- DfgA==
+ bh=qgUGiM/DYUpZaxD+L893gwF6KdedTU2Fc07gbGMU5x0=;
+ b=CW/1TtG8VjtboeOmBxf22kOcRmzfibWZlPcK877o0A1WZ/hr2mxhJ7TbElUX4grCaF
+ HX+mzOvS//O+gBFq0m2ImNnXdA7szRttDFVtLM0pjol1IvoWOqaZLG7DDLgjCK+6cf+G
+ pXx0WWBIETi+7hpK8oT9mvlT+Bp9AH1QNvmGdSjkb/sySgoXs5Fe5zDeoxZs3t7ET1NC
+ gDIXnLb1AUnODe8oW4JpyiDVMQ53XP7fbibj1KjiDZMiv8A8mtTavfIb9cve+BJYIiZR
+ gmFYJiBQxwmgrd05Edm3ZOG5It6BRjMtwqwIhg34xUxzINiQ8CB9xZRd1zbeOkhQ/Asi
+ xupw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746472633; x=1747077433;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ d=1e100.net; s=20230601; t=1746472714; x=1747077514;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GW6KVIAEijcEBLlWWBZL706R8iQgdB2ZER5S3nvinZo=;
- b=RUUcTAUVwG5aDC3CPQXLV/PLWZlfBy80zP2mYTsH6/+ukrWGq32Wt8G5uHpeJDVYGc
- MIMAQ/K9u8JRlm0dbdmm62n51OfDKHXnU+AE45nOlOsltvh3uZAhcji0h/WWRep83AjU
- 0u5Fca4jNUgxoeoRYNeB/RQStEtb/H0eQtPLQRCbh38Iekp0wYsG4djh6IEMVRzVjzHA
- JAxukjKFpHcFDYXuVZ5jvGOfRDW4biMOtJIdpTkXYp9LIh5H6veU5noKtugU4JTbP2cG
- KeN/EvdX1hTq7DlRmEv6P7I3pyodvA0MQ6RApzNcchffeaMEgyfSy9hvCSvaY5+yYkgW
- 8UZA==
+ bh=qgUGiM/DYUpZaxD+L893gwF6KdedTU2Fc07gbGMU5x0=;
+ b=TvqL+s7J/MDk2QUzPzgWLTqIId0bgfpcxCOW2aqUbPt2irXbiId/6pQ0kP3N0Mfrpg
+ awW3Cbc08O1OLdp0Y8utVru2ZZ49gghSpJBuqDZoaOkAEkRG+w0IcrndzCtmyseSOSsy
+ MfMYThDJfLoRoxyP78t5sA87221nfIbvTB9QexjVy379r5Ai7lDP2vbbnWYRgNx2UfZE
+ 6h2JNuY+S938wc179pk5DGnd0wxtk9icl+GwVgXkS7kfmEWjC0AtZ2eX/+Xh3Wg7pCFT
+ 1HC2GtsFgiLfVjE1SKU98B05tmuQCfhbGb3ucSL2KcztYKZ5o59LF7DX80y/hxy35jGG
+ BSTw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHynC3djlT6vAaIEcnBXea2Y3sponghhCVi++J8QwW8lAIdG+9De9JQQR/UEAB/id4L8qvRq2ObbKQ@nongnu.org
-X-Gm-Message-State: AOJu0YzGsyiRa7uE4bUmamJtQWFaeLd2eRzQwKe9r5+tFvKkDCqtBFR4
- e5HieEsPN3O3LaCpE8DEy+V8dgmUcdy96c/nxUw1DKpSl9rWEtjEkeaTO/lx4/c=
-X-Gm-Gg: ASbGnct8fp6a0WQs6tSwV2YfBaiVLMmxvFtW7+1et5rSwaaCbXHckAvGdyYtlQxLhrN
- YmsGS3YVAhKyi4U0CZ7ic4GbZOWqL5CFrqMmg3Mu1sm6Gl4Kvl/YTT1cOnJ/HanvT1CRku1/35m
- 9xLHoiNsvvd+tRX8kFs1Uld0cabHIxIcA9Th2H4HPFViEbOHd3/QHHhWwd6gxcDC2K/AHUK/P8e
- czr2I+v9ZWQucZU6OVp9x9QDr1xhap5mj9T3GSy0DMJouZNB8jqSgCx1eDEtL/SohTZeM7Giu7F
- FuH/flKiO+wG9xbGQ23kmGtIkUrSuoN0eDJKZlej+CaLtgA+9IRbi4beQb22ScDY
-X-Google-Smtp-Source: AGHT+IGnPIGHq8VjO3UXrxZyCh63NER++S0TiK8mYQqalmCCQirVcYO0Wpw015CxlvaOu9I3VCFpcQ==
-X-Received: by 2002:a17:902:d591:b0:215:a2f4:d4ab with SMTP id
- d9443c01a7336-22e327567a0mr9562555ad.7.1746472633594; 
- Mon, 05 May 2025 12:17:13 -0700 (PDT)
+ AJvYcCV7ODSPI3FRVJefAyMhkha0yJPR+XoRzTLUGuA0L8WMkPGnjaWyKWa0l5Dn9QbkiTrLLJuAEE/QmKmE@nongnu.org
+X-Gm-Message-State: AOJu0YwOxmMLsemTL7iTXh6SLCD5akVQBzcWB2BOurx2C7uOrLGuCZM1
+ X0dGPthhwNyNVrzNHr+V6x+GSrfEt+rmXX21KcINZgQodaUIoCwqqU80woXzYU0=
+X-Gm-Gg: ASbGncvUXgqw762/VQZMnq+3psLecp62hVCtf+a4BTgaxI/iTdgO6ydFeoHe/0Om6AM
+ ay5bAHiv4FRrJaBf3w48x9RYs2Y4f0kZbpY9twIDCv2nreEm61LIfUd85KagveItBBXywCE5JXJ
+ fZVBdEH7r8/opo6M/TQck9ocdcVo0ETtnVe8/UgX9NzEqMd2ewFGF6h/RLS6Weoyri3iTkQNqtG
+ XlPEJBx0WrqaIFb5izKvVC7Ct0c5iUpiBe4i0MLf8Mp4SBP+wE47J4TInX6oOMKAUfYcd1ZQmBX
+ JbuYCDl58O0h47gZnlxjo9CWRurw4lTRldXah0m0wogLZqDQJ8OKjQ==
+X-Google-Smtp-Source: AGHT+IHIZp9iXH90LNiEVwJbpi1Wd+mM2hRGG2JijV+Y1BkDIa/U6IW8Pa8ko2+EKFWM6e6m28nelw==
+X-Received: by 2002:a17:903:110f:b0:221:1497:7b08 with SMTP id
+ d9443c01a7336-22e328cc817mr8874575ad.23.1746472714255; 
+ Mon, 05 May 2025 12:18:34 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e1522936csm58574325ad.204.2025.05.05.12.17.12
+ 41be03b00d2f7-b1fb3b7c5b8sm4963587a12.39.2025.05.05.12.18.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 12:17:13 -0700 (PDT)
-Message-ID: <14dc3ba2-576a-4ce6-b07d-6b78280e235f@linaro.org>
-Date: Mon, 5 May 2025 12:17:12 -0700
+ Mon, 05 May 2025 12:18:33 -0700 (PDT)
+Message-ID: <45230c51-4fc1-4953-a914-eb61dd6add99@linaro.org>
+Date: Mon, 5 May 2025 12:18:33 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 41/48] target/arm/tcg/crypto_helper: compile file twice
+Subject: Re: [PATCH v5 43/48] target/arm/tcg/iwmmxt_helper: compile file twice
  (system, user)
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
  alex.bennee@linaro.org, kvm@vger.kernel.org,
  Peter Maydell <peter.maydell@linaro.org>, anjo@rev.ng,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20250505015223.3895275-1-pierrick.bouvier@linaro.org>
- <20250505015223.3895275-42-pierrick.bouvier@linaro.org>
- <79916f8d-2793-40a7-b769-ee109c52ef63@linaro.org>
- <f33fa744-1557-4c01-ba49-e64b4d3b6368@linaro.org>
- <c67c4a79-7855-4d15-8064-b2f448ac9a42@linaro.org>
- <83038814-8527-44ec-b1c1-2d17362d08da@linaro.org>
-In-Reply-To: <83038814-8527-44ec-b1c1-2d17362d08da@linaro.org>
+ <20250505015223.3895275-44-pierrick.bouvier@linaro.org>
+ <2c005b5f-1308-4c7e-9b0c-9640aef294e9@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <2c005b5f-1308-4c7e-9b0c-9640aef294e9@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,57 +108,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/25 11:53 AM, Pierrick Bouvier wrote:
-> On 5/5/25 11:51 AM, Richard Henderson wrote:
->> On 5/5/25 11:47, Pierrick Bouvier wrote:
->>> On 5/5/25 11:38 AM, Richard Henderson wrote:
->>>> On 5/4/25 18:52, Pierrick Bouvier wrote:
->>>>> --- a/target/arm/tcg/meson.build
->>>>> +++ b/target/arm/tcg/meson.build
->>>>> @@ -30,7 +30,6 @@ arm_ss.add(files(
->>>>>        'translate-mve.c',
->>>>>        'translate-neon.c',
->>>>>        'translate-vfp.c',
->>>>> -  'crypto_helper.c',
->>>>>        'hflags.c',
->>>>>        'iwmmxt_helper.c',
->>>>>        'm_helper.c',
->>>>> @@ -63,3 +62,10 @@ arm_system_ss.add(files(
->>>>>      arm_system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('cpu-v7m.c'))
->>>>>      arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files('cpu-v7m.c'))
->>>>> +
->>>>> +arm_common_system_ss.add(files(
->>>>> +  'crypto_helper.c',
->>>>> +))
->>>>> +arm_user_ss.add(files(
->>>>> +  'crypto_helper.c',
->>>>> +))
->>>>
->>>> Could this use arm_common_ss?  I don't see anything that needs to be built user/system in
->>>> this file...
->>>>
->>>
->>> It needs vec_internal.h (clear_tail), which needs CPUARMState, which pulls cpu.h, which
->>> uses CONFIG_USER_ONLY.
->>
->> Ah, right.  I didn't see that coming.  :-)
->>
+On 5/5/25 11:43 AM, Richard Henderson wrote:
+> On 5/4/25 18:52, Pierrick Bouvier wrote:
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    target/arm/tcg/iwmmxt_helper.c | 4 +++-
+>>    target/arm/tcg/meson.build     | 3 ++-
+>>    2 files changed, 5 insertions(+), 2 deletions(-)
 > 
-> I like the idea to have it built once though, since so far
-> {arch}_common_ss was not used, and I was not even sure such a
-> compilation unit exists.
->
+> It appears iwmmxt_helper.c could be built once, like crypto_helper.c.
+> 
 
-Done.
+It needs to access env->iwmmxt.cregs, and ARM_IWMMXT_wCASF define, so it 
+pulls cpu.h, which contains CONFIG_USER_ONLY ifdefs.
+So we need to compile it twice for now.
 
->>> I'll take a look to break this dependency, so it can be built only once, and for other
->>> files as well.
->>
->> Thanks.  Building twice is still an improvement, so for this set,
->>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->>
->> r~
+> 
+> r~
 > 
 
 
