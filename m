@@ -4,93 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B485CC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 17:22:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB67BC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 17:29:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uBzVq-0002a8-Pi; Mon, 05 May 2025 13:21:54 -0400
+	id 1uBzci-0005ZJ-DY; Mon, 05 May 2025 13:29:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1uBzVm-0002Yz-6z
- for qemu-devel@nongnu.org; Mon, 05 May 2025 13:21:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1uBzVj-0005uf-Q1
- for qemu-devel@nongnu.org; Mon, 05 May 2025 13:21:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746465705;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xjbCV6OHIp87ekAtC8x7PjsCwMBMv35Ov5BZrizMNEE=;
- b=bN8MJH2Wc/hYYb24e2RSbTCD93f04GLsdcZmmCJX0q3esVQXTjPcXTNu+C/5hHTbi0uZHU
- WIapfcIKadK/5B20PYvUwYguVZL1hJ7mPdMnm2WP6c+tE8RDNUXwhgyuSyUBDWBDyeUNej
- nzL/VZeiNHCcCO8oRRu4fH9ooGr9Hpc=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-170-7Wz8hSybP7i4yIGaSNimJQ-1; Mon, 05 May 2025 13:20:36 -0400
-X-MC-Unique: 7Wz8hSybP7i4yIGaSNimJQ-1
-X-Mimecast-MFC-AGG-ID: 7Wz8hSybP7i4yIGaSNimJQ_1746465635
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-30d6a0309f6so30838451fa.2
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 10:20:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1uBzcf-0005VJ-EV
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 13:28:58 -0400
+Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1uBzcd-0006eI-PI
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 13:28:57 -0400
+Received: by mail-qt1-x82f.google.com with SMTP id
+ d75a77b69052e-4766cb762b6so54067821cf.0
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 10:28:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1746466134; x=1747070934; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dt/NBmWkS5SW0IQ6dXDJKyT2czmYF9whmaW1CQaQYLA=;
+ b=M+MLtZ4XBJhib7/zdcZFZeb6kqQif24zX4AiJqZuSWd/9cMUcuj07hLrjy9Ncu56/k
+ qw7O+PWTlbG4m1Vlda6z0qKlGdCxSeoaUGVFGo1tXid+zPjiyzAFogeLzb2nKCOBURwZ
+ ZSjdKwOKnKDGjVaIvNlgjIezHxo3bWAeGngd7kd3cPMN1/9113JCHxt3FvYLjSB6/Wqg
+ 1RwAM253koDfdrHmpsBN9vral3xErVgZnG5a7DS8wIzS0Bj7CgmaMVQDyCAN5+voBScp
+ hKS1gMoL17PPcdqx7QoP6vxU1iQw/G0PdqW36dX2w0Qql79U/x5pxRY57N5wDtodWAhb
+ eOSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746465635; x=1747070435;
+ d=1e100.net; s=20230601; t=1746466134; x=1747070934;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xjbCV6OHIp87ekAtC8x7PjsCwMBMv35Ov5BZrizMNEE=;
- b=THYgYtceVvK7b06/bFEWadZbGmYCg9r4wTE1MxYx8IRQv4O5s7Z5VqIXSqqlAuphf5
- Ro4h7etwhqPR0jvqZuBrjDQDR2oHLJxAF6IFlpvTrhK3hJm+wVbi3rLSXJQqfDMFA2rH
- YIM/o0OOf0OfKTF5JmEjZsGz2BStqBZMjVdeYF19FXu1T69fNkiSfVq4DWeYpxV/NeAW
- 5grdu4CT9fh+XetwjPQUxMUoMkzIAMGHqep78vEUFwSE+nNqdj/6GQT2LTgTaLFp0mBH
- HonpqjSMPyvjBXcajz2NFtxNM5vZME/njFFkTxpfyd55/xdLaR461IunqyiZ4U4bF59g
- cZ1A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXmdSX3TDi0miRmfV5+RTucJnCNe0byJRvuvt6ZUVP3SOPLMtEtyxZ1MW1bTqchzJiH+nbKhRrsf6pj@nongnu.org
-X-Gm-Message-State: AOJu0YyvMTwurgW5TltJKqB2gJoEgw2D11RZDwntsTnYT2kOh4mg0/Fi
- WxVj4M0UVInHa8DCMhVd7yXSVHs2XGL0t4Ys62fW9OarFosiWb/X8M8g1rhACpoTNgkflsAC9ry
- zdBBSycRnkPiIl7moq5n/GWOMSZBLZVWVmL/SaWdEHiWk+mycmxRNX/jt84BRv7AER8m7WrWVaA
- qYtoeFkZuNnPhlxnpo/uZ8vbEhd/w=
-X-Gm-Gg: ASbGncswspCu8cDkl1NMiR7hNAAOlNmWVXJ52mvoP16YR5qfoXu07bQr/uW26bmuFdo
- zoKQp4LHkVt4nsRNsC5NljHB35SEXG+AbzmuFJ4eQdz1EPN/eYEtmO1VP75BtQ6m5j2+b
-X-Received: by 2002:a2e:ab08:0:b0:30b:ed5a:6f3c with SMTP id
- 38308e7fff4ca-3264f00f23emr490171fa.10.1746465634839; 
- Mon, 05 May 2025 10:20:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHkAjhiLTdxP6TFSve9PlqNaMwgPNCKMTPSoW3yMdvPw0hASQWes/uXCZWLH6t8gz02Db7Mt7hvHvPIu38FzPw=
-X-Received: by 2002:a2e:ab08:0:b0:30b:ed5a:6f3c with SMTP id
- 38308e7fff4ca-3264f00f23emr490071fa.10.1746465634424; Mon, 05 May 2025
- 10:20:34 -0700 (PDT)
+ bh=dt/NBmWkS5SW0IQ6dXDJKyT2czmYF9whmaW1CQaQYLA=;
+ b=fKO889FEOOVGVJoR0vbozX6tqWh1Y4jnB1GHPo7xM2S2JsLxfqgs5UA7GzRS3kRLhp
+ U0K1SjZGSq6AuuZ6CXERJbWmOi0bOkIIGBpUc/kfJIQ47EYqnAK6XUkfEknz4Ng1pGri
+ RvhF4hxmSus9y3/VOYgVEaLF8mVqG1TIjxh6XpquMF9jqyA8RJlIV4N0i74AxXAGH2Zd
+ rFZl51J6PRWxpb/CczR3bwMr9EcgSWzNaEYs/udpJ04QDiNSJTTBEgVd43Ers14ND6xo
+ 1vq3m7sA1F8NYDdTEh3CFgBPkTumm0oP+niuRJbceo7yQ5o4PhM5YjocY5lU73W6RDiL
+ HXNw==
+X-Gm-Message-State: AOJu0YzMIM3ktVGQ9GbapVbeLhfzfwpsCEWuyzav3/5eqeKyZyn3ke0G
+ Q8gbrg+JlmbyLbpGolMB4H0QEX/48jfAfyutevqqXl5IwFka73Avy2FcJJV2AJ78P5QV25b9cmy
+ V/8L5p1ZphlQjPop8VGSQ/Pr38Ho=
+X-Gm-Gg: ASbGncu2o0w8Q1KLijVkur4qJQZOfL3e6dYehpBggB7qDWsBxcBs6+ERJbiWWQo3OXB
+ nooK9uLzaWH4zjqitofDz91U4u0aReEagXQlUtONLM8yubOcSFxUaJ/P8WCGX+hdljyliXG9qyZ
+ 1/eU7ra1/nYh6ZcSYMsVhSvj4wOnf+dLCZD5SRY2ypmBKRLRScG/66NS0=
+X-Google-Smtp-Source: AGHT+IFKVvWTYdVcPzoJpdMn3nUWmngAAYfAr69lR1bVZiOnNLM3vOGFL/6Xz1bdV0zQA0pDBUSlnNECKIHaL9uri1w=
+X-Received: by 2002:a05:622a:4e90:b0:48d:7cb6:c616 with SMTP id
+ d75a77b69052e-490e21c87ddmr5114591cf.14.1746466134309; Mon, 05 May 2025
+ 10:28:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1746003314.git.lc00631@tecorigin.com>
- <6b3567672da9d5778c18a32ee1306aaed884463c.1746003314.git.lc00631@tecorigin.com>
-In-Reply-To: <6b3567672da9d5778c18a32ee1306aaed884463c.1746003314.git.lc00631@tecorigin.com>
-From: Mario Casquero <mcasquer@redhat.com>
-Date: Mon, 5 May 2025 19:20:23 +0200
-X-Gm-Features: ATxdqUH4OUFkZ2fjw8EBApayyr4CobYA7YhqW8RLyRDls4PGgAQ1PZaZ4eSW8lM
-Message-ID: <CAMXpfWuaYz0CX3UH4A6Daxxx_0=9R6mqh-C_Fw3T8WEs+KEi8w@mail.gmail.com>
-Subject: Re: [PATCH v3 1/1] system: optimizing info mtree printing for monitors
-To: Chao Liu <lc00631@tecorigin.com>
-Cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com, 
- philmd@linaro.org, zhangtj@tecorigin.com, zqz00548@tecorigin.com, 
- qemu-devel@nongnu.org
+References: <20250326161927.15572-1-just4now666666@gmail.com>
+ <CAJ+F1CKzKuO940euRhCb=tx_UQ-Ncs6k4yctipeT1v4vkinu3w@mail.gmail.com>
+ <CACkyd_awBqPLTQ=ouJng8+-P4y-5qutU4BJTNZrSRxSwAeiWVw@mail.gmail.com>
+In-Reply-To: <CACkyd_awBqPLTQ=ouJng8+-P4y-5qutU4BJTNZrSRxSwAeiWVw@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 5 May 2025 21:28:42 +0400
+X-Gm-Features: ATxdqUFjIqcj3cJI5fT3XleN0JE6nR-zzB3xuRAIaEMuEMdJ0UwZ9qL5uiDHYVs
+Message-ID: <CAJ+F1C+SQ-p_rRZ0w74wUHBPve_w-JktNfmURfUQuCDc1YTf7w@mail.gmail.com>
+Subject: Re: [PATCH 1/1] util/memfd: allow allocating 0 bytes
+To: Elisha Hollander <just4now666666@gmail.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mcasquer@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,172 +95,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch has been successfully tested. Differences are clear,
-without the patch:
+Hi
 
-/usr/libexec/qemu-kvm -m 4G -monitor stdio
-(qemu) info mtree
-...
-memory-region: system
-  0000000000000000-ffffffffffffffff (prio 0, i/o): system
-    0000000000000000-00000000bfffffff (prio 0, ram): alias
-ram-below-4g @pc.ram 0000000000000000-00000000bfffffff
-    0000000000000000-ffffffffffffffff (prio -1, i/o): pci
-...
-After applying the patch
-
-./qemu/build/qemu-system-x86_64 -m 4G -monitor stdio
-(qemu) info mtree
-...
-memory-region: system
-=E2=94=82  =E2=94=9C=E2=94=80=E2=94=80 0000000000000000-ffffffffffffffff (p=
-rio 0, i/o): system
-=E2=94=82  =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 0000000000000000-0000000=
-0bfffffff (prio 0, ram): alias
-ram-below-4g @pc.ram 0000000000000000-00000000bfffffff
-=E2=94=82  =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 0000000000000000-fffffff=
-fffffffff (prio -1, i/o): pci
-...
-
-Tested-by: Mario Casquero <mcasquer@redhat.com>
-
-
-On Wed, Apr 30, 2025 at 11:08=E2=80=AFAM Chao Liu <lc00631@tecorigin.com> w=
-rote:
+On Mon, May 5, 2025 at 9:03=E2=80=AFPM Elisha Hollander
+<just4now666666@gmail.com> wrote:
 >
-> Make the hierarchical relationship between nodes clearer by adding charac=
-ters
->
-> e.g.
->
-> qemu-system-riscv64 -M virt -monitor stdio -display none
->
-> ```
-> (qemu) info mtree
-> ...
-> memory-region: system
-> =E2=94=82  =E2=94=9C=E2=94=80=E2=94=80 0000000000000000-ffffffffffffffff =
-(prio 0, i/o): system
-> =E2=94=82  =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 0000000003000000-00000=
-0000300ffff (prio 0, i/o): gpex_ioport_window
-> =E2=94=82  =E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 0000000003=
-000000-000000000300ffff (prio 0, i/o): gpex_ioport
-> ...
-> =E2=94=82  =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 0000000400000000-00000=
-007ffffffff (prio 0, i/o): alias ...
-> ```
->
-> Signed-off-by: Chao Liu <lc00631@tecorigin.com>
-> Reviewed-by: Qingze Zhao <zqz00548@tecorigin.com>
-> Reviewed-by: Tingjian Zhang <zhangtj@tecorigin.com>
-> ---
->  system/memory.c | 36 ++++++++++++++++++++++++++++++------
->  1 file changed, 30 insertions(+), 6 deletions(-)
->
-> diff --git a/system/memory.c b/system/memory.c
-> index 71434e7ad0..cf91718bcc 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -3296,6 +3296,21 @@ typedef QTAILQ_HEAD(, MemoryRegionList) MemoryRegi=
-onListHead;
->                             int128_sub((size), int128_one())) : 0)
->  #define MTREE_INDENT "  "
->
-> +enum mtree_node_type {
-> +    MTREE_NODE_T_INNER,
-> +    MTREE_NODE_T_TAIL,
-> +};
-> +
-> +static void mtree_print_node(enum mtree_node_type is_tail)
-> +{
-> +    qemu_printf((is_tail =3D=3D MTREE_NODE_T_TAIL) ? "=E2=94=94=E2=94=80=
-=E2=94=80 " : "=E2=94=9C=E2=94=80=E2=94=80 ");
-> +}
-> +
-> +static void mtree_print_col(unsigned level)
-> +{
-> +    qemu_printf(level ? "=E2=94=82   " : "=E2=94=82  ");
-> +}
-> +
->  static void mtree_expand_owner(const char *label, Object *obj)
->  {
->      DeviceState *dev =3D (DeviceState *) object_dynamic_cast(obj, TYPE_D=
-EVICE);
-> @@ -3335,7 +3350,8 @@ static void mtree_print_mr_owner(const MemoryRegion=
- *mr)
->  static void mtree_print_mr(const MemoryRegion *mr, unsigned int level,
->                             hwaddr base,
->                             MemoryRegionListHead *alias_print_queue,
-> -                           bool owner, bool display_disabled)
-> +                           bool owner, bool display_disabled,
-> +                           enum mtree_node_type node_type)
->  {
->      MemoryRegionList *new_ml, *ml, *next_ml;
->      MemoryRegionListHead submr_print_queue;
-> @@ -3376,8 +3392,9 @@ static void mtree_print_mr(const MemoryRegion *mr, =
-unsigned int level,
->          }
->          if (mr->enabled || display_disabled) {
->              for (i =3D 0; i < level; i++) {
-> -                qemu_printf(MTREE_INDENT);
-> +                mtree_print_col(i);
->              }
-> +            mtree_print_node(node_type);
->              qemu_printf(HWADDR_FMT_plx "-" HWADDR_FMT_plx
->                          " (prio %d, %s%s): alias %s @%s " HWADDR_FMT_plx
->                          "-" HWADDR_FMT_plx "%s",
-> @@ -3398,8 +3415,9 @@ static void mtree_print_mr(const MemoryRegion *mr, =
-unsigned int level,
->      } else {
->          if (mr->enabled || display_disabled) {
->              for (i =3D 0; i < level; i++) {
-> -                qemu_printf(MTREE_INDENT);
-> +                mtree_print_col(i);
->              }
-> +            mtree_print_node(node_type);
->              qemu_printf(HWADDR_FMT_plx "-" HWADDR_FMT_plx
->                          " (prio %d, %s%s): %s%s",
->                          cur_start, cur_end,
-> @@ -3435,8 +3453,12 @@ static void mtree_print_mr(const MemoryRegion *mr,=
- unsigned int level,
->      }
->
->      QTAILQ_FOREACH(ml, &submr_print_queue, mrqueue) {
-> +        if (ml =3D=3D QTAILQ_LAST(&submr_print_queue)) {
-> +            node_type =3D MTREE_NODE_T_TAIL;
-> +        }
->          mtree_print_mr(ml->mr, level + 1, cur_start,
-> -                       alias_print_queue, owner, display_disabled);
-> +                       alias_print_queue, owner,
-> +                       display_disabled, node_type);
->      }
->
->      QTAILQ_FOREACH_SAFE(ml, &submr_print_queue, mrqueue, next_ml) {
-> @@ -3614,7 +3636,8 @@ static void mtree_print_as(gpointer key, gpointer v=
-alue, gpointer user_data)
->      struct AddressSpaceInfo *asi =3D user_data;
->
->      g_slist_foreach(as_same_root_mr_list, mtree_print_as_name, NULL);
-> -    mtree_print_mr(mr, 1, 0, asi->ml_head, asi->owner, asi->disabled);
-> +    mtree_print_mr(mr, 1, 0, asi->ml_head, asi->owner, asi->disabled,
-> +                   MTREE_NODE_T_INNER);
->      qemu_printf("\n");
->  }
->
-> @@ -3659,7 +3682,8 @@ static void mtree_info_as(bool dispatch_tree, bool =
-owner, bool disabled)
->      /* print aliased regions */
->      QTAILQ_FOREACH(ml, &ml_head, mrqueue) {
->          qemu_printf("memory-region: %s\n", memory_region_name(ml->mr));
-> -        mtree_print_mr(ml->mr, 1, 0, &ml_head, owner, disabled);
-> +        mtree_print_mr(ml->mr, 1, 0, &ml_head, owner, disabled,
-> +                       MTREE_NODE_T_INNER);
->          qemu_printf("\n");
->      }
->
-> --
-> 2.48.1
->
+> Not necessarily fdopen, can't remember why I chose it, we just need any p=
+ointer as no data will be written into the buffer anyways
 >
 
+NULL should be acceptable then. You need to explain in greater details
+what you are trying to solve.
+
+>
+> On Mon, May 5, 2025, 19:55 Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail=
+.com> wrote:
+>>
+>> Hi
+>>
+>> On Wed, Mar 26, 2025 at 8:21=E2=80=AFPM donno2048 <just4now666666@gmail.=
+com> wrote:
+>> >
+>> > This silently fixes issues resulting from trying to allocate 0 bytes.
+>> >
+>> > Fixes error, for example, for writing byte 0x20 to port 0x3c0, then wo=
+rd 0xf09 to port 0x3b4 when CPU is initiated, which shouldn't break.
+>> >
+>>
+>> This is worth a test.
+>>
+>> > Signed-off-by: donno2048 <just4now666666@gmail.com>
+>> > ---
+>> >  util/memfd.c | 10 +++++++---
+>> >  1 file changed, 7 insertions(+), 3 deletions(-)
+>> >
+>> > diff --git a/util/memfd.c b/util/memfd.c
+>> > index 07beab174d..4f2c4ea1dd 100644
+>> > --- a/util/memfd.c
+>> > +++ b/util/memfd.c
+>> > @@ -131,9 +131,13 @@ void *qemu_memfd_alloc(const char *name, size_t s=
+ize, unsigned int seals,
+>> >          }
+>> >      }
+>> >
+>> > -    ptr =3D mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, mfd, 0)=
+;
+>> > -    if (ptr =3D=3D MAP_FAILED) {
+>> > -        goto err;
+>> > +    if (size !=3D 0) {
+>> > +        ptr =3D mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, mfd=
+, 0);
+>> > +        if (ptr =3D=3D MAP_FAILED) {
+>> > +            goto err;
+>> > +        }
+>> > +    } else {
+>> > +        ptr =3D fdopen(mfd, "rw");
+>>
+>> I don't understand fdopen() here, it returns a FILE*
+>>
+>> >      }
+>> >
+>> >      *fd =3D mfd;
+>> > --
+>> > 2.30.2
+>> >
+>> >
+>>
+>>
+>> --
+>> Marc-Andr=C3=A9 Lureau
+
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
