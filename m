@@ -4,68 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D6D0C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38615C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:24:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCDUZ-0002Kb-Lw; Tue, 06 May 2025 04:17:31 -0400
+	id 1uCDbA-0003iR-Gh; Tue, 06 May 2025 04:24:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCDUX-0002Hd-Js; Tue, 06 May 2025 04:17:29 -0400
-Received: from mgamail.intel.com ([192.198.163.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCDUV-0003CB-UL; Tue, 06 May 2025 04:17:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746519448; x=1778055448;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=10YWkdaa4tg+9NYJj8T8Tk7sWC4fZfGCSRMUZqJZ3B8=;
- b=AN0eJBASL5XbV6uReNf7jU5qn5i8cQnBNg3u1lfzBWJi4g+GrubQgYLg
- 44U3L32Ytb/TRVgZu97UWrnp77bw94lfSeywrD5QKfH/x5rXIAG2tut4r
- 3yW2G8EVzvf0bwQvez3fP9c/OauOoBZQt0zFxyAvBVvAbQtT12C4uipCr
- u0wnvQvQXMdg9XVDD6JFklh2Gb6jYjLvW66BL9lajhl6WrgIDq0e0vitd
- 0WYcadI22ipYA4/5b9mLIkMYAoUwGEYOdhUlzyi6SswcPwOVxyNPdRQXW
- NihXg4ZqNzkjE37t08en/riKzU1qeHyajyVtgeWoQH9W9BoJwV4eO+tbS w==;
-X-CSE-ConnectionGUID: qY9CitosTmGtXhyXmdoErw==
-X-CSE-MsgGUID: 34FuWFaPSM6qnuKIQU1FsA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11424"; a="48079556"
-X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="48079556"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2025 01:17:19 -0700
-X-CSE-ConnectionGUID: 4pwteoLLQMORc/wu9tLw6Q==
-X-CSE-MsgGUID: WJuBnpQpQCG0sglJ/xaXsQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="140500056"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa004.jf.intel.com with ESMTP; 06 May 2025 01:17:17 -0700
-Date: Tue, 6 May 2025 16:38:17 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 11/11] docs: rust: update for newer minimum supported
- version
-Message-ID: <aBnKeU9fIKxzBGs5@intel.com>
-References: <20250505090438.24992-1-pbonzini@redhat.com>
- <20250505090438.24992-12-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDb6-0003hq-Rb
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 04:24:16 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDb4-0003sI-S2
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 04:24:16 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-ac345bd8e13so876566466b.0
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 01:24:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746519852; x=1747124652; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cq0N3criJDHU7BSJNCvrvSttnQ51DU8aN7mRbORYFks=;
+ b=fGL7T5d+p0FO54n7tOULzrejUuYGM3uqCeODQ3GfK02R5rHHm4KA7ABtesV1fW3r2K
+ wcqfEyDaCM9hr0sAzhX5MQmFQ9Q8EQUUGtbQPolY61enuLRzOsrar1e0AvC+vnJjSNm8
+ Xg3V949LUMnN0GTnWTU7Vpe0+v5GWP5FU1/L0rBXDepV2hpTRCpVV24HAHAVdl7CakhU
+ 28C4V8BlQtMKwyWofLa3X7BYtlJ7/JS08ThNtrXEYqccGPkhUxEPwURhIpPng8cHZRJA
+ eo0Uhc/nlj+tuoviu+PtzyvSp5vHnUhpMA+wwaV/39QV5ASv0peNLAkDJF0VlhrDZkuK
+ 1hgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746519853; x=1747124653;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cq0N3criJDHU7BSJNCvrvSttnQ51DU8aN7mRbORYFks=;
+ b=aT0HhVdRvk4VxQgzi+f8jc3Bu488/ELRFKcajws7ppz1QaNTZ8ZV1Ik/J5hLWwDtTZ
+ hCc5LOiLPnJBj3jfpeVOX3Q9VsgSR0N+O4B/F0yanxVZGu19k6BpakKZoZcIWNtxygvT
+ P+7nVZQQcvPioL56UrG8+QzY7tZpIdmRc4naIFavQk1Bz/7QYV2FfKna75EOdCBYMZ6m
+ +5Y+DcDEQ4/acSY19ESCR0Zk253xdk/TVLRMbs0lwqgkrfwJtk7OCxo0kMiFoA32vq3U
+ wm8EVcEMA5PbdpK5akDQcp2kzLtMgauMHcszjU1cX1WuyVywJb+6+UAeJaefWNPaAL4X
+ z3fg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5gBxqtMZZLnOPkEk3dSUPTDE0PE2N5UGA2RJ6pp1fTxkFgNIMKYovlQ8Oz3wRBg21rsM/Frft9wZA@nongnu.org
+X-Gm-Message-State: AOJu0YwOo/txpSmruGVOooZyzq5Rkxqk0CVsRcauJN8TRfB3KjT/GksS
+ 5GJ8rTgwAwOf5IjOH6TW8AwMy38HboXTKGZvwp0xByemPutmf8nU0y1F0uch5N0=
+X-Gm-Gg: ASbGncsHguGxmGTx0SfaqNb5/4QEdwgR0trfDNU6nO8rZsSoA1i9J/9TFHegc3Cqy1B
+ AhStIct7ObXphGk+bt7Eva3f64CmL9ImCqaqVWjlWl0uAFGcEaHB3lhHGKHvo2AqroWlRpQy5oL
+ OpLSHiCaQv7teVbgXhahLyHiJ/Em4ICK2QZoSKk9cDsg1TKspgysumU5ZRqCcMWFjWUWq3uw/dh
+ nFoRExDfkUc5unSItjOO1pdRK/OamZI1x5RXCME2UJBUt46LhnEjtpyt3WPiGA/wAWuUug+ynxi
+ yEFKe05F/BGlv52gB74pQzGZ6HPGAjcbul+C9IpblVzvBjZ+RdjgjrRD8dQYlEx+wf0wvBVhzTi
+ q+3Y=
+X-Google-Smtp-Source: AGHT+IGt5txLqLtSp3+cU2gSSgyJlnUvTSYiBCOBY+5W/7nbeKOqVAo/CFoPl+08CP9SDWM0WurRpw==
+X-Received: by 2002:a17:907:7fa2:b0:ac6:d142:2c64 with SMTP id
+ a640c23a62f3a-ad1d454e258mr210203366b.18.1746519852598; 
+ Tue, 06 May 2025 01:24:12 -0700 (PDT)
+Received: from [10.194.152.213] (238.21.205.77.rev.sfr.net. [77.205.21.238])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ad1891478fasm655909466b.26.2025.05.06.01.24.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 May 2025 01:24:11 -0700 (PDT)
+Message-ID: <56396829-cd35-4a96-bc7b-321eb01b91e4@linaro.org>
+Date: Tue, 6 May 2025 10:24:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250505090438.24992-12-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -57
-X-Spam_score: -5.8
-X-Spam_bar: -----
-X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] bsd-user: add option to enable plugins
+To: Warner Losh <imp@bsdimp.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Kyle Evans <kevans@freebsd.org>, qemu-devel@nongnu.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org
+References: <20250331234228.3475706-1-pierrick.bouvier@linaro.org>
+ <0a39e805-eb75-4b88-b316-189acad38efa@linaro.org>
+ <a7cc7e54-b84d-44e1-8c75-df39b44dd28f@FreeBSD.org>
+ <0a765d57-0c9a-4732-b560-203f03f903e9@linaro.org>
+ <CANCZdfpg6JEbDx3dJvCcdQNexcjW+zBYzjhrmtDDLJC8rm7meQ@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CANCZdfpg6JEbDx3dJvCcdQNexcjW+zBYzjhrmtDDLJC8rm7meQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,16 +107,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> -* Generic Associated Types (1.65.0)
-> -
-> -* ``CStr::from_bytes_with_nul()`` as a ``const`` function (1.72.0).
-> -
-> -* "Return position ``impl Trait`` in Traits" (1.75.0, blocker for including
-> -  the pinned-init create).
-> -
+On 6/5/25 02:25, Warner Losh wrote:
+> I'm also ignorant of plugins, but (a) if not enabling plugins is a nop
+> and (b) plugins either work or fail completely, then I think we can
+> enable them. If they cause problems when not enabled by the user,
+> though, we'll likely have to revert.
 
-Glad to see it's possible to include pinned-init. 
+Elsewhere in this thread Pierrick mentioned:
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+"... system mode, which runs on BSD ... already has plugins enabled."
+
+> 
+> I don't know enough about them, though, to review.
+> 
+> Warner
+> 
+> On Mon, May 5, 2025 at 12:38 PM Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+>>
+>> On 4/28/25 3:57 PM, Kyle Evans wrote:
+>>> On 4/28/25 14:36, Pierrick Bouvier wrote:
+>>>> On 3/31/25 4:42 PM, Pierrick Bouvier wrote:
+>>>>> Nothing prevent plugins to be enabled on this platform for user
+>>>>> binaries, only the option in the driver is missing.
+>>>>>
+>>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>>> ---
+>>>>>     bsd-user/main.c | 12 ++++++++++++
+>>>>>     1 file changed, 12 insertions(+)
 
 
