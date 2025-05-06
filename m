@@ -4,104 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79564C3ABBF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92AB5C3ABAC
 	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:56:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCE5h-0001pU-Ud; Tue, 06 May 2025 04:55:54 -0400
+	id 1uCE3h-0003jR-6c; Tue, 06 May 2025 04:53:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCE5Z-0001Dl-P8
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:55:46 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCE5V-0007l7-GS
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:55:45 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-acb39c45b4eso856647666b.1
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 01:55:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746521739; x=1747126539; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=r7WeRI1zx+FoyOA/YldoDkOxqvxpYNFgz6XaGrQKjpI=;
- b=RxqajIzsWt7yGo37M/ka+LtCn3Yyu3E+z7elSuzhXZNv6jifG34HzUoaoN/Bym0EAH
- Eum7SWZpfdaQM3y1W9u48B7BFEXhketYtfZ6n4TYS8mMOSsLcnelQ/FRqNTnJhq8ghis
- gLvduNVbSiuF5pMCSpN1WJzgO6VhXEWguDEQC5iUcouxriaIvZMviYdhEbBRY6b1Nl37
- pMYYbYqT+WJ744ba+s+Iw/ZmY2oVqyUAL1p+FkrKsaYl0eiy3LtB5HMNjb5J6lyb6e0j
- D/mU3NIkZfWJCx3eadLRhlAdASrVYLXe/NefPvSglrBs67WFySKT0Jn00IIW4mnOf3AN
- +1oA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746521739; x=1747126539;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r7WeRI1zx+FoyOA/YldoDkOxqvxpYNFgz6XaGrQKjpI=;
- b=UpYTkMu4hsO6cVJFxlDllkdKgDkJF7IFyDNG0QJeQI7t2jGTiV55JcZ4RQ3zEtzS/g
- qwWGcq0uzCzj08Tjj/HXXBShWgNEz2GDOig7K//j0euj2sUagH6rMt8UEj2XnkZwLHDE
- igwK02/lUl5/TgrzpWTqqX1wP7mOyfAd+vfK+xuU1ezXGXzIMfmaiQ3QEa7EHVwCkL8j
- mATl1268xfMUWGpX2XzQRJsysj5E0JOkLKX8WUobzQ89Pd8eq0sOd1pjIgawf0NsbYGk
- 1yz0Pm2ugcfHns4enquZ8ryno2AMnXZZ/LVbP8KbSbxe1M8+3fLbVTru3Tvhs5cvj9YS
- xU3g==
-X-Gm-Message-State: AOJu0YzXFQcRFVhEnmChRpTd51txfa7p4Y7qdySPJEvk4gpv+bATE93+
- tUrUx5FTkxWMx8ATszM6pZGkd7Gfp0xNvnsIbD+md2CV0M3b9FO/yf6VXvgzIOo=
-X-Gm-Gg: ASbGnctbM/7gWyqit+vt0tHnArD1i9evHWp1THYWPMaj8DBZ7phpF8gm1PVYyfZ/T8U
- cL8LkMoPJitGJa0EqP57R/6MQF4Q0tTwk0FQA5DNjaG/ahLiLLYwtz8qVmk/1WOEMrasQzHWGTO
- pRGMNr55hHfHmNwExnr5hF9fV9JT92Z1Yh7tH7WtltnLpe9fw6Bjcoz/eOEl/dy5lTL+pC4JWmq
- 6E/CGjC0GhQah7C7GoG3ER0oyMysZWAZXKp3BitrI91xtZr1/IBjAySx/uPjctj+0IAqOo4uOxf
- 7iM4gr9KTk4UwWgIi7jgUIZ/PHzMAHV8Mgn9ZjhW6fTx8ReNNlQUbvnQtZ7WqWhZVEJOlDJyoYN
- P8f8XTdnk0DRwbQ==
-X-Google-Smtp-Source: AGHT+IHifHRffEq5bdMQfPubSpOyrj3WXjvuBj9ZM/+bmICtF/DDCxyvX+7c81bPwv9FmYrdouWSVA==
-X-Received: by 2002:a17:907:3fa4:b0:abf:73ba:fd60 with SMTP id
- a640c23a62f3a-ad17b5dbc19mr1529984066b.29.1746521738971; 
- Tue, 06 May 2025 01:55:38 -0700 (PDT)
-Received: from [10.194.152.213] (238.21.205.77.rev.sfr.net. [77.205.21.238])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad189146f61sm661188366b.9.2025.05.06.01.55.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 May 2025 01:55:37 -0700 (PDT)
-Message-ID: <59c4d557-2f73-4b56-8650-f16ed3cd7bb2@linaro.org>
-Date: Tue, 6 May 2025 10:55:34 +0200
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uCE3d-0003aE-Ic
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 04:53:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uCE3b-0007M4-C3
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 04:53:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746521622;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OkX/ofmrhNwk1+GXqgS0ODBbVkDrluZ8fLg9OpEBk+Q=;
+ b=HJPtMAI4eUM3OowZTti0jjmTpsVtmqzg8pkoFhuJVFWtfm3Vc965u7iUTUwSF/OhI20XHh
+ u8ukyGr8dOIH+8giu9ch5OhZDKXh+59IoQggHQCQkZhEILgBVYEsrPU61biOpQAln66oUI
+ lqsl8FsrVmgDJ68lSGrALnRmYrOZ21s=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-203-Kb946JzQPkOOITaUcIcl4Q-1; Tue,
+ 06 May 2025 04:53:39 -0400
+X-MC-Unique: Kb946JzQPkOOITaUcIcl4Q-1
+X-Mimecast-MFC-AGG-ID: Kb946JzQPkOOITaUcIcl4Q_1746521617
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 57F3C1955E74; Tue,  6 May 2025 08:53:37 +0000 (UTC)
+Received: from gondolin.str.redhat.com (dhcp-192-216.str.redhat.com
+ [10.33.192.216])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9EA091956094; Tue,  6 May 2025 08:53:31 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ agraf@csgraf.de
+Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
+Subject: [PATCH v6 07/14] arm/cpu: Store aa64smfr0 into the idregs array
+Date: Tue,  6 May 2025 10:52:27 +0200
+Message-ID: <20250506085234.855779-8-cohuck@redhat.com>
+In-Reply-To: <20250506085234.855779-1-cohuck@redhat.com>
+References: <20250506085234.855779-1-cohuck@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] hw/virtio: Introduce CONFIG_VIRTIO_LEGACY to disable
- legacy support
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
- <eperezma@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>,
- Raphael Norwitz <raphael.norwitz@nutanix.com>,
- Jason Wang <jasowang@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-ppc@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Anton Johansson <anjo@rev.ng>, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20250502132441.64723-1-philmd@linaro.org>
- <aBnCk2WE_SNkRgSH@redhat.com> <20250506040903-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250506040903-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,91 +90,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/25 10:12, Michael S. Tsirkin wrote:
-> On Tue, May 06, 2025 at 09:04:50AM +0100, Daniel P. Berrangé wrote:
->> On Fri, May 02, 2025 at 03:24:41PM +0200, Philippe Mathieu-Daudé wrote:
->>> Legacy VirtIO devices don't have their endianness clearly defined.
->>> QEMU infers it taking the endianness of the (target) binary, or,
->>> when a target support switching endianness at runtime, taking the
->>> endianness of the vCPU accessing the device.
->>>
->>> Devices modelling shouldn't really change depending on a property
->>> of a CPU accessing it.
->>>
->>> For heterogeneous systems, it is simpler to break such dev <-> cpu
+From: Eric Auger <eric.auger@redhat.com>
 
-         ^^^^^^^^^^^^^
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+---
+ target/arm/cpu-features.h | 6 +++---
+ target/arm/cpu.h          | 1 -
+ target/arm/cpu64.c        | 7 ++-----
+ target/arm/helper.c       | 2 +-
+ target/arm/kvm.c          | 3 +--
+ target/arm/tcg/cpu64.c    | 4 ++--
+ 6 files changed, 9 insertions(+), 14 deletions(-)
 
->>> dependency, only allowing generic device models, with no knowledge
->>> of CPU (or DMA controller) accesses.
->>>
->>> Therefore we introduce the VIRTIO_LEGACY Kconfig key. We keep the
->>> current default (enabled).
->>> New binaries can set CONFIG_VIRTIO_LEGACY=n to restrict models to
->>> the VirtIO version 1 spec.
->>
->> IMHO that isn't acceptable. In order to be able to provide an
->> upgrade path from the old binaries, we need the need the new
->> binaries to be able to serve the same use cases & disabling
->> virtio 0.9 support prevents that.
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 7f6331ca437d..1ac1f3e95984 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -978,17 +978,17 @@ static inline bool isar_feature_aa64_sve_f64mm(const ARMISARegisters *id)
+ 
+ static inline bool isar_feature_aa64_sme_f64f64(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64smfr0, ID_AA64SMFR0, F64F64);
++    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, F64F64);
+ }
+ 
+ static inline bool isar_feature_aa64_sme_i16i64(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64smfr0, ID_AA64SMFR0, I16I64) == 0xf;
++    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, I16I64) == 0xf;
+ }
+ 
+ static inline bool isar_feature_aa64_sme_fa64(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64(id->id_aa64smfr0, ID_AA64SMFR0, FA64);
++    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, FA64);
+ }
+ 
+ /*
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index dc57a2e4ef19..e8f2fd14e874 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1077,7 +1077,6 @@ struct ArchCPU {
+         uint32_t dbgdidr;
+         uint32_t dbgdevid;
+         uint32_t dbgdevid1;
+-        uint64_t id_aa64smfr0;
+         uint64_t reset_pmcr_el0;
+         uint64_t idregs[NUM_ID_IDX];
+     } isar;
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 45981dfcfbb3..ce8cf45dd44f 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -328,7 +328,7 @@ void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
+ 
+     if (vq_map == 0) {
+         if (!cpu_isar_feature(aa64_sme, cpu)) {
+-            cpu->isar.id_aa64smfr0 = 0;
++            SET_IDREG(&cpu->isar, ID_AA64SMFR0, 0);
+             return;
+         }
+ 
+@@ -381,11 +381,8 @@ static bool cpu_arm_get_sme_fa64(Object *obj, Error **errp)
+ static void cpu_arm_set_sme_fa64(Object *obj, bool value, Error **errp)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+-    uint64_t t;
+ 
+-    t = cpu->isar.id_aa64smfr0;
+-    t = FIELD_DP64(t, ID_AA64SMFR0, FA64, value);
+-    cpu->isar.id_aa64smfr0 = t;
++    FIELD_DP64_IDREG(&cpu->isar, ID_AA64SMFR0, FA64, value);
+ }
+ 
+ #ifdef CONFIG_USER_ONLY
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 173fdb47a3d3..1f540d5e7fdd 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -7950,7 +7950,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 4, .opc2 = 5,
+               .access = PL1_R, .type = ARM_CP_CONST,
+               .accessfn = access_aa64_tid3,
+-              .resetvalue = cpu->isar.id_aa64smfr0 },
++              .resetvalue = GET_IDREG(isar, ID_AA64SMFR0)},
+             { .name = "ID_AA64PFR6_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 4, .opc2 = 6,
+               .access = PL1_R, .type = ARM_CP_CONST,
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 44cc02fb76a2..9fdfbd4c4458 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -353,8 +353,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+         err = 0;
+     } else {
+         err |= get_host_cpu_reg(fd, ahcf, ID_AA64PFR1_EL1_IDX);
+-        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64smfr0,
+-                              ARM64_SYS_REG(3, 0, 0, 4, 5));
++        err |= get_host_cpu_reg(fd, ahcf, ID_AA64SMFR0_EL1_IDX);
+         err |= get_host_cpu_reg(fd, ahcf, ID_AA64DFR0_EL1_IDX);
+         err |= get_host_cpu_reg(fd, ahcf, ID_AA64DFR1_EL1_IDX);
+         err |= get_host_cpu_reg(fd, ahcf, ID_AA64ISAR0_EL1_IDX);
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index ddb82a03e37c..80b1196aae93 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1267,7 +1267,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64DFR0, HPMN0, 1);     /* FEAT_HPMN0 */
+     SET_IDREG(isar, ID_AA64DFR0, t);
+ 
+-    t = cpu->isar.id_aa64smfr0;
++    t = GET_IDREG(isar, ID_AA64SMFR0);
+     t = FIELD_DP64(t, ID_AA64SMFR0, F32F32, 1);   /* FEAT_SME */
+     t = FIELD_DP64(t, ID_AA64SMFR0, B16F32, 1);   /* FEAT_SME */
+     t = FIELD_DP64(t, ID_AA64SMFR0, F16F32, 1);   /* FEAT_SME */
+@@ -1275,7 +1275,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+     t = FIELD_DP64(t, ID_AA64SMFR0, F64F64, 1);   /* FEAT_SME_F64F64 */
+     t = FIELD_DP64(t, ID_AA64SMFR0, I16I64, 0xf); /* FEAT_SME_I16I64 */
+     t = FIELD_DP64(t, ID_AA64SMFR0, FA64, 1);     /* FEAT_SME_FA64 */
+-    cpu->isar.id_aa64smfr0 = t;
++    SET_IDREG(isar, ID_AA64SMFR0, t);
+ 
+     /* Replicate the same data to the 32-bit id registers.  */
+     aa32_max_features(cpu);
+-- 
+2.49.0
 
-This isn't for the single binary effort, there we are taking a
-lot of care to not introduce any change.
-
-This is for after it; once we have a single binary (one architecture
-run by an instance) we can start testing heterogeneous emulation
-(different architectures in the same instance).
-
->> I don't see a compelling
->> technical reason why we can't support virtio 0.9 from this
->> endian point.
-
-VirtIO 0.9 needs knowledge of the vCPU architecture to get its
-endianness. So we need to somehow propagate that at creation
-time, guarantying which vCPU (or set of vCPUs) will access a
-virtio device.
-
-The use case I'd like to figure out is how should we model
-plugging a virtio 0.9 device in into a fully emulated
-ZynqMP machine, which has little-endian ARM cores and big
-endian MicroBlaze cores.
-
-Alex said this is unlikely to happen, and better is to
-ignore this case by not allowing virtio pre-1.0 devices in
-our future heterogeneous emulator.
-
-In this same thread Pierrick pointed me to the reference in
-the spec: '2.4.3 Legacy Interfaces: A Note on Virtqueue Endianness',
-"It is assumed that the host is already aware of the guest endian."
-
-I suppose this means a pre-1.0 virtio device expect to be used by
-a single guest OS, but it is not clear the guest OS as fixed
-endianness, because the code path checks vCPU endianness at
-runtime, so passing guest endianness as a property to pre-1.0
-devices isn't really an option.
-
-Anyway I think 1/ I posted this too early, "speculating" as Pierrick
-noticed, and confuse the community w.r.t. "single binary" and
-2/ I don' t understand legacy virtio and its endianness handling
-enough to figure a clever idea to keep using it heterogeneous
-setup, so I'll let this task to someone more familiar with that tech.
-
->> Yes may be more ugly/messy than we would like, but that's par
->> for the course with QEMU emulating arbitrary device models.
->> If the new binaries can't cope with messy devices then I think
->> we are doing something wrong.
-
-> 
-> To be more specific, having a kconfig knob modifying the device
-> without regards for machine types, means it is no longer
-> enough to inspect the command line to figure out the
-> compatiblity. That's a problem.
-> 
-
-OK. I won't pursue in this direction. I apologize for mentioning
-this topic again too early.
-
-Regards,
-
-Phil.
 
