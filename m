@@ -4,58 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10416C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 16:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CC4EC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 16:45:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCLNF-00068C-Mf; Tue, 06 May 2025 12:42:29 -0400
+	id 1uCLPs-0002Y0-Ow; Tue, 06 May 2025 12:45:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uCLNB-0005yj-D5; Tue, 06 May 2025 12:42:25 -0400
-Received: from imap4.hz.codethink.co.uk ([188.40.203.114])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uCLN8-0003OL-Qe; Tue, 06 May 2025 12:42:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap4-20230908; h=Sender:Content-Transfer-Encoding:
- MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
- List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=m/F/gtwzFqgZDUlL/FPX7ZrNzTg0BWxSgcbBBSxcpoQ=; b=AXZ7GugVjTJH0ktSPoOJ6rHH6T
- wgAEHyZ1dWXgErsSJLxm9M+RRgO34AaOmCjjvEC57fTwEHsyRd8csI4gGqMl+pUjsaGWIpnEpLlru
- nf92FHLzwzM7bk7hpal+5p2I2ofiomleMUVC8Zomx5UuznHMmQd5Yl/FeUh6DKMD4yJvZ02n/quZO
- WoLSVWxMx+kEHdvdFX54G3gmySTV+a2u1Z1Dn3r5ng7cO8iPB7UmCo10VnLK4s8o8L3+mrO5aB1wx
- uq70mln1i5J1Reb68R6WhrDP8Iidvo7r86PVzVekiltymRqLHH9fkDXJRhIAHsWgt1dvIGZA38Jf3
- GT09PgVQ==;
-Received: from [167.98.27.226] (helo=rainbowdash)
- by imap4.hz.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1uCLN0-0078s5-CR; Tue, 06 May 2025 17:42:14 +0100
-Received: from ben by rainbowdash with local (Exim 4.98.2)
- (envelope-from <ben@rainbowdash>) id 1uCLN0-00000001ytj-0HMY;
- Tue, 06 May 2025 17:42:14 +0100
-From: Ben Dooks <ben.dooks@codethink.co.uk>
-To: qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, hiwei_liu@linux.alibaba.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, alistair.francis@wdc.com,
- palmer@dabbelt.com, Ben Dooks <ben.dooks@codethink.co.uk>
-Subject: [PATCH RFC] target/riscv: Remove tbflag for VILL
-Date: Tue,  6 May 2025 17:42:07 +0100
-Message-Id: <20250506164207.472410-1-ben.dooks@codethink.co.uk>
-X-Mailer: git-send-email 2.37.2.352.g3c44437643
+ (Exim 4.90_1) (envelope-from <just4now666666@gmail.com>)
+ id 1uCLPq-0002TU-Ki
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 12:45:10 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <just4now666666@gmail.com>)
+ id 1uCLPo-0003mP-U2
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 12:45:10 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-30863b48553so61972a91.0
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 09:45:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1746549907; x=1747154707; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=yC0ECXde75V6nobHfnqunfAw2EloRLIfdnkLuabJLMs=;
+ b=bFhXLaHmg++IK2JvEFQW3gs7v7ROQo7GqoDofWP/Nx257ZRm7Y3bRHxGRdmYtJx0kl
+ r0sQn09iNGp2YVMQsJ4O5dEYb00sNTJDceIFgJtglI2X0AUqUNX1xarWRKTOy81PtxaN
+ d+q1hPA5lA6FzjZAztoQhrsx7q5IKiAZGm2x6JfkCO3OkbdsYEMEdIrlM2VA3CTUe6cW
+ IsynJetTVEDpOzK25d108Oofvv51v7ZSBqMi01zouUFUAMjXSjozDvvmuXx8dohJ5vpp
+ kr6N9JxFQZ6rj5T5eTytBVru6gIIEEwR9UBSGPAAhAX9r+2aHYrJhSMJyy4AG8mgvnCj
+ hULA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746549907; x=1747154707;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yC0ECXde75V6nobHfnqunfAw2EloRLIfdnkLuabJLMs=;
+ b=mXAz+uoOr2mLvsJYGpPMvs++dQdIi2Wp2/5NEha4dAYgW8DiuCKIiyI6gLeLiXjJEP
+ F8EAEHu+zKVJXI9O4xN/lUFxif03F9ZVuYsQqfpzD+LFxjvmPOMU+iyGupJE6wLgSM/n
+ jDOPqC9/gT1q24Hcq5x0xVfS3I+Gl15sggtD1Lm8ZAvSBY/9BGTke4PdxERnTzW6ZVKD
+ L0ref18aZUuWl/SGvpxoJnkIFL5MlqS2vtAfWJWBCDsJcpWk9ddhbuVnc1KWLcU0QvrY
+ qM3C+dgF+l1Wizjw8xO7dC6jCm2vFFSA72M1chSvZ7mY7nuYt6zPQgcsJ/OcvP4e2AjS
+ Y3Ww==
+X-Gm-Message-State: AOJu0YzUfK8eeaZV2cczWlMMl80QC0kYrdR0ZKLXBIU+fWqePt2OkbTA
+ O8l3WTu6PYTgF0jBUU8XtbxiVq9r3L0kjZOkbnhOAhbUq3tYFSeo279i35tll7mCinyGE8cprhU
+ B3o0om9pfQBGldhd+mmNRRUS2OCU=
+X-Gm-Gg: ASbGncvHoO+QAqZ/ydsAeb6YHpKO8XlO8/k9TtYP64gfC8/79ZtMUuxKIyZvl6nDXhC
+ QyvBp2i3LruRtVAkXI2I2ytPK2WmRXD/uzRHzyCUW10ScFcdu7XlrAIgtLgG46chX2rwJ+dwZf9
+ gjQwix2LhOu+ADqqT6gMCKpNKP2NDf/Su/HPCKBqalpQ==
+X-Google-Smtp-Source: AGHT+IFc6amYjd80dSNMM+8v33LCZ0x1lEz8Xx38dO6cOocKmclvgGZZ9cgbCEj/PVurEuy/CW35U8KEJvuznpR4KmI=
+X-Received: by 2002:a17:90b:17cd:b0:2ff:556f:bf9 with SMTP id
+ 98e67ed59e1d1-30aa8a28478mr446994a91.4.1746549907422; Tue, 06 May 2025
+ 09:45:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=188.40.203.114;
- envelope-from=srv_ts003@codethink.com; helo=imap4.hz.codethink.co.uk
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Elisha Hollander <just4now666666@gmail.com>
+Date: Tue, 6 May 2025 19:44:55 +0300
+X-Gm-Features: ATxdqUGVLOrH4iLgWU4c8DtTpp47OR1a1x1Ga9qgB5yWTJfznFDK6bvC4PE2IZQ
+Message-ID: <CACkyd_aL_KAgG1FzoC+H+TpNm2KCvWq+35HMUsVaBKWThNSBNQ@mail.gmail.com>
+Subject: [PATCH v2] util/memfd: allow allocating 0 bytes
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org, Elisha Hollander <just4now666666@gmail.com>
+Content-Type: multipart/alternative; boundary="000000000000d0817e06347a562a"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=just4now666666@gmail.com; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,93 +89,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the ctx->vill is only really applicable if the LMUL value is
-set to an invalid state (4) we can free the tbflag up by just using
-the LMUL field.
+--000000000000d0817e06347a562a
+Content-Type: text/plain; charset="UTF-8"
 
-This was discussed in [1] as part of a way of extending the space in
-tbflags to allow our big-endian work to have a bit in there.
+> As I mentioned earlier, let's say you don't initialize the vertical
+display end registers, and set the minimum scanline register, the emulation
+will then have to allocate some display buffer, but because the vertical
+display end is initilized as 0 the buffer will be empty and the program
+break.
 
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+Signed-off-by: donno2048 <just4now666666@gmail.com>
 
-[1] https://mail.gnu.org/archive/html/qemu-devel/2025-04/msg03982.html
 ---
- target/riscv/cpu.h        | 2 +-
- target/riscv/cpu_helper.c | 7 +++++--
- target/riscv/translate.c  | 5 ++++-
- 3 files changed, 10 insertions(+), 4 deletions(-)
+ util/memfd.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 167909c89b..2811d6d3f7 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -635,7 +635,7 @@ FIELD(TB_FLAGS, VS, 5, 2)
- FIELD(TB_FLAGS, LMUL, 7, 3)
- FIELD(TB_FLAGS, SEW, 10, 3)
- FIELD(TB_FLAGS, VL_EQ_VLMAX, 13, 1)
--FIELD(TB_FLAGS, VILL, 14, 1)
-+/* VILL replaced by checked of LMUL==4 */
- FIELD(TB_FLAGS, VSTART_EQ_ZERO, 15, 1)
- /* The combination of MXL/SXL/UXL that applies to the current cpu mode. */
- FIELD(TB_FLAGS, XL, 16, 2)
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 619c76cc00..290ed7c30b 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -38,6 +38,9 @@
- #include "debug.h"
- #include "pmp.h"
- 
-+/* avoid pulling in the tcg/riscv/tcg-target.c.inc */
-+#define VLMUL_RESERVED (4)
-+
- int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
+diff --git a/util/memfd.c b/util/memfd.c
+index 8a2e906..e96e5af 100644
+--- a/util/memfd.c
++++ b/util/memfd.c
+@@ -108,7 +108,7 @@ err:
+ void *qemu_memfd_alloc(const char *name, size_t size, unsigned int seals,
+                        int *fd, Error **errp)
  {
- #ifdef CONFIG_USER_ONLY
-@@ -164,7 +167,7 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
-         uint32_t maxsz = vlmax << vsew;
-         bool vl_eq_vlmax = (env->vstart == 0) && (vlmax == env->vl) &&
-                            (maxsz >= 8);
--        flags = FIELD_DP32(flags, TB_FLAGS, VILL, env->vill);
-+        g_assert(env->vill && lmul != VLMUL_RESERVED);
-         flags = FIELD_DP32(flags, TB_FLAGS, SEW, vsew);
-         flags = FIELD_DP32(flags, TB_FLAGS, LMUL,
-                            FIELD_EX64(env->vtype, VTYPE, VLMUL));
-@@ -175,7 +178,7 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
-                            FIELD_EX64(env->vtype, VTYPE, VMA));
-         flags = FIELD_DP32(flags, TB_FLAGS, VSTART_EQ_ZERO, env->vstart == 0);
-     } else {
--        flags = FIELD_DP32(flags, TB_FLAGS, VILL, 1);
-+        flags = FIELD_DP32(flags, TB_FLAGS, LMUL, VLMUL_RESERVED);
-     }
- 
-     if (cpu_get_fcfien(env)) {
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index cef61b5b29..28a6b345f2 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -37,6 +37,9 @@
- 
- #include "tcg/tcg-cpu.h"
- 
-+/* avoid pulling in the tcg/riscv/tcg-target.c.inc */
-+#define VLMUL_RESERVED (4)
-+
- /* global register indices */
- static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc, cpu_vl, cpu_vstart;
- static TCGv_i64 cpu_fpr[32]; /* assume F and D extensions */
-@@ -1274,9 +1277,9 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
-     ctx->misa_ext = env->misa_ext;
-     ctx->frm = -1;  /* unknown rounding mode */
-     ctx->cfg_ptr = &(cpu->cfg);
--    ctx->vill = FIELD_EX32(tb_flags, TB_FLAGS, VILL);
-     ctx->sew = FIELD_EX32(tb_flags, TB_FLAGS, SEW);
-     ctx->lmul = sextract32(FIELD_EX32(tb_flags, TB_FLAGS, LMUL), 0, 3);
-+    ctx->vill = ctx->lmul == VLMUL_RESERVED;
-     ctx->vta = FIELD_EX32(tb_flags, TB_FLAGS, VTA) && cpu->cfg.rvv_ta_all_1s;
-     ctx->vma = FIELD_EX32(tb_flags, TB_FLAGS, VMA) && cpu->cfg.rvv_ma_all_1s;
-     ctx->cfg_vta_all_1s = cpu->cfg.rvv_ta_all_1s;
--- 
-2.37.2.352.g3c44437643
+-    void *ptr;
++    void *ptr = NULL;
+     int mfd = qemu_memfd_create(name, size, false, 0, seals, NULL);
 
+     /* some systems have memfd without sealing */
+@@ -131,9 +131,11 @@ void *qemu_memfd_alloc(const char *name, size_t size,
+unsigned int seals,
+         }
+     }
+
+-    ptr = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, mfd, 0);
+-    if (ptr == MAP_FAILED) {
+-        goto err;
++    if (size != 0) {
++        ptr = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, mfd, 0);
++        if (ptr == MAP_FAILED) {
++            goto err;
++        }
+     }
+
+     *fd = mfd;
+--
+2.30.2
+
+--000000000000d0817e06347a562a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div dir=3D"auto">&gt; As I mentioned earlier, let&#39;s =
+say you don&#39;t initialize the vertical display end registers, and set th=
+e minimum scanline register, the emulation will then have to allocate some =
+display buffer, but because the vertical display end is initilized as 0 the=
+ buffer will be empty and the program break.</div><div dir=3D"auto"><br></d=
+iv><div dir=3D"auto">Signed-off-by: donno2048 &lt;<a href=3D"mailto:just4no=
+w666666@gmail.com" target=3D"_blank" rel=3D"noreferrer">just4now666666@gmai=
+l.com</a>&gt;</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div dir=
+=3D"auto">---</div><div dir=3D"auto">=C2=A0util/memfd.c | 10 ++++++----</di=
+v><div dir=3D"auto">=C2=A01 file changed, 6 insertions(+), 4 deletions(-)</=
+div><div dir=3D"auto"><br></div><div dir=3D"auto">diff --git a/util/memfd.c=
+ b/util/memfd.c</div><div dir=3D"auto">index 8a2e906..e96e5af 100644</div><=
+div dir=3D"auto">--- a/util/memfd.c</div><div dir=3D"auto">+++ b/util/memfd=
+.c</div><div dir=3D"auto">@@ -108,7 +108,7 @@ err:</div><div dir=3D"auto">=
+=C2=A0void *qemu_memfd_alloc(const char *name, size_t size, unsigned int se=
+als,</div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int *fd, Error **errp)</div><div dir=
+=3D"auto">=C2=A0{</div><div dir=3D"auto">-=C2=A0 =C2=A0 void *ptr;</div><di=
+v dir=3D"auto">+=C2=A0 =C2=A0 void *ptr =3D NULL;</div><div dir=3D"auto">=
+=C2=A0 =C2=A0 =C2=A0int mfd =3D qemu_memfd_create(name, size, false, 0, sea=
+ls, NULL);</div><div dir=3D"auto"><br></div><div dir=3D"auto">=C2=A0 =C2=A0=
+ =C2=A0/* some systems have memfd without sealing */</div><div dir=3D"auto"=
+>@@ -131,9 +131,11 @@ void *qemu_memfd_alloc(const char *name, size_t size,=
+ unsigned int seals,</div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0}</div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0}</div><div dir=3D"auto"><b=
+r></div><div dir=3D"auto">-=C2=A0 =C2=A0 ptr =3D mmap(0, size, PROT_READ | =
+PROT_WRITE, MAP_SHARED, mfd, 0);</div><div dir=3D"auto">-=C2=A0 =C2=A0 if (=
+ptr =3D=3D MAP_FAILED) {</div><div dir=3D"auto">-=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 goto err;</div><div dir=3D"auto">+=C2=A0 =C2=A0 if (size !=3D 0) {</div=
+><div dir=3D"auto">+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ptr =3D mmap(0, size, PROT_=
+READ | PROT_WRITE, MAP_SHARED, mfd, 0);</div><div dir=3D"auto">+=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 if (ptr =3D=3D MAP_FAILED) {</div><div dir=3D"auto">+=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto err;</div><div dir=3D"auto">+=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }</div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0}<=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0*fd =
+=3D mfd;</div><div dir=3D"auto">--</div><div dir=3D"auto">2.30.2</div></div=
+></div>
+
+--000000000000d0817e06347a562a--
 
