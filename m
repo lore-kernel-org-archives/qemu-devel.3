@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99ECCC3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:39:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 900F6C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:40:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCJQv-0001lZ-59; Tue, 06 May 2025 10:38:11 -0400
+	id 1uCJQZ-0001Q8-PF; Tue, 06 May 2025 10:37:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJPz-0000bo-2Y
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:37:12 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJPg-0000R6-2b
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:36:55 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJPw-0001Cr-CK
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:37:10 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-39c13fa05ebso3595155f8f.0
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:37:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJPc-0001B4-J3
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:36:51 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43cf06eabdaso47064575e9.2
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:36:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746542222; x=1747147022; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746542207; x=1747147007; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6XW5xHBO3SA/+mZJNPOxITj6/tX70uskRNb+p6Q8bM4=;
- b=RYFzugPd+JAX9FBQdupOrhLVJj6BLPgroVC4QuYGHj1MwScSCR/8VaxhG6OJYU0Msf
- pHbo8WNDAkeDW99psne4SxXvPdXlEtr9YCnikBNm3/0Djz3TPrjRDLyevt5zAyoK0jAZ
- yS5RFJePcTPwwRfz1IQUwOq5wBg2WHgw2xe7CiFdWQogo9HHdvgp4MArfeHZXcEf1jDU
- otirPhXYlVnXb16gCMC6i1QL19NVjha8Zhuxsc6wv5gUqgBsG1hKYY16l1Og6cKRAtsX
- O6s4yshko2uPE3gxXAdPs6SJvWcgf6388TczM9jJupfUAzARUyA3z2ywwyfszUu0RrbY
- zdyw==
+ bh=VcUIrYmbGjwMRc++oq35b0qq7zt00pXf6AQPz2o0MDQ=;
+ b=s2OeNlwzVaD835HxtDSuPMpyRJ+VAHeye8X4+KnCfdVuumfmqPP9Oo/yv2ucBpLz4Z
+ QuXTSTbJ7d/SORHtzPkfpY9Ny7XL64A3MOCjqkZnZx+fEd3CrgS2SAmnwopLNJEGv4yP
+ GqPGAkTcGJMiFzPX22XIfjC19ybrIyqfSNxjgku1ggvqclc1hW4SNMEeWs5HFthInB7L
+ 1md2qoRbdQlu0/acTPVmVSH5QdVIkyPWIgvHWcHTc8WdwSbL1klWLLccZrao5s7qF9OH
+ I2ek1E24PJfgfQ/3GEKpiFxTGWsQ25d25fuGIdtjfK8ZFF7Bjmnp5QJLo8x8NdISypl3
+ OAQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746542222; x=1747147022;
+ d=1e100.net; s=20230601; t=1746542207; x=1747147007;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6XW5xHBO3SA/+mZJNPOxITj6/tX70uskRNb+p6Q8bM4=;
- b=jZF3Bcg0K1waVG6wku/zOZL3jtufwbizwQb6DP/n/6u83N3uEd63SHYT/BfU8g+Lhb
- JJliZU5HNJMCgk8Zy2BHFVAuDyfwmZolXKIRdC0w/48QE+g6hVz88lfw62piM+kRukyU
- SqNvOCSN/TbzMsUMIdb1QTveKFY+sS36hCPU1/Tw1xgAAHatGkmp4ljklxhEz+VzomdK
- qDjNc/wENYrDbdZxNjmaYwfGYB3ra4+aZ6DLfex4fwh2YyjzF62+5NmydV4KbHY0xAqX
- xckwkyKwSQqgxEZr18qY75OFqGso/c9/170LJNgyFG3qQIQKpzxIZUdef5mct229Gei2
- Ntog==
-X-Gm-Message-State: AOJu0YwOUGXwFYTktPPLoViqpL3eJrQi15tuHF8LMatVx2HeWaEzyG9q
- G0stEbMhs+GTf+ud3euL4GNQ41PIQiDQ3PiS1w7aSJGwTRzY136LMNMmV8lwrDcqrH1cCYB3u0l
- b
-X-Gm-Gg: ASbGncuEyyxkLt3UJLzYmNwvH/w5K7KIrA/AjZJtxwZeHf2bIr7otIsH+NdLTyx50JT
- emG215YYU9aQ0589SqsMRJaX4QFlOD7Ld0sytODQFiOCNwKKMAhB4vcRnFxgMwNOS+jSvGuZ7Bd
- +rhkJypXV5JGJXz8G956YckKqquIA2lBqAMibC6/EZgt58glvn4RDvMYdteuy3wupjGmS85/qsg
- sEuhaFq4A0mfqNrNNO/iUX7tDZNv8WNtrTOFmNeTmYmX6hQcoJO7G43A5v0Bl+SO9uiPFKa1ifR
- 6s1IgcDXlyhsCrCWjNx8Ri34J6VqvDzx2QhP9AQM5Jjvmz/x38Zqh+YVHC7Iwnbuz+epaEdryJR
- igPl+QKjCz9FR012wjA1M
-X-Google-Smtp-Source: AGHT+IEA/O3UeOwrj+KOS5WHOwcW00MJEnP2JBKABRoxfMtJOGTuL/L+vRywczu9WgzGCPWUiByzZA==
-X-Received: by 2002:a5d:4b0e:0:b0:3a0:b3f1:6edf with SMTP id
- ffacd0b85a97d-3a0b3f16ef1mr113668f8f.21.1746542222517; 
- Tue, 06 May 2025 07:37:02 -0700 (PDT)
+ bh=VcUIrYmbGjwMRc++oq35b0qq7zt00pXf6AQPz2o0MDQ=;
+ b=pERa04NSezU8nSt/0MUVg94CqlXIA81ovzutumg52GYAArPNi5whfhq8sBFzfTXucR
+ 9/jJzx+UA8w6cBhF/y4CM3qJ4jz0ZOT2NsWyT2lnj73LOq/V7M+VmbavrqSAECVnnNvc
+ uDDUHY+m4z99xWh2wDl3+xdB88BfoYbw9hxUuCzmJQOuCE5DhNTyilCkT/dYXgbaapyk
+ CW3ptGa6g6+Y7AMbMmpNXGXh7LaMlJzpp90l2bJ7vXBxmehgsywC5/UDb9vSyJ0u8lhe
+ JzrgJIHn4BDhTtMGi0IssGyTBuRzBOq/dhIIj2TFs7g4bvd44xWtkU19E6D9zRH0bbbx
+ G6lw==
+X-Gm-Message-State: AOJu0Yxh/evV8piFKqQLRErSJtd5P2irGheTwq3Fs4H0xs2WjxkouxNH
+ SNEEhxI0SIj2LmYiFvcIWKXFQa0UFjODXOexVvo8+lnIfGZF9zNvXqPtyt6tRTGIVplAsd+IKR8
+ S
+X-Gm-Gg: ASbGnctYXYm2htoLPn4voQT2WRu2aQROvQc/W/I8mW7ibHsJ7Ejz4HZLZO1xhCaXbzz
+ mmQRWRh6MAps88N78uKBG/ovmBPamPW5Z2kSirTOBaK9V+QeSgS3ykrGdw9uRo63SuOYoglwkz6
+ lWeJxJ58nE31gma+Tsba7darYFtfFjz8P2Vxe79v8y8OZJqhYfIyOCfV444qlksHXUnKOW5XX1J
+ Jy5aG1tekz+msD0Gg0wqn+VxiVjfNqij+BHztbCIRiq6sFcJTh6jCwo0/6y0OBf9Jd11BveB4NJ
+ cnmdx+Gc6TmUHelWVsYDEQtM40U6i8wdeyOGndqgtc/iaVX6HkEHoZQqtbaoljQEMB2OxQmcgLV
+ kyQ0m9COo5Z5jTXke1JLh
+X-Google-Smtp-Source: AGHT+IFqEHayzZIkr54iEVOBn+5T+fQKfVPCFG66STijX0p/hN1GM8e6deIuQgIy9EcRn/Ie8DoSnw==
+X-Received: by 2002:a05:600c:1d0a:b0:43c:fffc:7855 with SMTP id
+ 5b1f17b1804b1-441d052322bmr33756225e9.15.1746542206772; 
+ Tue, 06 May 2025 07:36:46 -0700 (PDT)
 Received: from localhost.localdomain (91-163-26-170.subs.proxad.net.
  [91.163.26.170]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae3b57sm14185821f8f.36.2025.05.06.07.37.01
+ ffacd0b85a97d-3a099ae34e2sm13641958f8f.24.2025.05.06.07.36.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 May 2025 07:37:01 -0700 (PDT)
+ Tue, 06 May 2025 07:36:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Gustavo Romero <gustavo.romero@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 22/22] hw/isa/ich9: Remove stray empty comment
-Date: Tue,  6 May 2025 16:35:11 +0200
-Message-ID: <20250506143512.4315-23-philmd@linaro.org>
+Subject: [PULL 19/22] hw/i386/acpi-build: Update document reference
+Date: Tue,  6 May 2025 16:35:08 +0200
+Message-ID: <20250506143512.4315-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250506143512.4315-1-philmd@linaro.org>
 References: <20250506143512.4315-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,27 +102,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Remove stray empty comment in IRQ routing function.
+Update the reference for QEMU's ACPI PCI hotplug device interface. Also,
+use the possessive form in the comment.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <20250504215639.54860-3-gustavo.romero@linaro.org>
+Message-ID: <20250504215639.54860-9-gustavo.romero@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/isa/lpc_ich9.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/i386/acpi-build.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-index 71afb45b631..304dffac322 100644
---- a/hw/isa/lpc_ich9.c
-+++ b/hw/isa/lpc_ich9.c
-@@ -182,7 +182,6 @@ static uint64_t ich9_cc_read(void *opaque, hwaddr addr,
- }
+diff --git a/hw/i386/acpi-build.h b/hw/i386/acpi-build.h
+index 0dce155c8cc..275ec058a12 100644
+--- a/hw/i386/acpi-build.h
++++ b/hw/i386/acpi-build.h
+@@ -5,7 +5,7 @@
  
- /* IRQ routing */
--/* */
- static void ich9_lpc_rout(uint8_t pirq_rout, int *pic_irq, int *pic_dis)
- {
-     *pic_irq = pirq_rout & ICH9_LPC_PIRQ_ROUT_MASK;
+ extern const struct AcpiGenericAddress x86_nvdimm_acpi_dsmio;
+ 
+-/* PCI Hot-plug registers bases. See docs/spec/acpi_pci_hotplug.txt */
++/* PCI Hot-plug registers' base. See docs/specs/acpi_pci_hotplug.rst */
+ #define ACPI_PCIHP_SEJ_BASE 0x8
+ #define ACPI_PCIHP_BNMR_BASE 0x10
+ 
 -- 
 2.47.1
 
