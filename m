@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 583D0C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:46:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0103BC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:46:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCJWF-0004vT-Fk; Tue, 06 May 2025 10:43:39 -0400
+	id 1uCJWA-0004Xy-P1; Tue, 06 May 2025 10:43:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJSp-0007lG-Pz
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:40:10 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJSj-0007aV-81
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:40:02 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJSl-0001bH-TF
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:40:07 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-39bf44be22fso3915675f8f.0
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:40:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJSg-0001Yk-CO
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:40:00 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-39149bccb69so4504843f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:39:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746542401; x=1747147201; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746542396; x=1747147196; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lOi5amPs94CRFUHcijuRRBsiadMoOd81cUGdXDypUyk=;
- b=x6Dz1mqEs+4STOSwvdNdRlgOkvzOoUK9EAHXmldyCR476SJj+EH02kizA5NGBp0KqF
- swgmbNsfcSFKD24CXv/cJ+QwME0dMBnO4dj+vzdvoDU4MGlCQnVzxXD0IeLGjeSzIStx
- 3ojJA3YtatUSNb+8st6fEItrtnvkZE8gjgoVDjPh9fM1VBufwPWMeVfhy/2Mqbv0LarO
- V5xwDKTRyWlb+Zmn2RSjeXpXqtk8AuwP+fgqMhcyJMYRULuBBcBUV6n/mSz7IUwCB/FJ
- D/0UkSoW76g2Yhd9qa3QVWW/AFKL485aZVuIa7eb4eh3t3PM9jLPvh8ctfzyUAMPCqnf
- 4IaQ==
+ bh=Q1RXK9TNZCyuKZFLBANjjuVrJLcCqvX//mQ8ZqVm0L0=;
+ b=lPIn0sznahDZDDe7BYqabLiBKAA9ymwoqngRDLGU8Lo3V0UQEcTAoz/TbMOypck8h9
+ SKHlX4DnNSARGTpzXc7X/5lYJy0UANPlMj7jgv0+Hlzd2Pao0NnT6Zzeo/vWpaTxnfRn
+ 7/9OtU7kdRjrBvOFYwM4PD+pKqRDLr2eT2z77LJu+nzl6besAlNDSNKmcucl6HWgolK3
+ 277Fhb9uHUbDNEuqG+i9CFZetwFoer2GvEPtzee0Rb6m2gLwB77fOMtwVmm+XjGtMQjU
+ pOR47P5IqZv0yULdjrdskkP+AjXE/Unx7WwpFtA/0l2JXacw5WeAIcrY+D1ud3S36TGz
+ X2ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746542401; x=1747147201;
+ d=1e100.net; s=20230601; t=1746542396; x=1747147196;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lOi5amPs94CRFUHcijuRRBsiadMoOd81cUGdXDypUyk=;
- b=wqu7FbQOj6WACURyfqpIIYWdG+oYBDVZTk/Iv9krZixctWOf69KYn7mk1Y3D5B2TvL
- J86lRBytLRkl+8esMmY71IE/h4wBqiyX+hjnFlbdq8OXwaOoUolT3dGL0020vSYiFZe4
- 73syGXYIeBInZMIEVSGVhj/APDUqVbCNoGkltp0DCR4JSAv4mVQO7BVSgtB6CaZjRgfy
- x2hT3IL7sPmWRr9bDlPv4nEIwfTWrqM6E8n0KiybUOlMzC7paYKQGAutyAPMCnDck1cY
- MMhjpk7bqb/v+LfiDjR8vwNqTihROXoAqhypp/GqT+HqjOpWLzZV11nw58vFEk/Yd5HD
- jgPg==
-X-Gm-Message-State: AOJu0Yyk0ybKqyMNpRrHDLbhF9QAhfbBN6CEPxdrY+ZBK+940nM7rCXV
- Xw7JiZ1vcnVPTYsejG18ZF4ODsFT4sDCC1dQejHR/KyhLGpbkIzk3KUcaSlU9WjEbn1K/l51S4p
- y
-X-Gm-Gg: ASbGnctI0zn+SUmAdnfcQtJ4ayQ1NoxaXdMEWD96uYEtfvgwXv1WSJRrW6Yme51DrTz
- iTjVCkjz/C2/iPLSXM4eePzC/UeTLelXSKfEPwR62wlDIcpxj0jBeZQX4yKvwt5lKx1Lbk+HoF9
- R8tfo+Y3fEqJ1YRZpvftjeg2ce77+JzghLJSshZ7Yl9w9wa2QUrj/uISibfMXV8TAI3yxDFuNg0
- y40i8yJxD7reJUdiWVnMJfy/cK2dan4z8W0ubeGVLkUnyxqgIV2UF3kox8e8ttm1NNFgUH3i2KN
- Cpe1QQc0z7yy7M3OLGVD8nkM96bHkNDK634QpGtaVTcmKIVD0psXubcAXjF0bRxkYLV7VtpTDl1
- M1OSpq6U6VdjQrGvIsLXm
-X-Google-Smtp-Source: AGHT+IGUXLijdYxGQ7ShulRPcya3sReM1MGv27pg/1PmJM0ctcydT9Qsel6kvHUfyzd53mctpnE/FA==
-X-Received: by 2002:a05:6000:402a:b0:391:4389:f36a with SMTP id
- ffacd0b85a97d-3a0ac3ea243mr2564048f8f.48.1746542401006; 
- Tue, 06 May 2025 07:40:01 -0700 (PDT)
+ bh=Q1RXK9TNZCyuKZFLBANjjuVrJLcCqvX//mQ8ZqVm0L0=;
+ b=LoHlU/YkEZ2hU1H3IbKTvyHqIIsLijx2+daCkHgMX9fnV2LjBPuU5KeRv6V05guySg
+ T/yahFave8nLQFKS+fgouV0UCZOBzptUOibxetxqU/6C7VeezQ+F9dHhvg1+DSLIPfd2
+ ohAwDdI0lYaaXkMCbWYS1NID2QI4it/BX7A8qy+ffIP/HaPcRiBoVfaoPdXFgFheD8mC
+ LyL06tdVgLXR7vp9MnVjGxd3NzVUrP1ikPajbWE8P9ztcAibra3mSsPOouIesSKefahm
+ 6m/N8vrnXx4ywVzWLzFnPAFT7LwytOPN1dUu+mg1YVgv8FromokZpdf15j5yzKZd9666
+ Gxig==
+X-Gm-Message-State: AOJu0Yz8yeJsst5wF1UOtK/sbYcS19mxN+/4bNuWcKipGzbHRJKuGIYM
+ LoatlmFew3ngcmcfiArNKcoNWmJTmkHjByuwmsvWWPTV+xfIn2LNxGJtmmqcG+QjQg+8JdjyOuJ
+ h
+X-Gm-Gg: ASbGnctTQ93OqybAq+4hMEQPzZk4bCDzgbhSvFNEy++/bRFBAuVKPrV6EllhnblxheU
+ FpqQwJ4uiAyAqaOO2+j35Y36tg9hN+LVih9/OFjEzw/whpVQAxx8qJoZBX9otpyKttpWTiwyt0x
+ ds37L5wgxtuqpN5RFihkuV/EaBJKX1XtPqLV3cqWPPisQIezFUK63oLOquUjrpihDpJ/AezC9ld
+ jtlGckbpZ52vIItop6OhQdj5XzH8dYL9d3y16rywY+0khTEBn+XJiFwocGWjMI+NiqsHQ/e8Xhr
+ GG5eAGcK1+bCkQVCLz7EbNATJU9wLHM0ZPjBj3ZVCb7A0YYTt8WD8IktP+MYZc4Q+SUsyIwNKWe
+ l4oMX+7GQxKeYgcIMeLCL
+X-Google-Smtp-Source: AGHT+IERyC0ULigXCVdHbeKVZ0qq8iqab9YgQ8oItk0SniydPvtZ5WXB89avLZL/ZEmQSdcPWbu1iQ==
+X-Received: by 2002:a05:6000:200d:b0:390:e62e:f31f with SMTP id
+ ffacd0b85a97d-3a0ac0cb822mr2943505f8f.3.1746542396130; 
+ Tue, 06 May 2025 07:39:56 -0700 (PDT)
 Received: from localhost.localdomain (91-163-26-170.subs.proxad.net.
  [91.163.26.170]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae7bbesm13657933f8f.49.2025.05.06.07.39.59
+ ffacd0b85a97d-3a099b16f9dsm14155699f8f.93.2025.05.06.07.39.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 May 2025 07:40:00 -0700 (PDT)
+ Tue, 06 May 2025 07:39:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>,
@@ -77,18 +77,20 @@ Cc: Kevin Wolf <kwolf@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 11/19] hw/nvram/fw_cfg: Remove legacy FW_CFG_ORDER_OVERRIDE
-Date: Tue,  6 May 2025 16:38:57 +0200
-Message-ID: <20250506143905.4961-12-philmd@linaro.org>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v3 10/19] hw/i386/x86: Remove X86MachineClass::save_tsc_khz
+ field
+Date: Tue,  6 May 2025 16:38:56 +0200
+Message-ID: <20250506143905.4961-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250506143905.4961-1-philmd@linaro.org>
 References: <20250506143905.4961-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,336 +113,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MachineClass::legacy_fw_cfg_order boolean was only used
+The X86MachineClass::save_tsc_khz boolean was only used
 by the pc-q35-2.5 and pc-i440fx-2.5 machines, which got
-removed. Remove it along with:
-
-- FW_CFG_ORDER_OVERRIDE_* definitions
-- fw_cfg_set_order_override()
-- fw_cfg_reset_order_override()
-- fw_cfg_order[]
-- rom_set_order_override()
-- rom_reset_order_override()
-
-Simplify CLI and pc_vga_init() / pc_nic_init().
+removed. Remove it and simplify tsc_khz_needed().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- include/hw/boards.h       |   3 +-
- include/hw/loader.h       |   2 -
- include/hw/nvram/fw_cfg.h |  10 ----
- hw/core/loader.c          |  14 -----
- hw/i386/pc.c              |   7 +--
- hw/nvram/fw_cfg.c         | 109 +++-----------------------------------
- system/vl.c               |   5 --
- 7 files changed, 9 insertions(+), 141 deletions(-)
+ include/hw/i386/x86.h | 5 -----
+ hw/i386/x86.c         | 1 -
+ target/i386/machine.c | 5 ++---
+ 3 files changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 5c4e3d2a2cd..5dc5e3b547d 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -286,8 +286,7 @@ struct MachineClass {
-         no_parallel:1,
-         no_floppy:1,
-         no_cdrom:1,
--        pci_allow_0_address:1,
--        legacy_fw_cfg_order:1;
-+        pci_allow_0_address:1;
-     bool auto_create_sdcard;
-     bool is_default;
-     const char *default_machine_opts;
-diff --git a/include/hw/loader.h b/include/hw/loader.h
-index d280dc33e96..c96b5e141c6 100644
---- a/include/hw/loader.h
-+++ b/include/hw/loader.h
-@@ -270,8 +270,6 @@ int rom_add_elf_program(const char *name, GMappedFile *mapped_file, void *data,
-                         AddressSpace *as);
- int rom_check_and_register_reset(void);
- void rom_set_fw(FWCfgState *f);
--void rom_set_order_override(int order);
--void rom_reset_order_override(void);
+diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+index 258b1343a16..fc460b82f82 100644
+--- a/include/hw/i386/x86.h
++++ b/include/hw/i386/x86.h
+@@ -27,13 +27,8 @@
+ #include "qom/object.h"
  
- /**
-  * rom_transaction_begin:
-diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
-index 47578ccc7f2..d41b9328fd1 100644
---- a/include/hw/nvram/fw_cfg.h
-+++ b/include/hw/nvram/fw_cfg.h
-@@ -42,14 +42,6 @@ struct FWCfgDataGeneratorClass {
+ struct X86MachineClass {
+-    /*< private >*/
+     MachineClass parent;
  
- typedef struct fw_cfg_file FWCfgFile;
+-    /*< public >*/
+-
+-    /* TSC rate migration: */
+-    bool save_tsc_khz;
+     /* use DMA capable linuxboot option rom */
+     bool fwcfg_dma_enabled;
+     /* CPU and apic information: */
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index e2d04092992..f80533df1c5 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -382,7 +382,6 @@ static void x86_machine_class_init(ObjectClass *oc, const void *data)
+     mc->get_default_cpu_node_id = x86_get_default_cpu_node_id;
+     mc->possible_cpu_arch_ids = x86_possible_cpu_arch_ids;
+     mc->kvm_type = x86_kvm_type;
+-    x86mc->save_tsc_khz = true;
+     x86mc->fwcfg_dma_enabled = true;
+     nc->nmi_monitor_handler = x86_nmi;
  
--#define FW_CFG_ORDER_OVERRIDE_VGA    70
--#define FW_CFG_ORDER_OVERRIDE_NIC    80
--#define FW_CFG_ORDER_OVERRIDE_USER   100
--#define FW_CFG_ORDER_OVERRIDE_DEVICE 110
--
--void fw_cfg_set_order_override(FWCfgState *fw_cfg, int order);
--void fw_cfg_reset_order_override(FWCfgState *fw_cfg);
--
- typedef struct FWCfgFiles {
-     uint32_t  count;
-     FWCfgFile f[];
-@@ -75,8 +67,6 @@ struct FWCfgState {
-     uint32_t cur_offset;
-     Notifier machine_ready;
- 
--    int fw_cfg_order_override;
--
-     bool dma_enabled;
-     dma_addr_t dma_addr;
-     AddressSpace *dma_as;
-diff --git a/hw/core/loader.c b/hw/core/loader.c
-index b792a54bb02..e7056ba4bd3 100644
---- a/hw/core/loader.c
-+++ b/hw/core/loader.c
-@@ -1333,20 +1333,6 @@ void rom_set_fw(FWCfgState *f)
-     fw_cfg = f;
- }
- 
--void rom_set_order_override(int order)
--{
--    if (!fw_cfg)
--        return;
--    fw_cfg_set_order_override(fw_cfg, order);
--}
--
--void rom_reset_order_override(void)
--{
--    if (!fw_cfg)
--        return;
--    fw_cfg_reset_order_override(fw_cfg);
--}
--
- void rom_transaction_begin(void)
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index 6cb561c6322..dd2dac1d443 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -1060,9 +1060,8 @@ static bool tsc_khz_needed(void *opaque)
  {
-     Rom *rom;
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index cb375aabdc5..49632b69d29 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1033,7 +1033,6 @@ DeviceState *pc_vga_init(ISABus *isa_bus, PCIBus *pci_bus)
- {
-     DeviceState *dev = NULL;
- 
--    rom_set_order_override(FW_CFG_ORDER_OVERRIDE_VGA);
-     if (pci_bus) {
-         PCIDevice *pcidev = pci_vga_init(pci_bus);
-         dev = pcidev ? &pcidev->qdev : NULL;
-@@ -1041,7 +1040,7 @@ DeviceState *pc_vga_init(ISABus *isa_bus, PCIBus *pci_bus)
-         ISADevice *isadev = isa_vga_init(isa_bus);
-         dev = isadev ? DEVICE(isadev) : NULL;
-     }
--    rom_reset_order_override();
+     X86CPU *cpu = opaque;
+     CPUX86State *env = &cpu->env;
+-    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
+-    X86MachineClass *x86mc = X86_MACHINE_CLASS(mc);
+-    return env->tsc_khz && x86mc->save_tsc_khz;
 +
-     return dev;
++    return env->tsc_khz;
  }
  
-@@ -1231,8 +1230,6 @@ void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus)
-     bool default_is_ne2k = g_str_equal(mc->default_nic, TYPE_ISA_NE2000);
-     NICInfo *nd;
- 
--    rom_set_order_override(FW_CFG_ORDER_OVERRIDE_NIC);
--
-     while ((nd = qemu_find_nic_info(TYPE_ISA_NE2000, default_is_ne2k, NULL))) {
-         pc_init_ne2k_isa(isa_bus, nd, &error_fatal);
-     }
-@@ -1241,8 +1238,6 @@ void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus)
-     if (pci_bus) {
-         pci_init_nic_devices(pci_bus, mc->default_nic);
-     }
--
--    rom_reset_order_override();
- }
- 
- void pc_i8259_create(ISABus *isa_bus, qemu_irq *i8259_irqs)
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index 237b9f7d1fe..54cfa07d3f5 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -817,62 +817,6 @@ void fw_cfg_modify_i64(FWCfgState *s, uint16_t key, uint64_t value)
-     g_free(old);
- }
- 
--void fw_cfg_set_order_override(FWCfgState *s, int order)
--{
--    assert(s->fw_cfg_order_override == 0);
--    s->fw_cfg_order_override = order;
--}
--
--void fw_cfg_reset_order_override(FWCfgState *s)
--{
--    assert(s->fw_cfg_order_override != 0);
--    s->fw_cfg_order_override = 0;
--}
--
--/*
-- * This is the legacy order list.  For legacy systems, files are in
-- * the fw_cfg in the order defined below, by the "order" value.  Note
-- * that some entries (VGA ROMs, NIC option ROMS, etc.) go into a
-- * specific area, but there may be more than one and they occur in the
-- * order that the user specifies them on the command line.  Those are
-- * handled in a special manner, using the order override above.
-- *
-- * For non-legacy, the files are sorted by filename to avoid this kind
-- * of complexity in the future.
-- *
-- * This is only for x86, other arches don't implement versioning so
-- * they won't set legacy mode.
-- */
--static struct {
--    const char *name;
--    int order;
--} fw_cfg_order[] = {
--    { "etc/boot-menu-wait", 10 },
--    { "bootsplash.jpg", 11 },
--    { "bootsplash.bmp", 12 },
--    { "etc/boot-fail-wait", 15 },
--    { "etc/smbios/smbios-tables", 20 },
--    { "etc/smbios/smbios-anchor", 30 },
--    { "etc/e820", 40 },
--    { "etc/reserved-memory-end", 50 },
--    { "genroms/kvmvapic.bin", 55 },
--    { "genroms/linuxboot.bin", 60 },
--    { }, /* VGA ROMs from pc_vga_init come here, 70. */
--    { }, /* NIC option ROMs from pc_nic_init come here, 80. */
--    { "etc/system-states", 90 },
--    { }, /* User ROMs come here, 100. */
--    { }, /* Device FW comes here, 110. */
--    { "etc/extra-pci-roots", 120 },
--    { "etc/acpi/tables", 130 },
--    { "etc/table-loader", 140 },
--    { "etc/tpm/log", 150 },
--    { "etc/acpi/rsdp", 160 },
--    { "bootorder", 170 },
--    { "etc/msr_feature_control", 180 },
--
--#define FW_CFG_ORDER_OVERRIDE_LAST 200
--};
--
- /*
-  * Any sub-page size update to these table MRs will be lost during migration,
-  * as we use aligned size in ram_load_precopy() -> qemu_ram_resize() path.
-@@ -890,29 +834,6 @@ static void fw_cfg_acpi_mr_save(FWCfgState *s, const char *filename, size_t len)
-     }
- }
- 
--static int get_fw_cfg_order(FWCfgState *s, const char *name)
--{
--    int i;
--
--    if (s->fw_cfg_order_override > 0) {
--        return s->fw_cfg_order_override;
--    }
--
--    for (i = 0; i < ARRAY_SIZE(fw_cfg_order); i++) {
--        if (fw_cfg_order[i].name == NULL) {
--            continue;
--        }
--
--        if (strcmp(name, fw_cfg_order[i].name) == 0) {
--            return fw_cfg_order[i].order;
--        }
--    }
--
--    /* Stick unknown stuff at the end. */
--    warn_report("Unknown firmware file in legacy mode: %s", name);
--    return FW_CFG_ORDER_OVERRIDE_LAST;
--}
--
- void fw_cfg_add_file_callback(FWCfgState *s,  const char *filename,
-                               FWCfgCallback select_cb,
-                               FWCfgWriteCallback write_cb,
-@@ -921,7 +842,6 @@ void fw_cfg_add_file_callback(FWCfgState *s,  const char *filename,
- {
-     int i, index, count;
-     size_t dsize;
--    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
-     int order = 0;
- 
-     if (!s->files) {
-@@ -933,22 +853,10 @@ void fw_cfg_add_file_callback(FWCfgState *s,  const char *filename,
-     count = be32_to_cpu(s->files->count);
-     assert(count < fw_cfg_file_slots(s));
- 
--    /* Find the insertion point. */
--    if (mc->legacy_fw_cfg_order) {
--        /*
--         * Sort by order. For files with the same order, we keep them
--         * in the sequence in which they were added.
--         */
--        order = get_fw_cfg_order(s, filename);
--        for (index = count;
--             index > 0 && order < s->entry_order[index - 1];
--             index--);
--    } else {
--        /* Sort by file name. */
--        for (index = count;
--             index > 0 && strcmp(filename, s->files->f[index - 1].name) < 0;
--             index--);
--    }
-+    /* Find the insertion point, sorting by file name. */
-+    for (index = count;
-+         index > 0 && strcmp(filename, s->files->f[index - 1].name) < 0;
-+         index--);
- 
-     /*
-      * Move all the entries from the index point and after down one
-@@ -1058,7 +966,6 @@ bool fw_cfg_add_file_from_generator(FWCfgState *s,
- 
- static void fw_cfg_machine_reset(void *opaque)
- {
--    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
-     FWCfgState *s = opaque;
-     void *ptr;
-     size_t len;
-@@ -1068,11 +975,9 @@ static void fw_cfg_machine_reset(void *opaque)
-     ptr = fw_cfg_modify_file(s, "bootorder", (uint8_t *)buf, len);
-     g_free(ptr);
- 
--    if (!mc->legacy_fw_cfg_order) {
--        buf = get_boot_devices_lchs_list(&len);
--        ptr = fw_cfg_modify_file(s, "bios-geometry", (uint8_t *)buf, len);
--        g_free(ptr);
--    }
-+    buf = get_boot_devices_lchs_list(&len);
-+    ptr = fw_cfg_modify_file(s, "bios-geometry", (uint8_t *)buf, len);
-+    g_free(ptr);
- }
- 
- static void fw_cfg_machine_ready(struct Notifier *n, void *data)
-diff --git a/system/vl.c b/system/vl.c
-index 520956f4a19..dedd555eb87 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1191,10 +1191,7 @@ static int parse_fw_cfg(void *opaque, QemuOpts *opts, Error **errp)
-             return -1;
-         }
-     }
--    /* For legacy, keep user files in a specific global order. */
--    fw_cfg_set_order_override(fw_cfg, FW_CFG_ORDER_OVERRIDE_USER);
-     fw_cfg_add_file(fw_cfg, name, buf, size);
--    fw_cfg_reset_order_override(fw_cfg);
-     return 0;
- }
- 
-@@ -2744,7 +2741,6 @@ static void qemu_create_cli_devices(void)
-     }
- 
-     /* init generic devices */
--    rom_set_order_override(FW_CFG_ORDER_OVERRIDE_DEVICE);
-     qemu_opts_foreach(qemu_find_opts("device"),
-                       device_init_func, NULL, &error_fatal);
-     QTAILQ_FOREACH(opt, &device_opts, next) {
-@@ -2755,7 +2751,6 @@ static void qemu_create_cli_devices(void)
-         assert(ret_data == NULL); /* error_fatal aborts */
-         loc_pop(&opt->loc);
-     }
--    rom_reset_order_override();
- }
- 
- static bool qemu_machine_creation_done(Error **errp)
+ static const VMStateDescription vmstate_tsc_khz = {
 -- 
 2.47.1
 
