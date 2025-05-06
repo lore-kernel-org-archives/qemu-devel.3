@@ -4,80 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78060C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 17:43:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7B0C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 17:56:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCMJR-0001qA-Cv; Tue, 06 May 2025 13:42:37 -0400
+	id 1uCMVG-0005SM-M9; Tue, 06 May 2025 13:54:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonwilson030981@googlemail.com>)
- id 1uCMFv-00080o-2f
- for qemu-devel@nongnu.org; Tue, 06 May 2025 13:39:01 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uCMQk-0000Lb-0D
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 13:50:10 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jonwilson030981@googlemail.com>)
- id 1uCMFk-00024U-J4
- for qemu-devel@nongnu.org; Tue, 06 May 2025 13:38:53 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-39c1ef4ae3aso75642f8f.1
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 10:38:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uCMQh-0003hm-Kt
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 13:50:09 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-afc857702d1so5804285a12.3
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 10:50:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=googlemail.com; s=20230601; t=1746553126; x=1747157926; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=LFqz7mpBGf2u2lJna0a9zLlM9jchnfzYqWJqTyBYLzY=;
- b=kA6fjIg531hST41oyd1tlGJZDZRcsVWDV9zdM0FdNGw2fpr+/evcz4GvFK9iM/DVXv
- nYb/9m2dUiLCr+qzeUMSVUJD+2bVnpsgYMBwp0psbJWlRAgE44jmz+oMQhVPb2Ouyy6z
- I+PfmbkOiCx+aLM7akG6u1btiV4YG7ltBvI26GFhSJsBMgKLN3RtKofmAFE6VXiMHVT8
- Na5RWLqmwtOOqBNXYKoZWoJNlN9EKMTkO0AsOJivHP3xvlWiVG5Qx2VTQhCzDUFDtjxB
- Tel+pZbRY3JChLsr0dKJfBbMfxQmlQgP8WRLQqMzORCdjB9HJPlcXAM2HAz2gecxT71t
- j5AA==
+ d=linaro.org; s=google; t=1746553805; x=1747158605; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ziWvuP2yCLI2zotueDBtJ4waOtELy7ZWSUvZwJzeEiw=;
+ b=jzo6N+3SeEEvCtBiNWuWTjMRj22GukerD7DXs/TgseMFeHssIDM3JJH9xVw+Y8xPVW
+ Gx5bKZ+3n0bLDU1u3uaRipsi/cmkDA9pcqiincuZ15jIcQfrY6zMmc0thCNfFrQmHrIB
+ uvYNaGMOiSeF0kLvPkE5gd+vCVPH6OFxNIXG4V+d2s7zOkoFOIZ1+HruUVE5GuzogZaY
+ 6520dM2tHTrhj4AnJXtgxyNTFD5lUyrOiT/YPKmygTnwp3ZkC18dHS5qGpy8fsw/zjS2
+ 19QPGnOYGYLanD3H0KK3ySbp0URUOrTIWIX0EKkwqw6qViMpJ3saPGanXKVeckw55CvJ
+ f6zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746553126; x=1747157926;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LFqz7mpBGf2u2lJna0a9zLlM9jchnfzYqWJqTyBYLzY=;
- b=UfHENmtUekq/mG3FZWM9chbkA+65rzaYuHzIzulausG5B34T4q0Y+4whvGph0WKUWz
- iI/Ajfpwk05K/Qf/6nITiSXv7qCnfP1OwW0TTZWquiabN3oIiDkUXJB8oGH/+BgEE5HK
- +ks3OKSlj80jItVDxmcK/NlKaBLvlnp8Kg0dO8uBah666fZx23RhCHGcIvUNQyjkS3I+
- WcaGpINWbKBrzg7zVuMjp/0dsU6JPheH8XOTlNF27iZpsMEknFfU26pJs1iWQ6hA39bs
- ktG4pRNF2PgG2FFYICA/s81iJeN883b2vuDHqf3cezvBeKlg303JPVC+Fsk50fO0bZPe
- KdYg==
-X-Gm-Message-State: AOJu0YzAXctnVV24xugOAy/pon6chvmNtHpZXx1/5SvowMz0EHguF9yt
- Yyn3e6MaVEk8Oem7Vb1Jjr6AwWwqvYl1gQiEa4Y/QdlttSquCzPFmAK2s0WA2uRjIx64bX3wFU3
- ocAHf9iMPgBUpG+wCMXGLZfGbpyE=
-X-Gm-Gg: ASbGncvsjCXxpinY8GBooupfFE2wt9J40yR3/6slLgMAKz3975sbXev6+UzHnFWYJys
- Uxx9gQrmd1/KCcGhyrb8OtErMe4CcOID5cl3hv9pEgHmVvPWtO7ywBrNu0C3GppmhQjKGrW/rfr
- zuiFqXau1crjv4+v9kd9IrLQ==
-X-Google-Smtp-Source: AGHT+IH+OeSS3XZvja3iXglaQajAjHQMPPTw2OO6Nd/0R/5DkdcW1VWVck0EZejJuijGONNUK/iVqf16pbiib8EOM9U=
-X-Received: by 2002:a05:6000:4593:b0:3a0:b207:90c with SMTP id
- ffacd0b85a97d-3a0b45402femr458731f8f.19.1746553126071; Tue, 06 May 2025
- 10:38:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746553805; x=1747158605;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ziWvuP2yCLI2zotueDBtJ4waOtELy7ZWSUvZwJzeEiw=;
+ b=DBhdiKVU3RNrQh+q3KZf1gdsEy40vbysVqILo6SDglZP9fy9FmcNVRidIJA/+kFztB
+ 46dgwoy/fezUK8pfiStRxtzenQgjc/6IEL3v+90zFiQDq7OZsQMNrigV0Qx+MdjuKbN0
+ m0InPyb+JcwdPsr8iz/C1XmXKESloOOEQNrIwDeuwSqxNXhBwqFCv0RiA06VPsJhxYVC
+ ZwnuzG9eDiDtHW6p/LCnsLtc9P2rs0+jt4/QyUV232TEw2rgC3AnbNBf9yybx5hV/+Dp
+ WwqM/OH/78dZnKEPF+RvyypIp0gac/BzOYP04fwSpDpOQOkcgUQvxrIASPIrXfnwmSXN
+ Mapw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWCIaNMjhgfJ6VqMHqmiUr8VlWtjhMb+X30Tf6eaWXKx2kbOmOgyxX1Ysr/2xCIqmnHs1HU/WV1LoEi@nongnu.org
+X-Gm-Message-State: AOJu0Yybc/7dBJhSt0J1QwrlGBSXSnTAiENpwX7robe6S+LBC8KCZkLZ
+ QVn6DjYquYkt8cxqtBw6izzjJZHW4h0iOK0wMtFmRacvWq8ioKZuv0cQ4LuI7NwAAfa2SOtilLI
+ C
+X-Gm-Gg: ASbGnctK40/gCuS/rC4iLIwE6mrLuchELfEmN5JJtDhIYqDLC79hkW5iVzx+Q2ZY5SK
+ LLveXJ6V2lxCJjOa8JuhG2r3ZnVvdrIiT4ka/mUsLsxbKTQrEFoWI1r6lgevJatiPI3tGXPSQvM
+ Be3EthkXi2mbwUmZDJX0z23RJB8e/CMzsu5BcA8n5CMru6f/YJqiUi3LnorUVjm8WpB0kFi1Ki/
+ vsrn+Q9j9OU1fYLeltlsJ1ie+nn6XOpJwymV1nWgvu3sWnZXILOqTMSVh8YJBxdUI07dEhGp9wj
+ WCoM66sWnb5W27OZwPo+oUflYVCB5P/Po6uleu621nu5xcM08N3U4fIw5XCt0Ehx1P+5upUrLE4
+ Oh8s/nCM=
+X-Google-Smtp-Source: AGHT+IF38fYNxxSmh2i2oXx6/ZWu3ll4Fwa0eU9YKHB+3JTD8Ld+7G/YPWZhO6cL62YGXyQeqXoo1w==
+X-Received: by 2002:a05:6a20:d04f:b0:1f5:8eec:e517 with SMTP id
+ adf61e73a8af0-2148b728042mr192047637.9.1746553805274; 
+ Tue, 06 May 2025 10:50:05 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-74058dbc12fsm9483055b3a.64.2025.05.06.10.50.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 May 2025 10:50:04 -0700 (PDT)
+Message-ID: <f0c44965-e776-4450-859c-ef60b292fa48@linaro.org>
+Date: Tue, 6 May 2025 10:50:02 -0700
 MIME-Version: 1.0
-References: <20250506164602.1292446-1-62701594+WorksButNotTested@users.noreply.github.com>
- <aBo_HWA4nuY7FGul@redhat.com>
-In-Reply-To: <aBo_HWA4nuY7FGul@redhat.com>
-From: Jon Wilson <jonwilson030981@googlemail.com>
-Date: Tue, 6 May 2025 18:38:34 +0100
-X-Gm-Features: ATxdqUE3PiJlzga4PrzyNSm08vDSN1rS_xI7zDEfhZgORy3k_327aI5OzpC7ZLU
-Message-ID: <CAJHT5-L9UhmaYijUH7DPgknXN6HTM4T57ZamPG55axsJvZ9xuA@mail.gmail.com>
-Subject: Re: [PATCH v3] Support madvise(MADV_DONTDUMP) when creating core
- dumps for qemu-user
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000a9347e06347b1672"
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=jonwilson030981@googlemail.com; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/loongarch: Fix incorrect rounding in fnm{add, sub}
+ under certain modes
+To: WANG Rui <wangrui@loongson.cn>, Song Gao <gaosong@loongson.cn>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu@hev.cc, mengqinggang <mengqinggang@loongson.cn>
+References: <20250506152600.2521399-1-wangrui@loongson.cn>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250506152600.2521399-1-wangrui@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,302 +106,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a9347e06347b1672
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 5/6/25 08:26, WANG Rui wrote:
+> This patch fixes incorrect results for [xv]fnm{add,sub}.{s,d}
+> instructions when rounding toward zero, postive, negative.
+> 
+> According to the LoongArch ISA specification, these instructions perform
+> a fused multiply-add followed by a negation of the final result.
+> 
+> Previously, the sign inversion was applied before fused operation, which
+> interfered with rounding decisions that depend on the result sign --
+> leading to deviations from the expected behavior. This patch corrects
+> the implementation by applying the negation after fused multiply-add,
+> ensuring that rounding is performed on the correct intermediate result.
+> 
+> Reported-by: mengqinggang <mengqinggang@loongson.cn>
+> Signed-off-by: WANG Rui <wangrui@loongson.cn>
+> ---
+>   target/loongarch/tcg/fpu_helper.c     |  8 ++++++++
+>   target/loongarch/tcg/vec_helper.c     |  7 ++++++-
+>   tests/tcg/loongarch64/Makefile.target |  2 ++
+>   tests/tcg/loongarch64/test_fnmsub.c   | 20 ++++++++++++++++++++
+>   tests/tcg/loongarch64/test_vfnmsub.c  | 27 +++++++++++++++++++++++++++
+>   5 files changed, 63 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/tcg/loongarch64/test_fnmsub.c
+>   create mode 100644 tests/tcg/loongarch64/test_vfnmsub.c
+> 
+> diff --git a/target/loongarch/tcg/fpu_helper.c b/target/loongarch/tcg/fpu_helper.c
+> index fc3fd0561e..970b88ac56 100644
+> --- a/target/loongarch/tcg/fpu_helper.c
+> +++ b/target/loongarch/tcg/fpu_helper.c
+> @@ -389,9 +389,13 @@ uint64_t helper_fmuladd_s(CPULoongArchState *env, uint64_t fj,
+>                             uint64_t fk, uint64_t fa, uint32_t flag)
+>   {
+>       uint64_t fd;
+> +    uint32_t neg_res;
+>   
+> +    neg_res = flag & float_muladd_negate_result;
+> +    flag ^= neg_res;
+>       fd = nanbox_s(float32_muladd((uint32_t)fj, (uint32_t)fk,
+>                                    (uint32_t)fa, flag, &env->fp_status));
+> +    fd |= neg_res ? 0x80000000ULL : 0;
 
-Apologies. I'm just fighting git. Much more used to just using github.com
-and PRs, but I totally understand that different projects have their own
-preferences. Hopefully v4 looks a bit better?
-Is there anything else I need to do? What are the next steps? Just wait for
-it to be merged?
+|= cannot possibly be correct -- it would have to be ^=.
 
-Sorry, this workflow is all new to me. Thanks for your patience.
+Is this a problem with the sign of a NaN result?  That's the only case that isn't handled 
+by floatN_muladd.  target/arm/ does not use the float_muladd_* flags for exactly this 
+reason.  The LoongArch manual has
 
-Best Regards.
+   FNMSUB.D:
+     FR[fd] = -FP64_fusedMultiplyAdd(FR[fj], FR[fk], -FR[fa])
 
-Jon
+which matches the language in the Arm manual.  Which does suggest that the negation before 
+on fa and the negation after on the result should be unconditional.
 
-On Tue, May 6, 2025 at 5:57=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com>
-wrote:
+However, for this test case, if I'm interpreting these numbers correctly,
 
-> On Tue, May 06, 2025 at 05:46:02PM +0100, WorksButNotTested wrote:
-> > When running applications which make large (sparsely populated) address
-> ranges
-> > (e.g. when using address sanitizer with LibAFL) the inability to exclud=
-e
-> these
-> > regions from any core dump can result in very large files which fill th=
-e
-> disk.
-> > A coredump is obvously very useful for performing a post-mortem when
-> fuzzing.
-> >
-> > Whilst the man pages state that madvise provides only a hint (and hence
-> can be
-> > ignored), this patch adds support to handle MADV_DONTDUMP and set a
-> > corresponding flag in the page flags, thus allowing QEMU to exclude the=
-se
-> > regions from the core file.
-> >
-> > Signed-off-by: WorksButNotTested <
-> 62701594+WorksButNotTested@users.noreply.github.com>
->
-> Any reason you've not used your "jonwilson030981@googlemail.com"
-> address for this.
->
-> This github alias rejects any mail delivery, so also should not
-> be CC'd on the patch either, as that triggers failures when
-> reviewers reply to this submission.
->
-> > ---
-> >  include/exec/page-protection.h |  6 ++++++
-> >  linux-user/elfload.c           |  4 ++++
-> >  linux-user/mmap.c              | 18 ++++++++++++++++++
-> >  3 files changed, 28 insertions(+)
-> >
-> > diff --git a/include/exec/page-protection.h
-> b/include/exec/page-protection.h
-> > index c43231af8b..f8826d917e 100644
-> > --- a/include/exec/page-protection.h
-> > +++ b/include/exec/page-protection.h
-> > @@ -38,4 +38,10 @@
-> >   */
-> >  #define PAGE_PASSTHROUGH 0x0800
-> >
-> > +/*
-> > + * For linux-user, indicates that the page should not be included in a
-> core
-> > + * dump.
-> > + */
-> > +#define PAGE_DONTDUMP   0x1000
-> > +
-> >  #endif
-> > diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-> > index fbfdec2f17..41c46da055 100644
-> > --- a/linux-user/elfload.c
-> > +++ b/linux-user/elfload.c
-> > @@ -4067,6 +4067,10 @@ static size_t vma_dump_size(target_ulong start,
-> target_ulong end,
-> >          return 0;
-> >      }
-> >
-> > +    if (flags & PAGE_DONTDUMP) {
-> > +        return 0;
-> > +    }
-> > +
-> >      /*
-> >       * Usually we don't dump executable pages as they contain
-> >       * non-writable code that debugger can read directly from
-> > diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-> > index f88a80c31e..016063a8cf 100644
-> > --- a/linux-user/mmap.c
-> > +++ b/linux-user/mmap.c
-> > @@ -1247,6 +1247,24 @@ abi_long target_madvise(abi_ulong start,
-> abi_ulong len_in, int advice)
-> >       */
-> >      mmap_lock();
-> >      switch (advice) {
-> > +    case MADV_DONTDUMP:
-> > +        if (len > 0) {
-> > +            /*
-> > +             * To set the page permissons, we must OR our new flags
-> with the
-> > +             * existing flags. Only mark the pages as PAGE_DONTDUMP if
-> the
-> > +             * entire range has the same flags. If any part of the ran=
-ge
-> > +             * differs, we would need to process it one page at a time
-> which
-> > +             * might not be very performant. Since we are not obliged
-> to respect
-> > +             * this flag, we will support it for the most likely usage
-> scenario.
-> > +             * Note that we don't set PAGE_ANON, since this can only b=
-e
-> set with
-> > +             * new mappings.
-> > +             */
-> > +            int flg =3D page_get_flags(start);
-> > +            if (page_check_range(start, len, flg)) {
-> > +                page_set_flags(start, start + len - 1, PAGE_DONTDUMP |
-> (flg & ~PAGE_ANON) );
-> > +            }
-> > +        }
-> > +        break;
-> >      case MADV_WIPEONFORK:
-> >      case MADV_KEEPONFORK:
-> >          ret =3D -EINVAL;
-> > --
-> > 2.43.0
-> >
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-
-> https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-
-> https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-
-> https://www.instagram.com/dberrange :|
->
->
+> +    *(uint64_t *)&x = 0x4ff0000000000000UL;
+> +    *(uint64_t *)&y = 0x4ff0000000000000UL;
 
---000000000000a9347e06347b1672
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+  0x1.0p256
 
-<div dir=3D"ltr">Apologies. I&#39;m just fighting git. Much more used to ju=
-st using <a href=3D"http://github.com">github.com</a> and PRs, but I totall=
-y understand that different projects have their own preferences. Hopefully=
-=C2=A0v4 looks a bit better?<div>Is there anything else I need to do? What =
-are the next steps? Just wait for it to be merged?</div><div><br></div><div=
->Sorry, this workflow is all new=C2=A0to me. Thanks for your patience.</div=
-><div><br></div><div>Best Regards.</div><div><br></div><div>Jon</div></div>=
-<br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Tue, May 6, 2025 at 5:57=E2=80=AFPM Daniel P. Berrang=C3=
-=A9 &lt;<a href=3D"mailto:berrange@redhat.com">berrange@redhat.com</a>&gt; =
-wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Tue, M=
-ay 06, 2025 at 05:46:02PM +0100, WorksButNotTested wrote:<br>
-&gt; When running applications which make large (sparsely populated) addres=
-s ranges<br>
-&gt; (e.g. when using address sanitizer with LibAFL) the inability to exclu=
-de these<br>
-&gt; regions from any core dump can result in very large files which fill t=
-he disk.<br>
-&gt; A coredump is obvously very useful for performing a post-mortem when f=
-uzzing.<br>
-&gt; <br>
-&gt; Whilst the man pages state that madvise provides only a hint (and henc=
-e can be<br>
-&gt; ignored), this patch adds support to handle MADV_DONTDUMP and set a<br=
->
-&gt; corresponding flag in the page flags, thus allowing QEMU to exclude th=
-ese<br>
-&gt; regions from the core file.<br>
-&gt; <br>
-&gt; Signed-off-by: WorksButNotTested &lt;<a href=3D"mailto:62701594%2BWork=
-sButNotTested@users.noreply.github.com" target=3D"_blank">62701594+WorksBut=
-NotTested@users.noreply.github.com</a>&gt;<br>
-<br>
-Any reason you&#39;ve not used your &quot;<a href=3D"mailto:jonwilson030981=
-@googlemail.com" target=3D"_blank">jonwilson030981@googlemail.com</a>&quot;=
-<br>
-address for this.<br>
-<br>
-This github alias rejects any mail delivery, so also should not<br>
-be CC&#39;d on the patch either, as that triggers failures when<br>
-reviewers reply to this submission.<br>
-<br>
-&gt; ---<br>
-&gt;=C2=A0 include/exec/page-protection.h |=C2=A0 6 ++++++<br>
-&gt;=C2=A0 linux-user/elfload.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=
-=C2=A0 4 ++++<br>
-&gt;=C2=A0 linux-user/mmap.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 | 18 ++++++++++++++++++<br>
-&gt;=C2=A0 3 files changed, 28 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/include/exec/page-protection.h b/include/exec/page-protec=
-tion.h<br>
-&gt; index c43231af8b..f8826d917e 100644<br>
-&gt; --- a/include/exec/page-protection.h<br>
-&gt; +++ b/include/exec/page-protection.h<br>
-&gt; @@ -38,4 +38,10 @@<br>
-&gt;=C2=A0 =C2=A0*/<br>
-&gt;=C2=A0 #define PAGE_PASSTHROUGH 0x0800<br>
-&gt;=C2=A0 <br>
-&gt; +/*<br>
-&gt; + * For linux-user, indicates that the page should not be included in =
-a core <br>
-&gt; + * dump.<br>
-&gt; + */<br>
-&gt; +#define PAGE_DONTDUMP=C2=A0 =C2=A00x1000<br>
-&gt; +<br>
-&gt;=C2=A0 #endif<br>
-&gt; diff --git a/linux-user/elfload.c b/linux-user/elfload.c<br>
-&gt; index fbfdec2f17..41c46da055 100644<br>
-&gt; --- a/linux-user/elfload.c<br>
-&gt; +++ b/linux-user/elfload.c<br>
-&gt; @@ -4067,6 +4067,10 @@ static size_t vma_dump_size(target_ulong start,=
- target_ulong end,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 <br>
-&gt; +=C2=A0 =C2=A0 if (flags &amp; PAGE_DONTDUMP) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* Usually we don&#39;t dump executable pages=
- as they contain<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0* non-writable code that debugger can read d=
-irectly from<br>
-&gt; diff --git a/linux-user/mmap.c b/linux-user/mmap.c<br>
-&gt; index f88a80c31e..016063a8cf 100644<br>
-&gt; --- a/linux-user/mmap.c<br>
-&gt; +++ b/linux-user/mmap.c<br>
-&gt; @@ -1247,6 +1247,24 @@ abi_long target_madvise(abi_ulong start, abi_ul=
-ong len_in, int advice)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 mmap_lock();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 switch (advice) {<br>
-&gt; +=C2=A0 =C2=A0 case MADV_DONTDUMP:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (len &gt; 0) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* To set the page per=
-missons, we must OR our new flags with the<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* existing flags. Onl=
-y mark the pages as PAGE_DONTDUMP if the<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* entire range has th=
-e same flags. If any part of the range<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* differs, we would n=
-eed to process it one page at a time which<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* might not be very p=
-erformant. Since we are not obliged to respect<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* this flag, we will =
-support it for the most likely usage scenario.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Note that we don&#3=
-9;t set PAGE_ANON, since this can only be set with<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* new mappings.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int flg =3D page_get_flags(=
-start);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (page_check_range(start,=
- len, flg)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 page_set_flag=
-s(start, start + len - 1, PAGE_DONTDUMP | (flg &amp; ~PAGE_ANON) );<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 case MADV_WIPEONFORK:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 case MADV_KEEPONFORK:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -EINVAL;<br>
-&gt; -- <br>
-&gt; 2.43.0<br>
-&gt; <br>
-&gt; <br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"http=
-s://www.flickr.com/photos/dberrange" rel=3D"noreferrer" target=3D"_blank">h=
-ttps://www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"n=
-oreferrer" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer" target=3D"_bla=
-nk">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D=
-"https://www.instagram.com/dberrange" rel=3D"noreferrer" target=3D"_blank">=
-https://www.instagram.com/dberrange</a> :|<br>
-<br>
-</blockquote></div>
+> +    *(uint64_t *)&z = 0x2ff0000000000000UL;
 
---000000000000a9347e06347b1672--
+  0x1.0p-256
+
+> +
+> +    fesetround(FE_DOWNWARD);
+> +    asm("fnmsub.d %[x], %[x], %[y], %[z]\n\t"
+> +        :[x]"+f"(x)
+> +        :[y]"f"(y), [z]"f"(z));
+> +
+> +    assert(*(uint64_t *)&x == 0xdfefffffffffffffUL);
+
+   -(0x1.0p512 - epsilon)
+
+That really should have worked as-is.  I'll have a quick look.
+
+
+r~
 
