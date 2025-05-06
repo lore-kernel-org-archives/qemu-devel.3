@@ -4,70 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC960C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:15:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12886C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:15:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCDRj-0007kv-HN; Tue, 06 May 2025 04:14:35 -0400
+	id 1uCDRn-0007n6-JJ; Tue, 06 May 2025 04:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uCDRg-0007jT-N7; Tue, 06 May 2025 04:14:32 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uCDRe-0002Z9-DF; Tue, 06 May 2025 04:14:32 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Zs9zn4gKzz6M53T;
- Tue,  6 May 2025 16:09:57 +0800 (CST)
-Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id E469F1402ED;
- Tue,  6 May 2025 16:14:26 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 6 May 2025 10:14:26 +0200
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Tue, 6 May 2025 10:14:26 +0200
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, "nathanc@nvidia.com"
- <nathanc@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
- "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: RE: [PATCH v2 1/6] hw/arm/smmuv3: Add support to associate a PCIe RC
-Thread-Topic: [PATCH v2 1/6] hw/arm/smmuv3: Add support to associate a PCIe RC
-Thread-Index: AQHbu1V0fvNxmQCU0kS/eGPfhGB2G7O/dXYAgAXRX2A=
-Date: Tue, 6 May 2025 08:14:26 +0000
-Message-ID: <ce59282671674258a6dacd38fe09207c@huawei.com>
-References: <20250502102707.110516-1-shameerali.kolothum.thodi@huawei.com>
- <20250502102707.110516-2-shameerali.kolothum.thodi@huawei.com>
- <aBT/DKnSpdV1SEmb@Asurada-Nvidia>
-In-Reply-To: <aBT/DKnSpdV1SEmb@Asurada-Nvidia>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDRl-0007mB-Cx
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 04:14:37 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDRj-0002Ze-Er
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 04:14:36 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-ace98258d4dso770968466b.2
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 01:14:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746519274; x=1747124074; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=B1ObcUak8rP21keTA6ccHVXsEABYgIw70qlfR8gFXqQ=;
+ b=P7c6ULEQa+hsN0Ga+jMF/jZHnyWuiCvu63RqB636SR8VwmDMjIqzMABdSGbM1TJ4xT
+ bfn0aREiNaZ9TGLOGyOtaQNzYDMCcLSWiNtQZOzYfzDfHdD2DtOHX9dpkHrbxJReM+Ua
+ jEs6ISYBgpURn/wmysExY4qC+Bk53NIF14z+9sW2GKw/my4676YjVoZzNcvDhjBPCPme
+ icYnbWGME+YXrtgJP7HpON+w4hz46kBEYWb3uhs8PIfpQlj5Cvy9e3Sw9rU6Tvgmrcrl
+ TVOCUHkfrGbakdJSWbM3JS73Gz8U/TaT8YSnb95zVeZJ3shjaDskAyxNjj7CRsikHFbM
+ GisQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746519274; x=1747124074;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=B1ObcUak8rP21keTA6ccHVXsEABYgIw70qlfR8gFXqQ=;
+ b=BivUz8GLXWW8XSxpFlp3rgNUQ6V2/f89X+5AzaAvObZqZR18RWLwhLQdGEaAIjitRd
+ rwzsZSXKJXSIfFOw2Ui5KwfoZKxDUrPUmRRFjkXFCYpIw4GxbAQESzgeRVctihTNT9ny
+ 7tpzefy9ZpTRenb7iRjto5T7BC1pAIAyiMucvuyo4PVyid50HmOnZ2awsqSC11O+gw2T
+ 1w+aiZn9xLiM4DakJfW4hNsme3Tcz4vapTr6UtcPAVT11ae3xf9wJHKgNeEzbhFe+00/
+ av45yoVPHt4WBFIBBiiaM0W/JXfMDAfDFWsCzXA9c3M7LD1ePxlrgapkAvw90rDoJguH
+ yxng==
+X-Gm-Message-State: AOJu0YwLTG1I35ba5dTHzUMBLemorqksSM6uiKBPnIwYa5wCuyC+jo+a
+ Rm9R5XyP+AyCZDq+xIq8+Jjr8V19tq8SPJXjr1VuSlynijTUQr+t8eT7A3ghcK4=
+X-Gm-Gg: ASbGncvBG3FeodCry+jqpSiNDKP4fEOB0qWcsygRoFZNECYhswxM2rL+xUy2KC6wq3K
+ sxkd/tx3KSV8+8W1YtEvvNQiXpzakUyRPT26aGYxkW9pVY0POz39aRSpJwE1r9yjZ/JO/4ANB0N
+ iE0OztxC2SEN+koF6dyTKsg9Tovfgxl+qs5UQAZi1u0dwIKOAJY8ON7k0sDb0aRe3WSsN3JQjwK
+ 4Gaeusfx5O9dyHed3N/IpvQ/+tELNCrSm6S6m9HNOxrUYBKCM040KMR5+zuRwQ2hBCXBX3OEVCP
+ 6vfGwWgney8hCC3+DWcKc/WzE/snzmTkx0MLAuEqRUg0O9HBhhP8sZ3lMYmQ0wDqkWA+zotC/qU
+ Kb5A=
+X-Google-Smtp-Source: AGHT+IGkaF+Bl/Zjva4ElVab2vaC5IEekbHHdXG+PUFXqCxM8LDP+Cr/g3/XUWXzB4K6NXXGLfSJ4g==
+X-Received: by 2002:a17:907:c283:b0:ac3:413b:69c7 with SMTP id
+ a640c23a62f3a-ad1d467aff8mr199345666b.39.1746519273778; 
+ Tue, 06 May 2025 01:14:33 -0700 (PDT)
+Received: from [10.194.152.213] (238.21.205.77.rev.sfr.net. [77.205.21.238])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ad1891a26bdsm653613566b.43.2025.05.06.01.14.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 May 2025 01:14:33 -0700 (PDT)
+Message-ID: <f0bc5dde-afd9-4246-bad4-0618251e6735@linaro.org>
+Date: Tue, 6 May 2025 10:14:31 +0200
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 9/9] hw/s390x/s390-virtio-ccw: Remove the deprecated
+ 4.0 machine type
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+References: <20250506062148.306084-1-thuth@redhat.com>
+ <20250506062148.306084-10-thuth@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250506062148.306084-10-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,98 +102,22 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 6/5/25 08:21, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> The s390-ccw-virtio-4.0 machine is older than 6 years, so according to
+> our machine support policy, it can be removed now. The corresponding
+> v4.0 CPU feature group gets merged into the minimum feature group now.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   hw/s390x/s390-virtio-ccw.c  | 14 --------------
+>   target/s390x/gen-features.c |  4 ----
+>   2 files changed, 18 deletions(-)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: Friday, May 2, 2025 6:23 PM
-> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
-> eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
-> ddutile@redhat.com; berrange@redhat.com; nathanc@nvidia.com;
-> mochs@nvidia.com; smostafa@google.com; Linuxarm
-> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
-> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
-> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
-> Subject: Re: [PATCH v2 1/6] hw/arm/smmuv3: Add support to associate a
-> PCIe RC
->=20
-> On Fri, May 02, 2025 at 11:27:02AM +0100, Shameer Kolothum wrote:
-> > Although this change does not affect functionality at present, it lays
-> > the groundwork for enabling user-created SMMUv3 devices in future
-> > patches
-> >
-> > Signed-off-by: Shameer Kolothum
-> <shameerali.kolothum.thodi@huawei.com>
->=20
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
->=20
-> With some nits:
->=20
-> > ---
-> >  hw/arm/smmuv3.c | 26 ++++++++++++++++++++++++++
-> >  hw/arm/virt.c   |  3 ++-
-> >  2 files changed, 28 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c index
-> > ab67972353..605de9b721 100644
-> > --- a/hw/arm/smmuv3.c
-> > +++ b/hw/arm/smmuv3.c
-> > @@ -24,6 +24,7 @@
-> >  #include "hw/qdev-properties.h"
-> >  #include "hw/qdev-core.h"
-> >  #include "hw/pci/pci.h"
-> > +#include "hw/pci/pci_bridge.h"
->=20
-> Could probably replace the pci.h since pci_bridge.h includes it.
-
-I think it is best not to as it is indirect inclusion.
-
->=20
-> > +static int smmuv3_pcie_bus(Object *obj, void *opaque) {
-> > +    DeviceState *d =3D opaque;
-> > +    PCIBus *bus;
-> > +
-> > +    if (!object_dynamic_cast(obj, TYPE_PCI_HOST_BRIDGE)) {
-> > +        return 0;
-> > +    }
-> > +
-> > +    bus =3D PCI_HOST_BRIDGE(obj)->bus;
-> > +    if (d->parent_bus && !strcmp(bus->qbus.name, d->parent_bus-
-> >name)) {
-> > +        object_property_set_link(OBJECT(d), "primary-bus", OBJECT(bus)=
-,
-> > +                                 &error_abort);
-> > +        /* Return non-zero as we got the bus and don't need further
-> > + iteration.*/
->=20
-> Missing a space behind the '.'
-
-Sure.
-
->=20
-> > +        return 1;
-> > +    }
-> > +    return 0;
-> > +}
->=20
-> > @@ -1442,7 +1443,7 @@ static void create_smmu(const
-> VirtMachineState *vms,
-> >      }
-> >      object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
-> >                               &error_abort);
-> > -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> > +    qdev_realize_and_unref(dev, &bus->qbus, &error_fatal);
->=20
-> Could add a line of note in the commit message for this change?
-
-Will do.=20
-
-Thanks,
-Shameer
 
