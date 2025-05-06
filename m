@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B360EC3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE39C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:34:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCKF0-0003m9-PP; Tue, 06 May 2025 11:29:54 -0400
+	id 1uCKEp-0003fR-7K; Tue, 06 May 2025 11:29:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKEy-0003lG-Qx
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:52 -0400
+ id 1uCKEn-0003eI-CL
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKEw-0001xV-9T
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:52 -0400
+ id 1uCKEl-0001wE-0X
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746545388;
+ s=mimecast20190719; t=1746545377;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4t5TpUC5RTcF8GxmJiKFUlWUgjAwch+v1tmCu4iXGng=;
- b=cPS1MlQeuCxKY3ZVzwbo/0Ie0s50HE5Y/Rxrc3ywTbvG1pIHkikw1blneptjJiehxbrA8E
- g2OBPsRuez0I7wPzyUgGt8yvVdPmBeqCcdu0GYYxSzkedgFN/lfJpXdcPSlHFd2Jts/3TG
- pkIgW4rVEPprRhFhW65rj8to83jJn0w=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NJkJL+2iQH6j0YxyFlCO0wihd/nFC5q/GbHkjAOouko=;
+ b=aNk1kZWUI9s1US5TTTPuPcfNgThLN6zPCKeNvROe1rK3UiW9mwL2HLsOi9IBe0qHn8+jnx
+ 4mwFKPeIZWQm76KoXd8KEFx6ENny/WkZJpWwEERPI4LT6l/n89c1m/leXkM0p/1nOAKzU4
+ 8BiWEOUIbWVHQzvpkIFxP6hWhz76Pcc=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-629-KyWR5Q7bPTWjqFb-1Axwkg-1; Tue, 06 May 2025 11:29:47 -0400
-X-MC-Unique: KyWR5Q7bPTWjqFb-1Axwkg-1
-X-Mimecast-MFC-AGG-ID: KyWR5Q7bPTWjqFb-1Axwkg_1746545386
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-441c122fa56so13168105e9.2
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:29:47 -0700 (PDT)
+ us-mta-173-FOO3xrswOOahQ7jNX9W29A-1; Tue, 06 May 2025 11:29:36 -0400
+X-MC-Unique: FOO3xrswOOahQ7jNX9W29A-1
+X-Mimecast-MFC-AGG-ID: FOO3xrswOOahQ7jNX9W29A_1746545375
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a07a7b4298so2960565f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:29:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746545386; x=1747150186;
+ d=1e100.net; s=20230601; t=1746545375; x=1747150175;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4t5TpUC5RTcF8GxmJiKFUlWUgjAwch+v1tmCu4iXGng=;
- b=awqGn+Hb6YQ0GPHluM+i0m4HrPB6n//r/F5+gRF5MPPuhMdvLRxEwh+MvmnK9FRM/Z
- wwh40hE6YaHyl7/tZ1lZi5DQBQAS5CKMgAcXNFKmCBaTCahp2BlbBiq5e1+u4TozT914
- K/WnG7yJvHSR4ZY4i/SyGg/ZQ89t6EAeSY9t/jX+8MAuqb0eA2/9UinZAAR4czEKJuEf
- 5TwUkPHne7m3tujm9nXA8QqVt4OmKHuvJlFrSs//XBXka+xufL7HcRP6waIRlDwbCMI1
- HGhfzOGS5pTvcltOVuJn2C8M/uuDVq4tD5qqRrMTlD5YaDCCVzOTFw1VTZ/iQPfmg/xs
- H2xA==
-X-Gm-Message-State: AOJu0Yzu/exiDmV55bhh2t7HZuqW1lFVQ7VGBkVMHhwcD+Ys+9oZgxj6
- S92xRLxu0LDIDFINoJX8//4AmJCu4VFfFXU0pG/7YsSTCSA8HsDRULK6XhjW25w4nBLacwDuM0g
- zdzsc8Qep3+T1JBmrP5jBPUKEvzBxJdpJxg9EoRGsNCaxJiRmJctJsZy/fyn7NdZ72f8vXcwXBZ
- kmuKQlCKnjBlFWn4fy+GvXvfXmlk37K6yGhZHX
-X-Gm-Gg: ASbGnctqvWUbmKyF0znzaMvVJLEjB+0ep0iaLqaCFEbyai3XizxM7z+62rvgfsdITo/
- 4Tm7WDP9oVSNzHYnPXJKhR4+4gNvNshSLfLJ88LJQC0OoNRg+vOmDr6G5mqNNaLbOpPUGLn8n8r
- ohQs3x2yZ/zx3uEcPaYoTucA/3EecMkaWUlMx4MPYHh6DWYo78tOkdC+KI4ObeC4XbizsHzLpYU
- C587EjRSOOGRViwwgz2d6WMCOonQo8SNIBbwgchdWXVnd4qCX+EFE+Kfc1zonz5UJqjtug0VMuN
- 1fLht5jIn0w0KLM=
-X-Received: by 2002:a05:600c:681b:b0:43d:fa58:700e with SMTP id
- 5b1f17b1804b1-441d101319amr32439045e9.33.1746545386144; 
- Tue, 06 May 2025 08:29:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGbrxLJtbsdq71IHPioviS8KSZ2S+jW5jJiIvyQkIgeyuz903/ik5UEdLn4mmo+mqnGNt8jKQ==
-X-Received: by 2002:a05:600c:681b:b0:43d:fa58:700e with SMTP id
- 5b1f17b1804b1-441d101319amr32438835e9.33.1746545385807; 
- Tue, 06 May 2025 08:29:45 -0700 (PDT)
+ bh=NJkJL+2iQH6j0YxyFlCO0wihd/nFC5q/GbHkjAOouko=;
+ b=tf98luYD2tew5BQsV7JgRs5cGCnfWxbRJyqXqeoyP7az7fp/zqmnlYi2C1vXoP36Wp
+ QNQ2HwemmEkwUlHDpFu87PHoVXaCDm790SwpRQhsABtxXcJymBNUJD/YLiyNS5crczNV
+ VCnDATeyBEr3We1yAHpHZGnlp/1Xkd/SiCsDLFB/sF0+VvS5JU4/Ok0LtBxHGvUecqEJ
+ mRoXFqfBAHobgqH9fMmXDf1mnFfBh1fvNhpl8eiVS53ozxpgRD6W3TiXyf+lAzubKn46
+ E820oNrkk8pF4zPYd6x+MuxpI0Ec/lUw26ZADhn+YK9Mr2GzgGPEyLi0nVnGRAM+Zaex
+ FLtA==
+X-Gm-Message-State: AOJu0YxQ9WaCIN+RPd3Cu93pQHXuw5Wjioyrq9/8ViPDItWyvEHTRuZ0
+ +aEU7iADoFj+th2LVaHYdHQXcCgwh6NvEsBu6NbUlkEzNXQAHSP1PU6D1QW6mR70sxxGRi2LHZS
+ DQvWFe3/pyskje75h1MgseouFyapCYiOeMln36ItkFDeeYhppThs0OhDwHXwOxhQhgAKc2JyQgA
+ TNt90AHeWuyngHz+yEY0NkZAHGJyvl7lifmS6z
+X-Gm-Gg: ASbGncusauWl3CUPoOSy2n+6NhsGpA5jNoo9s8QhntVv3UsHcP8ug9cafgNspqqrrSA
+ jB/6kCk67sue+aZ4JEIZp3gBC+yL7AEwUseA2QExDF/NIrmUoQiKWx/opEuiB2sAnyEm8M7zCf3
+ YR7Qe2/4+pCiOdn7v1pwSMIGaFyvOSI3cWOPTOST5NcdL5lD0tNzb+tNZ6ds4sVJQCdzVRvlPZY
+ sEhrLBnlJ86QFBoUP4ITjLtsXpJdGJ+ssieMm0mxAUcmrehljhSUII2mAHL0i9HOJeMsR01ZXXh
+ ZaIhHwgjdAk8s9E=
+X-Received: by 2002:a05:6000:4006:b0:39c:268b:8b66 with SMTP id
+ ffacd0b85a97d-3a0ac1ff66fmr2847452f8f.43.1746545374651; 
+ Tue, 06 May 2025 08:29:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFTJzEa/w4GNmEL0Qa3jr5OmMdfA4BUDyhc6fh34Zv8Ht1LyLb+EU0sfeNaHLXMrH8NSFBuxA==
+X-Received: by 2002:a05:6000:4006:b0:39c:268b:8b66 with SMTP id
+ ffacd0b85a97d-3a0ac1ff66fmr2847430f8f.43.1746545374264; 
+ Tue, 06 May 2025 08:29:34 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae3528sm14316030f8f.30.2025.05.06.08.29.42
+ ffacd0b85a97d-3a0b25159c9sm1466480f8f.50.2025.05.06.08.29.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 08:29:43 -0700 (PDT)
+ Tue, 06 May 2025 08:29:33 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 08/30] rust: enable clippy::ptr_cast_constness
-Date: Tue,  6 May 2025 17:29:03 +0200
-Message-ID: <20250506152927.222671-9-pbonzini@redhat.com>
+Subject: [PULL 03/30] rust: use std::ffi instead of std::os::raw
+Date: Tue,  6 May 2025 17:28:58 +0200
+Message-ID: <20250506152927.222671-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250506152927.222671-1-pbonzini@redhat.com>
 References: <20250506152927.222671-1-pbonzini@redhat.com>
@@ -109,126 +109,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is allowed since Rust 1.64.0.
+
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/rust.rst            | 2 --
- rust/Cargo.toml                | 2 +-
- rust/hw/timer/hpet/src/hpet.rs | 2 +-
- rust/qemu-api/src/cell.rs      | 2 +-
- rust/qemu-api/src/chardev.rs   | 2 +-
- rust/qemu-api/src/qom.rs       | 4 ++--
- rust/qemu-api/src/timer.rs     | 2 +-
- 7 files changed, 7 insertions(+), 9 deletions(-)
+ docs/devel/rust.rst                    | 2 --
+ rust/hw/char/pl011/src/device_class.rs | 2 +-
+ rust/hw/timer/hpet/src/hpet.rs         | 3 +--
+ rust/qemu-api/src/chardev.rs           | 3 +--
+ rust/qemu-api/src/irq.rs               | 6 +++++-
+ rust/qemu-api/src/lib.rs               | 2 +-
+ rust/qemu-api/src/memory.rs            | 3 +--
+ rust/qemu-api/src/qdev.rs              | 3 +--
+ rust/qemu-api/src/qom.rs               | 3 +--
+ rust/qemu-api/src/timer.rs             | 2 +-
+ rust/qemu-api/src/vmstate.rs           | 2 +-
+ rust/qemu-api/tests/vmstate_tests.rs   | 7 ++++++-
+ 12 files changed, 20 insertions(+), 18 deletions(-)
 
 diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
-index 13a002cfe69..a315f668865 100644
+index 3cc2841d4d1..c7dfba98de1 100644
 --- a/docs/devel/rust.rst
 +++ b/docs/devel/rust.rst
 @@ -74,8 +74,6 @@ Supported tools
  QEMU supports rustc version 1.63.0 and newer.  Notably, the following features
  are missing:
  
--* ``cast_mut()``/``cast_const()`` (1.65.0).  Use ``as`` instead.
+-* ``core::ffi`` (1.64.0).  Use ``std::os::raw`` and ``std::ffi`` instead.
 -
- * Generic Associated Types (1.65.0)
+ * ``cast_mut()``/``cast_const()`` (1.65.0).  Use ``as`` instead.
  
- * ``CStr::from_bytes_with_nul()`` as a ``const`` function (1.72.0).
-diff --git a/rust/Cargo.toml b/rust/Cargo.toml
-index eda7980b31a..a328634d949 100644
---- a/rust/Cargo.toml
-+++ b/rust/Cargo.toml
-@@ -71,6 +71,7 @@ no_effect_underscore_binding = "deny"
- option_option = "deny"
- or_fun_call = "deny"
- ptr_as_ptr = "deny"
-+ptr_cast_constness = "deny"
- pub_underscore_fields = "deny"
- redundant_clone = "deny"
- redundant_closure_for_method_calls = "deny"
-@@ -92,7 +93,6 @@ used_underscore_binding = "deny"
+ * "let ... else" (1.65.0).  Use ``if let`` instead.  This is currently patched
+diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
+index b4d4a7eb432..cd2dc33c207 100644
+--- a/rust/hw/char/pl011/src/device_class.rs
++++ b/rust/hw/char/pl011/src/device_class.rs
+@@ -3,7 +3,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
  
- # nice to have, but cannot be enabled yet
- #wildcard_imports = "deny"   # still have many bindings::* imports
--#ptr_cast_constness = "deny" # needs 1.65.0 for cast_mut()/cast_const()
+ use std::{
+-    os::raw::{c_int, c_void},
++    ffi::{c_int, c_void},
+     ptr::NonNull,
+ };
  
- # these may have false positives
- #option_if_let_else = "deny"
 diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
-index d4364f2f2f7..b7a1be05deb 100644
+index 12de2ba59a1..d4364f2f2f7 100644
 --- a/rust/hw/timer/hpet/src/hpet.rs
 +++ b/rust/hw/timer/hpet/src/hpet.rs
-@@ -219,7 +219,7 @@ fn init(&mut self, index: u8, state: &HPETState) {
-             // SAFETY: the HPETTimer will only be used after the timer
-             // is initialized below.
-             qemu_timer: unsafe { Timer::new() },
--            state: NonNull::new(state as *const _ as *mut _).unwrap(),
-+            state: NonNull::new((state as *const HPETState).cast_mut()).unwrap(),
-             config: 0,
-             cmp: 0,
-             fsb: 0,
-diff --git a/rust/qemu-api/src/cell.rs b/rust/qemu-api/src/cell.rs
-index ab0785a2692..1cb9fdcd53f 100644
---- a/rust/qemu-api/src/cell.rs
-+++ b/rust/qemu-api/src/cell.rs
-@@ -1016,7 +1016,7 @@ pub const fn as_mut_ptr(&self) -> *mut T {
+@@ -3,8 +3,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
  
-     /// Returns a raw pointer to the opaque data.
-     pub const fn as_ptr(&self) -> *const T {
--        self.as_mut_ptr() as *const _
-+        self.as_mut_ptr().cast_const()
-     }
- 
-     /// Returns a raw pointer to the opaque data that can be passed to a
+ use std::{
+-    ffi::CStr,
+-    os::raw::{c_int, c_void},
++    ffi::{c_int, c_void, CStr},
+     pin::Pin,
+     ptr::{addr_of_mut, null_mut, NonNull},
+     slice::from_ref,
 diff --git a/rust/qemu-api/src/chardev.rs b/rust/qemu-api/src/chardev.rs
-index 146a4852da3..6e0590d758e 100644
+index 11e6c45afaf..146a4852da3 100644
 --- a/rust/qemu-api/src/chardev.rs
 +++ b/rust/qemu-api/src/chardev.rs
-@@ -160,7 +160,7 @@ pub fn enable_handlers<
-                 receive_cb,
-                 event_cb,
-                 None,
--                (owner as *const T as *mut T).cast::<c_void>(),
-+                (owner as *const T).cast_mut().cast::<c_void>(),
-                 core::ptr::null_mut(),
-                 true,
-             );
+@@ -10,11 +10,10 @@
+ //! called.
+ 
+ use std::{
+-    ffi::CStr,
++    ffi::{c_int, c_void, CStr},
+     fmt::{self, Debug},
+     io::{self, ErrorKind, Write},
+     marker::PhantomPinned,
+-    os::raw::{c_int, c_void},
+     ptr::addr_of_mut,
+     slice,
+ };
+diff --git a/rust/qemu-api/src/irq.rs b/rust/qemu-api/src/irq.rs
+index 1222d4fde30..1526e6f63a1 100644
+--- a/rust/qemu-api/src/irq.rs
++++ b/rust/qemu-api/src/irq.rs
+@@ -4,7 +4,11 @@
+ 
+ //! Bindings for interrupt sources
+ 
+-use std::{ffi::CStr, marker::PhantomData, os::raw::c_int, ptr};
++use std::{
++    ffi::{c_int, CStr},
++    marker::PhantomData,
++    ptr,
++};
+ 
+ use crate::{
+     bindings::{self, qemu_set_irq},
+diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
+index 05f38b51d30..c3641e893b7 100644
+--- a/rust/qemu-api/src/lib.rs
++++ b/rust/qemu-api/src/lib.rs
+@@ -33,7 +33,7 @@
+ 
+ use std::{
+     alloc::{GlobalAlloc, Layout},
+-    os::raw::c_void,
++    ffi::c_void,
+ };
+ 
+ #[cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)]
+diff --git a/rust/qemu-api/src/memory.rs b/rust/qemu-api/src/memory.rs
+index fdb1ea11fcf..9ef2694bd62 100644
+--- a/rust/qemu-api/src/memory.rs
++++ b/rust/qemu-api/src/memory.rs
+@@ -5,9 +5,8 @@
+ //! Bindings for `MemoryRegion`, `MemoryRegionOps` and `MemTxAttrs`
+ 
+ use std::{
+-    ffi::{CStr, CString},
++    ffi::{c_uint, c_void, CStr, CString},
+     marker::PhantomData,
+-    os::raw::{c_uint, c_void},
+ };
+ 
+ pub use bindings::{hwaddr, MemTxAttrs};
+diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
+index 18b4a9ba687..17c7fecabeb 100644
+--- a/rust/qemu-api/src/qdev.rs
++++ b/rust/qemu-api/src/qdev.rs
+@@ -5,8 +5,7 @@
+ //! Bindings to create devices and access device functionality from Rust.
+ 
+ use std::{
+-    ffi::{CStr, CString},
+-    os::raw::{c_int, c_void},
++    ffi::{c_int, c_void, CStr, CString},
+     ptr::NonNull,
+ };
+ 
 diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index 52e3a1ec981..41e5a5e29a8 100644
+index f1b4022157b..6929e4d33ae 100644
 --- a/rust/qemu-api/src/qom.rs
 +++ b/rust/qemu-api/src/qom.rs
-@@ -388,7 +388,7 @@ fn as_mut_ptr<U: ObjectType>(&self) -> *mut U
-     {
-         #[allow(clippy::as_ptr_cast_mut)]
-         {
--            self.as_ptr::<U>() as *mut _
-+            self.as_ptr::<U>().cast_mut()
-         }
-     }
- }
-@@ -638,7 +638,7 @@ pub unsafe fn from_raw(ptr: *const T) -> Self {
-         // SAFETY NOTE: while NonNull requires a mutable pointer, only
-         // Deref is implemented so the pointer passed to from_raw
-         // remains const
--        Owned(NonNull::new(ptr as *mut T).unwrap())
-+        Owned(NonNull::new(ptr.cast_mut()).unwrap())
-     }
+@@ -93,11 +93,10 @@
+ //! without incurring into violations of orphan rules for traits.
  
-     /// Obtain a raw C pointer from a reference.  `src` is consumed
+ use std::{
+-    ffi::CStr,
++    ffi::{c_void, CStr},
+     fmt,
+     mem::ManuallyDrop,
+     ops::{Deref, DerefMut},
+-    os::raw::c_void,
+     ptr::NonNull,
+ };
+ 
 diff --git a/rust/qemu-api/src/timer.rs b/rust/qemu-api/src/timer.rs
-index d697fd742bc..868bd88575f 100644
+index e769f8bc910..d697fd742bc 100644
 --- a/rust/qemu-api/src/timer.rs
 +++ b/rust/qemu-api/src/timer.rs
-@@ -81,7 +81,7 @@ pub fn init_full<'timer, 'opaque: 'timer, T, F>(
-                 scale as c_int,
-                 attributes as c_int,
-                 Some(timer_cb),
--                (opaque as *const T).cast::<c_void>() as *mut c_void,
-+                (opaque as *const T).cast::<c_void>().cast_mut(),
-             )
-         }
-     }
+@@ -3,7 +3,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ use std::{
+-    os::raw::{c_int, c_void},
++    ffi::{c_int, c_void},
+     pin::Pin,
+ };
+ 
+diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
+index 9ae97c389c1..c0f29f74188 100644
+--- a/rust/qemu-api/src/vmstate.rs
++++ b/rust/qemu-api/src/vmstate.rs
+@@ -25,7 +25,7 @@
+ //!   functionality that is missing from `vmstate_of!`.
+ 
+ use core::{marker::PhantomData, mem, ptr::NonNull};
+-use std::os::raw::{c_int, c_void};
++use std::ffi::{c_int, c_void};
+ 
+ pub use crate::bindings::{VMStateDescription, VMStateField};
+ use crate::{
+diff --git a/rust/qemu-api/tests/vmstate_tests.rs b/rust/qemu-api/tests/vmstate_tests.rs
+index f7a93117e1a..9a56ffd2385 100644
+--- a/rust/qemu-api/tests/vmstate_tests.rs
++++ b/rust/qemu-api/tests/vmstate_tests.rs
+@@ -2,7 +2,12 @@
+ // Author(s): Zhao Liu <zhai1.liu@intel.com>
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-use std::{ffi::CStr, mem::size_of, os::raw::c_void, ptr::NonNull, slice};
++use std::{
++    ffi::{c_void, CStr},
++    mem::size_of,
++    ptr::NonNull,
++    slice,
++};
+ 
+ use qemu_api::{
+     bindings::{
 -- 
 2.49.0
 
