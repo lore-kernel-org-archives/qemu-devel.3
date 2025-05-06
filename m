@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CCA6C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:33:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9843BC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:33:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCKGA-0005mi-6M; Tue, 06 May 2025 11:31:06 -0400
+	id 1uCKFp-00050s-7a; Tue, 06 May 2025 11:30:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFe-0004SE-G9
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uCKFO-0004B1-5b
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFb-0002FQ-Qv
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:33 -0400
+ id 1uCKFK-0002D2-T7
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746545430;
+ s=mimecast20190719; t=1746545412;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LHPitvNNyaabervLj5MUPkMguji4O/epz7bp+YMWz94=;
- b=AgmCXWV92jnyudpK0ycb+FstNXDFXmffusDALySWbxUP3hXK4W6QkSpV9ZvmXQRPNRKNzA
- O/GDxw6gxu6JQUth9UEDz9Qo+V+ord9VkH+mzhmxZkR49QTt98Y3Y5T8scouLDeka8Ac7d
- L5CkpVI3uVXS87A46y1nw668z05XdsY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+B/e/jQLvjp1zUQjAa3+VY4igRcEr7YAVAoc3I64Dmw=;
+ b=QKkncQ6+LLDxjEB1iKMt+iSOd18pUTULxcXNbbNGyE7I4kjd1ZUY35rjHS0U1bUHW42SFE
+ cQFen7byqaYIcf+wSaUiV17ysthW9FXpGtTOt/x/DAl/kB66SUYW4U9txVI8LcHrDLKY77
+ OaU31/0bBPBWq2wBqilKDqd0ms7Jjcw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-407-18rTPNnFO-SCdrOzyUqm8A-1; Tue, 06 May 2025 11:30:29 -0400
-X-MC-Unique: 18rTPNnFO-SCdrOzyUqm8A-1
-X-Mimecast-MFC-AGG-ID: 18rTPNnFO-SCdrOzyUqm8A_1746545428
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43ce8f82e66so29968715e9.3
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:30:28 -0700 (PDT)
+ us-mta-462-o8nn04ALMQ6XC5kO0kSnFA-1; Tue, 06 May 2025 11:30:11 -0400
+X-MC-Unique: o8nn04ALMQ6XC5kO0kSnFA-1
+X-Mimecast-MFC-AGG-ID: o8nn04ALMQ6XC5kO0kSnFA_1746545410
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43d08915f61so29906415e9.2
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:30:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746545426; x=1747150226;
+ d=1e100.net; s=20230601; t=1746545409; x=1747150209;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LHPitvNNyaabervLj5MUPkMguji4O/epz7bp+YMWz94=;
- b=qYYFq0ncGsBfZ6oAbHA07TDY13GlPeq9eAGNgPdBGm+MYXiMLlciIyypppU389fuII
- q0E+f/t92ioMhIkda17Nj48pzdeh3RKKgwglO01piScHiO2FL5SFpu1M73jaWwrMkxi4
- RWcVRURyjAd6bup5uwy7QoSDfgykyKRc2BafyK5oI4kgpyrDkQH2CqgTKwwTxeX87A4p
- xwqI5kik5QtmXWu0KSZdVMAKxt7EsQBuAQxWxJpv8hNe2tPfsxRjqMRHI/LSBsjTk255
- Ag2Eev2x2dbdntzii8iicNwQdmi8fyL5yskuPQJkF2pC8LQpr8KOK8Q+dNoyQbc2si/h
- phnQ==
-X-Gm-Message-State: AOJu0YwKqZ5dO1CWjtmZvkG/xprQoGlrp3usdiPfJDUkAdU6R+USDUrW
- Q2suVF5WqKbKe8QFQfCFGmpoGD+lX3Ph/FOblenmVahVIZTnYi58TpydCFLcWAe4c54QOzzPbER
- QugbB6yratlcUYbcmWILZdhxVlimQimPkjfLu0aND37P7pfzsPkKXZ4Rr4uORT267pb0ia7/YlD
- z4vIoYS9e7JGmblrBCekTuLmwxtf8rMLztUQ9T
-X-Gm-Gg: ASbGncvzTxkWZyhip6vGKb48MAiWOwZvgRKs0smpWx4zSWQRsDOOxwXe1ii0nOBe0kS
- 99v5aSxRUxmmqCj3L9dzAg0TyN6F9BreJzILVtgM3C/1G+Bdr9lJ+NMemKTdVnlH5Zo25rZsbBh
- QwaeD64rAEjVfmIqo+Psu65nRKfwrnzMiOTLgV3CP+Xh7ixj8j/GlVXUf3S5gIHvgeec56W/L8f
- 1cZwPfe55W6gmJeppxpAMm2o8e6e0yvZLwwMangCEVOCA8khVM5P4CNXk325otd+2ZChz11u8ef
- Sx4kOBi7mUjYdsw=
-X-Received: by 2002:a05:600c:34c3:b0:43d:abd:ad1c with SMTP id
- 5b1f17b1804b1-441c48b0347mr110511975e9.6.1746545426134; 
- Tue, 06 May 2025 08:30:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2pVkeIYVCnfHClsFHE46KXaBYuUbnyHAnyya85TtZWS1i6ZeKJuux8gLZ6QejW0e9cs2dCA==
-X-Received: by 2002:a05:600c:34c3:b0:43d:abd:ad1c with SMTP id
- 5b1f17b1804b1-441c48b0347mr110511515e9.6.1746545425583; 
- Tue, 06 May 2025 08:30:25 -0700 (PDT)
+ bh=+B/e/jQLvjp1zUQjAa3+VY4igRcEr7YAVAoc3I64Dmw=;
+ b=rzhWEDCyAb9oXyhjpPMykNZmEMJhNQCcqcn0/HJWPAvSWWkBQey3ByvQ4vQ5oIxsc1
+ UYRC/ZOWd7rnuT78i3LAZ6hqmFy3K3g2UbpP+w7kb76/xniXh7pXSztfJpfVAnfpb2iu
+ rb24NCZXv3UihIzse0rHOg5WMRmuLMbse7VVTh57xEOy3u12LRvXXjs4oPbsCv7mlPZg
+ Ow65/x1IGLUTz7Ox0SmrJmdbupU53zs6SlGBEmAAZFCKnylkmDAzgQiXRPsqilkJcs5H
+ LhqV26HkkJ72hOd4PneNGRS2v/dFY6ZwXd+nOEJK0RnUM3lWiNkpoaJsYIcQwNBbgdHC
+ ZEew==
+X-Gm-Message-State: AOJu0YxY0GTgX9AwiIQ6UzSYLvFON1N9xdANSvraW93/s6WRJSPTH+SG
+ xEgNkG4R0kr7bZ8LCKSOyUMHij/NS9kcr+GTpC66ikS/yE1NoBOrDYb+wvEmIsnqcsu+fCKgQ6s
+ KuA1ylJ+XlvmDSU4CdqIw9VYWoW1XLehnW9SYxdIzyYWfcPm5uaCi72YcbU7vactAzZveGznXij
+ XyVhqnU2NDyV5zu+5EzoFfx8MxMHbWtZ5Qs7p8
+X-Gm-Gg: ASbGncss9ylG8ErOrY7cP7XyixBqRZItA/yaylhs27GGEKWWkyWI5Io3OP2XbVGr2sv
+ XAjIDk5Wax+fl5URrbUy0wUrhAoWyTVaFcqpk3cAmfQTwTXFpd/F4ikRBB4Vvd6AoGE4eQ0ZoPo
+ R1mI4NnOSXBx3enhLszn1S/DveB7T0GhgekLCJIThsiGcwCeOaccWR3lM3A93wduN5hRKXXBsEB
+ 4IFlbrHgEkqocifXTKDrh0LQp1qSDn6VTTHrqblhZw1DEfbN3vpFWK0FTeocNexnBcxWzw+U7Dp
+ qm0oif4C5+GT4hs=
+X-Received: by 2002:a05:600c:1d9e:b0:43c:eec7:eabb with SMTP id
+ 5b1f17b1804b1-441c48bc8f0mr100993945e9.8.1746545409169; 
+ Tue, 06 May 2025 08:30:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFHfUnO3MIXYaxDuV/X4gxFY5IO+XsnLzED0/hbvDB9vlSOM1HG3cS/p+THYBvpO/5aYiVaiQ==
+X-Received: by 2002:a05:600c:1d9e:b0:43c:eec7:eabb with SMTP id
+ 5b1f17b1804b1-441c48bc8f0mr100993635e9.8.1746545408742; 
+ Tue, 06 May 2025 08:30:08 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099b17260sm14410090f8f.98.2025.05.06.08.30.24
+ 5b1f17b1804b1-441b89ee39esm172303685e9.21.2025.05.06.08.30.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 08:30:25 -0700 (PDT)
+ Tue, 06 May 2025 08:30:07 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 27/30] util: Add coroutine backend for emscripten
-Date: Tue,  6 May 2025 17:29:22 +0200
-Message-ID: <20250506152927.222671-28-pbonzini@redhat.com>
+Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>, Thomas Huth <thuth@redhat.com>
+Subject: [PULL 19/30] target/s390x: Fix type conflict of GLib function pointers
+Date: Tue,  6 May 2025 17:29:14 +0200
+Message-ID: <20250506152927.222671-20-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250506152927.222671-1-pbonzini@redhat.com>
 References: <20250506152927.222671-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -111,166 +110,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 
-Emscripten does not support couroutine methods currently used by QEMU but
-provides a coroutine implementation called "fiber". This commit introduces a
-coroutine backend using fiber. Note that fiber does not support submitting
-coroutines to other threads.
+On Emscripten, function pointer casts can result in runtime failures due to
+strict function signature checks. This affects the use of g_list_sort and
+g_slist_sort, which internally perform function pointer casts that are not
+supported by Emscripten. To avoid these issues, g_list_sort_with_data and
+g_slist_sort_with_data should be used instead, as they do not rely on
+function pointer casting.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Link: https://lore.kernel.org/r/006b683fd578ed6303a2dc8679094da9a7e6dfb4.1745820062.git.ktokunaga.mail@gmail.com
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Link: https://lore.kernel.org/r/e91c4e266b839f62b5c41173a05896b210ae1180.1745820062.git.ktokunaga.mail@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS           |   1 +
- util/coroutine-wasm.c | 127 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 128 insertions(+)
- create mode 100644 util/coroutine-wasm.c
+ target/s390x/cpu_models.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2e23dad4bc6..55c47fcd378 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -633,6 +633,7 @@ M: Kohei Tokunaga <ktokunaga.mail@gmail.com>
- S: Maintained
- F: include/system/os-wasm.h
- F: os-wasm.c
-+F: util/coroutine-wasm.c
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index 8951f1b36f9..954a7a99a9e 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -373,7 +373,7 @@ static void s390_print_cpu_model_list_entry(gpointer data, gpointer user_data)
+     g_free(name);
+ }
  
- Alpha Machines
- --------------
-diff --git a/util/coroutine-wasm.c b/util/coroutine-wasm.c
-new file mode 100644
-index 00000000000..cb1ec92509c
---- /dev/null
-+++ b/util/coroutine-wasm.c
-@@ -0,0 +1,127 @@
-+/*
-+ * emscripten fiber coroutine initialization code
-+ * based on coroutine-ucontext.c
-+ *
-+ * Copyright (C) 2006  Anthony Liguori <anthony@codemonkey.ws>
-+ * Copyright (C) 2011  Kevin Wolf <kwolf@redhat.com>
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2.0 of the License, or (at your option) any later version.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/coroutine_int.h"
-+#include "qemu/coroutine-tls.h"
-+
-+#include <emscripten/fiber.h>
-+
-+typedef struct {
-+    Coroutine base;
-+    void *stack;
-+    size_t stack_size;
-+
-+    void *asyncify_stack;
-+    size_t asyncify_stack_size;
-+
-+    CoroutineAction action;
-+
-+    emscripten_fiber_t fiber;
-+} CoroutineEmscripten;
-+
-+/**
-+ * Per-thread coroutine bookkeeping
-+ */
-+QEMU_DEFINE_STATIC_CO_TLS(Coroutine *, current);
-+QEMU_DEFINE_STATIC_CO_TLS(CoroutineEmscripten *, leader);
-+size_t leader_asyncify_stack_size = COROUTINE_STACK_SIZE;
-+
-+static void coroutine_trampoline(void *co_)
-+{
-+    Coroutine *co = co_;
-+
-+    while (true) {
-+        co->entry(co->entry_arg);
-+        qemu_coroutine_switch(co, co->caller, COROUTINE_TERMINATE);
-+    }
-+}
-+
-+Coroutine *qemu_coroutine_new(void)
-+{
-+    CoroutineEmscripten *co;
-+
-+    co = g_malloc0(sizeof(*co));
-+
-+    co->stack_size = COROUTINE_STACK_SIZE;
-+    co->stack = qemu_alloc_stack(&co->stack_size);
-+
-+    co->asyncify_stack_size = COROUTINE_STACK_SIZE;
-+    co->asyncify_stack = g_malloc0(co->asyncify_stack_size);
-+    emscripten_fiber_init(&co->fiber, coroutine_trampoline, &co->base,
-+                          co->stack, co->stack_size, co->asyncify_stack,
-+                          co->asyncify_stack_size);
-+
-+    return &co->base;
-+}
-+
-+void qemu_coroutine_delete(Coroutine *co_)
-+{
-+    CoroutineEmscripten *co = DO_UPCAST(CoroutineEmscripten, base, co_);
-+
-+    qemu_free_stack(co->stack, co->stack_size);
-+    g_free(co->asyncify_stack);
-+    g_free(co);
-+}
-+
-+CoroutineAction qemu_coroutine_switch(Coroutine *from_, Coroutine *to_,
-+                      CoroutineAction action)
-+{
-+    CoroutineEmscripten *from = DO_UPCAST(CoroutineEmscripten, base, from_);
-+    CoroutineEmscripten *to = DO_UPCAST(CoroutineEmscripten, base, to_);
-+
-+    set_current(to_);
-+    to->action = action;
-+    emscripten_fiber_swap(&from->fiber, &to->fiber);
-+    return from->action;
-+}
-+
-+Coroutine *qemu_coroutine_self(void)
-+{
-+    Coroutine *self = get_current();
-+
-+    if (!self) {
-+        CoroutineEmscripten *leaderp = get_leader();
-+        if (!leaderp) {
-+            leaderp = g_malloc0(sizeof(*leaderp));
-+            leaderp->asyncify_stack = g_malloc0(leader_asyncify_stack_size);
-+            leaderp->asyncify_stack_size = leader_asyncify_stack_size;
-+            emscripten_fiber_init_from_current_context(
-+                &leaderp->fiber,
-+                leaderp->asyncify_stack,
-+                leaderp->asyncify_stack_size);
-+            leaderp->stack = leaderp->fiber.stack_limit;
-+            leaderp->stack_size =
-+                leaderp->fiber.stack_base - leaderp->fiber.stack_limit;
-+            set_leader(leaderp);
-+        }
-+        self = &leaderp->base;
-+        set_current(self);
-+    }
-+    return self;
-+}
-+
-+bool qemu_in_coroutine(void)
-+{
-+    Coroutine *self = get_current();
-+
-+    return self && self->caller;
-+}
+-static gint s390_cpu_list_compare(gconstpointer a, gconstpointer b)
++static gint s390_cpu_list_compare(gconstpointer a, gconstpointer b, gpointer d)
+ {
+     const S390CPUClass *cc_a = S390_CPU_CLASS((ObjectClass *)a);
+     const S390CPUClass *cc_b = S390_CPU_CLASS((ObjectClass *)b);
+@@ -415,7 +415,7 @@ void s390_cpu_list(void)
+ 
+     qemu_printf("Available CPUs:\n");
+     list = object_class_get_list(TYPE_S390_CPU, false);
+-    list = g_slist_sort(list, s390_cpu_list_compare);
++    list = g_slist_sort_with_data(list, s390_cpu_list_compare, NULL);
+     g_slist_foreach(list, s390_print_cpu_model_list_entry, NULL);
+     g_slist_free(list);
+ 
 -- 
 2.49.0
 
