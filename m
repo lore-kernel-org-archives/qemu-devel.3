@@ -4,92 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53DC4C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:15:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D6D0C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:18:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCDSr-0001Cc-UD; Tue, 06 May 2025 04:15:45 -0400
+	id 1uCDUZ-0002Kb-Lw; Tue, 06 May 2025 04:17:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDSo-0001BT-4z
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:15:42 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDSm-0002s6-5a
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:15:41 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-ac7bd86f637so1162905866b.1
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 01:15:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746519338; x=1747124138; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KjrRtqVJLdO+vqnT52t4cWcpgZq2EdNjcrmMdn2l6Is=;
- b=OgoajrZt96nRolGX+W5n8gLii4ydgLF5+FvkSNxQR4DRHMEokkdyZtGAK5VHZQh+U4
- w5qQgNLo0NG7dNW7IpTSJ+MWXhaHU86Fk/L1izH2hXVpXVb1u4gDPemdM06gYBsa0hQI
- ElNtKUltyKvZb/nHIutK6x20YA896+wiZAEiwIPp60Hp1Nv57FBXOGRWup/c6f1B6SUe
- pMMWjcGWB36MTiUWCJtI2jRgXjuO1SyfflkGEOwR8WZKZWG27WDerRVmICZKLSuEzDI2
- gTgMeW43CRrN3nZmtzGg/UyK4l/q573cDaHLWQiOOtSdvEPMKOtTEzgYiBfCqx/RfY2L
- p3Tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746519338; x=1747124138;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KjrRtqVJLdO+vqnT52t4cWcpgZq2EdNjcrmMdn2l6Is=;
- b=U8RuxBR7Q8vSUubrpFbJUjCb+rVYKUX6h9GZ3bvDYM/+hm7tBsclC8mQNI+tRFj3Em
- Y47JA+gq1hMbETOtyqW8pYjh+U8wuL7BjQeoXPOdgS2B/l+olixArcx9mEZhKpkUxli6
- PQvrn34522fnIj+2yl6pEEuwXOX2+qKKgZ6/7NVYmU02X2S65MRERltreTaTtXsL9ZsS
- b/OUwPz/AqRhWdF1bikDHWJkOGcCEEXkE6s1JnD690+hlhKc0MhgHSWoDrdvG07qK3NP
- c8VRVT77Q1qZ2XfEao4WBYvUXH6+rtRL0Bzh7IwswIcr7S0rBISE25wkLNhzj1b3HK8U
- K2+g==
-X-Gm-Message-State: AOJu0YyBPoOfYwbF324qtmHqffRQXhF3nMeMwqxtwsExPpm1q3iyonuP
- 0KndekoJw2f2S87MIKwCgMHUN6J8NmK1L1pKG5WNp7qzW+al9MWDsfxUvUI2XE0=
-X-Gm-Gg: ASbGncsXO+XcdQvmISZegXzaU+5MOemgPeiaMM+6vHGgF722G0mJWB4/8tkSyImXdiY
- mleOzxcvMmHpXSLe2af0p9NEcq53cauZRg6Wl6eWsCqqi60ofmmcjdl1f6V4cEH1V+RKCG+p3sc
- /QnQe8wYw+iLwCc4kYmbfJWHQxArhM5obKnHewcmyrz5ecndRsC5HlVkk/iGwe8VSll7TY2V7zG
- qjqb0ORiNukKTlzGFmzr+iNXYuVflwpEaB9re1L8+43ROvRwIXKHrmIDIXwl7WMeaGu61wQhPR5
- QzkgvluigFfiOvst4PQeMGI0IM58kJ7vPLnnIVGMfduBKzGrRj9PUkdjZcx2RaJBQwt/vGnDMR/
- JN2g=
-X-Google-Smtp-Source: AGHT+IG7lXwDYaAOwVwzYywWYNhhtL6WCgs5+DF4fyDxbcgjYw2P6bTy7yKMTU+MelcMq0no74CQOg==
-X-Received: by 2002:a17:907:97d0:b0:ad1:8e6f:3ad8 with SMTP id
- a640c23a62f3a-ad1d2edafddmr241776466b.14.1746519337908; 
- Tue, 06 May 2025 01:15:37 -0700 (PDT)
-Received: from [10.194.152.213] (238.21.205.77.rev.sfr.net. [77.205.21.238])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad18914736asm653456366b.7.2025.05.06.01.15.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 May 2025 01:15:37 -0700 (PDT)
-Message-ID: <32d75ea4-0638-4e3c-9db3-fe37144837e4@linaro.org>
-Date: Tue, 6 May 2025 10:15:35 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCDUX-0002Hd-Js; Tue, 06 May 2025 04:17:29 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCDUV-0003CB-UL; Tue, 06 May 2025 04:17:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746519448; x=1778055448;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=10YWkdaa4tg+9NYJj8T8Tk7sWC4fZfGCSRMUZqJZ3B8=;
+ b=AN0eJBASL5XbV6uReNf7jU5qn5i8cQnBNg3u1lfzBWJi4g+GrubQgYLg
+ 44U3L32Ytb/TRVgZu97UWrnp77bw94lfSeywrD5QKfH/x5rXIAG2tut4r
+ 3yW2G8EVzvf0bwQvez3fP9c/OauOoBZQt0zFxyAvBVvAbQtT12C4uipCr
+ u0wnvQvQXMdg9XVDD6JFklh2Gb6jYjLvW66BL9lajhl6WrgIDq0e0vitd
+ 0WYcadI22ipYA4/5b9mLIkMYAoUwGEYOdhUlzyi6SswcPwOVxyNPdRQXW
+ NihXg4ZqNzkjE37t08en/riKzU1qeHyajyVtgeWoQH9W9BoJwV4eO+tbS w==;
+X-CSE-ConnectionGUID: qY9CitosTmGtXhyXmdoErw==
+X-CSE-MsgGUID: 34FuWFaPSM6qnuKIQU1FsA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11424"; a="48079556"
+X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="48079556"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 May 2025 01:17:19 -0700
+X-CSE-ConnectionGUID: 4pwteoLLQMORc/wu9tLw6Q==
+X-CSE-MsgGUID: WJuBnpQpQCG0sglJ/xaXsQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="140500056"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa004.jf.intel.com with ESMTP; 06 May 2025 01:17:17 -0700
+Date: Tue, 6 May 2025 16:38:17 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 11/11] docs: rust: update for newer minimum supported
+ version
+Message-ID: <aBnKeU9fIKxzBGs5@intel.com>
+References: <20250505090438.24992-1-pbonzini@redhat.com>
+ <20250505090438.24992-12-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/9] hw/s390x/event-facility: Remove the obsolete
- "allow_all_mask_sizes" code
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20250506062148.306084-1-thuth@redhat.com>
- <20250506062148.306084-4-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250506062148.306084-4-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250505090438.24992-12-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,19 +82,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/25 08:21, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> Now that the machine types 2.11 and older have been removed, we
-> don't need the "allow_all_mask_sizes" compatibility handling code
-> anymore and can remove it now.
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   hw/s390x/event-facility.c | 37 +------------------------------------
->   1 file changed, 1 insertion(+), 36 deletions(-)
+> -* Generic Associated Types (1.65.0)
+> -
+> -* ``CStr::from_bytes_with_nul()`` as a ``const`` function (1.72.0).
+> -
+> -* "Return position ``impl Trait`` in Traits" (1.75.0, blocker for including
+> -  the pinned-init create).
+> -
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Glad to see it's possible to include pinned-init. 
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
