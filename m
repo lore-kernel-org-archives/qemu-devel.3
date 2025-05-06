@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85A07C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 13:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F15AC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 13:18:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCIA0-0000qm-Qc; Tue, 06 May 2025 09:16:36 -0400
+	id 1uCIBT-0001TC-MH; Tue, 06 May 2025 09:18:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uCI9y-0000qC-DD
- for qemu-devel@nongnu.org; Tue, 06 May 2025 09:16:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uCI9w-0006WE-J0
- for qemu-devel@nongnu.org; Tue, 06 May 2025 09:16:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746537389;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=y3JirfBMvBI5AXjfyqj+Dfu98dFvQmMusPE8hhCytys=;
- b=bawgHUbzYjxgzs+anetYYTbI5M87QQE124+X+KHXMHDcI1tXQhzpSvY0pyfiHbWtbW16LO
- YKNao7IJxNPXrZineIRHRDNDusoRqUrzESNYHXdExmgFwuJR83QXWMm2e6bFWfwp72xjD+
- RlpzHyYBmIJJzcTmgjamqfso3n/lk3k=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-461-obUZwB7yOtKy8v-VfjGqTA-1; Tue, 06 May 2025 09:16:28 -0400
-X-MC-Unique: obUZwB7yOtKy8v-VfjGqTA-1
-X-Mimecast-MFC-AGG-ID: obUZwB7yOtKy8v-VfjGqTA_1746537387
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-47685de2945so98194661cf.0
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 06:16:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746537387; x=1747142187;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uCIBR-0001NJ-Mx
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 09:18:05 -0400
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uCIBP-0006lL-F0
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 09:18:05 -0400
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-70960e0b4d5so3428597b3.0
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 06:18:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746537482; x=1747142282; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=y3JirfBMvBI5AXjfyqj+Dfu98dFvQmMusPE8hhCytys=;
- b=BxV1pG73uc4iCfUfyMy0b5PCbX7PzXt/guGVQJdf/XO4/rKjsoHx95W1E6W+sFe/bo
- NJ1yvAiyqsUBNncCuOvw06+iVC4UZ1ZY1bACXraDa85XVUKAjMJZ1kGT1THACt5m8Xna
- Tv/aVKny/PVouhMU/pgt8uyXx404EdMAe1YE+wnHGdf6rHZFWtcIX+J76HSDLmazql5W
- 9x9WFrkEFjRPOWz4ocfg/kfyMi3Pf7g3mjOqqkfHjw+uByl3n3VHhbVjJgg5YP2Yrk4N
- 2Q2UN5m+CHiLZNuEVXJTh/Z47GlQ/DViI91C43g/m7tY2xpA6brFo+yu0RuHglYAPL7X
- ZSWg==
-X-Gm-Message-State: AOJu0Yyrb3i2ZtQajKNb87NtrvkcJDMtusb6rMJ74+/c6ZM0B4JF6MT0
- xiHcUihEpCg9Oym8Bch2l8xFmoQV7qScysDFEaAIyHuBZH8J4goXQ2+VFmSdlMhHRqhfgi2/+2h
- qIuAqn5BKUZgf4uclOWjkBinK+X2T201DOhJrtyxQPhriwcFB7Y16
-X-Gm-Gg: ASbGncuMGq9sqPe4h3npMHidRsHqL5xAVmuFAJjUBxbDiuZtzGx+gelb765mWAWayir
- uSBGoelbIwOluK+lxp2ldyZugT8zkaXI/1YcWHBUIzY9wO6vtC6Xj9QRg4eMh6UK5guTShpUYgs
- pK9LGdoftnL8E8ZorlQ4JNCUUI4DDe3+bWP+suxxLDBrvCaIjL0eHyXNJYZIf2hcRyMqs9bNDRz
- 4vRnqSspdrnfjusf96plljAvhvr0B1RE1k6ALZ5mIxiRDRVx4ARsog/6IlNFrWQPAt1x7uoDGv7
- xI4=
-X-Received: by 2002:a05:622a:1aa7:b0:476:76df:d26d with SMTP id
- d75a77b69052e-490f149dd69mr51815181cf.8.1746537387389; 
- Tue, 06 May 2025 06:16:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEIwuPsr0AYP1Ux/02L007qIfQBjtSci+9WDERAAsPgcOGRb8mTZl4r8NrPbCz4zGfKgI4PGQ==
-X-Received: by 2002:a05:622a:1aa7:b0:476:76df:d26d with SMTP id
- d75a77b69052e-490f149dd69mr51814861cf.8.1746537387026; 
- Tue, 06 May 2025 06:16:27 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-48b960ce251sm72038031cf.13.2025.05.06.06.16.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 06:16:26 -0700 (PDT)
-Date: Tue, 6 May 2025 09:16:23 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Joe Komlodi <komlodi@google.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, david@redhat.com,
- philmd@linaro.org, venture@google.com, pefoley@google.com
-Subject: Re: [PATCH] system/physmem: Fix UBSan finding in
- address_space_write_rom_internal
-Message-ID: <aBoLp9kw7-SHAGRa@x1.local>
-References: <20250505222236.1616628-1-komlodi@google.com>
+ bh=ry++gvQ3ZjoGDclwTqu4Yt0eg9TEBjs1UwzqzuDBf2s=;
+ b=G/PmlKz2ZGEIfKQKOaFGQJToYX37ifc0VJWEgfHkuv1PnpbWyyp8oZ+sF40a5t28IF
+ Db0tSQKCPJWiyA0Pg40NMiPL+9HFH47NLC8mg3s1o1yuqVvIfJHmZbVb8efnZbazKdEo
+ aTxI06P/bV91sz/+DohTnY50bk6O+ZF7bSbxWqAZFvYX8e/LmuA4dyeRAQF6Of9v/coW
+ Tcod7dhEX2Nx3QPs5HiUbIsxZ/iePov4CiQHxTe4gM13vbMBmqbS3p/eOSdkn49fVYfE
+ zqPPKA18ncH/q1HdL3iM745/5zIEP1DwMWmJN2Unsmx0mEGjAxLo+JXNvbhFfvdBFXO/
+ Tvrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746537482; x=1747142282;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ry++gvQ3ZjoGDclwTqu4Yt0eg9TEBjs1UwzqzuDBf2s=;
+ b=PzxJPv94gTSm+1GQ0M2GdoMeTOPmThKLCTE2LEXrnmE5dD6IGil8HZO2ZH0dKQZK2j
+ uGQ7BBMVJjZxgN8QS64rO9HNnQzGwh5uhMpXMlCRAT+PmUawdRmkjvHHtWEN0E2zxj6F
+ tIiCwRBwGnAiTP8LBWCM3eHZ+/d8ZI0bnjVvuXwP26m2sniZYOEhR8I8BJqEZ5jLoNR7
+ Mk/lq5tNF3cVfGNRRPHk9SigcE/BWMMBi9CKNzlhnrVB/rN5vUHi33GGdxLbOj69/D0p
+ 1QJFR9eWjqZr2GjxWrVXKQAGC2bjs+MMQUsj59VgDED87DSa9ogpRS2o2oP2s7IAd/z3
+ maqg==
+X-Gm-Message-State: AOJu0YzKW1Rh2JxEA5c/lThxiY4tSZegSHUC8kwWeJ9gVlf5LOutT1xO
+ /72IblVbLsNak7ce8Q0NkF31QEfS7rX3Hpeatub8vAbF1N0yWU030DbsLKuGmvdZn7GgM3vZ6Sb
+ o9UR5B+/LSSVRi/yY6zJXYA3Oxir6YNjtHRoyxA==
+X-Gm-Gg: ASbGncuaJOixfXkVcLa7ZNIYXtDEK613O5PPdqWnBRz0T2IqjR2B8fvIGHNb0KtLTv3
+ WLEAp/ZLv+D8AU9MmJzY5PXx+t4dK3VIU2nFRVH4YK5z4UT/mROPWyyY01e/RDG4X5oA6nmAPMC
+ QNX1au5jteoqeOcUg1KIBb2HY=
+X-Google-Smtp-Source: AGHT+IHe4xnyaP7V2Da2muPp+sHvr/HuzFLGvN5dFqUMitMsVoUzpxuib+Zn7slfLqdqilsDxV0WNIyszueSrQBHkMY=
+X-Received: by 2002:a05:690c:630d:b0:6ff:1d6f:38af with SMTP id
+ 00721157ae682-709197abf3cmr40581987b3.4.1746537481782; Tue, 06 May 2025
+ 06:18:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250505222236.1616628-1-komlodi@google.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250318130817.119636-1-corvin.koehne@gmail.com>
+ <20250318130817.119636-14-corvin.koehne@gmail.com>
+In-Reply-To: <20250318130817.119636-14-corvin.koehne@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 6 May 2025 14:17:49 +0100
+X-Gm-Features: ATxdqUEgJqvj0g1MSL5cr-jD6Fh2bVFPb-pi8FVTpFFgz9-UeVtrlRnISs1Ivug
+Message-ID: <CAFEAcA8sEVK5eaQjd-LmHtvf6Foj3ZjH1D0SMPoqQXGJneDCBg@mail.gmail.com>
+Subject: Re: [PATCH 13/21] hw/arm/beckhoff_CX7200: Remove second SD controller
+To: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
+ qemu-arm@nongnu.org, =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,31 +99,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 05, 2025 at 10:22:36PM +0000, Joe Komlodi wrote:
-> address_space_write_rom_internal can take in a NULL pointer for ptr if
-> it's only doing cache flushes instead of populating the ROM.
-> 
-> However, if building with --enable-ubsan, incrementing buf causes ubsan
-> to go off when doing cache flushes, since it will trigger on pointer
-> arithmetic on a NULL pointer, even if that NULL pointer doesn't get
-> dereferenced.
-> 
-> To fix this, we can move the buf incrementing to only be done when
-> writing data to ROM, since that's the only point where it gets
-> dereferenced and should be non-NULL.
-> 
-> Found by running:
-> qemu-system-aarch64 \
-> -machine virt \
-> -accel kvm
-> 
-> When built with --enable-ubsan.
-> 
-> Signed-off-by: Joe Komlodi <komlodi@google.com>
+On Tue, 18 Mar 2025 at 13:11, Corvin K=C3=B6hne <corvin.koehne@gmail.com> w=
+rote:
+>
+> From: YannickV <Y.Vossen@beckhoff.com>
+>
+> The CX7200 has one SD controller connected to address 0xE0101000.
+> The controller connected to address 0xE0100000 can be removed.
 
-queued, thanks.
+Hi -- I see Edgar has done some review on the first part
+of this patchset, but looking quickly over the second half
+I notice that it has quite a few commits like this that
+are removing/changing code that was just added in an
+earlier patch in the series.
 
--- 
-Peter Xu
+Please don't structure the patchset this way. If the board
+has only one SD controller, then send a patchset that puts
+in one SD controller, not one that puts in 2 and then
+removes 1 of them.
 
+Similarly for most of these other "remove" or "adjust" patches.
+
+(If you want to add a board in a way that breaks it down into
+smaller patches for easier review, one way to do this is
+that you start with a "skeleton" version of the board with
+e.g. just the CPU and one or two devices, and then in
+later patches you add more devices. But in this case the
+board code looks small enough that that's not necessary.)
+
+thanks
+-- PMM
 
