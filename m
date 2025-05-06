@@ -4,73 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70512C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 09:13:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B37C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 09:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCELj-0005tb-4K; Tue, 06 May 2025 05:12:27 -0400
+	id 1uCEPv-0008D5-JW; Tue, 06 May 2025 05:16:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uCELf-0005st-9M; Tue, 06 May 2025 05:12:23 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uCEPr-0008Bi-38
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 05:16:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uCELc-0001xn-UW; Tue, 06 May 2025 05:12:23 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZsCMW2F6Dz6K9jy;
- Tue,  6 May 2025 17:12:07 +0800 (CST)
-Received: from frapeml500006.china.huawei.com (unknown [7.182.85.219])
- by mail.maildlp.com (Postfix) with ESMTPS id 949D41402F3;
- Tue,  6 May 2025 17:12:17 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml500006.china.huawei.com (7.182.85.219) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 6 May 2025 11:12:17 +0200
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Tue, 6 May 2025 11:12:17 +0200
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
- "mochs@nvidia.com" <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)"
- <wangzhou1@hisilicon.com>, jiangkunkun <jiangkunkun@huawei.com>, "Jonathan
- Cameron" <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
- <zhangfei.gao@linaro.org>
-Subject: RE: [PATCH v2 2/6] hw/arm/virt-acpi-build: Update IORT for multiple
- smmuv3 devices
-Thread-Topic: [PATCH v2 2/6] hw/arm/virt-acpi-build: Update IORT for multiple
- smmuv3 devices
-Thread-Index: AQHbu00ZUUd2QcOmi06BQgcpw2jcEbPDmluAgAG780A=
-Date: Tue, 6 May 2025 09:12:16 +0000
-Message-ID: <61bed58f2f094f3eadc611069acb3849@huawei.com>
-References: <20250502102707.110516-1-shameerali.kolothum.thodi@huawei.com>
- <20250502102707.110516-3-shameerali.kolothum.thodi@huawei.com>
- <a6268f0a-00e1-43da-a9da-a22e4fc7f601@redhat.com>
-In-Reply-To: <a6268f0a-00e1-43da-a9da-a22e4fc7f601@redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uCEPm-0002WP-2W
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 05:16:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746522996;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=7FIB23mvbtYnFGNFnK8BC0WEahE4E9a/GHcIYRUObXE=;
+ b=MwSZUrhGwiBYUc4tij8NBSIZgsKnhnBzehO1zsWCogvSLWkpfd5r4iIqeSw+l/P2x0YogN
+ PPluNLT0L4eaYCPvqMIAxbe1ZMjlZ1OZk3KakukVoQFUKcbH+uafpmDnkUD744YNZFCXE/
+ l7EWi0+ZrmGPyGH/cl2HfhSpU2JrfMQ=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-344-UpVHCG4nPMSivhQuo1k0kg-1; Tue, 06 May 2025 05:16:35 -0400
+X-MC-Unique: UpVHCG4nPMSivhQuo1k0kg-1
+X-Mimecast-MFC-AGG-ID: UpVHCG4nPMSivhQuo1k0kg_1746522994
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a0af6219a5so147556f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 02:16:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746522994; x=1747127794;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7FIB23mvbtYnFGNFnK8BC0WEahE4E9a/GHcIYRUObXE=;
+ b=fSM4lfjC3lAGC3g65YJLyVVKPX2ts69Nu+u6Za7b8jCK0awWuU5Yhx7hDSlluOOq7F
+ ePRO8a78FRKaC65hrdBs5VttgviGq063ZK0u54uBV5X8YRVxrCI7CrZqB2yIPb3kpwtg
+ C/p9bq7qvDmvhy5UvpHR4R+2kLUx2LSfC8edxPyJChOyMRnGHJkBC0dkyDFq2CCJgpwc
+ E4hEqM8pGMQQ2pBry9x7qoeWxGguXd7D/A3Bk3rAPIOmH6OalrRT5v+HNmxj1lSgwMZr
+ dyW+1u1iTqzfvsYssj0AgC/PzSYVKCATcNqrYNL0UwSUdzDbuGtYVXRZKO/bNzw6YZkU
+ Tkbg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXQFfGMEd+5jp3V/2TcgyxpOvvu/oaGblZP7zd4mvMkAYkobHn2onXcbTeEwx8JI6kIMCGjcIRD1kIp@nongnu.org
+X-Gm-Message-State: AOJu0Yw7cn5aSg/JbMmUxAOIxXGQrb6lLXI8Kf6HzV7IYKmkrcjdqKwl
+ 27XNihZz0pmBkOtR1U9cWUvOOaqaczbRlN9LgYHwtAfakuEofL9KtGiY3g7cLMCCTxN/9QOO28+
+ iLFqd/PY4S7hKnAwsoNGjHuxwsazHJq0mw6KSvKZ9i+6VeDGpgirX
+X-Gm-Gg: ASbGncvOGfUgr929iyDd5KugjhVumhiakpwhIjZE7wnr6FVc313XoT7PK28Eg2aOmfQ
+ eX1qtoGzqlQ9b8b0NC67FZSJJZePy4b93z5D2DgBXEiTGgmp3FZMjE2uEy7PK/rP+/5GqHDIZw1
+ /JSamu962TwsjhyimcgtLSXyFvdE/GSLCICZQ2nkycJVgbPX2PfpPS4TbfDmKjPTZsdiN2daim5
+ /jeOne48r5HBCp88NBhMmzf4r0Vd5jDpF7XkXvMYtt5qxjbUEMyJBG+hFi20k9E3zl0Z3R0AI3c
+ MiCZdg==
+X-Received: by 2002:a05:6000:1843:b0:39c:30f7:b6ad with SMTP id
+ ffacd0b85a97d-3a0ab58f3camr1826758f8f.18.1746522994402; 
+ Tue, 06 May 2025 02:16:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEh3AmmiSUjKPZ1cUnEPXpLCYmWW9uQ8GAIwGfxbd9IoxVrigFZ6KykE0POMwpFUld9qbrcQg==
+X-Received: by 2002:a05:6000:1843:b0:39c:30f7:b6ad with SMTP id
+ ffacd0b85a97d-3a0ab58f3camr1826742f8f.18.1746522994012; 
+ Tue, 06 May 2025 02:16:34 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a099ae0d3csm12772869f8f.3.2025.05.06.02.16.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 May 2025 02:16:33 -0700 (PDT)
+Date: Tue, 6 May 2025 05:16:29 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ David Hildenbrand <david@redhat.com>,
+ Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
+ Jonah Palmer <jonah.palmer@oracle.com>,
+ Raphael Norwitz <raphael.norwitz@nutanix.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-ppc@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Anton Johansson <anjo@rev.ng>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: Re: [RFC PATCH] hw/virtio: Introduce CONFIG_VIRTIO_LEGACY to disable
+ legacy support
+Message-ID: <20250506051530-mutt-send-email-mst@kernel.org>
+References: <20250502132441.64723-1-philmd@linaro.org>
+ <aBnCk2WE_SNkRgSH@redhat.com>
+ <20250506040903-mutt-send-email-mst@kernel.org>
+ <59c4d557-2f73-4b56-8650-f16ed3cd7bb2@linaro.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <59c4d557-2f73-4b56-8650-f16ed3cd7bb2@linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,161 +127,99 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogcWVtdS1kZXZlbC0NCj4g
-Ym91bmNlcytzaGFtZWVyYWxpLmtvbG90aHVtLnRob2RpPWh1YXdlaS5jb21Abm9uZ251Lm9yZyA8
-cWVtdS0NCj4gZGV2ZWwtYm91bmNlcytzaGFtZWVyYWxpLmtvbG90aHVtLnRob2RpPWh1YXdlaS5j
-b21Abm9uZ251Lm9yZz4gT24NCj4gQmVoYWxmIE9mIEVyaWMgQXVnZXINCj4gU2VudDogTW9uZGF5
-LCBNYXkgNSwgMjAyNSA5OjQwIEFNDQo+IFRvOiBTaGFtZWVyYWxpIEtvbG90aHVtIFRob2RpDQo+
-IDxzaGFtZWVyYWxpLmtvbG90aHVtLnRob2RpQGh1YXdlaS5jb20+OyBxZW11LWFybUBub25nbnUu
-b3JnOw0KPiBxZW11LWRldmVsQG5vbmdudS5vcmcNCj4gQ2M6IHBldGVyLm1heWRlbGxAbGluYXJv
-Lm9yZzsgamdnQG52aWRpYS5jb207IG5pY29saW5jQG52aWRpYS5jb207DQo+IGRkdXRpbGVAcmVk
-aGF0LmNvbTsgYmVycmFuZ2VAcmVkaGF0LmNvbTsgbmF0aGFuY0BudmlkaWEuY29tOw0KPiBtb2No
-c0BudmlkaWEuY29tOyBzbW9zdGFmYUBnb29nbGUuY29tOyBMaW51eGFybQ0KPiA8bGludXhhcm1A
-aHVhd2VpLmNvbT47IFdhbmd6aG91IChCKSA8d2FuZ3pob3UxQGhpc2lsaWNvbi5jb20+Ow0KPiBq
-aWFuZ2t1bmt1biA8amlhbmdrdW5rdW5AaHVhd2VpLmNvbT47IEpvbmF0aGFuIENhbWVyb24NCj4g
-PGpvbmF0aGFuLmNhbWVyb25AaHVhd2VpLmNvbT47IHpoYW5nZmVpLmdhb0BsaW5hcm8ub3JnDQo+
-IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjIgMi82XSBody9hcm0vdmlydC1hY3BpLWJ1aWxkOiBVcGRh
-dGUgSU9SVCBmb3INCj4gbXVsdGlwbGUgc21tdXYzIGRldmljZXMNCj4gDQo+IEhpIFNoYW1lZXIs
-DQo+IA0KPiBPbiA1LzIvMjUgMTI6MjcgUE0sIFNoYW1lZXIgS29sb3RodW0gd3JvdGU6DQo+ID4g
-V2l0aCB0aGUgc29vbiB0byBiZSBpbnRyb2R1Y2VkwqB1c2VyLWNyZWF0YWJsZcKgU01NVXYzIGRl
-dmljZXMgZm9yDQo+ID4gdmlydCwgaXQgaXMgcG9zc2libGXCoHRvIGhhdmUgbXVsdGlwbGUgU01N
-VXYzIGRldmljZXMgYXNzb2NpYXRlZA0KPiA+IHdpdGggZGlmZmVyZW50IFBDSWUgcm9vdCBjb21w
-bGV4ZXMuDQo+ID4NCj4gPiBVcGRhdGUgSU9SVCBub2RlcyBhY2NvcmRpbmdseS4NCj4gPg0KPiA+
-IFNpZ25lZC1vZmYtYnk6IFNoYW1lZXIgS29sb3RodW0NCj4gPHNoYW1lZXJhbGkua29sb3RodW0u
-dGhvZGlAaHVhd2VpLmNvbT4NCj4gPiAtLS0NCj4gPiAgaHcvYXJtL3ZpcnQtYWNwaS1idWlsZC5j
-IHwgMTYyICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKystLS0tLS0tLQ0KPiBJIHdvdWxk
-IHJlY29tbWVuZCB0byBzcGxpdCB0aGF0IHBhdGNoLiBJIHRoaW5rIHlvdSBjYW4gZmlyc3QgaW50
-cm9kdWNlDQo+IHRoZSBuZXcgc3RydWN0IGFuZCBhZGFwdGluZyB0aGUgZXhpY3RpbmcgY29kZSBm
-b3IgdGhlICJsZWdhY3kNCj4gaW5zdGFudGlhdGlvbiBtb2RlIiBhbmQgdGhlbiBoYXZlIGEgc2Fw
-YXJldCBwYXRjaCBmb3IgaGFuZGxpbmcgdXNlcg0KPiBjcmVhdGVkIGluc3RhbmNlcy4gSXQgd2ls
-bCBiZSBlYXNpZXIgdG8gcmV2aWV3Lg0KDQpPay4gSSB3aWxsIHNwbGl0IHRoaXMgcGF0Y2guDQoN
-Cj4gDQo+IEF0IHNvbWUgcG9pbnQgaW4gdGhlIHNlcmllcyB5b3Ugc2hhbGwgY2hlY2sgdGhlIHVz
-ZXIgaXMgbm90IGF0dGVtcHRpbmcNCj4gdG8gdXNlIGxlZ2FjeSBtb2RlIGFuZCB1c2VyIGNyZWF0
-YWJsZSBtb2RlIGNvbmN1cnJlbnRseS4gSSBkb24ndCBrbm93IGlmDQo+IGl0IGlzIGRvbmUgeWV0
-Lg0KDQpZZXMsIGl0IGlzIGRvbmUgaW4gcGF0Y2ggIzUuIFNlZSBjaGFuZ2VzIHRvIHZpcnRfbWFj
-aGluZV9kZXZpY2VfcHJlX3BsdWdfY2IoKS4NCg0KDQo+ID4gIGh3L2FybS92aXJ0LmMgICAgICAg
-ICAgICB8ICAgMSArDQo+ID4gIGluY2x1ZGUvaHcvYXJtL3ZpcnQuaCAgICB8ICAgMSArDQo+ID4g
-IDMgZmlsZXMgY2hhbmdlZCwgMTMxIGluc2VydGlvbnMoKyksIDMzIGRlbGV0aW9ucygtKQ0KPiA+
-DQo+ID4gZGlmZiAtLWdpdCBhL2h3L2FybS92aXJ0LWFjcGktYnVpbGQuYyBiL2h3L2FybS92aXJ0
-LWFjcGktYnVpbGQuYw0KPiA+IGluZGV4IDNhYzhmOGUxNzguLjNjZTcwZjhmYTkgMTAwNjQ0DQo+
-ID4gLS0tIGEvaHcvYXJtL3ZpcnQtYWNwaS1idWlsZC5jDQo+ID4gKysrIGIvaHcvYXJtL3ZpcnQt
-YWNwaS1idWlsZC5jDQo+ID4gQEAgLTQzLDYgKzQzLDcgQEANCj4gPiAgI2luY2x1ZGUgImh3L2Fj
-cGkvZ2VuZXJpY19ldmVudF9kZXZpY2UuaCINCj4gPiAgI2luY2x1ZGUgImh3L2FjcGkvdHBtLmgi
-DQo+ID4gICNpbmNsdWRlICJody9hY3BpL2htYXQuaCINCj4gPiArI2luY2x1ZGUgImh3L2FybS9z
-bW11djMuaCINCj4gPiAgI2luY2x1ZGUgImh3L3BjaS9wY2llX2hvc3QuaCINCj4gPiAgI2luY2x1
-ZGUgImh3L3BjaS9wY2kuaCINCj4gPiAgI2luY2x1ZGUgImh3L3BjaS9wY2lfYnVzLmgiDQo+ID4g
-QEAgLTI2Niw2ICsyNjcsNzUgQEAgc3RhdGljIGludCBpb3J0X2lkbWFwX2NvbXBhcmUoZ2NvbnN0
-cG9pbnRlciBhLA0KPiBnY29uc3Rwb2ludGVyIGIpDQo+ID4gICAgICByZXR1cm4gaWRtYXBfYS0+
-aW5wdXRfYmFzZSAtIGlkbWFwX2ItPmlucHV0X2Jhc2U7DQo+ID4gIH0NCj4gPg0KPiA+ICtzdHJ1
-Y3QgU01NVXYzRGV2aWNlIHsNCj4gPiArICAgIGludCBpcnE7DQo+ID4gKyAgICBod2FkZHIgYmFz
-ZTsNCj4gPiArICAgIEdBcnJheSAqc21tdV9pZG1hcHM7DQo+ID4gKyAgICBzaXplX3Qgb2Zmc2V0
-Ow0KPiA+ICt9Ow0KPiA+ICt0eXBlZGVmIHN0cnVjdCBTTU1VdjNEZXZpY2UgU01NVXYzRGV2aWNl
-Ow0KPiA+ICsNCj4gPiArc3RhdGljIGludCBzbW11djNfZGV2X2lkbWFwX2NvbXBhcmUoZ2NvbnN0
-cG9pbnRlciBhLCBnY29uc3Rwb2ludGVyDQo+IGIpDQo+ID4gK3sNCj4gPiArICAgIFNNTVV2M0Rl
-dmljZSAqc2Rldl9hID0gKFNNTVV2M0RldmljZSAqKWE7DQo+ID4gKyAgICBTTU1VdjNEZXZpY2Ug
-KnNkZXZfYiA9IChTTU1VdjNEZXZpY2UgKiliOw0KPiA+ICsgICAgQWNwaUlvcnRJZE1hcHBpbmcg
-Km1hcF9hID0gJmdfYXJyYXlfaW5kZXgoc2Rldl9hLT5zbW11X2lkbWFwcywNCj4gPiArICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIEFjcGlJb3J0SWRNYXBwaW5n
-LCAwKTsNCj4gPiArICAgIEFjcGlJb3J0SWRNYXBwaW5nICptYXBfYiA9ICZnX2FycmF5X2luZGV4
-KHNkZXZfYi0+c21tdV9pZG1hcHMsDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICBBY3BpSW9ydElkTWFwcGluZywgMCk7DQo+ID4gKyAgICByZXR1cm4g
-bWFwX2EtPmlucHV0X2Jhc2UgLSBtYXBfYi0+aW5wdXRfYmFzZTsNCj4gPiArfQ0KPiA+ICsNCj4g
-PiArc3RhdGljIHZvaWQNCj4gPiArZ2V0X3NtbXV2M19sZWdhY3lfZGV2KFZpcnRNYWNoaW5lU3Rh
-dGUgKnZtcywgR0FycmF5ICoNCj4gc21tdXYzX2RldmljZXMpDQo+ID4gK3sNCj4gPiArICAgIFNN
-TVV2M0RldmljZSBzZGV2Ow0KPiA+ICsNCj4gPiArICAgIHNkZXYuc21tdV9pZG1hcHMgPSBnX2Fy
-cmF5X25ldyhmYWxzZSwgdHJ1ZSwNCj4gc2l6ZW9mKEFjcGlJb3J0SWRNYXBwaW5nKSk7DQo+ID4g
-KyAgICBvYmplY3RfY2hpbGRfZm9yZWFjaF9yZWN1cnNpdmUob2JqZWN0X2dldF9yb290KCksDQo+
-ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaW9ydF9ob3N0X2JyaWRnZXMs
-IHNkZXYuc21tdV9pZG1hcHMpOw0KPiA+ICsgICAgc2Rldi5iYXNlID0gdm1zLT5tZW1tYXBbVklS
-VF9TTU1VXS5iYXNlOw0KPiA+ICsgICAgc2Rldi5pcnEgPSB2bXMtPmlycW1hcFtWSVJUX1NNTVVd
-ICsgQVJNX1NQSV9CQVNFOw0KPiA+ICsgICAgZ19hcnJheV9hcHBlbmRfdmFsKHNtbXV2M19kZXZp
-Y2VzLCBzZGV2KTsNCj4gPiArfQ0KPiA+ICsNCj4gPiArc3RhdGljIGludCBnZXRfc21tdXYzX2Rl
-dmljZXMoT2JqZWN0ICpvYmosIHZvaWQgKm9wYXF1ZSkNCj4gPiArew0KPiA+ICsgICAgUENJQnVz
-ICpidXM7DQo+ID4gKyAgICBTTU1VdjNEZXZpY2Ugc2RldjsNCj4gPiArICAgIFN5c0J1c0Rldmlj
-ZSAqc2JkZXY7DQo+ID4gKyAgICBpbnQgbWluX2J1cywgbWF4X2J1czsNCj4gPiArICAgIEFjcGlJ
-b3J0SWRNYXBwaW5nIGlkbWFwOw0KPiA+ICsgICAgUGxhdGZvcm1CdXNEZXZpY2UgKnBidXM7DQo+
-ID4gKyAgICBHQXJyYXkgKnNkZXZfYmxvYiA9IG9wYXF1ZTsNCj4gPiArICAgIFZpcnRNYWNoaW5l
-U3RhdGUgKnZtcyA9IFZJUlRfTUFDSElORShxZGV2X2dldF9tYWNoaW5lKCkpOw0KPiA+ICsNCj4g
-PiArICAgIGlmICghb2JqZWN0X2R5bmFtaWNfY2FzdChvYmosIFRZUEVfQVJNX1NNTVVWMykpIHsN
-Cj4gPiArICAgICAgICByZXR1cm4gMDsNCj4gPiArICAgIH0NCj4gPiArDQo+ID4gKyAgICBidXMg
-PSBQQ0lfQlVTKG9iamVjdF9wcm9wZXJ0eV9nZXRfbGluayhvYmosICJwcmltYXJ5LWJ1cyIsDQo+
-ICZlcnJvcl9hYm9ydCkpOw0KPiA+ICsgICAgaWYgKCFidXMgfHwgcGNpX2J1c19ieXBhc3NfaW9t
-bXUoYnVzKSkgew0KPiBjYW4ndCB3ZSBzaW1wbHkgcHJldmVudCBhIHVzZXIgY3JlYXRhYmxlIFNN
-TVUgdG8gYmUgYXR0YWNoZWQgdG8NCj4gDQo+IHBjaV9idXNfYnlwYXNzX2lvbW11KGJ1cykgPw0K
-DQpPay4gSSB0aGluayB0aGF0IGNhbiBiZSBkb25lLg0KDQo+IA0KPiA+ICsgICAgICAgIHJldHVy
-biAwOw0KPiA+ICsgICAgfQ0KPiA+ICsNCj4gPiArICAgIHBidXMgPSBQTEFURk9STV9CVVNfREVW
-SUNFKHZtcy0+cGxhdGZvcm1fYnVzX2Rldik7DQo+ID4gKyAgICBzYmRldiA9IFNZU19CVVNfREVW
-SUNFKG9iaik7DQo+ID4gKyAgICBzZGV2LmJhc2UgPSBwbGF0Zm9ybV9idXNfZ2V0X21taW9fYWRk
-cihwYnVzLCBzYmRldiwgMCk7DQo+ID4gKyAgICBzZGV2LmJhc2UgKz0gdm1zLT5tZW1tYXBbVklS
-VF9QTEFURk9STV9CVVNdLmJhc2U7DQo+ID4gKyAgICBzZGV2LmlycSA9IHBsYXRmb3JtX2J1c19n
-ZXRfaXJxbihwYnVzLCBzYmRldiwgMCk7DQo+ID4gKyAgICBzZGV2LmlycSArPSB2bXMtPmlycW1h
-cFtWSVJUX1BMQVRGT1JNX0JVU107DQo+ID4gKyAgICBzZGV2LmlycSArPSBBUk1fU1BJX0JBU0U7
-DQo+ID4gKw0KPiA+ICsgICAgcGNpX2J1c19yYW5nZShidXMsICZtaW5fYnVzLCAmbWF4X2J1cyk7
-DQo+ID4gKyAgICBzZGV2LnNtbXVfaWRtYXBzID0gZ19hcnJheV9uZXcoZmFsc2UsIHRydWUsDQo+
-IHNpemVvZihBY3BpSW9ydElkTWFwcGluZykpOw0KPiA+ICsgICAgaWRtYXAuaW5wdXRfYmFzZSA9
-IG1pbl9idXMgPDwgOCwNCj4gPiArICAgIGlkbWFwLmlkX2NvdW50ID0gKG1heF9idXMgLSBtaW5f
-YnVzICsgMSkgPDwgOCwNCj4gPiArICAgIGdfYXJyYXlfYXBwZW5kX3ZhbChzZGV2LnNtbXVfaWRt
-YXBzLCBpZG1hcCk7DQo+ID4gKyAgICBnX2FycmF5X2FwcGVuZF92YWwoc2Rldl9ibG9iLCBzZGV2
-KTsNCj4gPiArICAgIHJldHVybiAwOw0KPiA+ICt9DQo+ID4gKw0KPiA+ICAvKg0KPiA+ICAgKiBJ
-bnB1dCBPdXRwdXQgUmVtYXBwaW5nIFRhYmxlIChJT1JUKQ0KPiA+ICAgKiBDb25mb3JtcyB0byAi
-SU8gUmVtYXBwaW5nIFRhYmxlIFN5c3RlbSBTb2Z0d2FyZSBvbiBBUk0NCj4gUGxhdGZvcm1zIiwN
-Cj4gPiBAQCAtMjc0LDExICszNDQsMTEgQEAgc3RhdGljIGludCBpb3J0X2lkbWFwX2NvbXBhcmUo
-Z2NvbnN0cG9pbnRlciBhLA0KPiBnY29uc3Rwb2ludGVyIGIpDQo+ID4gIHN0YXRpYyB2b2lkDQo+
-ID4gIGJ1aWxkX2lvcnQoR0FycmF5ICp0YWJsZV9kYXRhLCBCSU9TTGlua2VyICpsaW5rZXIsIFZp
-cnRNYWNoaW5lU3RhdGUNCj4gKnZtcykNCj4gPiAgew0KPiA+IC0gICAgaW50IGksIG5iX25vZGVz
-LCByY19tYXBwaW5nX2NvdW50Ow0KPiA+IC0gICAgc2l6ZV90IG5vZGVfc2l6ZSwgc21tdV9vZmZz
-ZXQgPSAwOw0KPiA+IC0gICAgQWNwaUlvcnRJZE1hcHBpbmcgKmlkbWFwOw0KPiA+ICsgICAgaW50
-IGksIGosIG5iX25vZGVzLCByY19tYXBwaW5nX2NvdW50Ow0KPiA+ICsgICAgc2l6ZV90IG5vZGVf
-c2l6ZTsNCj4gPiArICAgIGludCBudW1fc21tdXMgPSAwOw0KPiA+ICAgICAgdWludDMyX3QgaWQg
-PSAwOw0KPiA+IC0gICAgR0FycmF5ICpzbW11X2lkbWFwcyA9IGdfYXJyYXlfbmV3KGZhbHNlLCB0
-cnVlLA0KPiBzaXplb2YoQWNwaUlvcnRJZE1hcHBpbmcpKTsNCj4gPiArICAgIEdBcnJheSAqc21t
-dXYzX2RldmljZXMgPSBnX2FycmF5X25ldyhmYWxzZSwgdHJ1ZSwNCj4gc2l6ZW9mKFNNTVV2M0Rl
-dmljZSkpOw0KPiA+ICAgICAgR0FycmF5ICppdHNfaWRtYXBzID0gZ19hcnJheV9uZXcoZmFsc2Us
-IHRydWUsDQo+IHNpemVvZihBY3BpSW9ydElkTWFwcGluZykpOw0KPiA+DQo+ID4gICAgICBBY3Bp
-VGFibGUgdGFibGUgPSB7IC5zaWcgPSAiSU9SVCIsIC5yZXYgPSAzLCAub2VtX2lkID0gdm1zLT5v
-ZW1faWQsDQo+ID4gQEAgLTI4NiwyOCArMzU2LDQ2IEBAIGJ1aWxkX2lvcnQoR0FycmF5ICp0YWJs
-ZV9kYXRhLCBCSU9TTGlua2VyDQo+ICpsaW5rZXIsIFZpcnRNYWNoaW5lU3RhdGUgKnZtcykNCj4g
-PiAgICAgIC8qIFRhYmxlIDIgVGhlIElPUlQgKi8NCj4gPiAgICAgIGFjcGlfdGFibGVfYmVnaW4o
-JnRhYmxlLCB0YWJsZV9kYXRhKTsNCj4gPg0KPiA+IC0gICAgaWYgKHZtcy0+aW9tbXUgPT0gVklS
-VF9JT01NVV9TTU1VVjMpIHsNCj4gPiAtICAgICAgICBBY3BpSW9ydElkTWFwcGluZyBuZXh0X3Jh
-bmdlID0gezB9Ow0KPiA+IC0NCj4gPiArICAgIG5iX25vZGVzID0gMjsgLyogUkMsIElUUyAqLw0K
-PiA+ICsgICAgaWYgKHZtcy0+bGVnYWN5X3NtbXV2M19wcmVzZW50KSB7DQo+ID4gKyAgICAgICAg
-Z2V0X3NtbXV2M19sZWdhY3lfZGV2KHZtcywgc21tdXYzX2RldmljZXMpOw0KPiA+ICsgICAgICAg
-IC8qDQo+ID4gKyAgICAgICAgICogVGhlcmUgd2lsbCBiZSBvbmx5IG9uZSBsZWdhY3kgU01NVXYz
-IGFzIGl0IGlzIGEgbWFjaGluZSB3aWRlDQo+IG9uZS4NCj4gPiArICAgICAgICAgKiBBbmQgc2lu
-Y2UgaXQgY292ZXJzIGFsbCB0aGUgUENJZSBSQ3MgaW4gdGhlIG1hY2hpbmUsIG1heSBoYXZlDQo+
-ID4gKyAgICAgICAgICogbXVsdGlwbGUgU01NVXYzIGlkbWFwcy4gU29ydCBpdCBieSBpbnB1dF9i
-YXNlLg0KPiA+ICsgICAgICAgICAqLw0KPiA+ICsgICAgICAgIFNNTVV2M0RldmljZSAqcyA9ICZn
-X2FycmF5X2luZGV4KHNtbXV2M19kZXZpY2VzLA0KPiBTTU1VdjNEZXZpY2UsIDApOw0KPiA+ICsg
-ICAgICAgIGdfYXJyYXlfc29ydChzLT5zbW11X2lkbWFwcywgaW9ydF9pZG1hcF9jb21wYXJlKTsN
-Cj4gPiArICAgIH0gZWxzZSB7DQo+ID4gICAgICAgICAgb2JqZWN0X2NoaWxkX2ZvcmVhY2hfcmVj
-dXJzaXZlKG9iamVjdF9nZXRfcm9vdCgpLA0KPiA+IC0gICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICBpb3J0X2hvc3RfYnJpZGdlcywgc21tdV9pZG1hcHMpOw0KPiA+IC0NCj4g
-PiAtICAgICAgICAvKiBTb3J0IHRoZSBzbW11IGlkbWFwIGJ5IGlucHV0X2Jhc2UgKi8NCj4gPiAt
-ICAgICAgICBnX2FycmF5X3NvcnQoc21tdV9pZG1hcHMsIGlvcnRfaWRtYXBfY29tcGFyZSk7DQo+
-ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGdldF9zbW11djNfZGV2
-aWNlcywgc21tdXYzX2RldmljZXMpOw0KPiA+ICsgICAgICAgIC8qIFNvcnQgdGhlIHNtbXV2MyBk
-ZXZpY2VzKGlmIGFueSkgYnkgc21tdSBpZG1hcCBpbnB1dF9iYXNlICovDQo+ID4gKyAgICAgICAg
-Z19hcnJheV9zb3J0KHNtbXV2M19kZXZpY2VzLCBzbW11djNfZGV2X2lkbWFwX2NvbXBhcmUpOw0K
-PiA+ICsgICAgfQ0KPiA+DQo+ID4gKyAgICBudW1fc21tdXMgPSBzbW11djNfZGV2aWNlcy0+bGVu
-Ow0KPiA+ICsgICAgaWYgKG51bV9zbW11cykgew0KPiA+ICsgICAgICAgIEFjcGlJb3J0SWRNYXBw
-aW5nIG5leHRfcmFuZ2UgPSB7MH07DQo+ID4gKyAgICAgICAgaW50IHNtbXVfbWFwX2NudCA9IDA7
-DQo+ID4gICAgICAgICAgLyoNCj4gPiAgICAgICAgICAgKiBTcGxpdCB0aGUgd2hvbGUgUklEcyBi
-eSBtYXBwaW5nIGZyb20gUkMgdG8gU01NVSwNCj4gPiAgICAgICAgICAgKiBidWlsZCB0aGUgSUQg
-bWFwcGluZyBmcm9tIFJDIHRvIElUUyBkaXJlY3RseS4NCj4gPiAgICAgICAgICAgKi8NCj4gPiAt
-ICAgICAgICBmb3IgKGkgPSAwOyBpIDwgc21tdV9pZG1hcHMtPmxlbjsgaSsrKSB7DQo+ID4gLSAg
-ICAgICAgICAgIGlkbWFwID0gJmdfYXJyYXlfaW5kZXgoc21tdV9pZG1hcHMsIEFjcGlJb3J0SWRN
-YXBwaW5nLCBpKTsNCj4gPiAtDQo+ID4gLSAgICAgICAgICAgIGlmIChuZXh0X3JhbmdlLmlucHV0
-X2Jhc2UgPCBpZG1hcC0+aW5wdXRfYmFzZSkgew0KPiA+IC0gICAgICAgICAgICAgICAgbmV4dF9y
-YW5nZS5pZF9jb3VudCA9IGlkbWFwLT5pbnB1dF9iYXNlIC0NCj4gbmV4dF9yYW5nZS5pbnB1dF9i
-YXNlOw0KPiA+IC0gICAgICAgICAgICAgICAgZ19hcnJheV9hcHBlbmRfdmFsKGl0c19pZG1hcHMs
-IG5leHRfcmFuZ2UpOw0KPiA+ICsgICAgICAgIGZvciAoaSA9IDA7IGkgPCBudW1fc21tdXM7IGkr
-Kykgew0KPiA+ICsgICAgICAgICAgICBBY3BpSW9ydElkTWFwcGluZyAqaWRtYXA7DQo+IGV4dHJh
-IGxpbmUgbmVlZGVkDQoNClN1cmUuIEkgd29uZGVyIHdoeSB0aGUgY2hlY2twYXRjaCAtLXN0cmlj
-dCBkb2Vzbid0IHBpY2sgdGhlc2UgdGhpbmdzLg0KDQpUaGFua3MsDQpTaGFtZWVyDQoNCg==
+On Tue, May 06, 2025 at 10:55:34AM +0200, Philippe Mathieu-Daudé wrote:
+> On 6/5/25 10:12, Michael S. Tsirkin wrote:
+> > On Tue, May 06, 2025 at 09:04:50AM +0100, Daniel P. Berrangé wrote:
+> > > On Fri, May 02, 2025 at 03:24:41PM +0200, Philippe Mathieu-Daudé wrote:
+> > > > Legacy VirtIO devices don't have their endianness clearly defined.
+> > > > QEMU infers it taking the endianness of the (target) binary, or,
+> > > > when a target support switching endianness at runtime, taking the
+> > > > endianness of the vCPU accessing the device.
+> > > > 
+> > > > Devices modelling shouldn't really change depending on a property
+> > > > of a CPU accessing it.
+> > > > 
+> > > > For heterogeneous systems, it is simpler to break such dev <-> cpu
+> 
+>         ^^^^^^^^^^^^^
+> 
+> > > > dependency, only allowing generic device models, with no knowledge
+> > > > of CPU (or DMA controller) accesses.
+> > > > 
+> > > > Therefore we introduce the VIRTIO_LEGACY Kconfig key. We keep the
+> > > > current default (enabled).
+> > > > New binaries can set CONFIG_VIRTIO_LEGACY=n to restrict models to
+> > > > the VirtIO version 1 spec.
+> > > 
+> > > IMHO that isn't acceptable. In order to be able to provide an
+> > > upgrade path from the old binaries, we need the need the new
+> > > binaries to be able to serve the same use cases & disabling
+> > > virtio 0.9 support prevents that.
+> 
+> This isn't for the single binary effort, there we are taking a
+> lot of care to not introduce any change.
+> 
+> This is for after it; once we have a single binary (one architecture
+> run by an instance) we can start testing heterogeneous emulation
+> (different architectures in the same instance).
+> 
+> > > I don't see a compelling
+> > > technical reason why we can't support virtio 0.9 from this
+> > > endian point.
+> 
+> VirtIO 0.9 needs knowledge of the vCPU architecture to get its
+> endianness. So we need to somehow propagate that at creation
+> time, guarantying which vCPU (or set of vCPUs) will access a
+> virtio device.
+> 
+> The use case I'd like to figure out is how should we model
+> plugging a virtio 0.9 device in into a fully emulated
+> ZynqMP machine, which has little-endian ARM cores and big
+> endian MicroBlaze cores.
+> 
+> Alex said this is unlikely to happen, and better is to
+> ignore this case by not allowing virtio pre-1.0 devices in
+> our future heterogeneous emulator.
+
+Indeed. I just do not think this can be done with a kconfig knob,
+it's a machine property.
+
+> In this same thread Pierrick pointed me to the reference in
+> the spec: '2.4.3 Legacy Interfaces: A Note on Virtqueue Endianness',
+> "It is assumed that the host is already aware of the guest endian."
+> 
+> I suppose this means a pre-1.0 virtio device expect to be used by
+> a single guest OS, but it is not clear the guest OS as fixed
+> endianness, because the code path checks vCPU endianness at
+> runtime, so passing guest endianness as a property to pre-1.0
+> devices isn't really an option.
+> 
+> Anyway I think 1/ I posted this too early, "speculating" as Pierrick
+> noticed, and confuse the community w.r.t. "single binary" and
+> 2/ I don' t understand legacy virtio and its endianness handling
+> enough to figure a clever idea to keep using it heterogeneous
+> setup, so I'll let this task to someone more familiar with that tech.
+> 
+> > > Yes may be more ugly/messy than we would like, but that's par
+> > > for the course with QEMU emulating arbitrary device models.
+> > > If the new binaries can't cope with messy devices then I think
+> > > we are doing something wrong.
+> 
+> > 
+> > To be more specific, having a kconfig knob modifying the device
+> > without regards for machine types, means it is no longer
+> > enough to inspect the command line to figure out the
+> > compatiblity. That's a problem.
+> > 
+> 
+> OK. I won't pursue in this direction. I apologize for mentioning
+> this topic again too early.
+> 
+> Regards,
+> 
+> Phil.
+
 
