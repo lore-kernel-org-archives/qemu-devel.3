@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D15E5C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 07:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F00E7C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 07:44:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCCuS-0007uT-2M; Tue, 06 May 2025 03:40:12 -0400
+	id 1uCCxt-0000U9-JQ; Tue, 06 May 2025 03:43:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCCuQ-0007u3-Tw; Tue, 06 May 2025 03:40:10 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
+ id 1uCCxs-0000Tv-DH; Tue, 06 May 2025 03:43:44 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCCuP-00075t-9x; Tue, 06 May 2025 03:40:10 -0400
+ id 1uCCxq-0007T0-N7; Tue, 06 May 2025 03:43:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746517209; x=1778053209;
+ t=1746517423; x=1778053423;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=vbNRdNbsW9eQb9iQ2i4LzRidWxmWG7Nk5N+yFxfO8p0=;
- b=MKLJEKC9EDeos51SbmqVRKQpL6rGa1F3OQ2O9yA1Jn7g63Ua6vKisdL1
- 4oabxMImd8+Q3kCYnJ+NCSbOfm8th8ZnBb1XHj8nQg4Lo+IrkrNKucAdF
- Dzxyinj0EnVAfiVXGPmyEY+Avjx7Ea977PzXYSqtHSds0XcGK4bhTuSWO
- WbuYKZBSGFeLF0SMl0GW56yX8K5leJt3uKlfnvVuXT2nCdNy6yHZcUXJ2
- bzYsx/yi6t8Fs/yCJbVKk2fmHIZZZdR9w689wwart0QQ/PI5WdYO/x4yi
- Dhag3RVxgV41HURbtiJM1iTvBlHpiKTQjD93X4pxEJCn5wNGyHNHqI/hU g==;
-X-CSE-ConnectionGUID: jp9Oyop2QredhEE7ZVm68w==
-X-CSE-MsgGUID: xWSQ9A77Te+RQtv24+aRig==
-X-IronPort-AV: E=McAfee;i="6700,10204,11424"; a="47426091"
-X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="47426091"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2025 00:40:07 -0700
-X-CSE-ConnectionGUID: xM7pLFxZQoOwohRL3ovlKA==
-X-CSE-MsgGUID: Nsg0nZRmQbOCaU0QfDhOuQ==
+ bh=jpjnSiPmjZ/LCNkcolpzLGv0GSb4SYL6LR8xnEQEcXM=;
+ b=ZIkUOiRT1toiF2uTJ2hD1gtE75k2wT8GX/TbnwKaSwDd4OrEW42DD4cP
+ POQLvdRqcXoljhyVLaIgTZQAPH+2Jpr8xhRWkXvPxiLCG8A5nnvyiOynY
+ hU+WRHhMiBoWYHBuqQBaQkFV0oMdi0Q5nGBlo9k5EWMDmp5hFxyLn20TR
+ 0RBYjNry1hcbqQUwGiu2xdSed2axKGeGEuUHITYnBK6Atss0manWUI4rP
+ 1W09Tj/j4h+G77+UH9lL4Ng37tBsVQPVXG7o+/HvU6go8FUr7fl5DVcHp
+ pFQaiZSc23cqVJ+qemMR99hujDyClmsTXo/bbrMvcgRQvHA3G+xRvJ+9a Q==;
+X-CSE-ConnectionGUID: +FcQqjpQTk6lEawRaGsVlQ==
+X-CSE-MsgGUID: yOYNtGB8TzSh6byekea5NA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11424"; a="58795710"
+X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="58795710"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 May 2025 00:43:40 -0700
+X-CSE-ConnectionGUID: fGu+FcXLTnCt5iINkuxm7Q==
+X-CSE-MsgGUID: NLPjb+mYT+ScKWUxdlCCPg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="166589446"
+X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="135916824"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 06 May 2025 00:40:05 -0700
-Date: Tue, 6 May 2025 16:01:06 +0800
+ by fmviesa008.fm.intel.com with ESMTP; 06 May 2025 00:43:39 -0700
+Date: Tue, 6 May 2025 16:04:40 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 07/11] rust: qom: fix TODO about zeroability of classes
-Message-ID: <aBnBwlhkS23VwULI@intel.com>
+Subject: Re: [PATCH 08/11] rust: enable clippy::ptr_cast_constness
+Message-ID: <aBnCmJpnf6xzm4/I@intel.com>
 References: <20250505090438.24992-1-pbonzini@redhat.com>
- <20250505090438.24992-8-pbonzini@redhat.com>
+ <20250505090438.24992-9-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250505090438.24992-8-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250505090438.24992-9-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -57
 X-Spam_score: -5.8
@@ -81,27 +81,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 05, 2025 at 11:04:32AM +0200, Paolo Bonzini wrote:
-> Date: Mon,  5 May 2025 11:04:32 +0200
+On Mon, May 05, 2025 at 11:04:33AM +0200, Paolo Bonzini wrote:
+> Date: Mon,  5 May 2025 11:04:33 +0200
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 07/11] rust: qom: fix TODO about zeroability of classes
+> Subject: [PATCH 08/11] rust: enable clippy::ptr_cast_constness
 > X-Mailer: git-send-email 2.49.0
 > 
-> The proposed suggestion is not correct.  First it is not necessary for
-> *all* classes to be Zeroable, only for Rust-defined ones; classes
-> defined in C never implement ObjectImpl.
-> 
-> Second, the parent class field need not be Zeroable.  For example,
-> ChardevClass's chr_write and chr_be_event fields cannot be NULL,
-> therefore ChardevClass cannot be Zeroable.  However, char_class_init()
-> initializes them, therefore ChardevClass could be subclassed by Rust code.
-> 
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  rust/qemu-api/src/qom.rs | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
-
-Yes, it's clearly explained.
+>  docs/devel/rust.rst            | 2 --
+>  rust/Cargo.toml                | 2 +-
+>  rust/hw/timer/hpet/src/hpet.rs | 2 +-
+>  rust/qemu-api/src/cell.rs      | 2 +-
+>  rust/qemu-api/src/chardev.rs   | 2 +-
+>  rust/qemu-api/src/qom.rs       | 4 ++--
+>  rust/qemu-api/src/timer.rs     | 2 +-
+>  7 files changed, 7 insertions(+), 9 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
