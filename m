@@ -4,91 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33932C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:49:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D1D9C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCJXV-0003Yz-7d; Tue, 06 May 2025 10:44:57 -0400
+	id 1uCJX0-0000pD-Ez; Tue, 06 May 2025 10:44:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJTT-00006S-NQ
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:41:17 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uCJVD-0001dP-Cc
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:42:36 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJTP-0001u1-H2
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:40:47 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-441d1ed82faso5295715e9.0
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:40:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uCJV9-00027J-Oh
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:42:34 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-43cf05f0c3eso35844305e9.0
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:42:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746542441; x=1747147241; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746542550; x=1747147350; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kg1vT0Z/kKcz1VyaWx5HUe6zicIy/oQzxPnBZl9mXrw=;
- b=sxDPRMaoadOTKAaJg3X4/AMIpL9xosCQ1kuiPnoqdqbri3yOBJg2QWj0juE/DP93DT
- x9LRnt6C3g9N+FdKrwV8+NwnuqGbFaVPwB65BiCqVjLUwuIlpqFN6tiYMrZPdqL4aKuX
- bShYlfW7Uz7KxGrHXA/ptDcGUrr9SCe0wFf5Vx6G0gRPZBIVLPV8ZQ+nJZ5K5603Lixi
- Zkez9X9IchRyZWGFjmHSDs4cKqRGrtRxXdmyHoeZhoal9w/pi8yWEl+3stKI/F8o/NtJ
- CaIMa/eXhfi6DnC2bbXnn6e/kAfcmccfq43SWEi/o/zeNNCZbJWmTq9HKX/9NA2FOFoW
- DTMA==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=LxlT5ltl+62C9HFS06L3ExxGD28tq/piucc5fALXoww=;
+ b=JatjqQPSNU73oBaehwOUR74cAT4Z1+GkroqWDiEUpcpf/wrBSasTL86HYPd2vPs+qH
+ 945bqntpoiCf/HCHg4uaziJCR5VzetfXvE7ECmCL7r7kD6/BJieUsQInzOBDoQF+LzmD
+ Fq/GJodMjqpaFpk12ZDslu6d3AjzQwbGHFqgFhiVgyjj1TzSzGDlQj+6PRY23IRFvxgX
+ rPgkyZE02aRMDqrMO9xaPSLfOF3cDyMJ2oT5r+734WBiteZyeNEtt/C7Xaq6TWhMFmA4
+ hQjQJ99bQxznpql2yFkDjw43WZvQsgua8ekCPAOzuhZroXu1yfDqmTPLPJPpqP58x2ys
+ d4TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746542441; x=1747147241;
+ d=1e100.net; s=20230601; t=1746542550; x=1747147350;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kg1vT0Z/kKcz1VyaWx5HUe6zicIy/oQzxPnBZl9mXrw=;
- b=LFcsKeCdn7e5BsNhM+bWMCfvzE0W5frK2kqlg7W+i9LTH+2wK29djrF3ndT2LTv71Q
- quMXslDhbxQXlX+2hmGrYdAIqHMAFHXQNd4BumvAQCxQl5b7I1kCLH2snKiJwfca6UTa
- IFW0+W5MNQT9fr8I99KbSe8+5xjvTEcjnGdbNathKwqI856m/aTcB8+VkPG5TNCctbBO
- qP7cXp2uylK1oFpQ6uXOql7Cp8xvxAvmnSZTCVbsWA+r8RAkQdkS3jDO2Dvovdsq9UTP
- CNdiu4bRZ8bh4BpQtM9Sk/DoCKP5tElRmCVJcfGUOQldHK98J48P8nk3V5DiX1P5ZPYg
- pzkw==
-X-Gm-Message-State: AOJu0Yyi/orU/ofBzZjFj7DFVgY2XLutlep6oF1i+YOdAfMtrp5NWLHP
- tKS2rSCAdE3Vx5qa0SRr45WNHM1OjNewvuEkYxkFKVAIqELpsmNZutJYo2uBBqp3m6DpojQKrhF
- Z
-X-Gm-Gg: ASbGncsGMpT7NHvoE/rhsPxGF2UN2RM1rEIUabkCj5DKbJDHMZ/4uqo48Ib7V6AK3zY
- kETIJ5SpwA0LMBt60daA8BEV5vlor3XK2slbAmRSjERddrW9z+Si3H3hrgiE9q+kQMzAURfSjqb
- t+JfHbrl2nrbhpj/mjAGCW4Kzf5mpaYOmOWYG8oNXZLsmH+eFz1wCHFjHldBb+51DwyvEVEAqaJ
- yP4S6wmnwjsLcBx3spAIibOoK5aWFxXQzjS9dJgqdvshxpNX5DKyhBca4dcZ7iq7HiLHPdPULzI
- +Y92OCYJ/cdRzr21+eHbfxU1f0kM/CcPuJIT0/8CzWmkHPCT8FJN4bAOwOPFio0Wnl2DB8js396
- XXHK82djVNSWV/wGAoucG
-X-Google-Smtp-Source: AGHT+IHQAZ49KYPxLoAHLWKw/VKWTWZ+8epupQywWW5mERzm9ktQJYWdc7U9XBedGXKsW+AvT47+jA==
-X-Received: by 2002:a05:600c:34c7:b0:43c:eeee:b70a with SMTP id
- 5b1f17b1804b1-441c491fcb6mr89439125e9.22.1746542441449; 
- Tue, 06 May 2025 07:40:41 -0700 (PDT)
-Received: from localhost.localdomain (91-163-26-170.subs.proxad.net.
- [91.163.26.170]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b2b20a70sm220279655e9.31.2025.05.06.07.40.40
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 May 2025 07:40:41 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=LxlT5ltl+62C9HFS06L3ExxGD28tq/piucc5fALXoww=;
+ b=Fjnc9hbYaiey4h5q5pt7+W6R99Py+QbL6rMluz8TqvYA05m8zzqSydMPjsAeLNPMI3
+ rkpULbdeRVDVrXsjrGc1QryRKGJJu90GszaWoL4xusaY5h4c+14PsfkqFfeCqvsBTpnT
+ P9+MmZ8n5F+onhhQJSCL8gi0ztmhnnLnC6/ESUhqfqOXptTBJi03A/lnffwnnOAAtQ1X
+ 6SlNunQeC+JRxO3E95S50MJMg1kaDJ9vSXME24WOq53/RMh8XAg7n90PK2JHhFk88GRx
+ jTkEGZc/GSlN7/jW/PC6EPAmGOcRFQt2ye3xIg5HB1nukljMEKXjyctp5i9m+Lytu3Y8
+ 8tIQ==
+X-Gm-Message-State: AOJu0YwN1nIJ2LpzzrEdEsoPF2uhQQV6V897EUhKDk5duaiVksm3uoJ9
+ 5H2fPmKGlQB5TKP7uhaG8XXCCz1bvL8bPJR2/vOXFN512XKE9R30TIrjtU5YnN8WittkAltZJIu
+ g
+X-Gm-Gg: ASbGncub/X3LKecrzqfz4sQuIHKcxsKCfQPfkM6algS2A6zc03qGiJ+n04mhCHa+6ub
+ ftYIdyXUY7OUIua9s5RjB1Izcl5jFGJUPDw7E/Ha3QbBdrmMMqkRycixLMPO9qnP3TUR2Nn7K4c
+ daxAvHZNoqsXq0Wq55MHzi0Bkbl0erd6x/OL1yJnsML73bjrvMEAVwCfYS5C9hghyrC7/knOyH9
+ ArpvjFEe+RZJMupDnFJqX+HC/Kyq6G/UOpClgv3RrP1cC1Gst66ltPar4uWwWwtiHmO2omHscnm
+ lp/LGCTlorMLdAI6G7yMfr2SV9Y93Ue41SwJMrO4G8JRR2k=
+X-Google-Smtp-Source: AGHT+IEBgI7n3t/3mFDJp4/AotVJAZtm9HWURtGxci5vCk7LyzzVjvLJ+3ZiJMgudmpELdbWdCHuhw==
+X-Received: by 2002:a05:600c:528c:b0:43c:fffc:786c with SMTP id
+ 5b1f17b1804b1-441c48dc51dmr100765495e9.19.1746542549902; 
+ Tue, 06 May 2025 07:42:29 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-441b89edfc2sm169603435e9.20.2025.05.06.07.42.29
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 May 2025 07:42:29 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Fam Zheng <fam@euphon.net>,
- Hanna Reitz <hreitz@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- qemu-block@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, John Snow <jsnow@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 19/19] hw/net/vmxnet3: Merge DeviceRealize in InstanceInit
-Date: Tue,  6 May 2025 16:39:05 +0200
-Message-ID: <20250506143905.4961-20-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250506143905.4961-1-philmd@linaro.org>
-References: <20250506143905.4961-1-philmd@linaro.org>
+Subject: [PULL 11/32] hw/arm/virt: Remove deprecated virt-2.7 machine
+Date: Tue,  6 May 2025 15:41:53 +0100
+Message-ID: <20250506144214.1221450-12-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250506144214.1221450-1-peter.maydell@linaro.org>
+References: <20250506144214.1221450-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,60 +99,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simplify merging vmxnet3_realize() within vmxnet3_instance_init(),
-removing the need for device_class_set_parent_realize().
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+This machine has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") it can now be removed.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/net/vmxnet3.c | 15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
+ hw/arm/virt.c | 13 -------------
+ 1 file changed, 13 deletions(-)
 
-diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-index d080fe9b38a..7c0ca56b7c0 100644
---- a/hw/net/vmxnet3.c
-+++ b/hw/net/vmxnet3.c
-@@ -2238,6 +2238,7 @@ static void vmxnet3_instance_init(Object *obj)
-     device_add_bootindex_property(obj, &s->conf.bootindex,
-                                   "bootindex", "/ethernet-phy@0",
-                                   DEVICE(obj));
-+    PCI_DEVICE(obj)->cap_present |= QEMU_PCI_CAP_EXPRESS;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 9d82cf78b0e..a2a213717cc 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3649,16 +3649,3 @@ static void virt_machine_2_8_options(MachineClass *mc)
+     vmc->claim_edge_triggered_timers = true;
  }
- 
- static void vmxnet3_pci_uninit(PCIDevice *pci_dev)
-@@ -2463,22 +2464,10 @@ static const Property vmxnet3_properties[] = {
-     DEFINE_NIC_PROPERTIES(VMXNET3State, conf),
- };
- 
--static void vmxnet3_realize(DeviceState *qdev, Error **errp)
+ DEFINE_VIRT_MACHINE(2, 8)
+-
+-static void virt_machine_2_7_options(MachineClass *mc)
 -{
--    VMXNET3Class *vc = VMXNET3_DEVICE_GET_CLASS(qdev);
--    PCIDevice *pci_dev = PCI_DEVICE(qdev);
--    VMXNET3State *s = VMXNET3(qdev);
+-    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
 -
--    pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
--
--    vc->parent_dc_realize(qdev, errp);
+-    virt_machine_2_8_options(mc);
+-    compat_props_add(mc->compat_props, hw_compat_2_7, hw_compat_2_7_len);
+-    /* ITS was introduced with 2.8 */
+-    vmc->no_its = true;
+-    /* Stick with 1K pages for migration compatibility */
+-    mc->minimum_page_bits = 0;
 -}
--
- static void vmxnet3_class_init(ObjectClass *class, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(class);
-     PCIDeviceClass *c = PCI_DEVICE_CLASS(class);
--    VMXNET3Class *vc = VMXNET3_DEVICE_CLASS(class);
- 
-     c->realize = vmxnet3_pci_realize;
-     c->exit = vmxnet3_pci_uninit;
-@@ -2489,8 +2478,6 @@ static void vmxnet3_class_init(ObjectClass *class, const void *data)
-     c->class_id = PCI_CLASS_NETWORK_ETHERNET;
-     c->subsystem_vendor_id = PCI_VENDOR_ID_VMWARE;
-     c->subsystem_id = PCI_DEVICE_ID_VMWARE_VMXNET3;
--    device_class_set_parent_realize(dc, vmxnet3_realize,
--                                    &vc->parent_dc_realize);
-     dc->desc = "VMWare Paravirtualized Ethernet v3";
-     device_class_set_legacy_reset(dc, vmxnet3_qdev_reset);
-     dc->vmsd = &vmstate_vmxnet3;
+-DEFINE_VIRT_MACHINE(2, 7)
 -- 
-2.47.1
+2.43.0
 
 
