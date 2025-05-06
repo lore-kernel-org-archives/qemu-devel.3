@@ -4,89 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B01DC3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 16:46:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE2EFC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 16:49:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCLQv-0004RM-9c; Tue, 06 May 2025 12:46:17 -0400
+	id 1uCLTR-00057i-Qv; Tue, 06 May 2025 12:48:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonwilson030981@googlemail.com>)
- id 1uCLQo-0004Qi-BH
- for qemu-devel@nongnu.org; Tue, 06 May 2025 12:46:10 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jonwilson030981@googlemail.com>)
- id 1uCLQl-0003qB-3X
- for qemu-devel@nongnu.org; Tue, 06 May 2025 12:46:09 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-441c99459e9so20634065e9.3
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 09:46:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=googlemail.com; s=20230601; t=1746549963; x=1747154763; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=CN0x7sDidlTSuZ0lYt7EHm+6CgKwp8xe6SoPkgfgX+A=;
- b=USgFjbXYPCHyvg09IkZJGTV/nUwWeUja3HlYCQLEmWzVV97U6ypgCMEUlGXrmAftRH
- 5zGPvOoW7D93kJuZRmCseeqhEEyzJQdO4GpNCZ65pNyFnWlGfgcqmW0tMOBqT4CiRHku
- dvYfvE+yygzW4UMhsJaSyijySY6gkMij+GkGtJbYuFSyXriWNdTVkX+uZlVj2RPCdvEO
- 9K2luBsOKJ5rqwrIHxmY35XELsjVw2bi5heYD95LT1xIlZNibOmxSAytvXebRHM8ySdl
- cfYCislZIUDv5snfhoTZ/H5V2AJrO7byx/jsrqCfhx6kef7TOLRYAgD8/J4KibDx+Mv/
- floA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746549963; x=1747154763;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CN0x7sDidlTSuZ0lYt7EHm+6CgKwp8xe6SoPkgfgX+A=;
- b=PVlLvZJaKWy34r2S5z5JzFK2VGL5Vd0uljyEP4TNxkXJKaXa9UtttcHZBTrLPdjw/R
- dOJiXQ0T0smUapHpSpkYTrr9Sz9c/KGnD23Ak26avE+D3psY+ei4nLeckbPTleCFNI/7
- wD7aGnrduhia4O0D2xgAyK1m7WXtbeO2DrIEuOjHB9BoauZ59AKLiTjiTdTi6Dbjq5q2
- 10FQ2ZWE4Y+5grsB+ikUWBP33coVF1v2Yw5WQi+ln8wtuYgWxh4VM8+r8GuPRikEUSnb
- q6wifyxWw0dVVVLqX4+EcANy7WJ5jffod0k5LtTtQpBU7CEVkO/7DKGy4FKwxj2NC0zu
- obzQ==
-X-Gm-Message-State: AOJu0YzqRBySMDexiPw44+FmfYLzQPW3eQJ2N4JJBLXfg2UkcwKZ4tay
- 6zUva5HjaUEBT9SI9p8w2wDjKTs9eVPVoNtDKQG9tB8oZRTuF+SFY0K+b1/6BDw=
-X-Gm-Gg: ASbGncsJdbFh3eJIYwvPJKFvUuP7Wp5RJ0ugZkCVzzEEBW1WvMN5E7M8DaAxaFU7W5J
- sXas0JWZg0uG4oYJpCMRsGTxWsbFzXLjW2V99R0Vc8ifrTgnqVwLeyQNzRTe8IUmjS0UI24o5D+
- SgCszRsvuAS8XW5uZrSNYWwSC+thOzy15x7B7nENm2eSeXmae5rTVZuxuvrAOPO3aNVY4knVAmO
- VxPSxjQ3sf6l/8hEjdbZu0/NpJMGO9jJ1tGh6RT8eKq72w/O3xfvdeQdrBoQP+gUjIhQmNJC8m8
- wWgpLY+1GKsWWrIisON+eWX7mCNOVoIKKZMuaeqOij5FG1LabbOunVJgZqOKTVsJhR6cCDfnp+4
- qLTY5xumLu2JzvonwNgTXD6sSOjxH1M7F5MM=
-X-Google-Smtp-Source: AGHT+IHSfZm17FyF50wR7EnPy7JzASO9Q5FACgDdHGXUBVuR4f5uSZkEOsuhLdXMdeQttT0eg/UiPA==
-X-Received: by 2002:a05:600c:350e:b0:43c:e478:889 with SMTP id
- 5b1f17b1804b1-441bbe2c815mr173023695e9.0.1746549963257; 
- Tue, 06 May 2025 09:46:03 -0700 (PDT)
-Received: from outlast.lan (97e5422b.skybroadband.com. [151.229.66.43])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae0d15sm14529930f8f.13.2025.05.06.09.46.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 09:46:03 -0700 (PDT)
-From: WorksButNotTested <jonwilson030981@googlemail.com>
-X-Google-Original-From: WorksButNotTested
- <62701594+WorksButNotTested@users.noreply.github.com>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- WorksButNotTested <62701594+WorksButNotTested@users.noreply.github.com>
-Subject: [PATCH v3] Support madvise(MADV_DONTDUMP) when creating core dumps
- for qemu-user
-Date: Tue,  6 May 2025 17:46:02 +0100
-Message-ID: <20250506164602.1292446-1-62701594+WorksButNotTested@users.noreply.github.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uCLTP-00057R-Op
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 12:48:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uCLTO-0003z9-0Q
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 12:48:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746550128;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2uri6Cd+j223dgdddjZ6llmyapGXFnP5Lsupck775S4=;
+ b=hsrUvTAQRZAT2VNcPCtNWXZCmXhB+Q8S2xrnNT4FUJBLpK9LtaI9nuLNjbCDDSv3dXg4aG
+ 310b/SLm+TkbjSjxXbrs8fwCMWkNi7omEzAy4v2vhAvolSprXitJ8pE0i6xqyJAmge1NLy
+ Pu6CKalR4plZ7uv2qJ4J5hVEQcDGGSg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-67-q_a5RknIOfmEBM1K1wkICg-1; Tue,
+ 06 May 2025 12:48:45 -0400
+X-MC-Unique: q_a5RknIOfmEBM1K1wkICg-1
+X-Mimecast-MFC-AGG-ID: q_a5RknIOfmEBM1K1wkICg_1746550124
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EC6E11954B13; Tue,  6 May 2025 16:48:43 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.127])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7A87F1956094; Tue,  6 May 2025 16:48:42 +0000 (UTC)
+Date: Tue, 6 May 2025 17:48:39 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Elisha Hollander <just4now666666@gmail.com>
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] util/memfd: allow allocating 0 bytes
+Message-ID: <aBo9Z4NjOReXwbni@redhat.com>
+References: <CACkyd_bN=zx1LaLnrg-U35--jzF3Q3BA6ABBokQZjLznaHcjFg@mail.gmail.com>
+ <aBo6rDsbZGOfWfLP@redhat.com>
+ <CACkyd_YNXivoXE3PFNmK_5QCRQV83JZRf9NUEU+0yM4FOgM4fg@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=jonwilson030981@googlemail.com; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <CACkyd_YNXivoXE3PFNmK_5QCRQV83JZRf9NUEU+0yM4FOgM4fg@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,86 +87,96 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When running applications which make large (sparsely populated) address ranges
-(e.g. when using address sanitizer with LibAFL) the inability to exclude these
-regions from any core dump can result in very large files which fill the disk.
-A coredump is obvously very useful for performing a post-mortem when fuzzing.
+On Tue, May 06, 2025 at 07:41:32PM +0300, Elisha Hollander wrote:
+> Gave an example for a case where QEMU would try to allocate 0 bytes thus
+> fail here in the original version of the patch.
+> 
+> > As I mentioned earlier, let's say you don't initialize the vertical
+> display end registers, and set the minimum scanline register, the emulation
+> will then have to allocate some display buffer, but because the vertical
+> display end is initilized as 0 the buffer will be empty and the program
+> break.
 
-Whilst the man pages state that madvise provides only a hint (and hence can be
-ignored), this patch adds support to handle MADV_DONTDUMP and set a
-corresponding flag in the page flags, thus allowing QEMU to exclude these
-regions from the core file.
+Isn't this an invalid hardware configuration that should be detected
+in the emulation code, and either force the display end to a minimum
+value, or trigger an assert ?
 
-Signed-off-by: WorksButNotTested <62701594+WorksButNotTested@users.noreply.github.com>
----
- include/exec/page-protection.h |  6 ++++++
- linux-user/elfload.c           |  4 ++++
- linux-user/mmap.c              | 18 ++++++++++++++++++
- 3 files changed, 28 insertions(+)
+Patching a bug in a specific HW impl, by changing the qemu_memfd_alloc
+code feels like it is probably the wrong place to address this.
 
-diff --git a/include/exec/page-protection.h b/include/exec/page-protection.h
-index c43231af8b..f8826d917e 100644
---- a/include/exec/page-protection.h
-+++ b/include/exec/page-protection.h
-@@ -38,4 +38,10 @@
-  */
- #define PAGE_PASSTHROUGH 0x0800
- 
-+/*
-+ * For linux-user, indicates that the page should not be included in a core 
-+ * dump.
-+ */
-+#define PAGE_DONTDUMP   0x1000
-+
- #endif
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index fbfdec2f17..41c46da055 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -4067,6 +4067,10 @@ static size_t vma_dump_size(target_ulong start, target_ulong end,
-         return 0;
-     }
- 
-+    if (flags & PAGE_DONTDUMP) {
-+        return 0;
-+    }
-+
-     /*
-      * Usually we don't dump executable pages as they contain
-      * non-writable code that debugger can read directly from
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index f88a80c31e..016063a8cf 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -1247,6 +1247,24 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
-      */
-     mmap_lock();
-     switch (advice) {
-+    case MADV_DONTDUMP:
-+        if (len > 0) {
-+            /*
-+             * To set the page permissons, we must OR our new flags with the
-+             * existing flags. Only mark the pages as PAGE_DONTDUMP if the
-+             * entire range has the same flags. If any part of the range
-+             * differs, we would need to process it one page at a time which
-+             * might not be very performant. Since we are not obliged to respect
-+             * this flag, we will support it for the most likely usage scenario.
-+             * Note that we don't set PAGE_ANON, since this can only be set with
-+             * new mappings.
-+             */
-+            int flg = page_get_flags(start);
-+            if (page_check_range(start, len, flg)) {
-+                page_set_flags(start, start + len - 1, PAGE_DONTDUMP | (flg & ~PAGE_ANON) );
-+            }
-+        }
-+        break;
-     case MADV_WIPEONFORK:
-     case MADV_KEEPONFORK:
-         ret = -EINVAL;
+> 
+> I have no idea as for why my emails are getting messed up... :/
+> 
+> Have to go now, will try and send it again tomorrow probably...
+> 
+> On Tue, May 6, 2025, 19:37 Daniel P. Berrangé <berrange@redhat.com> wrote:
+> 
+> > On Tue, May 06, 2025 at 07:17:25PM +0300, Elisha Hollander wrote:
+> > > Sorry for former patch something is messed up with my email.
+> >
+> > The commit message needs to explain what problem is being solved by
+> > making this change as allowing 0 bytes looks dubious on the surface.
+> >
+> > >
+> > > Signed-off-by: donno2048 <just4now666666@gmail.com>
+> > > ---
+> > >  util/memfd.c | 10 ++++++----
+> > >  1 file changed, 6 insertions(+), 4 deletions(-)
+> > >
+> > > diff --git a/util/memfd.c b/util/memfd.c
+> > > index 8a2e906..e96e5af 100644
+> > > --- a/util/memfd.c
+> > > +++ b/util/memfd.c
+> > > @@ -108,7 +108,7 @@ err:
+> > >  void *qemu_memfd_alloc(const char *name, size_t size, unsigned int
+> > seals,
+> > >                         int *fd, Error **errp)
+> > >  {
+> > > - void *ptr;
+> > > + void *ptr = NULL;
+> > >      int mfd = qemu_memfd_create(name, size, false, 0, seals, NULL);
+> > >
+> > >      /* some systems have memfd without sealing */
+> > > @@ -131,9 +131,11 @@ void *qemu_memfd_alloc(const char *name, size_t
+> > size,
+> > > unsigned int seals,
+> > >          }
+> > >      }
+> > >
+> > > - ptr = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, mfd, 0);
+> > > - if (ptr == MAP_FAILED) {
+> > > - goto err;
+> > > + if (size != 0) {
+> > > + ptr = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, mfd, 0);
+> > > + if (ptr == MAP_FAILED) {
+> > > + goto err;
+> > > + }
+> > >      }
+> >
+> > This patch is mangled.
+> >
+> >
+> > With regards,
+> > Daniel
+> > --
+> > |: https://berrange.com      -o-
+> > https://www.flickr.com/photos/dberrange :|
+> > |: https://libvirt.org         -o-
+> > https://fstop138.berrange.com :|
+> > |: https://entangle-photo.org    -o-
+> > https://www.instagram.com/dberrange :|
+> >
+> >
+
+With regards,
+Daniel
 -- 
-2.43.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
