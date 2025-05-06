@@ -4,73 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F0B8C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 16:59:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B98C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 17:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCLcG-0007qE-PV; Tue, 06 May 2025 12:58:00 -0400
+	id 1uCLom-0001hO-LL; Tue, 06 May 2025 13:10:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uCLcE-0007q2-FI
- for qemu-devel@nongnu.org; Tue, 06 May 2025 12:57:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uCLoh-0001gB-Ts
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 13:10:52 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uCLcC-000541-LK
- for qemu-devel@nongnu.org; Tue, 06 May 2025 12:57:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746550674;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=HNYKar3vW2DpHyoGXSUqrSE39ldWu9YWlou3Q6Fp8IA=;
- b=ASpFPHqSyGvpdTtaV99Vtvwg6P1z4ynhD9ava2QguuFp5ojk5uQ5nKM8Oy1TxEwDJc9c25
- QTwyGcJ2ZlDYx8FSjRuPGY4pEhIUbjrAZi53l3LWCPBwfw/WIzubRNviM4HDiSyZCZUo38
- Aze9vP+nBvWkmBVE8kiYJWtybpRZybM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-PNi7-g-YP0SRGR7Im06ToA-1; Tue,
- 06 May 2025 12:57:51 -0400
-X-MC-Unique: PNi7-g-YP0SRGR7Im06ToA-1
-X-Mimecast-MFC-AGG-ID: PNi7-g-YP0SRGR7Im06ToA_1746550670
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B6721955D52; Tue,  6 May 2025 16:57:50 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.127])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B94A01956096; Tue,  6 May 2025 16:57:48 +0000 (UTC)
-Date: Tue, 6 May 2025 17:57:45 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: WorksButNotTested <jonwilson030981@googlemail.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3] Support madvise(MADV_DONTDUMP) when creating core
- dumps for qemu-user
-Message-ID: <aBo_HWA4nuY7FGul@redhat.com>
-References: <20250506164602.1292446-1-62701594+WorksButNotTested@users.noreply.github.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uCLoe-0006RA-MK
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 13:10:51 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZsPXT2tDHz6M4f4;
+ Wed,  7 May 2025 00:50:33 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 382FF1400D3;
+ Wed,  7 May 2025 00:55:03 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 6 May
+ 2025 18:55:02 +0200
+Date: Tue, 6 May 2025 17:55:01 +0100
+To: Anisa Su <anisa.su887@gmail.com>
+CC: <qemu-devel@nongnu.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
+ <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH 8/9] cxl-mailbox-utils: 0x5604 -  FMAPI Initiate DC Add
+Message-ID: <20250506175501.00001281@huawei.com>
+In-Reply-To: <aBjp8kvUDfwF-ksg@deb-101020-bm01.eng.stellus.in>
+References: <20250317164204.2299371-1-anisa.su887@gmail.com>
+ <20250317164204.2299371-9-anisa.su887@gmail.com>
+ <20250424121959.0000042d@huawei.com>
+ <aBjp8kvUDfwF-ksg@deb-101020-bm01.eng.stellus.in>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250506164602.1292446-1-62701594+WorksButNotTested@users.noreply.github.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
 X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,105 +70,147 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 06, 2025 at 05:46:02PM +0100, WorksButNotTested wrote:
-> When running applications which make large (sparsely populated) address ranges
-> (e.g. when using address sanitizer with LibAFL) the inability to exclude these
-> regions from any core dump can result in very large files which fill the disk.
-> A coredump is obvously very useful for performing a post-mortem when fuzzing.
-> 
-> Whilst the man pages state that madvise provides only a hint (and hence can be
-> ignored), this patch adds support to handle MADV_DONTDUMP and set a
-> corresponding flag in the page flags, thus allowing QEMU to exclude these
-> regions from the core file.
-> 
-> Signed-off-by: WorksButNotTested <62701594+WorksButNotTested@users.noreply.github.com>
+On Mon, 5 May 2025 16:40:18 +0000
+Anisa Su <anisa.su887@gmail.com> wrote:
 
-Any reason you've not used your "jonwilson030981@googlemail.com"
-address for this.
+> On Thu, Apr 24, 2025 at 12:19:59PM +0100, Jonathan Cameron wrote:
+> > On Mon, 17 Mar 2025 16:31:35 +0000
+> > anisa.su887@gmail.com wrote:
+> >   
+> > > From: Anisa Su <anisa.su@samsung.com>
+> > > 
+> > > FM DCD Management command 0x5604 implemented per CXL r3.2 Spec Section 7.6.7.6.5
+> > > 
+> > > Signed-off-by: Anisa Su <anisa.su@samsung.com>
+> > > ---  
+> ...
+> > > +        /* Create event record and insert to event log */
+> > > +        cxl_mbox_dc_event_create_record_hdr(ct3d, &event_rec.hdr);
+> > > +        event_rec.type = DC_EVENT_ADD_CAPACITY;
+> > > +        /* FIXME: for now, validity flag is cleared */  
+> > 
+> > This stuff is probably all valid.  If we can return remaining extents though we might
+> > as well.
+> >   
+> > > +        event_rec.validity_flags = 0;
+> > > +        /* FIXME: Currently only support 1 host */
+> > > +        event_rec.host_id = 0;
+> > > +        /* updated_region_id only valid for DC_EVENT_REGION_CONFIG_UPDATED */
+> > > +        event_rec.updated_region_id = 0;  
+> > 
+> > The event_rec is zeroed anyway so probably just don't set this at all
+> > and no need for the comment.
+> >   
+> > > +        for (i = 0; i < in->ext_count; i++) {  
+> > 
+> > Why can't we combine this with the earlier loop and avoid the
+> > need for separate storage of extents in event_rec_exts?
+> >   
+> I discussed with Fan and for add specifically, we will need 2 loops
+> because the pending list is of type CXLDCExtentGroupList. We must use the
+> first loop to create a CXLDCExtentGroup from all of the extents and
+> append the entire thing to the pending list before triggering any interrupts for
+> event records.
+> This is necessary to preserve the ordering/grouping in order for the
+> memdev_add_rsp command to know what to remove from the pending list if
+> no extents were accepted.
 
-This github alias rejects any mail delivery, so also should not
-be CC'd on the patch either, as that triggers failures when
-reviewers reply to this submission.
+Ah. That makes sense. Thanks!
 
-> ---
->  include/exec/page-protection.h |  6 ++++++
->  linux-user/elfload.c           |  4 ++++
->  linux-user/mmap.c              | 18 ++++++++++++++++++
->  3 files changed, 28 insertions(+)
+> But the storage of extents in event_rec_exts is unnecessary and for
+> release, we only need 1 loop.
 > 
-> diff --git a/include/exec/page-protection.h b/include/exec/page-protection.h
-> index c43231af8b..f8826d917e 100644
-> --- a/include/exec/page-protection.h
-> +++ b/include/exec/page-protection.h
-> @@ -38,4 +38,10 @@
->   */
->  #define PAGE_PASSTHROUGH 0x0800
->  
-> +/*
-> + * For linux-user, indicates that the page should not be included in a core 
-> + * dump.
-> + */
-> +#define PAGE_DONTDUMP   0x1000
-> +
->  #endif
-> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-> index fbfdec2f17..41c46da055 100644
-> --- a/linux-user/elfload.c
-> +++ b/linux-user/elfload.c
-> @@ -4067,6 +4067,10 @@ static size_t vma_dump_size(target_ulong start, target_ulong end,
->          return 0;
->      }
->  
-> +    if (flags & PAGE_DONTDUMP) {
-> +        return 0;
-> +    }
-> +
->      /*
->       * Usually we don't dump executable pages as they contain
->       * non-writable code that debugger can read directly from
-> diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-> index f88a80c31e..016063a8cf 100644
-> --- a/linux-user/mmap.c
-> +++ b/linux-user/mmap.c
-> @@ -1247,6 +1247,24 @@ abi_long target_madvise(abi_ulong start, abi_ulong len_in, int advice)
->       */
->      mmap_lock();
->      switch (advice) {
-> +    case MADV_DONTDUMP:
-> +        if (len > 0) {
-> +            /*
-> +             * To set the page permissons, we must OR our new flags with the
-> +             * existing flags. Only mark the pages as PAGE_DONTDUMP if the
-> +             * entire range has the same flags. If any part of the range
-> +             * differs, we would need to process it one page at a time which
-> +             * might not be very performant. Since we are not obliged to respect
-> +             * this flag, we will support it for the most likely usage scenario.
-> +             * Note that we don't set PAGE_ANON, since this can only be set with
-> +             * new mappings.
-> +             */
-> +            int flg = page_get_flags(start);
-> +            if (page_check_range(start, len, flg)) {
-> +                page_set_flags(start, start + len - 1, PAGE_DONTDUMP | (flg & ~PAGE_ANON) );
-> +            }
-> +        }
-> +        break;
->      case MADV_WIPEONFORK:
->      case MADV_KEEPONFORK:
->          ret = -EINVAL;
-> -- 
-> 2.43.0
+> Thanks,
+> Anisa
+> > > +            memcpy(&event_rec.dynamic_capacity_extent,
+> > > +                   &event_rec_exts[i],
+> > > +                   sizeof(CXLDCExtentRaw));
+> > > +
+> > > +            event_rec.flags = 0;
+> > > +            if (i < in->ext_count - 1) {
+> > > +                /* Set "More" flag */
+> > > +                event_rec.flags |= BIT(0);
+> > > +            }
+> > > +
+> > > +            if (cxl_event_insert(&ct3d->cxl_dstate,
+> > > +                                 CXL_EVENT_TYPE_DYNAMIC_CAP,
+> > > +                                 (CXLEventRecordRaw *)&event_rec)) {
+> > > +                cxl_event_irq_assert(ct3d);
+> > > +            }
+> > > +        }
+> > > +
+> > > +        return CXL_MBOX_SUCCESS;
+> > > +    default:
+> > > +        qemu_log_mask(LOG_UNIMP,
+> > > +                      "CXL extent selection policy not supported.\n");
+> > > +        return CXL_MBOX_INVALID_INPUT;
+> > > +    }
+> > > +
+> > > +    return CXL_MBOX_SUCCESS;
+> > > +}
+> > > +
+> > >  static const struct cxl_cmd cxl_cmd_set[256][256] = {
+> > >      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
+> > >          cmd_infostat_bg_op_abort, 0, 0 },
+> > > @@ -3804,6 +3970,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+> > >           CXL_MBOX_IMMEDIATE_DATA_CHANGE)},
+> > >      [FMAPI_DCD_MGMT][GET_DC_REGION_EXTENT_LIST] = { "GET_DC_REGION_EXTENT_LIST",
+> > >          cmd_fm_get_dc_region_extent_list, 12, 0},
+> > > +    [FMAPI_DCD_MGMT][INITIATE_DC_ADD] = { "INIT_DC_ADD",
+> > > +        cmd_fm_initiate_dc_add, ~0,
+> > > +        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
+> > > +        CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
+> > > +        CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
+> > > +        CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
+> > > +        CXL_MBOX_IMMEDIATE_DATA_CHANGE)},
+> > >  };
+> > >  
+> > >  /*
+> > > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> > > index b742b2bb8d..ccc619fe10 100644
+> > > --- a/hw/mem/cxl_type3.c
+> > > +++ b/hw/mem/cxl_type3.c
+> > > @@ -1982,8 +1982,8 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+> > >   * the list.
+> > >   * Return value: return true if has overlaps; otherwise, return false
+> > >   */
+> > > -static bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
+> > > -                                           uint64_t dpa, uint64_t len)
+> > > +bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
+> > > +                                    uint64_t dpa, uint64_t len)
+> > >  {
+> > >      CXLDCExtent *ent;
+> > >      Range range1, range2;
+> > > @@ -2028,8 +2028,8 @@ bool cxl_extents_contains_dpa_range(CXLDCExtentList *list,
+> > >      return false;
+> > >  }
+> > >  
+> > > -static bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
+> > > -                                                 uint64_t dpa, uint64_t len)
+> > > +bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
+> > > +                                          uint64_t dpa, uint64_t len)
+> > >  {
+> > >      CXLDCExtentGroup *group;
+> > >  
+> > > diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> > > index 217003a29d..1d5831a0b6 100644
+> > > --- a/include/hw/cxl/cxl_device.h
+> > > +++ b/include/hw/cxl/cxl_device.h
+> > > @@ -809,4 +809,8 @@ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+> > >  void cxl_assign_event_header(CXLEventRecordHdr *hdr,
+> > >                               const QemuUUID *uuid, uint32_t flags,
+> > >                               uint8_t length, uint64_t timestamp);
+> > > +bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
+> > > +                                    uint64_t dpa, uint64_t len);
+> > > +bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
+> > > +                                          uint64_t dpa, uint64_t len);
+> > >  #endif  
+> >   
 > 
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
