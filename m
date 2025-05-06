@@ -4,71 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C3BC3ABBF
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:42:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FB04C3ABBF
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCDsQ-0002Cq-Fq; Tue, 06 May 2025 04:42:10 -0400
+	id 1uCDtF-000332-G9; Tue, 06 May 2025 04:43:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uCDsN-00021N-QS; Tue, 06 May 2025 04:42:07 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uCDtD-00032e-Mg
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 04:42:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uCDsK-00067e-RI; Tue, 06 May 2025 04:42:07 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZsBhb349gz6K9jy;
- Tue,  6 May 2025 16:41:51 +0800 (CST)
-Received: from frapeml100007.china.huawei.com (unknown [7.182.85.133])
- by mail.maildlp.com (Postfix) with ESMTPS id A52CF1402F1;
- Tue,  6 May 2025 16:42:01 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml100007.china.huawei.com (7.182.85.133) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 6 May 2025 10:42:01 +0200
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Tue, 6 May 2025 10:42:01 +0200
-To: Donald Dutile <ddutile@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "berrange@redhat.com" <berrange@redhat.com>, "nathanc@nvidia.com"
- <nathanc@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>,
- "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: RE: [PATCH v2 1/6] hw/arm/smmuv3: Add support to associate a PCIe RC
-Thread-Topic: [PATCH v2 1/6] hw/arm/smmuv3: Add support to associate a PCIe RC
-Thread-Index: AQHbu1V0fvNxmQCU0kS/eGPfhGB2G7O/hJOAgAXI4EA=
-Date: Tue, 6 May 2025 08:42:01 +0000
-Message-ID: <ea2789664ea646148d5bf565cffc039d@huawei.com>
-References: <20250502102707.110516-1-shameerali.kolothum.thodi@huawei.com>
- <20250502102707.110516-2-shameerali.kolothum.thodi@huawei.com>
- <03c31d89-ad24-4470-99d0-a77e693e3ba2@redhat.com>
-In-Reply-To: <03c31d89-ad24-4470-99d0-a77e693e3ba2@redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uCDtA-0006Bj-S9
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 04:42:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746520974;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VBFAHntS4UWdCABIPpBynhyDjXD83ntgx9qwo28tG1I=;
+ b=VBK6BraGzXRRk79D+AasBz77GnbT9yXRoKO4JbFy+HvLXRuzdLhck3ewzbqLmdP3Z6K4pq
+ UO62DoKmtbdWHcEqOQgQ9eIJ5IQ6BGCLdYWNIl7S8QPxdp/i7mXY8lFG72gtDUKbONcfIY
+ YjfHHQkJp6z2uiQh/WBfvMv4MWZrev4=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-610-93DAUQIjOiy8FTmNjrXOow-1; Tue, 06 May 2025 04:42:52 -0400
+X-MC-Unique: 93DAUQIjOiy8FTmNjrXOow-1
+X-Mimecast-MFC-AGG-ID: 93DAUQIjOiy8FTmNjrXOow_1746520971
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43ea256f039so41106785e9.0
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 01:42:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746520970; x=1747125770;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VBFAHntS4UWdCABIPpBynhyDjXD83ntgx9qwo28tG1I=;
+ b=I/DklJ8cfis3qaUBQRW4eyqI6xt6IHmxeH+91uddjro/aCBmN3FBFMAEuXgdktECZG
+ F/eMFzeo03mRMjRtD9hi5vQiOpriOc0WUkoliaRF9GAfIl/NVIj2FY3WPMh6J1Pn/f4P
+ y9t3IZyya5W75UHF1Gn3PQaaAeFetzQjcMqRvcVTT+GlSvysj5UtZA3sxiaDEMPkABUI
+ 9ocE/zqyHRxQbyo1tTbz4f6kPFFJehXWIW+VeovZteTl11gAoOANkTTsZa1Yvhq31ij+
+ eT/mLwRrWwBv5WQahjyFiWphRhn7y93zrF3EZz89QSrayE86iqAvpwg6TPsOpzB7oKQl
+ s2Zw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVEqEuOHLqt4C5dHkJtKSNYGeuWk2OctbvBeqIjoni8jkTfpfeZVVaJpHFpwhlRIIhWcmr5GNj6KuOg@nongnu.org
+X-Gm-Message-State: AOJu0Yyp1+XqBs5wbt/ytT6XZYPoS565AygTga6St/vlMyYpLd/yJsEt
+ YSCK54GdahtXZe1AJKHDFii7FBvp5erkxlLtNstF6EUrXRcHPsGylVu7j5a/E4vCvHdJfuRRrD/
+ +24BP4Zz+0fgdSSDIw4R7rU9f35NflkQsB1lqQA+Xfw3paLgtGazC
+X-Gm-Gg: ASbGncuImRf07Ys8tQgGQwa+hpLoNDKb+d1C2Ktjy0/qY2TNNtVdR/iGWFFYKUChTrn
+ uv5aJ9wae0WP53ntndLUKj2PGvOI7SEp40HoNsuTj6RZ4xaehTZY9aG0Qmxga7Ee5y9qfz8PH8y
+ 7tZsM1Utg2SiO6P65qBAy9pqf1V0Dj62fZbFX6C7HdeG8Q0SPapuQvetRBgk4PkdqKSLvoPt6RY
+ jDFqp1HS9GzYh15gHSBuHrON+d1GAiw05f94M3fSn5uOMAxSsDRjm6jGO9LJJCcWjX0oSR/1lmi
+ tdjp4mjvunumioSv1enSiObxos35AzStqwe0VS841dv9bbA6k/HxGidk3Is=
+X-Received: by 2002:a05:600c:4e42:b0:43c:ea1a:720c with SMTP id
+ 5b1f17b1804b1-441c48dc0bdmr83725075e9.18.1746520970711; 
+ Tue, 06 May 2025 01:42:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOVj8RMDXNb80pJIK5P1XH+ZhVEPkaD+kk1y2Jt3832e+TMu/mERunkdOnbinLQpo7RTAE9Q==
+X-Received: by 2002:a05:600c:4e42:b0:43c:ea1a:720c with SMTP id
+ 5b1f17b1804b1-441c48dc0bdmr83724685e9.18.1746520970339; 
+ Tue, 06 May 2025 01:42:50 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-441b2af32a0sm209759555e9.23.2025.05.06.01.42.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 May 2025 01:42:48 -0700 (PDT)
+Message-ID: <6708dd99-eda0-4b1f-99e6-46a7cdea36fd@redhat.com>
+Date: Tue, 6 May 2025 10:42:46 +0200
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 07/24] hw/pci-host/gpex-acpi: Add native_pci_hotplug arg to
+ acpi_dsdt_add_pci_osc
+Content-Language: en-US
+To: Gustavo Romero <gustavo.romero@linaro.org>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com,
+ shannon.zhaosl@gmail.com
+Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com
+References: <20250428102628.378046-1-eric.auger@redhat.com>
+ <20250428102628.378046-8-eric.auger@redhat.com>
+ <4bd4aa37-1edf-4660-b415-2b2c3c184e30@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <4bd4aa37-1edf-4660-b415-2b2c3c184e30@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,80 +117,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRG9uYWxkIER1dGlsZSA8
-ZGR1dGlsZUByZWRoYXQuY29tPg0KPiBTZW50OiBGcmlkYXksIE1heSAyLCAyMDI1IDc6MTcgUE0N
-Cj4gVG86IFNoYW1lZXJhbGkgS29sb3RodW0gVGhvZGkNCj4gPHNoYW1lZXJhbGkua29sb3RodW0u
-dGhvZGlAaHVhd2VpLmNvbT47IHFlbXUtYXJtQG5vbmdudS5vcmc7DQo+IHFlbXUtZGV2ZWxAbm9u
-Z251Lm9yZw0KPiBDYzogZXJpYy5hdWdlckByZWRoYXQuY29tOyBwZXRlci5tYXlkZWxsQGxpbmFy
-by5vcmc7IGpnZ0BudmlkaWEuY29tOw0KPiBuaWNvbGluY0BudmlkaWEuY29tOyBiZXJyYW5nZUBy
-ZWRoYXQuY29tOyBuYXRoYW5jQG52aWRpYS5jb207DQo+IG1vY2hzQG52aWRpYS5jb207IHNtb3N0
-YWZhQGdvb2dsZS5jb207IExpbnV4YXJtDQo+IDxsaW51eGFybUBodWF3ZWkuY29tPjsgV2FuZ3po
-b3UgKEIpIDx3YW5nemhvdTFAaGlzaWxpY29uLmNvbT47DQo+IGppYW5na3Vua3VuIDxqaWFuZ2t1
-bmt1bkBodWF3ZWkuY29tPjsgSm9uYXRoYW4gQ2FtZXJvbg0KPiA8am9uYXRoYW4uY2FtZXJvbkBo
-dWF3ZWkuY29tPjsgemhhbmdmZWkuZ2FvQGxpbmFyby5vcmcNCj4gU3ViamVjdDogUmU6IFtQQVRD
-SCB2MiAxLzZdIGh3L2FybS9zbW11djM6IEFkZCBzdXBwb3J0IHRvIGFzc29jaWF0ZSBhDQo+IFBD
-SWUgUkMNCj4gDQo+IA0KPiANCj4gT24gNS8yLzI1IDY6MjcgQU0sIFNoYW1lZXIgS29sb3RodW0g
-d3JvdGU6DQo+ID4gQWx0aG91Z2ggdGhpcyBjaGFuZ2UgZG9lcyBub3QgYWZmZWN0IGZ1bmN0aW9u
-YWxpdHkgYXQgcHJlc2VudCwgaXQgbGF5cw0KPiA+IHRoZSBncm91bmR3b3JrIGZvciBlbmFibGlu
-ZyB1c2VyLWNyZWF0ZWQgU01NVXYzIGRldmljZXMgaW4NCj4gPiBmdXR1cmUgcGF0Y2hlcw0KPiA+
-DQo+ID4gU2lnbmVkLW9mZi1ieTogU2hhbWVlciBLb2xvdGh1bQ0KPiA8c2hhbWVlcmFsaS5rb2xv
-dGh1bS50aG9kaUBodWF3ZWkuY29tPg0KPiA+IC0tLQ0KPiA+ICAgaHcvYXJtL3NtbXV2My5jIHwg
-MjYgKysrKysrKysrKysrKysrKysrKysrKysrKysNCj4gPiAgIGh3L2FybS92aXJ0LmMgICB8ICAz
-ICsrLQ0KPiA+ICAgMiBmaWxlcyBjaGFuZ2VkLCAyOCBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9u
-KC0pDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvaHcvYXJtL3NtbXV2My5jIGIvaHcvYXJtL3NtbXV2
-My5jDQo+ID4gaW5kZXggYWI2Nzk3MjM1My4uNjA1ZGU5YjcyMSAxMDA2NDQNCj4gPiAtLS0gYS9o
-dy9hcm0vc21tdXYzLmMNCj4gPiArKysgYi9ody9hcm0vc21tdXYzLmMNCj4gPiBAQCAtMjQsNiAr
-MjQsNyBAQA0KPiA+ICAgI2luY2x1ZGUgImh3L3FkZXYtcHJvcGVydGllcy5oIg0KPiA+ICAgI2lu
-Y2x1ZGUgImh3L3FkZXYtY29yZS5oIg0KPiA+ICAgI2luY2x1ZGUgImh3L3BjaS9wY2kuaCINCj4g
-PiArI2luY2x1ZGUgImh3L3BjaS9wY2lfYnJpZGdlLmgiDQo+ID4gICAjaW5jbHVkZSAiY3B1Lmgi
-DQo+ID4gICAjaW5jbHVkZSAiZXhlYy90YXJnZXRfcGFnZS5oIg0KPiA+ICAgI2luY2x1ZGUgInRy
-YWNlLmgiDQo+ID4gQEAgLTE4NzQsNiArMTg3NSwyNSBAQCBzdGF0aWMgdm9pZCBzbW11X3Jlc2V0
-X2V4aXQoT2JqZWN0ICpvYmosDQo+IFJlc2V0VHlwZSB0eXBlKQ0KPiA+ICAgICAgIHNtbXV2M19p
-bml0X3JlZ3Mocyk7DQo+ID4gICB9DQo+ID4NCj4gPiArc3RhdGljIGludCBzbW11djNfcGNpZV9i
-dXMoT2JqZWN0ICpvYmosIHZvaWQgKm9wYXF1ZSkNCj4gPiArew0KPiA+ICsgICAgRGV2aWNlU3Rh
-dGUgKmQgPSBvcGFxdWU7DQo+ID4gKyAgICBQQ0lCdXMgKmJ1czsNCj4gPiArDQo+ID4gKyAgICBp
-ZiAoIW9iamVjdF9keW5hbWljX2Nhc3Qob2JqLCBUWVBFX1BDSV9IT1NUX0JSSURHRSkpIHsNCj4g
-PiArICAgICAgICByZXR1cm4gMDsNCj4gPiArICAgIH0NCj4gPiArDQo+ID4gKyAgICBidXMgPSBQ
-Q0lfSE9TVF9CUklER0Uob2JqKS0+YnVzOw0KPiA+ICsgICAgaWYgKGQtPnBhcmVudF9idXMgJiYg
-IXN0cmNtcChidXMtPnFidXMubmFtZSwgZC0+cGFyZW50X2J1cy0NCj4gPm5hbWUpKSB7DQo+ID4g
-KyAgICAgICAgb2JqZWN0X3Byb3BlcnR5X3NldF9saW5rKE9CSkVDVChkKSwgInByaW1hcnktYnVz
-IiwgT0JKRUNUKGJ1cyksDQo+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICZl
-cnJvcl9hYm9ydCk7DQo+ID4gKyAgICAgICAgLyogUmV0dXJuIG5vbi16ZXJvIGFzIHdlIGdvdCB0
-aGUgYnVzIGFuZCBkb24ndCBuZWVkIGZ1cnRoZXINCj4gaXRlcmF0aW9uLiovDQo+ID4gKyAgICAg
-ICAgcmV0dXJuIDE7DQo+ID4gKyAgICB9DQo+ID4gKyAgICByZXR1cm4gMDsNCj4gPiArfQ0KPiA+
-ICsNCj4gPiAgIHN0YXRpYyB2b2lkIHNtbXVfcmVhbGl6ZShEZXZpY2VTdGF0ZSAqZCwgRXJyb3Ig
-KiplcnJwKQ0KPiA+ICAgew0KPiA+ICAgICAgIFNNTVVTdGF0ZSAqc3lzID0gQVJNX1NNTVUoZCk7
-DQo+ID4gQEAgLTE4ODIsNiArMTkwMiwxMCBAQCBzdGF0aWMgdm9pZCBzbW11X3JlYWxpemUoRGV2
-aWNlU3RhdGUgKmQsIEVycm9yDQo+ICoqZXJycCkNCj4gPiAgICAgICBTeXNCdXNEZXZpY2UgKmRl
-diA9IFNZU19CVVNfREVWSUNFKGQpOw0KPiA+ICAgICAgIEVycm9yICpsb2NhbF9lcnIgPSBOVUxM
-Ow0KPiA+DQo+ID4gKyAgICBpZiAoIW9iamVjdF9wcm9wZXJ0eV9nZXRfbGluayhPQkpFQ1QoZCks
-ICJwcmltYXJ5LWJ1cyIsICZlcnJvcl9hYm9ydCkpDQo+IHsNCj4gPiArICAgICAgICBvYmplY3Rf
-Y2hpbGRfZm9yZWFjaF9yZWN1cnNpdmUob2JqZWN0X2dldF9yb290KCksDQo+IHNtbXV2M19wY2ll
-X2J1cywgZCk7DQo+ID4gKyAgICB9DQo+ID4gKw0KPiA+ICAgICAgIGMtPnBhcmVudF9yZWFsaXpl
-KGQsICZsb2NhbF9lcnIpOw0KPiA+ICAgICAgIGlmIChsb2NhbF9lcnIpIHsNCj4gPiAgICAgICAg
-ICAgZXJyb3JfcHJvcGFnYXRlKGVycnAsIGxvY2FsX2Vycik7DQo+ID4gQEAgLTE5OTYsNiArMjAy
-MCw4IEBAIHN0YXRpYyB2b2lkIHNtbXV2M19jbGFzc19pbml0KE9iamVjdENsYXNzDQo+ICprbGFz
-cywgY29uc3Qgdm9pZCAqZGF0YSkNCj4gPiAgICAgICBkZXZpY2VfY2xhc3Nfc2V0X3BhcmVudF9y
-ZWFsaXplKGRjLCBzbW11X3JlYWxpemUsDQo+ID4gICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAmYy0+cGFyZW50X3JlYWxpemUpOw0KPiA+ICAgICAgIGRldmljZV9jbGFzc19z
-ZXRfcHJvcHMoZGMsIHNtbXV2M19wcm9wZXJ0aWVzKTsNCj4gPiArICAgIGRjLT5ob3RwbHVnZ2Fi
-bGUgPSBmYWxzZTsNCj4gPiArICAgIGRjLT5idXNfdHlwZSA9IFRZUEVfUENJRV9CVVM7DQo+IERv
-ZXMgdGhpcyBmb3JjZSBsZWdhY3kgU01NVXYzIHRvIGJlIHRpZWQgdG8gYSBQQ0llIGJ1cyBub3c/
-DQo+IGlmIHNvLCB3aWxsIHRoYXQgYnJlYWsgc29tZSBleGlzdGluZyBsZWdhY3kgc21tdXYzIGNv
-bmZpZ3M/LCBpLmUuLCB2aXJ0aW8tc2NzaQ0KPiBhdHRhY2hlZCB0byBhIGxlZ2FjeSBzbW11djMu
-DQoNCk5vLiBJdCB3b24ndCBicmVhayB0aGUgZXhpc3RpbmcgY29uZmlnIGFzIEVyaWMgaGFzIGFs
-cmVhZHkgcmVwbGllZC4gVGhlIG9ubHkgZGlmZmVyZW5jZSBpcw0KYXMgRXJpYyByaWdodGx5IHBv
-aW50ZWQgb3V0LCBTTU1VdjMgaXMgYSBwbGF0Zm9ybSBkZXZpY2UgYW5kIHdlIGFyZSBzcGVjaWZ5
-aW5nDQp0aGUgZGV2aWNlIGJ1cyB0eXBlIGFzIFBDSUUsIHdoaWNoIGlzIGEgYml0IG9kZC4gVGhl
-IGluaXRpYWwgUkZDIHdhcyB3aXRoIGEgc3BlY2lmaWMNCiJwY2ktYnVzIiBhcyBjb21tYW5kIGxp
-bmUgb3B0aW9uICwgaWUsDQoNCi1kZXZpY2UgYXJtLXNtbXV2MywgcGNpLWJ1cz1wY2llMCwuLi4N
-Cg0KYW5kIHRoZW4gdGhlcmUgd2VyZSBmZWVkYmFja3MgdGhhdCBpdCBpcyBtb3JlIGludHVpdGl2
-ZSBhbmQgbWFrZXMgbGlmZSBlYXN5IHdpdGggDQpsaWJ2aXJ0IGlmIHdlIGNhbiB1c2UgdGhlIFFl
-bXUgZGV2aWNlICJidXMiIG9wdGlvbiBhbmQgaGVuY2UgdGhlIGNoYW5nZS4NCg0KVGhhbmtzLA0K
-U2hhbWVlcg0KDQoNCg0K
+
+
+On 5/6/25 2:13 AM, Gustavo Romero wrote:
+> Hi Eric,
+>
+> On 4/28/25 07:25, Eric Auger wrote:
+>> Add a new argument to acpi_dsdt_add_pci_osc to be able to disable
+>> native pci hotplug.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> ---
+>>   hw/pci-host/gpex-acpi.c | 11 ++++++-----
+>>   1 file changed, 6 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
+>> index e8b4c64c5f..4016089893 100644
+>> --- a/hw/pci-host/gpex-acpi.c
+>> +++ b/hw/pci-host/gpex-acpi.c
+>> @@ -50,7 +50,7 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev,
+>> uint32_t irq,
+>>       }
+>>   }
+>>   -static void acpi_dsdt_add_pci_osc(Aml *dev)
+>> +static void acpi_dsdt_add_pci_osc(Aml *dev, bool
+>> enable_native_pcie_hotplug)
+>>   {
+>>       Aml *method, *UUID, *ifctx, *ifctx1, *elsectx, *buf;
+>>   @@ -80,8 +80,9 @@ static void acpi_dsdt_add_pci_osc(Aml *dev)
+>>        * Allow OS control for all 5 features:
+>>        * PCIeHotplug SHPCHotplug PME AER PCIeCapability.
+>
+> This comment is no longer true for PCIeHotplug, which now can be
+> controlled by the platform, and so needs to be updated, although
+> it's going to go away in the series.
+
+Sure, replaced by
+
++     * Allow OS control for SHPCHotplug, PME, AER, PCIeCapability,
++     * and PCIeHotplug depending on enable_native_pcie_hotplug
+
+>  
+> Otherwise:
+>
+> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+thanks!
+
+Eric
+>
+>
+> Cheers,
+> Gustavo
+>
+>>        */
+>> -    aml_append(ifctx, aml_and(aml_name("CTRL"), aml_int(0x1F),
+>> -                              aml_name("CTRL")));
+>> +    aml_append(ifctx, aml_and(aml_name("CTRL"),
+>> +               aml_int(0x1E | (enable_native_pcie_hotplug ? 0x1 :
+>> 0x0)),
+>> +               aml_name("CTRL")));
+>>         ifctx1 = aml_if(aml_lnot(aml_equal(aml_arg(1), aml_int(0x1))));
+>>       aml_append(ifctx1, aml_or(aml_name("CDW1"), aml_int(0x08),
+>> @@ -192,7 +193,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct
+>> GPEXConfig *cfg)
+>>               if (is_cxl) {
+>>                   build_cxl_osc_method(dev);
+>>               } else {
+>> -                acpi_dsdt_add_pci_osc(dev);
+>> +                acpi_dsdt_add_pci_osc(dev, true);
+>>               }
+>>                 aml_append(scope, dev);
+>> @@ -267,7 +268,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct
+>> GPEXConfig *cfg)
+>>       }
+>>       aml_append(dev, aml_name_decl("_CRS", rbuf));
+>>   -    acpi_dsdt_add_pci_osc(dev);
+>> +    acpi_dsdt_add_pci_osc(dev, true);
+>>         Aml *dev_res0 = aml_device("%s", "RES0");
+>>       aml_append(dev_res0, aml_name_decl("_HID",
+>> aml_string("PNP0C02")));
+>
+
 
