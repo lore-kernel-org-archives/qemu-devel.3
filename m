@@ -4,196 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17262C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 11:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3656C3ABBF
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 11:48:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCGdJ-00015N-GE; Tue, 06 May 2025 07:38:46 -0400
+	id 1uCGlj-0003N1-Pl; Tue, 06 May 2025 07:47:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uCGdH-00014y-Pg; Tue, 06 May 2025 07:38:43 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCGlh-0003Md-IL
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 07:47:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uCGdF-0002fs-M2; Tue, 06 May 2025 07:38:43 -0400
-Received: from pps.filterd (m0127837.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 546A9EJ2016435;
- Tue, 6 May 2025 04:38:35 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=Aqw8X79Pb1nPpxm8sKPSQE35gxiIU2KBV82k+N1Cz
- ns=; b=DjSY4SUwdfWkVXmxe2TUazxE6s4smjiFY/+zhSRfN6z9A03R7Bm30yBxf
- l95MG1zTZlz2M46IaDKL5YS8h7HKRRxGnFEnzM44Ylzrh7kA4+LdiTzaQDOamlq1
- Qx140kccfF/0BR4I18x/X40Ee/B58IQiHEyYVUixgPKZvynCwNzvs4CHcKvjWPAp
- mBIsuB/CllmFq2wXUEA+KQWI+ooqwaY31vgPHIvN/p7awG/EAPvlbGXoKh6iPY1r
- A2R4PlrWD5SPLknFD8XDr6uBt0795LTJS6ST0p6mMn6TwnIinvxaFc8TAUiGBqXw
- paR3voUAZEJ+nFzxlRHZcbzexBvWw==
-Received: from ch1pr05cu001.outbound.protection.outlook.com
- (mail-northcentralusazlp17010007.outbound.protection.outlook.com
- [40.93.20.7])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 46df295sps-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 06 May 2025 04:38:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=scxtNVZg419rwhXqDR8bnbE2fb4H/0Bg2n6peBl3XS3ICkUZxDoyEi6eycdZTG8FyxTdI881VDTRcY2XdMefcoJAfkwxSWaMey965B6y4eVAwmZlu1E4EKagEjCpM6plz/O6fnoP94x262vLwqZatG9BBkbLjG9gIbH07GJ+4ZKDwcRl9n3Po6cOPkQqo1Jy5+k3hSSw9bPY2w/KmOQPUVQ5gtrRUtBMvX+iZaK/uLJIzv7rh5O2eQK4FhiZyafSolskMkIH+rp6EiRZvQd+hWEZRKNMXXVSEuG3E4SC9lDY2/yeeG8cdm8eYDrEEsukV/uXWdAuvP+ZBMN6pRg9pw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ukzatl2XLuleSymUBYj2iuS1baYJpd+A4XHYhU80E1c=;
- b=zTPgNOBObMzYOqoa+RbMe/U3Yp9VtcP4YPgS6SudPTxvT7tZjO54x/O1e2XotaqtIw/oPmcri8G3qSyuzUKYTXtbjdcTKdWG9QR+yUyMOBdmwNHUx8SSyxErOFndOQO9pxUZzvd3HtkkrkT7hMcMpXtHcRUNK6I6HHvEjtKONvjXzmGgLfTrjTVPrGkpuwRS1r8lgdO9bQK7apSGSIZ1J9GrY3sjtB8xXy+zcwsS0qVKBfkg6SdCGYtBDFfURp2s7jk2P0ahIMr+Xhpt/DHp6WWUOK3Qnzt2TF6TnN/+UioxWKw0WaOQmUWIYzKl4FCjppq0KJAcl4v2SEBpXmVYXQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ukzatl2XLuleSymUBYj2iuS1baYJpd+A4XHYhU80E1c=;
- b=hvMpNBgR4QvZkUW4PTksOAPdJdQ3Pmc4dr9FFqRn5jRljq3dTsQ6fxmtg/ag8yXNXY7jmiVtMXT1KfrILyBkTkgN8A5P0EVYIZfNIE3VUUJKkCEX18kZ3gXOYEpXGqQ4+BYiUwKp3ZUQjI1pSTcLlSb8fJVVpEDv1uZcFRIycV54FU+3ht8/cfyjyQyCgmDL1iZava2tYTmO0xnGRfhFpHEi71vNwQZiQ34t2A2E4/FyTd8Jtydx0Q0IDKIG36tI9U9zxzFjvhd1vOZblVq2+pmZtmCMSdK28HS28uNbC4BM0WTnNGjL7mTKfLkPuMzP8XFI0hd58KQYAlHp2f3UfA==
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
- by PH0PR02MB7288.namprd02.prod.outlook.com (2603:10b6:510:9::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.19; Tue, 6 May
- 2025 11:38:27 +0000
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51%5]) with mapi id 15.20.8722.011; Tue, 6 May 2025
- 11:38:27 +0000
-Date: Tue, 6 May 2025 12:38:22 +0100
-From: John Levon <john.levon@nutanix.com>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, qemu-s390x@nongnu.org,
- Jason Herne <jjherne@linux.ibm.com>, Tomita Moeko <tomitamoeko@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Tony Krowiak <akrowiak@linux.ibm.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>
-Subject: Re: [PATCH v2 04/15] vfio: add vfio_device_get_irq_info() helper
-Message-ID: <aBn0rtBxPyFDOaF2@lent>
-References: <20250430194003.2793823-1-john.levon@nutanix.com>
- <20250430194003.2793823-5-john.levon@nutanix.com>
- <21e7accb-f5e3-4f8c-aa76-e9e2f2094fb6@redhat.com>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <21e7accb-f5e3-4f8c-aa76-e9e2f2094fb6@redhat.com>
-X-Url: http://www.movementarian.org/
-X-ClientProxiedBy: AS4P251CA0019.EURP251.PROD.OUTLOOK.COM
- (2603:10a6:20b:5d3::7) To CH2PR02MB6760.namprd02.prod.outlook.com
- (2603:10b6:610:7f::9)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCGlf-0003Zw-85
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 07:47:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746532041;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fPA83f9n7U+j2ivhh1cgKqvTOzonyblIQVSHD3/jO+Y=;
+ b=Fm+lUuU9guQ2xNU6VqvV/rZQSoW3dZLFqY2bhoj5SXm62CcBi2+TVle3LBaYwsZxwXBbSr
+ 5hGN5KpTY69dsGoNP0xzkUnoP95n79iFFSGN0ccjiMsnQW7Hbi+UKb4Os7yLgwcsmQR5UC
+ 2XrxOshfDIwWYWLGZFE7WgzyS1Cc180=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-329-7WaJU5MjN_GLa4L2N08WeQ-1; Tue,
+ 06 May 2025 07:47:18 -0400
+X-MC-Unique: 7WaJU5MjN_GLa4L2N08WeQ-1
+X-Mimecast-MFC-AGG-ID: 7WaJU5MjN_GLa4L2N08WeQ_1746532036
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 904811955D54; Tue,  6 May 2025 11:47:15 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 56427195608D; Tue,  6 May 2025 11:47:14 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id AFC1D21E66C3; Tue, 06 May 2025 13:47:11 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Shameer Kolothum via <qemu-devel@nongnu.org>
+Cc: <qemu-arm@nongnu.org>,  Shameer Kolothum
+ <shameerali.kolothum.thodi@huawei.com>,  <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>,  <jgg@nvidia.com>,  <nicolinc@nvidia.com>,
+ <ddutile@redhat.com>,  <berrange@redhat.com>,  <nathanc@nvidia.com>,
+ <mochs@nvidia.com>,  <smostafa@google.com>,  <linuxarm@huawei.com>,
+ <wangzhou1@hisilicon.com>,  <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>,  <zhangfei.gao@linaro.org>
+Subject: Re: [PATCH v2 1/6] hw/arm/smmuv3: Add support to associate a PCIe RC
+In-Reply-To: <20250502102707.110516-2-shameerali.kolothum.thodi@huawei.com>
+ (Shameer Kolothum via's message of "Fri, 2 May 2025 11:27:02 +0100")
+References: <20250502102707.110516-1-shameerali.kolothum.thodi@huawei.com>
+ <20250502102707.110516-2-shameerali.kolothum.thodi@huawei.com>
+Date: Tue, 06 May 2025 13:47:11 +0200
+Message-ID: <877c2ut0zk.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|PH0PR02MB7288:EE_
-X-MS-Office365-Filtering-Correlation-Id: b1a7dffa-f56c-4c53-629f-08dd8c92843e
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?llG9jnNclf0k1IVnXZnXGq4sKtkV+/biPhpkH5wOnaqAu5IBwLTffrt2mN?=
- =?iso-8859-1?Q?//OlHPBlCq6IorXiI0lMBJxQoFmIxgq4aP5sKo/EiqxxvldoWz72Anni9k?=
- =?iso-8859-1?Q?sC65h7m58JxnOwAS3/Ikmsw7EB5hOWvXtDVMLBhAiO6LRvcJCVNeDxU/IJ?=
- =?iso-8859-1?Q?o/tyCWN9WwkvJ9WpiWZ4ST3WaKhc3PKAsFwfZVqb5ooMu8+R1eEpHOq/Bj?=
- =?iso-8859-1?Q?FU6jTnjG4mttSX4919cP71OTQ8lEngKtdNRA0lJ9u/bBYuR/LDkHs05t4c?=
- =?iso-8859-1?Q?OtUAPgXIHfdYmkhQCzrAaoe4Edg3cUBglRUMJRrnxUhHM6VxRzWXqPIlBF?=
- =?iso-8859-1?Q?pU/p0OYNb3Njs/6JZ2B8psadCGorNR39HQzi+N5GV0O1ZBoqsMwAXJEab2?=
- =?iso-8859-1?Q?e0k+2t8/rg0XbH+HfqL9BR9edl6s5zu0pqk1swTcwl8dYWRYcJhgRxTDp1?=
- =?iso-8859-1?Q?p4wa11QnGa1KZVAiQCd36n1R7PgY7lKzQbbY06fZ2/XncnyUG3mUszI2vF?=
- =?iso-8859-1?Q?N9SZeFMTJ6vBttL+I/v3wNdyNTfLAUp3BtNr8gfXgvf2t0LmfZr9AzoHY2?=
- =?iso-8859-1?Q?n9Au4OumA38YXklFQ0IBjMTPaTaYI+hk33Z4uRNCr19UioAJQJGIQo9/tp?=
- =?iso-8859-1?Q?cXFgMREDgbB5aVqAC9bl8zOje8wEDnXAvm3tDLtH/LQmpLHzJWi4V8w7SI?=
- =?iso-8859-1?Q?qYBAG0BGwMr02JWoKX93bRKomqx2NSJ0SEWDy54liuVJALDR8tbOcjDTXp?=
- =?iso-8859-1?Q?o7SXfDfOgzn7eBIef7kuxlecTceIN7MsmODLToCfkbkkNMCEpyyaNkWcOQ?=
- =?iso-8859-1?Q?VFWb/4m/vr4NyJTE42W/lhw5hTuV8AGf+yuaL5DR9ls5BaoXjUt+cxeBey?=
- =?iso-8859-1?Q?tuNGYgYEa7PZfpLU3XXJpiIOW14M+HIF1oBQ+4rRwUe/WT6VIqA7yHBnLF?=
- =?iso-8859-1?Q?zFETUjOLzGENVq46Jp7pRE3IfzbinQ92ZkGvTMPMFSIZKWkhll2OACr8Mb?=
- =?iso-8859-1?Q?70ZIWOiJXWuUE14uuBYKcEDsApYbp4WYSFN/XgKO1rChBA2GbDrFTPJaJ9?=
- =?iso-8859-1?Q?LqEkO6pC3mQtSnmfFKy5LZyI1pzuAuUScCBp4U4h9HlaFPIvFHGacdFTxV?=
- =?iso-8859-1?Q?9NNaeZIQTmwEl63ws99MpsB+htKCxkynnpKTvnKawPJS98byGMgTi0ngC+?=
- =?iso-8859-1?Q?oEFsRUigxNp5RpjxVGYXLX/h7s7504NiAWvp7XNaOKnZ9OvzG5vM9HK+TS?=
- =?iso-8859-1?Q?uJ87121FpXGiDOXjPgwkOflu7iCkbK+cSE9K+S45BYeBfgixRaEoG6eFO0?=
- =?iso-8859-1?Q?EMJ0Gwusu0v+/iv1YT0D8Dj8LvbsVeFThz6/veb8vFLUV2mveidI5BRcCo?=
- =?iso-8859-1?Q?EdeKQZAtV7EhOCUBV33YzdZrLdDG/L6Dq/leXJuMwoVAFy0jFLXGzzWc2X?=
- =?iso-8859-1?Q?jZwW/cjhc83vU5aIlq09vJyVtNq04XfGW0USZggtRncYYUr7Ka+xMd6TAt?=
- =?iso-8859-1?Q?E=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(376014)(366016); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?kNbMZbMUYHWnPrdcWuN8BXBI45bhvoqaMkGEaubLix1a4VU2UtW1DJoPp9?=
- =?iso-8859-1?Q?O8Ub+jxZlRT966oHUGbxBbSaIfPiTmWumMH4xg2sZD/6BgRVhDKqa+aEAg?=
- =?iso-8859-1?Q?4Dyty/0ODse88YvJd0A6PB/rZj264JAHIvEpujoWW6dkxmP5vkOpSpZQxP?=
- =?iso-8859-1?Q?ePsLVzm4XLtwRS5WkqoSamNf4RBv8dlzMv7QLDtdL93UVOIfMXG6TCACn6?=
- =?iso-8859-1?Q?xdSR/2t68tmsQwQZz1mGND1Qw1sqpx8Ae5gdligYu7yjERamnlPkDHkhdT?=
- =?iso-8859-1?Q?lAVv6dueM0uBbPpdnalT+MfxVF3KpbkG/Yr+T65xbBwOVpoGe+dmQGNvsG?=
- =?iso-8859-1?Q?4vjue4ACaoCzh1itq+kDyMrR0HBgTsW4x/jmzngHCUqWoGAuZcIr6+8vW4?=
- =?iso-8859-1?Q?g8LJnHofQf+nvYfK4+KZv41vsMc7dLk1Lipx74vZPbIIU/sSRF+A9vRAi6?=
- =?iso-8859-1?Q?KQd2152Zf/KqkwE06kfGRIosEJGO39X4EWqtdk0cezFDwTedyg0XKNF/Cj?=
- =?iso-8859-1?Q?3mLlAWUR5FI9bB0ntPXKLY/+uiApJMDqZCcwF+E6T6BqA4NwKDJt/Og7vS?=
- =?iso-8859-1?Q?pcKzKhs2P9zIC0jN4cV1oXP+o9PZ7vN3QTF+Ls0rSjg2pBsFEtORU6IyH8?=
- =?iso-8859-1?Q?SwHWZaAyEnUfMcJ1zJfs6P/2IYi0YF9kWGBtZdratU9OZK5KGgj9g0Y+fu?=
- =?iso-8859-1?Q?sYJKRhe1D5ShRaJIg/XC3QmRVBz3yy3OBTAEb+ZVm7TvvCPKRpwUSRU3Ha?=
- =?iso-8859-1?Q?ezDErUW9NvPyhUr2r8xXp65ASIGMkrTujzJgFxj30kPWUy2nWC5oPl/HkC?=
- =?iso-8859-1?Q?s24kbqvxtXzolaBeFsBVCPPFh26HX1cIl1wCT9T8QLD0BsZC0gUeP5z5Gh?=
- =?iso-8859-1?Q?xEJDaFfjHtPu2ucU/Zo7wi1k7MWPGusxn7arLEfaTCzk8wvRHJuibd/0nS?=
- =?iso-8859-1?Q?1XYa5tE3yqOfafRonmm5UC9u7z9H/8xnGsExeBnjiyd2P4rYDpXxOk8hwe?=
- =?iso-8859-1?Q?XhLK+lfJ/jIbQDpxK5K9q2hygkOVliMrQExPSWtovmP0OuIJymyAt+wmkz?=
- =?iso-8859-1?Q?du7/rzZQe+7Kwe1iPr8xLLMPqc0KutgMJXvqD+iCvZrzjf/S0YgrluKgh9?=
- =?iso-8859-1?Q?lXy978iJIeeUMVXcvq8f9mmRJJRc4OaEN3LGPDo35YAvsJrE6ZDjx1lJgA?=
- =?iso-8859-1?Q?ZO69xeYSkDbBzJOwtw50ARGBEEuLZ/tGgD7bwfQAD5Ngq2IP0iQgeUmw1F?=
- =?iso-8859-1?Q?tJ/bxTC5hhT65GsaXzWJ2vl9xm6wEKlYOVEAKLMrf0rBEMQqWXcTIT4MNE?=
- =?iso-8859-1?Q?6oh4UmCmhlL6f31JGB7kNCZje1msBRLAa0IDYvjxc/neYsL0s8C1w7E2II?=
- =?iso-8859-1?Q?x9VCDjKk8oo/Deeyz2tjhMJhuWrhLIuJ4i3UB1nZ83EANgK7hruqfGhREk?=
- =?iso-8859-1?Q?ZSMZA+gc/i/uz+kM8KLd8djWixo1TFLJ+guVvQeODFNe8vXxS1fAX+O2GY?=
- =?iso-8859-1?Q?Gw+wmNc6nY3RR4dtKDiu7Fq6JdSJMxeXl3Ugl9CHKbDvHGCeNRFiJd4njL?=
- =?iso-8859-1?Q?+8K+apkknp2mqfjplpMQNsCf/wpd85t0b2l3U8QfHqs8xKFfGmh0Z8O+kG?=
- =?iso-8859-1?Q?BLS/6J8XgIDyx2vPR5YKyegnI77Fd/omrJ?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b1a7dffa-f56c-4c53-629f-08dd8c92843e
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 May 2025 11:38:27.2690 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2MHc96xHMy8uO7uybL/647wy5BDLEJqIwSJJLKM0VlpN2QHXQo2WiELgSUXyvjW8/NMGDOpRvWzqcLK1zQTX6A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR02MB7288
-X-Authority-Analysis: v=2.4 cv=WtErMcfv c=1 sm=1 tr=0 ts=6819f4bb cx=c_pps
- a=2D6/CIrCIWs5X5ruZf5FWQ==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
- a=dt9VzEwgFbYA:10 a=0kUYKlekyDsA:10 a=fftdXDaRshV6qFOD4U8A:9 a=3ZKOabzyN94A:10
- a=wPNLvfGTeEIA:10 a=QYH75iMubAgA:10
-X-Proofpoint-GUID: tcFBtER5h6U_eioT1MRJGqAk8CNAelcB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDExMSBTYWx0ZWRfX08WGWeB6Dnkp
- 9g8aU5hpgpIRYwQDVMQqvsf/ybPyVpy9N6dyOFtUr43N1ut6wDu3QyjqEj4tDDmzKpqVlZoVuZo
- jNMEnyxDu38EKDdAPhZyeHmsgsxBps9A9OHyWwxajGZRz+67jxZhDxat7Jlq5ikkEXqSBWn8B7/
- fvmok6rGcufO/mmL/7n4oWr1pmZwUYtsQp+LmRVBDysFVKCOs1CBlOcEIOBc3Mhlw3j9n7+xu7A
- HNVCDenk1tqIeveiaoH+tlAK+lPhEIQ89WxiU7zOFAJJX0Di8yk1zIunUIkeUbSk79BfbGDAQjl
- IXu9Ts5EZ5IFSq+17DvJ446hWLBIoG02zHcXdtn2boTsNBiV6NzyynwcYPBzrvxHzIDqX/n6+hh
- WTBW+s2uSDT/VXhd28vUpADH5uzJlJDYi5EfKrNLuEXB4mAwkjVR78J///L0uiaEM9HsFflt
-X-Proofpoint-ORIG-GUID: tcFBtER5h6U_eioT1MRJGqAk8CNAelcB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-06_05,2025-05-05_01,2025-02-21_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=john.levon@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -209,17 +93,319 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 05, 2025 at 11:19:30AM +0200, Cédric Le Goater wrote:
+Shameer Kolothum via <qemu-devel@nongnu.org> writes:
 
-> > +int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
-> > +                                struct vfio_irq_info *info);
-> 
-> This is breaking the windows build.
+> Although this change does not affect functionality at present, it lays
+> the groundwork for enabling user-created SMMUv3 devices in
+> future patches
+>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>  hw/arm/smmuv3.c | 26 ++++++++++++++++++++++++++
+>  hw/arm/virt.c   |  3 ++-
+>  2 files changed, 28 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index ab67972353..605de9b721 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -24,6 +24,7 @@
+>  #include "hw/qdev-properties.h"
+>  #include "hw/qdev-core.h"
+>  #include "hw/pci/pci.h"
+> +#include "hw/pci/pci_bridge.h"
+>  #include "cpu.h"
+>  #include "exec/target_page.h"
+>  #include "trace.h"
+> @@ -1874,6 +1875,25 @@ static void smmu_reset_exit(Object *obj, ResetType=
+ type)
+>      smmuv3_init_regs(s);
+>  }
+>=20=20
+> +static int smmuv3_pcie_bus(Object *obj, void *opaque)
+> +{
+> +    DeviceState *d =3D opaque;
+> +    PCIBus *bus;
+> +
+> +    if (!object_dynamic_cast(obj, TYPE_PCI_HOST_BRIDGE)) {
+> +        return 0;
+> +    }
+> +
+> +    bus =3D PCI_HOST_BRIDGE(obj)->bus;
+> +    if (d->parent_bus && !strcmp(bus->qbus.name, d->parent_bus->name)) {
+> +        object_property_set_link(OBJECT(d), "primary-bus", OBJECT(bus),
+> +                                 &error_abort);
+> +        /* Return non-zero as we got the bus and don't need further iter=
+ation.*/
+> +        return 1;
+> +    }
+> +    return 0;
+> +}
+> +
+>  static void smmu_realize(DeviceState *d, Error **errp)
+>  {
+>      SMMUState *sys =3D ARM_SMMU(d);
+> @@ -1882,6 +1902,10 @@ static void smmu_realize(DeviceState *d, Error **e=
+rrp)
+>      SysBusDevice *dev =3D SYS_BUS_DEVICE(d);
+>      Error *local_err =3D NULL;
+>=20=20
+> +    if (!object_property_get_link(OBJECT(d), "primary-bus", &error_abort=
+)) {
+> +        object_child_foreach_recursive(object_get_root(), smmuv3_pcie_bu=
+s, d);
+> +    }
+> +
+>      c->parent_realize(d, &local_err);
+>      if (local_err) {
+>          error_propagate(errp, local_err);
+> @@ -1996,6 +2020,8 @@ static void smmuv3_class_init(ObjectClass *klass, c=
+onst void *data)
+>      device_class_set_parent_realize(dc, smmu_realize,
+>                                      &c->parent_realize);
+>      device_class_set_props(dc, smmuv3_properties);
+> +    dc->hotpluggable =3D false;
+> +    dc->bus_type =3D TYPE_PCIE_BUS;
 
-Sorry, I forgot to set up cross-compile. I've done so now, and it was actually
-vfio_device_prepare() that was broken, I think, as it was outside of the linux
-ifdef.
+This is very, very wrong.
 
-regards
-john
+The function serves as .class_init() for QOM type "arm-smmuv3", defined
+as:
+
+   static const TypeInfo smmuv3_type_info =3D {
+       .name          =3D TYPE_ARM_SMMUV3,
+       .parent        =3D TYPE_ARM_SMMU,
+
+Subtype of "arm-smmuv3".
+
+       .instance_size =3D sizeof(SMMUv3State),
+       .instance_init =3D smmuv3_instance_init,
+       .class_size    =3D sizeof(SMMUv3Class),
+       .class_init    =3D smmuv3_class_init,
+   };
+
+
+    static const TypeInfo smmu_base_info =3D {
+        .name          =3D TYPE_ARM_SMMU,
+        .parent        =3D TYPE_SYS_BUS_DEVICE,
+
+Subtype of "sys-bus-device".
+
+        .instance_size =3D sizeof(SMMUState),
+        .class_data    =3D NULL,
+        .class_size    =3D sizeof(SMMUBaseClass),
+        .class_init    =3D smmu_base_class_init,
+        .abstract      =3D true,
+    };
+
+Have a look at the instance struct:
+
+   struct SMMUv3State {
+       SMMUState     smmu_state;
+
+Starts with the supertype's instance struct, as is proper.
+
+       uint32_t features;
+       [more ...]
+   };
+
+Here's the supertype's instance struct:
+
+   struct SMMUState {
+       /* <private> */
+       SysBusDevice  dev;
+
+Again, starts with the supertype's instance struct.
+
+       const char *mrtypename;
+       [more...]
+   };
+
+This is a sysbus device, not a PCI device.  Monkey-patching dc->bus_type
+from TYPE_SYSTEM_BUS to TYPE_PCIE_BUS won't change that.  All it
+accomplishes is making the qdev core believe it plugs into a PCIE bus.
+This can only end in tears.
+
+In fact, when I build with the entire series applied (so the device can
+actually be used with -device), the result dies within seconds of my ad
+hoc testing:
+
+    $ qemu-system-aarch64 -nodefaults -S -display none -monitor stdio -M vi=
+rt -device pxb-pcie,id=3Dpcie.1,bus_nr=3D2 -device arm-smmuv3,bus=3Dpcie.1
+    QEMU 10.0.50 monitor - type 'help' for more information
+    qemu-system-aarch64: -device arm-smmuv3,bus=3Dpcie.1: warning: SMMUv3 d=
+evice only supported with pcie.0 for DT
+    (qemu) info qtree
+    bus: main-system-bus
+      type System
+      dev: pxb-host, id ""
+        x-config-reg-migration-enabled =3D true
+        bypass-iommu =3D false
+        bus: pcie.1
+          type pxb-pcie-bus
+          dev: arm-smmuv3, id ""
+            gpio-out "sysbus-irq" 4
+            stage =3D "nested"
+            bus_num =3D 0 (0x0)
+    Segmentation fault (core dumped)
+
+Backtrace:
+
+    #0  0x00005555557d8521 in pcibus_dev_print
+        (mon=3D0x55555826d0e0, dev=3D0x5555590ad360, indent=3D8)
+        at ../hw/pci/pci-hmp-cmds.c:140
+    #1  0x0000555555eac0a0 in bus_print_dev
+        (bus=3D<optimized out>, mon=3D<optimized out>, dev=3D0x5555590ad360=
+, indent=3D8)
+        at ../system/qdev-monitor.c:773
+    #2  qdev_print (mon=3D<optimized out>, dev=3D<optimized out>, indent=3D=
+8)
+        at ../system/qdev-monitor.c:805
+    #3  qbus_print
+        (mon=3Dmon@entry=3D0x55555826d0e0, bus=3Dbus@entry=3D0x5555590ac4a0=
+, indent=3D6,=20
+        indent@entry=3D4, details=3Ddetails@entry=3Dtrue) at ../system/qdev=
+-monitor.c:821
+    #4  0x0000555555eabd92 in qbus_print
+        (mon=3D0x55555826d0e0, bus=3D<optimized out>, indent=3D2, details=
+=3Dtrue)
+        at ../system/qdev-monitor.c:824
+    #5  0x0000555555979789 in handle_hmp_command_exec
+        (cmd=3D<optimized out>, mon=3D0x55555826d0e0, qdict=3D0x55555907d8e=
+0)
+        at ../monitor/hmp.c:1106
+    #6  handle_hmp_command_exec
+        (mon=3D0x55555826d0e0, cmd=3D0x55555769d220 <hmp_info_cmds+2560>, q=
+dict=3D0x55555907d8e0) at ../monitor/hmp.c:1098
+    #7  handle_hmp_command (mon=3Dmon@entry=3D0x55555826d0e0, cmdline=3D<op=
+timized out>,=20
+        cmdline@entry=3D0x555558657490 "info qtree") at ../monitor/hmp.c:11=
+58
+    #8  0x000055555597983c in monitor_command_cb
+
+Crash line is
+
+    int class =3D pci_get_word(d->config + PCI_CLASS_DEVICE);
+
+Debugger shows that d->config is invalid.  This is hardly surprising!
+
+The qdev core is trying to print information on the "arm_smmuv3" device
+here.  It's working with a DeviceState.  Your monkey-patching convinced
+it it's a PCIDevice, so it duly calls pcibus_dev_print() to print PCI
+device information.  pcibus_dev_print() casts the DeviceState * to
+PCIDevice *.  This assumes the device's instance actually starts with
+PCIDevice.  It actually starts with SysBusDevice.
+
+Unsurprisingly, and "make check" also fails:
+
+    >>> MESON_TEST_ITERATION=3D1 MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_=
+error=3D1:print_summary=3D1:print_stacktrace=3D1 RUST_BACKTRACE=3D1 QTEST_Q=
+EMU_BINARY=3D./qemu-system-aarch64 QTEST_QEMU_IMG=3D./qemu-img G_TEST_DBUS_=
+DAEMON=3D/work/armbru/qemu/tests/dbus-vmstate-daemon.sh ASAN_OPTIONS=3Dhalt=
+_on_error=3D1:abort_on_error=3D1:print_summary=3D1 PYTHON=3D/work/armbru/qe=
+mu/bld-arm/pyvenv/bin/python3 UBSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_er=
+ror=3D1:print_summary=3D1:print_stacktrace=3D1 MALLOC_PERTURB_=3D22 /work/a=
+rmbru/qemu/bld-arm/tests/qtest/test-hmp --tap -k
+    =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95
+    stderr:
+    qemu-system-aarch64: ../hw/core/qdev.c:113: qdev_set_parent_bus: Assert=
+ion `dc->bus_type && object_dynamic_cast(OBJECT(bus), dc->bus_type)' failed.
+    Broken pipe
+    ../tests/qtest/libqtest.c:208: kill_qemu() detected QEMU death from sig=
+nal 6 (Aborted) (core dumped)
+
+and
+
+    >>> MESON_TEST_ITERATION=3D1 MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_=
+error=3D1:print_summary=3D1:print_stacktrace=3D1 RUST_BACKTRACE=3D1 QTEST_Q=
+EMU_BINARY=3D./qemu-system-aarch64 MALLOC_PERTURB_=3D86 QTEST_QEMU_IMG=3D./=
+qemu-img G_TEST_DBUS_DAEMON=3D/work/armbru/qemu/tests/dbus-vmstate-daemon.s=
+h ASAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1 PYT=
+HON=3D/work/armbru/qemu/bld-arm/pyvenv/bin/python3 UBSAN_OPTIONS=3Dhalt_on_=
+error=3D1:abort_on_error=3D1:print_summary=3D1:print_stacktrace=3D1 /work/a=
+rmbru/qemu/bld-arm/tests/qtest/qom-test --tap -k
+    =E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95
+    stderr:
+    qemu-system-aarch64: ../hw/core/qdev.c:113: qdev_set_parent_bus: Assert=
+ion `dc->bus_type && object_dynamic_cast(OBJECT(bus), dc->bus_type)' failed.
+    Broken pipe
+    ../tests/qtest/libqtest.c:208: kill_qemu() detected QEMU death from sig=
+nal 6 (Aborted) (core dumped)
+
+Please make sure "make check" passes before posting patches for review.
+If you need help getting there, post them marked RFC and with the bad
+test results right in the cover letter.
+
+>  }
+>=20=20
+>  static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 177f3dd22c..3bae4e374f 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -56,6 +56,7 @@
+>  #include "qemu/cutils.h"
+>  #include "qemu/error-report.h"
+>  #include "qemu/module.h"
+> +#include "hw/pci/pci_bus.h"
+>  #include "hw/pci-host/gpex.h"
+>  #include "hw/virtio/virtio-pci.h"
+>  #include "hw/core/sysbus-fdt.h"
+> @@ -1442,7 +1443,7 @@ static void create_smmu(const VirtMachineState *vms,
+>      }
+>      object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
+>                               &error_abort);
+> -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> +    qdev_realize_and_unref(dev, &bus->qbus, &error_fatal);
+>      sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
+>      for (i =3D 0; i < NUM_SMMU_IRQS; i++) {
+>          sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
+
+What are you trying to accomplish?
+
+I *guess* you're trying to change the "arm-smmuv3" device to be a PCI
+device.  Correct?
+
+The only way to do that is making it a subtype of PCIDevice, i.e. change
+the parent chain from
+
+   arm-smmuv3 -> arm-smmu -> sys-bus-device -> device -> object
+
+to something like
+
+   arm-smmuv3 ->    ...   -> pci-device -> device -> object
+
+Note you cannot have different subtypes of the same supertype (say
+"arm-smmu") plug into different buses.  If you need a common device core
+to plug into different buses, things get more complicated.  Here's how
+the "serial-FOO" devices do it:
+
+* "serial-mm", a subtype of "sys-bus-device", thus plugs into system bus
+* "serial-isa", a subtype of "isa-device", thus plugs into ISA bus
+* "serial-pci", a subtype of "pci-device", thus plugs into PCI bus
+
+They all *contain* the core "serial" device, which is a subtype of
+"device", and thus does not plug into any bus.  "Contain" is "has a",
+not "subtype of".
+
+[...]
+
 
