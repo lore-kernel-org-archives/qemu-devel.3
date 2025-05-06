@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9843BC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:33:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29AC9C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:34:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCKFp-00050s-7a; Tue, 06 May 2025 11:30:45 -0400
+	id 1uCKFm-0004sG-CB; Tue, 06 May 2025 11:30:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFO-0004B1-5b
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:24 -0400
+ id 1uCKFY-0004RM-DC
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFK-0002D2-T7
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:17 -0400
+ id 1uCKFU-0002E0-Vu
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746545412;
+ s=mimecast20190719; t=1746545419;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+B/e/jQLvjp1zUQjAa3+VY4igRcEr7YAVAoc3I64Dmw=;
- b=QKkncQ6+LLDxjEB1iKMt+iSOd18pUTULxcXNbbNGyE7I4kjd1ZUY35rjHS0U1bUHW42SFE
- cQFen7byqaYIcf+wSaUiV17ysthW9FXpGtTOt/x/DAl/kB66SUYW4U9txVI8LcHrDLKY77
- OaU31/0bBPBWq2wBqilKDqd0ms7Jjcw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=E9XoMb5qN4Oa9TZ4oVvJWOLn4eFe7xMdd1uzmvhg4vM=;
+ b=BISiJMBBV5qK9eXiTf8z1hynyqf/0Nz+WJZlLPrHEpXmhRZm/+j//KmqcWrIwXEz7bUvd5
+ G5f2dRUrLSfPZG+d4ELfzaqwA2Bs3yJELeURmJrcmMQnJGM0CeevorkfBY8fxw0Q6+XMyt
+ nyAjr9cBcLseTLrhYeIjSgXU4ICdjOI=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-462-o8nn04ALMQ6XC5kO0kSnFA-1; Tue, 06 May 2025 11:30:11 -0400
-X-MC-Unique: o8nn04ALMQ6XC5kO0kSnFA-1
-X-Mimecast-MFC-AGG-ID: o8nn04ALMQ6XC5kO0kSnFA_1746545410
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43d08915f61so29906415e9.2
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:30:11 -0700 (PDT)
+ us-mta-150-HZJOq-UBNseF7F3bRJRkUg-1; Tue, 06 May 2025 11:30:13 -0400
+X-MC-Unique: HZJOq-UBNseF7F3bRJRkUg-1
+X-Mimecast-MFC-AGG-ID: HZJOq-UBNseF7F3bRJRkUg_1746545412
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3912fc9861cso1558298f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:30:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746545409; x=1747150209;
+ d=1e100.net; s=20230601; t=1746545411; x=1747150211;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+B/e/jQLvjp1zUQjAa3+VY4igRcEr7YAVAoc3I64Dmw=;
- b=rzhWEDCyAb9oXyhjpPMykNZmEMJhNQCcqcn0/HJWPAvSWWkBQey3ByvQ4vQ5oIxsc1
- UYRC/ZOWd7rnuT78i3LAZ6hqmFy3K3g2UbpP+w7kb76/xniXh7pXSztfJpfVAnfpb2iu
- rb24NCZXv3UihIzse0rHOg5WMRmuLMbse7VVTh57xEOy3u12LRvXXjs4oPbsCv7mlPZg
- Ow65/x1IGLUTz7Ox0SmrJmdbupU53zs6SlGBEmAAZFCKnylkmDAzgQiXRPsqilkJcs5H
- LhqV26HkkJ72hOd4PneNGRS2v/dFY6ZwXd+nOEJK0RnUM3lWiNkpoaJsYIcQwNBbgdHC
- ZEew==
-X-Gm-Message-State: AOJu0YxY0GTgX9AwiIQ6UzSYLvFON1N9xdANSvraW93/s6WRJSPTH+SG
- xEgNkG4R0kr7bZ8LCKSOyUMHij/NS9kcr+GTpC66ikS/yE1NoBOrDYb+wvEmIsnqcsu+fCKgQ6s
- KuA1ylJ+XlvmDSU4CdqIw9VYWoW1XLehnW9SYxdIzyYWfcPm5uaCi72YcbU7vactAzZveGznXij
- XyVhqnU2NDyV5zu+5EzoFfx8MxMHbWtZ5Qs7p8
-X-Gm-Gg: ASbGncss9ylG8ErOrY7cP7XyixBqRZItA/yaylhs27GGEKWWkyWI5Io3OP2XbVGr2sv
- XAjIDk5Wax+fl5URrbUy0wUrhAoWyTVaFcqpk3cAmfQTwTXFpd/F4ikRBB4Vvd6AoGE4eQ0ZoPo
- R1mI4NnOSXBx3enhLszn1S/DveB7T0GhgekLCJIThsiGcwCeOaccWR3lM3A93wduN5hRKXXBsEB
- 4IFlbrHgEkqocifXTKDrh0LQp1qSDn6VTTHrqblhZw1DEfbN3vpFWK0FTeocNexnBcxWzw+U7Dp
- qm0oif4C5+GT4hs=
-X-Received: by 2002:a05:600c:1d9e:b0:43c:eec7:eabb with SMTP id
- 5b1f17b1804b1-441c48bc8f0mr100993945e9.8.1746545409169; 
- Tue, 06 May 2025 08:30:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFHfUnO3MIXYaxDuV/X4gxFY5IO+XsnLzED0/hbvDB9vlSOM1HG3cS/p+THYBvpO/5aYiVaiQ==
-X-Received: by 2002:a05:600c:1d9e:b0:43c:eec7:eabb with SMTP id
- 5b1f17b1804b1-441c48bc8f0mr100993635e9.8.1746545408742; 
- Tue, 06 May 2025 08:30:08 -0700 (PDT)
+ bh=E9XoMb5qN4Oa9TZ4oVvJWOLn4eFe7xMdd1uzmvhg4vM=;
+ b=MpTcGEktYe6GMCzR9V8VXGuBDNa16s74BV/TBgCz8O2teFttlaQZmVwAGFURIcpLbW
+ gGfx/IiglsCeWiLzb0DbSX0XJ0wyevbWdYZNYB/gPO7h06pyGE4ry1U+fpKkeRAPlf8l
+ VXtM2P2W10l9Dr69mOoi+kiKh3cgfaKZYDuhwaGnCbWru/hRthbLtHFfNPg4JmIpeqo1
+ nHeYlK0ADukyWrZFyDWHItg3HAs5Hi5YHDHjm74cau81BQIxPlbeem94rMhO+GbnSP79
+ b7L/K3GObbiYMYxcF//z+z6+rSyiM+mp0ydx3GrBZqcqeET19ufcl9EPd390wKlrIYvT
+ 3wTA==
+X-Gm-Message-State: AOJu0YwkywAiNlaBBopBsSHQDLg4L/uQC4tB5f/sOoypn9wvEHWv+HAy
+ 8aUMV7y7WKnFAm1pYdgDC2rlugvxBQyk2eSjNyxtQQw08QRaDKP4hWQBNRQxLytL0hsmzFAjSPZ
+ pwH7V7A068h2EyMGzZ3YDnDDij2BqEbvgKdt48H4XCxCgc4+rfvLrWNWihnKztCWyGQc/NfIBxf
+ BpWBMr/acNHvBfH95GrBG8yRR02bcxgQ0ok8I5
+X-Gm-Gg: ASbGnct1I3WfGGjPKeSZUX9sJ8TGQ9WvUcazODb4scmBuXcLMChd/Hd5DP1a4SF4ycV
+ mdcN1YG/tzfEkIrg6tMhU8JTUGWrBJoNzodaj3YPt25xwgroc8mM8AOxPsiOjC9kNv78yGJk824
+ Onoj+kTlzKQ8rfsHrcEAdUT/6cA84hMznjXtubrQ/pJqE1kNjGLCQP4tzO9Z5zTVBdcefxj7ghK
+ Avl1sZ3gRGDhMsQEChNnl7Etf0HqGyCYTC+iyZYWRAt/wG/MBrwIKpOHmxANKRmfMyC6tgWnWfO
+ qHhwh0ZIBgIocBI=
+X-Received: by 2002:a05:6000:2506:b0:3a0:b1de:1bc0 with SMTP id
+ ffacd0b85a97d-3a0b1de1d73mr2195456f8f.13.1746545411648; 
+ Tue, 06 May 2025 08:30:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFGDPsArANAodhe+/MHjurDaI64+BlNn4NDYwtR+G8pq2Cgx8LNCNICPo95TF2D3feKueEoTg==
+X-Received: by 2002:a05:6000:2506:b0:3a0:b1de:1bc0 with SMTP id
+ ffacd0b85a97d-3a0b1de1d73mr2195435f8f.13.1746545411224; 
+ Tue, 06 May 2025 08:30:11 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b89ee39esm172303685e9.21.2025.05.06.08.30.07
+ ffacd0b85a97d-3a099b170b8sm13758278f8f.82.2025.05.06.08.30.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 08:30:07 -0700 (PDT)
+ Tue, 06 May 2025 08:30:09 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PULL 19/30] target/s390x: Fix type conflict of GLib function pointers
-Date: Tue,  6 May 2025 17:29:14 +0200
-Message-ID: <20250506152927.222671-20-pbonzini@redhat.com>
+Subject: [PULL 20/30] include/glib-compat.h: Poison g_list_sort and
+ g_slist_sort
+Date: Tue,  6 May 2025 17:29:15 +0200
+Message-ID: <20250506152927.222671-21-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250506152927.222671-1-pbonzini@redhat.com>
 References: <20250506152927.222671-1-pbonzini@redhat.com>
@@ -119,34 +120,30 @@ function pointer casting.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Link: https://lore.kernel.org/r/e91c4e266b839f62b5c41173a05896b210ae1180.1745820062.git.ktokunaga.mail@gmail.com
+Link: https://lore.kernel.org/r/fa57c8069d6c723f5b947560677f4ca596334330.1745820062.git.ktokunaga.mail@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/s390x/cpu_models.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/glib-compat.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-index 8951f1b36f9..954a7a99a9e 100644
---- a/target/s390x/cpu_models.c
-+++ b/target/s390x/cpu_models.c
-@@ -373,7 +373,7 @@ static void s390_print_cpu_model_list_entry(gpointer data, gpointer user_data)
-     g_free(name);
- }
+diff --git a/include/glib-compat.h b/include/glib-compat.h
+index 86be439ba0e..2e32b90f051 100644
+--- a/include/glib-compat.h
++++ b/include/glib-compat.h
+@@ -36,6 +36,13 @@
+ #include <pwd.h>
+ #endif
  
--static gint s390_cpu_list_compare(gconstpointer a, gconstpointer b)
-+static gint s390_cpu_list_compare(gconstpointer a, gconstpointer b, gpointer d)
- {
-     const S390CPUClass *cc_a = S390_CPU_CLASS((ObjectClass *)a);
-     const S390CPUClass *cc_b = S390_CPU_CLASS((ObjectClass *)b);
-@@ -415,7 +415,7 @@ void s390_cpu_list(void)
- 
-     qemu_printf("Available CPUs:\n");
-     list = object_class_get_list(TYPE_S390_CPU, false);
--    list = g_slist_sort(list, s390_cpu_list_compare);
-+    list = g_slist_sort_with_data(list, s390_cpu_list_compare, NULL);
-     g_slist_foreach(list, s390_print_cpu_model_list_entry, NULL);
-     g_slist_free(list);
- 
++/*
++ * These functions perform function pointer casts which can cause function call
++ * failure on Emscripten. Use g_slist_sort_with_data and g_list_sort_with_data
++ * instead of these functions.
++ */
++#pragma GCC poison g_slist_sort g_list_sort
++
+ /*
+  * Note that because of the GLIB_VERSION_MAX_ALLOWED constant above, allowing
+  * use of functions from newer GLib via this compat header needs a little
 -- 
 2.49.0
 
