@@ -4,103 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30287C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 10:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B112EC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 10:16:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCFI4-0006QF-Qj; Tue, 06 May 2025 06:12:45 -0400
+	id 1uCFLl-00086n-OZ; Tue, 06 May 2025 06:16:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uCFI2-0006PY-4d
- for qemu-devel@nongnu.org; Tue, 06 May 2025 06:12:42 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uCFHy-0000dT-7E
- for qemu-devel@nongnu.org; Tue, 06 May 2025 06:12:41 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5f6214f189bso10273580a12.2
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 03:12:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746526356; x=1747131156; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=n3OXNmuE7ethlsV0NbytaaYfvl2zsKsHLJr5BOq/Mjk=;
- b=hKSmP9+pIjdIstG5OKc842mcVmtxaCg+N49/Pk3vUfP3y68QG7K0ALyZ2iQGGmAUfP
- /rX7hAcBALYYPwY8jT4is3hAlRcZ0tLQMj1Oumo3EiVCys+ODHCOx0zRSrSJiDGSSiSs
- ie+NPb7Rm2yBnjvEdwy0F2VLfbF8x55Oz6iVg8LkaHP68wM8BUagMwCLnTQP/MdL/kRM
- jQzhaSSkSZOm6pDZCHZbfgd+HXFFIakCH3OQ32H2eNsA9dmelvf+dTAPXt+VYQJdCo6m
- HfZjk4z3XO82GmJCmT92HQfd94Jj3NGVuwX+JLiXBbZzN3yGN9cYL1nVyBWDKxvzqAdm
- 468A==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uCFLj-00086R-Pi
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 06:16:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uCFLh-0001Pg-Or
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 06:16:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746526587;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=IWB21ABLApo27kaYevEaVKe/h8erk3F0zgB+ajhvB+c=;
+ b=V5svsFvL72QsIUuS+4GTrU2SpBLYXhumbAOaDJQelqckGBFq7vq5bAF/Me/c/JlKz7Ls00
+ s+fFnJFe4els9meJSjea8XaqhTV0We6XSj03qrAL0zUSv66V6zslDQ/DeDMLRhTzoVFWYv
+ p4RrvDq2wW0UkQEKm4f5ngoDNQwfrvE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-609-1OhNHMjYPx6wm5b89emhJQ-1; Tue, 06 May 2025 06:16:26 -0400
+X-MC-Unique: 1OhNHMjYPx6wm5b89emhJQ-1
+X-Mimecast-MFC-AGG-ID: 1OhNHMjYPx6wm5b89emhJQ_1746526585
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43d734da1a3so25037715e9.0
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 03:16:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746526356; x=1747131156;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=n3OXNmuE7ethlsV0NbytaaYfvl2zsKsHLJr5BOq/Mjk=;
- b=UwljdscybQG27Axa5yb71ek+2a7eoQmkRSDstDQ/J7TfB+MFC9z2HeW8C561mr/UFJ
- 17V/LLVyAZXbgwGutdAYhiaHWin1kMZdIA/TjdHhCNzzZybgubA3xD7pOWwg07kmCSG1
- phF2kgPndyBcf8OlWMS2VPqVMHutunASXJGx0MFBZ0ikC4MUCbmoEm22sBcSIkdbXNW0
- pcv+i9QouA2QTB1qOPtvtWIVKH/TPlDlJIbh2iIR82f9Y8BFpjkbcV6yeVxKm0/gVGjz
- Ld3o7APEDM5tPpjqS0CVTGqRBlTB/xTc0kuSqRaLMA5c/ogSymWH7mCkjqlW+RMy+r2n
- wfmQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVpLQk25raiyCfnKzqULYndYB2J6ovDFXbs2Lk8WN3uyxJPh9BVFw21If4xkIobudfsLdW8sJ+Zj/I0@nongnu.org
-X-Gm-Message-State: AOJu0Yy28OZQ4Vg4NfU0K05EddrIylXq5VtD3lM7XV0m6N2NywuCqMje
- SFuWxhNmwqJcvj+43zbfBjsEhxJB7wo536YqYfU89v8IJpJhobPDNmZ0AjC5zpQ=
-X-Gm-Gg: ASbGncvxfbq5EhpRd9UOICmNAfPjQEp/MFgGJ02oCCL2VWuu67bY0kT5mVsHoBv9FTm
- lFIq5BzIrU0wBl39ClOnMbiQ6C5ycRSoovkJtRFx4USQv/tsnM8AfHkSRdUAvEu5YgqJ0WnYyHl
- AkLTa7CvbtHWH5INvkE4y9ooCNNcNRFpaZSkB79Cu6EhchHQiB+O4ej9cl4ZG0SaygfakmdFvfA
- 5NOCpQEA5uyc6cJ+HhOlO0OZ1tmkG9NyjfG2piYCBnq2HdVyGMYuDzqOxVLKHy6TKGqK4Pl4E9k
- dKVg9SyKP+N3UmbzGvwTEWG9Ay3nAVx+j0i+p7Ht83w=
-X-Google-Smtp-Source: AGHT+IHNvV90odi9HGPJDqs45WcBYcKnkFp144V1/3p0UBKoLEYNBv8LWVLCpp6v/alhfvCU7XTwVg==
-X-Received: by 2002:a17:906:dc8a:b0:ac3:afb1:dee7 with SMTP id
- a640c23a62f3a-ad17b5dbc98mr1535447566b.28.1746526355935; 
- Tue, 06 May 2025 03:12:35 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad1894c02a8sm670773666b.122.2025.05.06.03.12.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 03:12:35 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A36745F8BD;
- Tue,  6 May 2025 11:12:34 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,  qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>,  Alexandre Iooss <erdnaxe@crans.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  David Hildenbrand <david@redhat.com>,  Pierrick
- Bouvier <pierrick.bouvier@linaro.org>,  qemu-arm@nongnu.org,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Peter Xu
- <peterx@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  qemu-stable@nongnu.org
-Subject: Re: [PATCH 8/9] virtio-gpu: fix hang under TCG when unmapping blob
-In-Reply-To: <8994da6c-a369-40c7-b1c6-433519ba90a5@daynix.com> (Akihiko
- Odaki's message of "Sun, 4 May 2025 17:19:45 +0900")
-References: <20250428125918.449346-1-alex.bennee@linaro.org>
- <20250428125918.449346-9-alex.bennee@linaro.org>
- <8b123991-21f2-47b5-851d-6b53fbfaa691@collabora.com>
- <8994da6c-a369-40c7-b1c6-433519ba90a5@daynix.com>
-User-Agent: mu4e 1.12.10; emacs 30.1
-Date: Tue, 06 May 2025 11:12:34 +0100
-Message-ID: <874ixyoxnx.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1746526585; x=1747131385;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=IWB21ABLApo27kaYevEaVKe/h8erk3F0zgB+ajhvB+c=;
+ b=FtJgPiboBFqfeGGCxAJ5tlXI+4DdyFW6tLG/t1O9qS2v0l56sm30MInDJcfSY3GBb+
+ H9GtOrWraMmeAarXV0z/CQwOgHuTPW12/+C6Y92JRi5u/m5V37UXuS8jnRoMSctWjaBc
+ aZhR+rXIlJEe38ax2ZiXEWkuDKulPcNHkNKaNhBqkfTpcwJ5E+J1k7fYoZHqshcWWr7I
+ rn+jvGRKpajMoA3T5HpFyfBIuKQwuOKxcYs4pD47SnRRZHz9Ht1V0+HI4P/q0j4WF/fS
+ wOyDQuwspV2vX1ddJD5cAmERvRda/xCe/L9P0dM36GT82lkXcLK4CWbaxwZoglVOwhgh
+ iRNw==
+X-Gm-Message-State: AOJu0Yw/1vbaxZpdx/3FjLpCow0zITEgYVJNW5Xw+Z2MR32Omr2NdopA
+ VHaxxU/D2mP0ZRw2rtOjmsgpkSQQhoxNXTLzK7pYASJAbISUnpipC2z/lrMLgnuL+CkiWuFM5o4
+ VLMMMLX0q62JFinkPTcJghUE89qvyO3QgJr0nnIRJY/tMMyvWzxGN
+X-Gm-Gg: ASbGncu9J5E3uPdPwwfHKKzmRiEdRTH1v3Jo/ZKi/OUFESpP5yXOnCFG3zyksCmlvEU
+ GpjItuYyOofMTZirSEyKySra8TLDkhxJFYw28qxQvqGlVDoFr4/fGiKoLpY7yKRD0hRwvEF/NLB
+ u2VtSSLfBFItpC8/fwuH666pUJpucagF4OnYyLv+rgYE3IRJKNDm8zXElfS4siwKj0i2gG5CcgI
+ iKZKwBBAIbpEssolZk349UFcdIe+gTtc5SOCPpHeHLC0V5gCK06NfbLagCSY39hly8R2w8ToIBM
+ mCKNxeMJsOWmCuJBJkInRE7ohJeroKhlwJMxqwd8RdJrQle3qOsh
+X-Received: by 2002:a05:600c:1e20:b0:43d:4e9:27ff with SMTP id
+ 5b1f17b1804b1-441d04f46bemr23508875e9.7.1746526585132; 
+ Tue, 06 May 2025 03:16:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IECopqV+eEP9qvC0CTa7/uNvU8eYMqRXIwfGTpyqFKRsdJgktmgV2ZmtYoW5cDb4etNcBTV4Q==
+X-Received: by 2002:a05:600c:1e20:b0:43d:4e9:27ff with SMTP id
+ 5b1f17b1804b1-441d04f46bemr23508575e9.7.1746526584766; 
+ Tue, 06 May 2025 03:16:24 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-115-173.pools.arcor-ip.net.
+ [47.64.115.173]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a0b0f18accsm1064253f8f.41.2025.05.06.03.16.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 May 2025 03:16:24 -0700 (PDT)
+Message-ID: <2696db39-9e71-43ed-b504-fa4644d9a5f9@redhat.com>
+Date: Tue, 6 May 2025 12:16:17 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] meson: use thorough test setup as default
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250503201806.3045723-1-pierrick.bouvier@linaro.org>
+ <aBnYBpAYjdgVpG8D@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <aBnYBpAYjdgVpG8D@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,134 +154,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+On 06/05/2025 11.36, Daniel P. Berrangé wrote:
+> On Sat, May 03, 2025 at 01:18:06PM -0700, Pierrick Bouvier wrote:
+>> Allows all tests to be visible by default when using meson test
+>> directly.
+>>
+>> This has no impact on make check-* commands, which use SPEED=quick by
+>> default (see scripts/mtest2make.py).
+> 
+> IMHO it would be conceptually confusing if we cause 'make check' to
+> be running different stuff from 'meson test'. As long as we keep a
+> makefile wrapper around running tests, I think we should keep them
+> matching what they do by default.
 
-> On 2025/04/30 3:48, Dmitry Osipenko wrote:
->> On 4/28/25 15:59, Alex Benn=C3=83=C2=A9e wrote:
->>> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->>>
->>> This commit fixes an indefinite hang when using VIRTIO GPU blob objects
->>> under TCG in certain conditions.
->>>
->>> The VIRTIO_GPU_CMD_RESOURCE_MAP_BLOB VIRTIO command creates a
->>> MemoryRegion and attaches it to an offset on a PCI BAR of the
->>> VirtIOGPUdevice. The VIRTIO_GPU_CMD_RESOURCE_UNMAP_BLOB command unmaps
->>> it.
->>>
->>> Because virglrenderer commands are not thread-safe they are only
->>> called on the main context and QEMU performs the cleanup in three steps
->>> to prevent a use-after-free scenario where the guest can access the
->>> region after it=E2=80=99s unmapped:
->>>
->>> 1. From the main context, the region=E2=80=99s field finish_unmapping i=
-s false
->>>     by default, so it sets a variable cmd_suspended, increases the
->>>     renderer_blocked variable, deletes the blob subregion, and unparents
->>>     the blob subregion causing its reference count to decrement.
->>>
->>> 2. From an RCU context, the MemoryView gets freed, the FlatView gets
->>>     recalculated, the free callback of the blob region
->>>     virtio_gpu_virgl_hostmem_region_free is called which sets the
->>>     region=E2=80=99s field finish_unmapping to true, allowing the main =
-thread
->>>     context to finish replying to the command
->>>
->>> 3. From the main context, the command is processed again, but this time
->>>     finish_unmapping is true, so virgl_renderer_resource_unmap can be
->>>     called and a response is sent to the guest.
->>>
->>> It happens so that under TCG, if the guest has no timers configured (and
->>> thus no interrupt will cause the CPU to exit), the RCU thread does not
->>> have enough time to grab the locks and recalculate the FlatView.
->>>
->>> That=E2=80=99s not a big problem in practice since most guests will ass=
-ume a
->>> response will happen later in time and go on to do different things,
->>> potentially triggering interrupts and allowing the RCU context to run.
->>> If the guest waits for the unmap command to complete though, it blocks
->>> indefinitely. Attaching to the QEMU monitor and force quitting the guest
->>> allows the cleanup to continue.
->
-> The RCU thread should be free to kick in if the guest is waiting and
-> idle. That may be a problem that should be analyzed and fixed.
->
->>>
->>> There's no reason why the FlatView recalculation can't occur right away
->>> when we delete the blob subregion, however. It does not, because when we
->>> create the subregion we set the object as its own parent:
->>>
->>>      memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
->>>
->>> The extra reference is what prevents freeing the memory region object in
->>> the memory transaction of deleting the subregion.
->>>
->>> This commit changes the owner object to the device, which removes the
->>> extra owner reference in the memory region and causes the MR to be
->>> freed right away in the main context.
->>>
->>> Acked-by: Michael S. Tsirkin <mst@redhat.com>
->>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->>> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>> Message-Id: <20250410122643.1747913-3-manos.pitsidianakis@linaro.org>
->>> Cc: qemu-stable@nongnu.org
->>> ---
->>>   hw/display/virtio-gpu-virgl.c | 2 +-
->>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virg=
-l.c
->>> index 71a7500de9..8fbe4e70cc 100644
->>> --- a/hw/display/virtio-gpu-virgl.c
->>> +++ b/hw/display/virtio-gpu-virgl.c
->>> @@ -112,7 +112,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
->>>       vmr->g =3D g;
->>>       mr =3D g_new0(MemoryRegion, 1);
->>>   -    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size,
->>> data);
->>> +    memory_region_init_ram_ptr(mr, OBJECT(g), "blob", size, data);
->>>       memory_region_add_subregion(&b->hostmem, offset, mr);
->>>       memory_region_set_enabled(mr, true);
->>>=20=20=20
->> This change makes QEMU to crash.
->> AFAICT, it effectively reverts code to old bugged version [1] that
->> was
->> rejected in the past.
->> +Akihiko Odaki
->> [1]
->> https://lore.kernel.org/qemu-devel/20230915111130.24064-10-ray.huang@amd=
-.com/
->
-> I think you are right.
->
-> Changing the owner indeed makes the MR to be freed right away, but
-> this is because it makes a reference by the FlatView to the MR
-> dangling and can lead to use-after-free.
->
-> Setting the owner to the device implies that the device keeps the
-> storage of the MR and. The references to the MR must be counted by the
-> device to keep the storage available in such a case.
+But what we should maybe do instead: Properly document in 
+docs/devel/testing/functional.rst how to get the list of all tests and how 
+to run a single test with the "meson test" way... I could do it later when 
+time permits (likely not this week), but if anybody else wants to have a 
+try, that would be welcome!
 
-Well the lifetime of the region is effectively controlled by the virgl
-resource manager. There is a disconnect between when we can finally free
-the MR and when the virglrenderer is done with it.
+  Thomas
 
-> The MR itself doesn't count the references. It is fine as long as the
-> MR is kept alive by being parented by the device, but
-> virtio_gpu_virgl_unmap_resource_blob() unparents the MR and breaks the
-> assumption. That's why the device shouldn't be the the owner of the
-> MR.
-
-Then who should? Ultimately some object needs to "own" the MR until we
-know it can be freed (so no longer mapped into the guest and no longer
-referenced by virglrenderer). The normal MR refcounting isn't enough
-because the lifetime extends beyond when it is "visible" in the FlatView.
-
->
-> Regards,
-> Akihiko Odaki
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
