@@ -4,75 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31836C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 16:18:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38BCDC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 16:26:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCKzE-0003Rc-Vu; Tue, 06 May 2025 12:17:41 -0400
+	id 1uCL6l-0006nF-2n; Tue, 06 May 2025 12:25:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <just4now666666@gmail.com>)
- id 1uCKzD-0003Pp-My
- for qemu-devel@nongnu.org; Tue, 06 May 2025 12:17:39 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <just4now666666@gmail.com>)
- id 1uCKzB-0008O4-QK
- for qemu-devel@nongnu.org; Tue, 06 May 2025 12:17:39 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-30a8fd40723so938510a91.2
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 09:17:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746548256; x=1747153056; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=mqSbj9w3DhPdwtF/sf0zHQRXypyJF2qPdruK2v79sWQ=;
- b=bQnkqTKBvQIDmGlAjSfrA/2jddCO3Gj8qgRjZpJ+luxI2i8wIVWIOH6CoDjYEutbsz
- eqobVo38ONvFx1guVnkcqIXROVXfsW692Xh2UeEey3NLAQ8BqsJJoDnzFeErldEKbrK2
- pljZMf6ObJ+muPs3IeYmTN3b7OE4E2j4LkPTb34NNgFe9FHNqZEEq1GueSRRXyCXFRO7
- lOwyUQjhb9M3YtKWMeJqoekXqUEzhK2JkNFpuLfha81g1R1uMsiieWBFN4Jo2sjLBsOo
- HgTpd58N6VMjMsEBBRRTBWTMP+Auv3BCux+kgsPM2VfgyiHEOwSCG4LkaKw0bODem/Nk
- qTXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746548256; x=1747153056;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mqSbj9w3DhPdwtF/sf0zHQRXypyJF2qPdruK2v79sWQ=;
- b=FuEA9RnJScWfGpH3hm2m746CD8yXMSxSJWe7kcjKWNmK/F58FS2SNa96c2axWgKL1F
- pfF+PIEnKscxTpT7jbpWX/MbKF+e1uxaOP51SyYsuNXTWL50unnaSwsqDy/MDviH84Ha
- xI/tmlK089U6ml8B6qlWg2DmSvRkuQZVPtqfGbQpL18bSvtPnGYqKE3UwnZjDtoSRKc3
- ZQOdDYU75IcV00ptLjsSqX5KWbhyR+HM1HPMNvUvWVQUAfuAnd/3/8KuT78SIu3Xc/8e
- 4wG6qS/Cbramqa0CvHyf0uQy9S4jn7Nme9g2q4MPqMbs7yYKkrHzydCS8e3wNM0WDKWn
- k7hA==
-X-Gm-Message-State: AOJu0YxVIT8KIOwgestcC4Vo6FUDi26RixenmMu53e1CRwMeSSF3c2f/
- Ifa8KmjkApE6qTTmlZ/7T+v/9VdymY1YpxgSIlS1CBMFd1ex3NSWBR0tyNwbD5ytFlc5hNXpn4m
- e/5+gB2UWJ85M34gGZa9P3V+ZHXmX7KbAz90=
-X-Gm-Gg: ASbGncvAjXzW06V4yELDqKFV1ShfgkmBNZ3HyerKcxultPGTuY94e1rqPV0QsOo0RDV
- AizFgYN+Xq1vIHIj5VDwdywVcK3jX5AIsIjc8eb7k7uugBp2d59ssPqwHhTVTm4y1Qf9SzJuL/I
- LynVzxnrLdfoMJXgzRCI0MCCiy+XAq4z4WWEICmSHvjg==
-X-Google-Smtp-Source: AGHT+IGvNqGUcD22GbuY32UvxLww3ssQwJ1/ym4H4LCELCIWTcu0troTrAXWBZjG9qrdumj3EWniCGpldPo/WnocjZM=
-X-Received: by 2002:a17:90b:3849:b0:2ee:ed1c:e451 with SMTP id
- 98e67ed59e1d1-30aac1b332dmr91397a91.15.1746548256259; Tue, 06 May 2025
- 09:17:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uCL6j-0006md-4q
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 12:25:25 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uCL6g-00014K-8M
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 12:25:24 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id BCBAA55BC04;
+ Tue, 06 May 2025 18:25:18 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id W29b01ug81IU; Tue,  6 May 2025 18:25:16 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id A583D55BC02; Tue, 06 May 2025 18:25:16 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A2C1B745682;
+ Tue, 06 May 2025 18:25:16 +0200 (CEST)
+Date: Tue, 6 May 2025 18:25:16 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Markus Armbruster <armbru@redhat.com>
+cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>, 
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
+ Vincenzo Maffione <v.maffione@gmail.com>, 
+ Andrew Melnychenko <andrew@daynix.com>, 
+ Yuri Benditovich <yuri.benditovich@daynix.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Michael Roth <michael.roth@amd.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Lei Yang <leiyang@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 2/4] qdev-properties: Accept bool for OnOffAuto
+In-Reply-To: <87r011rbqy.fsf@pond.sub.org>
+Message-ID: <8ac4ff32-16d1-0140-f41f-e673928cde72@eik.bme.hu>
+References: <20250108-virtio-v4-0-cbf0aa04c9f9@daynix.com>
+ <20250108-virtio-v4-2-cbf0aa04c9f9@daynix.com> <87cyfwxveo.fsf@pond.sub.org>
+ <44b21e4c-b076-41bb-9564-1e7a8cf4a450@daynix.com>
+ <87r04bs8sj.fsf@pond.sub.org>
+ <6e6935dd-fae7-4cce-acad-69609eba9b6e@daynix.com>
+ <87r011rbqy.fsf@pond.sub.org>
 MIME-Version: 1.0
-From: Elisha Hollander <just4now666666@gmail.com>
-Date: Tue, 6 May 2025 19:17:25 +0300
-X-Gm-Features: ATxdqUFUYI5V4X0yurwMlsicoujIdaW5U0lYCVSWj_TFse_cg4JjHqPwXQqYF-A
-Message-ID: <CACkyd_bN=zx1LaLnrg-U35--jzF3Q3BA6ABBokQZjLznaHcjFg@mail.gmail.com>
-Subject: [PATCH v2] util/memfd: allow allocating 0 bytes
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, Elisha Hollander <just4now666666@gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000065c5c8063479f4df"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=just4now666666@gmail.com; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,82 +83,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000065c5c8063479f4df
-Content-Type: text/plain; charset="UTF-8"
+On Tue, 6 May 2025, Markus Armbruster wrote:
+> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+>
+>> On 2025/02/06 18:48, Markus Armbruster wrote:
+>>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+>
+> [...]
+>
+>>> I understand we have something like this:
+>>>
+>>> * true: on if possible, else off
+>>>
+>>> * false: off (always possible)
+>>>
+>>> Which one is the default?
+>>
+>> It depends. Some properties have true by default. The others have false.
+>>
+>>>
+>>> There is no way to reliably configure "on", i.e. fail if it's not
+>>> possible.  I agree that's a problem.
+>>>
+>>>>                                              This problem can be solved
+>>>> using an existing mechanism, OnOffAuto, which differentiates the "auto"
+>>>> state and explicit the "on" state.
+>>>
+>>> I guess you're proposing something like this:
+>>>
+>>> * auto: on if possible, else off
+>>>
+>>> * on: on if possible, else error
+>>>
+>>> * off: off (always possible)
+>>>
+>>> Which one is the default?
+>>
+>> I converted on to auto and off to false in a following patch.
+>>
+>>>
+>>>> However, converting bool to OnOffAuto surfaces another problem: they
+>>>> disagree how "on" and "off" should be written. Please note that the
+>>>> disagreement already exists and so it is nice to solve anyway.
+>>>
+>>> Yes, converting bool to OnOffAuto is an incompatible change.
+>>
+>> Not just about conversion, but this inconsistency require users to know
+>> whether a property is bool or OnOffAuto and change how the values are
+>> written in JSON accordingly. This somewhat hurts usability.
+>>
+>>>
+>>>> This patch tries to solve it by tolerating bool values for OnOffAuto. As
+>>>> you pointed out, this approach has a downside: it makes OnOffAuto more
+>>>> complicated by having multiple ways to express the same thing.
+>>>
+>>> It also affects existing uses of OnOffAuto, where such a change is
+>>> unnecessary and undesirable.
+>
+> To be clear: this is pretty much a deal-breaker for me.
+>
+> We established above that you need certain boolean properties to take a
+> third state.  I'm willing to discuss patches that change exactly these
+> properties.  I'm going to reject patches that affect properties that do
+> not need such a change.
 
-Sorry for former patch something is messed up with my email.
+Even if the change is backwards compatible not breaking existing usage 
+just adding additional ways to specify same value?
 
-Signed-off-by: donno2048 <just4now666666@gmail.com>
----
- util/memfd.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+I may not understand this problem completely and may have forgotten what I 
+understood but I think the proposed solution only added new alternative 
+names for existing values so the old values still work. Then the only way 
+this could break if somebody using new names want them to work on older 
+QEMU versions but that's not reasonable. Also JSON is not primarily used 
+by humans but by management apps and scripts which won't change the names 
+they use when we add new names that will likely only be used on the 
+command line so this should not break it even if those apps or script are 
+used with older QEMU.
 
-diff --git a/util/memfd.c b/util/memfd.c
-index 8a2e906..e96e5af 100644
---- a/util/memfd.c
-+++ b/util/memfd.c
-@@ -108,7 +108,7 @@ err:
- void *qemu_memfd_alloc(const char *name, size_t size, unsigned int seals,
-                        int *fd, Error **errp)
- {
-- void *ptr;
-+ void *ptr = NULL;
-     int mfd = qemu_memfd_create(name, size, false, 0, seals, NULL);
+>>>> Another approach is to have one unified way to express "on"/"off" for
+>>>> bool and OnOffAuto. This will give three options in total:
+>>>>
+>>>> 1. Let OnOffAuto accept JSON bool and "on"/"off" (what this patch does)
+>>>
+>>> The parenthesis is inaccurate.  This patch only affects qdev properties.
+>>> It does not affect use of OnOffAuto elsewhere, e.g. QOM object
+>>> "sev-guest" property "legacy-vm-type", or QMP command blockdev-add
+>>> argument "locking" with driver "file".
+>>>
+>>>> 2. Let OnOffAuto and bool accept JSON bool and deprecate "on"/"off"
+>>>> 3. Let OnOffAuto and bool accept "on"/"off" and deprecate JSON bool
+>>>
+>>> For each of these options:
+>>>
+>>> (a) Change exactly the uses of OnOffAuto that need to become tri-state
+>>>
+>>> (b) Change all qdev properties (currently a superset of (a); what this
+>>>     patch does)
+>>>
+>>> (c) Change all uses of OnOffAuto
+>>>
+>>> I dislike (c) and especially (b).
+>>>
+>>>> I'm fine with either of these approaches; they are at least better than
+>>>> the current situation where users need to care if the value is OnOffAuto
+>>>> or bool when they just want to express on/off. Please tell me what you
+>>>> prefer.
+>>>
+>>> We managed to maneuver ourselves into a bit of a corner in just a few
+>>> simple steps:
+>>>
+>>> * The obvious type for a flag is bool.
+>>>
+>>> * The obvious type for a small set of values is enum.
+>>>
+>>> * Thus, the obvious type for a tri-state is enum.
+>>>
+>>> * But this prevents growing a flag into a tri-state compatibly.  Which
+>>>   is what you want to do.
+>>>
+>>> However, we actually have a second way to do a tri-state: optional bool,
+>>> i.e. present and true, present and false, absent.
+>>>
+>>> Permit me a digression...  I'm not a fan of assigning "absent" a meaning
+>>> different from any present value.  But it's a design choice QAPI made.
+>>
+>> It's a new insight I didn't know. Properties in qdev have a default
+>> value instead of special "absent". But if QAPI does have special
+>> "absent", perhaps qdev may be modified to align with.
+>
+> Nothing stops you from creating qdev properties with a special "absent"
+> value.  All you need is a special value that cannot be set.
 
-     /* some systems have memfd without sealing */
-@@ -131,9 +131,11 @@ void *qemu_memfd_alloc(const char *name, size_t size,
-unsigned int seals,
-         }
-     }
+The problem is that the default value is 0 and that means false. You can't 
+change it without either changing the default or requiring to set the 
+default explicitly which may need a lot of changes and error prone so we 
+should keep the current default to avoid this.
 
-- ptr = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, mfd, 0);
-- if (ptr == MAP_FAILED) {
-- goto err;
-+ if (size != 0) {
-+ ptr = mmap(0, size, PROT_READ | PROT_WRITE, MAP_SHARED, mfd, 0);
-+ if (ptr == MAP_FAILED) {
-+ goto err;
-+ }
-     }
+> In fact, the humble "str" property already works that way: it's a char *
+> where null means "absent".
 
-     *fd = mfd;
---
-2.30.2
+This case works as the default value matches the uninitialised value but 
+would not work for bool.
 
---00000000000065c5c8063479f4df
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> Code can recognize "absent" and do whatever needs doing then.  For
+> instance, consider device "ide-cd".  It has three such properties:
+> "ver", "serial", and "model".  "ver" defaults to "2.5+", "serial" to
+> some unique string, but "model" defaults to NULL.  Since you cannot set
+> such a value, it effectively means "absent".  The code responsible for
+> this is in ide_dev_initfn():
+>
+>    if (!dev->version) {
+>        dev->version = g_strdup(s->version);
+>    }
+>    if (!dev->serial) {
+>        dev->serial = g_strdup(s->drive_serial_str);
+>    }
+>
+> Note it leaves a null dev->model null.
+>
+>>> Using optional that way can occasionally lead to trouble.  Consider
+>>> migrate-set-parameters.  Its arguments are all optional.  For each
+>>> argument present, the respective migration parameter is set to the
+>>> argument value.  You cannot use this to reset a migration parameter from
+>>> present to absent.  Matters for parameters where "absent" has a meaning
+>>> different from any "present" value.
+>>>
+>>> End of digression.
+>>>
+>>> Start of next digression :)
+>>>
+>>> Note that qdev properties are generally optional.  The only way to make
+>>> them mandatory is to reject their default value in .realize().  When
+>>> users set this default value explicitly, the error message will almost
+>>> certainly be confusing.
+>>>
+>>> End of digression.
+>>>
+>>> Optional bool may enable a fourth solution:
+>>>
+>>> 4. Make "absent" mean on if possible, else off, "present and true" mean
+>>>    on if possible, else error, and "present and false" mean off (always
+>>>    possible).
+>>>
+>>>    This changes the meaning of "present and true", but it's precisely
+>>>    the change you want, isn't it?
+>>
+>> We have "false by default" properties so it unfortunately does not work.
+>
+> Then make the code make "absent" mean what you need it to mean.  Just
+> like the code from ide_dev_initfn() I quoted above.
 
-<div dir=3D"auto"><div dir=3D"auto">Sorry for former patch something is mes=
-sed up with my email.</div><div dir=3D"auto"><br></div>Signed-off-by: donno=
-2048 &lt;<a href=3D"mailto:just4now666666@gmail.com">just4now666666@gmail.c=
-om</a>&gt;<div dir=3D"auto">---</div><div dir=3D"auto">=C2=A0util/memfd.c |=
- 10 ++++++----</div><div dir=3D"auto">=C2=A01 file changed, 6 insertions(+)=
-, 4 deletions(-)</div><div dir=3D"auto"><br></div><div dir=3D"auto">diff --=
-git a/util/memfd.c b/util/memfd.c</div><div dir=3D"auto">index 8a2e906..e96=
-e5af 100644</div><div dir=3D"auto">--- a/util/memfd.c</div><div dir=3D"auto=
-">+++ b/util/memfd.c</div><div dir=3D"auto">@@ -108,7 +108,7 @@ err:</div><=
-div dir=3D"auto">=C2=A0void *qemu_memfd_alloc(const char *name, size_t size=
-, unsigned int seals,</div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int *fd, Error **er=
-rp)</div><div dir=3D"auto">=C2=A0{</div><div dir=3D"auto">-    void *ptr;</=
-div><div dir=3D"auto">+    void *ptr =3D NULL;</div><div dir=3D"auto">=C2=
-=A0 =C2=A0 =C2=A0int mfd =3D qemu_memfd_create(name, size, false, 0, seals,=
- NULL);</div><div dir=3D"auto"><br></div><div dir=3D"auto">=C2=A0 =C2=A0 =
-=C2=A0/* some systems have memfd without sealing */</div><div dir=3D"auto">=
-@@ -131,9 +131,11 @@ void *qemu_memfd_alloc(const char *name, size_t size, =
-unsigned int seals,</div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0}</div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=A0}</div><div dir=3D"auto"><b=
-r></div><div dir=3D"auto">-    ptr =3D mmap(0, size, PROT_READ | PROT_WRITE=
-, MAP_SHARED, mfd, 0);</div><div dir=3D"auto">-    if (ptr =3D=3D MAP_FAILE=
-D) {</div><div dir=3D"auto">-        goto err;</div><div dir=3D"auto">+    =
-if (size !=3D 0) {</div><div dir=3D"auto">+        ptr =3D mmap(0, size, PR=
-OT_READ | PROT_WRITE, MAP_SHARED, mfd, 0);</div><div dir=3D"auto">+        =
-if (ptr =3D=3D MAP_FAILED) {</div><div dir=3D"auto">+            goto err;<=
-/div><div dir=3D"auto">+        }</div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=
-=A0}</div><div dir=3D"auto"><br></div><div dir=3D"auto">=C2=A0 =C2=A0 =C2=
-=A0*fd =3D mfd;</div><div dir=3D"auto">--</div><div dir=3D"auto">2.30.2</di=
-v></div>
+This would change the value for false as 0 is now taken to mean auto so 
+either all places that assume false need to be updated or if we use 
+different value for auto then all places need to explicitly set that and 
+you can't easily change a bool into OnOffAuto.
 
---00000000000065c5c8063479f4df--
+What is the core of the issue that you don't like about allowing on/off 
+for bool? If it's just some cases are not covered and still would not 
+accept alternative names would it be easier to fix those?
+
+Regards,
+BALATON Zoltan
+
+>>> Yet another solutions:
+>>>
+>>> 5. Alternate of bool and an enum with a single value "auto".
+>>>
+>>>     Falls apart with the keyval visitor used for the command line.
+>>>     Fixable, I believe, but a good chunk of work and complexity.
+>>
+>> I may have missed something, but I think that will break JSON string
+>> literals "on" and "off".
+>
+> Unbreaking it will be a good chunk of work and complexity, I believe.
+>
+>>> My gut feeling: explore 4. first.
+>
+>
+>
 
