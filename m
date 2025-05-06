@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9CFC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C491AC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCJXB-0001w3-4L; Tue, 06 May 2025 10:44:37 -0400
+	id 1uCJYP-000783-TM; Tue, 06 May 2025 10:45:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uCJVO-00023w-Te
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:42:48 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1uCJV6-0001TN-O5
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:42:33 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uCJVM-00029x-HE
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:42:46 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-441c99459e9so19289395e9.3
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:42:43 -0700 (PDT)
+ id 1uCJV3-00025t-Ju
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:42:28 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-441d1ed827cso4604195e9.1
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:42:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746542562; x=1747147362; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746542542; x=1747147342; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NIaSPaix7r679jzJntYchPOTlZ36RPzqbOenhGw4cwE=;
- b=S7C1oDxxtr14R+vykgGAmg2HclnVtH2vLyeCE/JR2plr2a6CXlNwr5O9WF/Bv8xnT/
- xe6nUUqwCbCeFtLvFBu9tF5yK2CnpvXA+Oj+EFRRHTNSP5pjObL8YtXnTgv12eyh0z0D
- 8E+SvfsewhQBHQNmRvPnS8vIC23Bh/7IsxZCYy+4RLa5HfBhGD73/+3gvI8MLFk11FtR
- eJ3PHYAEA/Q4sJEOqsyiZYOKVPvKRyy1MwcqyMJ8oVS3hF80GhehHfLpG1UQk9c0xATF
- IPwvvI2Our/Qty+hkRpMKV7cYPMoiw0H5owOmRXxXXg/EmQDt3bPVbXOMm075rsR4jyD
- NOAg==
+ :reply-to; bh=iaRot8lpjeibNl8vHrlolFRTMgPm1jY7hWkc0lrumMQ=;
+ b=qULwgcREOxy83GJwNuuLvA5YzlCPFyIzGcWe9pXKHZ/Js4+y0274sVv+5bG8cE79pk
+ 92cfTPrEx5VJ9P6Mf9T3tz0Zm0Imw/NgAM08+/I0bWfRn0DjWMBfoJsVY218LfLILeYs
+ kiIB1P+DTCJIYji4puxlZIl8j6I7D5PJhARETOtL2BFWhMPFHzXR3KmCH0amUaFEhZ0m
+ jwXRREBE6/zQFFT1qFwtqo8oZR69jgDMMzNIwseVVvrGa72eI7MqOye4MXAes8lVgBU+
+ uQId3D2Vnht5jgsWctqcJ1SAWJ+U9Bb6vVq2s/HjRwPLDkIo1BZedhlPNGtC8CPuXXAw
+ Wysw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746542562; x=1747147362;
+ d=1e100.net; s=20230601; t=1746542542; x=1747147342;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NIaSPaix7r679jzJntYchPOTlZ36RPzqbOenhGw4cwE=;
- b=VAUu7DCiDCgNKhEu8ALUAyDLL+wuQngRiZx8Z7m35imRW0h0rS+LZW8h+uSjDw+YGl
- UueaKZbE04rYkILuhmXUMEB3+BEM2Y3WvHuHexsK2zuCFxlfV/LP5VBcOfugmWcvL4FC
- HZQFE5MYBtStP6Wbw08mhtVvd181+/cvJMcU6loL3T5gt3uJY8pXyjTsiVbyX1Sfbr9T
- T/kXKdoPVMr64Hhe/capvgwun+s8MGhhJH3vN6qr6qGD92gUL3nVTvuijDsANly4E+yn
- 1dN9zlotE3bpYVM/bmh6pQ0qD//qgf8jw5xdRD1jH8J2p4JiHxV5dKyT2AleclCj8pww
- URDQ==
-X-Gm-Message-State: AOJu0YyJHZjZcDpnnk9nXv0ACtFkzBjpLPJhdJw5P98LRNN/VpukiFYJ
- 4wvjBKlZvEf0K5tfTdrJHZNqHtPZwdJYK7+dZ1V8vheHH1d3Ls+YKPVeprHaluf4d1yVB7UIMj6
- 7
-X-Gm-Gg: ASbGnctm2FcHjZGL29tYYASA9VpfRJqu0I9rMwfKoFfTuKHZfv411IMzCDdgjUQK25b
- kVRpGlwzys7vMhipR9Cxv2G/IS449RpfRCOVQJBEYANkW9QKj64pFV75A+4FQib1nAJCQd3swnB
- 0Rj12/1+X5S7Py5TmrLVhIiK+9/T1Yr4Mh4a06xsUUvSXwUFPaSQ6ib9DBfCwAanUyDw9tg78hM
- TPibtiAaDPj9KWeHTBKl6CzKHMgUKXpZq7Y9MjrqYhEp7NROaVc2b7JyNwin8iLFMfgMmYgc9pA
- yrPCBWJLBiMZR7cN2Q76meX9eIX0WlR8iAC07s+hrVv5aqM=
-X-Google-Smtp-Source: AGHT+IHZHLqbgPhzsWqMt7Ulkvn2BKGmK6YK8s1saDOm8cYYSdtX128W9pHaFVSErTDoxHqa4PKYUw==
-X-Received: by 2002:a05:600c:3155:b0:43b:cb12:ba6d with SMTP id
- 5b1f17b1804b1-441bbea0d49mr159933705e9.3.1746542562484; 
- Tue, 06 May 2025 07:42:42 -0700 (PDT)
+ bh=iaRot8lpjeibNl8vHrlolFRTMgPm1jY7hWkc0lrumMQ=;
+ b=B7SsX/PR8MhVQaRgba4u6gMhheiRNpIb+EZBL2mmJKgLMmSLfMN02u5SCJtotrw/qj
+ pcZnTTXv/xq+fBNYeS1PcI1VX9fZJs8ATCH0PEtjbD0aK69INDYZUlOfhwG6hsyGyvQe
+ ylBubMcyXneuJu52w/8b0aCaml2Yf2CVH7JkyqYpYncTlwEmOy2IcC48KzGRNcoioXaX
+ 1R2JH/renLFXeHVBUzhMdANOWQZfEOhnE7ezdGU1BDQ2ZakWY3sV2g0VHJG0vg5Rdxns
+ Zyunw2mYaoH5aiS1yOCfkjazP6RitQptssj7NcJ10DDZnRL74mGTR2Z+Nthx85zoX+9W
+ Uh6Q==
+X-Gm-Message-State: AOJu0YyM5b2F8sJEICK44CmPYs2MUWM23Fi/syTAYeguS6zDqBvs77Vo
+ PHZErrfsFzowXKkTRnS65zIEABrCw/JktxZ11VoY5Z7uX5T0JAzYlI3hJx4/P67rV5OhQA9OquU
+ T
+X-Gm-Gg: ASbGncuMVPMmgPhu77YQ3KQwJJUELb6WvqaQmZi9MU+I0Iq68DbV6qnf6RYjmeOwvRf
+ lSOXN7v62qMDHjD2bSb3mW8rH3MWcE534uJhesDvq0wh9+wIhxY18l8vXXxrmt/kzPOE61dFBpe
+ duPI8k+NgxvvqU6rtPeiWGblijfj7s1TXhF32XA8szQ02E1lmtCOQKiVZdKtvz3VTZr0YPMlWQ/
+ HWdXeNCaye6erhluqWirMpU1BtpfGroIG0POcvXqulJVQF3XxWddt3q6y+u3KK07OEQW+RjEIcR
+ DUi5xBQz3oHgMTVO55XtYRCC47nF4T56hshG8tiFCWb88CA=
+X-Google-Smtp-Source: AGHT+IGY7vqTYCKUDiONvepX46N8AZBcB6Y3OE7YRg/R2aEV78sgKLKG2kGhfHwEfmEotkFVpgJw7Q==
+X-Received: by 2002:a05:600c:4ecf:b0:440:6a5f:c308 with SMTP id
+ 5b1f17b1804b1-441d051b271mr36444815e9.13.1746542542151; 
+ Tue, 06 May 2025 07:42:22 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b89edfc2sm169603435e9.20.2025.05.06.07.42.41
+ 5b1f17b1804b1-441b89edfc2sm169603435e9.20.2025.05.06.07.42.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 07:42:41 -0700 (PDT)
+ Tue, 06 May 2025 07:42:21 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 23/32] target/arm: Don't assert() for ISB/SB inside IT block
-Date: Tue,  6 May 2025 15:42:05 +0100
-Message-ID: <20250506144214.1221450-24-peter.maydell@linaro.org>
+Subject: [PULL 05/32] target/arm/ptw: get current security_space for current
+ mmu_idx
+Date: Tue,  6 May 2025 15:41:47 +0100
+Message-ID: <20250506144214.1221450-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250506144214.1221450-1-peter.maydell@linaro.org>
 References: <20250506144214.1221450-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,76 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the guest code has an ISB or SB insn inside an IT block, we
-generate incorrect code which trips a TCG assertion:
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-qemu-system-arm: ../tcg/tcg-op.c:3343: void tcg_gen_goto_tb(unsigned int): Assertion `(tcg_ctx->goto_tb_issue_mask & (1 << idx)) == 0' failed.
+It should be equivalent to previous code.
+Allow to call common function to get a page address later.
 
-This is because we call gen_goto_tb(dc, 1, ...) twice:
-
- brcond_i32 ZF,$0x0,ne,$L1
- add_i32 pc,pc,$0x4
- goto_tb $0x1
- exit_tb $0x73d948001b81
- set_label $L1
- add_i32 pc,pc,$0x4
- goto_tb $0x1
- exit_tb $0x73d948001b81
-
-Both calls are in arm_tr_tb_stop(), one for the
-DISAS_NEXT/DISAS_TOO_MANY handling, and one for the dc->condjump
-condition-failed codepath.  The DISAS_NEXT handling doesn't have this
-problem because arm_post_translate_insn() does the handling of "emit
-the label for the condition-failed conditional execution" and so
-arm_tr_tb_stop() doesn't have dc->condjump set.  But for
-DISAS_TOO_MANY we don't do that.
-
-Fix the bug by making arm_post_translate_insn() handle the
-DISAS_TOO_MANY case.  This only affects the SB and ISB insns when
-used in Thumb mode inside an IT block: only these insns specifically
-set is_jmp to TOO_MANY, and their A32 encodings are unconditional.
-
-For the major TOO_MANY case (breaking the TB because it would cross a
-page boundary) we do that check and set is_jmp to TOO_MANY only after
-the call to arm_post_translate_insn(); so arm_post_translate_insn()
-sees is_jmp == DISAS_NEXT, and  we emit the correct code for that
-situation.
-
-With this fix we generate the somewhat more sensible set of TCG ops:
- brcond_i32 ZF,$0x0,ne,$L1
- set_label $L1
- add_i32 pc,pc,$0x4
- goto_tb $0x1
- exit_tb $0x7c5434001b81
-
-(NB: the TCG optimizer doesn't optimize out the jump-to-next, but
-we can't really avoid emitting it because we don't know at the
-point we're emitting the handling for the condexec check whether
-this insn is going to happen to be a nop for us or not.)
-
-Cc: qemu-stable@nongnu.org
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2942
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250501125544.727038-1-peter.maydell@linaro.org
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-id: 20250414153027.1486719-3-pierrick.bouvier@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/translate.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/arm/ptw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 88df9c482ab..e773ab72685 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -7760,7 +7760,8 @@ static bool arm_check_ss_active(DisasContext *dc)
- 
- static void arm_post_translate_insn(DisasContext *dc)
- {
--    if (dc->condjmp && dc->base.is_jmp == DISAS_NEXT) {
-+    if (dc->condjmp &&
-+        (dc->base.is_jmp == DISAS_NEXT || dc->base.is_jmp == DISAS_TOO_MANY)) {
-         if (dc->pc_save != dc->condlabel.pc_save) {
-             gen_update_pc(dc, dc->condlabel.pc_save - dc->pc_save);
-         }
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index bdb4de7c047..0ae9c5a3f49 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -3636,7 +3636,7 @@ hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cs, vaddr addr,
+     ARMCPU *cpu = ARM_CPU(cs);
+     CPUARMState *env = &cpu->env;
+     ARMMMUIdx mmu_idx = arm_mmu_idx(env);
+-    ARMSecuritySpace ss = arm_security_space(env);
++    ARMSecuritySpace ss = arm_mmu_idx_to_security_space(env, mmu_idx);
+     S1Translate ptw = {
+         .in_mmu_idx = mmu_idx,
+         .in_space = ss,
 -- 
 2.43.0
 
