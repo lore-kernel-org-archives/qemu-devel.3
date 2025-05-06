@@ -4,81 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54D63C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:39:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A7EC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:50:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCKOK-00042Y-OQ; Tue, 06 May 2025 11:39:32 -0400
+	id 1uCKYN-0001e0-6t; Tue, 06 May 2025 11:49:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCKOJ-00042K-R9
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:39:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uCKY0-0001a2-CA
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:49:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCKOD-0003Q7-8M
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:39:31 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uCKXy-0004nX-Gr
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:49:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746545964;
+ s=mimecast20190719; t=1746546568;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CgAbqy6WJ9z3W5UzzUNbeU0qsJG1COSaqX+7g6Erm2I=;
- b=CDnhLulUQN3GQswVHGMO1NHNdoJfAOHOaemX6EFLULQCdRvWthmG08ruDqJKYb48lu3n8T
- f4LTrRsqiz/W0jHSr9YYAPvoRVJl3fUUBLUPRjKfnEqWx1NJydBC8q4QhcxYwgKfeiUkkJ
- eEx6kSD5TAcxGdQsxNoXIdXZDe+RjVc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-41-anUd5ch6N4W1H3-ouxLLyg-1; Tue,
- 06 May 2025 11:39:20 -0400
-X-MC-Unique: anUd5ch6N4W1H3-ouxLLyg-1
-X-Mimecast-MFC-AGG-ID: anUd5ch6N4W1H3-ouxLLyg_1746545958
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8BA4D1955D67; Tue,  6 May 2025 15:39:16 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4720919560B2; Tue,  6 May 2025 15:39:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B04CD21E66C2; Tue, 06 May 2025 17:39:12 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  "Michael S.
- Tsirkin"
- <mst@redhat.com>,  Jason Wang <jasowang@redhat.com>,  Dmitry Fleytman
- <dmitry.fleytman@gmail.com>,  Sriram Yagnaraman
- <sriram.yagnaraman@ericsson.com>,  Luigi Rizzo <rizzo@iet.unipi.it>,
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>,  Vincenzo Maffione
- <v.maffione@gmail.com>,  Andrew Melnychenko <andrew@daynix.com>,  Yuri
- Benditovich <yuri.benditovich@daynix.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Michael
- Roth <michael.roth@amd.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,  Zhao Liu <zhao1.liu@intel.com>,
- Lei Yang <leiyang@redhat.com>,  BALATON Zoltan <balaton@eik.bme.hu>,
- qemu-devel@nongnu.org,  devel@daynix.com
-Subject: Re: [PATCH v6 0/4] virtio: Convert feature properties to OnOffAuto
-In-Reply-To: <db08fab9-682c-491c-bafc-9a701bbc73ee@daynix.com> (Akihiko
- Odaki's message of "Mon, 5 May 2025 15:44:43 +0900")
-References: <20250306-virtio-v6-0-1235eab776d9@daynix.com>
- <20250425081234-mutt-send-email-mst@kernel.org>
- <aAt-HPZB7ifgZqmd@redhat.com> <87r01gb7of.fsf@pond.sub.org>
- <db08fab9-682c-491c-bafc-9a701bbc73ee@daynix.com>
-Date: Tue, 06 May 2025 17:39:12 +0200
-Message-ID: <87msbprbof.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=bkngm4xPW0h1Rul1XmIN8IYWuu6SW3zE+68bt6TipHg=;
+ b=W/YARlgpbdKxt+AIu1M3H29+YWcdoaocchAZG/1t9xn5mxlez8Up9Y0urkz/4T/r6xijUz
+ 94G8FSqjQlJ0vr8MuZjTaCDlhYKe0iu2fVTNzygdKFs1pg8L5bL2DKVemerZ76ZvoBdV7D
+ LptWDv9Fso79fc2sIzw9qQfSGg44Ows=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-308-I6j3BEQBMKKfzYPGJ2DMNw-1; Tue, 06 May 2025 11:49:27 -0400
+X-MC-Unique: I6j3BEQBMKKfzYPGJ2DMNw-1
+X-Mimecast-MFC-AGG-ID: I6j3BEQBMKKfzYPGJ2DMNw_1746546566
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-39ac9b0cb6aso2434472f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:49:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746546566; x=1747151366;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bkngm4xPW0h1Rul1XmIN8IYWuu6SW3zE+68bt6TipHg=;
+ b=Qo1mwvVhxSs9Mk22mvrpg2ugYEY4joFKU0m2CT779ptdT4mmguf05KRhM6FAF3+kpa
+ 2RFMezd17NtJ2C/qd9T3nM/RiYVkrCc0ksJNwCWAzurcacP2TgY8EXaiz5SqK4v1JC+k
+ o7XoZXxWFA5YAh9H8O0tYNwf+1J1V2Q4x7BaddouYmAn++DsyAvDrkenB5t1sVJhRIAi
+ 38GTr6nYtJRIKV3BiQp3YGnLUFgINtLdXI2Zl3it0qRDVvblYD+lHJuN1Vl8eTZAIGf7
+ bxlU7iJ/pph014DgqHjcAEd3sC9DMOWOdh9J6dcP5Dzk+xiP8mzk7TblKKwtVaAoPOb/
+ Ss6A==
+X-Gm-Message-State: AOJu0YypyHIkLcgHoTHt+Y+9pJra08jUa06z2cpD708JeBCTSJPXEfEW
+ CPzHu0ZguatZU6UM4wo7kE/M22grZ16+AID5A4DHmsGtNgbXQEOKjO/zru1fkRbhgaGQ3g0/Fjv
+ XKZew786niHGaPzWaJ+p2Zp4FBraiITYvrH3yCa6JXOsWJ+FG/Q0O
+X-Gm-Gg: ASbGncs3693NfLYXFYpTk5fV9Bqp1EnJQIrvy3Q10ZqmuzmiPsQavrov8c/bWz/mScK
+ dSb5e9YcW4DAyWvfC6cbU4fPzobDMUynYM8AFDw3mo4kwzFk3JM2ZDQYvC5ro+KNFtw6IKJjY8J
+ y77zMFmhivziSdH7lLkUCkauF8N0B2mJX4LJahWqYhnn+cfiJ6+FFmLqKQ6QgfEZqoaH0KM7dl4
+ Plj3YV1ldouFt6RY80mK2nI8khdZtFOmYcul5MKA54DCOunjHojF80IRyjSden4eNsvDymxzVmd
+ TM53UZYDQMhIaNTwDGaIJx1rQ1phGSFY
+X-Received: by 2002:a05:6000:178f:b0:39c:d05:3779 with SMTP id
+ ffacd0b85a97d-3a0ac3eb17cmr2824051f8f.49.1746546566291; 
+ Tue, 06 May 2025 08:49:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFUj74RFkjOoqcOq/gKjPK5QyKCPHVWxdIDd1/VNcSsrdTvrR4Dao1DMLULuuawVwr1AmpEyg==
+X-Received: by 2002:a05:6000:178f:b0:39c:d05:3779 with SMTP id
+ ffacd0b85a97d-3a0ac3eb17cmr2824028f8f.49.1746546565814; 
+ Tue, 06 May 2025 08:49:25 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a099b172b3sm14264980f8f.90.2025.05.06.08.49.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 May 2025 08:49:25 -0700 (PDT)
+Date: Tue, 6 May 2025 17:49:23 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Gustavo Romero
+ <gustavo.romero@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Ani Sinha <anisinha@redhat.com>, Udo
+ Steinberg <udo@hypervisor.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, Andrew Jones
+ <ajones@ventanamicro.com>, "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?="
+ <berrange@redhat.com>, Fabiano Rosas <farosas@suse.de>, Alex
+ =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>, Shannon Zhao
+ <shannon.zhaosl@gmail.com>
+Subject: Re: [PATCH-for-10.0? v2 13/14] hw/arm/virt-acpi: Do not advertise
+ disabled GIC ITS
+Message-ID: <20250506174923.4fce914c@imammedo.users.ipa.redhat.com>
+In-Reply-To: <6b64af93-f542-4a0e-8e55-5bb235f42c83@linaro.org>
+References: <20250403151829.44858-1-philmd@linaro.org>
+ <20250403151829.44858-14-philmd@linaro.org>
+ <20250404124110.59c59dc3@imammedo.users.ipa.redhat.com>
+ <6b64af93-f542-4a0e-8e55-5bb235f42c83@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -103,52 +120,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+On Fri, 4 Apr 2025 14:49:45 +0200
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-> On 2025/04/26 0:08, Markus Armbruster wrote:
->> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>=20
->>> On Fri, Apr 25, 2025 at 08:14:13AM -0400, Michael S. Tsirkin wrote:
->>>> On Thu, Mar 06, 2025 at 03:16:26PM +0900, Akihiko Odaki wrote:
->>>>> This series was spun off from:
->>>>> "[PATCH 0/3] virtio-net: Convert feature properties to OnOffAuto"
->>>>> (https://patchew.org/QEMU/20240714-auto-v3-0-e27401aabab3@daynix.com/)
->>>>>
->>>>> Some features are not always available with vhost. Legacy features are
->>>>> not available with vp_vdpa in particular. virtio devices used to disa=
-ble
->>>>> them when not available even if the corresponding properties were
->>>>> explicitly set to "on".
->>>>>
->>>>> QEMU already has OnOffAuto type, which includes the "auto" value to l=
-et
->>>>> it automatically decide the effective value. Convert feature properti=
-es
->>>>> to OnOffAuto and set them "auto" by default to utilize it. This allows
->>>>> QEMU to report an error if they are set "on" and the corresponding
->>>>> features are not available.
->>>>>
->>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>
->>>>
->>>> Marcus, Paolo, Daniel, Eduardo, any feedback on the QOM bits?
->>>
->>> I've said on every previous version that I don't think we should be
->>> changing OnOffAuto to secretly accept bool values. That is bypassing
->>> QAPI schema definitions with a special code hack.
->>=20
->> I also objected to v4.  Thread starts at
->>      Message-ID: <87cyfwxveo.fsf@pond.sub.org>
->>      https://lore.kernel.org/qemu-devel/87cyfwxveo.fsf@pond.sub.org/
->> I could be persuaded to accept a patch that changes exactly the
->> properties that need to be changed to tri-state, with suitable
->> rationale.  This patch changes a bunch of unrelated properties, too.
->
-> I replied to the thread as I found that I haven't replied to the last mes=
-sage in the thread and the newer versions of the series do not address its =
-discussion points either.
+> On 4/4/25 12:41, Igor Mammedov wrote:
+> > On Thu,  3 Apr 2025 17:18:28 +0200
+> > Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+> >  =20
+> >> GIC ITS can be disabled at runtime using '-M its=3Doff',
+> >> which sets VirtMachineState::its =3D false. Check this
+> >> field to avoid advertising the ITS in the MADT table.
+> >>
+> >> Reported-by: Udo Steinberg <udo@hypervisor.org>
+> >> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2886
+> >> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> >> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+> >> ---
+> >>   hw/arm/virt-acpi-build.c | 2 +-
+> >>   1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> >> index e7e27951cb9..38a9e6fe0c5 100644
+> >> --- a/hw/arm/virt-acpi-build.c
+> >> +++ b/hw/arm/virt-acpi-build.c
+> >> @@ -212,7 +212,7 @@ static bool its_enabled(VirtMachineState *vms)
+> >>   {
+> >>       VirtMachineClass *vmc =3D VIRT_MACHINE_GET_CLASS(vms);
+> >>  =20
+> >> -    return !vmc->no_its;
+> >> +    return !vmc->no_its && vms->its; =20
+> >=20
+> > It's confusing have both no_its and its,
+> > it would be better to lean this mess up (i.e dedup or rename if somethi=
+ng is poorly named) =20
+>=20
+> What about:
+>=20
+> class: s/no_its/!its_createable/ or !its_usable
+> state: s/its/its_created/ or its_used or its_in_use
 
-I just reiterated and clarified my objection in said thread, and tried
-to point towards possible solutions I could accept.
+looking at the code what we are essentially doing with variables in class,
+is selecting its device type. And then playing scattered if/then game to de=
+cide
+which 'its' to create or not create.
+can we make something like this instead:
+
+ machine_foo_class_init_vX():
+  vmc->its_type =3D NULL;
+
+ machine_foo_class_init_vX+1():
+  vmc->its_type =3D accel_get_its_type()
+=20
+and then elsewhere:
+
+if(vmc->its_type && vms->its_enabled)
+    create_its(vmc->its_type)
+
 
 
