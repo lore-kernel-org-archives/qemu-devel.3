@@ -4,93 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 867CCC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53516C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCDP7-0002wA-M5; Tue, 06 May 2025 04:11:53 -0400
+	id 1uCDPO-00031d-09; Tue, 06 May 2025 04:12:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDP6-0002vo-1w
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:11:52 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDP4-0002Ma-2N
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:11:51 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-ac2902f7c2aso840722766b.1
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 01:11:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746519108; x=1747123908; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=g2mQ1cwRA8SyoG1wDqXR79JDRyq1Q99n6dkyg+uEfsw=;
- b=vBT9mFGuR5z6jqf8CeFwUyrjfCHvAPI4oCgabtqyOtQjYJ4awJTbOQIldZNGlI6iwd
- e1nmdfSd55dhPRhgssaIXJxOOkcYQPpZx2nWkYoWQuWuNR4KdM/Y7cm+u/cpLDsavBq8
- iVtAtktUFqKf8Kcf7DBSkYWbCRSvgLRaAUxvd6eZjilr6xCay65VBhFD+Ks7LayrF0DN
- LVD/9RkKIa5d6A6GLFrbzjoVs7R3Ww1BpMehDYlozZgmIJRpv4z/e8X/PsiHRhDgxPE8
- Pu1JmQtsOltr1qiY6ikFOqyks13pThIG7Cb38rcjspw+WW8i+3rgFYchWtoIEgELeTh8
- yrTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746519108; x=1747123908;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=g2mQ1cwRA8SyoG1wDqXR79JDRyq1Q99n6dkyg+uEfsw=;
- b=PzwY93eEuckExbWNh5unLorU7QXebeG6QpB4SICjtTCCYA08bMQKXQJwcPbhMtYbcj
- VKlu99/JY0OOvzvlGL76y5dynUtYZR3S1IDLpPQvAP2jJeR56A+hBQj0HeVuz0JCugZc
- YRdf2Dz/iCu/I6Y/SuUtZZvLlB5qUxxzO18xAGgAEY1Kwc25ed+ZpR9+rQVzC+x9vnlF
- 80qHv+IwOZ1fjZrRTwJ8fdRqEYrwDl5fEHtlfsN3LGB3MD00Chese3GjOK1HPGn4Mf1b
- UcALMNCyZkFLHdW0lUPtbZg0+twsQ0QXeYYlSDLbLUIxSip2OA2j2dYa0THUgSXgKpS0
- 6nGw==
-X-Gm-Message-State: AOJu0YyU6s0/d8BrjArboEhNbCCjsmmX17Lww8A64VyGkvBxBaE0zbl2
- 4jLMp5z/Lo/b+rHmxzPTUSltoKUELVU5KqxBYiKqr/johvQNk2X4rRpuxC/ixlhL7GpYyB6J/vc
- goWU=
-X-Gm-Gg: ASbGncsdIfL8pZS77p08CUy0YB1LJbxLK6gh6pvbjTlToAyC56moqKkfexpw4gcMwKt
- nDCbGE91Y48AWmMSxtg7z3OOSXrH6N2MMd6NshZuPM+JLfeaAN999GubXPriNvUHPUd/bIViIwg
- 6ur2x81T4cxZE86lgDyhBDh20Ltgy8n2pENmHKELUZHKA6uGTX7o7M0TaTU7yhVmgH82akJ6Hjd
- c8ZI/3jom5NVAL2LJN8nxGp0SkrWp3JKzvvIhDMs3DB5GxTUAQ6uEP41VeEcNU/bFqIe+vLqV0J
- 3Kw8b5QRDMJHYTvA8HHJISnLy1UjrWhMVLMihm/luFS5hDF2/3mXLMnTRDi+PX1UZf1eI3JbP7y
- Nca0=
-X-Google-Smtp-Source: AGHT+IGVRrUfIy7XysX9Pw1ZxCJfnJhYU5NJvN360QA5krj8dsUihmsCM7pvk3ISKqWBlB72mTvyxw==
-X-Received: by 2002:a17:907:7f8b:b0:acb:63a4:e8e5 with SMTP id
- a640c23a62f3a-ad1a48bc622mr983215966b.6.1746519108283; 
- Tue, 06 May 2025 01:11:48 -0700 (PDT)
-Received: from [10.194.152.213] (238.21.205.77.rev.sfr.net. [77.205.21.238])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5fa77b8fba2sm7238629a12.56.2025.05.06.01.11.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 May 2025 01:11:47 -0700 (PDT)
-Message-ID: <8850f0a0-3be9-4909-aa47-5932193ac1d1@linaro.org>
-Date: Tue, 6 May 2025 10:11:45 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCDPL-0002xV-Fg; Tue, 06 May 2025 04:12:07 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCDPG-0002NI-Q4; Tue, 06 May 2025 04:12:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746519123; x=1778055123;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Yd1/abJpO3rjSefg7BT4LMzLo4Y1N46ZWXlD7sWCN9Y=;
+ b=lfxHnuxN3dTuYoWZEnyq9gDqd8/3PH0eYd4MbmKh4g/w7v5Mo+q0UPD3
+ dpNskWKRYLcs06K/YfPDT3Cq3MC7GEDjgoojW8aFu53iobdlfNiH/Vxpz
+ YF8IaF8fk966b3ya+kITtI6bLM0iaWTpF9AKj1uRai7UwngTCkAKDHBdJ
+ 72zEy/VX41HMoxnsNXg3cb2PR2Kum7QR4odkV3SmDiaeugkyk3eh38C5b
+ FtVU9Db0adKBV/nO41amJBpITTu9bdH29OHVM/6D8vO0Z/DSRwgOTrUPE
+ bqRRQMmPoCalKPPGvB0QkNtcfbJPMRz2OWN7q9n4uKH3mVj7c6R2Weysr w==;
+X-CSE-ConnectionGUID: lZZSCY2WT+KwoT067E8dWQ==
+X-CSE-MsgGUID: qpKVUMUtR1CJcq+Xlcsyzw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11424"; a="73571275"
+X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="73571275"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 May 2025 01:11:58 -0700
+X-CSE-ConnectionGUID: s+6Cp41rQRiBLEvB85E8vA==
+X-CSE-MsgGUID: X2DUpjw+Q2Ka3bUyXwqjkw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="158794703"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa002.fm.intel.com with ESMTP; 06 May 2025 01:11:57 -0700
+Date: Tue, 6 May 2025 16:32:58 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 09/11] rust: remove offset_of replacement
+Message-ID: <aBnJOiX5o6Cl0KNB@intel.com>
+References: <20250505090438.24992-1-pbonzini@redhat.com>
+ <20250505090438.24992-10-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/9] hw/s390x/s390-virtio-ccw: Remove the deprecated
- 2.11 machine type
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20250506062148.306084-1-thuth@redhat.com>
- <20250506062148.306084-3-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250506062148.306084-3-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250505090438.24992-10-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,17 +81,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/25 08:21, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On Mon, May 05, 2025 at 11:04:34AM +0200, Paolo Bonzini wrote:
+> Date: Mon,  5 May 2025 11:04:34 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 09/11] rust: remove offset_of replacement
+> X-Mailer: git-send-email 2.49.0
 > 
-> The s390-ccw-virtio-2.11 machine is older than 6 years, so according
-> to our machine support policy, it can be removed now.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   hw/s390x/s390-virtio-ccw.c | 25 -------------------------
->   1 file changed, 25 deletions(-)
+>  docs/devel/rust.rst                  |   6 -
+>  rust/Cargo.lock                      |   1 -
+>  rust/Cargo.toml                      |   2 +-
+>  rust/hw/char/pl011/src/device.rs     |   4 +-
+>  rust/hw/timer/hpet/src/hpet.rs       |   4 +-
+>  rust/qemu-api-macros/src/lib.rs      |  29 +----
+>  rust/qemu-api/Cargo.toml             |   3 -
+>  rust/qemu-api/build.rs               |   7 --
+>  rust/qemu-api/meson.build            |   4 -
+>  rust/qemu-api/src/lib.rs             |   4 -
+>  rust/qemu-api/src/offset_of.rs       | 168 ---------------------------
+>  rust/qemu-api/src/qdev.rs            |   6 +-
+>  rust/qemu-api/src/vmstate.rs         |  10 +-
+>  rust/qemu-api/tests/tests.rs         |   2 -
+>  rust/qemu-api/tests/vmstate_tests.rs |   5 +-
+>  15 files changed, 16 insertions(+), 239 deletions(-)
+>  delete mode 100644 rust/qemu-api/src/offset_of.rs
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
