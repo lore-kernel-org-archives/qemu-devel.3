@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3FDCC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4F1EC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:35:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCKFv-0005Fm-Lw; Tue, 06 May 2025 11:30:54 -0400
+	id 1uCKEy-0003kx-MF; Tue, 06 May 2025 11:29:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFh-0004Xk-GW
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:37 -0400
+ id 1uCKEw-0003k8-GB
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFe-0002Fg-5g
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:37 -0400
+ id 1uCKEs-0001xJ-5w
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746545433;
+ s=mimecast20190719; t=1746545385;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8ct+iZ6ldjipZB0WBqqo1Lr+PnrNl25dJilmjNEGR3A=;
- b=VI0mcoVikd1yxKKAPFC/mF77jFwogGY4mGrdY+dVhC6EWux1czYiSDC4MMWDOMrR9P5sMe
- /a32L139lL45cjyWZG7t4NgeBmzxIz/3+pymNRxdujhjooNhtLorEx6sO8uuesuoIC0KP6
- az+NkKmPcaQYQTqCT8T6/ytUElW3ySU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IFPDsTbrLdiIRzvVoUS5dgOJNed7LD9BnNHYJEOGkc0=;
+ b=cNC9qSJrK4dEJTEHscJqkELCj160Wqbr+ijk9q4dS5G7VD+yoDKQ3SC/Lh4PY3kZXsyJDV
+ xu3wXL5IjsyR8xTShl4IUImD1Xiejv0pFMnUADXBI1+6NfStiUKniaFzTInpiJX/D8MA6B
+ S+RBTgwSdJsuAelAFu/m+t8eBzeBI0w=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-63dK4VWYPsifTLTw2PeSqw-1; Tue, 06 May 2025 11:30:31 -0400
-X-MC-Unique: 63dK4VWYPsifTLTw2PeSqw-1
-X-Mimecast-MFC-AGG-ID: 63dK4VWYPsifTLTw2PeSqw_1746545430
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a0b1f6815dso289903f8f.3
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:30:31 -0700 (PDT)
+ us-mta-474-g-oPmYl0NdmcUvRGEhzrOg-1; Tue, 06 May 2025 11:29:44 -0400
+X-MC-Unique: g-oPmYl0NdmcUvRGEhzrOg-1
+X-Mimecast-MFC-AGG-ID: g-oPmYl0NdmcUvRGEhzrOg_1746545383
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3912b54611dso2827985f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:29:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746545429; x=1747150229;
+ d=1e100.net; s=20230601; t=1746545382; x=1747150182;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8ct+iZ6ldjipZB0WBqqo1Lr+PnrNl25dJilmjNEGR3A=;
- b=N8AMVBmuwldtioMbauA3N4PGXw/Yi3Z+1q5usE7V24c/R5LEa+y5H8dWzsTVZ8bTac
- Igy3ToYBTxLo+Jp666+8x62ueAtfVfRnYzrG8hDLmy4vLgmle/RMyiMGEz8mnBGDSrgX
- Skv6b3fr5ZNI+7EcL07gQ++3FExENA5PT3QtlNH1CUq/j5Fug6zkF0lZGnwxz0dbfR8D
- 6EY6J0Py4MqMGXZaG0on2PN51orgdPJVnnADyRLRKSqgRXiyRzBaTZ1KqYBOrzs90hK/
- fzfKgLmtXTRF3tteTO17ls5d6MWGqTy51xKvxVmKNz83Ds93bxwa1qafWJPuctINmGYr
- GJgw==
-X-Gm-Message-State: AOJu0Yy+J0u8rH/1V3bfXELdX/PJ38tTjmrxfxonJFtqsFZS9swSEF4m
- xyOieynhzfzfbv7nV1iO/m9q1pSk/z4CE9rMLQUJzHAuOprQM2Dqq92DJW9yMcNxWL5f1ShNSDr
- Uj6qkiNFpRKErTRPevyFWn8SZ2qvuDkx95+spRKnscHv0brEqXny/cbnJHNgpqBABcDDEUMU73r
- cbjr2T1i8exkg1YTxvum55CHHipHWFUqxzcn01
-X-Gm-Gg: ASbGncvP3BZoSp+XOGB5NAqXvLYtNdo8Z63GAR7g7W21Sre/24NywU2Of/51Z8J/Bjn
- Q2qfmV+bWI71tHzzyxn8NwxhmMn0Et+eQjwOvyF9GwIp8CgJ+YA1B0CMKnIl3PuAhJeZvo0sjvz
- WtEEavKtknTEyVwh89VVKnDA8UOyJD6tzLdkXxEWvT5pkEE3kKzLpHI5PbUJIBIDPJoREDpEFuN
- ruH7WRNqcNxVWfbUqhouJ0PGKgaE8lruW8JESTurwXxeAtxXopPAzqH4kv5H9w/3QfT2OUDrJf9
- I2tRhuuYz1xuvOc=
-X-Received: by 2002:a05:6000:2503:b0:39e:e557:7d9 with SMTP id
- ffacd0b85a97d-3a0ac0c9ab1mr2843126f8f.5.1746545429626; 
- Tue, 06 May 2025 08:30:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHhYWTMHa4seAly1Yha10/WayXMhlVshsRbn/GwKUjQodTBinfh9UqeCqVZt0TH+ZLpjMjtLA==
-X-Received: by 2002:a05:6000:2503:b0:39e:e557:7d9 with SMTP id
- ffacd0b85a97d-3a0ac0c9ab1mr2843090f8f.5.1746545429055; 
- Tue, 06 May 2025 08:30:29 -0700 (PDT)
+ bh=IFPDsTbrLdiIRzvVoUS5dgOJNed7LD9BnNHYJEOGkc0=;
+ b=pI0RFiuvfRqGZ9jf4k9mfldKGLT+68OcCXmGIRr86YTBleuIErP5x/piumI+IBWioH
+ biJPkQbiUT6fI3JMPIxnbZQ7Y0AF8vOK5R/fI8TnAui0BkSZHfTG9gbdRvtrU4CUqZOE
+ 7Q5jl09/tzECfLmy2jVxM7lVDI5bkFUMQ5pr0Fi6SRkq8bu0KLO12LVUqwSYhImg8x7q
+ emhjtqK1z8gesgapHx7p575ZHaehqlGbT++wNvj7xCTwTP8lA8B3keva4sAu9jYn4Dzc
+ jF4xJnHPkCcb/hvCNg9afvulxuhiiTnK8oS0SLw0dV2flr+fvXzdzSTXrhwEFgEhuSFA
+ 3Clg==
+X-Gm-Message-State: AOJu0YxenqwPAlczgs5+7tMke0IDqTYiHzVxTOeJdIXfxJF2drl8+DOi
+ fT++jRrneVJzcXH60qXMD6Ol6YwjV9wzSWXyRYaHmxVarQF+MYDpT86PJ8c2j2Jfif0a146U7NE
+ 0imSI2cS8HEcrLhJFaf+ukWuEwftgfMNCWkUN24vsZTe7YM9NTluWL0g3nCkDG/s/Zeo7TWZGh2
+ OVsCNAWlnnrDGEbcPVIFEVE5AC2idnBrKY2dP9
+X-Gm-Gg: ASbGncv9aLRjdUSyx0feBWTTwVhoX+rhg5NLW+r1udlzdFJ7f37XLOp1oexTI6nloWn
+ dfuaE7Yo0mPpE8WJBALW0i11v9FMkVIJ3ZDnlpCWwKz+yYQF7k1i0iuTwxFSJMaARL3j2Puj5Xo
+ eBMEn8y7pXPqdW+t2fnSz2ZOElnG7y2vgOvy8+1WSgmFSRGIQyQ1uyufaZQLhQMuSy1nq71MmII
+ X9k5BbBj7Qr77S4vXUAatnd6Zi2f6pfjrNssNgh0jRrRrCJs/y1+vY3Xd+iXRHSD4Av0lPC/MXa
+ eXmo+Gh81JIZ8do=
+X-Received: by 2002:a05:6000:2289:b0:38b:d7d2:12f6 with SMTP id
+ ffacd0b85a97d-3a09fd7a1acmr8371205f8f.2.1746545381724; 
+ Tue, 06 May 2025 08:29:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGjqvytadpK5OojR0XVaSBwGeiUa9K8nLozV1/5qEroIq5HB2uHaL1hgDR0e5sMKHqJpJ+j0A==
+X-Received: by 2002:a05:6000:2289:b0:38b:d7d2:12f6 with SMTP id
+ ffacd0b85a97d-3a09fd7a1acmr8371181f8f.2.1746545381224; 
+ Tue, 06 May 2025 08:29:41 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b8a286c4sm171483035e9.25.2025.05.06.08.30.26
+ ffacd0b85a97d-3a099ae7b45sm13806377f8f.46.2025.05.06.08.29.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 08:30:26 -0700 (PDT)
+ Tue, 06 May 2025 08:29:38 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Subject: [PULL 28/30] meson: Add wasm build in build scripts
-Date: Tue,  6 May 2025 17:29:23 +0200
-Message-ID: <20250506152927.222671-29-pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 06/30] rust: use MaybeUninit::zeroed() in const context
+Date: Tue,  6 May 2025 17:29:01 +0200
+Message-ID: <20250506152927.222671-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250506152927.222671-1-pbonzini@redhat.com>
 References: <20250506152927.222671-1-pbonzini@redhat.com>
@@ -108,193 +109,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-
-has_int128_type is set to false on emscripten as of now to avoid errors by
-libffi. Tests are disabled on emscripten because they rely on host
-features that aren't supported by emscripten (e.g. fork and unix
-socket).
-
-Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Link: https://lore.kernel.org/r/ad03b3b180335f59e785e930968077bf15c46260.1745820062.git.ktokunaga.mail@gmail.com
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS                   |  1 +
- configure                     |  7 +++++++
- meson.build                   | 29 ++++++++++++++++++++++++-----
- configs/meson/emscripten.txt  |  8 ++++++++
- meson_options.txt             |  2 +-
- scripts/meson-buildoptions.sh |  2 +-
- 6 files changed, 42 insertions(+), 7 deletions(-)
- create mode 100644 configs/meson/emscripten.txt
+ docs/devel/rust.rst              |   4 --
+ rust/hw/timer/hpet/src/fw_cfg.rs |   6 +-
+ rust/qemu-api/src/zeroable.rs    | 106 +++++--------------------------
+ 3 files changed, 20 insertions(+), 96 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 55c47fcd378..02b75ea9e10 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -634,6 +634,7 @@ S: Maintained
- F: include/system/os-wasm.h
- F: os-wasm.c
- F: util/coroutine-wasm.c
-+F: configs/meson/emscripten.txt
+diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
+index 8167ff49aa9..13a002cfe69 100644
+--- a/docs/devel/rust.rst
++++ b/docs/devel/rust.rst
+@@ -83,10 +83,6 @@ are missing:
+ * "Return position ``impl Trait`` in Traits" (1.75.0, blocker for including
+   the pinned-init create).
  
- Alpha Machines
- --------------
-diff --git a/configure b/configure
-index 40705afdf57..2ce8d29fac2 100755
---- a/configure
-+++ b/configure
-@@ -360,6 +360,10 @@ elif check_define __NetBSD__; then
-   host_os=netbsd
- elif check_define __APPLE__; then
-   host_os=darwin
-+elif check_define EMSCRIPTEN ; then
-+  host_os=emscripten
-+  cpu=wasm32
-+  cross_compile="yes"
- else
-   # This is a fatal error, but don't report it yet, because we
-   # might be going to just print the --help text, or it might
-@@ -526,6 +530,9 @@ case "$cpu" in
-     linux_arch=x86
-     CPU_CFLAGS="-m64"
-     ;;
-+  wasm32)
-+    CPU_CFLAGS="-m32"
-+    ;;
- esac
+-* ``MaybeUninit::zeroed()`` as a ``const`` function (1.75.0).  QEMU's
+-  ``Zeroable`` trait can be implemented without ``MaybeUninit::zeroed()``,
+-  so this would be just a cleanup.
+-
+ * ``c"" literals`` (stable in 1.77.0).  QEMU provides a ``c_str!()`` macro
+   to define ``CStr`` constants easily
  
- if test -n "$host_arch" && {
-diff --git a/meson.build b/meson.build
-index 8eb3de5d68d..27f11501528 100644
---- a/meson.build
-+++ b/meson.build
-@@ -50,9 +50,9 @@ genh = []
- qapi_trace_events = []
+diff --git a/rust/hw/timer/hpet/src/fw_cfg.rs b/rust/hw/timer/hpet/src/fw_cfg.rs
+index bef03727ea3..aa08d283519 100644
+--- a/rust/hw/timer/hpet/src/fw_cfg.rs
++++ b/rust/hw/timer/hpet/src/fw_cfg.rs
+@@ -4,7 +4,7 @@
  
- bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
--supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux']
-+supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
- supported_cpus = ['ppc', 'ppc64', 's390x', 'riscv32', 'riscv64', 'x86', 'x86_64',
--  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64']
-+  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64', 'wasm32']
+ use std::ptr::addr_of_mut;
  
- cpu = host_machine.cpu_family()
+-use qemu_api::{cell::bql_locked, impl_zeroable, zeroable::Zeroable};
++use qemu_api::{cell::bql_locked, zeroable::Zeroable};
  
-@@ -353,6 +353,8 @@ foreach lang : all_languages
-       # endif
-       #endif''')
-     # ok
-+  elif compiler.get_id() == 'emscripten'
-+    # ok
-   else
-     error('You either need GCC v7.4 or Clang v10.0 (or XCode Clang v15.0) to compile QEMU')
-   endif
-@@ -470,7 +472,10 @@ endif
- # instead, we can't add -no-pie because it overrides -shared: the linker then
- # tries to build an executable instead of a shared library and fails.  So
- # don't add -no-pie anywhere and cross fingers. :(
--if not get_option('b_pie')
-+#
-+# Emscripten doesn't support -no-pie but meson can't catch the compiler
-+# warning. So explicitly omit the flag for Emscripten.
-+if not get_option('b_pie') and host_os != 'emscripten'
-   qemu_common_flags += cc.get_supported_arguments('-fno-pie', '-no-pie')
- endif
+ /// Each `HPETState` represents a Event Timer Block. The v1 spec supports
+ /// up to 8 blocks. QEMU only uses 1 block (in PC machine).
+@@ -18,7 +18,7 @@ pub struct HPETFwEntry {
+     pub min_tick: u16,
+     pub page_prot: u8,
+ }
+-impl_zeroable!(HPETFwEntry);
++unsafe impl Zeroable for HPETFwEntry {}
  
-@@ -514,6 +519,8 @@ ucontext_probe = '''
- supported_backends = []
- if host_os == 'windows'
-   supported_backends += ['windows']
-+elif host_os == 'emscripten'
-+  supported_backends += ['wasm']
- else
-   if host_os != 'darwin' and cc.links(ucontext_probe)
-     supported_backends += ['ucontext']
-@@ -902,6 +909,10 @@ if get_option('tcg').allowed()
-     if not get_option('tcg_interpreter')
-       error('Unsupported CPU @0@, try --enable-tcg-interpreter'.format(cpu))
-     endif
-+  elif host_arch == 'wasm32'
-+    if not get_option('tcg_interpreter')
-+      error('WebAssembly host requires --enable-tcg-interpreter')
-+    endif
-   elif get_option('tcg_interpreter')
-     warning('Use of the TCG interpreter is not recommended on this host')
-     warning('architecture. There is a native TCG execution backend available')
-@@ -2962,7 +2973,9 @@ config_host_data.set('CONFIG_ATOMIC64', cc.links('''
-     return 0;
-   }''', args: qemu_isa_flags))
+ #[repr(C, packed)]
+ #[derive(Copy, Clone, Default)]
+@@ -26,7 +26,7 @@ pub struct HPETFwConfig {
+     pub count: u8,
+     pub hpet: [HPETFwEntry; HPET_MAX_NUM_EVENT_TIMER_BLOCK],
+ }
+-impl_zeroable!(HPETFwConfig);
++unsafe impl Zeroable for HPETFwConfig {}
  
--has_int128_type = cc.compiles('''
-+# has_int128_type is set to false on Emscripten to avoid errors by libffi
-+# during runtime.
-+has_int128_type = host_os != 'emscripten' and cc.compiles('''
-   __int128_t a;
-   __uint128_t b;
-   int main(void) { b = a; }''')
-@@ -3775,6 +3788,8 @@ if have_block
-   # os-win32.c does not
-   if host_os == 'windows'
-     system_ss.add(files('os-win32.c'))
-+  elif host_os == 'emscripten'
-+    blockdev_ss.add(files('os-wasm.c'))
-   else
-     blockdev_ss.add(files('os-posix.c'))
-   endif
-@@ -4516,7 +4531,11 @@ subdir('scripts')
- subdir('tools')
- subdir('pc-bios')
- subdir('docs')
--subdir('tests')
-+# Tests are disabled on emscripten because they rely on host features that aren't
-+# supported by emscripten (e.g. fork and unix socket).
-+if host_os != 'emscripten'
-+  subdir('tests')
-+endif
- if gtk.found()
-   subdir('po')
- endif
-diff --git a/configs/meson/emscripten.txt b/configs/meson/emscripten.txt
-new file mode 100644
-index 00000000000..4230e88005f
---- /dev/null
-+++ b/configs/meson/emscripten.txt
-@@ -0,0 +1,8 @@
-+[built-in options]
-+c_args = ['-pthread']
-+cpp_args = ['-pthread']
-+objc_args = ['-pthread']
-+# -sPROXY_TO_PTHREAD link time flag always requires -pthread even during
-+# configuration so explicitly add the flag here.
-+c_link_args = ['-pthread','-sASYNCIFY=1','-sPROXY_TO_PTHREAD=1','-sFORCE_FILESYSTEM','-sALLOW_TABLE_GROWTH','-sTOTAL_MEMORY=2GB','-sWASM_BIGINT','-sEXPORT_ES6=1','-sASYNCIFY_IMPORTS=ffi_call_js','-sEXPORTED_RUNTIME_METHODS=addFunction,removeFunction,TTY,FS']
-+cpp_link_args = ['-pthread','-sASYNCIFY=1','-sPROXY_TO_PTHREAD=1','-sFORCE_FILESYSTEM','-sALLOW_TABLE_GROWTH','-sTOTAL_MEMORY=2GB','-sWASM_BIGINT','-sEXPORT_ES6=1','-sASYNCIFY_IMPORTS=ffi_call_js','-sEXPORTED_RUNTIME_METHODS=addFunction,removeFunction,TTY,FS']
-diff --git a/meson_options.txt b/meson_options.txt
-index 0b4115e733a..cc66b46c636 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -34,7 +34,7 @@ option('fuzzing_engine', type : 'string', value : '',
- option('trace_file', type: 'string', value: 'trace',
-        description: 'Trace file prefix for simple backend')
- option('coroutine_backend', type: 'combo',
--       choices: ['ucontext', 'sigaltstack', 'windows', 'auto'],
-+       choices: ['ucontext', 'sigaltstack', 'windows', 'wasm', 'auto'],
-        value: 'auto', description: 'coroutine backend to use')
+ #[allow(non_upper_case_globals)]
+ #[no_mangle]
+diff --git a/rust/qemu-api/src/zeroable.rs b/rust/qemu-api/src/zeroable.rs
+index a3415a2ebcc..d8239d08563 100644
+--- a/rust/qemu-api/src/zeroable.rs
++++ b/rust/qemu-api/src/zeroable.rs
+@@ -4,89 +4,17 @@
  
- # Everything else can be set via --enable/--disable-* option
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index d76a239130a..8a67a14e2e2 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -80,7 +80,7 @@ meson_options_help() {
-   printf "%s\n" '  --tls-priority=VALUE     Default TLS protocol/cipher priority string'
-   printf "%s\n" '                           [NORMAL]'
-   printf "%s\n" '  --with-coroutine=CHOICE  coroutine backend to use (choices:'
--  printf "%s\n" '                           auto/sigaltstack/ucontext/windows)'
-+  printf "%s\n" '                           auto/sigaltstack/ucontext/windows/wasm)'
-   printf "%s\n" '  --with-pkgversion=VALUE  use specified string as sub-version of the'
-   printf "%s\n" '                           package'
-   printf "%s\n" '  --with-suffix=VALUE      Suffix for QEMU data/modules/config directories'
+ /// Encapsulates the requirement that
+ /// `MaybeUninit::<Self>::zeroed().assume_init()` does not cause undefined
+-/// behavior.  This trait in principle could be implemented as just:
+-///
+-/// ```
+-/// pub unsafe trait Zeroable: Default {
+-///     const ZERO: Self = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
+-/// }
+-/// ```
+-///
+-/// The need for a manual implementation is only because `zeroed()` cannot
+-/// be used as a `const fn` prior to Rust 1.75.0. Once we can assume a new
+-/// enough version of the compiler, we could provide a `#[derive(Zeroable)]`
+-/// macro to check at compile-time that all struct fields are Zeroable, and
+-/// use the above blanket implementation of the `ZERO` constant.
++/// behavior.
+ ///
+ /// # Safety
+ ///
+-/// Because the implementation of `ZERO` is manual, it does not make
+-/// any assumption on the safety of `zeroed()`.  However, other users of the
+-/// trait could use it that way.  Do not add this trait to a type unless
+-/// all-zeroes is a valid value for the type.  In particular, remember that
+-/// raw pointers can be zero, but references and `NonNull<T>` cannot
++/// Do not add this trait to a type unless all-zeroes is a valid value for the
++/// type.  In particular, raw pointers can be zero, but references and
++/// `NonNull<T>` cannot.
+ pub unsafe trait Zeroable: Default {
+-    const ZERO: Self;
+-}
+-
+-/// A macro that acts similarly to [`core::mem::zeroed()`], only is const
+-///
+-/// ## Safety
+-///
+-/// Similar to `core::mem::zeroed()`, except this zeroes padding bits. Zeroed
+-/// padding usually isn't relevant to safety, but might be if a C union is used.
+-///
+-/// Just like for `core::mem::zeroed()`, an all zero byte pattern might not
+-/// be a valid value for a type, as is the case for references `&T` and `&mut
+-/// T`. Reference types trigger a (denied by default) lint and cause immediate
+-/// undefined behavior if the lint is ignored
+-///
+-/// ```rust compile_fail
+-/// use const_zero::const_zero;
+-/// // error: any use of this value will cause an error
+-/// // note: `#[deny(const_err)]` on by default
+-/// const STR: &str = unsafe{const_zero!(&'static str)};
+-/// ```
+-///
+-/// `const_zero` does not work on unsized types:
+-///
+-/// ```rust compile_fail
+-/// use const_zero::const_zero;
+-/// // error[E0277]: the size for values of type `[u8]` cannot be known at compilation time
+-/// const BYTES: [u8] = unsafe{const_zero!([u8])};
+-/// ```
+-/// ## Differences with `core::mem::zeroed`
+-///
+-/// `const_zero` zeroes padding bits, while `core::mem::zeroed` doesn't
+-#[macro_export]
+-macro_rules! const_zero {
+-    // This macro to produce a type-generic zero constant is taken from the
+-    // const_zero crate (v0.1.1):
+-    //
+-    //     https://docs.rs/const-zero/latest/src/const_zero/lib.rs.html
+-    //
+-    // and used under MIT license
+-    ($type_:ty) => {{
+-        const TYPE_SIZE: ::core::primitive::usize = ::core::mem::size_of::<$type_>();
+-        union TypeAsBytes {
+-            bytes: [::core::primitive::u8; TYPE_SIZE],
+-            inner: ::core::mem::ManuallyDrop<$type_>,
+-        }
+-        const ZERO_BYTES: TypeAsBytes = TypeAsBytes {
+-            bytes: [0; TYPE_SIZE],
+-        };
+-        ::core::mem::ManuallyDrop::<$type_>::into_inner(ZERO_BYTES.inner)
+-    }};
+-}
+-
+-/// A wrapper to implement the `Zeroable` trait through the `const_zero` macro.
+-#[macro_export]
+-macro_rules! impl_zeroable {
+-    ($type:ty) => {
+-        unsafe impl $crate::zeroable::Zeroable for $type {
+-            const ZERO: Self = unsafe { $crate::const_zero!($type) };
+-        }
+-    };
++    /// Return a value of Self whose memory representation consists of all
++    /// zeroes, with the possible exclusion of padding bytes.
++    const ZERO: Self = unsafe { ::core::mem::MaybeUninit::<Self>::zeroed().assume_init() };
+ }
+ 
+ // bindgen does not derive Default here
+@@ -97,13 +25,13 @@ fn default() -> Self {
+     }
+ }
+ 
+-impl_zeroable!(crate::bindings::Property__bindgen_ty_1);
+-impl_zeroable!(crate::bindings::Property);
+-impl_zeroable!(crate::bindings::VMStateFlags);
+-impl_zeroable!(crate::bindings::VMStateField);
+-impl_zeroable!(crate::bindings::VMStateDescription);
+-impl_zeroable!(crate::bindings::MemoryRegionOps__bindgen_ty_1);
+-impl_zeroable!(crate::bindings::MemoryRegionOps__bindgen_ty_2);
+-impl_zeroable!(crate::bindings::MemoryRegionOps);
+-impl_zeroable!(crate::bindings::MemTxAttrs);
+-impl_zeroable!(crate::bindings::CharBackend);
++unsafe impl Zeroable for crate::bindings::Property__bindgen_ty_1 {}
++unsafe impl Zeroable for crate::bindings::Property {}
++unsafe impl Zeroable for crate::bindings::VMStateFlags {}
++unsafe impl Zeroable for crate::bindings::VMStateField {}
++unsafe impl Zeroable for crate::bindings::VMStateDescription {}
++unsafe impl Zeroable for crate::bindings::MemoryRegionOps__bindgen_ty_1 {}
++unsafe impl Zeroable for crate::bindings::MemoryRegionOps__bindgen_ty_2 {}
++unsafe impl Zeroable for crate::bindings::MemoryRegionOps {}
++unsafe impl Zeroable for crate::bindings::MemTxAttrs {}
++unsafe impl Zeroable for crate::bindings::CharBackend {}
 -- 
 2.49.0
 
