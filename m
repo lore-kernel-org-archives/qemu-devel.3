@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6666DC3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 10:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9850C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 10:59:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCFyr-0002dM-Th; Tue, 06 May 2025 06:56:57 -0400
+	id 1uCG16-0003yr-Bh; Tue, 06 May 2025 06:59:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCFyo-0002Yt-DL
- for qemu-devel@nongnu.org; Tue, 06 May 2025 06:56:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCFym-0006KG-Ri
- for qemu-devel@nongnu.org; Tue, 06 May 2025 06:56:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746529012;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kvLU8i4sTYOylp/4hBHbK3K6hp+qzpClbnpviMvVgrk=;
- b=bUHACRuUZsX/44BWJ7k1N8JvjIbs2FGUcMf/yHY+jwelZwILWH8JJh358uJaZ5ArXR9oIg
- sJL7H94EfSWy6YWxUSUAamzO00V45j5p8XJ/r+H//pG7YKH2YnJuFgRs5vtWF+/fIQrSFm
- 6jLIymC/Tw9eZGP+dzQhdj5DKegD4wY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-r_nrn4XwMr2Wa0zpGyVFvQ-1; Tue, 06 May 2025 06:56:51 -0400
-X-MC-Unique: r_nrn4XwMr2Wa0zpGyVFvQ-1
-X-Mimecast-MFC-AGG-ID: r_nrn4XwMr2Wa0zpGyVFvQ_1746529010
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-39ac9b0cb6aso2269271f8f.2
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 03:56:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uCG13-0003yB-ME
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 06:59:13 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uCG12-0006TY-68
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 06:59:13 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-acb5ec407b1so972699466b.1
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 03:59:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746529150; x=1747133950; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Lhg+n7bB+d/Vvk7494T9j6vRZkBwbUAoC3ZP82GOO2g=;
+ b=WfZlCrPnfp+3x8mcM5Dqldo3tGmAAXJuA2tHgoAwOuTBYrPAlV0eQ6hY70HvX/hT0m
+ aJYD9jLNhSuAg+z0TrfHHgunyeXURDTDcWZO+y2ZL+1Y7CTQd7JLdGjTzlI4xxKwv8NR
+ lnbKErU/KN+EMZScPXzB24AfkQg1dxh0PJmTJQUPv1TkD3eOneuwoS6Xdv4c5VwBBGHr
+ /dxizplFnlVSSew4omAIAxC0FHHjqeR//wHyOgb3kAgVYCXIgIP2RAQDsrFXKPGhKoud
+ kZ3h2epCfSFz/4NKeZ3+AkkG67V2Bq8xHDeMKvAbtKc3d538brdyq2/yro7a+adjr00X
+ 2AWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746529007; x=1747133807;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kvLU8i4sTYOylp/4hBHbK3K6hp+qzpClbnpviMvVgrk=;
- b=JXKts+59wHOC+JTPMWFEhEn0SWp+6QYZRxeoX8x2yyukhwsjuQqRYxNk8CNE5QYJDE
- T2dVVR+RTx9MrzqtUAp3+KJo/+C4cFiytSShjGcoVdMCujb7NJtH6610wpy1r0gYQNzB
- jYvNzFbpTCcAiPC3rpu/QU3g/t4oIPXWg8Wqhlcec8T7rsMQEN6qX9UE3d6pFN2vIlRs
- 7raW5gz64OPqpHGlP8ka8WDs+RxunknYq+mqZQxgXQ7Hcjic7pOPkSu6jia29qFc8Ylu
- JVAbAYKSC6xaA3YBFglTntz79YteKZMdFH7nzL4J22ZS2FPW2667Uo5PabrCvhxsEJkr
- Ly8g==
-X-Gm-Message-State: AOJu0Yz1wbLyU3hSaEOaNIVcO6w2TKjgeQlSZemrPxLQyRXvQ/w+BB8L
- FbeKLqK8MZv+4yv0no5G7V8X/sdWu4e31v6Chrxwh8gqK/pODfDL660LH0wmwu3eaNIpEzh8d21
- t7tpCXRP4Wgf7lEmGRmLUXIkiwZz7UqbfuMBaCurCsUbT7xR8nOPnx4Pgyg0w2wdVcUP11GIki4
- kRdbkHwJTtD+o2dS2QoalqpIKikisNuCJ/dwc=
-X-Gm-Gg: ASbGncuR4crJTyqwXdPKGIbAGuCF0ISlkc7J5dV6Ha1FyJBVQlIWVyMT6V7OPeOJVV9
- jM/alRKG9Y3Xy9mfdzp3ny+7al/WfiTVBi8uSM1iJxZfIrCjRAIduzqH2JmaSVEmh3Uyq
-X-Received: by 2002:a5d:598f:0:b0:38f:28dc:ec23 with SMTP id
- ffacd0b85a97d-3a0ac0da194mr1915420f8f.19.1746529007494; 
- Tue, 06 May 2025 03:56:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF7sFP5dX58k2E/Xh1xdbQ7puHXYJcIDV06y0PeV8wfKkQAUmH9eswmsEAdMi6J1AAV2gVfS4m0fp5D0C49sCA=
-X-Received: by 2002:a5d:598f:0:b0:38f:28dc:ec23 with SMTP id
- ffacd0b85a97d-3a0ac0da194mr1915410f8f.19.1746529007259; Tue, 06 May 2025
- 03:56:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746529150; x=1747133950;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Lhg+n7bB+d/Vvk7494T9j6vRZkBwbUAoC3ZP82GOO2g=;
+ b=aVKFNhrJrokw562SDGVK95qMo2g1tyHSJ+7Axod20ll21iRy6qkL+mF2pe52oiJdy2
+ f/jflHUH2ztDs9XoSlNZJGN9yZWfkvDIqEKRa1WN2brsiY5XTfTRPZv4IiKCIGCE8Qjj
+ tpZlAkIY3luZAMDcnIPFafCS0ZIhG89ycWI+UmsgdlpzVJ/FrOrY92GFR1CmA+MOh2sa
+ mZokxLeIYefpNY3nfx4YrfdfrKmyQSd1JSf8MF5Uc2qpBiWPX30No+s4hBr+PDfm8Utm
+ +Mf0vg8Bm93rnEmujKdN5v0H2Ml2xPr88EEyk5wHAYrJeJyyXzhT4C56iaNwnGCnbcNM
+ FzkA==
+X-Gm-Message-State: AOJu0YwvrQI09r3rGZcVn1SP38th5ZcEH2LIXXM7hImUgYPkB2zZ4rRi
+ CgQZTMWMxFK0sX2xDhlxAvAYr+ykeHS+x0Gzpt6mIium80whHMBui4+fSdEdkJxofWWG6RmXEOX
+ k9kc=
+X-Gm-Gg: ASbGncs9svRtVheRMqUNi0Qts3ZaejoWK4CuXTPiWYnguxMl6Hkzjvtg+RgD+NL5I5C
+ m5ZNdJYhMoRI90qbZvbTtJ+uSZYeOAukxOWuhAsyGwFJxfATIQiCDLBahYPT+F3z+8FMS0tXMl5
+ MPUMqQst0c7H82ef5emo3QlwgzJCV32o4WVHnVfItbHAxKhxi1C/BdtTFQnVIBI/mqfUhUPg+wJ
+ pc8OHIv2JnaZ1x2d4Aduxo9AvS9HtBRpGMFC5Y8c3gJdF6BKo7hBOUYK5H33MWfSxv5NC0oe0pV
+ 8x2dfS7Uv+inb1BKpkdPI4bMz05aRWxBq237CH2jmEc=
+X-Google-Smtp-Source: AGHT+IF5aZXZRE/YbBhDRrKTX3lbKzMPVH0wr67npjOrW+KQpbLWlbePSs87btk0KXnI3AE8lnzq4A==
+X-Received: by 2002:a17:907:1c14:b0:ace:d994:3cc3 with SMTP id
+ a640c23a62f3a-ad1d3597dd9mr258497966b.51.1746529150518; 
+ Tue, 06 May 2025 03:59:10 -0700 (PDT)
+Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ad1891a15d5sm679661266b.44.2025.05.06.03.59.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 May 2025 03:59:09 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 322295F8BD;
+ Tue,  6 May 2025 11:59:09 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: dongwon.kim@intel.com
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] ui/gtk-gl-area: Remove extra draw call in refresh
+In-Reply-To: <20250214170813.2234754-1-dongwon.kim@intel.com> (dongwon kim's
+ message of "Fri, 14 Feb 2025 09:08:13 -0800")
+References: <20250206225304.1739418-1-dongwon.kim@intel.com>
+ <20250214170813.2234754-1-dongwon.kim@intel.com>
+User-Agent: mu4e 1.12.10; emacs 30.1
+Date: Tue, 06 May 2025 11:59:09 +0100
+Message-ID: <87selingxu.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20250505100854.73936-1-pbonzini@redhat.com>
- <20250505100854.73936-3-pbonzini@redhat.com>
- <aBnSUzH1RuYp123b@intel.com>
-In-Reply-To: <aBnSUzH1RuYp123b@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 6 May 2025 12:56:34 +0200
-X-Gm-Features: ATxdqUG3NgKZCj8uy6wsqkLbcwlR69f-HcA1wtXuvWTRYicNBlKwwcahkfNYbPI
-Message-ID: <CABgObfZ3uutsJUMwEcoZpJ-WwxWwfFrAfq6_9TGkFekOM3UXHg@mail.gmail.com>
-Subject: Re: [PATCH 2/5] rust: use inline const expressions
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,18 +104,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 6, 2025 at 10:51=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wrot=
-e:
-> > -        let _: () =3D CanReceiveFn::ASSERT_IS_SOME;
-> > +        const { assert!(CanReceiveFn::IS_SOME) };
+dongwon.kim@intel.com writes:
+
+> From: Dongwon Kim <dongwon.kim@intel.com>
 >
-> Do you think it's a good idea to warp this as a helper for easy
-> callback calls?
+> This partially reverts commit 77bf310084dad38b3a2badf01766c659056f1cf2
+> which causes some guest display corruption when gtk-gl-area
+> is used for GTK rendering (e.g. Wayland Compositor) possibly due to
+> simulataneous accesses on the guest frame buffer by host compositor
+> and the guest.
+>
 
-I think the wrapper would be very similar to what exists before this
-patch, wouldn't it? The const { assert!(...) } seems clear enough and
-not too verbose.
+btw in future keep v2 etc bellow the --- so the tooling can prune it
+when applying.
 
-Paolo
+> v2: Added "Fixes" tag
 
+Queued to virtio-gpu/next, thanks.
+
+>
+> Fixes: 77bf310084 ("ui/gtk: Draw guest frame at refresh cycle")
+> Reported-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Reported-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+> ---
+>  ui/gtk-gl-area.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+> index 2c9a0db425..9f7dc697f2 100644
+> --- a/ui/gtk-gl-area.c
+> +++ b/ui/gtk-gl-area.c
+> @@ -129,7 +129,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+>=20=20
+>      if (vc->gfx.guest_fb.dmabuf &&
+>          qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+> -        gd_gl_area_draw(vc);
+>          return;
+>      }
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
