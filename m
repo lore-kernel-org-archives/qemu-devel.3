@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FA3FC3ABBC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E66E0C3ABBE
 	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:34:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCKFh-0004YD-Sn; Tue, 06 May 2025 11:30:37 -0400
+	id 1uCKEz-0003ls-GX; Tue, 06 May 2025 11:29:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFI-00043P-Hd
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:12 -0400
+ id 1uCKEw-0003k6-GB
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFF-0002CK-5V
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:12 -0400
+ id 1uCKEt-0001xN-Mg
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746545408;
+ s=mimecast20190719; t=1746545386;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5VHgMfIC+s9fuauMpobbaoWCfcNnRXx+9S3XMDvhKC0=;
- b=P3U4XgsdGxv4buHYxGag4pMe6724S1qMCg8a1TyGQZBjXGm/2VwYXwFweWhFK890kpz2YK
- yjNbeRdcMufbZsIOdY9yUrP7L1+xZr2CKR6Pjf7zhuKkJsLUq0QbeYYvBdx/LSvZWSZ5wY
- Qh2LnmvvveDrbQ9BL2u5oKCYnv6kZlI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KVv4MrS7maqnZXU2DLQdOtK/vMh68KY00+XUfGh8Kxo=;
+ b=G7EC/PJR4kJZH2hODwIqSt2dxODFcb59m+hpcAOyFbDxdjwe7eJEeMDnTEWNgD+HETzDW/
+ zQXHetER52GlyRYFw/Klx7gedwvLl5AkgXvd+ZJedfGriadBXCmAcF+mGeBjfhQEP5/ajT
+ dPGI8JbNHKUwEiuHozK2zQ9RbZYwFAw=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-104-AHhVQ6EWO52vFcneHNKBcg-1; Tue, 06 May 2025 11:30:06 -0400
-X-MC-Unique: AHhVQ6EWO52vFcneHNKBcg-1
-X-Mimecast-MFC-AGG-ID: AHhVQ6EWO52vFcneHNKBcg_1746545400
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43d733063cdso42634275e9.0
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:30:04 -0700 (PDT)
+ us-mta-490-oLVm_zf3OYe507ZE__yooA-1; Tue, 06 May 2025 11:29:45 -0400
+X-MC-Unique: oLVm_zf3OYe507ZE__yooA-1
+X-Mimecast-MFC-AGG-ID: oLVm_zf3OYe507ZE__yooA_1746545384
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43ea256f039so45017065e9.0
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:29:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746545399; x=1747150199;
+ d=1e100.net; s=20230601; t=1746545383; x=1747150183;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5VHgMfIC+s9fuauMpobbaoWCfcNnRXx+9S3XMDvhKC0=;
- b=ecNtEzhyYRdd6pdA+KkWIYULT+7JHvgVWICzXuWd0Hotg066e81732/xHC6d+eApp0
- 2gN6rwp2rSWu74o70xd7IHke4HeLQiCoZgx2cKsu1O+PN3CKEiGqCl2JLjVJPNUJPN+H
- 3wLxSqsXPH6Il+OC1z+I98f+ybOMk3y5Wtgsf0n0xpTOPJJptg70Fhxs+LnXJT+lcOQY
- 63kU/x9hna3KXvh2eKfPaFqZV6rQYxx3qAKuuzmU2YhVrCWcRtSgYd08kj7QxAUgUIJg
- gKg3oKskGls9maWHJBSzM/eJkwmFE5B3B6xfCvuOO6UgbT0PdncxnEvt5sywcfAUlG9/
- RGYA==
-X-Gm-Message-State: AOJu0YwGNeaeyRoyWXmY6WKhRIe1No1Xe7GpP8QrFQL/SmxkK2YXZPph
- Cspca13uj0/MBC+/10SArsMo8bmDWZk/4YkZn55QIPnL+Ze1BmeBzrrwsAWd0kLZfty0Su3D6xh
- +pHM4u8WkztM+VpGnAZQihcUXPs/aF3UyACeL34TjjYz/ziEwQ7tGypRYa9Ddit4KJIY6Xj+Xw8
- Ahwi6lI58OlVcgvG+8G/vz4AD/16L/H5NhjUH9
-X-Gm-Gg: ASbGnctja762jElnxEBKtSYM37CkL90MQDG4+chylAdYlvK4KjprCDG7VlwYasp+mh+
- TIUEzMkRJ2cvukYMFsgUWYDu7epBKuJFhWzR7hMFzKI/Q1DA5hOf6cGGIhQIVVk4pDJSxarSEnv
- /+lqq01H0C1kUXjncVVAXID+qreoqTIdyf19XsWmRJn3/1C80bgKwNhsnj1X/KDnLiezKp1WiJV
- PjAPvPRrbwlcaJ4koiORwBU0ElwrRqIEMWHuvwOG+ER009+jMspqqoE48mwQGiUG0ceHgzZiJlq
- ZWe7Sz3naFfYSkE=
-X-Received: by 2002:a05:600c:1e04:b0:441:b00d:e9d1 with SMTP id
- 5b1f17b1804b1-441d0fbd63bmr32979165e9.2.1746545398933; 
- Tue, 06 May 2025 08:29:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEzQzgSsJL/M3vA4/N8LKSLVSy8CpsiURBHRgcQgpUV+k+zJrMmRvIg+FpYEUg+Sqof3gp2cQ==
-X-Received: by 2002:a05:600c:1e04:b0:441:b00d:e9d1 with SMTP id
- 5b1f17b1804b1-441d0fbd63bmr32978865e9.2.1746545398456; 
- Tue, 06 May 2025 08:29:58 -0700 (PDT)
+ bh=KVv4MrS7maqnZXU2DLQdOtK/vMh68KY00+XUfGh8Kxo=;
+ b=VyoXK+557ylxcjnTgcYsf/9akghTIgZWN72e9k42eeJMn7dI2j+xel0PvF/OSD2Jsd
+ gYHzUDQazNAovbZ76BWO9mDolFVNGgeF3sWr7Y1qAj+dK4cQmSnciOzIHbtIr2C253hS
+ GC0Ddun4HA7hmHbZZ017QDYmGSXhu8ZVPHVBm/C9Zu+kYw9xHTOuOu/bSktNQ6ewQ0qM
+ TPORrfAVgzqCDHA7wiMtpGjMJD+3SpHJex0AqdbRBN72WifbjqRPmoO6ZojhUCCfQy5M
+ 5sTONeUaeRHuUxzgRWyyDOuhT0C8Wa3diL2U/gn770NPxqlkhIlsM/FSyvqZpsAarPyl
+ /DDw==
+X-Gm-Message-State: AOJu0Yx2lsi3C88nXV9XPX6szq/GbbjLJKs6EIkRm+Hzeb6+EhzEjEvG
+ 7YlzpLcu3+FmtPa9U27uECwhNf/0atN0/rQiYNcKMcwVwJ2Q2bA/yitqTnPxkY3qHQOqeT6N+Pi
+ 1oGAdo6jfdgCBZlImO53+MOYlT2XCobJ4vr3nGM7J3S2HYfYiOGZ9fnxUVk14TZFBOxNKrtozHa
+ N5Rkw0Q+WkmT0QOsfdWm8n4nw0/51bnVUk8buu
+X-Gm-Gg: ASbGncsKIQxp6ffwePEtfguXR7s5G4WFz2bgSwi7vOZCL3PZU8vvfpW74P0lXl1ibLR
+ zCVbCQjejtapjSn9EAfNqVnfyj9LzZG4v8VGAAQLbiPJSb5/wZIDpKgXomuzKgpqNTwMzdRPFrb
+ osldcTyYgJ8dofGR67S2PiW/pHhlcAv/6QQ8JnSV1xiEvu+Hx0RCdc5iSY1M11xYY6xBD4IsU2E
+ 4ivmB3ea+lLVHBlSRAbOa6+6Gg7WO1SuCpW0L/N/GCZtA7jSVT9jvDZ6BRSyqdvspL/45o9YO2a
+ foBvifqqf7iVj0E=
+X-Received: by 2002:a05:600c:5027:b0:441:b698:3431 with SMTP id
+ 5b1f17b1804b1-441c4948315mr93497065e9.28.1746545382775; 
+ Tue, 06 May 2025 08:29:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHRFvoU8Uq5DPz3g7DwIGvUUgHj4/SCmYkbYd1Nx7T9OiGm9jsmFwOjYI48SwRQYJ9pLtMVWw==
+X-Received: by 2002:a05:600c:5027:b0:441:b698:3431 with SMTP id
+ 5b1f17b1804b1-441c4948315mr93496875e9.28.1746545382389; 
+ Tue, 06 May 2025 08:29:42 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b276052bsm219569375e9.0.2025.05.06.08.29.57
+ 5b1f17b1804b1-441b2af4546sm221945135e9.22.2025.05.06.08.29.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 08:29:57 -0700 (PDT)
+ Tue, 06 May 2025 08:29:42 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 15/30] docs: build-system: fix typo
-Date: Tue,  6 May 2025 17:29:10 +0200
-Message-ID: <20250506152927.222671-16-pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 07/30] rust: qom: fix TODO about zeroability of classes
+Date: Tue,  6 May 2025 17:29:02 +0200
+Message-ID: <20250506152927.222671-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250506152927.222671-1-pbonzini@redhat.com>
 References: <20250506152927.222671-1-pbonzini@redhat.com>
@@ -108,25 +109,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+The proposed suggestion is not correct.  First it is not necessary for
+*all* classes to be Zeroable, only for Rust-defined ones; classes
+defined in C never implement ObjectImpl.
+
+Second, the parent class field need not be Zeroable.  For example,
+ChardevClass's chr_write and chr_be_event fields cannot be NULL,
+therefore ChardevClass cannot be Zeroable.  However, char_class_init()
+initializes them, therefore ChardevClass could be subclassed by Rust code.
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/build-system.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ rust/qemu-api/src/qom.rs | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/docs/devel/build-system.rst b/docs/devel/build-system.rst
-index 258cfad3fe7..2c884197a20 100644
---- a/docs/devel/build-system.rst
-+++ b/docs/devel/build-system.rst
-@@ -168,7 +168,7 @@ The required versions of the packages are stored in a configuration file
- ``pythondeps.toml``.  The format is custom to QEMU, but it is documented
- at the top of the file itself and it should be easy to understand.  The
- requirements should make it possible to use the version that is packaged
--that is provided by supported distros.
-+by QEMU's supported distros.
+diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+index 6929e4d33ae..52e3a1ec981 100644
+--- a/rust/qemu-api/src/qom.rs
++++ b/rust/qemu-api/src/qom.rs
+@@ -534,9 +534,10 @@ pub trait ObjectImpl: ObjectType + IsA<Object> {
+     /// While `klass`'s parent class is initialized on entry, the other fields
+     /// are all zero; it is therefore assumed that all fields in `T` can be
+     /// zeroed, otherwise it would not be possible to provide the class as a
+-    /// `&mut T`.  TODO: add a bound of [`Zeroable`](crate::zeroable::Zeroable)
+-    /// to T; this is more easily done once Zeroable does not require a manual
+-    /// implementation (Rust 1.75.0).
++    /// `&mut T`.  TODO: it may be possible to add an unsafe trait that checks
++    /// that all fields *after the parent class* (but not the parent class
++    /// itself) are Zeroable.  This unsafe trait can be added via a derive
++    /// macro.
+     const CLASS_INIT: fn(&mut Self::Class);
+ }
  
- When dependencies are downloaded, instead, ``configure`` uses a "known
- good" version that is also listed in ``pythondeps.toml``.  In this
 -- 
 2.49.0
 
