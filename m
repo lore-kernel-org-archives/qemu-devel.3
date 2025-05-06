@@ -4,90 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89811C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 10:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 612AEC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 10:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCFcQ-0006gk-Vh; Tue, 06 May 2025 06:33:47 -0400
+	id 1uCFhS-0007sW-Q2; Tue, 06 May 2025 06:38:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCFcM-0006cO-RV
- for qemu-devel@nongnu.org; Tue, 06 May 2025 06:33:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCFcG-0003j8-Kx
- for qemu-devel@nongnu.org; Tue, 06 May 2025 06:33:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746527612;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pHMsoHwcRmM8GyjVZQfP1pBWTwp0nvQsTIV6VbWvmuc=;
- b=bcCbhjSOI9UU8zCGQNJcOPMoc0woUO1M00JeHCdZjUyJ+YBPhcvB097qdLJru7zhug/3uJ
- It4/bW/l5/wivtil3nu8iMOJkSnr+62CtMxPx1+FeRZWsx3v8RlP5pUVfufbK+oKHwRHcO
- caTXOehVLiRjb4mkA90H71o1sbOLoig=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-558-pY71UXW_NP6heg18-bgjMQ-1; Tue, 06 May 2025 06:33:31 -0400
-X-MC-Unique: pY71UXW_NP6heg18-bgjMQ-1
-X-Mimecast-MFC-AGG-ID: pY71UXW_NP6heg18-bgjMQ_1746527610
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43d007b2c79so33298305e9.2
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 03:33:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1uCFhR-0007sN-2Z
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 06:38:57 -0400
+Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1uCFhO-0004Dr-Ja
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 06:38:56 -0400
+Received: by mail-qt1-x830.google.com with SMTP id
+ d75a77b69052e-476a1acf61eso59623641cf.1
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 03:38:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1746527931; x=1747132731; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+FfJTCQ2R1KEWdIxYZv+z04lPQX+YE4Qn1qD8Loep20=;
+ b=M28IOa4JxDpyuG59jGJAQ2MSjcAVQGKj5W+wmauUpBnn4Cw2a0NnwabapvZmGl4rVY
+ NpdB3UgXvPh4iWK68g/UsaOmny7B9HfpsKzjbOBw/PRkS/hSx8GIFjKhgK615RCSr5Gm
+ K2yB42UflajEmQa6vbQ4kaynGb6OJ+G6NiPYZ1OZlSuoVmp7+cjbTBcEgkGqGp1d8o3G
+ sHrxsDW7mAsIOFsCSMJJlXPvBwMnPA3zy8T2NP0A9cAF5j0tWf80AfJncDJW/jqD7RYV
+ BM0vbRejoySpjInGmgGch5J65n1FKfXKxWoKMo6b7HZBzF0a+l/pxBiFSsLiBdN0tBEH
+ PAnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746527610; x=1747132410;
+ d=1e100.net; s=20230601; t=1746527931; x=1747132731;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pHMsoHwcRmM8GyjVZQfP1pBWTwp0nvQsTIV6VbWvmuc=;
- b=n720BnVCSo5agQGtwTCwqSz/m93n2yvAgmQFkTCOxmdMpvXZpxsoo8iZYeIbJgWTXt
- LyuyHdGYDMovR/yHLodfYOf7JcIB+5RaIIIoBv6M6PFNmDMQETpBPqo+iI1ZGJQdUsbI
- uvJysQvp/t+WgqFRAuCtwccDUFahITdnPYtWaX9cFmjX+tcoIXLSEyCtVXkM9XJ3lhUS
- WX5gAgFryXoujys1F10ir7EWoxWVo+KMjtM4r2B6amhYFm686r8zxzykrhFv9o9NudR0
- i4qiqlNyCH0LRSAjM7FyusSSpDfecyyC9Qvg+8AThVulMTiz2HXu6nWtblwnZNFwtqLy
- u4Fw==
-X-Gm-Message-State: AOJu0YyyizqMjs6Z57ItA155Xx1PSvpRk11ZLCDQToo6Vc2UvXn6s7oo
- t1venOPArtwsDAG0KzSxkDBfSRMZ50uXFuUIyPcj38D5RPSdd+ZBOMzXtebvKhK03j1ZTx1qBkF
- Zi6TWs9pCvtcXeVXfi4tWOYW9pJQEcKuoq5wQuyp0Tohmahre0gGHOc5cTRJVzFBgJ02kCNdew3
- nyfg69E1VXPuZjKgz36Iabku4ToHc=
-X-Gm-Gg: ASbGnctq0KIPQ2alyEmxu5SpGr8kr75UNURvw77wixFTrrSP9D0ymZIEv41AiLDpX13
- ruEDyjq8Z2i2t8UTpQbQkhYAJoz9h9ijsQmo9Aw1LXx31RfFQLLJwWFHRtvYWsr1xat7t
-X-Received: by 2002:a05:600c:5105:b0:43c:e7a7:aea0 with SMTP id
- 5b1f17b1804b1-441d100a80emr20486465e9.26.1746527610301; 
- Tue, 06 May 2025 03:33:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHNHhif8jfiVQ97z+BXAWrm/CsBCuRtiWnMWXYZ+vontZg7flbaekF43yuJIawFQ6RcncEFZQ7f6xv1OU+FVVU=
-X-Received: by 2002:a05:600c:5105:b0:43c:e7a7:aea0 with SMTP id
- 5b1f17b1804b1-441d100a80emr20486255e9.26.1746527609952; Tue, 06 May 2025
- 03:33:29 -0700 (PDT)
+ bh=+FfJTCQ2R1KEWdIxYZv+z04lPQX+YE4Qn1qD8Loep20=;
+ b=CRpQDSOHpBXRsab2afhIxDJNByI3kjHxCadsj3h2m8F4Rn/Xuh90bXmOfvnef0JDHL
+ SI+GOKuIZfgkg6mKSQxKtcLN10l8djJeu7O8PvC+t3ky8ItfgABHyeN9O/CPrA78A8Xb
+ z4HyimxSn2k3hKuiATZ2dHj3XhgRPt9IHLxuxmzoHu+mRt6YPAmiv0SwUtEQ04Xgzdnm
+ cvOK5BxX9GLmu5OxVfV9ruovzg7/J6phFfZrc4ZNet5FFyXveWzvtd/siyXDk2MBI4r3
+ tJUqZz5xQeV7cqsaX90sduJ1rg2V5oRYn2M2hBA/Tb9GJGiGFuDM4n35NZEIYVd+/7pQ
+ FoCg==
+X-Gm-Message-State: AOJu0Yxf5bBkOe5t/f52GWS0xwTSq/2X7kzwhmtY8kw31BBTZYd4vMmM
+ vGwwJjv/hoUfoZMUA396o9HvzpOfKV3CMll4H0ztdsqVZNhaiqddhPLphT8JMSfY+tOQL1krsyp
+ CvQoonnuyKYou5jRYVpQZ9rUoyNA=
+X-Gm-Gg: ASbGncvQh3PswXpKlZwMrdyJpM7IJF9aeKcT9q4TBAaVXlsBZDrYZoDBkqfOkKtxCiM
+ pPhjTajAFRZ6XpJD2jENpy9JiBQth2Ub0Iv8c3Qlu5XPP9GXNOCxJ1ITnk2Tn0Ed5aNqE5MN8Sy
+ 4qiRMBbvdhVpvp0YnoFZ/zhL0=
+X-Google-Smtp-Source: AGHT+IFqognh8C67G+HB36XybGpBN2tTEw6Ec9oNVLR2PTG5BL57lwLdyMEgz0IUW3M8qLOkaoxsb/HJ4gpBea3abJI=
+X-Received: by 2002:a05:622a:4244:b0:48a:1594:6207 with SMTP id
+ d75a77b69052e-4910c394f2dmr35549721cf.15.1746527930644; Tue, 06 May 2025
+ 03:38:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250505100854.73936-1-pbonzini@redhat.com>
- <20250505100854.73936-4-pbonzini@redhat.com>
- <aBncq8KFTgzcT3jv@intel.com>
-In-Reply-To: <aBncq8KFTgzcT3jv@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 6 May 2025 12:33:17 +0200
-X-Gm-Features: ATxdqUFKc370bpFxdrNgK4Lj-P5sRATe4xaagwdtzVix-xsXOtI0wcrxeuK1TBo
-Message-ID: <CABgObfYAw92Fy8PUPEf5=vJG2N_O3-pt754QoFLLgfQu9JB-0A@mail.gmail.com>
-Subject: Re: [PATCH 3/5] rust: vmstate: convert to use builder pattern
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+References: <20250311155932.1472092-1-marcandre.lureau@redhat.com>
+ <Z9Bg157qSKt2v74Z@redhat.com>
+In-Reply-To: <Z9Bg157qSKt2v74Z@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 6 May 2025 14:38:38 +0400
+X-Gm-Features: ATxdqUHdUG3N_TGGgp8AhE4Sms_NQhfay3pP4vSs_IDjYEoQyIOeNS8tG6x5Qc0
+Message-ID: <CAJ+F1C+GJ-3+4O0Hdjh3ZPbBiMmAfQdey1J++4mCPkNufReFSg@mail.gmail.com>
+Subject: Re: [PATCH for-10.1 00/10] Support vdagent migration
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x830.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,40 +94,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 6, 2025 at 11:35=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wrot=
-e:
->
-> > +unsafe extern "C" fn vmstate_pre_load_cb<
-> > +    T,
-> > +    F: for<'a> FnCall<(&'a T,), Result<(), impl Into<Errno>>>,
-> > +>(
-> > +    opaque: *mut c_void,
-> > +) -> c_int {
-> > +    // SAFETY: assumes vmstate_struct! is used correctly
-> > +    let result =3D F::call((unsafe { &*(opaque.cast::<T>()) },));
-> > +    into_neg_errno(result)
->
-> Thanks! Now I see why you used io::ErrorKind.
->
-> > +}
->
-> ...
->
-> > +    #[must_use]
-> > +    pub const fn pre_load<F: for<'a> FnCall<(&'a T,), Result<(), impl =
-Into<Errno>>>>(
-> > +        mut self,
-> > +        _f: &F,
-> > +    ) -> Self {
->
-> Do we need to assert F is not ()?
->
-> const { assert!(F::IS_SOME) };
+Hi
 
-A NULL callback (i.e. ".pre_load(())") is a bit weird but acceptable.
-So the assertion if not needed, but indeed there should be an "if"
-that stores "ptr::null()" instead of vmstate_pre_load_cb::<F>.
+On Tue, Mar 11, 2025 at 8:16=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Tue, Mar 11, 2025 at 07:59:22PM +0400, marcandre.lureau@redhat.com wro=
+te:
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> >
+> > iQJQBAABCAA6FiEEh6m9kz+HxgbSdvYt2ujhCXWWnOUFAmfQXbMcHG1hcmNhbmRy
+> > ZS5sdXJlYXVAcmVkaGF0LmNvbQAKCRDa6OEJdZac5bmLD/49TJdk8vSnG/G53f3Z
+> > UdUGdDiv98lAr/1wPZvmLPGfxiVLrVQK9Rarjnq9+dzmjoJC+w8THyPIvlvlKAQO
+> > aNSe5LV2lcYFLZwJqXQdGHTEWWZX3BmXroSFY06F9znX4lrNSg/cxLaI+Lt+dbEt
+> > BA9IIMzGYB+zhkgJh86Yji1Ioz29qwMgb4etf4OtP3PqT7/djWxxdlYLmyqN7D13
+> > seHAkvhaA7sqglLcfUv0MjrNA1Yxg3QQmbmiErpyaHo9kQ2AuV49THZl5/Pe3WR5
+> > FJAeO83G8hdxdqFuDvnXB0ID2klqWYkZTJsTD75F1hU1yqszkVt8k4mUWubTIDNm
+> > VEFKGz/S+xR2rO0RGgGzMPzEm0FSPbLq1+U2ETRf3xBns0Jbqe6njHeLGAzmOx9p
+> > 3F8fkM4mzIrs3oOU/e7dlxOl9N6uQhVfJW6G+9QMLPLveIpNR6CGphbgHuMK8PPL
+> > vZ1WNrGa/xoHvqQi2FvIJJrnKYYBJDXQW1edM+apDgO9jBSmiO5XlKZjeNHwgZ6J
+> > 0sNmJUKCmk2SPGtFHdpdRfjfYfN2eR07eTVnVgstpHCUZi0nRz+4A6yq4k0SQLQH
+> > ZWsaq6cdZyfNOOdSHaLfI/2/36eiLpVCAuwn+AjK+XvPR6mQc9rwebV8N5nXLEZ8
+> > OFcig1i00RhHBRJFPrOjWIFIQg=3D=3D
+> > =3DiTg5
+> > -----END PGP SIGNATURE-----
+>
+> Huh ?  I presume there should have been a cover letter here
+> instead of the tail end of a pgp signature....
+>
 
-Paolo
+No idea what went wrong. But anyway, there was not much to say in the
+cover letter, ttsia.
+Up for review?
 
+> >
+> > Marc-Andr=C3=A9 Lureau (10):
+> >   ui/gtk: warn if setting the clipboard failed
+> >   ui/clipboard: use int for selection field
+> >   ui/clipboard: split out QemuClipboardContent
+> >   ui/clipboard: add vmstate_cbinfo
+> >   ui/clipboard: delay clipboard update when not running
+> >   ui/vdagent: replace Buffer with GByteArray
+> >   ui/vdagent: keep "connected" state
+> >   ui/vdagent: factor out clipboard peer registration
+> >   ui/vdagent: add migration support
+> >   ui/vdagent: remove migration blocker
+> >
+> >  include/ui/clipboard.h |  31 +++++--
+> >  ui/clipboard.c         |  66 +++++++++++++-
+> >  ui/gtk-clipboard.c     |  13 ++-
+> >  ui/vdagent.c           | 202 +++++++++++++++++++++++++++++++++++------
+> >  4 files changed, 268 insertions(+), 44 deletions(-)
+> >
+> > --
+> > 2.47.0
+> >
+> >
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
