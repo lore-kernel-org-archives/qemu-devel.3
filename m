@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2C9C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 09:00:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13081C3ABBF
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 09:01:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCEA1-0000R7-3k; Tue, 06 May 2025 05:00:21 -0400
+	id 1uCEBC-0001GS-Ib; Tue, 06 May 2025 05:01:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=fu8x=XW=kaod.org=clg@ozlabs.org>)
- id 1uCE9v-0000PI-Q6; Tue, 06 May 2025 05:00:16 -0400
+ id 1uCEB9-0001Fn-MM; Tue, 06 May 2025 05:01:31 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=fu8x=XW=kaod.org=clg@ozlabs.org>)
- id 1uCE9r-0008KQ-PW; Tue, 06 May 2025 05:00:15 -0400
+ id 1uCEB7-0000Gx-6y; Tue, 06 May 2025 05:01:31 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZsC5b17Swz4xMv;
- Tue,  6 May 2025 19:00:03 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4ZsC7B3bwtz4x8f;
+ Tue,  6 May 2025 19:01:26 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZsC5V5805z4x8f;
- Tue,  6 May 2025 18:59:55 +1000 (AEST)
-Message-ID: <bcb2d862-da59-44d4-9697-c252a6d453da@kaod.org>
-Date: Tue, 6 May 2025 10:59:52 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4ZsC764j8Vz4wbV;
+ Tue,  6 May 2025 19:01:22 +1000 (AEST)
+Message-ID: <2043a4a4-a700-4562-8a46-846fb5a8e8b3@kaod.org>
+Date: Tue, 6 May 2025 11:01:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 15/22] test/qtest/hace: Add SHA-384 test cases for
- ASPEED HACE model
+Subject: Re: [PATCH v1 01/22] hw/misc/aspeed_hace: Remove unused code for
+ better readability
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
@@ -43,10 +43,9 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>
 References: <20250321092623.2097234-1-jamin_lin@aspeedtech.com>
- <20250321092623.2097234-16-jamin_lin@aspeedtech.com>
- <901e092f-4aef-4b31-810b-3ae418905f7f@kaod.org>
- <SI2PR06MB5041C7E5A6BF5D51BCD41451FC8E2@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <SI2PR06MB50419F51A1B8C55BC2E1A9EEFC8E2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+ <20250321092623.2097234-2-jamin_lin@aspeedtech.com>
+ <1c4176c4-6077-4260-b96d-69ab5b920afb@kaod.org>
+ <SI2PR06MB5041C4C35CD83984D7A7FC5DFC8E2@SI2PR06MB5041.apcprd06.prod.outlook.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -91,7 +90,7 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <SI2PR06MB50419F51A1B8C55BC2E1A9EEFC8E2@SI2PR06MB5041.apcprd06.prod.outlook.com>
+In-Reply-To: <SI2PR06MB5041C4C35CD83984D7A7FC5DFC8E2@SI2PR06MB5041.apcprd06.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -117,286 +116,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/25 08:51, Jamin Lin wrote:
+On 5/5/25 05:28, Jamin Lin wrote:
 > Hi Cédric
 > 
->> Subject: RE: [PATCH v1 15/22] test/qtest/hace: Add SHA-384 test cases for
->> ASPEED HACE model
+>> Subject: Re: [PATCH v1 01/22] hw/misc/aspeed_hace: Remove unused code for
+>> better readability
 >>
->> Hi Cédric,
+>> On 3/21/25 10:25, Jamin Lin wrote:
+>>> This cleanup follows significant changes in commit 4c1d0af4a28d,
+>>> making the model more readable.
+>>>
+>>> - Deleted "iov_cache" and "iov_count" from "AspeedHACEState".
 >>
->>> Subject: Re: [PATCH v1 15/22] test/qtest/hace: Add SHA-384 test cases
->>> for ASPEED HACE model
+>> It would be good to say why we can remove these. I think this is because
+>> s->iov_count is always zero, right ?
+>>
+>>> - Removed "reconstruct_iov" function and related logic.
+>>> - Simplified "do_hash_operation" by eliminating redundant checks.
 >>>
->>> On 3/21/25 10:26, Jamin Lin wrote:
->>>> Introduced SHA-384 test functions to verify hashing operations.
->>>> Extended support for scatter-gather (`_sg`) and accumulation
->>>> (`_accum`)
->>> tests.
->>>> Updated test result vectors for SHA-384 validation.
->>>>
->>>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
->>>> ---
->>>>    tests/qtest/aspeed-hace-utils.h |   6 ++
->>>>    tests/qtest/aspeed-hace-utils.c | 168
->>> +++++++++++++++++++++++++++++++-
->>>>    2 files changed, 171 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/tests/qtest/aspeed-hace-utils.h
->>>> b/tests/qtest/aspeed-hace-utils.h index 598577c69b..f4440561de
->>>> 100644
->>>> --- a/tests/qtest/aspeed-hace-utils.h
->>>> +++ b/tests/qtest/aspeed-hace-utils.h
->>>> @@ -54,14 +54,20 @@ void aspeed_test_md5(const char *machine, const
->>> uint32_t base,
->>>>                         const uint32_t src_addr);
->>>>    void aspeed_test_sha256(const char *machine, const uint32_t base,
->>>>                            const uint32_t src_addr);
->>>> +void aspeed_test_sha384(const char *machine, const uint32_t base,
->>>> +                        const uint32_t src_addr);
->>>>    void aspeed_test_sha512(const char *machine, const uint32_t base,
->>>>                            const uint32_t src_addr);
->>>>    void aspeed_test_sha256_sg(const char *machine, const uint32_t base,
->>>>                               const uint32_t src_addr);
->>>> +void aspeed_test_sha384_sg(const char *machine, const uint32_t base,
->>>> +                           const uint32_t src_addr);
->>>>    void aspeed_test_sha512_sg(const char *machine, const uint32_t base,
->>>>                               const uint32_t src_addr);
->>>>    void aspeed_test_sha256_accum(const char *machine, const uint32_t
->>> base,
->>>>                                  const uint32_t src_addr);
->>>> +void aspeed_test_sha384_accum(const char *machine, const uint32_t
->> base,
->>>> +                              const uint32_t src_addr);
->>>>    void aspeed_test_sha512_accum(const char *machine, const uint32_t
->>> base,
->>>>                                  const uint32_t src_addr);
->>>>    void aspeed_test_addresses(const char *machine, const uint32_t
->>>> base, diff --git a/tests/qtest/aspeed-hace-utils.c
->>>> b/tests/qtest/aspeed-hace-utils.c index 8fbbba49c1..d3146898c2
->>>> 100644
->>>> --- a/tests/qtest/aspeed-hace-utils.c
->>>> +++ b/tests/qtest/aspeed-hace-utils.c
->>>> @@ -16,7 +16,7 @@
->>>>     * Expected results were generated using command line utitiles:
->>>>     *
->>>>     *  echo -n -e 'abc' | dd of=/tmp/test
->>>> - *  for hash in sha512sum sha256sum md5sum; do $hash /tmp/test;
->>>> done
->>>> + *  for hash in sha512sum sha384sum sha256sum md5sum; do $hash
->>>> + /tmp/test; done
->>>>     *
->>>>     */
->>>>    static const uint8_t test_vector[] = {0x61, 0x62, 0x63}; @@ -29,6
->>>> +29,12 @@ static const uint8_t test_result_sha512[] = {
->>>>        0x45, 0x4d, 0x44, 0x23, 0x64, 0x3c, 0xe8, 0x0e, 0x2a, 0x9a,
->>>> 0xc9,
->>> 0x4f,
->>>>        0xa5, 0x4c, 0xa4, 0x9f};
->>>>
->>>> +static const uint8_t test_result_sha384[] = {
->>>> +    0xcb, 0x00, 0x75, 0x3f, 0x45, 0xa3, 0x5e, 0x8b, 0xb5, 0xa0, 0x3d,
->> 0x69,
->>>> +    0x9a, 0xc6, 0x50, 0x07, 0x27, 0x2c, 0x32, 0xab, 0x0e, 0xde,
->>>> +0xd1,
->>> 0x63,
->>>> +    0x1a, 0x8b, 0x60, 0x5a, 0x43, 0xff, 0x5b, 0xed, 0x80, 0x86, 0x07,
->> 0x2b,
->>>> +    0xa1, 0xe7, 0xcc, 0x23, 0x58, 0xba, 0xec, 0xa1, 0x34, 0xc8,
->>>> +0x25, 0xa7};
->>>> +
->>>>    static const uint8_t test_result_sha256[] = {
->>>>        0xba, 0x78, 0x16, 0xbf, 0x8f, 0x01, 0xcf, 0xea, 0x41, 0x41,
->>>> 0x40,
->>> 0xde,
->>>>        0x5d, 0xae, 0x22, 0x23, 0xb0, 0x03, 0x61, 0xa3, 0x96, 0x17,
->>>> 0x7a, 0x9c, @@ -45,7 +51,7 @@ static const uint8_t test_result_md5[] = {
->>>>     * Expected results were generated using command line utitiles:
->>>>     *
->>>>     *  echo -n -e 'abcdefghijkl' | dd of=/tmp/test
->>>> - *  for hash in sha512sum sha256sum; do $hash /tmp/test; done
->>>> + *  for hash in sha512sum sha384sum sha256sum; do $hash /tmp/test;
->>>> + done
->>>>     *
->>>>     */
->>>>    static const uint8_t test_vector_sg1[] = {0x61, 0x62, 0x63, 0x64,
->>>> 0x65, 0x66}; @@ -60,6 +66,12 @@ static const uint8_t
->>> test_result_sg_sha512[] = {
->>>>        0x84, 0x25, 0x7c, 0x32, 0xc8, 0xf6, 0xd0, 0x85, 0x4a, 0xe6,
->>>> 0xb5,
->>> 0x40,
->>>>        0xf8, 0x6d, 0xda, 0x2e};
->>>>
->>>> +static const uint8_t test_result_sg_sha384[] = {
->>>> +    0x10, 0x3c, 0xa9, 0x6c, 0x06, 0xa1, 0xce, 0x79, 0x8f, 0x08, 0xf8,
->> 0xef,
->>>> +    0xf0, 0xdf, 0xb0, 0xcc, 0xdb, 0x56, 0x7d, 0x48, 0xb2, 0x85, 0xb2,
->> 0x3d,
->>>> +    0x0c, 0xd7, 0x73, 0x45, 0x46, 0x67, 0xa3, 0xc2, 0xfa, 0x5f, 0x1b,
->> 0x58,
->>>> +    0xd9, 0xcd, 0xf2, 0x32, 0x9b, 0xd9, 0x97, 0x97, 0x30, 0xbf,
->>>> +0xaa, 0xff};
->>>> +
->>>>    static const uint8_t test_result_sg_sha256[] = {
->>>>        0xd6, 0x82, 0xed, 0x4c, 0xa4, 0xd9, 0x89, 0xc1, 0x34, 0xec,
->>>> 0x94,
->>> 0xf1,
->>>>        0x55, 0x1e, 0x1e, 0xc5, 0x80, 0xdd, 0x6d, 0x5a, 0x6e, 0xcd,
->>>> 0xe9, 0xf3, @@ -74,7 +86,7 @@ static const uint8_t
->>>> test_result_sg_sha256[]
->>> = {
->>>>     * Expected results were generated using command line utitiles:
->>>>     *
->>>>     *  echo -n -e 'abc' | dd of=/tmp/test
->>>> - *  for hash in sha512sum sha256sum; do $hash /tmp/test; done
->>>> + *  for hash in sha512sum sha384sum sha256sum; do $hash /tmp/test;
->>>> + done
->>>>     */
->>>>    static const uint8_t test_vector_accum_512[] = {
->>>>        0x61, 0x62, 0x63, 0x80, 0x00, 0x00, 0x00, 0x00, @@ -94,6
->>>> +106,24 @@ static const uint8_t test_vector_accum_512[] = {
->>>>        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>>        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18};
->>>>
->>>> +static const uint8_t test_vector_accum_384[] = {
->>>> +    0x61, 0x62, 0x63, 0x80, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
->>>> +    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x18};
->>>> +
->>>>    static const uint8_t test_vector_accum_256[] = {
->>>>        0x61, 0x62, 0x63, 0x80, 0x00, 0x00, 0x00, 0x00,
->>>>        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, @@ -112,6
->>>> +142,12 @@ static const uint8_t test_result_accum_sha512[] = {
->>>>        0x45, 0x4d, 0x44, 0x23, 0x64, 0x3c, 0xe8, 0x0e, 0x2a, 0x9a,
->>>> 0xc9,
->>> 0x4f,
->>>>        0xa5, 0x4c, 0xa4, 0x9f};
->>>>
->>>> +static const uint8_t test_result_accum_sha384[] = {
->>>> +    0xcb, 0x00, 0x75, 0x3f, 0x45, 0xa3, 0x5e, 0x8b, 0xb5, 0xa0, 0x3d,
->> 0x69,
->>>> +    0x9a, 0xc6, 0x50, 0x07, 0x27, 0x2c, 0x32, 0xab, 0x0e, 0xde,
->>>> +0xd1,
->>> 0x63,
->>>> +    0x1a, 0x8b, 0x60, 0x5a, 0x43, 0xff, 0x5b, 0xed, 0x80, 0x86, 0x07,
->> 0x2b,
->>>> +    0xa1, 0xe7, 0xcc, 0x23, 0x58, 0xba, 0xec, 0xa1, 0x34, 0xc8,
->>>> +0x25, 0xa7};
->>>> +
->>>>    static const uint8_t test_result_accum_sha256[] = {
->>>>        0xba, 0x78, 0x16, 0xbf, 0x8f, 0x01, 0xcf, 0xea, 0x41, 0x41,
->>>> 0x40,
->>> 0xde,
->>>>        0x5d, 0xae, 0x22, 0x23, 0xb0, 0x03, 0x61, 0xa3, 0x96, 0x17,
->>>> 0x7a, 0x9c, @@ -195,6 +231,40 @@ void aspeed_test_sha256(const char
->>> *machine, const uint32_t base,
->>>>        qtest_quit(s);
->>>>    }
->>>>
->>>> +void aspeed_test_sha384(const char *machine, const uint32_t base,
->>>> +                        const uint32_t src_addr) {
->>>> +    QTestState *s = qtest_init(machine);
->>>> +
->>>> +    const uint32_t digest_addr = src_addr + 0x10000;
->>>> +    uint8_t digest[32] = {0};
->>>> +
->>>> +    /* Check engine is idle, no busy or irq bits set */
->>>> +    g_assert_cmphex(qtest_readl(s, base + HACE_STS), ==, 0);
->>>> +
->>>> +    /* Write test vector into memory */
->>>> +    qtest_memwrite(s, src_addr, test_vector, sizeof(test_vector));
->>>> +
->>>> +    write_regs(s, base, src_addr, sizeof(test_vector), digest_addr,
->>>> +               HACE_ALGO_SHA384);
->>>> +
->>>> +    /* Check hash IRQ status is asserted */
->>>> +    g_assert_cmphex(qtest_readl(s, base + HACE_STS), ==,
->>>> + 0x00000200);
->>>> +
->>>> +    /* Clear IRQ status and check status is deasserted */
->>>> +    qtest_writel(s, base + HACE_STS, 0x00000200);
->>>> +    g_assert_cmphex(qtest_readl(s, base + HACE_STS), ==, 0);
->>>> +
->>>> +    /* Read computed digest from memory */
->>>> +    qtest_memread(s, digest_addr, digest, sizeof(digest));
->>>> +
->>>> +    /* Check result of computation */
->>>> +    g_assert_cmpmem(digest, sizeof(digest),
->>>> +                    test_result_sha384, sizeof(digest));
->>>> +
->>>> +    qtest_quit(s);
->>>> +}
->>>> +
->>>>    void aspeed_test_sha512(const char *machine, const uint32_t base,
->>>>                            const uint32_t src_addr)
->>>>    {
->>>> @@ -280,6 +350,57 @@ void aspeed_test_sha256_sg(const char
->> *machine,
->>> const uint32_t base,
->>>>        qtest_quit(s);
->>>>    }
->>>>
->>>> +void aspeed_test_sha384_sg(const char *machine, const uint32_t base,
->>>> +                           const uint32_t src_addr) {
->>>> +    QTestState *s = qtest_init(machine);
->>>> +
->>>> +    const uint32_t src_addr_1 = src_addr + 0x10000;
->>>> +    const uint32_t src_addr_2 = src_addr + 0x20000;
->>>> +    const uint32_t src_addr_3 = src_addr + 0x30000;
->>>> +    const uint32_t digest_addr = src_addr + 0x40000;
->>>> +    uint8_t digest[64] = {0};
+>>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>>> ---
+>>>    include/hw/misc/aspeed_hace.h |  2 --
+>>>    hw/misc/aspeed_hace.c         | 35 -----------------------------------
+>>>    2 files changed, 37 deletions(-)
 >>>
->>> This does not compile (gcc version 14.2.1)
+>>> diff --git a/include/hw/misc/aspeed_hace.h
+>>> b/include/hw/misc/aspeed_hace.h index 5d4aa19cfe..b69a038d35 100644
+>>> --- a/include/hw/misc/aspeed_hace.h
+>>> +++ b/include/hw/misc/aspeed_hace.h
+>>> @@ -31,10 +31,8 @@ struct AspeedHACEState {
+>>>        MemoryRegion iomem;
+>>>        qemu_irq irq;
 >>>
+>>> -    struct iovec iov_cache[ASPEED_HACE_MAX_SG];
+>>>        uint32_t regs[ASPEED_HACE_NR_REGS];
+>>>        uint32_t total_req_len;
+>>> -    uint32_t iov_count;
 >>>
->>> ../tests/qtest/aspeed-hace-utils.c: In function ‘aspeed_test_sha384_sg’:
->>> /usr/include/glib-2.0/glib/gtestutils.h:93:84: error: ‘__builtin_memcmp_eq’
->>> specified bound 64 exceeds the size 48 of unterminated array
->>> [-Werror=stringop-overread]
->>>      93 |                                              else if
->>> (__l1 != 0 && __m2 != NULL && memcmp (__m1, __m2, __l1) != 0) \
->>>         |
->>> ^~~~~~~~~~~~~~~~~~~~~~~~~
->>> ../tests/qtest/aspeed-hace-utils.c:399:5: note: in expansion of macro
->>> ‘g_assert_cmpmem’
->>>     399 |     g_assert_cmpmem(digest, sizeof(digest),
->>>         |     ^~~~~~~~~~~~~~~
->>> ../tests/qtest/aspeed-hace-utils.c:69:22: note: referenced argument
->>> declared here
->>>      69 | static const uint8_t test_result_sg_sha384[] = {
->>>         |                      ^~~~~~~~~~~~~~~~~~~~~
+>>>        MemoryRegion *dram_mr;
+>>>        AddressSpace dram_as;
+>>> diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c index
+>>> 32a5dbded3..8e7e8113a5 100644
+>>> --- a/hw/misc/aspeed_hace.c
+>>> +++ b/hw/misc/aspeed_hace.c
+>>> @@ -137,25 +137,6 @@ static bool has_padding(AspeedHACEState *s,
+>> struct iovec *iov,
+>>>        return false;
+>>>    }
 >>>
+>>> -static int reconstruct_iov(AspeedHACEState *s, struct iovec *iov, int id,
+>>> -                           uint32_t *pad_offset)
+>>> -{
+>>> -    int i, iov_count;
+>>> -    if (*pad_offset != 0) {
+>>> -        s->iov_cache[s->iov_count].iov_base = iov[id].iov_base;
+>>> -        s->iov_cache[s->iov_count].iov_len = *pad_offset;
+>>> -        ++s->iov_count;
+>>> -    }
+>>> -    for (i = 0; i < s->iov_count; i++) {
+>>> -        iov[i].iov_base = s->iov_cache[i].iov_base;
+>>> -        iov[i].iov_len = s->iov_cache[i].iov_len;
+>>> -    }
+>>> -    iov_count = s->iov_count;
+>>> -    s->iov_count = 0;
+>>> -    s->total_req_len = 0;
+>>> -    return iov_count;
+>>> -}
+>>> -
+>>>    static void do_hash_operation(AspeedHACEState *s, int algo, bool
+>> sg_mode,
+>>>                                  bool acc_mode)
+>>>    {
+>>> @@ -237,19 +218,6 @@ static void do_hash_operation(AspeedHACEState *s,
+>> int algo, bool sg_mode,
+>>>            iov[0].iov_base = haddr;
+>>>            iov[0].iov_len = len;
+>>>            i = 1;
+>>> -
+>>> -        if (s->iov_count) {
+>>> -            /*
+>>> -             * In aspeed sdk kernel driver, sg_mode is disabled in
+>> hash_final().
+>>> -             * Thus if we received a request with sg_mode disabled, it is
+>>> -             * required to check whether cache is empty. If no, we should
+>>> -             * combine cached iov and the current iov.
+>>> -             */
+>>> -            s->total_req_len += len;
+>>> -            if (has_padding(s, iov, len, &total_msg_len, &pad_offset)) {
+>>> -                i = reconstruct_iov(s, iov, 0, &pad_offset);
+>>> -            }
+>>> -        }
+>>>        }
+>>>
+>>>        if (acc_mode) {
+>>> @@ -273,7 +241,6 @@ static void do_hash_operation(AspeedHACEState *s,
+>> int algo, bool sg_mode,
+>>>                qcrypto_hash_free(s->hash_ctx);
+>>>
+>>>                s->hash_ctx = NULL;
+>>> -            s->iov_count = 0;
+>>>                s->total_req_len = 0;
+>>>            }
+>>>        } else if (qcrypto_hash_bytesv(algo, iov, i, &digest_buf, @@
+>>> -432,7 +399,6 @@ static void aspeed_hace_reset(DeviceState *dev)
+>>>        }
+>>>
+>>>        memset(s->regs, 0, sizeof(s->regs));
+>>> -    s->iov_count = 0;
+>>>        s->total_req_len = 0;
+>>>    }
+>>>
+>>> @@ -469,7 +435,6 @@ static const VMStateDescription
+>> vmstate_aspeed_hace = {
+>>>        .fields = (const VMStateField[]) {
+>>>            VMSTATE_UINT32_ARRAY(regs, AspeedHACEState,
+>> ASPEED_HACE_NR_REGS),
+>>>            VMSTATE_UINT32(total_req_len, AspeedHACEState),
+>>> -        VMSTATE_UINT32(iov_count, AspeedHACEState),
+>>
+>> This is a vmstate change which is breaking migration compatibility.
+>> We could preserve compatibility [1] but I think this is overkill.
+>> However, we should say so. Please add a comment in the commit log.
 >>
 > 
-> Sorry, the root cause is that I mistakenly set the digest size to 64 bytes. I will fix it.
+> How about the following commit log:
 > 
-> uint8_t digest[64] = {0};
-> static const uint8_t test_result_sg_sha384[] = {
->      0x10, 0x3c, 0xa9, 0x6c, 0x06, 0xa1, 0xce, 0x79, 0x8f, 0x08, 0xf8, 0xef,
->      0xf0, 0xdf, 0xb0, 0xcc, 0xdb, 0x56, 0x7d, 0x48, 0xb2, 0x85, 0xb2, 0x3d,
->      0x0c, 0xd7, 0x73, 0x45, 0x46, 0x67, 0xa3, 0xc2, 0xfa, 0x5f, 0x1b, 0x58,
->      0xd9, 0xcd, 0xf2, 0x32, 0x9b, 0xd9, 0x97, 0x97, 0x30, 0xbf, 0xaa, 0xff};
-> /* Check result of computation */
->      g_assert_cmpmem(digest, sizeof(digest), ====> 64bytes
->                      test_result_sg_sha384 ===>only 48bytes , sizeof(digest));
+> ```
+> hw/misc/aspeed_hace: Remove unused code for better readability
 > 
-> However, I believe explicitly setting the array size is the right approach.
-> I’d appreciate your thoughts or suggestions on this.
+> In the previous design of the hash framework, accumulative hashing was not
+> supported. To work around this limitation, commit 5cd7d85 introduced an
+> iov_cache array to store all the hash data from firmware.
+> Once the ASPEED HACE model collected all the data, it passed the iov_cache to
+> the hash API to calculate the final digest.
+> 
+> However, with commit e3c0752, the hash framework now supports accumulative
+> hashing. This allows us to refactor the ASPEED HACE model, removing redundant
+> logic and simplifying the implementation for better readability and
+> maintainability.
+> 
+> As a result, the iov_count variable is no longer needed—it was previously used
+> to track how many cached entries were used for hashing.
+> To maintain VMSTATE compatibility after removing this field, the VMSTATE_VERSION
+> is bumped to 2
+> 
+> This cleanup follows significant changes in commit 4c1d0af4a28d, making the
+> model more readable.
+> 
+> - Deleted "iov_cache" and "iov_count" from "AspeedHACEState".
+> - Removed "reconstruct_iov" function and related logic.
+> - Simplified "do_hash_operation" by eliminating redundant checks.
+> ```
 
-Yes. Please do that. Since this is an architecture requirement.
+
+OK Let's see in v2.
 
 
 Thanks,
@@ -404,169 +277,18 @@ Thanks,
 C.
 
 
-
+> Thans-Jamin
 > 
-> Thanks-Jamin
-> 
+>> Thanks,
 >>
->> I didn't explicitly set the array size for "test_result_sg_sha384", and the
->> compiler seems to have inferred a size of 64 bytes—likely due to 32-byte
->> alignment.
->> However, the actual SHA384 digest is 48 bytes, which is why your compiler
->> reported an error: it detected a possible buffer overread.
+>> C.
 >>
->> There are two possible ways to fix this issue:
+>> [1]
+>> https://qemu.readthedocs.io/en/v9.2.0/devel/migration/main.html#vmstate
 >>
->> Solution 1:
->> Define a constant MAX_SIZE_LENGTH (e.g., 64 bytes), and use it for all test
->> result arrays:
->>
->> test_result_sha512[MAX_SIZE_LENGTH];
->> test_result_sha384[MAX_SIZE_LENGTH];
->> However, in this case, we cannot use "sizeof(test_result_sha384)" or
->> "sizeof(test_result_sha256)" in the test code, because the compiler will
->> evaluate them as 128 bytes.
->> Therefore, we should use hardcoded digest lengths (48 for SHA384, 32 for
->> SHA256) when comparing results in the tests.
->>
->> Solution 2:
->> Set the actual digest size explicitly in the array definition:
->> test_result_sha512[64];
->> test_result_sha384[48];
->> This ensures "sizeof()" will return the correct digest size, and we can safely use
->> it in assertions.
->>
->> I prefer solution 2.
->> Let me know which solution you'd prefer to go with.
->>
->> Thanks-Jamin
->>>
->>>
->>>
->>>> +    struct AspeedSgList array[] = {
->>>> +        {  cpu_to_le32(sizeof(test_vector_sg1)),
->>>> +           cpu_to_le32(src_addr_1) },
->>>> +        {  cpu_to_le32(sizeof(test_vector_sg2)),
->>>> +           cpu_to_le32(src_addr_2) },
->>>> +        {  cpu_to_le32(sizeof(test_vector_sg3) | SG_LIST_LEN_LAST),
->>>> +           cpu_to_le32(src_addr_3) },
->>>> +    };
->>>> +
->>>> +    /* Check engine is idle, no busy or irq bits set */
->>>> +    g_assert_cmphex(qtest_readl(s, base + HACE_STS), ==, 0);
->>>> +
->>>> +    /* Write test vector into memory */
->>>> +    qtest_memwrite(s, src_addr_1, test_vector_sg1,
->>> sizeof(test_vector_sg1));
->>>> +    qtest_memwrite(s, src_addr_2, test_vector_sg2,
->>> sizeof(test_vector_sg2));
->>>> +    qtest_memwrite(s, src_addr_3, test_vector_sg3,
->>> sizeof(test_vector_sg3));
->>>> +    qtest_memwrite(s, src_addr, array, sizeof(array));
->>>> +
->>>> +    write_regs(s, base, src_addr,
->>>> +               (sizeof(test_vector_sg1)
->>>> +                + sizeof(test_vector_sg2)
->>>> +                + sizeof(test_vector_sg3)),
->>>> +               digest_addr, HACE_ALGO_SHA384 | HACE_SG_EN);
->>>> +
->>>> +    /* Check hash IRQ status is asserted */
->>>> +    g_assert_cmphex(qtest_readl(s, base + HACE_STS), ==,
->>>> + 0x00000200);
->>>> +
->>>> +    /* Clear IRQ status and check status is deasserted */
->>>> +    qtest_writel(s, base + HACE_STS, 0x00000200);
->>>> +    g_assert_cmphex(qtest_readl(s, base + HACE_STS), ==, 0);
->>>> +
->>>> +    /* Read computed digest from memory */
->>>> +    qtest_memread(s, digest_addr, digest, sizeof(digest));
->>>> +
->>>> +    /* Check result of computation */
->>>> +    g_assert_cmpmem(digest, sizeof(digest),
->>>> +                    test_result_sg_sha384, sizeof(digest));
->>>> +
->>>> +    qtest_quit(s);
->>>> +}
->>>> +
->>>>    void aspeed_test_sha512_sg(const char *machine, const uint32_t base,
->>>>                               const uint32_t src_addr)
->>>>    {
->>>> @@ -372,6 +493,47 @@ void aspeed_test_sha256_accum(const char
->>> *machine, const uint32_t base,
->>>>        qtest_quit(s);
->>>>    }
->>>>
->>>> +void aspeed_test_sha384_accum(const char *machine, const uint32_t
->> base,
->>>> +                              const uint32_t src_addr) {
->>>> +    QTestState *s = qtest_init(machine);
->>>> +
->>>> +    const uint32_t buffer_addr = src_addr + 0x10000;
->>>> +    const uint32_t digest_addr = src_addr + 0x40000;
->>>> +    uint8_t digest[64] = {0};
->>>
->>> ../tests/qtest/aspeed-hace-utils.c: In function ‘aspeed_test_sha384_accum’:
->>> /usr/include/glib-2.0/glib/gtestutils.h:93:84: error: ‘__builtin_memcmp_eq’
->>> specified bound 64 exceeds source size 48 [-Werror=stringop-overread]
->>>      93 |                                              else if
->>> (__l1 != 0 && __m2 != NULL && memcmp (__m1, __m2, __l1) != 0) \
->>>         |
->>> ^~~~~~~~~~~~~~~~~~~~~~~~~
->>> ../tests/qtest/aspeed-hace-utils.c:533:5: note: in expansion of macro
->>> ‘g_assert_cmpmem’
->>>     533 |     g_assert_cmpmem(digest, sizeof(digest),
->>>         |     ^~~~~~~~~~~~~~~
->>> ../tests/qtest/aspeed-hace-utils.c:145:22: note: source object declared here
->>>     145 | static const uint8_t test_result_accum_sha384[] = {
->>>         |                      ^~~~~~~~~~~~~~~~~~~~~~~~
->>>
->>>
->>> Thanks,
->>>
->>> C.
->>>
->>>
->>>
->>>> +    struct AspeedSgList array[] = {
->>>> +        {  cpu_to_le32(sizeof(test_vector_accum_384) |
->>> SG_LIST_LEN_LAST),
->>>> +           cpu_to_le32(buffer_addr) },
->>>> +    };
->>>> +
->>>> +    /* Check engine is idle, no busy or irq bits set */
->>>> +    g_assert_cmphex(qtest_readl(s, base + HACE_STS), ==, 0);
->>>> +
->>>> +    /* Write test vector into memory */
->>>> +    qtest_memwrite(s, buffer_addr, test_vector_accum_384,
->>>> +                   sizeof(test_vector_accum_384));
->>>> +    qtest_memwrite(s, src_addr, array, sizeof(array));
->>>> +
->>>> +    write_regs(s, base, src_addr, sizeof(test_vector_accum_384),
->>>> +               digest_addr, HACE_ALGO_SHA384 | HACE_SG_EN |
->>>> + HACE_ACCUM_EN);
->>>> +
->>>> +    /* Check hash IRQ status is asserted */
->>>> +    g_assert_cmphex(qtest_readl(s, base + HACE_STS), ==,
->>>> + 0x00000200);
->>>> +
->>>> +    /* Clear IRQ status and check status is deasserted */
->>>> +    qtest_writel(s, base + HACE_STS, 0x00000200);
->>>> +    g_assert_cmphex(qtest_readl(s, base + HACE_STS), ==, 0);
->>>> +
->>>> +    /* Read computed digest from memory */
->>>> +    qtest_memread(s, digest_addr, digest, sizeof(digest));
->>>> +
->>>> +    /* Check result of computation */
->>>> +    g_assert_cmpmem(digest, sizeof(digest),
->>>> +                    test_result_accum_sha384, sizeof(digest));
->>>> +
->>>> +    qtest_quit(s);
->>>> +}
->>>> +
->>>>    void aspeed_test_sha512_accum(const char *machine, const uint32_t
->>> base,
->>>>                                  const uint32_t src_addr)
->>>>    {
+>>>            VMSTATE_END_OF_LIST(),
+>>>        }
+>>>    };
 > 
 
 
