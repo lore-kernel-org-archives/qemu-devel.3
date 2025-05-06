@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37D22C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 12:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C3F0C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 12:57:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCHrV-0003T0-JO; Tue, 06 May 2025 08:57:29 -0400
+	id 1uCHrR-0003OI-EP; Tue, 06 May 2025 08:57:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uCHrR-0003Ox-Tg
- for qemu-devel@nongnu.org; Tue, 06 May 2025 08:57:26 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1uCHrO-0003Lf-Nt
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 08:57:22 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uCHrN-0003q7-NF
- for qemu-devel@nongnu.org; Tue, 06 May 2025 08:57:25 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5eb92df4fcbso10851604a12.0
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 05:57:21 -0700 (PDT)
+ id 1uCHrL-0003ov-1k
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 08:57:22 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-acb2faa9f55so746801266b.3
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 05:57:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746536240; x=1747141040; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746536236; x=1747141036; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iZ7ZcEntGPm6gGVefEyriA5YLtZ/h9pxvxLBafrRxrE=;
- b=DHz9IenC26s6aHkYTsX6PNWZf4BQ/qprEX1qf1vK7G2qRgRPrys8hSbUWy9Lu8sFFv
- 26Vsrc8AD3slWLgKNE3OLIQgB5azHIvxCQs5r4WtrkscdrQ1EWE/5jRfzjUEwgPWzpqK
- iS6ZyoyyH442YkSEpSzIyLC6RUXoQFEBPtoYyEM1dZ8VSLidf2fM43Tkfy3iNNDGGtpR
- 1mWtB3k49Z0ShFf63jH9D8Iks1dJSfkuodEa5CHRSPRHuHdBk02PIEPqdwlPglDob3eq
- Ll+37URJg8HidcgjosTTHQqS5fISMq7DoxbOum59M/vZewtTGE9pH0bCTExF3UujMtOX
- r2Jg==
+ bh=04euknF6hiqA68aLuG0ENQyvrvDpr8jpqKbpqudmzQg=;
+ b=EyuQzSy6XqSFcBaBycfUQ7/1FCXDjdAySxnbj44O/VhgF5bKEeXxnEKL+3wvVOE3KQ
+ SzyeExeCIRWM8wrBuwHejde6VhU2yQT47+dC6fAJXqT7sT0dSN4/WPPenKLS1WFcay5b
+ pOsttJnJjIdWLWdAP2SSQ8Mcxis5YIz3MF/7+pYpJXnYop69Wbj3OPgIp+LsFMyZPZH6
+ TWgaMrbxWsoKdopDgSKiEh70U//pRQ622FtJJOUq1mBaPrX88A83sPph5fiZ2mDzy3vW
+ 3ROnzM6f1+aMRr9eSokpM9Y+8kzWBl7watxDKCyYd17P8dtLPs/K73XEntWokrUI1pRO
+ 7YhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746536240; x=1747141040;
+ d=1e100.net; s=20230601; t=1746536236; x=1747141036;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iZ7ZcEntGPm6gGVefEyriA5YLtZ/h9pxvxLBafrRxrE=;
- b=e8MSJTMogXvRMvKkoa7/8OjR2AhgdUKaAufWv9zBn9e1XOPB7Gsvgov6sxH7GsQKAH
- dXF2PQ0G7PGSPnfvQYAr7/b9wbl2joRVoPPJG2LyFdj/G3tFX03rWxvIriD8oVg23w/g
- gs6H6w9p1AH0sCwb0Qsyak2tUhSOviNghAJB6QcKv9tG1PKrD2ZiLSZ39HlqGLmc9nIr
- jRXzelYLq79LJqbnildYNXK+eKFHtfe3Q9P2Xnr/4NdgR0xlTin23ypWszAOvbTpWbHh
- D9h6lqRvnEyr3+KFosyoFi/jEJocJo7CJEzHvPgPEpfiafGrmApclAcVyr1cInBYUXpc
- RyKQ==
-X-Gm-Message-State: AOJu0YxGmInBT9RdxARSmikN4oGvyKEv2U8SVcSIKtyDRRAclDg+FHof
- /+fAhtySY6zh4YfAEJi86xO4CBRGq7Ep0kV40K8LWceSG01Rcns2SWPwKocFZ58=
-X-Gm-Gg: ASbGncscBixwxKy7YazaV/bNkfZKmFflkvE9fTk5MWGWtlcDysJLMOjjxKlsM4ajtqm
- OIy6oLJm4gTRVy+yYZSFitNurRCk1GTZYwBsCESsz36AMiUCXC016nvuGMEvqmsIHojJZGvIqY3
- sUN5fV/kmGTIS4+xgMQaRp0gMgqaJ6fGieOYLz6AdLZJhw/u42JhBxYBax8SmkcfIf4T6WOKEp7
- b7rcgNs2OZIA2l4Bg9idqk63K5ghaG/dNl/QpABKlM1A+0KaA4iRdC8uvHeB1E0uSSJcNs8Wjz/
- coXsdwmNrZ3Gw9bQZZt95i6/cr09HdHgoW3SNIFJkuw=
-X-Google-Smtp-Source: AGHT+IESU9jkf+t+9IiUqWzqA2hstZHNJAvXar9Wuh0EFY6uhdG9PoGKI/IJ+aL6aFi/XLfIpPihjA==
-X-Received: by 2002:a17:907:7f8b:b0:ad1:8d47:f5a1 with SMTP id
- a640c23a62f3a-ad1d327b0c8mr332156966b.0.1746536240089; 
- Tue, 06 May 2025 05:57:20 -0700 (PDT)
+ bh=04euknF6hiqA68aLuG0ENQyvrvDpr8jpqKbpqudmzQg=;
+ b=Cc90VbF2HLNqkPJVZtiaaMV0JxtvXcJ9w9qhGliKWyEiJY652L9ZpYTdMpVVwPGRV3
+ ogI4g2zAOhG8ZCV1WJ9PUhuIeePo8Tz2C9pHhL2xCoiDkBRtuQ/31WY79onO14i+35ky
+ IoIQQUAK46AQeLlL/oUdasKPjxAiADMpqoGJpvTHNl1Lin56WzCVpJkO/IWWin/tK0hg
+ SrdHTPWEBmYnmzSRy/SlxFHgRb6DCkN+YsEZHDZtCsHjKUSyGR57s2TDhiGfGXEWST35
+ P4S/UPSgUUvcxhZ6TP2+Reg3yMBwMOzCeA+TgBdUBCaswMk05e2I4HY9mmhy5v9dMcG6
+ omYw==
+X-Gm-Message-State: AOJu0YwtMwXaGPuPCW+id5eTt0JZf8WeMRaF8uIQJicVwPNXn6NbLAoA
+ h2wllTtokmpIaOL1vIlkXQvOSE5rPyqcdZIJ8z6+WTqCEBGkyAphn3LcN4clkR4=
+X-Gm-Gg: ASbGnctsQlO9cDlAI3y/18q691ArL/qiBtPiupGUlDrxJdTXomViR+LJm38XQ6mqYj6
+ luKlJr4sfOmdumXWZiq9fpFjz8UbA4HEPoAgy78Xy+csBcNjsAAzZrlWuzB2l4auXOd4jeZpiML
+ xjhpWj6G+Tj9rhg8jTVNV72fcz+ASNtX3ES8W0FtILs5+Oa8iYo85TetkVif8xle6Rl8Oo+VO5G
+ ULu0eQ8j8XJ4r9cwdRUqXKcGMz8O25g3ioKvFyep9lodX/agT8fW4GA7Y7W5u0cyOwY+AMkmTcC
+ V84LL45C07RBpz7ilUbVtHilqQ2GMdE+rIZlbLAxrT4=
+X-Google-Smtp-Source: AGHT+IG8oOejUaa5cSdB9abs17+Bg2huR4Ig9dY2ZpZkMWO9AqovMeHZFgW/JB2viZ26riW6QFxCXA==
+X-Received: by 2002:a17:906:564a:b0:ad1:8e78:3d79 with SMTP id
+ a640c23a62f3a-ad1d3466a76mr236444966b.1.1746536236541; 
+ Tue, 06 May 2025 05:57:16 -0700 (PDT)
 Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad18e2d7a88sm642870066b.36.2025.05.06.05.57.17
+ 4fb4d7f45d1cf-5fa777c8b12sm7766567a12.24.2025.05.06.05.57.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 05:57:18 -0700 (PDT)
+ Tue, 06 May 2025 05:57:16 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8B8AB5FAAE;
+ by draig.lan (Postfix) with ESMTP id 32BA35F947;
  Tue,  6 May 2025 13:57:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -85,17 +85,18 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Peter Maydell <peter.maydell@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>
-Subject: [PATCH v2 05/14] contrib/plugins: add a scaling factor to the ips arg
-Date: Tue,  6 May 2025 13:57:06 +0100
-Message-Id: <20250506125715.232872-6-alex.bennee@linaro.org>
+Subject: [PATCH v2 01/14] tests/docker: expose $HOME/.cache/qemu as docker
+ volume
+Date: Tue,  6 May 2025 13:57:02 +0100
+Message-Id: <20250506125715.232872-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250506125715.232872-1-alex.bennee@linaro.org>
 References: <20250506125715.232872-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -118,87 +119,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's easy to get lost in zeros while setting the numbers of
-instructions per second. Add a scaling suffix to make things simpler.
+If you want to run functional tests we should share .cache/qemu so we
+don't force containers to continually re-download images.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 ---
 v2
-  - normalise the suffix before a full strcmp0
-  - check endptr actually set
-  - fix checkpatch
+  - Share a whole .cache/qemu path.
 ---
- contrib/plugins/ips.c | 36 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 35 insertions(+), 1 deletion(-)
+ tests/docker/Makefile.include | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
-index e5297dbb01..9b166a7d6c 100644
---- a/contrib/plugins/ips.c
-+++ b/contrib/plugins/ips.c
-@@ -20,6 +20,8 @@
+diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
+index fa1cbb6726..3959d8a028 100644
+--- a/tests/docker/Makefile.include
++++ b/tests/docker/Makefile.include
+@@ -185,8 +185,10 @@ docker:
  
- QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+ docker-help: docker
  
-+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
-+
- /* how many times do we update time per sec */
- #define NUM_TIME_UPDATE_PER_SEC 10
- #define NSEC_IN_ONE_SEC (1000 * 1000 * 1000)
-@@ -129,6 +131,18 @@ static void plugin_exit(qemu_plugin_id_t id, void *udata)
-     qemu_plugin_scoreboard_free(vcpus);
- }
++# Where QEMU caches build artefacts
++DOCKER_QEMU_CACHE_DIR := $$HOME/.cache/qemu
+ # Use a global constant ccache directory to speed up repetitive builds
+-DOCKER_CCACHE_DIR := $$HOME/.cache/qemu-docker-ccache
++DOCKER_QEMU_CCACHE_DIR := DOCKER_QEMU_CACHE_DIR/docker-ccache
  
-+typedef struct {
-+    const char *suffix;
-+    unsigned long multipler;
-+} scale_entry;
-+
-+/* a bit like units.h but not binary */
-+static scale_entry scales[] = {
-+    { "khz", 1000 },
-+    { "mhz", 1000 * 1000 },
-+    { "ghz", 1000 * 1000 * 1000 },
-+};
-+
- QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                                            const qemu_info_t *info, int argc,
-                                            char **argv)
-@@ -137,12 +151,32 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-         char *opt = argv[i];
-         g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-         if (g_strcmp0(tokens[0], "ips") == 0) {
--            max_insn_per_second = g_ascii_strtoull(tokens[1], NULL, 10);
-+            char *endptr = NULL;
-+            max_insn_per_second = g_ascii_strtoull(tokens[1], &endptr, 10);
-             if (!max_insn_per_second && errno) {
-                 fprintf(stderr, "%s: couldn't parse %s (%s)\n",
-                         __func__, tokens[1], g_strerror(errno));
-                 return -1;
-             }
-+
-+            if (endptr && *endptr != 0) {
-+                g_autofree gchar *lower = g_utf8_strdown(endptr, -1);
-+                unsigned long scale = 0;
-+
-+                for (int j = 0; j < ARRAY_SIZE(scales); j++) {
-+                    if (g_strcmp0(lower, scales[j].suffix) == 0) {
-+                        scale = scales[j].multipler;
-+                        break;
-+                    }
-+                }
-+
-+                if (scale) {
-+                    max_insn_per_second *= scale;
-+                } else {
-+                    fprintf(stderr, "bad suffix: %s\n", endptr);
-+                    return -1;
-+                }
-+            }
-         } else {
-             fprintf(stderr, "option parsing failed: %s\n", opt);
-             return -1;
+ # This rule if for directly running against an arbitrary docker target.
+ # It is called by the expanded docker targets (e.g. make
+@@ -195,7 +197,7 @@ DOCKER_CCACHE_DIR := $$HOME/.cache/qemu-docker-ccache
+ # For example: make docker-run TEST="test-quick" IMAGE="debian:arm64" EXECUTABLE=./aarch64-linux-user/qemu-aarch64
+ #
+ docker-run: docker-qemu-src
+-	@mkdir -p "$(DOCKER_CCACHE_DIR)"
++	@mkdir -p "$(DOCKER_QEMU_CCACHE_DIR)"
+ 	@if test -z "$(IMAGE)" || test -z "$(TEST)"; \
+ 		then echo "Invalid target $(IMAGE)/$(TEST)"; exit 1; \
+ 	fi
+@@ -222,8 +224,8 @@ docker-run: docker-qemu-src
+ 			-e V=$V -e J=$J -e DEBUG=$(DEBUG)		\
+ 			-e SHOW_ENV=$(SHOW_ENV) 			\
+ 			$(if $(NOUSER),,				\
+-				-e CCACHE_DIR=/var/tmp/ccache 		\
+-				-v $(DOCKER_CCACHE_DIR):/var/tmp/ccache:z \
++				-v $(DOCKER_QEMU_CACHE_DIR):$(DOCKER_QEMU_CACHE_DIR) 	\
++				-e CCACHE_DIR=$(DOCKER_QEMU_CCACHE_DIR)	\
+ 			)						\
+ 			-v $$(readlink -e $(DOCKER_SRC_COPY)):/var/tmp/qemu:z$(COMMA)ro \
+ 			$(IMAGE) 					\
 -- 
 2.39.5
 
