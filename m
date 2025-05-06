@@ -4,85 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3757AC3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:46:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07602C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:47:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCJXK-0002g8-Bb; Tue, 06 May 2025 10:44:47 -0400
+	id 1uCJU7-0000G9-7H; Tue, 06 May 2025 10:41:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uCJVT-00029G-Ga
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:42:53 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJSE-0006q1-QL
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:39:34 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uCJVR-0002BK-Qo
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:42:51 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-441d1ed827cso4608615e9.1
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:42:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJS8-0001Nx-L7
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:39:29 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43d2d952eb1so32603725e9.1
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:39:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746542568; x=1747147368; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746542362; x=1747147162; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=i+QMorwpUEytgCmmdGbZfkGf25KtJrpacfldZ2jwkgI=;
- b=va3hfedojbGZEG55KkKPi6X86tpfKHn8xSd1NJ1Vm+iWe0lb7rgFy1Q06vYjKcrhM7
- pnPTPs7QyQ4DPujkXvW//ngOpTzX015Q7DQrF7AgKEgp7dugNZWjw1Rll/qUQLFCV2id
- 8RdUWTHxa4+55k7O8PqCYYsP8iQPOMBIvbfZUQfDd6oBr875bcd1GnrvO7A4PWk7WhoP
- ue3JDW0ZDLpXwDjhLIJri7HAvsPo2ygaAo8P5sl+WexUdiRv/f7PTa7eWCLlGNk0Lgli
- 62HmC/qO/1XHJOXljuDtYbU0NsqOhFMz1e4SYDswtqGiWCzDaGSkyldE5JGIpHohJvhz
- SY6A==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1rBTFzGlpmN0XM4Xhc9yiz4Q5nlS539l0QvdyVgqZAM=;
+ b=b4ykbO+J15g+wh12lFCUrgh0juJ69bLqx7+6K/LtqNRF2pAqIrVK1g/pQ1FeFDGncR
+ B6CiJE7uNc5KisVLX4xOWHmsZjM9sw95WO0xWXlhJXk+0MBqg/xPofxnoVc/60NJrJva
+ WbnBYOVPPB1f31ojsigAK+ibAbioFpRfk9LWSDNvnhzEtbjVPOWcHak8yg/qZFZfghTE
+ 5F/qsOdH1YKI9uTnTbg0Tr24AHgeedY83QE4yAdxGVyKVd4AHK5RktOfcnVwKCJxVFzc
+ KCuScWS95RUWoXqNOeCftoLXbezSxi0+LyK73Xe3Ujub1m3sQVeBUkGb213t0ZdcnGNd
+ AuCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746542568; x=1747147368;
+ d=1e100.net; s=20230601; t=1746542362; x=1747147162;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i+QMorwpUEytgCmmdGbZfkGf25KtJrpacfldZ2jwkgI=;
- b=M0geBT1+ElFyuaqxNDdBs0r5z6rZbul8HUC2xYHapuup94YtPZW0TVhOi3dsULUF5k
- dLM56cXkKE10rssrcKy/biGaOrQmgI58tB3mj+rBH1DzOQItGqnnyuyCbi8h5iowkdoC
- UtdU2uSoRK6wDJN5k0LArFD6K9DECaSNh9rftl+b2JIOFvGcyveqfn6gcNOp5LSJw2Wu
- pookqx+Jdo/EeBXthH90CBV8Iq+WB0zh/wZF98e2Z24aSLD7N3vcuUL9U0BGdlTExPYD
- TL4ICDF2g75/rrqtt5lMi0k+6bx+X/sx0EmvgrfvsoVlKaPn6ViARt4K19LB6Bv0Zjur
- +cvA==
-X-Gm-Message-State: AOJu0YyB6uXBt/IW7NTfur99DolRLwIEOLkx6xGNalm7Ggcqh8Khft7E
- LDjifx0K1eh63MEnZPW9sdxSiqKWN35k6ehXMrJhNpY7BD2+8oYBT5fDIXUGwCyNWA8MhKYoc40
- A
-X-Gm-Gg: ASbGncvKCuZRQfGV2Dx5SBXkbeGJqDrNIjPnduS9vjKVRCJ61T+P+yO21hwkP+3rY/A
- Pfm801TiW5vaRDBwvCS+XzV7HzQTs/BdB+fyKjzUxwTUkrBv+U+G7azM4ufZqcbRkJhp6ThQ7gG
- jp9LZzGVBhaWkgPV3EwTT/IcgbATm+s/lKxfnNQJ+flg46RZvmGQYfp8GlCckiZoIjiwzKAW+pQ
- GS+E8xZ9N4l0YSI0+Zn0R/gA+CRZJ4YDtGB05PJklPakFtk0fELV4stLv976O11+d+bdgOrPiAk
- 8sgkeqpJT116ppD9tl/ie0XOXFzJfUjLO6yVLnS9hHg4Y58=
-X-Google-Smtp-Source: AGHT+IHYjYmPDWNNSoIC0FCIcHtGwDQtwjwbtG5mel3nmwHWS3FR03xDr1+oO+/D3GT/86tjyvEv4A==
-X-Received: by 2002:a05:600c:a03:b0:439:9424:1b70 with SMTP id
- 5b1f17b1804b1-441d054c884mr33139045e9.30.1746542568421; 
- Tue, 06 May 2025 07:42:48 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b89edfc2sm169603435e9.20.2025.05.06.07.42.46
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 07:42:47 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ bh=1rBTFzGlpmN0XM4Xhc9yiz4Q5nlS539l0QvdyVgqZAM=;
+ b=qVN8MCV/df2GZNQte/TC7SvJ4lo6VQE1+k1N5l2jL3hPoYVD77UEAiU/Wwc5FzdU9I
+ Kq7Tyg+hx0EyS4S/BtgGKAkXqtU9s/fQggiSPmeNokjd+2o7c1BO4Io8tIB/QQi3lqHP
+ wtbhZiu9dyfMeBhQRhBbfLy0lI2mlJ9vWR0cnaXfQ2kLcoddlpJWKsUeiuAJdl4+vaeh
+ 24+NpYvpweIG373yyR7GG+IAds0wtEufIna0KxPsvr0hA2n9w5PMmq1f93gbG+g38SB1
+ UqQ56uGdhNX2fIsN03ik6BTXami24cEeYyc8poz1IUj55a+yDzy+UROGk+UxahZEyTbq
+ 677w==
+X-Gm-Message-State: AOJu0YwlBJcec3aEkiTCOUeFWaDJNaTPbKnRrvyke7E39VKOAhchv+DR
+ bdt0ERZXpIkK/E14n0inyUfpVHWYckt5rGKrtoWhCvlSb9p5oZgFhygemJ5pxhKWSPpv7gPGr6M
+ f
+X-Gm-Gg: ASbGncsJmRFm6nBVflBFU5aBn9AfnGiVv8F7fzU9xjv/6PDqfeIFZCWhgAcMgg/zDFa
+ IRHYx+IxDPa9GOJXrEi5XXLX8qX91Ydg5Jc05KUXwwLhRTjqgaNIEOsYZHrQvQv2fCkG2y++mK6
+ XT9zG6HUKkcARhvhwKWhZYxuYxfGttMsLZXG9FJ6GXcCiUqbAVE6lbz5ZAlfPIagZuFASDFkeQl
+ 2eJ4RVfiTTP0DeujXGbJ+ZntZctfEIm9ZSpZ9ZWtfYh1850e6OHgReVNaXwKYBjA3ixqjmt7dY2
+ WUjae0xQQ30UvYX45kKatP6Iex10PVDgV9DhH3tuNqhWFfL8SrnBJXG/yUQHhIwJrvXTv+sJI24
+ msXF6DT6EO8YLXoDEhext
+X-Google-Smtp-Source: AGHT+IE6/y5uBu17rar7px9vRhKXkctL2ZkIdhRKBudoNomYp5AK2/ZDL1DDqx96TjW3VJM2Zv283A==
+X-Received: by 2002:a05:600c:3ba2:b0:43b:c5a3:2e1a with SMTP id
+ 5b1f17b1804b1-441d0fbd2demr34983385e9.2.1746542361997; 
+ Tue, 06 May 2025 07:39:21 -0700 (PDT)
+Received: from localhost.localdomain (91-163-26-170.subs.proxad.net.
+ [91.163.26.170]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a099ae8377sm14138964f8f.59.2025.05.06.07.39.20
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 06 May 2025 07:39:21 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 28/32] hw/gpio/imx_gpio: Fix interpretation of GDIR polarity
-Date: Tue,  6 May 2025 15:42:10 +0100
-Message-ID: <20250506144214.1221450-29-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250506144214.1221450-1-peter.maydell@linaro.org>
-References: <20250506144214.1221450-1-peter.maydell@linaro.org>
+Cc: Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Fam Zheng <fam@euphon.net>,
+ Hanna Reitz <hreitz@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ qemu-block@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, John Snow <jsnow@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3 03/19] hw/i386/pc: Remove pc_compat_2_4[] array
+Date: Tue,  6 May 2025 16:38:49 +0200
+Message-ID: <20250506143905.4961-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250506143905.4961-1-philmd@linaro.org>
+References: <20250506143905.4961-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,39 +111,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+The pc_compat_2_4[] array was only used by the pc-q35-2.4
+and pc-i440fx-2.4 machines, which got removed. Remove it.
 
-According to the i.MX 8M Plus reference manual, a GPIO pin is
-configured as an output when the corresponding bit in the GDIR
-register is set.  The function imx_gpio_set_int_line() is intended to
-be a no-op if the pin is configured as an output, returning early in
-such cases.  However, it inverts the condition.  Fix this by
-returning early when the bit is set.
-
-cc: qemu-stable@nongnu.org
-Fixes: f44272809779 ("i.MX: Add GPIO device")
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Message-id: 20250501183445.2389-4-shentey@gmail.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/gpio/imx_gpio.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/i386/pc.h |  3 ---
+ hw/i386/pc.c         | 19 -------------------
+ 2 files changed, 22 deletions(-)
 
-diff --git a/hw/gpio/imx_gpio.c b/hw/gpio/imx_gpio.c
-index f23c52af26d..450ece45482 100644
---- a/hw/gpio/imx_gpio.c
-+++ b/hw/gpio/imx_gpio.c
-@@ -72,7 +72,7 @@ static void imx_gpio_update_int(IMXGPIOState *s)
- static void imx_gpio_set_int_line(IMXGPIOState *s, int line, IMXGPIOLevel level)
- {
-     /* if this signal isn't configured as an input signal, nothing to do */
--    if (!extract32(s->gdir, line, 1)) {
-+    if (extract32(s->gdir, line, 1)) {
-         return;
-     }
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index f4a874b17fc..b34aa25fdce 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -301,9 +301,6 @@ extern const size_t pc_compat_2_6_len;
+ extern GlobalProperty pc_compat_2_5[];
+ extern const size_t pc_compat_2_5_len;
  
+-extern GlobalProperty pc_compat_2_4[];
+-extern const size_t pc_compat_2_4_len;
+-
+ #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+     static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
+                                                  const void *data) \
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index c8bb4a3ee47..2b46714a5ac 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -262,25 +262,6 @@ const size_t pc_compat_2_6_len = G_N_ELEMENTS(pc_compat_2_6);
+ GlobalProperty pc_compat_2_5[] = {};
+ const size_t pc_compat_2_5_len = G_N_ELEMENTS(pc_compat_2_5);
+ 
+-GlobalProperty pc_compat_2_4[] = {
+-    PC_CPU_MODEL_IDS("2.4.0")
+-    { "Haswell-" TYPE_X86_CPU, "abm", "off" },
+-    { "Haswell-noTSX-" TYPE_X86_CPU, "abm", "off" },
+-    { "Broadwell-" TYPE_X86_CPU, "abm", "off" },
+-    { "Broadwell-noTSX-" TYPE_X86_CPU, "abm", "off" },
+-    { "host" "-" TYPE_X86_CPU, "host-cache-info", "on" },
+-    { TYPE_X86_CPU, "check", "off" },
+-    { "qemu64" "-" TYPE_X86_CPU, "sse4a", "on" },
+-    { "qemu64" "-" TYPE_X86_CPU, "abm", "on" },
+-    { "qemu64" "-" TYPE_X86_CPU, "popcnt", "on" },
+-    { "qemu32" "-" TYPE_X86_CPU, "popcnt", "on" },
+-    { "Opteron_G2" "-" TYPE_X86_CPU, "rdtscp", "on" },
+-    { "Opteron_G3" "-" TYPE_X86_CPU, "rdtscp", "on" },
+-    { "Opteron_G4" "-" TYPE_X86_CPU, "rdtscp", "on" },
+-    { "Opteron_G5" "-" TYPE_X86_CPU, "rdtscp", "on", }
+-};
+-const size_t pc_compat_2_4_len = G_N_ELEMENTS(pc_compat_2_4);
+-
+ /*
+  * @PC_FW_DATA:
+  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
 -- 
-2.43.0
+2.47.1
 
 
