@@ -4,95 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F887C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 12:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E761CC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 12:53:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCHZf-0007DA-Ub; Tue, 06 May 2025 08:39:03 -0400
+	id 1uCHmb-0001Fq-QZ; Tue, 06 May 2025 08:52:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1uCHZd-0007Cp-FF
- for qemu-devel@nongnu.org; Tue, 06 May 2025 08:39:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1uCHZa-0001nj-8o
- for qemu-devel@nongnu.org; Tue, 06 May 2025 08:39:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746535135;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=03024538PKqFw1sCBX+EU2COYwqAymp1qeqoDp6AmKE=;
- b=Bp9YNP1qcFrTblJUM49ld12Zm4RcpHMynkI1V5TQSSnRQqS6KeXmm0zU2snCV58jwngHE3
- 2eNtZ6jsvO62p3WExvK1kKbqc7isrjPcXUyxZ3mF1qWaCvsWScSGhnlxkZARW7qCUCJI6M
- YIsqKjw5Ihs5rFkjokJCntILNq4i80E=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-373--tQoE5_gNLO6w9kXHt0fHw-1; Tue, 06 May 2025 08:38:54 -0400
-X-MC-Unique: -tQoE5_gNLO6w9kXHt0fHw-1
-X-Mimecast-MFC-AGG-ID: -tQoE5_gNLO6w9kXHt0fHw_1746535133
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3913aea90b4so1783588f8f.2
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 05:38:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uCHmX-0001FN-Pf
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 08:52:22 -0400
+Received: from mail-yb1-xb2f.google.com ([2607:f8b0:4864:20::b2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uCHmV-0003JJ-JR
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 08:52:21 -0400
+Received: by mail-yb1-xb2f.google.com with SMTP id
+ 3f1490d57ef6-e731a56e111so4754123276.1
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 05:52:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746535938; x=1747140738; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=cb6iqQOiZucx8C9pqxlck8bfdMm0/Ogu0GGyiwP3/1U=;
+ b=O0GVIvzbFVuxNpxhdYWC+MiS2+vL/lHiTgMdrg6QkphVpsSasC4PaRNHbPovJwq4hu
+ V1+hOuIvNH3ZHhKji115Jp24wlOnut+kAfU4zJrrNopy8K+D8LbO3TWxjckFpRuBsSXO
+ YbDkVmgDwaCAKwxALiZtyrAopX8OGdW2KitG2R/6AmfXI+Qo5kMD2CRCeBty6qNH6VmE
+ Y5+M898taFzUyNzF5MGjkToHExoOIXc5dZRKLTBSk8eJF4fvwuS1zyse0ebPA6oQBhKw
+ N2ACuBrhonRJu32G7manDxg8hZ9jZMS+5nyDbosS0M2vrFyIefZ5tiiVD/NHs+0+8QsR
+ dVsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746535133; x=1747139933;
+ d=1e100.net; s=20230601; t=1746535938; x=1747140738;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=03024538PKqFw1sCBX+EU2COYwqAymp1qeqoDp6AmKE=;
- b=tct84ecya63yXf2FcW2gq3tkBduu8Y9HZN/TuUbTD/AYs0pt7EYAtTSAVx+OAqeE7r
- hJddxOS3rE70hnK50dBUstGdXpTtPK8C2IWax/leQJkh6iojwNwdOQLgdEP63ox5cquM
- B8HaOTyJ+OZY7BFhEafOjddaULxZRIQUHHVm6DFnFAsrXt2HDNMNlxg6VMTy+UqdCDZe
- W2q40Mk3e2XnGD7dHK08I9Y19gOT0xye/RelG4IlNU28WlrF/LUxBWFFbxy1VLZF8sqX
- jcNvChVEXL005uU0YMlyvm8h7ca4QZXa9ivle7xRDc5r/PCzguzwtbtFWXRu27Yuzecq
- XBjw==
+ bh=cb6iqQOiZucx8C9pqxlck8bfdMm0/Ogu0GGyiwP3/1U=;
+ b=SuqRXxX1AXLARZwB4+hkNBYgpfkSt5dEzaKzRfacXUGS74QblD2fAtw8ujgLHEtRJ4
+ H7iOi/LHeWxWSWeR7uge1PNKi5pR3/q9S/IQeh0YJn5se9WiiicTkyRmeYLKUABVGMcG
+ aj+YWJ81DOi4dxCtgu2LQ30D0P05qFstnoaZ8HwDQ60fIpXz2SUvKgOMRgwRBZkBgNQV
+ gSZeR1qV+bad3O3xQpFDqesmg7uhubjapFkBzPl5q+/ASTdJsZDNu8GHlXPgSoQo44jz
+ mvG8VKWUAD4A9AAL026O0xY3z3fS5ZwvncRY3gg/XmJGPXJoyg30IYRlL5IB/iH3J+Ww
+ UQKA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWp/El8fT3d3nqEMglrm9S1CVQ/H3chpWjGPV8Npxs75mUW3zg3iY2Ud1Lf2J2o54B53qeIcoPR64Pq@nongnu.org
-X-Gm-Message-State: AOJu0YxC55Wf4uf/rq/HLki22NBKa+8L4YzP4wJ80fck67mFFMnmpDV1
- epxAir++XoSnfHYJ35f8XxZGrWPqA2FAmyqQCtk8CHJTiypSjStDzR50g1rPlgrcTMV60koYGUC
- H5QEAQgzbVKoxqP9eEPQIuWXvHohpaufLruZBS1mKqhhV4/h/x7055Iy2YI04hMdqT9wz1s3bOq
- TGu3sFasooXY/J9SmDVSN6lnWU52A=
-X-Gm-Gg: ASbGncv02b92HCOrFn+VqHbYUD+I9/aOt8tk5L8qQBdW2VwCC9sptJz7sWusxU3fj5D
- vh/GtWU/ISm6TaqSS5MTpAlMg9fBH5csUmEjBLKiw/+G7lrV+/8RpykBbowRrlyyWEo1/5A==
-X-Received: by 2002:a05:6000:4285:b0:3a0:8295:9e0f with SMTP id
- ffacd0b85a97d-3a0ac3ea645mr2329206f8f.54.1746535132924; 
- Tue, 06 May 2025 05:38:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQaUqrphdaXpJIKBZ88DnTmAVnWnkr26mT+Z2zLc6djtphGGFGhNmPYC+6aO0K4AoehaCNF3YzgGKPftDRsI0=
-X-Received: by 2002:a05:6000:4285:b0:3a0:8295:9e0f with SMTP id
- ffacd0b85a97d-3a0ac3ea645mr2329187f8f.54.1746535132547; Tue, 06 May 2025
- 05:38:52 -0700 (PDT)
+ AJvYcCUPpcETc/+TIlD1Nb0AgLEPaaHZtfJcS093t8CFUMAzKYDNjmi9jZue8Bxn2CCODsDcYASQx0ITaKYZ@nongnu.org
+X-Gm-Message-State: AOJu0YyKb1hR9iknGkBeXtCWiGeSwVDD/vfnvR2Bed6K44XdJJSUD74+
+ eCbH5NsRqkQoPuuQ0rwoGfVC3XmQW1rkaOk3Yqrvi8oRTNHrqj/aP+SfJEHjkfS6D4pOw076UGn
+ ZRAIbdR+8Cy0bp3Dc2N4zR+hMGSnhoWKhhYqqFQ==
+X-Gm-Gg: ASbGncsnpKq4dgUWo6JfyXOmAAQcL+aVAPmnNWfyB9Tf1Q0lCcxTTGJRvogRUwfn35S
+ LEQEQvpUokMLDVF/4nxNBgW5tJxfhMSCxbi+GtYYqgHxayHtS5TQ57PxEyp3CSIF5bo/eOLtkSm
+ z5/4HfgSJIHZJlygHL0OJfBZrwq2T5n+jqUg==
+X-Google-Smtp-Source: AGHT+IFv35YsM+40G9kcDOG6eXVEQssOgdmCqDJi+MvE/miqYI2uBwE/XbdfmfpsZdEgWYAYVA5K6v2+txA67Tzz2eg=
+X-Received: by 2002:a05:6902:158c:b0:e73:30bd:49b5 with SMTP id
+ 3f1490d57ef6-e757d0c2240mr14899436276.7.1746535937885; Tue, 06 May 2025
+ 05:52:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250411114534.3370816-1-ppandit@redhat.com>
- <87ecxteym0.fsf@suse.de> <87bjswfeis.fsf@suse.de>
- <CAE8KmOzzn7g1=pd2J325gAf4ffmGALKoHdgL17So4KawxkZdbg@mail.gmail.com>
- <87y0vyepta.fsf@suse.de> <aAlu0hcUCdzmIN4p@x1.local>
- <CAE8KmOz7P+Pz8zwJq+mTEJbZjhCk7iAo9+c5DrZzhbTmz=VtUQ@mail.gmail.com>
- <87v7qeg9r3.fsf@suse.de>
-In-Reply-To: <87v7qeg9r3.fsf@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Tue, 6 May 2025 18:08:35 +0530
-X-Gm-Features: ATxdqUFyx1mNj-tcA-aE_gn3Rth0pP6QavXSo7iXoz7sN2ISEPvbZKZqyYhHUW4
-Message-ID: <CAE8KmOzBZd=_FmmJTiwqKw5yPoYR7_+q+umpXBFJGPYZYuMgWw@mail.gmail.com>
-Subject: Re: [PATCH v9 0/7] Allow to enable multifd and postcopy migration
- together
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, berrange@redhat.com, 
- Prasad Pandit <pjp@fedoraproject.org>
+References: <20250418091208.1888768-1-timlee660101@gmail.com>
+In-Reply-To: <20250418091208.1888768-1-timlee660101@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 6 May 2025 13:52:05 +0100
+X-Gm-Features: ATxdqUFgVS9PFCSXBwpEgIg3HwtrSkk_YSOhtxVmbhc7IKgXj9F1u0c4gOO4USA
+Message-ID: <CAFEAcA_O1B7oXbK3RHLvSJHZaMSM-aVG_CD9Y7dH0OpAs7sibg@mail.gmail.com>
+Subject: Re: [PATCH] tests/qtest: Add qtest for NPCM8XX PSPI module
+To: Tim Lee <timlee660101@gmail.com>
+Cc: farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com, 
+ wuhaotsh@google.com, kfting@nuvoton.com, chli30@nuvoton.com, 
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,50 +95,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Fri, 18 Apr 2025 at 10:12, Tim Lee <timlee660101@gmail.com> wrote:
+>
+> - Created qtest to check initialization of registers in PSPI Module
+> - Implemented test into Build File
+>
+> Tested:
+> ./build/tests/qtest/npcm8xx-pspi_test
+>
+> Signed-off-by: Tim Lee <timlee660101@gmail.com>
+> ---
+>  MAINTAINERS                     |   1 +
+>  tests/qtest/meson.build         |   3 +
+>  tests/qtest/npcm8xx_pspi-test.c | 104 ++++++++++++++++++++++++++++++++
+>  3 files changed, 108 insertions(+)
+>  create mode 100644 tests/qtest/npcm8xx_pspi-test.c
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index d54b5578f8..0162f59bf7 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -892,6 +892,7 @@ F: hw/sensor/adm1266.c
+>  F: include/hw/*/npcm*
+>  F: tests/qtest/npcm*
+>  F: tests/qtest/adm1266-test.c
+> +F: tests/qtest/npcm8xx_pspi-test.c
 
-On Tue, 6 May 2025 at 00:34, Fabiano Rosas <farosas@suse.de> wrote:
-> >> # Running /ppc64/migration/multifd+postcopy/tcp/plain/cancel
-> >> # Using machine type: pseries-10.0
-> >> # starting QEMU: exec ./qemu-system-ppc64 -qtest
-> >> # {
-> >> #     "error": {
-> >> #         "class": "GenericError",
-> >> #         "desc": "Postcopy is not supported: Userfaultfd not available: Function not implemented"
-> >> #     }
-> >> # }
-> >
-===
-[ ~]#
-...
-PPC KVM module is not loaded. Try modprobe kvm_hv.
-qemu-system-ppc64: -accel kvm: failed to initialize kvm: Invalid argument
-qemu-system-ppc64: -accel kvm: ioctl(KVM_CREATE_VM) failed: Invalid argument
-PPC KVM module is not loaded. Try modprobe kvm_hv.
-qemu-system-ppc64: -accel kvm: failed to initialize kvm: Invalid argument
-[ ~]#
+This file is already matched as being in this section by the
+wildcard two lines earlier.
 
-[ ~]# modprobe kvm-hv
-modprobe: ERROR: could not insert 'kvm_hv': No such device
-[ ~]#
-[ ~]# ls -l /dev/kvm /dev/userfaultfd
-crw-rw-rw-. 1 root kvm  10, 232 May  6 07:06 /dev/kvm
-crw----rw-. 1 root root 10, 123 May  6 06:30 /dev/userfaultfd
-[ ~]#
-===
+>  F: pc-bios/npcm7xx_bootrom.bin
+>  F: pc-bios/npcm8xx_bootrom.bin
+>  F: roms/vbootrom
 
-* I tried to reproduce this issue across multiple Power9 and Power10
-machines, but I -qtest could not run due to above errors.
+> diff --git a/tests/qtest/npcm8xx_pspi-test.c b/tests/qtest/npcm8xx_pspi-test.c
+> new file mode 100644
+> index 0000000000..107bce681f
+> --- /dev/null
+> +++ b/tests/qtest/npcm8xx_pspi-test.c
+> @@ -0,0 +1,104 @@
+> +#include "qemu/osdep.h"
+> +#include "libqtest.h"
+> +#include "qemu/module.h"
 
-> We're missing a check on has_uffd for the multifd+postcopy tests.
+Every source file needs to start with the usual brief
+comment giving its copyright/license information (and we
+like that to include an SPDX-license-Identifier these days
+for new source files).
 
-* If it is about missing the 'e->has_uffd' check, does that mean
-Postcopy tests are skipped on this machine because 'e->has_uffd' is
-false?
+> +
+> +#define DATA_OFFSET 0x00
+> +#define CTL_SPIEN   0x01
+> +#define CTL_OFFSET  0x02
+> +#define CTL_MOD     0x04
+> +
+> +typedef struct PSPI {
+> +    uint64_t base_addr;
+> +} PSPI;
+> +
+> +PSPI pspi_defs = {
+> +    .base_addr  = 0xf0201000
+> +};
+> +
+> +static uint16_t pspi_read_data(QTestState *qts, const PSPI *pspi)
+> +{
+> +    return qtest_readw(qts, pspi->base_addr + DATA_OFFSET);
+> +}
+> +
+> +static void pspi_write_data(QTestState *qts, const PSPI *pspi, uint16_t value)
+> +{
+> +    qtest_writew(qts, pspi->base_addr + DATA_OFFSET, value);
+> +}
+> +
+> +static uint32_t pspi_read_ctl(QTestState *qts, const PSPI *pspi)
+> +{
+> +    return qtest_readl(qts, pspi->base_addr + CTL_OFFSET);
+> +}
+> +
+> +static void pspi_write_ctl(QTestState *qts, const PSPI *pspi, uint32_t value)
+> +{
+> +    qtest_writel(qts, pspi->base_addr + CTL_OFFSET, value);
+> +}
 
+If I'm reading the implementation correctly, it makes both
+the DATA and CTL registers 16 bits, but this code has the
+data register 16 bits and the control register 32 bits.
+Which is correct ?
 
-Thank you.
----
-  - Prasad
+> +/* Check PSPI can be reset to default value */
+> +static void test_init(gconstpointer pspi_p)
+> +{
+> +    const PSPI *pspi = pspi_p;
+> +
+> +    QTestState *qts = qtest_init("-machine npcm845-evb");
+> +    pspi_write_ctl(qts, pspi, CTL_SPIEN);
+> +    g_assert_cmphex(pspi_read_ctl(qts, pspi), ==, CTL_SPIEN);
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+> +/* Check PSPI can be r/w data register */
+> +static void test_data(gconstpointer pspi_p)
+> +{
+> +    const PSPI *pspi = pspi_p;
+> +    uint16_t test = 0x1234;
+> +    uint16_t output;
+> +
+> +    QTestState *qts = qtest_init("-machine npcm845-evb");
+> +
+> +    /* Write to data register */
+> +    pspi_write_data(qts, pspi, test);
+> +    printf("Wrote 0x%x to data register\n", test);
 
+Don't put printf()s in test cases, please. The test
+output is supposed to be TAP test protocol format, and
+the printfs insert random junk into that.
+
+If you need to output some kind of message, you can use
+g_test_message(), but for simple stuff like this I don't think
+the printfs are really adding anything, because the test is
+so short.
+
+> +
+> +    /* Read from data register */
+> +    output = pspi_read_data(qts, pspi);
+> +    printf("Read 0x%x from data register\n", output);
+
+Can we assert something useful here about what we read
+(e.g. that it's the same as what we wrote) ?
+
+> +
+> +    qtest_quit(qts);
+> +}
+
+thanks
+-- PMM
 
