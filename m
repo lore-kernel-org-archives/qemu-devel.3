@@ -4,57 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EE74C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:35:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD7FC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:35:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCJNl-0005vE-PC; Tue, 06 May 2025 10:34:54 -0400
+	id 1uCJOJ-0006RB-5l; Tue, 06 May 2025 10:35:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uCJNi-0005uQ-6b
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:34:50 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uCJNe-0000oz-Vv
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:34:49 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D586155C0CE;
- Tue, 06 May 2025 16:34:44 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id F1rj_iKIZjBi; Tue,  6 May 2025 16:34:42 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 8AD5F55BC02; Tue, 06 May 2025 16:34:42 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 89495745682;
- Tue, 06 May 2025 16:34:42 +0200 (CEST)
-Date: Tue, 6 May 2025 16:34:42 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Volker_R=FCmelin?= <vr_qemu@t-online.de>
-cc: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org, 
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: [PATCH] alsaaudio: Set try-poll to false by default
-In-Reply-To: <6911d5c1-fe46-4f6e-9165-b16fd23da2c8@t-online.de>
-Message-ID: <e16231fd-85bb-dde6-7e29-689f04238f19@eik.bme.hu>
-References: <20250316002046.D066A4E6004@zero.eik.bme.hu>
- <37909074.vkC8U9mzk0@silver>
- <abecc55b-f032-03e3-a9f3-628b1f8f7e5d@eik.bme.hu> <2024817.RjeAs2xCtm@silver>
- <6911d5c1-fe46-4f6e-9165-b16fd23da2c8@t-online.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJOH-0006Qc-G8
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:35:25 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJOF-00011q-7k
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:35:25 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-39c0dfad22aso3710068f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:35:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746542114; x=1747146914; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8IJm7D/h+TTh6vMPLy4x/Ypy1SJR36i3aKLyqJFnHoM=;
+ b=ID8TEdbu9fT2x+f/zFejoYfj9aQ7hadB4L5pMg/2q6hFj8Jc0ZNJ4P08arS1Z+HVxz
+ bKIsSqOVBpwizNSKMmcLCKU8XaribjQ0mfDmUZi8wkdPpKCcDEFUijCrN77pMqmDFlHj
+ 0M+unl9tOIympFKZIVH9QZPDJoKoEJCkDbYaBkukplMnMsJJf7LIjE+g5kBFO0XSLfr9
+ 4xARmfRT+mLYhLEiSGXv21W40HxpZYl95Jjwwka/ep5WPWuETzkz/BwMCivrNpON3qAa
+ Xx/a8vheUsQlMpYdgLF7QeFTbWqSz2br3SSO10QanDyJgQXvl/NhslXyOHfPOUNaOBif
+ tidw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746542114; x=1747146914;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8IJm7D/h+TTh6vMPLy4x/Ypy1SJR36i3aKLyqJFnHoM=;
+ b=LF3cKjU15ocOenZm+YqM9ZY/96sX/9gRktYERZayw8KYf3Ja/gT0+2oye1Z0ZsIyJ9
+ 4qZSI3Oqh4aGYAjUnQbOgeVkrzCwdanUbs2v+JgOQ/food1+B0DNyTsisIAaDJaC+1b+
+ BOoGQw26QoU1vsE3YRfixHo1gS8Ebs8rLBScFqIJvVYBJiuNuH/wf55xZap/ryfZ/wcR
+ 6U5qqP4WbBw8vlqiFc5wAmE1/LujUk6tB5RBfvx93IV4gW8BKwEVgv7ZahpWIVtRt5JH
+ Zh5RaBBgx9OUww/oVSWd8oKuG5F31u5D8pJgCDRzReKOCRlKKJl+y8B+P01x9Zm6ZU4b
+ o7BQ==
+X-Gm-Message-State: AOJu0YzZEdmCssOCn0St6yOC8m6ErvHeQO+zbkzgPq8UIqcN7Ly+Q+3H
+ AHo586yH6JVEsbkFmYii9KTky6/zawujLDR7HyD2yRBl9jqWNzOKceNdJNGU+SxGmRWzQvN3ajk
+ G
+X-Gm-Gg: ASbGnctJ+Rg+gwYrU+UfJd8awJQ3N3BoiScOn22SI3gTRYa44mhFjQ4THuEzNXckMyl
+ rLZjYVDUNQwD1fjHLVh02h4lScpbVy5XPT/4W6RgG2G/t8AVYSHemCLNAJxpQP8nEcwpjtsFvXm
+ etoRhOjCIyoc+0KI44bKrho1Vg47VRYc/lDl6wk2YvO+89CMPjZlCPtipE57vVHsD0q5dHHdksr
+ v7Ojy78YxjmGw9qq33VAd0Gazx5pmAj1uTAx5txXtrczBhWxNs851uSMCWxA0r3TgacLYXf/OM2
+ mT91+scVJcInGL/qIpbFplCVogCgFmEiot2q44KB6Z0l7KvDiHFiKxMuaNG3ZPaaYPACKtTNSG8
+ a+OjWmp/9EtVKvzLZ36hI
+X-Google-Smtp-Source: AGHT+IGU8UZlmPSIynqxPR0B9C9eM6Rkidj83nc66jqP8LQPDvasOCYAECnV7Qire/EHrgXvvVlGjw==
+X-Received: by 2002:a05:6000:2dc6:b0:3a0:8707:dad6 with SMTP id
+ ffacd0b85a97d-3a099ad1ab2mr14732250f8f.3.1746542113661; 
+ Tue, 06 May 2025 07:35:13 -0700 (PDT)
+Received: from localhost.localdomain (91-163-26-170.subs.proxad.net.
+ [91.163.26.170]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a099ae3403sm13797270f8f.28.2025.05.06.07.35.12
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 06 May 2025 07:35:13 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/22] Misc HW patches for 2025-05-06
+Date: Tue,  6 May 2025 16:34:49 +0200
+Message-ID: <20250506143512.4315-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1669468493-1746542082=:83033"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,149 +96,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+The following changes since commit a9e0c9c0f14e19d23443ac24c8080b4708d2eab8:
 
---3866299591-1669468493-1746542082=:83033
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+  Merge tag 'pull-9p-20250505' of https://github.com/cschoenebeck/qemu into staging (2025-05-05 11:26:59 -0400)
 
-On Tue, 8 Apr 2025, Volker Rümelin wrote:
-> Am 08.04.25 um 14:55 schrieb Christian Schoenebeck:
->> On Friday, April 4, 2025 1:34:27 PM CEST BALATON Zoltan wrote:
->>> On Fri, 4 Apr 2025, Christian Schoenebeck wrote:
->>>> On Monday, March 31, 2025 3:05:24 PM CEST BALATON Zoltan wrote:
->>>>> On Sun, 23 Mar 2025, Christian Schoenebeck wrote:
->>>>>> On Sunday, March 16, 2025 1:20:46 AM CET BALATON Zoltan wrote:
->>>>>>> Quoting Volker Rümelin: "try-poll=on tells the ALSA backend to try to
->>>>>>> use an event loop instead of the audio timer. This works most of the
->>>>>>> time. But the poll event handler in the ALSA backend has a bug. For
->>>>>>> example, if the guest can't provide enough audio frames in time, the
->>>>>>> ALSA buffer is only partly full and the event handler will be called
->>>>>>> again and again on every iteration of the main loop. This increases
->>>>>>> the processor load and the guest has less processor time to provide
->>>>>>> new audio frames in time. I have two examples where a guest can't
->>>>>>> recover from this situation and the guest seems to hang."
->>>>>>>
->>>>>>> One reproducer I've found is booting MorphOS demo iso on
->>>>>>> qemu-system-ppc -machine pegasos2 -audio alsa which should play a
->>>>>>> startup sound but instead it freezes. Even when it does not hang it
->>>>>>> plays choppy sound. Volker suggested using command line to set
->>>>>>> try-poll=off saying: "The try-poll=off arguments are typically
->>>>>>> necessary, because the alsa backend has a design issue with
->>>>>>> try-poll=on. If the guest can't provide enough audio frames, it's
->>>>>>> really unhelpful to ask for new audio frames on every main loop
->>>>>>> iteration until the guest can provide enough audio frames. Timer based
->>>>>>> playback doesn't have that problem."
->>>>>>>
->>>>>>> But users cannot easily find this option and having a non-working
->>>>>>> default is really unhelpful so to make life easier just set it to
->>>>>>> false by default which works until the issue with the alsa backend can
->>>>>>> be fixed.
->>>>>>>
->>>>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>>>>> ---
->>>>>>> This fixes my issue but if somebody has a better fix I'm open to that
->>>>>>> too.
->>>>>>>
->>>>>>>  audio/alsaaudio.c | 2 +-
->>>>>>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>>>>>
->>>>>>> diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
->>>>>>> index cacae1ea59..9b6c01c0ef 100644
->>>>>>> --- a/audio/alsaaudio.c
->>>>>>> +++ b/audio/alsaaudio.c
->>>>>>> @@ -899,7 +899,7 @@ static void alsa_enable_in(HWVoiceIn *hw, bool enable)
->>>>>>>  static void alsa_init_per_direction(AudiodevAlsaPerDirectionOptions *apdo)
->>>>>>>  {
->>>>>>>      if (!apdo->has_try_poll) {
->>>>>>> -        apdo->try_poll = true;
->>>>>>> +        apdo->try_poll = false;
->>>>>>>          apdo->has_try_poll = true;
->>>>>>>      }
->>>>>>>  }
->>>>>>>
->>>>>> Correct me if I am wrong, but AFAICS if polling is not used then no state
->>>>>> changes would be handled, no? At least I don't see any snd_pcm_state() call
->>>>>> outside of alsa_poll_handler().
->>>>> I have no idea but this fixes the problem (and does the same that can be
->>>>> also done from command line but nobody can find that command line option)
->>>>> so unless somebody has a better idea could this be merged as a fix for
->>>>> now?
->>>> Well, I understand that if fixes the misbehaviour you encountered. But how
->>>> helpful would it be if it then breaks behaviour for other people instead?
->>> What behaviour would it break and how?
->> There are only a bunch of ALSA states handled right now in the QEMU Alsa
->> driver (see alsa_poll_handler()):
->>
->>     state = snd_pcm_state (hlp->handle);
->>     switch (state) {
->>     case SND_PCM_STATE_SETUP:
->>         alsa_recover (hlp->handle);
->>         break;
->>
->>     case SND_PCM_STATE_XRUN:
->>         alsa_recover (hlp->handle);
->>         break;
->>
->>     case SND_PCM_STATE_SUSPENDED:
->>         alsa_resume (hlp->handle);
->>         break;
->>
->>     case SND_PCM_STATE_PREPARED:
->>         audio_run(hlp->s, "alsa run (prepared)");
->>         break;
->>
->>     case SND_PCM_STATE_RUNNING:
->>         audio_run(hlp->s, "alsa run (running)");
->>         break;
->>
->> For instance in poll mode it recovers in case of an xrun, which happens on
->> audio output if the audio output data was not delivered by the application in
->> time.
->>
->> The other case is when the system was suspended (standby). It should also
->> recover the audio session here.
->
-> Hi Christian,
->
-> I think the timer based mode works fine. snd_pcm_readi() and
-> snd_pcm_writei() return -EPIPE in case of a xrun and -ESTRPIPE if a
-> suspend event occurred. Both cases are handled in alsa_write(). The
-> -ESTRPIPE case is missing in alsa_read(), which may be a mistake. I
-> don't think it's possible alsa_read() and alsa_write() get called if the
-> ALSA system is in state SND_PCM_STATE_SETUP.
->
-> The write_loop() example code at
-> https://www.alsa-project.org/alsa-doc/alsa-lib/examples.html in file
-> test/pcm.c also doesn't use the snd_pcm_state() function. Please have a
-> look at write_loop() in test/pcm.c and compare it with
-> write_and_poll_loop() in the same file.
->
-> With best regards
-> Volker
+are available in the Git repository at:
 
-Could we get back to this and either accept this patch or find another 
-solution? From the above, it looks like this could be an acceptable fix 
-unless we can prove it would break something (but then it's already 
-possible to break it from the command line option so it's preexisting 
-problem).
+  https://github.com/philmd/qemu.git tags/hw-misc-20250506
 
->> Now I haven't tested whether these would work in callback mode right now, but
->> looking at the code suggests that they might not.
->>
->>>> I think it would be better to add a 2nd patch that would handle state changes
->>>> in callback mode. That would satisfy both groups of people. AFAICS
->>>> snd_pcm_state() can be called both in polling mode and callback mode.
->>> I can't do that because I don't quite know neither alsa nor audio in QEMU
->>> so I have no idea what to do. Can you give more clues?
->> Well, as a starting point you might try whether these cases described above
->> would still work in callback mode. Maybe it is even working, who knows.
+for you to fetch changes up to dc495b919f1d9d98e01aea22f545fdc7de07e28d:
 
-Can you suggest how can I test that? I'm not sure what to try and sound 
-works with this patch for the cases I use.
+  hw/isa/ich9: Remove stray empty comment (2025-05-06 16:32:02 +0200)
 
-Regards,
-BALATON Zoltan
---3866299591-1669468493-1746542082=:83033--
+----------------------------------------------------------------
+Misc HW patches
+
+- Allow using plugins on BSD user-emulation
+- Inline VMSTATE_CPU() macro
+- Fix headear includes for HVF x86
+- Build hw/hyperv/ files once
+- Various typo fixed
+
+----------------------------------------------------------------
+
+Eric Auger (3):
+  hw/pci/pcie_port: Fix pcie_slot_is_hotpluggbale_bus typo
+  hw/acpi/ged: Fix wrong identation
+  hw/i386/acpi-build: Fix build_append_notfication_callback typo
+
+Gustavo Romero (6):
+  qom/object: Fix typo in comment
+  hw/core/machine: Fix indentation
+  hw/i386/acpi-build: Update document reference
+  hw/i386/acpi-build: Fix typo and grammar in comment
+  hw/acpi/pcihp: Fix typo in function name
+  hw/isa/ich9: Remove stray empty comment
+
+Philippe Mathieu-Daudé (4):
+  target/migration: Inline VMSTATE_CPU()
+  target/i386/hvf: Include missing 'exec/target_page.h' header
+  system/hvf: Avoid including 'cpu.h'
+  system/hvf: Expose hvf_enabled() to common code
+
+Pierrick Bouvier (8):
+  bsd-user: add option to enable plugins
+  hw/hyperv/hv-balloon-stub: common compilation unit
+  hw/hyperv/hyperv.h: header cleanup
+  hw/hyperv/vmbus: common compilation unit
+  hw/hyperv/syndbg: common compilation unit
+  hw/hyperv/balloon: common balloon compilation units
+  hw/hyperv/hyperv_testdev: common compilation unit
+  hw/hyperv/hyperv: common compilation unit
+
+Steve Sistare (1):
+  qom: Factor qom_resolve_path() out
+
+ MAINTAINERS                     |  1 +
+ hw/i386/acpi-build.h            |  2 +-
+ include/hw/acpi/pcihp.h         |  2 +-
+ include/hw/core/cpu.h           | 12 ------------
+ include/hw/hyperv/hyperv.h      |  3 ++-
+ include/system/hvf.h            | 17 +++++++++++------
+ include/system/hvf_int.h        |  2 ++
+ accel/stubs/hvf-stub.c          | 12 ++++++++++++
+ bsd-user/main.c                 | 12 ++++++++++++
+ hw/acpi/acpi-pci-hotplug-stub.c |  2 +-
+ hw/acpi/generic_event_device.c  | 10 +++++-----
+ hw/acpi/ich9.c                  |  2 +-
+ hw/acpi/pcihp.c                 |  2 +-
+ hw/acpi/piix4.c                 |  2 +-
+ hw/core/machine.c               |  8 ++++----
+ hw/hyperv/hyperv.c              |  3 ++-
+ hw/hyperv/syndbg.c              |  9 ++++++---
+ hw/hyperv/vmbus.c               |  2 +-
+ hw/i386/acpi-build.c            | 10 +++++-----
+ hw/isa/lpc_ich9.c               |  1 -
+ hw/pci/pcie_port.c              |  4 ++--
+ qom/object.c                    |  2 +-
+ qom/qom-qmp-cmds.c              | 21 +++++++++++++++------
+ target/alpha/machine.c          |  2 +-
+ target/hppa/machine.c           |  2 +-
+ target/i386/hvf/hvf.c           |  1 +
+ target/microblaze/machine.c     |  2 +-
+ target/openrisc/machine.c       |  2 +-
+ accel/stubs/meson.build         |  1 +
+ hw/hyperv/meson.build           | 11 ++++++-----
+ 30 files changed, 99 insertions(+), 63 deletions(-)
+ create mode 100644 accel/stubs/hvf-stub.c
+
+-- 
+2.47.1
+
 
