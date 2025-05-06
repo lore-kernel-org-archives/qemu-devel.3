@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C25CC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CCBEC3ABBE
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:13:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCDQR-0005Yj-MF; Tue, 06 May 2025 04:13:15 -0400
+	id 1uCDQk-0006N7-5A; Tue, 06 May 2025 04:13:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDQP-0005SL-9c
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:13:13 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDQh-0006Jn-Ub
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 04:13:32 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDQM-0002Rh-HN
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:13:12 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-ac2af2f15d1so731694366b.1
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 01:13:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDQg-0002TX-AY
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 04:13:31 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5f6214f189bso10082084a12.2
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 01:13:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746519189; x=1747123989; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746519208; x=1747124008; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Rk5+JOkVI1Iae0WJiXrXiJp9Lx0r149VWjePrxsAQFU=;
- b=jEfBwEFYE1DhybvVHIqLPHQ8nnC7LGlkC1kMmaYhY4bwB3on8+EB/BRcWWAwxHcEf3
- dAld5onqNAkIc7rdnRUQW9kGHTnUdd+Ce7J/nixB30TJJ3yTRM89t3+Xd5GHf2DAJ3wL
- 4p5QeKPi5XxshJv7z0TX6C2Zdmfjiy0jf8AbB7A+HMQEcxxHSWU50msBDs4YsGvPKl9Z
- 3gu06ZrrQHGBojTkGqBscfpffD0+q3nUMqPDeSHpy1iYr2QBaFwWZDaNM/EecRb84Z5b
- KTXsHkHn5Q+4iPa30+vmGZYJAt4Eeb4bd6gLgf26D5NcnZz+Z7BcSTSFfrp4+9CqEhfr
- n5qA==
+ bh=PmGgjt0UaQb1TQiQ6KRUgCpfLXk3//KCWHnG+pGz6+I=;
+ b=V9qWYQfNXUSQpTLBgHuhosXiVL3jOygkIIoKO9ESevRxv298LBjkgzwY+8iqaA9L7E
+ tFVJyVZseDtR5NPlQoNt7Pa2ewnNgiLYFPpVb7CyzQabBlQ4KQ+rQbnC99AfZ8SST56j
+ nfU3h4pVvyXeekARg33frsyh440TIAiDFmp8Ii+qHcx2alu7X4tMlhqcmsjxNa7LRfz0
+ BbV54lJ9WuzbSmdLyqQIPbXz5Mozn37mrMxqjPf3Wa3KsuJbA7bDXofwtc3knfmoRHyu
+ 74dTLmImJitGd2yRGtBkPJSh9BUt15M1ZioXBWzPHLSYTW3ZSLq9DqffB/6fL9QymIRB
+ r8OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746519189; x=1747123989;
+ d=1e100.net; s=20230601; t=1746519208; x=1747124008;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Rk5+JOkVI1Iae0WJiXrXiJp9Lx0r149VWjePrxsAQFU=;
- b=HiVWAuelTbtbCslXIzruYQQsJ3D7Rmyal152e/5b/TlPkky9ulOCyHcvPZtTdegt97
- H9RBo3WtGzMBj/bFM74CNP4+t5JvzHWWWDjHWcX/lYq+m6H+DkKsukNPxPwzL+Ie3U5k
- 9GOEQQ1+lxIH5K5TLfnA4MqbP04uD8Y+3M4D2CesIN73qCuvIbdmKCExS3DWFyFEm7wp
- ygbvRFfuomaYiUFWDpAb2fI0tz4WumfB6pqDclCPbaRsOdklgp9HTG4LJ3JA8v8HYVOt
- 4uJ2k3P9nrIR2wWCy7Z2osNeHChX4/pRDrWaZVNJSEFew2gCbDzpm1gmAchG8QYt1yAc
- QVcg==
-X-Gm-Message-State: AOJu0Yw4Bd61QpL7zAFaVA4Oge/4w+u605WUfMTq4/1Cez4aX3CQkb+U
- 6+wqy2hp/4eBSrMzIxy0aOefgwe8gMMXn4xIepWdMHOiG9C+Nkbs+WTgl2nDlmc=
-X-Gm-Gg: ASbGncvXaY68du5cib0EoolYgCVDpq1b3juETZJ6WtWPhvrYqnvkEtlTOvfW7Xzcd0H
- xrr3IIpVDQHqZ0lcaOTFV62fhUzg6zxhRF8bcDHggw7dZzrCFjpqRcR7XGJ+R1bN2pw1DqZ7rc2
- 1Ak47Tyl47VBvnLu2c2/WrlqJ9ZPVgV/H8PHKeNxbxo9m0WOlPwU5cQGaVckMA4uEeMSho8RbYp
- KIG/tKdYK9OkIELmcBtbV2/L3axXB0XlRm27EpD14BmV5Z+5dSSrlBN6RoG+X3OV70OfjZNjVUN
- gqqNesO1YVUmecLg82v9Nyfbder0yg+REvKxxq5x8+ts8dPrMlfrV+kzpt+DwrrPOGJsOTb7iXq
- AlTI=
-X-Google-Smtp-Source: AGHT+IHg8xFxtwSPB1jX1Qmk1F2i4yvIXSdXrmRyUA7xTk3ZnWfERdHGIocU0l+UZ42KP4rS/gWq6g==
-X-Received: by 2002:a17:907:2d12:b0:ace:f53b:ff4a with SMTP id
- a640c23a62f3a-ad1d46ea512mr185086166b.50.1746519188972; 
- Tue, 06 May 2025 01:13:08 -0700 (PDT)
+ bh=PmGgjt0UaQb1TQiQ6KRUgCpfLXk3//KCWHnG+pGz6+I=;
+ b=ritdUgy/5dofp5t6BakVpWI+kP77vtmN8ji2Vsmgo8d4DPpp4R/3d3W69JsmXoT+Tr
+ 9WiyTeKdo60jp+vWNmTLRTewc9ct4mJ5bCTylJJ8WhKnwtbTbkPgmj+kNFOAMdnkn6Jv
+ FHzm03+05lnXLHdkMdiE98mXUSIk83qDxkR9Vk77rlZcMQNbd4VpF8/+EAZcFAZfUk+v
+ q86Qytnfaaaz5jn5pFPkirErd9/dxgO/N9pO5lB5+b4901Pdyo4x5TtOYhmo2Kmu3ShR
+ EdDvD+gsZgeAxmQG2gBOzDtc9yXVbR27mrG+b1QmOzqTlee9h5/WWT2XmD+eKTJ1cjP9
+ TqeA==
+X-Gm-Message-State: AOJu0Yxfzi/D8QLU4ydCFszzUruAASGJDOL+JvDarP3+UT1CWYm6twN4
+ sZfpRrC3pzsJIRjOYJrqQkCApSSH4d7pCyh+rV6DyTdku4pPJIGpKI8OtBX+Hvg=
+X-Gm-Gg: ASbGncvqznU7xh7nkXiJNlGDPCyh+74hvB1t/hKEMd3QxEAv98nODetEXXxkI6jdM5y
+ vGgPXQS5ZyrfYWhpztcpLErUnXh8ez70T5a4jyzQmQhNnlVltOX98V3YKWI3FQBS0hIAXwBXMYu
+ u+clQdrQSB0MfuqgK72Z7+ToSOsA6jn+Ofb4zhOrr4zYGRxLZ/bFmQfPK1CFsuLMS4ROeZsD2+1
+ 5KZLe9PtOAUFI541IOhVcr5lpy/fl7R2DmVn2YII7mtxoJ/UtEALKuAlI6sw+mAybjGRo5aeZpY
+ GFVePbly5o68sD8INaw6Wd9Ojpvoz6CsaoTtlxPkEf1s1gaeUUSlOUdKzvCeDqF1W0cfDpG2AXw
+ hAlA=
+X-Google-Smtp-Source: AGHT+IG0pv4p7W2OjYbI08zygnTVBhMGAFGT7fe2Y7bi1mJKKy/iwdJbrRfWuoIJoqxs7jPstmwNsA==
+X-Received: by 2002:a05:6402:3481:b0:5f7:eaf0:8826 with SMTP id
+ 4fb4d7f45d1cf-5fa7805bb42mr12267617a12.16.1746519208191; 
+ Tue, 06 May 2025 01:13:28 -0700 (PDT)
 Received: from [10.194.152.213] (238.21.205.77.rev.sfr.net. [77.205.21.238])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5fa7775ca09sm7272174a12.11.2025.05.06.01.13.07
+ 4fb4d7f45d1cf-5faa67c7e5fsm5813395a12.78.2025.05.06.01.13.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 May 2025 01:13:08 -0700 (PDT)
-Message-ID: <a1b6d9ac-68b4-48f9-955f-d7d999b04fdd@linaro.org>
-Date: Tue, 6 May 2025 10:13:06 +0200
+ Tue, 06 May 2025 01:13:27 -0700 (PDT)
+Message-ID: <ec90061b-3133-496f-ab69-31e065ecc492@linaro.org>
+Date: Tue, 6 May 2025 10:13:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/9] hw/s390x/s390-virtio-ccw: Remove the deprecated
- 2.12 machine type
+Subject: Re: [PATCH v2 6/9] hw/s390x/s390-virtio-ccw: Remove the deprecated
+ 3.0 machine type
 To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
  Halil Pasic <pasic@linux.ibm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
@@ -75,14 +75,14 @@ To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
 Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>
 References: <20250506062148.306084-1-thuth@redhat.com>
- <20250506062148.306084-6-thuth@redhat.com>
+ <20250506062148.306084-7-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250506062148.306084-6-thuth@redhat.com>
+In-Reply-To: <20250506062148.306084-7-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,13 +108,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 6/5/25 08:21, Thomas Huth wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
-> The s390-ccw-virtio-2.12 machine is older than 6 years, so according to
+> The s390-ccw-virtio-3.0 machine is older than 6 years, so according to
 > our machine support policy, it can be removed now.
 > 
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   hw/s390x/s390-virtio-ccw.c | 14 --------------
->   1 file changed, 14 deletions(-)
+>   hw/s390x/s390-virtio-ccw.c | 15 ---------------
+>   1 file changed, 15 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
