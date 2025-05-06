@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29AC9C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:34:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C69FFC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:34:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCKFm-0004sG-CB; Tue, 06 May 2025 11:30:42 -0400
+	id 1uCKFh-0004T6-5T; Tue, 06 May 2025 11:30:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFY-0004RM-DC
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uCKFA-0003rM-Ta
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFU-0002E0-Vu
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:27 -0400
+ id 1uCKF8-0001zD-Pe
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746545419;
+ s=mimecast20190719; t=1746545400;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=E9XoMb5qN4Oa9TZ4oVvJWOLn4eFe7xMdd1uzmvhg4vM=;
- b=BISiJMBBV5qK9eXiTf8z1hynyqf/0Nz+WJZlLPrHEpXmhRZm/+j//KmqcWrIwXEz7bUvd5
- G5f2dRUrLSfPZG+d4ELfzaqwA2Bs3yJELeURmJrcmMQnJGM0CeevorkfBY8fxw0Q6+XMyt
- nyAjr9cBcLseTLrhYeIjSgXU4ICdjOI=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=K3rTk5QqsJiLGicX/ZNrIaBcoFpzE0SDxObclyMNKwg=;
+ b=UWRMjbgI8siuWVL9X3bwJUKUETYC4WR8V4fIy9taOIWyvrTs01jK7GMxeETcBD7CQNZKKQ
+ IzrDA7/X3ivoqshMe/oPz++tFjZuBI1MPyBdKPE+pJLK5U127l28s18cOVnFueLN+pk0Qr
+ gdRGMz7nXeEaSUm6WIwJKJY3wyIAKV8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-150-HZJOq-UBNseF7F3bRJRkUg-1; Tue, 06 May 2025 11:30:13 -0400
-X-MC-Unique: HZJOq-UBNseF7F3bRJRkUg-1
-X-Mimecast-MFC-AGG-ID: HZJOq-UBNseF7F3bRJRkUg_1746545412
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3912fc9861cso1558298f8f.1
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:30:13 -0700 (PDT)
+ us-mta-375-cdieWZqTN9qNbECaTduzKQ-1; Tue, 06 May 2025 11:29:58 -0400
+X-MC-Unique: cdieWZqTN9qNbECaTduzKQ-1
+X-Mimecast-MFC-AGG-ID: cdieWZqTN9qNbECaTduzKQ_1746545398
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43d734da1a3so27177555e9.0
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:29:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746545411; x=1747150211;
+ d=1e100.net; s=20230601; t=1746545397; x=1747150197;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E9XoMb5qN4Oa9TZ4oVvJWOLn4eFe7xMdd1uzmvhg4vM=;
- b=MpTcGEktYe6GMCzR9V8VXGuBDNa16s74BV/TBgCz8O2teFttlaQZmVwAGFURIcpLbW
- gGfx/IiglsCeWiLzb0DbSX0XJ0wyevbWdYZNYB/gPO7h06pyGE4ry1U+fpKkeRAPlf8l
- VXtM2P2W10l9Dr69mOoi+kiKh3cgfaKZYDuhwaGnCbWru/hRthbLtHFfNPg4JmIpeqo1
- nHeYlK0ADukyWrZFyDWHItg3HAs5Hi5YHDHjm74cau81BQIxPlbeem94rMhO+GbnSP79
- b7L/K3GObbiYMYxcF//z+z6+rSyiM+mp0ydx3GrBZqcqeET19ufcl9EPd390wKlrIYvT
- 3wTA==
-X-Gm-Message-State: AOJu0YwkywAiNlaBBopBsSHQDLg4L/uQC4tB5f/sOoypn9wvEHWv+HAy
- 8aUMV7y7WKnFAm1pYdgDC2rlugvxBQyk2eSjNyxtQQw08QRaDKP4hWQBNRQxLytL0hsmzFAjSPZ
- pwH7V7A068h2EyMGzZ3YDnDDij2BqEbvgKdt48H4XCxCgc4+rfvLrWNWihnKztCWyGQc/NfIBxf
- BpWBMr/acNHvBfH95GrBG8yRR02bcxgQ0ok8I5
-X-Gm-Gg: ASbGnct1I3WfGGjPKeSZUX9sJ8TGQ9WvUcazODb4scmBuXcLMChd/Hd5DP1a4SF4ycV
- mdcN1YG/tzfEkIrg6tMhU8JTUGWrBJoNzodaj3YPt25xwgroc8mM8AOxPsiOjC9kNv78yGJk824
- Onoj+kTlzKQ8rfsHrcEAdUT/6cA84hMznjXtubrQ/pJqE1kNjGLCQP4tzO9Z5zTVBdcefxj7ghK
- Avl1sZ3gRGDhMsQEChNnl7Etf0HqGyCYTC+iyZYWRAt/wG/MBrwIKpOHmxANKRmfMyC6tgWnWfO
- qHhwh0ZIBgIocBI=
-X-Received: by 2002:a05:6000:2506:b0:3a0:b1de:1bc0 with SMTP id
- ffacd0b85a97d-3a0b1de1d73mr2195456f8f.13.1746545411648; 
- Tue, 06 May 2025 08:30:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGDPsArANAodhe+/MHjurDaI64+BlNn4NDYwtR+G8pq2Cgx8LNCNICPo95TF2D3feKueEoTg==
-X-Received: by 2002:a05:6000:2506:b0:3a0:b1de:1bc0 with SMTP id
- ffacd0b85a97d-3a0b1de1d73mr2195435f8f.13.1746545411224; 
- Tue, 06 May 2025 08:30:11 -0700 (PDT)
+ bh=K3rTk5QqsJiLGicX/ZNrIaBcoFpzE0SDxObclyMNKwg=;
+ b=L2bQUJXxMrY/yeZwwDw/8p6u1f8OF3LdrVMpp4WXwez9mKhf++DDBPYjgQ0gFfwQ1t
+ NydZNJPy2D6GmLoD1qfAyOJmAvShiDYfwtE4MR/T406g3vAS5s7s0oeS2zqD3sfNHbYy
+ QjuZtuzaLIfkX7TW0mD7AuD8NMYmZBXJsiEDqhgUTuxyITbFYIlqfna/Bf1DDSrMc9zT
+ hpyITcRmD4luKBIGSKoWplfHHb/UAL3Jp4wyDO5ub5FJLCqxf8RAzun7qpCOTHluP5i/
+ GVaRr3+fr71poR4lCaaWyNV45CTIwYF9RjPizICSG3Lp9enM5bbDVnt4vXPTTi5ckw01
+ WMxw==
+X-Gm-Message-State: AOJu0YxfZt/Pp7UvG1enjNmeagt+VxvGfCjMuKFMn9KetCXHZYwM8fac
+ Ax2+dwuTDlThURV7IETz0HqdRt60rXQyg7ymlbQWEbnBZ+9PONMWn3Of7WeA1eeDApeKHmNk/dY
+ 8NPrnbTZogX8pXjYsfmmYrFX8ovrVO+8dx+UgtiryelSpdVGTxVs37nmZLKGY/FtdyBdQEhO7t4
+ OGCzyGHJ9FUMXJgAOhR8TjtOgLuNxb0J1lHz4R
+X-Gm-Gg: ASbGncs0VMFOEfWMwBf5sxbPLGJy7DtbdA+vVU/ODqp1KOD60q2ZtZXhbB3KWkr6IMj
+ iTuNwH6/EWaHufrvUJgIQD8lRHb+p4+8trZggWmdKw1Cxobxal6uVN9hjg+ZHVhEf9eaj+X3qql
+ JQIrDQ7Q6puJkOSCVPq+ZfmSC2IjPkkGjn4oyKzlwW9dXF3N5p9OpE+ALZBN/vqNh8GqB9eWgcZ
+ PiAuXM1643s0OMXgLcQc94ABjCmLIPP2pXnDQF5zT1oEmq6YgN24KvE38jm2A3cd2KC/B54b05J
+ TbgdciHI7rlQoMA=
+X-Received: by 2002:a05:600c:3e17:b0:440:59eb:bfc with SMTP id
+ 5b1f17b1804b1-441d0530c30mr31905315e9.23.1746545397270; 
+ Tue, 06 May 2025 08:29:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEnKLz1F3y4aosjymx1MGac8KnnqpDg/ZYKgrmn2Fjlj1sW/dW9IN4od38HGaMcl1CE2dxxxQ==
+X-Received: by 2002:a05:600c:3e17:b0:440:59eb:bfc with SMTP id
+ 5b1f17b1804b1-441d0530c30mr31905115e9.23.1746545396810; 
+ Tue, 06 May 2025 08:29:56 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099b170b8sm13758278f8f.82.2025.05.06.08.30.09
+ 5b1f17b1804b1-441b2aecc89sm218058485e9.9.2025.05.06.08.29.54
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 08:30:09 -0700 (PDT)
+ Tue, 06 May 2025 08:29:54 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PULL 20/30] include/glib-compat.h: Poison g_list_sort and
- g_slist_sort
-Date: Tue,  6 May 2025 17:29:15 +0200
-Message-ID: <20250506152927.222671-21-pbonzini@redhat.com>
+Subject: [PULL 14/30] ci: run RISC-V cross jobs by default
+Date: Tue,  6 May 2025 17:29:09 +0200
+Message-ID: <20250506152927.222671-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250506152927.222671-1-pbonzini@redhat.com>
 References: <20250506152927.222671-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -109,41 +108,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+The riscv64-debian-cross container is based on Trixie rather than sid
+these days, so it is pretty much as stable as the others.  Enable it
+by default.
 
-On Emscripten, function pointer casts can result in runtime failures due to
-strict function signature checks. This affects the use of g_list_sort and
-g_slist_sort, which internally perform function pointer casts that are not
-supported by Emscripten. To avoid these issues, g_list_sort_with_data and
-g_slist_sort_with_data should be used instead, as they do not rely on
-function pointer casting.
-
-Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Link: https://lore.kernel.org/r/fa57c8069d6c723f5b947560677f4ca596334330.1745820062.git.ktokunaga.mail@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/glib-compat.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+ .gitlab-ci.d/container-cross.yml | 3 ---
+ .gitlab-ci.d/crossbuilds.yml     | 5 -----
+ 2 files changed, 8 deletions(-)
 
-diff --git a/include/glib-compat.h b/include/glib-compat.h
-index 86be439ba0e..2e32b90f051 100644
---- a/include/glib-compat.h
-+++ b/include/glib-compat.h
-@@ -36,6 +36,13 @@
- #include <pwd.h>
- #endif
+diff --git a/.gitlab-ci.d/container-cross.yml b/.gitlab-ci.d/container-cross.yml
+index 34c0e729ad9..e45ea17cf15 100644
+--- a/.gitlab-ci.d/container-cross.yml
++++ b/.gitlab-ci.d/container-cross.yml
+@@ -67,11 +67,8 @@ ppc64el-debian-cross-container:
+ riscv64-debian-cross-container:
+   extends: .container_job_template
+   stage: containers
+-  # as we are currently based on 'sid/unstable' we may break so...
+-  allow_failure: true
+   variables:
+     NAME: debian-riscv64-cross
+-    QEMU_JOB_OPTIONAL: 1
  
-+/*
-+ * These functions perform function pointer casts which can cause function call
-+ * failure on Emscripten. Use g_slist_sort_with_data and g_list_sort_with_data
-+ * instead of these functions.
-+ */
-+#pragma GCC poison g_slist_sort g_list_sort
-+
- /*
-  * Note that because of the GLIB_VERSION_MAX_ALLOWED constant above, allowing
-  * use of functions from newer GLib via this compat header needs a little
+ s390x-debian-cross-container:
+   extends: .container_job_template
+diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
+index 7ae0f966f15..3f76c901ba8 100644
+--- a/.gitlab-ci.d/crossbuilds.yml
++++ b/.gitlab-ci.d/crossbuilds.yml
+@@ -118,12 +118,8 @@ cross-ppc64el-kvm-only:
+     IMAGE: debian-ppc64el-cross
+     EXTRA_CONFIGURE_OPTS: --disable-tcg --without-default-devices
+ 
+-# The riscv64 cross-builds currently use a 'sid' container to get
+-# compilers and libraries. Until something more stable is found we
+-# allow_failure so as not to block CI.
+ cross-riscv64-system:
+   extends: .cross_system_build_job
+-  allow_failure: true
+   needs:
+     job: riscv64-debian-cross-container
+   variables:
+@@ -131,7 +127,6 @@ cross-riscv64-system:
+ 
+ cross-riscv64-user:
+   extends: .cross_user_build_job
+-  allow_failure: true
+   needs:
+     job: riscv64-debian-cross-container
+   variables:
 -- 
 2.49.0
 
