@@ -4,91 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CCBEC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:13:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD848C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:14:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCDQk-0006N7-5A; Tue, 06 May 2025 04:13:34 -0400
+	id 1uCDR7-0006sI-Tj; Tue, 06 May 2025 04:13:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDQh-0006Jn-Ub
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:13:32 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCDQg-0002TX-AY
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:13:31 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5f6214f189bso10082084a12.2
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 01:13:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746519208; x=1747124008; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PmGgjt0UaQb1TQiQ6KRUgCpfLXk3//KCWHnG+pGz6+I=;
- b=V9qWYQfNXUSQpTLBgHuhosXiVL3jOygkIIoKO9ESevRxv298LBjkgzwY+8iqaA9L7E
- tFVJyVZseDtR5NPlQoNt7Pa2ewnNgiLYFPpVb7CyzQabBlQ4KQ+rQbnC99AfZ8SST56j
- nfU3h4pVvyXeekARg33frsyh440TIAiDFmp8Ii+qHcx2alu7X4tMlhqcmsjxNa7LRfz0
- BbV54lJ9WuzbSmdLyqQIPbXz5Mozn37mrMxqjPf3Wa3KsuJbA7bDXofwtc3knfmoRHyu
- 74dTLmImJitGd2yRGtBkPJSh9BUt15M1ZioXBWzPHLSYTW3ZSLq9DqffB/6fL9QymIRB
- r8OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746519208; x=1747124008;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PmGgjt0UaQb1TQiQ6KRUgCpfLXk3//KCWHnG+pGz6+I=;
- b=ritdUgy/5dofp5t6BakVpWI+kP77vtmN8ji2Vsmgo8d4DPpp4R/3d3W69JsmXoT+Tr
- 9WiyTeKdo60jp+vWNmTLRTewc9ct4mJ5bCTylJJ8WhKnwtbTbkPgmj+kNFOAMdnkn6Jv
- FHzm03+05lnXLHdkMdiE98mXUSIk83qDxkR9Vk77rlZcMQNbd4VpF8/+EAZcFAZfUk+v
- q86Qytnfaaaz5jn5pFPkirErd9/dxgO/N9pO5lB5+b4901Pdyo4x5TtOYhmo2Kmu3ShR
- EdDvD+gsZgeAxmQG2gBOzDtc9yXVbR27mrG+b1QmOzqTlee9h5/WWT2XmD+eKTJ1cjP9
- TqeA==
-X-Gm-Message-State: AOJu0Yxfzi/D8QLU4ydCFszzUruAASGJDOL+JvDarP3+UT1CWYm6twN4
- sZfpRrC3pzsJIRjOYJrqQkCApSSH4d7pCyh+rV6DyTdku4pPJIGpKI8OtBX+Hvg=
-X-Gm-Gg: ASbGncvqznU7xh7nkXiJNlGDPCyh+74hvB1t/hKEMd3QxEAv98nODetEXXxkI6jdM5y
- vGgPXQS5ZyrfYWhpztcpLErUnXh8ez70T5a4jyzQmQhNnlVltOX98V3YKWI3FQBS0hIAXwBXMYu
- u+clQdrQSB0MfuqgK72Z7+ToSOsA6jn+Ofb4zhOrr4zYGRxLZ/bFmQfPK1CFsuLMS4ROeZsD2+1
- 5KZLe9PtOAUFI541IOhVcr5lpy/fl7R2DmVn2YII7mtxoJ/UtEALKuAlI6sw+mAybjGRo5aeZpY
- GFVePbly5o68sD8INaw6Wd9Ojpvoz6CsaoTtlxPkEf1s1gaeUUSlOUdKzvCeDqF1W0cfDpG2AXw
- hAlA=
-X-Google-Smtp-Source: AGHT+IG0pv4p7W2OjYbI08zygnTVBhMGAFGT7fe2Y7bi1mJKKy/iwdJbrRfWuoIJoqxs7jPstmwNsA==
-X-Received: by 2002:a05:6402:3481:b0:5f7:eaf0:8826 with SMTP id
- 4fb4d7f45d1cf-5fa7805bb42mr12267617a12.16.1746519208191; 
- Tue, 06 May 2025 01:13:28 -0700 (PDT)
-Received: from [10.194.152.213] (238.21.205.77.rev.sfr.net. [77.205.21.238])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5faa67c7e5fsm5813395a12.78.2025.05.06.01.13.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 May 2025 01:13:27 -0700 (PDT)
-Message-ID: <ec90061b-3133-496f-ab69-31e065ecc492@linaro.org>
-Date: Tue, 6 May 2025 10:13:25 +0200
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCDR4-0006mY-3I; Tue, 06 May 2025 04:13:54 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCDR2-0002Vp-BJ; Tue, 06 May 2025 04:13:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746519232; x=1778055232;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=dE7zz7MA21loKwGBXqqSeiRszbbsWdpQQdjUHiCm7r0=;
+ b=l7+/tgiXdLmaAt+4CWPInYfHkUTxsITvbIiNTgEp9a//Yxa2AdaShn+I
+ eTNE3osqEKpUdpCSo1NO23+h9vz+xPAiDno/iuwLDQyStC0H7d87fkQrx
+ wTy4nB9kaI8lXXz3A7AHpxSdAErALtSY1w/DOjluoh7gHWQ7KDFvxLUH1
+ iWqlcanJbjCJ8fuBnePMn0XriXUcB2fIDPvUw/iJMWNGLfU+Moqdovg+D
+ 2680mRzFoEe1/ukrPp+LVf8S4jfDdqHs0e5LCsZBd/W/0CJlbXYAAZLQC
+ aptB3sOcm67UXaLjzxtjd5xZ/47nierQE2aI/QIOafrhof4Y3oI4r0/09 w==;
+X-CSE-ConnectionGUID: +m5NfzSMR/6CDCr+gqcO0Q==
+X-CSE-MsgGUID: e3OOSahMQGiCvnbPRda4og==
+X-IronPort-AV: E=McAfee;i="6700,10204,11424"; a="58833466"
+X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="58833466"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 May 2025 01:13:50 -0700
+X-CSE-ConnectionGUID: WA7vYq6BQOS1xjUs/t7EVw==
+X-CSE-MsgGUID: nC88bKa2RSul+U+ZXIP3RA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="135533716"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa007.fm.intel.com with ESMTP; 06 May 2025 01:13:48 -0700
+Date: Tue, 6 May 2025 16:34:49 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, manos.pitsidianakis@linaro.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 10/11] rust: replace c_str! with c"" literals
+Message-ID: <aBnJqXXCjMZVPLRa@intel.com>
+References: <20250505090438.24992-1-pbonzini@redhat.com>
+ <20250505090438.24992-11-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/9] hw/s390x/s390-virtio-ccw: Remove the deprecated
- 3.0 machine type
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20250506062148.306084-1-thuth@redhat.com>
- <20250506062148.306084-7-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250506062148.306084-7-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250505090438.24992-11-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,17 +81,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/25 08:21, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On Mon, May 05, 2025 at 11:04:35AM +0200, Paolo Bonzini wrote:
+> Date: Mon,  5 May 2025 11:04:35 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 10/11] rust: replace c_str! with c"" literals
+> X-Mailer: git-send-email 2.49.0
 > 
-> The s390-ccw-virtio-3.0 machine is older than 6 years, so according to
-> our machine support policy, it can be removed now.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/s390x/s390-virtio-ccw.c | 15 ---------------
->   1 file changed, 15 deletions(-)
+>  docs/devel/rust.rst                    |  6 +--
+>  rust/hw/char/pl011/src/device_class.rs | 11 +++--
+>  rust/hw/char/pl011/src/lib.rs          |  6 +--
+>  rust/hw/timer/hpet/src/hpet.rs         | 19 ++++----
+>  rust/hw/timer/hpet/src/lib.rs          |  4 +-
+>  rust/qemu-api/meson.build              |  1 -
+>  rust/qemu-api/src/c_str.rs             | 61 --------------------------
+>  rust/qemu-api/src/cell.rs              |  4 +-
+>  rust/qemu-api/src/lib.rs               |  1 -
+>  rust/qemu-api/src/vmstate.rs           |  2 +-
+>  rust/qemu-api/tests/tests.rs           |  9 ++--
+>  rust/qemu-api/tests/vmstate_tests.rs   | 15 +++----
+>  12 files changed, 32 insertions(+), 107 deletions(-)
+>  delete mode 100644 rust/qemu-api/src/c_str.rs
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
