@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D7D9C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 09:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71E54C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 09:45:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCEis-0002yE-5z; Tue, 06 May 2025 05:36:22 -0400
+	id 1uCErO-000568-LY; Tue, 06 May 2025 05:45:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uCEim-0002sW-Fm
- for qemu-devel@nongnu.org; Tue, 06 May 2025 05:36:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uCErN-00055x-MI
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 05:45:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uCEik-00057R-MC
- for qemu-devel@nongnu.org; Tue, 06 May 2025 05:36:16 -0400
+ id 1uCErL-00060Z-67
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 05:45:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746524173;
+ s=mimecast20190719; t=1746524705;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=58T5jghiESHsvdLwlrlsvIK5I6pLvDsyHC+cway9G34=;
- b=NVBSoX+kb4vrItzCqk2mhgswBLyyr5eGapycaNmKf8MOzTcim3DwBvQ0jaxzOyrQntZnHi
- WovVk1cvHqsOGAirJwkaicQLQFazr0IGyMenRUmWXrSza8Fhv/R/OFJprcleKT4QNpHfX4
- +DepoKabAuKXz1abfkkxSfPbHKMh0+0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=3Pnp5s9C6/L7K9aqdYpf/8gk1zHZ8FuCxnocFbsJmFY=;
+ b=CQ+PHloUU4RrtTYbbMgDFFasJ/zFSqCdNoJ8WYfz2/o//01NP3BOv3yn8PlKA3vRQ9yS+U
+ lIXJpwPGwM78EKwi1bVGZ7R1oVHBrLuuycNR08kXp3l6NH5KUaF6gKueP45p+Als5RFBEZ
+ NnJ8NDlTVxgpR3nDdq/JgQbvdQnanow=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-464-42bFQu8JOHyF1vbsZkqy1Q-1; Tue,
- 06 May 2025 05:36:12 -0400
-X-MC-Unique: 42bFQu8JOHyF1vbsZkqy1Q-1
-X-Mimecast-MFC-AGG-ID: 42bFQu8JOHyF1vbsZkqy1Q_1746524171
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-fg4jMPdDOC-D8LTiVVtXyQ-1; Tue,
+ 06 May 2025 05:45:01 -0400
+X-MC-Unique: fg4jMPdDOC-D8LTiVVtXyQ-1
+X-Mimecast-MFC-AGG-ID: fg4jMPdDOC-D8LTiVVtXyQ_1746524700
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4C43C1955D69; Tue,  6 May 2025 09:36:11 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 981971801211; Tue,  6 May 2025 09:45:00 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.127])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3F46319560A3; Tue,  6 May 2025 09:36:09 +0000 (UTC)
-Date: Tue, 6 May 2025 10:36:06 +0100
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D6D981955F3C; Tue,  6 May 2025 09:44:58 +0000 (UTC)
+Date: Tue, 6 May 2025 10:44:55 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, thuth@redhat.com,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] meson: use thorough test setup as default
-Message-ID: <aBnYBpAYjdgVpG8D@redhat.com>
-References: <20250503201806.3045723-1-pierrick.bouvier@linaro.org>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org
+Subject: Re: [PATCH preview 0/5] rust: allow minimum version of 1.83
+Message-ID: <aBnaF9VvhhI8CwLC@redhat.com>
+References: <20250505100854.73936-1-pbonzini@redhat.com>
+ <aBnOyhMawDaY9yyR@intel.com>
+ <CABgObfYDOAGKdRNO91bfXQ4MPjbc0wNZSrDfpDiQZsOkrL53RQ@mail.gmail.com>
+ <aBnVtNgdjQ9DlugK@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250503201806.3045723-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <aBnVtNgdjQ9DlugK@intel.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -88,49 +89,22 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, May 03, 2025 at 01:18:06PM -0700, Pierrick Bouvier wrote:
-> Allows all tests to be visible by default when using meson test
-> directly.
+On Tue, May 06, 2025 at 05:26:12PM +0800, Zhao Liu wrote:
+> > > "enable Rust" supports v1.77 and "enable all devices written in Rust"
+> > > supports v1.83, correct?
+> > 
+> > Both support v1.83 only.  However, if Rust is missing or old, "enable
+> > all devices written in Rust" will fail compilation (e.g. Kconfig would
+> > fail for ARM/x86 targets due to unsatisfiable CONFIG_PL011);
 > 
-> This has no impact on make check-* commands, which use SPEED=quick by
-> default (see scripts/mtest2make.py).
+> In this case, a brand new Rust device (without a corresponding C
+> version) would be unable to compile on the above platforms which don't
+> support v1.83. I'm not sure if this is an acceptable limitation or
+> policy. (Has there been a similar case in history?)
 
-IMHO it would be conceptually confusing if we cause 'make check' to
-be running different stuff from 'meson test'. As long as we keep a
-makefile wrapper around running tests, I think we should keep them
-matching what they do by default.
-
-
-
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  meson.build | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index f8bf6e7bb66..57ff3f722d8 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -5,12 +5,13 @@ project('qemu', ['c'], meson_version: '>=1.5.0',
->  
->  meson.add_devenv({ 'MESON_BUILD_ROOT' : meson.project_build_root() })
->  
-> -add_test_setup('quick', exclude_suites: ['slow', 'thorough'], is_default: true,
-> +add_test_setup('quick', exclude_suites: ['slow', 'thorough'],
->                 env: ['RUST_BACKTRACE=1'])
->  add_test_setup('slow', exclude_suites: ['thorough'],
->                 env: ['G_TEST_SLOW=1', 'SPEED=slow', 'RUST_BACKTRACE=1'])
->  add_test_setup('thorough',
-> -               env: ['G_TEST_SLOW=1', 'SPEED=thorough', 'RUST_BACKTRACE=1'])
-> +               env: ['G_TEST_SLOW=1', 'SPEED=thorough', 'RUST_BACKTRACE=1'],
-> +               is_default: true)
->  
->  meson.add_postconf_script(find_program('scripts/symlink-install-tree.py'))
->  
-> -- 
-> 2.47.2
-> 
+Brand new features are not required to support all existing QEMU build
+targets, they can set whatever baseline is appropriate given the external
+dependencies they have.
 
 With regards,
 Daniel
