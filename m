@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4062C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B31B1C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:37:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCJOU-0006lK-VG; Tue, 06 May 2025 10:35:39 -0400
+	id 1uCJPS-0008Ox-H6; Tue, 06 May 2025 10:36:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJOS-0006be-QR
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:35:37 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJP2-0007pq-5s
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:36:17 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJOQ-000134-OI
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:35:36 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43cef035a3bso36575745e9.1
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:35:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJOy-000161-RK
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:36:11 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-39ee623fe64so5945185f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:36:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746542132; x=1747146932; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746542166; x=1747146966; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lCeRqTx0mhaZ0q9s1EL1ORmnDCtjAuDqQ8i9YX1QOyg=;
- b=JSbXXGpKXX7ad0vkDkDhH6ntFZeewhCHgmQGZRDXzPdRLqYpHrEuSO/wt0qTSb4UPI
- SFx0w482S/OS+PQpSK6f7kwc8AHVDxBEL0rmXiAyY6t6ffSxTQk3VDi2AWS0b5ud0mQK
- NyVXwrQl0qC32glI7eZoE3QFxEeZDjzMy7IxBP8S4ddJxIBorhoISFW63jAxYmygVS5n
- gW3momNmcKi/Ncat8NSNiPIq+mquMonfmcbpfNDLklgBmhwhdkiXaayBFzPaDzcLH/+5
- kXEcbwvaGAB0UVG9lUDzocZxJWIhr2spnDfT6/UN4dPkRwadwGvJI3URG1H+xphTmEuP
- nxVg==
+ bh=UJMsf8d9E7od1eerUg9AnKC8aiveIyxhwsrRajuSRCM=;
+ b=s5UumaTapMU27ohp56n5Oj0C5wIV3H5cF1xnAvLv7+HoMC8yPl1AD9Ge6936eRgk3U
+ O1X5qQCQqb3Hoh9RCcLCZ17su6SSt8P/+xse06ZovvkRX8ZCNQabSgWaWreiZ/AndK1e
+ ve8McUKB5fvN1PM0jzpzZhWfF+XGG6GzITPiOw4330RW8f4zUsRYrgSOPiMiAGFn9xSj
+ ydMM11InxRRz7B32rO4I3nMcWYjwkXWl5Z5VkvaQWyDNWsZMoBwQ8aQhcTuPLhN2rt6Z
+ tUy2Epa0IDIpx6ovUEMaZOF4Osrp8WzVrL3aBQ4O6ANSzVfpcGYB2kC2nvlGjL2OaGoQ
+ PRRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746542132; x=1747146932;
+ d=1e100.net; s=20230601; t=1746542166; x=1747146966;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lCeRqTx0mhaZ0q9s1EL1ORmnDCtjAuDqQ8i9YX1QOyg=;
- b=mzK7Ig6+aWc5FGG9Jkh7BJa6A+478V2cJHLHJ0JPDuJa3I4d/IJGtxDDu72JCumIaV
- G8LHB8ghqS+BLUA1pf8WGb0M3IQE73hynPz/8MYiS4agrSm1lKIOcNRArfnNjuQNnch5
- nt402iGw0JmvgaWLH/Hx3tNb/WLHZXqYZTPeco9REt6xDQ6lFNnSaXtozx0ltK4DfZHS
- exOhyXbzZjlK1hoMLFy0aFtgrjS1FG9C0d2+Br+aPvz0aoknYNRwvo8T3yQJFHvqIZwu
- UEpix0K2xBFm5PNmSLPjLLGm7Z95qcuKye3Ysm63F3yNhFoFAdMBD6KJ/TG0xVO4NQG6
- k40g==
-X-Gm-Message-State: AOJu0Yw8hpG8VnaDTr6pDuaWhFzrNNZMI+4HKgzU7LzEqpbzTCZWKTCx
- ROrMyMEGGlIoXSeqcP6FRYi49FiAcrnBaSo1VYm66IM04oAfneVBd895E40goyzm+emYybPqII/
- V
-X-Gm-Gg: ASbGncuRChTgUJ+7T3SertJ5A2CRaODKw6pFSbxLeVtBasFmqsogL5zJMSvQA60PB4l
- Li8pKAbGFbQmNkG2a2KInbKCR6ZlEirOj2AzmvLd1fBZz8BgGt1t3EXrdtjtheI3gXqbsj2lhgF
- H4NlixAtM93c+8OCw0uN6rSxsBTnMgCp8FTw1LwU1rznnjsaI74OXBwoAKdkKRotxH1VtU7IMHc
- OZwySyui6Ji7DYGuTzjnM6Eha7Op6jxW9YYoYnZfZAncm+2+HWSdiNMG2h6pC0pAKJMvtHDYNIK
- CFx0etCE4ggy9r+Y6wbs7TGYGM+PPeKrHcQ2bI9PwhSL4V3ssBJpCrPZavVNNGWTWMSWCz7CZCH
- JmhpAU/ThBzsUyjNq7/44
-X-Google-Smtp-Source: AGHT+IGyxPKdPvukJKTXf6ruUaT87ZzEzL6O8dLCqcTvoIwzktd9D4/V25yW65o62J9rxa/+7anu+A==
-X-Received: by 2002:a05:600c:1e88:b0:43c:f513:958a with SMTP id
- 5b1f17b1804b1-441c48bdf64mr94179155e9.13.1746542132340; 
- Tue, 06 May 2025 07:35:32 -0700 (PDT)
+ bh=UJMsf8d9E7od1eerUg9AnKC8aiveIyxhwsrRajuSRCM=;
+ b=ZXrR1ZrntXrQw1JGgflfr7mR3GCqCXDsl3PxQ9LYRBjozgNowyGvrMvUwERJ6XTFfE
+ mqcMSsAY8TOZLcD2sDlHpz/UEtEXDqYqbw+xPyy44A76eJQ2gS3L8iqBQF0KlNoJWfl7
+ HNn261D+cmVvC/0JibPq0iKD6oqSeayaHWJZ72TMkKXQasANa4pHOduOm+AhCLelxb2X
+ 6f7K1TLLKlFAT0VuL4gBmLrdiA/7AOptdGk/pYCiqZHcwCuZIy5qzt7AO0MGiJPrzX7M
+ zfnMgfWus2G6+jU7SRpbBqN1MA1I4LfASPTiXrIUi6rleq2n5Hotb1iftP0yrRd8ijxA
+ tw9w==
+X-Gm-Message-State: AOJu0YyH3vidz9HnaIxx0GFMyCcvO/Wi0TLp1BJu4Psd3AHQ48YQjLqq
+ uFlySo/AeYV5tMsXGFJmsybFLKLtv+VbhpBQlUZpzoH6NeeybMpMmxylDtAsVZVjtE9zjRTeGBi
+ f
+X-Gm-Gg: ASbGncvzg5YasTXpxLfHi7H8aDxKNndYn/QmA/smSOO4A6cOLK6+ZXorHUwAY5dw0Lo
+ R/AT5RBcEjWaYiuVxvQrRhKNmQCBvjqgVnjPNSCc8XsvdbJtMKrpLnW13s7o0+la0kF7gex7kXy
+ fLZyavH1OWUR89HHPp6y/sFrlJmGde9Oc9rdAQy8waakR9+8zo3C7U22RVz/wqXy9aLOs1BXw2e
+ ecaEmZ43Z7ufmY+gBN6W2mAvSHRLsoHjfj0AWXw3YEb8t9+mj3hi9hrGdjm8b8tAJagPJaf7qJ0
+ HbrJvZvEPHJOFDyAbhWVOh84+g4bX1LAy2Zd/sSSFS4uG43N8NdRoFbYYhYWpMRnQHfe5NdB9E2
+ LVIAhhamAagV5T4NnzDI5
+X-Google-Smtp-Source: AGHT+IG8gdzcrLUK4hyzHzUlFZVKGNgKT1Bv1OcU+Tzdh6+VKGqHHpd7tfpkjF7i2jKkEmz41CEHtw==
+X-Received: by 2002:a5d:5f85:0:b0:38f:6287:6474 with SMTP id
+ ffacd0b85a97d-3a0ac0d976cmr2881628f8f.15.1746542166185; 
+ Tue, 06 May 2025 07:36:06 -0700 (PDT)
 Received: from localhost.localdomain (91-163-26-170.subs.proxad.net.
  [91.163.26.170]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae7caasm14120803f8f.54.2025.05.06.07.35.31
+ 5b1f17b1804b1-441b89ee39esm170797135e9.21.2025.05.06.07.36.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 May 2025 07:35:31 -0700 (PDT)
+ Tue, 06 May 2025 07:36:05 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 04/22] target/migration: Inline VMSTATE_CPU()
-Date: Tue,  6 May 2025 16:34:53 +0200
-Message-ID: <20250506143512.4315-5-philmd@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 11/22] hw/hyperv/syndbg: common compilation unit
+Date: Tue,  6 May 2025 16:35:00 +0200
+Message-ID: <20250506143512.4315-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250506143512.4315-1-philmd@linaro.org>
 References: <20250506143512.4315-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,100 +101,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VMSTATE_CPU() is only used in 4 places and doesn't provide
-much, directly inline it using VMSTATE_STRUCT().
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-This removes the last COMPILING_PER_TARGET in "hw/core/cpu.h".
+We assume that page size is 4KB only, to dimension buffer size for
+receiving message.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250429085148.11876-1-philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20250424232829.141163-5-pierrick.bouvier@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h       | 12 ------------
- target/alpha/machine.c      |  2 +-
- target/hppa/machine.c       |  2 +-
- target/microblaze/machine.c |  2 +-
- target/openrisc/machine.c   |  2 +-
- 5 files changed, 4 insertions(+), 16 deletions(-)
+ hw/hyperv/syndbg.c    | 9 ++++++---
+ hw/hyperv/meson.build | 2 +-
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 12b2ff1f7d2..1e87f7d393e 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -1121,20 +1121,8 @@ bool cpu_exec_realizefn(CPUState *cpu, Error **errp);
- void cpu_exec_unrealizefn(CPUState *cpu);
- void cpu_exec_reset_hold(CPUState *cpu);
+diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
+index ca291826a07..8b8a14750dd 100644
+--- a/hw/hyperv/syndbg.c
++++ b/hw/hyperv/syndbg.c
+@@ -10,11 +10,11 @@
+ #include "qemu/error-report.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/sockets.h"
++#include "qemu/units.h"
+ #include "qapi/error.h"
+ #include "migration/vmstate.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/loader.h"
+-#include "cpu.h"
+ #include "exec/target_page.h"
+ #include "hw/hyperv/hyperv.h"
+ #include "hw/hyperv/vmbus-bridge.h"
+@@ -184,12 +184,15 @@ static bool create_udp_pkt(HvSynDbg *syndbg, void *pkt, uint32_t pkt_len,
+     return true;
+ }
  
--#ifdef COMPILING_PER_TARGET
--
- extern const VMStateDescription vmstate_cpu_common;
- 
--#define VMSTATE_CPU() {                                                     \
--    .name = "parent_obj",                                                   \
--    .size = sizeof(CPUState),                                               \
--    .vmsd = &vmstate_cpu_common,                                            \
--    .flags = VMS_STRUCT,                                                    \
--    .offset = 0,                                                            \
--}
--
--#endif /* COMPILING_PER_TARGET */
--
- #define UNASSIGNED_CPU_INDEX -1
- #define UNASSIGNED_CLUSTER_INDEX -1
- 
-diff --git a/target/alpha/machine.c b/target/alpha/machine.c
-index f09834f635d..5f302b166da 100644
---- a/target/alpha/machine.c
-+++ b/target/alpha/machine.c
-@@ -74,7 +74,7 @@ static const VMStateDescription vmstate_env = {
- };
- 
- static const VMStateField vmstate_cpu_fields[] = {
--    VMSTATE_CPU(),
-+    VMSTATE_STRUCT(parent_obj, AlphaCPU, 0, vmstate_cpu_common, CPUState),
-     VMSTATE_STRUCT(env, AlphaCPU, 1, vmstate_env, CPUAlphaState),
-     VMSTATE_END_OF_LIST()
- };
-diff --git a/target/hppa/machine.c b/target/hppa/machine.c
-index bb47a2e689f..13e555151a6 100644
---- a/target/hppa/machine.c
-+++ b/target/hppa/machine.c
-@@ -216,7 +216,7 @@ static const VMStateDescription vmstate_env = {
- };
- 
- static const VMStateField vmstate_cpu_fields[] = {
--    VMSTATE_CPU(),
-+    VMSTATE_STRUCT(parent_obj, HPPACPU, 0, vmstate_cpu_common, CPUState),
-     VMSTATE_STRUCT(env, HPPACPU, 1, vmstate_env, CPUHPPAState),
-     VMSTATE_END_OF_LIST()
- };
-diff --git a/target/microblaze/machine.c b/target/microblaze/machine.c
-index 51705e4f5c9..a4cf38dc891 100644
---- a/target/microblaze/machine.c
-+++ b/target/microblaze/machine.c
-@@ -93,7 +93,7 @@ static const VMStateDescription vmstate_env = {
- };
- 
- static const VMStateField vmstate_cpu_fields[] = {
--    VMSTATE_CPU(),
-+    VMSTATE_STRUCT(parent_obj, MicroBlazeCPU, 0, vmstate_cpu_common, CPUState),
-     VMSTATE_STRUCT(env, MicroBlazeCPU, 1, vmstate_env, CPUMBState),
-     VMSTATE_END_OF_LIST()
- };
-diff --git a/target/openrisc/machine.c b/target/openrisc/machine.c
-index 3574e571cb2..081c706d02c 100644
---- a/target/openrisc/machine.c
-+++ b/target/openrisc/machine.c
-@@ -136,7 +136,7 @@ const VMStateDescription vmstate_openrisc_cpu = {
-     .minimum_version_id = 1,
-     .post_load = cpu_post_load,
-     .fields = (const VMStateField[]) {
--        VMSTATE_CPU(),
-+        VMSTATE_STRUCT(parent_obj, OpenRISCCPU, 0, vmstate_cpu_common, CPUState),
-         VMSTATE_STRUCT(env, OpenRISCCPU, 1, vmstate_env, CPUOpenRISCState),
-         VMSTATE_END_OF_LIST()
-     }
++#define MSG_BUFSZ (4 * KiB)
++
+ static uint16_t handle_recv_msg(HvSynDbg *syndbg, uint64_t outgpa,
+                                 uint32_t count, bool is_raw, uint32_t options,
+                                 uint64_t timeout, uint32_t *retrieved_count)
+ {
+     uint16_t ret;
+-    uint8_t data_buf[TARGET_PAGE_SIZE - UDP_PKT_HEADER_SIZE];
++    g_assert(MSG_BUFSZ >= qemu_target_page_size());
++    uint8_t data_buf[MSG_BUFSZ];
+     hwaddr out_len;
+     void *out_data;
+     ssize_t recv_byte_count;
+@@ -202,7 +205,7 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg, uint64_t outgpa,
+         recv_byte_count = 0;
+     } else {
+         recv_byte_count = recv(syndbg->socket, data_buf,
+-                               MIN(sizeof(data_buf), count), MSG_WAITALL);
++                               MIN(MSG_BUFSZ, count), MSG_WAITALL);
+         if (recv_byte_count == -1) {
+             return HV_STATUS_INVALID_PARAMETER;
+         }
+diff --git a/hw/hyperv/meson.build b/hw/hyperv/meson.build
+index c855fdcf04c..a9f2045a9af 100644
+--- a/hw/hyperv/meson.build
++++ b/hw/hyperv/meson.build
+@@ -1,6 +1,6 @@
+ specific_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'))
+ specific_ss.add(when: 'CONFIG_HYPERV_TESTDEV', if_true: files('hyperv_testdev.c'))
+ system_ss.add(when: 'CONFIG_VMBUS', if_true: files('vmbus.c'))
+-specific_ss.add(when: 'CONFIG_SYNDBG', if_true: files('syndbg.c'))
++system_ss.add(when: 'CONFIG_SYNDBG', if_true: files('syndbg.c'))
+ specific_ss.add(when: 'CONFIG_HV_BALLOON', if_true: files('hv-balloon.c', 'hv-balloon-page_range_tree.c', 'hv-balloon-our_range_memslots.c'))
+ system_ss.add(when: 'CONFIG_HV_BALLOON', if_false: files('hv-balloon-stub.c'))
 -- 
 2.47.1
 
