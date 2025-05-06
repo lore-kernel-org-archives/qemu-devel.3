@@ -4,81 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF2D8C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 03:24:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E74FFC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 04:30:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uC8u3-0001gB-A3; Mon, 05 May 2025 23:23:31 -0400
+	id 1uC9vp-0000lO-KP; Tue, 06 May 2025 00:29:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <timlee660101@gmail.com>)
- id 1uC8u1-0001fO-DG
- for qemu-devel@nongnu.org; Mon, 05 May 2025 23:23:29 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <timlee660101@gmail.com>)
- id 1uC8tz-0002qw-Ks
- for qemu-devel@nongnu.org; Mon, 05 May 2025 23:23:29 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-72c13802133so1297310a34.3
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 20:23:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746501806; x=1747106606; darn=nongnu.org;
- h=cc:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=njb47W0vhAtLje8FjaPe1bsO5O4v0DdC04nQs7Mwt3I=;
- b=DUFJhMSYhS7E7J6dMcqIMobAJvzQMavMwKpm3Fa7Vb18MWFGaIuVoURL7S87tKiOJj
- Ft0d01K1Vj6vQ9T7OF4o4PdvvENLhOLL7HkM1WMQhhKZB6OgEEtbPBuOE4Vw323uis8+
- gDphZRbd3em5nQsmD0b2ZNqHkkrmb4/h14/24Q+F9G9JvzmFHsHkfzsFmOtMWwVeT4rC
- sTIzpuVfMDEXIiuc2MZMzNkGXKWEojJHp6PHUb/uQHnvKVQiVN9F6Ai0yDBOsfHBIcve
- wlIjPU2PIRWJ/T5am6+F3b42kE6YAodrFSg7/ZqUmQU6KPrKi5ccq5J4iQ9ilW5DM3ph
- zbmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746501806; x=1747106606;
- h=cc:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=njb47W0vhAtLje8FjaPe1bsO5O4v0DdC04nQs7Mwt3I=;
- b=mlUDNNPAze5bzk4+eYfUW5QHGkRzZkpgfDfvGQEr93VfqB053sMYIEq/GLQN+TVeWC
- 4BeoKq/MIayvHH6XJZcznmkiGYKwY3UnJWxDeXl/P4kcw3L9BMuqsCMrmrVaYGyVahFP
- FB74VHRuvWCggsI6KqvNLvK8j2YWHapkrxWIvJNl66AIUVn75gJ5lk8YKj494UsJ4oaW
- Ty4/sRBUU46owSEnZbFcaCbKkJLzTGfn8UhMy7/vdhlPjnaHBCyRWIfnT+LrCM/YkQoS
- 3/dIGtzAHvyZo/rRqD9gFAz2QIbHhdWdsg01p8CZMlJ0XPRerfABN+2bczb+QxY6Xki9
- WrhA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVQDswIAHV/A953/6suzHea/Tn+KalNzxf8bmXA7Sagt/nXWBHrcFsjDyXqdsB/CPbg/gKq1pMmzRbG@nongnu.org
-X-Gm-Message-State: AOJu0Yw11nagbeo/xYutVDDfimdzXGK6rfZoAXDcaRk3jE4KuEQTu8/S
- l837fO2X5Xa2p46gTc3GEYjikVNugp/U6d0bdrpoI2LvvEhjKdxr+YwWOScqxwRhtLYxevw9NAF
- tLjq2+tdLyuR8L0bthycjziKs/Io=
-X-Gm-Gg: ASbGncty8OYgFidVLkBDL2fDgNPwpOHZGQ1mKAauV6YuJxyUAmeegW2mKgNE6LeZDkN
- c3S56uBBj7v9DmcY9R0v/Sc5B7hokjGCNZsUYj2TBRUpKvDz4UU3RePPfNW98EHVv5VejrLyJ3P
- yej8oaDWJ1W8naDpFhLDyHnBc=
-X-Received: by 2002:a05:6870:8909:b0:2b7:7abf:df6b with SMTP id
- 586e51a60fabf-2db39103e68mt1185137fac.26.1746501805955; Mon, 05 May 2025
- 20:23:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1uC9vo-0000l5-DS; Tue, 06 May 2025 00:29:24 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1uC9vm-0001G1-83; Tue, 06 May 2025 00:29:24 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 545Lh2im015169;
+ Tue, 6 May 2025 04:29:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=cP9r3p/MzHElDzQbDZrlI8u6NO2FvJjtNy+K+kr+K
+ qw=; b=tCcFw2mCsDLyc5q0pkndbEp+sXaw6trUKMUageHFrXYrnGfZ8S6XrQKoF
+ TLSTPX6L3iAIOt52t/escPvM3WUmVqPAJt3zi8X1UbBSOndSTff1rF3CjcNdpXmN
+ YGndRF+al34zWWKeDsZ64bOOVZ7czwJACLwiTh+PdGsGItByVmtFV+4XJkZ2nO3A
+ j5MZUTFyEOgHhHZYljPrkes5ofASrfQDiKDixt2zIWEVLuFL3G561IolUfa3ldnf
+ it+TlxwSMC/tiv9hcZlPwNH6899YWoMU0F0bhuojlnwY9+6ODo035N1pDxFRngN8
+ 0PXQ9DYTitM6Hksce9WBcwt555tpw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46f5fw15kn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 May 2025 04:29:18 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 5464THYv026377;
+ Tue, 6 May 2025 04:29:17 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46f5fw15km-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 May 2025 04:29:17 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5463XvKZ025807;
+ Tue, 6 May 2025 04:29:17 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46dwuysv4c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 May 2025 04:29:16 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5464TEhr27328918
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 6 May 2025 04:29:15 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DDED72004E;
+ Tue,  6 May 2025 04:29:14 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0F5992004D;
+ Tue,  6 May 2025 04:29:14 +0000 (GMT)
+Received: from ltcblue8v9-lp2.aus.stglabs.ibm.com (unknown [9.40.192.95])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  6 May 2025 04:29:13 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-ppc@nongnu.org, npiggin@gmail.com
+Cc: danielhb413@gmail.com, qemu-devel@nongnu.org
+Subject: [PATCH] ppc/spapr: init lrdr-capapcity phys with ram size if maxmem
+ not provided
+Date: Tue,  6 May 2025 00:29:03 -0400
+Message-ID: <20250506042903.76250-1-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-References: <20250401085903.224787-1-timlee660101@gmail.com>
- <2d3d33c3-21a6-4432-9d9e-7332c5de63bb@linaro.org>
-In-Reply-To: <2d3d33c3-21a6-4432-9d9e-7332c5de63bb@linaro.org>
-From: Tim Lee <timlee660101@gmail.com>
-Date: Tue, 6 May 2025 11:23:14 +0800
-X-Gm-Features: ATxdqUGUlAjHysGZeSKEjqPxD0jy5rzwGuXZsAMYVmt4WUYo3scqFwv_PYcZf-s
-Message-ID: <CAJG6D+gBjd=1Xzk=OcsZWuMGqtPz2KhaQSVBYpZ-2LPhXFecFA@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/npcm8xx_boards: Add auto zero flash image and
- device part number
-Cc: peter.maydell@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- wuhaotsh@google.com, chli30@nuvoton.com, kfting@nuvoton.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=timlee660101@gmail.com; helo=mail-ot1-x331.google.com
-X-Spam_score_int: 13
-X-Spam_score: 1.3
-X-Spam_bar: +
-X-Spam_report: (1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, MALFORMED_FREEMAIL=2.16, MISSING_HEADERS=1.021,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA2MDAzNiBTYWx0ZWRfX/OCEimyB6Ol+
+ KdYqaXlzQRVEDJuvj3ubV+CEDGVZetcn+1a4fdPgqXmzL3WRtX0C5OF8+ZRxsaJ5S7DIBxModMp
+ E/x3LSUfzRJF+S9IMpHn335uoYpu7PAZmZZvcVvRe/OQQArBETYxTCKiO8Q7rnTarvhoouvjpyx
+ pNwZFc4WFKotvX/dLqrwHQzStjI/Z5hOaF7lvsLnobrNQwauYFg8jRw7+Ifi0upicE1ZAEkCHp9
+ oKsEYNgzJ+rQOyk1FDY2A+QfGSlJV6eTJnCBtC/G4pcVHn1UVySHvGNA515voVSHuBmHMdqK1Ss
+ iEm1uEuttiSaIq8D0M0zYuc8YHmkVh+/uqR26KbrjN6uZXDKzOC6gvWYOBeOof65NnQcEoaPj+1
+ uejGoC69F0VfW7d2+RzFEQ3xFzQDCLJRIi4ZijuiH+hbFL4xy00AjTSJKcGxf0EKbCdm8Kn5
+X-Proofpoint-ORIG-GUID: dlt4BCuwlsHfZsVAVl3dP336x29L3cmV
+X-Proofpoint-GUID: 3Zlczyw8OvdEoahVa4-tziJFLBSsE_Gm
+X-Authority-Analysis: v=2.4 cv=IaaHWXqa c=1 sm=1 tr=0 ts=6819901e cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=dt9VzEwgFbYA:10 a=f7IdgyKtn90A:10 a=VnNF1IyMAAAA:8 a=J1cxJhNvERGw7pREUikA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-06_02,2025-05-05_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0
+ bulkscore=0 malwarescore=0 lowpriorityscore=0 mlxscore=0 clxscore=1015
+ suspectscore=0 spamscore=0 priorityscore=1501 impostorscore=0
+ mlxlogscore=999 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505060036
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,43 +122,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> This won't work on read-only storage.
->
-> > +        }
-> >       }
-> >       qdev_realize_and_unref(flash, BUS(fiu->spi), &error_fatal);
-> >
-> > @@ -194,7 +206,8 @@ static void npcm845_evb_init(MachineState *machine)
-> >       qdev_realize(DEVICE(soc), NULL, &error_fatal);
-> >
-> >       npcm8xx_load_bootrom(machine, soc);
-> > -    npcm8xx_connect_flash(&soc->fiu[0], 0, "w25q256", drive_get(IF_MTD, 0, 0));
-> > +    npcm8xx_connect_flash(&soc->fiu[0], 0, "mx66l1g45g",
-> > +                          drive_get(IF_MTD, 0, 0));
-> >       npcm845_evb_i2c_init(soc);
-> >       npcm845_evb_fan_init(NPCM8XX_MACHINE(machine), soc);
-> >       npcm8xx_load_kernel(machine, soc);
->
-Indeed, we didn't consider the read-only storage case. Should we add
-bdrv_is_read_only() to check as shown in the code below? Thanks.
+lrdr-capacity contains phys field which communicates the maximum address
+in bytes and therefore, the most memory that can be allocated to this
+partition. This is usually populated when maxmem is provided alongwith
+memory size on qemu command line. However since maxmem is an optional
+param, this leads to bits being set to 0 in absence of maxmem param.
+Fix this by initializing the respective bits as per total mem size in
+such case.
 
-if (bdrv_is_read_only(bs)) {
-     // Handle read-only storage
-    if (blk_size < fiu->flash_size) {
-        error_report("Read-only storage is too small for flash device");
-        return;
-    }
-} else {
-    // Handle writable storage
-    if (blk_size < fiu->flash_size) {
-        blk_get_perm(blk, &perm, &shared_perm);
-        blk_set_perm(blk, BLK_PERM_ALL, BLK_PERM_ALL, &error_abort);
-        blk_truncate(blk, fiu->flash_size, true, PREALLOC_MODE_OFF,
-                     BDRV_REQ_ZERO_WRITE, &error_abort);
-        blk_set_perm(blk, perm, shared_perm, &error_abort);
-    }
-}
+Reported-by: Gaurav Batra <gbatra@us.ibm.com>
+Tested-by: David Christensen <drc@linux.ibm.com>
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ hw/ppc/spapr.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 702f774cda..9f18642734 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -907,6 +907,7 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
+     int rtas;
+     GString *hypertas = g_string_sized_new(256);
+     GString *qemu_hypertas = g_string_sized_new(256);
++    uint64_t max_device_addr = 0;
+     uint32_t lrdr_capacity[] = {
+         0,
+         0,
+@@ -917,13 +918,15 @@ static void spapr_dt_rtas(SpaprMachineState *spapr, void *fdt)
+ 
+     /* Do we have device memory? */
+     if (MACHINE(spapr)->device_memory) {
+-        uint64_t max_device_addr = MACHINE(spapr)->device_memory->base +
++        max_device_addr = MACHINE(spapr)->device_memory->base +
+             memory_region_size(&MACHINE(spapr)->device_memory->mr);
+-
+-        lrdr_capacity[0] = cpu_to_be32(max_device_addr >> 32);
+-        lrdr_capacity[1] = cpu_to_be32(max_device_addr & 0xffffffff);
++    } else if (ms->ram_size == ms->maxram_size) {
++        max_device_addr = ms->ram_size;
+     }
+ 
++    lrdr_capacity[0] = cpu_to_be32(max_device_addr >> 32);
++    lrdr_capacity[1] = cpu_to_be32(max_device_addr & 0xffffffff);
++
+     _FDT(rtas = fdt_add_subnode(fdt, 0, "rtas"));
+ 
+     /* hypertas */
 -- 
-Best regards,
-Tim Lee
+2.49.0
+
 
