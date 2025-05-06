@@ -4,100 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A78C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:49:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F9CFC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:50:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCJUZ-0000qL-RT; Tue, 06 May 2025 10:41:58 -0400
+	id 1uCJXB-0001w3-4L; Tue, 06 May 2025 10:44:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJSE-0006q6-S4
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:39:34 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uCJVO-00023w-Te
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:42:48 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJS7-0001Mq-SO
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:39:28 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3a07a7b517dso3742139f8f.3
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:39:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uCJVM-00029x-HE
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:42:46 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-441c99459e9so19289395e9.3
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:42:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746542357; x=1747147157; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746542562; x=1747147362; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/fyCoBA0tWbab3gBiKQWh21M4Tnr1243A7o99XgmYbE=;
- b=DyHxCtfbJlJSvguaipk9HIVskXyozTYw9Orhl65rLUH/+rD+dDanPogYZbMGZti071
- 2UEUzU0Jde0lJD+GYkzvo9rfaeCYTBco41ntLI6eJEpVuurt53H+YaWa6GkiVEOw8Y6C
- RaE90MM5GvINJlhth+0zmhQs9mhF5Iu4Uu324e0AyYE/jNYvW8Fp+ejJ1/HYkrcdZeo3
- 8kyhup7vkDlWGSud+MbhneEiC+18IAwTf2OxrbAfN6LCHzB5PwEsmpl/NWXT+L2pn6Bc
- +RkqFRfuY0CqUoFvflkLiON1aMI1sQQSMIQqQXxg2NHiq24znrN7Nthn2BMfXCiTrwwY
- m7ZA==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=NIaSPaix7r679jzJntYchPOTlZ36RPzqbOenhGw4cwE=;
+ b=S7C1oDxxtr14R+vykgGAmg2HclnVtH2vLyeCE/JR2plr2a6CXlNwr5O9WF/Bv8xnT/
+ xe6nUUqwCbCeFtLvFBu9tF5yK2CnpvXA+Oj+EFRRHTNSP5pjObL8YtXnTgv12eyh0z0D
+ 8E+SvfsewhQBHQNmRvPnS8vIC23Bh/7IsxZCYy+4RLa5HfBhGD73/+3gvI8MLFk11FtR
+ eJ3PHYAEA/Q4sJEOqsyiZYOKVPvKRyy1MwcqyMJ8oVS3hF80GhehHfLpG1UQk9c0xATF
+ IPwvvI2Our/Qty+hkRpMKV7cYPMoiw0H5owOmRXxXXg/EmQDt3bPVbXOMm075rsR4jyD
+ NOAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746542357; x=1747147157;
+ d=1e100.net; s=20230601; t=1746542562; x=1747147362;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/fyCoBA0tWbab3gBiKQWh21M4Tnr1243A7o99XgmYbE=;
- b=pppsfxf53NukZdqd7z9DP+9U+iLkJq+ClY74xyyZm/Oju4OuPqpmxHeDgDnsUmC5Gy
- 9VIss8QSY4btLKjlotANcNSyhMJizhD7JfWLAb5NhItsLyHIQzMgO4ROOtAhBle+TxuF
- f0D2QtcGyS2mPS+8CqU3D49DRaA1RDF62Kvdvqe7paclAxw5gtGOeCCJYlHzhnVgkPUb
- uUHlfjG2tPAmugLQMQY5bCJhNt8cRWeGYU0EJ3dDnqVT1g/lpHq6R2xXUXasDOe8sZSg
- KJPfLzLViOb94QyKLGXpr9BcQxyb/ZbEsg2ALLBpz/hAS8Kpj6PmAHub0QN6nEcHHQa6
- nGKQ==
-X-Gm-Message-State: AOJu0Yz7nCJfyqhcVlrELwpMQtksFdkMaADcNFatc5NAkzuavneWYL+o
- t+LHNqs3+O+EOGLLR2ZQfk+BP54TVdRJhUqxOQEcMqqOtnQLKNfDFIEG3KPjBY2m4me8DGI2cvC
- D
-X-Gm-Gg: ASbGncvc//TYC0jEE6c/5LD9G8/FndQ2EJn9PzWOy7wcENeohSIBG2EDXYnFBwVXKQJ
- uhE2GXgYxnO0FwkjK75CWgHdBpOGHOwiddYJt9mgSZttYaBqnmRmWJZ9HvmW+Few8qr2KGuFbCK
- UaSeaXgd4GgEf6W2i6yQt6xAJ6CZr80C6U0AiJ7W10+skGEKY+IL6YNzSYBI8rsRKR2PXcqZ7zz
- 85nDacaxWFx4wMSKx7sWXeDUhO1D1OR2JbXzEjnI08xN57Sg81l2t/L1ZwXth0W2BDaLilWUg6D
- 5KSb+Y46QeJoYm2XuO3VPk0ZBDfml9EypOsi4wEg8uEoOsjSRt6TOIgToX+GxlFvuObBlSeOE/2
- h4JHb0IsrE6G52eGiRz9aI3QBgFNHfD8=
-X-Google-Smtp-Source: AGHT+IF1/+Oi2SnEXoyODMCGZZJhiiLNAPvJ/doCDJp/AXlzYwa/wmaRJU+0FyCx71tc4UusUawHow==
-X-Received: by 2002:a05:6000:1867:b0:39f:a553:3d98 with SMTP id
- ffacd0b85a97d-3a0ac3eb316mr3073477f8f.56.1746542357212; 
- Tue, 06 May 2025 07:39:17 -0700 (PDT)
-Received: from localhost.localdomain (91-163-26-170.subs.proxad.net.
- [91.163.26.170]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b2b20aa6sm220489865e9.27.2025.05.06.07.39.16
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 May 2025 07:39:16 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=NIaSPaix7r679jzJntYchPOTlZ36RPzqbOenhGw4cwE=;
+ b=VAUu7DCiDCgNKhEu8ALUAyDLL+wuQngRiZx8Z7m35imRW0h0rS+LZW8h+uSjDw+YGl
+ UueaKZbE04rYkILuhmXUMEB3+BEM2Y3WvHuHexsK2zuCFxlfV/LP5VBcOfugmWcvL4FC
+ HZQFE5MYBtStP6Wbw08mhtVvd181+/cvJMcU6loL3T5gt3uJY8pXyjTsiVbyX1Sfbr9T
+ T/kXKdoPVMr64Hhe/capvgwun+s8MGhhJH3vN6qr6qGD92gUL3nVTvuijDsANly4E+yn
+ 1dN9zlotE3bpYVM/bmh6pQ0qD//qgf8jw5xdRD1jH8J2p4JiHxV5dKyT2AleclCj8pww
+ URDQ==
+X-Gm-Message-State: AOJu0YyJHZjZcDpnnk9nXv0ACtFkzBjpLPJhdJw5P98LRNN/VpukiFYJ
+ 4wvjBKlZvEf0K5tfTdrJHZNqHtPZwdJYK7+dZ1V8vheHH1d3Ls+YKPVeprHaluf4d1yVB7UIMj6
+ 7
+X-Gm-Gg: ASbGnctm2FcHjZGL29tYYASA9VpfRJqu0I9rMwfKoFfTuKHZfv411IMzCDdgjUQK25b
+ kVRpGlwzys7vMhipR9Cxv2G/IS449RpfRCOVQJBEYANkW9QKj64pFV75A+4FQib1nAJCQd3swnB
+ 0Rj12/1+X5S7Py5TmrLVhIiK+9/T1Yr4Mh4a06xsUUvSXwUFPaSQ6ib9DBfCwAanUyDw9tg78hM
+ TPibtiAaDPj9KWeHTBKl6CzKHMgUKXpZq7Y9MjrqYhEp7NROaVc2b7JyNwin8iLFMfgMmYgc9pA
+ yrPCBWJLBiMZR7cN2Q76meX9eIX0WlR8iAC07s+hrVv5aqM=
+X-Google-Smtp-Source: AGHT+IHZHLqbgPhzsWqMt7Ulkvn2BKGmK6YK8s1saDOm8cYYSdtX128W9pHaFVSErTDoxHqa4PKYUw==
+X-Received: by 2002:a05:600c:3155:b0:43b:cb12:ba6d with SMTP id
+ 5b1f17b1804b1-441bbea0d49mr159933705e9.3.1746542562484; 
+ Tue, 06 May 2025 07:42:42 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-441b89edfc2sm169603435e9.20.2025.05.06.07.42.41
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 May 2025 07:42:41 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Fam Zheng <fam@euphon.net>,
- Hanna Reitz <hreitz@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- qemu-block@nongnu.org, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, John Snow <jsnow@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v3 02/19] hw/i386/pc: Remove
- PCMachineClass::broken_reserved_end field
-Date: Tue,  6 May 2025 16:38:48 +0200
-Message-ID: <20250506143905.4961-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250506143905.4961-1-philmd@linaro.org>
-References: <20250506143905.4961-1-philmd@linaro.org>
+Subject: [PULL 23/32] target/arm: Don't assert() for ISB/SB inside IT block
+Date: Tue,  6 May 2025 15:42:05 +0100
+Message-ID: <20250506144214.1221450-24-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250506144214.1221450-1-peter.maydell@linaro.org>
+References: <20250506144214.1221450-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,65 +98,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PCMachineClass::broken_reserved_end field was only used
-by the pc-q35-2.4 and pc-i440fx-2.4 machines, which got removed.
-Remove it and simplify pc_memory_init().
+If the guest code has an ISB or SB insn inside an IT block, we
+generate incorrect code which trips a TCG assertion:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+qemu-system-arm: ../tcg/tcg-op.c:3343: void tcg_gen_goto_tb(unsigned int): Assertion `(tcg_ctx->goto_tb_issue_mask & (1 << idx)) == 0' failed.
+
+This is because we call gen_goto_tb(dc, 1, ...) twice:
+
+ brcond_i32 ZF,$0x0,ne,$L1
+ add_i32 pc,pc,$0x4
+ goto_tb $0x1
+ exit_tb $0x73d948001b81
+ set_label $L1
+ add_i32 pc,pc,$0x4
+ goto_tb $0x1
+ exit_tb $0x73d948001b81
+
+Both calls are in arm_tr_tb_stop(), one for the
+DISAS_NEXT/DISAS_TOO_MANY handling, and one for the dc->condjump
+condition-failed codepath.  The DISAS_NEXT handling doesn't have this
+problem because arm_post_translate_insn() does the handling of "emit
+the label for the condition-failed conditional execution" and so
+arm_tr_tb_stop() doesn't have dc->condjump set.  But for
+DISAS_TOO_MANY we don't do that.
+
+Fix the bug by making arm_post_translate_insn() handle the
+DISAS_TOO_MANY case.  This only affects the SB and ISB insns when
+used in Thumb mode inside an IT block: only these insns specifically
+set is_jmp to TOO_MANY, and their A32 encodings are unconditional.
+
+For the major TOO_MANY case (breaking the TB because it would cross a
+page boundary) we do that check and set is_jmp to TOO_MANY only after
+the call to arm_post_translate_insn(); so arm_post_translate_insn()
+sees is_jmp == DISAS_NEXT, and  we emit the correct code for that
+situation.
+
+With this fix we generate the somewhat more sensible set of TCG ops:
+ brcond_i32 ZF,$0x0,ne,$L1
+ set_label $L1
+ add_i32 pc,pc,$0x4
+ goto_tb $0x1
+ exit_tb $0x7c5434001b81
+
+(NB: the TCG optimizer doesn't optimize out the jump-to-next, but
+we can't really avoid emitting it because we don't know at the
+point we're emitting the handling for the condexec check whether
+this insn is going to happen to be a nop for us or not.)
+
+Cc: qemu-stable@nongnu.org
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2942
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20250501125544.727038-1-peter.maydell@linaro.org
 ---
- include/hw/i386/pc.h |  1 -
- hw/i386/pc.c         | 13 +++++--------
- 2 files changed, 5 insertions(+), 9 deletions(-)
+ target/arm/tcg/translate.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 9563674e2da..f4a874b17fc 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -107,7 +107,6 @@ struct PCMachineClass {
-     /* RAM / address space compat: */
-     bool gigabyte_align;
-     bool has_reserved_memory;
--    bool broken_reserved_end;
-     bool enforce_amd_1tb_hole;
-     bool isa_bios_alias;
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 88df9c482ab..e773ab72685 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -7760,7 +7760,8 @@ static bool arm_check_ss_active(DisasContext *dc)
  
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 70656157ca0..c8bb4a3ee47 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -999,14 +999,13 @@ void pc_memory_init(PCMachineState *pcms,
- 
-     if (machine->device_memory) {
-         uint64_t *val = g_malloc(sizeof(*val));
--        uint64_t res_mem_end = machine->device_memory->base;
--
--        if (!pcmc->broken_reserved_end) {
--            res_mem_end += memory_region_size(&machine->device_memory->mr);
--        }
-+        uint64_t res_mem_end;
- 
-         if (pcms->cxl_devices_state.is_enabled) {
-             res_mem_end = cxl_resv_end;
-+        } else {
-+            res_mem_end = machine->device_memory->base
-+                          + memory_region_size(&machine->device_memory->mr);
+ static void arm_post_translate_insn(DisasContext *dc)
+ {
+-    if (dc->condjmp && dc->base.is_jmp == DISAS_NEXT) {
++    if (dc->condjmp &&
++        (dc->base.is_jmp == DISAS_NEXT || dc->base.is_jmp == DISAS_TOO_MANY)) {
+         if (dc->pc_save != dc->condlabel.pc_save) {
+             gen_update_pc(dc, dc->condlabel.pc_save - dc->pc_save);
          }
-         *val = cpu_to_le64(ROUND_UP(res_mem_end, 1 * GiB));
-         fw_cfg_add_file(fw_cfg, "etc/reserved-memory-end", val, sizeof(*val));
-@@ -1044,9 +1043,7 @@ uint64_t pc_pci_hole64_start(void)
-         hole64_start = pc_get_cxl_range_end(pcms);
-     } else if (pcmc->has_reserved_memory && (ms->ram_size < ms->maxram_size)) {
-         pc_get_device_memory_range(pcms, &hole64_start, &size);
--        if (!pcmc->broken_reserved_end) {
--            hole64_start += size;
--        }
-+        hole64_start += size;
-     } else {
-         hole64_start = pc_above_4g_end(pcms);
-     }
 -- 
-2.47.1
+2.43.0
 
 
