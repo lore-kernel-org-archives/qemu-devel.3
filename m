@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E99CC3ABB6
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 00:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DF05C3ABBF
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 00:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uC5tw-0004Yj-0D; Mon, 05 May 2025 20:11:12 -0400
+	id 1uC5uA-0004a9-Cr; Mon, 05 May 2025 20:11:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uC5tu-0004YM-SM
- for qemu-devel@nongnu.org; Mon, 05 May 2025 20:11:10 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1uC5u8-0004Zk-B8
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 20:11:24 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uC5ts-00008E-Cx
- for qemu-devel@nongnu.org; Mon, 05 May 2025 20:11:10 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2254e0b4b79so75544975ad.2
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 17:11:06 -0700 (PDT)
+ id 1uC5u6-00008g-L7
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 20:11:24 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-736ad42dfd6so4114987b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 17:11:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746490265; x=1747095065; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746490281; x=1747095081; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:references
  :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
  :cc:subject:date:message-id:reply-to;
- bh=rMlrkoDSa1JV/ScygbYcd3JhEPUBHPR5an3220OLAoU=;
- b=hrv+oGIYinvIpSi250ODmaWhDPpA0HIenKAeQpy1xtCLG17jv5qqrrVjkdKw21oKuD
- i7dQxAbjfy2q06MvpKCSQIs7DLX1Byl75V0AKcuutiEPLrnVEM2hxccXBaOEHZ2YFh9U
- e7je1bDKqYHgXlR6YP0XEoLayqrM+SLQKGIR1nq93pmztZnaiuDN8HC+fgOcDdMJBn8h
- TcKlc92/KDZNoTRDDt0lsgRqjbLHf8RfCW8FM+uHZUTTLPs5wWkbQ1Tu4odiMNMSzAa+
- 1m3Ozr0Nw3alCRwDlEfJ3rA8wQFd1eaTcjagummB72EiXCb4R4+QFGfL6MmbduYSiGp9
- K67Q==
+ bh=a3YXeIUESEjfnloi8gualHdIywIy1WnTpQLCZFfcuFY=;
+ b=qLKrtn/YjHS3fTEIJeEVRcxsWYGommvCblTqBSn3VIXNsumui0eSHpZhfEvKNSQzva
+ hsCK17SAzTqSeG/FunnOLnj/Vxn/0mAOe7wrgP/mdixV0rL5cFU03Fo2+lhXuNAp7W5d
+ B8MbnbbAcxZxZn0pyaSkyc6LtirwyydwX4wmVdXL+ab93ksncmqS9WJbfI39IGOguE6x
+ sD+CbMkVuTuAj2z1NerdfYTXxXyzCU3HmrC5Qw3V42u9ZTO12KNGxNsrDHu7tHlZExEH
+ ETRjk6xa6m2UYNFcp3P6948GSE8Jb2vFJQlhLiIXI+DJYpNRGWheVDhgG/QknwjXo2IV
+ M39w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746490265; x=1747095065;
+ d=1e100.net; s=20230601; t=1746490281; x=1747095081;
  h=content-transfer-encoding:in-reply-to:content-language:references
  :cc:to:subject:from:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rMlrkoDSa1JV/ScygbYcd3JhEPUBHPR5an3220OLAoU=;
- b=UHR3+oo2nNH0gQgbt3iYMduT2VUo4t6EjwBLJXmxNepRqUQPEwEcZrHqMzttCAJqB6
- MGxirkxfcY0Ai2zXd67/6pDftCLi3yiCRIOZWfb17nkTgbN23elQk63OKVuPOVvJQRZA
- FdJJjQNI0neBGXIO7aL8s4AjbRMbe/RerOtW7sCs8wsgU7TqidvJP8e+3saKR86w0ZIt
- iu7w541DI7T3gxCjdTotKrcVmeQBxApnJJM99gApyNrOArEeMxH7CskWBrnm890diKBe
- kCwWAw8B45/4mhXm+Ud2VimzedhaegXPGT9gh4OWyNWvS+ASClWeg5BiNFteNr7NhWx1
- ZmqA==
+ bh=a3YXeIUESEjfnloi8gualHdIywIy1WnTpQLCZFfcuFY=;
+ b=nx+hziRCVSD5qSGd3+XEj1ezc/P2FM9xLVyQhgK+5IymZAz/1jQmnOq0boGEXExuFk
+ xgMjYa+WvohQ0Vd1MN1tsNugX9Pbfkuf9d/YCNUf79hkVl3TSHU/WGPCViJUIURm2PD8
+ qFb5vKi9skTM9necnGIh4gh7gbv13IdMfx9/g7C/nTABlbeEsEz2Kw5ETT5ZkxhOH5Ot
+ LFm6dnqNDIQRciqWL00rhwIVNDwekmftU9sAR5pbg14AJXnDU6ZJEVTeqwCWri6TGbRo
+ ZOja9XfXwg58YqoGMqm2Dx4YuTjT7l+Gtc91m2lZcBznpKUAa8T4cGjm9tkfYMMSeGWo
+ n5rQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUd52rhFW+yqtkT4n3ILccKFMTScqb1C+En8EYa2/Xeslw9r0ZOymN/s88Cfeco2Xi222VoaYytVlOb@nongnu.org
-X-Gm-Message-State: AOJu0YxjCUd1ST0HIdsH0HHUL4Be8qYpqMiWq9DsP+0ld/ZNIXBNzhGK
- pi+VuHjbI8lk3XjGkLFC0HFnRBAKPXELtIqPOfFB2zTYsq13milqWdgvdU3+Rj4=
-X-Gm-Gg: ASbGncsAgg8cHIwDoraPZj7P5qEErjKfnaLtX9BrMBlX4ofpJ4T3YWdZEEMJvTme5XP
- Af/44JmGhRcPwJWN0NuF9m26GxfDlAPWctiUyVa+Ecy1x77UNgTZMhZkai2/PRFISCxJQzYra4K
- 1IVrVNq2AbCAuu7kjhEaIV67M2XKUuMfHB0z3JxCR0n3eYnOaUiUntuy4ZMo/xPD7bVzhXjMyXn
- HrtICVZIuLpbqZA7ltdMf9T8/waNI9/8wBb0fq2umVUyd40lkLROJ6sxnvpRZ2ON7iz2WdNUg2c
- VyKTLgOo8jk5du++sgwh4bIAdurxsbQie5OUfcWGXo1ZbeFbxa1R03rhog1nc/fEy6ehp5c//1K
- In4im1NWpu81jkspjD5I=
-X-Google-Smtp-Source: AGHT+IHbcYSIIohp615rCZ8MyauwJAEMni+aPPKpnDh0PCp8ZLxeT6rTMFGBjCPkhuPTkSolYSxcUA==
-X-Received: by 2002:a17:902:ce02:b0:223:536d:f67b with SMTP id
- d9443c01a7336-22e1eaaf8ccmr172686835ad.38.1746490265450; 
- Mon, 05 May 2025 17:11:05 -0700 (PDT)
+ AJvYcCVjpzn7XU31YCDLGcwudpHumf3tEEi3417jetEyEgSFpspmwvDOs1zleWyj0HEUMx4mbo6F89onzNJz@nongnu.org
+X-Gm-Message-State: AOJu0Yz+ZDgQXcg/A2gq5gzGT7XP+wGOw1WtVmugpZDuwF6zxjkYMzy3
+ I6uBTr3Mt9P3+vBm2ZAWgqJrfwbKvalAIa6KKTPIGVzrsDYQs34KQuEpiu1TdpQ=
+X-Gm-Gg: ASbGnctJyvvfOdcqXD5HZbZ3FHcTxZsdnus82qtKq62i8JPfvfyr3J3RCINk8BAyowY
+ Iy04PoH45sLG4hpIb1NT8yFvfsVaGCnZjuMMgnz/mNvVrljQqT0inhmDSEY+LwaQAowKHRO2dCw
+ Dwrqf+jjVXwVV3/PQ5csqMO0cTkVxPd1yOkpJJT+xU57f8C/2H9HvcoZ3mJQGOksDBD12/3e4IS
+ Hw4NOm4Gz7xu678rYakgNdjFC+LtE5WYyCtaANY62e8SAY/pN9U/EeGz9sQnj+m80OTci/Ifonj
+ v8R1M6nexdMxSHy1NDmyzrvMegS4ADPU2JoBxkK8YAG3RXfxGiqcuqhum55AE6zul498ER2t2bp
+ YasrI5YVMwi9rZondcVw=
+X-Google-Smtp-Source: AGHT+IEQlu622z9lRWVJIUHfIIS6uWvTATaJZOUEBE+Q4GFVoojGAdyc4H/Yn0d1VBIUCMFeiCjLnQ==
+X-Received: by 2002:a05:6a00:8d87:b0:73e:2dc5:a93c with SMTP id
+ d2e1a72fcca58-74091a3c859mr1448028b3a.11.1746490281258; 
+ Mon, 05 May 2025 17:11:21 -0700 (PDT)
 Received: from ?IPV6:2804:7f0:b400:8604:71fc:f75a:e2f5:e7b5?
  ([2804:7f0:b400:8604:71fc:f75a:e2f5:e7b5])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e151e9f39sm61573215ad.84.2025.05.05.17.11.02
+ d2e1a72fcca58-74059020dedsm7781314b3a.91.2025.05.05.17.11.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 May 2025 17:11:05 -0700 (PDT)
-Message-ID: <9d4514ad-5b23-44a9-9b3e-77fce9066092@linaro.org>
-Date: Mon, 5 May 2025 21:11:00 -0300
+ Mon, 05 May 2025 17:11:20 -0700 (PDT)
+Message-ID: <0213a059-48bd-4c90-96be-afb25ae46341@linaro.org>
+Date: Mon, 5 May 2025 21:11:17 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Gustavo Romero <gustavo.romero@linaro.org>
-Subject: Re: [RFC 01/24] hw/pci/pcie_port: Fix pcie_slot_is_hotpluggbale_bus
- typo
+Subject: Re: [RFC 02/24] hw/acpi/ged: Fix wrong identation
 To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
  qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
  imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com,
  shannon.zhaosl@gmail.com
 Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com
 References: <20250428102628.378046-1-eric.auger@redhat.com>
- <20250428102628.378046-2-eric.auger@redhat.com>
+ <20250428102628.378046-3-eric.auger@redhat.com>
 Content-Language: en-US
-In-Reply-To: <20250428102628.378046-2-eric.auger@redhat.com>
+In-Reply-To: <20250428102628.378046-3-eric.auger@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,31 +113,30 @@ Hi Eric,
 On 4/28/25 07:25, Eric Auger wrote:
 > Signed-off-by: Eric Auger <eric.auger@redhat.com>
 > ---
->   hw/pci/pcie_port.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   hw/acpi/generic_event_device.c | 10 +++++-----
+>   1 file changed, 5 insertions(+), 5 deletions(-)
 > 
-> diff --git a/hw/pci/pcie_port.c b/hw/pci/pcie_port.c
-> index c73db30e98..072500ed34 100644
-> --- a/hw/pci/pcie_port.c
-> +++ b/hw/pci/pcie_port.c
-> @@ -188,7 +188,7 @@ int pcie_count_ds_ports(PCIBus *bus)
->       return dsp_count;
->   }
+> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> index c85d97ca37..7b2d582fff 100644
+> --- a/hw/acpi/generic_event_device.c
+> +++ b/hw/acpi/generic_event_device.c
+> @@ -458,11 +458,11 @@ static void acpi_ged_initfn(Object *obj)
+>        * container for memory hotplug IO and expose it as GED sysbus
+>        * MMIO so that boards can map it separately.
+>        */
+> -     memory_region_init(&s->container_memhp, OBJECT(dev), "memhp container",
+> -                        MEMORY_HOTPLUG_IO_LEN);
+> -     sysbus_init_mmio(sbd, &s->container_memhp);
+> -     acpi_memory_hotplug_init(&s->container_memhp, OBJECT(dev),
+> -                              &s->memhp_state, 0);
+> +    memory_region_init(&s->container_memhp, OBJECT(dev), "memhp container",
+> +                       MEMORY_HOTPLUG_IO_LEN);
+> +    sysbus_init_mmio(sbd, &s->container_memhp);
+> +    acpi_memory_hotplug_init(&s->container_memhp, OBJECT(dev),
+> +                             &s->memhp_state, 0);
 >   
-> -static bool pcie_slot_is_hotpluggbale_bus(HotplugHandler *plug_handler,
-> +static bool pcie_slot_is_hotpluggable_bus(HotplugHandler *plug_handler,
->                                             BusState *bus)
->   {
->       PCIESlot *s = PCIE_SLOT(bus->parent);
-> @@ -221,7 +221,7 @@ static void pcie_slot_class_init(ObjectClass *oc, void *data)
->       hc->plug = pcie_cap_slot_plug_cb;
->       hc->unplug = pcie_cap_slot_unplug_cb;
->       hc->unplug_request = pcie_cap_slot_unplug_request_cb;
-> -    hc->is_hotpluggable_bus = pcie_slot_is_hotpluggbale_bus;
-> +    hc->is_hotpluggable_bus = pcie_slot_is_hotpluggable_bus;
->   }
->   
->   static const TypeInfo pcie_slot_type_info = {
+>       memory_region_init_io(&ged_st->regs, obj, &ged_regs_ops, ged_st,
+>                             TYPE_ACPI_GED "-regs", ACPI_GED_REG_COUNT);
 
 Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 
