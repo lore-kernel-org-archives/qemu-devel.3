@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE39C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3FDCC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:34:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCKEp-0003fR-7K; Tue, 06 May 2025 11:29:43 -0400
+	id 1uCKFv-0005Fm-Lw; Tue, 06 May 2025 11:30:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKEn-0003eI-CL
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uCKFh-0004Xk-GW
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKEl-0001wE-0X
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:40 -0400
+ id 1uCKFe-0002Fg-5g
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746545377;
+ s=mimecast20190719; t=1746545433;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NJkJL+2iQH6j0YxyFlCO0wihd/nFC5q/GbHkjAOouko=;
- b=aNk1kZWUI9s1US5TTTPuPcfNgThLN6zPCKeNvROe1rK3UiW9mwL2HLsOi9IBe0qHn8+jnx
- 4mwFKPeIZWQm76KoXd8KEFx6ENny/WkZJpWwEERPI4LT6l/n89c1m/leXkM0p/1nOAKzU4
- 8BiWEOUIbWVHQzvpkIFxP6hWhz76Pcc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8ct+iZ6ldjipZB0WBqqo1Lr+PnrNl25dJilmjNEGR3A=;
+ b=VI0mcoVikd1yxKKAPFC/mF77jFwogGY4mGrdY+dVhC6EWux1czYiSDC4MMWDOMrR9P5sMe
+ /a32L139lL45cjyWZG7t4NgeBmzxIz/3+pymNRxdujhjooNhtLorEx6sO8uuesuoIC0KP6
+ az+NkKmPcaQYQTqCT8T6/ytUElW3ySU=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-173-FOO3xrswOOahQ7jNX9W29A-1; Tue, 06 May 2025 11:29:36 -0400
-X-MC-Unique: FOO3xrswOOahQ7jNX9W29A-1
-X-Mimecast-MFC-AGG-ID: FOO3xrswOOahQ7jNX9W29A_1746545375
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a07a7b4298so2960565f8f.0
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:29:36 -0700 (PDT)
+ us-mta-568-63dK4VWYPsifTLTw2PeSqw-1; Tue, 06 May 2025 11:30:31 -0400
+X-MC-Unique: 63dK4VWYPsifTLTw2PeSqw-1
+X-Mimecast-MFC-AGG-ID: 63dK4VWYPsifTLTw2PeSqw_1746545430
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a0b1f6815dso289903f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:30:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746545375; x=1747150175;
+ d=1e100.net; s=20230601; t=1746545429; x=1747150229;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NJkJL+2iQH6j0YxyFlCO0wihd/nFC5q/GbHkjAOouko=;
- b=tf98luYD2tew5BQsV7JgRs5cGCnfWxbRJyqXqeoyP7az7fp/zqmnlYi2C1vXoP36Wp
- QNQ2HwemmEkwUlHDpFu87PHoVXaCDm790SwpRQhsABtxXcJymBNUJD/YLiyNS5crczNV
- VCnDATeyBEr3We1yAHpHZGnlp/1Xkd/SiCsDLFB/sF0+VvS5JU4/Ok0LtBxHGvUecqEJ
- mRoXFqfBAHobgqH9fMmXDf1mnFfBh1fvNhpl8eiVS53ozxpgRD6W3TiXyf+lAzubKn46
- E820oNrkk8pF4zPYd6x+MuxpI0Ec/lUw26ZADhn+YK9Mr2GzgGPEyLi0nVnGRAM+Zaex
- FLtA==
-X-Gm-Message-State: AOJu0YxQ9WaCIN+RPd3Cu93pQHXuw5Wjioyrq9/8ViPDItWyvEHTRuZ0
- +aEU7iADoFj+th2LVaHYdHQXcCgwh6NvEsBu6NbUlkEzNXQAHSP1PU6D1QW6mR70sxxGRi2LHZS
- DQvWFe3/pyskje75h1MgseouFyapCYiOeMln36ItkFDeeYhppThs0OhDwHXwOxhQhgAKc2JyQgA
- TNt90AHeWuyngHz+yEY0NkZAHGJyvl7lifmS6z
-X-Gm-Gg: ASbGncusauWl3CUPoOSy2n+6NhsGpA5jNoo9s8QhntVv3UsHcP8ug9cafgNspqqrrSA
- jB/6kCk67sue+aZ4JEIZp3gBC+yL7AEwUseA2QExDF/NIrmUoQiKWx/opEuiB2sAnyEm8M7zCf3
- YR7Qe2/4+pCiOdn7v1pwSMIGaFyvOSI3cWOPTOST5NcdL5lD0tNzb+tNZ6ds4sVJQCdzVRvlPZY
- sEhrLBnlJ86QFBoUP4ITjLtsXpJdGJ+ssieMm0mxAUcmrehljhSUII2mAHL0i9HOJeMsR01ZXXh
- ZaIhHwgjdAk8s9E=
-X-Received: by 2002:a05:6000:4006:b0:39c:268b:8b66 with SMTP id
- ffacd0b85a97d-3a0ac1ff66fmr2847452f8f.43.1746545374651; 
- Tue, 06 May 2025 08:29:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFTJzEa/w4GNmEL0Qa3jr5OmMdfA4BUDyhc6fh34Zv8Ht1LyLb+EU0sfeNaHLXMrH8NSFBuxA==
-X-Received: by 2002:a05:6000:4006:b0:39c:268b:8b66 with SMTP id
- ffacd0b85a97d-3a0ac1ff66fmr2847430f8f.43.1746545374264; 
- Tue, 06 May 2025 08:29:34 -0700 (PDT)
+ bh=8ct+iZ6ldjipZB0WBqqo1Lr+PnrNl25dJilmjNEGR3A=;
+ b=N8AMVBmuwldtioMbauA3N4PGXw/Yi3Z+1q5usE7V24c/R5LEa+y5H8dWzsTVZ8bTac
+ Igy3ToYBTxLo+Jp666+8x62ueAtfVfRnYzrG8hDLmy4vLgmle/RMyiMGEz8mnBGDSrgX
+ Skv6b3fr5ZNI+7EcL07gQ++3FExENA5PT3QtlNH1CUq/j5Fug6zkF0lZGnwxz0dbfR8D
+ 6EY6J0Py4MqMGXZaG0on2PN51orgdPJVnnADyRLRKSqgRXiyRzBaTZ1KqYBOrzs90hK/
+ fzfKgLmtXTRF3tteTO17ls5d6MWGqTy51xKvxVmKNz83Ds93bxwa1qafWJPuctINmGYr
+ GJgw==
+X-Gm-Message-State: AOJu0Yy+J0u8rH/1V3bfXELdX/PJ38tTjmrxfxonJFtqsFZS9swSEF4m
+ xyOieynhzfzfbv7nV1iO/m9q1pSk/z4CE9rMLQUJzHAuOprQM2Dqq92DJW9yMcNxWL5f1ShNSDr
+ Uj6qkiNFpRKErTRPevyFWn8SZ2qvuDkx95+spRKnscHv0brEqXny/cbnJHNgpqBABcDDEUMU73r
+ cbjr2T1i8exkg1YTxvum55CHHipHWFUqxzcn01
+X-Gm-Gg: ASbGncvP3BZoSp+XOGB5NAqXvLYtNdo8Z63GAR7g7W21Sre/24NywU2Of/51Z8J/Bjn
+ Q2qfmV+bWI71tHzzyxn8NwxhmMn0Et+eQjwOvyF9GwIp8CgJ+YA1B0CMKnIl3PuAhJeZvo0sjvz
+ WtEEavKtknTEyVwh89VVKnDA8UOyJD6tzLdkXxEWvT5pkEE3kKzLpHI5PbUJIBIDPJoREDpEFuN
+ ruH7WRNqcNxVWfbUqhouJ0PGKgaE8lruW8JESTurwXxeAtxXopPAzqH4kv5H9w/3QfT2OUDrJf9
+ I2tRhuuYz1xuvOc=
+X-Received: by 2002:a05:6000:2503:b0:39e:e557:7d9 with SMTP id
+ ffacd0b85a97d-3a0ac0c9ab1mr2843126f8f.5.1746545429626; 
+ Tue, 06 May 2025 08:30:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHhYWTMHa4seAly1Yha10/WayXMhlVshsRbn/GwKUjQodTBinfh9UqeCqVZt0TH+ZLpjMjtLA==
+X-Received: by 2002:a05:6000:2503:b0:39e:e557:7d9 with SMTP id
+ ffacd0b85a97d-3a0ac0c9ab1mr2843090f8f.5.1746545429055; 
+ Tue, 06 May 2025 08:30:29 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a0b25159c9sm1466480f8f.50.2025.05.06.08.29.32
+ 5b1f17b1804b1-441b8a286c4sm171483035e9.25.2025.05.06.08.30.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 08:29:33 -0700 (PDT)
+ Tue, 06 May 2025 08:30:26 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 03/30] rust: use std::ffi instead of std::os::raw
-Date: Tue,  6 May 2025 17:28:58 +0200
-Message-ID: <20250506152927.222671-4-pbonzini@redhat.com>
+Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Subject: [PULL 28/30] meson: Add wasm build in build scripts
+Date: Tue,  6 May 2025 17:29:23 +0200
+Message-ID: <20250506152927.222671-29-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250506152927.222671-1-pbonzini@redhat.com>
 References: <20250506152927.222671-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -109,203 +108,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is allowed since Rust 1.64.0.
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+has_int128_type is set to false on emscripten as of now to avoid errors by
+libffi. Tests are disabled on emscripten because they rely on host
+features that aren't supported by emscripten (e.g. fork and unix
+socket).
+
+Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Link: https://lore.kernel.org/r/ad03b3b180335f59e785e930968077bf15c46260.1745820062.git.ktokunaga.mail@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/rust.rst                    | 2 --
- rust/hw/char/pl011/src/device_class.rs | 2 +-
- rust/hw/timer/hpet/src/hpet.rs         | 3 +--
- rust/qemu-api/src/chardev.rs           | 3 +--
- rust/qemu-api/src/irq.rs               | 6 +++++-
- rust/qemu-api/src/lib.rs               | 2 +-
- rust/qemu-api/src/memory.rs            | 3 +--
- rust/qemu-api/src/qdev.rs              | 3 +--
- rust/qemu-api/src/qom.rs               | 3 +--
- rust/qemu-api/src/timer.rs             | 2 +-
- rust/qemu-api/src/vmstate.rs           | 2 +-
- rust/qemu-api/tests/vmstate_tests.rs   | 7 ++++++-
- 12 files changed, 20 insertions(+), 18 deletions(-)
+ MAINTAINERS                   |  1 +
+ configure                     |  7 +++++++
+ meson.build                   | 29 ++++++++++++++++++++++++-----
+ configs/meson/emscripten.txt  |  8 ++++++++
+ meson_options.txt             |  2 +-
+ scripts/meson-buildoptions.sh |  2 +-
+ 6 files changed, 42 insertions(+), 7 deletions(-)
+ create mode 100644 configs/meson/emscripten.txt
 
-diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
-index 3cc2841d4d1..c7dfba98de1 100644
---- a/docs/devel/rust.rst
-+++ b/docs/devel/rust.rst
-@@ -74,8 +74,6 @@ Supported tools
- QEMU supports rustc version 1.63.0 and newer.  Notably, the following features
- are missing:
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 55c47fcd378..02b75ea9e10 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -634,6 +634,7 @@ S: Maintained
+ F: include/system/os-wasm.h
+ F: os-wasm.c
+ F: util/coroutine-wasm.c
++F: configs/meson/emscripten.txt
  
--* ``core::ffi`` (1.64.0).  Use ``std::os::raw`` and ``std::ffi`` instead.
--
- * ``cast_mut()``/``cast_const()`` (1.65.0).  Use ``as`` instead.
+ Alpha Machines
+ --------------
+diff --git a/configure b/configure
+index 40705afdf57..2ce8d29fac2 100755
+--- a/configure
++++ b/configure
+@@ -360,6 +360,10 @@ elif check_define __NetBSD__; then
+   host_os=netbsd
+ elif check_define __APPLE__; then
+   host_os=darwin
++elif check_define EMSCRIPTEN ; then
++  host_os=emscripten
++  cpu=wasm32
++  cross_compile="yes"
+ else
+   # This is a fatal error, but don't report it yet, because we
+   # might be going to just print the --help text, or it might
+@@ -526,6 +530,9 @@ case "$cpu" in
+     linux_arch=x86
+     CPU_CFLAGS="-m64"
+     ;;
++  wasm32)
++    CPU_CFLAGS="-m32"
++    ;;
+ esac
  
- * "let ... else" (1.65.0).  Use ``if let`` instead.  This is currently patched
-diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
-index b4d4a7eb432..cd2dc33c207 100644
---- a/rust/hw/char/pl011/src/device_class.rs
-+++ b/rust/hw/char/pl011/src/device_class.rs
-@@ -3,7 +3,7 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
+ if test -n "$host_arch" && {
+diff --git a/meson.build b/meson.build
+index 8eb3de5d68d..27f11501528 100644
+--- a/meson.build
++++ b/meson.build
+@@ -50,9 +50,9 @@ genh = []
+ qapi_trace_events = []
  
- use std::{
--    os::raw::{c_int, c_void},
-+    ffi::{c_int, c_void},
-     ptr::NonNull,
- };
+ bsd_oses = ['gnu/kfreebsd', 'freebsd', 'netbsd', 'openbsd', 'dragonfly', 'darwin']
+-supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux']
++supported_oses = ['windows', 'freebsd', 'netbsd', 'openbsd', 'darwin', 'sunos', 'linux', 'emscripten']
+ supported_cpus = ['ppc', 'ppc64', 's390x', 'riscv32', 'riscv64', 'x86', 'x86_64',
+-  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64']
++  'arm', 'aarch64', 'loongarch64', 'mips', 'mips64', 'sparc64', 'wasm32']
  
-diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
-index 12de2ba59a1..d4364f2f2f7 100644
---- a/rust/hw/timer/hpet/src/hpet.rs
-+++ b/rust/hw/timer/hpet/src/hpet.rs
-@@ -3,8 +3,7 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
+ cpu = host_machine.cpu_family()
  
- use std::{
--    ffi::CStr,
--    os::raw::{c_int, c_void},
-+    ffi::{c_int, c_void, CStr},
-     pin::Pin,
-     ptr::{addr_of_mut, null_mut, NonNull},
-     slice::from_ref,
-diff --git a/rust/qemu-api/src/chardev.rs b/rust/qemu-api/src/chardev.rs
-index 11e6c45afaf..146a4852da3 100644
---- a/rust/qemu-api/src/chardev.rs
-+++ b/rust/qemu-api/src/chardev.rs
-@@ -10,11 +10,10 @@
- //! called.
+@@ -353,6 +353,8 @@ foreach lang : all_languages
+       # endif
+       #endif''')
+     # ok
++  elif compiler.get_id() == 'emscripten'
++    # ok
+   else
+     error('You either need GCC v7.4 or Clang v10.0 (or XCode Clang v15.0) to compile QEMU')
+   endif
+@@ -470,7 +472,10 @@ endif
+ # instead, we can't add -no-pie because it overrides -shared: the linker then
+ # tries to build an executable instead of a shared library and fails.  So
+ # don't add -no-pie anywhere and cross fingers. :(
+-if not get_option('b_pie')
++#
++# Emscripten doesn't support -no-pie but meson can't catch the compiler
++# warning. So explicitly omit the flag for Emscripten.
++if not get_option('b_pie') and host_os != 'emscripten'
+   qemu_common_flags += cc.get_supported_arguments('-fno-pie', '-no-pie')
+ endif
  
- use std::{
--    ffi::CStr,
-+    ffi::{c_int, c_void, CStr},
-     fmt::{self, Debug},
-     io::{self, ErrorKind, Write},
-     marker::PhantomPinned,
--    os::raw::{c_int, c_void},
-     ptr::addr_of_mut,
-     slice,
- };
-diff --git a/rust/qemu-api/src/irq.rs b/rust/qemu-api/src/irq.rs
-index 1222d4fde30..1526e6f63a1 100644
---- a/rust/qemu-api/src/irq.rs
-+++ b/rust/qemu-api/src/irq.rs
-@@ -4,7 +4,11 @@
+@@ -514,6 +519,8 @@ ucontext_probe = '''
+ supported_backends = []
+ if host_os == 'windows'
+   supported_backends += ['windows']
++elif host_os == 'emscripten'
++  supported_backends += ['wasm']
+ else
+   if host_os != 'darwin' and cc.links(ucontext_probe)
+     supported_backends += ['ucontext']
+@@ -902,6 +909,10 @@ if get_option('tcg').allowed()
+     if not get_option('tcg_interpreter')
+       error('Unsupported CPU @0@, try --enable-tcg-interpreter'.format(cpu))
+     endif
++  elif host_arch == 'wasm32'
++    if not get_option('tcg_interpreter')
++      error('WebAssembly host requires --enable-tcg-interpreter')
++    endif
+   elif get_option('tcg_interpreter')
+     warning('Use of the TCG interpreter is not recommended on this host')
+     warning('architecture. There is a native TCG execution backend available')
+@@ -2962,7 +2973,9 @@ config_host_data.set('CONFIG_ATOMIC64', cc.links('''
+     return 0;
+   }''', args: qemu_isa_flags))
  
- //! Bindings for interrupt sources
+-has_int128_type = cc.compiles('''
++# has_int128_type is set to false on Emscripten to avoid errors by libffi
++# during runtime.
++has_int128_type = host_os != 'emscripten' and cc.compiles('''
+   __int128_t a;
+   __uint128_t b;
+   int main(void) { b = a; }''')
+@@ -3775,6 +3788,8 @@ if have_block
+   # os-win32.c does not
+   if host_os == 'windows'
+     system_ss.add(files('os-win32.c'))
++  elif host_os == 'emscripten'
++    blockdev_ss.add(files('os-wasm.c'))
+   else
+     blockdev_ss.add(files('os-posix.c'))
+   endif
+@@ -4516,7 +4531,11 @@ subdir('scripts')
+ subdir('tools')
+ subdir('pc-bios')
+ subdir('docs')
+-subdir('tests')
++# Tests are disabled on emscripten because they rely on host features that aren't
++# supported by emscripten (e.g. fork and unix socket).
++if host_os != 'emscripten'
++  subdir('tests')
++endif
+ if gtk.found()
+   subdir('po')
+ endif
+diff --git a/configs/meson/emscripten.txt b/configs/meson/emscripten.txt
+new file mode 100644
+index 00000000000..4230e88005f
+--- /dev/null
++++ b/configs/meson/emscripten.txt
+@@ -0,0 +1,8 @@
++[built-in options]
++c_args = ['-pthread']
++cpp_args = ['-pthread']
++objc_args = ['-pthread']
++# -sPROXY_TO_PTHREAD link time flag always requires -pthread even during
++# configuration so explicitly add the flag here.
++c_link_args = ['-pthread','-sASYNCIFY=1','-sPROXY_TO_PTHREAD=1','-sFORCE_FILESYSTEM','-sALLOW_TABLE_GROWTH','-sTOTAL_MEMORY=2GB','-sWASM_BIGINT','-sEXPORT_ES6=1','-sASYNCIFY_IMPORTS=ffi_call_js','-sEXPORTED_RUNTIME_METHODS=addFunction,removeFunction,TTY,FS']
++cpp_link_args = ['-pthread','-sASYNCIFY=1','-sPROXY_TO_PTHREAD=1','-sFORCE_FILESYSTEM','-sALLOW_TABLE_GROWTH','-sTOTAL_MEMORY=2GB','-sWASM_BIGINT','-sEXPORT_ES6=1','-sASYNCIFY_IMPORTS=ffi_call_js','-sEXPORTED_RUNTIME_METHODS=addFunction,removeFunction,TTY,FS']
+diff --git a/meson_options.txt b/meson_options.txt
+index 0b4115e733a..cc66b46c636 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -34,7 +34,7 @@ option('fuzzing_engine', type : 'string', value : '',
+ option('trace_file', type: 'string', value: 'trace',
+        description: 'Trace file prefix for simple backend')
+ option('coroutine_backend', type: 'combo',
+-       choices: ['ucontext', 'sigaltstack', 'windows', 'auto'],
++       choices: ['ucontext', 'sigaltstack', 'windows', 'wasm', 'auto'],
+        value: 'auto', description: 'coroutine backend to use')
  
--use std::{ffi::CStr, marker::PhantomData, os::raw::c_int, ptr};
-+use std::{
-+    ffi::{c_int, CStr},
-+    marker::PhantomData,
-+    ptr,
-+};
- 
- use crate::{
-     bindings::{self, qemu_set_irq},
-diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
-index 05f38b51d30..c3641e893b7 100644
---- a/rust/qemu-api/src/lib.rs
-+++ b/rust/qemu-api/src/lib.rs
-@@ -33,7 +33,7 @@
- 
- use std::{
-     alloc::{GlobalAlloc, Layout},
--    os::raw::c_void,
-+    ffi::c_void,
- };
- 
- #[cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)]
-diff --git a/rust/qemu-api/src/memory.rs b/rust/qemu-api/src/memory.rs
-index fdb1ea11fcf..9ef2694bd62 100644
---- a/rust/qemu-api/src/memory.rs
-+++ b/rust/qemu-api/src/memory.rs
-@@ -5,9 +5,8 @@
- //! Bindings for `MemoryRegion`, `MemoryRegionOps` and `MemTxAttrs`
- 
- use std::{
--    ffi::{CStr, CString},
-+    ffi::{c_uint, c_void, CStr, CString},
-     marker::PhantomData,
--    os::raw::{c_uint, c_void},
- };
- 
- pub use bindings::{hwaddr, MemTxAttrs};
-diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
-index 18b4a9ba687..17c7fecabeb 100644
---- a/rust/qemu-api/src/qdev.rs
-+++ b/rust/qemu-api/src/qdev.rs
-@@ -5,8 +5,7 @@
- //! Bindings to create devices and access device functionality from Rust.
- 
- use std::{
--    ffi::{CStr, CString},
--    os::raw::{c_int, c_void},
-+    ffi::{c_int, c_void, CStr, CString},
-     ptr::NonNull,
- };
- 
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index f1b4022157b..6929e4d33ae 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -93,11 +93,10 @@
- //! without incurring into violations of orphan rules for traits.
- 
- use std::{
--    ffi::CStr,
-+    ffi::{c_void, CStr},
-     fmt,
-     mem::ManuallyDrop,
-     ops::{Deref, DerefMut},
--    os::raw::c_void,
-     ptr::NonNull,
- };
- 
-diff --git a/rust/qemu-api/src/timer.rs b/rust/qemu-api/src/timer.rs
-index e769f8bc910..d697fd742bc 100644
---- a/rust/qemu-api/src/timer.rs
-+++ b/rust/qemu-api/src/timer.rs
-@@ -3,7 +3,7 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
- use std::{
--    os::raw::{c_int, c_void},
-+    ffi::{c_int, c_void},
-     pin::Pin,
- };
- 
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 9ae97c389c1..c0f29f74188 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -25,7 +25,7 @@
- //!   functionality that is missing from `vmstate_of!`.
- 
- use core::{marker::PhantomData, mem, ptr::NonNull};
--use std::os::raw::{c_int, c_void};
-+use std::ffi::{c_int, c_void};
- 
- pub use crate::bindings::{VMStateDescription, VMStateField};
- use crate::{
-diff --git a/rust/qemu-api/tests/vmstate_tests.rs b/rust/qemu-api/tests/vmstate_tests.rs
-index f7a93117e1a..9a56ffd2385 100644
---- a/rust/qemu-api/tests/vmstate_tests.rs
-+++ b/rust/qemu-api/tests/vmstate_tests.rs
-@@ -2,7 +2,12 @@
- // Author(s): Zhao Liu <zhai1.liu@intel.com>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
--use std::{ffi::CStr, mem::size_of, os::raw::c_void, ptr::NonNull, slice};
-+use std::{
-+    ffi::{c_void, CStr},
-+    mem::size_of,
-+    ptr::NonNull,
-+    slice,
-+};
- 
- use qemu_api::{
-     bindings::{
+ # Everything else can be set via --enable/--disable-* option
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index d76a239130a..8a67a14e2e2 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -80,7 +80,7 @@ meson_options_help() {
+   printf "%s\n" '  --tls-priority=VALUE     Default TLS protocol/cipher priority string'
+   printf "%s\n" '                           [NORMAL]'
+   printf "%s\n" '  --with-coroutine=CHOICE  coroutine backend to use (choices:'
+-  printf "%s\n" '                           auto/sigaltstack/ucontext/windows)'
++  printf "%s\n" '                           auto/sigaltstack/ucontext/windows/wasm)'
+   printf "%s\n" '  --with-pkgversion=VALUE  use specified string as sub-version of the'
+   printf "%s\n" '                           package'
+   printf "%s\n" '  --with-suffix=VALUE      Suffix for QEMU data/modules/config directories'
 -- 
 2.49.0
 
