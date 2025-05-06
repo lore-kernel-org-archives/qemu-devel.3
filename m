@@ -4,145 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AD33C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:16:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF021C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:18:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCK0a-0002ga-Cr; Tue, 06 May 2025 11:15:00 -0400
+	id 1uCK3u-0004Kb-T9; Tue, 06 May 2025 11:18:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uCK0Y-0002fc-F7
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:14:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uCK0W-0000BJ-KM
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:14:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746544495;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=S9Rx5fjuXqU6W7L9hiqlW3zm/KvXt/S4tAkzaORUBjg=;
- b=fzVfC7/A2IUraGXWUbfexZfAdnvDDIWylHJphr03FvqbMsF/b8IWmFxheDKg31hXXKslAR
- Z/gZe991eehzVfiaOHovNHkh/bsa5MwMBnHvj4mDMwre8KDAgKn+XXak84vzr+6cF3jTk+
- i3clCWXo4wKnihqGQJrjNsWFG3s3XTk=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-450-NIx-ICVdN9eb3iMZb4Cgog-1; Tue, 06 May 2025 11:14:53 -0400
-X-MC-Unique: NIx-ICVdN9eb3iMZb4Cgog-1
-X-Mimecast-MFC-AGG-ID: NIx-ICVdN9eb3iMZb4Cgog_1746544493
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3912fc9861cso1552240f8f.1
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:14:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uCK3p-0004IE-4S
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:18:22 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uCK3l-0000fF-5m
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:18:20 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-309f3bf23b8so7627100a91.3
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:18:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746544695; x=1747149495; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1qF/4YkbvVkMAeOW3oJDj8///733KHf3pnFEtujLnXQ=;
+ b=tfam9Xn7blyqUI3CFSzSS8G/tOzOQZGdTeVhd2a35XnDJOgE4l882xJmX9nImOjPFN
+ qhlR+nXcga4qeOTvSj9IT2lTD9wbtVP4x90dUhcgmUs96Wd3aquYXJV/XgOXfhOjNq75
+ sPh8Uv8vx6qRnL/euENsmNCDBnNvirDXQsdGsi6SnEY7qEByeexb6qw5LtuONmJz6Y1s
+ h1Gbkk1gdddJShIsCb+uVxKVUAapDkwPy3yzAmyb8V4ALR1axOSgXw+Th5EcbtU5aNfz
+ 6ai3xq08nh0AEJGenp0969KjHeUG6371aipblDF5V3vpVaGxDdg0rRW3WMaXHmYji/u0
+ tMLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746544492; x=1747149292;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=S9Rx5fjuXqU6W7L9hiqlW3zm/KvXt/S4tAkzaORUBjg=;
- b=SwPvMoHzmtjM77kspdnr8tQXYIqRjLWgTKwlQEjfTJ7zD7ABB6wOvcGzk32KmXERAR
- OK8NSUOJd9fe+yfgj++K8PM1h2hgkGZ8bZ8/6lqNS40+wZWzme72M3PFhxGP+Zc3P/vF
- sEbYwNx8jWDyDfHQDwA+TieWm5nRtVAiByMD33WEF5Qw889F19uNum3WOAixe8lAd/LX
- trqCz8DTJd1JpgQX806kmTafqCZU2RiciQh4TBw9mVeLbmcKon5brI2XrAQ5lYnb7gpc
- J/2kLoAsRG2XuxpvZF5OMlfIYvTEW3JYWcK++2bto0VRQhgSW3UG39WatUgFm6a6/KNk
- DA9Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVpiCVYRLeQPmo4R8cU/WH8g2SBd7ipqP7uXAJVopnktzcuADshCahM5bb+SB2tNNIdUx75ALPfJ7QM@nongnu.org
-X-Gm-Message-State: AOJu0YwpcuXPk+tiwCBNigESsr75f9dAYeAlx4/ty/GZqboL19SUiQJg
- zDuiq69SFMcBPgB4xaChpfpY/cOv++WxUroR7ycGznsvZVonAIJkqUJvw2AxEw+mCwEyttxijmN
- LJKE/XM4k+5rXQfuqkl6K9unTHwq5mdY/p71B8mmOhx0Ze6ogcTQZ
-X-Gm-Gg: ASbGncvS2/GuTSZJtcHU5hdfB8eLf1FVmq4h0J+EejZeV1yhXi8oag+BP/CZ8HCRWrn
- tXp8zzZ0+/PWGJP5aM5Mr3Pwv9ZqVK+NtIJVF0zxbBCwT/c1MjfcWwuNgv8OOAlvWzyM5+RLWMI
- 8XsCiXE7Gtma0hdfEW4OqQ+HJm4dfiY/2X7Gti1VylOIcSky88wilWzdC5NrC7uOj2A9ZQnStcO
- iFKFh3C88bF6Uyav0ttedco9e8Ii3L/6aJ3ekztCzGhwhhWV7ExG8Q4UxaMTD2e3YmyUDyTfIvL
- qb+4FN20h4KiniFapEm1W3UItdNFoUMVwQ4/sjwqWzo23CdeDQ==
-X-Received: by 2002:a05:6000:1acd:b0:391:23de:b19a with SMTP id
- ffacd0b85a97d-3a09fd7dbb0mr9604244f8f.31.1746544492497; 
- Tue, 06 May 2025 08:14:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUvD07ZX9eC60atHFC+G6qSYLmuyskPjrRWkkvw3PgMvHrzcIVPIskcgGXw4aVEasDaOOmTA==
-X-Received: by 2002:a05:6000:1acd:b0:391:23de:b19a with SMTP id
- ffacd0b85a97d-3a09fd7dbb0mr9604220f8f.31.1746544492090; 
- Tue, 06 May 2025 08:14:52 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ d=1e100.net; s=20230601; t=1746544695; x=1747149495;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1qF/4YkbvVkMAeOW3oJDj8///733KHf3pnFEtujLnXQ=;
+ b=OV+2PTQ7KD19ZPyVgZXL//RXxPxWrTdNvnuR1KXXOwDMXnLN3rKJGrX1/ID5JE0KeU
+ bRi4T3OyNZQhZljpYVs+sy7P9Axf0Kfv1ZDI2W5izzAsau4z8KDEYJI+7arX63D5RNNb
+ xffIcvI8qbrXNZAyZQF7bqBI6OZdIYr/2m8wyIYqGsQ/PsskNqSh7spWISQXpaz12B+U
+ LQ+n1HsUKPC5HoKuKbZr08xKOn/nnJdT8X85R8Xxy0f5hXyQOi10fCJCGI2/7j7AUwQ8
+ nw4UDBShXscBajy93Y7uppw72bYzBFYQKeNo5+2pnotgZlG/QQtN39vRF7VO2vMQnCfr
+ mRXA==
+X-Gm-Message-State: AOJu0Yyv5URRyXFSYgolQYctLskjxPCQ8w8MribWDJCbJYOVyKqkvDgT
+ jqA5pSsCnnCeVYqOWtkmhopQhMCvYvLru2AliGkveUVyIHpzBZ70M0MqsaCZCdI=
+X-Gm-Gg: ASbGnctZtxWGRXrU/IWwgI2Hh2gOMrXnGHxrXuBssM8W1HH9PhxegODRdIZWz3JtsOM
+ /kgvCAn4dTShMRhrdUm/0UojLwdK2YBx3JgycCGm1gujyt1aM1uy3REh1wXSfid74WZsgxXht7S
+ 5XgUMgDqWoQtJT7Qfk7prZTY+o7WjG/2XBugHSDq1ob+uDE9nUr+ifUh/PI5s91DpUDi8Y/r/yK
+ zYJAG5rPRuP2v2RN6jf5nyXwIKxOaCvzUJxedpuN53G7RYjIjjwCP80mTEykVSY3VkRlHZtkGX/
+ i69mrQkB5ODco4jLtCF/DXBTorA1a/XeqQnP/ni5MBeqzM1efeaQHg==
+X-Google-Smtp-Source: AGHT+IFbZgWlItvlCQJY29igBTXBxQcw6cM2Sh4oq9nefMxNskd0xAMkyiBgfMB7th/i82gB1NzxHQ==
+X-Received: by 2002:a17:90b:274e:b0:2ff:6af3:b5fa with SMTP id
+ 98e67ed59e1d1-30a7c0c8b6amr4786488a91.22.1746544695224; 
+ Tue, 06 May 2025 08:18:15 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae7bb3sm14173442f8f.51.2025.05.06.08.14.51
+ d9443c01a7336-22e1522f907sm74943835ad.219.2025.05.06.08.18.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 May 2025 08:14:51 -0700 (PDT)
-Message-ID: <2476d134-e342-4c2c-84ae-4d5972c30a94@redhat.com>
-Date: Tue, 6 May 2025 17:14:50 +0200
+ Tue, 06 May 2025 08:18:14 -0700 (PDT)
+Message-ID: <0c753bdf-996f-4f1d-9fed-cc0ebfc6418b@linaro.org>
+Date: Tue, 6 May 2025 08:18:13 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 22/23] tests/function/aspeed: Add functional test for
- ast2700fc
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Steven Lee <steven_lee@aspeedtech.com>, Jamin Lin <jamin_lin@aspeedtech.com>
-References: <20250505090635.778785-1-clg@redhat.com>
- <20250505090635.778785-23-clg@redhat.com>
- <CAFEAcA8wmqAtcgfPvyMY8nujTWNCSC0DYO64aA5up-sTWCr_jA@mail.gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <CAFEAcA8wmqAtcgfPvyMY8nujTWNCSC0DYO64aA5up-sTWCr_jA@mail.gmail.com>
+Subject: Re: [RFC PATCH] hw/virtio: Introduce CONFIG_VIRTIO_LEGACY to disable
+ legacy support
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ David Hildenbrand <david@redhat.com>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
+ <eperezma@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>,
+ Raphael Norwitz <raphael.norwitz@nutanix.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-ppc@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Anton Johansson <anjo@rev.ng>, qemu-arm@nongnu.org,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20250502132441.64723-1-philmd@linaro.org>
+ <aBnCk2WE_SNkRgSH@redhat.com> <20250506040903-mutt-send-email-mst@kernel.org>
+ <59c4d557-2f73-4b56-8650-f16ed3cd7bb2@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <59c4d557-2f73-4b56-8650-f16ed3cd7bb2@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,77 +119,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/6/25 16:22, Peter Maydell wrote:
-> On Mon, 5 May 2025 at 10:12, Cédric Le Goater <clg@redhat.com> wrote:
+On 5/6/25 1:55 AM, Philippe Mathieu-Daudé wrote:
+> On 6/5/25 10:12, Michael S. Tsirkin wrote:
+>> On Tue, May 06, 2025 at 09:04:50AM +0100, Daniel P. Berrangé wrote:
+>>> On Fri, May 02, 2025 at 03:24:41PM +0200, Philippe Mathieu-Daudé wrote:
+>>>> Legacy VirtIO devices don't have their endianness clearly defined.
+>>>> QEMU infers it taking the endianness of the (target) binary, or,
+>>>> when a target support switching endianness at runtime, taking the
+>>>> endianness of the vCPU accessing the device.
+>>>>
+>>>> Devices modelling shouldn't really change depending on a property
+>>>> of a CPU accessing it.
+>>>>
+>>>> For heterogeneous systems, it is simpler to break such dev <-> cpu
+> 
+>           ^^^^^^^^^^^^^
+> 
+>>>> dependency, only allowing generic device models, with no knowledge
+>>>> of CPU (or DMA controller) accesses.
+>>>>
+>>>> Therefore we introduce the VIRTIO_LEGACY Kconfig key. We keep the
+>>>> current default (enabled).
+>>>> New binaries can set CONFIG_VIRTIO_LEGACY=n to restrict models to
+>>>> the VirtIO version 1 spec.
+>>>
+>>> IMHO that isn't acceptable. In order to be able to provide an
+>>> upgrade path from the old binaries, we need the need the new
+>>> binaries to be able to serve the same use cases & disabling
+>>> virtio 0.9 support prevents that.
+> 
+> This isn't for the single binary effort, there we are taking a
+> lot of care to not introduce any change.
+> 
+> This is for after it; once we have a single binary (one architecture
+> run by an instance) we can start testing heterogeneous emulation
+> (different architectures in the same instance).
+> 
+>>> I don't see a compelling
+>>> technical reason why we can't support virtio 0.9 from this
+>>> endian point.
+> 
+> VirtIO 0.9 needs knowledge of the vCPU architecture to get its
+> endianness. So we need to somehow propagate that at creation
+> time, guarantying which vCPU (or set of vCPUs) will access a
+> virtio device.
+> 
+> The use case I'd like to figure out is how should we model
+> plugging a virtio 0.9 device in into a fully emulated
+> ZynqMP machine, which has little-endian ARM cores and big
+> endian MicroBlaze cores.
+> 
+
+Virtio devices are not the only one who will need to be extended to 
+support such a scenario.
+What happens when a disk or network card is added to the machine?
+Should it be shared?
+Should it be mapped only for one cpu address space?
+Should address spaces be mixed or independent?
+Per cluster, per cpu, per architure?
+
+Having a concrete prototype will allow us to answer to those questions, 
+and many others, and find solutions for the situations we meet.
+
+> Alex said this is unlikely to happen, and better is to
+> ignore this case by not allowing virtio pre-1.0 devices in
+> our future heterogeneous emulator.
+> 
+> In this same thread Pierrick pointed me to the reference in
+> the spec: '2.4.3 Legacy Interfaces: A Note on Virtqueue Endianness',
+> "It is assumed that the host is already aware of the guest endian."
+> 
+> I suppose this means a pre-1.0 virtio device expect to be used by
+> a single guest OS, but it is not clear the guest OS as fixed
+> endianness, because the code path checks vCPU endianness at
+> runtime, so passing guest endianness as a property to pre-1.0
+> devices isn't really an option.
+> 
+> Anyway I think 1/ I posted this too early, "speculating" as Pierrick
+> noticed, and confuse the community w.r.t. "single binary" and
+> 2/ I don' t understand legacy virtio and its endianness handling
+> enough to figure a clever idea to keep using it heterogeneous
+> setup, so I'll let this task to someone more familiar with that tech.
+>
+
+An important mantra will be to keep that compatible with existing 
+command line (potentially extending it to support those new use cases, 
+in both the existing *and* the new binary).
+
+The last thing we want to introduce is "yet another QEMU".
+
+>>> Yes may be more ugly/messy than we would like, but that's par
+>>> for the course with QEMU emulating arbitrary device models.
+>>> If the new binaries can't cope with messy devices then I think
+>>> we are doing something wrong.
+> 
 >>
->> From: Steven Lee <steven_lee@aspeedtech.com>
+>> To be more specific, having a kconfig knob modifying the device
+>> without regards for machine types, means it is no longer
+>> enough to inspect the command line to figure out the
+>> compatiblity. That's a problem.
 >>
->> Introduce a new test suite for ast2700fc machine.
->> Rename the original test_aarch64_aspeed.py to
->> test_aarch64_aspeed_ast2700.py.
->>
->> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
->> Change-Id: I3855f55c9f6e5cca1270c179445f549f8d81f36c
->> Reviewed-by: Cédric Le Goater <clg@redhat.com>
->> Link: https://lore.kernel.org/qemu-devel/20250505030618.3612042-1-steven_lee@aspeedtech.com
->> [ clg: Added new tests in meson.build ]
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > 
-> Hi; this new test seems to trigger an error in a clang-sanitizer
-> build; would you mind having a look?
-
-yes. I can reproduce. I will check next week.
-
-Thanks,
-
-C.
-
-
-
-
+> OK. I won't pursue in this direction. I apologize for mentioning
+> this topic again too early.
 > 
->   Output: qemu-system-aarch64: warning: hub port hub0port0 has no peer
-> qemu-system-aarch64: warning: hub 0 with no nics
-> qemu-system-aarch64: warning: netdev hub0port0 has no peer
-> qemu-system-aarch64: warning: nic ftgmac100.0 has no peer
-> qemu-system-aarch64: warning: nic ftgmac100.1 has no peer
-> qemu-system-aarch64: warning: nic ftgmac100.2 has no peer
-> qemu-system-aarch64: warning: requested NIC (#net038, model
-> unspecified) was not created (not supported by this machine?)
-> ../../system/memory.c:2798:27: runtime error: null pointer passed as
-> argument 2, which is declared to never be null
-> /usr/include/stdlib.h:962:6: note: nonnull attribute specified here
->      #0 0x617e4121b113 in flatview_lookup
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/memory.c:2798:12
->      #1 0x617e4121b113 in memory_region_find_rcu
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/memory.c:2833:10
->      #2 0x617e4121a5a9 in memory_region_find
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/memory.c:2860:11
->      #3 0x617e411c21ea in rom_check_and_register_reset
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../hw/core/loader.c:1317:19
->      #4 0x617e411d5ec7 in qdev_machine_creation_done
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../hw/core/machine.c:1756:9
->      #5 0x617e403d4877 in qemu_machine_creation_done
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/vl.c:2782:5
->      #6 0x617e403d4877 in qmp_x_exit_preconfig
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/vl.c:2810:10
->      #7 0x617e403d9a3c in qemu_init
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/vl.c:3844:9
->      #8 0x617e41301126 in main
-> /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/../../system/main.c:71:5
->      #9 0x7faf8202a1c9 in __libc_start_call_main
-> csu/../sysdeps/nptl/libc_start_call_main.h:58:16
->      #10 0x7faf8202a28a in __libc_start_main csu/../csu/libc-start.c:360:3
->      #11 0x617e3f920654 in _start
-> (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/arm-clang/qemu-system-aarch64+0x161d654)
-> (BuildId: f3f8c2ca821e695937a615bee293c4a5a336a6bd)
+> Regards,
 > 
-> SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior
-> ../../system/memory.c:2798:27
-> 
-> 
-> thanks
-> -- PMM
-> 
+> Phil.
 
 
