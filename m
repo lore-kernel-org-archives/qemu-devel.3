@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC90BC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 927F8C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:44:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCJW4-0004Ai-EU; Tue, 06 May 2025 10:43:30 -0400
+	id 1uCJWG-00055y-Ui; Tue, 06 May 2025 10:43:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJTD-000885-8T
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:40:36 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJSz-0007xX-C8
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:40:22 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJTA-0001qU-Tf
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:40:30 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-39129fc51f8so3822244f8f.0
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:40:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJSw-0001oy-5A
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:40:16 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43cfba466b2so48944035e9.3
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:40:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746542427; x=1747147227; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746542412; x=1747147212; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j41fV/T5fVwdY4VDR58WCPqJo5aDoWrBkyOMJ4Dwydk=;
- b=wmpFEQURYW9fcrJGc4PuDjVX/XM/MlmA1avmYzmTiJ6wfdpWe/JhZNIEYnsilVGfkl
- vNoqBy/wFZzSNQty+iJBLXmyhOdwFWxHccICPqlHCHbv6cAKj6TTNgojf1VkbS4WVQA7
- PbEC8/IM+hclckm1UIgEPw2SwOU468C9a7d1hpo7SLmZkxhFY6f94AfChdhJXQWRTJnX
- vx7MW980FmO9KM/pNh05dVpuRTLQk7BBGQdteo1OsomVg8/SkBZJ/RAEdUQ8bCY3L4JN
- PiZN1EUdrJf98ydQyBQi2knqbPvuteD0qpaptfK8k/1PSdA/LZn+9GBUUrsnKPRFZ3iO
- 8ayw==
+ bh=gjm2NV3MsVuXzERs7qPetKCBg7pCwU7Ow/3BPmE8MOo=;
+ b=Xjk62Jlp3DqNNz9afNzwHvDaDwml0+amNkLC3zIG4jWdlEC4xNIKOurZ5vlgdCUkgf
+ mMSWARf8az2VDI41p0Kw9ltonkIOlst/SjTCjHnLtWSdiAMZ0A/6JpgsSTKzEYB5D5Fu
+ u5asibyvdd9xVCYKzcQ8MbUQDprXMtn6z+K9muBspyuaO6OviRYbh0pL+9XbTNPKwNP/
+ yNsR3Pv7piMJYHFnM+dgfJLumTcrNqQePvJOTwTGGmqSkS1DGAh2/doeNL+ylA1Ht78R
+ HxE2g6FO6xTLkKi78HLH73UIhTUhA+937lbc4MHGU3idliIEIpHEasq1LeLn3e6IdvRO
+ 3APw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746542427; x=1747147227;
+ d=1e100.net; s=20230601; t=1746542412; x=1747147212;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=j41fV/T5fVwdY4VDR58WCPqJo5aDoWrBkyOMJ4Dwydk=;
- b=Af+VYYGafEZGxmLqIsjR7SmvnMuwpMYh1Np70+EySOmTvAvMzFpOBeN3J1DWgGPUHz
- 5WtQ733ovWF2rXkF1j6ubGuMbFrhhYID2kXBLMek63Jg2YUzXS4plkKuu+7EiZgxrb9e
- JDJQlsnT5ABwqVYzBdg5IAyHyUCwr1klRFaBmb+KyKG7OsGwe9Quk+cqFqkboEoBlSJ+
- S1hNwREHo0rOaCquJJuVooDqWicP50xIm3bsVcLwpI0JfJmS+7DJnjQ9hNX0pAWAcFVV
- wIo0HHoejK4Pbjuz001BUfZJPRqt5BzmYT9TD3imugcuKKnTEVuao8U3uvhnNedMtawp
- M6Ow==
-X-Gm-Message-State: AOJu0YypirPAtlK1NpbEbkVP5dmC1yNzS7fQ0Y/8TVucwzk+eoY1mwND
- 2/Y6e5VzQYweMpWQYLn34axla4IjmrEti++7xIoAWEBwPlXUFP1K3FK3cTmTM5i6DFpoUjnSZoU
- 8
-X-Gm-Gg: ASbGncumSrGkVgHeCVn1nYCAObS8mGBigfs3/nEkaG+kSI9HTKef2tYjk4NXX+VU9Kq
- UbOadsXst6R9+cIcywiPNUppjhJIuEJRm4umFoOLBaLbwSWbZuATp5o//H4A9xtCn3Ajr7ktvy9
- NIcC8WDUQA5Ljiqe1ou/hL7N+4blz/EjLtL8KyKsN05j+sPeMcSTx5IsVHJ6LGHK300seqY1RKz
- cuP0XLNREo0LWc6HN3S7GryhO1XE3mz/SbFRyAD4aSROqeFn3vUqtTbXuCbklL+t6jNPhT7x0GT
- 59RceZhLJo9lupmgWLRI23dglcszv3rWPxNtQPezqWVFmaavx0MCAMjaNCcy09gvvRkJcYgvymz
- DRZOk+R0M8KsITkiBEOID
-X-Google-Smtp-Source: AGHT+IGJd63f1aBzGm2VOibTt2HPEM3GOrmBR1zXP7t/gMjPs+FDvA7wJ4kzunrvNPdanDzrOiYXjA==
-X-Received: by 2002:a5d:64e8:0:b0:3a0:83a2:1e79 with SMTP id
- ffacd0b85a97d-3a09fd79f80mr10257819f8f.11.1746542426955; 
- Tue, 06 May 2025 07:40:26 -0700 (PDT)
+ bh=gjm2NV3MsVuXzERs7qPetKCBg7pCwU7Ow/3BPmE8MOo=;
+ b=Pu+0X+7b6qj2bxiaQEwaFB/60qm4xbsiKxfulTX+2FlHGpm39Vrbg3SJU2QPeeqHIS
+ oSxrNyRjKw6n6pcFP5KnYZ17Gbh9v9klNiakTfKBj6L7NB0kbmU6t2jQpDy1DIDlLo6u
+ jmirXprlxPoqPvliijHVLdbya+VEcUFRZIwLHaxgak3dZPHAMJpynq9YAxc0VPYaEACt
+ V6yimrGJpLGhL3JqSfqW5S1Mb7l7CUnFLDzlfTtNIkHEQ/wQiOXghgT2hdNX6v936vBl
+ ySCO16RNSiPCSOw3zbohtWA6vJDMiFxz8yJgQZY7ZDX5OmUv4e9Uq7WUixSd+qe7LsJI
+ D6aA==
+X-Gm-Message-State: AOJu0YwI0XwjVLKW2YrAmCDpSnHDcMN9R3YulZ/38AZyDspXeqFzoxeo
+ e1ywCjCYBmserNX4KKsekN6JClDE9blEU9uWm8DSoBet9p7hlEtJ643/tkbH54Xi0y8cde0DDPx
+ W
+X-Gm-Gg: ASbGnctvAuKkDU0mipHyUG7czgjXSrbiWcufmmx1Vx7h9j5piz7vrTHrkcVllmXK2aF
+ Y6WudbOIZxlBaSr5yGYK9jYcfhHUyGXFoKpfJzaPw9cbAEDi8O8obKPk4m3dBKFLP/k55fnU00R
+ djK+K6LwJjt9irWTzrl+SjFH8kFmXdH4e7Kk/v2ZVthFGmzvafT4ZWn9uWljsUGAI+Hf/qL6QlZ
+ Go0OTLocVi6a59kYW11S/KaTvu4Lyqnc6yYUmkATf+V5v0LnSp1h1foaMEjE79Iv8cXrADBNzZH
+ 8LDr45VGuWjXFqSKzkGVtoViP9ODHmXrdMX2qLqe7TBSsCPh/jIJ4e1qvuCEIMo2X6UVZ+AKcC9
+ qKPXaHz8qUZSeLvdcprbf
+X-Google-Smtp-Source: AGHT+IFfW5Wf4GJ7c+jOUtNj3caz1pDTdwGoQd9yyE/c8rQULGOIrDYd+PbbAFh6yKmLXTvh+8fOkg==
+X-Received: by 2002:a05:600c:35cb:b0:43c:e481:3353 with SMTP id
+ 5b1f17b1804b1-441d0524b5bmr36344135e9.17.1746542412050; 
+ Tue, 06 May 2025 07:40:12 -0700 (PDT)
 Received: from localhost.localdomain (91-163-26-170.subs.proxad.net.
  [91.163.26.170]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099b16f92sm13639579f8f.81.2025.05.06.07.40.25
+ 5b1f17b1804b1-441d2f28628sm4871995e9.3.2025.05.06.07.40.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 May 2025 07:40:26 -0700 (PDT)
+ Tue, 06 May 2025 07:40:11 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>,
@@ -78,18 +78,17 @@ Cc: Kevin Wolf <kwolf@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Fabiano Rosas <farosas@suse.de>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 16/19] hw/scsi/vmw_pvscsi: Convert DeviceRealize ->
- InstanceInit
-Date: Tue,  6 May 2025 16:39:02 +0200
-Message-ID: <20250506143905.4961-17-philmd@linaro.org>
+Subject: [PATCH v3 13/19] hw/block/fdc-isa: Remove 'fallback' property
+Date: Tue,  6 May 2025 16:38:59 +0200
+Message-ID: <20250506143905.4961-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250506143905.4961-1-philmd@linaro.org>
 References: <20250506143905.4961-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,60 +111,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Simplify replacing pvscsi_realize() by pvscsi_instance_init(),
-removing the need for device_class_set_parent_realize().
+The "fallback" property was only used by the hw_compat_2_5[] array,
+as 'fallback=144'. We removed all machines using that array, lets
+remove ISA floppy drive 'fallback' property, manually setting the
+default value in isabus_fdc_realize().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/scsi/vmw_pvscsi.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ hw/block/fdc-isa.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
-index e163023d14c..7c98b1b8ea6 100644
---- a/hw/scsi/vmw_pvscsi.c
-+++ b/hw/scsi/vmw_pvscsi.c
-@@ -1267,21 +1267,15 @@ static const Property pvscsi_properties[] = {
-     DEFINE_PROP_UINT8("use_msg", PVSCSIState, use_msg, 1),
+diff --git a/hw/block/fdc-isa.c b/hw/block/fdc-isa.c
+index 6d1790e0e61..090b91361cd 100644
+--- a/hw/block/fdc-isa.c
++++ b/hw/block/fdc-isa.c
+@@ -112,6 +112,7 @@ static void isabus_fdc_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     qdev_set_legacy_instance_id(dev, isa->iobase, 2);
++    qdev_prop_set_enum(dev, "fallback", FLOPPY_DRIVE_TYPE_288);
+ 
+     fdctrl_realize_common(dev, fdctrl, &err);
+     if (err != NULL) {
+@@ -293,9 +294,6 @@ static const Property isa_fdc_properties[] = {
+     DEFINE_PROP_SIGNED("fdtypeB", FDCtrlISABus, state.qdev_for_drives[1].type,
+                         FLOPPY_DRIVE_TYPE_AUTO, qdev_prop_fdc_drive_type,
+                         FloppyDriveType),
+-    DEFINE_PROP_SIGNED("fallback", FDCtrlISABus, state.fallback,
+-                        FLOPPY_DRIVE_TYPE_288, qdev_prop_fdc_drive_type,
+-                        FloppyDriveType),
  };
  
--static void pvscsi_realize(DeviceState *qdev, Error **errp)
-+static void pvscsi_instance_init(Object *obj)
- {
--    PVSCSIClass *pvs_c = PVSCSI_GET_CLASS(qdev);
--    PCIDevice *pci_dev = PCI_DEVICE(qdev);
--
--    pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
--
--    pvs_c->parent_dc_realize(qdev, errp);
-+    PCI_DEVICE(obj)->cap_present |= QEMU_PCI_CAP_EXPRESS;
- }
- 
- static void pvscsi_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
--    PVSCSIClass *pvs_k = PVSCSI_CLASS(klass);
-     HotplugHandlerClass *hc = HOTPLUG_HANDLER_CLASS(klass);
- 
-     k->realize = pvscsi_realizefn;
-@@ -1290,8 +1284,6 @@ static void pvscsi_class_init(ObjectClass *klass, const void *data)
-     k->device_id = PCI_DEVICE_ID_VMWARE_PVSCSI;
-     k->class_id = PCI_CLASS_STORAGE_SCSI;
-     k->subsystem_id = 0x1000;
--    device_class_set_parent_realize(dc, pvscsi_realize,
--                                    &pvs_k->parent_dc_realize);
-     device_class_set_legacy_reset(dc, pvscsi_reset);
-     dc->vmsd = &vmstate_pvscsi;
-     device_class_set_props(dc, pvscsi_properties);
-@@ -1306,6 +1298,7 @@ static const TypeInfo pvscsi_info = {
-     .class_size    = sizeof(PVSCSIClass),
-     .instance_size = sizeof(PVSCSIState),
-     .class_init    = pvscsi_class_init,
-+    .instance_init = pvscsi_instance_init,
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_HOTPLUG_HANDLER },
-         { INTERFACE_PCIE_DEVICE },
+ static void isabus_fdc_class_init(ObjectClass *klass, const void *data)
 -- 
 2.47.1
 
