@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E94CC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC7DDC3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 14:38:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCJPA-000832-QT; Tue, 06 May 2025 10:36:20 -0400
+	id 1uCJOK-0006TV-LN; Tue, 06 May 2025 10:35:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJP4-0007q4-FR
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:36:17 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJOJ-0006RA-2g
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:35:27 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJP2-00016T-Ry
- for qemu-devel@nongnu.org; Tue, 06 May 2025 10:36:14 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-39ee623fe64so5945268f8f.1
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:36:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCJOH-00012P-6U
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 10:35:26 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-43ede096d73so35016875e9.2
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 07:35:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746542171; x=1747146971; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746542123; x=1747146923; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=suVX6cmdj8m7H2HB7KjODyjJfCC/SsEdU5xs/t8XcI8=;
- b=hRb8l2Bn+42F+VEA/Kt50czONurGmGLwfgqHKNeY1ATDx8nG/UcwYT8lPSloMms4Xn
- 8LTZObMjifJJBTz0lZ2nCjQHNL8GGFzeWuIk9U/u954kaSZC+RMZks7yWCkMlKC9j2Wt
- 8KyyZ65fCylPa727gqzDa25oxzsDaBmMq/fbsqIEXY2chhfGCIKCrY0b5CylBO45Nyps
- iHg4Ke0F/eObbGC1GNoZXzcn1AMHgcvumt40u2PyZwxAoIoVIn8goHZ5FXjDTzNOFBAv
- 4k8GZ9Nzv2I1Nsc+pJO4ekm+q19xkXkHyF+fbvfVw0zFYvErK3Q4W2uvj+qRKpT1l++j
- 5OGQ==
+ bh=EJbqmq9kFpuW6bFY3e+x+p51Q9qF9BEDYXcNOdMViWc=;
+ b=iPTO/otqkRb6tjUGKURzcslD3umdH+x4gPgxKTLxIknMWiiiF2bphGKA5qhzjER2n6
+ SYekeMSElo6GwRkaDrergG1bzbYCvUd4bg7LJ4VEtScQRvzdDGm3xr9fexSV4qAzFc2p
+ k6bNHVNNe8zX7zHCXbpugaN2DrxZDw8kBv1enr9lshDd9+l3cmXZ9R5decsnhK4F2ckd
+ VpBQPJCjGFtKeW+ATYl4bGwTGh4Y75pVsb0lQ23VFpOO/bTqUljOpFBPZ9tmLySpqJeU
+ 8EUnYMD0HF9GmhZYL/+DSaHpV5TZ2zSfgTUeNrNjwDhvjQ/zOqPl7qhFAzZA3g/MYLgk
+ QFmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746542171; x=1747146971;
+ d=1e100.net; s=20230601; t=1746542123; x=1747146923;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=suVX6cmdj8m7H2HB7KjODyjJfCC/SsEdU5xs/t8XcI8=;
- b=WglgE5CpwzZXrsEcFfS0KrchjcDJXbt0KqySqRJYRwsFJ/kJ2ZTg5X4GJI2xNnkvTk
- Dn/u6S3vqKShtCnQZ4F+nnn2aZOpJRs708Aem7sMs+l+UW0eexQMqEbpIsx1/ThJ9Sdt
- NxmSHh8NTNTXFh0Yar7rrltMdGqfRIDGdAp1n27EG1RnwOLqbqtSTHA1T8t6ic6bzlP3
- pLtxS8vZ+gxuMDbNLehF4OA8Vs9+h53FuXdPYj8Otq9lyNLBcPODC2ugQ/nNkl5vjQEu
- XdmED0lzRzs5e2WrYiXDO6XducrSBoXDywjuDa+4kE6v1XpWu1ALeyI852sxyE0Gyuxu
- vlOA==
-X-Gm-Message-State: AOJu0YwAXRkAsIGZe/Cd0gG1UiKoomvcNbFJlhZEYL1+V+7BMhgmoZ8h
- iizYJPI2LkmK7u4QBwSPPAe0MfxO77eGLes0JcGrDMUufRC4ePr++W0MrBARBN5WVOkLo18uduL
- N
-X-Gm-Gg: ASbGncukNRYqQRr9c4dmv+gR/RCS60EI09TH8vkvVM8NpbnNzJnP3DNJQ8ugpwsjvo0
- f6kkcF8GtbI2W8nTlCHWGzskjl6iBNTr6bAnlyNh+OdM6RkENcrvvF+Znebt97q8dzPd2fjcuBe
- dxTNzO/Xx3/M/xqR9Lg+3niNvOh6fm/dY16bY6ZSOvpRimMZpDCc689y5G0f0d3iYNXvWb5+w2o
- Q6lRc7lUTqxWqgFB8J2BZf2DCAW84YNKkSOJqkD9BGKkWLqySULEG13Qm/lrWYzFP2HkFqbaJFA
- rPW1hN9QeiiK7WfPthKyiTuXNivkN0rndv9loYn7VW9RjnkFR7kwaHi63CrHTANodTfKfEPtKtG
- 9MwkhVk/6p/2oxdqg43ZL
-X-Google-Smtp-Source: AGHT+IHgV6wlRXHabzlYHxYg6Hed9DuVCr4yh2rGoelufPFTL3OLdbPjAF6f6+s7ndTD2+2Ol9u0kw==
-X-Received: by 2002:a05:6000:4006:b0:39c:268b:8b66 with SMTP id
- ffacd0b85a97d-3a0ac1ff66fmr2665764f8f.43.1746542171075; 
- Tue, 06 May 2025 07:36:11 -0700 (PDT)
+ bh=EJbqmq9kFpuW6bFY3e+x+p51Q9qF9BEDYXcNOdMViWc=;
+ b=wM4OleERnZi6OGEvhGAjTUIuJmzbyamrk0LlRWa0rztCMPIGYMtUWW94XELoae+zou
+ A85+COCC//0qJ1tLtM6OsQLVz1ozWbvfMbjTsZsbsVDDaab+HJrRCRIaL7vTBaFQmL74
+ X8kRkAgjPgPhMurg9wjJ1H7t0Q2MGJrUohGfHfGx8MUgPpV5orHL+vV9C34oPKHf80RS
+ 8R99V9b317Z14quHJQBcuYhGI75HwNEaoFW9NEaihb4k7VvlZCQkxEiwtwL8mEb2QbKV
+ 5VThfodpjcSnzyx8MU3xAYkcGKz5FvmKKAW5+C9sNm06eOmxUGAeWhkLg87MKIeyuS6v
+ kqOw==
+X-Gm-Message-State: AOJu0YzXmFAuGnPCh9YwsegYtIRhVO1HpkxSG3qMoVu1Xr7zsGgtK9EN
+ zc7LRr4zY7rX97E1cDLbrOxKNtKG6wKFjJ0vBlPsvN5GDQkFZejG09YuJ1fHEJ2FnnE/7jXH5LT
+ 9
+X-Gm-Gg: ASbGncsfZyJTPzm1Go0yglBc9LkDMYCCXRxlPY+56/Wkd5xv95LOP9XvbEMcQMp6+Lv
+ EQxJujufs1c9mP4sYCpAO7M+Wf1BNkEMJNb0I6YXsAvAGbRD7UzytpExmdBFD/8veALMdl+2Xpr
+ b7DP69nKCKjmoVFRttsz2mX41Fde0hDnaXhyITHAf04LPBB+XFplGiBAl1PlA3RvcJ+SgZPcxD+
+ jon2vccoqz4Zpaczz8GbPt6GyI24q252Y4m3/IV/aCAwfJm24r21IRHolQUMksR3dz4aPIjMBwk
+ RVhAeIvq2Xb3re6mJtVPz75UZxJuumEGQ9QrlW3xKDM/J8fafIk1b6Sgm2BdLDt9qfm/uxwk5wJ
+ OAcodQ01JGkh3a5RWkUo3
+X-Google-Smtp-Source: AGHT+IHm/TCOIjAoETc3x3haBoYu7LECfFiIq1TC+eypuHC82NlLojM17S94NK3HKMWrmc9G2jQCqw==
+X-Received: by 2002:a5d:6489:0:b0:3a0:b1ff:8542 with SMTP id
+ ffacd0b85a97d-3a0b1ff88f7mr1739276f8f.8.1746542123326; 
+ Tue, 06 May 2025 07:35:23 -0700 (PDT)
 Received: from localhost.localdomain (91-163-26-170.subs.proxad.net.
  [91.163.26.170]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a0b3d0a77asm101892f8f.56.2025.05.06.07.36.10
+ 5b1f17b1804b1-441b89cc441sm174930805e9.3.2025.05.06.07.35.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 May 2025 07:36:10 -0700 (PDT)
+ Tue, 06 May 2025 07:35:22 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: Steve Sistare <steven.sistare@oracle.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 12/22] hw/hyperv/balloon: common balloon compilation units
-Date: Tue,  6 May 2025 16:35:01 +0200
-Message-ID: <20250506143512.4315-13-philmd@linaro.org>
+Subject: [PULL 02/22] qom: Factor qom_resolve_path() out
+Date: Tue,  6 May 2025 16:34:51 +0200
+Message-ID: <20250506143512.4315-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250506143512.4315-1-philmd@linaro.org>
 References: <20250506143512.4315-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,27 +100,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Steve Sistare <steven.sistare@oracle.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20250424232829.141163-6-pierrick.bouvier@linaro.org>
+Factor out a helper to resolve the user's path and print error messages.
+No functional change.
+
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <1741036202-265696-2-git-send-email-steven.sistare@oracle.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/hyperv/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ qom/qom-qmp-cmds.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/hw/hyperv/meson.build b/hw/hyperv/meson.build
-index a9f2045a9af..5acd709bdd5 100644
---- a/hw/hyperv/meson.build
-+++ b/hw/hyperv/meson.build
-@@ -2,5 +2,5 @@ specific_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'))
- specific_ss.add(when: 'CONFIG_HYPERV_TESTDEV', if_true: files('hyperv_testdev.c'))
- system_ss.add(when: 'CONFIG_VMBUS', if_true: files('vmbus.c'))
- system_ss.add(when: 'CONFIG_SYNDBG', if_true: files('syndbg.c'))
--specific_ss.add(when: 'CONFIG_HV_BALLOON', if_true: files('hv-balloon.c', 'hv-balloon-page_range_tree.c', 'hv-balloon-our_range_memslots.c'))
-+system_ss.add(when: 'CONFIG_HV_BALLOON', if_true: files('hv-balloon.c', 'hv-balloon-page_range_tree.c', 'hv-balloon-our_range_memslots.c'))
- system_ss.add(when: 'CONFIG_HV_BALLOON', if_false: files('hv-balloon-stub.c'))
+diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+index e8665476182..293755f409e 100644
+--- a/qom/qom-qmp-cmds.c
++++ b/qom/qom-qmp-cmds.c
+@@ -28,15 +28,11 @@
+ #include "qom/object_interfaces.h"
+ #include "qom/qom-qobject.h"
+ 
+-ObjectPropertyInfoList *qmp_qom_list(const char *path, Error **errp)
++static Object *qom_resolve_path(const char *path, Error **errp)
+ {
+-    Object *obj;
+     bool ambiguous = false;
+-    ObjectPropertyInfoList *props = NULL;
+-    ObjectProperty *prop;
+-    ObjectPropertyIterator iter;
++    Object *obj = object_resolve_path(path, &ambiguous);
+ 
+-    obj = object_resolve_path(path, &ambiguous);
+     if (obj == NULL) {
+         if (ambiguous) {
+             error_setg(errp, "Path '%s' is ambiguous", path);
+@@ -44,6 +40,19 @@ ObjectPropertyInfoList *qmp_qom_list(const char *path, Error **errp)
+             error_set(errp, ERROR_CLASS_DEVICE_NOT_FOUND,
+                       "Device '%s' not found", path);
+         }
++    }
++    return obj;
++}
++
++ObjectPropertyInfoList *qmp_qom_list(const char *path, Error **errp)
++{
++    Object *obj;
++    ObjectPropertyInfoList *props = NULL;
++    ObjectProperty *prop;
++    ObjectPropertyIterator iter;
++
++    obj = qom_resolve_path(path, errp);
++    if (obj == NULL) {
+         return NULL;
+     }
+ 
 -- 
 2.47.1
 
