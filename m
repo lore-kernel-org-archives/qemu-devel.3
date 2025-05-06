@@ -4,117 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5B37C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 09:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98FB6C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 09:20:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCEPv-0008D5-JW; Tue, 06 May 2025 05:16:47 -0400
+	id 1uCESt-0001KA-6C; Tue, 06 May 2025 05:19:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uCEPr-0008Bi-38
- for qemu-devel@nongnu.org; Tue, 06 May 2025 05:16:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uCESm-0001JH-GD; Tue, 06 May 2025 05:19:46 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uCEPm-0002WP-2W
- for qemu-devel@nongnu.org; Tue, 06 May 2025 05:16:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746522996;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7FIB23mvbtYnFGNFnK8BC0WEahE4E9a/GHcIYRUObXE=;
- b=MwSZUrhGwiBYUc4tij8NBSIZgsKnhnBzehO1zsWCogvSLWkpfd5r4iIqeSw+l/P2x0YogN
- PPluNLT0L4eaYCPvqMIAxbe1ZMjlZ1OZk3KakukVoQFUKcbH+uafpmDnkUD744YNZFCXE/
- l7EWi0+ZrmGPyGH/cl2HfhSpU2JrfMQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-344-UpVHCG4nPMSivhQuo1k0kg-1; Tue, 06 May 2025 05:16:35 -0400
-X-MC-Unique: UpVHCG4nPMSivhQuo1k0kg-1
-X-Mimecast-MFC-AGG-ID: UpVHCG4nPMSivhQuo1k0kg_1746522994
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a0af6219a5so147556f8f.1
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 02:16:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746522994; x=1747127794;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7FIB23mvbtYnFGNFnK8BC0WEahE4E9a/GHcIYRUObXE=;
- b=fSM4lfjC3lAGC3g65YJLyVVKPX2ts69Nu+u6Za7b8jCK0awWuU5Yhx7hDSlluOOq7F
- ePRO8a78FRKaC65hrdBs5VttgviGq063ZK0u54uBV5X8YRVxrCI7CrZqB2yIPb3kpwtg
- C/p9bq7qvDmvhy5UvpHR4R+2kLUx2LSfC8edxPyJChOyMRnGHJkBC0dkyDFq2CCJgpwc
- E4hEqM8pGMQQ2pBry9x7qoeWxGguXd7D/A3Bk3rAPIOmH6OalrRT5v+HNmxj1lSgwMZr
- dyW+1u1iTqzfvsYssj0AgC/PzSYVKCATcNqrYNL0UwSUdzDbuGtYVXRZKO/bNzw6YZkU
- Tkbg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXQFfGMEd+5jp3V/2TcgyxpOvvu/oaGblZP7zd4mvMkAYkobHn2onXcbTeEwx8JI6kIMCGjcIRD1kIp@nongnu.org
-X-Gm-Message-State: AOJu0Yw7cn5aSg/JbMmUxAOIxXGQrb6lLXI8Kf6HzV7IYKmkrcjdqKwl
- 27XNihZz0pmBkOtR1U9cWUvOOaqaczbRlN9LgYHwtAfakuEofL9KtGiY3g7cLMCCTxN/9QOO28+
- iLFqd/PY4S7hKnAwsoNGjHuxwsazHJq0mw6KSvKZ9i+6VeDGpgirX
-X-Gm-Gg: ASbGncvOGfUgr929iyDd5KugjhVumhiakpwhIjZE7wnr6FVc313XoT7PK28Eg2aOmfQ
- eX1qtoGzqlQ9b8b0NC67FZSJJZePy4b93z5D2DgBXEiTGgmp3FZMjE2uEy7PK/rP+/5GqHDIZw1
- /JSamu962TwsjhyimcgtLSXyFvdE/GSLCICZQ2nkycJVgbPX2PfpPS4TbfDmKjPTZsdiN2daim5
- /jeOne48r5HBCp88NBhMmzf4r0Vd5jDpF7XkXvMYtt5qxjbUEMyJBG+hFi20k9E3zl0Z3R0AI3c
- MiCZdg==
-X-Received: by 2002:a05:6000:1843:b0:39c:30f7:b6ad with SMTP id
- ffacd0b85a97d-3a0ab58f3camr1826758f8f.18.1746522994402; 
- Tue, 06 May 2025 02:16:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEh3AmmiSUjKPZ1cUnEPXpLCYmWW9uQ8GAIwGfxbd9IoxVrigFZ6KykE0POMwpFUld9qbrcQg==
-X-Received: by 2002:a05:6000:1843:b0:39c:30f7:b6ad with SMTP id
- ffacd0b85a97d-3a0ab58f3camr1826742f8f.18.1746522994012; 
- Tue, 06 May 2025 02:16:34 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae0d3csm12772869f8f.3.2025.05.06.02.16.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 02:16:33 -0700 (PDT)
-Date: Tue, 6 May 2025 05:16:29 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- David Hildenbrand <david@redhat.com>,
- Eugenio =?iso-8859-1?Q?P=E9rez?= <eperezma@redhat.com>,
- Jonah Palmer <jonah.palmer@oracle.com>,
- Raphael Norwitz <raphael.norwitz@nutanix.com>,
- Jason Wang <jasowang@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-ppc@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: Re: [RFC PATCH] hw/virtio: Introduce CONFIG_VIRTIO_LEGACY to disable
- legacy support
-Message-ID: <20250506051530-mutt-send-email-mst@kernel.org>
-References: <20250502132441.64723-1-philmd@linaro.org>
- <aBnCk2WE_SNkRgSH@redhat.com>
- <20250506040903-mutt-send-email-mst@kernel.org>
- <59c4d557-2f73-4b56-8650-f16ed3cd7bb2@linaro.org>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uCESj-0002pi-U4; Tue, 06 May 2025 05:19:44 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZsCWy3JVPz6K9lD;
+ Tue,  6 May 2025 17:19:26 +0800 (CST)
+Received: from frapeml500006.china.huawei.com (unknown [7.182.85.219])
+ by mail.maildlp.com (Postfix) with ESMTPS id BD555140373;
+ Tue,  6 May 2025 17:19:36 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500006.china.huawei.com (7.182.85.219) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 6 May 2025 11:19:36 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Tue, 6 May 2025 11:19:36 +0200
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "mochs@nvidia.com" <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)"
+ <wangzhou1@hisilicon.com>, jiangkunkun <jiangkunkun@huawei.com>, "Jonathan
+ Cameron" <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>
+Subject: RE: [PATCH v2 3/6] hw/arm/virt: Factor out common SMMUV3 dt bindings
+ code
+Thread-Topic: [PATCH v2 3/6] hw/arm/virt: Factor out common SMMUV3 dt bindings
+ code
+Thread-Index: AQHbu00b8fX0gegQfEO/g7XdQ0ReRLPDoJAAgAG27NA=
+Date: Tue, 6 May 2025 09:19:36 +0000
+Message-ID: <e2e43104047e4294b3feab4726512e0a@huawei.com>
+References: <20250502102707.110516-1-shameerali.kolothum.thodi@huawei.com>
+ <20250502102707.110516-4-shameerali.kolothum.thodi@huawei.com>
+ <fd53570b-7e2c-47db-9d31-93a9d2327f2f@redhat.com>
+In-Reply-To: <fd53570b-7e2c-47db-9d31-93a9d2327f2f@redhat.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <59c4d557-2f73-4b56-8650-f16ed3cd7bb2@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,99 +83,103 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 06, 2025 at 10:55:34AM +0200, Philippe Mathieu-Daudé wrote:
-> On 6/5/25 10:12, Michael S. Tsirkin wrote:
-> > On Tue, May 06, 2025 at 09:04:50AM +0100, Daniel P. Berrangé wrote:
-> > > On Fri, May 02, 2025 at 03:24:41PM +0200, Philippe Mathieu-Daudé wrote:
-> > > > Legacy VirtIO devices don't have their endianness clearly defined.
-> > > > QEMU infers it taking the endianness of the (target) binary, or,
-> > > > when a target support switching endianness at runtime, taking the
-> > > > endianness of the vCPU accessing the device.
-> > > > 
-> > > > Devices modelling shouldn't really change depending on a property
-> > > > of a CPU accessing it.
-> > > > 
-> > > > For heterogeneous systems, it is simpler to break such dev <-> cpu
-> 
->         ^^^^^^^^^^^^^
-> 
-> > > > dependency, only allowing generic device models, with no knowledge
-> > > > of CPU (or DMA controller) accesses.
-> > > > 
-> > > > Therefore we introduce the VIRTIO_LEGACY Kconfig key. We keep the
-> > > > current default (enabled).
-> > > > New binaries can set CONFIG_VIRTIO_LEGACY=n to restrict models to
-> > > > the VirtIO version 1 spec.
-> > > 
-> > > IMHO that isn't acceptable. In order to be able to provide an
-> > > upgrade path from the old binaries, we need the need the new
-> > > binaries to be able to serve the same use cases & disabling
-> > > virtio 0.9 support prevents that.
-> 
-> This isn't for the single binary effort, there we are taking a
-> lot of care to not introduce any change.
-> 
-> This is for after it; once we have a single binary (one architecture
-> run by an instance) we can start testing heterogeneous emulation
-> (different architectures in the same instance).
-> 
-> > > I don't see a compelling
-> > > technical reason why we can't support virtio 0.9 from this
-> > > endian point.
-> 
-> VirtIO 0.9 needs knowledge of the vCPU architecture to get its
-> endianness. So we need to somehow propagate that at creation
-> time, guarantying which vCPU (or set of vCPUs) will access a
-> virtio device.
-> 
-> The use case I'd like to figure out is how should we model
-> plugging a virtio 0.9 device in into a fully emulated
-> ZynqMP machine, which has little-endian ARM cores and big
-> endian MicroBlaze cores.
-> 
-> Alex said this is unlikely to happen, and better is to
-> ignore this case by not allowing virtio pre-1.0 devices in
-> our future heterogeneous emulator.
-
-Indeed. I just do not think this can be done with a kconfig knob,
-it's a machine property.
-
-> In this same thread Pierrick pointed me to the reference in
-> the spec: '2.4.3 Legacy Interfaces: A Note on Virtqueue Endianness',
-> "It is assumed that the host is already aware of the guest endian."
-> 
-> I suppose this means a pre-1.0 virtio device expect to be used by
-> a single guest OS, but it is not clear the guest OS as fixed
-> endianness, because the code path checks vCPU endianness at
-> runtime, so passing guest endianness as a property to pre-1.0
-> devices isn't really an option.
-> 
-> Anyway I think 1/ I posted this too early, "speculating" as Pierrick
-> noticed, and confuse the community w.r.t. "single binary" and
-> 2/ I don' t understand legacy virtio and its endianness handling
-> enough to figure a clever idea to keep using it heterogeneous
-> setup, so I'll let this task to someone more familiar with that tech.
-> 
-> > > Yes may be more ugly/messy than we would like, but that's par
-> > > for the course with QEMU emulating arbitrary device models.
-> > > If the new binaries can't cope with messy devices then I think
-> > > we are doing something wrong.
-> 
-> > 
-> > To be more specific, having a kconfig knob modifying the device
-> > without regards for machine types, means it is no longer
-> > enough to inspect the command line to figure out the
-> > compatiblity. That's a problem.
-> > 
-> 
-> OK. I won't pursue in this direction. I apologize for mentioning
-> this topic again too early.
-> 
-> Regards,
-> 
-> Phil.
-
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRXJpYyBBdWdlciA8ZXJp
+Yy5hdWdlckByZWRoYXQuY29tPg0KPiBTZW50OiBNb25kYXksIE1heSA1LCAyMDI1IDEwOjAyIEFN
+DQo+IFRvOiBTaGFtZWVyYWxpIEtvbG90aHVtIFRob2RpDQo+IDxzaGFtZWVyYWxpLmtvbG90aHVt
+LnRob2RpQGh1YXdlaS5jb20+OyBxZW11LWFybUBub25nbnUub3JnOw0KPiBxZW11LWRldmVsQG5v
+bmdudS5vcmcNCj4gQ2M6IHBldGVyLm1heWRlbGxAbGluYXJvLm9yZzsgamdnQG52aWRpYS5jb207
+IG5pY29saW5jQG52aWRpYS5jb207DQo+IGRkdXRpbGVAcmVkaGF0LmNvbTsgYmVycmFuZ2VAcmVk
+aGF0LmNvbTsgbmF0aGFuY0BudmlkaWEuY29tOw0KPiBtb2Noc0BudmlkaWEuY29tOyBzbW9zdGFm
+YUBnb29nbGUuY29tOyBMaW51eGFybQ0KPiA8bGludXhhcm1AaHVhd2VpLmNvbT47IFdhbmd6aG91
+IChCKSA8d2FuZ3pob3UxQGhpc2lsaWNvbi5jb20+Ow0KPiBqaWFuZ2t1bmt1biA8amlhbmdrdW5r
+dW5AaHVhd2VpLmNvbT47IEpvbmF0aGFuIENhbWVyb24NCj4gPGpvbmF0aGFuLmNhbWVyb25AaHVh
+d2VpLmNvbT47IHpoYW5nZmVpLmdhb0BsaW5hcm8ub3JnDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0gg
+djIgMy82XSBody9hcm0vdmlydDogRmFjdG9yIG91dCBjb21tb24gU01NVVYzIGR0DQo+IGJpbmRp
+bmdzIGNvZGUNCj4gDQo+IEhpIFNoYW1lZXIsDQo+IA0KPiBPbiA1LzIvMjUgMTI6MjcgUE0sIFNo
+YW1lZXIgS29sb3RodW0gd3JvdGU6DQo+ID4gTm8gZnVuY3Rpb25hbCBjaGFuZ2VzIGludGVuZGVk
+LiBUaGlzIHdpbGwgYmUgdXNlZnVsIHdoZW4gd2UNCj4gPiBhZGQgc3VwcG9ydCBmb3IgdXNlci1j
+cmVhdGFibGUgc21tdXYzIGRldmljZS4NCj4gPg0KPiA+IFNpZ25lZC1vZmYtYnk6IFNoYW1lZXIg
+S29sb3RodW0NCj4gPHNoYW1lZXJhbGkua29sb3RodW0udGhvZGlAaHVhd2VpLmNvbT4NCj4gPiAt
+LS0NCj4gPiAgaHcvYXJtL3ZpcnQuYyB8IDU0ICsrKysrKysrKysrKysrKysrKysrKysrKysrKy0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPiA+ICAxIGZpbGUgY2hhbmdlZCwgMjkgaW5zZXJ0aW9u
+cygrKSwgMjUgZGVsZXRpb25zKC0pDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvaHcvYXJtL3ZpcnQu
+YyBiL2h3L2FybS92aXJ0LmMNCj4gPiBpbmRleCBkZDM1NWY0NDU0Li40NjRlODRhZTY3IDEwMDY0
+NA0KPiA+IC0tLSBhL2h3L2FybS92aXJ0LmMNCj4gPiArKysgYi9ody9hcm0vdmlydC5jDQo+ID4g
+QEAgLTE0MTgsMTkgKzE0MTgsNDMgQEAgc3RhdGljIHZvaWQgY3JlYXRlX3BjaWVfaXJxX21hcChj
+b25zdA0KPiBNYWNoaW5lU3RhdGUgKm1zLA0KPiA+ICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAweDcgICAgICAgICAgIC8qIFBDSSBpcnEgKi8pOw0KPiA+ICB9DQo+ID4NCj4gPiArc3RhdGlj
+IHZvaWQgY3JlYXRlX3NtbXV2M19kdF9iaW5kaW5ncyhjb25zdCBWaXJ0TWFjaGluZVN0YXRlICp2
+bXMsDQo+IGh3YWRkciBiYXNlLA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgIGh3YWRkciBzaXplLCBpbnQgaXJxKQ0KPiA+ICt7DQo+ID4gKyAgICBjaGFyICpub2Rl
+Ow0KPiA+ICsgICAgY29uc3QgY2hhciBjb21wYXRbXSA9ICJhcm0sc21tdS12MyI7DQo+ID4gKyAg
+ICBjb25zdCBjaGFyIGlycV9uYW1lc1tdID0gImV2ZW50cVwwcHJpcVwwY21kcS1zeW5jXDBnZXJy
+b3IiOw0KPiA+ICsgICAgTWFjaGluZVN0YXRlICptcyA9IE1BQ0hJTkUodm1zKTsNCj4gPiArDQo+
+ID4gKyAgICBub2RlID0gZ19zdHJkdXBfcHJpbnRmKCIvc21tdXYzQCUiIFBSSXg2NCwgYmFzZSk7
+DQo+ID4gKyAgICBxZW11X2ZkdF9hZGRfc3Vibm9kZShtcy0+ZmR0LCBub2RlKTsNCj4gPiArICAg
+IHFlbXVfZmR0X3NldHByb3AobXMtPmZkdCwgbm9kZSwgImNvbXBhdGlibGUiLCBjb21wYXQsDQo+
+IHNpemVvZihjb21wYXQpKTsNCj4gPiArICAgIHFlbXVfZmR0X3NldHByb3Bfc2l6ZWRfY2VsbHMo
+bXMtPmZkdCwgbm9kZSwgInJlZyIsIDIsIGJhc2UsIDIsIHNpemUpOw0KPiA+ICsNCj4gPiArICAg
+IHFlbXVfZmR0X3NldHByb3BfY2VsbHMobXMtPmZkdCwgbm9kZSwgImludGVycnVwdHMiLA0KPiA+
+ICsgICAgICAgICAgICBHSUNfRkRUX0lSUV9UWVBFX1NQSSwgaXJxICAgICwgR0lDX0ZEVF9JUlFf
+RkxBR1NfRURHRV9MT19ISSwNCj4gPiArICAgICAgICAgICAgR0lDX0ZEVF9JUlFfVFlQRV9TUEks
+IGlycSArIDEsDQo+IEdJQ19GRFRfSVJRX0ZMQUdTX0VER0VfTE9fSEksDQo+ID4gKyAgICAgICAg
+ICAgIEdJQ19GRFRfSVJRX1RZUEVfU1BJLCBpcnEgKyAyLA0KPiBHSUNfRkRUX0lSUV9GTEFHU19F
+REdFX0xPX0hJLA0KPiA+ICsgICAgICAgICAgICBHSUNfRkRUX0lSUV9UWVBFX1NQSSwgaXJxICsg
+MywNCj4gR0lDX0ZEVF9JUlFfRkxBR1NfRURHRV9MT19ISSk7DQo+ID4gKw0KPiA+ICsgICAgcWVt
+dV9mZHRfc2V0cHJvcChtcy0+ZmR0LCBub2RlLCAiaW50ZXJydXB0LW5hbWVzIiwgaXJxX25hbWVz
+LA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICBzaXplb2YoaXJxX25hbWVzKSk7DQo+ID4gKw0K
+PiA+ICsgICAgcWVtdV9mZHRfc2V0cHJvcChtcy0+ZmR0LCBub2RlLCAiZG1hLWNvaGVyZW50Iiwg
+TlVMTCwgMCk7DQo+ID4gKyAgICBxZW11X2ZkdF9zZXRwcm9wX2NlbGwobXMtPmZkdCwgbm9kZSwg
+IiNpb21tdS1jZWxscyIsIDEpOw0KPiA+ICsgICAgcWVtdV9mZHRfc2V0cHJvcF9jZWxsKG1zLT5m
+ZHQsIG5vZGUsICJwaGFuZGxlIiwgdm1zLQ0KPiA+aW9tbXVfcGhhbmRsZSk7DQo+ID4gKyAgICBn
+X2ZyZWUobm9kZSk7DQo+ID4gK30NCj4gPiArDQo+ID4gIHN0YXRpYyB2b2lkIGNyZWF0ZV9zbW11
+KGNvbnN0IFZpcnRNYWNoaW5lU3RhdGUgKnZtcywNCj4gPiAgICAgICAgICAgICAgICAgICAgICAg
+ICAgUENJQnVzICpidXMpDQo+ID4gIHsNCj4gPiAgICAgIFZpcnRNYWNoaW5lQ2xhc3MgKnZtYyA9
+IFZJUlRfTUFDSElORV9HRVRfQ0xBU1Modm1zKTsNCj4gPiAtICAgIGNoYXIgKm5vZGU7DQo+ID4g
+LSAgICBjb25zdCBjaGFyIGNvbXBhdFtdID0gImFybSxzbW11LXYzIjsNCj4gPiAgICAgIGludCBp
+cnEgPSAgdm1zLT5pcnFtYXBbVklSVF9TTU1VXTsNCj4gPiAgICAgIGludCBpOw0KPiA+ICAgICAg
+aHdhZGRyIGJhc2UgPSB2bXMtPm1lbW1hcFtWSVJUX1NNTVVdLmJhc2U7DQo+ID4gICAgICBod2Fk
+ZHIgc2l6ZSA9IHZtcy0+bWVtbWFwW1ZJUlRfU01NVV0uc2l6ZTsNCj4gPiAtICAgIGNvbnN0IGNo
+YXIgaXJxX25hbWVzW10gPSAiZXZlbnRxXDBwcmlxXDBjbWRxLXN5bmNcMGdlcnJvciI7DQo+ID4g
+ICAgICBEZXZpY2VTdGF0ZSAqZGV2Ow0KPiA+IC0gICAgTWFjaGluZVN0YXRlICptcyA9IE1BQ0hJ
+TkUodm1zKTsNCj4gPg0KPiA+ICAgICAgaWYgKHZtcy0+aW9tbXUgIT0gVklSVF9JT01NVV9TTU1V
+VjMgfHwgIXZtcy0+aW9tbXVfcGhhbmRsZSkgew0KPiA+ICAgICAgICAgIHJldHVybjsNCj4gPiBA
+QCAtMTQ0OSwyNyArMTQ3Myw3IEBAIHN0YXRpYyB2b2lkIGNyZWF0ZV9zbW11KGNvbnN0DQo+IFZp
+cnRNYWNoaW5lU3RhdGUgKnZtcywNCj4gPiAgICAgICAgICBzeXNidXNfY29ubmVjdF9pcnEoU1lT
+X0JVU19ERVZJQ0UoZGV2KSwgaSwNCj4gPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcWRl
+dl9nZXRfZ3Bpb19pbih2bXMtPmdpYywgaXJxICsgaSkpOw0KPiA+ICAgICAgfQ0KPiA+IC0NCj4g
+PiAtICAgIG5vZGUgPSBnX3N0cmR1cF9wcmludGYoIi9zbW11djNAJSIgUFJJeDY0LCBiYXNlKTsN
+Cj4gPiAtICAgIHFlbXVfZmR0X2FkZF9zdWJub2RlKG1zLT5mZHQsIG5vZGUpOw0KPiA+IC0gICAg
+cWVtdV9mZHRfc2V0cHJvcChtcy0+ZmR0LCBub2RlLCAiY29tcGF0aWJsZSIsIGNvbXBhdCwNCj4g
+c2l6ZW9mKGNvbXBhdCkpOw0KPiA+IC0gICAgcWVtdV9mZHRfc2V0cHJvcF9zaXplZF9jZWxscyht
+cy0+ZmR0LCBub2RlLCAicmVnIiwgMiwgYmFzZSwgMiwgc2l6ZSk7DQo+ID4gLQ0KPiA+IC0gICAg
+cWVtdV9mZHRfc2V0cHJvcF9jZWxscyhtcy0+ZmR0LCBub2RlLCAiaW50ZXJydXB0cyIsDQo+ID4g
+LSAgICAgICAgICAgIEdJQ19GRFRfSVJRX1RZUEVfU1BJLCBpcnEgICAgLCBHSUNfRkRUX0lSUV9G
+TEFHU19FREdFX0xPX0hJLA0KPiA+IC0gICAgICAgICAgICBHSUNfRkRUX0lSUV9UWVBFX1NQSSwg
+aXJxICsgMSwgR0lDX0ZEVF9JUlFfRkxBR1NfRURHRV9MT19ISSwNCj4gPiAtICAgICAgICAgICAg
+R0lDX0ZEVF9JUlFfVFlQRV9TUEksIGlycSArIDIsIEdJQ19GRFRfSVJRX0ZMQUdTX0VER0VfTE9f
+SEksDQo+ID4gLSAgICAgICAgICAgIEdJQ19GRFRfSVJRX1RZUEVfU1BJLCBpcnEgKyAzLA0KPiBH
+SUNfRkRUX0lSUV9GTEFHU19FREdFX0xPX0hJKTsNCj4gPiAtDQo+ID4gLSAgICBxZW11X2ZkdF9z
+ZXRwcm9wKG1zLT5mZHQsIG5vZGUsICJpbnRlcnJ1cHQtbmFtZXMiLCBpcnFfbmFtZXMsDQo+ID4g
+LSAgICAgICAgICAgICAgICAgICAgIHNpemVvZihpcnFfbmFtZXMpKTsNCj4gPiAtDQo+ID4gLSAg
+ICBxZW11X2ZkdF9zZXRwcm9wKG1zLT5mZHQsIG5vZGUsICJkbWEtY29oZXJlbnQiLCBOVUxMLCAw
+KTsNCj4gPiAtDQo+ID4gLSAgICBxZW11X2ZkdF9zZXRwcm9wX2NlbGwobXMtPmZkdCwgbm9kZSwg
+IiNpb21tdS1jZWxscyIsIDEpOw0KPiA+IC0NCj4gPiAtICAgIHFlbXVfZmR0X3NldHByb3BfY2Vs
+bChtcy0+ZmR0LCBub2RlLCAicGhhbmRsZSIsIHZtcy0NCj4gPmlvbW11X3BoYW5kbGUpOw0KPiA+
+IC0gICAgZ19mcmVlKG5vZGUpOw0KPiA+ICsgICAgY3JlYXRlX3NtbXV2M19kdF9iaW5kaW5ncyh2
+bXMsIGJhc2UsIHNpemUsIGlycSk7DQo+ID4gIH0NCj4gPg0KPiA+ICBzdGF0aWMgdm9pZCBjcmVh
+dGVfdmlydGlvX2lvbW11X2R0X2JpbmRpbmdzKFZpcnRNYWNoaW5lU3RhdGUgKnZtcykNCj4gUmV2
+aWV3ZWQtYnk6IEVyaWMgQXVnZXIgPGVyaWMuYXVnZXJAcmVkaGF0LmNvbT4NCj4gDQo+IG5vdGhp
+bmcgdG8gZG8gd2l0aCB0aGF0IHBhdGNoIGJ1dCBJIGp1c3Qgbm90aWNlZCB3ZSBvbWl0dGVkIHRv
+IHN1cHBvcnQgdGhlDQo+IA0KPiBieXBhc3NfaW9tbXU9dHJ1ZSBhbG9uZyB3aXRoIERUIG1vZGUu
+IEkgZG9uJ3Qgc2VlIHRoZSBpb21tdS1tYXANCj4gcHJvcGVydHkgc2V0IGFjY29yZGluZ2x5Lg0K
+PiANCj4gU29tZXRoaW5nIHRvIGZ1cnRoZXIgY29uc29saWRhdGU/DQoNClllcy4gSXQgbG9va3Mg
+bGlrZSBjdXJyZW50bHkgdGhlIHZpcnQgU01NVXYzIERUIGNvZGUgZG9lc24ndCB0YWtlIGNhcmUg
+b2YNCmJ5cGFzc19pb21tdT10cnVlIGNhc2UuIEkgd2lsbCBhZGQgdGhhdCBjaGVjay4NCg0KVGhh
+bmtzLA0KU2hhbWVlcg0K
 
