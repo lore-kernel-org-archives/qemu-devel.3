@@ -4,79 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E72C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 13:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AFF6C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 13:41:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCIEe-0002hT-F1; Tue, 06 May 2025 09:21:24 -0400
+	id 1uCIXN-0007zn-WA; Tue, 06 May 2025 09:40:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uCIEc-0002gm-Je
- for qemu-devel@nongnu.org; Tue, 06 May 2025 09:21:22 -0400
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uCIXM-0007zf-Rt
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 09:40:44 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uCIEa-0007Hp-RU
- for qemu-devel@nongnu.org; Tue, 06 May 2025 09:21:22 -0400
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-e731a56e111so4791072276.1
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 06:21:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746537679; x=1747142479; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=qsOJ6RiZETL6qZFBxc1blmCwCUn7EGIAVwx88TXfxTs=;
- b=wzTfX2jyErqNZuV927SLiQmP5+5UfDWwxCsOglAErhPQuvVRfGU/RlR0Pkk78C44FK
- FpV053Eg85Jh3Q+A9U1bDCGSK3fsFxrktgvXZm2tN+G8XmvqiAhYNWuJdQjHRbcEJPdF
- PQdr+GAEcQkbqakrQFSsg956ng3SVlzBNzCPChY6EiSkXDohwuV7mcAwvvkWfx22GYAh
- /o60PcldplZ8ZIrwobsgzIAlD2xrD/u7t0yhqhKxq3AaXHM/f+zUI9WkScu/xHLTQKJF
- h6sYhfba/gzaVYi5KLtkswqwkzyuKbq3ZWvKmTXwcWQQ7lKVPO8Q0WQG8hn689io8pdN
- GqxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746537679; x=1747142479;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qsOJ6RiZETL6qZFBxc1blmCwCUn7EGIAVwx88TXfxTs=;
- b=OT0G0vkBUBFJ5pkTBpEaYdvQm+fpjdE2byIVHrk+PEO3DAvH3eITIFap11Fi54QDG0
- nvQaKAVmBf1JuOj7DpwgKDYhcoEANwn/FlickIWb69wOKq4J6g+xeJRCszkAf2AebTj6
- 96bJEFYbg5gLkutsEMVl9OISiKvv/C+La8BFa9wg7FhN7YDO/LpHi35Y8P+X8lzHlGK0
- pIOf1NRida8z/AqmdZfrJrV6QWuLJrQWet89gVLJJkHJfw8RUzSx/qgHl1+4GyktyJIJ
- HiobFKAhQ7vCr4vPe0lRx1SRrj7rS4CSYtZiD2Nwo1Y+cvy4d3dDRkNGRYVJ8JuXvO++
- f16w==
-X-Gm-Message-State: AOJu0YxyNQ7i3hw9VJPcwQ1KUPc7a4ZfOa37vd4oYzuHUVoK6RWfAk2T
- Xpl/vtkEBY+mMDeRs44tLf6CrSZUy7uZ1Zh0X1ns4+uR7blhZUihNBhk4+saFAQV2VJm53igtaw
- bI8+2tYWxrUlVrR0BgCpaLM+ypMSgbRdd694XMw==
-X-Gm-Gg: ASbGncsJ6ZTI9jTz31WI5lRSXJEu6ta/Tm4YK6z4PfeCtR1VInY0zWP2D4CQNnjgpQg
- ULGgWAhMAbhrf4QuKuBGym1W2xGaQ4okwnLOeC0yJO+7YxmOf6KUvvei35bwgTNdNcW5VMcl0it
- eDwNjxxswfD/22c0tvp9RVXkw=
-X-Google-Smtp-Source: AGHT+IEoxKQf3KZ6nPGN/iRJrEQbUml+UBYPKPGS6tM57l/BXvlgZJf1G5bIRnRM0b6fkTYXwL9AmrEssJnvE+wJmX4=
-X-Received: by 2002:a05:6902:188b:b0:e6d:fe4e:2fea with SMTP id
- 3f1490d57ef6-e757d2e7cb1mr13449368276.22.1746537679447; Tue, 06 May 2025
- 06:21:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uCIXK-0001pn-V3
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 09:40:44 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id CE41021219;
+ Tue,  6 May 2025 13:40:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1746538840; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6Axh9iIwugGHQTOEQUStY2Kd0seJ4D7h1OrpGETWxyQ=;
+ b=opmZRhMEnalFOzSPi36na2T1eejBzyPliVZ4BJ/IV8VklekFoqdiuMXz6bDgxiFk+aYKf5
+ Egd5MF+ge/1br/DiDaUU3P57a1oErlJV057v070f7EGGdAz1V1DFvoWQZgDt0aDYwRFs7m
+ unwMsLJ62p0bmxz2f+4NMOPUwG4VpLM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1746538840;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6Axh9iIwugGHQTOEQUStY2Kd0seJ4D7h1OrpGETWxyQ=;
+ b=6zKuAXgM9AiUqOYTWkYNgxN/yoYtn9VcZn2fJrsYCPy6x1pTMtELuqLsNOb05R5L2Icguv
+ JVX54soZDf9jxmAw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=opmZRhME;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=6zKuAXgM
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1746538840; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6Axh9iIwugGHQTOEQUStY2Kd0seJ4D7h1OrpGETWxyQ=;
+ b=opmZRhMEnalFOzSPi36na2T1eejBzyPliVZ4BJ/IV8VklekFoqdiuMXz6bDgxiFk+aYKf5
+ Egd5MF+ge/1br/DiDaUU3P57a1oErlJV057v070f7EGGdAz1V1DFvoWQZgDt0aDYwRFs7m
+ unwMsLJ62p0bmxz2f+4NMOPUwG4VpLM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1746538840;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6Axh9iIwugGHQTOEQUStY2Kd0seJ4D7h1OrpGETWxyQ=;
+ b=6zKuAXgM9AiUqOYTWkYNgxN/yoYtn9VcZn2fJrsYCPy6x1pTMtELuqLsNOb05R5L2Icguv
+ JVX54soZDf9jxmAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 48AB5137CF;
+ Tue,  6 May 2025 13:40:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id v6NFAlgRGmjsQQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 06 May 2025 13:40:40 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
+ berrange@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v9 0/7] Allow to enable multifd and postcopy migration
+ together
+In-Reply-To: <CAE8KmOzBZd=_FmmJTiwqKw5yPoYR7_+q+umpXBFJGPYZYuMgWw@mail.gmail.com>
+References: <20250411114534.3370816-1-ppandit@redhat.com>
+ <87ecxteym0.fsf@suse.de> <87bjswfeis.fsf@suse.de>
+ <CAE8KmOzzn7g1=pd2J325gAf4ffmGALKoHdgL17So4KawxkZdbg@mail.gmail.com>
+ <87y0vyepta.fsf@suse.de> <aAlu0hcUCdzmIN4p@x1.local>
+ <CAE8KmOz7P+Pz8zwJq+mTEJbZjhCk7iAo9+c5DrZzhbTmz=VtUQ@mail.gmail.com>
+ <87v7qeg9r3.fsf@suse.de>
+ <CAE8KmOzBZd=_FmmJTiwqKw5yPoYR7_+q+umpXBFJGPYZYuMgWw@mail.gmail.com>
+Date: Tue, 06 May 2025 10:40:37 -0300
+Message-ID: <87plglg8mi.fsf@suse.de>
 MIME-Version: 1.0
-References: <20250505222236.1616628-1-komlodi@google.com>
-In-Reply-To: <20250505222236.1616628-1-komlodi@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 6 May 2025 14:21:08 +0100
-X-Gm-Features: ATxdqUF_g-z3wSHZSzZG2W_Afo8bmCqHWDgFArRKJdgE3jmkS_dtQWDyuAxe1tQ
-Message-ID: <CAFEAcA_65vRzAp1DzcZSDPWG+vX1C6xuh_2afdHqmXVFKZADmg@mail.gmail.com>
-Subject: Re: [PATCH] system/physmem: Fix UBSan finding in
- address_space_write_rom_internal
-To: Joe Komlodi <komlodi@google.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, peterx@redhat.com, 
- david@redhat.com, philmd@linaro.org, venture@google.com, pefoley@google.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: CE41021219
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_FIVE(0.00)[5];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,52 +135,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 5 May 2025 at 23:23, Joe Komlodi <komlodi@google.com> wrote:
+Prasad Pandit <ppandit@redhat.com> writes:
+
+> Hi,
 >
-> address_space_write_rom_internal can take in a NULL pointer for ptr if
-> it's only doing cache flushes instead of populating the ROM.
+> On Tue, 6 May 2025 at 00:34, Fabiano Rosas <farosas@suse.de> wrote:
+>> >> # Running /ppc64/migration/multifd+postcopy/tcp/plain/cancel
+>> >> # Using machine type: pseries-10.0
+>> >> # starting QEMU: exec ./qemu-system-ppc64 -qtest
+>> >> # {
+>> >> #     "error": {
+>> >> #         "class": "GenericError",
+>> >> #         "desc": "Postcopy is not supported: Userfaultfd not available: Function not implemented"
+>> >> #     }
+>> >> # }
+>> >
+> ===
+> [ ~]#
+> ...
+> PPC KVM module is not loaded. Try modprobe kvm_hv.
+> qemu-system-ppc64: -accel kvm: failed to initialize kvm: Invalid argument
+> qemu-system-ppc64: -accel kvm: ioctl(KVM_CREATE_VM) failed: Invalid argument
+> PPC KVM module is not loaded. Try modprobe kvm_hv.
+> qemu-system-ppc64: -accel kvm: failed to initialize kvm: Invalid argument
+
+The tests should fallback to TCG and that should be enough to reproduce
+this issue. I don't think you even need a ppc machine, the CI uses a
+x86_64 container.
+
+> [ ~]#
 >
-> However, if building with --enable-ubsan, incrementing buf causes ubsan
-> to go off when doing cache flushes, since it will trigger on pointer
-> arithmetic on a NULL pointer, even if that NULL pointer doesn't get
-> dereferenced.
+> [ ~]# modprobe kvm-hv
+> modprobe: ERROR: could not insert 'kvm_hv': No such device
+> [ ~]#
+> [ ~]# ls -l /dev/kvm /dev/userfaultfd
+> crw-rw-rw-. 1 root kvm  10, 232 May  6 07:06 /dev/kvm
+> crw----rw-. 1 root root 10, 123 May  6 06:30 /dev/userfaultfd
+> [ ~]#
+> ===
 >
-> To fix this, we can move the buf incrementing to only be done when
-> writing data to ROM, since that's the only point where it gets
-> dereferenced and should be non-NULL.
+> * I tried to reproduce this issue across multiple Power9 and Power10
+> machines, but I -qtest could not run due to above errors.
 >
-> Found by running:
-> qemu-system-aarch64 \
-> -machine virt \
-> -accel kvm
+
+There are several considerations to take into account with ppc64le, you
+probably have either a distro version that doesn't provide the KVM
+module or a machine that doesn't have KVM support at all.
+
+>> We're missing a check on has_uffd for the multifd+postcopy tests.
 >
-> When built with --enable-ubsan.
+> * If it is about missing the 'e->has_uffd' check, does that mean
+> Postcopy tests are skipped on this machine because 'e->has_uffd' is
+> false?
 >
-> Signed-off-by: Joe Komlodi <komlodi@google.com>
+
+I haven't verified, but yes, the ones that check has_uffd should be
+skipped.
+
+I don't think you need to go to the extent to reproduce this. Look at
+migrate_caps_check(), whenever postcopy-ram is enabled for the first
+time, it will call postcopy_ram_supported_by_host(), so it follows that
+any test that enables postcopy-ram must first check env->has_uffd.
+
+>
+> Thank you.
 > ---
->  system/physmem.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 16cf557d1a..ccd2b50da3 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -3204,6 +3204,7 @@ static inline MemTxResult address_space_write_rom_internal(AddressSpace *as,
->              case WRITE_DATA:
->                  memcpy(ram_ptr, buf, l);
->                  invalidate_and_set_dirty(mr, addr1, l);
-> +                buf += l;
->                  break;
-
-very minor, but I think the buf += l would be slightly better
-one line up, next to the memcpy(). That way we keep the
-"copy more data from buf" and "advance buf the corresponding
-amount" next to each other, rather than separating them by
-the set-dirty operation on the MR.
-
-Anyway
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
+>   - Prasad
 
