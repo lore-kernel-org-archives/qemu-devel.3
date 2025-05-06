@@ -4,99 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FB04C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:43:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C567CC3ABBF
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:43:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCDtF-000332-G9; Tue, 06 May 2025 04:43:01 -0400
+	id 1uCDtg-0003Pt-If; Tue, 06 May 2025 04:43:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uCDtD-00032e-Mg
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:42:59 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uCDte-0003Ke-Ei
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 04:43:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uCDtA-0006Bj-S9
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:42:58 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uCDtc-0006FH-Mn
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 04:43:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746520974;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1746521003;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VBFAHntS4UWdCABIPpBynhyDjXD83ntgx9qwo28tG1I=;
- b=VBK6BraGzXRRk79D+AasBz77GnbT9yXRoKO4JbFy+HvLXRuzdLhck3ewzbqLmdP3Z6K4pq
- UO62DoKmtbdWHcEqOQgQ9eIJ5IQ6BGCLdYWNIl7S8QPxdp/i7mXY8lFG72gtDUKbONcfIY
- YjfHHQkJp6z2uiQh/WBfvMv4MWZrev4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ekfWPmlcRu20I0INlQzkZcjFSIniyMODgHXybySRZ6w=;
+ b=NBSJLpSd5OFABvznKx/efTq6iR84klBifdLErYzUp/w89PNBaUtGRRDt4Js7WYkJFJng+4
+ Su25GcMGA9Gu80SE2djaJH/UlMcWurJZLvL3KrVOmRijR19pB+mtPZ4biWk/V6S7ucMIq+
+ ZUW4btu9+1OB8Qpr/lVpYNNmvLN4CEg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-93DAUQIjOiy8FTmNjrXOow-1; Tue, 06 May 2025 04:42:52 -0400
-X-MC-Unique: 93DAUQIjOiy8FTmNjrXOow-1
-X-Mimecast-MFC-AGG-ID: 93DAUQIjOiy8FTmNjrXOow_1746520971
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43ea256f039so41106785e9.0
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 01:42:52 -0700 (PDT)
+ us-mta-264-cL1F8xkyPvOwfIF5bItJxQ-1; Tue, 06 May 2025 04:43:22 -0400
+X-MC-Unique: cL1F8xkyPvOwfIF5bItJxQ-1
+X-Mimecast-MFC-AGG-ID: cL1F8xkyPvOwfIF5bItJxQ_1746521001
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-39d917b1455so1450350f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 01:43:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746520970; x=1747125770;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VBFAHntS4UWdCABIPpBynhyDjXD83ntgx9qwo28tG1I=;
- b=I/DklJ8cfis3qaUBQRW4eyqI6xt6IHmxeH+91uddjro/aCBmN3FBFMAEuXgdktECZG
- F/eMFzeo03mRMjRtD9hi5vQiOpriOc0WUkoliaRF9GAfIl/NVIj2FY3WPMh6J1Pn/f4P
- y9t3IZyya5W75UHF1Gn3PQaaAeFetzQjcMqRvcVTT+GlSvysj5UtZA3sxiaDEMPkABUI
- 9ocE/zqyHRxQbyo1tTbz4f6kPFFJehXWIW+VeovZteTl11gAoOANkTTsZa1Yvhq31ij+
- eT/mLwRrWwBv5WQahjyFiWphRhn7y93zrF3EZz89QSrayE86iqAvpwg6TPsOpzB7oKQl
- s2Zw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVEqEuOHLqt4C5dHkJtKSNYGeuWk2OctbvBeqIjoni8jkTfpfeZVVaJpHFpwhlRIIhWcmr5GNj6KuOg@nongnu.org
-X-Gm-Message-State: AOJu0Yyp1+XqBs5wbt/ytT6XZYPoS565AygTga6St/vlMyYpLd/yJsEt
- YSCK54GdahtXZe1AJKHDFii7FBvp5erkxlLtNstF6EUrXRcHPsGylVu7j5a/E4vCvHdJfuRRrD/
- +24BP4Zz+0fgdSSDIw4R7rU9f35NflkQsB1lqQA+Xfw3paLgtGazC
-X-Gm-Gg: ASbGncuImRf07Ys8tQgGQwa+hpLoNDKb+d1C2Ktjy0/qY2TNNtVdR/iGWFFYKUChTrn
- uv5aJ9wae0WP53ntndLUKj2PGvOI7SEp40HoNsuTj6RZ4xaehTZY9aG0Qmxga7Ee5y9qfz8PH8y
- 7tZsM1Utg2SiO6P65qBAy9pqf1V0Dj62fZbFX6C7HdeG8Q0SPapuQvetRBgk4PkdqKSLvoPt6RY
- jDFqp1HS9GzYh15gHSBuHrON+d1GAiw05f94M3fSn5uOMAxSsDRjm6jGO9LJJCcWjX0oSR/1lmi
- tdjp4mjvunumioSv1enSiObxos35AzStqwe0VS841dv9bbA6k/HxGidk3Is=
-X-Received: by 2002:a05:600c:4e42:b0:43c:ea1a:720c with SMTP id
- 5b1f17b1804b1-441c48dc0bdmr83725075e9.18.1746520970711; 
- Tue, 06 May 2025 01:42:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHOVj8RMDXNb80pJIK5P1XH+ZhVEPkaD+kk1y2Jt3832e+TMu/mERunkdOnbinLQpo7RTAE9Q==
-X-Received: by 2002:a05:600c:4e42:b0:43c:ea1a:720c with SMTP id
- 5b1f17b1804b1-441c48dc0bdmr83724685e9.18.1746520970339; 
- Tue, 06 May 2025 01:42:50 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b2af32a0sm209759555e9.23.2025.05.06.01.42.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 May 2025 01:42:48 -0700 (PDT)
-Message-ID: <6708dd99-eda0-4b1f-99e6-46a7cdea36fd@redhat.com>
-Date: Tue, 6 May 2025 10:42:46 +0200
+ d=1e100.net; s=20230601; t=1746521001; x=1747125801;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ekfWPmlcRu20I0INlQzkZcjFSIniyMODgHXybySRZ6w=;
+ b=b0LWo0gWFDUORSbYHJC+WhTR9rqhVE29OnRLZgZrTXiCUVvH3FzZVjMyZ0Kb6f+8GI
+ Krqq6pJc4hnA3Dyfd6eSRdaJWZEf9Bt8caQME1i28IlSiDjia5F/YeDfga7BbAc1i42t
+ kSziXSrjtyIlqH1SQDoCmudgbxHhm24WvKu/1KeMu0rXQXltlhrlgAGxvwQpSn9jTqTx
+ xLZFd2AMcF9f4Jp9THyNg5DH+bs3BA2yDNIGA6NpUbyF0YOhj6iEmcg11Viz1IaGIIud
+ El5TD3+oSAL1flAYryx+OJcTkhqPnLXEyDlJc+a2wF3qJVgqq5MTgRRa/fvchLEdcIjE
+ LAYQ==
+X-Gm-Message-State: AOJu0YwQ2uIVjd3Dq+MESMVOSzCND76nNkmqgC+x3D3Bh3YWGFTyEm7J
+ vpq5AwxWKVaiC51d5O1prLRJfQ9WjAvi9UnaiXpogxV4OOx6KkzjICxz0DX8kOo+g/cBnVsQkvw
+ pF3v9AjCtLMfp9u5q0HeGrVCGon6is/WU3Ryf035ZhSJNFoFlzkMm6D5TXQ/5IBk6GmcoANY+sf
+ /bv6uBOx/sS9t9yMOeWMTao/bLGBg=
+X-Gm-Gg: ASbGncs8EasX1DpYRCV3sJrTKdldBNf5Bu8ah8TCW8V1dJrflPhj/TL7VGc/zi8d/4a
+ gXqPQW+tncTkHudMS8rmTd992RxMqq01z/x/Yy/FrVPIKuyB3y09Bkr91Pi1urnnCKnzw
+X-Received: by 2002:a05:6000:40e1:b0:3a0:8330:3377 with SMTP id
+ ffacd0b85a97d-3a09fdd4a1dmr9155923f8f.44.1746521001127; 
+ Tue, 06 May 2025 01:43:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEiDMhadnXlOYaJ5xEfuavJo8vw7nZEiHjwTv+Tq5UxC56UVZ3eLALrt3JtU9sjydUF3V+WLW9y290yBpIHtYY=
+X-Received: by 2002:a05:6000:40e1:b0:3a0:8330:3377 with SMTP id
+ ffacd0b85a97d-3a09fdd4a1dmr9155901f8f.44.1746521000760; Tue, 06 May 2025
+ 01:43:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 07/24] hw/pci-host/gpex-acpi: Add native_pci_hotplug arg to
- acpi_dsdt_add_pci_osc
-Content-Language: en-US
-To: Gustavo Romero <gustavo.romero@linaro.org>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com,
- shannon.zhaosl@gmail.com
-Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com
-References: <20250428102628.378046-1-eric.auger@redhat.com>
- <20250428102628.378046-8-eric.auger@redhat.com>
- <4bd4aa37-1edf-4660-b415-2b2c3c184e30@linaro.org>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <4bd4aa37-1edf-4660-b415-2b2c3c184e30@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+References: <20250505100854.73936-1-pbonzini@redhat.com>
+ <aBnOyhMawDaY9yyR@intel.com>
+In-Reply-To: <aBnOyhMawDaY9yyR@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 6 May 2025 10:43:07 +0200
+X-Gm-Features: ATxdqUHO5kpqk7uzEPi6cWB3B3K-nU0GrrJIxIolqd-_gn_BqIv_jzcaTStcGG4
+Message-ID: <CABgObfYDOAGKdRNO91bfXQ4MPjbc0wNZSrDfpDiQZsOkrL53RQ@mail.gmail.com>
+Subject: Re: [PATCH preview 0/5] rust: allow minimum version of 1.83
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
 X-Spam_bar: ---
@@ -104,7 +86,7 @@ X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,89 +99,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, May 6, 2025 at 10:35=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wrot=
+e:
+>
+> > This series does not cover enabling the newer compiler in CI because,
+> > while both Debian and Ubuntu have a new-enough Rust compiler to support
+> > 1.77, they pose problems for this further bump.  For Debian, the bookwo=
+rm
+> > release probably will not have new compilers and is supported by QEMU
+> > for roughly two more years.  For Ubuntu, the situation is a bit weird
+> > because while Ubuntu 22.04 had new Rust compilers added until the summe=
+r
+> > of 2024, Ubuntu 24.04 is not adding packages for new versions.
+> >
+> > A possible plan here is to split the configuration between "enable Rust=
+"
+> > and "enable all devices written in Rust" as soon as new devices are
+> > contributed that are written in Rust.  This way, the C versions of
+> > the pl011 and HPET devices can be used but the new boards/devices would
+> > only be available on Debian or Ubuntu by using rustup.
+>
+> "enable Rust" supports v1.77 and "enable all devices written in Rust"
+> supports v1.83, correct?
 
+Both support v1.83 only.  However, if Rust is missing or old, "enable
+all devices written in Rust" will fail compilation (e.g. Kconfig would
+fail for ARM/x86 targets due to unsatisfiable CONFIG_PL011); "enable
+Rust" will simply pick the C version of the PL011 and HPET devices.
 
-On 5/6/25 2:13 AM, Gustavo Romero wrote:
-> Hi Eric,
->
-> On 4/28/25 07:25, Eric Auger wrote:
->> Add a new argument to acpi_dsdt_add_pci_osc to be able to disable
->> native pci hotplug.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> ---
->>   hw/pci-host/gpex-acpi.c | 11 ++++++-----
->>   1 file changed, 6 insertions(+), 5 deletions(-)
->>
->> diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
->> index e8b4c64c5f..4016089893 100644
->> --- a/hw/pci-host/gpex-acpi.c
->> +++ b/hw/pci-host/gpex-acpi.c
->> @@ -50,7 +50,7 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev,
->> uint32_t irq,
->>       }
->>   }
->>   -static void acpi_dsdt_add_pci_osc(Aml *dev)
->> +static void acpi_dsdt_add_pci_osc(Aml *dev, bool
->> enable_native_pcie_hotplug)
->>   {
->>       Aml *method, *UUID, *ifctx, *ifctx1, *elsectx, *buf;
->>   @@ -80,8 +80,9 @@ static void acpi_dsdt_add_pci_osc(Aml *dev)
->>        * Allow OS control for all 5 features:
->>        * PCIeHotplug SHPCHotplug PME AER PCIeCapability.
->
-> This comment is no longer true for PCIeHotplug, which now can be
-> controlled by the platform, and so needs to be updated, although
-> it's going to go away in the series.
+> The current vmstate builder is excellent, but I'm concerned it might not
+> land soon. Can we find a compromise?
 
-Sure, replaced by
+Do you think the above would be a good compromise?
 
-+     * Allow OS control for SHPCHotplug, PME, AER, PCIeCapability,
-+     * and PCIeHotplug depending on enable_native_pcie_hotplug
-
->  
-> Otherwise:
->
-> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-thanks!
-
-Eric
->
->
-> Cheers,
-> Gustavo
->
->>        */
->> -    aml_append(ifctx, aml_and(aml_name("CTRL"), aml_int(0x1F),
->> -                              aml_name("CTRL")));
->> +    aml_append(ifctx, aml_and(aml_name("CTRL"),
->> +               aml_int(0x1E | (enable_native_pcie_hotplug ? 0x1 :
->> 0x0)),
->> +               aml_name("CTRL")));
->>         ifctx1 = aml_if(aml_lnot(aml_equal(aml_arg(1), aml_int(0x1))));
->>       aml_append(ifctx1, aml_or(aml_name("CDW1"), aml_int(0x08),
->> @@ -192,7 +193,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct
->> GPEXConfig *cfg)
->>               if (is_cxl) {
->>                   build_cxl_osc_method(dev);
->>               } else {
->> -                acpi_dsdt_add_pci_osc(dev);
->> +                acpi_dsdt_add_pci_osc(dev, true);
->>               }
->>                 aml_append(scope, dev);
->> @@ -267,7 +268,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct
->> GPEXConfig *cfg)
->>       }
->>       aml_append(dev, aml_name_decl("_CRS", rbuf));
->>   -    acpi_dsdt_add_pci_osc(dev);
->> +    acpi_dsdt_add_pci_osc(dev, true);
->>         Aml *dev_res0 = aml_device("%s", "RES0");
->>       aml_append(dev_res0, aml_name_decl("_HID",
->> aml_string("PNP0C02")));
->
+Paolo
 
 
