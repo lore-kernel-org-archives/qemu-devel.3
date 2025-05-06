@@ -4,81 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 612AEC3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 10:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42DC0C3ABAC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 10:56:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCFhS-0007sW-Q2; Tue, 06 May 2025 06:38:58 -0400
+	id 1uCFwz-0001Ne-JL; Tue, 06 May 2025 06:55:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1uCFhR-0007sN-2Z
- for qemu-devel@nongnu.org; Tue, 06 May 2025 06:38:57 -0400
-Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1uCFhO-0004Dr-Ja
- for qemu-devel@nongnu.org; Tue, 06 May 2025 06:38:56 -0400
-Received: by mail-qt1-x830.google.com with SMTP id
- d75a77b69052e-476a1acf61eso59623641cf.1
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 03:38:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746527931; x=1747132731; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+FfJTCQ2R1KEWdIxYZv+z04lPQX+YE4Qn1qD8Loep20=;
- b=M28IOa4JxDpyuG59jGJAQ2MSjcAVQGKj5W+wmauUpBnn4Cw2a0NnwabapvZmGl4rVY
- NpdB3UgXvPh4iWK68g/UsaOmny7B9HfpsKzjbOBw/PRkS/hSx8GIFjKhgK615RCSr5Gm
- K2yB42UflajEmQa6vbQ4kaynGb6OJ+G6NiPYZ1OZlSuoVmp7+cjbTBcEgkGqGp1d8o3G
- sHrxsDW7mAsIOFsCSMJJlXPvBwMnPA3zy8T2NP0A9cAF5j0tWf80AfJncDJW/jqD7RYV
- BM0vbRejoySpjInGmgGch5J65n1FKfXKxWoKMo6b7HZBzF0a+l/pxBiFSsLiBdN0tBEH
- PAnA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uCFwx-0001Mz-Mh
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 06:54:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uCFwv-00061J-Uo
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 06:54:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746528896;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/QB6cMM13G9J7ZMV9roqY0baBsycG5Qv2FLuRzK0REw=;
+ b=JOKomM7F2NEyXQkdm1aMsyx1FolV3Rr/1DjzjVFZZ7I/v2DZORhV5QO2n0glwPFwy73qEY
+ rU8tjcHrdmMII1zvBVrQy/f9qqkScOsHYlvbOmYAPFBxe8gqoVo4sA8cZKuA3wXkYEV1KY
+ VMJssMiKXImoN/invtyDVjko6huCkag=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-115-6v1gAaJBOHCM7SKQZzOTiQ-1; Tue, 06 May 2025 06:54:55 -0400
+X-MC-Unique: 6v1gAaJBOHCM7SKQZzOTiQ-1
+X-Mimecast-MFC-AGG-ID: 6v1gAaJBOHCM7SKQZzOTiQ_1746528894
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-39ac9b0cb6aso2268463f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 03:54:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746527931; x=1747132731;
+ d=1e100.net; s=20230601; t=1746528894; x=1747133694;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+FfJTCQ2R1KEWdIxYZv+z04lPQX+YE4Qn1qD8Loep20=;
- b=CRpQDSOHpBXRsab2afhIxDJNByI3kjHxCadsj3h2m8F4Rn/Xuh90bXmOfvnef0JDHL
- SI+GOKuIZfgkg6mKSQxKtcLN10l8djJeu7O8PvC+t3ky8ItfgABHyeN9O/CPrA78A8Xb
- z4HyimxSn2k3hKuiATZ2dHj3XhgRPt9IHLxuxmzoHu+mRt6YPAmiv0SwUtEQ04Xgzdnm
- cvOK5BxX9GLmu5OxVfV9ruovzg7/J6phFfZrc4ZNet5FFyXveWzvtd/siyXDk2MBI4r3
- tJUqZz5xQeV7cqsaX90sduJ1rg2V5oRYn2M2hBA/Tb9GJGiGFuDM4n35NZEIYVd+/7pQ
- FoCg==
-X-Gm-Message-State: AOJu0Yxf5bBkOe5t/f52GWS0xwTSq/2X7kzwhmtY8kw31BBTZYd4vMmM
- vGwwJjv/hoUfoZMUA396o9HvzpOfKV3CMll4H0ztdsqVZNhaiqddhPLphT8JMSfY+tOQL1krsyp
- CvQoonnuyKYou5jRYVpQZ9rUoyNA=
-X-Gm-Gg: ASbGncvQh3PswXpKlZwMrdyJpM7IJF9aeKcT9q4TBAaVXlsBZDrYZoDBkqfOkKtxCiM
- pPhjTajAFRZ6XpJD2jENpy9JiBQth2Ub0Iv8c3Qlu5XPP9GXNOCxJ1ITnk2Tn0Ed5aNqE5MN8Sy
- 4qiRMBbvdhVpvp0YnoFZ/zhL0=
-X-Google-Smtp-Source: AGHT+IFqognh8C67G+HB36XybGpBN2tTEw6Ec9oNVLR2PTG5BL57lwLdyMEgz0IUW3M8qLOkaoxsb/HJ4gpBea3abJI=
-X-Received: by 2002:a05:622a:4244:b0:48a:1594:6207 with SMTP id
- d75a77b69052e-4910c394f2dmr35549721cf.15.1746527930644; Tue, 06 May 2025
- 03:38:50 -0700 (PDT)
+ bh=/QB6cMM13G9J7ZMV9roqY0baBsycG5Qv2FLuRzK0REw=;
+ b=U05rXXb5X9LkcdjQQN3em7ChtZKl9JN4ufkg/xTKGObPAaLHIZ9cbTnLMp5CJ1ve+L
+ qh5AYDSgC9mhaXEY85BfTFHinJdm7GKjPvNNU/kmuEQL/V9+Q5Wi/lQTSHhN2tx9ZmY9
+ 2eK0cRI6BNE8AO1xZLzWy9+o+OEkbmgVBxjCJ7Uu5+o1JcsaTerYW9uf2wyMWgoJjOGj
+ 9O+aMADUHAPWOqJ/w7Cg+lxEyhoYcIpYObNICP7uiTV/ffUhjOXov7XZK6SlfDIpLrGe
+ pEo+aNjrTVolSuEWQtJui0wXhyAN8uI/Ow6uyHInkyd6qf2kl3VN6XeR46YWR2ROpzlQ
+ bmEA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5s45352fxDPQlNVH1RtUV0MU9n7tqxlbEw6lvN/LEfQ4cFEhMTFcSayEIBLJHBOll8nqE0vnlujZO@nongnu.org
+X-Gm-Message-State: AOJu0Yz+HlQBTmX3gTtbTJLRhOw9+o+KYt/ScM21rrwH4Iv+4bbvuM/m
+ NebLXEqIBecUhgN67U3KFWyM3kLEodG0oH7d4QjWDVTtIdNUNIZSXP0DxeUy549VEbB8zz6K5sN
+ myaDqEQpPy0pbIkR+yVSMHqxnBNg2mlS3YfJfUmoF4Uw+63BPPSBS99ukwPMdMlX6jTEK0PUYN8
+ grmwNUrxmOKBiLQ0gmgi4DYBy25VM=
+X-Gm-Gg: ASbGncsyFQ5Eg1eaSn+XhZ/MDEzieaUBOxAhCDvTe2Cj6U0B6z8NhNyvo/ZhQd1MMnY
+ D3WHHHstesXgJoEbLXqIrCBX8e1MlXyjbK18x5hP32AQAQd/f0s17TP/di/FiTRdU63TE
+X-Received: by 2002:a05:6000:2505:b0:39e:dbee:f644 with SMTP id
+ ffacd0b85a97d-3a0ac1ff7famr2051483f8f.46.1746528893889; 
+ Tue, 06 May 2025 03:54:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNuzhjzZZTuEi2Y/4YMEd7FbdTFytzWENrKypJU2GHjSkPTT8LACBoD6XD4JyKsO/giTU5N3QfPQL1zapgI6c=
+X-Received: by 2002:a05:6000:2505:b0:39e:dbee:f644 with SMTP id
+ ffacd0b85a97d-3a0ac1ff7famr2051461f8f.46.1746528893565; Tue, 06 May 2025
+ 03:54:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250311155932.1472092-1-marcandre.lureau@redhat.com>
- <Z9Bg157qSKt2v74Z@redhat.com>
-In-Reply-To: <Z9Bg157qSKt2v74Z@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 6 May 2025 14:38:38 +0400
-X-Gm-Features: ATxdqUHdUG3N_TGGgp8AhE4Sms_NQhfay3pP4vSs_IDjYEoQyIOeNS8tG6x5Qc0
-Message-ID: <CAJ+F1C+GJ-3+4O0Hdjh3ZPbBiMmAfQdey1J++4mCPkNufReFSg@mail.gmail.com>
-Subject: Re: [PATCH for-10.1 00/10] Support vdagent migration
+References: <20250505100854.73936-1-pbonzini@redhat.com>
+ <aBnOyhMawDaY9yyR@intel.com>
+ <CABgObfYDOAGKdRNO91bfXQ4MPjbc0wNZSrDfpDiQZsOkrL53RQ@mail.gmail.com>
+ <aBnVtNgdjQ9DlugK@intel.com> <aBnbC4-hov9gY3MF@redhat.com>
+In-Reply-To: <aBnbC4-hov9gY3MF@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 6 May 2025 12:54:38 +0200
+X-Gm-Features: ATxdqUHQg1hWwOJqvxHrZULs5Ou4j82aKXsfY_S-ot90L0_AWxP-f9d49P6L46c
+Message-ID: <CABgObfbzWDnntjLcshsBPfdEdbx-6iqxd6FxUDbQa--VOqan=A@mail.gmail.com>
+Subject: Re: [PATCH preview 0/5] rust: allow minimum version of 1.83
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, kraxel@redhat.com
+Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org, qemu-rust@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x830.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,77 +106,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Tue, Mar 11, 2025 at 8:16=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+On Tue, May 6, 2025 at 11:49=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
 edhat.com> wrote:
+> > > [...] If Rust is missing or old, "enable
+> > > all devices written in Rust" will fail compilation (e.g. Kconfig woul=
+d
+> > > fail for ARM/x86 targets due to unsatisfiable CONFIG_PL011);
+> > > "enable Rust" will simply pick the C version of the PL011 and HPET de=
+vices.
 >
-> On Tue, Mar 11, 2025 at 07:59:22PM +0400, marcandre.lureau@redhat.com wro=
-te:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> >
-> > iQJQBAABCAA6FiEEh6m9kz+HxgbSdvYt2ujhCXWWnOUFAmfQXbMcHG1hcmNhbmRy
-> > ZS5sdXJlYXVAcmVkaGF0LmNvbQAKCRDa6OEJdZac5bmLD/49TJdk8vSnG/G53f3Z
-> > UdUGdDiv98lAr/1wPZvmLPGfxiVLrVQK9Rarjnq9+dzmjoJC+w8THyPIvlvlKAQO
-> > aNSe5LV2lcYFLZwJqXQdGHTEWWZX3BmXroSFY06F9znX4lrNSg/cxLaI+Lt+dbEt
-> > BA9IIMzGYB+zhkgJh86Yji1Ioz29qwMgb4etf4OtP3PqT7/djWxxdlYLmyqN7D13
-> > seHAkvhaA7sqglLcfUv0MjrNA1Yxg3QQmbmiErpyaHo9kQ2AuV49THZl5/Pe3WR5
-> > FJAeO83G8hdxdqFuDvnXB0ID2klqWYkZTJsTD75F1hU1yqszkVt8k4mUWubTIDNm
-> > VEFKGz/S+xR2rO0RGgGzMPzEm0FSPbLq1+U2ETRf3xBns0Jbqe6njHeLGAzmOx9p
-> > 3F8fkM4mzIrs3oOU/e7dlxOl9N6uQhVfJW6G+9QMLPLveIpNR6CGphbgHuMK8PPL
-> > vZ1WNrGa/xoHvqQi2FvIJJrnKYYBJDXQW1edM+apDgO9jBSmiO5XlKZjeNHwgZ6J
-> > 0sNmJUKCmk2SPGtFHdpdRfjfYfN2eR07eTVnVgstpHCUZi0nRz+4A6yq4k0SQLQH
-> > ZWsaq6cdZyfNOOdSHaLfI/2/36eiLpVCAuwn+AjK+XvPR6mQc9rwebV8N5nXLEZ8
-> > OFcig1i00RhHBRJFPrOjWIFIQg=3D=3D
-> > =3DiTg5
-> > -----END PGP SIGNATURE-----
->
-> Huh ?  I presume there should have been a cover letter here
-> instead of the tail end of a pgp signature....
->
+> I don't really like this because it perpetuates a state where we have
+> parallel implementations of devices that have to be kept in sync.
 
-No idea what went wrong. But anyway, there was not much to say in the
-cover letter, ttsia.
-Up for review?
+Me neither (see for example the Meson transition which avoided
+parallel implementations at all costs).
 
-> >
-> > Marc-Andr=C3=A9 Lureau (10):
-> >   ui/gtk: warn if setting the clipboard failed
-> >   ui/clipboard: use int for selection field
-> >   ui/clipboard: split out QemuClipboardContent
-> >   ui/clipboard: add vmstate_cbinfo
-> >   ui/clipboard: delay clipboard update when not running
-> >   ui/vdagent: replace Buffer with GByteArray
-> >   ui/vdagent: keep "connected" state
-> >   ui/vdagent: factor out clipboard peer registration
-> >   ui/vdagent: add migration support
-> >   ui/vdagent: remove migration blocker
-> >
-> >  include/ui/clipboard.h |  31 +++++--
-> >  ui/clipboard.c         |  66 +++++++++++++-
-> >  ui/gtk-clipboard.c     |  13 ++-
-> >  ui/vdagent.c           | 202 +++++++++++++++++++++++++++++++++++------
-> >  4 files changed, 268 insertions(+), 44 deletions(-)
-> >
-> > --
-> > 2.47.0
-> >
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
-ge :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
-om :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
-ge :|
->
->
+On the other hand, this series shows that it's hard to have a baseline
+version earlier than 1.83.  The bindings got pretty far while
+supporting older versions, and the few hacks needed were nice testbeds
+for the build system and the procedural macro infrastructure, but the
+improvements that const_refs_to_static provides for reflection are
+just too big. And for Debian that means waiting until July 2027 before
+making Rust mandatory, and for Ubuntu that's April 2028 based on the
+current situation. I hope that the effort proves itself either valid
+or unviable in less than 2-3 years. :)
 
+Now, it's certainly not the only possibility:
 
---=20
-Marc-Andr=C3=A9 Lureau
+1) If someone contributes devices that are written in Rust then we
+could just drop the PL011 and/or HPET sample device. That's a pity but
+they would survive in git history and could be resurrected later.
+
+2) Using RUSTC_BOOTSTRAP[1] allows enabling unstable features even in
+versions older than 1.83. Disadvantage: build system changes that will
+be obsolete soon(ish), plus the relevant compiler code obviously
+wasn't as tested as after stabilization. I'd prefer to avoid that, but
+hey---Linux does it.
+
+3) Affected distros could use RUSTC_BOOTSTRAP themselves if they want,
+while upstream QEMU would only support rustup toolchains for Debian
+bookworm and Ubuntu up to 24.10. This only requires
+tests/lcitool/refresh changes, the disadvantage is that the project
+would renege on the general promise that we make on platform support.
+
+[1] https://rustc-dev-guide.rust-lang.org/building/bootstrapping/what-boots=
+trapping-does.html#complications-of-bootstrapping
+
+> If we're re-writing C devices in Rust, we need to be able to promptly
+> drop the C impl once the Rust impl is feature complete. Keeping 2 impls
+> is a general maint burden, as well as an ongoing vmstate compatibility
+> danger if a change in one impl is not matched by an identical change
+> in the other impl.
+
+I agree. One more reason why "Let's Rewrite It In Rust" is more of a
+necessary evil to bootstrap the creation of bindings, and not a good
+idea in general.
+
+> IMHO having Rust declared supported in QEMU should be aligned with being
+> able to drop C impls of any ported devices.
+
+I agree in principle, though theory and practice may diverge.
+
+Paolo
+
 
