@@ -4,51 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0333C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19CE5C3ABBF
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 08:36:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCDj0-0006gW-1P; Tue, 06 May 2025 04:32:26 -0400
+	id 1uCDmN-0008B6-Hk; Tue, 06 May 2025 04:35:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1uCDiv-0006fz-Bn
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:32:22 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1uCDiq-0004nX-Es
- for qemu-devel@nongnu.org; Tue, 06 May 2025 04:32:20 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Ax3eICyRlo7oPWAA--.50967S3;
- Tue, 06 May 2025 16:32:02 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMCxbsX9yBlotW+2AA--.6028S2;
- Tue, 06 May 2025 16:32:00 +0800 (CST)
-From: Xianglai Li <lixianglai@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Song Gao <gaosong@loongson.cn>
-Subject: [[PATCH V3] hw/loongarch/boot: Adjust the loading position of the
- initrd
-Date: Tue,  6 May 2025 16:09:46 +0800
-Message-Id: <20250506080946.817092-1-lixianglai@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCDmH-0008Ad-Pg; Tue, 06 May 2025 04:35:49 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCDmE-0005FE-Le; Tue, 06 May 2025 04:35:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746520547; x=1778056547;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Jb1RRhleGPIZe3nJwLfwOBtdZ6gcQwVxPCoj7j8/H2I=;
+ b=IJdrRtfNg4Z3Hn2Qn0QMJOZwA4N48brYRbF+h5/6nENOuoxTmcwqHYSe
+ BfU7sUFnGApSPWjjYK4x1m6CgIVyD8KLdBK4VRp12uZDvPHn9Aq/ywRYY
+ 2DvFc6i9CV5fi57qGqYGW6E4rOYVrNl2uw8cK5A1bfRrzBeLki9Wd69qZ
+ 7dxTFYDv+MnRPaJRRBrRH7n5j/aq6sestjws2iPv55lSwu4WAcKQDFall
+ VvVXt3KoGoSzjhpPzjhGEqlnio144iwxnkuPqlNZUbt1qAPYzQ8A1qKhi
+ 6nSI8P0b30a+5zTi/6MC7NyiKU9Qr4UT4uF4he86oUFl21RraGacJ0SXt Q==;
+X-CSE-ConnectionGUID: Ab3ft/hhS9yPAPmuww75cw==
+X-CSE-MsgGUID: nHkYgciXT6GJLeipnYBbaA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11424"; a="51824250"
+X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="51824250"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 May 2025 01:35:42 -0700
+X-CSE-ConnectionGUID: u8ILFuOiSwynrNnIaJDs8Q==
+X-CSE-MsgGUID: gj5pK1CfTcuUhWypPgnJIQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,265,1739865600"; d="scan'208";a="140504277"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa004.jf.intel.com with ESMTP; 06 May 2025 01:35:42 -0700
+Date: Tue, 6 May 2025 16:56:42 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH preview 0/5] rust: allow minimum version of 1.83
+Message-ID: <aBnOyhMawDaY9yyR@intel.com>
+References: <20250505100854.73936-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxbsX9yBlotW+2AA--.6028S2
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250505100854.73936-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,109 +80,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When only the -kernel parameter is used to load the elf kernel, the initrd
-is loaded in the ram. If the initrd size is too large, the loading fails,
-resulting in a VM startup failure. This patch first loads initrd near
-the kernel.
+> This series does not cover enabling the newer compiler in CI because,
+> while both Debian and Ubuntu have a new-enough Rust compiler to support
+> 1.77, they pose problems for this further bump.  For Debian, the bookworm
+> release probably will not have new compilers and is supported by QEMU
+> for roughly two more years.  For Ubuntu, the situation is a bit weird
+> because while Ubuntu 22.04 had new Rust compilers added until the summer
+> of 2024, Ubuntu 24.04 is not adding packages for new versions.
+> 
+> A possible plan here is to split the configuration between "enable Rust"
+> and "enable all devices written in Rust" as soon as new devices are
+> contributed that are written in Rust.  This way, the C versions of
+> the pl011 and HPET devices can be used but the new boards/devices would
+> only be available on Debian or Ubuntu by using rustup.
 
-When the nearby memory space of the kernel is insufficient, it tries to
-load it to the starting position of high memory. If there is still not
-enough, qemu will report an error and ask the user to increase the memory
-space for the virtual machine to boot.
+"enable Rust" supports v1.77 and "enable all devices written in Rust"
+supports v1.83, correct?
 
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
----
-Cc: Bibo Mao <maobibo@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Cc: Song Gao <gaosong@loongson.cn>
-Cc: Xianglai Li <lixianglai@loongson.cn>
+If so, do we need two versions of vmstate? one is for v1.77 (that HPET &
+pl011 can use), and another one is for v1.83 (newer devices based on
+v1.83 can use).
 
-ChangeLog:
-V2->V3:
-1. Reduce the references to global variables related to intrd in the newly
-added functions
-2. Modify the format of the commit message
-3. Modify the name of the function find_initrd_loadoffset to
-alloc_initrd_memory
+The current vmstate builder is excellent, but I'm concerned it might not
+land soon. Can we find a compromise?
 
-V1->V2:
-If the low memory is insufficient, the initrd is directly loaded from the start
-address of the high memory, and the node0 memory space is not counted. 
-
- hw/loongarch/boot.c | 52 +++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 43 insertions(+), 9 deletions(-)
-
-diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
-index 354cf458c8..423c393f29 100644
---- a/hw/loongarch/boot.c
-+++ b/hw/loongarch/boot.c
-@@ -235,6 +235,45 @@ static int64_t load_loongarch_linux_image(const char *filename,
-     return size;
- }
- 
-+static ram_addr_t alloc_initrd_memory(struct loongarch_boot_info *info,
-+                uint64_t advice_start, ssize_t rd_size)
-+{
-+    hwaddr base, ram_size, gap, low_end;
-+    ram_addr_t initrd_end, initrd_start;
-+
-+    base = VIRT_LOWMEM_BASE;
-+    gap = VIRT_LOWMEM_SIZE;
-+    initrd_start = advice_start;
-+    initrd_end = initrd_start + rd_size;
-+
-+    ram_size = info->ram_size;
-+    low_end = base + MIN(ram_size, gap);
-+    if (initrd_end <= low_end) {
-+        return initrd_start;
-+    }
-+
-+    if (ram_size <= gap) {
-+        error_report("The low memory too small for initial ram disk '%s',"
-+             "You need to expand the ram",
-+             info->initrd_filename);
-+        exit(1);
-+    }
-+
-+    /*
-+     * Try to load initrd in the high memory
-+     */
-+    ram_size -= gap;
-+    initrd_start = VIRT_HIGHMEM_BASE;
-+    if (rd_size <= ram_size) {
-+        return initrd_start;
-+    }
-+
-+    error_report("The high memory too small for initial ram disk '%s',"
-+         "You need to expand the ram",
-+         info->initrd_filename);
-+    exit(1);
-+}
-+
- static int64_t load_kernel_info(struct loongarch_boot_info *info)
- {
-     uint64_t kernel_entry, kernel_low, kernel_high;
-@@ -262,15 +301,10 @@ static int64_t load_kernel_info(struct loongarch_boot_info *info)
-         initrd_size = get_image_size(info->initrd_filename);
-         if (initrd_size > 0) {
-             initrd_offset = ROUND_UP(kernel_high + 4 * kernel_size, 64 * KiB);
--
--            if (initrd_offset + initrd_size > info->ram_size) {
--                error_report("memory too small for initial ram disk '%s'",
--                             info->initrd_filename);
--                exit(1);
--            }
--
--            initrd_size = load_image_targphys(info->initrd_filename, initrd_offset,
--                                              info->ram_size - initrd_offset);
-+            initrd_offset = alloc_initrd_memory(info, initrd_offset,
-+                                                initrd_size);
-+            initrd_size = load_image_targphys(info->initrd_filename,
-+                                              initrd_offset, initrd_size);
-         }
- 
-         if (initrd_size == (target_ulong)-1) {
--- 
-2.39.1
+Thanks,
+Zhao
 
 
