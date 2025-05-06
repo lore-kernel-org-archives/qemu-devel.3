@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B510C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:32:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9211AC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCKFj-0004fZ-E2; Tue, 06 May 2025 11:30:39 -0400
+	id 1uCKGA-0005mr-5f; Tue, 06 May 2025 11:31:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFJ-000455-JX
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:13 -0400
+ id 1uCKFV-0004OF-MX
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFH-0002Cl-GD
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:13 -0400
+ id 1uCKFQ-0002Dv-CH
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746545410;
+ s=mimecast20190719; t=1746545418;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SfA/pb9Vrh0ctp/tNBaKwjaEFs5nICEyXk70PoakLy0=;
- b=SpwGwW1BRaAsZpWZrAvGUtYP/X5XVaVuR2lGCP/UUf/sUV56bs1v3Eh4mF2v9QIRe9yTUi
- xv7W5OBZxXK5O6MjFNNoIHJ0s5nP1aPIq++xQHSFidqkyrxRiY8RIayNSb4SOFG9W+U752
- jno3riL2DyKpRUtvpprpXgFS/QYGPDo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vfC625DT60DQslJrqD8Pl442kQIAsoNeAmmMzCsWRQo=;
+ b=IJgkBIqaMeNZxfMmM//GhuM1IHlvZpKqT5DaME19PJyp/5Ig1kme/4S5nIt4W5iuo7W0aS
+ BUvROtTREcWgakVDlM3/RHy4NXdaOF4jfGI5LbMqlKM03k+Gm3ezwtUJ7HDmnnxW/yWSYK
+ +vmGlFMg1zfAVkxHhemUtVVibXuvDc0=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-573-MTY3zlduPy--Wvk9SwKxxg-1; Tue, 06 May 2025 11:30:08 -0400
-X-MC-Unique: MTY3zlduPy--Wvk9SwKxxg-1
-X-Mimecast-MFC-AGG-ID: MTY3zlduPy--Wvk9SwKxxg_1746545408
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a07a7b4298so2960980f8f.0
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:30:08 -0700 (PDT)
+ us-mta-401-kAbOWJh7MTWxb5mzwNVb8g-1; Tue, 06 May 2025 11:30:17 -0400
+X-MC-Unique: kAbOWJh7MTWxb5mzwNVb8g-1
+X-Mimecast-MFC-AGG-ID: kAbOWJh7MTWxb5mzwNVb8g_1746545416
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a07a7b4298so2961049f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:30:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746545407; x=1747150207;
+ d=1e100.net; s=20230601; t=1746545415; x=1747150215;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SfA/pb9Vrh0ctp/tNBaKwjaEFs5nICEyXk70PoakLy0=;
- b=qEKR0dF+0i9tHmvLtF6GOGdbh9/gqdIZg8PkDHiTkPsA7gzQIM1Nlrb7OQAXkRNpv2
- 7Rf+CKBCFYT2kccESY7LqFlb8gJ95Szzg2XUFktcqG4qt+m8LVTNFLdZUVAvUwX2SJZj
- z5j5X6eochAGAGsvRqUtBGGMf2nHRvWBvTimwRTOxEgs5CcFsrCLf3FD4QjSRk0rKIpz
- bCNs1y4M05rCj4jQ1tKvxnRbNFK2w9jdCVMm+I/qXd3Q/E4Q57eLcdkzgbKexJ3P9TYQ
- SGKEvNOdrK6MG/ZoWyXLBX43UDoI/lFioIOFW/ZxZDx6rsK+4mojV2Kq8M5MhW9Y3CHe
- 8rKw==
-X-Gm-Message-State: AOJu0Yw2o9QCGYi2OaeRNxVRBSmj4oV2eEy3M9OK1No0/78hTFtQ9zRi
- 4plR/2TiFpWJKJxwtcVHfYMKDsolKsVCCDKC6Uf7Er+22sbf5XQI2f0ydCF7R3H/rxk+LoRHfqv
- zuqHO5DRGABBKqJXYUMB6ve88e7zlVCgRjd3XR759z8XqD/B/ogOyTb+5xMN5XH5ajHwZ/pDC8c
- tpXUStiODqWFroA0N8xCwnlStMIB56P2BRIhEh
-X-Gm-Gg: ASbGnctXFhhvYutZdbVookmTFcPQg4bcUzNaZA0XYdgBTu/TNg/Lk45ZKFbKZr9l89P
- N2zYtAnUbXhH+dGusP3INsNvDhBWl3mLyUa8gDjeWTMWmreEqp5FZUHWrxbFu4XRVI5cu55e/yU
- ccpVtdltS7R5Qxn8j2r2fwdeqTtzifgHT3z7lYdMJDXy86zNE5C2QIlNS7jRyyyNur6VVD8t+So
- /73Zt5/LtBXc3d8z1dVaNHLr89gk7ui/G4A0k2l2l7F1z3qQKSaj0j3uWrSyX8rvfV/dc1XKuTF
- +pJDNRKAqB+C5RM=
-X-Received: by 2002:a5d:64cb:0:b0:3a0:8331:3380 with SMTP id
- ffacd0b85a97d-3a0ac0cb0damr2632298f8f.8.1746545407244; 
- Tue, 06 May 2025 08:30:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHkLIP+ON78/RNW8/+M2HkGSkZ/mDg7+xgUBsfITnTwxKSu5mi/QxkbE/cKUwzm4jguAX6Lkg==
-X-Received: by 2002:a5d:64cb:0:b0:3a0:8331:3380 with SMTP id
- ffacd0b85a97d-3a0ac0cb0damr2632276f8f.8.1746545406822; 
- Tue, 06 May 2025 08:30:06 -0700 (PDT)
+ bh=vfC625DT60DQslJrqD8Pl442kQIAsoNeAmmMzCsWRQo=;
+ b=dd3j6egNFTl8mxSj8wRmWC+oM7dyZt3WbKUA8Sa5nrZmvbpP/AIo+wkGvCHRxjqylj
+ nBwL7YOvooZLd8lgjEwBVGtujBG6rWjzZV0duuWC8HnnGODtBDJwbE+c3K73ETVev6tH
+ EeYUMEuP9zNz0DbtALlnS8nQdVNFXvhHFDSlbRaVoYUXukUrX7pe7uu6E27uhHocdSnW
+ OzRUaUefREmRJzvPzRE5uYDMh73eue/BMV2nWUf36lmuOj0S6ShzOWj+ubpby3HTnjF2
+ DUVjZXtxb7WbG2HvDhupIXu3/X8WzrjGNKqbREwEW2z576VAjY5xyXqh4d5nvf2nVIw0
+ jOkg==
+X-Gm-Message-State: AOJu0Yy6g9g2H7tdt1Hav4squW32PB2QO6/yeIt+zVkitV+40RFGt0RF
+ ebA9XAssGQFtvlIuuxCkFqDK4JWbTuhCpGcfna7QoFsuOSNVP4LH8J5YXgNvFtIiFoTlrpR6KAz
+ 26rmM8/hfZdIlSeHO8hyDFX4QUup/pnSZSJclxZoTQOd04ylSrFgX/qEmHVcgP0H7dZwT9fXg/q
+ SqITadzXfpaG5nN6R/SF/7QZUHjbauTfxTCpty
+X-Gm-Gg: ASbGncskn4DGTiXuam3wYzir/2QxvvgQulAD2zkxApT/Rl5FrWsQ/gZXOoPn4HDulr4
+ RHPU0kktQnoIwvXWKeZFmRHX+OXXfnwTT/L3/hKMWiZeaUiYWDiUQPcJYMrteI1yWlz0V4ekslj
+ BxdjTbMHIKwtxqcVmwAF/bSTstMmSAVtGTbNpZYQkWbUrW3PLAKxxCwc4QGPUY7UilnC4VvigSP
+ QLdB6w1SlLqNThcG1eR8wrFehwomd0BCAiTDOpGICHR3wHJSD1Q/VKCTjhVcSJsqPVMaozWMd+I
+ 5txxvpQW3IGnasQ=
+X-Received: by 2002:adf:ce05:0:b0:3a0:af28:f879 with SMTP id
+ ffacd0b85a97d-3a0af28f88dmr2073549f8f.31.1746545415503; 
+ Tue, 06 May 2025 08:30:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEPTqc+PbxN96GhXDFspjVskfJNf8kvsV0NmGHH7u+kWzkkF5aSLWstwJnic1W7QDTlxmsmsw==
+X-Received: by 2002:adf:ce05:0:b0:3a0:af28:f879 with SMTP id
+ ffacd0b85a97d-3a0af28f88dmr2073528f8f.31.1746545415147; 
+ Tue, 06 May 2025 08:30:15 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a0b2c4a84csm1117268f8f.42.2025.05.06.08.30.04
+ ffacd0b85a97d-3a099b0f09dsm14162866f8f.63.2025.05.06.08.30.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 08:30:04 -0700 (PDT)
+ Tue, 06 May 2025 08:30:13 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Subject: [PULL 18/30] target/ppc: Fix type conflict of GLib function pointers
-Date: Tue,  6 May 2025 17:29:13 +0200
-Message-ID: <20250506152927.222671-19-pbonzini@redhat.com>
+Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 22/30] block: Add including of ioctl header for Emscripten build
+Date: Tue,  6 May 2025 17:29:17 +0200
+Message-ID: <20250506152927.222671-23-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250506152927.222671-1-pbonzini@redhat.com>
 References: <20250506152927.222671-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,42 +113,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 
-On Emscripten, function pointer casts can result in runtime failures due to
-strict function signature checks. This affects the use of g_list_sort and
-g_slist_sort, which internally perform function pointer casts that are not
-supported by Emscripten. To avoid these issues, g_list_sort_with_data and
-g_slist_sort_with_data should be used instead, as they do not rely on
-function pointer casting.
+Including <sys/ioctl.h> is still required on Emscripten, just like on other
+platforms, to make the ioctl function available.
 
 Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Link: https://lore.kernel.org/r/d917055d35f5ff7316ccdcbdf57af9a7bd85bf29.1745820062.git.ktokunaga.mail@gmail.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Link: https://lore.kernel.org/r/49b6ecdbd23ff83e3f191ef8a9f7cc2feeaea43f.1745820062.git.ktokunaga.mail@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/ppc/cpu_init.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/file-posix.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index b0973b6df95..09a8d4ff721 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7115,7 +7115,7 @@ PowerPCCPUClass *ppc_cpu_get_family_class(PowerPCCPUClass *pcc)
- }
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 0d85123d0fd..a845e2836f5 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -110,6 +110,10 @@
+ #include <sys/diskslice.h>
+ #endif
  
- /* Sort by PVR, ordering special case "host" last. */
--static gint ppc_cpu_list_compare(gconstpointer a, gconstpointer b)
-+static gint ppc_cpu_list_compare(gconstpointer a, gconstpointer b, gpointer d)
- {
-     ObjectClass *oc_a = (ObjectClass *)a;
-     ObjectClass *oc_b = (ObjectClass *)b;
-@@ -7183,7 +7183,7 @@ static void ppc_cpu_list(void)
- 
-     qemu_printf("Available CPUs:\n");
-     list = object_class_get_list(TYPE_POWERPC_CPU, false);
--    list = g_slist_sort(list, ppc_cpu_list_compare);
-+    list = g_slist_sort_with_data(list, ppc_cpu_list_compare, NULL);
-     g_slist_foreach(list, ppc_cpu_list_entry, NULL);
-     g_slist_free(list);
- 
++#ifdef EMSCRIPTEN
++#include <sys/ioctl.h>
++#endif
++
+ /* OS X does not have O_DSYNC */
+ #ifndef O_DSYNC
+ #ifdef O_SYNC
 -- 
 2.49.0
 
