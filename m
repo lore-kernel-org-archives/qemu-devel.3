@@ -4,64 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1BEDC3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:26:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88EF7C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:30:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCKAo-0008Gy-Ie; Tue, 06 May 2025 11:25:34 -0400
+	id 1uCKEn-0003ds-9g; Tue, 06 May 2025 11:29:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangrui@loongson.cn>)
- id 1uCKAh-0008EH-Rb
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:25:27 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangrui@loongson.cn>) id 1uCKAe-0001Wo-7O
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:25:27 -0400
-Received: from loongson.cn (unknown [223.64.120.156])
- by gateway (Coremail) with SMTP id _____8DxbKzXKRpoz+jWAA--.25153S3;
- Tue, 06 May 2025 23:25:11 +0800 (CST)
-Received: from lvm.. (unknown [223.64.120.156])
- by front1 (Coremail) with SMTP id qMiowMCx_cbRKRpoemC3AA--.9610S2;
- Tue, 06 May 2025 23:25:09 +0800 (CST)
-From: WANG Rui <wangrui@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- qemu@hev.cc, WANG Rui <wangrui@loongson.cn>,
- mengqinggang <mengqinggang@loongson.cn>
-Subject: [PATCH] target/loongarch: Fix incorrect rounding in fnm{add,
- sub} under certain modes
-Date: Tue,  6 May 2025 23:26:00 +0800
-Message-ID: <20250506152600.2521399-1-wangrui@loongson.cn>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uCKEk-0003d7-Q5
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uCKEg-0001vq-MR
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746545372;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=n0XbkiTZH3epDC4VLuIlaa5HcbGtY15NwWA65QEFbeg=;
+ b=K1yo/OnZW4ORo+s6SRf4CrijIE3qbaVfTnX1KagSOo9Ikbrdbd1ICCmD7oxsQU5bluNpUp
+ dQnlDnuaEU2CF3MCvVzPOUoeWUn+QcpYr+mOUs0SIOYy+BZTnZfHJQ1k93dJHeNqKtJWrY
+ MC4w28LMuJHK6rvDYvoaitXuRNXUMi0=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-387-0f91XRjiMASnlnLZ0TJc1A-1; Tue, 06 May 2025 11:29:31 -0400
+X-MC-Unique: 0f91XRjiMASnlnLZ0TJc1A-1
+X-Mimecast-MFC-AGG-ID: 0f91XRjiMASnlnLZ0TJc1A_1746545370
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-39c2da64df9so2595111f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:29:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746545370; x=1747150170;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=n0XbkiTZH3epDC4VLuIlaa5HcbGtY15NwWA65QEFbeg=;
+ b=J4vzzEj4JJzShSDqojlYGXPYQIdooxwjzXC0qFrnLQvhg75urKSoAL3hTFaxdlv5o7
+ XEQXyzR4eBh4pAr9QS0SwkQER0f3o95HyBS9EhUznYYHOtg4jfZ2XEaUDDgOmdOKNjPe
+ NSd8XRGufKMrOINx8SphWXGufKzxV/joF6I2LN1SVedt5rrGUIdP5yeQnuOjM1SVZl9J
+ NTCp5vgM0f5hJtuqMN4/UyXKCpNsgI/O6iz3w/31wXltbmxLmCtLRU6v5aKr+by/RN1H
+ fxmIntZdIeAJj64zQdQDeI96TrSP/yvf87XyvGUworHr8QkNDlANK2lUiWkbglBDY4V+
+ eBAA==
+X-Gm-Message-State: AOJu0YxYsDobZPaG2rnxx2bt7yuNNMpMWUKnPGGZ712bKbrszDAFzP73
+ cb9Cf8A3r0t/v78H546qO5LaN1Ww2kpOcjR65w73OjYhEcbHJPc8ocairJFHzfD7AnHm3SNEPah
+ d+1BWPxwzJIRbA6HQf3KxilkiLO+vZJ9Y3A6WLppdHCtVWp+GIkZ+WbXGn3lKRzI7xs7GLWxqiW
+ TGNktyHFifTESw3k8Emej2VlukPf/ZAX6ySACc
+X-Gm-Gg: ASbGncuYf6DM9qEkVCDEn3o8sVkXnEwcJW4OlBQ82VWYvG0dsDOY3THSghTWooSEfHt
+ cHS5unJZ4HpS114ivdIJgdCuuLOSnwHNZYkgo5AAmDr+4XRqQ86ghVM3wX1z61xOpimDUcuADL1
+ 3J/vNPALHm3l3DLlJg6S4nlomlSK+1kCxXC73Q8CYFfGyOxg5owRdt3O5+0TdUSPSM8+J4ywQD4
+ GE/4cKlObsT61cpozd+M156TNhjaa4ZZpsUTrFqh1ZYaQ6r9jm2brDOyAKyFreJAC0J67sYdc1F
+ 4ss+jX9JqLK65Ys=
+X-Received: by 2002:a5d:64e6:0:b0:3a0:88e4:3d2f with SMTP id
+ ffacd0b85a97d-3a0ac0caf9cmr3326269f8f.5.1746545369679; 
+ Tue, 06 May 2025 08:29:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEAdcQxRe1XHTuAGnmTrGz5JtZ/hgaFr8gHZrbbqyNhDo+4P9FLOvEX7Gf/t3H8FOX1tO0Pmg==
+X-Received: by 2002:a5d:64e6:0:b0:3a0:88e4:3d2f with SMTP id
+ ffacd0b85a97d-3a0ac0caf9cmr3326243f8f.5.1746545369154; 
+ Tue, 06 May 2025 08:29:29 -0700 (PDT)
+Received: from [192.168.122.1] ([151.95.54.106])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a099b0fe9dsm14047560f8f.71.2025.05.06.08.29.28
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 May 2025 08:29:28 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/30] Rust, wasm changes for 2025-05-06
+Date: Tue,  6 May 2025 17:28:55 +0200
+Message-ID: <20250506152927.222671-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCx_cbRKRpoemC3AA--.9610S2
-X-CM-SenderInfo: pzdqw2txl6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3Gw15Jw4xJr1DCr48Aw43urX_yoW7Xryrpr
- yfursakrs7JFZ7J3Z3Jw15WF15Jr4rC3W7Z3ZxJr1I9w4UKry8Zw1xKrW29FWDG3yUWr1S
- v3ZayF4xKF1UWagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUyEb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x0EwI
- xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
- Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7
- IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k2
- 6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
- AFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-e5UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=wangrui@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -79,153 +105,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch fixes incorrect results for [xv]fnm{add,sub}.{s,d}
-instructions when rounding toward zero, postive, negative.
+The following changes since commit a9e0c9c0f14e19d23443ac24c8080b4708d2eab8:
 
-According to the LoongArch ISA specification, these instructions perform
-a fused multiply-add followed by a negation of the final result.
+  Merge tag 'pull-9p-20250505' of https://github.com/cschoenebeck/qemu into staging (2025-05-05 11:26:59 -0400)
 
-Previously, the sign inversion was applied before fused operation, which
-interfered with rounding decisions that depend on the result sign --
-leading to deviations from the expected behavior. This patch corrects
-the implementation by applying the negation after fused multiply-add,
-ensuring that rounding is performed on the correct intermediate result.
+are available in the Git repository at:
 
-Reported-by: mengqinggang <mengqinggang@loongson.cn>
-Signed-off-by: WANG Rui <wangrui@loongson.cn>
----
- target/loongarch/tcg/fpu_helper.c     |  8 ++++++++
- target/loongarch/tcg/vec_helper.c     |  7 ++++++-
- tests/tcg/loongarch64/Makefile.target |  2 ++
- tests/tcg/loongarch64/test_fnmsub.c   | 20 ++++++++++++++++++++
- tests/tcg/loongarch64/test_vfnmsub.c  | 27 +++++++++++++++++++++++++++
- 5 files changed, 63 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/loongarch64/test_fnmsub.c
- create mode 100644 tests/tcg/loongarch64/test_vfnmsub.c
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
 
-diff --git a/target/loongarch/tcg/fpu_helper.c b/target/loongarch/tcg/fpu_helper.c
-index fc3fd0561e..970b88ac56 100644
---- a/target/loongarch/tcg/fpu_helper.c
-+++ b/target/loongarch/tcg/fpu_helper.c
-@@ -389,9 +389,13 @@ uint64_t helper_fmuladd_s(CPULoongArchState *env, uint64_t fj,
-                           uint64_t fk, uint64_t fa, uint32_t flag)
- {
-     uint64_t fd;
-+    uint32_t neg_res;
- 
-+    neg_res = flag & float_muladd_negate_result;
-+    flag ^= neg_res;
-     fd = nanbox_s(float32_muladd((uint32_t)fj, (uint32_t)fk,
-                                  (uint32_t)fa, flag, &env->fp_status));
-+    fd |= neg_res ? 0x80000000ULL : 0;
-     update_fcsr0(env, GETPC());
-     return fd;
- }
-@@ -400,8 +404,12 @@ uint64_t helper_fmuladd_d(CPULoongArchState *env, uint64_t fj,
-                           uint64_t fk, uint64_t fa, uint32_t flag)
- {
-     uint64_t fd;
-+    uint32_t neg_res;
- 
-+    neg_res = flag & float_muladd_negate_result;
-+    flag ^= neg_res;
-     fd = float64_muladd(fj, fk, fa, flag, &env->fp_status);
-+    fd |= neg_res ? 0x8000000000000000ULL : 0;
-     update_fcsr0(env, GETPC());
-     return fd;
- }
-diff --git a/target/loongarch/tcg/vec_helper.c b/target/loongarch/tcg/vec_helper.c
-index 3faf52cbc4..c48e3662d1 100644
---- a/target/loongarch/tcg/vec_helper.c
-+++ b/target/loongarch/tcg/vec_helper.c
-@@ -2446,10 +2446,15 @@ void HELPER(NAME)(void *vd, void *vj, void *vk, void *va,                    \
-     VReg *Vk = (VReg *)vk;                                                   \
-     VReg *Va = (VReg *)va;                                                   \
-     int oprsz = simd_oprsz(desc);                                            \
-+    uint32_t flag = flags;                                                   \
-+    uint32_t neg_res;                                                        \
-                                                                              \
-+    neg_res = flag & float_muladd_negate_result;                             \
-+    flag ^= neg_res;                                                         \
-     vec_clear_cause(env);                                                    \
-     for (i = 0; i < oprsz / (BIT / 8); i++) {                                \
--        Vd->E(i) = FN(Vj->E(i), Vk->E(i), Va->E(i), flags, &env->fp_status); \
-+        Vd->E(i) = FN(Vj->E(i), Vk->E(i), Va->E(i), flag, &env->fp_status);  \
-+        Vd->E(i) |= neg_res ? (1ULL << (BIT - 1)) : 0;                       \
-         vec_update_fcsr0(env, GETPC());                                      \
-     }                                                                        \
- }
-diff --git a/tests/tcg/loongarch64/Makefile.target b/tests/tcg/loongarch64/Makefile.target
-index 00030a1026..e3554a500e 100644
---- a/tests/tcg/loongarch64/Makefile.target
-+++ b/tests/tcg/loongarch64/Makefile.target
-@@ -16,5 +16,7 @@ LOONGARCH64_TESTS  += test_fclass
- LOONGARCH64_TESTS  += test_fpcom
- LOONGARCH64_TESTS  += test_pcadd
- LOONGARCH64_TESTS  += test_fcsr
-+LOONGARCH64_TESTS  += test_fnmsub
-+LOONGARCH64_TESTS  += test_vfnmsub
- 
- TESTS += $(LOONGARCH64_TESTS)
-diff --git a/tests/tcg/loongarch64/test_fnmsub.c b/tests/tcg/loongarch64/test_fnmsub.c
-new file mode 100644
-index 0000000000..0c8514f33d
---- /dev/null
-+++ b/tests/tcg/loongarch64/test_fnmsub.c
-@@ -0,0 +1,20 @@
-+#include <assert.h>
-+#include <stdint.h>
-+#include <fenv.h>
-+
-+int main()
-+{
-+    double x, y, z;
-+
-+    *(uint64_t *)&x = 0x4ff0000000000000UL;
-+    *(uint64_t *)&y = 0x4ff0000000000000UL;
-+    *(uint64_t *)&z = 0x2ff0000000000000UL;
-+
-+    fesetround(FE_DOWNWARD);
-+    asm("fnmsub.d %[x], %[x], %[y], %[z]\n\t"
-+        :[x]"+f"(x)
-+        :[y]"f"(y), [z]"f"(z));
-+
-+    assert(*(uint64_t *)&x == 0xdfefffffffffffffUL);
-+    return 0;
-+}
-diff --git a/tests/tcg/loongarch64/test_vfnmsub.c b/tests/tcg/loongarch64/test_vfnmsub.c
-new file mode 100644
-index 0000000000..8c332674ae
---- /dev/null
-+++ b/tests/tcg/loongarch64/test_vfnmsub.c
-@@ -0,0 +1,27 @@
-+#include <assert.h>
-+#include <stdint.h>
-+#include <fenv.h>
-+
-+int main()
-+{
-+    uint64_t x, y, z;
-+
-+    x = 0x4ff0000000000000UL;
-+    y = 0x4ff0000000000000UL;
-+    z = 0x2ff0000000000000UL;
-+
-+    fesetround(FE_DOWNWARD);
-+    asm("vreplgr2vr.d $vr0, %[x]\n\t"
-+        "vreplgr2vr.d $vr1, %[y]\n\t"
-+        "vreplgr2vr.d $vr2, %[z]\n\t"
-+        "vfnmsub.d $vr0, $vr0, $vr1, $vr2\n\t"
-+        "vpickve2gr.d %[x], $vr0, 0\n\t"
-+        "vpickve2gr.d %[y], $vr0, 1\n\t"
-+        :[x]"+&r"(x), [y]"+&r"(y)
-+        :[z]"r"(z)
-+        :"$f0", "$f1", "$f2");
-+
-+    assert(x == 0xdfefffffffffffffUL);
-+    assert(y == 0xdfefffffffffffffUL);
-+    return 0;
-+}
+for you to fetch changes up to e6b9b79c3076777b791f72ebdbc9d37ad8005fe9:
+
+  gitlab: Enable CI for wasm build (2025-05-06 16:02:04 +0200)
+
+----------------------------------------------------------------
+* ci: enable RISC-V cross jobs
+* rust: bump minimum supported version to 1.77
+* rust: enable uninlined_format_args lint
+* initial Emscripten support
+* small fixes
+
+----------------------------------------------------------------
+Kohei Tokunaga (15):
+      target/arm/helper.c: Fix type conflict of GLib function pointers
+      target/i386/cpu.c: Fix type conflict of GLib function pointers
+      target/ppc: Fix type conflict of GLib function pointers
+      target/s390x: Fix type conflict of GLib function pointers
+      include/glib-compat.h: Poison g_list_sort and g_slist_sort
+      util/cacheflush.c: Update cache flushing mechanism for Emscripten
+      block: Add including of ioctl header for Emscripten build
+      block: Fix type conflict of the copy_file_range stub
+      include/qemu/osdep.h: Add Emscripten-specific OS dependencies
+      Disable options unsupported on Emscripten
+      util: exclude mmap-alloc.c from compilation target on Emscripten
+      util: Add coroutine backend for emscripten
+      meson: Add wasm build in build scripts
+      tests: Add Dockerfile containing dependencies for Emscripten build
+      gitlab: Enable CI for wasm build
+
+Paolo Bonzini (15):
+      lcitool: use newer Rust for Debian and Ubuntu
+      meson, cargo: require Rust 1.77.0
+      rust: use std::ffi instead of std::os::raw
+      rust: let bilge use "let ... else"
+      rust: qemu_api_macros: make pattern matching more readable and efficient
+      rust: use MaybeUninit::zeroed() in const context
+      rust: qom: fix TODO about zeroability of classes
+      rust: enable clippy::ptr_cast_constness
+      rust: remove offset_of replacement
+      rust: replace c_str! with c"" literals
+      docs: rust: update for newer minimum supported version
+      target/i386/emulate: fix target_ulong format strings
+      rust: clippy: enable uninlined_format_args lint
+      ci: run RISC-V cross jobs by default
+      docs: build-system: fix typo
+
+ MAINTAINERS                                        |   9 ++
+ docs/about/build-platforms.rst                     |  11 +-
+ docs/devel/build-system.rst                        |   2 +-
+ docs/devel/rust.rst                                |  38 +----
+ configure                                          |   7 +
+ meson.build                                        |  35 ++++-
+ include/glib-compat.h                              |   7 +
+ include/qemu/cacheflush.h                          |   7 +
+ include/qemu/osdep.h                               |   8 +-
+ include/system/os-wasm.h                           | 104 +++++++++++++
+ block/file-posix.c                                 |  11 +-
+ os-wasm.c                                          | 119 +++++++++++++++
+ system/memory.c                                    |   2 +-
+ system/physmem.c                                   |   9 +-
+ system/vl.c                                        |   4 +-
+ target/arm/helper.c                                |   4 +-
+ target/i386/cpu.c                                  |  11 +-
+ target/i386/emulate/x86_decode.c                   |   2 +-
+ target/i386/emulate/x86_emu.c                      |   2 +-
+ target/ppc/cpu_init.c                              |   4 +-
+ target/s390x/cpu_models.c                          |   4 +-
+ util/cacheflush.c                                  |   4 +
+ util/coroutine-wasm.c                              | 127 ++++++++++++++++
+ util/oslib-posix.c                                 |  28 ++++
+ .gitlab-ci.d/buildtest-template.yml                |  27 ++++
+ .gitlab-ci.d/buildtest.yml                         |   9 ++
+ .gitlab-ci.d/container-cross.yml                   |   8 +-
+ .gitlab-ci.d/crossbuilds.yml                       |   5 -
+ backends/meson.build                               |   6 +-
+ configs/meson/emscripten.txt                       |   8 +
+ meson_options.txt                                  |   2 +-
+ qemu-options.hx                                    |   4 +-
+ rust/Cargo.lock                                    |   1 -
+ rust/Cargo.toml                                    |   7 +-
+ rust/clippy.toml                                   |   3 +-
+ rust/hw/char/pl011/src/device.rs                   |   4 +-
+ rust/hw/char/pl011/src/device_class.rs             |  13 +-
+ rust/hw/char/pl011/src/lib.rs                      |   6 +-
+ rust/hw/timer/hpet/src/fw_cfg.rs                   |   6 +-
+ rust/hw/timer/hpet/src/hpet.rs                     |  28 ++--
+ rust/hw/timer/hpet/src/lib.rs                      |   4 +-
+ rust/qemu-api-macros/src/lib.rs                    | 123 ++++++---------
+ rust/qemu-api/Cargo.toml                           |   3 -
+ rust/qemu-api/build.rs                             |  11 +-
+ rust/qemu-api/meson.build                          |   5 -
+ rust/qemu-api/src/c_str.rs                         |  61 --------
+ rust/qemu-api/src/cell.rs                          |   6 +-
+ rust/qemu-api/src/chardev.rs                       |   5 +-
+ rust/qemu-api/src/irq.rs                           |   6 +-
+ rust/qemu-api/src/lib.rs                           |   7 +-
+ rust/qemu-api/src/memory.rs                        |   3 +-
+ rust/qemu-api/src/offset_of.rs                     | 168 ---------------------
+ rust/qemu-api/src/qdev.rs                          |   9 +-
+ rust/qemu-api/src/qom.rs                           |  14 +-
+ rust/qemu-api/src/timer.rs                         |   4 +-
+ rust/qemu-api/src/vmstate.rs                       |  14 +-
+ rust/qemu-api/src/zeroable.rs                      | 106 +++----------
+ rust/qemu-api/tests/tests.rs                       |  11 +-
+ rust/qemu-api/tests/vmstate_tests.rs               |  27 ++--
+ scripts/ci/setup/ubuntu/ubuntu-2204-aarch64.yaml   |   2 +-
+ scripts/ci/setup/ubuntu/ubuntu-2204-s390x.yaml     |   2 +-
+ scripts/meson-buildoptions.sh                      |   2 +-
+ subprojects/bilge-impl-0.2-rs.wrap                 |   1 -
+ subprojects/packagefiles/bilge-impl-1.63.0.patch   |  45 ------
+ tests/docker/dockerfiles/debian-amd64-cross.docker |   2 +-
+ tests/docker/dockerfiles/debian-arm64-cross.docker |   2 +-
+ tests/docker/dockerfiles/debian-armhf-cross.docker |   2 +-
+ tests/docker/dockerfiles/debian-i686-cross.docker  |   2 +-
+ .../dockerfiles/debian-mips64el-cross.docker       |   2 +-
+ .../docker/dockerfiles/debian-mipsel-cross.docker  |   2 +-
+ .../docker/dockerfiles/debian-ppc64el-cross.docker |   2 +-
+ tests/docker/dockerfiles/debian-s390x-cross.docker |   2 +-
+ tests/docker/dockerfiles/debian.docker             |   2 +-
+ tests/docker/dockerfiles/emsdk-wasm32-cross.docker | 145 ++++++++++++++++++
+ tests/docker/dockerfiles/ubuntu2204.docker         |   3 +-
+ tests/lcitool/mappings.yml                         |   5 +
+ tests/lcitool/refresh                              |   5 +-
+ util/meson.build                                   |   4 +-
+ 78 files changed, 861 insertions(+), 654 deletions(-)
+ create mode 100644 include/system/os-wasm.h
+ create mode 100644 os-wasm.c
+ create mode 100644 util/coroutine-wasm.c
+ create mode 100644 configs/meson/emscripten.txt
+ delete mode 100644 rust/qemu-api/src/c_str.rs
+ delete mode 100644 rust/qemu-api/src/offset_of.rs
+ delete mode 100644 subprojects/packagefiles/bilge-impl-1.63.0.patch
+ create mode 100644 tests/docker/dockerfiles/emsdk-wasm32-cross.docker
 -- 
 2.49.0
 
