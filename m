@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72DF1C3ABAC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:32:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D9D2C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCKFj-0004dG-0I; Tue, 06 May 2025 11:30:39 -0400
+	id 1uCKEs-0003hR-3B; Tue, 06 May 2025 11:29:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFH-00041y-PE
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uCKEp-0003fW-LS
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKFE-0002CD-Q1
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:10 -0400
+ id 1uCKEn-0001wd-JT
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746545408;
+ s=mimecast20190719; t=1746545380;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AqmZ1Q/DSGXGQuEc9+2vNyAFTCNLqHbJJqjylFfQo1E=;
- b=PS1v/nVvcAiOVA43qRikm2XtwFT7Pok0GHnNxalFGeT2EiLY/mFMJmfjSpT0no783P0QM2
- EW/2+rJKSxn2QsKEmP3fB26sNgQOub/nox1KkdB9HvSJVE9ksrnJrF3FXLT3OVv1s34gaP
- M8tFwNBo/GBQhz8hdzV3frU7YiFi9nY=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nqAmlc5xorC7DUYYAMTvmDQnZIdhQQMyM8InBOMPed4=;
+ b=WZS18ErlP/VCrAGj01LfsNMQw9S+utQnhBtZrTm4BoqrjYqJhGDAAGXAH10H6dEAfiRfcp
+ R3XfSCBehMRweiZ7ySoV5r28HeWu5UBdJircm1xVigBg4vblgG89JcxbBxE2E5akPkwEMi
+ HgvixdJ3hWS3aheVUwXJgV63hS4OqtQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-340-ChwbrfC4PAmBVnlteNxXlQ-1; Tue, 06 May 2025 11:30:06 -0400
-X-MC-Unique: ChwbrfC4PAmBVnlteNxXlQ-1
-X-Mimecast-MFC-AGG-ID: ChwbrfC4PAmBVnlteNxXlQ_1746545405
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43d08915f61so29905805e9.2
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:30:06 -0700 (PDT)
+ us-mta-513-hleaDwvgMkWXYGGFgMIbIg-1; Tue, 06 May 2025 11:29:39 -0400
+X-MC-Unique: hleaDwvgMkWXYGGFgMIbIg-1
+X-Mimecast-MFC-AGG-ID: hleaDwvgMkWXYGGFgMIbIg_1746545378
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a07a7b4298so2960590f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:29:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746545404; x=1747150204;
+ d=1e100.net; s=20230601; t=1746545377; x=1747150177;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AqmZ1Q/DSGXGQuEc9+2vNyAFTCNLqHbJJqjylFfQo1E=;
- b=pc9AuJpSwGUMXPqVJSSJbp6toIkUZSR5+fjigIj7Iexo8zxMhAOIXo5JWOJbhHXdyD
- h6TheoMzEy8WOrDUqiq5Rf00oo77hmCjA4noKIWBQBZziP8qLLc1Ismtbaj2/KbBGepM
- itXDRZlxEyFeX1bU4613gNhg9ql1MRRyeSX3IU+4RUDCVKjr3wx+/eC92B1tJMD1Sb0V
- ZhlkKVdZOSKKU3pVqyseht2jO5HsM1jOju3cZCCIbOoI21qjVxQTqT3fI35gNbYm52NS
- qMZhe4Mwr6qWEqF9KYWEOzNUDmecY0rJqxinzB+tQ/8kG90ADMmBcgWue/tsbPqLKNvU
- Sl2A==
-X-Gm-Message-State: AOJu0YwOcosECUX+dBCUKphBTzrydVDjsigdS2frWtZ1UFcgglJfRUAZ
- DKJlaQ4G4msyu7IuoYJNCrQ8xYEiEww6/u88U5u7f7TRKoTeGvDQqDqFML4P1t5E7ZGtrKLdtJE
- fLt+mEXvjDiq9Wr1o5kOxEAAydaBvNZ5lZVAI59XS+uJrV+7nBkCNUrzVpZTaBejgrgFebyTkmI
- AB5JmBpyFdms45ksFLdJ/sgdrBy/h+P4231kMH
-X-Gm-Gg: ASbGnct6FP3nR1S+ArOKUelYYWw9gc7HTGmjLINRnTZuD3xWKAyX+gpCP15fPxDL/zt
- igjnFypMiTRyvBQnj2tQ41eSfczyjkVDEqm00z2jllwNZisGsxJ88tqcXJoErZPl42KXTjYfp79
- EvnL31UH+mxlW+UBLnEtbdzyDdlfCj4+iKbrpqKJPg1XWXk5XBmKldM5522QtYpagpZh49qVFis
- sVsuRiCLK2WmY3imnEBHfgut95rTmWBM0WLzUY6LAvw6iY6iNDiDG8q2naY6ZDA5o9F8nLOVTba
- hMHpjZTHRTEfo9s=
-X-Received: by 2002:a05:600c:37c3:b0:43c:fa3f:8e5d with SMTP id
- 5b1f17b1804b1-441c48b03c6mr119765305e9.2.1746545404580; 
- Tue, 06 May 2025 08:30:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEONxT7HyvI4xklcUmnv3xCDwHGB2nwJufb1iPMVLXNzm5q5ScuV2Bd0LNn7xT4TnE8xBj4tA==
-X-Received: by 2002:a05:600c:37c3:b0:43c:fa3f:8e5d with SMTP id
- 5b1f17b1804b1-441c48b03c6mr119765045e9.2.1746545404238; 
- Tue, 06 May 2025 08:30:04 -0700 (PDT)
+ bh=nqAmlc5xorC7DUYYAMTvmDQnZIdhQQMyM8InBOMPed4=;
+ b=JdRc0752miuo/Oys623PKTg2nn6vHH0+lK9ZL/uTKcztaM4XV7k9oYtVSsExNbJ9P8
+ WUehZ+Van1weEx5vLIbCs2HfH/dRdCAi9Ige+so3pB2qWSc8WN5cRLcoxvqrzl5PzBSp
+ eTj20J4J/rmmRy2cf/Af6ju4nvbOdHtdxyTV5BtqvYLTnfE5vcOrPA/A1dSL2WW7LyHN
+ dbu86QVHqdHrI9FWCy71dpsIpO4bbR5Vp2va2jKN0HWZyjnKvX/iJ85l+r9O64eMXZZT
+ RlQZwFUeUY6CzahjDJLXH3p0mdv1AwEebpP0Jup5r7a0kngzgXans4FjATA0l9EYnR/s
+ TT8g==
+X-Gm-Message-State: AOJu0YyPFtPZ8YoosWBeo5g4uDuug3RJ43p9Sa3k3P8PfZuqRp+Or9DX
+ +3gSjAADEybk/1OsWuau0gnENXDUpZfzEkKJkVpVvIA2pZZ9RzbjeG2WJdAWcaS0rO6/XWoxJbt
+ yPT2auZEnhxH3CYDzHLv2tilUGwrSevyofKl+UHWDmfyrkjg3yyDyxzIQ8n/Q1QgGXWfF+zObOF
+ bawvkQNzFUiG98kFHd0ZA7P56BJ4e1miv4rGV5
+X-Gm-Gg: ASbGnctk2w46bzLKEBNw4XRnOk+N1WG2Se1qcwbQQPDIg4UmJc1yNsE9xcgfRM4PHLS
+ qb7jDd+gK5yNjngsxHxaS/zvmnHtyeIkHdxBjWq/oUzhypIt68WAlADaGN0S+EhoFVdbgbqp5rI
+ vKNdyOxFFE+wsg6mWbDms3SJCskzrxajwu4O2J2itszsA8FGvzX4n7K9dIWNItfR7WFEvS6qOKK
+ +ByJ+WM7Tas0PGLFIlIDs+pRF49v2QgpL+IszGgPHbnaMo5d0PPGQCDElEiZxntq0N9zV03QUzU
+ 60KApqEQhA9wjOk=
+X-Received: by 2002:a05:6000:2902:b0:3a0:8c3e:5a4b with SMTP id
+ ffacd0b85a97d-3a0ac0da235mr3274587f8f.16.1746545376845; 
+ Tue, 06 May 2025 08:29:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFWiujdMwZ3Brl7RMktzF4M9/LToye1+nbmRVBodrtcPMJmkOiuA7vJC8DT2ybruBa/cm0d4Q==
+X-Received: by 2002:a05:6000:2902:b0:3a0:8c3e:5a4b with SMTP id
+ ffacd0b85a97d-3a0ac0da235mr3274553f8f.16.1746545376266; 
+ Tue, 06 May 2025 08:29:36 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441b2b28082sm217263045e9.34.2025.05.06.08.30.02
+ 5b1f17b1804b1-441bc264e2dsm152571775e9.12.2025.05.06.08.29.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 08:30:02 -0700 (PDT)
+ Tue, 06 May 2025 08:29:34 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Subject: [PULL 17/30] target/i386/cpu.c: Fix type conflict of GLib function
- pointers
-Date: Tue,  6 May 2025 17:29:12 +0200
-Message-ID: <20250506152927.222671-18-pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 04/30] rust: let bilge use "let ... else"
+Date: Tue,  6 May 2025 17:28:59 +0200
+Message-ID: <20250506152927.222671-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250506152927.222671-1-pbonzini@redhat.com>
 References: <20250506152927.222671-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -109,65 +109,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+"let ... else" was stabilized in 1.65.0; bumping the minimum supported
+Rust version means we don't need to patch it out anymore.
 
-On Emscripten, function pointer casts can result in runtime failures due to
-strict function signature checks. This affects the use of g_list_sort and
-g_slist_sort, which internally perform function pointer casts that are not
-supported by Emscripten. To avoid these issues, g_list_sort_with_data and
-g_slist_sort_with_data should be used instead, as they do not rely on
-function pointer casting.
-
-Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Link: https://lore.kernel.org/r/8ee6c2b02c97d5db358c3eb290d00afe71d1ceb7.1745820062.git.ktokunaga.mail@gmail.com
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ docs/devel/rust.rst                           |  3 --
+ subprojects/bilge-impl-0.2-rs.wrap            |  1 -
+ .../packagefiles/bilge-impl-1.63.0.patch      | 45 -------------------
+ 3 files changed, 49 deletions(-)
+ delete mode 100644 subprojects/packagefiles/bilge-impl-1.63.0.patch
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 6f21d5ed222..1ca6307c72e 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6240,7 +6240,7 @@ static void listflags(GList *features)
- }
+diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
+index c7dfba98de1..8167ff49aa9 100644
+--- a/docs/devel/rust.rst
++++ b/docs/devel/rust.rst
+@@ -76,9 +76,6 @@ are missing:
  
- /* Sort alphabetically by type name, respecting X86CPUClass::ordering. */
--static gint x86_cpu_list_compare(gconstpointer a, gconstpointer b)
-+static gint x86_cpu_list_compare(gconstpointer a, gconstpointer b, gpointer d)
- {
-     ObjectClass *class_a = (ObjectClass *)a;
-     ObjectClass *class_b = (ObjectClass *)b;
-@@ -6261,7 +6261,7 @@ static gint x86_cpu_list_compare(gconstpointer a, gconstpointer b)
- static GSList *get_sorted_cpu_model_list(void)
- {
-     GSList *list = object_class_get_list(TYPE_X86_CPU, false);
--    list = g_slist_sort(list, x86_cpu_list_compare);
-+    list = g_slist_sort_with_data(list, x86_cpu_list_compare, NULL);
-     return list;
- }
+ * ``cast_mut()``/``cast_const()`` (1.65.0).  Use ``as`` instead.
  
-@@ -6318,6 +6318,11 @@ static void x86_cpu_list_entry(gpointer data, gpointer user_data)
-     qemu_printf("  %-20s  %s\n", name, desc);
- }
+-* "let ... else" (1.65.0).  Use ``if let`` instead.  This is currently patched
+-  in QEMU's vendored copy of the bilge crate.
+-
+ * Generic Associated Types (1.65.0)
  
-+static gint strcmp_wrap(gconstpointer a, gconstpointer b, gpointer d)
-+{
-+    return strcmp(a, b);
-+}
-+
- /* list available CPU models and flags */
- static void x86_cpu_list(void)
- {
-@@ -6340,7 +6345,7 @@ static void x86_cpu_list(void)
-         }
-     }
+ * ``CStr::from_bytes_with_nul()`` as a ``const`` function (1.72.0).
+diff --git a/subprojects/bilge-impl-0.2-rs.wrap b/subprojects/bilge-impl-0.2-rs.wrap
+index d14c3dc769b..4f84eca1ccd 100644
+--- a/subprojects/bilge-impl-0.2-rs.wrap
++++ b/subprojects/bilge-impl-0.2-rs.wrap
+@@ -5,7 +5,6 @@ source_filename = bilge-impl-0.2.0.tar.gz
+ source_hash = feb11e002038ad243af39c2068c8a72bcf147acf05025dcdb916fcc000adb2d8
+ #method = cargo
+ patch_directory = bilge-impl-0.2-rs
+-diff_files = bilge-impl-1.63.0.patch
  
--    names = g_list_sort(names, (GCompareFunc)strcmp);
-+    names = g_list_sort_with_data(names, strcmp_wrap, NULL);
- 
-     qemu_printf("\nRecognized CPUID flags:\n");
-     listflags(names);
+ # bump this version number on every change to meson.build or the patches:
+ # v2
+diff --git a/subprojects/packagefiles/bilge-impl-1.63.0.patch b/subprojects/packagefiles/bilge-impl-1.63.0.patch
+deleted file mode 100644
+index 987428a6d65..00000000000
+--- a/subprojects/packagefiles/bilge-impl-1.63.0.patch
++++ /dev/null
+@@ -1,45 +0,0 @@
+---- a/src/shared/discriminant_assigner.rs
+-+++ b/src/shared/discriminant_assigner.rs
+-@@ -26,20 +26,20 @@
+-         let discriminant_expr = &discriminant.1;
+-         let variant_name = &variant.ident;
+- 
+--        let Expr::Lit(ExprLit { lit: Lit::Int(int), .. }) = discriminant_expr else {
+-+        if let Expr::Lit(ExprLit { lit: Lit::Int(int), .. }) = discriminant_expr {
+-+            let discriminant_value: u128 = int.base10_parse().unwrap_or_else(unreachable);
+-+            if discriminant_value > self.max_value() {
+-+                abort!(variant, "Value of variant exceeds the given number of bits")
+-+            }
+-+
+-+            Some(discriminant_value)
+-+        } else {
+-             abort!(
+-                 discriminant_expr,
+-                 "variant `{}` is not a number", variant_name;
+-                 help = "only literal integers currently supported"
+-             )
+--        };
+--
+--        let discriminant_value: u128 = int.base10_parse().unwrap_or_else(unreachable);
+--        if discriminant_value > self.max_value() {
+--            abort!(variant, "Value of variant exceeds the given number of bits")
+-         }
+--
+--        Some(discriminant_value)
+-     }
+- 
+-     fn assign(&mut self, variant: &Variant) -> u128 {
+---- a/src/shared/fallback.rs
+-+++ b/src/shared/fallback.rs
+-@@ -22,8 +22,9 @@
+-             }
+-             Unnamed(fields) => {
+-                 let variant_fields = fields.unnamed.iter();
+--                let Ok(fallback_value) = variant_fields.exactly_one() else {
+--                    abort!(variant, "fallback variant must have exactly one field"; help = "use only one field or change to a unit variant")
+-+                let fallback_value = match variant_fields.exactly_one() {
+-+                    Ok(ok) => ok,
+-+                    _ => abort!(variant, "fallback variant must have exactly one field"; help = "use only one field or change to a unit variant")
+-                 };
+- 
+-                 if !is_last_variant {
 -- 
 2.49.0
 
