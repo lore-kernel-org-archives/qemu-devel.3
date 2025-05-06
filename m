@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D9D2C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B510C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 15:32:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCKEs-0003hR-3B; Tue, 06 May 2025 11:29:46 -0400
+	id 1uCKFj-0004fZ-E2; Tue, 06 May 2025 11:30:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKEp-0003fW-LS
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:43 -0400
+ id 1uCKFJ-000455-JX
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCKEn-0001wd-JT
- for qemu-devel@nongnu.org; Tue, 06 May 2025 11:29:43 -0400
+ id 1uCKFH-0002Cl-GD
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 11:30:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746545380;
+ s=mimecast20190719; t=1746545410;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nqAmlc5xorC7DUYYAMTvmDQnZIdhQQMyM8InBOMPed4=;
- b=WZS18ErlP/VCrAGj01LfsNMQw9S+utQnhBtZrTm4BoqrjYqJhGDAAGXAH10H6dEAfiRfcp
- R3XfSCBehMRweiZ7ySoV5r28HeWu5UBdJircm1xVigBg4vblgG89JcxbBxE2E5akPkwEMi
- HgvixdJ3hWS3aheVUwXJgV63hS4OqtQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SfA/pb9Vrh0ctp/tNBaKwjaEFs5nICEyXk70PoakLy0=;
+ b=SpwGwW1BRaAsZpWZrAvGUtYP/X5XVaVuR2lGCP/UUf/sUV56bs1v3Eh4mF2v9QIRe9yTUi
+ xv7W5OBZxXK5O6MjFNNoIHJ0s5nP1aPIq++xQHSFidqkyrxRiY8RIayNSb4SOFG9W+U752
+ jno3riL2DyKpRUtvpprpXgFS/QYGPDo=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-513-hleaDwvgMkWXYGGFgMIbIg-1; Tue, 06 May 2025 11:29:39 -0400
-X-MC-Unique: hleaDwvgMkWXYGGFgMIbIg-1
-X-Mimecast-MFC-AGG-ID: hleaDwvgMkWXYGGFgMIbIg_1746545378
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a07a7b4298so2960590f8f.0
- for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:29:39 -0700 (PDT)
+ us-mta-573-MTY3zlduPy--Wvk9SwKxxg-1; Tue, 06 May 2025 11:30:08 -0400
+X-MC-Unique: MTY3zlduPy--Wvk9SwKxxg-1
+X-Mimecast-MFC-AGG-ID: MTY3zlduPy--Wvk9SwKxxg_1746545408
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a07a7b4298so2960980f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 06 May 2025 08:30:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746545377; x=1747150177;
+ d=1e100.net; s=20230601; t=1746545407; x=1747150207;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nqAmlc5xorC7DUYYAMTvmDQnZIdhQQMyM8InBOMPed4=;
- b=JdRc0752miuo/Oys623PKTg2nn6vHH0+lK9ZL/uTKcztaM4XV7k9oYtVSsExNbJ9P8
- WUehZ+Van1weEx5vLIbCs2HfH/dRdCAi9Ige+so3pB2qWSc8WN5cRLcoxvqrzl5PzBSp
- eTj20J4J/rmmRy2cf/Af6ju4nvbOdHtdxyTV5BtqvYLTnfE5vcOrPA/A1dSL2WW7LyHN
- dbu86QVHqdHrI9FWCy71dpsIpO4bbR5Vp2va2jKN0HWZyjnKvX/iJ85l+r9O64eMXZZT
- RlQZwFUeUY6CzahjDJLXH3p0mdv1AwEebpP0Jup5r7a0kngzgXans4FjATA0l9EYnR/s
- TT8g==
-X-Gm-Message-State: AOJu0YyPFtPZ8YoosWBeo5g4uDuug3RJ43p9Sa3k3P8PfZuqRp+Or9DX
- +3gSjAADEybk/1OsWuau0gnENXDUpZfzEkKJkVpVvIA2pZZ9RzbjeG2WJdAWcaS0rO6/XWoxJbt
- yPT2auZEnhxH3CYDzHLv2tilUGwrSevyofKl+UHWDmfyrkjg3yyDyxzIQ8n/Q1QgGXWfF+zObOF
- bawvkQNzFUiG98kFHd0ZA7P56BJ4e1miv4rGV5
-X-Gm-Gg: ASbGnctk2w46bzLKEBNw4XRnOk+N1WG2Se1qcwbQQPDIg4UmJc1yNsE9xcgfRM4PHLS
- qb7jDd+gK5yNjngsxHxaS/zvmnHtyeIkHdxBjWq/oUzhypIt68WAlADaGN0S+EhoFVdbgbqp5rI
- vKNdyOxFFE+wsg6mWbDms3SJCskzrxajwu4O2J2itszsA8FGvzX4n7K9dIWNItfR7WFEvS6qOKK
- +ByJ+WM7Tas0PGLFIlIDs+pRF49v2QgpL+IszGgPHbnaMo5d0PPGQCDElEiZxntq0N9zV03QUzU
- 60KApqEQhA9wjOk=
-X-Received: by 2002:a05:6000:2902:b0:3a0:8c3e:5a4b with SMTP id
- ffacd0b85a97d-3a0ac0da235mr3274587f8f.16.1746545376845; 
- Tue, 06 May 2025 08:29:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFWiujdMwZ3Brl7RMktzF4M9/LToye1+nbmRVBodrtcPMJmkOiuA7vJC8DT2ybruBa/cm0d4Q==
-X-Received: by 2002:a05:6000:2902:b0:3a0:8c3e:5a4b with SMTP id
- ffacd0b85a97d-3a0ac0da235mr3274553f8f.16.1746545376266; 
- Tue, 06 May 2025 08:29:36 -0700 (PDT)
+ bh=SfA/pb9Vrh0ctp/tNBaKwjaEFs5nICEyXk70PoakLy0=;
+ b=qEKR0dF+0i9tHmvLtF6GOGdbh9/gqdIZg8PkDHiTkPsA7gzQIM1Nlrb7OQAXkRNpv2
+ 7Rf+CKBCFYT2kccESY7LqFlb8gJ95Szzg2XUFktcqG4qt+m8LVTNFLdZUVAvUwX2SJZj
+ z5j5X6eochAGAGsvRqUtBGGMf2nHRvWBvTimwRTOxEgs5CcFsrCLf3FD4QjSRk0rKIpz
+ bCNs1y4M05rCj4jQ1tKvxnRbNFK2w9jdCVMm+I/qXd3Q/E4Q57eLcdkzgbKexJ3P9TYQ
+ SGKEvNOdrK6MG/ZoWyXLBX43UDoI/lFioIOFW/ZxZDx6rsK+4mojV2Kq8M5MhW9Y3CHe
+ 8rKw==
+X-Gm-Message-State: AOJu0Yw2o9QCGYi2OaeRNxVRBSmj4oV2eEy3M9OK1No0/78hTFtQ9zRi
+ 4plR/2TiFpWJKJxwtcVHfYMKDsolKsVCCDKC6Uf7Er+22sbf5XQI2f0ydCF7R3H/rxk+LoRHfqv
+ zuqHO5DRGABBKqJXYUMB6ve88e7zlVCgRjd3XR759z8XqD/B/ogOyTb+5xMN5XH5ajHwZ/pDC8c
+ tpXUStiODqWFroA0N8xCwnlStMIB56P2BRIhEh
+X-Gm-Gg: ASbGnctXFhhvYutZdbVookmTFcPQg4bcUzNaZA0XYdgBTu/TNg/Lk45ZKFbKZr9l89P
+ N2zYtAnUbXhH+dGusP3INsNvDhBWl3mLyUa8gDjeWTMWmreEqp5FZUHWrxbFu4XRVI5cu55e/yU
+ ccpVtdltS7R5Qxn8j2r2fwdeqTtzifgHT3z7lYdMJDXy86zNE5C2QIlNS7jRyyyNur6VVD8t+So
+ /73Zt5/LtBXc3d8z1dVaNHLr89gk7ui/G4A0k2l2l7F1z3qQKSaj0j3uWrSyX8rvfV/dc1XKuTF
+ +pJDNRKAqB+C5RM=
+X-Received: by 2002:a5d:64cb:0:b0:3a0:8331:3380 with SMTP id
+ ffacd0b85a97d-3a0ac0cb0damr2632298f8f.8.1746545407244; 
+ Tue, 06 May 2025 08:30:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHkLIP+ON78/RNW8/+M2HkGSkZ/mDg7+xgUBsfITnTwxKSu5mi/QxkbE/cKUwzm4jguAX6Lkg==
+X-Received: by 2002:a5d:64cb:0:b0:3a0:8331:3380 with SMTP id
+ ffacd0b85a97d-3a0ac0cb0damr2632276f8f.8.1746545406822; 
+ Tue, 06 May 2025 08:30:06 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-441bc264e2dsm152571775e9.12.2025.05.06.08.29.34
+ ffacd0b85a97d-3a0b2c4a84csm1117268f8f.42.2025.05.06.08.30.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 May 2025 08:29:34 -0700 (PDT)
+ Tue, 06 May 2025 08:30:04 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 04/30] rust: let bilge use "let ... else"
-Date: Tue,  6 May 2025 17:28:59 +0200
-Message-ID: <20250506152927.222671-5-pbonzini@redhat.com>
+Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Subject: [PULL 18/30] target/ppc: Fix type conflict of GLib function pointers
+Date: Tue,  6 May 2025 17:29:13 +0200
+Message-ID: <20250506152927.222671-19-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250506152927.222671-1-pbonzini@redhat.com>
 References: <20250506152927.222671-1-pbonzini@redhat.com>
@@ -109,96 +108,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"let ... else" was stabilized in 1.65.0; bumping the minimum supported
-Rust version means we don't need to patch it out anymore.
+From: Kohei Tokunaga <ktokunaga.mail@gmail.com>
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+On Emscripten, function pointer casts can result in runtime failures due to
+strict function signature checks. This affects the use of g_list_sort and
+g_slist_sort, which internally perform function pointer casts that are not
+supported by Emscripten. To avoid these issues, g_list_sort_with_data and
+g_slist_sort_with_data should be used instead, as they do not rely on
+function pointer casting.
+
+Signed-off-by: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Link: https://lore.kernel.org/r/d917055d35f5ff7316ccdcbdf57af9a7bd85bf29.1745820062.git.ktokunaga.mail@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- docs/devel/rust.rst                           |  3 --
- subprojects/bilge-impl-0.2-rs.wrap            |  1 -
- .../packagefiles/bilge-impl-1.63.0.patch      | 45 -------------------
- 3 files changed, 49 deletions(-)
- delete mode 100644 subprojects/packagefiles/bilge-impl-1.63.0.patch
+ target/ppc/cpu_init.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
-index c7dfba98de1..8167ff49aa9 100644
---- a/docs/devel/rust.rst
-+++ b/docs/devel/rust.rst
-@@ -76,9 +76,6 @@ are missing:
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index b0973b6df95..09a8d4ff721 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7115,7 +7115,7 @@ PowerPCCPUClass *ppc_cpu_get_family_class(PowerPCCPUClass *pcc)
+ }
  
- * ``cast_mut()``/``cast_const()`` (1.65.0).  Use ``as`` instead.
+ /* Sort by PVR, ordering special case "host" last. */
+-static gint ppc_cpu_list_compare(gconstpointer a, gconstpointer b)
++static gint ppc_cpu_list_compare(gconstpointer a, gconstpointer b, gpointer d)
+ {
+     ObjectClass *oc_a = (ObjectClass *)a;
+     ObjectClass *oc_b = (ObjectClass *)b;
+@@ -7183,7 +7183,7 @@ static void ppc_cpu_list(void)
  
--* "let ... else" (1.65.0).  Use ``if let`` instead.  This is currently patched
--  in QEMU's vendored copy of the bilge crate.
--
- * Generic Associated Types (1.65.0)
+     qemu_printf("Available CPUs:\n");
+     list = object_class_get_list(TYPE_POWERPC_CPU, false);
+-    list = g_slist_sort(list, ppc_cpu_list_compare);
++    list = g_slist_sort_with_data(list, ppc_cpu_list_compare, NULL);
+     g_slist_foreach(list, ppc_cpu_list_entry, NULL);
+     g_slist_free(list);
  
- * ``CStr::from_bytes_with_nul()`` as a ``const`` function (1.72.0).
-diff --git a/subprojects/bilge-impl-0.2-rs.wrap b/subprojects/bilge-impl-0.2-rs.wrap
-index d14c3dc769b..4f84eca1ccd 100644
---- a/subprojects/bilge-impl-0.2-rs.wrap
-+++ b/subprojects/bilge-impl-0.2-rs.wrap
-@@ -5,7 +5,6 @@ source_filename = bilge-impl-0.2.0.tar.gz
- source_hash = feb11e002038ad243af39c2068c8a72bcf147acf05025dcdb916fcc000adb2d8
- #method = cargo
- patch_directory = bilge-impl-0.2-rs
--diff_files = bilge-impl-1.63.0.patch
- 
- # bump this version number on every change to meson.build or the patches:
- # v2
-diff --git a/subprojects/packagefiles/bilge-impl-1.63.0.patch b/subprojects/packagefiles/bilge-impl-1.63.0.patch
-deleted file mode 100644
-index 987428a6d65..00000000000
---- a/subprojects/packagefiles/bilge-impl-1.63.0.patch
-+++ /dev/null
-@@ -1,45 +0,0 @@
----- a/src/shared/discriminant_assigner.rs
--+++ b/src/shared/discriminant_assigner.rs
--@@ -26,20 +26,20 @@
--         let discriminant_expr = &discriminant.1;
--         let variant_name = &variant.ident;
-- 
---        let Expr::Lit(ExprLit { lit: Lit::Int(int), .. }) = discriminant_expr else {
--+        if let Expr::Lit(ExprLit { lit: Lit::Int(int), .. }) = discriminant_expr {
--+            let discriminant_value: u128 = int.base10_parse().unwrap_or_else(unreachable);
--+            if discriminant_value > self.max_value() {
--+                abort!(variant, "Value of variant exceeds the given number of bits")
--+            }
--+
--+            Some(discriminant_value)
--+        } else {
--             abort!(
--                 discriminant_expr,
--                 "variant `{}` is not a number", variant_name;
--                 help = "only literal integers currently supported"
--             )
---        };
---
---        let discriminant_value: u128 = int.base10_parse().unwrap_or_else(unreachable);
---        if discriminant_value > self.max_value() {
---            abort!(variant, "Value of variant exceeds the given number of bits")
--         }
---
---        Some(discriminant_value)
--     }
-- 
--     fn assign(&mut self, variant: &Variant) -> u128 {
----- a/src/shared/fallback.rs
--+++ b/src/shared/fallback.rs
--@@ -22,8 +22,9 @@
--             }
--             Unnamed(fields) => {
--                 let variant_fields = fields.unnamed.iter();
---                let Ok(fallback_value) = variant_fields.exactly_one() else {
---                    abort!(variant, "fallback variant must have exactly one field"; help = "use only one field or change to a unit variant")
--+                let fallback_value = match variant_fields.exactly_one() {
--+                    Ok(ok) => ok,
--+                    _ => abort!(variant, "fallback variant must have exactly one field"; help = "use only one field or change to a unit variant")
--                 };
-- 
--                 if !is_last_variant {
 -- 
 2.49.0
 
