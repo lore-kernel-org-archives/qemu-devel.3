@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 923FCC3ABBF
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 May 2025 23:32:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E99CC3ABB6
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 May 2025 00:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uC57X-0006yM-Dl; Mon, 05 May 2025 19:21:11 -0400
+	id 1uC5tw-0004Yj-0D; Mon, 05 May 2025 20:11:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC57C-0006SB-Q4
- for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:50 -0400
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uC5tu-0004YM-SM
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 20:11:10 -0400
 Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uC57A-0003eR-Lf
- for qemu-devel@nongnu.org; Mon, 05 May 2025 19:20:50 -0400
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uC5ts-00008E-Cx
+ for qemu-devel@nongnu.org; Mon, 05 May 2025 20:11:10 -0400
 Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-22c336fcdaaso59555425ad.3
- for <qemu-devel@nongnu.org>; Mon, 05 May 2025 16:20:48 -0700 (PDT)
+ d9443c01a7336-2254e0b4b79so75544975ad.2
+ for <qemu-devel@nongnu.org>; Mon, 05 May 2025 17:11:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746487247; x=1747092047; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rVtP/RnhHG9awohdmhc7BZy6oUycGDI8ImSQa94LuXo=;
- b=k6T60VQgdXDMYJy3PZEN9lXMy9lrzI/Gbcjf7O06DAt6EzB1DuwPAhoqcpLBPptft7
- c7EX6+hOdUgbNc0eZmY45w8n5etDoGAl5r+TAi44gg4ECNdk5zE1dEe/oNhuophLlgg8
- 8OyFKK/8arNm0vInBqLyGPxVVwlYM4SCqB2c88yFqGUCL3L1hGkQjMvm1gDwan/hL78s
- ksRuHg4LcYSFU6aiAXW600V/RLMro/jed/zHKEf3kUqBrvGVU6gVwiYgItTX1hUGKlLO
- xsDjUovUxMFbtGpK+wyk2dji8y0K8lllITmHQ/PArAEl8JomnQcAHLCu8vKPo+ODDY1h
- uVPQ==
+ d=linaro.org; s=google; t=1746490265; x=1747095065; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=rMlrkoDSa1JV/ScygbYcd3JhEPUBHPR5an3220OLAoU=;
+ b=hrv+oGIYinvIpSi250ODmaWhDPpA0HIenKAeQpy1xtCLG17jv5qqrrVjkdKw21oKuD
+ i7dQxAbjfy2q06MvpKCSQIs7DLX1Byl75V0AKcuutiEPLrnVEM2hxccXBaOEHZ2YFh9U
+ e7je1bDKqYHgXlR6YP0XEoLayqrM+SLQKGIR1nq93pmztZnaiuDN8HC+fgOcDdMJBn8h
+ TcKlc92/KDZNoTRDDt0lsgRqjbLHf8RfCW8FM+uHZUTTLPs5wWkbQ1Tu4odiMNMSzAa+
+ 1m3Ozr0Nw3alCRwDlEfJ3rA8wQFd1eaTcjagummB72EiXCb4R4+QFGfL6MmbduYSiGp9
+ K67Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746487247; x=1747092047;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rVtP/RnhHG9awohdmhc7BZy6oUycGDI8ImSQa94LuXo=;
- b=C5qS+0rxJRMbXB0n+frNUkkE7R0SU1M8KmfTQ6EFJYM/urZlgh3ZG0cRjZaUSKN68t
- KpMft8E/IyyH6cz6iTgLmHQCewiNUT+RssoPp19qnoDNdgyobSIxHI5HABy5tEr5h7hC
- 36wDGDrE6vbTq3hnFCPOkuFGSpe06NIvBbSLqFSIV1Vzllp0VXU+T0zTzHqwx7rOySWd
- NaRU10h48RCMetM/FNzTauWUM78BIglPvVXI1+NVDuc97Pu8JoA96W+5200PiS7Jl4uX
- DSdeslWWwMzFX6kXNgMLp3aMWNEKIhm/MFKHgMHojvU3EYNBI+SZ+/OgxVU6tgmUzetF
- db8w==
-X-Gm-Message-State: AOJu0YxANnXy1+9qLKPggpkZpvjdvIkcbWs7fB1S1ocEX3sPxp+pjovI
- q4FfJi2Rj9pPOcVFu5S3ITOYyH8UT017sjTjwqWGb45omz4EBaNS5BxhYgRrbQ24e1qVKdy6ZiS
- myAY=
-X-Gm-Gg: ASbGnctGhrYgMy5p0xMUxDeOJfM4op1wbP/IKYI0Ik6xJezACw6vDY6U2Adoo1Sz0/E
- 19uRO4xrhxIQ833zbaBxQYD7WT9uyIU4d3U88ZJjb2WfU/nnm7x7yFVocQrxXw8lG3WUCuR9fyh
- sIWjaPYeK+0UYJdbC7rF3xdz/NQzVMZufZq0vazc81afw8EYvhqZQ7ueImV7cG9VAm0Z7EWjznC
- aJRjSmDJN2hO7M0U9E3CFuNCyRV9NZF138WelCCYx38MscjGjN2EM3z/P5u2JITAlHZz5zXda3N
- P1+jkTlAVtl0yDAIo/ZpfuO4eY4qwVuEqJmtDj7o
-X-Google-Smtp-Source: AGHT+IEMmS6ciWk/Y5QYiejcijVDCumZ8eY2Sx72qIxgeSdq7SZvIl1V5RaehgZdSDls9z4ASH3d6w==
-X-Received: by 2002:a17:902:d585:b0:223:66bb:8993 with SMTP id
- d9443c01a7336-22e1ea79d91mr141126175ad.43.1746487247181; 
- Mon, 05 May 2025 16:20:47 -0700 (PDT)
-Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e1522917asm60981715ad.201.2025.05.05.16.20.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 May 2025 16:20:46 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, anjo@rev.ng,
- Peter Maydell <peter.maydell@linaro.org>, alex.bennee@linaro.org,
- kvm@vger.kernel.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v6 30/50] target/arm/cortex-regs: compile file once (system)
-Date: Mon,  5 May 2025 16:19:55 -0700
-Message-ID: <20250505232015.130990-31-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250505232015.130990-1-pierrick.bouvier@linaro.org>
-References: <20250505232015.130990-1-pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20230601; t=1746490265; x=1747095065;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:subject:from:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rMlrkoDSa1JV/ScygbYcd3JhEPUBHPR5an3220OLAoU=;
+ b=UHR3+oo2nNH0gQgbt3iYMduT2VUo4t6EjwBLJXmxNepRqUQPEwEcZrHqMzttCAJqB6
+ MGxirkxfcY0Ai2zXd67/6pDftCLi3yiCRIOZWfb17nkTgbN23elQk63OKVuPOVvJQRZA
+ FdJJjQNI0neBGXIO7aL8s4AjbRMbe/RerOtW7sCs8wsgU7TqidvJP8e+3saKR86w0ZIt
+ iu7w541DI7T3gxCjdTotKrcVmeQBxApnJJM99gApyNrOArEeMxH7CskWBrnm890diKBe
+ kCwWAw8B45/4mhXm+Ud2VimzedhaegXPGT9gh4OWyNWvS+ASClWeg5BiNFteNr7NhWx1
+ ZmqA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUd52rhFW+yqtkT4n3ILccKFMTScqb1C+En8EYa2/Xeslw9r0ZOymN/s88Cfeco2Xi222VoaYytVlOb@nongnu.org
+X-Gm-Message-State: AOJu0YxjCUd1ST0HIdsH0HHUL4Be8qYpqMiWq9DsP+0ld/ZNIXBNzhGK
+ pi+VuHjbI8lk3XjGkLFC0HFnRBAKPXELtIqPOfFB2zTYsq13milqWdgvdU3+Rj4=
+X-Gm-Gg: ASbGncsAgg8cHIwDoraPZj7P5qEErjKfnaLtX9BrMBlX4ofpJ4T3YWdZEEMJvTme5XP
+ Af/44JmGhRcPwJWN0NuF9m26GxfDlAPWctiUyVa+Ecy1x77UNgTZMhZkai2/PRFISCxJQzYra4K
+ 1IVrVNq2AbCAuu7kjhEaIV67M2XKUuMfHB0z3JxCR0n3eYnOaUiUntuy4ZMo/xPD7bVzhXjMyXn
+ HrtICVZIuLpbqZA7ltdMf9T8/waNI9/8wBb0fq2umVUyd40lkLROJ6sxnvpRZ2ON7iz2WdNUg2c
+ VyKTLgOo8jk5du++sgwh4bIAdurxsbQie5OUfcWGXo1ZbeFbxa1R03rhog1nc/fEy6ehp5c//1K
+ In4im1NWpu81jkspjD5I=
+X-Google-Smtp-Source: AGHT+IHbcYSIIohp615rCZ8MyauwJAEMni+aPPKpnDh0PCp8ZLxeT6rTMFGBjCPkhuPTkSolYSxcUA==
+X-Received: by 2002:a17:902:ce02:b0:223:536d:f67b with SMTP id
+ d9443c01a7336-22e1eaaf8ccmr172686835ad.38.1746490265450; 
+ Mon, 05 May 2025 17:11:05 -0700 (PDT)
+Received: from ?IPV6:2804:7f0:b400:8604:71fc:f75a:e2f5:e7b5?
+ ([2804:7f0:b400:8604:71fc:f75a:e2f5:e7b5])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22e151e9f39sm61573215ad.84.2025.05.05.17.11.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 May 2025 17:11:05 -0700 (PDT)
+Message-ID: <9d4514ad-5b23-44a9-9b3e-77fce9066092@linaro.org>
+Date: Mon, 5 May 2025 21:11:00 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Gustavo Romero <gustavo.romero@linaro.org>
+Subject: Re: [RFC 01/24] hw/pci/pcie_port: Fix pcie_slot_is_hotpluggbale_bus
+ typo
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ imammedo@redhat.com, anisinha@redhat.com, mst@redhat.com,
+ shannon.zhaosl@gmail.com
+Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com
+References: <20250428102628.378046-1-eric.auger@redhat.com>
+ <20250428102628.378046-2-eric.auger@redhat.com>
+Content-Language: en-US
+In-Reply-To: <20250428102628.378046-2-eric.auger@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,33 +109,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- target/arm/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi Eric,
 
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 7db573f4a97..6e0327b6f5b 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -16,7 +16,6 @@ arm_system_ss = ss.source_set()
- arm_common_system_ss = ss.source_set()
- arm_system_ss.add(files(
-   'arm-qmp-cmds.c',
--  'cortex-regs.c',
-   'machine.c',
-   'ptw.c',
- ))
-@@ -38,6 +37,7 @@ arm_common_system_ss.add(when: 'TARGET_AARCH64', if_false: files(
- arm_common_system_ss.add(files(
-   'arch_dump.c',
-   'arm-powerctl.c',
-+  'cortex-regs.c',
-   'debug_helper.c',
-   'helper.c',
-   'vfp_fpscr.c',
--- 
-2.47.2
+On 4/28/25 07:25, Eric Auger wrote:
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> ---
+>   hw/pci/pcie_port.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/pci/pcie_port.c b/hw/pci/pcie_port.c
+> index c73db30e98..072500ed34 100644
+> --- a/hw/pci/pcie_port.c
+> +++ b/hw/pci/pcie_port.c
+> @@ -188,7 +188,7 @@ int pcie_count_ds_ports(PCIBus *bus)
+>       return dsp_count;
+>   }
+>   
+> -static bool pcie_slot_is_hotpluggbale_bus(HotplugHandler *plug_handler,
+> +static bool pcie_slot_is_hotpluggable_bus(HotplugHandler *plug_handler,
+>                                             BusState *bus)
+>   {
+>       PCIESlot *s = PCIE_SLOT(bus->parent);
+> @@ -221,7 +221,7 @@ static void pcie_slot_class_init(ObjectClass *oc, void *data)
+>       hc->plug = pcie_cap_slot_plug_cb;
+>       hc->unplug = pcie_cap_slot_unplug_cb;
+>       hc->unplug_request = pcie_cap_slot_unplug_request_cb;
+> -    hc->is_hotpluggable_bus = pcie_slot_is_hotpluggbale_bus;
+> +    hc->is_hotpluggable_bus = pcie_slot_is_hotpluggable_bus;
+>   }
+>   
+>   static const TypeInfo pcie_slot_type_info = {
 
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+
+
+Cheers,
+Gustavo
 
