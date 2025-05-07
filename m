@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B19C3ABC5
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 21:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D2B9C3ABBF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 21:24:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCm5K-0006Hg-Kn; Wed, 07 May 2025 17:13:46 -0400
+	id 1uCmFe-0004Xl-4D; Wed, 07 May 2025 17:24:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uCm4y-0006Cb-1h
- for qemu-devel@nongnu.org; Wed, 07 May 2025 17:13:24 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCmFd-0004XU-42
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 17:24:25 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uCm4u-0006FK-Db
- for qemu-devel@nongnu.org; Wed, 07 May 2025 17:13:23 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-736a7e126c7so358175b3a.3
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 14:13:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCmFa-0007rO-Np
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 17:24:24 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-b1fde81de05so135783a12.1
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 14:24:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746652397; x=1747257197; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GtWEOmY8WNzf/zuqN1oHdsdFxXcLLPjcJIdBZ8JJ7O4=;
- b=hQ+/BzBnGXbd3+fKfLM0q1FRo9c2Fghnr7v9RryvBERWeWWahvMp2oazL3nonP5FNE
- Mv0n5lah3NMsv268EkhMKt5NUmrNUfNS4pB7Y3pUkLOVhvTv8+hAJTxIUISncuqP2eyr
- orylrHEHR8IdXxiX04pwt1CYVa0kaBijDqxT158WiPOas/wm/5wxvBZ2KyV/FzDhl1cz
- Rzi0B+wxm4UJucO93AGJRwmOW0y0nnLV5iF7tkh8rbIb0eSJy85ip2MBWxgCD6ozxdfk
- IdkEJ+HrZkSmq3ysomSAJ/iyelQpM08GuAJfUXCT30lm38EtEqFw6Zet4lwl0/8wzttg
- yfdA==
+ d=linaro.org; s=google; t=1746653060; x=1747257860; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=W9wSbNtcYIATn3/CCIOmNLAP+ZutI6QPzA05RlF2E58=;
+ b=eInO1H8xZjbC9ju+Ljdb8gD+yR735FAOGwbB0CIqJQd9C96riOwwJH5jj1wFOIpEj8
+ mRbqg/mFTQzxJrPYuJm8JdrLiP70s8nawwA6k83nOztS20pf8IAlYhK+yWfkdAN4n2gL
+ PZ0uS2m3e+qqImWGq66w/HvUqadZHKSweMaculYEiZDOd24F/3zN/eru8z45cse7u4if
+ MQDNE/uEKGY2kXfR1FaCKvZTczvdafGp/URrsSSFZwnOqfTImb+XX23IQBTUZliiy+L/
+ gTPgQRmU0wCoXw365FZ3pi15KdW+DP/SBbs1M+lpzv25Ih816baAqhwRGOqqTMoHcfnY
+ b9gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746652397; x=1747257197;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GtWEOmY8WNzf/zuqN1oHdsdFxXcLLPjcJIdBZ8JJ7O4=;
- b=uY0fUJl58muyErqPv9vznYTcR4+3JNIOw7pT2h/PgqujQYGfvA8aOF6VssGeAINnXf
- yQURheVxCTFoBbtN9YyOmmCl6qSxJVVCfwHulKwVHMic/nrZ8OU2J7BC4GBmjPFtwsIe
- L5zEk044+EadavolJITvTbNlp5pvSlF9wq68p4oCre2l71AXD/MnB/kyVPu0qcIyP3Tc
- imnyb/WdttiFy+Ms2jlVv5kdS5VXWNGtX9S/R9CTQwiFKZ8P7YbM1Uy1FCNIwUrbq8jd
- AO8+0BgaH2FaAPUK3dEnUYAEdg+GsdcBEmsMC+FRf2ZCqGLmqFLyr14K+vq2MHiqO7gq
- LXRw==
-X-Gm-Message-State: AOJu0YyLBAXTLsT/fdnIdjQEdvKeJijBAgps+428K/e2XOQPxhPTsDd/
- OE4NpBAKpvZyvzTV4V+rU17cejXIJeecM3gAPd4paYHTGruEXQJ8D86btgnFsHM1C05ZQhjYgYV
- B
-X-Gm-Gg: ASbGncux9cK7Kqenoo98CqPk5KGds0J3N6O2PB7w9QrWinkXBN0D0rPmZSS7uEH99On
- jOLMfJF14ufKGTW0eq9sN7H/vNfgnwevdl7sXujwx9ISTxFHVrgyeDR891GqYpixWvVwfpG8kUz
- Snnf02+IPDC6s7LXNTsUUdyqZ01TtQeC/rxW5x0elT57RuJGg/ISH0E+C5O1R0npTcyCiF8nWoD
- IIcVVdehGUB1RyRV2P61RfFxmY1W01cD8pG6hxtnYgU3WgBi+namAe5ccm7JzS+ChiVsn9mywLz
- AmB6VZH9QUGHqGc4O2tfASVNPuCaxQvQTec/7raMKdKpB+Efp0TaXvjpTEuwV4Nc4xIPEyBiIei
- XvZogvKY0dg==
-X-Google-Smtp-Source: AGHT+IE/Ej/Y45wJFUCGjHyQhsFRxgecfHPCs5KUnVEIKmaFK7E53x1RIDZTxnecFP2RJrRJw7eQag==
-X-Received: by 2002:a05:6a20:72a1:b0:1f5:92ac:d6a1 with SMTP id
- adf61e73a8af0-2148b52649emr6219232637.4.1746652397629; 
- Wed, 07 May 2025 14:13:17 -0700 (PDT)
-Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7405902154dsm12255251b3a.90.2025.05.07.14.13.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 14:13:17 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 19/24] target/m68k: Merge gen_load_fp, gen_load_mode_fp
-Date: Wed,  7 May 2025 14:12:54 -0700
-Message-ID: <20250507211300.9735-20-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250507211300.9735-1-richard.henderson@linaro.org>
-References: <20250507211300.9735-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1746653060; x=1747257860;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=W9wSbNtcYIATn3/CCIOmNLAP+ZutI6QPzA05RlF2E58=;
+ b=PndKvEtDoBCk28cYUevrhgxHWHt/mcXEQx2An9N5ZWa5zwDEuOH3uOk+i73/IoipOw
+ maGlhSk8xBZXML07ghtxImxXlRXAlYNhAb+hrfCENFcaGOLsEV5tqsvscs8GRRZLuwq4
+ A8KB+TYZnGSM9IxB00PmsI1slbZH68OUIir6r/JFZZxS3VsMcWeVD0Sxgx0am+2D9ZYA
+ 5G/MOGNiFRWpB3orDaN70PewvtnoHrkwb+uZMQ/0bE2WgBSFNaC+yEgMVtEdeegr4sd1
+ InkUyFnCUHYZfFltSxdUsbXnnAV2mRl/fvjgjwloPjnZz5ks/QM23nvhF/u5ULqWdUnP
+ z5ew==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU+wTXWqbtn8ljcbsmLxSJ8jaLorRJN/tHEre4WmkZOIBpsZUSpnnP73i/FY3YhQSRGeyu8jZfqC+/W@nongnu.org
+X-Gm-Message-State: AOJu0YwPIaMxtX3KVs1yVu7u0leFLIj3KXn5zeF2BmufPgdclLBBbU2T
+ d6GaeZ8cc0SkqgQwRzd/GYM6VexM5n01zjyHaATzgYeZj4N8oK5QtdhSUa/Zy3c=
+X-Gm-Gg: ASbGnctblnn65X2pTrK2RrlHhbnudp4WqBWPjIsd/s7cqfbmrNWYs2yVewCj5NOlV5p
+ vDrw/eotFY4Z5asbNj5Jaylq2uaN0eNXYUwJrdStjmfqmA7COJd+izijGYiB2dopjqyEWR86QbQ
+ T9NaL5SJg1G8udaU791jKUZWeD2eZ+wUYOwtHhbLhE0RTRAMI+/pjW94kYMGWfswxeZrYWy9E2I
+ mQfWhG10Dfrpe7FON/JMcHBpvcXbbim95po+JwlLXXoHNr4cwdRBDHiOZmWGBwOx168dn3wTdgd
+ eNNTn4awH0fOpHBosGeuITqLeUk4XOtlv0PPM/s0qtE8GPRSOrQcJa7HBSf1/Tcb/S9SlDGjDTE
+ ifVbpNT2O
+X-Google-Smtp-Source: AGHT+IG9OQYyismC+aPpyYezSYCrHN9IBBy4qVV/tHH2qSvwJsqlgCVSU/dfUo7PBK9S+6t5GbFuAg==
+X-Received: by 2002:a17:90b:4c4f:b0:30a:3dde:6af4 with SMTP id
+ 98e67ed59e1d1-30aac29c154mr6321209a91.31.1746653060386; 
+ Wed, 07 May 2025 14:24:20 -0700 (PDT)
+Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-30ad4ffb545sm781114a91.45.2025.05.07.14.24.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 May 2025 14:24:19 -0700 (PDT)
+Message-ID: <e91774b1-b950-4930-9b85-1fe52b1b6cd8@linaro.org>
+Date: Wed, 7 May 2025 23:24:15 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] linux-user: Fix typo in comment
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, thuth@redhat.com
+References: <20250507204626.139507-1-gustavo.romero@linaro.org>
+ <20250507204626.139507-2-gustavo.romero@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250507204626.139507-2-gustavo.romero@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,153 +102,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This enables the exceptions raised by the actual load
-to be reflected as a failure.
+On 7/5/25 22:46, Gustavo Romero wrote:
+> Fix the duplicate "of" preposition in a comment.
+> 
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Suggested-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   linux-user/mmap.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/m68k/translate.c | 104 ++++++++++++++++++++--------------------
- 1 file changed, 51 insertions(+), 53 deletions(-)
-
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 642e80857c..711f1477c8 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -902,53 +902,6 @@ static void gen_fp_move(TCGv_ptr dest, TCGv_ptr src)
-     tcg_gen_st_i64(t64, dest, offsetof(FPReg, l.lower));
- }
- 
--static void gen_load_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
--                        int index)
--{
--    TCGv tmp;
--    TCGv_i64 t64;
--
--    t64 = tcg_temp_new_i64();
--    tmp = tcg_temp_new();
--    switch (opsize) {
--    case OS_BYTE:
--    case OS_WORD:
--    case OS_LONG:
--        tcg_gen_qemu_ld_tl(tmp, addr, index, opsize | MO_SIGN | MO_TE);
--        gen_helper_exts32(tcg_env, fp, tmp);
--        break;
--    case OS_SINGLE:
--        tcg_gen_qemu_ld_tl(tmp, addr, index, MO_TEUL);
--        gen_helper_extf32(tcg_env, fp, tmp);
--        break;
--    case OS_DOUBLE:
--        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
--        gen_helper_extf64(tcg_env, fp, t64);
--        break;
--    case OS_EXTENDED:
--        if (m68k_feature(s->env, M68K_FEATURE_CF_FPU)) {
--            gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
--            break;
--        }
--        tcg_gen_qemu_ld_i32(tmp, addr, index, MO_TEUL);
--        tcg_gen_shri_i32(tmp, tmp, 16);
--        tcg_gen_st16_i32(tmp, fp, offsetof(FPReg, l.upper));
--        tcg_gen_addi_i32(tmp, addr, 4);
--        tcg_gen_qemu_ld_i64(t64, tmp, index, MO_TEUQ);
--        tcg_gen_st_i64(t64, fp, offsetof(FPReg, l.lower));
--        break;
--    case OS_PACKED:
--        /*
--         * unimplemented data type on 68040/ColdFire
--         * FIXME if needed for another FPU
--         */
--        gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
--        break;
--    default:
--        g_assert_not_reached();
--    }
--}
--
- static void gen_store_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
-                          int index)
- {
-@@ -996,8 +949,8 @@ static void gen_store_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
-     }
- }
- 
--static bool gen_load_mode_fp(DisasContext *s, uint16_t insn, int opsize,
--                             TCGv_ptr fp, int index)
-+static bool gen_load_fp(DisasContext *s, uint16_t insn, int opsize,
-+                        TCGv_ptr fp, int index)
- {
-     int mode = extract32(insn, 3, 3);
-     int reg0 = REG(insn, 0);
-@@ -1084,10 +1037,55 @@ static bool gen_load_mode_fp(DisasContext *s, uint16_t insn, int opsize,
-             gen_addr_fault(s);
-             return false;
-         }
--        gen_load_fp(s, opsize, addr, fp, index);
--        return true;
-+        break;
-+
-+    default:
-+        g_assert_not_reached();
-     }
--    g_assert_not_reached();
-+
-+    switch (opsize) {
-+    case OS_BYTE:
-+    case OS_WORD:
-+    case OS_LONG:
-+        tmp = tcg_temp_new();
-+        tcg_gen_qemu_ld_tl(tmp, addr, index, opsize | MO_SIGN | MO_TE);
-+        gen_helper_exts32(tcg_env, fp, tmp);
-+        break;
-+    case OS_SINGLE:
-+        tmp = tcg_temp_new();
-+        tcg_gen_qemu_ld_tl(tmp, addr, index, MO_TEUL);
-+        gen_helper_extf32(tcg_env, fp, tmp);
-+        break;
-+    case OS_DOUBLE:
-+        t64 = tcg_temp_new_i64();
-+        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
-+        gen_helper_extf64(tcg_env, fp, t64);
-+        break;
-+    case OS_EXTENDED:
-+        if (m68k_feature(s->env, M68K_FEATURE_CF_FPU)) {
-+            gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
-+            return false;
-+        }
-+        tmp = tcg_temp_new();
-+        t64 = tcg_temp_new_i64();
-+        tcg_gen_qemu_ld_i32(tmp, addr, index, MO_TEUL);
-+        tcg_gen_addi_i32(addr, addr, 4);
-+        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
-+        tcg_gen_shri_i32(tmp, tmp, 16);
-+        tcg_gen_st16_i32(tmp, fp, offsetof(FPReg, l.upper));
-+        tcg_gen_st_i64(t64, fp, offsetof(FPReg, l.lower));
-+        break;
-+    case OS_PACKED:
-+        /*
-+         * unimplemented data type on 68040/ColdFire
-+         * FIXME if needed for another FPU
-+         */
-+        gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
-+        return false;
-+    default:
-+        g_assert_not_reached();
-+    }
-+    return true;
- }
- 
- static bool gen_store_mode_fp(DisasContext *s, uint16_t insn, int opsize,
-@@ -4911,7 +4909,7 @@ DISAS_INSN(fpu)
-         /* Source effective address.  */
-         opsize = ext_opsize(ext, 10);
-         cpu_src = gen_fp_result_ptr();
--        if (!gen_load_mode_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
-+        if (!gen_load_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
-             return;
-         }
-     } else {
--- 
-2.43.0
 
 
