@@ -4,85 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E8AC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 08:47:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B2F7C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 08:57:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCaQI-0007tk-Fl; Wed, 07 May 2025 04:46:38 -0400
+	id 1uCaaf-00038B-9U; Wed, 07 May 2025 04:57:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <timlee660101@gmail.com>)
- id 1uCaQG-0007sq-A1; Wed, 07 May 2025 04:46:36 -0400
-Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <timlee660101@gmail.com>)
- id 1uCaQE-0000RG-E4; Wed, 07 May 2025 04:46:36 -0400
-Received: by mail-oa1-x30.google.com with SMTP id
- 586e51a60fabf-2d09d495c6cso1769755fac.3; 
- Wed, 07 May 2025 01:46:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746607592; x=1747212392; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gnn2Vq4mb6y5HITMbTlLn96B2uBq2q4paLMypMJGpAI=;
- b=AE6isCGbsg1L9CwgCY4MGfBC4vH4MvE/8OhHcy5t1NROBQaSsReCx3Dx3U0gtDiXNX
- aqfANSvk263TkczPNDbJiUfkctungTfSihz6tLuVYtuBWVaomXBmbMCFgosqg57KKxTE
- 3MNcuzJe68vjwwKb+k0UwWv+ZNJ29WT+jAncU4gM8YOILqzSrIoOqRx+md0n5+zis9Qu
- 7VsAfc0wsdB7XmEjJhZroxSc7pOKu0KsUcyh+djsH6Tq1jKRNkpF9oq1vTctQfNPdu0t
- Kxxeze33MYHZ6yzQr2nFHk7rDqVAKKnNIgnZZE1qOv6nGIcXdy+OrMLSk5O01w94XNit
- 7LMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746607592; x=1747212392;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gnn2Vq4mb6y5HITMbTlLn96B2uBq2q4paLMypMJGpAI=;
- b=wm4cvwWouPo1OuyvohGZVbMwUV0XTbr2Xc0YwwGAfN2VnSbvYySvCu3izP/lup3wyd
- E1darD7wnWuSDhwuU0s+pEQUGYQsgenUhQsRjBHhOkScwW8GXisnKK7gr4aOW5cZzXbY
- RNi/6L3Bn31TA36VnEWJauDt//Ekb9Ub2sNomSWQM3Snhl+Dbggq8BIafijubXT4NUQl
- r4SN1BwnjJgg6ueGdE//0DyEQfsNjRwo9MNp8UOXOQeyZxK9tfg9brUvPhYV2+AVrWMm
- w0HAvgcUO6tGoKImPRFIjBZ9Rto6Rbhw9fNFGTEAa+r2d21ceM1Hik25loVeWaUvyhS6
- DAuQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUtFwGMj0Uj5DHbJQvqrz9j+GsXY17p1uRHhN1+sVPNSOe7xWsRP+tXsJYW3gxQrqIS/eveAPF3eyUj/Q==@nongnu.org,
- AJvYcCWoYDWPIxKPR4l8PNQwI4dDH7U9Z5pHkpQ7uI5m0LfJyddf2fo+WkqUn/2AXd6rZwmAztPJarpKMQ==@nongnu.org
-X-Gm-Message-State: AOJu0Yzt8ZpkQ8bhv03OTcvfogHfOF1GtlaDuBZSa6UbBQURlABg2Z+t
- NKuguCr6JkyLn3bD0D9M/R7vKPfFC8Hcbws5eFjkbfyIFkkLnKtKopOQzhLzE1rDkNZ+NgsqE06
- XjALlEOcPelyojpqSKAnqTwIHC/8=
-X-Gm-Gg: ASbGncsHAbgT0lU2oLuXTtuTaSH1DV0gf5vkZ0V5ek4Dq7x0InuCa8DczwYLGCt243r
- YAagiZgeQl3Ot2C4l7Zm/a8529I0/b8AW16kMgF4f26ujoaWg9LXxdEZTr9BKKiS/dbw6Y0HxYY
- 8O3BwrZEZ+5sCMhjZq7m/Qc+s=
-X-Google-Smtp-Source: AGHT+IFQOgpNB0obkG03QTu6CpAJ72MJxAg4BcfIqz65PWg0WgIkd+q/+b2Zw14fjBkLTDg7RnGSMMYr3h+RHIUQ9Qo=
-X-Received: by 2002:a05:6870:891c:b0:2bd:456c:92a with SMTP id
- 586e51a60fabf-2db5be369e8mr1380426fac.10.1746607591769; Wed, 07 May 2025
- 01:46:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uCaac-00037y-Lk
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 04:57:18 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uCaaZ-0001UX-To
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 04:57:18 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxTWtkIBto5fjXAA--.25867S3;
+ Wed, 07 May 2025 16:57:08 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCxLcVZIBtoK6G5AA--.9215S3;
+ Wed, 07 May 2025 16:56:59 +0800 (CST)
+Subject: Re: [PATCH v3] tests/qtest/cpu-plug-test: Add cpu hotplug support for
+ LoongArch
+From: bibo mao <maobibo@loongson.cn>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
+References: <20250314085130.4184272-1-maobibo@loongson.cn>
+Message-ID: <c66ea257-0449-cccb-ac13-518e42c9081f@loongson.cn>
+Date: Wed, 7 May 2025 16:55:49 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20250418091208.1888768-1-timlee660101@gmail.com>
- <CAFEAcA_O1B7oXbK3RHLvSJHZaMSM-aVG_CD9Y7dH0OpAs7sibg@mail.gmail.com>
-In-Reply-To: <CAFEAcA_O1B7oXbK3RHLvSJHZaMSM-aVG_CD9Y7dH0OpAs7sibg@mail.gmail.com>
-From: Tim Lee <timlee660101@gmail.com>
-Date: Wed, 7 May 2025 16:46:20 +0800
-X-Gm-Features: ATxdqUGRxlYMsQyce2DuWwyKelYvna9Ur6BlQScs3BxuI_DWfa36HhgIuXTXtk8
-Message-ID: <CAJG6D+hbqbLqQhqGA0sb4ngkuvC00ex7iR3p9UP-kWatoCGqUA@mail.gmail.com>
-Subject: Re: [PATCH] tests/qtest: Add qtest for NPCM8XX PSPI module
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com, 
- wuhaotsh@google.com, kfting@nuvoton.com, chli30@nuvoton.com, 
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:4860:4864:20::30;
- envelope-from=timlee660101@gmail.com; helo=mail-oa1-x30.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250314085130.4184272-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMCxLcVZIBtoK6G5AA--.9215S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxWw13Kw45Aw4xJF1UWFy5Jrc_yoW5AFyfpr
+ WDAw4FkFW8AFn8J3ZayF1UuryF9rnrC3WYvF4xtr10krZ8GryUGr48Ka1jq3ZxA3ykZF18
+ u3Wktrn5G3ZrtFcCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU25EfUUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.85,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,166 +82,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
-Thanks for your suggestion. Those changes will be included in v2.
+Hi Thomas,
 
-Peter Maydell <peter.maydell@linaro.org> =E6=96=BC 2025=E5=B9=B45=E6=9C=886=
-=E6=97=A5 =E9=80=B1=E4=BA=8C =E4=B8=8B=E5=8D=888:52=E5=AF=AB=E9=81=93=EF=BC=
-=9A
->
-> On Fri, 18 Apr 2025 at 10:12, Tim Lee <timlee660101@gmail.com> wrote:
-> >
-> > - Created qtest to check initialization of registers in PSPI Module
-> > - Implemented test into Build File
-> >
-> > Tested:
-> > ./build/tests/qtest/npcm8xx-pspi_test
-> >
-> > Signed-off-by: Tim Lee <timlee660101@gmail.com>
-> > ---
-> >  MAINTAINERS                     |   1 +
-> >  tests/qtest/meson.build         |   3 +
-> >  tests/qtest/npcm8xx_pspi-test.c | 104 ++++++++++++++++++++++++++++++++
-> >  3 files changed, 108 insertions(+)
-> >  create mode 100644 tests/qtest/npcm8xx_pspi-test.c
-> >
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index d54b5578f8..0162f59bf7 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -892,6 +892,7 @@ F: hw/sensor/adm1266.c
-> >  F: include/hw/*/npcm*
-> >  F: tests/qtest/npcm*
-> >  F: tests/qtest/adm1266-test.c
-> > +F: tests/qtest/npcm8xx_pspi-test.c
->
-> This file is already matched as being in this section by the
-> wildcard two lines earlier.
+Can this patch be merged since qemu 10.0 is released already?
 
-MAINTAINERS file keep no change.
->
-> >  F: pc-bios/npcm7xx_bootrom.bin
-> >  F: pc-bios/npcm8xx_bootrom.bin
-> >  F: roms/vbootrom
->
-> > diff --git a/tests/qtest/npcm8xx_pspi-test.c b/tests/qtest/npcm8xx_pspi=
--test.c
-> > new file mode 100644
-> > index 0000000000..107bce681f
-> > --- /dev/null
-> > +++ b/tests/qtest/npcm8xx_pspi-test.c
-> > @@ -0,0 +1,104 @@
-> > +#include "qemu/osdep.h"
-> > +#include "libqtest.h"
-> > +#include "qemu/module.h"
->
-> Every source file needs to start with the usual brief
-> comment giving its copyright/license information (and we
-> like that to include an SPDX-license-Identifier these days
-> for new source files).
->
+Regards
+Bibo Mao
 
-Add comment for copyright/license information.
-> > +
-> > +#define DATA_OFFSET 0x00
-> > +#define CTL_SPIEN   0x01
-> > +#define CTL_OFFSET  0x02
-> > +#define CTL_MOD     0x04
-> > +
-> > +typedef struct PSPI {
-> > +    uint64_t base_addr;
-> > +} PSPI;
-> > +
-> > +PSPI pspi_defs =3D {
-> > +    .base_addr  =3D 0xf0201000
-> > +};
-> > +
-> > +static uint16_t pspi_read_data(QTestState *qts, const PSPI *pspi)
-> > +{
-> > +    return qtest_readw(qts, pspi->base_addr + DATA_OFFSET);
-> > +}
-> > +
-> > +static void pspi_write_data(QTestState *qts, const PSPI *pspi, uint16_=
-t value)
-> > +{
-> > +    qtest_writew(qts, pspi->base_addr + DATA_OFFSET, value);
-> > +}
-> > +
-> > +static uint32_t pspi_read_ctl(QTestState *qts, const PSPI *pspi)
-> > +{
-> > +    return qtest_readl(qts, pspi->base_addr + CTL_OFFSET);
-> > +}
-> > +
-> > +static void pspi_write_ctl(QTestState *qts, const PSPI *pspi, uint32_t=
- value)
-> > +{
-> > +    qtest_writel(qts, pspi->base_addr + CTL_OFFSET, value);
-> > +}
->
-> If I'm reading the implementation correctly, it makes both
-> the DATA and CTL registers 16 bits, but this code has the
-> data register 16 bits and the control register 32 bits.
-> Which is correct ?
->
+On 2025/3/14 下午4:51, Bibo Mao wrote:
+> Add cpu hotplug testcase support for LoongArch system, it passes to
+> run with command "make check-qtest-loongarch64" as following:
+>    qemu:qtest+qtest-loongarch64 / qtest-loongarch64/cpu-plug-test OK 0.38s 1 subtests passed
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> ---
+> v2 ... v3:
+>    1. Remove redundant check with machine type since it is constant
+>       string.
+> 
+> v1 ... v2:
+>    1. Call test function add_loongarch_test_case() directly rather than
+>       qtest_cb_for_every_machine() since compatible machine is not
+>       supported on LoongArch system.
+>    2. Add architecture specified test case in separate line.
+> ---
+>   tests/qtest/cpu-plug-test.c | 24 ++++++++++++++++++++++++
+>   tests/qtest/meson.build     |  3 ++-
+>   2 files changed, 26 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tests/qtest/cpu-plug-test.c b/tests/qtest/cpu-plug-test.c
+> index 6633abfc10..44d704680b 100644
+> --- a/tests/qtest/cpu-plug-test.c
+> +++ b/tests/qtest/cpu-plug-test.c
+> @@ -156,6 +156,28 @@ static void add_s390x_test_case(const char *mname)
+>       g_free(path);
+>   }
+>   
+> +static void add_loongarch_test_case(const char *mname)
+> +{
+> +    char *path;
+> +    PlugTestData *data;
+> +
+> +    data = g_new(PlugTestData, 1);
+> +    data->machine = g_strdup(mname);
+> +    data->cpu_model = "la464";
+> +    data->device_model = g_strdup("la464-loongarch-cpu");
+> +    data->sockets = 1;
+> +    data->cores = 3;
+> +    data->threads = 1;
+> +    data->maxcpus = data->sockets * data->cores * data->threads;
+> +
+> +    path = g_strdup_printf("cpu-plug/%s/device-add/%ux%ux%u&maxcpus=%u",
+> +                           mname, data->sockets, data->cores,
+> +                           data->threads, data->maxcpus);
+> +    qtest_add_data_func_full(path, data, test_plug_with_device_add,
+> +                             test_data_free);
+> +    g_free(path);
+> +}
+> +
+>   int main(int argc, char **argv)
+>   {
+>       const char *arch = qtest_get_arch();
+> @@ -168,6 +190,8 @@ int main(int argc, char **argv)
+>           qtest_cb_for_every_machine(add_pseries_test_case, g_test_quick());
+>       } else if (g_str_equal(arch, "s390x")) {
+>           qtest_cb_for_every_machine(add_s390x_test_case, g_test_quick());
+> +    } else if (g_str_equal(arch, "loongarch64")) {
+> +        add_loongarch_test_case("virt");
+>       }
+>   
+>       return g_test_run();
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 5a8c1f102c..788093f744 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -149,7 +149,8 @@ qtests_hppa = \
+>   
+>   qtests_loongarch64 = qtests_filter + \
+>     (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
+> -  ['boot-serial-test']
+> +  ['boot-serial-test',
+> +   'cpu-plug-test']
+>   
+>   qtests_m68k = ['boot-serial-test'] + \
+>     qtests_filter
+> 
+> base-commit: 4c33c097f3a8a8093bcbaf097c3a178051e51b3e
+> 
 
-Yes, you are right! DATA and CLT registers both use 16 bits.
-> > +/* Check PSPI can be reset to default value */
-> > +static void test_init(gconstpointer pspi_p)
-> > +{
-> > +    const PSPI *pspi =3D pspi_p;
-> > +
-> > +    QTestState *qts =3D qtest_init("-machine npcm845-evb");
-> > +    pspi_write_ctl(qts, pspi, CTL_SPIEN);
-> > +    g_assert_cmphex(pspi_read_ctl(qts, pspi), =3D=3D, CTL_SPIEN);
-> > +
-> > +    qtest_quit(qts);
-> > +}
-> > +
-> > +/* Check PSPI can be r/w data register */
-> > +static void test_data(gconstpointer pspi_p)
-> > +{
-> > +    const PSPI *pspi =3D pspi_p;
-> > +    uint16_t test =3D 0x1234;
-> > +    uint16_t output;
-> > +
-> > +    QTestState *qts =3D qtest_init("-machine npcm845-evb");
-> > +
-> > +    /* Write to data register */
-> > +    pspi_write_data(qts, pspi, test);
-> > +    printf("Wrote 0x%x to data register\n", test);
->
-> Don't put printf()s in test cases, please. The test
-> output is supposed to be TAP test protocol format, and
-> the printfs insert random junk into that.
->
-> If you need to output some kind of message, you can use
-> g_test_message(), but for simple stuff like this I don't think
-> the printfs are really adding anything, because the test is
-> so short.
->
-
-Remove printf() in test cases.
-> > +
-> > +    /* Read from data register */
-> > +    output =3D pspi_read_data(qts, pspi);
-> > +    printf("Read 0x%x from data register\n", output);
->
-> Can we assert something useful here about what we read
-> (e.g. that it's the same as what we wrote) ?
->
-
-Currently, I just write test data to data register then read data from
-it and verify it.
-> > +
-> > +    qtest_quit(qts);
-> > +}
->
-> thanks
-> -- PMM
-
-
-
---=20
-Best regards,
-Tim Lee
 
