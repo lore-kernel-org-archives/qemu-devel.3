@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8751FC3ABBF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 23:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B581AC3ABBF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 23:52:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCoPy-0000Jb-SV; Wed, 07 May 2025 19:43:14 -0400
+	id 1uCoUq-0002ZI-Ia; Wed, 07 May 2025 19:48:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uCoPs-000074-5y
- for qemu-devel@nongnu.org; Wed, 07 May 2025 19:43:08 -0400
+ id 1uCoTa-0000bQ-KV
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 19:47:02 -0400
 Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uCoPp-0002XJ-W0
- for qemu-devel@nongnu.org; Wed, 07 May 2025 19:43:07 -0400
+ id 1uCoTY-00038Z-Qr
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 19:46:58 -0400
 Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-22c336fcdaaso5164825ad.3
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 16:43:03 -0700 (PDT)
+ d9443c01a7336-22c33677183so4699015ad.2
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 16:46:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746661382; x=1747266182; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746661615; x=1747266415; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6DV+2RAAVd7Czk8H7PoRnAo43qLQObnu+pSnMRVopks=;
- b=Ip89h0J4rfhd6A297IqLgoLxs9K7wr8v9ZXDzeqoy2c/m4XjPOuiV0d8bI3DECYcm3
- TLj5oUbUnt3o74rmLfSTdovmniJ3OTHv4Euf7sEMID3u4pFT1nTZXXAEVuZRjmlgX/zJ
- biv3cwpKQICUDpind7tEaTzOxC+s0JUvjKLgildopPbOFZFkW9Ehv2jxRQCh9wSagvzm
- drTCi5jGb3jZZ9nufyx3BV8iVfkV1U37oHCSma3CZgd9mYIjVlK3X04oTSbSSUjAAfoi
- guCwAz82R9aifkwZqdYwwhtmDTb8YaQntedlhQ0kmazNIwKigbu/IkMSm1Ym5hIzp03e
- LH3Q==
+ bh=11Q55+gMF5u6Eo9NyNW4V+s1ceVG/+YyEcTpuHMGI4c=;
+ b=YdaUCfv9YBQhloQQfvK2eW0E7esp1kgaAfQtjarRMxDfyE0xGT4Pv/tSMdrI1QtTAI
+ 6vwgTFKQqHF4EuGFgpsqI3GrSG6Zu22rmq5fQk59//54xPt1QuwBAdLZeoJr6/kWdt0C
+ x47SLn9j8uCpktSRkUWFcUhXxovM3BbNHdQyv/F9tr/ZceN6aCkLlwVjn9duYjHrWpEf
+ egm0Qg91dEA7Q+PQRxwmF/IJTPA9BsXgjuWklICT0Lv1ed/+13CsmmRn7C7HcMpIDPF4
+ w6Vij4xCS0kQgbfDw5u8I6bgl7vOLN6mf+13jIPltLl+gHKVFhpCjLmrGzO0tj12CRw0
+ pa0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746661382; x=1747266182;
+ d=1e100.net; s=20230601; t=1746661615; x=1747266415;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6DV+2RAAVd7Czk8H7PoRnAo43qLQObnu+pSnMRVopks=;
- b=XWNWZUdmWJwvGbC0Q8NwHlqKir1K9ZIQq0aNHvZJCFJywd1vS85RE51b9Zie6SfNnq
- 8OWx3gYN4TvtGc5niG0pniXTkAIycU3Eb2a4RKJoaVO/Id9AS7Y2Zz+tVttrWI7A67Ii
- hG+uPLu+e3eDQ9GaMgLbA1i1S0SqtySiUbmjXeqG5huj/P0qM+olITP47h3f0ujXji3b
- I+h2TFxN2/RF59TkPeGFoMsmFeoGVI+t2n4/UwoVvrBuyD1l0dt1MV83HqIstYll8tpD
- fRZpP9wwVtGUIRcQdoF6hJm1DkgGHqD5qlDqqpQP4XUIvQGl01Z7wmKhZ6NoV57vtQnD
- LY7A==
-X-Gm-Message-State: AOJu0Yz6xT1JQazEr+0FGLG2Dsgh8ygF9SM3C733MvAPm97EP7sd6mIb
- tMmO+yBPlXZw0RPf8ZEqt3fch6Ap6u3IP8iuw0s8ce1RFpq0+23ztJjG44AvxTHgutTt1Idl9es
- A3JUlbA==
-X-Gm-Gg: ASbGncv0u0l8lZOmQ9QfE29KAtcG0NPpy9u6ftEVa6NSsW2SyhnajoiMmMeCE3P9Rt7
- jkMvm7K5FFfv7fs+brEVWgPRkrBq0WO3J8YS9TZduhsvGBgEZiAu+1wTSu9Q7GTUzfX2jJ7Ew0H
- DjofqKAla8Z4xsLhi4VIimxQ02pg5ylRE1FObBn1WLtWcft4hggy0BagPEzbYg9nq0QeLfmNhSQ
- WoEWq2W6sJkaaEUYysiEG4Z7kioFugWRkizRECuGYgcQB1OX/M62IlP7VcHX/oYJBQr8lwChq8m
- Q6m8uVEWwuWk67HNRSGYKkGiJ7jfHZH/ZSX2wSQ6
-X-Google-Smtp-Source: AGHT+IEFUNK62tE1si4fuK2RKKlN0gVISYH36IdERyQZ1SgpJ1N+YZe4RJbDf6/SEw8jryGADSirZg==
-X-Received: by 2002:a17:902:ce86:b0:22e:4203:9f33 with SMTP id
- d9443c01a7336-22e865f7573mr16624385ad.33.1746661382643; 
- Wed, 07 May 2025 16:43:02 -0700 (PDT)
+ bh=11Q55+gMF5u6Eo9NyNW4V+s1ceVG/+YyEcTpuHMGI4c=;
+ b=jb8lTGY1Brzk4RHRhiotlNAW4+CqYmGaROSbhW2o5e1lvhgmqdo4sE7G+KYa+YQVIa
+ IjoX3jH611gZP355hje3INHqgTNEd/Y4xnhBL61rLq6qZoFNk7vDn2ChLOsR8rY3ZRGE
+ +jTffe25RXA/GbaDZipK5vMERIpM8mOts57xRotP835TmA5mIQPit6/+jJoNan6e2yW7
+ mgQcvJrLFl5ntx68vQCCXz/gcnnxqWmBA5GVuBqW6zze1dRQAn9dd8vAZ1h+Zn0ql+bd
+ XTjXZEdkm9a1XJxL+AHW1uOgeqqL4CssQJUB5jkkanp1sIvBs3wVNlD9MUuwXb7dsX7L
+ hv2A==
+X-Gm-Message-State: AOJu0YwQ3cRvVGjPrP3OMuBHC70XNWQjIaIpi6I4M6RAkpY4Jao0sAK7
+ 8krkUQmwPF5IP9URq7KHyzz0upSbu2SjDA25gy11EmDq0OuTSLdV2NNa2wMyq0S0wCsaW9vc960
+ MmZItpg==
+X-Gm-Gg: ASbGncsMnM2B/J7tyuBPe6U9ny+Zz+4ZnX/4HeHt3EiiyHUWd+/fD6Ds76ZGP1BD5NZ
+ 8JQH1SqflKi6yJE0jOYaL2YqFjLifd0L3Trnd1pFIh0r9WNJk+VujOUDA4V+T7eeGOT14WZv0E0
+ HAHLd4tA82XPWjINuyWhBB7zwvas2sFPPt+3e1lgz7eZfGT0N0ibPXboDwRr/LhVeUKO7QNtR/5
+ 7epzNGCrZYKUS1HONr4wkLTWciU6hPGbNkBEwItG0at8vmAjcekhYPVPiz57Y+t2fglLCASbumo
+ dV/EUBqyyseUfrR3Z+KO3qi1pvNJ/xMNuF5Ug/es
+X-Google-Smtp-Source: AGHT+IEeb52mgakz+8TCt7s0DB7r7G8IMfnoPVX8rLcKaGa0HamIowdccKji4YJ4u1M8woCDTY1WYw==
+X-Received: by 2002:a17:902:e748:b0:220:e1e6:4457 with SMTP id
+ d9443c01a7336-22e5ea7d822mr69085515ad.26.1746661615265; 
+ Wed, 07 May 2025 16:46:55 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e815806fdsm6491325ad.17.2025.05.07.16.43.01
+ d9443c01a7336-22e151e97absm100792435ad.62.2025.05.07.16.46.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 16:43:02 -0700 (PDT)
+ Wed, 07 May 2025 16:46:54 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, anjo@rev.ng, Peter Maydell <peter.maydell@linaro.org>,
@@ -70,14 +70,14 @@ Cc: qemu-arm@nongnu.org, anjo@rev.ng, Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v7 22/49] target/arm/helper: expose aarch64 cpu registration
-Date: Wed,  7 May 2025 16:42:13 -0700
-Message-ID: <20250507234241.957746-23-pierrick.bouvier@linaro.org>
+Subject: [PATCH v7 44/49] target/arm/tcg/neon_helper: compile file twice
+ (system, user)
+Date: Wed,  7 May 2025 16:42:35 -0700
+Message-ID: <20250507234241.957746-45-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250507234241.957746-1-pierrick.bouvier@linaro.org>
 References: <20250507234241.957746-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
  envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
@@ -103,70 +103,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-associated define_arm_cp_regs are guarded by
-"cpu_isar_feature(aa64_*)", so it's safe to expose that code for arm
-target (32 bit).
-
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/helper.c | 7 -------
- 1 file changed, 7 deletions(-)
+ target/arm/tcg/neon_helper.c | 4 +++-
+ target/arm/tcg/meson.build   | 3 ++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 2e57fa80b08..18ac8192331 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6590,7 +6590,6 @@ static const ARMCPRegInfo zcr_reginfo[] = {
-       .writefn = zcr_write, .raw_writefn = raw_write },
- };
+diff --git a/target/arm/tcg/neon_helper.c b/target/arm/tcg/neon_helper.c
+index e2cc7cf4ee6..2cc8241f1e4 100644
+--- a/target/arm/tcg/neon_helper.c
++++ b/target/arm/tcg/neon_helper.c
+@@ -9,11 +9,13 @@
  
--#ifdef TARGET_AARCH64
- static CPAccessResult access_tpidr2(CPUARMState *env, const ARMCPRegInfo *ri,
-                                     bool isread)
- {
-@@ -6824,7 +6823,6 @@ static const ARMCPRegInfo nmi_reginfo[] = {
-       .writefn = aa64_allint_write, .readfn = aa64_allint_read,
-       .resetfn = arm_cp_reset_ignore },
- };
--#endif /* TARGET_AARCH64 */
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+-#include "exec/helper-proto.h"
+ #include "tcg/tcg-gvec-desc.h"
+ #include "fpu/softfloat.h"
+ #include "vec_internal.h"
  
- static void define_pmu_regs(ARMCPU *cpu)
- {
-@@ -7016,7 +7014,6 @@ static const ARMCPRegInfo lor_reginfo[] = {
-       .type = ARM_CP_CONST, .resetvalue = 0 },
- };
++#define HELPER_H "tcg/helper.h"
++#include "exec/helper-proto.h.inc"
++
+ #define SIGNBIT (uint32_t)0x80000000
+ #define SIGNBIT64 ((uint64_t)1 << 63)
  
--#ifdef TARGET_AARCH64
- static CPAccessResult access_pauth(CPUARMState *env, const ARMCPRegInfo *ri,
-                                    bool isread)
- {
-@@ -7509,8 +7506,6 @@ static const ARMCPRegInfo nv2_reginfo[] = {
-       .fieldoffset = offsetof(CPUARMState, cp15.vncr_el2) },
- };
- 
--#endif /* TARGET_AARCH64 */
--
- static CPAccessResult access_predinv(CPUARMState *env, const ARMCPRegInfo *ri,
-                                      bool isread)
- {
-@@ -8951,7 +8946,6 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-         define_one_arm_cp_reg(cpu, &hcrx_el2_reginfo);
-     }
- 
--#ifdef TARGET_AARCH64
-     if (cpu_isar_feature(aa64_sme, cpu)) {
-         define_arm_cp_regs(cpu, sme_reginfo);
-     }
-@@ -9012,7 +9006,6 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-     if (cpu_isar_feature(aa64_nmi, cpu)) {
-         define_arm_cp_regs(cpu, nmi_reginfo);
-     }
--#endif
- 
-     if (cpu_isar_feature(any_predinv, cpu)) {
-         define_arm_cp_regs(cpu, predinv_reginfo);
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 02dfe768c5d..af786196d2f 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -32,7 +32,6 @@ arm_ss.add(files(
+   'translate-vfp.c',
+   'm_helper.c',
+   'mve_helper.c',
+-  'neon_helper.c',
+   'op_helper.c',
+   'tlb_helper.c',
+   'vec_helper.c',
+@@ -68,8 +67,10 @@ arm_common_ss.add(files(
+ arm_common_system_ss.add(files(
+   'hflags.c',
+   'iwmmxt_helper.c',
++  'neon_helper.c',
+ ))
+ arm_user_ss.add(files(
+   'hflags.c',
+   'iwmmxt_helper.c',
++  'neon_helper.c',
+ ))
 -- 
 2.47.2
 
