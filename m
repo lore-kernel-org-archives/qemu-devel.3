@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D89BC3ABBF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A50A3C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCj8X-0008FR-Bc; Wed, 07 May 2025 14:04:55 -0400
+	id 1uCj8z-0000LM-Ah; Wed, 07 May 2025 14:05:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uCj8B-00089O-NK; Wed, 07 May 2025 14:04:31 -0400
+ id 1uCj8t-0000Gq-Lj; Wed, 07 May 2025 14:05:15 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uCj89-0008Ay-Th; Wed, 07 May 2025 14:04:31 -0400
+ id 1uCj8r-0008Qe-Re; Wed, 07 May 2025 14:05:15 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 36AD911FEFB;
+ by isrv.corpit.ru (Postfix) with ESMTP id BD67911FF04;
  Wed, 07 May 2025 21:04:00 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 09157206700;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 90B77206709;
  Wed,  7 May 2025 21:04:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>, qemu-trivial@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 06/21] hw/acpi/ich9: Remove ICH9_DEBUG macro
-Date: Wed,  7 May 2025 21:03:57 +0300
-Message-Id: <20250507180412.182797-7-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-trivial@nongnu.org
+Subject: [PULL 15/21] hw/xen/xen-hvm-common.c: fix "the the" typo in comment
+Date: Wed,  7 May 2025 21:04:06 +0300
+Message-Id: <20250507180412.182797-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250507180412.182797-1-mjt@tls.msk.ru>
 References: <20250507180412.182797-1-mjt@tls.msk.ru>
@@ -59,48 +59,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
-
-Remove the ICH9_DEBUG macro, which is only used to dump the value of the
-pm_io_base parameter, passed to ich9_pm_iospace_update(). It provides
-little to no value and is not worth converting to a trace event.
-
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Suggested-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/acpi/ich9.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ hw/xen/xen-hvm-common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index c7a735bf64..9c0b7437b7 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -41,15 +41,6 @@
- #include "hw/mem/pc-dimm.h"
- #include "hw/mem/nvdimm.h"
- 
--//#define DEBUG
--
--#ifdef DEBUG
--#define ICH9_DEBUG(fmt, ...) \
--do { printf("%s "fmt, __func__, ## __VA_ARGS__); } while (0)
--#else
--#define ICH9_DEBUG(fmt, ...)    do { } while (0)
--#endif
--
- static void ich9_pm_update_sci_fn(ACPIREGS *regs)
- {
-     ICH9LPCPMRegs *pm = container_of(regs, ICH9LPCPMRegs, acpi_regs);
-@@ -135,8 +126,6 @@ static const MemoryRegionOps ich9_smi_ops = {
- 
- void ich9_pm_iospace_update(ICH9LPCPMRegs *pm, uint32_t pm_io_base)
- {
--    ICH9_DEBUG("to 0x%x\n", pm_io_base);
--
-     assert((pm_io_base & ICH9_PMIO_MASK) == 0);
- 
-     pm->pm_io_base = pm_io_base;
+diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
+index 9a677e8ed7..78e0bc8f64 100644
+--- a/hw/xen/xen-hvm-common.c
++++ b/hw/xen/xen-hvm-common.c
+@@ -711,7 +711,7 @@ static int xen_map_ioreq_server(XenIOState *state)
+     /*
+      * If we fail to map the shared page with xenforeignmemory_map_resource()
+      * or if we're using buffered ioreqs, we need xen_get_ioreq_server_info()
+-     * to provide the the addresses to map the shared page and/or to get the
++     * to provide the addresses to map the shared page and/or to get the
+      * event-channel port for buffered ioreqs.
+      */
+     if (state->shared_page == NULL || state->has_bufioreq) {
 -- 
 2.39.5
 
