@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67136C369DC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 05:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07EA6C369DC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 05:50:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCXdU-0001ne-EQ; Wed, 07 May 2025 01:48:05 -0400
+	id 1uCXfD-0002lp-Bp; Wed, 07 May 2025 01:49:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCXdD-0001ch-S6; Wed, 07 May 2025 01:47:53 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
+ id 1uCXfB-0002lV-0g
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 01:49:49 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCXdB-0004fO-FL; Wed, 07 May 2025 01:47:47 -0400
+ id 1uCXf8-0004m8-EM
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 01:49:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746596866; x=1778132866;
+ t=1746596987; x=1778132987;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=o/wtlwc0Rt7lZAcaducfQgX/1u11XR96ax4G6qwTSjo=;
- b=IQPr0hI/Dkdml6dxJ7i13E0Mun10zNpErbbHnjHmCveEa5qiZvS1JpeW
- EFuInME4UjiK51XfTXjMBa2aIQelB86OwU1uwU0J/oAltWZifyb8tMkK/
- ZsASo/N8ZCwwyfLqGNuyIXRAH831iGt+zohtZ4KwutDkhuRIq82LTigsN
- ucLFEGJvb7/QI/aQavD4SE+3i4F6UiD7iNAq0h9BAKVgeFoRCMAP8uDu4
- 0NUDyWE5AaqVuM+jNRTuddLIhsxJTfdtByvutjXHa0q5O4B5zZDWI1Kc7
- t8L6ixsrOQJODEpjL/AdJU1aXL/HvRxyY714EwAfgXjm0cjSTV60SeW3P Q==;
-X-CSE-ConnectionGUID: L3AfGmJtRoWc2PfGvTUh1A==
-X-CSE-MsgGUID: WgNUyOcsRrSejcmvX8a+RA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="50953223"
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="50953223"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2025 22:47:43 -0700
-X-CSE-ConnectionGUID: EVTEbi5yRyCCokJxJdLLqw==
-X-CSE-MsgGUID: nrhy20j3QAG6hZJSpJ3vtg==
+ bh=6srOwmxYkkxOMyYwDK6MriQ02JNwNkmPhZF+3e085Ko=;
+ b=J6QizcgevpgqbVHr3z5QVkyzspfiobKLWP0ugx/x7jOsZTb+S8+vC1n0
+ x/bdu1grWfJJJLevcMsY7I4ZOjF6Yg2k8xjn9j5F6gYm8U1RmyyONgv/m
+ VivaGsdTxmbh0Hym0ysHGYAbj9Z4JYR6m7tU2VTaxhjy1f1xgy5taVPWC
+ z4LrBWiNvWA5aEivoqJsWnp/oMBiMPrQJZLGl1d2qO3Au9j4+Cy3PHfQI
+ dr7tgyGoWMHUjy8jd+84TzUSL3EiwjWFTG9qNE8PbolvEoE/GgQJ0AF6Z
+ KniAjwsSbaMOgrYXl3hLD+4UQVu6wKO0Rg5eIEmsAa7OPSb+Hhr9vHRfw Q==;
+X-CSE-ConnectionGUID: 3eeP2ebQSd6SSmxEj/pEfg==
+X-CSE-MsgGUID: Jyy17k9cQhaWOWGS2ypHtw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="52120486"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="52120486"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 May 2025 22:49:43 -0700
+X-CSE-ConnectionGUID: Kb18GIyDSjCBwC8ZIx01Fg==
+X-CSE-MsgGUID: GCYbHms3S0StHsGit7ZsGg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="140801944"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="140580390"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa004.jf.intel.com with ESMTP; 06 May 2025 22:47:39 -0700
-Date: Wed, 7 May 2025 14:08:39 +0800
+ by orviesa003.jf.intel.com with ESMTP; 06 May 2025 22:49:39 -0700
+Date: Wed, 7 May 2025 14:10:39 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Fam Zheng <fam@euphon.net>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, John Snow <jsnow@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
+Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Amit Shah <amit@kernel.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [PATCH v3 19/19] hw/net/vmxnet3: Merge DeviceRealize in
- InstanceInit
-Message-ID: <aBr458k3k3d+/Kqz@intel.com>
-References: <20250506143905.4961-1-philmd@linaro.org>
- <20250506143905.4961-20-philmd@linaro.org>
+ Sergio Lopez <slp@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: Re: [PATCH v3 01/19] hw/i386/pc: Remove deprecated pc-q35-2.6 and
+ pc-i440fx-2.6 machines
+Message-ID: <aBr5XwjPDS6yn5Ff@intel.com>
+References: <20250502185652.67370-1-philmd@linaro.org>
+ <20250502185652.67370-2-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250506143905.4961-20-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250502185652.67370-2-philmd@linaro.org>
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -57
 X-Spam_score: -5.8
@@ -94,21 +97,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 06, 2025 at 04:39:05PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Tue,  6 May 2025 16:39:05 +0200
+On Fri, May 02, 2025 at 08:56:33PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Fri,  2 May 2025 20:56:33 +0200
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v3 19/19] hw/net/vmxnet3: Merge DeviceRealize in
->  InstanceInit
+> Subject: [PATCH v3 01/19] hw/i386/pc: Remove deprecated pc-q35-2.6 and
+>  pc-i440fx-2.6 machines
 > X-Mailer: git-send-email 2.47.1
 > 
-> Simplify merging vmxnet3_realize() within vmxnet3_instance_init(),
-> removing the need for device_class_set_parent_realize().
+> These machines has been supported for a period of more than 6 years.
+> According to our versioned machine support policy (see commit
+> ce80c4fa6ff "docs: document special exception for machine type
+> deprecation & removal") they can now be removed.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 > ---
->  hw/net/vmxnet3.c | 15 +--------------
->  1 file changed, 1 insertion(+), 14 deletions(-)
+>  hw/i386/pc_piix.c | 14 --------------
+>  hw/i386/pc_q35.c  | 14 --------------
+>  2 files changed, 28 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
