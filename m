@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6EEFC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 23:17:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E27FC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 23:19:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCnyj-0000ip-P7; Wed, 07 May 2025 19:15:05 -0400
+	id 1uCo37-0000BP-DH; Wed, 07 May 2025 19:19:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uCnyd-0000eR-Jk
- for qemu-devel@nongnu.org; Wed, 07 May 2025 19:14:59 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1uCo30-0000Ao-4v
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 19:19:30 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uCnyb-0007A3-Vi
- for qemu-devel@nongnu.org; Wed, 07 May 2025 19:14:59 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2241053582dso7311445ad.1
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 16:14:57 -0700 (PDT)
+ id 1uCo2x-0007rA-W0
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 19:19:29 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-22c336fcdaaso5036875ad.3
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 16:19:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746659697; x=1747264497; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KhAM5TzWr84Jlzb5Lb6xETas9izeZHd6MMPISYifZW8=;
- b=i0zJrJ28vh+Gc9l4Xc5q17Xgc9jg6vJkUGB+HlgYlKIznO1e+7UxhZFmdqUcBGkmzC
- cURx90F4Mn8/hGGDFEjxGTFzN8D59nY7Xk3u3QrahDXRZj8aMEGd2gQnx8twRmZboxsI
- hrH7jWhy0QZkf528Rv4M9WS2mm0+ehNegYX/Qy24PbRGf3mDStNLahQgvJgwfu2o4035
- YPSaw6diV1BZdXz0tE3Mno76g99hava21FhrMhRCGfj7fAolyabJOROs/ofVvxX33GD2
- 1P6Wfpts/+rlSO0ZrhgFjISUatw7ZjrxSOpXBv7BhR5mRlbl5H1ZXycxRHMHKXzgoFcC
- gzxQ==
+ d=linaro.org; s=google; t=1746659964; x=1747264764; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IjGaa7vZKUp/sZ11x041WwgpRJmJrf2IZh9bZEY6P4U=;
+ b=pu0U6hVxn94Rj5uOQo8pO6bMcrOESObZ/LnkinGXkbA+0591YqeIyih2OBP6+BRYIJ
+ F3zF1m1CBZixCBolVRuXsttwj0fijTh0m5rvijXJG79YcMJudz4b767AHoPYzs7Feyfg
+ LEW2U7vReX5poW9fb9GZpalR7TsAqnEskvJS0afFgHbXEdZ2kyCT0yCNHgebPd2HmRd0
+ qgj06MFkwj2S4/KLc1Ieehcr6PRnGJkADeKN53do0vAv07YTbIs4EpQqVH08ZALybGee
+ ibG/of1DsUJ8aSjBJPuDsraerYmcyulYanru4xpQb9J0zCN/+A37rcMaHNFp0mjZE5Dx
+ 0R4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746659697; x=1747264497;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KhAM5TzWr84Jlzb5Lb6xETas9izeZHd6MMPISYifZW8=;
- b=GJWCrPd5M6Ok2Yc15uqdlleZWC9BoHSn9cQMW7xN4BG0O5ust2Ap51lAhjcGznts+x
- LTnQ0beycBZ/ULCoZVe1Z9e537fNpOs9fkhWML8tdRxluLVNW/fBVllq0OzTy6uRTotq
- Opadr5CrzWdhFrQ1RDvbV2iR69tVl6oeK3n6hpghmCQ5VSZO3ndOd5G0TpU8miT4UgBR
- aLO9UGVZPSXOJfMNlC6s8nmFaoRp5JURLT+QJ7tV6Da8d2VqYdTflqXBBkkW1/Aewjl5
- 3Agm3N6QuDXrlDj3FQPhlOrdYYyL5m/xTuMg7Im+zU23L/T2+P1VQestw27RlPorV3X2
- UXhQ==
-X-Gm-Message-State: AOJu0Yz7hxqQCPNfSu6f2NOHqzbed5n+EUDProGIHVvZnWohrqAcrknK
- nVzMlkuGn7DO09DjKyXztYU+dsrRwB1dP3j+qWB9jYCOOFNpKnMo0DwSlWhTfG4BGsJY1GPkRe7
- PevE+pg==
-X-Gm-Gg: ASbGncsiSAZyDuDgt5woSoNpn/zK/IKhyAP1ThqqQXw56elPFGa3M0nJM+fwVYgnbC/
- UwD3BkrHFX7pa5poBPejno4h+8JT1wiF1aXAtIyukwDkZYYST8QubrhtxX55Yp0dWHu+fF6RV/G
- FsF/wibmaRywVShhupL2/7Nmp3FP5pa5E/SY71FZh3vW/H931Nb2cXPKDEpealDbbGfW/ptxzbE
- oIWVmYf3Zf+6oyGX7+FgQGkhJCEOsrs5mY3yKbESX+60n/Z8lX5MHtgV+7ZlDaKx15r382lA3Uj
- K5xdnGulBld+xCIVaeDwhtLcFcD17P1CGrguwcfX
-X-Google-Smtp-Source: AGHT+IFbl3oXn+4IyyLr7TL1pI/3M1qe92Rlc4/DbiYJmIYf2f3XQwk6p4sL2kZIVUisrCqfX7mENQ==
-X-Received: by 2002:a17:903:4410:b0:22e:56f4:e187 with SMTP id
- d9443c01a7336-22e5ec9d666mr74958625ad.22.1746659696800; 
- Wed, 07 May 2025 16:14:56 -0700 (PDT)
-Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e421a7dafsm40103205ad.69.2025.05.07.16.14.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 16:14:56 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, alex.bennee@linaro.org,
- stefanha@redhat.com, peter.maydell@linaro.org,
- Markus Armbruster <armbru@redhat.com>, richard.henderson@linaro.org,
- pbonzini@redhat.com, jsnow@redhat.com, philmd@linaro.org,
- berrange@redhat.com, thuth@redhat.com, Michael Roth <michael.roth@amd.com>
-Subject: [PATCH 06/13] qapi/visit: hide fields in JSON marshalling
-Date: Wed,  7 May 2025 16:14:36 -0700
-Message-ID: <20250507231442.879619-7-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
-References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20230601; t=1746659964; x=1747264764;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IjGaa7vZKUp/sZ11x041WwgpRJmJrf2IZh9bZEY6P4U=;
+ b=AJd2M0q/u4kT/KzKrJO0IeYWdLIQxvriZP0Ho1YQqdN5R7VjJssw37Iy+2JODR4Bic
+ t27bHn9ZtpmA3gaZwiKNdPJCWNg7ik6EixHeiBkVPCqCIUCLi1eQ7/XtP/zE2GUltI2n
+ h1j/Az6ML2QByCUJCM/sS6R8+arV3JgGfDQB+AUsefNrwV2B0U6Y3jmm87vu1gH5byyl
+ R7usS8R+zVqAVUafqeoSEKz6iTpqgJlZyPlYZstu1PlRdnmgUsDhvYVr0hV6W52qfSo4
+ H/cPcp+cpCMH0sNPkvrL4SQodZ+fXs9nSc6kX3wRRTw4Eq3gV0SUlE3NNQ/GFDdSUPaW
+ dhXg==
+X-Gm-Message-State: AOJu0YxxlTtrBhxV9HODkxits/KqW9R7V0kyOORkOmMUBO1EHoVdeHWp
+ 1t08Q6Sc2Ve7l6LCEYcHxXqePJVmajCkXFX1KF83hKXXMTtiEGZyu1g4WARyJmaI4/qVTMFDsx2
+ XeiIjoQ==
+X-Gm-Gg: ASbGncvJRG0/4U2RkHJXIUDUvT7Vf73fHI8EMBFftZrSY7Ysq4nrIpGq6OCIcMPQ/BT
+ fxLlms9J9vMUyBCMfNQyJ1T3OTrzpY3r8ecZscTjzBU2rjjYkgxeINEJeeFMkT628Ea7rC+SwX7
+ RJbOdkWXaWeEMrwm+myVZ+ER9oyoIC6h939c/RTsmoE2ceXKDD7Fw/dwQ9xsOPAZsGfg2pG8cvl
+ 45I64oI5s3UDxZOanHjgTCq9fQJTBL2kYdraQIsjWXQZKc69n0N7EQwL24dcPLszzIZ0M/0Ovip
+ EspIzSX/m/YnxYjfZmkAoadYP8N+y3zaJ66HkuAZSE2WD0oo51vpRA==
+X-Google-Smtp-Source: AGHT+IFeQgDOvz/waYvqQx8c2exGkoDKwjcEv5FRbCqrSZFlTVRm4b13AZQoYSpGxyZgfnzQ/8Vw8g==
+X-Received: by 2002:a17:903:2b07:b0:223:5e54:c521 with SMTP id
+ d9443c01a7336-22e853705a3mr18456755ad.0.1746659964600; 
+ Wed, 07 May 2025 16:19:24 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22e7985bc40sm12099755ad.174.2025.05.07.16.19.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 May 2025 16:19:24 -0700 (PDT)
+Message-ID: <5cda3006-282d-4637-aa34-d3d0762c656f@linaro.org>
+Date: Wed, 7 May 2025 16:19:23 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
+To: qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, stefanha@redhat.com,
+ Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
+ berrange@redhat.com, peter.maydell@linaro.org, thuth@redhat.com,
+ jsnow@redhat.com, philmd@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Markus Armbruster <armbru@redhat.com>
+References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,37 +105,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We modify gen_visit_object_members to hide elements based on the
-specified conditional.
-This allows to hide those elements in input/output json, even though
-they still exist in C code.
+v1 was posted:
+https://lore.kernel.org/qemu-devel/20250507231442.879619-1-pierrick.bouvier@linaro.org/
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- scripts/qapi/visit.py | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/scripts/qapi/visit.py b/scripts/qapi/visit.py
-index 36e240967b6..82caf8c5f0b 100644
---- a/scripts/qapi/visit.py
-+++ b/scripts/qapi/visit.py
-@@ -90,6 +90,7 @@ def gen_visit_object_members(name: str,
- 
-     for memb in members:
-         ret += memb.ifcond.gen_if()
-+        ret += memb.ifcond.gen_runtime_if()
-         if memb.optional:
-             has = 'has_' + c_name(memb.name)
-             if memb.need_has():
-@@ -126,6 +127,7 @@ def gen_visit_object_members(name: str,
-             ret += mcgen('''
-     }
- ''')
-+        ret += memb.ifcond.gen_runtime_endif()
-         ret += memb.ifcond.gen_endif()
- 
-     if branches:
--- 
-2.47.2
-
+Regards,
+Pierrick
 
