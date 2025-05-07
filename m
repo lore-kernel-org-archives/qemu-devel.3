@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 572D9C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 22:09:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F5FFC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 23:15:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCmwW-0003jQ-IX; Wed, 07 May 2025 18:08:44 -0400
+	id 1uCnyh-0000hV-Tf; Wed, 07 May 2025 19:15:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uCmwT-0003iX-PK
- for qemu-devel@nongnu.org; Wed, 07 May 2025 18:08:41 -0400
-Received: from mail-ot1-x342.google.com ([2607:f8b0:4864:20::342])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uCnye-0000fJ-O0
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 19:15:00 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uCmwO-0004lu-Eg
- for qemu-devel@nongnu.org; Wed, 07 May 2025 18:08:37 -0400
-Received: by mail-ot1-x342.google.com with SMTP id
- 46e09a7af769-72ec58e45baso206214a34.2
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 15:08:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uCnyd-0007AR-0h
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 19:15:00 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-22c33677183so4516875ad.2
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 16:14:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746655714; x=1747260514; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=C+TNR4R0QYLHFvrLzgiyHvbkryKHrE3SzQpDJQc54JM=;
- b=XSZKVgeB+ry/lKFFlBJ0r0pZA0ij3DuvvpLHXtbfkKG/lx+wAcazdJnlT+HzhNjH3S
- OFl6HO0NCyb4dv/HgW8A9v25inQG1IE9GfRUD1D/lo9MzfRXTm0BjmEcFHV6YCvVUZi7
- HvQhKjeUjqFhKmWwovbGTuWqpRt40HQ0x3gSl2msorVfXaG+hnwq2nIy6LvNQ5Mouuiq
- lfXX1hJHKLzs5K+0inCWKnZx3deOY/pjM0F2L/xDD83Y079nDQ/a2UCdY6HlQ/zC8Ios
- tzH7vkk19XOq9VgEj6QEO/FwQXbwMkyKxykrM7rJIR7RBwxV7Q18E7HBNZ4R63BPZSt7
- lnwA==
+ d=linaro.org; s=google; t=1746659697; x=1747264497; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QGmrC9Lpdjuz6pj+NV/O+8IjV/h+/Pk7pyNiZqlJEW0=;
+ b=eyBRZDObxziNIhXqd0qHGWpxIxAU72VjVm/DVVx47QLC2mTqopv4Kt1k/+niwuI2Ns
+ 0tg9QrIh3PjmGvaJRF+P62Ars4JpY74lgvHK2gGPQak6/wVlLszzfFHoOv1jM0KdTjgC
+ FJ3ynU7aEKOdOMhuhgJ/HsJstsFrG7i/1pNxuYhAs8GfXM8jAU7CdS34z7pcYIj9TYD6
+ niBqtMUCxWqmkg+bdHsk+oLzh6M/uvDHbtIaUHg67xaMrfznRl1m06MQ7bPeicAzkl+i
+ 0Qt0The++7p5OLTwN/iV+vH2tbveXXndQrxpHRFcR2SYojwoUFELcKrfgN3nd0Y1c61P
+ Aj5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746655714; x=1747260514;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=C+TNR4R0QYLHFvrLzgiyHvbkryKHrE3SzQpDJQc54JM=;
- b=SuJ1YKaN0pA/7wVCzeEqlXRUsMP1SByk2LPcCeM9FsZdgwFpnOyz6bKY70iqBXdH16
- 7nGD7Zzt7qJHzRDumAGTrxKmJPCle7nNo2LMOP1R/QACFl+zLMTufVtf0J9WvmMf8Bn/
- 5nOeLhZKPGISxmt/E0ERDJ+Z9xsf0qSjoPPNHpFNSinNAjrUKlpGb4OXC+fvasNPe0lC
- sW3RTDgJmT/2/Pv/89XjOk2TtPVY8Ql8tWa1zVH6ErPFk1T4Dmc0PNm9qUCpTclek4Je
- f3DbyKlcXNP2cCngLKstvyV+1NEOLJ4UJkeHW00aTeP0iRTXvMJld6nJT99dE59Fd2KE
- 6bMA==
-X-Gm-Message-State: AOJu0YxpPKQUAxbLx/ZD3CgY5oaJW+MTwr6EKsd7Vxkew/X4qCEsphH2
- CGUMHoFPb2nlFGsb8/gF8uF1tk2/CbzHG/2tdFOEyDse8481y5VnRoJgwSEsZXLvP6OBFUOAHe+
- 5vILucA==
-X-Gm-Gg: ASbGncv9Jr+KH7z9GVB6xolMMTyRkdtUfv1B/hZx04xMHcQhRVskpp2P+UerRaz/IWb
- /nPFwOhtUY27JqBbfry5louHEQH7MTep8MGyZB7LjPzdRTt6uwCzQpxGgq9oYHDHp9jb3Hy1p5l
- /xocfswNxe0lbO/+Qy9piIrexKqRDr7VJzj3neg0O0f5g5KqBpCh1bf8U9g9PcavOmNRBb6NXv4
- NVlCI/TerfpOhEDs1D8xboQjJSsVe/TRbziSDb8ElFo9YCRHXqWP2zobWzeC9N0vWoSg6jEoLM7
- QNv9EcMQYZuC4j7Md3nqkCFt3d8yNTT9wxQZpnifWjU8al1y/fkYFzdAnS/x6EFPT5hp5iS0JCB
- 7TejB5VSdGxCOiAN+zco=
-X-Google-Smtp-Source: AGHT+IGrLnjBHEaqSwCsHbcvPP76FCKC0k7282ar74QUv/UxBDlKMkkW5+TLUp28omHjS5BCIqViMg==
-X-Received: by 2002:a05:6870:898a:b0:29e:27b6:bea5 with SMTP id
- 586e51a60fabf-2db5c089db3mr3279004fac.25.1746655714443; 
- Wed, 07 May 2025 15:08:34 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:b400:8604:e0a0:55fe:c223:5f69?
- ([2804:7f0:b400:8604:e0a0:55fe:c223:5f69])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2db5cd8ee8csm942706fac.25.2025.05.07.15.08.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 May 2025 15:08:33 -0700 (PDT)
-Message-ID: <7379dfef-01c8-4625-841f-dd1344e386a4@linaro.org>
-Date: Wed, 7 May 2025 19:08:31 -0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] Fix typo in comments
+ d=1e100.net; s=20230601; t=1746659697; x=1747264497;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QGmrC9Lpdjuz6pj+NV/O+8IjV/h+/Pk7pyNiZqlJEW0=;
+ b=Cg+PpMVVEyKTVnncynSGt9mXyjXGK0JIuufPWlDEj7gZTtGaShUygkqrsiPAY8HEZ3
+ 4dBLJXdZrmqqHLyXmruxVpeBOckUQKuPNA93zw9NGfaBRIpuL1zJTjBLYApEiRVi5xav
+ xTXSYA+4om1OCJnHK29k7A6bdPeHxhhZr1CGiJ0dMFoITAGDmgd1rdECCelAENDf+VWD
+ BmfkxtM4vU0RWdWgUYOBxcYgfErPsK7EnEtPHDPZegvBA1I6mGiNPn+D1eX2SdYWN8NI
+ ZY9vh6ToqvrMQE55TM+w8zQ7RMCi7zFUoHQZUKdAA7OtIWfFGiFOlNjJ/uESVZfo9pnL
+ e6XA==
+X-Gm-Message-State: AOJu0YwfK0rE8JoxpbH5UYcmMgvfJZJcJ47hG2+bU6oL6seRZgg28tXP
+ WxtMF0SMCPV4cKk6nkdRaKRMB7xGhpULVEvTRqD7UryJVepXSVzqFVutz5ujVQ/B0JjsZjSLiqX
+ LA+bePA==
+X-Gm-Gg: ASbGncvsCPAKP18skToB2CbGTUNVyi6uNmkzHw5Rj2SxsBgXrvY+pKn8AwJlTvoLvfm
+ Ueb3jWxyD2iTAv1EUnruQ0RcdDeQoEFJxUQLkkSGx3e+XEdNk2zmyUZ5Mgusqf8cO+WkeH7JoTf
+ AJl2RgSpPDxB3HPF+4UwpJtbyLy4dhhbDCyWYBzybOzFk5Tya3kEpRzwMis7atotWXgdrqK5KAQ
+ QAjfY1nD9Op9BrW+sJrRDQyIyxmRuUk0TA30owgsjtAnN72pRaFi3lGP8rwwIFy8X0ZRXM5/PMG
+ gKISpuxWMsgYnPi5zPf7QgiMDvUYI+PEFPiHXCk3
+X-Google-Smtp-Source: AGHT+IEani3JSVOhs5Z5oWh2cz6RTifIrIFSNJCuEeLYVx7K6r7hOXxD8yE6NX3/bdvZ2VnDbsVIvA==
+X-Received: by 2002:a17:902:e743:b0:21f:61a9:be7d with SMTP id
+ d9443c01a7336-22e5edfa34bmr75155445ad.49.1746659697678; 
+ Wed, 07 May 2025 16:14:57 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22e421a7dafsm40103205ad.69.2025.05.07.16.14.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 07 May 2025 16:14:57 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, thuth@redhat.com
-References: <20250507204626.139507-1-gustavo.romero@linaro.org>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20250507204626.139507-1-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::342;
- envelope-from=gustavo.romero@linaro.org; helo=mail-ot1-x342.google.com
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, alex.bennee@linaro.org,
+ stefanha@redhat.com, peter.maydell@linaro.org,
+ Markus Armbruster <armbru@redhat.com>, richard.henderson@linaro.org,
+ pbonzini@redhat.com, jsnow@redhat.com, philmd@linaro.org,
+ berrange@redhat.com, thuth@redhat.com, Michael Roth <michael.roth@amd.com>
+Subject: [PATCH 07/13] qapi: add access to qemu/target-info.h
+Date: Wed,  7 May 2025 16:14:37 -0700
+Message-ID: <20250507231442.879619-8-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
+References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,36 +102,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Michael fixed all these typos a couple of hours ago [0], so this series
-can be ignored. Thanks.
+Add a default include qemu/target-info.h in QAPI generated code. This
+allows runtime conditionals to use any function defined in this header.
 
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ scripts/qapi/commands.py   | 2 ++
+ scripts/qapi/introspect.py | 1 +
+ scripts/qapi/visit.py      | 2 ++
+ 3 files changed, 5 insertions(+)
 
-Cheers,
-Gustavo
-
-[0] https://lists.nongnu.org/archive/html/qemu-trivial/2025-05/msg00022.html
-
-On 5/7/25 17:46, Gustavo Romero wrote:
-> Nothing exciting in this series, just typo fixes in comments.
-> 
-> 
-> Cheers,
-> Gustavo
-> 
-> Gustavo Romero (3):
->    linux-user: Fix typo in comment
->    Fix typo in comments
->    Fix typo in comments
-> 
->   block.c                             | 4 ++--
->   hw/display/apple-gfx.m              | 2 +-
->   hw/xen/xen-hvm-common.c             | 2 +-
->   include/exec/cpu-common.h           | 2 +-
->   include/hw/xen/interface/io/blkif.h | 2 +-
->   linux-user/mmap.c                   | 2 +-
->   qapi/machine-target.json            | 2 +-
->   qapi/qom.json                       | 2 +-
->   8 files changed, 9 insertions(+), 9 deletions(-)
-> 
+diff --git a/scripts/qapi/commands.py b/scripts/qapi/commands.py
+index 7b172f7c081..7776c84fe64 100644
+--- a/scripts/qapi/commands.py
++++ b/scripts/qapi/commands.py
+@@ -319,6 +319,7 @@ def _begin_user_module(self, name: str) -> None:
+         visit = self._module_basename('qapi-visit', name)
+         self._genc.add(mcgen('''
+ #include "qemu/osdep.h"
++#include "qemu/target-info.h"
+ #include "qapi/compat-policy.h"
+ #include "qapi/visitor.h"
+ #include "qobject/qdict.h"
+@@ -354,6 +355,7 @@ def visit_begin(self, schema: QAPISchema) -> None:
+                              c_prefix=c_name(self._prefix, protect=False)))
+         self._genc.add(mcgen('''
+ #include "qemu/osdep.h"
++#include "qemu/target-info.h"
+ #include "%(prefix)sqapi-commands.h"
+ #include "%(prefix)sqapi-init-commands.h"
+ #include "%(prefix)sqapi-features.h"
+diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
+index c70b97a455d..a16d6bad012 100644
+--- a/scripts/qapi/introspect.py
++++ b/scripts/qapi/introspect.py
+@@ -190,6 +190,7 @@ def __init__(self, prefix: str, unmask: bool):
+         self._name_map: Dict[str, str] = {}
+         self._genc.add(mcgen('''
+ #include "qemu/osdep.h"
++#include "qemu/target-info.h"
+ #include "%(prefix)sqapi-introspect.h"
+ 
+ ''',
+diff --git a/scripts/qapi/visit.py b/scripts/qapi/visit.py
+index 82caf8c5f0b..6836eb8ed60 100644
+--- a/scripts/qapi/visit.py
++++ b/scripts/qapi/visit.py
+@@ -342,6 +342,7 @@ def __init__(self, prefix: str):
+     def _begin_builtin_module(self) -> None:
+         self._genc.preamble_add(mcgen('''
+ #include "qemu/osdep.h"
++#include "qemu/target-info.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-builtin-visit.h"
+ '''))
+@@ -356,6 +357,7 @@ def _begin_user_module(self, name: str) -> None:
+         visit = self._module_basename('qapi-visit', name)
+         self._genc.preamble_add(mcgen('''
+ #include "qemu/osdep.h"
++#include "qemu/target-info.h"
+ #include "qapi/error.h"
+ #include "%(visit)s.h"
+ #include "%(prefix)sqapi-features.h"
+-- 
+2.47.2
 
 
