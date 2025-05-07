@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 758A0C3ABC6
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 23:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E754C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 23:17:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCnyj-0000iF-Ey; Wed, 07 May 2025 19:15:05 -0400
+	id 1uCnye-0000eY-1x; Wed, 07 May 2025 19:15:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uCnyf-0000gQ-TU
- for qemu-devel@nongnu.org; Wed, 07 May 2025 19:15:01 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1uCnyc-0000dg-1S
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 19:14:58 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uCnyd-0007Ai-SD
- for qemu-devel@nongnu.org; Wed, 07 May 2025 19:15:01 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-22e6344326dso4944775ad.1
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 16:14:59 -0700 (PDT)
+ id 1uCnyY-00079W-OR
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 19:14:57 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-b0b2d0b2843so229821a12.2
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 16:14:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746659698; x=1747264498; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746659693; x=1747264493; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7AD0wBkIB6INtnwcEFWKK+z4tJ5aOGPeiDtfz2k1oSg=;
- b=UW3dIm98PBw35sXFTNGIRrAaqzPv76CJou4gKKQHfQjfFUNqchPdvStDbjycr2m8e1
- DcYY95iPQ8JdsBjn7fOuGQhbHb1LhxEhJJAjlFq1TFK+FAC3sUd+nFTOsPxvemlvws8f
- xRuDcSZDUHEON6JDKnHtuNlJaay5lwyvS8pqWTdG5CaQ9Wyv2TLPrpRSvrF/6Iq+6WKV
- wK6thHYDMwdDos4zdpRNPXHResc7xirrP8+7CAEsAgWDJ14w3RwN9Y8Gt6YjH411C6BT
- +rv9Kzu0neNLMxx4qHcH36k+WhYrNQde/ZEBFw6ljGTORXdKcAy6LD/HWSetbi2SE5lg
- 7G8g==
+ bh=hmVgZ2T/BR9KDwjoUJTnrLXEqdGiV/GeYJSs5v9aKiI=;
+ b=fXmHNQ9nUXJt/3Ai9Da6fTB5b+Jw8UZz7YPehttkWh7TdDu0xNhvgJ40XYFVMa+u8F
+ MZnONw04g3Su6CSFbgx+aus65C21k+UCTiX3vfrC58AXYw7xzXQ2SdqmSQxZfn83ZuOx
+ 4EdA1i8I0uBP4MtNc5ruVPCaOAZaJSwqGF5eKVmQ4wlnFs48yeTke8jLK050OUQtC+IQ
+ IDoPRCg1/CWBOTxJkM3AqIDLOGD197orkcUTsRbt2kFrDq0uXge+e07HRwDOep5ujnkT
+ StIXJk1NWqtwnYyFHaPWJOdkIq+EbhL1XbFmLywAcZK8CQpYIBLm2exdPoEJyY6OKM52
+ HXTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746659698; x=1747264498;
+ d=1e100.net; s=20230601; t=1746659693; x=1747264493;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7AD0wBkIB6INtnwcEFWKK+z4tJ5aOGPeiDtfz2k1oSg=;
- b=inH1bEb7RTnAB+w2p0/6UETgQHwbZ/iNoDXPRB3ZqQ4g+8PrmYshs9SuyjKtT2dcMA
- 6VzOKfCH5txAc+Ki1OwkK2OyZtFnTr3mua3PaHvZSin+ObQMfSjRNqZlPPidLZMrOC6w
- A+H5RL6YlzB7A7TYR+ywUE47fhLOxniqHUVMkvTBoK0mddJyWoJab26YEqDcl6cBxArl
- esxsaQ2l7O7ZGQgCLT+X6Ta/s28Qv6l+A1/8522NAmqRXEENuMSKxjUcsV9FZEJxSQG7
- DGUesjgEnbjfsO7nOSZvV5aG+Mo6bqsMCU6EORChqiS95ISNfGR8IGRAABbmqkYUF5y/
- zJ3w==
-X-Gm-Message-State: AOJu0Yyan9CMfoPRlZt0oGB354+LxdDj7al7ea9Zg9EmGU8YGefVLmG9
- eTsiw0JGrzr4YMyR4D3BwAF1uV22UUMU11GkN0VD1Yx6HDCpI7bUUcO8eDNq65W9fvJ+YBwN0+m
- fWP+Upw==
-X-Gm-Gg: ASbGncsTBWdc9R4A1lqXFlVvIQQzUKr1lVSRyATvvmtpVQxMJ1B2mkZ/RYYh8Zi0qm4
- 0Tue8292Y8xToaF8uR1yz3pHNZZkl+kQ9BYcSWntODPef1KS10i6/kjfx1QaAlj3YoNDDzZHsIk
- HR43kYc2FLW+sKvfstNvOKno3H5jpEm2M4OA4Yv02lBrL5n6WQb8R8Jt2sMkRM0RM1Atta7nUzz
- xli3cMSZQd8aPCw5PIrxxP5HLyHyEZce/86p/eobka7Gg48fdP/59Dq+o3HGU9fT6Lp18a3ztQO
- SXSKlz5dzoRp1Thk9xB1gbUq/HYcmN0kvfi57ZZN
-X-Google-Smtp-Source: AGHT+IHkDxb/3QSYuqNyRMa7hBtpzZgcEsi99M+TX6miRHQQw6JxuczqtQjbR06TbHOaXWPjR+k02A==
-X-Received: by 2002:a17:902:c94f:b0:21a:8300:b9d5 with SMTP id
- d9443c01a7336-22e861d5e25mr16823395ad.23.1746659698562; 
- Wed, 07 May 2025 16:14:58 -0700 (PDT)
+ bh=hmVgZ2T/BR9KDwjoUJTnrLXEqdGiV/GeYJSs5v9aKiI=;
+ b=Twkk7ntKYAlVpIhFO2gZKwEQXd1/9jy/A+S85jD1TVwokOd+ten7owqLmJLg82VNzZ
+ w9J36bG062ZKx2IrDJuZ6cSnYa8sndQV0Bn0LpbtVkmis5tzssc1lwIRw/fqDozy2/x/
+ vmqv4PlEaNzsDohqZuqmXUG1IFrF+YqX3UrlznDuSXS5Pleg4TKTHHf8BHc9uiujUXkD
+ OonuManvNe/JBmRAmpBuhqfjnCWI/T8mXz57YIwFl5umIqa/NCMLBttIU49vIk6nQEcO
+ eQZgjUsvlsl/cd81tffe7Q504X4a8CjiFsAwcCLxG+f81mpWqqivwv23aKaNZT6PFUKs
+ wdLA==
+X-Gm-Message-State: AOJu0YzrcGuEOaph/iKaiFuBJvBEQ2Nl94HXOldcNa85mbBsoZNSaUpw
+ +WXAn2/8z14VrSqO+5+e/xDgP304WtjECxchd1buZK75LVtewtVTbXSFI4kBqcH5PjG+vQ61jKr
+ dFhgzDA==
+X-Gm-Gg: ASbGncvsKtDX3Im4U+txRNlOrIga5/oLZt6VQh0Gk1XUZqCxoUvNM43CZV9t+7E2cdB
+ j1w0Y/vD3hy8q8T5qULz0TS39qmb+0WV7I3OPIVqGAFdhIV7nLRNmuukZLi1TL4GmrGYySAZ7Ps
+ kPFDdVHkPpyFN5EePVNFBTZi8fP4O5obPTtGBE2tzeBsplwud5hDG4QzGipFxhYxV4pPskms2Lg
+ IaNK5L7D8fMEK58jJbOzLReXDyn95XsXvJhjBWqGVro9aCPCzCFma5t1I6eadb3Zp9SxUcKy4Q/
+ Q80HKLuBXsWSquVXVHORu8IbK7qbOFW8iF4+IscnKPc2bJtjmtc=
+X-Google-Smtp-Source: AGHT+IHiQkgsyoYL4DzZE0SLrS9XsTyACEsADCeyGYuWt88cAb0SIc6NpYgJoAQhy7sy0kOOe74IXw==
+X-Received: by 2002:a17:903:22cd:b0:224:26fd:82e5 with SMTP id
+ d9443c01a7336-22e5ee1d5a3mr77165335ad.48.1746659693218; 
+ Wed, 07 May 2025 16:14:53 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e421a7dafsm40103205ad.69.2025.05.07.16.14.57
+ d9443c01a7336-22e421a7dafsm40103205ad.69.2025.05.07.16.14.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 16:14:58 -0700 (PDT)
+ Wed, 07 May 2025 16:14:52 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, alex.bennee@linaro.org,
@@ -70,16 +70,16 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, alex.bennee@linaro.org,
  Markus Armbruster <armbru@redhat.com>, richard.henderson@linaro.org,
  pbonzini@redhat.com, jsnow@redhat.com, philmd@linaro.org,
  berrange@redhat.com, thuth@redhat.com, Michael Roth <michael.roth@amd.com>
-Subject: [PATCH 08/13] qemu/target-info: implement missing helpers
-Date: Wed,  7 May 2025 16:14:38 -0700
-Message-ID: <20250507231442.879619-9-pierrick.bouvier@linaro.org>
+Subject: [PATCH 02/13] qapi/introspect: generate schema as a QObject directly
+Date: Wed,  7 May 2025 16:14:32 -0700
+Message-ID: <20250507231442.879619-3-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
 References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,181 +102,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add runtime helpers for target and config queries.
+Instead of defining a const QLitObject, we implement a function to
+directly return the QObject associated.
 
-Note: This will be reimplemented later [1] using proper information in
-TargetInfo. Meanwhile, just add a simple implementation.
-
-[1] https://patchew.org/QEMU/20250424222112.36194-1-philmd@linaro.org/20250424222112.36194-19-philmd@linaro.org/
+The benefit is that we can now have a non static definition for the
+QLitObject, and so we can assign it using non static initializer.
+This will be used in next commits to initialize a .hidden field per
+element, at runtime.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- meson.build                |   2 +-
- include/qemu/target-info.h |  14 +++++
- target-info.c              | 117 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 132 insertions(+), 1 deletion(-)
+ monitor/qmp-cmds-control.c              | 2 +-
+ tests/unit/test-qobject-input-visitor.c | 6 +++---
+ scripts/qapi/introspect.py              | 9 ++++++---
+ 3 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 6b235b291dc..7094832c3e2 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3822,7 +3822,7 @@ endif
- common_ss.add(pagevary)
- specific_ss.add(files('page-target.c', 'page-vary-target.c'))
+diff --git a/monitor/qmp-cmds-control.c b/monitor/qmp-cmds-control.c
+index 150ca9f5cb6..1d52d4ca8e9 100644
+--- a/monitor/qmp-cmds-control.c
++++ b/monitor/qmp-cmds-control.c
+@@ -203,7 +203,7 @@ static SchemaInfoList *zap_deprecated(SchemaInfoList *schema)
  
--common_ss.add(files('target-info.c'))
-+specific_ss.add(files('target-info.c'))
- specific_ss.add(files('target-info-stub.c'))
- 
- subdir('backends')
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index 850a2958b9c..d9c0df10c53 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -38,4 +38,18 @@ const char *target_machine_typename(void);
-  */
- const char *target_cpu_type(void);
- 
-+bool target_i386(void);
-+bool target_x86_64(void);
-+bool target_arm(void);
-+bool target_aarch64(void);
-+bool target_s390x(void);
-+bool target_mips(void);
-+bool target_mips64(void);
-+bool target_loongarch64(void);
-+bool target_riscv32(void);
-+bool target_riscv64(void);
-+bool target_ppc(void);
-+bool target_ppc64(void);
-+bool target_has_kvm(void);
-+
- #endif
-diff --git a/target-info.c b/target-info.c
-index 16fdca7aaaf..f2bdae18f4f 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -29,3 +29,120 @@ const char *target_machine_typename(void)
+ SchemaInfoList *qmp_query_qmp_schema(Error **errp)
  {
-     return target_info()->machine_typename;
+-    QObject *obj = qobject_from_qlit(&qmp_schema_qlit);
++    QObject *obj = qmp_schema_qobject();
+     Visitor *v = qobject_input_visitor_new(obj);
+     SchemaInfoList *schema = NULL;
+ 
+diff --git a/tests/unit/test-qobject-input-visitor.c b/tests/unit/test-qobject-input-visitor.c
+index 84bdcdf702e..5d961325f95 100644
+--- a/tests/unit/test-qobject-input-visitor.c
++++ b/tests/unit/test-qobject-input-visitor.c
+@@ -1184,10 +1184,10 @@ static void test_visitor_in_fail_alternate(TestInputVisitorData *data,
  }
-+
-+bool target_i386(void)
-+{
-+#ifdef TARGET_I386
-+    return true;
-+#else
-+    return false;
-+#endif
+ 
+ static void do_test_visitor_in_qmp_introspect(TestInputVisitorData *data,
+-                                              const QLitObject *qlit)
++                                              QObject *qlit)
+ {
+     g_autoptr(SchemaInfoList) schema = NULL;
+-    QObject *obj = qobject_from_qlit(qlit);
++    QObject *obj = qlit;
+     Visitor *v;
+ 
+     v = qobject_input_visitor_new(obj);
+@@ -1202,7 +1202,7 @@ static void do_test_visitor_in_qmp_introspect(TestInputVisitorData *data,
+ static void test_visitor_in_qmp_introspect(TestInputVisitorData *data,
+                                            const void *unused)
+ {
+-    do_test_visitor_in_qmp_introspect(data, &test_qmp_schema_qlit);
++    do_test_visitor_in_qmp_introspect(data, test_qmp_schema_qobject());
+ }
+ 
+ int main(int argc, char **argv)
+diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
+index 89ee5d5f176..e0269bef0ce 100644
+--- a/scripts/qapi/introspect.py
++++ b/scripts/qapi/introspect.py
+@@ -193,15 +193,18 @@ def visit_end(self) -> None:
+         for typ in self._used_types:
+             typ.visit(self)
+         # generate C
+-        name = c_name(self._prefix, protect=False) + 'qmp_schema_qlit'
++        name = c_name(self._prefix, protect=False) + 'qmp_schema_qobject'
+         self._genh.add(mcgen('''
+ #include "qobject/qlit.h"
+ 
+-extern const QLitObject %(c_name)s;
++QObject *%(c_name)s(void);
+ ''',
+                              c_name=c_name(name)))
+         self._genc.add(mcgen('''
+-const QLitObject %(c_name)s = %(c_string)s;
++QObject *%(c_name)s(void) {
++    const QLitObject res = %(c_string)s;
++    return qobject_from_qlit(&res);
 +}
-+
-+bool target_x86_64(void)
-+{
-+#ifdef TARGET_X86_64
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
-+bool target_arm(void)
-+{
-+#ifdef TARGET_ARM
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
-+bool target_aarch64(void)
-+{
-+#ifdef TARGET_AARCH64
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
-+bool target_s390x(void)
-+{
-+#ifdef TARGET_S390X
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
-+bool target_mips(void)
-+{
-+#ifdef TARGET_MIPS
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
-+bool target_mips64(void)
-+{
-+#ifdef TARGET_MIPS64
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
-+bool target_loongarch64(void)
-+{
-+#ifdef TARGET_LOONGARCH64
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
-+bool target_riscv32(void)
-+{
-+#ifdef TARGET_RISCV32
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
-+bool target_riscv64(void)
-+{
-+#ifdef TARGET_RISCV64
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
-+bool target_ppc(void)
-+{
-+#ifdef TARGET_PPC
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
-+bool target_ppc64(void)
-+{
-+#ifdef TARGET_ppc64
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
-+
-+bool target_has_kvm(void)
-+{
-+#ifdef CONFIG_KVM
-+    return true;
-+#else
-+    return false;
-+#endif
-+}
+ ''',
+                              c_name=c_name(name),
+                              c_string=_tree_to_qlit(self._trees)))
 -- 
 2.47.2
 
