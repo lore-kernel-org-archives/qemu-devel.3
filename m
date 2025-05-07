@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E352BC369DC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 05:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C129FC369DC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 05:46:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCXaK-000369-PH; Wed, 07 May 2025 01:44:48 -0400
+	id 1uCXav-00048h-04; Wed, 07 May 2025 01:45:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uCXaI-00031s-U1
- for qemu-devel@nongnu.org; Wed, 07 May 2025 01:44:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCXam-0003xA-Jw; Wed, 07 May 2025 01:45:18 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1uCXaH-0004Iz-8E
- for qemu-devel@nongnu.org; Wed, 07 May 2025 01:44:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746596682;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZgGPOEIckAAF9toJS7M+yzypE8eGUzYE4nvvuKI/1is=;
- b=eEw4XvQoEQtugvQ3m6aAXRgFOMA4AGBaaufIgXzHZ+I56gyjhBpuaMP0x2ilk+Pl9tDPBk
- kjoaPMOogozcTvq4xOjpL5ul4Gxrw8ypZjriJfAql0K5LParLUwY02zJaYZzYnVy2fYe3h
- g8b6ChXA1MylwykrebVEZY4D85chBbM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-192-zcuuaGN4MGGMxOIr4RS75Q-1; Wed,
- 07 May 2025 01:44:36 -0400
-X-MC-Unique: zcuuaGN4MGGMxOIr4RS75Q-1
-X-Mimecast-MFC-AGG-ID: zcuuaGN4MGGMxOIr4RS75Q_1746596673
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 470F11801A31; Wed,  7 May 2025 05:44:33 +0000 (UTC)
-Received: from localhost (unknown [10.45.242.19])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 18AA318001DA; Wed,  7 May 2025 05:44:31 +0000 (UTC)
-From: marcandre.lureau@redhat.com
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- stefanha@redhat.com,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCXag-0004Vm-Dh; Wed, 07 May 2025 01:45:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746596711; x=1778132711;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=WizKcMFJapuRgjOqvCIabAqOzrcCdgMuQc73TY0LOzE=;
+ b=dyM2KXRt2FmzA4du2fSJXzI8HXZPP6tzBHJv6cRhintCUv3ivAFTcE1v
+ U+gF/UouuFzLCN0nU22C8w4A+/M0KQQZrdj9jmJJ41fCs5sQEIVaQegyX
+ FYPBKfoRYYY38VtAtSkKWpwRQ0pplLH1JMqq5Wt7ORdt+0dMR3iVPofhm
+ zDciKgXJ/a5bABqPig5p+nrqb1lAV96rBzAtDW0tE+GNeIeHT2mWbLL3A
+ WgfOjADeevKIvy+tzVC8yvlHOZf/D+Snzgxy5MNI+QF7KGeV5LTDJL6MQ
+ dnUnnC+Lt3nbQOBXryO+KPzVTp8xSiiNdhNpna8ACKuozISPfhuQnWo/j w==;
+X-CSE-ConnectionGUID: 41Cz2BA4T9CGt354u0D5cQ==
+X-CSE-MsgGUID: TMDJE2SST6aKWuLlsJxKBA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="48202594"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="48202594"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 May 2025 22:45:06 -0700
+X-CSE-ConnectionGUID: x9wl0gjhTge7VcYEANSrBw==
+X-CSE-MsgGUID: qkuyVnmfQ0WT9SM9wJqa5w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="135844103"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa007.fm.intel.com with ESMTP; 06 May 2025 22:45:02 -0700
+Date: Wed, 7 May 2025 14:06:03 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Fam Zheng <fam@euphon.net>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, John Snow <jsnow@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Qiang Yu <yuq825@gmail.com>
-Subject: [PULL 2/6] ui/egl: require EGL_EXT_image_dma_buf_import_modifiers
-Date: Wed,  7 May 2025 09:44:10 +0400
-Message-ID: <20250507054414.2284129-3-marcandre.lureau@redhat.com>
-In-Reply-To: <20250507054414.2284129-1-marcandre.lureau@redhat.com>
-References: <20250507054414.2284129-1-marcandre.lureau@redhat.com>
+ Gerd Hoffmann <kraxel@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [PATCH v3 16/19] hw/scsi/vmw_pvscsi: Convert DeviceRealize ->
+ InstanceInit
+Message-ID: <aBr4S64gDxmkRXbB@intel.com>
+References: <20250506143905.4961-1-philmd@linaro.org>
+ <20250506143905.4961-17-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+In-Reply-To: <20250506143905.4961-17-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,59 +94,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Qiang Yu <yuq825@gmail.com>
+On Tue, May 06, 2025 at 04:39:02PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Tue,  6 May 2025 16:39:02 +0200
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH v3 16/19] hw/scsi/vmw_pvscsi: Convert DeviceRealize ->
+>  InstanceInit
+> X-Mailer: git-send-email 2.47.1
+> 
+> Simplify replacing pvscsi_realize() by pvscsi_instance_init(),
+> removing the need for device_class_set_parent_realize().
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  hw/scsi/vmw_pvscsi.c | 13 +++----------
+>  1 file changed, 3 insertions(+), 10 deletions(-)
 
-It's used already, just check it explicitly.
-
-Reviewed-by: Marc-AndrÃ© Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Message-ID: <20250327025848.46962-3-yuq825@gmail.com>
----
- ui/egl-helpers.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-index d194d004b7..432863d702 100644
---- a/ui/egl-helpers.c
-+++ b/ui/egl-helpers.c
-@@ -257,6 +257,11 @@ int egl_rendernode_init(const char *rendernode, DisplayGLMode mode)
-         error_report("egl: EGL_MESA_image_dma_buf_export not supported");
-         goto err;
-     }
-+    if (!epoxy_has_egl_extension(qemu_egl_display,
-+                                 "EGL_EXT_image_dma_buf_import_modifiers")) {
-+        error_report("egl: EGL_EXT_image_dma_buf_import_modifiers not supported");
-+        goto err;
-+    }
- 
-     qemu_egl_rn_ctx = qemu_egl_init_ctx();
-     if (!qemu_egl_rn_ctx) {
-@@ -308,7 +313,7 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
-     EGLImageKHR image = EGL_NO_IMAGE_KHR;
-     EGLint attrs[64];
-     int i = 0;
--    uint64_t modifier;
-+    uint64_t modifier = qemu_dmabuf_get_modifier(dmabuf);
-     uint32_t texture = qemu_dmabuf_get_texture(dmabuf);
- 
-     if (texture != 0) {
-@@ -328,15 +333,12 @@ void egl_dmabuf_import_texture(QemuDmaBuf *dmabuf)
-     attrs[i++] = qemu_dmabuf_get_strides(dmabuf, NULL)[0];
-     attrs[i++] = EGL_DMA_BUF_PLANE0_OFFSET_EXT;
-     attrs[i++] = 0;
--#ifdef EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT
--    modifier = qemu_dmabuf_get_modifier(dmabuf);
-     if (modifier) {
-         attrs[i++] = EGL_DMA_BUF_PLANE0_MODIFIER_LO_EXT;
-         attrs[i++] = (modifier >>  0) & 0xffffffff;
-         attrs[i++] = EGL_DMA_BUF_PLANE0_MODIFIER_HI_EXT;
-         attrs[i++] = (modifier >> 32) & 0xffffffff;
-     }
--#endif
-     attrs[i++] = EGL_NONE;
- 
-     image = eglCreateImageKHR(qemu_egl_display,
--- 
-2.49.0
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
