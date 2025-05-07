@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AD86C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 20:47:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C949BC3ABBF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 21:13:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uClfR-0007Mc-Gp; Wed, 07 May 2025 16:47:01 -0400
+	id 1uCm4q-0006BG-VE; Wed, 07 May 2025 17:13:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uClfP-0007HP-QY
- for qemu-devel@nongnu.org; Wed, 07 May 2025 16:46:59 -0400
-Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uCm4m-00069Y-D4
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 17:13:12 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uClfJ-00037Z-Kt
- for qemu-devel@nongnu.org; Wed, 07 May 2025 16:46:59 -0400
-Received: by mail-oi1-x22b.google.com with SMTP id
- 5614622812f47-3f94b7bd964so315388b6e.1
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 13:46:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uCm4k-0006D0-LS
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 17:13:12 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7376dd56f8fso472405b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 14:13:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746650811; x=1747255611; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=EhPrnWrrEa3D6POxudXMd7e4Z/b8W/qudNgP3sQ1aLE=;
- b=vQFELfWQtJi+uqYsJ273wSSgYFHbfZZlAi91CbPHlbnlar8j6QaP/ypmW+kOXPwXDH
- g90tnETYqWv6NTqgP6KoRYNFT1+RvktiVyMtKiOtWknlT1PEkZFptJX/hUeq06k6yUNS
- iqETttIHUyyTqzYPDdoGfNW73cJjcsbVX59W3ixA9SAmz/Epx3F8oiqBolKjuj1PGQjJ
- qpjv94zfMEpR+DE1UsoGe6+tuq2j3+aRq3NJiY4cdNhfCrhzdpp9GSAejJq8XGcBp0qT
- lermtuhzLyKT+nXHFTRlZPHmxK0XquD3muZFVMvmwwkTDiyxa08NfuCrGg0a//otSsr4
- HkwA==
+ d=linaro.org; s=google; t=1746652389; x=1747257189; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jk4EjQefaC29HViyknRVvmNGslUguEBFOQzXT/8c2wA=;
+ b=r/EcXkfMF1rkZMY1ZZ7gs4V6kl1tpwyBXJTLoUA9avUOZWKZ90u4VUuAo99MhZD6+0
+ 580Ia8WYeh2GGUiHEf2Y31KuXC93BdFetPfWewkFuhkjo1i1WhDNLdtaUjDpyUtKpUuM
+ s+eliB2N3CcvyAFzJKJPSuwBMq1wgjf/cZXJmWhICXbrRvJ0y4hutCEs4aDtRfrOxUNW
+ gQrTIGZUcnDdn+B8Qevgaw5Fnp496aOlQtUOE2g7m19SPx2BfFypdAtz3u/runHdBwcg
+ P4900HKPkVmgANDXBx2LlHgqVEAkpnfC+V4F9OzN/if4SHxGq6NBuMAMe+D4BJR0+fmA
+ Vsfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746650811; x=1747255611;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EhPrnWrrEa3D6POxudXMd7e4Z/b8W/qudNgP3sQ1aLE=;
- b=QqVYLJqKnF+NJ3WT0TChzyUDrB7Y744sYZX1PJrg60MDsu7F2fEn35qLwXkfD2v8sU
- MepFJyd3udqaAJK90ja94xjFLsQUv1Lx9/4UuK0AbIDb5O0JSNcaTzch5QCnqKg4lWgO
- 4RuWHkYIduAP6IJv+FisddBul5sjwCi2OtQy+Sptybn0mDnK7Go/suNWw1T8KhI20zNU
- FtLoFJRHWNqcFIRrWw4y978l1TFcnoe8cdpkAHzOpFkt0JG1riAbngPzyNwcIMEkdbpK
- wEWS4z/f3QBwrhwdhWJzjqGS6i80GSLUKGYs8jbcY4dzf1VVTqP/akhyVdBI8XqN822S
- EKrQ==
-X-Gm-Message-State: AOJu0YxZxjhouw9yTtjrfB14tavce+FONYmReWCJLW6UckeuI4mLT5U9
- 7hpTRUWvX8ujgnOXsThF1HvdOUMb2Vunt4wHwaT9rqezgTvcAVDECHzS4CmWGn1m0nD0BL8yAzz
- AQ/M=
-X-Gm-Gg: ASbGncs20hauaVZt7OuI/DQ7G2UIHGyyM/WrLj1ImEEtz9V0+AE4Rm2NRMMue1xNJpb
- FFOwx52TnkwGXlkAH0X2oVRzqP26/J4BTi1Ftr3yb+srGMd8WceH5HKX3nmTyeDiKuMhT4FxHqI
- C1qOvA8WnCbJtYsNPew5l93Pel0LjEv5wcpb18iMkeNN/3f+z2VHpoN7Zdso+W7ilZJ2cKdQxwt
- bJB+JMV9isHXfoT6E+mghkNY7LhYg+yOW6oXHF27K0Vg9WIF412V+t48de6H1J89cyZm/7/5crf
- x0HEkI/vhjdKol0vGJRlrISCI1gBqSCx/Rqm3qgpO+Ecvkh8
-X-Google-Smtp-Source: AGHT+IH7/ieVTBFFKIEGbzu2A6yU9xqQJKw8wAvcdGFHCv25joYaS7oXC37//qPBJNx37uLpjrfvVg==
-X-Received: by 2002:a05:687c:2246:b0:2b8:e6f2:ba7e with SMTP id
- 586e51a60fabf-2db81400b71mr607967fac.12.1746650811089; 
- Wed, 07 May 2025 13:46:51 -0700 (PDT)
-Received: from gromero0.. ([200.150.181.215]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2db5cbc7d1fsm920933fac.11.2025.05.07.13.46.49
+ d=1e100.net; s=20230601; t=1746652389; x=1747257189;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jk4EjQefaC29HViyknRVvmNGslUguEBFOQzXT/8c2wA=;
+ b=rqay7jBVwmdM9ni5IPRAI19jAsFmq7cI8dYDdIwuaprT3LDN6T0HQc0wM3/FkvPa35
+ EWHP3Hvi7LlT0aLt8S8hzsDaf5qUuFsdsagZ31vefyOj+sEUGmF+DMKjxhcDtmEM8VgZ
+ SkGvidFJLP2UXEggz1gtBo4DdrGg3zw9vgXWp7gfUI9lx2UoCOwf8+Vlh/p0WPTSqGb+
+ WgseZ86itg4Cxbrnnn5B6ahSso7F+jh0oHI/IjHLwbeF+vq0PfzkuM/tnfNcvDjXkNHb
+ 5bQix/meCs5RwxmAIHIlrZ4GcbMYIeIuP/xvXxPc9aZkyxc37KGCoU20oyBeOmgC0Vxq
+ /M0A==
+X-Gm-Message-State: AOJu0YyrxgDNYx8USmcjD5WBsd+M8furCc1omDFdWsxpE16hg3dQmw3A
+ LxSwvQk9N316+8PD/rlnlZtIt9HFf86qA0dv+HmLGK30BnECj2NtLgCha+K3ZF6dR3U/N1wF15Z
+ q
+X-Gm-Gg: ASbGnctwzzX/IjmESkWCPs2Jsa+dPmWZ9yaIvdRO61LqxUiSfpTZnjHP07KvNfgQV1n
+ XglqPkHmH4iOVtFm1BeoWHOH52utdfljXuJ1Nv2JwZzTHemEXNHOEVwsCkubwXhz/VrxMF3gg6Z
+ A67rIFKCTYsQwa/G9rh34q+/FDer0Iho0Jua2frOMHEUetlW+WA7cWRUJxW2XuG9LWtOdMRITbx
+ icUeAY6LCoczLqqKiAp8qsJFFRxwGLy2S9kWiDw/U2eLqAYFOi+AGbtgCQVFllyO3U5XoBd4YN+
+ riUfpAxd3pBXJfI/WcWqBgBNm3jkhgLPogTx4N7f/R6hPZ8JFl/I/WWNOX0t0wazXqIjidBoD3k
+ =
+X-Google-Smtp-Source: AGHT+IFi+BC0VDcMYteBT6JzCkH6q6H7XNBlf7BDHKbxwsbSlRIPFVgW2yR5AAD5VD7B+EkOnr/b4w==
+X-Received: by 2002:a05:6a00:2a09:b0:73e:30dc:bb9b with SMTP id
+ d2e1a72fcca58-7409cedc8b4mr6570611b3a.2.1746652388741; 
+ Wed, 07 May 2025 14:13:08 -0700 (PDT)
+Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7405902154dsm12255251b3a.90.2025.05.07.14.13.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 13:46:50 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
+ Wed, 07 May 2025 14:13:08 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org,
-	thuth@redhat.com,
-	gustavo.romero@linaro.org
-Subject: [PATCH 0/3] Fix typo in comments
-Date: Wed,  7 May 2025 20:46:23 +0000
-Message-Id: <20250507204626.139507-1-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
+Cc: laurent@vivier.eu,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v5 08/24] target/m68k: Use g_assert_not_reached in
+ gen_lea_mode and gen_ea_mode
+Date: Wed,  7 May 2025 14:12:43 -0700
+Message-ID: <20250507211300.9735-9-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250507211300.9735-1-richard.henderson@linaro.org>
+References: <20250507211300.9735-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
- envelope-from=gustavo.romero@linaro.org; helo=mail-oi1-x22b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,28 +103,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nothing exciting in this series, just typo fixes in comments.
+The mode argument is extracted from 3 bits, and all cases are covered.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/m68k/translate.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-Cheers,
-Gustavo
-
-Gustavo Romero (3):
-  linux-user: Fix typo in comment
-  Fix typo in comments
-  Fix typo in comments
-
- block.c                             | 4 ++--
- hw/display/apple-gfx.m              | 2 +-
- hw/xen/xen-hvm-common.c             | 2 +-
- include/exec/cpu-common.h           | 2 +-
- include/hw/xen/interface/io/blkif.h | 2 +-
- linux-user/mmap.c                   | 2 +-
- qapi/machine-target.json            | 2 +-
- qapi/qom.json                       | 2 +-
- 8 files changed, 9 insertions(+), 9 deletions(-)
-
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index b9633e06da..f87eff3b10 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -768,8 +768,7 @@ static TCGv gen_lea_mode(CPUM68KState *env, DisasContext *s,
+         tcg_gen_movi_i32(tmp, offset);
+         return tmp;
+     }
+-    /* Should never happen.  */
+-    return NULL_QREG;
++    g_assert_not_reached();
+ }
+ 
+ static TCGv gen_lea(CPUM68KState *env, DisasContext *s, uint16_t insn,
+@@ -893,8 +892,7 @@ static TCGv gen_ea_mode(CPUM68KState *env, DisasContext *s, int mode, int reg0,
+             return NULL_QREG;
+         }
+     }
+-    /* Should never happen.  */
+-    return NULL_QREG;
++    g_assert_not_reached();
+ }
+ 
+ static TCGv_ptr gen_fp_ptr(int freg)
 -- 
-2.34.1
+2.43.0
 
 
