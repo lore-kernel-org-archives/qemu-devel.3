@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F92FC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:48:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34E56C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:48:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCjng-0001xz-30; Wed, 07 May 2025 14:47:24 -0400
+	id 1uCjne-0001vW-Al; Wed, 07 May 2025 14:47:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1uCjna-0001uV-KJ
- for qemu-devel@nongnu.org; Wed, 07 May 2025 14:47:19 -0400
+ id 1uCjnW-0001s3-8u
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 14:47:15 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1uCjnZ-0004rO-1B
- for qemu-devel@nongnu.org; Wed, 07 May 2025 14:47:18 -0400
+ id 1uCjnT-0004q9-Ex
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 14:47:13 -0400
 Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 547ILdjY019143;
- Wed, 7 May 2025 18:47:14 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 547ILxJ3020552;
+ Wed, 7 May 2025 18:47:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=5dek9YSXT8NlCdPBSBT4Iaj628VDwxiAIfKZ63Ecuso=; b=
- IG3PTCoaGkvFkLBofv5/LntvBi2LFdVWRB9qLSWKxQRpZSE2Z8i/G+EB7Ne2SWsG
- oT7fx+qlneR5kZ05BCzXQbyDO/LcdPPUSnkqwYygJD70aA8OOSq9I2hOczecOcse
- GHthuDEkuLsLSz6euxwBDA0ihP/KuDhkSCGACgZBMRMHqluQhzCVnk6iGAqcx5sA
- mX/stsDfutAAmxIkitAPUgTw8eX1uyoSqcQJyStkNpnySCMRQKjUuxsPjPsjjJ9K
- AEVDYaLnRtic/uQRoHktgGDVgZPQBxLBgc/jQoLMVYvMIUL8q0OaclZ6X9yxOYQI
- F8LEkGL9Laa8y/Dmh7+mKg==
+ corp-2025-04-25; bh=vfcEeH9KjcjHYG0umNVUq6ajQHnTZXWzx9BSMYQP59o=; b=
+ OX1YlgJeI+qSafMiBZxPCGWKAySau98bWTUNxbjzxu0xVx/9Mewx3x0vdKqb65cI
+ lM+JHxP7b8I2PmtiPVx7dFb047RL/2hJ5ZONLQtfpgVWZNysibj8mOS6aZnbpHgy
+ tLVFsipDIJN44qAjojVfemMwblQyHjoz72daqnHouSSrHzHO21s4nVCOMheGXwpN
+ H3e9yTjIEDU95UMW9GyuRywHXHKZme2ojlolM2QGWzUnJHF5pOKhINXIygtqXOYa
+ ph8IpHh62m+pIcmoh1RYms8+F2ZD3MkMXTrZZjF0n8yqke8kXxcp/QwJV/PVT3pQ
+ 0LgTfg6hah/zKTVBur/jTg==
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46gcqrg23p-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46gcqrg236-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 07 May 2025 18:47:14 +0000 (GMT)
+ Wed, 07 May 2025 18:47:07 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 547I5imN036206; Wed, 7 May 2025 18:47:13 GMT
+ with ESMTP id 547H2xdr036101; Wed, 7 May 2025 18:47:07 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46d9kbhdbv-1
+ 46d9kbhd83-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 07 May 2025 18:47:13 +0000
+ Wed, 07 May 2025 18:47:07 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 547Il3j1029452;
- Wed, 7 May 2025 18:47:12 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 547Il3iv029452;
+ Wed, 7 May 2025 18:47:06 GMT
 Received: from dhcp-10-43-71-250.usdhcp.oraclecorp.com.com
  (dhcp-10-43-71-250.usdhcp.oraclecorp.com [10.43.71.250])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 46d9kbhd41-4; Wed, 07 May 2025 18:47:12 +0000
+ 46d9kbhd41-2; Wed, 07 May 2025 18:47:05 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: jonah.palmer@oracle.com, eperezma@redhat.com, peterx@redhat.com,
@@ -62,9 +62,10 @@ Cc: jonah.palmer@oracle.com, eperezma@redhat.com, peterx@redhat.com,
  dtatulea@nvidia.com, leiyang@redhat.com, parav@mellanox.com,
  sgarzare@redhat.com, si-wei.liu@oracle.com, lingshan.zhu@intel.com,
  boris.ostrovsky@oracle.com
-Subject: [PATCH v4 3/7] vdpa: set backend capabilities at vhost_vdpa_init
-Date: Wed,  7 May 2025 14:46:43 -0400
-Message-ID: <20250507184647.15580-4-jonah.palmer@oracle.com>
+Subject: [PATCH v4 1/7] vdpa: check for iova tree initialized at
+ net_client_start
+Date: Wed,  7 May 2025 14:46:41 -0400
+Message-ID: <20250507184647.15580-2-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507184647.15580-1-jonah.palmer@oracle.com>
 References: <20250507184647.15580-1-jonah.palmer@oracle.com>
@@ -79,20 +80,20 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  suspectscore=0 adultscore=0 phishscore=0 mlxscore=0 malwarescore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2504070000
  definitions=main-2505070170
-X-Proofpoint-GUID: _2tMPaJ0QP-qL1d5LqUN9hFUY-pe3Ky-
-X-Authority-Analysis: v=2.4 cv=aJHwqa9m c=1 sm=1 tr=0 ts=681baab2 cx=c_pps
+X-Proofpoint-GUID: MiZ6B7PfO4A3sIis3ERdHPYZDm1p6xL9
+X-Authority-Analysis: v=2.4 cv=aJHwqa9m c=1 sm=1 tr=0 ts=681baaab cx=c_pps
  a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
  a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=20KFwNOVAAAA:8 a=yPCof4ZbAAAA:8
- a=DFJfL8PK9GXO38_WzYsA:9 a=3ZKOabzyN94A:10
+ a=_qgkVcge0i2d_SHi9Q8A:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: _2tMPaJ0QP-qL1d5LqUN9hFUY-pe3Ky-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDE3MCBTYWx0ZWRfX7tKwoaWoOxNd
- 43jBKpj0ADxWTePt62cC7iJCWeVa0weeYU57OeGGhejjWNbHZUtgcJZAM9i4qHudVF1rvYLBtDP
- 2/vo/S3a9ged625HzL+rKAYvAFkhUEAZP8fCbpUrkCsC83NSlhnKJY7V/c5EBHOevftBTSlU1cF
- B9ZjXPcL/76k8Yk5dB3YkxHjVbxuacwoZMAIavZ80Dz928904E28VO/zDWtfdy4IMJiQzLbKu8I
- A4Mpq+IUaJWBl5YBfNF7jsy0tCYbcjIbqQgBIScXUUH7wjuVyikA0//yplLY4wFZJOLKV2eXOge
- 6NnXuMhmM8qJAuNp5TIJgeYK/ExCr6XkSVTnC78tYQ+/v8UyeuEZ0yPE23RZheonXq2Ls5+FO6g
- gfWhT4IiRaqrp3buykjIm/LIHw7F14hL0fcognCyKQWbzcUcTxuWj2/5LVkFdKl/mdIXMH9x
+X-Proofpoint-ORIG-GUID: MiZ6B7PfO4A3sIis3ERdHPYZDm1p6xL9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDE3MCBTYWx0ZWRfX2p7MD79IUygj
+ NGRqgmmckgYi5iujPgTtfa96XE5f2+QwJOq3nFq2Jx96PnAyEutSY4BZSHz+PYkqnrohcKIR+Xw
+ KGaKJoIf7vBMnEsNSJjaVFsM83wEtOJaL+4Fs3C0Itd0f5EZyv5QLAkSjCpovl5Qvpu47bX9iV9
+ HNEwlPVK4b4zKBMZ9AHUInzMkE8CxGsEaNH6FQnHazwAWQqNF+BDYXmekYC9wqQTmZH0Hek3iVE
+ IgnMmiZrrObmnKqWZe9rpfXMvdpEoglFHrCjggE8NLybDLuZYAldMYjPhw1BibQxR2TXckvJPE8
+ TZ6PkTkwPmBaFN8nM93Oq8fFR/PcslxdTX3C74Mm9fYC0xy4VnxLLuHfBmAugEPja6twwjNbXQm
+ OCX3u9+DikGHwsn1kQgKOBtk0e9Ww7xgITiS3TqJbVdAxmrDadZFqGpiqc1Lk9FTLNICnsJR
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -32
@@ -120,43 +121,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Eugenio Pérez <eperezma@redhat.com>
 
-The backend does not reset them until the vdpa file descriptor is closed
-so there is no harm in doing it only once.
+To map the guest memory while it is migrating we need to create the
+iova_tree, as long as the destination uses x-svq=on. Checking to not
+override it.
 
-This allows the destination of a live migration to premap memory in
-batches, using VHOST_BACKEND_F_IOTLB_BATCH.
+The function vhost_vdpa_net_client_stop clear it if the device is
+stopped. If the guest starts the device again, the iova tree is
+recreated by vhost_vdpa_net_data_start_first or vhost_vdpa_net_cvq_start
+if needed, so old behavior is kept.
 
 Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
 Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 ---
- hw/virtio/vhost-vdpa.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ net/vhost-vdpa.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 6b242ca56a..e9826ede2c 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -634,6 +634,12 @@ static int vhost_vdpa_init(struct vhost_dev *dev, void *opaque, Error **errp)
-     v->dev = dev;
-     dev->opaque =  opaque ;
-     v->shared->listener = vhost_vdpa_memory_listener;
-+
-+    ret = vhost_vdpa_set_backend_cap(dev);
-+    if (unlikely(ret != 0)) {
-+        return ret;
-+    }
-+
-     vhost_vdpa_init_svq(dev, v);
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 7ca8b46eee..decb826868 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -366,7 +366,9 @@ static void vhost_vdpa_net_data_start_first(VhostVDPAState *s)
  
-     error_propagate(&dev->migration_blocker, v->migration_blocker);
-@@ -1563,7 +1569,6 @@ const VhostOps vdpa_ops = {
-         .vhost_set_vring_kick = vhost_vdpa_set_vring_kick,
-         .vhost_set_vring_call = vhost_vdpa_set_vring_call,
-         .vhost_get_features = vhost_vdpa_get_features,
--        .vhost_set_backend_cap = vhost_vdpa_set_backend_cap,
-         .vhost_set_owner = vhost_vdpa_set_owner,
-         .vhost_set_vring_endian = NULL,
-         .vhost_backend_memslots_limit = vhost_vdpa_memslots_limit,
+     migration_add_notifier(&s->migration_state,
+                            vdpa_net_migration_state_notifier);
+-    if (v->shadow_vqs_enabled) {
++
++    /* iova_tree may be initialized by vhost_vdpa_net_load_setup */
++    if (v->shadow_vqs_enabled && !v->shared->iova_tree) {
+         v->shared->iova_tree = vhost_iova_tree_new(v->shared->iova_range.first,
+                                                    v->shared->iova_range.last);
+     }
 -- 
 2.43.5
 
