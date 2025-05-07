@@ -4,79 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6202BC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25457C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:46:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCjQT-0006oS-Ju; Wed, 07 May 2025 14:23:25 -0400
+	id 1uCjm7-0008Sv-Ex; Wed, 07 May 2025 14:45:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uCjQR-0006o7-E6
- for qemu-devel@nongnu.org; Wed, 07 May 2025 14:23:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uCjQP-00027x-1i
- for qemu-devel@nongnu.org; Wed, 07 May 2025 14:23:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746642199;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=R0MJ1fACUa8aT/myQKyr2llpV7mLrlFzTPMPx1cAk0U=;
- b=fZM9NINf2/QZPHfo4NLxvKY3NW66fIl+1wxulLOizYLCY/+zO0b6GJJ4bsGaG9NoS/nA/9
- o5QXxVj5HGKgYo60nuhWwONwYB4dMZH5bJDG4KXkWvdPuB0XmqgYh2i0oNkP/hD2LFd58v
- PDl0xaunArjY69gCsvTmoGPuWB8hL7s=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-481-9EmSthmuNg62A3tqjVqTdA-1; Wed,
- 07 May 2025 14:23:16 -0400
-X-MC-Unique: 9EmSthmuNg62A3tqjVqTdA-1
-X-Mimecast-MFC-AGG-ID: 9EmSthmuNg62A3tqjVqTdA_1746642195
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F3E70180056F; Wed,  7 May 2025 18:23:14 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.63])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7EAC430001A1; Wed,  7 May 2025 18:23:12 +0000 (UTC)
-Date: Wed, 7 May 2025 19:23:08 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Nir Soffer <nirsof@gmail.com>
-Cc: qemu-devel@nongnu.org, Richard Jones <rjones@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v3 1/2] io: Increase unix socket buffers size on macOS
-Message-ID: <aBulDPx3h02280i2@redhat.com>
-References: <20250427165029.9072-1-nirsof@gmail.com>
- <20250427165029.9072-2-nirsof@gmail.com>
- <aBuMQSEm9f8JsdoQ@redhat.com>
- <FAF66BF6-176E-43A8-B097-85960D81ADCE@gmail.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uCjm3-0008Lj-EN
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 14:45:44 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uCjm1-0004kq-FL
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 14:45:42 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2264aefc45dso3460675ad.0
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 11:45:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746643539; x=1747248339; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qxDPVCjfVtoNgCIZdN1lq3rjLY8i4XcwvaPrwsrEMQs=;
+ b=YxVtmmAJChKclk+RWM6ZsyH/klbohtIIsUtdtfBrvRqfQ7wiI6sk629sbUzFQb5KbJ
+ mKMYQfsvbwrHZVCe2NVJ4oOv1rt0dLzAmdvqWJdlSwsza/leSZABZZfMFZvGgMi9WMZa
+ thsssPKnA0yGOuYmcYmrsGRxSG4Qdt8SLQ/vJnxdvUugJHZfUBoyDxelMkKyzL69NSG+
+ Z7P2NDc+D6OE+i1CCw6h1v6TWluaxLRmJfwDVew7PwKokjfsCrKwnY36cx8/qZefp0zc
+ zF08Ribj/cma+pmbmAgbMyvhpzFPEnKEUn8yH5EUgb8n9txOOewMYnbRmS5qKFz0YUaV
+ ZrmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746643539; x=1747248339;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qxDPVCjfVtoNgCIZdN1lq3rjLY8i4XcwvaPrwsrEMQs=;
+ b=IyM+JupSzcwjw57ipW+GTwGKjcaafYgXJY612dHmqeYXEU0W4du6FVFGFHTn6fAZF9
+ FBIdk64IkbbobPoyqxfAZwSjYAXtdKpED5BSZbxem8yFtnnHiG39JKg2fM5mz89SltSi
+ Xi1fHZDJvxIyg+OtfqBvArb2SV0ZqGZiI9d5xvsk8de7mfoYKdeQ2lFM1yXLkxOx1dSD
+ ipYF0eUHeMFO69gRWg6EjJNwiGKTxomUJ0daKbgGksKal+FnBcr1XyasJzEAnmnjyvpa
+ AtkUJpY+xXO3yqImTZh7okAABO0gdN5GC3xYFhTa7qSDwbYhZg/6LuabmfvuQa7aydGe
+ kwiA==
+X-Gm-Message-State: AOJu0Yx0mNIXSXbCQz7e8Buz9uVRAZi/lYGiIsmyyKNLCdNQ/IRQRsGt
+ AeqHb5cv/GA2BAxJQEzOT5vA5NmEitaO+gZDDjibWdnl4XvTedvMYwX0Ynw+4W5b7rHnbBh6t4z
+ zRyA7nA==
+X-Gm-Gg: ASbGncueajxttDzDjmtbyONgoLdFKEH2M8p/tRpHsAtIoF2Qn1n9KLLp8yM6WICrDIp
+ QtpPSCt+Ayz1u8f8BXfWIiR2DtN+8xuIh3d9XkzTiMpckCtmBgPaga//VBm0rqR2/Mca80fcqRa
+ DDt/6jc0WlOCa4/UIHSnK4CtWId8hOiEg8uTNOPoTIQooFwpZFu6cT9U3sUWpJIAuuIs5RqIeI6
+ CjdGLzXKPbfRhH53m66hpwER/XRErfUyxhc7ne1V4AYXpSVGbutaLYngyVdrwgbjDl/AZn9sVzc
+ hXtelXzbcyo0aVd8yW+5SAoRIrwuptotxW9qsPHSgHN8lEDiKEQ9NqrDEJ6Hd5g2
+X-Google-Smtp-Source: AGHT+IEsAog+MHtGX3z21n5EUDikknzrRG0EBU0DG/ehEfnU6AYRAhfonz8yLAb/4xitHKjA2gr9+A==
+X-Received: by 2002:a17:902:e744:b0:22e:53a2:554e with SMTP id
+ d9443c01a7336-22e85ed73edmr6794345ad.10.1746643539002; 
+ Wed, 07 May 2025 11:45:39 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22e173b584csm93205485ad.16.2025.05.07.11.45.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 May 2025 11:45:38 -0700 (PDT)
+Message-ID: <0657578e-3825-407b-9837-1e29717f94e2@linaro.org>
+Date: Wed, 7 May 2025 11:45:37 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <FAF66BF6-176E-43A8-B097-85960D81ADCE@gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] meson: use thorough test setup as default
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250503201806.3045723-1-pierrick.bouvier@linaro.org>
+ <f7da46dd-0e8f-42d8-b555-300c088f605e@redhat.com>
+ <91cc4370-163e-4bdd-ac1c-b0d6ea3c06cb@linaro.org>
+ <aBnXXC3ldqErl8ub@redhat.com>
+ <6a8d7703-e275-4566-bc38-b627cc597e9a@linaro.org>
+ <e36633e2-e0de-422a-8ad3-1562e97926c6@redhat.com>
+ <aBsISp5UvOLzFhqn@redhat.com>
+ <51c4e997-8ae4-43a5-81b7-561c035ba85c@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <51c4e997-8ae4-43a5-81b7-561c035ba85c@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,191 +108,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 07, 2025 at 08:17:19PM +0300, Nir Soffer wrote:
+On 5/7/25 12:39 AM, Thomas Huth wrote:
+>>>> Then I don't understand the previous argument from Thomas to not make
+>>>> thorough the default: "The thorough functional tests download a
+>>>> lot of assets from the internet, so if someone just runs "meson test"
+>>>> without further parameters, I think we should not trigger these
+>>>> downloads in that case". It's what precache-functional is doing.
+>>>
+>>> precache-functional is *only* called when you run "make check-functional",
+>>> i.e. when you know that you want to run the functional tests that might
+>>> download assets from the internet. It's not called when you run the normal
+>>> "make check".
+>>
+>> Are you sure ?  If that's the case it was *not* my intention when i
+>> added precaching - I thought that "make check"  would call
+>> "make check-functional" and thus trigger precaching ?
 > 
+> "check-functional" is not part of the normal "check" target - on purpose
+> since we don't want to trigger downloads by surprise when people just run
+> "make check". That's also why we have separate "functional" CI jobs in the
+> gitlab CI, since otherwise this would be handled by the normal "check" jobs
+> already.
+>
+
+`make check` calls build/pyvenv/bin/meson test --no-rebuild -t 1, which 
+triggers func-quick by default, triggering associated downloads, since 
+QEMU_TEST_NO_DOWNLOAD=1 is not set for this target, except if I missed 
+another hidden hack somewhere.
+`meson test --no-suite func-quick --no-suite func-thorough` should be 
+what make check should do instead, or we need another "setup", to 
+exclude functional-quick from quick default.
+
+It seems that we just have some confusion steaming from our own 
+"makefile abstraction layer", when we could simply use builtin meson 
+test command for that, which works for all workflows (single vs multiple 
+tests). It reinforces my opinion that setups are awkward and that's 
+better to use meson test directly with --setup thorough being the 
+default, for better or worse. In case a developer wants a specific 
+suite, it's also easy to select it with '--suite', and list them with 
+'--list'.
+
+That said, I'm dropping this series, and won't pursue asking to change 
+the default, since this opinion is not the established consensus.
+
+>    Thomas
 > 
-> > On 7 May 2025, at 19:37, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > 
-> > On Sun, Apr 27, 2025 at 07:50:28PM +0300, Nir Soffer wrote:
-> >> On macOS we need to increase unix stream socket buffers size on the
-> >> client and server to get good performance. We set socket buffers on
-> >> macOS after connecting or accepting a client connection.  For unix
-> >> datagram socket we need different configuration that can be done later.
-> >> 
-> >> Testing shows that setting socket receive buffer size (SO_RCVBUF) has no
-> >> effect on performance, so we set only the send buffer size (SO_SNDBUF).
-> >> It seems to work like Linux but not documented.
-> >> 
-> >> Testing shows that optimal buffer size is 512k to 4 MiB, depending on
-> >> the test case. The difference is very small, so I chose 2 MiB.
-> >> 
-> >> I tested reading from qemu-nbd and writing to qemu-nbd with qemu-img and
-> >> computing a blkhash with nbdcopy and blksum.
-> >> 
-> >> To focus on NBD communication and get less noisy results, I tested
-> >> reading and writing to null-co driver. I added a read-pattern option to
-> >> the null-co driver to return data full of 0xff:
-> >> 
-> >>    NULL="json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': '10g', 'read-pattern': -1}}"
-> >> 
-> >> For testing buffer size I added an environment variable for setting the
-> >> socket buffer size.
-> >> 
-> >> Read from qemu-nbd via qemu-img convert. In this test buffer size of 2m
-> >> is optimal (12.6 times faster).
-> >> 
-> >>    qemu-nbd -r -t -e 0 -f raw -k /tmp/nbd.sock "$NULL" &
-> >>    qemu-img convert -f raw -O raw -W -n "nbd+unix:///?socket=/tmp/nbd.sock" "$NULL"
-> >> 
-> >> | buffer size | time    | user    | system  |
-> >> |-------------|---------|---------|---------|
-> >> |     default |  13.361 |   2.653 |   5.702 |
-> >> |       65536 |   2.283 |   0.204 |   1.318 |
-> >> |      131072 |   1.673 |   0.062 |   1.008 |
-> >> |      262144 |   1.592 |   0.053 |   0.952 |
-> >> |      524288 |   1.496 |   0.049 |   0.887 |
-> >> |     1048576 |   1.234 |   0.047 |   0.738 |
-> >> |     2097152 |   1.060 |   0.080 |   0.602 |
-> >> |     4194304 |   1.061 |   0.076 |   0.604 |
-> >> 
-> >> Write to qemu-nbd with qemu-img convert. In this test buffer size of 2m
-> >> is optimal (9.2 times faster).
-> >> 
-> >>    qemu-nbd -t -e 0 -f raw -k /tmp/nbd.sock "$NULL" &
-> >>    qemu-img convert -f raw -O raw -W -n "$NULL" "nbd+unix:///?socket=/tmp/nbd.sock"
-> >> 
-> >> | buffer size | time    | user    | system  |
-> >> |-------------|---------|---------|---------|
-> >> |     default |   8.063 |   2.522 |   4.184 |
-> >> |       65536 |   1.472 |   0.430 |   0.867 |
-> >> |      131072 |   1.071 |   0.297 |   0.654 |
-> >> |      262144 |   1.012 |   0.239 |   0.587 |
-> >> |      524288 |   0.970 |   0.201 |   0.514 |
-> >> |     1048576 |   0.895 |   0.184 |   0.454 |
-> >> |     2097152 |   0.877 |   0.174 |   0.440 |
-> >> |     4194304 |   0.944 |   0.231 |   0.535 |
-> >> 
-> >> Compute a blkhash with nbdcopy, using 4 NBD connections and 256k request
-> >> size. In this test buffer size of 4m is optimal (5.1 times faster).
-> >> 
-> >>    qemu-nbd -r -t -e 0 -f raw -k /tmp/nbd.sock "$NULL" &
-> >>    nbdcopy --blkhash "nbd+unix:///?socket=/tmp/nbd.sock" null:
-> >> 
-> >> | buffer size | time    | user    | system  |
-> >> |-------------|---------|---------|---------|
-> >> |     default |   8.624 |   5.727 |   6.507 |
-> >> |       65536 |   2.563 |   4.760 |   2.498 |
-> >> |      131072 |   1.903 |   4.559 |   2.093 |
-> >> |      262144 |   1.759 |   4.513 |   1.935 |
-> >> |      524288 |   1.729 |   4.489 |   1.924 |
-> >> |     1048576 |   1.696 |   4.479 |   1.884 |
-> >> |     2097152 |   1.710 |   4.480 |   1.763 |
-> >> |     4194304 |   1.687 |   4.479 |   1.712 |
-> >> 
-> >> Compute a blkhash with blksum, using 1 NBD connection and 256k read
-> >> size. In this test buffer size of 512k is optimal (10.3 times faster).
-> >> 
-> >>    qemu-nbd -r -t -e 0 -f raw -k /tmp/nbd.sock "$NULL" &
-> >>    blksum "nbd+unix:///?socket=/tmp/nbd.sock"
-> >> 
-> >> | buffer size | time    | user    | system  |
-> >> |-------------|---------|---------|---------|
-> >> |     default |  13.085 |   5.664 |   6.461 |
-> >> |       65536 |   3.299 |   5.106 |   2.515 |
-> >> |      131072 |   2.396 |   4.989 |   2.069 |
-> >> |      262144 |   1.607 |   4.724 |   1.555 |
-> >> |      524288 |   1.271 |   4.528 |   1.224 |
-> >> |     1048576 |   1.294 |   4.565 |   1.333 |
-> >> |     2097152 |   1.299 |   4.569 |   1.344 |
-> >> |     4194304 |   1.291 |   4.559 |   1.327 |
-> >> 
-> >> Signed-off-by: Nir Soffer <nirsof@gmail.com>
-> >> ---
-> >> io/channel-socket.c | 32 ++++++++++++++++++++++++++++++++
-> >> 1 file changed, 32 insertions(+)
-> >> 
-> >> diff --git a/io/channel-socket.c b/io/channel-socket.c
-> >> index 608bcf066e..06901ab694 100644
-> >> --- a/io/channel-socket.c
-> >> +++ b/io/channel-socket.c
-> >> @@ -21,6 +21,7 @@
-> >> #include "qapi/error.h"
-> >> #include "qapi/qapi-visit-sockets.h"
-> >> #include "qemu/module.h"
-> >> +#include "qemu/units.h"
-> >> #include "io/channel-socket.h"
-> >> #include "io/channel-util.h"
-> >> #include "io/channel-watch.h"
-> >> @@ -37,6 +38,33 @@
-> >> 
-> >> #define SOCKET_MAX_FDS 16
-> >> 
-> >> +/*
-> >> + * Testing shows that 2m send buffer gives best throuput and lowest cpu usage.
-> >> + * Changing the receive buffer size has no effect on performance.
-> >> + */
-> >> +#ifdef __APPLE__
-> >> +#define UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE (2 * MiB)
-> >> +#endif /* __APPLE__ */
-> >> +
-> >> +static void qio_channel_socket_set_buffers(QIOChannelSocket *ioc)
-> >> +{
-> >> +    if (ioc->localAddr.ss_family == AF_UNIX) {
-> >> +        int type;
-> >> +        socklen_t type_len = sizeof(type);
-> >> +
-> >> +        if (getsockopt(ioc->fd, SOL_SOCKET, SO_TYPE, &type, &type_len) == -1) {
-> >> +            return;
-> >> +        }
-> >> +
-> >> +#ifdef UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE
-> >> +        if (type == SOCK_STREAM) {
-> >> +            const int value = UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE;
-> >> +            setsockopt(ioc->fd, SOL_SOCKET, SO_SNDBUF, &value, sizeof(value));
-> >> +        }
-> >> +#endif /* UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE */
-> >> +    }
-> >> +}
-> > 
-> > While I'm not doubting your benchmark results, I'm a little uneasy about
-> > setting this unconditionally for *all* UNIX sockets QEMU creates. The
-> > benchmarks show NBD benefits from this, but I'm not convinced that all
-> > the other scenarios QEMU creates UNIX sockets for justify it.
-> > 
-> > On Linux, whatever value you set with SO_SNDBUF appears to get doubled
-> > internally by the kernel.
-> > 
-> > IOW, this is adding 4 MB fixed overhead for every UNIX socket that
-> > QEMU creates. It doesn't take many UNIX sockets in QEMU for that to
-> > become a significant amount of extra memory overhead on a host.
-> > 
-> > I'm thinking we might be better with a helper
-> > 
-> >  qio_channel_socket_set_send_buffer(QIOChannelSocket *ioc, size_t size)
-> > 
-> > that we call from the NBD code, to limit the impact. Also I think this
-> > helper ought not to filter on AF_UNIX - the caller can see the socket
-> > type via qio_channel_socket_get_local_address if it does not already
-> > have a record of the address, and selectively set the buffer size.
-> 
-> So you suggest to move also UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE to nbd?
-> 
-> If we use this only for nbd this is fine, but once we add another caller we will
-> to duplicate the code selecting the right size for the OS. But I guess we can 
-> reconsider this when have this problem.
 
-Yeah, lets worry about that aspect another day and focus on NBD.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Regards,
+Pierrick
 
