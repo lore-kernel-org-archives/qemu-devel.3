@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF638C3ABC6
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 02:34:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD400C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 02:34:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCUaT-0002dt-1F; Tue, 06 May 2025 22:32:45 -0400
+	id 1uCUaK-0002cU-JZ; Tue, 06 May 2025 22:32:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uCUaB-0002aZ-JA
- for qemu-devel@nongnu.org; Tue, 06 May 2025 22:32:31 -0400
+ id 1uCUa4-0002Zk-RZ
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 22:32:22 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uCUa8-0000pr-Bv
- for qemu-devel@nongnu.org; Tue, 06 May 2025 22:32:27 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1uCUa1-0000ou-3R
+ for qemu-devel@nongnu.org; Tue, 06 May 2025 22:32:20 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxJHA1xhpoopvXAA--.25831S3;
- Wed, 07 May 2025 10:32:21 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Axz3MtxhpodpvXAA--.25428S3;
+ Wed, 07 May 2025 10:32:13 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMAxj8UUxhpoKeC4AA--.11788S11;
- Wed, 07 May 2025 10:32:20 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMAxj8UUxhpoKeC4AA--.11788S5;
+ Wed, 07 May 2025 10:32:12 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 09/16] hw/intc/loongarch_pch: Use generic read callback for
- iomem8 region
-Date: Wed,  7 May 2025 10:31:41 +0800
-Message-Id: <20250507023148.1877287-10-maobibo@loongson.cn>
+Subject: [PATCH v4 03/16] hw/intc/loongarch_pch: Remove some duplicate macro
+Date: Wed,  7 May 2025 10:31:35 +0800
+Message-Id: <20250507023148.1877287-4-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250507023148.1877287-1-maobibo@loongson.cn>
 References: <20250507023148.1877287-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxj8UUxhpoKeC4AA--.11788S11
+X-CM-TRANSID: qMiowMAxj8UUxhpoKeC4AA--.11788S5
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,64 +65,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add iomem8 region register read operation emulation in generic read
-function loongarch_pch_pic_read(), and use this function for iomem8
-region.
+The meaning of macro definition STATUS_LO_START is simliar with
+PCH_PIC_INT_STATUS, only that offset is different, the same for
+macro POL_LO_START. Now remove these duplicated macro definitions.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongarch_pch_pic.c | 28 ++++++++--------------------
- 1 file changed, 8 insertions(+), 20 deletions(-)
+ hw/intc/loongarch_pch_pic.c            | 20 ++++++++++----------
+ include/hw/intc/loongarch_pic_common.h |  5 -----
+ 2 files changed, 10 insertions(+), 15 deletions(-)
 
 diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index e477a6033b..dbfc178e5d 100644
+index 52ae360fdc..17ab071a6b 100644
 --- a/hw/intc/loongarch_pch_pic.c
 +++ b/hw/intc/loongarch_pch_pic.c
-@@ -103,6 +103,12 @@ static uint64_t pch_pic_read(void *opaque, hwaddr addr, uint64_t field_mask)
-     case PCH_PIC_INT_POL:
-         val = s->int_polarity;
-         break;
-+    case PCH_PIC_HTMSI_VEC ... PCH_PIC_HTMSI_VEC_END:
-+        val = *(uint64_t *)(s->htmsi_vector + addr - PCH_PIC_HTMSI_VEC);
-+        break;
-+    case PCH_PIC_ROUTE_ENTRY ... PCH_PIC_ROUTE_ENTRY_END:
-+        val = *(uint64_t *)(s->route_entry + addr - PCH_PIC_ROUTE_ENTRY);
-+        break;
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "pch_pic_read: Bad address 0x%"PRIx64"\n", addr);
-@@ -264,28 +270,10 @@ static void loongarch_pch_pic_high_writew(void *opaque, hwaddr addr,
- static uint64_t loongarch_pch_pic_readb(void *opaque, hwaddr addr,
-                                         unsigned size)
+@@ -208,19 +208,19 @@ static uint64_t loongarch_pch_pic_high_readw(void *opaque, hwaddr addr,
  {
--    LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
--    uint64_t val = 0;
--    int64_t offset_tmp;
-+    uint64_t val;
+     LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
+     uint64_t val = 0;
+-    uint32_t offset = addr & 0xfff;
++    uint32_t offset = addr + PCH_PIC_INT_STATUS;
  
-     addr += PCH_PIC_ROUTE_ENTRY;
--    switch (addr) {
--    case PCH_PIC_HTMSI_VEC ... PCH_PIC_HTMSI_VEC_END:
--        offset_tmp = addr - PCH_PIC_HTMSI_VEC;
--        if (offset_tmp >= 0 && offset_tmp < 64) {
--            val = s->htmsi_vector[offset_tmp];
--        }
--        break;
--    case PCH_PIC_ROUTE_ENTRY ... PCH_PIC_ROUTE_ENTRY_END:
--        offset_tmp = addr - PCH_PIC_ROUTE_ENTRY;
--        if (offset_tmp >= 0 && offset_tmp < 64) {
--            val = s->route_entry[offset_tmp];
--        }
--        break;
--    default:
--        break;
--    }
+     switch (offset) {
+-    case STATUS_LO_START:
++    case PCH_PIC_INT_STATUS:
+         val = (uint32_t)(s->intisr & (~s->int_mask));
+         break;
+-    case STATUS_HI_START:
++    case PCH_PIC_INT_STATUS + 4:
+         val = (s->intisr & (~s->int_mask)) >> 32;
+         break;
+-    case POL_LO_START:
++    case PCH_PIC_INT_POL:
+         val = (uint32_t)s->int_polarity;
+         break;
+-    case POL_HI_START:
++    case PCH_PIC_INT_POL + 4:
+         val = s->int_polarity >> 32;
+         break;
+     default:
+@@ -236,21 +236,21 @@ static void loongarch_pch_pic_high_writew(void *opaque, hwaddr addr,
+ {
+     LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
+     uint32_t offset, data = (uint32_t)value;
+-    offset = addr & 0xfff;
++    offset = addr + PCH_PIC_INT_STATUS;
+ 
+     trace_loongarch_pch_pic_high_writew(size, addr, data);
+ 
+     switch (offset) {
+-    case STATUS_LO_START:
++    case PCH_PIC_INT_STATUS:
+         s->intisr = get_writew_val(s->intisr, data, 0);
+         break;
+-    case STATUS_HI_START:
++    case PCH_PIC_INT_STATUS + 4:
+         s->intisr = get_writew_val(s->intisr, data, 1);
+         break;
+-    case POL_LO_START:
++    case PCH_PIC_INT_POL:
+         s->int_polarity = get_writew_val(s->int_polarity, data, 0);
+         break;
+-    case POL_HI_START:
++    case PCH_PIC_INT_POL + 4:
+         s->int_polarity = get_writew_val(s->int_polarity, data, 1);
+         break;
+     default:
+diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
+index caf712eae0..2b4b483c63 100644
+--- a/include/hw/intc/loongarch_pic_common.h
++++ b/include/hw/intc/loongarch_pic_common.h
+@@ -26,11 +26,6 @@
+ #define PCH_PIC_INT_STATUS              0x3a0
+ #define PCH_PIC_INT_POL                 0x3e0
+ 
+-#define STATUS_LO_START                 0
+-#define STATUS_HI_START                 0x4
+-#define POL_LO_START                    0x40
+-#define POL_HI_START                    0x44
 -
-+    val = loongarch_pch_pic_read(opaque, addr, size);
-     trace_loongarch_pch_pic_readb(size, addr, val);
-     return val;
- }
+ #define TYPE_LOONGARCH_PIC_COMMON "loongarch_pic_common"
+ OBJECT_DECLARE_TYPE(LoongArchPICCommonState,
+                     LoongArchPICCommonClass, LOONGARCH_PIC_COMMON)
 -- 
 2.39.3
 
