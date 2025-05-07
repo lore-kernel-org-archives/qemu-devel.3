@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF267C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 23:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C714C3ABBF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 23:48:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCoPb-000866-Er; Wed, 07 May 2025 19:42:51 -0400
+	id 1uCoQH-0000sW-1I; Wed, 07 May 2025 19:43:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uCoPZ-00082D-7G
- for qemu-devel@nongnu.org; Wed, 07 May 2025 19:42:49 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1uCoPw-0000Fn-Hk
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 19:43:12 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uCoPV-0002Q2-Oy
- for qemu-devel@nongnu.org; Wed, 07 May 2025 19:42:48 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-227d6b530d8so4592515ad.3
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 16:42:45 -0700 (PDT)
+ id 1uCoPu-0002a0-Ij
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 19:43:12 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-30a93d80a80so378794a91.3
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 16:43:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746661364; x=1747266164; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746661389; x=1747266189; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+wT6DnXqbX5AENDmRydoGeLBXcyCT3Vy8ui4SCalzaQ=;
- b=bjre1c7xOmlPpkgUZXk9pzbWghf6iuWCiCw5GqI3AsUaKgK5QUWg4HTsijEGTklMhu
- xGXY7KFAhKdBCNdFgtvaR9Ux9WTIXmVMt5duKN67z/jSEoY8Cac8KxMiv2beQdTUlx+8
- WRVlx13tLThwENLbWMXs+4ePuSdTq/dTCSThmdXgoHlurtM46ZX6/8ERD2NjP68Ztdhn
- yK44fOT3yhWl5emrTHuZFEvjuD6Y3G/7h47f9RubHTr6Jnd/RKUp9mUtrVNwQHP0jVu3
- Toj88elw8rKfo/xdiEuXFWSW9DRV4SmAfDJPWQTTeH3+j/SdtHRpSvzMqGM5ENWsbvUf
- dl5w==
+ bh=3AGfH/it6XrbUjxeSHUy0wlg4nMt2R7aYVYgAEJcCXI=;
+ b=QFY4r4wH0Du7+P9L8O96pfncP/4fVqilOPYTpUiFvC/rqdvq9MBfHA5uqLgC1U3qLG
+ NuKLvMz1fqRykifBWFLsEucSy8p4OpCIJAat0kysHiMJv9QZQU8Y7qymK4p2vkOwwT8O
+ gpxNx1X7m/5QhJRyOdGpepqVEBHJB1/dzFd3XZSjEq5ljhdQdyVlAXUnk2UxGyh/aCdp
+ awrHBbxUb71dVkqYJJjJYriJqEbSsj91R7VAAczB8YX6uDOEbr2pK93g4/qhlYme38qg
+ B7/Gdl/9AAplU1iGCTbJv0RXoSwHpERpChkaF2Y2U65BeGbqm19zNVjuwKOCSg4PpqJk
+ 7FUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746661364; x=1747266164;
+ d=1e100.net; s=20230601; t=1746661389; x=1747266189;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+wT6DnXqbX5AENDmRydoGeLBXcyCT3Vy8ui4SCalzaQ=;
- b=Tvvra/GXE9Z/lyVZYrGA5g2C2cO5figBIpYpmcZYWTJKp5bNknOx/BFpxVcqINvBmL
- WPD90Hk6OqhOYha/AGt7l+pK+YU8nltNcSvRM6vR3JoUQSVm5A1dIQaYg7844NeX6oEK
- P3WiH8fIX+kF3iqzmbWTZW03Wn1fYhDR/GL77LnDnx+61I07RIVOf+rQ8B7wJNnOJO+k
- Y/avyVrlQGDZQPZT4N1sVyXbqyLZsDkUHRkVcySePkqeC75gnax+Q5Aa5tiHmdTLYonK
- F2qx8787TPaLodBGZsgtoQkEhpyRUm1+TxboCRy/fFeNNGrBvfDWAt98MSOt8ao1dDyv
- PVMA==
-X-Gm-Message-State: AOJu0YyzoOiIF5t4PIWqYUTvn2F3CltHM8bgw6IH0wgJgBMoykEKr9xa
- PpnxWaHThSrmwhtUDndrTZN9gxvOFvxuJaEgG0OWDBL9F7czlefSjz1HqdUF33//t7qO4gJRvLA
- B0mLHdw==
-X-Gm-Gg: ASbGncsboN5nyFvBzLS4eE2erQYCUNQnvGelqoNcGPTV9SYhGItAjW85LsCXppZhYy/
- Uvejjiy7TFgScRGMksehiB9ikWNPd6T6tvwh2xcdjjZxFTZcTkm0+VYSodph72NpX0LyKiPFxtS
- ou8Kkt8eMCujn1++p6zMvCmKaUNWB0ZqhXC3o95oehGv5+wz8yfdNh8gicK2kZZpenc7y4rJOS0
- MzwhjKzoDbHHP5V2U4QRxZIj+QfmHbZVjeGDGnWU0EXPt7I8WbqpLP7tK1VOlM4B2MObTNJv6lP
- QMJnaEb+MCKyD0T39lzfnV84EIhiqtTG/92U05Yg
-X-Google-Smtp-Source: AGHT+IH9jmSZoEfyBfxc66HFb7NLtse6xLVjOyrIpvtO2+/5/1e3pQZm95IdBBwOL7DhDe1MFZOmAA==
-X-Received: by 2002:a17:902:f606:b0:224:1af1:87f4 with SMTP id
- d9443c01a7336-22e5ea91381mr89954445ad.22.1746661364459; 
- Wed, 07 May 2025 16:42:44 -0700 (PDT)
+ bh=3AGfH/it6XrbUjxeSHUy0wlg4nMt2R7aYVYgAEJcCXI=;
+ b=lDgq8HW3VIMr3MCotVkFNgaFSDehfKoQDrLBYrM+eCflqvFVulmDRnneEh5tFY3s0E
+ wGpw81YX0RCH1hYFb3BK4uPiR04criVrUxNNBr49aL5JVDjhkA+dRWKVGGar72Xu7dld
+ RmrD6XALibYnO0DWe6esWDy0F3v35+f4YgmzjlzfXS/mxwvxpXFRa8Dfep1wgoPsRUbJ
+ pPVINadi7BqPbd9h6aJMtNDGd5Cr3Nkl1iiZkphI3TFcmZSLRTfx7dIIMlfHPLJXVwCn
+ rTpIWNxDQofyzQuo9i3pXaJGOHnUIxLjROzTaql1yU2IPfWDDbLuzEgVYP5sqZHjCSs3
+ iWiw==
+X-Gm-Message-State: AOJu0YwTIQQygn6/lZm3iOp5Yv9RiraSl/AJnBEE4taDGXJsiK7ryV0t
+ HoRQvnWJlnttr/tHrIVhC9j5JdLnkOf8yf+ioKH3JnP8UCKvWP23dz23zf4owwgquhikbJ1NDD4
+ 0BvsA6Q==
+X-Gm-Gg: ASbGncvRHE6cwqpyrX7z9W6qesMQgS1ImG+1+kPt04S0o7oZKPapWiEOBcnDbaW6YYQ
+ hrpjzLSzjYvPoMHiCSFyAiDH9q9KiKq1UHv9wB390KqN2GPGt51XSYQuPdPxM+DIBhec2vrl9zK
+ QbonfbBYN3FZ9MGwyIRyLbjEMCvBPYFssstGWwDEPj+Nf9R0lmhcArYx/bE/QgpZbaQ4X+Lpt/T
+ ucRxOLMYJdPriKwDsUzW+uHIdR2jYlQ/1MRXMTZuJegty5JqlKsem4qy0tlXK8vosonY+mvAgMs
+ VpWaWPWwwG+/n25VGQiJw3NDv8FtSvP1YhG4GHC5mCw03RCjD1w=
+X-Google-Smtp-Source: AGHT+IHfVFswkH2ailGEzkC8ZP8p7efGOpbhAQWb2RgZin6ra0kY9zWRj1hd1EERwyLNkO1zECZsoQ==
+X-Received: by 2002:a17:90b:1d92:b0:305:2d68:8d39 with SMTP id
+ 98e67ed59e1d1-30aac19d869mr9690107a91.12.1746661389236; 
+ Wed, 07 May 2025 16:43:09 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e815806fdsm6491325ad.17.2025.05.07.16.42.43
+ d9443c01a7336-22e815806fdsm6491325ad.17.2025.05.07.16.43.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 16:42:44 -0700 (PDT)
+ Wed, 07 May 2025 16:43:08 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, anjo@rev.ng, Peter Maydell <peter.maydell@linaro.org>,
@@ -70,18 +70,17 @@ Cc: qemu-arm@nongnu.org, anjo@rev.ng, Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v7 01/49] target/arm: Replace target_ulong -> vaddr for
- HWBreakpoint
-Date: Wed,  7 May 2025 16:41:52 -0700
-Message-ID: <20250507234241.957746-2-pierrick.bouvier@linaro.org>
+Subject: [PATCH v7 30/49] target/arm/ptw: replace target_ulong with int64_t
+Date: Wed,  7 May 2025 16:42:21 -0700
+Message-ID: <20250507234241.957746-31-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250507234241.957746-1-pierrick.bouvier@linaro.org>
 References: <20250507234241.957746-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,65 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+sextract64 returns a signed value.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/internals.h   | 6 +++---
- target/arm/hyp_gdbstub.c | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ target/arm/ptw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 660d3a88e07..5b421bc4ecd 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1949,9 +1949,9 @@ extern GArray *hw_breakpoints, *hw_watchpoints;
- #define get_hw_bp(i)    (&g_array_index(hw_breakpoints, HWBreakpoint, i))
- #define get_hw_wp(i)    (&g_array_index(hw_watchpoints, HWWatchpoint, i))
- 
--bool find_hw_breakpoint(CPUState *cpu, target_ulong pc);
--int insert_hw_breakpoint(target_ulong pc);
--int delete_hw_breakpoint(target_ulong pc);
-+bool find_hw_breakpoint(CPUState *cpu, vaddr pc);
-+int insert_hw_breakpoint(vaddr pc);
-+int delete_hw_breakpoint(vaddr pc);
- 
- bool check_watchpoint_in_range(int i, vaddr addr);
- CPUWatchpoint *find_hw_watchpoint(CPUState *cpu, vaddr addr);
-diff --git a/target/arm/hyp_gdbstub.c b/target/arm/hyp_gdbstub.c
-index 0512d67f8cf..bb5969720ce 100644
---- a/target/arm/hyp_gdbstub.c
-+++ b/target/arm/hyp_gdbstub.c
-@@ -54,7 +54,7 @@ GArray *hw_breakpoints, *hw_watchpoints;
-  * here so future PC comparisons will work properly.
-  */
- 
--int insert_hw_breakpoint(target_ulong addr)
-+int insert_hw_breakpoint(vaddr addr)
- {
-     HWBreakpoint brk = {
-         .bcr = 0x1,                             /* BCR E=1, enable */
-@@ -80,7 +80,7 @@ int insert_hw_breakpoint(target_ulong addr)
-  * Delete a breakpoint and shuffle any above down
-  */
- 
--int delete_hw_breakpoint(target_ulong pc)
-+int delete_hw_breakpoint(vaddr pc)
- {
-     int i;
-     for (i = 0; i < hw_breakpoints->len; i++) {
-@@ -226,7 +226,7 @@ int delete_hw_watchpoint(vaddr addr, vaddr len, int type)
-     return -ENOENT;
- }
- 
--bool find_hw_breakpoint(CPUState *cpu, target_ulong pc)
-+bool find_hw_breakpoint(CPUState *cpu, vaddr pc)
- {
-     int i;
- 
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 89979c07e5a..68ec3f5e755 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -1660,7 +1660,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+     uint64_t ttbr;
+     hwaddr descaddr, indexmask, indexmask_grainsize;
+     uint32_t tableattrs;
+-    target_ulong page_size;
++    uint64_t page_size;
+     uint64_t attrs;
+     int32_t stride;
+     int addrsize, inputsize, outputsize;
+@@ -1733,7 +1733,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
+      * validation to do here.
+      */
+     if (inputsize < addrsize) {
+-        target_ulong top_bits = sextract64(address, inputsize,
++        uint64_t top_bits = sextract64(address, inputsize,
+                                            addrsize - inputsize);
+         if (-top_bits != param.select) {
+             /* The gap between the two regions is a Translation fault */
 -- 
 2.47.2
 
