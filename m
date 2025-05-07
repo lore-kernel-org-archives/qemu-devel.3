@@ -4,34 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DDDDC3ABBF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:05:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BC78C3ABC5
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:05:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCj83-00086u-Hj; Wed, 07 May 2025 14:04:23 -0400
+	id 1uCj8W-0008FQ-03; Wed, 07 May 2025 14:04:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uCj7z-00085E-Ni; Wed, 07 May 2025 14:04:19 -0400
+ id 1uCj8E-0008CQ-Nm; Wed, 07 May 2025 14:04:35 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uCj7x-00088u-1Z; Wed, 07 May 2025 14:04:19 -0400
+ id 1uCj8D-0008Bb-3d; Wed, 07 May 2025 14:04:34 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D8C1111FEF6;
- Wed, 07 May 2025 21:03:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 474D411FEFD;
+ Wed, 07 May 2025 21:04:00 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B55CB2066FB;
- Wed,  7 May 2025 21:04:12 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 23C8F206702;
+ Wed,  7 May 2025 21:04:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Zixing Liu <liushuyu@aosc.io>, qemu-trivial@nongnu.org,
+Cc: Gustavo Romero <gustavo.romero@linaro.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 01/21] linux-user/syscall.c: add translation logic for
- epoll_pwait2 syscall
-Date: Wed,  7 May 2025 21:03:52 +0300
-Message-Id: <20250507180412.182797-2-mjt@tls.msk.ru>
+Subject: [PULL 08/21] hw/core/machine: Fix indentation
+Date: Wed,  7 May 2025 21:03:59 +0300
+Message-Id: <20250507180412.182797-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250507180412.182797-1-mjt@tls.msk.ru>
 References: <20250507180412.182797-1-mjt@tls.msk.ru>
@@ -60,94 +59,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zixing Liu <liushuyu@aosc.io>
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Signed-off-by: Zixing Liu <liushuyu@aosc.io>
+Fix indentation for some elements in the hardware compat arrays.
+
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- linux-user/syscall.c | 36 ++++++++++++++++++++++++++++++++----
- 1 file changed, 32 insertions(+), 4 deletions(-)
+ hw/core/machine.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 23b901b713..d2335cb823 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -712,6 +712,11 @@ safe_syscall5(int, ppoll, struct pollfd *, ufds, unsigned int, nfds,
- safe_syscall6(int, epoll_pwait, int, epfd, struct epoll_event *, events,
-               int, maxevents, int, timeout, const sigset_t *, sigmask,
-               size_t, sigsetsize)
-+#if defined(__NR_epoll_pwait2)
-+safe_syscall6(int, epoll_pwait2, int, epfd, struct epoll_event *, events,
-+              int, maxevents, struct timespec *, timeout, const sigset_t *, sigmask,
-+              size_t, sigsetsize)
-+#endif
- #if defined(__NR_futex)
- safe_syscall6(int,futex,int *,uaddr,int,op,int,val, \
-               const struct timespec *,timeout,int *,uaddr2,int,val3)
-@@ -13364,19 +13369,22 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-     }
- #endif
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index ed01798d37..b8ae155dfa 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -41,7 +41,7 @@ GlobalProperty hw_compat_10_0[] = {};
+ const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
  
--#if defined(TARGET_NR_epoll_wait) || defined(TARGET_NR_epoll_pwait)
-+#if defined(TARGET_NR_epoll_wait) || defined(TARGET_NR_epoll_pwait) || defined(TARGET_NR_epoll_pwait2)
- #if defined(TARGET_NR_epoll_wait)
-     case TARGET_NR_epoll_wait:
- #endif
- #if defined(TARGET_NR_epoll_pwait)
-     case TARGET_NR_epoll_pwait:
-+#endif
-+#if defined(TARGET_NR_epoll_pwait2)
-+    case TARGET_NR_epoll_pwait2:
- #endif
-     {
-         struct target_epoll_event *target_ep;
-         struct epoll_event *ep;
-         int epfd = arg1;
-         int maxevents = arg3;
--        int timeout = arg4;
-+        abi_long timeout = arg4;
+ GlobalProperty hw_compat_9_2[] = {
+-    {"arm-cpu", "backcompat-pauth-default-use-qarma5", "true"},
++    { "arm-cpu", "backcompat-pauth-default-use-qarma5", "true"},
+     { "virtio-balloon-pci", "vectors", "0" },
+     { "virtio-balloon-pci-transitional", "vectors", "0" },
+     { "virtio-balloon-pci-non-transitional", "vectors", "0" },
+@@ -58,12 +58,12 @@ GlobalProperty hw_compat_9_1[] = {
+ const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
  
-         if (maxevents <= 0 || maxevents > TARGET_EP_MAX_EVENTS) {
-             return -TARGET_EINVAL;
-@@ -13397,6 +13405,9 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-         switch (num) {
- #if defined(TARGET_NR_epoll_pwait)
-         case TARGET_NR_epoll_pwait:
-+#if defined(TARGET_NR_epoll_pwait2)
-+        case TARGET_NR_epoll_pwait2:
-+#endif
-         {
-             sigset_t *set = NULL;
+ GlobalProperty hw_compat_9_0[] = {
+-    {"arm-cpu", "backcompat-cntfrq", "true" },
++    { "arm-cpu", "backcompat-cntfrq", "true" },
+     { "scsi-hd", "migrate-emulated-scsi-request", "false" },
+     { "scsi-cd", "migrate-emulated-scsi-request", "false" },
+-    {"vfio-pci", "skip-vsc-check", "false" },
++    { "vfio-pci", "skip-vsc-check", "false" },
+     { "virtio-pci", "x-pcie-pm-no-soft-reset", "off" },
+-    {"sd-card", "spec_version", "2" },
++    { "sd-card", "spec_version", "2" },
+ };
+ const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
  
-@@ -13407,8 +13418,25 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-                 }
-             }
- 
--            ret = get_errno(safe_epoll_pwait(epfd, ep, maxevents, timeout,
--                                             set, SIGSET_T_SIZE));
-+            if (num == TARGET_NR_epoll_pwait) {
-+                ret = get_errno(safe_epoll_pwait(epfd, ep, maxevents, (int)timeout,
-+                                                 set, SIGSET_T_SIZE));
-+            } else {
-+#if defined(TARGET_NR_epoll_pwait2)
-+                struct timespec hspec;
-+                struct timespec *ts_arg = NULL;
-+                if (timeout) {
-+                    if (target_to_host_timespec(&hspec, (abi_ulong)timeout)) {
-+                        return -TARGET_EFAULT;
-+                    }
-+                    ts_arg = &hspec;
-+                }
-+                ret = get_errno(safe_epoll_pwait2(epfd, ep, maxevents, ts_arg,
-+                                              set, SIGSET_T_SIZE));
-+#else
-+                return -TARGET_ENOSYS;
-+#endif
-+            }
- 
-             if (set) {
-                 finish_sigsuspend_mask(ret);
 -- 
 2.39.5
 
