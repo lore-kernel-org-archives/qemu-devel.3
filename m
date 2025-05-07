@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76CFEC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 23:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAD18C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 23:16:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCnyc-0000dc-Fu; Wed, 07 May 2025 19:14:58 -0400
+	id 1uCnyl-0000jX-Dm; Wed, 07 May 2025 19:15:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uCnya-0000dN-CF
- for qemu-devel@nongnu.org; Wed, 07 May 2025 19:14:56 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1uCnyh-0000hX-RO
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 19:15:04 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uCnyX-00079O-RP
- for qemu-devel@nongnu.org; Wed, 07 May 2025 19:14:56 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-22e70a9c6bdso7291415ad.3
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 16:14:53 -0700 (PDT)
+ id 1uCnye-0007Aw-Tq
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 19:15:03 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2264aefc45dso6270645ad.0
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 16:15:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746659692; x=1747264492; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746659699; x=1747264499; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PktLga2mkUHG38EkDlv7DyiIOAqfi9auOds2cIP2UXM=;
- b=tQIFC7r7Q322xg7WlAAr2akaCKHIk7K1u0MfAapmNwtR69yVotd+mBNFf3DWo8aDZx
- 1mobB97LLChTk4d/vrfXzUQsL/k5yYAXbCYPCxmpl3mJ3bN9X0xD6EKbkIrpQ4mZ7pZm
- qJY7OjuchLFhncz2pTDRX/22hWe4PDbAoWhzWTj4aCW1hF7632j+K1djC12zWhRwhc7b
- oF0RSybgQocFHYZrjhmmYbDza2bI06GUcYQpi5Gva04UjWMJQheTPaKkhj4019AcpgwQ
- jfwXsbK2b7JzyL11MdQ2j+jmqvbQxnVZyOAZn77ujtrW+H90HoFXU72pC/3Vrfw1fe4i
- CcdA==
+ bh=GQFNYs+5MBLEhk/YpwGvftpZAYeWxZFFM99PsEI42kc=;
+ b=T6oEGNuDa5xqFlDDTr9rHQBB6+3cOEoeGgJN5z84UvIq1fQWnHlvURZcj0zfO++Qfb
+ F12daF1cI1gzaELysnhKoHQYtlkf6nIO4oYQaznaUCou97LiAQBhQI9Ij4+MPxU9qwvw
+ /bag4OUFRUs3bSvRgDU9me3Co8I5Ofubby6Y98tr7u8bkG8p1MU4MKETu4yQOdijGoM7
+ BImvsvZ6pckMpLIPHDOe44Nz+qOsvqgASqG+me7LvVZG8HpdLuyqGaw2l4lW2d5qZfH4
+ IX/xtxGtQko1+XDkE5dEnmuRvkDcUN56wW6YGdxG/Zk+3C3ePgle4iFYeQBZqiqGh2Pp
+ e1xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746659692; x=1747264492;
+ d=1e100.net; s=20230601; t=1746659699; x=1747264499;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PktLga2mkUHG38EkDlv7DyiIOAqfi9auOds2cIP2UXM=;
- b=QF+Sf2qYKRSW/cLfgWU6EHe+Qm9DUkhb+Ou6mbqTLi1tiuEizn5rC5IxCoh4wo3mwH
- BxJyx+gYW7GVMSQyss6V1eSvxMbTllHQ7POvpddrhkhPp4uM9RL7xQ28QrKHBpr7ItsU
- M/nbnkoqlOAYdkj3HkguLR2rfsJHF3bd6xfyi2vdKHLm8hPbl8hVtDsq0MXcM27a0nOQ
- 1OzEwcnaHMNtVxIGHv+ph6AVyZaL9iHw5aBIijI4yBQBPrf+cczOBsxqtBKXEHlAl6JO
- RoGtqOmBRBnHnik+9OMDJRtQJmQSOAUAUqXK2t7fUHnqkySHEn7UZaGS1qCLsHvkQ4Dk
- +yRw==
-X-Gm-Message-State: AOJu0Yy/WYoG9rctlV+LZmcJr6G3HQYNLv4JzIEqmF4lEkf8DGjSC9S+
- DO4dW9fpOZNOmLg9/rnyBFrAxu09RPCLyfraPwAXRVnAKHP2rbsjmcvmusbtfWPDaes5EMF57+m
- iZxBeQg==
-X-Gm-Gg: ASbGncsFRtZhY3O0KEX3T9teN9LbBLCtgIyaxDuxtdThZUwPUjHUwGueORf45IAR+Eg
- pDNl/KUR/QTu3BcZE35/jWasDIFWPhf3CxOV+g1l7fb4q3uImSd5noL2OZIlZBvIOiah4MKbBCE
- ddzBhoZe6JLe41/6WFyi9aE9opCi2zuxnNucDACzZTdrMNew9vvbhuHQ2JtPWhwOFlcPFP3kB/E
- 91E5gMX/b+QL2HAPyJXL2OFdbp9zENCmVIkrMWxhF/h/JMljlIBFi7luvZ3vy4f/sG7cJv0y9av
- AUHxNVLmbXfyiGFUosUwv9ncjH0ddugmlHRJg7GN
-X-Google-Smtp-Source: AGHT+IEYIeEDhp8V7qD9TO56tZJBxadveSsBiexmBU2hNY6yPnAqNoa94hV5/uKtuVi7FNHcMxcWtQ==
-X-Received: by 2002:a17:903:188:b0:223:65a9:ab86 with SMTP id
- d9443c01a7336-22e5ea5514cmr84187935ad.12.1746659692156; 
- Wed, 07 May 2025 16:14:52 -0700 (PDT)
+ bh=GQFNYs+5MBLEhk/YpwGvftpZAYeWxZFFM99PsEI42kc=;
+ b=tpdYLyKbUGxPjE38UKlIHV31yzExlB/yc4U5ZrRfhD0QB8cXWi8BPTAS2kVfdWrkTi
+ X2g69F8jcwGea9ue6m7Znt7dHM38hiIXo7/BhDlbPBP8z6wiXgQITcVvpSP+xDxBsc9p
+ oR8QX9siawoGWYcfzoLGYrnfPz80euEsou9ICHk0R3CPU8aOD1JcwnAC9sAHi6sEcY9t
+ SSF5Xg9W4OkniGWWYOCRKX8YGYfsq52g2g6OjbIqS+heqfIFpAlGN0R9VRR9DI0xpeif
+ JZyz8eb2LDT54pLaDWKvbS7JDaSBurn8quwFDpT+plV9WRGHHJlEB6XS7/Sbs4cDC/Ft
+ Feog==
+X-Gm-Message-State: AOJu0Yy08/ixty0R8uvloLr/yyWjHUEFHQWW9eq+Ywg+V/HuYMtRDXJ0
+ K1wrGV07FAcUTwNSzxIbDbhha9IxT7n5RRgIKg+lXZtMLqLDubIcfklDe7NPin1IXGBd17Ll/Jz
+ s+LqHow==
+X-Gm-Gg: ASbGncuJhgerMg3IG01AVudtz2S448rrWujxhHTo+u8kM3NTqRXB3oReri5a8xLmb8B
+ wErtDlUTVjPCH8Zb341JKgZ9S+2iVn2/16+ChVWTiAsxQyIhQOvEubROYeQZYafFsuepHqArMx0
+ gNcKFIfR/S9rYMY7av6x3CaN+KlGFXG+2ITK9KvItFbTXT+1AgQzchSahaBTs5p74ojMNMU/MAq
+ Z2P7oTdQ+KKuzpsQEIi3z6dD9fGO9FkW/nNDGNiPqLeH4xgy60t9N805wQat+Ms9ChKvMu9AZD5
+ dIzj0hjDFXuSvYISQQmgGu/G+lTkaUZt6vHYHNeC
+X-Google-Smtp-Source: AGHT+IFEoRfQsYrvh8/50kwwZBMMzjb0S1mqp/fy8lbubOgUdWtR4vUsb970fbOPikIFeUQYSPrv1A==
+X-Received: by 2002:a17:902:d487:b0:227:ac2a:2472 with SMTP id
+ d9443c01a7336-22e865f7ea1mr17243255ad.28.1746659699493; 
+ Wed, 07 May 2025 16:14:59 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e421a7dafsm40103205ad.69.2025.05.07.16.14.51
+ d9443c01a7336-22e421a7dafsm40103205ad.69.2025.05.07.16.14.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 16:14:51 -0700 (PDT)
+ Wed, 07 May 2025 16:14:59 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, alex.bennee@linaro.org,
@@ -70,23 +70,23 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, alex.bennee@linaro.org,
  Markus Armbruster <armbru@redhat.com>, richard.henderson@linaro.org,
  pbonzini@redhat.com, jsnow@redhat.com, philmd@linaro.org,
  berrange@redhat.com, thuth@redhat.com, Michael Roth <michael.roth@amd.com>
-Subject: [PATCH 01/13] qapi: introduce 'runtime_if' for QAPI json
-Date: Wed,  7 May 2025 16:14:31 -0700
-Message-ID: <20250507231442.879619-2-pierrick.bouvier@linaro.org>
+Subject: [PATCH 09/13] qapi: transform target specific 'if' in runtime checks
+Date: Wed,  7 May 2025 16:14:39 -0700
+Message-ID: <20250507231442.879619-10-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
 References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,370 +102,434 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This new entry can be used in QAPI json to specify a runtime conditional
-to expose any entry, similar to existing 'if', that applies at compile
-time, thanks to ifdef. The element is always defined in C, but not
-exposed through the schema and visit functions, thus being hidden for a
-QMP consumer.
-
-QAPISchemaIfCond is extended to parse this information. A first version
-was tried duplicating this, but this proved to be much more boilerplate
-than needed to pass information through all function calls.
-
-'if' and 'runtime_if' can be combined elegantly on a single item,
-allowing to restrict an element to be present based on compile time
-defines, and runtime checks at the same time.
-
-Note: This commit only adds parsing of runtime_if, and does not hide
-anything yet.
-
-For review:
-
-- I don't really like "runtime_if" name.
-  What would make sense, IMHO, is to rename existing 'if' to 'ifdef',
-  and reuse 'if' for 'runtime_if'. Since it requires invasive changes, I
-  would prefer to get agreement before wasting time in case you prefer
-  any other naming convention. Let me know what you'd like.
-
-- As mentioned in second paragraph, I think our best implementation
-  would be to extend existing QAPISchemaIfCond, as it's really
-  complicated to extend all call sites if we have another new object.
-
-- No tests/doc added at this time, as I prefer to wait that we decide
-  about naming and proposed approach first.
-
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- scripts/qapi/common.py | 16 +++++++++++-
- scripts/qapi/expr.py   |  9 ++++---
- scripts/qapi/gen.py    | 56 +++++++++++++++++++++++++++++++++++++++++-
- scripts/qapi/schema.py | 44 ++++++++++++++++++++++++---------
- 4 files changed, 107 insertions(+), 18 deletions(-)
+ qapi/machine-target.json | 84 ++++++++++++++++++++++++----------------
+ qapi/misc-target.json    | 48 ++++++++++++-----------
+ scripts/qapi/expr.py     |  9 +++--
+ 3 files changed, 81 insertions(+), 60 deletions(-)
 
-diff --git a/scripts/qapi/common.py b/scripts/qapi/common.py
-index d7c8aa3365c..0e8e2abeb58 100644
---- a/scripts/qapi/common.py
-+++ b/scripts/qapi/common.py
-@@ -229,6 +229,8 @@ def gen_infix(operator: str, operands: Sequence[Any]) -> str:
- def cgen_ifcond(ifcond: Optional[Union[str, Dict[str, Any]]]) -> str:
-     return gen_ifcond(ifcond, 'defined(%s)', '!%s', ' && ', ' || ')
+diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+index 541f93eeb78..6174b7291ca 100644
+--- a/qapi/machine-target.json
++++ b/qapi/machine-target.json
+@@ -96,7 +96,7 @@
+ ##
+ { 'struct': 'CpuModelBaselineInfo',
+   'data': { 'model': 'CpuModelInfo' },
+-  'if': 'TARGET_S390X' }
++  'runtime_if': 'target_s390x()' }
  
-+def cgen_runtime_ifcond(ifcond: Optional[Union[str, Dict[str, Any]]]) -> str:
-+    return gen_ifcond(ifcond, '%s', '!%s', ' && ', ' || ')
+ ##
+ # @CpuModelCompareInfo:
+@@ -120,7 +120,7 @@
+ { 'struct': 'CpuModelCompareInfo',
+   'data': { 'result': 'CpuModelCompareResult',
+             'responsible-properties': ['str'] },
+-  'if': 'TARGET_S390X' }
++  'runtime_if': 'target_s390x()' }
  
- def docgen_ifcond(ifcond: Optional[Union[str, Dict[str, Any]]]) -> str:
-     # TODO Doc generated for conditions needs polish
-@@ -242,7 +244,6 @@ def gen_if(cond: str) -> str:
- #if %(cond)s
- ''', cond=cond)
+ ##
+ # @query-cpu-model-comparison:
+@@ -179,7 +179,7 @@
+ { 'command': 'query-cpu-model-comparison',
+   'data': { 'modela': 'CpuModelInfo', 'modelb': 'CpuModelInfo' },
+   'returns': 'CpuModelCompareInfo',
+-  'if': 'TARGET_S390X' }
++  'runtime_if': 'target_s390x()' }
  
--
- def gen_endif(cond: str) -> str:
-     if not cond:
-         return ''
-@@ -250,6 +251,19 @@ def gen_endif(cond: str) -> str:
- #endif /* %(cond)s */
- ''', cond=cond)
+ ##
+ # @query-cpu-model-baseline:
+@@ -235,7 +235,7 @@
+   'data': { 'modela': 'CpuModelInfo',
+             'modelb': 'CpuModelInfo' },
+   'returns': 'CpuModelBaselineInfo',
+-  'if': 'TARGET_S390X' }
++  'runtime_if': 'target_s390x()' }
  
-+def gen_runtime_if(cond: str) -> str:
-+    if not cond:
-+        return ''
-+    return mcgen('''
-+if (%(cond)s) {
-+''', cond=cond)
-+
-+def gen_runtime_endif(cond: str) -> str:
-+    if not cond:
-+        return ''
-+    return mcgen('''
-+} /* (%(cond)s) */
-+''', cond=cond)
+ ##
+ # @CpuModelExpansionInfo:
+@@ -256,12 +256,15 @@
+ { 'struct': 'CpuModelExpansionInfo',
+   'data': { 'model': 'CpuModelInfo',
+             'deprecated-props' : { 'type': ['str'],
+-                                   'if': 'TARGET_S390X' } },
+-  'if': { 'any': [ 'TARGET_S390X',
+-                   'TARGET_I386',
+-                   'TARGET_ARM',
+-                   'TARGET_LOONGARCH64',
+-                   'TARGET_RISCV' ] } }
++                                   'runtime_if': 'target_s390x()'} },
++  'runtime_if': { 'any': [ 'target_s390x()',
++                           'target_i386()',
++                           'target_x86_64()',
++                           'target_arm()',
++                           'target_aarch64()',
++                           'target_loongarch64()',
++                           'target_riscv32()',
++                           'target_riscv64()' ] } }
  
- def must_match(pattern: str, string: str) -> Match[str]:
-     match = re.match(pattern, string)
+ ##
+ # @query-cpu-model-expansion:
+@@ -311,11 +314,14 @@
+   'data': { 'type': 'CpuModelExpansionType',
+             'model': 'CpuModelInfo' },
+   'returns': 'CpuModelExpansionInfo',
+-  'if': { 'any': [ 'TARGET_S390X',
+-                   'TARGET_I386',
+-                   'TARGET_ARM',
+-                   'TARGET_LOONGARCH64',
+-                   'TARGET_RISCV' ] } }
++  'runtime_if': { 'any': [ 'target_s390x()',
++                           'target_i386()',
++                           'target_x86_64()',
++                           'target_arm()',
++                           'target_aarch64()',
++                           'target_loongarch64()',
++                           'target_riscv32()',
++                           'target_riscv64()' ] } }
+ 
+ ##
+ # @CpuDefinitionInfo:
+@@ -378,13 +384,18 @@
+             'typename': 'str',
+             '*alias-of' : 'str',
+             'deprecated' : 'bool' },
+-  'if': { 'any': [ 'TARGET_PPC',
+-                   'TARGET_ARM',
+-                   'TARGET_I386',
+-                   'TARGET_S390X',
+-                   'TARGET_MIPS',
+-                   'TARGET_LOONGARCH64',
+-                   'TARGET_RISCV' ] } }
++  'runtime_if': { 'any': [ 'target_ppc()',
++                           'target_ppc64()',
++                           'target_arm()',
++                           'target_aarch64()',
++                           'target_i386()',
++                           'target_x86_64()',
++                           'target_s390x()',
++                           'target_mips()',
++                           'target_mips64()',
++                           'target_loongarch64()',
++                           'target_riscv32()',
++                           'target_riscv64()' ] } }
+ 
+ ##
+ # @query-cpu-definitions:
+@@ -396,13 +407,18 @@
+ # Since: 1.2
+ ##
+ { 'command': 'query-cpu-definitions', 'returns': ['CpuDefinitionInfo'],
+-  'if': { 'any': [ 'TARGET_PPC',
+-                   'TARGET_ARM',
+-                   'TARGET_I386',
+-                   'TARGET_S390X',
+-                   'TARGET_MIPS',
+-                   'TARGET_LOONGARCH64',
+-                   'TARGET_RISCV' ] } }
++  'runtime_if': { 'any': [ 'target_ppc()',
++                           'target_ppc64()',
++                           'target_arm()',
++                           'target_aarch64()',
++                           'target_i386()',
++                           'target_x86_64()',
++                           'target_s390x()',
++                           'target_mips()',
++                           'target_mips64()',
++                           'target_loongarch64()',
++                           'target_riscv32()',
++                           'target_riscv64()' ] } }
+ 
+ ##
+ # @S390CpuPolarization:
+@@ -414,7 +430,7 @@
+ ##
+ { 'enum': 'S390CpuPolarization',
+   'data': [ 'horizontal', 'vertical' ],
+-  'if': 'TARGET_S390X'
++  'runtime_if': 'target_s390x()'
+ }
+ 
+ ##
+@@ -453,7 +469,7 @@
+       '*dedicated': 'bool'
+   },
+   'features': [ 'unstable' ],
+-  'if': { 'all': [ 'TARGET_S390X' , 'CONFIG_KVM' ] }
++  'runtime_if': { 'all': [ 'target_s390x()' , 'target_has_kvm()' ] }
+ }
+ 
+ ##
+@@ -489,7 +505,7 @@
+ { 'event': 'CPU_POLARIZATION_CHANGE',
+   'data': { 'polarization': 'S390CpuPolarization' },
+   'features': [ 'unstable' ],
+-  'if': { 'all': [ 'TARGET_S390X', 'CONFIG_KVM' ] }
++  'runtime_if': { 'all': [ 'target_s390x()' , 'target_has_kvm()' ] }
+ }
+ 
+ ##
+@@ -503,7 +519,7 @@
+ ##
+ { 'struct': 'CpuPolarizationInfo',
+   'data': { 'polarization': 'S390CpuPolarization' },
+-  'if': { 'all': [ 'TARGET_S390X', 'CONFIG_KVM' ] }
++  'runtime_if': { 'all': [ 'target_s390x()' , 'target_has_kvm()' ] }
+ }
+ 
+ ##
+@@ -519,5 +535,5 @@
+ ##
+ { 'command': 'query-s390x-cpu-polarization', 'returns': 'CpuPolarizationInfo',
+   'features': [ 'unstable' ],
+-  'if': { 'all': [ 'TARGET_S390X', 'CONFIG_KVM' ] }
++  'runtime_if': { 'all': [ 'target_s390x()' , 'target_has_kvm()' ] }
+ }
+diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+index 42e4a7417dc..54500533e5b 100644
+--- a/qapi/misc-target.json
++++ b/qapi/misc-target.json
+@@ -17,7 +17,7 @@
+ #     <- { "return": {} }
+ ##
+ { 'command': 'rtc-reset-reinjection',
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @SevState:
+@@ -45,7 +45,7 @@
+ { 'enum': 'SevState',
+   'data': ['uninit', 'launch-update', 'launch-secret', 'running',
+            'send-update', 'receive-update' ],
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @SevGuestType:
+@@ -60,7 +60,7 @@
+ ##
+ { 'enum': 'SevGuestType',
+   'data': [ 'sev', 'sev-snp' ],
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @SevGuestInfo:
+@@ -76,7 +76,7 @@
+ { 'struct': 'SevGuestInfo',
+   'data': { 'policy': 'uint32',
+             'handle': 'uint32' },
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @SevSnpGuestInfo:
+@@ -89,7 +89,7 @@
+ ##
+ { 'struct': 'SevSnpGuestInfo',
+   'data': { 'snp-policy': 'uint64' },
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @SevInfo:
+@@ -121,7 +121,7 @@
+   'data': {
+       'sev': 'SevGuestInfo',
+       'sev-snp': 'SevSnpGuestInfo' },
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ 
+ ##
+@@ -141,7 +141,7 @@
+ #                      "handle" : 1 } }
+ ##
+ { 'command': 'query-sev', 'returns': 'SevInfo',
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @SevLaunchMeasureInfo:
+@@ -153,7 +153,7 @@
+ # Since: 2.12
+ ##
+ { 'struct': 'SevLaunchMeasureInfo', 'data': {'data': 'str'},
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @query-sev-launch-measure:
+@@ -170,7 +170,7 @@
+ #     <- { "return": { "data": "4l8LXeNlSPUDlXPJG5966/8%YZ" } }
+ ##
+ { 'command': 'query-sev-launch-measure', 'returns': 'SevLaunchMeasureInfo',
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @SevCapability:
+@@ -197,7 +197,7 @@
+             'cpu0-id': 'str',
+             'cbitpos': 'int',
+             'reduced-phys-bits': 'int'},
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @query-sev-capabilities:
+@@ -217,7 +217,7 @@
+ #                      "cbitpos": 47, "reduced-phys-bits": 1}}
+ ##
+ { 'command': 'query-sev-capabilities', 'returns': 'SevCapability',
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @sev-inject-launch-secret:
+@@ -234,7 +234,7 @@
+ ##
+ { 'command': 'sev-inject-launch-secret',
+   'data': { 'packet-header': 'str', 'secret': 'str', '*gpa': 'uint64' },
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @SevAttestationReport:
+@@ -248,7 +248,7 @@
+ ##
+ { 'struct': 'SevAttestationReport',
+   'data': { 'data': 'str'},
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @query-sev-attestation-report:
+@@ -272,7 +272,7 @@
+ { 'command': 'query-sev-attestation-report',
+   'data': { 'mnonce': 'str' },
+   'returns': 'SevAttestationReport',
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @GICCapability:
+@@ -297,7 +297,7 @@
+   'data': { 'version': 'int',
+             'emulated': 'bool',
+             'kernel': 'bool' },
+-  'if': 'TARGET_ARM' }
++  'runtime_if': { 'any': [ 'target_arm()', 'target_aarch64()' ] } }
+ 
+ ##
+ # @query-gic-capabilities:
+@@ -316,7 +316,7 @@
+ #                     { "version": 3, "emulated": false, "kernel": true } ] }
+ ##
+ { 'command': 'query-gic-capabilities', 'returns': ['GICCapability'],
+-  'if': 'TARGET_ARM' }
++  'runtime_if': { 'any': [ 'target_arm()', 'target_aarch64()' ] } }
+ 
+ ##
+ # @SGXEPCSection:
+@@ -356,7 +356,7 @@
+             'sgx2': 'bool',
+             'flc': 'bool',
+             'sections': ['SGXEPCSection']},
+-   'if': 'TARGET_I386' }
++   'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @query-sgx:
+@@ -375,7 +375,8 @@
+ #                      "sections": [{"node": 0, "size": 67108864},
+ #                      {"node": 1, "size": 29360128}]} }
+ ##
+-{ 'command': 'query-sgx', 'returns': 'SGXInfo', 'if': 'TARGET_I386' }
++{ 'command': 'query-sgx', 'returns': 'SGXInfo',
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @query-sgx-capabilities:
+@@ -394,7 +395,8 @@
+ #                      "section" : [{"node": 0, "size": 67108864},
+ #                      {"node": 1, "size": 29360128}]} }
+ ##
+-{ 'command': 'query-sgx-capabilities', 'returns': 'SGXInfo', 'if': 'TARGET_I386' }
++{ 'command': 'query-sgx-capabilities', 'returns': 'SGXInfo',
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ 
+ ##
+@@ -418,7 +420,7 @@
+ ##
+ { 'enum': 'EvtchnPortType',
+   'data': ['closed', 'unbound', 'interdomain', 'pirq', 'virq', 'ipi'],
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @EvtchnInfo:
+@@ -449,7 +451,7 @@
+            'target': 'uint16',
+            'pending': 'bool',
+            'masked': 'bool'},
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ 
+ ##
+@@ -488,7 +490,7 @@
+ ##
+ { 'command': 'xen-event-list',
+   'returns': ['EvtchnInfo'],
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
+ 
+ ##
+ # @xen-event-inject:
+@@ -506,4 +508,4 @@
+ ##
+ { 'command': 'xen-event-inject',
+   'data': { 'port': 'uint32' },
+-  'if': 'TARGET_I386' }
++  'runtime_if': { 'any': [ 'target_i386()', 'target_x86_64()' ] } }
 diff --git a/scripts/qapi/expr.py b/scripts/qapi/expr.py
-index cae0a083591..5ae26395964 100644
+index 5ae26395964..f31f28ecb10 100644
 --- a/scripts/qapi/expr.py
 +++ b/scripts/qapi/expr.py
-@@ -392,7 +392,8 @@ def check_type_implicit(value: Optional[object],
-                          permit_underscore=permissive)
-         if c_name(key, False) == 'u' or c_name(key, False).startswith('has_'):
-             raise QAPISemError(info, "%s uses reserved name" % key_source)
--        check_keys(arg, info, key_source, ['type'], ['if', 'features'])
-+        check_keys(arg, info, key_source, ['type'], ['if', 'features',
-+                                                     'runtime_if'])
-         check_if(arg, info, key_source)
-         check_features(arg.get('features'), info)
-         check_type_name_or_array(arg['type'], info, key_source)
-@@ -642,7 +643,7 @@ def check_exprs(exprs: List[QAPIExpression]) -> List[QAPIExpression]:
+@@ -638,7 +638,8 @@ def check_exprs(exprs: List[QAPIExpression]) -> List[QAPIExpression]:
+ 
+         if meta == 'enum':
+             check_keys(expr, info, meta,
+-                       ['enum', 'data'], ['if', 'features', 'prefix'])
++                       ['enum', 'data'], ['if', 'runtime_if', 'features',
++                                          'prefix'])
+             check_enum(expr)
          elif meta == 'union':
              check_keys(expr, info, meta,
-                        ['union', 'base', 'discriminator', 'data'],
--                       ['if', 'features'])
-+                       ['if', 'runtime_if', 'features'])
-             normalize_members(expr.get('base'))
-             normalize_members(expr['data'])
-             check_union(expr)
-@@ -659,8 +660,8 @@ def check_exprs(exprs: List[QAPIExpression]) -> List[QAPIExpression]:
-         elif meta == 'command':
+@@ -654,7 +655,8 @@ def check_exprs(exprs: List[QAPIExpression]) -> List[QAPIExpression]:
+             check_alternate(expr)
+         elif meta == 'struct':
              check_keys(expr, info, meta,
-                        ['command'],
--                       ['data', 'returns', 'boxed', 'if', 'features',
--                        'gen', 'success-response', 'allow-oob',
-+                       ['data', 'returns', 'boxed', 'if', 'runtime_if',
-+                        'features', 'gen', 'success-response', 'allow-oob',
-                         'allow-preconfig', 'coroutine'])
-             normalize_members(expr.get('data'))
+-                       ['struct', 'data'], ['base', 'if', 'features'])
++                       ['struct', 'data'], ['base', 'if', 'runtime_if',
++                                            'features'])
+             normalize_members(expr['data'])
+             check_struct(expr)
+         elif meta == 'command':
+@@ -667,7 +669,8 @@ def check_exprs(exprs: List[QAPIExpression]) -> List[QAPIExpression]:
              check_command(expr)
-diff --git a/scripts/qapi/gen.py b/scripts/qapi/gen.py
-index d3c56d45c89..5082eb331f4 100644
---- a/scripts/qapi/gen.py
-+++ b/scripts/qapi/gen.py
-@@ -109,6 +109,37 @@ def _wrap_ifcond(ifcond: QAPISchemaIfCond, before: str, after: str) -> str:
-     return out
- 
- 
-+def _wrap_runtime_ifcond(ifcond: QAPISchemaIfCond, before: str, after: str) -> str:
-+    if before == after:
-+        return after   # suppress empty #if ... #endif
-+
-+    assert after.startswith(before)
-+    out = before
-+    added = after[len(before):]
-+    if added[0] == '\n':
-+        out += '\n'
-+        added = added[1:]
-+    out += ifcond.gen_runtime_if()
-+    out += added
-+    out += ifcond.gen_runtime_endif()
-+    return out
-+
-+
-+def _wrap_runtime_ifcond(ifcond: QAPISchemaIfCond, before: str, after: str) -> str:
-+    if before == after:
-+        return after   # suppress empty #if ... #endif
-+
-+    assert after.startswith(before)
-+    out = before
-+    added = after[len(before):]
-+    if added[0] == '\n':
-+        out += '\n'
-+        added = added[1:]
-+    out += ifcond.gen_runtime_if()
-+    out += added
-+    out += ifcond.gen_runtime_endif()
-+    return out
-+
- def build_params(arg_type: Optional[QAPISchemaObjectType],
-                  boxed: bool,
-                  extra: Optional[str] = None) -> str:
-@@ -137,12 +168,17 @@ class QAPIGenCCode(QAPIGen):
-     def __init__(self, fname: str):
-         super().__init__(fname)
-         self._start_if: Optional[Tuple[QAPISchemaIfCond, str, str]] = None
-+        self._start_runtime_if: Optional[Tuple[QAPISchemaIfCond, str, str]] = None
- 
-     def start_if(self, ifcond: QAPISchemaIfCond) -> None:
-         assert self._start_if is None
-         self._start_if = (ifcond, self._body, self._preamble)
- 
--    def end_if(self) -> None:
-+    def start_runtime_if(self, ifcond: QAPISchemaIfCond) -> None:
-+        assert self._start_runtime_if is None
-+        self._start_runtime_if = (ifcond, self._body, self._preamble)
-+
-+    def end_if(self, runtime: bool = False) -> None:
-         assert self._start_if is not None
-         self._body = _wrap_ifcond(self._start_if[0],
-                                   self._start_if[1], self._body)
-@@ -150,8 +186,18 @@ def end_if(self) -> None:
-                                       self._start_if[2], self._preamble)
-         self._start_if = None
- 
-+    def end_runtime_if(self, runtime: bool = False) -> None:
-+        assert self._start_runtime_if is not None
-+        self._body = _wrap_runtime_ifcond(self._start_runtime_if[0],
-+                                          self._start_runtime_if[1], self._body)
-+        self._preamble = _wrap_runtime_ifcond(self._start_runtime_if[0],
-+                                              self._start_runtime_if[2],
-+                                              self._preamble)
-+        self._start_runtime_if = None
-+
-     def get_content(self) -> str:
-         assert self._start_if is None
-+        assert self._start_runtime_if is None
-         return super().get_content()
- 
- 
-@@ -231,6 +277,14 @@ def ifcontext(ifcond: QAPISchemaIfCond, *args: QAPIGenCCode) -> Iterator[None]:
-     for arg in args:
-         arg.end_if()
- 
-+@contextmanager
-+def runtime_ifcontext(ifcond: QAPISchemaIfCond,
-+                      *args: QAPIGenCCode) -> Iterator[None]:
-+    for arg in args:
-+        arg.start_runtime_if(ifcond)
-+    yield
-+    for arg in args:
-+        arg.end_runtime_if()
- 
- class QAPISchemaMonolithicCVisitor(QAPISchemaVisitor):
-     def __init__(self,
-diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
-index cbe3b5aa91e..533d0dfe088 100644
---- a/scripts/qapi/schema.py
-+++ b/scripts/qapi/schema.py
-@@ -36,9 +36,12 @@
-     POINTER_SUFFIX,
-     c_name,
-     cgen_ifcond,
-+    cgen_runtime_ifcond,
-     docgen_ifcond,
--    gen_endif,
-     gen_if,
-+    gen_endif,
-+    gen_runtime_if,
-+    gen_runtime_endif,
- )
- from .error import QAPIError, QAPISemError, QAPISourceError
- from .expr import check_exprs
-@@ -50,8 +53,10 @@ class QAPISchemaIfCond:
-     def __init__(
-         self,
-         ifcond: Optional[Union[str, Dict[str, object]]] = None,
-+        runtime_ifcond: Optional[Union[str, Dict[str, object]]] = None,
-     ) -> None:
-         self.ifcond = ifcond
-+        self.runtime_ifcond = runtime_ifcond
- 
-     def _cgen(self) -> str:
-         return cgen_ifcond(self.ifcond)
-@@ -65,8 +70,17 @@ def gen_endif(self) -> str:
-     def docgen(self) -> str:
-         return docgen_ifcond(self.ifcond)
- 
-+    def _cgen_runtime(self) -> str:
-+        return cgen_runtime_ifcond(self.runtime_ifcond)
-+
-+    def gen_runtime_if(self) -> str:
-+        return gen_runtime_if(self._cgen_runtime())
-+
-+    def gen_runtime_endif(self) -> str:
-+        return gen_runtime_endif(self._cgen_runtime())
-+
-     def is_present(self) -> bool:
--        return bool(self.ifcond)
-+        return bool(self.ifcond) or bool(self.runtime_ifcond)
- 
- 
- class QAPISchemaEntity:
-@@ -1281,13 +1295,15 @@ def _make_features(
-                 self._feature_dict[feat.name] = feat
- 
-         return [QAPISchemaFeature(f['name'], info,
--                                  QAPISchemaIfCond(f.get('if')))
-+                                  QAPISchemaIfCond(f.get('if'),
-+                                                   f.get('runtime_if')))
-                 for f in features]
- 
-     def _make_enum_member(
-         self,
-         name: str,
-         ifcond: Optional[Union[str, Dict[str, Any]]],
-+        runtime_ifcond: Optional[Union[str, Dict[str, Any]]],
-         features: Optional[List[Dict[str, Any]]],
-         info: Optional[QAPISourceInfo],
-     ) -> QAPISchemaEnumMember:
-@@ -1299,6 +1315,7 @@ def _make_enum_members(
-         self, values: List[Dict[str, Any]], info: Optional[QAPISourceInfo]
-     ) -> List[QAPISchemaEnumMember]:
-         return [self._make_enum_member(v['name'], v.get('if'),
-+                                       v.get('runtime_if'),
-                                        v.get('features'), info)
-                 for v in values]
- 
-@@ -1338,7 +1355,7 @@ def _def_enum_type(self, expr: QAPIExpression) -> None:
-         name = expr['enum']
-         data = expr['data']
-         prefix = expr.get('prefix')
--        ifcond = QAPISchemaIfCond(expr.get('if'))
-+        ifcond = QAPISchemaIfCond(expr.get('if'), expr.get('runtime_if'))
-         info = expr.info
-         features = self._make_features(expr.get('features'), info)
-         self._def_definition(QAPISchemaEnumType(
-@@ -1369,7 +1386,8 @@ def _make_members(
-         info: QAPISourceInfo,
-     ) -> List[QAPISchemaObjectTypeMember]:
-         return [self._make_member(key, value['type'],
--                                  QAPISchemaIfCond(value.get('if')),
-+                                  QAPISchemaIfCond(value.get('if'),
-+                                                   value.get('runtime_if')),
-                                   value.get('features'), info)
-                 for (key, value) in data.items()]
- 
-@@ -1378,7 +1396,7 @@ def _def_struct_type(self, expr: QAPIExpression) -> None:
-         base = expr.get('base')
-         data = expr['data']
-         info = expr.info
--        ifcond = QAPISchemaIfCond(expr.get('if'))
-+        ifcond = QAPISchemaIfCond(expr.get('if'), expr.get('runtime_if'))
-         features = self._make_features(expr.get('features'), info)
-         self._def_definition(QAPISchemaObjectType(
-             name, info, expr.doc, ifcond, features, base,
-@@ -1404,7 +1422,7 @@ def _def_union_type(self, expr: QAPIExpression) -> None:
-         data = expr['data']
-         assert isinstance(data, dict)
-         info = expr.info
--        ifcond = QAPISchemaIfCond(expr.get('if'))
-+        ifcond = QAPISchemaIfCond(expr.get('if'), expr.get('runtime_if'))
-         features = self._make_features(expr.get('features'), info)
-         if isinstance(base, dict):
-             base = self._make_implicit_object_type(
-@@ -1412,7 +1430,8 @@ def _def_union_type(self, expr: QAPIExpression) -> None:
-                 'base', self._make_members(base, info))
-         variants = [
-             self._make_variant(key, value['type'],
--                               QAPISchemaIfCond(value.get('if')),
-+                               QAPISchemaIfCond(value.get('if'),
-+                                                value.get('runtime_if')),
-                                info)
-             for (key, value) in data.items()]
-         members: List[QAPISchemaObjectTypeMember] = []
-@@ -1426,12 +1445,13 @@ def _def_alternate_type(self, expr: QAPIExpression) -> None:
-         name = expr['alternate']
-         data = expr['data']
-         assert isinstance(data, dict)
--        ifcond = QAPISchemaIfCond(expr.get('if'))
-+        ifcond = QAPISchemaIfCond(expr.get('if'), expr.get('runtime_if'))
-         info = expr.info
-         features = self._make_features(expr.get('features'), info)
-         variants = [
-             self._make_variant(key, value['type'],
--                               QAPISchemaIfCond(value.get('if')),
-+                               QAPISchemaIfCond(value.get('if'),
-+                                                value.get('runtime_if')),
-                                info)
-             for (key, value) in data.items()]
-         tag_member = QAPISchemaObjectTypeMember('type', info, 'QType', False)
-@@ -1450,7 +1470,7 @@ def _def_command(self, expr: QAPIExpression) -> None:
-         allow_oob = expr.get('allow-oob', False)
-         allow_preconfig = expr.get('allow-preconfig', False)
-         coroutine = expr.get('coroutine', False)
--        ifcond = QAPISchemaIfCond(expr.get('if'))
-+        ifcond = QAPISchemaIfCond(expr.get('if'), expr.get('runtime_if'))
-         info = expr.info
-         features = self._make_features(expr.get('features'), info)
-         if isinstance(data, dict):
-@@ -1469,7 +1489,7 @@ def _def_event(self, expr: QAPIExpression) -> None:
-         name = expr['event']
-         data = expr.get('data')
-         boxed = expr.get('boxed', False)
--        ifcond = QAPISchemaIfCond(expr.get('if'))
-+        ifcond = QAPISchemaIfCond(expr.get('if'), expr.get('runtime_if'))
-         info = expr.info
-         features = self._make_features(expr.get('features'), info)
-         if isinstance(data, dict):
+         elif meta == 'event':
+             check_keys(expr, info, meta,
+-                       ['event'], ['data', 'boxed', 'if', 'features'])
++                       ['event'], ['data', 'boxed', 'if', 'runtime_if',
++                                   'features'])
+             normalize_members(expr.get('data'))
+             check_event(expr)
+         else:
 -- 
 2.47.2
 
