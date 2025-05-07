@@ -4,66 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF5F4C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 09:15:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08DA2C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 09:20:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCark-0007Af-Jn; Wed, 07 May 2025 05:15:00 -0400
+	id 1uCavy-00087H-Jo; Wed, 07 May 2025 05:19:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangrui@loongson.cn>)
- id 1uCari-0007AQ-9C
- for qemu-devel@nongnu.org; Wed, 07 May 2025 05:14:58 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangrui@loongson.cn>) id 1uCard-0005ap-Gv
- for qemu-devel@nongnu.org; Wed, 07 May 2025 05:14:58 -0400
-Received: from loongson.cn (unknown [223.64.120.156])
- by gateway (Coremail) with SMTP id _____8AxQK2FJBtoYv7XAA--.9670S3;
- Wed, 07 May 2025 17:14:45 +0800 (CST)
-Received: from lvm.. (unknown [223.64.120.156])
- by front1 (Coremail) with SMTP id qMiowMBxXsV_JBtos6q5AA--.12892S2;
- Wed, 07 May 2025 17:14:43 +0800 (CST)
-From: WANG Rui <wangrui@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu@hev.cc, WANG Rui <wangrui@loongson.cn>,
- mengqinggang <mengqinggang@loongson.cn>
-Subject: [RFC PATCH v2] target/loongarch: Fix incorrect rounding in fnm{add,
- sub} under certain modes
-Date: Wed,  7 May 2025 17:14:55 +0800
-Message-ID: <20250507091455.3257138-1-wangrui@loongson.cn>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <timlee660101@gmail.com>)
+ id 1uCavu-00080b-VX; Wed, 07 May 2025 05:19:19 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <timlee660101@gmail.com>)
+ id 1uCavp-0006Ne-QH; Wed, 07 May 2025 05:19:18 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-30aa8a259e0so798467a91.1; 
+ Wed, 07 May 2025 02:19:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1746609549; x=1747214349; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pcdvujWM7E7CRcZLjZytCLuGjS6SIp8h6sop6QNazwE=;
+ b=Brh+MHWHtn1hZHjfE9q6TEszCIfcy7bo02bFtJ4rews5fCNjRliNhXCdB+7v0oHVuc
+ knzCJeibfFO7U7QwFBMuUgvSeUzWvoTDA8JKEOiMLfn3CChwkSaRg+TMjCFmH03+ywdQ
+ tyd3BCSeTXAwGgK5dJjkB0TMy0uAdw1QOjpCOfXaKLfotm+izR79w0REVMDHHh9733US
+ cXccynZil0YYJPadnpbEJrac5lEiZnPpJxu7uokmkycuBNQdi2vu+xBZaWMkZZLFWk8h
+ WSyMgtKFvY2AdNjuHoS2uN9TumhJ1Nf1arXuzxyqmrlfZIl0KQl7nbdQYMVDLE/UDrXF
+ CMRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746609549; x=1747214349;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pcdvujWM7E7CRcZLjZytCLuGjS6SIp8h6sop6QNazwE=;
+ b=Xn3ojEnG6D5TRZ/aJw867K45HjOwgZqupYWSLltZG+A6PPxOQUkmRbzx3QYYtTuPGL
+ nSJaiWbuLa/GewOiVd4fxBLMZFAgyOogRBc0BhQkSZhGY2zhJUzvRmBo6R+FqlqUI846
+ yOyN9vzCQwq4FIPOmgmHOPknlYTUI8P+iKiIOkiUL12E6/f6Gm6Vndyo8XzBcmg7srpI
+ 8JIkHx4tHO6NvCgan+uFh2EpCwCIe7rvvNiN4r6bSPBujbDT3iL7zu12zQFAOypSAfGQ
+ t0Vv0DJi42wHlqnKL4hUrzgdEKjApWQE8Jb1Pzgh1WMC06M77oZrsclzuuMam2/rMx17
+ mr8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVKmxppADghlCKnPx58evpUaW6SqLW8LgUXoxO6EOd+qrxeo+KbMLi8W//dkGSR0UYIFss9PHUM1HBs@nongnu.org
+X-Gm-Message-State: AOJu0Yy6hRs7FGBNchbIuGCDWQRRyfIU1yr1Ua9rsnkJSoU9+4dvfsHn
+ 1rV6e+NHjB3TOlfrIM212jwy2U84/Hu4nqofRr73ZmVv41Oz3fwl
+X-Gm-Gg: ASbGnctNGi7XXoMCqRe9glwgUHZBRAfHHRXHRfRYUVQPI3e8iGlwT7PEAGkc3V42+LY
+ EU2L5IELx+0VIt9jCZsXdISr3z+k9x2I/fFvsHycbcAl/vTrBYt+C958/MLT+fWmNUyj7micSJN
+ 5HW3LQUFO0IheTCNY+n2CnHILA8I7R+3mhGlS9MShg19hdPdlO3s4TyDEse9/gTWqJzSkjFmAGW
+ yFWbCL+qsF2sqsngZZFMWrlhczuWMZGPy+Po4ZJtg7HTWbEDPkxsZ8fI/EcSPo8ycBJknXHAtQI
+ jffdR7lhub+9qDYIshX44N5/qkewmjhRyKM+fvyiedKgFLgCAag9x0fRf+sikLpqWXpFExmeuAI
+ UBVprczyS
+X-Google-Smtp-Source: AGHT+IH7E+GG21tSGVJCJdNyvDEOLYzzD70bRR1+bHl1+/prcu+yrywbPhVfd97GlYFOw6Gsw3+FRA==
+X-Received: by 2002:a17:90b:3908:b0:2ee:aa28:79aa with SMTP id
+ 98e67ed59e1d1-30aac184527mr3839449a91.6.1746609549362; 
+ Wed, 07 May 2025 02:19:09 -0700 (PDT)
+Received: from hcdev-d520mt.. (60-250-196-139.hinet-ip.hinet.net.
+ [60.250.196.139]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-30aae500d66sm1489788a91.7.2025.05.07.02.19.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 07 May 2025 02:19:09 -0700 (PDT)
+From: Tim Lee <timlee660101@gmail.com>
+To: farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
+ wuhaotsh@google.com, kfting@nuvoton.com, chli30@nuvoton.com
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Tim Lee <timlee660101@gmail.com>
+Subject: [v2] tests/qtest: Add qtest for NPCM8XX PSPI module
+Date: Wed,  7 May 2025 17:18:59 +0800
+Message-Id: <20250507091859.2507455-1-timlee660101@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxXsV_JBtos6q5AA--.12892S2
-X-CM-SenderInfo: pzdqw2txl6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWfJF4xXr18Zr18WFyUCFW8KrX_yoWDuFyDpF
- 9rurs2kr48AF4xZFnrt3ZrCrn5Wr43J342q3srGry0vr43tF4UCr4rKa4DuF1jg34jgw4a
- qFZYk3y7Ga1UWagCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUyEb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwCF04k20xvY0x0EwI
- xGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480
- Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7
- IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k2
- 6cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxV
- AFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-e5UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=wangrui@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=timlee660101@gmail.com; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,296 +99,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch fixes incorrect results for `[xv]fnm{add,sub}.{s,d}`
-instructions when rounding toward {zero, positive, negative}.
+- Created qtest to check initialization of registers in PSPI Module
+- Implemented test into Build File
 
-According to the LoongArch ISA specification, the result of an
-instruction like `FNMSUB.D` is computed as:
+Tested:
+./build/tests/qtest/npcm8xx-pspi_test
 
-  FR[fd] = -FP64_fusedMultiplyAdd(FR[fj], FR[fk], -FR[fa])
-
-Here, `FP64_fusedMultiplyAdd()` performs a fused multiply-add operation
-compliant with IEEE 754-2008. The negation is applied to the fully
-rounded result of the fused operation - not to any intermediate value.
-This behavior is specifiec to LoongArch and differs from other arches,
-which is why the existing `float_muladd_negate_result` flag does not
-model it correctly.
-
-To address this, I introduce a new flag `float_muladd_negate_rounded_result`,
-which applies the negation after rounding. This ensures that rounding
-decisions based on the sign of the result are handled correctly.
-
-Reported-by: mengqinggang <mengqinggang@loongson.cn>
-Signed-off-by: WANG Rui <wangrui@loongson.cn>
+Signed-off-by: Tim Lee <timlee660101@gmail.com>
 ---
-v1 -> v2:
-- Introduce `float_muladd_negate_rounded_result`
----
- fpu/softfloat.c                               | 42 ++++++++++++++++---
- include/fpu/softfloat.h                       |  3 +-
- .../tcg/insn_trans/trans_farith.c.inc         | 10 +++--
- target/loongarch/tcg/vec_helper.c             |  8 ++--
- tests/tcg/loongarch64/Makefile.target         |  2 +
- tests/tcg/loongarch64/test_fnmsub.c           | 25 +++++++++++
- tests/tcg/loongarch64/test_vfnmsub.c          | 27 ++++++++++++
- 7 files changed, 102 insertions(+), 15 deletions(-)
- create mode 100644 tests/tcg/loongarch64/test_fnmsub.c
- create mode 100644 tests/tcg/loongarch64/test_vfnmsub.c
+Changes since v1:
+- MAINTAINERS file not need to change
+- Add comment for copyright/license information
+- Correct CTL registers to use 16 bits
+- Remove printf() in test cases
 
-diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 34c962d6bd..2691e89a03 100644
---- a/fpu/softfloat.c
-+++ b/fpu/softfloat.c
-@@ -2234,13 +2234,18 @@ float16_muladd_scalbn(float16 a, float16 b, float16 c,
-                       int scale, int flags, float_status *status)
- {
-     FloatParts64 pa, pb, pc, *pr;
-+    float16 r;
- 
-     float16_unpack_canonical(&pa, a, status);
-     float16_unpack_canonical(&pb, b, status);
-     float16_unpack_canonical(&pc, c, status);
-     pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
- 
--    return float16_round_pack_canonical(pr, status);
-+    r = float16_round_pack_canonical(pr, status);
-+    if (flags & float_muladd_negate_rounded_result) {
-+        r = float16_chs(r);
-+    }
-+    return r;
- }
- 
- float16 float16_muladd(float16 a, float16 b, float16 c,
-@@ -2254,13 +2259,18 @@ float32_muladd_scalbn(float32 a, float32 b, float32 c,
-                       int scale, int flags, float_status *status)
- {
-     FloatParts64 pa, pb, pc, *pr;
-+    float32 r;
- 
-     float32_unpack_canonical(&pa, a, status);
-     float32_unpack_canonical(&pb, b, status);
-     float32_unpack_canonical(&pc, c, status);
-     pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
- 
--    return float32_round_pack_canonical(pr, status);
-+    r = float32_round_pack_canonical(pr, status);
-+    if (flags & float_muladd_negate_rounded_result) {
-+        r = float32_chs(r);
-+    }
-+    return r;
- }
- 
- float64 QEMU_SOFTFLOAT_ATTR
-@@ -2268,13 +2278,18 @@ float64_muladd_scalbn(float64 a, float64 b, float64 c,
-                       int scale, int flags, float_status *status)
- {
-     FloatParts64 pa, pb, pc, *pr;
-+    float64 r;
- 
-     float64_unpack_canonical(&pa, a, status);
-     float64_unpack_canonical(&pb, b, status);
-     float64_unpack_canonical(&pc, c, status);
-     pr = parts_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
- 
--    return float64_round_pack_canonical(pr, status);
-+    r = float64_round_pack_canonical(pr, status);
-+    if (flags & float_muladd_negate_rounded_result) {
-+        r = float64_chs(r);
-+    }
-+    return r;
- }
- 
- static bool force_soft_fma;
-@@ -2422,39 +2437,54 @@ float64 float64r32_muladd(float64 a, float64 b, float64 c,
-                           int flags, float_status *status)
- {
-     FloatParts64 pa, pb, pc, *pr;
-+    float64 r;
- 
-     float64_unpack_canonical(&pa, a, status);
-     float64_unpack_canonical(&pb, b, status);
-     float64_unpack_canonical(&pc, c, status);
-     pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
- 
--    return float64r32_round_pack_canonical(pr, status);
-+    r = float64r32_round_pack_canonical(pr, status);
-+    if (flags & float_muladd_negate_rounded_result) {
-+        r = float64_chs(r);
-+    }
-+    return r;
- }
- 
- bfloat16 QEMU_FLATTEN bfloat16_muladd(bfloat16 a, bfloat16 b, bfloat16 c,
-                                       int flags, float_status *status)
- {
-     FloatParts64 pa, pb, pc, *pr;
-+    bfloat16 r;
- 
-     bfloat16_unpack_canonical(&pa, a, status);
-     bfloat16_unpack_canonical(&pb, b, status);
-     bfloat16_unpack_canonical(&pc, c, status);
-     pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
- 
--    return bfloat16_round_pack_canonical(pr, status);
-+    r = bfloat16_round_pack_canonical(pr, status);
-+    if (flags & float_muladd_negate_rounded_result) {
-+        r = bfloat16_chs(r);
-+    }
-+    return r;
- }
- 
- float128 QEMU_FLATTEN float128_muladd(float128 a, float128 b, float128 c,
-                                       int flags, float_status *status)
- {
-     FloatParts128 pa, pb, pc, *pr;
-+    float128 r;
- 
-     float128_unpack_canonical(&pa, a, status);
-     float128_unpack_canonical(&pb, b, status);
-     float128_unpack_canonical(&pc, c, status);
-     pr = parts_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
- 
--    return float128_round_pack_canonical(pr, status);
-+    r = float128_round_pack_canonical(pr, status);
-+    if (flags & float_muladd_negate_rounded_result) {
-+        r = float128_chs(r);
-+    }
-+    return r;
- }
- 
- /*
-diff --git a/include/fpu/softfloat.h b/include/fpu/softfloat.h
-index c18ab2cb60..db7ea2c916 100644
---- a/include/fpu/softfloat.h
-+++ b/include/fpu/softfloat.h
-@@ -129,7 +129,8 @@ enum {
-     float_muladd_negate_c = 1,
-     float_muladd_negate_product = 2,
-     float_muladd_negate_result = 4,
--    float_muladd_suppress_add_product_zero = 8,
-+    float_muladd_negate_rounded_result = 8,
-+    float_muladd_suppress_add_product_zero = 16,
- };
- 
- /*----------------------------------------------------------------------------
-diff --git a/target/loongarch/tcg/insn_trans/trans_farith.c.inc b/target/loongarch/tcg/insn_trans/trans_farith.c.inc
-index f4a0dea727..68d149647e 100644
---- a/target/loongarch/tcg/insn_trans/trans_farith.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_farith.c.inc
-@@ -199,9 +199,11 @@ TRANS(fmadd_s, FP_SP, gen_muladd, gen_helper_fmuladd_s, 0)
- TRANS(fmadd_d, FP_DP, gen_muladd, gen_helper_fmuladd_d, 0)
- TRANS(fmsub_s, FP_SP, gen_muladd, gen_helper_fmuladd_s, float_muladd_negate_c)
- TRANS(fmsub_d, FP_DP, gen_muladd, gen_helper_fmuladd_d, float_muladd_negate_c)
--TRANS(fnmadd_s, FP_SP, gen_muladd, gen_helper_fmuladd_s, float_muladd_negate_result)
--TRANS(fnmadd_d, FP_DP, gen_muladd, gen_helper_fmuladd_d, float_muladd_negate_result)
-+TRANS(fnmadd_s, FP_SP, gen_muladd, gen_helper_fmuladd_s,
-+      float_muladd_negate_rounded_result)
-+TRANS(fnmadd_d, FP_DP, gen_muladd, gen_helper_fmuladd_d,
-+      float_muladd_negate_rounded_result)
- TRANS(fnmsub_s, FP_SP, gen_muladd, gen_helper_fmuladd_s,
--      float_muladd_negate_c | float_muladd_negate_result)
-+      float_muladd_negate_c | float_muladd_negate_rounded_result)
- TRANS(fnmsub_d, FP_DP, gen_muladd, gen_helper_fmuladd_d,
--      float_muladd_negate_c | float_muladd_negate_result)
-+      float_muladd_negate_c | float_muladd_negate_rounded_result)
-diff --git a/target/loongarch/tcg/vec_helper.c b/target/loongarch/tcg/vec_helper.c
-index 3faf52cbc4..d20f887afa 100644
---- a/target/loongarch/tcg/vec_helper.c
-+++ b/target/loongarch/tcg/vec_helper.c
-@@ -2458,12 +2458,12 @@ DO_4OP_F(vfmadd_s, 32, UW, float32_muladd, 0)
- DO_4OP_F(vfmadd_d, 64, UD, float64_muladd, 0)
- DO_4OP_F(vfmsub_s, 32, UW, float32_muladd, float_muladd_negate_c)
- DO_4OP_F(vfmsub_d, 64, UD, float64_muladd, float_muladd_negate_c)
--DO_4OP_F(vfnmadd_s, 32, UW, float32_muladd, float_muladd_negate_result)
--DO_4OP_F(vfnmadd_d, 64, UD, float64_muladd, float_muladd_negate_result)
-+DO_4OP_F(vfnmadd_s, 32, UW, float32_muladd, float_muladd_negate_rounded_result)
-+DO_4OP_F(vfnmadd_d, 64, UD, float64_muladd, float_muladd_negate_rounded_result)
- DO_4OP_F(vfnmsub_s, 32, UW, float32_muladd,
--         float_muladd_negate_c | float_muladd_negate_result)
-+         float_muladd_negate_c | float_muladd_negate_rounded_result)
- DO_4OP_F(vfnmsub_d, 64, UD, float64_muladd,
--         float_muladd_negate_c | float_muladd_negate_result)
-+         float_muladd_negate_c | float_muladd_negate_rounded_result)
- 
- #define DO_2OP_F(NAME, BIT, E, FN)                       \
- void HELPER(NAME)(void *vd, void *vj,                    \
-diff --git a/tests/tcg/loongarch64/Makefile.target b/tests/tcg/loongarch64/Makefile.target
-index 00030a1026..e3554a500e 100644
---- a/tests/tcg/loongarch64/Makefile.target
-+++ b/tests/tcg/loongarch64/Makefile.target
-@@ -16,5 +16,7 @@ LOONGARCH64_TESTS  += test_fclass
- LOONGARCH64_TESTS  += test_fpcom
- LOONGARCH64_TESTS  += test_pcadd
- LOONGARCH64_TESTS  += test_fcsr
-+LOONGARCH64_TESTS  += test_fnmsub
-+LOONGARCH64_TESTS  += test_vfnmsub
- 
- TESTS += $(LOONGARCH64_TESTS)
-diff --git a/tests/tcg/loongarch64/test_fnmsub.c b/tests/tcg/loongarch64/test_fnmsub.c
+ tests/qtest/meson.build         |   3 +
+ tests/qtest/npcm8xx_pspi-test.c | 118 ++++++++++++++++++++++++++++++++
+ 2 files changed, 121 insertions(+)
+ create mode 100644 tests/qtest/npcm8xx_pspi-test.c
+
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 3136d15e0f..88672a8b00 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -210,6 +210,8 @@ qtests_npcm7xx = \
+    'npcm7xx_watchdog_timer-test',
+    'npcm_gmac-test'] + \
+    (slirp.found() ? ['npcm7xx_emc-test'] : [])
++qtests_npcm8xx = \
++  ['npcm8xx_pspi-test']
+ qtests_aspeed = \
+   ['aspeed_hace-test',
+    'aspeed_smc-test',
+@@ -257,6 +259,7 @@ qtests_aarch64 = \
+   (config_all_accel.has_key('CONFIG_TCG') and                                            \
+    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
++  (config_all_devices.has_key('CONFIG_NPCM8XX') ? qtests_npcm8xx : []) + \
+   ['arm-cpu-features',
+    'numa-test',
+    'boot-serial-test',
+diff --git a/tests/qtest/npcm8xx_pspi-test.c b/tests/qtest/npcm8xx_pspi-test.c
 new file mode 100644
-index 0000000000..47fef92cb7
+index 0000000000..13b8a8229c
 --- /dev/null
-+++ b/tests/tcg/loongarch64/test_fnmsub.c
-@@ -0,0 +1,25 @@
-+#include <assert.h>
-+#include <stdint.h>
-+#include <fenv.h>
++++ b/tests/qtest/npcm8xx_pspi-test.c
+@@ -0,0 +1,118 @@
++/*
++ * QTests for the Nuvoton NPCM8XX PSPI Controller
++ *
++ * Copyright (c) 2025 Nuvoton Technology Corporation
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ */
 +
-+int main()
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "qemu/module.h"
++
++/* Register offsets */
++#define DATA_OFFSET 0x00
++#define CTL_SPIEN   0x01
++#define CTL_OFFSET  0x02
++#define CTL_MOD     0x04
++
++typedef struct PSPI {
++    uint64_t base_addr;
++} PSPI;
++
++PSPI pspi_defs = {
++    .base_addr  = 0xf0201000
++};
++
++static uint16_t pspi_read_data(QTestState *qts, const PSPI *pspi)
 +{
-+    double x, y, z;
-+    union {
-+        uint64_t i;
-+        double d;
-+    } u;
-+
-+    x = 0x1.0p256;
-+    y = 0x1.0p256;
-+    z = 0x1.0p-256;
-+
-+    fesetround(FE_DOWNWARD);
-+    asm("fnmsub.d %[x], %[x], %[y], %[z]\n\t"
-+        :[x]"+f"(x)
-+        :[y]"f"(y), [z]"f"(z));
-+
-+    u.d = x;
-+    assert(u.i == 0xdfefffffffffffffUL);
-+    return 0;
++    return qtest_readw(qts, pspi->base_addr + DATA_OFFSET);
 +}
-diff --git a/tests/tcg/loongarch64/test_vfnmsub.c b/tests/tcg/loongarch64/test_vfnmsub.c
-new file mode 100644
-index 0000000000..8c332674ae
---- /dev/null
-+++ b/tests/tcg/loongarch64/test_vfnmsub.c
-@@ -0,0 +1,27 @@
-+#include <assert.h>
-+#include <stdint.h>
-+#include <fenv.h>
 +
-+int main()
++static void pspi_write_data(QTestState *qts, const PSPI *pspi, uint16_t value)
 +{
-+    uint64_t x, y, z;
++    qtest_writew(qts, pspi->base_addr + DATA_OFFSET, value);
++}
 +
-+    x = 0x4ff0000000000000UL;
-+    y = 0x4ff0000000000000UL;
-+    z = 0x2ff0000000000000UL;
++static uint16_t pspi_read_ctl(QTestState *qts, const PSPI *pspi)
++{
++    return qtest_readw(qts, pspi->base_addr + CTL_OFFSET);
++}
 +
-+    fesetround(FE_DOWNWARD);
-+    asm("vreplgr2vr.d $vr0, %[x]\n\t"
-+        "vreplgr2vr.d $vr1, %[y]\n\t"
-+        "vreplgr2vr.d $vr2, %[z]\n\t"
-+        "vfnmsub.d $vr0, $vr0, $vr1, $vr2\n\t"
-+        "vpickve2gr.d %[x], $vr0, 0\n\t"
-+        "vpickve2gr.d %[y], $vr0, 1\n\t"
-+        :[x]"+&r"(x), [y]"+&r"(y)
-+        :[z]"r"(z)
-+        :"$f0", "$f1", "$f2");
++static void pspi_write_ctl(QTestState *qts, const PSPI *pspi, uint16_t value)
++{
++    qtest_writew(qts, pspi->base_addr + CTL_OFFSET, value);
++}
 +
-+    assert(x == 0xdfefffffffffffffUL);
-+    assert(y == 0xdfefffffffffffffUL);
-+    return 0;
++/* Check PSPI can be reset to default value */
++static void test_init(gconstpointer pspi_p)
++{
++    const PSPI *pspi = pspi_p;
++
++    QTestState *qts = qtest_init("-machine npcm845-evb");
++
++    /* Write CTL_SPIEN value to control register for enable PSPI module */
++    pspi_write_ctl(qts, pspi, CTL_SPIEN);
++    g_assert_cmphex(pspi_read_ctl(qts, pspi), ==, CTL_SPIEN);
++
++    qtest_quit(qts);
++}
++
++/* Check PSPI can be r/w data register */
++static void test_data(gconstpointer pspi_p)
++{
++    const PSPI *pspi = pspi_p;
++    uint16_t test = 0x1234;
++    uint16_t output;
++
++    QTestState *qts = qtest_init("-machine npcm845-evb");
++
++    /* Enable 16-bit data interface mode */
++    pspi_write_ctl(qts, pspi, CTL_MOD);
++    g_assert_cmphex(pspi_read_ctl(qts, pspi), ==, CTL_MOD);
++
++    /* Write to data register */
++    pspi_write_data(qts, pspi, test);
++
++    /* Read from data register */
++    output = pspi_read_data(qts, pspi);
++    g_assert_cmphex(output, ==, test);
++
++    qtest_quit(qts);
++}
++
++/* Check PSPI can be r/w control register */
++static void test_ctl(gconstpointer pspi_p)
++{
++    const PSPI *pspi = pspi_p;
++    uint8_t control = CTL_MOD;
++
++    QTestState *qts = qtest_init("-machine npcm845-evb");
++
++    /* Write CTL_MOD value to control register for 16-bit interface mode */
++    qtest_memwrite(qts, pspi->base_addr + CTL_OFFSET,
++                   &control, sizeof(control));
++    g_assert_cmphex(pspi_read_ctl(qts, pspi), ==, control);
++
++    qtest_quit(qts);
++}
++
++static void pspi_add_test(const char *name, const PSPI* wd,
++        GTestDataFunc fn)
++{
++    g_autofree char *full_name = g_strdup_printf("npcm8xx_pspi/%s",  name);
++    qtest_add_data_func(full_name, wd, fn);
++}
++
++#define add_test(name, td) pspi_add_test(#name, td, test_##name)
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    add_test(init, &pspi_defs);
++    add_test(ctl, &pspi_defs);
++    add_test(data, &pspi_defs);
++    return g_test_run();
 +}
 -- 
-2.49.0
+2.34.1
 
 
