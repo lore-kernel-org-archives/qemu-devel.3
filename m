@@ -4,85 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2092C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 07:56:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8DD3C3ABC6
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 08:04:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCZcn-0001Uq-2n; Wed, 07 May 2025 03:55:30 -0400
+	id 1uCZki-0007iK-7g; Wed, 07 May 2025 04:03:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCZck-0001UB-3L
- for qemu-devel@nongnu.org; Wed, 07 May 2025 03:55:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCZkh-0007fp-0A
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 04:03:39 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCZci-0001lk-8l
- for qemu-devel@nongnu.org; Wed, 07 May 2025 03:55:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746604522;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=p3TgzwexWi3Tl59TeP0/GgXQsKq/utGNxlw9hk6Zz2U=;
- b=I1rR1KITifPB9W+qIHioVo7EDg5eCS3Kq62n415A6Myf2Jm+tIsXQOZ6UUnekZc+J5ChJA
- JtbWbByV0Ouqx4ailwGQr2Ce9zSsL5jRjg/hBbcvg6MdUex83l35kod8zFJjJtWf53YycJ
- Zr4W0FKVW+Ij9/OUefINNE5AKGGO66E=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-Zej7C2D4MsKrnun75S9e9A-1; Wed,
- 07 May 2025 03:55:18 -0400
-X-MC-Unique: Zej7C2D4MsKrnun75S9e9A-1
-X-Mimecast-MFC-AGG-ID: Zej7C2D4MsKrnun75S9e9A_1746604517
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D1A2F1800446; Wed,  7 May 2025 07:55:16 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D62119560A7; Wed,  7 May 2025 07:55:16 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id ACAFB21E66C9; Wed, 07 May 2025 09:55:13 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org,  richard.henderson@linaro.org,
- stefanha@redhat.com,  Michael Roth <michael.roth@amd.com>,
- pbonzini@redhat.com,  berrange@redhat.com,  peter.maydell@linaro.org,
- thuth@redhat.com,  jsnow@redhat.com,  philmd@linaro.org,  Alex
- =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  devel@lists.libvirt.org,  Victor Toso
- <victortoso@redhat.com>
-Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
-In-Reply-To: <f2972cb4-4266-4835-9548-706983dc611f@linaro.org> (Pierrick
- Bouvier's message of "Tue, 29 Apr 2025 12:15:39 -0700")
-References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
- <87a584b69n.fsf@pond.sub.org>
- <5b21965d-2428-454c-9dd7-266987495abd@linaro.org>
- <87a583789z.fsf@pond.sub.org>
- <25bb4527-f145-4d9c-8f91-a962bfa14a6f@linaro.org>
- <8734drpg4j.fsf@pond.sub.org>
- <f2972cb4-4266-4835-9548-706983dc611f@linaro.org>
-Date: Wed, 07 May 2025 09:55:13 +0200
-Message-ID: <87msbokg7y.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCZke-0002W0-G8
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 04:03:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746605016; x=1778141016;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=HpDrDECtQvcsHMVE+hPPlkdbyYlVcQroZZnd1WpB868=;
+ b=IrX2rxhPiHu7u75k1iW0XHz5qt0GHRlb9BIdfzMwlO71tBnffRM7i2h1
+ BK/r62dWuD6c8ijo/9/09v0E3VblqugGiFzmvZWagl+1SZyJc7eSNLyet
+ 4nn+GIMQYGTYtUstV94dTDkS2M2zUdyYCf4Msm1Qy3Di++9302VisFEKA
+ BF9bnk0ZvKSGLJrYK0fqyc0MS8IV7kaljx8kjuHEmVRSlspON67pLfNLD
+ Ina3Owl2n4iakjmAWSEilvrCoanwhyTpXSnTDTA6tfqtiTa4CdlzY+rM7
+ 8v2e4lte2I/4yMgAnRJx6rbon9iR8P4rTk+65siSeSfWmOdeBPuSnzt59 g==;
+X-CSE-ConnectionGUID: JFoNyJ9tQ72qFxKOjKWUCA==
+X-CSE-MsgGUID: CLtuzly4QxSr5B6eEw+8iA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="48467052"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="48467052"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 May 2025 01:03:32 -0700
+X-CSE-ConnectionGUID: 03T1Qm4MQtSK7kjTRNd+ag==
+X-CSE-MsgGUID: gVnonXNwSV2yo8rzbg+URQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="135843911"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa006.fm.intel.com with ESMTP; 07 May 2025 01:03:22 -0700
+Date: Wed, 7 May 2025 16:24:23 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Mark Burton <mburton@qti.qualcomm.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Alessandro Di Federico <ale@rev.ng>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Anton Johansson <anjo@rev.ng>, Brian Cain <bcain@quicinc.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, Neo Jia <cjia@nvidia.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
+ "Wedgwood, Chris" <cw@f00f.org>, dhedde@kalrayinc.com,
+ Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Auger Eric <eric.auger@redhat.com>,
+ Felipe Franciosi <felipe@nutanix.com>, iggy@theiggy.com,
+ Warner Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Jason Gunthorpe <jgg@nvidia.com>,
+ Jidong Xiao <jidong.xiao@gmail.com>, Jim Shu <jim.shu@sifive.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
+ Luc Michel <luc@lmichel.fr>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Max Chou <max.chou@sifive.com>, Meirav Dean <mdean@redhat.com>,
+ mimu@linux.vnet.ibm.com, "Ho, Nelson" <nelson.ho@windriver.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Bernhard Beschow <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>,
+ z.huo@139.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ "Wu, Zhiyong" <zwu.kernel@gmail.com>
+Subject: Re: KVM/QEMU Community call 29/04/2025 agenda items?
+Message-ID: <aBsYt/nm/6+8tHtx@intel.com>
+References: <874iy85yx2.fsf@draig.linaro.org>
+ <eefb308b-5cd8-4b30-bc32-e37f601cb07b@linaro.org>
+ <CABgObfYmm2RgFUuViDJA_cuqeCUOh_DV5Qar8YLnrbfYVV39VQ@mail.gmail.com>
+ <87a57ydj8y.fsf@pond.sub.org> <aBIGdQab_PufZ2X6@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aBIGdQab_PufZ2X6@redhat.com>
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,50 +118,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+Ping Philippe?
 
-[...]
+> > Another example: the KVM PMU filter series linked above wants to define
+> > 
+> >     { 'enum': 'KvmPmuEventFormat',
+> >       'data': ['raw', 'x86-select-umask', 'x86-masked-entry'] }
+> > 
+> > The enum makes sense only when we have CONFIG_KVM.  Member @raw makes
+> > sense regardless of target then.  The other two only for TARGET_I386.
+> 
+> NB, ...makes sense only when we have CONFIG_KVM **and** the QEMU
+> process was launched with '-accel kvm'.
+> 
+> It feels strange that we want our reported schema show a difference when
+> we launch "qemu-system-x86_64 -accel tcg" between two builds one with
+> and without CONFIG_KVM, when KVM is not in use ? 
+> 
+> Or to reverse the question, why does it matter if we report existence
+> of KvmPmuEventFormat unconditionally ?
+> 
+> > We could elect to forgo such conditionals.  The main disadvantage is
+> > loss of precision in query-qmp-schema.  Which may or may not matter, and
+> > may or may not box us into corners.
+> 
+> Is the precision we have justifiable ?
+> 
+> When it comes to runtime configuration QMP is already imprecise.
+> 
+> eg set-cpu-topology on x390 is KVM only but still there
+>    when running with TCG
+> 
+> eg reporting query-hotpluggable-cpus on machine types that
+>    lack hotplug
+> 
+> eg reporting set-numa-node on arches/machines that lack NUMA
+> 
+> eg reporting query-balloon when no balloon device is present
+> 
+> eg reporting various xen- commands when either the target
+>    or machine type lack Xen support
+> 
+> eg reporting many cxl-* commands when either the target
+>    or machine type lacks CXL support.
 
-> I don't think we should think too much ahead for languages other than C,=
-=20
-> for one, two, and even three reasons :)
+Indeed, I think Daniel's examples are great. @Philipppe, are these cases
+considered in the context of single binary/heterogeneous emulation?
 
-I agree that thinking ahead too much is a bad habit.  So is thinking
-ahead too little :)
-
-> - First, it's already broken because we rely on ifdef that won't be=20
-> there in Rust or Go.
-
-I don't think it's broken.  QAPI 'if' translates straightforwardly to C
-#if, but that doesn't mean it cannot be translated to conditional
-compilation / metaprogramming in other languages.
-
-In fact, the value of 'if' used to be C constant expressions suitable
-for use with #if, and we changed it to its current form specifically to
-enable Rust work, in merge commit c83fcfaf8a5.  Marc-Andr=C3=A9's was trying
-to develop Rust bindings back then, and if I remember correctly this
-change was enough to let him implement 'if' with Rust.
-
-> - Second, it's code, we can just change it later if needed.
-
-True!
-
-> - Third, those json are consumed only by QEMU (right?), so we are free=20
-> to write/modify them as we want.
-
-Also true.=20=20
-
-> The only thing that must stay the same is what we expose to the consumer=
-=20
-> in the schema, and which commands we expose in qemu.
-
-We may evolve the external interface as long as we honor our
-compatibility promise.
-
-You're aiming for "no change at all" there.  I understand why that's
-desirable.  But if it should turn out that a bit of compatible change
-simplifies the job, we can take the simpler route.
-
-[...]
-
+> IOW the use of TARGET_ conditionals are only addressing a very
+> narrow area of (im)precision, whose rationale is largely an
+> artifact of our historical separate binary / multiple builds
+> choice. The only real justification for continuing with this
+> is that we've always done it.
+> 
+> Creating a general runtime conditional mechanism in QAPI feels
+> like opening a pandora's box.
+> 
+> We'll have a mechanism but it will be impractical to use it fully
+> enough to be able to claim we are actually precise. The scope of
+> runtime choices/conditions is too huge.
+> 
+> It risks creating a mechanism that requires a never ending stream
+> of patches to address continually reported gaps. A potentially
+> significant maintainer burden.
+> 
+> By comparison the CONFIG_ conditionals in QAPI, both the scope
+> and semantics clear and it is a fairly tractable problem, although
+> even there we miss them eg lack of CONFIG_XEN conditions on xen
+> commands.
+> 
 
