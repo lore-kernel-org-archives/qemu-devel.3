@@ -4,80 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C17F0C369DC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 05:30:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57E46C369DC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 05:35:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCXLe-0006QU-Lo; Wed, 07 May 2025 01:29:38 -0400
+	id 1uCXRC-0000H0-Du; Wed, 07 May 2025 01:35:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCXLc-0006Pn-Lk; Wed, 07 May 2025 01:29:36 -0400
-Received: from mgamail.intel.com ([192.198.163.19])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCXRA-0000Gq-M4
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 01:35:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCXLa-0002K5-9n; Wed, 07 May 2025 01:29:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746595774; x=1778131774;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=rY1yoBamctuSX1QSNKdJdBkPpQYoVfT6L9f+nin7WT4=;
- b=JU+XZaCebDi7ak2sI3/vPNhPoivhCHVB9oVU1eSJaXR/ktiPAdQazmmw
- Vk632tH5Sq8ToC5bCz0h46evd9gY8BNYooDSQgFx6jxk94k2l+2ik3WaV
- Jmt4hpxxxikGoAl/SfG3EFg+QzEGl3h2GEUVWRvwqCBSKBFPt9gfuLfIv
- Cj1yJSPpPm5Judm6KINBabCBn7OAF2rlus1zaHVYXtZ0yAI2wBnyzR6jG
- EKTEQmuTVUDr0t68OIRE+T1+Ug2cNuT2hcckLWYKeJJAQF7blxk2RnRDh
- 5lVOvdfc/xfz7gix6L56ub+vy5VORbCRCUZ9mQn4ctmmSEwW8RMlcaIwO Q==;
-X-CSE-ConnectionGUID: dwfGJq7TRD6FdI10dtQCQg==
-X-CSE-MsgGUID: mL7LTHiVQ6KPk/A/G09Okg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="47401767"
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="47401767"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2025 22:29:30 -0700
-X-CSE-ConnectionGUID: 9jBtQkWMQjiii6kOLpgjJg==
-X-CSE-MsgGUID: Cli5wzLfRbC97HL963NgKg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="140957650"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 06 May 2025 22:29:27 -0700
-Date: Wed, 7 May 2025 13:50:27 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Fam Zheng <fam@euphon.net>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, John Snow <jsnow@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [PATCH v3 13/19] hw/block/fdc-isa: Remove 'fallback' property
-Message-ID: <aBr0o91RsDrMKcVv@intel.com>
-References: <20250506143905.4961-1-philmd@linaro.org>
- <20250506143905.4961-14-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCXR9-0003Cs-3m
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 01:35:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746596116;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=i4x+1/5Eo/Y7WQtRO2ysyT2YXhKNX42md/QhevOUiBg=;
+ b=FcqIi4kBdCzjjlgHGGLPUzdkSKBLO0a+m+nuLPlXVHXVIMYxEMHfe6ZyOZI5wOgyw4l03e
+ Wpnlsj8AhCcOamvHX7eXxAW5WfZZ9aIec51pZnl3yYPqxel3ORyMkXiX+nrvhZj/Pmq0zN
+ vs6JcRqNvlw13jtoxsstrpg0PeoV3qQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-KKpcIGWAP6CAiIGX1raixg-1; Wed,
+ 07 May 2025 01:35:13 -0400
+X-MC-Unique: KKpcIGWAP6CAiIGX1raixg-1
+X-Mimecast-MFC-AGG-ID: KKpcIGWAP6CAiIGX1raixg_1746596112
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B5251805ECE; Wed,  7 May 2025 05:35:12 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B23C61800368; Wed,  7 May 2025 05:35:11 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 33CB221E66C9; Wed, 07 May 2025 07:35:09 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  qemu-devel@nongnu.org,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Michael
+ Roth <michael.roth@amd.com>,  Daniel =?utf-8?Q?P=2EBerrang=C3=A9?=
+ <berrange@redhat.com>, Stefan Hajnoczi <stefanha@gmail.com>
+Subject: Re: [PATCH] Drop support for Python 3.8
+In-Reply-To: <CAFn=p-Y3xOo95XMRNC-pSrcoD6858bkzu0cpCUqXn1MZs1vAmA@mail.gmail.com>
+ (John Snow's message of "Tue, 6 May 2025 15:49:38 -0400")
+References: <20250425120710.879518-1-thuth@redhat.com>
+ <57f21448-79c1-4d46-9a8e-f9109eb67dcd@linaro.org>
+ <87jz78b7fh.fsf@pond.sub.org>
+ <5d0e0b69-cbbc-4fa4-a847-fdc8603a8122@redhat.com>
+ <875ximdj2i.fsf@pond.sub.org>
+ <CAFn=p-ZZgRg_A=nXOLGd=S8b2g9K3FNm-hqG1Rv1F=uy4PLqEQ@mail.gmail.com>
+ <67ceeed9-75e1-489d-a750-dcf1beac703f@redhat.com>
+ <CAFn=p-Y3xOo95XMRNC-pSrcoD6858bkzu0cpCUqXn1MZs1vAmA@mail.gmail.com>
+Date: Wed, 07 May 2025 07:35:09 +0200
+Message-ID: <87wmatm19u.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250506143905.4961-14-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -57
-X-Spam_score: -5.8
-X-Spam_bar: -----
-X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,23 +98,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 06, 2025 at 04:38:59PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Tue,  6 May 2025 16:38:59 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v3 13/19] hw/block/fdc-isa: Remove 'fallback' property
-> X-Mailer: git-send-email 2.47.1
-> 
-> The "fallback" property was only used by the hw_compat_2_5[] array,
-> as 'fallback=144'. We removed all machines using that array, lets
-> remove ISA floppy drive 'fallback' property, manually setting the
-> default value in isabus_fdc_realize().
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->  hw/block/fdc-isa.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
+John Snow <jsnow@redhat.com> writes:
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> On Tue, May 6, 2025 at 10:17=E2=80=AFAM Thomas Huth <thuth@redhat.com> wr=
+ote:
+>
+>> On 06/05/2025 00.49, John Snow wrote:
+>> ...
+>> > If there are no objections to moving to 3.9 as the minimum, I certainly
+>> > don't mind. Go right ahead and I'll clean up afterwards as part of my
+>> > "delint qapi" series in which I'd like to fix quite a few other things=
+ that
+>> > are currently wonky. In fact, moving to 3.9 as a minimum might make al=
+l of
+>> > that much easier for me and allow deeper cleanings.
+>>
+>>   Hi John!
+>>
+>> It has just been merged:
+>>
+>
+> Yay! Thanks a lot for doing this. I lost my appetite for arguing for Pyth=
+on
+> version bumps, but when other people do it, I am always cheering :) Sorry
+> to have been MIA while you were submitting this.
+
+I'm cheering, too!
+
+Supporting a wide range of Python versions has been costly.  Most
+recently, it made John write docs/sphinx/compat.py, which looks like
+every line of code there was bought with blood, sweat, and tears.
+
+[...]
 
 
