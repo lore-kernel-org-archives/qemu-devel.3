@@ -4,75 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CBE0C3ABB6
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 06:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C8CDC369DC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 06:36:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCYEQ-0008Pg-8Z; Wed, 07 May 2025 02:26:14 -0400
+	id 1uCYNc-0000wc-E0; Wed, 07 May 2025 02:35:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCYEO-0008PH-Aq
- for qemu-devel@nongnu.org; Wed, 07 May 2025 02:26:12 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1uCYNa-0000tp-Ku
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 02:35:42 -0400
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCYEM-0008Ri-Oj
- for qemu-devel@nongnu.org; Wed, 07 May 2025 02:26:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746599171; x=1778135171;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=EN1Oi7r46yPYOorhg67Y2ev5p9Xe4QzAmxO+pxYY994=;
- b=L2iPyaKilVN/LRHq1JX4j7ZU8cuvaxAO5VVkO/wzKc4XSCFcXjdJsnKy
- o3UTVDQvjuFcRjIWsDV1nlgHej0QbdHsUZ9o08R6P7BfRjVtQ6Vaji7IK
- riaAkiSeuFxLujzWXZB1Zy0/49PlTltIgJTBCtY6R/sxbzGimzrX11FIj
- lflbvimskhZjL+eEY4FvtRo9fn4idumvs7L3HxzlETcA5JmJIghdcIif5
- Wi+dZgu2mqtTp+YMcAu0LvgCiD/ViCwzSVPsRNZ/pfm+h6Q2x5T3HGYRn
- QkrFea36LikHYqfRtr6Z9Pj/hNSZUcakGnc/oKeJPoF5znBhDtRh+deAH g==;
-X-CSE-ConnectionGUID: OwW+XAbwTUu/9kFQ+e6YbA==
-X-CSE-MsgGUID: njqYI3KQTUWD1PHkcAxXLA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="48180786"
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="48180786"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2025 23:26:09 -0700
-X-CSE-ConnectionGUID: X+UBwxGZT1ewCQVFUE35gA==
-X-CSE-MsgGUID: wcCO+fJ4THmiCvlF4xYMtA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="135858537"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 06 May 2025 23:26:04 -0700
-Date: Wed, 7 May 2025 14:47:05 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1uCYNZ-0001GD-5C
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 02:35:42 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 2D59EA4D49D;
+ Wed,  7 May 2025 06:35:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51E0C4CEE7;
+ Wed,  7 May 2025 06:35:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1746599732;
+ bh=l1J+yu/udDUI/mMMp6c3ZkSHRSKvfdoXZZ+RGOaCt3o=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=eASQR1m0eTvttMBVnnIz/iUqpE5yZ+aPjDBVyurrHVAMOOySgLp5kj8tMkSv6hkbh
+ 8z2CG1dXaZkqs1bhxGC8/Tvr2+WIj41LgN36LUTCaa+GdqpDjrSWJG0H8WKzyVQjr1
+ yLPWofImyMa9uJkdQmC6Vy/5D2tMgNdQsLt79pxdqR9rZ1dws/tRKjS0TzO80VpKfl
+ KW5beXBP7BvmLXo/pag6qF5ughUY2cHC0fyAFRrvyyIQQCS8br0yJd6hPKApvdT5Yc
+ 0//6ab7cdu2B6ztRpCSCfgPBssvAFKeokUEzDjZzvl5oPlPjTAj6EhFeu+nG0C7Knr
+ SWq3rkqwucC+w==
+Date: Wed, 7 May 2025 06:35:31 +0000
+From: Wei Liu <wei.liu@kernel.org>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>, Amit Shah <amit@kernel.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Jason Wang <jasowang@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH v3 07/19] hw/i386/pc: Remove pc_compat_2_6[] array
-Message-ID: <aBsB6YaIURX1Ds02@intel.com>
-References: <20250502185652.67370-1-philmd@linaro.org>
- <20250502185652.67370-8-philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Wei Liu <wei.liu@kernel.org>
+Subject: Re: [PULL 05/22] target/i386/hvf: Include missing
+ 'exec/target_page.h' header
+Message-ID: <aBr_MzqaoGwN7gpQ@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+References: <20250506143512.4315-1-philmd@linaro.org>
+ <20250506143512.4315-6-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250502185652.67370-8-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
+In-Reply-To: <20250506143512.4315-6-philmd@linaro.org>
+Received-SPF: pass client-ip=147.75.193.91; envelope-from=wei.liu@kernel.org;
+ helo=nyc.source.kernel.org
 X-Spam_score_int: -57
 X-Spam_score: -5.8
 X-Spam_bar: -----
@@ -96,22 +75,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 02, 2025 at 08:56:39PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Fri,  2 May 2025 20:56:39 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v3 07/19] hw/i386/pc: Remove pc_compat_2_6[] array
-> X-Mailer: git-send-email 2.47.1
+On Tue, May 06, 2025 at 04:34:54PM +0200, Philippe Mathieu-Daudé wrote:
+> Include "exec/target_page.h" to be able to compile HVF on x86_64:
 > 
-> The pc_compat_2_6[] array was only used by the pc-q35-2.6
-> and pc-i440fx-2.6 machines, which got removed. Remove it.
+>   ../target/i386/hvf/hvf.c:139:49: error: use of undeclared identifier 'TARGET_PAGE_SIZE'
+>               uint64_t dirty_page_start = gpa & ~(TARGET_PAGE_SIZE - 1u);
+>                                                 ^
+>   ../target/i386/hvf/hvf.c:141:45: error: use of undeclared identifier 'TARGET_PAGE_SIZE'
+>               hv_vm_protect(dirty_page_start, TARGET_PAGE_SIZE,
 > 
+> Fixes: 9c2ff9cdc9b ("exec/cpu-all: remove exec/target_page include")
+> Reported-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reported-by: Wei Liu <wei.liu@kernel.org>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> Message-Id: <20250425174310.70890-1-philmd@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
+FYI Paolo merged a patch from me that does the same thing. My patch is
+already in the master branch.
+
+Wei.
+
 > ---
->  include/hw/i386/pc.h | 3 ---
->  hw/i386/pc.c         | 8 --------
->  2 files changed, 11 deletions(-)
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
+>  target/i386/hvf/hvf.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+> index 99e37a33e50..b16fb066758 100644
+> --- a/target/i386/hvf/hvf.c
+> +++ b/target/i386/hvf/hvf.c
+> @@ -50,6 +50,7 @@
+>  #include "qemu/error-report.h"
+>  #include "qemu/memalign.h"
+>  #include "qapi/error.h"
+> +#include "exec/target_page.h"
+>  #include "migration/blocker.h"
+>  
+>  #include "system/hvf.h"
+> -- 
+> 2.47.1
+> 
 
