@@ -4,79 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BC71C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 14:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C824BC3ABC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 14:16:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCfOp-0003in-MF; Wed, 07 May 2025 10:05:27 -0400
+	id 1uCfYC-0005uV-2t; Wed, 07 May 2025 10:15:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uCfOo-0003i6-AZ
- for qemu-devel@nongnu.org; Wed, 07 May 2025 10:05:26 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uCfOm-0008Lo-8Q
- for qemu-devel@nongnu.org; Wed, 07 May 2025 10:05:26 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5f861d16622so12081111a12.2
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 07:05:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746626722; x=1747231522; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QGSdUkCxEXbIB9do3YlB8SKdemuH1onJk+9dW7t5Cek=;
- b=cdFK2xyp0vzzqaOTH2WLdi8/CavQPgm0/07sPr+KAEt34qIgWRb3I8Z57OtpgNHaHL
- CF6VNUkhOTb5c6kWQGFqHCbo9Cb1n5Vz9TeX58xhUGsYWjjUXv3GWLliYBJ4fDvHU3yi
- bGhwpuKeAKbjwa1IAio4ZeLVB13Ol91z8cxwQXSwoOII7hDCmJCUJC9nWj0B8u6mEmLE
- ApwyYCqxNxRBHcVlqvAzqo7/r1v/kVLn0hxvEIjjf0ImE0jreo73tTA0y2bH5TGYmB3Q
- oUI8kGqv0zn81BjDDa+6dTlaHrABuI2vA/JvdipGzjICKNN//BT7jjqz1LpdKDMAlDLB
- C9pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746626722; x=1747231522;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QGSdUkCxEXbIB9do3YlB8SKdemuH1onJk+9dW7t5Cek=;
- b=poRsAt3sENBx/WQBJp8BFXwvdOuOeC2bVa0ToPMkMh8Lzp6YPm6ZS/WXpDgNai6/Jj
- v/+HFhCKNHR7/7OFXn7qgbarol9aHD7leyo1BZM3RtW1OyQwuqAW9gX+/R/T2be8rLhT
- PiaT08TmNn5FHte1HoNTSaP1M4nZHA5rJhG1ZFF9C08DXs8DM9JV18/QcfO3oHz2nJb9
- zJqVMJotSHV/xhF0jsJaVhaH1SqO8zslHWIMZQqO4PFV/JhUOVJf9sQM08tbC8qv7rsP
- 7AhoVZKEb/uPB91dotckvmLJeyflGbGZ7LAOyubD6I4IaLBh/kKgYHvEj+2hRVODyjHj
- Fb5w==
-X-Gm-Message-State: AOJu0YzpbDVmggxi9tAd8ugYXmfCMDvlzPTYq8Rhm2ii8qMZsK0Sx9cJ
- sQutF95ov5i1pIjBm+gPMgW9mojC0dx9SMCL9iFvCb5ROQNARi6YPVdInZ/BPjXb68moc5TzKt/
- fwpP6XNAq3TCsrtgF41vkmyIcHBY=
-X-Gm-Gg: ASbGncv7ZVmWAEnwy5jZiByl6c+9ka4SdCpK50aBsK/fuXn1bGQG/UH+MQAh3eu962l
- 1jVKGfc+KykEmZUBC0RM1/XsT5EadFITPdQPv8VEBRCoS0baTcAVPCZQc1xxuKLMjfi0LGuVaD0
- j1IIdW7leby7c1ZRVBMWAp
-X-Google-Smtp-Source: AGHT+IHzLBcetvEPNzRIgV1K3CZVaRY98JC41be8Oeq2SS6z1FicCJQv4Hh85MEEHL5wuZPl/7LGX5i7yk5hEEP2RnU=
-X-Received: by 2002:a05:6402:1ed5:b0:5fa:82a4:4879 with SMTP id
- 4fb4d7f45d1cf-5fbe9e5467cmr3071524a12.16.1746626721458; Wed, 07 May 2025
- 07:05:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
+ id 1uCfYA-0005sG-Bp; Wed, 07 May 2025 10:15:06 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kbusch@kernel.org>)
+ id 1uCfY8-0001lU-Sj; Wed, 07 May 2025 10:15:06 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id E15A75C5B0A;
+ Wed,  7 May 2025 14:12:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F52C4CEE2;
+ Wed,  7 May 2025 14:15:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1746627300;
+ bh=kjC8owSJbzDuKvUd5iBB03rp46mjqxf1yzEu+x7yIlQ=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=Ptp2ZS7W6NeV63hDzYvCkoMuXEd478EmjOG7UYcubpzgAWgIqQHWQFgdFzPz3SWZN
+ KwM/wey18nKOIHSYHJZv5U0dOCKZ3iBsOCX50+5H5Luynj8pJdMmqKWtKKqiLwLTyb
+ /bEbwO2RM50Cad0cA39c/VihiiIzWfDSoiVtka1VFyQbHmuvXJVqvbK2fuhTRq2ZEU
+ fzCHyCYOkBdrk5eX/gjXyPMfgWR4XenyEEtNWt16luqup/LYlrIF2dJOZ3sd8G+xf5
+ CUUSuNpDvZd917qktzN6xduIQ81EtmD5j4eU1OSM4cookX9qXkVXEQu5WARqEr4sOn
+ VEbYn06TktfcQ==
+Date: Wed, 7 May 2025 08:14:58 -0600
+From: Keith Busch <kbusch@kernel.org>
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, Jesper Devantier <foss@defmacro.it>,
+ qemu-block@nongnu.org, Klaus Jensen <k.jensen@samsung.com>,
+ qemu-stable@nongnu.org,
+ =?iso-8859-1?Q?St=E9phane?= Graber <stgraber@stgraber.org>
+Subject: Re: [PATCH] hw/nvme: fix nvme hotplugging
+Message-ID: <aBtq4it04wpPSZkX@kbusch-mbp.dhcp.thefacebook.com>
+References: <20250507-fix-non-hotpluggable-subsys-v1-1-667f224ebc0f@samsung.com>
 MIME-Version: 1.0
-References: <20250506144214.1221450-1-peter.maydell@linaro.org>
-In-Reply-To: <20250506144214.1221450-1-peter.maydell@linaro.org>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 7 May 2025 10:05:09 -0400
-X-Gm-Features: ATxdqUG5ITu4U2Gm4tMszDkI9SQaYd1_80acNK0hqZe6IMQy8TcHFyeP7GmYgRg
-Message-ID: <CAJSP0QXi1eGdbi5=2EGWuHdL2JX6h513wwVMi167xYZKHjbFSw@mail.gmail.com>
-Subject: Re: [PULL 00/32] target-arm queue
-To: Peter Maydell <peter.maydell@linaro.org>, Mads Ynddal <mads@ynddal.dk>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250507-fix-non-hotpluggable-subsys-v1-1-667f224ebc0f@samsung.com>
+Received-SPF: pass client-ip=139.178.84.217; envelope-from=kbusch@kernel.org;
+ helo=dfw.source.kernel.org
+X-Spam_score_int: -84
+X-Spam_score: -8.5
+X-Spam_bar: --------
+X-Spam_report: (-8.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,135 +72,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 6, 2025 at 10:52=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> Now I'm back from holiday, here's a target-arm pullreq :-)
->
-> thanks
-> -- PMM
->
-> The following changes since commit a9e0c9c0f14e19d23443ac24c8080b4708d2ea=
-b8:
->
->   Merge tag 'pull-9p-20250505' of https://github.com/cschoenebeck/qemu in=
-to staging (2025-05-05 11:26:59 -0400)
->
-> are available in the Git repository at:
->
->   https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-ar=
-m-20250506
->
-> for you to fetch changes up to 607e1208b53ac713a76d158f4abc4cd2e8870051:
->
->   hw/arm/virt: Remove deprecated virt-4.0 machine (2025-05-06 15:02:35 +0=
-100)
->
-> ----------------------------------------------------------------
-> target-arm queue:
->  * hw/arm/npcm8xx_boards: Correct valid_cpu_types setting of NPCM8XX SoC
->  * arm/hvf: fix crashes when using gdbstub
->  * target/arm/ptw: fix arm_cpu_get_phys_page_attrs_debug
->  * hw/arm/virt: Remove deprecated old versions of 'virt' machine
->  * tests/functional: Add test for imx8mp-evk board with USDHC coverage
->  * hw/arm: Attach PSPI module to NPCM8XX SoC
->  * target/arm: Don't assert() for ISB/SB inside IT block
->  * docs: Don't define duplicate label in qemu-block-drivers.rst.inc
->  * target/arm/kvm: Drop support for kernels without KVM_ARM_PREFERRED_TAR=
-GET
->  * hw/pci-host/designware: Fix viewport configuration
->  * hw/gpio/imx_gpio: Fix interpretation of GDIR polarity
->
-> ----------------------------------------------------------------
-> Bernhard Beschow (4):
->       tests/functional: Add test for imx8mp-evk board with USDHC coverage
->       hw/pci-host/designware: Remove unused include
->       hw/pci-host/designware: Fix viewport configuration
->       hw/gpio/imx_gpio: Fix interpretation of GDIR polarity
->
-> Mads Ynddal (2):
->       hvf: avoid repeatedly setting trap debug for each cpu
->       hvf: only update sysreg from owning thread
+On Wed, May 07, 2025 at 09:30:55AM +0200, Klaus Jensen wrote:
+> From: Klaus Jensen <k.jensen@samsung.com>
+> 
+> Commit cd59f50ab017 caused a regression on nvme hotplugging for devices
+> with an implicit nvm subsystem.
+> 
+> The nvme-subsys device was incorrectly left with being marked as
+> non-hotpluggable. Fix this.
 
-Please take a look at the following aarch64 macOS CI failure:
+Looks good.
 
-../accel/hvf/hvf-all.c:61:54: error: unknown type name 'run_on_cpu_data'
-61 | static void do_hvf_update_guest_debug(CPUState *cpu, run_on_cpu_data a=
-rg)
-| ^
-../accel/hvf/hvf-all.c:68:5: error: call to undeclared function
-'run_on_cpu'; ISO C99 and later do not support implicit function
-declarations [-Wimplicit-function-declaration]
-68 | run_on_cpu(cpu, do_hvf_update_guest_debug, RUN_ON_CPU_NULL);
-| ^
-../accel/hvf/hvf-all.c:68:48: error: use of undeclared identifier
-'RUN_ON_CPU_NULL'
-68 | run_on_cpu(cpu, do_hvf_update_guest_debug, RUN_ON_CPU_NULL);
-| ^
-3 errors generated.
-
-https://gitlab.com/qemu-project/qemu/-/jobs/9962088576
-
->
-> Peter Maydell (3):
->       target/arm: Don't assert() for ISB/SB inside IT block
->       docs: Don't define duplicate label in qemu-block-drivers.rst.inc
->       target/arm/kvm: Drop support for kernels without KVM_ARM_PREFERRED_=
-TARGET
->
-> Philippe Mathieu-Daud=C3=A9 (17):
->       hw/arm/virt: Remove deprecated virt-2.6 machine
->       hw/arm/virt: Remove VirtMachineClass::no_pmu field
->       hw/arm/virt: Remove VirtMachineClass::disallow_affinity_adjustment
->       hw/arm/virt: Remove deprecated virt-2.7 machine
->       hw/arm/virt: Remove VirtMachineClass::no_its field
->       hw/arm/virt: Remove deprecated virt-2.8 machine
->       hw/arm/virt: Remove VirtMachineClass::claim_edge_triggered_timers f=
-ield
->       hw/arm/virt: Remove deprecated virt-2.9 machine
->       hw/arm/virt: Remove deprecated virt-2.10 machine
->       hw/arm/virt: Remove deprecated virt-2.11 machine
->       hw/arm/virt: Remove VirtMachineClass::smbios_old_sys_ver field
->       hw/arm/virt: Remove deprecated virt-2.12 machine
->       hw/arm/virt: Remove VirtMachineClass::no_highmem_ecam field
->       hw/arm/virt: Update comment about Multiprocessor Affinity Register
->       hw/arm/virt: Remove deprecated virt-3.0 machine
->       hw/arm/virt: Remove deprecated virt-3.1 machine
->       hw/arm/virt: Remove deprecated virt-4.0 machine
->
-> Pierrick Bouvier (4):
->       target/arm/ptw: extract arm_mmu_idx_to_security_space
->       target/arm/ptw: get current security_space for current mmu_idx
->       target/arm/ptw: extract arm_cpu_get_phys_page
->       target/arm/ptw: fix arm_cpu_get_phys_page_attrs_debug
->
-> Tim Lee (2):
->       hw/arm/npcm8xx_boards: Correct valid_cpu_types setting of NPCM8XX S=
-oC
->       hw/arm: Attach PSPI module to NPCM8XX SoC
->
->  MAINTAINERS                                 |   1 +
->  docs/devel/codebase.rst                     |   2 +-
->  docs/system/qemu-block-drivers.rst.inc      |   2 -
->  include/hw/arm/npcm8xx.h                    |   2 +
->  include/hw/arm/virt.h                       |   6 --
->  target/arm/kvm_arm.h                        |   7 +-
->  accel/hvf/hvf-all.c                         |   7 +-
->  hw/arm/npcm8xx.c                            |  11 +-
->  hw/arm/npcm8xx_boards.c                     |   2 +-
->  hw/arm/virt-acpi-build.c                    |  10 +-
->  hw/arm/virt.c                               | 153 ++++------------------=
-------
->  hw/gpio/imx_gpio.c                          |   2 +-
->  hw/pci-host/designware.c                    |   5 +-
->  target/arm/arm-qmp-cmds.c                   |   2 +-
->  target/arm/hvf/hvf.c                        |  27 ++---
->  target/arm/kvm.c                            |  55 ++--------
->  target/arm/ptw.c                            |  71 +++++++++----
->  target/arm/tcg/translate.c                  |   3 +-
->  tests/functional/meson.build                |   2 +
->  tests/functional/test_aarch64_imx8mp_evk.py |  67 ++++++++++++
->  20 files changed, 188 insertions(+), 249 deletions(-)
->  create mode 100755 tests/functional/test_aarch64_imx8mp_evk.py
->
+Reviewed-by: Keith Busch <kbusch@kernel.org>
 
