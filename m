@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38148C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 14:58:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45980C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 15:05:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCgDR-0007Nl-Ia; Wed, 07 May 2025 10:57:45 -0400
+	id 1uCgKG-0004YT-PA; Wed, 07 May 2025 11:04:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCgDP-0007NJ-Ld
- for qemu-devel@nongnu.org; Wed, 07 May 2025 10:57:43 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uCgKF-0004VZ-FO
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 11:04:47 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCgDN-0001Rs-U4
- for qemu-devel@nongnu.org; Wed, 07 May 2025 10:57:43 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-acb5ec407b1so1243801966b.1
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 07:57:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uCgKD-0002YU-T8
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 11:04:47 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-227d6b530d8so68889435ad.3
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 08:04:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746629859; x=1747234659; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746630284; x=1747235084; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=+WVajEV11GEqSenfOy+NdjDhSwEzJSbqG5IrfbmAHQA=;
- b=ns6siBlI6tDSWR21nO2PVjco/A3zyECgVS0rogEOD7TiAmHazaQ5qavboCUHIKD7gE
- LE2EFVf/So5PsbwzXZtAjGlLlDM7VCN5WYqmeLArcQ2cqk1d7DJqwWIXn0Ake4G6hkE1
- EvLMb+AXWhESFRRLX+MplLcA00OhvjIuEV3QEb749AdxxyUqKD0nM2xvyqR+0HgYs/Lb
- dpWJh5cfy+CpUArCf95iWokbf9jSi+1xmyQJn8ilhC4/7vaaWhAnAzfLdeIO6Cx4WR1p
- aAr1zqg+eeGJe9hPx+vkPsNHfs9T1IlnQHiNlEnZceEStJb9vlxqV6oqwVAIdRKiGKln
- I07w==
+ bh=6gJURbY6ep+V9uB5VHEC7U8S+al3pil7qnZvouDe92Q=;
+ b=ruJYMfwws7g8P2QSoUFBbycU3qWTiXWLyUqBJfKUF2pksXnddQprm4NrHQmcwVaU5i
+ hoaeMQBp7eMqZZZF5C27Zdoep/jnuVtZRwkDtSKTDkJDc6MsttvwDRAdxjbEn6Xt92w0
+ 5Ld454OVMLZR7SkC50NHNGcGE5Ah6yPpJfK+ToTSoZ+YqEkwPQbrvHZjf6qb58uNj1b0
+ 4hcUgTzeNWWnjFhcNHv6l+YAZaLG7GJTNeoZTu1qfoF8poQ5NIHXZjxE7SINEcHGNXqy
+ 7LgBB1DTOhNH8U5eTav6QQrkNSP9US9y+/WnDqBlmy5bLDKN95r1Lt02N2jhApyNHocU
+ HCeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746629859; x=1747234659;
+ d=1e100.net; s=20230601; t=1746630284; x=1747235084;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+WVajEV11GEqSenfOy+NdjDhSwEzJSbqG5IrfbmAHQA=;
- b=aiYg7z8bQAYkoFhxLQ1V2vkRvwXBoftG3aQXvviA7UkXVoEKB6hGPLXWFZvEQtlCq6
- xPVoTBvd0mHImU+cVbu7ilurD+pisYgrM092GkmizhcnFhlHvuPetKj0ntnUswyD31/P
- naU3as7M2wLbLqPoSKFF67ydbLsr75ctyjhgNjnfBSrYAEL2Om2VVqz1+3c3PXiidnLH
- 1Tz43WeN9Rk9HXUfdgiYJ9kqoZ3L7zvGCeABTXCl0FPvnQn19nckK1xFelSZz2nbp88B
- VJj5R9sonPpImK+V+VUexYGGMXKuHf8LO8EENRoxHSJ4axREh6caXrVlzW+oxXXiPVJB
- r9oQ==
-X-Gm-Message-State: AOJu0YxjO+hgmwIF4G3y/edC0T2emyVckeV93500U2DYhJla8cZR1gJr
- OLJLiqWFmlVpbl/rY5TztCY3nfI6MBP6fXfnyYV9stgq8maZDQcdy+CJob7BGe2YrQvaw3Ymdev
- tvnw=
-X-Gm-Gg: ASbGncvV9WFDuuq0GavS3d9orVDW+gglU4LNzxhOKz/U4vhbw9xlx2qVXu7yAOJUPG+
- qYxMrOTL2wKj8PeyhtwJUCtb5d7JqSOBMXI07p1yLHFdU7/ODFgU1d9U4PNbvdiddxW622OTKFC
- Z6OOnO9HyYYYzfW70HKI2ajYqeserDkKJVcZ2vBARmSbgRe0Y60HLyR9FuIk3kN0YaO+ozZBmYB
- 3+FyRp1wH511Yxyg4OOiImNMPn1lcADPFV+sXDZZNA7J4WiSnur92AguNuYK0i9gjhpMo2qX57K
- ZjUYdwfn9p91AqVHJcI0JpJx/sX4FYRcmDcBgeO3l+nAF5BotIJY8uvteVJMC2hEbmhWf7JeHOI
- y
-X-Google-Smtp-Source: AGHT+IEnWxS0QJMPEPvUtwR0wOpUCzHEPpr+VPoiUlw2fHopGKxji7hGoFmMBwBN2mKfWabSncoGSg==
-X-Received: by 2002:a17:907:c12:b0:ac4:169:3664 with SMTP id
- a640c23a62f3a-ad1e8c934d6mr339387266b.33.1746629859402; 
- Wed, 07 May 2025 07:57:39 -0700 (PDT)
-Received: from [10.194.152.213] (26.21.205.77.rev.sfr.net. [77.205.21.26])
+ bh=6gJURbY6ep+V9uB5VHEC7U8S+al3pil7qnZvouDe92Q=;
+ b=L8jtKSTbAteITckDuhXq6THf3NT/cfiA/oEzSS6KeIkDpW/cCIxGLfb0xb/7vaW8pt
+ xdjkAIUlasFeGubyBEl6iKDHL3X5+eXpCiIuO+WgNPbqVhikeM6rjsD26gdU/5MKNmpR
+ L6ExrPhH/zvDhiB/zUxqruwPC6UMVNh67JQBGC2WHQqsTtVRvtmWqQbeiM3g/WQp72t0
+ 0fZf3YCrdQhTNCg9UxuY4DpvYq/LqDWKaP9dgg7zuQ3rNqHBkOpoUj/26XMVo1dvcl0V
+ SErnDFD5T93U3HGd31UVoW5je8wfRN6pcVKeLVuOV1gKBY4fCSXEpAP4Xze45lp5g6KI
+ bSSw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWT41Nor/eUprJpHQW5HRbgf+mdmLYCEXOg/hfpTYkVK0FHSh23hSVrWrhabipUm28zHri8Ak8cY6N0@nongnu.org
+X-Gm-Message-State: AOJu0YxWEmQHnetzX9RjvRn1CNHM1g9M1B7f5LONTrEWB4xYwnoRsNYM
+ WrruIr2kRPnxavn1gIwgca6/lJFSAzrMMOhLsRAeAZfZsx3dkEs1flpkG0L/KpY=
+X-Gm-Gg: ASbGncvdKzvIP4tzRrUq2m7B7kyD7NC9XxlKmsvLQwHa6jMIPMMI6n4TjhxXkNO5pu3
+ fftfaMKnUJxNttsvxjYVhu/d6a2FBQLJtmGWbDrDAyf72OJDiUw7en1eV/Aqle25KEjnamFHrWQ
+ UScLSgQthCBzVY+nD9mWbMLgeTNwfmdH4s/Cu7Iam9hen2Hzu9OOWStG+ZSwDTEWh7EeBBHZuS8
+ 9WrBsuhiaC4m4gYgQGLMaixvS6U6PcXb+Tq3ivDG7t/QWYD1THfGHg1P5tdE+nLzZbwOyTIs7tY
+ YB1IxRq0emQ0YDpkZMikT6ceuIe5qJvcxYRcnd1hTSLeWst6x0qnvR6ZhkKc18AXIisbfaxWA8d
+ Zl3cwbCA=
+X-Google-Smtp-Source: AGHT+IHRiztExaV/PTIpc0lf42Un4luX9kZoqfq2oSwEXPU4EuMbyIBVviHXZiNQDPMQvdUgG0h4ag==
+X-Received: by 2002:a17:903:990:b0:22e:39f8:61fa with SMTP id
+ d9443c01a7336-22e5ece3f6emr61747235ad.34.1746630284378; 
+ Wed, 07 May 2025 08:04:44 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad189147375sm922084266b.12.2025.05.07.07.57.38
+ d9443c01a7336-22e151e95c3sm96190065ad.68.2025.05.07.08.04.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 May 2025 07:57:38 -0700 (PDT)
-Message-ID: <0d976e4f-f8d2-407f-891a-8b13ea621821@linaro.org>
-Date: Wed, 7 May 2025 16:57:36 +0200
+ Wed, 07 May 2025 08:04:43 -0700 (PDT)
+Message-ID: <f92c8c65-8fb4-4cfe-b793-a5aa17f11c1d@linaro.org>
+Date: Wed, 7 May 2025 08:04:42 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/32] target-arm queue
-To: Stefan Hajnoczi <stefanha@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Mads Ynddal <mads@ynddal.dk>
-Cc: qemu-devel@nongnu.org
-References: <20250506144214.1221450-1-peter.maydell@linaro.org>
- <CAJSP0QXi1eGdbi5=2EGWuHdL2JX6h513wwVMi167xYZKHjbFSw@mail.gmail.com>
+Subject: Re: [RFC PATCH v2] target/loongarch: Fix incorrect rounding in
+ fnm{add,sub} under certain modes
+To: WANG Rui <wangrui@loongson.cn>, Song Gao <gaosong@loongson.cn>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu@hev.cc, mengqinggang <mengqinggang@loongson.cn>
+References: <20250507091455.3257138-1-wangrui@loongson.cn>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAJSP0QXi1eGdbi5=2EGWuHdL2JX6h513wwVMi167xYZKHjbFSw@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250507091455.3257138-1-wangrui@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,83 +105,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/5/25 16:05, Stefan Hajnoczi wrote:
-> On Tue, May 6, 2025 at 10:52 AM Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> Now I'm back from holiday, here's a target-arm pullreq :-)
->>
->> thanks
->> -- PMM
->>
->> The following changes since commit a9e0c9c0f14e19d23443ac24c8080b4708d2eab8:
->>
->>    Merge tag 'pull-9p-20250505' of https://github.com/cschoenebeck/qemu into staging (2025-05-05 11:26:59 -0400)
->>
->> are available in the Git repository at:
->>
->>    https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20250506
->>
->> for you to fetch changes up to 607e1208b53ac713a76d158f4abc4cd2e8870051:
->>
->>    hw/arm/virt: Remove deprecated virt-4.0 machine (2025-05-06 15:02:35 +0100)
->>
->> ----------------------------------------------------------------
->> target-arm queue:
->>   * hw/arm/npcm8xx_boards: Correct valid_cpu_types setting of NPCM8XX SoC
->>   * arm/hvf: fix crashes when using gdbstub
->>   * target/arm/ptw: fix arm_cpu_get_phys_page_attrs_debug
->>   * hw/arm/virt: Remove deprecated old versions of 'virt' machine
->>   * tests/functional: Add test for imx8mp-evk board with USDHC coverage
->>   * hw/arm: Attach PSPI module to NPCM8XX SoC
->>   * target/arm: Don't assert() for ISB/SB inside IT block
->>   * docs: Don't define duplicate label in qemu-block-drivers.rst.inc
->>   * target/arm/kvm: Drop support for kernels without KVM_ARM_PREFERRED_TARGET
->>   * hw/pci-host/designware: Fix viewport configuration
->>   * hw/gpio/imx_gpio: Fix interpretation of GDIR polarity
->>
->> ----------------------------------------------------------------
->> Bernhard Beschow (4):
->>        tests/functional: Add test for imx8mp-evk board with USDHC coverage
->>        hw/pci-host/designware: Remove unused include
->>        hw/pci-host/designware: Fix viewport configuration
->>        hw/gpio/imx_gpio: Fix interpretation of GDIR polarity
->>
->> Mads Ynddal (2):
->>        hvf: avoid repeatedly setting trap debug for each cpu
->>        hvf: only update sysreg from owning thread
+On 5/7/25 02:14, WANG Rui wrote:
+> This patch fixes incorrect results for `[xv]fnm{add,sub}.{s,d}`
+> instructions when rounding toward {zero, positive, negative}.
 > 
-> Please take a look at the following aarch64 macOS CI failure:
+> According to the LoongArch ISA specification, the result of an
+> instruction like `FNMSUB.D` is computed as:
 > 
-> ../accel/hvf/hvf-all.c:61:54: error: unknown type name 'run_on_cpu_data'
-> 61 | static void do_hvf_update_guest_debug(CPUState *cpu, run_on_cpu_data arg)
-> | ^
-> ../accel/hvf/hvf-all.c:68:5: error: call to undeclared function
-> 'run_on_cpu'; ISO C99 and later do not support implicit function
-> declarations [-Wimplicit-function-declaration]
-> 68 | run_on_cpu(cpu, do_hvf_update_guest_debug, RUN_ON_CPU_NULL);
-> | ^
-> ../accel/hvf/hvf-all.c:68:48: error: use of undeclared identifier
-> 'RUN_ON_CPU_NULL'
-> 68 | run_on_cpu(cpu, do_hvf_update_guest_debug, RUN_ON_CPU_NULL);
-> | ^
-> 3 errors generated.
+>    FR[fd] = -FP64_fusedMultiplyAdd(FR[fj], FR[fk], -FR[fa])
 > 
-> https://gitlab.com/qemu-project/qemu/-/jobs/9962088576
+> Here, `FP64_fusedMultiplyAdd()` performs a fused multiply-add operation
+> compliant with IEEE 754-2008. The negation is applied to the fully
+> rounded result of the fused operation - not to any intermediate value.
+> This behavior is specifiec to LoongArch and differs from other arches,
+> which is why the existing `float_muladd_negate_result` flag does not
+> model it correctly.
 
-"hvf: only update sysreg from owning thread" missing:
+Loongarch does not differ from other arches; we got it wrong for everyone.
+There's no need for a new flag.
 
--- >8 --
-diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-index 3fc65d6b231..8c387fda24d 100644
---- a/accel/hvf/hvf-all.c
-+++ b/accel/hvf/hvf-all.c
-@@ -12,6 +12,7 @@
-  #include "qemu/error-report.h"
-  #include "system/hvf.h"
-  #include "system/hvf_int.h"
-+#include "hw/core/cpu.h"
 
-  const char *hvf_return_string(hv_return_t ret)
-  {
----
+r~
 
