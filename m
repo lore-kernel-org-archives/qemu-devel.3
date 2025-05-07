@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07EA6C369DC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 05:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9649BC369DC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 06:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCXfD-0002lp-Bp; Wed, 07 May 2025 01:49:51 -0400
+	id 1uCXrk-00050j-CY; Wed, 07 May 2025 02:02:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCXfB-0002lV-0g
- for qemu-devel@nongnu.org; Wed, 07 May 2025 01:49:49 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
+ id 1uCXri-00050b-E6
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 02:02:46 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCXf8-0004m8-EM
- for qemu-devel@nongnu.org; Wed, 07 May 2025 01:49:47 -0400
+ id 1uCXrg-0006Cn-Ao
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 02:02:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746596987; x=1778132987;
+ t=1746597764; x=1778133764;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=6srOwmxYkkxOMyYwDK6MriQ02JNwNkmPhZF+3e085Ko=;
- b=J6QizcgevpgqbVHr3z5QVkyzspfiobKLWP0ugx/x7jOsZTb+S8+vC1n0
- x/bdu1grWfJJJLevcMsY7I4ZOjF6Yg2k8xjn9j5F6gYm8U1RmyyONgv/m
- VivaGsdTxmbh0Hym0ysHGYAbj9Z4JYR6m7tU2VTaxhjy1f1xgy5taVPWC
- z4LrBWiNvWA5aEivoqJsWnp/oMBiMPrQJZLGl1d2qO3Au9j4+Cy3PHfQI
- dr7tgyGoWMHUjy8jd+84TzUSL3EiwjWFTG9qNE8PbolvEoE/GgQJ0AF6Z
- KniAjwsSbaMOgrYXl3hLD+4UQVu6wKO0Rg5eIEmsAa7OPSb+Hhr9vHRfw Q==;
-X-CSE-ConnectionGUID: 3eeP2ebQSd6SSmxEj/pEfg==
-X-CSE-MsgGUID: Jyy17k9cQhaWOWGS2ypHtw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="52120486"
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="52120486"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2025 22:49:43 -0700
-X-CSE-ConnectionGUID: Kb18GIyDSjCBwC8ZIx01Fg==
-X-CSE-MsgGUID: GCYbHms3S0StHsGit7ZsGg==
+ mime-version:in-reply-to;
+ bh=fYeFsw+e+0T7mv/VnYux2PU5Nz3oieqA4saYwFggnsU=;
+ b=jstd/2uHLsWobvSf2SXB6Q1xoXPX7DoJOA3PFvDssPyQqdiiWG+5PLvM
+ aoHI98pFw2RvasDaLV5faTKKjbFWOy+rrDJPUXAqMnN2LUH0mpV9jTUqs
+ l6v0CkxGpLMQ4LjWiesNLUlJrv0uoU//sTVtCTrzRCZojcOyiUzGoVTOe
+ bH+I8qdERwZBBFoTsuHFN1n4VJE3bGIjz2XIeo54IZxj0IhctYiuIjruu
+ frLV+dCpoMDbe5jfvBmqD3glSkLks8aYmrBWg3HsuAD1QUSD68mH32DJ5
+ his4mSLAY/UpxvaIqjBHhLyOm/Z9+mCbEMkjLX7V9z6WsQxKwiIrYbbCg Q==;
+X-CSE-ConnectionGUID: kS7E8BJuTVS9dRpoDdizXQ==
+X-CSE-MsgGUID: JRr31pycSbOGJCPI1IKMMA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="58502825"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="58502825"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 May 2025 23:02:41 -0700
+X-CSE-ConnectionGUID: WD21wPEwSPS02x5jbc9/dg==
+X-CSE-MsgGUID: SFOhLJtuQf+oZRCT33bSPw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="140580390"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="141033394"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 06 May 2025 22:49:39 -0700
-Date: Wed, 7 May 2025 14:10:39 +0800
+ by fmviesa004.fm.intel.com with ESMTP; 06 May 2025 23:02:33 -0700
+Date: Wed, 7 May 2025 14:23:34 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
@@ -62,17 +62,16 @@ Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH v3 01/19] hw/i386/pc: Remove deprecated pc-q35-2.6 and
- pc-i440fx-2.6 machines
-Message-ID: <aBr5XwjPDS6yn5Ff@intel.com>
+Subject: Re: [PATCH v3 02/19] hw/i386/pc: Remove
+ PCMachineClass::legacy_cpu_hotplug field
+Message-ID: <aBr8Zknwle47ljOB@intel.com>
 References: <20250502185652.67370-1-philmd@linaro.org>
- <20250502185652.67370-2-philmd@linaro.org>
+ <20250502185652.67370-3-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250502185652.67370-2-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250502185652.67370-3-philmd@linaro.org>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -57
 X-Spam_score: -5.8
@@ -97,24 +96,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 02, 2025 at 08:56:33PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Fri,  2 May 2025 20:56:33 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v3 01/19] hw/i386/pc: Remove deprecated pc-q35-2.6 and
->  pc-i440fx-2.6 machines
-> X-Mailer: git-send-email 2.47.1
-> 
-> These machines has been supported for a period of more than 6 years.
-> According to our versioned machine support policy (see commit
-> ce80c4fa6ff "docs: document special exception for machine type
-> deprecation & removal") they can now be removed.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> ---
->  hw/i386/pc_piix.c | 14 --------------
->  hw/i386/pc_q35.c  | 14 --------------
->  2 files changed, 28 deletions(-)
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index 3fffa4a3328..625889783ec 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -1465,9 +1465,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+>      }
+>      aml_append(dsdt, scope);
+>  
+> -    if (pcmc->legacy_cpu_hotplug) {
+> -        build_legacy_cpu_hotplug_aml(dsdt, machine, pm->cpu_hp_io_base);
+> -    } else {
+> +    {
+
+Why leave the {} here? for clarity?
+
+>          CPUHotplugFeatures opts = {
+>              .acpi_1_compatible = true, .has_legacy_cphp = true,
+>              .smi_path = pm->smi_on_cpuhp ? "\\_SB.PCI0.SMI0.SMIC" : NULL,
+
+Otherwise,
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
