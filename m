@@ -4,95 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 043F6C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 11:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DC64C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 12:42:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCdQo-0004TJ-Bh; Wed, 07 May 2025 07:59:22 -0400
+	id 1uCe56-00018X-1n; Wed, 07 May 2025 08:41:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCdQk-0004PR-HF
- for qemu-devel@nongnu.org; Wed, 07 May 2025 07:59:19 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1uCe54-000180-D3; Wed, 07 May 2025 08:40:58 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCdQi-0000HH-Mr
- for qemu-devel@nongnu.org; Wed, 07 May 2025 07:59:18 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-ad1e8e2ad6bso173307466b.0
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 04:59:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1uCe51-0005I0-GC; Wed, 07 May 2025 08:40:58 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3a0b637db6eso287933f8f.0; 
+ Wed, 07 May 2025 05:40:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746619153; x=1747223953; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SH6b9zQQV0lci+6HTZeoMmH460ygIDVI8hLOfHQhD9s=;
- b=MYnQkp849RpaLQ3RtdLo/mknjJd4M01VEe+r6rG7cDpv4YUKW5d34QJSzTasYQeSke
- mBbd+Yjs2D6WdsMeiQZAZO7a4w6cfqrYti+IPhKG3V0s3Vbphq/CQPL3bZumFdiZLvLY
- uABNQGkE4Uykf+kdAbLs/I9LzaP2wTXU9uVxiWHKbvLTJEBCJQh2+ikJm6QHjhFUu/sw
- trDIPrlV/qJm/lcSE58wk/NjY2NhSYoXQGEPhJNjiezZrrVVasBRXAZX9h1TLS2hlVRX
- nRP7STWjYTQ2NM28WWSv5iofWyGMuEGgMet/OjE4H90+sMvY9njt+y9MOJbMtjgQSHJc
- FQRA==
+ d=gmail.com; s=20230601; t=1746621651; x=1747226451; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=WXtzo8RvfOFbPN14G8275CPJMhhtba9xplx+kqTGCto=;
+ b=P/rxCIJQInLsL5DmcUEl17MN5lPbN53h7ekhHgRtMS8Yy/uznXMN8N9qv3MlfUMwV2
+ 5IYvy8VOf/hwPIeS4gfJW9ZfeGwTERw13s6AaKfxp13wMyCCLLHaqxTFyFBK1wBXj/i1
+ pOkVDSqO9Ae/F1xlfpvzvLN+YVe9f8ivuRUySfsT/L2SZSgCmAE0hVVtiSJ4M6Toqt4k
+ 2n1eU2tQ7oMYn6jN29dXVHXdbExjzfN+fwmDNFrAF4hRacW643yx55m8ZC6OwlXxfoW7
+ P/LUSSMu95yRlacnKcGKAcLAjrbYhDrUF5HyjW0wXHJQFm4vRV9StdshX34DI27BAL7O
+ 0pkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746619153; x=1747223953;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SH6b9zQQV0lci+6HTZeoMmH460ygIDVI8hLOfHQhD9s=;
- b=teFV6HhIPgwz75mGP3I0YLiKDcuABIeqxe4AShUqLluRC5bBMEaXl1F9R7tN6zkgqJ
- Ix1KR/UmKxKOHCeMrRTAr7b5c1EZoyr45vVmNlan8e6icBNpf+w6jhlOL09N4uS1CVTz
- hkTS4LGNN/+1GJVuxdAcoKEWOFAwWWOk9llB+O6/jN5/yMF2kLeEXa9t6XNOK9om2/F0
- HUOFUcFRPZeKlBvANWW7D1zO9eT5gD/XJrJNu+fnYCI7FJ0oA4uuU2hXnnt/LdUcXq1u
- bDuJgDtVCxKjpWJDpbtfIdb33zRK/ieakn/onW+uF75iV8LEHz0w6Yv/rLFLQ74tPI0o
- sS0g==
-X-Gm-Message-State: AOJu0YyFLLoUd0E5EfExnN+J6XvBj7RAz+pnBypwXCYbzQLbGOS6GB5i
- stX9mjAXhAA6ZqkJGB0iRAm9WTu/UuX0ysxVryfle158g2fDkQi6CAyW+PaGep4=
-X-Gm-Gg: ASbGnctXzON/VdXTKC+nuxLqKCLEFwGX5Dek1shfrXko1FOlOyKANzPrGx7zoTXqYQA
- yYhcm4IGzFNXAGGNkA7DYAjWoRhhuI/sQrX6PGfWHHGPYsbXiVWryIAA2S9JBpS5fJHmn5w9MQv
- Z300Gq1nqpzn7tUAsCwcVmikrdNIINq4LgxntlHTbuC9GHjXr/fz/RQ+EroMEYQKjpa/OKJ8QyO
- 25+W35keoH+hqL81YXVVWU7l0oHkJPAOi9sHAoYfTKiMKpCH23eD64xRQ0Gsh4RywdRt/OAkdyI
- 7snf1xTDqB7oQIhYGNfIdv4bwlL0x/A6sWwKHt0WnoyOQjtbBuQ4QyQXLPPA
-X-Google-Smtp-Source: AGHT+IGmNvGQqSCk8kKK1pEFe/I4HvHCh4+Kte9nrnuMN31GDrb0CZtujtwvMGbmjW4JsPisBAQoiw==
-X-Received: by 2002:a17:906:ba86:b0:ad1:825f:e326 with SMTP id
- a640c23a62f3a-ad1e8e2b533mr262364166b.52.1746619152940; 
- Wed, 07 May 2025 04:59:12 -0700 (PDT)
-Received: from [192.168.55.72] ([176.171.151.116])
+ d=1e100.net; s=20230601; t=1746621651; x=1747226451;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WXtzo8RvfOFbPN14G8275CPJMhhtba9xplx+kqTGCto=;
+ b=ArLwwKPL1dXHNbj5I7kkK2vAuf74cOJlBOTm4ySkbgVBwsuMe3AwihKOXoOJSbsxqG
+ cH4vQIECD21dpumUAMyLNFqQ9qOmrQ3r4u2KEQBXKainO60imd6no+qhc/NHgdmxx93Q
+ dJV3X8EoyJCq2HFzZd/wiEAQn9gicciqJQ+x4NfIVKJpyiIW06SZfU4m1wzsF7hdk5iP
+ QEAlSD7Mcf+iiYiaUzM1a+hKp3lpe3OEMxAcRxxovawLOdagAs4VNmJLqtOZ6me5QJCi
+ 13E34LRAfijKdKSyOnikzKs4SPAXVxYagszw5AjvsJS3gkFFdVn8rgqxX2zxqpoBP22C
+ QocQ==
+X-Gm-Message-State: AOJu0Yx3besjymx9MNfv481xYIHuH5qdEk4sFXeDH72eFCN923/G6Qx2
+ 0v6itPsAtMeYV96yt7SJOewATktVys54X37+b9Vn4WtTWe+WgM+LBiw7zQ==
+X-Gm-Gg: ASbGncsoC3ey4asbEo1iQi9qpfH0/66ygQamKoGNQaKlwhmCly1/i8zri2sHKs1jREf
+ Rphhlv9EfEto9gnBw3ljsFNcuA0720l+YiTOwP5EEZCnZyovwWdTsn5/KZR3OOlCkF7z8+vwnQP
+ DOirB6il0MIGE3Rq6W/6cXhqfoLlafyq9JB1f3430Yoa/QkRp/lx6B7cJlNJuKPU7Uz22WiZk64
+ oECSec9xTdUX88R6Gm3DT1tFqv38TpIaoPUPfXhdbUiN8RgHclHha7AA85fAHwVjcCQk0s3otLm
+ YpCmWuNpmumh3cy9HcXptTQZO9C8NebiYFCXRQlhuhir/EVGWK21z/hZIliqg803NUX3QqhPGNH
+ XF3WgkJPrDlzbcCR9TcurEjMRHqwGN2EDq1I=
+X-Google-Smtp-Source: AGHT+IHA6pIseiswC06dD2ZFIB+6oOS1SqpNhKM6RStoFf//g8M4Dp1S9RuSqWgto5Qo5ud3YowRQQ==
+X-Received: by 2002:a05:6000:1acd:b0:391:4674:b10f with SMTP id
+ ffacd0b85a97d-3a0b4a39f78mr2747614f8f.36.1746621650920; 
+ Wed, 07 May 2025 05:40:50 -0700 (PDT)
+Received: from Georg-PC.fritz.box
+ (p200300faaf05a000f691e93a67aa5664.dip0.t-ipconnect.de.
+ [2003:fa:af05:a000:f691:e93a:67aa:5664])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ad1891a311bsm904468566b.54.2025.05.07.04.59.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 May 2025 04:59:12 -0700 (PDT)
-Message-ID: <89e7e6e9-2cb5-42bb-8155-ce891db2caba@linaro.org>
-Date: Wed, 7 May 2025 13:59:10 +0200
+ ffacd0b85a97d-3a099ae3b57sm17162871f8f.36.2025.05.07.05.40.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 07 May 2025 05:40:50 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH] hw/i2c/imx_i2c: Always set interrupt status bit if interrupt
+ condition occurs
+Date: Wed,  7 May 2025 14:40:40 +0200
+Message-ID: <20250507124040.425773-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/19] hw/mips/loongson3_virt: Prefer using
- fw_cfg_init_mem()
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
- Amit Shah <amit@kernel.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Jason Wang <jasowang@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20250502185652.67370-1-philmd@linaro.org>
- <20250502185652.67370-4-philmd@linaro.org> <aBr+OFe2KKKYnGEb@intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aBr+OFe2KKKYnGEb@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,36 +98,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/5/25 08:31, Zhao Liu wrote:
-> On Fri, May 02, 2025 at 08:56:35PM +0200, Philippe Mathieu-Daudé wrote:
->> Date: Fri,  2 May 2025 20:56:35 +0200
->> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Subject: [PATCH v3 03/19] hw/mips/loongson3_virt: Prefer using
->>   fw_cfg_init_mem()
->> X-Mailer: git-send-email 2.47.1
->>
->> fw_cfg_init_mem_wide() is prefered to initialize fw_cfg
->> with DMA support. Without DMA, use fw_cfg_init_mem().
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/mips/loongson3_virt.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
->> index de6fbcc0cb4..41733988729 100644
->> --- a/hw/mips/loongson3_virt.c
->> +++ b/hw/mips/loongson3_virt.c
->> @@ -286,7 +286,7 @@ static void fw_conf_init(void)
->>       FWCfgState *fw_cfg;
->>       hwaddr cfg_addr = virt_memmap[VIRT_FW_CFG].base;
->>   
->> -    fw_cfg = fw_cfg_init_mem_wide(cfg_addr, cfg_addr + 8, 8, 0, NULL);
->> +    fw_cfg = fw_cfg_init_mem(cfg_addr, cfg_addr + 8, 8);
-> 
-> EMM, I'm not sure if I'm basing on the wrong code base... in which patch
-> does fw_cfg_init_mem() accept the third argument?
+According to the i.MX 8M Plus reference manual, the status flag I2C_I2SR[IIF]
+continues to be set when an interrupt condition occurs even when I2C interrupts
+are disabled (I2C_I2CR[IIEN] is clear). However, the device model only sets the
+flag when I2C interrupts are enabled which causes U-Boot to loop forever. Fix
+the device model by always setting the flag and let I2C_I2CR[IIEN] guard I2C
+interrupts only.
 
-Doh, I missed that, thanks :)
+Also remove the comment in the code since it merely stated the obvious and would
+be outdated now.
+
+Fixes: 20d0f9cf6a41 ("i.MX: Add I2C controller emulator")
+cc: qemu-stable
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/i2c/imx_i2c.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/hw/i2c/imx_i2c.c b/hw/i2c/imx_i2c.c
+index 91f84c2ad7..d26177c85d 100644
+--- a/hw/i2c/imx_i2c.c
++++ b/hw/i2c/imx_i2c.c
+@@ -79,13 +79,12 @@ static void imx_i2c_reset(DeviceState *dev)
+ 
+ static inline void imx_i2c_raise_interrupt(IMXI2CState *s)
+ {
+-    /*
+-     * raise an interrupt if the device is enabled and it is configured
+-     * to generate some interrupts.
+-     */
+-    if (imx_i2c_is_enabled(s) && imx_i2c_interrupt_is_enabled(s)) {
++    if (imx_i2c_is_enabled(s)) {
+         s->i2sr |= I2SR_IIF;
+-        qemu_irq_raise(s->irq);
++
++        if (imx_i2c_interrupt_is_enabled(s)) {
++            qemu_irq_raise(s->irq);
++        }
+     }
+ }
+ 
+-- 
+2.49.0
 
 
