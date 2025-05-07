@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A585EC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 16:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9624DC3ABC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 17:09:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCi6k-0003yw-LM; Wed, 07 May 2025 12:58:58 -0400
+	id 1uCiGB-0005F5-Fu; Wed, 07 May 2025 13:08:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uCi6h-0003yc-H3
- for qemu-devel@nongnu.org; Wed, 07 May 2025 12:58:56 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uCi6f-0008C6-Rc
- for qemu-devel@nongnu.org; Wed, 07 May 2025 12:58:55 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5fbed53b421so67377a12.0
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 09:58:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746637130; x=1747241930; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=2QrzeBqfTjupWsGeaorzNfjBe9sOSt/y01h6JPPSi/M=;
- b=pHN1x0pJf9Yvc284PnxwAFhPUqG19Tuzv07y0gt3uRBwXxVjy/NAFtwkpyj8TSYrBr
- 1mO7Z9kKsR2y26vEOmR9E/aj7sW3Mx6SVRoBVVHzOX3Gv6wDapkN4KiTsIhsIcVqLMcM
- ooO0jCXp4MlnYZXKwio3Wu/MLA/92dMRQJB6b+K7kQEpNJwG/wVMMzTYx/znCxpr+3+X
- 2obepTUkTwCnoTCmimHmHMSUwtRNC2WIopJixih3cb0Sy/q7jqPAWqQeAjNWaLb8DR91
- IMLYJKgKG4Mms0bzCd1MTJRCzLAXuH1/1wShGlNONypPHaisori/lJGFo2Ptm52mNPLm
- vlNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746637130; x=1747241930;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2QrzeBqfTjupWsGeaorzNfjBe9sOSt/y01h6JPPSi/M=;
- b=imNAbC0vn5yKBh4arDa1wKYd2e7c9206dYBjZnY64XWiddbd2y18kShPBDJcwHq1cq
- E2RWFjkUSDynoZT/m0Ps7vsy8tEGpKblDe3fH/GwiMwVktByEb0vcQEaKfEoQPSdra0U
- tJiWodNduhyx9ooEUcny7p0cuZEv4sHAY8Zdk+Hj1N8ncV1RkbMASvQNl0I7ok5OR4B1
- 2HtIngpJnWeHgwdxU+Yuebb2naJgucV25PR0gpTIg6cjhsYgilqCiVOBH2dvf1f0L75U
- moeoLkMe8fRoG7+dRNtRx+OC7KCGG7nmJsu/LpOVC6v7N8yUjPCM2PAgdp7coH2WLzbE
- 3j4w==
-X-Gm-Message-State: AOJu0Yz4DFjxWhVmn9Nu/Vc0gibNHJkgND3zrop1UvNAIjjbqyhVGHnW
- g3iH3m5tsyLur3gnDPfiDSjsBmbTOOx/Ci48PsiVGNuSNj+P8zj4cGJn8uuHGhU=
-X-Gm-Gg: ASbGnctlE73yU0f/2ZvIB8OgtflaY0Um4c+sWF8DtrHPTRF/UIc8mI1tOR+MhYcH5+Y
- cBb2VF0MF6rmo7+2vwFQMlirYrMsFRCEccB23ibnNAynymIBflyLEIX3/2PVXnbAnA6SUQR2VaZ
- CnM5PzreiSuZRBfp8agsODWdwb2BCiYglR9hLzPNr2dE8CuMBokdQWxkLETzR3F80WNxfLmNbI9
- o3PIE+RaC0MvfNhuDeOfp3z55hmy7mH0yI6OV8xa5FxhSwH++p1AY0UN8YS/cR9XtZoWcm//Hj2
- n3jiyHsRSMiSw3PAP899u/c7aXI94fWqnEpX8SLF6xE=
-X-Google-Smtp-Source: AGHT+IEjwlDEel/UMA/0VRJvb9numA+npiWUK9YDRGd3llkqVdKjJ9Bg5ww0EB2enP8MElvpx3qdBA==
-X-Received: by 2002:a05:6402:4343:b0:5fc:3e6e:f048 with SMTP id
- 4fb4d7f45d1cf-5fc3e6ef1bbmr92825a12.0.1746637130393; 
- Wed, 07 May 2025 09:58:50 -0700 (PDT)
-Received: from draig.lan ([185.126.160.109]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5fa77b8fe2fsm9977563a12.57.2025.05.07.09.58.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 09:58:49 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 43D715F858;
- Wed,  7 May 2025 17:58:48 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Julian Armistead <julian.armistead@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [RFC PATCH] target/arm: allow gdb to read ARM_CP_NORAW regs
-Date: Wed,  7 May 2025 17:58:40 +0100
-Message-Id: <20250507165840.401623-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uCiGA-0005DQ-En; Wed, 07 May 2025 13:08:42 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uCiG8-0000zS-Hv; Wed, 07 May 2025 13:08:42 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id BA6C211FEE1;
+ Wed, 07 May 2025 20:08:23 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 710112066C1;
+ Wed,  7 May 2025 20:08:36 +0300 (MSK)
+Message-ID: <a876a007-2f40-4042-b399-c8ed43ece99f@tls.msk.ru>
+Date: Wed, 7 May 2025 20:08:36 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] qom/object: Fix typo in comment
+To: Thomas Huth <thuth@redhat.com>, Gustavo Romero
+ <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org
+References: <20250504215639.54860-5-gustavo.romero@linaro.org>
+ <a4749d61-727f-4ec7-b494-33ebaa2956ed@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <a4749d61-727f-4ec7-b494-33ebaa2956ed@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,74 +105,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before this we suppress all ARM_CP_NORAW registers being listed under
-GDB. This includes useful registers like CurrentEL which gets tagged
-as ARM_CP_NO_RAW because it is one of the ARM_CP_SPECIAL_MASK
-registers. These are registers TCG can directly compute because we
-have the information at compile time but until now with no readfn.
+On 05.05.2025 13:08, Thomas Huth wrote:
+> On 04/05/2025 23.56, Gustavo Romero wrote:
+>> Fix duplicate preposition in comment.
+>>
+>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>> ---
+>>   qom/object.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/qom/object.c b/qom/object.c
+>> index 664f0f24ae..7b013f40a0 100644
+>> --- a/qom/object.c
+>> +++ b/qom/object.c
+>> @@ -485,7 +485,7 @@ bool object_apply_global_props(Object *obj, const 
+>> GPtrArray *props,
+>>    * Slot 0: accelerator's global property defaults
+>>    * Slot 1: machine's global property defaults
+>>    * Slot 2: global properties from legacy command line option
+>> - * Each is a GPtrArray of of GlobalProperty.
+>> + * Each is a GPtrArray of GlobalProperty.
+>>    * Applied in order, later entries override earlier ones.
+>>    */
+>>   static GPtrArray *object_compat_props[3];
+> 
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> 
+> There seems to be another "of of" in linux-user/mmap.c in case you want 
+> to extend your patch.
+> 
+> Also:
+> 
+> $ grep -r " the the " *
+> block.c:     * will not run most of the the code in .drained_begin() 
+> again (which is not
+> hw/xen/xen-hvm-common.c:     * to provide the the addresses to map the 
+> shared page and/or to get the
+> include/exec/cpu-common.h: * Attempt to load the the unwind state for a 
+> host pc occurring in
+> include/hw/xen/interface/io/blkif.h: *      since the the backend driver 
+> will still try to map those grants
+> qapi/qom.json:#     HMAT indexed via the the node ID in this SRAT 
+> structure) to
+> 
+> $ grep -r " in in " *
+> hw/display/apple-gfx.m:     * All unique MemoryRegions for which a 
+> mapping has been created in in this
+> qapi/machine-target.json:#     removed in in some future version of QEMU 
+> according to the QEMU
 
-Add a .readfn to return the CurrentEL and then loosen the restrictions
-in arm_register_sysreg_for_feature to allow ARM_CP_NORAW registers to
-be read if there is a readfn available.
+Hi!
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Julian Armistead <julian.armistead@linaro.org>
----
- target/arm/gdbstub.c |  6 +++++-
- target/arm/helper.c  | 15 ++++++++++++++-
- 2 files changed, 19 insertions(+), 2 deletions(-)
+I picked up all changes by Gustavo for the trivial patches tree.
 
-diff --git a/target/arm/gdbstub.c b/target/arm/gdbstub.c
-index ce4497ad7c..029678ac9a 100644
---- a/target/arm/gdbstub.c
-+++ b/target/arm/gdbstub.c
-@@ -282,7 +282,11 @@ static void arm_register_sysreg_for_feature(gpointer key, gpointer value,
-     CPUARMState *env = &cpu->env;
-     DynamicGDBFeatureInfo *dyn_feature = &cpu->dyn_sysreg_feature;
- 
--    if (!(ri->type & (ARM_CP_NO_RAW | ARM_CP_NO_GDB))) {
-+    if (!(ri->type & ARM_CP_NO_GDB)) {
-+        /* skip ARM_CP_NO_RAW if there are no helper functions */
-+        if ((ri->type & ARM_CP_NO_RAW) && !ri->readfn) {
-+            return;
-+        }
-         if (arm_feature(env, ARM_FEATURE_AARCH64)) {
-             if (ri->state == ARM_CP_STATE_AA64) {
-                 arm_gen_one_feature_sysreg(&param->builder, dyn_feature,
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 7fb6e88630..7ea1307c20 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -4993,6 +4993,17 @@ static void ic_ivau_write(CPUARMState *env, const ARMCPRegInfo *ri,
- }
- #endif
- 
-+/*
-+ * Normally the current_el is known at translation time and we can
-+ * emit the result directly in TCG code. However this helper exists
-+ * only so we can also expose CURRENTEL to gdb.
-+ */
-+static uint64_t aa64_currentel_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    int el = arm_current_el(env);
-+    return el;
-+}
-+
- static const ARMCPRegInfo v8_cp_reginfo[] = {
-     /*
-      * Minimal set of EL0-visible registers. This will need to be expanded
-@@ -5031,7 +5042,9 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
-     },
-     { .name = "CURRENTEL", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 0, .opc2 = 2, .crn = 4, .crm = 2,
--      .access = PL1_R, .type = ARM_CP_CURRENTEL },
-+      .access = PL1_R, .type = ARM_CP_CURRENTEL,
-+      .readfn = aa64_currentel_read
-+    },
-     /*
-      * Instruction cache ops. All of these except `IC IVAU` NOP because we
-      * don't emulate caches.
--- 
-2.39.5
+I also fixed the typos suggested above by Thomas.
 
+Thanks,
+
+/mjt
 
