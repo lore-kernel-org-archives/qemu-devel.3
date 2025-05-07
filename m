@@ -4,119 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C15BC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 07:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72610C3ABB6
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 07:40:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCZFW-0002T5-OU; Wed, 07 May 2025 03:31:27 -0400
+	id 1uCZMv-0007TJ-UD; Wed, 07 May 2025 03:39:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1uCZFO-0002ES-5z; Wed, 07 May 2025 03:31:18 -0400
-Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCZMo-0007Sr-QY; Wed, 07 May 2025 03:38:59 -0400
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1uCZFL-0007PG-Kf; Wed, 07 May 2025 03:31:17 -0400
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal
- [10.202.2.44])
- by mailfout.phl.internal (Postfix) with ESMTP id 2A42413800E9;
- Wed,  7 May 2025 03:31:11 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Wed, 07 May 2025 03:31:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:message-id:mime-version
- :reply-to:subject:subject:to:to; s=fm2; t=1746603071; x=
- 1746689471; bh=pD8j52EvOhwtpXpiBU4PvI6djNSqJ08++4z0SAYwOL0=; b=B
- oRoFJXNiZPe+2VcEZaNSTx9FQxYxTkg/dK+unfl4Dw/SpwEAWdd8GGnGqZZM7ccR
- zihHZUGrZKuassJdg/Rq/UcyvAi9uI/B4MeyGDs2X0n3mAojNzp7CbnQYwbnG3kG
- mNquu2mMWuCJmyioBLWaF48Ai1lSN3Oa3Kbedc1tqQgzC5geeQyqlAcsZ/N+Zrk1
- e7UxFXmx9giIeCA5CCWqdzSmXkiY3XZsN79RlW1dKGWf1UoMB51Bun16uwhj82lU
- BRjnGxqzCL2T75UUC6jZ6NNtOZeL6KLmIyQbQKeNY7lqbZTByCgsgj5W0HNNU0cY
- 9ul7NJkqXx2WBSbthPp2A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; t=1746603071; x=1746689471; bh=pD8j52EvOhwtpXpiBU4PvI6djNSq
- J08++4z0SAYwOL0=; b=Ip5Jj+Au8R4hwdet3RPtwz4zGXx0b0vPRcK46hUIiYvP
- xfpPrzcpgWO3rGu/pUbAQmNlcRnULHzEW63NkcX1zUraF4HIEQIECtLhDFzEi6t7
- xP4atoc24USQWzJbN7gjVmbjhTO+LkkaNLIyd1jNx2qb/RfN2+LpYoF1nae5BMSl
- JVmcSA+V+kxYnW9LtrNdXWG+CKj5xiOoLY9lROmod2bjegJfK4gyVvB50zwP6T8x
- /3KSn2LyKjiBGu5Gn9gQ7rwlzIkw02ZFoOL3eouvEu0v1opVxP6zObXYpFNr0uLj
- qwzpDNL3YuJMFGGgxUpbnggc1EEsngs5OJPzIR/jew==
-X-ME-Sender: <xms:PQwbaGcv7uKXHcsQtomUh6Gz5m5Wm2iqylAShbu67JWuQRqGl54UoQ>
- <xme:PQwbaAPV6upbdmjThN0hj5-n88dOgm3ZRxpobbl8JZ0CYCBGf5hoS8kAzt2-Rbm0R
- MQvPkbbOusghHrenWs>
-X-ME-Received: <xmr:PQwbaHi8gfGHzgkWlsdeehff1zrtvQ4N1BvEu515shUzc9s8ctymYBk4zKmtfF1PYbt8yac5STk58ggywMOv4RU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeivdeiucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
- pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
- gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkffvvefosehtkeertdertdej
- necuhfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnth
- drughkqeenucggtffrrghtthgvrhhnpeevfeeltdekleevledugeejveehffejteeftdel
- keekiedtuedtudefhfffgeehhfenucffohhmrghinhepghhithhlrggsrdgtohhmnecuve
- hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesihhr
- rhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouh
- htpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhmpdhrtghpthht
- ohepshhtghhrrggsvghrsehsthhgrhgrsggvrhdrohhrghdprhgtphhtthhopehqvghmuh
- dquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdhsthgrsghl
- vgesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrd
- gukhdprhgtphhtthhopehqvghmuhdqsghlohgtkhesnhhonhhgnhhurdhorhhgpdhrtghp
- thhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepkhgsuhhstghhse
- hkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:PQwbaD97FHcrS5_E68J-yzfE7GKQTuJbpSivwoJLxakq7UaHyhoZ2w>
- <xmx:PQwbaCvYypYhBeC4fiV8-ToPx7mjWP3KAw5K6tK3DJ3mmXxoxisiqg>
- <xmx:PQwbaKFIH4VceC5AStMeK3sKsa4Qno3rQuTBGrP1ww4o81QEHjJOCQ>
- <xmx:PQwbaBMknM6Ml42e_aVEixCE1PUE_7gVZkpUESKW2RzkyEoAT9ggzQ>
- <xmx:PwwbaONhZhYXZsWjUsN52473N-RTKHykqI8kpPJkLIj_429Fwdof2pq7>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 03:31:08 -0400 (EDT)
-From: Klaus Jensen <its@irrelevant.dk>
-Date: Wed, 07 May 2025 09:30:55 +0200
-Subject: [PATCH] hw/nvme: fix nvme hotplugging
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCZMm-00088O-1z; Wed, 07 May 2025 03:38:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746603536; x=1778139536;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=eSdAWIL9QwmGd2sJcWiQDIS/aNUqKJGlmNZtHMw8g5g=;
+ b=PjFvk4CKgUyJkT6eqcoy+kfMOBc7RoxGWQ3ypEAOQJkODpQsd3AAk0Cv
+ FLoxWI1NsuAX4eA7kpPy9KT3AzuZegPgwlSwj0w8Q0ebRXIqNBJIEM6VZ
+ wwi9Thyq6Cxm0FKSAiaVaQ/tjbKbwL5aU4cPCoofIWt0zJBoDFmMdgita
+ Urjl+5GzoXFf52U4gjUZ1UPv8FGuQdC3nDbeA+rrFL6Yhqf+9qopy52rR
+ asHRSDbwIbY2lFt09BEaa7I59bJ1Bje5EVelSx6wwoTJlx/ocRi5S93AA
+ L5S+ysV/3yLRpyjlh6wYCRBGzIzsuXwfUMn0gOslqfDGgJg/ASB94mBC5 g==;
+X-CSE-ConnectionGUID: PrrHvwzsT6uKSjKHjlmtgw==
+X-CSE-MsgGUID: p0Vb9M46QV+EyHXV43bHpg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="65724608"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="65724608"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 May 2025 00:38:51 -0700
+X-CSE-ConnectionGUID: 5xgkbUMWSYuibA6qZJP28Q==
+X-CSE-MsgGUID: 26B2PJQ8SJW4mYmpQm993A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="136880282"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa009.fm.intel.com with ESMTP; 07 May 2025 00:38:48 -0700
+Date: Wed, 7 May 2025 15:59:50 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 4/5] rust: vmstate: use const_refs_to_static
+Message-ID: <aBsS9tmqold+tMMu@intel.com>
+References: <20250505100854.73936-1-pbonzini@redhat.com>
+ <20250505100854.73936-5-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250507-fix-non-hotpluggable-subsys-v1-1-667f224ebc0f@samsung.com>
-X-B4-Tracking: v=1; b=H4sIAC4MG2gC/x3MSwqAMAwA0atI1gbaivi5irioGmtAWmlUFPHuF
- pcPhnlAKDIJtNkDkU4WDj5B5xmMi/WOkKdkMMqUqlQVznyhDx6XsG/r4ZwdVkI5BrkFlSlsMdW
- 6GhsN6bBFSvl/7/r3/QABKWFibQAAAA==
-X-Change-ID: 20250507-fix-non-hotpluggable-subsys-023a3d817c91
-To: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
- qemu-block@nongnu.org
-Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org, 
- =?utf-8?q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1234; i=k.jensen@samsung.com; 
- h=from:subject:message-id;
- bh=q5QHh4i9WZialT5kLw8YDaneF/BMYXKkocT82fG5r8E=; 
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0o0bkFGdEFaTCtrQTBEQUFvQlRlR3ZNV
- zFQRGVrQnl5WmlBR2diRER0ZCtWTGI3eVV2dTF0aUkzYzdLajR1CnUxMmRCQzVjOEZuSUN3UGNZ
- MWNReUlrQk13UUFBUW9BSFJZaEJGSW9NNnAxNHR6bW9rZG13RTNocnpGdFR3M3AKQlFKb0d3dzd
- BQW9KRUUzaHJ6RnRUdzNweFZjSC8yYXUxRnMvQzhjVTFxNUtoWlEvRW1aclRBSytEQnhSYWxoSw
- pRUnNPZGtJTm1CcWJWMlczamdHUDdkVzQzc3o1RDd3TlVPL0xaYTVKY2hCY2xrNWxFSEgrRUdxR
- 1R5UWtyandiCjBOc21saWphcTd5WXFwczBETzhXTnhzVWo1NXgxR3V5UHEzWG83aHZpNFcyanZ3
- dWQrYWFmZndreTNramdQYnoKZHVDaWkyL0FyWXBMZjhqdlZuMW1iNFNxRVV1VGFlcUFRbFVNYVY
- vUkFaWkMxTWJnZmkrZU93SDkzamdIOGNqZApZYzlyL2hWSnZBZlR0T1Bkb3B3VnR1UmdPSC8xQT
- NkWmZ6QlkyRXhtVTA1Z25jWCtQeFEzMVpZeENTOHQ4MmpFCklkUEpiOTVlTE9xNm5xS3hXcGZFd
- Go0S1hUdms4Vm8xREpFZDJoRWN4UzV1aFljcFdmZkpYYUh0Cj1pT0puCi0tLS0tRU5EIFBHUCBN
- RVNTQUdFLS0tLS0K
-X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
- fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
-Received-SPF: pass client-ip=103.168.172.149; envelope-from=its@irrelevant.dk;
- helo=fout-a6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250505100854.73936-5-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,43 +81,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Klaus Jensen <k.jensen@samsung.com>
+> @@ -998,7 +1000,7 @@ impl ObjectImpl for HPETState {
+>              vmstate_of!(HPETState, counter),
+>              vmstate_of!(HPETState, num_timers_save).with_version_id(2),
+>              vmstate_validate!(HPETState, VALIDATE_TIMERS_NAME, HPETState::validate_num_timers),
+> -            vmstate_struct!(HPETState, timers[0 .. num_timers], &VMSTATE_HPET_TIMER, BqlRefCell<HPETTimer>, HPETState::validate_num_timers).with_version_id(0),
+> +            vmstate_of!(HPETState, timers[0 .. num_timers], HPETState::validate_num_timers).with_version_id(0),
+>          })
 
-Commit cd59f50ab017 caused a regression on nvme hotplugging for devices
-with an implicit nvm subsystem.
-
-The nvme-subsys device was incorrectly left with being marked as
-non-hotpluggable. Fix this.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Stéphane Graber <stgraber@stgraber.org>
-Tested-by: Stéphane Graber <stgraber@stgraber.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2950
-Fixes: cd59f50ab017 ("hw/nvme: always initialize a subsystem")
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/subsys.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/hw/nvme/subsys.c b/hw/nvme/subsys.c
-index 38271d78c8bdc6dfa07cbea6b41b6a6083d62203..777e1c620fd0372ea1d9e193a5cd0903b9ffb019 100644
---- a/hw/nvme/subsys.c
-+++ b/hw/nvme/subsys.c
-@@ -226,7 +226,6 @@ static void nvme_subsys_class_init(ObjectClass *oc, const void *data)
- 
-     dc->realize = nvme_subsys_realize;
-     dc->desc = "Virtual NVMe subsystem";
--    dc->hotpluggable = false;
- 
-     device_class_set_props(dc, nvme_subsystem_props);
- }
-
----
-base-commit: a9e0c9c0f14e19d23443ac24c8080b4708d2eab8
-change-id: 20250507-fix-non-hotpluggable-subsys-023a3d817c91
-
-Best regards,
--- 
-Klaus Jensen <k.jensen@samsung.com>
+The unified vmstate_of is indeed clean... it's more concise and easier
+to use than the C version.
 
 
