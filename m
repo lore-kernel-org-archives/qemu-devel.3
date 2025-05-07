@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C27AC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:05:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 200B9C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:05:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCj8q-0000A3-Te; Wed, 07 May 2025 14:05:13 -0400
+	id 1uCj8f-0008Mg-Pt; Wed, 07 May 2025 14:05:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uCj8j-0008Q3-3b; Wed, 07 May 2025 14:05:09 -0400
+ id 1uCj8J-0008Ds-LT; Wed, 07 May 2025 14:04:40 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uCj8g-0008Cs-3c; Wed, 07 May 2025 14:05:03 -0400
+ id 1uCj8G-0008C7-69; Wed, 07 May 2025 14:04:39 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 88EC411FF01;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6C67E11FEFF;
  Wed, 07 May 2025 21:04:00 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 656A8206706;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3EB4C206704;
  Wed,  7 May 2025 21:04:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Gustavo Romero <gustavo.romero@linaro.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 12/21] hw/acpi/pcihp: Fix typo in function name
-Date: Wed,  7 May 2025 21:04:03 +0300
-Message-Id: <20250507180412.182797-13-mjt@tls.msk.ru>
+Subject: [PULL 10/21] hw/net/e1000: Remove stray empty comment in header
+Date: Wed,  7 May 2025 21:04:01 +0300
+Message-Id: <20250507180412.182797-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250507180412.182797-1-mjt@tls.msk.ru>
 References: <20250507180412.182797-1-mjt@tls.msk.ru>
@@ -61,86 +61,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Fix typo in QEMU's ACPI PCI hotplug API function name that checks
-whether a given bus is hotplug-capable.
+In the header file, remove a stray empty comment in the Offload Context
+Descriptor struct.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/acpi/acpi-pci-hotplug-stub.c | 2 +-
- hw/acpi/ich9.c                  | 2 +-
- hw/acpi/pcihp.c                 | 2 +-
- hw/acpi/piix4.c                 | 2 +-
- include/hw/acpi/pcihp.h         | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+ hw/net/e1000x_regs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/acpi/acpi-pci-hotplug-stub.c b/hw/acpi/acpi-pci-hotplug-stub.c
-index b67b4a92da..b7bc6e40a1 100644
---- a/hw/acpi/acpi-pci-hotplug-stub.c
-+++ b/hw/acpi/acpi-pci-hotplug-stub.c
-@@ -34,7 +34,7 @@ void acpi_pcihp_reset(AcpiPciHpState *s)
- {
- }
- 
--bool acpi_pcihp_is_hotpluggbale_bus(AcpiPciHpState *s, BusState *bus)
-+bool acpi_pcihp_is_hotpluggable_bus(AcpiPciHpState *s, BusState *bus)
- {
-     return true;
- }
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index 9c0b7437b7..967b67485e 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -559,7 +559,7 @@ void ich9_pm_device_unplug_cb(HotplugHandler *hotplug_dev, DeviceState *dev,
- bool ich9_pm_is_hotpluggable_bus(HotplugHandler *hotplug_dev, BusState *bus)
- {
-     ICH9LPCState *lpc = ICH9_LPC_DEVICE(hotplug_dev);
--    return acpi_pcihp_is_hotpluggbale_bus(&lpc->pm.acpi_pci_hotplug, bus);
-+    return acpi_pcihp_is_hotpluggable_bus(&lpc->pm.acpi_pci_hotplug, bus);
- }
- 
- void ich9_pm_ospm_status(AcpiDeviceIf *adev, ACPIOSTInfoList ***list)
-diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
-index 5f79c9016b..aac90013d4 100644
---- a/hw/acpi/pcihp.c
-+++ b/hw/acpi/pcihp.c
-@@ -371,7 +371,7 @@ void acpi_pcihp_device_unplug_request_cb(HotplugHandler *hotplug_dev,
-     acpi_send_event(DEVICE(hotplug_dev), ACPI_PCI_HOTPLUG_STATUS);
- }
- 
--bool acpi_pcihp_is_hotpluggbale_bus(AcpiPciHpState *s, BusState *bus)
-+bool acpi_pcihp_is_hotpluggable_bus(AcpiPciHpState *s, BusState *bus)
- {
-     Object *o = OBJECT(bus->parent);
- 
-diff --git a/hw/acpi/piix4.c b/hw/acpi/piix4.c
-index b16d45f03e..d98b80df6d 100644
---- a/hw/acpi/piix4.c
-+++ b/hw/acpi/piix4.c
-@@ -406,7 +406,7 @@ static bool piix4_is_hotpluggable_bus(HotplugHandler *hotplug_dev,
-                                       BusState *bus)
- {
-     PIIX4PMState *s = PIIX4_PM(hotplug_dev);
--    return acpi_pcihp_is_hotpluggbale_bus(&s->acpi_pci_hotplug, bus);
-+    return acpi_pcihp_is_hotpluggable_bus(&s->acpi_pci_hotplug, bus);
- }
- 
- static void piix4_pm_machine_ready(Notifier *n, void *opaque)
-diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
-index ac21a95913..a97904bada 100644
---- a/include/hw/acpi/pcihp.h
-+++ b/include/hw/acpi/pcihp.h
-@@ -58,7 +58,7 @@ typedef struct AcpiPciHpState {
- void acpi_pcihp_init(Object *owner, AcpiPciHpState *, PCIBus *root,
-                      MemoryRegion *io, uint16_t io_base);
- 
--bool acpi_pcihp_is_hotpluggbale_bus(AcpiPciHpState *s, BusState *bus);
-+bool acpi_pcihp_is_hotpluggable_bus(AcpiPciHpState *s, BusState *bus);
- void acpi_pcihp_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-                                    DeviceState *dev, Error **errp);
- void acpi_pcihp_device_plug_cb(HotplugHandler *hotplug_dev, AcpiPciHpState *s,
+diff --git a/hw/net/e1000x_regs.h b/hw/net/e1000x_regs.h
+index cd896fc0ca..e9a74de6f4 100644
+--- a/hw/net/e1000x_regs.h
++++ b/hw/net/e1000x_regs.h
+@@ -900,7 +900,7 @@ struct e1000_context_desc {
+             uint16_t tucse;     /* TCP checksum end */
+         } tcp_fields;
+     } upper_setup;
+-    uint32_t cmd_and_length;    /* */
++    uint32_t cmd_and_length;
+     union {
+         uint32_t data;
+         struct {
 -- 
 2.39.5
 
