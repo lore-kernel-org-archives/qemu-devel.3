@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 945B1C369DC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 05:47:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67136C369DC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 05:48:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCXck-00017V-5M; Wed, 07 May 2025 01:47:18 -0400
+	id 1uCXdU-0001ne-EQ; Wed, 07 May 2025 01:48:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCXcZ-000125-R0; Wed, 07 May 2025 01:47:10 -0400
-Received: from mgamail.intel.com ([192.198.163.16])
+ id 1uCXdD-0001ch-S6; Wed, 07 May 2025 01:47:53 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCXcX-0004dl-TA; Wed, 07 May 2025 01:47:07 -0400
+ id 1uCXdB-0004fO-FL; Wed, 07 May 2025 01:47:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746596826; x=1778132826;
+ t=1746596866; x=1778132866;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=rfEXf68V60C0Th20RXfNRgzyZE6DKAjUx9gYV9PtMA0=;
- b=armuA50AwvqrMufGM3lwSLj5yODSBn1iZfhytpmjqdDw3Ygui9+diL/9
- 8JKBXYeaaO8UrCPn1kZqLeaabJq1VGP4FAQis0vW1qKlHbkOh1PSdVOX+
- /m8vpYtSoJkBW9v1gK01ozjuNlxQ4FN65OHQ5uTNTuam86LCY1D2mB+In
- /5UEhWapgWCzWiCPnTmYa2ian1cLK1ubjr3I0us+Hqawe0rPNOh63sK7/
- E5shnfYq+tCvTS1oAqfJqIF41bykC5ubK+O3W5P6VHCkzgQGPcDSOgifr
- lOGI3Z96ChjSF8wQ2Eb7wlbjHnmvM3f9XclGSHuW/llruGRD6PUapPnbn A==;
-X-CSE-ConnectionGUID: i/CipE3VRKqvQFE9SvTcLg==
-X-CSE-MsgGUID: OgJNukXURxiqKxvWATqwUg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="35933181"
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="35933181"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2025 22:47:03 -0700
-X-CSE-ConnectionGUID: GOKDtlMBS3K8aVJZ7AKaJg==
-X-CSE-MsgGUID: 26p/0bHHSniGzE4sR4N5hg==
+ bh=o/wtlwc0Rt7lZAcaducfQgX/1u11XR96ax4G6qwTSjo=;
+ b=IQPr0hI/Dkdml6dxJ7i13E0Mun10zNpErbbHnjHmCveEa5qiZvS1JpeW
+ EFuInME4UjiK51XfTXjMBa2aIQelB86OwU1uwU0J/oAltWZifyb8tMkK/
+ ZsASo/N8ZCwwyfLqGNuyIXRAH831iGt+zohtZ4KwutDkhuRIq82LTigsN
+ ucLFEGJvb7/QI/aQavD4SE+3i4F6UiD7iNAq0h9BAKVgeFoRCMAP8uDu4
+ 0NUDyWE5AaqVuM+jNRTuddLIhsxJTfdtByvutjXHa0q5O4B5zZDWI1Kc7
+ t8L6ixsrOQJODEpjL/AdJU1aXL/HvRxyY714EwAfgXjm0cjSTV60SeW3P Q==;
+X-CSE-ConnectionGUID: L3AfGmJtRoWc2PfGvTUh1A==
+X-CSE-MsgGUID: WgNUyOcsRrSejcmvX8a+RA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="50953223"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="50953223"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 May 2025 22:47:43 -0700
+X-CSE-ConnectionGUID: EVTEbi5yRyCCokJxJdLLqw==
+X-CSE-MsgGUID: nrhy20j3QAG6hZJSpJ3vtg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="140959458"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="140801944"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 06 May 2025 22:46:59 -0700
-Date: Wed, 7 May 2025 14:07:59 +0800
+ by orviesa004.jf.intel.com with ESMTP; 06 May 2025 22:47:39 -0700
+Date: Wed, 7 May 2025 14:08:39 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
@@ -59,17 +59,17 @@ Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [PATCH v3 18/19] hw/net/vmxnet3: Remove
- VMXNET3_COMPAT_FLAG_DISABLE_PCIE definition
-Message-ID: <aBr4v4XLlUXQUe7n@intel.com>
+Subject: Re: [PATCH v3 19/19] hw/net/vmxnet3: Merge DeviceRealize in
+ InstanceInit
+Message-ID: <aBr458k3k3d+/Kqz@intel.com>
 References: <20250506143905.4961-1-philmd@linaro.org>
- <20250506143905.4961-19-philmd@linaro.org>
+ <20250506143905.4961-20-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250506143905.4961-19-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250506143905.4961-20-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -57
 X-Spam_score: -5.8
@@ -94,23 +94,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 06, 2025 at 04:39:04PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Tue,  6 May 2025 16:39:04 +0200
+On Tue, May 06, 2025 at 04:39:05PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Tue,  6 May 2025 16:39:05 +0200
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v3 18/19] hw/net/vmxnet3: Remove
->  VMXNET3_COMPAT_FLAG_DISABLE_PCIE definition
+> Subject: [PATCH v3 19/19] hw/net/vmxnet3: Merge DeviceRealize in
+>  InstanceInit
 > X-Mailer: git-send-email 2.47.1
 > 
-> VMXNET3_COMPAT_FLAG_DISABLE_PCIE was only used by the
-> hw_compat_2_5[] array, via the 'x-disable-pcie=on' property.
-> We removed all machines using that array, lets remove all the
-> code around VMXNET3_COMPAT_FLAG_DISABLE_PCIE.
+> Simplify merging vmxnet3_realize() within vmxnet3_instance_init(),
+> removing the need for device_class_set_parent_realize().
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->  hw/net/vmxnet3.c | 11 +----------
->  1 file changed, 1 insertion(+), 10 deletions(-)
+>  hw/net/vmxnet3.c | 15 +--------------
+>  1 file changed, 1 insertion(+), 14 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
