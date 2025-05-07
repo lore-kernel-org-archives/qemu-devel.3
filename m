@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A08AAC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:06:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91A0FC3ABC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:06:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCj8p-000076-Rx; Wed, 07 May 2025 14:05:12 -0400
+	id 1uCj9R-0001e5-Vv; Wed, 07 May 2025 14:05:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uCj8j-0008Q2-3p; Wed, 07 May 2025 14:05:09 -0400
+ id 1uCj9J-0000um-GQ; Wed, 07 May 2025 14:05:41 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uCj8a-0008CF-Rr; Wed, 07 May 2025 14:05:03 -0400
+ id 1uCj9H-0008Rn-6w; Wed, 07 May 2025 14:05:41 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7FE7411FF00;
+ by isrv.corpit.ru (Postfix) with ESMTP id F11E211FF07;
  Wed, 07 May 2025 21:04:00 +0300 (MSK)
 Received: from think4mjt.origo (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5158E206705;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C455120670C;
  Wed,  7 May 2025 21:04:13 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>, qemu-trivial@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 11/21] hw/pci-host/gpex-acpi: Fix typo in comment
-Date: Wed,  7 May 2025 21:04:02 +0300
-Message-Id: <20250507180412.182797-12-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-trivial@nongnu.org
+Subject: [PULL 18/21] qapi/qom.json: fix "the the" typo in comment
+Date: Wed,  7 May 2025 21:04:09 +0300
+Message-Id: <20250507180412.182797-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250507180412.182797-1-mjt@tls.msk.ru>
 References: <20250507180412.182797-1-mjt@tls.msk.ru>
@@ -59,31 +59,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
-
-Fix typo in a comment about the creation of the ACPI CRS method.
-
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Suggested-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- hw/pci-host/gpex-acpi.c | 2 +-
+ qapi/qom.json | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
-index e8b4c64c5f..0aba47c71c 100644
---- a/hw/pci-host/gpex-acpi.c
-+++ b/hw/pci-host/gpex-acpi.c
-@@ -182,7 +182,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
- 
-             /*
-              * Resources defined for PXBs are composed of the following parts:
--             * 1. The resources the pci-brige/pcie-root-port need.
-+             * 1. The resources the pci-bridge/pcie-root-port need.
-              * 2. The resources the devices behind pxb need.
-              */
-             crs = build_crs(PCI_HOST_BRIDGE(BUS(bus)->parent), &crs_range_set,
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 28ce24cd8d..04c118e4d6 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -871,7 +871,7 @@
+ #     link characteristics read from PCIe Configuration space.
+ #     To get the full path latency from CPU to CXL attached DRAM
+ #     CXL device:  Add the latency from CPU to Generic Port (from
+-#     HMAT indexed via the the node ID in this SRAT structure) to
++#     HMAT indexed via the node ID in this SRAT structure) to
+ #     that for CXL bus links, the latency across intermediate switches
+ #     and from the EP port to the actual memory.  Bandwidth is more
+ #     complex as there may be interleaving across multiple devices
 -- 
 2.39.5
 
