@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF06FC369DC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 06:21:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9AC2C369DC
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 06:26:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCY9H-0005LG-7e; Wed, 07 May 2025 02:20:55 -0400
+	id 1uCYDv-0008LZ-ET; Wed, 07 May 2025 02:25:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCY9D-0005L3-FM
- for qemu-devel@nongnu.org; Wed, 07 May 2025 02:20:51 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ id 1uCYDt-0008LL-Va
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 02:25:41 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCY9B-0007qP-0l
- for qemu-devel@nongnu.org; Wed, 07 May 2025 02:20:51 -0400
+ id 1uCYDs-0008P0-1j
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 02:25:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746598849; x=1778134849;
+ t=1746599140; x=1778135140;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=ZMxogRC/2Ywa6Bpb4bilAwDm3gSz9d9HL+WAMMsR+Ec=;
- b=Tmjbo9TbfejLmkWsj6JMeK7chj6XcFO2Ov0GRLH6ZzktCGE1owaelGag
- LlhlVPZ4GDvO+Et0REfTy/+b2ZjILG2B/gT5vVPNxXaD2rEghffzipYGc
- JdMdrq4uvIqi19W5eZA5KaiaBwMGg/kRzlDfq9tIfIXJbSfNN0xpuI3vN
- 2MwhaUIDAafpxhxDTa4Nfm8rTdrTowcDRBKa01596ONS50Xi0Edu53DVB
- DceLCWfJVZ/iwBpPOpxz/FMT89qJRxPr1j73uzTAJQBX9G3+NbSllE5+/
- 11jaEUBlWE2pc8yAwEUB4nLdjyL5AXm/9/1OZ8hymYZBlY6uGTqr9o5Wl A==;
-X-CSE-ConnectionGUID: 7LuL6g7sS1aj6+D7OUK9Xw==
-X-CSE-MsgGUID: Uy0P/o8WQF6+spSJBuFWZg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="48180264"
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="48180264"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 May 2025 23:20:44 -0700
-X-CSE-ConnectionGUID: I6qFCfgDSdihzrmf5M6Aog==
-X-CSE-MsgGUID: iJyOiSQES5qy6BvoHK3Zhw==
+ bh=oOQM0dcuI5vXA+PePUN0hZ6lMT/U6Qsqt5NjTsDanU0=;
+ b=KuvRubJG+DYleGITEOgkYSM9UNIGSjrEEY4jeFjjYzn5K5cFlO7wlC9L
+ 3BUvIWvq/GCCjNQJu15r/kYTQM18aKCSvG7uLqXlbTV934ncz0QXmLwRe
+ wjBCvyfb3SQNNlC78xos2dAXzkhNGoDrEdlTDZv5qkrjIiGVKyqrrEjRh
+ f1SPaa2f1HFd/qHxzYu/a2yC6Tb6T/0788OfsJRIDPsaCihrXvM4XCDwh
+ a/unEu7bNmQ8vEjF8XMqxgewlGHF756YknLBdukIR42XdDhucNT/7a3uC
+ 0vyT8TnSufC9S3Nmf0670mBTv9yk0dOp4nd/nfklawkGZ5xzAt73O/Uhr A==;
+X-CSE-ConnectionGUID: zckOo3ZkQOSJdHwJUlc68w==
+X-CSE-MsgGUID: KoX2CuKbRtyArRTjUOijgw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="59297048"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="59297048"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 May 2025 23:25:37 -0700
+X-CSE-ConnectionGUID: u/ClRLdHTbayVRLL/UagGg==
+X-CSE-MsgGUID: Vo6YCvMbQbu5Sbu/WYaQbw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="135857518"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; d="scan'208";a="141037737"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 06 May 2025 23:20:39 -0700
-Date: Wed, 7 May 2025 14:41:40 +0800
+ by fmviesa004.fm.intel.com with ESMTP; 06 May 2025 23:25:33 -0700
+Date: Wed, 7 May 2025 14:46:34 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
@@ -61,17 +61,17 @@ Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
  =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v3 05/19] hw/i386/x86: Remove
- X86MachineClass::fwcfg_dma_enabled field
-Message-ID: <aBsApFCmVrgtNMMT@intel.com>
+Subject: Re: [PATCH v3 06/19] hw/nvram/fw_cfg: Remove
+ fw_cfg_io_properties::dma_enabled
+Message-ID: <aBsBylkuSbY81HPl@intel.com>
 References: <20250502185652.67370-1-philmd@linaro.org>
- <20250502185652.67370-6-philmd@linaro.org>
+ <20250502185652.67370-7-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250502185652.67370-6-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250502185652.67370-7-philmd@linaro.org>
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -57
 X-Spam_score: -5.8
@@ -96,27 +96,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 02, 2025 at 08:56:37PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Fri,  2 May 2025 20:56:37 +0200
+On Fri, May 02, 2025 at 08:56:38PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Fri,  2 May 2025 20:56:38 +0200
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v3 05/19] hw/i386/x86: Remove
->  X86MachineClass::fwcfg_dma_enabled field
+> Subject: [PATCH v3 06/19] hw/nvram/fw_cfg: Remove
+>  fw_cfg_io_properties::dma_enabled
 > X-Mailer: git-send-email 2.47.1
 > 
-> The X86MachineClass::fwcfg_dma_enabled boolean was only used
-> by the pc-q35-2.6 and pc-i440fx-2.6 machines, which got
-> removed. Remove it and simplify.
+> Now than all calls to fw_cfg_init_io_dma() pass DMA arguments,
+> the 'dma_enabled' of the TYPE_FW_CFG_IO type is not used anymore.
+> Remove it, simplifying fw_cfg_init_io_dma() and fw_cfg_io_realize().
 > 
+> Note, we can not remove the equivalent in fw_cfg_mem_properties[]
+> because it is still used in HPPA and MIPS Loongson3 machines:
+> 
+>   $ git grep -w fw_cfg_init_mem
+>   hw/hppa/machine.c:204:    fw_cfg = fw_cfg_init_mem(addr, addr + 4);
+>   hw/mips/loongson3_virt.c:289:    fw_cfg = fw_cfg_init_mem(cfg_addr, cfg_addr + 8, 8);
+
+The argument here is wrong. :-)
+ 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  include/hw/i386/x86.h | 2 --
->  hw/i386/microvm.c     | 3 ---
->  hw/i386/multiboot.c   | 7 +------
->  hw/i386/x86-common.c  | 3 +--
->  hw/i386/x86.c         | 2 --
->  5 files changed, 2 insertions(+), 15 deletions(-)
-
-Note for myself: fwcfg_dma_enabled is not a property.
+>  hw/nvram/fw_cfg.c | 26 ++++++++------------------
+>  1 file changed, 8 insertions(+), 18 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
