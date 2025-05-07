@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E8A7C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 15:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E43C3ABBF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 15:27:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCgeV-0006EJ-1S; Wed, 07 May 2025 11:25:43 -0400
+	id 1uCgfk-0007u2-DJ; Wed, 07 May 2025 11:27:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangrui@loongson.cn>)
- id 1uCgeS-0006AQ-5z
- for qemu-devel@nongnu.org; Wed, 07 May 2025 11:25:40 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangrui@loongson.cn>) id 1uCgeO-0006gs-SQ
- for qemu-devel@nongnu.org; Wed, 07 May 2025 11:25:39 -0400
-Received: from loongson.cn (unknown [209.85.128.169])
- by gateway (Coremail) with SMTP id _____8CxeXFnextojWDYAA--.26755S3;
- Wed, 07 May 2025 23:25:28 +0800 (CST)
-Received: from mail-yw1-f169.google.com (unknown [209.85.128.169])
- by front1 (Coremail) with SMTP id qMiowMDxu8RkextoR3O6AA--.12421S3;
- Wed, 07 May 2025 23:25:25 +0800 (CST)
-Received: by mail-yw1-f169.google.com with SMTP id
- 00721157ae682-7082e46880eso60903237b3.1
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 08:25:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCgfg-0007pO-Kg
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 11:26:58 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCgfd-0006qd-EP
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 11:26:56 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3a0b9625735so53227f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 08:26:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746631611; x=1747236411; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9ZT8Xy5cBt7B+o16iw1Z1+KFhXWVf1/GnM9h0ZEdFa0=;
+ b=N4KCVAHuPwhKdwicqdfmT5MUomcp6ZrMXRFpplBcumxkrxsF/g/Yv7vUT82rF/AVYV
+ +oaDVMD8WLPCSk4G4QOcluzCxVJsh5zUv21rD3y7tsgP+LWHLgTPG8kZgfG87vrJ/ksY
+ rpASmfPpmfLFg6SDxTfWoFRXSgtEu9E3ltAgUKlqrrXvGENVU0hIgPQv+s5/siD/YakK
+ MzuY3CIxxXIBOVZANQoiHwP4Ad7F2j9Qe6Oj6kKDGLZtfTg2fpr0anns60ey5f84sKQv
+ uhRWQarq26aEukSEqL6GRkC1z/V7xz6tU3ahI9DJPdtfvl/nGqiI3dY1e0nd7f2OZ8wL
+ C7aQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746631611; x=1747236411;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9ZT8Xy5cBt7B+o16iw1Z1+KFhXWVf1/GnM9h0ZEdFa0=;
+ b=Tnb88tinge62GrGDqUftIuCzrBoVosdupGCPfOBJkzOhoL097e5xs4Vdx7XAgIAtLS
+ Huc5hxH/VXUpXdQLhKWEg32mvjk1ZWb0Nr+YapGSy+mRcM1BtMfGjyMHYbgU7897B6mc
+ ShrXgA3eNu7TNn8d/wCtJd1syIOvDUmbbJQThsmGy+dxoMNK5i9flmlLuzmpNgpmWzu2
+ hX5fCXYayG4oFzNeMjkBxNstVrb8M3IK5fZ0QpsUGs3Q22NdPihGae86KJO2MQUIc7/x
+ qwedqNiK39Em/9PgrSMtuQlWjHlYuYt/eBp9F849H37BeaQL45BKOc0pp4bYXhRBBf1q
+ Udmw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWBcwsQlymzo8GH1WAriHffLr0B4ARSgvO4mC9fTtwxkZ/0q0wxkRgthhAxyoLdBTKL22vHoABS9DD9@nongnu.org
-X-Gm-Message-State: AOJu0YwB4egtY0GEWi9p+VKrckAx/R7V+VGYYWEKjpxJjqyEjNvIWpGo
- ibyYStyuhPuPxeWi2bTAHr7AgXwzcW2YYXyfDUwfXulpeMfYJYAZPh0erGkJZntltoN71w+jNZW
- hyh2wRJsMx/LOxRdXCMUjgbkJLGRCtaXejonTfQ==
-X-Google-Smtp-Source: AGHT+IFYy/3Jly0hZ3YUEuAChnEeIvZtn/EcEZ+HAYOwHU0hfBZPqmrVrTXF5D+uM06oNQOmzb5/pJeiaYcBBgzFOOg=
-X-Received: by 2002:a05:690c:650a:b0:6fb:8461:e828 with SMTP id
- 00721157ae682-70a1dad5ae4mr49740247b3.30.1746631523254; Wed, 07 May 2025
- 08:25:23 -0700 (PDT)
+ AJvYcCWZE1SjKYoY9QBlbF43fqhFggmzA7f+8N82AVO4fKzl22NWi7tED+foG4YObsx2gj0IlRstDscDQ1RH@nongnu.org
+X-Gm-Message-State: AOJu0Ywd/96XbBU+xZpdPDkg0QM80ch9UOQv4UdRnz4Aqe6QcFCl3yin
+ D1qvTESjYfkkXfV0B/7FQLtfT27V/6Q8eaGXzO7sRcFDN06vp741Ip8F2ezUglU=
+X-Gm-Gg: ASbGncsPGl50m2yVSC9KLKc+Kbrp03gIspNrpqFGe0SrOFpxLTXGsUfP8w7sQUZn8Gn
+ lzIML1oh7XCKoZwJiXKjqSScHZc88SKxCxudOGm4E5TRGlZmctMZJ5XtYD/XbtnN5YZlAGUfLT3
+ yc14mM1vuqvA/xm8/jeT9TJgFAj3K8VpuHbMYPIwT2MZ3BY8ZqXfmBfGqXyDnliC8N4Ks8n2h2E
+ CjJ9Hl1yDdvbjcJjhL0zKSWDbFpUysB1C7UcIdvcssdhyvlDyT5QsYTFFT8RM9axfAUAkWjDbnE
+ vE7JABEEsXuxNPWYUTCKgCAekeZJ/XrZ/cl5xwH/jotq9414FzAecf1SDOxvDDdTLPdOcQ4GMa/
+ nm9SznKFRdQcoUBfBiRSYnIwcdaBeQH8=
+X-Google-Smtp-Source: AGHT+IEqMbvv45QaCs9n0tFq6w0oPZ+2VkUNKuKGlHtuuA6sutv/J+JsqRSHRxYEPxB6vTWRy8mkeA==
+X-Received: by 2002:a05:6000:2088:b0:3a0:aee0:c640 with SMTP id
+ ffacd0b85a97d-3a0b4a25e8dmr3722751f8f.56.1746631611035; 
+ Wed, 07 May 2025 08:26:51 -0700 (PDT)
+Received: from [192.168.1.70] (lputeaux-658-1-173-28.w92-154.abo.wanadoo.fr.
+ [92.154.108.28]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a0b6e52796sm1514618f8f.37.2025.05.07.08.26.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 May 2025 08:26:50 -0700 (PDT)
+Message-ID: <5fdd8922-9ce4-4547-b909-88e3f2232d0b@linaro.org>
+Date: Wed, 7 May 2025 17:26:49 +0200
 MIME-Version: 1.0
-References: <20250507091455.3257138-1-wangrui@loongson.cn>
- <f92c8c65-8fb4-4cfe-b793-a5aa17f11c1d@linaro.org>
-In-Reply-To: <f92c8c65-8fb4-4cfe-b793-a5aa17f11c1d@linaro.org>
-From: WANG Rui <wangrui@loongson.cn>
-Date: Wed, 7 May 2025 23:25:12 +0800
-X-Gmail-Original-Message-ID: <CAHirt9jd4LGkGyp0xKFQYKM3CnPYUs4xJmSyg4je6iMKR_0b5A@mail.gmail.com>
-X-Gm-Features: ATxdqUGo_E9NHLOCUWJs74i3zUDNri2GHvvP9RsARnIvEAN7CbXDi4w7r2t8Wew
-Message-ID: <CAHirt9jd4LGkGyp0xKFQYKM3CnPYUs4xJmSyg4je6iMKR_0b5A@mail.gmail.com>
-Subject: Re: [RFC PATCH v2] target/loongarch: Fix incorrect rounding in
- fnm{add,sub} under certain modes
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Song Gao <gaosong@loongson.cn>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org, qemu@hev.cc, mengqinggang <mengqinggang@loongson.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-CM-TRANSID: qMiowMDxu8RkextoR3O6AA--.12421S3
-X-CM-SenderInfo: pzdqw2txl6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7ZF4rWF4UGF1fArW8Wr1ktFc_yoW8CF1fpF
- W8CF1vyF4FgF1kX397Way0yFyfXw4rtrW3Ga4kWa9xArn0qF12qF4FyrWUua9rCw15Wr4a
- vr4Y93WUWa4qkacCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvGb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1ln4kS14v26r1Y6r17M2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2
- x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18
- McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41l42
- xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1l4IxYO2xFxVAFwI0_JF0_Jw1l
- x2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14
- v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IY
- x2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87
- Iv67AKxVW8JVWxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIF
- yTuYvjxU7QzVUUUUU
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=wangrui@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] fpu: Process float_muladd_negate_result after rounding
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: WANG Rui <wangrui@loongson.cn>
+References: <20250507145013.4024038-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250507145013.4024038-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,51 +101,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+On 7/5/25 16:50, Richard Henderson wrote:
+> Changing the sign before rounding affects the correctness of
+> the asymmetric rouding modes: float_round_up and float_round_down.
+> 
+> Reported-by: WANG Rui <wangrui@loongson.cn>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   fpu/softfloat.c                     | 54 +++++++++++++++++++++++------
+>   tests/tcg/multiarch/fnmsub.c        | 36 +++++++++++++++++++
+>   fpu/softfloat-parts.c.inc           |  4 ---
+>   tests/tcg/multiarch/Makefile.target |  1 +
+>   4 files changed, 81 insertions(+), 14 deletions(-)
+>   create mode 100644 tests/tcg/multiarch/fnmsub.c
 
-On Wed, May 7, 2025 at 11:04=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 5/7/25 02:14, WANG Rui wrote:
-> > This patch fixes incorrect results for `[xv]fnm{add,sub}.{s,d}`
-> > instructions when rounding toward {zero, positive, negative}.
-> >
-> > According to the LoongArch ISA specification, the result of an
-> > instruction like `FNMSUB.D` is computed as:
-> >
-> >    FR[fd] =3D -FP64_fusedMultiplyAdd(FR[fj], FR[fk], -FR[fa])
-> >
-> > Here, `FP64_fusedMultiplyAdd()` performs a fused multiply-add operation
-> > compliant with IEEE 754-2008. The negation is applied to the fully
-> > rounded result of the fused operation - not to any intermediate value.
-> > This behavior is specifiec to LoongArch and differs from other arches,
-> > which is why the existing `float_muladd_negate_result` flag does not
-> > model it correctly.
->
-> Loongarch does not differ from other arches; we got it wrong for everyone=
-.
-> There's no need for a new flag.
-
-I'm not familiar with PowerPC and s390x. The official PowerPC docs[^1]
-doesn't clearly specify the order of negation and rounding operations.
-I also don't have access to the hardware to run experiments. However,
-I did find the Linux kernel's emulation code[^2][^3] for the PowerPC
-`fnmsub` instruction, which seems to suggest that negation occurs
-before rounding - though it's possible that interpretation is
-incorrect.
-
-[^1]: https://www.ibm.com/docs/en/aix/7.2?topic=3Dset-fnmsub-fnms-floating-=
-negative-multiply-subtract-instruction
-[^2]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tr=
-ee/arch/powerpc/math-emu/fnmsub.c?h=3Dv6.15-rc5#n49
-[^3}: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tr=
-ee/arch/powerpc/math-emu/fnmsub.c?h=3Dv6.15-rc5#n55
-
-Regards,
--hev
-
->
->
-> r~
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
