@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2795C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F92FC3ABC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:48:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCjni-0001zG-JS; Wed, 07 May 2025 14:47:26 -0400
+	id 1uCjng-0001xz-30; Wed, 07 May 2025 14:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1uCjnh-0001yf-D4
- for qemu-devel@nongnu.org; Wed, 07 May 2025 14:47:25 -0400
+ id 1uCjna-0001uV-KJ
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 14:47:19 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1uCjnf-0004s7-7x
- for qemu-devel@nongnu.org; Wed, 07 May 2025 14:47:25 -0400
+ id 1uCjnZ-0004rO-1B
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 14:47:18 -0400
 Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 547ILiME019208;
- Wed, 7 May 2025 18:47:20 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 547ILdjY019143;
+ Wed, 7 May 2025 18:47:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=Cn2D+QZaslPTu2ZbfzI5iPItSSAjPRQH/o/Wkg5U8c8=; b=
- KY2gPRqm8Jxw89AzhLpYk341RviSHfKIR35+e8G/FshOI9NufUOKFe9pXxr/7oeO
- tuIDAhYOXPAGNkipoptOBlshb23ZmMcQDbl3bx1iR9Qd5iOB5TG27pGUMJLIcM2l
- 1GFnBwu+RYCjLMJpcrhB1Sv+DZ7Aum3loCH2JaFxJ+sC0mk6JSI/dRUnZ/v4cgms
- Ja0RE/R33zlBU14b+aNNuPstm9VeEIejKV7JwBHwAg2XFwNdZK1WjQf/vdxfEAk8
- 5DL4H/CmDkJqoh1zG+HZsqI8LVZuNJt9FOjlH0ctfVtQ1m5Heo4OfIgS6AaPmBJJ
- kXRy3aFuCvcACc0h+hE86Q==
+ corp-2025-04-25; bh=5dek9YSXT8NlCdPBSBT4Iaj628VDwxiAIfKZ63Ecuso=; b=
+ IG3PTCoaGkvFkLBofv5/LntvBi2LFdVWRB9qLSWKxQRpZSE2Z8i/G+EB7Ne2SWsG
+ oT7fx+qlneR5kZ05BCzXQbyDO/LcdPPUSnkqwYygJD70aA8OOSq9I2hOczecOcse
+ GHthuDEkuLsLSz6euxwBDA0ihP/KuDhkSCGACgZBMRMHqluQhzCVnk6iGAqcx5sA
+ mX/stsDfutAAmxIkitAPUgTw8eX1uyoSqcQJyStkNpnySCMRQKjUuxsPjPsjjJ9K
+ AEVDYaLnRtic/uQRoHktgGDVgZPQBxLBgc/jQoLMVYvMIUL8q0OaclZ6X9yxOYQI
+ F8LEkGL9Laa8y/Dmh7+mKg==
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46gcqrg23y-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46gcqrg23p-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 07 May 2025 18:47:19 +0000 (GMT)
+ Wed, 07 May 2025 18:47:14 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 547IG4b9035980; Wed, 7 May 2025 18:47:19 GMT
+ with ESMTP id 547I5imN036206; Wed, 7 May 2025 18:47:13 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46d9kbhdee-1
+ 46d9kbhdbv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 07 May 2025 18:47:19 +0000
+ Wed, 07 May 2025 18:47:13 +0000
 Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 547Il3j5029452;
- Wed, 7 May 2025 18:47:18 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 547Il3j1029452;
+ Wed, 7 May 2025 18:47:12 GMT
 Received: from dhcp-10-43-71-250.usdhcp.oraclecorp.com.com
  (dhcp-10-43-71-250.usdhcp.oraclecorp.com [10.43.71.250])
  by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 46d9kbhd41-6; Wed, 07 May 2025 18:47:18 +0000
+ 46d9kbhd41-4; Wed, 07 May 2025 18:47:12 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: jonah.palmer@oracle.com, eperezma@redhat.com, peterx@redhat.com,
@@ -62,9 +62,9 @@ Cc: jonah.palmer@oracle.com, eperezma@redhat.com, peterx@redhat.com,
  dtatulea@nvidia.com, leiyang@redhat.com, parav@mellanox.com,
  sgarzare@redhat.com, si-wei.liu@oracle.com, lingshan.zhu@intel.com,
  boris.ostrovsky@oracle.com
-Subject: [PATCH v4 5/7] vdpa: reorder listener assignment
-Date: Wed,  7 May 2025 14:46:45 -0400
-Message-ID: <20250507184647.15580-6-jonah.palmer@oracle.com>
+Subject: [PATCH v4 3/7] vdpa: set backend capabilities at vhost_vdpa_init
+Date: Wed,  7 May 2025 14:46:43 -0400
+Message-ID: <20250507184647.15580-4-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250507184647.15580-1-jonah.palmer@oracle.com>
 References: <20250507184647.15580-1-jonah.palmer@oracle.com>
@@ -79,20 +79,20 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  suspectscore=0 adultscore=0 phishscore=0 mlxscore=0 malwarescore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2504070000
  definitions=main-2505070170
-X-Proofpoint-GUID: y-jpGnTMPD1ON-KTbPv6PS_qEVWrMpO6
-X-Authority-Analysis: v=2.4 cv=aJHwqa9m c=1 sm=1 tr=0 ts=681baab7 cx=c_pps
+X-Proofpoint-GUID: _2tMPaJ0QP-qL1d5LqUN9hFUY-pe3Ky-
+X-Authority-Analysis: v=2.4 cv=aJHwqa9m c=1 sm=1 tr=0 ts=681baab2 cx=c_pps
  a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
  a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=20KFwNOVAAAA:8 a=yPCof4ZbAAAA:8
- a=itFYg6Kn0ubi6tYoDH8A:9 a=3ZKOabzyN94A:10
+ a=DFJfL8PK9GXO38_WzYsA:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: y-jpGnTMPD1ON-KTbPv6PS_qEVWrMpO6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDE3MCBTYWx0ZWRfX5k1GpoYdtTyi
- +Wu90rGrvUqGCtd4CrdKy1zcsLtX3qzhpO75NFQIzVx1Nt2xAkTbaZ+Cyt4xumgvnAtpoVekKf9
- axcArJkzZLgeamdue6BwJK107wCVxj9TyyPTsM3sBNLvniecuCQRlK91ePzLYw2hFtVWl2UxRqm
- j0ijYvRipYXImhA7iMcA2NpP1LHNuIm1A5vRaKs9vPPea9qn9rJKIDAb09ZNCXrKH/GT0Iw2Jvo
- aNurD7lN6bFpqcz8A60R9h4OQybLQog19Qrp2clSuVQWCGcIv7z/YiOxEA5VVrBa7HF3oIhWZGv
- cWs+w4iqZySlJ9050PhJMvmNyGgG9dzL2ADPaPecwESylH3gklaGB2eqk/EEwIfGmbe6+x5p6/N
- glQvNLLdCYxWSwAgTdQwZ1gB3Uadrvz3wymXnEisXoeMx0OPKsIIIi/T9qqXYmuubaecD5+P
+X-Proofpoint-ORIG-GUID: _2tMPaJ0QP-qL1d5LqUN9hFUY-pe3Ky-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA3MDE3MCBTYWx0ZWRfX7tKwoaWoOxNd
+ 43jBKpj0ADxWTePt62cC7iJCWeVa0weeYU57OeGGhejjWNbHZUtgcJZAM9i4qHudVF1rvYLBtDP
+ 2/vo/S3a9ged625HzL+rKAYvAFkhUEAZP8fCbpUrkCsC83NSlhnKJY7V/c5EBHOevftBTSlU1cF
+ B9ZjXPcL/76k8Yk5dB3YkxHjVbxuacwoZMAIavZ80Dz928904E28VO/zDWtfdy4IMJiQzLbKu8I
+ A4Mpq+IUaJWBl5YBfNF7jsy0tCYbcjIbqQgBIScXUUH7wjuVyikA0//yplLY4wFZJOLKV2eXOge
+ 6NnXuMhmM8qJAuNp5TIJgeYK/ExCr6XkSVTnC78tYQ+/v8UyeuEZ0yPE23RZheonXq2Ls5+FO6g
+ gfWhT4IiRaqrp3buykjIm/LIHw7F14hL0fcognCyKQWbzcUcTxuWj2/5LVkFdKl/mdIXMH9x
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -32
@@ -120,44 +120,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Eugenio Pérez <eperezma@redhat.com>
 
-Since commit f6fe3e333f ("vdpa: move memory listener to
-vhost_vdpa_shared") this piece of code repeatedly assign
-shared->listener members.  This was not a problem as it was not used
-until device start.
+The backend does not reset them until the vdpa file descriptor is closed
+so there is no harm in doing it only once.
 
-However next patches move the listener registration to this
-vhost_vdpa_init function.  When the listener is registered it is added
-to an embedded linked list, so setting its members again will cause
-memory corruption to the linked list node.
-
-Do the right thing and only set it in the first vdpa device.
+This allows the destination of a live migration to premap memory in
+batches, using VHOST_BACKEND_F_IOTLB_BATCH.
 
 Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
 Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 ---
- hw/virtio/vhost-vdpa.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/virtio/vhost-vdpa.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 450f68f117..de834f2ebd 100644
+index 6b242ca56a..e9826ede2c 100644
 --- a/hw/virtio/vhost-vdpa.c
 +++ b/hw/virtio/vhost-vdpa.c
-@@ -633,7 +633,6 @@ static int vhost_vdpa_init(struct vhost_dev *dev, void *opaque, Error **errp)
- 
+@@ -634,6 +634,12 @@ static int vhost_vdpa_init(struct vhost_dev *dev, void *opaque, Error **errp)
      v->dev = dev;
      dev->opaque =  opaque ;
--    v->shared->listener = vhost_vdpa_memory_listener;
+     v->shared->listener = vhost_vdpa_memory_listener;
++
++    ret = vhost_vdpa_set_backend_cap(dev);
++    if (unlikely(ret != 0)) {
++        return ret;
++    }
++
+     vhost_vdpa_init_svq(dev, v);
  
-     ret = vhost_vdpa_set_backend_cap(dev);
-     if (unlikely(ret != 0)) {
-@@ -675,6 +674,7 @@ static int vhost_vdpa_init(struct vhost_dev *dev, void *opaque, Error **errp)
-     vhost_vdpa_add_status(dev, VIRTIO_CONFIG_S_ACKNOWLEDGE |
-                                VIRTIO_CONFIG_S_DRIVER);
- 
-+    v->shared->listener = vhost_vdpa_memory_listener;
-     return 0;
- }
- 
+     error_propagate(&dev->migration_blocker, v->migration_blocker);
+@@ -1563,7 +1569,6 @@ const VhostOps vdpa_ops = {
+         .vhost_set_vring_kick = vhost_vdpa_set_vring_kick,
+         .vhost_set_vring_call = vhost_vdpa_set_vring_call,
+         .vhost_get_features = vhost_vdpa_get_features,
+-        .vhost_set_backend_cap = vhost_vdpa_set_backend_cap,
+         .vhost_set_owner = vhost_vdpa_set_owner,
+         .vhost_set_vring_endian = NULL,
+         .vhost_backend_memslots_limit = vhost_vdpa_memslots_limit,
 -- 
 2.43.5
 
