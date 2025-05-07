@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCE8DC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF8F8C3ABBF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 18:55:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCjpE-0006MD-K5; Wed, 07 May 2025 14:49:00 -0400
+	id 1uCjv6-0000Ip-Dd; Wed, 07 May 2025 14:55:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uCjpA-00067D-Pr
- for qemu-devel@nongnu.org; Wed, 07 May 2025 14:48:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uCjp4-0004xj-Lx
- for qemu-devel@nongnu.org; Wed, 07 May 2025 14:48:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746643727;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gvCar0xROiw1iU5Yy0nYM9lHzXpN822daM0uYf6JOLg=;
- b=NljT3t958V9ee2bH3H/axOykZth1DTSPegvczlI+7JaklulXWgXfw1/Nmc6z2AJBrL9kQJ
- gK2tAfOop46ktDBiU3v7EwLjeGA9a7STWo/syNcbxdIYadf8e1FlxonkEtJh5/7alonST0
- UHll464Y49V+evyelCXOZs7VINq/Ywk=
-Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
- [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-142-NkkuktY1OpOyt_Ndx4nwdg-1; Wed, 07 May 2025 14:48:46 -0400
-X-MC-Unique: NkkuktY1OpOyt_Ndx4nwdg-1
-X-Mimecast-MFC-AGG-ID: NkkuktY1OpOyt_Ndx4nwdg_1746643726
-Received: by mail-il1-f198.google.com with SMTP id
- e9e14a558f8ab-3d93e2ac7fbso2234765ab.1
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 11:48:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uCjv4-0000Ic-Lm
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 14:55:02 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uCjv2-0005t0-Vq
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 14:55:02 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-7403f3ece96so409578b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 11:55:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746644099; x=1747248899; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IacWndUOkI5TB6QaH0d6nRN/cvG4xaq881JfTh/w1bE=;
+ b=fZiFFXmOpmLhSa6kdnxoTQfGxGUScHOdxTTOySMQCRGdRGzgm2qP71MrjYC0viVYxp
+ 8M479fdW87U8f5ELKG54JyRdyZZTXXOOKvpXHX3NwIPrpVrLBpIXhXCCJRTuGpKy2wFh
+ WykAVpHNlRt5RmcHqAgnm6VghABDfl+fk4OfPbIA/lGSeMP3KBd+yw+9ixCcSgUJhIs9
+ GAG4VCN7ZXQ/3vGZtQrpZC/UWhO+U6xRN8HRoUA7nBHR30Kwxl8duLaWVrkRd2FlSikO
+ 1L1pymX64B1BYztz4JpQtmii3sU7Xr4EmLU+3zkksM4f21gZ94iLBzXNhObxwr4swKpR
+ XaQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746643725; x=1747248525;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gvCar0xROiw1iU5Yy0nYM9lHzXpN822daM0uYf6JOLg=;
- b=sn9kG95yioCqL8N5v2+WG/7QGyJuO5N05VEo8XNq8BQPDciSPNknttJHm3mdRyIK8K
- nl6uGGLGzPPcbFleoHCM2+qEubBIRDKeQnDyMaTCoqhbmaYj+Whvd1aSXvK/feIN9CXv
- lttUZCjXg4+dTCVmjgnky4Ornic17Q6MqmjkFhpD7cZF/xKuE8/eUV2m+UWQuCHP3zJI
- oKtKhGi70qgzcp7TR5B1C89xIjTI6I6opuOL4u7dnKrJN87K3sw2x0Idn+fNOagd4lk2
- YI3xgvU9NivDKsolJ2tGgW3D60w5wTvwGXLZsL0zlvBnk05Y/ukTXk+V8hKb2JjoPMVt
- e6YQ==
-X-Gm-Message-State: AOJu0YxQ9cOL74CnRg+eAUTYMldlGPlZ9R2rL2KSU6O0DoeWA7lU55xG
- ipata3bA8rdttMv52LQUgSOBxKv7YtxXupWcfWh/0VJzyqasWAtf9TuBgk523jFte8U9Wgjja2p
- B2XsQjx+U078gX53Erj1Rczs4goSxpb9Q+H7MoHI9Ntd4AksaMXUoOBL1w5xf
-X-Gm-Gg: ASbGncvVCy0uur147PWCx5UXh/2hxCdVyuDzFGiVe6s7nWl6QniTJxJOonYaKBXt7ul
- XqCZdk/WnmzqqmIAEc/xttbxhzOLbyUmpn3LbTsWEhxVJMbHbsh+RBsoOKAQYjeoPxG8cDxuNpC
- FRxSZCMqKnbtQBn8hlWcN3Eo6H9Wx4iIdQpn9G1iH4oNvWHIofXQT9+jbprWfyiMoPpHGs68LWK
- 6HHoLE0zgPm5iSEGgHPnEjrkxwAmdp11wXD85N5F2a0weZ50N/Szr2ZR/Y3nhyShH2QHNJ/5c2N
- xho=
-X-Received: by 2002:a05:6e02:1d93:b0:3d4:3db1:77ae with SMTP id
- e9e14a558f8ab-3da7392d0a4mr56416725ab.18.1746643725067; 
- Wed, 07 May 2025 11:48:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHRnAnmf2kVSII8hObbke+fRmUVXYCsiqbzcPebeNHljAP4HQsaAOCAtSrpM3g6SHV11CipeA==
-X-Received: by 2002:ac8:7c50:0:b0:48d:c8fc:b21f with SMTP id
- d75a77b69052e-4922574deabmr56938571cf.11.1746643714095; 
- Wed, 07 May 2025 11:48:34 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-49221270288sm18206781cf.24.2025.05.07.11.48.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 11:48:33 -0700 (PDT)
-Date: Wed, 7 May 2025 14:48:31 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/3] ci: Re-enable python subtests in qtest migration suite
-Message-ID: <aBuq_zZb12cGdVmW@x1.local>
-References: <20250507155835.31074-1-farosas@suse.de>
- <20250507155835.31074-2-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1746644099; x=1747248899;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IacWndUOkI5TB6QaH0d6nRN/cvG4xaq881JfTh/w1bE=;
+ b=Gw7JZGCTssl3ggerbz/6l2kxY6PDiVXLPd7uMpMWwi/ZldFEIO7+ei9Ad+gy+zyho4
+ WkK4VB2u4sWzIz3aip7cr6AeUYyNdKu6EyPe6X45k6c4tEuEv8batIqA6yv/N5mPSYW6
+ h683hp9Dzp4Jx0H1ZbABef7ehETYZFcJX9keC5yY0UQi1f9XbEb1RBwn3Y+/eN/0VVkH
+ 5FRgGmB9kW/L0D3m3BV7i8yZB2VVuC3HDsQE8UPXYGskkFFYxOYio5c86SAB1u3ZPTdY
+ d1Ex87COFcb+/tpT6lX4+dV4Cn2k9rmt0/vv8XsP3R0pqE4hPI1l4r4kjtQkhvEoOcrH
+ 6q1A==
+X-Gm-Message-State: AOJu0YxhgUCnJfqc5FroRCn0Dgtc+i0BD4zenA+O2Raxb18j3lQI7mlk
+ UEY2mm9dzv9ucs0jEA+tIieB86Je+C/1Hp9poFJEOhiGiUoswd98+RiZxF/J008=
+X-Gm-Gg: ASbGncsnK5AWaumzQUgBbAaoOdLMZA5qBCcgrnFL8AxvYjRjaTq2c3zAbXCbh8qD3Lt
+ uMrW+QICV1NvQuFTgWVRlLhMvmCqtth/3jacIak4rNYM3oXep0vtnMJUOJw3Tlr9v2FO8nvR5pW
+ A1LgGaBotIHWEvVM3EXuC3ET0ri1KyNtE5pbV+z7MU69Dwnsav/Okf+PBfrBpjkMcH0eB93ZMF2
+ E0Gw+0VUAa0RYKiKogpd7Ee5OSctfXNBB3ZQNP2NN2xgwXirucfAdc7eB9pF3DkND7bLEpaPwnu
+ nmjkn6iYzumxElhEkIDpXRQA1APlIIxEv4aDEBDLntjjsBMmRTgixA==
+X-Google-Smtp-Source: AGHT+IFU/LqN5lKQiutif7QZsj2f39F/UO2YyyPfZKyWFzuN6xvsjQ1aJhpUwpUNgH3Nsbe/iLHBEQ==
+X-Received: by 2002:a05:6a00:e84:b0:736:5664:53f3 with SMTP id
+ d2e1a72fcca58-7409cfd500amr5378762b3a.15.1746644099436; 
+ Wed, 07 May 2025 11:54:59 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b1fb3920e67sm9930552a12.7.2025.05.07.11.54.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 May 2025 11:54:58 -0700 (PDT)
+Message-ID: <273a6cc7-9123-4b9a-8934-ed9b668bf130@linaro.org>
+Date: Wed, 7 May 2025 11:54:58 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250507155835.31074-2-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/3] single-binary: make QAPI generated files common
+Content-Language: en-US
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, stefanha@redhat.com, 
+ Michael Roth <michael.roth@amd.com>, pbonzini@redhat.com,
+ berrange@redhat.com, peter.maydell@linaro.org, thuth@redhat.com,
+ jsnow@redhat.com, philmd@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, devel@lists.libvirt.org,
+ Victor Toso <victortoso@redhat.com>
+References: <20250424183350.1798746-1-pierrick.bouvier@linaro.org>
+ <87a584b69n.fsf@pond.sub.org>
+ <5b21965d-2428-454c-9dd7-266987495abd@linaro.org>
+ <87a583789z.fsf@pond.sub.org>
+ <25bb4527-f145-4d9c-8f91-a962bfa14a6f@linaro.org>
+ <8734drpg4j.fsf@pond.sub.org>
+ <f2972cb4-4266-4835-9548-706983dc611f@linaro.org>
+ <87msbokg7y.fsf@pond.sub.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <87msbokg7y.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,20 +112,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 07, 2025 at 12:58:33PM -0300, Fabiano Rosas wrote:
-> The migration compatibility tests have been running with the PYTHON
-> variable unset to avoid running a broken test. The faulty test has
-> since been removed, so we can enable the python tests once again.
+On 5/7/25 12:55 AM, Markus Armbruster wrote:
+
+[...]
+
+>> - First, it's already broken because we rely on ifdef that won't be
+>> there in Rust or Go.
 > 
-> Aside from the broken test, only one other test uses python and I have
-> been running it locally ever since, so this commit should not expose
-> any new bug.
+> I don't think it's broken.  QAPI 'if' translates straightforwardly to C
+> #if, but that doesn't mean it cannot be translated to conditional
+> compilation / metaprogramming in other languages.
 > 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> In fact, the value of 'if' used to be C constant expressions suitable
+> for use with #if, and we changed it to its current form specifically to
+> enable Rust work, in merge commit c83fcfaf8a5.  Marc-André's was trying
+> to develop Rust bindings back then, and if I remember correctly this
+> change was enough to let him implement 'if' with Rust.
+>
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Sure, I didn't mean "this approach is doomed", simply that it needs 
+changes, the same way code doing a runtime check would need changes as well.
 
--- 
-Peter Xu
+>> - Second, it's code, we can just change it later if needed.
+> 
+> True!
+> 
+>> - Third, those json are consumed only by QEMU (right?), so we are free
+>> to write/modify them as we want.
+> 
+> Also true.
+> 
+>> The only thing that must stay the same is what we expose to the consumer
+>> in the schema, and which commands we expose in qemu.
+> 
+> We may evolve the external interface as long as we honor our
+> compatibility promise.
+> 
+> You're aiming for "no change at all" there.  I understand why that's
+> desirable.  But if it should turn out that a bit of compatible change
+> simplifies the job, we can take the simpler route.
+>
 
+I have a local prototype doing what was described: introduce a 
+runtime_if, additional to if (no worries, the name can be changed 
+later), exposing schema parts conditionnally, and same for visiting 
+types and registering commands.
+It's not too ugly, and easy to combine compilation if and runtime if 
+together.
+
+I should be able to post it next week.
+
+> [...]
+> 
+
+Regards,
+Pierrick.
 
