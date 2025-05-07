@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 755D0C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 21:15:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A76C3ABBF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 21:15:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCm5Q-0006Iw-AO; Wed, 07 May 2025 17:13:53 -0400
+	id 1uCm4w-0006CN-Lf; Wed, 07 May 2025 17:13:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uCm4y-0006Cc-9U
- for qemu-devel@nongnu.org; Wed, 07 May 2025 17:13:24 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1uCm4k-00068X-EG
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 17:13:10 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uCm4u-0006F5-DZ
- for qemu-devel@nongnu.org; Wed, 07 May 2025 17:13:23 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-7376e311086so487508b3a.3
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 14:13:17 -0700 (PDT)
+ id 1uCm4h-0006C3-OT
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 17:13:10 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-73bf1cef6ceso441768b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 14:13:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746652396; x=1747257196; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746652386; x=1747257186; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EhkUBLDgBKrW8ClWiq8/+jgtiQv4CNEKhBjqg5DTUHo=;
- b=Y6mxyPW5ml3b8gVT06K4UPsx97lWFlX+rmUmVgpC45CmUzazOUJPWySWLQRphxcvgw
- hvwgnvak2csS/BTLfd17X+WSdK98S884sG7DWf4EoVGICD/UjGCoKcLZl3T0W9u1VWVq
- Z8tEZ0NjgaGVmUCT1hAfrld8ugkzRI0NDjWF2souEs02CF8s6YaQCZDuIAZhNBhUJ7P7
- D+yJisvJOsiNnrYso7xeDk3YqMCdZF2YU2/Jr55JKlTyL6qwkwLzof4RSqMH/iztkbkl
- htVmrdCYY5YtccGbPh3rbi3smHuPksouD4rrNSNLlJdQ0EZWVIdlb1yKpYnr3sJRlK7O
- 0SfQ==
+ bh=aIvXrHcg71Zxao4OnBZBdLddOM/XHAwRxf7Qh2NnRSQ=;
+ b=x6UTs173Zsg+PyAW7Gq+KApfI5/CoV8rgHHOhkxh186zlX+j1JqOE4MluSfriSqUSX
+ R8LImXYlx2ba6NvwvL2VD3GoXuqcS1+sgyWVWJAjimSvENQd8OGWM4QcFyIMqJNX+5km
+ 0TmkP332+pjgC2JzHmjKkBOt+JIHRXPA5DvXpqeY4BU7euvYQoJ34iBiK+uqUplIQcCm
+ ANbX7tc5Dkpm4AhRcYb9p725/bOApvea/NbecWl6Tb7oqLzoAWWhwyHkjdCOQ3ZiPxw1
+ 4C54mHVzrKa61ba8Y4/1vTUifsWatKUZeBG49beNAMmTthSXyLgEh6z+ELoTKkSSTT8e
+ 603w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746652396; x=1747257196;
+ d=1e100.net; s=20230601; t=1746652386; x=1747257186;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EhkUBLDgBKrW8ClWiq8/+jgtiQv4CNEKhBjqg5DTUHo=;
- b=N3jpN4OQMiap2qNWBp3UV2LoMcYFAhOs+tTlB+yGsIWcv/lxZwv98S59m5ymqczc+k
- dzX/q54wy0obzPCevIitOkKgaR0jvpaRO6rIf282tPT8Nr9pybRL5J8aMgxuPinOGnmW
- XSmwfNBa9k8f5NPgkpdhwWce8B3aV3DzxGJCaXSIth/a7OqwAMmMK3igjdb6ydHFl/Xa
- rEe11LxUYq/aioye2fyYWvfGM2lV2XHJBSo20VsC0MPmaC/9Sp5r+N2qtyu6KNtFPmqy
- y7ecqH+5TK9LVyk56Y35Bpmomvq5r+5f/F0VDpwoFhjkGtn1KGtbLH4EDerpAj0YvGW6
- M5Jg==
-X-Gm-Message-State: AOJu0YwgLTijMLKYYAEINqidDoxtvOIvJzovOcu/wAspKUVZi5FOPZKq
- 81qiX7SpmxAMNY3Q1MLDLZ98GsTlooppU44BQp3KzK8uqyKsfhRCVXGnQAU+UjdN6usywgk9BPx
- e
-X-Gm-Gg: ASbGnctw3JFei/r8kKYMpPXsZMlCZmu3ZQ1zF+GpgTY0YR2kuMh0fr6lJclLXtV0Evo
- FSEr/r2AcVqxJZBhvPB0nn2wTQbvgscxARaLP+Y4z96mS4jHFwAo4l5hKxGTr7MJFVH9Jagw7M3
- yg6490UppzlnBMT4JpIrSL3FPvxdDfUC1IcL00s766otKJHCmBfelkSJkzIqbv3ymggQ7ewA7Op
- 3QEgtnAyIb5+x4ZrBijq22thg8oACpRESQ0SU9OY9tmgJhYgMxW6iuP6Jg3N2Wzo7aWXUICjegt
- Q97tE2TtTcH4fpWhxEHLoG171CAkWha6jCKYa2THur+MAsLiX3wzSDtuBgrKa+1Nk4/YWwq0evQ
- =
-X-Google-Smtp-Source: AGHT+IEkyN1AOxvX2zM9z6tueTQqxJqU9ugv8Utpo/saB/lEsQKO24mDzhDoRWNQR/5kGe7+cPillA==
-X-Received: by 2002:a05:6a21:3a8f:b0:1f5:9024:324f with SMTP id
- adf61e73a8af0-2159b01b320mr1129534637.31.1746652396109; 
- Wed, 07 May 2025 14:13:16 -0700 (PDT)
+ bh=aIvXrHcg71Zxao4OnBZBdLddOM/XHAwRxf7Qh2NnRSQ=;
+ b=tqs5FhnFLqhIrcgZd7C0Wttio9V9EHQPA4CnlhtHqTDxxIkM16ZpRevq7Mw/bntnRB
+ 34GW6cvc7xHY2nHvGq5IqY/fI6V4/n+HhtyYWrkCmQHNUzFBsDZsv8PDfiQnAfpj1Xcm
+ vE1uZUrCr/wyZ+xog2I96wGX7UiBUfeCQBXVoCY1z/4yoEx4yliDe4PDfVt9GIaXKJu0
+ wQlZKEL7gV7My83sSiaXCaJ+gBaLAslY+oh0k6FM2l+c/8LwRNgSpwyLWRqREJvfrjmE
+ A50U32i0B5l0fQCvUHOIVTmoLajw7Sfe9Opb73ISq9OnKZk/tsgXMEtbxUIpRuD0uMY7
+ 8F+A==
+X-Gm-Message-State: AOJu0YxzTDki1AXlv4MQYCfS39Wyd2D7Fm6ltm9wkWk8FhY9qNbi7FwU
+ 264GaDN2jwHr26+pOgkeDO4ftlBACGTJuQIGq5zqClSPWyzAfcJd7OHdVCxPNp0exAtlcJ2Aa8W
+ 4
+X-Gm-Gg: ASbGnctICzxlvUCziaNF+MtNMcy3ltKdEABCwFTieefCLmpQ/KxnjCyeL24bMJF/5if
+ diNuG8HGs6EqA2bqzs0xCTw8NmyBD0WKSH29kazEmtZ7Y1pG5MaYQGyV75avLavMRq8tQVEIQcy
+ 7cqx1aPUSa2vbkUUgVHxBat+UpPg1QNfY1FIteALszx1SoEl3H4TliVBR6DXZH38qTs3C/kzO96
+ jF/O0IH77xTme47O8oJCbR2YUjV/YGH4jaagrLd8wreUzNUrGYTUsEyMN4umQgkYx/bZLQ54BfD
+ olG3By9br1YjdYx1wTFvzz/+sGnFscXpmSlZCCPgo7Ooeyk4+UQARF1/jY9F+zk0W1iHQeWu7Au
+ I+rV+ZlWftg==
+X-Google-Smtp-Source: AGHT+IGK9ZZNU2vHyKqGTp/0VgQf0BUI3E/xlBtqr+1LNFKjnAxmzfSatpSpj5QunAs5HGlN6ujNlQ==
+X-Received: by 2002:a05:6a21:3946:b0:1f0:e42e:fb1d with SMTP id
+ adf61e73a8af0-2148d312247mr7721982637.36.1746652386230; 
+ Wed, 07 May 2025 14:13:06 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7405902154dsm12255251b3a.90.2025.05.07.14.13.15
+ d2e1a72fcca58-7405902154dsm12255251b3a.90.2025.05.07.14.13.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 14:13:15 -0700 (PDT)
+ Wed, 07 May 2025 14:13:05 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 17/24] target/m68k: Split gen_ea_mode_fp for load/store
-Date: Wed,  7 May 2025 14:12:52 -0700
-Message-ID: <20250507211300.9735-18-richard.henderson@linaro.org>
+Cc: laurent@vivier.eu
+Subject: [PATCH v5 05/24] target/m68k: Update FPSR for FMOVECR
+Date: Wed,  7 May 2025 14:12:40 -0700
+Message-ID: <20250507211300.9735-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250507211300.9735-1-richard.henderson@linaro.org>
 References: <20250507211300.9735-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,206 +100,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace with gen_load_mode_fp and gen_store_mode_fp.
-Return bool for success from the new functions.
-Remove gen_ldst_fp and ea_what as unused.
+This instruction sets CC and EXC bits just like any other.
+So far we do not properly emulate inexact for the various
+rom entries, but we can certainly update CC correctly.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/translate.c | 125 +++++++++++++++++++++-------------------
- 1 file changed, 65 insertions(+), 60 deletions(-)
+ target/m68k/fpu_helper.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 2694620375..a6afde7f49 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -330,12 +330,6 @@ static inline void gen_store(DisasContext *s, int opsize, TCGv addr, TCGv val,
-     }
- }
- 
--typedef enum {
--    EA_STORE,
--    EA_LOADU,
--    EA_LOADS
--} ea_what;
--
- /* Read a 16-bit immediate constant */
- static inline uint16_t read_im16(CPUM68KState *env, DisasContext *s)
+diff --git a/target/m68k/fpu_helper.c b/target/m68k/fpu_helper.c
+index deae94b0ee..e63fd3ec11 100644
+--- a/target/m68k/fpu_helper.c
++++ b/target/m68k/fpu_helper.c
+@@ -425,6 +425,7 @@ void HELPER(ftst)(CPUM68KState *env, FPReg *val)
+ void HELPER(fconst)(CPUM68KState *env, FPReg *val, uint32_t offset)
  {
-@@ -1002,60 +996,38 @@ static void gen_store_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
-     }
+     val->d = fpu_rom[offset];
++    HELPER(ftst)(env, val);
  }
  
--static void gen_ldst_fp(DisasContext *s, int opsize, TCGv addr,
--                        TCGv_ptr fp, ea_what what, int index)
--{
--    if (what == EA_STORE) {
--        gen_store_fp(s, opsize, addr, fp, index);
--    } else {
--        gen_load_fp(s, opsize, addr, fp, index);
--    }
--}
--
--static int gen_ea_mode_fp(DisasContext *s, int mode, int reg0, int opsize,
--                          TCGv_ptr fp, ea_what what, int index)
-+static bool gen_load_mode_fp(DisasContext *s, uint16_t insn, int opsize,
-+                             TCGv_ptr fp, int index)
- {
-+    int mode = extract32(insn, 3, 3);
-+    int reg0 = REG(insn, 0);
-     TCGv reg, addr, tmp;
-     TCGv_i64 t64;
- 
-     switch (mode) {
-     case 0: /* Data register direct.  */
-         reg = cpu_dregs[reg0];
--        if (what == EA_STORE) {
--            switch (opsize) {
--            case OS_BYTE:
--            case OS_WORD:
--            case OS_LONG:
--                gen_helper_reds32(reg, tcg_env, fp);
--                break;
--            case OS_SINGLE:
--                gen_helper_redf32(reg, tcg_env, fp);
--                break;
--            default:
--                g_assert_not_reached();
--            }
--        } else {
--            tmp = tcg_temp_new();
--            switch (opsize) {
--            case OS_BYTE:
--            case OS_WORD:
--            case OS_LONG:
--                tcg_gen_ext_i32(tmp, reg, opsize | MO_SIGN);
--                gen_helper_exts32(tcg_env, fp, tmp);
--                break;
--            case OS_SINGLE:
--                gen_helper_extf32(tcg_env, fp, reg);
--                break;
--            default:
--                g_assert_not_reached();
--            }
-+        tmp = tcg_temp_new();
-+        switch (opsize) {
-+        case OS_BYTE:
-+        case OS_WORD:
-+        case OS_LONG:
-+            tcg_gen_ext_i32(tmp, reg, opsize | MO_SIGN);
-+            gen_helper_exts32(tcg_env, fp, tmp);
-+            break;
-+        case OS_SINGLE:
-+            gen_helper_extf32(tcg_env, fp, reg);
-+            break;
-+        default:
-+            g_assert_not_reached();
-         }
--        return 0;
-+        return true;
-+
-     case 1: /* Address register direct.  */
--        return -1;
-+        return false;
- 
-     case 7: /* Other */
--        if (reg0 == 4 && what != EA_STORE) {
-+        if (reg0 == 4) {
-             switch (opsize) {
-             case OS_BYTE:
-                 tmp = tcg_constant_i32((int8_t)read_im8(s->env, s));
-@@ -1097,7 +1069,7 @@ static int gen_ea_mode_fp(DisasContext *s, int mode, int reg0, int opsize,
-             default:
-                 g_assert_not_reached();
-             }
--            return 0;
-+            return true;
-         }
-         /* fall through */
- 
-@@ -1108,20 +1080,55 @@ static int gen_ea_mode_fp(DisasContext *s, int mode, int reg0, int opsize,
-     case 6: /* Indirect index + displacement.  */
-         addr = gen_lea_mode(s, mode, reg0, opsize);
-         if (IS_NULL_QREG(addr)) {
--            return -1;
-+            return false;
-         }
--        gen_ldst_fp(s, opsize, addr, fp, what, index);
--        return 0;
-+        gen_load_fp(s, opsize, addr, fp, index);
-+        return true;
-     }
-     g_assert_not_reached();
- }
- 
--static int gen_ea_fp(CPUM68KState *env, DisasContext *s, uint16_t insn,
--                       int opsize, TCGv_ptr fp, ea_what what, int index)
-+static bool gen_store_mode_fp(DisasContext *s, uint16_t insn, int opsize,
-+                              TCGv_ptr fp, int index)
- {
-     int mode = extract32(insn, 3, 3);
-     int reg0 = REG(insn, 0);
--    return gen_ea_mode_fp(s, mode, reg0, opsize, fp, what, index);
-+    TCGv reg, addr;
-+
-+    switch (mode) {
-+    case 0: /* Data register direct.  */
-+        reg = cpu_dregs[reg0];
-+        switch (opsize) {
-+        case OS_BYTE:
-+        case OS_WORD:
-+        case OS_LONG:
-+            gen_helper_reds32(reg, tcg_env, fp);
-+            break;
-+        case OS_SINGLE:
-+            gen_helper_redf32(reg, tcg_env, fp);
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+        return true;
-+
-+    case 1: /* Address register direct.  */
-+        return false;
-+
-+    case 2: /* Indirect register */
-+    case 3: /* Indirect postincrement.  */
-+    case 4: /* Indirect predecrememnt.  */
-+    case 5: /* Indirect displacement.  */
-+    case 6: /* Indirect index + displacement.  */
-+    case 7: /* Other */
-+        addr = gen_lea_mode(s, mode, reg0, opsize);
-+        if (IS_NULL_QREG(addr)) {
-+            return false;
-+        }
-+        gen_store_fp(s, opsize, addr, fp, index);
-+        return true;
-+    }
-+    g_assert_not_reached();
- }
- 
- typedef struct {
-@@ -4880,8 +4887,7 @@ DISAS_INSN(fpu)
-     case 3: /* fmove out */
-         cpu_src = gen_fp_ptr(REG(ext, 7));
-         opsize = ext_opsize(ext, 10);
--        if (gen_ea_fp(env, s, insn, opsize, cpu_src,
--                      EA_STORE, IS_USER(s)) == -1) {
-+        if (!gen_store_mode_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
-             gen_addr_fault(s);
-         }
-         gen_helper_ftst(tcg_env, cpu_src);
-@@ -4902,8 +4908,7 @@ DISAS_INSN(fpu)
-         /* Source effective address.  */
-         opsize = ext_opsize(ext, 10);
-         cpu_src = gen_fp_result_ptr();
--        if (gen_ea_fp(env, s, insn, opsize, cpu_src,
--                      EA_LOADS, IS_USER(s)) == -1) {
-+        if (!gen_load_mode_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
-             gen_addr_fault(s);
-             return;
-         }
+ typedef int (*float_access)(CPUM68KState *env, uint32_t addr, FPReg *fp,
 -- 
 2.43.0
 
