@@ -4,80 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28B51C369DC
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 07:17:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C15BC3ABC0
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 07:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCZ24-0008WG-LY; Wed, 07 May 2025 03:17:32 -0400
+	id 1uCZFW-0002T5-OU; Wed, 07 May 2025 03:31:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCZ23-0008Vr-9S
- for qemu-devel@nongnu.org; Wed, 07 May 2025 03:17:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1uCZFO-0002ES-5z; Wed, 07 May 2025 03:31:18 -0400
+Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCZ21-0005sH-D1
- for qemu-devel@nongnu.org; Wed, 07 May 2025 03:17:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746602248;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ZIkCvJIuf4jYdmTNfAgY6Dihn0ApFOiX54QYNWVmpBY=;
- b=h6vKzav1PpIbpkiDiY8bwxQN437DqfocYCQFUqV0PaAnwrAuYUwegGWA9gjV3Nyg3zA6zX
- 4zHi4GIGE8kFEQEvsbl2drsayKTKdpJO0mNEXkysO4f0izr3mvMqeSGDYQxHsOUXQdtBjX
- /eKnTxTtkBVkkkbp3dod6TPtKi543Uk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-5YgLfgqzN2az4tHIVNc9xQ-1; Wed,
- 07 May 2025 03:17:25 -0400
-X-MC-Unique: 5YgLfgqzN2az4tHIVNc9xQ-1
-X-Mimecast-MFC-AGG-ID: 5YgLfgqzN2az4tHIVNc9xQ_1746602242
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B0571800446; Wed,  7 May 2025 07:17:22 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A85019560A7; Wed,  7 May 2025 07:17:21 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 78E8F21E66C2; Wed, 07 May 2025 09:17:18 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Donald Dutile <ddutile@redhat.com>
-Cc: Shameer Kolothum via <qemu-devel@nongnu.org>,  qemu-arm@nongnu.org,
- Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- eric.auger@redhat.com,  peter.maydell@linaro.org,  jgg@nvidia.com,
- nicolinc@nvidia.com,  berrange@redhat.com,  nathanc@nvidia.com,
- mochs@nvidia.com,  smostafa@google.com,  linuxarm@huawei.com,
- wangzhou1@hisilicon.com,  jiangkunkun@huawei.com,
- jonathan.cameron@huawei.com,  zhangfei.gao@linaro.org
-Subject: Re: [PATCH v2 1/6] hw/arm/smmuv3: Add support to associate a PCIe RC
-In-Reply-To: <e02e884b-0f3d-4426-8a67-2cbd23e80e8c@redhat.com> (Donald
- Dutile's message of "Tue, 6 May 2025 16:48:57 -0400")
-References: <20250502102707.110516-1-shameerali.kolothum.thodi@huawei.com>
- <20250502102707.110516-2-shameerali.kolothum.thodi@huawei.com>
- <877c2ut0zk.fsf@pond.sub.org>
- <e02e884b-0f3d-4426-8a67-2cbd23e80e8c@redhat.com>
-Date: Wed, 07 May 2025 09:17:18 +0200
-Message-ID: <87frhglwjl.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1uCZFL-0007PG-Kf; Wed, 07 May 2025 03:31:17 -0400
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal
+ [10.202.2.44])
+ by mailfout.phl.internal (Postfix) with ESMTP id 2A42413800E9;
+ Wed,  7 May 2025 03:31:11 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-04.internal (MEProxy); Wed, 07 May 2025 03:31:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:message-id:mime-version
+ :reply-to:subject:subject:to:to; s=fm2; t=1746603071; x=
+ 1746689471; bh=pD8j52EvOhwtpXpiBU4PvI6djNSqJ08++4z0SAYwOL0=; b=B
+ oRoFJXNiZPe+2VcEZaNSTx9FQxYxTkg/dK+unfl4Dw/SpwEAWdd8GGnGqZZM7ccR
+ zihHZUGrZKuassJdg/Rq/UcyvAi9uI/B4MeyGDs2X0n3mAojNzp7CbnQYwbnG3kG
+ mNquu2mMWuCJmyioBLWaF48Ai1lSN3Oa3Kbedc1tqQgzC5geeQyqlAcsZ/N+Zrk1
+ e7UxFXmx9giIeCA5CCWqdzSmXkiY3XZsN79RlW1dKGWf1UoMB51Bun16uwhj82lU
+ BRjnGxqzCL2T75UUC6jZ6NNtOZeL6KLmIyQbQKeNY7lqbZTByCgsgj5W0HNNU0cY
+ 9ul7NJkqXx2WBSbthPp2A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm3; t=1746603071; x=1746689471; bh=pD8j52EvOhwtpXpiBU4PvI6djNSq
+ J08++4z0SAYwOL0=; b=Ip5Jj+Au8R4hwdet3RPtwz4zGXx0b0vPRcK46hUIiYvP
+ xfpPrzcpgWO3rGu/pUbAQmNlcRnULHzEW63NkcX1zUraF4HIEQIECtLhDFzEi6t7
+ xP4atoc24USQWzJbN7gjVmbjhTO+LkkaNLIyd1jNx2qb/RfN2+LpYoF1nae5BMSl
+ JVmcSA+V+kxYnW9LtrNdXWG+CKj5xiOoLY9lROmod2bjegJfK4gyVvB50zwP6T8x
+ /3KSn2LyKjiBGu5Gn9gQ7rwlzIkw02ZFoOL3eouvEu0v1opVxP6zObXYpFNr0uLj
+ qwzpDNL3YuJMFGGgxUpbnggc1EEsngs5OJPzIR/jew==
+X-ME-Sender: <xms:PQwbaGcv7uKXHcsQtomUh6Gz5m5Wm2iqylAShbu67JWuQRqGl54UoQ>
+ <xme:PQwbaAPV6upbdmjThN0hj5-n88dOgm3ZRxpobbl8JZ0CYCBGf5hoS8kAzt2-Rbm0R
+ MQvPkbbOusghHrenWs>
+X-ME-Received: <xmr:PQwbaHi8gfGHzgkWlsdeehff1zrtvQ4N1BvEu515shUzc9s8ctymYBk4zKmtfF1PYbt8yac5STk58ggywMOv4RU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeivdeiucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+ pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+ gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkffvvefosehtkeertdertdej
+ necuhfhrohhmpefmlhgruhhsucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnth
+ drughkqeenucggtffrrghtthgvrhhnpeevfeeltdekleevledugeejveehffejteeftdel
+ keekiedtuedtudefhfffgeehhfenucffohhmrghinhepghhithhlrggsrdgtohhmnecuve
+ hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesihhr
+ rhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouh
+ htpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhmpdhrtghpthht
+ ohepshhtghhrrggsvghrsehsthhgrhgrsggvrhdrohhrghdprhgtphhtthhopehqvghmuh
+ dquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepqhgvmhhuqdhsthgrsghl
+ vgesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepihhtshesihhrrhgvlhgvvhgrnhhtrd
+ gukhdprhgtphhtthhopehqvghmuhdqsghlohgtkhesnhhonhhgnhhurdhorhhgpdhrtghp
+ thhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepkhgsuhhstghhse
+ hkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:PQwbaD97FHcrS5_E68J-yzfE7GKQTuJbpSivwoJLxakq7UaHyhoZ2w>
+ <xmx:PQwbaCvYypYhBeC4fiV8-ToPx7mjWP3KAw5K6tK3DJ3mmXxoxisiqg>
+ <xmx:PQwbaKFIH4VceC5AStMeK3sKsa4Qno3rQuTBGrP1ww4o81QEHjJOCQ>
+ <xmx:PQwbaBMknM6Ml42e_aVEixCE1PUE_7gVZkpUESKW2RzkyEoAT9ggzQ>
+ <xmx:PwwbaONhZhYXZsWjUsN52473N-RTKHykqI8kpPJkLIj_429Fwdof2pq7>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 May 2025 03:31:08 -0400 (EDT)
+From: Klaus Jensen <its@irrelevant.dk>
+Date: Wed, 07 May 2025 09:30:55 +0200
+Subject: [PATCH] hw/nvme: fix nvme hotplugging
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20250507-fix-non-hotpluggable-subsys-v1-1-667f224ebc0f@samsung.com>
+X-B4-Tracking: v=1; b=H4sIAC4MG2gC/x3MSwqAMAwA0atI1gbaivi5irioGmtAWmlUFPHuF
+ pcPhnlAKDIJtNkDkU4WDj5B5xmMi/WOkKdkMMqUqlQVznyhDx6XsG/r4ZwdVkI5BrkFlSlsMdW
+ 6GhsN6bBFSvl/7/r3/QABKWFibQAAAA==
+X-Change-ID: 20250507-fix-non-hotpluggable-subsys-023a3d817c91
+To: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>, 
+ Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>, 
+ qemu-block@nongnu.org
+Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-stable@nongnu.org, 
+ =?utf-8?q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1234; i=k.jensen@samsung.com; 
+ h=from:subject:message-id;
+ bh=q5QHh4i9WZialT5kLw8YDaneF/BMYXKkocT82fG5r8E=; 
+ b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0o0bkFGdEFaTCtrQTBEQUFvQlRlR3ZNV
+ zFQRGVrQnl5WmlBR2diRER0ZCtWTGI3eVV2dTF0aUkzYzdLajR1CnUxMmRCQzVjOEZuSUN3UGNZ
+ MWNReUlrQk13UUFBUW9BSFJZaEJGSW9NNnAxNHR6bW9rZG13RTNocnpGdFR3M3AKQlFKb0d3dzd
+ BQW9KRUUzaHJ6RnRUdzNweFZjSC8yYXUxRnMvQzhjVTFxNUtoWlEvRW1aclRBSytEQnhSYWxoSw
+ pRUnNPZGtJTm1CcWJWMlczamdHUDdkVzQzc3o1RDd3TlVPL0xaYTVKY2hCY2xrNWxFSEgrRUdxR
+ 1R5UWtyandiCjBOc21saWphcTd5WXFwczBETzhXTnhzVWo1NXgxR3V5UHEzWG83aHZpNFcyanZ3
+ dWQrYWFmZndreTNramdQYnoKZHVDaWkyL0FyWXBMZjhqdlZuMW1iNFNxRVV1VGFlcUFRbFVNYVY
+ vUkFaWkMxTWJnZmkrZU93SDkzamdIOGNqZApZYzlyL2hWSnZBZlR0T1Bkb3B3VnR1UmdPSC8xQT
+ NkWmZ6QlkyRXhtVTA1Z25jWCtQeFEzMVpZeENTOHQ4MmpFCklkUEpiOTVlTE9xNm5xS3hXcGZFd
+ Go0S1hUdms4Vm8xREpFZDJoRWN4UzV1aFljcFdmZkpYYUh0Cj1pT0puCi0tLS0tRU5EIFBHUCBN
+ RVNTQUdFLS0tLS0K
+X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
+ fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
+Received-SPF: pass client-ip=103.168.172.149; envelope-from=its@irrelevant.dk;
+ helo=fout-a6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,49 +133,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Donald Dutile <ddutile@redhat.com> writes:
+From: Klaus Jensen <k.jensen@samsung.com>
 
-[...]
+Commit cd59f50ab017 caused a regression on nvme hotplugging for devices
+with an implicit nvm subsystem.
 
-> In this series, an iommu/smmu needs to be placed -BETWEEN- a sysbus and a PCIe-tree,
-> or step-wise, plug an smmuv3 into a sysbus, and a pcie tree/domain/RC into an SMMUv3.
+The nvme-subsys device was incorrectly left with being marked as
+non-hotpluggable. Fix this.
 
-RC = root complex?
+Cc: qemu-stable@nongnu.org
+Reported-by: Stéphane Graber <stgraber@stgraber.org>
+Tested-by: Stéphane Graber <stgraber@stgraber.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2950
+Fixes: cd59f50ab017 ("hw/nvme: always initialize a subsystem")
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+---
+ hw/nvme/subsys.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-> So, an smmu needs to be associated with a bus (tree), i.e., pcie.0, pcie.1...
-> One could model it as a PCIe device, attached at the pcie-RC ... but that's not how it's modelled in ARM hw.
+diff --git a/hw/nvme/subsys.c b/hw/nvme/subsys.c
+index 38271d78c8bdc6dfa07cbea6b41b6a6083d62203..777e1c620fd0372ea1d9e193a5cd0903b9ffb019 100644
+--- a/hw/nvme/subsys.c
++++ b/hw/nvme/subsys.c
+@@ -226,7 +226,6 @@ static void nvme_subsys_class_init(ObjectClass *oc, const void *data)
+ 
+     dc->realize = nvme_subsys_realize;
+     dc->desc = "Virtual NVMe subsystem";
+-    dc->hotpluggable = false;
+ 
+     device_class_set_props(dc, nvme_subsystem_props);
+ }
 
-Physical ARM hardware?
+---
+base-commit: a9e0c9c0f14e19d23443ac24c8080b4708d2eab8
+change-id: 20250507-fix-non-hotpluggable-subsys-023a3d817c91
 
-Assuming the virtual devices and buses we're discussing model physical
-devices and buses:
-
-* What are the physical devices of interest?
-
-* How are they wired together?  Which of the wires are buses, in
-  particular PCI buses?
-
-> SMMU's are discovered via ACPI tables.
->
-> That leaves us back to the 'how to associate an SMMUv3 to a PCIe tree(RC)',
-> and that leads me to the other discussion & format I saw btwn Eric & Shameer:
->  -device arm-smmv3,id=smmuv3.3
->  -device xxxx,smmuv3= smmuv3.3
-> where one tags a (PCIe) device to an smmuv3(id), which is needed to build the (proper) IORT for (pcie-)device<->SMMUv3 associativity in a multi-SMMUv3 configuration.
->
-> We could keep the bus=pcie.X option for the -device arm-smmuv3 to indicate that all PCIe devices connected to the pcie.0 tree go through that smmuv3;
-> qdev would model/config as the smmuv3 is 'attached to pcie.0'... which it sorta is...  and I think the IORT build could associate all devices on pcie.0 to be associated
-> with the proper smmuv3.
-
-Device property "bus" is strictly for specifying into which the bus the
-device is to be plugged.  The device's type must match the bus: only a
-PCI device can plug into a PCI bus, and so forth.
-
-A PCI device has a PCI address (dev.fn) on the bus it's plugged into.
-If that's not the case for a physical smmuv3, we should not make the
-virtual smmuv3 a PCI device.
-
-Is there any prior art in QEMU, or is this the first device of this
-kind?
+Best regards,
+-- 
+Klaus Jensen <k.jensen@samsung.com>
 
 
