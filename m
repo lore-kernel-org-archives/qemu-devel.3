@@ -4,71 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 678DAC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 20:12:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F13CC3ABBF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 20:45:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCl6l-0001RA-OF; Wed, 07 May 2025 16:11:12 -0400
+	id 1uClcp-00030y-Hm; Wed, 07 May 2025 16:44:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uCl6h-0001Ot-DF
- for qemu-devel@nongnu.org; Wed, 07 May 2025 16:11:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uCl6V-0006Yg-Pj
- for qemu-devel@nongnu.org; Wed, 07 May 2025 16:11:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746648649;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jjPv1iFcP/fVSIBXcu71YmzrCiUhHTHr+OKAEh1p+ns=;
- b=ZOsB5zd6m6X0hzfcrlzxx43IHaVmGNaFcdirxmaL/X6KTNKGTSqTKYTnTpiJ96LYvnMLBx
- k5DDFVfWM4H10BCu9p9tntGI+BxuA2VBiN98r5axdKrkbgh11sKmN1xx9sgfZKVlvA1zLX
- 2zAKt46HJI1jL9HZsWBNRS4vtz1imJ8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-341-wbU8PyJkNFyy_1T12HCzrw-1; Wed,
- 07 May 2025 16:10:41 -0400
-X-MC-Unique: wbU8PyJkNFyy_1T12HCzrw-1
-X-Mimecast-MFC-AGG-ID: wbU8PyJkNFyy_1T12HCzrw_1746648639
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5CDC619560BC; Wed,  7 May 2025 20:10:39 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.248])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E07DF1956055; Wed,  7 May 2025 20:10:38 +0000 (UTC)
-Date: Wed, 7 May 2025 16:10:37 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 00/32] target-arm queue
-Message-ID: <20250507201037.GA9193@fedora>
-References: <20250506144214.1221450-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uClcn-0002yY-Aw
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 16:44:17 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uClcj-0002ms-MT
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 16:44:17 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-22e7eff58a0so3445805ad.3
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 13:44:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746650651; x=1747255451; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=MGKhtEtKmIv/iqo3Q0C370p+aaMvKjOJBkZGTD/hQ3I=;
+ b=CwfPyzeDpKPb/SapfzhWcYuOZH+wqDkyCPa1tKCJGvoO/T//OCUK2q3lna8CMcQdJQ
+ GneB4z1dS2Em3dBdx+EbITnfH4spL/iIITsFnvnQFsWYXSdvgTbHKzIyis589hJqGwiX
+ rKW+270B5tfie8wmbqpYszibYVb0yfiRgwxqZhTAA/BYrU0XquTEbBH8yU+56Kq8Mewk
+ Jso6ew6z5BysvjpOVbACyVZcwVm1WgUF0ZylcLzDykWmBoTQafEECFd89Nc2HTC50gHl
+ DwUrVMrV/XIXSdIgD1QPVMnw/VOZY4RPoEnMpUkP06fWi4WfdAShNcoy9VGPR4LyaDgS
+ Lsyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746650651; x=1747255451;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MGKhtEtKmIv/iqo3Q0C370p+aaMvKjOJBkZGTD/hQ3I=;
+ b=IHc5fURXgbr0c98blXMbfODKoousmkWxpOUFhAeHfVYjz6byptHHDrVubjFZw4K/Du
+ rB3nER0rHy5yGTY7DUM4G/JBHEW7sLjsUWiWBrwY2CRsVF6GTXLc+4s6tqCLYKN4OnuT
+ VQsY0bPHVu6DN3yr/WYJUgCX3qRo8gxsQsXClEC5qWbUBETwzUbTugLxIKCei1CMsP7r
+ 8XpZtU54zexVUr9R6nzCCX9+Yd+ecWgHI4uO7SX9gmVhNSjRhPSZTR32BQ2oJ9l7/RnE
+ YbLtLCYekUCAyiOTol2BB38YNuTS6v00/7e7qmClfHsG5/zd7d+M/T3HBntyFZ8DiseK
+ Z9gQ==
+X-Gm-Message-State: AOJu0YzlvB606IF1L05NA9opu/wOCLLYXtUYwr/uaKc3sOI5yHPoXG84
+ SgjqUp7lpzNkwm+0e6VJeSHo5mEhBXmStwdfNxHhD0EyaskjFXsSeY0SvzoofOTr8c2q9hx4j3/
+ ny+DUIA==
+X-Gm-Gg: ASbGncu6dkZiQbSfzhX7aXvzuuk+S72UJXC+lNz3fSi9s6/LA+2DTkf6TQo0RJiM/Rq
+ dBB8e8ZP5503sPDU8BuZLnTo1fWRP2Hj/5bpaUQzHNzWuDDeChiZr4LWaWToJUDXJCG9uPFFutK
+ u924RAsU2vNthzOadS8Y5/xKy7TI6YrcQTeiiTv8vfEsc8VgM9NMCoAto0hbhjeDb+1MpfEoAD+
+ r6U3GzbzyBw3jf+GDPqtRrKbb9fvhlFihDuEhKsjBKDfoDx0E++ScXPeDOtYEFMO2guyXZw2r4M
+ 35h5dic9aP5n/vkfdNYKjHmfJ2Sb4gzL30IJu5p11/4LFIQtJvuPBDN7fdHjE5NHVqtqN0+Te31
+ YlqVIfn8m2kz2bItMiekF
+X-Google-Smtp-Source: AGHT+IFlaXJh+QHwB3F75bEgVdpum6WfURuIe225/7BiQVyhHz50dF8mwAW/LIQA0YDVItLZiAQ8Aw==
+X-Received: by 2002:a17:903:1a45:b0:220:f151:b668 with SMTP id
+ d9443c01a7336-22e5ea8a5c2mr61177045ad.20.1746650651320; 
+ Wed, 07 May 2025 13:44:11 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22e1522a7e0sm98817315ad.208.2025.05.07.13.44.05
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 07 May 2025 13:44:10 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Cameron Esfahani <dirty@apple.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mads Ynddal <m.ynddal@samsung.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH] accel/hvf: Include missing 'hw/core/cpu.h' header
+Date: Wed,  7 May 2025 22:44:01 +0200
+Message-ID: <20250507204401.45379-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="a0DNhwSHNas+mm3C"
-Content-Disposition: inline
-In-Reply-To: <20250506144214.1221450-1-peter.maydell@linaro.org>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,30 +102,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Since commit d5bd8d8267e ("hvf: only update sysreg from owning
+thread") hvf-all.c accesses the run_on_cpu_data type and calls
+run_on_cpu(), both defined in the "hw/core/cpu.h" header.
+Fortunately, it is indirectly included via:
 
---a0DNhwSHNas+mm3C
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+  "system/hvf.h"
+    -> "target/arm/cpu.h"
+         -> "target/arm/cpu-qom.h"
+              -> "hw/core/cpu.h"
 
-Applied, thanks.
+"system/hvf.h" however doesn't need "target/arm/cpu.h" and we
+want to remove it there. In order to do that we first need to
+include it in the hvf-all.c file.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
+Cc: Mads Ynddal <m.ynddal@samsung.com>
+Reported-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ accel/hvf/hvf-all.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---a0DNhwSHNas+mm3C
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgbvj0ACgkQnKSrs4Gr
-c8h/8gf/ZqfleWFmrE/gAMqJfvjoXAGOoFZvsc8lpYkjxa71F8l0tl4cYl2ekKOc
-elXkzSdyxyOsuPKWNb4dGTN7Qd+oiQgPEoLxQ2nQU1Vw+yBoUL5eEZPHwyPxP8L+
-qbmc8RYoTTghk3FFGfgpDXYRWEC7JiwnCtnc96zaONRiBSM6jdHg9bxmP7ypdA2m
-pX0wsbY8uWobgjFQllefS8ziR5hv6Jl6psGAwA6+y/1xAxSORTu3qBAKBE+CjRKe
-7kru0ze9iRiNETGIW1LXFpcD5Kh6hvL2o4oiiDD7RiMyXrpN32LPjQ2Uzg1MzvLl
-Rs3kskQXuIV9uCfz3YixApnQMvDx+w==
-=cJUi
------END PGP SIGNATURE-----
-
---a0DNhwSHNas+mm3C--
+diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+index 3fc65d6b231..8c387fda24d 100644
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -12,6 +12,7 @@
+ #include "qemu/error-report.h"
+ #include "system/hvf.h"
+ #include "system/hvf_int.h"
++#include "hw/core/cpu.h"
+ 
+ const char *hvf_return_string(hv_return_t ret)
+ {
+-- 
+2.47.1
 
 
