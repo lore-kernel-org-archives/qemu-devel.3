@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5800C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 21:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69B19C3ABC5
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 21:19:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCm5K-0006Hh-NG; Wed, 07 May 2025 17:13:46 -0400
+	id 1uCm5K-0006Hg-Kn; Wed, 07 May 2025 17:13:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uCm4x-0006CZ-T4
+ id 1uCm4y-0006Cb-1h
  for qemu-devel@nongnu.org; Wed, 07 May 2025 17:13:24 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uCm4u-0006FR-Dd
+ id 1uCm4u-0006FK-Db
  for qemu-devel@nongnu.org; Wed, 07 May 2025 17:13:23 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-736c1138ae5so370316b3a.3
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 14:13:19 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-736a7e126c7so358175b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 14:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746652398; x=1747257198; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746652397; x=1747257197; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AHgGr6AIObpnYWHjAOdcgxhm8gRRf7ROs3UzR4seVSk=;
- b=Whl0b7x54ub4qYgR36abfULGBUnJqbYP22fY+CyQOcW54gOosUYqzbHrNiEP8/TFqU
- 1+SbgWlTTxP7hKdScTYwM/mv9Ton9wokfGRlsefumRsrbmcLyrDV8mWpWLQOVIaLko4p
- Hx92LzmDrdMrmkjPtmvrQO81wZ/2ZSNR8gd9F9CmWWqtNTS3ZNf5Mma2at1aPoHKTDoN
- cTQLOlOXLMiiRccuuxKCJ9XgfoM9YplXbkiHYEkKysf11quEW/LHvq0PUKvn5UF12LfZ
- KBwvYSFe8E6cLOYck0oroIKpsfYFhm3o6q1UJWFnku07IXdJWrI68eEoIf6WOO/gZyXt
- YilA==
+ bh=GtWEOmY8WNzf/zuqN1oHdsdFxXcLLPjcJIdBZ8JJ7O4=;
+ b=hQ+/BzBnGXbd3+fKfLM0q1FRo9c2Fghnr7v9RryvBERWeWWahvMp2oazL3nonP5FNE
+ Mv0n5lah3NMsv268EkhMKt5NUmrNUfNS4pB7Y3pUkLOVhvTv8+hAJTxIUISncuqP2eyr
+ orylrHEHR8IdXxiX04pwt1CYVa0kaBijDqxT158WiPOas/wm/5wxvBZ2KyV/FzDhl1cz
+ Rzi0B+wxm4UJucO93AGJRwmOW0y0nnLV5iF7tkh8rbIb0eSJy85ip2MBWxgCD6ozxdfk
+ IdkEJ+HrZkSmq3ysomSAJ/iyelQpM08GuAJfUXCT30lm38EtEqFw6Zet4lwl0/8wzttg
+ yfdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746652398; x=1747257198;
+ d=1e100.net; s=20230601; t=1746652397; x=1747257197;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AHgGr6AIObpnYWHjAOdcgxhm8gRRf7ROs3UzR4seVSk=;
- b=bPhOtYflYrpvvDbCy1/L4O2oRkFRewrT8QSv8fouVwSlNcCytS72YfC04XvMOuH3CN
- tke1hw+5kMT6q9FFriVTRvVP1KPTebMjsOgB6mUadoKpkllENTVMifVmR6/UI/aW/8v9
- J5SXjTP7/aZ5QUsp6vpoOUfADZ5+/myyf5ncXYsuHMO+5axOGs+9QUKePhamoNK5+YDN
- 9O3oIcwqPfk52X78z+Xvt3ffLQtPDxVVwT8Yrj1a4p7S3tefc7SjIq1xORr6IGsdkv9H
- 0BeV6R/FVsRq+uKdebxilRJkAt2m4OFTTu0oNqYINuzb9OXbUVPkd4MxbJjwIFQtsLl4
- z1sA==
-X-Gm-Message-State: AOJu0Yy7O13Q3ulX3JguQNA7TPWlSBsq+TcuK8qlRGI6LytR/j1Rp8Jp
- wAF3c8ldL7Jox4t4wLymjCwTKnaWxINIG1u8Kh5S/OK9766M2xIc8gznc5Z0RsueUXsZsgbivNt
- I
-X-Gm-Gg: ASbGnctzRbVGJ3XIAe6Ag9ipSZeONUmsBv/TQyPDeemRrqbEd+ZEmTEPLiw1wqT8InV
- NIu4h0q5L98YtvmCOb9GpVOtnFyHA88hN7crioDI/4rljox1K0W6vPTYjBfsO9Ef68Z0bShLaM4
- snwJqAxzGnJ7etwoa2S7nipCfxBOU6GRUB7jKQ9xg2QRsgaYR+7SvOYtXHeWHA5Ksan+o4iNgDG
- dILuzk6Z9YQArJeD+2fsfkfEzzrBLPMrEPP0fdF0x+I06G7a9PV2Y6Sc0e5ObAqfnZ4FGhnP8BA
- D48fCEc+7fiPyPN3Rq57lGLToi0a+ODh8EwRPeBMMerqpVlCtuAD1pT8qvG6c5OHmhO6Tn0lRU8
- =
-X-Google-Smtp-Source: AGHT+IE2fWAcdZs9lzvjtrwh/TLO6Et1nw1yXPpoVmFyMo6W9T0+mB4Ug8/kFvF5IIbLHZxjCPUfbQ==
-X-Received: by 2002:a05:6a20:72aa:b0:1f5:a3e8:64c8 with SMTP id
- adf61e73a8af0-2148d42cc3dmr8562656637.36.1746652398364; 
- Wed, 07 May 2025 14:13:18 -0700 (PDT)
+ bh=GtWEOmY8WNzf/zuqN1oHdsdFxXcLLPjcJIdBZ8JJ7O4=;
+ b=uY0fUJl58muyErqPv9vznYTcR4+3JNIOw7pT2h/PgqujQYGfvA8aOF6VssGeAINnXf
+ yQURheVxCTFoBbtN9YyOmmCl6qSxJVVCfwHulKwVHMic/nrZ8OU2J7BC4GBmjPFtwsIe
+ L5zEk044+EadavolJITvTbNlp5pvSlF9wq68p4oCre2l71AXD/MnB/kyVPu0qcIyP3Tc
+ imnyb/WdttiFy+Ms2jlVv5kdS5VXWNGtX9S/R9CTQwiFKZ8P7YbM1Uy1FCNIwUrbq8jd
+ AO8+0BgaH2FaAPUK3dEnUYAEdg+GsdcBEmsMC+FRf2ZCqGLmqFLyr14K+vq2MHiqO7gq
+ LXRw==
+X-Gm-Message-State: AOJu0YyLBAXTLsT/fdnIdjQEdvKeJijBAgps+428K/e2XOQPxhPTsDd/
+ OE4NpBAKpvZyvzTV4V+rU17cejXIJeecM3gAPd4paYHTGruEXQJ8D86btgnFsHM1C05ZQhjYgYV
+ B
+X-Gm-Gg: ASbGncux9cK7Kqenoo98CqPk5KGds0J3N6O2PB7w9QrWinkXBN0D0rPmZSS7uEH99On
+ jOLMfJF14ufKGTW0eq9sN7H/vNfgnwevdl7sXujwx9ISTxFHVrgyeDR891GqYpixWvVwfpG8kUz
+ Snnf02+IPDC6s7LXNTsUUdyqZ01TtQeC/rxW5x0elT57RuJGg/ISH0E+C5O1R0npTcyCiF8nWoD
+ IIcVVdehGUB1RyRV2P61RfFxmY1W01cD8pG6hxtnYgU3WgBi+namAe5ccm7JzS+ChiVsn9mywLz
+ AmB6VZH9QUGHqGc4O2tfASVNPuCaxQvQTec/7raMKdKpB+Efp0TaXvjpTEuwV4Nc4xIPEyBiIei
+ XvZogvKY0dg==
+X-Google-Smtp-Source: AGHT+IE/Ej/Y45wJFUCGjHyQhsFRxgecfHPCs5KUnVEIKmaFK7E53x1RIDZTxnecFP2RJrRJw7eQag==
+X-Received: by 2002:a05:6a20:72a1:b0:1f5:92ac:d6a1 with SMTP id
+ adf61e73a8af0-2148b52649emr6219232637.4.1746652397629; 
+ Wed, 07 May 2025 14:13:17 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
  d2e1a72fcca58-7405902154dsm12255251b3a.90.2025.05.07.14.13.17
@@ -69,17 +69,17 @@ From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 20/24] target/m68k: Merge gen_store_fp, gen_store_mode_fp
-Date: Wed,  7 May 2025 14:12:55 -0700
-Message-ID: <20250507211300.9735-21-richard.henderson@linaro.org>
+Subject: [PATCH v5 19/24] target/m68k: Merge gen_load_fp, gen_load_mode_fp
+Date: Wed,  7 May 2025 14:12:54 -0700
+Message-ID: <20250507211300.9735-20-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250507211300.9735-1-richard.henderson@linaro.org>
 References: <20250507211300.9735-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,25 +102,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This enables the exceptions raised by the actual store
+This enables the exceptions raised by the actual load
 to be reflected as a failure.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/translate.c | 107 ++++++++++++++++++++--------------------
- 1 file changed, 53 insertions(+), 54 deletions(-)
+ target/m68k/translate.c | 104 ++++++++++++++++++++--------------------
+ 1 file changed, 51 insertions(+), 53 deletions(-)
 
 diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index 711f1477c8..af5b20989c 100644
+index 642e80857c..711f1477c8 100644
 --- a/target/m68k/translate.c
 +++ b/target/m68k/translate.c
 @@ -902,53 +902,6 @@ static void gen_fp_move(TCGv_ptr dest, TCGv_ptr src)
      tcg_gen_st_i64(t64, dest, offsetof(FPReg, l.lower));
  }
  
--static void gen_store_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
--                         int index)
+-static void gen_load_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
+-                        int index)
 -{
 -    TCGv tmp;
 -    TCGv_i64 t64;
@@ -131,28 +131,28 @@ index 711f1477c8..af5b20989c 100644
 -    case OS_BYTE:
 -    case OS_WORD:
 -    case OS_LONG:
--        gen_helper_reds32(tmp, tcg_env, fp);
--        tcg_gen_qemu_st_tl(tmp, addr, index, opsize | MO_TE);
+-        tcg_gen_qemu_ld_tl(tmp, addr, index, opsize | MO_SIGN | MO_TE);
+-        gen_helper_exts32(tcg_env, fp, tmp);
 -        break;
 -    case OS_SINGLE:
--        gen_helper_redf32(tmp, tcg_env, fp);
--        tcg_gen_qemu_st_tl(tmp, addr, index, MO_TEUL);
+-        tcg_gen_qemu_ld_tl(tmp, addr, index, MO_TEUL);
+-        gen_helper_extf32(tcg_env, fp, tmp);
 -        break;
 -    case OS_DOUBLE:
--        gen_helper_redf64(t64, tcg_env, fp);
--        tcg_gen_qemu_st_i64(t64, addr, index, MO_TEUQ);
+-        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
+-        gen_helper_extf64(tcg_env, fp, t64);
 -        break;
 -    case OS_EXTENDED:
 -        if (m68k_feature(s->env, M68K_FEATURE_CF_FPU)) {
 -            gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
 -            break;
 -        }
--        tcg_gen_ld16u_i32(tmp, fp, offsetof(FPReg, l.upper));
--        tcg_gen_shli_i32(tmp, tmp, 16);
--        tcg_gen_qemu_st_i32(tmp, addr, index, MO_TEUL);
+-        tcg_gen_qemu_ld_i32(tmp, addr, index, MO_TEUL);
+-        tcg_gen_shri_i32(tmp, tmp, 16);
+-        tcg_gen_st16_i32(tmp, fp, offsetof(FPReg, l.upper));
 -        tcg_gen_addi_i32(tmp, addr, 4);
--        tcg_gen_ld_i64(t64, fp, offsetof(FPReg, l.lower));
--        tcg_gen_qemu_st_i64(t64, tmp, index, MO_TEUQ);
+-        tcg_gen_qemu_ld_i64(t64, tmp, index, MO_TEUQ);
+-        tcg_gen_st_i64(t64, fp, offsetof(FPReg, l.lower));
 -        break;
 -    case OS_PACKED:
 -        /*
@@ -166,31 +166,25 @@ index 711f1477c8..af5b20989c 100644
 -    }
 -}
 -
- static bool gen_load_fp(DisasContext *s, uint16_t insn, int opsize,
-                         TCGv_ptr fp, int index)
+ static void gen_store_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
+                          int index)
  {
-@@ -1088,12 +1041,13 @@ static bool gen_load_fp(DisasContext *s, uint16_t insn, int opsize,
-     return true;
+@@ -996,8 +949,8 @@ static void gen_store_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
+     }
  }
  
--static bool gen_store_mode_fp(DisasContext *s, uint16_t insn, int opsize,
--                              TCGv_ptr fp, int index)
-+static bool gen_store_fp(DisasContext *s, uint16_t insn, int opsize,
-+                         TCGv_ptr fp, int index)
+-static bool gen_load_mode_fp(DisasContext *s, uint16_t insn, int opsize,
+-                             TCGv_ptr fp, int index)
++static bool gen_load_fp(DisasContext *s, uint16_t insn, int opsize,
++                        TCGv_ptr fp, int index)
  {
      int mode = extract32(insn, 3, 3);
      int reg0 = REG(insn, 0);
--    TCGv reg, addr;
-+    TCGv reg, addr, tmp;
-+    TCGv_i64 t64;
- 
-     switch (mode) {
-     case 0: /* Data register direct.  */
-@@ -1127,10 +1081,55 @@ static bool gen_store_mode_fp(DisasContext *s, uint16_t insn, int opsize,
+@@ -1084,10 +1037,55 @@ static bool gen_load_mode_fp(DisasContext *s, uint16_t insn, int opsize,
              gen_addr_fault(s);
              return false;
          }
--        gen_store_fp(s, opsize, addr, fp, index);
+-        gen_load_fp(s, opsize, addr, fp, index);
 -        return true;
 +        break;
 +
@@ -204,18 +198,18 @@ index 711f1477c8..af5b20989c 100644
 +    case OS_WORD:
 +    case OS_LONG:
 +        tmp = tcg_temp_new();
-+        gen_helper_reds32(tmp, tcg_env, fp);
-+        tcg_gen_qemu_st_tl(tmp, addr, index, opsize | MO_TE);
++        tcg_gen_qemu_ld_tl(tmp, addr, index, opsize | MO_SIGN | MO_TE);
++        gen_helper_exts32(tcg_env, fp, tmp);
 +        break;
 +    case OS_SINGLE:
 +        tmp = tcg_temp_new();
-+        gen_helper_redf32(tmp, tcg_env, fp);
-+        tcg_gen_qemu_st_tl(tmp, addr, index, MO_TEUL);
++        tcg_gen_qemu_ld_tl(tmp, addr, index, MO_TEUL);
++        gen_helper_extf32(tcg_env, fp, tmp);
 +        break;
 +    case OS_DOUBLE:
 +        t64 = tcg_temp_new_i64();
-+        gen_helper_redf64(t64, tcg_env, fp);
-+        tcg_gen_qemu_st_i64(t64, addr, index, MO_TEUQ);
++        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
++        gen_helper_extf64(tcg_env, fp, t64);
 +        break;
 +    case OS_EXTENDED:
 +        if (m68k_feature(s->env, M68K_FEATURE_CF_FPU)) {
@@ -224,12 +218,12 @@ index 711f1477c8..af5b20989c 100644
 +        }
 +        tmp = tcg_temp_new();
 +        t64 = tcg_temp_new_i64();
-+        tcg_gen_ld16u_i32(tmp, fp, offsetof(FPReg, l.upper));
-+        tcg_gen_shli_i32(tmp, tmp, 16);
-+        tcg_gen_qemu_st_i32(tmp, addr, index, MO_TEUL);
++        tcg_gen_qemu_ld_i32(tmp, addr, index, MO_TEUL);
 +        tcg_gen_addi_i32(addr, addr, 4);
-+        tcg_gen_ld_i64(t64, fp, offsetof(FPReg, l.lower));
-+        tcg_gen_qemu_st_i64(t64, addr, index, MO_TEUQ);
++        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
++        tcg_gen_shri_i32(tmp, tmp, 16);
++        tcg_gen_st16_i32(tmp, fp, offsetof(FPReg, l.upper));
++        tcg_gen_st_i64(t64, fp, offsetof(FPReg, l.lower));
 +        break;
 +    case OS_PACKED:
 +        /*
@@ -244,16 +238,16 @@ index 711f1477c8..af5b20989c 100644
 +    return true;
  }
  
- typedef struct {
-@@ -4889,7 +4888,7 @@ DISAS_INSN(fpu)
-     case 3: /* fmove out */
-         cpu_src = gen_fp_ptr(REG(ext, 7));
+ static bool gen_store_mode_fp(DisasContext *s, uint16_t insn, int opsize,
+@@ -4911,7 +4909,7 @@ DISAS_INSN(fpu)
+         /* Source effective address.  */
          opsize = ext_opsize(ext, 10);
--        if (gen_store_mode_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
-+        if (gen_store_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
-             gen_helper_ftst(tcg_env, cpu_src);
+         cpu_src = gen_fp_result_ptr();
+-        if (!gen_load_mode_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
++        if (!gen_load_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
+             return;
          }
-         return;
+     } else {
 -- 
 2.43.0
 
