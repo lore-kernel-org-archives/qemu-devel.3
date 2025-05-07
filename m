@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D85C3ABBF
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 20:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AD86C3ABBF
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 May 2025 20:47:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uClfb-0007So-1q; Wed, 07 May 2025 16:47:11 -0400
+	id 1uClfR-0007Mc-Gp; Wed, 07 May 2025 16:47:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uClfR-0007OS-Vz
- for qemu-devel@nongnu.org; Wed, 07 May 2025 16:47:02 -0400
-Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
+ id 1uClfP-0007HP-QY
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 16:46:59 -0400
+Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uClfL-00037p-QN
- for qemu-devel@nongnu.org; Wed, 07 May 2025 16:47:01 -0400
-Received: by mail-oa1-x32.google.com with SMTP id
- 586e51a60fabf-2c769da02b0so314375fac.3
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 13:46:55 -0700 (PDT)
+ id 1uClfJ-00037Z-Kt
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 16:46:59 -0400
+Received: by mail-oi1-x22b.google.com with SMTP id
+ 5614622812f47-3f94b7bd964so315388b6e.1
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 13:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746650814; x=1747255614; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ub+oD40WAPydF2GdZl0ptFBPrvXnH1JqhWmWJzcddoI=;
- b=e8/mSVF9+A6wqmpQ+f4UaBfwu1fLgh2K7kfLF9puEq5aA6uU8W+v6WvDqqCxVIQU9E
- 2eKt4ORcMPUd57yI7+W+FSAijFG4LvGTvb8Ee79bKZW86wynpyGjKBvEHaRuHsxu5PRR
- 9XX9daedTqAE/dd1qwZsAlBU24CaCZMqYSipUjqbp/ZiMF0CWGlueNcbde+raoVN17Bm
- CaOTax8M+n/Efk3zFw1uXcImOFBQ5hrLIqJJ27L00mgOLiB2k2RShLHjWlYk62ByaVzR
- MhXpP154uz1zQDaNdh3BId+9kgKC1pksGgftMXaiFIIzQeXESgOefpXyK/WoszDWrTGt
- 0F6w==
+ d=linaro.org; s=google; t=1746650811; x=1747255611; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=EhPrnWrrEa3D6POxudXMd7e4Z/b8W/qudNgP3sQ1aLE=;
+ b=vQFELfWQtJi+uqYsJ273wSSgYFHbfZZlAi91CbPHlbnlar8j6QaP/ypmW+kOXPwXDH
+ g90tnETYqWv6NTqgP6KoRYNFT1+RvktiVyMtKiOtWknlT1PEkZFptJX/hUeq06k6yUNS
+ iqETttIHUyyTqzYPDdoGfNW73cJjcsbVX59W3ixA9SAmz/Epx3F8oiqBolKjuj1PGQjJ
+ qpjv94zfMEpR+DE1UsoGe6+tuq2j3+aRq3NJiY4cdNhfCrhzdpp9GSAejJq8XGcBp0qT
+ lermtuhzLyKT+nXHFTRlZPHmxK0XquD3muZFVMvmwwkTDiyxa08NfuCrGg0a//otSsr4
+ HkwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746650814; x=1747255614;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ub+oD40WAPydF2GdZl0ptFBPrvXnH1JqhWmWJzcddoI=;
- b=Xb+MugU9hguzB0y4hO1ehvH4f0pubjyti9xHbwLnVDNhKS9SAh3pm8sUOzM4zypUCI
- +I1KZVLJ5nNimfNPnDiISnjj05Nx4zqLNcfglD4B6rzeCXy70E7ZLm5xpeQrXrdeAhWA
- cpyWQyGNszWWMdEVHRq9+PKr9jWGel9Fd7v/zIHVzcdy6SoBaI2dWgDvpOcGR2EJquWM
- wrLU+vY0Np0T97n8bIdaDpm+zprsqmnb3Bl+UzXhoBx1ci9/WRtcwNY3BriPx8rIhyZk
- /HEOUM3sJbVIBEm/n1NxLeAQlfHIMMR81u1HvCOFcNtmz1EuOTLqlc5dqshVN3UOa8/h
- ItLw==
-X-Gm-Message-State: AOJu0YyDVqGF6qvYpLBF8kjvwY20amlPpw3k3D2WmiO0/i6kmt3lKcKp
- +F/0+htysXyCw+S9NPggTbxGYvJtSexc29S6YEEqCoRxntKnj1xN9stnCRXzmCQWWdq/oaNAeXk
- j7RE=
-X-Gm-Gg: ASbGncsfGu+CgOr/SvnTBvl6fOMDkJBnrm+q72hUnYyqvWQCgBSrvAlE8MZL+w+7NZD
- fbGG/YBE7xmCEm1mhx1/VdJ9Via/TS4MOmBgHPUkqJtrRGdZACuKajoy1tpTAEYtr1V9TjjtSSf
- 4l6h/nY0jyjqdOJNwiOi4RkpCeDNWWZNnTr1AWxnHtjC+SMlPuZdVMT9pKoN84dx3/nztz+Qj4A
- DskI9QCGk0l/toi9/Ge7jNMd8WBhsOrjcEHE+7f+BV1p6HnxxAgnY03Lp9ZCwHMWuBuWGbxnuR6
- c5+cRjdGdijQpySTc/mjwqHNpNtjUyXQrjGiRQf7JYyE3Dpf
-X-Google-Smtp-Source: AGHT+IFc0VU0cXn+LODppNE4D0mvR3Cn71Aqv1XwI4RBdk+TxcW3ZHpqblag3/GGMH0TyqyVWq8ZLA==
-X-Received: by 2002:a05:6870:7308:b0:2c1:4090:9263 with SMTP id
- 586e51a60fabf-2db819c5a58mr639531fac.35.1746650814007; 
- Wed, 07 May 2025 13:46:54 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746650811; x=1747255611;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EhPrnWrrEa3D6POxudXMd7e4Z/b8W/qudNgP3sQ1aLE=;
+ b=QqVYLJqKnF+NJ3WT0TChzyUDrB7Y744sYZX1PJrg60MDsu7F2fEn35qLwXkfD2v8sU
+ MepFJyd3udqaAJK90ja94xjFLsQUv1Lx9/4UuK0AbIDb5O0JSNcaTzch5QCnqKg4lWgO
+ 4RuWHkYIduAP6IJv+FisddBul5sjwCi2OtQy+Sptybn0mDnK7Go/suNWw1T8KhI20zNU
+ FtLoFJRHWNqcFIRrWw4y978l1TFcnoe8cdpkAHzOpFkt0JG1riAbngPzyNwcIMEkdbpK
+ wEWS4z/f3QBwrhwdhWJzjqGS6i80GSLUKGYs8jbcY4dzf1VVTqP/akhyVdBI8XqN822S
+ EKrQ==
+X-Gm-Message-State: AOJu0YxZxjhouw9yTtjrfB14tavce+FONYmReWCJLW6UckeuI4mLT5U9
+ 7hpTRUWvX8ujgnOXsThF1HvdOUMb2Vunt4wHwaT9rqezgTvcAVDECHzS4CmWGn1m0nD0BL8yAzz
+ AQ/M=
+X-Gm-Gg: ASbGncs20hauaVZt7OuI/DQ7G2UIHGyyM/WrLj1ImEEtz9V0+AE4Rm2NRMMue1xNJpb
+ FFOwx52TnkwGXlkAH0X2oVRzqP26/J4BTi1Ftr3yb+srGMd8WceH5HKX3nmTyeDiKuMhT4FxHqI
+ C1qOvA8WnCbJtYsNPew5l93Pel0LjEv5wcpb18iMkeNN/3f+z2VHpoN7Zdso+W7ilZJ2cKdQxwt
+ bJB+JMV9isHXfoT6E+mghkNY7LhYg+yOW6oXHF27K0Vg9WIF412V+t48de6H1J89cyZm/7/5crf
+ x0HEkI/vhjdKol0vGJRlrISCI1gBqSCx/Rqm3qgpO+Ecvkh8
+X-Google-Smtp-Source: AGHT+IH7/ieVTBFFKIEGbzu2A6yU9xqQJKw8wAvcdGFHCv25joYaS7oXC37//qPBJNx37uLpjrfvVg==
+X-Received: by 2002:a05:687c:2246:b0:2b8:e6f2:ba7e with SMTP id
+ 586e51a60fabf-2db81400b71mr607967fac.12.1746650811089; 
+ Wed, 07 May 2025 13:46:51 -0700 (PDT)
 Received: from gromero0.. ([200.150.181.215]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2db5cbc7d1fsm920933fac.11.2025.05.07.13.46.51
+ 586e51a60fabf-2db5cbc7d1fsm920933fac.11.2025.05.07.13.46.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 13:46:53 -0700 (PDT)
+ Wed, 07 May 2025 13:46:50 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org,
 	thuth@redhat.com,
 	gustavo.romero@linaro.org
-Subject: [PATCH 1/3] linux-user: Fix typo in comment
-Date: Wed,  7 May 2025 20:46:24 +0000
-Message-Id: <20250507204626.139507-2-gustavo.romero@linaro.org>
+Subject: [PATCH 0/3] Fix typo in comments
+Date: Wed,  7 May 2025 20:46:23 +0000
+Message-Id: <20250507204626.139507-1-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250507204626.139507-1-gustavo.romero@linaro.org>
-References: <20250507204626.139507-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::32;
- envelope-from=gustavo.romero@linaro.org; helo=mail-oa1-x32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-oi1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,27 +97,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix the duplicate "of" preposition in a comment.
+Nothing exciting in this series, just typo fixes in comments.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Suggested-by: Thomas Huth <thuth@redhat.com>
----
- linux-user/mmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index f88a80c31e..002e1e668e 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -645,7 +645,7 @@ static abi_long mmap_h_eq_g(abi_ulong start, abi_ulong len,
-  *
-  * However, this case is rather common with executable images,
-  * so the workaround is important for even trivial tests, whereas
-- * the mmap of of a file being extended is less common.
-+ * the mmap of a file being extended is less common.
-  */
- static abi_long mmap_h_lt_g(abi_ulong start, abi_ulong len, int host_prot,
-                             int mmap_flags, int page_flags, int fd,
+Cheers,
+Gustavo
+
+Gustavo Romero (3):
+  linux-user: Fix typo in comment
+  Fix typo in comments
+  Fix typo in comments
+
+ block.c                             | 4 ++--
+ hw/display/apple-gfx.m              | 2 +-
+ hw/xen/xen-hvm-common.c             | 2 +-
+ include/exec/cpu-common.h           | 2 +-
+ include/hw/xen/interface/io/blkif.h | 2 +-
+ linux-user/mmap.c                   | 2 +-
+ qapi/machine-target.json            | 2 +-
+ qapi/qom.json                       | 2 +-
+ 8 files changed, 9 insertions(+), 9 deletions(-)
+
 -- 
 2.34.1
 
