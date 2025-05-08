@@ -4,97 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8CB2C3ABC6
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 21:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0FB5C3ABC6
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 21:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD8nu-0005N6-TG; Thu, 08 May 2025 17:29:19 -0400
+	id 1uD8xj-0005l6-Gi; Thu, 08 May 2025 17:39:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uD8ns-0005Gp-9k
- for qemu-devel@nongnu.org; Thu, 08 May 2025 17:29:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uD8nq-00062m-Oi
- for qemu-devel@nongnu.org; Thu, 08 May 2025 17:29:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746739751;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gduKp8TXaddet8MYCJkDdTxox7NbhZJ7SnzHOtqVZeE=;
- b=OqFMnzssU3W0gBaLhY+MmiFYlQ/ZaTQYjn7V32FaXl/oBPtsgnD5V5I9oyX+7PL11Z6lYu
- 3+QHOtitzuUiZS4hPmAsMG5scWUD3kiPpAAWhwfZXEe2QgTX3dfhNvB1FM9UgK/8Ohkq0t
- 9lW8ltCpe3iuGR6J0pMqn/i4WelxmcU=
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
- [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-168-b1jdGjAbNdSiL_jLj4rr8A-1; Thu, 08 May 2025 17:29:07 -0400
-X-MC-Unique: b1jdGjAbNdSiL_jLj4rr8A-1
-X-Mimecast-MFC-AGG-ID: b1jdGjAbNdSiL_jLj4rr8A_1746739745
-Received: by mail-oi1-f200.google.com with SMTP id
- 5614622812f47-3feb1dce9ceso572527b6e.1
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 14:29:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uD8xg-0005ku-Vj
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 17:39:25 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uD8xd-0006tH-UA
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 17:39:23 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-af52a624283so1427172a12.0
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 14:39:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746740360; x=1747345160; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RIVzRxBQ0ha8wenOm7zlIZDDBm5UcvXpy6kwjw4B2j0=;
+ b=f9cfD+TDEn7dRbKk+n6yhuxYfsAIAJqs+9mGpSYHPebeLuMajSVhFQbrN5DYBzixNj
+ UPzoZaKyQj+h7HTcMlNWkux2D1pz4HOt2DEWK9pXfBGHBxOkDB3ZmbIUGPke7LZ/nP2w
+ CL2m/YLgkLyPCxOzGl88gY32QPyct8mvmypczw4BreDS64uBi8l7hQLUjVojXaRuBUND
+ pDA8YV5LiQekDLT1Hkqg7v+kDO6XE1qpveGJsTuIfS2mw4sYoy/wZuOIQAzKyyS6E5ih
+ 0RBOX4wZcwPUYPDEpV771+1DwN/wVyAg9d1x7BR+PoMz3/n1KqnD9hOXADB2iSwtO63m
+ w4uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746739745; x=1747344545;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gduKp8TXaddet8MYCJkDdTxox7NbhZJ7SnzHOtqVZeE=;
- b=vK8WFDP3951FP+RUMdEATdLfra34w4hW86KdxGB/qZj49V666ovOfC56VskqC0hOp8
- w43n1eFL5jZSmNtn4aFaiPCErEIn8c1yUaX4raX6943I0/VeFsxeqXSYC4IQ/2gWct1C
- 6evLYDKMkGIQOD3Itdz5NySysT83QQ4qBxLGV2N0pRPbwDo26aL94s7ezdi5dzpEhat6
- YWE+W7Ltz5xVt0Pn3jW3UHTYZA5m/dkOw6HFEYkdY+lItzNdC/ly21TgijaSfBcDTp2M
- J0pocq57/fWwuNdqT4BB+07HmnEOMPO/CJFZUd5MuUxl8vlSF0vqKbzw1t8uZAdxnwpj
- fIfQ==
-X-Gm-Message-State: AOJu0YyaJc83GYGU2SLAAkX5hMvkLayVOVHunUH0V6VcKyb6tD/hiDFq
- 8xXyrpwpYgWKfMBb1JfwYnAuU2QCPOL6l7Ge7Dq52BYibHZa7xrapt8NBZ86EzNjikwc5VZe5FW
- kOeg84ZUcdCEWpKGgua9v6PvehGdOU+CEmqrhJffMwvbAt7P7RRFwBf4KTLRrxvpUhhotNI+ZE6
- zEoY47Ii7/h64D/HL0TwhGwI6sR7s=
-X-Gm-Gg: ASbGnctAmDJ8tV8clYeYFbbVWEkZoh98SOQZuehBmx9cBXBNr6ccbOG/PuFzx8vKTYE
- Kk+tfBB467IvC9f4uQlNVJocsadmL8oT0NAReyRAyXMcM9wrPdHi65S22ZpQ9sNREDhpuUQ==
-X-Received: by 2002:a05:6870:c083:b0:2c1:5448:3941 with SMTP id
- 586e51a60fabf-2dba4317d33mr706757fac.18.1746739745209; 
- Thu, 08 May 2025 14:29:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH0ZD6STFSXwRY5AvmKffHMkX6mVHH+MWc0kDGuytNNJFMGSmGUA3gfCUsL1mAfJG3jyP5mGjQq/Smaiha9YLs=
-X-Received: by 2002:a05:6870:c083:b0:2c1:5448:3941 with SMTP id
- 586e51a60fabf-2dba4317d33mr706736fac.18.1746739744837; Thu, 08 May 2025
- 14:29:04 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746740360; x=1747345160;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RIVzRxBQ0ha8wenOm7zlIZDDBm5UcvXpy6kwjw4B2j0=;
+ b=gpnGMYI1Z4KHACTCTsx1edyFmJKTvUaxSL4TE+wp4VYV+kCi40iVXXGdCvFfekwTW7
+ G01+ONLH0I/aPY+rveQTd1sEEfFiAZGyODri1MSp0ODt9xHFlT4jv8ltLDiqMR7KhzvJ
+ 1ksWz2Wmu4kA68utUK4lIEHgsEKRUh67WwT58vY2mFsEHxyiwlZs9H/6tM1YyJhhQJnl
+ GgustJks7FSkd34TCBrdMowmVmUll3XDFmX3eHvSiGmw0mmUDgcxU3r/AIx6/O+QKF9j
+ jQ7vNENADmQnaiNe+Bv6Idcy8HQsTA2I7998LFzgxOnHTR1Sb5Qnd4LTyB2Z0ACUPEi0
+ cVXw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXqJWjVnZh93ZS98BaOWKutkRJ18fP/TnKD6zE0TFgBeqiejLfrN69yw4CbsY6iS2Uo90bNhHGV4+0E@nongnu.org
+X-Gm-Message-State: AOJu0YwDUUSTJX87k63F2itBEJD8etwPL2Ldbpa0f7AUUsY5BFkVY7CZ
+ DbSp1QN+Nz3pqFBofd6A31Lb3ZwFS1al3hJ8KAAxwdt0GJo9yTD7J1M98iyzc0w=
+X-Gm-Gg: ASbGnct8vCH/9Rj7qey6L98dlnttZNTqvKpxjrGw4vUvJYWyA4LFyuZeBNc6g/4FeD3
+ rAv7ygH8TX4uHAAdvBsneU4TTcx8QHnt4ihLQ3oQJadOBAzoBOXgWamUlMO7Ahnuu3KOeM/RlE6
+ XrQ1TEQz0WP6S8YmttNpBI0DlDdyAyM0sKcvN1vmI0CN2Qi0QIsLVX4c9JKjpYvWNxKiunaZff+
+ WkpewbPLMz1ldlhz+bzEhUXTY69E8PBsgYtDgLNzmBaOvDTH32rfuQqjHGBq9j7mSDOsZoUgrQN
+ iuQDZ3AsasOg08KgUdL826kO+9j9NqzZcw2rzEYUO6x1GybfheTwZBb57ERO
+X-Google-Smtp-Source: AGHT+IG/270pCzQSFoEjNB8YVTry7RGATg5hCBKH108zES6TVj0IwEOYOB7Y+NOYRhCyTuhtiqrSog==
+X-Received: by 2002:a17:902:f64e:b0:21f:5063:d3ca with SMTP id
+ d9443c01a7336-22e84783767mr82097805ad.16.1746740359836; 
+ Thu, 08 May 2025 14:39:19 -0700 (PDT)
+Received: from [192.168.101.134] ([75.147.178.105])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22fc82c329dsm4170055ad.258.2025.05.08.14.39.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 May 2025 14:39:19 -0700 (PDT)
+Message-ID: <ce0be4e4-6e77-4a4a-9e1a-90e8f99e0d02@linaro.org>
+Date: Thu, 8 May 2025 14:39:17 -0700
 MIME-Version: 1.0
-References: <20250508002440.423776-1-afaria@redhat.com>
- <20250508002440.423776-3-afaria@redhat.com>
- <20250508203755.GA63777@fedora>
-In-Reply-To: <20250508203755.GA63777@fedora>
-From: Alberto Faria <afaria@redhat.com>
-Date: Thu, 8 May 2025 22:28:27 +0100
-X-Gm-Features: ATxdqUGldNclz98oWGrC7sKBpJLwSdW5iNPS0cRjTy5K3QDE_LTCuEk4Z4BaKYA
-Message-ID: <CAELaAXywEqdE6w32QsGAqfBJjQRUjRQt7WaW1pJvjS+ifQtqHA@mail.gmail.com>
-Subject: Re: [RFC 2/4] virtio-blk: Add VIRTIO_BLK_T_OUT_FUA command support
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Coiby Xu <Coiby.Xu@gmail.com>, 
- Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Raphael Norwitz <raphael@enfabrica.net>, Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, 
- qemu-block@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
- Hanna Reitz <hreitz@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Xie Yongji <xieyongji@bytedance.com>, Yanan Wang <wangyanan55@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=afaria@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 00/24] target/m68k: fpu improvements
+To: Helge Deller <deller@gmx.de>, qemu-devel@nongnu.org
+Cc: laurent@vivier.eu
+References: <20250507211300.9735-1-richard.henderson@linaro.org>
+ <14e74771-f887-4e7d-8fcd-78244a3f0d08@gmx.de>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <14e74771-f887-4e7d-8fcd-78244a3f0d08@gmx.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,26 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 8, 2025 at 9:38=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.com=
-> wrote:
-> On Thu, May 08, 2025 at 01:24:38AM +0100, Alberto Faria wrote:
-> > Signed-off-by: Alberto Faria <afaria@redhat.com>
-> > ---
-> >  block/export/virtio-blk-handler.c |  7 ++--
-> >  hw/block/virtio-blk.c             |  2 ++
-> >  hw/core/machine.c                 |  4 ++-
-> >  hw/virtio/virtio-qmp.c            |  2 ++
-> >  tests/qtest/virtio-blk-test.c     | 56 +++++++++++++++++++++++++++++++
-> >  5 files changed, 68 insertions(+), 3 deletions(-)
->
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+On 5/7/25 14:28, Helge Deller wrote:
+> On 5/7/25 23:12, Richard Henderson wrote:
+>> v3: https://lore.kernel.org/qemu-devel/20240909172823.649837-1- 
+>> richard.henderson@linaro.org/
+>> v4: https://lore.kernel.org/qemu-devel/20250224171444.440135-1- 
+>> richard.henderson@linaro.org/
+>>
+>> Changes for v5:
+>>    - Rebase from February.  :-/
+>>    - Use ldl_be_p in m68k_fpu_gdb_set_reg (phil).
+>>
+>> Patches needing review:
+>>    03-target-m68k-Keep-FPSR-up-to-date.patch
+>>    05-target-m68k-Update-FPSR-for-FMOVECR.patch
+>>    09-target-m68k-Use-OS_UNSIZED-in-LEA-PEA-JMP.patch
+>>    10-target-m68k-Move-pre-dec-post-inc-to-gen_lea_mode.patch
+>>    11-target-m68k-Split-gen_ea_mode-for-load-store.patch
+>>    21-target-m68k-Implement-packed-decimal-real-loads-a.patch
+> 
+> Hi Richard,
+> I noticed that the FPU emulation on hppa has some issues too.
+> Any suggestion, how one can test the runtime FP emulation (inside the VM)?
 
-Please disregard this version of the series, it is missing several
-hw/block/virtio-blk.c changes needed to actually get
-VIRTIO_BLK_T_OUT_FUA working. I've sent v2 fixing this; it only
-differs on patch 2/4.
+RISU is probably best.
 
-Thank you,
-Alberto
 
+r~
 
