@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9AE9C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 07:53:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0850CC3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 07:56:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCw4K-0003Q9-UJ; Thu, 08 May 2025 03:53:24 -0400
+	id 1uCw6f-0004YZ-70; Thu, 08 May 2025 03:55:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uCw4H-0003Pp-Lp
- for qemu-devel@nongnu.org; Thu, 08 May 2025 03:53:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uCw6d-0004YL-92
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 03:55:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uCw4G-0003Pd-3F
- for qemu-devel@nongnu.org; Thu, 08 May 2025 03:53:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uCw6b-0003sA-K6
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 03:55:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746690799;
+ s=mimecast20190719; t=1746690944;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gbxJO53ELp7QdRPsg5yHxWLcQX9/Uk4NsOEVV/jcX04=;
- b=GRUBKA1T/E+N2cD0E4cwRBomF8pSWgpvtdzs0viGkPXXkffEJlghkp4xQGYMTw4VLncqRe
- M5vvQNMbT9J7MhWLVhW840PA4hfNFSH0Yl3hjF4BqMOehW/PNfYD9OZZBwsfUVCSUqDnVL
- lpGJlX9EWjupxkaSOrLQwAlN37+rAGw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OOBMQcHuS726CowzUBIWVhy/mCdvow/YjXZ8UfUxLXc=;
+ b=U9r0KjlekuEFffRK01/w7UpGGkvnQ3B5WCseTInMz9+yJvGFFhk7SMv8o+GFbuET1wTI3N
+ 54FxyTbgfPLmPGR1qgfvb0ogVaFbwq+K2ChpFS3uR5mhy6kEtZYS9Gw2/JZ4t+hzN8U+sO
+ 11qHycyWwbGmoFv2tLH/iFvIqx+Dzis=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-tlbc0cPsMnGQ-ut4noFx9A-1; Thu, 08 May 2025 03:53:18 -0400
-X-MC-Unique: tlbc0cPsMnGQ-ut4noFx9A-1
-X-Mimecast-MFC-AGG-ID: tlbc0cPsMnGQ-ut4noFx9A_1746690797
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-39ee4b91d1cso781930f8f.0
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 00:53:17 -0700 (PDT)
+ us-mta-609-Qh1m7woNOCuvdvJfpEJk-w-1; Thu, 08 May 2025 03:55:43 -0400
+X-MC-Unique: Qh1m7woNOCuvdvJfpEJk-w-1
+X-Mimecast-MFC-AGG-ID: Qh1m7woNOCuvdvJfpEJk-w_1746690942
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-39c1b1c0969so425418f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 00:55:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746690797; x=1747295597;
+ d=1e100.net; s=20230601; t=1746690942; x=1747295742;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gbxJO53ELp7QdRPsg5yHxWLcQX9/Uk4NsOEVV/jcX04=;
- b=dEUMzfPFgu8rgcZwUjPqleLaUCMPTdpszx/5FPBNo/CVMaHI1Xq3W/UK5WTMDuSNp0
- f6R5rt4RiQaRlKSnyKUft3jqe8+wfdYEdl7Z9BkM+3ATH+i0+qtPoZ5Bx6dJ/L5PPrZy
- ZvdBPkNcsBO+PjIXLHvdHVHIoJNy0bQYsLBriCBKNh0PRwMTpEJ315/kR3aeKF4u7vVh
- jJis1rRB5va0js42CGqlu797sNdR3XnX2PwC5kPvK9kGKr5bBbg9It6MVoDtv/zSd+wp
- 6rH7fAde4i1eP4WEN6Ja0rgj7/L74FMnOCfGkTYIiStWyNNqcy6W+gr85KfnIOnJVbCI
- e4AA==
+ bh=OOBMQcHuS726CowzUBIWVhy/mCdvow/YjXZ8UfUxLXc=;
+ b=bU9qOLworbJcmpNqG4ph3ht2imi7ZQJkLg+p1zYZkkVfTl5s4d4bJtRduG/Qa4KGEc
+ yho6+HVf+0Iiu4QoT4aXpcx6tCgZ4gLCl3wZGYQP5K/7ysDbDVO1h1QeJrTf4XP+uCN8
+ opyW3LyruUgyhWMihD0DwS4qVxLokJbuwHSI6GnVs5VY6yFoADy8L+Jf2QcZsdLBw4uK
+ t7qFOM6lhxZGXLRrh9fL0g5lA62Ug1wX7xqGaMrsuWJDDCMnuSTjv7kAuc91lAVobg9F
+ UEDMgBUytmb3otMuYurotq6H8P8xaOdl5BTrP7XjBFwMdsWKoUji5gTvibLEwlUUHa62
+ EQOA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWqmp2zgXwJjirqFQP/Jz0PZWkwvBr8sTMG5m2i1kqucwPSCwnOAF+is4R17bp2DEPL5ZAN8c1K6+uU@nongnu.org
-X-Gm-Message-State: AOJu0YykeLMFmswXh1wAWpiD7rHB95fS8NbuqlLR0sZLQWNAMKOH5prE
- lNOobx0j6/5MECjW9CoEwjWCPahtRKaItbaPcfPhMcrFdnWi14mwIH1nYl+vpbSpbqym37DqHYd
- 1LAxIPRTm1LUCwrej7WPRJZqPrx6fWisuNRielDEupqMNCdf2hG5v
-X-Gm-Gg: ASbGncu7Nc24Sk1RiBmufbqaes4TfvPBmejwNzrZT93HsK7r0j7aQH16wJkD5jGKDGy
- 4l6JopLIhd9pAYQ507LNk/jy/HNwWBcc6ItNP1WqCGVFCUwdOD91VCrahFWx32GH/pG4+Psi5qa
- bKdS1sCdc1hMgMnHBcN4LvKQuukmR4bLfzL4qOcdXr2i0gdef1hZ4Vpswy05X1ssG9DwNWORNFk
- OWP4rC2tPYyDvrrkOgYNscioxWGzX864mjJTyX/sfTjhKCp1OcvoZKXEQsu3mHZB9OgTgyhbp+4
- jZPAIGl4/ERCZPYKjFhGwrZ3rtbP0eLneptq7vB0RQc7ByGo8WKw
-X-Received: by 2002:a05:6000:2ab:b0:39f:c05:c220 with SMTP id
- ffacd0b85a97d-3a0b9941e27mr1993277f8f.22.1746690796865; 
- Thu, 08 May 2025 00:53:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IElkqOw8tn2oihZwFNwPrlEY4Qmh3cGFOgcTpvzujNRD0KkbbWSa2ZP2iC1LSe5Wcjrs5XA9w==
-X-Received: by 2002:a05:6000:2ab:b0:39f:c05:c220 with SMTP id
- ffacd0b85a97d-3a0b9941e27mr1993240f8f.22.1746690796422; 
- Thu, 08 May 2025 00:53:16 -0700 (PDT)
+ AJvYcCXQwniZNBECCEc5JVG9nkF6GABHi+CRB1PT5BBr7CM6R4cmMQgdAQ/ectOvw7tThzXIWKyYApMuNnQu@nongnu.org
+X-Gm-Message-State: AOJu0Ywtg/eewOXhK9GKYZaptNqe1V89qMORMu99uUZTj0E2Wbtqlv0M
+ TI61sAgqqW2mT23b0VAWqquNeuWfwPMG0JsWqxV65IgM6H7Rg7WIjusJ81CQfLaEeCESqsEYoHk
+ l4ZAwcZBBGVRJRb63j1lFsfVIAA1CYHXdjgeVyM11uQZ/r9Xp+OlY
+X-Gm-Gg: ASbGnct9zWvvbBrn0rICXnTSKvF8wPyFDKWFvtRWWo1PZUNbN1HgRkhIPdFhuFVzXLJ
+ vcbv7816fveRgHtR041cOnGUZxksXVvhxaEeSwRsnV/oaI2o1028kt/M33knGyOvsU3zM6/YEac
+ UywcKU8pJdHmXlQnZdmoQLj9IlCmTvl64IIqQhgiCtT29Qg+grX3qNGHR1sySwCad3VsyXNKIpC
+ 0Nds0/V5hV3roCrznB/MwVhpW9OveHP/1hsFu92TbVIxs6jrpbEBRPqsMt1QNjfIjBLwY8Ljihj
+ t87i9IKohffK+XWJ1EUNwjADcIxgxfjebLonS0CZc7sG/yeWsrbi
+X-Received: by 2002:a05:6000:40de:b0:3a0:aeba:23b1 with SMTP id
+ ffacd0b85a97d-3a0b4a6f746mr5147452f8f.49.1746690942295; 
+ Thu, 08 May 2025 00:55:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE774Wi3vl3AC4YkO2o6/kAwi20xYE0NLkBXFM7MtnDFMbZMRZLJCsWERDKk/war6/CxY/NJg==
+X-Received: by 2002:a05:6000:40de:b0:3a0:aeba:23b1 with SMTP id
+ ffacd0b85a97d-3a0b4a6f746mr5147421f8f.49.1746690941931; 
+ Thu, 08 May 2025 00:55:41 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-115-173.pools.arcor-ip.net.
  [47.64.115.173]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a099ae7caasm19644391f8f.54.2025.05.08.00.53.13
+ ffacd0b85a97d-3a099ae0c31sm19622689f8f.10.2025.05.08.00.55.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 May 2025 00:53:15 -0700 (PDT)
-Message-ID: <2785e145-d69a-456f-8d85-03f7922531d9@redhat.com>
-Date: Thu, 8 May 2025 09:53:12 +0200
+ Thu, 08 May 2025 00:55:41 -0700 (PDT)
+Message-ID: <2e2f4b39-d7f1-4817-947f-106558c1621c@redhat.com>
+Date: Thu, 8 May 2025 09:55:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/19] hw/i386/pc: Remove deprecated pc-q35-2.7 and
- pc-i440fx-2.7 machines
+Subject: Re: [PATCH v3 12/19] hw/i386/pc: Remove pc_compat_2_7[] array
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Laurent Vivier <lvivier@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
@@ -94,8 +93,7 @@ Cc: Laurent Vivier <lvivier@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>
 References: <20250502185652.67370-1-philmd@linaro.org>
- <20250502185652.67370-12-philmd@linaro.org>
- <97eadaef-7c1b-4561-af9a-bd887e00d19c@linaro.org>
+ <20250502185652.67370-13-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -140,10 +138,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <97eadaef-7c1b-4561-af9a-bd887e00d19c@linaro.org>
+In-Reply-To: <20250502185652.67370-13-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -168,80 +166,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/05/2025 11.50, Philippe Mathieu-Daudé wrote:
-> On 2/5/25 20:56, Philippe Mathieu-Daudé wrote:
->> These machines has been supported for a period of more than 6 years.
->> According to our versioned machine support policy (see commit
->> ce80c4fa6ff "docs: document special exception for machine type
->> deprecation & removal") they can now be removed.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
->> ---
->>   hw/i386/pc_piix.c |  9 ---------
->>   hw/i386/pc_q35.c  | 10 ----------
->>   2 files changed, 19 deletions(-)
->>
->> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
->> index 98a118fd4a0..98bd8d0e67b 100644
->> --- a/hw/i386/pc_piix.c
->> +++ b/hw/i386/pc_piix.c
->> @@ -755,15 +755,6 @@ static void 
->> pc_i440fx_machine_2_8_options(MachineClass *m)
->>   DEFINE_I440FX_MACHINE(2, 8);
->> -static void pc_i440fx_machine_2_7_options(MachineClass *m)
->> -{
->> -    pc_i440fx_machine_2_8_options(m);
->> -    compat_props_add(m->compat_props, hw_compat_2_7, hw_compat_2_7_len);
->> -    compat_props_add(m->compat_props, pc_compat_2_7, pc_compat_2_7_len);
->> -}
->> -
->> -DEFINE_I440FX_MACHINE(2, 7);
->> -
->>   #ifdef CONFIG_ISAPC
->>   static void isapc_machine_options(MachineClass *m)
->>   {
->> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
->> index b7ffb5f1216..a1f46cd8f03 100644
->> --- a/hw/i386/pc_q35.c
->> +++ b/hw/i386/pc_q35.c
->> @@ -648,13 +648,3 @@ static void pc_q35_machine_2_8_options(MachineClass *m)
->>   }
->>   DEFINE_Q35_MACHINE(2, 8);
->> -
->> -static void pc_q35_machine_2_7_options(MachineClass *m)
->> -{
->> -    pc_q35_machine_2_8_options(m);
->> -    m->max_cpus = 255;
->> -    compat_props_add(m->compat_props, hw_compat_2_7, hw_compat_2_7_len);
->> -    compat_props_add(m->compat_props, pc_compat_2_7, pc_compat_2_7_len);
->> -}
->> -
->> -DEFINE_Q35_MACHINE(2, 7);
+On 02/05/2025 20.56, Philippe Mathieu-Daudé wrote:
+> The pc_compat_2_7[] array was only used by the pc-q35-2.7
+> and pc-i440fx-2.7 machines, which got removed. Remove it.
 > 
-> As noticed Thomas for 2.4, here I missed to squash:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> ---
+>   include/hw/i386/pc.h |  3 ---
+>   hw/i386/pc.c         | 10 ----------
+>   2 files changed, 13 deletions(-)
 > 
-> -- >8 --
-> diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86- 
-> cpuid-compat.c
-> index 456e2af6657..5e0547e81b7 100644
-> --- a/tests/qtest/test-x86-cpuid-compat.c
-> +++ b/tests/qtest/test-x86-cpuid-compat.c
-> @@ -348,11 +347,0 @@ int main(int argc, char **argv)
-> -    if (qtest_has_machine("pc-i440fx-2.7")) {
-> -        add_cpuid_test("x86/cpuid/auto-level/pc-2.7",
-> -                       "486", "arat=on,avx512vbmi=on,xsaveopt=on",
-> -                       "pc-i440fx-2.7", "level", 1);
-> -        add_cpuid_test("x86/cpuid/auto-xlevel/pc-2.7",
-> -                       "486", "3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-> -                       "pc-i440fx-2.7", "xlevel", 0);
-> -        add_cpuid_test("x86/cpuid/auto-xlevel2/pc-2.7",
-> -                       "486", "xstore=on", "pc-i440fx-2.7",
-> -                       "xlevel2", 0);
-> -    }
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index 4fb2033bc54..319ec82f709 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -289,9 +289,6 @@ extern const size_t pc_compat_2_9_len;
+>   extern GlobalProperty pc_compat_2_8[];
+>   extern const size_t pc_compat_2_8_len;
+>   
+> -extern GlobalProperty pc_compat_2_7[];
+> -extern const size_t pc_compat_2_7_len;
+> -
+>   #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+>       static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
+>                                                    const void *data) \
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 7573b880905..ee7095c89a8 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -241,16 +241,6 @@ GlobalProperty pc_compat_2_8[] = {
+>   };
+>   const size_t pc_compat_2_8_len = G_N_ELEMENTS(pc_compat_2_8);
+>   
+> -GlobalProperty pc_compat_2_7[] = {
+> -    { TYPE_X86_CPU, "l3-cache", "off" },
+> -    { TYPE_X86_CPU, "full-cpuid-auto-level", "off" },
+> -    { "Opteron_G3" "-" TYPE_X86_CPU, "family", "15" },
+> -    { "Opteron_G3" "-" TYPE_X86_CPU, "model", "6" },
+> -    { "Opteron_G3" "-" TYPE_X86_CPU, "stepping", "1" },
+> -    { "isa-pcspk", "migrate", "off" },
+> -};
+> -const size_t pc_compat_2_7_len = G_N_ELEMENTS(pc_compat_2_7);
 
-With that hunk added:
+I'd really appreciate if you could provide clean-up patches for 
+TYPE_X86_CPU, too. Otherwise I'm pretty sure we'll forget that there is some 
+clean up possibility here.
 
+Anyway, for this patch here:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
