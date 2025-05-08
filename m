@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1B49C3ABC0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5457C3ABC3
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 00:20:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCoyN-0005yL-PX; Wed, 07 May 2025 20:18:47 -0400
+	id 1uCoyK-0005xF-6e; Wed, 07 May 2025 20:18:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uCoyK-0005xe-Bp
- for qemu-devel@nongnu.org; Wed, 07 May 2025 20:18:44 -0400
+ id 1uCoyF-0005wT-Ub
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 20:18:40 -0400
 Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uCoyI-0006uo-8S
- for qemu-devel@nongnu.org; Wed, 07 May 2025 20:18:43 -0400
+ id 1uCoyE-0006uR-Bw
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 20:18:39 -0400
 Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-736ab1c43c4so496689b3a.1
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 17:18:41 -0700 (PDT)
+ d2e1a72fcca58-736e52948ebso563071b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 17:18:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746663521; x=1747268321; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746663517; x=1747268317; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BjR+4cbwIjuGdu5a9Wc1yALEfQJBd/CuIo518XL/+fg=;
- b=BlGfJFgct3qOaH2iTzV9hc5xD3h59TX7KPXnuOm9pP30iyG9BkzhOx6rttSUWdYj8M
- H5SzKv0QVJqWb32l7GscU0vGcgTMtUhX++RwRFsKtsUKSVBTTncm0DEY49qPvFDNU9Fe
- SBqd9AEG7/c3vxM7HoRG+ReW8ZelALST/A+k0Kni7KnZNBCHw/jcYW2VNqVfRhSPuthG
- HeJx9BHmbsPaHF3iWfKllgvntWd5Tl6S87GWkRe2mIb9aUEhatmhm6PKnVHlGW/wLpsz
- yDVq2uFV1PxA+f2PMxAZEzCRY6SYRCGqQA3Tas8467XH2LfhAu9bZi+k5Fk4uqosQQ64
- 6wRw==
+ bh=24J3bQARsJAxNOHuQ8xXqx3aKqY63r09Vs0+/glM9oo=;
+ b=D1eBbyMw/rCCdKVOqEe1qEVygIgfwNJCVfpbH4qIoMhJKcrs0iIeKoG+/4ID7vL6Yn
+ ov/C9/j8HNf/9PSTe2RKMOLJFn9+NTG10ZGbuMBjLVz12c3JccA0ref8+6Xe5tdkcCK/
+ 5UM4+N9RaPrLFYlIQSUA6VRky2IAN+2aWBKWl8qUd0hFJu5Bc1zsTCT+A0hr5DZKhaOK
+ 7KzRf782BJBTWKdIHiwp3y2nGnEj1nLz53hMk1jcpjoDRXjgKwhWX+Wd4By3IK50Bgyq
+ +YEd58NZby9O4J/dFoooWiEi0VUrV5LKuRYSR6+rn6qe4GbT026Mn72+OyBY3fYEli+o
+ yeRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746663521; x=1747268321;
+ d=1e100.net; s=20230601; t=1746663517; x=1747268317;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BjR+4cbwIjuGdu5a9Wc1yALEfQJBd/CuIo518XL/+fg=;
- b=oImwbgsSo/SEuDsuj0dDTfq3yZMP3F7ThxCXbTQ/uVMa+0JjA+P+UkNj3rjOL8tq3I
- NAsZHXFTemxZcph4FY54RphwoYE7Wzi3wb6kpfk4md1yFnLQCZ4Ye07odqu3dGfEyscQ
- jGZhFJJsLPoqNFn8KK8c9f4nXKfxOvLdA6PldZoiLQxz1gJNWW4m2Y/3SY/kRshp0MTb
- 36LQ9My9umV7JNnHWN/iYvldlDVtWLO8XuUM9YjUBUX3TxndhrNNFJ28u960nl/bYhQa
- 9aKaHAJ3KG81gJMayf6zZZsFZnqq4dxkBooz+4cW7HBRU6HZlwe4UGZ31+uSa0ueuGYB
- DIkA==
-X-Gm-Message-State: AOJu0Yw0GLr013WErx4CUZ6xrRwUQn2S9ErbIEkJpI22DH0bWL3g92yE
- NtIi9c/PWCQ7bB2kpM645/DRGX1qwOrtb9k9ACp065PmKJDrDiNUI9JJBw==
-X-Gm-Gg: ASbGncu8+WVajniczEWaXhj+Skl01M+o8FOK6KgWnij1hOXxwR/oK6VeRdVA/J8zOwk
- IreIBFBJTk/NOXa0BQauzPpvbfeRYSIdcNxmR8A9X2FnJyp/4jCcxHRUVzkJI7FFwaZ3a/NRPcg
- BA0dhR5/r9ed/5xQN66INi3V3Zkzqe1zyHPE5ElQFfPhJWJOY81i1VT9FRrst4kcLLWTKPDpcGN
- Xi63CGkqpS57ZI/UdS2G7mFtfUyolSMRfipSW1SuY3vEmyCkQLbsU3BCgJQZJpQG69cl7syP/FT
- IELXd5SGYU7I/d+ASIzxZEnleFr906u2+isb/F8FYd0dk0tUxFGFa+OEatZwbA==
-X-Google-Smtp-Source: AGHT+IFVW9/qE144753BxmrJrZ3KQKrB5Cd+qE4MZUI/qK0vbO/pbkjxTE2f8Un30OPgdezgLBxmoA==
-X-Received: by 2002:a05:6a00:3286:b0:736:5c8e:baaa with SMTP id
- d2e1a72fcca58-7409cee610cmr7425910b3a.2.1746663520848; 
- Wed, 07 May 2025 17:18:40 -0700 (PDT)
+ bh=24J3bQARsJAxNOHuQ8xXqx3aKqY63r09Vs0+/glM9oo=;
+ b=mjsmxl4xkaVZr3ne1fR+Vbl5YDsVZRP9QvS2YcfzN4fHX6j8qGMKuLlYb5FLEAeBfp
+ CG1o72jEDeRp3yUrskk947FcxjncBfGYQ0LN+N0Z1hgRmSnSkAuvf1tiLHSltEHQYGXL
+ XdfRb4DRdpbqDa+HR0vQTvlN4kNoCNR0ODxXctPuzNEjqUolDb/jEtbs6h3S+yaejG84
+ pYmTcF8XER5UOf51pVB4vxb8mJjdfiaSrFsY3y3p4qRrU1FnQb/bGhl7NgQ3h+kAq1Yj
+ 2j8Vv+es+kLCmxYma5ILXoXlHzTHBAWCgP6BLTuYNQl3di2zWqiwg7jSglWT4gb6rSx1
+ rjqQ==
+X-Gm-Message-State: AOJu0Yz1ZIg4iaZv/8ZsKTfOdIJjPqNbWJgkrzzhUc+IGmfHspBTtVNH
+ C9DNCeM8rJhEEWDEswtFhl/JW4RK+ueoqdvVrMOTrerTLmvBpVY2HOgdLg==
+X-Gm-Gg: ASbGncsRYeYQX2OkFwOF82wPxJp3QNwSnujXgpiYhpW0sOKx9YLLwPwRCez+C/Cd/T2
+ kfF9i/xzvp0wDyOh6I+B9TOqLulsv58BgQdJ9cslHAkIv31QMX2mMD+rKoCgJCG4vyPFlCb3945
+ bad0CkOpQbUJc/FIC3xmHz2Oo2MEdm7TCb043REZxuOomAUBsk78Be9/0ZkjNtx96Tr9M5thWyw
+ nq03oM0LskvhiupHUyMlROIXavVBNRQMq8trU88v0YgFrCqWaZbvg6xSObN5hxWVn0BCfOGOfUp
+ pI3SwFKuzKt/lCg5DQDWEEBJRBvZbnjWKTEOkdB4WAj7yIqs6kRi4FAyELAT/g==
+X-Google-Smtp-Source: AGHT+IGoeqjRK7ZFr56WSw5bWPKP7f1TV1YrmaY01bM+y2gZcRS32IpW/MbpQWlGq8gyRlz5VeG8lg==
+X-Received: by 2002:a05:6a20:d489:b0:1f5:7eee:bb10 with SMTP id
+ adf61e73a8af0-2159af312a7mr1779842637.8.1746663516792; 
+ Wed, 07 May 2025 17:18:36 -0700 (PDT)
 Received: from deb-101020-bm01.dtc.local ([149.97.161.244])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7405902167csm12378724b3a.98.2025.05.07.17.18.40
+ d2e1a72fcca58-7405902167csm12378724b3a.98.2025.05.07.17.18.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 17:18:40 -0700 (PDT)
+ Wed, 07 May 2025 17:18:36 -0700 (PDT)
 From: anisa.su887@gmail.com
 To: qemu-devel@nongnu.org
 Cc: Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com, dave@stgolabs.net,
  linux-cxl@vger.kernel.org, Anisa Su <anisa.su@samsung.com>
-Subject: [PATCH v2 05/10] cxl_events.h: Move definition for
- dynamic_capacity_uuid and enum for DC event types
-Date: Thu,  8 May 2025 00:01:01 +0000
-Message-ID: <20250508001754.122180-6-anisa.su887@gmail.com>
+Subject: [PATCH v2 03/10] cxl/type3: Add dsmas_flags to CXLDCRegion struct
+Date: Thu,  8 May 2025 00:00:59 +0000
+Message-ID: <20250508001754.122180-4-anisa.su887@gmail.com>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250508001754.122180-1-anisa.su887@gmail.com>
 References: <20250508001754.122180-1-anisa.su887@gmail.com>
@@ -103,64 +102,71 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anisa Su <anisa.su@samsung.com>
 
-Move definition/enum to cxl_events.h for shared use in next patch
+Add booleans to DC Region struct to represent dsmas flags (defined in CDAT)
+in preparation for the next command, which returns the flags in the
+response.
 
 Signed-off-by: Anisa Su <anisa.su@samsung.com>
 ---
- hw/mem/cxl_type3.c          | 15 ---------------
- include/hw/cxl/cxl_events.h | 15 +++++++++++++++
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ hw/mem/cxl_type3.c          |  8 +++++++-
+ include/hw/cxl/cxl_device.h | 15 +++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
 
 diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 05d4c861f1..6ad48f55ce 100644
+index 7129da0940..05d4c861f1 100644
 --- a/hw/mem/cxl_type3.c
 +++ b/hw/mem/cxl_type3.c
-@@ -1982,21 +1982,6 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
-     }
- }
+@@ -232,10 +232,16 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+          * future.
+          */
+         for (i = 0; i < ct3d->dc.num_regions; i++) {
++            ct3d->dc.regions[i].nonvolatile = false;
++            ct3d->dc.regions[i].sharable = false;
++            ct3d->dc.regions[i].hw_managed_coherency = false;
++            ct3d->dc.regions[i].ic_specific_dc_management = false;
++            ct3d->dc.regions[i].rdonly = false;
+             ct3_build_cdat_entries_for_mr(&(table[cur_ent]),
+                                           dsmad_handle++,
+                                           ct3d->dc.regions[i].len,
+-                                          false, true, region_base);
++                                          ct3d->dc.regions[i].nonvolatile,
++                                          true, region_base);
+             ct3d->dc.regions[i].dsmadhandle = dsmad_handle - 1;
  
--/* CXL r3.1 Table 8-50: Dynamic Capacity Event Record */
--static const QemuUUID dynamic_capacity_uuid = {
--    .data = UUID(0xca95afa7, 0xf183, 0x4018, 0x8c, 0x2f,
--                 0x95, 0x26, 0x8e, 0x10, 0x1a, 0x2a),
--};
--
--typedef enum CXLDCEventType {
--    DC_EVENT_ADD_CAPACITY = 0x0,
--    DC_EVENT_RELEASE_CAPACITY = 0x1,
--    DC_EVENT_FORCED_RELEASE_CAPACITY = 0x2,
--    DC_EVENT_REGION_CONFIG_UPDATED = 0x3,
--    DC_EVENT_ADD_CAPACITY_RSP = 0x4,
--    DC_EVENT_CAPACITY_RELEASED = 0x5,
--} CXLDCEventType;
--
- /*
-  * Check whether the range [dpa, dpa + len - 1] has overlaps with extents in
-  * the list.
-diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
-index 38cadaa0f3..758b075a64 100644
---- a/include/hw/cxl/cxl_events.h
-+++ b/include/hw/cxl/cxl_events.h
-@@ -184,4 +184,19 @@ typedef struct CXLEventDynamicCapacity {
-     uint32_t tags_avail;
- } QEMU_PACKED CXLEventDynamicCapacity;
+             cur_ent += CT3_CDAT_NUM_ENTRIES;
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index bebed04085..cbcc1bc9f5 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -177,6 +177,15 @@ typedef enum {
+     MAX_LOG_TYPE
+ } CXLLogType;
  
-+/* CXL r3.1 Table 8-50: Dynamic Capacity Event Record */
-+static const QemuUUID dynamic_capacity_uuid = {
-+    .data = UUID(0xca95afa7, 0xf183, 0x4018, 0x8c, 0x2f,
-+                 0x95, 0x26, 0x8e, 0x10, 0x1a, 0x2a),
-+};
++/* DSMAS Flags Bits */
++typedef enum {
++    CXL_DSMAS_FLAGS_NONVOLATILE = 2,
++    CXL_DSMAS_FLAGS_SHARABLE = 3,
++    CXL_DSMAS_FLAGS_HW_MANAGED_COHERENCY = 4,
++    CXL_DSMAS_FLAGS_IC_SPECIFIC_DC_MANAGEMENT = 5,
++    CXL_DSMAS_FLAGS_RDONLY = 6,
++} CXLDSMASFlags;
 +
-+typedef enum CXLDCEventType {
-+    DC_EVENT_ADD_CAPACITY = 0x0,
-+    DC_EVENT_RELEASE_CAPACITY = 0x1,
-+    DC_EVENT_FORCED_RELEASE_CAPACITY = 0x2,
-+    DC_EVENT_REGION_CONFIG_UPDATED = 0x3,
-+    DC_EVENT_ADD_CAPACITY_RSP = 0x4,
-+    DC_EVENT_CAPACITY_RELEASED = 0x5,
-+} CXLDCEventType;
-+
- #endif /* CXL_EVENTS_H */
+ typedef struct CXLCCI CXLCCI;
+ typedef struct cxl_device_state CXLDeviceState;
+ struct cxl_cmd;
+@@ -609,6 +618,12 @@ typedef struct CXLDCRegion {
+     uint8_t flags;
+     unsigned long *blk_bitmap;
+     uint64_t supported_blk_size_bitmask;
++    /* Following bools make up dsmas flags, as defined in the CDAT */
++    bool nonvolatile;
++    bool sharable;
++    bool hw_managed_coherency;
++    bool ic_specific_dc_management;
++    bool rdonly;
+ } CXLDCRegion;
+ 
+ typedef struct CXLSetFeatureInfo {
 -- 
 2.47.2
 
