@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B83C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 13:39:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80B91C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 13:39:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD1SM-0000Wo-FF; Thu, 08 May 2025 09:38:36 -0400
+	id 1uD1SF-0000RX-A6; Thu, 08 May 2025 09:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1Rq-0008Lb-PQ
- for qemu-devel@nongnu.org; Thu, 08 May 2025 09:38:03 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1RU-0007ku-OO
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:37:45 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1Ro-0003qo-HZ
- for qemu-devel@nongnu.org; Thu, 08 May 2025 09:38:02 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-22e45088d6eso13992165ad.0
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 06:38:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1RT-0003pU-6L
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:37:40 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-30ab344a1d8so988175a91.3
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 06:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746711478; x=1747316278; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746711457; x=1747316257; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WY7gSBXT6cR7bWSaiDRLSHPRiSnEJ0DiKBMO01arpK0=;
- b=st6zY8gdtQxfu2ev4NTpXSr0YGXqWQuhwEir7C8e4T7OpoUad6V60nP0sK4urVXcjq
- DEvol2Wl0MbfpG0iACc7zikVVtoHPJJVfKw0tvwZoEkJGib6hCdD/DWPldOXgy0GVco+
- th75CjygbmUzsY3CoLpE1pepTmhveIky62hA/wIWr2inHSvBzOe/JWUzt3CwzjhQJBRE
- mhY8E2ZmBbccu87M2cfMswhwy6OZGc1sC33jA4CGg0Txo0GhobKat3Se5TSwcla8XxI+
- O84tg+hQaKP3Oo623djRdERsR02exbaNGkLT9VS4mKoXAiSaHbnC+Er+DrZ1fDhWQxsN
- yOCg==
+ bh=kL4pIFttZ2qmq1tFiNzzTmUrRSAgtctinyd6wOyzE6Q=;
+ b=pZEXRn+uUUcZV7rv5n+DbYGDAf7vo8d+hGkxidM8y0S9kSSlKk2Vaqjq+4xIyOXiZs
+ 19UANWsu9Kd/pUgNGJqvO/m55ZZ8DFEunL6EEf4lxLnDWNbTQ+CKI48GmhDkGxcoqI1v
+ clb3AxFZyTsu4XHeTeIG7HwKYbncKHGVsUlMJfyXt4u5AauhqyJZ7pJT8+XmN4osl1kr
+ O1fOO/1jRse3c2H+1gmnHCATwKFYsfeqgQynZ9pmk6+z6dGoItTxFkjJqBNmvWjvn0Gw
+ OeyUJt+KjJo43TNcgcJitpVgCNYBj2YzDpuPsWHggwIS0RNfVq35qJMrbcY5oE10KMNx
+ 7uIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746711478; x=1747316278;
+ d=1e100.net; s=20230601; t=1746711457; x=1747316257;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WY7gSBXT6cR7bWSaiDRLSHPRiSnEJ0DiKBMO01arpK0=;
- b=nY1JIurNRbrp5jOHjiiAALwLV5twQq3La8ThtTMQkGE753cKNE4l2XvqWZ4V1926TX
- MvHu/lhAB/Bd7Nts3eHK92YGEBp7VcOYNK8dxITvEuxt9fBBA15ZwPJNNMOLWfX+dOIq
- iXV4m8J36sq6sMc/cfHJq63NFUzXJeqJXAQZuPUXrdysslyH64hnYjJCE0IM2hpV5Yvq
- 3AY8jPucMbeoMydq6reDm8m3h6ULPGdU3D24NmmdRuq3wC03zu6NMKbozlV3yPrN22IJ
- gETmZWZbS8rEQLrfmSjVqNzm4rfC57ybZCM0pfGvIaN+IBy1xzH/Hk0k2w5lVNvrwqxH
- bANQ==
-X-Gm-Message-State: AOJu0Yw33VzpZvG69Q+ysvCOCEvyn0wtUzVX7Fakwqig68ZazawVUdS2
- Davwzgh5liMHh5ya307PAOyv59gnUOyq7HI+IS++EuRV0q7FxgQZFdf1/imBFW2nVE0H1MZjMcc
- MjiRW+Q==
-X-Gm-Gg: ASbGncvVRi8EEUWFzEey8BXTIhUyM2SscRcuyEEsrxfENAbb8kKPfCA+P0ZeVCxCc6u
- g0j0xV2quJg+WpA/lAOY90HSR090HsHPDAn97/WgrJ1QVwNt3XbjPhzCtzEUIufjhXB9Pbdiete
- BPmkXOMFvkJvy8/PxE7iYfq67xERnd0YuKPyKDk39vNeS7mIWri93xVikoLoCCOB61s1dBsOgH8
- 5Twqa1Zd7Is+QfGhEsEhXzlhUlw0txHaWtnDlP0cWv2EiVCvfHHGfnYiDd+K5LVrE2nVFwPY4S/
- sE7wP6vMOQuLIQPBHPF3kM7u5dc1K5D8+p5sezhaLj8U61aZmiXnrCPHqFlceiqwNHj2xIp3nMo
- CpOvm+/6xuNijV7d1jUK+TSkaUw==
-X-Google-Smtp-Source: AGHT+IFLlPSB1rrLA2f2qz61Ov5siZIkGu3fk4846ZY3wJHNQUHlcR79jlid3BO4tuhX5LA8XNMdHA==
-X-Received: by 2002:a17:903:244b:b0:22e:b215:1b6 with SMTP id
- d9443c01a7336-22eb2150297mr51984415ad.28.1746711478628; 
- Thu, 08 May 2025 06:37:58 -0700 (PDT)
+ bh=kL4pIFttZ2qmq1tFiNzzTmUrRSAgtctinyd6wOyzE6Q=;
+ b=QMlu3BBdoq7WLq4DBXWUZSbKP0+2fLic3jx3n2QowbZ7b0clTHuWQJEhzuh3h+Z5xP
+ 5cQa+ni1/hz1AqB39ZlhUSo0Ji5+kPQXhN4J4JkI+yCm1fu5Iout+NiRy7MQ0j1TN6CJ
+ s/VU0lbwR1oJese9yeA5g7gXCx3SolFEVsF+iZYcDVjiMbI6A+li09/MXenFBrJjBgbG
+ hlLmhdbrZo0IYq7NJefMzWXb/qOyfR3B5lgCCWtZWqx4trBCFXbdcUY7xCAsUpjM+e2j
+ usdICMFCkRnAV2r/dCyUSXXe35UvKHUrooNPLDoZJd0kFs3vH5s4qeXvZzSWpYVmdGLS
+ 9R+w==
+X-Gm-Message-State: AOJu0YwWsfYuHPw0uQLX/nbtAf4M75SUGYNOP4iZsKOMc1YUKrEPMYwD
+ qiRoA+Z7M08jjvRxF/VoxnSd/h6jrJVNJw9D5hrX6juNCbYzaJ77uSuHAtDF5QJVsxDRmIoTcai
+ fUQJOKw==
+X-Gm-Gg: ASbGncvQKYp//WZgOry5+TK20SLxVkAOKb4Hi45k0RLPlxrKnXnGtiykwKNBLJoO5dv
+ 7olF+jyRQF2qisYKmnRN1z6KbA4+zxJSnyf5z19sGn9wE8ZNb06A/w3SuPgi1ABKifYq/k/SPiC
+ XMfojxHtxTC/2F8MQJ1tdD2mH0ByaQCSj5N2qWfuZ20IwVileV4jkCknecbhMQXGweqHdH9BI9V
+ nJ7IjiEIH2SQK/iV8sLjvHt5RLNbMJd8+MDXYfghh+guNxzkGU70hTo7fqUCyH4nT+0OZxyAiEl
+ skaKb6tflwOGrmktoHv/zGtqBm5hKxBez1FynWvGcE5gLZ/0EqpCkq4+VIG3JZEWv6tlp2PEj/6
+ +UeHuoEa5aBKrvQQBiJAR8P4k8Q==
+X-Google-Smtp-Source: AGHT+IEk1b8ISPttgleiSmQEDw2klEkwqCgpYadFc8f0DOCy8FGYg03X1jjsNrMZ6SJ85jEJZpDRnw==
+X-Received: by 2002:a17:90b:1d03:b0:2fe:e0a9:49d4 with SMTP id
+ 98e67ed59e1d1-30b28cd784amr5179358a91.2.1746711457171; 
+ Thu, 08 May 2025 06:37:37 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e151ebd08sm111835505ad.104.2025.05.08.06.37.45
+ d9443c01a7336-22e15228ce9sm112128395ad.163.2025.05.08.06.37.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 08 May 2025 06:37:58 -0700 (PDT)
+ Thu, 08 May 2025 06:37:36 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
@@ -86,25 +86,25 @@ Cc: Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
  qemu-arm@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>
-Subject: [PATCH v4 05/27] hw/nvram/fw_cfg: Factor fw_cfg_init_mem_internal()
- out
-Date: Thu,  8 May 2025 15:35:28 +0200
-Message-ID: <20250508133550.81391-6-philmd@linaro.org>
+Subject: [PATCH v4 04/27] hw/mips/loongson3_virt: Prefer using
+ fw_cfg_init_mem_nodma()
+Date: Thu,  8 May 2025 15:35:27 +0200
+Message-ID: <20250508133550.81391-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250508133550.81391-1-philmd@linaro.org>
 References: <20250508133550.81391-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,53 +120,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor fw_cfg_init_mem_internal() out of fw_cfg_init_mem_wide().
-In fw_cfg_init_mem_wide(), assert DMA arguments are provided.
-Callers without DMA have to use the fw_cfg_init_mem() helper.
+fw_cfg_init_mem_wide() is prefered to initialize fw_cfg
+with DMA support. Without DMA, use fw_cfg_init_mem_nodma().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/nvram/fw_cfg.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ hw/mips/loongson3_virt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index 10f8f8db86f..4067324fb09 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -1053,9 +1053,9 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
-     return s;
- }
+diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+index de6fbcc0cb4..654a2f0999f 100644
+--- a/hw/mips/loongson3_virt.c
++++ b/hw/mips/loongson3_virt.c
+@@ -286,7 +286,7 @@ static void fw_conf_init(void)
+     FWCfgState *fw_cfg;
+     hwaddr cfg_addr = virt_memmap[VIRT_FW_CFG].base;
  
--FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
--                                 hwaddr data_addr, uint32_t data_width,
--                                 hwaddr dma_addr, AddressSpace *dma_as)
-+static FWCfgState *fw_cfg_init_mem_internal(hwaddr ctl_addr,
-+                                            hwaddr data_addr, uint32_t data_width,
-+                                            hwaddr dma_addr, AddressSpace *dma_as)
- {
-     DeviceState *dev;
-     SysBusDevice *sbd;
-@@ -1087,10 +1087,19 @@ FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
-     return s;
- }
- 
-+FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
-+                                 hwaddr data_addr, uint32_t data_width,
-+                                 hwaddr dma_addr, AddressSpace *dma_as)
-+{
-+    assert(dma_addr && dma_as);
-+    return fw_cfg_init_mem_internal(ctl_addr, data_addr, data_addr,
-+                                    dma_addr, dma_as);
-+}
-+
- FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
-                                   unsigned data_width)
- {
--    return fw_cfg_init_mem_wide(ctl_addr, data_addr, data_width, 0, NULL);
-+    return fw_cfg_init_mem_internal(ctl_addr, data_addr, data_width, 0, NULL);
- }
- 
- 
+-    fw_cfg = fw_cfg_init_mem_wide(cfg_addr, cfg_addr + 8, 8, 0, NULL);
++    fw_cfg = fw_cfg_init_mem_nodma(cfg_addr, cfg_addr + 8, 8);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, (uint16_t)current_machine->smp.cpus);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_MAX_CPUS, (uint16_t)current_machine->smp.max_cpus);
+     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, loaderparams.ram_size);
 -- 
 2.47.1
 
