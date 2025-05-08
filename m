@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A524C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D6FC3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:10:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD2qz-0001HH-Nc; Thu, 08 May 2025 11:08:05 -0400
+	id 1uD2qL-0005yM-EE; Thu, 08 May 2025 11:07:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2qu-0000jw-CV
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:08:00 -0400
+ id 1uD2qC-0005Me-23
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:07:17 -0400
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2qq-0007RF-E9
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:07:59 -0400
+ id 1uD2q9-0007RW-Fb
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:07:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746716876; x=1778252876;
+ t=1746716833; x=1778252833;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=pOOQrH0r21D3RUmO6grDlkePBA5BARKSWD6S8v1sNVA=;
- b=Lx6mdL9Oza8bLPZPTmp4LjWo6Z+8EE2DYWeAP6zbbzbD7mktt+N4h25J
- A9bZLqYn4+zOMUrPT5DQmDHofMVYMwfalwVtRqaNddO7kW3b+Xt7GwPOi
- 8mlB//AFNm8PxwN5vPKoRi7RUkdWohP2s1uUJk2CicJXc09oLStxa6LMK
- Bxwf9Ma+kBBMjnxh7gbwhqBmpwJEdzlz/gdH/Gpcga/BUlC/LXzg6psEx
- Ri++kP3dLkB7XIKTz8pyUpRv/vpdBPdk9DtS+fKUmsl5iyxl290/R4yEh
- +ILi4o+2TbTsmfzoMk6j3DlYg9RHk+N4TPCGGMdf0uf6l2mZW6joTMckL A==;
-X-CSE-ConnectionGUID: AFw/ulhtS3SZLbO9nLnxEw==
-X-CSE-MsgGUID: 1ydjQbqPQIu0Dk1YnymB4Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73888417"
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73888417"
+ bh=KWILXHL0VnAkibk99IHWXywOOvMvm6j0ss8g3Pct9KA=;
+ b=CYp57iI8JU1VbjvUgr2R8w68loRdTVByZYiByy8nyEpbihnPO5aTGzLW
+ khW9iVwtN50MWVIbfYWztZ9KAxQH68qDoIG5cWCdF02EaA1FMbD8VtPbP
+ 74pZQY5ICoAkMzTsJu9JdxtlWDo2DB44KFinBfzSFNMYz9wKSBd4uklbw
+ RtJofRg/mO3LLlhCyNuVK65a/MbD4++DtuRQLQJhuRKk9QoOG3hxvK5fC
+ MScwg9ht6zCsuzrNIZg2jIKA02reQKQDMlbFUVJEasFJ0VX2OaLnXMBZ/
+ HC7sbFp1kBpQ8BANvwZhttKsqoqJOMlwBgf2A38fcfWng7oCI4OpBg6m/ Q==;
+X-CSE-ConnectionGUID: gfdfA8uWQf+8pRu7C/kI+w==
+X-CSE-MsgGUID: HMQY1g5KShKb/Dbd2EmrUA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73888285"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73888285"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2025 08:07:01 -0700
-X-CSE-ConnectionGUID: durcEn7/Q4mZwrA5xTWj6g==
-X-CSE-MsgGUID: kg9m63EFRjW4JNemURaQFA==
+ 08 May 2025 08:06:34 -0700
+X-CSE-ConnectionGUID: rHuE/TQhQV+05hUWj1ZjLQ==
+X-CSE-MsgGUID: 9EW3V2vNRP+CgPj01swmxA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141440345"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141440145"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:06:58 -0700
+ by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:06:31 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -57,9 +57,9 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v9 41/55] i386/apic: Skip kvm_apic_put() for TDX
-Date: Thu,  8 May 2025 10:59:47 -0400
-Message-ID: <20250508150002.689633-42-xiaoyao.li@intel.com>
+Subject: [PATCH v9 32/55] i386/tdx: implement tdx_cpu_instance_init()
+Date: Thu,  8 May 2025 10:59:38 -0400
+Message-ID: <20250508150002.689633-33-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250508150002.689633-1-xiaoyao.li@intel.com>
 References: <20250508150002.689633-1-xiaoyao.li@intel.com>
@@ -90,52 +90,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-KVM neithers allow writing to MSR_IA32_APICBASE for TDs, nor allow for
-KVM_SET_LAPIC[*].
-
-Note, KVM_GET_LAPIC is also disallowed for TDX. It is called in the path
-
-  do_kvm_cpu_synchronize_state()
-  -> kvm_arch_get_registers()
-     -> kvm_get_apic()
-
-and it's already disllowed for confidential guest through
-guest_state_protected.
-
-[*] https://lore.kernel.org/all/Z3w4Ku4Jq0CrtXne@google.com/
+Currently, pmu is not supported for TDX by KVM.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Changes in v8:
-- Fix the coding style; (Francesco)
+chanegs in v6:
+ - new patch;
 ---
- hw/i386/kvm/apic.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/i386/kvm/tdx.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/hw/i386/kvm/apic.c b/hw/i386/kvm/apic.c
-index 757510600098..cb65fca49586 100644
---- a/hw/i386/kvm/apic.c
-+++ b/hw/i386/kvm/apic.c
-@@ -17,6 +17,7 @@
- #include "system/hw_accel.h"
- #include "system/kvm.h"
- #include "kvm/kvm_i386.h"
-+#include "kvm/tdx.h"
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index e80586feb704..0d6342b51dbc 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -405,6 +405,11 @@ static int tdx_kvm_type(X86ConfidentialGuest *cg)
+     return KVM_X86_TDX_VM;
+ }
  
- static inline void kvm_apic_set_reg(struct kvm_lapic_state *kapic,
-                                     int reg_id, uint32_t val)
-@@ -141,6 +142,10 @@ static void kvm_apic_put(CPUState *cs, run_on_cpu_data data)
-     struct kvm_lapic_state kapic;
-     int ret;
- 
-+    if (is_tdx_vm()) {
-+        return;
-+    }
++static void tdx_cpu_instance_init(X86ConfidentialGuest *cg, CPUState *cpu)
++{
++    object_property_set_bool(OBJECT(cpu), "pmu", false, &error_abort);
++}
 +
-     kvm_put_apicbase(s->cpu, s->apicbase);
-     kvm_put_apic_state(s, &kapic);
+ static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
+ {
+     if ((tdx->attributes & ~tdx_caps->supported_attrs)) {
+@@ -798,4 +803,5 @@ static void tdx_guest_class_init(ObjectClass *oc, void *data)
  
+     klass->kvm_init = tdx_kvm_init;
+     x86_klass->kvm_type = tdx_kvm_type;
++    x86_klass->cpu_instance_init = tdx_cpu_instance_init;
+ }
 -- 
 2.43.0
 
