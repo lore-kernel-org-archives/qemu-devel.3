@@ -4,79 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C749C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 00:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB40C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 01:10:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCp4x-0007HI-Vq; Wed, 07 May 2025 20:25:36 -0400
+	id 1uCplW-0007KI-8S; Wed, 07 May 2025 21:09:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uCp4t-0007D0-AU
- for qemu-devel@nongnu.org; Wed, 07 May 2025 20:25:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1uCplT-0007K0-If
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 21:09:31 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uCp4r-0007h7-VZ
- for qemu-devel@nongnu.org; Wed, 07 May 2025 20:25:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746663929;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=b1DYCnxI5zsuno/R8zHzLRAzIAnJoX4ey2f9yC3L6gY=;
- b=fWutktAEaIPPR6QzClBNxVdxtS1Nz7pMrroOk4Inbw8l1zNiNd2w6Ib5kE7D9/FCkQt/f7
- YIbTN5vX75lLNN861HTjSZXf19+9hHH7887QpsGuvVDcrcjQkY4vCuhOEyPxL/eQrmg0pq
- j9vsjUvmMu78qTs7SHlPeffyEw4iNGw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-389-F-2KWdgPPxmTRuf7A-cUXQ-1; Wed,
- 07 May 2025 20:25:25 -0400
-X-MC-Unique: F-2KWdgPPxmTRuf7A-cUXQ-1
-X-Mimecast-MFC-AGG-ID: F-2KWdgPPxmTRuf7A-cUXQ_1746663923
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 08A9A1956086; Thu,  8 May 2025 00:25:23 +0000 (UTC)
-Received: from desktop.redhat.com (unknown [10.45.224.21])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6CC0319560A7; Thu,  8 May 2025 00:25:15 +0000 (UTC)
-From: Alberto Faria <afaria@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Coiby Xu <Coiby.Xu@gmail.com>, Laurent Vivier <lvivier@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Raphael Norwitz <raphael@enfabrica.net>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>, Hanna Reitz <hreitz@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Xie Yongji <xieyongji@bytedance.com>, Yanan Wang <wangyanan55@huawei.com>,
- Alberto Faria <afaria@redhat.com>
-Subject: [RFC 4/4] vduse-blk: Add VIRTIO_BLK_T_OUT_FUA command support
-Date: Thu,  8 May 2025 01:24:40 +0100
-Message-ID: <20250508002440.423776-5-afaria@redhat.com>
-In-Reply-To: <20250508002440.423776-1-afaria@redhat.com>
-References: <20250508002440.423776-1-afaria@redhat.com>
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1uCplS-0004D2-5C
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 21:09:31 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 5BFCB438AC;
+ Thu,  8 May 2025 01:09:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28327C4CEE2;
+ Thu,  8 May 2025 01:09:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1746666566;
+ bh=ls52icprft9OMVau01V3TNJQdID0Gzc0JOe1BN8+u54=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=vNw8rqEY5ypW0cbpuMqJwFTgdL3isMGGC7WlKIgslDUyvB/7FIMRkiw8UTaymAMz8
+ OgR+UGXpeiea/TX7lgqAqGm0T+KZ2mt07wMqUGEJXE0vOjLmSQOycv2C4RhgauBth4
+ zDLOYnnIQjdHRbE36Hc79HMkijathui2NnPRK0K8ED1TFSssKLSC7mTF+gurVhO4jf
+ ijgrgo/EA9ifAL+ZFVvu3a7GAK/kaGdUFTg1rnh598pAou80Q8Ip26fh7eWAJFzFb9
+ z0otQsSq277+PlE4xHPX/VwjUtye909l3Xfg/gyZu7daEEdcaZegfjWeWkCVrvAzsr
+ 8HURw2AmVd4Wg==
+Date: Thu, 8 May 2025 01:09:24 +0000
+From: Wei Liu <wei.liu@kernel.org>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Wei Liu <wei.liu@kernel.org>, qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PULL 05/22] target/i386/hvf: Include missing
+ 'exec/target_page.h' header
+Message-ID: <aBwERHkcHPymjbk8@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+References: <20250506143512.4315-1-philmd@linaro.org>
+ <20250506143512.4315-6-philmd@linaro.org>
+ <aBr_MzqaoGwN7gpQ@liuwe-devbox-ubuntu-v2.tail21d00.ts.net>
+ <36eee8b9-2ffe-461f-a1c6-2e19ad623a10@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=afaria@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <36eee8b9-2ffe-461f-a1c6-2e19ad623a10@linaro.org>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=wei.liu@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -34
 X-Spam_score: -3.5
 X-Spam_bar: ---
 X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,26 +76,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Alberto Faria <afaria@redhat.com>
----
- block/export/vduse-blk.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+On Wed, May 07, 2025 at 01:20:49PM +0200, Philippe Mathieu-Daudé wrote:
+> Hi Wei,
+> 
+> On 7/5/25 08:35, Wei Liu wrote:
+> > On Tue, May 06, 2025 at 04:34:54PM +0200, Philippe Mathieu-Daudé wrote:
+> > > Include "exec/target_page.h" to be able to compile HVF on x86_64:
+> > > 
+> > >    ../target/i386/hvf/hvf.c:139:49: error: use of undeclared identifier 'TARGET_PAGE_SIZE'
+> > >                uint64_t dirty_page_start = gpa & ~(TARGET_PAGE_SIZE - 1u);
+> > >                                                  ^
+> > >    ../target/i386/hvf/hvf.c:141:45: error: use of undeclared identifier 'TARGET_PAGE_SIZE'
+> > >                hv_vm_protect(dirty_page_start, TARGET_PAGE_SIZE,
+> > > 
+> > > Fixes: 9c2ff9cdc9b ("exec/cpu-all: remove exec/target_page include")
+> > > Reported-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > > Reported-by: Wei Liu <wei.liu@kernel.org>
+> > > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > > Message-Id: <20250425174310.70890-1-philmd@linaro.org>
+> > > Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > 
+> > FYI Paolo merged a patch from me that does the same thing. My patch is
+> > already in the master branch.
+> 
+> Paolo said he'd replace your patch by this older one which mentions
+> the problematic commit, which is why I didn't notice your patch,
+> I was expecting this one to disappear on rebase. I don't plan to
+> repost this PR except if there is a serious problem with it. In
+> this case, we can still revert if we are picky. Duplicated includes
+> aren't a problem, missing ones are.
+> 
 
-diff --git a/block/export/vduse-blk.c b/block/export/vduse-blk.c
-index bd852e538dc..36c3c0a56e6 100644
---- a/block/export/vduse-blk.c
-+++ b/block/export/vduse-blk.c
-@@ -329,7 +329,8 @@ static int vduse_blk_exp_create(BlockExport *exp, BlockExportOptions *opts,
-                (1ULL << VIRTIO_BLK_F_BLK_SIZE) |
-                (1ULL << VIRTIO_BLK_F_FLUSH) |
-                (1ULL << VIRTIO_BLK_F_DISCARD) |
--               (1ULL << VIRTIO_BLK_F_WRITE_ZEROES);
-+               (1ULL << VIRTIO_BLK_F_WRITE_ZEROES) |
-+               (1ULL << VIRTIO_BLK_F_OUT_FUA);
- 
-     if (num_queues > 1) {
-         features |= 1ULL << VIRTIO_BLK_F_MQ;
--- 
-2.49.0
+Sure.
 
+> BTW since you are testing / using HVF on x86, do you know if your
+> employer could help extending our CI infrastructure coverage for
+> your use cases?
+> 
+
+No, we don't have a use case for HVF. I only tested it because I wanted
+to refactor the instruction emulator out of the HVF code base.
+
+Thanks,
+Wei.
+
+> Regards,
+> 
+> Phil.
 
