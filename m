@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BCF3C3ABC5
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:07:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B073C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:07:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD2p7-0002ES-Vn; Thu, 08 May 2025 11:06:10 -0400
+	id 1uD2o4-0000zL-OO; Thu, 08 May 2025 11:05:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2p5-0002Bz-LW
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:06:07 -0400
+ id 1uD2o2-0000wW-QE
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:05:02 -0400
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2p3-0007RF-H7
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:06:07 -0400
+ id 1uD2nz-0007F6-NU
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:05:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746716765; x=1778252765;
+ t=1746716699; x=1778252699;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=VL+hM8rVoBcz6mlb05abG/U2PuWh3ox63otrGufxFx4=;
- b=DKqMX+yfmARM5CHQxM3qdUMR13ytkUN20ez7lDy4aUOb2qfA0L96TA32
- Ik+AX9f9+QNVIzkoZLDSq5Ml6tNDxRuDtdBK/yFnLCeMUuT1evlqThuwx
- GM4nhrVx8pHqP7XVovDmiMqdIrr+Rwaq5yHw7CJOD6sRUJyxVxYdiUHyI
- jfQUlKj7Y6nLcIWB3h+3dmc8/nkOMasjGYtqWphfWyzOBPOBGj2IMFHni
- QSxCZqSMlzw8/LCH+ehVEXtBBBUvk7tAxXwcCha/FeU0LJcpB6R5qbb38
- oPTaf6vG7EyhQxZybcVnY4hNOne8BsITgesrJoogKX5BgFB3iOZFKWxPZ g==;
-X-CSE-ConnectionGUID: jcs4jiMwSZ+aSqZcCWSKFw==
-X-CSE-MsgGUID: R4IcGyg/QA6BxaY1jcpXTQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73888143"
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73888143"
+ bh=8eEFWvQ5m134UL5XMAtMTrdDfH9o+p5aQQB44b14wsw=;
+ b=Ac7+kkWrXZ/bkvRT1zx2+s/hF3LcnKuj0Jdcj5FmyWnFLlArpK25FONI
+ lRdD45HfE9R4oTfQwsiyGnyUSozEoV04URYZk+egH2kcNRvyS9wn5qQQ9
+ oJcW0NO4kUHs42GceWm8r4pzxkAzGULlGP9KwWUmjiWsQ4EQiuwwmakZM
+ EEW1fEQ2/wQUitdgZ577KydO6zTTiSA3T0rBwCrIMGfO+HVu4kHlzAa2F
+ UdAaIfympyx62xNAvUJN7Aye7mtwQbYBVI5O8UkLIQLcZwq9awfrv1Ogf
+ REZ1OC7eaad39YMJ4PQLW4ZZd8ZjcVeQRnZseZ/0CI7z4Tbt0tppackgc Q==;
+X-CSE-ConnectionGUID: VmgZEKMnRXWlkmKY5PkJXg==
+X-CSE-MsgGUID: 19BF/EAASjuKA1H/65tLEQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73887968"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73887968"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2025 08:05:50 -0700
-X-CSE-ConnectionGUID: GJqGVDoASBOvBT0os5KXtg==
-X-CSE-MsgGUID: TIUVAjEfTTSSuwT96Kj2NA==
+ 08 May 2025 08:04:56 -0700
+X-CSE-ConnectionGUID: jOhk/4W/Qg+lTCy5bKRaqw==
+X-CSE-MsgGUID: Ep6fqDXFScScn/nEEwoYwA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141439929"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141439664"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:05:47 -0700
+ by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:04:53 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -57,14 +57,14 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v9 18/55] i386/tdx: Parse TDVF metadata for TDX VM
-Date: Thu,  8 May 2025 10:59:24 -0400
-Message-ID: <20250508150002.689633-19-xiaoyao.li@intel.com>
+Subject: [PATCH v9 01/55] *** HACK *** linux-headers: Update headers to pull
+ in TDX API changes
+Date: Thu,  8 May 2025 10:59:07 -0400
+Message-ID: <20250508150002.689633-2-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250508150002.689633-1-xiaoyao.li@intel.com>
 References: <20250508150002.689633-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
@@ -91,99 +91,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After TDVF is loaded to bios MemoryRegion, it needs parse TDVF metadata.
+Pull in recent TDX updates, which are not backwards compatible.
+
+It's just to make this series runnable. It will be updated by script
+
+	scripts/update-linux-headers.sh
+
+once TDX support is upstreamed in linux kernel
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/i386/pc_sysfw.c         | 7 +++++++
- target/i386/kvm/tdx-stub.c | 5 +++++
- target/i386/kvm/tdx.c      | 5 +++++
- target/i386/kvm/tdx.h      | 3 +++
- 4 files changed, 20 insertions(+)
+ linux-headers/asm-x86/kvm.h | 69 +++++++++++++++++++++++++++++++++++++
+ linux-headers/linux/kvm.h   |  1 +
+ 2 files changed, 70 insertions(+)
 
-diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-index 1eeb58ab37f9..821396c16e91 100644
---- a/hw/i386/pc_sysfw.c
-+++ b/hw/i386/pc_sysfw.c
-@@ -37,6 +37,7 @@
- #include "hw/block/flash.h"
- #include "system/kvm.h"
- #include "target/i386/sev.h"
-+#include "kvm/tdx.h"
+diff --git a/linux-headers/asm-x86/kvm.h b/linux-headers/asm-x86/kvm.h
+index 86f2c34e7afa..baca2d479365 100644
+--- a/linux-headers/asm-x86/kvm.h
++++ b/linux-headers/asm-x86/kvm.h
+@@ -925,4 +925,73 @@ struct kvm_hyperv_eventfd {
+ #define KVM_X86_SNP_VM		4
+ #define KVM_X86_TDX_VM		5
  
- #define FLASH_SECTOR_SIZE 4096
- 
-@@ -280,5 +281,11 @@ void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
-         }
- 
-         sev_encrypt_flash(gpa, ptr, size, &error_fatal);
-+    } else if (is_tdx_vm()) {
-+        ret = tdx_parse_tdvf(ptr, size);
-+        if (ret) {
-+            error_report("failed to parse TDVF for TDX VM");
-+            exit(1);
-+        }
-     }
- }
-diff --git a/target/i386/kvm/tdx-stub.c b/target/i386/kvm/tdx-stub.c
-index 2344433594ea..7748b6d0a446 100644
---- a/target/i386/kvm/tdx-stub.c
-+++ b/target/i386/kvm/tdx-stub.c
-@@ -8,3 +8,8 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
- {
-     return -EINVAL;
- }
++/* Trust Domain eXtension sub-ioctl() commands. */
++enum kvm_tdx_cmd_id {
++	KVM_TDX_CAPABILITIES = 0,
++	KVM_TDX_INIT_VM,
++	KVM_TDX_INIT_VCPU,
++	KVM_TDX_INIT_MEM_REGION,
++	KVM_TDX_FINALIZE_VM,
++	KVM_TDX_GET_CPUID,
 +
-+int tdx_parse_tdvf(void *flash_ptr, int size)
-+{
-+    return -EINVAL;
-+}
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 2522f2030de3..71be3bd28d47 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -382,6 +382,11 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
-     return 0;
- }
- 
-+int tdx_parse_tdvf(void *flash_ptr, int size)
-+{
-+    return tdvf_parse_metadata(&tdx_guest->tdvf, flash_ptr, size);
-+}
++	KVM_TDX_CMD_NR_MAX,
++};
 +
- static bool tdx_guest_get_sept_ve_disable(Object *obj, Error **errp)
- {
-     TdxGuest *tdx = TDX_GUEST(obj);
-diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-index b73461b8d8a3..28a03c2a7b82 100644
---- a/target/i386/kvm/tdx.h
-+++ b/target/i386/kvm/tdx.h
-@@ -8,6 +8,7 @@
- #endif
- 
- #include "confidential-guest.h"
-+#include "hw/i386/tdvf.h"
- 
- #define TYPE_TDX_GUEST "tdx-guest"
- #define TDX_GUEST(obj)  OBJECT_CHECK(TdxGuest, (obj), TYPE_TDX_GUEST)
-@@ -32,6 +33,7 @@ typedef struct TdxGuest {
-     char *mrownerconfig;    /* base64 encoded sha348 digest */
- 
-     MemoryRegion *tdvf_mr;
-+    TdxFirmware tdvf;
- } TdxGuest;
- 
- #ifdef CONFIG_TDX
-@@ -42,5 +44,6 @@ bool is_tdx_vm(void);
- 
- int tdx_pre_create_vcpu(CPUState *cpu, Error **errp);
- void tdx_set_tdvf_region(MemoryRegion *tdvf_mr);
-+int tdx_parse_tdvf(void *flash_ptr, int size);
- 
- #endif /* QEMU_I386_TDX_H */
++struct kvm_tdx_cmd {
++	/* enum kvm_tdx_cmd_id */
++	__u32 id;
++	/* flags for sub-commend. If sub-command doesn't use this, set zero. */
++	__u32 flags;
++	/*
++	 * data for each sub-command. An immediate or a pointer to the actual
++	 * data in process virtual address.  If sub-command doesn't use it,
++	 * set zero.
++	 */
++	__u64 data;
++	/*
++	 * Auxiliary error code.  The sub-command may return TDX SEAMCALL
++	 * status code in addition to -Exxx.
++	 * Defined for consistency with struct kvm_sev_cmd.
++	 */
++	__u64 hw_error;
++};
++
++struct kvm_tdx_capabilities {
++	__u64 supported_attrs;
++	__u64 supported_xfam;
++	__u64 reserved[254];
++	struct kvm_cpuid2 cpuid;
++};
++
++struct kvm_tdx_init_vm {
++	__u64 attributes;
++	__u64 xfam;
++	__u64 mrconfigid[6];	/* sha384 digest */
++	__u64 mrowner[6];	/* sha384 digest */
++	__u64 mrownerconfig[6];	/* sha384 digest */
++
++	/* The total space for TD_PARAMS before the CPUIDs is 256 bytes */
++	__u64 reserved[12];
++
++	/*
++	 * Call KVM_TDX_INIT_VM before vcpu creation, thus before
++	 * KVM_SET_CPUID2.
++	 * This configuration supersedes KVM_SET_CPUID2s for VCPUs because the
++	 * TDX module directly virtualizes those CPUIDs without VMM.  The user
++	 * space VMM, e.g. qemu, should make KVM_SET_CPUID2 consistent with
++	 * those values.  If it doesn't, KVM may have wrong idea of vCPUIDs of
++	 * the guest, and KVM may wrongly emulate CPUIDs or MSRs that the TDX
++	 * module doesn't virtualize.
++	 */
++	struct kvm_cpuid2 cpuid;
++};
++
++#define KVM_TDX_MEASURE_MEMORY_REGION   _BITULL(0)
++
++struct kvm_tdx_init_mem_region {
++	__u64 source_addr;
++	__u64 gpa;
++	__u64 nr_pages;
++};
++
+ #endif /* _ASM_X86_KVM_H */
+diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+index 27181b3dd8fb..bf728042db0c 100644
+--- a/linux-headers/linux/kvm.h
++++ b/linux-headers/linux/kvm.h
+@@ -369,6 +369,7 @@ struct kvm_run {
+ #define KVM_SYSTEM_EVENT_WAKEUP         4
+ #define KVM_SYSTEM_EVENT_SUSPEND        5
+ #define KVM_SYSTEM_EVENT_SEV_TERM       6
++#define KVM_SYSTEM_EVENT_TDX_FATAL      7
+ 			__u32 type;
+ 			__u32 ndata;
+ 			union {
 -- 
 2.43.0
 
