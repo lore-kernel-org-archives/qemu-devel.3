@@ -4,95 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 005ADC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 10:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 030A1C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 10:23:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCyNh-0007GD-NK; Thu, 08 May 2025 06:21:33 -0400
+	id 1uCyPb-000830-Kq; Thu, 08 May 2025 06:23:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCyNg-0007G4-5C
- for qemu-devel@nongnu.org; Thu, 08 May 2025 06:21:32 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCyNe-0004Z6-AH
- for qemu-devel@nongnu.org; Thu, 08 May 2025 06:21:31 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-af6a315b491so646155a12.1
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 03:21:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746699688; x=1747304488; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=E4gbiILORQ5SKAOiOpRy1Lu2hmzlunjIj77BVpolAGc=;
- b=Hx87CkKDBkWwUpvIPGcCxzx+WBiJneMtVb+QFy2Bs7WQ9m8AvIeTTC4D23AlCgiBP7
- XkH8Qf7LXJLWAsIBirGpFdqUXbFx/X0mgioDIvvj14qGrZXrOhoGeoA60r6Mgw8DTtm0
- 0UNUgMwVml4Bl/tea5Pk0s+HTDImOXTxhy1KPtZ+pawCst3oeLF2q3dBzz9PYO6pjzB1
- 0zbf2RHVWbhyWIaaJ9SBx9d3FDwVeXwbRQssjIKjfbBdeeSCjpdrtFt5A5+T98TIKDAy
- TVtypYKdB5jCtwpzHE955bw5KIq9ByUCQWB6DswQTGGvPnJR4ZwYRNLy8dZN538BSia/
- BCnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746699688; x=1747304488;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=E4gbiILORQ5SKAOiOpRy1Lu2hmzlunjIj77BVpolAGc=;
- b=ubc1BR9uiuxixQySzqUI9lm6GbVDyssRlG6yu6094Fs/zOyCZ3ebXG9Q4BNJY6xSQf
- rF2lyHPmQoHY5JIpYLFK4cJdZbO4ocGPsV7rY3ZAyoG8syIjh0/UDvfy/Eeb6VVm/xmo
- zUHPxiS9mWfhynXtWAQib/1jclHXAjCVNkEooWUawi2zd/qqsfq4+qAWPv/Zm3Wu+uyP
- WK7HKxFaBgfEMIJMeW6RHJc5EWx8xDlTog/raUCXLHUmOJEAiktIZpQX7Fim92i/ylsa
- ql7PeAeSIT5u/yX4Ppo9veWwms4DxwfD4k8Jl3ATcf8m2j12wqAXBFRwtkk6/C779iE6
- XtNg==
-X-Gm-Message-State: AOJu0Yxlx1Zsc79pASIK+cc9n0q0jqtIjTm8gGvAZZxdRvxeNc0uByU2
- b7gy7wHKXJSljHYO+qHoAMwIa0VaiKn5N0WtO/j7ouBa5N6YprFlWaaTpR1P/d4=
-X-Gm-Gg: ASbGncvoSfMHpyK8EkjUFqiPU8Zp7p9ZNCienTEAlbyBhq4c50yu3tRpZfkghduMKnv
- wUYOL6mkWr92vDlWp6+bI7o4c8Yy5Tvi6GtumvQckc7ZvssuupbNv9nw9Ng97eu5l7GJiEFZsNe
- G/eCB003fFefzqanVhOaPfozBHdsnp9rcryI08v2AMs7cNpHqnQGmiY8PXFw2YGiqDjzX6H/Keu
- DL683fGcEg3hfrGeoq9TLHJTYqnkBZwdVVVeul5LizvOciatwY53zGW+7v5oguVg8Dftwh8JRZ7
- S0HbCZPbGNBctY3jUzMiMQBVDBmASeG81TPIMh9+MiKG80d6yUa2ECcNJ0Hjq4WPu2oOEtHU0HM
- kEdgxO1jd
-X-Google-Smtp-Source: AGHT+IEnwO+e/aWjRp6opISVgYsy/hA9DeK9AqdySEm1FmKtOL58eVWwNsNncyoiRpviFFGjtjiadw==
-X-Received: by 2002:a17:903:19c6:b0:223:f639:69df with SMTP id
- d9443c01a7336-22e5edfd586mr97846555ad.41.1746699688535; 
- Thu, 08 May 2025 03:21:28 -0700 (PDT)
-Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e152291e3sm108525195ad.202.2025.05.08.03.21.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 May 2025 03:21:28 -0700 (PDT)
-Message-ID: <3b92958c-c99f-4c9c-96b6-c5fbaaec06fc@linaro.org>
-Date: Thu, 8 May 2025 12:21:20 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uCyPZ-00082W-By
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 06:23:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uCyPX-0004k6-JY
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 06:23:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746699805;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GscHLCL+LwuKkOa1ZCyj9Y+ZdNjmPUuW6VDPzihSLUw=;
+ b=hmgS4vZDYkKb44I6Q70wKg7d2UmimF0MWMsJStkS0I/Smw94TdoUETEV2m6khJmeMMVtlu
+ nbEEDoRF4X/azGgjcY/Xm6ae/rYSQ31Rxxahtg5n7jFxpOzHeAnSLXWRF6ibRsYA9sCLPj
+ K9y++It/sPcLkugRRDHfPd2sXgKCZ/4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-A0j5GCKOPvy8_CbuE-9meA-1; Thu,
+ 08 May 2025 06:23:22 -0400
+X-MC-Unique: A0j5GCKOPvy8_CbuE-9meA-1
+X-Mimecast-MFC-AGG-ID: A0j5GCKOPvy8_CbuE-9meA_1746699800
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 65B78195608B; Thu,  8 May 2025 10:23:20 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.138])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6291C18003FD; Thu,  8 May 2025 10:23:16 +0000 (UTC)
+Date: Thu, 8 May 2025 11:23:12 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, devel@lists.libvirt.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
 Subject: Re: [PATCH v3 2/5] include/hw/boards: cope with dev/rc versions in
  deprecation checks
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, devel@lists.libvirt.org,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu
- <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
+Message-ID: <aByGENuj1O-SJ_xG@redhat.com>
 References: <20250506160024.2380244-1-berrange@redhat.com>
  <20250506160024.2380244-3-berrange@redhat.com>
  <09b0a1cf-afac-4308-89a2-cc22aba5699d@redhat.com>
  <aBxxHob9MK0BYHLw@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aBxxHob9MK0BYHLw@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <3b92958c-c99f-4c9c-96b6-c5fbaaec06fc@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=philmd@linaro.org; helo=mail-pg1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <3b92958c-c99f-4c9c-96b6-c5fbaaec06fc@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,43 +94,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/5/25 10:53, Daniel P. Berrangé wrote:
-> On Thu, May 08, 2025 at 09:45:50AM +0200, Thomas Huth wrote:
->> On 06/05/2025 18.00, Daniel P. Berrangé wrote:
->>> When VERSION is set to a development snapshot (micro >= 50), or a release
->>> candidate (micro >= 90) we have an off-by-1 in determining deprecation
->>> and deletion thresholds for versioned machine types. In such cases we need
->>> to use the next major/minor version in threshold checks.
->>>
->>> This adapts the deprecation macros to do "next version" prediction when
->>> seeing a dev/rc version number.
->>>
->>> This ensures users of release candidates get an accurate view of machines
->>> that will be deprecated/deleted in the final release.
->>>
->>> This requires hardcoding our current release policy of 3 releases per
->>> year, with a major bump at the start of each year, and that dev/rc
->>> versions have micro >= 50.
->>>
->>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->>> ---
->>>    include/hw/boards.h | 33 ++++++++++++++++++++++++++++++++-
->>>    1 file changed, 32 insertions(+), 1 deletion(-)
->>
->> FYI, this causes a failure in the CI now:
->>
->>   https://gitlab.com/thuth/qemu/-/jobs/9965651507#L163
+On Thu, May 08, 2025 at 12:21:20PM +0200, Philippe Mathieu-Daudé wrote:
+> On 8/5/25 10:53, Daniel P. Berrangé wrote:
+> > On Thu, May 08, 2025 at 09:45:50AM +0200, Thomas Huth wrote:
+> > > On 06/05/2025 18.00, Daniel P. Berrangé wrote:
+> > > > When VERSION is set to a development snapshot (micro >= 50), or a release
+> > > > candidate (micro >= 90) we have an off-by-1 in determining deprecation
+> > > > and deletion thresholds for versioned machine types. In such cases we need
+> > > > to use the next major/minor version in threshold checks.
+> > > > 
+> > > > This adapts the deprecation macros to do "next version" prediction when
+> > > > seeing a dev/rc version number.
+> > > > 
+> > > > This ensures users of release candidates get an accurate view of machines
+> > > > that will be deprecated/deleted in the final release.
+> > > > 
+> > > > This requires hardcoding our current release policy of 3 releases per
+> > > > year, with a major bump at the start of each year, and that dev/rc
+> > > > versions have micro >= 50.
+> > > > 
+> > > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > > > ---
+> > > >    include/hw/boards.h | 33 ++++++++++++++++++++++++++++++++-
+> > > >    1 file changed, 32 insertions(+), 1 deletion(-)
+> > > 
+> > > FYI, this causes a failure in the CI now:
+> > > 
+> > >   https://gitlab.com/thuth/qemu/-/jobs/9965651507#L163
+> 
+> Ah, just noticed the same error msg:
+> 
+>   qemu-system-x86_64: unsupported machine type: "pc-q35-4.1"
+> 
+> > > 
+> > > Looks like we have to remove the related subtest now?
+> 
+> Hmmm shouldn't we merge this series on top of up-to-4.1 machines
+> removal?
 
-Ah, just noticed the same error msg:
+There's no dependency on that series in general, just removal of the
+test case. We need to remove that test case regardless, because our
+machines will automatically remove registration of the machine type,
+regardless of whether the code is deleted.
 
-   qemu-system-x86_64: unsupported machine type: "pc-q35-4.1"
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
->>
->> Looks like we have to remove the related subtest now?
-
-Hmmm shouldn't we merge this series on top of up-to-4.1 machines
-removal?
 
