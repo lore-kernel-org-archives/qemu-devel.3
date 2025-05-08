@@ -4,95 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 497AFC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 20:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF04FC3ABC6
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 20:38:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD7vm-0004T6-92; Thu, 08 May 2025 16:33:22 -0400
+	id 1uD80R-0001sh-2X; Thu, 08 May 2025 16:38:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uD7vl-0004Sn-2d
- for qemu-devel@nongnu.org; Thu, 08 May 2025 16:33:21 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uD7vj-0006pm-ED
- for qemu-devel@nongnu.org; Thu, 08 May 2025 16:33:20 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-736ad42dfd6so1217586b3a.3
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 13:33:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746736398; x=1747341198; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=NCueMDDjXEfE1wVpJdpkz3Q7vMMKFXFelZsxCzsBDGU=;
- b=CH1yQY2XmdM3hp6iBPXOV7GGvrXUD1mE+3ccvnugafS0BZUO20JZQAvMGTFPwxlRAc
- V+XHjS0EiK1xbRljmXuwbapChAt4amtQgN6Odg2TdeYuDdG2LtbpxY6249WIyPPrSJ9/
- y+0kAVePFGwSxmwrBWobnBgupcHv8E05eAYg33+KN2xBPl3E4pv8Ec66i1qc9158LAz4
- MCo4l0/SEuVCcefAKke5G+yc+GfR+OqE29weJMO8hO/4C2f97j+FuJljkqGa/rEL74Xf
- BHtxDuEBy0h7rgwl0lkKaDz4Mqgbw9fakmRmia3RlZpErlU3HW/lERB6VDxrjqfpS0kg
- QCwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746736398; x=1747341198;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NCueMDDjXEfE1wVpJdpkz3Q7vMMKFXFelZsxCzsBDGU=;
- b=GANkV8246pMXUTyT0gqqiR2aeQuNC5Pk4Zt/h2rkO0k/WYpObuk1qxGL3/in2jmvkx
- NqeFoEY98B1TG7hFLj4KmWiPp8ZbfeZAhIJ08hdcLu+eX6AAAR795AD/SF1G8bfyFLAD
- kPq6lWGcRzer0P5bPK1pV+oKN+oBgrcJlkOq1uf2VldZ4XPS43RgCpV2HTa29sg8wY9U
- sGX1fdAYy03RwJwRl4kAduUs0JvWbachuzq1WErFBC87Blhf6Rctf80cnOhurDDcE9xI
- FfzgSz2CIiMG3l62e8/JPibcVWoMgniWDOUQG3GLPZnsKA6dnDpb0CRUzdSdom+To8S7
- iPnw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXoK0KVFuDQu76Q+JRJgFCEpP2tSArmm4ucfuriDI2PuDkjsxT+j0QYjHrwxrEnPVMn3jre1sj55mGm@nongnu.org
-X-Gm-Message-State: AOJu0Yyy5/Mu3w+sTrt1Qx4Zd6+7v5reM3SutzHkNLECTmrycCunvOkA
- bDk+0pp3PUyIVI7VqldW3lYEb1Laaqqz9TbeBUQt5IgU/Kn76e2P+/8+gFGTmHg=
-X-Gm-Gg: ASbGncvJ2wsgtC6Fc7w4LwF4u5e+z0JHHZBa1OfbOCzcD/R0OoUNTFnPbP7g3M0QlA0
- nkdGFF+589aimtU9PndzF3t9gNl1JtG71kcgwy1G0VRxjWYlDQKe3pO0bGtxCqyKnRI1cnVB9Xc
- CcjhjR2dJ3XL6YRysGyF8pEe/Wxn+VMebdrqPzl5ndjEGFwEna3WCssmPnpg1uDt34pwv4vpKpW
- 9hlnAEqrsKWMFO5M6qb1omb+PZdjVqA/TLZujQnrt3An5TtnD6aCvPfhwaCOJ2syDPGPNRnSV5t
- 3TtkiKlXDbNk899udc+kA5fmg3MBBRBkNPfApN3+9sWX/S60Wwe+Xw==
-X-Google-Smtp-Source: AGHT+IFRKqjZQueN/FXf+JcNZ7cwbsSiQkVaTvGeI9MwJsiLP9K6gF1MpuBt74qsgBMqVtOcYE2b5Q==
-X-Received: by 2002:a05:6a00:148b:b0:736:a540:c9ad with SMTP id
- d2e1a72fcca58-7423c073074mr910719b3a.20.1746736397995; 
- Thu, 08 May 2025 13:33:17 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74237703f97sm463105b3a.8.2025.05.08.13.33.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 May 2025 13:33:17 -0700 (PDT)
-Message-ID: <8993e11b-d9c4-42a7-b24e-6626900b836d@linaro.org>
-Date: Thu, 8 May 2025 13:33:16 -0700
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uD80P-0001sS-9b
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 16:38:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uD80N-0007Ra-9W
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 16:38:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746736685;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ta0ZnAmXeQ3vt8HugexCP82d3ZKtdiV5L1JSLb+JKgk=;
+ b=R/mDBsUXiyAkYTvXSsMW1elm4atOHvGFMvWY+yqBbvyzJWvI5QGkM1O9ZaLy3rTsthg+kE
+ MBWJJ4ujLkd97suYZ5r/NgWYqMS+Joqs7HgXvnO8VpXhMZ7hPDRsbAkodGkodMyY6M/BuF
+ WYqGRPNLn0YoOlm/ctbA6zcUcGxc7LA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-lwDyMo9EOyimgMPsUwybQQ-1; Thu,
+ 08 May 2025 16:38:01 -0400
+X-MC-Unique: lwDyMo9EOyimgMPsUwybQQ-1
+X-Mimecast-MFC-AGG-ID: lwDyMo9EOyimgMPsUwybQQ_1746736679
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D8FE819541AF; Thu,  8 May 2025 20:37:58 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.22])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EEF0418003FC; Thu,  8 May 2025 20:37:56 +0000 (UTC)
+Date: Thu, 8 May 2025 16:37:55 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alberto Faria <afaria@redhat.com>
+Cc: qemu-devel@nongnu.org, Coiby Xu <Coiby.Xu@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Raphael Norwitz <raphael@enfabrica.net>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Xie Yongji <xieyongji@bytedance.com>, Yanan Wang <wangyanan55@huawei.com>
+Subject: Re: [RFC 2/4] virtio-blk: Add VIRTIO_BLK_T_OUT_FUA command support
+Message-ID: <20250508203755.GA63777@fedora>
+References: <20250508002440.423776-1-afaria@redhat.com>
+ <20250508002440.423776-3-afaria@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/13] qapi: add weak stubs for target specific commands
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, stefanha@redhat.com, peter.maydell@linaro.org,
- Markus Armbruster <armbru@redhat.com>, richard.henderson@linaro.org,
- pbonzini@redhat.com, jsnow@redhat.com, berrange@redhat.com,
- thuth@redhat.com, Michael Roth <michael.roth@amd.com>
-References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
- <20250507231442.879619-11-pierrick.bouvier@linaro.org>
- <30076d35-3452-4061-8fc6-d3eb9810d0b8@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <30076d35-3452-4061-8fc6-d3eb9810d0b8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="66o/ExEzAnPSJX0J"
+Content-Disposition: inline
+In-Reply-To: <20250508002440.423776-3-afaria@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,83 +96,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/7/25 11:57 PM, Philippe Mathieu-Daudé wrote:
-> On 8/5/25 01:14, Pierrick Bouvier wrote:
->> We are about to expose various target specific commands for all targets,
->> so we need to stub not implemented qmp_* functions.
->>
->> MinGW does not support weak symbols without at least one strong
->> definition, so we'll have to detail stubs per target. Sad.
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>    qapi/commands-weak-stubs.c | 38 ++++++++++++++++++++++++++++++++++++++
->>    qapi/meson.build           |  2 ++
->>    2 files changed, 40 insertions(+)
->>    create mode 100644 qapi/commands-weak-stubs.c
->>
->> diff --git a/qapi/commands-weak-stubs.c b/qapi/commands-weak-stubs.c
->> new file mode 100644
->> index 00000000000..9734263c32e
->> --- /dev/null
->> +++ b/qapi/commands-weak-stubs.c
->> @@ -0,0 +1,38 @@
->> +/*
->> + * Weak symbols for target specific commands
->> + *
->> + * Copyright Linaro, 2025
->> + *
->> + * This work is licensed under the terms of the GNU LGPL, version 2.1 or later.
->> + * See the COPYING.LIB file in the top-level directory.
->> + *
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include <glib.h>
->> +
->> +#define NOT_REACHABLE(symbol)                                                  \
->> +void __attribute__((weak)) symbol(void);                                       \
->> +void __attribute__((weak)) symbol(void) { g_assert_not_reached(); }
->> +
->> +#define WEAK_STUB(command)                                                     \
->> +NOT_REACHABLE(qmp_marshal_##command)                                           \
->> +NOT_REACHABLE(qmp_##command)
->> +
->> +WEAK_STUB(query_cpu_model_comparison);
->> +WEAK_STUB(query_cpu_model_baseline);
->> +WEAK_STUB(set_cpu_topology);
->> +WEAK_STUB(query_s390x_cpu_polarization);
->> +WEAK_STUB(rtc_reset_reinjection);
->> +WEAK_STUB(query_sev);
->> +WEAK_STUB(query_sev_launch_measure);
->> +WEAK_STUB(query_sev_capabilities);
->> +WEAK_STUB(sev_inject_launch_secret);
->> +WEAK_STUB(query_sev_attestation_report);
->> +WEAK_STUB(query_sgx);
->> +WEAK_STUB(query_sgx_capabilities);
->> +WEAK_STUB(xen_event_list);
->> +WEAK_STUB(xen_event_inject);
->> +WEAK_STUB(query_cpu_model_expansion);
->> +WEAK_STUB(query_cpu_definitions);
->> +WEAK_STUB(query_gic_capabilities);
-> 
-> Shouldn't this also be generated by QAPI scripts?
-> 
 
-It's a bit tricky, because we would need to generate the build system 
-also (which targets links what), and meson is a sane tool so it prevents 
-users from doing that.
+--66o/ExEzAnPSJX0J
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
->> diff --git a/qapi/meson.build b/qapi/meson.build
->> index eadde4db307..60fc958ec10 100644
->> --- a/qapi/meson.build
->> +++ b/qapi/meson.build
->> @@ -147,3 +147,5 @@ foreach output : qapi_specific_outputs + qapi_nonmodule_outputs
->>      specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: qapi_files[i])
->>      i = i + 1
->>    endforeach
->> +
->> +system_ss.add(files('commands-weak-stubs.c'))
-> 
+On Thu, May 08, 2025 at 01:24:38AM +0100, Alberto Faria wrote:
+> Signed-off-by: Alberto Faria <afaria@redhat.com>
+> ---
+>  block/export/virtio-blk-handler.c |  7 ++--
+>  hw/block/virtio-blk.c             |  2 ++
+>  hw/core/machine.c                 |  4 ++-
+>  hw/virtio/virtio-qmp.c            |  2 ++
+>  tests/qtest/virtio-blk-test.c     | 56 +++++++++++++++++++++++++++++++
+>  5 files changed, 68 insertions(+), 3 deletions(-)
+
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--66o/ExEzAnPSJX0J
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgdFiMACgkQnKSrs4Gr
+c8irMQgAvvH7jeQkcFbytmcsYN8vB2sWeUCUrIafSQ9u1WuNPALgK5a0YQZn7qVw
+xxxcC4UOzWV6F1HWCSRpaiAEGqg4nNgrs/vl9gvRr4K1k6csv4M97EkQLfM0eioX
+xX+iNqXLXDJKRrnaCHkgrzN8h1cOMDKbG5LghE4hPfmCnG+UNq674vJQIzu0GsVx
+/ztB7O7wlaMrcDBNzAS+br8ZhPuukE9tJ5TyPWilEQVDO0ew/pHhqf0zz4XPcEcH
+Mm4mDvau8y6u9AMAJQdYt2Sd1Fjijwe60mIl/TnOtj71pKTvud7ggHgxAUgS7Wb3
+G7hzIdDVDjNpKos3AnHkN+XRM9m4jQ==
+=RvWK
+-----END PGP SIGNATURE-----
+
+--66o/ExEzAnPSJX0J--
 
 
