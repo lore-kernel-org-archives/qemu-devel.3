@@ -4,108 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12F81C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 12:33:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1397C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 12:57:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD0Ql-0004kM-OW; Thu, 08 May 2025 08:32:52 -0400
+	id 1uD0oB-0002Qw-06; Thu, 08 May 2025 08:57:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uD0Qh-0004ij-31
- for qemu-devel@nongnu.org; Thu, 08 May 2025 08:32:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uD0Qe-0003bv-Re
- for qemu-devel@nongnu.org; Thu, 08 May 2025 08:32:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746707562;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qraPEFHDmnMYwxu0uhWFKpy4r4Y407C6B0MBxZZmqfs=;
- b=g1X1JqmXAikEjZHpQneHMex1G0lVOeQyncXAgiJVfqbvdXzazzdpaViPzAJCod/54LT0D7
- K2g+hLyesyg2/sUBRCAbSD3cAPu3r/j40eqwgSTLqjCOnB2B/fA/iz4hYR6qFOafIlvSuV
- eN3pUZ/wr5BD0nKkwXrGpwTIs1nKpHk=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-8-qk_aPeRtOBqtMkwO2PKQYQ-1; Thu,
- 08 May 2025 08:32:39 -0400
-X-MC-Unique: qk_aPeRtOBqtMkwO2PKQYQ-1
-X-Mimecast-MFC-AGG-ID: qk_aPeRtOBqtMkwO2PKQYQ_1746707554
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C1AB7195608B; Thu,  8 May 2025 12:32:32 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5759F19560AE; Thu,  8 May 2025 12:32:29 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7814121E6768; Thu, 08 May 2025 14:32:26 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>,  Mark Burton
- <mburton@qti.qualcomm.com>,  Eduardo Habkost <eduardo@habkost.net>,
- Alessandro Di Federico <ale@rev.ng>,  Alistair Francis
- <alistair.francis@wdc.com>,  Anton Johansson <anjo@rev.ng>,  Brian Cain
- <bcain@quicinc.com>,  "Daniel P. Berrange" <berrange@redhat.com>,  Chao
- Peng <chao.p.peng@linux.intel.com>,  Neo Jia <cjia@nvidia.com>,
- =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@kaod.org>,  "Wedgwood, Chris" <cw@f00f.org>,
- dhedde@kalrayinc.com,  Eric Blake <eblake@redhat.com>,
- eblot@rivosinc.com,  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,  Auger Eric
- <eric.auger@redhat.com>,  Felipe Franciosi <felipe@nutanix.com>,
- iggy@theiggy.com,  Warner Losh <imp@bsdimp.com>,  Jan Kiszka
- <jan.kiszka@web.de>,  Jason Gunthorpe <jgg@nvidia.com>,  Jidong Xiao
- <jidong.xiao@gmail.com>,  Jim Shu <jim.shu@sifive.com>,  Joao Martins
- <joao.m.martins@oracle.com>,  Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>,  Luc Michel <luc@lmichel.fr>,  Manos
- Pitsidianakis <manos.pitsidianakis@linaro.org>,  Max Chou
- <max.chou@sifive.com>,  Meirav Dean <mdean@redhat.com>,
- mimu@linux.vnet.ibm.com,  "Ho, Nelson" <nelson.ho@windriver.com>,  Paul
- Walmsley <paul.walmsley@sifive.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  QEMU Developers <qemu-devel@nongnu.org>,
- Roberto Campesato <rbc@meta.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>,  Bernhard Beschow
- <shentey@gmail.com>,  Stefan Hajnoczi <stefanha@gmail.com>,  Thomas Huth
- <thuth@redhat.com>,  Wei Wang <wei.w.wang@intel.com>,  z.huo@139.com,  LIU
- Zhiwei <zhiwei_liu@linux.alibaba.com>,  "Wu, Zhiyong"
- <zwu.kernel@gmail.com>
-Subject: Re: KVM/QEMU Community call 29/04/2025 agenda items?
-In-Reply-To: <aBxvmV7F+lI6YDGn@intel.com> (Zhao Liu's message of "Thu, 8 May
- 2025 16:47:21 +0800")
-References: <874iy85yx2.fsf@draig.linaro.org>
- <eefb308b-5cd8-4b30-bc32-e37f601cb07b@linaro.org>
- <CABgObfYmm2RgFUuViDJA_cuqeCUOh_DV5Qar8YLnrbfYVV39VQ@mail.gmail.com>
- <87a57ydj8y.fsf@pond.sub.org>
- <5ce00003-4105-40c7-954b-63336a4325d5@linaro.org>
- <87plgkihg4.fsf@pond.sub.org> <aBxvmV7F+lI6YDGn@intel.com>
-Date: Thu, 08 May 2025 14:32:26 +0200
-Message-ID: <87plgjcmg5.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0o8-0002QQ-Fc
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 08:57:00 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0o6-000714-Kg
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 08:57:00 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-22e033a3a07so10991885ad.0
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 05:56:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746709017; x=1747313817; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9pJjdoekuhc4yMSxtr3j+KnXmQZ6lV5ZboD4CrHy7xU=;
+ b=az3tbm6Bmf0K00ko1+dEIf6W0CeziiPGb6WfzK2uAQ3Z4s3i3NtiHfymlq/9b9Nl8F
+ C+tuJVCxvHac65Ipor9+TKBDvqzd+HQp4RSCl5Osn7xmCKW7RFRZ7XgwzHhQ4JVlsoxi
+ P/2UaVNJ+PTbbWv6NqpsFDH0zAxDVF4vHQNDtmqhWdxNnHAfzEj3xcWngOmEV30rDW8H
+ L5gvEUPdm3D9PddpFy8ypCCATdrHaRiikDoPbxWlLVSbvq96fZD5iBqxID+gbILf7/Ok
+ MLD/ep3fSjwJCG3khTUbTvoSyV2dcM/Ipc+QGa19gMTvDM/5Jp/I+3U0PBLSHYka0mL3
+ R3Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746709017; x=1747313817;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9pJjdoekuhc4yMSxtr3j+KnXmQZ6lV5ZboD4CrHy7xU=;
+ b=aPO9Gt6Wqd0XY/RTtF+iPvoYY1HUp0qjeaRkMJJcAw5bxkPZVNSVABWAeQ8y1Vvlgo
+ Q4m92CNmqKPZUmKmoJHhhTLFkHB2Ma90AUCUEZViqkn61HbEFudmLReGQm9/2OqFypHo
+ dEeJpqANhRcd1M1vkQ4Lc1jP9OrkvKjwChTMTK/wCni6kOjljMv0a+Q/4iTHWrBf3gjA
+ WE3ldKwSi0Pq+83wAmmQi8caS6zP0qTyFsb4EHkB0kOCr9i4owd+2O+UrNzh/LJElP9H
+ b+1bNZPBjCZ/43vQEnok9E744x8EP8hjv0T3bLdla5bZMtlv85RFTPaVwqjCckRSkOfM
+ CeUw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVwmtTS02VjxEs9vbGwzIBtMM+67QumqjEDRZepae5KJRVPw7gOhZdWX1bvuslhW/oqEtFirH9Jl9kr@nongnu.org
+X-Gm-Message-State: AOJu0YzC3WhKAbglv/Us/qho4fMSQeT9u/PtyJJASAL7C4iW4obuwPUv
+ b1hC6aZPt0yFDaFgKLRR7tlc18D83dmv7Zi6NktSZp3b2lU5cM7sI+I3b+y15Iw=
+X-Gm-Gg: ASbGncs6UFpZcephmeLQL07Q5PtjetegFB9YoQFMu2XwrpbfPZrkh47VA3Bi2eUp2Vn
+ zGXOtcW2WqJBA0DTcfg/UVP7yJohQAglcnp2tkRTwDF9NU4slvTcHxKGBGNQIGqyTQCBpXCla9O
+ 4TDDjZAXDtjQmIfvKB0ILfDQsMxuFNH1Am1IiJuzFMFdluqnOQPgDBrQZK8kCnbzH39/2MgmauX
+ sH50/LwzJJ4VUSYwSK8vcOIQQUeumcnOCyqraevz8+RxNT0cqqfv/oG9LNiCSGuvTaYCslfH7O1
+ A/DOy22Zpoy/H0hy2GkSWw9IN79lHo9JeTDHzexyDr90AF5I+t2ozcSoUuLfnH9G0upwSMat2Aw
+ JSJ/oRCsK
+X-Google-Smtp-Source: AGHT+IGZpcx63wuPU1bRAh1qPdu9aqbL5NgEYwwxIg6K0jsxzLMLTJKWnbrbAPz7BUBUAQHaL6wFyQ==
+X-Received: by 2002:a17:903:4091:b0:22e:1791:2e5a with SMTP id
+ d9443c01a7336-22e5eaa70demr98224355ad.35.1746709016620; 
+ Thu, 08 May 2025 05:56:56 -0700 (PDT)
+Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22e6265945fsm33740185ad.134.2025.05.08.05.56.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 May 2025 05:56:56 -0700 (PDT)
+Message-ID: <a829863c-33d2-42c9-8068-431c60540ba2@linaro.org>
+Date: Thu, 8 May 2025 14:56:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/16] hw/i386/x86: Remove
+ X86MachineClass::fwcfg_dma_enabled field
+To: Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-devel@nongnu.org,
+ Helge Deller <deller@gmx.de>, Huacai Chen <chenhuacai@kernel.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Yi Liu <yi.l.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Amit Shah <amit@kernel.org>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Sergio Lopez <slp@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Ani Sinha <anisinha@redhat.com>
+References: <20250501183628.87479-1-philmd@linaro.org>
+ <20250501183628.87479-4-philmd@linaro.org>
+ <2acc8c0c-f563-4d27-b73d-ce4c0f8ef424@nutanix.com>
+ <54d72848-9108-4b04-a46c-1f82492e06cb@linaro.org>
+ <bd23ff1c-d1a2-4967-b8bb-a6eda6a4ca33@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <bd23ff1c-d1a2-4967-b8bb-a6eda6a4ca33@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,170 +120,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhao Liu <zhao1.liu@intel.com> writes:
+On 5/5/25 11:06, Thomas Huth wrote:
+> On 02/05/2025 12.45, Philippe Mathieu-Daudé wrote:
+>> On 2/5/25 11:08, Mark Cave-Ayland wrote:
+>>> On 01/05/2025 19:36, Philippe Mathieu-Daudé wrote:
+>>>
+>>>> The X86MachineClass::fwcfg_dma_enabled boolean was only used
+>>>> by the pc-q35-2.6 and pc-i440fx-2.6 machines, which got
+>>>> removed. Remove it and simplify.
+>>>>
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> ---
+>>>>   include/hw/i386/x86.h | 2 --
+>>>>   hw/i386/microvm.c     | 3 ---
+>>>>   hw/i386/multiboot.c   | 7 +------
+>>>>   hw/i386/x86-common.c  | 3 +--
+>>>>   hw/i386/x86.c         | 2 --
+>>>>   5 files changed, 2 insertions(+), 15 deletions(-)
+>>>>
+>>>> diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+>>>> index fc460b82f82..29d37af11e6 100644
+>>>> --- a/include/hw/i386/x86.h
+>>>> +++ b/include/hw/i386/x86.h
+>>>> @@ -29,8 +29,6 @@
+>>>>   struct X86MachineClass {
+>>>>       MachineClass parent;
+>>>> -    /* use DMA capable linuxboot option rom */
+>>>> -    bool fwcfg_dma_enabled;
+>>>>       /* CPU and apic information: */
+>>>>       bool apic_xrupt_override;
+>>>>   };
+>>
+>>
+>>>> diff --git a/hw/i386/multiboot.c b/hw/i386/multiboot.c
+>>>> index 6e6b96bc345..bfa7e8f1e83 100644
+>>>> --- a/hw/i386/multiboot.c
+>>>> +++ b/hw/i386/multiboot.c
+>>>> @@ -153,7 +153,6 @@ int load_multiboot(X86MachineState *x86ms,
+>>>>                      int kernel_file_size,
+>>>>                      uint8_t *header)
+>>>>   {
+>>>> -    bool multiboot_dma_enabled = X86_MACHINE_GET_CLASS(x86ms)- 
+>>>> >fwcfg_dma_enabled;
+>>>>       int i, is_multiboot = 0;
+>>>>       uint32_t flags = 0;
+>>>>       uint32_t mh_entry_addr;
+>>>> @@ -402,11 +401,7 @@ int load_multiboot(X86MachineState *x86ms,
+>>>>       fw_cfg_add_bytes(fw_cfg, FW_CFG_INITRD_DATA, mb_bootinfo_data,
+>>>>                        sizeof(bootinfo));
+>>>> -    if (multiboot_dma_enabled) {
+>>>> -        option_rom[nb_option_roms].name = "multiboot_dma.bin";
+>>>> -    } else {
+>>>> -        option_rom[nb_option_roms].name = "multiboot.bin";
+>>>> -    }
+>>>> +    option_rom[nb_option_roms].name = "multiboot_dma.bin";
+>>>
+>>> Question: now that all machines support DMA-capable fw_cfg, does that 
+>>> mean that the non-DMA options roms above can also be removed?
+>>
+>> All x86 machines, but there are still 2 not supporting it: HPPA and
+>> MIPS Loongson-3:
+>>
+>> hw/hppa/machine.c:204:    fw_cfg = fw_cfg_init_mem(addr, addr + 4);
+>>
+>> hw/mips/loongson3_virt.c:289:    fw_cfg = 
+>> fw_cfg_init_mem_wide(cfg_addr, cfg_addr + 8, 8, 0, NULL);
+>>
+> 
+> But these don't use "multiboot.bin", do they? So I think you could 
+> remove pc-bios/multiboot.bin now from the repo?
+> 
+> Same question for "linuxboot.bin" : All users in hw/i386 seem to enable 
+> DMA, so fw_cfg_dma_enabled() should always return true here? If so, I 
+> think the normal "linuxboot.bin" could go away, too?
 
-> On Wed, May 07, 2025 at 05:11:39PM +0200, Markus Armbruster wrote:
->> Date: Wed, 07 May 2025 17:11:39 +0200
->> From: Markus Armbruster <armbru@redhat.com>
->> Subject: Re: KVM/QEMU Community call 29/04/2025 agenda items?
->>=20
->> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
->>=20
->> > On 30/4/25 12:41, Markus Armbruster wrote:
->>=20
->> [...]
->>=20
->> >> Pierrick's stated goal is to have no noticable differences between the
->> >> single binary and the qemu-system-<target> it covers.
->> >>=20
->> >> We have two external interfaces to worry about: QMP and the command
->> >> line.  Let's ignore the latter for now.
->> >>=20
->> >> Target-specific differences in *syntax* come from QAPI schema
->> >> conditionals with target-specific conditions.  Example:
->> >>=20
->> >>      { 'command': 'query-cpu-definitions', 'returns': ['CpuDefinition=
-Info'],
->> >>        'if': { 'any': [ 'TARGET_PPC',
->> >>                         'TARGET_ARM',
->> >>                         'TARGET_I386',
->> >>                         'TARGET_S390X',
->> >>                         'TARGET_MIPS',
->> >>                         'TARGET_LOONGARCH64',
->> >>                         'TARGET_RISCV' ] } }
->> >>=20
->> >> This command is only defined for some targets.
->> >>=20
->> >> The value of query-qmp-schema reflects this: it has
->> >> query-cpu-definitions exactly when the condition is satisfied.  The
->> >> condition is evaluated at compile-time, because that's how QAPI schema
->> >> 'if' works.
->> >>=20
->> >> Say we drop the condition and instead add an equivalent run-time
->> >> condition to command registration.  This preserves behavior of command
->> >> execution.  But query-qmp-schema now has query-cpu-definitions *alway=
-s*.
->> >> This is a noticable difference.  It may break management applications
->> >> that use query-qmp-schema to probe for the command.
->> >>=20
->> >> Moreover, conditionals aren't limited to commands.  Example:
->> >>=20
->> >>      { 'struct': 'CpuModelExpansionInfo',
->> >>        'data': { 'model': 'CpuModelInfo',
->> >>                  'deprecated-props' : { 'type': ['str'],
->> >> --->                                   'if': 'TARGET_S390X' } },
->> >>        'if': { 'any': [ 'TARGET_S390X',
->> >>                         'TARGET_I386',
->> >>                         'TARGET_ARM',
->> >>                         'TARGET_LOONGARCH64',
->> >>                         'TARGET_RISCV' ] } }
->> >>=20
->> >> Here we have a conditional member.
->>=20
->> [...]
->>=20
->> > IMHO conditionals should only depend on host / static configuration
->> > features, not features modifiable from the command line.
->>=20
->> This is how the QAPI schema works now.
->>=20
->> >                                                          (I'm always
->> > confused by KVM features published in the schema, but then you start
->> > your binary with -accel=3Dtcg and still can run KVM specific commands
->> > via QMP, returning errors).
->>=20
->> Not exactly a ringing endorsement for keeping the QAPI schema work the
->> way it does now, isn't it?  ;)
->>=20
->> The problem at hand is QAPI-generated files in a single binary.
->>=20
->> Pierrick posted "[RFC PATCH 0/3] single-binary: make QAPI generated
->> files common".  The patches are flawed, but that's alright for RFC.
->>=20
->> In review, I pointed out three possible solutions, and discussed their
->> pros and cons:
->>=20
->> (1) Drop target-specific conditionals.
->>=20
->> (2) Replace them by run-time checks.
->>=20
->> (3) Have target-specific QAPI-generated code for multiple targets
->>     coexist in the single binary.
->
-> Thank you Markus for your nice summary! I also apologize to you and
-> Philippe if I didn't understand correctly (I tried to look at
-> Pierrick's and Philippe's work, but still worry about I may have wrong
-> understanding :-) )
->
->> Both (1) and (3) keep the QAPI schema work as it does now.
->>=20
->> Pierrick's patches are an incomplete attempt at (2).
->
-> I see.
->
->> Daniel made a case for (1).  You and I actually discussed (1) before,
->> and I encouraged you to explore it.
->
-> And I notice Philippe has 2 patches:
->
-> (1) For QAPI, this is to drop target-specific cond:
->
-> https://lore.kernel.org/qemu-devel/20250429100419.20427-1-philmd@linaro.o=
-rg/
->
-> I feel it's a smart way to make it optional.
->
-> (2) Not for QAPI, but this is try to add runtime check:
->
-> https://lore.kernel.org/qemu-devel/20250502214551.80401-5-philmd@linaro.o=
-rg/
->
-> I am thinking about how kvm-pmu-filter could be aligned with these
-> current efforts in mail list.
->
-> I can drop all the target conditions for KvmPmuEventFormat:
->
->     { 'enum': 'KvmPmuEventFormat',
->       'data': ['raw', 'x86-select-umask', 'x86-masked-entry'] }
-
-This is what you need to do if we pick solution (1).
-
-> This is what you listed before and it is similar to the way in (1). But
-> only (1) is not enough because I can't make these formats as optional
-> (pls educate me if I'm wrong :-) ).
->
-> Therefore, I think I need run-time check like Philippe did in (2), in
-> my kvm-pmu.c file. Do you think so?
-
-In general, not just for your KVM PMU filter work: dropping
-target-specific conditionals makes the formerly conditional things exist
-for targets where they didn't exist before.  This commonly breaks the
-build for these targets.  To fix a target's build, we can either
-implement things for the target, or make attempts to use them fail
-cleanly.
-
-> An additional question - about CONFIG_KVM - is that I see that it's all
-> currently focused on solving target-specific problems, and I understand
-> that it's not yet kvm-specific's turn.
->
-> But kvm-pmu-filter does (or, may :-) ) need CONFIG_KVM. My initial
-> thought is, is it possible to remove the CONFIG_KVM condition for
-> kvm-pmu-filter in QAPI and use the same runtime check? But this would
-> require accel-info as Philippe's work on target-info in [2]).
-
-I'm afraid I don't understand your question.
-
->> We can certainly discuss this some more, but I'd prefer to review a
->> working solution instead.
->
-> With so many options on the table, I'm a bit confused about the fate of
-> kvm-pmu-filter. Should this case wait for the most appropriate option to
-> come along, or could it move forward based on the status quo, and then
-> consider the refactoring later with the final optimal option?
-
-Up to you.
-
-We'll hopefully reach consensus fairly soon.  You might want to wait a
-few days for that.
+You are right!
 
 
