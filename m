@@ -4,100 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79A2DC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 13:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97ACDC3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 13:14:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD0to-0007eb-V0; Thu, 08 May 2025 09:02:52 -0400
+	id 1uD14S-0000LI-PS; Thu, 08 May 2025 09:13:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0tn-0007cV-OQ
- for qemu-devel@nongnu.org; Thu, 08 May 2025 09:02:51 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0tm-0007g2-00
- for qemu-devel@nongnu.org; Thu, 08 May 2025 09:02:51 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-2d54b936ad9so488311fac.1
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 06:02:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746709368; x=1747314168; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qA1vncVNbExTdrFsEz+MOpDLGhtoDokunG6HR7YcMKQ=;
- b=XYGmfxqtcXB8aqbd502TYMFxXiHKbe+xFYSeOAPVr372wEDw3ld6s1DhtMqzlmsZxv
- N08sxIELx3xr4wS/qglB02bBg4MXqDIAdRfoHGL8un4SY/4a+aN5RfCU8aeFdaltCPFR
- lVSdGoKtb3QffZMJmE+FSivUJu7DzTCGq7WzqI34zCm7TR/NYQg3yyBvXqupnImiswcr
- f78pSrtvIFh7VEFV2IUKjZKE7uOpyKdS3UZejU5XxEECfrEtN4LOxiOvqTjvWAAvSu12
- r1El5nJKuk2gqeN09p3nx91bfWspXB61jKH2/yNBZp5Yg2mSRmDUNkF4Br5QWDUbK1Vu
- gfeQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uD14R-0000L3-Ca
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:13:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uD14P-0000hS-Qc
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:13:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746710028;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=6ljvXYz3Ammv9IyTNCcBI9y3hT6/YYDHfD78BUikWg4=;
+ b=foQUxqchLO373aXj9U2JWiqcjJS6gQXBEHnynHcvHLcLeDSmivHTGMJVcWmajonxbdIN+m
+ 6y2lQrQxpxoA2ZqendfgXdEN5cxF0AyNVMFzc20ZGoTNRH+lAm5gFmOwEO6FfmRO36bcqn
+ i5bwaqli3UY92FHBWgECdqtRed+bVNg=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-60-2LoRx98qMHiRHVhrMX9O-w-1; Thu, 08 May 2025 09:13:46 -0400
+X-MC-Unique: 2LoRx98qMHiRHVhrMX9O-w-1
+X-Mimecast-MFC-AGG-ID: 2LoRx98qMHiRHVhrMX9O-w_1746710025
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a0b5d18cb7so416575f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 06:13:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746709368; x=1747314168;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qA1vncVNbExTdrFsEz+MOpDLGhtoDokunG6HR7YcMKQ=;
- b=eiTN5CM1a6ZawAj6baOK3oVJp8Ucu/QTMGJGFZpCZi+OH9jNvYQZpeQh1UUVZ4hTpn
- 3jdH74/uK7ilC13k9n5thw7C+jIuZlMgVxJjeKRVXJLKQ0NY0Og6TTAAn7IXA8JOjyI7
- r/FnQ1q0oTH+lWXb0AS7Mr67E8Wt0Yv488N4eCMVXpGw+5Yt1acrBzZQrVe9sTVXync+
- Z36s7eMAGk2WPOHsaq4UWINMO8MKul6ClvEAFbjlojXlQ6BDqhkBotWrd+/e6K2i5rQX
- yR6B7zNGqdNWlWVbRm0eoYX4MGImWuwSX9MvereL0qJ6/W53w/zMwMDzjNg/NfITq2F0
- /t2g==
-X-Gm-Message-State: AOJu0YytZBrIlFlqtA3/JOcIDFNMJFXWHBqrE1U8E4snBmxxMUlhrukE
- B5G7rK2UcwbdFiFEU5Tk0JodysL0P2z4f1+FLHAzt3YF2ON6qyFO0ACozbjqFZCPQel4IlzWJ3c
- lujKPyw==
-X-Gm-Gg: ASbGncur5RMcdYCcfeEYWD9U+Uprhxk1uacN2tYysFRcc2KPb8VnXzbH/UElsvrg+7p
- r6uIryGIIZXbJspHOdk8kZYVT+NygFoQ1Tb/HtRGt+dw9Djo6Nh8iondmkaTP3PJtDwLW6CqhTp
- o17Z1TMS09wznJVnAX/fq/1GXBRMaxKBr15vgF9T7RXQ4ozhwVCYaVqPoJKJtkypOm1mDwG3AqE
- ca5Pw9tBeuADWfoHmYwqUaluRn6exrKa2SfMug6TLHyuZqR/Upg/LnA89+KNplCOEXxRsWthjng
- UP9cgpVdyTQxU18xqZnWvQG9RSMfJXstbK/EbWla0u/PTSsb5AM2+Rp4E1ucyMSO6DTa3rTewvn
- j2ieiSkxp
-X-Google-Smtp-Source: AGHT+IFGi9KKWLTJSGelkBNr+B0RQn4nXILJ941fddjvdQfwnySHriAeM0GFeky9bGuV6MF5oAAWzg==
-X-Received: by 2002:a05:6a21:1645:b0:1f5:9cb2:28a2 with SMTP id
- adf61e73a8af0-2148c221f55mr10380136637.19.1746709354134; 
- Thu, 08 May 2025 06:02:34 -0700 (PDT)
-Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b1fb3b62502sm11251540a12.32.2025.05.08.06.02.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 May 2025 06:02:33 -0700 (PDT)
-Message-ID: <55b19265-b5e0-44a0-b5fd-ac6741f6667a@linaro.org>
-Date: Thu, 8 May 2025 15:02:21 +0200
+ d=1e100.net; s=20230601; t=1746710025; x=1747314825;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6ljvXYz3Ammv9IyTNCcBI9y3hT6/YYDHfD78BUikWg4=;
+ b=YKj24+wTHaZZ9gp0z0DpAmYEwbZfHU77/kpBpdYi7J9UYvNQwDCaszj8JQ1MP5yB/g
+ ue0Oag25WgnjlJrFq3K1QjSgOCF7ZnRx4cHlH5xgzfvL3uhi5ixLtiPVQzsN4m2YNvDO
+ flbgIlXK//Ivf9pCvnOf/lruOtlxFUNyaW2Grvl3tK6qNQtkmhLcKA+BfF9drgWwWjcX
+ CMkAnJ+98PnyCTm7CGaaKP7R7zT9ZSi+CxPyqTXhlMwd9O4Fjg/jJoqVDSUEWfCbOyNk
+ yZeYobnFS6e/0WbaSBaEKACma0nuHV79iFFz6SdLwfuu428bVB+uJ79h10CjPj5HhbXi
+ RpmA==
+X-Gm-Message-State: AOJu0Yy9pxKGsmB7JlC9lUskk8B+p6aPRQL3EbqP4cWrh4XH/AmbLtQg
+ 73Y4LEPbqbPBvrg2Rt0cX3slOK8furs/r2lb1vawQXOPYmmruycXXCr0tY7m6YEmYU1N9K+N+i9
+ JEh4ugzFAnB+iz4X7M48T56a4wC0LKbw5/XzI0+kDoukuF4rPtINH76PQhtB3hgfpbMuVctiAfw
+ Zg9HeJFuJlrc87oWL5VBeeyhPCxnCCi6mKbQtl
+X-Gm-Gg: ASbGncstxAZ1ZLEYpkRem1MffYK5kofbFj3s9kJULMrLfRdyMQz5zAUeX5aPgmqaQ2j
+ SSSQtIxepurnE5l+HMKzpsF32xyXWnvLW0fA0uibIjWE4ny0/DMIEKOgubaz3rh+UsdOyck8mKt
+ DBMunQbGtXpPXjJXqD7ViqG+RtpkLreZ6tE7AySvOcVBY6S2Be9IXOoVtKuaa0kf8c5ddxIFLN3
+ 1cCMACZoSmxL1/aW3itDP02xx14BzWqRSf/trs0Bp9ifV1jAboc/kmC0zZYwSdinWYcDiD/xBcr
+ wln3itcchBUOVo8=
+X-Received: by 2002:a05:6000:4310:b0:3a0:b784:8826 with SMTP id
+ ffacd0b85a97d-3a0b7848cbdmr3060969f8f.19.1746710025112; 
+ Thu, 08 May 2025 06:13:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGaKrSXJ8I7Cg83JOHOZoiv9KZJXeh1YHNtPuw1QA+xD3deOYI7y+1YICMJZcuBHrKgvjGvQQ==
+X-Received: by 2002:a05:6000:4310:b0:3a0:b784:8826 with SMTP id
+ ffacd0b85a97d-3a0b7848cbdmr3060947f8f.19.1746710024599; 
+ Thu, 08 May 2025 06:13:44 -0700 (PDT)
+Received: from [192.168.122.1] ([151.95.54.106])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-442d14e0437sm28496645e9.36.2025.05.08.06.13.44
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 May 2025 06:13:44 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH] meson: remove unnecessary dependencies from specific_ss
+Date: Thu,  8 May 2025 15:13:43 +0200
+Message-ID: <20250508131343.502891-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/19] hw/i386/pc: Remove
- PCMachineClass::legacy_cpu_hotplug field
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
- Amit Shah <amit@kernel.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Jason Wang <jasowang@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-References: <20250502185652.67370-1-philmd@linaro.org>
- <20250502185652.67370-3-philmd@linaro.org> <aBr8Zknwle47ljOB@intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aBr8Zknwle47ljOB@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=philmd@linaro.org; helo=mail-oa1-x2a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,35 +104,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/5/25 08:23, Zhao Liu wrote:
->> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
->> index 3fffa4a3328..625889783ec 100644
->> --- a/hw/i386/acpi-build.c
->> +++ b/hw/i386/acpi-build.c
->> @@ -1465,9 +1465,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
->>       }
->>       aml_append(dsdt, scope);
->>   
->> -    if (pcmc->legacy_cpu_hotplug) {
->> -        build_legacy_cpu_hotplug_aml(dsdt, machine, pm->cpu_hp_io_base);
->> -    } else {
->> +    {
-> 
-> Why leave the {} here? for clarity?
+All dependencies that are in common_ss (which includes system_ss) automatically
+have their include path added when building the target-specific files.  So the
+hack in ui/meson.build is not needed anymore since commit 727bb5b477e ("meson:
+pick libfdt from common_ss when building target-specific files", 2024-05-10);
+drop it.
 
-Exactly, the diff-stat contains already more than 200 lines, too much to
-my taste. If we de-indent this block, per our coding style we also need
-to declare 'CPUHotplugFeatures opts' earlier. If you really want the
-braces removed, I'd to it in a follow-up cleanup patch.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ ui/meson.build | 3 ---
+ 1 file changed, 3 deletions(-)
 
-> 
->>           CPUHotplugFeatures opts = {
->>               .acpi_1_compatible = true, .has_legacy_cphp = true,
->>               .smi_path = pm->smi_on_cpuhp ? "\\_SB.PCI0.SMI0.SMIC" : NULL,
-> 
-> Otherwise,
-> 
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+diff --git a/ui/meson.build b/ui/meson.build
+index 35fb04cadf3..6371422c460 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -1,7 +1,4 @@
+ system_ss.add(pixman)
+-specific_ss.add(when: ['CONFIG_SYSTEM_ONLY'], if_true: pixman)   # for the include path
+-specific_ss.add(when: ['CONFIG_SYSTEM_ONLY'], if_true: opengl)   # for the include path
+-
+ system_ss.add(png)
+ system_ss.add(files(
+   'clipboard.c',
+-- 
+2.49.0
 
-Thanks!
 
