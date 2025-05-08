@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87271C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 03:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37AE5C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 04:38:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCrvL-0007Iv-5j; Wed, 07 May 2025 23:27:51 -0400
+	id 1uCt15-0003r1-DE; Thu, 08 May 2025 00:37:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCrvC-0006wz-0L
- for qemu-devel@nongnu.org; Wed, 07 May 2025 23:27:45 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCt13-0003li-Gt
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 00:37:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCrv7-0004mg-RC
- for qemu-devel@nongnu.org; Wed, 07 May 2025 23:27:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746674858; x=1778210858;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Do/Mt7cuGmmYyaMcVi9sk+DI6UceGJACMlQytDMh9O4=;
- b=CH2i99d9J+7Glg9qL3Abpp/bEWsAXZep/kby8l9cVYi8O5MjZMET37SF
- JktL1Khimbz59jqEE1SEM1qlSLWOuP5Zmjwg23kp2ius6esiNDDnsk5oS
- 7CTO7CtqIhyqks00d4VzNFu7Jgtg+QNWGpRoLDLMP+u/tA5Ze9fV4aV2j
- fOLwNtArRchPRQwnXOA3Md4vISdw4XoHNB8ZCGC1R4lte2s5R6yxnQZcF
- /YrVMfnxb0ZWgnwUxdUJoRQWnEdU999Y0mUvI5t1MweD+d+/DpDJVlplm
- /qKBYDcpmL3hsKTxJprk3y1DvRZDtj1PaftVUAlz0WsgJBlZTCGNtMcfT Q==;
-X-CSE-ConnectionGUID: gIpRB3JrT3ua+tWXv5aKnQ==
-X-CSE-MsgGUID: BfBRddF9Q9mP4FFB4JqKjg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11426"; a="59427225"
-X-IronPort-AV: E=Sophos;i="6.15,271,1739865600"; d="scan'208";a="59427225"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 May 2025 20:27:36 -0700
-X-CSE-ConnectionGUID: Dakj3ZeWTMym5AzwStf/ag==
-X-CSE-MsgGUID: tzh504TeQMObvr8joi3PMg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,271,1739865600"; d="scan'208";a="141113610"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa004.jf.intel.com with ESMTP; 07 May 2025 20:27:34 -0700
-Date: Thu, 8 May 2025 11:48:35 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH 4/4] tests/tcg/x86_64/fma: add test for exact-denormal
- output
-Message-ID: <aBwpk5mwMbF7PSuA@intel.com>
-References: <20250213142613.151308-1-peter.maydell@linaro.org>
- <20250213142613.151308-5-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCt11-0005xw-Um
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 00:37:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746679064;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=a2zE8WOYtlxWat/l/sSRe4CJW/O0hEa8M+Wcws3pdEE=;
+ b=LLHASCC6CiNcesuA1DH0bnXBMZG6NBoia6Xg5S1l1sGJ4HjrdL7xOEhtFA78rt+dDNX4cx
+ cExJmTGi0CM6deEmZTOpMiOgOEj8+t5/ixW5l+No1HdXHt924ZN/6Lb6tE59vjHlQYexrs
+ HXnTqdTXiDPbApcOk5RK2jT5fnkIDmg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-6I3v3KMEN8-DkLokNRZ6tg-1; Thu,
+ 08 May 2025 00:37:39 -0400
+X-MC-Unique: 6I3v3KMEN8-DkLokNRZ6tg-1
+X-Mimecast-MFC-AGG-ID: 6I3v3KMEN8-DkLokNRZ6tg_1746679058
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2958F1955DC5; Thu,  8 May 2025 04:37:38 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7EFF219560A7; Thu,  8 May 2025 04:37:37 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CA7AE21E6768; Thu, 08 May 2025 06:37:34 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Nir Soffer <nirsof@gmail.com>
+Cc: qemu-devel@nongnu.org,  Eric Blake <eblake@redhat.com>,
+ qemu-block@nongnu.org,  Kevin Wolf <kwolf@redhat.com>,  Fam Zheng
+ <fam@euphon.net>,  Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH v2 1/2] block/null: Report DATA if not reading zeroes
+In-Reply-To: <20250430203717.16359-2-nirsof@gmail.com> (Nir Soffer's message
+ of "Wed, 30 Apr 2025 23:37:16 +0300")
+References: <20250430203717.16359-1-nirsof@gmail.com>
+ <20250430203717.16359-2-nirsof@gmail.com>
+Date: Thu, 08 May 2025 06:37:34 +0200
+Message-ID: <87plgjg1kh.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250213142613.151308-5-peter.maydell@linaro.org>
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -57
-X-Spam_score: -5.8
-X-Spam_bar: -----
-X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,22 +87,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 13, 2025 at 02:26:13PM +0000, Peter Maydell wrote:
-> Date: Thu, 13 Feb 2025 14:26:13 +0000
-> From: Peter Maydell <peter.maydell@linaro.org>
-> Subject: [PATCH 4/4] tests/tcg/x86_64/fma: add test for exact-denormal
->  output
-> X-Mailer: git-send-email 2.43.0
-> 
-> Add some fma test cases that check for correct handling of FTZ and
-> for the flag that indicates that the input denormal was consumed.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  tests/tcg/x86_64/fma.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+Nir Soffer <nirsof@gmail.com> writes:
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> If read-zeroes is not set, we did not report BDRV_BLOCK_DATA or
+> BDRV_BLOCK_ZERO. This is not consistent with other drivers and can
+> confuse users or other programs:
+>
+>     % qemu-img map --output json "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': '1g'}}"
+>     [{ "start": 0, "length": 1073741824, "depth": 0, "present": false, "zero": false, "data": false, "compressed": false}]
+>
+>     % qemu-nbd "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': '1g'}}" &
+>
+>     % nbdinfo --map nbd://127.0.0.1
+>              0  1073741824    1  hole
+>
+> With this change we report DATA in this case:
+>
+>     % ./qemu-img map --output json "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': '1g'}}"
+>     [{ "start": 0, "length": 1073741824, "depth": 0, "present": true, "zero": false, "data": true, "compressed": false, "offset": 0}]
+>
+>     % ./qemu-nbd "json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': '1g'}}" &
+>
+>     % nbdinfo --map nbd://127.0.0.1
+>              0  1073741824    0  data
+>
+> Signed-off-by: Nir Soffer <nirsof@gmail.com>
+> ---
+>  block/null.c         | 4 +---
+>  qapi/block-core.json | 5 +++--
+>  2 files changed, 4 insertions(+), 5 deletions(-)
+>
+> diff --git a/block/null.c b/block/null.c
+> index dc0b1fdbd9..7ba87bd9a9 100644
+> --- a/block/null.c
+> +++ b/block/null.c
+> @@ -239,9 +239,7 @@ static int coroutine_fn null_co_block_status(BlockDriverState *bs,
+>      *map = offset;
+>      *file = bs;
+>  
+> -    if (s->read_zeroes) {
+> -        ret |= BDRV_BLOCK_ZERO;
+> -    }
+> +    ret |= s->read_zeroes ? BDRV_BLOCK_ZERO : BDRV_BLOCK_DATA;
+>      return ret;
+>  }
+>  
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index b1937780e1..7c95c9e36a 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
+> @@ -3293,8 +3293,9 @@
+>  #     requests.  Default to zero which completes requests immediately.
+>  #     (Since 2.4)
+>  #
+> -# @read-zeroes: if true, reads from the device produce zeroes; if
+> -#     false, the buffer is left unchanged.
+> +# @read-zeroes: if true, emulate a sparse image, and reads from the
+> +#     device produce zeroes; if false, emulate an allocated image but
+> +#     reads from the device leave the buffer unchanged.
+>  #     (default: false; since: 4.1)
+>  #
+>  # Since: 2.9
+
+Possibly dumb question: how is this doc change related to the code fix?
+
+Suggest to split the sentence for easier reading:
+
+   # @read-zeroes: If true, emulate a sparse image, and reads from the
+   #     device produce zeroes.  If false, emulate an allocated image,
+   #     but reads from the device leave the buffer unchanged.
 
 
