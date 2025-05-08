@@ -4,93 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E45BCC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 12:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 918ACC3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 12:26:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD0FD-0004Z5-DD; Thu, 08 May 2025 08:20:55 -0400
+	id 1uD0Jm-0005XH-IB; Thu, 08 May 2025 08:25:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uD0FB-0004Y8-Qe
- for qemu-devel@nongnu.org; Thu, 08 May 2025 08:20:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uD0F9-0002I6-UY
- for qemu-devel@nongnu.org; Thu, 08 May 2025 08:20:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746706850;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type;
- bh=ouSsJkJAFWb+y7cBhlR74l80lG1mzvrlsj4ZPiMQWYo=;
- b=I9sG6mR9mFLbu4XFLff8BCIYJ2r3AVc590HnKRAzh5KdbmHL5QSbR6Vfy7LDwD2jdPUxWQ
- dlZGfTcxzjZpryhBCembyu+VLmO1A0pDkjQwdwSt61pF7N+l3rIqyZVDwpzKnVFTH250ON
- 77owH1GRL8fy0mYbUxUuo4L+5Q/40tY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-146-VaSQOYrsMvqYwibZbub5VA-1; Thu, 08 May 2025 08:20:49 -0400
-X-MC-Unique: VaSQOYrsMvqYwibZbub5VA-1
-X-Mimecast-MFC-AGG-ID: VaSQOYrsMvqYwibZbub5VA_1746706848
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a0b1f6815dso257311f8f.3
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 05:20:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0Jk-0005VB-3r
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 08:25:36 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0Jh-0002mD-Gl
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 08:25:35 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-22fbbf9c01bso1442345ad.3
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 05:25:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746707130; x=1747311930; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=JN8yzStfIrke6Ih4ToR7vQPWRj4Mc0F9s94EUPsMOtA=;
+ b=WcMHeftCAVCyim2kwaGMHKKAed1kJbnm0bp9gmO76OCCVUft4GJ5T2raEfz7VfBUHo
+ wBouxUYJvGYxeQHoyWbrd1eAaHASbYfx38p0F/P8+G06IP4nVuOYRsKuhFt/xcM6z30W
+ W6JiucMadkCZlhoVWgy2dQADuaoTjrZG0IqG5A46CDwSu5TqRZo6thiDh1gJIrqBpvKg
+ RjTWlp5mNeIk5x72autYWAdGd/8XVdNNLw6N5DxTGnWljUG83DzFL1SN7luptaLj+0qQ
+ V33VcCUGSKAH4K7WCa/ucSQSti17emkRfYqPxBHAI3iVHOENFM9SEfN0UWvHXYEDLq8k
+ P1Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746706847; x=1747311647;
- h=content-disposition:mime-version:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ouSsJkJAFWb+y7cBhlR74l80lG1mzvrlsj4ZPiMQWYo=;
- b=qILHToK3lpr2WByRzkknI942l6PmEK9oE97sGJz+F/WrxNtRhpRFrQi/sH6OGJs7GY
- 2Keh57QLg6QIZHdGFCoLrUZP7Da5rbTPtLJdbuQo38Bt4jsmcaTq17VqqQNNyWw63F0s
- /yfSVbzbz9X4vIvJ8KQM3NQoYjpn5plevGAjH54XDWitBKf9VdfyW+ZmxCkXrYDanijY
- 5rh0wkFsjYSsbpJe7WgVsIxN1lKeFkEAno+ULweO1fr8mEvV1UysR3YuNo4mWBbbrema
- enql94goTPO/WfiipUQ5u9vRqoyrIs7Iv2+RO42mkNsHQsGnsyJGVU8f4MyAN1FsU/8H
- EBrQ==
-X-Gm-Message-State: AOJu0Yxrscmo0JqC4eX4RmeGC0QShXWeesoMP0amoFxI5Z0OPckcEd96
- Zjrv3PkDSa2eW2+HjA3Pb3/YI+M4zHGSZAKZnVjo74Mn2qXV5ZULKEy95A+EGU3KIG/IBWYCrFC
- H+p9UAHwRXmKYsJU9k0wU53YSId201miwwc/qubsc1gOXCT8Mkp8CTFPGWXUcj3NdKYpBEW41OC
- w3uW99wQEi/Pipjs/EzT/CZ2VKHboELA==
-X-Gm-Gg: ASbGncvAhK6TXH2eM7rO3+QBM+Fl4/3Fd2MK0hwZtQU+dNhNEB8PwjBIqDd1fwbsWkG
- cGy8nKiM6ds1+MUVdAYlwbgWeQgxIlgtp41iaxsRdRRYBDTWBmlR3QxiamGMKhgceVzEQVIG7fY
- syxoiwrlxkiRluqXS7cvfUGCYyD0eJLB5reFJec0UKhRoFtEXp3hh4bkVNhbdHRSmrj1QT/eTv4
- ZgkAHLIGIl5B7cQFOrhC17HJItTp5HSHUVzkszCnzL7lCdu+YltB7QHsdlUrGDmNUhMYY/ylapz
- U5MYew==
-X-Received: by 2002:a5d:648d:0:b0:39e:e217:28c0 with SMTP id
- ffacd0b85a97d-3a0b49e9e67mr5953015f8f.10.1746706847183; 
- Thu, 08 May 2025 05:20:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGaXbZbsw3Bc7qU0hDjxBIETTDuyEDiucBYldtQtPMiFBa6+EYXy/cFTbLQKMpE7tfhbTd7vw==
-X-Received: by 2002:a5d:648d:0:b0:39e:e217:28c0 with SMTP id
- ffacd0b85a97d-3a0b49e9e67mr5952987f8f.10.1746706846786; 
- Thu, 08 May 2025 05:20:46 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442cd3b7e7fsm35275485e9.39.2025.05.08.05.20.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 May 2025 05:20:46 -0700 (PDT)
-Date: Thu, 8 May 2025 08:20:44 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
+ d=1e100.net; s=20230601; t=1746707130; x=1747311930;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JN8yzStfIrke6Ih4ToR7vQPWRj4Mc0F9s94EUPsMOtA=;
+ b=R27oVQ5Dm5h8dS66v0PHhv2PQqkb1w8LuS7kf/YQVQ7CrxsjbcpZD17BBK0XSwFkCn
+ 0MCdwbN1N6xMb6AwQmENbTTuGRfF3/18C9hWwFZ8r6dsp2JFhEP9Ynd4T4Mabt14txMk
+ cPYyjQQ7BgETM6+x8j7VzBechHBZim2WNHEFTnRKq5l8CHCgj6sjTvBUM/ovcWztNFTZ
+ vWnMIu9R8Z/mTCz3hh2iZcZmbl8MWN3jO0o2vxm8W4gzXoUo4ha7H1DXwzC8dfolKKeb
+ 8qQA3EmlJneoPGmjFofHbfh7ALw3QVEuXN9El6u7HcwiFqj0rsByDcMJO4f5PFog7WqN
+ XAyQ==
+X-Gm-Message-State: AOJu0YzV85phF0LH31iZKh5TFpz6B/avXyL73giWsxO/u+pF3xkfPx01
+ Znk0or5Jx7awpVFEtKF6xi47L5jupP7Ned81DEgqS919ew93JTeCHUd8aYZrrZEk98v1YWS201G
+ kvYmL0Q==
+X-Gm-Gg: ASbGncvDhkQu3AiGn/Ih/4cDWdPWmYTR73k119wGAASE11bjxiCiCAfbNqwDXMYSPBO
+ c7fnYO20/JAMr91vJYWkupXgXXHgEKfGYs0IF27NpbRqp6bH8amiabCqcGGHHrqndeJoF0gPuFq
+ nQn3Y9WB4BJY1M1OYHGBOIAMFqvEvtjRaSBxVrn1ae5nYmaRynhw3PmsDrlQHuQqJCTZhx+CBWu
+ 6lFPgynlvAYDijvRTUon8zNVuN19J4n1OUTiBU4fvHg0+7D5YAHq8VaXobfUrK1i/miM2RRVyi/
+ UII0KJClzxBLEHjxBquUbKIw4rzzaIxQQqePQgGMxo7fslFScsQLSZSTkPeyoINMEcGkdpUmazV
+ CM6Cn0gBh4QYjstk=
+X-Google-Smtp-Source: AGHT+IG8b89VgigiAiBjtCWLVGvwnx9FErpbK9LPZaj4spds58qV0H7wtrT2LVf95NqAfx3lcjCmNA==
+X-Received: by 2002:a17:903:41c1:b0:220:c63b:d93c with SMTP id
+ d9443c01a7336-22e5ecabfbamr98724415ad.44.1746707130553; 
+ Thu, 08 May 2025 05:25:30 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22fbff4a805sm1140355ad.179.2025.05.08.05.25.28
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 08 May 2025 05:25:30 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH RFC] meson: require int128 type
-Message-ID: <8c8f9a7e77e25a87b54335f7c376cb079fe67655.1746706766.git.mst@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/19] Misc HW patches for 2025-05-08
+Date: Thu,  8 May 2025 14:25:20 +0200
+Message-ID: <20250508122522.73786-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,111 +96,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-compilers that QEMU requires support int128
-(though arithmetic might be more challenging).
-As virtio wants to use int128 with bitwise opts only,
-make it simple by failing configure if not there.
+The following changes since commit 57b6f8d07f1478375f85a4593a207e936c63ff59:
 
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
+  Merge tag 'pull-target-arm-20250506' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2025-05-07 14:28:20 -0400)
 
-Hi guys,
-any feedback on this one?
-Lightly tested.
+are available in the Git repository at:
 
+  https://github.com/philmd/qemu.git tags/hw-misc-20250508
 
- include/qemu/int128.h                                | 6 +-----
- host/include/x86_64/host/atomic128-ldst.h.inc        | 5 -----
- host/include/x86_64/host/load-extract-al16-al8.h.inc | 6 ------
- meson.build                                          | 5 ++++-
- 4 files changed, 5 insertions(+), 17 deletions(-)
+for you to fetch changes up to 201965865dd88b28e9a40a350642ce25784a574a:
 
-diff --git a/include/qemu/int128.h b/include/qemu/int128.h
-index 174bd7dafb..299bc8f0bf 100644
---- a/include/qemu/int128.h
-+++ b/include/qemu/int128.h
-@@ -479,18 +479,14 @@ static inline void bswap128s(Int128 *s)
- #define INT128_MIN int128_make128(0, INT64_MIN)
- 
- /*
-- * When compiler supports a 128-bit type, define a combination of
-+ * Define a combination of
-  * a possible structure and the native types.  Ease parameter passing
-  * via use of the transparent union extension.
-  */
--#ifdef CONFIG_INT128_TYPE
- typedef union {
-     __uint128_t u;
-     __int128_t i;
-     Int128 s;
- } Int128Alias __attribute__((transparent_union));
--#else
--typedef Int128 Int128Alias;
--#endif /* CONFIG_INT128_TYPE */
- 
- #endif /* INT128_H */
-diff --git a/host/include/x86_64/host/atomic128-ldst.h.inc b/host/include/x86_64/host/atomic128-ldst.h.inc
-index 4c698e3246..2c313f4168 100644
---- a/host/include/x86_64/host/atomic128-ldst.h.inc
-+++ b/host/include/x86_64/host/atomic128-ldst.h.inc
-@@ -11,7 +11,6 @@
- #ifndef X86_64_ATOMIC128_LDST_H
- #define X86_64_ATOMIC128_LDST_H
- 
--#ifdef CONFIG_INT128_TYPE
- #include "host/cpuinfo.h"
- #include "tcg/debug-assert.h"
- #include <immintrin.h>
-@@ -67,9 +66,5 @@ static inline void atomic16_set(Int128 *ptr, Int128 val)
-         } while (!__sync_bool_compare_and_swap_16(ptr_align, old, new.i));
-     }
- }
--#else
--/* Provide QEMU_ERROR stubs. */
--#include "host/include/generic/host/atomic128-ldst.h.inc"
--#endif
- 
- #endif /* X86_64_ATOMIC128_LDST_H */
-diff --git a/host/include/x86_64/host/load-extract-al16-al8.h.inc b/host/include/x86_64/host/load-extract-al16-al8.h.inc
-index b837c37868..d8c838a420 100644
---- a/host/include/x86_64/host/load-extract-al16-al8.h.inc
-+++ b/host/include/x86_64/host/load-extract-al16-al8.h.inc
-@@ -8,7 +8,6 @@
- #ifndef X86_64_LOAD_EXTRACT_AL16_AL8_H
- #define X86_64_LOAD_EXTRACT_AL16_AL8_H
- 
--#ifdef CONFIG_INT128_TYPE
- #include "host/atomic128-ldst.h.inc"
- 
- /**
-@@ -41,10 +40,5 @@ load_atom_extract_al16_or_al8(void *pv, int s)
-     }
-     return int128_getlo(int128_urshift(r.s, shr));
- }
--#else
--/* Fallback definition that must be optimized away, or error.  */
--uint64_t QEMU_ERROR("unsupported atomic")
--    load_atom_extract_al16_or_al8(void *pv, int s);
--#endif
- 
- #endif /* X86_64_LOAD_EXTRACT_AL16_AL8_H */
-diff --git a/meson.build b/meson.build
-index 41f68d3806..38186524da 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2966,7 +2966,10 @@ has_int128_type = cc.compiles('''
-   __int128_t a;
-   __uint128_t b;
-   int main(void) { b = a; }''')
--config_host_data.set('CONFIG_INT128_TYPE', has_int128_type)
-+
-+if not has_int128_type
-+    error('You must use a compiler with int128 support to compile QEMU')
-+endif
- 
- has_int128 = has_int128_type and cc.links('''
-   __int128_t a;
+  hw/i2c/imx_i2c: Always set interrupt status bit if interrupt condition occurs (2025-05-08 14:22:12 +0200)
+
+----------------------------------------------------------------
+Misc HW patches
+
+- Allow using plugins on BSD user-emulation
+- Inline VMSTATE_CPU() macro
+- Fix headear includes for HVF x86
+- Build hw/hyperv/ files once
+- Various typo fixed
+- Fix issue in i.MX I2C model
+
+----------------------------------------------------------------
+
+Bernhard Beschow (1):
+  hw/i2c/imx_i2c: Always set interrupt status bit if interrupt condition
+    occurs
+
+Eric Auger (3):
+  hw/pci/pcie_port: Fix pcie_slot_is_hotpluggbale_bus typo
+  hw/acpi/ged: Fix wrong identation
+  hw/i386/acpi-build: Fix build_append_notfication_callback typo
+
+Gustavo Romero (2):
+  hw/i386/acpi-build: Update document reference
+  hw/i386/acpi-build: Fix typo and grammar in comment
+
+Philippe Mathieu-Daudé (4):
+  target/migration: Inline VMSTATE_CPU()
+  accel/hvf: Include missing 'hw/core/cpu.h' header
+  system/hvf: Avoid including 'cpu.h'
+  system/hvf: Expose hvf_enabled() to common code
+
+Pierrick Bouvier (8):
+  bsd-user: add option to enable plugins
+  hw/hyperv/hv-balloon-stub: common compilation unit
+  hw/hyperv/hyperv.h: header cleanup
+  hw/hyperv/vmbus: common compilation unit
+  hw/hyperv/syndbg: common compilation unit
+  hw/hyperv/balloon: common balloon compilation units
+  hw/hyperv/hyperv_testdev: common compilation unit
+  hw/hyperv/hyperv: common compilation unit
+
+Steve Sistare (1):
+  qom: Factor qom_resolve_path() out
+
+ MAINTAINERS                    |  1 +
+ hw/i386/acpi-build.h           |  2 +-
+ include/hw/core/cpu.h          | 12 ------------
+ include/hw/hyperv/hyperv.h     |  3 ++-
+ include/system/hvf.h           | 17 +++++++++++------
+ include/system/hvf_int.h       |  2 ++
+ accel/hvf/hvf-all.c            |  1 +
+ accel/stubs/hvf-stub.c         | 12 ++++++++++++
+ bsd-user/main.c                | 12 ++++++++++++
+ hw/acpi/generic_event_device.c | 10 +++++-----
+ hw/hyperv/hyperv.c             |  3 ++-
+ hw/hyperv/syndbg.c             |  9 ++++++---
+ hw/hyperv/vmbus.c              |  2 +-
+ hw/i2c/imx_i2c.c               | 11 +++++------
+ hw/i386/acpi-build.c           | 10 +++++-----
+ hw/pci/pcie_port.c             |  4 ++--
+ qom/qom-qmp-cmds.c             | 21 +++++++++++++++------
+ target/alpha/machine.c         |  2 +-
+ target/hppa/machine.c          |  2 +-
+ target/microblaze/machine.c    |  2 +-
+ target/openrisc/machine.c      |  2 +-
+ accel/stubs/meson.build        |  1 +
+ hw/hyperv/meson.build          | 11 ++++++-----
+ 23 files changed, 94 insertions(+), 58 deletions(-)
+ create mode 100644 accel/stubs/hvf-stub.c
+
 -- 
-MST
+2.47.1
 
 
