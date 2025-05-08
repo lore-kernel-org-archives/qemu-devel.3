@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD63C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB0F8C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:09:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD2o5-0000zz-4z; Thu, 08 May 2025 11:05:05 -0400
+	id 1uD2rk-0004jF-RR; Thu, 08 May 2025 11:08:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2o3-0000xT-9p
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:05:03 -0400
+ id 1uD2rS-0004VY-NK
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:08:34 -0400
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2o0-0007Ez-Og
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:05:02 -0400
+ id 1uD2rL-0007RF-KD
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:08:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746716701; x=1778252701;
+ t=1746716907; x=1778252907;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=vUjlF8Ac1iAIrx69S+KM0WHaJynMVnu83w0XBqlU04U=;
- b=D7/yYOciuZHyGcAJXN5zt0SB6I7I8bzJdz3ig91IXyHzgLZh0v59X8/d
- oUL2Gzx7rNfG9P2++IVoBFJbuJF1TUImIH1kyDNwuU7vZBqBy1dEWM+j1
- Ur81hP7Nfa8ECd4nCli54Hnu+As1RVf1vQSsGahEurdMfOwD/SdlPKSXY
- cp4yd0WAhPGZHrDsVI4ulHnTmwgUSRj2cHTFCy3mCmzZ52fiGtTZZVFMU
- jl+eo7zw1EQ/eqD32w066eDIro8D5cu8xrdO6glQFhX3+89wBw9BjS9Y5
- l4B91DpdvAwopx6IMlWPBroKJ3DPvu3tL7L638PXxzhCGAt5DbriptaYO A==;
-X-CSE-ConnectionGUID: tWXQ7DbXQm6TqifVHqJzag==
-X-CSE-MsgGUID: DIsAVKihRMmkTpsASU4v+w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73887979"
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73887979"
+ bh=qGmppuz76UFbMVe2OECyh/g/OnsfvsdqCGRM/PlnJ1Y=;
+ b=Zl1DmU21JxkZQEM78MLSR3QJJDQYp65LBSMSYUrk3KPTJYLOQ8RKg2Sp
+ OKSyfQCyNMhR5YK+Zgfu8/BqhIJf51WH80jSCA3rki6cQ38cEZ79sI3Ju
+ alYZaodJQR2AC18njiqRQpuzQefFfiInqz6XTGkczsxIMs3cfpFDHl9Y7
+ B5estbyxXgfmmTXP8/2SVKmEko6zrpPp5N53WaeFOt28lPhgjWmBGKMaw
+ iGoeEghsjaynUFqm+MnMfPyt4g5VDaZBM7QxPOxenMXMeXFdGqBhzTEbo
+ txQS8dLl2no7+YH/Jr0sRreJJVQxYcHfXoCwbS6X+YNCYCfQ3/v3FMEaN w==;
+X-CSE-ConnectionGUID: BXzUKwkXQw2wWYdwgSQfHA==
+X-CSE-MsgGUID: MObFE7UpTtOg/u/dTB30Ng==
+X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73888532"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73888532"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2025 08:04:59 -0700
-X-CSE-ConnectionGUID: UOVqKJzlQ1GL4rsoBCVS4Q==
-X-CSE-MsgGUID: Jq7glIq2RdK4WvpZ9wLNvQ==
+ 08 May 2025 08:07:20 -0700
+X-CSE-ConnectionGUID: MS76/PcZQDaeFyhadM9NlA==
+X-CSE-MsgGUID: Sso8Bzk3Q0OwZb+gxTkZHQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141439697"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141440450"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:04:56 -0700
+ by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:07:17 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -57,14 +57,13 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v9 02/55] i386: Introduce tdx-guest object
-Date: Thu,  8 May 2025 10:59:08 -0400
-Message-ID: <20250508150002.689633-3-xiaoyao.li@intel.com>
+Subject: [PATCH v9 47/55] i386/tdx: Add supported CPUID bits relates to XFAM
+Date: Thu,  8 May 2025 10:59:53 -0400
+Message-ID: <20250508150002.689633-48-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250508150002.689633-1-xiaoyao.li@intel.com>
 References: <20250508150002.689633-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
@@ -91,212 +90,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce tdx-guest object which inherits X86_CONFIDENTIAL_GUEST,
-and will be used to create TDX VMs (TDs) by
+Some CPUID bits are controlled by XFAM. They are not covered by
+tdx_caps.cpuid (which only contians the directly configurable bits), but
+they are actually supported when the related XFAM bit is supported.
 
-  qemu -machine ...,confidential-guest-support=tdx0	\
-       -object tdx-guest,id=tdx0
+Add these XFAM controlled bits to TDX supported CPUID bits based on the
+supported_xfam.
 
-It has one QAPI member 'attributes' defined, which allows user to set
-TD's attributes directly.
+Besides, incorporate the supported_xfam into the supported CPUID leaf of
+0xD.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Changes in v7:
- - update QAPI version to 10.0;
- - update to use SPDX tags for license info;
- - update copyright to 2025;
+ target/i386/cpu.c     | 12 -------
+ target/i386/cpu.h     | 16 ++++++++++
+ target/i386/kvm/tdx.c | 73 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 89 insertions(+), 12 deletions(-)
 
-Chanegs in v6:
- - Make tdx-guest inherits X86_CONFIDENTIAL_GUEST;
- - set cgs->require_guest_memfd;
- - allow attributes settable via QAPI;
- - update QAPI version to since 9.2;
-
-Changes in v4:
- - update the new qapi `since` filed from 8.2 to 9.0
-
-Changes in v1
- - make @attributes not user-settable
----
- configs/devices/i386-softmmu/default.mak |  1 +
- hw/i386/Kconfig                          |  5 +++
- qapi/qom.json                            | 15 +++++++++
- target/i386/kvm/meson.build              |  2 ++
- target/i386/kvm/tdx.c                    | 43 ++++++++++++++++++++++++
- target/i386/kvm/tdx.h                    | 21 ++++++++++++
- 6 files changed, 87 insertions(+)
- create mode 100644 target/i386/kvm/tdx.c
- create mode 100644 target/i386/kvm/tdx.h
-
-diff --git a/configs/devices/i386-softmmu/default.mak b/configs/devices/i386-softmmu/default.mak
-index 4faf2f0315e2..bc0479a7e0a3 100644
---- a/configs/devices/i386-softmmu/default.mak
-+++ b/configs/devices/i386-softmmu/default.mak
-@@ -18,6 +18,7 @@
- #CONFIG_QXL=n
- #CONFIG_SEV=n
- #CONFIG_SGA=n
-+#CONFIG_TDX=n
- #CONFIG_TEST_DEVICES=n
- #CONFIG_TPM_CRB=n
- #CONFIG_TPM_TIS_ISA=n
-diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
-index d34ce07b215d..cce9521ba934 100644
---- a/hw/i386/Kconfig
-+++ b/hw/i386/Kconfig
-@@ -10,6 +10,10 @@ config SGX
-     bool
-     depends on KVM
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index f91502838023..071669c2d908 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1671,15 +1671,6 @@ bool is_feature_word_cpuid(uint32_t feature, uint32_t index, int reg)
+     return false;
+ }
  
-+config TDX
-+    bool
-+    depends on KVM
+-typedef struct FeatureMask {
+-    FeatureWord index;
+-    uint64_t mask;
+-} FeatureMask;
+-
+-typedef struct FeatureDep {
+-    FeatureMask from, to;
+-} FeatureDep;
+-
+ static FeatureDep feature_dependencies[] = {
+     {
+         .from = { FEAT_7_0_EDX,             CPUID_7_0_EDX_ARCH_CAPABILITIES },
+@@ -1848,9 +1839,6 @@ static const X86RegisterInfo32 x86_reg_info_32[CPU_NB_REGS32] = {
+ };
+ #undef REGISTER
+ 
+-/* CPUID feature bits available in XSS */
+-#define CPUID_XSTATE_XSS_MASK    (XSTATE_ARCH_LBR_MASK)
+-
+ ExtSaveArea x86_ext_save_areas[XSAVE_STATE_AREA_COUNT] = {
+     [XSTATE_FP_BIT] = {
+         /* x87 FP state component is always enabled if XSAVE is supported */
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 0e984ec42bb6..132312d70a54 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -588,6 +588,7 @@ typedef enum X86Seg {
+ #define XSTATE_OPMASK_BIT               5
+ #define XSTATE_ZMM_Hi256_BIT            6
+ #define XSTATE_Hi16_ZMM_BIT             7
++#define XSTATE_PT_BIT                   8
+ #define XSTATE_PKRU_BIT                 9
+ #define XSTATE_ARCH_LBR_BIT             15
+ #define XSTATE_XTILE_CFG_BIT            17
+@@ -601,6 +602,7 @@ typedef enum X86Seg {
+ #define XSTATE_OPMASK_MASK              (1ULL << XSTATE_OPMASK_BIT)
+ #define XSTATE_ZMM_Hi256_MASK           (1ULL << XSTATE_ZMM_Hi256_BIT)
+ #define XSTATE_Hi16_ZMM_MASK            (1ULL << XSTATE_Hi16_ZMM_BIT)
++#define XSTATE_PT_MASK                  (1ULL << XSTATE_PT_BIT)
+ #define XSTATE_PKRU_MASK                (1ULL << XSTATE_PKRU_BIT)
+ #define XSTATE_ARCH_LBR_MASK            (1ULL << XSTATE_ARCH_LBR_BIT)
+ #define XSTATE_XTILE_CFG_MASK           (1ULL << XSTATE_XTILE_CFG_BIT)
+@@ -623,6 +625,11 @@ typedef enum X86Seg {
+                                  XSTATE_Hi16_ZMM_MASK | XSTATE_PKRU_MASK | \
+                                  XSTATE_XTILE_CFG_MASK | XSTATE_XTILE_DATA_MASK)
+ 
++/* CPUID feature bits available in XSS */
++#define CPUID_XSTATE_XSS_MASK    (XSTATE_ARCH_LBR_MASK)
 +
- config PC
-     bool
-     imply APPLESMC
-@@ -26,6 +30,7 @@ config PC
-     imply QXL
-     imply SEV
-     imply SGX
-+    imply TDX
-     imply TEST_DEVICES
-     imply TPM_CRB
-     imply TPM_TIS_ISA
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 28ce24cd8d08..c0b61df964ef 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -1047,6 +1047,19 @@
-             '*host-data': 'str',
-             '*vcek-disabled': 'bool' } }
- 
-+##
-+# @TdxGuestProperties:
-+#
-+# Properties for tdx-guest objects.
-+#
-+# @attributes: The 'attributes' of a TD guest that is passed to
-+#     KVM_TDX_INIT_VM
-+#
-+# Since: 10.1
-+##
-+{ 'struct': 'TdxGuestProperties',
-+  'data': { '*attributes': 'uint64' } }
++#define CPUID_XSTATE_MASK       (CPUID_XSTATE_XCR0_MASK | CPUID_XSTATE_XSS_MASK)
 +
- ##
- # @ThreadContextProperties:
- #
-@@ -1132,6 +1145,7 @@
-     'sev-snp-guest',
-     'thread-context',
-     's390-pv-guest',
-+    'tdx-guest',
-     'throttle-group',
-     'tls-creds-anon',
-     'tls-creds-psk',
-@@ -1204,6 +1218,7 @@
-                                       'if': 'CONFIG_SECRET_KEYRING' },
-       'sev-guest':                  'SevGuestProperties',
-       'sev-snp-guest':              'SevSnpGuestProperties',
-+      'tdx-guest':                  'TdxGuestProperties',
-       'thread-context':             'ThreadContextProperties',
-       'throttle-group':             'ThrottleGroupProperties',
-       'tls-creds-anon':             'TlsCredsAnonProperties',
-diff --git a/target/i386/kvm/meson.build b/target/i386/kvm/meson.build
-index 3996cafaf29f..466bccb9cb17 100644
---- a/target/i386/kvm/meson.build
-+++ b/target/i386/kvm/meson.build
-@@ -8,6 +8,8 @@ i386_kvm_ss.add(files(
+ /* CPUID feature words */
+ typedef enum FeatureWord {
+     FEAT_1_EDX,         /* CPUID[1].EDX */
+@@ -671,6 +678,15 @@ typedef enum FeatureWord {
+     FEATURE_WORDS,
+ } FeatureWord;
  
- i386_kvm_ss.add(when: 'CONFIG_XEN_EMU', if_true: files('xen-emu.c'))
- 
-+i386_kvm_ss.add(when: 'CONFIG_TDX', if_true: files('tdx.c'))
++typedef struct FeatureMask {
++    FeatureWord index;
++    uint64_t mask;
++} FeatureMask;
 +
- i386_system_ss.add(when: 'CONFIG_HYPERV', if_true: files('hyperv.c'), if_false: files('hyperv-stub.c'))
++typedef struct FeatureDep {
++    FeatureMask from, to;
++} FeatureDep;
++
+ typedef uint64_t FeatureWordArray[FEATURE_WORDS];
+ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
  
- i386_system_ss.add_all(when: 'CONFIG_KVM', if_true: i386_kvm_ss)
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-new file mode 100644
-index 000000000000..ec84ae2947bb
---- /dev/null
+index e4ad2632a566..df6b71568321 100644
+--- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -0,0 +1,43 @@
+@@ -23,6 +23,8 @@
+ 
+ #include <linux/kvm_para.h>
+ 
++#include "cpu.h"
++#include "cpu-internal.h"
+ #include "hw/i386/e820_memory_layout.h"
+ #include "hw/i386/tdvf.h"
+ #include "hw/i386/x86.h"
+@@ -493,6 +495,32 @@ static TdxAttrsMap tdx_attrs_maps[] = {
+      .feat_mask = CPUID_7_0_ECX_KeyLocker,},
+ };
+ 
++typedef struct TdxXFAMDep {
++    int xfam_bit;
++    FeatureMask feat_mask;
++} TdxXFAMDep;
++
 +/*
-+ * QEMU TDX support
++ * Note, only the CPUID bits whose virtualization type are "XFAM & Native" are
++ * defiend here.
 + *
-+ * Copyright (c) 2025 Intel Corporation
-+ *
-+ * Author:
-+ *      Xiaoyao Li <xiaoyao.li@intel.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * For those whose virtualization type are "XFAM & Configured & Native", they
++ * are reported as configurable bits. And they are not supported if not in the
++ * configureable bits list from KVM even if the corresponding XFAM bit is
++ * supported.
 + */
++TdxXFAMDep tdx_xfam_deps[] = {
++    { XSTATE_YMM_BIT,       { FEAT_1_ECX, CPUID_EXT_FMA }},
++    { XSTATE_YMM_BIT,       { FEAT_7_0_EBX, CPUID_7_0_EBX_AVX2 }},
++    { XSTATE_OPMASK_BIT,    { FEAT_7_0_ECX, CPUID_7_0_ECX_AVX512_VBMI}},
++    { XSTATE_OPMASK_BIT,    { FEAT_7_0_EDX, CPUID_7_0_EDX_AVX512_FP16}},
++    { XSTATE_PT_BIT,        { FEAT_7_0_EBX, CPUID_7_0_EBX_INTEL_PT}},
++    { XSTATE_PKRU_BIT,      { FEAT_7_0_ECX, CPUID_7_0_ECX_PKU}},
++    { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_BF16 }},
++    { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_TILE }},
++    { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_INT8 }},
++};
 +
-+#include "qemu/osdep.h"
-+#include "qom/object_interfaces.h"
-+
-+#include "tdx.h"
-+
-+/* tdx guest */
-+OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
-+                                   tdx_guest,
-+                                   TDX_GUEST,
-+                                   X86_CONFIDENTIAL_GUEST,
-+                                   { TYPE_USER_CREATABLE },
-+                                   { NULL })
-+
-+static void tdx_guest_init(Object *obj)
+ static struct kvm_cpuid_entry2 *find_in_supported_entry(uint32_t function,
+                                                         uint32_t index)
+ {
+@@ -560,6 +588,50 @@ static void tdx_add_supported_cpuid_by_attrs(void)
+     }
+ }
+ 
++static void tdx_add_supported_cpuid_by_xfam(void)
 +{
-+    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
-+    TdxGuest *tdx = TDX_GUEST(obj);
++    struct kvm_cpuid_entry2 *e;
++    int i;
 +
-+    cgs->require_guest_memfd = true;
-+    tdx->attributes = 0;
++    const TdxXFAMDep *xfam_dep;
++    const FeatureWordInfo *f;
++    for (i = 0; i < ARRAY_SIZE(tdx_xfam_deps); i++) {
++        xfam_dep = &tdx_xfam_deps[i];
++        if (!((1ULL << xfam_dep->xfam_bit) & tdx_caps->supported_xfam)) {
++            continue;
++        }
 +
-+    object_property_add_uint64_ptr(obj, "attributes", &tdx->attributes,
-+                                   OBJ_PROP_FLAG_READWRITE);
++        f = &feature_word_info[xfam_dep->feat_mask.index];
++        if (f->type != CPUID_FEATURE_WORD) {
++            continue;
++        }
++
++        e = find_in_supported_entry(f->cpuid.eax, f->cpuid.ecx);
++        switch(f->cpuid.reg) {
++        case R_EAX:
++            e->eax |= xfam_dep->feat_mask.mask;
++            break;
++        case R_EBX:
++            e->ebx |= xfam_dep->feat_mask.mask;
++            break;
++        case R_ECX:
++            e->ecx |= xfam_dep->feat_mask.mask;
++            break;
++        case R_EDX:
++            e->edx |= xfam_dep->feat_mask.mask;
++            break;
++        }
++    }
++
++    e = find_in_supported_entry(0xd, 0);
++    e->eax |= (tdx_caps->supported_xfam & CPUID_XSTATE_XCR0_MASK);
++    e->edx |= (tdx_caps->supported_xfam & CPUID_XSTATE_XCR0_MASK) >> 32;
++
++    e = find_in_supported_entry(0xd, 1);
++    e->ecx |= (tdx_caps->supported_xfam & CPUID_XSTATE_XSS_MASK);
++    e->edx |= (tdx_caps->supported_xfam & CPUID_XSTATE_XSS_MASK) >> 32;
 +}
 +
-+static void tdx_guest_finalize(Object *obj)
-+{
-+}
-+
-+static void tdx_guest_class_init(ObjectClass *oc, void *data)
-+{
-+}
-diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-new file mode 100644
-index 000000000000..f3b725336161
---- /dev/null
-+++ b/target/i386/kvm/tdx.h
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef QEMU_I386_TDX_H
-+#define QEMU_I386_TDX_H
-+
-+#include "confidential-guest.h"
-+
-+#define TYPE_TDX_GUEST "tdx-guest"
-+#define TDX_GUEST(obj)  OBJECT_CHECK(TdxGuest, (obj), TYPE_TDX_GUEST)
-+
-+typedef struct TdxGuestClass {
-+    X86ConfidentialGuestClass parent_class;
-+} TdxGuestClass;
-+
-+typedef struct TdxGuest {
-+    X86ConfidentialGuest parent_obj;
-+
-+    uint64_t attributes;    /* TD attributes */
-+} TdxGuest;
-+
-+#endif /* QEMU_I386_TDX_H */
+ static void tdx_setup_supported_cpuid(void)
+ {
+     if (tdx_supported_cpuid) {
+@@ -575,6 +647,7 @@ static void tdx_setup_supported_cpuid(void)
+ 
+     tdx_add_supported_cpuid_by_fixed1_bits();
+     tdx_add_supported_cpuid_by_attrs();
++    tdx_add_supported_cpuid_by_xfam();
+ }
+ 
+ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
 -- 
 2.43.0
 
