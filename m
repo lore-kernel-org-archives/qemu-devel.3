@@ -4,125 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E633DC3ABC5
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 22:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71D56C3ABC5
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 22:54:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDA7U-0003so-Ub; Thu, 08 May 2025 18:53:37 -0400
+	id 1uDA5f-0004DS-Mi; Thu, 08 May 2025 18:51:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1uDA7Q-0003dS-RI
- for qemu-devel@nongnu.org; Thu, 08 May 2025 18:53:33 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1uDA7N-0006jy-Ue
- for qemu-devel@nongnu.org; Thu, 08 May 2025 18:53:32 -0400
-Received: by mail-ed1-f67.google.com with SMTP id
- 4fb4d7f45d1cf-5fbee929e83so2274059a12.3
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 15:53:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746744807; x=1747349607;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:cc:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=g9e/fC6fU2lh9c7GzUuH09/jCREzNc81OgSNbCgdXcQ=;
- b=XfuokHB28v0+LMLlNsDd9L8AKnSNr3WmrNRsypYqUkJCCBPw2/acqdkCR3abwbSJ+z
- cne0mtsGsPGjK9c163/JBGACZ/a1vPjH3n8pDBsfDkXIn0oxeI9/Tpe4VEfPSCEAehLo
- tBfWA1UKrYg+iIg/9lEbEWqQVqWKvtmo/fC5kycnYmx/6T+i1dwAhVho5klDX4XXxcT+
- AfPmYdD57vKsdXYXY4JBlTl+SnmO/H9HPTvE7lL5OB+/ygfQ3x33lolqzdZuMs1jB/Gy
- H4bvunD8RdL49e9eOyOIV5Egq54NGXDvSww7h97Bl4eZ3gpOKLwIMCHz4ieJHxutos/P
- NdWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCViOTTiXmWXfQgyaniWc9YORqNTZiDHXXbsGIJkiCQFsXWNVWby5z6rlhl2V2LAnRwSfLpuHa4dnHXo@nongnu.org
-X-Gm-Message-State: AOJu0YyiwnVAFI6zoB5XkMrrwCrAFipF4tRp0a8jsMqT3assqLFimDip
- 7v4KoVSL92aoqJ0YyXNAc459slNt4ggj+vsmtOgzVQ6xj7ye/pb+
-X-Gm-Gg: ASbGncsJczPbYHEKL7SMwHVZ/JzYA728voufzjKFmTezLyiZ9S8VzLknRtcHh+UPV6F
- aq0tJWqhNWsn4Sh5TQ6FHFjYyHoDDIqrpbvV7UYZPIu/YuOVcSN4AGWe+nvXvKqjv+3nYchNX1i
- Hv/v7l0+RfexcyLAPyfm2dbf7RBDUsD540XnnsjV6Fgl+IEFGEDF8d62xOdf9IR8ZVYbun6jZfs
- knnnb6uyxXd2YOdILzFu1rVJxlu+XjUeqp58vq38nf/V4La65h6E8A9Ge+Eq8gIduCNlfhVuksF
- 1v+wKlT1QbXoUVA4EpAoRbypx+94PdoN0zmqW2Z/Skchv+qjNQyQFFcTuyGvufEJi2QYdiHCT/I
- H4JEsbAw=
-X-Google-Smtp-Source: AGHT+IHJM+lCiZ2vhvVRIlbITWEf7Izk9/j7f3d0CGYn8KSO7+yyv6Rk8y/Svw2hv8VLqt6slfGo8g==
-X-Received: by 2002:a05:6402:13d4:b0:5fb:1eed:cdb1 with SMTP id
- 4fb4d7f45d1cf-5fca0793ecfmr823609a12.18.1746744807314; 
- Thu, 08 May 2025 15:53:27 -0700 (PDT)
-Received: from [192.168.88.252] (194-212-251-179.customers.tmcz.cz.
- [194.212.251.179]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5fc9cc261e9sm510663a12.23.2025.05.08.15.53.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 May 2025 15:53:27 -0700 (PDT)
-Message-ID: <f044b02b-3b7a-4a64-ab38-3298f96955a9@ovn.org>
-Date: Fri, 9 May 2025 00:53:25 +0200
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1uDA5S-000460-6A; Thu, 08 May 2025 18:51:33 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1uDA5O-0006Su-Pu; Thu, 08 May 2025 18:51:29 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 548KEFMD011690;
+ Thu, 8 May 2025 22:51:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=RtdXI4BwukCJjH2rf
+ wJgiGKWwqX77gxqX75i5A+21X4=; b=hevo8/yg0lsbbkJcBbn6z2X+lJYOW9TkA
+ +iPH+dPXxQv9++xNx7IlQH5dkipHsnFNpSpO88hYre1BuOzEdz/o2U0YPgtWap8Q
+ hqoJot3PyWFkH0ENRAY0gcWj2MiVPjV9YcHxdMyvu0cuejNL5lWzyrw7pvVKwG3h
+ S3J34RVvKgAQn1ebultG/GoYA8soTOfMSXF5DteHNAeIfrbhijLNtJlDTa5LMz5i
+ 7VXxx1ive5XOgF1C3pVCtvBJh+/0oeIniynsX/PcWGnvFbf85mE26m/7nB96PJvN
+ Y/JMC397VZqi7VLOsd9FsTlzCH2SMeCowCRsXL7YEFbvmxuUp70Aw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46gu2t3atp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 08 May 2025 22:51:25 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 548LVTM5025798;
+ Thu, 8 May 2025 22:51:24 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 46dwv0886d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 08 May 2025 22:51:24 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 548MpN4022413800
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 8 May 2025 22:51:23 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 32E505805B;
+ Thu,  8 May 2025 22:51:23 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AEFF458055;
+ Thu,  8 May 2025 22:51:21 +0000 (GMT)
+Received: from fedora-workstation.ibmuc.com (unknown [9.61.11.238])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  8 May 2025 22:51:21 +0000 (GMT)
+From: Zhuoying Cai <zycai@linux.ibm.com>
+To: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
+ pbonzini@redhat.com
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
+ fiuczy@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, zycai@linux.ibm.com
+Subject: [PATCH v2 07/25] s390x/diag: Implement DIAG 320 subcode 2
+Date: Thu,  8 May 2025 18:50:23 -0400
+Message-ID: <20250508225042.313672-8-zycai@linux.ibm.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250508225042.313672-1-zycai@linux.ibm.com>
+References: <20250508225042.313672-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: i.maximets@ovn.org, Jason Wang <jasowang@redhat.com>,
- Anton Protopopov <aspsk@isovalent.com>
-Subject: Re: [PATCH] net/af-xdp: Support pinned map path for AF_XDP sockets
-To: Daniel Borkmann <daniel@iogearbox.net>, qemu-devel@nongnu.org
-References: <20250508123436.461030-1-daniel@iogearbox.net>
-Content-Language: en-US
-From: Ilya Maximets <i.maximets@ovn.org>
-Autocrypt: addr=i.maximets@ovn.org; keydata=
- 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
-In-Reply-To: <20250508123436.461030-1-daniel@iogearbox.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.208.67;
- envelope-from=i.maximets.ovn@gmail.com; helo=mail-ed1-f67.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=NLnV+16g c=1 sm=1 tr=0 ts=681d356d cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=U5Kxr4yU-FAgF73suGkA:9
+X-Proofpoint-ORIG-GUID: QMZGUsOY3ipNKJzKuRS2f5ufPyQ7j3sX
+X-Proofpoint-GUID: QMZGUsOY3ipNKJzKuRS2f5ufPyQ7j3sX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA4MDIwNSBTYWx0ZWRfXyDUIIYzvFT6k
+ rsbTgx6/tEyIJOp1JIQFBQqjffL7zkv8Ep1qafMo+0p72EEG4zFaZGtlKB0l5kfxRqwEKClm4/F
+ g+q9NT03BpA1fdfLDzIEzRL5MR8zv8arQ8D4lQHq/NrykGrmqqeDmxoVzf5DNPuGoiRjjWi/UtX
+ P2K+Ut/16TuJlB+ebG4Dsa6C4N0fwxFd0IJJO7JqJ0lyqs/vVeGLI3hPLpQL/W6m+MDHzkSR7LB
+ g51X1u1OctA54XVUDrIb3jVrXPNHfOZAp8iNc6kBmIlANuqAVeSE1SPIYKm0BXNnMYRoywiYLlS
+ v7h1sn9/7VFsCb72XRpSgQoLer4BfJvkmz8MUQ8/SabL8/h8WQ2E3f01Up2/4QG/N5vVkmi2w5o
+ vIAmkCP4IuC8J/FqP400g27m5/fRFmqqGBvTLusc0yJQ+eP942C3vSNg64zUjf3DuMRn87s5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-08_07,2025-05-08_04,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 suspectscore=0
+ mlxlogscore=999 phishscore=0 mlxscore=0 impostorscore=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 malwarescore=0 priorityscore=1501
+ adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
+ definitions=main-2505080205
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,235 +120,654 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/25 2:34 PM, Daniel Borkmann wrote:
-> Extend inhibit=on setting with the option to specify a pinned XSK map
-> path along with a starting index (default 0) to push the created XSK
-> sockets into. Example usage:
-> 
->   # ./build/qemu-system-x86_64 [...] \
->     -netdev af-xdp,ifname=eth0,id=net0,mode=native,queues=2,inhibit=on,map-path=/sys/fs/bpf/foo,map-start-index=2
->     -device virtio-net-pci,netdev=net0 [...]
-> 
-> This is useful for the case where an existing XDP program with XSK map
-> is present on the AF_XDP supported phys device and the XSK map not yet
-> populated. Qemu will then push the XSK sockets into the specified map.
+DIAG 320 subcode 2 provides verification-certificates (VCs) that are in the
+certificate store. Only X509 certificates in DER format and SHA-256 hash
+type are recognized.
 
-Hi, Daniel.
+The subcode value is denoted by setting the second-left-most bit
+of an 8-byte field.
 
-Thanks for the patch!
+The Verification Certificate Block (VCB) contains the output data
+when the operation completes successfully. It includes a common
+header followed by zero or more Verification Certificate Entries (VCEs),
+depending on the VCB input length and the VC range (from the first VC
+index to the last VC index) in the certificate store.
 
-Could you, please, explain the use case a little more?  Is this patch
-aiming to improve usability?  Do you have a specific use case in mind?
+Each VCE contains information about a certificate retrieved from
+the S390IPLCertificateStore, such as the certificate name, key type,
+key ID length, hash length, and the raw certificate data.
+The key ID and hash are extracted from the raw certificate by the crypto API.
 
-The main idea behind 'inhibit' is that the qemu doesn't need to have a lot
-of privileges to use the pre-loaded program and the pre-created sockets.
-But creating the sockets and setting them into a map doesn't allow us to
-run without privileges, IIUC.  May be worth mentioning at least in the
-commit message.
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+---
+ crypto/x509-utils.c            | 204 ++++++++++++++++++++++++++++-
+ include/crypto/x509-utils.h    |  10 ++
+ include/hw/s390x/ipl/diag320.h |  47 +++++++
+ qapi/crypto.json               |  20 +++
+ target/s390x/diag.c            | 227 ++++++++++++++++++++++++++++++++-
+ 5 files changed, 506 insertions(+), 2 deletions(-)
 
-Also, isn't map-start-index the same thing as start-queue ?  Do we need
-both of them?
-
-I didn't read much into the code yet, but this patch is missing a few
-bits of documentation, e.g. it's missing an update for qemu-options.hx.
-
-See a few other quick comment below.
-
-Best regards, Ilya Maximets.
-
-> 
-> Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-> Cc: Ilya Maximets <i.maximets@ovn.org>
-> Cc: Jason Wang <jasowang@redhat.com>
-> Cc: Anton Protopopov <aspsk@isovalent.com>
-> ---
->  net/af-xdp.c  | 63 +++++++++++++++++++++++++++++++++++++++++++++------
->  qapi/net.json | 24 +++++++++++++-------
->  2 files changed, 72 insertions(+), 15 deletions(-)
-> 
-> diff --git a/net/af-xdp.c b/net/af-xdp.c
-> index 01c5fb914e..ddc52f1307 100644
-> --- a/net/af-xdp.c
-> +++ b/net/af-xdp.c
-> @@ -51,6 +51,8 @@ typedef struct AFXDPState {
->  
->      uint32_t             n_queues;
->      uint32_t             xdp_flags;
-> +    char                 *map_path;
-> +    uint32_t             map_start_index;
->      bool                 inhibit;
->  } AFXDPState;
->  
-> @@ -261,6 +263,7 @@ static void af_xdp_send(void *opaque)
->  static void af_xdp_cleanup(NetClientState *nc)
->  {
->      AFXDPState *s = DO_UPCAST(AFXDPState, nc, nc);
-> +    int pin_fd, idx;
->  
->      qemu_purge_queued_packets(nc);
->  
-> @@ -282,6 +285,22 @@ static void af_xdp_cleanup(NetClientState *nc)
->                  "af-xdp: unable to remove XDP program from '%s', ifindex: %d\n",
->                  s->ifname, s->ifindex);
->      }
-> +    if (s->map_path) {
-> +        pin_fd = bpf_obj_get(s->map_path);
-> +        if (pin_fd < 0) {
-> +            fprintf(stderr,
-> +                "af-xdp: unable to remove %s's XSK sockets from '%s', ifindex: %d\n",
-> +                s->ifname, s->map_path, s->ifindex);
-> +        } else {
-> +            idx = nc->queue_index;
-> +            if (s->map_start_index > 0) {
-> +                idx += s->map_start_index;
-> +            }
-> +            bpf_map_delete_elem(pin_fd, &idx);
-> +            close(pin_fd);
-> +        }
-> +    }
-> +    g_free(s->map_path);
->  }
->  
->  static int af_xdp_umem_create(AFXDPState *s, int sock_fd, Error **errp)
-> @@ -343,7 +362,7 @@ static int af_xdp_socket_create(AFXDPState *s,
->          .bind_flags = XDP_USE_NEED_WAKEUP,
->          .xdp_flags = XDP_FLAGS_UPDATE_IF_NOEXIST,
->      };
-> -    int queue_id, error = 0;
-> +    int queue_id, pin_fd, xsk_fd, idx, error = 0;
->  
->      s->inhibit = opts->has_inhibit && opts->inhibit;
->      if (s->inhibit) {
-> @@ -384,6 +403,23 @@ static int af_xdp_socket_create(AFXDPState *s,
->          }
->      }
->  
-> +    if (!error && s->map_path) {
-> +        pin_fd = bpf_obj_get(s->map_path);
-> +        if (pin_fd < 0) {
-> +            error = errno;
-> +        } else {
-> +	    xsk_fd = xsk_socket__fd(s->xsk);
-
-Indentation is off.  Tbas mixed with spaces here and in some other
-places in the patch.
-
-> +            idx = s->nc.queue_index;
-> +            if (s->map_start_index) {
-> +                idx += s->map_start_index;
-> +            }
-> +            if (bpf_map_update_elem(pin_fd, &idx, &xsk_fd, 0)) {
-> +                error = errno;
-> +            }
-> +            close(pin_fd);
-> +        }
-> +    }
-> +
->      if (error) {
->          error_setg_errno(errp, error,
->                           "failed to create AF_XDP socket for %s queue_id: %d",
-> @@ -465,8 +501,8 @@ int net_init_af_xdp(const Netdev *netdev,
->          return -1;
->      }
->  
-> -    if ((opts->has_inhibit && opts->inhibit) != !!opts->sock_fds) {
-> -        error_setg(errp, "'inhibit=on' requires 'sock-fds' and vice versa");
-> +    if ((opts->has_inhibit && opts->inhibit) != !!(opts->sock_fds || opts->map_path)) {
-> +        error_setg(errp, "'inhibit=on' requires 'sock-fds' or 'map-path' and vice versa");
-
-This may need some re-wording as 'A requires B or C or vice versa' is
-a little hard to understand.
-
->          return -1;
->      }
->  
-> @@ -491,6 +527,12 @@ int net_init_af_xdp(const Netdev *netdev,
->          pstrcpy(s->ifname, sizeof(s->ifname), opts->ifname);
->          s->ifindex = ifindex;
->          s->n_queues = queues;
-> +        if (opts->map_path) {
-> +            s->map_path = g_strdup(opts->map_path);
-> +            if (opts->has_map_start_index && opts->map_start_index > 0) {
-> +                s->map_start_index = opts->map_start_index;
-> +            }
-> +        }
->  
->          if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, errp)
->              || af_xdp_socket_create(s, opts, errp)) {
-> @@ -504,10 +546,17 @@ int net_init_af_xdp(const Netdev *netdev,
->      if (nc0) {
->          s = DO_UPCAST(AFXDPState, nc, nc0);
->          if (bpf_xdp_query_id(s->ifindex, s->xdp_flags, &prog_id) || !prog_id) {
-> -            error_setg_errno(errp, errno,
-> -                             "no XDP program loaded on '%s', ifindex: %d",
-> -                             s->ifname, s->ifindex);
-> -            goto err;
-> +            if (!s->map_path) {
-> +                error_setg_errno(errp, errno,
-> +                                 "no XDP program loaded on '%s', ifindex: %d",
-> +                                 s->ifname, s->ifindex);
-> +                goto err;
-> +	    } else {
-> +                warn_report("no XDP program loaded on '%s', ifindex: %d, "
-> +			    "only %"PRIi64" XSK socket%s loaded into map %s at this point",
-> +			    s->ifname, s->ifindex, queues, queues > 1 ? "s" : "",
-> +			    s->map_path);
-
-How a missing program is not an error?  Seems strange.
-
-> +            }
->          }
->      }
->  
-> diff --git a/qapi/net.json b/qapi/net.json
-> index 310cc4fd19..c750b805e8 100644
-> --- a/qapi/net.json
-> +++ b/qapi/net.json
-> @@ -454,7 +454,7 @@
->  #     (default: 0).
->  #
->  # @inhibit: Don't load a default XDP program, use one already loaded
-> -#     to the interface (default: false).  Requires @sock-fds.
-> +#     to the interface (default: false).  Requires @sock-fds or @map-path.
->  #
->  # @sock-fds: A colon (:) separated list of file descriptors for
->  #     already open but not bound AF_XDP sockets in the queue order.
-> @@ -462,17 +462,25 @@
->  #     into XDP socket map for corresponding queues.  Requires
->  #     @inhibit.
->  #
-> +# @map-path: The path to a pinned xsk map to push file descriptors
-> +#     for bound AF_XDP sockets into. Requires @inhibit.
-> +#
-> +# @map-start-index: Use @map-path to insert xsk sockets starting from
-> +#     this index number (default: 0). Requires @map-path.
-
-These are new fields that do not exist in the older versions, so
-they will need their own 'since' qualifiers.
-
-> +#
->  # Since: 8.2
->  ##
->  { 'struct': 'NetdevAFXDPOptions',
->    'data': {
-> -    'ifname':       'str',
-> -    '*mode':        'AFXDPMode',
-> -    '*force-copy':  'bool',
-> -    '*queues':      'int',
-> -    '*start-queue': 'int',
-> -    '*inhibit':     'bool',
-> -    '*sock-fds':    'str' },
-> +    'ifname':           'str',
-> +    '*mode':            'AFXDPMode',
-> +    '*force-copy':      'bool',
-> +    '*queues':          'int',
-> +    '*start-queue':     'int',
-> +    '*inhibit':         'bool',
-> +    '*sock-fds':        'str',
-> +    '*map-path':        'str',
-> +    '*map-start-index': 'int' },
->    'if': 'CONFIG_AF_XDP' }
->  
->  ##
+diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
+index 0b8cfc9022..51bd75d4eb 100644
+--- a/crypto/x509-utils.c
++++ b/crypto/x509-utils.c
+@@ -129,6 +129,7 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+     int hlen;
+     gnutls_x509_crt_t crt;
+     gnutls_datum_t datum = {.data = cert, .size = size};
++    gnutls_x509_crt_fmt_t fmt;
+ 
+     if (alg >= G_N_ELEMENTS(qcrypto_to_gnutls_hash_alg_map)) {
+         error_setg(errp, "Unknown hash algorithm");
+@@ -140,9 +141,15 @@ int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
+         return -1;
+     }
+ 
++    fmt = qcrypto_get_x509_cert_fmt(cert, size, errp);
++    if (fmt == -1) {
++        error_setg(errp, "Certificate is neither in DER or PEM format");
++        return -1;
++    }
++
+     gnutls_x509_crt_init(&crt);
+ 
+-    if (gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM) != 0) {
++    if (gnutls_x509_crt_import(crt, &datum, fmt) != 0) {
+         error_setg(errp, "Failed to import certificate");
+         goto cleanup;
+     }
+@@ -199,6 +206,173 @@ cleanup:
+     return rc;
+ }
+ 
++int qcrypto_get_x509_cert_version(uint8_t *cert, size_t size, Error **errp)
++{
++    int rc = -1;
++    gnutls_x509_crt_t crt;
++    gnutls_datum_t datum = {.data = cert, .size = size};
++    gnutls_x509_crt_fmt_t fmt;
++
++    fmt = qcrypto_get_x509_cert_fmt(cert, size, errp);
++    if (fmt == -1) {
++        error_setg(errp, "Certificate is neither in DER or PEM format");
++        return rc;
++    }
++
++    if (gnutls_x509_crt_init(&crt) < 0) {
++        error_setg(errp, "Failed to initialize certificate");
++        return rc;
++    }
++
++    if (gnutls_x509_crt_import(crt, &datum, fmt) != 0) {
++        error_setg(errp, "Failed to import certificate");
++        goto cleanup;
++    }
++
++    rc = gnutls_x509_crt_get_version(crt);
++
++cleanup:
++    gnutls_x509_crt_deinit(crt);
++    return rc;
++}
++
++int qcrypto_check_x509_cert_times(uint8_t *cert, size_t size, Error **errp)
++{
++    int rc = -1;
++    gnutls_x509_crt_t crt;
++    gnutls_datum_t datum = {.data = cert, .size = size};
++    time_t now = time(0);
++    gnutls_x509_crt_fmt_t fmt;
++
++    if (now == ((time_t)-1)) {
++        error_setg(errp, "Cannot get current time");
++        return rc;
++    }
++
++    fmt = qcrypto_get_x509_cert_fmt(cert, size, errp);
++    if (fmt == -1) {
++        error_setg(errp, "Certificate is neither in DER or PEM format");
++        return rc;
++    }
++
++    if (gnutls_x509_crt_init(&crt) < 0) {
++        error_setg(errp, "Failed to initialize certificate");
++        return rc;
++    }
++
++    if (gnutls_x509_crt_import(crt, &datum, fmt) != 0) {
++        error_setg(errp, "Failed to import certificate");
++        goto cleanup;
++    }
++
++    if (gnutls_x509_crt_get_expiration_time(crt) < now) {
++        error_setg(errp, "The certificate has expired");
++        goto cleanup;
++    }
++
++    if (gnutls_x509_crt_get_activation_time(crt) > now) {
++        error_setg(errp, "The certificate is not yet active");
++        goto cleanup;
++    }
++
++    rc = 0;
++
++cleanup:
++    gnutls_x509_crt_deinit(crt);
++    return rc;
++}
++
++int qcrypto_get_x509_pk_algorithm(uint8_t *cert, size_t size, Error **errp)
++{
++    int rc = -1;
++    unsigned int bits;
++    gnutls_x509_crt_t crt;
++    gnutls_datum_t datum = {.data = cert, .size = size};
++    gnutls_x509_crt_fmt_t fmt;
++
++    fmt = qcrypto_get_x509_cert_fmt(cert, size, errp);
++    if (fmt == -1) {
++        error_setg(errp, "Certificate is neither in DER or PEM format");
++        return rc;
++    }
++
++    if (gnutls_x509_crt_init(&crt) < 0) {
++        error_setg(errp, "Failed to initialize certificate");
++        return rc;
++    }
++
++    if (gnutls_x509_crt_import(crt, &datum, fmt) != 0) {
++        error_setg(errp, "Failed to import certificate");
++        goto cleanup;
++    }
++
++    rc = gnutls_x509_crt_get_pk_algorithm(crt, &bits);
++
++cleanup:
++    gnutls_x509_crt_deinit(crt);
++    return rc;
++}
++
++int qcrypto_get_x509_cert_key_id(uint8_t *cert, size_t size,
++                                 QCryptoKeyidFlags flag,
++                                 uint8_t *result,
++                                 size_t *resultlen,
++                                 Error **errp)
++{
++    int ret = -1;
++    int keyid_len;
++    gnutls_x509_crt_t crt;
++    gnutls_datum_t datum = {.data = cert, .size = size};
++    gnutls_x509_crt_fmt_t fmt;
++
++    if (flag >= G_N_ELEMENTS(qcrypto_to_gnutls_keyid_flags_map)) {
++        error_setg(errp, "Unknown key id flag");
++        return -1;
++    }
++
++    if (result == NULL) {
++        error_setg(errp, "No valid buffer given");
++        return -1;
++    }
++
++    fmt = qcrypto_get_x509_cert_fmt(cert, size, errp);
++    if (fmt == -1) {
++        error_setg(errp, "Certificate is neither in DER or PEM format");
++        return -1;
++    }
++
++    if (gnutls_x509_crt_init(&crt)) {
++        error_setg(errp, "Failed to initialize certificate");
++        return -1;
++    }
++
++    if (gnutls_x509_crt_import(crt, &datum, fmt) != 0) {
++        error_setg(errp, "Failed to import certificate");
++        goto cleanup;
++    }
++
++    keyid_len = qcrypto_get_x509_keyid_len(QCRYPTO_KEYID_FLAGS_SHA256, errp);
++    if (*resultlen < keyid_len) {
++        error_setg(errp,
++                   "Result buffer size %zu is smaller than key id %d",
++                   *resultlen, keyid_len);
++        goto cleanup;
++    }
++
++    if (gnutls_x509_crt_get_key_id(crt,
++                                   qcrypto_to_gnutls_keyid_flags_map[flag],
++                                   result, resultlen) != 0) {
++        error_setg(errp, "Failed to get fingerprint from certificate");
++        goto cleanup;
++    }
++
++    ret = 0;
++
++cleanup:
++    gnutls_x509_crt_deinit(crt);
++    return ret;
++}
++
+ #else /* ! CONFIG_GNUTLS */
+ 
+ int qcrypto_check_x509_cert_fmt(uint8_t *cert, size_t size,
+@@ -236,4 +410,32 @@ int qcrypto_get_x509_signature_algorithm(uint8_t *cert, size_t size, Error **err
+     return -ENOTSUP;
+ }
+ 
++int qcrypto_get_x509_cert_version(uint8_t *cert, size_t size, Error **errp)
++{
++    error_setg(errp, "To get certificate version requires GNUTLS");
++    return -ENOTSUP;
++}
++
++int qcrypto_check_x509_cert_times(uint8_t *cert, size_t size, Error **errp)
++{
++    error_setg(errp, "To get certificate times requires GNUTLS");
++    return -ENOTSUP;
++}
++
++int qcrypto_get_x509_pk_algorithm(uint8_t *cert, size_t size, Error **errp)
++{
++    error_setg(errp, "To get public key algorithm requires GNUTLS");
++    return -ENOTSUP;
++}
++
++int qcrypto_get_x509_cert_key_id(uint8_t *cert, size_t size,
++                                 QCryptoKeyidFlags flag,
++                                 uint8_t *result,
++                                 size_t *resultlen,
++                                 Error **errp)
++{
++    error_setg(errp, "To get key ID requires GNUTLS");
++    return -ENOTSUP;
++}
++
+ #endif /* ! CONFIG_GNUTLS */
+diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
+index 8fb263b9e1..cf43de0b2c 100644
+--- a/include/crypto/x509-utils.h
++++ b/include/crypto/x509-utils.h
+@@ -25,4 +25,14 @@ int qcrypto_get_x509_hash_len(QCryptoHashAlgo alg, Error **errp);
+ int qcrypto_get_x509_keyid_len(QCryptoKeyidFlags flag, Error **errp);
+ int qcrypto_get_x509_signature_algorithm(uint8_t *cert, size_t size, Error **errp);
+ 
++int qcrypto_get_x509_cert_version(uint8_t *cert, size_t size, Error **errp);
++int qcrypto_check_x509_cert_times(uint8_t *cert, size_t size, Error **errp);
++int qcrypto_get_x509_pk_algorithm(uint8_t *cert, size_t size, Error **errp);
++
++int qcrypto_get_x509_cert_key_id(uint8_t *cert, size_t size,
++                                 QCryptoKeyidFlags flag,
++                                 uint8_t *result,
++                                 size_t *resultlen,
++                                 Error **errp);
++
+ #endif
+diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
+index e91eb7238c..dc1dae1d76 100644
+--- a/include/hw/s390x/ipl/diag320.h
++++ b/include/hw/s390x/ipl/diag320.h
+@@ -12,15 +12,24 @@
+ 
+ #define DIAG_320_SUBC_QUERY_ISM     0
+ #define DIAG_320_SUBC_QUERY_VCSI    1
++#define DIAG_320_SUBC_STORE_VC      2
+ 
+ #define DIAG_320_RC_OK              0x0001
+ #define DIAG_320_RC_INVAL_VCSSB_LEN 0x0202
++#define DIAG_320_RC_INVAL_VCB_LEN   0x0204
++#define DIAG_320_RC_BAD_RANGE       0x0302
+ 
+ #define VCSSB_MAX_LEN   128
+ #define VCE_HEADER_LEN  128
+ #define VCB_HEADER_LEN  64
+ 
+ #define DIAG_320_ISM_QUERY_VCSI     0x4000000000000000
++#define DIAG_320_ISM_STORE_VC       0x2000000000000000
++
++#define DIAG_320_VCE_FLAGS_VALID                0x80
++#define DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING    0
++#define DIAG_320_VCE_FORMAT_X509_DER            1
++#define DIAG_320_VCE_HASHTYPE_SHA2_256          1
+ 
+ struct VCStorageSizeBlock {
+     uint32_t length;
+@@ -39,4 +48,42 @@ struct VCStorageSizeBlock {
+ typedef struct VCStorageSizeBlock \
+ VCStorageSizeBlock;
+ 
++struct VCBlock {
++    uint32_t in_len;
++    uint32_t reserved0;
++    uint16_t first_vc_index;
++    uint16_t last_vc_index;
++    uint32_t reserved1[5];
++    uint32_t out_len;
++    uint8_t reserved2[3];
++    uint8_t version;
++    uint16_t stored_ct;
++    uint16_t remain_ct;
++    uint32_t reserved3[5];
++    uint8_t vce_buf[];
++} QEMU_PACKED;
++typedef struct VCBlock VCBlock;
++
++struct VCEntry {
++    uint32_t len;
++    uint8_t flags;
++    uint8_t key_type;
++    uint16_t cert_idx;
++    uint32_t name[16];
++    uint8_t format;
++    uint8_t reserved0;
++    uint16_t keyid_len;
++    uint8_t reserved1;
++    uint8_t hash_type;
++    uint16_t hash_len;
++    uint32_t reserved2;
++    uint32_t cert_len;
++    uint32_t reserved3[2];
++    uint16_t hash_offset;
++    uint16_t cert_offset;
++    uint32_t reserved4[7];
++    uint8_t cert_buf[];
++} QEMU_PACKED;
++typedef struct VCEntry VCEntry;
++
+ #endif
+diff --git a/qapi/crypto.json b/qapi/crypto.json
+index 2bbf29affe..4757bcd3db 100644
+--- a/qapi/crypto.json
++++ b/qapi/crypto.json
+@@ -692,3 +692,23 @@
+            'rsa-sha256', 'rsa-sha384', 'rsa-sha512', 'rsa-sha224',
+            'dsa-sha224', 'dsa-sha256',
+            'ecdsa-sha1', 'ecdsa-sha224', 'ecdsa-sha256', 'ecdsa-sha384', 'ecdsa-sha512']}
++
++##
++# @QCryptoPkAlgo:
++#
++# Algorithms for public-key
++#
++# @unknown: UNKNOWN
++#
++# @rsa: RSA
++#
++# @dsa: DSA
++#
++# @dh: DH
++#
++# @ecdsa: ECDSA
++#
++# Since: 9.2
++##
++{ 'enum': 'QCryptoPkAlgo',
++  'data': ['unknown', 'rsa', 'dsa', 'dh', 'ecdsa']}
+diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+index 0743f5ec0e..6fd59ac863 100644
+--- a/target/s390x/diag.c
++++ b/target/s390x/diag.c
+@@ -17,12 +17,14 @@
+ #include "s390x-internal.h"
+ #include "hw/watchdog/wdt_diag288.h"
+ #include "system/cpus.h"
++#include "hw/s390x/cert-store.h"
+ #include "hw/s390x/ipl.h"
+ #include "hw/s390x/s390-virtio-ccw.h"
+ #include "system/kvm.h"
+ #include "kvm/kvm_s390x.h"
+ #include "target/s390x/kvm/pv.h"
+ #include "qemu/error-report.h"
++#include "crypto/x509-utils.h"
+ 
+ 
+ int handle_diag_288(CPUS390XState *env, uint64_t r1, uint64_t r3)
+@@ -191,6 +193,87 @@ out:
+     }
+ }
+ 
++static int diag_320_is_cert_valid(S390IPLCertificate qcert, Error **errp)
++{
++    int version;
++    int rc;
++
++    version = qcrypto_get_x509_cert_version((uint8_t *)qcert.raw, qcert.size, errp);
++    if (version < 0) {
++        return version == -ENOTSUP ? -ENOTSUP : 0;
++    }
++
++    rc = qcrypto_check_x509_cert_times((uint8_t *)qcert.raw, qcert.size, errp);
++    if (rc) {
++        return 0;
++    }
++
++    return 1;
++}
++
++static int diag_320_get_cert_info(VCEntry *vce, S390IPLCertificate qcert, int *is_valid,
++                                  unsigned char **key_id_data, void **hash_data)
++{
++    int algo;
++    int rc;
++    Error *err = NULL;
++
++    /* VCE flag (validity) */
++    *is_valid = diag_320_is_cert_valid(qcert, &err);
++    /* return early if GNUTLS is not enabled */
++    if (*is_valid == -ENOTSUP) {
++        error_report("GNUTLS is not supported");
++        return -1;
++    }
++
++    /* key-type */
++    algo = qcrypto_get_x509_pk_algorithm((uint8_t *)qcert.raw, qcert.size, &err);
++    if (algo == QCRYPTO_PK_ALGO_RSA) {
++        vce->key_type = DIAG_320_VCE_KEYTYPE_SELF_DESCRIBING;
++    }
++
++    /* VC format */
++    if (qcert.format == QCRYPTO_CERT_FMT_DER) {
++        vce->format = DIAG_320_VCE_FORMAT_X509_DER;
++    }
++
++    /* key id and key id len */
++    *key_id_data = g_malloc0(qcert.key_id_size);
++    rc = qcrypto_get_x509_cert_key_id((uint8_t *)qcert.raw, qcert.size,
++                                      QCRYPTO_KEYID_FLAGS_SHA256,
++                                      *key_id_data, &qcert.key_id_size, &err);
++    if (rc < 0) {
++        error_report("Fail to retrieve certificate key ID");
++        goto out;
++    }
++    vce->keyid_len = cpu_to_be16(qcert.key_id_size);
++
++    /* hash type */
++    if (qcert.hash_type == QCRYPTO_SIG_ALGO_RSA_SHA256) {
++        vce->hash_type = DIAG_320_VCE_HASHTYPE_SHA2_256;
++    }
++
++    /* hash and hash len */
++    *hash_data = g_malloc0(qcert.hash_size);
++    rc = qcrypto_get_x509_cert_fingerprint((uint8_t *)qcert.raw, qcert.size,
++                                           QCRYPTO_HASH_ALGO_SHA256,
++                                           *hash_data, &qcert.hash_size, &err);
++    if (rc < 0) {
++        error_report("Fail to retrieve certificate hash");
++        goto out;
++    }
++    vce->hash_len = cpu_to_be16(qcert.hash_size);
++
++    return 0;
++
++out:
++    g_free(*key_id_data);
++    g_free(*hash_data);
++
++    return -1;
++}
++
++
+ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+ {
+     S390CPU *cpu = env_archcpu(env);
+@@ -216,7 +299,7 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+ 
+     switch (subcode) {
+     case DIAG_320_SUBC_QUERY_ISM:
+-        uint64_t ism = cpu_to_be64(DIAG_320_ISM_QUERY_VCSI);
++        uint64_t ism = cpu_to_be64(DIAG_320_ISM_QUERY_VCSI | DIAG_320_ISM_STORE_VC);
+ 
+         if (s390_cpu_virt_mem_write(cpu, addr, r1, &ism, sizeof(ism))) {
+             s390_cpu_virt_mem_handle_exc(cpu, ra);
+@@ -260,6 +343,148 @@ void handle_diag_320(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+         }
+         rc = DIAG_320_RC_OK;
+         break;
++    case DIAG_320_SUBC_STORE_VC:
++        VCBlock *vcb;
++        size_t vce_offset;
++        size_t remaining_space;
++        size_t keyid_buf_size;
++        size_t hash_buf_size;
++        size_t cert_buf_size;
++        uint32_t vce_len;
++        unsigned char *key_id_data = NULL;
++        void *hash_data = NULL;
++        int is_valid = 0;
++        uint16_t first_vc_index;
++        uint16_t last_vc_index;
++        uint32_t in_len;
++
++        vcb = g_new0(VCBlock, 1);
++        if (s390_cpu_virt_mem_read(cpu, addr, r1, vcb, sizeof(*vcb))) {
++            s390_cpu_virt_mem_handle_exc(cpu, ra);
++            return;
++        }
++
++        in_len = be32_to_cpu(vcb->in_len);
++        first_vc_index = be16_to_cpu(vcb->first_vc_index);
++        last_vc_index = be16_to_cpu(vcb->last_vc_index);
++
++        if (in_len % TARGET_PAGE_SIZE != 0) {
++            rc = DIAG_320_RC_INVAL_VCB_LEN;
++            g_free(vcb);
++            break;
++        }
++
++        if (first_vc_index > last_vc_index) {
++            rc = DIAG_320_RC_BAD_RANGE;
++            g_free(vcb);
++            break;
++        }
++
++        if (first_vc_index == 0) {
++            /*
++             * Zero is a valid index for the first and last VC index.
++             * Zero index results in the VCB header and zero certificates returned.
++             */
++            if (last_vc_index == 0) {
++                goto out;
++            }
++
++            /* DIAG320 certificate store remains a one origin for cert entries */
++            vcb->first_vc_index = 1;
++        }
++
++        vce_offset = VCB_HEADER_LEN;
++        vcb->out_len = VCB_HEADER_LEN;
++        remaining_space = in_len - VCB_HEADER_LEN;
++
++        for (int i = first_vc_index - 1; i < last_vc_index && i < qcs->count; i++) {
++            VCEntry *vce;
++            S390IPLCertificate qcert = qcs->certs[i];
++            /*
++             * Each VCE is word aligned.
++             * Each variable length field within the VCE is also word aligned.
++             */
++            keyid_buf_size = ROUND_UP(qcert.key_id_size, 4);
++            hash_buf_size = ROUND_UP(qcert.hash_size, 4);
++            cert_buf_size = ROUND_UP(qcert.size, 4);
++            vce_len = VCE_HEADER_LEN + cert_buf_size + keyid_buf_size + hash_buf_size;
++
++            /*
++             * If there is no more space to store the cert,
++             * set the remaining verification cert count and
++             * break early.
++             */
++            if (remaining_space < vce_len) {
++                vcb->remain_ct = cpu_to_be16(last_vc_index - i);
++                break;
++            }
++
++            /*
++             * Construct VCE
++             * Unused area following the VCE field contains zeros.
++             */
++            vce = g_malloc0(vce_len);
++            vce->len = cpu_to_be32(vce_len);
++            vce->cert_idx = cpu_to_be16(i + 1);
++            vce->cert_len = cpu_to_be32(qcert.size);
++
++            strncpy((char *)vce->name, (char *)qcert.vc_name, VC_NAME_LEN_BYTES);
++
++            rc = diag_320_get_cert_info(vce, qcert, &is_valid, &key_id_data, &hash_data);
++            if (rc) {
++                g_free(vce);
++                continue;
++            }
++
++            /* VCE field offset is also word aligned */
++            vce->hash_offset = cpu_to_be16(VCE_HEADER_LEN + keyid_buf_size);
++            vce->cert_offset = cpu_to_be16(VCE_HEADER_LEN + keyid_buf_size +
++                                           hash_buf_size);
++
++            /* Write Key ID */
++            memcpy(vce->cert_buf, key_id_data, qcert.key_id_size);
++            /* Write Hash key */
++            memcpy(vce->cert_buf + keyid_buf_size, hash_data, qcert.hash_size);
++            /* Write VCE cert data */
++            memcpy(vce->cert_buf + keyid_buf_size + hash_buf_size, qcert.raw, qcert.size);
++
++            /* The certificate is valid and VCE contains the certificate */
++            if (is_valid) {
++                vce->flags |= DIAG_320_VCE_FLAGS_VALID;
++            }
++
++            /* Write VCE Header */
++            if (s390_cpu_virt_mem_write(cpu, addr + vce_offset, r1, vce, vce_len)) {
++                s390_cpu_virt_mem_handle_exc(cpu, ra);
++                return;
++            }
++
++            vce_offset += vce_len;
++            vcb->out_len += vce_len;
++            remaining_space -= vce_len;
++            vcb->stored_ct++;
++
++            g_free(vce);
++            g_free(key_id_data);
++            g_free(hash_data);
++        }
++
++        vcb->out_len = cpu_to_be32(vcb->out_len);
++        vcb->stored_ct = cpu_to_be16(vcb->stored_ct);
++
++    out:
++        /*
++         * Write VCB header
++         * All VCEs have been populated with the latest information
++         * and write VCB header last.
++         */
++        if (s390_cpu_virt_mem_write(cpu, addr, r1, vcb, VCB_HEADER_LEN)) {
++            s390_cpu_virt_mem_handle_exc(cpu, ra);
++            return;
++        }
++        rc = DIAG_320_RC_OK;
++        g_free(vcb);
++        break;
+     default:
+         s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+         return;
+-- 
+2.49.0
 
 
