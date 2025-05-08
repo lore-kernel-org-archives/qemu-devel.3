@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA2BC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 14:11:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B90BC3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 14:11:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD1wj-0001y2-Lp; Thu, 08 May 2025 10:09:57 -0400
+	id 1uD1wo-00026P-Ql; Thu, 08 May 2025 10:10:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uD1wg-0001pi-6m; Thu, 08 May 2025 10:09:54 -0400
+ id 1uD1wj-0001yR-W6; Thu, 08 May 2025 10:09:58 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uD1wd-0008RR-In; Thu, 08 May 2025 10:09:53 -0400
+ id 1uD1wg-0008UB-HN; Thu, 08 May 2025 10:09:57 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id DF46A43662;
- Thu,  8 May 2025 16:09:41 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 033DB4248E;
+ Thu,  8 May 2025 16:09:43 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  andrey.drobyshev@virtuozzo.com, hreitz@redhat.com, stefanha@redhat.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru
-Subject: [PATCH 06/11] blockdev: drain while unlocked in
- internal_snapshot_action()
-Date: Thu,  8 May 2025 16:09:31 +0200
-Message-Id: <20250508140936.3344485-7-f.ebner@proxmox.com>
+Subject: [PATCH 11/11] iotests/graph-changes-while-io: add test case with
+ removal of lower snapshot
+Date: Thu,  8 May 2025 16:09:36 +0200
+Message-Id: <20250508140936.3344485-12-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250508140936.3344485-1-f.ebner@proxmox.com>
 References: <20250508140936.3344485-1-f.ebner@proxmox.com>
@@ -58,48 +58,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+
+This case is catching potential deadlock which takes place when job-dismiss
+is issued when I/O requests are processed in a separate iothread.
+
+See https://mail.gnu.org/archive/html/qemu-devel/2025-04/msg04421.html
+
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 ---
+ .../qemu-iotests/tests/graph-changes-while-io | 101 ++++++++++++++++--
+ .../tests/graph-changes-while-io.out          |   4 +-
+ 2 files changed, 96 insertions(+), 9 deletions(-)
 
-Could the bs associated to the device change because of polling
-when draining? If yes, does that mean we need to drain all in the
-beginning and not temporarily unlock?
-
- blockdev.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/blockdev.c b/blockdev.c
-index 1272b9a745..f2b4fdf1b3 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -1216,7 +1216,7 @@ static void internal_snapshot_action(BlockdevSnapshotInternal *internal,
-     int ret1;
+diff --git a/tests/qemu-iotests/tests/graph-changes-while-io b/tests/qemu-iotests/tests/graph-changes-while-io
+index 194fda500e..e30f823da4 100755
+--- a/tests/qemu-iotests/tests/graph-changes-while-io
++++ b/tests/qemu-iotests/tests/graph-changes-while-io
+@@ -27,6 +27,8 @@ from iotests import imgfmt, qemu_img, qemu_img_create, qemu_io, \
  
-     GLOBAL_STATE_CODE();
--    GRAPH_RDLOCK_GUARD_MAINLOOP();
-+    bdrv_graph_rdlock_main_loop();
  
-     tran_add(tran, &internal_snapshot_drv, state);
+ top = os.path.join(iotests.test_dir, 'top.img')
++snap1 = os.path.join(iotests.test_dir, 'snap1.img')
++snap2 = os.path.join(iotests.test_dir, 'snap2.img')
+ nbd_sock = os.path.join(iotests.sock_dir, 'nbd.sock')
  
-@@ -1225,14 +1225,18 @@ static void internal_snapshot_action(BlockdevSnapshotInternal *internal,
  
-     bs = qmp_get_root_bs(device, errp);
-     if (!bs) {
-+        bdrv_graph_rdunlock_main_loop();
-         return;
-     }
+@@ -58,6 +60,15 @@ class TestGraphChangesWhileIO(QMPTestCase):
+     def tearDown(self) -> None:
+         self.qsd.stop()
  
-     state->bs = bs;
- 
-+    bdrv_graph_rdunlock_main_loop();
-     /* Paired with .clean() */
-     bdrv_drained_begin(bs);
- 
-+    GRAPH_RDLOCK_GUARD_MAINLOOP();
++    def _wait_for_blockjob(self, status) -> None:
++        done = False
++        while not done:
++            for event in self.qsd.get_qmp().get_events(wait=10.0):
++                if event['event'] != 'JOB_STATUS_CHANGE':
++                    continue
++                if event['data']['status'] == status:
++                    done = True
 +
-     if (bdrv_op_is_blocked(bs, BLOCK_OP_TYPE_INTERNAL_SNAPSHOT, errp)) {
-         return;
-     }
+     def test_blockdev_add_while_io(self) -> None:
+         # Run qemu-img bench in the background
+         bench_thr = Thread(target=do_qemu_img_bench)
+@@ -116,13 +127,89 @@ class TestGraphChangesWhileIO(QMPTestCase):
+                 'device': 'job0',
+             })
+ 
+-            cancelled = False
+-            while not cancelled:
+-                for event in self.qsd.get_qmp().get_events(wait=10.0):
+-                    if event['event'] != 'JOB_STATUS_CHANGE':
+-                        continue
+-                    if event['data']['status'] == 'null':
+-                        cancelled = True
++            self._wait_for_blockjob('null')
++
++        bench_thr.join()
++
++    def test_remove_lower_snapshot_while_io(self) -> None:
++        # Run qemu-img bench in the background
++        bench_thr = Thread(target=do_qemu_img_bench, args=(100000, ))
++        bench_thr.start()
++
++        # While I/O is performed on 'node0' node, consequently add 2 snapshots
++        # on top of it, then remove (commit) them starting from lower one.
++        while bench_thr.is_alive():
++            # Recreate snapshot images on every iteration
++            qemu_img_create('-f', imgfmt, snap1, '1G')
++            qemu_img_create('-f', imgfmt, snap2, '1G')
++
++            self.qsd.cmd('blockdev-add', {
++                'driver': imgfmt,
++                'node-name': 'snap1',
++                'file': {
++                    'driver': 'file',
++                    'filename': snap1
++                }
++            })
++
++            self.qsd.cmd('blockdev-snapshot', {
++                'node': 'node0',
++                'overlay': 'snap1',
++            })
++
++            self.qsd.cmd('blockdev-add', {
++                'driver': imgfmt,
++                'node-name': 'snap2',
++                'file': {
++                    'driver': 'file',
++                    'filename': snap2
++                }
++            })
++
++            self.qsd.cmd('blockdev-snapshot', {
++                'node': 'snap1',
++                'overlay': 'snap2',
++            })
++
++            self.qsd.cmd('block-commit', {
++                'job-id': 'commit-snap1',
++                'device': 'snap2',
++                'top-node': 'snap1',
++                'base-node': 'node0',
++                'auto-finalize': True,
++                'auto-dismiss': False,
++            })
++
++            self._wait_for_blockjob('concluded')
++            self.qsd.cmd('job-dismiss', {
++                'id': 'commit-snap1',
++            })
++
++            self.qsd.cmd('block-commit', {
++                'job-id': 'commit-snap2',
++                'device': 'snap2',
++                'top-node': 'snap2',
++                'base-node': 'node0',
++                'auto-finalize': True,
++                'auto-dismiss': False,
++            })
++
++            self._wait_for_blockjob('ready')
++            self.qsd.cmd('job-complete', {
++                'id': 'commit-snap2',
++            })
++
++            self._wait_for_blockjob('concluded')
++            self.qsd.cmd('job-dismiss', {
++                'id': 'commit-snap2',
++            })
++
++            self.qsd.cmd('blockdev-del', {
++                'node-name': 'snap1'
++            })
++            self.qsd.cmd('blockdev-del', {
++                'node-name': 'snap2'
++            })
+ 
+         bench_thr.join()
+ 
+diff --git a/tests/qemu-iotests/tests/graph-changes-while-io.out b/tests/qemu-iotests/tests/graph-changes-while-io.out
+index fbc63e62f8..8d7e996700 100644
+--- a/tests/qemu-iotests/tests/graph-changes-while-io.out
++++ b/tests/qemu-iotests/tests/graph-changes-while-io.out
+@@ -1,5 +1,5 @@
+-..
++...
+ ----------------------------------------------------------------------
+-Ran 2 tests
++Ran 3 tests
+ 
+ OK
 -- 
 2.39.5
 
