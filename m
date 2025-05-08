@@ -4,72 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92E31C3ABBE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA89C3ABC6
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 22:22:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD9cd-0005Vf-6t; Thu, 08 May 2025 18:21:43 -0400
+	id 1uD9cf-0005W8-1q; Thu, 08 May 2025 18:21:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3bi4daAwKCocylmtsp34pqlyrzzrwp.nzx1px5-op6pwyzyry5.z2r@flex--nabihestefan.bounces.google.com>)
- id 1uD9cb-0005Ui-Eh
- for qemu-devel@nongnu.org; Thu, 08 May 2025 18:21:41 -0400
-Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
+ <3cC4daAwKCok0novur56rsn0t11tyr.p1z3rz7-qr8ry010t07.14t@flex--nabihestefan.bounces.google.com>)
+ id 1uD9cc-0005VF-7K
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 18:21:42 -0400
+Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3bi4daAwKCocylmtsp34pqlyrzzrwp.nzx1px5-op6pwyzyry5.z2r@flex--nabihestefan.bounces.google.com>)
- id 1uD9cZ-0003Rz-FZ
+ <3cC4daAwKCok0novur56rsn0t11tyr.p1z3rz7-qr8ry010t07.14t@flex--nabihestefan.bounces.google.com>)
+ id 1uD9ca-0003S2-AD
  for qemu-devel@nongnu.org; Thu, 08 May 2025 18:21:41 -0400
-Received: by mail-pg1-x549.google.com with SMTP id
- 41be03b00d2f7-b1f8d149911so1486972a12.0
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 15:21:36 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id
+ d9443c01a7336-22fba10f55eso7331725ad.1
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 15:21:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1746742895; x=1747347695; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=y5dv+AmlzIvDSwk4btx/YlLu8rd3snmuoU7Mvc+vUso=;
- b=Q1j0F9Ri7y+3CBx43r6lqhnHuS3pFFqJljubVycrkTy0O8//+lUNwBRr/bPSzWydb3
- zXzTFhUgnyDEcDSJ8FBSaThFkK3cAS+t/rAH+l5r2htkkRaDHhNE5PnQcZs+wBg37Ijn
- qYVfzgGe4jfkspvQu6XxiCdaeIDSZGyw+I7+DHHqj8KWTfMC4Fdlg6xEFj6eYzAbO4Az
- kcQfUUlq6C6sCAKkdZ/Kb69YWKqcpNMquIo2L/uZ0TdB07MbUTLbRCY4JzxAv+ZlyiKA
- A2+TDNxUJy6itqi2D4rkLmRzaNjocZO7zAgLT3bijasVA/jVrKhMXBs3UXRi3ztofke/
- A7pQ==
+ d=google.com; s=20230601; t=1746742896; x=1747347696; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=fAPCiA6RKhgktgeaYt6XdYoAJLE7E95Vkv4XUtsa3Jg=;
+ b=WV9NLbbxxrzn3ix6Q2L/6aBwNvcSx3Mk2uqXwNA5nqpZpK8hMX7HZlBNs7T6cp2lnJ
+ wve4JSpHje5hVj0WwiswZ8U5XmD7KenTEeMS05lxbM3psCBUB1KAPjmtEEKnTVRRSldx
+ Sy9XbkW/LHTm+U4hP48s92tjFmMbw9qEaqTfjwk/9XTPK2j7lAFK9SwoXl+/cPjDUgh+
+ 4yNWY0S3A42Ue2NItM34iRyQdbwv4e2VJV0Qo7nz5PyA9FgbStzBJe3307pmSsQ6PzXb
+ eJeZmMdGbx/74+i+fPZkrRRyyBH2edjtHFAlAuRXtFViE0XwAkBegx4CkXKCwDrcxxmS
+ h8RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746742895; x=1747347695;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=y5dv+AmlzIvDSwk4btx/YlLu8rd3snmuoU7Mvc+vUso=;
- b=tyhbpYJF1TcFKMvc/ztbxQJBBOti9NtgPGBb/8ioA5yRh9NsyG1NDBaKHM9Akpz2u1
- AZYemlVB/xup0cUe9vLO7rUKSySbC8RTYQqXBMuX9GRvRZY+hoKQWCtcSUn5fYAcMBZW
- WecnoY4/TC4/JpwXFCy6DGpNHqjhZlekADAIQ2zy2OBwVaPWEJ69g40sR5AOHCjXosDT
- XlZULx476wY/Ns0Fe+pT6uS700ooO3/y3PjfPpcWpOyw0HolWhHnLY5lk/4dR8AMeuPU
- PulkSQS1TfwpMs3MnRf9ji4rS9Zd4d/JnmmCbk4DPNZqxUiDEPes2GBBlP7Cv+gmjrqh
- nqDg==
-X-Gm-Message-State: AOJu0YwoumjAfvjybfitZ+8Ecavi9SNNGO25X5iSev3m5FH2ulC4km+f
- 3BmUGElk1kLPcCFoT2Pg2YXN5lpQH9xB90uBYXqly7wyW2fmvpwHJny6d5SJZ118CPhhZngVuWO
- c+E7PmBiHqGhg1P9tSBVBLOvAMHvyjtwW/3nGsYbPfAUaQ2SI66JNufEsJoDxRT51e/gpQpDxOA
- UaEnsgtwyn7KqkeCiSnfebIAsJJt/PVSz3J6FPkMpEIXSQjZQ1o5gZnhwosgEi/CU=
-X-Google-Smtp-Source: AGHT+IHDizn+UK8AprUIQSpynkoFVQHQUuQP4T+obuapwwO9U5gpWIDnBWBzmtAeVfb/Mup1cL/52NwKQY+6H8tV0Lo=
-X-Received: from pgn7.prod.google.com ([2002:a63:d47:0:b0:b16:9964:4283])
+ d=1e100.net; s=20230601; t=1746742896; x=1747347696;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fAPCiA6RKhgktgeaYt6XdYoAJLE7E95Vkv4XUtsa3Jg=;
+ b=dmt3vLhPms+2tayZ8J3XTnyQrb1p2UDVZi+AIrvwXvnFTUaaVEUNTkcn101L3a6vJR
+ FBGTRDVFW8X6unMV2wT150WLUIc1so29Esspw6rx18kyhlp76m1GPPNV1CZKtya3AChD
+ Xlzk+i5j0vZl9OLyZoufwuqdkL4XXgaZSF1VhqNWwDug1HxBw5E4EWbCvocrA+26MFnl
+ 6issQ0PovhiUD6KHYeIUNjkiYmFYVo5WUDNox2Ynhlto3t1Pfpwr11ug6+3YWzAzIRcB
+ gDh4oxfJgWwvYvt/U+aS0BMW+lt4eEypT+7lQO+VsH2WlW0+5h5TUO9/7vrGWGkfZFQ3
+ bf6g==
+X-Gm-Message-State: AOJu0YxHpMshVtQ8ax4pBdV1mU5ci3/NGCwn9JAm1J5bD6pPALugmCdR
+ P/A3OW3m2PZfp7P9BlEUrsXJobe/7YjRTXMoF9A+CtPTa0gDlijsUKw1beG8NCUXWtIjlOebTsq
+ AkYIqC2dtPXuCfTPFVIYAVMxC++FfDWr6l8tC8SOxgFV7oUAAcYVvwgwtJMTFGGsu0/mpSeHNC2
+ RVtKUXp1shPT6hHV5rzCpoMi9UPiyf/1AmPI+JVNLzu2B8SrV5D0yqpMwbJf3lRDc=
+X-Google-Smtp-Source: AGHT+IHBOykAl+9pkLECBkKW+tqqBC4S9PQU+1cqMmyuAIhaGhyD4dp6Kb4qva58sJtgASIwSgjP8eKRxpq5CIJW4XY=
+X-Received: from plle7.prod.google.com ([2002:a17:903:1667:b0:223:225b:3d83])
  (user=nabihestefan job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a21:78c:b0:1f5:79c4:5da6 with SMTP id
- adf61e73a8af0-215abab9196mr1234154637.5.1746742894769; 
- Thu, 08 May 2025 15:21:34 -0700 (PDT)
-Date: Thu,  8 May 2025 22:21:30 +0000
+ 2002:a17:902:cecb:b0:22f:a932:5374 with SMTP id
+ d9443c01a7336-22fc918d1a7mr17310455ad.48.1746742896087; 
+ Thu, 08 May 2025 15:21:36 -0700 (PDT)
+Date: Thu,  8 May 2025 22:21:31 +0000
+In-Reply-To: <20250508222132.748479-1-nabihestefan@google.com>
 Mime-Version: 1.0
+References: <20250508222132.748479-1-nabihestefan@google.com>
 X-Mailer: git-send-email 2.49.0.1015.ga840276032-goog
-Message-ID: <20250508222132.748479-1-nabihestefan@google.com>
-Subject: [PATCH 0/2] Miscellaneous MSan finding
+Message-ID: <20250508222132.748479-2-nabihestefan@google.com>
+Subject: [PATCH 1/2] util: fix msan findings in keyval
 From: Nabih Estefan <nabihestefan@google.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, pbonzini@redhat.com, armbru@redhat.com, 
- Nabih Estefan <nabihestefan@google.com>
+ Peter Foley <pefoley@google.com>, Nabih Estefan <nabihestefan@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
- envelope-from=3bi4daAwKCocylmtsp34pqlyrzzrwp.nzx1px5-op6pwyzyry5.z2r@flex--nabihestefan.bounces.google.com;
- helo=mail-pg1-x549.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
+ envelope-from=3cC4daAwKCok0novur56rsn0t11tyr.p1z3rz7-qr8ry010t07.14t@flex--nabihestefan.bounces.google.com;
+ helo=mail-pl1-x649.google.com
 X-Spam_score_int: -100
 X-Spam_score: -10.1
 X-Spam_bar: ----------
@@ -92,16 +94,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixes for miscellaneous msan finding in QEMU
+From: Peter Foley <pefoley@google.com>
 
-Peter Foley (2):
-  util: fix msan findings in keyval
-  accel/tcg: fix msan findings in translate-all
+e.g.
+I	2025-02-28 09:51:05.240071-0800		624	stream.go:47	qemu: Uninitialized value was created by an allocation of 'key_in_cur.i' in the stack frame
+I	2025-02-28 09:51:05.240187-0800		624	stream.go:47	qemu: #0 0xaaaac49f489c in keyval_parse_one third_party/qemu/util/keyval.c:190:5
 
- accel/tcg/translate-all.c | 2 +-
- util/keyval.c             | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Signed-off-by: Peter Foley <pefoley@google.com>
+Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+---
+ util/keyval.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/util/keyval.c b/util/keyval.c
+index a70629a481..f33c64079d 100644
+--- a/util/keyval.c
++++ b/util/keyval.c
+@@ -187,7 +187,7 @@ static const char *keyval_parse_one(QDict *qdict, const char *params,
+ {
+     const char *key, *key_end, *val_end, *s, *end;
+     size_t len;
+-    char key_in_cur[128];
++    char key_in_cur[128] = {};
+     QDict *cur;
+     int ret;
+     QObject *next;
 -- 
 2.49.0.1015.ga840276032-goog
 
