@@ -4,82 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89DE8C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 09:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4061DC3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 09:58:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCxxl-0003QH-M7; Thu, 08 May 2025 05:54:45 -0400
+	id 1uCy0r-0001d9-8t; Thu, 08 May 2025 05:57:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCxxj-0003Pw-9d
- for qemu-devel@nongnu.org; Thu, 08 May 2025 05:54:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uCy0o-0001WW-V1
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 05:57:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uCxxh-0001Hb-Kx
- for qemu-devel@nongnu.org; Thu, 08 May 2025 05:54:43 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uCy0n-0001d7-CS
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 05:57:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746698080;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Iibwwyi5W0D6zz6AXlnAP/ozqACug8CvhufUCjgPp3w=;
- b=CjEyJQNUaft5RrZP6kOmDmpL0EqDE5lMhcJVMvejlxzmYISxpGjKM3xkJV1F/nqOFrMHER
- BBYUYHbMDb6m6oHStSPmeeFWI7AQds+bvOt+soPcuCD55JUt1j61YIIhFQH1NpHAPyaMz5
- h9scLFhDb6ZXIaPkFK+JPzs5nkr2rVM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-210-HcUoE7xnOMWHG6L5jPnpEw-1; Thu, 08 May 2025 05:54:39 -0400
-X-MC-Unique: HcUoE7xnOMWHG6L5jPnpEw-1
-X-Mimecast-MFC-AGG-ID: HcUoE7xnOMWHG6L5jPnpEw_1746698078
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-442d472cf84so411785e9.2
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 02:54:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746698078; x=1747302878;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Iibwwyi5W0D6zz6AXlnAP/ozqACug8CvhufUCjgPp3w=;
- b=pH0nr8yRWbKyuukqbAU0yCHoDXjWpp2Q/rkCMduHs1R+8/M/Q2CBnSbORnu2CgfGTH
- rdbt8i338de252JV0U3AAw1oac8YgYoIxoNGTrvdwxAz0CaA4E2xS2jb0kd4DyxMgqtj
- 7PIHiAqy/tymt3KWpHwDvI3ok6TYL3L6xn7caWe5T5JLsaxopmJr7aHFbxLoyctn+sjj
- Vsd6qu8fH+JC5nz4n34MKfH1IN92nksG3Q7R8VzgCbZgpNgz+jMl1s9dXS5msC7yKkG1
- kQAHnYG+anXCfBlRvx9cp/LlVcedqKrVlr7dOA+teDpP5N8cZTaswESKmnsSjLmg47oc
- dg4w==
-X-Gm-Message-State: AOJu0YxSXXWpp6+/9ZsI0XkIE/NyUoRzUGjzwpO+XbI81CyVHWCzWnaq
- qFcU4/JodDFGEmG3uovodqeO5oWnPv5VCBQyp9cUtV0W05hONnx0ezcErsXj+RVxzbV5CQ7gL+M
- wISf4iZlsW1lpn9kASNV88g4Uuz/CzLY+s1SyKqP0gdDMcBS0/yRwdPXrde8crdY2IECCYbkDrQ
- XvreYndsL3TDy0Yn0re5OiVr7rkSsVqtYPcyKH
-X-Gm-Gg: ASbGnctSEMU7MBKfEgNei5BO2RV6285Un9B3bWbDOubQSXib5GYzk183FjSazsd6iDt
- Kff7j8nCxqAtgQLFBWTAi3G7oiZwqFjPkZoraaTMwz5BuESCAibVRDZyxdK2tdvUzdM2bUJgf35
- g7ldJdsumWVE5pC0gM5j/EsYB0qSdrYya/r//wZD9VaFiB/S2HIx2i4TTJPeXA0PnhXT5sxZLxk
- Ux1oDK6SY9t2F2g5O7jhUNJun/0IF99YCMsMLsC2k2hInjSNybMwDR5TpBqHcWWPgSTx5bqQK/j
- GqPBkXpZlGpOXJQ=
-X-Received: by 2002:a05:600c:8714:b0:43d:8ea:8d7a with SMTP id
- 5b1f17b1804b1-442d034f74amr19052555e9.28.1746698077786; 
- Thu, 08 May 2025 02:54:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHWFw0EYXejcsu+Rukw39+u6L0yaRTwH/bZ0DQFVtRnqFFbBjYZ+Ps6pO66eEAHLf1fPcWbJw==
-X-Received: by 2002:a05:600c:8714:b0:43d:8ea:8d7a with SMTP id
- 5b1f17b1804b1-442d034f74amr19052355e9.28.1746698077397; 
- Thu, 08 May 2025 02:54:37 -0700 (PDT)
-Received: from [192.168.122.1] ([151.95.54.106])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442cd3aeb6esm31581075e9.25.2025.05.08.02.54.36
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 May 2025 02:54:37 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] target/i386: ignore misplaced REX prefixes
-Date: Thu,  8 May 2025 11:54:36 +0200
-Message-ID: <20250508095436.471819-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.49.0
+ s=mimecast20190719; t=1746698272;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=j0f1irurx2OmJxyoGHk8cuRZq2S1aadozfeKWIkApQ4=;
+ b=SKI6QvfYaOevFoAdR9YdMx10VigIh8rzDnans+sfZt8ZRX7kVRo9t/Ai8T0KQmdtjCAc4s
+ sIFDpsHOSwdvE5z3mXxO0Z7lV/NX9OqAxDft+VzGdIG2PgCFDQOmEaqAAsIheVCVuLVnSd
+ /nsze01xQ7wcyknMjjE7Q2qMrSwSHRw=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-3I7Ie61zPzKiq8buGmE3TQ-1; Thu,
+ 08 May 2025 05:57:48 -0400
+X-MC-Unique: 3I7Ie61zPzKiq8buGmE3TQ-1
+X-Mimecast-MFC-AGG-ID: 3I7Ie61zPzKiq8buGmE3TQ_1746698267
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A803C1955DD0; Thu,  8 May 2025 09:57:47 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.138])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5FEE21956058; Thu,  8 May 2025 09:57:42 +0000 (UTC)
+Date: Thu, 8 May 2025 10:57:37 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] tests/qtest/q35-test: Remove the obsolete
+ test_without_smram_base test
+Message-ID: <aByAEWTciwaXVDQv@redhat.com>
+References: <20250508095122.144807-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+In-Reply-To: <20250508095122.144807-1-thuth@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -101,86 +87,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/decode-new.c.inc | 36 ++++++++++++++++++++++++--------
- 1 file changed, 27 insertions(+), 9 deletions(-)
+On Thu, May 08, 2025 at 11:51:22AM +0200, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> With the release of QEMU 10.1, the pc-q35-4.1 machine will be older
+> than 6 years and thus will get disabled automatically by the
+> MACHINE_VER_DELETION() macro. Remove the related test to avoid
+> that the q35-test is failing when the machine is not available anymore.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  tests/qtest/q35-test.c | 37 +------------------------------------
+>  1 file changed, 1 insertion(+), 36 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index cda32ee6784..55216e0d249 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -2542,7 +2542,13 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
-     s->has_modrm = false;
-     s->prefix = 0;
- 
-- next_byte:
-+ next_byte:;
-+#ifdef TARGET_X86_64
-+    /* clear any REX prefix followed by other prefixes.  */
-+    int rex;
-+    rex = -1;
-+ next_byte_rex:
-+#endif
-     b = x86_ldub_code(env, s);
- 
-     /* Collect prefixes.  */
-@@ -2585,13 +2591,12 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
- #ifdef TARGET_X86_64
-     case 0x40 ... 0x4f:
-         if (CODE64(s)) {
--            /* REX prefix */
--            s->prefix |= PREFIX_REX;
--            s->vex_w = (b >> 3) & 1;
--            s->rex_r = (b & 0x4) << 1;
--            s->rex_x = (b & 0x2) << 2;
--            s->rex_b = (b & 0x1) << 3;
--            goto next_byte;
-+            /*
-+             * REX prefix; ignored unless it is the last prefix, so
-+             * for now just stash it
-+             */
-+            rex = b;
-+            goto next_byte_rex;
-         }
-         break;
- #endif
-@@ -2618,10 +2623,13 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
- 
-             /* 4.1.1-4.1.3: No preceding lock, 66, f2, f3, or rex prefixes. */
-             if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ
--                             | PREFIX_LOCK | PREFIX_DATA | PREFIX_REX)) {
-+                             | PREFIX_LOCK | PREFIX_DATA)) {
-                 goto illegal_op;
-             }
- #ifdef TARGET_X86_64
-+            if (rex != -1) {
-+                goto illegal_op;
-+            }
-             s->rex_r = (~vex2 >> 4) & 8;
- #endif
-             if (b == 0xc5) {
-@@ -2661,6 +2669,16 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
- 
-     /* Post-process prefixes.  */
-     if (CODE64(s)) {
-+#ifdef TARGET_X86_64
-+        if (rex != -1) {
-+            s->prefix |= PREFIX_REX;
-+            s->vex_w = (rex >> 3) & 1;
-+            s->rex_r = (rex & 0x4) << 1;
-+            s->rex_x = (rex & 0x2) << 2;
-+            s->rex_b = (rex & 0x1) << 3;
-+        }
-+#endif
-+
-         /*
-          * In 64-bit mode, the default data size is 32-bit.  Select 64-bit
-          * data with rex_w, and 16-bit data with 0x66; rex_w takes precedence
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+
+With regards,
+Daniel
 -- 
-2.49.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
