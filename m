@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B073C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F41AC3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:07:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD2o4-0000zL-OO; Thu, 08 May 2025 11:05:04 -0400
+	id 1uD2qF-0005Vq-7Y; Thu, 08 May 2025 11:07:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2o2-0000wW-QE
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:05:02 -0400
+ id 1uD2q8-0005FM-B1
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:07:12 -0400
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2nz-0007F6-NU
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:05:02 -0400
+ id 1uD2q4-0007UR-FQ
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:07:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746716699; x=1778252699;
+ t=1746716828; x=1778252828;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=8eEFWvQ5m134UL5XMAtMTrdDfH9o+p5aQQB44b14wsw=;
- b=Ac7+kkWrXZ/bkvRT1zx2+s/hF3LcnKuj0Jdcj5FmyWnFLlArpK25FONI
- lRdD45HfE9R4oTfQwsiyGnyUSozEoV04URYZk+egH2kcNRvyS9wn5qQQ9
- oJcW0NO4kUHs42GceWm8r4pzxkAzGULlGP9KwWUmjiWsQ4EQiuwwmakZM
- EEW1fEQ2/wQUitdgZ577KydO6zTTiSA3T0rBwCrIMGfO+HVu4kHlzAa2F
- UdAaIfympyx62xNAvUJN7Aye7mtwQbYBVI5O8UkLIQLcZwq9awfrv1Ogf
- REZ1OC7eaad39YMJ4PQLW4ZZd8ZjcVeQRnZseZ/0CI7z4Tbt0tppackgc Q==;
-X-CSE-ConnectionGUID: VmgZEKMnRXWlkmKY5PkJXg==
-X-CSE-MsgGUID: 19BF/EAASjuKA1H/65tLEQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73887968"
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73887968"
+ bh=Ua3ZETS+iT290H+LO2Dg9TnqZFRwIQnJNoMCWUzIJ38=;
+ b=bptNU+D10jjAceN7fZ2Ndnqtlkc1L8PKnrvdfkbsmfz1yJz/fbBJEwOx
+ kVxG5x79gisqzmBT7z51pAIi6/PRYkDh3+bHI1UQpWsZnvveBY9OoeY6s
+ lq5Q30ZV7JLHzt57GEF1PNzPtEXZgnGwzOsiuYEJfGaEsxhjTz8/5lShN
+ OyYVvryFF/TKGH1y1wCayjM/FtgwSuQQplen/3klsoJKGJ68+AR4bW7yk
+ PFM2aqIkzIqvdWEpTpBFhczRITNu9BVR+qceDG6fNJ/bgOku8K1L/PVn5
+ KdFf405jZwIzOv+O8ec2eLp3JajZbRDHoA/Au49hZemwunEPVxi+hqUt9 Q==;
+X-CSE-ConnectionGUID: UV4pWU+JQ7WhjKTN/pj0uQ==
+X-CSE-MsgGUID: wsitzCJORB2E8oJZft295Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73888276"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73888276"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2025 08:04:56 -0700
-X-CSE-ConnectionGUID: jOhk/4W/Qg+lTCy5bKRaqw==
-X-CSE-MsgGUID: Ep6fqDXFScScn/nEEwoYwA==
+ 08 May 2025 08:06:31 -0700
+X-CSE-ConnectionGUID: OJjJQfX8Q62hzqaYYfem4Q==
+X-CSE-MsgGUID: HS8g275/QTS3WHFg59Vvxg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141439664"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141440129"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:04:53 -0700
+ by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:06:28 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -57,10 +57,10 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v9 01/55] *** HACK *** linux-headers: Update headers to pull
- in TDX API changes
-Date: Thu,  8 May 2025 10:59:07 -0400
-Message-ID: <20250508150002.689633-2-xiaoyao.li@intel.com>
+Subject: [PATCH v9 31/55] i386/cpu: introduce
+ x86_confidential_guest_cpu_instance_init()
+Date: Thu,  8 May 2025 10:59:37 -0400
+Message-ID: <20250508150002.689633-32-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250508150002.689633-1-xiaoyao.li@intel.com>
 References: <20250508150002.689633-1-xiaoyao.li@intel.com>
@@ -91,110 +91,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pull in recent TDX updates, which are not backwards compatible.
-
-It's just to make this series runnable. It will be updated by script
-
-	scripts/update-linux-headers.sh
-
-once TDX support is upstreamed in linux kernel
+To allow execute confidential guest specific cpu init operations.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- linux-headers/asm-x86/kvm.h | 69 +++++++++++++++++++++++++++++++++++++
- linux-headers/linux/kvm.h   |  1 +
- 2 files changed, 70 insertions(+)
+Changes in v9:
+ - use current_machine instead of qdev_get_machine(); (Zhao Liu)
 
-diff --git a/linux-headers/asm-x86/kvm.h b/linux-headers/asm-x86/kvm.h
-index 86f2c34e7afa..baca2d479365 100644
---- a/linux-headers/asm-x86/kvm.h
-+++ b/linux-headers/asm-x86/kvm.h
-@@ -925,4 +925,73 @@ struct kvm_hyperv_eventfd {
- #define KVM_X86_SNP_VM		4
- #define KVM_X86_TDX_VM		5
+Changes in v6:
+ - new patch;
+---
+ target/i386/confidential-guest.h | 11 +++++++++++
+ target/i386/cpu.c                |  8 ++++++++
+ 2 files changed, 19 insertions(+)
+
+diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
+index 164be7633a20..a86c42a47558 100644
+--- a/target/i386/confidential-guest.h
++++ b/target/i386/confidential-guest.h
+@@ -39,6 +39,7 @@ struct X86ConfidentialGuestClass {
  
-+/* Trust Domain eXtension sub-ioctl() commands. */
-+enum kvm_tdx_cmd_id {
-+	KVM_TDX_CAPABILITIES = 0,
-+	KVM_TDX_INIT_VM,
-+	KVM_TDX_INIT_VCPU,
-+	KVM_TDX_INIT_MEM_REGION,
-+	KVM_TDX_FINALIZE_VM,
-+	KVM_TDX_GET_CPUID,
+     /* <public> */
+     int (*kvm_type)(X86ConfidentialGuest *cg);
++    void (*cpu_instance_init)(X86ConfidentialGuest *cg, CPUState *cpu);
+     uint32_t (*mask_cpuid_features)(X86ConfidentialGuest *cg, uint32_t feature, uint32_t index,
+                                     int reg, uint32_t value);
+ };
+@@ -59,6 +60,16 @@ static inline int x86_confidential_guest_kvm_type(X86ConfidentialGuest *cg)
+     }
+ }
+ 
++static inline void x86_confidential_guest_cpu_instance_init(X86ConfidentialGuest *cg,
++                                                            CPUState *cpu)
++{
++    X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
 +
-+	KVM_TDX_CMD_NR_MAX,
-+};
++    if (klass->cpu_instance_init) {
++        klass->cpu_instance_init(cg, cpu);
++    }
++}
 +
-+struct kvm_tdx_cmd {
-+	/* enum kvm_tdx_cmd_id */
-+	__u32 id;
-+	/* flags for sub-commend. If sub-command doesn't use this, set zero. */
-+	__u32 flags;
-+	/*
-+	 * data for each sub-command. An immediate or a pointer to the actual
-+	 * data in process virtual address.  If sub-command doesn't use it,
-+	 * set zero.
-+	 */
-+	__u64 data;
-+	/*
-+	 * Auxiliary error code.  The sub-command may return TDX SEAMCALL
-+	 * status code in addition to -Exxx.
-+	 * Defined for consistency with struct kvm_sev_cmd.
-+	 */
-+	__u64 hw_error;
-+};
+ /**
+  * x86_confidential_guest_mask_cpuid_features:
+  *
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index add6430f7edd..ea73b2225282 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -36,6 +36,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/i386/topology.h"
+ #ifndef CONFIG_USER_ONLY
++#include "confidential-guest.h"
+ #include "system/reset.h"
+ #include "qapi/qapi-commands-machine-target.h"
+ #include "exec/address-spaces.h"
+@@ -8504,6 +8505,13 @@ static void x86_cpu_post_initfn(Object *obj)
+     }
+ 
+     accel_cpu_instance_init(CPU(obj));
 +
-+struct kvm_tdx_capabilities {
-+	__u64 supported_attrs;
-+	__u64 supported_xfam;
-+	__u64 reserved[254];
-+	struct kvm_cpuid2 cpuid;
-+};
-+
-+struct kvm_tdx_init_vm {
-+	__u64 attributes;
-+	__u64 xfam;
-+	__u64 mrconfigid[6];	/* sha384 digest */
-+	__u64 mrowner[6];	/* sha384 digest */
-+	__u64 mrownerconfig[6];	/* sha384 digest */
-+
-+	/* The total space for TD_PARAMS before the CPUIDs is 256 bytes */
-+	__u64 reserved[12];
-+
-+	/*
-+	 * Call KVM_TDX_INIT_VM before vcpu creation, thus before
-+	 * KVM_SET_CPUID2.
-+	 * This configuration supersedes KVM_SET_CPUID2s for VCPUs because the
-+	 * TDX module directly virtualizes those CPUIDs without VMM.  The user
-+	 * space VMM, e.g. qemu, should make KVM_SET_CPUID2 consistent with
-+	 * those values.  If it doesn't, KVM may have wrong idea of vCPUIDs of
-+	 * the guest, and KVM may wrongly emulate CPUIDs or MSRs that the TDX
-+	 * module doesn't virtualize.
-+	 */
-+	struct kvm_cpuid2 cpuid;
-+};
-+
-+#define KVM_TDX_MEASURE_MEMORY_REGION   _BITULL(0)
-+
-+struct kvm_tdx_init_mem_region {
-+	__u64 source_addr;
-+	__u64 gpa;
-+	__u64 nr_pages;
-+};
-+
- #endif /* _ASM_X86_KVM_H */
-diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
-index 27181b3dd8fb..bf728042db0c 100644
---- a/linux-headers/linux/kvm.h
-+++ b/linux-headers/linux/kvm.h
-@@ -369,6 +369,7 @@ struct kvm_run {
- #define KVM_SYSTEM_EVENT_WAKEUP         4
- #define KVM_SYSTEM_EVENT_SUSPEND        5
- #define KVM_SYSTEM_EVENT_SEV_TERM       6
-+#define KVM_SYSTEM_EVENT_TDX_FATAL      7
- 			__u32 type;
- 			__u32 ndata;
- 			union {
++#ifndef CONFIG_USER_ONLY
++    if (current_machine && current_machine->cgs) {
++        x86_confidential_guest_cpu_instance_init(
++            X86_CONFIDENTIAL_GUEST(current_machine->cgs), (CPU(obj)));
++    }
++#endif
+ }
+ 
+ static void x86_cpu_init_default_topo(X86CPU *cpu)
 -- 
 2.43.0
 
