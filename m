@@ -4,86 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46FDDC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 02:16:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39E22C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 03:28:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCqnG-0002pK-8L; Wed, 07 May 2025 22:15:26 -0400
+	id 1uCrul-0006AV-32; Wed, 07 May 2025 23:27:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <timlee660101@gmail.com>)
- id 1uCqnE-0002os-K8; Wed, 07 May 2025 22:15:24 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <timlee660101@gmail.com>)
- id 1uCqnC-0003i7-PI; Wed, 07 May 2025 22:15:24 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-22e730c05ddso5165625ad.2; 
- Wed, 07 May 2025 19:15:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746670521; x=1747275321; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=6biUSIsPzsQyImSoRkB97aDVQZkOBWG2G0BZKEhAFWg=;
- b=nSfjoEM0dtRP0sAHBF5hMG8u9BtjpvoxAFR0CgUNDUpvgNNjheb/ANEgnx3WILLvi4
- l4jUTPxhftINd0/wa/z794Bh0RY3UjaDbOcLrApzUiddvf/qH0bc8BWBFk7edqdPgSSU
- DWtTpKiAlqzzAJf1Q9IKYFg7I3g9qyRHMyRbqHm5z4pCfBRteFHNGU7L/YGFsKPl9BsW
- 55pXwGglUkokXg5AdL57sptmX8kAgc3ZW+ktHmDszDO7l0XOMQmj3zOvufwh0Ka/JsOt
- nFvZDdA2DI0URlURllzJZccIDwqn0clrsbuMzRKQlWnw8gYtwSECbE4j/MwvicsJpQvM
- /CKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746670521; x=1747275321;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6biUSIsPzsQyImSoRkB97aDVQZkOBWG2G0BZKEhAFWg=;
- b=EpH1VcRSBBkXG0MA2st7/j6XzbbLgKt3HdG2M0iRFzmyyJ/TpbzfUMvbG+4Rigte/t
- PckhmIra0ofYN8I6K756DHwPIbUCeAG+GM1mOQ2NkB60l4OH0otFC2NvJvXQl2xBVTeN
- NFzbCNXvkSYlsJUaX9u0Agg1+HFGkRQm+uHRcY/1KLsFNhcv+n1cL00pIKIy1nE6+tZ/
- 77QPoeCUacLjIVv3xK/XQP29DuuzWtcWytsxmcENY+xKTN/OO8mQlD3ZluyDIt85H28Y
- X0OsJNA+HzAy2oqhzd6K38r0fLc6kpxYVkieGSJV4Md0DfrsFqorWV5MPnnX3GIihyaF
- n/MA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVxwdzdgx/NGI/gj9pM2Gwl7ahImMLXKka37TObz52lELQ05KSvknWDIB0jkscjMdZJSTew21qXL/SA@nongnu.org
-X-Gm-Message-State: AOJu0YymVX8D5SPgIU/H2GYQVxOXhOgF2p+WuHtxOLGhrVrUY22EzT/8
- 2e2eTQKKf+Hn+2q24OHYmE+cVGUj3i8af+bIPQ5H4ObWCcGDxs3y
-X-Gm-Gg: ASbGncvIvQkQTANt3OH6A7qD1qkElr586OZIw4ATXVaFf1k5kxhmAJF0jaodshIEXtl
- 0aAhMSWKSfQC6nz9DWD487RX6iOd8u4ItIye+5uOy5R2d/QtCEHQvu6Q43n+D8J44T2C3Qtyclq
- 9ekne+m0l3E37s5OnNGNRSYmOnC3uExoeEmiyr+EK0pAvfzGzkNDyQCe1aNCsD112PtiwOHUJzs
- ksmrqw0kFUnuILxdMlyDR18DymjbAbq4yg5ArJObfaZ+pJyqfuMMFBtnE5z955KdMOIy3qb8VY5
- kts3etr2+W1g7aPAS2ZpO1lvkAYYdN1SUcvuLsfSfet4zob7QQCpSUskQYLKIEfFMMFcz1k91wD
- QIqVzqYjj
-X-Google-Smtp-Source: AGHT+IG+Bd7a8HzndVSBce7zuzFUK/ybIJed1NXkiMwG0gGzt8Kja/JWbI5OVjG6Ym4cLwgSTKMMKg==
-X-Received: by 2002:a17:902:f60e:b0:223:33cb:335f with SMTP id
- d9443c01a7336-22e8560cf20mr22737035ad.3.1746670520821; 
- Wed, 07 May 2025 19:15:20 -0700 (PDT)
-Received: from hcdev-d520mt.. (60-250-196-139.hinet-ip.hinet.net.
- [60.250.196.139]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e150eae2asm101692795ad.39.2025.05.07.19.15.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 19:15:20 -0700 (PDT)
-From: Tim Lee <timlee660101@gmail.com>
-To: peter.maydell@linaro.org, wuhaotsh@google.com, kfting@nuvoton.com,
- chli30@nuvoton.com
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Tim Lee <timlee660101@gmail.com>
-Subject: [v2] hw/arm/npcm8xx_boards: Add auto zero flash image and device part
- number
-Date: Thu,  8 May 2025 10:15:10 +0800
-Message-Id: <20250508021510.2959328-1-timlee660101@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCrui-00067w-Eo
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 23:27:12 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCrug-0004ja-GX
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 23:27:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746674830; x=1778210830;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=u1cPUNvH+ejgTBykEDHRQ59Zj9LvTxinqbTXaZLsO1w=;
+ b=Y1aEhXbKHN3s+YW6PahtqFCfSuwUe+Matg44fIBf9jp5rSA0CwLGkZeS
+ hC92ADFS/4yjbgYB/81th1XBb7ACrG9OqrLDizbl3exe+9L3ZL1Es4GiA
+ DJxtApdIchKqhPTXcW/k1/CLFGQ2c0binxeUdVR1KnFr9wTN75nXbvian
+ leOCzuhW8ERf4C5E/x7fuIJfC60hNktz+KYYQDl3s8i2CIQlW/4JfAO0F
+ vWq4X1S9PDN2MwX4ITBkwge+cTaNU0zNt8QdWurfz8exNXm0EVhIX8ULJ
+ kr4bKEbBsPV1U1m+puV5XdJIXaHTVDUYOyV/u5nkknM8zQTN4IBK+WFwJ g==;
+X-CSE-ConnectionGUID: G4QBGl/RTA+KsHbYT2i1Tg==
+X-CSE-MsgGUID: fx7ga9gUTHyEkBb5AchTHg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11426"; a="59427205"
+X-IronPort-AV: E=Sophos;i="6.15,271,1739865600"; d="scan'208";a="59427205"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 May 2025 20:27:07 -0700
+X-CSE-ConnectionGUID: 45Q0kRY2TXSTy94qdNzoPw==
+X-CSE-MsgGUID: M2bArtdGQP6YM+Esb+x4HA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,271,1739865600"; d="scan'208";a="141113564"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa004.jf.intel.com with ESMTP; 07 May 2025 20:27:06 -0700
+Date: Thu, 8 May 2025 11:48:07 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH 3/4] target/i386: Wire up MXCSR.DE and FPUS.DE correctly
+Message-ID: <aBwpd8W2A7DBdmKm@intel.com>
+References: <20250213142613.151308-1-peter.maydell@linaro.org>
+ <20250213142613.151308-4-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=timlee660101@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250213142613.151308-4-peter.maydell@linaro.org>
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,77 +84,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix flash device part number to `mx66l1g45g` according image-bmc run on npcm8xx
-evb board (SPIFlash...SF: Detected mx66l1g45g, total 128 MiB)
+On Thu, Feb 13, 2025 at 02:26:12PM +0000, Peter Maydell wrote:
+> Date: Thu, 13 Feb 2025 14:26:12 +0000
+> From: Peter Maydell <peter.maydell@linaro.org>
+> Subject: [PATCH 3/4] target/i386: Wire up MXCSR.DE and FPUS.DE correctly
+> X-Mailer: git-send-email 2.43.0
+> 
+> The x86 DE bit in the FPU and MXCSR status is supposed to be set
+> when an input denormal is consumed. We didn't previously report
+> this from softfloat, so the x86 code either simply didn't set
+> the DE bit or else incorrectly wired it up to denormal_flushed,
+> depending on which register you looked at.
+> 
+> Now we have input_denormal_used we can wire up these DE bits
+> with the semantics they are supposed to have.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/i386/tcg/fpu_helper.c | 11 +++--------
+>  1 file changed, 3 insertions(+), 8 deletions(-)
 
-And add auto zero flash image size to resolve error below after executing
-`./qemu-system-aarch64 -machine npcm845-evb -drive file=image-bmc`
-
-Error message:
-qemu-system-aarch64: mx66l1g45g device '/machine/unattached/device[73]'
-requires 134217728 bytes, mtd0 block backend provides 67108864 bytes
-
-Tested:
-Build passes and runs ./qemu-system-aarch64 -machine npcm845-evb normally
-
-Signed-off-by: Tim Lee <timlee660101@gmail.com>
----
-Changes since v1:
-- Add a statement that checks whether the storage is writable
-
- hw/arm/npcm8xx_boards.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
-
-diff --git a/hw/arm/npcm8xx_boards.c b/hw/arm/npcm8xx_boards.c
-index 3fb8478e72..79295a586c 100644
---- a/hw/arm/npcm8xx_boards.c
-+++ b/hw/arm/npcm8xx_boards.c
-@@ -27,6 +27,7 @@
- #include "qemu/error-report.h"
- #include "qemu/datadir.h"
- #include "qemu/units.h"
-+#include "system/block-backend.h"
- 
- #define NPCM845_EVB_POWER_ON_STRAPS 0x000017ff
- 
-@@ -59,10 +60,26 @@ static void npcm8xx_connect_flash(NPCM7xxFIUState *fiu, int cs_no,
- {
-     DeviceState *flash;
-     qemu_irq flash_cs;
-+    BlockBackend *blk;
-+    BlockDriverState *bs;
-+    uint64_t blk_size, perm, shared_perm;
- 
-     flash = qdev_new(flash_type);
-     if (dinfo) {
-         qdev_prop_set_drive(flash, "drive", blk_by_legacy_dinfo(dinfo));
-+        blk = blk_by_legacy_dinfo(dinfo);
-+        bs = blk_bs(blk);
-+        blk_size = blk_getlength(blk);
-+
-+        if (!bdrv_is_read_only(bs)) {
-+            if (blk_size < fiu->flash_size) {
-+                blk_get_perm(blk, &perm, &shared_perm);
-+                blk_set_perm(blk, BLK_PERM_ALL, BLK_PERM_ALL, &error_abort);
-+                blk_truncate(blk, fiu->flash_size, true, PREALLOC_MODE_OFF,
-+                             BDRV_REQ_ZERO_WRITE, &error_abort);
-+                blk_set_perm(blk, perm, shared_perm, &error_abort);
-+            }
-+        }
-     }
-     qdev_realize_and_unref(flash, BUS(fiu->spi), &error_fatal);
- 
-@@ -194,7 +211,8 @@ static void npcm845_evb_init(MachineState *machine)
-     qdev_realize(DEVICE(soc), NULL, &error_fatal);
- 
-     npcm8xx_load_bootrom(machine, soc);
--    npcm8xx_connect_flash(&soc->fiu[0], 0, "w25q256", drive_get(IF_MTD, 0, 0));
-+    npcm8xx_connect_flash(&soc->fiu[0], 0, "mx66l1g45g",
-+                          drive_get(IF_MTD, 0, 0));
-     npcm845_evb_i2c_init(soc);
-     npcm845_evb_fan_init(NPCM8XX_MACHINE(machine), soc);
-     npcm8xx_load_kernel(machine, soc);
--- 
-2.34.1
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
