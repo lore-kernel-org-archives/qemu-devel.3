@@ -4,100 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A318AC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 11:45:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B2D1C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 11:48:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCzgQ-0006Nq-0y; Thu, 08 May 2025 07:44:58 -0400
+	id 1uCzjp-0007IR-6R; Thu, 08 May 2025 07:48:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uCzgO-0006NR-HJ
- for qemu-devel@nongnu.org; Thu, 08 May 2025 07:44:56 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uCzgL-0006Sp-Ma
- for qemu-devel@nongnu.org; Thu, 08 May 2025 07:44:55 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-22e661313a3so8759715ad.3
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 04:44:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1746704692; x=1747309492;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=y4mN7lAZSTS1MUAScK+xPavY/LezpV88F45AFAl8d08=;
- b=DewpfGT2aHj/g3dlpHBvwl1LAbiIxTzA8Mk9HRFqzLOTeum9sGuOO2MbtvAplZOizr
- z8VSaSD/DrtCjmObIk1aoScWwn+5Yo9Qfy5tIJSxFmJtH99U1coAc7HIFB6nOMcgiAy2
- 7y7szla1OxmqbcvBHIAVlmmBoucrYeYpLrxMuLHpORweFIvZY7xvJ/uV0MOFvpXS8qa4
- 7ugz7q2WpTRGFndqZU767oCd6NePMJvGj2NsTPcVwgqjJvihh2g6psq/YxRKMzP2HEOl
- KnLK0cUcn+09w9kUSDajpp7dG4L8Ujcj+9RXYGWAs2YMXKXs5BEG6Jsan1YinIY1DnWa
- mFzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746704692; x=1747309492;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y4mN7lAZSTS1MUAScK+xPavY/LezpV88F45AFAl8d08=;
- b=kPA3tNBmUHDsD3v8VSEBOS/ZimWftVi7Q49enC7e59mrTqRVsiHyn398JVQgpbt2hE
- i5NgNqMPolzay0yXKRj9yn5oPHRGznZEIQLp/fldA282REFWRdK3uRE6e5f583vj+XNc
- 0jQEOsONIyqqzASC2a1E+Cu1cCoEMCauuCAO3/wTDMhDTpyZXgST0EDND0U9jmzuwvdI
- WIxeXRQgbDGojMffwZef91cnth6aPyCZyyMAJnAny6mEo1KA4Y3wSY4Nopagu0iIBylX
- h4wFti641zGgQKWg17/XyJFqEyww4/o3HjfoJocZBOoVXXF71GgthxM4hMYO3rp+iB/T
- z1Vg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVjaet3QZYpXtO2dNHsXQXqcEeihIgIrD/BabzUdqWajThUy/H3fcN+3BEj4mKkpQNJB07dnxkLKEA5@nongnu.org
-X-Gm-Message-State: AOJu0YxbmM7GA2wPOQ0RisTFC3CKGdrdAu9Qn6fyp1vDH0Z9eXef8/ZY
- aPGC0Wy4BSNsu5apk5lMcufQhnTNfa7F5AYKtbqnzed9knXNEZI+uw9hh3wI6U4=
-X-Gm-Gg: ASbGnctV2sR19tQStCaDMSEJtUwk7sHJZBwKDUvzAqUVlnGKmKD8zclMXy1oyf3tQCi
- 7NH7yVbTDrpIbyM6Wdo5qpZtCkw+21lCcGYyI1jkWcY1zk/4S3Wxr6pfvyRELuTmS7X8Nthje8c
- E5i4PEoTZL0EjJZ6Q9cEqigz7RWFXdeOnpaUk6oa+wR3k9VlBBZhQEFi0cXb7MCxPuZ99wVI3yA
- ShBRE4cqVKraIGe///9x3EyTpV2J/8YQgudazVyaMcaS71wTavb5sxIYLI7SNone1ScXbEeZfSk
- qAITbBXHxwKcgEg7Mp6+GAqZqRxiuEHTysaQ2kgCjUt6drrjVmc=
-X-Google-Smtp-Source: AGHT+IFnw/m9PRjlh4N4SXn3THy7SpJiEbWIMiOoRDJTVi5CQcdIexmcz36u0NBm6QxcbpgvSSFZbQ==
-X-Received: by 2002:a17:903:fa4:b0:22d:e57a:2795 with SMTP id
- d9443c01a7336-22e5edea81bmr106096045ad.47.1746704691787; 
- Thu, 08 May 2025 04:44:51 -0700 (PDT)
-Received: from [10.100.116.185] ([157.82.128.1])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e188285f8sm100724905ad.46.2025.05.08.04.44.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 May 2025 04:44:51 -0700 (PDT)
-Message-ID: <00c07484-4882-4ad2-97cb-b0ec250f8b5b@daynix.com>
-Date: Thu, 8 May 2025 20:44:47 +0900
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCzjn-0007II-57
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 07:48:27 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uCzjl-0006tX-7u
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 07:48:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746704905; x=1778240905;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=1uyG16FIdzJvVtC7hjq7yIsugtDMo+Kie/Zj81E2f+o=;
+ b=NQE5ftqmCXkSm+jk8RPsIxEX4TSNlqhvVY4MiIlNedzCRAgg2dMwv3ki
+ iwQtnIuzUjfaQyvNOVWFAJ82m88I9H5k/quNvZOwB6fUzHvB9j5KuoQ1e
+ Q+lRosK0B6Y/lgmCOZ00dQ5Dfi/aSwZpYE01/SflNsfCft8okCb1T4deL
+ W2dr1WEL5nPWJ+W0EeCrY5a1MmgnkSBFE3kiVLDH2V+nyee8M1xMEaCId
+ mtpU1Cu9pty12JtvYqJiix6C2MOP9MwPpy7z1ZJQlp21gQtWPe/EF0GRR
+ J5zQIBQGPj5/OBWqeKBQBRBDBOwADaeNgyvB7BMsg5uOhikw7tC+F46hK A==;
+X-CSE-ConnectionGUID: YuAnA2RhTrKA72+iIzSn5Q==
+X-CSE-MsgGUID: oOMsr1DmSGmI4vkkyf0wTA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11426"; a="66014855"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="66014855"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 May 2025 04:48:05 -0700
+X-CSE-ConnectionGUID: eRixBp4XTQ6mft2czjJcfA==
+X-CSE-MsgGUID: 41jMWdpNQNK1SdyI89EKmg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="137260064"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa009.fm.intel.com with ESMTP; 08 May 2025 04:48:00 -0700
+Date: Thu, 8 May 2025 20:09:02 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Amit Shah <amit@kernel.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: Re: [PATCH v3 12/19] hw/i386/pc: Remove pc_compat_2_7[] array
+Message-ID: <aBye3pzw6LLJ1rgt@intel.com>
+References: <20250502185652.67370-1-philmd@linaro.org>
+ <20250502185652.67370-13-philmd@linaro.org>
+ <2e2f4b39-d7f1-4817-947f-106558c1621c@redhat.com>
+ <1bd065b9-32ff-46d9-8131-b06e75017243@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/9] virtio-gpu: fix hang under TCG when unmapping blob
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-stable@nongnu.org
-References: <20250428125918.449346-1-alex.bennee@linaro.org>
- <20250428125918.449346-9-alex.bennee@linaro.org>
- <8b123991-21f2-47b5-851d-6b53fbfaa691@collabora.com>
- <8994da6c-a369-40c7-b1c6-433519ba90a5@daynix.com>
- <874ixyoxnx.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <874ixyoxnx.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+In-Reply-To: <1bd065b9-32ff-46d9-8131-b06e75017243@linaro.org>
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,129 +98,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/05/06 19:12, Alex BennÃ©e wrote:
-> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+On Thu, May 08, 2025 at 12:40:35PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Thu, 8 May 2025 12:40:35 +0200
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: Re: [PATCH v3 12/19] hw/i386/pc: Remove pc_compat_2_7[] array
 > 
->> On 2025/04/30 3:48, Dmitry Osipenko wrote:
->>> On 4/28/25 15:59, Alex BennÃƒÂ©e wrote:
->>>> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->>>>
->>>> This commit fixes an indefinite hang when using VIRTIO GPU blob objects
->>>> under TCG in certain conditions.
->>>>
->>>> The VIRTIO_GPU_CMD_RESOURCE_MAP_BLOB VIRTIO command creates a
->>>> MemoryRegion and attaches it to an offset on a PCI BAR of the
->>>> VirtIOGPUdevice. The VIRTIO_GPU_CMD_RESOURCE_UNMAP_BLOB command unmaps
->>>> it.
->>>>
->>>> Because virglrenderer commands are not thread-safe they are only
->>>> called on the main context and QEMU performs the cleanup in three steps
->>>> to prevent a use-after-free scenario where the guest can access the
->>>> region after itâ€™s unmapped:
->>>>
->>>> 1. From the main context, the regionâ€™s field finish_unmapping is false
->>>>      by default, so it sets a variable cmd_suspended, increases the
->>>>      renderer_blocked variable, deletes the blob subregion, and unparents
->>>>      the blob subregion causing its reference count to decrement.
->>>>
->>>> 2. From an RCU context, the MemoryView gets freed, the FlatView gets
->>>>      recalculated, the free callback of the blob region
->>>>      virtio_gpu_virgl_hostmem_region_free is called which sets the
->>>>      regionâ€™s field finish_unmapping to true, allowing the main thread
->>>>      context to finish replying to the command
->>>>
->>>> 3. From the main context, the command is processed again, but this time
->>>>      finish_unmapping is true, so virgl_renderer_resource_unmap can be
->>>>      called and a response is sent to the guest.
->>>>
->>>> It happens so that under TCG, if the guest has no timers configured (and
->>>> thus no interrupt will cause the CPU to exit), the RCU thread does not
->>>> have enough time to grab the locks and recalculate the FlatView.
->>>>
->>>> Thatâ€™s not a big problem in practice since most guests will assume a
->>>> response will happen later in time and go on to do different things,
->>>> potentially triggering interrupts and allowing the RCU context to run.
->>>> If the guest waits for the unmap command to complete though, it blocks
->>>> indefinitely. Attaching to the QEMU monitor and force quitting the guest
->>>> allows the cleanup to continue.
->>
->> The RCU thread should be free to kick in if the guest is waiting and
->> idle. That may be a problem that should be analyzed and fixed.
->>
->>>>
->>>> There's no reason why the FlatView recalculation can't occur right away
->>>> when we delete the blob subregion, however. It does not, because when we
->>>> create the subregion we set the object as its own parent:
->>>>
->>>>       memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
->>>>
->>>> The extra reference is what prevents freeing the memory region object in
->>>> the memory transaction of deleting the subregion.
->>>>
->>>> This commit changes the owner object to the device, which removes the
->>>> extra owner reference in the memory region and causes the MR to be
->>>> freed right away in the main context.
->>>>
->>>> Acked-by: Michael S. Tsirkin <mst@redhat.com>
->>>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->>>> Reviewed-by: Alex BennÃ©e <alex.bennee@linaro.org>
->>>> Tested-by: Alex BennÃ©e <alex.bennee@linaro.org>
->>>> Message-Id: <20250410122643.1747913-3-manos.pitsidianakis@linaro.org>
->>>> Cc: qemu-stable@nongnu.org
->>>> ---
->>>>    hw/display/virtio-gpu-virgl.c | 2 +-
->>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
->>>> index 71a7500de9..8fbe4e70cc 100644
->>>> --- a/hw/display/virtio-gpu-virgl.c
->>>> +++ b/hw/display/virtio-gpu-virgl.c
->>>> @@ -112,7 +112,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
->>>>        vmr->g = g;
->>>>        mr = g_new0(MemoryRegion, 1);
->>>>    -    memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size,
->>>> data);
->>>> +    memory_region_init_ram_ptr(mr, OBJECT(g), "blob", size, data);
->>>>        memory_region_add_subregion(&b->hostmem, offset, mr);
->>>>        memory_region_set_enabled(mr, true);
->>>>    
->>> This change makes QEMU to crash.
->>> AFAICT, it effectively reverts code to old bugged version [1] that
->>> was
->>> rejected in the past.
->>> +Akihiko Odaki
->>> [1]
->>> https://lore.kernel.org/qemu-devel/20230915111130.24064-10-ray.huang@amd.com/
->>
->> I think you are right.
->>
->> Changing the owner indeed makes the MR to be freed right away, but
->> this is because it makes a reference by the FlatView to the MR
->> dangling and can lead to use-after-free.
->>
->> Setting the owner to the device implies that the device keeps the
->> storage of the MR and. The references to the MR must be counted by the
->> device to keep the storage available in such a case.
+> Hi Thomas,
 > 
-> Well the lifetime of the region is effectively controlled by the virgl
-> resource manager. There is a disconnect between when we can finally free
-> the MR and when the virglrenderer is done with it.
+> On 8/5/25 09:55, Thomas Huth wrote:
+> > On 02/05/2025 20.56, Philippe Mathieu-Daudé wrote:
+> > > The pc_compat_2_7[] array was only used by the pc-q35-2.7
+> > > and pc-i440fx-2.7 machines, which got removed. Remove it.
+> > > 
+> > > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > > Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> > > ---
+> > >   include/hw/i386/pc.h |  3 ---
+> > >   hw/i386/pc.c         | 10 ----------
+> > >   2 files changed, 13 deletions(-)
+> > > 
+> > > diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> > > index 4fb2033bc54..319ec82f709 100644
+> > > --- a/include/hw/i386/pc.h
+> > > +++ b/include/hw/i386/pc.h
+> > > @@ -289,9 +289,6 @@ extern const size_t pc_compat_2_9_len;
+> > >   extern GlobalProperty pc_compat_2_8[];
+> > >   extern const size_t pc_compat_2_8_len;
+> > > -extern GlobalProperty pc_compat_2_7[];
+> > > -extern const size_t pc_compat_2_7_len;
+> > > -
+> > >   #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+> > >       static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
+> > >                                                    const void *data) \
+> > > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> > > index 7573b880905..ee7095c89a8 100644
+> > > --- a/hw/i386/pc.c
+> > > +++ b/hw/i386/pc.c
+> > > @@ -241,16 +241,6 @@ GlobalProperty pc_compat_2_8[] = {
+> > >   };
+> > >   const size_t pc_compat_2_8_len = G_N_ELEMENTS(pc_compat_2_8);
+> > > -GlobalProperty pc_compat_2_7[] = {
+> > > -    { TYPE_X86_CPU, "l3-cache", "off" },
+> > > -    { TYPE_X86_CPU, "full-cpuid-auto-level", "off" },
+> > > -    { "Opteron_G3" "-" TYPE_X86_CPU, "family", "15" },
+> > > -    { "Opteron_G3" "-" TYPE_X86_CPU, "model", "6" },
+> > > -    { "Opteron_G3" "-" TYPE_X86_CPU, "stepping", "1" },
+> > > -    { "isa-pcspk", "migrate", "off" },
+> > > -};
+> > > -const size_t pc_compat_2_7_len = G_N_ELEMENTS(pc_compat_2_7);
+> > 
+> > I'd really appreciate if you could provide clean-up patches for
+> > TYPE_X86_CPU, too. Otherwise I'm pretty sure we'll forget that there is
+> > some clean up possibility here.
 > 
->> The MR itself doesn't count the references. It is fine as long as the
->> MR is kept alive by being parented by the device, but
->> virtio_gpu_virgl_unmap_resource_blob() unparents the MR and breaks the
->> assumption. That's why the device shouldn't be the the owner of the
->> MR.
-> 
-> Then who should? Ultimately some object needs to "own" the MR until we
-> know it can be freed (so no longer mapped into the guest and no longer
-> referenced by virglrenderer). The normal MR refcounting isn't enough
-> because the lifetime extends beyond when it is "visible" in the FlatView.
+> Well TBH it is too exhausting to keep rebasing these patches without
+> feedback from maintainers. I'll respin a v4 with Zhao and your comments
+> addressed but without touching the TYPE_X86_CPU properties. If
+> maintainers prefer to remove dead code in one go -- something I
+> certainly understand from a maintainer PoV -- I'll let someone else
+> do it, taking over my series.
 
-The current code makes the MR "own" itself. This works because the 
-references are kept counted by the MR's own reference counter just like 
-a normal Object.
+Hi Philippe, I think I could volunteer help you to revisit the history
+of these properties (they're also too old for me :-)), and help identify
+if these properties should be removed or at least list the potential
+issues. Hopefully I can do this.
 
-Regards,
-Akihiko Odaki
+Thanks,
+Zhao
+
 
