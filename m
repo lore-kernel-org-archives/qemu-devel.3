@@ -4,86 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83004C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:41:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC9B8C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:51:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD3Mk-00029s-Tq; Thu, 08 May 2025 11:40:54 -0400
+	id 1uD3Wq-0004Ai-Ha; Thu, 08 May 2025 11:51:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uD3Mi-00027L-Jm
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:40:53 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uD3Wo-0004AI-CJ
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:51:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uD3Mg-0003jH-Of
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:40:52 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uD3Wk-0004hV-FK
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:51:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746718849;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1746719472;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GwA504YPBGLxJMAq0kJ7g4FAfYLGpGM0xwJHbVHNdL8=;
- b=FGbfO+bo+M1j09QxKf26KK2imyXlHMt1n5A+fOO2Vkz4+/wQzWpcFH6aRZXW8AWKQ5Ts1p
- T9r4OaDhYpL+7tQ05/yt0L61UYhDd07/TgjeHvXZS+wp0JB2fQpy/jOLwUywBQlsejsAYd
- 6k5dWzK/IxH01DL52tC4zxfPd2fEdJQ=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-60-YONxHUPsMQqgFdaF2Cq-AQ-1; Thu, 08 May 2025 11:40:43 -0400
-X-MC-Unique: YONxHUPsMQqgFdaF2Cq-AQ-1
-X-Mimecast-MFC-AGG-ID: YONxHUPsMQqgFdaF2Cq-AQ_1746718843
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7c5e2a31f75so348750385a.1
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 08:40:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746718842; x=1747323642;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GwA504YPBGLxJMAq0kJ7g4FAfYLGpGM0xwJHbVHNdL8=;
- b=jra74ymDJpiO8AjhdIuhAL6gEdvq66VhfnfCA9XN5wWwJ/zRjtmqrHrOiVJNSigQ4I
- rf0KRklInkT8C5eOfK2ET6wYgbD7xZ7X0JgFRF1q2+WthR6sgBuvwmpQi9F3ruk15u8q
- P6az+F5dlxe7agbANT9BEN5TF30V1DkatQD1hqH/xcoxxuIUD41HeQ9tI8gzMD1l4ts5
- ciSHWcugL81Tihpesprg5V+/BqzGtOoD5IYp1ccO7xj58/+ie9emdB2rKrSxglUQeron
- lWTcx7eIZGRsjRROUz5V3OeOE/R8wtn36uIasn7p9UO1mI7DNSm/79TgM+69aYG//HtY
- 17nw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVuQavUZeZOYMlN8mVoXsVyu/reARWxxPeKkMh28NLcOWJXqKn94nPQQLvo+7FiyHw0uF4ZsQOp8fhH@nongnu.org
-X-Gm-Message-State: AOJu0YwnSOx3hDnE+NUDqxW47FN7rtk/8eVX6XHfbSO1oX+MVIBZZgxv
- xss7iFUgiJwsiQv/3lmZhe5O9R244t0nQxoyeQqvjgCSg34XK6Du96Xjh9SakPV44nWIfp2iZ+I
- 2rv8wyi84x1VAb98ACQXTeVB7Sprr9V9wdiYpL2mof1NIg/1BHva7GbboG0+B
-X-Gm-Gg: ASbGnct2fySK2/G2rW32M52CZCbULq/SWA7k5z7epc5hsGJVt5D14NM3bjnht57Ym04
- ESSpeb7UUxnAmed73nIjgXH1E8wQsNtW/CUBeVWqqJVKNgkPyPzba9sh86Pp6MOod9+CbpDWsYM
- Mrv8Rgr1EqpVVHxbTvdzU3qMVuIDh2ZVBy+VuqLuHl3Fn/21IDhaEveTNqHJR1kJ9H4yVMwk6jd
- oHONyU58A8a0kXCrHXnlwK0umlCT3hOiGGm/0aWWwMm1dJRbq/RxFlP2Pm2obAwwFlXSiAWtyof
- gUM=
-X-Received: by 2002:a05:6214:f03:b0:6f2:d45c:4a25 with SMTP id
- 6a1803df08f44-6f542adfa97mr110959096d6.41.1746718832016; 
- Thu, 08 May 2025 08:40:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrk1CBlTFat73f5dmbbYIAugRjw6ebZYbo0uKTVH0q609aXt2S+dN88S3Fc/eqX9JgWF7TPA==
-X-Received: by 2002:a05:620a:2552:b0:7c7:a591:4f9b with SMTP id
- af79cd13be357-7cd011069bemr15681985a.28.1746718821404; 
- Thu, 08 May 2025 08:40:21 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cd00f64c67sm6759285a.33.2025.05.08.08.40.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 May 2025 08:40:21 -0700 (PDT)
-Date: Thu, 8 May 2025 11:40:18 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Prasad Pandit <ppandit@redhat.com>, qemu-devel@nongnu.org,
- berrange@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
-Subject: Re: [PATCH v10 3/3] migration: write zero pages when postcopy enabled
-Message-ID: <aBzQYslYtUZgXjgO@x1.local>
-References: <20250508122849.207213-1-ppandit@redhat.com>
- <20250508122849.207213-4-ppandit@redhat.com>
- <87ecwzfbnk.fsf@suse.de>
+ bh=eLbqO2QHhyIzTM9jdAkYzAdp9jCpj1hHf89BSXzft/E=;
+ b=JrNUSED4KG2xjFc8AlYfZ7eIko+gIzdqn6FyZmsMWOUQYs/JyLU1lct13/lcfB6RIG8MIG
+ YuryVKihgzdfoQ6S09WcubkeER9q7fl9B65bV8tTvf2t9oM3sLsOhYs1kLKrQDBEwFqzS0
+ IBVu8y8KlwX4oVQ4EzcawRbBKzGWeek=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-318-H4MXQHguPJ2kHh5Q-c7lag-1; Thu,
+ 08 May 2025 11:51:08 -0400
+X-MC-Unique: H4MXQHguPJ2kHh5Q-c7lag-1
+X-Mimecast-MFC-AGG-ID: H4MXQHguPJ2kHh5Q-c7lag_1746719466
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B203318009B6; Thu,  8 May 2025 15:51:05 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.138])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79EFB195605C; Thu,  8 May 2025 15:51:01 +0000 (UTC)
+Date: Thu, 8 May 2025 16:50:57 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Rick Edgecombe <rick.p.edgecombe@intel.com>
+Subject: Re: [PATCH v9 12/55] i386/tdx: Validate TD attributes
+Message-ID: <aBzS4WVfrQNMMTXQ@redhat.com>
+References: <20250508150002.689633-1-xiaoyao.li@intel.com>
+ <20250508150002.689633-13-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87ecwzfbnk.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250508150002.689633-13-xiaoyao.li@intel.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -105,126 +91,30 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 08, 2025 at 10:57:19AM -0300, Fabiano Rosas wrote:
-> Prasad Pandit <ppandit@redhat.com> writes:
+On Thu, May 08, 2025 at 10:59:18AM -0400, Xiaoyao Li wrote:
+> Validate TD attributes with tdx_caps that only supported bits are
+> allowed by KVM.
 > 
-> > From: Prasad Pandit <pjp@fedoraproject.org>
-> >
-> > During multifd migration, zero pages are are written if
-> > they are migrated more than ones.
+> Besides, sanity check the attribute bits that have not been supported by
+> QEMU yet. e.g., debug bit, it will be allowed in the future when debug
+> TD support lands in QEMU.
 > 
-> s/ones/once/
-> 
-> >
-> > This may result in a migration hang issue when Multifd
-> > and Postcopy are enabled together.
-> >
-> > When Postcopy is enabled, always write zero pages as and
-> > when they are migrated.
-> >
-> > Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
-> 
-> This patch should come before 1/3, otherwise it'll break bisect.
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-We could squash the two together, IMHO.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-> 
-> > ---
-> >  migration/multifd-zero-page.c | 22 ++++++++++++++++++++--
-> >  1 file changed, 20 insertions(+), 2 deletions(-)
-> >
-> > v10: new patch, not present in v9 or earlier versions.
-> >
-> > diff --git a/migration/multifd-zero-page.c b/migration/multifd-zero-page.c
-> > index dbc1184921..9bfb3ef803 100644
-> > --- a/migration/multifd-zero-page.c
-> > +++ b/migration/multifd-zero-page.c
-> > @@ -85,9 +85,27 @@ void multifd_recv_zero_page_process(MultiFDRecvParams *p)
-> >  {
-> >      for (int i = 0; i < p->zero_num; i++) {
-> >          void *page = p->host + p->zero[i];
-> > -        if (ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
-> > +
-> > +        /*
-> > +         * During multifd migration zero page is written to the memory
-> > +         * only if it is migrated more than ones.
-> 
-> s/ones/once/
-> 
-> > +         *
-> > +         * It becomes a problem when both Multifd & Postcopy options are
-> > +         * enabled. If the zero page which was skipped during multifd phase,
-> > +         * is accessed during the Postcopy phase of the migration, a page
-> > +         * fault occurs. But this page fault is not served because the
-> > +         * 'receivedmap' says the zero page is already received. Thus the
-> > +         * migration hangs.
 
-More accurate version could be: "the thread accessing the page may hang".
-As discussed previously, in most cases IIUC it won't hang migration when
-accessed in vcpu contexts, and will move again when all pages migrated
-(triggers uffd unregistrations).
-
-> > +         *
-> > +         * When Postcopy is enabled, always write the zero page as and when
-> > +         * it is migrated.
-> > +         *
-> 
-> extra blank line here^
-> 
-> > +         */
-> 
-> nit: Inconsistent use of capitalization for the feature names. I'd keep
-> it all lowercase.
-> 
-> > +        if (migrate_postcopy_ram() ||
-> > +            ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
-> >              memset(page, 0, multifd_ram_page_size());
-> > -        } else {
-> > +        }
-> > +        if (!ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i])) {
-> >              ramblock_recv_bitmap_set_offset(p->block, p->zero[i]);
-> >          }
-
-Nitpick below: we could avoid checking the bitmap twice, and maybe move it
-a bit is easier to read.
-
-Meanwhile when at it.. for postcopy if we want we don't need to set all
-zeros.. just fault it in either using one inst.  Summary:
-
-void multifd_recv_zero_page_process(MultiFDRecvParams *p)
-{
-    bool received;
-
-    for (int i = 0; i < p->zero_num; i++) {
-        void *page = p->host + p->zero[i];
-
-        received = ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i]);
-        if (!received) {
-            ramblock_recv_bitmap_set_offset(p->block, p->zero[i]);
-        }
-
-        if (received) {
-            /* If it has an older version, we must clear the whole page */
-            memset(page, 0, multifd_ram_page_size());
-        } else if (migrate_postcopy_ram()) {
-            /*
-             * If postcopy is enabled, we must fault in the page because
-             * XXX (please fill in..).  Here we don't necessarily need to
-             * zero the whole page because we know it must be pre-filled
-             * with zeros anyway.
-             */
-            *(uint8_t *)page = 0;
-        }
-    }
-}
-
-We could also use MADV_POPULATE_WRITE but not sure which one is faster, and
-this might still be easier to follow anyway..
-
+With regards,
+Daniel
 -- 
-Peter Xu
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
