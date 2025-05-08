@@ -4,86 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6958CC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 09:49:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40418C3ABC5
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 09:51:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCxs8-0000Bz-AU; Thu, 08 May 2025 05:48:56 -0400
+	id 1uCxu2-00016m-W1; Thu, 08 May 2025 05:50:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1uCxs6-0000B5-5b
- for qemu-devel@nongnu.org; Thu, 08 May 2025 05:48:54 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1uCxs4-0000YW-EV
- for qemu-devel@nongnu.org; Thu, 08 May 2025 05:48:53 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-30ac5cc0df4so1089166a91.2
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 02:48:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1746697730; x=1747302530; darn=nongnu.org;
- h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HPZEa3YzDTFrkeSvop+B/Cvd4GOwtfD9tuIAMpr1/ys=;
- b=PbQ3O5Q4UXcTDWQAZ+7u6h3ofvaHbvmKSxN/IUV3FEhoMRtHjiFx0VZScjE7b9NiBT
- VUVRIAHN0Niv9CUlR1GfEN4bAnc+G0JRnvXz5AAUJLQuSuCWr+j60zK/z0/05sN4dWGZ
- RlO5XhWajp6AKz3T/wpWJFRcW3HOfP2+vkR35hpbJ2ejiKGXEB8EUifVRy6rRir85kT7
- W5wJeRNjTs+SCsdyh9i+oywQJOltF+jFAHqdOY2BSUbrz8uBBEAaoNKJsIuw6pglbDbd
- hmv7bN0tvZlwzS4XWuh0Jlk8lDIyw/9AND53SIamgCMU9MSTQTS/lLP6mxfLE7Y2PPsQ
- PYhg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uCxu1-00016S-KY
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 05:50:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uCxu0-0000rc-2D
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 05:50:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746697850;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=li4m/JDAIzf4ljpLeQSBOMq1oMxYHdkOV5a9yMTKehU=;
+ b=d1KmFvkG424Je3wDwDVaLWHwvmvpy7Uws44H+r96Paf5Y1E1ZBC3CIlcghUQlJ9h2aXfWO
+ lSwf5+9BjFDhaQo5nsgoTxKBAk4NZ/0CNYFm6zycbN9yusA3JKD/sEmTOhHbbr4LpZFEsp
+ YZX2Ewd8Ko3ZgMbwtK/ImcutnLv2+i8=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-284-K8JXjX80Mmai58ltAot8Hg-1; Thu, 08 May 2025 05:50:48 -0400
+X-MC-Unique: K8JXjX80Mmai58ltAot8Hg-1
+X-Mimecast-MFC-AGG-ID: K8JXjX80Mmai58ltAot8Hg_1746697848
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-44059976a1fso2968175e9.1
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 02:50:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746697730; x=1747302530;
- h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HPZEa3YzDTFrkeSvop+B/Cvd4GOwtfD9tuIAMpr1/ys=;
- b=IdjXPk/e0q0a2bs6MAIJMVOSciacjxa1ZU7AjCNopuRuzw5ZUC2aE+f8TEkb2QlmyU
- djj6h2SEaJqOhpioupHfWG/xJIXWlilg/MoE36p40Zw/a8IGzG8kfp//eyc/Eqa+naEu
- 4J07IZqH30Q/dBc2y9cG4k/MW/3YxDAl5wdhcWkdWAWW9JABoEm7UVF4oRG+EwkOUnio
- 6udfmUfIb6cUrCHlyE1dkklLcyEJkeCdL3ubwQ3oeRhHWb+FEM+fdRoKRGzerM8TjyUv
- oG5e5ievXyu0PZKlk/TBshGzWcBMmrecALn5P7F/eYUFEUwBdCP0W23IuLXTeErs19KB
- ecIg==
-X-Gm-Message-State: AOJu0YzTPZSF/TsJpXSmi4CfEskaU8PFWHNLwWHXKzuN6wQIJUQcUzI1
- epegZw+IoD7JYNyD+ZYVWosUUsiSx7zmrCd0X2LGu6W65aQfEInWWZx+SE/p5Sf4G90Jd1JCRRp
- g2WeiQUoYU4lbZw8BApjGzMt2cV1jTxbEoqaLZm9KRFOEfoKmfXhUgFF7SHJwEOYNqWJsyl6LhA
- l5i1chltDuhfJvNjnSBLD6KQAEyjB/F83euw==
-X-Gm-Gg: ASbGnctW93qQ3hLBS98h2oG80P48Y4Jnv+qMCkMgQbfJJv30YqzwD2FWljJ+E5nc0za
- Pj9Qsul3eF2/RweZXXYbqWF9zzihFMLhnMo10huosdDdiJb4IMpEEhpBUQwHgaH7rIIVN5ZGu0s
- OXvEVJ4IQMoS4iRFi3P7HlaEG3ZEMnLwpipjh4Gt8pgzT4tLwe/njJiTGkJHQzVv5oUpXMkt4xu
- m0kMrqmYKDBhepcLmrJnkHbdvdBf1klNdC6CQZf1VKNpLNnuAgXxEE+/wqr1PwmI6xQ0ogYi9m6
- ubj3BklCaV4CNJQsPZ61WI0BUprOA2RlGpqinA4S7FlAi1utnupznsHvD9YoZHQ=
-X-Google-Smtp-Source: AGHT+IEL5cv2g4mPZjisZ7tTok6cMB4BxU5V9aGj/fIibPpAhPLaHRqmMDDU9Z9Ll/+FOagFPQwHlQ==
-X-Received: by 2002:a17:90a:da87:b0:2ff:72f8:3708 with SMTP id
- 98e67ed59e1d1-30aac1adc25mr11354915a91.17.1746697730103; 
- Thu, 08 May 2025 02:48:50 -0700 (PDT)
-Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
+ d=1e100.net; s=20230601; t=1746697847; x=1747302647;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=li4m/JDAIzf4ljpLeQSBOMq1oMxYHdkOV5a9yMTKehU=;
+ b=SAwhra4ejcpuWpW+TOXa8OkjsW3eX6WQJeUZ5BzyX0xoQ4hv00oIx5tEt0scstJMZm
+ XAoltTxIMmtCkWOmu3kyOMI8S8YDVk/8pl32J6WYFfndDZrTJ6yWVHOj96N/m7CLgRry
+ Xwyw3ZXrfDZS/lKuaGlILNVjpjR6SU/VvDyTTiWHSwcX3M/hKU88myW96DPt7MtYkRD9
+ mTqp+DolTLNvqcTjvUcoO8FcIycfrhVFoowHqdgKI/Ju264snibSCfXKBlkig3Io3kEy
+ cYUeN7HoEZ2FUD8COKx5wK3IJPIo/teGJaHb4Ea2oN5umb8Ho1aYXxV9+AAzZvO7Rb5S
+ ZaUA==
+X-Gm-Message-State: AOJu0YzsBa/yrPwj2iwTeFMitd1UQdOQife+H3e1AeHGXPyO4Q/xcEXl
+ 3lIaQg1ZQH3NbKWQK/DDnpOQqhtDy3Un0QXdgefF4aQdwYJ5Nd6MlxfnIbUa/Mo0ghaKQwiBTl7
+ ktYsshSpfkexFb9fmoH699uDWJuw6mk56S06cbaj8wxDW7lTrS5XHqf1V9bbomGbxivP6PNHORa
+ 1JLSnBenZWIcrwvmFr47BZyVqOSvKls8vbekkK
+X-Gm-Gg: ASbGncuPmki0bgVBt6uWjz3ZBMBSjjnlIo05a8nbiXXqY87B+W6MnzNLkxrNKXYJ1qN
+ z83nV8X9RJOJhFSRqsDD9qOtQwtMzhh5m0PomKdRpYicQ7sGJWz2sW2Ze1G5Y0hmWOX2W22nYb/
+ qxg1rmRX+qNWr/6O8LwjKJMZtdAOVm9TglwN5MEvDT/cNl4UoHQRo+LSgWGxF8i0C8xE3Sb1n94
+ TIwlVkFsVjL53IpIgfFvt8Q+m2B7YVpdJvldfcwd22yzR1OBqf1kv+jtN4lOC7xS0GceYz0t1Rd
+ duKUlw/k5u6a20c=
+X-Received: by 2002:a5d:64ac:0:b0:3a0:880a:144f with SMTP id
+ ffacd0b85a97d-3a0b4a0280cmr5155008f8f.6.1746697847132; 
+ Thu, 08 May 2025 02:50:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFcLqH5OYD+XOAypUYKt26pjJgtkGZTfilpGiALDnCO3gQvyrm5HJDEokslaGPNrF2/Q+wn8Q==
+X-Received: by 2002:a5d:64ac:0:b0:3a0:880a:144f with SMTP id
+ ffacd0b85a97d-3a0b4a0280cmr5154988f8f.6.1746697846691; 
+ Thu, 08 May 2025 02:50:46 -0700 (PDT)
+Received: from [192.168.122.1] ([151.95.54.106])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30ad4fe1f47sm1730688a91.38.2025.05.08.02.48.48
+ ffacd0b85a97d-3a099b1726bsm20002456f8f.94.2025.05.08.02.50.46
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 May 2025 02:48:49 -0700 (PDT)
-From: Jim Shu <jim.shu@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH v2] target/riscv: support atomic instruction fetch (Ziccif)
-Date: Thu,  8 May 2025 17:48:38 +0800
-Message-Id: <20250508094838.19394-1-jim.shu@sifive.com>
-X-Mailer: git-send-email 2.17.1
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=jim.shu@sifive.com; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ Thu, 08 May 2025 02:50:46 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH] meson: do not check supported TCG architecture if no
+ emulators built
+Date: Thu,  8 May 2025 11:50:44 +0200
+Message-ID: <20250508095044.468069-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.49.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,114 +105,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Support 4-byte atomic instruction fetch when instruction is natural
-aligned.
+Errors about TCI are pointless if only tools are being built; suppress
+them even if the user did not specify --disable-tcg.
 
-Current implementation is not atomic because it loads instruction twice
-for first and last 2 bytes. We load 4 bytes at once to keep the
-atomicity. This instruction preload method only applys when instruction
-is 4-byte aligned. If instruction is unaligned, it could be across pages
-so that preload will trigger additional page fault.
-
-We encounter this issue when doing pressure test of enabling & disabling
-Linux kernel ftrace. Ftrace with kernel preemption requires concurrent
-modification and execution of instruction, so non-atomic instruction
-fetch will cause the race condition. We may fetch the wrong instruction
-which is the mixing of 2 instructions.
-
-Also, RISC-V Profile wants to provide this feature by HW. RVA20U64
-Ziccif protects the atomicity of instruction fetch when it is
-natural aligned.
-
-This commit depends on the atomic read support of translator_ld in
-the commit 6a9dfe1984b0c593fb0ddb52d4e70832e6201dd6.
-
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/riscv/translate.c | 46 +++++++++++++++++++++++++++++-----------
- 1 file changed, 34 insertions(+), 12 deletions(-)
+ meson.build | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 85128f997b..77edf04803 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1222,13 +1222,35 @@ const RISCVDecoder decoder_table[] = {
+diff --git a/meson.build b/meson.build
+index 6923f94b856..bfddcc07dfd 100644
+--- a/meson.build
++++ b/meson.build
+@@ -247,6 +247,8 @@ have_vhost_net_vdpa = have_vhost_vdpa and get_option('vhost_net').allowed()
+ have_vhost_net_kernel = have_vhost_kernel and get_option('vhost_net').allowed()
+ have_vhost_net = have_vhost_net_kernel or have_vhost_net_user or have_vhost_net_vdpa
  
- const size_t decoder_table_size = ARRAY_SIZE(decoder_table);
- 
--static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
-+static void decode_opc(CPURISCVState *env, DisasContext *ctx)
- {
-+    uint32_t opcode;
-+    bool pc_is_4byte_align = ((ctx->base.pc_next % 4) == 0);
++have_tcg = get_option('tcg').allowed() and (have_system or have_user)
 +
-     ctx->virt_inst_excp = false;
--    ctx->cur_insn_len = insn_len(opcode);
-+    if (pc_is_4byte_align) {
-+        /*
-+         * Load 4 bytes at once to make instruction fetch atomically.
-+         *
-+         * Note: When pc is 4-byte aligned, 4-byte instruction wouldn't be
-+         * across pages. We could preload 4 bytes instruction no matter
-+         * real one is 2 or 4 bytes. Instruction preload wouldn't trigger
-+         * additional page fault.
-+         */
-+        opcode = translator_ldl(env, &ctx->base, ctx->base.pc_next);
-+    } else {
-+        /*
-+         * For unaligned pc, instruction preload may trigger additional
-+         * page fault so we only load 2 bytes here.
-+         */
-+        opcode = (uint32_t) translator_lduw(env, &ctx->base, ctx->base.pc_next);
-+    }
-+    ctx->ol = ctx->xl;
-+
-+    ctx->cur_insn_len = insn_len((uint16_t)opcode);
-     /* Check for compressed insn */
-     if (ctx->cur_insn_len == 2) {
--        ctx->opcode = opcode;
-+        ctx->opcode = (uint16_t)opcode;
-         /*
-          * The Zca extension is added as way to refer to instructions in the C
-          * extension that do not include the floating-point loads and stores
-@@ -1238,15 +1260,17 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t opcode)
-             return;
-         }
-     } else {
--        uint32_t opcode32 = opcode;
--        opcode32 = deposit32(opcode32, 16, 16,
--                             translator_lduw(env, &ctx->base,
--                                             ctx->base.pc_next + 2));
--        ctx->opcode = opcode32;
-+        if (!pc_is_4byte_align) {
-+            /* Load last 2 bytes of instruction here */
-+            opcode = deposit32(opcode, 16, 16,
-+                               translator_lduw(env, &ctx->base,
-+                                               ctx->base.pc_next + 2));
-+        }
-+        ctx->opcode = opcode;
+ have_tools = get_option('tools') \
+   .disable_auto_if(not have_system) \
+   .allowed()
+@@ -863,7 +865,7 @@ elif host_os == 'haiku'
+             cc.find_library('network'),
+             cc.find_library('bsd')]
+ elif host_os == 'openbsd'
+-  if get_option('tcg').allowed() and target_dirs.length() > 0
++  if have_tcg
+     # Disable OpenBSD W^X if available
+     emulator_link_args = cc.get_supported_link_arguments('-Wl,-z,wxneeded')
+   endif
+@@ -904,7 +906,7 @@ if host_os == 'netbsd'
+ endif
  
-         for (guint i = 0; i < ctx->decoders->len; ++i) {
-             riscv_cpu_decode_fn func = g_ptr_array_index(ctx->decoders, i);
--            if (func(ctx, opcode32)) {
-+            if (func(ctx, opcode)) {
-                 return;
-             }
-         }
-@@ -1324,10 +1348,8 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
- {
-     DisasContext *ctx = container_of(dcbase, DisasContext, base);
-     CPURISCVState *env = cpu_env(cpu);
--    uint16_t opcode16 = translator_lduw(env, &ctx->base, ctx->base.pc_next);
- 
--    ctx->ol = ctx->xl;
--    decode_opc(env, ctx, opcode16);
-+    decode_opc(env, ctx);
-     ctx->base.pc_next += ctx->cur_insn_len;
- 
-     /*
+ tcg_arch = host_arch
+-if get_option('tcg').allowed()
++if have_tcg
+   if host_arch == 'unknown'
+     if not get_option('tcg_interpreter')
+       error('Unsupported CPU @0@, try --enable-tcg-interpreter'.format(cpu))
+@@ -2534,7 +2536,7 @@ config_host_data.set('CONFIG_PIXMAN', pixman.found())
+ config_host_data.set('CONFIG_SLIRP', slirp.found())
+ config_host_data.set('CONFIG_SNAPPY', snappy.found())
+ config_host_data.set('CONFIG_SOLARIS', host_os == 'sunos')
+-if get_option('tcg').allowed()
++if have_tcg
+   config_host_data.set('CONFIG_TCG', 1)
+   config_host_data.set('CONFIG_TCG_INTERPRETER', tcg_arch == 'tci')
+ endif
+@@ -4954,7 +4956,7 @@ if host_arch == 'unknown'
+   message('compile or work on this host CPU. You can help by volunteering')
+   message('to maintain it and providing a build host for our continuous')
+   message('integration setup.')
+-  if get_option('tcg').allowed() and target_dirs.length() > 0
++  if have_tcg
+     message()
+     message('configure has succeeded and you can continue to build, but')
+     message('QEMU will use a slow interpreter to emulate the target CPU.')
 -- 
-2.17.1
+2.49.0
 
 
