@@ -4,94 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3350C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 14:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25FE1C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 14:46:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD2TO-0002Pp-NI; Thu, 08 May 2025 10:43:42 -0400
+	id 1uD2Vz-0005m9-2o; Thu, 08 May 2025 10:46:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uD2TM-0002Og-C8
- for qemu-devel@nongnu.org; Thu, 08 May 2025 10:43:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1uD2Vw-0005iN-KP
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 10:46:20 -0400
+Received: from fhigh-b6-smtp.messagingengine.com ([202.12.124.157])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uD2TF-000561-2D
- for qemu-devel@nongnu.org; Thu, 08 May 2025 10:43:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746715411;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RhQyym7E+M+PuHm7jn9gZRO7XTTO0/52PxBBUsxFrQY=;
- b=fJNGOmh5oPaPMHByy3SfDYu0wsv5TSQNrTTx0NoNP9pe1n8IiUqiYaZvnHMsZDtKY4Xgvf
- Zh0DJ6sIsoR+raogxLnx2p7pd00pZQZPMYLPprmN2XdyeKW0UEM/AIWldzX/f8LhxIOIEt
- oXkuoOdeh8Rv/5ZM7QHvH5xakziy9rc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-537-79dJ50GdMhK9nLBaTexBRw-1; Thu, 08 May 2025 10:43:30 -0400
-X-MC-Unique: 79dJ50GdMhK9nLBaTexBRw-1
-X-Mimecast-MFC-AGG-ID: 79dJ50GdMhK9nLBaTexBRw_1746715409
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-441c122fa56so4683735e9.2
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 07:43:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746715409; x=1747320209;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RhQyym7E+M+PuHm7jn9gZRO7XTTO0/52PxBBUsxFrQY=;
- b=HntrMQ9AQms45GLD5Oc98y1BnkC/s35M0jz8DEuEE8g5UmsO/32PPZUXe3ij96CFnv
- eo29OfiIAs/e0BswG53GKu4hgm0/Bvy/sD3jcmJX5A6GTz9hq/6Rc1PPOUFJk7oDoXl3
- dCwFus0k/liQeCvJMQkpZKRo8tfQ+Ct/hps93L+INDyAY8JsW6fEZQcosF8qY56VTocc
- r3Kr+NfHNo5Urvz31/1zOQJe6NHJbi9z6Qp3Eyw3FvzUyiRJ1hqQ/aerkFc37YMY+Qx/
- nZgMWuTzFNrl3e9xmVRTW8k2d5WhwIu0gef2qSMA95h38IqCk04lPpolEsldqWo7hHUG
- IeQA==
-X-Gm-Message-State: AOJu0Yzwl161lmEBmwZUaKf/9n9hsJb37XyiBMNZqWkfioXHKF3MmcH3
- qo6Ksg7N7uiU5j0w5/Y4gAsbclpCSk+NUn2iFW6gcXFwXn+D6tUL8tNd4cQyGDfcWWL4/E6Hs3Y
- fN0MHMyrtP/9UI2CMyNE4Lt/Jok7/dG6YjLvYN073hda+UCt6Fc0A
-X-Gm-Gg: ASbGncu2nZEEZ4KshzqGLItPRzxcqadV0YkB9YbAMgugXXxZO0wqozUJOyYn5p3fwZu
- 3kpqiqCs6pRzBBjh32U24UImXS49tBX1qWptTa/QZHLz0znteK7vCJbwAmZnY4PtexRqzASawnN
- /b+/pxFiqQRDP2WXLEF43tdog5TFYCF087ktv4IhC6YermuQfWAWFlQSLNFr2JhmgP9FzhSpjV2
- NxJ19WrBuApMXL2mw7HcT6vMrHYfxzKbj2FVz62cQRTdGu/IdLJWzzhwqdQhT1xlE/J/y0dJO8O
- vT+Raw==
-X-Received: by 2002:a05:600c:4454:b0:43d:79:ae1b with SMTP id
- 5b1f17b1804b1-441d44c363amr66520085e9.14.1746715409042; 
- Thu, 08 May 2025 07:43:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE1pKnly0b4G01Y9Idb0oHOf4VDU29H6vTRJPd7O/AcEw4nBnlVG4NM9jTo3VHE5hmkmPNU3w==
-X-Received: by 2002:a05:600c:4454:b0:43d:79:ae1b with SMTP id
- 5b1f17b1804b1-441d44c363amr66519895e9.14.1746715408706; 
- Thu, 08 May 2025 07:43:28 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442cd3b7dc1sm38918665e9.34.2025.05.08.07.43.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 May 2025 07:43:28 -0700 (PDT)
-Date: Thu, 8 May 2025 10:43:25 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH RFC] meson: require int128 type
-Message-ID: <20250508104300-mutt-send-email-mst@kernel.org>
-References: <8c8f9a7e77e25a87b54335f7c376cb079fe67655.1746706766.git.mst@redhat.com>
- <CAFEAcA-ideWjVhKjK6xTcSFoKPY3C_9BJ0jp-UE-7qCkGGt8FQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1uD2Vr-0005QB-EM
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 10:46:20 -0400
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal
+ [10.202.2.43])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 56BC925401DB;
+ Thu,  8 May 2025 10:46:11 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-03.internal (MEProxy); Thu, 08 May 2025 10:46:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm1; t=1746715571;
+ x=1746801971; bh=kU6gecXX5DRugQ2PgGYDQbiPnTBtDMKQykc5j4YwIAg=; b=
+ eoVhIBFhoKpo3rQqPIUTXrUEWWyiesebYATAKTXrcBtnO6MQV0OicGWRD6iwQZXy
+ oFdDa2WQmak2jnaukjSKnMaKg+sEumk7o5eo/fXzNHYYncaLUHjpjpWtRuIzh6Ee
+ dUHcYxkvU+AKZT4YVDYC6WSb2mCrUA3F2nXmQ3Y/9nmDEFp6kGDw6AXaaotB7pQu
+ dT1n9clwjyytZh/z6jNaz1hdgZ4AzjikCm21QtAk5ayF4vDXvXxAtl29H/pj6b0s
+ FhnTft5KrKU/GxqG2+2MhPTh8oIbn9qQjw93e86z2Qju0c/nU1GntzCinGCUtYJy
+ vY577ZV+HB1zP5slfhbJLQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746715571; x=
+ 1746801971; bh=kU6gecXX5DRugQ2PgGYDQbiPnTBtDMKQykc5j4YwIAg=; b=U
+ czeOc4olybOGCH1y9vIz91P2W36Oh1jUvH3Z+zOI/Qp+Uv7xWvqONmdykSZeLPsV
+ WDnl2MGEnB0ZYkV4HZFzRMVQiA/wS3lY+doDgB/2rHNfiShkjljZDbBAFTm/vhOM
+ 8R/5dbSmlaHuDNEcmNamW+3/7CNSidqi6AV3/HDzaAmHWZ1vp/Y4Jvs9sX4umZWn
+ mjSLua+RboDJARWke8BVJOdyqbqyvsjL9B9e8GVt5I5PYOiuba/4/1FB2FZB7Vam
+ 6lpmh+aQED72w5OILueZYob3bmZlHzRoia8qN9Y+lQNVcr9prdlS37xjgSJG6+dc
+ f1hl/qMpNdSuPGXFsBAtw==
+X-ME-Sender: <xms:ssMcaEornfbQ6qUrjEaWtshdSFNKFHPTcLDvHJSwZXZ2Y77YRSgaVQ>
+ <xme:ssMcaKoG_pFNGzM9t3QI46PC-IK9jg-fv740d-h3FcsQDYAttxvJPWIDbtl9RiZfd
+ Tny6xfAzZ30Si3WBTs>
+X-ME-Received: <xmr:ssMcaJPqPetE0JFx3gOrVhBQFVrghPRt9IH5wTZTwCp1xsTUBQVCjtfu8R7g_aM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledttdduucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+ pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+ gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
+ tdejnecuhfhrohhmpeflihgrgihunhcujggrnhhguceojhhirgiguhhnrdihrghnghesfh
+ hlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepvdekiefhfeevkeeuveetfeel
+ ffekgedugefhtdduudeghfeuveegffegudekjeelnecuvehluhhsthgvrhfuihiivgeptd
+ enucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgr
+ thdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+ htohepphhhihhlmhgusehlihhnrghrohdrohhrghdprhgtphhtthhopegthhgvnhhhuhgr
+ tggriheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhirgiguhhnrdihrghnghesfh
+ hlhihgohgrthdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhu
+ rdhorhhg
+X-ME-Proxy: <xmx:s8McaL5ehMh-3ncW1lIpuZC06TbAECSSPt6JWRPTXZUv4QpGW6n7Gw>
+ <xmx:s8McaD7P5qQNl0UJLp4n56k0gsd9xP951aTNQqDlnNpiFNqYDx8KUQ>
+ <xmx:s8McaLiNhuYbwYYjBZLuyOa8eWRDZzac9Wl9KYmfvvcyQZTQv0jM3Q>
+ <xmx:s8McaN4427KOVsVDvngHtEacnPFxfoUg_YMKHF8DZdMfA1eSo-lK7g>
+ <xmx:s8McaFvx9q80N8GO25IlkjUmppWylGET91IisFgBond7xipbEQifJYNu>
+Feedback-ID: ifd894703:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 8 May 2025 10:46:10 -0400 (EDT)
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Date: Thu, 08 May 2025 15:46:06 +0100
+Subject: [PATCH 1/5] hw/pci-host/bonito: Implement ICU
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA-ideWjVhKjK6xTcSFoKPY3C_9BJ0jp-UE-7qCkGGt8FQ@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250508-bonito-v1-1-4f9f27733028@flygoat.com>
+References: <20250508-bonito-v1-0-4f9f27733028@flygoat.com>
+In-Reply-To: <20250508-bonito-v1-0-4f9f27733028@flygoat.com>
+To: qemu-devel@nongnu.org
+Cc: Huacai Chen <chenhuacai@kernel.org>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5531;
+ i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
+ bh=hlmXXtlM9zjCVW9fwHMlYV534Q+3X+HrgL2Itg0lMhM=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhgyZwxtYWk9oNgRenH/HqPYi25bMXxWS5XcUQgKW2Rorc
+ py9K7+3o5SFQYyLQVZMkSVEQKlvQ+PFBdcfZP2BmcPKBDKEgYtTACZy8QLD/2yhLT2Vb/NMX3Wu
+ XNS+w026VmHrlD71XbXM2ZmNTzXbFzL8ZJy9J0t6lk9FULOSwvV7Sf+Od76ccV4nRi7xwo8WVTc
+ 5LgA=
+X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
+ fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
+Received-SPF: pass client-ip=202.12.124.157;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-b6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,27 +123,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 08, 2025 at 01:30:25PM +0100, Peter Maydell wrote:
-> On Thu, 8 May 2025 at 13:21, Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > compilers that QEMU requires support int128
-> > (though arithmetic might be more challenging).
-> > As virtio wants to use int128 with bitwise opts only,
-> > make it simple by failing configure if not there.
-> 
-> IIRC the problem is not the compiler version but whether
-> or not it's targeting a 32-bit host: compilers will
-> implement an int128 based on 2 64-bit registers, but
-> not one based on 4 32-bit registers. Did you check this
-> on all our supported host platforms ?
-> 
-> (We've deprecated 32-bit host support, but not dropped
-> it yet, I think.)
-> 
-> thanks
-> -- PMM
+Implement interrupt controller on Bonito north bridge, as well
+as PCI INTx mapping as per Fuloong 2E's hardware connection.
 
-Thanks for the feedback, indeed I did not. Will check some
-config.
+pci_bonito_set_irq is renamed to bonito_set_irq to reflect that
+it also sets other IRQs on chip.
+
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+---
+ hw/pci-host/bonito.c | 96 ++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 56 insertions(+), 40 deletions(-)
+
+diff --git a/hw/pci-host/bonito.c b/hw/pci-host/bonito.c
+index 7d6251a78d7e2e26803dd72968ca2ea7adcfe0e5..a599a1db4c068325b8c1aa8fb4a45f6b299b581b 100644
+--- a/hw/pci-host/bonito.c
++++ b/hw/pci-host/bonito.c
+@@ -157,6 +157,22 @@ FIELD(BONGENCFG, PCIQUEUE,      12, 1)
+ #define BONITO_INTEN            (0x38 >> 2)      /* 0x138 */
+ #define BONITO_INTISR           (0x3c >> 2)      /* 0x13c */
+ 
++/* ICU Pins */
++#define ICU_PIN_MBOXx(x)        (0 + (x))
++#define ICU_PIN_DMARDY          4
++#define ICU_PIN_DMAEMPTY        5
++#define ICU_PIN_COPYRDY         6
++#define ICU_PIN_COPYEMPTY       7
++#define ICU_PIN_COPYERR         8
++#define ICU_PIN_PCIIRQ          9
++#define ICU_PIN_MASTERERR       10
++#define ICU_PIN_SYSTEMERR       11
++#define ICU_PIN_DRAMPERR        12
++#define ICU_PIN_RETRYERR        13
++#define ICU_PIN_INTTIMER        14
++#define ICU_PIN_GPIOx(x)        (16 + (x))
++#define ICU_PIN_GPINx(x)        (25 + (x))
++
+ /* PCI mail boxes */
+ #define BONITO_PCIMAIL0_OFFSET    0x40
+ #define BONITO_PCIMAIL1_OFFSET    0x44
+@@ -206,6 +222,7 @@ struct PCIBonitoState {
+ 
+     BonitoState *pcihost;
+     uint32_t regs[BONITO_REGS];
++    uint32_t icu_pin_state;
+ 
+     struct bonldma {
+         uint32_t ldmactrl;
+@@ -242,6 +259,40 @@ struct BonitoState {
+ #define TYPE_PCI_BONITO "Bonito"
+ OBJECT_DECLARE_SIMPLE_TYPE(PCIBonitoState, PCI_BONITO)
+ 
++static void bonito_update_irq(PCIBonitoState *s)
++{
++    BonitoState *bs = s->pcihost;
++    uint32_t inten = s->regs[BONITO_INTEN];
++    uint32_t intisr = s->regs[BONITO_INTISR];
++    uint32_t intpol = s->regs[BONITO_INTPOL];
++    uint32_t intedge = s->regs[BONITO_INTEDGE];
++    uint32_t pin_state = s->icu_pin_state;
++    uint32_t level, edge;
++
++    pin_state = (pin_state & ~intpol) | (~pin_state & intpol);
++
++    level = pin_state & ~intedge;
++    edge = (pin_state & ~intisr) & intedge;
++
++    intisr = (intisr & intedge) | level;
++    intisr |= edge;
++    intisr &= inten;
++
++    s->regs[BONITO_INTISR] = intisr;
++
++    qemu_set_irq(*bs->pic, !!intisr);
++}
++
++static void bonito_set_irq(void *opaque, int irq, int level)
++{
++    BonitoState *bs = opaque;
++    PCIBonitoState *s = bs->pci_dev;
++
++    s->icu_pin_state = deposit32(s->icu_pin_state, irq, 1, !!level);
++
++    bonito_update_irq(s);
++}
++
+ static void bonito_writel(void *opaque, hwaddr addr,
+                           uint64_t val, unsigned size)
+ {
+@@ -289,12 +340,12 @@ static void bonito_writel(void *opaque, hwaddr addr,
+         }
+         break;
+     case BONITO_INTENSET:
+-        s->regs[BONITO_INTENSET] = val;
+         s->regs[BONITO_INTEN] |= val;
++        bonito_update_irq(s);
+         break;
+     case BONITO_INTENCLR:
+-        s->regs[BONITO_INTENCLR] = val;
+         s->regs[BONITO_INTEN] &= ~val;
++        bonito_update_irq(s);
+         break;
+     case BONITO_INTEN:
+     case BONITO_INTISR:
+@@ -549,45 +600,10 @@ static const MemoryRegionOps bonito_spciconf_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+ };
+ 
+-#define BONITO_IRQ_BASE 32
+-
+-static void pci_bonito_set_irq(void *opaque, int irq_num, int level)
+-{
+-    BonitoState *s = opaque;
+-    qemu_irq *pic = s->pic;
+-    PCIBonitoState *bonito_state = s->pci_dev;
+-    int internal_irq = irq_num - BONITO_IRQ_BASE;
+-
+-    if (bonito_state->regs[BONITO_INTEDGE] & (1 << internal_irq)) {
+-        qemu_irq_pulse(*pic);
+-    } else {   /* level triggered */
+-        if (bonito_state->regs[BONITO_INTPOL] & (1 << internal_irq)) {
+-            qemu_irq_raise(*pic);
+-        } else {
+-            qemu_irq_lower(*pic);
+-        }
+-    }
+-}
+-
+-/* map the original irq (0~3) to bonito irq (16~47, but 16~31 are unused) */
+ static int pci_bonito_map_irq(PCIDevice *pci_dev, int irq_num)
+ {
+-    int slot;
+-
+-    slot = PCI_SLOT(pci_dev->devfn);
+-
+-    switch (slot) {
+-    case 5:   /* FULOONG2E_VIA_SLOT, SouthBridge, IDE, USB, ACPI, AC97, MC97 */
+-        return irq_num % 4 + BONITO_IRQ_BASE;
+-    case 6:   /* FULOONG2E_ATI_SLOT, VGA */
+-        return 4 + BONITO_IRQ_BASE;
+-    case 7:   /* FULOONG2E_RTL_SLOT, RTL8139 */
+-        return 5 + BONITO_IRQ_BASE;
+-    case 8 ... 12: /* PCI slot 1 to 4 */
+-        return (slot - 8 + irq_num) + 6 + BONITO_IRQ_BASE;
+-    default:  /* Unknown device, don't do any translation */
+-        return irq_num;
+-    }
++    /* Fuloong 2E PCI INTX are connected to Bonito GPIN[3:0] */
++    return ICU_PIN_GPINx(irq_num);
+ }
+ 
+ static void bonito_reset_hold(Object *obj, ResetType type)
+@@ -633,7 +649,7 @@ static void bonito_host_realize(DeviceState *dev, Error **errp)
+ 
+     memory_region_init(&bs->pci_mem, OBJECT(dev), "pci.mem", BONITO_PCIHI_SIZE);
+     phb->bus = pci_register_root_bus(dev, "pci",
+-                                     pci_bonito_set_irq, pci_bonito_map_irq,
++                                     bonito_set_irq, pci_bonito_map_irq,
+                                      dev, &bs->pci_mem, get_system_io(),
+                                      PCI_DEVFN(5, 0), 32, TYPE_PCI_BUS);
+ 
+
+-- 
+Git-154)
 
 
