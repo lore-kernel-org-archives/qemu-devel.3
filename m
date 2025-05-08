@@ -4,75 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE98CC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 08:44:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14B1DC3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 08:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCwqo-0007Zi-MA; Thu, 08 May 2025 04:43:30 -0400
+	id 1uCx17-0001bq-T9; Thu, 08 May 2025 04:54:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCwqm-0007Yc-HR
- for qemu-devel@nongnu.org; Thu, 08 May 2025 04:43:28 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uCx16-0001bb-KF
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 04:54:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uCwqk-0001WY-LY
- for qemu-devel@nongnu.org; Thu, 08 May 2025 04:43:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746693807; x=1778229807;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=47N7/5hbDRSZqNUgkGm7luIjBLHEUhSBxhLFH2Pvrrc=;
- b=Xl5w03ki6MwqCsFmNfN6eSBE9o6HqyStDJvcVwUGchkSHtqDEMuU+Ld1
- +GVRPpZCa2Wd/RJFcbRPCI2eIS1/jyIp5tktUXJzS6mOS2n/VWj9IIrQA
- oXYhy36Eg7aiO84gVXgFQ0rjCv5eGjgpaNVeghMSKOTAiqBkNm8lfQNd/
- qMB7wB/vRI2mP4+0ELbkfAhErnfl9u2ShDzqxZD096QgAZ7wqjhDQopos
- LbhMQzs6Sg6uVSwaJT2eSB5XKR81CLm4VEQqFm72iO/GZXbMJr+A1viiK
- lsKRU9Rdkwkps8kjuuO3Q79Vxy+5Xl2OApa0Wb1dGZOKATn+L6xbutK9p A==;
-X-CSE-ConnectionGUID: II0/v5EcQK295W7osICl4g==
-X-CSE-MsgGUID: NO6nBKTJR2qoM2ZSCtWbLQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11426"; a="65877967"
-X-IronPort-AV: E=Sophos;i="6.15,271,1739865600"; d="scan'208";a="65877967"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2025 01:43:23 -0700
-X-CSE-ConnectionGUID: vySyN8tqQ/6y6dWgu0pLZQ==
-X-CSE-MsgGUID: 52j0XdXJQGqvLtWbydndlg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,271,1739865600"; d="scan'208";a="173425416"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 08 May 2025 01:43:19 -0700
-Date: Thu, 8 May 2025 17:04:21 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- yeeli@zhaoxin.com, cobechen@zhaoxin.com, ewanhai@zhaoxin.com,
- MaryFeng@zhaoxin.com, Runaguo@zhaoxin.com, Xanderchen@zhaoxin.com,
- Alansong@zhaoxin.com, qemu-devel@nongnu.org
-Subject: Re: [Bug] QEMU TCG warnings after commit c6bd2dd63420 - HTT /
- CMP_LEG bits
-Message-ID: <aBxzlUFqYj1Ltc+4@intel.com>
-References: <c111d9f9-2914-4b41-811a-b3a9ad0d83a9@zhaoxin.com>
- <006111a2-8406-46ed-a6bd-71d0c68edf4b@zhaoxin.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uCx14-0002k4-Qr
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 04:54:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746694444;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CLRKe0/dHE+hc4LWPJK1wOSiSCneWhe7npArK/IXs08=;
+ b=Z2OlzBhmq+XJX62CZiM7ynplH69jz7gGOWqTpx7phz09DGLV6UkMyZYhjVNz98v1AMIHlw
+ uAo4ohYlPuuaE8OCE7i747jY5P9kmkozpFtC3EcCH/th/jtOWqzlru8RQxgs0E+H0Dblun
+ R+ihsm/9IOlpjR/c97a5Oe4zn8lj1As=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-340-tFMItBbLPw2PBsGgd0mMpA-1; Thu,
+ 08 May 2025 04:54:00 -0400
+X-MC-Unique: tFMItBbLPw2PBsGgd0mMpA-1
+X-Mimecast-MFC-AGG-ID: tFMItBbLPw2PBsGgd0mMpA_1746694439
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8AAA01956094; Thu,  8 May 2025 08:53:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.138])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 808931956055; Thu,  8 May 2025 08:53:54 +0000 (UTC)
+Date: Thu, 8 May 2025 09:53:50 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, devel@lists.libvirt.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
+Subject: Re: [PATCH v3 2/5] include/hw/boards: cope with dev/rc versions in
+ deprecation checks
+Message-ID: <aBxxHob9MK0BYHLw@redhat.com>
+References: <20250506160024.2380244-1-berrange@redhat.com>
+ <20250506160024.2380244-3-berrange@redhat.com>
+ <09b0a1cf-afac-4308-89a2-cc22aba5699d@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <006111a2-8406-46ed-a6bd-71d0c68edf4b@zhaoxin.com>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -57
-X-Spam_score: -5.8
-X-Spam_bar: -----
-X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+In-Reply-To: <09b0a1cf-afac-4308-89a2-cc22aba5699d@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,26 +93,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > [3] My colleague Alan noticed what appears to be a related problem: if
-> > we launch a guest with '-cpu <model>,-ht --enable-kvm', which means
-> > explicitly removing the ht flag, but the guest still reports HT(cat
-> > /proc/cpuinfo in linux guest) enabled. In other words, under KVM the ht
-> > bit seems to be forced on even when the user tries to disable it.
+On Thu, May 08, 2025 at 09:45:50AM +0200, Thomas Huth wrote:
+> On 06/05/2025 18.00, Daniel P. Berrangé wrote:
+> > When VERSION is set to a development snapshot (micro >= 50), or a release
+> > candidate (micro >= 90) we have an off-by-1 in determining deprecation
+> > and deletion thresholds for versioned machine types. In such cases we need
+> > to use the next major/minor version in threshold checks.
+> > 
+> > This adapts the deprecation macros to do "next version" prediction when
+> > seeing a dev/rc version number.
+> > 
+> > This ensures users of release candidates get an accurate view of machines
+> > that will be deprecated/deleted in the final release.
+> > 
+> > This requires hardcoding our current release policy of 3 releases per
+> > year, with a major bump at the start of each year, and that dev/rc
+> > versions have micro >= 50.
+> > 
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >   include/hw/boards.h | 33 ++++++++++++++++++++++++++++++++-
+> >   1 file changed, 32 insertions(+), 1 deletion(-)
 > 
-> XiaoYao reminded me that issue [3] stems from a different patch. Please
-> ignore it for now—I'll start a separate thread to discuss that one
-> independently.
+> FYI, this causes a failure in the CI now:
+> 
+>  https://gitlab.com/thuth/qemu/-/jobs/9965651507#L163
+> 
+> Looks like we have to remove the related subtest now?
 
-I haven't found any other thread :-).
+Oh indeed yes.
 
-By the way, just curious, in what cases do you need to disbale the HT
-flag? "-smp 4" means 4 cores with 1 thread per core, and is it not
-enough?
-
-As for the “-ht” behavior, I'm also unsure whether this should be fixed
-or not - one possible consideration is whether “-ht” would be useful.
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
