@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EBFAC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 20:25:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AAC4C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 20:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD7nz-0008WI-3Y; Thu, 08 May 2025 16:25:19 -0400
+	id 1uD7t0-0005Nz-4y; Thu, 08 May 2025 16:30:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uD7nv-0008Tj-M9
- for qemu-devel@nongnu.org; Thu, 08 May 2025 16:25:15 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1uD7sv-0005NW-95
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 16:30:26 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uD7ns-0005nz-Oa
- for qemu-devel@nongnu.org; Thu, 08 May 2025 16:25:15 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7370a2d1981so1281407b3a.2
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 13:25:12 -0700 (PDT)
+ id 1uD7st-0006dS-Ag
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 16:30:25 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-30aa8a259e0so1418299a91.1
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 13:30:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746735911; x=1747340711; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746736222; x=1747341022; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=dbs3ICrNU/zk4+ddXd/8djGXG+kqtD2eyXzlHHlUsK8=;
- b=uuBfWGxYTH0nfsvtHS6I7kKQNXqURpEddYI2EKvKaHiFFwcKRj6z+bl7CPyw4P+pei
- AOP2UDgu/ZpJ8GLWTz0aLaN/Lmj8Q8DaMtxwP82URQaii4ng1LvzB7by2jTek5qR32CG
- VPLCIZIzFmdTSfnnITbAGIvy45A6QpQPAyyF4D1M5o2UN1saHupV8GMSAd3sraU3L3zR
- Kmh2010GMgSZ6f0/NKEB7HztEfUVLiZLe9zb5yrydNIBknw0gZ+3e6/6BIwkID6bkXqk
- rl+br5lMtOW4fOvKoXcD1+Ug3EMJU1pxkWFnRrcXIzpYqJe3uPHi/9q3VFY/BScWWqa5
- /qMQ==
+ bh=Owc7RU/pQjq3QnKiVQJoGg4WVKo13wdIgEsMCgVYBFQ=;
+ b=F6Ig0QpwB7svGjVmMQCsr4e/VoM/lYD25tukIHLOD9FJCkj4LRqCo6LVSgMhsYqkIm
+ LcEw8dQIhL0IL+j/zo6ZxCLD4Kcnl1QTY2lHB9J4JVyX1nTpB0/2CoQkdi8uiM0v1HkZ
+ hUSpUh3kuXaQerjuPYtl0iJUJARU8wbCjEo09tUw8j/fohtYlLrdYXepQatC0c/RKcWE
+ PT6U/5jNKTITF0ZkzbFCY7iKkBn2bVs9a4K1hF098G5qk/q7Scd0BVrbiVfvcU0jnvV/
+ 6qqZKY9q9qzbk69m7WIUu9kCH1fypIsRTCcCp4aKB+6uaqvNH8spnAKEnT/B+SmZljBy
+ 1LXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746735911; x=1747340711;
+ d=1e100.net; s=20230601; t=1746736222; x=1747341022;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dbs3ICrNU/zk4+ddXd/8djGXG+kqtD2eyXzlHHlUsK8=;
- b=fOcMd0dTcNCVeB7EMYcVyhuE9AdRyI+Rjc4lgKHJ46AA2HTnpTl4cohy0uRFbsmGos
- MuXSZVAgO20lqHrOeVJ5BxIn5wWQTlcM9+YrM2Zu7kAH2d+Ff4Onn2Zw9fXimH5Vb5cX
- 4gR/aXDgCj+KxzDGuHo9+Q2+WTqFOgP2u5khn9u2gFn4+/b5hD9dFHIMvXUpHajCGpAB
- p0SFxM/Crx3ojl+dIwsPFu9ajyEmDpjADUokdmEa/p4g6swwNtntBL8VnEKO7GpVQwXm
- zqksgGNEuf/fukiBPjotomug6Q1d9kzCFk86jDsAu78q0R4DBaF+fAjPvTOYwolqq82R
- oV7w==
-X-Gm-Message-State: AOJu0YwXy+jK4GDP079/1CcEfjG03M5/mDnJDRB1K9nJRsjlGQvZJXtX
- HIehcSsxBfx4Ygv3OSgUfm1yiqk8iMQl5uCK6EeCk2V00bjv4zB1ZdEVmNzPTDQ=
-X-Gm-Gg: ASbGncvJ3JYrnzjSIk9Hi5CLnnjPj489QB/Cl79i1AVhfNU9Gc3+RkMJ6XKAn6VvRn3
- OdC/TTjp9SGcJ06qwDlBRgxxB5NMTHiYIOdbUkm0MKKFIhqCZpm58O0F1nyklSJMmclJxa4KtL6
- k7fUGYvSAzTJzb8fk6OQbXLinJfe8VwcdpYcAvRG8bNvb8vrXArgDPP5FT930Uliqor5tWZlVdX
- f9IdqpNklJMyz4zlXDOFpM5TLQdVj8yfoNEPS8oY3iHMMKjjx1z8WYlcvSG5VLhZ4dGN4WKgIaf
- 9KJJGomcBk/UJszsjbkF4Htzjl8InFmWaXEocjQvTn+40kOQKFaH7w==
-X-Google-Smtp-Source: AGHT+IHX+QwVPFTBvEkSchrXQf8nWTOFMg3SHCnPBbU+mW2FN9V0XUhjzMTcHKgCe+mVoZDQzGKdvg==
-X-Received: by 2002:a05:6a21:3483:b0:1f5:839e:ece8 with SMTP id
- adf61e73a8af0-215abab9c4emr894456637.2.1746735911313; 
- Thu, 08 May 2025 13:25:11 -0700 (PDT)
+ bh=Owc7RU/pQjq3QnKiVQJoGg4WVKo13wdIgEsMCgVYBFQ=;
+ b=uwpO44il7zx4U12pNjzhMaHavms//L4P/oHyoGtAczkBoHQn4Gcm0UURbGClLg2MGO
+ Rifv5yvtF8SndnLjM6NkhU8UB1ptaTGde8BZKAcASgrzr1darPYXO+WfWsuF30CyVUMl
+ +6/LovskuDeabZ3z1K4bDVoQmkPCZ5oH7uYppwplC8SpuY3WaDl6gsK+0Rb9F4jK46fm
+ t3axkaE7wRUD9yMSXSjppyx/9jrsKSYDvEllapoP2BGFpOPnagvT6eILYfWO6N14XwSS
+ i7j+vVF6jVFm0sc8URGEoD9D/yihzVVAbi7B9zHjLtaOvdoFX4dj3HpoaiukYV+MAzsc
+ PUbA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXBRR5iWo89TaRx76bDKJuUXweS5LtADtrMv0FSIBzikRxHjeRfLlsVdJKJxBMv3JSibafde01ChFVT@nongnu.org
+X-Gm-Message-State: AOJu0YxvCTHj2MruuPOxqCdqGUykJpyVltgwptA5hfk6NCqEcH1LuK+l
+ Ffu+C/LQ7e8MY/SLY1zuGitnh/44ElVKtiM+aLhJ+OXZG5/ILWHhvKsoMdjYseI=
+X-Gm-Gg: ASbGncuzHuv+oeNxSq7Zw56KGgiHpWUy3Qu33r7ugce42A6RWnmIc00VMwzuSZkwapL
+ GBpxZBTItCFry5jhny2A+2C/tESXugyNeYjAHGfvvKRp61C8wkocO2Iz31RuMRRwDCOTsbL4ySA
+ sGBH7jmSBhuzu1givg2bB/xO3sxo6+t01wBmkgyCixhrHLKHeyLfUILFe8UtzxmXy6IoCr/uCOb
+ CbcHLbUUVHwybKuPtNf6v0Bm5CIfuFNyoKBk7czhCtzC3VoxDVZKz3/YGIX5rvka4NVsahD5Ld5
+ i5YOJ4ksly1KOad8iALmdAwk/979onu2sXQ3gWcwd4ELIs80XGx6zg==
+X-Google-Smtp-Source: AGHT+IFkzTRO20FTEEnkUlCbxN5eAdj2BQEyHkX3gXpUdzjxk2W7wEZ9CzuakAP4/uQiynAFn31WMg==
+X-Received: by 2002:a17:90b:1d02:b0:2ee:aa28:79aa with SMTP id
+ 98e67ed59e1d1-30c3caf9720mr1378934a91.6.1746736221729; 
+ Thu, 08 May 2025 13:30:21 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74237a386b4sm441879b3a.136.2025.05.08.13.25.10
+ 98e67ed59e1d1-30c39e61056sm417919a91.39.2025.05.08.13.30.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 May 2025 13:25:10 -0700 (PDT)
-Message-ID: <49dc014b-bfd1-43de-8d0c-c916e178432a@linaro.org>
-Date: Thu, 8 May 2025 13:25:10 -0700
+ Thu, 08 May 2025 13:30:21 -0700 (PDT)
+Message-ID: <40d21813-d9b6-42f5-a439-634a8e3ccf98@linaro.org>
+Date: Thu, 8 May 2025 13:30:20 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/13] qobject/qlit: allow to hide dict or list entries
+Subject: Re: [PATCH 08/13] qemu/target-info: implement missing helpers
 Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, stefanha@redhat.com,
- peter.maydell@linaro.org, Markus Armbruster <armbru@redhat.com>,
- richard.henderson@linaro.org, pbonzini@redhat.com, jsnow@redhat.com,
- philmd@linaro.org, thuth@redhat.com, Michael Roth <michael.roth@amd.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, stefanha@redhat.com, peter.maydell@linaro.org,
+ Markus Armbruster <armbru@redhat.com>, richard.henderson@linaro.org,
+ pbonzini@redhat.com, jsnow@redhat.com, berrange@redhat.com,
+ thuth@redhat.com, Michael Roth <michael.roth@amd.com>
 References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
- <20250507231442.879619-4-pierrick.bouvier@linaro.org>
- <aBy94N6JSwDj53mb@redhat.com>
+ <20250507231442.879619-9-pierrick.bouvier@linaro.org>
+ <34d4719e-e8e9-4f2d-ad57-bb4043cb540f@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <aBy94N6JSwDj53mb@redhat.com>
+In-Reply-To: <34d4719e-e8e9-4f2d-ad57-bb4043cb540f@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,114 +108,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/25 7:21 AM, Daniel P. Berrangé wrote:
-> On Wed, May 07, 2025 at 04:14:33PM -0700, Pierrick Bouvier wrote:
->> We add a new .hidden field to qlit entries, which gets ignored when
->> creating the associated QObject.
->> By default .hidden is 0, so it means the entry is visible. This way,
->> only potentially hidden elements need to be assigned.
-> 
-> IMHO this feels like a somewhat dubious concept to have in the
-> qobject code, as it is quite specialized to a single use case.
-> A more general purpose approach would be to have some mechanism
-> for cloning while applying a data filter, though I admit that
-> may be more tedious to actually use.
->
-
-It's the least worse solution I found, for conditionally defining the 
-schema.
-Trying to dynamically create the qlit stuff with individual .push() was 
-a nightmare in code generator, so I dropped this idea.
-
+On 5/7/25 11:40 PM, Philippe Mathieu-Daudé wrote:
+> On 8/5/25 01:14, Pierrick Bouvier wrote:
+>> Add runtime helpers for target and config queries.
+>>
+>> Note: This will be reimplemented later [1] using proper information in
+>> TargetInfo. Meanwhile, just add a simple implementation.
+>>
+>> [1] https://patchew.org/QEMU/20250424222112.36194-1-philmd@linaro.org/20250424222112.36194-19-philmd@linaro.org/
 >>
 >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >> ---
->>   include/qobject/qlit.h | 12 ++++++++++++
->>   qobject/qlit.c         | 10 ++++++++--
->>   2 files changed, 20 insertions(+), 2 deletions(-)
->>
->> diff --git a/include/qobject/qlit.h b/include/qobject/qlit.h
->> index c0676d5daf2..3b66c22013c 100644
->> --- a/include/qobject/qlit.h
->> +++ b/include/qobject/qlit.h
->> @@ -28,25 +28,37 @@ struct QLitObject {
->>           QLitDictEntry *qdict;
->>           QLitObject *qlist;
->>       } value;
->> +    bool hidden;
->>   };
->>   
->>   struct QLitDictEntry {
->>       const char *key;
->>       QLitObject value;
->> +    bool hidden;
->>   };
->>   
->>   #define QLIT_QNULL \
->>       { .type = QTYPE_QNULL }
->>   #define QLIT_QBOOL(val) \
->>       { .type = QTYPE_QBOOL, .value.qbool = (val) }
->> +#define QLIT_QBOOL_HIDDEN(val, cond) \
->> +    { .type = QTYPE_QBOOL, .value.qbool = (val), .hidden = (cond) }
->>   #define QLIT_QNUM(val) \
->>       { .type = QTYPE_QNUM, .value.qnum = (val) }
->> +#define QLIT_QNUM_HIDDEN(val, cond) \
->> +    { .type = QTYPE_QNUM, .value.qnum = (val), .hidden = (cond) }
->>   #define QLIT_QSTR(val) \
->>       { .type = QTYPE_QSTRING, .value.qstr = (val) }
->> +#define QLIT_QSTR_HIDDEN(val, cond) \
->> +    { .type = QTYPE_QSTRING, .value.qstr = (val), .hidden = (cond) }
->>   #define QLIT_QDICT(val) \
->>       { .type = QTYPE_QDICT, .value.qdict = (val) }
->> +#define QLIT_QDICT_HIDDEN(val, cond) \
->> +    { .type = QTYPE_QDICT, .value.qdict = (val), .hidden = (cond) }
->>   #define QLIT_QLIST(val) \
->>       { .type = QTYPE_QLIST, .value.qlist = (val) }
->> +#define QLIT_QLIST_HIDDEN(val, cond) \
->> +    { .type = QTYPE_QLIST, .value.qlist = (val), .hidden = (cond) }
->>   
->>   bool qlit_equal_qobject(const QLitObject *lhs, const QObject *rhs);
->>   
->> diff --git a/qobject/qlit.c b/qobject/qlit.c
->> index a44f47eaa57..7b372c5ebaa 100644
->> --- a/qobject/qlit.c
->> +++ b/qobject/qlit.c
->> @@ -90,6 +90,8 @@ bool qlit_equal_qobject(const QLitObject *lhs, const QObject *rhs)
->>   
->>   QObject *qobject_from_qlit(const QLitObject *qlit)
->>   {
->> +    g_assert(!qlit->hidden);
->> +
->>       switch (qlit->type) {
->>       case QTYPE_QNULL:
->>           return QOBJECT(qnull());
->> @@ -102,7 +104,9 @@ QObject *qobject_from_qlit(const QLitObject *qlit)
->>           QLitDictEntry *e;
->>   
->>           for (e = qlit->value.qdict; e->key; e++) {
->> -            qdict_put_obj(qdict, e->key, qobject_from_qlit(&e->value));
->> +            if (!e->hidden) {
->> +                qdict_put_obj(qdict, e->key, qobject_from_qlit(&e->value));
->> +            }
->>           }
->>           return QOBJECT(qdict);
->>       }
->> @@ -111,7 +115,9 @@ QObject *qobject_from_qlit(const QLitObject *qlit)
->>           QLitObject *e;
->>   
->>           for (e = qlit->value.qlist; e->type != QTYPE_NONE; e++) {
->> -            qlist_append_obj(qlist, qobject_from_qlit(e));
->> +            if (!e->hidden) {
->> +                qlist_append_obj(qlist, qobject_from_qlit(e));
->> +            }
->>           }
->>           return QOBJECT(qlist);
->>       }
->> -- 
->> 2.47.2
->>
+>>    meson.build                |   2 +-
+>>    include/qemu/target-info.h |  14 +++++
+>>    target-info.c              | 117 +++++++++++++++++++++++++++++++++++++
+>>    3 files changed, 132 insertions(+), 1 deletion(-)
 > 
-> With regards,
-> Daniel
+> 
+>> +bool target_mips(void)
+> 
+> I know this is the same lowercase name, but maybe we could consider
+> directly using target_mips32() instead of keeping the technical debt
+> of having TARGET_MIPS defined for both 32 and 64-bit targets.
+> Thankfully we cleared that with recent targets (i.e. LoongArch or
+> RISC-V -- AVR is a bit different, since 8-bit AVR and AVR32 are
+> distinct architectures).
+> 
+> For x86 we often use 'x86' as any of (i386, x86_64, amd64), maybe
+> we can introduce target_x86() too.
+> 
+>> +{
+>> +#ifdef TARGET_MIPS
+>> +    return true;
+>> +#else
+>> +    return false;
+>> +#endif
+>> +}
+>> +
+>> +bool target_mips64(void)
+>> +{
+>> +#ifdef TARGET_MIPS64
+>> +    return true;
+>> +#else
+>> +    return false;
+>> +#endif
+>> +}
+>> +
+>> +bool target_loongarch64(void)
+>> +{
+>> +#ifdef TARGET_LOONGARCH64
+>> +    return true;
+>> +#else
+>> +    return false;
+>> +#endif
+>> +}
+>> +
+>> +bool target_riscv32(void)
+>> +{
+>> +#ifdef TARGET_RISCV32
+>> +    return true;
+>> +#else
+>> +    return false;
+>> +#endif
+>> +}
+>> +
+>> +bool target_riscv64(void)
+>> +{
+>> +#ifdef TARGET_RISCV64
+>> +    return true;
+>> +#else
+>> +    return false;
+>> +#endif
+>> +}
+>> +
+>> +bool target_ppc(void)
+> 
+> Ditto, target_ppc32()?
+> 
+>> +{
+>> +#ifdef TARGET_PPC
+>> +    return true;
+>> +#else
+>> +    return false;
+>> +#endif
+>> +}
+>> +
+>> +bool target_ppc64(void)
+>> +{
+>> +#ifdef TARGET_ppc64
+>> +    return true;
+>> +#else
+>> +    return false;
+>> +#endif
+>> +}
+>> +
+>> +bool target_has_kvm(void)
+>> +{
+>> +#ifdef CONFIG_KVM
+>> +    return true;
+>> +#else
+>> +    return false;
+>> +#endif
+>> +}
+> 
 
+I simply tried to reflect existing TARGET_* (so there is no 
+TARGET_PPC32, which is incoherent with having TARGET_RISCV{,32,64}).
+
+For the long term, I think we should aim for a 1-1 mapping with 
+SysEmuTarget instead, which is *coherent*. As well, we'll probably want 
+a way to identify target base architecture, like target_base_arm(), 
+target_base_i386(), ..., which will include 32 and 64 bits variants.
+
+Since patches for TargetInfo bringing target_arch() are not there yet, I 
+didn't want to bring all the material for a new bike shed, so I simply 
+followed existing TARGET_*. I hope we can have this whole conversation 
+on another dedicated series, once upstream TargetInfo will contain a 
+target_arch field.
 
