@@ -4,90 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6673C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 06:20:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D6D4C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 06:33:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCubV-0001Tw-43; Thu, 08 May 2025 02:19:33 -0400
+	id 1uCunk-00059c-CP; Thu, 08 May 2025 02:32:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCubS-0001Sc-P8
- for qemu-devel@nongnu.org; Thu, 08 May 2025 02:19:30 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCubQ-00086D-W4
- for qemu-devel@nongnu.org; Thu, 08 May 2025 02:19:30 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-73972a54919so664312b3a.3
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 23:19:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746685167; x=1747289967; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yiHP4TlwEh6ms74MOz5a63FG2+OHs0apV3ncHU+nk4w=;
- b=b/PgQrpbuvjlTXqkMTQhOCgG40ymOLroEGMgCDx60y3JYPPJsMtK9outgzf4Y1xo/o
- 4uzNnIB2nrERkv7eXtiby9WZF7w64vjLxiOz+6KKvnDVbwUQV0OYaNHfshd2X9iNGWMV
- ZYk/tf3p3pazD/Iy334u6Vl/PaOfrYB1GkmUc66uZkdBcRVrKTh7bmhull0OqGddHMCF
- suAKd/4gw5trO2l1Cjfz7uuvUU+SlHG5nNGfzXJFQI8RRrmyhwm5BlDPbMRDJeJNlxFC
- 4xVS4M9G2IUoa1RtFutfEM7yEDo0Z6UfXeQuNcFmaQRcrPGP8udshHoG1zxXy0Eo8PLf
- bMNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746685167; x=1747289967;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yiHP4TlwEh6ms74MOz5a63FG2+OHs0apV3ncHU+nk4w=;
- b=s/byWWbMTFmiLZsYrCaVaBCN3qPbEvtzgEE3rycggn0Uxl3S9nIeQJruFxSOK56z7v
- R49fy9hng2+u6yfIrQqeihwzTKeBqxgT0iaRO9VLi583kR2VZ7U32YfI+ZofZ/5FFpKq
- Q5GMvmuKPzkTVr0ySVs0j0jnPnd2rawLLfTD9JW5QsLYOAhnlwRcQyo0NkUlK7nLDowH
- Dxt5XiBGj4jdSSZNbHChDtBidACnzcKmX6xmicrfsVRFlO2kyxN7xD2gHMiCVN0fjeGk
- HTBXnA7j/7/RUXp3akn+j6m9FNFu11mep3rWPzva8EM3n49rt8rPggjXryk9j79tgr1y
- IxHQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVRHPOtAEwpyRQ1wmUDpHGKKgqQqy9zPvY+TQCmCzZ7HIT/44kS6Ks+inpiY3uoy2p2PDBExi9ft2uJ@nongnu.org
-X-Gm-Message-State: AOJu0YyqC1Lldl3Gxu797eg2gNlKo2oLZoXcZQiH1dR2RvPEf1q0Qelh
- s4ZC3ItWXrAt6K5Q0WiqzQBatbMiKmplrEbaeNXEdOu20Igz7IeZIwlfx9RtwZk=
-X-Gm-Gg: ASbGncsjMvbKmvsVAJEbppOtz64F1eoCsYU4U2L6Gx6BHTf9KppYUF2kVcd3RBZvrps
- +cIDfZSvFBMPY12cxYawCcLQEPUOSOX7QJSOs9UEmnP+ZgJ7UdMk0GCkx4haxxQ6JnaEHdltlgR
- sGZ+JNeD9+1mzJwobQRTBfZHT3gMJ0cgJazG51xnSRsWE9L+CsULM7piYSd7aZqBUDNWbGMf7Tm
- X/DmJXnHsJtiwB6HnBViF1woI7K1zeV7SCjGhS7dLf3XKZt2Y+0z1nSAKweAb4TGV6Yxa5f0gMf
- JMvYyqR8JkBLvyCj9aX8HSnJNNFUyY5fP1VP/30wB/fVofima6yX6Pg/2pHan/06G4bprAdxu1E
- p1hDL1SkpBQC0/luWl4I=
-X-Google-Smtp-Source: AGHT+IG6/Gg+ighuNaGXNQG96qev4OTmBjmqOwwO+eNDNojzoe6D/v7Dg6YBIaexCDAq9GnjRdMnAQ==
-X-Received: by 2002:a05:6a20:3d94:b0:1f5:7f56:a649 with SMTP id
- adf61e73a8af0-2159af5b182mr2723143637.13.1746685167307; 
- Wed, 07 May 2025 23:19:27 -0700 (PDT)
-Received: from [192.168.69.243] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-740aeafa44fsm609025b3a.20.2025.05.07.23.19.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 May 2025 23:19:26 -0700 (PDT)
-Message-ID: <e6b06003-7145-46d5-b19d-b9e134084fc7@linaro.org>
-Date: Thu, 8 May 2025 08:19:18 +0200
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uCune-000593-Q5
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 02:32:08 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uCunb-0001EU-9G
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 02:32:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746685923; x=1778221923;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=EhUxPhN89QWRiBJnOQ92HMc/WEiQXaIrQeVMQashhcY=;
+ b=hEUY2+bUv+zaDhWToVRQCMVbdAjVI8TqOgRBTBqHCmEhU3pzxQ+wr4cH
+ oY8F+KUDV9ucgVk7XUkocZC21YARc/MVGXu633DrSGIJ8F3WvDIlyNofv
+ i3FP97H/ziAGEg8zhDJFr+yYRfxgIPxvi1PENjv4dsOzZs86ok4LRs3hC
+ JdnWXuuDG/9TB9ti/W2RnehOPvoYUAvDhM58FOMkZ12sf4Zz43AEu7fFv
+ oXG0AdmWZ36Awrp1HcyYOjIaiwehd10jePPjMy2B0l2/Bs64623LFk86R
+ 4zs5AXR94fHxfIBCfltsUU+N61fN3qjvyUkBLpHMvX9CrMh5gJUgkLiiX g==;
+X-CSE-ConnectionGUID: Kyj6St0jSHOvrxQW33j1YA==
+X-CSE-MsgGUID: le13pVUpTOejgd04m3r/Jg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11426"; a="52264134"
+X-IronPort-AV: E=Sophos;i="6.15,271,1739865600"; d="scan'208";a="52264134"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 May 2025 23:31:59 -0700
+X-CSE-ConnectionGUID: vWXw4NFPTtGtKc6yf00USA==
+X-CSE-MsgGUID: PW9Fz6dnQZ2kdaR4tXRmpA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,271,1739865600"; d="scan'208";a="136078994"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 May 2025 23:31:57 -0700
+Message-ID: <d1c29947-2ffc-427d-8bc5-fb6ceb49b0fe@intel.com>
+Date: Thu, 8 May 2025 14:31:53 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [v2] hw/arm/npcm8xx_boards: Add auto zero flash image and device
- part number
-To: Tim Lee <timlee660101@gmail.com>, peter.maydell@linaro.org,
- wuhaotsh@google.com, kfting@nuvoton.com, chli30@nuvoton.com
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20250508021510.2959328-1-timlee660101@gmail.com>
+Subject: Re: [PATCH v8 46/55] i386/tdx: Add supported CPUID bits related to TD
+ Attributes
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Markus Armbruster
+ <armbru@redhat.com>, Francesco Lavra <francescolavra.fl@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Rick Edgecombe <rick.p.edgecombe@intel.com>
+References: <20250401130205.2198253-1-xiaoyao.li@intel.com>
+ <20250401130205.2198253-47-xiaoyao.li@intel.com> <aBnzG0e+Dea5S3sR@intel.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250508021510.2959328-1-timlee660101@gmail.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <aBnzG0e+Dea5S3sR@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,84 +93,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tim,
+On 5/6/2025 7:31 PM, Zhao Liu wrote:
+> On Tue, Apr 01, 2025 at 09:01:56AM -0400, Xiaoyao Li wrote:
+>> Date: Tue,  1 Apr 2025 09:01:56 -0400
+>> From: Xiaoyao Li <xiaoyao.li@intel.com>
+>> Subject: [PATCH v8 46/55] i386/tdx: Add supported CPUID bits related to TD
+>>   Attributes
+>> X-Mailer: git-send-email 2.34.1
+>>
+>> For TDX, some CPUID feature bit is configured via TD attributes. They
+>> are not covered by tdx_caps.cpuid (which only contians the configurable
+>> bits), but they are actually supported when the related attributre bit
+>> is supported.
+>>
+>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>> ---
+>>   target/i386/cpu.h     |  4 +++
+>>   target/i386/kvm/tdx.c | 59 +++++++++++++++++++++++++++++++++++++++++++
+>>   2 files changed, 63 insertions(+)
+>>
+>> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+>> index 115137279a1a..0e984ec42bb6 100644
+>> --- a/target/i386/cpu.h
+>> +++ b/target/i386/cpu.h
+>> @@ -903,6 +903,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+>>   #define CPUID_7_0_ECX_LA57              (1U << 16)
+>>   /* Read Processor ID */
+>>   #define CPUID_7_0_ECX_RDPID             (1U << 22)
+>> +/* KeyLocker */
+>> +#define CPUID_7_0_ECX_KeyLocker         (1U << 23)
+>>   /* Bus Lock Debug Exception */
+>>   #define CPUID_7_0_ECX_BUS_LOCK_DETECT   (1U << 24)
+>>   /* Cache Line Demote Instruction */
+>> @@ -963,6 +965,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+>>   #define CPUID_7_1_EAX_AVX_VNNI          (1U << 4)
+>>   /* AVX512 BFloat16 Instruction */
+>>   #define CPUID_7_1_EAX_AVX512_BF16       (1U << 5)
+>> +/* Linear address space separation */
+>> +#define CPUID_7_1_EAX_LASS              (1U << 6)
+>>   /* CMPCCXADD Instructions */
+>>   #define CPUID_7_1_EAX_CMPCCXADD         (1U << 7)
+>>   /* Fast Zero REP MOVS */
+> 
+> The whole framework is very good for me.
+> 
+> Since LASS/key locker are not yet supported, I think it's better to add
+> the note (in the commit message or code) that they are helpful for
+> future enabling. Of course, removing these two features would be best,
+> as they cannot be covered by current testing.
 
-On 8/5/25 04:15, Tim Lee wrote:
-> Fix flash device part number to `mx66l1g45g` according image-bmc run on npcm8xx
-> evb board (SPIFlash...SF: Detected mx66l1g45g, total 128 MiB)
-> 
-> And add auto zero flash image size to resolve error below after executing
-> `./qemu-system-aarch64 -machine npcm845-evb -drive file=image-bmc`
-> 
-> Error message:
-> qemu-system-aarch64: mx66l1g45g device '/machine/unattached/device[73]'
-> requires 134217728 bytes, mtd0 block backend provides 67108864 bytes
-> 
-> Tested:
-> Build passes and runs ./qemu-system-aarch64 -machine npcm845-evb normally
-> 
-> Signed-off-by: Tim Lee <timlee660101@gmail.com>
-> ---
-> Changes since v1:
-> - Add a statement that checks whether the storage is writable
-> 
->   hw/arm/npcm8xx_boards.c | 20 +++++++++++++++++++-
->   1 file changed, 19 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/arm/npcm8xx_boards.c b/hw/arm/npcm8xx_boards.c
-> index 3fb8478e72..79295a586c 100644
-> --- a/hw/arm/npcm8xx_boards.c
-> +++ b/hw/arm/npcm8xx_boards.c
-> @@ -27,6 +27,7 @@
->   #include "qemu/error-report.h"
->   #include "qemu/datadir.h"
->   #include "qemu/units.h"
-> +#include "system/block-backend.h"
->   
->   #define NPCM845_EVB_POWER_ON_STRAPS 0x000017ff
->   
-> @@ -59,10 +60,26 @@ static void npcm8xx_connect_flash(NPCM7xxFIUState *fiu, int cs_no,
->   {
->       DeviceState *flash;
->       qemu_irq flash_cs;
-> +    BlockBackend *blk;
-> +    BlockDriverState *bs;
-> +    uint64_t blk_size, perm, shared_perm;
->   
->       flash = qdev_new(flash_type);
->       if (dinfo) {
->           qdev_prop_set_drive(flash, "drive", blk_by_legacy_dinfo(dinfo));
-> +        blk = blk_by_legacy_dinfo(dinfo);
-> +        bs = blk_bs(blk);
-> +        blk_size = blk_getlength(blk);
-> +
-> +        if (!bdrv_is_read_only(bs)) {
+I will add note in the commit message and don't change the code.
 
-This isn't what I meant, we'll get the same issue with read-only storage.
+Keep them in tdx_attrs_maps[] is helpful for the completeness of the 
+existing attribute bits that are related to a CPUID feature.
 
-See:
-https://lore.kernel.org/qemu-devel/CAFEAcA9itEDTrznX1KRVEza__Dch95aBpPzbdTJ0-tuxwiHtoQ@mail.gmail.com/
-
-> +            if (blk_size < fiu->flash_size) {
-> +                blk_get_perm(blk, &perm, &shared_perm);
-> +                blk_set_perm(blk, BLK_PERM_ALL, BLK_PERM_ALL, &error_abort);
-> +                blk_truncate(blk, fiu->flash_size, true, PREALLOC_MODE_OFF,
-> +                             BDRV_REQ_ZERO_WRITE, &error_abort);
-> +                blk_set_perm(blk, perm, shared_perm, &error_abort);
-> +            }
-> +        }
->       }
->       qdev_realize_and_unref(flash, BUS(fiu->spi), &error_fatal);
->   
-> @@ -194,7 +211,8 @@ static void npcm845_evb_init(MachineState *machine)
->       qdev_realize(DEVICE(soc), NULL, &error_fatal);
->   
->       npcm8xx_load_bootrom(machine, soc);
-> -    npcm8xx_connect_flash(&soc->fiu[0], 0, "w25q256", drive_get(IF_MTD, 0, 0));
-> +    npcm8xx_connect_flash(&soc->fiu[0], 0, "mx66l1g45g",
-> +                          drive_get(IF_MTD, 0, 0));
->       npcm845_evb_i2c_init(soc);
->       npcm845_evb_fan_init(NPCM8XX_MACHINE(machine), soc);
->       npcm8xx_load_kernel(machine, soc);
+> Regards,
+> Zhao
+> 
+> 
 
 
