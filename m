@@ -4,104 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7EBCC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 14:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6043AC3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 14:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD2Vz-0005la-3Z; Thu, 08 May 2025 10:46:23 -0400
+	id 1uD2W3-0005q8-LR; Thu, 08 May 2025 10:46:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1uD2Vv-0005hx-VH
- for qemu-devel@nongnu.org; Thu, 08 May 2025 10:46:20 -0400
-Received: from fhigh-b6-smtp.messagingengine.com ([202.12.124.157])
+ id 1uD2Vz-0005lJ-H2
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 10:46:23 -0400
+Received: from fout-b7-smtp.messagingengine.com ([202.12.124.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1uD2Vr-0005Q8-Dn
- for qemu-devel@nongnu.org; Thu, 08 May 2025 10:46:19 -0400
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal
- [10.202.2.46])
- by mailfhigh.stl.internal (Postfix) with ESMTP id E205725401E2;
- Thu,  8 May 2025 10:46:09 -0400 (EDT)
+ id 1uD2Vt-0005Qe-Rv
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 10:46:21 -0400
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal
+ [10.202.2.45])
+ by mailfout.stl.internal (Postfix) with ESMTP id 9C19C1140186;
+ Thu,  8 May 2025 10:46:16 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Thu, 08 May 2025 10:46:10 -0400
+ by phl-compute-05.internal (MEProxy); Thu, 08 May 2025 10:46:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
  cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:message-id:mime-version:reply-to
- :subject:subject:to:to; s=fm1; t=1746715569; x=1746801969; bh=0b
- 3lK/0Fpj2azO7tV8t+D2bik5lireq1rygEf2Ugdfw=; b=X3gQxMobwDiZf+dODL
- 67wjirB+Eyjdxb2r7gMxCXc1ipf3PolUFXMRvcGFWmnKzI6M3vuNrMwHx7riQgRu
- 3otC4v5++bFJlpp8EfvpKh8YLl8Kn27Af64W7jPRR5aNZ9Bdqi0JchcEoMjjWZRl
- pe6073pdGvYgblplfKRwEP1qt61XoDLaJqtJZ0+Gawdd//mR7dJFHWxDOBvSXJYl
- FwH/Qq3n0lhkfXrsPKOM86RFmOKmSrTZd6U9SzP8yXWuXro/JfMKqraMB9SdxvxF
- 35RhkMhr+b19RGG1YNlCgsF8x0G6HD9BYSU2Jz/VdeKsCAbYFaybgnj8h8aTqLy0
- r6GA==
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm1; t=1746715576;
+ x=1746801976; bh=xgYGUe5aVPbLGV1KO4i6XTjmOUixoOut3Ubry1WEeqo=; b=
+ UD8o5DwaK1v3X+MasI+5HO8UTKifcsECC867xeiU3BFJcjtjz4kqNTETRoB1ytvd
+ /IyV0L5aYm3FkrBGwoBWjlGWmDHg4faVSQPFodX+2gcxeU8vXhguq1B/vpkVxhpz
+ DWugllj23h7jnNThnfLAmuIlBPprueXM+6h9jIrFhXqN4IbGFJNaOGGepoq0K16+
+ VzOpC7YxMa6P5WGSnoFB0MsNuou7Xi8sBQy82j4NO4ixsg2dm3rKZFzqUl8VzTch
+ wzrPjzPpXR/kYrJoFbuRavTEPui4dh8Ffb+fEVGmB+H0FOTS02KgDrQVAq1KInTo
+ eiMOCsI2wOkhHYVeRCr0Kg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; t=1746715569; x=1746801969; bh=0b3lK/0Fpj2azO7tV8t+D2bik5li
- req1rygEf2Ugdfw=; b=vfGaQfTqWQpWH7rhnnCDgyNgP6Uz6pizidFbtZ78UAYO
- 0o6zTICLp8Jm4R8ULQyWY04DZPpIrobbp3c36ibrwZz4AKPEmZNbMgGAtOxhAeWM
- lqgbJZPaOiId28ulNuEhE4SALgsAx3XBqaRPfGEbflxfGAv+Di+qWimNWE75nn8J
- 0fv0N+cWeQx6e+xd6rOB5JzutW5zGw4KW4fP+/OlPJHHLptOi2lqgTuQ+XMqTyBY
- dcdSsW6/PMnq70D7ZETnofQBESqZoJErjCHdIhheQ2Omxnq9Kq3QGNbNcL0n15yX
- +piZyyHLyRiPPCcP7bs5LHA3Ta/8GGf/KLzksC9dWg==
-X-ME-Sender: <xms:scMcaLHVGm3sG1v2EnMBQLoliJiU-tgIkpxZcwxKsmn0uD8CMNyucg>
- <xme:scMcaIUejFV6tvw7jAaqrZLNzDp1Whj9tJB__oAQL5v52bLoyCEWKjvAFHO1PvQPX
- ov0s1MFb2JsVxzw9S8>
-X-ME-Received: <xmr:scMcaNLUEMCtAOo6YdjKkZf0dsDfC_XvptjmnSE9NP47p3E_f9_PTrFk5ebgqXk>
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746715576; x=
+ 1746801976; bh=xgYGUe5aVPbLGV1KO4i6XTjmOUixoOut3Ubry1WEeqo=; b=A
+ CEF2GBTL3WNaXAqLW3XIWFqAn8IVTp5rPnMJvUCq59aGxAfsdTsvh+lKgscSW37j
+ h6rHHR4O6qqLmMX+WGYiiLlphx62+pV7VKEMc8dgshf/S92mg814JkAQiVP2uOqN
+ wVBBqwUVhss1K0/enBtl729t901dbFWgtT7ggi5IsJpLAtkR1l7o8xNk3054w1+Q
+ fpP0VObRNsrzSzPjzty8jk+WQmDjzMjk/CMAgaewAkIAiI1z3ILDk+G2O0Q6ubls
+ rKaSQClJ9H1b7uhDijbawkMS7VENAbUUeAx4m+8PQmpVYiPYPnRh0O1bLEn7d8OD
+ oulIfd8DME0SkU5sk0NLg==
+X-ME-Sender: <xms:uMMcaI8byTFkEp4_xtJioh_r5Hek0QArUnFIrdEGMDxDqqWF-uZmgg>
+ <xme:uMMcaAtSLZNL8b6TfQQBzu3E9vT-DcUv_GmU4QiYoFwyIZ53mlaIbRYr-MIzoQJBI
+ Nb4a6llRHPIN_ift2o>
+X-ME-Received: <xmr:uMMcaOAohoXEDuTPa27PYz_NoszPG4TVGaPGSf8JvkzQScwduteCKvTFIPq97UI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledttdduucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
  pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
- gvnhhtshculddquddttddmnecujfgurhephffufffkgggtgffvvefosehtjeertdertdej
- necuhfhrohhmpeflihgrgihunhcujggrnhhguceojhhirgiguhhnrdihrghnghesfhhlhi
- hgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepudffffffhfeuheevhffgleevkeeu
- geetfeegieeijeehfeekheekveduveeigeeunecuvehluhhsthgvrhfuihiivgeptdenuc
- frrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdr
- tghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
- epphhhihhlmhgusehlihhnrghrohdrohhrghdprhgtphhtthhopegthhgvnhhhuhgrtggr
- iheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhirgiguhhnrdihrghnghesfhhlhi
- hgohgrthdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdho
- rhhg
-X-ME-Proxy: <xmx:scMcaJG12niLKQQ5xiOfGIVIJNfBoW8x3gdihTc9xGwoNePeiyV4mg>
- <xmx:scMcaBVZL1CxkZOPsuuXz3Y4csLOtg8ILxgmRlOyFoFMfmJ6Q4vGSg>
- <xmx:scMcaENodIRC7jVBPLbkSZLpe6Ba4M1R0cs2s9waoacnTRU8aLcGNw>
- <xmx:scMcaA0onqVXrF7nXnkuujiKFNbS_VuFZoTpRO2bZewUtpvsOfQ2RA>
- <xmx:scMcaArrTzNX-Dsse6MNKd8brncTWkCs0SOGUkQxaW54itRe1WcHalOe>
+ gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
+ tdejnecuhfhrohhmpeflihgrgihunhcujggrnhhguceojhhirgiguhhnrdihrghnghesfh
+ hlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepffegieduteefgfduheegkeeh
+ vdejfefhvedvudfhtdefjedufeekteevjeejffefnecuffhomhgrihhnpehqvghmuhdroh
+ hrghdptghiphhunhhithgvugdrtghomhdpghhithhhuhgsrdgtohhmnecuvehluhhsthgv
+ rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghngh
+ esfhhlhihgohgrthdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphho
+ uhhtpdhrtghpthhtohepphhhihhlmhgusehlihhnrghrohdrohhrghdprhgtphhtthhope
+ gthhgvnhhhuhgrtggriheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhirgiguhhn
+ rdihrghnghesfhhlhihgohgrthdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlh
+ esnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:uMMcaIcTPJYn5at2o31Jawi5pOm3dqKcRqmkWQzjY8Arc6MHjVWdfg>
+ <xmx:uMMcaNNe1z9iA8GnfMrzuFvcPuCLmNaCfKBszVIJN5g2EN-sNtiuJg>
+ <xmx:uMMcaCmOT5Mdm6irRPqDFqFYUoZQj2AtqXIe-Hq630Umj9rJAb6I9w>
+ <xmx:uMMcaPvuAUFbIoDTieDyKYZVV0S3rp_oq-Lq-dF3IueUu3YARtHjVg>
+ <xmx:uMMcaPheWgwcPJz8pJoX27YRcvjfVraD-j3Y7V4cYeI6-WxfDpipX7J7>
 Feedback-ID: ifd894703:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 May 2025 10:46:08 -0400 (EDT)
+ 8 May 2025 10:46:15 -0400 (EDT)
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH 0/5] hw/pci-host/bonito: Improve various emulation
- functions
-Date: Thu, 08 May 2025 15:46:05 +0100
-Message-Id: <20250508-bonito-v1-0-4f9f27733028@flygoat.com>
+Date: Thu, 08 May 2025 15:46:10 +0100
+Subject: [PATCH 5/5] hw/pci-host/bonito: Add comments about documentation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAK3DHGgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDUwNz3aT8vMySfF0TCyNzU8skoyRTozQloOKCotS0zAqwQdGxtbUAjRW
- uKFgAAAA=
-X-Change-ID: 20250507-bonito-482759b2b52f
+Message-Id: <20250508-bonito-v1-5-4f9f27733028@flygoat.com>
+References: <20250508-bonito-v1-0-4f9f27733028@flygoat.com>
+In-Reply-To: <20250508-bonito-v1-0-4f9f27733028@flygoat.com>
 To: qemu-devel@nongnu.org
 Cc: Huacai Chen <chenhuacai@kernel.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Jiaxun Yang <jiaxun.yang@flygoat.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=858;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1483;
  i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
- bh=Z4jSD3Hn1W1y+kyu9le5QRQKK7Xt9VdntPDvHNKY6+8=;
- b=owGbwMvMwCXmXMhTe71c8zDjabUkhgyZwxsO/OI2yYwJ8jsU9FVTNcDo4ndPcfZbXpc2P7Lcr
- SEWuV+lo5SFQYyLQVZMkSVEQKlvQ+PFBdcfZP2BmcPKBDKEgYtTACbygoGR4fvxzyJX74eu3tOW
- fs+9+tqWw+vDtsXprKg8xTt/0evi6XYM/z3LRC3X7DY9vs1nwyJXPZG/2a+O10Tmz430FnustMR
- BjRUA
+ bh=MU1PXw79l+PqaNzCUo78gxclfibVJ+777pGeiHAtmdo=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhgyZwxtObTwRZb/lyJfMk1li2rKRJ93kV+U/nhq4d98sk
+ 3INPrNvHaUsDGJcDLJiiiwhAkp9GxovLrj+IOsPzBxWJpAhDFycAjCRlEuMDN/3+Za1HFq549mL
+ 5VkFPFFfWVtCy9MFj6UUupzmmPUmZzbDL6YTrAe3eTx+suPf24nH4w9pa8U/KG5RkH6wqsjO5U1
+ OADcA
 X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
  fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
-Received-SPF: pass client-ip=202.12.124.157;
- envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-b6-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.150;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout-b7-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -125,34 +124,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
-
-This series addressed a couple of missing Bonito functionalities
-I found when I was trying to test NetBSD against QEMU.
-
-Please review.
-
-Thanks
-Jiaxun
-
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
-Jiaxun Yang (5):
-      hw/pci-host/bonito: Implement ICU
-      hw/pci-host/bonito: Implement PCIMAP register
-      hw/pci-host/bonito: Implement DMA address translation
-      hw/pci-host/bonito: Rework PCI config space accessor
-      hw/pci-host/bonito: Add comments about documentation
+ hw/pci-host/bonito.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
- hw/pci-host/bonito.c     | 453 +++++++++++++++++++++++++++++------------------
- hw/pci-host/trace-events |   3 -
- 2 files changed, 284 insertions(+), 172 deletions(-)
----
-base-commit: c5e2c4042e3c50b96cc5eaa9683325c5a96913b0
-change-id: 20250507-bonito-482759b2b52f
+diff --git a/hw/pci-host/bonito.c b/hw/pci-host/bonito.c
+index 49b4be26393a08eda4f99c8e2ef8a0c455c57bc0..918ee39661004d902d2deb25dd5e782855a11854 100644
+--- a/hw/pci-host/bonito.c
++++ b/hw/pci-host/bonito.c
+@@ -1,5 +1,5 @@
+ /*
+- * bonito north bridge support
++ * Algorithmics Ltd BONITO north bridge emulation
+  *
+  * Copyright (c) 2008 yajin (yajin@vm-kernel.org)
+  * Copyright (c) 2010 Huacai Chen (zltjiangshi@gmail.com)
+@@ -8,10 +8,21 @@
+  *
+  * Contributions after 2012-01-13 are licensed under the terms of the
+  * GNU GPL, version 2 or (at your option) any later version.
+- */
+-
+-/*
+- * fuloong 2e mini pc has a bonito north bridge.
++ *
++ * For 32-bit variant:
++ * "BONITO - PCI/SDRAM System Controller for Vr43xx"
++ * https://wiki.qemu.org/File:Bonito-spec.pdf
++ *
++ * "BONITO - Companion Chip for Vr43xx and Vr5xxx" (uPD65949S1-P00-F6)
++ * https://repo.oss.cipunited.com/archives/docs/NEC/U15789EE1V0DS00.pdf
++ *
++ * For 64-bit variant:
++ * "BONITO64 - "north bridge" controller for 64-bit MIPS CPUs"
++ * https://wiki.qemu.org/File:Bonito-spec.pdf
++ *
++ * For Godson (Loongson) 2E variant:
++ * "Godson 2E North Bridge User Manual" (in Chinese)
++ * https://github.com/loongson-community/docs/blob/master/2E/Godson_2E_NB_UM.pdf
+  */
+ 
+ #include "qemu/osdep.h"
 
-Best regards,
 -- 
-Jiaxun Yang <jiaxun.yang@flygoat.com>
+Git-154)
 
 
