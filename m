@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB0F8C3ABBE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5F48C3ABC5
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:09:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD2rk-0004jF-RR; Thu, 08 May 2025 11:08:53 -0400
+	id 1uD2po-0003jA-ND; Thu, 08 May 2025 11:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2rS-0004VY-NK
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:08:34 -0400
+ id 1uD2pS-0003DM-Ly
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:06:34 -0400
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2rL-0007RF-KD
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:08:34 -0400
+ id 1uD2pO-0007UR-QW
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:06:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746716907; x=1778252907;
+ t=1746716787; x=1778252787;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=qGmppuz76UFbMVe2OECyh/g/OnsfvsdqCGRM/PlnJ1Y=;
- b=Zl1DmU21JxkZQEM78MLSR3QJJDQYp65LBSMSYUrk3KPTJYLOQ8RKg2Sp
- OKSyfQCyNMhR5YK+Zgfu8/BqhIJf51WH80jSCA3rki6cQ38cEZ79sI3Ju
- alYZaodJQR2AC18njiqRQpuzQefFfiInqz6XTGkczsxIMs3cfpFDHl9Y7
- B5estbyxXgfmmTXP8/2SVKmEko6zrpPp5N53WaeFOt28lPhgjWmBGKMaw
- iGoeEghsjaynUFqm+MnMfPyt4g5VDaZBM7QxPOxenMXMeXFdGqBhzTEbo
- txQS8dLl2no7+YH/Jr0sRreJJVQxYcHfXoCwbS6X+YNCYCfQ3/v3FMEaN w==;
-X-CSE-ConnectionGUID: BXzUKwkXQw2wWYdwgSQfHA==
-X-CSE-MsgGUID: MObFE7UpTtOg/u/dTB30Ng==
-X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73888532"
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73888532"
+ bh=wD8Kvtj/d3HQzlszpVDkCNb2gHjrXU68l4/VjTG4hpk=;
+ b=AihnP6ofb9mmJsPwggyLFUd6x7TMUke7WsNAihY/XM27baxXRLbXsEAY
+ E+j2k3FN8k7dfMx3bfGGS8+X5KVfcYC82UyenpY0lY+8y17jLieuL5gQj
+ ocPxsVyM1NDNq0iLZkDj/pJc2Vt2yR8iZ0Ok+azBY+214SmdbrHthdUz6
+ Ji/LHiZQLMY5pNs8GkdxFA2DMuJsPHNWEIpqPWfoiWGyMgk4n+3OZE8kj
+ KcFhuO7nwXy8zwXmwnT5OgCdOm47DzEQmZoNYV6T0inFdRlT5KqIArLxz
+ JDXpT3wA+cJOTNhCd1Jb8lYXwjcl/yv2NKj71FHoK9IASABx1zp6ksyHc A==;
+X-CSE-ConnectionGUID: LMFDxbg0TtKjcYLkGiyU+Q==
+X-CSE-MsgGUID: 6oXb9ZcqTS+sOVEBA8IMOg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73888180"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73888180"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2025 08:07:20 -0700
-X-CSE-ConnectionGUID: MS76/PcZQDaeFyhadM9NlA==
-X-CSE-MsgGUID: Sso8Bzk3Q0OwZb+gxTkZHQ==
+ 08 May 2025 08:06:03 -0700
+X-CSE-ConnectionGUID: L23JwriwTIqi9kO9SVkGUQ==
+X-CSE-MsgGUID: 3roRcB+HQJuiuC/OIacYHQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141440450"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141439987"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:07:17 -0700
+ by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:06:00 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -57,9 +57,10 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v9 47/55] i386/tdx: Add supported CPUID bits relates to XFAM
-Date: Thu,  8 May 2025 10:59:53 -0400
-Message-ID: <20250508150002.689633-48-xiaoyao.li@intel.com>
+Subject: [PATCH v9 22/55] headers: Add definitions from UEFI spec for volumes,
+ resources, etc...
+Date: Thu,  8 May 2025 10:59:28 -0400
+Message-ID: <20250508150002.689633-23-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250508150002.689633-1-xiaoyao.li@intel.com>
 References: <20250508150002.689633-1-xiaoyao.li@intel.com>
@@ -90,206 +91,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some CPUID bits are controlled by XFAM. They are not covered by
-tdx_caps.cpuid (which only contians the directly configurable bits), but
-they are actually supported when the related XFAM bit is supported.
+Add UEFI definitions for literals, enums, structs, GUIDs, etc... that
+will be used by TDX to build the UEFI Hand-Off Block (HOB) that is passed
+to the Trusted Domain Virtual Firmware (TDVF).
 
-Add these XFAM controlled bits to TDX supported CPUID bits based on the
-supported_xfam.
+All values come from the UEFI specification [1], PI spec [2] and TDVF
+design guide[3].
 
-Besides, incorporate the supported_xfam into the supported CPUID leaf of
-0xD.
+[1] UEFI Specification v2.1.0 https://uefi.org/sites/default/files/resources/UEFI_Spec_2_10_Aug29.pdf
+[2] UEFI PI spec v1.8 https://uefi.org/sites/default/files/resources/UEFI_PI_Spec_1_8_March3.pdf
+[3] https://software.intel.com/content/dam/develop/external/us/en/documents/tdx-virtual-firmware-design-guide-rev-1.pdf
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c     | 12 -------
- target/i386/cpu.h     | 16 ++++++++++
- target/i386/kvm/tdx.c | 73 +++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 89 insertions(+), 12 deletions(-)
+Changes in v7:
+ - use SPDX tag;
+---
+ include/standard-headers/uefi/uefi.h | 187 +++++++++++++++++++++++++++
+ 1 file changed, 187 insertions(+)
+ create mode 100644 include/standard-headers/uefi/uefi.h
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index f91502838023..071669c2d908 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1671,15 +1671,6 @@ bool is_feature_word_cpuid(uint32_t feature, uint32_t index, int reg)
-     return false;
- }
- 
--typedef struct FeatureMask {
--    FeatureWord index;
--    uint64_t mask;
--} FeatureMask;
--
--typedef struct FeatureDep {
--    FeatureMask from, to;
--} FeatureDep;
--
- static FeatureDep feature_dependencies[] = {
-     {
-         .from = { FEAT_7_0_EDX,             CPUID_7_0_EDX_ARCH_CAPABILITIES },
-@@ -1848,9 +1839,6 @@ static const X86RegisterInfo32 x86_reg_info_32[CPU_NB_REGS32] = {
- };
- #undef REGISTER
- 
--/* CPUID feature bits available in XSS */
--#define CPUID_XSTATE_XSS_MASK    (XSTATE_ARCH_LBR_MASK)
--
- ExtSaveArea x86_ext_save_areas[XSAVE_STATE_AREA_COUNT] = {
-     [XSTATE_FP_BIT] = {
-         /* x87 FP state component is always enabled if XSAVE is supported */
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 0e984ec42bb6..132312d70a54 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -588,6 +588,7 @@ typedef enum X86Seg {
- #define XSTATE_OPMASK_BIT               5
- #define XSTATE_ZMM_Hi256_BIT            6
- #define XSTATE_Hi16_ZMM_BIT             7
-+#define XSTATE_PT_BIT                   8
- #define XSTATE_PKRU_BIT                 9
- #define XSTATE_ARCH_LBR_BIT             15
- #define XSTATE_XTILE_CFG_BIT            17
-@@ -601,6 +602,7 @@ typedef enum X86Seg {
- #define XSTATE_OPMASK_MASK              (1ULL << XSTATE_OPMASK_BIT)
- #define XSTATE_ZMM_Hi256_MASK           (1ULL << XSTATE_ZMM_Hi256_BIT)
- #define XSTATE_Hi16_ZMM_MASK            (1ULL << XSTATE_Hi16_ZMM_BIT)
-+#define XSTATE_PT_MASK                  (1ULL << XSTATE_PT_BIT)
- #define XSTATE_PKRU_MASK                (1ULL << XSTATE_PKRU_BIT)
- #define XSTATE_ARCH_LBR_MASK            (1ULL << XSTATE_ARCH_LBR_BIT)
- #define XSTATE_XTILE_CFG_MASK           (1ULL << XSTATE_XTILE_CFG_BIT)
-@@ -623,6 +625,11 @@ typedef enum X86Seg {
-                                  XSTATE_Hi16_ZMM_MASK | XSTATE_PKRU_MASK | \
-                                  XSTATE_XTILE_CFG_MASK | XSTATE_XTILE_DATA_MASK)
- 
-+/* CPUID feature bits available in XSS */
-+#define CPUID_XSTATE_XSS_MASK    (XSTATE_ARCH_LBR_MASK)
-+
-+#define CPUID_XSTATE_MASK       (CPUID_XSTATE_XCR0_MASK | CPUID_XSTATE_XSS_MASK)
-+
- /* CPUID feature words */
- typedef enum FeatureWord {
-     FEAT_1_EDX,         /* CPUID[1].EDX */
-@@ -671,6 +678,15 @@ typedef enum FeatureWord {
-     FEATURE_WORDS,
- } FeatureWord;
- 
-+typedef struct FeatureMask {
-+    FeatureWord index;
-+    uint64_t mask;
-+} FeatureMask;
-+
-+typedef struct FeatureDep {
-+    FeatureMask from, to;
-+} FeatureDep;
-+
- typedef uint64_t FeatureWordArray[FEATURE_WORDS];
- uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index e4ad2632a566..df6b71568321 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -23,6 +23,8 @@
- 
- #include <linux/kvm_para.h>
- 
-+#include "cpu.h"
-+#include "cpu-internal.h"
- #include "hw/i386/e820_memory_layout.h"
- #include "hw/i386/tdvf.h"
- #include "hw/i386/x86.h"
-@@ -493,6 +495,32 @@ static TdxAttrsMap tdx_attrs_maps[] = {
-      .feat_mask = CPUID_7_0_ECX_KeyLocker,},
- };
- 
-+typedef struct TdxXFAMDep {
-+    int xfam_bit;
-+    FeatureMask feat_mask;
-+} TdxXFAMDep;
-+
+diff --git a/include/standard-headers/uefi/uefi.h b/include/standard-headers/uefi/uefi.h
+new file mode 100644
+index 000000000000..5256349ec0b6
+--- /dev/null
++++ b/include/standard-headers/uefi/uefi.h
+@@ -0,0 +1,187 @@
 +/*
-+ * Note, only the CPUID bits whose virtualization type are "XFAM & Native" are
-+ * defiend here.
++ * Copyright (C) 2025 Intel Corporation
 + *
-+ * For those whose virtualization type are "XFAM & Configured & Native", they
-+ * are reported as configurable bits. And they are not supported if not in the
-+ * configureable bits list from KVM even if the corresponding XFAM bit is
-+ * supported.
++ * Author: Isaku Yamahata <isaku.yamahata at gmail.com>
++ *                        <isaku.yamahata at intel.com>
++ *         Xiaoyao Li <xiaoyao.li@intel.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+TdxXFAMDep tdx_xfam_deps[] = {
-+    { XSTATE_YMM_BIT,       { FEAT_1_ECX, CPUID_EXT_FMA }},
-+    { XSTATE_YMM_BIT,       { FEAT_7_0_EBX, CPUID_7_0_EBX_AVX2 }},
-+    { XSTATE_OPMASK_BIT,    { FEAT_7_0_ECX, CPUID_7_0_ECX_AVX512_VBMI}},
-+    { XSTATE_OPMASK_BIT,    { FEAT_7_0_EDX, CPUID_7_0_EDX_AVX512_FP16}},
-+    { XSTATE_PT_BIT,        { FEAT_7_0_EBX, CPUID_7_0_EBX_INTEL_PT}},
-+    { XSTATE_PKRU_BIT,      { FEAT_7_0_ECX, CPUID_7_0_ECX_PKU}},
-+    { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_BF16 }},
-+    { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_TILE }},
-+    { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_INT8 }},
-+};
 +
- static struct kvm_cpuid_entry2 *find_in_supported_entry(uint32_t function,
-                                                         uint32_t index)
- {
-@@ -560,6 +588,50 @@ static void tdx_add_supported_cpuid_by_attrs(void)
-     }
- }
- 
-+static void tdx_add_supported_cpuid_by_xfam(void)
-+{
-+    struct kvm_cpuid_entry2 *e;
-+    int i;
++#ifndef HW_I386_UEFI_H
++#define HW_I386_UEFI_H
 +
-+    const TdxXFAMDep *xfam_dep;
-+    const FeatureWordInfo *f;
-+    for (i = 0; i < ARRAY_SIZE(tdx_xfam_deps); i++) {
-+        xfam_dep = &tdx_xfam_deps[i];
-+        if (!((1ULL << xfam_dep->xfam_bit) & tdx_caps->supported_xfam)) {
-+            continue;
-+        }
++/***************************************************************************/
++/*
++ * basic EFI definitions
++ * supplemented with UEFI Specification Version 2.8 (Errata A)
++ * released February 2020
++ */
++/* UEFI integer is little endian */
 +
-+        f = &feature_word_info[xfam_dep->feat_mask.index];
-+        if (f->type != CPUID_FEATURE_WORD) {
-+            continue;
-+        }
++typedef struct {
++    uint32_t Data1;
++    uint16_t Data2;
++    uint16_t Data3;
++    uint8_t Data4[8];
++} EFI_GUID;
 +
-+        e = find_in_supported_entry(f->cpuid.eax, f->cpuid.ecx);
-+        switch(f->cpuid.reg) {
-+        case R_EAX:
-+            e->eax |= xfam_dep->feat_mask.mask;
-+            break;
-+        case R_EBX:
-+            e->ebx |= xfam_dep->feat_mask.mask;
-+            break;
-+        case R_ECX:
-+            e->ecx |= xfam_dep->feat_mask.mask;
-+            break;
-+        case R_EDX:
-+            e->edx |= xfam_dep->feat_mask.mask;
-+            break;
-+        }
-+    }
++typedef enum {
++    EfiReservedMemoryType,
++    EfiLoaderCode,
++    EfiLoaderData,
++    EfiBootServicesCode,
++    EfiBootServicesData,
++    EfiRuntimeServicesCode,
++    EfiRuntimeServicesData,
++    EfiConventionalMemory,
++    EfiUnusableMemory,
++    EfiACPIReclaimMemory,
++    EfiACPIMemoryNVS,
++    EfiMemoryMappedIO,
++    EfiMemoryMappedIOPortSpace,
++    EfiPalCode,
++    EfiPersistentMemory,
++    EfiUnacceptedMemoryType,
++    EfiMaxMemoryType
++} EFI_MEMORY_TYPE;
 +
-+    e = find_in_supported_entry(0xd, 0);
-+    e->eax |= (tdx_caps->supported_xfam & CPUID_XSTATE_XCR0_MASK);
-+    e->edx |= (tdx_caps->supported_xfam & CPUID_XSTATE_XCR0_MASK) >> 32;
++#define EFI_HOB_HANDOFF_TABLE_VERSION 0x0009
 +
-+    e = find_in_supported_entry(0xd, 1);
-+    e->ecx |= (tdx_caps->supported_xfam & CPUID_XSTATE_XSS_MASK);
-+    e->edx |= (tdx_caps->supported_xfam & CPUID_XSTATE_XSS_MASK) >> 32;
-+}
++#define EFI_HOB_TYPE_HANDOFF              0x0001
++#define EFI_HOB_TYPE_MEMORY_ALLOCATION    0x0002
++#define EFI_HOB_TYPE_RESOURCE_DESCRIPTOR  0x0003
++#define EFI_HOB_TYPE_GUID_EXTENSION       0x0004
++#define EFI_HOB_TYPE_FV                   0x0005
++#define EFI_HOB_TYPE_CPU                  0x0006
++#define EFI_HOB_TYPE_MEMORY_POOL          0x0007
++#define EFI_HOB_TYPE_FV2                  0x0009
++#define EFI_HOB_TYPE_LOAD_PEIM_UNUSED     0x000A
++#define EFI_HOB_TYPE_UEFI_CAPSULE         0x000B
++#define EFI_HOB_TYPE_FV3                  0x000C
++#define EFI_HOB_TYPE_UNUSED               0xFFFE
++#define EFI_HOB_TYPE_END_OF_HOB_LIST      0xFFFF
 +
- static void tdx_setup_supported_cpuid(void)
- {
-     if (tdx_supported_cpuid) {
-@@ -575,6 +647,7 @@ static void tdx_setup_supported_cpuid(void)
- 
-     tdx_add_supported_cpuid_by_fixed1_bits();
-     tdx_add_supported_cpuid_by_attrs();
-+    tdx_add_supported_cpuid_by_xfam();
- }
- 
- static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
++typedef struct {
++    uint16_t HobType;
++    uint16_t HobLength;
++    uint32_t Reserved;
++} EFI_HOB_GENERIC_HEADER;
++
++typedef uint64_t EFI_PHYSICAL_ADDRESS;
++typedef uint32_t EFI_BOOT_MODE;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    uint32_t Version;
++    EFI_BOOT_MODE BootMode;
++    EFI_PHYSICAL_ADDRESS EfiMemoryTop;
++    EFI_PHYSICAL_ADDRESS EfiMemoryBottom;
++    EFI_PHYSICAL_ADDRESS EfiFreeMemoryTop;
++    EFI_PHYSICAL_ADDRESS EfiFreeMemoryBottom;
++    EFI_PHYSICAL_ADDRESS EfiEndOfHobList;
++} EFI_HOB_HANDOFF_INFO_TABLE;
++
++#define EFI_RESOURCE_SYSTEM_MEMORY          0x00000000
++#define EFI_RESOURCE_MEMORY_MAPPED_IO       0x00000001
++#define EFI_RESOURCE_IO                     0x00000002
++#define EFI_RESOURCE_FIRMWARE_DEVICE        0x00000003
++#define EFI_RESOURCE_MEMORY_MAPPED_IO_PORT  0x00000004
++#define EFI_RESOURCE_MEMORY_RESERVED        0x00000005
++#define EFI_RESOURCE_IO_RESERVED            0x00000006
++#define EFI_RESOURCE_MEMORY_UNACCEPTED      0x00000007
++#define EFI_RESOURCE_MAX_MEMORY_TYPE        0x00000008
++
++#define EFI_RESOURCE_ATTRIBUTE_PRESENT                  0x00000001
++#define EFI_RESOURCE_ATTRIBUTE_INITIALIZED              0x00000002
++#define EFI_RESOURCE_ATTRIBUTE_TESTED                   0x00000004
++#define EFI_RESOURCE_ATTRIBUTE_SINGLE_BIT_ECC           0x00000008
++#define EFI_RESOURCE_ATTRIBUTE_MULTIPLE_BIT_ECC         0x00000010
++#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_1           0x00000020
++#define EFI_RESOURCE_ATTRIBUTE_ECC_RESERVED_2           0x00000040
++#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTED           0x00000080
++#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTED          0x00000100
++#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTED      0x00000200
++#define EFI_RESOURCE_ATTRIBUTE_UNCACHEABLE              0x00000400
++#define EFI_RESOURCE_ATTRIBUTE_WRITE_COMBINEABLE        0x00000800
++#define EFI_RESOURCE_ATTRIBUTE_WRITE_THROUGH_CACHEABLE  0x00001000
++#define EFI_RESOURCE_ATTRIBUTE_WRITE_BACK_CACHEABLE     0x00002000
++#define EFI_RESOURCE_ATTRIBUTE_16_BIT_IO                0x00004000
++#define EFI_RESOURCE_ATTRIBUTE_32_BIT_IO                0x00008000
++#define EFI_RESOURCE_ATTRIBUTE_64_BIT_IO                0x00010000
++#define EFI_RESOURCE_ATTRIBUTE_UNCACHED_EXPORTED        0x00020000
++#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTED      0x00040000
++#define EFI_RESOURCE_ATTRIBUTE_READ_ONLY_PROTECTABLE    0x00080000
++#define EFI_RESOURCE_ATTRIBUTE_READ_PROTECTABLE         0x00100000
++#define EFI_RESOURCE_ATTRIBUTE_WRITE_PROTECTABLE        0x00200000
++#define EFI_RESOURCE_ATTRIBUTE_EXECUTION_PROTECTABLE    0x00400000
++#define EFI_RESOURCE_ATTRIBUTE_PERSISTENT               0x00800000
++#define EFI_RESOURCE_ATTRIBUTE_PERSISTABLE              0x01000000
++#define EFI_RESOURCE_ATTRIBUTE_MORE_RELIABLE            0x02000000
++
++typedef uint32_t EFI_RESOURCE_TYPE;
++typedef uint32_t EFI_RESOURCE_ATTRIBUTE_TYPE;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    EFI_GUID Owner;
++    EFI_RESOURCE_TYPE ResourceType;
++    EFI_RESOURCE_ATTRIBUTE_TYPE ResourceAttribute;
++    EFI_PHYSICAL_ADDRESS PhysicalStart;
++    uint64_t ResourceLength;
++} EFI_HOB_RESOURCE_DESCRIPTOR;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    EFI_GUID Name;
++
++    /* guid specific data follows */
++} EFI_HOB_GUID_TYPE;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    EFI_PHYSICAL_ADDRESS BaseAddress;
++    uint64_t Length;
++} EFI_HOB_FIRMWARE_VOLUME;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    EFI_PHYSICAL_ADDRESS BaseAddress;
++    uint64_t Length;
++    EFI_GUID FvName;
++    EFI_GUID FileName;
++} EFI_HOB_FIRMWARE_VOLUME2;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    EFI_PHYSICAL_ADDRESS BaseAddress;
++    uint64_t Length;
++    uint32_t AuthenticationStatus;
++    bool ExtractedFv;
++    EFI_GUID FvName;
++    EFI_GUID FileName;
++} EFI_HOB_FIRMWARE_VOLUME3;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++    uint8_t SizeOfMemorySpace;
++    uint8_t SizeOfIoSpace;
++    uint8_t Reserved[6];
++} EFI_HOB_CPU;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++} EFI_HOB_MEMORY_POOL;
++
++typedef struct {
++    EFI_HOB_GENERIC_HEADER Header;
++
++    EFI_PHYSICAL_ADDRESS BaseAddress;
++    uint64_t Length;
++} EFI_HOB_UEFI_CAPSULE;
++
++#define EFI_HOB_OWNER_ZERO                                      \
++    ((EFI_GUID){ 0x00000000, 0x0000, 0x0000,                    \
++        { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 } })
++
++#endif
 -- 
 2.43.0
 
