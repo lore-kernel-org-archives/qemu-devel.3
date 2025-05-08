@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95B17C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 22:08:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B39AC3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 22:08:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD9Ot-0007Rv-Iz; Thu, 08 May 2025 18:07:31 -0400
+	id 1uD9Ou-0007Sr-9B; Thu, 08 May 2025 18:07:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3HCsdaAwKCi8YLMTSPdePQLYRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--nabihestefan.bounces.google.com>)
- id 1uD9Or-0007LU-M2
- for qemu-devel@nongnu.org; Thu, 08 May 2025 18:07:29 -0400
-Received: from mail-pf1-x44a.google.com ([2607:f8b0:4864:20::44a])
+ <3HSsdaAwKCjAZMNUTQefQRMZSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--nabihestefan.bounces.google.com>)
+ id 1uD9Os-0007NQ-4E
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 18:07:30 -0400
+Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3HCsdaAwKCi8YLMTSPdePQLYRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--nabihestefan.bounces.google.com>)
- id 1uD9Op-0001gq-EW
+ <3HSsdaAwKCjAZMNUTQefQRMZSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--nabihestefan.bounces.google.com>)
+ id 1uD9Oq-0001h0-0w
  for qemu-devel@nongnu.org; Thu, 08 May 2025 18:07:29 -0400
-Received: by mail-pf1-x44a.google.com with SMTP id
- d2e1a72fcca58-736c7df9b6cso1912175b3a.3
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 15:07:25 -0700 (PDT)
+Received: by mail-pl1-x64a.google.com with SMTP id
+ d9443c01a7336-22fb8cfff31so6353705ad.1
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 15:07:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1746742044; x=1747346844; darn=nongnu.org;
+ d=google.com; s=20230601; t=1746742046; x=1747346846; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=y8fZ2oazQrEG5s1AS0nB/dvBEbv4XtnmcMMlYNe4V5k=;
- b=eiy50BvVW45y/oE5CNt2L3nlf0/qzCPIkyGidnIdk2dku1CI/uXnI39y1PDYYPewuX
- GsEqUCWdCKZrPW9d37jVFWPWSKRX4e04iikA4IuAiJNZYsMwOd5NmRnxrHTl6DpoHHKD
- eWe2ucHXpIh7yvBkyw0N/fzCwRSsprkrlO4bjno9xbhc3y3VHewq/C4mq6FWlmnlDd1m
- lyvJnTzWedn21CNsmKjITadFDd1WheFkr0mhfNAiUF2DZWBQcGnW6M0c9j/PrGa/BPwP
- bYucxevk5okdPCfXZNMGoGtLSHPir5afAvbGB5pqnC9VMm1dNzIDjOnYNdzCCw21zEhY
- oodQ==
+ bh=fJU6UlRN3H7dSUUIlwcfvpO29WmnqKnNMBXNRLUsUNk=;
+ b=wvw+eWJ8p8ynL/bCG/dZu6kil/5BvSTe+P2mAnJFog9uyMbTm2+Z03vRRyJT1TzUKp
+ eezW9kYiFldiYd7qvHlNXr8XwGq7BmcsoOJy51qCSEaE77hWNKaOUbrdlAuNPrBDfRQo
+ TXK9+9RXyevCC5DWbKrYPGeDWhenQyYDCdeGOxAFeJ3jJVeZKrxQDfzegE4Y/BYqCTZd
+ mkDWGVmWi4h61Gc+SsgAzEtG1YP2SjjlY2NHCxAnRLj+lgTSTXCRcwpciRPDQa6ixOh5
+ 2NtXyhRC9zQOc+1s0cfi6GquTsJjlVbybZ2eH2kWgeOupUu6tDcsrVEv0o+eknPO/tu2
+ mb6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746742044; x=1747346844;
+ d=1e100.net; s=20230601; t=1746742046; x=1747346846;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y8fZ2oazQrEG5s1AS0nB/dvBEbv4XtnmcMMlYNe4V5k=;
- b=Pr560psBXT8sY8YU4Qt5Tz6bdu5CT4xwMj4ZVYfA/B9eT1TMBM5pu06yHOJYQ+QoZD
- wsfU07mFcsDlfQ88UQ7qzMH1kvMXtjZ6hGPljVulWlbIHDek6wS9MrKfhRAtKz25VzSX
- hfFLt0Ynbcj9y5a+yP+VUp60qs2d5PgST/j2bdi2F2wJlcYfIWypgyfXb4eYtLR/gH4O
- L+09tjrAFer9Ny4XBbpH0cgZogv2I5N9RSXpVEEQUdzXO8uigqeT5Nr0qCqJrYfPlB6R
- htd+/4qg1A9slAMZpTMizumDzwy989crADmCHu3srnfY70RdUy6Jo1wvZomk8FZWz9vj
- Lojg==
-X-Gm-Message-State: AOJu0YyrXKGJYvghbvzuIFA5Jk2sD7k+vnNbfRF0md8vS+vGsDKPcg1J
- DwkWy9qzPVyIQYW2UBLPmKpZVYFF08cGB5i5/91lR4z9E+P7qQRTQ9n8eYD+yfxwfies/f8ej0R
- I8UjEjHy8xkbczmFakYHqTIMCIOezBgwSVjv8oVZxzy6ZSrkvSlnO81CQORXUSJhwe3Q/iSWwen
- FMgI6+I8EsmS3xiW4eUobCfWz27Iwdvc4YV/WiVtK7A06e7OLags+YX27O10aNghA=
-X-Google-Smtp-Source: AGHT+IFYC2QSX1HCxtDZ+yoNhI45RIsfiH0cFCs++OpgTR/wyiF6cJWwai1ZHeegr/Eukpf++WyLGye4hGOfuWzEcLQ=
-X-Received: from pgut4.prod.google.com ([2002:a65:6084:0:b0:b1f:f3f1:9e07])
+ bh=fJU6UlRN3H7dSUUIlwcfvpO29WmnqKnNMBXNRLUsUNk=;
+ b=iuGUWPto6vtqFAkr2jMrDdanblCeFXZJ4hmntXmfCHNm8vc8xEHjSZvwQ0Kltn94vH
+ 7XOUso70Lk/Y8r8D6n3JzVk11AbnFe+vrli4ROCO1WZbxwxZ4PSv9khgxVfVm0FKvzb3
+ WoJ77quGPU/78CB4GozpyyA9L6oEX3ybiHz8qTf22vcd8Gj3XlGOUIdYeh4XpaSW+K6j
+ qVqdRcnx/jPvjavT0GAYqEsD1FATvIC5DYbwG63EFam/Fffj20cNF+G3GgXMe0cc1iaj
+ r0yjoJspijvG/0ZDT74EecSDY0R1Foy9MELQtPBaeN36mXXhA5D7LKUxUy341X64YAV9
+ 2qHA==
+X-Gm-Message-State: AOJu0YyWkRmcKQ5OWrn5Nbfix1qzSb1Ooj/9hA47q3YfB7BGQTCMS6Pu
+ yoJ3tTftXSc93vXjCMs/itTeaROCLSYOZccF6JCArjCqU218ODIQ9ug7O792fIwdhyJ/WTbIWn4
+ hC4jVlhR1FXR1FzRKHmmKfWzMRB4cUsv2MPL3ckZlsobYy739MFg+HEz8YpRSpKPCoCWgEqgAi3
+ 3ENsjB0+PlpaULzYn/YhOq1CV4cQ+kgYGWP7dhfsl2K4CSCy/NJ/V/ecdHC6WoaG4=
+X-Google-Smtp-Source: AGHT+IHegrkqn/KsXotRkXOWoiFRuWiZo0MUqAPEh+sCMXmxqvDJitICFqyt0CpxZMVhNSazfSpJ7yj6lDEjVtenYE4=
+X-Received: from plez11.prod.google.com ([2002:a17:902:cccb:b0:223:f487:afc6])
  (user=nabihestefan job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a20:3d81:b0:1f5:7df9:f13c with SMTP id
- adf61e73a8af0-215abc734c6mr1249250637.41.1746742044337; 
- Thu, 08 May 2025 15:07:24 -0700 (PDT)
-Date: Thu,  8 May 2025 22:07:17 +0000
+ 2002:a17:902:ea0b:b0:224:24d3:60f4 with SMTP id
+ d9443c01a7336-22fc8b49391mr14117325ad.15.1746742045671; 
+ Thu, 08 May 2025 15:07:25 -0700 (PDT)
+Date: Thu,  8 May 2025 22:07:18 +0000
 In-Reply-To: <20250508220718.735415-1-nabihestefan@google.com>
 Mime-Version: 1.0
 References: <20250508220718.735415-1-nabihestefan@google.com>
 X-Mailer: git-send-email 2.49.0.1015.ga840276032-goog
-Message-ID: <20250508220718.735415-2-nabihestefan@google.com>
-Subject: [PATCH 1/2] hw/arm: Add GMAC devices to NPCM8XX SoC
+Message-ID: <20250508220718.735415-3-nabihestefan@google.com>
+Subject: [PATCH 2/2] tests/qtest: Migrate GMAC test from 7xx to 8xx
 From: Nabih Estefan <nabihestefan@google.com>
 To: qemu-devel@nongnu.org
 Cc: kfting@nuvoton.com, wuhaotsh@google.com, peter.maydell@linaro.org, 
  farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com, qemu-arm@nongnu.org, 
  Nabih Estefan <nabihestefan@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::44a;
- envelope-from=3HCsdaAwKCi8YLMTSPdePQLYRZZRWP.NZXbPXf-OPgPWYZYRYf.ZcR@flex--nabihestefan.bounces.google.com;
- helo=mail-pf1-x44a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
+ envelope-from=3HSsdaAwKCjAZMNUTQefQRMZSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--nabihestefan.bounces.google.com;
+ helo=mail-pl1-x64a.google.com
 X-Spam_score_int: -100
 X-Spam_score: -10.1
 X-Spam_bar: ----------
@@ -95,143 +95,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hao Wu <wuhaotsh@google.com>
+For upstreaming we migrated this test to 7xx (since that was already
+upstream) move it back to 8xx where it can check the 4 GMACs since that
+is the board this test was originally created for.
 
-The GMAC was originally created for the 8xx machine. During upstreaming
-both the GMAC and the 8XX we removed it so they would not depend on each
-other for the process, that connection should be added back in.
-
-Signed-off-by: Hao Wu <wuhaotsh@google.com>
 Signed-off-by: Nabih Estefan <nabihestefan@google.com>
 ---
- hw/arm/npcm8xx.c         | 54 ++++++++++++++++++++++++++++++++++++----
- include/hw/arm/npcm8xx.h |  5 +++-
- 2 files changed, 53 insertions(+), 6 deletions(-)
+ tests/qtest/meson.build      |  6 ++-
+ tests/qtest/npcm_gmac-test.c | 85 ++++++++++++++++++++++++++++++++++--
+ 2 files changed, 86 insertions(+), 5 deletions(-)
 
-diff --git a/hw/arm/npcm8xx.c b/hw/arm/npcm8xx.c
-index d7ee306de7..d14bf55cd7 100644
---- a/hw/arm/npcm8xx.c
-+++ b/hw/arm/npcm8xx.c
-@@ -67,6 +67,9 @@
- /* SDHCI Modules */
- #define NPCM8XX_MMC_BA          0xf0842000
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 3136d15e0f..ea9f8bc4b2 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -207,9 +207,10 @@ qtests_npcm7xx = \
+    'npcm7xx_sdhci-test',
+    'npcm7xx_smbus-test',
+    'npcm7xx_timer-test',
+-   'npcm7xx_watchdog_timer-test',
+-   'npcm_gmac-test'] + \
++   'npcm7xx_watchdog_timer-test'] + \
+    (slirp.found() ? ['npcm7xx_emc-test'] : [])
++qtests_npcm8xx = \
++  ['npcm_gmac-test']
+ qtests_aspeed = \
+   ['aspeed_hace-test',
+    'aspeed_smc-test',
+@@ -257,6 +258,7 @@ qtests_aarch64 = \
+   (config_all_accel.has_key('CONFIG_TCG') and                                            \
+    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
+   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
++  (config_all_devices.has_key('CONFIG_NPCM8XX') ? qtests_npcm8xx : []) + \
+   ['arm-cpu-features',
+    'numa-test',
+    'boot-serial-test',
+diff --git a/tests/qtest/npcm_gmac-test.c b/tests/qtest/npcm_gmac-test.c
+index c28b471ab2..1317da2cd7 100644
+--- a/tests/qtest/npcm_gmac-test.c
++++ b/tests/qtest/npcm_gmac-test.c
+@@ -36,7 +36,7 @@ typedef struct TestData {
+     const GMACModule *module;
+ } TestData;
  
-+/* PCS Module */
-+#define NPCM8XX_PCS_BA          0xf0780000
-+
- /* PSPI Modules */
- #define NPCM8XX_PSPI_BA         0xf0201000
- 
-@@ -85,6 +88,10 @@ enum NPCM8xxInterrupt {
-     NPCM8XX_ADC_IRQ             = 0,
-     NPCM8XX_PECI_IRQ            = 6,
-     NPCM8XX_KCS_HIB_IRQ         = 9,
-+    NPCM8XX_GMAC1_IRQ           = 14,
-+    NPCM8XX_GMAC2_IRQ,
-+    NPCM8XX_GMAC3_IRQ,
-+    NPCM8XX_GMAC4_IRQ,
-     NPCM8XX_MMC_IRQ             = 26,
-     NPCM8XX_PSPI_IRQ            = 28,
-     NPCM8XX_TIMER0_IRQ          = 32,   /* Timer Module 0 */
-@@ -260,6 +267,14 @@ static const hwaddr npcm8xx_smbus_addr[] = {
-     0xfff0a000,
+-/* Values extracted from hw/arm/npcm7xx.c */
++/* Values extracted from hw/arm/npcm8xx.c */
+ static const GMACModule gmac_module_list[] = {
+     {
+         .irq        = 14,
+@@ -46,6 +46,14 @@ static const GMACModule gmac_module_list[] = {
+         .irq        = 15,
+         .base_addr  = 0xf0804000
+     },
++    {
++        .irq        = 16,
++        .base_addr  = 0xf0806000
++    },
++    {
++        .irq        = 17,
++        .base_addr  = 0xf0808000
++    }
  };
  
-+/* Register base address for each GMAC Module */
-+static const hwaddr npcm8xx_gmac_addr[] = {
-+    0xf0802000,
-+    0xf0804000,
-+    0xf0806000,
-+    0xf0808000,
-+};
-+
- /* Register base address for each USB host EHCI registers */
- static const hwaddr npcm8xx_ehci_addr[] = {
-     0xf0828100,
-@@ -444,6 +459,11 @@ static void npcm8xx_init(Object *obj)
-         object_initialize_child(obj, "mft[*]", &s->mft[i], TYPE_NPCM7XX_MFT);
-     }
- 
-+    for (i = 0; i < ARRAY_SIZE(s->gmac); i++) {
-+        object_initialize_child(obj, "gmac[*]", &s->gmac[i], TYPE_NPCM_GMAC);
-+    }
-+    object_initialize_child(obj, "pcs", &s->pcs, TYPE_NPCM_PCS);
-+
-     object_initialize_child(obj, "mmc", &s->mmc, TYPE_NPCM7XX_SDHCI);
-     object_initialize_child(obj, "pspi", &s->pspi, TYPE_NPCM_PSPI);
+ /* Returns the index of the GMAC module. */
+@@ -174,18 +182,32 @@ static uint32_t gmac_read(QTestState *qts, const GMACModule *mod,
+     return qtest_readl(qts, mod->base_addr + regno);
  }
-@@ -668,6 +688,35 @@ static void npcm8xx_realize(DeviceState *dev, Error **errp)
-         sysbus_connect_irq(sbd, 0, npcm8xx_irq(s, NPCM8XX_MFT0_IRQ + i));
-     }
  
-+    /*
-+     * GMAC Modules. Cannot fail.
-+     */
-+    QEMU_BUILD_BUG_ON(ARRAY_SIZE(npcm8xx_gmac_addr) != ARRAY_SIZE(s->gmac));
-+    for (i = 0; i < ARRAY_SIZE(s->gmac); i++) {
-+        SysBusDevice *sbd = SYS_BUS_DEVICE(&s->gmac[i]);
++static uint16_t pcs_read(QTestState *qts, const GMACModule *mod,
++                          NPCMRegister regno)
++{
++    uint32_t write_value = (regno & 0x3ffe00) >> 9;
++    qtest_writel(qts, PCS_BASE_ADDRESS + NPCM_PCS_IND_AC_BA, write_value);
++    uint32_t read_offset = regno & 0x1ff;
++    return qtest_readl(qts, PCS_BASE_ADDRESS + read_offset);
++}
 +
-+        /* This is used to make sure that the NIC can create the device */
-+        qemu_configure_nic_device(DEVICE(sbd), false, NULL);
+ /* Check that GMAC registers are reset to default value */
+ static void test_init(gconstpointer test_data)
+ {
+     const TestData *td = test_data;
+     const GMACModule *mod = td->module;
+-    QTestState *qts = qtest_init("-machine npcm750-evb");
++    QTestState *qts = qtest_init("-machine npcm845-evb");
+ 
+ #define CHECK_REG32(regno, value) \
+     do { \
+         g_assert_cmphex(gmac_read(qts, mod, (regno)), ==, (value)); \
+     } while (0)
+ 
++#define CHECK_REG_PCS(regno, value) \
++    do { \
++        g_assert_cmphex(pcs_read(qts, mod, (regno)), ==, (value)); \
++    } while (0)
 +
-+        /*
-+         * The device exists regardless of whether it's connected to a QEMU
-+         * netdev backend. So always instantiate it even if there is no
-+         * backend.
-+         */
-+        sysbus_realize(sbd, &error_abort);
-+        sysbus_mmio_map(sbd, 0, npcm8xx_gmac_addr[i]);
-+        /*
-+         * N.B. The values for the second argument sysbus_connect_irq are
-+         * chosen to match the registration order in npcm7xx_emc_realize.
-+         */
-+        sysbus_connect_irq(sbd, 0, npcm8xx_irq(s, NPCM8XX_GMAC1_IRQ + i));
+     CHECK_REG32(NPCM_DMA_BUS_MODE, 0x00020100);
+     CHECK_REG32(NPCM_DMA_XMT_POLL_DEMAND, 0);
+     CHECK_REG32(NPCM_DMA_RCV_POLL_DEMAND, 0);
+@@ -235,6 +257,63 @@ static void test_init(gconstpointer test_data)
+     CHECK_REG32(NPCM_GMAC_PTP_TAR, 0);
+     CHECK_REG32(NPCM_GMAC_PTP_TTSR, 0);
+ 
++    if (mod->base_addr == 0xf0802000) {
++        CHECK_REG_PCS(NPCM_PCS_SR_CTL_ID1, 0x699e);
++        CHECK_REG_PCS(NPCM_PCS_SR_CTL_ID2, 0);
++        CHECK_REG_PCS(NPCM_PCS_SR_CTL_STS, 0x8000);
++
++        CHECK_REG_PCS(NPCM_PCS_SR_MII_CTRL, 0x1140);
++        CHECK_REG_PCS(NPCM_PCS_SR_MII_STS, 0x0109);
++        CHECK_REG_PCS(NPCM_PCS_SR_MII_DEV_ID1, 0x699e);
++        CHECK_REG_PCS(NPCM_PCS_SR_MII_DEV_ID2, 0x0ced0);
++        CHECK_REG_PCS(NPCM_PCS_SR_MII_AN_ADV, 0x0020);
++        CHECK_REG_PCS(NPCM_PCS_SR_MII_LP_BABL, 0);
++        CHECK_REG_PCS(NPCM_PCS_SR_MII_AN_EXPN, 0);
++        CHECK_REG_PCS(NPCM_PCS_SR_MII_EXT_STS, 0xc000);
++
++        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_ABL, 0x0003);
++        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_TX_MAX_DLY_LWR, 0x0038);
++        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_TX_MAX_DLY_UPR, 0);
++        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_TX_MIN_DLY_LWR, 0x0038);
++        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_TX_MIN_DLY_UPR, 0);
++        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_RX_MAX_DLY_LWR, 0x0058);
++        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_RX_MAX_DLY_UPR, 0);
++        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_RX_MIN_DLY_LWR, 0x0048);
++        CHECK_REG_PCS(NPCM_PCS_SR_TIM_SYNC_RX_MIN_DLY_UPR, 0);
++
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MMD_DIG_CTRL1, 0x2400);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_AN_CTRL, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_AN_INTR_STS, 0x000a);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_TC, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_DBG_CTRL, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_EEE_MCTRL0, 0x899c);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_EEE_TXTIMER, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_EEE_RXTIMER, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_LINK_TIMER_CTRL, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_EEE_MCTRL1, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_DIG_STS, 0x0010);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_ICG_ERRCNT1, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MISC_STS, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_RX_LSTS, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_TX_BSTCTRL0, 0x00a);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_TX_LVLCTRL0, 0x007f);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_TX_GENCTRL0, 0x0001);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_TX_GENCTRL1, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_TX_STS, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_RX_GENCTRL0, 0x0100);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_RX_GENCTRL1, 0x1100);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_RX_LOS_CTRL0, 0x000e);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_MPLL_CTRL0, 0x0100);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_MPLL_CTRL1, 0x0032);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_MPLL_STS, 0x0001);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_MISC_CTRL2, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_LVL_CTRL, 0x0019);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_MISC_CTRL0, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_MP_MISC_CTRL1, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_DIG_CTRL2, 0);
++        CHECK_REG_PCS(NPCM_PCS_VR_MII_DIG_ERRCNT_SEL, 0);
 +    }
-+    /*
-+     * GMAC Physical Coding Sublayer(PCS) Module. Cannot fail.
-+     */
-+    sysbus_realize(SYS_BUS_DEVICE(&s->pcs), &error_abort);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->pcs), 0, NPCM8XX_PCS_BA);
 +
-     /*
-      * Flash Interface Unit (FIU). Can fail if incorrect number of chip selects
-      * specified, but this is a programming error.
-@@ -741,12 +790,7 @@ static void npcm8xx_realize(DeviceState *dev, Error **errp)
-     create_unimplemented_device("npcm8xx.ahbpci",       0xf0400000,   1 * MiB);
-     create_unimplemented_device("npcm8xx.dap",          0xf0500000, 960 * KiB);
-     create_unimplemented_device("npcm8xx.mcphy",        0xf05f0000,  64 * KiB);
--    create_unimplemented_device("npcm8xx.pcs",          0xf0780000, 256 * KiB);
-     create_unimplemented_device("npcm8xx.tsgen",        0xf07fc000,   8 * KiB);
--    create_unimplemented_device("npcm8xx.gmac1",        0xf0802000,   8 * KiB);
--    create_unimplemented_device("npcm8xx.gmac2",        0xf0804000,   8 * KiB);
--    create_unimplemented_device("npcm8xx.gmac3",        0xf0806000,   8 * KiB);
--    create_unimplemented_device("npcm8xx.gmac4",        0xf0808000,   8 * KiB);
-     create_unimplemented_device("npcm8xx.copctl",       0xf080c000,   4 * KiB);
-     create_unimplemented_device("npcm8xx.tipctl",       0xf080d000,   4 * KiB);
-     create_unimplemented_device("npcm8xx.rst",          0xf080e000,   4 * KiB);
-diff --git a/include/hw/arm/npcm8xx.h b/include/hw/arm/npcm8xx.h
-index 3436abff99..a8377db490 100644
---- a/include/hw/arm/npcm8xx.h
-+++ b/include/hw/arm/npcm8xx.h
-@@ -28,7 +28,8 @@
- #include "hw/misc/npcm7xx_mft.h"
- #include "hw/misc/npcm7xx_pwm.h"
- #include "hw/misc/npcm7xx_rng.h"
--#include "hw/net/npcm7xx_emc.h"
-+#include "hw/net/npcm_gmac.h"
-+#include "hw/net/npcm_pcs.h"
- #include "hw/nvram/npcm7xx_otp.h"
- #include "hw/sd/npcm7xx_sdhci.h"
- #include "hw/timer/npcm7xx_timer.h"
-@@ -99,6 +100,8 @@ struct NPCM8xxState {
-     EHCISysBusState     ehci[2];
-     OHCISysBusState     ohci[2];
-     NPCM7xxFIUState     fiu[3];
-+    NPCMGMACState       gmac[4];
-+    NPCMPCSState        pcs;
-     NPCM7xxSDHCIState   mmc;
-     NPCMPSPIState       pspi;
- };
+     qtest_quit(qts);
+ }
+ 
+@@ -242,7 +321,7 @@ static void gmac_add_test(const char *name, const TestData* td,
+                           GTestDataFunc fn)
+ {
+     g_autofree char *full_name = g_strdup_printf(
+-            "npcm7xx_gmac/gmac[%d]/%s", gmac_module_index(td->module), name);
++            "npcm8xx_gmac/gmac[%d]/%s", gmac_module_index(td->module), name);
+     qtest_add_data_func(full_name, td, fn);
+ }
+ 
 -- 
 2.49.0.1015.ga840276032-goog
 
