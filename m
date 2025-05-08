@@ -4,102 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2965C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 07:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16642C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 07:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCvhJ-0002kU-D6; Thu, 08 May 2025 03:29:37 -0400
+	id 1uCvjR-0003YK-5k; Thu, 08 May 2025 03:31:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCvhF-0002k4-Tm
- for qemu-devel@nongnu.org; Thu, 08 May 2025 03:29:34 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCvhE-0000ab-4v
- for qemu-devel@nongnu.org; Thu, 08 May 2025 03:29:33 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-227d6b530d8so7191925ad.3
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 00:29:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746689370; x=1747294170; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=HpvHuRxKXE3hUM5G1W3E4yC2SOPYhTgmTrK0RBLLJn8=;
- b=lEWny4HyjQhJkBcJuRT5Dr/WBFUbWAmPauUMaCYql6N0tDhgrJCyxXKYkWBWoDu+lp
- 6h/L9hg+E9pKxfNYP1JWl1gDgJN/YJQYI5J6uT/nKQBRS5//GcVymurSAn36HB9KScIi
- QGgZLp5A2wmg4viOEEsMtY0cZ/yJpHK+VgqwyixypkJHHNviv2djPgOE3nxf+J94NmOG
- wWLGCzoOlkF3L3hIfJy39S8Dc72OnTGY7kcg2L69UfVvAfrG//JwKx2NpO8IQ64khDPm
- SYos1W9bCdkUDXV7BjRR8EDSqQBiRJc7bYgN7EtU21j9embWIoBpu/2r2HmfY4va+SN7
- NpDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746689370; x=1747294170;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HpvHuRxKXE3hUM5G1W3E4yC2SOPYhTgmTrK0RBLLJn8=;
- b=r4lpUZDZfX9ZB5EV2icQ6rFCLbmQom7y4IQ/o0OT8PquDYOvWDwERuVi/KxZf2WkAH
- Ierb0S0isTHsiaT7oxz4rDZOOW7PhfqyPWV7NHBhUzMh8ipVzo/nX6eRoQQaftkCYb1H
- 9LC4kC4mSjBrtgfBU5wGzgvka8IFTUVfCpH+NXdXi1m/SpwM2h1/nGSS7mB9bTViwz+P
- XI85e8+M1RJ6VLWWEzR8JXVt4fffwnmJzk6Q3UC3VpEpE1q601KV9lCtJ9Lh9+a2jRks
- mP3xZNfkwKFO0W+9n1USklOty4v3FGL2lYk8O+3XmLehRy2XEqvhTS/W3TQXgBkons7v
- oiJA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVWSb/U1n3P2GIIK78Eulrbjk4+sQyv9z8ZSjN1at3qbY+dOnOBxJWGfKnKWteSr1C1zKdTear4dM6c@nongnu.org
-X-Gm-Message-State: AOJu0Yz37OgOTaIxeaDOvk8JGpgPuxzOgxYD+zuuOpZT17HNI2U9hoD2
- lh7hiIZ9ZWPthBxN38srdVTXFmtQn3wUUprfnf1MtRcBC6FgxFwfWZv2KauKvog=
-X-Gm-Gg: ASbGncv85HZc8SmAb/hv5ZIyF3bB6542l8ZOhd6AfMoqAkz0XXj4ppco81wa1KfIpgs
- y7vDSAaVHCObLPR/2HpyRDWyt8TQQOc4l0/IOWXs/qT9INhe8HeH6+bd7o5jtONCPl4SvA7Egzb
- I2M4XmdDqjHsf9fc4DOUUtMQmCtg+WLrNwZfW4irc/nq3+L2ayU7w0C2nGF0/e2RVGDvHGw6GFV
- LnJp+vsZ3Awdc/mqrZP8eXGEG5Gd+kkqVuY4aIvE5+Toty7hgHTSCPei4mE4KxJqXlLe2QAeCU+
- owlnq1gD6uWOK8zPTRpsiJqHCbEnili4rPKxxpz4vw1GMrLE9iFtGMP/kJQ4/zyBUXK+r38i6Ka
- U9AMqh+eb
-X-Google-Smtp-Source: AGHT+IHxnPpW0DNVisFvkjWUW9cLX7NfdmOHOS7Wt9u4GaaAE3xENowyBPArmLWXTwbTz4OsxdjM6g==
-X-Received: by 2002:a17:903:32ce:b0:225:abd2:5e4b with SMTP id
- d9443c01a7336-22e5ea78da9mr100156525ad.16.1746689370310; 
- Thu, 08 May 2025 00:29:30 -0700 (PDT)
-Received: from [192.168.69.243] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e696a554esm25138965ad.128.2025.05.08.00.29.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 May 2025 00:29:29 -0700 (PDT)
-Message-ID: <06743a2e-009b-4143-bf95-47338a595a51@linaro.org>
-Date: Thu, 8 May 2025 09:29:20 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uCvjK-0003XQ-JQ; Thu, 08 May 2025 03:31:43 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uCvjH-0000zc-5Z; Thu, 08 May 2025 03:31:42 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 048DD1200CE;
+ Thu, 08 May 2025 10:31:12 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7F238206B4A;
+ Thu,  8 May 2025 10:31:25 +0300 (MSK)
+Message-ID: <f337d662-9eea-4f8b-b2a4-38a46e64732e@tls.msk.ru>
+Date: Thu, 8 May 2025 10:31:26 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/16] hw/core/machine: Remove hw_compat_2_6[] array
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- Yi Liu <yi.l.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Amit Shah <amit@kernel.org>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Sergio Lopez <slp@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Yanan Wang <wangyanan55@huawei.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Ani Sinha <anisinha@redhat.com>
-References: <20250501183628.87479-1-philmd@linaro.org>
- <20250501183628.87479-7-philmd@linaro.org>
- <fd5da152-cd33-48e6-96f7-7048c631661b@redhat.com>
- <cc6fbcae-fda6-4ad9-9f7c-b3afd471d151@linaro.org>
-Content-Language: en-US
-In-Reply-To: <cc6fbcae-fda6-4ad9-9f7c-b3afd471d151@linaro.org>
+Subject: Re: [PATCH] target/arm: Don't assert() for ISB/SB inside IT block
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20250501125544.727038-1-peter.maydell@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250501125544.727038-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,28 +104,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/25 11:58, Philippe Mathieu-Daudé wrote:
-> On 5/5/25 11:13, Thomas Huth wrote:
->> On 01/05/2025 20.36, Philippe Mathieu-Daudé wrote:
->>> The hw_compat_2_6[] array was only used by the pc-q35-2.6 and
->>> pc-i440fx-2.6 machines, which got removed. Remove it.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   include/hw/boards.h | 3 ---
->>>   hw/core/machine.c   | 8 --------
->>>   2 files changed, 11 deletions(-)
->>
->> It's still used in the arm virt machine which has not been removed yet?
+On 01.05.2025 15:55, Peter Maydell wrote:
+> If the guest code has an ISB or SB insn inside an IT block, we
+> generate incorrect code which trips a TCG assertion:
 > 
-> Sorry, I forgot to mention in the cover this series consider
-> ARM virt-2.6 up to virt-2.12 machines removed because the
-> series doing that is already queued in target-arm.next:
-> https://lore.kernel.org/qemu-devel/20250116145944.38028-1- 
-> philmd@linaro.org/
+> qemu-system-arm: ../tcg/tcg-op.c:3343: void tcg_gen_goto_tb(unsigned int): Assertion `(tcg_ctx->goto_tb_issue_mask & (1 << idx)) == 0' failed.
+> 
+> This is because we call gen_goto_tb(dc, 1, ...) twice:
+> 
+>   brcond_i32 ZF,$0x0,ne,$L1
+>   add_i32 pc,pc,$0x4
+>   goto_tb $0x1
+>   exit_tb $0x73d948001b81
+>   set_label $L1
+>   add_i32 pc,pc,$0x4
+>   goto_tb $0x1
+>   exit_tb $0x73d948001b81
+> 
+> Both calls are in arm_tr_tb_stop(), one for the
+> DISAS_NEXT/DISAS_TOO_MANY handling, and one for the dc->condjump
+> condition-failed codepath.  The DISAS_NEXT handling doesn't have this
+> problem because arm_post_translate_insn() does the handling of "emit
+> the label for the condition-failed conditional execution" and so
+> arm_tr_tb_stop() doesn't have dc->condjump set.  But for
+> DISAS_TOO_MANY we don't do that.
+> 
+> Fix the bug by making arm_post_translate_insn() handle the
+> DISAS_TOO_MANY case.  This only affects the SB and ISB insns when
+> used in Thumb mode inside an IT block: only these insns specifically
+> set is_jmp to TOO_MANY, and their A32 encodings are unconditional.
+> 
+> For the major TOO_MANY case (breaking the TB because it would cross a
+> page boundary) we do that check and set is_jmp to TOO_MANY only after
+> the call to arm_post_translate_insn(); so arm_post_translate_insn()
+> sees is_jmp == DISAS_NEXT, and  we emit the correct code for that
+> situation.
+> 
+> With this fix we generate the somewhat more sensible set of TCG ops:
+>   brcond_i32 ZF,$0x0,ne,$L1
+>   set_label $L1
+>   add_i32 pc,pc,$0x4
+>   goto_tb $0x1
+>   exit_tb $0x7c5434001b81
+> 
+> (NB: the TCG optimizer doesn't optimize out the jump-to-next, but
+> we can't really avoid emitting it because we don't know at the
+> point we're emitting the handling for the condexec check whether
+> this insn is going to happen to be a nop for us or not.)
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2942
 
-The ARM patches has been merged as commits 1731ec33c38 ("hw/arm/virt:
-Remove deprecated virt-2.6 machine") and 390becbf7fa ("hw/arm/virt:
-Remove deprecated virt-2.7 machine").
+Hi!
 
+Is this change applicable for older stable releases, besides 10.0
+(currently 9.2 and 7.2)?  It applies cleanly but I wonder if it is
+actually needed..
+
+Thanks,
+
+/mjt
 
