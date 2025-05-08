@@ -4,100 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1397C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 12:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79A2DC3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 13:03:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD0oB-0002Qw-06; Thu, 08 May 2025 08:57:03 -0400
+	id 1uD0to-0007eb-V0; Thu, 08 May 2025 09:02:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0o8-0002QQ-Fc
- for qemu-devel@nongnu.org; Thu, 08 May 2025 08:57:00 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0tn-0007cV-OQ
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:02:51 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0o6-000714-Kg
- for qemu-devel@nongnu.org; Thu, 08 May 2025 08:57:00 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-22e033a3a07so10991885ad.0
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 05:56:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0tm-0007g2-00
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:02:51 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-2d54b936ad9so488311fac.1
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 06:02:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746709017; x=1747313817; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746709368; x=1747314168; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9pJjdoekuhc4yMSxtr3j+KnXmQZ6lV5ZboD4CrHy7xU=;
- b=az3tbm6Bmf0K00ko1+dEIf6W0CeziiPGb6WfzK2uAQ3Z4s3i3NtiHfymlq/9b9Nl8F
- C+tuJVCxvHac65Ipor9+TKBDvqzd+HQp4RSCl5Osn7xmCKW7RFRZ7XgwzHhQ4JVlsoxi
- P/2UaVNJ+PTbbWv6NqpsFDH0zAxDVF4vHQNDtmqhWdxNnHAfzEj3xcWngOmEV30rDW8H
- L5gvEUPdm3D9PddpFy8ypCCATdrHaRiikDoPbxWlLVSbvq96fZD5iBqxID+gbILf7/Ok
- MLD/ep3fSjwJCG3khTUbTvoSyV2dcM/Ipc+QGa19gMTvDM/5Jp/I+3U0PBLSHYka0mL3
- R3Gg==
+ bh=qA1vncVNbExTdrFsEz+MOpDLGhtoDokunG6HR7YcMKQ=;
+ b=XYGmfxqtcXB8aqbd502TYMFxXiHKbe+xFYSeOAPVr372wEDw3ld6s1DhtMqzlmsZxv
+ N08sxIELx3xr4wS/qglB02bBg4MXqDIAdRfoHGL8un4SY/4a+aN5RfCU8aeFdaltCPFR
+ lVSdGoKtb3QffZMJmE+FSivUJu7DzTCGq7WzqI34zCm7TR/NYQg3yyBvXqupnImiswcr
+ f78pSrtvIFh7VEFV2IUKjZKE7uOpyKdS3UZejU5XxEECfrEtN4LOxiOvqTjvWAAvSu12
+ r1El5nJKuk2gqeN09p3nx91bfWspXB61jKH2/yNBZp5Yg2mSRmDUNkF4Br5QWDUbK1Vu
+ gfeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746709017; x=1747313817;
+ d=1e100.net; s=20230601; t=1746709368; x=1747314168;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9pJjdoekuhc4yMSxtr3j+KnXmQZ6lV5ZboD4CrHy7xU=;
- b=aPO9Gt6Wqd0XY/RTtF+iPvoYY1HUp0qjeaRkMJJcAw5bxkPZVNSVABWAeQ8y1Vvlgo
- Q4m92CNmqKPZUmKmoJHhhTLFkHB2Ma90AUCUEZViqkn61HbEFudmLReGQm9/2OqFypHo
- dEeJpqANhRcd1M1vkQ4Lc1jP9OrkvKjwChTMTK/wCni6kOjljMv0a+Q/4iTHWrBf3gjA
- WE3ldKwSi0Pq+83wAmmQi8caS6zP0qTyFsb4EHkB0kOCr9i4owd+2O+UrNzh/LJElP9H
- b+1bNZPBjCZ/43vQEnok9E744x8EP8hjv0T3bLdla5bZMtlv85RFTPaVwqjCckRSkOfM
- CeUw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVwmtTS02VjxEs9vbGwzIBtMM+67QumqjEDRZepae5KJRVPw7gOhZdWX1bvuslhW/oqEtFirH9Jl9kr@nongnu.org
-X-Gm-Message-State: AOJu0YzC3WhKAbglv/Us/qho4fMSQeT9u/PtyJJASAL7C4iW4obuwPUv
- b1hC6aZPt0yFDaFgKLRR7tlc18D83dmv7Zi6NktSZp3b2lU5cM7sI+I3b+y15Iw=
-X-Gm-Gg: ASbGncs6UFpZcephmeLQL07Q5PtjetegFB9YoQFMu2XwrpbfPZrkh47VA3Bi2eUp2Vn
- zGXOtcW2WqJBA0DTcfg/UVP7yJohQAglcnp2tkRTwDF9NU4slvTcHxKGBGNQIGqyTQCBpXCla9O
- 4TDDjZAXDtjQmIfvKB0ILfDQsMxuFNH1Am1IiJuzFMFdluqnOQPgDBrQZK8kCnbzH39/2MgmauX
- sH50/LwzJJ4VUSYwSK8vcOIQQUeumcnOCyqraevz8+RxNT0cqqfv/oG9LNiCSGuvTaYCslfH7O1
- A/DOy22Zpoy/H0hy2GkSWw9IN79lHo9JeTDHzexyDr90AF5I+t2ozcSoUuLfnH9G0upwSMat2Aw
- JSJ/oRCsK
-X-Google-Smtp-Source: AGHT+IGZpcx63wuPU1bRAh1qPdu9aqbL5NgEYwwxIg6K0jsxzLMLTJKWnbrbAPz7BUBUAQHaL6wFyQ==
-X-Received: by 2002:a17:903:4091:b0:22e:1791:2e5a with SMTP id
- d9443c01a7336-22e5eaa70demr98224355ad.35.1746709016620; 
- Thu, 08 May 2025 05:56:56 -0700 (PDT)
+ bh=qA1vncVNbExTdrFsEz+MOpDLGhtoDokunG6HR7YcMKQ=;
+ b=eiTN5CM1a6ZawAj6baOK3oVJp8Ucu/QTMGJGFZpCZi+OH9jNvYQZpeQh1UUVZ4hTpn
+ 3jdH74/uK7ilC13k9n5thw7C+jIuZlMgVxJjeKRVXJLKQ0NY0Og6TTAAn7IXA8JOjyI7
+ r/FnQ1q0oTH+lWXb0AS7Mr67E8Wt0Yv488N4eCMVXpGw+5Yt1acrBzZQrVe9sTVXync+
+ Z36s7eMAGk2WPOHsaq4UWINMO8MKul6ClvEAFbjlojXlQ6BDqhkBotWrd+/e6K2i5rQX
+ yR6B7zNGqdNWlWVbRm0eoYX4MGImWuwSX9MvereL0qJ6/W53w/zMwMDzjNg/NfITq2F0
+ /t2g==
+X-Gm-Message-State: AOJu0YytZBrIlFlqtA3/JOcIDFNMJFXWHBqrE1U8E4snBmxxMUlhrukE
+ B5G7rK2UcwbdFiFEU5Tk0JodysL0P2z4f1+FLHAzt3YF2ON6qyFO0ACozbjqFZCPQel4IlzWJ3c
+ lujKPyw==
+X-Gm-Gg: ASbGncur5RMcdYCcfeEYWD9U+Uprhxk1uacN2tYysFRcc2KPb8VnXzbH/UElsvrg+7p
+ r6uIryGIIZXbJspHOdk8kZYVT+NygFoQ1Tb/HtRGt+dw9Djo6Nh8iondmkaTP3PJtDwLW6CqhTp
+ o17Z1TMS09wznJVnAX/fq/1GXBRMaxKBr15vgF9T7RXQ4ozhwVCYaVqPoJKJtkypOm1mDwG3AqE
+ ca5Pw9tBeuADWfoHmYwqUaluRn6exrKa2SfMug6TLHyuZqR/Upg/LnA89+KNplCOEXxRsWthjng
+ UP9cgpVdyTQxU18xqZnWvQG9RSMfJXstbK/EbWla0u/PTSsb5AM2+Rp4E1ucyMSO6DTa3rTewvn
+ j2ieiSkxp
+X-Google-Smtp-Source: AGHT+IFGi9KKWLTJSGelkBNr+B0RQn4nXILJ941fddjvdQfwnySHriAeM0GFeky9bGuV6MF5oAAWzg==
+X-Received: by 2002:a05:6a21:1645:b0:1f5:9cb2:28a2 with SMTP id
+ adf61e73a8af0-2148c221f55mr10380136637.19.1746709354134; 
+ Thu, 08 May 2025 06:02:34 -0700 (PDT)
 Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e6265945fsm33740185ad.134.2025.05.08.05.56.44
+ 41be03b00d2f7-b1fb3b62502sm11251540a12.32.2025.05.08.06.02.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 May 2025 05:56:56 -0700 (PDT)
-Message-ID: <a829863c-33d2-42c9-8068-431c60540ba2@linaro.org>
-Date: Thu, 8 May 2025 14:56:40 +0200
+ Thu, 08 May 2025 06:02:33 -0700 (PDT)
+Message-ID: <55b19265-b5e0-44a0-b5fd-ac6741f6667a@linaro.org>
+Date: Thu, 8 May 2025 15:02:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/16] hw/i386/x86: Remove
- X86MachineClass::fwcfg_dma_enabled field
-To: Thomas Huth <thuth@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-devel@nongnu.org,
- Helge Deller <deller@gmx.de>, Huacai Chen <chenhuacai@kernel.org>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Cc: Igor Mammedov <imammedo@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- Yi Liu <yi.l.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Amit Shah <amit@kernel.org>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+Subject: Re: [PATCH v3 02/19] hw/i386/pc: Remove
+ PCMachineClass::legacy_cpu_hotplug field
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
+ Amit Shah <amit@kernel.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Jason Wang <jasowang@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Sergio Lopez <slp@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Yanan Wang <wangyanan55@huawei.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Ani Sinha <anisinha@redhat.com>
-References: <20250501183628.87479-1-philmd@linaro.org>
- <20250501183628.87479-4-philmd@linaro.org>
- <2acc8c0c-f563-4d27-b73d-ce4c0f8ef424@nutanix.com>
- <54d72848-9108-4b04-a46c-1f82492e06cb@linaro.org>
- <bd23ff1c-d1a2-4967-b8bb-a6eda6a4ca33@redhat.com>
+ Yanan Wang <wangyanan55@huawei.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+References: <20250502185652.67370-1-philmd@linaro.org>
+ <20250502185652.67370-3-philmd@linaro.org> <aBr8Zknwle47ljOB@intel.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <bd23ff1c-d1a2-4967-b8bb-a6eda6a4ca33@redhat.com>
+In-Reply-To: <aBr8Zknwle47ljOB@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=philmd@linaro.org; helo=mail-oa1-x2a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,80 +113,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/25 11:06, Thomas Huth wrote:
-> On 02/05/2025 12.45, Philippe Mathieu-Daudé wrote:
->> On 2/5/25 11:08, Mark Cave-Ayland wrote:
->>> On 01/05/2025 19:36, Philippe Mathieu-Daudé wrote:
->>>
->>>> The X86MachineClass::fwcfg_dma_enabled boolean was only used
->>>> by the pc-q35-2.6 and pc-i440fx-2.6 machines, which got
->>>> removed. Remove it and simplify.
->>>>
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> ---
->>>>   include/hw/i386/x86.h | 2 --
->>>>   hw/i386/microvm.c     | 3 ---
->>>>   hw/i386/multiboot.c   | 7 +------
->>>>   hw/i386/x86-common.c  | 3 +--
->>>>   hw/i386/x86.c         | 2 --
->>>>   5 files changed, 2 insertions(+), 15 deletions(-)
->>>>
->>>> diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
->>>> index fc460b82f82..29d37af11e6 100644
->>>> --- a/include/hw/i386/x86.h
->>>> +++ b/include/hw/i386/x86.h
->>>> @@ -29,8 +29,6 @@
->>>>   struct X86MachineClass {
->>>>       MachineClass parent;
->>>> -    /* use DMA capable linuxboot option rom */
->>>> -    bool fwcfg_dma_enabled;
->>>>       /* CPU and apic information: */
->>>>       bool apic_xrupt_override;
->>>>   };
->>
->>
->>>> diff --git a/hw/i386/multiboot.c b/hw/i386/multiboot.c
->>>> index 6e6b96bc345..bfa7e8f1e83 100644
->>>> --- a/hw/i386/multiboot.c
->>>> +++ b/hw/i386/multiboot.c
->>>> @@ -153,7 +153,6 @@ int load_multiboot(X86MachineState *x86ms,
->>>>                      int kernel_file_size,
->>>>                      uint8_t *header)
->>>>   {
->>>> -    bool multiboot_dma_enabled = X86_MACHINE_GET_CLASS(x86ms)- 
->>>> >fwcfg_dma_enabled;
->>>>       int i, is_multiboot = 0;
->>>>       uint32_t flags = 0;
->>>>       uint32_t mh_entry_addr;
->>>> @@ -402,11 +401,7 @@ int load_multiboot(X86MachineState *x86ms,
->>>>       fw_cfg_add_bytes(fw_cfg, FW_CFG_INITRD_DATA, mb_bootinfo_data,
->>>>                        sizeof(bootinfo));
->>>> -    if (multiboot_dma_enabled) {
->>>> -        option_rom[nb_option_roms].name = "multiboot_dma.bin";
->>>> -    } else {
->>>> -        option_rom[nb_option_roms].name = "multiboot.bin";
->>>> -    }
->>>> +    option_rom[nb_option_roms].name = "multiboot_dma.bin";
->>>
->>> Question: now that all machines support DMA-capable fw_cfg, does that 
->>> mean that the non-DMA options roms above can also be removed?
->>
->> All x86 machines, but there are still 2 not supporting it: HPPA and
->> MIPS Loongson-3:
->>
->> hw/hppa/machine.c:204:    fw_cfg = fw_cfg_init_mem(addr, addr + 4);
->>
->> hw/mips/loongson3_virt.c:289:    fw_cfg = 
->> fw_cfg_init_mem_wide(cfg_addr, cfg_addr + 8, 8, 0, NULL);
->>
+On 7/5/25 08:23, Zhao Liu wrote:
+>> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+>> index 3fffa4a3328..625889783ec 100644
+>> --- a/hw/i386/acpi-build.c
+>> +++ b/hw/i386/acpi-build.c
+>> @@ -1465,9 +1465,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+>>       }
+>>       aml_append(dsdt, scope);
+>>   
+>> -    if (pcmc->legacy_cpu_hotplug) {
+>> -        build_legacy_cpu_hotplug_aml(dsdt, machine, pm->cpu_hp_io_base);
+>> -    } else {
+>> +    {
 > 
-> But these don't use "multiboot.bin", do they? So I think you could 
-> remove pc-bios/multiboot.bin now from the repo?
+> Why leave the {} here? for clarity?
+
+Exactly, the diff-stat contains already more than 200 lines, too much to
+my taste. If we de-indent this block, per our coding style we also need
+to declare 'CPUHotplugFeatures opts' earlier. If you really want the
+braces removed, I'd to it in a follow-up cleanup patch.
+
 > 
-> Same question for "linuxboot.bin" : All users in hw/i386 seem to enable 
-> DMA, so fw_cfg_dma_enabled() should always return true here? If so, I 
-> think the normal "linuxboot.bin" could go away, too?
+>>           CPUHotplugFeatures opts = {
+>>               .acpi_1_compatible = true, .has_legacy_cphp = true,
+>>               .smi_path = pm->smi_on_cpuhp ? "\\_SB.PCI0.SMI0.SMIC" : NULL,
+> 
+> Otherwise,
+> 
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-You are right!
-
+Thanks!
 
