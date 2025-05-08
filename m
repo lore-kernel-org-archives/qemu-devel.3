@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29013C3ABC5
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 13:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FCD0C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 13:41:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD1Uf-0006w1-3O; Thu, 08 May 2025 09:40:57 -0400
+	id 1uD1Uo-0007oF-Jb; Thu, 08 May 2025 09:41:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1UN-0006OI-Pd
- for qemu-devel@nongnu.org; Thu, 08 May 2025 09:40:42 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1Ui-0007Ob-1o
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:41:00 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1UH-0004Uq-U0
- for qemu-devel@nongnu.org; Thu, 08 May 2025 09:40:39 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-22e033a3a07so11499545ad.0
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 06:40:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1Ue-0004XC-KX
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:40:59 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-22c3407a87aso13358195ad.3
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 06:40:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746711631; x=1747316431; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746711653; x=1747316453; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=asjuzn+eAAncdD20eXT1wyN528c12dvw5wk014+4k7o=;
- b=n4+hUlyJXXiVURMDEaXhmuAIeke3CbU/WhW2sNX2vqjWn5djXq1b+c7tuhFuX7a3Jp
- qQpf0PQ390AtQVr/vpAuDeyE/gwAkYWH63Nn6yUXvRFbuZtai6WTgWDsXWkIqWWFmSfv
- 7rqVuKKaS3881y6bkfa/hUrntcEe34Bawu/SSuxqbUO7LUeUPcMtQCMWs9tAb8G53/lx
- cCayG3dri6IS+icrP12Af0XK3Exjkk+DAjL7z/hZXBF9/vYGHD2InnZDzxu7DBC5ucwk
- 9UmfkdVtS9F2+fHvY0Exbjo/iVumaOwZ2gVuNj1NIw+IHmT0uFpX0g0rBHIPMWU2lJ1z
- TY5Q==
+ bh=mAafb+dHM0R7U2T8OMZzAcuOcBI3QoaSzAwGll5ygQs=;
+ b=O+JrDn7MLNTxze7nteuj+q6kgqyFdjSXaG1BrCcNTkeRrBUIZ2hNFJKS2CdNehcCrZ
+ RbSASv9Dw/VZiK+bhEj8qj7qvqyR9aZ4fqetfbjXOTth3F1s6mJsz2QZFd8UQGcDE/Bb
+ tJeEE7MuSpqQQQ4Nj3r/+27OQWohhQiCfxnTMWmsNqxLdEALd9PGAxcmPVbGQwcWBGHs
+ FMgNbLkod6MBjYFl7JcAip+VRUNSq6cdHa6yJuG/kt01/RE7dASjK+odVxM7vx6vHEyS
+ jdglCqb3h53kyM3GqEQci/XRPQOhpbrwmMMlmn5jXp/1dyE1d70rtkLof6wJMAukAiRj
+ YRbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746711631; x=1747316431;
+ d=1e100.net; s=20230601; t=1746711653; x=1747316453;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=asjuzn+eAAncdD20eXT1wyN528c12dvw5wk014+4k7o=;
- b=OkXB8+F8oAnX2bbDM/uACR+ORo50C8eiTo0gYPCuciHaCtMOqyJN0haMQYo1Wm1rFM
- yvMhNiBni5AuUUmnx+90mBpFMiDN2aRnLf0Sxw771WrwjfQoFfVGH3fXV61rsKT8Ylf1
- T6B1jbZWNE1CZM5k86bZ1YDcJdgC+E2y0/B1wXGeI90joQSwepaF5A4UA2VSMY1zdKkw
- pYudsz95yyfP8pJC/p5pnMnWPOxU0Xo+1T81OUWb7IJ4Jg4IxFL2C3ja/+cz1FHf2ijC
- JOZDOdYVIcneOSCFVWz1DriQNPqxZAWSLhJzbqPQhpFoX36oj5b+4tV5R1LQNRz9RwJW
- f7Mw==
-X-Gm-Message-State: AOJu0YyRhKIjAtJhIas71P9bqxeRFHc/VKQE5SfHsesxUUrlkNtoWrkB
- USSM43UKy7DX0gTbBZwfhgquS2/fdJK5hShnuZQc+xilsNJl7cCEgtG+k/h/ZIB1b17fb2vQ3ZH
- vyIM41A==
-X-Gm-Gg: ASbGncvKGSsdO1E7PJM/s9i0/Kd+uSkQcsrH6gTen38qH1JyAK1d/RU+yQq3n5YRVzf
- ueCcaf5mzoWb6Yzg8Ml5zNSIkeF9gEDAK2MZCqM5dg5B5CcgveX+jJgXgCRt/96o5SlifzeomWj
- 5nbFwzA8k3jWuO5gdaoIZHoI9bCWqaUlVeo/IOnUManQWtUK8qOtWlK3RCyyrfJkgYHEMTLv9h7
- ODriRmaJHHqLXSl/AJsr6c5c8TQ9tdnWv1NS6/Zg4K02ZO1rwgbx2IYRE7CIrZEKZMNjHJcTfnE
- zuQ5ymhl7qrwLZbGb3NgeV/N+d92scnntiMurQv7aHyvxuxO2WQJ4LOgfLj+ADiaU1++uVyG2GL
- crP2+elDDTkAlXV4=
-X-Google-Smtp-Source: AGHT+IFMVBzAtV2goIk7zmm4G8sdtx//nL3Zm5hupcOT55Ln+9PVf+fcRnFH7jUrGz21grhEs6MpwA==
-X-Received: by 2002:a17:903:3bc6:b0:223:4d7e:e52c with SMTP id
- d9443c01a7336-22e5ea1d4b2mr110687105ad.5.1746711631350; 
- Thu, 08 May 2025 06:40:31 -0700 (PDT)
+ bh=mAafb+dHM0R7U2T8OMZzAcuOcBI3QoaSzAwGll5ygQs=;
+ b=sSJTnUJ6ZhXes9we+rGKlZC1JXF/r9YbRh3yIW7yrjU3P4/5jwU+U1A1uzmZJmlyb5
+ 8as3I/AHl3vIyDiiL+mL9OqfCE7+DtfUXhBb7wJC3eoYXwrqVcd0XkVFaAZKCnpXVaPn
+ 5vTebByJaW3QS7tAZnayork0grQ7mVXHcuLTpk52UHmqVnICNB6pbxQQPntq1qPaoLxF
+ 92MJdFBjX+iYUBjr6ns4xfrxiZqr6LKc7ttnjs8GUDBzFcYvEDweutG7WzVMQY33T7Rj
+ d8CjNKYmeaZLW/T0dJzbrbdtvBMPBqWi0wt9n047HOlKiPKNVa8c4zbJWc1c2+jtPz/g
+ rPfw==
+X-Gm-Message-State: AOJu0YwPPwjvIvI1ruUotkFWLOUIrd1j3GGDq0+YrpVQ9umF3Gelv5MT
+ mOm00uHNQUSOPf7WdDYWTcI1kMULtLnBtI8XXxSQc7uyoP9skbhN5q0A11W6lhGorjJl/Rtgu2s
+ ZF1LG5w==
+X-Gm-Gg: ASbGncs5dvv8dSWwaZsoTGaJf+ZDxXkmSnd3QFzhH1XdX0ebvJyre+Gb7wsbPgLRjt3
+ Q2ntQhouDtGdJn6vL9UjZypohcnA7GvwrRh2eLIO7kgWT+jB5FHo1Mc5JVKkBJpTmU5AS4jlAN4
+ yYHNcYW2aMkKjhFmPUy05X95/nYydBxSM6Q/+Luay7e7zRh+zIRILyrDL10izYff6dlH5sgxeNp
+ VTpvQTBKjO/JDtSC8jmd31qI9wEKn0vU4V20NOtwR91YZ8Yqczv4EGB1yWDCCXV9DMipNIyhY4S
+ FCrirSlPo3dl+a3Dw4JzBTPq7R1zESgQYeD4/nI4CkxXnGPQC5P3IySs7OaaEi4li8DSay71e1N
+ clTQjCMIoMa1XSDk=
+X-Google-Smtp-Source: AGHT+IH2y/VUfyrC8R22FpXXRo/ODUgoWXOAiZYF8dEokDeUe9aZgmQXy0YOuspLaJeraSPMUSaU9w==
+X-Received: by 2002:a17:903:194e:b0:224:f12:3734 with SMTP id
+ d9443c01a7336-22e8660509bmr47849675ad.30.1746711653500; 
+ Thu, 08 May 2025 06:40:53 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fbd4474c1sm3299195ad.112.2025.05.08.06.40.17
+ d9443c01a7336-22e150eb5d2sm112359365ad.7.2025.05.08.06.40.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 08 May 2025 06:40:30 -0700 (PDT)
+ Thu, 08 May 2025 06:40:53 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
@@ -86,18 +86,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
  qemu-arm@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>
-Subject: [PATCH v4 12/27] target/i386/cpu: Remove
- CPUX86State::enable_cpuid_0xb field
-Date: Thu,  8 May 2025 15:35:35 +0200
-Message-ID: <20250508133550.81391-13-philmd@linaro.org>
+Subject: [PATCH v4 13/27] target/i386/cpu: Remove CPUX86State::fill_mtrr_mask
+ field
+Date: Thu,  8 May 2025 15:35:36 +0200
+Message-ID: <20250508133550.81391-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250508133550.81391-1-philmd@linaro.org>
 References: <20250508133550.81391-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,55 +120,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CPUX86State::enable_cpuid_0xb boolean was only disabled
+The CPUX86State::fill_mtrr_mask boolean was only disabled
 for the pc-q35-2.6 and pc-i440fx-2.6 machines, which got
 removed. Being now always %true, we can remove it and simplify
-cpu_x86_cpuid().
+kvm_get_msrs().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/i386/cpu.h | 3 ---
- target/i386/cpu.c | 6 ------
- 2 files changed, 9 deletions(-)
+ target/i386/cpu.h     |  3 ---
+ target/i386/cpu.c     |  1 -
+ target/i386/kvm/kvm.c | 10 +++-------
+ 3 files changed, 3 insertions(+), 11 deletions(-)
 
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 0db70a70439..06817a31cf9 100644
+index 06817a31cf9..7585407da54 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -2241,9 +2241,6 @@ struct ArchCPU {
-      */
-     bool legacy_multi_node;
+@@ -2253,9 +2253,6 @@ struct ArchCPU {
+     /* Enable auto level-increase for Intel Processor Trace leave */
+     bool intel_pt_auto_level;
  
--    /* Compatibility bits for old machine types: */
--    bool enable_cpuid_0xb;
+-    /* if true fill the top bits of the MTRR_PHYSMASKn variable range */
+-    bool fill_mtrr_mask;
 -
-     /* Enable auto level-increase for all CPUID leaves */
-     bool full_cpuid_auto_level;
+     /* if true override the phys_bits value with a value read from the host */
+     bool host_phys_bits;
  
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 49179f35812..6fe37f71b1e 100644
+index 6fe37f71b1e..fb505d13122 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -6982,11 +6982,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         break;
-     case 0xB:
-         /* Extended Topology Enumeration Leaf */
--        if (!cpu->enable_cpuid_0xb) {
--                *eax = *ebx = *ecx = *edx = 0;
--                break;
--        }
--
-         *ecx = count & 0xff;
-         *edx = cpu->apic_id;
+@@ -8810,7 +8810,6 @@ static const Property x86_cpu_properties[] = {
+     DEFINE_PROP_UINT32("guest-phys-bits", X86CPU, guest_phys_bits, -1),
+     DEFINE_PROP_BOOL("host-phys-bits", X86CPU, host_phys_bits, false),
+     DEFINE_PROP_UINT8("host-phys-bits-limit", X86CPU, host_phys_bits_limit, 0),
+-    DEFINE_PROP_BOOL("fill-mtrr-mask", X86CPU, fill_mtrr_mask, true),
+     DEFINE_PROP_UINT32("level-func7", X86CPU, env.cpuid_level_func7,
+                        UINT32_MAX),
+     DEFINE_PROP_UINT32("level", X86CPU, env.cpuid_level, UINT32_MAX),
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index c9a3c02e3e3..87edce99e85 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -4635,13 +4635,9 @@ static int kvm_get_msrs(X86CPU *cpu)
+      * we're migrating to.
+      */
  
-@@ -8828,7 +8823,6 @@ static const Property x86_cpu_properties[] = {
-     DEFINE_PROP_UINT64("ucode-rev", X86CPU, ucode_rev, 0),
-     DEFINE_PROP_BOOL("full-cpuid-auto-level", X86CPU, full_cpuid_auto_level, true),
-     DEFINE_PROP_STRING("hv-vendor-id", X86CPU, hyperv_vendor),
--    DEFINE_PROP_BOOL("cpuid-0xb", X86CPU, enable_cpuid_0xb, true),
-     DEFINE_PROP_BOOL("x-vendor-cpuid-only", X86CPU, vendor_cpuid_only, true),
-     DEFINE_PROP_BOOL("x-amd-topoext-features-only", X86CPU, amd_topoext_features_only, true),
-     DEFINE_PROP_BOOL("lmce", X86CPU, enable_lmce, false),
+-    if (cpu->fill_mtrr_mask) {
+-        QEMU_BUILD_BUG_ON(TARGET_PHYS_ADDR_SPACE_BITS > 52);
+-        assert(cpu->phys_bits <= TARGET_PHYS_ADDR_SPACE_BITS);
+-        mtrr_top_bits = MAKE_64BIT_MASK(cpu->phys_bits, 52 - cpu->phys_bits);
+-    } else {
+-        mtrr_top_bits = 0;
+-    }
++    QEMU_BUILD_BUG_ON(TARGET_PHYS_ADDR_SPACE_BITS > 52);
++    assert(cpu->phys_bits <= TARGET_PHYS_ADDR_SPACE_BITS);
++    mtrr_top_bits = MAKE_64BIT_MASK(cpu->phys_bits, 52 - cpu->phys_bits);
+ 
+     for (i = 0; i < ret; i++) {
+         uint32_t index = msrs[i].index;
 -- 
 2.47.1
 
