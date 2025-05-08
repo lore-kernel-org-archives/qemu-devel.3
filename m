@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21199C3ABBE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66782C3ABC0
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:07:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD2oM-0001GU-OZ; Thu, 08 May 2025 11:05:22 -0400
+	id 1uD2os-0001bl-0R; Thu, 08 May 2025 11:05:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2oK-0001F4-BY
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:05:20 -0400
+ id 1uD2oq-0001Xm-52
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:05:52 -0400
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2oD-0007RF-FS
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:05:20 -0400
+ id 1uD2on-0007RW-Fb
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:05:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746716713; x=1778252713;
+ t=1746716749; x=1778252749;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=lkJDVh6f4q0rfLhOwSxloLSzBCDY8EWkflSfQc5PpZ0=;
- b=aAPdzvwQeuutzvxzIfeJ71OyJsQnrrsbU6TXDHJ8AyhDD9zB+8vrUPtD
- 2JPkq/uR3AknehSUzZCM7adIutFR+JoLxPrPBg2bVdYEU8CVEJiFsGY6r
- N9beO5PaxpTCUU48lssK+hXe9m33tDinnbYe860XbuIX4tOvHVJnNe3wD
- PM/cM2oYVftnSws1wwnm7GLTSO21Pymgy7KCZ6n5eK7COY8Ooegn848+4
- rhEomK+J4QkYp6SH/+eA3nKIgK/4nrZlpf0qntFl+bO+O4c08SB4g6rz3
- 3sCjtPOwwP0E5ZZr7SwniKk/k63b9DlR4B/twlJcvwZjkIiX1uajBrf1R Q==;
-X-CSE-ConnectionGUID: 8BgLGMzuQ1CV98XB3SAb9Q==
-X-CSE-MsgGUID: kdCCCxn+RreRkNW5LJ7GxQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73888022"
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73888022"
+ bh=f2K2N6DrwE73hXtHrzTwih79rFdx7FYrVysyYjXVDOk=;
+ b=UmPm52ocZqf0lx7EWllzCnyH2ZXJhZhfx8ADrZ9SfE1m3mYdLzRS8F0N
+ GzYSFr7zvESvTt/6Js8M10TtmZU54sZXF7IlfmVXo7GrMWgSy1AxQ1SDF
+ o2eY9LJFLJo2HK9xNZI0rrbi/QW2wCprIxAq+CoTzf3wL6M0vudI8mD4v
+ wNSo9GOWjPWg5MAP2DCt6UuFSawGEqIorBDw8wjQGUUF0NGMX8nfSfAhT
+ Y7XRaLfe5nMQJfxk7gjiNHrSG0gssCoja3ovGdubbzXDfytCzRqwtRVjD
+ GTUFRvGvG1fN910iccCV0Ci04053PuiyiIXy5vgxkK+3wBHKkjFrqjiEL g==;
+X-CSE-ConnectionGUID: duBZz41iQYGzotWisXGq3g==
+X-CSE-MsgGUID: ECXmQpD1Q6Ck4NIqq6+IcA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73888103"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73888103"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2025 08:05:12 -0700
-X-CSE-ConnectionGUID: cPmVxdEDTTmT0h1mJS9/jw==
-X-CSE-MsgGUID: sAmPp/ArR0i78udXMGPg+Q==
+ 08 May 2025 08:05:37 -0700
+X-CSE-ConnectionGUID: HiGESqzOTWmFJyvG1GoH3g==
+X-CSE-MsgGUID: fi6EydKOSSqeER/4W+dKGw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141439812"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141439892"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:05:09 -0700
+ by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:05:34 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -57,14 +57,15 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v9 06/55] i386/tdx: Introduce is_tdx_vm() helper and cache
- tdx_guest object
-Date: Thu,  8 May 2025 10:59:12 -0400
-Message-ID: <20250508150002.689633-7-xiaoyao.li@intel.com>
+Subject: [PATCH v9 14/55] i386/tdx: Set APIC bus rate to match with what TDX
+ module enforces
+Date: Thu,  8 May 2025 10:59:20 -0400
+Message-ID: <20250508150002.689633-15-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250508150002.689633-1-xiaoyao.li@intel.com>
 References: <20250508150002.689633-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
@@ -91,92 +92,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It will need special handling for TDX VMs all around the QEMU.
-Introduce is_tdx_vm() helper to query if it's a TDX VM.
+TDX advertises core crystal clock with cpuid[0x15] as 25MHz for TD
+guests and it's unchangeable from VMM. As a result, TDX guest reads
+the APIC timer at the same frequency, 25MHz.
 
-Cache tdx_guest object thus no need to cast from ms->cgs every time.
+While KVM's default emulated frequency for APIC bus is 1GHz, set the
+APIC bus rate to match with TDX explicitly to ensure KVM provide correct
+emulated APIC timer for TD guest.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Isaku Yamahata <isaku.yamahata@intel.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-changes in v3:
-- replace object_dynamic_cast with TDX_GUEST();
+Changes in v6:
+ - new patch;
 ---
- target/i386/kvm/tdx.c | 15 ++++++++++++++-
- target/i386/kvm/tdx.h | 10 ++++++++++
- 2 files changed, 24 insertions(+), 1 deletion(-)
+ target/i386/kvm/tdx.c | 13 +++++++++++++
+ target/i386/kvm/tdx.h |  3 +++
+ 2 files changed, 16 insertions(+)
 
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index c67be5e618e2..16f67e18ae78 100644
+index 39fd964c6b27..c96e8eb7b8c2 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -18,8 +18,16 @@
- #include "kvm_i386.h"
- #include "tdx.h"
+@@ -254,6 +254,19 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+     init_vm = g_malloc0(sizeof(struct kvm_tdx_init_vm) +
+                         sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
  
-+static TdxGuest *tdx_guest;
++    if (!kvm_check_extension(kvm_state, KVM_CAP_X86_APIC_BUS_CYCLES_NS)) {
++        error_setg(errp, "KVM doesn't support KVM_CAP_X86_APIC_BUS_CYCLES_NS");
++        return -EOPNOTSUPP;
++    }
 +
- static struct kvm_tdx_capabilities *tdx_caps;
- 
-+/* Valid after kvm_arch_init()->confidential_guest_kvm_init()->tdx_kvm_init() */
-+bool is_tdx_vm(void)
-+{
-+    return !!tdx_guest;
-+}
++    r = kvm_vm_enable_cap(kvm_state, KVM_CAP_X86_APIC_BUS_CYCLES_NS,
++                          0, TDX_APIC_BUS_CYCLES_NS);
++    if (r < 0) {
++        error_setg_errno(errp, -r,
++                         "Unable to set core crystal clock frequency to 25MHz");
++        return r;
++    }
 +
- enum tdx_ioctl_level {
-     TDX_VM_IOCTL,
-     TDX_VCPU_IOCTL,
-@@ -117,15 +125,20 @@ static int get_tdx_capabilities(Error **errp)
- 
- static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
- {
-+    TdxGuest *tdx = TDX_GUEST(cgs);
-     int r = 0;
- 
-     kvm_mark_guest_state_protected();
- 
-     if (!tdx_caps) {
-         r = get_tdx_capabilities(errp);
-+        if (r) {
-+            return r;
-+        }
-     }
- 
--    return r;
-+    tdx_guest = tdx;
-+    return 0;
- }
- 
- static int tdx_kvm_type(X86ConfidentialGuest *cg)
+     if (tdx_guest->mrconfigid) {
+         g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrconfigid,
+                               strlen(tdx_guest->mrconfigid), &data_len, errp);
 diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-index f3b725336161..de8ae9196163 100644
+index e472b11fb0dd..d39e733d9fcc 100644
 --- a/target/i386/kvm/tdx.h
 +++ b/target/i386/kvm/tdx.h
-@@ -3,6 +3,10 @@
- #ifndef QEMU_I386_TDX_H
- #define QEMU_I386_TDX_H
+@@ -16,6 +16,9 @@ typedef struct TdxGuestClass {
+     X86ConfidentialGuestClass parent_class;
+ } TdxGuestClass;
  
-+#ifndef CONFIG_USER_ONLY
-+#include CONFIG_DEVICES /* CONFIG_TDX */
-+#endif
++/* TDX requires bus frequency 25MHz */
++#define TDX_APIC_BUS_CYCLES_NS 40
 +
- #include "confidential-guest.h"
+ typedef struct TdxGuest {
+     X86ConfidentialGuest parent_obj;
  
- #define TYPE_TDX_GUEST "tdx-guest"
-@@ -18,4 +22,10 @@ typedef struct TdxGuest {
-     uint64_t attributes;    /* TD attributes */
- } TdxGuest;
- 
-+#ifdef CONFIG_TDX
-+bool is_tdx_vm(void);
-+#else
-+#define is_tdx_vm() 0
-+#endif /* CONFIG_TDX */
-+
- #endif /* QEMU_I386_TDX_H */
 -- 
 2.43.0
 
