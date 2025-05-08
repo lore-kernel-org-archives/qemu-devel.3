@@ -4,92 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C46FC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 06:40:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF9F8C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 06:41:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCuvg-0007Tb-DO; Thu, 08 May 2025 02:40:24 -0400
+	id 1uCuwB-0007cc-IY; Thu, 08 May 2025 02:40:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCuve-0007TO-FS
- for qemu-devel@nongnu.org; Thu, 08 May 2025 02:40:22 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCuvc-0002F6-DU
- for qemu-devel@nongnu.org; Thu, 08 May 2025 02:40:22 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-736c062b1f5so742552b3a.0
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 23:40:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746686419; x=1747291219; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/OsBFC3nZCS/UxXhP/fCnCeyqUT9iKnjwcPfGuZbrak=;
- b=ww4EZKCqqgEEe7dkS3GMkiLwtk1Ad9R3rWbMXzuiYfbGzs3z5p6noafxBKAh0kn5CQ
- RxFSBj8GnI/Y87cLOR6L+DXICBgmA4HnstDHSZfc/+9dS/rq9kZKeQagFoD6Nhcwiw3y
- sDthhEi2HHYwsgURbn2515X8by61gDuCc2b43XKEmFTsEDvderLP4v4XYJnUrniZAdMo
- /Me0APmZnqGGmBbxTzOm6nsK2R1s//SQbxcJFFnS/W1VigIwcB3WeEcAo6oAndveCv8u
- z2fkHaKUEqDq5XxS/Q/6+SemFHI5KxEOmR6fanuCUF13ZqrxW36Pv60Ir7/qzIRk9wQ+
- RI6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746686419; x=1747291219;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/OsBFC3nZCS/UxXhP/fCnCeyqUT9iKnjwcPfGuZbrak=;
- b=b+Ojmy0g/kupluMYVMJTR36BVDfZ0L+x/lg1kb733EMsPTeD3+sC86W425hEBo9ZKk
- hRp/wFE6ViYshzpnNva/4nw11r93+m/ykqrTN0gKbdrdYOnREHjRgWLps9aVGL79L87a
- 4yrTY2txaZibRMLwV/APLnQMWtc5cE56mVboJAAmlkhjo502u9RJxrj4AgLx4QMMnQPN
- ttzhxsVpvv++MX+V9uMuwlsYjOn5LnIoqG77oJyQcdv/SjcSHwes6VvI0eEBczF9g46X
- M4O0hlIrb7LBdW41EpPGfTv1iuQy8tJ9QybuHv7ABq4tMoEZdFS2TspQtNa9WXGvwsO5
- 8e+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUvD80RoSucanHjpaJDXinYOeCt+n+97w9V945okYjlRqHE5WTwBat9iHUXfWH323G4Tn7c8SlSYFET@nongnu.org
-X-Gm-Message-State: AOJu0Yw+zKuy0DIqyVvYHfqxIF21oevSrRWM+ZET7WQmQTfhLNCEpJvU
- hSM312IbGleRqbqQX4AuuarloxtoB/uRwjZjyT3tu+YKlokfi3QIzVOyB0cTab0=
-X-Gm-Gg: ASbGncuoXe9u2ypuSnuFxBlX9LBVF0ObThReMU+D6sJgz0uYxYNiHizawNDKKNMbvb3
- We24PKyqbb1bp4poBmoGDQPl5b2AvhXgaailiYm2GrYK+vjHnBwflVeSzpAJVMqQXwFI70FtmIG
- pYT/ZR05hbE98FWimaWVjS1j/5ZFL9unW20/l+CqFs5T8eQeBKHJBzPflex249aj30qaMjs4KSz
- eSIxUL87iyB8tDIiMkRXCpM832VUu3OvLtpGKRU6crSpxGVdontUgrpXGh5UXj7PsZYu4PuFJ3o
- I7th1ibR6DHVNNuJSYNOJgyI4ZAp9klr+P6lD3pi1jAJgzLCUq6e2S4XewzYZPoF1ObJHP5l3sY
- hnuREgBfwp7Y3i2J0srk=
-X-Google-Smtp-Source: AGHT+IGLXtoBurY6nWEPIRIdZhJPBq21/XNNZVR06b31zNPqEX05JoYjiwYnxEw0EVrjOdFtiNwe1w==
-X-Received: by 2002:a05:6a21:6d83:b0:1f5:86c6:5747 with SMTP id
- adf61e73a8af0-2159b05448fmr3443562637.32.1746686418761; 
- Wed, 07 May 2025 23:40:18 -0700 (PDT)
-Received: from [192.168.69.243] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-74058dbbb15sm12859841b3a.58.2025.05.07.23.40.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 May 2025 23:40:18 -0700 (PDT)
-Message-ID: <34d4719e-e8e9-4f2d-ad57-bb4043cb540f@linaro.org>
-Date: Thu, 8 May 2025 08:40:10 +0200
+ (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
+ id 1uCuw8-0007ar-8a
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 02:40:53 -0400
+Received: from zuban.uni-paderborn.de ([2001:638:502:c003::17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
+ id 1uCuw3-0002GE-54
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 02:40:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=uni-paderborn.de; s=20170601; h=In-Reply-To:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+ Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+ List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=NnZoVKkLHN+FYnNREYkg/lZa/3aGf15DndGvLl62Ie0=; b=FO6Ly4wARzr5irA6NJ9tAmMVY4
+ 0SGrAAEU7/sHFntMvX5GDI2Rtg46l4ZKX+QJtSVfa4IgD+VRzn02jLexpnDrLNZ3bHKsLnYSil7sN
+ u/4mhbtyQa7bR0W+AjcwzlrtO48NRehgq2DAwutFhHAX/bDxD612drEbeCgur04TWBNk=;
+Date: Thu, 8 May 2025 08:40:30 +0200
+From: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, foss@percivaleng.com, 
+ Michael Rolnik <mrolnik@gmail.com>, Laurent Vivier <laurent@vivier.eu>, 
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>,
+ Stafford Horne <shorne@gmail.com>, 
+ Yoshinori Sato <ysato@users.sourceforge.jp>, Max Filippov <jcmvbkbc@gmail.com>
+Subject: Re: [PATCH 03/12] target: Use cpu_pointer_wrap_uint32 for 32-bit
+ targets
+Message-ID: <ma2ujmsw2mzw747azwohjxdqeu4j4wog24sxhvg2uo5hvf6xmz@kyep4r5ocrwf>
+References: <20250504205714.3432096-1-richard.henderson@linaro.org>
+ <20250504205714.3432096-4-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/13] qemu/target-info: implement missing helpers
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, stefanha@redhat.com, peter.maydell@linaro.org,
- Markus Armbruster <armbru@redhat.com>, richard.henderson@linaro.org,
- pbonzini@redhat.com, jsnow@redhat.com, berrange@redhat.com,
- thuth@redhat.com, Michael Roth <michael.roth@amd.com>
-References: <20250507231442.879619-1-pierrick.bouvier@linaro.org>
- <20250507231442.879619-9-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250507231442.879619-9-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250504205714.3432096-4-richard.henderson@linaro.org>
+X-IMT-Source: Extern
+X-IMT-rspamd-score: -10
+X-UPB-Report: Action: no action, RCVD_TLS_ALL(0.00), FROM_HAS_DN(0.00),
+ FROM_EQ_ENVFROM(0.00), FREEMAIL_ENVRCPT(0.00), SUSPICIOUS_RECIPS(1.50),
+ BAYES_HAM(-2.99), TO_MATCH_ENVRCPT_ALL(0.00), MID_RHS_NOT_FQDN(0.50),
+ MIME_GOOD(-0.10), FREEMAIL_CC(0.00), NEURAL_HAM(0.00), RCPT_COUNT_SEVEN(0.00),
+ TAGGED_RCPT(0.00), RCVD_VIA_SMTP_AUTH(0.00), ARC_NA(0.00), ASN(0.00),
+ RCVD_COUNT_ONE(0.00), MIME_TRACE(0.00), TO_DN_SOME(0.00), MISSING_XM_UA(0.00),
+ Message-ID: ma2ujmsw2mzw747azwohjxdqeu4j4wog24sxhvg2uo5hvf6xmz@kyep4r5ocrwf
+X-IMT-Spam-Score: 0.0 ()
+X-IMT-Authenticated-Sender: kbastian@UNI-PADERBORN.DE
+Received-SPF: pass client-ip=2001:638:502:c003::17;
+ envelope-from=kbastian@mail.uni-paderborn.de; helo=zuban.uni-paderborn.de
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,106 +80,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/5/25 01:14, Pierrick Bouvier wrote:
-> Add runtime helpers for target and config queries.
+On Sun, May 04, 2025 at 01:57:04PM -0700, Richard Henderson wrote:
+> M68K, MicroBlaze, OpenRISC, RX, TriCore and Xtensa are
+> all 32-bit targets.  AVR is more complicated, but using
+> a 32-bit wrap preserves current behaviour.
 > 
-> Note: This will be reimplemented later [1] using proper information in
-> TargetInfo. Meanwhile, just add a simple implementation.
-> 
-> [1] https://patchew.org/QEMU/20250424222112.36194-1-philmd@linaro.org/20250424222112.36194-19-philmd@linaro.org/
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Cc: Michael Rolnik <mrolnik@gmail.com>
+> Cc: Laurent Vivier <laurent@vivier.eu>
+> Cc: Edgar E. Iglesias <edgar.iglesias@gmail.com>
+> Cc: Stafford Horne <shorne@gmail.com>
+> Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
+> Cc: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
+> Cc: Max Filippov <jcmvbkbc@gmail.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   meson.build                |   2 +-
->   include/qemu/target-info.h |  14 +++++
->   target-info.c              | 117 +++++++++++++++++++++++++++++++++++++
->   3 files changed, 132 insertions(+), 1 deletion(-)
+>  include/accel/tcg/cpu-ops.h | 1 +
+>  accel/tcg/cputlb.c          | 6 ++++++
+>  target/avr/cpu.c            | 6 ++++++
+>  target/m68k/cpu.c           | 1 +
+>  target/microblaze/cpu.c     | 1 +
+>  target/openrisc/cpu.c       | 1 +
+>  target/rx/cpu.c             | 1 +
+>  target/tricore/cpu.c        | 1 +
+>  target/xtensa/cpu.c         | 1 +
+>  9 files changed, 19 insertions(+)
 
+Reviewed-by: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
 
-> +bool target_mips(void)
+For the TriCore part:
+Tested-by Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
 
-I know this is the same lowercase name, but maybe we could consider
-directly using target_mips32() instead of keeping the technical debt
-of having TARGET_MIPS defined for both 32 and 64-bit targets.
-Thankfully we cleared that with recent targets (i.e. LoongArch or
-RISC-V -- AVR is a bit different, since 8-bit AVR and AVR32 are
-distinct architectures).
-
-For x86 we often use 'x86' as any of (i386, x86_64, amd64), maybe
-we can introduce target_x86() too.
-
-> +{
-> +#ifdef TARGET_MIPS
-> +    return true;
-> +#else
-> +    return false;
-> +#endif
-> +}
-> +
-> +bool target_mips64(void)
-> +{
-> +#ifdef TARGET_MIPS64
-> +    return true;
-> +#else
-> +    return false;
-> +#endif
-> +}
-> +
-> +bool target_loongarch64(void)
-> +{
-> +#ifdef TARGET_LOONGARCH64
-> +    return true;
-> +#else
-> +    return false;
-> +#endif
-> +}
-> +
-> +bool target_riscv32(void)
-> +{
-> +#ifdef TARGET_RISCV32
-> +    return true;
-> +#else
-> +    return false;
-> +#endif
-> +}
-> +
-> +bool target_riscv64(void)
-> +{
-> +#ifdef TARGET_RISCV64
-> +    return true;
-> +#else
-> +    return false;
-> +#endif
-> +}
-> +
-> +bool target_ppc(void)
-
-Ditto, target_ppc32()?
-
-> +{
-> +#ifdef TARGET_PPC
-> +    return true;
-> +#else
-> +    return false;
-> +#endif
-> +}
-> +
-> +bool target_ppc64(void)
-> +{
-> +#ifdef TARGET_ppc64
-> +    return true;
-> +#else
-> +    return false;
-> +#endif
-> +}
-> +
-> +bool target_has_kvm(void)
-> +{
-> +#ifdef CONFIG_KVM
-> +    return true;
-> +#else
-> +    return false;
-> +#endif
-> +}
-
+Cheers,
+Bastian
 
