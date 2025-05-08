@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6218FC3ABBF
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 00:26:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C749C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 00:26:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCp4p-0006zm-Im; Wed, 07 May 2025 20:25:27 -0400
+	id 1uCp4x-0007HI-Vq; Wed, 07 May 2025 20:25:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uCp4l-0006rd-5Q
- for qemu-devel@nongnu.org; Wed, 07 May 2025 20:25:23 -0400
+ (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uCp4t-0007D0-AU
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 20:25:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uCp4i-0007gO-Gs
- for qemu-devel@nongnu.org; Wed, 07 May 2025 20:25:22 -0400
+ (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uCp4r-0007h7-VZ
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 20:25:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746663919;
+ s=mimecast20190719; t=1746663929;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yQdRYdv1hJr4DYNXk5+/7v7Oi6dfRnQTQtwpKu8K5hg=;
- b=ddV5vsoFdze0ck6W6TgtMH3Lgyd7asML2GaxBJiYMLaEwYPxSLOd6HM2U8km+g4UOPh4Cy
- 6vL0b9H5lBQ87bTkxmD2yEuGsz0KbA0+eNaUH4R9jESBKVWtQJuEtv7slWB9O/uOFvYfFH
- eLtS20UWHIcogESfT1GgTs8qBqKyoHw=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=b1DYCnxI5zsuno/R8zHzLRAzIAnJoX4ey2f9yC3L6gY=;
+ b=fWutktAEaIPPR6QzClBNxVdxtS1Nz7pMrroOk4Inbw8l1zNiNd2w6Ib5kE7D9/FCkQt/f7
+ YIbTN5vX75lLNN861HTjSZXf19+9hHH7887QpsGuvVDcrcjQkY4vCuhOEyPxL/eQrmg0pq
+ j9vsjUvmMu78qTs7SHlPeffyEw4iNGw=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-117-_LMn4GuoOOuKFYJuEFVSpg-1; Wed,
- 07 May 2025 20:25:16 -0400
-X-MC-Unique: _LMn4GuoOOuKFYJuEFVSpg-1
-X-Mimecast-MFC-AGG-ID: _LMn4GuoOOuKFYJuEFVSpg_1746663915
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-389-F-2KWdgPPxmTRuf7A-cUXQ-1; Wed,
+ 07 May 2025 20:25:25 -0400
+X-MC-Unique: F-2KWdgPPxmTRuf7A-cUXQ-1
+X-Mimecast-MFC-AGG-ID: F-2KWdgPPxmTRuf7A-cUXQ_1746663923
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E7EDB1955DC5; Thu,  8 May 2025 00:25:14 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 08A9A1956086; Thu,  8 May 2025 00:25:23 +0000 (UTC)
 Received: from desktop.redhat.com (unknown [10.45.224.21])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C589819560A7; Thu,  8 May 2025 00:25:07 +0000 (UTC)
+ id 6CC0319560A7; Thu,  8 May 2025 00:25:15 +0000 (UTC)
 From: Alberto Faria <afaria@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Coiby Xu <Coiby.Xu@gmail.com>, Laurent Vivier <lvivier@redhat.com>,
@@ -59,9 +59,9 @@ Cc: Coiby Xu <Coiby.Xu@gmail.com>, Laurent Vivier <lvivier@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Xie Yongji <xieyongji@bytedance.com>, Yanan Wang <wangyanan55@huawei.com>,
  Alberto Faria <afaria@redhat.com>
-Subject: [RFC 3/4] vhost-user-blk: Add VIRTIO_BLK_T_OUT_FUA command support
-Date: Thu,  8 May 2025 01:24:39 +0100
-Message-ID: <20250508002440.423776-4-afaria@redhat.com>
+Subject: [RFC 4/4] vduse-blk: Add VIRTIO_BLK_T_OUT_FUA command support
+Date: Thu,  8 May 2025 01:24:40 +0100
+Message-ID: <20250508002440.423776-5-afaria@redhat.com>
 In-Reply-To: <20250508002440.423776-1-afaria@redhat.com>
 References: <20250508002440.423776-1-afaria@redhat.com>
 MIME-Version: 1.0
@@ -94,177 +94,23 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Alberto Faria <afaria@redhat.com>
 ---
- block/export/vhost-user-blk-server.c    |  1 +
- contrib/vhost-user-blk/vhost-user-blk.c | 16 +++++--
- hw/block/vhost-user-blk.c               |  3 ++
- hw/core/machine.c                       |  1 +
- tests/qtest/vhost-user-blk-test.c       | 56 +++++++++++++++++++++++++
- 5 files changed, 74 insertions(+), 3 deletions(-)
+ block/export/vduse-blk.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/block/export/vhost-user-blk-server.c b/block/export/vhost-user-blk-server.c
-index d9d2014d9b7..fad9560b219 100644
---- a/block/export/vhost-user-blk-server.c
-+++ b/block/export/vhost-user-blk-server.c
-@@ -125,6 +125,7 @@ static uint64_t vu_blk_get_features(VuDev *dev)
-                1ull << VIRTIO_BLK_F_FLUSH |
-                1ull << VIRTIO_BLK_F_DISCARD |
-                1ull << VIRTIO_BLK_F_WRITE_ZEROES |
-+               1ull << VIRTIO_BLK_F_OUT_FUA |
-                1ull << VIRTIO_BLK_F_CONFIG_WCE |
-                1ull << VIRTIO_BLK_F_MQ |
-                1ull << VIRTIO_F_VERSION_1 |
-diff --git a/contrib/vhost-user-blk/vhost-user-blk.c b/contrib/vhost-user-blk/vhost-user-blk.c
-index 6cc18a1c04f..8d732bbe468 100644
---- a/contrib/vhost-user-blk/vhost-user-blk.c
-+++ b/contrib/vhost-user-blk/vhost-user-blk.c
-@@ -154,7 +154,7 @@ vub_readv(VubReq *req, struct iovec *iov, uint32_t iovcnt)
- }
+diff --git a/block/export/vduse-blk.c b/block/export/vduse-blk.c
+index bd852e538dc..36c3c0a56e6 100644
+--- a/block/export/vduse-blk.c
++++ b/block/export/vduse-blk.c
+@@ -329,7 +329,8 @@ static int vduse_blk_exp_create(BlockExport *exp, BlockExportOptions *opts,
+                (1ULL << VIRTIO_BLK_F_BLK_SIZE) |
+                (1ULL << VIRTIO_BLK_F_FLUSH) |
+                (1ULL << VIRTIO_BLK_F_DISCARD) |
+-               (1ULL << VIRTIO_BLK_F_WRITE_ZEROES);
++               (1ULL << VIRTIO_BLK_F_WRITE_ZEROES) |
++               (1ULL << VIRTIO_BLK_F_OUT_FUA);
  
- static ssize_t
--vub_writev(VubReq *req, struct iovec *iov, uint32_t iovcnt)
-+vub_writev(VubReq *req, struct iovec *iov, uint32_t iovcnt, int flags)
- {
-     VubDev *vdev_blk = req->vdev_blk;
-     ssize_t rc;
-@@ -271,12 +271,19 @@ static int vub_virtio_process_req(VubDev *vdev_blk,
-     type = le32_to_cpu(req->out->type);
-     switch (type & ~VIRTIO_BLK_T_BARRIER) {
-     case VIRTIO_BLK_T_IN:
--    case VIRTIO_BLK_T_OUT: {
-+    case VIRTIO_BLK_T_OUT:
-+    case VIRTIO_BLK_T_OUT_FUA: {
-         ssize_t ret = 0;
-         bool is_write = type & VIRTIO_BLK_T_OUT;
-+        int flags = 0;
-         req->sector_num = le64_to_cpu(req->out->sector);
-         if (is_write) {
--            ret  = vub_writev(req, &elem->out_sg[1], out_num);
-+            #ifdef RWF_SYNC
-+            if (type == VIRTIO_BLK_T_OUT_FUA) {
-+                flags |= RWF_SYNC;
-+            }
-+            #endif
-+            ret  = vub_writev(req, &elem->out_sg[1], out_num, flags);
-         } else {
-             ret = vub_readv(req, &elem->in_sg[0], in_num);
-         }
-@@ -379,6 +386,9 @@ vub_get_features(VuDev *dev)
-                1ull << VIRTIO_BLK_F_DISCARD |
-                1ull << VIRTIO_BLK_F_WRITE_ZEROES |
-                #endif
-+               #ifdef RWF_SYNC
-+               1ull << VIRTIO_BLK_F_OUT_FUA |
-+               #endif
-                1ull << VIRTIO_BLK_F_CONFIG_WCE;
- 
-     if (vdev_blk->enable_ro) {
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 4bb5ed299e7..988be625969 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -44,6 +44,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_BLK_F_CONFIG_WCE,
-     VIRTIO_BLK_F_DISCARD,
-     VIRTIO_BLK_F_WRITE_ZEROES,
-+    VIRTIO_BLK_F_OUT_FUA,
-     VIRTIO_F_VERSION_1,
-     VIRTIO_RING_F_INDIRECT_DESC,
-     VIRTIO_RING_F_EVENT_IDX,
-@@ -581,6 +582,8 @@ static const Property vhost_user_blk_properties[] = {
-                       VIRTIO_BLK_F_DISCARD, true),
-     DEFINE_PROP_BIT64("write-zeroes", VHostUserBlk, parent_obj.host_features,
-                       VIRTIO_BLK_F_WRITE_ZEROES, true),
-+    DEFINE_PROP_BIT64("fua-write", VHostUserBlk, parent_obj.host_features,
-+                      VIRTIO_BLK_F_OUT_FUA, true),
- };
- 
- static void vhost_user_blk_class_init(ObjectClass *klass, const void *data)
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 8439b094904..bcf4f3423cb 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -39,6 +39,7 @@
- 
- GlobalProperty hw_compat_10_0[] = {
-     { "virtio-blk-device", "fua-write", "false" },
-+    { "vhost-user-blk", "fua-write", "false" },
- };
- const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
- 
-diff --git a/tests/qtest/vhost-user-blk-test.c b/tests/qtest/vhost-user-blk-test.c
-index ea90d41232e..4c68702e0b0 100644
---- a/tests/qtest/vhost-user-blk-test.c
-+++ b/tests/qtest/vhost-user-blk-test.c
-@@ -72,6 +72,7 @@ static uint64_t virtio_blk_request(QGuestAllocator *alloc, QVirtioDevice *d,
-     switch (req->type) {
-     case VIRTIO_BLK_T_IN:
-     case VIRTIO_BLK_T_OUT:
-+    case VIRTIO_BLK_T_OUT_FUA:
-         g_assert_cmpuint(data_size % 512, ==, 0);
-         break;
-     case VIRTIO_BLK_T_DISCARD:
-@@ -389,6 +390,61 @@ static QVirtQueue *test_basic(QVirtioDevice *dev, QGuestAllocator *alloc)
-                                           VIRTIO_BLK_T_DISCARD);
-     }
- 
-+    if (features & (1u << VIRTIO_BLK_F_OUT_FUA)) {
-+        /* FUA write and read with 3 descriptor layout */
-+        /* FUA write request */
-+        req.type = VIRTIO_BLK_T_OUT_FUA;
-+        req.ioprio = 1;
-+        req.sector = 0;
-+        req.data = g_malloc0(512);
-+        strcpy(req.data, "test");
-+
-+        req_addr = virtio_blk_request(alloc, dev, &req, 512);
-+
-+        g_free(req.data);
-+
-+        free_head = qvirtqueue_add(qts, vq, req_addr, 16, false, true);
-+        qvirtqueue_add(qts, vq, req_addr + 16, 512, false, true);
-+        qvirtqueue_add(qts, vq, req_addr + 528, 1, true, false);
-+
-+        qvirtqueue_kick(qts, dev, vq, free_head);
-+
-+        qvirtio_wait_used_elem(qts, dev, vq, free_head, NULL,
-+                            QVIRTIO_BLK_TIMEOUT_US);
-+        status = readb(req_addr + 528);
-+        g_assert_cmpint(status, ==, 0);
-+
-+        guest_free(alloc, req_addr);
-+
-+        /* Read request */
-+        req.type = VIRTIO_BLK_T_IN;
-+        req.ioprio = 1;
-+        req.sector = 0;
-+        req.data = g_malloc0(512);
-+
-+        req_addr = virtio_blk_request(alloc, dev, &req, 512);
-+
-+        g_free(req.data);
-+
-+        free_head = qvirtqueue_add(qts, vq, req_addr, 16, false, true);
-+        qvirtqueue_add(qts, vq, req_addr + 16, 512, true, true);
-+        qvirtqueue_add(qts, vq, req_addr + 528, 1, true, false);
-+
-+        qvirtqueue_kick(qts, dev, vq, free_head);
-+
-+        qvirtio_wait_used_elem(qts, dev, vq, free_head, NULL,
-+                            QVIRTIO_BLK_TIMEOUT_US);
-+        status = readb(req_addr + 528);
-+        g_assert_cmpint(status, ==, 0);
-+
-+        data = g_malloc0(512);
-+        qtest_memread(qts, req_addr + 16, data, 512);
-+        g_assert_cmpstr(data, ==, "test");
-+        g_free(data);
-+
-+        guest_free(alloc, req_addr);
-+    }
-+
-     if (features & (1u << VIRTIO_F_ANY_LAYOUT)) {
-         /* Write and read with 2 descriptor layout */
-         /* Write request */
+     if (num_queues > 1) {
+         features |= 1ULL << VIRTIO_BLK_F_MQ;
 -- 
 2.49.0
 
