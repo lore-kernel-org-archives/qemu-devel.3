@@ -4,79 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FFDDC3ABBF
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 00:19:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09C7BC3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 00:19:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCoyH-0005wS-GK; Wed, 07 May 2025 20:18:41 -0400
+	id 1uCoyB-0005vO-4l; Wed, 07 May 2025 20:18:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uCoyE-0005wH-7k
- for qemu-devel@nongnu.org; Wed, 07 May 2025 20:18:38 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1uCoy8-0005vC-8W
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 20:18:32 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uCoyC-0006uN-BF
- for qemu-devel@nongnu.org; Wed, 07 May 2025 20:18:37 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-736ad42dfd6so368948b3a.3
- for <qemu-devel@nongnu.org>; Wed, 07 May 2025 17:18:35 -0700 (PDT)
+ id 1uCoy6-0006tw-6l
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 20:18:32 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-736e52948ebso562964b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 07 May 2025 17:18:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746663515; x=1747268315; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U7+mohXqrdEbWb/P26+vE06tjBRbP4oy3sTl3Q0AKe8=;
- b=hvPOwYbPXZXh/47GLBcog8kxo9ZX5pHnir7DVE9YbcrZWuwf8GBNU950hwASHmfIYq
- flI2mT4uTnAaTNL0ks7qldLvJmVqsY0uHgu+la5/bVI3tOrMqh9QFtpLZfaovqE3Qry9
- sCVeRTFi7MCmH8vrLopnU7WucJXSRWZqQC6sNF0CeLP8dnrtQRicOhLxkZVE4cr4UJ5f
- nDSHsgQTK2GqS/wbWsOUv9aZ24ehpAlOgfDoeJnCcv3AHKKFNOrrWr8iYWbK/jcD3zwv
- bjTyZeBm2fXIw0TLzr5dpDwuaU0Bz1d79KQfv9MwnRpUUCbWwBGeJwLWuaockk/FF+6V
- uGcw==
+ d=gmail.com; s=20230601; t=1746663507; x=1747268307; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=1DUUdafSg3gAWNrrjVpbMbgAbVF/N0VART/pBT07PSM=;
+ b=PTijOaeWpDJ3EPFtRLaW546cfjuthNr+nSDkIPAE7ohrZvcr4YQwSnBmkezQX1aXjf
+ rkrXdtG3sv0aTIx+MzRe1Nk5+TK1JKV2hYGZD5fvmowbvvM3hG383pXtwYdpGuth0e1e
+ jUJ8gC10WHvhU7t2IT1jeDm+JAOdJwYno53RHiicj5I8FgYy86KXKVX+1XC9iUjiZ9rO
+ IYLSOOMbKk9zpe5rxXC7PdcguUPp7hAilW++BQWi/ZxqFY5dtS/nMVITYVfy0uL2k9b8
+ V3/XVQFUuFDy9sLkyLZ8wgW5dZhKPpeeMfu1/QCra66u9op/whth6ZokoLnV8A0sAZkt
+ N/Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746663515; x=1747268315;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=U7+mohXqrdEbWb/P26+vE06tjBRbP4oy3sTl3Q0AKe8=;
- b=aGp2f7qHu7SsYjhto8vD5OBfa+Urv5zi7emxyL+ZOUuwmDeoMqUjfurrP+rdhmlyY7
- pXuWuUr5IzpmafS4T4/8IFfRsxQhI0ZKU4znUPa4GbCZvm599X/S2kr7GD6ToSFtPTFK
- a6V0UuFez6gk50nu3apBdxIp+YXGAfiWZriACpJPQRCAP0lc+h14wmAAEuRMKLOkDQVy
- MDtUylB3QzwV3B8s65JcpNnEL2GtkF+F0jvdtf9ZLrZUz8CUYwmhq9LXvVYAIfWzkDYZ
- 8+LYnb2xqHpGyghXB/T45Y1PBm/M5nHMkTfBwQ4Q4OE1k2Dg6YxgwAAYTL6clBW3+oXR
- EMAg==
-X-Gm-Message-State: AOJu0YznN0nUGLw9RkUohRFjaAwrprXpR0Y6pzIFbtIS0XIIsiK6y4m9
- aDVWKfIogTx8Ip5/yXrDtn1YhkOqVDQYI9tmqx9b613txF2QNQlKJHqJ2g==
-X-Gm-Gg: ASbGncuFSn49wk0EgoC0fZAm441imK0CVvQAlzmeKg74doDf7qXc4GqLJVPt+3fYb9m
- mX3i7yxtOpmv72Xd0bHiyzgjBVffIDPYPMXJunLzF3+0Kl2MBkJvohi+GgpMg+yjq1tHzmMEoiU
- BO298bbqNiBIrG9icyWWTlhOmbOpexiMWnVYDPdPqJoOE5VKIpaEpOUP0dED5UyV9Lp+3yxRiKu
- pYDzaLxs/ZvkIlD3weurpQUFDbIPo1YWHh2lMcgA8g4RAYKa/sWfmScAXWlZ0wrxYr6kuZeqoHy
- nkrPQ/YXQFyXhiQuVl3fFzqhdrIJRbxLoxq3l30e20uiulQPYr0IF00pHJMgwQ==
-X-Google-Smtp-Source: AGHT+IHibVqj8jZcLyVDhgi+myiefRMZk3bIo6OqeV4F51rIZRhUJ3r6wDFKZ2ARLgO9wOaFTfcN3w==
-X-Received: by 2002:a05:6a00:ac86:b0:736:32d2:aa8e with SMTP id
- d2e1a72fcca58-7409cef5bd4mr7444822b3a.6.1746663514799; 
- Wed, 07 May 2025 17:18:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746663507; x=1747268307;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1DUUdafSg3gAWNrrjVpbMbgAbVF/N0VART/pBT07PSM=;
+ b=LF/Z+AS2u0pZMX65IL7YP8w2qVzwapr9cMuFnd+yJmLOaDacuZdxRyz8AHB5LNGAz0
+ phivv5hI5hNk9sLUHtYaccVzVEj5CrL2BelbL8xqZ/jmscOTEoorXXnIwrFp8//K/DcN
+ wB47Or6tuQxOi1FD49AOFVwUImH5Jn9m+rTUFb67GGduy1I+3CN7POws3s8OZ6GNJTMX
+ PgrWvwm7uXoCdZSkR3deCUaBpqBQRkd5lPd2Lj9sOjjNmbG4jz/RUYAE1qX36x00E2tS
+ lfYLwHucCINPgBIOW5SgI9k+LSBIT81IN1qb7fZO10arDpqGYoiMD5qUt+VQBg28sEl5
+ sX+g==
+X-Gm-Message-State: AOJu0YzmsVjI/kShgkuZ0SyJCoG4Xgmc+Pn8/lJtXNwM+oFDOs9yQgK7
+ uGzAZue/GyZKfEgOhsFpJCx13z032H8N7R1lQBn/x51fdsFVmMn2RJYrYw==
+X-Gm-Gg: ASbGncvNjtRA4ELcNv5DOIyH4EGCUInpSORNzJxhtNSXK0MFL65NDPTLLi4mxF/XTdP
+ Xgg60Cb+47JVAD7t/0o4wiqkb5AvXMxyozkZq+BfB3LbmJLZHYT4zIMXReNMpDHpGb46kURPIDH
+ RdbC2lvW5pYV9/apDdUGzhjcx+OaJoRsmVlWrutCakPO+U2j8OvOKtDf5m+M0OkiOAnlR5jFIzs
+ zKfFwXO1C2c6Mp/KuvR9iKReFQfhPINqYFv+4tHAwCJpF6Lth26Y1Qv0TwPpWg1sYzUfNDUKXaj
+ 2K+lL9jeyGEI+dfFjhO7aoTqmPL4oh2ji7TfngBcRkQM2o/S/mLpY+DwfX5AJA==
+X-Google-Smtp-Source: AGHT+IEB0JXt6z8w2I6N2UYJl/ixcQnuaXs/9O6VqQ8Uf85PMo1g4X9kfpaFz6eYJTPAnFwaeV4U5Q==
+X-Received: by 2002:a05:6a20:12d4:b0:204:4573:d854 with SMTP id
+ adf61e73a8af0-2159af312d9mr1699263637.9.1746663506886; 
+ Wed, 07 May 2025 17:18:26 -0700 (PDT)
 Received: from deb-101020-bm01.dtc.local ([149.97.161.244])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7405902167csm12378724b3a.98.2025.05.07.17.18.34
+ d2e1a72fcca58-7405902167csm12378724b3a.98.2025.05.07.17.18.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 May 2025 17:18:34 -0700 (PDT)
+ Wed, 07 May 2025 17:18:26 -0700 (PDT)
 From: anisa.su887@gmail.com
 To: qemu-devel@nongnu.org
 Cc: Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com, dave@stgolabs.net,
  linux-cxl@vger.kernel.org, Anisa Su <anisa.su@samsung.com>
-Subject: [PATCH v2 02/10] cxl-mailbox-utils: 0x5600 - FMAPI Get DCD Info
-Date: Thu,  8 May 2025 00:00:58 +0000
-Message-ID: <20250508001754.122180-3-anisa.su887@gmail.com>
+Subject: [PATCH v2 00/10] CXL: FMAPI DCD Management Commands 0x5600-0x5605
+Date: Thu,  8 May 2025 00:00:56 +0000
+Message-ID: <20250508001754.122180-1-anisa.su887@gmail.com>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250508001754.122180-1-anisa.su887@gmail.com>
-References: <20250508001754.122180-1-anisa.su887@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=anisa.su887@gmail.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=anisa.su887@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,177 +99,111 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anisa Su <anisa.su@samsung.com>
 
-FM DCD Management command 0x5600 implemented per CXL 3.2 Spec Section 7.6.7.6.1.
+This patchset adds support for 6 FM API DCD Management commands (0x5600-0x5605)
+according to the CXL r3.2 Spec. It is based on the following branch:
+https://gitlab.com/jic23/qemu/-/tree/cxl-2025-02-20.
 
-Signed-off-by: Anisa Su <anisa.su@samsung.com>
----
- hw/cxl/cxl-mailbox-utils.c   | 56 ++++++++++++++++++++++++++++++++++++
- hw/cxl/i2c_mctp_cxl.c        |  6 ++--
- hw/mem/cxl_type3.c           |  4 +++
- include/hw/cxl/cxl_device.h  |  1 +
- include/hw/cxl/cxl_opcodes.h |  3 ++
- 5 files changed, 68 insertions(+), 2 deletions(-)
+The code was tested with libcxlmi, which runs in the QEMU VM and sends 56xxh
+commands to the device (QEMU emulated) through MCTP messages over I2C
+bus. To perform end-to-end tests, both MCTP and DCD support are needed
+for the kernel, so the needed MCTP patches are applied on top of Ira's DCD
+branch https://github.com/weiny2/linux-kernel/tree/dcd-v4-2024-12-11.
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index ed3294530f..d3c69233b8 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -3280,6 +3280,52 @@ static CXLRetCode cmd_dcd_release_dyn_cap(const struct cxl_cmd *cmd,
-     return CXL_MBOX_SUCCESS;
- }
- 
-+/* CXL r3.2 section 7.6.7.6.1: Get DCD Info (Opcode 5600h) */
-+static CXLRetCode cmd_fm_get_dcd_info(const struct cxl_cmd *cmd,
-+                                      uint8_t *payload_in,
-+                                      size_t len_in,
-+                                      uint8_t *payload_out,
-+                                      size_t *len_out,
-+                                      CXLCCI *cci)
-+{
-+    struct {
-+        uint8_t num_hosts;
-+        uint8_t num_regions_supported;
-+        uint8_t rsvd1[2];
-+        uint16_t add_select_policy_bitmask;
-+        uint8_t rsvd2[2];
-+        uint16_t release_select_policy_bitmask;
-+        uint8_t sanitize_on_release_bitmask;
-+        uint8_t rsvd3;
-+        uint64_t total_dynamic_capacity;
-+        uint64_t region_blk_size_bitmasks[8];
-+    } QEMU_PACKED *out = (void *)payload_out;
-+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    CXLDCRegion *region;
-+    int i;
-+
-+    out->num_hosts = 1;
-+    out->num_regions_supported = ct3d->dc.num_regions;
-+    stw_le_p(&out->add_select_policy_bitmask,
-+             BIT(CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE));
-+    stw_le_p(&out->release_select_policy_bitmask,
-+             BIT(CXL_EXTENT_REMOVAL_POLICY_PRESCRIPTIVE));
-+    out->sanitize_on_release_bitmask = 0;
-+
-+    stq_le_p(&out->total_dynamic_capacity,
-+             ct3d->dc.total_capacity / CXL_CAPACITY_MULTIPLIER);
-+
-+    for (i = 0; i < ct3d->dc.num_regions; i++) {
-+        region = &ct3d->dc.regions[i];
-+        memcpy(&out->region_blk_size_bitmasks[i],
-+               &region->supported_blk_size_bitmask,
-+               sizeof(out->region_blk_size_bitmasks[i]));
-+    }
-+
-+    *len_out = sizeof(*out);
-+    return CXL_MBOX_SUCCESS;
-+}
-+
- static const struct cxl_cmd cxl_cmd_set[256][256] = {
-     [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
-         cmd_infostat_bg_op_abort, 0, 0 },
-@@ -3401,6 +3447,11 @@ static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
-                                      cmd_tunnel_management_cmd, ~0, 0 },
- };
- 
-+static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
-+    [FMAPI_DCD_MGMT][GET_DCD_INFO] = { "GET_DCD_INFO",
-+        cmd_fm_get_dcd_info, 0, 0 },
-+};
-+
- /*
-  * While the command is executing in the background, the device should
-  * update the percentage complete in the Background Command Status Register
-@@ -3703,7 +3754,12 @@ void cxl_initialize_t3_fm_owned_ld_mctpcci(CXLCCI *cci, DeviceState *d,
-                                            DeviceState *intf,
-                                            size_t payload_max)
- {
-+    CXLType3Dev *ct3d = CXL_TYPE3(d);
-+
-     cxl_copy_cci_commands(cci, cxl_cmd_set_t3_fm_owned_ld_mctp);
-+    if (ct3d->dc.num_regions) {
-+        cxl_copy_cci_commands(cci, cxl_cmd_set_fm_dcd);
-+    }
-     cci->d = d;
-     cci->intf = intf;
-     cxl_init_cci(cci, payload_max);
-diff --git a/hw/cxl/i2c_mctp_cxl.c b/hw/cxl/i2c_mctp_cxl.c
-index 7d2cbc3b75..dd5fc4f393 100644
---- a/hw/cxl/i2c_mctp_cxl.c
-+++ b/hw/cxl/i2c_mctp_cxl.c
-@@ -29,6 +29,7 @@
- #include "hw/pci/pcie_port.h"
- #include "hw/qdev-properties.h"
- #include "hw/registerfields.h"
-+#include "hw/cxl/cxl_opcodes.h"
- 
- #define TYPE_I2C_MCTP_CXL "i2c_mctp_cxl"
- 
-@@ -198,9 +199,10 @@ static void i2c_mctp_cxl_handle_message(MCTPI2CEndpoint *mctp)
-          */
- 
-         if (!(msg->message_type == MCTP_MT_CXL_TYPE3 &&
--              msg->command_set < 0x51) &&
-+              msg->command_set < PHYSICAL_SWITCH) &&
-             !(msg->message_type == MCTP_MT_CXL_FMAPI &&
--              msg->command_set >= 0x51 && msg->command_set < 0x56)) {
-+              msg->command_set >= PHYSICAL_SWITCH &&
-+              msg->command_set < GLOBAL_MEMORY_ACCESS_EP_MGMT)) {
-             buf->rc = CXL_MBOX_UNSUPPORTED;
-             st24_le_p(buf->pl_length, len_out);
-             s->len = s->pos;
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 11c38a9292..7129da0940 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -8,6 +8,7 @@
-  *
-  * SPDX-License-Identifier: GPL-v2-only
-  */
-+#include <math.h>
- 
- #include "qemu/osdep.h"
- #include "qemu/units.h"
-@@ -766,6 +767,8 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
-     uint64_t region_len;
-     uint64_t decode_len;
-     uint64_t blk_size = 2 * MiB;
-+    /* Only 1 block size is supported for now. */
-+    uint64_t supported_blk_size_bitmask = BIT((int) log2(blk_size));
-     CXLDCRegion *region;
-     MemoryRegion *mr;
-     uint64_t dc_size;
-@@ -811,6 +814,7 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
-             .block_size = blk_size,
-             /* dsmad_handle set when creating CDAT table entries */
-             .flags = 0,
-+            .supported_blk_size_bitmask = supported_blk_size_bitmask,
-         };
-         ct3d->dc.total_capacity += region->len;
-         region->blk_bitmap = bitmap_new(region->len / region->block_size);
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index ca515cab13..bebed04085 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -608,6 +608,7 @@ typedef struct CXLDCRegion {
-     uint32_t dsmadhandle;
-     uint8_t flags;
-     unsigned long *blk_bitmap;
-+    uint64_t supported_blk_size_bitmask;
- } CXLDCRegion;
- 
- typedef struct CXLSetFeatureInfo {
-diff --git a/include/hw/cxl/cxl_opcodes.h b/include/hw/cxl/cxl_opcodes.h
-index 26d3a99e8a..c4c233665e 100644
---- a/include/hw/cxl/cxl_opcodes.h
-+++ b/include/hw/cxl/cxl_opcodes.h
-@@ -61,4 +61,7 @@ enum {
-         #define MANAGEMENT_COMMAND     0x0
-     MHD = 0x55,
-         #define GET_MHD_INFO 0x0
-+    FMAPI_DCD_MGMT = 0x56,
-+        #define GET_DCD_INFO 0x0
-+    GLOBAL_MEMORY_ACCESS_EP_MGMT = 0X59
- };
+For the tests of commands 0x5600 (Get DCD Info), 0x5601 (Get Host DC Region
+Config), and 0x5603 (Get DC Region Extent Lists), DCD kernel code is not involved.
+The libcxlmi test program is used to send the command to the device and results
+are collected and verified.
+
+For command 0x5602 (Set DC Region Config): device creates an event record with type
+DC_EVENT_REGION_CONFIG_UPDATED and triggers an interrupt to the host
+if the configuration changes as a result of the command. Currently, the kernel
+version used to test this only supports Add/Release type events. Thus, this
+request essentially gets ignored but did not cause problems besides the host
+not knowing about the configuration change when tested.
+
+For the command 0x5604 (Initiate DC Add) and 0x5605 (Initiate DC Release), the
+tests involve libcxlmi test program (acting as the FM), kernel DCD
+code (host) and QEMU device. The test workflow follows that in cxl r3.2 section
+7.6.7.6.5 and 7.6.7.6.6. More specifically, the tests involve following
+steps,
+1. Start a VM with CXL topology: https://github.com/moking/cxl-test-tool/blob/main/utils/cxl.py#L54.
+2. Load the CXL related drivers in the VM;
+3. Create a DC region for the DCD device attached.
+4. add/release DC extents by sending 0x5604 and 0x5605 respectively through
+the out-of-tree libcxlmi test program
+(https://github.com/anisa-su993/libcxlmi/blob/dcd_management_cmds/tests/test-fmapi.c).
+5. Check and verify the extents by retrieving the extents list through
+command 0x5603 in the test program.
+
+The remaining 3 commands in this series (0x5606-0x5608) are related to tags
+and sharing, thus have not been implemented.
+
+Changes
+================================================================================
+v1 -> v2:
+1. Feedback from Jonathan Cameron on v1
+Addressed general style concerns (newlines/spacing, minor refactoring, etc.)
+1.1. Changes Related to 0x5600 - FMAPI Get DCD Info
+    - Squashed prepatory patch adding supported_blk_sizes_bitmask
+    - Added new prepatory patch moving opcodes enum from cxl-mailbox-utils.c to
+    new header file opcodes.h
+    Needed for the check in i2c_mctp_cxl.c to ensure the FMAPI Commands
+    (0x51 - 0x59) are bound with MCTP_MT_CXL_FMAPI. By moving the enum,
+    the hardcoded values (0x51, 0x59) can be replaced with their
+    enumerators.
+    - Bug fix to return Add/Release Extent Selection Policy bitmasks
+      correctly
+1.2. Changes Related to 0x5601 - FMAPI Get Host Region Config
+    - Prepatory patch to add dsmas_flags to CXLDCRegion struct was modified to
+    store the booleans dsmas_flags is made up of instead of copying it from the
+    CDAT for that region. Values hardcoded for unsupported flags.
+    - Build the returned dsmas_flags from the new booleans.
+1.3. Changes Related to 0x5602 - FMAPI Set DC Region Config
+    - Added locking for CXLDCRegion bitmap for the case that extents are being
+    added/released via a different CCI than that of the FM-enabled CCI.
+    - Prepatory patch created for the above (quite short, can be squashed if
+    preferred)
+    - Added a check to verify that the requested block_size is supported by the
+    region by looking at region->supported_blk_sizes_bitmask
+    - Instead of event_record validity flag being cleared, set to 1
+    - Fixed bug of forgetting to update region->block_size
+1.4. Changes Related to 0x5603 - FMAPI Get DC Region Extents
+    - Minor refactoring of loop filling in response payload extents
+
+2. Feedback from Fan Ni and Jonathan Cameron on v1
+2.1. Changes Related to 0x5604 - FMAPI Initiate DC Add
+    - Remove redundant storage of extents in event_rec_exts
+    - Refactor event record creation into helper function for re-use by release
+    - Return event_record.available_extents
+    (total_extents_available - num_pending - num_accepted) instead of
+    leaving it blank
+2.2. Changes Related to 0x5605 - FMAPI Initiate DC Release
+    - Remove redundant storage of extents in event_rec_exts/redundant 2nd loop
+    - Add #define for removal_policy_bitmask instead of hardcoding 0x7
+
+Anisa Su (10):
+  cxl-mailbox-utils: Move opcodes enum to new header file
+  cxl-mailbox-utils: 0x5600 - FMAPI Get DCD Info
+  cxl/type3: Add dsmas_flags to CXLDCRegion struct
+  cxl-mailbox-utils: 0x5601 - FMAPI Get Host Region Config
+  cxl_events.h: Move definition for dynamic_capacity_uuid and enum for
+    DC event types
+  hw/cxl_type3: Add DC Region bitmap lock
+  cxl-mailbox-utils: 0x5602 - FMAPI Set DC Region Config
+  cxl-mailbox-utils: 0x5603 - FMAPI Get DC Region Extent Lists
+  cxl-mailbox-utils: 0x5604 - FMAPI Initiate DC Add
+  cxl-mailbox-utils: 0x5605 - FMAPI Initiate DC Release
+
+ hw/cxl/cxl-mailbox-utils.c   | 649 +++++++++++++++++++++++++++++++----
+ hw/cxl/i2c_mctp_cxl.c        |   6 +-
+ hw/mem/cxl_type3.c           |  41 ++-
+ include/hw/cxl/cxl_device.h  |  24 ++
+ include/hw/cxl/cxl_events.h  |  15 +
+ include/hw/cxl/cxl_mailbox.h |   6 +
+ include/hw/cxl/cxl_opcodes.h |  72 ++++
+ 7 files changed, 724 insertions(+), 89 deletions(-)
+ create mode 100644 include/hw/cxl/cxl_opcodes.h
+
 -- 
 2.47.2
 
