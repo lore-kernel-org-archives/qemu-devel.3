@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30B2C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:11:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CEA4C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD2qu-0000ay-3h; Thu, 08 May 2025 11:08:00 -0400
+	id 1uD2qh-0007qc-BI; Thu, 08 May 2025 11:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2qg-0007rU-Im
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:07:47 -0400
+ id 1uD2qb-0007XI-9P
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:07:42 -0400
 Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2qc-0007cH-HL
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:07:46 -0400
+ id 1uD2qS-0007cH-Im
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:07:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746716863; x=1778252863;
+ t=1746716853; x=1778252853;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=RnPUkkVptiBkzoG1PZzbzX6SNfcRkotJXQDy/R78Sro=;
- b=PeQN1C5lQiVLZJqDNA3oZD8CcY3Pjo8YVkxkGLGyE+ONGFe1LY/Da36q
- wCEJQJbtiH2Sn3pm5SAWCzGIUlenAzNUmc5dJxbvbn66EiU2jiQs3EJhw
- L7eYuxYi3ipfHgDl2jKx7M5UntahzkJjRCJLJBx71tAjwboooznUsOaIk
- 2O97dsWpWr4BmUjToQi8yWBm8tqF8kxdOHa3ZzcazxN06z0SLZrBcE6gq
- zjNQ/8Q1V703OcqiXzdMt5J8dX6mQAYlHYghcvKS9FzAF2jqxozXDcRcR
- amEMsvDLJULNZ1t29AKBeowQVsXElYTgBiMlTEPpfC1nT8bI4p8X8XEBQ Q==;
-X-CSE-ConnectionGUID: GrRboBjDQ82tL+dgPbpUWA==
-X-CSE-MsgGUID: Y10+rMQgTMayXoxXysJNwA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="58716567"
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="58716567"
+ bh=JjSnyfe/tXL5LKPn1Vv9VsX+SGiMSu+B4m1uHEH+er8=;
+ b=fgm2crThjjyfHy2iE9v/UK32ku8+Ye0buFX9gtAB28v3v19Qjy3vql4n
+ bRP9qOgIkvV7I4v3wawl18x3NJ7H9GwGkPzazoZPvmLPzUbXF/BJaq2m9
+ jhRzWvYz2JHSB8QNibqvuXErR0RzxDricRy05o6bnePmv/kX5podFiHSl
+ GyEIw1TKIq6zZWUli2L+NOEMyZorcZeqG+nCj7iB++cu4MHXVUtk4ADo3
+ d6p4BLJ56qs0vVWbySNo0SuIO8n/wC26DLAGOJvFV9I9OXOkVR31TM7nY
+ 26GCo9M8mxAzSSJoN3/tI5mPI5iixJs7Uket4i7pacOuKGZiuFO1DTHoT g==;
+X-CSE-ConnectionGUID: 7GcPZdciR6az0+QMnN1wTw==
+X-CSE-MsgGUID: tT6ynVLcSLy8FVMG2lIKvQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="58716533"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="58716533"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2025 08:07:39 -0700
-X-CSE-ConnectionGUID: Ar4o2wnjSGqd0GLgwhsxrw==
-X-CSE-MsgGUID: xqj2rnT5QPC72IKLc5lneA==
+ 08 May 2025 08:07:30 -0700
+X-CSE-ConnectionGUID: A9R3aAj+QvObAsMV4Bs5rA==
+X-CSE-MsgGUID: u+Gggfw8RO2WtqhYt4FEGQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141440575"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141440540"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:07:35 -0700
+ by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:07:26 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -57,9 +57,10 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v9 53/55] i386/tdx: Make invtsc default on
-Date: Thu,  8 May 2025 10:59:59 -0400
-Message-ID: <20250508150002.689633-54-xiaoyao.li@intel.com>
+Subject: [PATCH v9 50/55] i386/cgs: Introduce
+ x86_confidential_guest_check_features()
+Date: Thu,  8 May 2025 10:59:56 -0400
+Message-ID: <20250508150002.689633-51-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250508150002.689633-1-xiaoyao.li@intel.com>
 References: <20250508150002.689633-1-xiaoyao.li@intel.com>
@@ -90,28 +91,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Because it's fixed1 bit that enforced by TDX module.
+To do cgs specific feature checking. Note the feature checking in
+x86_cpu_filter_features() is valid for non-cgs VMs. For cgs VMs like
+TDX, what features can be supported has more restrictions.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/kvm/tdx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ target/i386/confidential-guest.h | 13 +++++++++++++
+ target/i386/kvm/kvm.c            |  8 ++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index e9c680b74040..6aeb4fcc4975 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -749,6 +749,9 @@ static void tdx_cpu_instance_init(X86ConfidentialGuest *cg, CPUState *cpu)
+diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
+index 777d43cc9688..48b88dbd3130 100644
+--- a/target/i386/confidential-guest.h
++++ b/target/i386/confidential-guest.h
+@@ -42,6 +42,7 @@ struct X86ConfidentialGuestClass {
+     void (*cpu_instance_init)(X86ConfidentialGuest *cg, CPUState *cpu);
+     uint32_t (*adjust_cpuid_features)(X86ConfidentialGuest *cg, uint32_t feature,
+                                       uint32_t index, int reg, uint32_t value);
++    int (*check_features)(X86ConfidentialGuest *cg, CPUState *cs);
+ };
  
-     object_property_set_bool(OBJECT(cpu), "pmu", false, &error_abort);
- 
-+    /* invtsc is fixed1 for TD guest */
-+    object_property_set_bool(OBJECT(cpu), "invtsc", true, &error_abort);
-+
-     x86cpu->enable_cpuid_0x1f = true;
+ /**
+@@ -91,4 +92,16 @@ static inline int x86_confidential_guest_adjust_cpuid_features(X86ConfidentialGu
+     }
  }
  
++static inline int x86_confidential_guest_check_features(X86ConfidentialGuest *cg,
++                                                        CPUState *cs)
++{
++    X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
++
++    if (klass->check_features) {
++        return klass->check_features(cg, cs);
++    }
++
++    return 0;
++}
++
+ #endif
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 17d7bf6ae9aa..27b4a069d194 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2092,6 +2092,14 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     int r;
+     Error *local_err = NULL;
+ 
++    if (current_machine->cgs) {
++        r = x86_confidential_guest_check_features(
++                X86_CONFIDENTIAL_GUEST(current_machine->cgs), cs);
++        if (r < 0) {
++            return r;
++        }
++    }
++
+     memset(&cpuid_data, 0, sizeof(cpuid_data));
+ 
+     cpuid_i = 0;
 -- 
 2.43.0
 
