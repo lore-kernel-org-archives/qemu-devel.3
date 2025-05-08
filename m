@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86BA8C3ABBF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABCB0C3ABC0
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 00:25:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCp4X-0006OO-Kz; Wed, 07 May 2025 20:25:09 -0400
+	id 1uCp4Q-00067o-0w; Wed, 07 May 2025 20:25:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uCp4W-0006L9-6A
- for qemu-devel@nongnu.org; Wed, 07 May 2025 20:25:08 -0400
+ (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uCp4M-00064o-GS
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 20:24:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uCp4U-0007ez-Kz
- for qemu-devel@nongnu.org; Wed, 07 May 2025 20:25:07 -0400
+ (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uCp4K-0007TA-Uy
+ for qemu-devel@nongnu.org; Wed, 07 May 2025 20:24:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746663905;
+ s=mimecast20190719; t=1746663896;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=POpTinu+4TbATah+exKWXvTgLrro4auj9JlqEVua2po=;
- b=C0/UhhdN5gFKJHV6GsbWTIGuJv61oPsIzGf0CLBbFzQc+4snC55BgsJ+8KMe5R+azR+OP5
- Ck7aJNXsCGNsqQdQBWdbRWRPJDL0Vpdc3pRbp5D6yhMM/AUSjzjDj31YzvfcbV2zF8IT4N
- Mk0rKVnm7d56O3smSteXltErUJCYnp4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=nrUiYLGuofZplWuxxJETdEH9HBEFopFfFhqIQ8yveHs=;
+ b=fXUGuuyrR2iJZW1mqy3WBIBORQvtuDrQFnzGY0Ovk5BPyJ0JaGSxqjKrKoPUjK4aAX7w0g
+ 4/geLU4NV7XJrSxKbDfFb/Z2+4DUosIkvoeuDNOHzhOCnQnImovvsZDw3UHuvgEGhGlGA5
+ lh4zM1KJktXLAS5ateIZ6nMHtlxbtSE=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-439-c1wGO_JRPbi6oXTEz1MakQ-1; Wed,
- 07 May 2025 20:25:00 -0400
-X-MC-Unique: c1wGO_JRPbi6oXTEz1MakQ-1
-X-Mimecast-MFC-AGG-ID: c1wGO_JRPbi6oXTEz1MakQ_1746663899
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-1-LmMPc5lrNh-G8E_hmlhoCA-1; Wed,
+ 07 May 2025 20:24:52 -0400
+X-MC-Unique: LmMPc5lrNh-G8E_hmlhoCA-1
+X-Mimecast-MFC-AGG-ID: LmMPc5lrNh-G8E_hmlhoCA_1746663891
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC939180045B; Thu,  8 May 2025 00:24:58 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 624361956086; Thu,  8 May 2025 00:24:50 +0000 (UTC)
 Received: from desktop.redhat.com (unknown [10.45.224.21])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 040CA19560AF; Thu,  8 May 2025 00:24:50 +0000 (UTC)
+ id 8FEBA19560A7; Thu,  8 May 2025 00:24:42 +0000 (UTC)
 From: Alberto Faria <afaria@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Coiby Xu <Coiby.Xu@gmail.com>, Laurent Vivier <lvivier@redhat.com>,
@@ -59,11 +58,10 @@ Cc: Coiby Xu <Coiby.Xu@gmail.com>, Laurent Vivier <lvivier@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Xie Yongji <xieyongji@bytedance.com>, Yanan Wang <wangyanan55@huawei.com>,
  Alberto Faria <afaria@redhat.com>
-Subject: [RFC 1/4] include: Add tentative virtio-blk FUA write definitions
-Date: Thu,  8 May 2025 01:24:37 +0100
-Message-ID: <20250508002440.423776-2-afaria@redhat.com>
-In-Reply-To: <20250508002440.423776-1-afaria@redhat.com>
-References: <20250508002440.423776-1-afaria@redhat.com>
+Subject: [RFC 0/4] virtio-blk: Add support for FUA write requests
+Date: Thu,  8 May 2025 01:24:36 +0100
+Message-ID: <20250508002440.423776-1-afaria@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -92,33 +90,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Alberto Faria <afaria@redhat.com>
----
- include/standard-headers/linux/virtio_blk.h | 4 ++++
- 1 file changed, 4 insertions(+)
+There is a proposal to introduce virtio-blk fua write support to the virtio
+spec [1], and a matching kernel RFC [2]. This series implements the proposal by
+adding VIRTIO_BLK_{F,T}_OUT_FUA uapi definitions and corresponding virtio-blk,
+vhost-user-blk, and vduse-blk support.
 
-diff --git a/include/standard-headers/linux/virtio_blk.h b/include/standard-headers/linux/virtio_blk.h
-index d7be3cf5e42..67a373e7967 100644
---- a/include/standard-headers/linux/virtio_blk.h
-+++ b/include/standard-headers/linux/virtio_blk.h
-@@ -42,6 +42,7 @@
- #define VIRTIO_BLK_F_WRITE_ZEROES	14	/* WRITE ZEROES is supported */
- #define VIRTIO_BLK_F_SECURE_ERASE	16 /* Secure Erase is supported */
- #define VIRTIO_BLK_F_ZONED		17	/* Zoned block device */
-+#define VIRTIO_BLK_F_OUT_FUA		18	/* FUA write is supported */
- 
- /* Legacy feature bits */
- #ifndef VIRTIO_BLK_NO_LEGACY
-@@ -204,6 +205,9 @@ struct virtio_blk_config {
- /* Reset All zones command */
- #define VIRTIO_BLK_T_ZONE_RESET_ALL 26
- 
-+/* FUA write command */
-+#define VIRTIO_BLK_T_OUT_FUA        27
-+
- #ifndef VIRTIO_BLK_NO_LEGACY
- /* Barrier before this op. */
- #define VIRTIO_BLK_T_BARRIER	0x80000000
+[1] https://lore.kernel.org/virtio-comment/20250507152602.3993258-1-afaria@redhat.com/
+[2] https://lore.kernel.org/linux-block/20250508001951.421467-1-afaria@redhat.com/
+
+Alberto Faria (4):
+  include: Add tentative virtio-blk FUA write definitions
+  virtio-blk: Add VIRTIO_BLK_T_OUT_FUA command support
+  vhost-user-blk: Add VIRTIO_BLK_T_OUT_FUA command support
+  vduse-blk: Add VIRTIO_BLK_T_OUT_FUA command support
+
+ block/export/vduse-blk.c                    |  3 +-
+ block/export/vhost-user-blk-server.c        |  1 +
+ block/export/virtio-blk-handler.c           |  7 ++-
+ contrib/vhost-user-blk/vhost-user-blk.c     | 16 ++++--
+ hw/block/vhost-user-blk.c                   |  3 ++
+ hw/block/virtio-blk.c                       |  2 +
+ hw/core/machine.c                           |  5 +-
+ hw/virtio/virtio-qmp.c                      |  2 +
+ include/standard-headers/linux/virtio_blk.h |  4 ++
+ tests/qtest/vhost-user-blk-test.c           | 56 +++++++++++++++++++++
+ tests/qtest/virtio-blk-test.c               | 56 +++++++++++++++++++++
+ 11 files changed, 148 insertions(+), 7 deletions(-)
+
 -- 
 2.49.0
 
