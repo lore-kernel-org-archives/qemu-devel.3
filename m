@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BED1C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 12:08:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC28BC3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 12:19:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD02g-0001Os-HA; Thu, 08 May 2025 08:07:58 -0400
+	id 1uD0DY-0003GG-RA; Thu, 08 May 2025 08:19:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uD02d-0001OV-VD
- for qemu-devel@nongnu.org; Thu, 08 May 2025 08:07:55 -0400
-Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0DW-0003Fz-49
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 08:19:10 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uD02c-0000im-6E
- for qemu-devel@nongnu.org; Thu, 08 May 2025 08:07:55 -0400
-Received: by mail-yb1-xb2e.google.com with SMTP id
- 3f1490d57ef6-e78f44034ffso426968276.1
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 05:07:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0DU-0001zt-E8
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 08:19:09 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-73bf1cef6ceso974235b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 05:19:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746706073; x=1747310873; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YL87FuhWDvRyv0KfIzORqijLk934LJSUMog7volKFdc=;
- b=oH2Il1FX4ZO9zRvppNOtiSK8d/0fJwSqUhhdZsZNqcH+oUrtiabfxbRkoY1o349TQE
- TNIWKbloIvXjqLPGOBCrSxVVJP/TR+dWP8tWCtWc5FpU+kPT5j2+bpwuUtzWQWTzLWTI
- DFa9kJWlc5VznKaDdj68FkON/mTMtdL+iQvmfpc+c3ij0O92B6lvAp3A1a1itXQP+QrL
- gY2r32J3/BuJc5EkoTLUFBZYcc1O+8zsGQn8NKt6QgWyF8aGU6M7SXECKORtCWo34DfK
- ZFiiA7yVXOUm27LJIUuICFFAdkfrK4NYUQcWD1Lv0loEw1aoKnZxbHoEdeQ5kJKFE0JT
- 9QIw==
+ d=linaro.org; s=google; t=1746706746; x=1747311546; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vneQPxpJlDDokGiIiyPtLhHxMJalMcA0+iSqBwt+LGw=;
+ b=lxe611LVKa2XjjdDSHFqIYgB16jE04Bbn2UWnmva4BIjcYINErHdccuao2jl1hjo9b
+ nPGafDa2o6p4MXo4/OIDE3GZyfJDW1SXIPs5J28OSlvw4i8S5IefZ+ZTvJvpGHbNAJZe
+ ddbbKrceJEZxygQ3EYrqmL6OUlpIYgTxj7DQM/pEgpXnJaXuil4zOxYm1SG9IcCKquBS
+ jX6r0O7MHsjbgS6Fr7y397oDYxF4tMwbBjVSNLltgMW0xchOJL2N+s0tWkU58pGDtj4s
+ 4muIEhnaQHVTUPP6p/Pre9gPXkuEtKXQUA1wmEN2wIopdoLvuFTCfQd5m0JDu4t/bL40
+ 89Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746706073; x=1747310873;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YL87FuhWDvRyv0KfIzORqijLk934LJSUMog7volKFdc=;
- b=avq37x4yTKqlWkk6LNf/W+sqCOuL8ldLFBFWXwDALZ6U+EJYQeaLM2Zr9X6LAyBQvL
- 45yRiXfTT4UtpM8wsa5tIAxIrTb76x8hDx+1VLjbyLUwpTMJV3Q29xN+KZqdpTdFBZgm
- hc+pb60NVssuWEO3IRDBL/e6FIhRTTOy0bNjS1I4u8Ng2nv8KRMLTh7G9ZrY+HJJfUSM
- J9QJL2EDaFAUK/uDyvpeie+vgbtnD/Amg1WL1AqPA3lwi2JlKZKuLJZ3I2Lnw6sEBQWR
- 3nl3jNDJjx7NRf2pxuudh0JutOo0z/CyCcZn76UJiGeymkpUjBE9JiGDUybZqHtfSn1U
- wJHw==
-X-Gm-Message-State: AOJu0YzhHtSNr7Cr+Nggxp9iaKV9ZediapXqvOtInp214bYf+AqCxirh
- sIuvh1UMSmtDp93UqpYd8PxQFUCP33FztqN014esfWpzEIdGqoP0GX00jxFl5sU3sHUOR0rqBvz
- eov8HYy9cmsOtpZwFDNYRWnnt3QMFlHisHefsgg==
-X-Gm-Gg: ASbGncvZ+OiBOWu1TwDEZAbsE8GFvigJkuSzuE26LxuJX2efqGW22u8lGezz5niSYzS
- ZnmXiYE2VOIztwn8TxILwjIgRAH5KB9oLCHOBmFE4V5VCC/YAZj0Ll0xnbwYndu3uEePW70oiHh
- YbPTM6RvbLmv24cn/+uHsrVFk=
-X-Google-Smtp-Source: AGHT+IE5s+nuYHd6x2a6aCI7dtUK2PdHv+gp2usVJxorITTM1P4EYvIoJcl9QwMcbO2gplMF/xxze1IqiTWVweuX+Cg=
-X-Received: by 2002:a05:6902:2b84:b0:e78:6954:49f1 with SMTP id
- 3f1490d57ef6-e78ef5efa6dmr3846126276.4.1746706072667; Thu, 08 May 2025
- 05:07:52 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746706746; x=1747311546;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vneQPxpJlDDokGiIiyPtLhHxMJalMcA0+iSqBwt+LGw=;
+ b=fGLsI4C9VqjTJsi2hqFo0LcJNs7AkYwt0/CIfOsVKvrILa7BKbT+H6E0gQRG6W3hLC
+ b3cmmwwiFVtoDURWFHoZrznGlXuirkEITCX/zWT6yqnGNshozgUmflpPPirYe7aTqv8p
+ xHgLauTlZ2pMMdZh5k8nPM9/a8p7ZiXZEP9588948X5zEiBdU0L5zhpsdilIDAPo+8C2
+ gWeN4b+ozeVd8xixbrjr8WW+aqB1huzgnipwORPNn0wT2Nuip3Ang0z3oloKlettueec
+ 5pIaaiPltrruWCuSPpyRH/cnLNWR9+GM8OINS+x8HBJ7jOKAqB0CuxKi4xwJ/RuOIps9
+ +vkA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVajmPLbgHGKrMW4UfccBFMnpbZjQmvn/FASUfZKbIfIOqJAW/LC9uTTt8v78lem6L4MV26419AFOob@nongnu.org
+X-Gm-Message-State: AOJu0Yx32RWcSkVy0XexcdyfIHinMr7JekNGWgIByAa360TFOCDoSexD
+ EFSSUKLwX9HPJGeyatHrIb/DLewbwX5gUFikgRZw1h2jUIiJ7f7cKdDbQh95exk=
+X-Gm-Gg: ASbGncvLbQt8dSbmCg4HzFxuXnBuv2mSYZ6mPuCXS/S1tSa8JUS3X3Dfw9o7cWJAW2L
+ eCkcUX4IMdaXboGo6qCxvlsSm8qRsiPvh10Av0F+lFDOkxSwLavLHkS6N2757VgcJg4dE40ptb8
+ JjeclidQfTbwriJs5AkGj0rmFd7izxEAoy4Ibkv5KYKXhjWj2EOAFEyJWVIJcGx6N+Vz6PuUjvv
+ o3cjAMVGv8dQ83n4TDBgF3mlzBdsTV2RBl3RLMHrKBZj5dL+PWB0zzBNTgXHtBAVaenTMzIEtzz
+ POmZBOPgWFZSUy3i9TSI9c1Fj115HMh6Pri9+sDJheUHJ/NWCstQZES9gTIytcE5ex2so73I17O
+ 2L+iN6J5d
+X-Google-Smtp-Source: AGHT+IEK1b8V6FcPHKhSRwC5GSZwbCidJEV3gjMZFWX35jytS1ath+i2nKLdYjCvPCZTjBMBFzRj9Q==
+X-Received: by 2002:a05:6a00:2905:b0:740:9a4b:fb2a with SMTP id
+ d2e1a72fcca58-7409cfea3camr10489274b3a.20.1746706746399; 
+ Thu, 08 May 2025 05:19:06 -0700 (PDT)
+Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7405905ce9fsm13599041b3a.136.2025.05.08.05.19.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 May 2025 05:19:05 -0700 (PDT)
+Message-ID: <df5c04b4-f5a7-4e54-b4aa-12ad3f37267d@linaro.org>
+Date: Thu, 8 May 2025 14:18:59 +0200
 MIME-Version: 1.0
-References: <20250507165840.401623-1-alex.bennee@linaro.org>
- <CAFEAcA_0cf=XEbH9VQdTHqu1wekSmFDLdqnnzpcwnshCT-UUCg@mail.gmail.com>
- <87zffnmidy.fsf@draig.linaro.org>
-In-Reply-To: <87zffnmidy.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 8 May 2025 13:07:40 +0100
-X-Gm-Features: ATxdqUHvqCH0dZwizDr8EfdhDc4AqOMpAhinqOWIMw7rKJfMVDevOb_UT-kHgyk
-Message-ID: <CAFEAcA80-CWEQYwTQPziUxm5V1K93VZstLh2r9mTGkD5QueKoA@mail.gmail.com>
-Subject: Re: [RFC PATCH] target/arm: allow gdb to read ARM_CP_NORAW regs
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Julian Armistead <julian.armistead@linaro.org>, 
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] bsd-user: add option to enable plugins
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, Kyle Evans <kevans@freebsd.org>
+References: <20250331234228.3475706-1-pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250331234228.3475706-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,68 +102,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 8 May 2025 at 12:50, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
-> > On Wed, 7 May 2025 at 17:58, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
-wrote:
-> >>
-> >> Before this we suppress all ARM_CP_NORAW registers being listed under
-> >> GDB. This includes useful registers like CurrentEL which gets tagged
-> >> as ARM_CP_NO_RAW because it is one of the ARM_CP_SPECIAL_MASK
-> >> registers. These are registers TCG can directly compute because we
-> >> have the information at compile time but until now with no readfn.
-> >>
-> >> Add a .readfn to return the CurrentEL and then loosen the restrictions
-> >> in arm_register_sysreg_for_feature to allow ARM_CP_NORAW registers to
-> >> be read if there is a readfn available.
-> >
-> > The primary use case for NO_RAW is "system instructions" like
-> > the TLB maintenance insns. These don't make sense to expose
-> > to a debugger.
->
-> I think we could re-think the logic:
->
->     /*
->      * By convention, for wildcarded registers only the first
->      * entry is used for migration; the others are marked as
->      * ALIAS so we don't try to transfer the register
->      * multiple times. Special registers (ie NOP/WFI) are
->      * never migratable and not even raw-accessible.
->      */
->     if (r2->type & ARM_CP_SPECIAL_MASK) {
->         r2->type |=3D ARM_CP_NO_RAW;
->     }
+On 1/4/25 01:42, Pierrick Bouvier wrote:
+> Nothing prevent plugins to be enabled on this platform for user
+> binaries, only the option in the driver is missing.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   bsd-user/main.c | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
 
-Well, we definitely don't want WFI or the DC ZVA etc
-"registers" to be exposed to GDB or for us to try to handle
-them in KVM state sync or migration... ARM_CP_NOP is less
-clear because we use it pretty widely for more than one
-purpose. The main one is "system instruction that we don't
-need to implement". (CP_NOP + a readable register is a
-questionable combination since the guest will expect it to
-update the general-purpose destreg, not leave it untouched,
-but we do have some.)
-
-> > If we want the gdbstub access to system registers to be
-> > more than our current "we provide the ones that are easy",
-> > then I think I'd like to see a bit more up-front analysis of
-> > what the gdbstub needs and whether we've got into a bit of
-> > a mess with our ARM_CP_* flags that we could straighten out.
->
-> Yeah - hence the RFC. CurrentEL is a super useful one to expose though
-> when you are debugging complex hypervisor setups.
-
-One problem with this patch is the one that the reporter of
-https://gitlab.com/qemu-project/qemu/-/issues/2760 noted
-in the conversation there: it will allow the debugger to
-read registers which have a side-effect on read, like
-ICC_IAR1_EL1: we almost certainly do not want to allow
-the debugger to acknowledge an interrupt by doing a sysreg
-read.
-
-thanks
--- PMM
+Patch queued, thanks.
 
