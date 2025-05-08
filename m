@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5027C3ABC5
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 13:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8794C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 13:37:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD1QA-00068b-RO; Thu, 08 May 2025 09:36:18 -0400
+	id 1uD1RB-0006yC-Bt; Thu, 08 May 2025 09:37:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1Q7-00067o-1J
- for qemu-devel@nongnu.org; Thu, 08 May 2025 09:36:15 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1R9-0006uq-5v
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:37:19 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1Q3-0003gg-1g
- for qemu-devel@nongnu.org; Thu, 08 May 2025 09:36:13 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-22e661313a3so9802375ad.3
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 06:36:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1R7-0003mU-8y
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:37:18 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-22e8461d872so10227335ad.3
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 06:37:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746711368; x=1747316168; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9KuBrSw61wT1TUDNwR8So3hV4T+jBIcjNnsvQibQhUU=;
- b=v7MK66rWl+/gtcAjLXnjGZ1UPMBUlatDxgLkdFo80EJm+v0uSPfJ/gKS9XZid5Jr6n
- 6GNmaZOx5BqV/ZcTb4FihCfxmUdrQmZsqxD/E6fHEV8PWWv2VdA9mDbJcXU2uOKussQH
- O+XLH53pbIjyMBRZ730H7kAvGybtZvbjISjtyOlTlqKiy/trlBrCwJE6GQ+7qrR/Ohbv
- pVzxiYyo4p/CRgSJkQIlz7efrPmj9eKSJ80mLgcKzJbWfi5sb2pNccSHSsb3ESPh026d
- tSrRF+oYPqjfS/X2Jg1Hgz+lnYbDKqmWI+1nOtMnIpHy8WV+7Jzbza4CH5SEHjY0ntPt
- SnkA==
+ d=linaro.org; s=google; t=1746711435; x=1747316235; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5TBd8qqudhdD0Z8zjZ7s78pINlfboYf1Urx2r0CkJAA=;
+ b=S429XQ0tOrkMZD1st2icj26/ufTBgFP10Lh5LA5ngiFSDnES4gFd+cEjJXFfZ9oPJ6
+ 405pKS8DM7MQGE8v/MZ6j+/89M8IBAUU/FolhHIiFIKQ7WGaIMJgnmb+Z10x4ZWpRy9a
+ ueP+qMiJZh8VYl47hoWqA8dkJ8hVc4K9B8M+ZkE5A0maZzsSBmViVk6Sg2CR3cYyZqkP
+ /pyLGZGmJmjIct8G4mcCX7/1zy3fgVhDmkphDuWlX0n1wPp4OdtIW6NtRJOtdn6zDFpi
+ 2plN2zX3Sk/UvGr/847XyLj/iAbX22f/mb39kpcL4iqAq0mgmgiGD9KaHJz4bdtAC13Z
+ g4PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746711368; x=1747316168;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=9KuBrSw61wT1TUDNwR8So3hV4T+jBIcjNnsvQibQhUU=;
- b=YYFh/6kUuz4PKxkokbsqS6+Y4Ld7ASGgU+BWph3yccM2EmknajKqDUawENsK8FibVe
- AIaSNzAxG2Ra0VjyTjU1LoE/tV1s3pfI1rcNgHRgvsXPEcxeclSrXns9WnqGtxLyvxzo
- NzmvaAhE+r9PB1i4uNm6wtNd/OE1Jf5nbKON4knsooi3nQ6pbRMGu3Wh6u+6g4NHIVdL
- XD1sSdL4SZKbXuKu0YyuzeMC757Igqd86jss2Y/uhaqcEJk1rmRrIm1+21iBGJcBOIkZ
- 0xL2QEYurCTgkutmFDKjSAt2Uawl6wFZI6n8SK4/tiSgDNA/+rLE2mp+zY6IcDfZ9YS1
- w+sw==
-X-Gm-Message-State: AOJu0YztPt1Oe5RGfcGDUZ+49YatFCymUIfpwwl/ohit99WlqoKg0rpc
- FdqYUVr5y9upOHBVUqDmS0fJxEJ59LhR87eEjAg2ekC1QXwjY8xWwz7tnLJ3qdld8gcJnVRmA7k
- UieCBpg==
-X-Gm-Gg: ASbGncu6mr3byV1/W/sxCM8Sj31K9NzDu2r/dWwaaZgHQlTH7A2nz25NNfANFVl//fP
- 3l8iAznTo2065+utd3WtY0lt6qTgE2dr7s95jhUjIa4PXA4Ub5Zw+yCSnONYQPBQv6aELMZaf5e
- Dc7owhoO+l5HdUATWLtfG+T2SoCb0dbrDxATeAEMFI6AWt1nJOBqvL4utxoGoPF5ktlX+gP+b7p
- /8f4T7y3ugZ/Shfc6DFbWmXmeVGmbPWPU+rGBlVH/tKFrfV6GPCzo5Mp418hXENaEW62O9DDtY2
- N/GEJrnTcH2A6Dnt7+PvRdoDaBCdMYSyJhy9gXay+W+VPOxpW7MZDkF6nZhTvA6ev4c4UffH1Sf
- IJDhGGLh9va5sArn8Kjjpg8cViA==
-X-Google-Smtp-Source: AGHT+IHCT7Ta0iqmowfn6JqxQ1updQHvZZpvmqe29UPiMd4qZ7+roOQP5pRKO/ivAKjg6VTKGbWo9g==
-X-Received: by 2002:a17:903:478d:b0:220:e924:99dd with SMTP id
- d9443c01a7336-22e5ecc52a4mr120970055ad.34.1746711368214; 
- Thu, 08 May 2025 06:36:08 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746711435; x=1747316235;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5TBd8qqudhdD0Z8zjZ7s78pINlfboYf1Urx2r0CkJAA=;
+ b=V5S4+1eR0jLnaavT+4Ewk1wIkMOiSPDDnDyQYtuqYAjyHHxSPmkWzE5HXB18s0ylMN
+ JCfYaLwBMjcDy62+ux9LYfsIegixsujguOgd4r3BEJ1IQ7CEqpEZ11ABq0H3tUPzojI0
+ pLQ4Vjar9TNE/lnY6c8sR+y3U584080BIAePUVz62EvOVweL6BC47pS65MjHiE4NUL4a
+ fT89UzxCl5vdNmFcH2F1yqqFWjXVKdCqaaQcvw0KuOZ5b9EZcsF+HQXPZTC0hP+sFSa9
+ jVX5lsZxCIhJMz+ISaMacfYMjxla35YAquBsKyas/sfWaYB58jfQPeQSp+dCDI1ivB/c
+ BRPQ==
+X-Gm-Message-State: AOJu0Yxe6fmujo41Rzg44OeEO+m2N1EJC6wimPMI2JY1wtiO4+bYyYF9
+ Nkp1QJbyNeJsfLaAa0Q1sDonC+0AC+EaM78W0Wq3k3orzr/iH8kiGj6i6PsLloPECWrWMWuj4Ar
+ RaUbtsg==
+X-Gm-Gg: ASbGncu27dGfpJcYeMid6Th6Nl2Gr/AiykBJ9C4lfuJ9m3m+YyGodDUDwcOk1FPrgil
+ REB4fDJwTYWUo9Rt5wOrlIVRQZ02K9yo6mCfjVnT8hzhzX9J12HWxHrMGyPtisf2k6c1pWyMd9x
+ odlv8jgioOHmWVzhHjwjhRKcy6nBfY3Jf011Ty2w7HXCo7f6qWmMug1Ajkuod5K57yRk87QTccQ
+ Hp86MXPhL2e5PM09WSi9i2GTsZbomnhTkKxg6GdYCtfyiho4gI5Mcllp4LTl3gXf5byNctV/t+7
+ PWkKeWAGTKTo1v97PJxaTy8GenqEw7KnjwQv13pafwVWbvuwcNAy+STnfx4Kpr5H+U9oBGrO4dq
+ FPDXeVjpUXux9/cY8LuLJix/8gw==
+X-Google-Smtp-Source: AGHT+IEJizHNdtE8oY6MH3Ekj+OOYKeRXfM+oPJqKHaH4R/E3Hoh31CNR9MnGx/SSOApYorqKsZYCA==
+X-Received: by 2002:a17:903:440c:b0:226:5dbf:373f with SMTP id
+ d9443c01a7336-22e8560ce56mr54655525ad.10.1746711435370; 
+ Thu, 08 May 2025 06:37:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e1521fd31sm112108055ad.130.2025.05.08.06.35.54
+ d9443c01a7336-22e1521fb4asm111932715ad.113.2025.05.08.06.37.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 08 May 2025 06:36:07 -0700 (PDT)
+ Thu, 08 May 2025 06:37:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
@@ -85,15 +86,18 @@ Cc: Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
  qemu-arm@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>
-Subject: [PATCH v4 00/27] hw/i386/pc: Remove deprecated 2.6 and 2.7 PC machines
-Date: Thu,  8 May 2025 15:35:23 +0200
-Message-ID: <20250508133550.81391-1-philmd@linaro.org>
+Subject: [PATCH v4 03/27] hw/nvram/fw_cfg: Rename fw_cfg_init_mem() with
+ '_nodma' suffix
+Date: Thu,  8 May 2025 15:35:26 +0200
+Message-ID: <20250508133550.81391-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250508133550.81391-1-philmd@linaro.org>
+References: <20250508133550.81391-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,110 +120,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v3:
-- Addressed Thomas and Zhao review comments
-- Rename fw_cfg_init_mem_[no]dma() helpers
-- Remove unused CPU properties
-- Remove {multi,linux}boot.bin
-- Added R-b tags
+Rename fw_cfg_init_mem() as fw_cfg_init_mem_nodma()
+to distinct with the DMA version (currently named
+fw_cfg_init_mem_wide).
 
-Since v2:
-- Addressed Mark review comments and added his R-b tags
+Suggested-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/nvram/fw_cfg.h | 3 ++-
+ hw/hppa/machine.c         | 2 +-
+ hw/nvram/fw_cfg.c         | 7 +++----
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-The versioned 'pc' and 'q35' machines up to 2.12 been marked
-as deprecated two releases ago, and are older than 6 years,
-so according to our support policy we can remove them.
-
-This series only includes the 2.6 and 2.7 machines removal,
-as it is a big enough number of LoC removed. Rest will
-follow.
-
-Based-on: <20250506143905.4961-1-philmd@linaro.org>
-
-Philippe Mathieu-Daudé (27):
-  hw/i386/pc: Remove deprecated pc-q35-2.6 and pc-i440fx-2.6 machines
-  hw/i386/pc: Remove PCMachineClass::legacy_cpu_hotplug field
-  hw/nvram/fw_cfg: Rename fw_cfg_init_mem() with '_nodma' suffix
-  hw/mips/loongson3_virt: Prefer using fw_cfg_init_mem_nodma()
-  hw/nvram/fw_cfg: Factor fw_cfg_init_mem_internal() out
-  hw/nvram/fw_cfg: Rename fw_cfg_init_mem_wide() ->
-    fw_cfg_init_mem_dma()
-  hw/i386/x86: Remove X86MachineClass::fwcfg_dma_enabled field
-  hw/i386/pc: Remove multiboot.bin
-  hw/nvram/fw_cfg: Remove fw_cfg_io_properties::dma_enabled
-  hw/i386/pc: Remove linuxboot.bin
-  hw/i386/pc: Remove pc_compat_2_6[] array
-  target/i386/cpu: Remove CPUX86State::enable_cpuid_0xb field
-  target/i386/cpu: Remove CPUX86State::fill_mtrr_mask field
-  hw/intc/apic: Remove APICCommonState::legacy_instance_id field
-  hw/core/machine: Remove hw_compat_2_6[] array
-  hw/virtio/virtio-mmio: Remove
-    VirtIOMMIOProxy::format_transport_address field
-  hw/i386/pc: Remove deprecated pc-q35-2.7 and pc-i440fx-2.7 machines
-  hw/i386/pc: Remove pc_compat_2_7[] array
-  target/i386/cpu: Remove CPUX86State::full_cpuid_auto_level field
-  target/i386/cpu: Remove CPUX86State::enable_l3_cache field
-  hw/audio/pcspk: Remove PCSpkState::migrate field
-  hw/core/machine: Remove hw_compat_2_7[] array
-  hw/i386/intel_iommu: Remove IntelIOMMUState::buggy_eim field
-  hw/intc/ioapic: Remove IOAPICCommonState::version field
-  hw/virtio/virtio-pci: Remove VirtIOPCIProxy::ignore_backend_features
-    field
-  hw/char/virtio-serial: Do not expose the 'emergency-write' property
-  hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_PAGE_PER_VQ definition
-
- hw/intc/ioapic_internal.h           |   3 +-
- include/hw/acpi/cpu_hotplug.h       |   3 -
- include/hw/boards.h                 |   6 -
- include/hw/i386/apic_internal.h     |   1 -
- include/hw/i386/intel_iommu.h       |   1 -
- include/hw/i386/pc.h                |   9 --
- include/hw/i386/x86.h               |   2 -
- include/hw/nvram/fw_cfg.h           |   9 +-
- include/hw/virtio/virtio-mmio.h     |   1 -
- include/hw/virtio/virtio-pci.h      |   2 -
- include/hw/virtio/virtio-serial.h   |   2 -
- pc-bios/optionrom/optionrom.h       |   4 -
- target/i386/cpu.h                   |  15 --
- hw/acpi/cpu_hotplug.c               | 230 ---------------------------
- hw/arm/virt.c                       |   2 +-
- hw/audio/pcspk.c                    |  10 --
- hw/char/virtio-serial-bus.c         |   9 +-
- hw/core/machine.c                   |  17 --
- hw/display/virtio-vga.c             |  10 --
- hw/hppa/machine.c                   |   2 +-
- hw/i386/acpi-build.c                |   4 +-
- hw/i386/fw_cfg.c                    |   5 +-
- hw/i386/intel_iommu.c               |   5 +-
- hw/i386/microvm.c                   |   3 -
- hw/i386/multiboot.c                 |   7 +-
- hw/i386/pc.c                        |  22 +--
- hw/i386/pc_piix.c                   |  23 ---
- hw/i386/pc_q35.c                    |  24 ---
- hw/i386/x86-common.c                |   6 +-
- hw/i386/x86.c                       |   2 -
- hw/intc/apic_common.c               |   5 -
- hw/intc/ioapic.c                    |  18 +--
- hw/intc/ioapic_common.c             |   2 +-
- hw/mips/loongson3_virt.c            |   2 +-
- hw/nvram/fw_cfg.c                   |  48 +++---
- hw/riscv/virt.c                     |   4 +-
- hw/virtio/virtio-mmio.c             |  15 --
- hw/virtio/virtio-pci.c              |  12 +-
- target/i386/cpu.c                   | 152 ++++++++----------
- target/i386/kvm/kvm.c               |  10 +-
- tests/qtest/test-x86-cpuid-compat.c |  11 --
- pc-bios/meson.build                 |   2 -
- pc-bios/multiboot.bin               | Bin 1024 -> 0 bytes
- pc-bios/optionrom/Makefile          |   2 +-
- pc-bios/optionrom/linuxboot.S       | 195 -----------------------
- pc-bios/optionrom/multiboot.S       | 232 ---------------------------
- pc-bios/optionrom/multiboot_dma.S   | 234 +++++++++++++++++++++++++++-
- 47 files changed, 349 insertions(+), 1034 deletions(-)
- delete mode 100644 pc-bios/multiboot.bin
- delete mode 100644 pc-bios/optionrom/linuxboot.S
- delete mode 100644 pc-bios/optionrom/multiboot.S
-
+diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
+index d41b9328fd1..d5161a79436 100644
+--- a/include/hw/nvram/fw_cfg.h
++++ b/include/hw/nvram/fw_cfg.h
+@@ -307,7 +307,8 @@ bool fw_cfg_add_file_from_generator(FWCfgState *s,
+ 
+ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
+                                 AddressSpace *dma_as);
+-FWCfgState *fw_cfg_init_mem(hwaddr ctl_addr, hwaddr data_addr);
++FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
++                                  unsigned data_width);
+ FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
+                                  hwaddr data_addr, uint32_t data_width,
+                                  hwaddr dma_addr, AddressSpace *dma_as);
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index dacedc5409c..0d768cb90b0 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -201,7 +201,7 @@ static FWCfgState *create_fw_cfg(MachineState *ms, PCIBus *pci_bus,
+     int btlb_entries = HPPA_BTLB_ENTRIES(&cpu[0]->env);
+     int len;
+ 
+-    fw_cfg = fw_cfg_init_mem(addr, addr + 4);
++    fw_cfg = fw_cfg_init_mem_nodma(addr, addr + 4, 1);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, ms->smp.cpus);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_MAX_CPUS, HPPA_MAX_CPUS);
+     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, ms->ram_size);
+diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
+index 54cfa07d3f5..10f8f8db86f 100644
+--- a/hw/nvram/fw_cfg.c
++++ b/hw/nvram/fw_cfg.c
+@@ -1087,11 +1087,10 @@ FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
+     return s;
+ }
+ 
+-FWCfgState *fw_cfg_init_mem(hwaddr ctl_addr, hwaddr data_addr)
++FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
++                                  unsigned data_width)
+ {
+-    return fw_cfg_init_mem_wide(ctl_addr, data_addr,
+-                                fw_cfg_data_mem_ops.valid.max_access_size,
+-                                0, NULL);
++    return fw_cfg_init_mem_wide(ctl_addr, data_addr, data_width, 0, NULL);
+ }
+ 
+ 
 -- 
 2.47.1
 
