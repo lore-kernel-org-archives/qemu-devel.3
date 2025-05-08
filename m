@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DD4FC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 20:00:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 015E9C3ABC6
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 20:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD7OO-0007e8-1A; Thu, 08 May 2025 15:58:52 -0400
+	id 1uD7So-0003p1-EI; Thu, 08 May 2025 16:03:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1uD7OM-0007db-VO
- for qemu-devel@nongnu.org; Thu, 08 May 2025 15:58:51 -0400
-Received: from mail-bn7nam10on20630.outbound.protection.outlook.com
- ([2a01:111:f403:2009::630]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ id 1uD7Sm-0003nJ-RN
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 16:03:24 -0400
+Received: from mail-bn7nam10on2063.outbound.protection.outlook.com
+ ([40.107.92.63] helo=NAM10-BN7-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1uD7OK-0002BT-Ly
- for qemu-devel@nongnu.org; Thu, 08 May 2025 15:58:50 -0400
+ id 1uD7Sj-0002fa-Va
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 16:03:24 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HOfMFxybuMY+oZDyUiqKNcfeqt7RmaPCeYeWvtB6/w7fD74R6bbFyfBNR/mmdL8XzO6TN70iL9P/o7LOxYLfvfAvuyUXCJmtdiWRfQv4VWzSy9su+p1ndOu7KRiJX49KolEbH7EeBzyzCTVDsQbTHAYDWFvuXOfoyBBBRrH2uTGyt/gz+gBTcxYS44Bgl8kqZi/HZXCG7JxGHH17/0XhMcR03gZWbfOFKu5zxUqJwly3E/26EWBGH1E32U15ujwLIKhhFusbkNMWGQqUYCIzjDKCgvbE67nxJiA8KTddJz3pIVYJtoo6y6AdQ1wsqOcCmhUPmWik7W4NfKT+l1tcWw==
+ b=gWFnlR5Ii3ZOtv0i1nSD7/oSCkzmgBrz7Cp6CqpUW3JDJ3Y8V9NZ57XzxvL3+cJvGwilAJo+l4ROMdRtxD+l1ISb9BXvR3WZqH1yLeHLfs7Wc+VmB9yP51LA+L6Cy+l4GhG4tRZ6pQhzYrExIj0yzKTP9fVSIKUvpTzUQQ4Xwk4uOYU3dx1LRY5vrnuTzNlHwKcwIs7tjCiWvmZE4n72tP1ydE1p34jfB2mzKFSxHM8pHyNysST4JZkpw6YCBtalg2C3WqYPPW6APZaT9+XoTikiUPrjCEsQWfFu2yQWZCPkLrkxGS4vLIRWvvvPeboTAf5swu92ZoCrqQ60LG344A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UlVHo4nglJ2oRd7FJjo7b3n0lZCDNR4nht21u51PTSA=;
- b=HMA3SNk471aHRRhnRvKXyyJiVQU46aBMW+fz02TdAH8nLHmoR62x8uhUeX3joz69/yXEkIQ44rY5P73MP3nWZJ1q2n3XWIfMTD5ndZbiCjdzj8l8CYy1atz8YGrAeyfWM1na+zu1dxpVzUv5+Kvw+K1wsqkJ+C5EwqcSNSVVTVaIQzzb7k5O72hUUG0wgMZIxDtPsDjW6wkQQNu8HUqPc9QLlPp5G54MbALH/uAfjvUJOyPqR4BGEoEYKYjuWCzfWUjTfdHllFnTJsnZLcHVBRX7j5NInVY9yyrDIunS7g+WOgNY3QrggDnESaWTO/6htaaqnFVEYmE8hgi1/xqxAQ==
+ bh=pTArx6Mys2RVs23mpZD3+xGaMla9YOvxmvCJPZFOwj0=;
+ b=EDfHQ4X6ew+Ct2qHdhG0NWp13RSNxfjLfFuLlnC3mGQcVddjpVqpe8YUS5/78wSNyp0Wb1G9N0ztx23PgJ/CA9Xz0Iz63c4h5HsDiq1URSXj/NAZDQ1YgnogtgebEOlwoxKpuFB+NuvwG8FBboQE/BmjiehN5DxL+GQTjQvWYQPt/camk2dGiKFv88pIUXBSL0YlaYZ9av48s2GPKfR+JmX7VLCLJSYYqfIukpRrPLtPEYUBRkG7IfUuXY8bQOeKho1NExJibZju0no90ZR8iIFph52dbuJ/iqEVhr6P0+6SEXhKylnip5fCUC381vp4ftX6IU4mG0prSOSlbZZyAg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UlVHo4nglJ2oRd7FJjo7b3n0lZCDNR4nht21u51PTSA=;
- b=AbwK0+2jgFPSpaz4EKpQoVtXxdwddJarRQIJEl9jQ0V3drETUnD3MNoKDd5NxsPo3Ru7D/uDzJguejrI2dYfpVnAqse72zG/LijvLm1vwiLMAqwR6ywfiXNvYCBzukBqDKnlQz1fk37Rui6jyNqqzS9HWI8eAr5a1AHS6O40zeA=
-Received: from DM5PR07CA0097.namprd07.prod.outlook.com (2603:10b6:4:ae::26) by
- SA1PR12MB8143.namprd12.prod.outlook.com (2603:10b6:806:333::10) with
- Microsoft SMTP Server (version=TLS1_2,
+ bh=pTArx6Mys2RVs23mpZD3+xGaMla9YOvxmvCJPZFOwj0=;
+ b=0S86tBJmnUc+OUfqaUg7Ceh6ggVUUmRPu3To6Z3lUkAO+FR7tY9NfMd9Ncwziqj3AcTsx3BRVovN+3VVRFGvfC9qxkJhSYYfJGY3N0PhuuFIIovOyiQudutMq/u3h3TG/ke7lretAmjmS8lZwT5UWmYq4MVGUa1PlIpk5PXPiqQ=
+Received: from CH5PR02CA0002.namprd02.prod.outlook.com (2603:10b6:610:1ed::14)
+ by SN7PR12MB6790.namprd12.prod.outlook.com (2603:10b6:806:269::15)
+ with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.24; Thu, 8 May
- 2025 19:58:39 +0000
-Received: from DS3PEPF000099D4.namprd04.prod.outlook.com
- (2603:10b6:4:ae:cafe::d2) by DM5PR07CA0097.outlook.office365.com
- (2603:10b6:4:ae::26) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8699.30 via Frontend Transport; Thu,
- 8 May 2025 19:58:39 +0000
+ 2025 19:58:11 +0000
+Received: from DS3PEPF000099D5.namprd04.prod.outlook.com
+ (2603:10b6:610:1ed:cafe::49) by CH5PR02CA0002.outlook.office365.com
+ (2603:10b6:610:1ed::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8722.23 via Frontend Transport; Thu,
+ 8 May 2025 19:58:11 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,24 +53,22 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- DS3PEPF000099D4.mail.protection.outlook.com (10.167.17.5) with Microsoft SMTP
+ DS3PEPF000099D5.mail.protection.outlook.com (10.167.17.6) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8722.18 via Frontend Transport; Thu, 8 May 2025 19:58:38 +0000
+ 15.20.8722.18 via Frontend Transport; Thu, 8 May 2025 19:58:10 +0000
 Received: from bmoger-ubuntu.amd.com (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 8 May
- 2025 14:58:37 -0500
+ 2025 14:58:09 -0500
 From: Babu Moger <babu.moger@amd.com>
 To: <pbonzini@redhat.com>
 CC: <zhao1.liu@intel.com>, <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>,
  <davydov-max@yandex-team.ru>
-Subject: [PATCH v7 4/6] target/i386: Add couple of feature bits in
- CPUID_Fn80000021_EAX
-Date: Thu, 8 May 2025 14:58:02 -0500
-Message-ID: <a5f6283a59579b09ac345b3f21ecb3b3b2d92451.1746734284.git.babu.moger@amd.com>
+Subject: [PATCH v7 0/6] target/i386: Update EPYC CPU models for Cache property, RAS,
+ SVM feature and add EPYC-Turin CPU model
+Date: Thu, 8 May 2025 14:57:58 -0500
+Message-ID: <cover.1746734284.git.babu.moger@amd.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <cover.1746734284.git.babu.moger@amd.com>
-References: <cover.1746734284.git.babu.moger@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -80,54 +77,53 @@ X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
  (10.181.40.145)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF000099D4:EE_|SA1PR12MB8143:EE_
-X-MS-Office365-Filtering-Correlation-Id: d5b0c6e6-f90f-4bb9-355a-08dd8e6ab99b
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099D5:EE_|SN7PR12MB6790:EE_
+X-MS-Office365-Filtering-Correlation-Id: 42a16802-5aa4-4d41-7862-08dd8e6aa8f1
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|36860700013|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?do6298Jh63ZY7qsPO6ec7GkLEBm5xVBjfp4GPA1emg6R45CuoQDEZ1a7DFcC?=
- =?us-ascii?Q?SbMrGH+fYNE6jsEyv5IA42VBzEdCxMAn6D23CBB5/t/zc54XNdG3orf2MsWZ?=
- =?us-ascii?Q?qi/03e0K4hfa77APVRfBvdFjKXr3+j1ZdFGIBL0CR2HamUSOODE91lSS2hJQ?=
- =?us-ascii?Q?ggsg2Y//RFb3YuMH5+qnDDvKjYeetd2hsjz24nJR8i8ZPzNbHdV/SSQ/lIm5?=
- =?us-ascii?Q?HYei4GjQ18AH+e5RVMD946NGApDE40Yp61wO3Wi67wOYRlk9nItqQ4k2WwIn?=
- =?us-ascii?Q?R4ddPio7HYw3tRqLr0x0quxwwkssU7ACvXbpMeWsKKeu2kIymizvzAnUH0VM?=
- =?us-ascii?Q?ivdHCXJM8X7rIaD6vjhaezYobhL3NTFWwVfTme9GuHqTEK+GXNmtU7gcP5UM?=
- =?us-ascii?Q?ljG3LkJp24nbyKEJEf5X+C1hKG4eG2w2xp+YwqcnbMIaDBmotk4HxPvs8yXg?=
- =?us-ascii?Q?TPi96CfEs6+TOrBrlbYClWw55f4SZ9cNifO/uxNddlAL9kAjUkyLP5dT991R?=
- =?us-ascii?Q?Dn4fVOu8BRtv4OKe91KuXSqGr2GvMt8KleiNHY7ODATYS0joNPYfyNdViwTQ?=
- =?us-ascii?Q?aP4fH5JYjkutqycAO+pVKFxU2IAiYWduP+NPWHrXCdPzi64HvvQiF1OcNkSH?=
- =?us-ascii?Q?Wp/87P+AKN1kFjscO4FxfH+PLxj6x0pHOvAchuXJGG4Z5yKiFmmZwai9Sc5s?=
- =?us-ascii?Q?2D/zLnbh2Od8z6DXCBCP8DjvLS66ZsuKisHjJV41NCcdEJH7ogQLRavdh2lv?=
- =?us-ascii?Q?UI7D9epuuGgDyt10zw2a/Z6BdjvObS88pLt2Tp7DaeK/npX8M6lHqZ1nx/t9?=
- =?us-ascii?Q?x3RsQmsnTLWQl5cijNSmPZhjWqKWZebbm4ZevC2FQYF5ncoYCgmxv2RKegXO?=
- =?us-ascii?Q?yGji6/KJNaYCmzPi2iGZj9LMUcjQgioRQVAesBkoxAoAYxP4OMO+9dlZnr4B?=
- =?us-ascii?Q?bEZDNH7HalsgJSHEwyVES4n43dgiY/TvV53zaegtt4CUJC2UQAsxjFiaXIth?=
- =?us-ascii?Q?032sDjT2EVOCWugiUpQUIXc983rVuXqeBdGdaLrV7N8Jj+3e+aZfn0JHP7Pe?=
- =?us-ascii?Q?1BcgrsiCMvRyZaum760mXkQpLjDvGH/FbG7Llvyo8P9eGlqw/xP36eopkJx6?=
- =?us-ascii?Q?dtf8DwkRZ0vq0GNDMz+C2QstJvRLRBGecLdpZ3zKlFPl2fQOu/TeLqgJEM5x?=
- =?us-ascii?Q?5T70/yUjRi4B0X0GIu+L+xyvM+OkmFzwn0ZXzl238GD+o01p7iuYdyXfRf72?=
- =?us-ascii?Q?JNpzIUrsRikw0Bxro8cjWTtEQlzWOZvtuJLpU1DWpBIefkHYGk4fPgn5ucQr?=
- =?us-ascii?Q?BybRV/+sJ9bfTVURxxAlB7C7yksU58dJmDjv2z3Gv5GRzH62g82Jq1/ul+ef?=
- =?us-ascii?Q?885zRMvd4Qefqesl8DP0FwUy5xDLn7slH4HZLz1M25WkH265KQkW4Dscd9C2?=
- =?us-ascii?Q?V69ofI5PxCEo5SIb5COc6ZuFTICNozVeaT/9KsYLd0MJ2DY1uJF02YWox/or?=
- =?us-ascii?Q?Z9vO+9RU0RMOOlDK8viZ/7UfWW80YQqsFHhj7XOmgtgoTcmHQG9bNKDWMA?=
- =?us-ascii?Q?=3D=3D?=
+ ARA:13230040|36860700013|1800799024|82310400026|376014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?MOfmwmnMSjAyDONvI5nr42aNxD+5q4tLhj/IJD61o/ETaUaqFEoEIHWTyuOY?=
+ =?us-ascii?Q?Bkw7N93d3CBxw2VJUZD8dYIm0cYKa8Qgg1y30gtxwTZSFFF5oMVZpnNmad6r?=
+ =?us-ascii?Q?ifQmzxGLd3pR/Y0BRdjsXm6w5BjaHvuhgDaUe90QBZOdI4grLwPU8iSz7ozV?=
+ =?us-ascii?Q?NRkroCGozaKzXsMdiQb9FIB+Oalo/kBJ9QtAifrIYvTNSIxCe33NDgLQ+vcK?=
+ =?us-ascii?Q?hwl7zEV7V7HVP1Og4zC+Mjai/ONPCT00IMrZw882IHMqnE9J7daJ5B21mca9?=
+ =?us-ascii?Q?Z02aybm/P0ZztSN62xpDFSmg6EWnJ0QcWHU6jff2N1BKWmczIXskOzOzMPV8?=
+ =?us-ascii?Q?iN9KBDS268TjAI+w9duGUDqDVxbu/3BgDCFw61xjkIn/fn9yIjCGIzHRIXHg?=
+ =?us-ascii?Q?I9spe7m+H1+e3JUtasG2gvaV5L3cmaN38mzrLqoY1kYV5aCVNcRVuIucZY/Z?=
+ =?us-ascii?Q?OU5e9HS5tLqutjVSEQAGcZfR48rEg5Y8IOOmCUvzLOQLk5tnxe2YYTyHkpcZ?=
+ =?us-ascii?Q?/NbRIp0K+WQE+cERA3klQQI/nFjvKLNqBK0EtjOaO5OBb+MW5hplAjt+eZd6?=
+ =?us-ascii?Q?eBotZLz4OmZ7njfqVy52lqW1Xtw84nNXjMu+aI4bkfqX8h0EJLXq4CuvM+7m?=
+ =?us-ascii?Q?mWvcYHg2IUZrBz91IBypDXDM2q5jW6R/tW5URmuOX+ZHYC+1Zhmj5y23WBK8?=
+ =?us-ascii?Q?8qkQNfkgVrlCoHFRZhvmDzUgqWglx9PXSjDwbKPn0bKJVYSD3dyW6rTrrt2W?=
+ =?us-ascii?Q?BjllD4NDoyzPJiXBrQzwRCjiqd4pUIFh3j54Zq5X2bLmLy6r3gsOpHwq5bLB?=
+ =?us-ascii?Q?FvzR4TXw7W3ipuZcbWrfhFTtpN3kvfKdILF2Rqh/r5laWdZ4NJuDjI9pG2qA?=
+ =?us-ascii?Q?+N0hFRn2nu0jPpHsWASoLdJAREhtL91MD7K0DOyaVrmRqmxhGMR8BPK+u2TT?=
+ =?us-ascii?Q?q6uuswMX3OvgqtGIkiZA/jCUZ9GM1lWNliZFyDk5Zos5TAH0MnUdBS7iEl8F?=
+ =?us-ascii?Q?so+ytRrddkL+IExtCnOc2JyXGgsIcnWBkg0fpn8ItvkByAoJfzLuUtizCe2a?=
+ =?us-ascii?Q?Gh22u0yitLqJodfcRqDYXJM+HS1bJGWW8H3Hkin4qqJ2AaH61x650dmxs6Fo?=
+ =?us-ascii?Q?4oUcYifo4GFExZ1OcSnFxHcnquUm2XfewO4OGgeOilhCR5MWI817RNiQFlFe?=
+ =?us-ascii?Q?xTGH0M2WEKDEV0W6ESCHE46FP6Kjnu3d7Siqpc9vScATAmlTAOtqBaq3mi75?=
+ =?us-ascii?Q?wEx6e/5sRJxicnaeVoyR0YCCSF1roSmY9MdBdC5LfAvukGCBoUzMogjjDZ3r?=
+ =?us-ascii?Q?aipl1J7/qusL0rHu7d06+SUKT+0eRigBN6IT4LZf3a0AFMG3cytWIbaM9pzj?=
+ =?us-ascii?Q?BTsC1WUcqpqRo00CtEcz+qi3cfefDp2eerSjdZxBTgYRh2Jkf9/BQC/RALnS?=
+ =?us-ascii?Q?Rjy7Hk7SxFS/Uo4+1I8nJSsUKD6tMjQfw5qRKGwWNvPq/LF66Iu010tx2p73?=
+ =?us-ascii?Q?qCPvZTwXXVVFyc4=3D?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(36860700013)(376014); DIR:OUT;
+ SFS:(13230040)(36860700013)(1800799024)(82310400026)(376014); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2025 19:58:38.7300 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d5b0c6e6-f90f-4bb9-355a-08dd8e6ab99b
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2025 19:58:10.7708 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 42a16802-5aa4-4d41-7862-08dd8e6aa8f1
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099D4.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099D5.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB8143
-Received-SPF: permerror client-ip=2a01:111:f403:2009::630;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6790
+Received-SPF: permerror client-ip=40.107.92.63;
  envelope-from=Babu.Moger@amd.com;
  helo=NAM10-BN7-obe.outbound.protection.outlook.com
 X-Spam_score_int: -34
@@ -135,6 +131,8 @@ X-Spam_score: -3.5
 X-Spam_bar: ---
 X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -151,65 +149,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add CPUID bit indicates that a WRMSR to MSR_FS_BASE, MSR_GS_BASE, or
-MSR_KERNEL_GS_BASE is non-serializing amd PREFETCHI that the indicates
-support for IC prefetch.
 
-CPUID_Fn80000021_EAX
-Bit    Feature description
-20     Indicates support for IC prefetch.
-1      FsGsKernelGsBaseNonSerializing.
-       WRMSR to FS_BASE, GS_BASE and KernelGSbase are non-serializing.
+Following changes are implemented in this series.
+
+1. Fixed the cache(L2,L3) property details in all the EPYC models.
+2. Add RAS feature bits (SUCCOR, McaOverflowRecov) on all EPYC models
+3. Add missing SVM feature bits required for nested guests on all EPYC models
+4. Add the missing feature bit fs-gs-base-ns(WRMSR to {FS,GS,KERNEL_G}S_BASE is
+   non-serializing). This bit is added in EPYC-Genoa and EPYC-Turin models.
+5. Add RAS, SVM, fs-gs-base-ns and perfmon-v2 on EPYC-Genoa and EPYC-Turin models.
+6. Add support for EPYC-Turin. 
+   (Add all the above feature bits and few additional bits movdiri, movdir64b,
+    avx512-vp2intersect, avx-vnni, prefetchi, sbpb, ibpb-brtype, srso-user-kernel-no).
 
 Link: https://www.amd.com/content/dam/amd/en/documents/epyc-technical-docs/programmer-references/57238.zip
-Signed-off-by: Babu Moger <babu.moger@amd.com>
-Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://www.amd.com/content/dam/amd/en/documents/corporate/cr/speculative-return-stack-overflow-whitepaper.pdf
 ---
- target/i386/cpu.c | 4 ++--
- target/i386/cpu.h | 4 ++++
- 2 files changed, 6 insertions(+), 2 deletions(-)
+v7: Rebased on top latest 57b6f8d07f14 (upstream/master) Merge tag 'pull-target-arm-20250506'
+    Added new feature bit PREFETCHI. KVM support for the bit is added recently.
+    https://github.com/kvm-x86/linux/commit/d88bb2ded2ef
+    Paolo, These patches have been pending for a while. Please consider merging when you get a chance.
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 98fad3a2f9..741be0eaa8 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1239,12 +1239,12 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-     [FEAT_8000_0021_EAX] = {
-         .type = CPUID_FEATURE_WORD,
-         .feat_names = {
--            "no-nested-data-bp", NULL, "lfence-always-serializing", NULL,
-+            "no-nested-data-bp", "fs-gs-base-ns", "lfence-always-serializing", NULL,
-             NULL, NULL, "null-sel-clr-base", NULL,
-             "auto-ibrs", NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
--            NULL, NULL, NULL, NULL,
-+            "prefetchi", NULL, NULL, NULL,
-             "eraps", NULL, NULL, "sbpb",
-             "ibpb-brtype", "srso-no", "srso-user-kernel-no", NULL,
-         },
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 4f8ed8868e..d251e32ae9 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1070,12 +1070,16 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- 
- /* Processor ignores nested data breakpoints */
- #define CPUID_8000_0021_EAX_NO_NESTED_DATA_BP            (1U << 0)
-+/* WRMSR to FS_BASE, GS_BASE, or KERNEL_GS_BASE is non-serializing */
-+#define CPUID_8000_0021_EAX_FS_GS_BASE_NS                (1U << 1)
- /* LFENCE is always serializing */
- #define CPUID_8000_0021_EAX_LFENCE_ALWAYS_SERIALIZING    (1U << 2)
- /* Null Selector Clears Base */
- #define CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE            (1U << 6)
- /* Automatic IBRS */
- #define CPUID_8000_0021_EAX_AUTO_IBRS                    (1U << 8)
-+/* Indicates support for IC prefetch */
-+#define CPUID_8000_0021_EAX_PREFETCHI                    (1U << 20)
- /* Enhanced Return Address Predictor Scurity */
- #define CPUID_8000_0021_EAX_ERAPS                        (1U << 24)
- /* Selective Branch Predictor Barrier */
+v6: Initialized the boolean feature bits to true where applicable.
+    Added Reviewed-by tag from Zhao.
+
+v5: Add EPYC-Turin CPU model
+    Dropped ERAPS and RAPSIZE bits from EPYC-Turin models as kernel support for
+    these bits are not done yet. Users can still use the options +eraps,+rapsize
+    to test these featers.
+    Add Reviewed-by tag from Maksim for the patches already reviewed.
+
+v4: Some of the patches in v3 are already merged. Posting the rest of the patches.
+    Dropped EPYC-Turin model for now. Will post them later.
+    Added SVM feature bit as discussed in
+    https://lore.kernel.org/kvm/b4b7abae-669a-4a86-81d3-d1f677a82929@redhat.com/
+    Fixed the cache property details as discussed in
+    https://lore.kernel.org/kvm/20230504205313.225073-8-babu.moger@amd.com/
+    Thanks to Maksim and Paolo for their feedback.
+
+v3: Added SBPB, IBPB_BRTYPE, SRSO_USER_KERNEL_NO, ERAPS and RAPSIZE bits
+    to EPYC-Turin.
+    Added new patch(1) to fix a minor typo.
+
+v2: Fixed couple of typos.
+    Added Reviewed-by tag from Zhao.
+    Rebased on top of 6d00c6f98256 ("Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging")
+
+Previous revisions:
+v6: https://lore.kernel.org/kvm/cover.1740766026.git.babu.moger@amd.com/
+v5: https://lore.kernel.org/kvm/cover.1738869208.git.babu.moger@amd.com/
+v4: https://lore.kernel.org/kvm/cover.1731616198.git.babu.moger@amd.com/
+v3: https://lore.kernel.org/kvm/cover.1729807947.git.babu.moger@amd.com/
+v2: https://lore.kernel.org/kvm/cover.1723068946.git.babu.moger@amd.com/
+v1: https://lore.kernel.org/qemu-devel/cover.1718218999.git.babu.moger@amd.com/
+
+Babu Moger (6):
+  target/i386: Update EPYC CPU model for Cache property, RAS, SVM
+    feature bits
+  target/i386: Update EPYC-Rome CPU model for Cache property, RAS, SVM
+    feature bits
+  target/i386: Update EPYC-Milan CPU model for Cache property, RAS, SVM
+    feature bits
+  target/i386: Add couple of feature bits in CPUID_Fn80000021_EAX
+  target/i386: Update EPYC-Genoa for Cache property, perfmon-v2, RAS and
+    SVM feature bits
+  target/i386: Add support for EPYC-Turin model
+
+ target/i386/cpu.c | 439 +++++++++++++++++++++++++++++++++++++++++++++-
+ target/i386/cpu.h |   4 +
+ 2 files changed, 441 insertions(+), 2 deletions(-)
+
 -- 
 2.34.1
 
