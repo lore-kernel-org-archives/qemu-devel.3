@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17F2DC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 10:09:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5139EC3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 10:19:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCyBN-0004Ga-Ey; Thu, 08 May 2025 06:08:49 -0400
+	id 1uCyKx-0005sO-B5; Thu, 08 May 2025 06:18:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uCyBL-0004Fk-NV
- for qemu-devel@nongnu.org; Thu, 08 May 2025 06:08:47 -0400
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ id 1uCyKw-0005s5-2V
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 06:18:42 -0400
+Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uCyBI-0002vC-LJ
- for qemu-devel@nongnu.org; Thu, 08 May 2025 06:08:47 -0400
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-e740a09eae0so778145276.1
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 03:08:43 -0700 (PDT)
+ id 1uCyKu-00044H-DE
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 06:18:41 -0400
+Received: by mail-yb1-xb30.google.com with SMTP id
+ 3f1490d57ef6-e6dd991a0e6so716225276.1
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 03:18:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746698923; x=1747303723; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1H0+0F9vOVLheaEZEvUdOPFnTo+Yi5n5w8p9tg66jlY=;
- b=DdpNeli9l9HGy9ezC3P2Qbnfst/bYaL6wTBNK/qLdhwZ2ZY3a0Xic6tUs5rqo7Xidk
- 0rHmaQN7Jjmmc0UkCEJAs/fIX3FLVPvDJdaKzjvgCSdaplZ3a0thQV5XzpwC4EaihwkY
- ow4dcl29ezKjHMevJv9/krsOl6a+4CopHOcr86IsMmuu1BA7Bv001Fj/Se8u+RcyJrIx
- mEkLIUSP5rHT3MHfbB3+2UOelpN9G1RD2ABVY7upmJwTMVdAonL5wmeDJsrq4NjpmJ9E
- JVu8l+nGRWVdyTKPrXqgJX4XzqzJZ/jnr4E9R46UbeoFt0fKg3aYPgzsQreDZUotS++C
- 5qUA==
+ d=linaro.org; s=google; t=1746699519; x=1747304319; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=73i+0d3Wl2gShoZApYcx1Yf5nkVre6dyVWblG7yrRj8=;
+ b=Q8zHDwwbC+1kd9rsMZewkGjl2KCiBzrNf7LZxADDenIpUFqBz1OPSN/ppwp26za+5Q
+ MvGJAvk8tiUU5t6f97N9qkIeuXQa9xb8fmWDKA+sats8tETYQTL0S1pvq2P1YFdcMvhy
+ yUXEu5iMW/sxp0WwZ3wk1uBxOtMcL26FHfXHvKytFjCGbX6j84qrC6yxkx5ERaRQLSQA
+ CiQGJsGj14tix/mT8mblSmtYO7UAZ3jG32fGZ+S7iCSsVTFujBA9+siZ8C/yhsCK8mib
+ Qw/TwngoMUeXeHiZdJlsX+dTEgeWiws1xK175TCN92CHmiE+qkh7djKVErIZ5zTR/LzI
+ aaEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746698923; x=1747303723;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1H0+0F9vOVLheaEZEvUdOPFnTo+Yi5n5w8p9tg66jlY=;
- b=n5TG9QbsxrIavtu2I8ZXyvjp9AOSADBYohzw6RAuJKFrQdBEtnOigClFWmkqT3aiDe
- jJ9Bwg5QqmizlOw7xvvOCHWh6+TxE2Aoqbu1DhFFIZz4gG56NJSujSuw3nJ8QBZeYG9g
- TdOVZtjCLBH7OaP7FW0SFyYH63D55wt0TSiNXLsXSFimprNG0NLY/Z9OO3AempmPpnX0
- NDh1mdGxdygWAg+hSjS42I7RV2LbC1oyhAjQ/1Z8Fxxb/QCUfLoEfLv5QDSu+UiRqfZ+
- 887gcHl59uFPIdcEtFD/lbhz5JnOQSG+AmXc3hPySwSXEHarb9OGWi1NflijJ25F1khK
- etZQ==
-X-Gm-Message-State: AOJu0YxP9Cs99L2sRk1HFu5xh85FXydYfmRj31sK8jRobmoh1z5CDPej
- xx5iwkj9zbpaTcp8/B02DZADAeeWvhwBOjRQ2GBB58qsl8x3Udfhf65H7aFKufFX1QfphY0IvSr
- SEt8E72BK+Gtm3ABeQLpYeSn2Xen1SCOXbX7Z/A==
-X-Gm-Gg: ASbGnctG1AK2PvTteETljA75LQUqbNjOquHpv/ZzDD3Zcymc/UqmsZGl2U3FOVb4ZH5
- jV0dBE4NylNBZJ/AZbSRu19m7x3F8sCU0PIRFvgvDlILFx3afTj7kLhoJuAgCnSlR9VmfA4Jvf0
- cZKQod+T8RQu7XZKM1Gvrhojo=
-X-Google-Smtp-Source: AGHT+IHAFjKhVb7P78m/ux7WDmQOeEzYANSm2OTObw8LkPC3QsIjwxGCiY6aftn5mq53d1lzDEptDpZC92r0BZ5Ofsc=
-X-Received: by 2002:a05:6902:2411:b0:e75:5ef3:893e with SMTP id
- 3f1490d57ef6-e788143b11bmr8339767276.35.1746698922914; Thu, 08 May 2025
- 03:08:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746699519; x=1747304319;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=73i+0d3Wl2gShoZApYcx1Yf5nkVre6dyVWblG7yrRj8=;
+ b=UB9VThZ/vc4805bsKYlqMX0dt1NXRrqVi9dT9Cb84VyeJhltUIXUosnoG+Xo7H4mwF
+ ph5KTqj9dXduwR6PB7Xl/zzoPMmMNOBhROhRJuONFTUK9bPGiHo6nIIuCkipIc56Jclb
+ lwNZUO1ddSutpZ1YJBSVAhY3EOV8LgCG7EADFiBCr7RGtPgqfJeD1Lon5GPlIttclupU
+ zM8GM788kcIVMyq5TlCVKtq/+IUUujUfbfBonTk0Sq4vHnCFx7GzFjxkBi5RbJpCOOgp
+ j1Ic+avWNQP0+XB/W3Ld0d9uE/vDT1vpyzuWvKHlUcxdnPk+jxKgSPJTGu2eOqRz1pMq
+ M+9g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX9syXftaLuLIxumhg68AQaY74KZj66g5n6gfZMeEowND2grNpzQjmVynSEy33cTNV6OS6BXMwRicxM@nongnu.org
+X-Gm-Message-State: AOJu0Yz3j7K5ECISIRk8p0y9lPXVxgkVQQDX0XzQ+Jbp2No+Td+8Lnx5
+ nigpox3GQoSveT5llhsG3EnTOuHo5oYzYdtKoSxBff35xQmHVBIhsKqgQzthPYgcmA4Qpmk5fbI
+ n/QD3y7xqwft6S2bc5+Rk51dzUNictsq3vxwVTAtp1+Cfha7U
+X-Gm-Gg: ASbGncvV7FvLlx3QHx5COTviBvr7Afi84Se5Ft12h+lMnmhj4pgYp01vBmM1ZYE/l8z
+ VvmmV5VFXl1+NlyGMPv/ZRlZI3GQEGjNKLE2f+DUL+Dmcx5zieDOuxDSXVHQdzt929DmzugW2TL
+ aVFoMLtf0ChKAsMjP3C3x61ME=
+X-Google-Smtp-Source: AGHT+IEjnG3a96G2RwkuhpBxEJbx8VAEnJq5YSTyNF2IbY98AdBIim1DWgSegiCw9mM4TDyCztdfZM8cdElLVoMd4Ug=
+X-Received: by 2002:a05:6902:c13:b0:e78:f2a8:a69b with SMTP id
+ 3f1490d57ef6-e78f2a8a88amr1417917276.17.1746699518973; Thu, 08 May 2025
+ 03:18:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250507165840.401623-1-alex.bennee@linaro.org>
-In-Reply-To: <20250507165840.401623-1-alex.bennee@linaro.org>
+References: <20250501125544.727038-1-peter.maydell@linaro.org>
+ <f337d662-9eea-4f8b-b2a4-38a46e64732e@tls.msk.ru>
+In-Reply-To: <f337d662-9eea-4f8b-b2a4-38a46e64732e@tls.msk.ru>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 8 May 2025 11:08:31 +0100
-X-Gm-Features: ATxdqUGNuMZUmWvsDZGuey5CBwObIZjAL67p9J79vhahR9SoTWffafPG5Bi4MUg
-Message-ID: <CAFEAcA_0cf=XEbH9VQdTHqu1wekSmFDLdqnnzpcwnshCT-UUCg@mail.gmail.com>
-Subject: Re: [RFC PATCH] target/arm: allow gdb to read ARM_CP_NORAW regs
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Julian Armistead <julian.armistead@linaro.org>, 
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
+Date: Thu, 8 May 2025 11:18:27 +0100
+X-Gm-Features: ATxdqUELS1jBLqbLlVlU_NsUm5Ifg6vQuDtUd_zZP8gaRa3-yLRmTBxVLntKKaQ
+Message-ID: <CAFEAcA9eVO5PCpi8CmmrMwZrQexPOKWE-RpW3k2jwHv26NLjLw@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: Don't assert() for ISB/SB inside IT block
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,28 +94,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 7 May 2025 at 17:58, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
+On Thu, 8 May 2025 at 08:31, Michael Tokarev <mjt@tls.msk.ru> wrote:
 >
-> Before this we suppress all ARM_CP_NORAW registers being listed under
-> GDB. This includes useful registers like CurrentEL which gets tagged
-> as ARM_CP_NO_RAW because it is one of the ARM_CP_SPECIAL_MASK
-> registers. These are registers TCG can directly compute because we
-> have the information at compile time but until now with no readfn.
->
-> Add a .readfn to return the CurrentEL and then loosen the restrictions
-> in arm_register_sysreg_for_feature to allow ARM_CP_NORAW registers to
-> be read if there is a readfn available.
+> On 01.05.2025 15:55, Peter Maydell wrote:
+> > If the guest code has an ISB or SB insn inside an IT block, we
+> > generate incorrect code which trips a TCG assertion:
 
-The primary use case for NO_RAW is "system instructions" like
-the TLB maintenance insns. These don't make sense to expose
-to a debugger.
+> Is this change applicable for older stable releases, besides 10.0
+> (currently 9.2 and 7.2)?  It applies cleanly but I wonder if it is
+> actually needed..
 
-If we want the gdbstub access to system registers to be
-more than our current "we provide the ones that are easy",
-then I think I'd like to see a bit more up-front analysis of
-what the gdbstub needs and whether we've got into a bit of
-a mess with our ARM_CP_* flags that we could straighten out.
+I think any branch with commit 73fce314dbbf2d ("target/arm: Use
+DISAS_TOO_MANY for ISB and SB") needs the fix. That would
+include both 9.2 and 7.2, unless I got my git rune wrong.
 
 thanks
 -- PMM
