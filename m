@@ -4,136 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 015E9C3ABC6
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 20:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0BFBC3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 20:21:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD7So-0003p1-EI; Thu, 08 May 2025 16:03:28 -0400
+	id 1uD7j1-0006Vb-95; Thu, 08 May 2025 16:20:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1uD7Sm-0003nJ-RN
- for qemu-devel@nongnu.org; Thu, 08 May 2025 16:03:24 -0400
-Received: from mail-bn7nam10on2063.outbound.protection.outlook.com
- ([40.107.92.63] helo=NAM10-BN7-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1uD7Sj-0002fa-Va
- for qemu-devel@nongnu.org; Thu, 08 May 2025 16:03:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gWFnlR5Ii3ZOtv0i1nSD7/oSCkzmgBrz7Cp6CqpUW3JDJ3Y8V9NZ57XzxvL3+cJvGwilAJo+l4ROMdRtxD+l1ISb9BXvR3WZqH1yLeHLfs7Wc+VmB9yP51LA+L6Cy+l4GhG4tRZ6pQhzYrExIj0yzKTP9fVSIKUvpTzUQQ4Xwk4uOYU3dx1LRY5vrnuTzNlHwKcwIs7tjCiWvmZE4n72tP1ydE1p34jfB2mzKFSxHM8pHyNysST4JZkpw6YCBtalg2C3WqYPPW6APZaT9+XoTikiUPrjCEsQWfFu2yQWZCPkLrkxGS4vLIRWvvvPeboTAf5swu92ZoCrqQ60LG344A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pTArx6Mys2RVs23mpZD3+xGaMla9YOvxmvCJPZFOwj0=;
- b=EDfHQ4X6ew+Ct2qHdhG0NWp13RSNxfjLfFuLlnC3mGQcVddjpVqpe8YUS5/78wSNyp0Wb1G9N0ztx23PgJ/CA9Xz0Iz63c4h5HsDiq1URSXj/NAZDQ1YgnogtgebEOlwoxKpuFB+NuvwG8FBboQE/BmjiehN5DxL+GQTjQvWYQPt/camk2dGiKFv88pIUXBSL0YlaYZ9av48s2GPKfR+JmX7VLCLJSYYqfIukpRrPLtPEYUBRkG7IfUuXY8bQOeKho1NExJibZju0no90ZR8iIFph52dbuJ/iqEVhr6P0+6SEXhKylnip5fCUC381vp4ftX6IU4mG0prSOSlbZZyAg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pTArx6Mys2RVs23mpZD3+xGaMla9YOvxmvCJPZFOwj0=;
- b=0S86tBJmnUc+OUfqaUg7Ceh6ggVUUmRPu3To6Z3lUkAO+FR7tY9NfMd9Ncwziqj3AcTsx3BRVovN+3VVRFGvfC9qxkJhSYYfJGY3N0PhuuFIIovOyiQudutMq/u3h3TG/ke7lretAmjmS8lZwT5UWmYq4MVGUa1PlIpk5PXPiqQ=
-Received: from CH5PR02CA0002.namprd02.prod.outlook.com (2603:10b6:610:1ed::14)
- by SN7PR12MB6790.namprd12.prod.outlook.com (2603:10b6:806:269::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.24; Thu, 8 May
- 2025 19:58:11 +0000
-Received: from DS3PEPF000099D5.namprd04.prod.outlook.com
- (2603:10b6:610:1ed:cafe::49) by CH5PR02CA0002.outlook.office365.com
- (2603:10b6:610:1ed::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8722.23 via Frontend Transport; Thu,
- 8 May 2025 19:58:11 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- DS3PEPF000099D5.mail.protection.outlook.com (10.167.17.6) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8722.18 via Frontend Transport; Thu, 8 May 2025 19:58:10 +0000
-Received: from bmoger-ubuntu.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 8 May
- 2025 14:58:09 -0500
-From: Babu Moger <babu.moger@amd.com>
-To: <pbonzini@redhat.com>
-CC: <zhao1.liu@intel.com>, <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>,
- <davydov-max@yandex-team.ru>
-Subject: [PATCH v7 0/6] target/i386: Update EPYC CPU models for Cache property, RAS,
- SVM feature and add EPYC-Turin CPU model
-Date: Thu, 8 May 2025 14:57:58 -0500
-Message-ID: <cover.1746734284.git.babu.moger@amd.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uD7j0-0006VK-DB
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 16:20:10 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uD7ix-00053P-RE
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 16:20:10 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-736e52948ebso1742756b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 13:20:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746735605; x=1747340405; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cb0YDNe/2wg2OVbQIugya6VOwjI344me+nQ0nKho4tU=;
+ b=ZwLglYd0C0DebZ7QKADJad2NukumIHmlXpCf6tByLLuHUBtmnfKn/Q/lXmNd8J3CpU
+ NszidnrYTR05CcJvR6a7h+jgzvpS1OOfKhL8Vv1EptCdx3R/nIAyJERXrpi7IWJMiYMM
+ UgnHEQ1u5T/s+cvSL9a6/QD4gk5D1b8nj8S0ncw0fr5Q7cE/8DKUepITx+3w6QROk2lc
+ IpDudZQFVq9zscbG2j/0xVJqAivmiFhZzqs3zWIf8Q35s8jaYP+DYm0vqrlhz9PskNVg
+ +3225a5WvLGQ3AKtGy2NMgzC07Tw7U/5Q1WUmjw5nv6yxFyxgH10iN/ESkWAuNShbhrL
+ RFIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746735605; x=1747340405;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cb0YDNe/2wg2OVbQIugya6VOwjI344me+nQ0nKho4tU=;
+ b=i2/qjp9p1xpj4rK9KKlrKetPc7XK0lyVILgEO3Poq7wLGrLn1qSyKPDqMq4rhCV7ph
+ qncoJq7pOBICitF9riHmNoLG8GZEvJ33X64Ueos3U9MuLeB8FhVer+6DSMThHWn/QxnG
+ reWY8eZ0SIce+AJAWQ/uRhZZo+jDfTah14ERPzPHkObqVfM+gmw4l+dTrgR8HQPNB53f
+ AFNohknuVLIke1PqzktPixfdefiKwQLaCIonL526loceFfWqczTEmBjqSWcHQUh66Kfw
+ 7s3VFiHGcCtFqV4+ys15RckKY5HlfSLCFwljfQvihlF33QVmYdvITNuDO8xT0GTiWDKa
+ 3szQ==
+X-Gm-Message-State: AOJu0YxRd0U3sqCvJXbvVo7t7Gdx1Z4xoPcKx1gBcS1EYXTuh248T7dR
+ Eop9sdiUxJcfcAgIQ8BhngAtwmZWAsHas+S3BkM2Dqqd7SBiETvoq5q38CpjZC0=
+X-Gm-Gg: ASbGncsr6vE285Sp+LMljzh1XlGSnfPg5O3TQh4Imt65UgADFGUIMHbEzn7h0+2fWmx
+ cOtX0D7sEfuIhLhY79EMKIvCztTsu2rl4sQvys9L53/SWT2f9EvqBQ3Ixu97pbfypti+TtzfWPT
+ tOFEz0xnU96aXuyGpEXB64oGKmh0u7AyC0JBVc6g9EvQDbNAhA92Ju/j0zXQuatUHoa+R7MU/Zm
+ k8SG/PsaNQCzMsZSMZIGcEzcPOT/QmPvze31NNjuErXl/akBINgf3HmJG+xahsoIH+ec2ZzgkgY
+ 8GLHsxQjJRtVVLPOcGh4uIXcAxB6oHWDJuGhl3KWXSjYGmxWO6bctw==
+X-Google-Smtp-Source: AGHT+IFxfedK+OrmGZ/sPX2yazD1WVJ9rxL2oeJs4YinKu69lXupMn9+yw5BEgQgPlVmNxcOvr7WLA==
+X-Received: by 2002:a05:6a00:1488:b0:730:95a6:3761 with SMTP id
+ d2e1a72fcca58-7423ba87372mr1194252b3a.3.1746735605269; 
+ Thu, 08 May 2025 13:20:05 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b2351b7a6bdsm237359a12.69.2025.05.08.13.20.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 May 2025 13:20:04 -0700 (PDT)
+Message-ID: <1dcff322-02d4-4191-893f-4b3178aeea92@linaro.org>
+Date: Thu, 8 May 2025 13:20:04 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] meson: use thorough test setup as default
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250503201806.3045723-1-pierrick.bouvier@linaro.org>
+ <f7da46dd-0e8f-42d8-b555-300c088f605e@redhat.com>
+ <91cc4370-163e-4bdd-ac1c-b0d6ea3c06cb@linaro.org>
+ <aBnXXC3ldqErl8ub@redhat.com>
+ <6a8d7703-e275-4566-bc38-b627cc597e9a@linaro.org>
+ <e36633e2-e0de-422a-8ad3-1562e97926c6@redhat.com>
+ <aBsISp5UvOLzFhqn@redhat.com>
+ <51c4e997-8ae4-43a5-81b7-561c035ba85c@redhat.com>
+ <0657578e-3825-407b-9837-1e29717f94e2@linaro.org>
+ <13eda815-02a9-4bf3-8892-3225a27c0691@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <13eda815-02a9-4bf3-8892-3225a27c0691@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF000099D5:EE_|SN7PR12MB6790:EE_
-X-MS-Office365-Filtering-Correlation-Id: 42a16802-5aa4-4d41-7862-08dd8e6aa8f1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|82310400026|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?MOfmwmnMSjAyDONvI5nr42aNxD+5q4tLhj/IJD61o/ETaUaqFEoEIHWTyuOY?=
- =?us-ascii?Q?Bkw7N93d3CBxw2VJUZD8dYIm0cYKa8Qgg1y30gtxwTZSFFF5oMVZpnNmad6r?=
- =?us-ascii?Q?ifQmzxGLd3pR/Y0BRdjsXm6w5BjaHvuhgDaUe90QBZOdI4grLwPU8iSz7ozV?=
- =?us-ascii?Q?NRkroCGozaKzXsMdiQb9FIB+Oalo/kBJ9QtAifrIYvTNSIxCe33NDgLQ+vcK?=
- =?us-ascii?Q?hwl7zEV7V7HVP1Og4zC+Mjai/ONPCT00IMrZw882IHMqnE9J7daJ5B21mca9?=
- =?us-ascii?Q?Z02aybm/P0ZztSN62xpDFSmg6EWnJ0QcWHU6jff2N1BKWmczIXskOzOzMPV8?=
- =?us-ascii?Q?iN9KBDS268TjAI+w9duGUDqDVxbu/3BgDCFw61xjkIn/fn9yIjCGIzHRIXHg?=
- =?us-ascii?Q?I9spe7m+H1+e3JUtasG2gvaV5L3cmaN38mzrLqoY1kYV5aCVNcRVuIucZY/Z?=
- =?us-ascii?Q?OU5e9HS5tLqutjVSEQAGcZfR48rEg5Y8IOOmCUvzLOQLk5tnxe2YYTyHkpcZ?=
- =?us-ascii?Q?/NbRIp0K+WQE+cERA3klQQI/nFjvKLNqBK0EtjOaO5OBb+MW5hplAjt+eZd6?=
- =?us-ascii?Q?eBotZLz4OmZ7njfqVy52lqW1Xtw84nNXjMu+aI4bkfqX8h0EJLXq4CuvM+7m?=
- =?us-ascii?Q?mWvcYHg2IUZrBz91IBypDXDM2q5jW6R/tW5URmuOX+ZHYC+1Zhmj5y23WBK8?=
- =?us-ascii?Q?8qkQNfkgVrlCoHFRZhvmDzUgqWglx9PXSjDwbKPn0bKJVYSD3dyW6rTrrt2W?=
- =?us-ascii?Q?BjllD4NDoyzPJiXBrQzwRCjiqd4pUIFh3j54Zq5X2bLmLy6r3gsOpHwq5bLB?=
- =?us-ascii?Q?FvzR4TXw7W3ipuZcbWrfhFTtpN3kvfKdILF2Rqh/r5laWdZ4NJuDjI9pG2qA?=
- =?us-ascii?Q?+N0hFRn2nu0jPpHsWASoLdJAREhtL91MD7K0DOyaVrmRqmxhGMR8BPK+u2TT?=
- =?us-ascii?Q?q6uuswMX3OvgqtGIkiZA/jCUZ9GM1lWNliZFyDk5Zos5TAH0MnUdBS7iEl8F?=
- =?us-ascii?Q?so+ytRrddkL+IExtCnOc2JyXGgsIcnWBkg0fpn8ItvkByAoJfzLuUtizCe2a?=
- =?us-ascii?Q?Gh22u0yitLqJodfcRqDYXJM+HS1bJGWW8H3Hkin4qqJ2AaH61x650dmxs6Fo?=
- =?us-ascii?Q?4oUcYifo4GFExZ1OcSnFxHcnquUm2XfewO4OGgeOilhCR5MWI817RNiQFlFe?=
- =?us-ascii?Q?xTGH0M2WEKDEV0W6ESCHE46FP6Kjnu3d7Siqpc9vScATAmlTAOtqBaq3mi75?=
- =?us-ascii?Q?wEx6e/5sRJxicnaeVoyR0YCCSF1roSmY9MdBdC5LfAvukGCBoUzMogjjDZ3r?=
- =?us-ascii?Q?aipl1J7/qusL0rHu7d06+SUKT+0eRigBN6IT4LZf3a0AFMG3cytWIbaM9pzj?=
- =?us-ascii?Q?BTsC1WUcqpqRo00CtEcz+qi3cfefDp2eerSjdZxBTgYRh2Jkf9/BQC/RALnS?=
- =?us-ascii?Q?Rjy7Hk7SxFS/Uo4+1I8nJSsUKD6tMjQfw5qRKGwWNvPq/LF66Iu010tx2p73?=
- =?us-ascii?Q?qCPvZTwXXVVFyc4=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(82310400026)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2025 19:58:10.7708 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 42a16802-5aa4-4d41-7862-08dd8e6aa8f1
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099D5.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6790
-Received-SPF: permerror client-ip=40.107.92.63;
- envelope-from=Babu.Moger@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,77 +112,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 5/8/25 3:05 AM, Thomas Huth wrote:
+> On 07/05/2025 20.45, Pierrick Bouvier wrote:
+>> On 5/7/25 12:39 AM, Thomas Huth wrote:
+>>>>>> Then I don't understand the previous argument from Thomas to not make
+>>>>>> thorough the default: "The thorough functional tests download a
+>>>>>> lot of assets from the internet, so if someone just runs "meson test"
+>>>>>> without further parameters, I think we should not trigger these
+>>>>>> downloads in that case". It's what precache-functional is doing.
+>>>>>
+>>>>> precache-functional is *only* called when you run "make check-functional",
+>>>>> i.e. when you know that you want to run the functional tests that might
+>>>>> download assets from the internet. It's not called when you run the normal
+>>>>> "make check".
+>>>>
+>>>> Are you sure ?  If that's the case it was *not* my intention when i
+>>>> added precaching - I thought that "make check"  would call
+>>>> "make check-functional" and thus trigger precaching ?
+>>>
+>>> "check-functional" is not part of the normal "check" target - on purpose
+>>> since we don't want to trigger downloads by surprise when people just run
+>>> "make check". That's also why we have separate "functional" CI jobs in the
+>>> gitlab CI, since otherwise this would be handled by the normal "check" jobs
+>>> already.
+>>>
+>>
+>> `make check` calls build/pyvenv/bin/meson test --no-rebuild -t 1, which
+>> triggers func-quick by default, triggering associated downloads, since
+>> QEMU_TEST_NO_DOWNLOAD=1 is not set for this target, except if I missed
+>> another hidden hack somewhere.
+> 
+> You missed the fact that the "quick" functional tests do not download any
+> assets :-)
+>
 
-Following changes are implemented in this series.
+Hum...... (fact push -f on my brain).... ok.
 
-1. Fixed the cache(L2,L3) property details in all the EPYC models.
-2. Add RAS feature bits (SUCCOR, McaOverflowRecov) on all EPYC models
-3. Add missing SVM feature bits required for nested guests on all EPYC models
-4. Add the missing feature bit fs-gs-base-ns(WRMSR to {FS,GS,KERNEL_G}S_BASE is
-   non-serializing). This bit is added in EPYC-Genoa and EPYC-Turin models.
-5. Add RAS, SVM, fs-gs-base-ns and perfmon-v2 on EPYC-Genoa and EPYC-Turin models.
-6. Add support for EPYC-Turin. 
-   (Add all the above feature bits and few additional bits movdiri, movdir64b,
-    avx512-vp2intersect, avx-vnni, prefetchi, sbpb, ibpb-brtype, srso-user-kernel-no).
+> I know it's confusing since the name of the suites rather indicate something
+> about the runtime of the tests and not about whether they trigger a download
+> or not, but the suite names are so deeply glued into the "mtest2make" logic
+> that I was not able to come up with a better solution. Maybe Paolo or some
+> other Meson expert could clean that up, but for the time being, for the
+> functional test we have:
+>
 
-Link: https://www.amd.com/content/dam/amd/en/documents/epyc-technical-docs/programmer-references/57238.zip
-Link: https://www.amd.com/content/dam/amd/en/documents/corporate/cr/speculative-return-stack-overflow-whitepaper.pdf
----
-v7: Rebased on top latest 57b6f8d07f14 (upstream/master) Merge tag 'pull-target-arm-20250506'
-    Added new feature bit PREFETCHI. KVM support for the bit is added recently.
-    https://github.com/kvm-x86/linux/commit/d88bb2ded2ef
-    Paolo, These patches have been pending for a while. Please consider merging when you get a chance.
+I understand there is sometimes a rationale reason behind things, and 
+most of the time, historical reasons.
 
-v6: Initialized the boolean feature bits to true where applicable.
-    Added Reviewed-by tag from Zhao.
+> - quick tests that can always run (also run during "make check")
+> 
+> - thorough tests that download assets from the internet (only run during
+> "make check-functional")
+> 
+> I tried to document it in docs/devel/testing/functional.rst in the "Asset
+> handling" section already, please have a look whether that's sufficient, or
+> whether you have some ideas how to improve the situation.
+>
 
-v5: Add EPYC-Turin CPU model
-    Dropped ERAPS and RAPSIZE bits from EPYC-Turin models as kernel support for
-    these bits are not done yet. Users can still use the options +eraps,+rapsize
-    to test these featers.
-    Add Reviewed-by tag from Maksim for the patches already reviewed.
+Indeed, and I remember reading this when I started working on QEMU, but 
+not really after spending time to craft the "right" command and keep it 
+in my aliases.
 
-v4: Some of the patches in v3 are already merged. Posting the rest of the patches.
-    Dropped EPYC-Turin model for now. Will post them later.
-    Added SVM feature bit as discussed in
-    https://lore.kernel.org/kvm/b4b7abae-669a-4a86-81d3-d1f677a82929@redhat.com/
-    Fixed the cache property details as discussed in
-    https://lore.kernel.org/kvm/20230504205313.225073-8-babu.moger@amd.com/
-    Thanks to Maksim and Paolo for their feedback.
+In general, having documentation is great, but I would still favor 
+intuitive commands and defaults over a lengthy explaination or this 
+email thread, but as "good defaults" and "intuitive command" is 
+definitely a personal judgment, and not something objective, I'll simply 
+accept the current situation and move on.
 
-v3: Added SBPB, IBPB_BRTYPE, SRSO_USER_KERNEL_NO, ERAPS and RAPSIZE bits
-    to EPYC-Turin.
-    Added new patch(1) to fix a minor typo.
+>    Thomas
+> 
 
-v2: Fixed couple of typos.
-    Added Reviewed-by tag from Zhao.
-    Rebased on top of 6d00c6f98256 ("Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging")
-
-Previous revisions:
-v6: https://lore.kernel.org/kvm/cover.1740766026.git.babu.moger@amd.com/
-v5: https://lore.kernel.org/kvm/cover.1738869208.git.babu.moger@amd.com/
-v4: https://lore.kernel.org/kvm/cover.1731616198.git.babu.moger@amd.com/
-v3: https://lore.kernel.org/kvm/cover.1729807947.git.babu.moger@amd.com/
-v2: https://lore.kernel.org/kvm/cover.1723068946.git.babu.moger@amd.com/
-v1: https://lore.kernel.org/qemu-devel/cover.1718218999.git.babu.moger@amd.com/
-
-Babu Moger (6):
-  target/i386: Update EPYC CPU model for Cache property, RAS, SVM
-    feature bits
-  target/i386: Update EPYC-Rome CPU model for Cache property, RAS, SVM
-    feature bits
-  target/i386: Update EPYC-Milan CPU model for Cache property, RAS, SVM
-    feature bits
-  target/i386: Add couple of feature bits in CPUID_Fn80000021_EAX
-  target/i386: Update EPYC-Genoa for Cache property, perfmon-v2, RAS and
-    SVM feature bits
-  target/i386: Add support for EPYC-Turin model
-
- target/i386/cpu.c | 439 +++++++++++++++++++++++++++++++++++++++++++++-
- target/i386/cpu.h |   4 +
- 2 files changed, 441 insertions(+), 2 deletions(-)
-
--- 
-2.34.1
-
+Thanks for the insights,
+Pierrick
 
