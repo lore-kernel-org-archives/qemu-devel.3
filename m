@@ -4,62 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E2DC3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 13:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CC94C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 13:37:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD1Jo-0001UR-RK; Thu, 08 May 2025 09:29:45 -0400
+	id 1uD1QU-0006Af-S9; Thu, 08 May 2025 09:36:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uD1Jm-0001Tu-V8
- for qemu-devel@nongnu.org; Thu, 08 May 2025 09:29:42 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uD1Jj-0002tq-Oh
- for qemu-devel@nongnu.org; Thu, 08 May 2025 09:29:42 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZtXtC4hQSz6M4Ys;
- Thu,  8 May 2025 21:24:51 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 3BCE51402A5;
- Thu,  8 May 2025 21:29:24 +0800 (CST)
-Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 8 May
- 2025 15:29:23 +0200
-Date: Thu, 8 May 2025 14:29:18 +0100
-To: Richard Henderson <richard.henderson@linaro.org>
-CC: Alistair Francis <alistair23@gmail.com>, <qemu-devel@nongnu.org>,
- <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH 066/147] include/exec: Move TLB_MMIO, TLB_DISCARD_WRITE
- to slow flags
-Message-ID: <20250508142918.0000248d@huawei.com>
-In-Reply-To: <04875ca2-781b-4000-b74c-fc338bc6ec4d@linaro.org>
-References: <20250422192819.302784-1-richard.henderson@linaro.org>
- <20250422192819.302784-67-richard.henderson@linaro.org>
- <20250425183524.00000b28@huawei.com>
- <CAKmqyKMN5bo12Oh8hrwdiimqJSzHMZwB7JjAquBrEK3PTbtGyA@mail.gmail.com>
- <04875ca2-781b-4000-b74c-fc338bc6ec4d@linaro.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1QS-0006A8-Al
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:36:36 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1QP-0003iP-1p
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:36:36 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-b1fb650bdf7so559907a12.1
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 06:36:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746711391; x=1747316191; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XP+ZGWOYnOiwfrA3/LUhv7eqSLRqDyC8l2H8ehhMIaA=;
+ b=aE/K7ScaiJjh+A9fvZjiGuJUAI0/3374/OqP+zRb/9Td+ff6F49YmgMs5dheZ1rZub
+ WNv+ZhwMv2j4C5SJdDlAxbbYzLWgbsbSFUPV3bA3ju7Czww3H6ypoTkO1QNFFHXR0U6w
+ v7EzyKr+ePKxDleGqpHqKM09JufYAiQPQ8vdDYnWXwgLeSqoeTziHlD6BlGCGQn39hA8
+ SZNyEvhoD7vyqpJI+faHBjgtfxU0JsiAlAZiqoUxHAiSxmu2pPmaLU2QRIrb5/Eag/h8
+ eV3fI7Y/R+7AqFsTu9ZYs8RQlwvoOR4kiyvv3nuBpq0LR5Ko71rRIRjilLF6ymMrQdKf
+ STtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746711391; x=1747316191;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XP+ZGWOYnOiwfrA3/LUhv7eqSLRqDyC8l2H8ehhMIaA=;
+ b=QWJL1lBojhXXorv60Eo0UrbyqNKowyHFXwcmoINarKlHa+3OYp8L49IFS1cS9wn9+B
+ UuZofdY76JAfE78k9/WWdQFxnzMfUs4Ga8Cmdp+5xgthY+6En/TRKlSctuMVS5u4bjZW
+ irogUbHxcn52e60Vy7Tae3ku+MH55ckSaqJWB0NjV2PyF/Q67gEnfRNtvcpue0CZYunG
+ LIMxlIxuGpO/maFQYhpsOcRF/wEXwYuffRaUnR9Y0WNl83ml0njvbJeqijJSEuF8Pe+V
+ HSCGYccjKifvZrlVz1dVQj+KxWYEh9nGoOsuiS0/gB33ForRHW33bH5LbCOFTLn7kZTV
+ Z9mA==
+X-Gm-Message-State: AOJu0YwwaOYF1wVtcHor3OGJKq46JqV2472A6EzZah5iKbK8HJ49KzsB
+ J63Mag9Uvz9jsNz7gs+qXHJEQUyH8GGSEqrE4lg9fjbr6z+uUK5UR0fMcEsbYNORP29ee21Zza0
+ +avu9Ng==
+X-Gm-Gg: ASbGnctVSCiz5LJk2WYggbGXbmiF3W/kpOHgHDKv0o7bIZb3cR4sST2oLn7OLNEuSZ6
+ 5bFuRNPSgeS8T5eGoHP1rKRgyCpLOzLP/hKAZMNz3dJ/KirXR4hd5d1eplxmVzM1s+zkSlbQ8Jl
+ pv2T7BCLGUpNAnLOhimTsfZkuLIBvx+1HV7T7y91AG2KiPlsGTZQj7GuLY18HW5HwKhkCbhFZnc
+ Rk5E/BGQf61CrRCjRYZEZq0xTzcO67whaLa7l6jO/PoTnXHP0HHi6xHg4x6lTT3cy8I0gCHCMBF
+ As99YzgGksL08PCAjUgIMURhLk848evLUgcLXdCLa6dB9OQe3kiF7TTynmT4yGfte40eLyv6cMe
+ 5VBYyvVLGVJWMAgg=
+X-Google-Smtp-Source: AGHT+IERcd0wpsVEg7UAq/VxS+1i8htfAwkqBnDOgXkJzjD1MEkNI1SisofAeEu+2dRvjUVX/IEO2A==
+X-Received: by 2002:a05:6a20:9f48:b0:1f5:535c:82dc with SMTP id
+ adf61e73a8af0-2148d3124f5mr10576405637.42.1746711390803; 
+ Thu, 08 May 2025 06:36:30 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b1fb3c6a590sm11373659a12.66.2025.05.08.06.36.16
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 08 May 2025 06:36:30 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
+ Sergio Lopez <slp@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-riscv@nongnu.org,
+ Weiwei Li <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Helge Deller <deller@gmx.de>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ qemu-arm@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v4 01/27] hw/i386/pc: Remove deprecated pc-q35-2.6 and
+ pc-i440fx-2.6 machines
+Date: Thu,  8 May 2025 15:35:24 +0200
+Message-ID: <20250508133550.81391-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250508133550.81391-1-philmd@linaro.org>
+References: <20250508133550.81391-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,242 +119,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 29 Apr 2025 19:43:05 -0700
-Richard Henderson <richard.henderson@linaro.org> wrote:
+These machines has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") they can now be removed.
 
-> On 4/29/25 14:35, Alistair Francis wrote:
-> > On Sat, Apr 26, 2025 at 3:36=E2=80=AFAM Jonathan Cameron via
-> > <qemu-devel@nongnu.org> wrote: =20
-> >>
-> >> On Tue, 22 Apr 2025 12:26:55 -0700
-> >> Richard Henderson <richard.henderson@linaro.org> wrote:
-> >> =20
-> >>> Recover two bits from the inline flags. =20
-> >>
-> >>
-> >> Hi Richard,
-> >>
-> >> Early days but something (I'm fairly sure in this patch) is tripping u=
-p my favourite
-> >> TCG corner case of running code out of MMIO memory (interleaved CXL me=
-mory).
-> >>
-> >> Only seeing it on arm64 tests so far which isn't upstream yet..
-> >> (guess what I was getting ready to post today)
-> >>
-> >> Back trace is:
-> >>
-> >> #0  0x0000555555fd4296 in cpu_atomic_fetch_andq_le_mmu (env=3D0x555557=
-ee19b0, addr=3D18442241572520067072, val=3D18446744073701163007, oi=3D8244,=
- retaddr=3D<optimized out>) at ../../accel/tcg/atomic_template.h:140
-> >> #1  0x00007fffb6894125 in code_gen_buffer ()
-> >> #2  0x0000555555fc4c46 in cpu_tb_exec (cpu=3Dcpu@entry=3D0x555557ededf=
-0, itb=3Ditb@entry=3D0x7fffb6894000 <code_gen_buffer+200511443>, tb_exit=3D=
-tb_exit@entry=3D0x7ffff4bfb744) at ../../accel/tcg/cpu-exec.c:455
-> >> #3  0x0000555555fc51c2 in cpu_loop_exec_tb (tb_exit=3D0x7ffff4bfb744, =
-last_tb=3D<synthetic pointer>, pc=3D<optimized out>, tb=3D0x7fffb6894000 <c=
-ode_gen_buffer+200511443>, cpu=3D0x555557ededf0) at ../../accel/tcg/cpu-exe=
-c.c:904
-> >> #4  cpu_exec_loop (cpu=3Dcpu@entry=3D0x555557ededf0, sc=3Dsc@entry=3D0=
-x7ffff4bfb7f0) at ../../accel/tcg/cpu-exec.c:1018
-> >> #5  0x0000555555fc58f1 in cpu_exec_setjmp (cpu=3Dcpu@entry=3D0x555557e=
-dedf0, sc=3Dsc@entry=3D0x7ffff4bfb7f0) at ../../accel/tcg/cpu-exec.c:1035
-> >> #6  0x0000555555fc5f6c in cpu_exec (cpu=3Dcpu@entry=3D0x555557ededf0) =
-at ../../accel/tcg/cpu-exec.c:1061
-> >> #7  0x0000555556146ac3 in tcg_cpu_exec (cpu=3Dcpu@entry=3D0x555557eded=
-f0) at ../../accel/tcg/tcg-accel-ops.c:81
-> >> #8  0x0000555556146ee3 in mttcg_cpu_thread_fn (arg=3Darg@entry=3D0x555=
-557ededf0) at ../../accel/tcg/tcg-accel-ops-mttcg.c:94
-> >> #9  0x00005555561f6450 in qemu_thread_start (args=3D0x555557f8f430) at=
- ../../util/qemu-thread-posix.c:541
-> >> #10 0x00007ffff7750aa4 in start_thread (arg=3D<optimized out>) at ./np=
-tl/pthread_create.c:447
-> >> #11 0x00007ffff77ddc3c in clone3 () at ../sysdeps/unix/sysv/linux/x86_=
-64/clone3.S:78
-> >>
-> >> I haven't pushed out the rebased tree yet making this a truly awful bu=
-g report.
-> >>
-> >> The pull request you sent with this in wasn't bisectable so this was a=
- bit of a guessing
-> >> game. I see the seg fault only after this patch. =20
-> >=20
-> > I see the same thing with some RISC-V tests. I can provide the test
-> > images if you want as well =20
->=20
->=20
-> Yes please.
->=20
->=20
-> r~
-
-I'm guessing Alastair is busy.
-
-I got around to testing this on x86 and indeed blow up is the same.
-
-0x0000555555e3dd77 in cpu_atomic_add_fetchl_le_mmu (env=3D0x55555736bef0, a=
-ddr=3D140271756837240, val=3D1, oi=3D34, retaddr=3D<optimized out>) at ../.=
-./accel/tcg/atomic_template.h:143
-143     GEN_ATOMIC_HELPER(add_fetch)
-(gdb) bt
-#0  0x0000555555e3dd77 in cpu_atomic_add_fetchl_le_mmu (env=3D0x55555736bef=
-0, addr=3D140271756837240, val=3D1, oi=3D34, retaddr=3D<optimized out>) at =
-../../accel/tcg/atomic_template.h:143
-#1  0x00007fffbc31c6f0 in code_gen_buffer ()
-#2  0x0000555555e23aa6 in cpu_tb_exec (cpu=3Dcpu@entry=3D0x555557369330, it=
-b=3Ditb@entry=3D0x7fffbc31c600 <code_gen_buffer+295441875>, tb_exit=3Dtb_ex=
-it@entry=3D0x7ffff4bfd6ec) at ../../accel/tcg/cpu-exec.c:438
-#3  0x0000555555e24025 in cpu_loop_exec_tb (tb_exit=3D0x7ffff4bfd6ec, last_=
-tb=3D<synthetic pointer>, pc=3D<optimized out>, tb=3D0x7fffbc31c600 <code_g=
-en_buffer+295441875>, cpu=3D0x555557369330) at ../../accel/tcg/cpu-exec.c:8=
-72
-#4  cpu_exec_loop (cpu=3Dcpu@entry=3D0x555557369330, sc=3Dsc@entry=3D0x7fff=
-f4bfd7b0) at ../../accel/tcg/cpu-exec.c:982
-#5  0x0000555555e247a1 in cpu_exec_setjmp (cpu=3Dcpu@entry=3D0x555557369330=
-, sc=3Dsc@entry=3D0x7ffff4bfd7b0) at ../../accel/tcg/cpu-exec.c:999
-#6  0x0000555555e24e2c in cpu_exec (cpu=3Dcpu@entry=3D0x555557369330) at ..=
-/../accel/tcg/cpu-exec.c:1025
-#7  0x0000555555e42c73 in tcg_cpu_exec (cpu=3Dcpu@entry=3D0x555557369330) a=
-t ../../accel/tcg/tcg-accel-ops.c:81
-#8  0x0000555555e43093 in mttcg_cpu_thread_fn (arg=3Darg@entry=3D0x55555736=
-9330) at ../../accel/tcg/tcg-accel-ops-mttcg.c:94
-#9  0x0000555555ef2250 in qemu_thread_start (args=3D0x5555573e6e20) at ../.=
-./util/qemu-thread-posix.c:541
-#10 0x00007ffff7750aa4 in start_thread (arg=3D<optimized out>) at ./nptl/pt=
-hread_create.c:447
-#11 0x00007ffff77ddc3c in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/cl=
-one3.S:78
-
-Need one patch for my particular setup to work around some DMA buffer issue=
-s in virtio (similar to
-a patch for pci space last year).  I've been meaning to post an RFC to get =
-feedback on how
-to handle this but not gotten to it yet!
-
-=46rom 801e47897c5959a22ed050d7e7feebbbd3a12588 Mon Sep 17 00:00:00 2001
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Date: Mon, 22 Apr 2024 13:54:37 +0100
-Subject: [PATCH] physmem: Increase bounce buffers for "memory" address spac=
-e.
-
-Doesn't need to be this big and should be configurable.
-
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- system/physmem.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/i386/pc_piix.c | 14 --------------
+ hw/i386/pc_q35.c  | 14 --------------
+ 2 files changed, 28 deletions(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 3f4fd69d9a..651b875827 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2798,6 +2798,7 @@ static void memory_map_init(void)
-     memory_region_init(system_memory, NULL, "system", UINT64_MAX);
-     address_space_init(&address_space_memory, system_memory, "memory");
-=20
-+    address_space_memory.max_bounce_buffer_size =3D 1024 * 1024 * 1024;
-     system_io =3D g_malloc(sizeof(*system_io));
-     memory_region_init_io(system_io, NULL, &unassigned_io_ops, NULL, "io",
-                           65536);
---=20
-2.43.0
-
-
-Anyhow, other than that you need any random distro image (I tend to use deb=
-ian nocloud images)
-and a recent kernel build (mainline is fine).
-
-Then a config along the lines of (obviously this isn't minimal)
-
-qemu-system-x86_64 -M q35,cxl=3Don,sata=3Doff,smbus=3Doff -m 4g,maxmem=3D8G=
-,slots=3D4 -cpu max -smp 4 \
-                                      -kernel bzImage \
-                                      -bios bios \
- -drive if=3Dnone,file=3D/mnt/d/images/x86-full-big.qcow2,format=3Dqcow2,id=
-=3Dhd \
- -device ioh3420,id=3Droot_port1 -device virtio-blk-pci,drive=3Dhd,bus=3Dro=
-ot_port1 \
- -netdev user,id=3Dmynet,hostfwd=3Dtcp::5553-:22 -device virtio-net-pci,net=
-dev=3Dmynet,id=3Dbob \
- -nographic -no-reboot -append 'earlycon console=3DttyS0 root=3D/dev/vda3 f=
-sck.mode=3Dskip tp_printk maxcpus=3D4' \
- -monitor telnet:127.0.0.1:1235,server,nowait \
- -object memory-backend-ram,size=3D4G,id=3Dmem0 \
- -numa node,nodeid=3D0,cpus=3D0-3,memdev=3Dmem0 \
- -numa node,nodeid=3D1 \
- -serial mon:stdio \
-  -object memory-backend-file,id=3Dcxl-mem1,share=3Don,mem-path=3D/tmp/cxlt=
-est.raw,size=3D256M,align=3D256M \
- -object memory-backend-file,id=3Dcxl-mem2,share=3Don,mem-path=3D/tmp/cxlte=
-st2.raw,size=3D256M,align=3D256M \
- -object memory-backend-file,id=3Dcxl-lsa1,share=3Don,mem-path=3D/tmp/lsa.r=
-aw,size=3D1M,align=3D1M \
- -object memory-backend-file,id=3Dcxl-mem3,share=3Don,mem-path=3D/tmp/cxlte=
-st3.raw,size=3D256M,align=3D256M \
- -object memory-backend-file,id=3Dcxl-mem4,share=3Don,mem-path=3D/tmp/cxlte=
-st4.raw,size=3D256M,align=3D256M \
- -object memory-backend-file,id=3Dcxl-lsa2,share=3Don,mem-path=3D/tmp/lsa2.=
-raw,size=3D1M,align=3D1M \
- -device pxb-cxl,bus_nr=3D12,bus=3Dpcie.0,id=3Dcxl.1 \
- -device cxl-rp,port=3D0,bus=3Dcxl.1,id=3Droot_port0,chassis=3D0,slot=3D2 \
- -device cxl-rp,port=3D1,bus=3Dcxl.1,id=3Droot_port2,chassis=3D0,slot=3D3 \
- -device cxl-type3,bus=3Droot_port0,volatile-memdev=3Dcxl-mem1,id=3Dcxl-pme=
-m0,lsa=3Dcxl-lsa1,sn=3D3 \
- -device cxl-type3,bus=3Droot_port2,volatile-memdev=3Dcxl-mem3,id=3Dcxl-pme=
-m1,lsa=3Dcxl-lsa2,sn=3D4 \
- -machine cxl-fmw.0.targets.0=3Dcxl.1,cxl-fmw.0.size=3D4G,cxl-fmw.0.interle=
-ave-granularity=3D1k
-
-Then after booting into linux, bring up a cxl region with:
-
-    cd /sys/bus/cxl/devices/decoder0.0/
-    cat create_ram_region
-    echo region0 > create_ram_region
-
-    echo ram > /sys/bus/cxl/devices/decoder2.0/mode
-    echo $((256 << 20)) > /sys/bus/cxl/devices/decoder2.0/dpa_size
-
-    cd /sys/bus/cxl/devices/region0/
-    echo 256 > interleave_granularity
-    echo 1 > interleave_ways
-    echo $((256 << 20)) > size=20
-    echo decoder2.0 > target0
-    echo 1 > commit
-    echo region0 > /sys/bus/cxl/drivers/cxl_region/bind
-
-That should bring up a small amount of memory in node 2. Interleaving isn't=
- actually
-in use here but we haven't upstreamed the bypass optimizations so this is s=
-till
-mmio space to QEMU.
-
-Then numactl -m 2 ls=20
-boom.
-
-A few relevant bits of kernel config (also not minimal)
-
-//dax stuff to ensure we get memory as normal ram.
-CONFIG_DAX=3Dy
-CONFIG_DEV_DAX=3Dm
-CONFIG_DEV_DAX_PMEM=3Dm
-CONFIG_DEV_DAX_HMEM=3Dy
-CONFIG_DEV_DAX_CXL=3Dm
-CONFIG_DEV_DAX_HMEM_DEVICES=3Dy
-CONFIG_DEV_DAX_KMEM=3Dm
-//memory hotplug
-CONFIG_ARCH_ENABLE_MEMORY_HOTPLUG=3Dy
-CONFIG_ARCH_ENABLE_MEMORY_HOTREMOVE=3Dy
-CONFIG_MEMORY_HOTPLUG=3Dy
-CONFIG_MHP_DEFAULT_ONLINE_TYPE_ONLINE_MOVABLE=3Dy
-
-Any hints welcome!  Also happy to provide any additional info as necessary.
-
-Jonathan
-
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 7a62bb06500..98a118fd4a0 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -764,20 +764,6 @@ static void pc_i440fx_machine_2_7_options(MachineClass *m)
+ 
+ DEFINE_I440FX_MACHINE(2, 7);
+ 
+-static void pc_i440fx_machine_2_6_options(MachineClass *m)
+-{
+-    X86MachineClass *x86mc = X86_MACHINE_CLASS(m);
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-
+-    pc_i440fx_machine_2_7_options(m);
+-    pcmc->legacy_cpu_hotplug = true;
+-    x86mc->fwcfg_dma_enabled = false;
+-    compat_props_add(m->compat_props, hw_compat_2_6, hw_compat_2_6_len);
+-    compat_props_add(m->compat_props, pc_compat_2_6, pc_compat_2_6_len);
+-}
+-
+-DEFINE_I440FX_MACHINE(2, 6);
+-
+ #ifdef CONFIG_ISAPC
+ static void isapc_machine_options(MachineClass *m)
+ {
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 33211b1876f..b7ffb5f1216 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -658,17 +658,3 @@ static void pc_q35_machine_2_7_options(MachineClass *m)
+ }
+ 
+ DEFINE_Q35_MACHINE(2, 7);
+-
+-static void pc_q35_machine_2_6_options(MachineClass *m)
+-{
+-    X86MachineClass *x86mc = X86_MACHINE_CLASS(m);
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-
+-    pc_q35_machine_2_7_options(m);
+-    pcmc->legacy_cpu_hotplug = true;
+-    x86mc->fwcfg_dma_enabled = false;
+-    compat_props_add(m->compat_props, hw_compat_2_6, hw_compat_2_6_len);
+-    compat_props_add(m->compat_props, pc_compat_2_6, pc_compat_2_6_len);
+-}
+-
+-DEFINE_Q35_MACHINE(2, 6);
+-- 
+2.47.1
 
 
