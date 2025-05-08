@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BBC7C3ABBE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BCF3C3ABC5
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 15:07:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD2pS-00032U-Bn; Thu, 08 May 2025 11:06:30 -0400
+	id 1uD2p7-0002ES-Vn; Thu, 08 May 2025 11:06:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2pI-0002wL-Na
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:06:20 -0400
+ id 1uD2p5-0002Bz-LW
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:06:07 -0400
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uD2pE-0007RW-2j
- for qemu-devel@nongnu.org; Thu, 08 May 2025 11:06:18 -0400
+ id 1uD2p3-0007RF-H7
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 11:06:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746716776; x=1778252776;
+ t=1746716765; x=1778252765;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=RPTMrLQkM3bIxbRVYOEBZ9rV41Eau9U5ifMZEE5ypx0=;
- b=WlaGT2asaStfqm0ANPOBokx1AjmI/FpE39R7+J6/Q9M9cq/p5LDPwN/4
- 62yh+bzbPmPgYoIpZwWrgvTZiagmxpQmFU9TdYNyJ7QxiwSXMmJEwMdKf
- PWQIo0eBc9plwhW1DUBQRHuwdllHdyb9Bto+DbgMXp/EfEkRUxcytRYr+
- QqI0PUA8K7F0+afIeqkHqRcu0Zd8ak3sX4GIIWVtOCMRT4ysiQjl7s+70
- Ae4zZ82lMmB6mi7mbZcs9/JfBxxW0mKmcRludmROj3kz3uHLxwNT7UH6Z
- otYYQR5dKNr9Isp106DwcNCHwbIyEneZOn0+T9wLwrHsgKHiOnPb3+EYM Q==;
-X-CSE-ConnectionGUID: m9CsxhNdRsO0QUb9zSrBcw==
-X-CSE-MsgGUID: cQGeqlSdQgC2QhfMGFDnIQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73888161"
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73888161"
+ bh=VL+hM8rVoBcz6mlb05abG/U2PuWh3ox63otrGufxFx4=;
+ b=DKqMX+yfmARM5CHQxM3qdUMR13ytkUN20ez7lDy4aUOb2qfA0L96TA32
+ Ik+AX9f9+QNVIzkoZLDSq5Ml6tNDxRuDtdBK/yFnLCeMUuT1evlqThuwx
+ GM4nhrVx8pHqP7XVovDmiMqdIrr+Rwaq5yHw7CJOD6sRUJyxVxYdiUHyI
+ jfQUlKj7Y6nLcIWB3h+3dmc8/nkOMasjGYtqWphfWyzOBPOBGj2IMFHni
+ QSxCZqSMlzw8/LCH+ehVEXtBBBUvk7tAxXwcCha/FeU0LJcpB6R5qbb38
+ oPTaf6vG7EyhQxZybcVnY4hNOne8BsITgesrJoogKX5BgFB3iOZFKWxPZ g==;
+X-CSE-ConnectionGUID: jcs4jiMwSZ+aSqZcCWSKFw==
+X-CSE-MsgGUID: R4IcGyg/QA6BxaY1jcpXTQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="73888143"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="73888143"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 May 2025 08:05:57 -0700
-X-CSE-ConnectionGUID: SpTfsLpbTSm6BZLpLRbESQ==
-X-CSE-MsgGUID: sc2osDjRRLSImdynd04j3w==
+ 08 May 2025 08:05:50 -0700
+X-CSE-ConnectionGUID: GJqGVDoASBOvBT0os5KXtg==
+X-CSE-MsgGUID: TIUVAjEfTTSSuwT96Kj2NA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141439956"
+X-IronPort-AV: E=Sophos;i="6.15,272,1739865600"; d="scan'208";a="141439929"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:05:54 -0700
+ by orviesa005.jf.intel.com with ESMTP; 08 May 2025 08:05:47 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -57,14 +57,14 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  Rick Edgecombe <rick.p.edgecombe@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PATCH v9 20/55] i386/tdx: Track mem_ptr for each firmware entry of
- TDVF
-Date: Thu,  8 May 2025 10:59:26 -0400
-Message-ID: <20250508150002.689633-21-xiaoyao.li@intel.com>
+Subject: [PATCH v9 18/55] i386/tdx: Parse TDVF metadata for TDX VM
+Date: Thu,  8 May 2025 10:59:24 -0400
+Message-ID: <20250508150002.689633-19-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250508150002.689633-1-xiaoyao.li@intel.com>
 References: <20250508150002.689633-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
@@ -91,138 +91,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For each TDVF sections, QEMU needs to copy the content to guest
-private memory via KVM API (KVM_TDX_INIT_MEM_REGION).
-
-Introduce a field @mem_ptr for TdxFirmwareEntry to track the memory
-pointer of each TDVF sections. So that QEMU can add/copy them to guest
-private memory later.
-
-TDVF sections can be classified into two groups:
- - Firmware itself, e.g., TDVF BFV and CFV, that located separately from
-   guest RAM. Its memory pointer is the bios pointer.
-
- - Sections located at guest RAM, e.g., TEMP_MEM and TD_HOB.
-   mmap a new memory range for them.
-
-Register a machine_init_done callback to do the stuff.
+After TDVF is loaded to bios MemoryRegion, it needs parse TDVF metadata.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Changes in v8:
-- Remove the duplicated header include;
-- Add error handling for qemu_ram_mmap() failure;
----
- hw/i386/tdvf.c         |  1 +
- include/hw/i386/tdvf.h |  7 +++++++
- target/i386/kvm/tdx.c  | 37 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 45 insertions(+)
+ hw/i386/pc_sysfw.c         | 7 +++++++
+ target/i386/kvm/tdx-stub.c | 5 +++++
+ target/i386/kvm/tdx.c      | 5 +++++
+ target/i386/kvm/tdx.h      | 3 +++
+ 4 files changed, 20 insertions(+)
 
-diff --git a/hw/i386/tdvf.c b/hw/i386/tdvf.c
-index 6b1c6aede1e7..b351f7a9a16e 100644
---- a/hw/i386/tdvf.c
-+++ b/hw/i386/tdvf.c
-@@ -178,6 +178,7 @@ int tdvf_parse_metadata(TdxFirmware *fw, void *flash_ptr, int size)
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index 1eeb58ab37f9..821396c16e91 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -37,6 +37,7 @@
+ #include "hw/block/flash.h"
+ #include "system/kvm.h"
+ #include "target/i386/sev.h"
++#include "kvm/tdx.h"
+ 
+ #define FLASH_SECTOR_SIZE 4096
+ 
+@@ -280,5 +281,11 @@ void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
          }
-     }
  
-+    fw->mem_ptr = flash_ptr;
-     return 0;
- 
- err:
-diff --git a/include/hw/i386/tdvf.h b/include/hw/i386/tdvf.h
-index 7ebcac42a36c..e75c8d1acc68 100644
---- a/include/hw/i386/tdvf.h
-+++ b/include/hw/i386/tdvf.h
-@@ -26,13 +26,20 @@ typedef struct TdxFirmwareEntry {
-     uint64_t size;
-     uint32_t type;
-     uint32_t attributes;
-+
-+    void *mem_ptr;
- } TdxFirmwareEntry;
- 
- typedef struct TdxFirmware {
-+    void *mem_ptr;
-+
-     uint32_t nr_entries;
-     TdxFirmwareEntry *entries;
- } TdxFirmware;
- 
-+#define for_each_tdx_fw_entry(fw, e)    \
-+    for (e = (fw)->entries; e != (fw)->entries + (fw)->nr_entries; e++)
-+
- int tdvf_parse_metadata(TdxFirmware *fw, void *flash_ptr, int size);
- 
- #endif /* HW_I386_TDVF_H */
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 71be3bd28d47..e2794843a9db 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -12,10 +12,13 @@
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
- #include "qemu/base64.h"
-+#include "qemu/mmap-alloc.h"
- #include "qapi/error.h"
- #include "qom/object_interfaces.h"
- #include "crypto/hash.h"
-+#include "system/system.h"
- 
-+#include "hw/i386/tdvf.h"
- #include "hw/i386/x86.h"
- #include "kvm_i386.h"
- #include "tdx.h"
-@@ -143,6 +146,38 @@ void tdx_set_tdvf_region(MemoryRegion *tdvf_mr)
-     tdx_guest->tdvf_mr = tdvf_mr;
- }
- 
-+static void tdx_finalize_vm(Notifier *notifier, void *unused)
-+{
-+    TdxFirmware *tdvf = &tdx_guest->tdvf;
-+    TdxFirmwareEntry *entry;
-+
-+    for_each_tdx_fw_entry(tdvf, entry) {
-+        switch (entry->type) {
-+        case TDVF_SECTION_TYPE_BFV:
-+        case TDVF_SECTION_TYPE_CFV:
-+            entry->mem_ptr = tdvf->mem_ptr + entry->data_offset;
-+            break;
-+        case TDVF_SECTION_TYPE_TD_HOB:
-+        case TDVF_SECTION_TYPE_TEMP_MEM:
-+            entry->mem_ptr = qemu_ram_mmap(-1, entry->size,
-+                                           qemu_real_host_page_size(), 0, 0);
-+            if (entry->mem_ptr == MAP_FAILED) {
-+                error_report("Failed to mmap memory for TDVF section %d",
-+                             entry->type);
-+                exit(1);
-+            }
-+            break;
-+        default:
-+            error_report("Unsupported TDVF section %d", entry->type);
+         sev_encrypt_flash(gpa, ptr, size, &error_fatal);
++    } else if (is_tdx_vm()) {
++        ret = tdx_parse_tdvf(ptr, size);
++        if (ret) {
++            error_report("failed to parse TDVF for TDX VM");
 +            exit(1);
 +        }
-+    }
-+}
-+
-+static Notifier tdx_machine_done_notify = {
-+    .notify = tdx_finalize_vm,
-+};
-+
- static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
- {
-     TdxGuest *tdx = TDX_GUEST(cgs);
-@@ -157,6 +192,8 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         }
      }
- 
-+    qemu_add_machine_init_done_notifier(&tdx_machine_done_notify);
+ }
+diff --git a/target/i386/kvm/tdx-stub.c b/target/i386/kvm/tdx-stub.c
+index 2344433594ea..7748b6d0a446 100644
+--- a/target/i386/kvm/tdx-stub.c
++++ b/target/i386/kvm/tdx-stub.c
+@@ -8,3 +8,8 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+ {
+     return -EINVAL;
+ }
 +
-     tdx_guest = tdx;
++int tdx_parse_tdvf(void *flash_ptr, int size)
++{
++    return -EINVAL;
++}
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 2522f2030de3..71be3bd28d47 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -382,6 +382,11 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
      return 0;
  }
+ 
++int tdx_parse_tdvf(void *flash_ptr, int size)
++{
++    return tdvf_parse_metadata(&tdx_guest->tdvf, flash_ptr, size);
++}
++
+ static bool tdx_guest_get_sept_ve_disable(Object *obj, Error **errp)
+ {
+     TdxGuest *tdx = TDX_GUEST(obj);
+diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+index b73461b8d8a3..28a03c2a7b82 100644
+--- a/target/i386/kvm/tdx.h
++++ b/target/i386/kvm/tdx.h
+@@ -8,6 +8,7 @@
+ #endif
+ 
+ #include "confidential-guest.h"
++#include "hw/i386/tdvf.h"
+ 
+ #define TYPE_TDX_GUEST "tdx-guest"
+ #define TDX_GUEST(obj)  OBJECT_CHECK(TdxGuest, (obj), TYPE_TDX_GUEST)
+@@ -32,6 +33,7 @@ typedef struct TdxGuest {
+     char *mrownerconfig;    /* base64 encoded sha348 digest */
+ 
+     MemoryRegion *tdvf_mr;
++    TdxFirmware tdvf;
+ } TdxGuest;
+ 
+ #ifdef CONFIG_TDX
+@@ -42,5 +44,6 @@ bool is_tdx_vm(void);
+ 
+ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp);
+ void tdx_set_tdvf_region(MemoryRegion *tdvf_mr);
++int tdx_parse_tdvf(void *flash_ptr, int size);
+ 
+ #endif /* QEMU_I386_TDX_H */
 -- 
 2.43.0
 
