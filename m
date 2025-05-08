@@ -4,94 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF621C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 21:10:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8CB2C3ABC6
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 21:30:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD8Uy-0000w8-5i; Thu, 08 May 2025 17:09:44 -0400
+	id 1uD8nu-0005N6-TG; Thu, 08 May 2025 17:29:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uD8Uw-0000vu-N4
- for qemu-devel@nongnu.org; Thu, 08 May 2025 17:09:42 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uD8Uu-000310-OE
- for qemu-devel@nongnu.org; Thu, 08 May 2025 17:09:42 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-b1fcb97d209so2406682a12.1
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 14:09:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746738579; x=1747343379; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=u+CTyW4erm0mU3TkRLQQ7QNHC2FOJHqKozGF2GSdmSk=;
- b=CZIU+s1T83UKPnE4KeXxELxVzP6VUMmDm9QGCYmxr24gWabbUMvknE1HogmvSD8szp
- hmmdtQ/57WEfAeyU71iEq6FLeMCidb269+QMAONBOFgVqq5tr5V6A/hZ9E8sMJltx8tp
- KHdMWKWXgHNiTKgYisqjiy4poxqi88AHiPfcGFAiMJAu5oO4zsuDvGzatjvV8bSMyrh1
- jVIBjgNELtKZ7Z8O/peRBaynDJ7cIVtbX1NMoLMjfR7ryCBF5RcIZvN9iLnavTsCeKOK
- Exu2gd80D5iBoYqixpBNqsjQBb930ycQYIjWtfNb3DXJH1ki0B+N+lHEZhXmsQH0PC3v
- 58dA==
+ (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uD8ns-0005Gp-9k
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 17:29:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <afaria@redhat.com>) id 1uD8nq-00062m-Oi
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 17:29:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746739751;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gduKp8TXaddet8MYCJkDdTxox7NbhZJ7SnzHOtqVZeE=;
+ b=OqFMnzssU3W0gBaLhY+MmiFYlQ/ZaTQYjn7V32FaXl/oBPtsgnD5V5I9oyX+7PL11Z6lYu
+ 3+QHOtitzuUiZS4hPmAsMG5scWUD3kiPpAAWhwfZXEe2QgTX3dfhNvB1FM9UgK/8Ohkq0t
+ 9lW8ltCpe3iuGR6J0pMqn/i4WelxmcU=
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-168-b1jdGjAbNdSiL_jLj4rr8A-1; Thu, 08 May 2025 17:29:07 -0400
+X-MC-Unique: b1jdGjAbNdSiL_jLj4rr8A-1
+X-Mimecast-MFC-AGG-ID: b1jdGjAbNdSiL_jLj4rr8A_1746739745
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-3feb1dce9ceso572527b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 14:29:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746738579; x=1747343379;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=u+CTyW4erm0mU3TkRLQQ7QNHC2FOJHqKozGF2GSdmSk=;
- b=rDPgZvQ7pXAuMIMJZI9p9L746/1FNeloNub9FYuhVqPmYHVRLuH5e7aa5XDpHRIuo7
- iJA/TRlZtaBpeTPkPd4FtCJq0uPs+gVaJMlurS1SaN2Jrq/36lhuuI1C9p5vyBx2US/9
- 75EdGat1irx+4Vp8j2QS7DWPX/jr1Sui+dn6qp9Xc+pKbp81dOabhcgabbw95SL0F6Ct
- PJmeGeHyX4zXbufjiP22lCSCbbslaES10YxlI6OaVH/SsbBwtcY/jFdtcdAByHE2zKyV
- D1DNOkrJ3d2s1mUqWbw7QiBbuAGFUp28ukwBZ6DOeZdc08qlvxtASD1iHxKhh3deK2IA
- qF5g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXMWHhKtb0G97bi+ecfSFyt1/bsx2zu00bYGnbfAKVlK8K3ui6E6vI61Y3oCAQEc1Q20A4HCleiU98H@nongnu.org
-X-Gm-Message-State: AOJu0YzGkGTR/hRay4DOECjurVBnyNOPn/HmAxNokw0kmvqW/jSuA2Qo
- G19Rh6qAeXkHrVficz13Q59pHb/eXmMa5LI5/d9hvljPZYqREr+MCrDJD9BVQKU=
-X-Gm-Gg: ASbGncvkOrmPWZYGefgBP9u4cEEoo9tIfRllWDrvPeSO5KmFQtmSm0EXZ79R5sgCF4S
- jddO40IznoIRwgnwZGDBEUewd8NDPqjsjDArtyazGjCz2OlKddBEve7TngMVKF5FZSJvj+ldTTb
- 4Av5GgF9LYUnpH9YaIDaCT/5vPlhktEA9hVedbgiXRjsyMmr6ZdIieUcqVvhfeMzOOwIHb4ofhk
- SqMX2tq9n8nQXmNNLn8FJTF9puXsbERoQsKQ9d27hIXRDuMTTPr+avckORtSe5wrd9MxgFy+hdD
- GD6lGY5FOrXzyvYxCuxLa8suGILbQq+P2agkQ+9mB4re9Tg/uOkaXo7ofzW+eDIm
-X-Google-Smtp-Source: AGHT+IHbvpH57IdUqagdM7XxJVFdbgHLA2m0Bau3lmF6ZhFKeKsK3cVcRuMp+gSa40s4ITgW9ngzcw==
-X-Received: by 2002:a17:902:d4ca:b0:22e:3d2e:d94f with SMTP id
- d9443c01a7336-22fc91cbaa2mr12813235ad.0.1746738578899; 
- Thu, 08 May 2025 14:09:38 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc8271af7sm3949785ad.151.2025.05.08.14.09.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 May 2025 14:09:38 -0700 (PDT)
-Message-ID: <c7623b1c-01c1-46c0-bfa6-dc34aa4e722d@linaro.org>
-Date: Thu, 8 May 2025 14:09:37 -0700
+ d=1e100.net; s=20230601; t=1746739745; x=1747344545;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gduKp8TXaddet8MYCJkDdTxox7NbhZJ7SnzHOtqVZeE=;
+ b=vK8WFDP3951FP+RUMdEATdLfra34w4hW86KdxGB/qZj49V666ovOfC56VskqC0hOp8
+ w43n1eFL5jZSmNtn4aFaiPCErEIn8c1yUaX4raX6943I0/VeFsxeqXSYC4IQ/2gWct1C
+ 6evLYDKMkGIQOD3Itdz5NySysT83QQ4qBxLGV2N0pRPbwDo26aL94s7ezdi5dzpEhat6
+ YWE+W7Ltz5xVt0Pn3jW3UHTYZA5m/dkOw6HFEYkdY+lItzNdC/ly21TgijaSfBcDTp2M
+ J0pocq57/fWwuNdqT4BB+07HmnEOMPO/CJFZUd5MuUxl8vlSF0vqKbzw1t8uZAdxnwpj
+ fIfQ==
+X-Gm-Message-State: AOJu0YyaJc83GYGU2SLAAkX5hMvkLayVOVHunUH0V6VcKyb6tD/hiDFq
+ 8xXyrpwpYgWKfMBb1JfwYnAuU2QCPOL6l7Ge7Dq52BYibHZa7xrapt8NBZ86EzNjikwc5VZe5FW
+ kOeg84ZUcdCEWpKGgua9v6PvehGdOU+CEmqrhJffMwvbAt7P7RRFwBf4KTLRrxvpUhhotNI+ZE6
+ zEoY47Ii7/h64D/HL0TwhGwI6sR7s=
+X-Gm-Gg: ASbGnctAmDJ8tV8clYeYFbbVWEkZoh98SOQZuehBmx9cBXBNr6ccbOG/PuFzx8vKTYE
+ Kk+tfBB467IvC9f4uQlNVJocsadmL8oT0NAReyRAyXMcM9wrPdHi65S22ZpQ9sNREDhpuUQ==
+X-Received: by 2002:a05:6870:c083:b0:2c1:5448:3941 with SMTP id
+ 586e51a60fabf-2dba4317d33mr706757fac.18.1746739745209; 
+ Thu, 08 May 2025 14:29:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH0ZD6STFSXwRY5AvmKffHMkX6mVHH+MWc0kDGuytNNJFMGSmGUA3gfCUsL1mAfJG3jyP5mGjQq/Smaiha9YLs=
+X-Received: by 2002:a05:6870:c083:b0:2c1:5448:3941 with SMTP id
+ 586e51a60fabf-2dba4317d33mr706736fac.18.1746739744837; Thu, 08 May 2025
+ 14:29:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 00/10] qapi: remove all TARGET_* conditionals from the
- schema
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250508135816.673087-1-berrange@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250508135816.673087-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250508002440.423776-1-afaria@redhat.com>
+ <20250508002440.423776-3-afaria@redhat.com>
+ <20250508203755.GA63777@fedora>
+In-Reply-To: <20250508203755.GA63777@fedora>
+From: Alberto Faria <afaria@redhat.com>
+Date: Thu, 8 May 2025 22:28:27 +0100
+X-Gm-Features: ATxdqUGldNclz98oWGrC7sKBpJLwSdW5iNPS0cRjTy5K3QDE_LTCuEk4Z4BaKYA
+Message-ID: <CAELaAXywEqdE6w32QsGAqfBJjQRUjRQt7WaW1pJvjS+ifQtqHA@mail.gmail.com>
+Subject: Re: [RFC 2/4] virtio-blk: Add VIRTIO_BLK_T_OUT_FUA command support
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, Coiby Xu <Coiby.Xu@gmail.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Raphael Norwitz <raphael@enfabrica.net>, Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ qemu-block@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
+ Hanna Reitz <hreitz@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Xie Yongji <xieyongji@bytedance.com>, Yanan Wang <wangyanan55@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=afaria@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,71 +110,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/25 6:58 AM, Daniel P. Berrangé wrote:
-> Pierrick has proposed a series that introduces a concept of runtime
-> conditionals to the QAPI schema, in order to adapt the TARGET_*
-> conditionals currently used at build time:
-> 
->    https://lists.nongnu.org/archive/html/qemu-devel/2025-05/msg01699.html
-> 
-> For the sake of comparison & evaluation, this series illustrates the
-> alternative approach that we've discussed of entirely removing any
-> concept of TARGET_* conditionals.
-> 
-> With this the QAPI schema varies solely based on CONFIG_* conditionals,
-> and is thus invariant across different target emulators.
-> 
-> In this PoC I've taken the minimal effort approach to the problem.
-> 
-> The QAPI schema has removed the TARGET_* conditionals and in order to
-> make all the emulators then compile, the stubs/ directory is populated
-> with a bunch of files to provide dummy impls of the target specific QMP
-> commands.
-> 
-> This is sufficient to make the current QEMU binaries build successfully.
-> 
-> To make the "single binary" concept work, however, would require
-> additional followup work to eliminate the stubs.
-> 
-> Instead of having stubs we would need to de-couple the QMP command
-> impl from the machine internals. This would likely require greater
-> use of interfaces and/or virtual method dispatchers on the machine
-> class. This would enable the 'qmp_XXXXX' command impls to exist
-> once. Then they call out to virtual methods on the machine to provide
-> the real impl, and/or generate an error if the virtual method is not
-> implemented for the machine.
+On Thu, May 8, 2025 at 9:38=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.com=
+> wrote:
+> On Thu, May 08, 2025 at 01:24:38AM +0100, Alberto Faria wrote:
+> > Signed-off-by: Alberto Faria <afaria@redhat.com>
+> > ---
+> >  block/export/virtio-blk-handler.c |  7 ++--
+> >  hw/block/virtio-blk.c             |  2 ++
+> >  hw/core/machine.c                 |  4 ++-
+> >  hw/virtio/virtio-qmp.c            |  2 ++
+> >  tests/qtest/virtio-blk-test.c     | 56 +++++++++++++++++++++++++++++++
+> >  5 files changed, 68 insertions(+), 3 deletions(-)
 >
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-Thanks for posting it Daniel.
+Please disregard this version of the series, it is missing several
+hw/block/virtio-blk.c changes needed to actually get
+VIRTIO_BLK_T_OUT_FUA working. I've sent v2 fixing this; it only
+differs on patch 2/4.
 
-I think your approach is pretty neat, and yes, it's much simpler than 
-having any compile time or runtime conditional to deal with that.
+Thank you,
+Alberto
 
-When we talked about that on previous thread, I thought the idea was to 
-expose *all* the commands to *all* the targets, which I didn't really 
-understand, considering we have target specific commands by design.
-I understand better where you wanted to go, by extracting concerned 
-commands in dedicated files.
-
-The only downside I can see is that some commands have to be there, but 
-return an "error, not implemented" at runtime. Fine for me, but some 
-people may argue against it.
-
-A concern I might have as well is about how we'll deal if we want to 
-hide some commands in the future, based on various criterias 
-(is_heterogenenous()?). The mantra "define all, and let the build system 
-hide things" mantra means you can only have a single definition existing 
-in the binary, by design. But maybe it's not even a real concern, and I 
-definitely prefer to see problems before fixing them, so it's definitely 
-not blocking this approach.
-
-Overall, if I had to choose, I think I would pick your approach instead 
-of the "runtime conditional" route, it's just simpler and saner overall.
-I would be happy to see you take ownership on that, as long as we can 
-deliver something in the next weeks. I can help on anything as well.
-
-@Markus, @Michael, which approach would you prefer to be followed for QAPI?
-
-Thanks,
-Pierrick
 
