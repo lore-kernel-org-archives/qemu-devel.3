@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE0ECC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 13:43:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1D9C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 13:44:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD1XE-0006mM-HK; Thu, 08 May 2025 09:43:36 -0400
+	id 1uD1Xc-0007lg-VL; Thu, 08 May 2025 09:44:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1XC-0006hz-3A
- for qemu-devel@nongnu.org; Thu, 08 May 2025 09:43:34 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1Xa-0007df-Fb
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:43:58 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1X9-0004sF-UT
- for qemu-devel@nongnu.org; Thu, 08 May 2025 09:43:33 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-22e8e4423ecso9475235ad.0
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 06:43:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD1XW-0004uK-L6
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 09:43:58 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-736aaeed234so902606b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 06:43:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746711809; x=1747316609; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746711832; x=1747316632; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pfVenGRAMwE+Z64hRHr90BeNRoYPJugExqalvrobNt0=;
- b=hulytKT1hPoVIjADKnGCtwnlbRUBYbFzdK0xK1GO4Of87SOThpj1m3e+lk/cHbM+NW
- GR18dhdjKZXAYczkNk0oMBtQKjtA7Rm+2bb1OhRVwlhv3O0O40jhdmifGyqi7WqnkSE0
- g5/vTb4+CpKDkiggTnwXYRdaCwXyM+LVh1m/52J5M8mSf+LFfvPI87cAaNp6L++4nNhE
- PuPotLdh11CW9HhuxNxNlscDbVV6G18ZTCbpO3rVSMw2YwU9wYJpVi7erdHOK+7SHw4C
- MeQlYXHNdXKa1KGqmaj1UjAdUzYFAC4kwflHVSyaPOoy8LbW556lBvl4puwQSkdsJMCl
- j7fg==
+ bh=Iz56OqXDxt7nqC4LwA+a7OYiuZlEyLYttSp20fJi6+I=;
+ b=RYMclTj9lOI1cUlMD3feG4ufuIXaaBlvI0giA9qYKpOCsUval6rcNOdTDHw8tC23RP
+ d8J0PTMhRaie4r6CEVA/osf2C8RzHcKs1Rl5bQ8heX/vXh+EoW9DTqTVajkDt17Gw4E/
+ nXDVGIX3QGR+xYFYa0P/PDObQYf/ZPqzEP6sYe+sZtJucVJT2o17ALVBVmWC8wff7lXJ
+ VJDlZ3xKQAvI+R/jxb7Zq51gvYsj7Keg9B8eWr1woVvvNCMB73xnukJakGZhEKCaqMD8
+ CpZ3mYMjQ9DNg4fdvshJTpXa+DWz3Alkylx56utGoxZjTmQqLww9yFZqt80XVQrbJydg
+ 951w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746711809; x=1747316609;
+ d=1e100.net; s=20230601; t=1746711832; x=1747316632;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pfVenGRAMwE+Z64hRHr90BeNRoYPJugExqalvrobNt0=;
- b=xALFHbsAUZvz4yfzaaXSfs/XZ+HHkXZZ4M3SJBBHii6d740MiBsrI+YQk7O8+MPTfL
- wZqC+NaAqtEhUnN6JvnrCrD2nzyLfNprPz7CveHtXrUyeosmEH9TOkvj+wVUojNuxO6E
- U4Y4KlOb4WmPhtX9ZWaa9vYS1ya9aXKWyC4Qi7U5Gs4WH/HOR++frkoyAp9FN89KMIOr
- 8YcHoDF0/4hyNqg020wp8VL367Fn5W9aLIN+abp9Tz8KJ7tR7XM1OMIAv0JO6AD7a79X
- r4e/5yjWDQewboi5RzPHHHPxvjZ7bnRSHkwdTnng7ye0sutoxgstqumfMii7oQKKgaL4
- MEgA==
-X-Gm-Message-State: AOJu0YwU4UA5YiGL8o3+aUIfh/YH6BVSVo3IdA6YUgKgtAkw3LRDFo4g
- gao+CD/XiCoNMrrgLMFwjFqq2FHWq2ycOEHZ5f9eblbF2885UNj9IXCQ8YR2XEHQUJ1xfqK3DTw
- 2C1cqJw==
-X-Gm-Gg: ASbGncs8gX1gpQi9q2emFWQ2biVZ13BipYbMHn7ZqILzvWMA5i+XMSGDZzSY1XWQz4e
- pDbQcYHWBc06lOaCBxom/QO3gYEdMdVidXE+TMJy80PrmYN8Ge7XYPIeWO2/4Ms8T7IHmdh9YAF
- arP5oTNsjUAaa8H4/9VT+sJLObXCkvw9aqNJlep/ptanShwhPtnnBxHpKLP3uC0Jq5WBLmT4o0b
- VCOIjx971Y5q8onUWSovclAaVMbanWqAIl+hdmIwO3ZQGN4ZyVtJEXoK6f+keDs+ArlCJZfV8hF
- z9I286qsS68fDnfppxlQnSWtstpnAJF5BcedZGgWE9DJ23pv4Ds+ql2ijGYuCFuqpPveQ88Q0o/
- +ndac7S+LWCOAL2g=
-X-Google-Smtp-Source: AGHT+IFUTjKWPVkUkd1NBRniOTZ1k0pEbrW8dI3RWonTdhC9W5HoKkZnRoLeVCQ+2VhsISUWKpmYUg==
-X-Received: by 2002:a17:902:da84:b0:224:11fc:40c0 with SMTP id
- d9443c01a7336-22e85613e2amr56447695ad.11.1746711809443; 
- Thu, 08 May 2025 06:43:29 -0700 (PDT)
+ bh=Iz56OqXDxt7nqC4LwA+a7OYiuZlEyLYttSp20fJi6+I=;
+ b=jQl3hO1UVBdpcolcz6U70h+H95UQBS42DL4mRGHciadUWryvuBFzATv4r0KqqL5W61
+ 6xzwLVsSBhvbgDwV96GzTvkwGdsQbdcPF5vY8SkO/y5XtV3bWHiGew8Kc93F9vhRshqV
+ LX3o3JnZ4dXhWWjcJ/D7QXVFTBraqmekGghGterk42IH0FxBkObIsGyYLC5FoAp4ueiI
+ IzJxmFbCmV1Sid7Y7cWdTgsXpBs2xlSvyAWnO+PBQGCEQisYK48LhdXFFVi1M0UDyfXA
+ TxousLTbWg+tVeE74yF2Emu0dNbiSUU7IcZP8RtgYkYIPodV3M81fQ5bUIK4UVYq1GxY
+ qU2g==
+X-Gm-Message-State: AOJu0YzVQywY5kzEh7QeCdsXC/+P1U6wTXewtNcmYdQwIJLzGn4YqfoS
+ POX/TNYe1p6NTEdzS1JLDrMXl/Po2fm9K7yBwSFe/PcIkkbWs8P0yMByeGVUkfPJ4Ful+kLRX7N
+ ECkDKrA==
+X-Gm-Gg: ASbGncuYdFgRIyjW4ZB0WFfW/z2TR19oO5AXVW/Qjg8/cvVO4lud8ZNYXxwl9gz9SUq
+ kpuowSbDbSp1MevWYtB1QdodsEibaictOwAjgK3XP/ZvnwdCJ0fSDfsle7SghxEEy41pC2+2ORt
+ 7f8gcSlZI/IRajai4SVYIVI0SoCVFmpPLGEro2VgwB684ZG+fmJE5U/2jr3bgNX+INPD/P554IY
+ zbf7N01T5cu/yT5UkJDjuTfYdOdbpwKu5mVIQSZLanyIbPidGKSAP8x7AipkxMjcfyQszWgabAR
+ gRtjjs28dMYK1qtQl2dvPKnrrnEFYpSO8Qm6pX7PPAYy02A5UcZCyrT8LklPdT+pDkwwkFs1O8w
+ r9Rc8FFjdx11UYgU=
+X-Google-Smtp-Source: AGHT+IHYW6laMjiHc6hZ9CXPvMKDRBiIggZW6kdWUwxA5qsOS+e0Hn9w40Bkb0wK958QO+bMwwTmhQ==
+X-Received: by 2002:a05:6a00:418d:b0:736:4e0a:7e82 with SMTP id
+ d2e1a72fcca58-740a99ab539mr4600433b3a.10.1746711832328; 
+ Thu, 08 May 2025 06:43:52 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22e15228fa7sm111988195ad.181.2025.05.08.06.43.15
+ d2e1a72fcca58-7405902154dsm13751300b3a.90.2025.05.08.06.43.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 08 May 2025 06:43:29 -0700 (PDT)
+ Thu, 08 May 2025 06:43:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
@@ -85,19 +85,20 @@ Cc: Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
  =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
  qemu-arm@nongnu.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>
-Subject: [PATCH v4 20/27] target/i386/cpu: Remove CPUX86State::enable_l3_cache
- field
-Date: Thu,  8 May 2025 15:35:43 +0200
-Message-ID: <20250508133550.81391-21-philmd@linaro.org>
+ Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v4 21/27] hw/audio/pcspk: Remove PCSpkState::migrate field
+Date: Thu,  8 May 2025 15:35:44 +0200
+Message-ID: <20250508133550.81391-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250508133550.81391-1-philmd@linaro.org>
 References: <20250508133550.81391-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,112 +121,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The CPUX86State::enable_l3_cache boolean was only disabled
-for the pc-q35-2.7 and pc-i440fx-2.7 machines, which got
-removed.  Being now always %true, we can remove it and simplify
-cpu_x86_cpuid() and encode_cache_cpuid80000006().
+The PCSpkState::migrate boolean was only set in the
+pc_compat_2_7[] array, via the 'migrate=off' property.
+We removed all machines using that array, lets remove
+that property, simplifying vmstate_spk[].
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- target/i386/cpu.h |  6 ------
- target/i386/cpu.c | 39 +++++++++++++--------------------------
- 2 files changed, 13 insertions(+), 32 deletions(-)
+ hw/audio/pcspk.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index b5cbd91c156..62239b0a562 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2219,12 +2219,6 @@ struct ArchCPU {
-      */
-     bool enable_lmce;
+diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
+index a419161b5b1..0e83ba0bf73 100644
+--- a/hw/audio/pcspk.c
++++ b/hw/audio/pcspk.c
+@@ -56,7 +56,6 @@ struct PCSpkState {
+     unsigned int play_pos;
+     uint8_t data_on;
+     uint8_t dummy_refresh_clock;
+-    bool migrate;
+ };
  
--    /* Compatibility bits for old machine types.
--     * If true present virtual l3 cache for VM, the vcpus in the same virtual
--     * socket share an virtual l3 cache.
--     */
--    bool enable_l3_cache;
--
-     /* Compatibility bits for old machine types.
-      * If true present L1 cache as per-thread, not per-core.
-      */
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 6b9a1f2251a..4be174ea9c7 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -468,17 +468,13 @@ static void encode_cache_cpuid80000006(CPUCacheInfo *l2,
-            (AMD_ENC_ASSOC(l2->associativity) << 12) |
-            (l2->lines_per_tag << 8) | (l2->line_size);
- 
--    if (l3) {
--        assert(l3->size % (512 * 1024) == 0);
--        assert(l3->associativity > 0);
--        assert(l3->lines_per_tag > 0);
--        assert(l3->line_size > 0);
--        *edx = ((l3->size / (512 * 1024)) << 18) |
--               (AMD_ENC_ASSOC(l3->associativity) << 12) |
--               (l3->lines_per_tag << 8) | (l3->line_size);
--    } else {
--        *edx = 0;
--    }
-+    assert(l3->size % (512 * 1024) == 0);
-+    assert(l3->associativity > 0);
-+    assert(l3->lines_per_tag > 0);
-+    assert(l3->line_size > 0);
-+    *edx = ((l3->size / (512 * 1024)) << 18) |
-+           (AMD_ENC_ASSOC(l3->associativity) << 12) |
-+           (l3->lines_per_tag << 8) | (l3->line_size);
+ static const char *s_spk = "pcspk";
+@@ -196,18 +195,10 @@ static void pcspk_realizefn(DeviceState *dev, Error **errp)
+     pcspk_state = s;
  }
  
- /* Encode cache info for CPUID[8000001D] */
-@@ -6849,11 +6845,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         }
-         *eax = 1; /* Number of CPUID[EAX=2] calls required */
-         *ebx = 0;
--        if (!cpu->enable_l3_cache) {
--            *ecx = 0;
--        } else {
--            *ecx = cpuid2_cache_descriptor(env->cache_info_cpuid2.l3_cache);
--        }
-+        *ecx = cpuid2_cache_descriptor(env->cache_info_cpuid2.l3_cache);
-         *edx = (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1d_cache) << 16) |
-                (cpuid2_cache_descriptor(env->cache_info_cpuid2.l1i_cache) <<  8) |
-                (cpuid2_cache_descriptor(env->cache_info_cpuid2.l2_cache));
-@@ -6907,13 +6899,10 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-                                     eax, ebx, ecx, edx);
-                 break;
-             case 3: /* L3 cache info */
--                if (cpu->enable_l3_cache) {
--                    encode_cache_cpuid4(env->cache_info_cpuid4.l3_cache,
--                                        topo_info,
--                                        eax, ebx, ecx, edx);
--                    break;
--                }
--                /* fall through */
-+                encode_cache_cpuid4(env->cache_info_cpuid4.l3_cache,
-+                                    topo_info,
-+                                    eax, ebx, ecx, edx);
-+                break;
-             default: /* end of info */
-                 *eax = *ebx = *ecx = *edx = 0;
-                 break;
-@@ -7284,8 +7273,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-                (AMD_ENC_ASSOC(L2_ITLB_4K_ASSOC) << 12) |
-                (L2_ITLB_4K_ENTRIES);
-         encode_cache_cpuid80000006(env->cache_info_amd.l2_cache,
--                                   cpu->enable_l3_cache ?
--                                   env->cache_info_amd.l3_cache : NULL,
-+                                   env->cache_info_amd.l3_cache,
-                                    ecx, edx);
-         break;
-     case 0x80000007:
-@@ -8821,7 +8809,6 @@ static const Property x86_cpu_properties[] = {
-     DEFINE_PROP_BOOL("x-vendor-cpuid-only", X86CPU, vendor_cpuid_only, true),
-     DEFINE_PROP_BOOL("x-amd-topoext-features-only", X86CPU, amd_topoext_features_only, true),
-     DEFINE_PROP_BOOL("lmce", X86CPU, enable_lmce, false),
--    DEFINE_PROP_BOOL("l3-cache", X86CPU, enable_l3_cache, true),
-     DEFINE_PROP_BOOL("kvm-pv-enforce-cpuid", X86CPU, kvm_pv_enforce_cpuid,
-                      false),
-     DEFINE_PROP_BOOL("vmware-cpuid-freq", X86CPU, vmware_cpuid_freq, true),
+-static bool migrate_needed(void *opaque)
+-{
+-    PCSpkState *s = opaque;
+-
+-    return s->migrate;
+-}
+-
+ static const VMStateDescription vmstate_spk = {
+     .name = "pcspk",
+     .version_id = 1,
+     .minimum_version_id = 1,
+-    .needed = migrate_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT8(data_on, PCSpkState),
+         VMSTATE_UINT8(dummy_refresh_clock, PCSpkState),
+@@ -218,7 +209,6 @@ static const VMStateDescription vmstate_spk = {
+ static const Property pcspk_properties[] = {
+     DEFINE_AUDIO_PROPERTIES(PCSpkState, card),
+     DEFINE_PROP_UINT32("iobase", PCSpkState, iobase,  0x61),
+-    DEFINE_PROP_BOOL("migrate", PCSpkState, migrate,  true),
+ };
+ 
+ static void pcspk_class_initfn(ObjectClass *klass, const void *data)
 -- 
 2.47.1
 
