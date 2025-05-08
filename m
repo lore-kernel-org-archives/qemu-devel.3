@@ -4,91 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65849C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 11:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44DB6C3ABC0
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 11:39:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCzG0-0002l6-6O; Thu, 08 May 2025 07:17:41 -0400
+	id 1uCzZz-0004nb-DM; Thu, 08 May 2025 07:38:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCzFx-0002kw-ME
- for qemu-devel@nongnu.org; Thu, 08 May 2025 07:17:38 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uCzFu-0003Yh-Uw
- for qemu-devel@nongnu.org; Thu, 08 May 2025 07:17:36 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-22e7eff58a0so8269725ad.3
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 04:17:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746703053; x=1747307853; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=K1Fi6A7xl5bPquTurvis4WauUWx0TEHEdBotDD3k+mM=;
- b=gr+yimiEwQOgRSN7F+mu1xhRSdqFNy8oqxbFQ4cBd8N63EkX/JqOEM9zV5OCj+TGwk
- 4SA101jAUMuGeFOjm4cbAEFrRwMyKBkQCmU6qXVX/thAAKdcXnbtGEpqWcpCzxfl8L7w
- sXh8tw4TmRtBARuowwjxQQwsG20yu6SGI+EV88JZn4niH/P1hw1Iax7Wg0BF0+1hZbG7
- TEosCsZYfqCoBk16qMtcb7GTuL1kFudhsWLI/+bUBWivC/eMS6KhVmBgmK6SL/HSaMEu
- oMBAdiZ+JCauuq38WRqzGqMfjMS+DeLJLpzCBytnE0RyBZxoZoyMXjVxC0B2HmZFH0n3
- kuWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746703053; x=1747307853;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=K1Fi6A7xl5bPquTurvis4WauUWx0TEHEdBotDD3k+mM=;
- b=sXqdC86wSgkWT1mpgNxAaNKLWdTtlZWUD1z9P0YwmpIs89RQL3NQEuBGx3QiM57j4v
- 0mnL4Cm7V5Zze6VbMAA6UnFt2eQGK1NVTQWY1AsLtFJoz0JOOb3Xiv0DfUBmqFFaqewh
- XPhUzWVBM8kjeVjf2mXM1CorjwIGYGfGEer6TGVTVNJAm10Lfnr180yVJnFSvSQwCFP1
- JW43DUKlaj+hXVkH8FIu+mDV34t+ZiBRFbbx+1jg5mZWneU8cm6AtR29Zh39CammIY5R
- BaNLwFkeixvaITC664wdac7OY51MzSyUHkfaUOaChmuwuUERKkxvokKjbIPC0lxLHA/k
- 1FtA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVJ2G7UKmnCzJwPMeQEE1ToI00Nc3e+jfmpcRC0PudxtbFVQczYZuGRak1xis+zm2WmJolhVHNW3TDi@nongnu.org
-X-Gm-Message-State: AOJu0YzGDfIkJVngqtCRQeuT82kmSKNVfDea375gcOsknekEE+GtIQtd
- 5YRZjbsgMbg5GdK4DW1yDervmwtrPb1USOSMXCXdWJAHcqV1np3iq2F/vCrbM5M=
-X-Gm-Gg: ASbGnctR3jPCWX+1MZ3U9THYBCGPc0mJ/xicg9OGE2XyQcOJkDoIsvRgfbCgFy45CWc
- /P9S17fYAYQffcCXRcSmCgFbcpK7g8pUW4BTLc37yWs+695krKRiFiBmcCetWMkf7ZAtPkCUAbg
- +OnolFlUINpy9MexVRzjh0Wv8Lnc2oeFlTC0ugMZ45KzdvPFGtsyGWo5qJBxcFISrdauIYzoKfr
- JK/rOKRoLlNZd14h3pL0nAa2C0jzbHmoWmWYqfLoCfrqnh3sKrL9yjDlHRv2PGdfLhsOP3AJlDW
- 87dsKYtbvm5EPeeiRUrurXdNtiuF8NP1+e1EQ7uEW4zwcLRrlUt0SEyYoQ9K8E2q4eUMIykaoNw
- 5ytTN7qym
-X-Google-Smtp-Source: AGHT+IG/jMSljJcBebw6+Jb29hg+gh9OK5nqhSpaZmshhAc+p8ccVXRVmk8s0pA92qmUI67xVCYs4A==
-X-Received: by 2002:a17:903:4052:b0:22e:7f20:52c6 with SMTP id
- d9443c01a7336-22e7f2054demr39563465ad.23.1746703052800; 
- Thu, 08 May 2025 04:17:32 -0700 (PDT)
-Received: from [192.168.69.244] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22ed6f351bdsm12754035ad.221.2025.05.08.04.17.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 May 2025 04:17:32 -0700 (PDT)
-Message-ID: <22ba8dd4-37d4-4d83-8942-527dd5cb01fe@linaro.org>
-Date: Thu, 8 May 2025 13:17:27 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCzZw-0004nM-CM
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 07:38:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uCzZp-0005bu-8m
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 07:38:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746704287;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QUaYsnsVMywgMF92UWJHF+/MOCGKuZ7G7P8DPqzv680=;
+ b=epfM5j0hlOvhDtmuxOfrGKsYRz/S2Ksc8dqc6MM+qekePwHeL53x/3PVWe36I/Y5knYoe1
+ 3A1Xcj4K6qerBW6BN/C5e8Ww/xQSo1SV4onVJPMG6reUkNGiDZWalFyNAoYzKcIqcQR+jo
+ +Fot0hqq3Vu4IQDokvS9ZvWyr2Wjwqg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-_e7IRLMRPm2LlavCEKoz6g-1; Thu,
+ 08 May 2025 07:38:04 -0400
+X-MC-Unique: _e7IRLMRPm2LlavCEKoz6g-1
+X-Mimecast-MFC-AGG-ID: _e7IRLMRPm2LlavCEKoz6g_1746704283
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 849281955BF1; Thu,  8 May 2025 11:38:02 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C15D618001D8; Thu,  8 May 2025 11:38:01 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2320A21E6768; Thu, 08 May 2025 13:37:59 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+Cc: qemu-devel@nongnu.org,  alex.bennee@linaro.org,  philmd@linaro.org,
+ armbru@redhat.com,  christian.boenig@lauterbach.com
+Subject: Re: [PATCH v2 00/20] Add Multi-Core Debug (MCD) API support
+In-Reply-To: <20250430052741.21145-1-mario.fleischmann@lauterbach.com> (Mario
+ Fleischmann's message of "Wed, 30 Apr 2025 07:27:21 +0200")
+References: <20250430052741.21145-1-mario.fleischmann@lauterbach.com>
+Date: Thu, 08 May 2025 13:37:59 +0200
+Message-ID: <87tt5ve3jc.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/qtest/q35-test: Remove the obsolete
- test_without_smram_base test
-To: Thomas Huth <thuth@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20250508095122.144807-1-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250508095122.144807-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,20 +85,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/5/25 11:51, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> With the release of QEMU 10.1, the pc-q35-4.1 machine will be older
-> than 6 years and thus will get disabled automatically by the
-> MACHINE_VER_DELETION() macro. Remove the related test to avoid
-> that the q35-test is failing when the machine is not available anymore.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/qtest/q35-test.c | 37 +------------------------------------
->   1 file changed, 1 insertion(+), 36 deletions(-)
+Mario Fleischmann <mario.fleischmann@lauterbach.com> writes:
 
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> This patch series introduces support for the Multi-Core Debug (MCD) API, a
+> commonly used debug interface by emulators. The MCD API, defined through a
+> header file, consists of 54 functions for implementing debug and trace.
+> However, since it is a header-file-only interface, MCD does not specify a
+> communication protocol.
+>
+> To keep the overhead of a communication protocol on top of MCD minimal,
+> we follow a remote procedure call approach by using QAPI as an interface
+> definition and transport infrastructure. This way, we can use qapi-gen to
+> take care of generating the infrastructure to dispatch MCD functions and
+> to (un)marshal their arguments and results. Furthermore, qapi-doc and qtest
+> provide good integration into QEMU's documentation and test frameworks.
+>
+> In v1 of this patch series, the MCD protocol was directly integrated in QMP
+> and the QMP monitor was responsible for dispatching MCD's server stub. This
+> introduced a dependency between QEMU's machine protocol and the MCD debug
+> protocol which is not to be expected. For this reason, v2 introduces a MCD
+> monitor which uses as much of the QMP monitor's framework as possible but
+> keeps the two protocols separate from each other.
+> Similarly, MCD's test suite uses as much of the qtest framework as is useful
+> for sending JSON commands to the QEMU under test but adds new code where
+> required to prevent dependencies to QMP.
+>
+> To enable MCD, configure QEMU with `--enable-mcd`.
+>
+> To start the MCD monitor, run QEMU with the `-mcd` option:
+> qemu-system-<arch> [options] -qmp tcp::1235,server=on,wait=off
+
+-mcd, I presume.
+
+> To run the MCD test suite independently, start `mcd-test`:
+> V=1 QTEST_QEMU_BINARY="./qemu-system-<arch> [options]" tests/qtest/mcd-test
+>
+> To connect from a MCD client, a client stub corresponding to this
+> patch series can be found at https://gitlab.com/lauterbach/mcdrefsrv
 
 
