@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 918ACC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 12:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 826B2C3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 12:26:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD0Jm-0005XH-IB; Thu, 08 May 2025 08:25:38 -0400
+	id 1uD0KJ-0006K9-8L; Thu, 08 May 2025 08:26:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0Jk-0005VB-3r
- for qemu-devel@nongnu.org; Thu, 08 May 2025 08:25:36 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0KB-0006Ab-W0
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 08:26:04 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0Jh-0002mD-Gl
- for qemu-devel@nongnu.org; Thu, 08 May 2025 08:25:35 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-22fbbf9c01bso1442345ad.3
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 05:25:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uD0K7-0002nN-6X
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 08:26:01 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-30a99cff4feso1094151a91.0
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 05:25:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746707130; x=1747311930; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=JN8yzStfIrke6Ih4ToR7vQPWRj4Mc0F9s94EUPsMOtA=;
- b=WcMHeftCAVCyim2kwaGMHKKAed1kJbnm0bp9gmO76OCCVUft4GJ5T2raEfz7VfBUHo
- wBouxUYJvGYxeQHoyWbrd1eAaHASbYfx38p0F/P8+G06IP4nVuOYRsKuhFt/xcM6z30W
- W6JiucMadkCZlhoVWgy2dQADuaoTjrZG0IqG5A46CDwSu5TqRZo6thiDh1gJIrqBpvKg
- RjTWlp5mNeIk5x72autYWAdGd/8XVdNNLw6N5DxTGnWljUG83DzFL1SN7luptaLj+0qQ
- V33VcCUGSKAH4K7WCa/ucSQSti17emkRfYqPxBHAI3iVHOENFM9SEfN0UWvHXYEDLq8k
- P1Ew==
+ d=linaro.org; s=google; t=1746707155; x=1747311955; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pU/ZxDhCJzHZz6avlpYz2FzUTOirixtvN1XU436tyf4=;
+ b=Y/1hikpaUMRazW5ZyhfwlpCZFtd8ZA40eAqRP5r5pd0ABksVrdWbmjuMuyjmK++0wL
+ fLlK3ClyG7BwpfVAzv7qA0g2d8W2CjxZaL2RuvoGFTAZmxIlbKjnJmifRNaJEA6TPcAL
+ gjfPK8kKzI9mSilBncUgClixMHR0KGQVgj/vb2nz0nC9XQfaJzX+XmmkBMG4KO0RiQ0H
+ HBQTpzMt+nYMISI4fUKaR+wOhypgMyhPkMNDJeOSJPDIFGRT6d+iDw1McVYI2MCHGOZf
+ iG/dJC9X+G7w3Ile2+VicGVSVDhd7XysrqXW40/QnB5HbwZrCb2KNkSeCD3mIzdlCBE7
+ fMHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746707130; x=1747311930;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JN8yzStfIrke6Ih4ToR7vQPWRj4Mc0F9s94EUPsMOtA=;
- b=R27oVQ5Dm5h8dS66v0PHhv2PQqkb1w8LuS7kf/YQVQ7CrxsjbcpZD17BBK0XSwFkCn
- 0MCdwbN1N6xMb6AwQmENbTTuGRfF3/18C9hWwFZ8r6dsp2JFhEP9Ynd4T4Mabt14txMk
- cPYyjQQ7BgETM6+x8j7VzBechHBZim2WNHEFTnRKq5l8CHCgj6sjTvBUM/ovcWztNFTZ
- vWnMIu9R8Z/mTCz3hh2iZcZmbl8MWN3jO0o2vxm8W4gzXoUo4ha7H1DXwzC8dfolKKeb
- 8qQA3EmlJneoPGmjFofHbfh7ALw3QVEuXN9El6u7HcwiFqj0rsByDcMJO4f5PFog7WqN
- XAyQ==
-X-Gm-Message-State: AOJu0YzV85phF0LH31iZKh5TFpz6B/avXyL73giWsxO/u+pF3xkfPx01
- Znk0or5Jx7awpVFEtKF6xi47L5jupP7Ned81DEgqS919ew93JTeCHUd8aYZrrZEk98v1YWS201G
- kvYmL0Q==
-X-Gm-Gg: ASbGncvDhkQu3AiGn/Ih/4cDWdPWmYTR73k119wGAASE11bjxiCiCAfbNqwDXMYSPBO
- c7fnYO20/JAMr91vJYWkupXgXXHgEKfGYs0IF27NpbRqp6bH8amiabCqcGGHHrqndeJoF0gPuFq
- nQn3Y9WB4BJY1M1OYHGBOIAMFqvEvtjRaSBxVrn1ae5nYmaRynhw3PmsDrlQHuQqJCTZhx+CBWu
- 6lFPgynlvAYDijvRTUon8zNVuN19J4n1OUTiBU4fvHg0+7D5YAHq8VaXobfUrK1i/miM2RRVyi/
- UII0KJClzxBLEHjxBquUbKIw4rzzaIxQQqePQgGMxo7fslFScsQLSZSTkPeyoINMEcGkdpUmazV
- CM6Cn0gBh4QYjstk=
-X-Google-Smtp-Source: AGHT+IG8b89VgigiAiBjtCWLVGvwnx9FErpbK9LPZaj4spds58qV0H7wtrT2LVf95NqAfx3lcjCmNA==
-X-Received: by 2002:a17:903:41c1:b0:220:c63b:d93c with SMTP id
- d9443c01a7336-22e5ecabfbamr98724415ad.44.1746707130553; 
- Thu, 08 May 2025 05:25:30 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746707155; x=1747311955;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pU/ZxDhCJzHZz6avlpYz2FzUTOirixtvN1XU436tyf4=;
+ b=XlM2l2r60SvQNxFvw6aYghyTGQ2kGvQj/IwI12jdmYo5Wd1KCCHqxA3FivvC+CweIO
+ TGOfJwcKWVbfvdWXK8EmNXpD4ZBPFwRd9jYUqMLyAyKUxG+G3s3lVwv1jiL3CL1rYegK
+ 845yby8qnq1TxJOatuag1XJLThNICF0r5izQv5z5vvnu8CqnI3x3OShM0Sf1M6IPdOsT
+ KE9KY4hcftGFoErLaKkS4YpjqvkXmWAttns/oZsE7Ya3a+QIMypEUzyVQiB+o8lXoT80
+ 41EluYGFES2Ng4iJZhJaPNS94vfwTFrscCW13JZmor4q/LxS/5QyuzhFnhB5r1IzrI4A
+ ta7A==
+X-Gm-Message-State: AOJu0YxFjEpSjyAAhw6dPQw/aTYLgomdQ58hQLHLNAyx7A6m+K6bQM/W
+ taWvC7wtYVmVwhv3J7Auz4KSXTDvSmRdNVFMTwBLYeQNj0Y7Cwi8zcaxt/ERaJMBIawEuRDd9L3
+ jf7eg9A==
+X-Gm-Gg: ASbGnctb1ai1uw30Oejdf9i2G+efuzZYdE9JL32H7FKl9MkKEpVIUkgZt7PHDQv0EOi
+ tkCuZdM2RL+1qIUUGIgZk1wDKZAiFuL9CEIgDFA3Bj8UqtxU1QSDlhxhmSjd6AssjeWb6zD0V9+
+ 4okuSxd00EhCHpim9CtYHN62n6YL3t5LBXszPXWlTMVvC1+WKrrG9msJL7zMfMHcNzqlSeGuqz3
+ hDOnlfouTFdQDlZuLclI/1rJWm/DGwDixTz+a/29Q7yyqWDK0YdDrBWs/ifKOljbMN3mmeXsIXf
+ JO/azzMwS68Cbyloouo71vWPWYTESRgB33YBdGbQFZSoO8pxh4yBs26lqffXlmSrydiBu8gjhpX
+ urd3DBHnCot7MTS0=
+X-Google-Smtp-Source: AGHT+IH+TntRxMjRaboxugs5qZV9JRhWfJ4hcI1BsdeTD2QEanc9PZfrdDclpBFRk9tM7TyvF0jwIg==
+X-Received: by 2002:a17:90b:314e:b0:2ff:6fc3:79c3 with SMTP id
+ 98e67ed59e1d1-30b33105a54mr4704588a91.9.1746707143546; 
+ Thu, 08 May 2025 05:25:43 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fbff4a805sm1140355ad.179.2025.05.08.05.25.28
+ 98e67ed59e1d1-30ad474a0b0sm2087085a91.3.2025.05.08.05.25.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 08 May 2025 05:25:30 -0700 (PDT)
+ Thu, 08 May 2025 05:25:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 00/19] Misc HW patches for 2025-05-08
-Date: Thu,  8 May 2025 14:25:20 +0200
-Message-ID: <20250508122522.73786-1-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mads Ynddal <m.ynddal@samsung.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mads Ynddal <mads@ynddal.dk>
+Subject: [PULL 04/19] accel/hvf: Include missing 'hw/core/cpu.h' header
+Date: Thu,  8 May 2025 14:25:21 +0200
+Message-ID: <20250508122522.73786-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250508122522.73786-1-philmd@linaro.org>
+References: <20250508122522.73786-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,88 +102,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 57b6f8d07f1478375f85a4593a207e936c63ff59:
+Since commit d5bd8d8267e ("hvf: only update sysreg from owning
+thread") hvf-all.c accesses the run_on_cpu_data type and calls
+run_on_cpu(), both defined in the "hw/core/cpu.h" header.
+Fortunately, it is indirectly included via:
 
-  Merge tag 'pull-target-arm-20250506' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2025-05-07 14:28:20 -0400)
+  "system/hvf.h"
+    -> "target/arm/cpu.h"
+         -> "target/arm/cpu-qom.h"
+              -> "hw/core/cpu.h"
 
-are available in the Git repository at:
+"system/hvf.h" however doesn't need "target/arm/cpu.h" and we
+want to remove it there. In order to do that we first need to
+include it in hvf-all.c, otherwise we get:
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20250508
+  ../accel/hvf/hvf-all.c:61:54: error: unknown type name 'run_on_cpu_data'
+   61 | static void do_hvf_update_guest_debug(CPUState *cpu, run_on_cpu_data arg)
+      |                                                      ^
+  ../accel/hvf/hvf-all.c:68:5: error: call to undeclared function 'run_on_cpu'
+   68 |     run_on_cpu(cpu, do_hvf_update_guest_debug, RUN_ON_CPU_NULL);
+      |     ^
+  ../accel/hvf/hvf-all.c:68:48: error: use of undeclared identifier 'RUN_ON_CPU_NULL'
+   68 |     run_on_cpu(cpu, do_hvf_update_guest_debug, RUN_ON_CPU_NULL);
+      |                                                ^
 
-for you to fetch changes up to 201965865dd88b28e9a40a350642ce25784a574a:
+Cc: Mads Ynddal <m.ynddal@samsung.com>
+Reported-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Mads Ynddal <mads@ynddal.dk>
+Message-Id: <20250507204401.45379-1-philmd@linaro.org>
+---
+ accel/hvf/hvf-all.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-  hw/i2c/imx_i2c: Always set interrupt status bit if interrupt condition occurs (2025-05-08 14:22:12 +0200)
-
-----------------------------------------------------------------
-Misc HW patches
-
-- Allow using plugins on BSD user-emulation
-- Inline VMSTATE_CPU() macro
-- Fix headear includes for HVF x86
-- Build hw/hyperv/ files once
-- Various typo fixed
-- Fix issue in i.MX I2C model
-
-----------------------------------------------------------------
-
-Bernhard Beschow (1):
-  hw/i2c/imx_i2c: Always set interrupt status bit if interrupt condition
-    occurs
-
-Eric Auger (3):
-  hw/pci/pcie_port: Fix pcie_slot_is_hotpluggbale_bus typo
-  hw/acpi/ged: Fix wrong identation
-  hw/i386/acpi-build: Fix build_append_notfication_callback typo
-
-Gustavo Romero (2):
-  hw/i386/acpi-build: Update document reference
-  hw/i386/acpi-build: Fix typo and grammar in comment
-
-Philippe Mathieu-Daudé (4):
-  target/migration: Inline VMSTATE_CPU()
-  accel/hvf: Include missing 'hw/core/cpu.h' header
-  system/hvf: Avoid including 'cpu.h'
-  system/hvf: Expose hvf_enabled() to common code
-
-Pierrick Bouvier (8):
-  bsd-user: add option to enable plugins
-  hw/hyperv/hv-balloon-stub: common compilation unit
-  hw/hyperv/hyperv.h: header cleanup
-  hw/hyperv/vmbus: common compilation unit
-  hw/hyperv/syndbg: common compilation unit
-  hw/hyperv/balloon: common balloon compilation units
-  hw/hyperv/hyperv_testdev: common compilation unit
-  hw/hyperv/hyperv: common compilation unit
-
-Steve Sistare (1):
-  qom: Factor qom_resolve_path() out
-
- MAINTAINERS                    |  1 +
- hw/i386/acpi-build.h           |  2 +-
- include/hw/core/cpu.h          | 12 ------------
- include/hw/hyperv/hyperv.h     |  3 ++-
- include/system/hvf.h           | 17 +++++++++++------
- include/system/hvf_int.h       |  2 ++
- accel/hvf/hvf-all.c            |  1 +
- accel/stubs/hvf-stub.c         | 12 ++++++++++++
- bsd-user/main.c                | 12 ++++++++++++
- hw/acpi/generic_event_device.c | 10 +++++-----
- hw/hyperv/hyperv.c             |  3 ++-
- hw/hyperv/syndbg.c             |  9 ++++++---
- hw/hyperv/vmbus.c              |  2 +-
- hw/i2c/imx_i2c.c               | 11 +++++------
- hw/i386/acpi-build.c           | 10 +++++-----
- hw/pci/pcie_port.c             |  4 ++--
- qom/qom-qmp-cmds.c             | 21 +++++++++++++++------
- target/alpha/machine.c         |  2 +-
- target/hppa/machine.c          |  2 +-
- target/microblaze/machine.c    |  2 +-
- target/openrisc/machine.c      |  2 +-
- accel/stubs/meson.build        |  1 +
- hw/hyperv/meson.build          | 11 ++++++-----
- 23 files changed, 94 insertions(+), 58 deletions(-)
- create mode 100644 accel/stubs/hvf-stub.c
-
+diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+index 3fc65d6b231..8c387fda24d 100644
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -12,6 +12,7 @@
+ #include "qemu/error-report.h"
+ #include "system/hvf.h"
+ #include "system/hvf_int.h"
++#include "hw/core/cpu.h"
+ 
+ const char *hvf_return_string(hv_return_t ret)
+ {
 -- 
 2.47.1
 
