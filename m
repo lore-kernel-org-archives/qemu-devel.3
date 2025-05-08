@@ -4,96 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D4D0C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 10:33:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D80BBC3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 10:38:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCyZ0-0006FC-LU; Thu, 08 May 2025 06:33:14 -0400
+	id 1uCyd7-0002FJ-Fg; Thu, 08 May 2025 06:37:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uCyYu-0006Ai-SD
- for qemu-devel@nongnu.org; Thu, 08 May 2025 06:33:08 -0400
-Received: from mail-yb1-xb35.google.com ([2607:f8b0:4864:20::b35])
+ id 1uCyd6-0002Eu-I9
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 06:37:28 -0400
+Received: from mail-yb1-xb32.google.com ([2607:f8b0:4864:20::b32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uCyYr-000640-Sl
- for qemu-devel@nongnu.org; Thu, 08 May 2025 06:33:08 -0400
-Received: by mail-yb1-xb35.google.com with SMTP id
- 3f1490d57ef6-e78e3200bb2so849655276.3
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 03:33:05 -0700 (PDT)
+ id 1uCyd4-0006XJ-Up
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 06:37:28 -0400
+Received: by mail-yb1-xb32.google.com with SMTP id
+ 3f1490d57ef6-e78f89f5c30so123281276.0
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 03:37:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746700384; x=1747305184; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746700645; x=1747305445; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KMtOUDyAwjpqecoun8+xjSclmRlj4tmUuc9dTCbiEV8=;
- b=wqPGHeYyM0bqrPfSUGbhZ1twt6+GHWwBsmbJ1gMFKK8RVRg35MKiKu7KOwKAwXTaHB
- Ao1VryJCGKFcTwZcrmuAAAm9TZQQb3Bjllvc9Eg2Xa/7P83Fku9qpmz3630gVlnfZj+1
- /iM84f7Bhr8y4a7OBlHVPt+kiPg67vUAOSiT/UDrot/Owzkei0RKYBjf5lExlgZ0kEaN
- jxjc572S15QcVW2Q9A9XftLPPU2fo3NH5eRPtnKGPdiclk3/tA5PmD2lQ0fNR4XQhZn2
- fYY/v/JUAzwM38KNEtMZJFph/D7lYyaYCz2eLaSnlBKBjNaVDm0Mxub3rrgfb5IFHTjT
- RCtg==
+ bh=HxsGv45yXM2dGvzaNPkdS3GffWkTTOXIPrTUUIiufPc=;
+ b=bpRzO0Vxr4UKxhsxn/r/tgUYP/wBwLrlbLISPjM9BB0gP7uVqa9znN4wlxUCG4U+JW
+ /yGxI4WxCPr5TsLBkd1HATjFNrK9GTye8IoKn/dzuAjZQbILJp+pD4xCch/wMXjFvHJ+
+ rwy3CARsM2GZSaKwZtUSBWq3eF6JC0kEMlBJ3Dm4wFmStvL6Djq9p+UMDJx8WnAF7o8K
+ jdk0lApBUfxLZKqsE0wjJUbltEHS8h1Tffovfs5Ac59CmQYoeDdkmDvFM0fyK5dQey8S
+ hL2PSFEkgiirdg30/9M4AqSfcapiJhfHxsaaqqs995HbzkyJjj0wWFSeYxP5wJ7c3Mps
+ soeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746700384; x=1747305184;
+ d=1e100.net; s=20230601; t=1746700645; x=1747305445;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KMtOUDyAwjpqecoun8+xjSclmRlj4tmUuc9dTCbiEV8=;
- b=aqTOH4fBVsiAFs/4qDWexpfA/AehAVyJqu9ZLbSDuANHrfrwIGZkFS7UpqfyYzLwaL
- EfMA0nRY81I5FdReM5Fsb4PrJdmbXJ38v39tExnaFkBwXf9HZg4R1b5RM9yBPrImByU1
- p7PdeL7tx8tf1RP9J73fkHstU1c7YxLnIu2cwwn1BOzdyls1XLg8eOwKTCUv6bsDt0v9
- uXZkcz5ip6U/c8E521rfcf8cpN4vUAd4nuBhBDPlMNo8soWs4amhSCaljj7ZNwR+CLEk
- m/upGjJCsVw4RPVVFkXJUXTb09sAWCUF2LBDCK3haK2F+8fdfraVHVCx/SNUeu1mEfQk
- 8pIQ==
+ bh=HxsGv45yXM2dGvzaNPkdS3GffWkTTOXIPrTUUIiufPc=;
+ b=Kiu7PYET6tbNzCDuRBTtihj0XynxpzrnHGklWFLGhR0phPjiEnjJbvrW3UgK99nCiS
+ Ku2rf+3Xmk8L8Zq9YHbKt0URhGYiXWosvj1oDCVsEgxZBd6I/pmfhRLlnUDzzj1wyQ+F
+ rjxaBPfszlD2u9K48TRuMgYwefG2u2u54SYTvq898u1M+b2vHoOKEvit2tVmfMOM9Al8
+ 9+2TXytZrGgLenvG8IKZvPQ0zuhRuCk+eN10cWcXJLnEu8MHlreIDk7uU+XoI93rt7kB
+ l4dJP004tUUuTy//F3UNNYXqiwYSXfll6MwWZ7XlFwiu2er4ImcRe3J55m+f5ZfznhZp
+ UnTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWa7EukpKVufAnzZyy9n1t+A/xoxT/8DXltTfZhyp5r+hhS3QEQd5JPCj+lCpiSK3vvW/t7smCh9A/I@nongnu.org
-X-Gm-Message-State: AOJu0Yw/dnqNCmH3JhSrqzDTaTGhKqiBKG3vNRx6dI4MZlQQAEolA7gy
- 8fqnR3o9iUie+R8FUOXzDKCWwgCGoSRyuFBHvHCCDodgpuwjLSzkKcjktZNPdEn8I6NDvoZsTQd
- 606n8UWxUTRRJzTS5Jy3Rps1/X93zkxYQV/ZHgA==
-X-Gm-Gg: ASbGncsZZeKYHlnMusbl2dxiXqmIEuharabo7Fj2kaCXptAhwSlVbq6s/hmuWSPiAPL
- N190DsXIp0Ja1VvXB5oxrEtHbSj5o49D4f3QBMq5y/z0F2Putb9xg1IhlPyz1oa51o6U8ee29eJ
- DDIYt49rQ4JApB9+6726MxNhI=
-X-Google-Smtp-Source: AGHT+IGftwn4e/xnN3j6P31cm8Yf/u0yUcP4RFH7pgWCyb3qFVhXMHM7d5lZEz3AnQXFN+6mL0SXOp1EDzElTrOvo80=
-X-Received: by 2002:a05:6902:6112:b0:e78:effa:714 with SMTP id
- 3f1490d57ef6-e78effa155amr2291036276.31.1746700384509; Thu, 08 May 2025
- 03:33:04 -0700 (PDT)
+ AJvYcCVjx8tSwLOSvSHJtmt1x4TzVvJf73EgkZt6E+iMMSkKsUjg9DwNAiwXT5JU78tiJaiuB+4Mp7LTcCuy@nongnu.org
+X-Gm-Message-State: AOJu0YzWxFV++kAakAXlVUfbQKqcLCcCSnOruGUdpwd11yuqyigaM+nc
+ SfHKzotKUNGkZiAF9yddobDIM2qGOISPQ9afCzAeh80Dgqmm0X8FdrEWO2X5juZcJST5uDmj35H
+ MnykLbmASIA2pOVXQni88rh8uRFQDKA6xC0NgALGVHcdc19Fj
+X-Gm-Gg: ASbGnctjB2KfIAbt73bFIYHGHOdTyiIXVfiOLlEDRp0MJ9SKpdxFC9CBdqyBcP8pwJM
+ m9HX6nl4XLKIUHD4ytaoHXTa6g5/GL7eOnIzLE4AU6v6PRFkOi5jVAyDIieIlSHuP93fpsTotyX
+ XvWLqTWXlsFh8wfdvDhpPdB44=
+X-Google-Smtp-Source: AGHT+IEwlGGPMtTZqxkpEPIC49l6ax7XuLP8MSmJmYxXlPlv4XoOB0+vwEkyOUofcEAs3LVqzcTlvOP/onG6zcrLwbc=
+X-Received: by 2002:a05:6902:2e0a:b0:e73:1cd5:fae9 with SMTP id
+ 3f1490d57ef6-e7881b1a1damr8773251276.30.1746700645629; Thu, 08 May 2025
+ 03:37:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250502132441.64723-1-philmd@linaro.org>
- <aBnCk2WE_SNkRgSH@redhat.com>
- <20250506040903-mutt-send-email-mst@kernel.org>
- <59c4d557-2f73-4b56-8650-f16ed3cd7bb2@linaro.org>
- <6af5a9ec-a197-49d8-880f-cdd88621e180@daynix.com>
-In-Reply-To: <6af5a9ec-a197-49d8-880f-cdd88621e180@daynix.com>
+References: <20250507124040.425773-1-shentey@gmail.com>
+ <aBtavpDt1yfoavj7@mail.minyard.net>
+ <8a5893be-7217-4c58-838c-01370db5d6bf@linaro.org>
+ <b0737130-fc97-40e0-8488-3daaca23552d@linaro.org>
+In-Reply-To: <b0737130-fc97-40e0-8488-3daaca23552d@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 8 May 2025 11:32:53 +0100
-X-Gm-Features: ATxdqUHp7jirf2HcolIcpMHLpg4XXjrUi-k12MNNu9eYjKtF6HK2NVemzIMK9bU
-Message-ID: <CAFEAcA8FR8LmvOSoFjrNBexa4UnC43r21gwxQLO6TJfA-A-JPw@mail.gmail.com>
-Subject: Re: [RFC PATCH] hw/virtio: Introduce CONFIG_VIRTIO_LEGACY to disable
- legacy support
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Nicholas Piggin <npiggin@gmail.com>, David Hildenbrand <david@redhat.com>, 
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, 
- Jonah Palmer <jonah.palmer@oracle.com>,
- Raphael Norwitz <raphael.norwitz@nutanix.com>, 
- Jason Wang <jasowang@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-ppc@nongnu.org, =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Anton Johansson <anjo@rev.ng>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Thu, 8 May 2025 11:37:12 +0100
+X-Gm-Features: ATxdqUEOYQ166hgRIeGt8wr00URORUpqbEwn9Q__mDvxV7UdnakoJPWylvMg5NY
+Message-ID: <CAFEAcA9xSecBW6NZe38757oWNKXrfvHfy0+Cfq=itPFsHeQV+w@mail.gmail.com>
+Subject: Re: [PATCH] hw/i2c/imx_i2c: Always set interrupt status bit if
+ interrupt condition occurs
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: corey@minyard.net, Bernhard Beschow <shentey@gmail.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b35;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b32;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,50 +100,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 8 May 2025 at 09:37, Akihiko Odaki <akihiko.odaki@daynix.com> wrote=
-:
->
-> On 2025/05/06 17:55, Philippe Mathieu-Daud=C3=A9 wrote:
-> > VirtIO 0.9 needs knowledge of the vCPU architecture to get its
-> > endianness. So we need to somehow propagate that at creation
-> > time, guarantying which vCPU (or set of vCPUs) will access a
-> > virtio device.
+On Thu, 8 May 2025 at 11:32, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+> FWIW I noticed the patch subject is truncated to my default git-view
+> because it is over 72 chars. Since there is no enforcement on patch
+> subject / description lines length in checkpatch.pl I suppose nobody
+> really cares about that so I'll merge as is.
 
-> It may not be too early as QEMU may already support heterogeneous
-> endianness.
->
-> An Arm CPU have a register to switch the endianness, which depends on
-> the current Exception level, and QEMU already implements it at least
-> enough to switch the endianness for virtio if I read the code correctly.
->
-> This means QEMU should already be able to handle cases where the
-> endianness changes depending on:
-> - timing (due to writes to SCLR or switches among Exception levels) or
-> - vCPUs (as each vCPU has its own register instance).
+I treat subject length stuff as an "it would be nice to be
+below this" thing -- I try to keep them from being overlong
+lines. But sometimes you really can't express what the
+patch is doing in that length limit, and in those cases
+I favour having a slightly long subject line over having
+one that doesn't say what the patch is doing.
 
-Mmm -- the virtio code uses 'current_cpu' to get the CPU which
-did the device access to it, and then queries that CPU for
-which endianness it should be assuming the data to be.
-That ought to also work in a fully heterogenous setup with
-e.g. multiple Arm and microblaze cores, I think ?
-
-There is however also a function virtio_default_endian()
-which seems to get used in contexts where the device
-isn't being directly accessed by a CPU, such as system reset,
-and which looks at target_big_endian(). That I think will
-need attention for a heterogenous setup. (For runtime-endian
-change setups like Arm it doesn't matter, because when the
-OS resets the virtio device it will set the endianness that
-way. But AIUI target_big_endian() becomes kind of meaningless
-in the heterogenous single binary setup?)
-
-Note that in practice nobody's going to be actively flipping
-endianness and expecting the virtio device to keep up: the
-use cases are "the OS sets things up once at bootup before
-it touches any virtio device", and "the CPU boots up in
-big-endian mode (i.e. the opposite of the target_big_endian()
-compile time value) because the board/SoC model configures it
-that way".
+In the description part, we should be keeping away from
+overlength lines by having them wrap at 75 chars or
+less, unless there's a strong reason to not wrap (usually
+it's a URL or we're quoting an error message).
 
 thanks
 -- PMM
