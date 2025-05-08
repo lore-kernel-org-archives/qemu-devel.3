@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0135CC3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 20:56:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 983FCC3ABC6
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 21:01:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uD8HG-0006VM-AG; Thu, 08 May 2025 16:55:34 -0400
+	id 1uD8Mn-0003Mr-P5; Thu, 08 May 2025 17:01:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uD8HC-0006QJ-23
- for qemu-devel@nongnu.org; Thu, 08 May 2025 16:55:30 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uD8Mm-0003MU-B6
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 17:01:16 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uD8HA-0001CX-9y
- for qemu-devel@nongnu.org; Thu, 08 May 2025 16:55:29 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-af52a624283so1401946a12.0
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 13:55:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uD8Mk-0001tx-Fa
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 17:01:15 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7403f3ece96so2142374b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 14:01:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746737727; x=1747342527; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KaLy/9pQK1orApI56HfkpL8gk225GnRZj8BeLUv8SVw=;
- b=tXtqMHYFM00p2HrJKp56BcJWjUZcdZNBxX7Vbzlu9vTq5B7Hxk9IAnSU38Vm51CxMM
- S417FUSVUDqjIXF+lsICdtxxjHJBSePH9R4TaEOejKJLXErK3aCgk9aod79RN8VB2OOC
- 0tggo6mPhyq8sqD5qywfQR3lvpFTagOU1JOmBCAtDm3caCO1PP3DPBVtiydZBbnVYSmb
- kiMYlUHov20cXkHWxilSEZJeF2vNyStOZVn7xxF9MvtwjH3O46pmTODBDaiVcqo8wUX/
- 0OcCQjMIObGB+Zk5Hdhgs3Pkwm2xW8Kftd2HTdfozKNU1j+eaqeP1En1+46MTeT8VWQD
- l/pg==
+ d=linaro.org; s=google; t=1746738073; x=1747342873; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=O3XRYcA8W2YyYPPF6UVXOycq43wFy2VdPuzBgGaaZtg=;
+ b=Jp9BW8RuU1Vvj4pS4qyFHCcKeisjxaD50cPJQgmxNzbz5ur2R6exu576efM/ZojqZH
+ vy5cJSo7QL9z5wwPGINvagANCsn/zUCrVw/5H2kfdZON/rS61Cnw0Nw6cnuPmKxNfXFS
+ eH2NPsVcd0Y15UOBlOmPDrx1v8jGB/JsjKuGaCoVX7pHZaUtiIfrQoD7Sdv835sUS+71
+ 5PvnOcqv+KkJJXIFTsV/4AOiFFPjODXrSDvEEfkK1Q+W/XNpXeXNXBYrnVFTyWsuq8sH
+ 29z7JnQFAKOhebLq9mXOvx+6OnJzqiPebybY6alruY9kTlHfvyJNegSq9sXPBt3q1YPV
+ hLIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746737727; x=1747342527;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1746738073; x=1747342873;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KaLy/9pQK1orApI56HfkpL8gk225GnRZj8BeLUv8SVw=;
- b=uq/ZQDL2VXL7r05H7AuFjJrjaHxsuoPGyz6/Vga71gRxBhf94z3ZUtnZNWPy9hhfEN
- Ge3YsJ5oCnS1e+YgPUsYEOkJGNrtwQgK52DnXeejZ6hMChqd7BvVMDVQY1BNQk35ENpp
- raNzUVdsUQJUFOgmcEzX1DkRMtFUan/G1LUwSVbiQ8PyhyKmrto5DFJkRPdjbb63qYT5
- DUO24ylUW+YmL1Et4BmlvsMzjzp69YRwqWksUhx4cxhNuqfmjjz0hTXD4/TpUUIHCWns
- C+e06NnC/1jhroF0FiWaCpVwTIegLA3y528ZfldNQE33BfNOxo/HHNyuWVGpEdyUDl/X
- G0Sw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXU4yNu/kUkTQpSrLVqLLHNRAjCtb+zH96FwB64wckB5I7SZUIDJe3E5RL+JrkZMBuxT0q7eWS+y2sY@nongnu.org
-X-Gm-Message-State: AOJu0YwRmLy/0PkIC1MxKyqwklMKHI9meWlUPP8C6PIpcsAasONXpLfM
- qCgM5+5o0nWNaCT0sZYhq35Ps+yZGTad7wJcjx6vlo1b5Rdfb/BoBt58J+kOHbY=
-X-Gm-Gg: ASbGncsJ742f9K424mTuC9StVIkwTKngEbpzhF0F6HC82UzPnw4VVYqzsHCbn+w0qZm
- TqUetkUapRHbiJlGubW+CxP/sSso+3QeG6DnPM5djmN06BT4hw7pblOdsmHGJKsSBZWa8lYHAp2
- GTUKdzxoPkzo7F2TUMnqtIV9nQ57+DpRDHRkyWueD9+pDp/dfOVSUT0VFOBctVkFK9RRhXXwDcn
- QP4ieLlgNk4bGHpkZRUeCJG3MxLN2Qoy6QLk99tw1YGfpdoJCfCte3ZGpb1I6GjpXnH1PgpbHQ0
- 7ldom0pBCIFazOckz8H6u2yU8k2My15oaNptEXN+p321E2NXp8Dn/g==
-X-Google-Smtp-Source: AGHT+IF9QgbEAsXUVVDvzdkCSI3o6nzBb/Iv9xxIJ2i0U6YeM6LNkLml0axVUQ7KXSKJZBGGuC/A1w==
-X-Received: by 2002:a17:902:f607:b0:215:9eac:1857 with SMTP id
- d9443c01a7336-22e846e0394mr72010855ad.5.1746737726728; 
- Thu, 08 May 2025 13:55:26 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ bh=O3XRYcA8W2YyYPPF6UVXOycq43wFy2VdPuzBgGaaZtg=;
+ b=eZn2zaC7SMiPTGemEkQ9KS+wf6elq6dohlhhfF7DNMkj/x9rP8hLwUeZ4ltx47/br1
+ G5E1glYEsUYyvMe6KAryBurhiBa7nSkKRknq6T6S1+I3OmaHyhMKlc0/8trfnoauyw4g
+ Y4eWfNliwPoPbdwbLY5JAoHwEVolhJZJ7JTsSxnRYB3eMoOzp9MQgMzpB2RGay3N3llk
+ wE2h4T/LrIcHEfwz3rcelhb2oeRyDsPvqwLaxPQiqFf9rr4ZQv079utM9QsdUouVXyIW
+ NtnEKdAklFF39VQu6D0rqDXL3cazTBrc/dB0aRMG4T26XJNnxO6j0lbb+a16YqAAXkKq
+ dRyA==
+X-Gm-Message-State: AOJu0YyIggRmmgLvx63R9nWPxuRo8zHHXhyHL0mbT9yAtjUnvPhSkJVw
+ HE7f1D2OZfpWFUvtI4vdJQH+/QVStK2QqJtcpUMhi5nzHNnlsWSEERZSKUBKlCMSrBm7ZGoAOFd
+ c
+X-Gm-Gg: ASbGncs6o3uwyN9XMlIcvH7EZ6xniJsSrDEyUK+HdFrNXvxg41aHUB+8BQvG0kMWzay
+ wr/sF3iiy9oeRfkGjiRxwUmN8YRhuqFJhUMaIqd687F/Zen/QE7pW5BNVHGuGSoa/RccuKYmSGz
+ yqM89dEnj/SHP/04WaPMpAS1r3GTWPyOAeSKMIo1xmKZEJn6Whh0+pcQf7CTU/TveG0RnLvlmBm
+ 9TmJCIJK4AI1M1aAv6+VXm2N5RVIPaCfIAMyemOW2l+GsQbhKAQJNr8z2JZaXzAjtNyk40VYDsh
+ Q3PR5OocD39yQ+H9Djuj8dE0jnDHsD5IzhuTk7j3OuseZ+/WcepE3hEKExtE
+X-Google-Smtp-Source: AGHT+IEb6qNoTS+WAPB4Af4bi3CATdo+EVnCfMRkV9kg7OwZmAlJxtmZMOprmnYXVvKHcVUJs5kWoA==
+X-Received: by 2002:a17:902:f545:b0:22e:627f:ebc9 with SMTP id
+ d9443c01a7336-22fc8b0fad4mr11463445ad.3.1746738072809; 
+ Thu, 08 May 2025 14:01:12 -0700 (PDT)
+Received: from [192.168.101.134] ([75.147.178.105])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc7b2a70fsm4109005ad.105.2025.05.08.13.55.25
+ d9443c01a7336-22fc680515esm4371185ad.0.2025.05.08.14.01.12
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 May 2025 13:55:26 -0700 (PDT)
-Message-ID: <ad0efe6f-f445-4ba2-8b15-b02667f99ac3@linaro.org>
-Date: Thu, 8 May 2025 13:55:25 -0700
+ Thu, 08 May 2025 14:01:12 -0700 (PDT)
+Message-ID: <f8fa2d89-2028-4d58-9722-13e90e09dc43@linaro.org>
+Date: Thu, 8 May 2025 14:01:10 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/10] qapi: make most CPU commands unconditionally
- available
+Subject: Re: [PATCH] target/i386: ignore misplaced REX prefixes
+To: qemu-devel@nongnu.org
+References: <20250508095436.471819-1-pbonzini@redhat.com>
 Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20250508135816.673087-1-berrange@redhat.com>
- <20250508135816.673087-10-berrange@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250508135816.673087-10-berrange@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250508095436.471819-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x533.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,38 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/25 6:58 AM, Daniel P. Berrangé wrote:
-> This removes the TARGET_* conditions from all the CPU commands
-> that are conceptually target independent. Top level stubs are
-> provided to cope with targets which do not currently implement
-> all of the commands.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+On 5/8/25 02:54, Paolo Bonzini wrote:
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   qapi/machine-target.json              | 397 --------------------------
->   qapi/machine.json                     | 363 +++++++++++++++++++++++
->   stubs/meson.build                     |   2 +
->   stubs/monitor-cpu-s390x.c             |  23 ++
->   stubs/monitor-cpu.c                   |  21 ++
->   target/arm/arm-qmp-cmds.c             |   2 +-
->   target/i386/cpu-system.c              |   2 +-
->   target/i386/cpu.c                     |   2 +-
->   target/loongarch/loongarch-qmp-cmds.c |   2 +-
->   target/mips/system/mips-qmp-cmds.c    |  12 +-
->   target/ppc/ppc-qmp-cmds.c             |  12 +-
->   target/riscv/riscv-qmp-cmds.c         |   2 +-
->   target/s390x/cpu_models_system.c      |   2 +-
->   13 files changed, 437 insertions(+), 405 deletions(-)
->   create mode 100644 stubs/monitor-cpu-s390x.c
->   create mode 100644 stubs/monitor-cpu.c
->
+>   target/i386/tcg/decode-new.c.inc | 36 ++++++++++++++++++++++++--------
+>   1 file changed, 27 insertions(+), 9 deletions(-)
+> 
+> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+> index cda32ee6784..55216e0d249 100644
+> --- a/target/i386/tcg/decode-new.c.inc
+> +++ b/target/i386/tcg/decode-new.c.inc
+> @@ -2542,7 +2542,13 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+>       s->has_modrm = false;
+>       s->prefix = 0;
+>   
+> - next_byte:
+> + next_byte:;
+> +#ifdef TARGET_X86_64
+> +    /* clear any REX prefix followed by other prefixes.  */
+> +    int rex;
+> +    rex = -1;
+> + next_byte_rex:
+> +#endif
+>       b = x86_ldub_code(env, s);
 
-This sounds good to me, as long we are ok with having commands returning 
-a "this command is not supported here" paradigm.
-I thought it was the complex case we were trying to deal with, precisely 
-because we didn't want to introduce the "command here, but it returns an 
-error" shell.
+I guess this is ok, with -1.  It might be worthwhile rewriting without ifdefs, since we 
+already let CODE64(s) and REX_PREFIX(s) expand to false without TARGET_X86_64.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+The only irritating part would be actually setting s->rex_* at the end, because those 
+members are themselves ifdef'ed over in DisasContext.
 
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
