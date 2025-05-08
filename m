@@ -4,89 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16642C3ABC0
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 07:32:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0207CC3ABBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 07:47:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uCvjR-0003YK-5k; Thu, 08 May 2025 03:31:50 -0400
+	id 1uCvxD-0007Fk-PI; Thu, 08 May 2025 03:46:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uCvjK-0003XQ-JQ; Thu, 08 May 2025 03:31:43 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uCvxB-0007FI-SX
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 03:46:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uCvjH-0000zc-5Z; Thu, 08 May 2025 03:31:42 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 048DD1200CE;
- Thu, 08 May 2025 10:31:12 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7F238206B4A;
- Thu,  8 May 2025 10:31:25 +0300 (MSK)
-Message-ID: <f337d662-9eea-4f8b-b2a4-38a46e64732e@tls.msk.ru>
-Date: Thu, 8 May 2025 10:31:26 +0300
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uCvx9-0002mJ-FK
+ for qemu-devel@nongnu.org; Thu, 08 May 2025 03:46:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746690356;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=aCBdMoUtDKce4pWy3oUb1Rhy+9aEtvCMv90ZcUfQqXo=;
+ b=Qf3GRU4hrlMZ3nJoc8Uk8h3HQWBTtdp/ISbCZAOeTDAqn42zDwuLkPig+Gv9Hf/hR8rf4u
+ ZJIsz0dydlKwT5inLzi8RdMP6pdS0+H5jfUB4Th8R4JWasvsAaOb1FjeBBaLGcpiBu0pZq
+ kvum6T7jzLyNO0LDLtOjm9Y2qGRodVU=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-614-02yrTJznPGSLlX5POSL1Lw-1; Thu, 08 May 2025 03:45:54 -0400
+X-MC-Unique: 02yrTJznPGSLlX5POSL1Lw-1
+X-Mimecast-MFC-AGG-ID: 02yrTJznPGSLlX5POSL1Lw_1746690353
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43e9a3d2977so4362605e9.1
+ for <qemu-devel@nongnu.org>; Thu, 08 May 2025 00:45:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746690353; x=1747295153;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aCBdMoUtDKce4pWy3oUb1Rhy+9aEtvCMv90ZcUfQqXo=;
+ b=NrgDBM9qup9IZFynD3C8qU+aSS2bW541b4Y231kekMg3VSWAeiXViJ//5YdQd28gPk
+ AmwpCnZUrZPI7K9uGEdwijwVlNlhDxmKK5gFtTtnckVefJlU3LsaDFzivCE2jtRJMmME
+ SQ++1qvJrjx9eQqZWe6guMMiio5FVZATqpNHs6tNrLH1Vr9wfNPW8YISvnEKqwJFlrjm
+ YeR78RxIGwDxmcaPjjH8wJwqLpLGMLhpamCcaR3TuNurDYCHLt8dNy5rlo0YE2Es1OMY
+ IbmuEU+zlgmJJ3y5iQUTM/KOqKPiPYRYdAUIeBeBKsjzxSgo/Eg6nL+KA4IW6UBXUZ/E
+ WxfA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWoWkrqpTD//pl0qKYq3PUad19DrjYnIdtdxgMW600k/KQ8Ewz7WjWIodOpqj5e6Z31uOsCrJPU/XXu@nongnu.org
+X-Gm-Message-State: AOJu0YzBQ6jvpXSXzsZ9AHi4m3ci1dvoCmY5zPRMb2pPdeb33cslSKCI
+ 8BB1np0gwVe5Cfwf6Z5QMPwFYsmVKtIupnuKRPB80jUxBl6kKW3bhlwNI+ax0Lfzz4eNtcFVPEx
+ 2JKBLS+Sb2cb5C2DvONVIj8ihHGRaPm9fsa/D80crk7e/WzUd7ZdJ
+X-Gm-Gg: ASbGncseKnhRrb1JhP4rhgJk/UXsl41zDmSGJYGrtiXuvLXZvSZR2ahzWD2d947nniZ
+ 5+Cy9iTvKdZf3gTEukQ5NWG07G5aUCLi1gaOBnwrRx1MO3XwEg69mfUSDG1VHGZVFpwCKA+5Eqn
+ l15dgbgjz9IAPKndRYtgJ+iUjNEpXHIRc/+5Y8vv6RP4c/hnKA/oWB+jgrojeID8ZJR/PLelVJf
+ O0HnVPkpJD1O6iRwjfUF943kmZTHzMMAOBOTEQL9dx68SoqMFyo6ULnlMl79Xsuhgu0MGueYRcQ
+ 4nYVLRd7LNy6hVHI+2xNHtBGXr+BEwxYC4N8y0G3Q/NjtInNH/tp
+X-Received: by 2002:a05:600c:4f01:b0:43c:f64c:447f with SMTP id
+ 5b1f17b1804b1-442d034bbf3mr16896155e9.29.1746690353391; 
+ Thu, 08 May 2025 00:45:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHn4zfh7mD1aF/ScKAo5yPXaXzSgwS8VVN2MAXBLqq6MRtXI0OzVoMN9hUzt2oBDCW5Hfx1qw==
+X-Received: by 2002:a05:600c:4f01:b0:43c:f64c:447f with SMTP id
+ 5b1f17b1804b1-442d034bbf3mr16895895e9.29.1746690353018; 
+ Thu, 08 May 2025 00:45:53 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-115-173.pools.arcor-ip.net.
+ [47.64.115.173]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-441d1266624sm45590685e9.2.2025.05.08.00.45.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 May 2025 00:45:51 -0700 (PDT)
+Message-ID: <09b0a1cf-afac-4308-89a2-cc22aba5699d@redhat.com>
+Date: Thu, 8 May 2025 09:45:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Don't assert() for ISB/SB inside IT block
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+Subject: Re: [PATCH v3 2/5] include/hw/boards: cope with dev/rc versions in
+ deprecation checks
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20250501125544.727038-1-peter.maydell@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250501125544.727038-1-peter.maydell@linaro.org>
+Cc: Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, devel@lists.libvirt.org,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu
+ <zhao1.liu@intel.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
+References: <20250506160024.2380244-1-berrange@redhat.com>
+ <20250506160024.2380244-3-berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250506160024.2380244-3-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.414,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,64 +160,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01.05.2025 15:55, Peter Maydell wrote:
-> If the guest code has an ISB or SB insn inside an IT block, we
-> generate incorrect code which trips a TCG assertion:
+On 06/05/2025 18.00, Daniel P. Berrangé wrote:
+> When VERSION is set to a development snapshot (micro >= 50), or a release
+> candidate (micro >= 90) we have an off-by-1 in determining deprecation
+> and deletion thresholds for versioned machine types. In such cases we need
+> to use the next major/minor version in threshold checks.
 > 
-> qemu-system-arm: ../tcg/tcg-op.c:3343: void tcg_gen_goto_tb(unsigned int): Assertion `(tcg_ctx->goto_tb_issue_mask & (1 << idx)) == 0' failed.
+> This adapts the deprecation macros to do "next version" prediction when
+> seeing a dev/rc version number.
 > 
-> This is because we call gen_goto_tb(dc, 1, ...) twice:
+> This ensures users of release candidates get an accurate view of machines
+> that will be deprecated/deleted in the final release.
 > 
->   brcond_i32 ZF,$0x0,ne,$L1
->   add_i32 pc,pc,$0x4
->   goto_tb $0x1
->   exit_tb $0x73d948001b81
->   set_label $L1
->   add_i32 pc,pc,$0x4
->   goto_tb $0x1
->   exit_tb $0x73d948001b81
+> This requires hardcoding our current release policy of 3 releases per
+> year, with a major bump at the start of each year, and that dev/rc
+> versions have micro >= 50.
 > 
-> Both calls are in arm_tr_tb_stop(), one for the
-> DISAS_NEXT/DISAS_TOO_MANY handling, and one for the dc->condjump
-> condition-failed codepath.  The DISAS_NEXT handling doesn't have this
-> problem because arm_post_translate_insn() does the handling of "emit
-> the label for the condition-failed conditional execution" and so
-> arm_tr_tb_stop() doesn't have dc->condjump set.  But for
-> DISAS_TOO_MANY we don't do that.
-> 
-> Fix the bug by making arm_post_translate_insn() handle the
-> DISAS_TOO_MANY case.  This only affects the SB and ISB insns when
-> used in Thumb mode inside an IT block: only these insns specifically
-> set is_jmp to TOO_MANY, and their A32 encodings are unconditional.
-> 
-> For the major TOO_MANY case (breaking the TB because it would cross a
-> page boundary) we do that check and set is_jmp to TOO_MANY only after
-> the call to arm_post_translate_insn(); so arm_post_translate_insn()
-> sees is_jmp == DISAS_NEXT, and  we emit the correct code for that
-> situation.
-> 
-> With this fix we generate the somewhat more sensible set of TCG ops:
->   brcond_i32 ZF,$0x0,ne,$L1
->   set_label $L1
->   add_i32 pc,pc,$0x4
->   goto_tb $0x1
->   exit_tb $0x7c5434001b81
-> 
-> (NB: the TCG optimizer doesn't optimize out the jump-to-next, but
-> we can't really avoid emitting it because we don't know at the
-> point we're emitting the handling for the condexec check whether
-> this insn is going to happen to be a nop for us or not.)
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2942
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   include/hw/boards.h | 33 ++++++++++++++++++++++++++++++++-
+>   1 file changed, 32 insertions(+), 1 deletion(-)
 
-Hi!
+FYI, this causes a failure in the CI now:
 
-Is this change applicable for older stable releases, besides 10.0
-(currently 9.2 and 7.2)?  It applies cleanly but I wonder if it is
-actually needed..
+  https://gitlab.com/thuth/qemu/-/jobs/9965651507#L163
 
-Thanks,
+Looks like we have to remove the related subtest now?
 
-/mjt
+  Thomas
+
 
