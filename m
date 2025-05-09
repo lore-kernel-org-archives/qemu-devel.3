@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A42B3C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 11:08:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93CEEC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 11:09:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDLa8-0007KZ-VB; Fri, 09 May 2025 07:07:57 -0400
+	id 1uDLaA-0007Pz-Kz; Fri, 09 May 2025 07:07:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uDLZx-00076A-0l
- for qemu-devel@nongnu.org; Fri, 09 May 2025 07:07:45 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uDLa8-0007Kn-0H
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 07:07:56 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uDLZv-0000iz-0c
- for qemu-devel@nongnu.org; Fri, 09 May 2025 07:07:44 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-30ac5cc0df4so2667373a91.2
- for <qemu-devel@nongnu.org>; Fri, 09 May 2025 04:07:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uDLa5-0000jJ-PB
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 07:07:55 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-ae727e87c26so1323187a12.0
+ for <qemu-devel@nongnu.org>; Fri, 09 May 2025 04:07:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746788860; x=1747393660; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746788872; x=1747393672; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=T3QDNycj2cfcdLF6s/SvwTLO4ogOTisZBN0TIphy6t0=;
- b=IvFWKu8naz4v7ubeXMbeuGvwjh3Xc5x3EkiaBnUh2pFWgvJwBbgi1ilSopEbbh5MCl
- qN9T19bWV88+I6fcP05F2jcLo2kFbmYFWB1azp+9ty+WkvGGnclHkD4K+VaTC+Y1JRVq
- jUawTmd93HzA4e8kez7n51w9CFTsmnpx/NWxp0OjAKus70tQDwtqKi6cX7iXrxluIOn0
- repFOPIpSHGR36aB/fN6hw8DugUQWSmWblmYA1z2E6pYfBciVB9plQOu2wKx1ygglnkd
- TOkYKsSAKZmKjdFIMua8yk1VKAj4DMsqD7i3YSs2mffyak+dnuOtukIHFryD7ZC/66jj
- jolw==
+ bh=reqG+HnTLrWadGCjBmFMEasTPlhnHQqMim/E/FT6daU=;
+ b=Q6fZ6QH3VEYCxtEdTAO5mLny7BPyTqLJ2oj05uVhB13/S8TqKzg5KCt6lJsJh1R9ED
+ 7eWCQL+PS7+IrEkhh/rXcouabK8hgvp+pUUknC2R9Lia6dN6OtljmGvBQEi7yEFh1KlF
+ +k5FMzkB1epRj0nxNXVUhIRpew8spEjYlMfW+iFZ0J9RXODz9sDCn/ifdf4AvnRQXFbH
+ 99eCuOD3U+V67ZLIHtbTeppkg92ZnpB/ysCZoQBXn7+Hf3gtX2RBipEke8SGR81b+ABt
+ 8QEzeZjTsqCR6bcN9j75iU44sWayARO0bldFi1Cfa85dz0V+F90MnV7cWIdT/XNWJsHp
+ OlZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746788860; x=1747393660;
+ d=1e100.net; s=20230601; t=1746788872; x=1747393672;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=T3QDNycj2cfcdLF6s/SvwTLO4ogOTisZBN0TIphy6t0=;
- b=s3lWGFFUQcFv/E23v5fyBFYkPhl4X3B/eFHBrLlbs3K+G3GCMoHJLZfq4zRAmC6prC
- onNfwBYRjD/vDXb440a6WQJQ6qkvu1w/JEX9DMSenUsgoYzjd/bqJtfhckZlgEJuafRv
- Xs6mEmvBcZrOdV1z8mQIdH9KDbdsIUC4b+QW1tWj37O8BbBXVVHBH/xOaIp3RJRGPGO5
- wC7gyLgHou0UnfPakWz1A1A+1Ztv543HwXAUQnHFv9IMhibcR5Tesk+7bG6L4EaCGTpe
- 9Exk1almO+m5AXb1/dgw3SVKzqrD+HLKN4oTn0wc+7O22dMTd2dF5laigl2pkKEcBFga
- PqEw==
-X-Gm-Message-State: AOJu0Yzxg3WfpxPLZGaVLXvTQwIiGqHhptcq0i0eVVBE/1LtXsBEh3LF
- ugaiFY+haiidOGHgefAHQCFkvRMYT+UL7YEjmYFuwDGXtR3PIfmmy1GC//XBDDhiGze8Asr9Dvm
- zbFQ=
-X-Gm-Gg: ASbGncutV2EzVrdX5esQRqR6jBWAyOJ+QlrNGwMWn4UZB9gD2hjr9nOlzxcjfGSTxa5
- KXzufmBsxWuB04Xj7TUksSP5KA3jnWRyA9s1Le5Ye3Lqt8+gF65yT4R0G1fV+JaneyQ6LZ/RHsN
- hi11tguExLuZLAqZq9SogUVOKcGqZeXdwWIt9rEO3lEDUj6+yvFj1EfrEtxCYAh8Be5EjFdnnnu
- C+urf4oIMkgpoupCRswCP0M5MwbMzx4uAgoHQMlDjDhTXYcAFDb+drQo/Y8QCdajsV7lBo2rzL1
- j7KOOtZqX9NkqgzqDZkWpIvrjld3KatJgSrQOboPdqmL/aIh9ou1IYDdnaM9TI1rPcxuV0iPx4r
- tXcznliHz1l+DpNk=
-X-Google-Smtp-Source: AGHT+IHGv2wiwA/+WsvSv5j64C5TuTYfj4RbZv5gj7GDWVw8flDbAa8iVJZ/BRKWMAaYh7tkcQ3x2Q==
-X-Received: by 2002:a17:90b:164f:b0:30a:4d18:c71b with SMTP id
- 98e67ed59e1d1-30c3d3eb986mr4836926a91.20.1746788860455; 
- Fri, 09 May 2025 04:07:40 -0700 (PDT)
+ bh=reqG+HnTLrWadGCjBmFMEasTPlhnHQqMim/E/FT6daU=;
+ b=mAxiZMda8yIugaP/IJ5+iOHuK7QDGpLEVPcxvZLZQsnl5sAYoLEhmzvdWJV+LCPt9E
+ +JEEmKoLIdXTHi9jPLTD4ni1vKb05j+HtzADmeHrd0lcBJXGcjLmlDPmlrNRSizNIaGR
+ v8wqLUDDopdzFQD66c7CNkfjP2K0Zmx5DNHZsAZNPfkyatXmCXp+jktILJRJS1MFGc5t
+ iec5sDTNs7J3Mv2TTb5F4HTCq9F7OJmVX6HhvHlajZXgFbnH9cTm/DXThs1WIbFUeO2+
+ 9/xE9D9hrkMCZFlwwm7n6MgrC7D6Migrl0cQgh0NySWq9HGqBzZu3CLfSKfFLz3qmGkg
+ JCVw==
+X-Gm-Message-State: AOJu0YxqUaIabwCcXsFZ+SHmtnzjKvSnYzNkzLbeOJtUg3FnaPeKqqr+
+ /gl1ikeMw7d4ee+eFboUI8DzKWv67mn5zU05DcczsTWqG3lLju3LhWRd0PPkh3I8DJX2TB2YoC2
+ 2Ed4=
+X-Gm-Gg: ASbGncuKzYFyy4ynKLBLDxTQ9NStiQm5DonKalgoMIYpKEpP5xAgMXxTyIBOFhDNrTz
+ BZ48BFshGrzOsmHQYBVzzqQ57NGOvv5DTCAKZeeCVZV1bajlonuR9ZemuRN3T0g+S/N6hhSVwJh
+ iuIQ2pbjW5m0Wfbuv5FMkufLB1xx2s55zBIF6HyzlXYC44C23w9Ps0+2zllPkoi3bvgh395DEiY
+ V5jdep5UTfIlTv6CRBq6j9pp4W4SU3zewbZzHXHbX4EkJZ7n7bbAdfaU4/284puIaC0ypQGPdH5
+ dvQh4JWP+y2bNqh/JmqyfZvKO/XwRlxgGRaCF8lI/5+mPf5li3xvA/4QmuOG8w8f8rg8L9oyNxJ
+ 8VCJqcrbw5eNh56I=
+X-Google-Smtp-Source: AGHT+IGYbd9wt4dta+vIQu4BAd/UgszgxGHEhF0L2eVTJj7OGbiCMXYHfT1TcZbvFgGWZ+FeFwlkFA==
+X-Received: by 2002:a17:902:d48a:b0:220:ca39:d453 with SMTP id
+ d9443c01a7336-22fc8b6131amr48451375ad.17.1746788871856; 
+ Fri, 09 May 2025 04:07:51 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30ad4fe2248sm4170871a91.35.2025.05.09.04.07.37
+ d9443c01a7336-22fc82c338fsm14574985ad.259.2025.05.09.04.07.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 09 May 2025 04:07:40 -0700 (PDT)
+ Fri, 09 May 2025 04:07:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/2] semihosting/uaccess: Remove uses of target_ulong type
-Date: Fri,  9 May 2025 13:07:19 +0200
-Message-ID: <20250509110721.90447-2-philmd@linaro.org>
+Subject: [PATCH v2 2/2] semihosting/uaccess: Compile once
+Date: Fri,  9 May 2025 13:07:20 +0200
+Message-ID: <20250509110721.90447-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250509110721.90447-1-philmd@linaro.org>
 References: <20250509110721.90447-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=philmd@linaro.org; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,110 +101,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace target_ulong by vaddr or size_t types to match
-cpu_memory_rw_debug() prototype in "exec/cpu-common.h":
-
-  int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
-                          void *ptr, size_t len,
-                          bool is_write);
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- include/semihosting/uaccess.h | 12 ++++++------
- semihosting/uaccess.c         | 10 +++++-----
- 2 files changed, 11 insertions(+), 11 deletions(-)
+ semihosting/meson.build | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/include/semihosting/uaccess.h b/include/semihosting/uaccess.h
-index 6bc90b12d6f..2093a498277 100644
---- a/include/semihosting/uaccess.h
-+++ b/include/semihosting/uaccess.h
-@@ -15,9 +15,9 @@
- #endif
+diff --git a/semihosting/meson.build b/semihosting/meson.build
+index f3d38dda91d..d0819891bc3 100644
+--- a/semihosting/meson.build
++++ b/semihosting/meson.build
+@@ -3,9 +3,7 @@ specific_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files(
+   'syscalls.c',
+ ))
  
- #include "exec/cpu-common.h"
--#include "exec/cpu-defs.h"
- #include "exec/tswap.h"
- #include "exec/page-protection.h"
-+#include "exec/vaddr.h"
+-specific_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_true: files(
+-  'uaccess.c',
+-))
++system_ss.add(when: 'CONFIG_TCG', if_true: files('uaccess.c'))
  
- /**
-  * get_user_u64:
-@@ -89,8 +89,8 @@
-  *
-  * The returned pointer should be freed using uaccess_unlock_user().
-  */
--void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
--                        target_ulong len, bool copy);
-+void *uaccess_lock_user(CPUArchState *env, vaddr addr,
-+                        size_t len, bool copy);
- /**
-  * lock_user:
-  *
-@@ -103,7 +103,7 @@ void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
-  *
-  * The returned string should be freed using uaccess_unlock_user().
-  */
--char *uaccess_lock_user_string(CPUArchState *env, target_ulong addr);
-+char *uaccess_lock_user_string(CPUArchState *env, vaddr addr);
- /**
-  * uaccess_lock_user_string:
-  *
-@@ -112,10 +112,10 @@ char *uaccess_lock_user_string(CPUArchState *env, target_ulong addr);
- #define lock_user_string(p) uaccess_lock_user_string(env, p)
- 
- void uaccess_unlock_user(CPUArchState *env, void *p,
--                         target_ulong addr, target_ulong len);
-+                         vaddr addr, size_t len);
- #define unlock_user(s, args, len) uaccess_unlock_user(env, s, args, len)
- 
--ssize_t uaccess_strlen_user(CPUArchState *env, target_ulong addr);
-+ssize_t uaccess_strlen_user(CPUArchState *env, vaddr addr);
- #define target_strlen(p) uaccess_strlen_user(env, p)
- 
- #endif /* SEMIHOSTING_SOFTMMU_UACCESS_H */
-diff --git a/semihosting/uaccess.c b/semihosting/uaccess.c
-index 4554844e15b..ff944d8c2f7 100644
---- a/semihosting/uaccess.c
-+++ b/semihosting/uaccess.c
-@@ -14,8 +14,8 @@
- #include "exec/tlb-flags.h"
- #include "semihosting/uaccess.h"
- 
--void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
--                        target_ulong len, bool copy)
-+void *uaccess_lock_user(CPUArchState *env, vaddr addr,
-+                        size_t len, bool copy)
- {
-     void *p = malloc(len);
-     if (p && copy) {
-@@ -27,7 +27,7 @@ void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
-     return p;
- }
- 
--ssize_t uaccess_strlen_user(CPUArchState *env, target_ulong addr)
-+ssize_t uaccess_strlen_user(CPUArchState *env, vaddr addr)
- {
-     int mmu_idx = cpu_mmu_index(env_cpu(env), false);
-     size_t len = 0;
-@@ -75,7 +75,7 @@ ssize_t uaccess_strlen_user(CPUArchState *env, target_ulong addr)
-     }
- }
- 
--char *uaccess_lock_user_string(CPUArchState *env, target_ulong addr)
-+char *uaccess_lock_user_string(CPUArchState *env, vaddr addr)
- {
-     ssize_t len = uaccess_strlen_user(env, addr);
-     if (len < 0) {
-@@ -85,7 +85,7 @@ char *uaccess_lock_user_string(CPUArchState *env, target_ulong addr)
- }
- 
- void uaccess_unlock_user(CPUArchState *env, void *p,
--                         target_ulong addr, target_ulong len)
-+                         vaddr addr, size_t len)
- {
-     if (len) {
-         cpu_memory_rw_debug(env_cpu(env), addr, p, len, 1);
+ common_ss.add(when: 'CONFIG_SEMIHOSTING', if_false: files('stubs-all.c'))
+ user_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files('user.c'))
 -- 
 2.47.1
 
