@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B82AC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 09:18:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F161CC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 09:18:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDJrR-0006dM-7X; Fri, 09 May 2025 05:17:41 -0400
+	id 1uDJrt-00084I-7o; Fri, 09 May 2025 05:18:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uDJrO-0006Sj-C8; Fri, 09 May 2025 05:17:38 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
+ id 1uDJrp-0007vI-U7; Fri, 09 May 2025 05:18:05 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uDJrM-0001uE-6p; Fri, 09 May 2025 05:17:38 -0400
+ id 1uDJro-0001ww-0e; Fri, 09 May 2025 05:18:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746782256; x=1778318256;
+ t=1746782284; x=1778318284;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=5mIvtmlMDAOHavZAXRHaTj/kdL7gzjc2wDPxrUkRr+0=;
- b=fi+qwXufOeswkfMx8v+DEd6cXjMXVIX+IkJPvjiN6fEuXKC6VjgGz0I/
- JWpnCAMoJX5ziPGhfi59pKuwngQ2ifOQ/G/3H+bfKVK8yBh35C2m6adTb
- sZnJ+Kye99mtsSiVkJS4oeF2PPGoIrECxTwoXe/EKh2huvrgSV/IE958t
- BYTySDX5S6jCQsx4ZChtfyCpZ85bhP47X+mmPdoShqOKJaonOVTdHuham
- GU91taOIzaFqfhDuCdV/IIFYRC2uCf+BthySaybdlqj8ZCIIvvPFj6d88
- JtgO8wmqu888r8/xfxCAvFKxK8lxhxt/6PlhcudtdYUEh+zsJZ4w23Sq/ g==;
-X-CSE-ConnectionGUID: 9W17QH/NTb6apgPfFlMUXg==
-X-CSE-MsgGUID: 4jklvZ56St+zmw3uHUgJkw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="52410792"
-X-IronPort-AV: E=Sophos;i="6.15,274,1739865600"; d="scan'208";a="52410792"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 May 2025 02:17:31 -0700
-X-CSE-ConnectionGUID: xkxzZMCtSeagvkGP+nrt9g==
-X-CSE-MsgGUID: kLRaW1O5TW+pOnGVjsMXEA==
+ bh=h0jLMVr4wHnyYCY84J6GlAtgPWQ/rDP7k9g6E5hEDYQ=;
+ b=EbOy4/LJ024PcenYgIMqk7ge4JeAbBc6BwRStAW+wcR0Cc3L7kcVtLKU
+ wEZULU05wlalTrLj+PSJupQVoRAt9BjaTaQYBAkHA5mEUL4bHIHAJfHJB
+ 3v4bfNe5apzyfBOeY85z35PIaUXsjVOJ78np3qYhdQapCx/bkFte3wcTq
+ rYjt56R2kNd58CSp+99R4I1xrRPkrThz9kziqT9UgqdNhtM/Ak7+lcSWU
+ a0OeKdqEcdYDy6Dqe1i3QHugL3BKt4nxR7McMznZf/mfBAeql0d95YSud
+ S7DNahcW3xDckskwRfZ89Sl00UNtA/tKT7tAPL4Q+K02cnLNeH7QdjTLO w==;
+X-CSE-ConnectionGUID: TQL3I8hHRbWuAJKl1t1a/g==
+X-CSE-MsgGUID: uY15pQZDSrOzsjzzf87qPw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="66135975"
+X-IronPort-AV: E=Sophos;i="6.15,274,1739865600"; d="scan'208";a="66135975"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 May 2025 02:18:01 -0700
+X-CSE-ConnectionGUID: PtU105OcSpyexIUEeJfEMQ==
+X-CSE-MsgGUID: PXGVHxs5RDmF6e6hkLHUeQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,274,1739865600"; d="scan'208";a="137562238"
+X-IronPort-AV: E=Sophos;i="6.15,274,1739865600"; d="scan'208";a="167496453"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa009.fm.intel.com with ESMTP; 09 May 2025 02:17:25 -0700
-Date: Fri, 9 May 2025 17:38:26 +0800
+ by orviesa002.jf.intel.com with ESMTP; 09 May 2025 02:17:54 -0700
+Date: Fri, 9 May 2025 17:38:55 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
@@ -69,18 +69,17 @@ Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  qemu-arm@nongnu.org,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v4 21/27] hw/audio/pcspk: Remove PCSpkState::migrate field
-Message-ID: <aB3NEtdeP7mysAgJ@intel.com>
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: Re: [PATCH v4 22/27] hw/core/machine: Remove hw_compat_2_7[] array
+Message-ID: <aB3NL4k1baV0k6iu@intel.com>
 References: <20250508133550.81391-1-philmd@linaro.org>
- <20250508133550.81391-22-philmd@linaro.org>
+ <20250508133550.81391-23-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250508133550.81391-22-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250508133550.81391-23-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -57
 X-Spam_score: -5.8
@@ -105,23 +104,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 08, 2025 at 03:35:44PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Thu,  8 May 2025 15:35:44 +0200
+On Thu, May 08, 2025 at 03:35:45PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Thu,  8 May 2025 15:35:45 +0200
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v4 21/27] hw/audio/pcspk: Remove PCSpkState::migrate field
+> Subject: [PATCH v4 22/27] hw/core/machine: Remove hw_compat_2_7[] array
 > X-Mailer: git-send-email 2.47.1
 > 
-> The PCSpkState::migrate boolean was only set in the
-> pc_compat_2_7[] array, via the 'migrate=off' property.
-> We removed all machines using that array, lets remove
-> that property, simplifying vmstate_spk[].
+> The hw_compat_2_7[] array was only used by the pc-q35-2.7 and
+> pc-i440fx-2.7 machines, which got removed. Remove it.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > ---
->  hw/audio/pcspk.c | 10 ----------
->  1 file changed, 10 deletions(-)
+>  include/hw/boards.h | 3 ---
+>  hw/core/machine.c   | 9 ---------
+>  2 files changed, 12 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
