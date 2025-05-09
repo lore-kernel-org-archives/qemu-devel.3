@@ -4,93 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58854C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 07:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CB73C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 07:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDHtb-0007BK-FH; Fri, 09 May 2025 03:11:47 -0400
+	id 1uDI16-0000u8-TS; Fri, 09 May 2025 03:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uDHtW-00079w-B4; Fri, 09 May 2025 03:11:43 -0400
-Received: from mgamail.intel.com ([192.198.163.17])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uDI15-0000ty-CM
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 03:19:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uDHtT-0002UI-RY; Fri, 09 May 2025 03:11:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746774700; x=1778310700;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=2C5nET5W0bcIefwZbA8VGGLLv3FN4P08bT/uTlqla4U=;
- b=X4jd3BH0CDz1bkctTH4SFJNqS7mLi783drkRpEvj1VhrBIn/5xVZxWsS
- 815JgA+cc503DFP+3qaEYeG5G3O/AS5swBEidcOaGHSxQY4RJVQcmgz1H
- kUty3Tl+E0OD3FConAIUhByrstfcACi3K/6ozqsbTv+M84P1FAg4CXe5n
- ZXnQ4MTTo6rXlB9pmYF3I3R+jGEjTOu45Vlr1+WtKnRy6W7APMoPbzGIP
- 4uhV8rVPTRMKNHc3KJtPqvP4phR6o0/U631zv9z1BvR8DH8SX4ayMg1pR
- +RcOkBkOjNwjpxI4Iq6BtKtAiKGXdHQRU3zHESX8Lo6uWm6ME7S32DBtC g==;
-X-CSE-ConnectionGUID: /gksMlF2Q6uX3X3EmaF4ug==
-X-CSE-MsgGUID: giyLz8jKT8eDuqW/+rq6BA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="48505798"
-X-IronPort-AV: E=Sophos;i="6.15,274,1739865600"; d="scan'208";a="48505798"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 May 2025 00:11:35 -0700
-X-CSE-ConnectionGUID: n9zxyQjGRH+MShzMygYUyA==
-X-CSE-MsgGUID: 8Fjt0m4zT2CGbDnrIJiefA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,274,1739865600"; d="scan'208";a="141311969"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 09 May 2025 00:11:28 -0700
-Date: Fri, 9 May 2025 15:32:30 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- kvm@vger.kernel.org, Sergio Lopez <slp@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Yi Liu <yi.l.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-riscv@nongnu.org,
- Weiwei Li <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>,
- Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>,
- Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha <anisinha@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- qemu-arm@nongnu.org,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH v4 12/27] target/i386/cpu: Remove
- CPUX86State::enable_cpuid_0xb field
-Message-ID: <aB2vjuT07EuO6JSQ@intel.com>
-References: <20250508133550.81391-1-philmd@linaro.org>
- <20250508133550.81391-13-philmd@linaro.org>
- <23260c74-01ba-45bc-bf2f-b3e19c28ec8a@intel.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uDI13-0003V6-Ho
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 03:19:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746775166;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=f+eVov18gpL6NHiVTKX4S7QSo9I/Gk1DTt3koU5gwxw=;
+ b=JfhIjcgB1CHYbipHWZwEEbmTnNVe0lE8IMf5WEqfa8VWnIKbi3FI1WX6QMPcABER7law0I
+ 5VG2bo7A2ywwq8EEYmQb8fg9BujOygN99EYvktK/yfMbsmsMezR0xy9jed0Zf2lauWp8TK
+ wfAToE9iqX8d9Gpl7saAWpqBe6/rGJk=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-JyzQTfHUOJehR49h8XFGLA-1; Fri,
+ 09 May 2025 03:19:24 -0400
+X-MC-Unique: JyzQTfHUOJehR49h8XFGLA-1
+X-Mimecast-MFC-AGG-ID: JyzQTfHUOJehR49h8XFGLA_1746775163
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2F05F195608E; Fri,  9 May 2025 07:19:23 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A11D119560BC; Fri,  9 May 2025 07:19:22 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C78CC21E66C2; Fri, 09 May 2025 09:19:19 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: Nir Soffer <nirsof@gmail.com>,  qemu-devel@nongnu.org,
+ qemu-block@nongnu.org,  Kevin Wolf <kwolf@redhat.com>,  Fam Zheng
+ <fam@euphon.net>,  Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH v2 2/2] block/null: Add read-pattern option
+In-Reply-To: <mykoj5oasoeq3k4xa7c2f4kt4sybz3o7plf7wc6ma27auh7gst@2anh6h54xam7>
+ (Eric Blake's message of "Thu, 8 May 2025 09:30:43 -0500")
+References: <20250430203717.16359-1-nirsof@gmail.com>
+ <20250430203717.16359-3-nirsof@gmail.com>
+ <87h61vekn9.fsf@pond.sub.org>
+ <mykoj5oasoeq3k4xa7c2f4kt4sybz3o7plf7wc6ma27auh7gst@2anh6h54xam7>
+Date: Fri, 09 May 2025 09:19:19 +0200
+Message-ID: <875xiab6a0.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <23260c74-01ba-45bc-bf2f-b3e19c28ec8a@intel.com>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -57
-X-Spam_score: -5.8
-X-Spam_bar: -----
-X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,89 +91,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 09, 2025 at 02:49:27PM +0800, Xiaoyao Li wrote:
-> Date: Fri, 9 May 2025 14:49:27 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: Re: [PATCH v4 12/27] target/i386/cpu: Remove
->  CPUX86State::enable_cpuid_0xb field
-> 
-> On 5/8/2025 9:35 PM, Philippe Mathieu-Daudé wrote:
-> > The CPUX86State::enable_cpuid_0xb boolean was only disabled
-> > for the pc-q35-2.6 and pc-i440fx-2.6 machines, which got
-> > removed. Being now always %true, we can remove it and simplify
-> > cpu_x86_cpuid().
-> > 
-> > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > ---
-> >   target/i386/cpu.h | 3 ---
-> >   target/i386/cpu.c | 6 ------
-> >   2 files changed, 9 deletions(-)
-> > 
-> > diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> > index 0db70a70439..06817a31cf9 100644
-> > --- a/target/i386/cpu.h
-> > +++ b/target/i386/cpu.h
-> > @@ -2241,9 +2241,6 @@ struct ArchCPU {
-> >        */
-> >       bool legacy_multi_node;
-> > -    /* Compatibility bits for old machine types: */
-> > -    bool enable_cpuid_0xb;
-> > -
-> >       /* Enable auto level-increase for all CPUID leaves */
-> >       bool full_cpuid_auto_level;
-> > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> > index 49179f35812..6fe37f71b1e 100644
-> > --- a/target/i386/cpu.c
-> > +++ b/target/i386/cpu.c
-> > @@ -6982,11 +6982,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-> >           break;
-> >       case 0xB:
-> >           /* Extended Topology Enumeration Leaf */
-> > -        if (!cpu->enable_cpuid_0xb) {
-> > -                *eax = *ebx = *ecx = *edx = 0;
-> > -                break;
-> > -        }
-> > -
-> >           *ecx = count & 0xff;
-> >           *edx = cpu->apic_id;
-> > @@ -8828,7 +8823,6 @@ static const Property x86_cpu_properties[] = {
-> >       DEFINE_PROP_UINT64("ucode-rev", X86CPU, ucode_rev, 0),
-> >       DEFINE_PROP_BOOL("full-cpuid-auto-level", X86CPU, full_cpuid_auto_level, true),
-> >       DEFINE_PROP_STRING("hv-vendor-id", X86CPU, hyperv_vendor),
-> > -    DEFINE_PROP_BOOL("cpuid-0xb", X86CPU, enable_cpuid_0xb, true),
-> 
-> It's deprecating the "cpuid-0xb" property.
-> 
-> I think we need go with the standard process to deprecate it.
+Eric Blake <eblake@redhat.com> writes:
 
-Thanks! I got your point.
+> On Thu, May 08, 2025 at 07:28:26AM +0200, Markus Armbruster wrote:
+>> Let's take a step back from the concrete interface and ponder what we're
+>> trying to do.  We want three cases:
+>>=20
+>> * Allocated, reads return unspecified crap (security hazard)
+>>=20
+>> * Allocated, reads return specified data
+>>=20
+>> * Sparse, reads return zeroes
+>>=20
+>> How would we do this if we started on a green field?
+>>=20
+>> Here's my try:
+>>=20
+>>     bool sparse
+>>     uint8 contents
+>>=20
+>> so that
+>>=20
+>> * Allocated, reads return unspecified crap (security hazard)
+>>=20
+>>   @sparse is false, and @contents is absent
+>>=20
+>> * Allocated, reads return specified data
+>>=20
+>>   @sparse is false, and @contents is present
+>>=20
+>> * Sparse, reads return zeroes
+>>=20
+>>   @sparse is true, and @contents must absent or zero
+>
+> That indeed is a nice view of what we hope to test with.
+>
+>>=20
+>> I'd make @sparse either mandatory or default to true, so that we don't
+>> default to security hazard.
+>>=20
+>> Now compare this to your patch: same configuration data (bool =C3=97 uin=
+t8),
+>> better names, cleaner semantics, better defaults.
+>>=20
+>> Unless we want to break compatibility, we're stuck with the name
+>> @read-zeroes for the bool, and its trap-for-the-unwary default value,
+>> but cleaner semantics seem possible.
+>>=20
+>> Thoughts?
+>
+> What if we add @sparse as an optional bool, but mutually exclusive
+> with @read-zeroes.  That would lead to 27 combinations of absent,
+> present with 0 value, or present with non-zero value; but with fewer
+> actual cases supported.  Something like your above table of what to do
+> with sparse and contents, and with these additional rules:
+>
+> read-zeroes omitted, sparse omitted
+>  - at present, defaults to sparse=3Dfalse for back-compat
+>  - may change in the future [*]
+> read-zeroes present, sparse omitted
+>  - behaves like explicit setting of sparse, but with old spelling
+>  - may issue a deprecation warning [*]
+> read-zeroes omitted, sparse present
+>  - explicit spelling, no warning (use above logic for how contents acts)
+> read-zeroes and sparse both present
+>  - error, whether values were same or different
+>
+> [*] Simultaneously, we start the deprecation cycle on @read-zeroes -
+> tagging it as deprecated now, and removing it in a couple of releases.
+> Once it is gone, we are left with just @sparse; at that time, we can
+> decide to either make it mandatory (if so, we should warn now if
+> neither read-zeroes nor sparse is specified), or leave it optional but
+> change it to default true (so that the security hazard of sparse:false
+> and omitted contents is now opt-in instead of default).
 
-Though this property is introduced for compatibility, as its comment
-said "Compatibility bits for old machine types", it is also useful for 
-somer users.
+The recommended way to stay on top of deprecations in QMP is to test
+with -compat deprecated-input=3Dreject,deprecated-output=3Dhide or similar.
+This relies on special feature 'deprecated', and is limited to syntax.
 
-Fo example, in the early development stages of TDX, when there was no
-full support for CPU topology, Intel had disable this property for
-testing and found this bug:
+There is no way to formally deprecate defaults.
 
-https://lore.kernel.org/qemu-devel/20250227062523.124601-3-zhao1.liu@intel.com/
+We can deprecate @read-zeroes, but this wouldn't cover behavior when
+absent.  Changing that is a compatibility break.  Hard to justify.
 
-So, I think there may be other similar use cases as well.
+Except when the interface in question is unstable.  Block drivers
+null-aio and null-co aren't.  Should they?
 
-And, if someone wants to emulate ancient x86 CPUs (though I can't
-currently confirm from which generation of CPUs 0xb support started), he
-may want to consider disable this property as well.
-
-The main problem here is that the "property" mechanism doesn't
-distinguish between internal use/public use, and although it was originally
-intended for internal QEMU use, it also leaks to the user, creating some
-external use cases.
-
-@Philippe, thank you for cleaning up this case! I think we can keep this
-property, and if you don't mind, I can modify its comment later to
-indicate that it's used to adjust the topology support for the CPU.
-
-Thanks,
-Zhao
+Warnings are awkward with QMP.  We can only warn to stderr.
 
 
