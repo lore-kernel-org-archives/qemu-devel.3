@@ -4,58 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F9AC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3015BC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:21:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDNa7-00043e-QY; Fri, 09 May 2025 09:16:04 -0400
+	id 1uDNYE-0001nK-Pp; Fri, 09 May 2025 09:14:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYv-0002Iq-1f
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:52 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYD-0001nC-UV
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYr-0007Do-Ex
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:47 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYA-00072Y-V1
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746796483;
+ s=mimecast20190719; t=1746796441;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sVUcCZRKOq/kbj+QXNOx7sH+oheFYfZEKGWAOTGUE08=;
- b=Yyo0NgV7exzHh6Jzf2dgKZQDn9SqE/3NTvFbCcgDSLrW3K8qm/DbQLYR9qacylEQ9u6Oa+
- 6k6PFqcOaXOrmAacjO1xSTeYT8L5SCy8ZrDIsjfUNlyN4Y26msmLIUe+1vGGcqguentjo6
- 4nqR/CkyAVpIKTHbVm6p9R/oy8bM19k=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=EgX52XnmIkBlF15up3p+eVDztujVWFimpqqDzgYI5l0=;
+ b=ek0Q6M6iyDFnjiFV0Zj+/t8u7hdDpiQNa37bAC3rMZYFkTSq8fBLYaNNwh44tgqsJbdpY5
+ GFRnCJNev7f8uLO2Hxqjqq9Z1xCKoOCzGV6LnjaTcXVaW23OavvCAdToVuMbqTyapAQOtY
+ zzEEmkqI/HvBsfMGBY96Gv11bsiUoxk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-543-ob9k7SdHPaWbzibHA3ExWA-1; Fri,
- 09 May 2025 09:14:41 -0400
-X-MC-Unique: ob9k7SdHPaWbzibHA3ExWA-1
-X-Mimecast-MFC-AGG-ID: ob9k7SdHPaWbzibHA3ExWA_1746796480
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-Uq-xfJtNMeew1sCqcrPhNA-1; Fri,
+ 09 May 2025 09:13:57 -0400
+X-MC-Unique: Uq-xfJtNMeew1sCqcrPhNA-1
+X-Mimecast-MFC-AGG-ID: Uq-xfJtNMeew1sCqcrPhNA_1746796435
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 89F34180045B; Fri,  9 May 2025 13:14:40 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 80576195605B; Fri,  9 May 2025 13:13:55 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5012C18003FD; Fri,  9 May 2025 13:14:37 +0000 (UTC)
+ id 9AA5318003FD; Fri,  9 May 2025 13:13:52 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- John Levon <john.levon@nutanix.com>,
- John Johnson <john.g.johnson@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 24/28] vfio: add device IO ops vector
-Date: Fri,  9 May 2025 15:13:13 +0200
-Message-ID: <20250509131317.164235-25-clg@redhat.com>
+Subject: [PULL 10/28] vfio/igd: Allow overriding GMS with 0xf0 to 0xfe on Gen9+
+Date: Fri,  9 May 2025 15:12:59 +0200
+Message-ID: <20250509131317.164235-11-clg@redhat.com>
 In-Reply-To: <20250509131317.164235-1-clg@redhat.com>
 References: <20250509131317.164235-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,333 +85,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Levon <john.levon@nutanix.com>
+From: Tomita Moeko <tomitamoeko@gmail.com>
 
-For vfio-user, device operations such as IRQ handling and region
-read/writes are implemented in userspace over the control socket, not
-ioctl() to the vfio kernel driver; add an ops vector to generalize this,
-and implement vfio_device_io_ops_ioctl for interacting with the kernel
-vfio driver.
+On Gen9 and later IGD devices, GMS 0xf0 to 0xfe represents 4MB to 60MB
+pre-allocated memory size in 4MB increments. Allow users overriding
+GMS with these values.
 
-Originally-by: John Johnson <john.g.johnson@oracle.com>
-Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
-Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
-Signed-off-by: John Levon <john.levon@nutanix.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250507152020.1254632-11-john.levon@nutanix.com
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+Reviewed-by: Corvin Köhne <c.koehne@beckhoff.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Tested-by: Alex Williamson <alex.williamson@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250505170305.23622-8-tomitamoeko@gmail.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-device.h | 38 ++++++++++++++++++
- hw/vfio/container-base.c      |  6 +--
- hw/vfio/device.c              | 74 +++++++++++++++++++++++++++++------
- hw/vfio/listener.c            | 13 +++---
- hw/vfio/pci.c                 | 10 ++---
- 5 files changed, 114 insertions(+), 27 deletions(-)
+ hw/vfio/igd.c | 59 +++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 41 insertions(+), 18 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 4a3220294309d718bb3230a5d3f4bab9e082f951..7e1e81e76bd2b484108282f7147ff7a0793360cf 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -41,6 +41,7 @@ enum {
- };
- 
- typedef struct VFIODeviceOps VFIODeviceOps;
-+typedef struct VFIODeviceIOOps VFIODeviceIOOps;
- typedef struct VFIOMigration VFIOMigration;
- 
- typedef struct IOMMUFDBackend IOMMUFDBackend;
-@@ -66,6 +67,7 @@ typedef struct VFIODevice {
-     OnOffAuto migration_multifd_transfer;
-     bool migration_events;
-     VFIODeviceOps *ops;
-+    VFIODeviceIOOps *io_ops;
-     unsigned int num_irqs;
-     unsigned int num_regions;
-     unsigned int flags;
-@@ -151,6 +153,42 @@ typedef QLIST_HEAD(VFIODeviceList, VFIODevice) VFIODeviceList;
- extern VFIODeviceList vfio_device_list;
- 
- #ifdef CONFIG_LINUX
-+/*
-+ * How devices communicate with the server.  The default option is through
-+ * ioctl() to the kernel VFIO driver, but vfio-user can use a socket to a remote
-+ * process.
-+ */
-+struct VFIODeviceIOOps {
-+    /**
-+     * @device_feature
-+     *
-+     * Fill in feature info for the given device.
-+     */
-+    int (*device_feature)(VFIODevice *vdev, struct vfio_device_feature *);
-+
-+    /**
-+     * @get_region_info
-+     *
-+     * Fill in @info with information on the region given by @info->index.
-+     */
-+    int (*get_region_info)(VFIODevice *vdev,
-+                           struct vfio_region_info *info);
-+
-+    /**
-+     * @get_irq_info
-+     *
-+     * Fill in @irq with information on the IRQ given by @info->index.
-+     */
-+    int (*get_irq_info)(VFIODevice *vdev, struct vfio_irq_info *irq);
-+
-+    /**
-+     * @set_irqs
-+     *
-+     * Configure IRQs as defined by @irqs.
-+     */
-+    int (*set_irqs)(VFIODevice *vdev, struct vfio_irq_set *irqs);
-+};
-+
- void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
-                          struct vfio_device_info *info);
- 
-diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-index 3ff473a45c2db779a54f3d8e77079d4a1601eb36..1c6ca94b6040813a63bb8fca07b25189a8d8cb76 100644
---- a/hw/vfio/container-base.c
-+++ b/hw/vfio/container-base.c
-@@ -198,11 +198,7 @@ static int vfio_device_dma_logging_report(VFIODevice *vbasedev, hwaddr iova,
-     feature->flags = VFIO_DEVICE_FEATURE_GET |
-                      VFIO_DEVICE_FEATURE_DMA_LOGGING_REPORT;
- 
--    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
--        return -errno;
--    }
--
--    return 0;
-+    return vbasedev->io_ops->device_feature(vbasedev, feature);
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 9dec32818c91f2021f6dc0c4bbe1fc0682df1a55..8ad9d723e29cd4d63e12346b6e40604ac020e747 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -412,6 +412,44 @@ static bool vfio_pci_igd_setup_lpc_bridge(VFIOPCIDevice *vdev, Error **errp)
+     return true;
  }
  
- static int vfio_container_iommu_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 5d837092cba2c35ad17d93dd5c3627d83defc818..40a196bfb9a86656610863d4f064db383c7072e0 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -82,7 +82,7 @@ void vfio_device_irq_disable(VFIODevice *vbasedev, int index)
-         .count = 0,
-     };
- 
--    ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, &irq_set);
-+    vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
- }
- 
- void vfio_device_irq_unmask(VFIODevice *vbasedev, int index)
-@@ -95,7 +95,7 @@ void vfio_device_irq_unmask(VFIODevice *vbasedev, int index)
-         .count = 1,
-     };
- 
--    ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, &irq_set);
-+    vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
- }
- 
- void vfio_device_irq_mask(VFIODevice *vbasedev, int index)
-@@ -108,7 +108,7 @@ void vfio_device_irq_mask(VFIODevice *vbasedev, int index)
-         .count = 1,
-     };
- 
--    ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, &irq_set);
-+    vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
- }
- 
- static inline const char *action_to_str(int action)
-@@ -167,7 +167,7 @@ bool vfio_device_irq_set_signaling(VFIODevice *vbasedev, int index, int subindex
-     pfd = (int32_t *)&irq_set->data;
-     *pfd = fd;
- 
--    if (!ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, irq_set)) {
-+    if (!vbasedev->io_ops->set_irqs(vbasedev, irq_set)) {
-         return true;
-     }
- 
-@@ -188,22 +188,19 @@ bool vfio_device_irq_set_signaling(VFIODevice *vbasedev, int index, int subindex
- int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
-                              struct vfio_irq_info *info)
- {
--    int ret;
--
-     memset(info, 0, sizeof(*info));
- 
-     info->argsz = sizeof(*info);
-     info->index = index;
- 
--    ret = ioctl(vbasedev->fd, VFIO_DEVICE_GET_IRQ_INFO, info);
--
--    return ret < 0 ? -errno : ret;
-+    return vbasedev->io_ops->get_irq_info(vbasedev, info);
- }
- 
- int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
-                                 struct vfio_region_info **info)
- {
-     size_t argsz = sizeof(struct vfio_region_info);
-+    int ret;
- 
-     *info = g_malloc0(argsz);
- 
-@@ -211,10 +208,11 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
- retry:
-     (*info)->argsz = argsz;
- 
--    if (ioctl(vbasedev->fd, VFIO_DEVICE_GET_REGION_INFO, *info)) {
-+    ret = vbasedev->io_ops->get_region_info(vbasedev, *info);
-+    if (ret != 0) {
-         g_free(*info);
-         *info = NULL;
--        return -errno;
-+        return ret;
-     }
- 
-     if ((*info)->argsz > argsz) {
-@@ -320,11 +318,14 @@ void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
-     vbasedev->fd = fd;
- }
- 
-+static VFIODeviceIOOps vfio_device_io_ops_ioctl;
-+
- void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
-                       DeviceState *dev, bool ram_discard)
- {
-     vbasedev->type = type;
-     vbasedev->ops = ops;
-+    vbasedev->io_ops = &vfio_device_io_ops_ioctl;
-     vbasedev->dev = dev;
-     vbasedev->fd = -1;
- 
-@@ -442,3 +443,54 @@ void vfio_device_unprepare(VFIODevice *vbasedev)
-     QLIST_REMOVE(vbasedev, global_next);
-     vbasedev->bcontainer = NULL;
- }
-+
-+/*
-+ * Traditional ioctl() based io
-+ */
-+
-+static int vfio_device_io_device_feature(VFIODevice *vbasedev,
-+                                         struct vfio_device_feature *feature)
++static bool vfio_pci_igd_override_gms(int gen, uint32_t gms, uint32_t *gmch)
 +{
-+    int ret;
++    bool ret = false;
 +
-+    ret = ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature);
++    if (gen == -1) {
++        error_report("x-igd-gms is not supported on this device");
++    } else if (gen < 8) {
++        if (gms <= 0x10) {
++            *gmch &= ~(IGD_GMCH_GEN6_GMS_MASK << IGD_GMCH_GEN6_GMS_SHIFT);
++            *gmch |= gms << IGD_GMCH_GEN6_GMS_SHIFT;
++            ret = true;
++        } else {
++            error_report(QERR_INVALID_PARAMETER_VALUE, "x-igd-gms", "0~0x10");
++        }
++    } else if (gen == 8) {
++        if (gms <= 0x40) {
++            *gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
++            *gmch |= gms << IGD_GMCH_GEN8_GMS_SHIFT;
++            ret = true;
++        } else {
++            error_report(QERR_INVALID_PARAMETER_VALUE, "x-igd-gms", "0~0x40");
++        }
++    } else {
++        /* 0x0  to 0x40: 32MB increments starting at 0MB */
++        /* 0xf0 to 0xfe: 4MB increments starting at 4MB */
++        if ((gms <= 0x40) || (gms >= 0xf0 && gms <= 0xfe)) {
++            *gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
++            *gmch |= gms << IGD_GMCH_GEN8_GMS_SHIFT;
++            ret = true;
++        } else {
++            error_report(QERR_INVALID_PARAMETER_VALUE,
++                         "x-igd-gms", "0~0x40 or 0xf0~0xfe");
++        }
++    }
 +
-+    return ret < 0 ? -errno : ret;
-+}
-+
-+static int vfio_device_io_get_region_info(VFIODevice *vbasedev,
-+                                          struct vfio_region_info *info)
-+{
-+    int ret;
-+
-+    ret = ioctl(vbasedev->fd, VFIO_DEVICE_GET_REGION_INFO, info);
-+
-+    return ret < 0 ? -errno : ret;
-+}
-+
-+static int vfio_device_io_get_irq_info(VFIODevice *vbasedev,
-+                                       struct vfio_irq_info *info)
-+{
-+    int ret;
-+
-+    ret = ioctl(vbasedev->fd, VFIO_DEVICE_GET_IRQ_INFO, info);
-+
-+    return ret < 0 ? -errno : ret;
-+}
-+
-+static int vfio_device_io_set_irqs(VFIODevice *vbasedev,
-+                                   struct vfio_irq_set *irqs)
-+{
-+    int ret;
-+
-+    ret = ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, irqs);
-+
-+    return ret < 0 ? -errno : ret;
-+}
-+
-+static VFIODeviceIOOps vfio_device_io_ops_ioctl = {
-+    .device_feature = vfio_device_io_device_feature,
-+    .get_region_info = vfio_device_io_get_region_info,
-+    .get_irq_info = vfio_device_io_get_irq_info,
-+    .set_irqs = vfio_device_io_set_irqs,
-+};
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index e7ade7d62ec81c9228e096ba4818a8dd09f54bd3..2b93ca55b6d47e4ef3e89bea681d6e345f8d3abe 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -794,13 +794,17 @@ static void vfio_devices_dma_logging_stop(VFIOContainerBase *bcontainer)
-                      VFIO_DEVICE_FEATURE_DMA_LOGGING_STOP;
- 
-     QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
-+        int ret;
-+
-         if (!vbasedev->dirty_tracking) {
-             continue;
-         }
- 
--        if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
-+        ret = vbasedev->io_ops->device_feature(vbasedev, feature);
-+
-+        if (ret != 0) {
-             warn_report("%s: Failed to stop DMA logging, err %d (%s)",
--                        vbasedev->name, -errno, strerror(errno));
-+                        vbasedev->name, -ret, strerror(-ret));
-         }
-         vbasedev->dirty_tracking = false;
-     }
-@@ -901,10 +905,9 @@ static bool vfio_devices_dma_logging_start(VFIOContainerBase *bcontainer,
-             continue;
-         }
- 
--        ret = ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature);
-+        ret = vbasedev->io_ops->device_feature(vbasedev, feature);
-         if (ret) {
--            ret = -errno;
--            error_setg_errno(errp, errno, "%s: Failed to start DMA logging",
-+            error_setg_errno(errp, -ret, "%s: Failed to start DMA logging",
-                              vbasedev->name);
-             goto out;
-         }
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index f65c9463ce0350e6a1962309da21e96d1aa6cfdd..da2ffc9bf36778fb61a7decf345391caee528b2a 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -381,7 +381,7 @@ static void vfio_msi_interrupt(void *opaque)
- static int vfio_enable_msix_no_vec(VFIOPCIDevice *vdev)
- {
-     g_autofree struct vfio_irq_set *irq_set = NULL;
--    int ret = 0, argsz;
-+    int argsz;
-     int32_t *fd;
- 
-     argsz = sizeof(*irq_set) + sizeof(*fd);
-@@ -396,9 +396,7 @@ static int vfio_enable_msix_no_vec(VFIOPCIDevice *vdev)
-     fd = (int32_t *)&irq_set->data;
-     *fd = -1;
- 
--    ret = ioctl(vdev->vbasedev.fd, VFIO_DEVICE_SET_IRQS, irq_set);
--
--    return ret < 0 ? -errno : ret;
-+    return vdev->vbasedev.io_ops->set_irqs(&vdev->vbasedev, irq_set);
- }
- 
- static int vfio_enable_vectors(VFIOPCIDevice *vdev, bool msix)
-@@ -455,11 +453,11 @@ static int vfio_enable_vectors(VFIOPCIDevice *vdev, bool msix)
-         fds[i] = fd;
-     }
- 
--    ret = ioctl(vdev->vbasedev.fd, VFIO_DEVICE_SET_IRQS, irq_set);
-+    ret = vdev->vbasedev.io_ops->set_irqs(&vdev->vbasedev, irq_set);
- 
-     g_free(irq_set);
- 
--    return ret < 0 ? -errno : ret;
 +    return ret;
- }
++}
++
+ #define IGD_GGC_MMIO_OFFSET     0x108040
+ #define IGD_BDSM_MMIO_OFFSET    0x1080C0
  
- static void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
+@@ -594,24 +632,9 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+      * 32MiB. This option should only be used when the desired size cannot be
+      * set from DVMT Pre-Allocated option in host BIOS.
+      */
+-    if (vdev->igd_gms) {
+-        if (gen < 8) {
+-            if (vdev->igd_gms <= 0x10) {
+-                gmch &= ~(IGD_GMCH_GEN6_GMS_MASK << IGD_GMCH_GEN6_GMS_SHIFT);
+-                gmch |= vdev->igd_gms << IGD_GMCH_GEN6_GMS_SHIFT;
+-            } else {
+-                error_report(QERR_INVALID_PARAMETER_VALUE,
+-                             "x-igd-gms", "0~0x10");
+-            }
+-        } else {
+-            if (vdev->igd_gms <= 0x40) {
+-                gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
+-                gmch |= vdev->igd_gms << IGD_GMCH_GEN8_GMS_SHIFT;
+-            } else {
+-                error_report(QERR_INVALID_PARAMETER_VALUE,
+-                             "x-igd-gms", "0~0x40");
+-            }
+-        }
++    if (vdev->igd_gms &&
++        !vfio_pci_igd_override_gms(gen, vdev->igd_gms, &gmch)) {
++        return false;
+     }
+ 
+     gms_size = igd_stolen_memory_size(gen, gmch);
 -- 
 2.49.0
 
