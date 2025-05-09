@@ -4,55 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68B8AC3ABCE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18F9AC3ABC3
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:21:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDNaN-0005CJ-7a; Fri, 09 May 2025 09:16:19 -0400
+	id 1uDNa7-00043e-QY; Fri, 09 May 2025 09:16:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYf-0001wv-5J
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:36 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYv-0002Iq-1f
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYc-0007BO-0M
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:32 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYr-0007Do-Ex
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746796468;
+ s=mimecast20190719; t=1746796483;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dGkPGUSZMhIMr4dT/QB+Dd0huVnEKb4u0dhAGyLD1bs=;
- b=Lfb/FCO1AcBlYlQ42KOvY9an/yj6wvOkP2FdszWLit5A2sPLyUDE2PQa7RWgW4gPt3paJB
- KTx08jZ2cOBa2PJYQL8gKwuCg7F1rM4NnTPNnTKTvwbJHslvpjXyeyNr6gN+u8DoUWTqw1
- PA0Fgi6wfPvJCz3W9pC61OwRJVZssdE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=sVUcCZRKOq/kbj+QXNOx7sH+oheFYfZEKGWAOTGUE08=;
+ b=Yyo0NgV7exzHh6Jzf2dgKZQDn9SqE/3NTvFbCcgDSLrW3K8qm/DbQLYR9qacylEQ9u6Oa+
+ 6k6PFqcOaXOrmAacjO1xSTeYT8L5SCy8ZrDIsjfUNlyN4Y26msmLIUe+1vGGcqguentjo6
+ 4nqR/CkyAVpIKTHbVm6p9R/oy8bM19k=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-31-zcDR27mUMkeavKly0y1qow-1; Fri,
- 09 May 2025 09:14:22 -0400
-X-MC-Unique: zcDR27mUMkeavKly0y1qow-1
-X-Mimecast-MFC-AGG-ID: zcDR27mUMkeavKly0y1qow_1746796462
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-543-ob9k7SdHPaWbzibHA3ExWA-1; Fri,
+ 09 May 2025 09:14:41 -0400
+X-MC-Unique: ob9k7SdHPaWbzibHA3ExWA-1
+X-Mimecast-MFC-AGG-ID: ob9k7SdHPaWbzibHA3ExWA_1746796480
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F20AB1956069; Fri,  9 May 2025 13:14:21 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 89F34180045B; Fri,  9 May 2025 13:14:40 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 36CA418003FD; Fri,  9 May 2025 13:14:18 +0000 (UTC)
+ id 5012C18003FD; Fri,  9 May 2025 13:14:37 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  John Levon <john.levon@nutanix.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 18/28] vfio: add vfio_device_get_irq_info() helper
-Date: Fri,  9 May 2025 15:13:07 +0200
-Message-ID: <20250509131317.164235-19-clg@redhat.com>
+Subject: [PULL 24/28] vfio: add device IO ops vector
+Date: Fri,  9 May 2025 15:13:13 +0200
+Message-ID: <20250509131317.164235-25-clg@redhat.com>
 In-Reply-To: <20250509131317.164235-1-clg@redhat.com>
 References: <20250509131317.164235-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -86,234 +89,331 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Levon <john.levon@nutanix.com>
 
-Add a helper similar to vfio_device_get_region_info() and use it
-everywhere.
+For vfio-user, device operations such as IRQ handling and region
+read/writes are implemented in userspace over the control socket, not
+ioctl() to the vfio kernel driver; add an ops vector to generalize this,
+and implement vfio_device_io_ops_ioctl for interacting with the kernel
+vfio driver.
 
-Replace a couple of needless allocations with stack variables.
-
-As a side-effect, this fixes a minor error reporting issue in the call
-from vfio_msix_early_setup().
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Originally-by: John Johnson <john.g.johnson@oracle.com>
+Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20250507152020.1254632-5-john.levon@nutanix.com
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250507152020.1254632-11-john.levon@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-device.h |  3 +++
- hw/vfio/ap.c                  | 19 ++++++++++---------
- hw/vfio/ccw.c                 | 20 +++++++++++---------
- hw/vfio/device.c              | 15 +++++++++++++++
- hw/vfio/pci.c                 | 23 +++++++++++------------
- hw/vfio/platform.c            |  6 +++---
- 6 files changed, 53 insertions(+), 33 deletions(-)
+ include/hw/vfio/vfio-device.h | 38 ++++++++++++++++++
+ hw/vfio/container-base.c      |  6 +--
+ hw/vfio/device.c              | 74 +++++++++++++++++++++++++++++------
+ hw/vfio/listener.c            | 13 +++---
+ hw/vfio/pci.c                 | 10 ++---
+ 5 files changed, 114 insertions(+), 27 deletions(-)
 
 diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 8b1437ba6654d08f65740f42dc3a50775d7f5cc1..a7eaaa31e7e98a1ec73eefde0d935842ef9da401 100644
+index 4a3220294309d718bb3230a5d3f4bab9e082f951..7e1e81e76bd2b484108282f7147ff7a0793360cf 100644
 --- a/include/hw/vfio/vfio-device.h
 +++ b/include/hw/vfio/vfio-device.h
-@@ -147,6 +147,9 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
- int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
-                                      uint32_t subtype, struct vfio_region_info **info);
- bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_type);
+@@ -41,6 +41,7 @@ enum {
+ };
+ 
+ typedef struct VFIODeviceOps VFIODeviceOps;
++typedef struct VFIODeviceIOOps VFIODeviceIOOps;
+ typedef struct VFIOMigration VFIOMigration;
+ 
+ typedef struct IOMMUFDBackend IOMMUFDBackend;
+@@ -66,6 +67,7 @@ typedef struct VFIODevice {
+     OnOffAuto migration_multifd_transfer;
+     bool migration_events;
+     VFIODeviceOps *ops;
++    VFIODeviceIOOps *io_ops;
+     unsigned int num_irqs;
+     unsigned int num_regions;
+     unsigned int flags;
+@@ -151,6 +153,42 @@ typedef QLIST_HEAD(VFIODeviceList, VFIODevice) VFIODeviceList;
+ extern VFIODeviceList vfio_device_list;
+ 
+ #ifdef CONFIG_LINUX
++/*
++ * How devices communicate with the server.  The default option is through
++ * ioctl() to the kernel VFIO driver, but vfio-user can use a socket to a remote
++ * process.
++ */
++struct VFIODeviceIOOps {
++    /**
++     * @device_feature
++     *
++     * Fill in feature info for the given device.
++     */
++    int (*device_feature)(VFIODevice *vdev, struct vfio_device_feature *);
 +
-+int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
-+                                struct vfio_irq_info *info);
- #endif
- 
- /* Returns 0 on success, or a negative errno. */
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index 1207c08d8d94dc6b9004725f8e266c2ec4d04105..785c0a019754a436c59357cf957c4dc6f81ba578 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -74,10 +74,10 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
-                                           unsigned int irq, Error **errp)
- {
-     int fd;
--    size_t argsz;
-+    int ret;
-     IOHandler *fd_read;
-     EventNotifier *notifier;
--    g_autofree struct vfio_irq_info *irq_info = NULL;
-+    struct vfio_irq_info irq_info;
-     VFIODevice *vdev = &vapdev->vdev;
- 
-     switch (irq) {
-@@ -96,14 +96,15 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
-         return false;
-     }
- 
--    argsz = sizeof(*irq_info);
--    irq_info = g_malloc0(argsz);
--    irq_info->index = irq;
--    irq_info->argsz = argsz;
-+    ret = vfio_device_get_irq_info(vdev, irq, &irq_info);
++    /**
++     * @get_region_info
++     *
++     * Fill in @info with information on the region given by @info->index.
++     */
++    int (*get_region_info)(VFIODevice *vdev,
++                           struct vfio_region_info *info);
 +
-+    if (ret < 0) {
-+        error_setg_errno(errp, -ret, "vfio: Error getting irq info");
-+        return false;
-+    }
- 
--    if (ioctl(vdev->fd, VFIO_DEVICE_GET_IRQ_INFO,
--              irq_info) < 0 || irq_info->count < 1) {
--        error_setg_errno(errp, errno, "vfio: Error getting irq info");
-+    if (irq_info.count < 1) {
-+        error_setg(errp, "vfio: Error getting irq info, count=0");
-         return false;
-     }
- 
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index fde0c3fbef3ca2204381c8ee6d07b502d2160e63..ab3fabf991c35abb6c40d925f526c2a2d8955aef 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -376,8 +376,8 @@ static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-                                            Error **errp)
- {
-     VFIODevice *vdev = &vcdev->vdev;
--    g_autofree struct vfio_irq_info *irq_info = NULL;
--    size_t argsz;
-+    struct vfio_irq_info irq_info;
-+    int ret;
-     int fd;
-     EventNotifier *notifier;
-     IOHandler *fd_read;
-@@ -406,13 +406,15 @@ static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
-         return false;
-     }
- 
--    argsz = sizeof(*irq_info);
--    irq_info = g_malloc0(argsz);
--    irq_info->index = irq;
--    irq_info->argsz = argsz;
--    if (ioctl(vdev->fd, VFIO_DEVICE_GET_IRQ_INFO,
--              irq_info) < 0 || irq_info->count < 1) {
--        error_setg_errno(errp, errno, "vfio: Error getting irq info");
-+    ret = vfio_device_get_irq_info(vdev, irq, &irq_info);
++    /**
++     * @get_irq_info
++     *
++     * Fill in @irq with information on the IRQ given by @info->index.
++     */
++    int (*get_irq_info)(VFIODevice *vdev, struct vfio_irq_info *irq);
 +
-+    if (ret < 0) {
-+        error_setg_errno(errp, -ret, "vfio: Error getting irq info");
-+        return false;
-+    }
++    /**
++     * @set_irqs
++     *
++     * Configure IRQs as defined by @irqs.
++     */
++    int (*set_irqs)(VFIODevice *vdev, struct vfio_irq_set *irqs);
++};
 +
-+    if (irq_info.count < 1) {
-+        error_setg(errp, "vfio: Error getting irq info, count=0");
-         return false;
-     }
+ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
+                          struct vfio_device_info *info);
  
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 9673b0717ead435e117d8084720fde4ba3a13dd8..5d837092cba2c35ad17d93dd5c3627d83defc818 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -185,6 +185,21 @@ bool vfio_device_irq_set_signaling(VFIODevice *vbasedev, int index, int subindex
-     return false;
+diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+index 3ff473a45c2db779a54f3d8e77079d4a1601eb36..1c6ca94b6040813a63bb8fca07b25189a8d8cb76 100644
+--- a/hw/vfio/container-base.c
++++ b/hw/vfio/container-base.c
+@@ -198,11 +198,7 @@ static int vfio_device_dma_logging_report(VFIODevice *vbasedev, hwaddr iova,
+     feature->flags = VFIO_DEVICE_FEATURE_GET |
+                      VFIO_DEVICE_FEATURE_DMA_LOGGING_REPORT;
+ 
+-    if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
+-        return -errno;
+-    }
+-
+-    return 0;
++    return vbasedev->io_ops->device_feature(vbasedev, feature);
  }
  
-+int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
-+                             struct vfio_irq_info *info)
+ static int vfio_container_iommu_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 5d837092cba2c35ad17d93dd5c3627d83defc818..40a196bfb9a86656610863d4f064db383c7072e0 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -82,7 +82,7 @@ void vfio_device_irq_disable(VFIODevice *vbasedev, int index)
+         .count = 0,
+     };
+ 
+-    ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, &irq_set);
++    vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
+ }
+ 
+ void vfio_device_irq_unmask(VFIODevice *vbasedev, int index)
+@@ -95,7 +95,7 @@ void vfio_device_irq_unmask(VFIODevice *vbasedev, int index)
+         .count = 1,
+     };
+ 
+-    ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, &irq_set);
++    vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
+ }
+ 
+ void vfio_device_irq_mask(VFIODevice *vbasedev, int index)
+@@ -108,7 +108,7 @@ void vfio_device_irq_mask(VFIODevice *vbasedev, int index)
+         .count = 1,
+     };
+ 
+-    ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, &irq_set);
++    vbasedev->io_ops->set_irqs(vbasedev, &irq_set);
+ }
+ 
+ static inline const char *action_to_str(int action)
+@@ -167,7 +167,7 @@ bool vfio_device_irq_set_signaling(VFIODevice *vbasedev, int index, int subindex
+     pfd = (int32_t *)&irq_set->data;
+     *pfd = fd;
+ 
+-    if (!ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, irq_set)) {
++    if (!vbasedev->io_ops->set_irqs(vbasedev, irq_set)) {
+         return true;
+     }
+ 
+@@ -188,22 +188,19 @@ bool vfio_device_irq_set_signaling(VFIODevice *vbasedev, int index, int subindex
+ int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
+                              struct vfio_irq_info *info)
+ {
+-    int ret;
+-
+     memset(info, 0, sizeof(*info));
+ 
+     info->argsz = sizeof(*info);
+     info->index = index;
+ 
+-    ret = ioctl(vbasedev->fd, VFIO_DEVICE_GET_IRQ_INFO, info);
+-
+-    return ret < 0 ? -errno : ret;
++    return vbasedev->io_ops->get_irq_info(vbasedev, info);
+ }
+ 
+ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
+                                 struct vfio_region_info **info)
+ {
+     size_t argsz = sizeof(struct vfio_region_info);
++    int ret;
+ 
+     *info = g_malloc0(argsz);
+ 
+@@ -211,10 +208,11 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
+ retry:
+     (*info)->argsz = argsz;
+ 
+-    if (ioctl(vbasedev->fd, VFIO_DEVICE_GET_REGION_INFO, *info)) {
++    ret = vbasedev->io_ops->get_region_info(vbasedev, *info);
++    if (ret != 0) {
+         g_free(*info);
+         *info = NULL;
+-        return -errno;
++        return ret;
+     }
+ 
+     if ((*info)->argsz > argsz) {
+@@ -320,11 +318,14 @@ void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
+     vbasedev->fd = fd;
+ }
+ 
++static VFIODeviceIOOps vfio_device_io_ops_ioctl;
++
+ void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
+                       DeviceState *dev, bool ram_discard)
+ {
+     vbasedev->type = type;
+     vbasedev->ops = ops;
++    vbasedev->io_ops = &vfio_device_io_ops_ioctl;
+     vbasedev->dev = dev;
+     vbasedev->fd = -1;
+ 
+@@ -442,3 +443,54 @@ void vfio_device_unprepare(VFIODevice *vbasedev)
+     QLIST_REMOVE(vbasedev, global_next);
+     vbasedev->bcontainer = NULL;
+ }
++
++/*
++ * Traditional ioctl() based io
++ */
++
++static int vfio_device_io_device_feature(VFIODevice *vbasedev,
++                                         struct vfio_device_feature *feature)
 +{
 +    int ret;
 +
-+    memset(info, 0, sizeof(*info));
++    ret = ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature);
 +
-+    info->argsz = sizeof(*info);
-+    info->index = index;
++    return ret < 0 ? -errno : ret;
++}
++
++static int vfio_device_io_get_region_info(VFIODevice *vbasedev,
++                                          struct vfio_region_info *info)
++{
++    int ret;
++
++    ret = ioctl(vbasedev->fd, VFIO_DEVICE_GET_REGION_INFO, info);
++
++    return ret < 0 ? -errno : ret;
++}
++
++static int vfio_device_io_get_irq_info(VFIODevice *vbasedev,
++                                       struct vfio_irq_info *info)
++{
++    int ret;
 +
 +    ret = ioctl(vbasedev->fd, VFIO_DEVICE_GET_IRQ_INFO, info);
 +
 +    return ret < 0 ? -errno : ret;
 +}
 +
- int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
-                                 struct vfio_region_info **info)
- {
++static int vfio_device_io_set_irqs(VFIODevice *vbasedev,
++                                   struct vfio_irq_set *irqs)
++{
++    int ret;
++
++    ret = ioctl(vbasedev->fd, VFIO_DEVICE_SET_IRQS, irqs);
++
++    return ret < 0 ? -errno : ret;
++}
++
++static VFIODeviceIOOps vfio_device_io_ops_ioctl = {
++    .device_feature = vfio_device_io_device_feature,
++    .get_region_info = vfio_device_io_get_region_info,
++    .get_irq_info = vfio_device_io_get_irq_info,
++    .set_irqs = vfio_device_io_set_irqs,
++};
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index e7ade7d62ec81c9228e096ba4818a8dd09f54bd3..2b93ca55b6d47e4ef3e89bea681d6e345f8d3abe 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -794,13 +794,17 @@ static void vfio_devices_dma_logging_stop(VFIOContainerBase *bcontainer)
+                      VFIO_DEVICE_FEATURE_DMA_LOGGING_STOP;
+ 
+     QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
++        int ret;
++
+         if (!vbasedev->dirty_tracking) {
+             continue;
+         }
+ 
+-        if (ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature)) {
++        ret = vbasedev->io_ops->device_feature(vbasedev, feature);
++
++        if (ret != 0) {
+             warn_report("%s: Failed to stop DMA logging, err %d (%s)",
+-                        vbasedev->name, -errno, strerror(errno));
++                        vbasedev->name, -ret, strerror(-ret));
+         }
+         vbasedev->dirty_tracking = false;
+     }
+@@ -901,10 +905,9 @@ static bool vfio_devices_dma_logging_start(VFIOContainerBase *bcontainer,
+             continue;
+         }
+ 
+-        ret = ioctl(vbasedev->fd, VFIO_DEVICE_FEATURE, feature);
++        ret = vbasedev->io_ops->device_feature(vbasedev, feature);
+         if (ret) {
+-            ret = -errno;
+-            error_setg_errno(errp, errno, "%s: Failed to start DMA logging",
++            error_setg_errno(errp, -ret, "%s: Failed to start DMA logging",
+                              vbasedev->name);
+             goto out;
+         }
 diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index e1fab21b47adb4df9b011b3efb6d7c15c84bc8c2..5ccfc67aef6e1653dcf47c88d53265072c7a95c6 100644
+index f65c9463ce0350e6a1962309da21e96d1aa6cfdd..da2ffc9bf36778fb61a7decf345391caee528b2a 100644
 --- a/hw/vfio/pci.c
 +++ b/hw/vfio/pci.c
-@@ -1555,8 +1555,7 @@ static bool vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
-     uint16_t ctrl;
-     uint32_t table, pba;
-     int ret, fd = vdev->vbasedev.fd;
--    struct vfio_irq_info irq_info = { .argsz = sizeof(irq_info),
--                                      .index = VFIO_PCI_MSIX_IRQ_INDEX };
-+    struct vfio_irq_info irq_info;
-     VFIOMSIXInfo *msix;
- 
-     pos = pci_find_capability(&vdev->pdev, PCI_CAP_ID_MSIX);
-@@ -1593,7 +1592,8 @@ static bool vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
-     msix->pba_offset = pba & ~PCI_MSIX_FLAGS_BIRMASK;
-     msix->entries = (ctrl & PCI_MSIX_FLAGS_QSIZE) + 1;
- 
--    ret = ioctl(vdev->vbasedev.fd, VFIO_DEVICE_GET_IRQ_INFO, &irq_info);
-+    ret = vfio_device_get_irq_info(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX,
-+                                   &irq_info);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "failed to get MSI-X irq info");
-         g_free(msix);
-@@ -2736,7 +2736,7 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
+@@ -381,7 +381,7 @@ static void vfio_msi_interrupt(void *opaque)
+ static int vfio_enable_msix_no_vec(VFIOPCIDevice *vdev)
  {
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     g_autofree struct vfio_region_info *reg_info = NULL;
--    struct vfio_irq_info irq_info = { .argsz = sizeof(irq_info) };
-+    struct vfio_irq_info irq_info;
-     int i, ret = -1;
+     g_autofree struct vfio_irq_set *irq_set = NULL;
+-    int ret = 0, argsz;
++    int argsz;
+     int32_t *fd;
  
-     /* Sanity check device */
-@@ -2797,12 +2797,10 @@ static bool vfio_populate_device(VFIOPCIDevice *vdev, Error **errp)
-         }
-     }
+     argsz = sizeof(*irq_set) + sizeof(*fd);
+@@ -396,9 +396,7 @@ static int vfio_enable_msix_no_vec(VFIOPCIDevice *vdev)
+     fd = (int32_t *)&irq_set->data;
+     *fd = -1;
  
--    irq_info.index = VFIO_PCI_ERR_IRQ_INDEX;
+-    ret = ioctl(vdev->vbasedev.fd, VFIO_DEVICE_SET_IRQS, irq_set);
 -
--    ret = ioctl(vdev->vbasedev.fd, VFIO_DEVICE_GET_IRQ_INFO, &irq_info);
-+    ret = vfio_device_get_irq_info(vbasedev, VFIO_PCI_ERR_IRQ_INDEX, &irq_info);
-     if (ret) {
-         /* This can fail for an old kernel or legacy PCI dev */
--        trace_vfio_populate_device_get_irq_info_failure(strerror(errno));
-+        trace_vfio_populate_device_get_irq_info_failure(strerror(-ret));
-     } else if (irq_info.count == 1) {
-         vdev->pci_aer = true;
-     } else {
-@@ -2911,17 +2909,18 @@ static void vfio_req_notifier_handler(void *opaque)
+-    return ret < 0 ? -errno : ret;
++    return vdev->vbasedev.io_ops->set_irqs(&vdev->vbasedev, irq_set);
+ }
  
- static void vfio_register_req_notifier(VFIOPCIDevice *vdev)
- {
--    struct vfio_irq_info irq_info = { .argsz = sizeof(irq_info),
--                                      .index = VFIO_PCI_REQ_IRQ_INDEX };
-+    struct vfio_irq_info irq_info;
-     Error *err = NULL;
-     int32_t fd;
-+    int ret;
- 
-     if (!(vdev->features & VFIO_FEATURE_ENABLE_REQ)) {
-         return;
+ static int vfio_enable_vectors(VFIOPCIDevice *vdev, bool msix)
+@@ -455,11 +453,11 @@ static int vfio_enable_vectors(VFIOPCIDevice *vdev, bool msix)
+         fds[i] = fd;
      }
  
--    if (ioctl(vdev->vbasedev.fd,
--              VFIO_DEVICE_GET_IRQ_INFO, &irq_info) < 0 || irq_info.count < 1) {
-+    ret = vfio_device_get_irq_info(&vdev->vbasedev, VFIO_PCI_REQ_IRQ_INDEX,
-+                                   &irq_info);
-+    if (ret < 0 || irq_info.count < 1) {
-         return;
-     }
+-    ret = ioctl(vdev->vbasedev.fd, VFIO_DEVICE_SET_IRQS, irq_set);
++    ret = vdev->vbasedev.io_ops->set_irqs(&vdev->vbasedev, irq_set);
  
-diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-index ffb3681607e2816ff0c07e2b5cfd255b46500b10..9a21f2e50a2945a6658b9be4fdec1bc1c98d0f20 100644
---- a/hw/vfio/platform.c
-+++ b/hw/vfio/platform.c
-@@ -474,10 +474,10 @@ static bool vfio_populate_device(VFIODevice *vbasedev, Error **errp)
-     QSIMPLEQ_INIT(&vdev->pending_intp_queue);
+     g_free(irq_set);
  
-     for (i = 0; i < vbasedev->num_irqs; i++) {
--        struct vfio_irq_info irq = { .argsz = sizeof(irq) };
-+        struct vfio_irq_info irq;
-+
-+        ret = vfio_device_get_irq_info(vbasedev, i, &irq);
+-    return ret < 0 ? -errno : ret;
++    return ret;
+ }
  
--        irq.index = i;
--        ret = ioctl(vbasedev->fd, VFIO_DEVICE_GET_IRQ_INFO, &irq);
-         if (ret) {
-             error_setg_errno(errp, -ret, "failed to get device irq info");
-             goto irq_err;
+ static void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
 -- 
 2.49.0
 
