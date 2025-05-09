@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1664C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 10:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79D14C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 10:23:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDKl3-0007xa-2w; Fri, 09 May 2025 06:15:09 -0400
+	id 1uDKsr-0005EE-Pn; Fri, 09 May 2025 06:23:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDKl1-0007wS-K1
- for qemu-devel@nongnu.org; Fri, 09 May 2025 06:15:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDKsp-0005Dm-5c
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 06:23:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDKkz-00021O-3i
- for qemu-devel@nongnu.org; Fri, 09 May 2025 06:15:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDKsk-0003FI-FY
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 06:23:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746785704;
+ s=mimecast20190719; t=1746786184;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8v/oX3df1V34QV6hsnXKyvAFQ2J4WuV+7D9IhovwpEU=;
- b=dNC8We2kL2rAVnnVYSfVR6NPuhhAWnxWrDeO5HZYf+XUab2g/HSiILhlg4tRUhxoI3Gaer
- SZX7KkfaMUywtDB6HUaT7VWP08SpKlsOgSV47EoMqUj/LvkCf3oAsHDQLPpD6gLgVJvBiU
- OniXQFIJKFE62CpCyGx/WCZqeA9ZuvQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZAEPxr9kstj2+ZjrdreGcx6naC2WtAoG66RuSrRWLSA=;
+ b=GcMsWTZ7lUiKpUkb7KxyufO2raClmNbkm14iczeBZo4Z+ghaKgg02wNYS6Cff6P2l3YKmu
+ DNldNuaiMm2zDDfo0tf9TC8X9q7ZcQ7jvAMwkZr9d6eA+fJiije9kQgbkAeryAqaKHdIZA
+ f42lOs7Bqu7EQ38vZYKH6o1PM8Mtxrs=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-464-DbvXILjzNpOVteuZE_X6YQ-1; Fri, 09 May 2025 06:15:02 -0400
-X-MC-Unique: DbvXILjzNpOVteuZE_X6YQ-1
-X-Mimecast-MFC-AGG-ID: DbvXILjzNpOVteuZE_X6YQ_1746785701
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43ea256f039so14860325e9.0
- for <qemu-devel@nongnu.org>; Fri, 09 May 2025 03:15:02 -0700 (PDT)
+ us-mta-252-InNZOZx4MyenXfxpqhCjIw-1; Fri, 09 May 2025 06:23:03 -0400
+X-MC-Unique: InNZOZx4MyenXfxpqhCjIw-1
+X-Mimecast-MFC-AGG-ID: InNZOZx4MyenXfxpqhCjIw_1746786182
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a1f9ddf04bso280897f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 09 May 2025 03:23:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746785701; x=1747390501;
+ d=1e100.net; s=20230601; t=1746786182; x=1747390982;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8v/oX3df1V34QV6hsnXKyvAFQ2J4WuV+7D9IhovwpEU=;
- b=uK7ESILbTInW7beWMGtDaOI4sDcDCmH73UmAS91iU53+KkSPITKZwdyDZwRLeSX2EO
- DLW1R6lAisMk6q+2AO/pcVNEjIC2WRGR4cmMJTd6xu3n13yxGtxS5bxBRYprYUF5jWbg
- y6hHMJZw9Bid95qE8XdzcSZaMtGTHadYVCSxHXyYHA2meQsO8vp2n9Bgp8r0YpvVsq3Q
- l3s8d64JWR2PmMi4FbqpVUqVI6iH91QvFn3GVklHa0YHzXu7yTAyc0mC9OOqJNLUoYWS
- +BuNt+ePqFOpwD23nfsEvsW70UI1bJCYr5Id2lN48nFx2ucYIzYLJIZqwTs6nEh1zIab
- 7vYQ==
+ bh=ZAEPxr9kstj2+ZjrdreGcx6naC2WtAoG66RuSrRWLSA=;
+ b=J6Y97n7p723DgQj8V2mzvZUqgtOvilcD1P1imbAujaBCvH5XY9Ox/nAt8VwuCFhZj0
+ +lVhLg+FhpGFdoSmrIpprmKYhZWyxm1yHJMA5RCPs87FVj25xZq6def11eB0iatlUiju
+ Sp7I+zNWGdhPCo4uConk0Jf3Gtu6UZvxd+bR0LRxyrNhEgjKrePjE4laCQljZ36cEAi5
+ VwEr4SGiOrKg2J4tRjBPSolYIcveVMc6kV8VzgJuzaMb+Bu+KCL6w+FpcQKl7SUPb1Wd
+ Cd43l0lsTmjML90FU4YDmLq8p9kB+LgttpWNpkelEv+l0sZt7dcihyJAg9WmhlXuzcS3
+ J8Kw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWuyMndHWe4NX1zqoFKLODwVaSklCKTkBAczvje/KlkWXlG2FNw8t7+0Xy06NSLy3ShZWPJrHtMpWzX@nongnu.org
-X-Gm-Message-State: AOJu0YzU6qrg67qR9wz+l+jfZQYsa+N7iJ3GJsv86kiz7Tpb+kO607Yu
- uEZX77WLvUUCGi2f3FyQq2t+/9gYIIeusx1oI8gQRj4wM99yLapsfvKbVEhvfS2zxk5MhdwvmcU
- i4jWiR1hqqv6fQHkvmieqTAsp7WBTJXJIoXA9XoRZzAeOLQlt5hGi
-X-Gm-Gg: ASbGncuI0JKwRg0YRMaPWc1dzhOKea7EGL9JZAcab631RNF5Fio57HTT7akeq8SEcad
- dTtSZXvx6tTSwRwApNw+AkTkWScMTxsj7smJlhpOw3E86KxcsLeqGuw+n62plJhvZasED9tC3IV
- NEJ1uamfTQdwGUjtB7pE/5APEENbAf+JYpxv3NEkcSMRjLIRYQxdkRoZ8u0mfUCPE53FVlEGkeL
- BBlThie3fHjZKWXHjrJkiwvIW7iP/dmR+whRWLC1XN9/CPRZiDzNg6uJNQSaRgiaEOK81lcoaBU
- T/yNu62yL7EB5Ltne3sY5gw+DVOhMcFSNnKH7AYjKpwJqulOSabdUBC1
-X-Received: by 2002:a05:600c:4e8f:b0:43c:ef55:f1e8 with SMTP id
- 5b1f17b1804b1-442d6d44d0fmr24397935e9.13.1746785700901; 
- Fri, 09 May 2025 03:15:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHu9OrR4/h9dQNpgbPjzM9fmRaGSlpZSYkPE3HQRhWCVZ0UoF7vEVGCdtkNMGQPxyrjNKhRtw==
-X-Received: by 2002:a05:600c:4e8f:b0:43c:ef55:f1e8 with SMTP id
- 5b1f17b1804b1-442d6d44d0fmr24397135e9.13.1746785699147; 
- Fri, 09 May 2025 03:14:59 -0700 (PDT)
+ AJvYcCVMSMpEZF0GqD9HbNTA1mHGnYRSnJg0pQjXUB6cBDpWsaUrwcqNEALN2Lcw154AFmnyEmXDGVCCVhI3@nongnu.org
+X-Gm-Message-State: AOJu0YzzircTtSvoIYZDzvmXpSRpBg83tidNm34ZKkkJNwx9MOuGNxhr
+ P1lzvJpuFsiHQLvuE3HQPFivedHl9EFrPq/g/XfWHFPtAGaOVqHj03x9lNsBY6UNwO4Zrwkf20+
+ Np+XYCEC6n12S9ZrSTcf/r3QaOIlo1k59nxeJ/e96JaqY/+lnXZ6y
+X-Gm-Gg: ASbGncs6CapS6tmlta+Fn4+2xFjEaQiQYVMP9f6kMGUf+6JcfuHIrlo42QtKV0kNmpN
+ JGFNxZJNH4pF/zfM1Qwq/bGZ2oyN2cbKFeuN/zhLMiqYvVwaKCItZkVOg0kxILsbmtuknc2xf66
+ 5pFbyWmR/SRtJ97uWLxRkX66hBqJKnmONhkRb6rl22Y4A69DPsK26w3ogT7cemO3dhu4NfenPnf
+ aih6ZsgYa2D5lmNzkP3jPkIPUJQxe11TE4OHBmqvrpVdslMqYX4lwnPFoFo3dXLhJaSknIknrW5
+ 0JmCsAhR/GT/GuFszXUl0CjlQkpW0OXK3P3drbreMF21NCq76bs9//U=
+X-Received: by 2002:adf:f687:0:b0:3a1:fa6c:4735 with SMTP id
+ ffacd0b85a97d-3a1fa6c4838mr882308f8f.35.1746786182058; 
+ Fri, 09 May 2025 03:23:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGEDU6wuaggfrm8umWU4ME3XDpyz7FpPpgOlA15hvAH+rAaNhdAzrBwRmlFEQuhkcJqGZ+u9g==
+X-Received: by 2002:adf:f687:0:b0:3a1:fa6c:4735 with SMTP id
+ ffacd0b85a97d-3a1fa6c4838mr882291f8f.35.1746786181620; 
+ Fri, 09 May 2025 03:23:01 -0700 (PDT)
 Received: from ?IPV6:2a01:cb1d:89d7:6e00:da58:edc2:d8ef:4b9f?
  ([2a01:cb1d:89d7:6e00:da58:edc2:d8ef:4b9f])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f58f33b5sm2826759f8f.54.2025.05.09.03.14.57
+ ffacd0b85a97d-3a1f5a5a2e0sm2756761f8f.101.2025.05.09.03.23.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 May 2025 03:14:58 -0700 (PDT)
-Message-ID: <474c1db8-8ba9-46d3-90c8-b99d677e56a7@redhat.com>
-Date: Fri, 9 May 2025 12:14:57 +0200
+ Fri, 09 May 2025 03:23:00 -0700 (PDT)
+Message-ID: <21444f2f-6666-40b6-9f0d-9a15efff99a8@redhat.com>
+Date: Fri, 9 May 2025 12:22:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 13/15] vfio: add vfio-pci-base class
+Subject: Re: [PATCH v3 15/15] vfio/container: pass MemoryRegion to DMA
+ operations
 To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Halil Pasic <pasic@linux.ibm.com>, Tomita Moeko <tomitamoeko@gmail.com>,
@@ -89,10 +90,10 @@ Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
  qemu-s390x@nongnu.org, Jason Herne <jjherne@linux.ibm.com>,
  John Johnson <john.g.johnson@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>
 References: <20250507152020.1254632-1-john.levon@nutanix.com>
- <20250507152020.1254632-14-john.levon@nutanix.com>
+ <20250507152020.1254632-16-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -138,9 +139,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250507152020.1254632-14-john.levon@nutanix.com>
+In-Reply-To: <20250507152020.1254632-16-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
@@ -166,251 +167,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+John,
+
 On 5/7/25 17:20, John Levon wrote:
-> Split out parts of TYPE_VFIO_PCI into a base TYPE_VFIO_PCI_BASE,
-> although we have not yet introduced another subclass, so all the
-> properties have remained in TYPE_VFIO_PCI.
-> 
-> Note that currently there is no need for additional data for
-> TYPE_VFIO_PCI, so it shares the same C struct type as
-> TYPE_VFIO_PCI_BASE, VFIOPCIDevice.
-> 
-> Originally-by: John Johnson <john.g.johnson@oracle.com>
-> Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
-> Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
-> Signed-off-by: John Levon <john.levon@nutanix.com>
+> Pass through the MemoryRegion to DMA operation handlers of vfio
+> containers. The vfio-user container will need this later.
 
+It think the subject and commit log does not reflect the important
+part, which is to add a extend the memory_get_xlat_addr() parameters
+with a 'MemoryRegion **' parameter for vfio-user usage (and why).
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Could you please rephrase and resend as a standalone patch putting
+in Cc: the system/memory maintainers, virtio and vfio ?
+
 
 Thanks,
 
 C.
 
 
+
+
+> Originally-by: John Johnson <john.g.johnson@oracle.com>
+> Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+> Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+> Signed-off-by: John Levon <john.levon@nutanix.com>
 > ---
->   hw/vfio/pci.h    | 10 +++++++-
->   hw/vfio/device.c |  2 +-
->   hw/vfio/pci.c    | 62 +++++++++++++++++++++++++++++++-----------------
->   3 files changed, 50 insertions(+), 24 deletions(-)
+>   include/hw/vfio/vfio-container-base.h |  4 ++--
+>   include/system/memory.h               |  4 +++-
+>   hw/vfio/container-base.c              |  4 ++--
+>   hw/vfio/container.c                   |  3 ++-
+>   hw/vfio/iommufd.c                     |  3 ++-
+>   hw/vfio/listener.c                    | 18 +++++++++++-------
+>   hw/virtio/vhost-vdpa.c                |  2 +-
+>   system/memory.c                       |  7 ++++++-
+>   8 files changed, 29 insertions(+), 16 deletions(-)
 > 
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index f835b1dbc2..5ce0fb916f 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -118,8 +118,16 @@ typedef struct VFIOMSIXInfo {
->       bool noresize;
->   } VFIOMSIXInfo;
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index 3d392b0fd8..359b483963 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -78,7 +78,7 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
 >   
-> +/*
-> + * TYPE_VFIO_PCI_BASE is an abstract type used to share code
-> + * between VFIO implementations that use a kernel driver
-> + * with those that use user sockets.
-> + */
-> +#define TYPE_VFIO_PCI_BASE "vfio-pci-base"
-> +OBJECT_DECLARE_SIMPLE_TYPE(VFIOPCIDevice, VFIO_PCI_BASE)
-> +
->   #define TYPE_VFIO_PCI "vfio-pci"
-> -OBJECT_DECLARE_SIMPLE_TYPE(VFIOPCIDevice, VFIO_PCI)
-> +/* TYPE_VFIO_PCI shares struct VFIOPCIDevice. */
+>   int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+>                              hwaddr iova, ram_addr_t size,
+> -                           void *vaddr, bool readonly);
+> +                           void *vaddr, bool readonly, MemoryRegion *mrp);
+>   int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
+>                                hwaddr iova, ram_addr_t size,
+>                                IOMMUTLBEntry *iotlb, bool unmap_all);
+> @@ -121,7 +121,7 @@ struct VFIOIOMMUClass {
+>       void (*listener_commit)(VFIOContainerBase *bcontainer);
+>       int (*dma_map)(const VFIOContainerBase *bcontainer,
+>                      hwaddr iova, ram_addr_t size,
+> -                   void *vaddr, bool readonly);
+> +                   void *vaddr, bool readonly, MemoryRegion *mrp);
+>       /**
+>        * @dma_unmap
+>        *
+> diff --git a/include/system/memory.h b/include/system/memory.h
+> index fbbf4cf911..eca1d9f32e 100644
+> --- a/include/system/memory.h
+> +++ b/include/system/memory.h
+> @@ -746,13 +746,15 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+>    * @read_only: indicates if writes are allowed
+>    * @mr_has_discard_manager: indicates memory is controlled by a
+>    *                          RamDiscardManager
+> + * @mrp: if non-NULL, fill in with MemoryRegion
+>    * @errp: pointer to Error*, to store an error if it happens.
+>    *
+>    * Return: true on success, else false setting @errp with error.
+>    */
+>   bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>                             ram_addr_t *ram_addr, bool *read_only,
+> -                          bool *mr_has_discard_manager, Error **errp);
+> +                          bool *mr_has_discard_manager, MemoryRegion **mrp,
+> +                          Error **errp);
 >   
->   struct VFIOPCIDevice {
->       PCIDevice pdev;
-> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-> index 0b2cd90d64..9fba2c7272 100644
-> --- a/hw/vfio/device.c
-> +++ b/hw/vfio/device.c
-> @@ -392,7 +392,7 @@ bool vfio_device_hiod_create_and_realize(VFIODevice *vbasedev,
->   VFIODevice *vfio_get_vfio_device(Object *obj)
+>   typedef struct CoalescedMemoryRange CoalescedMemoryRange;
+>   typedef struct MemoryRegionIoeventfd MemoryRegionIoeventfd;
+> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+> index 1c6ca94b60..a677bb6694 100644
+> --- a/hw/vfio/container-base.c
+> +++ b/hw/vfio/container-base.c
+> @@ -75,12 +75,12 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
+>   
+>   int vfio_container_dma_map(VFIOContainerBase *bcontainer,
+>                              hwaddr iova, ram_addr_t size,
+> -                           void *vaddr, bool readonly)
+> +                           void *vaddr, bool readonly, MemoryRegion *mrp)
 >   {
->       if (object_dynamic_cast(obj, TYPE_VFIO_PCI)) {
-> -        return &VFIO_PCI(obj)->vbasedev;
-> +        return &VFIO_PCI_BASE(obj)->vbasedev;
->       } else {
->           return NULL;
+>       VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+>   
+>       g_assert(vioc->dma_map);
+> -    return vioc->dma_map(bcontainer, iova, size, vaddr, readonly);
+> +    return vioc->dma_map(bcontainer, iova, size, vaddr, readonly, mrp);
+>   }
+>   
+>   int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index a9f0dbaec4..98d6b9f90c 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -207,7 +207,8 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+>   }
+>   
+>   static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+> -                               ram_addr_t size, void *vaddr, bool readonly)
+> +                               ram_addr_t size, void *vaddr, bool readonly,
+> +                               MemoryRegion *mrp)
+>   {
+>       const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+>                                                     bcontainer);
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index af1c7ab10a..a2518c4a5d 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -34,7 +34,8 @@
+>               TYPE_HOST_IOMMU_DEVICE_IOMMUFD "-vfio"
+>   
+>   static int iommufd_cdev_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+> -                            ram_addr_t size, void *vaddr, bool readonly)
+> +                            ram_addr_t size, void *vaddr, bool readonly,
+> +                            MemoryRegion *mrp)
+>   {
+>       const VFIOIOMMUFDContainer *container =
+>           container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index bfacb3d8d9..71f336a31c 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -93,12 +93,12 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
+>   /* Called with rcu_read_lock held.  */
+>   static bool vfio_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>                                  ram_addr_t *ram_addr, bool *read_only,
+> -                               Error **errp)
+> +                               MemoryRegion **mrp, Error **errp)
+>   {
+>       bool ret, mr_has_discard_manager;
+>   
+>       ret = memory_get_xlat_addr(iotlb, vaddr, ram_addr, read_only,
+> -                               &mr_has_discard_manager, errp);
+> +                               &mr_has_discard_manager, mrp, errp);
+>       if (ret && mr_has_discard_manager) {
+>           /*
+>            * Malicious VMs might trigger discarding of IOMMU-mapped memory. The
+> @@ -126,6 +126,7 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       VFIOGuestIOMMU *giommu = container_of(n, VFIOGuestIOMMU, n);
+>       VFIOContainerBase *bcontainer = giommu->bcontainer;
+>       hwaddr iova = iotlb->iova + giommu->iommu_offset;
+> +    MemoryRegion *mrp;
+>       void *vaddr;
+>       int ret;
+>       Error *local_err = NULL;
+> @@ -150,7 +151,8 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+>           bool read_only;
+>   
+> -        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &local_err)) {
+> +        if (!vfio_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, &mrp,
+> +                                &local_err)) {
+>               error_report_err(local_err);
+>               goto out;
+>           }
+> @@ -163,7 +165,7 @@ static void vfio_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>            */
+>           ret = vfio_container_dma_map(bcontainer, iova,
+>                                        iotlb->addr_mask + 1, vaddr,
+> -                                     read_only);
+> +                                     read_only, mrp);
+>           if (ret) {
+>               error_report("vfio_container_dma_map(%p, 0x%"HWADDR_PRIx", "
+>                            "0x%"HWADDR_PRIx", %p) = %d (%s)",
+> @@ -233,7 +235,7 @@ static int vfio_ram_discard_notify_populate(RamDiscardListener *rdl,
+>           vaddr = memory_region_get_ram_ptr(section->mr) + start;
+>   
+>           ret = vfio_container_dma_map(bcontainer, iova, next - start,
+> -                                     vaddr, section->readonly);
+> +                                     vaddr, section->readonly, section->mr);
+>           if (ret) {
+>               /* Rollback */
+>               vfio_ram_discard_notify_discard(rdl, section);
+> @@ -557,7 +559,7 @@ static void vfio_listener_region_add(MemoryListener *listener,
 >       }
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 1236de315d..a1bfdfe375 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -241,7 +241,7 @@ static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
 >   
->   static void vfio_intx_routing_notifier(PCIDevice *pdev)
+>       ret = vfio_container_dma_map(bcontainer, iova, int128_get64(llsize),
+> -                                 vaddr, section->readonly);
+> +                                 vaddr, section->readonly, section->mr);
+>       if (ret) {
+>           error_setg(&err, "vfio_container_dma_map(%p, 0x%"HWADDR_PRIx", "
+>                      "0x%"HWADDR_PRIx", %p) = %d (%s)",
+> @@ -1021,7 +1023,9 @@ static void vfio_iommu_map_dirty_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       }
+>   
+>       rcu_read_lock();
+> -    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, &local_err)) {
+> +    if (!vfio_get_xlat_addr(iotlb, NULL, &translated_addr, NULL, NULL,
+> +                            &local_err)) {
+> +        error_report_err(local_err);
+>           goto out_unlock;
+>       }
+>   
+> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+> index 1ab2c11fa8..4c4b3d1371 100644
+> --- a/hw/virtio/vhost-vdpa.c
+> +++ b/hw/virtio/vhost-vdpa.c
+> @@ -228,7 +228,7 @@ static void vhost_vdpa_iommu_map_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+>       if ((iotlb->perm & IOMMU_RW) != IOMMU_NONE) {
+>           bool read_only;
+>   
+> -        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL,
+> +        if (!memory_get_xlat_addr(iotlb, &vaddr, NULL, &read_only, NULL, NULL,
+>                                     &local_err)) {
+>               error_report_err(local_err);
+>               return;
+> diff --git a/system/memory.c b/system/memory.c
+> index 71434e7ad0..79671943ce 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -2176,7 +2176,8 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+>   /* Called with rcu_read_lock held.  */
+>   bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>                             ram_addr_t *ram_addr, bool *read_only,
+> -                          bool *mr_has_discard_manager, Error **errp)
+> +                          bool *mr_has_discard_manager, MemoryRegion **mrp,
+> +                          Error **errp)
 >   {
-> -    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
->       PCIINTxRoute route;
+>       MemoryRegion *mr;
+>       hwaddr xlat;
+> @@ -2241,6 +2242,10 @@ bool memory_get_xlat_addr(IOMMUTLBEntry *iotlb, void **vaddr,
+>           *read_only = !writable || mr->readonly;
+>       }
 >   
->       if (vdev->interrupt != VFIO_INT_INTx) {
-> @@ -514,7 +514,7 @@ static void vfio_update_kvm_msi_virq(VFIOMSIVector *vector, MSIMessage msg,
->   static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
->                                      MSIMessage *msg, IOHandler *handler)
->   {
-> -    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
->       VFIOMSIVector *vector;
->       int ret;
->       bool resizing = !!(vdev->nr_vectors < nr + 1);
-> @@ -620,7 +620,7 @@ static int vfio_msix_vector_use(PCIDevice *pdev,
->   
->   static void vfio_msix_vector_release(PCIDevice *pdev, unsigned int nr)
->   {
-> -    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
->       VFIOMSIVector *vector = &vdev->msi_vectors[nr];
->   
->       trace_vfio_msix_vector_release(vdev->vbasedev.name, nr);
-> @@ -1196,7 +1196,7 @@ static const MemoryRegionOps vfio_vga_ops = {
->    */
->   static void vfio_sub_page_bar_update_mapping(PCIDevice *pdev, int bar)
->   {
-> -    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
->       VFIORegion *region = &vdev->bars[bar].region;
->       MemoryRegion *mmap_mr, *region_mr, *base_mr;
->       PCIIORegion *r;
-> @@ -1242,7 +1242,7 @@ static void vfio_sub_page_bar_update_mapping(PCIDevice *pdev, int bar)
->    */
->   uint32_t vfio_pci_read_config(PCIDevice *pdev, uint32_t addr, int len)
->   {
-> -    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
->       VFIODevice *vbasedev = &vdev->vbasedev;
->       uint32_t emu_bits = 0, emu_val = 0, phys_val = 0, val;
->   
-> @@ -1276,7 +1276,7 @@ uint32_t vfio_pci_read_config(PCIDevice *pdev, uint32_t addr, int len)
->   void vfio_pci_write_config(PCIDevice *pdev,
->                              uint32_t addr, uint32_t val, int len)
->   {
-> -    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
->       VFIODevice *vbasedev = &vdev->vbasedev;
->       uint32_t val_le = cpu_to_le32(val);
->       int ret;
-> @@ -3129,7 +3129,7 @@ static bool vfio_interrupt_setup(VFIOPCIDevice *vdev, Error **errp)
->   static void vfio_realize(PCIDevice *pdev, Error **errp)
->   {
->       ERRP_GUARD();
-> -    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
->       VFIODevice *vbasedev = &vdev->vbasedev;
->       int i, ret;
->       char uuid[UUID_STR_LEN];
-> @@ -3300,7 +3300,7 @@ error:
->   
->   static void vfio_instance_finalize(Object *obj)
->   {
-> -    VFIOPCIDevice *vdev = VFIO_PCI(obj);
-> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
->   
->       vfio_display_finalize(vdev);
->       vfio_bars_finalize(vdev);
-> @@ -3318,7 +3318,7 @@ static void vfio_instance_finalize(Object *obj)
->   
->   static void vfio_exitfn(PCIDevice *pdev)
->   {
-> -    VFIOPCIDevice *vdev = VFIO_PCI(pdev);
-> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
->       VFIODevice *vbasedev = &vdev->vbasedev;
->   
->       vfio_unregister_req_notifier(vdev);
-> @@ -3342,7 +3342,7 @@ static void vfio_exitfn(PCIDevice *pdev)
->   
->   static void vfio_pci_reset(DeviceState *dev)
->   {
-> -    VFIOPCIDevice *vdev = VFIO_PCI(dev);
-> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(dev);
->   
->       trace_vfio_pci_reset(vdev->vbasedev.name);
->   
-> @@ -3382,7 +3382,7 @@ post_reset:
->   static void vfio_instance_init(Object *obj)
->   {
->       PCIDevice *pci_dev = PCI_DEVICE(obj);
-> -    VFIOPCIDevice *vdev = VFIO_PCI(obj);
-> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
->       VFIODevice *vbasedev = &vdev->vbasedev;
->   
->       device_add_bootindex_property(obj, &vdev->bootindex,
-> @@ -3403,6 +3403,31 @@ static void vfio_instance_init(Object *obj)
->       pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+> +    if (mrp != NULL) {
+> +        *mrp = mr;
+> +    }
+> +
+>       return true;
 >   }
 >   
-> +static void vfio_pci_base_dev_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    PCIDeviceClass *pdc = PCI_DEVICE_CLASS(klass);
-> +
-> +    dc->desc = "VFIO PCI base device";
-> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-> +    pdc->exit = vfio_exitfn;
-> +    pdc->config_read = vfio_pci_read_config;
-> +    pdc->config_write = vfio_pci_write_config;
-> +}
-> +
-> +static const TypeInfo vfio_pci_base_dev_info = {
-> +    .name = TYPE_VFIO_PCI_BASE,
-> +    .parent = TYPE_PCI_DEVICE,
-> +    .instance_size = 0,
-> +    .abstract = true,
-> +    .class_init = vfio_pci_base_dev_class_init,
-> +    .interfaces = (const InterfaceInfo[]) {
-> +        { INTERFACE_PCIE_DEVICE },
-> +        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-> +        { }
-> +    },
-> +};
-> +
->   static PropertyInfo vfio_pci_migration_multifd_transfer_prop;
->   
->   static const Property vfio_pci_dev_properties[] = {
-> @@ -3473,7 +3498,8 @@ static const Property vfio_pci_dev_properties[] = {
->   #ifdef CONFIG_IOMMUFD
->   static void vfio_pci_set_fd(Object *obj, const char *str, Error **errp)
->   {
-> -    vfio_device_set_fd(&VFIO_PCI(obj)->vbasedev, str, errp);
-> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
-> +    vfio_device_set_fd(&vdev->vbasedev, str, errp);
->   }
->   #endif
->   
-> @@ -3488,11 +3514,7 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, const void *data)
->       object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
->   #endif
->       dc->desc = "VFIO-based PCI device assignment";
-> -    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
->       pdc->realize = vfio_realize;
-> -    pdc->exit = vfio_exitfn;
-> -    pdc->config_read = vfio_pci_read_config;
-> -    pdc->config_write = vfio_pci_write_config;
->   
->       object_class_property_set_description(klass, /* 1.3 */
->                                             "host",
-> @@ -3617,16 +3639,11 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, const void *data)
->   
->   static const TypeInfo vfio_pci_dev_info = {
->       .name = TYPE_VFIO_PCI,
-> -    .parent = TYPE_PCI_DEVICE,
-> +    .parent = TYPE_VFIO_PCI_BASE,
->       .instance_size = sizeof(VFIOPCIDevice),
->       .class_init = vfio_pci_dev_class_init,
->       .instance_init = vfio_instance_init,
->       .instance_finalize = vfio_instance_finalize,
-> -    .interfaces = (const InterfaceInfo[]) {
-> -        { INTERFACE_PCIE_DEVICE },
-> -        { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-> -        { }
-> -    },
->   };
->   
->   static const Property vfio_pci_dev_nohotplug_properties[] = {
-> @@ -3673,6 +3690,7 @@ static void register_vfio_pci_dev_type(void)
->       vfio_pci_migration_multifd_transfer_prop = qdev_prop_on_off_auto;
->       vfio_pci_migration_multifd_transfer_prop.realized_set_allowed = true;
->   
-> +    type_register_static(&vfio_pci_base_dev_info);
->       type_register_static(&vfio_pci_dev_info);
->       type_register_static(&vfio_pci_nohotplug_dev_info);
->   }
 
 
