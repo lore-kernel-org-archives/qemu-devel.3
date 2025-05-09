@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61C46C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:58:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50FC3C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 14:04:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDODa-0007DB-GS; Fri, 09 May 2025 09:56:51 -0400
+	id 1uDOJu-0000iN-MT; Fri, 09 May 2025 10:03:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uDODX-0007Ct-2i
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:56:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <baolu.lu@linux.intel.com>)
+ id 1uDHV9-00007I-HO
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 02:46:31 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uDODP-0003pW-Fo
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:56:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746798995;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aJTgjBH1sQgQiugoRW8zsK2poEQBZoj6J6pMz+Aofz0=;
- b=FsrB5H082DruJet35owaE41JRrYFoq64k2wE/SNwJU1I5uP2J0osymOwB+FE61o8YZameU
- hcQUtVP9Sh7DJKGuT2K5U1V7lUF3TG0mbujDo8ItlCh9E/wQhQf1EllVjp1KZn55tCbNUQ
- 7zptSoMClzcyYefMkQUC7lEDZJfw7aQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-an9J818AMR-F5AHLb1DHUw-1; Fri,
- 09 May 2025 09:56:31 -0400
-X-MC-Unique: an9J818AMR-F5AHLb1DHUw-1
-X-Mimecast-MFC-AGG-ID: an9J818AMR-F5AHLb1DHUw_1746798990
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5EF721801A17; Fri,  9 May 2025 13:56:30 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.100])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A748218018B2; Fri,  9 May 2025 13:56:27 +0000 (UTC)
-Date: Fri, 9 May 2025 14:56:24 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH RFC 00/10] qapi: remove all TARGET_* conditionals from
- the schema
-Message-ID: <aB4JiDnVE8XrVfax@redhat.com>
-References: <20250508135816.673087-1-berrange@redhat.com>
- <c7623b1c-01c1-46c0-bfa6-dc34aa4e722d@linaro.org>
- <aB3EpKu0iafLtgVT@redhat.com> <874ixt6gsd.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <baolu.lu@linux.intel.com>)
+ id 1uDHV3-00089I-C0
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 02:46:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746773186; x=1778309186;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=B/S648cE9UMjrXY4G55L/9UarDhdPR/uC967jP+/D6Y=;
+ b=L8RKvz6vCeGU9jkMbUZ5iRzlA+F/8tbTO5l+W5YV38+tmIrFMCxIvUZT
+ oPgsQsyuDjYihLz/YfUcwXsuu5NW1JouxvlUSTZ3n/cArwh4AbJyNoGJC
+ 9wRie17CEOZ5TCf/iQ5ZB7W89UcU9DDlwm2aHVcRDcjQ9XJJZVBZan3GE
+ iwsCxxZhWvRASL6DkDPuuj7aMvqfZHMA4fVp++liWWGP6oJ2zJP5wXYqi
+ fIDQQk7S4JkmD2DXgpYb3wIejXW6SubGCTiUH/Wx2m1T1iuvM1B0VWqa9
+ BLt1q5yHuKX9qvuglng2lKQyQixmq8+oTxKBRgRDro2pJxQgkLyJkx7MG w==;
+X-CSE-ConnectionGUID: l2c31YCxR5KtAgM1OBPBbw==
+X-CSE-MsgGUID: 0f2hOhTMTsGLql7Mb/ra8w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="48744116"
+X-IronPort-AV: E=Sophos;i="6.15,274,1739865600"; d="scan'208";a="48744116"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 May 2025 23:46:15 -0700
+X-CSE-ConnectionGUID: zdojglEvRUWT+tIOOBWUpw==
+X-CSE-MsgGUID: AyroqVwHRgiYPYok+xNV4g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,274,1739865600"; d="scan'208";a="141482476"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+ by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 May 2025 23:46:12 -0700
+Message-ID: <013b36a9-9310-4073-b54c-9c511f23decf@linux.intel.com>
+Date: Fri, 9 May 2025 14:41:41 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <874ixt6gsd.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.413,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 07/13] ram-block-attribute: Introduce RamBlockAttribute
+ to manage RAMBLock with guest_memfd
+To: Chenyi Qiang <chenyi.qiang@intel.com>,
+ David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
+References: <20250407074939.18657-1-chenyi.qiang@intel.com>
+ <20250407074939.18657-8-chenyi.qiang@intel.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <20250407074939.18657-8-chenyi.qiang@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=198.175.65.18;
+ envelope-from=baolu.lu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -56
+X-Spam_score: -5.7
+X-Spam_bar: -----
+X-Spam_report: (-5.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 09 May 2025 10:03:20 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,155 +91,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 09, 2025 at 03:43:30PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On 4/7/25 15:49, Chenyi Qiang wrote:
+> Commit 852f0048f3 ("RAMBlock: make guest_memfd require uncoordinated
+> discard") highlighted that subsystems like VFIO may disable RAM block
+> discard. However, guest_memfd relies on discard operations for page
+> conversion between private and shared memory, potentially leading to
+> stale IOMMU mapping issue when assigning hardware devices to
+> confidential VMs via shared memory. To address this, it is crucial to
+> ensure systems like VFIO refresh its IOMMU mappings.
 > 
-> > On Thu, May 08, 2025 at 02:09:37PM -0700, Pierrick Bouvier wrote:
-> >> On 5/8/25 6:58 AM, Daniel P. Berrangé wrote:
-> >> > Pierrick has proposed a series that introduces a concept of runtime
-> >> > conditionals to the QAPI schema, in order to adapt the TARGET_*
-> >> > conditionals currently used at build time:
-> >> > 
-> >> >    https://lists.nongnu.org/archive/html/qemu-devel/2025-05/msg01699.html
-> >> > 
-> >> > For the sake of comparison & evaluation, this series illustrates the
-> >> > alternative approach that we've discussed of entirely removing any
-> >> > concept of TARGET_* conditionals.
-> >> > 
-> >> > With this the QAPI schema varies solely based on CONFIG_* conditionals,
-> >> > and is thus invariant across different target emulators.
-> >> > 
-> >> > In this PoC I've taken the minimal effort approach to the problem.
-> >> > 
-> >> > The QAPI schema has removed the TARGET_* conditionals and in order to
-> >> > make all the emulators then compile, the stubs/ directory is populated
-> >> > with a bunch of files to provide dummy impls of the target specific QMP
-> >> > commands.
-> >> > 
-> >> > This is sufficient to make the current QEMU binaries build successfully.
-> >> > 
-> >> > To make the "single binary" concept work, however, would require
-> >> > additional followup work to eliminate the stubs.
-> >> > 
-> >> > Instead of having stubs we would need to de-couple the QMP command
-> >> > impl from the machine internals. This would likely require greater
-> >> > use of interfaces and/or virtual method dispatchers on the machine
-> >> > class. This would enable the 'qmp_XXXXX' command impls to exist
-> >> > once. Then they call out to virtual methods on the machine to provide
-> >> > the real impl, and/or generate an error if the virtual method is not
-> >> > implemented for the machine.
-> >> > 
-> >> 
-> >> Thanks for posting it Daniel.
-> >> 
-> >> I think your approach is pretty neat, and yes, it's much simpler than having
-> >> any compile time or runtime conditional to deal with that.
-> >> 
-> >> When we talked about that on previous thread, I thought the idea was to
-> >> expose *all* the commands to *all* the targets, which I didn't really
-> >> understand, considering we have target specific commands by design.
-> >> I understand better where you wanted to go, by extracting concerned commands
-> >> in dedicated files.
-> >> 
-> >> The only downside I can see is that some commands have to be there, but
-> >> return an "error, not implemented" at runtime. Fine for me, but some people
-> >> may argue against it.
-> >> 
-> >> A concern I might have as well is about how we'll deal if we want to hide
-> >> some commands in the future, based on various criterias
-> >> (is_heterogenenous()?). The mantra "define all, and let the build system
-> >> hide things" mantra means you can only have a single definition existing in
-> >> the binary, by design. But maybe it's not even a real concern, and I
-> >> definitely prefer to see problems before fixing them, so it's definitely not
-> >> blocking this approach.
-> >
-> > I think we have to distinguish between what made sense in the context
-> > of our original design, from what makes sense for our future design(s)
-> > and plans.
+> PrivateSharedManager is introduced to manage private and shared states in
+> confidential VMs, similar to RamDiscardManager, which supports
+> coordinated RAM discard in VFIO. Integrating PrivateSharedManager with
+> guest_memfd can facilitate the adjustment of VFIO mappings in response
+> to page conversion events.
 > 
-> No argument.
+> Since guest_memfd is not an object, it cannot directly implement the
+> PrivateSharedManager interface. Implementing it in HostMemoryBackend is
+> not appropriate because guest_memfd is per RAMBlock, and some RAMBlocks
+> have a memory backend while others do not. Notably, virtual BIOS
+> RAMBlocks using memory_region_init_ram_guest_memfd() do not have a
+> backend.
 > 
-> The original design idea is simple: #ifdef CONFIG_FOO for QAPI schema,
-> to not generate dead code, and to not have silly stubs.  Even if you
-> don't care about wasting disk and address space, you probably care about
-> wasting developer time on writing silly stubs and waiting for dead code
-> to compile.
+> To manage RAMBlocks with guest_memfd, define a new object named
+> RamBlockAttribute to implement the RamDiscardManager interface. This
+> object stores guest_memfd information such as shared_bitmap, and handles
+> page conversion notification. The memory state is tracked at the host
+> page size granularity, as the minimum memory conversion size can be one
+> page per request. Additionally, VFIO expects the DMA mapping for a
+> specific iova to be mapped and unmapped with the same granularity.
+> Confidential VMs may perform partial conversions, such as conversions on
+> small regions within larger regions. To prevent invalid cases and until
+> cut_mapping operation support is available, all operations are performed
+> with 4K granularity.
+
+Just for your information, IOMMUFD plans to introduce the support for
+cut operation. The kickoff patch series is under discussion here:
+
+https://lore.kernel.org/linux-iommu/0-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com/
+
+This new cut support is expected to be exclusive to IOMMUFD and not
+directly available in the VFIO container context. The VFIO uAPI for map/
+unmap is being superseded by IOMMUFD, and all new features will only be
+available in IOMMUFD.
+
 > 
-> Initially, target-specific macros did not work in conditions.  That was
-> easy enough to fix, so we did.
+> Signed-off-by: Chenyi Qiang<chenyi.qiang@intel.com>
 
-Ah, yes, forgot that bit of history.
+<...>
 
-> > I can understand why we took the direction we did historically, but I
-> > think we have unwittingly created problems for ourselves that are
-> > looking increasingly worse than the problems we considered solved.
-> >
-> >
-> > In the other thread I pointed out my dislike for QAPI schema not being
-> > fully self-describing when we have conditionals present, even today,
-> > but there are other aspects that trouble me more wrt conditionals.
-> 
-> I'm not sure I have all this present in my mind...  Can you summarize
-> what troubles you?  Or point me to the message(s)?
+> +
+> +int ram_block_attribute_realize(RamBlockAttribute *attr, MemoryRegion *mr)
+> +{
+> +    uint64_t shared_bitmap_size;
+> +    const int block_size  = qemu_real_host_page_size();
+> +    int ret;
+> +
+> +    shared_bitmap_size = ROUND_UP(mr->size, block_size) / block_size;
+> +
+> +    attr->mr = mr;
+> +    ret = memory_region_set_generic_state_manager(mr, GENERIC_STATE_MANAGER(attr));
+> +    if (ret) {
+> +        return ret;
+> +    }
+> +    attr->shared_bitmap_size = shared_bitmap_size;
+> +    attr->shared_bitmap = bitmap_new(shared_bitmap_size);
 
-Oppps, sorry, should have cross-linked to:
+Above introduces a bitmap to track the private/shared state of each 4KB
+page. While functional, for large RAM blocks managed by guest_memfd,
+this could lead to significant memory consumption.
 
-  https://lists.nongnu.org/archive/html/qemu-devel/2025-05/msg01947.html
+Have you considered an alternative like a Maple Tree or a generic
+interval tree? Both are often more memory-efficient for tracking ranges
+of contiguous states.
 
-> > Since the schema is currently target specific, a mgmt app has to probe
-> > for QEMU capabilities once for every target binary. QEMU has ~30 system
-> > binaries, and if querying capabilities takes 250 milliseconds, then
-> > querying all binaries is ~ 7 seconds of work. Libvirt mitigates this
-> > overhead by caching the results of capabilities probes. We periodically
-> > suffer delays when we must invalidate our cache though, typically on
-> > software upgrades, and this is unpleasant for users who think we've
-> > got stuck or just have bad slow code.
-> 
-> How does cache invalidation work?  Timestamp of binary?
+> +
+> +    return ret;
+> +}
+> +
+> +void ram_block_attribute_unrealize(RamBlockAttribute *attr)
+> +{
+> +    g_free(attr->shared_bitmap);
+> +    memory_region_set_generic_state_manager(attr->mr, NULL);
+> +}
 
-ctime of libvirt itself and ctime of QEMU binary are the two
-primary factors.
-
-We had to throw in other factors on top for various edge cases
-over time. So we also check the mtime of the directory containing
-QEMU loadable modules, as features reported can vary if the user
-installs new device/backend modules. Also check kernel version,
-microcode version, CPUID signature, because that can affect
-availability of some features.
-
-NB, this is caching more than just the QMP schema - we issue
-many 'query-xxxx' commands when probing QEMU.
-
-https://gitlab.com/libvirt/libvirt/-/blame/master/src/qemu/qemu_capabilities.c#L5406
-
-> > Even if we had a QAPI schema that didn't vary per target, this is
-> > repeated probing is tricky to avoid when we have completely independant
-> > binaries. We would need QEMU to have some internal "build id", so that
-> > we could detect that all binaries came from the same build, to let us
-> > avoid re-probing each binary.
-> 
-> Back when I created QAPI/QMP introspection, I floated the idea to put
-> something into the QMP greeting to enable safe caching.  Libvirt
-> developers told me they didn't need that.  I don't remember the details,
-> but I guess the cache invalidation they already had was deemed good
-> enough.
-
-I don't recall that discussion, but I would think the problem is
-that we probe much more than just QMP schema. Actually thinking
-about it, the fact that we probe more than just QMP schema means
-my idea of probing once and getting the answer for all targets
-may not be practical. Some of the query-xxx  commands we run will
-likely need to know the target.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Thanks,
+baolu
 
