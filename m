@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 409E4C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 11:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C17E2C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 11:33:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDLxQ-0004hl-7f; Fri, 09 May 2025 07:32:00 -0400
+	id 1uDLyD-0005lx-Ih; Fri, 09 May 2025 07:32:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uDLxM-0004Y2-VI
- for qemu-devel@nongnu.org; Fri, 09 May 2025 07:31:57 -0400
+ id 1uDLy4-0005YV-AS
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 07:32:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uDLxJ-00041X-OB
- for qemu-devel@nongnu.org; Fri, 09 May 2025 07:31:56 -0400
+ id 1uDLy1-00043o-Em
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 07:32:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746790312;
+ s=mimecast20190719; t=1746790355;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QcEgMB/9WMavw9lA506PdE7fP0qMey9GM2f91eT+cYA=;
- b=COqveyuJggnGK3LEhXDWv4UThuVOHM2d+0aR+6ZghEQsUFBCbZrH8xcWEmJiO5PO/AJDc4
- OAopCiwy799RuypLjki+e3i9PDMPOGoIM/gxdyGQUUrJVFfNXC0Yrf0csF2r4aGfeEtjbz
- TwAHe5oH3ViKErBWTmmEV2rbrxMEwi8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=V73moDry7B5RXqJHaEnxmvYinpOvkFgKzyDMVBpfSno=;
+ b=Ps40QrvoAMI91FWKSklvcLnDJ8z/esFkMq1+7leHqu+98IK7pVKHLuqWIw+MCuFMORESsl
+ 6fMBtx6sPuWPsiq1p9AzHlsuNbfckWdmhtQAp5Qx/Mx3XeLAieJayRwQRuerrQ3UVjeKMe
+ vTKwshy8VDcTzPczmzE8BBcWiH+QuSQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-rvL-r0W2Ph6nBLmUzTl3cw-1; Fri,
- 09 May 2025 07:31:49 -0400
-X-MC-Unique: rvL-r0W2Ph6nBLmUzTl3cw-1
-X-Mimecast-MFC-AGG-ID: rvL-r0W2Ph6nBLmUzTl3cw_1746790309
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-636--GKZxgKmOLq6-Ec8lKZEJA-1; Fri,
+ 09 May 2025 07:32:34 -0400
+X-MC-Unique: -GKZxgKmOLq6-Ec8lKZEJA-1
+X-Mimecast-MFC-AGG-ID: -GKZxgKmOLq6-Ec8lKZEJA_1746790353
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB9361956053
- for <qemu-devel@nongnu.org>; Fri,  9 May 2025 11:31:48 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5649F19560AB
+ for <qemu-devel@nongnu.org>; Fri,  9 May 2025 11:32:33 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.100])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9CE1418001DA; Fri,  9 May 2025 11:31:47 +0000 (UTC)
-Date: Fri, 9 May 2025 12:31:44 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C835719560AD; Fri,  9 May 2025 11:32:31 +0000 (UTC)
+Date: Fri, 9 May 2025 12:32:28 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org, kraxel@redhat.com
-Subject: Re: [PATCH for-10.1 07/10] ui/vdagent: keep "connected" state
-Message-ID: <aB3noPHJbHHotOwy@redhat.com>
+Subject: Re: [PATCH for-10.1 08/10] ui/vdagent: factor out clipboard peer
+ registration
+Message-ID: <aB3nzGGxRJpmYPI_@redhat.com>
 References: <20250311155932.1472092-1-marcandre.lureau@redhat.com>
- <20250311155932.1472092-8-marcandre.lureau@redhat.com>
+ <20250311155932.1472092-9-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250311155932.1472092-8-marcandre.lureau@redhat.com>
+In-Reply-To: <20250311155932.1472092-9-marcandre.lureau@redhat.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
@@ -90,22 +91,20 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 11, 2025 at 07:59:29PM +0400, marcandre.lureau@redhat.com wrote:
+On Tue, Mar 11, 2025 at 07:59:30PM +0400, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> During post-load of migration, virtio will notify of fe_open state.
-> However vdagent code will handle this as a reconnection. This will
-> trigger a connection reset/caps with the agent.
+> This allows common code reuse during migration.
 > 
-> Check if the state actually changed before resetting the connection.
+> Note that resetting the serial is now done regardless if the clipboard
+> peer was registered or not. This should still be correct.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  ui/vdagent.c | 7 +++++++
->  1 file changed, 7 insertions(+)
+>  ui/vdagent.c | 20 ++++++++++++++------
+>  1 file changed, 14 insertions(+), 6 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
 
 With regards,
 Daniel
