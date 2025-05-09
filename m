@@ -4,108 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0626C3ABBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 May 2025 22:55:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B768C3ABC5
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 01:09:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDA5x-0004kX-FZ; Thu, 08 May 2025 18:52:01 -0400
+	id 1uDCDU-0001s6-5W; Thu, 08 May 2025 21:07:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uDA5t-0004dU-PE; Thu, 08 May 2025 18:51:58 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <KFTING@nuvoton.com>)
+ id 1uDCDO-0001rL-KE; Thu, 08 May 2025 21:07:50 -0400
+Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uDA5p-0006Xx-Lt; Thu, 08 May 2025 18:51:57 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 548L3UG0030390;
- Thu, 8 May 2025 22:51:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=w1judaDeHUVLJmlaN
- FoJMYy10eq6+K3EcuJ3b/7/lyo=; b=YdUjVeOmWukMyGywiRPM0cxiP73GgDniI
- NiEsO+d0NmhqbPokOMlmK86/OwM7XgIr9crlDaYb5axTVkIc1aJ2l+owEBFemuU/
- RJTYL1tbNSVGt0bo636v+iUvhHepAHPRuZzhdFfnxDAfQzBoEtYGLw5zq4q/syIF
- SWBzFjnPnRRvRi8M2LCSOH1laoAk7MRtr3WSiweFvCwYG3a2+tr/YHimOvOp86fA
- l0wtCD6P0F6s+hl9o2cus1G2FhFjVuGSrh3at+Z68/aWOIYXFFAnQqD79RAZswcE
- RZHbVLPXFCAM+ZyZegBINbarrvEw5JIZ08f1MjFhTDVJxarrUcS3Q==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46h46krcd0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 08 May 2025 22:51:50 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 548KgeVd001345;
- Thu, 8 May 2025 22:51:49 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 46dwftr95g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 08 May 2025 22:51:49 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 548MpmgY31195754
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 8 May 2025 22:51:49 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8A48F58055;
- Thu,  8 May 2025 22:51:48 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 07E6F5804B;
- Thu,  8 May 2025 22:51:47 +0000 (GMT)
-Received: from fedora-workstation.ibmuc.com (unknown [9.61.11.238])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  8 May 2025 22:51:46 +0000 (GMT)
-From: Zhuoying Cai <zycai@linux.ibm.com>
-To: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- pbonzini@redhat.com
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
- fiuczy@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, zycai@linux.ibm.com
-Subject: [PATCH v2 17/25] pc-bios/s390-ccw: Add signature verification for
- secure IPL in audit mode
-Date: Thu,  8 May 2025 18:50:33 -0400
-Message-ID: <20250508225042.313672-18-zycai@linux.ibm.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250508225042.313672-1-zycai@linux.ibm.com>
-References: <20250508225042.313672-1-zycai@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <KFTING@nuvoton.com>)
+ id 1uDCDM-0003Fh-A1; Thu, 08 May 2025 21:07:50 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PNK6zVRqk44905ae33u/M8PWQna4hQwOlwUArEauxuG44ujmyB5Bu34FDF+x1L4jfynD7G+Aj6s+MbUuV0MXRf3cvNJL8eBPQbKP4mw4IJCM40YNCwal42IWRe/PLDTnvZ2/hCTzuIj/hL+S0sxf0WfQ+RdpT/+cYYdX3jriDB8K1oQoaT2/5oD64Sccr9yL1/2gTVX4NjHg1/8TrmYM+VKEhULJFt3QA3hfXEyeEnSbkItj0uJyOBbdoaW0JGRDTs8GDBXdfWk8G+mQDGjssVWCSQg0unRivb6uaCfavXkqakVmO+Fpu0IPWVNYuWuHkIhONRfs0yx5ya2/DjICwg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wGNe1tOjU1MkpdrGEfM/CsPZU4C6RElvUMLww3wmWBk=;
+ b=chpmfGBTrGRQeO3lQLPnrsG3oya7qfKDmFKmAHN/katITDj9iCwQ+Hiayz4BPG7A5WhpGnSZWRYrePu7cZWdP7PSVNxDmGP/eSI/OFRz2bVb9tC0dnfgX5lmhfF0JsMkZmoFSZ5bCqUvxY2wpqPd73ja9kNuriJSHkFlODupyiZNNgMpqYn2yqKfNjMe/uZqkqhh2GISLRlW7H34358cGD4iqKPAotWoI5G1Eht13U6p2sOvEVpoqnUfcqbQpEuJeD6yKUJfeIcwyz9g9+75C2e61bI+9jzxdocJCBozGBCb5feeBwBXgdxO1rbHqbFqDdykDr9PQDawhiGlS1+uJw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nuvoton.com; dmarc=pass action=none header.from=nuvoton.com;
+ dkim=pass header.d=nuvoton.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nuvoton.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wGNe1tOjU1MkpdrGEfM/CsPZU4C6RElvUMLww3wmWBk=;
+ b=aUSHH9YtxACf8MxDSTl8VX46hfYbR4t4ygeI2EjmuUrzvhfAv3TRAOjggwZOF6CM11BxYjFbVn4IjnYXMga6k0DzYQ6DKJd29SNNcli/QIDzAplwp4T80Bp/UFrE4SFHlG9GG4iS3BT7PspTJFCwvwDBj3X1/N6j9TO6LlZUPzo=
+Received: from TYZPR03MB6896.apcprd03.prod.outlook.com (2603:1096:400:289::14)
+ by TYZPR03MB8190.apcprd03.prod.outlook.com (2603:1096:405:25::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.31; Fri, 9 May
+ 2025 01:07:40 +0000
+Received: from TYZPR03MB6896.apcprd03.prod.outlook.com
+ ([fe80::ac4e:718:3b03:3123]) by TYZPR03MB6896.apcprd03.prod.outlook.com
+ ([fe80::ac4e:718:3b03:3123%6]) with mapi id 15.20.8699.026; Fri, 9 May 2025
+ 01:07:39 +0000
+From: "KFTING@nuvoton.com" <KFTING@nuvoton.com>
+To: Tim Lee <timlee660101@gmail.com>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "wuhaotsh@google.com" <wuhaotsh@google.com>,
+ "CHLI30@nuvoton.com" <CHLI30@nuvoton.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Subject: RE: [v2] hw/arm/npcm8xx_boards: Add auto zero flash image and device
+ part number
+Thread-Topic: [v2] hw/arm/npcm8xx_boards: Add auto zero flash image and device
+ part number
+Thread-Index: AQHbv78SS00M65miW0SL9hgmvHv+lrPJfcbQ
+Date: Fri, 9 May 2025 01:07:39 +0000
+Message-ID: <TYZPR03MB6896AFFE1901AC461C4939AFDB8AA@TYZPR03MB6896.apcprd03.prod.outlook.com>
+References: <20250508021510.2959328-1-timlee660101@gmail.com>
+In-Reply-To: <20250508021510.2959328-1-timlee660101@gmail.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nuvoton.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYZPR03MB6896:EE_|TYZPR03MB8190:EE_
+x-ms-office365-filtering-correlation-id: a2e4d568-40f6-486d-95f4-08dd8e95e4c6
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700018;
+x-microsoft-antispam-message-info: =?us-ascii?Q?WQQHeH1ExcbNqC9VHlYOQ9P2RBag9hQCp15f5eH++LsfL+q3rr6KENIqmZXT?=
+ =?us-ascii?Q?Cn6J+oOtW2RhjwlgWl2zOvAW3AkAXXcrzD7K1dtXPA1CuOKXcsP69YVYgGnf?=
+ =?us-ascii?Q?KAYUsAdhgkDOxEnvPx/jF3IoAadJG6ywDBVHR9VMPB+QwYDl3ycEjTi5nhQh?=
+ =?us-ascii?Q?2w87qGhh8xPfZiYcrTTuW9Wv2MOOYe0r60DTwSdFrYPZpBA4VRmB1ThQhCPe?=
+ =?us-ascii?Q?2hSW7WaTIuHs/U+Ba3LuZxGyIfn0xuh7robmZeichjYEfTBzQxV4o2BTK3eC?=
+ =?us-ascii?Q?Htcg/aaYC8FdsuZcn+XcHLf/oxbhkoW7hVT1UrJ3dQBQriyEcgAeRUjVNrwG?=
+ =?us-ascii?Q?kyR/5VHUpQ4+uE+zwtXvdtGE1wg1CThYbXM3BoJqeQvngqIG0Svw3Aeq+RUt?=
+ =?us-ascii?Q?uDaKHH8k3ijvIQnkIzvrrxVhdNKQh/cOqsWOOA+7D4M+NAbWuP+AjVNGSrWL?=
+ =?us-ascii?Q?wdjMVC/pjwuqVSg3ZOk0e75hdiSONlymH8HE9yL5cOUU+HmbhTEf0aCVivJZ?=
+ =?us-ascii?Q?iBIDbVmjf5iWCoqm8bz7Jjs+Cpot0S0ObuHYs6qPugLOcVDNC0Zqz4icuNCG?=
+ =?us-ascii?Q?xTQRkGZGbbI1eZOENMPlA8JGKQcU/MtS+KHLomgUVWzWXsAmpC2NhN4x+Jf6?=
+ =?us-ascii?Q?XiFjmCEZ5rK3+ugFmqXDlSDRgZJgRUzALdsJkQ6cAlsWkpFI6QU3DCUbAY6Z?=
+ =?us-ascii?Q?j1Vps8uhWufkZpzm29h1yRwwsilMLflWFva7iFklUbizQz0jRKrFnPofTbbs?=
+ =?us-ascii?Q?HL8o971lrW6hGFkbFy/u+gJMNichQCh0Q0lBGOKMORa0skIX6mOJMr/fIAKe?=
+ =?us-ascii?Q?yATtQeLt8EnkuHwkb0fzZ2I73OEq0ZVkRpVnQ+5WMw6KNj83H9po4aaJAtwH?=
+ =?us-ascii?Q?mbKybvYrMfzlt5qEGIfboe1Z6efEbqcmEswS3+LHl5GmAhaQ5bXTGymobggt?=
+ =?us-ascii?Q?2JluUJCD4D++ESuXg5xW2126BzSJ78qsAu4VbfvfVoRUkG0wSePmP+3dA4GD?=
+ =?us-ascii?Q?kC2fHwUxYYnvkbZLxLIPJsYbvcSE63t3dAReHLezlBUgrbLzSoV1eoRwLZVw?=
+ =?us-ascii?Q?+LkZrzt6jyTZngVs8+KHWcqGKAtps84YnZ4/vkYbE2JaMDh4kj2kd5UxrrC9?=
+ =?us-ascii?Q?plYCqap+Qz+k20cdtregtp2iHTLWAYE8iTEcfuAqoCDCTV7fXMB1kUmaRBck?=
+ =?us-ascii?Q?kk3FnPo57XydkCYef4rVaqGlJeWd1lvaXSzZCS9bGK2iTpuBwzDzJo87C3rM?=
+ =?us-ascii?Q?qqKgxoy2jLT8XgtBXwHhjYjneRrOuutt7tOL/ZYjn2B1YZgLyVvdoKFr0jlg?=
+ =?us-ascii?Q?i/7M6WlPawIpUIUyzosZvdMZIAfIPDZN+Z8ZDDXk8nosGNptQVDithB7iy5X?=
+ =?us-ascii?Q?MZYSvTowr18aQVNOLRMYnx9tkxMBkLpEN+aM87CcAP2WjUC08HMpnKeMoau0?=
+ =?us-ascii?Q?sqams5RwI1Vgs8zd+Zqcc/loDqCWmb03SRCQIUF16hhVQ3uzTXRlhw=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYZPR03MB6896.apcprd03.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?XAV2R1PsbLJ/EVxSD7mGf5QeDRphsDnMu3Raj4eFStNkwihju3jQkKuqIhpU?=
+ =?us-ascii?Q?afMPSpaJmSLfWkNyTHn8WJkAIPQNCahUvJwOYivWF/53jtXJFV2WEJtrzE8g?=
+ =?us-ascii?Q?XNuWTK8nTvCuXHz+Wox3t70mVM8wX9PLPkN9YMEx8HwXSx4ospedG0p/1GYU?=
+ =?us-ascii?Q?cCM99rRNII/c+3DRTYUB4L69CouUbRxussqMOvgNw49glsAdRbgTU6eAqovi?=
+ =?us-ascii?Q?KccmO3T2AawHzF/KqDY5W6/y+waFPvtYAetOQmBZcVzqJHPdo8XyeE0wzpqC?=
+ =?us-ascii?Q?Qes2JtRQudSSR2pdrlR6Q6Ip7XVe9odvsF3pzzmdMndZgPLoHgdXN/otZ05N?=
+ =?us-ascii?Q?rozyFQSMtlzcOGIpbo+dfpxsRWqRKXGwVCVaBiLKS1XwgRE3zMG+oZhbEyVN?=
+ =?us-ascii?Q?0aiXvoTcvmC69bgZuukUCaejSRvVRNlhB+a4UFZ7xx186Z8n4ssvjVGM101p?=
+ =?us-ascii?Q?OXaga+3u/iuV2yOkh0wzUbe6gf8BxFl2VOB8pQHiNC7BwSbb4hQoVaw57fVz?=
+ =?us-ascii?Q?5jMfNtxV85W4/59ya6J1YY6zI0cUD3UxSPIupXk2vDvf9ENiPdjVIGI4x/A7?=
+ =?us-ascii?Q?m7YIoRSNMhrtQM0t28Asr+wVwmN6nvMqmUs1NxARJanQjfXGa3yITyyBIz0J?=
+ =?us-ascii?Q?oJYzQsMcL71j5Af7SStLkgTeybBgtgGH2cdzOjgXwi4WoNXCz0QzIQRPRBfN?=
+ =?us-ascii?Q?oTR4Wg86ehs8YM5+wuKgys+3B268iMqpGi9ySPaV8HaDR9/hBcqEEkWlluDt?=
+ =?us-ascii?Q?WmeEBET6TTPYN6YwMxQcefpc5JC+gEK/vI3D8peU2jAt1FFNmfwgaEUzKMaq?=
+ =?us-ascii?Q?DYi22Ev2bZFyYSXdZG9wCkRa+X8syXBsArk5W2L6NsZcKDas2PD+JgnRa/0y?=
+ =?us-ascii?Q?TdS/mXERXF+5/oxGKTObLu0Zqlse5mlggd0s/PJTliI2iyqbGb4cDKtNzJbJ?=
+ =?us-ascii?Q?bEefq/SkbQKOPqyIF8bX9Iq9eDDq9aNNDsq/TwBsDEAxBSxFLPr6GYyj9Ctx?=
+ =?us-ascii?Q?c63pI6SOQmNRnqNx6uw3Y8hE+1zluQFJOAnUDyulYsMsP23ZuKIMYtBUFIkl?=
+ =?us-ascii?Q?OQVuanZ2tWdAx+o7Vmv6gspJ8E0vN4LNtZzAVmgBA8hpEtkmo9HPkiFjLNv9?=
+ =?us-ascii?Q?9q1eb4WC0LyG4ng/hwKowMBWhxmxsieg347czbJWT5aAObp8x6t/x0CfoQwy?=
+ =?us-ascii?Q?EKgSEpsmPULoI09XWWKJZ4NQ5OJXV9lJuL7iNBl7zOFkIRMHBeG6TCZ68mhk?=
+ =?us-ascii?Q?J0TqQtIvb2R0FRnFIygiJUZ/W0g2C5v7KcYwqYjZh/vh5yhM2DEnSF9NjXwd?=
+ =?us-ascii?Q?ZkJ259pO/hjOAVqceWQep/uCbj5mdzzlh6p4LsxP15dE2mI0n0ee6Ve1JRMq?=
+ =?us-ascii?Q?eigMAdy/rKPLbv1fn9UxzR2wpmX2qYZg7ddjdcOTyXC3QH+UlQyGa24dBW7Y?=
+ =?us-ascii?Q?J6Bm45zjMkf2lycPCjR+2hYnkFEKFkzcsfL6ksE+B00GhPY3lVpH6XrRLs7S?=
+ =?us-ascii?Q?1BdN9a2nnZT5dyVcrNDmBU03fIUZKYktxXMQIN0WzO5X5ANak8+HghfduP2r?=
+ =?us-ascii?Q?enQeLKNqQ0dt5v86pX5YATaMqi7sr2eHc0uAXASc?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=LaM86ifi c=1 sm=1 tr=0 ts=681d3587 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=_GU9376sj0kzJ0Tcw8oA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA4MDIwNSBTYWx0ZWRfX7ykY7Kee8/xL
- HyjF2nt7LhJZomIjEXSZgG9PxbrhCNh3zJc5iilzX8jKyK8k1ugR+LB8dgFV+ITlPQTDRvLZZRa
- 5gki9uDar5caHGVcvi3n7b85owWn78ASvQXR68cUxXAW0wKLz4ULncv5H4Fp6zNnw8TQg9ZwMLm
- t6yoNlTx+9MVSadXToxXGRWobJCUVubJdQOy3prcJcJxwUkW/BjiVVAD6PZjmuHwDa2gsUpK6En
- QyNSbb5GJvem66FSCH/okPnoD/2e+CQx24dKi4db/+n9fVI5p0t1mCVxkrPCcEnKji3BZPaqaOV
- XNj9sCrJkTzEVKNIXlEpwqAFMIl7tnciAPL6S6cP4KGVoZ6Zh7TSVn0VO/usio1WqAQ6vH4D7sB
- RXLs7pCV6I/X153ldsBdgVoIq+ur1o70crbeU1mA692qKVZ+ZNByAJIayJKdZ6LE/z2d1Zzz
-X-Proofpoint-ORIG-GUID: 9Z55b-Lt0cFPDZ0b6yJgHRbu0ofvm7ZS
-X-Proofpoint-GUID: 9Z55b-Lt0cFPDZ0b6yJgHRbu0ofvm7ZS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-08_07,2025-05-08_04,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0
- clxscore=1015 bulkscore=0 priorityscore=1501 adultscore=0
- lowpriorityscore=0 impostorscore=0 spamscore=0 suspectscore=0
- mlxlogscore=999 mlxscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505080205
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-OriginatorOrg: nuvoton.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR03MB6896.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a2e4d568-40f6-486d-95f4-08dd8e95e4c6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 09 May 2025 01:07:39.5343 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a3f24931-d403-4b4a-94f1-7d83ac638e07
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: yuzsaxoEOU8qg5yAsmI3oxZs1ZUk0LqV6Sa33MhfYA243/tP9ELYKtnw/g4omJt4GuvaL0GgfJcsYQ+GXlAgMA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR03MB8190
+Received-SPF: pass client-ip=2a01:111:f403:c405::7;
+ envelope-from=KFTING@nuvoton.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,768 +163,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enable secure IPL in audit mode, which performs signature verification,
-but any error does not terminate the boot process. Only warnings will be
-logged to the console instead.
+From: Tim Lee <timlee660101@gmail.com>
+Sent: Thursday, May 8, 2025 10:15 AM
+To: peter.maydell@linaro.org; wuhaotsh@google.com; CS20 KFTing <KFTING@nuvo=
+ton.com>; CS20 CHLi30 <CHLI30@nuvoton.com>
+Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org; Tim Lee <timlee660101@gmail=
+.com>
+Subject: [v2] hw/arm/npcm8xx_boards: Add auto zero flash image and device p=
+art number
 
-Add a comp_len variable to store the length of a segment in
-zipl_load_segment. comp_len variable is necessary to store the
-calculated segment length and is used during signature verification.
-Return the length on success, or a negative return code on failure.
 
-Secure IPL in audit mode requires at least one certificate provided in
-the key store along with necessary facilities (Secure IPL Facility,
-Certificate Store Facility and secure IPL extension support).
+Fix flash device part number to `mx66l1g45g` according image-bmc run on npc=
+m8xx evb board (SPIFlash...SF: Detected mx66l1g45g, total 128 MiB)
 
-Note: Secure IPL in audit mode is implemented for the SCSI scheme of
-virtio-blk/virtio-scsi devices.
+And add auto zero flash image size to resolve error below after executing
+`./qemu-system-aarch64 -machine npcm845-evb -drive file=3Dimage-bmc`
 
-Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Error message:
+qemu-system-aarch64: mx66l1g45g device '/machine/unattached/device[73]'
+requires 134217728 bytes, mtd0 block backend provides 67108864 bytes
+
+Tested:
+Build passes and runs ./qemu-system-aarch64 -machine npcm845-evb normally
+
+Signed-off-by: Tim Lee <timlee660101@gmail.com>
 ---
- pc-bios/s390-ccw/Makefile     |   3 +-
- pc-bios/s390-ccw/bootmap.c    | 192 +++++++++++++++++++++++++++++++++-
- pc-bios/s390-ccw/bootmap.h    |   9 ++
- pc-bios/s390-ccw/main.c       |   9 ++
- pc-bios/s390-ccw/s390-ccw.h   |  14 +++
- pc-bios/s390-ccw/sclp.c       |  44 ++++++++
- pc-bios/s390-ccw/sclp.h       |   6 ++
- pc-bios/s390-ccw/secure-ipl.c | 175 +++++++++++++++++++++++++++++++
- pc-bios/s390-ccw/secure-ipl.h | 109 +++++++++++++++++++
- 9 files changed, 558 insertions(+), 3 deletions(-)
- create mode 100644 pc-bios/s390-ccw/secure-ipl.c
- create mode 100644 pc-bios/s390-ccw/secure-ipl.h
+Changes since v1:
+- Add a statement that checks whether the storage is writable
 
-diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
-index dc69dd484f..fedb89a387 100644
---- a/pc-bios/s390-ccw/Makefile
-+++ b/pc-bios/s390-ccw/Makefile
-@@ -34,7 +34,8 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
- .PHONY : all clean build-all distclean
- 
- OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
--	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o
-+	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
-+	  secure-ipl.o
- 
- SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
- 
-diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
-index 3dd09fda7e..06cea0929a 100644
---- a/pc-bios/s390-ccw/bootmap.c
-+++ b/pc-bios/s390-ccw/bootmap.c
-@@ -15,6 +15,7 @@
- #include "bootmap.h"
- #include "virtio.h"
- #include "bswap.h"
-+#include "secure-ipl.h"
- 
- #ifdef DEBUG
- /* #define DEBUG_FALLBACK */
-@@ -34,6 +35,13 @@ static uint8_t sec[MAX_SECTOR_SIZE*4] __attribute__((__aligned__(PAGE_SIZE)));
- const uint8_t el_torito_magic[] = "EL TORITO SPECIFICATION"
-                                   "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0";
- 
-+/* sector for storing certificates */
-+static uint8_t certs_sec[CERT_MAX_SIZE * MAX_CERTIFICATES];
-+/* sector for storing signatures */
-+static uint8_t sig_sec[MAX_SECTOR_SIZE] __attribute__((__aligned__(PAGE_SIZE)));
-+
-+ipl_print_func_t zipl_secure_print_func;
-+
- /*
-  * Match two CCWs located after PSW and eight filler bytes.
-  * From libmagic and arch/s390/kernel/head.S.
-@@ -676,6 +684,155 @@ static int zipl_load_segment(ComponentEntry *entry, uint64_t address)
-     return comp_len;
- }
- 
-+static uint32_t zipl_handle_sig_entry(ComponentEntry *entry)
-+{
-+    uint32_t sig_len;
-+
-+    if (zipl_load_segment(entry, (uint64_t)sig_sec) < 0) {
-+        return -1;
-+    }
-+
-+    if (entry->compdat.sig_info.format != DER_SIGNATURE_FORMAT) {
-+        puts("Signature is not in DER format");
-+        return -1;
-+    }
-+    sig_len = entry->compdat.sig_info.sig_len;
-+
-+    return sig_len;
-+}
-+
-+static int handle_certificate(int *cert_table, uint64_t **cert,
-+                             uint64_t cert_len, uint8_t cert_idx,
-+                             IplSignatureCertificateList *certs, int cert_index)
-+{
-+    bool unused;
-+
-+    unused = cert_table[cert_idx] == -1;
-+    if (unused) {
-+        if (zipl_secure_request_certificate(*cert, cert_idx)) {
-+            zipl_secure_cert_list_add(certs, cert_index, *cert, cert_len);
-+            cert_table[cert_idx] = cert_index;
-+            *cert += cert_len;
-+        } else {
-+            puts("Could not get certificate");
-+            return -1;
-+        }
-+
-+        /* increment cert_index for the next cert entry */
-+        return ++cert_index;
-+    }
-+
-+    return cert_index;
-+}
-+
-+static int zipl_run_secure(ComponentEntry *entry, uint8_t *tmp_sec)
-+{
-+    bool found_signature = false;
-+    IplDeviceComponentList comps;
-+    IplSignatureCertificateList certs;
-+    uint64_t *cert = (uint64_t *)certs_sec;
-+    int cert_index = 0;
-+    int comp_index = 0;
-+    uint64_t comp_addr;
-+    int comp_len;
-+    bool have_sig;
-+    uint32_t sig_len;
-+    uint64_t cert_len = -1;
-+    uint8_t cert_idx = -1;
-+    bool verified;
-+    /*
-+     * Store indices of cert entry that have already used for signature verification
-+     * to prevent allocating the same certificate multiple times.
-+     * cert_table index: index of certificate from qemu cert store used for verification
-+     * cert_table value: index of cert entry in cert list that contains the certificate
-+     */
-+    int cert_table[MAX_CERTIFICATES] = { [0 ... MAX_CERTIFICATES - 1] = -1};
-+    zipl_secure_print_func = zipl_secure_get_print_func(boot_mode);
-+
-+    if (!zipl_secure_ipl_supported()) {
-+        return -1;
-+    }
-+
-+    zipl_secure_init_lists(&comps, &certs);
-+
-+    have_sig = false;
-+    while (entry->component_type == ZIPL_COMP_ENTRY_LOAD ||
-+           entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
-+
-+        if (entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
-+            /* There should never be two signatures in a row */
-+            if (have_sig) {
-+                return -1;
-+            }
-+
-+            sig_len = zipl_handle_sig_entry(entry);
-+            if (sig_len < 0) {
-+                return -1;
-+            }
-+
-+            have_sig = true;
-+        } else {
-+            comp_addr = entry->compdat.load_addr;
-+            comp_len = zipl_load_segment(entry, comp_addr);
-+            if (comp_len < 0) {
-+                return -1;
-+            }
-+
-+            if (have_sig) {
-+                verified = verify_signature(comp_len, comp_addr,
-+                                            sig_len, (uint64_t)sig_sec,
-+                                            &cert_len, &cert_idx);
-+
-+                if (verified) {
-+                    cert_index = handle_certificate(cert_table, &cert,
-+                                                    cert_len, cert_idx,
-+                                                    &certs, cert_index);
-+
-+                    puts("Verified component");
-+                    zipl_secure_comp_list_add(&comps, comp_index, cert_table[cert_idx],
-+                                              comp_addr, comp_len,
-+                                              S390_IPL_COMPONENT_FLAG_SC |
-+                                              S390_IPL_COMPONENT_FLAG_CSV);
-+                } else {
-+                    zipl_secure_comp_list_add(&comps, comp_index, -1,
-+                                              comp_addr, comp_len,
-+                                              S390_IPL_COMPONENT_FLAG_SC);
-+                    zipl_secure_print_func(verified, "Could not verify component");
-+                }
-+
-+                comp_index++;
-+                found_signature = true;
-+                /* After a signature is used another new one can be accepted */
-+                have_sig = false;
-+            }
-+        }
-+
-+        entry++;
-+
-+        if ((uint8_t *)(&entry[1]) > (tmp_sec + MAX_SECTOR_SIZE)) {
-+            puts("Wrong entry value");
-+            return -EINVAL;
-+        }
-+    }
-+
-+    if (entry->component_type != ZIPL_COMP_ENTRY_EXEC) {
-+        puts("No EXEC entry");
-+        return -EINVAL;
-+    }
-+
-+    if (!found_signature) {
-+        zipl_secure_print_func(found_signature,
-+                               "Secure boot is on, but components are not signed");
-+    }
-+
-+    if (zipl_secure_update_iirb(&comps, &certs)) {
-+        zipl_secure_print_func(false, "Failed to write IPL Information Report Block");
-+    }
-+    write_reset_psw(entry->compdat.load_psw);
-+
-+    return 0;
-+}
-+
- static int zipl_run_normal(ComponentEntry *entry, uint8_t *tmp_sec)
- {
-     while (entry->component_type == ZIPL_COMP_ENTRY_LOAD ||
-@@ -735,8 +892,17 @@ static int zipl_run(ScsiBlockPtr *pte)
-     /* Load image(s) into RAM */
-     entry = (ComponentEntry *)(&header[1]);
- 
--    if (zipl_run_normal(entry, tmp_sec)) {
--        return -1;
-+    switch (boot_mode) {
-+    case ZIPL_SECURE_AUDIT_MODE:
-+        if (zipl_run_secure(entry, tmp_sec)) {
-+            return -1;
-+        }
-+        break;
-+    case ZIPL_NORMAL_MODE:
-+        if (zipl_run_normal(entry, tmp_sec)) {
-+            return -1;
-+        }
-+        break;
-     }
- 
-     /* should not return */
-@@ -1095,17 +1261,35 @@ static int zipl_load_vscsi(void)
-  * IPL starts here
-  */
- 
-+ZiplBootMode zipl_mode(uint8_t hdr_flags)
-+{
-+    bool sipl_set = hdr_flags & DIAG308_IPIB_FLAGS_SIPL;
-+    bool iplir_set = hdr_flags & DIAG308_IPIB_FLAGS_IPLIR;
-+
-+    if (!sipl_set && iplir_set) {
-+        return ZIPL_SECURE_AUDIT_MODE;
-+    }
-+
-+    return ZIPL_NORMAL_MODE;
-+}
-+
- void zipl_load(void)
- {
-     VDev *vdev = virtio_get_device();
- 
-     if (vdev->is_cdrom) {
-+        if (boot_mode == ZIPL_SECURE_AUDIT_MODE) {
-+            panic("Secure boot from ISO image is not supported!");
-+        }
-         ipl_iso_el_torito();
-         puts("Failed to IPL this ISO image!");
-         return;
-     }
- 
-     if (virtio_get_device_type() == VIRTIO_ID_NET) {
-+        if (boot_mode == ZIPL_SECURE_AUDIT_MODE) {
-+            panic("Virtio net boot device does not support secure boot!");
-+        }
-         netmain();
-         puts("Failed to IPL from this network!");
-         return;
-@@ -1116,6 +1300,10 @@ void zipl_load(void)
-         return;
-     }
- 
-+    if (boot_mode == ZIPL_SECURE_AUDIT_MODE) {
-+        panic("ECKD boot device does not support secure boot!");
-+    }
-+
-     switch (virtio_get_device_type()) {
-     case VIRTIO_ID_BLOCK:
-         zipl_load_vblk();
-diff --git a/pc-bios/s390-ccw/bootmap.h b/pc-bios/s390-ccw/bootmap.h
-index 95943441d3..e48823a835 100644
---- a/pc-bios/s390-ccw/bootmap.h
-+++ b/pc-bios/s390-ccw/bootmap.h
-@@ -88,9 +88,18 @@ typedef struct BootMapTable {
-     BootMapPointer entry[];
- } __attribute__ ((packed)) BootMapTable;
- 
-+#define DER_SIGNATURE_FORMAT 1
-+
-+typedef struct SignatureInformation {
-+    uint8_t format;
-+    uint8_t reserved[3];
-+    uint32_t sig_len;
-+} __attribute__((packed)) SignatureInformation;
-+
- typedef union ComponentEntryData {
-     uint64_t load_psw;
-     uint64_t load_addr;
-+    SignatureInformation sig_info;
- } ComponentEntryData;
- 
- typedef struct ComponentEntry {
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index c9328f1c51..38962da1dd 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -28,6 +28,7 @@ IplParameterBlock *iplb;
- bool have_iplb;
- static uint16_t cutype;
- LowCore *lowcore; /* Yes, this *is* a pointer to address 0 */
-+ZiplBootMode boot_mode;
- 
- #define LOADPARM_PROMPT "PROMPT  "
- #define LOADPARM_EMPTY  "        "
-@@ -272,9 +273,17 @@ static int virtio_setup(void)
- 
- static void ipl_boot_device(void)
- {
-+    if (boot_mode == 0) {
-+        boot_mode = zipl_mode(iplb->hdr_flags);
-+    }
-+
-     switch (cutype) {
-     case CU_TYPE_DASD_3990:
-     case CU_TYPE_DASD_2107:
-+        if (boot_mode == ZIPL_SECURE_AUDIT_MODE) {
-+            panic("Passthrough (vfio) device does not support secure boot!");
-+        }
-+
-         dasd_ipl(blk_schid, cutype);
-         break;
-     case CU_TYPE_VIRTIO:
-diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
-index 6cdce3e5e5..648f407dc5 100644
---- a/pc-bios/s390-ccw/s390-ccw.h
-+++ b/pc-bios/s390-ccw/s390-ccw.h
-@@ -39,6 +39,9 @@ typedef unsigned long long u64;
- #define MIN_NON_ZERO(a, b) ((a) == 0 ? (b) : \
-                             ((b) == 0 ? (a) : (MIN(a, b))))
- #endif
-+#ifndef ROUND_UP
-+#define ROUND_UP(n, d) (((n) + (d) - 1) & -(0 ? (n) : (d)))
-+#endif
- 
- #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
- 
-@@ -64,6 +67,8 @@ void sclp_print(const char *string);
- void sclp_set_write_mask(uint32_t receive_mask, uint32_t send_mask);
- void sclp_setup(void);
- void sclp_get_loadparm_ascii(char *loadparm);
-+bool sclp_is_diag320_on(void);
-+bool sclp_is_sipl_on(void);
- int sclp_read(char *str, size_t count);
- 
- /* virtio.c */
-@@ -76,6 +81,15 @@ int virtio_read(unsigned long sector, void *load_addr);
- /* bootmap.c */
- void zipl_load(void);
- 
-+typedef enum ZiplBootMode {
-+    ZIPL_NORMAL_MODE = 1,
-+    ZIPL_SECURE_AUDIT_MODE = 2,
-+} ZiplBootMode;
-+
-+extern ZiplBootMode boot_mode;
-+
-+ZiplBootMode zipl_mode(uint8_t hdr_flags);
-+
- /* jump2ipl.c */
- void write_reset_psw(uint64_t psw);
- int jump_to_IPL_code(uint64_t address);
-diff --git a/pc-bios/s390-ccw/sclp.c b/pc-bios/s390-ccw/sclp.c
-index 4a07de018d..0b03c3164f 100644
---- a/pc-bios/s390-ccw/sclp.c
-+++ b/pc-bios/s390-ccw/sclp.c
-@@ -113,6 +113,50 @@ void sclp_get_loadparm_ascii(char *loadparm)
-     }
- }
- 
-+static void sclp_get_fac134(uint8_t *fac134)
-+{
-+
-+    ReadInfo *sccb = (void *)_sccb;
-+
-+    memset((char *)_sccb, 0, sizeof(ReadInfo));
-+    sccb->h.length = SCCB_SIZE;
-+    if (!sclp_service_call(SCLP_CMDW_READ_SCP_INFO, sccb)) {
-+        *fac134 = sccb->fac134;
-+    }
-+}
-+
-+bool sclp_is_diag320_on(void)
-+{
-+    uint8_t fac134 = 0;
-+
-+    sclp_get_fac134(&fac134);
-+    return fac134 & SCCB_FAC134_DIAG320_BIT;
-+}
-+
-+/*
-+ * Get fac_ipl (byte 136 and byte 137 of the SCLP Read Info block)
-+ * for IPL device facilities.
-+ */
-+static void sclp_get_fac_ipl(uint16_t *fac_ipl)
-+{
-+
-+    ReadInfo *sccb = (void *)_sccb;
-+
-+    memset((char *)_sccb, 0, sizeof(ReadInfo));
-+    sccb->h.length = SCCB_SIZE;
-+    if (!sclp_service_call(SCLP_CMDW_READ_SCP_INFO, sccb)) {
-+        *fac_ipl = sccb->fac_ipl;
-+    }
-+}
-+
-+bool sclp_is_sipl_on(void)
-+{
-+    uint16_t fac_ipl = 0;
-+
-+    sclp_get_fac_ipl(&fac_ipl);
-+    return fac_ipl & SCCB_FAC_IPL_SIPL_BIT;
-+}
-+
- int sclp_read(char *str, size_t count)
- {
-     ReadEventData *sccb = (void *)_sccb;
-diff --git a/pc-bios/s390-ccw/sclp.h b/pc-bios/s390-ccw/sclp.h
-index 64b53cad29..cf147f4634 100644
---- a/pc-bios/s390-ccw/sclp.h
-+++ b/pc-bios/s390-ccw/sclp.h
-@@ -50,6 +50,8 @@ typedef struct SCCBHeader {
- } __attribute__((packed)) SCCBHeader;
- 
- #define SCCB_DATA_LEN (SCCB_SIZE - sizeof(SCCBHeader))
-+#define SCCB_FAC134_DIAG320_BIT 0x4
-+#define SCCB_FAC_IPL_SIPL_BIT 0x4000
- 
- typedef struct ReadInfo {
-     SCCBHeader h;
-@@ -57,6 +59,10 @@ typedef struct ReadInfo {
-     uint8_t rnsize;
-     uint8_t reserved[13];
-     uint8_t loadparm[LOADPARM_LEN];
-+    uint8_t reserved1[102];
-+    uint8_t fac134;
-+    uint8_t reserved2;
-+    uint16_t fac_ipl;
- } __attribute__((packed)) ReadInfo;
- 
- typedef struct SCCB {
-diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
-new file mode 100644
-index 0000000000..da795079f4
---- /dev/null
-+++ b/pc-bios/s390-ccw/secure-ipl.c
-@@ -0,0 +1,175 @@
-+/*
-+ * S/390 Secure IPL
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <string.h>
-+#include <stdio.h>
-+#include "s390-ccw.h"
-+#include "secure-ipl.h"
-+
-+uint8_t vcb_data[MAX_SECTOR_SIZE * 4] __attribute__((__aligned__(PAGE_SIZE)));
-+uint8_t vcssb_data[VCSSB_MAX_LEN] __attribute__((__aligned__(PAGE_SIZE)));
-+
-+VCStorageSizeBlock *zipl_secure_get_vcssb(void)
-+{
-+    VCStorageSizeBlock *vcssb;
-+    int rc;
-+
-+    vcssb = (VCStorageSizeBlock *)vcssb_data;
-+    /* avoid retrieving vcssb multiple times */
-+    if (vcssb->length == VCSSB_MAX_LEN) {
-+        return vcssb;
-+    }
-+
-+    rc = diag320(vcssb, DIAG_320_SUBC_QUERY_VCSI);
-+    if (rc != DIAG_320_RC_OK) {
-+        return NULL;
-+    }
-+
-+    return vcssb;
-+}
-+
-+uint32_t zipl_secure_request_certificate(uint64_t *cert, uint8_t index)
-+{
-+    VCStorageSizeBlock *vcssb;
-+    VCBlock *vcb;
-+    VCEntry *vce;
-+    uint64_t rc = 0;
-+    uint32_t cert_len = 0;
-+
-+    /* Get Verification Certificate Storage Size block with DIAG320 subcode 1 */
-+    vcssb = zipl_secure_get_vcssb();
-+    if (vcssb == NULL) {
-+        return 0;
-+    }
-+
-+    /*
-+     * Request single entry
-+     * Fill input fields of single-entry VCB
-+     */
-+    vcb = (VCBlock *)vcb_data;
-+    vcb->in_len = ROUND_UP(vcssb->max_single_vcb_len, PAGE_SIZE);
-+    vcb->first_vc_index = index + 1;
-+    vcb->last_vc_index = index + 1;
-+
-+    rc = diag320(vcb, DIAG_320_SUBC_STORE_VC);
-+    if (rc == DIAG_320_RC_OK) {
-+        vce = (VCEntry *)vcb->vce_buf;
-+        cert_len = vce->cert_len;
-+        memcpy(cert, (uint8_t *)vce + vce->cert_offset, vce->cert_len);
-+        /* clear out region for next cert(s) */
-+        memcpy(vcb_data, 0, sizeof(vcb_data));
-+    }
-+
-+    return cert_len;
-+}
-+
-+void zipl_secure_cert_list_add(IplSignatureCertificateList *certs, int cert_index,
-+                               uint64_t *cert, uint64_t cert_len)
-+{
-+    if (cert_index > MAX_CERTIFICATES - 1) {
-+        printf("Warning: Ignoring cert entry [%d] because it's over %d entires\n",
-+                cert_index + 1, MAX_CERTIFICATES);
-+        return;
-+    }
-+
-+    certs->cert_entries[cert_index].addr = (uint64_t)cert;
-+    certs->cert_entries[cert_index].len = cert_len;
-+    certs->ipl_info_header.len += sizeof(certs->cert_entries[cert_index]);
-+}
-+
-+void zipl_secure_comp_list_add(IplDeviceComponentList *comps, int comp_index,
-+                               int cert_index, uint64_t comp_addr,
-+                               uint64_t comp_len, uint8_t flags)
-+{
-+    if (comp_index > MAX_CERTIFICATES - 1) {
-+        printf("Warning: Ignoring comp entry [%d] because it's over %d entires\n",
-+                comp_index + 1, MAX_CERTIFICATES);
-+        return;
-+    }
-+
-+    comps->device_entries[comp_index].addr = comp_addr;
-+    comps->device_entries[comp_index].len = comp_len;
-+    comps->device_entries[comp_index].flags = flags;
-+    comps->device_entries[comp_index].cert_index = cert_index;
-+    comps->ipl_info_header.len += sizeof(comps->device_entries[comp_index]);
-+}
-+
-+int zipl_secure_update_iirb(IplDeviceComponentList *comps,
-+                            IplSignatureCertificateList *certs)
-+{
-+    IplInfoReportBlock *iirb;
-+    IplDeviceComponentList *iirb_comps;
-+    IplSignatureCertificateList *iirb_certs;
-+    uint32_t iirb_hdr_len;
-+    uint32_t comps_len;
-+    uint32_t certs_len;
-+
-+    if (iplb->len % 8 != 0) {
-+        panic("IPL parameter block length field value is not multiple of 8 bytes");
-+    }
-+
-+    iirb_hdr_len = sizeof(IplInfoReportBlockHeader);
-+    comps_len = comps->ipl_info_header.len;
-+    certs_len = certs->ipl_info_header.len;
-+    if ((comps_len + certs_len + iirb_hdr_len) > sizeof(IplInfoReportBlock)) {
-+        puts("Not enough space to hold all components and certificates in IIRB");
-+        return -1;
-+    }
-+
-+    /* IIRB immediately follows IPLB */
-+    iirb = &ipl_data.iirb;
-+    iirb->hdr.len = iirb_hdr_len;
-+
-+    /* Copy IPL device component list after IIRB Header */
-+    iirb_comps = (IplDeviceComponentList *) iirb->info_blks;
-+    memcpy(iirb_comps, comps, comps_len);
-+
-+    /* Update IIRB length */
-+    iirb->hdr.len += comps_len;
-+
-+    /* Copy IPL sig cert list after IPL device component list */
-+    iirb_certs = (IplSignatureCertificateList *) (iirb->info_blks +
-+                                                  iirb_comps->ipl_info_header.len);
-+    memcpy(iirb_certs, certs, certs_len);
-+
-+    /* Update IIRB length */
-+    iirb->hdr.len += certs_len;
-+
-+    return 0;
-+}
-+
-+bool zipl_secure_ipl_supported(void)
-+{
-+    if (!sclp_is_sipl_on()) {
-+        puts("Secure IPL Facility is not supported by the hypervisor!");
-+        return false;
-+    }
-+
-+    if (!is_secure_ipl_extension_supported()) {
-+        puts("Secure IPL extensions are not supported by the hypervisor!");
-+        return false;
-+    }
-+
-+    if (!(sclp_is_diag320_on() && is_cert_store_facility_supported())) {
-+        puts("Certificate Store Facility is not supported by the hypervisor!");
-+        return false;
-+    }
-+
-+    return true;
-+}
-+
-+void zipl_secure_init_lists(IplDeviceComponentList *comps,
-+                            IplSignatureCertificateList *certs)
-+{
-+    comps->ipl_info_header.ibt = IPL_IBT_COMPONENTS;
-+    comps->ipl_info_header.len = sizeof(comps->ipl_info_header);
-+
-+    certs->ipl_info_header.ibt = IPL_IBT_CERTIFICATES;
-+    certs->ipl_info_header.len = sizeof(certs->ipl_info_header);
-+}
-diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
-new file mode 100644
-index 0000000000..4e2328840b
---- /dev/null
-+++ b/pc-bios/s390-ccw/secure-ipl.h
-@@ -0,0 +1,109 @@
-+/*
-+ * S/390 Secure IPL
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef _PC_BIOS_S390_CCW_SECURE_IPL_H
-+#define _PC_BIOS_S390_CCW_SECURE_IPL_H
-+
-+#include <diag320.h>
-+#include <diag508.h>
-+
-+VCStorageSizeBlock *zipl_secure_get_vcssb(void);
-+uint32_t zipl_secure_request_certificate(uint64_t *cert, uint8_t index);
-+void zipl_secure_cert_list_add(IplSignatureCertificateList *certs, int cert_index,
-+                               uint64_t *cert, uint64_t cert_len);
-+void zipl_secure_comp_list_add(IplDeviceComponentList *comps, int comp_index,
-+                               int cert_index, uint64_t comp_addr,
-+                               uint64_t comp_len, uint8_t flags);
-+int zipl_secure_update_iirb(IplDeviceComponentList *comps,
-+                            IplSignatureCertificateList *certs);
-+bool zipl_secure_ipl_supported(void);
-+void zipl_secure_init_lists(IplDeviceComponentList *comps,
-+                            IplSignatureCertificateList *certs);
-+
-+typedef void (*ipl_print_func_t)(bool, const char *);
-+
-+static inline ipl_print_func_t zipl_secure_get_print_func(ZiplBootMode boot_mode)
-+{
-+    if (boot_mode == ZIPL_SECURE_AUDIT_MODE) {
-+        return &IPL_check;
-+    }
-+
-+    return NULL;
-+}
-+
-+extern ipl_print_func_t zipl_secure_print_func;
-+
-+static inline uint64_t diag320(void *data, unsigned long subcode)
-+{
-+    register unsigned long addr asm("0") = (unsigned long)data;
-+    register unsigned long rc asm("1") = 0;
-+
-+    asm volatile ("diag %0,%2,0x320\n"
-+                  : "+d" (addr), "+d" (rc)
-+                  : "d" (subcode)
-+                  : "memory", "cc");
-+    return rc;
-+}
-+
-+static inline uint64_t get_320_subcodes(uint64_t *ism)
-+{
-+    return diag320(ism, DIAG_320_SUBC_QUERY_ISM);
-+}
-+
-+static inline bool is_cert_store_facility_supported(void)
-+{
-+    uint64_t d320_ism;
-+
-+    get_320_subcodes(&d320_ism);
-+    return (d320_ism & DIAG_320_ISM_QUERY_VCSI) &&
-+           (d320_ism & DIAG_320_ISM_STORE_VC);
-+}
-+
-+static inline uint64_t _diag508(void *data, unsigned long subcode)
-+{
-+    register unsigned long addr asm("0") = (unsigned long)data;
-+    register unsigned long rc asm("1") = 0;
-+
-+    asm volatile ("diag %0,%2,0x508\n"
-+                  : "+d" (addr), "+d" (rc)
-+                  : "d" (subcode)
-+                  : "memory", "cc");
-+    return rc;
-+}
-+
-+static inline uint64_t get_508_subcodes(void)
-+{
-+    return _diag508(NULL, DIAG_508_SUBC_QUERY_SUBC);
-+}
-+
-+static inline bool is_secure_ipl_extension_supported(void)
-+{
-+    uint64_t d508_subcodes;
-+
-+    d508_subcodes = get_508_subcodes();
-+    return d508_subcodes & DIAG_508_SUBC_SIG_VERIF;
-+}
-+
-+static inline bool verify_signature(uint64_t comp_len, uint64_t comp_addr,
-+                                    uint64_t sig_len, uint64_t sig_addr,
-+                                    uint64_t *cert_len, uint8_t *cert_idx)
-+{
-+    Diag508SignatureVerificationBlock svb = {{}, comp_len, comp_addr,
-+                                             sig_len, sig_addr };
-+
-+    if (_diag508(&svb, DIAG_508_SUBC_SIG_VERIF) == DIAG_508_RC_OK) {
-+        *cert_len = svb.csi.len;
-+        *cert_idx = svb.csi.idx;
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
-+#endif /* _PC_BIOS_S390_CCW_SECURE_IPL_H */
--- 
-2.49.0
+ hw/arm/npcm8xx_boards.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
+diff --git a/hw/arm/npcm8xx_boards.c b/hw/arm/npcm8xx_boards.c index 3fb847=
+8e72..79295a586c 100644
+--- a/hw/arm/npcm8xx_boards.c
++++ b/hw/arm/npcm8xx_boards.c
+@@ -27,6 +27,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/datadir.h"
+ #include "qemu/units.h"
++#include "system/block-backend.h"
+
+ #define NPCM845_EVB_POWER_ON_STRAPS 0x000017ff
+
+@@ -59,10 +60,26 @@ static void npcm8xx_connect_flash(NPCM7xxFIUState *fiu,=
+ int cs_no,  {
+     DeviceState *flash;
+     qemu_irq flash_cs;
++    BlockBackend *blk;
++    BlockDriverState *bs;
++    uint64_t blk_size, perm, shared_perm;
+
+     flash =3D qdev_new(flash_type);
+     if (dinfo) {
+         qdev_prop_set_drive(flash, "drive", blk_by_legacy_dinfo(dinfo));
++        blk =3D blk_by_legacy_dinfo(dinfo);
++        bs =3D blk_bs(blk);
++        blk_size =3D blk_getlength(blk);
++
++        if (!bdrv_is_read_only(bs)) {
++            if (blk_size < fiu->flash_size) {
++                blk_get_perm(blk, &perm, &shared_perm);
++                blk_set_perm(blk, BLK_PERM_ALL, BLK_PERM_ALL, &error_abort=
+);
++                blk_truncate(blk, fiu->flash_size, true, PREALLOC_MODE_OFF=
+,
++                             BDRV_REQ_ZERO_WRITE, &error_abort);
++                blk_set_perm(blk, perm, shared_perm, &error_abort);
++            }
++        }
+     }
+     qdev_realize_and_unref(flash, BUS(fiu->spi), &error_fatal);
+
+@@ -194,7 +211,8 @@ static void npcm845_evb_init(MachineState *machine)
+     qdev_realize(DEVICE(soc), NULL, &error_fatal);
+
+     npcm8xx_load_bootrom(machine, soc);
+-    npcm8xx_connect_flash(&soc->fiu[0], 0, "w25q256", drive_get(IF_MTD, 0,=
+ 0));
++    npcm8xx_connect_flash(&soc->fiu[0], 0, "mx66l1g45g",
++                          drive_get(IF_MTD, 0, 0));
+     npcm845_evb_i2c_init(soc);
+     npcm845_evb_fan_init(NPCM8XX_MACHINE(machine), soc);
+     npcm8xx_load_kernel(machine, soc);
+--
+2.34.1
+
+Reviewed-by: Tyrone Ting <kfting@nuvoton.com>
+________________________________
+________________________________
+ The privileged confidential information contained in this email is intende=
+d for use only by the addressees as indicated by the original sender of thi=
+s email. If you are not the addressee indicated in this email or are not re=
+sponsible for delivery of the email to such a person, please kindly reply t=
+o the sender indicating this fact and delete all copies of it from your com=
+puter and network server immediately. Your cooperation is highly appreciate=
+d. It is advised that any unauthorized use of confidential information of N=
+uvoton is strictly prohibited; and any information in this email irrelevant=
+ to the official business of Nuvoton shall be deemed as neither given nor e=
+ndorsed by Nuvoton.
 
