@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E55C7C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:15:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 283E0C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:16:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDNY1-0001l5-P8; Fri, 09 May 2025 09:13:53 -0400
+	id 1uDNZe-0002pY-OR; Fri, 09 May 2025 09:15:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNXv-0001ic-5a
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:13:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYK-0001oD-Hd
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNXt-0006yx-12
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:13:46 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYI-000759-6T
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746796423;
+ s=mimecast20190719; t=1746796449;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RYeG22mCeiTacQ8DiSx9KTLVQyfLuPSeREmUytrZTGI=;
- b=Faz5jzDdEZksyfqDZWYEiYIQQucdMEOiudj8atcPqw77Mm16M2vgzwFOnKg4memcThZLNI
- p82t79F5o3TzAFGE12wqDVo4WUfChenQ1jLMea6tmLudN1/DJiixmflq2n5555oNGz7Ltn
- jBU4JBRUjTEByCJuVwN4ikEcsOeEgmo=
+ bh=nHiDi2ZHWr431HJmeW0LZI0aOuvHwVaomQkrQOS5eew=;
+ b=LBT/OkNYDI5o6iT1WTxOLK69nnNl0/cDiOQdyLSfRy39yZMZEhPg0uic6GrQn7cD+WWihS
+ ikHdg6zvnbUKwfKoU0vWKOZDhGwGbOKYmuSdnJqmPStC+8fPR9mNOqhXkk0WBrGQLe4KtW
+ tH93NRpgFZpgdVjC3T89jrshKV3rc14=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-fqk0K2CVMJ6Xnu-yrYyTMg-1; Fri,
- 09 May 2025 09:13:42 -0400
-X-MC-Unique: fqk0K2CVMJ6Xnu-yrYyTMg-1
-X-Mimecast-MFC-AGG-ID: fqk0K2CVMJ6Xnu-yrYyTMg_1746796421
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-332-Isp83ryhPxm6a03K9l4SEA-1; Fri,
+ 09 May 2025 09:14:08 -0400
+X-MC-Unique: Isp83ryhPxm6a03K9l4SEA-1
+X-Mimecast-MFC-AGG-ID: Isp83ryhPxm6a03K9l4SEA_1746796447
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F041180035C; Fri,  9 May 2025 13:13:41 +0000 (UTC)
+ id 5B987180098E; Fri,  9 May 2025 13:14:06 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3773418003FD; Fri,  9 May 2025 13:13:38 +0000 (UTC)
+ id 974A71800DB9; Fri,  9 May 2025 13:14:03 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Tomita Moeko <tomitamoeko@gmail.com>,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
+ Rorie Reyes <rreyes@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 06/28] vfio/igd: Detect IGD device by OpRegion
-Date: Fri,  9 May 2025 15:12:55 +0200
-Message-ID: <20250509131317.164235-7-clg@redhat.com>
+Subject: [PULL 13/28] linux-header: update-linux-header script changes
+Date: Fri,  9 May 2025 15:13:02 +0200
+Message-ID: <20250509131317.164235-14-clg@redhat.com>
 In-Reply-To: <20250509131317.164235-1-clg@redhat.com>
 References: <20250509131317.164235-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -85,113 +84,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomita Moeko <tomitamoeko@gmail.com>
+From: Rorie Reyes <rreyes@linux.ibm.com>
 
-There is currently no straightforward way to distinguish if a Intel
-graphics device is IGD or discrete GPU. However, only IGD devices have
-OpRegion. Use the presence of VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION
-to identify IGD devices. Still, OpRegion on hotplugged IGD device is
-not supported.
+Kernel commit 8a141be3233a changed from using
+ASSEMBLY to ASSEMBLER
+Updated the update-linux-header script to match
 
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-Reviewed-by: Corvin Köhne <c.koehne@beckhoff.com>
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-Tested-by: Alex Williamson <alex.williamson@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250505170305.23622-4-tomitamoeko@gmail.com
+Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250425052401.8287-2-rreyes@linux.ibm.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/igd.c | 30 ++++++++++++++++--------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+ scripts/update-linux-headers.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index b1fce76f7250c2b2185cc259ac673d0d595832e8..347253d08ce594d46cafb674ebbd9ca8878200e0 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -185,9 +185,10 @@ static bool vfio_pci_igd_opregion_init(VFIOPCIDevice *vdev,
-     return true;
- }
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index 8913e4fb99b7d6589dd90143cec407b0f0cf6301..b43b8ef75a6321588475ec2bdf7f04e4b1ca5090 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -177,7 +177,7 @@ EOF
  
--static bool vfio_pci_igd_setup_opregion(VFIOPCIDevice *vdev, Error **errp)
-+static bool vfio_pci_igd_opregion_detect(VFIOPCIDevice *vdev,
-+                                         struct vfio_region_info **opregion,
-+                                         Error **errp)
- {
--    g_autofree struct vfio_region_info *opregion = NULL;
-     int ret;
- 
-     /* Hotplugging is not supported for opregion access */
-@@ -198,17 +199,13 @@ static bool vfio_pci_igd_setup_opregion(VFIOPCIDevice *vdev, Error **errp)
- 
-     ret = vfio_device_get_region_info_type(&vdev->vbasedev,
-                     VFIO_REGION_TYPE_PCI_VENDOR_TYPE | PCI_VENDOR_ID_INTEL,
--                    VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, &opregion);
-+                    VFIO_REGION_SUBTYPE_INTEL_IGD_OPREGION, opregion);
-     if (ret) {
-         error_setg_errno(errp, -ret,
-                          "Device does not supports IGD OpRegion feature");
-         return false;
-     }
- 
--    if (!vfio_pci_igd_opregion_init(vdev, opregion, errp)) {
--        return false;
--    }
--
-     return true;
- }
- 
-@@ -480,6 +477,7 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
- 
- static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
- {
-+    g_autofree struct vfio_region_info *opregion = NULL;
-     int ret, gen;
-     uint64_t gms_size;
-     uint64_t *bdsm_size;
-@@ -487,16 +485,17 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-     bool legacy_mode_enabled = false;
-     Error *err = NULL;
- 
--    /*
--     * This must be an Intel VGA device at address 00:02.0 for us to even
--     * consider enabling legacy mode.  The vBIOS has dependencies on the
--     * PCI bus address.
--     */
-     if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
-         !vfio_is_vga(vdev)) {
-         return true;
-     }
- 
-+    /* IGD device always comes with OpRegion */
-+    if (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp)) {
-+        return true;
-+    }
-+    info_report("OpRegion detected on Intel display %x.", vdev->device_id);
-+
-     /*
-      * IGD is not a standard, they like to change their specs often.  We
-      * only attempt to support back to SandBridge and we hope that newer
-@@ -572,7 +571,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
- 
-     /* Setup OpRegion access */
-     if ((vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION) &&
--        !vfio_pci_igd_setup_opregion(vdev, errp)) {
-+        !vfio_pci_igd_opregion_init(vdev, opregion, errp)) {
-         goto error;
-     }
- 
-@@ -672,8 +671,11 @@ error:
-  */
- static bool vfio_pci_kvmgt_config_quirk(VFIOPCIDevice *vdev, Error **errp)
- {
-+    g_autofree struct vfio_region_info *opregion = NULL;
-+
-     if ((vdev->features & VFIO_FEATURE_ENABLE_IGD_OPREGION) &&
--        !vfio_pci_igd_setup_opregion(vdev, errp)) {
-+        (!vfio_pci_igd_opregion_detect(vdev, &opregion, errp) ||
-+         !vfio_pci_igd_opregion_init(vdev, opregion, errp))) {
-         return false;
-     }
- 
+         # Remove everything except the macros from bootparam.h avoiding the
+         # unnecessary import of several video/ist/etc headers
+-        sed -e '/__ASSEMBLY__/,/__ASSEMBLY__/d' \
++        sed -e '/__ASSEMBLER__/,/__ASSEMBLER__/d' \
+                "$hdrdir/include/asm/bootparam.h" > "$hdrdir/bootparam.h"
+         cp_portable "$hdrdir/bootparam.h" \
+                     "$output/include/standard-headers/asm-$arch"
 -- 
 2.49.0
 
