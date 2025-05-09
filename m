@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13AD4C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 06:05:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD314C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 06:17:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDGqj-0004oN-8o; Fri, 09 May 2025 02:04:45 -0400
+	id 1uDH29-0001HL-2F; Fri, 09 May 2025 02:16:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1uDGqV-0004je-D3
- for qemu-devel@nongnu.org; Fri, 09 May 2025 02:04:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uDH24-0001Fo-5H; Fri, 09 May 2025 02:16:29 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1uDGqT-0003Dy-LB
- for qemu-devel@nongnu.org; Fri, 09 May 2025 02:04:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746770667;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HjAoYaLhZpqMCjPL/iLBw0WthQv1l6BPcZV2ENe3NGs=;
- b=IEjFhksvYv83gSQeHzLPec5M/trpwef7gAHLdUmYG0vL7x7i94htu2+317atk3/8duV2/E
- c+pZSi9B/rAqdL3//TRuivy1YAgpwVET2EWWTPFjgCXRqV/ivoHnS5PwujI2NuBjRJlM32
- HufzrdHt7KCpe+T5nwwZNgEBvWSfo4o=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-517-FJs8mqSDP7mbEuVD9qPpgw-1; Fri, 09 May 2025 02:04:25 -0400
-X-MC-Unique: FJs8mqSDP7mbEuVD9qPpgw-1
-X-Mimecast-MFC-AGG-ID: FJs8mqSDP7mbEuVD9qPpgw_1746770664
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-44059976a1fso6225465e9.1
- for <qemu-devel@nongnu.org>; Thu, 08 May 2025 23:04:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746770664; x=1747375464;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HjAoYaLhZpqMCjPL/iLBw0WthQv1l6BPcZV2ENe3NGs=;
- b=b/cSkOPfNLNZRytskeT/5YKd2ARtCSEHbBLC1F5JNC7HXQPPmr1qO2f71Jh0Zn0mHL
- fk2RTQKed3kskZo3Qdzqd29Vh9FqkcZCxykIk39cgKZRjxPbh7AC/1RRQBTVfUYDlVYm
- uGbHiG/E23SRZXSYqn2AzeHNIiE92Piu2OOyamCaq5z03NlNdmNXSWxgA56zKFoJNPzc
- TuMyOGuTkkDNISjpziVMsZeT+sWE4PQH2kVayMX8TXNFZqa71CkDWn3Ppc7P1rfrJEEO
- 8GuGmt47ok85Cd/teOUtPnyVYUYCwKA8pKCENHaQiIxtqhn+nQkLEuVFkAPQEApt0YuW
- eX4g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWRMpps+jL3rTfRL2mVjiKxmZPrGOLb2Ra2BZfUZfYIMxwPLK/3y2RmTsriJGCujGQLjNv71sjaL/j5@nongnu.org
-X-Gm-Message-State: AOJu0YyBYSP6k91JWp4qU6eNw3+vs/97Qsn8O6UPX1qajjafcqMmzqqq
- 0ncItHB1luPGYbolFDmOjyK2UGP9Ym3ZAR2hAJgEcViM1D8oRzay/xSbG0MH2Yabf2LRub7g+Jl
- br7xhtAjtF6+88OIJBBOxdM0Lhr2xRu0SY68zSrTIS3fYtG9N5u1v8fh1P6GO15qLC640Q7on2c
- TBSYBrTlJW97IY/a0L/bKw4E0pKIc=
-X-Gm-Gg: ASbGncv0ApxIKHEjD0YhJVS1xAe2CtT2kg6Tn42lL1v5PLxaCzfDg/r6w9poSUYPqHp
- /SjQEM/YG5/E1wuwiy22utl180xZ+w6PDSPGrKVA6gsQXGe6ct7hRQTbIuESCCzodQRRbVVc=
-X-Received: by 2002:a05:600c:3c87:b0:43c:e9f7:d6a3 with SMTP id
- 5b1f17b1804b1-442d6d44d1cmr16882115e9.13.1746770663765; 
- Thu, 08 May 2025 23:04:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHR7udclj5IOldEE0yngowZHah6KJ2dOvJvq0k/U7eo49EZIG/L9oFPoAu5zv9FHAzKbhGNvdMsFsDTAD/EGOs=
-X-Received: by 2002:a05:600c:3c87:b0:43c:e9f7:d6a3 with SMTP id
- 5b1f17b1804b1-442d6d44d1cmr16881845e9.13.1746770663392; Thu, 08 May 2025
- 23:04:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uDH21-0004YM-91; Fri, 09 May 2025 02:16:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1746771385; x=1778307385;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=ggqJ1IiHFWvnWutr4RX9vZ4PtcAAvKkNUvCBk+pjK5I=;
+ b=QJUiOsRPprBTx5heJ1iPMiCKx+ZgoVAIP8zLubZ9NWTVPKT6RubBr4kS
+ Bnf90PhKHQcNSXhNKLjYGRo393CUNGnpCRAydIG5T8KpFkuhWhMCU9Q0J
+ rXJCwCYqMH6WY5JhmppppFhZHvwCbtmIZxABE326W91inaZMBSye+rTt4
+ 5eX8ytA6B9XvPaM1Wbmohw8+XgIOIh5pk1gWlHSt4LPnjeLPUeAiaxapU
+ OOZfVXTVqcz8PBKAc6lURESQ21vXg/Iqx4UwPxvzE6MZKbRP7/reyzK3n
+ jpEHeHzH7Hy9tsDSjPKIFyOE8KMIEdjQjOTsV7sW3fUZSygVh18Ze4fDZ g==;
+X-CSE-ConnectionGUID: mTQD+J7OTZ6qHGOSrTMVVA==
+X-CSE-MsgGUID: 7PYn5Jv5SCaXLZU51jO1Uw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="66119786"
+X-IronPort-AV: E=Sophos;i="6.15,274,1739865600"; d="scan'208";a="66119786"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 May 2025 23:16:20 -0700
+X-CSE-ConnectionGUID: EShOvyRJSeCCU7P6Wp2LEQ==
+X-CSE-MsgGUID: a3tZ14YNSzus0U3OwlV/+g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,274,1739865600"; d="scan'208";a="137043614"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa007.jf.intel.com with ESMTP; 08 May 2025 23:16:13 -0700
+Date: Fri, 9 May 2025 14:37:15 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ kvm@vger.kernel.org, Sergio Lopez <slp@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Yi Liu <yi.l.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-riscv@nongnu.org,
+ Weiwei Li <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha <anisinha@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ qemu-arm@nongnu.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>
+Subject: Re: [PATCH v4 09/27] hw/nvram/fw_cfg: Remove
+ fw_cfg_io_properties::dma_enabled
+Message-ID: <aB2imx1sp9sgMs3c@intel.com>
+References: <20250508133550.81391-1-philmd@linaro.org>
+ <20250508133550.81391-10-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20250508122849.207213-1-ppandit@redhat.com>
- <20250508122849.207213-4-ppandit@redhat.com>
- <87ecwzfbnk.fsf@suse.de> <aBzQYslYtUZgXjgO@x1.local>
-In-Reply-To: <aBzQYslYtUZgXjgO@x1.local>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Fri, 9 May 2025 11:34:06 +0530
-X-Gm-Features: AX0GCFsx6lAnxGKiUaJbbkTQHI6N1neFetE_-XK7op0fuahoZuEm9XFQapfbpEg
-Message-ID: <CAE8KmOzi8Zzy5hE2SMdTbMZJQD5_XH34rfEP_B85jstUF9E08g@mail.gmail.com>
-Subject: Re: [PATCH v10 3/3] migration: write zero pages when postcopy enabled
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, berrange@redhat.com,
- Prasad Pandit <pjp@fedoraproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250508133550.81391-10-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -57
+X-Spam_score: -5.8
+X-Spam_bar: -----
+X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,89 +104,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > This patch should come before 1/3, otherwise it'll break bisect.
-> We could squash the two together, IMHO.
+On Thu, May 08, 2025 at 03:35:32PM +0200, Philippe Mathieu-Daudé wrote:
+> Date: Thu,  8 May 2025 15:35:32 +0200
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH v4 09/27] hw/nvram/fw_cfg: Remove
+>  fw_cfg_io_properties::dma_enabled
+> X-Mailer: git-send-email 2.47.1
+> 
+> Now than all calls to fw_cfg_init_io_dma() pass DMA arguments,
+> the 'dma_enabled' of the TYPE_FW_CFG_IO type is not used anymore.
+> Remove it, simplifying fw_cfg_init_io_dma() and fw_cfg_io_realize().
+> 
+> Note, we can not remove the equivalent in fw_cfg_mem_properties[]
+> because it is still used in HPPA and MIPS Loongson3 machines:
+> 
+>   $ git grep -w fw_cfg_init_mem_nodma
+>   hw/hppa/machine.c:204:    fw_cfg = fw_cfg_init_mem_nodma(addr, addr + 4, 1);
+>   hw/mips/loongson3_virt.c:289:    fw_cfg = fw_cfg_init_mem_nodma(cfg_addr, cfg_addr + 8, 8);
+> 
+> 'linuxboot.bin' isn't used anymore, we'll remove it in the
+> next commit.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>  hw/i386/fw_cfg.c     |  5 +----
+>  hw/i386/x86-common.c |  5 +----
+>  hw/nvram/fw_cfg.c    | 26 ++++++++------------------
+>  3 files changed, 10 insertions(+), 26 deletions(-)
+> 
+> diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+> index 5c0bcd5f8a9..1fe084fd720 100644
+> --- a/hw/i386/fw_cfg.c
+> +++ b/hw/i386/fw_cfg.c
+> @@ -221,10 +221,7 @@ void fw_cfg_add_acpi_dsdt(Aml *scope, FWCfgState *fw_cfg)
+>       * of the i/o region used is FW_CFG_CTL_SIZE; when using DMA, the
+>       * DMA control register is located at FW_CFG_DMA_IO_BASE + 4
+>       */
+> -    Object *obj = OBJECT(fw_cfg);
+> -    uint8_t io_size = object_property_get_bool(obj, "dma_enabled", NULL) ?
+> -        ROUND_UP(FW_CFG_CTL_SIZE, 4) + sizeof(dma_addr_t) :
+> -        FW_CFG_CTL_SIZE;
+> +    uint8_t io_size = ROUND_UP(FW_CFG_CTL_SIZE, 4) + sizeof(dma_addr_t);
+>      Aml *dev = aml_device("FWCF");
+>      Aml *crs = aml_resource_template();
+>  
+> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> index 27254a0e9f1..ee594364415 100644
+> --- a/hw/i386/x86-common.c
+> +++ b/hw/i386/x86-common.c
+> @@ -991,10 +991,7 @@ void x86_load_linux(X86MachineState *x86ms,
+>      }
+>  
+>      option_rom[nb_option_roms].bootindex = 0;
+> -    option_rom[nb_option_roms].name = "linuxboot.bin";
+> -    if (fw_cfg_dma_enabled(fw_cfg)) {
+> -        option_rom[nb_option_roms].name = "linuxboot_dma.bin";
+> -    }
+> +    option_rom[nb_option_roms].name = "linuxboot_dma.bin";
+>      nb_option_roms++;
+>  }
+>  
+> diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
+> index 51b028b5d0a..ef976a4bce2 100644
+> --- a/hw/nvram/fw_cfg.c
+> +++ b/hw/nvram/fw_cfg.c
+> @@ -1026,12 +1026,9 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
+>      FWCfgIoState *ios;
+>      FWCfgState *s;
+>      MemoryRegion *iomem = get_system_io();
+> -    bool dma_requested = dma_iobase && dma_as;
+>  
+> +    assert(dma_iobase);
 
-* It is adjusting the specific optimisation behaviour for the use case
-of when Multifd and Postcopy are enabled together. I think it's better
-as a separate patch. It'll help to see how that optimization
-changed/evolved over time.
+Maybe a rebase nit? In v3, it is:
 
-> > s/ones/once/
-> >
-> > > +         *
-> > > +         * It becomes a problem when both Multifd & Postcopy options are
-> > > +         * enabled. If the zero page which was skipped during multifd phase,
-> > > +         * is accessed during the Postcopy phase of the migration, a page
-> > > +         * fault occurs. But this page fault is not served because the
-> > > +         * 'receivedmap' says the zero page is already received. Thus the
-> > > +         * migration hangs.
->
-> More accurate version could be: "the thread accessing the page may hang".
-> As discussed previously, in most cases IIUC it won't hang migration when
-> accessed in vcpu contexts, and will move again when all pages migrated
-> (triggers uffd unregistrations).
+assert(dma_iobase && dma_as);
 
-* Okay.
-
-> Meanwhile when at it.. for postcopy if we want we don't need to set all
-> zeros.. just fault it in either using one inst.  Summary:
->
-> void multifd_recv_zero_page_process(MultiFDRecvParams *p)
-> {
->     bool received;
->
->     for (int i = 0; i < p->zero_num; i++) {
->         void *page = p->host + p->zero[i];
->
->         received = ramblock_recv_bitmap_test_byte_offset(p->block, p->zero[i]);
->         if (!received) {
->             ramblock_recv_bitmap_set_offset(p->block, p->zero[i]);
->         }
-
-* Okay.
-
->         if (received) {
->             /* If it has an older version, we must clear the whole page */
->             memset(page, 0, multifd_ram_page_size());
->         } else if (migrate_postcopy_ram()) {
->             /*
->              * If postcopy is enabled, we must fault in the page because
->              * XXX (please fill in..).  Here we don't necessarily need to
->              * zero the whole page because we know it must be pre-filled
->              * with zeros anyway.
->              */
->             *(uint8_t *)page = 0;
->
-> We could also use MADV_POPULATE_WRITE but not sure which one is faster, and
-> this might still be easier to follow anyway..
-
-* Not sure how this is to work; During Multifd phase (Postcopy not
-running), when migrate_postcopy_ram() returns true, we shall raise a
-page fault here?
-
-* Could we zero-initialise the destination guest memory when migration
-starts? And not migrate the zero pages from the source at all? ie. we
-mark the page received in the 'receivedmap' as is done now, but page
-fault should also not happen for that guest address, because the
-memory was already zero-initialised at the beginning. I think there
-might be some scope to send zero-page entries piggy-backed with
-non-zero pages, whose contents are migrated anyway.
-
-* Say there are 10 pages (4KB each, Total: 40KB). Of these 10 pages:
-
-        Non-zero pages: 1, 2, 4, 7, 9, 10
-               Zero Pages: 3, 5-6 and 8
-
-* We only migrate/send non-zero pages from source to the destination.
-When non-zero page-4 is migrated, an entry/hint of page-3 being zero
-one is piggy-backed with it. When non-zero page-7 is sent an
-entry/hint of pages-5-6 being zero pages is sent with it. Similarly a
-hint of page-8 being zero page is sent along with page-9. (thinking
-aloud)
-
-Thank you.
----
-  - Prasad
+Others are fine for me.
 
 
