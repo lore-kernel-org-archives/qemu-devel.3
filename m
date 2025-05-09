@@ -4,109 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43EC4C3ABC9
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 21:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F46C3ABC9
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 22:06:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDV78-0004t0-O2; Fri, 09 May 2025 17:18:38 -0400
+	id 1uDVq7-0003Yn-Rb; Fri, 09 May 2025 18:05:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uDV76-0004sS-P2
- for qemu-devel@nongnu.org; Fri, 09 May 2025 17:18:36 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uDV74-0004KW-Sj
- for qemu-devel@nongnu.org; Fri, 09 May 2025 17:18:36 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id AC8792116A;
- Fri,  9 May 2025 21:18:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1746825509; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uDVq4-0003Pi-1d
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 18:05:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uDVq1-0001Cy-5c
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 18:05:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746828299;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mEKfYdSyd1SP/UWLsx8u/eySzvrQPfyY/7QJE8d7mFg=;
- b=HYHDXTzcryzuNkWtzM2Nsg+PDN06O6X7tryzf8Ay7qnCjq2ROJn1K6PTC2hLLD1eF+CXNY
- PRPTIZsx18I9Ys+EEAnIR885t2de917wqCRVOWeuReEkoZmwxaRpaXu0peiDvU2VUfsFJt
- gH6rsEniWXpSR2qDL1VGadTbmNO84Xw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1746825509;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mEKfYdSyd1SP/UWLsx8u/eySzvrQPfyY/7QJE8d7mFg=;
- b=jCwW1KAj9G289EJWaK2WWoPTW59M7HRWeOSEUPNz1z37X0hRE7BTU732TTpcyEWu2bihY2
- tFOYC8tBRBoUwwDw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1746825509; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mEKfYdSyd1SP/UWLsx8u/eySzvrQPfyY/7QJE8d7mFg=;
- b=HYHDXTzcryzuNkWtzM2Nsg+PDN06O6X7tryzf8Ay7qnCjq2ROJn1K6PTC2hLLD1eF+CXNY
- PRPTIZsx18I9Ys+EEAnIR885t2de917wqCRVOWeuReEkoZmwxaRpaXu0peiDvU2VUfsFJt
- gH6rsEniWXpSR2qDL1VGadTbmNO84Xw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1746825509;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mEKfYdSyd1SP/UWLsx8u/eySzvrQPfyY/7QJE8d7mFg=;
- b=jCwW1KAj9G289EJWaK2WWoPTW59M7HRWeOSEUPNz1z37X0hRE7BTU732TTpcyEWu2bihY2
- tFOYC8tBRBoUwwDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0BD5613931;
- Fri,  9 May 2025 21:18:27 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iFBELiNxHmjkNwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 09 May 2025 21:18:27 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 2/3] tests/qtest/libqos: Avoid double swapping when using
- modern virtio
-Date: Fri,  9 May 2025 18:18:20 -0300
-Message-Id: <20250509211821.23684-3-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20250509211821.23684-1-farosas@suse.de>
-References: <20250509211821.23684-1-farosas@suse.de>
+ bh=Z6LuaFaZgXuWiIhpkLgPcqYZV30Fra1paV1GNpnnc54=;
+ b=AOzww9+Ob6EupQX4oGcxNWR5N4W7rdHL7XBsr/ZaaiL6zztGLnTo9OsbYKcHTscGgBXcI8
+ w25rlmUfQoKVhny9KBGtvgGuxJzwmoZcxgdoETbXcEGRGUCD0/zqyXulej09kaS8+IxrJ+
+ tc3atRJo7zSUcKQ0AlgNsOnZ2QwXc38=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-543-Cbt-p4A1NUqvqDKV0Ajhig-1; Fri, 09 May 2025 18:04:57 -0400
+X-MC-Unique: Cbt-p4A1NUqvqDKV0Ajhig-1
+X-Mimecast-MFC-AGG-ID: Cbt-p4A1NUqvqDKV0Ajhig_1746828297
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7c5c82c6d72so453480885a.2
+ for <qemu-devel@nongnu.org>; Fri, 09 May 2025 15:04:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746828297; x=1747433097;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Z6LuaFaZgXuWiIhpkLgPcqYZV30Fra1paV1GNpnnc54=;
+ b=JqRcrEwK0Tt1mKCwVpLYcXtvoL7nmHQ3UDrFJACiTebecKprYMlRW65+VkqgcJrIa7
+ qWuGD1xXJfAryKZePIUrXwPqpv5R5HnpT363BJk7P5LYIBUTOImXFp1Yco2tdW3U9jD2
+ jyU8poIymuA7rBKwenkA+W6zrTo5Q9/FJqRWo0OvK3RYMVVQhI8NmT37eR2GSFrY7Dq+
+ prUYXcOwanWVXZVb9mTnMiGrwe0DTU5S9Ifiuz5+Ym1OzM6Tr8QEehvmXuJd4lJ+ju9Z
+ IzWxVb900N/f4X9SLDtwwr9frGgH+mo6lX4CSJQNodT76VXWKHjb+MzjSKDvfcSil3DL
+ Tk2g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8hvJk0RJp22Udcy63VDVOJ6tqZZGSS42NEszebc7ikPNnfDccX9aiF/eedoX/O3PcuZcXrN5wiScP@nongnu.org
+X-Gm-Message-State: AOJu0YykhJbotzBdQJe1VVC8xAzyqFv/1kIrO0TSEy/GKAXF6cdYmmv2
+ 4HL4P07ollCbHDuP1C0j7lq4D0pN0CgTwNhad3AmrC5RtY9nKH2Jpx6NgK7FrGv0L5TYnialqo2
+ zMTTJQ8oyxyKzt2dm5N8JaMp1/nq/eyHVWgoGcS4v4xTIFPEcawnT
+X-Gm-Gg: ASbGnctqZ1wk+YkaTLf3mzZBPMYtMrRZ5HrGRGNFMMFPsoMLxYJjRGb6YYHKPZ9ANc2
+ leIhpcEh9RQaAEA/8lLeizaLNy1PuWYEZo43Fhcg6/b3hBLGG9XN6+VHKdbbpEMT1N5+LwvC7lg
+ rJg529cR0TW7LTp4cifhsTepvQC5WRVAMXOEDF3niY3w9hfLGUCGh9jWKXul7K3C3B/rAkoW4s+
+ /2vKTAamQZHR0cKgSe4j9bb9tiXCVL3v7FXJuzc6gJVoK6a4uOZcI9VVvp4xw9h4hlf1Gz00xP1
+ KBo=
+X-Received: by 2002:a05:620a:4556:b0:7ca:bdbe:c5af with SMTP id
+ af79cd13be357-7cd010f3f30mr714956885a.10.1746828297378; 
+ Fri, 09 May 2025 15:04:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEyFmF0HAqsMoNaOEkV/cE6s0zGTKUms3DPBhuCBMew07wj+WrRon5Wmnt3DjN5l+zMSXg2mA==
+X-Received: by 2002:a05:620a:4556:b0:7ca:bdbe:c5af with SMTP id
+ af79cd13be357-7cd010f3f30mr714953485a.10.1746828297007; 
+ Fri, 09 May 2025 15:04:57 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7cd00f63ba2sm193642885a.44.2025.05.09.15.04.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 May 2025 15:04:56 -0700 (PDT)
+Date: Fri, 9 May 2025 18:04:53 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Marco Cavenati <Marco.Cavenati@eurecom.fr>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>
+Subject: Re: [PATCH] migration: add FEATURE_SEEKABLE to QIOChannelBlock
+Message-ID: <aB58BQQ12aosCalh@x1.local>
+References: <87ecxyhon3.fsf@suse.de> <7cd3c-67fe3180-3d9-10622a60@195384178>
+ <87plhdfs9o.fsf@suse.de> <7cd3c-6800c580-4b5-10622a60@195456151>
+ <871ptqg6u9.fsf@suse.de> <151d8c-680a4080-15-6f9ea10@196998929>
+ <aB0Swile4IjxTUsd@x1.local>
+ <193e5a-681dfa80-3af-701c0f80@227192887>
+ <aB4rhlVGCSk7IwoE@x1.local>
+ <1b54a0-681e7080-273-3299e580@146025174>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_THREE(0.00)[4];
- FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1b54a0-681e7080-273-3299e580@146025174>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.413,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,110 +113,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On Fri, May 09, 2025 at 11:14:41PM +0200, Marco Cavenati wrote:
+> On Friday, May 09, 2025 18:21 CEST, Peter Xu <peterx@redhat.com> wrote:
+>  
+> > So you don't really need to take sequence of snapshots?  Hmm, that sounds
+> > like a completely different use case that I originally thought.
+> 
+> Correct
+> 
+> > Have you thought of leveraging ignore-shared and MAP_PRIVATE for the major
+> > chunk of guest mem?
+> > 
+> > Let me explain; it's a very rough idea, but maybe you can collect something
+> > useful.
+> > 
+> > So.. if you keep reloading one VM state thousands of times, it's better
+> > first that you have some shmem file (let's imagine that's enough.. you
+> > could have more backends) keeping the major chunk of the VM RAM image that
+> > you migrated before into a file.
+> > 
+> > Say, the major part of guest mem is stored here:
+> > 
+> >   PATH_RAM=/dev/shm/XXX
+> > 
+> > Then you migrate (with ignore-shared=on) to a file here (NOTE: I _think_
+> > you really can use file migration in this case with VM stopped first, not
+> > snapshot save/load):
+> > 
+> >   PATH_VM_IMAGE=/tmp/VM_IMAGE_YYY
+> > 
+> > Then, the two files above should contain all info you need to start a new
+> > VM.
+> > 
+> > When you want to recover that VM state, boot a VM using this cmdline:
+> > 
+> >   $qemu ... \
+> >   -object memory-backend-file,mem-path=$PATH_RAM,share=off
+> >   -incoming file:$PATH_VM_IMAGE
+> > 
+> > That'll boot a VM, directly loading the shmem page cache (always present on
+> > the host, occupying RAM, though, outside of VM lifecycle, but it's part of
+> > the design..), loading VM image would be lightning fast because it's tiny
+> > when there's almost no RAM inside.  No concern on mapped-ram at all as the
+> > rest RAMs are too trivial to just be a stream.
+> > 
+> > The important bit is share=off - that will mmap() the VM major RAM as
+> > MAP_PRIVATE, then it'll do CoW on the "snapshot" you made before, whenever
+> > you writes to some guest pages during fuzzing some functions, it copies the
+> > shmem page cache over.  shmem page cache should never change its content.
+> > 
+> > Sounds working to you?
+> 
+> I didn't know much about these options, cool, thanks for the explanation.
+> 
+> My only concern is that I'd have to restart the QEMU process for each iteration.
+> Honestly I've never measured the impact it would have but I fear that it would 
+> be noticeable since the goal is to restore many times a second. What do you
+> think?
 
-The logic in the qvirtio_read/write function is rather a headache,
-involving byte-swapping when the target is big endian, just to
-maybe involve another byte-swapping  in the qtest_read/write
-function immediately afterwards (on the QEMU side). Let's do it in
-a more obvious way here: For virtio 1.0, we know that the values have
-to be little endian, so let's read/write the bytes in that well known
-order here.
+It may depends on how "many times" are defined. :) IIUC, booting QEMU could
+still be pretty fast, but yes, worth measuring.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20250430132817.610903-1-thuth@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/libqos/virtio.c | 44 ++++++++++++++++++++++++-------------
- 1 file changed, 29 insertions(+), 15 deletions(-)
+If that works at least functionally (which also needs some double checking
+I guess..), it would be great if you would compare the perf difference
+v.s. your solution, that'll be very helpful material for reviewers to read
+when/if you're going to propose the feature.
 
-diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
-index 2e7979652f..5a709d0bc5 100644
---- a/tests/qtest/libqos/virtio.c
-+++ b/tests/qtest/libqos/virtio.c
-@@ -25,49 +25,63 @@
-  */
- static uint16_t qvirtio_readw(QVirtioDevice *d, QTestState *qts, uint64_t addr)
- {
--    uint16_t val = qtest_readw(qts, addr);
-+    uint16_t val;
- 
--    if (d->features & (1ull << VIRTIO_F_VERSION_1) && qtest_big_endian(qts)) {
--        val = bswap16(val);
-+    if (d->features & (1ull << VIRTIO_F_VERSION_1)) {
-+        qtest_memread(qts, addr, &val, sizeof(val));
-+        val = le16_to_cpu(val);
-+    } else {
-+        val = qtest_readw(qts, addr);
-     }
-+
-     return val;
- }
- 
- static uint32_t qvirtio_readl(QVirtioDevice *d, QTestState *qts, uint64_t addr)
- {
--    uint32_t val = qtest_readl(qts, addr);
-+    uint32_t val;
- 
--    if (d->features & (1ull << VIRTIO_F_VERSION_1) && qtest_big_endian(qts)) {
--        val = bswap32(val);
-+    if (d->features & (1ull << VIRTIO_F_VERSION_1)) {
-+        qtest_memread(qts, addr, &val, sizeof(val));
-+        val = le32_to_cpu(val);
-+    } else {
-+        val = qtest_readl(qts, addr);
-     }
-+
-     return val;
- }
- 
- static void qvirtio_writew(QVirtioDevice *d, QTestState *qts,
-                            uint64_t addr, uint16_t val)
- {
--    if (d->features & (1ull << VIRTIO_F_VERSION_1) && qtest_big_endian(qts)) {
--        val = bswap16(val);
-+    if (d->features & (1ull << VIRTIO_F_VERSION_1)) {
-+        val = cpu_to_le16(val);
-+        qtest_memwrite(qts, addr, &val, sizeof(val));
-+    } else {
-+        qtest_writew(qts, addr, val);
-     }
--    qtest_writew(qts, addr, val);
- }
- 
- static void qvirtio_writel(QVirtioDevice *d, QTestState *qts,
-                            uint64_t addr, uint32_t val)
- {
--    if (d->features & (1ull << VIRTIO_F_VERSION_1) && qtest_big_endian(qts)) {
--        val = bswap32(val);
-+    if (d->features & (1ull << VIRTIO_F_VERSION_1)) {
-+        val = cpu_to_le32(val);
-+        qtest_memwrite(qts, addr, &val, sizeof(val));
-+    } else {
-+        qtest_writel(qts, addr, val);
-     }
--    qtest_writel(qts, addr, val);
- }
- 
- static void qvirtio_writeq(QVirtioDevice *d, QTestState *qts,
-                            uint64_t addr, uint64_t val)
- {
--    if (d->features & (1ull << VIRTIO_F_VERSION_1) && qtest_big_endian(qts)) {
--        val = bswap64(val);
-+    if (d->features & (1ull << VIRTIO_F_VERSION_1)) {
-+        val = cpu_to_le64(val);
-+        qtest_memwrite(qts, addr, &val, sizeof(val));
-+    } else {
-+        qtest_writeq(qts, addr, val);
-     }
--    qtest_writeq(qts, addr, val);
- }
- 
- uint8_t qvirtio_config_readb(QVirtioDevice *d, uint64_t addr)
+> (Also, snapshots conveniently take care of the disk as well, but this shouldn't 
+> be too big of a deal.)
+
+True, I didn't take disks into consideration.  Maybe disk files can be
+snapshotted and recovered separately using either qcow2's snapshots, or
+using snapshots on modern file systems like btrfs.  Good to know you seem
+to have ways to work it out in all cases.
+
 -- 
-2.35.3
+Peter Xu
 
 
