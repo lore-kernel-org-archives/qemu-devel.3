@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC04C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 16:39:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDD0C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 16:56:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDQl2-0004Vb-57; Fri, 09 May 2025 12:39:32 -0400
+	id 1uDR0v-0006pD-SC; Fri, 09 May 2025 12:55:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uDQkx-0004A7-9G
- for qemu-devel@nongnu.org; Fri, 09 May 2025 12:39:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uDR0u-0006j3-4g
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 12:55:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uDQku-0000LZ-SO
- for qemu-devel@nongnu.org; Fri, 09 May 2025 12:39:27 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uDR0s-0002Dh-BI
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 12:55:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746808761;
+ s=mimecast20190719; t=1746809752;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=srMI2g/tjPiWuM4zYo5KPb3LCL/1N2Q2GBGNV9AwH04=;
- b=OP4Y/afu7tYm7bzjPFixEvGJ1CaxJYLo5WoAhIwnAgvXSvooPdieOCCuL7n9wtA32hOW5p
- eRNVw+qFyn9vF9/FqaZuV2H1igHIUqGDPaYwbALiw32M+5kuAwgeaS1K1BWj42OvIRRRCi
- GdGVClW8jUThqv9030qlL4S3TdMqiX0=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=clPU3c6+Xzd9g35CRO1GiEKesw0SsTU9Vuir29zAB5M=;
+ b=Kf4ZLLvNcrCEvYyGIEFdnFwdBQ8oaxeRFslpefMslozLdwH0EvpjF1a+EgW7GqeWvRLX67
+ rK/Ta9tYSEw4ZXtLCzOG32O4Hp3plz7xQkIBPIvWZJJ4fno9Px3lr209uvN5abuML5s0an
+ SFGeZSaxymuZzm9M6mGABv24bZKY4MM=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-547-V6CpBsh9NtWt2_VXSJjEbg-1; Fri, 09 May 2025 12:39:20 -0400
-X-MC-Unique: V6CpBsh9NtWt2_VXSJjEbg-1
-X-Mimecast-MFC-AGG-ID: V6CpBsh9NtWt2_VXSJjEbg_1746808759
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a0b1798d69so933410f8f.3
- for <qemu-devel@nongnu.org>; Fri, 09 May 2025 09:39:20 -0700 (PDT)
+ us-mta-524-QBGzwAofMDqXFP-hFNNScA-1; Fri, 09 May 2025 12:55:50 -0400
+X-MC-Unique: QBGzwAofMDqXFP-hFNNScA-1
+X-Mimecast-MFC-AGG-ID: QBGzwAofMDqXFP-hFNNScA_1746809750
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43cf172ff63so11292475e9.3
+ for <qemu-devel@nongnu.org>; Fri, 09 May 2025 09:55:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746808758; x=1747413558;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=srMI2g/tjPiWuM4zYo5KPb3LCL/1N2Q2GBGNV9AwH04=;
- b=AkHEUZGnO9CNzG7sujGYg2WuTrpG7LDj0+tYsqFS4/PeK/pPBjP+7KNqA2gTdphpY1
- j6bSdifKqV/DwGs3b9p9tHXmmd6CnjhDlBCXyDHtpqAjqXUhrgvrAcosartdUTzYlJ7Q
- 12r8YhmAnxzTlItxJQtQi86O7BMvSifD76jwDH4VI/DUIH4T2wrgyb+BG2FaKgl9c4NZ
- aZp9bq55B93mWx/vrnu6xRU4XfXPAZjRIhrsN+ob+ZFGElMxXux0MN9E2T9dPsFUZWqC
- 9++PMlyRKlChTsnf/Q+PvotdQIQuGLvsW464aY7z5Ggp9IBNHVFwsv812H8DzHbq77aN
- AgRA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPcf7zLK1/hVXJTxq8HsGX9iFCh2RyrpmseV5HakIpkGr4sgzxbCplVJLapdfZxl8p00+1ZS5AGlmo@nongnu.org
-X-Gm-Message-State: AOJu0Ywcc17BSq8V/XJc74BjLPdPxuGeLmiCxRwGbNtL0kwKhHWp5OVV
- wGKiYBr3inXs4WszntOkR7zkQOQ0Ns8wmJtGbrln73tqfCD1ZtzWnxPFEYyz1J7heU+2hiPa5PF
- yqW3SkGUU3nCEWlLOpEjUizw+C/C/m8/ZEQ4xWbW5K7nWft+txf3uuy61sKhY
-X-Gm-Gg: ASbGncugCATY1FbGWk1JYoUFXyqpEhpyHyXCNs+4Zy+VC8wGqawOc/JXngjJvY/o/SJ
- 2g0XPwWb++mUmhzfalRBC9DxOc12uiEX6qbniCyybWcVp5UJ7vcqCsubmQNsW/QfKRQMtBfBc6e
- e+bLcAodtnD+PZVDAOmsDRN6pEDyB+1hFlwfXI1VhvujGj9HUuWhLtgqmS4VMDk4Ol1TzMHMtwD
- uYfRdfHy1Eoxl7CUnN3dT3+9EoRipGm1emZmCgKvL3R6M6blBkGdO9EH/zSIaIEELcay//7gXOI
- 0tBy6Q==
-X-Received: by 2002:a05:6000:430d:b0:3a0:ac96:bd41 with SMTP id
- ffacd0b85a97d-3a1f643c6a4mr3670864f8f.27.1746808758551; 
- Fri, 09 May 2025 09:39:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHavhplC+6nqM3oY2QAmbhpJgYS4h5A+nbfoCPON8HNgBtcIo/NH4FgUtyf7lfstgX2yK7DnA==
-X-Received: by 2002:a05:6000:430d:b0:3a0:ac96:bd41 with SMTP id
- ffacd0b85a97d-3a1f643c6a4mr3670843f8f.27.1746808758196; 
- Fri, 09 May 2025 09:39:18 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746809749; x=1747414549;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=clPU3c6+Xzd9g35CRO1GiEKesw0SsTU9Vuir29zAB5M=;
+ b=FGpu1suG7lLwbNzvySxQgGlvfWXmG5FtwFdbM1LkxeSk+5bgqjXRCvyfXA2BsY/moY
+ M4xQQFm1EgjJ6gbKXsIKjHQmIyN+2yad7itprFgrNQc/XDoSRQjP9XKNQ6qz8Jnog+qa
+ eVkMDokJ23JQZgcvQ4rw/H4oZhZlnFmjS6hTAtSp4Y99UHLeH9TTdbIseZ943krLeMYs
+ gVxFn5skOkL+yo8bzrnGHqWtEWBtKX03z6j1cLoyK5r4hypD47Gmg9NOhkkeZKXh6THj
+ Y5tur0BGQWfx9T8QU6A26ChUO6Km9G/YMTq881buxdEfxwUsf5ZttdV5laygBSyepAEB
+ 3SFA==
+X-Gm-Message-State: AOJu0YxsDPfZI3JWH9c2ooQkD5xjspNw2lfgf1/CLy0IBaxFez8xfcnv
+ lyalOeQsIWSZ+zNsraUymQNJUmS6aKT/tDZMxAcVc0UBp+6cjQuOXvQVnDthoSFMEDzSJNH4oQq
+ 7JGlUBJGcJWgkPAV2UlmD6qqkTMGgTaMrclUc9jim6BTAO/brs9Gd
+X-Gm-Gg: ASbGncurTvcKTULQjBwSIfaBa65z2WDO5ToR2z/8bJrOgt1xRgDl+M49hOtMz2rVedg
+ tfLaMZungNFZgsQ3lCNwClH/g9UaugfHGBUCB6ljOSR+aZxIn5XfenwJhpMZy5DN6owumozlue6
+ JlsTFZ8SyDGB3oIgLqE875pVhr3t6UIez9cjZC17D4YC3bYEiWKilG5tm+U/ClplaNfPLgB2J6n
+ kNsVT7J3BI/qUy2HSxtgbn7ijd8cyu4lJROcfvAp7u/GtKhchSzkNNIommikzP5OQOwkF5bOGeJ
+ JEsAxQ==
+X-Received: by 2002:a05:6000:144b:b0:3a0:b65b:78ef with SMTP id
+ ffacd0b85a97d-3a1f64b6931mr3944112f8f.52.1746809749584; 
+ Fri, 09 May 2025 09:55:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGFOJQdPjQAaQ0U+gBainJuO+12O2XFCMDmdK3SXiUgXKkn3aWdhuDJIfdPWAx8Gtp+GBv/Ew==
+X-Received: by 2002:a05:6000:144b:b0:3a0:b65b:78ef with SMTP id
+ ffacd0b85a97d-3a1f64b6931mr3944092f8f.52.1746809749210; 
+ Fri, 09 May 2025 09:55:49 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f57ee95asm3809235f8f.11.2025.05.09.09.39.16
+ ffacd0b85a97d-3a1f58ebec4sm3851240f8f.36.2025.05.09.09.55.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 May 2025 09:39:17 -0700 (PDT)
-Date: Fri, 9 May 2025 12:39:15 -0400
+ Fri, 09 May 2025 09:55:48 -0700 (PDT)
+Date: Fri, 9 May 2025 12:55:45 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: yuanminghao <yuanmh12@chinatelecom.cn>
-Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: [PATCH 1/1] vhost: do not reset used_memslots when destroying
- vhost dev
-Message-ID: <20250509123901-mutt-send-email-mst@kernel.org>
-References: <1741024937-37164-1-git-send-email-yuanmh12@chinatelecom.cn>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
+ devel@lists.libvirt.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
+Subject: Re: [PATCH v3 0/5] docs: automated info about machine
+ deprecation/removal info
+Message-ID: <20250509125532-mutt-send-email-mst@kernel.org>
+References: <20250506160024.2380244-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <1741024937-37164-1-git-send-email-yuanmh12@chinatelecom.cn>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250506160024.2380244-1-berrange@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -108,119 +112,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 03, 2025 at 01:02:17PM -0500, yuanminghao wrote:
-> > > Global used_memslots or used_shared_memslots is updated to 0 unexpectly
-> > 
-> > it shouldn't be 0 in practice, as it comes from number of RAM regions VM has.
-> > It's likely a bug somewhere else.
-> > 
-> > Please describe a way to reproduce the issue.
-> > 
-> Hi, Igor Mammedov,
->   Sorry for the late response, here are the steps to reproduce the issue:
+On Tue, May 06, 2025 at 05:00:19PM +0100, Daniel P. Berrangé wrote:
+> Since we deprecate and remove versioned machine types on a fixed
+> schedule, we can automatically ensure that the docs reflect the
+> latest version info, rather than requiring manual updates on each
+> dev cycle.
 > 
->   1.start a domain with 1Core 1GiB memory, no network interface.
->   2.print used_memslots with gdb
->     gdb -p ${qemupid} <<< "p used_memslots"
->     $1 = 0
->   3.attach a network interface net1
->   cat>/tmp/net1.xml <<EOF
->   <interface type='network'>
->     <mac address='52:54:00:12:34:56'/>
->     <source network='default'/>
->     <model type='virtio'/>
->   </interface>
->   EOF
->   virsh attach-device dom /tmp/net1.xml --live
->   4.print current used_memslots with gdb
->     gdb -p ${qemupid} <<< "p used_memslots"
->     $1 = 2
->   5.attach another network interface net2
->   cat>/tmp/net2.xml <<EOF
->   <interface type='network'>
->     <mac address='52:54:00:12:34:78'/>
->     <source network='default'/>
->     <model type='virtio'/>
->   </interface>
->   EOF
->   virsh attach-device dom /tmp/net2.xml --live
->   6.print current used_memslots with gdb
->     gdb -p ${qemupid} <<< "p used_memslots"
->     $1 = 2
->   7.detach network interface net2
->   virsh detach-device dom /tmp/net2.xml --live
->   8.print current used_memslots with gdb
->     gdb -p ${qemupid} <<< "p used_memslots"
->     $1 = 0
-> After detaching net2, the used_memslots was reseted to 0, which was expected to be 2.
+> The first patch in this series removes the hack which postponed
+> automatic removal of versioned machine types to the 10.1.0 release,
+> since we're now in the 10.1.0 dev cycle.
+> 
+> The second patch in this series fixes the logic to ensure dev snapshots
+> and release candidates don't have an off-by-1 error in setting
+> deprecation and removal thresholds - they must predict the next formal
+> release version number.
+> 
+> The following three patches deal with the docs stuff.
 
-Igor, WDYT?
+series:
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
-> > > when a vhost device destroyed. This can occur during scenarios such as live
-> > > detaching a vhost device or restarting a vhost-user net backend (e.g., OVS-DPDK):
-> > >  #0  vhost_commit(listener) at hw/virtio/vhost.c:439
-> > >  #1  listener_del_address_space(as, listener) at memory.c:2777
-> > >  #2  memory_listener_unregister(listener) at memory.c:2823
-> > >  #3  vhost_dev_cleanup(hdev) at hw/virtio/vhost.c:1406
-> > >  #4  vhost_net_cleanup(net) at hw/net/vhost_net.c:402
-> > >  #5  vhost_user_start(be, ncs, queues) at net/vhost-user.c:113
-> > >  #6  net_vhost_user_event(opaque, event) at net/vhost-user.c:281
-> > >  #7  tcp_chr_new_client(chr, sioc) at chardev/char-socket.c:924
-> > >  #8  tcp_chr_accept(listener, cioc, opaque) at chardev/char-socket.c:961
-> > >
-> > > So we skip the update of used_memslots and used_shared_memslots when destroying
-> > > vhost devices, and it should work event if all vhost devices are removed.
-> > >
-> > > Signed-off-by: yuanminghao <yuanmh12@chinatelecom.cn>
-> > > ---
-> > >  hw/virtio/vhost.c         | 14 +++++++++-----
-> > >  include/hw/virtio/vhost.h |  1 +
-> > >  2 files changed, 10 insertions(+), 5 deletions(-)
-> > >
-> > > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> > > index 6aa72fd434..2258a12066 100644
-> > > --- a/hw/virtio/vhost.c
-> > > +++ b/hw/virtio/vhost.c
-> > > @@ -666,11 +666,13 @@ static void vhost_commit(MemoryListener *listener)
-> > >      dev->mem = g_realloc(dev->mem, regions_size);
-> > >      dev->mem->nregions = dev->n_mem_sections;
-> > > 
-> > > -    if (dev->vhost_ops->vhost_backend_no_private_memslots &&
-> > > -        dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
-> > > -        used_shared_memslots = dev->mem->nregions;
-> > > -    } else {
-> > > -        used_memslots = dev->mem->nregions;
-> > > +    if (!dev->listener_removing) {
-> > > +        if (dev->vhost_ops->vhost_backend_no_private_memslots &&
-> > > +            dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
-> > > +            used_shared_memslots = dev->mem->nregions;
-> > > +        } else {
-> > > +            used_memslots = dev->mem->nregions;
-> > > +        }
-> > >      }
-> > > 
-> > >      for (i = 0; i < dev->n_mem_sections; i++) {
-> > > @@ -1668,7 +1670,9 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
-> > >      }
-> > >      if (hdev->mem) {
-> > >          /* those are only safe after successful init */
-> > > +        hdev->listener_removing = true;
-> > >          memory_listener_unregister(&hdev->memory_listener);
-> > > +        hdev->listener_removing = false;
-> > >          QLIST_REMOVE(hdev, entry);
-> > >      }
-> > >      migrate_del_blocker(&hdev->migration_blocker);
-> > > diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-> > > index a9469d50bc..037f85b642 100644
-> > > --- a/include/hw/virtio/vhost.h
-> > > +++ b/include/hw/virtio/vhost.h
-> > > @@ -133,6 +133,7 @@ struct vhost_dev {
-> > >      QLIST_HEAD(, vhost_iommu) iommu_list;
-> > >      IOMMUNotifier n;
-> > >      const VhostDevConfigOps *config_ops;
-> > > +    bool listener_removing;
-> > >  };
-> > > 
-> > >  extern const VhostOps kernel_ops;
+> Changed in v3:
+> 
+>  - Remove mistaken mention of 'ppc', only 'ppc64' has versioned
+>    machine types
+> 
+> Changed in v2:
+> 
+>  - Remove hack that temporarily postponed automatic deletion
+>    of machine types
+>  - Fix docs version info for stable bugfix releases
+> 
+> Daniel P. Berrangé (5):
+>   Revert "include/hw: temporarily disable deletion of versioned machine
+>     types"
+>   include/hw/boards: cope with dev/rc versions in deprecation checks
+>   docs/about/deprecated: auto-generate a note for versioned machine
+>     types
+>   docs/about/removed-features: auto-generate a note for versioned
+>     machine types
+>   include/hw/boards: add warning about changing deprecation logic
+> 
+>  docs/about/deprecated.rst       |  7 ++++
+>  docs/about/removed-features.rst | 10 +++---
+>  docs/conf.py                    | 39 +++++++++++++++++++++-
+>  include/hw/boards.h             | 58 +++++++++++++++++++++------------
+>  4 files changed, 89 insertions(+), 25 deletions(-)
+> 
+> -- 
+> 2.49.0
 
 
