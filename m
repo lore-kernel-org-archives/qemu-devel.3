@@ -4,104 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6220C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 16:39:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC04C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 16:39:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDQil-0002Ap-Kv; Fri, 09 May 2025 12:37:11 -0400
+	id 1uDQl2-0004Vb-57; Fri, 09 May 2025 12:39:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1uDQic-00024t-3q; Fri, 09 May 2025 12:37:03 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uDQkx-0004A7-9G
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 12:39:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1uDQiU-0000Cf-Tg; Fri, 09 May 2025 12:36:59 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 549EEOoN031556;
- Fri, 9 May 2025 16:36:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=52DjofBsUUNvOfdOV
- weJIlhF2WxSR1eGUCP9z5rsi5I=; b=RcBWsB9BZya0QkvvtXghs9FT7USOcgtlq
- 0nN4paiZoVS0cwwJPnjxCB8uYw93nVEGqoucjCFI9//ix/l95pA2fYJE6whYUzZd
- F59qerv5c24RSAAOL5JhAYw5sqLlCVP7kIv8vt0XI7hlFUX1VstOAWkvJqJnZJHt
- Uns1f/qI8Z8Eff35919a27XIz4FxZsSwZCgFGf+2o1CBICZPZ3qwtlu3zgiGdP6+
- bwFEkzFodIWjeHuw34IHTcGF2AHSqXJGykBEQw02djlFmtHYbZZ2RaSe05FKWcVQ
- Eyp85a87pNGoxyFsDtkbwCBx67NX7urYI10YQHIjyhM0PJuJZx90A==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 46h4rwd26f-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 09 May 2025 16:36:53 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 549GSiiQ014112;
- Fri, 9 May 2025 16:36:52 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 46dypm46yc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 09 May 2025 16:36:52 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 549GapWW29098656
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 9 May 2025 16:36:51 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B06E658063;
- Fri,  9 May 2025 16:36:51 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E3A1958043;
- Fri,  9 May 2025 16:36:50 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.61.241.92])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  9 May 2025 16:36:50 +0000 (GMT)
-From: Rorie Reyes <rreyes@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
- jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
- alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com,
- akrowiak@linux.ibm.com, rreyes@linux.ibm.com
-Subject: [RFC PATCH v8 6/6] s390: implementing CHSC SEI for AP config change
-Date: Fri,  9 May 2025 12:36:45 -0400
-Message-ID: <20250509163645.33050-7-rreyes@linux.ibm.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250509163645.33050-1-rreyes@linux.ibm.com>
-References: <20250509163645.33050-1-rreyes@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uDQku-0000LZ-SO
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 12:39:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746808761;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=srMI2g/tjPiWuM4zYo5KPb3LCL/1N2Q2GBGNV9AwH04=;
+ b=OP4Y/afu7tYm7bzjPFixEvGJ1CaxJYLo5WoAhIwnAgvXSvooPdieOCCuL7n9wtA32hOW5p
+ eRNVw+qFyn9vF9/FqaZuV2H1igHIUqGDPaYwbALiw32M+5kuAwgeaS1K1BWj42OvIRRRCi
+ GdGVClW8jUThqv9030qlL4S3TdMqiX0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-547-V6CpBsh9NtWt2_VXSJjEbg-1; Fri, 09 May 2025 12:39:20 -0400
+X-MC-Unique: V6CpBsh9NtWt2_VXSJjEbg-1
+X-Mimecast-MFC-AGG-ID: V6CpBsh9NtWt2_VXSJjEbg_1746808759
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a0b1798d69so933410f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 09 May 2025 09:39:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746808758; x=1747413558;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=srMI2g/tjPiWuM4zYo5KPb3LCL/1N2Q2GBGNV9AwH04=;
+ b=AkHEUZGnO9CNzG7sujGYg2WuTrpG7LDj0+tYsqFS4/PeK/pPBjP+7KNqA2gTdphpY1
+ j6bSdifKqV/DwGs3b9p9tHXmmd6CnjhDlBCXyDHtpqAjqXUhrgvrAcosartdUTzYlJ7Q
+ 12r8YhmAnxzTlItxJQtQi86O7BMvSifD76jwDH4VI/DUIH4T2wrgyb+BG2FaKgl9c4NZ
+ aZp9bq55B93mWx/vrnu6xRU4XfXPAZjRIhrsN+ob+ZFGElMxXux0MN9E2T9dPsFUZWqC
+ 9++PMlyRKlChTsnf/Q+PvotdQIQuGLvsW464aY7z5Ggp9IBNHVFwsv812H8DzHbq77aN
+ AgRA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWPcf7zLK1/hVXJTxq8HsGX9iFCh2RyrpmseV5HakIpkGr4sgzxbCplVJLapdfZxl8p00+1ZS5AGlmo@nongnu.org
+X-Gm-Message-State: AOJu0Ywcc17BSq8V/XJc74BjLPdPxuGeLmiCxRwGbNtL0kwKhHWp5OVV
+ wGKiYBr3inXs4WszntOkR7zkQOQ0Ns8wmJtGbrln73tqfCD1ZtzWnxPFEYyz1J7heU+2hiPa5PF
+ yqW3SkGUU3nCEWlLOpEjUizw+C/C/m8/ZEQ4xWbW5K7nWft+txf3uuy61sKhY
+X-Gm-Gg: ASbGncugCATY1FbGWk1JYoUFXyqpEhpyHyXCNs+4Zy+VC8wGqawOc/JXngjJvY/o/SJ
+ 2g0XPwWb++mUmhzfalRBC9DxOc12uiEX6qbniCyybWcVp5UJ7vcqCsubmQNsW/QfKRQMtBfBc6e
+ e+bLcAodtnD+PZVDAOmsDRN6pEDyB+1hFlwfXI1VhvujGj9HUuWhLtgqmS4VMDk4Ol1TzMHMtwD
+ uYfRdfHy1Eoxl7CUnN3dT3+9EoRipGm1emZmCgKvL3R6M6blBkGdO9EH/zSIaIEELcay//7gXOI
+ 0tBy6Q==
+X-Received: by 2002:a05:6000:430d:b0:3a0:ac96:bd41 with SMTP id
+ ffacd0b85a97d-3a1f643c6a4mr3670864f8f.27.1746808758551; 
+ Fri, 09 May 2025 09:39:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHavhplC+6nqM3oY2QAmbhpJgYS4h5A+nbfoCPON8HNgBtcIo/NH4FgUtyf7lfstgX2yK7DnA==
+X-Received: by 2002:a05:6000:430d:b0:3a0:ac96:bd41 with SMTP id
+ ffacd0b85a97d-3a1f643c6a4mr3670843f8f.27.1746808758196; 
+ Fri, 09 May 2025 09:39:18 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a1f57ee95asm3809235f8f.11.2025.05.09.09.39.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 May 2025 09:39:17 -0700 (PDT)
+Date: Fri, 9 May 2025 12:39:15 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: yuanminghao <yuanmh12@chinatelecom.cn>
+Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: Re: [PATCH 1/1] vhost: do not reset used_memslots when destroying
+ vhost dev
+Message-ID: <20250509123901-mutt-send-email-mst@kernel.org>
+References: <1741024937-37164-1-git-send-email-yuanmh12@chinatelecom.cn>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=QIxoRhLL c=1 sm=1 tr=0 ts=681e2f25 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=dt9VzEwgFbYA:10 a=VnNF1IyMAAAA:8 a=m9aztibn0zm50kQe27wA:9
-X-Proofpoint-GUID: 5snpuWy0kotRWX6z-r_lpPgKoj8nb3rv
-X-Proofpoint-ORIG-GUID: 5snpuWy0kotRWX6z-r_lpPgKoj8nb3rv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTA5MDE2NCBTYWx0ZWRfX3M7gLCBU5mVv
- M5vfTOVBAgO21MzjKASy2t7htvEoDWAeOTgH8dlUSDseGN6wSmW2O+i2FZKFcDtj3Rsio5/u55z
- 3+eETI+s4qQLWUJAhHh8rgV0WdhEnw4hqfQUYtAI7nfU3chNu046xHlfILANXb+HoUmQxeNRe/q
- 5JUjMAKDo4l1+jzg6kOedKFSHnbBFdRQ5+wjg6b/lle4eZp9xNWbPNH5LpjNK9AHuNWbjix9vys
- Nmu2ek8C7qVpFMt6mPvRW0guYr8gSdrxrd2v8gMlZk2pBR/liv0NY1EpPGDHO6Al7uN9foI/YX6
- I1+UGYj/j1AKrQBTzzNn5IMEPH8QjwdPjF1Ih4ugWkKAV4byA+kGcfrGoxUjMwQ63MG66dNiJ9I
- Q4IQdXW8NNPU2KJLTDemlB1xpVJzGkVpmHciCRaFeX3U/nB1B+HPGuDvmQvLFz/ZUQCBsBJC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-09_06,2025-05-09_01,2025-02-21_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 mlxscore=0
- suspectscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
- malwarescore=0 bulkscore=0 adultscore=0 mlxlogscore=999 spamscore=0
- priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2504070000
- definitions=main-2505090164
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rreyes@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1741024937-37164-1-git-send-email-yuanmh12@chinatelecom.cn>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.413,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,111 +108,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Handle interception of the CHSC SEI instruction for requests
-indicating the guest's AP configuration has changed.
+On Mon, Mar 03, 2025 at 01:02:17PM -0500, yuanminghao wrote:
+> > > Global used_memslots or used_shared_memslots is updated to 0 unexpectly
+> > 
+> > it shouldn't be 0 in practice, as it comes from number of RAM regions VM has.
+> > It's likely a bug somewhere else.
+> > 
+> > Please describe a way to reproduce the issue.
+> > 
+> Hi, Igor Mammedov,
+>   Sorry for the late response, here are the steps to reproduce the issue:
+> 
+>   1.start a domain with 1Core 1GiB memory, no network interface.
+>   2.print used_memslots with gdb
+>     gdb -p ${qemupid} <<< "p used_memslots"
+>     $1 = 0
+>   3.attach a network interface net1
+>   cat>/tmp/net1.xml <<EOF
+>   <interface type='network'>
+>     <mac address='52:54:00:12:34:56'/>
+>     <source network='default'/>
+>     <model type='virtio'/>
+>   </interface>
+>   EOF
+>   virsh attach-device dom /tmp/net1.xml --live
+>   4.print current used_memslots with gdb
+>     gdb -p ${qemupid} <<< "p used_memslots"
+>     $1 = 2
+>   5.attach another network interface net2
+>   cat>/tmp/net2.xml <<EOF
+>   <interface type='network'>
+>     <mac address='52:54:00:12:34:78'/>
+>     <source network='default'/>
+>     <model type='virtio'/>
+>   </interface>
+>   EOF
+>   virsh attach-device dom /tmp/net2.xml --live
+>   6.print current used_memslots with gdb
+>     gdb -p ${qemupid} <<< "p used_memslots"
+>     $1 = 2
+>   7.detach network interface net2
+>   virsh detach-device dom /tmp/net2.xml --live
+>   8.print current used_memslots with gdb
+>     gdb -p ${qemupid} <<< "p used_memslots"
+>     $1 = 0
+> After detaching net2, the used_memslots was reseted to 0, which was expected to be 2.
 
-If configuring --without-default-devices, hw/s390x/ap-stub.c
-was created to handle such circumstance. Also added the
-following to hw/s390x/meson.build if CONFIG_VFIO_AP is
-false, it will use the stub file.
+Igor, WDYT?
 
-Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
----
- MAINTAINERS           |  1 +
- hw/s390x/ap-stub.c    | 23 +++++++++++++++++++++++
- hw/s390x/meson.build  |  1 +
- target/s390x/ioinst.c | 11 +++++++++--
- 4 files changed, 34 insertions(+), 2 deletions(-)
- create mode 100644 hw/s390x/ap-stub.c
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 23174b4ca7..070c746c69 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -112,6 +112,7 @@ F: hw/intc/s390_flic.c
- F: hw/intc/s390_flic_kvm.c
- F: hw/s390x/
- F: hw/vfio/ap.c
-+F: hw/s390x/ap-stub.c
- F: hw/vfio/ccw.c
- F: hw/watchdog/wdt_diag288.c
- F: include/hw/s390x/
-diff --git a/hw/s390x/ap-stub.c b/hw/s390x/ap-stub.c
-new file mode 100644
-index 0000000000..9d2c4c2e67
---- /dev/null
-+++ b/hw/s390x/ap-stub.c
-@@ -0,0 +1,23 @@
-+/*
-+ * VFIO based AP matrix device assignment
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Rorie Reyes <rreyes@linux.ibm.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or (at
-+ * your option) any later version. See the COPYING file in the top-level
-+ * directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/s390x/ap-bridge.h"
-+
-+int ap_chsc_sei_nt0_get_event(void *res)
-+{
-+    return 0;
-+}
-+
-+int ap_chsc_sei_nt0_have_event(void)
-+{
-+    return 0;
-+}
-diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
-index 3bbebfd817..99cbcbd7d6 100644
---- a/hw/s390x/meson.build
-+++ b/hw/s390x/meson.build
-@@ -33,6 +33,7 @@ s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files(
- ))
- s390x_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('3270-ccw.c'))
- s390x_ss.add(when: 'CONFIG_VFIO', if_true: files('s390-pci-vfio.c'))
-+s390x_ss.add(when: 'CONFIG_VFIO_AP', if_false: files('ap-stub.c'))
- 
- virtio_ss = ss.source_set()
- virtio_ss.add(files('virtio-ccw.c'))
-diff --git a/target/s390x/ioinst.c b/target/s390x/ioinst.c
-index fe62ba5b06..2320dd4c12 100644
---- a/target/s390x/ioinst.c
-+++ b/target/s390x/ioinst.c
-@@ -18,6 +18,7 @@
- #include "trace.h"
- #include "hw/s390x/s390-pci-bus.h"
- #include "target/s390x/kvm/pv.h"
-+#include "hw/s390x/ap-bridge.h"
- 
- /* All I/O instructions but chsc use the s format */
- static uint64_t get_address_from_regs(CPUS390XState *env, uint32_t ipb,
-@@ -574,13 +575,19 @@ out:
- 
- static int chsc_sei_nt0_get_event(void *res)
- {
--    /* no events yet */
-+    if (s390_has_feat(S390_FEAT_AP)) {
-+        return ap_chsc_sei_nt0_get_event(res);
-+    }
-+
-     return 1;
- }
- 
- static int chsc_sei_nt0_have_event(void)
- {
--    /* no events yet */
-+    if (s390_has_feat(S390_FEAT_AP)) {
-+        return ap_chsc_sei_nt0_have_event();
-+    }
-+
-     return 0;
- }
- 
--- 
-2.48.1
+> > > when a vhost device destroyed. This can occur during scenarios such as live
+> > > detaching a vhost device or restarting a vhost-user net backend (e.g., OVS-DPDK):
+> > >  #0  vhost_commit(listener) at hw/virtio/vhost.c:439
+> > >  #1  listener_del_address_space(as, listener) at memory.c:2777
+> > >  #2  memory_listener_unregister(listener) at memory.c:2823
+> > >  #3  vhost_dev_cleanup(hdev) at hw/virtio/vhost.c:1406
+> > >  #4  vhost_net_cleanup(net) at hw/net/vhost_net.c:402
+> > >  #5  vhost_user_start(be, ncs, queues) at net/vhost-user.c:113
+> > >  #6  net_vhost_user_event(opaque, event) at net/vhost-user.c:281
+> > >  #7  tcp_chr_new_client(chr, sioc) at chardev/char-socket.c:924
+> > >  #8  tcp_chr_accept(listener, cioc, opaque) at chardev/char-socket.c:961
+> > >
+> > > So we skip the update of used_memslots and used_shared_memslots when destroying
+> > > vhost devices, and it should work event if all vhost devices are removed.
+> > >
+> > > Signed-off-by: yuanminghao <yuanmh12@chinatelecom.cn>
+> > > ---
+> > >  hw/virtio/vhost.c         | 14 +++++++++-----
+> > >  include/hw/virtio/vhost.h |  1 +
+> > >  2 files changed, 10 insertions(+), 5 deletions(-)
+> > >
+> > > diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> > > index 6aa72fd434..2258a12066 100644
+> > > --- a/hw/virtio/vhost.c
+> > > +++ b/hw/virtio/vhost.c
+> > > @@ -666,11 +666,13 @@ static void vhost_commit(MemoryListener *listener)
+> > >      dev->mem = g_realloc(dev->mem, regions_size);
+> > >      dev->mem->nregions = dev->n_mem_sections;
+> > > 
+> > > -    if (dev->vhost_ops->vhost_backend_no_private_memslots &&
+> > > -        dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
+> > > -        used_shared_memslots = dev->mem->nregions;
+> > > -    } else {
+> > > -        used_memslots = dev->mem->nregions;
+> > > +    if (!dev->listener_removing) {
+> > > +        if (dev->vhost_ops->vhost_backend_no_private_memslots &&
+> > > +            dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
+> > > +            used_shared_memslots = dev->mem->nregions;
+> > > +        } else {
+> > > +            used_memslots = dev->mem->nregions;
+> > > +        }
+> > >      }
+> > > 
+> > >      for (i = 0; i < dev->n_mem_sections; i++) {
+> > > @@ -1668,7 +1670,9 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
+> > >      }
+> > >      if (hdev->mem) {
+> > >          /* those are only safe after successful init */
+> > > +        hdev->listener_removing = true;
+> > >          memory_listener_unregister(&hdev->memory_listener);
+> > > +        hdev->listener_removing = false;
+> > >          QLIST_REMOVE(hdev, entry);
+> > >      }
+> > >      migrate_del_blocker(&hdev->migration_blocker);
+> > > diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+> > > index a9469d50bc..037f85b642 100644
+> > > --- a/include/hw/virtio/vhost.h
+> > > +++ b/include/hw/virtio/vhost.h
+> > > @@ -133,6 +133,7 @@ struct vhost_dev {
+> > >      QLIST_HEAD(, vhost_iommu) iommu_list;
+> > >      IOMMUNotifier n;
+> > >      const VhostDevConfigOps *config_ops;
+> > > +    bool listener_removing;
+> > >  };
+> > > 
+> > >  extern const VhostOps kernel_ops;
 
 
