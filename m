@@ -4,114 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D51D4C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 16:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B3FC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 16:03:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDQA5-0008C2-Ko; Fri, 09 May 2025 12:01:21 -0400
+	id 1uDQAQ-0000pF-DH; Fri, 09 May 2025 12:01:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uDQ9m-0007ld-E5
- for qemu-devel@nongnu.org; Fri, 09 May 2025 12:01:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uDQ9j-00042B-9u
- for qemu-devel@nongnu.org; Fri, 09 May 2025 12:01:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746806457;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=pp1R+sHe0G6QXL8IYhdEIVqTNgya/k6FcsiXO1F4Qzc=;
- b=IlL0kwckLF2DGQk6RDcWiCUZ9RG1YhMxHSR4WnPRR1IdhR3MVVU4rJtVu7i/q47zM6Ca56
- myom9M4VpcFlYaQzjvw3L+gmXO+0+2TH84KgaP5DayLldAe3b97niwptl+v0FMgPA3MtVl
- SPahupRyLiv0eg/WA6n2nAfsZ+q9fEM=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-20-7QFTa-9SOVaC8IFXIdSvYw-1; Fri, 09 May 2025 12:00:55 -0400
-X-MC-Unique: 7QFTa-9SOVaC8IFXIdSvYw-1
-X-Mimecast-MFC-AGG-ID: 7QFTa-9SOVaC8IFXIdSvYw_1746806455
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-440667e7f92so12179195e9.3
- for <qemu-devel@nongnu.org>; Fri, 09 May 2025 09:00:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uDQAO-0000iu-JL; Fri, 09 May 2025 12:01:40 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uDQAL-00045C-VU; Fri, 09 May 2025 12:01:40 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5fbed53b421so3467684a12.0; 
+ Fri, 09 May 2025 09:01:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1746806494; x=1747411294; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/IMwc7g0gPuHpf710a69q+fyDXuR4UXONr4b3md0hTM=;
+ b=mFu4i147/7mPC8V25y4bZdzAKl5GegnE6IXoo3UGLE1xWa3rWwvG3kUz0hwpH4eQgy
+ y8m27yykFDu/loPPGZ5m3Pc53r9RJwmIlnynqdY6qJFb3HMFA54VX6OSo9lza1BZSWbH
+ OHAZ7eOgdDwGORtKUN67kBkSOui1j8VfV3S1xP9ea0Fcr4S91jmXEeCPlLI+wk3wPB5G
+ +zQGYGAzOtjeYtGOaHK4H9b2i0cynMf87EYRaN8EL61D/nCbiTS+Op55Yn50pzL6tbvT
+ UdySaQpZ98UgQqLF65g+tus+sxkNx9lSRkZj1k+G3wppS70bnZdqQG4v334Dy8JLk07Z
+ 5W/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746806454; x=1747411254;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1746806494; x=1747411294;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pp1R+sHe0G6QXL8IYhdEIVqTNgya/k6FcsiXO1F4Qzc=;
- b=JxTDEojSYqqyHDgtXiS+6psd6EPJkyuGkTMdrm7DEQf6K7FB7L0DxCouLJz2GsM5k8
- EAXOMqpwmTpA7HAF/O9mkRmaAz0MV5f4Q4JkzrhKks57FpzM+bySXnSr++d01ykZLdGk
- qnsxU3pgewpuFwKqmshl26ZtDZxUgFtonFoaB7a58zOymoNfBiS4ztRebuarncq24Oqx
- Q0R+twG0VIs9h/LyDOxDn2xgsgRV0QQoAhryRjBlIykwfG8xQlJhuev/B8dekNMUSxCt
- jCayIuZJNqF9zE+UCLPfexkKPITdsp3HsKzZLrQv5Z8adwaFylt7is4cep4+WRlkLK7T
- teoQ==
-X-Gm-Message-State: AOJu0Yy4Vc3OzUPjhUxVIiXtnmqmvUN6qm8pZaPhC1g0bpurP7YNMibT
- 2UZnjAe5rqiCNejPFMWneO0tLj277zCTJomG2Bst6msMSr2cZGOtVhyduAZg1w+VBUY2ydb3eb6
- 2IhimvOIoQCHgVye3PI0F1Oh6uNwpo5L1+ACVsIXpA2g6dNk5nZIB
-X-Gm-Gg: ASbGncsxbCW5kFXxHBOtSt0Igo9VPRT+CEpucHUpYX81NcgYsfoOteW1iGeOu4774YU
- jephFYRwFkk6ZY1D2u6nOmrhyOwUW01ybpvzJD5m1IGVGzGRev/S2tPOAUJj7RrZLHPr/5CMYpg
- W+iTZ5zzBjk1JW09lBtnM/VodhNlwIv3ZUD+6jv7hSnVnpTxvB2Pxa39jD2L8dbZMUbg6mMF50i
- 7oHxVF7ZieS+Y8wpb/l8+AzTv7Hgj5uqOokLpMrl8UNynJlBNseZOswCOYWBkFrx0naTIWOw0OP
- vWKYPJEUZmsRf6X3YkhO/sKvszRtBc6K
-X-Received: by 2002:a05:600c:699a:b0:43c:ee3f:2c3 with SMTP id
- 5b1f17b1804b1-442d6d18b4dmr37308535e9.7.1746806454598; 
- Fri, 09 May 2025 09:00:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHS6pTd6+VJXAdfrY7kXu0jP714J0Kn35h7fvaLNzrQyXsYvefWneKyFITxNj+O58PDLW9NnQ==
-X-Received: by 2002:a05:600c:699a:b0:43c:ee3f:2c3 with SMTP id
- 5b1f17b1804b1-442d6d18b4dmr37307645e9.7.1746806454010; 
- Fri, 09 May 2025 09:00:54 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442d67df5ecsm33860625e9.9.2025.05.09.09.00.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 May 2025 09:00:53 -0700 (PDT)
-Date: Fri, 9 May 2025 18:00:50 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- kvm@vger.kernel.org, Sergio Lopez <slp@redhat.com>, Gerd Hoffmann
- <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Laurent
- Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, Yi Liu
- <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, Eduardo
- Habkost <eduardo@habkost.net>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, qemu-riscv@nongnu.org, Weiwei Li
- <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>, Zhao Liu
- <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>, Helge Deller
- <deller@gmx.de>, Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha
- <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>, Paolo Bonzini
- <pbonzini@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- qemu-arm@nongnu.org, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
- <marcandre.lureau@redhat.com>, Huacai Chen <chenhuacai@kernel.org>, Jason
- Wang <jasowang@redhat.com>
-Subject: Re: [PATCH v4 09/27] hw/nvram/fw_cfg: Remove
- fw_cfg_io_properties::dma_enabled
-Message-ID: <20250509180050.0b91cef1@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250508133550.81391-10-philmd@linaro.org>
-References: <20250508133550.81391-1-philmd@linaro.org>
- <20250508133550.81391-10-philmd@linaro.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ bh=/IMwc7g0gPuHpf710a69q+fyDXuR4UXONr4b3md0hTM=;
+ b=ggb5o64lGOlk5Eog2xg9Crv43XS6uJLs7xYFOEVh8Qaz9BO11N6eFTRHFp8dJ3nLIL
+ uWf62Dbrr1517aF1uKcplH2AAirZJ4z44SwT0ctk1Z5PfkhZAW8TJaCnvbjGeY3Z6HUv
+ BNAkTl8ofnELsQM5MpNmnKqF3P210E+QxHi4eiBMe49oUvuDOFe7H1moPhrawZKlj0yQ
+ aMe6WpLPuqyMXgJ7JKp5b+EHsTGF0rS6pnWtxuI3gBNWMTEeXsVcOa4IHiN3t5PpUsSz
+ 14RqtKKXgkpiUVk7WQoTkkKWSlYxe6L1oA0Engz3UN2wNka167W5ncIuGg5Moh0PIXS0
+ VgFg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWLOaVp4oliSXS66bHCbWLIrKb9O+mB0/3fAi2fv5uJwhY9HrZ6LN8rbIBlREis/GspsSGDqCuzS3LClq0=@nongnu.org
+X-Gm-Message-State: AOJu0YzNRldDdzV4cWM3JCk9cVHESvneb+fPZkAXIIIpc8kvcVNq09s/
+ WF5ycwJGYp/FZJX9SG9DbA7rC813HKA356Vek57O9oMuBeobfYIR1774NTwXCesAD6gHyylPrXr
+ 8M7u3yJpVp7PXxY26aj1oobn1ckNTPAlCeCs=
+X-Gm-Gg: ASbGncta/7O7JIB7j+Fih9rphN5/a0h0CozQ5/qAmruY2APTxNsWRMjaBh4+8m4RPE3
+ 5dV3K+DK6cVxuW3W/OJpgtQNpLMfnyNsG63QlwHphSbFcgrZR3qVfbNCP0zMge9c7X5N/ZVHskk
+ S7wQJnc1oATj3zaAnmlC99
+X-Google-Smtp-Source: AGHT+IGz3DTqRN29qluUtEYMGXXMv6eN82AAi3HjzwTdvlIjkX1KjzDHIBbupgYGiGGJ4Li0LyYxnSqMU95HUhhzfbU=
+X-Received: by 2002:a05:6402:3591:b0:5f8:30c2:8650 with SMTP id
+ 4fb4d7f45d1cf-5fca078ee00mr3315814a12.14.1746806493851; Fri, 09 May 2025
+ 09:01:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+References: <20250507180737.183147-1-mjt@tls.msk.ru>
+In-Reply-To: <20250507180737.183147-1-mjt@tls.msk.ru>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Fri, 9 May 2025 12:01:21 -0400
+X-Gm-Features: AX0GCFv7rd7A9Qb1cdoFhpGhbcJAqwjKeU7YpXJaO8X4Yne-z_9zMz2oTVzTQ0M
+Message-ID: <CAJSP0QVz2OwZdzA7t5P93vGg0zkpW=ebsJ+gWF64nYS4oxQiew@mail.gmail.com>
+Subject: Re: [PULL v2 00/21] Trivial patches for 2025-05-07
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
+ Zixing Liu <liushuyu@aosc.io>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.413,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,144 +94,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu,  8 May 2025 15:35:32 +0200
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+On Wed, May 7, 2025 at 2:08=E2=80=AFPM Michael Tokarev <mjt@tls.msk.ru> wro=
+te:
+>
+> The following changes since commit c5e2c4042e3c50b96cc5eaa9683325c5a96913=
+b0:
+>
+>   Merge tag 'pull-loongarch-20250506' of https://github.com/bibo-mao/qemu=
+ into staging (2025-05-06 11:03:45 -0400)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+>
+> for you to fetch changes up to 40d2aa5a7199f783e12818505857c3fd4663080f:
+>
+>   docs: replace `-hda` with `-drive` & update `root=3D` kernel parameter =
+(2025-05-07 21:05:10 +0300)
+>
+> ----------------------------------------------------------------
+> trivial patches for 2025-05-07
+>
+> Mostly typos in comments by Gustavo Romero,
+> plus changing -hda in examples to -drive,
+> plus single linux-user update (new syscall variant)
+>
+> v2: update the last patch Author (it was "via qemu-trivial")
+> ----------------------------------------------------------------
+> Gustavo Romero (11):
+>       hw/pci/pci.c: Turn DPRINTF into trace events
+>       hw/isa/ich9: Remove stray empty comment
+>       hw/i386/acpi-build: Fix typo and grammar in comment
+>       hw/i386/acpi-build: Update document reference
+>       hw/acpi/ich9: Remove ICH9_DEBUG macro
+>       hw/i386/acpi-build: Fix typo in function name
+>       hw/core/machine: Fix indentation
+>       qom/object: Fix typo in comment
+>       hw/net/e1000: Remove stray empty comment in header
+>       hw/pci-host/gpex-acpi: Fix typo in comment
+>       hw/acpi/pcihp: Fix typo in function name
+>
+> Integral (1):
+>       docs: replace `-hda` with `-drive` & update `root=3D` kernel parame=
+ter
+>
+> Michael Tokarev (8):
+>       linux-user/mmap.c: fix "of of" typo in comment
+>       block.c: fix "the the" typo in comment
+>       hw/xen/xen-hvm-common.c: fix "the the" typo in comment
+>       include/exec/cpu-common.h: fix "the the" typo in comment
+>       include/hw/xen/interface/io/blkif.h: fix "the the" typo in comment
+>       qapi/qom.json: fix "the the" typo in comment
+>       hw/display/apple-gfx.m: fix "in in" typo in comment
+>       qapi/machine-target.json: fix "in in" typo in comment
+>
+> Zixing Liu (1):
+>       linux-user/syscall.c: add translation logic for epoll_pwait2 syscal=
+l
 
-> Now than all calls to fw_cfg_init_io_dma() pass DMA arguments,
-> the 'dma_enabled' of the TYPE_FW_CFG_IO type is not used anymore.
-> Remove it, simplifying fw_cfg_init_io_dma() and fw_cfg_io_realize().
->=20
-> Note, we can not remove the equivalent in fw_cfg_mem_properties[]
-> because it is still used in HPPA and MIPS Loongson3 machines:
->=20
->   $ git grep -w fw_cfg_init_mem_nodma
->   hw/hppa/machine.c:204:    fw_cfg =3D fw_cfg_init_mem_nodma(addr, addr +=
- 4, 1);
->   hw/mips/loongson3_virt.c:289:    fw_cfg =3D fw_cfg_init_mem_nodma(cfg_a=
-ddr, cfg_addr + 8, 8);
->=20
-> 'linuxboot.bin' isn't used anymore, we'll remove it in the
-> next commit.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
->  hw/i386/fw_cfg.c     |  5 +----
->  hw/i386/x86-common.c |  5 +----
->  hw/nvram/fw_cfg.c    | 26 ++++++++------------------
->  3 files changed, 10 insertions(+), 26 deletions(-)
->=20
-> diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-> index 5c0bcd5f8a9..1fe084fd720 100644
-> --- a/hw/i386/fw_cfg.c
-> +++ b/hw/i386/fw_cfg.c
-> @@ -221,10 +221,7 @@ void fw_cfg_add_acpi_dsdt(Aml *scope, FWCfgState *fw=
-_cfg)
->       * of the i/o region used is FW_CFG_CTL_SIZE; when using DMA, the
->       * DMA control register is located at FW_CFG_DMA_IO_BASE + 4
->       */
-> -    Object *obj =3D OBJECT(fw_cfg);
-> -    uint8_t io_size =3D object_property_get_bool(obj, "dma_enabled", NUL=
-L) ?
-> -        ROUND_UP(FW_CFG_CTL_SIZE, 4) + sizeof(dma_addr_t) :
-> -        FW_CFG_CTL_SIZE;
-> +    uint8_t io_size =3D ROUND_UP(FW_CFG_CTL_SIZE, 4) + sizeof(dma_addr_t=
-);
->      Aml *dev =3D aml_device("FWCF");
->      Aml *crs =3D aml_resource_template();
-> =20
-> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> index 27254a0e9f1..ee594364415 100644
-> --- a/hw/i386/x86-common.c
-> +++ b/hw/i386/x86-common.c
-> @@ -991,10 +991,7 @@ void x86_load_linux(X86MachineState *x86ms,
->      }
-> =20
->      option_rom[nb_option_roms].bootindex =3D 0;
-> -    option_rom[nb_option_roms].name =3D "linuxboot.bin";
-> -    if (fw_cfg_dma_enabled(fw_cfg)) {
-> -        option_rom[nb_option_roms].name =3D "linuxboot_dma.bin";
-> -    }
-> +    option_rom[nb_option_roms].name =3D "linuxboot_dma.bin";
->      nb_option_roms++;
->  }
-> =20
-> diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-> index 51b028b5d0a..ef976a4bce2 100644
-> --- a/hw/nvram/fw_cfg.c
-> +++ b/hw/nvram/fw_cfg.c
-> @@ -1026,12 +1026,9 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, ui=
-nt32_t dma_iobase,
->      FWCfgIoState *ios;
->      FWCfgState *s;
->      MemoryRegion *iomem =3D get_system_io();
-> -    bool dma_requested =3D dma_iobase && dma_as;
-> =20
-> +    assert(dma_iobase);
->      dev =3D qdev_new(TYPE_FW_CFG_IO);
-> -    if (!dma_requested) {
-> -        qdev_prop_set_bit(dev, "dma_enabled", false);
-> -    }
-> =20
->      object_property_add_child(OBJECT(qdev_get_machine()), TYPE_FW_CFG,
->                                OBJECT(dev));
-> @@ -1042,13 +1039,10 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, u=
-int32_t dma_iobase,
->      memory_region_add_subregion(iomem, iobase, &ios->comb_iomem);
-> =20
->      s =3D FW_CFG(dev);
-> -
-> -    if (s->dma_enabled) {
-> -        /* 64 bits for the address field */
-> -        s->dma_as =3D dma_as;
-> -        s->dma_addr =3D 0;
-> -        memory_region_add_subregion(iomem, dma_iobase, &s->dma_iomem);
-> -    }
-> +    /* 64 bits for the address field */
-> +    s->dma_as =3D dma_as;
-> +    s->dma_addr =3D 0;
-> +    memory_region_add_subregion(iomem, dma_iobase, &s->dma_iomem);
-> =20
->      return s;
->  }
-> @@ -1185,8 +1179,6 @@ static void fw_cfg_file_slots_allocate(FWCfgState *=
-s, Error **errp)
->  }
-> =20
->  static const Property fw_cfg_io_properties[] =3D {
-> -    DEFINE_PROP_BOOL("dma_enabled", FWCfgIoState, parent_obj.dma_enabled,
-> -                     true),
+Hi Michael and Zixing Liu,
+Please take a look at the following build failure in the CI system:
 
-in 7/27 you still have, fw_cfg_dma_enabled(fw_cfg) which works around
-now missing property (in IO case) in obscure way.
-that is also used in bios_linker_loader_can_write_pointer().
+arm-linux-gnueabihf-gcc -Ilibqemu-arm-linux-user.a.p -I. -I..
+-Itarget/arm -I../target/arm -I../common-user/host/arm
+-I../linux-user/include/host/arm -I../linux-user/include -Ilinux-user
+-I../linux-user -Ilinux-user/arm -I../linux-user/arm -Iqapi -Itrace
+-Iui/shader -I/usr/include/capstone -I/usr/include/glib-2.0
+-I/usr/lib/arm-linux-gnueabihf/glib-2.0/include
+-fdiagnostics-color=3Dauto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O2 -g
+-fstack-protector-strong -Wempty-body -Wendif-labels
+-Wexpansion-to-defined -Wformat-security -Wformat-y2k
+-Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self
+-Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs
+-Wold-style-declaration -Wold-style-definition -Wredundant-decls
+-Wshadow=3Dlocal -Wstrict-prototypes -Wtype-limits -Wundef -Wvla
+-Wwrite-strings -Wno-missing-include-dirs -Wno-psabi
+-Wno-shift-negative-value -isystem
+/builds/qemu-project/qemu/linux-headers -isystem linux-headers -iquote
+. -iquote /builds/qemu-project/qemu -iquote
+/builds/qemu-project/qemu/include -iquote
+/builds/qemu-project/qemu/host/include/generic -iquote
+/builds/qemu-project/qemu/tcg/arm -pthread -D_GNU_SOURCE
+-D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE -fno-strict-aliasing
+-fno-common -fwrapv -ftrivial-auto-var-init=3Dzero
+-fzero-call-used-regs=3Dused-gpr -fPIE -isystem../linux-headers
+-isystemlinux-headers -DCOMPILING_PER_TARGET
+'-DCONFIG_TARGET=3D"arm-linux-user-config-target.h"' -MD -MQ
+libqemu-arm-linux-user.a.p/linux-user_syscall.c.o -MF
+libqemu-arm-linux-user.a.p/linux-user_syscall.c.o.d -o
+libqemu-arm-linux-user.a.p/linux-user_syscall.c.o -c
+../linux-user/syscall.c
+../linux-user/syscall.c: In function =E2=80=98do_syscall1=E2=80=99:
+../linux-user/syscall.c:13434:33: error: implicit declaration of
+function =E2=80=98safe_epoll_pwait2=E2=80=99; did you mean =E2=80=98safe_ep=
+oll_pwait=E2=80=99?
+[-Werror=3Dimplicit-function-declaration]
+13434 | ret =3D get_errno(safe_epoll_pwait2(epfd, ep, maxevents, ts_arg,
+| ^~~~~~~~~~~~~~~~~
+| safe_epoll_pwait
+../linux-user/syscall.c:13434:33: error: nested extern declaration of
+=E2=80=98safe_epoll_pwait2=E2=80=99 [-Werror=3Dnested-externs]
 
-It would be better to get rid of fw_cfg_dma_enabled() as well
-or keep property as RO and replace fw_cfg_dma_enabled() with property
-accessor if both calls can happen on nondma path                     =20
+https://gitlab.com/qemu-project/qemu/-/jobs/9987233462
 
+Michael: Once the issue is resolved, please send a v2 pull request
+(either without the commit in question or with an updated version of
+the commit).
 
->      DEFINE_PROP_UINT16("x-file-slots", FWCfgIoState, parent_obj.file_slo=
-ts,
->                         FW_CFG_FILE_SLOTS_DFLT),
->  };
-> @@ -1207,11 +1199,9 @@ static void fw_cfg_io_realize(DeviceState *dev, Er=
-ror **errp)
->      memory_region_init_io(&s->comb_iomem, OBJECT(s), &fw_cfg_comb_mem_op=
-s,
->                            FW_CFG(s), "fwcfg", FW_CFG_CTL_SIZE);
-> =20
-> -    if (FW_CFG(s)->dma_enabled) {
-> -        memory_region_init_io(&FW_CFG(s)->dma_iomem, OBJECT(s),
-> -                              &fw_cfg_dma_mem_ops, FW_CFG(s), "fwcfg.dma=
-",
-> -                              sizeof(dma_addr_t));
-> -    }
-> +    memory_region_init_io(&FW_CFG(s)->dma_iomem, OBJECT(s),
-> +                          &fw_cfg_dma_mem_ops, FW_CFG(s), "fwcfg.dma",
-> +                          sizeof(dma_addr_t));
-> =20
->      fw_cfg_common_realize(dev, errp);
->  }
+Thanks,
+Stefan
 
+>
+>  block.c                             |  2 +-
+>  docs/system/gdb.rst                 |  2 +-
+>  docs/system/linuxboot.rst           |  6 +++---
+>  docs/system/target-mips.rst         |  2 +-
+>  hw/acpi/acpi-pci-hotplug-stub.c     |  2 +-
+>  hw/acpi/ich9.c                      | 13 +------------
+>  hw/acpi/pcihp.c                     |  2 +-
+>  hw/acpi/piix4.c                     |  2 +-
+>  hw/core/machine.c                   |  8 ++++----
+>  hw/display/apple-gfx.m              |  2 +-
+>  hw/i386/acpi-build.c                | 10 +++++-----
+>  hw/i386/acpi-build.h                |  2 +-
+>  hw/isa/lpc_ich9.c                   |  1 -
+>  hw/net/e1000x_regs.h                |  2 +-
+>  hw/pci-host/gpex-acpi.c             |  2 +-
+>  hw/pci/pci.c                        | 19 ++++++-------------
+>  hw/pci/trace-events                 |  4 ++++
+>  hw/xen/xen-hvm-common.c             |  2 +-
+>  include/exec/cpu-common.h           |  2 +-
+>  include/hw/acpi/pcihp.h             |  2 +-
+>  include/hw/xen/interface/io/blkif.h |  2 +-
+>  linux-user/mmap.c                   |  2 +-
+>  linux-user/syscall.c                | 36 +++++++++++++++++++++++++++++++=
++----
+>  qapi/machine-target.json            |  2 +-
+>  qapi/qom.json                       |  2 +-
+>  qom/object.c                        |  2 +-
+>  26 files changed, 73 insertions(+), 60 deletions(-)
+>
 
