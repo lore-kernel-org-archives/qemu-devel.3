@@ -4,97 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 816D6C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 17:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B2CDC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 17:51:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDRr9-000861-LN; Fri, 09 May 2025 13:49:55 -0400
+	id 1uDRsK-0000qO-AD; Fri, 09 May 2025 13:51:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uDRr3-000845-RY
- for qemu-devel@nongnu.org; Fri, 09 May 2025 13:49:50 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uDRs9-0000nO-FS
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 13:50:58 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uDRr2-0000iE-0x
- for qemu-devel@nongnu.org; Fri, 09 May 2025 13:49:49 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uDRs7-0000yi-K7
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 13:50:57 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id CA973211AB;
- Fri,  9 May 2025 17:49:43 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id BC1F81F397;
+ Fri,  9 May 2025 17:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1746812983; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1746813053; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=boBkZiCy4NyzTNW1PMcc79Z/+Tamrx7P0j1L6kDkXnY=;
- b=A1oOJOGX5UZazYpuH9GCIhUeKdGmw/vq7dNNl9pXgYKomKSIsera/qCJGwCCnJBPHC+GfG
- fx+Lv/v9Ps+KLoh06OXTHTb53ulloeIHUH90roG5DAA2uMdIaPkHTLvTy+ECGpdj7Funp/
- pCyGxshmT+/l8J12zS5q97iiTzg3Qpo=
+ bh=dRVse9f796e5HVMjXc/wv8g8KASemDr6yYOQdJ5128w=;
+ b=E8iLhiNp1UaTbpcVIjElplhKGdg0phLfXlv6LG7Czh/EayxxJ086+64lUPPrqnSVNX/REo
+ QrTT6/7lbetdvZ3voC/5AL3FWgA//ijYH+pk7WZplJYked9Yrls+JAAYJ6pjiLYvO3uAHX
+ BNlEFxVwoBR6I1zz8LP4dWLDAMQurxk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1746812983;
+ s=susede2_ed25519; t=1746813053;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=boBkZiCy4NyzTNW1PMcc79Z/+Tamrx7P0j1L6kDkXnY=;
- b=NP3qHxIrKngTbpTpS0NHDMdHb/Z1qeT4oe7dFrR1tKTaM/zRo//7VdLtR3ZFMOLZZxTo4p
- m9EUDI/Mhh16WfBA==
-Authentication-Results: smtp-out1.suse.de;
-	none
+ bh=dRVse9f796e5HVMjXc/wv8g8KASemDr6yYOQdJ5128w=;
+ b=61QFz8s7OaVkFkHXCQNxXvmtnYXIzN9CtqMtnhwjWTnkvsrcikRQ8YVVsqrmP66w3ZqrMl
+ duJ8R1MCO2lRzFDQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=E8iLhiNp;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=61QFz8s7
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1746812983; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1746813053; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=boBkZiCy4NyzTNW1PMcc79Z/+Tamrx7P0j1L6kDkXnY=;
- b=A1oOJOGX5UZazYpuH9GCIhUeKdGmw/vq7dNNl9pXgYKomKSIsera/qCJGwCCnJBPHC+GfG
- fx+Lv/v9Ps+KLoh06OXTHTb53ulloeIHUH90roG5DAA2uMdIaPkHTLvTy+ECGpdj7Funp/
- pCyGxshmT+/l8J12zS5q97iiTzg3Qpo=
+ bh=dRVse9f796e5HVMjXc/wv8g8KASemDr6yYOQdJ5128w=;
+ b=E8iLhiNp1UaTbpcVIjElplhKGdg0phLfXlv6LG7Czh/EayxxJ086+64lUPPrqnSVNX/REo
+ QrTT6/7lbetdvZ3voC/5AL3FWgA//ijYH+pk7WZplJYked9Yrls+JAAYJ6pjiLYvO3uAHX
+ BNlEFxVwoBR6I1zz8LP4dWLDAMQurxk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1746812983;
+ s=susede2_ed25519; t=1746813053;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=boBkZiCy4NyzTNW1PMcc79Z/+Tamrx7P0j1L6kDkXnY=;
- b=NP3qHxIrKngTbpTpS0NHDMdHb/Z1qeT4oe7dFrR1tKTaM/zRo//7VdLtR3ZFMOLZZxTo4p
- m9EUDI/Mhh16WfBA==
+ bh=dRVse9f796e5HVMjXc/wv8g8KASemDr6yYOQdJ5128w=;
+ b=61QFz8s7OaVkFkHXCQNxXvmtnYXIzN9CtqMtnhwjWTnkvsrcikRQ8YVVsqrmP66w3ZqrMl
+ duJ8R1MCO2lRzFDQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 23C861399F;
- Fri,  9 May 2025 17:49:40 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 77A101399F;
+ Fri,  9 May 2025 17:50:50 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id CYmWNDRAHmgiBQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 09 May 2025 17:49:40 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SkQFDXpAHmhwBQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 09 May 2025 17:50:50 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH] s390x: Fix leak in machine_set_loadparm
-Date: Fri,  9 May 2025 14:49:38 -0300
-Message-Id: <20250509174938.25935-1-farosas@suse.de>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] tests/qtest/ast2700-smc-test: Fix leak
+Date: Fri,  9 May 2025 14:50:47 -0300
+Message-Id: <20250509175047.26066-1-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: BC1F81F397
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_SEVEN(0.00)[8];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FREEMAIL_CC(0.00)[kaod.org,linaro.org,aspeedtech.com,gmail.com,codeconstruct.com.au,jms.id.au,redhat.com];
+ RCPT_COUNT_SEVEN(0.00)[10]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DKIM_TRACE(0.00)[suse.de:+];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,41 +127,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ASAN spotted a leaking string in machine_set_loadparm():
+ASAN spotted a leak of the memory used to hold the tmp_path:
 
-Direct leak of 9 byte(s) in 1 object(s) allocated from:
-    #0 0x560ffb5bb379 in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:69:3
-    #1 0x7f1aca926518 in g_malloc ../glib/gmem.c:106
-    #2 0x7f1aca94113e in g_strdup ../glib/gstrfuncs.c:364
-    #3 0x560ffc8afbf9 in qobject_input_type_str ../qapi/qobject-input-visitor.c:542:12
-    #4 0x560ffc8a80ff in visit_type_str ../qapi/qapi-visit-core.c:349:10
-    #5 0x560ffbe6053a in machine_set_loadparm ../hw/s390x/s390-virtio-ccw.c:802:10
-    #6 0x560ffc0c5e52 in object_property_set ../qom/object.c:1450:5
-    #7 0x560ffc0d4175 in object_property_set_qobject ../qom/qom-qobject.c:28:10
-    #8 0x560ffc0c6004 in object_property_set_str ../qom/object.c:1458:15
-    #9 0x560ffbe2ae60 in update_machine_ipl_properties ../hw/s390x/ipl.c:569:9
-    #10 0x560ffbe2aa65 in s390_ipl_update_diag308 ../hw/s390x/ipl.c:594:5
-    #11 0x560ffbdee132 in handle_diag_308 ../target/s390x/diag.c:147:9
-    #12 0x560ffbebb956 in helper_diag ../target/s390x/tcg/misc_helper.c:137:9
-    #13 0x7f1a3c51c730  (/memfd:tcg-jit (deleted)+0x39730)
+Direct leak of 35 byte(s) in 1 object(s) allocated from:
+    #0 0x55e29aa96da9 in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:69:3
+    #1 0x7fe0cfb26518 in g_malloc ../glib/gmem.c:106
+    #2 0x7fe0cfb4146e in g_strconcat ../glib/gstrfuncs.c:629
+    #3 0x7fe0cfb0a78f in g_get_tmp_name ../glib/gfileutils.c:1742
+    #4 0x7fe0cfb0b00b in g_file_open_tmp ../glib/gfileutils.c:1802
+    #5 0x55e29ab53961 in test_ast2700_evb ../tests/qtest/ast2700-smc-test.c:20:10
+    #6 0x55e29ab53803 in main ../tests/qtest/ast2700-smc-test.c:65:5
+    #7 0x7fe0cf7bd24c in __libc_start_main ../csu/libc-start.c:308
+    #8 0x55e29a9f7759 in _start ../sysdeps/x86_64/start.S:120
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- hw/s390x/s390-virtio-ccw.c | 1 +
+ tests/qtest/ast2700-smc-test.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index d5658afed9..744e901db8 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -804,6 +804,7 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
-     }
+diff --git a/tests/qtest/ast2700-smc-test.c b/tests/qtest/ast2700-smc-test.c
+index d1c4856307..62d538d8a3 100644
+--- a/tests/qtest/ast2700-smc-test.c
++++ b/tests/qtest/ast2700-smc-test.c
+@@ -67,5 +67,6 @@ int main(int argc, char **argv)
  
-     s390_ipl_fmt_loadparm(ms->loadparm, val, errp);
-+    g_free(val);
+     qtest_quit(ast2700_evb_data.s);
+     unlink(ast2700_evb_data.tmp_path);
++    g_free(ast2700_evb_data.tmp_path);
+     return ret;
  }
- 
- static void ccw_machine_class_init(ObjectClass *oc, const void *data)
 -- 
 2.35.3
 
