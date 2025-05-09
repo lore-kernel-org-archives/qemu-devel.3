@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26FC7C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:18:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 770FEC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:18:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDNXz-0001k5-3R; Fri, 09 May 2025 09:13:51 -0400
+	id 1uDNaL-00054L-Rh; Fri, 09 May 2025 09:16:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNXq-0001i0-1i
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:13:42 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYZ-0001pn-Vd
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNXo-0006xS-0E
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:13:41 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYX-00079i-Qg
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746796419;
+ s=mimecast20190719; t=1746796463;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TzGye/MLmPKxKAPIljfhMJ7poocLepPP6GDibNB0t5A=;
- b=fo+Thg74r3LFWjdEI3B6z54rjjEvCYMirIbDBs1VNT5opzql174eNQWbc/2P89GjITo/2x
- yDBEA+rmGroRPkFxlPhlNHMtOytF9Aot4CmUe1Kv3Rc41ropsBH32qum9bm+k0/GqvQ74r
- +zmzDwSufvE/N64D6xvw4yC0yuVeZu4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=/Klz5oLzNjXEG77/RbmGS07w+vwqadNlGeKOMWqsRSk=;
+ b=dYiuVEHou/n4NSO9lnSD8i8jcfbi5tFP78ccJB9yvI1gYz5+WmtGEhxTQMov7Myj+i+kZ9
+ dcYg6M++WZpHjdWJ3ZfK2u5530Pf6WLCLXiGo4U54kzTe33oJfQh2WdddLuSyEbISlFb3S
+ seWQYvDP9S7MHNPA6FZU+kd6o0/Fc0A=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-xDPyiTDQNb2T5_QPr34FxQ-1; Fri,
- 09 May 2025 09:13:36 -0400
-X-MC-Unique: xDPyiTDQNb2T5_QPr34FxQ-1
-X-Mimecast-MFC-AGG-ID: xDPyiTDQNb2T5_QPr34FxQ_1746796415
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-hYyL9vApN-ad8gPdscypjg-1; Fri,
+ 09 May 2025 09:14:19 -0400
+X-MC-Unique: hYyL9vApN-ad8gPdscypjg-1
+X-Mimecast-MFC-AGG-ID: hYyL9vApN-ad8gPdscypjg_1746796458
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E7A881956053; Fri,  9 May 2025 13:13:34 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A8F7D1800446; Fri,  9 May 2025 13:14:18 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0C45818003FD; Fri,  9 May 2025 13:13:31 +0000 (UTC)
+ id AA31E180045B; Fri,  9 May 2025 13:14:16 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Tomita Moeko <tomitamoeko@gmail.com>,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
+ John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 04/28] vfio/igd: Restrict legacy mode to Gen6-9 devices
-Date: Fri,  9 May 2025 15:12:53 +0200
-Message-ID: <20250509131317.164235-5-clg@redhat.com>
+Subject: [PULL 17/28] vfio: add vfio_attach_device_by_iommu_type()
+Date: Fri,  9 May 2025 15:13:06 +0200
+Message-ID: <20250509131317.164235-18-clg@redhat.com>
 In-Reply-To: <20250509131317.164235-1-clg@redhat.com>
 References: <20250509131317.164235-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,66 +84,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomita Moeko <tomitamoeko@gmail.com>
+From: John Levon <john.levon@nutanix.com>
 
-Intel only provides legacy VBIOS for IGD up to Gen9, and there is no
-CSM support on later devices. Additionally, Seabios can only handle
-32-bit BDSM register used until Gen9. Since legacy mode requires VGA
-capability, restrict it to Gen6 through Gen9 devices.
+Allow attachment by explicitly passing a TYPE_VFIO_IOMMU_* string;
+vfio-user will use this later.
 
-Link: https://lore.kernel.org/qemu-devel/20250325172239.27926-1-tomitamoeko@gmail.com/T/
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-Reviewed-by: Corvin Köhne <c.koehne@beckhoff.com>
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-Tested-by: Alex Williamson <alex.williamson@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250505170305.23622-2-tomitamoeko@gmail.com
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: John Levon <john.levon@nutanix.com>
+Link: https://lore.kernel.org/qemu-devel/20250507152020.1254632-4-john.levon@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- docs/igd-assign.txt | 1 +
- hw/vfio/igd.c       | 6 +++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ include/hw/vfio/vfio-device.h |  3 +++
+ hw/vfio/device.c              | 22 +++++++++++++++-------
+ 2 files changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/docs/igd-assign.txt b/docs/igd-assign.txt
-index 3aed7956d5d4fbc763d52c0f6ae0288c9a423679..95beb7681279ca97fc2b4b390045847dcd59eabd 100644
---- a/docs/igd-assign.txt
-+++ b/docs/igd-assign.txt
-@@ -47,6 +47,7 @@ Intel document [1] shows how to dump VBIOS to file. For UEFI Option ROM, see
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index 342c4ba3bfec8d143a297203dbfa0e6f6fae3535..8b1437ba6654d08f65740f42dc3a50775d7f5cc1 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -127,6 +127,9 @@ bool vfio_device_hiod_create_and_realize(VFIODevice *vbasedev,
+                                          const char *typename, Error **errp);
+ bool vfio_device_attach(char *name, VFIODevice *vbasedev,
+                         AddressSpace *as, Error **errp);
++bool vfio_device_attach_by_iommu_type(const char *iommu_type, char *name,
++                                      VFIODevice *vbasedev, AddressSpace *as,
++                                      Error **errp);
+ void vfio_device_detach(VFIODevice *vbasedev);
+ VFIODevice *vfio_get_vfio_device(Object *obj);
  
- QEMU also provides a "Legacy" mode that implicitly enables full functionality
- on IGD, it is automatically enabled when
-+* IGD generation is 6 to 9 (Sandy Bridge to Comet Lake)
- * Machine type is i440fx
- * IGD is assigned to guest BDF 00:02.0
- * ROM BAR or romfile is present
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index d7e4728fdc84a0d91086f224c889f24120e1ce14..e06484c9112f104b87c18bb7b2d0a2cd2de1992e 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -517,11 +517,13 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
- 
-     /*
-      * For backward compatibility, enable legacy mode when
-+     * - Device geneation is 6 to 9 (including both)
-      * - Machine type is i440fx (pc_piix)
-      * - IGD device is at guest BDF 00:02.0
-      * - Not manually disabled by x-igd-legacy-mode=off
-      */
-     if ((vdev->igd_legacy_mode != ON_OFF_AUTO_OFF) &&
-+        (gen >= 6 && gen <= 9) &&
-         !strcmp(MACHINE_GET_CLASS(qdev_get_machine())->family, "pc_piix") &&
-         (&vdev->pdev == pci_find_device(pci_device_root_bus(&vdev->pdev),
-         0, PCI_DEVFN(0x2, 0)))) {
-@@ -566,7 +568,9 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-         vdev->features |= VFIO_FEATURE_ENABLE_IGD_LPC;
-     } else if (vdev->igd_legacy_mode == ON_OFF_AUTO_ON) {
-         error_setg(&err,
--                   "Machine is not i440fx or assigned BDF is not 00:02.0");
-+                   "Machine is not i440fx, assigned BDF is not 00:02.0, "
-+                   "or device %04x (gen %d) doesn't support legacy mode",
-+                   vdev->device_id, gen);
-         goto error;
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 31c441a3dfffdf459994407904ab78b1798bf979..9673b0717ead435e117d8084720fde4ba3a13dd8 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -376,21 +376,29 @@ VFIODevice *vfio_get_vfio_device(Object *obj)
      }
+ }
  
+-bool vfio_device_attach(char *name, VFIODevice *vbasedev,
+-                        AddressSpace *as, Error **errp)
++bool vfio_device_attach_by_iommu_type(const char *iommu_type, char *name,
++                                      VFIODevice *vbasedev, AddressSpace *as,
++                                      Error **errp)
+ {
+     const VFIOIOMMUClass *ops =
+-        VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_LEGACY));
+-
+-    if (vbasedev->iommufd) {
+-        ops = VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
+-    }
++        VFIO_IOMMU_CLASS(object_class_by_name(iommu_type));
+ 
+     assert(ops);
+ 
+     return ops->attach_device(name, vbasedev, as, errp);
+ }
+ 
++bool vfio_device_attach(char *name, VFIODevice *vbasedev,
++                        AddressSpace *as, Error **errp)
++{
++    const char *iommu_type = vbasedev->iommufd ?
++                             TYPE_VFIO_IOMMU_IOMMUFD :
++                             TYPE_VFIO_IOMMU_LEGACY;
++
++    return vfio_device_attach_by_iommu_type(iommu_type, name, vbasedev,
++                                            as, errp);
++}
++
+ void vfio_device_detach(VFIODevice *vbasedev)
+ {
+     if (!vbasedev->bcontainer) {
 -- 
 2.49.0
 
