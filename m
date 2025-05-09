@@ -4,99 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02B41C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 16:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5892BC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 16:31:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDQTw-0007yP-Km; Fri, 09 May 2025 12:21:52 -0400
+	id 1uDQcQ-0005sb-EG; Fri, 09 May 2025 12:30:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uDQTv-0007yF-Hg
- for qemu-devel@nongnu.org; Fri, 09 May 2025 12:21:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uDQTs-0006kx-Ro
- for qemu-devel@nongnu.org; Fri, 09 May 2025 12:21:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746807705;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TSMSWqDuF7KZEoapTc5y0SPuSAW2rz9OzDiwUvbRvLE=;
- b=CvzvOgZ9mDDu67P/nlZdlC7mX7LhBVGxVTupd68svLPrUnzNOpSvlG06noelduz0MkTLwr
- 9lRQb+IvDOgeJmcbg9wu2eZ4jYNUb08Yv2vzQinW/sqA3QXCa05pDALN1KBDMlnvWtM8qm
- AN8FDsy4RqhMNH9EDLEQsTCNnvMZOgI=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-6YfnX9YrPWGjKIppC4CBwQ-1; Fri, 09 May 2025 12:21:44 -0400
-X-MC-Unique: 6YfnX9YrPWGjKIppC4CBwQ-1
-X-Mimecast-MFC-AGG-ID: 6YfnX9YrPWGjKIppC4CBwQ_1746807704
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7c760637fe5so412325685a.0
- for <qemu-devel@nongnu.org>; Fri, 09 May 2025 09:21:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jiangxueqian@gmail.com>)
+ id 1uDQcL-0005s8-Vb
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 12:30:34 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jiangxueqian@gmail.com>)
+ id 1uDQcJ-0007y8-RQ
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 12:30:33 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-30828fc17adso2377654a91.1
+ for <qemu-devel@nongnu.org>; Fri, 09 May 2025 09:30:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1746808230; x=1747413030; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Jfq80ZQtlerh3tsfBXzzSab1yGg9ZH7g5AReSzq5Vek=;
+ b=mT4PGQQAEYgUwaeaJnQfMqASmyL9geqsp2oN80DKu4bGaISLRxh+CkCrJqLFpJ7k8n
+ VHRlR+43ZqyAEO6EYmY/hpd42UnZTfdRVwbafcUGGFg9yNspXH8qpN5HbMnhtQBq/1Pb
+ 23mFoc8LfuA7tNqHTn5GefmdTjIBHVDG8AY+bTPtOP/f34y1VrLK4COlj837jPgOrodr
+ ZGsccIvPuBqq+X7AdO+n/BKDQnoZL9S21f8J3SDA3XsYh5huFFmgTlTJThKKaphILP9F
+ CMttG6+aCf70gYerZuHKwC+pal6cDFFjbXjgErUERKqKFa0rjqgduAhN+k/hqd5qfKee
+ CD6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746807702; x=1747412502;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TSMSWqDuF7KZEoapTc5y0SPuSAW2rz9OzDiwUvbRvLE=;
- b=Rnt2151ntLf8sddysTKSLRxD7ODKYvkhDKYZDh6Ef/84HmXcDc6spz02316ZrySCIW
- 7HXpvPXakbTQ/3Zfm8S24MGGiPXFMVFHPaA06JZt0rS6KWIlqVtL3qZAlzQvjXAbp9Mu
- 1c6Luf3L32lWdoQ39yHr6QvI+MHPN+eBCw8Q5eUrPllTuElmDdBzebTMhf0MLPrvScTx
- LX/HPtVV0jf54XqToiPDAdaP0+fGs0tHalc12sy/GRu702Kt1kwWCwBGAsbM+3xV6fdP
- F7m5QnsrMw0nKTlffhvtgqVBQT63W46oCtLcSMd95NCmfYhrk4lx28iQNWeqZz/bzAJ8
- 0v1w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJ7f/UsD9g2HwyaRJVmXnvY2idFgMAQ0mY+mtE0lL3D0IyV6aQ+NIGLuLabgzReWrXV10PNpcVIHSH@nongnu.org
-X-Gm-Message-State: AOJu0YzIwpJBGMrMnhWgVqaHuCnWZ1JhEJn2x5WgObZeGwIr3RPCtSPK
- bf/UNcj8RibzivE/JBS3hFF05PaLERNB6RJsPiXtDAgtG/C4V0mFVxynyML0XQZoAoqcGZnsABm
- 035/46NKe/dggn2LdnUU3OPEzlfF7TSrF1YDo09RsUa5EV7n2AlLQvEWQaIt4
-X-Gm-Gg: ASbGncvqM9YLc80KtiQu3CZXTMdMCj2gkExa14av2ghfdohF6en9P3N06vrxkRSa3rz
- Qzg4nepZic5wg8JHScDgrSH+6t8JHZ0kkbkhDnpOQUw58Dp3OQDnik2AacpnA9POIGbC9EHrHIA
- GBKWy3JNGJ26Fi0nUWr57fB/xwFvMlT0Ssi3lZLLQIp1sqoxcl3FRtqV6n2uJgov3A7kngPDglz
- cSjokJHrhkiRKHymJr9hsoamK1LkFdZC9NUgJHJX7TfdDCD4OlIVyenyU5uD22UJssQw6igSUzo
- SQo=
-X-Received: by 2002:a05:620a:2618:b0:7c5:5584:dc1b with SMTP id
- af79cd13be357-7cd01169048mr941548085a.54.1746807702261; 
- Fri, 09 May 2025 09:21:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHlKp+54QeGqjs46NXXcpdhnV2j/VI8xLLHwWHn0gAwZZBtKuV9XuApd8M6LZCa6/nK8MkYZQ==
-X-Received: by 2002:a05:622a:1314:b0:47b:4f3:b257 with SMTP id
- d75a77b69052e-4945276462bmr57061891cf.31.1746807690625; 
- Fri, 09 May 2025 09:21:30 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-49452584100sm14334411cf.57.2025.05.09.09.21.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 May 2025 09:21:30 -0700 (PDT)
-Date: Fri, 9 May 2025 12:21:26 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Marco Cavenati <Marco.Cavenati@eurecom.fr>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>
-Subject: Re: [PATCH] migration: add FEATURE_SEEKABLE to QIOChannelBlock
-Message-ID: <aB4rhlVGCSk7IwoE@x1.local>
-References: <87jz7rhjzq.fsf@suse.de> <4caa0-67f8d780-a89-60718600@156698708>
- <87ecxyhon3.fsf@suse.de> <7cd3c-67fe3180-3d9-10622a60@195384178>
- <87plhdfs9o.fsf@suse.de> <7cd3c-6800c580-4b5-10622a60@195456151>
- <871ptqg6u9.fsf@suse.de> <151d8c-680a4080-15-6f9ea10@196998929>
- <aB0Swile4IjxTUsd@x1.local>
- <193e5a-681dfa80-3af-701c0f80@227192887>
+ d=1e100.net; s=20230601; t=1746808230; x=1747413030;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Jfq80ZQtlerh3tsfBXzzSab1yGg9ZH7g5AReSzq5Vek=;
+ b=PdF5zUr2OKWvYi6XaWFVlTca40N5ISUCJkv4Q2h7KzYQW08YRu/Ivzo+Cy8/vDcE/S
+ xh9UGQpbZ3xn3p5ZvYU+1bGHY8+vsRTsHoBA9wmXfgH3LuBTgK6bzYE7UrmLJsuhm6/Y
+ M/Nh2g5UJ0uBMjIxXiObKWKUV4a2+F3qHnz7RdIIfYUr6JbSbjIGceqPuQlbmO7dZEvZ
+ jg5MIb6pT+jjGzSaLdRj8L/1Sf16U/8d8NcDKU5kTxHO2GxYvQQWHBgI2RILSBGlnSBj
+ E7a4rHVvd5K3yfBgSG+JYqq39r89zzCq3OawmwvL3cAUWBDYyVlJhvaVdQhZ0ICNgFYG
+ Y/Ng==
+X-Gm-Message-State: AOJu0Yx+qqD7VdnZbIAIBn5IUNb5YTjae60QpFKtOIMrTVbrbgtsgZrj
+ /gzs0+9Iw5hq31+Yk1FtIM8u+VqMwYSTDfuZFXYmz8Oxmlap4ttSQRyeX41OzGs=
+X-Gm-Gg: ASbGncuwENSUIrXZG8Kw5mVOftOdurbsKvCOfgIjwTNTgqN0MnutIUqiMWV5n1ebsUS
+ NVK2k/fVjD53ggQnjutx5uzN5cnJkcIrisiHpEMN1X+JP0HJcA6aILqpqq2gtxWenOLQwx8P50g
+ 9gRCZeSg9niAw8QqHyM8UzJEZ2nonC5xxKdxnctTxAbqGSEZHMF+uWDO5agn5CuqHuVPKqbs2rI
+ Sd80JFB3885ORVhBXcHbRuG16kKXaRIg983jCtkGq+RE0jcf22b6GGR4ElYwlPq3HHo1TS3bKQn
+ 5SRUSZ4MDkNWOF9IEThvIOf1Fu3xLt8isluSQrZf8hrLGuMQY0+LiWvIRGc=
+X-Google-Smtp-Source: AGHT+IFYcV9tT1TnoovNXspCxHLjuzOgGa95+tQRQCWoZEfD/7npfWCz0SEmGXnop6lNzhkU9lp06w==
+X-Received: by 2002:a17:90b:3d82:b0:2ee:f80c:6889 with SMTP id
+ 98e67ed59e1d1-30c3d661528mr8046136a91.33.1746808229495; 
+ Fri, 09 May 2025 09:30:29 -0700 (PDT)
+Received: from [192.168.11.20] ([74.48.121.150])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-30ad4ffb4a0sm4266707a91.46.2025.05.09.09.30.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 09 May 2025 09:30:29 -0700 (PDT)
+Message-ID: <093aee8f-030d-472e-865c-bf2f20eae87c@gmail.com>
+Date: Sat, 10 May 2025 00:30:25 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <193e5a-681dfa80-3af-701c0f80@227192887>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.413,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] virtio-gpu-gl: Add 'serverfd' property
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20250403155129.3396821-1-jiangxueqian@gmail.com>
+ <87tt5vmhx9.fsf@draig.linaro.org>
+Content-Language: en-US
+From: Jiang XueQian <jiangxueqian@gmail.com>
+In-Reply-To: <87tt5vmhx9.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=jiangxueqian@gmail.com; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,140 +101,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 09, 2025 at 02:51:47PM +0200, Marco Cavenati wrote:
-> Hello Peter,
+
+
+On 5/8/25 8:00 PM, Alex Bennée wrote:
+> Jiang XueQian <jiangxueqian@gmail.com> writes:
 > 
-> On Thursday, May 08, 2025 22:23 CEST, Peter Xu <peterx@redhat.com> wrote:
+>> This property passes socket of a externally started virgl_render_server
+>> to virglrenderer, so that it won't try to spawn new process and get
+>> killed by seccomp, allowing virtio-gpu-gl venus and sandbox to enable
+>> at the same time.
 > 
-> > > The scenarios where zeroing is not required (incoming migration and
-> > > -loadvm) share a common characteristic: the VM has not yet run in the
-> > > current QEMU process.
-> > > To avoid splitting read_ramblock_mapped_ram(), could we implement
-> > > a check to determine if the VM has ever run and decide whether to zero
-> > > the memory based on that? Maybe using RunState?
-> > > 
-> > > Then we can add something like this to read_ramblock_mapped_ram()
-> > > ...
-> > > clear_bit_idx = 0;
-> > > for (...) {
-> > >     // Zero pages
-> > >     if (guest_has_ever_run()) {
-> > >         unread = TARGET_PAGE_SIZE * (set_bit_idx - clear_bit_idx);
-> > >         offset = clear_bit_idx << TARGET_PAGE_BITS;
-> > >         host = host_from_ram_block_offset(block, offset);
-> > >         if (!host) {...}
-> > >         ram_handle_zero(host, unread);
-> > >     }
-> > >     // Non-zero pages
-> > >     clear_bit_idx = find_next_zero_bit(bitmap, num_pages, set_bit_idx + 1);
-> > > ...
-> > > (Plus trailing zero pages handling)
-> > 
-> > [...]
-> > 
-> > > > >> > In a nutshell, I'm using dirty page tracking to load from the snapshot
-> > > > >> > only the pages that have been dirtied between two loadvm;
-> > > > >> > mapped-ram is required to seek and read only the dirtied pages.
-> > 
-> > I may not have the full picture here, please bare with me if so.
-> > 
-> > It looks to me the major feature here you're proposing is like a group of
-> > snapshots in sequence, while only the 1st snapshot contains full RAM data,
-> > the rest only contains what were dirtied?
-> >
-> > From what I can tell, the interface will be completely different from
-> > snapshots then - firstly the VM will be running when taking (at least the
-> > 2nd+) snapshots, meanwhile there will be an extra phase after normal save
-> > snapshot, which is "keep saving snapshots", during the window the user is
-> > open to snapshot at any time based on the 1st snapshot.  I'm curious what's
-> > the interfacing for the feature.  It seems we need a separate command
-> > saying that "finished storing the current group of snapshots", which should
-> > stop the dirty tracking.
+> Do we have an example of how to start such a virgl server?
+> docs/syste,/devices/virtio-gpu.rst could be expanded with some example
+> invocations of the various modes.
 > 
-> My goal is to speed up recurrent snapshot restore of short living VMs.
-> In my use case I create one snapshot, and then I restore it thousands
-> of times, leaving the VM running for just a few functions execution for
-> example.
-> Still, you are right in saying that this is a two steps process.
-> What I added (not in this patch, but in a downstream fork atm) are a
-> couple of HMP commands:
-> - loadvm_for_hotreaload: in a nutshell it's a loadvm that also starts dirty
-> tracking
-> - hotreload: again a loadvm but that takes advantage of the dirty log
-> to selectively restore only dirty pages
+
+virgl_render_server can be started like `path/to/virgl_render_server 
+--socket-fd <seqpacket-socketpair-fd>`.
+
+It is spawned by virgl_render_init function without this patch, so I 
+used that 
+(https://gitlab.freedesktop.org/virgl/virglrenderer/-/blob/1.1.1/src/proxy/proxy_server.c?ref_type=tags#L73) 
+as a reference during development.
+
+Thank you for the advice. I'll add some examples and docs.
+
+>>
+>> Signed-off-by: Jiang XueQian <jiangxueqian@gmail.com>
+>> ---
+>>   hw/display/virtio-gpu-gl.c     | 15 +++++++++++++++
+>>   hw/display/virtio-gpu-virgl.c  | 17 +++++++++++++++++
+>>   include/hw/virtio/virtio-gpu.h |  2 ++
+>>   3 files changed, 34 insertions(+)
+>>
+>> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+>> index 683fad3bf8..e7c89f7c29 100644
+>> --- a/hw/display/virtio-gpu-gl.c
+>> +++ b/hw/display/virtio-gpu-gl.c
+>> @@ -22,6 +22,7 @@
+>>   #include "hw/virtio/virtio-gpu-bswap.h"
+>>   #include "hw/virtio/virtio-gpu-pixman.h"
+>>   #include "hw/qdev-properties.h"
+>> +#include "monitor/monitor.h"
+>>   
+>>   #include <virglrenderer.h>
+>>   
+>> @@ -143,6 +144,17 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+>>           return;
+>>       }
+>>   
+>> +#if VIRGL_RENDERER_CALLBACKS_VERSION >= 3
+>> +    if (g->parent_obj.conf.serverfd) {
+>> +        g->parent_obj.conf.serverfd_parsed =
+>> +            monitor_fd_param(monitor_cur(),
+>> g->parent_obj.conf.serverfd, errp);
 > 
-> > I'm also curious what is the use case, and I also wonder if "whether we
-> > could avoid memset(0) on a zero page" is anything important here - maybe
-> > you could start with simple (which is to always memset() for a zero page
-> > when a page is dirtied)?
+> I think the right place to validate we have a valid serverfd is in a
+> property setter function.
 > 
-> My use case is, you guessed it, fuzz testing aka fuzzing.
-> About the zeroing, you are right, optimizing it is not a huge concern for
-> my use case, doing what you say is perfectly fine.
+
+I see your point, but I prefer to keep it simple.
+
+Using both variables is confusing and worth improving. This code is not 
+only used to validate serverfd.
+
+Here monitor_fd_param find the fd by its symbolic name or by parsing 
+digits, and take ownership of it. The fd is stored and later pass to 
+virglrenderer.
+
+After this, .serverfd is only used as a boolean, indicating whether 
+.serverfd_parsed is valid.
+
+Many devices accept fd but most of them do so by accepting a chardev, 
+which is not suitable in this case. Only a few devices accept fd 
+directly, I found vhost-scsi and vhost-vsock, and they are using 
+monitor_fd_param. I believe abstracting it further is unnecessary.
+
+>> +        if (g->parent_obj.conf.serverfd_parsed < 0) {
+>> +            error_prepend(errp, "unable to parse serverfd: ");
+>> +            return;
+>> +        }
+>> +    }
+>> +#endif
+>> +
+>>       g->parent_obj.conf.flags |= (1 << VIRTIO_GPU_FLAG_VIRGL_ENABLED);
+>>       g->capset_ids = virtio_gpu_virgl_get_capsets(g);
+>>       VIRTIO_GPU_BASE(g)->virtio_config.num_capsets = g->capset_ids->len;
+>> @@ -159,6 +171,9 @@ static const Property virtio_gpu_gl_properties[] = {
+>>                       VIRTIO_GPU_FLAG_STATS_ENABLED, false),
+>>       DEFINE_PROP_BIT("venus", VirtIOGPU, parent_obj.conf.flags,
+>>                       VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
+>> +#if VIRGL_RENDERER_CALLBACKS_VERSION >= 3
+>> +    DEFINE_PROP_STRING("serverfd", VirtIOGPU,
+>> parent_obj.conf.serverfd),
 > 
-> Just to be clear, what I describe above is not the content of this patch.
-> This patch aims only to make a first step in adding the support for the
-> mapped-ram feature for savevm/loadvm snapshots, which is a
-> prerequisite for my hotreload feature.
-> mapped-ram is currently supported only in (file) migration.
-> What's missing from this patch to have it working completely, is the
-> handling of zero pages. Differently from migration, with snapshots pages
-> are not all zero prior to the restore and must therefore be handled.
+> Use DEFINE_PROP with a PropertyInfo structure.
 > 
-> I hope I summarized in an understandable way, if not I'll be happy to
-> further clarify :) 
+>> +#endif
+>>   };
+>>   
+>>   static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+>> index 145a0b3879..420aae3b05 100644
+>> --- a/hw/display/virtio-gpu-virgl.c
+>> +++ b/hw/display/virtio-gpu-virgl.c
+>> @@ -1030,6 +1030,19 @@ static int virgl_make_context_current(void *opaque, int scanout_idx,
+>>                                      qctx);
+>>   }
+>>   
+>> +#if VIRGL_RENDERER_CALLBACKS_VERSION >= 3
+>> +static int virgl_get_server_fd(void *opaque, uint32_t version)
+>> +{
+>> +    VirtIOGPU *g = opaque;
+>> +
+>> +    if (g->parent_obj.conf.serverfd) {
+>> +        return g->parent_obj.conf.serverfd_parsed;
+>> +    }
+>> +
+>> +    return -1;
+>> +}
+>> +#endif
+>> +
+>>   static struct virgl_renderer_callbacks virtio_gpu_3d_cbs = {
+>>       .version             = 1,
+>>       .write_fence         = virgl_write_fence,
+>> @@ -1097,6 +1110,10 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>>       uint32_t flags = 0;
+>>       VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+>>   
+>> +#if VIRGL_RENDERER_CALLBACKS_VERSION >= 3
+>> +    virtio_gpu_3d_cbs.version = 3;
+>> +    virtio_gpu_3d_cbs.get_server_fd = virgl_get_server_fd;
+>> +#endif
+>>   #if VIRGL_RENDERER_CALLBACKS_VERSION >= 4
+>>       if (qemu_egl_display) {
+>>           virtio_gpu_3d_cbs.version = 4;
+>> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+>> index a42957c4e2..40a81f500c 100644
+>> --- a/include/hw/virtio/virtio-gpu.h
+>> +++ b/include/hw/virtio/virtio-gpu.h
+>> @@ -128,6 +128,8 @@ struct virtio_gpu_base_conf {
+>>       uint32_t xres;
+>>       uint32_t yres;
+>>       uint64_t hostmem;
+>> +    char *serverfd;
+>> +    int serverfd_parsed;
+> 
+> And we can drop char serverfd and have an explicit place for the fd. Is
+> 0 a valid fd or do we need a initialise to -1?
+> 
 
-Yes, thanks.
+I'll improve this by always giving .serverfd_parsed a value, so that 
+later code don't have to check .serverfd.
 
-So you don't really need to take sequence of snapshots?  Hmm, that sounds
-like a completely different use case that I originally thought.
-
-Have you thought of leveraging ignore-shared and MAP_PRIVATE for the major
-chunk of guest mem?
-
-Let me explain; it's a very rough idea, but maybe you can collect something
-useful.
-
-So.. if you keep reloading one VM state thousands of times, it's better
-first that you have some shmem file (let's imagine that's enough.. you
-could have more backends) keeping the major chunk of the VM RAM image that
-you migrated before into a file.
-
-Say, the major part of guest mem is stored here:
-
-  PATH_RAM=/dev/shm/XXX
-
-Then you migrate (with ignore-shared=on) to a file here (NOTE: I _think_
-you really can use file migration in this case with VM stopped first, not
-snapshot save/load):
-
-  PATH_VM_IMAGE=/tmp/VM_IMAGE_YYY
-
-Then, the two files above should contain all info you need to start a new
-VM.
-
-When you want to recover that VM state, boot a VM using this cmdline:
-
-  $qemu ... \
-  -object memory-backend-file,mem-path=$PATH_RAM,share=off
-  -incoming file:$PATH_VM_IMAGE
-
-That'll boot a VM, directly loading the shmem page cache (always present on
-the host, occupying RAM, though, outside of VM lifecycle, but it's part of
-the design..), loading VM image would be lightning fast because it's tiny
-when there's almost no RAM inside.  No concern on mapped-ram at all as the
-rest RAMs are too trivial to just be a stream.
-
-The important bit is share=off - that will mmap() the VM major RAM as
-MAP_PRIVATE, then it'll do CoW on the "snapshot" you made before, whenever
-you writes to some guest pages during fuzzing some functions, it copies the
-shmem page cache over.  shmem page cache should never change its content.
-
-Sounds working to you?
-
-Thanks,
-
--- 
-Peter Xu
-
+>>   };
+>>   
+>>   struct virtio_gpu_ctrl_command {
+> 
 
