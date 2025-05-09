@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E261C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCC00C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:20:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDNZx-0003D4-B0; Fri, 09 May 2025 09:15:54 -0400
+	id 1uDNYL-0001oH-Bs; Fri, 09 May 2025 09:14:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNZ1-0002PR-N2
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:15:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYG-0001nc-Lo
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYy-0007Ec-SK
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:54 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYE-00073m-ES
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746796491;
+ s=mimecast20190719; t=1746796445;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HisD7F+n0YQRQAJHKMQy689CXMethJ5xHSYlbFgCquc=;
- b=DhR5qj73N9qFSQ2EQxRBVasOU//t0wF5NOVl9R08YMjCov6GZIXMuO5CouQQhcuLHkbRwT
- s0Ec8zoDwR8HR4mjmSASH3mg5x+DMLZbrQQeESwJzcq47M3f/yk/w+Y6GDLKP3ZufHDIgb
- mNbgXhFIy5hRqnurb5wci04AgcJO/V8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=suQwsuILrtRb07/uWbc2/shPRu3zUyBZpeF2Kznj17A=;
+ b=a4LL5dnnMdidDQjLLrNNR9O1krjmM6DaQl0itD7z1/HeaR2CfHblVGpUTRC3t2DrBFlPYW
+ KCcsYAa+wwpSuvBb+as2ADHx3gMakB3l6gQWo3p3WHUgNi5Dh9CPq59yEh4UjFBQYsk/Sw
+ h78uZQ3x7hif2Hr1Rn2Me7/rEv+oAbU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-qhEVWJynNXaLEXNI9MEY7g-1; Fri,
- 09 May 2025 09:14:48 -0400
-X-MC-Unique: qhEVWJynNXaLEXNI9MEY7g-1
-X-Mimecast-MFC-AGG-ID: qhEVWJynNXaLEXNI9MEY7g_1746796487
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-311-6YxE6aP4PD-PgwwImFFUcQ-1; Fri,
+ 09 May 2025 09:14:00 -0400
+X-MC-Unique: 6YxE6aP4PD-PgwwImFFUcQ-1
+X-Mimecast-MFC-AGG-ID: 6YxE6aP4PD-PgwwImFFUcQ_1746796439
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 52BDE180087F; Fri,  9 May 2025 13:14:47 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2078819560B0; Fri,  9 May 2025 13:13:59 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 85663180045B; Fri,  9 May 2025 13:14:45 +0000 (UTC)
+ id 372D71800EC9; Fri,  9 May 2025 13:13:55 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- John Levon <john.levon@nutanix.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 26/28] vfio: add read/write to device IO ops vector
-Date: Fri,  9 May 2025 15:13:15 +0200
-Message-ID: <20250509131317.164235-27-clg@redhat.com>
+Subject: [PULL 11/28] vfio/igd: Only emulate GGC register when x-igd-gms is set
+Date: Fri,  9 May 2025 15:13:00 +0200
+Message-ID: <20250509131317.164235-12-clg@redhat.com>
 In-Reply-To: <20250509131317.164235-1-clg@redhat.com>
 References: <20250509131317.164235-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -84,204 +85,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Levon <john.levon@nutanix.com>
+From: Tomita Moeko <tomitamoeko@gmail.com>
 
-Now we have the region info cache, add ->region_read/write device I/O
-operations instead of explicit pread()/pwrite() system calls.
+x-igd-gms is used for overriding DSM region size in GGC register in
+both config space and MMIO BAR0, by default host value is used.
+There is no need to emulate it in default case.
 
-Signed-off-by: John Levon <john.levon@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20250507152020.1254632-13-john.levon@nutanix.com
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+Reviewed-by: Corvin Köhne <c.koehne@beckhoff.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Tested-by: Alex Williamson <alex.williamson@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250505170305.23622-9-tomitamoeko@gmail.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-device.h | 18 ++++++++++++++++++
- hw/vfio/device.c              | 34 ++++++++++++++++++++++++++++++++++
- hw/vfio/pci.c                 | 28 ++++++++++++++--------------
- hw/vfio/region.c              | 17 +++++++++++------
- 4 files changed, 77 insertions(+), 20 deletions(-)
+ hw/vfio/igd.c | 49 ++++++++++++++++++++++++++-----------------------
+ 1 file changed, 26 insertions(+), 23 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 4fff3dcee3b4a2a3c8a4bd6fa017cf822a16668e..8bcb3c19f62b5a47c835e10149c04a9bd7536520 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -188,6 +188,24 @@ struct VFIODeviceIOOps {
-      * Configure IRQs as defined by @irqs.
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 8ad9d723e29cd4d63e12346b6e40604ac020e747..886d44f017f415d5f82c892e630ae2de1637677c 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -478,22 +478,24 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+         return;
+     }
+ 
+-    ggc_quirk = vfio_quirk_alloc(1);
+-    ggc_mirror = ggc_quirk->data = g_malloc0(sizeof(*ggc_mirror));
+-    ggc_mirror->mem = ggc_quirk->mem;
+-    ggc_mirror->vdev = vdev;
+-    ggc_mirror->bar = nr;
+-    ggc_mirror->offset = IGD_GGC_MMIO_OFFSET;
+-    ggc_mirror->config_offset = IGD_GMCH;
+-
+-    memory_region_init_io(ggc_mirror->mem, OBJECT(vdev),
+-                          &vfio_generic_mirror_quirk, ggc_mirror,
+-                          "vfio-igd-ggc-quirk", 2);
+-    memory_region_add_subregion_overlap(vdev->bars[nr].region.mem,
+-                                        ggc_mirror->offset, ggc_mirror->mem,
+-                                        1);
++    if (vdev->igd_gms) {
++        ggc_quirk = vfio_quirk_alloc(1);
++        ggc_mirror = ggc_quirk->data = g_malloc0(sizeof(*ggc_mirror));
++        ggc_mirror->mem = ggc_quirk->mem;
++        ggc_mirror->vdev = vdev;
++        ggc_mirror->bar = nr;
++        ggc_mirror->offset = IGD_GGC_MMIO_OFFSET;
++        ggc_mirror->config_offset = IGD_GMCH;
+ 
+-    QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, ggc_quirk, next);
++        memory_region_init_io(ggc_mirror->mem, OBJECT(vdev),
++                              &vfio_generic_mirror_quirk, ggc_mirror,
++                              "vfio-igd-ggc-quirk", 2);
++        memory_region_add_subregion_overlap(vdev->bars[nr].region.mem,
++                                            ggc_mirror->offset, ggc_mirror->mem,
++                                            1);
++
++        QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, ggc_quirk, next);
++    }
+ 
+     bdsm_quirk = vfio_quirk_alloc(1);
+     bdsm_mirror = bdsm_quirk->data = g_malloc0(sizeof(*bdsm_mirror));
+@@ -632,9 +634,15 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+      * 32MiB. This option should only be used when the desired size cannot be
+      * set from DVMT Pre-Allocated option in host BIOS.
       */
-     int (*set_irqs)(VFIODevice *vdev, struct vfio_irq_set *irqs);
+-    if (vdev->igd_gms &&
+-        !vfio_pci_igd_override_gms(gen, vdev->igd_gms, &gmch)) {
+-        return false;
++    if (vdev->igd_gms) {
++        if (!vfio_pci_igd_override_gms(gen, vdev->igd_gms, &gmch)) {
++            return false;
++        }
 +
-+    /**
-+     * @region_read
-+     *
-+     * Read @size bytes from the region @nr at offset @off into the buffer
-+     * @data.
-+     */
-+    int (*region_read)(VFIODevice *vdev, uint8_t nr, off_t off, uint32_t size,
-+                       void *data);
-+
-+    /**
-+     * @region_write
-+     *
-+     * Write @size bytes to the region @nr at offset @off from the buffer
-+     * @data.
-+     */
-+    int (*region_write)(VFIODevice *vdev, uint8_t nr, off_t off, uint32_t size,
-+                        void *data);
- };
- 
- void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 77b0675abe7b4f4155ea79cf3fd0e3ab4b21f8ea..0b2cd90d64dc797bb2f20c60c57ff49706816aed 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -505,9 +505,43 @@ static int vfio_device_io_set_irqs(VFIODevice *vbasedev,
-     return ret < 0 ? -errno : ret;
- }
- 
-+static int vfio_device_io_region_read(VFIODevice *vbasedev, uint8_t index,
-+                                      off_t off, uint32_t size, void *data)
-+{
-+    struct vfio_region_info *info;
-+    int ret;
-+
-+    ret = vfio_device_get_region_info(vbasedev, index, &info);
-+    if (ret != 0) {
-+        return ret;
-+    }
-+
-+    ret = pread(vbasedev->fd, data, size, info->offset + off);
-+
-+    return ret < 0 ? -errno : ret;
-+}
-+
-+static int vfio_device_io_region_write(VFIODevice *vbasedev, uint8_t index,
-+                                       off_t off, uint32_t size, void *data)
-+{
-+    struct vfio_region_info *info;
-+    int ret;
-+
-+    ret = vfio_device_get_region_info(vbasedev, index, &info);
-+    if (ret != 0) {
-+        return ret;
-+    }
-+
-+    ret = pwrite(vbasedev->fd, data, size, info->offset + off);
-+
-+    return ret < 0 ? -errno : ret;
-+}
-+
- static VFIODeviceIOOps vfio_device_io_ops_ioctl = {
-     .device_feature = vfio_device_io_device_feature,
-     .get_region_info = vfio_device_io_get_region_info,
-     .get_irq_info = vfio_device_io_get_irq_info,
-     .set_irqs = vfio_device_io_set_irqs,
-+    .region_read = vfio_device_io_region_read,
-+    .region_write = vfio_device_io_region_write,
- };
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 9136cf52c82711939db01c09a8a1277327bc484f..1236de315d1a73aa408c108e2e650a37b037b93e 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -918,18 +918,22 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
-     memset(vdev->rom, 0xff, size);
- 
-     while (size) {
--        bytes = pread(vbasedev->fd, vdev->rom + off,
--                      size, vdev->rom_offset + off);
-+        bytes = vbasedev->io_ops->region_read(vbasedev,
-+                                              VFIO_PCI_ROM_REGION_INDEX,
-+                                              off, size, vdev->rom + off);
-+
-         if (bytes == 0) {
-             break;
-         } else if (bytes > 0) {
-             off += bytes;
-             size -= bytes;
-         } else {
--            if (errno == EINTR || errno == EAGAIN) {
-+            if (bytes == -EINTR || bytes == -EAGAIN) {
-                 continue;
-             }
--            error_report("vfio: Error reading device ROM: %m");
-+            error_report("vfio: Error reading device ROM: %s",
-+                         strreaderror(bytes));
-+
-             break;
-         }
-     }
-@@ -969,22 +973,18 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
- static int vfio_pci_config_space_read(VFIOPCIDevice *vdev, off_t offset,
-                                       uint32_t size, void *data)
- {
--    ssize_t ret;
--
--    ret = pread(vdev->vbasedev.fd, data, size, vdev->config_offset + offset);
--
--    return ret < 0 ? -errno : (int)ret;
-+    return vdev->vbasedev.io_ops->region_read(&vdev->vbasedev,
-+                                              VFIO_PCI_CONFIG_REGION_INDEX,
-+                                              offset, size, data);
- }
- 
- /* "Raw" write of underlying config space. */
- static int vfio_pci_config_space_write(VFIOPCIDevice *vdev, off_t offset,
-                                        uint32_t size, void *data)
- {
--    ssize_t ret;
--
--    ret = pwrite(vdev->vbasedev.fd, data, size, vdev->config_offset + offset);
--
--    return ret < 0 ? -errno : (int)ret;
-+    return vdev->vbasedev.io_ops->region_write(&vdev->vbasedev,
-+                                               VFIO_PCI_CONFIG_REGION_INDEX,
-+                                               offset, size, data);
- }
- 
- static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index ef2630cac3924fef200b2ece1be0dbad219dd67d..34752c3f65c4b43fc961754657b18f5269c01ef1 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -45,6 +45,7 @@ void vfio_region_write(void *opaque, hwaddr addr,
-         uint32_t dword;
-         uint64_t qword;
-     } buf;
-+    int ret;
- 
-     switch (size) {
-     case 1:
-@@ -64,11 +65,13 @@ void vfio_region_write(void *opaque, hwaddr addr,
-         break;
++        /* GMCH is read-only, emulated */
++        pci_set_long(vdev->pdev.config + IGD_GMCH, gmch);
++        pci_set_long(vdev->pdev.wmask + IGD_GMCH, 0);
++        pci_set_long(vdev->emulated_config_bits + IGD_GMCH, ~0);
      }
  
--    if (pwrite(vbasedev->fd, &buf, size, region->fd_offset + addr) != size) {
-+    ret = vbasedev->io_ops->region_write(vbasedev, region->nr,
-+                                         addr, size, &buf);
-+    if (ret != size) {
-         error_report("%s(%s:region%d+0x%"HWADDR_PRIx", 0x%"PRIx64
--                     ",%d) failed: %m",
-+                     ",%d) failed: %s",
-                      __func__, vbasedev->name, region->nr,
--                     addr, data, size);
-+                     addr, data, size, strwriteerror(ret));
-     }
+     gms_size = igd_stolen_memory_size(gen, gmch);
+@@ -652,11 +660,6 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+     fw_cfg_add_file(fw_cfg_find(), "etc/igd-bdsm-size",
+                     bdsm_size, sizeof(*bdsm_size));
  
-     trace_vfio_region_write(vbasedev->name, region->nr, addr, data, size);
-@@ -96,11 +99,13 @@ uint64_t vfio_region_read(void *opaque,
-         uint64_t qword;
-     } buf;
-     uint64_t data = 0;
-+    int ret;
- 
--    if (pread(vbasedev->fd, &buf, size, region->fd_offset + addr) != size) {
--        error_report("%s(%s:region%d+0x%"HWADDR_PRIx", %d) failed: %m",
-+    ret = vbasedev->io_ops->region_read(vbasedev, region->nr, addr, size, &buf);
-+    if (ret != size) {
-+        error_report("%s(%s:region%d+0x%"HWADDR_PRIx", %d) failed: %s",
-                      __func__, vbasedev->name, region->nr,
--                     addr, size);
-+                     addr, size, strreaderror(ret));
-         return (uint64_t)-1;
-     }
-     switch (size) {
+-    /* GMCH is read-only, emulated */
+-    pci_set_long(vdev->pdev.config + IGD_GMCH, gmch);
+-    pci_set_long(vdev->pdev.wmask + IGD_GMCH, 0);
+-    pci_set_long(vdev->emulated_config_bits + IGD_GMCH, ~0);
+-
+     /* BDSM is read-write, emulated.  The BIOS needs to be able to write it */
+     if (gen < 11) {
+         pci_set_long(vdev->pdev.config + IGD_BDSM, 0);
 -- 
 2.49.0
 
