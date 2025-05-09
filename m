@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D377CC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:16:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66486C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:16:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDNa2-0003fm-In; Fri, 09 May 2025 09:15:59 -0400
+	id 1uDNY0-0001kq-6p; Fri, 09 May 2025 09:13:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNZ7-0002YK-SZ
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:15:04 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNXo-0001hw-Mc
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:13:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNZ3-0007FK-KU
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:59 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNXk-0006x3-U0
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:13:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746796496;
+ s=mimecast20190719; t=1746796415;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=n9dp+vGAaJR3Tzwj/axTWOM7V9O2RntbetImxPSb22Q=;
- b=QpKnh7YbPNuRPW0NGeX10W/d8ySRBym9DyxU84Lo2Y2rAO6L5tGy0FZHwl64e57fUgtZNd
- sTSCaFSgnMjrQgl6sqPPvQo42NV8nETg2W6yaF0iS6soexz/kw2T1kNGvxOYHZn+s3qy3v
- O5LJjO72lPuVtPSa6Ip1kfQ+F/XAHBA=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=mMnZaqscNTKV+8L0HlcgKdjLzi6vxS856e3Tmw05Uv8=;
+ b=WY+GCmutpurQL1nx+T2NBIyKNs/8sX/w6mhITV9CleOJoCRul3sSEFUr+q6mIaCEy1HEe9
+ 4AXVylW3LHTk0jzoVIVe3lteTDGKRG1xh0sm0hfo59Y1RrQ5R2ds6z4y4RZLTDgGphS7Tx
+ zeiP5KZlqHWxlQgaRNHcRjIbza1xw5s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-cp4_BzozNOib7UdRcSIOXw-1; Fri,
- 09 May 2025 09:14:55 -0400
-X-MC-Unique: cp4_BzozNOib7UdRcSIOXw-1
-X-Mimecast-MFC-AGG-ID: cp4_BzozNOib7UdRcSIOXw_1746796494
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-175-gSywlvffPd20ncnU1qbnVA-1; Fri,
+ 09 May 2025 09:13:32 -0400
+X-MC-Unique: gSywlvffPd20ncnU1qbnVA-1
+X-Mimecast-MFC-AGG-ID: gSywlvffPd20ncnU1qbnVA_1746796411
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2BB431955DCD; Fri,  9 May 2025 13:14:54 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D441195608B; Fri,  9 May 2025 13:13:31 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3069518003FD; Fri,  9 May 2025 13:14:51 +0000 (UTC)
+ id 8D2FE180045B; Fri,  9 May 2025 13:13:29 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- John Levon <john.levon@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 28/28] vfio/container: pass listener_begin/commit callbacks
-Date: Fri,  9 May 2025 15:13:17 +0200
-Message-ID: <20250509131317.164235-29-clg@redhat.com>
+ Steve Sistare <steven.sistare@oracle.com>,
+ Cedric Le Goater <clg@redhat.com>
+Subject: [PULL 03/28] vfio/container: vfio_container_group_add
+Date: Fri,  9 May 2025 15:12:52 +0200
+Message-ID: <20250509131317.164235-4-clg@redhat.com>
 In-Reply-To: <20250509131317.164235-1-clg@redhat.com>
 References: <20250509131317.164235-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -84,80 +84,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Levon <john.levon@nutanix.com>
+From: Steve Sistare <steven.sistare@oracle.com>
 
-The vfio-user container will later need to hook into these callbacks;
-set up vfio to use them, and optionally pass them through to the
-container.
+Add vfio_container_group_add to de-dup some code.  No functional change.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: John Levon <john.levon@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20250507152020.1254632-15-john.levon@nutanix.com
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Cedric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/1746195760-101443-4-git-send-email-steven.sistare@oracle.com
+[ clg: vfio_attach_discard_disable() -> vfio_container_attach_discard_disable() ]
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-container-base.h |  2 ++
- hw/vfio/listener.c                    | 28 +++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+)
+ hw/vfio/container.c | 47 ++++++++++++++++++++++++---------------------
+ 1 file changed, 25 insertions(+), 22 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index 59f07d26e8226916c9c58eac07cb494552097138..3d392b0fd8bca9de1480d75ccfac8f3625e82121 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -117,6 +117,8 @@ struct VFIOIOMMUClass {
- 
-     /* basic feature */
-     bool (*setup)(VFIOContainerBase *bcontainer, Error **errp);
-+    void (*listener_begin)(VFIOContainerBase *bcontainer);
-+    void (*listener_commit)(VFIOContainerBase *bcontainer);
-     int (*dma_map)(const VFIOContainerBase *bcontainer,
-                    hwaddr iova, ram_addr_t size,
-                    void *vaddr, bool readonly);
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index 2b93ca55b6d47e4ef3e89bea681d6e345f8d3abe..bfacb3d8d9cd5b7764a1678142eedf6d553cc07a 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -411,6 +411,32 @@ static bool vfio_get_section_iova_range(VFIOContainerBase *bcontainer,
-     return true;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 4b2864cfa85d815fb67f2465b7544eb9de1664d3..a761f0958b71de39093d8849b49c55e3662e096f 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -558,6 +558,26 @@ static bool vfio_container_attach_discard_disable(VFIOContainer *container,
+     return !ret;
  }
  
-+static void vfio_listener_begin(MemoryListener *listener)
++static bool vfio_container_group_add(VFIOContainer *container, VFIOGroup *group,
++                                     Error **errp)
 +{
-+    VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
-+                                                 listener);
-+    void (*listener_begin)(VFIOContainerBase *bcontainer);
-+
-+    listener_begin = VFIO_IOMMU_GET_CLASS(bcontainer)->listener_begin;
-+
-+    if (listener_begin) {
-+        listener_begin(bcontainer);
++    if (!vfio_container_attach_discard_disable(container, group, errp)) {
++        return false;
 +    }
++    group->container = container;
++    QLIST_INSERT_HEAD(&container->group_list, group, container_next);
++    vfio_group_add_kvm_device(group);
++    return true;
 +}
 +
-+static void vfio_listener_commit(MemoryListener *listener)
++static void vfio_container_group_del(VFIOContainer *container, VFIOGroup *group)
 +{
-+    VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
-+                                                 listener);
-+    void (*listener_commit)(VFIOContainerBase *bcontainer);
-+
-+    listener_commit = VFIO_IOMMU_GET_CLASS(bcontainer)->listener_begin;
-+
-+    if (listener_commit) {
-+        listener_commit(bcontainer);
-+    }
++    QLIST_REMOVE(group, container_next);
++    group->container = NULL;
++    vfio_group_del_kvm_device(group);
++    vfio_ram_block_discard_disable(container, false);
 +}
 +
- static void vfio_device_error_append(VFIODevice *vbasedev, Error **errp)
+ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
+                                    Error **errp)
  {
-     /*
-@@ -1161,6 +1187,8 @@ static void vfio_listener_log_sync(MemoryListener *listener,
+@@ -568,20 +588,13 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
+     VFIOIOMMUClass *vioc = NULL;
+     bool new_container = false;
+     bool group_was_added = false;
+-    bool discard_disabled = false;
  
- static const MemoryListener vfio_memory_listener = {
-     .name = "vfio",
-+    .begin = vfio_listener_begin,
-+    .commit = vfio_listener_commit,
-     .region_add = vfio_listener_region_add,
-     .region_del = vfio_listener_region_del,
-     .log_global_start = vfio_listener_log_global_start,
+     space = vfio_address_space_get(as);
+ 
+     QLIST_FOREACH(bcontainer, &space->containers, next) {
+         container = container_of(bcontainer, VFIOContainer, bcontainer);
+         if (!ioctl(group->fd, VFIO_GROUP_SET_CONTAINER, &container->fd)) {
+-            if (!vfio_container_attach_discard_disable(container, group, errp)) {
+-                return false;
+-            }
+-            group->container = container;
+-            QLIST_INSERT_HEAD(&container->group_list, group, container_next);
+-            vfio_group_add_kvm_device(group);
+-            return true;
++            return vfio_container_group_add(container, group, errp);
+         }
+     }
+ 
+@@ -608,11 +621,6 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
+         goto fail;
+     }
+ 
+-    if (!vfio_container_attach_discard_disable(container, group, errp)) {
+-        goto fail;
+-    }
+-    discard_disabled = true;
+-
+     vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+     assert(vioc->setup);
+ 
+@@ -620,12 +628,11 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
+         goto fail;
+     }
+ 
+-    vfio_group_add_kvm_device(group);
+-
+     vfio_address_space_insert(space, bcontainer);
+ 
+-    group->container = container;
+-    QLIST_INSERT_HEAD(&container->group_list, group, container_next);
++    if (!vfio_container_group_add(container, group, errp)) {
++        goto fail;
++    }
+     group_was_added = true;
+ 
+     if (!vfio_listener_register(bcontainer, errp)) {
+@@ -640,15 +647,11 @@ fail:
+     vfio_listener_unregister(bcontainer);
+ 
+     if (group_was_added) {
+-        QLIST_REMOVE(group, container_next);
+-        vfio_group_del_kvm_device(group);
++        vfio_container_group_del(container, group);
+     }
+     if (vioc && vioc->release) {
+         vioc->release(bcontainer);
+     }
+-    if (discard_disabled) {
+-        vfio_ram_block_discard_disable(container, false);
+-    }
+     if (new_container) {
+         vfio_cpr_unregister_container(bcontainer);
+         object_unref(container);
 -- 
 2.49.0
 
