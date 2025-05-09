@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93CEEC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 11:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 683FDC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 11:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDLaA-0007Pz-Kz; Fri, 09 May 2025 07:07:58 -0400
+	id 1uDLhd-0001BC-4p; Fri, 09 May 2025 07:15:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uDLa8-0007Kn-0H
- for qemu-devel@nongnu.org; Fri, 09 May 2025 07:07:56 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
+ id 1uDLhb-00016M-DA
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 07:15:39 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uDLa5-0000jJ-PB
- for qemu-devel@nongnu.org; Fri, 09 May 2025 07:07:55 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-ae727e87c26so1323187a12.0
- for <qemu-devel@nongnu.org>; Fri, 09 May 2025 04:07:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
+ id 1uDLhZ-0001rG-Dj
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 07:15:39 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-22e730c05ddso19096735ad.2
+ for <qemu-devel@nongnu.org>; Fri, 09 May 2025 04:15:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746788872; x=1747393672; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=reqG+HnTLrWadGCjBmFMEasTPlhnHQqMim/E/FT6daU=;
- b=Q6fZ6QH3VEYCxtEdTAO5mLny7BPyTqLJ2oj05uVhB13/S8TqKzg5KCt6lJsJh1R9ED
- 7eWCQL+PS7+IrEkhh/rXcouabK8hgvp+pUUknC2R9Lia6dN6OtljmGvBQEi7yEFh1KlF
- +k5FMzkB1epRj0nxNXVUhIRpew8spEjYlMfW+iFZ0J9RXODz9sDCn/ifdf4AvnRQXFbH
- 99eCuOD3U+V67ZLIHtbTeppkg92ZnpB/ysCZoQBXn7+Hf3gtX2RBipEke8SGR81b+ABt
- 8QEzeZjTsqCR6bcN9j75iU44sWayARO0bldFi1Cfa85dz0V+F90MnV7cWIdT/XNWJsHp
- OlZQ==
+ d=gmail.com; s=20230601; t=1746789335; x=1747394135; darn=nongnu.org;
+ h=content-transfer-encoding:to:subject:from:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=w37uRQkbRh13fcoa9Ff9GIzvttVw9Z47RX6OOQkxQX0=;
+ b=WoHEyEOmO8ZJArW1H+2zbqRfo8W+on/2RddWdhvrsGVN95PCOPxlycnvwS/N0J9Wnj
+ fkHxSu72Xbm4S0L3RNFGIRe59oVEJQ1iLFZ/ex39BmL81iI6Ra4r1EhI7OxLdeJODJ8V
+ Om3YEaNb68uVyF27TaMfq4Dwb7T3ur6HcutmkvlvDwMKoIabHpEe8/MQhPJLUlsuifrr
+ WofR1spRAi1b3ckLjQy5ZmCuxYgk06y04wKqwoQkNv7Pt+GNuvasLLiQtmHKtx3DAta0
+ 3P0171NMI1JnnzRgEAFfkEcg9MDMIlrihuhF3rBPD/OQLbOIX6XFybXWdW1SEb+XSw/Q
+ S/kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746788872; x=1747393672;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=reqG+HnTLrWadGCjBmFMEasTPlhnHQqMim/E/FT6daU=;
- b=mAxiZMda8yIugaP/IJ5+iOHuK7QDGpLEVPcxvZLZQsnl5sAYoLEhmzvdWJV+LCPt9E
- +JEEmKoLIdXTHi9jPLTD4ni1vKb05j+HtzADmeHrd0lcBJXGcjLmlDPmlrNRSizNIaGR
- v8wqLUDDopdzFQD66c7CNkfjP2K0Zmx5DNHZsAZNPfkyatXmCXp+jktILJRJS1MFGc5t
- iec5sDTNs7J3Mv2TTb5F4HTCq9F7OJmVX6HhvHlajZXgFbnH9cTm/DXThs1WIbFUeO2+
- 9/xE9D9hrkMCZFlwwm7n6MgrC7D6Migrl0cQgh0NySWq9HGqBzZu3CLfSKfFLz3qmGkg
- JCVw==
-X-Gm-Message-State: AOJu0YxqUaIabwCcXsFZ+SHmtnzjKvSnYzNkzLbeOJtUg3FnaPeKqqr+
- /gl1ikeMw7d4ee+eFboUI8DzKWv67mn5zU05DcczsTWqG3lLju3LhWRd0PPkh3I8DJX2TB2YoC2
- 2Ed4=
-X-Gm-Gg: ASbGncuKzYFyy4ynKLBLDxTQ9NStiQm5DonKalgoMIYpKEpP5xAgMXxTyIBOFhDNrTz
- BZ48BFshGrzOsmHQYBVzzqQ57NGOvv5DTCAKZeeCVZV1bajlonuR9ZemuRN3T0g+S/N6hhSVwJh
- iuIQ2pbjW5m0Wfbuv5FMkufLB1xx2s55zBIF6HyzlXYC44C23w9Ps0+2zllPkoi3bvgh395DEiY
- V5jdep5UTfIlTv6CRBq6j9pp4W4SU3zewbZzHXHbX4EkJZ7n7bbAdfaU4/284puIaC0ypQGPdH5
- dvQh4JWP+y2bNqh/JmqyfZvKO/XwRlxgGRaCF8lI/5+mPf5li3xvA/4QmuOG8w8f8rg8L9oyNxJ
- 8VCJqcrbw5eNh56I=
-X-Google-Smtp-Source: AGHT+IGYbd9wt4dta+vIQu4BAd/UgszgxGHEhF0L2eVTJj7OGbiCMXYHfT1TcZbvFgGWZ+FeFwlkFA==
-X-Received: by 2002:a17:902:d48a:b0:220:ca39:d453 with SMTP id
- d9443c01a7336-22fc8b6131amr48451375ad.17.1746788871856; 
- Fri, 09 May 2025 04:07:51 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc82c338fsm14574985ad.259.2025.05.09.04.07.49
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 09 May 2025 04:07:51 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/2] semihosting/uaccess: Compile once
-Date: Fri,  9 May 2025 13:07:20 +0200
-Message-ID: <20250509110721.90447-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20250509110721.90447-1-philmd@linaro.org>
-References: <20250509110721.90447-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1746789335; x=1747394135;
+ h=content-transfer-encoding:to:subject:from:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=w37uRQkbRh13fcoa9Ff9GIzvttVw9Z47RX6OOQkxQX0=;
+ b=sBJ/Llm9qUfo2vWeEq29ptD4O4vIm6/+Vx6o9H63dYCvKihZ12dgqFdD+8pYzEdVSa
+ kEIDWT7ne7NnhMwnfS3lxDvX7a76BdpIpJ0lsQ/vTsxIP5ZsZXU4qQYrHcInStnWKa9J
+ +u661K99EwWbl6sAQZUfPEddsW0pd5GpNvIj3p0rZmVQ3hwGEjIeCJy/v2ReeLHhgHLk
+ 8fONS60EAqJ673PNo1ojtw1yjM2sHKaoNZCGXrwbnRuoGTbTrSY5Cqk+V8Q1jkk/HKPQ
+ sYsw8cB+O8PRuAFRUWxqsWZGTlzXseYOO6eytUHstqDRQhp69Y5aaE2mN2Wxi0Ko3YcM
+ 2NyQ==
+X-Gm-Message-State: AOJu0Ywkvoc7VFTSBmGOg9UvZrq7H7E89/vv/l42i3ehyrf41O8uSAPL
+ /dpazTLh5Gope42afediKlFRDUbDJWfwhoi0NSkJmqYHqBdWnUk5810s5w==
+X-Gm-Gg: ASbGncvc3mmCs+xTn5uLgMQ1HL/ZirvyZqcIXEpq7Gi2g5TRhbEScEQ5NjapNSYMZXo
+ ATvanKaC+erkHgFaWXkJ5oOnZHH/Fs2z5jhe7nz3OEiUuiqZPlL/DdkGX/sx3jszhfhfSsWtANS
+ WqTbhbRItzdEQgC3WJ4dpN9FYN1mJqJE6i14LjxGCkiGEgwv5/amV/efRJS+4LE0Kky7Q7xfkZs
+ BzuWASy8G0SZEtKcsyievjhr8jdyuUl3AvmoO8YK+mfm6hIqfpt4i2OlYXr8HnNBJsbfrbvH1ri
+ lx4LSwkqPQUpCftk5vy1yU/8aCMyitgso7e9eurOxId80rQpaDIYWCYC18dUC5ErC9AqYbrjbfA
+ 58jkd/Dp1M92dD/rT5XrpRNwo8864Kizx+qMR
+X-Google-Smtp-Source: AGHT+IFzqGwSzdZbn+FoypIYNvysK8RSTEx3Oq410cjx6Q5uXMo7573NgEeS7DHVspbqaj87a5s70w==
+X-Received: by 2002:a17:903:946:b0:220:cb1a:da5 with SMTP id
+ d9443c01a7336-22fc8d98a39mr42395795ad.40.1746789334819; 
+ Fri, 09 May 2025 04:15:34 -0700 (PDT)
+Received: from ?IPV6:240e:404:1920:fd75:c5dc:7302:8c3:8925?
+ ([240e:404:1920:fd75:c5dc:7302:8c3:8925])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22fc8271bdasm14808865ad.122.2025.05.09.04.15.32
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 09 May 2025 04:15:34 -0700 (PDT)
+Message-ID: <b18184b6-aa78-4b81-b2af-96a5628f122b@gmail.com>
+Date: Fri, 9 May 2025 19:15:29 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Zheng Huang <hz1624917200@gmail.com>
+Subject: [PATCH] hw/audio/cs4231a: fix assertion error in isa_bus_get_irq
+To: qemu-devel@nongnu.org
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=philmd@linaro.org; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=hz1624917200@gmail.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,27 +99,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This patch fixes an assertion error in isa_bus_get_irq() in
+/hw/isa/isa-bus.c by adding a constraint to the irq property.
+
+Signed-off-by: Zheng Huang <hz1624917200@gmail.com>
 ---
- semihosting/meson.build | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ hw/audio/cs4231a.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/semihosting/meson.build b/semihosting/meson.build
-index f3d38dda91d..d0819891bc3 100644
---- a/semihosting/meson.build
-+++ b/semihosting/meson.build
-@@ -3,9 +3,7 @@ specific_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files(
-   'syscalls.c',
- ))
+diff --git a/hw/audio/cs4231a.c b/hw/audio/cs4231a.c
+index 5a9be80ba3..d390da4c37 100644
+--- a/hw/audio/cs4231a.c
++++ b/hw/audio/cs4231a.c
+@@ -682,6 +682,10 @@ static void cs4231a_realizefn (DeviceState *dev, Error **errp)
+         return;
+     }
  
--specific_ss.add(when: ['CONFIG_SEMIHOSTING', 'CONFIG_SYSTEM_ONLY'], if_true: files(
--  'uaccess.c',
--))
-+system_ss.add(when: 'CONFIG_TCG', if_true: files('uaccess.c'))
- 
- common_ss.add(when: 'CONFIG_SEMIHOSTING', if_false: files('stubs-all.c'))
- user_ss.add(when: 'CONFIG_SEMIHOSTING', if_true: files('user.c'))
++    if (s->irq >= ISA_NUM_IRQS) {
++        error_setg(errp, "Invalid IRQ %d (max %d)", s->irq, ISA_NUM_IRQS);
++        return;
++    }
+     s->pic = isa_bus_get_irq(bus, s->irq);
+     k = ISADMA_GET_CLASS(s->isa_dma);
+     k->register_channel(s->isa_dma, s->dma, cs_dma_read, s);
 -- 
-2.47.1
-
+2.34.1
 
