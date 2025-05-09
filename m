@@ -4,142 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B241C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:31:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BA47C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:44:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDNnx-0004YY-LA; Fri, 09 May 2025 09:30:21 -0400
+	id 1uDO0w-0003ES-4S; Fri, 09 May 2025 09:43:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uDNnv-0004Uo-C5
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:30:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uDO0t-0003BE-R2
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:43:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uDNns-0000pH-Vx
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:30:18 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uDO0q-0002Ix-Ma
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:43:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746797414;
+ s=mimecast20190719; t=1746798216;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Fd/h4NUss9Kl+fhdVab2bUS/LU1/DPsIc5inj0tEVmQ=;
- b=EVmI4NwbYuwOE0Pfney8HnbyKAdjxonTR1ocZUfcvTH4YCOJimg61zqL53VnHE9q9DYAft
- l1XZVvsEzu2BpjuOc/GOTwwVng5KNUSCp7jvcu10RGAmzcgVQOLF4NMW5UP2cuI2RngaUQ
- RwGIbBXek5twM6BinnXH+aRvkjHrFo4=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-428-iy9vr3hOPK6hKo3p3XDmXg-1; Fri, 09 May 2025 09:30:12 -0400
-X-MC-Unique: iy9vr3hOPK6hKo3p3XDmXg-1
-X-Mimecast-MFC-AGG-ID: iy9vr3hOPK6hKo3p3XDmXg_1746797411
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a0b7124b5fso1361136f8f.2
- for <qemu-devel@nongnu.org>; Fri, 09 May 2025 06:30:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746797411; x=1747402211;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Fd/h4NUss9Kl+fhdVab2bUS/LU1/DPsIc5inj0tEVmQ=;
- b=w7T1xMTGcSnJsnYlFpPlercTubRnwCd4qbl3PBvRmuBFDr6a9XAw/9U2hzKn5t+/qd
- 5AAdJQY+m0LwiCy8llUGFWQCATFnY4gNXJwBeFgMCcx8SMrEsbeHabM7AAoAzxTwGjRL
- oI/hlqSdcODrpcIlVTMW1u2poflT3dx4nQ15LcmuRluCW++/qd2WARXFoic6kv1pLbmW
- M8PwP5BJYaeujqJ9Wf7eb0ewX5QMs7U5b+KYS6UWT7x+s+z9DW08/iGHU6qEgcheB97j
- 8h6BNndFnJEZLKXrDjd6+0JhN/cTzjJkWorPzT0vp95Y+oABgePKypg9gt8QT6m5Skx6
- PQbQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXn5H/UTh4i1oume5IqUIgNllrl6vnGAkQ1q2pJFd3xKFauFr485D7WMUOBShwOqiHvZ5CS6M82M5jp@nongnu.org
-X-Gm-Message-State: AOJu0Yz4U5hHKum52d1624CCXYhiusn4s16pcfREV5I1J1yWrgMIV/1e
- Kdfu0IYLkZFcDH4l5fSPJZ5k1zBbKRfCnv5awRvoopT7RS69j7xZPihX9T0Mg+GgvDDDg1J8DDs
- yFr4yR9ougj8CWtdSm3hrBLKhZJbCpefsit5I+s3A/aXS1baFZ2Kr
-X-Gm-Gg: ASbGnctfIvreJDS9epHvHTZ3nE56KYcz+AUVsU6XuqcwJTk/B4eydqhnO1MbsBnPm/y
- 91fnKDyRnFJHDYcGOaZymm3YOLMnuRmQBo2sVkMGDAqjbFlUGEj9MPyGBQlRGwRdClu0GE+uJFa
- J8WDg05xayyRNola6vkjFf9iVzyGZIRGW/okph6EILcLoJdbADclp0ybLde6OtJjIY5VoxRhQpO
- 3UrNeYO7jiWnN/hAHr/IonxJeZYeoIp+OUyT7FAU8bZdLW7YjP6YYK4BTG7OUJ2kBPCLo+0bCIu
- mXXsqN87ShQOB+fDTLXekt/RXjjBVFP40cqacp6A2HKezpdB8XC0
-X-Received: by 2002:a05:6000:40df:b0:3a0:8383:ef19 with SMTP id
- ffacd0b85a97d-3a1f64ac258mr3040017f8f.51.1746797410702; 
- Fri, 09 May 2025 06:30:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF5zOQO3+QKRrv3B6dJ4VIAVYMP9cVwtJOz22vPpb/OYcKCpSSQDPfOfFEzkLD1DwqUQtXvkA==
-X-Received: by 2002:a05:6000:40df:b0:3a0:8383:ef19 with SMTP id
- ffacd0b85a97d-3a1f64ac258mr3039987f8f.51.1746797410342; 
- Fri, 09 May 2025 06:30:10 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-115-173.pools.arcor-ip.net.
- [47.64.115.173]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f5a4c7b2sm3289807f8f.93.2025.05.09.06.30.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 May 2025 06:30:09 -0700 (PDT)
-Message-ID: <4d3d7964-2ff0-4e62-9949-bc3df4018e31@redhat.com>
-Date: Fri, 9 May 2025 15:30:08 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=Roh3UTbDGrBHbUmnwwPtmnW4BjHi4BVMuQ8T7OcdqKU=;
+ b=DdAuTdvgVqp2eSujWoKokVhx+9LOnoxYXwwT/nPdaOOnsghx4tb0Q4061xqVhMrFith8k3
+ 4wUYPLITHJGrR+4VmzdAXL5U+IFp744Xd0qNGg1bxRd6v6vji1uq+SbOt2PulhjlLD1PQB
+ xwpZaebkLmu0chyRRXEN8BbWgkwSUp8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-4898YouwNyOZ2LU1GLHacA-1; Fri,
+ 09 May 2025 09:43:35 -0400
+X-MC-Unique: 4898YouwNyOZ2LU1GLHacA-1
+X-Mimecast-MFC-AGG-ID: 4898YouwNyOZ2LU1GLHacA_1746798214
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 37C6A1955DCE; Fri,  9 May 2025 13:43:34 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6195819560BC; Fri,  9 May 2025 13:43:33 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B9FA121E66C2; Fri, 09 May 2025 15:43:30 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Da?=
+ =?utf-8?Q?ud=C3=A9?=
+ <philmd@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Richard
+ Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH RFC 00/10] qapi: remove all TARGET_* conditionals from
+ the schema
+In-Reply-To: <aB3EpKu0iafLtgVT@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Fri, 9 May 2025 10:02:28 +0100")
+References: <20250508135816.673087-1-berrange@redhat.com>
+ <c7623b1c-01c1-46c0-bfa6-dc34aa4e722d@linaro.org>
+ <aB3EpKu0iafLtgVT@redhat.com>
+Date: Fri, 09 May 2025 15:43:30 +0200
+Message-ID: <874ixt6gsd.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/19] hw/i386/pc: Remove deprecated 2.4 and 2.5 PC
- machines
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, qemu-block@nongnu.org,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, John Snow <jsnow@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <20250506143905.4961-1-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250506143905.4961-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -164,48 +94,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/05/2025 16.38, Philippe Mathieu-Daudé wrote:
-> (series reviewed)
-> 
-> Since v2:
-> - Removed qtest in test-x86-cpuid-compat.c
-> 
-> Since v1:
-> - Fixed issues noticed by Thomas
-> 
-> The versioned 'pc' and 'q35' machines up to 2.12 been marked
-> as deprecated two releases ago, and are older than 6 years,
-> so according to our support policy we can remove them.
-> 
-> This series only includes the 2.4 and 2.5 machines removal,
-> as it is a big enough number of LoC removed. Rest will
-> follow. Highlight is the legacy fw_cfg API removal :)
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-  Hi Philippe,
+> On Thu, May 08, 2025 at 02:09:37PM -0700, Pierrick Bouvier wrote:
+>> On 5/8/25 6:58 AM, Daniel P. Berrang=C3=A9 wrote:
+>> > Pierrick has proposed a series that introduces a concept of runtime
+>> > conditionals to the QAPI schema, in order to adapt the TARGET_*
+>> > conditionals currently used at build time:
+>> >=20
+>> >    https://lists.nongnu.org/archive/html/qemu-devel/2025-05/msg01699.h=
+tml
+>> >=20
+>> > For the sake of comparison & evaluation, this series illustrates the
+>> > alternative approach that we've discussed of entirely removing any
+>> > concept of TARGET_* conditionals.
+>> >=20
+>> > With this the QAPI schema varies solely based on CONFIG_* conditionals,
+>> > and is thus invariant across different target emulators.
+>> >=20
+>> > In this PoC I've taken the minimal effort approach to the problem.
+>> >=20
+>> > The QAPI schema has removed the TARGET_* conditionals and in order to
+>> > make all the emulators then compile, the stubs/ directory is populated
+>> > with a bunch of files to provide dummy impls of the target specific QMP
+>> > commands.
+>> >=20
+>> > This is sufficient to make the current QEMU binaries build successfull=
+y.
+>> >=20
+>> > To make the "single binary" concept work, however, would require
+>> > additional followup work to eliminate the stubs.
+>> >=20
+>> > Instead of having stubs we would need to de-couple the QMP command
+>> > impl from the machine internals. This would likely require greater
+>> > use of interfaces and/or virtual method dispatchers on the machine
+>> > class. This would enable the 'qmp_XXXXX' command impls to exist
+>> > once. Then they call out to virtual methods on the machine to provide
+>> > the real impl, and/or generate an error if the virtual method is not
+>> > implemented for the machine.
+>> >=20
+>>=20
+>> Thanks for posting it Daniel.
+>>=20
+>> I think your approach is pretty neat, and yes, it's much simpler than ha=
+ving
+>> any compile time or runtime conditional to deal with that.
+>>=20
+>> When we talked about that on previous thread, I thought the idea was to
+>> expose *all* the commands to *all* the targets, which I didn't really
+>> understand, considering we have target specific commands by design.
+>> I understand better where you wanted to go, by extracting concerned comm=
+ands
+>> in dedicated files.
+>>=20
+>> The only downside I can see is that some commands have to be there, but
+>> return an "error, not implemented" at runtime. Fine for me, but some peo=
+ple
+>> may argue against it.
+>>=20
+>> A concern I might have as well is about how we'll deal if we want to hide
+>> some commands in the future, based on various criterias
+>> (is_heterogenenous()?). The mantra "define all, and let the build system
+>> hide things" mantra means you can only have a single definition existing=
+ in
+>> the binary, by design. But maybe it's not even a real concern, and I
+>> definitely prefer to see problems before fixing them, so it's definitely=
+ not
+>> blocking this approach.
+>
+> I think we have to distinguish between what made sense in the context
+> of our original design, from what makes sense for our future design(s)
+> and plans.
 
-I just gave this series a try, but it fails in at least two spots.
+No argument.
 
-First, you missed this:
+The original design idea is simple: #ifdef CONFIG_FOO for QAPI schema,
+to not generate dead code, and to not have silly stubs.  Even if you
+don't care about wasting disk and address space, you probably care about
+wasting developer time on writing silly stubs and waiting for dead code
+to compile.
 
-diff --git a/hw/block/fdc-isa.c b/hw/block/fdc-isa.c
---- a/hw/block/fdc-isa.c
-+++ b/hw/block/fdc-isa.c
-@@ -112,7 +112,6 @@ static void isabus_fdc_realize(DeviceState *dev, Error 
-**errp)
-      }
+Initially, target-specific macros did not work in conditions.  That was
+easy enough to fix, so we did.
 
-      qdev_set_legacy_instance_id(dev, isa->iobase, 2);
--    qdev_prop_set_enum(dev, "fallback", FLOPPY_DRIVE_TYPE_288);
+However, target-specific conditions turned out less useful than
+anticipated.  Adding a target-specific conditional anywhere in a
+definition makes the entire definition and its users target-specific.
+This can make handwritten code artificially target-specific, which is
+undesirable.
 
-      fdctrl_realize_common(dev, fdctrl, &err);
-      if (err != NULL) {
+Target-specific conditions now also complicate the single binary work.
 
-Second, bios-tables-test now complains about a mismatch in the ACPI tables 
-somewhere...
+> I can understand why we took the direction we did historically, but I
+> think we have unwittingly created problems for ourselves that are
+> looking increasingly worse than the problems we considered solved.
+>
+>
+> In the other thread I pointed out my dislike for QAPI schema not being
+> fully self-describing when we have conditionals present, even today,
+> but there are other aspects that trouble me more wrt conditionals.
 
-Could you please fix that up and check in the gitlab CI whether the problems 
-are gone? Thanks!
+I'm not sure I have all this present in my mind...  Can you summarize
+what troubles you?  Or point me to the message(s)?
 
-  Thomas
+> Since the schema is currently target specific, a mgmt app has to probe
+> for QEMU capabilities once for every target binary. QEMU has ~30 system
+> binaries, and if querying capabilities takes 250 milliseconds, then
+> querying all binaries is ~ 7 seconds of work. Libvirt mitigates this
+> overhead by caching the results of capabilities probes. We periodically
+> suffer delays when we must invalidate our cache though, typically on
+> software upgrades, and this is unpleasant for users who think we've
+> got stuck or just have bad slow code.
+
+How does cache invalidation work?  Timestamp of binary?
+
+> Even if we had a QAPI schema that didn't vary per target, this is
+> repeated probing is tricky to avoid when we have completely independant
+> binaries. We would need QEMU to have some internal "build id", so that
+> we could detect that all binaries came from the same build, to let us
+> avoid re-probing each binary.
+
+Back when I created QAPI/QMP introspection, I floated the idea to put
+something into the QMP greeting to enable safe caching.  Libvirt
+developers told me they didn't need that.  I don't remember the details,
+but I guess the cache invalidation they already had was deemed good
+enough.
+
+> With your work to have a single binary that can impersonate any of our
+> target specific binaries, *if* we had a QAPI schema that didn't vary
+> per target, we would stand a real chance of being able to eliminate
+> the need to probe capabilities once for every target.
+
+This is actually independent of "single binary".
+
+query-qmp-schema's value will be the same for all qemu-system-FOO built
+from same QAPI schema source and configuration.
+
+If there are no target-dependent conditionals, schema configuration is
+the same regardless of target.
+
+Of course, capability probing can go beyond query-qmp-schema, but you
+get the idea.
+
+> eg if we assume qemu-system-x86_64 is a symlink to "/usr/bin/qemu-system"
+> (or whatever you call the common binary), then we only need to probe one
+> binary - the target of the symlink - we can easily identify that all
+> the legacy binary symlinks resolve to the same real binary with no special
+> effort.
+
+Have a message digest of query-qmp-schema's value in the QMP greeting.
+Management application uses it as key to cache probe results.
+
+> Conversely if we want the QAPI schema to be varying at runtime per target,
+> it means we have to select a target before we can probe the schema in the
+> binary. If we assume an install with only the new binary and none of the
+> legacy target specific symlinks, we have a chicken & egg problem though.
+>
+> How do we know what targets are supported ? We should be able to use QAPI
+> to query the available targets, but before we can use QAPI we need to
+> select a target ?
+>
+> We could make QAPI only expose the pieces of schema that are *not*
+> specific to a target initially, and then refine the schema once a
+> target is selected. That would solve the immediate problem, but I
+> think that kind of cleverness is just postponing the pain
+>
+> Consider that we eventually want a QEMU binary that can run CPUs from
+> multiple targets concurrently.  That implies that a dynamic QAPI schema
+> needs to turn on the target specific pieces of multiple targets at once.
+> At that point a mgmt app fundamentally has to understand ahead of time
+> that some features are target specific - the existance/absence of
+> features in the QAPI schema can no longer express what is target
+> specific, since we must expose the union of features all targets
+> that are in use.
+>
+> So as we look to the future of QEMU, IMHO, the concept of using the QAPI
+> schema definitions to dynamically express what is available per-target
+> is unhelpful and likely even to be harmful.
+>
+> Assuming a schema that is fixed at build time ought to simplify QEMU
+> maintainers' life, and while mgmt apps loose a little info, they will
+> gain in other ways such as not having to query QEMU capabilities
+> 30 times over.
+
+Schema fixed at build time is a fundamental design choice we made for
+QAPI.
+
+It limits the questions schema introspection can answer.  Can affect
+valid questions, but that doesn't mean we have to answer them via schema
+introspection.  We've been tempted to answer them via schema
+introspection because schema introspection has been such a success.
+
+We may need to think about replacements better than "add yet another ad
+hoc query command" and "QOM tree spelunking".  Not a blocker.
+
+>> Overall, if I had to choose, I think I would pick your approach instead =
+of
+>> the "runtime conditional" route, it's just simpler and saner overall.
+>> I would be happy to see you take ownership on that, as long as we can
+>> deliver something in the next weeks. I can help on anything as well.
+>
+> I'm fine with you driving this forward, not least because I can't commit
+> to having any predictable amount of time to write code myself for this.
+>
+>> @Markus, @Michael, which approach would you prefer to be followed for QA=
+PI?
+>
+> With regards,
+> Daniel
 
 
