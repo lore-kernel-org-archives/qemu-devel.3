@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FED7C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 11:25:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D973C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 11:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDLqa-00026Q-05; Fri, 09 May 2025 07:24:56 -0400
+	id 1uDLqz-0002Jp-TB; Fri, 09 May 2025 07:25:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uDLqY-00026E-Eh
- for qemu-devel@nongnu.org; Fri, 09 May 2025 07:24:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uDLqu-0002Fm-J6
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 07:25:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uDLqT-0002qM-Sx
- for qemu-devel@nongnu.org; Fri, 09 May 2025 07:24:54 -0400
+ id 1uDLqo-00032B-FN
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 07:25:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746789886;
+ s=mimecast20190719; t=1746789908;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EGWV23Rl9lekR26voNOdL+wEt+ybDcnzWLUHRAxkqUQ=;
- b=LL5zBLRC9juFD1HJ9jkb4viYTdPjAj08pVSM5D6CuouSu/BM8nnbm7KcxCER5cqgIzsNkZ
- GopyH6zbw9juXGpATl8RpJ0kPBUK8yj0jSAV0OOkihoqDYVYVgpL6u+BbpxXfoPv8PKanr
- XrvASzfOr7OUqtLCDT4wzlo+7JytrCM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=xhcnbdus4ZnrT6rTz6xzPXPuKd6qw3uIAK5G7pap8xE=;
+ b=LM+u4fPzojMsJDvy/+HfbXUnGty6CsUw2H3nBgiQgnrSba3n7jPKYrNTlHhu3P6/34tHk6
+ dOPDXq//s6EqLMs4+zYeeZyC3zdYQHKjSRJPi0ofE5pEDI+yBeA8xDVnNGuJ0KWsA1g9kC
+ H9wOgUy1SZ2yq43yFAmbmEbmdKzSz9c=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-248-i3VSauljOlijnR4sqR8OXQ-1; Fri,
- 09 May 2025 07:24:45 -0400
-X-MC-Unique: i3VSauljOlijnR4sqR8OXQ-1
-X-Mimecast-MFC-AGG-ID: i3VSauljOlijnR4sqR8OXQ_1746789884
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-YKO-OovQOGCPrf1uC1MBdA-1; Fri,
+ 09 May 2025 07:25:07 -0400
+X-MC-Unique: YKO-OovQOGCPrf1uC1MBdA-1
+X-Mimecast-MFC-AGG-ID: YKO-OovQOGCPrf1uC1MBdA_1746789906
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 247C31956080
- for <qemu-devel@nongnu.org>; Fri,  9 May 2025 11:24:44 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 58C5D18003FC
+ for <qemu-devel@nongnu.org>; Fri,  9 May 2025 11:25:06 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.100])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4496C1956058; Fri,  9 May 2025 11:24:41 +0000 (UTC)
-Date: Fri, 9 May 2025 12:24:38 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9EB43180049D; Fri,  9 May 2025 11:25:04 +0000 (UTC)
+Date: Fri, 9 May 2025 12:25:00 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org, kraxel@redhat.com
-Subject: Re: [PATCH for-10.1 01/10] ui/gtk: warn if setting the clipboard
- failed
-Message-ID: <aB3l9ti0iu6DVBRi@redhat.com>
+Subject: Re: [PATCH for-10.1 02/10] ui/clipboard: use int for selection field
+Message-ID: <aB3mDLsdE-6gZVbw@redhat.com>
 References: <20250311155932.1472092-1-marcandre.lureau@redhat.com>
- <20250311155932.1472092-2-marcandre.lureau@redhat.com>
+ <20250311155932.1472092-3-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250311155932.1472092-2-marcandre.lureau@redhat.com>
+In-Reply-To: <20250311155932.1472092-3-marcandre.lureau@redhat.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -91,15 +90,15 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 11, 2025 at 07:59:23PM +0400, marcandre.lureau@redhat.com wrote:
+On Tue, Mar 11, 2025 at 07:59:24PM +0400, marcandre.lureau@redhat.com wrote:
 > From: Marc-André Lureau <marcandre.lureau@redhat.com>
 > 
-> Just in case.
+> This allows to use a VMSTATE_INT32 field for migration purposes.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  ui/gtk-clipboard.c | 13 ++++++++-----
->  1 file changed, 8 insertions(+), 5 deletions(-)
+>  include/ui/clipboard.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
