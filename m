@@ -4,92 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09A8EC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 10:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C32DC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 10:12:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDKhK-0007YY-86; Fri, 09 May 2025 06:11:18 -0400
+	id 1uDKip-0002Kx-PV; Fri, 09 May 2025 06:12:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uDKhH-0007Wo-El; Fri, 09 May 2025 06:11:15 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uDKhF-0001b8-N2; Fri, 09 May 2025 06:11:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1746785474; x=1778321474;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=DYzgfmr2nHUFnRtfKx2VUV7W2FkMFo4CpLIHKoL2k0I=;
- b=LCwinC2BbEhFPn4fpJFHI11N/cD/mejWq6aKk6qeb6xHU9iikF/Qd/Dl
- pXLKtmWQd/of8Q9sWphsv5MAsd19gVhozzGws2XScj5dYhzbyCqCRdy8/
- BZ67/zy6snE1wfGMJYvuW8usFIGh4RHz+TxgvoSPVDkTyvUgqNM/hQWWG
- HXWx7EJUd3EDUjwzCflmrHsu5foDMUGAyE0acC13wFTfvpCSOZQlDyuzm
- cYxmjMm34WtOltdbGzhuIz0HwLALIepVAKuZz6xbRjm33SF/NDvr3e583
- Qz0bVaOKnhxbwdbEdpKnVC89y0CCYSskcoLaG9CRsvZtTjhefx5M4/bF0 g==;
-X-CSE-ConnectionGUID: Xpb41upyQ1yAvxMVCkmF9g==
-X-CSE-MsgGUID: 0AaCUsluRaWIG7TKWM0XeA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11427"; a="66013414"
-X-IronPort-AV: E=Sophos;i="6.15,274,1739865600"; d="scan'208";a="66013414"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 May 2025 03:11:10 -0700
-X-CSE-ConnectionGUID: HKEkuJfoTV22rXlvJht/zw==
-X-CSE-MsgGUID: 34wmXNVFQ0SpQaxijdq0mQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,274,1739865600"; d="scan'208";a="137577882"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa009.fm.intel.com with ESMTP; 09 May 2025 03:11:02 -0700
-Date: Fri, 9 May 2025 18:32:05 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- kvm@vger.kernel.org, Sergio Lopez <slp@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Yi Liu <yi.l.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-riscv@nongnu.org,
- Weiwei Li <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>,
- Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>,
- Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha <anisinha@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- qemu-arm@nongnu.org,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: Re: [PATCH v4 24/27] hw/intc/ioapic: Remove
- IOAPICCommonState::version field
-Message-ID: <aB3Zpc45+/OZ7hq2@intel.com>
-References: <20250508133550.81391-1-philmd@linaro.org>
- <20250508133550.81391-25-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uDKio-0002Iv-HM
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 06:12:50 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uDKim-0001g8-4S
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 06:12:50 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8CxG6wd1R1oG2XbAA--.65268S3;
+ Fri, 09 May 2025 18:12:45 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMBxXsUd1R1oACrAAA--.30666S2;
+ Fri, 09 May 2025 18:12:45 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Huacai Chen <chenhuacai@kernel.org>,
+ qemu-devel@nongnu.org, Xianglai Li <lixianglai@loongson.cn>
+Subject: [PATCH 11/15] hw/intc/loongarch_pch: Add irqchip-in-kernel realize
+ function
+Date: Fri,  9 May 2025 18:12:41 +0800
+Message-Id: <20250509101245.1070255-1-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20250509100747.1070094-1-maobibo@loongson.cn>
+References: <20250509100747.1070094-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250508133550.81391-25-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -57
-X-Spam_score: -5.8
-X-Spam_bar: -----
-X-Spam_report: (-5.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.416,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowMBxXsUd1R1oACrAAA--.30666S2
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,53 +66,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 08, 2025 at 03:35:47PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Thu,  8 May 2025 15:35:47 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v4 24/27] hw/intc/ioapic: Remove IOAPICCommonState::version
->  field
-> X-Mailer: git-send-email 2.47.1
-> 
-> The IOAPICCommonState::version integer was only set
-> in the hw_compat_2_7[] array, via the 'version=0x11'
-> property. We removed all machines using that array,
-> lets remove that property, simplify by only using the
-> default version (defined as IOAPIC_VER_DEF).
-> 
-> For the record, this field was introduced in commit
-> 20fd4b7b6d9 ("x86: ioapic: add support for explicit EOI"):
-> 
->  >   Some old Linux kernels (upstream before v4.0), or any released RHEL
->  >   kernels has problem in sending APIC EOI when IR is enabled.
->  >   Meanwhile, many of them only support explicit EOI for IOAPIC, which
->  >   is only introduced in IOAPIC version 0x20. This patch provide a way
->  >   to boost QEMU IOAPIC to version 0x20, in order for QEMU to correctly
->  >   receive EOI messages.
->  >
->  >   Without boosting IOAPIC version to 0x20, kernels before commit
->  >   d32932d ("x86/irq: Convert IOAPIC to use hierarchical irqdomain
->  >   interfaces") will have trouble enabling both IR and level-triggered
->  >   interrupt devices (like e1000).
->  >
->  >   To upgrade IOAPIC to version 0x20, we need to specify:
->  >
->  >     -global ioapic.version=0x20
->  >
->  >   To be compatible with old systems, 0x11 will still be the default
->  >   IOAPIC version. Here 0x11 and 0x20 are the only versions to be
->  >   supported.
->  >
->  >   One thing to mention: this patch only applies to emulated IOAPIC. It
->  >   does not affect kernel IOAPIC behavior.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> ---
->  hw/intc/ioapic_internal.h |  3 +--
->  hw/intc/ioapic.c          | 18 ++----------------
->  hw/intc/ioapic_common.c   |  2 +-
->  3 files changed, 4 insertions(+), 19 deletions(-)
+Function kvm_loongarch_pic_realize() is added if irqchip-in-kernel
+property is enabled. It is to notify KVM kernel to create PCH PCI device
+in kernel mode.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+---
+ hw/intc/loongarch_pch_pic.c         |  4 +++
+ hw/intc/loongarch_pic_kvm.c         | 38 +++++++++++++++++++++++++++++
+ hw/intc/meson.build                 |  2 ++
+ include/hw/intc/loongarch_pch_pic.h |  3 +++
+ 4 files changed, 47 insertions(+)
+ create mode 100644 hw/intc/loongarch_pic_kvm.c
+
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index 3729ab9700..481a303cc1 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -287,6 +287,10 @@ static void loongarch_pic_realize(DeviceState *dev, Error **errp)
+                           &loongarch_pch_pic_ops,
+                           s, TYPE_LOONGARCH_PIC, VIRT_PCH_REG_SIZE);
+     sysbus_init_mmio(sbd, &s->iomem);
++
++    if (kvm_enabled() && lps->irqchip_in_kernel) {
++        kvm_loongarch_pic_realize(dev, errp);
++    }
+ }
+ 
+ static const Property loongarch_pic_properties[] = {
+diff --git a/hw/intc/loongarch_pic_kvm.c b/hw/intc/loongarch_pic_kvm.c
+new file mode 100644
+index 0000000000..696dabb0b2
+--- /dev/null
++++ b/hw/intc/loongarch_pic_kvm.c
+@@ -0,0 +1,38 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * LoongArch kvm pch pic interrupt support
++ *
++ * Copyright (C) 2024 Loongson Technology Corporation Limited
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "hw/boards.h"
++#include "hw/intc/loongarch_pch_pic.h"
++#include "hw/loongarch/virt.h"
++#include "hw/pci-host/ls7a.h"
++#include "system/kvm.h"
++
++void kvm_loongarch_pic_realize(DeviceState *dev, Error **errp)
++{
++    LoongarchPICState *lps = LOONGARCH_PIC(dev);
++    uint64_t pch_pic_base = VIRT_PCH_REG_BASE;
++    int ret;
++
++    ret = kvm_create_device(kvm_state, KVM_DEV_TYPE_LOONGARCH_PCHPIC, false);
++    if (ret < 0) {
++        fprintf(stderr, "Create KVM_LOONGARCH_PCHPIC failed: %s\n",
++                strerror(-ret));
++        abort();
++    }
++
++    lps->dev_fd = ret;
++    ret = kvm_device_access(lps->dev_fd, KVM_DEV_LOONGARCH_PCH_PIC_GRP_CTRL,
++                            KVM_DEV_LOONGARCH_PCH_PIC_CTRL_INIT,
++                            &pch_pic_base, true, NULL);
++    if (ret < 0) {
++        fprintf(stderr, "KVM_LOONGARCH_PCH_PIC_INIT failed: %s\n",
++                strerror(-ret));
++        abort();
++    }
++}
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index 1cc999771d..3137521a4a 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -74,6 +74,8 @@ specific_ss.add(when: 'CONFIG_LOONGARCH_IPI', if_true: files('loongarch_ipi.c'))
+ specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_LOONGARCH_IPI'],
+                 if_true: files('loongarch_ipi_kvm.c'))
+ specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_PIC', if_true: files('loongarch_pch_pic.c', 'loongarch_pic_common.c'))
++specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_LOONGARCH_PCH_PIC'],
++                if_true: files('loongarch_pic_kvm.c'))
+ specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_MSI', if_true: files('loongarch_pch_msi.c'))
+ specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extioi.c', 'loongarch_extioi_common.c'))
+ specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_LOONGARCH_EXTIOI'],
+diff --git a/include/hw/intc/loongarch_pch_pic.h b/include/hw/intc/loongarch_pch_pic.h
+index 40fe550c0b..91a20dd624 100644
+--- a/include/hw/intc/loongarch_pch_pic.h
++++ b/include/hw/intc/loongarch_pch_pic.h
+@@ -17,6 +17,7 @@ OBJECT_DECLARE_TYPE(LoongarchPICState, LoongarchPICClass, LOONGARCH_PIC)
+ struct LoongarchPICState {
+     LoongArchPICCommonState parent_obj;
+     bool irqchip_in_kernel;
++    int dev_fd;
+ };
+ 
+ struct LoongarchPICClass {
+@@ -26,4 +27,6 @@ struct LoongarchPICClass {
+     ResettablePhases parent_phases;
+ };
+ 
++void kvm_loongarch_pic_realize(DeviceState *dev, Error **errp);
++
+ #endif /* HW_LOONGARCH_PCH_PIC_H */
+-- 
+2.39.3
 
 
