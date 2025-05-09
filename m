@@ -4,64 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70126C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:16:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77BE0C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:16:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDNYo-0001xc-C9; Fri, 09 May 2025 09:14:44 -0400
+	id 1uDNa9-00049j-0Z; Fri, 09 May 2025 09:16:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYI-0001o6-DA
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYe-0001ws-UB
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYG-00074N-5R
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:10 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYb-0007As-8I
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746796447;
+ s=mimecast20190719; t=1746796467;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5p/ESlZX+Zto3qw0RZkUh6LhqGtBlv90UkPLwIviJCA=;
- b=ZGxYNLc6C+yasOD1/rOQDUYREeveK3liE4CiDhzm8w0vxbsU3SRrUc8FsfMxb+OPxJ+qt6
- dgim5uZYe2NxCBn8AYhhQHA4nU1gGWcXOw1MpLk6VYw7/e93pOudL5DBfN0a4ytiCG6V6+
- pBxKtV5aMl8Kiy5KCqu5WECbGVgN3ag=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=8A8+KNUoabK6pQMh0GdBRZj24kITmDWlYavmbgCcywM=;
+ b=FANvqPDK6BQ+3/u+kCXj4ZZI1XE+1Z0JG2zxepJqLB1xa++G7Fh4aghde3UA0O1Euau2Qw
+ hiZnGm+kgACG3gg/aD6UqMg++3l0YPNCzByZVr9bTuw4f8F1M3HHst6CAje1c2bm+BjpRD
+ UWOAw2WutF54H4AnKVRRO7FGdRVGo8U=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-620-Ia2eYU_gMSikrnYay6YTJg-1; Fri,
- 09 May 2025 09:14:04 -0400
-X-MC-Unique: Ia2eYU_gMSikrnYay6YTJg-1
-X-Mimecast-MFC-AGG-ID: Ia2eYU_gMSikrnYay6YTJg_1746796443
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-319-GYFhTKAsMVCynKLx5YiUxg-1; Fri,
+ 09 May 2025 09:14:26 -0400
+X-MC-Unique: GYFhTKAsMVCynKLx5YiUxg-1
+X-Mimecast-MFC-AGG-ID: GYFhTKAsMVCynKLx5YiUxg_1746796465
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B12501956089; Fri,  9 May 2025 13:14:02 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4F6D31800370; Fri,  9 May 2025 13:14:25 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A3532180175D; Fri,  9 May 2025 13:13:59 +0000 (UTC)
+ id 9B50218003FD; Fri,  9 May 2025 13:14:22 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Tomita Moeko <tomitamoeko@gmail.com>,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
+ John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 12/28] vfio/igd: Remove generation limitation for IGD
- passthrough
-Date: Fri,  9 May 2025 15:13:01 +0200
-Message-ID: <20250509131317.164235-13-clg@redhat.com>
+Subject: [PULL 19/28] vfio: consistently handle return value for helpers
+Date: Fri,  9 May 2025 15:13:08 +0200
+Message-ID: <20250509131317.164235-20-clg@redhat.com>
 In-Reply-To: <20250509131317.164235-1-clg@redhat.com>
 References: <20250509131317.164235-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -86,160 +84,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomita Moeko <tomitamoeko@gmail.com>
+From: John Levon <john.levon@nutanix.com>
 
-Starting from Intel Core Ultra Series (Meteor Lake), Data Stolen Memory
-has became a part of LMEMBAR (MMIO BAR2) [1][2], meaning that BDSM and
-GGC register quirks are no longer needed on these platforms.
+Various bits of code that call vfio device APIs should consistently use
+the "return -errno" approach for passing errors back, rather than
+presuming errno is (still) set correctly.
 
-To support Meteor/Arrow/Lunar Lake and future IGD devices, remove the
-generation limitation in IGD passthrough, and apply BDSM and GGC quirks
-only to known Gen6-12 devices.
-
-[1] https://edc.intel.com/content/www/us/en/design/publications/14th-generation-core-processors-cfg-and-mem-registers/d2-f0-processor-graphics-registers/
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/gpu/drm/i915/gem/i915_gem_stolen.c?h=v6.14#n142
-
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-Reviewed-by: Corvin Köhne <c.koehne@beckhoff.com>
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-Tested-by: Alex Williamson <alex.williamson@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250505170305.23622-10-tomitamoeko@gmail.com
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: John Levon <john.levon@nutanix.com>
+Link: https://lore.kernel.org/qemu-devel/20250507152020.1254632-6-john.levon@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- docs/igd-assign.txt |  6 +++++
- hw/vfio/igd.c       | 58 ++++++++++++++++-----------------------------
- 2 files changed, 27 insertions(+), 37 deletions(-)
+ hw/vfio/pci.c | 33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
-diff --git a/docs/igd-assign.txt b/docs/igd-assign.txt
-index fc444503ff310a317d5d6724b4656c29c4a7dc87..af4e8391fc25898906b0b8bf123e1ec44e45efc0 100644
---- a/docs/igd-assign.txt
-+++ b/docs/igd-assign.txt
-@@ -157,6 +157,12 @@ fw_cfg requirements on the VM firmware:
-    it's expected that this fw_cfg file is only relevant to a single PCI
-    class VGA device with Intel vendor ID, appearing at PCI bus address 00:02.0.
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 5ccfc67aef6e1653dcf47c88d53265072c7a95c6..866cf58d04600cdd5394a52e0ebe9dd7bb41a1c6 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -398,7 +398,7 @@ static int vfio_enable_msix_no_vec(VFIOPCIDevice *vdev)
  
-+   Starting from Meteor Lake, IGD devices access stolen memory via its MMIO
-+   BAR2 (LMEMBAR) and removed the BDSM register in config space. There is
-+   no need for guest firmware to allocate data stolen memory in guest address
-+   space and write it to BDSM register. Value of this fw_cfg file is 0 in
-+   such case.
-+
- Upstream Seabios has OpRegion and BDSM (pre-Gen11 device only) support.
- However, the support is not accepted by upstream EDK2/OVMF. A recommended
- solution is to create a virtual OpRom with following DXE drivers:
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 886d44f017f415d5f82c892e630ae2de1637677c..3ee1a73b57c57563f661a246e6dd7e505231be91 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -103,6 +103,7 @@ static int igd_gen(VFIOPCIDevice *vdev)
-     /*
-      * Unfortunately, Intel changes it's specification quite often. This makes
-      * it impossible to use a suitable default value for unknown devices.
-+     * Return -1 for not applying any generation-specific quirks.
-      */
-     return -1;
+     ret = ioctl(vdev->vbasedev.fd, VFIO_DEVICE_SET_IRQS, irq_set);
+ 
+-    return ret;
++    return ret < 0 ? -errno : ret;
  }
-@@ -459,20 +460,12 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
-     VFIOConfigMirrorQuirk *ggc_mirror, *bdsm_mirror;
-     int gen;
  
--    /*
--     * This must be an Intel VGA device at address 00:02.0 for us to even
--     * consider enabling legacy mode. Some driver have dependencies on the PCI
--     * bus address.
--     */
-     if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
-         !vfio_is_vga(vdev) || nr != 0) {
-         return;
+ static int vfio_enable_vectors(VFIOPCIDevice *vdev, bool msix)
+@@ -459,7 +459,7 @@ static int vfio_enable_vectors(VFIOPCIDevice *vdev, bool msix)
+ 
+     g_free(irq_set);
+ 
+-    return ret;
++    return ret < 0 ? -errno : ret;
+ }
+ 
+ static void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
+@@ -581,7 +581,8 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+             vfio_device_irq_disable(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX);
+             ret = vfio_enable_vectors(vdev, true);
+             if (ret) {
+-                error_report("vfio: failed to enable vectors, %d", ret);
++                error_report("vfio: failed to enable vectors, %s",
++                             strerror(-ret));
+             }
+         } else {
+             Error *err = NULL;
+@@ -695,7 +696,8 @@ static void vfio_msix_enable(VFIOPCIDevice *vdev)
+     if (vdev->nr_vectors) {
+         ret = vfio_enable_vectors(vdev, true);
+         if (ret) {
+-            error_report("vfio: failed to enable vectors, %d", ret);
++            error_report("vfio: failed to enable vectors, %s",
++                         strerror(-ret));
+         }
+     } else {
+         /*
+@@ -712,7 +714,8 @@ static void vfio_msix_enable(VFIOPCIDevice *vdev)
+          */
+         ret = vfio_enable_msix_no_vec(vdev);
+         if (ret) {
+-            error_report("vfio: failed to enable MSI-X, %d", ret);
++            error_report("vfio: failed to enable MSI-X, %s",
++                         strerror(-ret));
+         }
      }
  
--    /*
--     * Only on IGD devices of gen 11 and above, the BDSM register is mirrored
--     * into MMIO space and read from MMIO space by the Windows driver.
--     */
-+    /* Only on IGD Gen6-12 device needs quirks in BAR 0 */
-     gen = igd_gen(vdev);
-     if (gen < 6) {
-         return;
-@@ -519,7 +512,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+@@ -765,7 +768,8 @@ retry:
+     ret = vfio_enable_vectors(vdev, false);
+     if (ret) {
+         if (ret < 0) {
+-            error_report("vfio: Error: Failed to setup MSI fds: %m");
++            error_report("vfio: Error: Failed to setup MSI fds: %s",
++                         strerror(-ret));
+         } else {
+             error_report("vfio: Error: Failed to enable %d "
+                          "MSI vectors, retry with %d", vdev->nr_vectors, ret);
+@@ -882,17 +886,21 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
+ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
  {
-     g_autofree struct vfio_region_info *opregion = NULL;
-     int ret, gen;
--    uint64_t gms_size;
-+    uint64_t gms_size = 0;
-     uint64_t *bdsm_size;
-     uint32_t gmch;
-     bool legacy_mode_enabled = false;
-@@ -536,18 +529,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-     }
-     info_report("OpRegion detected on Intel display %x.", vdev->device_id);
- 
--    /*
--     * IGD is not a standard, they like to change their specs often.  We
--     * only attempt to support back to SandBridge and we hope that newer
--     * devices maintain compatibility with generation 8.
--     */
-     gen = igd_gen(vdev);
--    if (gen == -1) {
--        error_report("IGD device %s is unsupported in legacy mode, "
--                     "try SandyBridge or newer", vdev->vbasedev.name);
--        return true;
--    }
--
-     gmch = vfio_pci_read_config(&vdev->pdev, IGD_GMCH, 4);
- 
-     /*
-@@ -645,32 +627,34 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-         pci_set_long(vdev->emulated_config_bits + IGD_GMCH, ~0);
-     }
- 
--    gms_size = igd_stolen_memory_size(gen, gmch);
-+    if (gen > 0) {
-+        gms_size = igd_stolen_memory_size(gen, gmch);
+     g_autofree struct vfio_region_info *reg_info = NULL;
++    VFIODevice *vbasedev = &vdev->vbasedev;
+     uint64_t size;
+     off_t off = 0;
+     ssize_t bytes;
++    int ret;
 +
-+        /* BDSM is read-write, emulated. BIOS needs to be able to write it */
-+        if (gen < 11) {
-+            pci_set_long(vdev->pdev.config + IGD_BDSM, 0);
-+            pci_set_long(vdev->pdev.wmask + IGD_BDSM, ~0);
-+            pci_set_long(vdev->emulated_config_bits + IGD_BDSM, ~0);
-+        } else {
-+            pci_set_quad(vdev->pdev.config + IGD_BDSM_GEN11, 0);
-+            pci_set_quad(vdev->pdev.wmask + IGD_BDSM_GEN11, ~0);
-+            pci_set_quad(vdev->emulated_config_bits + IGD_BDSM_GEN11, ~0);
-+        }
-+    }
++    ret = vfio_device_get_region_info(vbasedev, VFIO_PCI_ROM_REGION_INDEX,
++                                      &reg_info);
  
-     /*
-      * Request reserved memory for stolen memory via fw_cfg.  VM firmware
-      * must allocate a 1MB aligned reserved memory region below 4GB with
--     * the requested size (in bytes) for use by the Intel PCI class VGA
--     * device at VM address 00:02.0.  The base address of this reserved
--     * memory region must be written to the device BDSM register at PCI
--     * config offset 0x5C.
-+     * the requested size (in bytes) for use by the IGD device. The base
-+     * address of this reserved memory region must be written to the
-+     * device BDSM register.
-+     * For newer device without BDSM register, this fw_cfg item is 0.
-      */
-     bdsm_size = g_malloc(sizeof(*bdsm_size));
-     *bdsm_size = cpu_to_le64(gms_size);
-     fw_cfg_add_file(fw_cfg_find(), "etc/igd-bdsm-size",
-                     bdsm_size, sizeof(*bdsm_size));
+-    if (vfio_device_get_region_info(&vdev->vbasedev,
+-                                    VFIO_PCI_ROM_REGION_INDEX, &reg_info)) {
+-        error_report("vfio: Error getting ROM info: %m");
++    if (ret != 0) {
++        error_report("vfio: Error getting ROM info: %s", strerror(-ret));
+         return;
+     }
  
--    /* BDSM is read-write, emulated.  The BIOS needs to be able to write it */
--    if (gen < 11) {
--        pci_set_long(vdev->pdev.config + IGD_BDSM, 0);
--        pci_set_long(vdev->pdev.wmask + IGD_BDSM, ~0);
--        pci_set_long(vdev->emulated_config_bits + IGD_BDSM, ~0);
--    } else {
--        pci_set_quad(vdev->pdev.config + IGD_BDSM_GEN11, 0);
--        pci_set_quad(vdev->pdev.wmask + IGD_BDSM_GEN11, ~0);
--        pci_set_quad(vdev->emulated_config_bits + IGD_BDSM_GEN11, ~0);
--    }
--
-     trace_vfio_pci_igd_bdsm_enabled(vdev->vbasedev.name, (gms_size / MiB));
+-    trace_vfio_pci_load_rom(vdev->vbasedev.name, (unsigned long)reg_info->size,
++    trace_vfio_pci_load_rom(vbasedev->name, (unsigned long)reg_info->size,
+                             (unsigned long)reg_info->offset,
+                             (unsigned long)reg_info->flags);
  
-     return true;
+@@ -901,8 +909,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+ 
+     if (!vdev->rom_size) {
+         vdev->rom_read_failed = true;
+-        error_report("vfio-pci: Cannot read device rom at "
+-                    "%s", vdev->vbasedev.name);
++        error_report("vfio-pci: Cannot read device rom at %s", vbasedev->name);
+         error_printf("Device option ROM contents are probably invalid "
+                     "(check dmesg).\nSkip option ROM probe with rombar=0, "
+                     "or load from file with romfile=\n");
+@@ -913,7 +920,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
+     memset(vdev->rom, 0xff, size);
+ 
+     while (size) {
+-        bytes = pread(vdev->vbasedev.fd, vdev->rom + off,
++        bytes = pread(vbasedev->fd, vdev->rom + off,
+                       size, vdev->rom_offset + off);
+         if (bytes == 0) {
+             break;
 -- 
 2.49.0
 
