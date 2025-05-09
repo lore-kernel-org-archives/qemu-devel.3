@@ -4,42 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D145C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 20:58:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB4C0C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 21:15:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDUm5-00077Q-Nh; Fri, 09 May 2025 16:56:54 -0400
+	id 1uDV3Q-0002bt-TI; Fri, 09 May 2025 17:14:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uDUm2-0006yN-TU; Fri, 09 May 2025 16:56:50 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
+ id 1uDV3O-0002ZJ-Oe
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 17:14:46 -0400
+Received: from smtp.eurecom.fr ([193.55.113.210])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uDUlz-00027c-TQ; Fri, 09 May 2025 16:56:49 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 724FD120672;
- Fri, 09 May 2025 23:56:34 +0300 (MSK)
-Received: from localhost.localdomain (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EA48D2081C6;
- Fri,  9 May 2025 23:56:36 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PULL v3 00/21] Trivial patches for 2025-05-07
-Date: Fri,  9 May 2025 23:56:28 +0300
-Message-Id: <20250509205629.674225-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.5
+ (Exim 4.90_1) (envelope-from <Marco.Cavenati@eurecom.fr>)
+ id 1uDV3M-0003iU-GE
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 17:14:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=eurecom.fr; i=@eurecom.fr; q=dns/txt; s=default;
+ t=1746825284; x=1778361284;
+ h=from:in-reply-to:references:date:cc:to:mime-version:
+ message-id:subject:content-transfer-encoding;
+ bh=iQqRefYE6NZz7OjOZAjgKaOjIhd4yg593OcmbVd26KM=;
+ b=XZTfWvtuOAGwvscmt/t2VXkIh66DQg/1OnP6ppYCc944NDF9CGkH5QZS
+ WyOXKkP97n/Pek6ldE/IaP5z0msoZmuqN3nrOc0p9fXH+bmDHQ0vEYVi2
+ 15pW3AdIsjxWe9Trdkq/BoPQefd56bqDLXaCCGER8F2A/dMIBkDz5Gd44 U=;
+X-CSE-ConnectionGUID: GrPdYT9+Ql2Tkp4jYLOhGA==
+X-CSE-MsgGUID: 3wUeaCccRDW/rfQyuCGF9Q==
+X-IronPort-AV: E=Sophos;i="6.15,276,1739833200"; 
+   d="scan'208";a="1247564"
+Received: from quovadis.eurecom.fr ([10.3.2.233])
+ by drago1i.eurecom.fr with ESMTP; 09 May 2025 23:14:41 +0200
+From: "Marco Cavenati" <Marco.Cavenati@eurecom.fr>
+In-Reply-To: <aB4rhlVGCSk7IwoE@x1.local>
+Content-Type: text/plain; charset="utf-8"
+X-Forward: 80.215.234.36
+References: <87jz7rhjzq.fsf@suse.de> <4caa0-67f8d780-a89-60718600@156698708>
+ <87ecxyhon3.fsf@suse.de> <7cd3c-67fe3180-3d9-10622a60@195384178>
+ <87plhdfs9o.fsf@suse.de> <7cd3c-6800c580-4b5-10622a60@195456151>
+ <871ptqg6u9.fsf@suse.de> <151d8c-680a4080-15-6f9ea10@196998929>
+ <aB0Swile4IjxTUsd@x1.local>
+ <193e5a-681dfa80-3af-701c0f80@227192887> <aB4rhlVGCSk7IwoE@x1.local>
+Date: Fri, 09 May 2025 23:14:41 +0200
+Cc: "Fabiano Rosas" <farosas@suse.de>, qemu-devel@nongnu.org,
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ "Prasad Pandit" <ppandit@redhat.com>
+To: "Peter Xu" <peterx@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Message-ID: <1b54a0-681e7080-273-3299e580@146025174>
+Subject: =?utf-8?q?Re=3A?= [PATCH] =?utf-8?q?migration=3A?= add 
+ =?utf-8?q?FEATURE=5FSEEKABLE?= to QIOChannelBlock
+User-Agent: SOGoMail 5.12.0
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=193.55.113.210;
+ envelope-from=Marco.Cavenati@eurecom.fr; helo=smtp.eurecom.fr
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -57,82 +80,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit c5e2c4042e3c50b96cc5eaa9683325c5a96913b0:
+On Friday, May 09, 2025 18:21 CEST, Peter Xu <peterx@redhat.com> wrote:
+=20
+> So you don't really need to take sequence of snapshots?  Hmm, that so=
+unds
+> like a completely different use case that I originally thought.
 
-  Merge tag 'pull-loongarch-20250506' of https://github.com/bibo-mao/qemu into staging (2025-05-06 11:03:45 -0400)
+Correct
 
-are available in the Git repository at:
+> Have you thought of leveraging ignore-shared and MAP=5FPRIVATE for th=
+e major
+> chunk of guest mem?
+>=20
+> Let me explain; it's a very rough idea, but maybe you can collect som=
+ething
+> useful.
+>=20
+> So.. if you keep reloading one VM state thousands of times, it's bett=
+er
+> first that you have some shmem file (let's imagine that's enough.. yo=
+u
+> could have more backends) keeping the major chunk of the VM RAM image=
+ that
+> you migrated before into a file.
+>=20
+> Say, the major part of guest mem is stored here:
+>=20
+>   PATH=5FRAM=3D/dev/shm/XXX
+>=20
+> Then you migrate (with ignore-shared=3Don) to a file here (NOTE: I =5F=
+think=5F
+> you really can use file migration in this case with VM stopped first,=
+ not
+> snapshot save/load):
+>=20
+>   PATH=5FVM=5FIMAGE=3D/tmp/VM=5FIMAGE=5FYYY
+>=20
+> Then, the two files above should contain all info you need to start a=
+ new
+> VM.
+>=20
+> When you want to recover that VM state, boot a VM using this cmdline:
+>=20
+>   $qemu ... \
+>   -object memory-backend-file,mem-path=3D$PATH=5FRAM,share=3Doff
+>   -incoming file:$PATH=5FVM=5FIMAGE
+>=20
+> That'll boot a VM, directly loading the shmem page cache (always pres=
+ent on
+> the host, occupying RAM, though, outside of VM lifecycle, but it's pa=
+rt of
+> the design..), loading VM image would be lightning fast because it's =
+tiny
+> when there's almost no RAM inside.  No concern on mapped-ram at all a=
+s the
+> rest RAMs are too trivial to just be a stream.
+>=20
+> The important bit is share=3Doff - that will mmap() the VM major RAM =
+as
+> MAP=5FPRIVATE, then it'll do CoW on the "snapshot" you made before, w=
+henever
+> you writes to some guest pages during fuzzing some functions, it copi=
+es the
+> shmem page cache over.  shmem page cache should never change its cont=
+ent.
+>=20
+> Sounds working to you?
 
-  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+I didn't know much about these options, cool, thanks for the explanatio=
+n.
 
-for you to fetch changes up to 2f418cc9915284cb8eb7d607ec70fe13fe55ce5c:
+My only concern is that I'd have to restart the QEMU process for each i=
+teration.
+Honestly I've never measured the impact it would have but I fear that i=
+t would=20
+be noticeable since the goal is to restore many times a second. What do=
+ you
+think?
+(Also, snapshots conveniently take care of the disk as well, but this s=
+houldn't=20
+be too big of a deal.)
 
-  docs/devel/testing/functional: Fix typo (2025-05-09 23:50:19 +0300)
+Thanks,
+Best
+Marco
 
-----------------------------------------------------------------
-trivial patches for 2025-05-07
-
-Mostly typos in comments by Gustavo Romero,
-plus changing -hda in examples to -drive,
-
-v2: update the last patch Author (it was "via qemu-trivial")
-v3: drop problematic linux-user commit, and add one more
-    trivial comment fix by Gustavo Romero.
-    The remaining changes are all comment fixes and single doc
-    fix, there's no code changes.
-----------------------------------------------------------------
-Gustavo Romero (12):
-      hw/pci/pci.c: Turn DPRINTF into trace events
-      hw/isa/ich9: Remove stray empty comment
-      hw/i386/acpi-build: Fix typo and grammar in comment
-      hw/i386/acpi-build: Update document reference
-      hw/acpi/ich9: Remove ICH9_DEBUG macro
-      hw/i386/acpi-build: Fix typo in function name
-      hw/core/machine: Fix indentation
-      qom/object: Fix typo in comment
-      hw/net/e1000: Remove stray empty comment in header
-      hw/pci-host/gpex-acpi: Fix typo in comment
-      hw/acpi/pcihp: Fix typo in function name
-      docs/devel/testing/functional: Fix typo
-
-Integral (1):
-      docs: replace `-hda` with `-drive` & update `root=` kernel parameter
-
-Michael Tokarev (8):
-      linux-user/mmap.c: fix "of of" typo in comment
-      block.c: fix "the the" typo in comment
-      hw/xen/xen-hvm-common.c: fix "the the" typo in comment
-      include/exec/cpu-common.h: fix "the the" typo in comment
-      include/hw/xen/interface/io/blkif.h: fix "the the" typo in comment
-      qapi/qom.json: fix "the the" typo in comment
-      hw/display/apple-gfx.m: fix "in in" typo in comment
-      qapi/machine-target.json: fix "in in" typo in comment
-
- block.c                             |  2 +-
- docs/devel/testing/functional.rst   |  2 +-
- docs/system/gdb.rst                 |  2 +-
- docs/system/linuxboot.rst           |  6 +++---
- docs/system/target-mips.rst         |  2 +-
- hw/acpi/acpi-pci-hotplug-stub.c     |  2 +-
- hw/acpi/ich9.c                      | 13 +------------
- hw/acpi/pcihp.c                     |  2 +-
- hw/acpi/piix4.c                     |  2 +-
- hw/core/machine.c                   |  8 ++++----
- hw/display/apple-gfx.m              |  2 +-
- hw/i386/acpi-build.c                | 10 +++++-----
- hw/i386/acpi-build.h                |  2 +-
- hw/isa/lpc_ich9.c                   |  1 -
- hw/net/e1000x_regs.h                |  2 +-
- hw/pci-host/gpex-acpi.c             |  2 +-
- hw/pci/pci.c                        | 19 ++++++-------------
- hw/pci/trace-events                 |  4 ++++
- hw/xen/xen-hvm-common.c             |  2 +-
- include/exec/cpu-common.h           |  2 +-
- include/hw/acpi/pcihp.h             |  2 +-
- include/hw/xen/interface/io/blkif.h |  2 +-
- linux-user/mmap.c                   |  2 +-
- qapi/machine-target.json            |  2 +-
- qapi/qom.json                       |  2 +-
- qom/object.c                        |  2 +-
- 26 files changed, 42 insertions(+), 57 deletions(-)
 
