@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5697FC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:14:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75BEDC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:15:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDNYn-0001xT-JQ; Fri, 09 May 2025 09:14:42 -0400
+	id 1uDNYB-0001n0-8d; Fri, 09 May 2025 09:14:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYR-0001ou-Ns
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNY7-0001mS-Sh
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYO-00077B-Ri
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:18 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNY5-00071u-MK
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:13:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746796456;
+ s=mimecast20190719; t=1746796436;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=40cRvs0eAD+P5ZNGuz/k6ER2KaiSahsbMtU8YqYZtNg=;
- b=YKR4ucF+bBabgpdARq0VCbDrers2oG/h49ekY+muOv5kd/VGyVXBE4bwF82TnQmRElniF3
- +3Vohe5OA0h7cvpg4AWOqhDo+Ve/6gmldcNh2x7oEOkhfco6FJNKRpeqaKTghrJoKgMjyF
- J5vlRtfpaEk6Zv7R00NnN74aV9ykwtQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=9gSLGM39m3Jvu/PSF0Lhw1cqS2npjBRM2FDLgxqNPwA=;
+ b=OBAGr4yRBqqhJACoYY+uWPzF27KFz6W2GBp6UHvHA6RvYuaZ2vpHi4FIc0plRrb3m5TOCF
+ Mjz0L1tFlFrlvMo+0CjiT6D4d2tDZVIeMSriKSs+uUDqOPXrSmS9yS/xiRQpkk2RthEtqI
+ isQBel/GR+M1ENGhwbtCDjASH23EDdA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-kfUvc1f6PDGERkr8ohX3vw-1; Fri,
- 09 May 2025 09:14:15 -0400
-X-MC-Unique: kfUvc1f6PDGERkr8ohX3vw-1
-X-Mimecast-MFC-AGG-ID: kfUvc1f6PDGERkr8ohX3vw_1746796453
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-62-Jx-HYZDBOTmCjebBLH2xbQ-1; Fri,
+ 09 May 2025 09:13:52 -0400
+X-MC-Unique: Jx-HYZDBOTmCjebBLH2xbQ-1
+X-Mimecast-MFC-AGG-ID: Jx-HYZDBOTmCjebBLH2xbQ_1746796431
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 198191800DA1; Fri,  9 May 2025 13:14:13 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9D7F21956051; Fri,  9 May 2025 13:13:51 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8419F180045B; Fri,  9 May 2025 13:14:10 +0000 (UTC)
+ id 2377F18003FD; Fri,  9 May 2025 13:13:48 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- John Levon <john.levon@nutanix.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 15/28] vfio: add vfio_device_prepare()
-Date: Fri,  9 May 2025 15:13:04 +0200
-Message-ID: <20250509131317.164235-16-clg@redhat.com>
+Subject: [PULL 09/28] vfio/igd: Enable OpRegion by default
+Date: Fri,  9 May 2025 15:12:58 +0200
+Message-ID: <20250509131317.164235-10-clg@redhat.com>
 In-Reply-To: <20250509131317.164235-1-clg@redhat.com>
 References: <20250509131317.164235-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -84,123 +85,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Levon <john.levon@nutanix.com>
+From: Tomita Moeko <tomitamoeko@gmail.com>
 
-Commonize some initialization code shared by the legacy and iommufd vfio
-implementations.
+As the presence of OpRegion is used to detect IGD device now, and
+guest driver usually depends on OpRegion to work. Enable OpRegion
+on IGD devices by default for out-of-the-box passthrough experience
+(except pre-boot display output), especially for libvirt users.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: John Levon <john.levon@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20250507152020.1254632-2-john.levon@nutanix.com
+Example of IGD passthrough with libvirt:
+<hostdev mode="subsystem" type="pci" managed="yes">
+  <source>
+    <address domain="0x0000" bus="0x00" slot="0x02" function="0x0"/>
+  </source>
+  <rom file="/path/to/igd/rom"/>
+  <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x0"/>
+ </hostdev>
+
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+Reviewed-by: Corvin Köhne <c.koehne@beckhoff.com>
+Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Tested-by: Alex Williamson <alex.williamson@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250505170305.23622-7-tomitamoeko@gmail.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/vfio/vfio-device.h |  3 +++
- hw/vfio/container.c           | 14 ++------------
- hw/vfio/device.c              | 14 ++++++++++++++
- hw/vfio/iommufd.c             |  9 +--------
- 4 files changed, 20 insertions(+), 20 deletions(-)
+ docs/igd-assign.txt | 4 ++--
+ hw/vfio/pci.c       | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 81c95bb51eeead0e8c4d126c2d0561e235632946..081929ca4b9bc59217c633421fcbe84ea4171aa7 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -134,6 +134,9 @@ typedef QLIST_HEAD(VFIODeviceList, VFIODevice) VFIODeviceList;
- extern VFIODeviceList vfio_device_list;
+diff --git a/docs/igd-assign.txt b/docs/igd-assign.txt
+index 95beb7681279ca97fc2b4b390045847dcd59eabd..fc444503ff310a317d5d6724b4656c29c4a7dc87 100644
+--- a/docs/igd-assign.txt
++++ b/docs/igd-assign.txt
+@@ -102,7 +102,7 @@ digital formats work well.
  
- #ifdef CONFIG_LINUX
-+void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
-+                         struct vfio_device_info *info);
-+
- int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
-                                 struct vfio_region_info **info);
- int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index a761f0958b71de39093d8849b49c55e3662e096f..d30c1a141d34d8b026876e4a289c08ba067ef8a7 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -826,18 +826,14 @@ static bool vfio_device_get(VFIOGroup *group, const char *name,
-         }
-     }
+ Options
+ =======
+-* x-igd-opregion=[on|*off*]
++* x-igd-opregion=[*on*|off]
+   Copy host IGD OpRegion and expose it to guest with fw_cfg
  
-+    vfio_device_prepare(vbasedev, &group->container->bcontainer, info);
-+
-     vbasedev->fd = fd;
-     vbasedev->group = group;
-     QLIST_INSERT_HEAD(&group->device_list, vbasedev, next);
+ * x-igd-lpc=[on|*off*]
+@@ -124,7 +124,7 @@ Examples
  
--    vbasedev->num_irqs = info->num_irqs;
--    vbasedev->num_regions = info->num_regions;
--    vbasedev->flags = info->flags;
--
-     trace_vfio_device_get(name, info->flags, info->num_regions, info->num_irqs);
+ * Adding IGD with OpRegion and LPC ID hack, but without VGA ranges
+   (For UEFI guests)
+-  -device vfio-pci,host=00:02.0,id=hostdev0,addr=2.0,x-igd-legacy-mode=off,x-igd-opregion=on,x-igd-lpc=on,romfile=efi_oprom.rom
++  -device vfio-pci,host=00:02.0,id=hostdev0,addr=2.0,x-igd-legacy-mode=off,x-igd-lpc=on,romfile=efi_oprom.rom
  
--    vbasedev->reset_works = !!(info->flags & VFIO_DEVICE_FLAGS_RESET);
--
-     return true;
- }
  
-@@ -890,7 +886,6 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
-     int groupid = vfio_device_get_groupid(vbasedev, errp);
-     VFIODevice *vbasedev_iter;
-     VFIOGroup *group;
--    VFIOContainerBase *bcontainer;
- 
-     if (groupid < 0) {
-         return false;
-@@ -919,11 +914,6 @@ static bool vfio_legacy_attach_device(const char *name, VFIODevice *vbasedev,
-         goto device_put_exit;
-     }
- 
--    bcontainer = &group->container->bcontainer;
--    vbasedev->bcontainer = bcontainer;
--    QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
--    QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
--
-     return true;
- 
- device_put_exit:
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index d625a7c4dbbf4ac222541283c4034e840da02b08..f3b9902d21cdb4443ffd603b1b3f8ad5950996fc 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -398,3 +398,17 @@ void vfio_device_detach(VFIODevice *vbasedev)
-     }
-     VFIO_IOMMU_GET_CLASS(vbasedev->bcontainer)->detach_device(vbasedev);
- }
-+
-+void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
-+                         struct vfio_device_info *info)
-+{
-+    vbasedev->num_irqs = info->num_irqs;
-+    vbasedev->num_regions = info->num_regions;
-+    vbasedev->flags = info->flags;
-+    vbasedev->reset_works = !!(info->flags & VFIO_DEVICE_FLAGS_RESET);
-+
-+    vbasedev->bcontainer = bcontainer;
-+    QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
-+
-+    QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
-+}
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 232c06dd15ba922b9ac4adbb96ec04e2e56a4072..83033c352a7d8d868aea52b2bdfcdcbbb6914bff 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -588,14 +588,7 @@ found_container:
-         iommufd_cdev_ram_block_discard_disable(false);
-     }
- 
--    vbasedev->group = 0;
--    vbasedev->num_irqs = dev_info.num_irqs;
--    vbasedev->num_regions = dev_info.num_regions;
--    vbasedev->flags = dev_info.flags;
--    vbasedev->reset_works = !!(dev_info.flags & VFIO_DEVICE_FLAGS_RESET);
--    vbasedev->bcontainer = bcontainer;
--    QLIST_INSERT_HEAD(&bcontainer->device_list, vbasedev, container_next);
--    QLIST_INSERT_HEAD(&vfio_device_list, vbasedev, global_next);
-+    vfio_device_prepare(vbasedev, bcontainer, &dev_info);
- 
-     trace_iommufd_cdev_device_info(vbasedev->name, devfd, vbasedev->num_irqs,
-                                    vbasedev->num_regions, vbasedev->flags);
+ Guest firmware
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 6908bcc0d3145c98d2999841d00451bdc51b6a3e..e1fab21b47adb4df9b011b3efb6d7c15c84bc8c2 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3385,7 +3385,7 @@ static const Property vfio_pci_dev_properties[] = {
+     DEFINE_PROP_BIT("x-req", VFIOPCIDevice, features,
+                     VFIO_FEATURE_ENABLE_REQ_BIT, true),
+     DEFINE_PROP_BIT("x-igd-opregion", VFIOPCIDevice, features,
+-                    VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, false),
++                    VFIO_FEATURE_ENABLE_IGD_OPREGION_BIT, true),
+     DEFINE_PROP_BIT("x-igd-lpc", VFIOPCIDevice, features,
+                     VFIO_FEATURE_ENABLE_IGD_LPC_BIT, false),
+     DEFINE_PROP_ON_OFF_AUTO("x-igd-legacy-mode", VFIOPCIDevice,
 -- 
 2.49.0
 
