@@ -4,103 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82F3EC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 11:45:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C3B8C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 12:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDM9K-0006GI-6u; Fri, 09 May 2025 07:44:18 -0400
+	id 1uDMd5-0001JA-Fb; Fri, 09 May 2025 08:15:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uDM9D-0006Fx-R4
- for qemu-devel@nongnu.org; Fri, 09 May 2025 07:44:12 -0400
-Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uDM9A-00054n-SW
- for qemu-devel@nongnu.org; Fri, 09 May 2025 07:44:11 -0400
-Received: by mail-yb1-xb2e.google.com with SMTP id
- 3f1490d57ef6-e740a09eb00so2010445276.0
- for <qemu-devel@nongnu.org>; Fri, 09 May 2025 04:44:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746791045; x=1747395845; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OWPMhJ0Sk0mJLU2ZE9eP/Hx0TLPpyirbi6sQ6Yk4IDw=;
- b=GeY7YRYf4LK2+S13Phras32OwIRKPL9fb/erF4q/OLmxBKWu3cfEZtkCCpuH8d/hfD
- JYtcYg3Y5aWZo9RaC4xRwyHhUX3vqWmNeVTzD5O7IJdEoxwhhAdNYEpLBzTJb2PiZbkP
- IbFc4pCOqlYTsVIQc/fad18Y1TsF+6XIpUMHrgB2XMb8Ej4OTKbxnjosWqogFKLPEalk
- 98KwD3sO1RD3GhX38LqgvMaRuXek0WRiT+2qgsw9e8EDhsBGJRg4E7sOQ14rJNSG9nn1
- GsTSt0bXtXROR46K53bGA0Z+ovVpHpWGbP0XjTkU0WR1FTfO227uGQS9hjNs+Bcq5yz7
- kkJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746791045; x=1747395845;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OWPMhJ0Sk0mJLU2ZE9eP/Hx0TLPpyirbi6sQ6Yk4IDw=;
- b=UsnP+Lx0iIgiXsKlnS8FpWjV8k9aV8M0X8no9VRnZFZfJYWUTfasHzt+vKKiWCcuxg
- PoTZRHOV0z+JWwUl42aNIvTwuufTj1rPl9/uQ/GeN6JGTbSHeYl64J4gsThgRpe9D+Nx
- lVvgegl5f2QQ/Kbp6Ic0Kygrj6m6dtv5CXolfHumSrmXQouuBNp0BUoZea4TstlW/ATh
- ZAsWfjjPjxDMsH7BLkqfPmFn3zMTGBXCKmaCZGRdC0yeg090rvW3UEZaX/WuLF3D9HZa
- Jpf99OL9EUKu8bm9PdOhvqb9++r0oROqqtxZO6tZPp6KG9nuv7RB8Q+BzEt+e+b8S37W
- zOoQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLCQD4obPQbEESWdWoqxD4s3r9+8PAV7RlG3L1fS6kd/W42YJ53Y8hqm+MznNwvN9H0nugHEXXgiPf@nongnu.org
-X-Gm-Message-State: AOJu0YwSInQk54DXYzkfBTzK3Kck4LLJ17Ue7RSaNmSn4S2JaeHaC4Fk
- nzMGITVQcUFMlcjKWLwHDpNBtkCte00RyRe9ILZZI9jT9dn+mZNnm0BYIBjrs5+xMoJMwU67JMi
- zYD/k/wxumN2JQbwEodIBsfRuNmHu+vBRQ8cIWQ==
-X-Gm-Gg: ASbGnctU0b4aXV/o36sjQx/tc4HEx/mcJtJ3D+seTzUxncV64rRKE2TpxluMiK9S1gd
- H6Mqrh/mrF5QmYsOsgDSLHgoqx6fUW8DUBjYAkqZ/UylhsFa5mliE7rauSKkFX+baAzv/VHeaVM
- D+bKUMOryxSdxSdDTrYZM/0Q8=
-X-Google-Smtp-Source: AGHT+IEANq3k6k8uGBqRzffI2kNfhLBsmUO00zQrce2lgOi6kdo1CBiLV/WOlHQ5oOpSDlZ6W4p6tysG6k877aGOt8I=
-X-Received: by 2002:a05:690c:4489:b0:708:100a:57b0 with SMTP id
- 00721157ae682-70a3f9e4badmr38279097b3.8.1746791045315; Fri, 09 May 2025
- 04:44:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1uDMcw-0001Dw-HJ
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 08:14:55 -0400
+Received: from fhigh-a8-smtp.messagingengine.com ([103.168.172.159])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1uDMcq-00007P-D0
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 08:14:54 -0400
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal
+ [10.202.2.46])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id E57DD1140179;
+ Fri,  9 May 2025 08:14:44 -0400 (EDT)
+Received: from phl-imap-12 ([10.202.2.86])
+ by phl-compute-06.internal (MEProxy); Fri, 09 May 2025 08:14:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm1; t=1746792884;
+ x=1746879284; bh=lSubyW03DCg7OiznXvR1OSs6YXkjDZcyo+emS+GJmpE=; b=
+ dyfOB7J1QKqy4z5aWn/w8NOpfdGJwWR77Vd6E/mra/1DY/hJ20M9CAs370IVebfw
+ +H0el5UHcpiUk/fBS3qocPYEkLWF2rqp27gkTMRrgZyi1BCqBv116JOZjfUneyU/
+ bMZYns7AfFFi+LLMFY4XFP7DFaxAYEQlG5yyRYM0GOOSrAwLJb0I0z9mDgJcy9SU
+ a+pcI+J5pg0/EqClU/6jWWl3bHGkl3+T20vKsiVPIJCG4o8rd+zl8lkJULjA+kmd
+ 9UBqa2dGEbEIBi5/07k/gHfoO/1HQJ2NbCzYeXLnSa5qc6Ojc+k6FCoRHJJjpbPV
+ gS8I6wmgMhSCqkAGqoDStQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746792884; x=
+ 1746879284; bh=lSubyW03DCg7OiznXvR1OSs6YXkjDZcyo+emS+GJmpE=; b=M
+ hnzISAyuFd71GjitPDpAkXsq+sWJfQG6cj1VbiXpLisxr9nM31vFjEBjymBZId+o
+ vfplobBIpPWHA86nLM1VSYHxJH6LZnXe+tdcXXRxihOTdzhZXnomWujqG8f/aJmx
+ gDtzM36l1vCNc31l4GVVLpcb0NbYTc4lsfOpE6lYYsfxDJa9ysxumXoTl9MNA6sH
+ JAgVRMw2cmjg9KdgMXQteDzwZCpvnkSINkodUUk7eCl9qtkL68kFeoMHXsiqGxH/
+ Z0BkpdIivlCLC0Avz2LRLVkva4nWbPVE+Scik2JR0nI767mw7IN5MRAuFRSvSBRi
+ nzqabLrWHEL/N2I21K37A==
+X-ME-Sender: <xms:tPEdaKdWsfpXrfS5s7cD2zH2mYnDZ8Xyyjw1PlZU5_DMN1nWcwLElQ>
+ <xme:tPEdaEMLRg2Sfksssw_6dzTONIq1oSnkG49Nxkxni-lNcUdOHrYMB2s5omc-Q0kF4
+ JqHYwPHDaKovUSinbw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvheelucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+ pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+ gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertder
+ tdejnecuhfhrohhmpedflfhirgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghngh
+ esfhhlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepjeehfeduvddtgffgvdff
+ keethefhlefgvdevvdekuefffeekheehgeevhfevteejnecuvehluhhsthgvrhfuihiivg
+ eptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihg
+ ohgrthdrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtg
+ hpthhtoheptghhvghnhhhurggtrghisehkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+ rghoshhonhhgsehlohhonhhgshhonhdrtghnpdhrtghpthhtoheplhhigihirghnghhlrg
+ hisehlohhonhhgshhonhdrtghnpdhrtghpthhtohepmhgrohgsihgsoheslhhoohhnghhs
+ ohhnrdgtnhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:tPEdaLhVFQh8GUXVxHAgo8vmiCm9mWIcFAHd3cCbi_uCUpZnv1sjWA>
+ <xmx:tPEdaH87nHY6YdtTsQdE18N9H5sJHVrw8lhaGC3mPwKbWHerAm9AFw>
+ <xmx:tPEdaGszURUs61b8OBZN5D2AEz8m6eKPVUCvQqx12VW1wxv2pmRtlw>
+ <xmx:tPEdaOGiT7kzIltMlwmm9TotqfS04DVQbLPh8-jKoW5X4c1Kds9JuA>
+ <xmx:tPEdaNOPKGb1JfCoYzJlCA4WeI54REhdZVBB-TjIEhYhveboAOqLQYaI>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id 522E81C20067; Fri,  9 May 2025 08:14:44 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-References: <20250502102707.110516-1-shameerali.kolothum.thodi@huawei.com>
- <20250502102707.110516-2-shameerali.kolothum.thodi@huawei.com>
- <877c2ut0zk.fsf@pond.sub.org>
- <e02e884b-0f3d-4426-8a67-2cbd23e80e8c@redhat.com>
- <87frhglwjl.fsf@pond.sub.org> <72f9043a73294bfc9b539ae9b94836d3@huawei.com>
- <d21e0c57-b89a-4c79-958e-e633de039e4c@redhat.com>
- <CAFEAcA9bZ6Rd4PSMG61mJ5Ja07j3--DQE7KqA8RZwxGH3N51sA@mail.gmail.com>
- <3d7824d9fcf04e2e961d30a5f3404b52@huawei.com>
- <CAFEAcA-HWuAUVhqsE7p2BMo6wg+7F273Q_J2LVLrHzFagTjxgg@mail.gmail.com>
- <aB3dAPNgXj7w9-7L@redhat.com>
-In-Reply-To: <aB3dAPNgXj7w9-7L@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 9 May 2025 12:43:54 +0100
-X-Gm-Features: ATxdqUFgLyjyeViuXI9TIX-GTN5xgvuJ3wiqu4qsd_2ry_z0YWIPux9C51IebDc
-Message-ID: <CAFEAcA-2XS3jBAzLnx9m-V_mqrJr47BsbQamTzszTPN+rmisfA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] hw/arm/smmuv3: Add support to associate a PCIe RC
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>, 
- Donald Dutile <ddutile@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Shameer Kolothum via <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, 
- "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "nathanc@nvidia.com" <nathanc@nvidia.com>, 
- "mochs@nvidia.com" <mochs@nvidia.com>,
- "smostafa@google.com" <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>, 
- "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun <jiangkunkun@huawei.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>, 
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: T21cba618b4b61b3d
+Date: Fri, 09 May 2025 13:14:16 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: "Bibo Mao" <maobibo@loongson.cn>, "Song Gao" <gaosong@loongson.cn>
+Cc: "Huacai Chen" <chenhuacai@kernel.org>,
+ "QEMU devel" <qemu-devel@nongnu.org>, "Xianglai Li" <lixianglai@loongson.cn>
+Message-Id: <977bcff5-d3bf-47b5-8958-d279ca22a4d4@app.fastmail.com>
+In-Reply-To: <20250509101245.1070255-4-maobibo@loongson.cn>
+References: <20250509100747.1070094-1-maobibo@loongson.cn>
+ <20250509101245.1070255-1-maobibo@loongson.cn>
+ <20250509101245.1070255-4-maobibo@loongson.cn>
+Subject: Re: [PATCH 14/15] target/loongarch: Report error with split
+ kernel_irqchip option
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=103.168.172.159;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fhigh-a8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,51 +116,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 May 2025 at 11:46, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
->
-> On Fri, May 09, 2025 at 11:37:14AM +0100, Peter Maydell wrote:
-> > (I want to start here by saying that I appreciate that I'm
-> > coming in without having read the previous discussion, so
-> > this is kind of going back over ground you've already
-> > been through.)
-> >
-> > I agree that rather than having an entirely separate "SMMU with
-> > acceleration" it would be better to have it be a property on
-> > the SMMU device. But why do we need it to be user created?
-> > Making it user-created leads into all kinds of tricky areas
-> > mostly surrounding the fact that QEMU right now simply doesn't
-> > support having user-created sysbus devices and other kinds
-> > of device with complex wiring-up. -device is really intended
-> > for "this is a model of a device that in real hardware is
-> > pluggable and has basically one connection, like a PCI card
-> > has a PCI-slot".
->
-> In terms of "why does it need to be user created" - the goal was to expos=
-e
-> multiple SMMUs to the guest, each associated with a separate physical SMM=
-U.
-> IIUC, each physical NUMA node would have its own SMMU.
->
-> So configuring a guest VM will require creating multiple PXBs, one for
-> each virtual NUMA node, and then creating SMMUs for each PXB.
->
-> Since there was a need for the user to create SMMUs for the PXBs, the
-> question was then raised, why shouldn't the default SMMU also be
-> user creatable in the same way, so that mgmt apps like libvirt have
-> a single way to configure the SMMUs with -device.
 
-Sure, the default "there's just one pci bridge and either
-no SMMU or one SMMU" isn't that special. But we don't
-have good infrastructure for creating sysbus devices on
-the command line, whether it's the default SMMU or the
-extra SMMUs or a UART or anything else. I guess the
-dynamic_sysbus stuff works, but I've never really liked it
-(it's basically "the board will magically do the right thing",
-and to some extent it's working around the way we have
-very patchy support for "I want to configure a board the
-device created rather than configuring a device I am
-creating").
 
--- PMM
+=E5=9C=A82025=E5=B9=B45=E6=9C=889=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=
+=8D=8811:12=EF=BC=8CBibo Mao=E5=86=99=E9=81=93=EF=BC=9A
+> Option kernel_irqchip=3Dsplit is not supported on LoongArch virt machi=
+ne,
+> report error and exit if detect split kernel_irqchip option.
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>  target/loongarch/kvm/kvm.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+> index 1bda570482..a8e5724b21 100644
+> --- a/target/loongarch/kvm/kvm.c
+> +++ b/target/loongarch/kvm/kvm.c
+> @@ -1249,7 +1249,12 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
+>=20
+>  int kvm_arch_irqchip_create(KVMState *s)
+>  {
+> -    return 0;
+> +    if (kvm_kernel_irqchip_split()) {
+> +        error_report("-machine kernel_irqchip=3Dsplit is not supporte=
+d on ARM.");
+                                                                        =
+   ^ ARM :)
+
+Thanks
+
+--=20
+- Jiaxun
 
