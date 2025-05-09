@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3015BC3ABBC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 426A5C3ABCC
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:21:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDNYE-0001nK-Pp; Fri, 09 May 2025 09:14:06 -0400
+	id 1uDNZy-0003GZ-2F; Fri, 09 May 2025 09:15:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYD-0001nC-UV
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYq-0002Do-3v
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYA-00072Y-V1
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:05 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYn-0007D8-1o
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746796441;
+ s=mimecast20190719; t=1746796479;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EgX52XnmIkBlF15up3p+eVDztujVWFimpqqDzgYI5l0=;
- b=ek0Q6M6iyDFnjiFV0Zj+/t8u7hdDpiQNa37bAC3rMZYFkTSq8fBLYaNNwh44tgqsJbdpY5
- GFRnCJNev7f8uLO2Hxqjqq9Z1xCKoOCzGV6LnjaTcXVaW23OavvCAdToVuMbqTyapAQOtY
- zzEEmkqI/HvBsfMGBY96Gv11bsiUoxk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=OStcsqLN3Qew8ZrB5Fggs4ss5DbCOLdB7ezfyhhYOok=;
+ b=QRiLi7p+l3hDnYxL1oIHK5ZhcCoyBn0KBLqZX4LGaDCyt1JP3xKI9zBdWRISWJKdzPF59H
+ rTA3QTyGSq+cI04aQWTTlP+lm/ZBubi92xdHeCF0hJiTBb1hKmuUmyHG1hTdXpfGfWKPQx
+ 3zh6hMi73KvSSAilkG41wlVptTC3ghk=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-Uq-xfJtNMeew1sCqcrPhNA-1; Fri,
- 09 May 2025 09:13:57 -0400
-X-MC-Unique: Uq-xfJtNMeew1sCqcrPhNA-1
-X-Mimecast-MFC-AGG-ID: Uq-xfJtNMeew1sCqcrPhNA_1746796435
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-332-V_w2SPTeNOm_BjiVHU-oBw-1; Fri,
+ 09 May 2025 09:14:37 -0400
+X-MC-Unique: V_w2SPTeNOm_BjiVHU-oBw-1
+X-Mimecast-MFC-AGG-ID: V_w2SPTeNOm_BjiVHU-oBw_1746796476
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 80576195605B; Fri,  9 May 2025 13:13:55 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C34A31956046; Fri,  9 May 2025 13:14:36 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9AA5318003FD; Fri,  9 May 2025 13:13:52 +0000 (UTC)
+ id C5F9C18003FD; Fri,  9 May 2025 13:14:34 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Tomita Moeko <tomitamoeko@gmail.com>,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
+ John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 10/28] vfio/igd: Allow overriding GMS with 0xf0 to 0xfe on Gen9+
-Date: Fri,  9 May 2025 15:12:59 +0200
-Message-ID: <20250509131317.164235-11-clg@redhat.com>
+Subject: [PULL 23/28] vfio: implement unmap all for DMA unmap callbacks
+Date: Fri,  9 May 2025 15:13:12 +0200
+Message-ID: <20250509131317.164235-24-clg@redhat.com>
 In-Reply-To: <20250509131317.164235-1-clg@redhat.com>
 References: <20250509131317.164235-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -85,99 +84,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomita Moeko <tomitamoeko@gmail.com>
+From: John Levon <john.levon@nutanix.com>
 
-On Gen9 and later IGD devices, GMS 0xf0 to 0xfe represents 4MB to 60MB
-pre-allocated memory size in 4MB increments. Allow users overriding
-GMS with these values.
+Handle unmap_all in the DMA unmap handlers rather than in the caller.
 
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
-Reviewed-by: Corvin Köhne <c.koehne@beckhoff.com>
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
-Tested-by: Alex Williamson <alex.williamson@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250505170305.23622-8-tomitamoeko@gmail.com
+Signed-off-by: John Levon <john.levon@nutanix.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20250507152020.1254632-10-john.levon@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/igd.c | 59 +++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 41 insertions(+), 18 deletions(-)
+ hw/vfio/container.c | 41 +++++++++++++++++++++++++++++++----------
+ hw/vfio/iommufd.c   | 15 ++++++++++++++-
+ hw/vfio/listener.c  | 19 ++++++-------------
+ 3 files changed, 51 insertions(+), 24 deletions(-)
 
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 9dec32818c91f2021f6dc0c4bbe1fc0682df1a55..8ad9d723e29cd4d63e12346b6e40604ac020e747 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -412,6 +412,44 @@ static bool vfio_pci_igd_setup_lpc_bridge(VFIOPCIDevice *vdev, Error **errp)
-     return true;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index d5f4e66f1c4146c2eb6a2ce209c74c4d391c27ce..a9f0dbaec4c8d83450048d9bc53b34d859731ebb 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -119,12 +119,9 @@ unmap_exit:
+     return ret;
  }
  
-+static bool vfio_pci_igd_override_gms(int gen, uint32_t gms, uint32_t *gmch)
+-/*
+- * DMA - Mapping and unmapping for the "type1" IOMMU interface used on x86
+- */
+-static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+-                                 hwaddr iova, ram_addr_t size,
+-                                 IOMMUTLBEntry *iotlb, bool unmap_all)
++static int vfio_legacy_dma_unmap_one(const VFIOContainerBase *bcontainer,
++                                     hwaddr iova, ram_addr_t size,
++                                     IOMMUTLBEntry *iotlb)
+ {
+     const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+                                                   bcontainer);
+@@ -138,10 +135,6 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+     int ret;
+     Error *local_err = NULL;
+ 
+-    if (unmap_all) {
+-        return -ENOTSUP;
+-    }
+-
+     if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
+         if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
+             bcontainer->dirty_pages_supported) {
+@@ -185,6 +178,34 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+     return 0;
+ }
+ 
++/*
++ * DMA - Mapping and unmapping for the "type1" IOMMU interface used on x86
++ */
++static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
++                                 hwaddr iova, ram_addr_t size,
++                                 IOMMUTLBEntry *iotlb, bool unmap_all)
 +{
-+    bool ret = false;
++    int ret;
 +
-+    if (gen == -1) {
-+        error_report("x-igd-gms is not supported on this device");
-+    } else if (gen < 8) {
-+        if (gms <= 0x10) {
-+            *gmch &= ~(IGD_GMCH_GEN6_GMS_MASK << IGD_GMCH_GEN6_GMS_SHIFT);
-+            *gmch |= gms << IGD_GMCH_GEN6_GMS_SHIFT;
-+            ret = true;
-+        } else {
-+            error_report(QERR_INVALID_PARAMETER_VALUE, "x-igd-gms", "0~0x10");
++    if (unmap_all) {
++        /* The unmap ioctl doesn't accept a full 64-bit span. */
++        Int128 llsize = int128_rshift(int128_2_64(), 1);
++
++        ret = vfio_legacy_dma_unmap_one(bcontainer, 0, int128_get64(llsize),
++                                        iotlb);
++
++        if (ret == 0) {
++            ret = vfio_legacy_dma_unmap_one(bcontainer, int128_get64(llsize),
++                                            int128_get64(llsize), iotlb);
 +        }
-+    } else if (gen == 8) {
-+        if (gms <= 0x40) {
-+            *gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
-+            *gmch |= gms << IGD_GMCH_GEN8_GMS_SHIFT;
-+            ret = true;
-+        } else {
-+            error_report(QERR_INVALID_PARAMETER_VALUE, "x-igd-gms", "0~0x40");
-+        }
++
 +    } else {
-+        /* 0x0  to 0x40: 32MB increments starting at 0MB */
-+        /* 0xf0 to 0xfe: 4MB increments starting at 4MB */
-+        if ((gms <= 0x40) || (gms >= 0xf0 && gms <= 0xfe)) {
-+            *gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
-+            *gmch |= gms << IGD_GMCH_GEN8_GMS_SHIFT;
-+            ret = true;
-+        } else {
-+            error_report(QERR_INVALID_PARAMETER_VALUE,
-+                         "x-igd-gms", "0~0x40 or 0xf0~0xfe");
-+        }
++        ret = vfio_legacy_dma_unmap_one(bcontainer, iova, size, iotlb);
 +    }
 +
 +    return ret;
 +}
 +
- #define IGD_GGC_MMIO_OFFSET     0x108040
- #define IGD_BDSM_MMIO_OFFSET    0x1080C0
+ static int vfio_legacy_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+                                ram_addr_t size, void *vaddr, bool readonly)
+ {
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 6b2764c044135b95c199b5df2f864156817fb6fc..af1c7ab10a090a2a4a2913231fc50903be9fb0f1 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -51,8 +51,21 @@ static int iommufd_cdev_unmap(const VFIOContainerBase *bcontainer,
+     const VFIOIOMMUFDContainer *container =
+         container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
  
-@@ -594,24 +632,9 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-      * 32MiB. This option should only be used when the desired size cannot be
-      * set from DVMT Pre-Allocated option in host BIOS.
-      */
--    if (vdev->igd_gms) {
--        if (gen < 8) {
--            if (vdev->igd_gms <= 0x10) {
--                gmch &= ~(IGD_GMCH_GEN6_GMS_MASK << IGD_GMCH_GEN6_GMS_SHIFT);
--                gmch |= vdev->igd_gms << IGD_GMCH_GEN6_GMS_SHIFT;
--            } else {
--                error_report(QERR_INVALID_PARAMETER_VALUE,
--                             "x-igd-gms", "0~0x10");
--            }
--        } else {
--            if (vdev->igd_gms <= 0x40) {
--                gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
--                gmch |= vdev->igd_gms << IGD_GMCH_GEN8_GMS_SHIFT;
--            } else {
--                error_report(QERR_INVALID_PARAMETER_VALUE,
--                             "x-igd-gms", "0~0x40");
--            }
--        }
-+    if (vdev->igd_gms &&
-+        !vfio_pci_igd_override_gms(gen, vdev->igd_gms, &gmch)) {
-+        return false;
++    /* unmap in halves */
+     if (unmap_all) {
+-        return -ENOTSUP;
++        Int128 llsize = int128_rshift(int128_2_64(), 1);
++        int ret;
++
++        ret = iommufd_backend_unmap_dma(container->be, container->ioas_id,
++                                        0, int128_get64(llsize));
++
++        if (ret == 0) {
++            ret = iommufd_backend_unmap_dma(container->be, container->ioas_id,
++                                            int128_get64(llsize),
++                                            int128_get64(llsize));
++        }
++
++        return ret;
      }
  
-     gms_size = igd_stolen_memory_size(gen, gmch);
+     /* TODO: Handle dma_unmap_bitmap with iotlb args (migration) */
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index c5183700dbd859c9a66083f2cb6f74a75a01cc66..e7ade7d62ec81c9228e096ba4818a8dd09f54bd3 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -634,21 +634,14 @@ static void vfio_listener_region_del(MemoryListener *listener,
+     }
+ 
+     if (try_unmap) {
++        bool unmap_all = false;
++
+         if (int128_eq(llsize, int128_2_64())) {
+-            /* The unmap ioctl doesn't accept a full 64-bit span. */
+-            llsize = int128_rshift(llsize, 1);
+-            ret = vfio_container_dma_unmap(bcontainer, iova,
+-                                           int128_get64(llsize), NULL, false);
+-            if (ret) {
+-                error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+-                             "0x%"HWADDR_PRIx") = %d (%s)",
+-                             bcontainer, iova, int128_get64(llsize), ret,
+-                             strerror(-ret));
+-            }
+-            iova += int128_get64(llsize);
++            unmap_all = true;
++            llsize = int128_zero();
+         }
+-        ret = vfio_container_dma_unmap(bcontainer, iova,
+-                                       int128_get64(llsize), NULL, false);
++        ret = vfio_container_dma_unmap(bcontainer, iova, int128_get64(llsize),
++                                       NULL, unmap_all);
+         if (ret) {
+             error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+                          "0x%"HWADDR_PRIx") = %d (%s)",
 -- 
 2.49.0
 
