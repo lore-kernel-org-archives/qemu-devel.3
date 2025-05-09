@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77BE0C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D377CC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 May 2025 13:16:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDNa9-00049j-0Z; Fri, 09 May 2025 09:16:05 -0400
+	id 1uDNa2-0003fm-In; Fri, 09 May 2025 09:15:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYe-0001ws-UB
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:36 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNZ7-0002YK-SZ
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:15:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNYb-0007As-8I
- for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:31 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uDNZ3-0007FK-KU
+ for qemu-devel@nongnu.org; Fri, 09 May 2025 09:14:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746796467;
+ s=mimecast20190719; t=1746796496;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8A8+KNUoabK6pQMh0GdBRZj24kITmDWlYavmbgCcywM=;
- b=FANvqPDK6BQ+3/u+kCXj4ZZI1XE+1Z0JG2zxepJqLB1xa++G7Fh4aghde3UA0O1Euau2Qw
- hiZnGm+kgACG3gg/aD6UqMg++3l0YPNCzByZVr9bTuw4f8F1M3HHst6CAje1c2bm+BjpRD
- UWOAw2WutF54H4AnKVRRO7FGdRVGo8U=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=n9dp+vGAaJR3Tzwj/axTWOM7V9O2RntbetImxPSb22Q=;
+ b=QpKnh7YbPNuRPW0NGeX10W/d8ySRBym9DyxU84Lo2Y2rAO6L5tGy0FZHwl64e57fUgtZNd
+ sTSCaFSgnMjrQgl6sqPPvQo42NV8nETg2W6yaF0iS6soexz/kw2T1kNGvxOYHZn+s3qy3v
+ O5LJjO72lPuVtPSa6Ip1kfQ+F/XAHBA=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-319-GYFhTKAsMVCynKLx5YiUxg-1; Fri,
- 09 May 2025 09:14:26 -0400
-X-MC-Unique: GYFhTKAsMVCynKLx5YiUxg-1
-X-Mimecast-MFC-AGG-ID: GYFhTKAsMVCynKLx5YiUxg_1746796465
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-cp4_BzozNOib7UdRcSIOXw-1; Fri,
+ 09 May 2025 09:14:55 -0400
+X-MC-Unique: cp4_BzozNOib7UdRcSIOXw-1
+X-Mimecast-MFC-AGG-ID: cp4_BzozNOib7UdRcSIOXw_1746796494
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4F6D31800370; Fri,  9 May 2025 13:14:25 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2BB431955DCD; Fri,  9 May 2025 13:14:54 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.18])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9B50218003FD; Fri,  9 May 2025 13:14:22 +0000 (UTC)
+ id 3069518003FD; Fri,  9 May 2025 13:14:51 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  John Levon <john.levon@nutanix.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 19/28] vfio: consistently handle return value for helpers
-Date: Fri,  9 May 2025 15:13:08 +0200
-Message-ID: <20250509131317.164235-20-clg@redhat.com>
+Subject: [PULL 28/28] vfio/container: pass listener_begin/commit callbacks
+Date: Fri,  9 May 2025 15:13:17 +0200
+Message-ID: <20250509131317.164235-29-clg@redhat.com>
 In-Reply-To: <20250509131317.164235-1-clg@redhat.com>
 References: <20250509131317.164235-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -86,125 +86,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: John Levon <john.levon@nutanix.com>
 
-Various bits of code that call vfio device APIs should consistently use
-the "return -errno" approach for passing errors back, rather than
-presuming errno is (still) set correctly.
+The vfio-user container will later need to hook into these callbacks;
+set up vfio to use them, and optionally pass them through to the
+container.
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20250507152020.1254632-6-john.levon@nutanix.com
+Link: https://lore.kernel.org/qemu-devel/20250507152020.1254632-15-john.levon@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.c | 33 ++++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 13 deletions(-)
+ include/hw/vfio/vfio-container-base.h |  2 ++
+ hw/vfio/listener.c                    | 28 +++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 5ccfc67aef6e1653dcf47c88d53265072c7a95c6..866cf58d04600cdd5394a52e0ebe9dd7bb41a1c6 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -398,7 +398,7 @@ static int vfio_enable_msix_no_vec(VFIOPCIDevice *vdev)
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index 59f07d26e8226916c9c58eac07cb494552097138..3d392b0fd8bca9de1480d75ccfac8f3625e82121 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -117,6 +117,8 @@ struct VFIOIOMMUClass {
  
-     ret = ioctl(vdev->vbasedev.fd, VFIO_DEVICE_SET_IRQS, irq_set);
- 
--    return ret;
-+    return ret < 0 ? -errno : ret;
+     /* basic feature */
+     bool (*setup)(VFIOContainerBase *bcontainer, Error **errp);
++    void (*listener_begin)(VFIOContainerBase *bcontainer);
++    void (*listener_commit)(VFIOContainerBase *bcontainer);
+     int (*dma_map)(const VFIOContainerBase *bcontainer,
+                    hwaddr iova, ram_addr_t size,
+                    void *vaddr, bool readonly);
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index 2b93ca55b6d47e4ef3e89bea681d6e345f8d3abe..bfacb3d8d9cd5b7764a1678142eedf6d553cc07a 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -411,6 +411,32 @@ static bool vfio_get_section_iova_range(VFIOContainerBase *bcontainer,
+     return true;
  }
  
- static int vfio_enable_vectors(VFIOPCIDevice *vdev, bool msix)
-@@ -459,7 +459,7 @@ static int vfio_enable_vectors(VFIOPCIDevice *vdev, bool msix)
- 
-     g_free(irq_set);
- 
--    return ret;
-+    return ret < 0 ? -errno : ret;
- }
- 
- static void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
-@@ -581,7 +581,8 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
-             vfio_device_irq_disable(&vdev->vbasedev, VFIO_PCI_MSIX_IRQ_INDEX);
-             ret = vfio_enable_vectors(vdev, true);
-             if (ret) {
--                error_report("vfio: failed to enable vectors, %d", ret);
-+                error_report("vfio: failed to enable vectors, %s",
-+                             strerror(-ret));
-             }
-         } else {
-             Error *err = NULL;
-@@ -695,7 +696,8 @@ static void vfio_msix_enable(VFIOPCIDevice *vdev)
-     if (vdev->nr_vectors) {
-         ret = vfio_enable_vectors(vdev, true);
-         if (ret) {
--            error_report("vfio: failed to enable vectors, %d", ret);
-+            error_report("vfio: failed to enable vectors, %s",
-+                         strerror(-ret));
-         }
-     } else {
-         /*
-@@ -712,7 +714,8 @@ static void vfio_msix_enable(VFIOPCIDevice *vdev)
-          */
-         ret = vfio_enable_msix_no_vec(vdev);
-         if (ret) {
--            error_report("vfio: failed to enable MSI-X, %d", ret);
-+            error_report("vfio: failed to enable MSI-X, %s",
-+                         strerror(-ret));
-         }
-     }
- 
-@@ -765,7 +768,8 @@ retry:
-     ret = vfio_enable_vectors(vdev, false);
-     if (ret) {
-         if (ret < 0) {
--            error_report("vfio: Error: Failed to setup MSI fds: %m");
-+            error_report("vfio: Error: Failed to setup MSI fds: %s",
-+                         strerror(-ret));
-         } else {
-             error_report("vfio: Error: Failed to enable %d "
-                          "MSI vectors, retry with %d", vdev->nr_vectors, ret);
-@@ -882,17 +886,21 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
- static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
- {
-     g_autofree struct vfio_region_info *reg_info = NULL;
-+    VFIODevice *vbasedev = &vdev->vbasedev;
-     uint64_t size;
-     off_t off = 0;
-     ssize_t bytes;
-+    int ret;
++static void vfio_listener_begin(MemoryListener *listener)
++{
++    VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
++                                                 listener);
++    void (*listener_begin)(VFIOContainerBase *bcontainer);
 +
-+    ret = vfio_device_get_region_info(vbasedev, VFIO_PCI_ROM_REGION_INDEX,
-+                                      &reg_info);
++    listener_begin = VFIO_IOMMU_GET_CLASS(bcontainer)->listener_begin;
++
++    if (listener_begin) {
++        listener_begin(bcontainer);
++    }
++}
++
++static void vfio_listener_commit(MemoryListener *listener)
++{
++    VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
++                                                 listener);
++    void (*listener_commit)(VFIOContainerBase *bcontainer);
++
++    listener_commit = VFIO_IOMMU_GET_CLASS(bcontainer)->listener_begin;
++
++    if (listener_commit) {
++        listener_commit(bcontainer);
++    }
++}
++
+ static void vfio_device_error_append(VFIODevice *vbasedev, Error **errp)
+ {
+     /*
+@@ -1161,6 +1187,8 @@ static void vfio_listener_log_sync(MemoryListener *listener,
  
--    if (vfio_device_get_region_info(&vdev->vbasedev,
--                                    VFIO_PCI_ROM_REGION_INDEX, &reg_info)) {
--        error_report("vfio: Error getting ROM info: %m");
-+    if (ret != 0) {
-+        error_report("vfio: Error getting ROM info: %s", strerror(-ret));
-         return;
-     }
- 
--    trace_vfio_pci_load_rom(vdev->vbasedev.name, (unsigned long)reg_info->size,
-+    trace_vfio_pci_load_rom(vbasedev->name, (unsigned long)reg_info->size,
-                             (unsigned long)reg_info->offset,
-                             (unsigned long)reg_info->flags);
- 
-@@ -901,8 +909,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
- 
-     if (!vdev->rom_size) {
-         vdev->rom_read_failed = true;
--        error_report("vfio-pci: Cannot read device rom at "
--                    "%s", vdev->vbasedev.name);
-+        error_report("vfio-pci: Cannot read device rom at %s", vbasedev->name);
-         error_printf("Device option ROM contents are probably invalid "
-                     "(check dmesg).\nSkip option ROM probe with rombar=0, "
-                     "or load from file with romfile=\n");
-@@ -913,7 +920,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
-     memset(vdev->rom, 0xff, size);
- 
-     while (size) {
--        bytes = pread(vdev->vbasedev.fd, vdev->rom + off,
-+        bytes = pread(vbasedev->fd, vdev->rom + off,
-                       size, vdev->rom_offset + off);
-         if (bytes == 0) {
-             break;
+ static const MemoryListener vfio_memory_listener = {
+     .name = "vfio",
++    .begin = vfio_listener_begin,
++    .commit = vfio_listener_commit,
+     .region_add = vfio_listener_region_add,
+     .region_del = vfio_listener_region_del,
+     .log_global_start = vfio_listener_log_global_start,
 -- 
 2.49.0
 
