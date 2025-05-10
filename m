@@ -4,94 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8169C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 May 2025 05:22:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10E60C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 May 2025 06:09:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDceL-0000qE-F2; Sat, 10 May 2025 01:21:25 -0400
+	id 1uDdNn-0003zQ-M2; Sat, 10 May 2025 02:08:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uDceH-0000q0-Q6
- for qemu-devel@nongnu.org; Sat, 10 May 2025 01:21:21 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uDceE-0002Td-0d
- for qemu-devel@nongnu.org; Sat, 10 May 2025 01:21:20 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-22e70a9c6bdso42798265ad.3
- for <qemu-devel@nongnu.org>; Fri, 09 May 2025 22:21:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1746854476; x=1747459276;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=icnR6mCExmKuvXMxjjDFnK3+IjjW6pRctB4P8e+djZs=;
- b=RyDvxz8MLs6hZ5vOgVw+3xEhWlsWEQZYkmHbBPxWuc9xWb3lnZawUQwdMABLdMN9k0
- UmvLAcQlae/6oc+j9UL92cYrVffXGeMBnSY+O88W+S+HhsLAig79AKPNWOYl14w5UJDN
- 65HiIpcKJ8wmp87iCvuvhiAhgt9wV3Qb0KnUWnIBUMA8N/ooNZBvKg/u7K2gszAuaspe
- O3fXsk/M4TCSgs2ORcblSzh6hp3T/KqfnTv1Lj+juL7iCTD7EpfgFwIX5F2vg2mqd9nU
- EvmsTHA07P6ZVBZbMbMoLpMbVdhtIdSNiDR2Zn7UcP7WAUR5oXjSP9uYjqpFx1CPfJhZ
- nuIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746854476; x=1747459276;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=icnR6mCExmKuvXMxjjDFnK3+IjjW6pRctB4P8e+djZs=;
- b=KsRE/tE8TXJQr8PQ/sY7rFI76gDAJ3X2elM68jBFWZAOOFgnhEYwfFzNU+XsJDrBj8
- IUTEhlt6u/eZOfUBRDd3fhyW4w3JD6OnRVxiAUBYXEvH+gaLsxkhIlweZz3MtUOpuAlR
- yfZx+JELzDkJJbJWJGCwlfPce1CUl86Wm7SEhg1VBETz/9LT2BbXTs/izOWxdyI5Migz
- Yum4lw9lTm2yEZ28amt7gW6gjW0JyVSbkjB//x/HqXEntB6CIZ+oR7Wa5I9PHlv8FsO8
- 3o4U/Oi6KWH8CLggvgJnNwIb/U97XlmhzJbfz8ANhY1wwHbb8k4WvTqWC76oRGJ3/UUK
- I2Aw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4zBREbfTs6UKQvpUitDEIdeDtxS4Rl1MZEmHR+naWjr0t+YOJwrCknmsrqCnNzwyIP1VOKAnfCVOr@nongnu.org
-X-Gm-Message-State: AOJu0YwDqcTacJkMCvM0tbpWj57ZzwiHuhAaj0cJ2Uy74ui1OdJ6uA5i
- DCv1Qyt+71ZjPZ+N8e3YMEFDyaC/k40uzlcIg/96O2HCistVtcA1+gqQI9dOJSk=
-X-Gm-Gg: ASbGncvzYELzk2dqNG20rpXgzcgPKUg6zPVoY9PnYt6SQD7BhOZatixs4sZJnjwrAW8
- XBFH+tSWLMKORW1qVE3AZPIC+B7CCXrWsp2D+iUduLqUEWbgv/CYZ2fVsDYsB4Z5mVD6hhGKF9n
- 670cMLJQjNVYaDChJDOCtQq2oSsXat047X3YbRtR2Nd6kdN7qXdbRlCTCYGhLzBxlrAathi1nnL
- LbIsB7Wg5SKjT9+nAXyYe2+rFX1pASWvqq2S+BHxOC7gCgajoRoNM69Ihorj8yqsx/FGFdgj4kF
- rRx8pY0ZVCQiUhaYHALEh0OHjKiosDR3pLhhel2gHLyN3lrDuhTv7xvFqOIC+w==
-X-Google-Smtp-Source: AGHT+IG4CssyCag+gZZ3r/aCdjY3EvqiHNBV3rlAq77gQl5Txi6jqPXp33+UvwNitXuBXCtw4tbDEg==
-X-Received: by 2002:a17:903:32ca:b0:21f:1bd:efd4 with SMTP id
- d9443c01a7336-22fc8b334f2mr91622345ad.19.1746854476204; 
- Fri, 09 May 2025 22:21:16 -0700 (PDT)
-Received: from [10.100.116.185] ([157.82.128.1])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc7741e76sm26499295ad.98.2025.05.09.22.21.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 May 2025 22:21:15 -0700 (PDT)
-Message-ID: <a77fbf1a-0155-4e88-b520-043b025d44f7@daynix.com>
-Date: Sat, 10 May 2025 14:21:13 +0900
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uDdNk-0003uB-Lr
+ for qemu-devel@nongnu.org; Sat, 10 May 2025 02:08:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uDdNc-0006uv-Jr
+ for qemu-devel@nongnu.org; Sat, 10 May 2025 02:08:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746857290;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TGU0S0Ns6ALcVlmeEWOIZTkTyU/QcH+0PP9FqpiJmUM=;
+ b=RWfJF7lqmTXBCBNngMu5v/qYnPYis3+3j3fjrbJ29OXESRWvcd25XqPYZNFQRQntZ9/j+B
+ 1puyA6DHyV8u3aSsrGH/vRZVVhYG5xy8XamBCZ8p/LY3BkcplIMvHWI2MhpicDrHa9JMex
+ kT7Rtwf40tVy8fGwbDLiqHNmUKuh2IY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-MqoOGSiGNtK85nH6F98TLA-1; Sat,
+ 10 May 2025 02:08:06 -0400
+X-MC-Unique: MqoOGSiGNtK85nH6F98TLA-1
+X-Mimecast-MFC-AGG-ID: MqoOGSiGNtK85nH6F98TLA_1746857285
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA2F8180045B; Sat, 10 May 2025 06:08:05 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EACC53000221; Sat, 10 May 2025 06:08:04 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 7313B21E6768; Sat, 10 May 2025 08:08:02 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Da?=
+ =?utf-8?Q?ud=C3=A9?=
+ <philmd@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Richard
+ Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH RFC 00/10] qapi: remove all TARGET_* conditionals from
+ the schema
+In-Reply-To: <aB4JiDnVE8XrVfax@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Fri, 9 May 2025 14:56:24 +0100")
+References: <20250508135816.673087-1-berrange@redhat.com>
+ <c7623b1c-01c1-46c0-bfa6-dc34aa4e722d@linaro.org>
+ <aB3EpKu0iafLtgVT@redhat.com> <874ixt6gsd.fsf@pond.sub.org>
+ <aB4JiDnVE8XrVfax@redhat.com>
+Date: Sat, 10 May 2025 08:08:02 +0200
+Message-ID: <874ixt2e2l.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] docs: Bump sphinx to 8.2.3
-To: John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- devel@daynix.com
-References: <20250505-sphinx82-v1-0-85f2418b33b1@daynix.com>
- <20250505-sphinx82-v1-1-85f2418b33b1@daynix.com>
- <CAFn=p-bSMFVScSNewv_92-3u2FyyN5CYpUkABppazW53CUF-jw@mail.gmail.com>
- <871pt1ngeu.fsf@pond.sub.org>
- <CAFn=p-YmggufG8c7no68sSBca0_cZNO=fqZbLR0hcf2Lm40n_Q@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAFn=p-YmggufG8c7no68sSBca0_cZNO=fqZbLR0hcf2Lm40n_Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.413,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,96 +95,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/05/08 3:23, John Snow wrote:
-> 
-> 
-> On Wed, May 7, 2025 at 1:22 AM Markus Armbruster <armbru@redhat.com 
-> <mailto:armbru@redhat.com>> wrote:
-> 
->     John Snow <jsnow@redhat.com <mailto:jsnow@redhat.com>> writes:
-> 
->      > On Mon, May 5, 2025 at 8:19 AM Akihiko Odaki
->     <akihiko.odaki@daynix.com <mailto:akihiko.odaki@daynix.com>>
->      > wrote:
->      >
->      >> sphinx 5.3.0 fails with Python 3.13.1:
->      >>
->      >> ../docs/meson.build:37: WARNING:
->      >> /home/me/qemu/build/pyvenv/bin/sphinx-build:
->      >> Extension error:
->      >> Could not import extension sphinx.builders.epub3 (exception: No
->     module
->      >> named 'imghdr')
->      >>
->      >> ../docs/meson.build:39:6: ERROR: Problem encountered: Install a
->     Python 3
->      >> version of python-sphinx and the readthedoc theme
->      >>
->      >> Bump sphinx to 8.2.3 and also sphinx_rtd_theme as required for
->     the new
->      >> sphinx version.
->      >>
->      >> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com
->     <mailto:akihiko.odaki@daynix.com>>
-> 
->     [...]
-> 
->      > Can we set our suggested version to 6.2.0 instead? This version
->     removed
->      > reliance on 'imghdr' but merely requires Python 3.8+ which is our
->     current
->      > stated minimum.
->      >
->      > If Thomas upgrades our minimum Python to 3.9, then we could use
->     something
->      > as new as 7.2.0 which requires 3.9+.
-> 
->     Thomas did: commit d64db833d6.
-> 
-> 
-> OK, that being said, let's try setting both the preferred and minimum 
-> versions to *7.2.0*. We could theoretically aim higher, but let's start 
-> conservatively for now and see what, if anything, breaks before we get 
-> more adventurous.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-7.2.0 as minimum and 7.2.6 as preferred perhaps? Patch releases fix 
-regressions so the latest of 7.2.x may have the minimal risk.
+> On Fri, May 09, 2025 at 03:43:30PM +0200, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>> > I think we have to distinguish between what made sense in the context
+>> > of our original design, from what makes sense for our future design(s)
+>> > and plans.
+>>=20
+>> No argument.
+>>=20
+>> The original design idea is simple: #ifdef CONFIG_FOO for QAPI schema,
+>> to not generate dead code, and to not have silly stubs.  Even if you
+>> don't care about wasting disk and address space, you probably care about
+>> wasting developer time on writing silly stubs and waiting for dead code
+>> to compile.
+>>=20
+>> Initially, target-specific macros did not work in conditions.  That was
+>> easy enough to fix, so we did.
+>
+> Ah, yes, forgot that bit of history.
+>
+>> > I can understand why we took the direction we did historically, but I
+>> > think we have unwittingly created problems for ourselves that are
+>> > looking increasingly worse than the problems we considered solved.
+>> >
+>> >
+>> > In the other thread I pointed out my dislike for QAPI schema not being
+>> > fully self-describing when we have conditionals present, even today,
+>> > but there are other aspects that trouble me more wrt conditionals.
+>>=20
+>> I'm not sure I have all this present in my mind...  Can you summarize
+>> what troubles you?  Or point me to the message(s)?
+>
+> Oppps, sorry, should have cross-linked to:
+>
+>   https://lists.nongnu.org/archive/html/qemu-devel/2025-05/msg01947.html
 
-> 
-> I think 7.2 is new enough that I can remove the vast majority of the 
-> compatibility crud in docs/sphinx/compat.py and it will make my life a 
-> lot easier, without being so new as to require a bleeding edge version 
-> of Python that may not be available on older platforms we still support 
-> for package building.
-> 
-> I think it's not a huge deal to support Sphinx 7.x and 8.x for now. I am 
-> just reluctant to suggest that we should have a pinned (very modern) 
-> Sphinx version for doc building, because I do not know what the impact 
-> of that would be on downstream builds that offer documentation from SRPM 
-> (Red Hat, etc) which may not be able to procure a bleeding-edge Sphinx 
-> from PyPI from an isolated build environment.
-> 
-> 
->      > I'd say 8.0.0 is too new (requires 3.10+) and conflicts with our
->     stated
->      > minimums.
-> 
->     Requiring more recent versions of dependencies for optional parts of the
->     build can be okay, but the degradation must be graceful.
-> 
->     This makes sense only when the more recent dependencies save us enough
->     trouble to justify inconveniencing users stuck on older dependencies as
->     well as the additional build system complexity.
-> 
->     I have no opinion on whether that's the case here.  If you think it is,
->     make your argument :)
-> 
->     "Graceful" means that if we require Sphinx 8, which requires Python
->     3.10, the build must still succeed when we have only Python 3.9 (our
->     stated minimum), but we don't build documentation then.  If the user
->     demands documentation with configure --enable-docs, the build fails.
-> 
->     [...]
-> 
+Hadn't gotten to that thread...  Thanks!
+
+>> > Since the schema is currently target specific, a mgmt app has to probe
+>> > for QEMU capabilities once for every target binary. QEMU has ~30 system
+>> > binaries, and if querying capabilities takes 250 milliseconds, then
+>> > querying all binaries is ~ 7 seconds of work. Libvirt mitigates this
+>> > overhead by caching the results of capabilities probes. We periodically
+>> > suffer delays when we must invalidate our cache though, typically on
+>> > software upgrades, and this is unpleasant for users who think we've
+>> > got stuck or just have bad slow code.
+>>=20
+>> How does cache invalidation work?  Timestamp of binary?
+>
+> ctime of libvirt itself and ctime of QEMU binary are the two
+> primary factors.
+>
+> We had to throw in other factors on top for various edge cases
+> over time. So we also check the mtime of the directory containing
+> QEMU loadable modules, as features reported can vary if the user
+> installs new device/backend modules. Also check kernel version,
+> microcode version, CPUID signature, because that can affect
+> availability of some features.
+>
+> NB, this is caching more than just the QMP schema - we issue
+> many 'query-xxxx' commands when probing QEMU.
+>
+> https://gitlab.com/libvirt/libvirt/-/blame/master/src/qemu/qemu_capabilit=
+ies.c#L5406
+>
+>> > Even if we had a QAPI schema that didn't vary per target, this is
+>> > repeated probing is tricky to avoid when we have completely independant
+>> > binaries. We would need QEMU to have some internal "build id", so that
+>> > we could detect that all binaries came from the same build, to let us
+>> > avoid re-probing each binary.
+>>=20
+>> Back when I created QAPI/QMP introspection, I floated the idea to put
+>> something into the QMP greeting to enable safe caching.  Libvirt
+>> developers told me they didn't need that.  I don't remember the details,
+>> but I guess the cache invalidation they already had was deemed good
+>> enough.
+>
+> I don't recall that discussion, but I would think the problem is
+> that we probe much more than just QMP schema. Actually thinking
+> about it, the fact that we probe more than just QMP schema means
+> my idea of probing once and getting the answer for all targets
+> may not be practical. Some of the query-xxx  commands we run will
+> likely need to know the target.
+
+Yes.
+
+We could split the cache along validity conditions.  Possibly worth the
+extra complexity if expensive probes then live longer in their cache.
+
+I'd love to have a list of probes libvirt runs and why.
 
 
