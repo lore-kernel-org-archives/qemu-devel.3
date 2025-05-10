@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 955FDC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 May 2025 09:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F8C9C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 May 2025 12:14:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDgxS-0001lK-SS; Sat, 10 May 2025 05:57:26 -0400
+	id 1uDj59-0007Eh-TZ; Sat, 10 May 2025 08:13:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uDgxQ-0001cF-7o
- for qemu-devel@nongnu.org; Sat, 10 May 2025 05:57:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1uDj58-0007EU-S4; Sat, 10 May 2025 08:13:30 -0400
+Received: from sender4-op-o12.zoho.com ([136.143.188.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uDgxM-0003yS-Oj
- for qemu-devel@nongnu.org; Sat, 10 May 2025 05:57:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746871038;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bdrRRYre6/EVEq3NOcB7lioI/8kz6plC4TCFCFG/ziA=;
- b=KhVpPafZbpVMYsM91W9pshfmwjPJ2KVsjIZdcQxY1GYtD3rE5EdPolwW/G7hg4zdDk8JGs
- /hFHOnecWPnZAqU08kbO5+1Ran3gPFDI8eIJTAElP+LKzS/OWrW05hWRuSC8SyL25g8VEp
- sdH0wCuTKAkEQUCTtQoqukUlRFwyf2U=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-vtFZ2wPOPAiUaRwsB0XbvA-1; Sat,
- 10 May 2025 05:57:15 -0400
-X-MC-Unique: vtFZ2wPOPAiUaRwsB0XbvA-1
-X-Mimecast-MFC-AGG-ID: vtFZ2wPOPAiUaRwsB0XbvA_1746871034
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D60681955DC5; Sat, 10 May 2025 09:57:13 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1F91819560B0; Sat, 10 May 2025 09:57:13 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 75D0721E6768; Sat, 10 May 2025 11:57:10 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 01/10] qapi: expose rtc-reset-reinjection command
- unconditionally
-In-Reply-To: <20250508135816.673087-2-berrange@redhat.com> ("Daniel
- P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 8 May 2025 14:58:07
- +0100")
-References: <20250508135816.673087-1-berrange@redhat.com>
- <20250508135816.673087-2-berrange@redhat.com>
-Date: Sat, 10 May 2025 11:57:10 +0200
-Message-ID: <87ldr4zt3d.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1uDj56-0003qv-H0; Sat, 10 May 2025 08:13:30 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1746879175; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=CQqi0aQRkMyWKiBG9y86zueiHzyBoWZqTdb3ij3pG8We7Oz63UKphmty9iyppXAjOaR3Dr3u3sLcQ9A7dSj4oVSpcKNGwo2kE+1ZKku/6GUbPCV14trBRb3vBleTaRXQi+69VhHEUVhbopdgji6X5W8Ykq1qFlre+5Y5GLtMv8E=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1746879175;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=da87Gvfr92nTmRe9YFikUiBtrxbK9MwMgr9kg1RROaY=; 
+ b=F2C1bYxeUEC1urcRyP1UPJz62kUBFOEP7IdQODVsJo7yLSDsoSALc6uKvH/uFVG0I4fJsL2OjMeDN4E4TeDh5H6CWIgKV/35Kh1kAZ8M9G/awMKXuj/5LdVHYStEdYRozFK3+zuGP5FUiUTKy6Ph0SeJZ8XEmCSZudLtBnVQ2g0=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1746879175; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=da87Gvfr92nTmRe9YFikUiBtrxbK9MwMgr9kg1RROaY=;
+ b=NxwCYmm7eiB2fDVfMi7Ugvzij/zXWswkfpvC5dsuDY+f/6q4FMz302nNwLMRWE45
+ HjIMfCzv2LI8oaqYJ2NHkJgcnhbGr01dwHAmPRyZevoYq2DylhXXyBIG84lrM/GGwFb
+ 86fSLBIPcOEpeV8WfR9FkPIlxRdqa96yTlsxVx+Y=
+Received: by mx.zohomail.com with SMTPS id 1746879172685901.4554516787928;
+ Sat, 10 May 2025 05:12:52 -0700 (PDT)
+Message-ID: <d370ffec-f430-4377-80bc-323d5087834c@collabora.com>
+Date: Sat, 10 May 2025 15:12:45 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.413,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 12/14] ui/gtk-gl-area: Remove extra draw call in refresh
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-arm@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Dongwon Kim <dongwon.kim@intel.com>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>
+References: <20250506125715.232872-1-alex.bennee@linaro.org>
+ <20250506125715.232872-13-alex.bennee@linaro.org>
+ <d5a8cec1-f689-4d31-b6bb-b63eaa4ce2af@daynix.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <d5a8cec1-f689-4d31-b6bb-b63eaa4ce2af@daynix.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.12;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-op-o12.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -92,214 +94,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 5/10/25 07:52, Akihiko Odaki wrote:
+> On 2025/05/06 21:57, Alex Bennée wrote:
+>> From: Dongwon Kim <dongwon.kim@intel.com>
+>>
+>> This partially reverts commit 77bf310084dad38b3a2badf01766c659056f1cf2
+>> which causes some guest display corruption when gtk-gl-area
+>> is used for GTK rendering (e.g. Wayland Compositor) possibly due to
+>> simulataneous accesses on the guest frame buffer by host compositor
+>> and the guest.
+> 
+> Simply reverting the part of the commit may re-introduce the problem the
+> commit tried to solve, which will be a regression as the commit is
+> already included in releases.
+> 
+> I guess the problem is that the gl_block callback of GraphicHwOps is not
+> properly implemented and it is what should be fixed.
 
-> This removes the TARGET_I386 condition from the rtc-reset-reinjection
-> command. This requires providing a QMP command stub for non-i386 target.
-> This in turn requires moving the command out of misc-target.json, since
-> that will trigger symbol poisoning errors when built from target
-> independent code.
->
-> Rather than putting the command into misc.json, it is proposed to create
-> misc-$TARGET.json files to hold commands whose impl is conceptually
-> only applicable to a single target. This gives an obvious docs hint to
-> consumers that the command is only useful in relation a specific target,
-> while misc.json is for commands applicable to 2 or more targets.
+The reverted commit made QEMU GTK GUI unusable under Wayland. It was
+fixing problem which requires very specific QEMU setup, while breaking
+generic setups. The offending change should be reverted as it introduced
+a bigger problem. A proper solution should be found, meanwhile QEMU GTK
+under Wayland should be restored, IMO.
 
-Starting with this patch, the series structures the manual like this:
+For the reference see [1]. First bug reports about a mirrored display
+problem were made to me on IRC a year ago and the root of the problem
+was identified only couple months ago.
 
-    =3D Machines
-    ... contents of machine.json ...
-    =3D=3D Specific to S390
-    ... contents of machine-s390.json ...
+[1]
+https://lore.kernel.org/qemu-devel/5aedf1ad-d9b0-4edb-a050-f3d9bee9bccb@collabora.com/
 
-and
+As of today, the GTK problem isn't understood.
 
-    =3D Miscellanea
-    ... contents of misc.json ...
-    =3D=3D Specific to ARM
-    ... contents of misc-arm.json ...
-    =3D=3D Specific to i386
-    ... contents of misc-i386.json ...
-
-Except it doesn't add =3D=3D subsection headers, but that's detail.  The
-text I show for them here is crap.
-
-Possible alternative: collect the target-specific stuff in one place
-rather than two:
-
-    =3D Targets
-    =3D=3D ARM
-    =3D=3D i386
-    =3D=3D S390
-
-Again the header text is crap.
-
-Is separating the current contents of misc-<target>.json from
-machine-<target>.json useful?
-
-> The current impl of qmp_rtc_reset_reinject() is a no-op if the i386
-> RTC is disabled in Kconfig, or if the running machine type lack any
-> RTC device. Thus the stub impl for non-i386 targets retains this
-> no-op behaviour, instead of reporting a Error which is the more usual
-> choice for commands invoked against unsupported configurations.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> ---
->  hw/i386/monitor.c        |  2 +-
->  qapi/meson.build         |  1 +
->  qapi/misc-i386.json      | 24 ++++++++++++++++++++++++
->  qapi/misc-target.json    | 17 -----------------
->  qapi/qapi-schema.json    |  1 +
->  stubs/meson.build        |  1 +
->  stubs/monitor-i386-rtc.c | 10 ++++++++++
->  7 files changed, 38 insertions(+), 18 deletions(-)
->  create mode 100644 qapi/misc-i386.json
->  create mode 100644 stubs/monitor-i386-rtc.c
->
-> diff --git a/hw/i386/monitor.c b/hw/i386/monitor.c
-> index 1921e4d52e..79df96562f 100644
-> --- a/hw/i386/monitor.c
-> +++ b/hw/i386/monitor.c
-> @@ -26,7 +26,7 @@
->  #include "monitor/monitor.h"
->  #include "qobject/qdict.h"
->  #include "qapi/error.h"
-> -#include "qapi/qapi-commands-misc-target.h"
-> +#include "qapi/qapi-commands-misc-i386.h"
->  #include "hw/i386/x86.h"
->  #include "hw/rtc/mc146818rtc.h"
->=20=20
-> diff --git a/qapi/meson.build b/qapi/meson.build
-> index eadde4db30..3a9bd06104 100644
-> --- a/qapi/meson.build
-> +++ b/qapi/meson.build
-> @@ -64,6 +64,7 @@ if have_system
->      'qdev',
->      'pci',
->      'rocker',
-> +    'misc-i386',
->      'tpm',
->      'uefi',
->    ]
-> diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
-> new file mode 100644
-> index 0000000000..d5bfd91405
-> --- /dev/null
-> +++ b/qapi/misc-i386.json
-> @@ -0,0 +1,24 @@
-> +# -*- Mode: Python -*-
-> +# vim: filetype=3Dpython
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-
-Might be cleaner to add this to all qapi/*.json first, and in a separate
-patch.
-
-> +
-> +##
-> +# @rtc-reset-reinjection:
-> +#
-> +# This command will reset the RTC interrupt reinjection backlog.  Can
-> +# be used if another mechanism to synchronize guest time is in effect,
-> +# for example QEMU guest agent's guest-set-time command.
-> +#
-> +# Use of this command is only applicable for x86 machines with an RTC,
-> +# and on other machines will silently return without performing any
-> +# action.
-
-This paragraph replaces ...
-
-> +#
-> +# Since: 2.1
-> +#
-> +# .. qmp-example::
-> +#
-> +#     -> { "execute": "rtc-reset-reinjection" }
-> +#     <- { "return": {} }
-> +##
-> +{ 'command': 'rtc-reset-reinjection' }
-> diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-> index 42e4a7417d..5d0ffb0164 100644
-> --- a/qapi/misc-target.json
-> +++ b/qapi/misc-target.json
-> @@ -2,23 +2,6 @@
->  # vim: filetype=3Dpython
->  #
->=20=20
-> -##
-> -# @rtc-reset-reinjection:
-> -#
-> -# This command will reset the RTC interrupt reinjection backlog.  Can
-> -# be used if another mechanism to synchronize guest time is in effect,
-> -# for example QEMU guest agent's guest-set-time command.
-> -#
-> -# Since: 2.1
-> -#
-> -# .. qmp-example::
-> -#
-> -#     -> { "execute": "rtc-reset-reinjection" }
-> -#     <- { "return": {} }
-> -##
-> -{ 'command': 'rtc-reset-reinjection',
-> -  'if': 'TARGET_I386' }
-
-... the conditional.
-
-Before, attempting to execute the command fails with CommandNotFound.
-
-Afterwards it succeeds without doing anything.  I think it should fail
-instead.  CommandNotFound would be a lie, so change it to GenericError.
-
-"Specific to target" is no longer machine-readable.  Should
-machine-readability be (or become) desirable, we could expose it via
-suitable QAPI features, e.g. 'features': ['target-i386'].
-
-> -
->  ##
->  # @SevState:
->  #
-> diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
-> index 7bc600bb76..96f6aa4413 100644
-> --- a/qapi/qapi-schema.json
-> +++ b/qapi/qapi-schema.json
-> @@ -61,6 +61,7 @@
->  { 'include': 'replay.json' }
->  { 'include': 'yank.json' }
->  { 'include': 'misc.json' }
-> +{ 'include': 'misc-i386.json' }
->  { 'include': 'misc-target.json' }
->  { 'include': 'audio.json' }
->  { 'include': 'acpi.json' }
-> diff --git a/stubs/meson.build b/stubs/meson.build
-> index 63392f5e78..9907b54c1e 100644
-> --- a/stubs/meson.build
-> +++ b/stubs/meson.build
-> @@ -77,6 +77,7 @@ if have_system
->    stub_ss.add(files('target-monitor-defs.c'))
->    stub_ss.add(files('win32-kbd-hook.c'))
->    stub_ss.add(files('xen-hw-stub.c'))
-> +  stub_ss.add(files('monitor-i386-rtc.c'))
->  endif
->=20=20
->  if have_system or have_user
-> diff --git a/stubs/monitor-i386-rtc.c b/stubs/monitor-i386-rtc.c
-> new file mode 100644
-> index 0000000000..ee2e60d95b
-> --- /dev/null
-> +++ b/stubs/monitor-i386-rtc.c
-> @@ -0,0 +1,10 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "qapi/qapi-commands-misc-i386.h"
-> +
-> +void qmp_rtc_reset_reinjection(Error **errp)
-> +{
-> +    /* Nothing to do since non-x86 machines lack an RTC */
-> +}
-
-I think I'd create one stub file per qapi/<foo>-<target>.json.
-
+-- 
+Best regards,
+Dmitry
 
