@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3F8C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 May 2025 15:59:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2C0DC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 May 2025 16:06:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDmbG-00058E-5z; Sat, 10 May 2025 11:58:54 -0400
+	id 1uDmhh-0001Ka-Et; Sat, 10 May 2025 12:05:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1uDmbF-000585-9X
- for qemu-devel@nongnu.org; Sat, 10 May 2025 11:58:53 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1uDmhf-0001KG-4m
+ for qemu-devel@nongnu.org; Sat, 10 May 2025 12:05:31 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1uDmbD-0006fz-MT
- for qemu-devel@nongnu.org; Sat, 10 May 2025 11:58:53 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-22fa414c565so21986725ad.2
- for <qemu-devel@nongnu.org>; Sat, 10 May 2025 08:58:51 -0700 (PDT)
+ id 1uDmhd-0007ev-Ee
+ for qemu-devel@nongnu.org; Sat, 10 May 2025 12:05:30 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-74068f95d9fso3010857b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 10 May 2025 09:05:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746892730; x=1747497530; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746893128; x=1747497928; darn=nongnu.org;
  h=mime-version:user-agent:content-transfer-encoding:references
  :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
  :date:message-id:reply-to;
  bh=7w6u/K+jjAGvqxuoEObDTwiO8Ld7zXcOM3VbP7umGmA=;
- b=cTXXjxEn0Voh8PIUuvTEtNLDNoLwVqA6z8HGE1swLYbRZ/U3tQc+grt8yf6XOgd1WK
- r4L4C4fShl3Y3XRI2vgB18JGeR2Nw3HypgNKDQkthBGd3O/cIF1byKEWoLbD/s2Iw7A8
- vmftDEufwbMpoB2dNui/z3Iq/CCyj6YzOqzydCu0mHpgetx/wsWaelzyD4OayeodoouG
- J7mxu+QEysCundYBOGDqM8+nLpLEg8bRHJ123BZe4WJyBwvVodpE5bi74k1xXmhtcLSy
- PZqKc+TWvs4iGjoIAUI9fztbF89Pbz2y2eEMi7b7U3HhHO9tlB+a68L4YLeftVGZ0BUQ
- tl+g==
+ b=ZqAyTmeKzarY1t6fb0xaAmeQBXWVGp8cWMCG545ZPsnHgqrNfhlqLWM+09GCSQpF3k
+ JT5d8Y/PQShbM8POKT/DLkhwe1EeUqsM2Zb7QoQ5F8DLV6+rWgrGiCzH/v6iqUwzibec
+ m/DIjD8+hVuVnQlE7RoysTk/XbK6upuvjmKguhAMGXPABfXLT2Syuft3/SmEtPnsLdSi
+ zQ9D3G+yksrEmFsKsAEKL8Df1aGBMzQW5LuyBs2G4sE/NEDolSq1K9eNFgqlGPXryPXD
+ /mhT2zppmIvkQK8dzAKMaH1Twl5cWxn9C4468hoQGzMNBY5bEY7aqW2DiNE/m8e8d9iv
+ DmaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746892730; x=1747497530;
+ d=1e100.net; s=20230601; t=1746893128; x=1747497928;
  h=mime-version:user-agent:content-transfer-encoding:references
  :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
  bh=7w6u/K+jjAGvqxuoEObDTwiO8Ld7zXcOM3VbP7umGmA=;
- b=eR21zbaQuB3+XnxDWrStH5TbrXtlaXoMOH1dS/gFyAYefLy8NlGo8O3JukYymWmjLe
- S7m0VamBJd2Juy3TTSLfrPNITaZ4IpnEs8mh2/eUyQTyWm+wbKsgtuuQMHHm0+C0ohZw
- zVrAbHctoG3bBgkA9VOBsp2Xs0zvq6mI2AFCOZ5vrnKB7wje5flQC52Kw5zSwClq8437
- FDq3yf+Lgn+bIlHw1H9tMYU2FbuFPvWbM79Qgg+kSPfMNPWrobardhjQYbtz7LgID3Oc
- PxLzXcKkOeAMejceln5fRPBzRojC5bXEI88PTvE0Asj0+sjZKXzjV5oEv2G5NqtB9yR9
- EsYw==
-X-Gm-Message-State: AOJu0YyTC7UOjfj12NlmELsQXBm2N950t0sWmG3jboZIYKfr1fNYfWbh
- n6fw1ofESYpw+6BFTqJT+ZmRSVK3yH8Us6NODbkuuNyiKmnAuZ/t
-X-Gm-Gg: ASbGnctU4sw9FnHi1km7Hmcrr7km6gdiG72MDLx61w3Sy5CJqC4BTrUpv6pmqe6aBwR
- lgF7FcbumgES9+OKTfGWQ4hXqgUPuUtTnraHLsWjOPY1NgdwUsSrjumXCal0IucOfLqu5UCmtX2
- jo2KpOJrnsfVCRIchaUqGO2FvQRknnVUOv+ZWQ1g/mWA/FVvfD7tSNXdSAHmW5+xjht/S7fAm8D
- TpSp0gPytFcg/jid9RNTFW8K/rsacppGDxsvb3G3jiJe0fjbwHUEpzA1pCu7oHAmKAhYRu+3MTI
- KTQuUTRkGtWe5jqyzrVFHWWTTi1mXQlzfZWZmyNo265/StXhKKYTKYfE/twIsihu
-X-Google-Smtp-Source: AGHT+IFRAvOdAMCg+z6xRSunGjqNjPV8Cvypw++eo58yvyT+ICQdtUpBXpdGtd+5l/4gq42zpH4cSQ==
-X-Received: by 2002:a17:902:da8e:b0:22e:7971:4d48 with SMTP id
- d9443c01a7336-22fc918bc44mr108302955ad.45.1746892730020; 
- Sat, 10 May 2025 08:58:50 -0700 (PDT)
+ b=NLKWyv0la8fgO2rehM9N2bRB0q18g0d54nzkXJF6XEHD6D4L/Ve147uF4sf4D0ubct
+ 924m6JZa1D3M+bAi6HWFgnrLWenHl9+Sgm9BI/wLAwFWJ5s+YbCOBraZQZ5rSDw3wwiW
+ H7e6mFWQCHWQRpvxZdoalgPA26JbXqZYXMNsff9CwMNq8m31jBAqznUrEZ6+63hGe2uZ
+ TZeyYRFuNhltBQI4tRbIzTb5wwrELDZPGLKka+y1LfgkUypaMhmQKYZLiVd/NbZ7eCSy
+ 5zyck9YTwq/PkMVWUOCi0J79OcbXMNzQhP3IAhsv9swr5+pEhOHV0elAQ/ZVK1QnC/1P
+ OgQQ==
+X-Gm-Message-State: AOJu0YxE/zA/CsnFv8ZpxhgR9xdSxXVD2q/AEPA1hH/o2vrtcyyhzeYj
+ uglXAIvj6m8DbU6b5Wy7SGvXJP301bBd8JqA9zBFbjjfutFe8sxaItl8ynXp
+X-Gm-Gg: ASbGncsmjN+ClPw5jKrQZEg9FXLFYLX3SWuWJ9XGmf8BLaOBJNPe2uw3nP28ECq1/gN
+ X6zuFOHhqDgBDintk1redvNzmqG+a5AyFUR4msQGQqiqLprp/TmLa29jF7HsLwyJb9OzMtpxAcc
+ QimwZmXEojOFDbvvoNBSt8A09YTGALe8Pdox6k5oGhfsmfR4aVjpbSESrzUx4EojyDW6u7O3ukH
+ oiXZsywob6VlWela4ybCMFa2qA1C9J7gUo3e8bDpUwZGtJulRRfoHlQLlpfek5Y3QKw4cnUTjYm
+ 3e/iC0dqS/WrjHypS0j6Q5Le3I8dAlsRaPYOxi07T2gMjrhAPxGzgKIqp7m6WtdGaC1FFCA7WKQ
+ =
+X-Google-Smtp-Source: AGHT+IG5tBra8iMuYVtjtior9CZYn6pXhNjttxocz0qDZF2QmJxmAuz9PV4XW6wyLlk/k7aScy5Xwg==
+X-Received: by 2002:a05:6a00:10c9:b0:740:6f69:dce9 with SMTP id
+ d2e1a72fcca58-7423b2f7d37mr10595768b3a.0.1746893127630; 
+ Sat, 10 May 2025 09:05:27 -0700 (PDT)
 Received: from [192.168.31.160] ([117.143.179.132])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc829eb97sm34276555ad.215.2025.05.10.08.58.48
+ d2e1a72fcca58-74237a3d3e9sm3349469b3a.125.2025.05.10.09.05.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 10 May 2025 08:58:49 -0700 (PDT)
-Message-ID: <a3e34458ddc2754390eaed7a8788d910450c5459.camel@gmail.com>
+ Sat, 10 May 2025 09:05:27 -0700 (PDT)
+Message-ID: <64502a9a9073d919c2524686ba8ef54929a30446.camel@gmail.com>
 Subject: Re: [PATCH] ui/gtk: Properly apply x/y scale when rendering GL area
 From: Weifeng Liu <weifeng.liu.z@gmail.com>
 To: =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@gmail.com>
 Cc: qemu-devel@nongnu.org, hikalium <hikalium@hikalium.com>, Alexander
  Orzechowski <orzechowski.alexander@gmail.com>, Gerd Hoffmann
  <kraxel@redhat.com>
-Date: Sat, 10 May 2025 23:58:26 +0800
+Date: Sun, 11 May 2025 00:05:23 +0800
 In-Reply-To: <CAJ+F1C+jPtvsY0yy9rZJLRLME9cC=p1bRGrXA3G1XQfJUmDXrg@mail.gmail.com>
 References: <20250419094959.224954-1-weifeng.liu.z@gmail.com>
  <CAJ+F1C+jPtvsY0yy9rZJLRLME9cC=p1bRGrXA3G1XQfJUmDXrg@mail.gmail.com>
@@ -78,8 +79,8 @@ Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.56.1 (3.56.1-1.fc42) 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=weifeng.liu.z@gmail.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=weifeng.liu.z@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
