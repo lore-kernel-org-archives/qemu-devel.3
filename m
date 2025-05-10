@@ -4,63 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9058CC3ABC9
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 May 2025 16:37:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90B82C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 May 2025 18:38:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDnBx-0004mv-1H; Sat, 10 May 2025 12:36:49 -0400
+	id 1uDp4o-0002ui-Um; Sat, 10 May 2025 14:37:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <whitebox@nefkom.net>)
- id 1uDnBu-0004mi-Sj
- for qemu-devel@nongnu.org; Sat, 10 May 2025 12:36:46 -0400
-Received: from mail-out.m-online.net ([2001:a60:0:28:0:1:25:1])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uDp4k-0002oj-KO
+ for qemu-devel@nongnu.org; Sat, 10 May 2025 14:37:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <whitebox@nefkom.net>)
- id 1uDnBs-0003ZF-Ey
- for qemu-devel@nongnu.org; Sat, 10 May 2025 12:36:46 -0400
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
- by mail-out.m-online.net (Postfix) with ESMTP id 4Zvs2Y5R6Fz1sFNS;
- Sat, 10 May 2025 18:36:37 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
- by mail.m-online.net (Postfix) with ESMTP id 4Zvs2Y4hxlz1qqlW;
- Sat, 10 May 2025 18:36:37 +0200 (CEST)
-X-Virus-Scanned: amavis at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
- by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavis, port 10024)
- with ESMTP id USUquRbOHs4S; Sat, 10 May 2025 18:36:27 +0200 (CEST)
-X-Auth-Info: 5CDLlVmWbkMV3dPEGnz1QMyxbNmvNtzGb4t07QcR2l+wviQu5kFhQrMyQ+dMMEgi
-Received: from igel.home (aftr-82-135-83-241.dynamic.mnet-online.de
- [82.135.83.241])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uDp4i-0007dp-GG
+ for qemu-devel@nongnu.org; Sat, 10 May 2025 14:37:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746902246;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=e21Jlz1Mh8gK0H9n5i/V8IFtuwOrGd/p8JADZpVMjoY=;
+ b=bTDYBZU4FzcTRWjvFxNDMSUZu4qUtgSS5mxBcgXMFjpcEIt0DvzgVaAYIwpTavkrr0hbFq
+ McY5rOuuM1ohhRIbNMWPA5R066P2ng03Rk8Vs9VSmHxIWV0KD5CWt+hGuH3Y8PqAwGFTtV
+ 9GSJAdH/qcJQusqry39YB/qTYyrCDeY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-0-bl10QYOpuTsEFBbPekOg-1; Sat,
+ 10 May 2025 14:37:25 -0400
+X-MC-Unique: 0-bl10QYOpuTsEFBbPekOg-1
+X-Mimecast-MFC-AGG-ID: 0-bl10QYOpuTsEFBbPekOg_1746902244
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.mnet-online.de (Postfix) with ESMTPSA;
- Sat, 10 May 2025 18:36:27 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
- id BE03E2C1955; Sat, 10 May 2025 18:36:26 +0200 (CEST)
-From: Andreas Schwab <schwab@linux-m68k.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  laurent@vivier.eu
-Subject: Re: [PATCH v5 21/24] target/m68k: Implement packed decimal real
- loads and stores
-In-Reply-To: <20250507211300.9735-22-richard.henderson@linaro.org> (Richard
- Henderson's message of "Wed, 7 May 2025 14:12:56 -0700")
-References: <20250507211300.9735-1-richard.henderson@linaro.org>
- <20250507211300.9735-22-richard.henderson@linaro.org>
-Date: Sat, 10 May 2025 18:36:26 +0200
-Message-ID: <875xi8zalx.fsf@igel.home>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4454C18003FC; Sat, 10 May 2025 18:37:24 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.39])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B8A3530001A1; Sat, 10 May 2025 18:37:22 +0000 (UTC)
+Date: Sat, 10 May 2025 14:35:37 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ stefanha@redhat.com,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [PULL 0/6] Ui patches
+Message-ID: <20250510183537.GA116900@fedora>
+References: <20250507054414.2284129-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: pass client-ip=2001:a60:0:28:0:1:25:1;
- envelope-from=whitebox@nefkom.net; helo=mail-out.m-online.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_LOW=-0.7,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="pW6kSACsBteVrxAa"
+Content-Disposition: inline
+In-Reply-To: <20250507054414.2284129-1-marcandre.lureau@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.413,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,38 +93,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mai 07 2025, Richard Henderson wrote:
 
-> +    /* Convert the 3 digit decimal exponent to binary. */
-> +    exp = ((hi >> 24) & 0xf)
-> +        + ((hi >> 20) & 0xf) * 10
-> +        + ((hi >> 16) & 0xf) * 100;
+--pW6kSACsBteVrxAa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-This is backwards.  An exponent of 123 is stored as 0x01230000, not
-0x03210000.
+Applied, thanks.
 
-> +    for (int i = 24; exp10; i -= 4, exp10 /= 10) {
-> +        res_hi |= (exp10 % 10) << i;
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
 
-Again, this is backwards.  Also, the decimal exponent of an extended
-precision number can be as big as 4951.  From the fpsp040:
+--pW6kSACsBteVrxAa
+Content-Type: application/pgp-signature; name=signature.asc
 
-| A15. Convert the exponent to bcd.
-|      As in A14 above, the exp is converted to bcd and the
-|      digits are stored in the final string.
-|
-|      Digits are stored in L_SCR1(a6) on return from BINDEC as:
-|
-|	 32               16 15                0
-|	-----------------------------------------
-|	|  0 | e3 | e2 | e1 | e4 |  X |  X |  X |
-|	-----------------------------------------
+-----BEGIN PGP SIGNATURE-----
 
-That is, the fourth digit of the exponent is stored in the upper 4 bits
-of the padding (OPERR is set if e4 is non-zero).
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgfnHkACgkQnKSrs4Gr
+c8gMhwf9Gd7eWEEDBnYrGgO4I/GVdyqnkELuUzPshC9ynQjfEnh8dafOYYDqV7Yr
+SKdyn9VAT0C+BToLmlsWmSKjZQIpMasJWzcurGemIemCnH+qQhJAAuko5PLuuif6
+1MTI3KhUkJnsLavb7MjP2E+6kMR79hc43bIfhSRdxBvxtfd4UyT2bG7+OmphEnQD
+fvnAzTy6BOpbCZ/Xj+Gt4BcuBcCZRlV0MLRSXm3aQ7q/6TgTNPem0Oq0KDOXq/vS
+ME+Qp3lXsgWJMOTAUZ45EaOK5xfdhkq7oHJrRvbrFYKnzC1Pr1BH70fk13xj6g+0
+MSunBH0RZ3gJV7HAT1b9EeUyOfsFRg==
+=Tkkg
+-----END PGP SIGNATURE-----
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+--pW6kSACsBteVrxAa--
+
 
