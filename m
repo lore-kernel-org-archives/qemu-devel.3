@@ -4,100 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE14C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 04:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CAF2C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 06:09:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDybc-00055E-Ox; Sun, 11 May 2025 00:48:05 -0400
+	id 1uDzrw-0002Cn-VH; Sun, 11 May 2025 02:09:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uDybX-00054q-97
- for qemu-devel@nongnu.org; Sun, 11 May 2025 00:48:00 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1uDzru-0002CD-8x
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 02:08:59 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uDybV-0002pa-Kn
- for qemu-devel@nongnu.org; Sun, 11 May 2025 00:47:59 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7423fb98cb1so1575573b3a.3
- for <qemu-devel@nongnu.org>; Sat, 10 May 2025 21:47:46 -0700 (PDT)
+ id 1uDzrr-0003s3-IF
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 02:08:57 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-22fa414c497so40362325ad.0
+ for <qemu-devel@nongnu.org>; Sat, 10 May 2025 23:08:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1746938865; x=1747543665;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1746943733; x=1747548533;
  darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SrRtF81GH+qwnsWqM1CfEyu3ujI3f2cd1a7b3ZRta5Q=;
- b=Aq/YzP983wTnin+qn/jIoWNHW5zS6jSjXKGBD45kAD4UIc+WUQNNx7rLDltskIStyF
- 5oyDDhyRWsqMOuSTYtabmh87UR7q23B1pES3KOXR40o+mlIW0Kv5jsb/5wmJzcZTau+2
- qKobS706+lL1ASNpo8l2y1BS8r2Wa6m7s0byICY2Neijt9YqSLB4cGbPeNkodswFJIEe
- wqHpGJ7K2K7u7F9WJBxsc3rEgYFBXA1ZqROI96gr23ioCM5m6ktum0gKBT+AfJjXBKUU
- XiHM2FYSjIO712P+ixxPF+Wup1rJw97Ceag5yeVWSuxFY2/2Re2gF5a/b7x8lp15DaMD
- 4S6w==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=zveZBuPtk3zGBEEgYVqGSXDbx7e0Rl6JL+tYwpwf9WU=;
+ b=3KUOOYvnKU2ZOzgyNgFps0cohLiPBYx0ay/w2j00AUpNwE8u9124LRwvzL52ZXl2+S
+ r8P+nWZMPEeqjPG9sOewZm+KG0fqKNXE8jCZrOfLNxGByJrDOjoi3E/rAJ9cWv7Xe86O
+ m4EPbsl3KPa22BQ7SmvYpmOMDChPU1Bmji22Md+ckxzt4CA4yhEzP4+RXYm9ckjhP2BY
+ mkawrm8ze55UZ0WqPxx3eG2XYrjImFie+RQNblh7biNEskx5zV6ybhRqhYwrIWRE+Qqb
+ RLcrvHHOfojA/+RrKY6IemDkCcMLz3n0gOkmb5LMKAhEDzihtgQeRptrFoNewE5AcCFY
+ diEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746938865; x=1747543665;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SrRtF81GH+qwnsWqM1CfEyu3ujI3f2cd1a7b3ZRta5Q=;
- b=kI4FGiwkfj5YWQ6B34729pbfFFT+7xURQ/y3d43MCfpfo8ZCDmxHX68osYrYHW8ww7
- W8QZ1Ixlg6S3t3/bZyVS4CjACl5REpUVwtAJ8dpq8m3qSu7l4q3lfl/tY64Izd9mLAu2
- w0tZ4ugPgwda+MNjWzUcFjZcO8hxdfGLFXfTV41nKNR794CI6subEJ/3YJds2NQL3hn2
- Y1chFfbJ3/LMaiX3tntLkxyPFYQT59LK+Nho38b5C4Lo74b+1YCJYRXX9PRQC236eV4S
- W91aJmo9VZfUW+GDEuZSJnBYJkxqgCioAFnp2eOKQw3SPp6D/MxX3VkJcr2rtcn8rr+T
- dkVg==
+ d=1e100.net; s=20230601; t=1746943733; x=1747548533;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=zveZBuPtk3zGBEEgYVqGSXDbx7e0Rl6JL+tYwpwf9WU=;
+ b=HRbFWUVKHvGJX4j9eDkmDAJl2MjYHVJ7pOU6hxH/m3V3joDHxPjTr5rlphj6xBE3tl
+ BdWCHku02nIXjcNZKvNhJMDXRAZ1g9fL1x88FxnTCb2H/urAR3+TK3IkK7iYk1RhkrJx
+ m7Q29+fAnYlxn46v/L+PrIIqZpRoMVYlfi0KKM264jaoZIWcuF9k3XNeqGwbGPjs+ytb
+ aGM2xJmwm1OKrG0N2l07iIzEHCh6Qj7oU1wCH4dtvjG6qmzqGsuDMpvtEEvdneepy3LP
+ DxUkFl1RcSVWkkGYUqGD4MdnCEusZeCAIDSkwIM+htgQ5GUTEt4N1gC+Sz0azw4tC0da
+ Dt5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUbjM034bx2lrFmuXoPgxQ1e/RHhSypupW7serdOri1hJLVP5onaugImeVnHzrrxmSsRcUgqY+sbPap@nongnu.org
-X-Gm-Message-State: AOJu0Yy7VnK/8TJ/SW9/RuCQUd4Pup+2ue60UxnXnd6e/lQrSLskcgG2
- N5ZIdBDaDY+x9tFVNhAWohJD+0C0tQA538rQnJKbH7DOjHU9L4MXyTFA7mexbPw=
-X-Gm-Gg: ASbGncuPQYb6bkkh0dlM3wNpRUK8fKa/gt17+SlWrPN/rjnDzAKamDYmgml/VlwGYrq
- 6IBwhMu+rnkXxGbYxMV6Y8nJbT6jKFwKRijCyYPNk8u5CAQ7V4J8/Ezt1Q+veDZm+/PfFa5HBpg
- 9hU3658GCghIu0oEO2rmMLGrpWh6UJd4trDjg+dCMkBp3YxspUR66+2VZek3LBn1IPbEx8hKvKA
- pVGfWfVLNrEbUft5hJZng30PZajQVbj/+75XFbCSYXeRoUP2ECVQNc82pSXuVbwK604ke2bWXFd
- iKDvDao8gjHRBtwqOgQk5BE6tIk2aGXdMS+YLZAFY/56tF133+WW7pwFCCKgDgc6
-X-Google-Smtp-Source: AGHT+IGOFC6UJsU6buYjnhgoT0/PLos+jBVFPbbBRktrvOZaJPyBBfGvddUn5CfkJfLeuw0zYftIeQ==
-X-Received: by 2002:a05:6a20:72a2:b0:1f3:388b:3b4b with SMTP id
- adf61e73a8af0-215abb8f2a2mr13495228637.15.1746938865446; 
- Sat, 10 May 2025 21:47:45 -0700 (PDT)
-Received: from [157.82.203.223] ([157.82.203.223])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc7546b48sm40933275ad.30.2025.05.10.21.47.40
+ AJvYcCUdVrh5bNpObWAxdJnztZDqiplkoNiuxpvUyKWN3NBram+RSrT0vlC1u/GbC1DSA1xPxu1D1ewdtFCi@nongnu.org
+X-Gm-Message-State: AOJu0YxgDO3xwYfQXzIyOmI8LHBnD8VrwJRYrpn8/fmC9SSZ/PvFglQV
+ qUPN1wbF8jYLDYQNgyz7LkNXw8rKfk7VAPyLsK5aThkSmexrAyDPshex9ME8lsw=
+X-Gm-Gg: ASbGncvCAhzmdYNvYwYLqKLdr0E34l41L1dU4zQUbJhxFfMh/MGE7sVXyFAATfZSTSV
+ LdvSjEZ/QEAEvJSaGv6rmbt1KQegPw9SZskw1NNgf87WzxnBYh9VFN6tgs6C75ILO3p9gsw2BE5
+ UOYcxhx3Xzz8UWGl6n7xP8P3CIqBza04KdN3EwEAlxd4HwG2OuWjJbOfzfzBS+zjUdy3PRboJLi
+ lR7dE1ISVjdCI8XBtBixP8wOUZxYsSiYv7pZfLF/JznUkk9ATNY+cwIiLLc7DqEYdh6gsJKnXV9
+ vvffRE7Kzzuv1wqepodc2b4rp92XN2UDHu6c4G6lVZsGcdfQvvHldgSea2d+2JSL4Q==
+X-Google-Smtp-Source: AGHT+IHDXS5CY88ycLwY3Fq5oMAx4VJgHuJJ2Jr7OqWlVPS/ade/D03qb/ggsHTFKz8d1VespOlxkg==
+X-Received: by 2002:a17:902:cf06:b0:21f:564:80a4 with SMTP id
+ d9443c01a7336-22fc9185dcfmr111730615ad.33.1746943733315; 
+ Sat, 10 May 2025 23:08:53 -0700 (PDT)
+Received: from localhost ([157.82.203.223])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d9443c01a7336-22fc828b4d9sm40986955ad.191.2025.05.10.23.08.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 10 May 2025 21:47:45 -0700 (PDT)
-Message-ID: <f7d65908-cd12-4c44-a80a-07e23ff27833@daynix.com>
-Date: Sun, 11 May 2025 13:47:39 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/14] ui/gtk-gl-area: Remove extra draw call in refresh
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- qemu-arm@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Dongwon Kim <dongwon.kim@intel.com>,
- Vivek Kasireddy <vivek.kasireddy@intel.com>
-References: <20250506125715.232872-1-alex.bennee@linaro.org>
- <20250506125715.232872-13-alex.bennee@linaro.org>
- <d5a8cec1-f689-4d31-b6bb-b63eaa4ce2af@daynix.com>
- <d370ffec-f430-4377-80bc-323d5087834c@collabora.com>
-Content-Language: en-US
+ Sat, 10 May 2025 23:08:53 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <d370ffec-f430-4377-80bc-323d5087834c@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
+Date: Sun, 11 May 2025 15:08:19 +0900
+Subject: [PATCH v3 02/10] futex: Support Windows
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250511-event-v3-2-f7f69247d303@daynix.com>
+References: <20250511-event-v3-0-f7f69247d303@daynix.com>
+In-Reply-To: <20250511-event-v3-0-f7f69247d303@daynix.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Hailiang Zhang <zhanghailiang@xfusion.com>
+Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org, 
+ devel@daynix.com, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.15-dev-edae6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -119,47 +107,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/05/10 21:12, Dmitry Osipenko wrote:
-> On 5/10/25 07:52, Akihiko Odaki wrote:
->> On 2025/05/06 21:57, Alex Bennée wrote:
->>> From: Dongwon Kim <dongwon.kim@intel.com>
->>>
->>> This partially reverts commit 77bf310084dad38b3a2badf01766c659056f1cf2
->>> which causes some guest display corruption when gtk-gl-area
->>> is used for GTK rendering (e.g. Wayland Compositor) possibly due to
->>> simulataneous accesses on the guest frame buffer by host compositor
->>> and the guest.
->>
->> Simply reverting the part of the commit may re-introduce the problem the
->> commit tried to solve, which will be a regression as the commit is
->> already included in releases.
->>
->> I guess the problem is that the gl_block callback of GraphicHwOps is not
->> properly implemented and it is what should be fixed.
-> 
-> The reverted commit made QEMU GTK GUI unusable under Wayland. It was
-> fixing problem which requires very specific QEMU setup, while breaking
-> generic setups. The offending change should be reverted as it introduced
-> a bigger problem. A proper solution should be found, meanwhile QEMU GTK
-> under Wayland should be restored, IMO.
-> 
-> For the reference see [1]. First bug reports about a mirrored display
-> problem were made to me on IRC a year ago and the root of the problem
-> was identified only couple months ago.
-> 
-> [1]
-> https://lore.kernel.org/qemu-devel/5aedf1ad-d9b0-4edb-a050-f3d9bee9bccb@collabora.com/
+Windows supports futex-like APIs since Windows 8 and Windows Server
+2012.
 
-That describes the context well. It should also be described with an 
-inline comment so that we will not lose track of the known problem.
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ meson.build                       |  2 ++
+ include/qemu/futex.h              | 53 ++++++++++++++++++++++++++++++---------
+ tests/unit/test-aio-multithread.c |  2 +-
+ util/lockcnt.c                    |  2 +-
+ util/qemu-thread-posix.c          |  4 +--
+ util/meson.build                  |  2 +-
+ 6 files changed, 48 insertions(+), 17 deletions(-)
 
-> 
-> As of today, the GTK problem isn't understood.
-> 
+diff --git a/meson.build b/meson.build
+index 27f115015285..11d42e4a7d39 100644
+--- a/meson.build
++++ b/meson.build
+@@ -835,11 +835,13 @@ emulator_link_args = []
+ midl = not_found
+ widl = not_found
+ pathcch = not_found
++synchronization = not_found
+ host_dsosuf = '.so'
+ if host_os == 'windows'
+   midl = find_program('midl', required: false)
+   widl = find_program('widl', required: false)
+   pathcch = cc.find_library('pathcch')
++  synchronization = cc.find_library('Synchronization')
+   socket = cc.find_library('ws2_32')
+   winmm = cc.find_library('winmm')
+ 
+diff --git a/include/qemu/futex.h b/include/qemu/futex.h
+index f57774005330..607613eec835 100644
+--- a/include/qemu/futex.h
++++ b/include/qemu/futex.h
+@@ -1,5 +1,5 @@
+ /*
+- * Wrappers around Linux futex syscall
++ * Wrappers around Linux futex syscall and similar
+  *
+  * Copyright Red Hat, Inc. 2017
+  *
+@@ -11,28 +11,37 @@
+  *
+  */
+ 
++/*
++ * Note that a wake-up can also be caused by common futex usage patterns in
++ * unrelated code that happened to have previously used the futex word's
++ * memory location (e.g., typical futex-based implementations of Pthreads
++ * mutexes can cause this under some conditions).  Therefore, qemu_futex_wait()
++ * callers should always conservatively assume that it is a spurious wake-up,
++ * and use the futex word's value (i.e., the user-space synchronization scheme)
++ * to decide whether to continue to block or not.
++ */
++
+ #ifndef QEMU_FUTEX_H
+ #define QEMU_FUTEX_H
+ 
++#define HAVE_FUTEX
++
++#ifdef CONFIG_LINUX
+ #include <sys/syscall.h>
+ #include <linux/futex.h>
+ 
+ #define qemu_futex(...)              syscall(__NR_futex, __VA_ARGS__)
+ 
+-static inline void qemu_futex_wake(void *f, int n)
++static inline void qemu_futex_wake_all(void *f)
+ {
+-    qemu_futex(f, FUTEX_WAKE, n, NULL, NULL, 0);
++    qemu_futex(f, FUTEX_WAKE, INT_MAX, NULL, NULL, 0);
++}
++
++static inline void qemu_futex_wake_single(void *f)
++{
++    qemu_futex(f, FUTEX_WAKE, 1, NULL, NULL, 0);
+ }
+ 
+-/*
+- * Note that a wake-up can also be caused by common futex usage patterns in
+- * unrelated code that happened to have previously used the futex word's
+- * memory location (e.g., typical futex-based implementations of Pthreads
+- * mutexes can cause this under some conditions).  Therefore, callers should
+- * always conservatively assume that it is a spurious wake-up, and use the futex
+- * word's value (i.e., the user-space synchronization scheme) to decide whether
+- * to continue to block or not.
+- */
+ static inline void qemu_futex_wait(void *f, unsigned val)
+ {
+     while (qemu_futex(f, FUTEX_WAIT, (int) val, NULL, NULL, 0)) {
+@@ -46,5 +55,25 @@ static inline void qemu_futex_wait(void *f, unsigned val)
+         }
+     }
+ }
++#elif defined(CONFIG_WIN32)
++#include <synchapi.h>
++
++static inline void qemu_futex_wake_all(void *f)
++{
++    WakeByAddressAll(f);
++}
++
++static inline void qemu_futex_wake_single(void *f)
++{
++    WakeByAddressSingle(f);
++}
++
++static inline void qemu_futex_wait(void *f, unsigned val)
++{
++    WaitOnAddress(f, &val, sizeof(val), INFINITE);
++}
++#else
++#undef HAVE_FUTEX
++#endif
+ 
+ #endif /* QEMU_FUTEX_H */
+diff --git a/tests/unit/test-aio-multithread.c b/tests/unit/test-aio-multithread.c
+index 8c2e41545a29..0ead6bf34ad1 100644
+--- a/tests/unit/test-aio-multithread.c
++++ b/tests/unit/test-aio-multithread.c
+@@ -330,7 +330,7 @@ static void mcs_mutex_unlock(void)
+     /* Wake up the next in line.  */
+     next = qatomic_read(&nodes[id].next);
+     nodes[next].locked = 0;
+-    qemu_futex_wake(&nodes[next].locked, 1);
++    qemu_futex_wake_single(&nodes[next].locked);
+ }
+ 
+ static void test_multi_fair_mutex_entry(void *opaque)
+diff --git a/util/lockcnt.c b/util/lockcnt.c
+index d07c6cc5cee4..ca27d8e61a5c 100644
+--- a/util/lockcnt.c
++++ b/util/lockcnt.c
+@@ -106,7 +106,7 @@ static bool qemu_lockcnt_cmpxchg_or_wait(QemuLockCnt *lockcnt, int *val,
+ static void lockcnt_wake(QemuLockCnt *lockcnt)
+ {
+     trace_lockcnt_futex_wake(lockcnt);
+-    qemu_futex_wake(&lockcnt->count, 1);
++    qemu_futex_wake_single(&lockcnt->count);
+ }
+ 
+ void qemu_lockcnt_inc(QemuLockCnt *lockcnt)
+diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+index eade5311d175..13459e44c768 100644
+--- a/util/qemu-thread-posix.c
++++ b/util/qemu-thread-posix.c
+@@ -345,7 +345,7 @@ static inline void qemu_futex_wait(QemuEvent *ev, unsigned val)
+ 
+ /* Valid transitions:
+  * - free->set, when setting the event
+- * - busy->set, when setting the event, followed by qemu_futex_wake
++ * - busy->set, when setting the event, followed by qemu_futex_wake_all
+  * - set->free, when resetting the event
+  * - free->busy, when waiting
+  *
+@@ -400,7 +400,7 @@ void qemu_event_set(QemuEvent *ev)
+         smp_mb__after_rmw();
+         if (old == EV_BUSY) {
+             /* There were waiters, wake them up.  */
+-            qemu_futex_wake(ev, INT_MAX);
++            qemu_futex_wake_all(ev);
+         }
+     }
+ }
+diff --git a/util/meson.build b/util/meson.build
+index e5cd327e2767..c756558d6763 100644
+--- a/util/meson.build
++++ b/util/meson.build
+@@ -27,7 +27,7 @@ else
+   util_ss.add(files('event_notifier-win32.c'))
+   util_ss.add(files('oslib-win32.c'))
+   util_ss.add(files('qemu-thread-win32.c'))
+-  util_ss.add(winmm, pathcch)
++  util_ss.add(winmm, pathcch, synchronization)
+ endif
+ util_ss.add(when: linux_io_uring, if_true: files('fdmon-io_uring.c'))
+ if glib_has_gslice
 
-If your guess about simultaneous accesses on the guest frame buffer is 
-correct, it's a bug of the emulated device, not GTK.
+-- 
+2.49.0
 
-Regards,
-Akihiko Odaki
 
