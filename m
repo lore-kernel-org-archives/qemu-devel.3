@@ -4,95 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EF9CC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 15:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF5FC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 16:14:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uE8iY-0006A8-2b; Sun, 11 May 2025 11:35:54 -0400
+	id 1uE9It-0001aH-Mv; Sun, 11 May 2025 12:13:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uE8iQ-00069m-Vg
- for qemu-devel@nongnu.org; Sun, 11 May 2025 11:35:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uE9Iq-0001Zj-2F
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 12:13:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uE8iL-0004Sh-53
- for qemu-devel@nongnu.org; Sun, 11 May 2025 11:35:45 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uE9In-0007Tb-K1
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 12:13:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746977739;
+ s=mimecast20190719; t=1746980000;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1dGZSm3Yz1zx4Xk8PBJBGVFbmWafRGsNAmrRbygIjgY=;
- b=SExGpDysSBozgrAEucpcLrIJ2J9uUVqMfV9Bx2BE7sMlSx0h4dkFYMinWHotMI4DiFvMZs
- CH7Q2vVaR3NsVgMvCDHG9dlBwiSP4Ao+vowxqlrGJv9L18IwpLh7vlEkn26oIqkEi8SLZL
- XKaCqePS8CNYdRlZ/BmUXKnlbZdpEJ4=
+ bh=8tAdELh0T/zSbeHd7+8bc0dRTH9dy+3avvPw3zGnF8I=;
+ b=Kz5VdcNnXQqILpr0x/Fw+fEfRdKUAEWAvRoDjU2tkDuybFcdWIAQGab8upoiaFbwsKgeHZ
+ 6j3fju0vhLY9JIuEjY4pQN2PnJ2P9yDYzyNhumMHZDSfY1krKbFbwyuRITKwcxrBWxuPBB
+ Y11rFV8wrms89In+bgEKWFSlxCfnBwU=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-348-HJYSCwWJNFmaQyfJ-JFNnw-1; Sun, 11 May 2025 11:35:37 -0400
-X-MC-Unique: HJYSCwWJNFmaQyfJ-JFNnw-1
-X-Mimecast-MFC-AGG-ID: HJYSCwWJNFmaQyfJ-JFNnw_1746977737
+ us-mta-641-OZu4X42fOJiwwe-JztKaSQ-1; Sun, 11 May 2025 12:13:19 -0400
+X-MC-Unique: OZu4X42fOJiwwe-JztKaSQ-1
+X-Mimecast-MFC-AGG-ID: OZu4X42fOJiwwe-JztKaSQ_1746979998
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a0bd786a53so1434089f8f.0
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 08:35:37 -0700 (PDT)
+ ffacd0b85a97d-3a0b662be0cso2305538f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 09:13:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746977736; x=1747582536;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1dGZSm3Yz1zx4Xk8PBJBGVFbmWafRGsNAmrRbygIjgY=;
- b=bn8ZSjon2f2T60g35A5uQvMdmoqMhk+IF1DHFT9RmWLkZrXSlxuDUfYnwYBKkuKnWd
- 3kGZAI2bwySG8NlKzm8gEtW2GvjWJSJD0JyAVvhVXo2vifAoCiEfvrQUejhxtrtEQUQu
- i/YGle7A932QnSlijyJnm5Q+ZuOpRJs7Uq7RjpO97Q4oC8q8JAXiwEDhug1kqDm1mFsL
- oafwFI4xeTdIPOpu4g/JZoB6pKLsu/UC8jUakkLrKIfUlpPJztSdo+tPaG7HB80VGoOY
- zrzcOMJYtsTzOsrtORaoQ5mqLV/XqXXNQF9OMkV0OCS4LQ7ysB6PPKMWa+crWWqA4rmR
- v5Xg==
+ d=1e100.net; s=20230601; t=1746979996; x=1747584796;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8tAdELh0T/zSbeHd7+8bc0dRTH9dy+3avvPw3zGnF8I=;
+ b=M53ksHMd5JRcrLgHgmY+YgUwDc71Q3NlyXUtKQKs4kS8zUkoIyzS4G0NeL0Dqm2v6L
+ 0d6StmCas65OlxnosecaNBDgj9wHVXV/Asa6idXfPDZi5AmTd8k9HPcFQCwsLRfSO5Gm
+ RpdmPrlJE8Me80SmlZVmfGeUL4hZ1O7mnJ61Zd1hBPfK0NVc+bd6s72cYNAXdV1mb37C
+ bMLJhNp2c2oHDqBTjqdViVLSFwiDGf4IZivQJ2mYdruFd2ATiMGhgHp81nXve024TfEq
+ W3b3sbcoU7zzByu5cEr/x3+7xq/Vhnr4SVA9BPNzBCNzS+6SSFLTxVomMm1uPbvyno3b
+ DG9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWVzAcNCIJrdQskUKCp8ZKnV/yQd3MKKpoiGLehw5yqG2HimKY0pd5T2AfQ1ES+BO00qR9gER9lU/cB@nongnu.org
-X-Gm-Message-State: AOJu0YyiSvFaskOxncAP9QBHfxw6awhh2kgxM8elE986JXPbD50NOA5q
- 71X5/nOKXkGBYKfHNy2juWpRzGZuaq6RCVZIEdDCm8il3Y/GuQ4/RFEnl5Cwz10NX3vtigvn1ez
- JYC02m+FoOZt53iprltGrGjcYgZlx41WMsfpDwtFxULtXZK1z7A0J
-X-Gm-Gg: ASbGncvMsM5G0g8/cU6/mGy6+PoKF0FUOy6rj2Kr8cudPpKwZW3yw/aWk7rxVHTgJaz
- gQkXFgc6rrHWqLFsvDEAiRUUSaYfMnQ2IMyfybs9MqoRezwfGSUox8W3dWiNzfYdD4ExKnEbYZM
- ZdX/Z9HTkgbXAOmpXX2+1j3RJVutLmIaV2O9z5VLRHxEtJ09X19nE6/mmgpgulRd+EFlzPRyIAj
- KoYd2hiSenVup/zbqyp/9TrBdt6URJHozEqUDE94n5H5T03VAiLC8CPlw51PfJZgvTuaEo9UpHr
- CUkPww==
-X-Received: by 2002:a5d:4807:0:b0:3a1:f653:85dc with SMTP id
- ffacd0b85a97d-3a1f6538611mr5653469f8f.58.1746977736598; 
- Sun, 11 May 2025 08:35:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE8ycwjgRjqziI65+pULxKGTc0dlw2SMTOg50mM091k/Ks21xjHRlD+Y1viwUbus+NVE43a6g==
-X-Received: by 2002:a5d:4807:0:b0:3a1:f653:85dc with SMTP id
- ffacd0b85a97d-3a1f6538611mr5653450f8f.58.1746977736205; 
- Sun, 11 May 2025 08:35:36 -0700 (PDT)
+ AJvYcCWuMkt/vnCOSpQNcJgmQPgzh05X2upZI62ffdU42RL9QjL80R340MjQX0QtWwHL4LBKfW4T3d0IXqdQ@nongnu.org
+X-Gm-Message-State: AOJu0YzQHj1PyClC2ofD38qMMlXWfPjxg3gr7pgqIPkCYhqRNs96jzkn
+ 9jOSbXZuqrzkB321PGKjeo4y63ma6c0ZZvHDbXbMGtjJj6kOxFwezni6R94nBsr2USK59IS0nNm
+ bN+D5nVXwrhkGinpzcEPU052CHO3i+9P8iEnclVErxBqOlg7olmGC
+X-Gm-Gg: ASbGncvnUozFdh65OYBXnyj6oAQPgocjvd4D9OwvIzveebNqU23FQ4Ru+ZUOspTCp36
+ 0FGERRI2F+WaCqI/qG6EPiF3ifRr8z8g8EBVjdBTNQ2dYAvst6Zk8owEz+BDx5BDRiI6r7DjKLn
+ RHaYn0KVmu0guWZvh2JpVXxDpoEJqmCXYvNGBaisaPEERFxeKuYXZuuT97A+hqQXebfutIdgdNM
+ YjqWGB7dIXkNIT4BFdIwcVQjr3PzvTwRatrYUkUSekFDqCxD5AAd90p05FLXB7dkKGT1n0iB8Jt
+ wjZ8Iw==
+X-Received: by 2002:a05:6000:420f:b0:39e:e438:8e4b with SMTP id
+ ffacd0b85a97d-3a1f64ae792mr8136640f8f.50.1746979995900; 
+ Sun, 11 May 2025 09:13:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFXe3nv0scuUJFYsYr9uAEyTUNuR2G1BtHE4a2EynRqEsQnNhRnjvT9uyop0DwxA7kHva51OQ==
+X-Received: by 2002:a05:6000:420f:b0:39e:e438:8e4b with SMTP id
+ ffacd0b85a97d-3a1f64ae792mr8136622f8f.50.1746979995444; 
+ Sun, 11 May 2025 09:13:15 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f57ddd5esm9458022f8f.6.2025.05.11.08.35.33
+ ffacd0b85a97d-3a1f5a4c583sm9480955f8f.84.2025.05.11.09.13.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 08:35:34 -0700 (PDT)
-Date: Sun, 11 May 2025 11:35:31 -0400
+ Sun, 11 May 2025 09:13:14 -0700 (PDT)
+Date: Sun, 11 May 2025 12:13:11 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Yan Vugenfirer <yvugenfi@redhat.com>
-Cc: "Suthikulpanit, Suravee" <suravee.suthikulpanit@amd.com>,
- qemu-devel@nongnu.org, pbonzini@redhat.com, mtosatti@redhat.com,
- marcel.apfelbaum@gmail.com, jon.grimm@amd.com,
- santosh.shukla@amd.com, vasant.hegde@amd.com, Wei.Huang2@amd.com,
- kraxel@redhat.com, bsd@redhat.com, berrange@redhat.com, ddutile@redhat.com
-Subject: Re: [PATCH] pci-ids.rst: Add Red Hat pci-id for AMD IOMMU device
-Message-ID: <20250511113520-mutt-send-email-mst@kernel.org>
-References: <20250304183747.639382-1-suravee.suthikulpanit@amd.com>
- <20250309094039-mutt-send-email-mst@kernel.org>
- <70b47c11-da90-4f93-b7b7-a522b8ae7def@amd.com>
- <CAGoVJZwg0KvZX7_OCFYp+RBk_fO4kBV3MmY3FxUC=RbnNKLtZA@mail.gmail.com>
- <20250511092651-mutt-send-email-mst@kernel.org>
- <CAGoVJZw=okgUdmSdWWc+iU7cQ0M7B-j0s66pWtqygZdYtJCgrw@mail.gmail.com>
+To: oenhan@gmail.com
+Cc: sgarzare@redhat.com, marcel.apfelbaum@gmail.com, cohuck@redhat.com,
+ pasic@linux.ibm.com, farman@linux.ibm.com,
+ borntraeger@linux.ibm.com, leiyang@redhat.com,
+ qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Huaitong Han <hanht2@chinatelecom.cn>,
+ Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>,
+ Jidong Xia <xiajd@chinatelecom.cn>
+Subject: Re: [PATCH] vhost: Don't set vring call if guest notifier is unused
+Message-ID: <20250511121034-mutt-send-email-mst@kernel.org>
+References: <20250326082537.379977-1-hanht2@chinatelecom.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGoVJZw=okgUdmSdWWc+iU7cQ0M7B-j0s66pWtqygZdYtJCgrw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20250326082537.379977-1-hanht2@chinatelecom.cn>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -46
 X-Spam_score: -4.7
@@ -117,96 +112,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, May 11, 2025 at 06:20:41PM +0300, Yan Vugenfirer wrote:
-> On Sun, May 11, 2025 at 4:27 PM Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > On Wed, Mar 12, 2025 at 02:43:52PM +0200, Yan Vugenfirer wrote:
-> > >
-> > >
-> > > On Tue, Mar 11, 2025 at 4:02 AM Suthikulpanit, Suravee <
-> > > suravee.suthikulpanit@amd.com> wrote:
-> > >
-> > >
-> > >
-> > >     On 3/9/2025 8:44 PM, Michael S. Tsirkin wrote:
-> > >     > On Tue, Mar 04, 2025 at 06:37:47PM +0000, Suravee Suthikulpanit wrote:
-> > >     >> The QEMU-emulated AMD IOMMU PCI device is implemented based on the AMD I
-> > >     /O
-> > >     >> Virtualization Technology (IOMMU) Specification [1]. The PCI id for this
-> > >     >> device is platform-specific.
-> > >     >>
-> > >     >> Currently, the QEMU-emulated AMD IOMMU device is using AMD vendor id and
-> > >     >> undefined device id.
-> > >     >>
-> > >     >> Therefore, change the vendor id to Red Hat and request a new
-> > >     QEMU-specific
-> > >     >> device id.
-> > >     >>
-> > >     >> [1] https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs
-> > >     /specifications/48882_IOMMU.pdf
-> > >     >>
-> > >     >> Cc: Gerd Hoffmann <kraxel@redhat.com>
-> > >     >> Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-> > >     >
-> > >     > Will the existing drivers bind with the device then?
-> > >
-> > >     Existing Windows would not recognize the device ID.
-> > >
-> > >     Actually, Linux and Windows does not depend on the PCI vendor / device
-> > >     ids to probe devices and initialize AMD IOMMU. Instead, it depends on
-> > >     the ACPI IVRS table.
-> > >
-> > >     Checking on a real system w/ AMD IOMMU enabled booting Windows Server
-> > >     2022, there is no AMD IOMMU device showing in the Device Manger.
-> > >
-> > >     In this case, I believe Windows is not fully initializing the
-> > >     QEMU-emulated AMD IOMMU. So Windows would not remove the IOMMU PCIe from
-> > >     the list of OS visible devices and therefore expose the PNPID to the
-> > >     device manager. And since the device ID is zero, it appears as an "Other
-> > >     devices->PCI Device (with warning sign).
-> > >
-> > >     Therefore, it we have two options:
-> > >
-> > >     1. Fake the device ID to 0x1419, which is current appear in the
-> > >     machine.inf as an entry in section [AMD_SYS.NTamd64]:
-> > >
-> > >     %IommuDevice_Desc% = NO_DRV,PCI\VEN_1022&DEV_1419
-> > >
-> > > Considering that this is a "null driver" (no actual driver is loaded for the
-> > > PCIe endpoint according to machine.inf), I recommend using this PNP ID.
-> > >
-> >
-> > So this is the status quo really or did I miss anything?
+Thanks for the patch!
+I an waiting for Stefan's comments to be addressed.
+Additionally, something to improve:
+
+On Wed, Mar 26, 2025 at 04:25:37PM +0800, oenhan@gmail.com wrote:
+> From: Huaitong Han <hanht2@chinatelecom.cn>
 > 
-> There was a patch fixing it:
-> https://patchwork.kernel.org/project/qemu-devel/patch/20250325021140.5676-1-suravee.suthikulpanit@amd.com/
+> The vring call fd is set even when the guest does not use msix (e.g., in the
+> case of virtio pmd), leading to unnecessary CPU overhead for processing
+> interrupts. The previous patch optimized the condition where msix is enabled
+> but the queue vector is unset. However, there is a additional case where the
+> guest interrupt notifier is effectively unused and the vring call fd should
+> also be cleared: the guest does not use msix and the INTX_DISABLED bit in the PCI
+> config is set.
+> 
+> Fixes: 96a3d98d2c ("vhost: don't set vring call if no vector")
 
-Ah, right. Thanks.
+this must be with no empty lines adjacent to the rest of trailers.
 
-> >
-> > >
-> > >     2. Figure out why Windows does not recognize the device.
-> > >
-> > > The answer is simple: the PCIe endpoint's PNP ID is unknown to Windows. So
-> > > technically device is recognized (it is shown in Device Manager after all), but
-> > > there are no compatible drivers for it. And in anycase, machine.inf specifies
-> > > "null driver" for AMD PCIe endpoint IOMMU device. The device will get a
-> > > friendly name in Device Manager and considered to be "installed" by Windows, by
-> > > there is no actual driver associated with the device.
-> > >
-> > > Best regards,
-> > > Yan.
-> > >
-> > >
-> > >
-> > >     Anyhow, we should still assign some PCI ID value (instead of zero).
-> > >
-> > >     Thanks,
-> > >     Suravee
-> > >
-> > >
-> > >
-> > >
-> >
+> Test result:
+> https://raw.githubusercontent.com/oenhan/build_log/refs/heads/main/qemu/2503261015/build/meson-logs/testlog.txt
+
+just include the summary here inline.
+
+> Reported-by: Zhiyuan Yuan <yuanzhiyuan@chinatelecom.cn>
+> Signed-off-by: Jidong Xia <xiajd@chinatelecom.cn>
+> Signed-off-by: Huaitong Han <hanht2@chinatelecom.cn>
+> ---
+>  hw/pci/pci.c                   |  2 +-
+>  hw/s390x/virtio-ccw.c          |  9 ++++++---
+>  hw/virtio/vhost.c              |  5 ++---
+>  hw/virtio/virtio-pci.c         | 15 ++++++++++-----
+>  include/hw/pci/pci.h           |  1 +
+>  include/hw/virtio/virtio-bus.h |  2 +-
+>  6 files changed, 21 insertions(+), 13 deletions(-)
+> 
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 2844ec5556..503a897528 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -1719,7 +1719,7 @@ static void pci_update_mappings(PCIDevice *d)
+>      pci_update_vga(d);
+>  }
+>  
+> -static inline int pci_irq_disabled(PCIDevice *d)
+> +int pci_irq_disabled(PCIDevice *d)
+>  {
+>      return pci_get_word(d->config + PCI_COMMAND) & PCI_COMMAND_INTX_DISABLE;
+>  }
+> diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
+> index 43f3b162c8..af482a22cd 100644
+> --- a/hw/s390x/virtio-ccw.c
+> +++ b/hw/s390x/virtio-ccw.c
+> @@ -936,11 +936,14 @@ static void virtio_ccw_vmstate_change(DeviceState *d, bool running)
+>      }
+>  }
+>  
+> -static bool virtio_ccw_query_guest_notifiers(DeviceState *d)
+> +static bool virtio_ccw_query_guest_notifiers_used(DeviceState *d, int n)
+>  {
+>      CcwDevice *dev = CCW_DEVICE(d);
+> +    VirtioCcwDevice *vdev = VIRTIO_CCW_DEVICE(d);
+> +    VirtIODevice *virtio_dev = virtio_bus_get_device(&vdev->bus);
+>  
+> -    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA);
+> +    return !!(dev->sch->curr_status.pmcw.flags & PMCW_FLAGS_MASK_ENA)
+> +            && virtio_queue_vector(virtio_dev, n) != VIRTIO_NO_VECTOR;
+>  }
+>  
+>  static int virtio_ccw_get_mappings(VirtioCcwDevice *dev)
+> @@ -1270,7 +1273,7 @@ static void virtio_ccw_bus_class_init(ObjectClass *klass, void *data)
+>      bus_class->max_dev = 1;
+>      k->notify = virtio_ccw_notify;
+>      k->vmstate_change = virtio_ccw_vmstate_change;
+> -    k->query_guest_notifiers = virtio_ccw_query_guest_notifiers;
+> +    k->query_guest_notifiers_used = virtio_ccw_query_guest_notifiers_used;
+>      k->set_guest_notifiers = virtio_ccw_set_guest_notifiers;
+>      k->save_queue = virtio_ccw_save_queue;
+>      k->load_queue = virtio_ccw_load_queue;
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index 6aa72fd434..32634da836 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -1341,9 +1341,8 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+>          vhost_virtqueue_mask(dev, vdev, idx, false);
+>      }
+>  
+> -    if (k->query_guest_notifiers &&
+> -        k->query_guest_notifiers(qbus->parent) &&
+> -        virtio_queue_vector(vdev, idx) == VIRTIO_NO_VECTOR) {
+> +    if (k->query_guest_notifiers_used &&
+> +        !k->query_guest_notifiers_used(qbus->parent, idx)) {
+>          file.fd = -1;
+>          r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
+>          if (r) {
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index 3ca3f849d3..25ff869618 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -30,6 +30,7 @@
+>  #include "qemu/error-report.h"
+>  #include "qemu/log.h"
+>  #include "qemu/module.h"
+> +#include "hw/pci/pci.h"
+>  #include "hw/pci/msi.h"
+>  #include "hw/pci/msix.h"
+>  #include "hw/loader.h"
+> @@ -1031,7 +1032,7 @@ static void virtio_pci_one_vector_mask(VirtIOPCIProxy *proxy,
+>  
+>      /* If guest supports masking, keep irqfd but mask it.
+>       * Otherwise, clean it up now.
+> -     */ 
+> +     */
+>      if (vdev->use_guest_notifier_mask && k->guest_notifier_mask) {
+>          k->guest_notifier_mask(vdev, queue_no, true);
+>      } else {
+> @@ -1212,10 +1213,15 @@ static int virtio_pci_set_guest_notifier(DeviceState *d, int n, bool assign,
+>      return 0;
+>  }
+>  
+> -static bool virtio_pci_query_guest_notifiers(DeviceState *d)
+> +static bool virtio_pci_query_guest_notifiers_used(DeviceState *d, int n)
+>  {
+>      VirtIOPCIProxy *proxy = to_virtio_pci_proxy(d);
+> -    return msix_enabled(&proxy->pci_dev);
+> +    VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+> +
+> +    if (msix_enabled(&proxy->pci_dev))
+> +        return virtio_queue_vector(vdev, n) != VIRTIO_NO_VECTOR;
+> +    else
+> +        return !pci_irq_disabled(&proxy->pci_dev);
+>  }
+>  
+>  static int virtio_pci_set_guest_notifiers(DeviceState *d, int nvqs, bool assign)
+> @@ -2599,7 +2605,7 @@ static void virtio_pci_bus_class_init(ObjectClass *klass, void *data)
+>      k->save_extra_state = virtio_pci_save_extra_state;
+>      k->load_extra_state = virtio_pci_load_extra_state;
+>      k->has_extra_state = virtio_pci_has_extra_state;
+> -    k->query_guest_notifiers = virtio_pci_query_guest_notifiers;
+> +    k->query_guest_notifiers_used = virtio_pci_query_guest_notifiers_used;
+>      k->set_guest_notifiers = virtio_pci_set_guest_notifiers;
+>      k->set_host_notifier_mr = virtio_pci_set_host_notifier_mr;
+>      k->vmstate_change = virtio_pci_vmstate_change;
+> @@ -2630,4 +2636,3 @@ static void virtio_pci_register_types(void)
+>  }
+>  
+>  type_init(virtio_pci_register_types)
+> -
+> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+> index 822fbacdf0..de4ab28046 100644
+> --- a/include/hw/pci/pci.h
+> +++ b/include/hw/pci/pci.h
+> @@ -256,6 +256,7 @@ void pci_del_capability(PCIDevice *pci_dev, uint8_t cap_id, uint8_t cap_size);
+>  
+>  uint8_t pci_find_capability(PCIDevice *pci_dev, uint8_t cap_id);
+>  
+> +int pci_irq_disabled(PCIDevice *d);
+>  
+>  uint32_t pci_default_read_config(PCIDevice *d,
+>                                   uint32_t address, int len);
+> diff --git a/include/hw/virtio/virtio-bus.h b/include/hw/virtio/virtio-bus.h
+> index 7ab8c9dab0..de75a44895 100644
+> --- a/include/hw/virtio/virtio-bus.h
+> +++ b/include/hw/virtio/virtio-bus.h
+> @@ -48,7 +48,7 @@ struct VirtioBusClass {
+>      int (*load_done)(DeviceState *d, QEMUFile *f);
+>      int (*load_extra_state)(DeviceState *d, QEMUFile *f);
+>      bool (*has_extra_state)(DeviceState *d);
+> -    bool (*query_guest_notifiers)(DeviceState *d);
+> +    bool (*query_guest_notifiers_used)(DeviceState *d, int n);
+
+
+I don't see why we need to change the name, and you don't explain
+in the commit log. The new name isn't really clear, either.
+
+
+>      int (*set_guest_notifiers)(DeviceState *d, int nvqs, bool assign);
+>      int (*set_host_notifier_mr)(DeviceState *d, int n,
+>                                  MemoryRegion *mr, bool assign);
+> -- 
+> 2.43.5
 
 
