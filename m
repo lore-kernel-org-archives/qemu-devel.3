@@ -4,92 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE93C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 04:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE14C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 04:48:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDyVJ-0000Ef-C3; Sun, 11 May 2025 00:41:33 -0400
+	id 1uDybc-00055E-Ox; Sun, 11 May 2025 00:48:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uDyVH-0000E0-0W
- for qemu-devel@nongnu.org; Sun, 11 May 2025 00:41:31 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1uDybX-00054q-97
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 00:48:00 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uDyVE-0002Ne-Tq
- for qemu-devel@nongnu.org; Sun, 11 May 2025 00:41:30 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-22e331215dbso34080575ad.1
- for <qemu-devel@nongnu.org>; Sat, 10 May 2025 21:41:28 -0700 (PDT)
+ id 1uDybV-0002pa-Kn
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 00:47:59 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7423fb98cb1so1575573b3a.3
+ for <qemu-devel@nongnu.org>; Sat, 10 May 2025 21:47:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1746938487; x=1747543287;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1746938865; x=1747543665;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SnN7elGbhJ5UYY3XjFQrJcRKgRTxFPqEFsafip8SGlA=;
- b=HDHI7h8E1+R0NoHOX4RU+6/h4CLa0RGTWa/Zld+JQGivUG2SEl39eQORoQ/bZ4Q4i/
- pgYWaWw5wNZCe0LGIN3veW79XA68TdKigbkJhVpa1BHoOQsQnsC5tR4kQqD9hbQYjHi4
- eWi0v+F9ZXJt0XYRmL0bIZRxylIDEPeAxUrub+yod5ACF5cq4DZG4hkcUx0T5fhNZHZN
- 2Lw52COth52KIVFVeGzC/Bj6DEhHoe5HyrAHtATGC4HHXf0PqA7Uhx4DS8D3QNhLqiLn
- +BR+sp5sM7SdTC+Fl59G4delbnovugN9QMoVgmkZUI9ND09i8R5lfNRtm1/V2NLcXgJb
- Yocg==
+ bh=SrRtF81GH+qwnsWqM1CfEyu3ujI3f2cd1a7b3ZRta5Q=;
+ b=Aq/YzP983wTnin+qn/jIoWNHW5zS6jSjXKGBD45kAD4UIc+WUQNNx7rLDltskIStyF
+ 5oyDDhyRWsqMOuSTYtabmh87UR7q23B1pES3KOXR40o+mlIW0Kv5jsb/5wmJzcZTau+2
+ qKobS706+lL1ASNpo8l2y1BS8r2Wa6m7s0byICY2Neijt9YqSLB4cGbPeNkodswFJIEe
+ wqHpGJ7K2K7u7F9WJBxsc3rEgYFBXA1ZqROI96gr23ioCM5m6ktum0gKBT+AfJjXBKUU
+ XiHM2FYSjIO712P+ixxPF+Wup1rJw97Ceag5yeVWSuxFY2/2Re2gF5a/b7x8lp15DaMD
+ 4S6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746938487; x=1747543287;
+ d=1e100.net; s=20230601; t=1746938865; x=1747543665;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SnN7elGbhJ5UYY3XjFQrJcRKgRTxFPqEFsafip8SGlA=;
- b=YqAAiFiSMds9jx3vQ4wFX+Z8KpC4qyS3c3kjLFk0m6XaeQHmCnpxUKARYTRreVp4yP
- 3dnRAAF6fvovWg4WEc/Jg0qhprM4BqZoO/HKq518C5I6o7GQ/sAt3yVKwD37EnLMpWOI
- MpA165OEPLDCind1yw/skpM9Z3hQFx7mkUaw8YNb6g5ZFZujTfernP11ssZFSl2LQmIn
- XOvLujRup0rXz7nKTDPtjIygtRgMIuMIFKFRGELgjlx4ZuGgTaxQ8GxoFl1YIgi94+Vi
- HUJx+4xQSFhvdTxiOu05BY1DYGvTcgqKWUcZvhKz64qNChIhJspkLcfCQxlcg+IjpJ6G
- AtlA==
+ bh=SrRtF81GH+qwnsWqM1CfEyu3ujI3f2cd1a7b3ZRta5Q=;
+ b=kI4FGiwkfj5YWQ6B34729pbfFFT+7xURQ/y3d43MCfpfo8ZCDmxHX68osYrYHW8ww7
+ W8QZ1Ixlg6S3t3/bZyVS4CjACl5REpUVwtAJ8dpq8m3qSu7l4q3lfl/tY64Izd9mLAu2
+ w0tZ4ugPgwda+MNjWzUcFjZcO8hxdfGLFXfTV41nKNR794CI6subEJ/3YJds2NQL3hn2
+ Y1chFfbJ3/LMaiX3tntLkxyPFYQT59LK+Nho38b5C4Lo74b+1YCJYRXX9PRQC236eV4S
+ W91aJmo9VZfUW+GDEuZSJnBYJkxqgCioAFnp2eOKQw3SPp6D/MxX3VkJcr2rtcn8rr+T
+ dkVg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0wl/daOFsUh2RFwVE6l+anFrFEIq2+15/pNyWaBapi83PjQoSGlgR8DzfDUn1OOhtkbsjb/s3YBdr@nongnu.org
-X-Gm-Message-State: AOJu0Yxnmf8bpr6daos7bUsUj0Lyws6KbTXzweUHwQLv9lEBSebL2Kcf
- 1rIflLR9DhzUnICVAlKQUPQZDDJ+CFWtxIIu1dqGnTrYEmsZLrKxCgX5IcqmNXo=
-X-Gm-Gg: ASbGncuxw57ZdUPcp2GW8bPHPtEnKi/fiomIsTfyqNL2GJ+QcqQdk0MSE2C2t9VL2Fo
- O7LDptbuHEC21+72IaKmitLZ/g2WZonKsVYc3F1JWFO4GGeK0rXa3GZ8cC71AYzLmVNJvgEtQi7
- JRqgQeNX/SAt7uYwGMD89MkVTXSgsnKgAJhlMjM72jkN5LM2F3rhPUi/aGMb98V/oXgjK/1aIUk
- yU6/3PjTwjvzL6fEF4qnV+/YbJuDEvNXf6zyDf8Kd2qtvaA8FhpurqyqvQm7oy+LOZ1L9CEHXWF
- Lbo9Ynjk0Pco6mYdrIVShQMxLQZ3RrkfFaxEkaKG3jcNWXBEg25miyOxy85CyfXXp233Z4j1Q9A
- =
-X-Google-Smtp-Source: AGHT+IGWehGM8bGSzrcnWEDEbYYZydpnrrc7wUMxoBLNJzOkdYli9xYZ5Ct1Fjcaui9DWBXpZeW8cA==
-X-Received: by 2002:a17:903:2443:b0:221:1497:7b08 with SMTP id
- d9443c01a7336-22e847b818emr204938925ad.23.1746938486805; 
- Sat, 10 May 2025 21:41:26 -0700 (PDT)
+ AJvYcCUbjM034bx2lrFmuXoPgxQ1e/RHhSypupW7serdOri1hJLVP5onaugImeVnHzrrxmSsRcUgqY+sbPap@nongnu.org
+X-Gm-Message-State: AOJu0Yy7VnK/8TJ/SW9/RuCQUd4Pup+2ue60UxnXnd6e/lQrSLskcgG2
+ N5ZIdBDaDY+x9tFVNhAWohJD+0C0tQA538rQnJKbH7DOjHU9L4MXyTFA7mexbPw=
+X-Gm-Gg: ASbGncuPQYb6bkkh0dlM3wNpRUK8fKa/gt17+SlWrPN/rjnDzAKamDYmgml/VlwGYrq
+ 6IBwhMu+rnkXxGbYxMV6Y8nJbT6jKFwKRijCyYPNk8u5CAQ7V4J8/Ezt1Q+veDZm+/PfFa5HBpg
+ 9hU3658GCghIu0oEO2rmMLGrpWh6UJd4trDjg+dCMkBp3YxspUR66+2VZek3LBn1IPbEx8hKvKA
+ pVGfWfVLNrEbUft5hJZng30PZajQVbj/+75XFbCSYXeRoUP2ECVQNc82pSXuVbwK604ke2bWXFd
+ iKDvDao8gjHRBtwqOgQk5BE6tIk2aGXdMS+YLZAFY/56tF133+WW7pwFCCKgDgc6
+X-Google-Smtp-Source: AGHT+IGOFC6UJsU6buYjnhgoT0/PLos+jBVFPbbBRktrvOZaJPyBBfGvddUn5CfkJfLeuw0zYftIeQ==
+X-Received: by 2002:a05:6a20:72a2:b0:1f3:388b:3b4b with SMTP id
+ adf61e73a8af0-215abb8f2a2mr13495228637.15.1746938865446; 
+ Sat, 10 May 2025 21:47:45 -0700 (PDT)
 Received: from [157.82.203.223] ([157.82.203.223])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc75469edsm40733225ad.40.2025.05.10.21.41.24
+ d9443c01a7336-22fc7546b48sm40933275ad.30.2025.05.10.21.47.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 10 May 2025 21:41:26 -0700 (PDT)
-Message-ID: <b80a7e2a-8675-4c33-9295-d460c6093cc5@daynix.com>
-Date: Sun, 11 May 2025 13:41:23 +0900
+ Sat, 10 May 2025 21:47:45 -0700 (PDT)
+Message-ID: <f7d65908-cd12-4c44-a80a-07e23ff27833@daynix.com>
+Date: Sun, 11 May 2025 13:47:39 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/9] qemu-thread: Avoid futex abstraction for non-Linux
-To: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hailiang Zhang <zhanghailiang@xfusion.com>
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
- devel@daynix.com, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20250510-event-v2-0-7953177ce1b8@daynix.com>
- <20250510-event-v2-3-7953177ce1b8@daynix.com>
- <54bb98a7-110d-41d2-a683-1428cb7d94a2@redhat.com>
+Subject: Re: [PATCH v2 12/14] ui/gtk-gl-area: Remove extra draw call in refresh
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-arm@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Dongwon Kim <dongwon.kim@intel.com>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>
+References: <20250506125715.232872-1-alex.bennee@linaro.org>
+ <20250506125715.232872-13-alex.bennee@linaro.org>
+ <d5a8cec1-f689-4d31-b6bb-b63eaa4ce2af@daynix.com>
+ <d370ffec-f430-4377-80bc-323d5087834c@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <54bb98a7-110d-41d2-a683-1428cb7d94a2@redhat.com>
+In-Reply-To: <d370ffec-f430-4377-80bc-323d5087834c@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -111,145 +119,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/05/11 0:02, Paolo Bonzini wrote:
-> On 5/10/25 10:51, Akihiko Odaki wrote:
->> Add special implementations of qemu_event_set() and qemu_event_wait()
->> using pthread primitives. qemu_event_wait() will ensure qemu_event_set()
->> finishes, and these functions will avoid complex barrier and atomic
->> operations.
-> 
-> Unfortunately not...
-> 
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> Tested-by: Phil Dennis-Jordan <phil@philjordan.eu>
->> Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
->> ---
->>   util/qemu-thread-posix.c | 45 +++++++++++++++++ 
->> +---------------------------
->>   1 file changed, 18 insertions(+), 27 deletions(-)
+On 2025/05/10 21:12, Dmitry Osipenko wrote:
+> On 5/10/25 07:52, Akihiko Odaki wrote:
+>> On 2025/05/06 21:57, Alex Bennée wrote:
+>>> From: Dongwon Kim <dongwon.kim@intel.com>
+>>>
+>>> This partially reverts commit 77bf310084dad38b3a2badf01766c659056f1cf2
+>>> which causes some guest display corruption when gtk-gl-area
+>>> is used for GTK rendering (e.g. Wayland Compositor) possibly due to
+>>> simulataneous accesses on the guest frame buffer by host compositor
+>>> and the guest.
 >>
->> diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
->> index 13459e44c768..805cac444f15 100644
->> --- a/util/qemu-thread-posix.c
->> +++ b/util/qemu-thread-posix.c
->> @@ -319,28 +319,6 @@ void qemu_sem_wait(QemuSemaphore *sem)
->>   #ifdef __linux__
->>   #include "qemu/futex.h"
->> -#else
->> -static inline void qemu_futex_wake(QemuEvent *ev, int n)
->> -{
->> -    assert(ev->initialized);
->> -    pthread_mutex_lock(&ev->lock);
->> -    if (n == 1) {
->> -        pthread_cond_signal(&ev->cond);
->> -    } else {
->> -        pthread_cond_broadcast(&ev->cond);
->> -    }
->> -    pthread_mutex_unlock(&ev->lock);
->> -}
->> -
->> -static inline void qemu_futex_wait(QemuEvent *ev, unsigned val)
->> -{
->> -    assert(ev->initialized);
->> -    pthread_mutex_lock(&ev->lock);
->> -    if (ev->value == val) {
->> -        pthread_cond_wait(&ev->cond, &ev->lock);
->> -    }
->> -    pthread_mutex_unlock(&ev->lock);
->> -}
->>   #endif
->>   /* Valid transitions:
->> @@ -363,7 +341,7 @@ static inline void qemu_futex_wait(QemuEvent *ev, 
->> unsigned val)
->>   void qemu_event_init(QemuEvent *ev, bool init)
->>   {
->> -#ifndef __linux__
->> +#ifndef CONFIG_LINUX
->>       pthread_mutex_init(&ev->lock, NULL);
->>       pthread_cond_init(&ev->cond, NULL);
->>   #endif
->> @@ -376,7 +354,7 @@ void qemu_event_destroy(QemuEvent *ev)
->>   {
->>       assert(ev->initialized);
->>       ev->initialized = false;
->> -#ifndef __linux__
->> +#ifndef CONFIG_LINUX
->>       pthread_mutex_destroy(&ev->lock);
->>       pthread_cond_destroy(&ev->cond);
->>   #endif
->> @@ -386,6 +364,7 @@ void qemu_event_set(QemuEvent *ev)
->>   {
->>       assert(ev->initialized);
->> +#ifdef CONFIG_LINUX
->>       /*
->>        * Pairs with both qemu_event_reset() and qemu_event_wait().
->>        *
+>> Simply reverting the part of the commit may re-introduce the problem the
+>> commit tried to solve, which will be a regression as the commit is
+>> already included in releases.
+>>
+>> I guess the problem is that the gl_block callback of GraphicHwOps is not
+>> properly implemented and it is what should be fixed.
 > 
-> The user of this code will not have mutexes so some care is needed.  You 
-> have:
+> The reverted commit made QEMU GTK GUI unusable under Wayland. It was
+> fixing problem which requires very specific QEMU setup, while breaking
+> generic setups. The offending change should be reverted as it introduced
+> a bigger problem. A proper solution should be found, meanwhile QEMU GTK
+> under Wayland should be restored, IMO.
 > 
->      if (!qatomic_load_acquire(&done)) {
->          qemu_event_reset(&ev);
->          if (!qatomic_load_acquire(&done))
->              qemu_event_wait(&ev);
->      }
+> For the reference see [1]. First bug reports about a mirrored display
+> problem were made to me on IRC a year ago and the root of the problem
+> was identified only couple months ago.
 > 
-> and on the other side
-> 
->      qatomic_store_release(&done, 1);
->      qemu_event_set(&ev);
->      --> qatomic_set(&ev.value, EV_SET);
-> 
-> I don't think this is correct without the memory barrier in 
-> qemu_event_set(), though I am not actually sure how you'd
-> add it.
-> 
-> The problem is, I don't see anything that prevents this:
-> 
->                  set done
->                  qemu_event_set()
->                    pthread_mutex_lock()
->                    ev.value = SET
->      qemu_event_reset()
->        ev.value |= FREE
->        smp_mb__after_rmw()
->                    // store buffer not flushed yet,
->                    // so other thread doesn't see "done"
->      read done
->      pthread_mutex_lock()
->                    pthread_cond_broadcast()
->                    pthread_mutex_unlock()
->      while ev.value != SET
->          // hang
->          pthread_cond_wait()
-> 
-> The barrier in qemu_event_reset() is not enough, you need one on each side.
+> [1]
+> https://lore.kernel.org/qemu-devel/5aedf1ad-d9b0-4edb-a050-f3d9bee9bccb@collabora.com/
 
-This is insightful; I will restore smp_mb() in qemu_event_set().
+That describes the context well. It should also be described with an 
+inline comment so that we will not lose track of the known problem.
 
 > 
->> +#else
->> +    pthread_mutex_lock(&ev->lock);
->> +    if (qatomic_read(&ev->value) != EV_SET) {
+> As of today, the GTK problem isn't understood.
 > 
-> Apart from the above this needs to be a while(), because condition 
-> variables also have spurious wakeups.
 
-I will fix it with the next version too.
+If your guess about simultaneous accesses on the guest frame buffer is 
+correct, it's a bug of the emulated device, not GTK.
 
 Regards,
 Akihiko Odaki
-
-> 
-> Paolo
-> 
->> +        pthread_cond_wait(&ev->cond, &ev->lock);
->> +    }
->> +    pthread_mutex_unlock(&ev->lock);
->> +#endif
->>   }
->>   static __thread NotifierList thread_exit;
->>
-> 
-
 
