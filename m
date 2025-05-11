@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F8A6C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 07:36:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE878C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 07:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uE1D3-0003s6-Lm; Sun, 11 May 2025 03:34:53 -0400
+	id 1uE1D8-0003yT-C3; Sun, 11 May 2025 03:34:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1uE1Cy-0003ra-1k
- for qemu-devel@nongnu.org; Sun, 11 May 2025 03:34:48 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1uE1D2-0003s8-Rf
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 03:34:53 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1uE1Cw-0003eJ-GE
- for qemu-devel@nongnu.org; Sun, 11 May 2025 03:34:47 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-73972a54919so3426714b3a.3
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 00:34:44 -0700 (PDT)
+ id 1uE1D1-0003ff-A8
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 03:34:52 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-22e09f57ed4so47507645ad.0
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 00:34:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746948883; x=1747553683; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1746948889; x=1747553689; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GD00sUZOZrB9HHzwrU461gFiGd5/EAk6Pa8GbiDiias=;
- b=VzucHF9opKszFFzyFV5IrygWQWX48VMgPphlx6FML1EEhofgJENm9KamHKhVvpgW04
- UAiAFJkPj2FMVgpE15sB7tnGrqJNwC3rseLIzfeTZwc58mUEvOLEhQ90FSwTr+zWPYhp
- Kh8mQEl2txFPk+4Uap9O39Hms/6OVbrc3g6eTenW8wfXb0HyyXEeAXiQ3Pc+fdg7PPMF
- p7QIG58oRF5HWU5lLwgjWSCHg5OTHHByyzBwY3jPGgdhU8mDEgVDs08V3NTtjjR/rn10
- +QfIbeYK1OTGhbuoZ5WGuFkCwCFbsNi4pqNG8S1DnsRz0hVEbtSyp2W1oWaPpPMDsTNM
- BYpA==
+ bh=b8/qrbN8SL3D7304Ebsbfdho9U8Wr6YNdQY2YgeEWjw=;
+ b=LdPQNJujfrRv3jUmvKieRXHXCvP2+1+Q1nrurOX4MSmyz2npkevhjvUQl/E5RYUszF
+ i2m4WtlLEETfWgAT8I5zv/cpPaAKKwbDK7rIgqvceU1uj1JfMTBCT5I/hUSvAtv5K6OZ
+ 7NcZKi8N5CCtCPc7o6AvWdYX0J1NGkxMmhlmQYiQZo01xhVvHWiv5maEkyWaAnkAIRxK
+ Y7vH7GsETkpVIuJlhnrxkN84rOy06rzp0vH7rpXw3Hxb2kBwGabo+xVNr2aTpS7IX7Rq
+ vbXuoFpL8Tfi+3ASN7yZT8use0Fl27ADSMv1oche6IUpmfhkHTVavtKnnka6mobHLdDC
+ EKjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746948883; x=1747553683;
+ d=1e100.net; s=20230601; t=1746948889; x=1747553689;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GD00sUZOZrB9HHzwrU461gFiGd5/EAk6Pa8GbiDiias=;
- b=mpWzX+m1m/wkG5yMts8tc5RbQQ13p2dJ2pCS1sYB89b/L8V2kt/y7F0ewup/GjAuHQ
- 2Pe/5iWoClO/HMukvBGH71oevHGpN5rZL5DPr86nEgQvD/TKsZbtLJj/uRk9XbEzfYbF
- gHud50t64p6vT+mYI3vCJNPff4oc3BVQr2dYd2xH7SaDqZFD0QRnaGqjDGp5YcQdeS9o
- uxdZ/rx3S28Np/ZwK7Y2zKpiGGKrwoVNRDdw9R/Mpjs8wJSKMwD6hbFkjyXDNGmbJdkW
- MMoSWY/Kz7/yCvpyGvbDlUtqxDDafwIpLHWCGDj17FUeLred8tnNo+jft6VX6etKu4C+
- mXxw==
-X-Gm-Message-State: AOJu0YxTSXK0G+f3sz9QuR+wNhjENk5q//WV7fk8JRPwjPdDREOixVJn
- kItgAjUxfR8oaQyyijaOCh+SBFcq/2y1vigKL7TsuzPgZudlmiNkd02L1L0u
-X-Gm-Gg: ASbGnctb969BSgliaB6opbOmnZ+Cc3s+M0Kd/YFF2bsGqBqeweFPilXPiog+PmS4ezN
- jHy5uSTO7NHP8bEW5Ur5KmbmmmoOV5wr3UppW0SJboiIlIU/0bAwZgDIeih+WSjKKVI9OVxcPUv
- g894uMvK3Aa2O56qGPfjQKp8YKKpsalWGoyO6mnQkFjStW06Cai6RPkHAsg4chFWBt4PydW/0P6
- pyXI2BGXbqpYUlsWPA4zSQXbQGPVGO9h8EhEr/mpyUHc0dolceOOxlqmY4klcRkuc5PculQV7Be
- RguxRdfFEQXvWfNmA87A54zqwc5XkyPPXquduFoHSu9STN7375uqo+Q=
-X-Google-Smtp-Source: AGHT+IG3lQ410cGLegCOdC8n9h11cBwBwT0VfaHZkKceb9eWgMGpzSa6RwBgQFWwEPEYj4BR9/4+1w==
-X-Received: by 2002:a05:6a21:108c:b0:1f3:2a83:7548 with SMTP id
- adf61e73a8af0-215abcc7e9bmr13755704637.38.1746948882901; 
- Sun, 11 May 2025 00:34:42 -0700 (PDT)
+ bh=b8/qrbN8SL3D7304Ebsbfdho9U8Wr6YNdQY2YgeEWjw=;
+ b=opzerny8BndsniOIGEkAI/rbfW28HngaWGSu+CW88N17qVNUJueSz32JsbKJFSVVlb
+ I5iZMkDgre54/3gA0PcQR8EgMxMSsOEXMJ5rnCxUNrg3kcGtAnqSAh9RC6CAnlIdzLxS
+ 9697ZIRBE40JQiGK/8O6ZM6HGWG1+NTZq70FAsUJxMuKFE9sg41GWy0DWILPEoOiMmQo
+ muK1CytqwekgltFYumWpncbOr8kDRkBHdM0ZzBubEpv+QS3FlMglCLqBtYpNatxjd5Ly
+ 1cMEsGwq6jgRZCqdrWr16jZsn7TaP7unt0VR03qo8HnvjwQ7oPvmXfd1UKOzM1iorg1y
+ ZCbw==
+X-Gm-Message-State: AOJu0YyCs4ENut+gUDPl8YA9NTXrYTRtwFwRXPGxOabnGLXBQDbt+ncr
+ seVDumC7OicJ9VRaC8UVQY9MjZNsHUeQfQHKpBA9vQUGttm1k6d1PFGpbdQO
+X-Gm-Gg: ASbGncssx8y6Vai57URVP/yPt2saLrkceixHQ4QQkF3W6f18/ZLDhytZplZ51OO0HHV
+ Ad55fDY+huKDgVB9cINJyWM2hN2DJSEeRKTtzRcSJSTANfO6k7jZZgb9Cf3o4wGoBKYRLs9T53n
+ mpu6bgiC6nqbVvcODaQZGMgFtE34pR7fPdQdwjwqjWlvrupi5Lg0CyutoWLJFBJscQNuMsqA91h
+ V0uh4/EnZjon9FegPhhS06ekAwdKrOxWfdChrtYpP0sPCTI4s8XP2fDOkZRoIZNpbVW/4l1nraE
+ xvH++7dGgdkIXLQHIAz+LBV9AQj9VvbnRIDHKhVjzQys1APrW4i1Lng=
+X-Google-Smtp-Source: AGHT+IFPfyFaq+GzSPb1tTf3XZql8JcfUh5W6+WHNZynBDt6ScBKYP8BH1bBec401PDsV0NryiE6AA==
+X-Received: by 2002:a17:902:e84c:b0:215:58be:3349 with SMTP id
+ d9443c01a7336-22fc937b1f5mr160639745ad.14.1746948889480; 
+ Sun, 11 May 2025 00:34:49 -0700 (PDT)
 Received: from localhost ([103.192.227.12]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b2349dd1fd8sm3783534a12.26.2025.05.11.00.34.41
+ d9443c01a7336-22fc75498b2sm42483605ad.13.2025.05.11.00.34.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 00:34:42 -0700 (PDT)
+ Sun, 11 May 2025 00:34:48 -0700 (PDT)
 From: Weifeng Liu <weifeng.liu.z@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Weifeng Liu <weifeng.liu.z@gmail.com>
-Subject: [PATCH 4/9] ui/gtk: Update scales in fixed-scale mode when rendering
- GL area
-Date: Sun, 11 May 2025 15:33:14 +0800
-Message-ID: <20250511073337.876650-5-weifeng.liu.z@gmail.com>
+Subject: [PATCH 6/9] ui/gtk: Don't update scale in fixed scale mode in
+ gtk-egl.c
+Date: Sun, 11 May 2025 15:33:16 +0800
+Message-ID: <20250511073337.876650-7-weifeng.liu.z@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250511073337.876650-1-weifeng.liu.z@gmail.com>
 References: <20250511073337.876650-1-weifeng.liu.z@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=weifeng.liu.z@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=weifeng.liu.z@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,47 +98,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When gl=on, scale_x and scale_y were set to 1 on startup that didn't
-reflect the real situation of the scan-out in free scale mode, resulting
-in incorrect cursor coordinates to be sent when moving the mouse
-pointer. Simply updating the scales before rendering the image fixes
-this issue.
+Scale shouldn't be changed until user explicitly requests it in fixed
+scale mode (full-screen=false and free-scale=false). Use function
+gd_update_scale to complete scale updating instead.
 
 Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
 ---
- ui/gtk-gl-area.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ ui/gtk-egl.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index ba9fbec432..db93cd6204 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -43,6 +43,8 @@ void gd_gl_area_draw(VirtualConsole *vc)
-     QemuDmaBuf *dmabuf = vc->gfx.guest_fb.dmabuf;
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index 947c99334b..f8e4f4bc70 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -95,8 +95,9 @@ void gd_egl_draw(VirtualConsole *vc)
  #endif
-     int pw, ph, gs, y1, y2;
-+    int ww, wh;
-+    int fbw, fbh;
+         gd_egl_scanout_flush(&vc->gfx.dcl, 0, 0, vc->gfx.w, vc->gfx.h);
  
-     if (!vc->gfx.gls) {
-         return;
-@@ -50,8 +52,14 @@ void gd_gl_area_draw(VirtualConsole *vc)
+-        vc->gfx.scale_x = (double)ww / surface_width(vc->gfx.ds);
+-        vc->gfx.scale_y = (double)wh / surface_height(vc->gfx.ds);
++        gd_update_scale(vc, ww, wh,
++                        surface_width(vc->gfx.ds),
++                        surface_height(vc->gfx.ds));
  
-     gtk_gl_area_make_current(GTK_GL_AREA(vc->gfx.drawing_area));
-     gs = gdk_window_get_scale_factor(gtk_widget_get_window(vc->gfx.drawing_area));
--    pw = gtk_widget_get_allocated_width(vc->gfx.drawing_area) * gs;
--    ph = gtk_widget_get_allocated_height(vc->gfx.drawing_area) * gs;
-+    fbw = surface_width(vc->gfx.ds);
-+    fbh = surface_height(vc->gfx.ds);
-+    ww = gtk_widget_get_allocated_width(vc->gfx.drawing_area);
-+    wh = gtk_widget_get_allocated_height(vc->gfx.drawing_area);
-+    pw = ww * gs;
-+    ph = wh * gs;
-+
-+    gd_update_scale(vc, ww, wh, fbw, fbh);
+         glFlush();
+ #ifdef CONFIG_GBM
+@@ -122,8 +123,9 @@ void gd_egl_draw(VirtualConsole *vc)
  
-     if (vc->gfx.scanout_mode) {
-         if (!vc->gfx.guest_fb.framebuffer) {
+         eglSwapBuffers(qemu_egl_display, vc->gfx.esurface);
+ 
+-        vc->gfx.scale_x = (double)ww / surface_width(vc->gfx.ds);
+-        vc->gfx.scale_y = (double)wh / surface_height(vc->gfx.ds);
++        gd_update_scale(vc, ww, wh,
++                        surface_width(vc->gfx.ds),
++                        surface_height(vc->gfx.ds));
+ 
+         glFlush();
+     }
 -- 
 2.49.0
 
