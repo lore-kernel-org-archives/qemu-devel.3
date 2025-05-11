@@ -4,102 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E07AC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 13:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C43C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 13:59:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uE73o-0005eV-14; Sun, 11 May 2025 09:49:44 -0400
+	id 1uE7C5-0000yd-AO; Sun, 11 May 2025 09:58:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uE73l-0005dR-T6
- for qemu-devel@nongnu.org; Sun, 11 May 2025 09:49:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uE73k-0002xQ-5l
- for qemu-devel@nongnu.org; Sun, 11 May 2025 09:49:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746971379;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oeGpKGElYWdXPzY44xLkHOg5kh0ZxJrvla0lMfzEXOw=;
- b=TnrxiwW1MVJu5a3Hbmlp1uxgdv+fNT4NbkzzEkWck7O1391jMrmwpJ7KduWbz4YYQs3KmT
- f6lLnV4ENhh0DL5V/68f78R9JQNFQkuM6rPVulQf2rxy9XVU9oV21+zepXNHrq2GsDim7D
- J0d4Cms+K6vdJuTMG4j9wJpiMNdH1cs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-K7Q3aITyPoCjqN-LLsZ1Nw-1; Sun, 11 May 2025 09:49:38 -0400
-X-MC-Unique: K7Q3aITyPoCjqN-LLsZ1Nw-1
-X-Mimecast-MFC-AGG-ID: K7Q3aITyPoCjqN-LLsZ1Nw_1746971377
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-43efa869b0aso25544855e9.3
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 06:49:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uE7C2-0000xp-Ng
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 09:58:15 -0400
+Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uE7C1-0003uU-68
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 09:58:14 -0400
+Received: by mail-yb1-xb31.google.com with SMTP id
+ 3f1490d57ef6-e6df1419f94so2870528276.0
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 06:58:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1746971891; x=1747576691; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=DymOizHJz6ZfCWnGwL888QZa3scm7WEzJt+b/qAC9+w=;
+ b=NueyoE2JRXUVeF7I3XB564JM1jQazs8SZp80emFtM4zOiephqclhrKDPtQDQA2tZUr
+ 3KuMhB37k9k3t4mTpZ3uOnsZl2m0iUaU2xD/+VcFz5/26xcZeeKLoybbqjftvxl3c0mW
+ WWvjtm0OOMR8OLJSUtMsbOtQUcTpSK18v+im4rMkw2YOf7u511LuZ0gT9XtgNTJbVfQC
+ GmUBxdi29CfOIcHe0kt0EnHwCkw9uwkKMR5mfiMZqs6xMSHkvtb9imTJ6sQI3z8b1hcp
+ 3Si9v0rXG3vFnAsYZ8h86dVjyBnHrX3CE+sMVOZep4OSgNJ9kIOqjM2FjIv/N2HI4jT5
+ 4L2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746971376; x=1747576176;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oeGpKGElYWdXPzY44xLkHOg5kh0ZxJrvla0lMfzEXOw=;
- b=BPy4o4Wjue2vuXLm4eWgLx3IuM4peOcpdO7u3gY7HHbia7sGc5/fuJV7z+cCQR79FZ
- Jy21fomZrZbInZeD5KarBGZ61JfRHPoclDwfzKhoRqj5EjkPADM12R3N6qdE11asMD3D
- u0R6jHLWXSnajLPvSjXVyxTpxT6smCiGq8HXgrGtIkesfHWEM5w1dzpXy1e+Xs5vvBLe
- AYo9n+BC1g6FMr62UtOHFzmUlEW39bWlY/upzi5t3mHFA8YYiSFNZSaWYxUw+L0JlK7D
- hfvhrZubjE7QazYR3DFFe31Oq+ORFcHi/PfyiOaDjRwhMjR266ZTGLEqKSB3wObbCieo
- vqGA==
-X-Gm-Message-State: AOJu0YwelAA00qgrVaE7/PVXMd6jUM9BEdpq/qY/gM5WxsX4DRssKGDu
- 91zcYrj5IX18Yz/eTs0nNj/2kPovbhyO0gk71vjqF0N8Ys4fjye2Yhfo8uZe2HGaERlvOGaAqcc
- iNVeXTK9852m2AnzwkL4QRV0G+cjtdGm7gagZIqe9ArSKQjw1iCNo2BbSPJW6
-X-Gm-Gg: ASbGncscrlP8MieAlLUhJwjB54fvFVCmk/cHyjmlVvHEUvF6tugjBFKjkA0zUB3Fujq
- v10zOVuLSJ11duLQqlb7BgexEFJX0COrKTohDsL5h4FrdA9Onw94H0GDkJQ+rNl7c6xdT1+KUUx
- x+zWd1+4B7OnrJvVUXNWEKECNuuMLiOq9S2/LalNNSD4BaxF9AZG7qIKATHAYE2hcR6ncBUP2SR
- gtBJg3j5GcFzN5RtQmHyYNimyXvNUPlPbA+0OJSl4P9SqeyXfgoQxT0LG67Rz5F0bBopxHoSoXG
- 32gwVQ==
-X-Received: by 2002:a05:600c:3482:b0:43d:7588:6688 with SMTP id
- 5b1f17b1804b1-442d6d1fb46mr95610435e9.12.1746971376621; 
- Sun, 11 May 2025 06:49:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG2NXC9IiTkxQvIIZmNC+D37RbKV1hathZfceRhRAG+N+asE+0YvEQhdohdgfaxzzsKXhKTRg==
-X-Received: by 2002:a05:600c:3482:b0:43d:7588:6688 with SMTP id
- 5b1f17b1804b1-442d6d1fb46mr95610295e9.12.1746971376213; 
- Sun, 11 May 2025 06:49:36 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442d6858626sm94596225e9.27.2025.05.11.06.49.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 06:49:34 -0700 (PDT)
-Date: Sun, 11 May 2025 09:49:31 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Jason Chien <jason.chien@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "open list:MCIMX7D SABRE / i..." <qemu-arm@nongnu.org>
-Subject: Re: [PATCH 0/4] Integrate IOMMUs with PCI hosts that have ATUs
-Message-ID: <20250511094907-mutt-send-email-mst@kernel.org>
-References: <20250307203952.13871-1-jason.chien@sifive.com>
+ d=1e100.net; s=20230601; t=1746971891; x=1747576691;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DymOizHJz6ZfCWnGwL888QZa3scm7WEzJt+b/qAC9+w=;
+ b=JQx5HaCcEIB2aPU4tGg6hlffvpO9jNKc8odGcbYFkd/1YFSaWLTXbepQYjl5zNM19V
+ 877UusCJbpwxx/z1u+lkcxMt1VKur3Rlzs5K7ZN4OkHaqFygNPxdPYCjFtJ5XsDGozpw
+ uI+hSTFU6Qmt8JJyRpZ20/gQUCFAyfsEmVO/EmJnW4Tp3JAQ4JRFU6AINkbMVAoxZzPC
+ IQGaGBKSUP+KNgHh6Dx3tqqJtDMXpXEgQ+hb2kNvPSMIBKQaTpJPar0Z2E4KNqvKp1Vd
+ 8thljcJeaOFhgOISOncVO7QHXzeFJkBUguEAYhCVj/BcDpchbwvxJLiz2kAWi1kD+JR6
+ TWHw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVmxFwJ4Yt4UcsqCLbV4Xj/ug3+CGOcOxTgSF4zfog4Lk1T2gb+A3O4hY/OXExuLRz7I5JonGZd3zmM@nongnu.org
+X-Gm-Message-State: AOJu0YwzJNw65U7J1TQKsyiEIm4jrCUHGEWH1akLJvC9aXFRWgKIVZFe
+ W0Vl9F/0217NZmEeu6F+BCrQ94aaXa1EmoU+R1t74obIcpD1TVPqwUVWg7ImzgHQcUxqS6RmkPF
+ 2OExX1PxlQt3MfKMduv6s+cbEwjKFf5YtKpaY+bEuABmGstWSr7w=
+X-Gm-Gg: ASbGnctEHF32q+cLmQZHRsVqM7LGcOceViLvctwaUFAkdUFCMezbzK7GSFJm2JQjuH5
+ Y5ekDXAbzj6ncdDxCUrRBvM3R5MCimgNA58RD5LHq0SWld4eTfuTBLrveZzesMJXbqLNsrHDO/s
+ DcQipTSfMc4S/e/y8pQGyPicWk2ENoUhz2ig==
+X-Google-Smtp-Source: AGHT+IGNLRulOQWthqxbv3n0ncLX/iCrBwEnDGMoGvVCzKlhkkYcNJC91HgpbYO/s9b/OXvKEfCkQyLQbr08EukEtzQ=
+X-Received: by 2002:a05:6902:2503:b0:e78:f1e2:8f25 with SMTP id
+ 3f1490d57ef6-e78fd9bcf66mr13752766276.0.1746971891287; Sun, 11 May 2025
+ 06:58:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250307203952.13871-1-jason.chien@sifive.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.587,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250507091859.2507455-1-timlee660101@gmail.com>
+ <CAFEAcA82=0Pp9U=W5EAjcVkR0GL_o1iVPuUPA=w2SFy4mwd_5w@mail.gmail.com>
+In-Reply-To: <CAFEAcA82=0Pp9U=W5EAjcVkR0GL_o1iVPuUPA=w2SFy4mwd_5w@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sun, 11 May 2025 14:58:00 +0100
+X-Gm-Features: AX0GCFvImpE51QOD9twAeL6evaG7etqOtzehgfZin8mrFtvCsefGZHHF6I2eECQ
+Message-ID: <CAFEAcA8qYRa+CHD+z687ATYwOBenrm_c1hg=yvVq-hzRDxMdRA@mail.gmail.com>
+Subject: Re: [v2] tests/qtest: Add qtest for NPCM8XX PSPI module
+To: Tim Lee <timlee660101@gmail.com>
+Cc: farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com, 
+ wuhaotsh@google.com, kfting@nuvoton.com, chli30@nuvoton.com, 
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,41 +96,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Mar 08, 2025 at 04:39:33AM +0800, Jason Chien wrote:
-> The struct PCIIOMMUOps is designed for use by an IOMMU, but many PCI hosts
-> also utilize it to implement their ATUs, preventing coexistence with IOMMUs.
-> Overwriting a PCI host’s PCIIOMMUOps disrupts its translation rules.
-> 
-> This patch series introduces a mechanism to route inbound transactions from
-> PCI hosts to the IOMMU, enabling proper integration.
-> 
-> The final patch depends on another patch series:
-> https://lists.nongnu.org/archive/html/qemu-riscv/2025-03/msg00003.html
+On Sun, 11 May 2025 at 14:47, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Wed, 7 May 2025 at 10:19, Tim Lee <timlee660101@gmail.com> wrote:
+> >
+> > - Created qtest to check initialization of registers in PSPI Module
+> > - Implemented test into Build File
+> >
+> > Tested:
+> > ./build/tests/qtest/npcm8xx-pspi_test
+> >
+> > Signed-off-by: Tim Lee <timlee660101@gmail.com>
+> > ---
+> > Changes since v1:
+> > - MAINTAINERS file not need to change
+> > - Add comment for copyright/license information
+> > - Correct CTL registers to use 16 bits
+> > - Remove printf() in test cases
+>
+>
+>
+> Applied to target-arm.next, thanks.
 
+...but it fails "make check", so I've dropped it:
 
-PCI things:
+not ok /aarch64/npcm8xx_pspi/data - ERROR:../../tests/qtest/npcm8xx_pspi-test.c:
+80:test_data: assertion failed (output == test): (0x00000000 == 0x00001234)
+Bail out!
+----------------------------------- stderr -----------------------------------
+**
+ERROR:../../tests/qtest/npcm8xx_pspi-test.c:80:test_data: assertion failed (outp
+ut == test): (0x00000000 == 0x00001234)
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+(test program exited with status code -6)
 
-
-given the dependency, pls merge through risc-v tree.
-
-> Jason Chien (4):
->   include/hw/pci: Introduce a callback to set the downstream mr of PCI
->     hosts
->   hw/pci: Introduce an API to set PCI host downstream mr for IOMMU
->     integration
->   hw/pci-host/designware: Implement PCIIOMMUOps.set_downstream_mr()
->   hw/riscv/riscv-iommu: Connect the IOMMU with PCI hosts that have ATUs
-> 
->  hw/pci-host/designware.c         | 18 +++++++++++++++---
->  hw/pci/pci.c                     |  8 ++++++++
->  hw/riscv/riscv-iommu.c           | 15 ++++++++++-----
->  include/hw/pci-host/designware.h |  2 ++
->  include/hw/pci/pci.h             | 21 +++++++++++++++++++++
->  5 files changed, 56 insertions(+), 8 deletions(-)
-> 
-> -- 
-> 2.43.2
-
+thanks
+-- PMM
 
