@@ -4,54 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D70D4C3ABC5
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 11:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46196C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 11:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uE5FK-000228-Ow; Sun, 11 May 2025 07:53:30 -0400
+	id 1uE5In-0004uF-DA; Sun, 11 May 2025 07:57:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uE5FJ-00021o-8f
- for qemu-devel@nongnu.org; Sun, 11 May 2025 07:53:29 -0400
+ id 1uE5Il-0004u3-S9
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 07:57:03 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uE5FH-0003g2-IK
- for qemu-devel@nongnu.org; Sun, 11 May 2025 07:53:28 -0400
+ id 1uE5Ii-0003yT-Kr
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 07:57:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=wvfaEGZAwBu+9BjtQCS5CMAc4HRb1QYuz5cOSZi2Brk=; b=Umkb+KYWUwd4q/J0Q3IzcuI3oU
- f2l+1JHsva4qFym+LJFYvVlKiRH+4LYgAdHLEa5mrD7Hi4gmoLn55Q9+05jCuYRoUlfs93c5xFbiO
- SZ3ctY+RIHv8gQLa1DHGVZJNvyMVaHcDzRTe6k1QsGIDHIMjo482LIzLOoseIuHegeEexvuivBNTu
- dmd/8AWH5BHQky0k9h6+jOmpdO0QeO/8Z+qvYQIUv0BaX3fC4N0+FSc7UA9x4VVY+4EjykT73rezh
- SCdBSOSVSJ18MUXfkImwHoWv9Z2AjxfADn5Fga7W7TOAVw2IoQ3GM73SEM2fRrBhxEw+jzGokQH48
- PgcZgZXYQUj3YuAiGkmICF6yYS7ej5XfAixK+aqvvBwDRVWEXKloRaWGz18RP/Or8NpzcgpAkYHws
- qrX8hSckHZFqreBBigVSabsM7O06Kp3zzMlD+ld+QnFOuzEDl16Y7XDHOA4AdBC7o7JL4YdwiP+2r
- mzsOOplgZc2cn/hKH03IS0ElQxFXQ5EuSnV6RvypsS72MqNQV7L54+y/mbAhAKh7UdLxV+5UzzDQu
- qyiDQxDD4nCowh+hRX9dYPoHyi1i2hgJ3DzTr5DBsNfV8oBp5gZFfxZgwGy65MKh57uQT2BEt3W8o
- ApZsnusN5jwNyJUMEJR0VhmlzEKpb6qpeMh//aFTw=;
+ bh=30+qryEb+AWW5viAdLWGzs+xMX4urs67AamPqaY13/s=; b=L7PMERlRPdR2H1p+8kD8Eirr+N
+ EpkqNGIoui2f2GgYrAAxtDRVaE6xKeCuS9FmhamzCPSeuHzOtOoUcZxItPG4IyQsNSPpAj26o9432
+ dRJul2AuXHNzr6CPebTFeyNGP78eLg+hmVtIfiM0G810Ke3c8NG1AFPXRt1muBKcspYpjB8haM+pL
+ QKq29tiN2TjSI1eZepgqNgLmHP7HarFiRiajjpwfXrkOvP9vJVP3wgCXtiz0sWbkUCzceoctd2z3P
+ yPJncaJnQ6IhcgU3NSBc3qbGJPz9eWQwJtVI76dSX0eXEqO/v9e+ACu2CxZ3QAMhcS+zVK5DKRen8
+ Pw8Xx4wEgkJq0txAkbRIjznZ+4Mb2LJNyRm5RaGW3XKKuG1QT2CnANqfoDwJhLy0fRgrPyLGdOghk
+ zthjIbRSn/CCEnhcfPJwBwWN8LVCLrpdUaqpdS2zMSXNwXxccgaNv5SUGjVpqmqLin8N88YdD5xzP
+ Fex0YNser9cph7YQzutxHPOnc2RzJlvo5kCvct3Yqq69etgqsNbFe3YvgN/jjdZQE5GiA8o0BLjFF
+ ya9gSfc3B5W9wZOSc5Unzv3UJBpkxQMtoY3CbbyjEfFPpZYJPpIfS4jSC+N4DzSyZ5O78nONkhWF0
+ QmZ2mg3/AoECeIuzju2HbvhHjdlRhE7RmK8TkaNns=;
 Received: from [2a02:8012:2f01:0:4ae:f8b0:6f31:6171]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uE5Dz-00036J-7k; Sun, 11 May 2025 12:52:07 +0100
-Message-ID: <bff0f830-2012-40f2-b8c0-c6165be623e2@ilande.co.uk>
-Date: Sun, 11 May 2025 12:53:22 +0100
+ id 1uE5HR-00037h-TN; Sun, 11 May 2025 12:55:42 +0100
+Message-ID: <0c8e4e46-1fc2-40f7-836e-70402135ecb4@ilande.co.uk>
+Date: Sun, 11 May 2025 12:56:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-References: <d456c188-0463-4dc2-9178-469f840eaebe@t-online.de>
- <20250511073846.8713-5-vr_qemu@t-online.de>
+To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
+Cc: atar4qemu@gmail.com, Richard Henderson <richard.henderson@linaro.org>
+References: <20250425093513.863289-1-chigot@adacore.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -78,12 +72,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20250511073846.8713-5-vr_qemu@t-online.de>
+In-Reply-To: <20250425093513.863289-1-chigot@adacore.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:4ae:f8b0:6f31:6171
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 5/7] hw/audio/asc: replace g_malloc0() with g_malloc()
+Subject: Re: [PATCH] target/sparc: don't set FSR_NVA when comparing unordered
+ floats
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -109,32 +104,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/05/2025 08:38, Volker Rümelin wrote:
+On 25/04/2025 10:35, Clément Chigot wrote:
 
-> There is no need to allocate initialized memory with g_malloc0()
-> if it's directly followed by a memset() function call. g_malloc()
-> is sufficient.
+(added Richard on CC)
+
+> FSR_NVA should be set when one of the operands is a signaling NaN or
+> when using FCMPEx instructions. But those cases are already handled
+> within check_ieee_exception or floatxx_compare functions.
+> Otherwise, it should be left untouched.
 > 
-> Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+> FTR, this was detected by inf-compare-[5678] tests within gcc
+> testsuites.
+> 
+> Signed-off-by: Clément Chigot <chigot@adacore.com>
 > ---
->   hw/audio/asc.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/sparc/fop_helper.c | 1 -
+>   1 file changed, 1 deletion(-)
 > 
-> diff --git a/hw/audio/asc.c b/hw/audio/asc.c
-> index 03dee0fcc7..f12268e296 100644
-> --- a/hw/audio/asc.c
-> +++ b/hw/audio/asc.c
-> @@ -664,7 +664,7 @@ static void asc_realize(DeviceState *dev, Error **errp)
->       s->samples = AUD_get_buffer_size_out(s->voice) >> s->shift;
->       s->mixbuf = g_malloc0(s->samples << s->shift);
->   
-> -    s->silentbuf = g_malloc0(s->samples << s->shift);
-> +    s->silentbuf = g_malloc(s->samples << s->shift);
->       memset(s->silentbuf, 0x80, s->samples << s->shift);
->   
->       /* Add easc registers if required */
+> diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
+> index c25097d07f..b57da7c9ea 100644
+> --- a/target/sparc/fop_helper.c
+> +++ b/target/sparc/fop_helper.c
+> @@ -446,7 +446,6 @@ static uint32_t finish_fcmp(CPUSPARCState *env, FloatRelation r, uintptr_t ra)
+>       case float_relation_greater:
+>           return 2;
+>       case float_relation_unordered:
+> -        env->fsr |= FSR_NVA;
+>           return 3;
+>       }
+>       g_assert_not_reached();
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+I don't really use floating point in my SPARC images, but if Richard is happy then I 
+don't mind giving:
+
+Acked-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
 
 ATB,
