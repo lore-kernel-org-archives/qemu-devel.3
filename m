@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E80C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 07:35:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DC2DC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 07:35:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uE1Cy-0003rT-B9; Sun, 11 May 2025 03:34:48 -0400
+	id 1uE1Cn-0003qQ-O1; Sun, 11 May 2025 03:34:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1uE1Cu-0003rA-0y
- for qemu-devel@nongnu.org; Sun, 11 May 2025 03:34:44 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1uE1Cj-0003q9-AJ
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 03:34:34 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1uE1Cs-0003eA-Av
- for qemu-devel@nongnu.org; Sun, 11 May 2025 03:34:43 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-30aa8a259e0so3279154a91.1
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 00:34:41 -0700 (PDT)
+ id 1uE1Ch-0003cy-08
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 03:34:32 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7410c18bb00so3662734b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 00:34:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746948880; x=1747553680; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tS+g3pnX6R2LSJM2Y4TIWBBIODQHvMi7Upe+tVFJbTI=;
- b=bLbd7857zmrxecDjNvZ2UWcZTGTHuT7rZ4SHCeB6p6KEe3WVrb0CwTzMvOYfgX2oQA
- bOwC4c3HQGvXEF+1og4+dZQlbB6IqZI7UhTw0qYN1JMc2SYw8PH9M6LnPi847Q0Xf87P
- zxRVp07eByopzCyU+vuLL5oH8CcxWMB7zd52SM+OUIkLoo159NjppNOHVY0Q494Vvcl4
- JUCyRTO+lPw977bilNQ3PII8pK8fbCmNUsaeb7/bHz/PNwRhhL3oJ6U5iO9U33teL4t0
- tLGsxlA3HmMa8brSkwq8oNLPFuT4ZNzaYIZJva9n+IR5EYy8CeJvsL6IZ9Z+JO9IEfNb
- nOig==
+ d=gmail.com; s=20230601; t=1746948868; x=1747553668; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bqAFcM0mocguuOJJgtADKFvDV5IEcmLyJztG0xkJMwo=;
+ b=BWagDD6QYLBOzNxchVs+jCztlGb08gxe2HC/zdHB/Kc8asp7cSqUFqFQed0xA7qtJU
+ p8bIro2/eH7bd4qyywzAuq408Fe2xQU7laf+ajsw+hVJYFylJTiH4ZI/YQ3o6yWjsv0p
+ Y2qMl1b1mFk54b/PB0jQZm0v68eDBpjCKqDr8bf87ajO+W0TQJevoO0a5XL7kwfRWKUH
+ +WwWGZXj23YhVSG6tfL1AVZC4jYiGBm0Hh3/+3GbmOeP8Nma/txqPXQt0fyS0vS18Kfs
+ DvB4TVQ7hjEw8+ACTcU59AThnG3A2TKsyHUgaTKAudMkRNx2AiZe31ljQVrrkzQUIbsn
+ OYEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746948880; x=1747553680;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tS+g3pnX6R2LSJM2Y4TIWBBIODQHvMi7Upe+tVFJbTI=;
- b=ZHND3uZQKMyxm7VoDNU04J7URadzpABD2+Bxo9QLDpl5k5rzwzt4yASw4GSpbqD2z+
- R80bbGXJ38srKFufG4iA5WwiSqUOPXuTdLi2EobUA3Yr8uP/x0b7aVnDqZBQJoFp1VTy
- nPqR+T5Q2NQReCM20ZMbhND+wxiuSg0YhZfvWsi7bCX5aBm4JlMs+S3Eo+I/v+XaDCwb
- vDbqyaYiRwX8ygyljUwa6OwkIGK1Svq1L9hkq3zlx77wMNsu8AWKyk7D/NN1FC/zYo9f
- xQGiHoRnc4DGAot3kIZFyFd5sIhE3o950zz516zle735cXOgGjy7itEBYYAWGUKVbUy3
- uC8A==
-X-Gm-Message-State: AOJu0YyaP3QsCIJQc+advfNsfYDm8o6N00drHK96RLzyJ8mu0mkuALho
- QcDbTq6hCJ8RgkfwYHLdYYgNjVICqj2OZUJVd0xerEF5T5pNpL5emMb8gLA5
-X-Gm-Gg: ASbGncu56nTEbOIqqzF3KaIT0JCLBesw95loZ2xqg3xGU3TzBRfOTC311ktZUjx3gHe
- Sdy7yeeBP4mTP4uYjsn80x5oYSGfqp//Sb0sxLD20DjkF7L0mz10n+lkFurKD52WWt/4eWD5UPT
- /LJbdV++jCgTDZwKL6QbbmkLCoXIJR1vroLETjOdYsE0xat89zvwUUk+zIrXrxWo20bN4BsfFzZ
- jkvyjhI2M4esL5v0u5HOz9bdqrJs45q8PaeyiS+Cuo9pxY/X00bAE+hvE7etbjmSIdblRzZUc4t
- 54vvFL5YASkrW9rxKxsMwtCJp4kWQuzH8sWX6ORwL1zWePZQYgPiN+c=
-X-Google-Smtp-Source: AGHT+IEBaExnNiVQiIm4JH0XJZk68B9bMhjw53xw4HYJU1eWpJ/SPB3MI59quXoKaH27P9WzWfc+pQ==
-X-Received: by 2002:a17:90b:1dc1:b0:2fe:9581:fbea with SMTP id
- 98e67ed59e1d1-30c3d6580famr13692023a91.29.1746948879818; 
- Sun, 11 May 2025 00:34:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746948868; x=1747553668;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bqAFcM0mocguuOJJgtADKFvDV5IEcmLyJztG0xkJMwo=;
+ b=UtjGy5cwz7u4+oALkEh9ZpdjpVG89aenRcXH4h0T43v9qIUUE4saqyxJfk+tu0oV0Z
+ MdoJ0OJcA+OSTnsirgNbinW4kaE3Z0sdDaIGySrdYawZhiMd1oFSwSo6oNlWsiIC3zIz
+ aHlCjAWAOKtXWZrobcE3x52XvnjYUWdMUXrUCeDT9stzg2xgrqILADZCBMVBd8ws8DqB
+ hQ4K9615I+aUeg4Vny37wqiELMpucSnol2J0AVX0yTjd7yWTmdnIm29k0gT43VAOGJXJ
+ zk7Pb8sfeDerL9lyMnaHJkjt8J0vcXmmLj06Px2UC8BllhjXmQxdwzxeVtwGEXDlSApe
+ 3uVA==
+X-Gm-Message-State: AOJu0Ywb52ZnZtpKIq0UY82HLTw0IYq2gQNu9vaU/xGyMHNokrsn7L97
+ YARkBBq9KzHurTwRp10FoFj1h0/9h4wGx+HyBKkksUqSwkD7slhL2lZtKbNo
+X-Gm-Gg: ASbGncvAxQDzPXVk3IC64QwuPlrQLahD8oG3jYPbli/3TRkn7hVIQ90TBkLDWl0jaX/
+ 7FY5uaAHB938J5EPvTAzu1yhcMgmpfz46gXnMd+tyX7oDMC+6BjMfUkV9wFZHygkF4JFfCDREC2
+ eOHcfyKXzV4GGyj68Y/IF6yUYO+0WSuZuO4OzjOgkQtvSdBQGEsCV9mQ3M2j0sHY+krHlPYZB+f
+ 9MKQD68ydEUU1c0M5Hj8lqWfpupx0TioZVoLk5FwYZFVAwTHVWlBKpfLg8XIWcOUPNsE894ki4P
+ o0nRsefwx9hP25RGPVY8sEVWYV7lLgPfRvyzQnT7JJrMyDrlwYAIhSE=
+X-Google-Smtp-Source: AGHT+IGyHJlTpGv/wvRkU6Fpv+Pao6vQORr6CD1jqLBYPb2+q/lglgFykagzzQDoxhV0whk73+NRFQ==
+X-Received: by 2002:a05:6a00:1254:b0:736:34a2:8a18 with SMTP id
+ d2e1a72fcca58-7423c030959mr14987126b3a.24.1746948868516; 
+ Sun, 11 May 2025 00:34:28 -0700 (PDT)
 Received: from localhost ([103.192.227.12]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-30c39e76039sm4491951a91.43.2025.05.11.00.34.38
+ d2e1a72fcca58-74237a0ce8asm4101759b3a.88.2025.05.11.00.34.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 00:34:39 -0700 (PDT)
+ Sun, 11 May 2025 00:34:27 -0700 (PDT)
 From: Weifeng Liu <weifeng.liu.z@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Weifeng Liu <weifeng.liu.z@gmail.com>
-Subject: [PATCH 3/9] gtk/ui: Introduce helper gd_update_scale
-Date: Sun, 11 May 2025 15:33:13 +0800
-Message-ID: <20250511073337.876650-4-weifeng.liu.z@gmail.com>
+Cc: Weifeng Liu <weifeng.liu.z@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ Dongwon Kim <dongwon.kim@intel.com>
+Subject: [PATCH 0/9] ui: Improve scale handling
+Date: Sun, 11 May 2025 15:33:10 +0800
+Message-ID: <20250511073337.876650-1-weifeng.liu.z@gmail.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250511073337.876650-1-weifeng.liu.z@gmail.com>
-References: <20250511073337.876650-1-weifeng.liu.z@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=weifeng.liu.z@gmail.com; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=weifeng.liu.z@gmail.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,74 +101,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The code snippet updating scale_x/scale_y is general and will be used in
-next patch. Make it a function.
+Hi all,
 
-Signed-off-by: Weifeng Liu <weifeng.liu.z@gmail.com>
----
- include/ui/gtk.h |  2 ++
- ui/gtk.c         | 30 +++++++++++++++++++-----------
- 2 files changed, 21 insertions(+), 11 deletions(-)
+Now we have quite a lot of display backends for different use cases.
+Even in the context of gtk, we have various implementations (e.g., gl=on
+vs gl=off, X11 vs Wayland). However, behaviors to users are not aligned
+across the backends, especially in the part of scale handling. This
+patch set attempts to improve scale handling.
 
-diff --git a/include/ui/gtk.h b/include/ui/gtk.h
-index aa3d637029..d3944046db 100644
---- a/include/ui/gtk.h
-+++ b/include/ui/gtk.h
-@@ -224,4 +224,6 @@ int gd_gl_area_make_current(DisplayGLCtx *dgc,
- /* gtk-clipboard.c */
- void gd_clipboard_init(GtkDisplayState *gd);
- 
-+void gd_update_scale(VirtualConsole *vc, int ww, int wh, int fbw, int fbh);
-+
- #endif /* UI_GTK_H */
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 8f5bb4b62e..47af49e387 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -801,6 +801,24 @@ void gd_update_monitor_refresh_rate(VirtualConsole *vc, GtkWidget *widget)
- #endif
- }
- 
-+void gd_update_scale(VirtualConsole *vc, int ww, int wh, int fbw, int fbh)
-+{
-+    if (!vc) {
-+        return;
-+    }
-+
-+    if (vc->s->full_screen) {
-+        vc->gfx.scale_x = (double)ww / fbw;
-+        vc->gfx.scale_y = (double)wh / fbh;
-+    } else if (vc->s->free_scale) {
-+        double sx, sy;
-+
-+        sx = (double)ww / fbw;
-+        sy = (double)wh / fbh;
-+
-+        vc->gfx.scale_x = vc->gfx.scale_y = MIN(sx, sy);
-+    }
-+}
- /**
-  * DOC: Coordinate handling.
-  *
-@@ -908,17 +926,7 @@ static gboolean gd_draw_event(GtkWidget *widget, cairo_t *cr, void *opaque)
-     ww_widget = gdk_window_get_width(gtk_widget_get_window(widget));
-     wh_widget = gdk_window_get_height(gtk_widget_get_window(widget));
- 
--    if (s->full_screen) {
--        vc->gfx.scale_x = (double)ww_widget / fbw;
--        vc->gfx.scale_y = (double)wh_widget / fbh;
--    } else if (s->free_scale) {
--        double sx, sy;
--
--        sx = (double)ww_widget / fbw;
--        sy = (double)wh_widget / fbh;
--
--        vc->gfx.scale_x = vc->gfx.scale_y = MIN(sx, sy);
--    }
-+    gd_update_scale(vc, ww_widget, wh_widget, fbw, fbh);
- 
-     ww_surface = fbw * vc->gfx.scale_x;
-     wh_surface = fbh * vc->gfx.scale_y;
+We have to deal with various coordinates due to the existence of scaling
+in different level. Firstly, in desktop level, we could have a global
+window scale factor. Secondly, users might set a zooming factor to
+adjust the size of guest content in scan-out level. Consequently, 1) the
+buffer from guest, 2) the host window and 3) OpenGl drawing area inside
+the host window are in distinct coordinates. It's important to define
+these coordinates and scales unambiguously and use a consistent naming
+convention for variables representing different concepts. The first
+patch in this set tries to achieve this goal by adding a document in
+gtk.c, and the next patch (PATCH 2) attempts to align the code with the
+document.
+
+PATCH 3 - 5 fix bugs in mouse position calculation due to not handling
+scale properly, for both gtk and sdl.
+
+PATCH 6 align scale update logic in gtk-egl with other implementations.
+
+PATCH 7 fix an issue that gtk window might keep enlarging/shrinking because 
+ui info propagating to guest not considering scale.
+
+PATCH 8 and 9 align fixed-scale mode behavior in gtk-gl-area and gtk-egl with
+other implementations by adding appropriate padding to the window to preserve
+the scale.
+
+Tested cases:
+
+- qemu-kvm -display gtk,gl=on (free scale mode, fixed scale mode, full
+  screen mode)
+- qemu-kvm -display gtk,gl=off (free scale mode, fixed scale mode, full
+  screen mode)
+- GDK_BACKEND=x11 qemu-kvm -display gtk,gl=off (free scale mode, fixed
+  scale mode, full screen mode)
+- qemu-kvm -display sdl,gl=off
+- qemu-kvm -display sdl,gl=on
+
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Cc: Dongwon Kim <dongwon.kim@intel.com>
+
+Best regards,
+Weifeng
+
+Weifeng Liu (9):
+  ui/gtk: Document scale and coordinate handling
+  ui/gtk: Use consistent naming for variables in different coordinates
+  gtk/ui: Introduce helper gd_update_scale
+  ui/gtk: Update scales in fixed-scale mode when rendering GL area
+  ui/sdl: Consider scaling in mouse event handling
+  ui/gtk: Don't update scale in fixed scale mode in gtk-egl.c
+  ui/gtk: Consider scaling when propagating ui info
+  ui/gtk-gl-area: Render guest content with padding in fixed-scale mode
+  ui/gtk-egl: Render guest content with padding in fixed-scale mode
+
+ include/ui/egl-helpers.h |   4 +-
+ include/ui/gtk.h         |   2 +
+ ui/egl-helpers.c         |  10 +-
+ ui/gtk-egl.c             |  58 ++++++---
+ ui/gtk-gl-area.c         |  53 +++++++--
+ ui/gtk.c                 | 245 +++++++++++++++++++++++++++------------
+ ui/sdl2-gl.c             |   2 +-
+ ui/sdl2.c                |  20 +++-
+ 8 files changed, 290 insertions(+), 104 deletions(-)
+
 -- 
 2.49.0
 
