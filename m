@@ -4,76 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66483C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 17:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEDAFC3ABCB
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 17:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEAa8-0002kP-32; Sun, 11 May 2025 13:35:20 -0400
+	id 1uEAqX-00077b-Pn; Sun, 11 May 2025 13:52:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1uEAa6-0002fe-7t
- for qemu-devel@nongnu.org; Sun, 11 May 2025 13:35:18 -0400
-Received: from mail-yw1-x1141.google.com ([2607:f8b0:4864:20::1141])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1uEAa4-0007LY-Dh
- for qemu-devel@nongnu.org; Sun, 11 May 2025 13:35:17 -0400
-Received: by mail-yw1-x1141.google.com with SMTP id
- 00721157ae682-703cd93820fso33384087b3.2
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 10:35:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746984915; x=1747589715; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Od/bYHMkqh8HuPtuVnhFKddGUAN3J22K/RqW7t69+ks=;
- b=CRzK6CTMNFvzXc2/LdT44RpxyOq5MRiSPpmuSZEEVmwOv1JDpNMyrvkb7ct2OldIrE
- LHIB13KTm2wu246nliJ9g5H2S7xA3kqZ4fP9Kgu/FCkEsVKgK4apz7NgYneqs5pmGDyY
- BRCYmckO4SzheobtVkwOQrOSI+EWdgOLAwqUuKSx3VDnibVIuOXebnwNJuPjM6sLH6DT
- gK5S1Dyb5iWUjWvPxPja0+VMSV1maJEgboZXu1mj+GvkJqcSVnvA9i5ss0zkG1ZUyhPg
- YM8+42oPyYVIi7z8gmVz+RZ7s4879u58lrq+900CPyhRYEV0QaiyFKVtosY4sEL2mOyx
- JauQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uEAqW-00077L-5Q
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 13:52:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uEAqT-0000SX-UX
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 13:52:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746985932;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eTNtWMdtJVRxphB0XkaxqPrVhsptmuf1ozGfqkLl210=;
+ b=disLZ0pr+8ZJnsfWmQNnCWKiIwwUNOAcPjrKWhG+AvqVrxW8WnAkqVR68Yv/uYWrlqGdOL
+ cWAPMFK/hOxkdgii9io9O2LiTVntcuzxe3ZBM7mBq4dfCLYwklpdNm3PhVmeW6JnmHN0Ny
+ tsmhVcdX9SJbqihBKjvPFVls4Zy0iTI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-418-c6NRx_TTNiO1rnvlpRcdPA-1; Sun, 11 May 2025 13:52:10 -0400
+X-MC-Unique: c6NRx_TTNiO1rnvlpRcdPA-1
+X-Mimecast-MFC-AGG-ID: c6NRx_TTNiO1rnvlpRcdPA_1746985930
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43e9b0fd00cso17794245e9.0
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 10:52:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746984915; x=1747589715;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Od/bYHMkqh8HuPtuVnhFKddGUAN3J22K/RqW7t69+ks=;
- b=TMIA+mUDKjSv4TK13IPl4vCOjTlBI7v/eEOVi319fX2tGHDnlBYoRc9W+K4yNG6+A6
- pr5Am7IK9/XMRXUuijgfs2pdZKQknrY4+nejVvJkGxg9OwOCrKJNhEPjbIyCwFMn486V
- Yya3VXq74W8MRlA1F5FVpoM76l8rGR0lK9m6NcY3NmOI6+L75z+OukZdqLKBF0kzsdjX
- A8InmMD286HZjKpgpR+MPY9PZCXNS1QqDP1EuUlFrEcfRru+5iUINvzUGlf0G681V7M7
- eEgNsQw+vQ1n7l+8dl8Hm7jr/M3NT8O3rfwfFZBXha+hjTV3YjZj0tR0VPOcy1OJuK4i
- sbSw==
-X-Gm-Message-State: AOJu0YzrK+m259RNaay1BzTy1TG0xOJL8HO4AncdC7wGVB3pHAs2QWz/
- N47TbgGSYPXD2HuyTq6Oj6ZZ29KX+LbLmYJMMR5nar377Wv/UxLzc/IVRqsVsHTmFi71s8h4gsf
- 2QacqOO7kbJt8CJ+wGI9pGXOx3GB/zpkKwJHMuw==
-X-Gm-Gg: ASbGncuJi+6ezMMdTo/Q2GfHAqq+bAz55FprJiOMZSLuFoF1qBwcfyQ6S7gWfw88Pib
- hxCsKGMoR3jYUW+/axvoOb+RNRuskenU85x64vM9Hy4/JqjUpyx8LNqRd8R8HvaCUB+QFUJIYVL
- L30HGNx1XDFXcFurjw0h0TOmKWwNrpsGXlod3xggCS2nRo
-X-Google-Smtp-Source: AGHT+IFHQQYYnY16l86pBDySvBksi2dWW06zp1gjnBuv1S+Af9MYKMHn3zQYHyqGjNS4/6XVlOFc8rT831f2Ji6sJ1k=
-X-Received: by 2002:a05:690c:3341:b0:6fe:aa66:5d82 with SMTP id
- 00721157ae682-70a3fa40be7mr144168467b3.19.1746984914518; Sun, 11 May 2025
- 10:35:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746985929; x=1747590729;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eTNtWMdtJVRxphB0XkaxqPrVhsptmuf1ozGfqkLl210=;
+ b=PsPzuT9saDhkxFsDSJUUP6KUO3ohzBSJm1l2pt7OsQMZATW40LkE+RjL37ltCMViRp
+ yeqskcaAhqtm7p+KETr8at+zAcqYeAOhSX0cApoinWcdONI7c1TuofuMBeknOglVp6F/
+ YRwXNKpWfjQxSBip/TJAvErimn6eU0qr5a3lmftD0ZWKvfBwtrLWf5kW2S6vqraBiJmW
+ J+OLk/eA65lt/o8oPXdrSKdlHFuy2o/fW5fXYnCylmGFkNimbIcwDT3xPhOF9fOhv96X
+ RfHb4HMrXyC0Ha0X70Mkd0tMvYAmNqrsnWsO2dyGBXWhaZmt0RX3obd00s4el4xVz09P
+ q3uQ==
+X-Gm-Message-State: AOJu0YynqgDogVixuXYjHK7voqZdfWLEjNX7EgtDiAe2u9Xjk3u2y94k
+ NcLOPfwrih1n4U8r0KITw1ozHaefhqsWH5ohJ9g2iPXzMYs2REMJh8julULfpNhWkqsYpTQyoAS
+ Id9v4KVK6Dsc23VgNUEL7rhtBkVDH6yzlbqZkkdao4AgbAzfEpr/H
+X-Gm-Gg: ASbGnctnRm8O87BnNaRPDLgVBwS3d0MEj+lTf/XWSRS2t5hHurRif5ILkFaZG5LFUDN
+ egGNhcoSqfRT/lr1tTQBluw1hF/a0wYryLn8s6cpvMFjH9tCbp6XkVaCe+HcQcpBLT63AdiDUgA
+ 4LoxRVEa6XngK59GZ0tCFeJBC/9vK+UifEjZAjVz8TGItwiX8NcYeTRbnx3uUY3CseY94TLJB4I
+ KHVFG44bGqMqizVwIwA7/8el0JEqsLgR6A3fvmQA0Gw6TsoOKzn72dOP/kp8yjpos/G74Rbr0yw
+ 9ECcYg==
+X-Received: by 2002:a05:600c:4e06:b0:442:d9fb:d9a5 with SMTP id
+ 5b1f17b1804b1-442d9fbda6bmr70601815e9.9.1746985929577; 
+ Sun, 11 May 2025 10:52:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFd0WsK2612ML3LJKbjH+v+NfS+VTteHEJgZEDKCxYEJavv+8w9UfaJ7kd3u09HRyiVzDJ38g==
+X-Received: by 2002:a05:600c:4e06:b0:442:d9fb:d9a5 with SMTP id
+ 5b1f17b1804b1-442d9fbda6bmr70601695e9.9.1746985929187; 
+ Sun, 11 May 2025 10:52:09 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-442cd3b7d2bsm141688425e9.36.2025.05.11.10.52.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 11 May 2025 10:52:08 -0700 (PDT)
+Date: Sun, 11 May 2025 13:52:00 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Sairaj Kodilkar <sarunkod@amd.com>
+Cc: qemu-devel@nongnu.org, marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net,
+ suravee.suthikulpanit@amd.com, alejandro.j.jimenez@oracle.com,
+ joao.m.martins@oracle.com
+Subject: Re: [PATCH v2 0/2] amd_iommu: Fixes
+Message-ID: <20250511135031-mutt-send-email-mst@kernel.org>
+References: <20250509064526.15500-1-sarunkod@amd.com>
 MIME-Version: 1.0
-From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
-Date: Sun, 11 May 2025 23:05:03 +0530
-X-Gm-Features: AX0GCFt-xqInsJ1qV0lObN8nBm5woqev06TjMp_yHA3IZzR3DU3EHrDEVE5GVIo
-Message-ID: <CAGkZZ+ttRPMmK9ynnwvNE32z3ayGqH-DDcq0_DUrJoc0Da6N6Q@mail.gmail.com>
-Subject: GSoC Intro: Soumyajyotii Ssarkar, working on Implementing LASI
- Network Card & NCR710 SCSI Controller Device Models
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000420da10634df9f0d"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1141;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-yw1-x1141.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250509064526.15500-1-sarunkod@amd.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.587,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,51 +107,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000420da10634df9f0d
-Content-Type: text/plain; charset="UTF-8"
+On Fri, May 09, 2025 at 12:15:24PM +0530, Sairaj Kodilkar wrote:
+> Fix following two issues in the amd viommu
+> 1. The guest fails to setup the passthrough device when for following setup
+>    because amd iommu enables the no DMA memory region even when guest is 
+>    using DMA remapping mode.
+> 
+>     -device amd-iommu,intremap=on,xtsup=on,pt=on \
+>     -device vfio-pci,host=<DEVID> \
+> 
+>     and guest forcing DMA remap mode e.g. 'iommu.passthrough=0'
+> 
+>     which will cause failures from QEMU:
+> 
+>     qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
+>     qemu-system-x86_64: AHCI: Failed to start FIS receive engine: bad FIS receive buffer address
+>     qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
+>     qemu-system-x86_64: AHCI: Failed to start FIS receive engine: bad FIS receive buffer address
+>     qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
+> 
+> 
+> 2. The guest fails to boot with xtsup=on and <= 255 vCPUs, because amd_iommu
+>    does not enable x2apic mode.
+> 
+> base commit 56c6e249b6988c1b6edc2dd34ebb0f1e570a1365 (v10.0.0-rc3)
+> 
+> Sairaj Kodilkar (1):
+>   hw/i386/amd_iommu: Fix device setup failure when PT is on.
+> 
+> Vasant Hegde (1):
+>   hw/i386/amd_iommu: Fix xtsup when vcpus < 255
+> 
+>  hw/i386/amd_iommu.c | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
 
-Dear QEMU Developers,
-I am Soumyajyotii Ssarkar, a sophomore Computer Science student from India.
-It is truly an honor for me to be a part of this community. I look forward
-to a productive summer with our community.
+Patches themselves were not posted to list.
+Only the cover letter.
 
-For the first half of my summer, I will be working on thoroughly testing
-and debugging the current LASI Network Card implementation in QEMU and
-adding missing code.
-For the second half of my summer, I will be working on the NCR710
-implementation taking the current NCR710 implementation from WinUAE which
-was ported to QEMU by Helge Deller(my Mentor) as an inspiration and
-building upon it. Refining both of them to reach upto QEMU standards,
-I plan to keep you all in the loop with updates every alternate week, and
-to be in constant touch with my mentor every week keeping them up to date
-with my project progress.
+> -- 
+> 2.34.1
 
-I humbly appreciate the community's work in bringing such a wonderful
-software into reality and I am greatly honored to work among you all, to
-further enhance QEMU this summer.
-Thanking You,
-Soumyajyotii Ssarkar.
-
---000000000000420da10634df9f0d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Dear QEMU Developers,<div>I am Soumyajyotii Ssarkar, a sop=
-homore Computer Science student from India. It is=C2=A0truly an honor for m=
-e to be a part of this community. I look forward to a productive summer wit=
-h our community.</div><div><br></div><div>For the first half of my summer, =
-I will be working on thoroughly=C2=A0testing and debugging the current LASI=
- Network Card implementation in QEMU and adding missing code.</div><div>For=
- the second half of my summer, I will be working on the NCR710 implementati=
-on taking the current NCR710 implementation from WinUAE which was ported to=
- QEMU by Helge Deller(my Mentor) as an inspiration and building upon it. Re=
-fining both of them to reach upto QEMU standards,</div><div>I plan to keep =
-you all in the loop with updates every alternate week, and to be in constan=
-t touch with my mentor every week keeping them up to date with my project p=
-rogress.</div><div><br></div><div>I humbly appreciate=C2=A0the community&#3=
-9;s work in bringing such a wonderful software into reality and I am greatl=
-y honored to work among you all, to further enhance QEMU this summer.</div>=
-<div>Thanking You,</div><div>Soumyajyotii Ssarkar.</div></div>
-
---000000000000420da10634df9f0d--
 
