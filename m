@@ -4,89 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA055C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 17:21:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66483C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 17:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEALf-0006Qh-R7; Sun, 11 May 2025 13:20:23 -0400
+	id 1uEAa8-0002kP-32; Sun, 11 May 2025 13:35:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uEALe-0006QK-6d
- for qemu-devel@nongnu.org; Sun, 11 May 2025 13:20:22 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
+ id 1uEAa6-0002fe-7t
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 13:35:18 -0400
+Received: from mail-yw1-x1141.google.com ([2607:f8b0:4864:20::1141])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uEALb-0006BN-Ro
- for qemu-devel@nongnu.org; Sun, 11 May 2025 13:20:21 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-b07d607dc83so2866109a12.1
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 10:20:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
+ id 1uEAa4-0007LY-Dh
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 13:35:17 -0400
+Received: by mail-yw1-x1141.google.com with SMTP id
+ 00721157ae682-703cd93820fso33384087b3.2
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 10:35:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746984017; x=1747588817; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TFhUNIb35hTVnlM4jkZ7y1pSgMonXQDhP/FRTte5SlM=;
- b=JVwaijYe0fIaHttQSILeQ2SDjlux2vqlz910vU2ei6/ooDg+ejYrmw+oSR2ztxpK7L
- iBYGbc1AJkwte78Xp21WUk+w5EVAFwdFC3cwYN/fw5BqozRU3wXzH38WaH8uWQrpgSWa
- cneZ9AWd7XElfhT/suovMdRBtMLkte/ry3KONkKpvZi8WHxM3QHyEAtqxxTZ5iDKEMKe
- Q7x7dYT2whbv8oGhBaZlDhuRn8KgUHdXHa/dKXGuPopsXgrvMlf+Vk5YIkxaxDnpav75
- w5uqG+fM0rseoSsVSxnU251RkSExbx1m8mt0dYA7b3xpbo23eF8lyLIf8aZGHMwoIv0Q
- wXYw==
+ d=gmail.com; s=20230601; t=1746984915; x=1747589715; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Od/bYHMkqh8HuPtuVnhFKddGUAN3J22K/RqW7t69+ks=;
+ b=CRzK6CTMNFvzXc2/LdT44RpxyOq5MRiSPpmuSZEEVmwOv1JDpNMyrvkb7ct2OldIrE
+ LHIB13KTm2wu246nliJ9g5H2S7xA3kqZ4fP9Kgu/FCkEsVKgK4apz7NgYneqs5pmGDyY
+ BRCYmckO4SzheobtVkwOQrOSI+EWdgOLAwqUuKSx3VDnibVIuOXebnwNJuPjM6sLH6DT
+ gK5S1Dyb5iWUjWvPxPja0+VMSV1maJEgboZXu1mj+GvkJqcSVnvA9i5ss0zkG1ZUyhPg
+ YM8+42oPyYVIi7z8gmVz+RZ7s4879u58lrq+900CPyhRYEV0QaiyFKVtosY4sEL2mOyx
+ JauQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746984017; x=1747588817;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TFhUNIb35hTVnlM4jkZ7y1pSgMonXQDhP/FRTte5SlM=;
- b=VoKssuDkwwb64m507ulGWwObPpatngOy7yMwwujn9PR8dc82tx0YhRyS2hbT2i1zrh
- Msa+nVSiVZ+rc4xeHJ6AeU97lBs4Ev8wR7lTJo0MvGm//BnQQrJKhWdnjB9jhfRBzbwy
- 3PSXejff6x75VyCqxwzojeyiTcX0LGsT5BlyQrQ8hZyQi6tr01AQKXNHuJAga1JB2NMB
- MUDF6iW4kzKBN0S80wEUcRgit/2lBLvYLhX7f7ghCzKmQfoDcUbjJwwac5JwJLoVAZpY
- oBSQsdaMEbhOhpDCFQoRkueyr4cQjH6/nCHEsjvn44+r5efG2tS05xZ6fh+jmmiFiZOy
- dBrw==
-X-Gm-Message-State: AOJu0YxeY6VgyV1zDMH3NX+UXqFqy1xY0qiqgaaIbCsUlI0ydMDhBJHF
- KLSiOUjfKHsQ2efFrzMKLqLJWQriGDdQqXX+1TpKluOh+rMyoWskl4I261ZrUVg=
-X-Gm-Gg: ASbGncvTnISuyoJ+QmrokM6JN+VNZFVe+rl0XM7SdxaLsLXtdVbvZ5eogT3JWYbouAK
- px+YygQwpiIp3VjQZsGdjrbVssS4jIaINx9IaprcZZIhpsAseIgAcDdge326M5NWGcgVQfaleON
- Uuz0YIds/g4ItnGrg3qDmTsKE8JpT+j2VCiTQRuDGcWtwQGjKHiE47zIPS1sKDQKWp6+MTjL2NJ
- iGoPUt3IHSg7DDbdWQJwfX/ULo2US4BdpWQw8BSxBSHEHiZ14fXSosSuZ9CofH5cCoz2AtSfPEV
- FUkKWCjSLbHDutmOLNK0eSVbwunLL1TVyk3thqsFTCf/wt/0rfp4Ip16WUCwu9vB4Z4qFIIAPkB
- tPihUl5KzXiShd72Cws+v3NhdycSb
-X-Google-Smtp-Source: AGHT+IEB2kAj+HAYkguNrRkRUCIsqQoqc3OCOkJjEDruN+KClQXfh+9CsDbrJm6nkb8PWHvUMm8esw==
-X-Received: by 2002:a17:903:1904:b0:22e:4d64:821f with SMTP id
- d9443c01a7336-22fc8b56982mr115144645ad.20.1746984016998; 
- Sun, 11 May 2025 10:20:16 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc8298a40sm48514395ad.200.2025.05.11.10.20.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 11 May 2025 10:20:16 -0700 (PDT)
-Message-ID: <6ee4b563-6fce-4f34-b58b-f0e400a631db@linaro.org>
-Date: Sun, 11 May 2025 10:20:14 -0700
+ d=1e100.net; s=20230601; t=1746984915; x=1747589715;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Od/bYHMkqh8HuPtuVnhFKddGUAN3J22K/RqW7t69+ks=;
+ b=TMIA+mUDKjSv4TK13IPl4vCOjTlBI7v/eEOVi319fX2tGHDnlBYoRc9W+K4yNG6+A6
+ pr5Am7IK9/XMRXUuijgfs2pdZKQknrY4+nejVvJkGxg9OwOCrKJNhEPjbIyCwFMn486V
+ Yya3VXq74W8MRlA1F5FVpoM76l8rGR0lK9m6NcY3NmOI6+L75z+OukZdqLKBF0kzsdjX
+ A8InmMD286HZjKpgpR+MPY9PZCXNS1QqDP1EuUlFrEcfRru+5iUINvzUGlf0G681V7M7
+ eEgNsQw+vQ1n7l+8dl8Hm7jr/M3NT8O3rfwfFZBXha+hjTV3YjZj0tR0VPOcy1OJuK4i
+ sbSw==
+X-Gm-Message-State: AOJu0YzrK+m259RNaay1BzTy1TG0xOJL8HO4AncdC7wGVB3pHAs2QWz/
+ N47TbgGSYPXD2HuyTq6Oj6ZZ29KX+LbLmYJMMR5nar377Wv/UxLzc/IVRqsVsHTmFi71s8h4gsf
+ 2QacqOO7kbJt8CJ+wGI9pGXOx3GB/zpkKwJHMuw==
+X-Gm-Gg: ASbGncuJi+6ezMMdTo/Q2GfHAqq+bAz55FprJiOMZSLuFoF1qBwcfyQ6S7gWfw88Pib
+ hxCsKGMoR3jYUW+/axvoOb+RNRuskenU85x64vM9Hy4/JqjUpyx8LNqRd8R8HvaCUB+QFUJIYVL
+ L30HGNx1XDFXcFurjw0h0TOmKWwNrpsGXlod3xggCS2nRo
+X-Google-Smtp-Source: AGHT+IFHQQYYnY16l86pBDySvBksi2dWW06zp1gjnBuv1S+Af9MYKMHn3zQYHyqGjNS4/6XVlOFc8rT831f2Ji6sJ1k=
+X-Received: by 2002:a05:690c:3341:b0:6fe:aa66:5d82 with SMTP id
+ 00721157ae682-70a3fa40be7mr144168467b3.19.1746984914518; Sun, 11 May 2025
+ 10:35:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 21/24] target/m68k: Implement packed decimal real loads
- and stores
-To: Andreas Schwab <schwab@linux-m68k.org>
-Cc: qemu-devel@nongnu.org, laurent@vivier.eu
-References: <20250507211300.9735-1-richard.henderson@linaro.org>
- <20250507211300.9735-22-richard.henderson@linaro.org>
- <875xi8zalx.fsf@igel.home>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <875xi8zalx.fsf@igel.home>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+From: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Date: Sun, 11 May 2025 23:05:03 +0530
+X-Gm-Features: AX0GCFt-xqInsJ1qV0lObN8nBm5woqev06TjMp_yHA3IZzR3DU3EHrDEVE5GVIo
+Message-ID: <CAGkZZ+ttRPMmK9ynnwvNE32z3ayGqH-DDcq0_DUrJoc0Da6N6Q@mail.gmail.com>
+Subject: GSoC Intro: Soumyajyotii Ssarkar, working on Implementing LASI
+ Network Card & NCR710 SCSI Controller Device Models
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000420da10634df9f0d"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1141;
+ envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-yw1-x1141.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,46 +89,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/10/25 09:36, Andreas Schwab wrote:
-> On Mai 07 2025, Richard Henderson wrote:
-> 
->> +    /* Convert the 3 digit decimal exponent to binary. */
->> +    exp = ((hi >> 24) & 0xf)
->> +        + ((hi >> 20) & 0xf) * 10
->> +        + ((hi >> 16) & 0xf) * 100;
-> 
-> This is backwards.  An exponent of 123 is stored as 0x01230000, not
-> 0x03210000.
-> 
->> +    for (int i = 24; exp10; i -= 4, exp10 /= 10) {
->> +        res_hi |= (exp10 % 10) << i;
-> 
-> Again, this is backwards.  Also, the decimal exponent of an extended
-> precision number can be as big as 4951.  From the fpsp040:
-> 
-> | A15. Convert the exponent to bcd.
-> |      As in A14 above, the exp is converted to bcd and the
-> |      digits are stored in the final string.
-> |
-> |      Digits are stored in L_SCR1(a6) on return from BINDEC as:
-> |
-> |	 32               16 15                0
-> |	-----------------------------------------
-> |	|  0 | e3 | e2 | e1 | e4 |  X |  X |  X |
-> |	-----------------------------------------
-> 
-> That is, the fourth digit of the exponent is stored in the upper 4 bits
-> of the padding (OPERR is set if e4 is non-zero).
-> 
+--000000000000420da10634df9f0d
+Content-Type: text/plain; charset="UTF-8"
 
-Well that's annoying.  There's a mis-print in the m68000pm/ad manual, where it says
+Dear QEMU Developers,
+I am Soumyajyotii Ssarkar, a sophomore Computer Science student from India.
+It is truly an honor for me to be a part of this community. I look forward
+to a productive summer with our community.
 
-   SE SM YY E0 E1 E0 E3 x x D16
+For the first half of my summer, I will be working on thoroughly testing
+and debugging the current LASI Network Card implementation in QEMU and
+adding missing code.
+For the second half of my summer, I will be working on the NCR710
+implementation taking the current NCR710 implementation from WinUAE which
+was ported to QEMU by Helge Deller(my Mentor) as an inspiration and
+building upon it. Refining both of them to reach upto QEMU standards,
+I plan to keep you all in the loop with updates every alternate week, and
+to be in constant touch with my mentor every week keeping them up to date
+with my project progress.
 
-I didn't notice E0 listed twice and so thought "0 1 2 3" was the order.
+I humbly appreciate the community's work in bringing such a wonderful
+software into reality and I am greatly honored to work among you all, to
+further enhance QEMU this summer.
+Thanking You,
+Soumyajyotii Ssarkar.
 
-Will fix.
+--000000000000420da10634df9f0d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr">Dear QEMU Developers,<div>I am Soumyajyotii Ssarkar, a sop=
+homore Computer Science student from India. It is=C2=A0truly an honor for m=
+e to be a part of this community. I look forward to a productive summer wit=
+h our community.</div><div><br></div><div>For the first half of my summer, =
+I will be working on thoroughly=C2=A0testing and debugging the current LASI=
+ Network Card implementation in QEMU and adding missing code.</div><div>For=
+ the second half of my summer, I will be working on the NCR710 implementati=
+on taking the current NCR710 implementation from WinUAE which was ported to=
+ QEMU by Helge Deller(my Mentor) as an inspiration and building upon it. Re=
+fining both of them to reach upto QEMU standards,</div><div>I plan to keep =
+you all in the loop with updates every alternate week, and to be in constan=
+t touch with my mentor every week keeping them up to date with my project p=
+rogress.</div><div><br></div><div>I humbly appreciate=C2=A0the community&#3=
+9;s work in bringing such a wonderful software into reality and I am greatl=
+y honored to work among you all, to further enhance QEMU this summer.</div>=
+<div>Thanking You,</div><div>Soumyajyotii Ssarkar.</div></div>
 
-r~
+--000000000000420da10634df9f0d--
 
