@@ -4,67 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B13C3ABD2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79464C3ABC3
 	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 13:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uE6WO-0006no-FU; Sun, 11 May 2025 09:15:12 -0400
+	id 1uE6WD-0006Qm-U9; Sun, 11 May 2025 09:15:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uE6WG-0006UC-LN
- for qemu-devel@nongnu.org; Sun, 11 May 2025 09:15:04 -0400
-Received: from mailgate02.uberspace.is ([2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4])
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uE6WC-0006PV-1c
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 09:15:00 -0400
+Received: from mailgate02.uberspace.is ([185.26.156.114])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uE6WE-0006qb-0N
- for qemu-devel@nongnu.org; Sun, 11 May 2025 09:15:04 -0400
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uE6W8-0006mF-Fe
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 09:14:59 -0400
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id BA35518006C
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 15:14:50 +0200 (CEST)
-Received: (qmail 26112 invoked by uid 990); 11 May 2025 13:14:50 -0000
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 1F5D0180050
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 15:14:47 +0200 (CEST)
+Received: (qmail 25941 invoked by uid 990); 11 May 2025 13:14:47 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Sun, 11 May 2025 15:14:50 +0200
+ Sun, 11 May 2025 15:14:46 +0200
 From: Julian Ganz <neither@nut.email>
 To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- qemu-ppc@nongnu.org (open list:PowerPC TCG CPUs)
-Subject: [PATCH v4 15/23] target/ppc: call plugin trap callbacks
-Date: Sun, 11 May 2025 15:14:07 +0200
-Message-ID: <4daa0f2dc7ebb59ed0cce0c85b6b8b40720728f5.1746968215.git.neither@nut.email>
+Cc: Julian Ganz <neither@nut.email>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 03/23] plugins: add hooks for new discontinuity related
+ callbacks
+Date: Sun, 11 May 2025 15:13:55 +0200
+Message-ID: <de35ba0200017bef2126899f918b6be8830851ea.1746968215.git.neither@nut.email>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <cover.1746968215.git.neither@nut.email>
 References: <cover.1746968215.git.neither@nut.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.987861) MID_CONTAINS_FROM(1)
- MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.587861
+X-Rspamd-Bar: ----
+X-Rspamd-Report: REPLY(-4) SUSPICIOUS_RECIPS(1.5) MID_CONTAINS_FROM(1)
+ MIME_GOOD(-0.1) BAYES_HAM(-3) R_MISSING_CHARSET(0.5)
+X-Rspamd-Score: -4.1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
  h=from:to:cc:subject:date;
- bh=+MotbJIQe9rsBhnC1Fo8zZ/hxx6wRlQ/dXH41OFrpnU=;
- b=AwR3tBAe5In+f4jpyClpXan++T8wjUzFBRCWPNhZuUrV8QlheEakPa+FAQXGc+hAq739j2VO+Y
- G68ZM7PlQjPYQ0gbtED1j6tW3XFfxv4kilvAVFg6QUJFYBiWPIlCsgHLmZjMtvZtNXmlxcNowrDW
- Nl6x6mFIQzHLOkEXSV43HDNFRx5N+QkBed88re3bUwB3/BYsGBbOvDz2Ef2M/0f1l1Z6nvALS0lo
- /9d6Vp67Pfmy7lHmSvc+9xwymxj/KAoB6M/0UFE8L+fJRpI805Cd+hWRfZyRsZ/JFLU7zoFhRoHh
- LfoPNC585Fgibi1bbClEybmG/WMkP5ia+vuTPhoXNYrxeBMNwDO+2RYje3KO9RpeYeW6kQVQgai+
- iQBgNBEbL+3Ie+BmTm6dPh4erLZReqO9sa/5VVNwOYFkk96CG8PMogTf8O+COCOrhPGcQXiv7XW3
- 2Q10nHuYkfqd0uEB+Sv30tmHMwPoUPpQAqNt3BfKlPIPUU119GJa2SfrSOFCBDfaVolFIutXFOsz
- osZShDjMBI9/qV+VPFZDPJBjPiDTHCUxqdGL4J2neaFWIrLVwiEkXvMWXdXizZwmNkcboUKKpRQw
- qbqqyBBPX1UW/25bMPSmgV8VxV/4JZBp+MqdqMaduUTImBXDXF/jVIFc5lm4OlYe6/JL9DroBigY
- A=
-Received-SPF: pass client-ip=2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4;
- envelope-from=neither@nut.email; helo=mailgate02.uberspace.is
+ bh=xnmTchtKkuBxSt7akDwvVFkTIUBDMW6NONxwKe7Ga2g=;
+ b=N/eD+7/tY8q2HkeiMTjOxeCdnqowtZMW09CJcmYWm/DeZB+O7TyN3Xbss/jtxHTyEkM0ql/3JF
+ AMlX18eR6VOuH0LN7pACMValhUWWgqih3woYYoiL6FnhoEnLu0AXGM95mFUaa/VPcTcgM5jMPRu/
+ tsMqrf8KwwrKE94718b82nVZj6+8KUntLDaF4F3Ew/dbBBQRJniQf7n30N/0qCZqOJI/Wt4ES0x3
+ T0b+I0D9jjB7nFnVYN8kmvxM8YtnarFTz9EO19+WtdtcRK3KjBsIWMPuq8QWJpf6YK8qSqx5gQku
+ U0nikf1TC7kFcCEOPpM/r5UTA0/wx7HYAr2AfdMzywmir7LwQbeDv9t7tfzubP7F2b02gpGjQ3bV
+ LFgrggMOSWdXIASofu1wGr86iwvuGYFAgLzztOmkEKHfmKD+L29Ee5GAkcm/3KHGHkt/01SDXSdH
+ kyS8HwolI4jGuJVV8HfTd8xASMSd6/BjdEU0dfSa4TMY5nrIDu14U5Q6JPEMMkMEeO8hjQRjnIp4
+ rDsU6O4+TZNsGJN26OjhAKFuo+Ox7rwV7ykwFrJ2eaE/GZHYjysx2WNSy2VE/O7j2ocb0MB3JP0q
+ y+72d2SIn1Ic++2nNmRnDGeoQzk2Osb6F9nhBjItw1l++0zCzefE1PmgkRWCCziG27gizCl5GSkz
+ c=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,220 +84,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We recently introduced API for registering callbacks for trap related
-events as well as the corresponding hook functions. Due to differences
-between architectures, the latter need to be called from target specific
-code.
+The plugin API allows registration of callbacks for a variety of VCPU
+related events, such as VCPU reset, idle and resume. In addition, we
+recently introduced API for registering callbacks for discontinuity
+events, specifically for interrupts, exceptions and host calls.
 
-This change places hooks for Power PC targets.
+This change introduces the corresponding hooks called from target
+specific code inside qemu.
 
 Signed-off-by: Julian Ganz <neither@nut.email>
 ---
- target/ppc/excp_helper.c | 42 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ include/qemu/plugin.h | 12 ++++++++++
+ plugins/core.c        | 53 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 65 insertions(+)
 
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 1efdc4066e..24740a000b 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -27,6 +27,7 @@
- #include "internal.h"
- #include "helper_regs.h"
- #include "hw/ppc/ppc.h"
-+#include "qemu/plugin.h"
+diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+index 27a176b631..3494325039 100644
+--- a/include/qemu/plugin.h
++++ b/include/qemu/plugin.h
+@@ -161,6 +161,9 @@ void qemu_plugin_vcpu_exit_hook(CPUState *cpu);
+ void qemu_plugin_tb_trans_cb(CPUState *cpu, struct qemu_plugin_tb *tb);
+ void qemu_plugin_vcpu_idle_cb(CPUState *cpu);
+ void qemu_plugin_vcpu_resume_cb(CPUState *cpu);
++void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu, uint64_t from);
++void qemu_plugin_vcpu_exception_cb(CPUState *cpu, uint64_t from);
++void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from);
+ void
+ qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1,
+                          uint64_t a2, uint64_t a3, uint64_t a4, uint64_t a5,
+@@ -243,6 +246,15 @@ static inline void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
+ static inline void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
+ { }
  
- #include "trace.h"
- 
-@@ -404,11 +405,32 @@ static void powerpc_mcheck_checkstop(CPUPPCState *env)
-     powerpc_checkstop(env, "machine check with MSR[ME]=0");
++static inline void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu, uint64_t from)
++{ }
++
++static inline void qemu_plugin_vcpu_exception_cb(CPUState *cpu, uint64_t from)
++{ }
++
++static inline void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from)
++{ }
++
+ static inline void
+ qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1, uint64_t a2,
+                          uint64_t a3, uint64_t a4, uint64_t a5, uint64_t a6,
+diff --git a/plugins/core.c b/plugins/core.c
+index dc1f5cb4d8..f07813d588 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -104,6 +104,44 @@ static void plugin_vcpu_cb__simple(CPUState *cpu, enum qemu_plugin_event ev)
+     }
  }
  
-+static void powerpc_do_plugin_vcpu_interrupt_cb(CPUState *cs, int excp,
-+                                                uint64_t from)
++/*
++ * Disable CFI checks.
++ * The callback function has been loaded from an external library so we do not
++ * have type information
++ */
++QEMU_DISABLE_CFI
++static void plugin_vcpu_cb__discon(CPUState *cpu,
++                                   enum qemu_plugin_discon_type type,
++                                   uint64_t from)
 +{
-+    switch (excp) {
-+    case POWERPC_EXCP_NONE:
-+        break;
-+    case POWERPC_EXCP_FIT:
-+    case POWERPC_EXCP_WDT:
-+    case POWERPC_EXCP_DEBUG:
-+    case POWERPC_EXCP_PIT:
-+    case POWERPC_EXCP_SMI:
-+    case POWERPC_EXCP_PERFM:
-+    case POWERPC_EXCP_THERM:
-+        qemu_plugin_vcpu_interrupt_cb(cs, from);
-+        break;
-+    default:
-+        qemu_plugin_vcpu_exception_cb(cs, from);
++    struct qemu_plugin_cb *cb, *next;
++    enum qemu_plugin_event ev;
++    uint64_t to = cpu->cc->get_pc(cpu);
++
++    if (cpu->cpu_index < plugin.num_vcpus) {
++        switch (type) {
++        case QEMU_PLUGIN_DISCON_INTERRUPT:
++            ev = QEMU_PLUGIN_EV_VCPU_INTERRUPT;
++            break;
++        case QEMU_PLUGIN_DISCON_EXCEPTION:
++            ev = QEMU_PLUGIN_EV_VCPU_EXCEPTION;
++            break;
++        case QEMU_PLUGIN_DISCON_HOSTCALL:
++            ev = QEMU_PLUGIN_EV_VCPU_HOSTCALL;
++            break;
++        default:
++            g_assert_not_reached();
++        }
++
++        /* iterate safely; plugins might uninstall themselves at any time */
++        QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
++            qemu_plugin_vcpu_discon_cb_t func = cb->f.vcpu_discon;
++
++            func(cb->ctx->id, cpu->cpu_index, type, from, to);
++        }
 +    }
 +}
 +
- static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
- {
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
-     int srr0 = SPR_SRR0, srr1 = SPR_SRR1;
-+    uint64_t last_pc = env->nip;
- 
-     /* new srr1 value excluding must-be-zero bits */
-     msr = env->msr & ~0x783f0000ULL;
-@@ -456,6 +478,7 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
-             if (!FIELD_EX64_FE(env->msr) || !FIELD_EX64(env->msr, MSR, FP)) {
-                 trace_ppc_excp_fp_ignore();
-                 powerpc_reset_excp_state(cpu);
-+                qemu_plugin_vcpu_exception_cb(env_cpu(env), last_pc);
-                 return;
-             }
-             env->spr[SPR_40x_ESR] = ESR_FP;
-@@ -510,12 +533,14 @@ static void powerpc_excp_40x(PowerPCCPU *cpu, int excp)
-     env->spr[srr0] = env->nip;
-     env->spr[srr1] = msr;
-     powerpc_set_excp_state(cpu, vector, new_msr);
-+    powerpc_do_plugin_vcpu_interrupt_cb(env_cpu(env), excp, last_pc);
- }
- 
- static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
- {
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
-+    uint64_t last_pc = env->nip;
- 
-     /* new srr1 value excluding must-be-zero bits */
-     msr = env->msr & ~0x783f0000ULL;
-@@ -567,6 +592,7 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
-             if (!FIELD_EX64_FE(env->msr) || !FIELD_EX64(env->msr, MSR, FP)) {
-                 trace_ppc_excp_fp_ignore();
-                 powerpc_reset_excp_state(cpu);
-+                qemu_plugin_vcpu_exception_cb(env_cpu(env), last_pc);
-                 return;
-             }
-             /*
-@@ -653,12 +679,14 @@ static void powerpc_excp_6xx(PowerPCCPU *cpu, int excp)
-     env->spr[SPR_SRR0] = env->nip;
-     env->spr[SPR_SRR1] = msr;
-     powerpc_set_excp_state(cpu, vector, new_msr);
-+    powerpc_do_plugin_vcpu_interrupt_cb(env_cpu(env), excp, last_pc);
- }
- 
- static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
- {
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
-+    uint64_t last_pc = env->nip;
- 
-     /* new srr1 value excluding must-be-zero bits */
-     msr = env->msr & ~0x783f0000ULL;
-@@ -708,6 +736,7 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-             if (!FIELD_EX64_FE(env->msr) || !FIELD_EX64(env->msr, MSR, FP)) {
-                 trace_ppc_excp_fp_ignore();
-                 powerpc_reset_excp_state(cpu);
-+                qemu_plugin_vcpu_exception_cb(env_cpu(env), last_pc);
-                 return;
-             }
-             /*
-@@ -758,6 +787,7 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-         if (lev == 1 && cpu->vhyp) {
-             cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
-             powerpc_reset_excp_state(cpu);
-+            qemu_plugin_vcpu_hostcall_cb(env_cpu(env), last_pc);
-             return;
-         }
- 
-@@ -803,12 +833,14 @@ static void powerpc_excp_7xx(PowerPCCPU *cpu, int excp)
-     env->spr[SPR_SRR0] = env->nip;
-     env->spr[SPR_SRR1] = msr;
-     powerpc_set_excp_state(cpu, vector, new_msr);
-+    powerpc_do_plugin_vcpu_interrupt_cb(env_cpu(env), excp, last_pc);
- }
- 
- static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
- {
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
-+    uint64_t last_pc = env->nip;
- 
-     /* new srr1 value excluding must-be-zero bits */
-     msr = env->msr & ~0x783f0000ULL;
-@@ -858,6 +890,7 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-             if (!FIELD_EX64_FE(env->msr) || !FIELD_EX64(env->msr, MSR, FP)) {
-                 trace_ppc_excp_fp_ignore();
-                 powerpc_reset_excp_state(cpu);
-+                qemu_plugin_vcpu_exception_cb(env_cpu(env), last_pc);
-                 return;
-             }
-             /*
-@@ -908,6 +941,7 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-         if (lev == 1 && cpu->vhyp) {
-             cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
-             powerpc_reset_excp_state(cpu);
-+            qemu_plugin_vcpu_hostcall_cb(env_cpu(env), last_pc);
-             return;
-         }
- 
-@@ -947,6 +981,7 @@ static void powerpc_excp_74xx(PowerPCCPU *cpu, int excp)
-     env->spr[SPR_SRR0] = env->nip;
-     env->spr[SPR_SRR1] = msr;
-     powerpc_set_excp_state(cpu, vector, new_msr);
-+    powerpc_do_plugin_vcpu_interrupt_cb(env_cpu(env), excp, last_pc);
- }
- 
- static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-@@ -954,6 +989,7 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
-     int srr0 = SPR_SRR0, srr1 = SPR_SRR1;
-+    uint64_t last_pc = env->nip;
- 
-     /*
-      * Book E does not play games with certain bits of xSRR1 being MSR save
-@@ -1025,6 +1061,7 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-             if (!FIELD_EX64_FE(env->msr) || !FIELD_EX64(env->msr, MSR, FP)) {
-                 trace_ppc_excp_fp_ignore();
-                 powerpc_reset_excp_state(cpu);
-+                qemu_plugin_vcpu_exception_cb(env_cpu(env), last_pc);
-                 return;
-             }
-             /*
-@@ -1133,6 +1170,7 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-     env->spr[srr0] = env->nip;
-     env->spr[srr1] = msr;
-     powerpc_set_excp_state(cpu, vector, new_msr);
-+    powerpc_do_plugin_vcpu_interrupt_cb(env_cpu(env), excp, last_pc);
- }
- 
  /*
-@@ -1254,6 +1292,7 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-     CPUPPCState *env = &cpu->env;
-     target_ulong msr, new_msr, vector;
-     int srr0 = SPR_SRR0, srr1 = SPR_SRR1, lev = -1;
-+    uint64_t last_pc = env->nip;
- 
-     /* new srr1 value excluding must-be-zero bits */
-     msr = env->msr & ~0x783f0000ULL;
-@@ -1353,6 +1392,7 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-             if (!FIELD_EX64_FE(env->msr) || !FIELD_EX64(env->msr, MSR, FP)) {
-                 trace_ppc_excp_fp_ignore();
-                 powerpc_reset_excp_state(cpu);
-+                qemu_plugin_vcpu_exception_cb(env_cpu(env), last_pc);
-                 return;
-             }
-             /*
-@@ -1397,6 +1437,7 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-         if (lev == 1 && books_vhyp_handles_hcall(cpu)) {
-             cpu->vhyp_class->hypercall(cpu->vhyp, cpu);
-             powerpc_reset_excp_state(cpu);
-+            qemu_plugin_vcpu_hostcall_cb(env_cpu(env), last_pc);
-             return;
-         }
-         if (env->insns_flags2 & PPC2_ISA310) {
-@@ -1543,6 +1584,7 @@ static void powerpc_excp_books(PowerPCCPU *cpu, int excp)
-         ppc_excp_apply_ail(cpu, excp, msr, &new_msr, &vector);
-         powerpc_set_excp_state(cpu, vector, new_msr);
+  * Disable CFI checks.
+  * The callback function has been loaded from an external library so we do not
+@@ -539,6 +577,21 @@ void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
      }
-+    powerpc_do_plugin_vcpu_interrupt_cb(env_cpu(env), excp, last_pc);
  }
- #else
- static inline void powerpc_excp_books(PowerPCCPU *cpu, int excp)
+ 
++void qemu_plugin_vcpu_interrupt_cb(CPUState *cpu, uint64_t from)
++{
++    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_DISCON_INTERRUPT, from);
++}
++
++void qemu_plugin_vcpu_exception_cb(CPUState *cpu, uint64_t from)
++{
++    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_DISCON_EXCEPTION, from);
++}
++
++void qemu_plugin_vcpu_hostcall_cb(CPUState *cpu, uint64_t from)
++{
++    plugin_vcpu_cb__discon(cpu, QEMU_PLUGIN_DISCON_HOSTCALL, from);
++}
++
+ void qemu_plugin_register_vcpu_idle_cb(qemu_plugin_id_t id,
+                                        qemu_plugin_vcpu_simple_cb_t cb)
+ {
 -- 
 2.49.0
 
