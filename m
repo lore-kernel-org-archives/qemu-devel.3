@@ -4,84 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEDAFC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 17:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E20F0C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 18:01:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEAqX-00077b-Pn; Sun, 11 May 2025 13:52:17 -0400
+	id 1uEAyk-0001zQ-5N; Sun, 11 May 2025 14:00:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uEAqW-00077L-5Q
- for qemu-devel@nongnu.org; Sun, 11 May 2025 13:52:16 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uEAyi-0001yd-CF
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 14:00:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uEAqT-0000SX-UX
- for qemu-devel@nongnu.org; Sun, 11 May 2025 13:52:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uEAyg-00019d-Fp
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 14:00:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746985932;
+ s=mimecast20190719; t=1746986441;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=eTNtWMdtJVRxphB0XkaxqPrVhsptmuf1ozGfqkLl210=;
- b=disLZ0pr+8ZJnsfWmQNnCWKiIwwUNOAcPjrKWhG+AvqVrxW8WnAkqVR68Yv/uYWrlqGdOL
- cWAPMFK/hOxkdgii9io9O2LiTVntcuzxe3ZBM7mBq4dfCLYwklpdNm3PhVmeW6JnmHN0Ny
- tsmhVcdX9SJbqihBKjvPFVls4Zy0iTI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ALE2KMQWCGBqmIePCS8sG6Vuvf8zpyoGRV/yfZwMSQc=;
+ b=WzSHaw7mz5SlkJp1+PNxOfGsqcQJBVG9etZOh1QCmSKoC8cVQS3AGorSHdh4uCmq7Ka9vf
+ +CICwc7GH9vUVi1VtS8VSWKZpjz0Z2rXC9JY1XOq5WuoGQ7dxe6z+ONm/TjBbHCwRYsLMk
+ +cvQtviFiu+9Zgshk0wlWlZJIJ481dU=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-418-c6NRx_TTNiO1rnvlpRcdPA-1; Sun, 11 May 2025 13:52:10 -0400
-X-MC-Unique: c6NRx_TTNiO1rnvlpRcdPA-1
-X-Mimecast-MFC-AGG-ID: c6NRx_TTNiO1rnvlpRcdPA_1746985930
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43e9b0fd00cso17794245e9.0
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 10:52:10 -0700 (PDT)
+ us-mta-372-v5c-u7nWMwmCqcwDo-QgUA-1; Sun, 11 May 2025 14:00:39 -0400
+X-MC-Unique: v5c-u7nWMwmCqcwDo-QgUA-1
+X-Mimecast-MFC-AGG-ID: v5c-u7nWMwmCqcwDo-QgUA_1746986438
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a0b5c28f05so1918812f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 11:00:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746985929; x=1747590729;
+ d=1e100.net; s=20230601; t=1746986438; x=1747591238;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eTNtWMdtJVRxphB0XkaxqPrVhsptmuf1ozGfqkLl210=;
- b=PsPzuT9saDhkxFsDSJUUP6KUO3ohzBSJm1l2pt7OsQMZATW40LkE+RjL37ltCMViRp
- yeqskcaAhqtm7p+KETr8at+zAcqYeAOhSX0cApoinWcdONI7c1TuofuMBeknOglVp6F/
- YRwXNKpWfjQxSBip/TJAvErimn6eU0qr5a3lmftD0ZWKvfBwtrLWf5kW2S6vqraBiJmW
- J+OLk/eA65lt/o8oPXdrSKdlHFuy2o/fW5fXYnCylmGFkNimbIcwDT3xPhOF9fOhv96X
- RfHb4HMrXyC0Ha0X70Mkd0tMvYAmNqrsnWsO2dyGBXWhaZmt0RX3obd00s4el4xVz09P
- q3uQ==
-X-Gm-Message-State: AOJu0YynqgDogVixuXYjHK7voqZdfWLEjNX7EgtDiAe2u9Xjk3u2y94k
- NcLOPfwrih1n4U8r0KITw1ozHaefhqsWH5ohJ9g2iPXzMYs2REMJh8julULfpNhWkqsYpTQyoAS
- Id9v4KVK6Dsc23VgNUEL7rhtBkVDH6yzlbqZkkdao4AgbAzfEpr/H
-X-Gm-Gg: ASbGnctnRm8O87BnNaRPDLgVBwS3d0MEj+lTf/XWSRS2t5hHurRif5ILkFaZG5LFUDN
- egGNhcoSqfRT/lr1tTQBluw1hF/a0wYryLn8s6cpvMFjH9tCbp6XkVaCe+HcQcpBLT63AdiDUgA
- 4LoxRVEa6XngK59GZ0tCFeJBC/9vK+UifEjZAjVz8TGItwiX8NcYeTRbnx3uUY3CseY94TLJB4I
- KHVFG44bGqMqizVwIwA7/8el0JEqsLgR6A3fvmQA0Gw6TsoOKzn72dOP/kp8yjpos/G74Rbr0yw
- 9ECcYg==
-X-Received: by 2002:a05:600c:4e06:b0:442:d9fb:d9a5 with SMTP id
- 5b1f17b1804b1-442d9fbda6bmr70601815e9.9.1746985929577; 
- Sun, 11 May 2025 10:52:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFd0WsK2612ML3LJKbjH+v+NfS+VTteHEJgZEDKCxYEJavv+8w9UfaJ7kd3u09HRyiVzDJ38g==
-X-Received: by 2002:a05:600c:4e06:b0:442:d9fb:d9a5 with SMTP id
- 5b1f17b1804b1-442d9fbda6bmr70601695e9.9.1746985929187; 
- Sun, 11 May 2025 10:52:09 -0700 (PDT)
+ bh=ALE2KMQWCGBqmIePCS8sG6Vuvf8zpyoGRV/yfZwMSQc=;
+ b=ucmPk1wChwW72FEOH6XVRlLh/PKsbK71pMwphiaO1rimQBgV/+j2tF3+4bB0797YZN
+ 5qO8G8bMdsYLieaQbsuAG+J9xIpwCbuY3NXl4wRHEXS6TUccOlPc9kCKmsNk/QLeKyYa
+ UShaLU/vaHyymQdEG5XSOhR4I6TyVJeRmEqSkjteJOOqyH/HESNgvW8nUYNhHrE9L5Ox
+ fP13XCaSQ5KHSSWTUU1IiUx2ugmUzpPh89dsdD6Zbu5Mk9tQ858POohUofF4A1Is+AGp
+ fU2FC0GYkGPoleOJpTdivhVfd895HOVqWYPwgAzu4m1ovhqcYf8qWmre5oDVtcku7SLx
+ cTMQ==
+X-Gm-Message-State: AOJu0Yyl2dwmlPu0EgJoXtl/BFH9ZyYLTBRFa/at7XWWL8G0oad010Gu
+ XQgbZgkgSIjFUzTGule4wlfAHoC7TGt7iD28Y4R9vSvt4u+Te6X0u8x9198G4ESTyw14z7mjTnJ
+ btMKXV1Sb6GG0NmvJJPxUWioncX+QzmMcN4S0xOaahaS8C7IMUtPq
+X-Gm-Gg: ASbGncs9zRHblUvwiLVLzq9eJnVBibxerlR4wqhpeefK3I8MFu1TqyMoCUa5vly7OdI
+ PIin4/Zv7B5Jr7gds1HWZ4e6Q9dnD0MH5T6x+UeyZCUmrn6yu+mkzBOpDeaL5gHJ76f78w/UCKP
+ yXqWuM7i0TYJTvs/V6vRlzNtBJ4dDYC/eZ3ibnT4A8LeJ64DXUhhigXvVQpDAOmV3gU4TxXKBvq
+ OtIZx3QiUawjYYVxOJraxTBd7H6LGYefafzYyRSCxiclqdmPaj0dPbEQoYA97aHx4SNyVsDPTsh
+ p0qRdA==
+X-Received: by 2002:a5d:64ec:0:b0:3a0:ba27:646c with SMTP id
+ ffacd0b85a97d-3a1f64b5845mr7656925f8f.44.1746986438277; 
+ Sun, 11 May 2025 11:00:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGP6QZpAGTJUBarwm/jThMZVY0U+88W4RO0pCjydS8n777dkK7eO9KK2cxTY7i/hxvART9r/A==
+X-Received: by 2002:a5d:64ec:0:b0:3a0:ba27:646c with SMTP id
+ ffacd0b85a97d-3a1f64b5845mr7656893f8f.44.1746986437805; 
+ Sun, 11 May 2025 11:00:37 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442cd3b7d2bsm141688425e9.36.2025.05.11.10.52.07
+ ffacd0b85a97d-3a1f5a4cc39sm9761816f8f.100.2025.05.11.11.00.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 10:52:08 -0700 (PDT)
-Date: Sun, 11 May 2025 13:52:00 -0400
+ Sun, 11 May 2025 11:00:36 -0700 (PDT)
+Date: Sun, 11 May 2025 14:00:33 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Sairaj Kodilkar <sarunkod@amd.com>
-Cc: qemu-devel@nongnu.org, marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net,
- suravee.suthikulpanit@amd.com, alejandro.j.jimenez@oracle.com,
- joao.m.martins@oracle.com
-Subject: Re: [PATCH v2 0/2] amd_iommu: Fixes
-Message-ID: <20250511135031-mutt-send-email-mst@kernel.org>
-References: <20250509064526.15500-1-sarunkod@amd.com>
+To: Haoqian He <haoqian.he@smartx.com>
+Cc: qemu-devel@nongnu.org, sgarzare@redhat.com, raphael@enfabrica.net,
+ fengli@smartx.com, yuhua@smartx.com, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Amit Shah <amit@kernel.org>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ "reviewer:vhost-user-scmi" <mzamazal@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "open list:Block layer core" <qemu-block@nongnu.org>,
+ "open list:virtiofs" <virtio-fs@lists.linux.dev>
+Subject: Re: [PATCH v5 0/3] vhost: fix the IO error after live migration
+Message-ID: <20250511135931-mutt-send-email-mst@kernel.org>
+References: <20250401151819.1526461-1-haoqian.he@smartx.com>
+ <20250416024729.3289157-1-haoqian.he@smartx.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250509064526.15500-1-sarunkod@amd.com>
+In-Reply-To: <20250416024729.3289157-1-haoqian.he@smartx.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -46
@@ -107,44 +121,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 09, 2025 at 12:15:24PM +0530, Sairaj Kodilkar wrote:
-> Fix following two issues in the amd viommu
-> 1. The guest fails to setup the passthrough device when for following setup
->    because amd iommu enables the no DMA memory region even when guest is 
->    using DMA remapping mode.
+On Tue, Apr 15, 2025 at 10:47:25PM -0400, Haoqian He wrote:
+> At the end of the VM live migration, the vhost device will be stopped.
+> Currently, if the vhost-user backend crashes, vhost device's set_status()
+> would not return failure, live migration won't perceive the disconnection
+> with the backend. After the live migration is successful, the stale inflight
+> IO will be submitted to the migration target host, which may be leading to
+> the IO error.
 > 
->     -device amd-iommu,intremap=on,xtsup=on,pt=on \
->     -device vfio-pci,host=<DEVID> \
-> 
->     and guest forcing DMA remap mode e.g. 'iommu.passthrough=0'
-> 
->     which will cause failures from QEMU:
-> 
->     qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
->     qemu-system-x86_64: AHCI: Failed to start FIS receive engine: bad FIS receive buffer address
->     qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
->     qemu-system-x86_64: AHCI: Failed to start FIS receive engine: bad FIS receive buffer address
->     qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
-> 
-> 
-> 2. The guest fails to boot with xtsup=on and <= 255 vCPUs, because amd_iommu
->    does not enable x2apic mode.
-> 
-> base commit 56c6e249b6988c1b6edc2dd34ebb0f1e570a1365 (v10.0.0-rc3)
-> 
-> Sairaj Kodilkar (1):
->   hw/i386/amd_iommu: Fix device setup failure when PT is on.
-> 
-> Vasant Hegde (1):
->   hw/i386/amd_iommu: Fix xtsup when vcpus < 255
-> 
->  hw/i386/amd_iommu.c | 20 ++++++++++----------
->  1 file changed, 10 insertions(+), 10 deletions(-)
+> The following patch series fixes the issue by making the live migration
+> aware of the loss of connection with the vhost-user backend and aborting
+> the live migration.
 
-Patches themselves were not posted to list.
-Only the cover letter.
+tagged, thanks a lot!
 
+
+yet something to improve:
+
+in the future pls post a new thread, not part of old thread.
+
+also in the future, pls do not quote a huge mail just to add two lines
+at the end, snip.
+
+
+
+> ---
+>   v1 ... v2
+>     1. Fix some grammar issues in commit message.
+>     2. Remove assert in vhost_scsi_common_stop and return error upwards.
+> 
+>   v2 ... v3
+>     1. Added more detailed comments and commit message.
+>     2. Change the newly added type name and parameter name.
+>     3. Remove set_status_ext, change the return type of set_status to int.
+> 
+>   v3 ... v4
+>     1. Call set_status() only if the function pointer is not NULL in the
+>        3rd patch.
+>     2. Add the more detailed commit messages for the 3rd patch.
+> 
+>   v4 ... v5
+>     1. Fix code style issues in patch v4.
+>     2. Rebased on master.
+> 
+> Haoqian He (3):
+>   system/runstate: add VM state change cb with return value
+>   vhost: return failure if stop virtqueue failed in vhost_dev_stop
+>   vhost-user: return failure if backend crash when live migration
+> 
+>  backends/vhost-user.c                  | 20 +++++++--------
+>  hw/block/vhost-user-blk.c              | 27 +++++++++++---------
+>  hw/block/virtio-blk.c                  |  7 +++---
+>  hw/char/virtio-serial-bus.c            |  3 ++-
+>  hw/core/vm-change-state-handler.c      | 18 ++++++++-----
+>  hw/display/vhost-user-gpu.c            | 12 ++++++---
+>  hw/input/virtio-input.c                |  3 ++-
+>  hw/net/virtio-net.c                    |  3 ++-
+>  hw/scsi/scsi-bus.c                     |  2 +-
+>  hw/scsi/vhost-scsi-common.c            | 13 +++++-----
+>  hw/scsi/vhost-scsi.c                   |  5 ++--
+>  hw/scsi/vhost-user-scsi.c              | 18 +++++++------
+>  hw/vfio/migration.c                    |  2 +-
+>  hw/virtio/vdpa-dev.c                   |  5 ++--
+>  hw/virtio/vhost-user-base.c            | 23 ++++++++++-------
+>  hw/virtio/vhost-user-fs.c              | 23 ++++++++++-------
+>  hw/virtio/vhost-user-scmi.c            | 27 ++++++++++++--------
+>  hw/virtio/vhost-user-vsock.c           | 15 +++++++----
+>  hw/virtio/vhost-vsock-common.c         | 12 ++++-----
+>  hw/virtio/vhost-vsock.c                | 11 ++++----
+>  hw/virtio/vhost.c                      | 23 +++++++++--------
+>  hw/virtio/virtio-balloon.c             |  3 ++-
+>  hw/virtio/virtio-crypto.c              |  3 ++-
+>  hw/virtio/virtio-iommu.c               |  3 ++-
+>  hw/virtio/virtio-rng.c                 |  5 ++--
+>  hw/virtio/virtio.c                     | 22 ++++++++++------
+>  include/hw/virtio/vhost-scsi-common.h  |  2 +-
+>  include/hw/virtio/vhost-vsock-common.h |  2 +-
+>  include/hw/virtio/vhost.h              |  8 +++---
+>  include/hw/virtio/virtio.h             |  2 +-
+>  include/system/runstate.h              | 13 +++++++---
+>  include/system/vhost-user-backend.h    |  2 +-
+>  system/cpus.c                          |  8 ++++--
+>  system/runstate.c                      | 35 ++++++++++++++++++++++----
+>  34 files changed, 239 insertions(+), 141 deletions(-)
+> 
 > -- 
-> 2.34.1
+> 2.44.0
 
 
