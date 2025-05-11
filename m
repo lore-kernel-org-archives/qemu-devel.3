@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADDB4C3ABC3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0280C3ABCB
 	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 20:37:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEDOr-0002RP-Q2; Sun, 11 May 2025 16:35:53 -0400
+	id 1uEDPB-0003cN-55; Sun, 11 May 2025 16:36:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uEDOp-0002Mv-Iy
- for qemu-devel@nongnu.org; Sun, 11 May 2025 16:35:51 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1uEDP7-0003ab-Dz
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 16:36:09 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uEDOn-0006Jq-Uh
- for qemu-devel@nongnu.org; Sun, 11 May 2025 16:35:51 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-b1ffeda9363so3702360a12.1
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 13:35:49 -0700 (PDT)
+ id 1uEDP5-0006NM-IT
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 16:36:09 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-af5085f7861so2548131a12.3
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 13:36:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746995748; x=1747600548; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746995766; x=1747600566; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QB6EucikZ5GuyLdpQZhqymhWhSSzXHh0jGDVun/Y4xc=;
- b=zhh1IyzXEV44Uz6hMZ5bxG4yd/QGJqTQgWpQJ/maWEQ010bV7NUdEXkiQN6sx8v2sS
- 57QNuJBnyzCqvdHatZwiCbQ1ldj6Jr3ThTIrRJQ/0pNCDYbabXt07AQ+jMX3Er9Ke+ip
- XwpV4pmV6CvaLrzmIlp6bHRpSTGPmW0O5NL1uskBf2BXMYZuKHeak1sYUyI26LT4YylY
- wHh0dL1uE4J4H1jL0XYm6N4kq426X1jpEcY1k01vPyEig6lumHKclR0Mf/E2N0+Hw64i
- Wwn0EO9zG0RusmEDQjlPJZjDnWPYgCycuSYjAqVsaTeBcp2zNPGrcOL2exwXq9y/xrrl
- 3//Q==
+ bh=qhebvcCenIsTy/MycdkDWsoVv1Q1HWhIQtMjE6FLOCY=;
+ b=h8UOBEdzvgbykOyvd8zIkA1bLFdmEUA4Qx9Aq8D0IIxIsmSuLa5Ck+CAx20BJaGHRx
+ PzJWXMAwpoYL3tttTHwBMCuIQyhkPnKydi3FSa6ufRzdPIG0/u4AlUW931+BJp0PSlwq
+ EPSKjnM1+EWMXUwEbbWwO2PvPKEeLC4cOCKd/aWUcUSRslyt/yIwtg0TlUMnu9O5nfle
+ p1fklaS2jjAZ4Yf6sCYKhev/E7t/cr8P3kkBw85ydIk5A5eVPRqU08NpBwgipj6SUDNz
+ ZK9AuV8f9IkP9nHPKAkY0nHAfEWlTyDr6FOxQZMzcus1vAX6PWQS4IxesRWihGGxVaoJ
+ CbzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746995748; x=1747600548;
+ d=1e100.net; s=20230601; t=1746995766; x=1747600566;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QB6EucikZ5GuyLdpQZhqymhWhSSzXHh0jGDVun/Y4xc=;
- b=UagJ6esx00UoQS+sxXqg/2fQcQdcjpwNPv0Z9bo5sXhheN1bNunY2FhvfiUcMWzNAi
- urNxfRwNsM4QvjFqKeCmcayecR2KGaXoTPbQACVSV6WhR1kseTwKnSS1k/P2X6bo9K9/
- icoPil9Td4hK4nJpQn6DUckPhIOzwx5g07v6m2B75dUcxvtCng/MQOrWxUw9A6sZLVMN
- zcFD8XyY26R20elMnWghBB0d7h1Rc4NigKm+rh0uJVIfahqWpm0tR2E6dyus02JJqFP0
- jy3pUJiKFWdOJUn6c9meDGfex9HNFonFOk7053GxMNo3o/oTQJJVuV9daG5syeL1hh4D
- LyDg==
-X-Gm-Message-State: AOJu0YxKdseZOwAKhqlqWcNnhmqcIoiog4S86MX1xaQUeEIO8B4o70vI
- a/YZhYysi2v+I3YleDAf5JNmqSH/1QeQHYMFWys7HJpzDegu2FNDm8NtP9N4RF2sC/UOaWhHEYg
- f
-X-Gm-Gg: ASbGncvTXdUhrOodeU3CQIpF0/MEjnHj6nRpHnIHxSwHIveWYaEwJSH0kEiXdduRKW+
- 0TqVHmcrCjcyZISNdhu3m+OT83dDZqXxzarpQIpr9Jrgz4300/09p4mQoAMkYCdWvHQPs0fF/LH
- FMDKWizIcXLNG0z+QRfiqU4lfCXHx6FH1cajPUvjkYkBnMbNdDaRb1e10HAHpp0h+g9C5WaTe3E
- eqKSPmfoJcXJb5X6MxsaIEXQPzlrlAaCoLYh4Pxq70Qsoba+nLP2KwudnfSNwbBOSMwlbRPtWsR
- ej1dfPJc1Wm2u7B3WLHdlmW3+VgMSwaOnMk0dMf96nZjLPo6tXZvwmIuecKY91DXDzQu/UucUTP
- RD/swHMnOHQ==
-X-Google-Smtp-Source: AGHT+IEk/n5UcAvxhZ8PGayS3sCaBCYHQrXw1JxvEfI6IEhrspO6ExCo75lUxK5h1FVTHlK/wP0LGg==
-X-Received: by 2002:a17:902:f706:b0:220:e9ef:ec98 with SMTP id
- d9443c01a7336-22fc8b723ecmr185364515ad.19.1746995748584; 
- Sun, 11 May 2025 13:35:48 -0700 (PDT)
+ bh=qhebvcCenIsTy/MycdkDWsoVv1Q1HWhIQtMjE6FLOCY=;
+ b=dXjjstUrmF3iIxFV0ziZCirzunz/nzxoPxwPOTw96QpvTZTf4qKRjlWz3Lx+/z4dTT
+ ZK9dWGwLrhCA1CM3x9MfokN8pyxPB92rnfXZDFJZOg4N8bdqb2nwUd60V/nvPQ4f1LzY
+ fSy+rCWMWJsZNbMmOkHg6i6VdeUoDZorXjKlBqaSPIdK8C14YmWGPXBNxgzSzb74b7D3
+ DR0aPZqX0d1sH/+4ylWLNVVYvEwqvf4hTj8zgRoJBgU+XzxFqOs1+rX3wN53JmV2m3h8
+ KaT5oeSGCKJneown5/rB+HkamUmZOGjFNialprKdA/VJGAuLryvMdcYt+ozGbkR2XqoX
+ U9IQ==
+X-Gm-Message-State: AOJu0YyopIy561XnmZsLHV2vi/uKxqnSYHk9/qJOUKFZVabMWCskasF9
+ N0YFyFbVlDbkSWRpXdk58TmS4/XDMB8yvzTJaoEBWHSlwpdbnqPbF0N8H/4kZ9gDWYNmhBFkZcr
+ u
+X-Gm-Gg: ASbGnctksRDg6TEp2VUgOKoQJfw4HisYbARPhSETr4gX9j3czca6S7smMOhPOx/zjMr
+ 6kF0YNP0Kg/3/vYs0vwmN+4/1wMnMFaqSNSh4FkoUsLwHsUF1A4yuYAXtGo9n+VeQjDNCLmy0Ho
+ y8KFwywGCObDKjNfhhb0L9CdnS1mpP/VlB2F6fvgkYPs3RZoJXrO5OyFI8UXTl0NoYyFdZNDc1I
+ 0J0jhqfIvbrlNxLoEGYvJ2PjY8pILlmvONjTpAqmPTzk6hJaVwt0qycVDc8t+OTa8TE/DH9SZ8V
+ SDkofNjGL/HmX1WSdFr0JXY1TiEml1aFdzSjhT7ytWgKcAmIFjEjwqH/b8WkP2ZVjHfCJvxf6uy
+ glGajgVoonw==
+X-Google-Smtp-Source: AGHT+IGH/eGN3QMC/RCqr1DvkezM8IZEvEi5zlilgs4II5Ta0DVItCz0+PtHKm4rQ5gl0hUg+tVBYA==
+X-Received: by 2002:a17:903:2349:b0:224:10a2:cae7 with SMTP id
+ d9443c01a7336-22fc8e95bf0mr178894245ad.40.1746995766149; 
+ Sun, 11 May 2025 13:36:06 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc7544d86sm49955095ad.47.2025.05.11.13.35.48
+ d9443c01a7336-22fc7544d86sm49955095ad.47.2025.05.11.13.36.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 13:35:48 -0700 (PDT)
+ Sun, 11 May 2025 13:36:05 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu, schwab@linux-m68k.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 01/24] target/m68k: Add FPSR exception bit defines
-Date: Sun, 11 May 2025 13:35:23 -0700
-Message-ID: <20250511203546.139788-2-richard.henderson@linaro.org>
+Subject: [PATCH v6 22/24] tests/tcg/m68k: Add packed decimal tests
+Date: Sun, 11 May 2025 13:35:44 -0700
+Message-ID: <20250511203546.139788-23-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250511203546.139788-1-richard.henderson@linaro.org>
 References: <20250511203546.139788-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,105 +105,138 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/m68k/cpu.h        | 21 +++++++++++++++++++++
- target/m68k/fpu_helper.c | 22 +++++++++++-----------
- 2 files changed, 32 insertions(+), 11 deletions(-)
+ tests/tcg/m68k/packeddecimal-1.c | 46 ++++++++++++++++++++++++++
+ tests/tcg/m68k/packeddecimal-2.c | 55 ++++++++++++++++++++++++++++++++
+ tests/tcg/m68k/Makefile.target   |  4 ++-
+ 3 files changed, 104 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/m68k/packeddecimal-1.c
+ create mode 100644 tests/tcg/m68k/packeddecimal-2.c
 
-diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
-index d9db6a486a..035034772b 100644
---- a/target/m68k/cpu.h
-+++ b/target/m68k/cpu.h
-@@ -442,6 +442,27 @@ typedef enum {
- #define FPSR_QT_MASK  0x00ff0000
- #define FPSR_QT_SHIFT 16
- 
-+/* Exception Status Byte */
+diff --git a/tests/tcg/m68k/packeddecimal-1.c b/tests/tcg/m68k/packeddecimal-1.c
+new file mode 100644
+index 0000000000..cd5759fff7
+--- /dev/null
++++ b/tests/tcg/m68k/packeddecimal-1.c
+@@ -0,0 +1,46 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Test packed decimal real conversion to long double. */
 +
-+#define FPSR_EXC_MASK     0xff00
-+#define FPSR_EXC_INEX1    0x0100
-+#define FPSR_EXC_INEX2    0x0200
-+#define FPSR_EXC_DZ       0x0400
-+#define FPSR_EXC_UNFL     0x0800
-+#define FPSR_EXC_OVFL     0x1000
-+#define FPSR_EXC_OPERR    0x2000
-+#define FPSR_EXC_SNAN     0x4000
-+#define FPSR_EXC_BSUN     0x8000
++#include <stdio.h>
 +
-+/* Accrued Exception Byte */
++struct T {
++    unsigned int d[3];
++    long double f;
++};
 +
-+#define FPSR_AEXC_MASK    0xf8
-+#define FPSR_AEXC_INEX    0x08
-+#define FPSR_AEXP_DZ      0x10
-+#define FPSR_AEXP_UNFL    0x20
-+#define FPSR_AEXP_OVFL    0x40
-+#define FPSR_AEXP_IOP     0x80
++#define PDR(SMEY, EXP, INT, M1, M2) \
++    { (0b##SMEY << 28) | (0x##EXP << 16) | INT, 0x##M1, 0x##M2 }
 +
- /* Floating-Point Control Register */
- /* Rounding mode */
- #define FPCR_RND_MASK   0x0030
-diff --git a/target/m68k/fpu_helper.c b/target/m68k/fpu_helper.c
-index 56012863c8..3e35c20be3 100644
---- a/target/m68k/fpu_helper.c
-+++ b/target/m68k/fpu_helper.c
-@@ -169,19 +169,19 @@ static int cpu_m68k_exceptbits_from_host(int host_bits)
-     int target_bits = 0;
++static const struct T tests[] = {
++    { PDR(0000, 000, 1, 00000000, 00000000), 1.0e0l },
++    { PDR(0000, 001, 1, 00000000, 00000000), 1.0e1l },
++    { PDR(0000, 010, 1, 00000000, 00000000), 1.0e10l },
++    { PDR(0000, 000, 0, 10000000, 00000000), 0.1e0l },
++    { PDR(0100, 001, 1, 00000000, 00000000), 1.0e-1l },
++    { PDR(1000, 005, 5, 55550000, 00000000), -5.5555e5l },
++    { PDR(0000, 999, 9, 99999999, 99999999), 9.9999999999999999e999l },
++    { PDR(0000, 123, 1, 23456789, 12345678), 1.2345678912345678e123l },
++    { PDR(0000, 000, 0, 00000000, 00000000), 0.0l },
++    { PDR(1000, 000, 0, 00000000, 00000000), -0.0l },
++    { PDR(0000, 999, 0, 00000000, 00000000), 0.0e999l },
++    { PDR(0111, FFF, 0, 00000000, 00000000), __builtin_infl() },
++    { PDR(1111, FFF, 0, 00000000, 00000000), -__builtin_infl() },
++};
++
++int main()
++{
++    int ret = 0;
++
++    for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++) {
++        const struct T *t = &tests[i];
++        long double f;
++
++        asm("fmove.p (%1),%0" : "=f"(f) : "a"(t->d));
++
++        if (f != t->f) {
++            fprintf(stderr, "Mismatch at %d: %.17Le != %.17Le\n", i, f, t->f);
++            ret = 1;
++        }
++    }
++    return ret;
++}
+diff --git a/tests/tcg/m68k/packeddecimal-2.c b/tests/tcg/m68k/packeddecimal-2.c
+new file mode 100644
+index 0000000000..5b956440bc
+--- /dev/null
++++ b/tests/tcg/m68k/packeddecimal-2.c
+@@ -0,0 +1,55 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Test packed decimal real conversion from long double, dynamic k-factor */
++
++#include <stdio.h>
++#include <float.h>
++
++struct T {
++    unsigned int d[3];
++    long double lf;
++    int kfactor;
++};
++
++#define PDR(SMEY, EXP, I, M1, M2) \
++    { (0b##SMEY << 28) | ((0x##EXP & 0xfff) << 16) | (0x##EXP & 0xf000) | I, \
++      0x##M1, 0x##M2 }
++
++static const struct T tests[] = {
++    { PDR(0000, 0000, 1, 00000000, 00000000), 1.0e0l, 0 },
++    { PDR(0000, 0010, 1, 00000000, 00000000), 1.0e10l, 0 },
++    { PDR(0100, 0001, 1, 00000000, 00000000), 1.0e-1l, 0 },
++    { PDR(1000, 0005, 5, 55550000, 00000000), -5.5555e5l, 5 },
++    { PDR(0100, 0005, 5, 55550000, 00000000), 5.5555e-5l, 5 },
++    { PDR(0000, 0005, 2, 22222222, 22222222), 2.2222222222222222e5l, 17 },
++    { PDR(0000, 0005, 2, 22220000, 00000000), 2.2222222222222222e5l, 5 },
++    { PDR(0000, 0005, 2, 20000000, 00000000), 2.2222222222222222e5l, 2 },
++    { PDR(0000, 0005, 6, 66670000, 00000000), 6.6666666666666666e5l, 5 },
++    { PDR(0000, 4932, 1, 18973149, 53572318), LDBL_MAX, 17 },
++    { PDR(0100, 4932, 1, 68105157, 15560468), LDBL_MIN, 17 },
++    { PDR(0100, 4951, 1, 82259976, 59412373), LDBL_TRUE_MIN, 17 },
++    { PDR(0000, 0000, 0, 00000000, 00000000), 0.0l },
++    { PDR(1000, 0000, 0, 00000000, 00000000), -0.0l },
++    { PDR(0111, 0FFF, 0, 00000000, 00000000), __builtin_infl() },
++    { PDR(1111, 0FFF, 0, 00000000, 00000000), -__builtin_infl() },
++};
++
++int main()
++{
++    int ret = 0;
++
++    for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++) {
++        const struct T *t = &tests[i];
++        unsigned int out[3];
++
++        asm("fmove.p %1,(%0),%2"
++            : : "a"(out), "f"(t->lf), "d"(t->kfactor) : "memory");
++
++        if (out[0] != t->d[0] || out[1] != t->d[1] || out[2] != t->d[2]) {
++            fprintf(stderr, "Mismatch at %d: %08x%08x%08x != %08x%08x%08x\n",
++                    i, out[0], out[1], out[2],
++                    t->d[0], t->d[1], t->d[2]);
++            ret = 1;
++        }
++    }
++    return ret;
++}
+diff --git a/tests/tcg/m68k/Makefile.target b/tests/tcg/m68k/Makefile.target
+index 33f7b1b127..b505260b79 100644
+--- a/tests/tcg/m68k/Makefile.target
++++ b/tests/tcg/m68k/Makefile.target
+@@ -4,4 +4,6 @@
+ #
  
-     if (host_bits & float_flag_invalid) {
--        target_bits |= 0x80;
-+        target_bits |= FPSR_AEXP_IOP;
-     }
-     if (host_bits & float_flag_overflow) {
--        target_bits |= 0x40;
-+        target_bits |= FPSR_AEXP_OVFL;
-     }
-     if (host_bits & (float_flag_underflow | float_flag_output_denormal_flushed)) {
--        target_bits |= 0x20;
-+        target_bits |= FPSR_AEXP_UNFL;
-     }
-     if (host_bits & float_flag_divbyzero) {
--        target_bits |= 0x10;
-+        target_bits |= FPSR_AEXP_DZ;
-     }
-     if (host_bits & float_flag_inexact) {
--        target_bits |= 0x08;
-+        target_bits |= FPSR_AEXC_INEX;
-     }
-     return target_bits;
- }
-@@ -191,19 +191,19 @@ static int cpu_m68k_exceptbits_to_host(int target_bits)
- {
-     int host_bits = 0;
- 
--    if (target_bits & 0x80) {
-+    if (target_bits & FPSR_AEXP_IOP) {
-         host_bits |= float_flag_invalid;
-     }
--    if (target_bits & 0x40) {
-+    if (target_bits & FPSR_AEXP_OVFL) {
-         host_bits |= float_flag_overflow;
-     }
--    if (target_bits & 0x20) {
-+    if (target_bits & FPSR_AEXP_UNFL) {
-         host_bits |= float_flag_underflow;
-     }
--    if (target_bits & 0x10) {
-+    if (target_bits & FPSR_AEXP_DZ) {
-         host_bits |= float_flag_divbyzero;
-     }
--    if (target_bits & 0x08) {
-+    if (target_bits & FPSR_AEXC_INEX) {
-         host_bits |= float_flag_inexact;
-     }
-     return host_bits;
-@@ -213,7 +213,7 @@ uint32_t cpu_m68k_get_fpsr(CPUM68KState *env)
- {
-     int host_flags = get_float_exception_flags(&env->fp_status);
-     int target_flags = cpu_m68k_exceptbits_from_host(host_flags);
--    int except = (env->fpsr & ~(0xf8)) | target_flags;
-+    int except = (env->fpsr & ~FPSR_AEXC_MASK) | target_flags;
-     return except;
- }
- 
+ VPATH += $(SRC_PATH)/tests/tcg/m68k
+-TESTS += trap denormal
++TESTS += trap denormal packeddecimal-1 packeddecimal-2
++
++run-packeddecimal-%: QEMU_OPTS += -cpu m68020
 -- 
 2.43.0
 
