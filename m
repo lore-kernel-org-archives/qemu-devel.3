@@ -4,97 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C89AC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 13:20:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79763C3ABC5
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 13:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uE6bK-0004to-1x; Sun, 11 May 2025 09:20:18 -0400
+	id 1uE6dQ-0005qD-Ux; Sun, 11 May 2025 09:22:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uE6bH-0004rp-MJ
- for qemu-devel@nongnu.org; Sun, 11 May 2025 09:20:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uE6bF-00089V-V3
- for qemu-devel@nongnu.org; Sun, 11 May 2025 09:20:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1746969613;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DQgsqkTOIyZhN/qlgqF78+C8tcllmzO5ZDG7Hijf0JM=;
- b=ASPn4WoB/US/HoaRfZ+czT5Ayr0jbcfMB9UAKn7mMjb31k+yXZlc7aXNuOJ4Ctwtk3L69J
- kausAkb8YirvN2MzokIoQguZAQqwwtOiPJilUWp+DdXmwezz057Gqz/Ea1T5C2HnYGOmN1
- ZnOmODS1xTSoXtN4XA0FYal4kFDKSOo=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-574-HoFsZypvPcunOgI9aFiXUQ-1; Sun, 11 May 2025 09:20:11 -0400
-X-MC-Unique: HoFsZypvPcunOgI9aFiXUQ-1
-X-Mimecast-MFC-AGG-ID: HoFsZypvPcunOgI9aFiXUQ_1746969610
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43f251dc364so21999765e9.2
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 06:20:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746969610; x=1747574410;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DQgsqkTOIyZhN/qlgqF78+C8tcllmzO5ZDG7Hijf0JM=;
- b=eMcFmge/9Z2NVawMPf+04RQfcNt3m5Csh77ZTV1lXkOY8XtY9GYuMCW5ICwPTTSxcT
- BntwwSvtuq3N9au6J97oEOWy/jPQLVdAXEGhxNJDYR3LZcBtHqwKFN8iqzPguToO6CgX
- 0Nq0DQ2RHYwm2Bp9B/yogF3dndhFiU+KXmA40mQsavtTRVldYZ4d0nkzaaxoaxqcRXNb
- Zo8aZRFXYH1D98r29ElbCaSMa+P+nYQE8qAbeOFK2wODQt32thHkkePBgelZ9li8IOtG
- 6yPG90KqdjHIoFQVT/G1HOSnMZLyftHKRFerS5fjHmd2LDo+rvzF1d+hDCVoRzcP4J7T
- IzFg==
-X-Gm-Message-State: AOJu0Yx5edkTN0tzKRZdl4XPioTZq9wJSpkoBoHIa4a5k2unky/wcmfj
- fjMZC87KYtCR4bd9QqDF6D6lj5PV60Nh1yjBr/vcL3LVuJY3fJQmPmL91C3BwmxSJ6TsRhUFmAQ
- 8R1h3v33BALV1ihzLX8vWrDjuztrDHfEiJOUeydeMVWxNEZBn7Rlt
-X-Gm-Gg: ASbGncv104/W8+VqEEN+8wbONPMFCVwHAfNPGqvLuyLgqnjm2ma+KWQeO902tFOO9Ib
- UeMPmU1ZidXD4a4B5UGYWh8vW9XMrFufHGESCPHvvgt6/oZX8bDjQAnRvzXRhhw1pS7jaC2acwk
- 3IZrzVLYC6Nq1cJKkzIR7sTAOFCC2yuR0ZHSt+7p+QtlP5+tEhUCitm497jiMf6rugs1FYSVQ5v
- l9f+Kgm+UdNCeT5NrErJKJiAFgbo/g0GlA9aCWbp4Zil0f+i4edP8HybJ2Ut6nehooqwgPU6/Mw
- UkjQ7Q==
-X-Received: by 2002:a5d:64ab:0:b0:3a0:b65b:78ff with SMTP id
- ffacd0b85a97d-3a1f6487d6amr7788833f8f.40.1746969610296; 
- Sun, 11 May 2025 06:20:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEKBMWzClzGKTnM4TtETLrZC6iFV/0P/Ho/Ky4KWUVatV7orHTQ7ZEnn5JlGPDQpj3de52nXw==
-X-Received: by 2002:a5d:64ab:0:b0:3a0:b65b:78ff with SMTP id
- ffacd0b85a97d-3a1f6487d6amr7788813f8f.40.1746969609924; 
- Sun, 11 May 2025 06:20:09 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f5a2d96csm9329134f8f.69.2025.05.11.06.20.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 06:20:09 -0700 (PDT)
-Date: Sun, 11 May 2025 09:20:06 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
- devel@lists.libvirt.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
-Subject: Re: [PATCH v3 0/5] docs: automated info about machine
- deprecation/removal info
-Message-ID: <20250511091938-mutt-send-email-mst@kernel.org>
-References: <20250506160024.2380244-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uE6dL-0005pg-63
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 09:22:24 -0400
+Received: from mailgate02.uberspace.is ([185.26.156.114])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uE6dI-0008HZ-3T
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 09:22:22 -0400
+Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id 5ED5D17F6DC
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 15:22:17 +0200 (CEST)
+Received: (qmail 2710 invoked by uid 990); 11 May 2025 13:22:17 -0000
+Authentication-Results: skiff.uberspace.de;
+	auth=pass (plain)
+Received: from unknown (HELO unkown) (::1)
+ by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
+ Sun, 11 May 2025 15:22:17 +0200
+From: Julian Ganz <neither@nut.email>
+To: qemu-devel@nongnu.org
+Cc: Julian Ganz <neither@nut.email>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+Subject: [PATCH v4 22/23] tests: add test for double-traps on rv64
+Date: Sun, 11 May 2025 15:22:04 +0200
+Message-ID: <a8da56b19c033e4187dfaf2d279251381f1ff91b.1746968215.git.neither@nut.email>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <cover.1746968215.git.neither@nut.email>
+References: <cover.1746968215.git.neither@nut.email>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250506160024.2380244-1-berrange@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -46
-X-Spam_score: -4.7
-X-Spam_bar: ----
-X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.587,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+X-Rspamd-Bar: -----
+X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.956359) MID_CONTAINS_FROM(1)
+ MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
+X-Rspamd-Score: -5.556359
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
+ h=from:to:cc:subject:date;
+ bh=eUTnk0SsP7MHhQE4SD1W0GftCCfEm0F/fm+fj9Jx9SM=;
+ b=uwdEIFnEKSuPkDvwXS6LerA5JZN972XO3dOmHhzVPNMjo2IREAXTQDcfyfoqX9h8g5LzA6qsSG
+ nWedCXH/Cb+yQ9i/mgtqUwyUGtHN8C3MzwuIOWH4wnfzuygs2ehW9XDYzlccHnP7F6w4/3Fd3R4O
+ MCPqFgVQ4z/Xx+GimoNQlXryv2HnxlIxkFaMM5g5Fu9H9AwoeNcho6MAbsLhV78uDTBfAZjEdhoP
+ lxgkfDjvWEoZo7OrVpSRlhqx/m1bXoQhDqUZWiHTWARCdyocL1JZxXXzK7rV5IommnGCtjP+wNDM
+ sDUhWKEhTLXq8dGOwj1cYseyH3EsPTQGSKLrF2u2l/ONeh3ZAMe4NmBUvZX/Do2lkzGRjgeHm6qx
+ KRRvVvjvGASCQaBndvRD1LIkg9wT5ukgViOvRvi0R8xgVwjeOssxeqAphN6XtlqfzcjMXUYKfXeL
+ W6V31LQb0FxfG7hGJpG6Nnt8PMZMpgCYuKyIOK20Csl5RadilmPQGXrePC8ava4fRDdz1P+ZRrT3
+ gzmjezhtmMXShCN51tx6yVM2tTowjeFbrhIE/R/+Qe/lwIuFK2q7GzPTtq70KzsiGWTRORRG1Bez
+ SjSDPGU24arIDczJ0ccsarOeDrquX8e3BI7Cf6kUcl2vxwS1mcj747+mghy/lZWk15Koa8yAROgV
+ 4=
+Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
+ helo=mailgate02.uberspace.is
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,54 +84,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 06, 2025 at 05:00:19PM +0100, Daniel P. Berrangé wrote:
-> Since we deprecate and remove versioned machine types on a fixed
-> schedule, we can automatically ensure that the docs reflect the
-> latest version info, rather than requiring manual updates on each
-> dev cycle.
-> 
-> The first patch in this series removes the hack which postponed
-> automatic removal of versioned machine types to the 10.1.0 release,
-> since we're now in the 10.1.0 dev cycle.
-> 
-> The second patch in this series fixes the logic to ensure dev snapshots
-> and release candidates don't have an off-by-1 error in setting
-> deprecation and removal thresholds - they must predict the next formal
-> release version number.
-> 
-> The following three patches deal with the docs stuff.
+We do have a number of test-caes for various architectures exercising
+their interrupt/exception logic. However, for the recently introduced
+trap API we also want to exercise the logic for double traps on at leat
+one architecture.
 
+Signed-off-by: Julian Ganz <neither@nut.email>
+---
+ tests/tcg/riscv64/Makefile.softmmu-target |  6 ++
+ tests/tcg/riscv64/doubletrap.S            | 73 +++++++++++++++++++++++
+ 2 files changed, 79 insertions(+)
+ create mode 100644 tests/tcg/riscv64/doubletrap.S
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-
-> Changed in v3:
-> 
->  - Remove mistaken mention of 'ppc', only 'ppc64' has versioned
->    machine types
-> 
-> Changed in v2:
-> 
->  - Remove hack that temporarily postponed automatic deletion
->    of machine types
->  - Fix docs version info for stable bugfix releases
-> 
-> Daniel P. Berrangé (5):
->   Revert "include/hw: temporarily disable deletion of versioned machine
->     types"
->   include/hw/boards: cope with dev/rc versions in deprecation checks
->   docs/about/deprecated: auto-generate a note for versioned machine
->     types
->   docs/about/removed-features: auto-generate a note for versioned
->     machine types
->   include/hw/boards: add warning about changing deprecation logic
-> 
->  docs/about/deprecated.rst       |  7 ++++
->  docs/about/removed-features.rst | 10 +++---
->  docs/conf.py                    | 39 +++++++++++++++++++++-
->  include/hw/boards.h             | 58 +++++++++++++++++++++------------
->  4 files changed, 89 insertions(+), 25 deletions(-)
-> 
-> -- 
-> 2.49.0
+diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
+index 7c1d44d3f4..5fba973e18 100644
+--- a/tests/tcg/riscv64/Makefile.softmmu-target
++++ b/tests/tcg/riscv64/Makefile.softmmu-target
+@@ -20,5 +20,11 @@ EXTRA_RUNS += run-issue1060
+ run-issue1060: issue1060
+ 	$(call run-test, $<, $(QEMU) $(QEMU_OPTS)$<)
+ 
++EXTRA_RUNS += run-plugin-doubletrap
++run-plugin-doubletrap: doubletrap
++	$(call run-test, $<, \
++	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $*.pout \
++	  $(QEMU_OPTS)$<)
++
+ # We don't currently support the multiarch system tests
+ undefine MULTIARCH_TESTS
+diff --git a/tests/tcg/riscv64/doubletrap.S b/tests/tcg/riscv64/doubletrap.S
+new file mode 100644
+index 0000000000..b61089c9c1
+--- /dev/null
++++ b/tests/tcg/riscv64/doubletrap.S
+@@ -0,0 +1,73 @@
++	.option norvc
++
++	.text
++	.global _start
++_start:
++	# Set up vectored interrupts
++	lla	t0, trap
++	add	t0, t0, 1
++	csrw	mtvec, t0
++
++	# Enable sw interrupts
++	csrrsi	zero, mie, 0x8
++	csrrsi	zero, mstatus, 0x8
++
++	# Engage the double trap: we trigger an machine-level software
++	# interrupt, which will trap to an illegal instruction
++	lui	t1, 0x02000
++	li	t0, 1
++	sw	t0, 0(t1)
++
++	# If we still not went out via the software interrupt route after a
++	# short while, we failed the test.
++	lui	t0, 0x1
++0:
++	addi	t0, t0, -1
++	bnez	t0, 0b
++	j	fail
++
++trap:
++	j	illegal_insn # Exceptions
++	j	fail # Supervisor software interrupt
++	j	fail
++	.insn	i CUSTOM_0, 0, x0, x0, 0 # Machine software interrupt
++	j	fail
++	j	fail # Supervisor timer interrupt
++	j	fail
++	j	fail # Machine timer interrupt
++	j	fail
++	j	fail # Supervisor external interrupt
++	j	fail
++	j	fail # Machine external interrupt
++	j	fail
++	j	fail # Counter overflow interrupt
++	j	fail
++	j	fail
++
++illegal_insn:
++	# Check whether we really got an illegal instruction
++	csrr	t0, mcause
++	li	t1, 2
++	bne	t0, t1, fail
++	li	a0, 0
++	j	_exit
++fail:
++	li	a0, 1
++_exit:
++	lla	a1, semiargs
++	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
++	sd	t0, 0(a1)
++	sd	a0, 8(a1)
++	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
++
++	# Semihosting call sequence
++	.balign	16
++	slli	zero, zero, 0x1f
++	ebreak
++	srai	zero, zero, 0x7
++	j	.
++
++	.data
++	.balign	16
++semiargs:
++	.space	16
+-- 
+2.49.0
 
 
