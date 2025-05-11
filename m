@@ -4,82 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51419C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 20:40:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DBBAC3ABCB
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 20:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEDTY-0006AY-B2; Sun, 11 May 2025 16:40:44 -0400
+	id 1uEDWf-0006sK-P9; Sun, 11 May 2025 16:43:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1uEDTV-0006AQ-SX
- for qemu-devel@nongnu.org; Sun, 11 May 2025 16:40:41 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uEDWd-0006rk-8t
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 16:43:55 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
- id 1uEDTT-0006uA-5d
- for qemu-devel@nongnu.org; Sun, 11 May 2025 16:40:41 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-30a89c31ae7so5001096a91.2
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 13:40:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uEDWb-0006z9-Bs
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 16:43:54 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7424ccbef4eso1131542b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 13:43:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1746996037; x=1747600837; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=b1yzQD4F7s8+6vEDWGn6czw3Jqad3rTywjc8Jd6/Iio=;
- b=V9f10+109fYLtU8QcOpfTQXouXF1ZswuiN804+ZQEDjlzqhKf/C/bg8Tf4vDgwb9oA
- c0GI0ApcbwZ5hGGjzoTCtfVvDpzIZRIoYKqEPtF+gOzf3tcnEKJg1rH2aCUzaVui0TQY
- qAS4xihMbDZvs6inZtREHCCv+I+ENP04CpTvuPQqt10rJQEBB957+qFPUuPk1IeH1u7r
- 4l2rsrU0vcuFMmyD3+Jt0mvU1WEcYaj6aGi8C5hPnh9dNKqGAFXsH/BjMWfxzJk24E1h
- mIQN//WAGo7OzWbcRejWw+qYiAGDNibsnd4mgdVPKp3GVv/dee6a+BSZCwGuRjEoHlV4
- zrCA==
+ d=linaro.org; s=google; t=1746996231; x=1747601031; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=HTb1uf5/tl6i0Zb0GJ0I4cJW/1QAIGXYsr4fhEEb/wY=;
+ b=AOsuU2gpD1n/DAGFcFsW/eDOnq7r4sS8oXfSh+l+/yF4fcJqXq1NADU3M4O2KUTvXI
+ I7Ye+YytDmcxll5fkYjItv+wNK2uv8Hy67ZUf/amrvmgoE55qP3ZzX0/yIAl7Qf0pMaO
+ cOk3GHMrw0WI7J9rg9S8lgxzUQE+uCBGap4of+uAB11E1z6eTXdfjgPgpeo4cfVRyJq6
+ lpwGn6CLsvdl7tjyTbkePmbHbPNIBldoS0iS6nc+ugyfwCtIwOivza/8ygrxyj2NZBKZ
+ Kwd6eU//qGO0tFfHF+XHFEUfNxddrfmXKKK8kPSPZU1cgnFbw2xg0jE9x60q2vANrIB6
+ V6zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746996037; x=1747600837;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=b1yzQD4F7s8+6vEDWGn6czw3Jqad3rTywjc8Jd6/Iio=;
- b=lDsczSnQs8DMO1cmcH8qzW7h2QI4L4u90vdune8dX+S0CrQfgFKd+VXrIaD7dc10jh
- 2wISdNtYBCHVV47KEXY62O8KSRKje39K6upEPFEceKxTlckwb+P5eUWtNJ+5T3VmKP0b
- QFOsMN/3d9k2+8sStUKJuR1R2Tk9GKd0bDbHM9U9ij4C/BEhUzEoseQFZ0Z3gFw4/Ork
- Sgg26zPUPRanJPw+qfzPpFRjCQNUXw14O/Ks9uN9ULowGf1dnjpRx0++Q9uWGvTfckBS
- lwFuPgIrDgnl5I7InztCbtVUa/Upl2LD5aCCOk5l6mOCH8jN6LRROiwGyPiYPLGFTJBj
- x7/w==
-X-Gm-Message-State: AOJu0YyPLzjHCXJWC0oz7TMEYwN4sq0iG2dqsBboEewmCZ6MoKIkP0XN
- xbd/JtPXogyD2UHYVsHp1e1nxNOdKMHEJc+8TYrsszHnFEA0AGiZ29KpNFhYWNZJdXnvgy5AZ6C
- poc0ZX07jFONTdAmc/Zok26SoRhM=
-X-Gm-Gg: ASbGncuRnG3xvr7gY/PEAiIejtd586o+SDBkZRZpKPm/cBjRTUwFTercQlaUuBXguNc
- TaOCVuduBqA8bqAYEWoReHgIGWyT6wRgddw1hEJCMUb63JtMCeD2bmunLcBOOa8wJaWbwcrVMQP
- IP81mmfOQnHS0ByRSy9a+70a1prOocPfsaWtJwhXvPIA==
-X-Google-Smtp-Source: AGHT+IH48gQ9k6+9gV+/mvXFbbSoapXyBxFI96Kn7mBlF1Ze6jkf6GioAzHo5ywg2+XCjd63ZDrly6eqpx2hVfrNlFc=
-X-Received: by 2002:a17:90b:1a89:b0:2f6:f32e:90ac with SMTP id
- 98e67ed59e1d1-30c3cefc37bmr16838336a91.11.1746996037269; Sun, 11 May 2025
- 13:40:37 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1746996231; x=1747601031;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HTb1uf5/tl6i0Zb0GJ0I4cJW/1QAIGXYsr4fhEEb/wY=;
+ b=uFEVUizjACz+mQzA3+knLqC9ERG2uEGF+IlWemi/9HpWyK9FSUiT6RNvzDn0y++7Gr
+ aco9kOfFrVkzVku8usMpAhgK1UioevkCO9B/PvnwEQjcuqeK3mNCfCObbkLqKvfb88gI
+ RF4zNQNLi/KG8CNOdBsA9ohtQ4ITT6VJ3eGs8a6W4AJYpzKBPK6rWjHW9Z5MbJbzVlqv
+ eXAJuTPleAKF00ROFoa51x7S5DpbaVYx/cQCvb1b1jfGPFRQjDNCJE4CBerLoX2uPMG/
+ fmUj745XlVa1UxTHLotNELC3ao61gVQRt1UR62jdoy8K73Oc+6ufCnctEDxqVk1Zxyjx
+ 5XqQ==
+X-Gm-Message-State: AOJu0YyNHzw560kfEHt4BtTf2nE/RZ6YzQEVCUkkCnx6alk0TVl/HLiX
+ neOpz/sgChxst2sTHK97Lh7N7gnz4tG5L4vyRrhRDeIoBYmsp1GJw28d6njZVf/F97aQXwXvgAC
+ 6
+X-Gm-Gg: ASbGncuoRYpSpZE9hfiViFpshRSc6rTkb37Nz/c0sqyK+2QbcEcaQjYBphqvX9cm5jn
+ MqNQrCiH6GNvqAhC6hz5fNxiJbWnv0pNqa1kCQlMGEf6/DZ/6Wr0MhToH60uHh8y9JbBW5SktpJ
+ dVZfqOJ+ZScTWzi4d5zWOCtxDe1mu/UkAToJPLmbYaHvMhGpwmBs8fd+st6C8Q1UoAtdo9M7T7B
+ AOnC5s8Nj9oNBNYBB2r1rT/BbeHlFMb/w0BkXMyVc/IzBjL8LcyZBR/BE38GbjaAE+RdCZlPFUe
+ 1bnxtAhUZqTrVVgPAQ+BRQmCK+iKAQrRmG1GkzjHWPnjjk3gbZ6lAxdOa8QfHCdK2mCDUHXyvkN
+ C2v8rE4PrTMixxVQAAg==
+X-Google-Smtp-Source: AGHT+IHw0tq9BA8Hi9JFJyhYX/i7jRNyQZURnqkvbGhEB79rGdxWt8LFUuVsFW/8G63vuCyF7/DH+w==
+X-Received: by 2002:a05:6a00:3cd2:b0:736:32d2:aa93 with SMTP id
+ d2e1a72fcca58-7423c00942bmr14887856b3a.20.1746996231450; 
+ Sun, 11 May 2025 13:43:51 -0700 (PDT)
+Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-74237a8efa2sm4791508b3a.165.2025.05.11.13.43.50
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 11 May 2025 13:43:50 -0700 (PDT)
+Message-ID: <692eed39-4682-47f9-8d4e-dc0a7e8e60e2@linaro.org>
+Date: Sun, 11 May 2025 13:43:49 -0700
 MIME-Version: 1.0
-References: <cover.1746968215.git.neither@nut.email>
- <26b7c748557fb8dc655eb003758789263705d736.1746968215.git.neither@nut.email>
-In-Reply-To: <26b7c748557fb8dc655eb003758789263705d736.1746968215.git.neither@nut.email>
-From: Max Filippov <jcmvbkbc@gmail.com>
-Date: Sun, 11 May 2025 13:40:26 -0700
-X-Gm-Features: AX0GCFt17M_AcFdDrYptnd9AiPCSucryNr72Cp8YtLZTxkph_aeioZaKo7FI7sI
-Message-ID: <CAMo8BfK33QYx0i39D=GBOQMAswku7szCMYsM74MEQoevDSrm7g@mail.gmail.com>
-Subject: Re: [PATCH v4 20/23] target/xtensa: call plugin trap callbacks
-To: Julian Ganz <neither@nut.email>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=jcmvbkbc@gmail.com; helo=mail-pj1-x1029.google.com
-X-Spam_score_int: -5
-X-Spam_score: -0.6
-X-Spam_bar: /
-X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/sparc: don't set FSR_NVA when comparing unordered
+ floats
+To: qemu-devel@nongnu.org
+References: <20250425093513.863289-1-chigot@adacore.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250425093513.863289-1-chigot@adacore.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,24 +103,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, May 11, 2025 at 6:14=E2=80=AFAM Julian Ganz <neither@nut.email> wro=
-te:
->
-> We recently introduced API for registering callbacks for trap related
-> events as well as the corresponding hook functions. Due to differences
-> between architectures, the latter need to be called from target specific
-> code.
->
-> This change places hooks for xtensa targets.
->
-> Signed-off-by: Julian Ganz <neither@nut.email>
+On 4/25/25 02:35, Clément Chigot wrote:
+> FSR_NVA should be set when one of the operands is a signaling NaN or
+> when using FCMPEx instructions. But those cases are already handled
+> within check_ieee_exception or floatxx_compare functions.
+> Otherwise, it should be left untouched.
+> 
+> FTR, this was detected by inf-compare-[5678] tests within gcc
+> testsuites.
+> 
+> Signed-off-by: Clément Chigot <chigot@adacore.com>
 > ---
->  target/xtensa/exc_helper.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+>   target/sparc/fop_helper.c | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
+> index c25097d07f..b57da7c9ea 100644
+> --- a/target/sparc/fop_helper.c
+> +++ b/target/sparc/fop_helper.c
+> @@ -446,7 +446,6 @@ static uint32_t finish_fcmp(CPUSPARCState *env, FloatRelation r, uintptr_t ra)
+>       case float_relation_greater:
+>           return 2;
+>       case float_relation_unordered:
+> -        env->fsr |= FSR_NVA;
+>           return 3;
+>       }
+>       g_assert_not_reached();
 
-Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
---=20
-Thanks.
--- Max
+r~
 
