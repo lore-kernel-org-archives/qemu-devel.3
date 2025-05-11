@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0280C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 20:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C6A5C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 20:37:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEDPB-0003cN-55; Sun, 11 May 2025 16:36:13 -0400
+	id 1uEDP6-0003U2-BW; Sun, 11 May 2025 16:36:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uEDP7-0003ab-Dz
- for qemu-devel@nongnu.org; Sun, 11 May 2025 16:36:09 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1uEDP3-0003I8-Uv
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 16:36:06 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uEDP5-0006NM-IT
- for qemu-devel@nongnu.org; Sun, 11 May 2025 16:36:09 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-af5085f7861so2548131a12.3
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 13:36:07 -0700 (PDT)
+ id 1uEDP2-0006Mm-3g
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 16:36:05 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-b1a1930a922so2711245a12.3
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 13:36:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746995766; x=1747600566; darn=nongnu.org;
+ d=linaro.org; s=google; t=1746995762; x=1747600562; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qhebvcCenIsTy/MycdkDWsoVv1Q1HWhIQtMjE6FLOCY=;
- b=h8UOBEdzvgbykOyvd8zIkA1bLFdmEUA4Qx9Aq8D0IIxIsmSuLa5Ck+CAx20BJaGHRx
- PzJWXMAwpoYL3tttTHwBMCuIQyhkPnKydi3FSa6ufRzdPIG0/u4AlUW931+BJp0PSlwq
- EPSKjnM1+EWMXUwEbbWwO2PvPKEeLC4cOCKd/aWUcUSRslyt/yIwtg0TlUMnu9O5nfle
- p1fklaS2jjAZ4Yf6sCYKhev/E7t/cr8P3kkBw85ydIk5A5eVPRqU08NpBwgipj6SUDNz
- ZK9AuV8f9IkP9nHPKAkY0nHAfEWlTyDr6FOxQZMzcus1vAX6PWQS4IxesRWihGGxVaoJ
- CbzQ==
+ bh=Ajr6sQHdjTxKRS0SoK6A2gKsRODsAKPtm5i21TP9SuA=;
+ b=M663ZojUGCwKMT4PbO0yIfwgYfqgiG50NZQ3ujDMvv/Q5wRgOYKppXaYOOdDFQ28Gd
+ 0nz589bzyn2ttrBEX61FZu8nqJFrHNfXvSAt7z+TbtyrrFAvTQVJSqTRka+Jo8iuNqCw
+ sdmOz0PtYMBhXUlx0JJAUmPjvDbe4m44ojfHBipTUOshejTdCTPL6wFbm58DR96QpYb7
+ VA+9QV4zCl7k11v8ERbaPimAjJOLHHUoHFzjOqjg0DpytcHf4i/yl81DgSid6I2VKYyS
+ xx2K7M6cbQ6bXbdT7QjqAp/9zWnVPdtnmGQ8Gwf2kDZ0o/lWnlGkFHe5ZEKsbVdPduvb
+ bRbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746995766; x=1747600566;
+ d=1e100.net; s=20230601; t=1746995762; x=1747600562;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qhebvcCenIsTy/MycdkDWsoVv1Q1HWhIQtMjE6FLOCY=;
- b=dXjjstUrmF3iIxFV0ziZCirzunz/nzxoPxwPOTw96QpvTZTf4qKRjlWz3Lx+/z4dTT
- ZK9dWGwLrhCA1CM3x9MfokN8pyxPB92rnfXZDFJZOg4N8bdqb2nwUd60V/nvPQ4f1LzY
- fSy+rCWMWJsZNbMmOkHg6i6VdeUoDZorXjKlBqaSPIdK8C14YmWGPXBNxgzSzb74b7D3
- DR0aPZqX0d1sH/+4ylWLNVVYvEwqvf4hTj8zgRoJBgU+XzxFqOs1+rX3wN53JmV2m3h8
- KaT5oeSGCKJneown5/rB+HkamUmZOGjFNialprKdA/VJGAuLryvMdcYt+ozGbkR2XqoX
- U9IQ==
-X-Gm-Message-State: AOJu0YyopIy561XnmZsLHV2vi/uKxqnSYHk9/qJOUKFZVabMWCskasF9
- N0YFyFbVlDbkSWRpXdk58TmS4/XDMB8yvzTJaoEBWHSlwpdbnqPbF0N8H/4kZ9gDWYNmhBFkZcr
- u
-X-Gm-Gg: ASbGnctksRDg6TEp2VUgOKoQJfw4HisYbARPhSETr4gX9j3czca6S7smMOhPOx/zjMr
- 6kF0YNP0Kg/3/vYs0vwmN+4/1wMnMFaqSNSh4FkoUsLwHsUF1A4yuYAXtGo9n+VeQjDNCLmy0Ho
- y8KFwywGCObDKjNfhhb0L9CdnS1mpP/VlB2F6fvgkYPs3RZoJXrO5OyFI8UXTl0NoYyFdZNDc1I
- 0J0jhqfIvbrlNxLoEGYvJ2PjY8pILlmvONjTpAqmPTzk6hJaVwt0qycVDc8t+OTa8TE/DH9SZ8V
- SDkofNjGL/HmX1WSdFr0JXY1TiEml1aFdzSjhT7ytWgKcAmIFjEjwqH/b8WkP2ZVjHfCJvxf6uy
- glGajgVoonw==
-X-Google-Smtp-Source: AGHT+IGH/eGN3QMC/RCqr1DvkezM8IZEvEi5zlilgs4II5Ta0DVItCz0+PtHKm4rQ5gl0hUg+tVBYA==
-X-Received: by 2002:a17:903:2349:b0:224:10a2:cae7 with SMTP id
- d9443c01a7336-22fc8e95bf0mr178894245ad.40.1746995766149; 
- Sun, 11 May 2025 13:36:06 -0700 (PDT)
+ bh=Ajr6sQHdjTxKRS0SoK6A2gKsRODsAKPtm5i21TP9SuA=;
+ b=TobCcVA6ADQyV9LqpjTZFOrPSYuBNa7kQ87IoHMWx3NSsIagYbEVqI6lLbt4pPSltW
+ 79LO8i+Es6gibbxGInOw7ZsTHHU2h8iLUu+BphSKD5yfWieJe9MK+Gd/hX6jcMwVlJOL
+ mFHnDUZkkFZxyhi3Vz93PhD1UfzTx1BocpKLiWwD/pTp0CWuy3nqOVxyWZIqr3oooXa6
+ H8o2LuFn6EeXoWHRSu0jJw3Y9OARsF8bLU5OAnEDgAPJlYtFer8AHG+h6mE119zYDN9V
+ n4WekgtFMbWYLLE0gdUbISMiYwqTIwrCzNCMzY1etjItbkUIyQwwB/7uYbawxV7CUTig
+ 9bJw==
+X-Gm-Message-State: AOJu0YxRGoAt5IsikkefZS4KOUN4qoBTMvwHxLcX1KjnPuqhveZGUePb
+ ewfJwy1rwNWEwX5Xs5Gvtx1FpA1RYuCZ4f+BL9oazPUJq3wCv3xZlrUvtArnAZtUhT5JSpMPPVG
+ a
+X-Gm-Gg: ASbGncvuK4k76BWRNmhGqn5eiVLv7pQNnoBbhRSDyulyEXncEYMgW/CFcdSk0omButr
+ kwVjkugSgqXv9IRvz5agEk015Vu8nqpC5f7woJxertlodHrm2ySkpkpVs3R79qe+nRcPxxTSkm8
+ zXUbjmO7VhfApcEn6AbAJOTek3bqYpWmZAMncQKda459LS3o82tTpPbS0tba+CcTFixWSblbNwG
+ RLOGZDn3+CfUbjoAqF3NcaJCkcwRRnVkZywHblxvWk24ONpc2uZ+pndBWfGoTcQx+ExnG61jbY3
+ 6DGjCxyEEcjy+uDFMtdrc1JjwsGX/ToQegSmkiyWN8AZQvOXTo4Qn/KUcya2vjM6g7nqhByLhMh
+ W+HfLQFD4LA==
+X-Google-Smtp-Source: AGHT+IGQov3aHk2fw9nl9BT1MWFOnwpb8p0hhRgxb+WQNIt0Ibngu0b6DcugjLSDkAOayKxzNmTmFQ==
+X-Received: by 2002:a17:902:d4d2:b0:223:f408:c3cf with SMTP id
+ d9443c01a7336-22fc8b6b97fmr154371395ad.21.1746995762480; 
+ Sun, 11 May 2025 13:36:02 -0700 (PDT)
 Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc7544d86sm49955095ad.47.2025.05.11.13.36.05
+ d9443c01a7336-22fc7544d86sm49955095ad.47.2025.05.11.13.36.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 13:36:05 -0700 (PDT)
+ Sun, 11 May 2025 13:36:02 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu, schwab@linux-m68k.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 22/24] tests/tcg/m68k: Add packed decimal tests
-Date: Sun, 11 May 2025 13:35:44 -0700
-Message-ID: <20250511203546.139788-23-richard.henderson@linaro.org>
+Subject: [PATCH v6 19/24] target/m68k: Merge gen_load_fp, gen_load_mode_fp
+Date: Sun, 11 May 2025 13:35:41 -0700
+Message-ID: <20250511203546.139788-20-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250511203546.139788-1-richard.henderson@linaro.org>
 References: <20250511203546.139788-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,141 +102,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This enables the exceptions raised by the actual load
+to be reflected as a failure.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/tcg/m68k/packeddecimal-1.c | 46 ++++++++++++++++++++++++++
- tests/tcg/m68k/packeddecimal-2.c | 55 ++++++++++++++++++++++++++++++++
- tests/tcg/m68k/Makefile.target   |  4 ++-
- 3 files changed, 104 insertions(+), 1 deletion(-)
- create mode 100644 tests/tcg/m68k/packeddecimal-1.c
- create mode 100644 tests/tcg/m68k/packeddecimal-2.c
+ target/m68k/translate.c | 104 ++++++++++++++++++++--------------------
+ 1 file changed, 51 insertions(+), 53 deletions(-)
 
-diff --git a/tests/tcg/m68k/packeddecimal-1.c b/tests/tcg/m68k/packeddecimal-1.c
-new file mode 100644
-index 0000000000..cd5759fff7
---- /dev/null
-+++ b/tests/tcg/m68k/packeddecimal-1.c
-@@ -0,0 +1,46 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Test packed decimal real conversion to long double. */
-+
-+#include <stdio.h>
-+
-+struct T {
-+    unsigned int d[3];
-+    long double f;
-+};
-+
-+#define PDR(SMEY, EXP, INT, M1, M2) \
-+    { (0b##SMEY << 28) | (0x##EXP << 16) | INT, 0x##M1, 0x##M2 }
-+
-+static const struct T tests[] = {
-+    { PDR(0000, 000, 1, 00000000, 00000000), 1.0e0l },
-+    { PDR(0000, 001, 1, 00000000, 00000000), 1.0e1l },
-+    { PDR(0000, 010, 1, 00000000, 00000000), 1.0e10l },
-+    { PDR(0000, 000, 0, 10000000, 00000000), 0.1e0l },
-+    { PDR(0100, 001, 1, 00000000, 00000000), 1.0e-1l },
-+    { PDR(1000, 005, 5, 55550000, 00000000), -5.5555e5l },
-+    { PDR(0000, 999, 9, 99999999, 99999999), 9.9999999999999999e999l },
-+    { PDR(0000, 123, 1, 23456789, 12345678), 1.2345678912345678e123l },
-+    { PDR(0000, 000, 0, 00000000, 00000000), 0.0l },
-+    { PDR(1000, 000, 0, 00000000, 00000000), -0.0l },
-+    { PDR(0000, 999, 0, 00000000, 00000000), 0.0e999l },
-+    { PDR(0111, FFF, 0, 00000000, 00000000), __builtin_infl() },
-+    { PDR(1111, FFF, 0, 00000000, 00000000), -__builtin_infl() },
-+};
-+
-+int main()
-+{
-+    int ret = 0;
-+
-+    for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++) {
-+        const struct T *t = &tests[i];
-+        long double f;
-+
-+        asm("fmove.p (%1),%0" : "=f"(f) : "a"(t->d));
-+
-+        if (f != t->f) {
-+            fprintf(stderr, "Mismatch at %d: %.17Le != %.17Le\n", i, f, t->f);
-+            ret = 1;
-+        }
-+    }
-+    return ret;
-+}
-diff --git a/tests/tcg/m68k/packeddecimal-2.c b/tests/tcg/m68k/packeddecimal-2.c
-new file mode 100644
-index 0000000000..5b956440bc
---- /dev/null
-+++ b/tests/tcg/m68k/packeddecimal-2.c
-@@ -0,0 +1,55 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Test packed decimal real conversion from long double, dynamic k-factor */
-+
-+#include <stdio.h>
-+#include <float.h>
-+
-+struct T {
-+    unsigned int d[3];
-+    long double lf;
-+    int kfactor;
-+};
-+
-+#define PDR(SMEY, EXP, I, M1, M2) \
-+    { (0b##SMEY << 28) | ((0x##EXP & 0xfff) << 16) | (0x##EXP & 0xf000) | I, \
-+      0x##M1, 0x##M2 }
-+
-+static const struct T tests[] = {
-+    { PDR(0000, 0000, 1, 00000000, 00000000), 1.0e0l, 0 },
-+    { PDR(0000, 0010, 1, 00000000, 00000000), 1.0e10l, 0 },
-+    { PDR(0100, 0001, 1, 00000000, 00000000), 1.0e-1l, 0 },
-+    { PDR(1000, 0005, 5, 55550000, 00000000), -5.5555e5l, 5 },
-+    { PDR(0100, 0005, 5, 55550000, 00000000), 5.5555e-5l, 5 },
-+    { PDR(0000, 0005, 2, 22222222, 22222222), 2.2222222222222222e5l, 17 },
-+    { PDR(0000, 0005, 2, 22220000, 00000000), 2.2222222222222222e5l, 5 },
-+    { PDR(0000, 0005, 2, 20000000, 00000000), 2.2222222222222222e5l, 2 },
-+    { PDR(0000, 0005, 6, 66670000, 00000000), 6.6666666666666666e5l, 5 },
-+    { PDR(0000, 4932, 1, 18973149, 53572318), LDBL_MAX, 17 },
-+    { PDR(0100, 4932, 1, 68105157, 15560468), LDBL_MIN, 17 },
-+    { PDR(0100, 4951, 1, 82259976, 59412373), LDBL_TRUE_MIN, 17 },
-+    { PDR(0000, 0000, 0, 00000000, 00000000), 0.0l },
-+    { PDR(1000, 0000, 0, 00000000, 00000000), -0.0l },
-+    { PDR(0111, 0FFF, 0, 00000000, 00000000), __builtin_infl() },
-+    { PDR(1111, 0FFF, 0, 00000000, 00000000), -__builtin_infl() },
-+};
-+
-+int main()
-+{
-+    int ret = 0;
-+
-+    for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++) {
-+        const struct T *t = &tests[i];
-+        unsigned int out[3];
-+
-+        asm("fmove.p %1,(%0),%2"
-+            : : "a"(out), "f"(t->lf), "d"(t->kfactor) : "memory");
-+
-+        if (out[0] != t->d[0] || out[1] != t->d[1] || out[2] != t->d[2]) {
-+            fprintf(stderr, "Mismatch at %d: %08x%08x%08x != %08x%08x%08x\n",
-+                    i, out[0], out[1], out[2],
-+                    t->d[0], t->d[1], t->d[2]);
-+            ret = 1;
-+        }
-+    }
-+    return ret;
-+}
-diff --git a/tests/tcg/m68k/Makefile.target b/tests/tcg/m68k/Makefile.target
-index 33f7b1b127..b505260b79 100644
---- a/tests/tcg/m68k/Makefile.target
-+++ b/tests/tcg/m68k/Makefile.target
-@@ -4,4 +4,6 @@
- #
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index ab6db2cd57..dbbe1b7c91 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -902,53 +902,6 @@ static void gen_fp_move(TCGv_ptr dest, TCGv_ptr src)
+     tcg_gen_st_i64(t64, dest, offsetof(FPReg, l.lower));
+ }
  
- VPATH += $(SRC_PATH)/tests/tcg/m68k
--TESTS += trap denormal
-+TESTS += trap denormal packeddecimal-1 packeddecimal-2
+-static void gen_load_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
+-                        int index)
+-{
+-    TCGv tmp;
+-    TCGv_i64 t64;
+-
+-    t64 = tcg_temp_new_i64();
+-    tmp = tcg_temp_new();
+-    switch (opsize) {
+-    case OS_BYTE:
+-    case OS_WORD:
+-    case OS_LONG:
+-        tcg_gen_qemu_ld_tl(tmp, addr, index, opsize | MO_SIGN | MO_TE);
+-        gen_helper_exts32(tcg_env, fp, tmp);
+-        break;
+-    case OS_SINGLE:
+-        tcg_gen_qemu_ld_tl(tmp, addr, index, MO_TEUL);
+-        gen_helper_extf32(tcg_env, fp, tmp);
+-        break;
+-    case OS_DOUBLE:
+-        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
+-        gen_helper_extf64(tcg_env, fp, t64);
+-        break;
+-    case OS_EXTENDED:
+-        if (m68k_feature(s->env, M68K_FEATURE_CF_FPU)) {
+-            gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
+-            break;
+-        }
+-        tcg_gen_qemu_ld_i32(tmp, addr, index, MO_TEUL);
+-        tcg_gen_shri_i32(tmp, tmp, 16);
+-        tcg_gen_st16_i32(tmp, fp, offsetof(FPReg, l.upper));
+-        tcg_gen_addi_i32(tmp, addr, 4);
+-        tcg_gen_qemu_ld_i64(t64, tmp, index, MO_TEUQ);
+-        tcg_gen_st_i64(t64, fp, offsetof(FPReg, l.lower));
+-        break;
+-    case OS_PACKED:
+-        /*
+-         * unimplemented data type on 68040/ColdFire
+-         * FIXME if needed for another FPU
+-         */
+-        gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+-}
+-
+ static void gen_store_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
+                          int index)
+ {
+@@ -996,8 +949,8 @@ static void gen_store_fp(DisasContext *s, int opsize, TCGv addr, TCGv_ptr fp,
+     }
+ }
+ 
+-static bool gen_load_mode_fp(DisasContext *s, uint16_t insn, int opsize,
+-                             TCGv_ptr fp, int index)
++static bool gen_load_fp(DisasContext *s, uint16_t insn, int opsize,
++                        TCGv_ptr fp, int index)
+ {
+     int mode = extract32(insn, 3, 3);
+     int reg0 = REG(insn, 0);
+@@ -1084,10 +1037,55 @@ static bool gen_load_mode_fp(DisasContext *s, uint16_t insn, int opsize,
+             gen_addr_fault(s);
+             return false;
+         }
+-        gen_load_fp(s, opsize, addr, fp, index);
+-        return true;
++        break;
 +
-+run-packeddecimal-%: QEMU_OPTS += -cpu m68020
++    default:
++        g_assert_not_reached();
+     }
+-    g_assert_not_reached();
++
++    switch (opsize) {
++    case OS_BYTE:
++    case OS_WORD:
++    case OS_LONG:
++        tmp = tcg_temp_new();
++        tcg_gen_qemu_ld_tl(tmp, addr, index, opsize | MO_SIGN | MO_TE);
++        gen_helper_exts32(tcg_env, fp, tmp);
++        break;
++    case OS_SINGLE:
++        tmp = tcg_temp_new();
++        tcg_gen_qemu_ld_tl(tmp, addr, index, MO_TEUL);
++        gen_helper_extf32(tcg_env, fp, tmp);
++        break;
++    case OS_DOUBLE:
++        t64 = tcg_temp_new_i64();
++        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
++        gen_helper_extf64(tcg_env, fp, t64);
++        break;
++    case OS_EXTENDED:
++        if (m68k_feature(s->env, M68K_FEATURE_CF_FPU)) {
++            gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
++            return false;
++        }
++        tmp = tcg_temp_new();
++        t64 = tcg_temp_new_i64();
++        tcg_gen_qemu_ld_i32(tmp, addr, index, MO_TEUL);
++        tcg_gen_addi_i32(addr, addr, 4);
++        tcg_gen_qemu_ld_i64(t64, addr, index, MO_TEUQ);
++        tcg_gen_shri_i32(tmp, tmp, 16);
++        tcg_gen_st16_i32(tmp, fp, offsetof(FPReg, l.upper));
++        tcg_gen_st_i64(t64, fp, offsetof(FPReg, l.lower));
++        break;
++    case OS_PACKED:
++        /*
++         * unimplemented data type on 68040/ColdFire
++         * FIXME if needed for another FPU
++         */
++        gen_exception(s, s->base.pc_next, EXCP_FP_UNIMP);
++        return false;
++    default:
++        g_assert_not_reached();
++    }
++    return true;
+ }
+ 
+ static bool gen_store_mode_fp(DisasContext *s, uint16_t insn, int opsize,
+@@ -4911,7 +4909,7 @@ DISAS_INSN(fpu)
+         /* Source effective address.  */
+         opsize = ext_opsize(ext, 10);
+         cpu_src = gen_fp_result_ptr();
+-        if (!gen_load_mode_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
++        if (!gen_load_fp(s, insn, opsize, cpu_src, IS_USER(s))) {
+             return;
+         }
+     } else {
 -- 
 2.43.0
 
