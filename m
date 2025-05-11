@@ -4,69 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCB8EC3ABC5
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 13:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C89AC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 13:20:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uE6WL-0006kf-Vm; Sun, 11 May 2025 09:15:10 -0400
+	id 1uE6bK-0004to-1x; Sun, 11 May 2025 09:20:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uE6WG-0006UD-Na
- for qemu-devel@nongnu.org; Sun, 11 May 2025 09:15:04 -0400
-Received: from mailgate02.uberspace.is ([185.26.156.114])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uE6WE-0006qg-8R
- for qemu-devel@nongnu.org; Sun, 11 May 2025 09:15:04 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id 1CEB3180070
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 15:14:51 +0200 (CEST)
-Received: (qmail 26131 invoked by uid 990); 11 May 2025 13:14:51 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Sun, 11 May 2025 15:14:50 +0200
-From: Julian Ganz <neither@nut.email>
-To: qemu-devel@nongnu.org
-Cc: Julian Ganz <neither@nut.email>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: [PATCH v4 16/23] target/riscv: call plugin trap callbacks
-Date: Sun, 11 May 2025 15:14:08 +0200
-Message-ID: <40c7216b842b7d06a0b947a7eee7cc11b9305b15.1746968215.git.neither@nut.email>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <cover.1746968215.git.neither@nut.email>
-References: <cover.1746968215.git.neither@nut.email>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uE6bH-0004rp-MJ
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 09:20:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uE6bF-00089V-V3
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 09:20:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1746969613;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DQgsqkTOIyZhN/qlgqF78+C8tcllmzO5ZDG7Hijf0JM=;
+ b=ASPn4WoB/US/HoaRfZ+czT5Ayr0jbcfMB9UAKn7mMjb31k+yXZlc7aXNuOJ4Ctwtk3L69J
+ kausAkb8YirvN2MzokIoQguZAQqwwtOiPJilUWp+DdXmwezz057Gqz/Ea1T5C2HnYGOmN1
+ ZnOmODS1xTSoXtN4XA0FYal4kFDKSOo=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-574-HoFsZypvPcunOgI9aFiXUQ-1; Sun, 11 May 2025 09:20:11 -0400
+X-MC-Unique: HoFsZypvPcunOgI9aFiXUQ-1
+X-Mimecast-MFC-AGG-ID: HoFsZypvPcunOgI9aFiXUQ_1746969610
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43f251dc364so21999765e9.2
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 06:20:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1746969610; x=1747574410;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DQgsqkTOIyZhN/qlgqF78+C8tcllmzO5ZDG7Hijf0JM=;
+ b=eMcFmge/9Z2NVawMPf+04RQfcNt3m5Csh77ZTV1lXkOY8XtY9GYuMCW5ICwPTTSxcT
+ BntwwSvtuq3N9au6J97oEOWy/jPQLVdAXEGhxNJDYR3LZcBtHqwKFN8iqzPguToO6CgX
+ 0Nq0DQ2RHYwm2Bp9B/yogF3dndhFiU+KXmA40mQsavtTRVldYZ4d0nkzaaxoaxqcRXNb
+ Zo8aZRFXYH1D98r29ElbCaSMa+P+nYQE8qAbeOFK2wODQt32thHkkePBgelZ9li8IOtG
+ 6yPG90KqdjHIoFQVT/G1HOSnMZLyftHKRFerS5fjHmd2LDo+rvzF1d+hDCVoRzcP4J7T
+ IzFg==
+X-Gm-Message-State: AOJu0Yx5edkTN0tzKRZdl4XPioTZq9wJSpkoBoHIa4a5k2unky/wcmfj
+ fjMZC87KYtCR4bd9QqDF6D6lj5PV60Nh1yjBr/vcL3LVuJY3fJQmPmL91C3BwmxSJ6TsRhUFmAQ
+ 8R1h3v33BALV1ihzLX8vWrDjuztrDHfEiJOUeydeMVWxNEZBn7Rlt
+X-Gm-Gg: ASbGncv104/W8+VqEEN+8wbONPMFCVwHAfNPGqvLuyLgqnjm2ma+KWQeO902tFOO9Ib
+ UeMPmU1ZidXD4a4B5UGYWh8vW9XMrFufHGESCPHvvgt6/oZX8bDjQAnRvzXRhhw1pS7jaC2acwk
+ 3IZrzVLYC6Nq1cJKkzIR7sTAOFCC2yuR0ZHSt+7p+QtlP5+tEhUCitm497jiMf6rugs1FYSVQ5v
+ l9f+Kgm+UdNCeT5NrErJKJiAFgbo/g0GlA9aCWbp4Zil0f+i4edP8HybJ2Ut6nehooqwgPU6/Mw
+ UkjQ7Q==
+X-Received: by 2002:a5d:64ab:0:b0:3a0:b65b:78ff with SMTP id
+ ffacd0b85a97d-3a1f6487d6amr7788833f8f.40.1746969610296; 
+ Sun, 11 May 2025 06:20:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKBMWzClzGKTnM4TtETLrZC6iFV/0P/Ho/Ky4KWUVatV7orHTQ7ZEnn5JlGPDQpj3de52nXw==
+X-Received: by 2002:a5d:64ab:0:b0:3a0:b65b:78ff with SMTP id
+ ffacd0b85a97d-3a1f6487d6amr7788813f8f.40.1746969609924; 
+ Sun, 11 May 2025 06:20:09 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a1f5a2d96csm9329134f8f.69.2025.05.11.06.20.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 11 May 2025 06:20:09 -0700 (PDT)
+Date: Sun, 11 May 2025 09:20:06 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
+ devel@lists.libvirt.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>
+Subject: Re: [PATCH v3 0/5] docs: automated info about machine
+ deprecation/removal info
+Message-ID: <20250511091938-mutt-send-email-mst@kernel.org>
+References: <20250506160024.2380244-1-berrange@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: -----
-X-Rspamd-Report: REPLY(-4) BAYES_HAM(-2.987116) MID_CONTAINS_FROM(1)
- MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: -5.587116
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=VQ+IG/WFqsioJzIjPbJB/PWrUssDhf/OuDz5jcwCvrA=;
- b=pO4wC1L0LVTOmGefFMPY1F5Aw/6ASZ+DzBsL5lj12DsTQdzjXhkzcfYoLiHq2tTq+r1oRYatTK
- WO727jwwxmy5f7ug0SUcuUx+ALqTxI7e4CvizNx7Q3NJns3slliR9xCWsT0Z13D5yBUnEH2F0kCi
- Ip+w9G5FN3BMGDrVhlT9e+3Ms/tJ6dhNrwWRUAJEVS2iPNgvnCD3x8YIXz3LXzYh9q+DxVhmt6hm
- mRvmmL409voYi213kU/Rdg/PRM0s6nEykoEI/z729bpCdWqXCtCMsnEA3v0uqdSCKMDhDJ8M0LBu
- 1jcRutQhKB6rdbuekRVAZQ0Y3D9b0RjjFDFfLNeTnP36mDZgNYuKIprRBdgwouhhVXe4csoI9fma
- SgGTapg18Brg/ZA3zPwju3lPhX0LSWOHx6hx++PJozCKdq3APuOmhOYfZEe4vOQ7YIgvUGvFtaUW
- LkSOCSj16pEsw77KTrg/zLb6k7ATQnZq7/Fmw1uDZfCKd65D3bp+grNm8Fma3JRH8iM1S2faaA8X
- MQi9eFl1UwPWrXT1dVQbEI4S+mqlrxom6Cvz4nCu5XfefLz2bPz9H0Im1habnsB0/4fQoKuBvFxu
- mG/6vSRXAE4FZ70X8dayQ2upWcDrWf7vWGHFSAH+j8/C1kAUq87kjUi5Kpo2KjKhv//3P5imrVjx
- U=
-Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
- helo=mailgate02.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+In-Reply-To: <20250506160024.2380244-1-berrange@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.587,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,60 +112,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We recently introduced API for registering callbacks for trap related
-events as well as the corresponding hook functions. Due to differences
-between architectures, the latter need to be called from target specific
-code.
+On Tue, May 06, 2025 at 05:00:19PM +0100, Daniel P. Berrangé wrote:
+> Since we deprecate and remove versioned machine types on a fixed
+> schedule, we can automatically ensure that the docs reflect the
+> latest version info, rather than requiring manual updates on each
+> dev cycle.
+> 
+> The first patch in this series removes the hack which postponed
+> automatic removal of versioned machine types to the 10.1.0 release,
+> since we're now in the 10.1.0 dev cycle.
+> 
+> The second patch in this series fixes the logic to ensure dev snapshots
+> and release candidates don't have an off-by-1 error in setting
+> deprecation and removal thresholds - they must predict the next formal
+> release version number.
+> 
+> The following three patches deal with the docs stuff.
 
-This change places hooks for RISC-V targets.
 
-Signed-off-by: Julian Ganz <neither@nut.email>
----
- target/riscv/cpu_helper.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index d5039f69a9..dce7e34cba 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -36,6 +36,7 @@
- #include "cpu_bits.h"
- #include "debug.h"
- #include "pmp.h"
-+#include "qemu/plugin.h"
- 
- int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
- {
-@@ -2173,6 +2174,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-     uint64_t hdeleg = async ? env->hideleg : env->hedeleg;
-     const bool prev_virt = env->virt_enabled;
-     const target_ulong prev_priv = env->priv;
-+    uint64_t last_pc = env->pc;
-     target_ulong tval = 0;
-     target_ulong tinst = 0;
-     target_ulong htval = 0;
-@@ -2195,6 +2197,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-         case RISCV_EXCP_SEMIHOST:
-             do_common_semihosting(cs);
-             env->pc += 4;
-+            qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
-             return;
- #endif
-         case RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT:
-@@ -2464,6 +2467,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-                         prev_priv, prev_virt);
-     }
- 
-+    if (async) {
-+        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
-+    } else {
-+        qemu_plugin_vcpu_exception_cb(cs, last_pc);
-+    }
-+
-     /*
-      * Interrupt/exception/trap delivery is asynchronous event and as per
-      * zicfilp spec CPU should clear up the ELP state. No harm in clearing
--- 
-2.49.0
+> Changed in v3:
+> 
+>  - Remove mistaken mention of 'ppc', only 'ppc64' has versioned
+>    machine types
+> 
+> Changed in v2:
+> 
+>  - Remove hack that temporarily postponed automatic deletion
+>    of machine types
+>  - Fix docs version info for stable bugfix releases
+> 
+> Daniel P. Berrangé (5):
+>   Revert "include/hw: temporarily disable deletion of versioned machine
+>     types"
+>   include/hw/boards: cope with dev/rc versions in deprecation checks
+>   docs/about/deprecated: auto-generate a note for versioned machine
+>     types
+>   docs/about/removed-features: auto-generate a note for versioned
+>     machine types
+>   include/hw/boards: add warning about changing deprecation logic
+> 
+>  docs/about/deprecated.rst       |  7 ++++
+>  docs/about/removed-features.rst | 10 +++---
+>  docs/conf.py                    | 39 +++++++++++++++++++++-
+>  include/hw/boards.h             | 58 +++++++++++++++++++++------------
+>  4 files changed, 89 insertions(+), 25 deletions(-)
+> 
+> -- 
+> 2.49.0
 
 
