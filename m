@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1AAAC3ABC5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A426AC3ABC3
 	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 07:39:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uE1H8-0005JE-4D; Sun, 11 May 2025 03:39:06 -0400
+	id 1uE1H1-0005HR-Kg; Sun, 11 May 2025 03:38:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <volker.ruemelin@t-online.de>)
- id 1uE1H6-0005Ir-J2
- for qemu-devel@nongnu.org; Sun, 11 May 2025 03:39:04 -0400
-Received: from mailout07.t-online.de ([194.25.134.83])
+ id 1uE1Gx-0005Gv-GJ
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 03:38:55 -0400
+Received: from mailout02.t-online.de ([194.25.134.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <volker.ruemelin@t-online.de>)
- id 1uE1H5-00044B-1D
- for qemu-devel@nongnu.org; Sun, 11 May 2025 03:39:04 -0400
-Received: from fwd86.aul.t-online.de (fwd86.aul.t-online.de [10.223.144.112])
- by mailout07.t-online.de (Postfix) with SMTP id D5891776;
- Sun, 11 May 2025 09:39:01 +0200 (CEST)
-Received: from linpower.localnet ([84.175.230.13]) by fwd86.t-online.de
+ id 1uE1Gv-00042c-Gc
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 03:38:55 -0400
+Received: from fwd70.aul.t-online.de (fwd70.aul.t-online.de [10.223.144.96])
+ by mailout02.t-online.de (Postfix) with SMTP id 5B72313A5;
+ Sun, 11 May 2025 09:38:49 +0200 (CEST)
+Received: from linpower.localnet ([84.175.230.13]) by fwd70.t-online.de
  with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
- esmtp id 1uE1H1-0qb0zZ0; Sun, 11 May 2025 09:38:59 +0200
+ esmtp id 1uE1Gp-1dgnLd0; Sun, 11 May 2025 09:38:47 +0200
 Received: by linpower.localnet (Postfix, from userid 1000)
- id 14247200365; Sun, 11 May 2025 09:38:47 +0200 (CEST)
+ id 04C402002C2; Sun, 11 May 2025 09:38:47 +0200 (CEST)
 From: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>
 To: Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -36,24 +36,25 @@ To: Gerd Hoffmann <kraxel@redhat.com>,
 Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 6/7] audio/mixeng: remove unnecessary pointer type casts
-Date: Sun, 11 May 2025 09:38:45 +0200
-Message-ID: <20250511073846.8713-6-vr_qemu@t-online.de>
+Subject: [PATCH 1/7] tests/functional: use 'none' audio driver for q800 tests
+Date: Sun, 11 May 2025 09:38:40 +0200
+Message-ID: <20250511073846.8713-1-vr_qemu@t-online.de>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <d456c188-0463-4dc2-9178-469f840eaebe@t-online.de>
 References: <d456c188-0463-4dc2-9178-469f840eaebe@t-online.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TOI-EXPURGATEID: 150726::1746949139-BFFFD4E5-3A1E64F7/0/0 CLEAN NORMAL
-X-TOI-MSGID: c686a716-778b-4716-9549-65b49acf8cee
-Received-SPF: pass client-ip=194.25.134.83;
- envelope-from=volker.ruemelin@t-online.de; helo=mailout07.t-online.de
+X-TOI-EXPURGATEID: 150726::1746949127-51127547-D9683718/10/29118861210 SUSPECT
+ URL
+X-TOI-MSGID: 9667be69-169b-4de8-8fce-0433afa77dc6
+Received-SPF: pass client-ip=194.25.134.17;
+ envelope-from=volker.ruemelin@t-online.de; helo=mailout02.t-online.de
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -71,54 +72,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A simple assignment automatically converts a void pointer type
-to any other pointer type.
+Since commit ac13a6b3fd ("audio: add Apple Sound Chip (ASC)
+emulation") the Quadra 800 machine has an audio device. It is
+not guaranteed that the default audio driver of the audio
+subsystem will work correctly on all host systems. Therefore,
+the 'none' audio driver should be used in all q800 tests.
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2812
 Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
 ---
- audio/mixeng.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tests/functional/test_m68k_q800.py   | 3 ++-
+ tests/functional/test_m68k_replay.py | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/audio/mixeng.c b/audio/mixeng.c
-index 69f6549224..13e1ff9b08 100644
---- a/audio/mixeng.c
-+++ b/audio/mixeng.c
-@@ -286,7 +286,7 @@ static const float float_scale_reciprocal = 1.f / ((int64_t)INT32_MAX + 1);
- static void conv_natural_float_to_mono(struct st_sample *dst, const void *src,
-                                        int samples)
- {
--    float *in = (float *)src;
-+    const float *in = src;
+diff --git a/tests/functional/test_m68k_q800.py b/tests/functional/test_m68k_q800.py
+index 400b7aeb5d..b3e655346c 100755
+--- a/tests/functional/test_m68k_q800.py
++++ b/tests/functional/test_m68k_q800.py
+@@ -25,7 +25,8 @@ def test_m68k_q800(self):
+         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+                                'console=ttyS0 vga=off')
+         self.vm.add_args('-kernel', kernel_path,
+-                         '-append', kernel_command_line)
++                         '-append', kernel_command_line,
++                         '-audio', 'none')
+         self.vm.launch()
+         console_pattern = 'Kernel command line: %s' % kernel_command_line
+         self.wait_for_console_pattern(console_pattern)
+diff --git a/tests/functional/test_m68k_replay.py b/tests/functional/test_m68k_replay.py
+index 18c1db539c..213d6ae07e 100755
+--- a/tests/functional/test_m68k_replay.py
++++ b/tests/functional/test_m68k_replay.py
+@@ -24,7 +24,8 @@ def test_q800(self):
+         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+                                'console=ttyS0 vga=off')
+         console_pattern = 'No filesystem could mount root'
+-        self.run_rr(kernel_path, kernel_command_line, console_pattern)
++        self.run_rr(kernel_path, kernel_command_line, console_pattern,
++                    args=('-audio', 'none'))
  
-     while (samples--) {
-         dst->r = dst->l = CONV_NATURAL_FLOAT(*in++);
-@@ -297,7 +297,7 @@ static void conv_natural_float_to_mono(struct st_sample *dst, const void *src,
- static void conv_natural_float_to_stereo(struct st_sample *dst, const void *src,
-                                          int samples)
- {
--    float *in = (float *)src;
-+    const float *in = src;
- 
-     while (samples--) {
-         dst->l = CONV_NATURAL_FLOAT(*in++);
-@@ -314,7 +314,7 @@ t_sample *mixeng_conv_float[2] = {
- static void clip_natural_float_from_mono(void *dst, const struct st_sample *src,
-                                          int samples)
- {
--    float *out = (float *)dst;
-+    float *out = dst;
- 
-     while (samples--) {
-         *out++ = CLIP_NATURAL_FLOAT(src->l + src->r);
-@@ -325,7 +325,7 @@ static void clip_natural_float_from_mono(void *dst, const struct st_sample *src,
- static void clip_natural_float_from_stereo(
-     void *dst, const struct st_sample *src, int samples)
- {
--    float *out = (float *)dst;
-+    float *out = dst;
- 
-     while (samples--) {
-         *out++ = CLIP_NATURAL_FLOAT(src->l);
+     ASSET_MCF5208 = Asset(
+        'https://qemu-advcal.gitlab.io/qac-best-of-multiarch/download/day07.tar.xz',
 -- 
 2.43.0
 
