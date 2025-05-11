@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31E62C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 06:10:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC61BC3ABC5
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 06:10:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDzsT-0002Tf-0a; Sun, 11 May 2025 02:09:33 -0400
+	id 1uDzrv-0002CH-Vk; Sun, 11 May 2025 02:09:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uDzsQ-0002NF-Cf
- for qemu-devel@nongnu.org; Sun, 11 May 2025 02:09:30 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1uDzro-0002Bd-Ew
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 02:08:53 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uDzsM-0003zI-Gr
- for qemu-devel@nongnu.org; Sun, 11 May 2025 02:09:29 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-7376dd56eccso3664366b3a.0
- for <qemu-devel@nongnu.org>; Sat, 10 May 2025 23:09:26 -0700 (PDT)
+ id 1uDzrl-0003qn-RP
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 02:08:51 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7399a2dc13fso4794247b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 10 May 2025 23:08:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1746943765; x=1747548565;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1746943728; x=1747548528;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JTypoeZqSyyTDeBkhQ4cmNM0+/YBvay7mu1Vof3a/Wg=;
- b=bp54SyyS1AWvMVI7ihn9qRT9Gm6OLq9WmUsTGh9cg8vwHYUpYr1t97J3xUFsQhcUzU
- 32KM+6wvAVlbeoEI8kzg3htRQvLFITEKdzXJLf1oo31/p5SYLxtSdCQvquuWJ7ABOj1K
- Q5sg8H+Xr/0oKUXJ0Z6rMYT9QIuiiElYrHBARmCSgSfzM/mmOsnrDFraD2lOyS7X40X7
- eHvQ3TN8oA2c8zgjriO8CjNunOuOhNhZAVdM6PrUEuKLsAJogT+oKSi140Mdv5mvQapg
- oe/3NNgso5U/tWJhvLBb8GHH27ONPvmADs9pM+E3YZbrVcDqK+t+4n+NKLNDqE1c29Ic
- pU/g==
+ :reply-to; bh=pmNZ7ppKIZvWL/zBQGiJLjC96XIPRx7qmwliG7uE764=;
+ b=Yxe7PdEKhvOYLpaxSrxd/eDG/XiaXcD1hs9sOzT0A5fVI1nmXzqMqb0gTChwT993LM
+ bNKpOuSxz6mxGdMK4W7zjX/Yk3WJ8X9Z/SPqDnFlINwExQ/a/nc+jCaGmpwsVIhUM0eD
+ pjV4NMYHSjx4xqvtPDgnSgKfgRnd42E20jRLjCctIwnzDMMHdg7/8ZA8fx39NCttVk9I
+ +9Mg8OlFM1qBgj7do2Zja28p0y5xChm98WZROWdEvhpY4182Y7UAoGjynVjJtMSjwzjk
+ kVvyxU7MJfsswRtyj/92QtgHbjcj4fFhWPCTIrEBVwgmeRGkUj6WIEf/YbbgYilK+zkF
+ dAZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746943765; x=1747548565;
+ d=1e100.net; s=20230601; t=1746943728; x=1747548528;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JTypoeZqSyyTDeBkhQ4cmNM0+/YBvay7mu1Vof3a/Wg=;
- b=P2bzYxYiBShSpETdDcbfR0LCRzUTds8btDpFXv0xsQUfAX9D766GFeS5h3vzv7T7ph
- 5DphW6OGNypjev0q1KoHnPp2zt17RZ1BBdS5hE1Cirl8KOU/nGIxBuyY0nix5XXbSyTh
- L8Wh8JSIE9Ai4dMDBWEVkrEITYautqY5bLMce57dSTSVfooCLzJjnZXzbeaRRfRC/Cjk
- 69oSWGyMv00qmHncl9GsGceoBc5ix6Lu4wvDbzNbaHRyB/47wo1WYCoApwAEIGU73V4e
- NoSOoJAlJ/rfCiyD5FyHiNdnQ8H+mEyRLvfbd3MY3f4H86Fh213Wf+ZFmA55UB9ZFcHZ
- w5Iw==
+ bh=pmNZ7ppKIZvWL/zBQGiJLjC96XIPRx7qmwliG7uE764=;
+ b=Z+brGvQHK/lj2Tp54Rxp7c++E5X+z3EhSpIwoF7P8U5mYZdo0c2oQyE+Cg+OBHYTV9
+ lHES8uDdouY/9MHdzGm+2UR/LHHHfw9iSTfBKZUtxunI2yJfB3aWaXp3W7elWIvJ2wy1
+ 3FbOt++UhACYj0UTx91WHjHr7uySB9YKMExjcPyS6YGVcMdxJL4gkhToaVTk4xlTzqYk
+ SYgoyMcRI6pi827WiDZcPyF67VeT2R39uqofbM1RdvzgKwSMyi4JCoL0AeSTHBSYZueS
+ /gwF8secbOWxU16n6EUWap3pRplnA+ASIu0YqRihGUyxAc1gdW7Yd4zDAHr2R+8qLIAk
+ DB+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV1Nd3Zopiws3GYKmmqMy05dypMjrYPGFN0/kI6mRXowIIrbN4MAvecPd4L5csz1LNHhFOAMFBZPVyK@nongnu.org
-X-Gm-Message-State: AOJu0YzzS+9Nl1bOVmWcLjmbW792mxdaOor/MXy1NHD9dXLaszO1rfEQ
- TJIqhyOm3+LnF11eAsdGMx2kHZm7aok81o4oaVOEzYQDyxoPSyscmDmFUpTPNgA=
-X-Gm-Gg: ASbGnctvrnYtOU4oT1AmsdxPc4j9xK5J4RX/sEurdssszORU5X6a2mD/mP0N4Vatte9
- yE/AfNI452gs5zbxByaOcRoip+e/chPs0GC3E9+E/mg2BILDkhtz9eS0TVyi6WPZGQovAjA7lQ+
- SAJdmfBo16D+VMLwHOCz2kF3afLMtsdw/8OrbxHgzCAfdFOe8a4ioeKo+C3bkhGjfJs5Rdgfqw+
- u7+aLF34oVcxsnC9dRvOH0XzIl589/zrfXjTURQuMU9heVCyZ7Zr9RDPjTal8rQA4rt+9tur8E1
- Sa2WJI+enPmK729Lqd91HHsTrai1OEI/c/jxGy726PeYsiwdLCq/ESA=
-X-Google-Smtp-Source: AGHT+IGYTUJr+erX3gCKvhGmSsPSowRUsEOukTUu7wdlOAdlGaSS1fH99ZIX5LoPPbfB8mvb/OxFsg==
-X-Received: by 2002:a05:6a21:3946:b0:1f5:9098:e448 with SMTP id
- adf61e73a8af0-215abb547c3mr12632191637.5.1746943765272; 
- Sat, 10 May 2025 23:09:25 -0700 (PDT)
+ AJvYcCVFNWkGWe+5RcxqUlirmh5PamMK3Rd9kdVs9J4s0ppZdyQhRA+1uOWJMA2dUOyPKCkqZzGVqfinvy/L@nongnu.org
+X-Gm-Message-State: AOJu0YzteKzcL79ZjoYKCQcsDMdM5yh77H/hXsD8fb99ZQbHyO6O7Fsc
+ j/7ympRrY0fnpJHojkWXztaluLmdSods22hzCC5t57psaRVZ0GtOMG3NmQ8AOWbHo29rLIgKnCS
+ h
+X-Gm-Gg: ASbGncuKWolbCVXccrhVtXtoiGYEl2wa8X3plqh9EiBWtwApPJGRbkUms2+YREwJBsM
+ 9tQFq+v3WfMlYNFEcOkzLGUBSLfI0WNpW9jWBlUenBzS1oYzPTam7rbumXsWKS/UbyS6osU+Kv3
+ hAOmBaavGZ0g46C9Vja6bY/DbKZvN+NlcD7HfTe8DZlmv72S3RwwBOfv7vhahVBwCNk8/Mwe4g9
+ Zsa1M4K0QQJMMCrQcjcEaf8XCbT+Q0T6ouMd63htOOU+BanDir6z4he2tf50GRsXRH6DXaFAPqC
+ +3OEO6Ek8WomdzUb422RDBSJLiwXLzaztXguRWtL4DqwbXuDYsylskI=
+X-Google-Smtp-Source: AGHT+IGhiGar9OwyhY+ygUb8vTkxAw0bcB6qj1JAfzXLfvUFVIerZxb051yOUyjlqkbLOwYAh7XAww==
+X-Received: by 2002:a05:6a20:9c88:b0:1ee:d418:f764 with SMTP id
+ adf61e73a8af0-215abc6f679mr12701252637.38.1746943728512; 
+ Sat, 10 May 2025 23:08:48 -0700 (PDT)
 Received: from localhost ([157.82.203.223])
  by smtp.gmail.com with UTF8SMTPSA id
- 41be03b00d2f7-b2350ddbb38sm3704131a12.62.2025.05.10.23.09.22
+ 98e67ed59e1d1-30ad4d2e499sm6638795a91.16.2025.05.10.23.08.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 10 May 2025 23:09:25 -0700 (PDT)
+ Sat, 10 May 2025 23:08:48 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 11 May 2025 15:08:26 +0900
-Subject: [PATCH v3 09/10] migration/postcopy: Replace QemuSemaphore with
- QemuEvent
+Date: Sun, 11 May 2025 15:08:18 +0900
+Subject: [PATCH v3 01/10] futex: Check value after qemu_futex_wait()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250511-event-v3-9-f7f69247d303@daynix.com>
+Message-Id: <20250511-event-v3-1-f7f69247d303@daynix.com>
 References: <20250511-event-v3-0-f7f69247d303@daynix.com>
 In-Reply-To: <20250511-event-v3-0-f7f69247d303@daynix.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
@@ -85,8 +85,8 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.15-dev-edae6
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,81 +108,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-thread_sync_sem is an one-shot event so it can be converted into
-QemuEvent, which is more lightweight.
+futex(2) - Linux manual page
+https://man7.org/linux/man-pages/man2/futex.2.html
+> Note that a wake-up can also be caused by common futex usage patterns
+> in unrelated code that happened to have previously used the futex
+> word's memory location (e.g., typical futex-based implementations of
+> Pthreads mutexes can cause this under some conditions).  Therefore,
+> callers should always conservatively assume that a return value of 0
+> can mean a spurious wake-up, and use the futex word's value (i.e.,
+> the user-space synchronization scheme) to decide whether to continue
+> to block or not.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- migration/migration.h    |  4 ++--
- migration/postcopy-ram.c | 10 +++++-----
- migration/savevm.c       |  2 +-
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ include/qemu/futex.h              |  9 +++++++++
+ tests/unit/test-aio-multithread.c |  4 +++-
+ util/qemu-thread-posix.c          | 28 ++++++++++++++++------------
+ 3 files changed, 28 insertions(+), 13 deletions(-)
 
-diff --git a/migration/migration.h b/migration/migration.h
-index eec49bf3f893..fd45a0f20c0f 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -98,9 +98,9 @@ struct MigrationIncomingState {
-     void (*transport_cleanup)(void *data);
-     /*
-      * Used to sync thread creations.  Note that we can't create threads in
--     * parallel with this sem.
-+     * parallel with this event.
-      */
--    QemuSemaphore  thread_sync_sem;
-+    QemuEvent  thread_sync_event;
-     /*
-      * Free at the start of the main state load, set as the main thread finishes
-      * loading state.
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 995614b38c9d..75fd310fb2b0 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -90,10 +90,10 @@ void postcopy_thread_create(MigrationIncomingState *mis,
-                             QemuThread *thread, const char *name,
-                             void *(*fn)(void *), int joinable)
- {
--    qemu_sem_init(&mis->thread_sync_sem, 0);
-+    qemu_event_init(&mis->thread_sync_event, false);
-     qemu_thread_create(thread, name, fn, mis, joinable);
--    qemu_sem_wait(&mis->thread_sync_sem);
--    qemu_sem_destroy(&mis->thread_sync_sem);
-+    qemu_event_wait(&mis->thread_sync_event);
-+    qemu_event_destroy(&mis->thread_sync_event);
+diff --git a/include/qemu/futex.h b/include/qemu/futex.h
+index 91ae88966e12..f57774005330 100644
+--- a/include/qemu/futex.h
++++ b/include/qemu/futex.h
+@@ -24,6 +24,15 @@ static inline void qemu_futex_wake(void *f, int n)
+     qemu_futex(f, FUTEX_WAKE, n, NULL, NULL, 0);
  }
  
- /* Postcopy needs to detect accesses to pages that haven't yet been copied
-@@ -964,7 +964,7 @@ static void *postcopy_ram_fault_thread(void *opaque)
-     trace_postcopy_ram_fault_thread_entry();
-     rcu_register_thread();
-     mis->last_rb = NULL; /* last RAMBlock we sent part of */
--    qemu_sem_post(&mis->thread_sync_sem);
-+    qemu_event_set(&mis->thread_sync_event);
++/*
++ * Note that a wake-up can also be caused by common futex usage patterns in
++ * unrelated code that happened to have previously used the futex word's
++ * memory location (e.g., typical futex-based implementations of Pthreads
++ * mutexes can cause this under some conditions).  Therefore, callers should
++ * always conservatively assume that it is a spurious wake-up, and use the futex
++ * word's value (i.e., the user-space synchronization scheme) to decide whether
++ * to continue to block or not.
++ */
+ static inline void qemu_futex_wait(void *f, unsigned val)
+ {
+     while (qemu_futex(f, FUTEX_WAIT, (int) val, NULL, NULL, 0)) {
+diff --git a/tests/unit/test-aio-multithread.c b/tests/unit/test-aio-multithread.c
+index 08d4570ccb14..8c2e41545a29 100644
+--- a/tests/unit/test-aio-multithread.c
++++ b/tests/unit/test-aio-multithread.c
+@@ -305,7 +305,9 @@ static void mcs_mutex_lock(void)
+     prev = qatomic_xchg(&mutex_head, id);
+     if (prev != -1) {
+         qatomic_set(&nodes[prev].next, id);
+-        qemu_futex_wait(&nodes[id].locked, 1);
++        while (qatomic_read(&nodes[id].locked) == 1) {
++            qemu_futex_wait(&nodes[id].locked, 1);
++        }
+     }
+ }
  
-     struct pollfd *pfd;
-     size_t pfd_len = 2 + mis->postcopy_remote_fds->len;
-@@ -1716,7 +1716,7 @@ void *postcopy_preempt_thread(void *opaque)
+diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+index b2e26e21205b..eade5311d175 100644
+--- a/util/qemu-thread-posix.c
++++ b/util/qemu-thread-posix.c
+@@ -428,17 +428,21 @@ void qemu_event_wait(QemuEvent *ev)
  
-     rcu_register_thread();
+     assert(ev->initialized);
  
--    qemu_sem_post(&mis->thread_sync_sem);
-+    qemu_event_set(&mis->thread_sync_event);
+-    /*
+-     * qemu_event_wait must synchronize with qemu_event_set even if it does
+-     * not go down the slow path, so this load-acquire is needed that
+-     * synchronizes with the first memory barrier in qemu_event_set().
+-     *
+-     * If we do go down the slow path, there is no requirement at all: we
+-     * might miss a qemu_event_set() here but ultimately the memory barrier in
+-     * qemu_futex_wait() will ensure the check is done correctly.
+-     */
+-    value = qatomic_load_acquire(&ev->value);
+-    if (value != EV_SET) {
++    while (true) {
++        /*
++         * qemu_event_wait must synchronize with qemu_event_set even if it does
++         * not go down the slow path, so this load-acquire is needed that
++         * synchronizes with the first memory barrier in qemu_event_set().
++         *
++         * If we do go down the slow path, there is no requirement at all: we
++         * might miss a qemu_event_set() here but ultimately the memory barrier
++         * in qemu_futex_wait() will ensure the check is done correctly.
++         */
++        value = qatomic_load_acquire(&ev->value);
++        if (value == EV_SET) {
++            break;
++        }
++
+         if (value == EV_FREE) {
+             /*
+              * Leave the event reset and tell qemu_event_set that there are
+@@ -452,7 +456,7 @@ void qemu_event_wait(QemuEvent *ev)
+              * like the load above.
+              */
+             if (qatomic_cmpxchg(&ev->value, EV_FREE, EV_BUSY) == EV_SET) {
+-                return;
++                break;
+             }
+         }
  
-     /*
-      * The preempt channel is established in asynchronous way.  Wait
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 006514c3e301..52105dd2f10b 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -2078,7 +2078,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
- 
-     migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
-                                    MIGRATION_STATUS_POSTCOPY_ACTIVE);
--    qemu_sem_post(&mis->thread_sync_sem);
-+    qemu_event_set(&mis->thread_sync_event);
-     trace_postcopy_ram_listen_thread_start();
- 
-     rcu_register_thread();
 
 -- 
 2.49.0
