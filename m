@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36D3DC3ABC5
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 06:10:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D91FC3ABC5
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 06:10:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uDzs8-0002EP-Ea; Sun, 11 May 2025 02:09:12 -0400
+	id 1uDzsG-0002Fb-AC; Sun, 11 May 2025 02:09:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uDzs7-0002EA-4R
- for qemu-devel@nongnu.org; Sun, 11 May 2025 02:09:11 -0400
+ id 1uDzsE-0002FF-Kh
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 02:09:18 -0400
 Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uDzs4-0003up-Ho
- for qemu-devel@nongnu.org; Sun, 11 May 2025 02:09:10 -0400
+ id 1uDzsC-0003wY-Sw
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 02:09:18 -0400
 Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7406c6dd2b1so4124361b3a.0
- for <qemu-devel@nongnu.org>; Sat, 10 May 2025 23:09:08 -0700 (PDT)
+ d2e1a72fcca58-7376dd56f8fso4557488b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 10 May 2025 23:09:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1746943747; x=1747548547;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1746943755; x=1747548555;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2ROcRo5lRkpHeGga5i/5rAD10k/YOPwsQfA+djJP2tA=;
- b=071pZoyxua1Pu2gebDqAYhqwLPO44hTjRPkIMv/o9TB8SjlXETnaJr1hFf2WoAr7gQ
- R4A5U5zVK4ZY77m5pBy+LIEovOx9xLHqZ4KtMI+qQmZlCcjD0x+NWYxUM7TANpzGX0t0
- 4ZhvbfWVAPv72z9miaJ5wBGvKAxm1UV9EB8r/9fXx9ILsCP5QamL1ahY9Uki4ZMwkHzo
- Cibmv186by+ElH2YHgqBACwpoi/Q8dhoEaVQyCO2fk7xBAFl4TzxFIQveZol4SnBfv+Q
- +n6p4Qb/qxqtBRNo6+OWn0vUmKehf+N0f6lzhl7Wda63yUTHoFZtLVLL+xDZQsqIcz2n
- UHyw==
+ :reply-to; bh=sHD+2pGYZBM1saUJBRZKECLnePiyCMT+xoiE17eX2xk=;
+ b=nC8vqENRA47aLmfDjRnXlnASzh3592o/dGJf2cHN13BdM59gNddeA2LGxTkwGl4RRP
+ LQ4Igb9WQNFOJeBh9LCJMDIyWEQpuQE5dy5kMPUE8605Q2rW+8CH10l0j3z0rpEtDFds
+ DHU2Nuzv2y3lWpvyvkI/XgllFh0Wu8DvXkp67YTAY+JDM4+vqiWXsq0A+gSvKmGQdQZ9
+ wOBcpHJKxHCS1bP0R/Qxa/umjVV6N591hvcfatMqXLy58Soocc95XBlfFFaGRD79TfLo
+ Hha2lIwwiyeHUQZGs0ArW4mpq1F2fg4t8mD3d0dzAl4WbKJ+tcDS5Va077gR+V/Pui6U
+ JBNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746943747; x=1747548547;
+ d=1e100.net; s=20230601; t=1746943755; x=1747548555;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2ROcRo5lRkpHeGga5i/5rAD10k/YOPwsQfA+djJP2tA=;
- b=Hju9jnXQJDEzDTmwkw+LXBCkQUxkRhaMPUv0IRxDUK6iRoJkxqOKyPA+YI875GB7Qw
- efD+rMmht+9sbiRw005NnrCivPTX+YqKJh5/5AiAaguMuAmeTGPAhd+RzI68sGSSf8rI
- eAD5VAMJsZ4IBiiVP88suhxJEfut4ppCppRjY92M+KwAI3387WyPTQ32/CBioYvpZd4N
- pU7kiZ9WCwguwN3i04hS35b+1Csqd1JuYYmAK1B6E7Nax/vmrubdnfkcOTVFpz9XCAYL
- hp6cj0BdWp93X1emgqzSa6+0C8HaCIu3Bmkd93dyrAn4BT4Oxa8M7Q9mNLS3/30nM99a
- tmeQ==
+ bh=sHD+2pGYZBM1saUJBRZKECLnePiyCMT+xoiE17eX2xk=;
+ b=b/n6UF0m0fUG9AvUBWPNvNV4ecuShs1VLTlQnqXwKhdvIZyQ0XCXvAYAzlV2DaLOs7
+ 0nym1JZ4wTBUUSpgzQ1StuBcUDIFv1FDdGX6eUSxN02eqliL7pswu2uK2VycUVJBybFK
+ V1lpp+rY7pm3UGfpcDgY4B7Hd2NJnixJg7mqmLwF65nFh1xJFJMCsRAQ7xrMMgqhLPiz
+ LGiY+8p1Zok1zpTmPunnkUgrds0c8jUQtw64aLAUQjaMn6VtLp86hth/Yc4DF6EKR254
+ NOLbtFXTgrqdq+IZxWIlT4wGI3tzXMOxWCATW2/5l5kgDdtZs63zkrhe2V+aeXW0dsm7
+ 6LpQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGDTszN/k/xUyGoFYU+Apoeny9wSUrbTLrP7g8GGCurThFrWl/D2qWpg+aE7qoygXZzJxKKuK6QHTc@nongnu.org
-X-Gm-Message-State: AOJu0Yz3CQxi2DWoYi9GEcgRPZ5JTdFye+Lp1H2QpBwgG7DT2dry0Dqa
- LMhURn9eqQU5PjwAeqRh/I4U6GjzeqimtKAch9fgk91AIquvXmCE+CkCiX4IGEM=
-X-Gm-Gg: ASbGnctQjgFAvakWf/PUBsK/Ck2oUsH3Ccfraiwyjm+AkGLdILzSG8qKrseqavqLar1
- xZ2d9+0niDblLi+fW94noeTu5kw/GT2kYWuGl+O0yWjurAsT3T7iAJKpy2RCGbP/9toirufXo0W
- LfTnIC354KVGZcMHOFXu+2tx22x6Y0aI/4JFAwxbJnDneSZfRWmNPBrHcHDP6JljlxDCghpg3kB
- 2Jg5pk53qeU5C9ednP1siRD1FYrNfBjItOfeUxJysPkeymD/xzMlmYai/R14eIzUeuNh/8LkMsA
- W8PWPUmgeYUBMvkbh+RXXUADZZQyep7lXjClZtDYqtSD9qPmUbAdY1g=
-X-Google-Smtp-Source: AGHT+IG8a6hyVJ6PSj9WMjgh2PR9D5WAjm0uvxVOdkqBrtq5wCIza7CblpXPznSKomPiXD7vYVAS+w==
-X-Received: by 2002:a05:6a21:32a9:b0:1f3:20be:c18a with SMTP id
- adf61e73a8af0-215ab579af0mr11378190637.10.1746943746908; 
- Sat, 10 May 2025 23:09:06 -0700 (PDT)
+ AJvYcCU/nGO+ziYhhNpHSpBScAyB2t2ZQwlk0a4UW5elnZ2w0rII5gV5nPw85jxHuU+CwGhauyxO1vWAj5PC@nongnu.org
+X-Gm-Message-State: AOJu0Yz3gsNu/HFMBnGjor/iE6Can3N13Dq1j7FCnnsY15Qp8nd0UXk4
+ U3+vOPSXyAwiViL93iCbgeGJ/bnS1hUidFsLZb7rt4awCHMvbNL7qSl9vgV9y08=
+X-Gm-Gg: ASbGnctyHQ1HPCrSToaRy9OvPdewyIpKpe8QwgvuRM2nndOMisX2kPSJ08B0NxcvH8P
+ xeMTWwgsYv4qe5DGZyCvriEpOzWw/Pr28vma3g6XIY+4jhELGX26Stuq8xgwBUC5F4iZbux1dzc
+ 4mUhvMnh9RFYVpY0SUxrct1ybyOzT8ll2WTAb33hKsjoKyECQOZBAAzWNsljVxwFQOXY5GC5fYE
+ j/jTgRj+xpLeuAfhQuJG2qIRDzTIPBJJZB8IOtVROZf4Qqo51aXv0nt5dIOmrFqI9MY7ATnwJs6
+ URf8RdwvMKwWeubKdjgAYPCmZn2ChHSYknmrSc5GrEEhA40Vn76W0Wc=
+X-Google-Smtp-Source: AGHT+IHZZz4gZgd+2wrBtj9/WMk8CBB6cYGLc0h8iYz2WetG7IYGYAQBvKFpjrkBXPzWOx3dtU8PfQ==
+X-Received: by 2002:a05:6a00:1915:b0:740:a52f:9652 with SMTP id
+ d2e1a72fcca58-7423bbf0b49mr11717917b3a.6.1746943755562; 
+ Sat, 10 May 2025 23:09:15 -0700 (PDT)
 Received: from localhost ([157.82.203.223])
  by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-74237704630sm3374944b3a.22.2025.05.10.23.09.04
+ 41be03b00d2f7-b234ad4205dsm3634139a12.44.2025.05.10.23.09.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 10 May 2025 23:09:06 -0700 (PDT)
+ Sat, 10 May 2025 23:09:15 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 11 May 2025 15:08:22 +0900
-Subject: [PATCH v3 05/10] qemu-thread: Use futex for QemuEvent on Windows
+Date: Sun, 11 May 2025 15:08:24 +0900
+Subject: [PATCH v3 07/10] migration: Replace QemuSemaphore with QemuEvent
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250511-event-v3-5-f7f69247d303@daynix.com>
+Message-Id: <20250511-event-v3-7-f7f69247d303@daynix.com>
 References: <20250511-event-v3-0-f7f69247d303@daynix.com>
 In-Reply-To: <20250511-event-v3-0-f7f69247d303@daynix.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
@@ -107,550 +107,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the futex-based implementation of QemuEvent on Windows to
-remove code duplication and remove the overhead of event object
-construction and destruction.
+rp_pong_acks tells if it has ever received one pong. QemuEvent is
+better suited for this usage because it represents a boolean rather
+than integer and will not decrement with the wait operation.
+
+pause_event can utilize qemu_event_reset() to discard events.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- include/qemu/thread-posix.h |   9 ---
- include/qemu/thread-win32.h |   6 --
- include/qemu/thread.h       |  11 +++-
- util/event.c                | 148 ++++++++++++++++++++++++++++++++++++++++++++
- util/qemu-thread-posix.c    | 147 -------------------------------------------
- util/qemu-thread-win32.c    | 129 --------------------------------------
- util/meson.build            |   1 +
- 7 files changed, 159 insertions(+), 292 deletions(-)
+ migration/migration.h |  6 +++---
+ migration/migration.c | 29 +++++++++++++----------------
+ 2 files changed, 16 insertions(+), 19 deletions(-)
 
-diff --git a/include/qemu/thread-posix.h b/include/qemu/thread-posix.h
-index c412623a9143..758808b705e4 100644
---- a/include/qemu/thread-posix.h
-+++ b/include/qemu/thread-posix.h
-@@ -32,15 +32,6 @@ struct QemuSemaphore {
-     unsigned int count;
- };
+diff --git a/migration/migration.h b/migration/migration.h
+index d53f7cad84d8..11dba5f4da77 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -342,11 +342,11 @@ struct MigrationState {
+          */
+         QemuSemaphore rp_sem;
+         /*
+-         * We post to this when we got one PONG from dest. So far it's an
++         * We set this when we got one PONG from dest. So far it's an
+          * easy way to know the main channel has successfully established
+          * on dest QEMU.
+          */
+-        QemuSemaphore rp_pong_acks;
++        QemuEvent rp_pong_acks;
+     } rp_state;
  
--struct QemuEvent {
--#ifndef CONFIG_LINUX
--    pthread_mutex_t lock;
--    pthread_cond_t cond;
--#endif
--    unsigned value;
--    bool initialized;
--};
--
- struct QemuThread {
-     pthread_t thread;
- };
-diff --git a/include/qemu/thread-win32.h b/include/qemu/thread-win32.h
-index d95af4498fc9..da9e7322990c 100644
---- a/include/qemu/thread-win32.h
-+++ b/include/qemu/thread-win32.h
-@@ -28,12 +28,6 @@ struct QemuSemaphore {
-     bool initialized;
- };
+     double mbps;
+@@ -379,7 +379,7 @@ struct MigrationState {
+     QemuSemaphore wait_unplug_sem;
  
--struct QemuEvent {
--    int value;
--    HANDLE event;
--    bool initialized;
--};
--
- typedef struct QemuThreadData QemuThreadData;
- struct QemuThread {
-     QemuThreadData *data;
-diff --git a/include/qemu/thread.h b/include/qemu/thread.h
-index 6f800aad31a9..573f8c9ede20 100644
---- a/include/qemu/thread.h
-+++ b/include/qemu/thread.h
-@@ -3,13 +3,22 @@
+     /* Migration is paused due to pause-before-switchover */
+-    QemuSemaphore pause_sem;
++    QemuEvent pause_event;
  
- #include "qemu/processor.h"
- #include "qemu/atomic.h"
-+#include "qemu/futex.h"
- 
- typedef struct QemuCond QemuCond;
- typedef struct QemuSemaphore QemuSemaphore;
--typedef struct QemuEvent QemuEvent;
- typedef struct QemuLockCnt QemuLockCnt;
- typedef struct QemuThread QemuThread;
- 
-+typedef struct QemuEvent {
-+#ifndef HAVE_FUTEX
-+    pthread_mutex_t lock;
-+    pthread_cond_t cond;
-+#endif
-+    unsigned value;
-+    bool initialized;
-+} QemuEvent;
-+
- #ifdef _WIN32
- #include "qemu/thread-win32.h"
- #else
-diff --git a/util/event.c b/util/event.c
-new file mode 100644
-index 000000000000..20853d61a7cd
---- /dev/null
-+++ b/util/event.c
-@@ -0,0 +1,148 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/thread.h"
-+
-+/*
-+ * Valid transitions:
-+ * - free->set, when setting the event
-+ * - busy->set, when setting the event, followed by qemu_futex_wake_all
-+ * - set->free, when resetting the event
-+ * - free->busy, when waiting
-+ *
-+ * set->busy does not happen (it can be observed from the outside but
-+ * it really is set->free->busy).
-+ *
-+ * busy->free provably cannot happen; to enforce it, the set->free transition
-+ * is done with an OR, which becomes a no-op if the event has concurrently
-+ * transitioned to free or busy.
-+ */
-+
-+#define EV_SET         0
-+#define EV_FREE        1
-+#define EV_BUSY       -1
-+
-+void qemu_event_init(QemuEvent *ev, bool init)
-+{
-+#ifndef HAVE_FUTEX
-+    pthread_mutex_init(&ev->lock, NULL);
-+    pthread_cond_init(&ev->cond, NULL);
-+#endif
-+
-+    ev->value = (init ? EV_SET : EV_FREE);
-+    ev->initialized = true;
-+}
-+
-+void qemu_event_destroy(QemuEvent *ev)
-+{
-+    assert(ev->initialized);
-+    ev->initialized = false;
-+#ifndef HAVE_FUTEX
-+    pthread_mutex_destroy(&ev->lock);
-+    pthread_cond_destroy(&ev->cond);
-+#endif
-+}
-+
-+void qemu_event_set(QemuEvent *ev)
-+{
-+    assert(ev->initialized);
-+
-+    /*
-+     * Pairs with qemu_event_wait() (on Linux) and qemu_event_reset().
-+     *
-+     * qemu_event_set has release semantics, but because it *loads*
-+     * ev->value we need a full memory barrier here.
-+     *
-+     * qemu_event_wait() do not have a paired barrier on non-Linux because
-+     * ev->lock ensures ordering.
-+     */
-+    smp_mb();
-+
-+#ifdef HAVE_FUTEX
-+    if (qatomic_read(&ev->value) != EV_SET) {
-+        int old = qatomic_xchg(&ev->value, EV_SET);
-+
-+        /* Pairs with memory barrier in kernel futex_wait system call.  */
-+        smp_mb__after_rmw();
-+        if (old == EV_BUSY) {
-+            /* There were waiters, wake them up.  */
-+            qemu_futex_wake_all(ev);
-+        }
-+    }
-+#else
-+    pthread_mutex_lock(&ev->lock);
-+    qatomic_set(&ev->value, EV_SET);
-+    pthread_cond_broadcast(&ev->cond);
-+    pthread_mutex_unlock(&ev->lock);
-+#endif
-+}
-+
-+void qemu_event_reset(QemuEvent *ev)
-+{
-+    assert(ev->initialized);
-+
-+    /*
-+     * If there was a concurrent reset (or even reset+wait),
-+     * do nothing.  Otherwise change EV_SET->EV_FREE.
-+     */
-+    qatomic_or(&ev->value, EV_FREE);
-+
-+    /*
-+     * Order reset before checking the condition in the caller.
-+     * Pairs with the first memory barrier in qemu_event_set().
-+     */
-+    smp_mb__after_rmw();
-+}
-+
-+void qemu_event_wait(QemuEvent *ev)
-+{
-+    assert(ev->initialized);
-+
-+#ifdef HAVE_FUTEX
-+    while (true) {
-+        /*
-+         * qemu_event_wait must synchronize with qemu_event_set even if it does
-+         * not go down the slow path, so this load-acquire is needed that
-+         * synchronizes with the first memory barrier in qemu_event_set().
-+         *
-+         * If we do go down the slow path, there is no requirement at all: we
-+         * might miss a qemu_event_set() here but ultimately the memory barrier
-+         * in qemu_futex_wait() will ensure the check is done correctly.
-+         */
-+        unsigned value = qatomic_load_acquire(&ev->value);
-+        if (value == EV_SET) {
-+            break;
-+        }
-+
-+        if (value == EV_FREE) {
-+            /*
-+             * Leave the event reset and tell qemu_event_set that there are
-+             * waiters.  No need to retry, because there cannot be a concurrent
-+             * busy->free transition.  After the CAS, the event will be either
-+             * set or busy.
-+             *
-+             * This cmpxchg doesn't have particular ordering requirements if it
-+             * succeeds (moving the store earlier can only cause
-+             * qemu_event_set() to issue _more_ wakeups), the failing case needs
-+             * acquire semantics like the load above.
-+             */
-+            if (qatomic_cmpxchg(&ev->value, EV_FREE, EV_BUSY) == EV_SET) {
-+                break;
-+            }
-+        }
-+
-+        /*
-+         * This is the final check for a concurrent set, so it does need
-+         * a smp_mb() pairing with the second barrier of qemu_event_set().
-+         * The barrier is inside the FUTEX_WAIT system call.
-+         */
-+        qemu_futex_wait(ev, EV_BUSY);
-+    }
-+#else
-+    pthread_mutex_lock(&ev->lock);
-+    while (qatomic_read(&ev->value) != EV_SET) {
-+        pthread_cond_wait(&ev->cond, &ev->lock);
-+    }
-+    pthread_mutex_unlock(&ev->lock);
-+#endif
-+}
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index 6dc6f2b25dce..ba725444ba63 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -317,153 +317,6 @@ void qemu_sem_wait(QemuSemaphore *sem)
-     qemu_mutex_unlock(&sem->mutex);
+     /* The semaphore is used to notify COLO thread that failover is finished */
+     QemuSemaphore colo_exit_sem;
+diff --git a/migration/migration.c b/migration/migration.c
+index 4697732bef91..053c23c58d82 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1630,7 +1630,7 @@ void migration_cancel(void)
+         }
+         /* If the migration is paused, kick it out of the pause */
+         if (old_state == MIGRATION_STATUS_PRE_SWITCHOVER) {
+-            qemu_sem_post(&s->pause_sem);
++            qemu_event_set(&s->pause_event);
+         }
+         migrate_set_state(&s->state, old_state, MIGRATION_STATUS_CANCELLING);
+     } while (s->state != MIGRATION_STATUS_CANCELLING);
+@@ -2342,7 +2342,7 @@ void qmp_migrate_continue(MigrationStatus state, Error **errp)
+                    MigrationStatus_str(s->state));
+         return;
+     }
+-    qemu_sem_post(&s->pause_sem);
++    qemu_event_set(&s->pause_event);
  }
  
--#ifdef CONFIG_LINUX
--#include "qemu/futex.h"
--#endif
--
--/* Valid transitions:
-- * - free->set, when setting the event
-- * - busy->set, when setting the event, followed by qemu_futex_wake_all
-- * - set->free, when resetting the event
-- * - free->busy, when waiting
-- *
-- * set->busy does not happen (it can be observed from the outside but
-- * it really is set->free->busy).
-- *
-- * busy->free provably cannot happen; to enforce it, the set->free transition
-- * is done with an OR, which becomes a no-op if the event has concurrently
-- * transitioned to free or busy.
-- */
--
--#define EV_SET         0
--#define EV_FREE        1
--#define EV_BUSY       -1
--
--void qemu_event_init(QemuEvent *ev, bool init)
--{
--#ifndef CONFIG_LINUX
--    pthread_mutex_init(&ev->lock, NULL);
--    pthread_cond_init(&ev->cond, NULL);
--#endif
--
--    ev->value = (init ? EV_SET : EV_FREE);
--    ev->initialized = true;
--}
--
--void qemu_event_destroy(QemuEvent *ev)
--{
--    assert(ev->initialized);
--    ev->initialized = false;
--#ifndef CONFIG_LINUX
--    pthread_mutex_destroy(&ev->lock);
--    pthread_cond_destroy(&ev->cond);
--#endif
--}
--
--void qemu_event_set(QemuEvent *ev)
--{
--    assert(ev->initialized);
--
--    /*
--     * Pairs with qemu_event_wait() (on Linux) and qemu_event_reset().
--     *
--     * qemu_event_set has release semantics, but because it *loads*
--     * ev->value we need a full memory barrier here.
--     *
--     * qemu_event_wait() do not have a paired barrier on non-Linux because
--     * ev->lock ensures ordering.
--     */
--    smp_mb();
--
--#ifdef CONFIG_LINUX
--    if (qatomic_read(&ev->value) != EV_SET) {
--        int old = qatomic_xchg(&ev->value, EV_SET);
--
--        /* Pairs with memory barrier in kernel futex_wait system call.  */
--        smp_mb__after_rmw();
--        if (old == EV_BUSY) {
--            /* There were waiters, wake them up.  */
--            qemu_futex_wake_all(ev);
--        }
--    }
--#else
--    pthread_mutex_lock(&ev->lock);
--    qatomic_set(&ev->value, EV_SET);
--    pthread_cond_broadcast(&ev->cond);
--    pthread_mutex_unlock(&ev->lock);
--#endif
--}
--
--void qemu_event_reset(QemuEvent *ev)
--{
--    assert(ev->initialized);
--
--    /*
--     * If there was a concurrent reset (or even reset+wait),
--     * do nothing.  Otherwise change EV_SET->EV_FREE.
--     */
--    qatomic_or(&ev->value, EV_FREE);
--
--    /*
--     * Order reset before checking the condition in the caller.
--     * Pairs with the first memory barrier in qemu_event_set().
--     */
--    smp_mb__after_rmw();
--}
--
--void qemu_event_wait(QemuEvent *ev)
--{
--    assert(ev->initialized);
--
--#ifdef CONFIG_LINUX
--    while (true) {
--        /*
--         * qemu_event_wait must synchronize with qemu_event_set even if it does
--         * not go down the slow path, so this load-acquire is needed that
--         * synchronizes with the first memory barrier in qemu_event_set().
--         *
--         * If we do go down the slow path, there is no requirement at all: we
--         * might miss a qemu_event_set() here but ultimately the memory barrier
--         * in qemu_futex_wait() will ensure the check is done correctly.
--         */
--        unsigned value = qatomic_load_acquire(&ev->value);
--        if (value == EV_SET) {
--            break;
--        }
--
--        if (value == EV_FREE) {
--            /*
--             * Leave the event reset and tell qemu_event_set that there are
--             * waiters.  No need to retry, because there cannot be a concurrent
--             * busy->free transition.  After the CAS, the event will be either
--             * set or busy.
--             *
--             * This cmpxchg doesn't have particular ordering requirements if it
--             * succeeds (moving the store earlier can only cause qemu_event_set()
--             * to issue _more_ wakeups), the failing case needs acquire semantics
--             * like the load above.
--             */
--            if (qatomic_cmpxchg(&ev->value, EV_FREE, EV_BUSY) == EV_SET) {
--                break;
--            }
--        }
--
--        /*
--         * This is the final check for a concurrent set, so it does need
--         * a smp_mb() pairing with the second barrier of qemu_event_set().
--         * The barrier is inside the FUTEX_WAIT system call.
--         */
--        qemu_futex_wait(ev, EV_BUSY);
--    }
--#else
--    pthread_mutex_lock(&ev->lock);
--    while (qatomic_read(&ev->value) != EV_SET) {
--        pthread_cond_wait(&ev->cond, &ev->lock);
--    }
--    pthread_mutex_unlock(&ev->lock);
--#endif
--}
--
- static __thread NotifierList thread_exit;
+ int migration_rp_wait(MigrationState *s)
+@@ -2550,7 +2550,7 @@ static void *source_return_path_thread(void *opaque)
+         case MIG_RP_MSG_PONG:
+             tmp32 = ldl_be_p(buf);
+             trace_source_return_path_thread_pong(tmp32);
+-            qemu_sem_post(&ms->rp_state.rp_pong_acks);
++            qemu_event_set(&ms->rp_state.rp_pong_acks);
+             break;
+ 
+         case MIG_RP_MSG_REQ_PAGES:
+@@ -2693,7 +2693,7 @@ static inline void
+ migration_wait_main_channel(MigrationState *ms)
+ {
+     /* Wait until one PONG message received */
+-    qemu_sem_wait(&ms->rp_state.rp_pong_acks);
++    qemu_event_wait(&ms->rp_state.rp_pong_acks);
+ }
  
  /*
-diff --git a/util/qemu-thread-win32.c b/util/qemu-thread-win32.c
-index a7fe3cc345f0..ca2e0b512e26 100644
---- a/util/qemu-thread-win32.c
-+++ b/util/qemu-thread-win32.c
-@@ -231,135 +231,6 @@ void qemu_sem_wait(QemuSemaphore *sem)
+@@ -2911,21 +2911,18 @@ static bool migration_switchover_prepare(MigrationState *s)
+         return true;
      }
- }
  
--/* Wrap a Win32 manual-reset event with a fast userspace path.  The idea
-- * is to reset the Win32 event lazily, as part of a test-reset-test-wait
-- * sequence.  Such a sequence is, indeed, how QemuEvents are used by
-- * RCU and other subsystems!
-- *
-- * Valid transitions:
-- * - free->set, when setting the event
-- * - busy->set, when setting the event, followed by SetEvent
-- * - set->free, when resetting the event
-- * - free->busy, when waiting
-- *
-- * set->busy does not happen (it can be observed from the outside but
-- * it really is set->free->busy).
-- *
-- * busy->free provably cannot happen; to enforce it, the set->free transition
-- * is done with an OR, which becomes a no-op if the event has concurrently
-- * transitioned to free or busy (and is faster than cmpxchg).
-- */
--
--#define EV_SET         0
--#define EV_FREE        1
--#define EV_BUSY       -1
--
--void qemu_event_init(QemuEvent *ev, bool init)
--{
--    /* Manual reset.  */
--    ev->event = CreateEvent(NULL, TRUE, TRUE, NULL);
--    ev->value = (init ? EV_SET : EV_FREE);
--    ev->initialized = true;
--}
--
--void qemu_event_destroy(QemuEvent *ev)
--{
--    assert(ev->initialized);
--    ev->initialized = false;
--    CloseHandle(ev->event);
--}
--
--void qemu_event_set(QemuEvent *ev)
--{
--    assert(ev->initialized);
--
--    /*
--     * Pairs with both qemu_event_reset() and qemu_event_wait().
--     *
--     * qemu_event_set has release semantics, but because it *loads*
--     * ev->value we need a full memory barrier here.
--     */
--    smp_mb();
--    if (qatomic_read(&ev->value) != EV_SET) {
--        int old = qatomic_xchg(&ev->value, EV_SET);
--
--        /* Pairs with memory barrier after ResetEvent.  */
--        smp_mb__after_rmw();
--        if (old == EV_BUSY) {
--            /* There were waiters, wake them up.  */
--            SetEvent(ev->event);
--        }
+-    /* Since leaving this state is not atomic with posting the semaphore
++    /*
++     * Since leaving this state is not atomic with setting the event
+      * it's possible that someone could have issued multiple migrate_continue
+-     * and the semaphore is incorrectly positive at this point;
+-     * the docs say it's undefined to reinit a semaphore that's already
+-     * init'd, so use timedwait to eat up any existing posts.
++     * and the event is incorrectly set at this point so reset it.
+      */
+-    while (qemu_sem_timedwait(&s->pause_sem, 1) == 0) {
+-        /* This block intentionally left blank */
 -    }
--}
--
--void qemu_event_reset(QemuEvent *ev)
--{
--    assert(ev->initialized);
--
--    /*
--     * If there was a concurrent reset (or even reset+wait),
--     * do nothing.  Otherwise change EV_SET->EV_FREE.
--     */
--    qatomic_or(&ev->value, EV_FREE);
--
--    /*
--     * Order reset before checking the condition in the caller.
--     * Pairs with the first memory barrier in qemu_event_set().
--     */
--    smp_mb__after_rmw();
--}
--
--void qemu_event_wait(QemuEvent *ev)
--{
--    unsigned value;
--
--    assert(ev->initialized);
--
--    /*
--     * qemu_event_wait must synchronize with qemu_event_set even if it does
--     * not go down the slow path, so this load-acquire is needed that
--     * synchronizes with the first memory barrier in qemu_event_set().
--     *
--     * If we do go down the slow path, there is no requirement at all: we
--     * might miss a qemu_event_set() here but ultimately the memory barrier in
--     * qemu_futex_wait() will ensure the check is done correctly.
--     */
--    value = qatomic_load_acquire(&ev->value);
--    if (value != EV_SET) {
--        if (value == EV_FREE) {
--            /*
--             * Here the underlying kernel event is reset, but qemu_event_set is
--             * not yet going to call SetEvent.  However, there will be another
--             * check for EV_SET below when setting EV_BUSY.  At that point it
--             * is safe to call WaitForSingleObject.
--             */
--            ResetEvent(ev->event);
--
--            /*
--             * It is not clear whether ResetEvent provides this barrier; kernel
--             * APIs (KeResetEvent/KeClearEvent) do not.  Better safe than sorry!
--             */
--            smp_mb();
--
--            /*
--             * Leave the event reset and tell qemu_event_set that there are
--             * waiters.  No need to retry, because there cannot be a concurrent
--             * busy->free transition.  After the CAS, the event will be either
--             * set or busy.
--             */
--            if (qatomic_cmpxchg(&ev->value, EV_FREE, EV_BUSY) == EV_SET) {
--                return;
--            }
--        }
--
--        /*
--         * ev->value is now EV_BUSY.  Since we didn't observe EV_SET,
--         * qemu_event_set() must observe EV_BUSY and call SetEvent().
--         */
--        WaitForSingleObject(ev->event, INFINITE);
--    }
--}
--
- struct QemuThreadData {
-     /* Passed to win32_start_routine.  */
-     void             *(*start_routine)(void *);
-diff --git a/util/meson.build b/util/meson.build
-index c756558d6763..58033131328a 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -35,6 +35,7 @@ if glib_has_gslice
- endif
- util_ss.add(files('defer-call.c'))
- util_ss.add(files('envlist.c', 'path.c', 'module.c'))
-+util_ss.add(files('event.c'))
- util_ss.add(files('host-utils.c'))
- util_ss.add(files('bitmap.c', 'bitops.c'))
- util_ss.add(files('fifo8.c'))
++    qemu_event_reset(&s->pause_event);
+ 
+     /* Update [POSTCOPY_]ACTIVE to PRE_SWITCHOVER */
+     migrate_set_state(&s->state, s->state, MIGRATION_STATUS_PRE_SWITCHOVER);
+     bql_unlock();
+ 
+-    qemu_sem_wait(&s->pause_sem);
++    qemu_event_wait(&s->pause_event);
+ 
+     bql_lock();
+     /*
+@@ -4057,10 +4054,10 @@ static void migration_instance_finalize(Object *obj)
+     qemu_mutex_destroy(&ms->qemu_file_lock);
+     qemu_sem_destroy(&ms->wait_unplug_sem);
+     qemu_sem_destroy(&ms->rate_limit_sem);
+-    qemu_sem_destroy(&ms->pause_sem);
++    qemu_event_destroy(&ms->pause_event);
+     qemu_sem_destroy(&ms->postcopy_pause_sem);
+     qemu_sem_destroy(&ms->rp_state.rp_sem);
+-    qemu_sem_destroy(&ms->rp_state.rp_pong_acks);
++    qemu_event_destroy(&ms->rp_state.rp_pong_acks);
+     qemu_sem_destroy(&ms->postcopy_qemufile_src_sem);
+     error_free(ms->error);
+ }
+@@ -4072,14 +4069,14 @@ static void migration_instance_init(Object *obj)
+     ms->state = MIGRATION_STATUS_NONE;
+     ms->mbps = -1;
+     ms->pages_per_second = -1;
+-    qemu_sem_init(&ms->pause_sem, 0);
++    qemu_event_init(&ms->pause_event, false);
+     qemu_mutex_init(&ms->error_mutex);
+ 
+     migrate_params_init(&ms->parameters);
+ 
+     qemu_sem_init(&ms->postcopy_pause_sem, 0);
+     qemu_sem_init(&ms->rp_state.rp_sem, 0);
+-    qemu_sem_init(&ms->rp_state.rp_pong_acks, 0);
++    qemu_event_init(&ms->rp_state.rp_pong_acks, false);
+     qemu_sem_init(&ms->rate_limit_sem, 0);
+     qemu_sem_init(&ms->wait_unplug_sem, 0);
+     qemu_sem_init(&ms->postcopy_qemufile_src_sem, 0);
 
 -- 
 2.49.0
