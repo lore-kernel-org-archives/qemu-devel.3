@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD61DC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 20:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51419C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 May 2025 20:40:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEDP2-0003CU-R6; Sun, 11 May 2025 16:36:04 -0400
+	id 1uEDTY-0006AY-B2; Sun, 11 May 2025 16:40:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uEDOz-0002yq-Qm
- for qemu-devel@nongnu.org; Sun, 11 May 2025 16:36:01 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1uEDTV-0006AQ-SX
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 16:40:41 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uEDOy-0006Lr-09
- for qemu-devel@nongnu.org; Sun, 11 May 2025 16:36:01 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-22fac0694aaso27071475ad.1
- for <qemu-devel@nongnu.org>; Sun, 11 May 2025 13:35:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1uEDTT-0006uA-5d
+ for qemu-devel@nongnu.org; Sun, 11 May 2025 16:40:41 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-30a89c31ae7so5001096a91.2
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 13:40:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1746995758; x=1747600558; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1746996037; x=1747600837; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vpTbNPfyDTwnZROaQJM3hL9QPrm4wpK5u5e1FadsZ4Q=;
- b=ZsIWkW/UU6GM8nTntSCjhz4fQ7VHqFS6OYwbZvNeJUFnDcRmWpmpGX43EuIMUTplzC
- VmSYzy7PWB4621uu3nLTK0vYZU+F6XhLRdyInArpuFF4B4viAG7IA2z0WmOnkFYNHqxf
- kyGSDhFJCQUwkbfeBiO5B5SOFSdx/X+9sMl6/huaweMyWllL+cH+8DLo9ZX2gQlHRYo+
- eT/UDsJQVpKi8adj8445tYxayv53r5KjmNlA1jdnC8wiKidOzAiNhT/6BmnPKMgH1f45
- MX6dBF8Np6bAcGyhNAhfvghzjtgNHhDEV2+f4h9ROBb3a+ZtYG2EoBKLibR0PKoQb9jW
- hNZQ==
+ bh=b1yzQD4F7s8+6vEDWGn6czw3Jqad3rTywjc8Jd6/Iio=;
+ b=V9f10+109fYLtU8QcOpfTQXouXF1ZswuiN804+ZQEDjlzqhKf/C/bg8Tf4vDgwb9oA
+ c0GI0ApcbwZ5hGGjzoTCtfVvDpzIZRIoYKqEPtF+gOzf3tcnEKJg1rH2aCUzaVui0TQY
+ qAS4xihMbDZvs6inZtREHCCv+I+ENP04CpTvuPQqt10rJQEBB957+qFPUuPk1IeH1u7r
+ 4l2rsrU0vcuFMmyD3+Jt0mvU1WEcYaj6aGi8C5hPnh9dNKqGAFXsH/BjMWfxzJk24E1h
+ mIQN//WAGo7OzWbcRejWw+qYiAGDNibsnd4mgdVPKp3GVv/dee6a+BSZCwGuRjEoHlV4
+ zrCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1746995758; x=1747600558;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1746996037; x=1747600837;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vpTbNPfyDTwnZROaQJM3hL9QPrm4wpK5u5e1FadsZ4Q=;
- b=mpJFVkN13VvmVbmmtKE99Jhyv9TA29hHnBQRyPkCqCJ5SMTkf1LZpzHw8UVzRq3p0T
- Zi65F5SJZseUOtCbt+leDL+dd7hWV64ULpBupHGR6j37PRSf2F2OoGmyc5MfUcb5Fnmt
- CadW8U87HJS6zrA+TX+EW8Iy47mYKl5E0OyLA3YA5GtJvADqvKwulzziIa4a21mH4lar
- pR9HAm+tVi3S4KZMly+u8IVDzF7aotI4k15ux2rW6bj3Ok5m/Cvy/pQSqrf/vqwll3rf
- M6b+NWwHiYHuIQUbxG6tfhKhjT7oawt4SLDThP4wXWrnUTrBHRbk6q/tqDFXJlWd5Fri
- T6xA==
-X-Gm-Message-State: AOJu0Yzq//UK5NzkTxJ1eKAbfYzis3ZN3NVWBG9f4At7n7oMuEkjWz5k
- OBp+lryrxTnLOrHvuA3oQNVK/J1mOS4mLqpu/hepVQT/t9/IwjO9yvOGzvZBjq63ytAky1Yfayv
- W
-X-Gm-Gg: ASbGnct1NpeZbAy7swg0dklSmyrKSCLfJf5CjxnvrBPxrTSH+j4x9xOjVQovTTCEry2
- QdfGt4fa4j/CltmjVCwJbt9VTNHpnkNzV+I2QxFewW81Vo98lL/dYOffAmSrF0NzPeeScso4HQi
- HoRWjy4YToKgrjJUtD97vl65mN46twdMhpcXMalVMKMC4iIq3rLk6cCk0x3LEM9MsBBZ65NzKBI
- VJPP8VSPN7glaaPGNqg+MeKfOroTsgaMHxsg4Qu7J4DUMBvpvCWlbBNTh+v01Io+CrkKcLSGGQN
- DS9bv7cnD50dvxeF35ieIS74zWHOBD+iVpZXg3bhhcEMl+eMtb5ZjWwE3qHIkWBNs9iOFM+bJeX
- mfkUdjTBUXELYpog1K+48
-X-Google-Smtp-Source: AGHT+IHo0ewUI6A+tnlXRD/3wj/4ke/cA8EXulrqak80+xsax0WOUjE+1hGF8w7yfOScc1U+igQyNQ==
-X-Received: by 2002:a17:903:990:b0:22e:485a:b45 with SMTP id
- d9443c01a7336-22fc918d07emr168690335ad.46.1746995758624; 
- Sun, 11 May 2025 13:35:58 -0700 (PDT)
-Received: from stoup.. (71-212-47-143.tukw.qwest.net. [71.212.47.143])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc7544d86sm49955095ad.47.2025.05.11.13.35.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 13:35:58 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu, schwab@linux-m68k.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v6 14/24] target/m68k: Remove env argument to gen_load_mode
-Date: Sun, 11 May 2025 13:35:36 -0700
-Message-ID: <20250511203546.139788-15-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250511203546.139788-1-richard.henderson@linaro.org>
-References: <20250511203546.139788-1-richard.henderson@linaro.org>
+ bh=b1yzQD4F7s8+6vEDWGn6czw3Jqad3rTywjc8Jd6/Iio=;
+ b=lDsczSnQs8DMO1cmcH8qzW7h2QI4L4u90vdune8dX+S0CrQfgFKd+VXrIaD7dc10jh
+ 2wISdNtYBCHVV47KEXY62O8KSRKje39K6upEPFEceKxTlckwb+P5eUWtNJ+5T3VmKP0b
+ QFOsMN/3d9k2+8sStUKJuR1R2Tk9GKd0bDbHM9U9ij4C/BEhUzEoseQFZ0Z3gFw4/Ork
+ Sgg26zPUPRanJPw+qfzPpFRjCQNUXw14O/Ks9uN9ULowGf1dnjpRx0++Q9uWGvTfckBS
+ lwFuPgIrDgnl5I7InztCbtVUa/Upl2LD5aCCOk5l6mOCH8jN6LRROiwGyPiYPLGFTJBj
+ x7/w==
+X-Gm-Message-State: AOJu0YyPLzjHCXJWC0oz7TMEYwN4sq0iG2dqsBboEewmCZ6MoKIkP0XN
+ xbd/JtPXogyD2UHYVsHp1e1nxNOdKMHEJc+8TYrsszHnFEA0AGiZ29KpNFhYWNZJdXnvgy5AZ6C
+ poc0ZX07jFONTdAmc/Zok26SoRhM=
+X-Gm-Gg: ASbGncuRnG3xvr7gY/PEAiIejtd586o+SDBkZRZpKPm/cBjRTUwFTercQlaUuBXguNc
+ TaOCVuduBqA8bqAYEWoReHgIGWyT6wRgddw1hEJCMUb63JtMCeD2bmunLcBOOa8wJaWbwcrVMQP
+ IP81mmfOQnHS0ByRSy9a+70a1prOocPfsaWtJwhXvPIA==
+X-Google-Smtp-Source: AGHT+IH48gQ9k6+9gV+/mvXFbbSoapXyBxFI96Kn7mBlF1Ze6jkf6GioAzHo5ywg2+XCjd63ZDrly6eqpx2hVfrNlFc=
+X-Received: by 2002:a17:90b:1a89:b0:2f6:f32e:90ac with SMTP id
+ 98e67ed59e1d1-30c3cefc37bmr16838336a91.11.1746996037269; Sun, 11 May 2025
+ 13:40:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <cover.1746968215.git.neither@nut.email>
+ <26b7c748557fb8dc655eb003758789263705d736.1746968215.git.neither@nut.email>
+In-Reply-To: <26b7c748557fb8dc655eb003758789263705d736.1746968215.git.neither@nut.email>
+From: Max Filippov <jcmvbkbc@gmail.com>
+Date: Sun, 11 May 2025 13:40:26 -0700
+X-Gm-Features: AX0GCFt17M_AcFdDrYptnd9AiPCSucryNr72Cp8YtLZTxkph_aeioZaKo7FI7sI
+Message-ID: <CAMo8BfK33QYx0i39D=GBOQMAswku7szCMYsM74MEQoevDSrm7g@mail.gmail.com>
+Subject: Re: [PATCH v4 20/23] target/xtensa: call plugin trap callbacks
+To: Julian Ganz <neither@nut.email>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=jcmvbkbc@gmail.com; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,103 +95,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the env pointer in DisasContext.
+On Sun, May 11, 2025 at 6:14=E2=80=AFAM Julian Ganz <neither@nut.email> wro=
+te:
+>
+> We recently introduced API for registering callbacks for trap related
+> events as well as the corresponding hook functions. Due to differences
+> between architectures, the latter need to be called from target specific
+> code.
+>
+> This change places hooks for xtensa targets.
+>
+> Signed-off-by: Julian Ganz <neither@nut.email>
+> ---
+>  target/xtensa/exc_helper.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/m68k/translate.c | 31 ++++++++++++-------------------
- 1 file changed, 12 insertions(+), 19 deletions(-)
+Reviewed-by: Max Filippov <jcmvbkbc@gmail.com>
 
-diff --git a/target/m68k/translate.c b/target/m68k/translate.c
-index cc37f7a192..c3cf1c9f91 100644
---- a/target/m68k/translate.c
-+++ b/target/m68k/translate.c
-@@ -776,9 +776,8 @@ static TCGv gen_lea(CPUM68KState *env, DisasContext *s, uint16_t insn,
-  * a write otherwise it is a read (0 == sign extend, -1 == zero extend).
-  * ADDRP is non-null for readwrite operands.
-  */
--static TCGv gen_load_mode(CPUM68KState *env, DisasContext *s,
--                          int mode, int reg0, int opsize, TCGv *addrp,
--                          int sign, int index)
-+static TCGv gen_load_mode(DisasContext *s, int mode, int reg0, int opsize,
-+                          TCGv *addrp, int sign, int index)
- {
-     TCGv reg, ret, addr = NULL;
-     int32_t offset;
-@@ -799,19 +798,19 @@ static TCGv gen_load_mode(CPUM68KState *env, DisasContext *s,
-             /* Immediate: sign extend values for consistency.  */
-             switch (opsize) {
-             case OS_BYTE:
--                offset = read_im8(env, s);
-+                offset = read_im8(s->env, s);
-                 if (sign) {
-                     offset = (int8_t)offset;
-                 }
-                 break;
-             case OS_WORD:
--                offset = read_im16(env, s);
-+                offset = read_im16(s->env, s);
-                 if (sign) {
-                     offset = (int16_t)offset;
-                 }
-                 break;
-             case OS_LONG:
--                offset = read_im32(env, s);
-+                offset = read_im32(s->env, s);
-                 break;
-             default:
-                 g_assert_not_reached();
-@@ -1324,7 +1323,7 @@ static void gen_exit_tb(DisasContext *s)
- 
- #define SRC_EA(env, result, opsize, op_sign, addrp)                     \
-     do {                                                                \
--        result = gen_load_mode(env, s, extract32(insn, 3, 3),           \
-+        result = gen_load_mode(s, extract32(insn, 3, 3),                \
-                                REG(insn, 0), opsize, addrp,             \
-                                op_sign, IS_USER(s));                    \
-         if (IS_NULL_QREG(result)) {                                     \
-@@ -1700,10 +1699,8 @@ DISAS_INSN(abcd_mem)
- 
-     /* Indirect pre-decrement load (mode 4) */
- 
--    src = gen_load_mode(env, s, 4, REG(insn, 0), OS_BYTE,
--                        NULL, false, IS_USER(s));
--    dest = gen_load_mode(env, s, 4, REG(insn, 9), OS_BYTE,
--                         &addr, false, IS_USER(s));
-+    src = gen_load_mode(s, 4, REG(insn, 0), OS_BYTE, NULL, false, IS_USER(s));
-+    dest = gen_load_mode(s, 4, REG(insn, 9), OS_BYTE, &addr, false, IS_USER(s));
- 
-     bcd_add(dest, src);
- 
-@@ -1736,10 +1733,8 @@ DISAS_INSN(sbcd_mem)
- 
-     /* Indirect pre-decrement load (mode 4) */
- 
--    src = gen_load_mode(env, s, 4, REG(insn, 0), OS_BYTE,
--                        NULL, false, IS_USER(s));
--    dest = gen_load_mode(env, s, 4, REG(insn, 9), OS_BYTE,
--                         &addr, false, IS_USER(s));
-+    src = gen_load_mode(s, 4, REG(insn, 0), OS_BYTE, NULL, false, IS_USER(s));
-+    dest = gen_load_mode(s, 4, REG(insn, 9), OS_BYTE, &addr, false, IS_USER(s));
- 
-     bcd_sub(dest, src);
- 
-@@ -3120,11 +3115,9 @@ DISAS_INSN(cmpm)
-     TCGv src, dst;
- 
-     /* Post-increment load (mode 3) from Ay.  */
--    src = gen_load_mode(env, s, 3, REG(insn, 0), opsize,
--                        NULL, true, IS_USER(s));
-+    src = gen_load_mode(s, 3, REG(insn, 0), opsize, NULL, true, IS_USER(s));
-     /* Post-increment load (mode 3) from Ax.  */
--    dst = gen_load_mode(env, s, 3, REG(insn, 9), opsize,
--                        NULL, true, IS_USER(s));
-+    dst = gen_load_mode(s, 3, REG(insn, 9), opsize, NULL, true, IS_USER(s));
- 
-     gen_update_cc_cmp(s, dst, src, opsize);
- }
--- 
-2.43.0
-
+--=20
+Thanks.
+-- Max
 
