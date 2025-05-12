@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C61B0C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 18:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93802C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 18:38:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEXyO-0001Nd-0p; Mon, 12 May 2025 14:33:56 -0400
+	id 1uEY2m-0003OA-SN; Mon, 12 May 2025 14:38:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uEXyN-0001NU-1I
- for qemu-devel@nongnu.org; Mon, 12 May 2025 14:33:55 -0400
+ id 1uEY2e-0003I8-Tn
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 14:38:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uEXyI-0003l8-DG
- for qemu-devel@nongnu.org; Mon, 12 May 2025 14:33:54 -0400
+ id 1uEY2c-0004EH-Gx
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 14:38:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747074827;
+ s=mimecast20190719; t=1747075097;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gu/osO7xx5SuJYbmUtWb5U0BaLQTz2o+OZLEvswXu7o=;
- b=EQvRoGHdqpP8IKBfQhRf2MamTyQJkH9GwfLrfX9is+MGCE0cSRIWk2HWUdfZeXsgSaPeln
- tiL1QHAD/PLkCvpGfooZR112lMBc6Mk6z/YL+U6hZPnaNV2xmCtZD/FY8UfY7zc3Gr1VGA
- xM7vtsF2ncK/aHJ6Vl/I4zUoc1daKrw=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=sMAnQk66oVPj8Mjos3U3u2tAvgXVUMwSTvkBFFFM0lQ=;
+ b=KZ14qMV9DpFf6dBDGwcbtic3LVNamPm7zanG81TwyxF8YcGnF2HRXUpzp4JS1sfpa2M+ge
+ y9upo2+QSajqY2UEmWkL4N21imAE7SnT0mfqe3LoCCqHoP0nB50Xruc4rOk3EcgJJDkG2t
+ yieVxmd/dgEva4Jn679dORtOeVv1MFM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-509-in2AkurANNiVaqV5rgpX_w-1; Mon,
- 12 May 2025 14:33:46 -0400
-X-MC-Unique: in2AkurANNiVaqV5rgpX_w-1
-X-Mimecast-MFC-AGG-ID: in2AkurANNiVaqV5rgpX_w_1747074824
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-287-1EYA3Mb4MNS5G0SlRhi-tA-1; Mon,
+ 12 May 2025 14:38:14 -0400
+X-MC-Unique: 1EYA3Mb4MNS5G0SlRhi-tA-1
+X-Mimecast-MFC-AGG-ID: 1EYA3Mb4MNS5G0SlRhi-tA_1747075093
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D1A191955DE8; Mon, 12 May 2025 18:33:44 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 10BC01800DA1; Mon, 12 May 2025 18:38:13 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.162])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 02391195396E; Mon, 12 May 2025 18:33:42 +0000 (UTC)
-Date: Mon, 12 May 2025 19:33:39 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C15A130001A1; Mon, 12 May 2025 18:38:10 +0000 (UTC)
+Date: Mon, 12 May 2025 19:38:07 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 01/10] qapi: expose rtc-reset-reinjection command
- unconditionally
-Message-ID: <aCI_A7ymWf-f3fOT@redhat.com>
+Subject: Re: [PATCH RFC 00/10] qapi: remove all TARGET_* conditionals from
+ the schema
+Message-ID: <aCJADz2WhyOBYy3H@redhat.com>
 References: <20250508135816.673087-1-berrange@redhat.com>
- <20250508135816.673087-2-berrange@redhat.com>
- <87ldr4zt3d.fsf@pond.sub.org>
+ <c7623b1c-01c1-46c0-bfa6-dc34aa4e722d@linaro.org>
+ <aB3EpKu0iafLtgVT@redhat.com> <874ixt6gsd.fsf@pond.sub.org>
+ <aB4JiDnVE8XrVfax@redhat.com> <874ixt2e2l.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87ldr4zt3d.fsf@pond.sub.org>
+In-Reply-To: <874ixt2e2l.fsf@pond.sub.org>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
@@ -95,169 +96,47 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, May 10, 2025 at 11:57:10AM +0200, Markus Armbruster wrote:
+On Sat, May 10, 2025 at 08:08:02AM +0200, Markus Armbruster wrote:
 > Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
-> > This removes the TARGET_I386 condition from the rtc-reset-reinjection
-> > command. This requires providing a QMP command stub for non-i386 target.
-> > This in turn requires moving the command out of misc-target.json, since
-> > that will trigger symbol poisoning errors when built from target
-> > independent code.
+> > On Fri, May 09, 2025 at 03:43:30PM +0200, Markus Armbruster wrote:
+> >> Daniel P. Berrangé <berrange@redhat.com> writes:
+> >> > Even if we had a QAPI schema that didn't vary per target, this is
+> >> > repeated probing is tricky to avoid when we have completely independant
+> >> > binaries. We would need QEMU to have some internal "build id", so that
+> >> > we could detect that all binaries came from the same build, to let us
+> >> > avoid re-probing each binary.
+> >> 
+> >> Back when I created QAPI/QMP introspection, I floated the idea to put
+> >> something into the QMP greeting to enable safe caching.  Libvirt
+> >> developers told me they didn't need that.  I don't remember the details,
+> >> but I guess the cache invalidation they already had was deemed good
+> >> enough.
 > >
-> > Rather than putting the command into misc.json, it is proposed to create
-> > misc-$TARGET.json files to hold commands whose impl is conceptually
-> > only applicable to a single target. This gives an obvious docs hint to
-> > consumers that the command is only useful in relation a specific target,
-> > while misc.json is for commands applicable to 2 or more targets.
+> > I don't recall that discussion, but I would think the problem is
+> > that we probe much more than just QMP schema. Actually thinking
+> > about it, the fact that we probe more than just QMP schema means
+> > my idea of probing once and getting the answer for all targets
+> > may not be practical. Some of the query-xxx  commands we run will
+> > likely need to know the target.
 > 
-> Starting with this patch, the series structures the manual like this:
+> Yes.
 > 
->     = Machines
->     ... contents of machine.json ...
->     == Specific to S390
->     ... contents of machine-s390.json ...
+> We could split the cache along validity conditions.  Possibly worth the
+> extra complexity if expensive probes then live longer in their cache.
 > 
-> and
-> 
->     = Miscellanea
->     ... contents of misc.json ...
->     == Specific to ARM
->     ... contents of misc-arm.json ...
->     == Specific to i386
->     ... contents of misc-i386.json ...
-> 
-> Except it doesn't add == subsection headers, but that's detail.  The
-> text I show for them here is crap.
-> 
-> Possible alternative: collect the target-specific stuff in one place
-> rather than two:
-> 
->     = Targets
->     == ARM
->     == i386
->     == S390
-> 
-> Again the header text is crap.
-> 
-> Is separating the current contents of misc-<target>.json from
-> machine-<target>.json useful?
+> I'd love to have a list of probes libvirt runs and why.
 
-I'm fairly confused what the intended difference is between
-stuff in 'misc.json' and stuff in 'machine.json' already,
-and just preserved that split rather than try to think about
-it in more detail.
+We don't record the 'why' I'm afraid, so answer the 'why' is pretty
+much a case of having to read the code :-(
 
+The list of probes is also somewhat metadata driven, starting
+from:
 
-> > diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
-> > new file mode 100644
-> > index 0000000000..d5bfd91405
-> > --- /dev/null
-> > +++ b/qapi/misc-i386.json
-> > @@ -0,0 +1,24 @@
-> > +# -*- Mode: Python -*-
-> > +# vim: filetype=python
-> > +#
-> > +# SPDX-License-Identifier: GPL-2.0-or-later
-> 
-> Might be cleaner to add this to all qapi/*.json first, and in a separate
-> patch.
+ https://gitlab.com/libvirt/libvirt/-/blob/6ff8d08777ebbcb9a1e11534c3a3341fbf0343e8/src/qemu/qemu_capabilities.c?page=6#L5718
 
-Adding SPDX-License-Identifier to existing files is something we're
-not generally doing, only newly created files are getting it.
-
-
-> > +
-> > +##
-> > +# @rtc-reset-reinjection:
-> > +#
-> > +# This command will reset the RTC interrupt reinjection backlog.  Can
-> > +# be used if another mechanism to synchronize guest time is in effect,
-> > +# for example QEMU guest agent's guest-set-time command.
-> > +#
-> > +# Use of this command is only applicable for x86 machines with an RTC,
-> > +# and on other machines will silently return without performing any
-> > +# action.
-> 
-> This paragraph replaces ...
-> 
-> > +#
-> > +# Since: 2.1
-> > +#
-> > +# .. qmp-example::
-> > +#
-> > +#     -> { "execute": "rtc-reset-reinjection" }
-> > +#     <- { "return": {} }
-> > +##
-> > +{ 'command': 'rtc-reset-reinjection' }
-> > diff --git a/qapi/misc-target.json b/qapi/misc-target.json
-> > index 42e4a7417d..5d0ffb0164 100644
-> > --- a/qapi/misc-target.json
-> > +++ b/qapi/misc-target.json
-> > @@ -2,23 +2,6 @@
-> >  # vim: filetype=python
-> >  #
-> >  
-> > -##
-> > -# @rtc-reset-reinjection:
-> > -#
-> > -# This command will reset the RTC interrupt reinjection backlog.  Can
-> > -# be used if another mechanism to synchronize guest time is in effect,
-> > -# for example QEMU guest agent's guest-set-time command.
-> > -#
-> > -# Since: 2.1
-> > -#
-> > -# .. qmp-example::
-> > -#
-> > -#     -> { "execute": "rtc-reset-reinjection" }
-> > -#     <- { "return": {} }
-> > -##
-> > -{ 'command': 'rtc-reset-reinjection',
-> > -  'if': 'TARGET_I386' }
-> 
-> ... the conditional.
-> 
-> Before, attempting to execute the command fails with CommandNotFound.
-> 
-> Afterwards it succeeds without doing anything.  I think it should fail
-> instead.  CommandNotFound would be a lie, so change it to GenericError.
-
-See also my comment in the commit message that this has different
-behaviour on x86 vs non-x86, when no RTC is present - x86 treats
-"no RTC" as a no-op, but non-x86 treats it as an error.
-
-I don't mind if we preserve this inconsistency though.
-
-
-> > diff --git a/stubs/monitor-i386-rtc.c b/stubs/monitor-i386-rtc.c
-> > new file mode 100644
-> > index 0000000000..ee2e60d95b
-> > --- /dev/null
-> > +++ b/stubs/monitor-i386-rtc.c
-> > @@ -0,0 +1,10 @@
-> > +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> > +
-> > +#include "qemu/osdep.h"
-> > +#include "qapi/error.h"
-> > +#include "qapi/qapi-commands-misc-i386.h"
-> > +
-> > +void qmp_rtc_reset_reinjection(Error **errp)
-> > +{
-> > +    /* Nothing to do since non-x86 machines lack an RTC */
-> > +}
-> 
-> I think I'd create one stub file per qapi/<foo>-<target>.json.
-
-That's what I started doing but I forgot that doesn't work out well
-with the linker.
-
-The linker's granularity for dropping stubs is per-file, not per-symbol.
-
-If /any/ method in a stub/nnn.c file is needed, the linker will pull in
-all methods. This results in duplicate symbol errors if only a subset
-of stub methods were actually needed.
-
-This forces us to have a separate stub file per build configuration
-scenario that can affect use of stubs.
+you would have to then work backwards for each virQMEUCapsProbeQMP
+method we call.
 
 With regards,
 Daniel
