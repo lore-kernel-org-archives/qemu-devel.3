@@ -4,110 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4B68C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:01:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55AA2C3ABD8
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:07:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEUdt-0008MG-V3; Mon, 12 May 2025 11:00:34 -0400
+	id 1uEUjZ-0003lx-P4; Mon, 12 May 2025 11:06:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uEUde-0008F0-J1
- for qemu-devel@nongnu.org; Mon, 12 May 2025 11:00:28 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uEUjU-0003lO-Dk
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:06:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uEUda-0002NA-1b
- for qemu-devel@nongnu.org; Mon, 12 May 2025 11:00:17 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uEUjQ-0003Gr-HY
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:06:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747062009;
+ s=mimecast20190719; t=1747062369;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eI5J0HXKP1fZkgVktC6av2xKm9xJ4Og8E9m08wcvTwo=;
- b=WB0MWn6FSW2MN1trfsowKMcMP7Tqlu0WzrV13ApQUQ8zNsxdmptGBAAApTbB45MZiP1xG+
- gvt26JrxFyStgm/2xwXmHyP7yuevCqniBRKLQmqfHUNdYOFrAha0vTkeCEnD5dVQzz6Hoy
- x718tOPjzVY4UfDITPNByNgaGHtsKNc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Cy8TKlaEjh/1/iAb0ycpraX4hwQr7xq7u1lrsROBwNg=;
+ b=YPEWcus23QZYQOieZLwNcqVc7M8No2yeb3YCc68B3v1wwG6Dyw/xZ1T9M0Ebdkh6q1HUiH
+ yp76bTpcizbjKWZLKfx96/BhAshO01jyjSmfK1JNPzof7/hMMJydx4IF2MnDw115Vcgjks
+ 8M8NNBcc6S/pfnhMxiz06AZmSbr3bj4=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-42-sQdim-ixPGuFlZ9UOkmvug-1; Mon, 12 May 2025 11:00:08 -0400
-X-MC-Unique: sQdim-ixPGuFlZ9UOkmvug-1
-X-Mimecast-MFC-AGG-ID: sQdim-ixPGuFlZ9UOkmvug_1747062007
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-44059976a1fso15052545e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 08:00:08 -0700 (PDT)
+ us-mta-564-zABAObWoPpWz1lmVv5GtVA-1; Mon, 12 May 2025 11:06:07 -0400
+X-MC-Unique: zABAObWoPpWz1lmVv5GtVA-1
+X-Mimecast-MFC-AGG-ID: zABAObWoPpWz1lmVv5GtVA_1747062367
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6f544cf3f6dso86291286d6.0
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 08:06:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747062007; x=1747666807;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=eI5J0HXKP1fZkgVktC6av2xKm9xJ4Og8E9m08wcvTwo=;
- b=PS8b1tXjaPuCGHtdOiIY+4p97MDrpVAHwafzvlUEagNQoGqu585Z7UO/0tkiW/9mJB
- zCsmv+t1C2rmgbFqnzH8wAZrVkhkAulejCCzlmSR28DCBUMI6iuLiQ6JVAcNKAxpfJG2
- XrpSR0k8ph4kJy0RqGfMdOzI/p1tD1bqfP3tBkG67dsfn5iXvyIPHtRMs+bYKdWlirHm
- tJYmnTeui89g6sR/OeOw9NhCP22PJS1Vh+ijuJ++dpZD+AAR5B7madW1XAPrBTkq73iB
- 23zb+WHgfep7Z2ZMfxqSMFFLlbMy1yU8mzrCyD5tOWlZKCwb+gRDev51dYA4lths7vLh
- sCpA==
+ d=1e100.net; s=20230601; t=1747062367; x=1747667167;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Cy8TKlaEjh/1/iAb0ycpraX4hwQr7xq7u1lrsROBwNg=;
+ b=PfQyxSb4sBnloLeMJcQiDLY3Iv8xnWHge+Hdam7CE7ZhW4mcxksv6T3977cF3bJ+Xe
+ psxv5cqyLna8u3xoDXmVW3O1z9EkHxPFeuDxG5Kp/7Hi8CzT+DvcPV7dSmjBllQgubfC
+ GUGe8X3Oay4+VFLM1vVZMxxdOszatpPJr/rFMbFdmOH2g5irja3g7qH8FnE8+qIjewZ2
+ eyRnAYJTh2yf45Ty16559Q+Q5m0dy6IHtL6jBWr1c24swQRbg5murF7iNc/K/x4gUDDO
+ tqNYjexB6yQGTxRKw8+g//Cz2R01QIuxNC2Q8i/Ifn3aXz9usv0oQbaDlwhL/zJ/keMD
+ eQLA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWLi0ZQ9rA6W5GaSzDblRhLiQQ80WIrUxfdU7P+dQY1ymJcJQtw03uKa/tGK7JGqhhaOqoADVGse6S3@nongnu.org
-X-Gm-Message-State: AOJu0Yzs82O7gGsP7xPJjvOPpIABu3MtFjNZDqT5jQb5okHPBC1scxCn
- 3tZxV3MgBmk+v+FJ8jUNNd0Ws3PHqBLj4FjZKfB18YEzyATzHxUXrAqELR3j/bE9xNRuFu6A1vs
- 43U74Q8E9GGOGvlJdLP7UCPA/BYzKHuK3L4TfLW0pfoMUGslM+LR+
-X-Gm-Gg: ASbGncsqOV2GG89XN2eQJmAzZtmV+rN5Az+osd+eljYjXncGsImofDHeCLk3FWy2MdO
- X/cAlMIinRqZ6/Uj6u+4eRiXbkvKpk0ynpyUHK3NxcocR0GkL6rFP8F2GuYFHYIUp4V5Tee4ivZ
- D0rfTrLyOnjDA2ffcrWElznkNJZwS3GJ+ABkZgHmS0wImmgLgp2XJmYi73g1jKCRJUofWwnVM3U
- 1Hh1/WyWzBJSv1H++KN9DzlgDFEvEuQv7o8t+7f6qQZBNwITirfG6upnTOp3sTk+Fv3tGspadoV
- tTi9AA0NxNtRggg7qTTRTIezyPD/21g7
-X-Received: by 2002:a05:600c:6090:b0:43b:c95f:fd9 with SMTP id
- 5b1f17b1804b1-442d6d18bfamr121218155e9.5.1747062007325; 
- Mon, 12 May 2025 08:00:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IENnBzlU+YWO9pdg1Vj3hsTx2kvLvw+CHG1z5vAuqAHrGkAn/2pGCf8Z7HbzTYuwHLj+iYbzA==
-X-Received: by 2002:a05:600c:6090:b0:43b:c95f:fd9 with SMTP id
- 5b1f17b1804b1-442d6d18bfamr121217765e9.5.1747062006953; 
- Mon, 12 May 2025 08:00:06 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442cd3b7e26sm171495205e9.37.2025.05.12.08.00.05
+ AJvYcCXGki0cjA4kgFP+TfpJb/RoeEH0rDqqNb+LKDZ992BrYUILpqS0325NykYV+C7baSIVVHKsVrW331fo@nongnu.org
+X-Gm-Message-State: AOJu0Yz6C/BPhy+ljKXfUghLylbenDjjZMF0VM61W05ALiwQqMa5mJ3O
+ /k424SuSVdpY5XplqaRM2q4mPH+P3z76Cd0sVa/WP2Wj6/p6Xdombb+dblKQ5r/zqQ8qV3P390E
+ NJFtR3TEBCTuCtWipX/YSlRV0psO/E0OBHjnSLmAKrJqJXfd+PU3z
+X-Gm-Gg: ASbGncsiAp2OEJITDz3N/CeXbydqEn+vOlxy0FHfuofKxCoh0+0e79lAwzxMECqwsdb
+ Bp3wbTyUU3ESdsWxoD37z8eOF8p6ec5b9dGWsoglcSUrO62DGRwXN6NhlXEG2UScPNnefTjrD4s
+ kFBV1z7Giq7zc9H7ME72p3hDkIiU9UWFKnpvd62LmDKFnYdx3QhX47Fl1aQPglR+9zZXsRqIRTc
+ ep+buML1yGWA5taQAeOOMNURlzldLfs1yxWDctQRgQKeDhM9uqvbNTzPPhBEOYUiDp7RS0WDSId
+ XKI=
+X-Received: by 2002:a05:6214:f03:b0:6f2:a4cf:5fd7 with SMTP id
+ 6a1803df08f44-6f6e4848aa4mr206096376d6.45.1747062367265; 
+ Mon, 12 May 2025 08:06:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGGXXAQ2YSN1Q/OTdFjuNlGpVLu+KZzTj0kmwYhbpn3N6fMtLUJQ8V1lKubvstRHApq/AQyGA==
+X-Received: by 2002:a05:6214:f03:b0:6f2:a4cf:5fd7 with SMTP id
+ 6a1803df08f44-6f6e4848aa4mr206096176d6.45.1747062366954; 
+ Mon, 12 May 2025 08:06:06 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6f6e39f4d40sm53838616d6.48.2025.05.12.08.06.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 May 2025 08:00:06 -0700 (PDT)
-Date: Mon, 12 May 2025 17:00:02 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVk?=
- =?UTF-8?B?w6k=?= <philmd@linaro.org>, qemu-devel@nongnu.org, Richard
- Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org, Sergio Lopez
- <slp@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Laurent Vivier <lvivier@redhat.com>, Jiaxun
- Yang <jiaxun.yang@flygoat.com>, Yi Liu <yi.l.liu@intel.com>, "Michael S.
- Tsirkin" <mst@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>, Alistair Francis
- <alistair.francis@wdc.com>, Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- qemu-riscv@nongnu.org, Weiwei Li <liwei1518@gmail.com>, Amit Shah
- <amit@kernel.org>, Yanan Wang <wangyanan55@huawei.com>, Helge Deller
- <deller@gmx.de>, Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha
- <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>, Paolo Bonzini
- <pbonzini@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- qemu-arm@nongnu.org, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
- <marcandre.lureau@redhat.com>, Huacai Chen <chenhuacai@kernel.org>, Jason
- Wang <jasowang@redhat.com>
-Subject: Re: [PATCH v4 12/27] target/i386/cpu: Remove
- CPUX86State::enable_cpuid_0xb field
-Message-ID: <20250512170002.635aa9fa@imammedo.users.ipa.redhat.com>
-In-Reply-To: <aB2vjuT07EuO6JSQ@intel.com>
-References: <20250508133550.81391-1-philmd@linaro.org>
- <20250508133550.81391-13-philmd@linaro.org>
- <23260c74-01ba-45bc-bf2f-b3e19c28ec8a@intel.com>
- <aB2vjuT07EuO6JSQ@intel.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ Mon, 12 May 2025 08:06:06 -0700 (PDT)
+Date: Mon, 12 May 2025 11:06:02 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ berrange@redhat.com, Prasad Pandit <pjp@fedoraproject.org>
+Subject: Re: [PATCH v10 3/3] migration: write zero pages when postcopy enabled
+Message-ID: <aCIOWo36zJeCxTJO@x1.local>
+References: <20250508122849.207213-1-ppandit@redhat.com>
+ <20250508122849.207213-4-ppandit@redhat.com>
+ <87ecwzfbnk.fsf@suse.de> <aBzQYslYtUZgXjgO@x1.local>
+ <CAE8KmOzi8Zzy5hE2SMdTbMZJQD5_XH34rfEP_B85jstUF9E08g@mail.gmail.com>
+ <aB4bGYf-EuGES73h@x1.local>
+ <CAE8KmOwFDJhFE6wJpTfDBAG4mJ-Xjsfh8VJwqVYLzT3gGZLZUA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE8KmOwFDJhFE6wJpTfDBAG4mJ-Xjsfh8VJwqVYLzT3gGZLZUA@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -132,37 +111,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 9 May 2025 15:32:30 +0800
-Zhao Liu <zhao1.liu@intel.com> wrote:
+On Mon, May 12, 2025 at 11:56:31AM +0530, Prasad Pandit wrote:
+> Hi,
+> 
+> On Fri, 9 May 2025 at 20:41, Peter Xu <peterx@redhat.com> wrote:
+> > Isn't that what multifd is doing already?
+> > typedef struct {
+> >     ...
+> >     /*
+> >      * This array contains the pointers to:
+> >      *  - normal pages (initial normal_pages entries)
+> >      *  - zero pages (following zero_pages entries)
+> >      */
+> >     uint64_t offset[];
+> > } __attribute__((packed)) MultiFDPacket_t;
+> > Or maybe I missed what you meant.
+> 
+> * Why are we memsetting zero pages on the receive side? What I'm
+> trying to get at is, if destination memory is zero-initialised at the
+> beginning of migration, we might be able to do away with this
+> memset(3) call and this optimisation altogether. All zero page entries
+> could point to the same zero page as well, if we don't want to
+> preallocate all zero pages at start.
 
-> On Fri, May 09, 2025 at 02:49:27PM +0800, Xiaoyao Li wrote:
-> > Date: Fri, 9 May 2025 14:49:27 +0800
-> > From: Xiaoyao Li <xiaoyao.li@intel.com>
-> > Subject: Re: [PATCH v4 12/27] target/i386/cpu: Remove
-> >  CPUX86State::enable_cpuid_0xb field
-> >=20
-> > On 5/8/2025 9:35 PM, Philippe Mathieu-Daud=C3=A9 wrote: =20
-> > > The CPUX86State::enable_cpuid_0xb boolean was only disabled
-> > > for the pc-q35-2.6 and pc-i440fx-2.6 machines, which got
-> > > removed. Being now always %true, we can remove it and simplify
-> > > cpu_x86_cpuid().
-> > >=20
-> > > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-...
-> > > @@ -8828,7 +8823,6 @@ static const Property x86_cpu_properties[] =3D {
-> > >       DEFINE_PROP_UINT64("ucode-rev", X86CPU, ucode_rev, 0),
-> > >       DEFINE_PROP_BOOL("full-cpuid-auto-level", X86CPU, full_cpuid_au=
-to_level, true),
-> > >       DEFINE_PROP_STRING("hv-vendor-id", X86CPU, hyperv_vendor),
-> > > -    DEFINE_PROP_BOOL("cpuid-0xb", X86CPU, enable_cpuid_0xb, true), =
-=20
-...
+I didn't follow, sorry.
 
-> @Philippe, thank you for cleaning up this case! I think we can keep this
-> property, and if you don't mind, I can modify its comment later to
-> indicate that it's used to adjust the topology support for the CPU.
+It's still uncertain to me whether the initial pages would be zero before
+migration touching it.  I'll need to check some day, because it looks a
+matter too as long as we avoid memset in the 1st round.  But I don't
+understand what you meant by "do away with memset... altogether".
 
-+1, we should not delete this without due process (aka deprecation).
-So perhaps deprecate now and remove in couple of releases=20
+What is the change you're suggesting?
+
+-- 
+Peter Xu
 
 
