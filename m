@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE370C3ABCC
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 18:41:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6FD2C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 18:44:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEY5p-0005T8-E6; Mon, 12 May 2025 14:41:37 -0400
+	id 1uEY8H-0007G0-9T; Mon, 12 May 2025 14:44:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uEY5T-0005Nx-SY
- for qemu-devel@nongnu.org; Mon, 12 May 2025 14:41:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uEY8F-0007Fc-IH
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 14:44:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uEY5L-0004c1-O6
- for qemu-devel@nongnu.org; Mon, 12 May 2025 14:41:15 -0400
+ id 1uEY8D-0004uc-7f
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 14:44:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747075263;
+ s=mimecast20190719; t=1747075444;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=giEm6KTYvaMPaFAiw6r2pxGrb25kccnv4p+hJDugP0w=;
- b=RmMHbhrBr9YSvZNDgRzZuQk9QiY6HV7tRdtf/H/HramtiIeRYJz1y2voDwcuiEvferpT6T
- qq1e3qsGMa2hCqcb+fi3Gt9sAyvJPe+rGSrsBOsmrHIuwv34Ec0ONosyytaNcCpgbU5umw
- +33ece/weZ2nWXicu2Hs5OyEySzGJjU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=IXRPBDqzjRm/zedQ6rp12iLcVe+5Vh2wax2x3N0XscA=;
+ b=I2fW5884SlPbIFbLwDfigUZrawal0A3o+T5sc0CjoKiWih8eAHVj2S+w9imqCUFVbRznn3
+ 1M7Fp+KeCdO2dzqydWA41QN8E3vB4awOzE79GK74SZfm1SCk1ruX/DdiPLo4rSGijnl7QD
+ VdIeEp3y8TqBO+Fpb2ox9+NLiqhbaAA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-JZ1Be_QQNuqo9tlQv8iTLg-1; Mon,
- 12 May 2025 14:41:00 -0400
-X-MC-Unique: JZ1Be_QQNuqo9tlQv8iTLg-1
-X-Mimecast-MFC-AGG-ID: JZ1Be_QQNuqo9tlQv8iTLg_1747075259
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-eVo9Bj8tMHyoipeknrYL-Q-1; Mon,
+ 12 May 2025 14:43:58 -0400
+X-MC-Unique: eVo9Bj8tMHyoipeknrYL-Q-1
+X-Mimecast-MFC-AGG-ID: eVo9Bj8tMHyoipeknrYL-Q_1747075437
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D201918001EA; Mon, 12 May 2025 18:40:58 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C7A5D180087C; Mon, 12 May 2025 18:43:57 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.161])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E95161940EB0; Mon, 12 May 2025 18:40:56 +0000 (UTC)
-Date: Mon, 12 May 2025 14:40:55 -0400
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 35AF718001DA; Mon, 12 May 2025 18:43:57 +0000 (UTC)
+Date: Mon, 12 May 2025 14:43:56 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: Eric Blake <eblake@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, sunnyzhyy@qq.com,
  vsementsov@yandex-team.ru, John Snow <jsnow@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v4 10/13] mirror: Skip pre-zeroing destination if it is
+Subject: Re: [PATCH v4 11/13] mirror: Skip writing zeroes when target is
  already zero
-Message-ID: <20250512184055.GF141177@fedora>
+Message-ID: <20250512184356.GG141177@fedora>
 References: <20250509204341.3553601-15-eblake@redhat.com>
- <20250509204341.3553601-25-eblake@redhat.com>
+ <20250509204341.3553601-26-eblake@redhat.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="1s9xHEsGJDIjvJTK"
+ protocol="application/pgp-signature"; boundary="0Wo7MzqttkZNFKV9"
 Content-Disposition: inline
-In-Reply-To: <20250509204341.3553601-25-eblake@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <20250509204341.3553601-26-eblake@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -89,73 +89,100 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---1s9xHEsGJDIjvJTK
+--0Wo7MzqttkZNFKV9
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 09, 2025 at 03:40:27PM -0500, Eric Blake wrote:
-> When doing a sync=3Dfull mirroring, we can skip pre-zeroing the
-> destination if it already reads as zeroes and we are not also trying
-> to punch holes due to detect-zeroes.  With this patch, there are fewer
-> scenarios that have to pass in an explicit target-is-zero, while still
-> resulting in a sparse destination remaining sparse.
+On Fri, May 09, 2025 at 03:40:28PM -0500, Eric Blake wrote:
+> When mirroring, the goal is to ensure that the destination reads the
+> same as the source; this goal is met whether the destination is sparse
+> or fully-allocated (except when explicitly punching holes, then merely
+> reading zero is not enough to know if it is sparse, so we still want
+> to punch the hole).  Avoiding a redundant write to zero (whether in
+> the background because the zero cluster was marked in the dirty
+> bitmap, or in the foreground because the guest is writing zeroes) when
+> the destination already reads as zero makes mirroring faster, and
+> avoids allocating the destination merely because the source reports as
+> allocated.
 >=20
-> A later patch will then further improve things to skip writing to the
-> destination for parts of the image where the source is zero; but even
-> with just this patch, it is possible to see a difference for any
-> source that does not report itself as fully allocated, coupled with a
-> destination BDS that can quickly report that it already reads as zero.
-> (For a source that reports as fully allocated, such as a file, the
-> rest of mirror_dirty_init() still sets the entire dirty bitmap to
-> true, so even though we avoided the pre-zeroing, we are not yet
-> avoiding all redundant I/O).
+> The effect is especially pronounced when the source is a raw file.
+> That's because when the source is a qcow2 file, the dirty bitmap only
+> visits the portions of the source that are allocated, which tend to be
+> non-zero.  But when the source is a raw file,
+> bdrv_co_is_allocated_above() reports the entire file as allocated so
+> mirror_dirty_init sets the entire dirty bitmap, and it is only later
+> during mirror_iteration that we change to consulting the more precise
+> bdrv_co_block_status_above() to learn where the source reads as zero.
 >=20
-> Iotest 194 detects the difference made by this patch: for a file
-> source (where block status reports the entire image as allocated, and
-> therefore we end up writing zeroes everywhere in the destination
-> anyways), the job length remains the same.  But for a qcow2 source and
-> a destination that reads as all zeroes, the dirty bitmap changes to
-> just tracking the allocated portions of the source, which results in
-> faster completion and smaller job statistics.  For the test to pass
-> with both ./check -file and -qcow2, a new python filter is needed to
-> mask out the now-varying job amounts (this matches the shell filters
-> _filter_block_job_{offset,len} in common.filter).  A later test will
-> also be added which further validates expected sparseness, so it does
-> not matter that 194 is no longer explicitly looking at how many bytes
-> were copied.
+> Remember that since a mirror operation can write a cluster more than
+> once (every time the guest changes the source, the destination is also
+> changed to keep up), and the guest can change whether a given cluster
+> reads as zero, is discarded, or has non-zero data over the course of
+> the mirror operation, we can't take the shortcut of relying on
+> s->target_is_zero (which is static for the life of the job) in
+> mirror_co_zero() to see if the destination is already zero, because
+> that information may be stale.  Any solution we use must be dynamic in
+> the face of the guest writing or discarding a cluster while the mirror
+> has been ongoing.
+>=20
+> We could just teach mirror_co_zero() to do a block_status() probe of
+> the destination, and skip the zeroes if the destination already reads
+> as zero, but we know from past experience that extra block_status()
+> calls are not always cheap (tmpfs, anyone?), especially when they are
+> random access rather than linear.  Use of block_status() of the source
+> by the background task in a linear fashion is not our bottleneck (it's
+> a background task, after all); but since mirroring can be done while
+> the source is actively being changed, we don't want a slow
+> block_status() of the destination to occur on the hot path of the
+> guest trying to do random-access writes to the source.
+>=20
+> So this patch takes a slightly different approach: any time we have to
+> track dirty clusters, we can also track which clusters are known to
+> read as zero.  For sync=3DTOP or when we are punching holes from
+> "detect-zeroes":"unmap", the zero bitmap starts out empty, but
+> prevents a second write zero to a cluster that was already zero by an
+> earlier pass; for sync=3DFULL when we are not punching holes, the zero
+> bitmap starts out full if the destination reads as zero during
+> initialization.  Either way, I/O to the destination can now avoid
+> redundant write zero to a cluster that already reads as zero, all
+> without having to do a block_status() per write on the destination.
+>=20
+> With this patch, if I create a raw sparse destination file, connect it
+> with QMP 'blockdev-add' while leaving it at the default "discard":
+> "ignore", then run QMP 'blockdev-mirror' with "sync": "full", the
+> destination remains sparse rather than fully allocated.  Meanwhile, a
+> destination image that is already fully allocated remains so unless it
+> was opened with "detect-zeroes": "unmap".  And any time writing zeroes
+> is skipped, the job counters are not incremented.
 >=20
 > Signed-off-by: Eric Blake <eblake@redhat.com>
 >=20
 > ---
 >=20
-> v3: add exemption for "detect-zeroes":"unmap" on destination
-> v4: Rebase later in series, revise logic for pre-zeroing [Sunny], add
-> in python filter
+> v3: also skip counters when skipping I/O [Sunny]
+> v4: rebase to earlier changes
 > ---
->  block/mirror.c                | 24 ++++++++++++++++--------
->  tests/qemu-iotests/194        |  6 ++++--
->  tests/qemu-iotests/194.out    |  4 ++--
->  tests/qemu-iotests/iotests.py | 12 +++++++++++-
->  4 files changed, 33 insertions(+), 13 deletions(-)
+>  block/mirror.c | 107 ++++++++++++++++++++++++++++++++++++++++++-------
+>  1 file changed, 93 insertions(+), 14 deletions(-)
 
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
---1s9xHEsGJDIjvJTK
+--0Wo7MzqttkZNFKV9
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgiQLcACgkQnKSrs4Gr
-c8ig+AgAjvUHcA7ZAFBhBR2yXtmlu8CvQxgkqYxf6jEq7nwNPlNoEu/8te3O4MTK
-8ISeB/j1Isp6xSlF+MCHffz73qzbESPAoelk5QcGFHF9SGYanm7d2XVJKwX/Pm1i
-dgPCDA6LSyZn+mWXCUL9nLXdb75kR4yZAQNrsJdyIwhrLC+7OI14/ueV9zkySeTx
-ejX+XwhHzMJxAV8uf5qmk1yBv0bZb6j0N3L5pW+PbLNg2Fnd/seKHgPn0jXQk2K6
-y0/gMdx69wBQpGD8AUzu+/JB0AdnAZAuv2/rl73R55olDyc75fywOi3SIAHWNems
-xMD/aSUCdFgz2+s0Lr7Btd9ug2cbVQ==
-=nhlu
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgiQWsACgkQnKSrs4Gr
+c8hOoAgAvg9HHIh2M7FZZm4OTJMqS9k0ZubRyEND6SGD2gPvpipSl3q9Ftshwq8+
+PQh5YHetrbJ7bOJi3sHwYiVfHWvLQEXaFelSxQbjqKywK2dDMTe4Fng52Yvn7ddH
+mFXusnV3PTlu47+13fU5fX4u0VY4jCjN7DCfS9y20BWpn97y13ikNflF8I+WXYI1
+GtgWNzD2eBtnyf3+2fctvSwVAk4MVT+wWhIT/VfdORPa12JAiMDSks4r5ell0tc6
+pOSGeLXDxr6NyjJIM2WxfTTUFkN5bxgB3NEbyQ1bHl58pRB7N6W74LtuGoDdQD/h
+wJVYZDwXNmZmA9QZ9690LGNiX+Ia4g==
+=J8K5
 -----END PGP SIGNATURE-----
 
---1s9xHEsGJDIjvJTK--
+--0Wo7MzqttkZNFKV9--
 
 
