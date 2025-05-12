@@ -4,72 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 094B3C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:25:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7207FC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:25:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEU5R-0002UD-Ol; Mon, 12 May 2025 10:24:57 -0400
+	id 1uEU6J-0005jb-1F; Mon, 12 May 2025 10:25:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uEU5P-0002PH-L2
- for qemu-devel@nongnu.org; Mon, 12 May 2025 10:24:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uEU5N-0006ZO-5Q
- for qemu-devel@nongnu.org; Mon, 12 May 2025 10:24:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747059892;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iMm8d72QVAUBvkD8Pd5UIDY2uZLCCUU0CotH4S20ewo=;
- b=Hghb25DGk9b9nI3dnlSmokWlUzes5aRqI4q2MADDeN/PAuctA0hxgg1ihfs2AVSrSZj12d
- pnNIInUnVuLpoEtphTHnlckPPTEjwIZp3HMOiT92DTyCysgf1TzKFBU5LuGQ0tsE7li5je
- 9EGo/eI93yAVpLYKVW5RuaO8Pq5pn2Q=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-PyG9HUGoP0KxIyAMfgPP-w-1; Mon,
- 12 May 2025 10:24:50 -0400
-X-MC-Unique: PyG9HUGoP0KxIyAMfgPP-w-1
-X-Mimecast-MFC-AGG-ID: PyG9HUGoP0KxIyAMfgPP-w_1747059889
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BD15C18003FC; Mon, 12 May 2025 14:24:49 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.162])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 79D7D19560A3; Mon, 12 May 2025 14:24:48 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 4/4] crypto: fully drop built-in cipher provider
-Date: Mon, 12 May 2025 15:24:39 +0100
-Message-ID: <20250512142439.1101159-5-berrange@redhat.com>
-In-Reply-To: <20250512142439.1101159-1-berrange@redhat.com>
-References: <20250512142439.1101159-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uEU6G-0005Xg-Kp
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 10:25:48 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uEU6D-0006pm-Fu
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 10:25:48 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43d04dc73b7so49603065e9.3
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 07:25:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747059943; x=1747664743; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rSPZR3sadD5efGt8lWmxGdMlXZ0hZfBQa22foBmhhWE=;
+ b=mgciK5Uxsm3KHiI8N71eR1gnQ8eGInGL58M4HHcDO6zuiu+NIMW/PMiDu1I7vGwoZ+
+ /rLtUIjmFqgmiXnLZ0bVopV1MCHU5lH/9c0LmohBI+MHjYqP71izxd+p4ItSmGThsA63
+ UL+PKsoiHS0ClunXsQvf/wK2WXRoQ23UKRSc3Kv84L5HzW8wH1XSmvjXiQIH9gBAk2Eq
+ 0rr9eyKpI1Lzq8CnXU2CHJQBY7y8BOqwiuqYvIbK9kZogEbAbYCPRMy0gri7VqAdMX1r
+ qAfrO1kfti58i+iS7YgypiV7A3wP4RXd4rwAmriIJidXXdxdVzw0nuG7tbzpli1Pl6zq
+ hjpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747059943; x=1747664743;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rSPZR3sadD5efGt8lWmxGdMlXZ0hZfBQa22foBmhhWE=;
+ b=MzTigkx6eLjYnYrHVEbrsf3g21gZHC/b/gBzRxG0IN7rWwAdDZsvgce440289GCLq7
+ TLL6cV3nHwHskn/7SkuuCEmIu160L5p7/QJjKzzirsXJjOifHTG/YKFMRsjFXoaY12pE
+ 3ogZRixX6po3sFH0XcjO/nuEbWer+Y0eZEggcDOI2bPwpr/Cc2nt5B/Uq8WrrisXH/2g
+ uNF9fy+83KjVSP72/EL/3X3zQgd/Q6VTIBCHblrRlDOxJuWciFy6NPwfSVjBP7HZ/AwB
+ OFKmJtuBJ4/np0EXqFVN94Uj/j5XGfV+wkM/ohfOesqaPFHfiY2bWwZ0NVX4P+4ApOlc
+ UX2A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVa3wvp+7qfaCcmu/aJG+almcma9LQXoKUFrhAq2FgjwNvKc4cTSduONYBFiZP3XNGr6iiKcWCf0mrh@nongnu.org
+X-Gm-Message-State: AOJu0Yzy/Fubw9S88lmJzzkleTAuvAJHt9JKyo26eNuEFuKq0+toMXqo
+ D0mbrXkyIlbst1yZc3lsdLNj0ckeYTcElrv9fylMKeT8S/u/301L7feYLlBRGLw=
+X-Gm-Gg: ASbGncsWdqh/zbJLTwtf2aTOBatjISS1qOWmihKPiyYBd/0pTwTVlRfTVkIpLTxtpFr
+ lWQ0gwQuDt2YhPgFU/KuV1eEYfJWZiiE8PLbNv2+zbZi7RKfgJ76BONJHmmd8/Z6UT9wTmOksCa
+ bMjcDoAMlp3rWdUPx8qS44hKq6HYprVYJPMyQb9UvW7EiUGFyi8iKUgM2r34IVk+yTow6L16YEZ
+ oCULnUSHHj9lAA711OcKTQw/WCEllzWPtzrsneCjOZ5HHZMotw4fyOYxPwdNNFLBCuItu2W0qYD
+ whIaFBRhOKGdcDyGxIWbk3h5Cb6Sqlpq9DLBw/4x3W+1Mh6c0WlPqeB+nvJc/5ruOe8+KvhwYci
+ y5RX8uMtJeSpe
+X-Google-Smtp-Source: AGHT+IEuLocMAPIUE16H2o8ZUrtjGxyc2fI0K438orNL1KwTirasf7qmz9ALKjwya655Rah6MA//tQ==
+X-Received: by 2002:a05:600c:3d0c:b0:43d:2230:300f with SMTP id
+ 5b1f17b1804b1-442d6c31f3fmr130230175e9.0.1747059943597; 
+ Mon, 12 May 2025 07:25:43 -0700 (PDT)
+Received: from [10.93.5.179] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-442cd3aeb6esm172654765e9.25.2025.05.12.07.25.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 May 2025 07:25:43 -0700 (PDT)
+Message-ID: <1ba74c1a-df5f-4fb2-9f17-0a5990f88803@linaro.org>
+Date: Mon, 12 May 2025 15:25:42 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests/functional: Add PCI hotplug test for aarch64
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: eric.auger@redhat.com, alex.bennee@linaro.org, philmd@linaro.org,
+ peter.maydell@linaro.org
+References: <20250512123646.157447-1-gustavo.romero@linaro.org>
+ <1f9b943e-3c6c-47ea-929f-6c512e4c8ac7@redhat.com>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <1f9b943e-3c6c-47ea-929f-6c512e4c8ac7@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,418 +105,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+Hi Thomas,
 
-When originally creating the internal crypto cipher APIs, they were
-wired up to use the built-in D3DES and AES implementations, as a way
-to gracefully transition to the new APIs without introducing an
-immediate hard dep on any external crypto libraries for the VNC
-password auth (D3DES) or the qcow2 encryption (AES).
+On 5/12/25 10:03, Thomas Huth wrote:
+> On 12/05/2025 14.36, Gustavo Romero wrote:
+>> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
+>> hot-unplug on arm64. Currently, the aarch64 'virt' machine uses the PCIe
+>> native controller and does not support ACPI-based hotplugging. However,
+>> since support is planned, this test sets 'acpi=force' and specifies an
+>> EDK2 firmware image in advance. This is harmless and prepares for future
+>> ACPI support.
+>>
+>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>> ---
+>>   MAINTAINERS                                  |  5 ++
+>>   tests/functional/meson.build                 |  1 +
+>>   tests/functional/test_aarch64_hotplug_pci.py | 73 ++++++++++++++++++++
+>>   3 files changed, 79 insertions(+)
+>>   create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 23174b4ca7..9ebb768214 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -2065,6 +2065,11 @@ S: Supported
+>>   F: include/hw/pci/pcie_doe.h
+>>   F: hw/pci/pcie_doe.c
+>> +ARM PCI Hotplug
+>> +M: Gustavo Romero <gustavo.romero@linaro.org>
+>> +S: Supported
+>> +F: tests/functional/test_aarch64_hotplug_pci.py
+>> +
+>>   ACPI/SMBIOS
+>>   M: Michael S. Tsirkin <mst@redhat.com>
+>>   M: Igor Mammedov <imammedo@redhat.com>
+>> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+>> index 52b4706cfe..2d68840fa2 100644
+>> --- a/tests/functional/meson.build
+>> +++ b/tests/functional/meson.build
+>> @@ -83,6 +83,7 @@ tests_aarch64_system_quick = [
+>>   tests_aarch64_system_thorough = [
+>>     'aarch64_aspeed_ast2700',
+>>     'aarch64_aspeed_ast2700fc',
+>> +  'aarch64_hotplug_pci',
+>>     'aarch64_imx8mp_evk',
+>>     'aarch64_raspi3',
+>>     'aarch64_raspi4',
+>> diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functional/test_aarch64_hotplug_pci.py
+>> new file mode 100755
+>> index 0000000000..05c92d7a45
+>> --- /dev/null
+>> +++ b/tests/functional/test_aarch64_hotplug_pci.py
+>> @@ -0,0 +1,73 @@
+>> +#!/usr/bin/env python3
+>> +#
+>> +# The test hotplugs a PCI device and checks it on a Linux guest.
+>> +#
+>> +# Copyright (c) 2025 Linaro Ltd.
+>> +#
+>> +# Author:
+>> +#  Gustavo Romero <gustavo.romero@linaro.org>
+>> +#
+>> +# This work is licensed under the terms of the GNU GPL, version 2 or
+>> +# later.  See the COPYING file in the top-level directory.
+>> +
+>> +from os import path
+>> +from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
+>> +from qemu_test import BUILD_DIR
+>> +
+>> +class HotplugPCI(LinuxKernelTest):
+>> +
+>> +    ASSET_KERNEL = Asset(
+>> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
+>> +         'current/images/netboot/debian-installer/arm64/linux'),
+>> +        '3821d4db56d42c6a4eac62f31846e35465940afd87746b4cfcdf5c9eca3117b2')
+>> +
+>> +    ASSET_INITRD = Asset(
+>> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
+>> +         'current/images/netboot/debian-installer/arm64/initrd.gz'),
+>> +        '2583ec22b45265ad69e82f198674f53d4cd85be124fe012eedc2fd91156bc4b4')
+>> +
+>> +    def test_hotplug_pci(self):
+>> +
+>> +        self.set_machine('virt')
+>> +        self.vm.add_args('-m', '512M')
+>> +        self.vm.add_args('-cpu', 'cortex-a57')
+>> +        self.vm.add_args('-append',
+>> +                         'console=ttyAMA0,115200 acpi=force init=/bin/sh')
+>> +        self.vm.add_args('-device',
+>> +                         'pcie-root-port,bus=pcie.0,chassis=1,slot=1,id=pcie.1')
+>> +        self.vm.add_args('-bios', path.join(BUILD_DIR, 'pc-bios',
+>> +                         'edk2-aarch64-code.fd'))
+> 
+> Sorry for missing it in v1, but we've got a dedicated function for creating paths in the build directory: self.build_file() ... in case you respin, could you please that one instead?
 
-In the 6.1.0 release we dropped the built-in D3DES impl, and also
-the XTS mode for the AES impl, leaving only AES with ECB/CBC modes.
-The rational was that with the system emulators, it is expected that
-3rd party crypto libraries will be available.
+Sure, done in v3. Thanks!
 
-The qcow2 LUKS impl is preferred to the legacy raw AES impl, and by
-default that requires AES in XTS mode, limiting the usefulness of
-the built-in cipher provider.
 
-The built-in AES impl has known timing attacks and is only suitable
-for use cases where a security boundary is already not expected to
-be provided (TCG).
-
-Providing a built-in cipher impl thus potentially misleads users,
-should they configure a QEMU without any crypto library, and try
-to use it with the LUKS backend, even if that requires a non-default
-configuration choice.
-
-Complete what we started in 6.1.0 and purge the remaining AES
-support.
-
-Use of either gnutls, nettle, or libcrypt is now mandatory for any
-cipher support, except for TCG impls.
-
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- crypto/cipher-builtin.c.inc | 303 ------------------------------------
- crypto/cipher-stub.c.inc    |  41 +++++
- crypto/cipher.c             |   2 +-
- 3 files changed, 42 insertions(+), 304 deletions(-)
- delete mode 100644 crypto/cipher-builtin.c.inc
- create mode 100644 crypto/cipher-stub.c.inc
-
-diff --git a/crypto/cipher-builtin.c.inc b/crypto/cipher-builtin.c.inc
-deleted file mode 100644
-index da5fcbd9a3..0000000000
---- a/crypto/cipher-builtin.c.inc
-+++ /dev/null
-@@ -1,303 +0,0 @@
--/*
-- * QEMU Crypto cipher built-in algorithms
-- *
-- * Copyright (c) 2015 Red Hat, Inc.
-- *
-- * This library is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU Lesser General Public
-- * License as published by the Free Software Foundation; either
-- * version 2.1 of the License, or (at your option) any later version.
-- *
-- * This library is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-- * Lesser General Public License for more details.
-- *
-- * You should have received a copy of the GNU Lesser General Public
-- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-- *
-- */
--
--#include "crypto/aes.h"
--
--typedef struct QCryptoCipherBuiltinAESContext QCryptoCipherBuiltinAESContext;
--struct QCryptoCipherBuiltinAESContext {
--    AES_KEY enc;
--    AES_KEY dec;
--};
--
--typedef struct QCryptoCipherBuiltinAES QCryptoCipherBuiltinAES;
--struct QCryptoCipherBuiltinAES {
--    QCryptoCipher base;
--    QCryptoCipherBuiltinAESContext key;
--    uint8_t iv[AES_BLOCK_SIZE];
--};
--
--
--static inline bool qcrypto_length_check(size_t len, size_t blocksize,
--                                        Error **errp)
--{
--    if (unlikely(len & (blocksize - 1))) {
--        error_setg(errp, "Length %zu must be a multiple of block size %zu",
--                   len, blocksize);
--        return false;
--    }
--    return true;
--}
--
--static void qcrypto_cipher_ctx_free(QCryptoCipher *cipher)
--{
--    g_free(cipher);
--}
--
--static int qcrypto_cipher_no_setiv(QCryptoCipher *cipher,
--                                   const uint8_t *iv, size_t niv,
--                                   Error **errp)
--{
--    error_setg(errp, "Setting IV is not supported");
--    return -1;
--}
--
--static void do_aes_encrypt_ecb(const void *vctx,
--                               size_t len,
--                               uint8_t *out,
--                               const uint8_t *in)
--{
--    const QCryptoCipherBuiltinAESContext *ctx = vctx;
--
--    /* We have already verified that len % AES_BLOCK_SIZE == 0. */
--    while (len) {
--        AES_encrypt(in, out, &ctx->enc);
--        in += AES_BLOCK_SIZE;
--        out += AES_BLOCK_SIZE;
--        len -= AES_BLOCK_SIZE;
--    }
--}
--
--static void do_aes_decrypt_ecb(const void *vctx,
--                               size_t len,
--                               uint8_t *out,
--                               const uint8_t *in)
--{
--    const QCryptoCipherBuiltinAESContext *ctx = vctx;
--
--    /* We have already verified that len % AES_BLOCK_SIZE == 0. */
--    while (len) {
--        AES_decrypt(in, out, &ctx->dec);
--        in += AES_BLOCK_SIZE;
--        out += AES_BLOCK_SIZE;
--        len -= AES_BLOCK_SIZE;
--    }
--}
--
--static void do_aes_encrypt_cbc(const AES_KEY *key,
--                               size_t len,
--                               uint8_t *out,
--                               const uint8_t *in,
--                               uint8_t *ivec)
--{
--    uint8_t tmp[AES_BLOCK_SIZE];
--    size_t n;
--
--    /* We have already verified that len % AES_BLOCK_SIZE == 0. */
--    while (len) {
--        for (n = 0; n < AES_BLOCK_SIZE; ++n) {
--            tmp[n] = in[n] ^ ivec[n];
--        }
--        AES_encrypt(tmp, out, key);
--        memcpy(ivec, out, AES_BLOCK_SIZE);
--        len -= AES_BLOCK_SIZE;
--        in += AES_BLOCK_SIZE;
--        out += AES_BLOCK_SIZE;
--    }
--}
--
--static void do_aes_decrypt_cbc(const AES_KEY *key,
--                               size_t len,
--                               uint8_t *out,
--                               const uint8_t *in,
--                               uint8_t *ivec)
--{
--    uint8_t tmp[AES_BLOCK_SIZE];
--    size_t n;
--
--    /* We have already verified that len % AES_BLOCK_SIZE == 0. */
--    while (len) {
--        memcpy(tmp, in, AES_BLOCK_SIZE);
--        AES_decrypt(in, out, key);
--        for (n = 0; n < AES_BLOCK_SIZE; ++n) {
--            out[n] ^= ivec[n];
--        }
--        memcpy(ivec, tmp, AES_BLOCK_SIZE);
--        len -= AES_BLOCK_SIZE;
--        in += AES_BLOCK_SIZE;
--        out += AES_BLOCK_SIZE;
--    }
--}
--
--static int qcrypto_cipher_aes_encrypt_ecb(QCryptoCipher *cipher,
--                                          const void *in, void *out,
--                                          size_t len, Error **errp)
--{
--    QCryptoCipherBuiltinAES *ctx
--        = container_of(cipher, QCryptoCipherBuiltinAES, base);
--
--    if (!qcrypto_length_check(len, AES_BLOCK_SIZE, errp)) {
--        return -1;
--    }
--    do_aes_encrypt_ecb(&ctx->key, len, out, in);
--    return 0;
--}
--
--static int qcrypto_cipher_aes_decrypt_ecb(QCryptoCipher *cipher,
--                                          const void *in, void *out,
--                                          size_t len, Error **errp)
--{
--    QCryptoCipherBuiltinAES *ctx
--        = container_of(cipher, QCryptoCipherBuiltinAES, base);
--
--    if (!qcrypto_length_check(len, AES_BLOCK_SIZE, errp)) {
--        return -1;
--    }
--    do_aes_decrypt_ecb(&ctx->key, len, out, in);
--    return 0;
--}
--
--static int qcrypto_cipher_aes_encrypt_cbc(QCryptoCipher *cipher,
--                                          const void *in, void *out,
--                                          size_t len, Error **errp)
--{
--    QCryptoCipherBuiltinAES *ctx
--        = container_of(cipher, QCryptoCipherBuiltinAES, base);
--
--    if (!qcrypto_length_check(len, AES_BLOCK_SIZE, errp)) {
--        return -1;
--    }
--    do_aes_encrypt_cbc(&ctx->key.enc, len, out, in, ctx->iv);
--    return 0;
--}
--
--static int qcrypto_cipher_aes_decrypt_cbc(QCryptoCipher *cipher,
--                                          const void *in, void *out,
--                                          size_t len, Error **errp)
--{
--    QCryptoCipherBuiltinAES *ctx
--        = container_of(cipher, QCryptoCipherBuiltinAES, base);
--
--    if (!qcrypto_length_check(len, AES_BLOCK_SIZE, errp)) {
--        return -1;
--    }
--    do_aes_decrypt_cbc(&ctx->key.dec, len, out, in, ctx->iv);
--    return 0;
--}
--
--static int qcrypto_cipher_aes_setiv(QCryptoCipher *cipher, const uint8_t *iv,
--                             size_t niv, Error **errp)
--{
--    QCryptoCipherBuiltinAES *ctx
--        = container_of(cipher, QCryptoCipherBuiltinAES, base);
--
--    if (niv != AES_BLOCK_SIZE) {
--        error_setg(errp, "IV must be %d bytes not %zu",
--                   AES_BLOCK_SIZE, niv);
--        return -1;
--    }
--
--    memcpy(ctx->iv, iv, AES_BLOCK_SIZE);
--    return 0;
--}
--
--static const struct QCryptoCipherDriver qcrypto_cipher_aes_driver_ecb = {
--    .cipher_encrypt = qcrypto_cipher_aes_encrypt_ecb,
--    .cipher_decrypt = qcrypto_cipher_aes_decrypt_ecb,
--    .cipher_setiv = qcrypto_cipher_no_setiv,
--    .cipher_free = qcrypto_cipher_ctx_free,
--};
--
--static const struct QCryptoCipherDriver qcrypto_cipher_aes_driver_cbc = {
--    .cipher_encrypt = qcrypto_cipher_aes_encrypt_cbc,
--    .cipher_decrypt = qcrypto_cipher_aes_decrypt_cbc,
--    .cipher_setiv = qcrypto_cipher_aes_setiv,
--    .cipher_free = qcrypto_cipher_ctx_free,
--};
--
--bool qcrypto_cipher_supports(QCryptoCipherAlgo alg,
--                             QCryptoCipherMode mode)
--{
--    switch (alg) {
--    case QCRYPTO_CIPHER_ALGO_AES_128:
--    case QCRYPTO_CIPHER_ALGO_AES_192:
--    case QCRYPTO_CIPHER_ALGO_AES_256:
--        switch (mode) {
--        case QCRYPTO_CIPHER_MODE_ECB:
--        case QCRYPTO_CIPHER_MODE_CBC:
--            return true;
--        default:
--            return false;
--        }
--        break;
--    default:
--        return false;
--    }
--}
--
--static QCryptoCipher *qcrypto_cipher_ctx_new(QCryptoCipherAlgo alg,
--                                             QCryptoCipherMode mode,
--                                             const uint8_t *key,
--                                             size_t nkey,
--                                             Error **errp)
--{
--    if (!qcrypto_cipher_validate_key_length(alg, mode, nkey, errp)) {
--        return NULL;
--    }
--
--    switch (alg) {
--    case QCRYPTO_CIPHER_ALGO_AES_128:
--    case QCRYPTO_CIPHER_ALGO_AES_192:
--    case QCRYPTO_CIPHER_ALGO_AES_256:
--        {
--            QCryptoCipherBuiltinAES *ctx;
--            const QCryptoCipherDriver *drv;
--
--            switch (mode) {
--            case QCRYPTO_CIPHER_MODE_ECB:
--                drv = &qcrypto_cipher_aes_driver_ecb;
--                break;
--            case QCRYPTO_CIPHER_MODE_CBC:
--                drv = &qcrypto_cipher_aes_driver_cbc;
--                break;
--            default:
--                goto bad_mode;
--            }
--
--            ctx = g_new0(QCryptoCipherBuiltinAES, 1);
--            ctx->base.driver = drv;
--
--            if (AES_set_encrypt_key(key, nkey * 8, &ctx->key.enc)) {
--                error_setg(errp, "Failed to set encryption key");
--                goto error;
--            }
--            if (AES_set_decrypt_key(key, nkey * 8, &ctx->key.dec)) {
--                error_setg(errp, "Failed to set decryption key");
--                goto error;
--            }
--
--            return &ctx->base;
--
--        error:
--            g_free(ctx);
--            return NULL;
--        }
--
--    default:
--        error_setg(errp,
--                   "Unsupported cipher algorithm %s",
--                   QCryptoCipherAlgo_str(alg));
--        return NULL;
--    }
--
-- bad_mode:
--    error_setg(errp, "Unsupported cipher mode %s",
--               QCryptoCipherMode_str(mode));
--    return NULL;
--}
-diff --git a/crypto/cipher-stub.c.inc b/crypto/cipher-stub.c.inc
-new file mode 100644
-index 0000000000..2574882d89
---- /dev/null
-+++ b/crypto/cipher-stub.c.inc
-@@ -0,0 +1,41 @@
-+/*
-+ * QEMU Crypto cipher built-in algorithms
-+ *
-+ * Copyright (c) 2015 Red Hat, Inc.
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2.1 of the License, or (at your option) any later version.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-+ *
-+ */
-+
-+bool qcrypto_cipher_supports(QCryptoCipherAlgo alg,
-+                             QCryptoCipherMode mode)
-+{
-+    return false;
-+}
-+
-+static QCryptoCipher *qcrypto_cipher_ctx_new(QCryptoCipherAlgo alg,
-+                                             QCryptoCipherMode mode,
-+                                             const uint8_t *key,
-+                                             size_t nkey,
-+                                             Error **errp)
-+{
-+    if (!qcrypto_cipher_validate_key_length(alg, mode, nkey, errp)) {
-+        return NULL;
-+    }
-+
-+    error_setg(errp,
-+               "Unsupported cipher algorithm %s, no crypto library enabled in build",
-+               QCryptoCipherAlgo_str(alg));
-+    return NULL;
-+}
-diff --git a/crypto/cipher.c b/crypto/cipher.c
-index c14a8b8a11..229710f76b 100644
---- a/crypto/cipher.c
-+++ b/crypto/cipher.c
-@@ -145,7 +145,7 @@ qcrypto_cipher_validate_key_length(QCryptoCipherAlgo alg,
- #elif defined CONFIG_GNUTLS_CRYPTO
- #include "cipher-gnutls.c.inc"
- #else
--#include "cipher-builtin.c.inc"
-+#include "cipher-stub.c.inc"
- #endif
- 
- QCryptoCipher *qcrypto_cipher_new(QCryptoCipherAlgo alg,
--- 
-2.49.0
-
+Cheers,
+Gustavo
 
