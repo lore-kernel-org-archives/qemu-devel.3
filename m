@@ -4,92 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2268FC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 10:11:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53BC9C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 10:15:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEQ7y-00030H-HV; Mon, 12 May 2025 06:11:18 -0400
+	id 1uEQBw-0003ub-6w; Mon, 12 May 2025 06:15:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uEQ7w-0002zu-Ez; Mon, 12 May 2025 06:11:16 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uEQBo-0003u2-NM
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 06:15:16 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uEQ7u-0002fT-B1; Mon, 12 May 2025 06:11:16 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 25286120D62;
- Mon, 12 May 2025 13:11:03 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7D5B82099C2;
- Mon, 12 May 2025 13:11:09 +0300 (MSK)
-Message-ID: <3fe33f8e-79c1-4757-8e06-f2aedd652222@tls.msk.ru>
-Date: Mon, 12 May 2025 13:11:09 +0300
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uEQBi-000325-6M
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 06:15:16 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4ZwwMg5ncBz6M4mX;
+ Mon, 12 May 2025 18:10:07 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 86ADD1402EA;
+ Mon, 12 May 2025 18:14:46 +0800 (CST)
+Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 12 May
+ 2025 12:14:45 +0200
+Date: Mon, 12 May 2025 11:14:44 +0100
+To: "Michael S. Tsirkin" <mst@redhat.com>
+CC: <linux-cxl@vger.kernel.org>, <qemu-devel@nongnu.org>,
+ <linuxarm@huawei.com>, <fan.ni@samsung.com>, Yuquan Wang
+ <wangyuquan1236@phytium.com.cn>, "Arpit Kumar" <arpit1.kumar@samsung.com>,
+ Sweta Kumari <s5.kumari@samsung.com>, Vinayak Holikatti
+ <vinayak.kh@samsung.com>, Davidlohr Bueso <dave@stgolabs.net>, Ajay Joshi
+ <ajay.opensrc@micron.com>
+Subject: Re: [PATCH qemu 7/8] hw/cxl/cxl-mailbox-utils: Added support for
+ Get Log Capabilities (Opcode 0402h)
+Message-ID: <20250512111444.00007be0@huawei.com>
+In-Reply-To: <20250512043011-mutt-send-email-mst@kernel.org>
+References: <20250305092501.191929-1-Jonathan.Cameron@huawei.com>
+ <20250305092501.191929-8-Jonathan.Cameron@huawei.com>
+ <20250512043011-mutt-send-email-mst@kernel.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio-net: Copy all for dhclient workaround
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org,
- Antoine Damhet <adamhet@scaleway.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- devel@daynix.com, qemu-stable@nongnu.org
-References: <20250405-mtu-v1-1-08c5910fa6fd@daynix.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250405-mtu-v1-1-08c5910fa6fd@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,28 +75,231 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05.04.2025 11:04, Akihiko Odaki wrote:
-> The goal of commit 7987d2be5a8b ("virtio-net: Copy received header to
-> buffer") was to remove the need to patch the (const) input buffer with a
-> recomputed UDP checksum by copying headers to a RW region and inject the
-> checksum there. The patch computed the checksum only from the header
-> fields (missing the rest of the payload) producing an invalid one
-> and making guests fail to acquire a DHCP lease.
-> 
-> Fix the issue by copying the entire packet instead of only copying the
-> headers.
-> 
-> Fixes: 7987d2be5a8b ("virtio-net: Copy received header to buffer")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2727
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+On Mon, 12 May 2025 04:42:37 -0400
+"Michael S. Tsirkin" <mst@redhat.com> wrote:
 
-Ping?  Is this change still needed?
+> On Wed, Mar 05, 2025 at 09:24:58AM +0000, Jonathan Cameron wrote:
+> > From: Arpit Kumar <arpit1.kumar@samsung.com>
+> >=20
+> > CXL spec 3.2 section 8.2.10.5.3 describes Get Log Capabilities.
+> > It provides log capabilities supported by specified log.
+> >=20
+> > Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
+> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > ---
+> >  include/hw/cxl/cxl_device.h  | 20 ++++++++++++++++
+> >  include/hw/cxl/cxl_mailbox.h |  5 ++++
+> >  hw/cxl/cxl-mailbox-utils.c   | 45 ++++++++++++++++++++++++++++++++++++
+> >  3 files changed, 70 insertions(+)
+> >=20
+> > diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> > index ed6cd50c67..87a376c982 100644
+> > --- a/include/hw/cxl/cxl_device.h
+> > +++ b/include/hw/cxl/cxl_device.h
+> > @@ -133,6 +133,18 @@ typedef enum {
+> >      CXL_MBOX_MAX =3D 0x20
+> >  } CXLRetCode;
+> > =20
+> > +/* types of logs */
+> > +typedef enum {
+> > +    CXL_LOG_COMMAND_EFFECT,
+> > +    CXL_LOG_VENDOR_DEBUG,
+> > +    CXL_LOG_COMPONENT_STATE_DUMP,
+> > +    CXL_LOG_ERROR_CHECK_SCRUB,
+> > +    CXL_LOG_MEDIA_TEST_CAPABILITY,
+> > +    CXL_LOG_MEDIA_TEST_RESULTS_SHORT,
+> > +    CXL_LOG_MEDIA_TEST_RESULTS_LONG,
+> > +    MAX_LOG_TYPE
+> > +} CXLLogType;
+> > +
+> >  typedef struct CXLCCI CXLCCI;
+> >  typedef struct cxl_device_state CXLDeviceState;
+> >  struct cxl_cmd;
+> > @@ -163,6 +175,11 @@ typedef struct CXLEventLog {
+> >      QSIMPLEQ_HEAD(, CXLEvent) events;
+> >  } CXLEventLog;
+> > =20
+> > +typedef struct CXLLogCapabilities {
+> > +    uint32_t param_flags;
+> > +    QemuUUID uuid;
+> > +} CXLLogCapabilities;
+> > +
+> >  typedef struct CXLCCI {
+> >      struct cxl_cmd cxl_cmd_set[256][256];
+> >      struct cel_log {
+> > @@ -171,6 +188,9 @@ typedef struct CXLCCI {
+> >      } cel_log[1 << 16];
+> >      size_t cel_size;
+> > =20
+> > +    /* get log capabilities */
+> > +    const CXLLogCapabilities *supported_log_cap;
+> > +
+> >      /* background command handling (times in ms) */
+> >      struct {
+> >          uint16_t opcode;
+> > diff --git a/include/hw/cxl/cxl_mailbox.h b/include/hw/cxl/cxl_mailbox.h
+> > index 9008402d1c..8e1c7c5f15 100644
+> > --- a/include/hw/cxl/cxl_mailbox.h
+> > +++ b/include/hw/cxl/cxl_mailbox.h
+> > @@ -16,4 +16,9 @@
+> >  #define CXL_MBOX_BACKGROUND_OPERATION (1 << 6)
+> >  #define CXL_MBOX_BACKGROUND_OPERATION_ABORT (1 << 7)
+> > =20
+> > +#define CXL_LOG_CAP_CLEAR_SUPPORTED (1 << 0)
+> > +#define CXL_LOG_CAP_POPULATE_SUPPORTED (1 << 1)
+> > +#define CXL_LOG_CAP_AUTO_POPULATE_SUPPORTED (1 << 2)
+> > +#define CXL_LOG_CAP_PERSISTENT_COLD_RESET_SUPPORTED (1 << 3)
+> > +
+> >  #endif
+> > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> > index 299f232f26..f35fc4f112 100644
+> > --- a/hw/cxl/cxl-mailbox-utils.c
+> > +++ b/hw/cxl/cxl-mailbox-utils.c
+> > @@ -81,6 +81,7 @@ enum {
+> >      LOGS        =3D 0x04,
+> >          #define GET_SUPPORTED 0x0
+> >          #define GET_LOG       0x1
+> > +        #define GET_LOG_CAPABILITIES   0x2
+> >      FEATURES    =3D 0x05,
+> >          #define GET_SUPPORTED 0x0
+> >          #define GET_FEATURE   0x1
+> > @@ -1068,6 +1069,43 @@ static CXLRetCode cmd_logs_get_log(const struct =
+cxl_cmd *cmd,
+> >      return CXL_MBOX_SUCCESS;
+> >  }
+> > =20
+> > +static const struct CXLLogCapabilities *find_log_index(QemuUUID *uuid,=
+ CXLCCI *cci)
+> > +{
+> > +    for (int i =3D CXL_LOG_COMMAND_EFFECT; i < MAX_LOG_TYPE; i++) {
+> > +        if (qemu_uuid_is_equal(uuid,
+> > +            &cci->supported_log_cap[i].uuid)) {
+> > +                return &cci->supported_log_cap[i];
+> > +        }
+> > +    }
+> > +    return NULL;
+> > +}
+> > +
+> > +/* CXL r3.2 Section 8.2.10.5.3: Get Log Capabilities (Opcode 0402h) */
+> > +static CXLRetCode cmd_logs_get_log_capabilities(const struct cxl_cmd *=
+cmd,
+> > +                                                uint8_t *payload_in,
+> > +                                                size_t len_in,
+> > +                                                uint8_t *payload_out,
+> > +                                                size_t *len_out,
+> > +                                                CXLCCI *cci)
+> > +{
+> > +    const CXLLogCapabilities *cap;
+> > +    struct {
+> > +        QemuUUID uuid;
+> > +    } QEMU_PACKED QEMU_ALIGNED(8) *get_log_capabilities_in =3D (void *=
+)payload_in;
+> > +
+> > +    uint32_t *get_log_capabilities_out =3D (uint32_t *)payload_out;
+> > +
+> > +    cap =3D find_log_index(&get_log_capabilities_in->uuid, cci);
+> > +    if (!cap) {
+> > +        return CXL_MBOX_INVALID_LOG;
+> > +    }
+> > +
+> > +    memcpy(get_log_capabilities_out, &cap->param_flags,
+> > +           sizeof(cap->param_flags));
+> > +    *len_out =3D sizeof(*get_log_capabilities_out);
+> > +    return CXL_MBOX_SUCCESS;
+> > +}
+> > +
+> >  /* CXL r3.1 section 8.2.9.6: Features */
+> >  /*
+> >   * Get Supported Features output payload
+> > @@ -3253,6 +3291,8 @@ static const struct cxl_cmd cxl_cmd_set[256][256]=
+ =3D {
+> >      [LOGS][GET_SUPPORTED] =3D { "LOGS_GET_SUPPORTED", cmd_logs_get_sup=
+ported,
+> >                                0, 0 },
+> >      [LOGS][GET_LOG] =3D { "LOGS_GET_LOG", cmd_logs_get_log, 0x18, 0 },
+> > +    [LOGS][GET_LOG_CAPABILITIES] =3D { "LOGS_GET_LOG_CAPABILITIES",
+> > +                                     cmd_logs_get_log_capabilities, 0x=
+10, 0 },
+> >      [FEATURES][GET_SUPPORTED] =3D { "FEATURES_GET_SUPPORTED",
+> >                                    cmd_features_get_supported, 0x8, 0 },
+> >      [FEATURES][GET_FEATURE] =3D { "FEATURES_GET_FEATURE",
+> > @@ -3512,10 +3552,15 @@ static void cxl_rebuild_cel(CXLCCI *cci)
+> >      }
+> >  }
+> > =20
+> > +static const struct CXLLogCapabilities cxl_get_log_cap[MAX_LOG_TYPE] =
+=3D {
+> > +    [CXL_LOG_COMMAND_EFFECT] =3D { .param_flags =3D 0, .uuid =3D cel_u=
+uid },
+> > +};
+> > + =20
+>=20
+>=20
+> causes ci build failures:
+>=20
+> https://gitlab.com/mstredhat/qemu/-/jobs/9999980051
+>=20
+> ../hw/cxl/cxl-mailbox-utils.c:3556:60: error: initializer element is not =
+constant
+>      [CXL_LOG_COMMAND_EFFECT] =3D { .param_flags =3D 0, .uuid =3D cel_uui=
+d },
+>                                                             ^~~~~~~~
+> ../hw/cxl/cxl-mailbox-utils.c:3556:60: note: (near initialization for =E2=
+=80=98cxl_get_log_cap[0].uuid=E2=80=99)
+>=20
+>=20
 
-Thanks,
+Looks good. Thanks for fixing it up!
+> Fixed it up like this:
+>=20
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index f35fc4f112..13d26e391b 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -992,9 +992,10 @@ static CXLRetCode cmd_timestamp_set(const struct cxl=
+_cmd *cmd,
+>  }
+> =20
+>  /* CXL r3.1 Section 8.2.9.5.2.1: Command Effects Log (CEL) */
+> -static const QemuUUID cel_uuid =3D {
+> -    .data =3D UUID(0x0da9c0b5, 0xbf41, 0x4b78, 0x8f, 0x79,
+> +#define CEL_UUID UUID(0x0da9c0b5, 0xbf41, 0x4b78, 0x8f, 0x79, \
+>                   0x96, 0xb1, 0x62, 0x3b, 0x3f, 0x17)
+> +static const QemuUUID cel_uuid =3D {
+> +    .data =3D CEL_UUID
+>  };
+> =20
+>  /* CXL r3.1 Section 8.2.9.5.1: Get Supported Logs (Opcode 0400h) */
+> @@ -3553,7 +3554,7 @@ static void cxl_rebuild_cel(CXLCCI *cci)
+>  }
+> =20
+>  static const struct CXLLogCapabilities cxl_get_log_cap[MAX_LOG_TYPE] =3D=
+ {
+> -    [CXL_LOG_COMMAND_EFFECT] =3D { .param_flags =3D 0, .uuid =3D cel_uui=
+d },
+> +    [CXL_LOG_COMMAND_EFFECT] =3D { .param_flags =3D 0, .uuid =3D CEL_UUI=
+D },
+>  };
+> =20
+>  void cxl_init_cci(CXLCCI *cci, size_t payload_max)
+>=20
+>=20
+> >  void cxl_init_cci(CXLCCI *cci, size_t payload_max)
+> >  {
+> >      cci->payload_max =3D payload_max;
+> >      cxl_rebuild_cel(cci);
+> > +    cci->supported_log_cap =3D cxl_get_log_cap;
+> > =20
+> >      cci->bg.complete_pct =3D 0;
+> >      cci->bg.starttime =3D 0;
+> > --=20
+> > 2.43.0 =20
+>=20
+>=20
 
-/mjt
 
