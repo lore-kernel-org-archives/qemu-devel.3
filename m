@@ -4,102 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6391C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 08:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9480EC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 08:20:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEOJD-0006Pf-QY; Mon, 12 May 2025 04:14:48 -0400
+	id 1uEONt-0007m8-1w; Mon, 12 May 2025 04:19:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEOJC-0006PE-Hi
- for qemu-devel@nongnu.org; Mon, 12 May 2025 04:14:46 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEOJ9-0007Yg-Vj
- for qemu-devel@nongnu.org; Mon, 12 May 2025 04:14:46 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43cf3192f3bso44083415e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 01:14:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747037682; x=1747642482; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Mll3exlrXuuAdA7yJ27rstMprE+JfW+limRUrWGgwgs=;
- b=CoBNuwnHiKpt9v77eypE0bay2Bi62lxquY2ASnAkcsVuYkScomBkHQ5wZJvFFtaM0f
- 4UxT1D3wKYgDFZYPXosjIUmYAGi+Ljm+5xetyr49FnEjmv+ChssPEJhdGSumiHia8PNj
- 8IO9WkLDOL48w24Lfigxr19Wjem+EDqqQGFMEcQTLygRiD5m1weFRkvtjhr+dOdUtUOw
- ieqIzdQpEOD2fpU1JojeFlUTKwGN7S2Hlfkplv5jHhMrHMfbTAO+NIs10AEnDjzV6Uay
- gft1XFGTLNj55b0Cdg8aVRFrYJ8i10vVvv9SWGerVOpWbmkCQ3lZFDjsdsCk0l4JyANt
- HbxQ==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uEONg-0007gq-KL
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 04:19:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uEONd-00087u-L1
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 04:19:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747037958;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2fvSZBSz7SW+rN/UmgDYVlAuf9XOlhIq2nJC4JEI3cs=;
+ b=BJ9V0/OMdwJUs5GDKQuX1TO8YIEiDxkd5hDcGN6/JnQCIQX3fDjTdoD8wx5eG4IHcXAb5L
+ ZcuDZNlxjRO9KDm8EtZBMYv9pkjrstYGrXxVZABpjQ63kigq8ozM/KLjoggeVxIwTzp+El
+ XiMhUNVPrHcSbVdcp3N+m117ZDOvNWM=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-185-qYPI1ncuMoWSmGDKD3Xmfw-1; Mon, 12 May 2025 04:19:16 -0400
+X-MC-Unique: qYPI1ncuMoWSmGDKD3Xmfw-1
+X-Mimecast-MFC-AGG-ID: qYPI1ncuMoWSmGDKD3Xmfw_1747037955
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a0b9bbfa5dso1340479f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 01:19:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747037682; x=1747642482;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Mll3exlrXuuAdA7yJ27rstMprE+JfW+limRUrWGgwgs=;
- b=pre9SrAf7/bcZV0waH4SZq1nwhC7y/LYGB7tnX1ByOXVB/Wo1w85yDHhBHZR7zKuvg
- AGXPd+IHBR1sODnXzsA9AB9zReItazj+JwTXwiwWnmOFNGDq2LliADPnxLOeZ4HNtT1R
- aEnFuWYQabtq7mcVXwEAYgN6uYfsPghT2mykfm3yoUhcHgkp2+eeV4b9xy55OoM3XO3/
- scUy+1sLZJ9ZSAQ59jCcgQrtLL6kWPgcthmNJeCRHghesUdJAqo1y5eECWWLseC7i4Fd
- bHWehDlzoVXVb3LZ+e2+Uw7gsIrKKsWV2f0q4ydIr8Bn1FUj9NNo4msP/+ASdAMR4uz/
- K0NQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXQBHKk9y0ejL6agrxnWQiNsYUAxKmHLIySzGuAKe58JZKg04g2X+u/yHWr1xTGspeeubgTiSywJ+XN@nongnu.org
-X-Gm-Message-State: AOJu0Yy9LjHnX81H3g9aNb3k67jt9s5yyCbFjk6Dq0pAD50l5yNO+pro
- 6NkMuMoi197EhcNjnaoZKEM4BoB//t+kn41kITCrESxh8ZpMkQJ2QgXasR4f0v2Zo3W6bd+Jywy
- 2iTih+Q==
-X-Gm-Gg: ASbGnct3I5j/BxkrowYCrwOxZ0RnRQts9pXvNac7FdJ8kzarEcbXWHdjUwaxK6gs/Hl
- 03vpZ3xI51yEHVV4HX3sGsoILNXGXs4flsGiu8TVCg/fol67BwlEhrQlcxx6UOWUT5n5Cygkwe+
- xeNwlZz/ZPVpRoruO/89Zb74i8UeG6lLbawYTg8DHMMMte3dD0hPAj12vLxekLN3qTv0ryAd2Zi
- YcJstK3bQnbYgZfYKSFN1owyKl5vXsiDt1BJg88pOtOOQ5k+7szHeUvUb9hoRnugg6hMxRvv9yx
- SSwy0g+foersHcWFlQsrEYbdrxkOX7mnvn3w6T5QZbg7py+WylFaXl6PJBXgAS4v3BTVsSyoYNb
- miqmP9ii5tw5jr89VyBEjoz0OYuLaQFftiVG0nxxxU8SUdQ==
-X-Google-Smtp-Source: AGHT+IGwSeax9MK3+szqdQnNhXnJUfDr3088Irg2G41/NyvDV9chg+j2xSAon7PK0bMHDMv8PGqGgQ==
-X-Received: by 2002:a05:600c:c0c3:20b0:442:e0e0:250 with SMTP id
- 5b1f17b1804b1-442e0e003famr30777745e9.29.1747037681993; 
- Mon, 12 May 2025 01:14:41 -0700 (PDT)
-Received: from [172.19.170.213] (54.red-95-127-42.staticip.rima-tde.net.
- [95.127.42.54]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442d67df639sm116711395e9.13.2025.05.12.01.14.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 May 2025 01:14:41 -0700 (PDT)
-Message-ID: <b8f6eb5e-1a6b-4b53-aee3-f63276de6e0e@linaro.org>
-Date: Mon, 12 May 2025 10:14:37 +0200
+ d=1e100.net; s=20230601; t=1747037955; x=1747642755;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2fvSZBSz7SW+rN/UmgDYVlAuf9XOlhIq2nJC4JEI3cs=;
+ b=SoIdbY6tXQ4cSVE6vdypF7bJXPgMPTqcPEHh6lWVmfTYRTZz8cY0zrn0xgAc5OOApT
+ 4TGXRWBCLT/42KcRD43rlswxdLVbI1nJFg8TA0DZo0y8tKL5EKtBAZb6ezNbDLw2+X0H
+ WY/WKTUoBQxv9unx08Ioci2f7P+p0soFEC1UrC8wVhoItCl9RAnvLMui6FWH4lgee2Xo
+ rrbmvVvSMALSPXax7oSJsRhKSntySkydLYCp/li6hs12EtzPIzjy2f8IgJsU9LyjzyWT
+ saHMJz9X94iUn87cjtoQ/rKJW8fYdelz5qhkFB1+tENtKdw7inZNIN4kDiDB4R/zDBmn
+ MhCg==
+X-Gm-Message-State: AOJu0YzASKjtjrebQzaOJVZJGG5+Lbh1s2904lLQxfdJ9C6ju+a+WACe
+ UAajuJ4ZpSSJWWK40uXyDMfFpxHZyqF2zryu4HK0fMgcmJ52/qsMxvmFQiB7129PV2Dhll4sqGJ
+ qNbuS9MZbW5ZuK1eircXHJIeq8k8OTmcDuI7OhbrRhg+OlMleGoI9
+X-Gm-Gg: ASbGncs/KCPrVYdfSTEC2whENkAugF/iOaSzUjbVGYKuBhB1sQ87MKH6N1dJZJfv3AL
+ 5rLZKnoTC584cZm+XTFtIvoQMdzjVMI8lxenSMZzC5FfaDr7OPHzUz7hWrqqx3Js4tNVnoEuZt2
+ A151DgiGwsXHQ5E01LbloL2LCaHF88V8ZjjB1059789ld31ER1Mv7oC7myr9f13xejBjnaZnk4U
+ LUMuFVejuEK2CHqDUD1M5Py/0a8qxbNeYPQ835i3sooGfk1QOTLh0hCpBS+CmTa/a70m4XUmxS6
+ /V9VXBU8Uqn2SfF7csoFO8vhBNU9hefb
+X-Received: by 2002:a05:6000:401e:b0:3a0:aee0:c647 with SMTP id
+ ffacd0b85a97d-3a1f64374e1mr9506406f8f.17.1747037955348; 
+ Mon, 12 May 2025 01:19:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGgHeilnFjVtlzQeFAWYCb/Ncwx/SQ6IkBm/EN6BrcPThYXSIr2QrCJWo6KgNXFdjoS9BV4Tg==
+X-Received: by 2002:a05:6000:401e:b0:3a0:aee0:c647 with SMTP id
+ ffacd0b85a97d-3a1f64374e1mr9506370f8f.17.1747037954950; 
+ Mon, 12 May 2025 01:19:14 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-442d6858626sm118499335e9.27.2025.05.12.01.19.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 May 2025 01:19:14 -0700 (PDT)
+Date: Mon, 12 May 2025 10:19:12 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ kvm@vger.kernel.org, Sergio Lopez <slp@redhat.com>, Gerd Hoffmann
+ <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Laurent
+ Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, Yi Liu
+ <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, qemu-riscv@nongnu.org, Weiwei Li
+ <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>, Zhao Liu
+ <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>, Helge Deller
+ <deller@gmx.de>, Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha
+ <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>, Paolo Bonzini
+ <pbonzini@redhat.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ qemu-arm@nongnu.org, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
+ <marcandre.lureau@redhat.com>, Huacai Chen <chenhuacai@kernel.org>, Jason
+ Wang <jasowang@redhat.com>, Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v4 11/27] hw/i386/pc: Remove pc_compat_2_6[] array
+Message-ID: <20250512101912.6900beaf@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250508133550.81391-12-philmd@linaro.org>
+References: <20250508133550.81391-1-philmd@linaro.org>
+ <20250508133550.81391-12-philmd@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/19] hw/net/e1000: Remove unused E1000_FLAG_MAC flag
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, qemu-block@nongnu.org,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, John Snow <jsnow@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-References: <20250506143905.4961-1-philmd@linaro.org>
- <20250506143905.4961-7-philmd@linaro.org>
- <a47270aa-3de5-4474-80ea-bc2d126d6442@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <a47270aa-3de5-4474-80ea-bc2d126d6442@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.587,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,122 +127,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/25 08:00, Thomas Huth wrote:
-> On 06/05/2025 16.38, Philippe Mathieu-Daudé wrote:
->> E1000_FLAG_MAC was only used by the hw_compat_2_4[] array,
->> via the 'extra_mac_registers=off' property. We removed all
->> machines using that array, lets remove all the code around
->> E1000_FLAG_MAC, including the MAC_ACCESS_FLAG_NEEDED enum,
->> similarly to commit fa4ec9ffda7 ("e1000: remove old
->> compatibility code").
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
->> ---
->>   hw/net/e1000.c | 72 ++++++++++----------------------------------------
->>   1 file changed, 14 insertions(+), 58 deletions(-)
->>
->> diff --git a/hw/net/e1000.c b/hw/net/e1000.c
->> index cba4999e6d0..e0310aef872 100644
->> --- a/hw/net/e1000.c
->> +++ b/hw/net/e1000.c
->> @@ -127,10 +127,8 @@ struct E1000State_st {
->>       QEMUTimer *flush_queue_timer;
->>   /* Compatibility flags for migration to/from qemu 1.3.0 and older */
->> -#define E1000_FLAG_MAC_BIT 2
->>   #define E1000_FLAG_TSO_BIT 3
->>   #define E1000_FLAG_VET_BIT 4
->> -#define E1000_FLAG_MAC (1 << E1000_FLAG_MAC_BIT)
->>   #define E1000_FLAG_TSO (1 << E1000_FLAG_TSO_BIT)
->>   #define E1000_FLAG_VET (1 << E1000_FLAG_VET_BIT)
->> @@ -1210,54 +1208,24 @@ static const writeops macreg_writeops[] = {
->>   enum { NWRITEOPS = ARRAY_SIZE(macreg_writeops) };
->> -enum { MAC_ACCESS_PARTIAL = 1, MAC_ACCESS_FLAG_NEEDED = 2 };
->> +enum { MAC_ACCESS_PARTIAL = 1 };
->> -#define markflag(x)    ((E1000_FLAG_##x << 2) | MAC_ACCESS_FLAG_NEEDED)
->>   /* In the array below the meaning of the bits is: [f|f|f|f|f|f|n|p]
->>    * f - flag bits (up to 6 possible flags)
->>    * n - flag needed
->>    * p - partially implenented */
->>   static const uint8_t mac_reg_access[0x8000] = {
->> -    [IPAV]    = markflag(MAC),    [WUC]     = markflag(MAC),
->> -    [IP6AT]   = markflag(MAC),    [IP4AT]   = markflag(MAC),
->> -    [FFVT]    = markflag(MAC),    [WUPM]    = markflag(MAC),
->> -    [ECOL]    = markflag(MAC),    [MCC]     = markflag(MAC),
->> -    [DC]      = markflag(MAC),    [TNCRS]   = markflag(MAC),
->> -    [RLEC]    = markflag(MAC),    [XONRXC]  = markflag(MAC),
->> -    [XOFFTXC] = markflag(MAC),    [RFC]     = markflag(MAC),
->> -    [TSCTFC]  = markflag(MAC),    [MGTPRC]  = markflag(MAC),
->> -    [WUS]     = markflag(MAC),    [AIT]     = markflag(MAC),
->> -    [FFLT]    = markflag(MAC),    [FFMT]    = markflag(MAC),
->> -    [SCC]     = markflag(MAC),    [FCRUC]   = markflag(MAC),
->> -    [LATECOL] = markflag(MAC),    [COLC]    = markflag(MAC),
->> -    [SEQEC]   = markflag(MAC),    [CEXTERR] = markflag(MAC),
->> -    [XONTXC]  = markflag(MAC),    [XOFFRXC] = markflag(MAC),
->> -    [RJC]     = markflag(MAC),    [RNBC]    = markflag(MAC),
->> -    [MGTPDC]  = markflag(MAC),    [MGTPTC]  = markflag(MAC),
->> -    [RUC]     = markflag(MAC),    [ROC]     = markflag(MAC),
->> -    [GORCL]   = markflag(MAC),    [GORCH]   = markflag(MAC),
->> -    [GOTCL]   = markflag(MAC),    [GOTCH]   = markflag(MAC),
->> -    [BPRC]    = markflag(MAC),    [MPRC]    = markflag(MAC),
->> -    [TSCTC]   = markflag(MAC),    [PRC64]   = markflag(MAC),
->> -    [PRC127]  = markflag(MAC),    [PRC255]  = markflag(MAC),
->> -    [PRC511]  = markflag(MAC),    [PRC1023] = markflag(MAC),
->> -    [PRC1522] = markflag(MAC),    [PTC64]   = markflag(MAC),
->> -    [PTC127]  = markflag(MAC),    [PTC255]  = markflag(MAC),
->> -    [PTC511]  = markflag(MAC),    [PTC1023] = markflag(MAC),
->> -    [PTC1522] = markflag(MAC),    [MPTC]    = markflag(MAC),
->> -    [BPTC]    = markflag(MAC),
->> -
->> -    [TDFH]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
->> -    [TDFT]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
->> -    [TDFHS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
->> -    [TDFTS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
->> -    [TDFPC] = markflag(MAC) | MAC_ACCESS_PARTIAL,
->> -    [RDFH]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
->> -    [RDFT]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
->> -    [RDFHS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
->> -    [RDFTS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
->> -    [RDFPC] = markflag(MAC) | MAC_ACCESS_PARTIAL,
->> -    [PBM]   = markflag(MAC) | MAC_ACCESS_PARTIAL,
->> +    [TDFH]  = MAC_ACCESS_PARTIAL,
->> +    [TDFT]  = MAC_ACCESS_PARTIAL,
->> +    [TDFHS] = MAC_ACCESS_PARTIAL,
->> +    [TDFTS] = MAC_ACCESS_PARTIAL,
->> +    [TDFPC] = MAC_ACCESS_PARTIAL,
->> +    [RDFH]  = MAC_ACCESS_PARTIAL,
->> +    [RDFT]  = MAC_ACCESS_PARTIAL,
->> +    [RDFHS] = MAC_ACCESS_PARTIAL,
->> +    [RDFTS] = MAC_ACCESS_PARTIAL,
->> +    [RDFPC] = MAC_ACCESS_PARTIAL,
->> +    [PBM]   = MAC_ACCESS_PARTIAL,
->>   };
->>   static void
->> @@ -1268,8 +1236,7 @@ e1000_mmio_write(void *opaque, hwaddr addr, 
->> uint64_t val,
->>       unsigned int index = (addr & 0x1ffff) >> 2;
->>       if (index < NWRITEOPS && macreg_writeops[index]) {
->> -        if (!(mac_reg_access[index] & MAC_ACCESS_FLAG_NEEDED)
->> -            || (s->compat_flags & (mac_reg_access[index] >> 2))) {
->> +        if (s->compat_flags & (mac_reg_access[index] >> 2)) {
->>               if (mac_reg_access[index] & MAC_ACCESS_PARTIAL) {
->>                   DBGOUT(GENERAL, "Writing to register at offset: 
->> 0x%08x. "
->>                          "It is not fully implemented.\n", index<<2);
->> @@ -1295,8 +1262,7 @@ e1000_mmio_read(void *opaque, hwaddr addr, 
->> unsigned size)
->>       unsigned int index = (addr & 0x1ffff) >> 2;
->>       if (index < NREADOPS && macreg_readops[index]) {
->> -        if (!(mac_reg_access[index] & MAC_ACCESS_FLAG_NEEDED)
->> -            || (s->compat_flags & (mac_reg_access[index] >> 2))) {
->> +        if (s->compat_flags & (mac_reg_access[index] >> 2)) {
->>               if (mac_reg_access[index] & MAC_ACCESS_PARTIAL) {
->>                   DBGOUT(GENERAL, "Reading register at offset: 0x%08x. "
->>                          "It is not fully implemented.\n", index<<2);
-> 
-> There still seems to be something wrong in this patch, tests/qtest/pxe- 
-> test is failing when this is applied ... could you please have another 
-> look?
+On Thu,  8 May 2025 15:35:34 +0200
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-Fixed by not removing MAC_ACCESS_FLAG_NEEDED, thanks.
+> The pc_compat_2_6[] array was only used by the pc-q35-2.6
+> and pc-i440fx-2.6 machines, which got removed. Remove it.
+
+see my comment in 1/27
+
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>  include/hw/i386/pc.h | 3 ---
+>  hw/i386/pc.c         | 8 --------
+>  2 files changed, 11 deletions(-)
+>=20
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index a3de3e9560d..4fb2033bc54 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -292,9 +292,6 @@ extern const size_t pc_compat_2_8_len;
+>  extern GlobalProperty pc_compat_2_7[];
+>  extern const size_t pc_compat_2_7_len;
+> =20
+> -extern GlobalProperty pc_compat_2_6[];
+> -extern const size_t pc_compat_2_6_len;
+> -
+>  #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+>      static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
+>                                                   const void *data) \
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 4e6fe68e2e0..65a11ea8f99 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -251,14 +251,6 @@ GlobalProperty pc_compat_2_7[] =3D {
+>  };
+>  const size_t pc_compat_2_7_len =3D G_N_ELEMENTS(pc_compat_2_7);
+> =20
+> -GlobalProperty pc_compat_2_6[] =3D {
+> -    { TYPE_X86_CPU, "cpuid-0xb", "off" },
+> -    { "vmxnet3", "romfile", "" },
+> -    { TYPE_X86_CPU, "fill-mtrr-mask", "off" },
+> -    { "apic-common", "legacy-instance-id", "on", }
+> -};
+> -const size_t pc_compat_2_6_len =3D G_N_ELEMENTS(pc_compat_2_6);
+> -
+>  /*
+>   * @PC_FW_DATA:
+>   * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
+
 
