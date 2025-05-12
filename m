@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 074DEC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 03:18:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD50CC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 03:18:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEJcD-0005wz-OQ; Sun, 11 May 2025 23:14:05 -0400
+	id 1uEJcH-0006Ft-4t; Sun, 11 May 2025 23:14:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uEJbS-0001Xh-5r; Sun, 11 May 2025 23:13:18 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1uEJc7-0005Mj-7V; Sun, 11 May 2025 23:13:59 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uEJbQ-0006yO-Hd; Sun, 11 May 2025 23:13:17 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-306b6ae4fb2so3614546a91.3; 
- Sun, 11 May 2025 20:13:15 -0700 (PDT)
+ id 1uEJc4-00073w-F2; Sun, 11 May 2025 23:13:58 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7418e182864so2902054b3a.1; 
+ Sun, 11 May 2025 20:13:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747019594; x=1747624394; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747019634; x=1747624434; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HsBj22uLdU+RqO7TIsmV1n+sWxv+uojwlrhxC1hIb4I=;
- b=MNUTHLO6NiDYJQfeg3120yU8HK8eQdIFpfAzuumgKfOoHUaRAcSjQXwWkVQBlBk8Fi
- Ks//bLoHUH8IGEpTQkVMFLLymRnArrT8UuOv9GkczoSzUtbmiv9ul96+qlwp1sUqEPC6
- 8qb9xy63n/1WnsA8kud3JemxZyz5Rc+X6i6B1Hol+T5CD5MccPBrLHy3x32bR5olSHDb
- yZWNKDdDTBl/LVjvbkuMVa3OUwS0DnjcEwm3gkrLevRwBGdJ6A4XEcpjBmkjbRTWUbGV
- sKL3eaIBguX9fuCXia9dbpW37w5wHmml4Ona1dLg5rOEfno2Utv9sfh007HbZvkG8ICe
- GRJQ==
+ bh=ozBPu1v/P5BL4hnwKiy63E2mFqcKZCCJOZmJTr2wD0o=;
+ b=N7idvki+iVFU30C5ywqQioFrorb6nZYmd4NQMw0rqkT8t5yh7+tQv8UlVxjAXPs25G
+ jX+i5st/nflyg/XVQDkdWEVDxWmQU7tqEacjGUVErLx5A5xL1jMwb9StueC6VVZpKjCR
+ hCMaQ2Hw/yg9gr8qOeN9+eI1YyY5ux1xGf273rF8P/IBPXa2qIbfNPofQe1Rkxt6vTnc
+ md0p3mNop3GHVZSeSqfS5Q4QShU6rGa3T8aiwBDcgU95v1kl/h5cFcmN7r69kQ3MsmQ5
+ 8uuZaroWcvHyD9iN3Rl6cxBLRbp/XEjUo/bRsgme7G8urxlSVYPFnZ9w0QM+qBaDuyEl
+ w6QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747019594; x=1747624394;
+ d=1e100.net; s=20230601; t=1747019634; x=1747624434;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HsBj22uLdU+RqO7TIsmV1n+sWxv+uojwlrhxC1hIb4I=;
- b=vKuBnxstI+p6SQl65H9B0VSVxyB/4kkrnCDgPFZls3P8X/SKHQuZQlVvI+LsOYJdy8
- 7UdZzwrAAlCOGt7g/juWHpKt/4i7bhThnU+x1uDuU11eOiX7RJZP8OsxcS86PCqsSyXk
- e2bWgi41xED7gYNP7h3zKmOqZWJKamehie5iDFW3ZRPDWTwuyaqL8g8CdC3h3EOuq1zd
- 5yNkT0yPJE2ZeL5im2+tMv7F1cRxnlMTDwZGq3+EwXzijmHj4gcYDb//nPcFQmuozO7K
- bEFQdUybGZL3xLgwdtYERYYbkKr3oQu43NkiwZhr0xyRIlx3iUAbYpajaB+hnshmHGCD
- UXdQ==
+ bh=ozBPu1v/P5BL4hnwKiy63E2mFqcKZCCJOZmJTr2wD0o=;
+ b=BpHCHEHF6rnpYuoo8cpEJzBaNUrZnBYF9JWkkdOfPAP+AVj5h/SxOVgnZRz7bmYT0z
+ J1EWVXJnLpl5O7KvWWJEyNCQI34dCv4fTIF+tOacuCS/b2wCvTR+nAwvKCEdoVSJSKs4
+ vA7LO+TEBET/uKter9gEpZFWP+e/lebf+Bde92LvHx++fww69tKitGtQkvn8w+Pi2sxe
+ +VnOlL5Jkv+qMgfvefol/BmuoQO7EmOKqzrXNSaEN4XbHapAR7wCEBeekVgaetywS9dp
+ h36pYtwHKrE5lqSf9AFuo0Q3xDPHYF+iy9NjgoY7YYqH+nTbOQx6KRQM7G7XOmBj30wo
+ jHYg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVlGJje7d552Nv6piQ/20FHKLke5cpTHuXwWoeOcF+mf2rpcqC2yauMQTzo6pfvIye8McZZmst4XbpX@nongnu.org
-X-Gm-Message-State: AOJu0YwFzOzhhb3ia+Rpz+Z2ixT/5NWXnJpPqhu18RX1Wp24neGCBo6k
- +4yl3T5RfOGzr9wJSXKkXzfQpZbQJP+8/n85//V7mHkJmCg6/wtqi++03w==
-X-Gm-Gg: ASbGnctG4sbzFE3XfC5O+aLzw4CVIeTeE/tqUceVBzsoxpe0QieEoJRg167hZkcKqZU
- 2JAumG7NJCJJjeshBd29Kp3+E/1tpFemKbL24m9e/3Y6Y4d4Rzxy/nRi9HO2bGqLD6I1MmCOgTe
- VeusDhoProdGZgVohCv81luIBvD9f+6fATAsryVMVFucjIwLM4rOWTAI5seCKWQsuYYCXUCB5yI
- TrE12g0HgEuEHyz+GghFxskpVEb53r7T4SwV7elb1A4RwLEq/o970pmzlWF4sf5Hz4Yg+95Aq96
- 8qwDnCYmwhHk+oIgu0mlIQRwZbGirtWgw3pZal/TQfOgMPrdMwCkDCBAgQ==
-X-Google-Smtp-Source: AGHT+IEO+OygOxG8AC8s/T+p2vJHBvk8f9gmzreYgrWlAwHECp9Hm0uNFZAKYrrusMc1lGq1+WhJMQ==
-X-Received: by 2002:a17:90b:17c6:b0:2ff:502e:62d4 with SMTP id
- 98e67ed59e1d1-30c3d653aafmr15267972a91.32.1747019594237; 
- Sun, 11 May 2025 20:13:14 -0700 (PDT)
+ AJvYcCU3RD2kRbgwydbeFZFG+JhQN6Mz1WsNrCkHJ60QYM2gT1k7Vho+z7Z9VYxPXP6Sk+ErwOXDL0d+Q3SS@nongnu.org
+X-Gm-Message-State: AOJu0Yz7Sn3+bdJxf+VHN6mlQB/kQ4kYOi7TlLVDyWZFQqbHOo1XZFXn
+ 5NdS1dBGE9nBejFFJYQMTrUOzKGRrRNPVMwxhjxol/M5hi7Sz+zg8rl75g==
+X-Gm-Gg: ASbGnct6YuAXAbMrmKs7A5s5cpzRveJoYIyrwFYW4GE+RCrz7tjMNQEx1j3tyxkvXOz
+ izGxjQYU8wcBdUZdcNg2QQVOF4i0UzZmAubYyGduYhd/WQ6CnhI3Cdchcn0bxpRaevm1JKn9gTp
+ 3/6cmUbF/GvfEohAUgW003D9UjX1lrT+1iot8yAWeCChHdHMcQ+UIB/CRudIYSiuUkoHbcwUpoE
+ qY63ZpSI3295M4APViAaoLeJSiH+oZG1cekWvUOZ3UAKOQAPnZZ9V4FoumPcEu7utIJsBrAkQml
+ k8k9T04nf2XTfJmZfUjzVTi3s6qXzQR6l9kQnHamoDRVQPn+HH0VHhZRzQ==
+X-Google-Smtp-Source: AGHT+IFvS6C5Pi6YkiAXAxfj78HycFXKAreucfhNtegwTOoM+rVV0TATN6v8msrR6oFGS1QE38+ojA==
+X-Received: by 2002:a05:6a20:d490:b0:1f5:884a:7549 with SMTP id
+ adf61e73a8af0-215abcf3a0bmr18032901637.41.1747019634276; 
+ Sun, 11 May 2025 20:13:54 -0700 (PDT)
 Received: from wheely.local0.net ([118.209.229.237])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b234951024csm4750069a12.5.2025.05.11.20.13.11
+ 41be03b00d2f7-b234951024csm4750069a12.5.2025.05.11.20.13.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 20:13:13 -0700 (PDT)
+ Sun, 11 May 2025 20:13:53 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
  Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
  Caleb Schlossin <calebs@linux.vnet.ibm.com>
-Subject: [PATCH 34/50] ppc/xive: tctx_accept only lower irq line if an
- interrupt was presented
-Date: Mon, 12 May 2025 13:10:43 +1000
-Message-ID: <20250512031100.439842-35-npiggin@gmail.com>
+Subject: [PATCH 45/50] ppc/xive2: redistribute group interrupts on context push
+Date: Mon, 12 May 2025 13:10:54 +1000
+Message-ID: <20250512031100.439842-46-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250512031100.439842-1-npiggin@gmail.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,37 +101,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The relationship between an interrupt signaled in the TIMA and the QEMU
-irq line to the processor to be 1:1, so they should be raised and
-lowered together and "just in case" lowering should be avoided (it could
-mask
+When pushing a context, any presented group interrupt should be
+redistributed before processing pending interrupts to present
+highest priority.
+
+This can occur when pushing the POOL ring when the valid PHYS
+ring has a group interrupt presented, because they share signal
+registers.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/intc/xive.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/intc/xive2.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index 4e0c71d684..d5dbeab6bd 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -95,8 +95,6 @@ uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t sig_ring)
-     g_assert(tctx->regs[TM_QW2_HV_POOL + TM_PIPR] == 0);
-     g_assert(tctx->regs[TM_QW2_HV_POOL + TM_CPPR] == 0);
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index 21cd07df68..392ac6077e 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -945,8 +945,9 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
+                                    uint8_t nvp_blk, uint32_t nvp_idx,
+                                    bool do_restore)
+ {
++    uint8_t *sig_regs = xive_tctx_signal_regs(tctx, ring);
+     uint8_t *regs = &tctx->regs[ring];
+-    uint8_t ipb;
++    uint8_t ipb, nsr = sig_regs[TM_NSR];
+     Xive2Nvp nvp;
  
--    qemu_irq_lower(xive_tctx_output(tctx, sig_ring));
--
-     if (xive_nsr_indicates_exception(sig_ring, nsr)) {
-         uint8_t cppr = sig_regs[TM_PIPR];
-         uint8_t ring;
-@@ -117,6 +115,7 @@ uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t sig_ring)
+     /*
+@@ -978,6 +979,11 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
+     /* IPB bits in the backlog are merged with the TIMA IPB bits */
+     regs[TM_IPB] |= ipb;
  
-         /* Clear the exception from NSR */
-         sig_regs[TM_NSR] = 0;
-+        qemu_irq_lower(xive_tctx_output(tctx, sig_ring));
- 
-         trace_xive_tctx_accept(tctx->cs->cpu_index, ring,
-                                regs[TM_IPB], sig_regs[TM_PIPR],
++    if (xive_nsr_indicates_group_exception(ring, nsr)) {
++        /* redistribute precluded active grp interrupt */
++        g_assert(ring == TM_QW2_HV_POOL); /* PHYS ring has the grp interrupt */
++        xive2_redistribute(xrtr, tctx, xive_nsr_exception_ring(ring, nsr));
++    }
+     xive2_tctx_process_pending(tctx, ring == TM_QW2_HV_POOL ?
+                                          TM_QW3_HV_PHYS : ring);
+ }
 -- 
 2.47.1
 
