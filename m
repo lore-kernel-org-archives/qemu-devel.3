@@ -4,87 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E482C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 13:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D10F9C3ABCD
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 13:36:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uETHq-00086I-VG; Mon, 12 May 2025 09:33:42 -0400
+	id 1uETKO-0003mu-1G; Mon, 12 May 2025 09:36:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uETHd-00082G-Fd; Mon, 12 May 2025 09:33:33 -0400
-Received: from mgamail.intel.com ([192.198.163.19])
+ id 1uETKJ-0003dd-V0
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 09:36:15 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uETHY-0001Fd-Mg; Mon, 12 May 2025 09:33:27 -0400
+ id 1uETKH-0001ZA-C7
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 09:36:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747056804; x=1778592804;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=F7j3cep47puNwkdI95QJzzsEY4MpzPeMA6iUkercExs=;
- b=ltjgigwPGhNecNl3qwhyHjADaNy7vGrWjftbd6o933Z08RRFl8YHr88i
- tBgqMMemMHcde+Jrj6xAgIWG2zVo/YMaMZHBsABMEOKM31o6ZsqyVnFO5
- usGHAwzOH/vZwOGKCZOa6azfKZr+I/hHjEyIIp6PK7Ibo+SZbSbm9auxD
- eJj2KwrCGPIRNi7v+Ieskp+SbN8khq/36y2NCwwTxYdLGR9wh1voJ1X1Y
- eTpgxZBBzDpRn+ikxSy8bGsAlaDVr1Qzx1etBYAJ1uh9omZiBhmXKmPbo
- IB9zEPtWNMqi3UCHePSy4eDS9u4EG574ytNqBupqFbGki5/hkfxQ8mPof w==;
-X-CSE-ConnectionGUID: A4uO4SfmRrqsz2dVHa247w==
-X-CSE-MsgGUID: PTnCD1tPQaO9V97pSBCUWw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11431"; a="47960748"
-X-IronPort-AV: E=Sophos;i="6.15,282,1739865600"; d="scan'208";a="47960748"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 May 2025 06:33:17 -0700
-X-CSE-ConnectionGUID: 8a8HyKboSVah4ASvPQPnYQ==
-X-CSE-MsgGUID: zzCrsy+8RXOjD7uwBo8uaA==
+ t=1747056973; x=1778592973;
+ h=message-id:date:mime-version:subject:to:references:from:
+ in-reply-to:content-transfer-encoding;
+ bh=BWanhrcjUc2Guy5WnzRoRspVEfC8/bifM0S35VOeN7g=;
+ b=K5+i04xn9ARImDEXNqPBI/D4UhSg4V+mh5x/uJo3M0uc4zwvdsCXQduW
+ nWbu7AyD7HRlOXm2oq0mRMwDuAYa8mFsW0Uhm7K1afjzoQ9glW4ya67Xi
+ G07zG1tODfxLwkVJNiGy2qXK+A3ExOrHD2hY8xBuPgIwaq2Auj3IJ9ZYp
+ fiONiHxAxHyqCcmHhi3UbXbI0Jc4U8h2g22vYxBCQV6u7x3bFVemuTN+Y
+ Ij6SfO7I2Bq+fmJ+F2z0whkwGNayjeOGniFcC+Wh8lXjPoJN5uwIjRfom
+ 8JL0JQqvT4hXoqSD33s6iuktaI5QdUAP9bVwJSJl7OnDllYVKJ8xHKA3s w==;
+X-CSE-ConnectionGUID: vLglKM4aQZW3XZL7hNnGKw==
+X-CSE-MsgGUID: XSvfyOxgRRmxhXj4L1sXnw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11431"; a="52502152"
+X-IronPort-AV: E=Sophos;i="6.15,282,1739865600"; d="scan'208";a="52502152"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 May 2025 06:36:11 -0700
+X-CSE-ConnectionGUID: K67uPbrNQaS08KEA9HTLAQ==
+X-CSE-MsgGUID: 6SFUYvfVQqqH3NWfqdcC/A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,282,1739865600"; d="scan'208";a="137081420"
+X-IronPort-AV: E=Sophos;i="6.15,282,1739865600"; d="scan'208";a="168306243"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
- by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 May 2025 06:33:10 -0700
-Message-ID: <e5a305cc-4c8b-48df-99fe-539ebd9b72f9@intel.com>
-Date: Mon, 12 May 2025 21:33:06 +0800
+ by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 May 2025 06:36:10 -0700
+Message-ID: <74e48026-51e4-4b40-ad1b-c51e5bbf8344@intel.com>
+Date: Mon, 12 May 2025 21:36:07 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: How to mark internal properties
-To: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- kvm@vger.kernel.org, Gerd Hoffmann <kraxel@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-riscv@nongnu.org,
- Weiwei Li <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>,
- Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>,
- Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha <anisinha@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- qemu-arm@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
- Jason Wang <jasowang@redhat.com>
-References: <20250508133550.81391-1-philmd@linaro.org>
- <20250508133550.81391-13-philmd@linaro.org>
- <23260c74-01ba-45bc-bf2f-b3e19c28ec8a@intel.com> <aB2vjuT07EuO6JSQ@intel.com>
- <2f526570-7ab0-479c-967c-b3f95f9f19e3@redhat.com>
- <CAFEAcA-kuHvxjuV_cMh-Px3C-k2Gd51jFqhwndO52vm++M_jAA@mail.gmail.com>
- <aCG6MuDLrQpoTqpg@redhat.com> <87jz6mqeu5.fsf@pond.sub.org>
+Subject: Re: [PATCH] linux-headers: update from 6.15 + kvm/next
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20250512093146.91254-1-pbonzini@redhat.com>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <87jz6mqeu5.fsf@pond.sub.org>
+In-Reply-To: <20250512093146.91254-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.19; envelope-from=xiaoyao.li@intel.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -48
 X-Spam_score: -4.9
@@ -109,36 +84,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/12/2025 6:54 PM, Markus Armbruster wrote:
-> Daniel P. Berrangé<berrange@redhat.com> writes:
+On 5/12/2025 5:31 PM, Paolo Bonzini wrote:
+> This brings in the userspace TDX API.
 > 
->> On Mon, May 12, 2025 at 09:46:30AM +0100, Peter Maydell wrote:
->>> On Fri, 9 May 2025 at 11:04, Thomas Huth<thuth@redhat.com> wrote:
->>>> Thanks for your clarifications, Zhao! But I think this shows again the
->>>> problem that we have hit a couple of times in the past already: Properties
->>>> are currently used for both, config knobs for the users and internal
->>>> switches for configuration of the machine. We lack a proper way to say "this
->>>> property is usable for the user" and "this property is meant for internal
->>>> configuration only".
->>>>
->>>> I wonder whether we could maybe come up with a naming scheme to better
->>>> distinguish the two sets, e.g. by using a prefix similar to the "x-" prefix
->>>> for experimental properties? We could e.g. say that all properties starting
->>>> with a "q-" are meant for QEMU-internal configuration only or something
->>>> similar (and maybe even hide those from the default help output when running
->>>> "-device xyz,help" ?)? Anybody any opinions or better ideas on this?
->>> I think a q-prefix is potentially a bit clunky unless we also have
->>> infrastructure to say eg DEFINE_INTERNAL_PROP_BOOL("foo", ...)
->>> and have it auto-add the prefix, and to have the C APIs for
->>> setting properties search for both "foo" and "q-foo" so you
->>> don't have to write qdev_prop_set_bit(dev, "q-foo", ...).
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-> If we make intent explicit with DEFINE_INTERNAL_PROP_FOO(), is repeating
-> intent in the name useful?
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
-+1 for DEFINE_INTERNAL_PROP_FOO(). I have the same thought.
+> ---
+>   linux-headers/asm-x86/kvm.h | 71 +++++++++++++++++++++++++++++++++++++
+>   linux-headers/linux/kvm.h   |  1 +
+>   2 files changed, 72 insertions(+)
+> 
+> diff --git a/linux-headers/asm-x86/kvm.h b/linux-headers/asm-x86/kvm.h
+> index dc591fb17e5..7fb57ccb2a7 100644
+> --- a/linux-headers/asm-x86/kvm.h
+> +++ b/linux-headers/asm-x86/kvm.h
+> @@ -439,6 +439,7 @@ struct kvm_sync_regs {
+>   #define KVM_X86_QUIRK_MWAIT_NEVER_UD_FAULTS	(1 << 6)
+>   #define KVM_X86_QUIRK_SLOT_ZAP_ALL		(1 << 7)
+>   #define KVM_X86_QUIRK_STUFF_FEATURE_MSRS	(1 << 8)
+> +#define KVM_X86_QUIRK_IGNORE_GUEST_PAT		(1 << 9)
+>   
+>   #define KVM_STATE_NESTED_FORMAT_VMX	0
+>   #define KVM_STATE_NESTED_FORMAT_SVM	1
+> @@ -928,4 +929,74 @@ struct kvm_hyperv_eventfd {
+>   #define KVM_X86_SNP_VM		4
+>   #define KVM_X86_TDX_VM		5
+>   
+> +/* Trust Domain eXtension sub-ioctl() commands. */
+> +enum kvm_tdx_cmd_id {
+> +	KVM_TDX_CAPABILITIES = 0,
+> +	KVM_TDX_INIT_VM,
+> +	KVM_TDX_INIT_VCPU,
+> +	KVM_TDX_INIT_MEM_REGION,
+> +	KVM_TDX_FINALIZE_VM,
+> +	KVM_TDX_GET_CPUID,
+> +
+> +	KVM_TDX_CMD_NR_MAX,
+> +};
+> +
+> +struct kvm_tdx_cmd {
+> +	/* enum kvm_tdx_cmd_id */
+> +	__u32 id;
+> +	/* flags for sub-commend. If sub-command doesn't use this, set zero. */
+> +	__u32 flags;
+> +	/*
+> +	 * data for each sub-command. An immediate or a pointer to the actual
+> +	 * data in process virtual address.  If sub-command doesn't use it,
+> +	 * set zero.
+> +	 */
+> +	__u64 data;
+> +	/*
+> +	 * Auxiliary error code.  The sub-command may return TDX SEAMCALL
+> +	 * status code in addition to -Exxx.
+> +	 */
+> +	__u64 hw_error;
+> +};
+> +
+> +struct kvm_tdx_capabilities {
+> +	__u64 supported_attrs;
+> +	__u64 supported_xfam;
+> +	__u64 reserved[254];
+> +
+> +	/* Configurable CPUID bits for userspace */
+> +	struct kvm_cpuid2 cpuid;
+> +};
+> +
+> +struct kvm_tdx_init_vm {
+> +	__u64 attributes;
+> +	__u64 xfam;
+> +	__u64 mrconfigid[6];	/* sha384 digest */
+> +	__u64 mrowner[6];	/* sha384 digest */
+> +	__u64 mrownerconfig[6];	/* sha384 digest */
+> +
+> +	/* The total space for TD_PARAMS before the CPUIDs is 256 bytes */
+> +	__u64 reserved[12];
+> +
+> +	/*
+> +	 * Call KVM_TDX_INIT_VM before vcpu creation, thus before
+> +	 * KVM_SET_CPUID2.
+> +	 * This configuration supersedes KVM_SET_CPUID2s for VCPUs because the
+> +	 * TDX module directly virtualizes those CPUIDs without VMM.  The user
+> +	 * space VMM, e.g. qemu, should make KVM_SET_CPUID2 consistent with
+> +	 * those values.  If it doesn't, KVM may have wrong idea of vCPUIDs of
+> +	 * the guest, and KVM may wrongly emulate CPUIDs or MSRs that the TDX
+> +	 * module doesn't virtualize.
+> +	 */
+> +	struct kvm_cpuid2 cpuid;
+> +};
+> +
+> +#define KVM_TDX_MEASURE_MEMORY_REGION   _BITULL(0)
+> +
+> +struct kvm_tdx_init_mem_region {
+> +	__u64 source_addr;
+> +	__u64 gpa;
+> +	__u64 nr_pages;
+> +};
+> +
+>   #endif /* _ASM_X86_KVM_H */
+> diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+> index e5f3e8b5a02..99cc82a275c 100644
+> --- a/linux-headers/linux/kvm.h
+> +++ b/linux-headers/linux/kvm.h
+> @@ -369,6 +369,7 @@ struct kvm_run {
+>   #define KVM_SYSTEM_EVENT_WAKEUP         4
+>   #define KVM_SYSTEM_EVENT_SUSPEND        5
+>   #define KVM_SYSTEM_EVENT_SEV_TERM       6
+> +#define KVM_SYSTEM_EVENT_TDX_FATAL      7
+>   			__u32 type;
+>   			__u32 ndata;
+>   			union {
 
-We need something in code to restrict the *internal* property really 
-internal, i.e., not user settable. What the name of the property is 
-doesn't matter.
 
