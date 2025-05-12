@@ -4,91 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A61BC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:31:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF56BC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:41:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEUBH-000152-J1; Mon, 12 May 2025 10:30:59 -0400
+	id 1uEULD-0004bE-RU; Mon, 12 May 2025 10:41:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uEUAp-0000xY-8U
- for qemu-devel@nongnu.org; Mon, 12 May 2025 10:30:39 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uEUAn-0007Fo-0M
- for qemu-devel@nongnu.org; Mon, 12 May 2025 10:30:30 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43cfecdd8b2so33443805e9.2
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 07:30:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747060227; x=1747665027; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CDHbfwwtGpejayhTK/B+witrioDgKibkJjLcwoyOovw=;
- b=CWd36MaWnqDz3Nr7Z9uWBYLgyo+oUHcCXPC6mbWU3zG005lHD2CxBnk4bYHkLk1PEo
- ykvQx3TXzGs6mOfUDujPgoersbybqnk9A/xx/ZHx+oAqTz7kxNDS1q9cjjHL6KUJL2nV
- 3QR6Zs6rcVn7XSrKTs3xlal8S0SgoA+LtYUP2yiQXaZmR+TMx1CApGVotEg8BzqwrPt+
- YBydhH4+IzHLMCXuLlyzFuF1I1czYtLB76t/TebTirE1VYtkEEIM5w3WWi1z3rxilwsL
- BzMHE7xdVWL7AdmewW8GybpcQCEXScKllHNJyy/tNALMhX3lt3t0au/Ao8/xgNq7ACTt
- RPKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747060227; x=1747665027;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CDHbfwwtGpejayhTK/B+witrioDgKibkJjLcwoyOovw=;
- b=DLFZ2qbEtRO/yoKu/7O/xUXJVQkyfQqeyQjqSN0xMDpiK/L4dbBOcNye2a1KxotacU
- SQvGSWe7CNQ3Xo7ztQFAHK1texOYvjnratI4qlvIAjp1czs5zw3rDAkO3R8CbClGBXE6
- CoxZOhlc74RxBkU33eEpS3TVYcnno0tzi1h6NtHCeYdaSyJSeUlIc9Nyo47x177264xe
- 35J9Yvec/uvxjDoyHC3AI+p0gj2XlaZE1Ia4biYz5GNV9OroTX/BEPsnYTe5tt5KsUcX
- Q05RtGR8SYkJ/kBMxZG7lDTaHsaRwsIAQElKhnFoNCc1shTMb97FaIxdilK2DL4yY417
- TzCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUr02lAMvky742w+NfMIxPqrxUyk10eqJU9Xp5F4FfVsscjTuefQQ9WQLgL7mgwy1Q3BnfI5846Ik9v@nongnu.org
-X-Gm-Message-State: AOJu0YysH7sFEFze5K8+6xmQL33KJaeyiQax/I7tbcwr0i0Vt7Omtjra
- +0NDtmXwMZWXRq+ckhBY6KbiiAG2VGztO/ikF4+Wg+B7xr3rT3eSTPpEdvFPCVw=
-X-Gm-Gg: ASbGncvPdHZsSfDsVWo8hupnXaaOR1YV0iA9QsBYwWNu5dGocjlIvz+efQNirGyh+KU
- BE/Ex2bdz1QRV4rC0zD0DSEonay78MCq5JZCAuqxx+JxacamM10i1wvSRobjBfNP1V3EWPuqmjD
- vIBCNYRzEZb9GgbDAH4T5IKzjPnt0+te06yJ5JNdrf11Xi1AQnI+TKMThTOxXnPqdav+QilK9bo
- ZHa7buElWmCjE5xZyoTeFMFQdBG6XG2UqsgbEmfw6VW7jJutKlX+rmoKqqVpB71+yyvFelZtZ7y
- R5Gki0XR5e8GZa4DlfYOWOh+KgeXjrqFnoPtamBXQBqAL6NYiv6gMGBCnMor/cyO5EN6EZfcUkZ
- A0mDYHOS16Sq4
-X-Google-Smtp-Source: AGHT+IHqRHuEatPpsig+0Kkb9NO1jFZ2T+6yNEceFOw1Im00QeohPMfL8klzV47ONBJO+ZIhMpmhmA==
-X-Received: by 2002:a05:600c:1da8:b0:43c:fb95:c76f with SMTP id
- 5b1f17b1804b1-442d6d1f997mr127420355e9.9.1747060226768; 
- Mon, 12 May 2025 07:30:26 -0700 (PDT)
-Received: from [10.93.5.179] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442d77af6f9sm58264085e9.1.2025.05.12.07.30.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 May 2025 07:30:26 -0700 (PDT)
-Message-ID: <5cb82793-0e22-42e7-bfef-7f374c9b6dab@linaro.org>
-Date: Mon, 12 May 2025 15:30:25 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uEULB-0004ah-M5; Mon, 12 May 2025 10:41:13 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uEUL9-0000Di-3y; Mon, 12 May 2025 10:41:13 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0683755BC03;
+ Mon, 12 May 2025 16:41:03 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id Z7rQEdTdCDjh; Mon, 12 May 2025 16:41:00 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id DEB0955BC02; Mon, 12 May 2025 16:41:00 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DB06B745682;
+ Mon, 12 May 2025 16:41:00 +0200 (CEST)
+Date: Mon, 12 May 2025 16:41:00 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+cc: Markus Armbruster <armbru@redhat.com>, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org, 
+ Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Yi Liu <yi.l.liu@intel.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-riscv@nongnu.org, 
+ Weiwei Li <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha <anisinha@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ =?ISO-8859-15?Q?Cl=E9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>, 
+ qemu-arm@nongnu.org, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>
+Subject: Re: How to mark internal properties
+In-Reply-To: <e5a305cc-4c8b-48df-99fe-539ebd9b72f9@intel.com>
+Message-ID: <f342557b-e589-f51d-cfd8-04f97e9c5efd@eik.bme.hu>
+References: <20250508133550.81391-1-philmd@linaro.org>
+ <20250508133550.81391-13-philmd@linaro.org>
+ <23260c74-01ba-45bc-bf2f-b3e19c28ec8a@intel.com> <aB2vjuT07EuO6JSQ@intel.com>
+ <2f526570-7ab0-479c-967c-b3f95f9f19e3@redhat.com>
+ <CAFEAcA-kuHvxjuV_cMh-Px3C-k2Gd51jFqhwndO52vm++M_jAA@mail.gmail.com>
+ <aCG6MuDLrQpoTqpg@redhat.com> <87jz6mqeu5.fsf@pond.sub.org>
+ <e5a305cc-4c8b-48df-99fe-539ebd9b72f9@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/functional: Add PCI hotplug test for aarch64
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, thuth@redhat.com
-Cc: eric.auger@redhat.com, alex.bennee@linaro.org, peter.maydell@linaro.org
-References: <20250512123646.157447-1-gustavo.romero@linaro.org>
- <3b7f61dc-8708-459c-b48b-db955ad462bf@linaro.org>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <3b7f61dc-8708-459c-b48b-db955ad462bf@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=gustavo.romero@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-2120470484-1747060860=:11021"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,40 +92,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Phil,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On 5/12/25 11:15, Philippe Mathieu-Daudé wrote:
-> On 12/5/25 14:36, Gustavo Romero wrote:
->> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
->> hot-unplug on arm64. Currently, the aarch64 'virt' machine uses the PCIe
->> native controller and does not support ACPI-based hotplugging. However,
->> since support is planned, this test sets 'acpi=force' and specifies an
->> EDK2 firmware image in advance. This is harmless and prepares for future
->> ACPI support.
->>
->> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->> ---
->>   MAINTAINERS                                  |  5 ++
->>   tests/functional/meson.build                 |  1 +
->>   tests/functional/test_aarch64_hotplug_pci.py | 73 ++++++++++++++++++++
->>   3 files changed, 79 insertions(+)
->>   create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 23174b4ca7..9ebb768214 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -2065,6 +2065,11 @@ S: Supported
->>   F: include/hw/pci/pcie_doe.h
->>   F: hw/pci/pcie_doe.c
->> +ARM PCI Hotplug
->> +M: Gustavo Romero <gustavo.romero@linaro.org>
-> 
-> Cc: qemu-arm@?
+--3866299591-2120470484-1747060860=:11021
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Thanks, cc:ed it in v3.
+On Mon, 12 May 2025, Xiaoyao Li wrote:
+> On 5/12/2025 6:54 PM, Markus Armbruster wrote:
+>> Daniel P. Berrangé<berrange@redhat.com> writes:
+>>> On Mon, May 12, 2025 at 09:46:30AM +0100, Peter Maydell wrote:
+>>>> On Fri, 9 May 2025 at 11:04, Thomas Huth<thuth@redhat.com> wrote:
+>>>>> Thanks for your clarifications, Zhao! But I think this shows again the
+>>>>> problem that we have hit a couple of times in the past already: 
+>>>>> Properties
+>>>>> are currently used for both, config knobs for the users and internal
+>>>>> switches for configuration of the machine. We lack a proper way to say 
+>>>>> "this
+>>>>> property is usable for the user" and "this property is meant for 
+>>>>> internal
+>>>>> configuration only".
+>>>>> 
+>>>>> I wonder whether we could maybe come up with a naming scheme to better
+>>>>> distinguish the two sets, e.g. by using a prefix similar to the "x-" 
+>>>>> prefix
+>>>>> for experimental properties? We could e.g. say that all properties 
+>>>>> starting
+>>>>> with a "q-" are meant for QEMU-internal configuration only or something
+>>>>> similar (and maybe even hide those from the default help output when 
+>>>>> running
+>>>>> "-device xyz,help" ?)? Anybody any opinions or better ideas on this?
+>>>> I think a q-prefix is potentially a bit clunky unless we also have
+>>>> infrastructure to say eg DEFINE_INTERNAL_PROP_BOOL("foo", ...)
+>>>> and have it auto-add the prefix, and to have the C APIs for
+>>>> setting properties search for both "foo" and "q-foo" so you
+>>>> don't have to write qdev_prop_set_bit(dev, "q-foo", ...).
+>
+>> If we make intent explicit with DEFINE_INTERNAL_PROP_FOO(), is repeating
+>> intent in the name useful?
+>
+> +1 for DEFINE_INTERNAL_PROP_FOO(). I have the same thought.
+>
+> We need something in code to restrict the *internal* property really 
+> internal, i.e., not user settable. What the name of the property is doesn't 
+> matter.
 
+What's an internal property? Properties are there to make some field of an 
+object introspectable and settable from command line and QEMU monitor or 
+other external interfaces. If that's not needed for something why is it 
+defined as a property in the first place and not just e.g. C accessor 
+functions as part of the device's interface instead? I think this may be 
+overusing QOM for things that may not need it and adding complexity where 
+not needed. It reminds me of patches that wanted to export via-ide IRQs or 
+ISA IRQs just to be able to connect them to other parts _of the same chip_ 
+becuase this chip is modeled as multiple QOM objects for reusing code from 
+those. But in reality the chip does not have such pins and these are 
+internal connections so I think it would be better to model these as 
+functions and not QOM constructs that the user can change. In general, if 
+the device or object has an external connection or a knob that the user 
+may need to change or connect to another device (like building a board 
+from parts you can wire pins together) then those need properties or 
+qemu_irqs but other "internal properties" may need some other way to 
+access and often simple accessor functions are enough for this as these 
+internal properties are only accessed form the code. That way we would not 
+need even more complexity to hide these from the user, instead of that 
+just don't expose them but use something else where a property is not 
+needed. A property is just like an accessor function with additional 
+complexity to expose it to other interfaces so it's externally settable 
+and introspectable but we don't need those for internal properties so we 
+can drop that complexity and get back to the accessor function at the 
+bottom of it.
 
-Cheers,
-Gustavo
+Regards,
+BALATON Zoltan
+--3866299591-2120470484-1747060860=:11021--
 
