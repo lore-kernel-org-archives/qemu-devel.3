@@ -4,93 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70389C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 19:43:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF52C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 19:43:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEZ2u-0001mL-TJ; Mon, 12 May 2025 15:42:40 -0400
+	id 1uEZ3i-0002Pu-3q; Mon, 12 May 2025 15:43:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uEZ2s-0001m3-Ub
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:42:38 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uEZ3g-0002Os-7a
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 15:43:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uEZ2q-0003OZ-1o
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:42:38 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uEZ3e-0003RI-7W
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 15:43:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747078954;
+ s=mimecast20190719; t=1747079005;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=nkDtm9Lnjo5cyrTByxOa1qBNfkDZM4x6dBOWMRIyzWY=;
- b=FlihpkOhN4udWibjALP4NZtyXUUUx1gUoloc8LAjAQpgnk4oifm3UIGEwONbrLsc/s42an
- PXRDp3TxUS814zTzkGXbU+GwasCBT7MiQqTbbljaL87L5pYvETreNvsVNkI9pBS5KlqcgS
- rHMdlLiaPSo0zSXfsBmLxmJfbg69hPg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-372-oLX1gk3-NZWN1DxgfkHxlw-1; Mon, 12 May 2025 15:42:32 -0400
-X-MC-Unique: oLX1gk3-NZWN1DxgfkHxlw-1
-X-Mimecast-MFC-AGG-ID: oLX1gk3-NZWN1DxgfkHxlw_1747078952
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43eea5a5d80so27159395e9.1
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 12:42:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747078951; x=1747683751;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nkDtm9Lnjo5cyrTByxOa1qBNfkDZM4x6dBOWMRIyzWY=;
- b=S+zx0ba4ey+qNxHJHbyjFQX8HUUBV+d1ooHhxl1131ARO2qQ/M+6AUvii5RbPqVvUP
- WKCptfj963dkUTHVyuECu41Xm8f14du5AfSpFLPINzkTCILMQB8AvJzNEMTcF1mHKLQU
- 4SmBD0NWXwUpcIph2kWs4dHNBsxFHdFoE2wHgc5nUWwm1mBT5OvBB9hfcuJpdOyrHN5L
- 4NzkGJlseik/t9Hd4jblstARZOEw9q9XCJbS2isGr8LvR1vXm5B3SNJvWD0RhQ1JBiGT
- ep0vnhQwGSCiNIlHvIRdrziKRA0957WU06//VrE5wNZxuznwnnNOm9ke4EYINmSweQ1s
- rvqQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXICMpyKOCaau0NHHpLXP1KXH1DoHuMubwKE3v5WrzPoa2lb8LbjqO8otqgakelNgik7jIBVMTetNJn@nongnu.org
-X-Gm-Message-State: AOJu0Yy53+pjGBjFbmNIKT61DGssZckq1Anrqr3aOsUkW1HYKvpoiTra
- M+bMYNCBWrk0pNEgXedUV3jHB4DyoZuhWo06YdRigbtW6tKShwVrvcuvH3DF5/6Hrgcxc0STsQM
- k9Asb2hbewwuP1sReLFGNgR3ZKQrDscfSbKCyeP7t0xk9idIPbBqI
-X-Gm-Gg: ASbGncucDHz1MeAa4Qarno6NEbc1We0gfY3VAh790FD1L9ave2t6CEMGWcLUIq2ayU1
- Y4hZ/f9hZckb5eFV3h5sVE3rE/kdH/noCqT/3FFTG3LZMlFG0d2VVN6MWWKMnI+6CIIOjH2cKA8
- +VQridxtj0aWE6i7rvlczli0iTSOuw1bT90mo6U17f9iZa60hGTanHcK6chMsXdJnC2qOetlrys
- Fo2qpcdufb9Ac2C0Vksyhvb9/KQxZZMW4pUYwBL1GViUdRAA7dlyXlwkepQm+3vJ68SZl4iSn1z
- NGGmgA==
-X-Received: by 2002:a05:600c:a00a:b0:43c:eeee:b70a with SMTP id
- 5b1f17b1804b1-442d6dd2421mr120003655e9.22.1747078951533; 
- Mon, 12 May 2025 12:42:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEaPTUja3nXtLYCqcBglz3Nf901OuvmwBqg1z+x1kFw4Q1uPi+QWQ1uhTYsA7GUU1gszNGdxQ==
-X-Received: by 2002:a05:600c:a00a:b0:43c:eeee:b70a with SMTP id
- 5b1f17b1804b1-442d6dd2421mr120003535e9.22.1747078951123; 
- Mon, 12 May 2025 12:42:31 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442eb5f4ca8sm3063405e9.18.2025.05.12.12.42.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 May 2025 12:42:30 -0700 (PDT)
-Date: Mon, 12 May 2025 15:42:27 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, Gavin Shan <gshan@redhat.com>,
+ bh=M1+tkJUhtvqz8hIl1D1zEDZaZU5VHrxNczTEeik760Y=;
+ b=cl2SacA9+b1FT2I9r0kz8fS2ulbOSSxpQRFdfXRFhNdbf0bsrE5tGoWsv6tXP1KP7eAOub
+ iKrXDp9VkF7LeB3yrlzWMr41QnoKx50nM7KO1jybyxU8XvBRTLUa6AwNORMICqW3Ug4+V4
+ uTgIDWlx8RZJX6xi4m+KAw1FfCn10jc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-280-UMEIvA7IOLK-5hTn75Qugw-1; Mon,
+ 12 May 2025 15:43:22 -0400
+X-MC-Unique: UMEIvA7IOLK-5hTn75Qugw-1
+X-Mimecast-MFC-AGG-ID: UMEIvA7IOLK-5hTn75Qugw_1747079000
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D73841955D79; Mon, 12 May 2025 19:43:19 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.161])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 944E7180045B; Mon, 12 May 2025 19:43:18 +0000 (UTC)
+Date: Mon, 12 May 2025 15:43:12 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alberto Faria <afaria@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Xie Yongji <xieyongji@bytedance.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 09/20] acpi/ghes: don't hard-code the number of
- sources for HEST table
-Message-ID: <20250512154053-mutt-send-email-mst@kernel.org>
-References: <cover.1741374594.git.mchehab+huawei@kernel.org>
- <1c024a700815fa4a100fc3bada477481fd266a83.1741374594.git.mchehab+huawei@kernel.org>
+ Raphael Norwitz <raphael@enfabrica.net>, Cornelia Huck <cohuck@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Coiby Xu <Coiby.Xu@gmail.com>, Fabiano Rosas <farosas@suse.de>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: Re: [RFC v2 3/4] vhost-user-blk: Add VIRTIO_BLK_T_OUT_FUA command
+ support
+Message-ID: <20250512194312.GM141177@fedora>
+References: <20250508162044.857655-1-afaria@redhat.com>
+ <20250508162044.857655-4-afaria@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="vfvJVVXch43AejIf"
 Content-Disposition: inline
-In-Reply-To: <1c024a700815fa4a100fc3bada477481fd266a83.1741374594.git.mchehab+huawei@kernel.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20250508162044.857655-4-afaria@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -99,7 +81,7 @@ X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,216 +97,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 07, 2025 at 08:14:38PM +0100, Mauro Carvalho Chehab wrote:
-> The current code is actually dependent on having just one error
-> structure with a single source, as any change there would cause
-> migration issues.
-> 
-> As the number of sources should be arch-dependent, as it will depend on
-> what kind of notifications will exist, and how many errors can be
-> reported at the same time, change the logic to be more flexible,
-> allowing the number of sources to be defined when building the
-> HEST table by the caller.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-Breaks CI:
+--vfvJVVXch43AejIf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-https://gitlab.com/mstredhat/qemu/-/jobs/10007863974
-
-I dropped the patchset for now, pls rebase and repost.
-
+On Thu, May 08, 2025 at 05:20:43PM +0100, Alberto Faria wrote:
+> Signed-off-by: Alberto Faria <afaria@redhat.com>
 > ---
->  hw/acpi/ghes.c           | 39 +++++++++++++++++++++------------------
->  hw/arm/virt-acpi-build.c |  8 +++++++-
->  include/hw/acpi/ghes.h   | 17 ++++++++++++-----
->  3 files changed, 40 insertions(+), 24 deletions(-)
-> 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index 668ca72587c7..f49d0d628fc4 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -238,17 +238,17 @@ ghes_gen_err_data_uncorrectable_recoverable(GArray *block,
->   * See docs/specs/acpi_hest_ghes.rst for blobs format.
->   */
->  static void build_ghes_error_table(AcpiGhesState *ags, GArray *hardware_errors,
-> -                                   BIOSLinker *linker)
-> +                                   BIOSLinker *linker, int num_sources)
->  {
->      int i, error_status_block_offset;
->  
->      /* Build error_block_address */
-> -    for (i = 0; i < ACPI_GHES_ERROR_SOURCE_COUNT; i++) {
-> +    for (i = 0; i < num_sources; i++) {
->          build_append_int_noprefix(hardware_errors, 0, sizeof(uint64_t));
->      }
->  
->      /* Build read_ack_register */
-> -    for (i = 0; i < ACPI_GHES_ERROR_SOURCE_COUNT; i++) {
-> +    for (i = 0; i < num_sources; i++) {
->          /*
->           * Initialize the value of read_ack_register to 1, so GHES can be
->           * writable after (re)boot.
-> @@ -263,13 +263,13 @@ static void build_ghes_error_table(AcpiGhesState *ags, GArray *hardware_errors,
->  
->      /* Reserve space for Error Status Data Block */
->      acpi_data_push(hardware_errors,
-> -        ACPI_GHES_MAX_RAW_DATA_LENGTH * ACPI_GHES_ERROR_SOURCE_COUNT);
-> +        ACPI_GHES_MAX_RAW_DATA_LENGTH * num_sources);
->  
->      /* Tell guest firmware to place hardware_errors blob into RAM */
->      bios_linker_loader_alloc(linker, ACPI_HW_ERROR_FW_CFG_FILE,
->                               hardware_errors, sizeof(uint64_t), false);
->  
-> -    for (i = 0; i < ACPI_GHES_ERROR_SOURCE_COUNT; i++) {
-> +    for (i = 0; i < num_sources; i++) {
->          /*
->           * Tell firmware to patch error_block_address entries to point to
->           * corresponding "Generic Error Status Block"
-> @@ -295,12 +295,14 @@ static void build_ghes_error_table(AcpiGhesState *ags, GArray *hardware_errors,
+>  block/export/vhost-user-blk-server.c    |  1 +
+>  contrib/vhost-user-blk/vhost-user-blk.c | 16 +++++--
+>  hw/block/vhost-user-blk.c               |  3 ++
+>  hw/core/machine.c                       |  1 +
+>  tests/qtest/vhost-user-blk-test.c       | 56 +++++++++++++++++++++++++
+>  5 files changed, 74 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/block/export/vhost-user-blk-server.c b/block/export/vhost-us=
+er-blk-server.c
+> index d9d2014d9b7..fad9560b219 100644
+> --- a/block/export/vhost-user-blk-server.c
+> +++ b/block/export/vhost-user-blk-server.c
+> @@ -125,6 +125,7 @@ static uint64_t vu_blk_get_features(VuDev *dev)
+>                 1ull << VIRTIO_BLK_F_FLUSH |
+>                 1ull << VIRTIO_BLK_F_DISCARD |
+>                 1ull << VIRTIO_BLK_F_WRITE_ZEROES |
+> +               1ull << VIRTIO_BLK_F_OUT_FUA |
+>                 1ull << VIRTIO_BLK_F_CONFIG_WCE |
+>                 1ull << VIRTIO_BLK_F_MQ |
+>                 1ull << VIRTIO_F_VERSION_1 |
+> diff --git a/contrib/vhost-user-blk/vhost-user-blk.c b/contrib/vhost-user=
+-blk/vhost-user-blk.c
+> index 6cc18a1c04f..8d732bbe468 100644
+> --- a/contrib/vhost-user-blk/vhost-user-blk.c
+> +++ b/contrib/vhost-user-blk/vhost-user-blk.c
+> @@ -154,7 +154,7 @@ vub_readv(VubReq *req, struct iovec *iov, uint32_t io=
+vcnt)
 >  }
->  
->  /* Build Generic Hardware Error Source version 2 (GHESv2) */
-> -static void build_ghes_v2(GArray *table_data,
-> -                          BIOSLinker *linker,
-> -                          enum AcpiGhesNotifyType notify,
-> -                          uint16_t source_id)
-> +static void build_ghes_v2_entry(GArray *table_data,
-> +                                BIOSLinker *linker,
-> +                                const AcpiNotificationSourceId *notif_src,
-> +                                uint16_t index, int num_sources)
+> =20
+>  static ssize_t
+> -vub_writev(VubReq *req, struct iovec *iov, uint32_t iovcnt)
+> +vub_writev(VubReq *req, struct iovec *iov, uint32_t iovcnt, int flags)
 >  {
->      uint64_t address_offset;
-> +    const uint16_t notify = notif_src->notify;
-> +    const uint16_t source_id = notif_src->source_id;
->  
->      /*
->       * Type:
-> @@ -331,7 +333,7 @@ static void build_ghes_v2(GArray *table_data,
->                                     address_offset + GAS_ADDR_OFFSET,
->                                     sizeof(uint64_t),
->                                     ACPI_HW_ERROR_FW_CFG_FILE,
-> -                                   source_id * sizeof(uint64_t));
-> +                                   index * sizeof(uint64_t));
->  
->      /* Notification Structure */
->      build_ghes_hw_error_notification(table_data, notify);
-> @@ -351,8 +353,7 @@ static void build_ghes_v2(GArray *table_data,
->                                     address_offset + GAS_ADDR_OFFSET,
->                                     sizeof(uint64_t),
->                                     ACPI_HW_ERROR_FW_CFG_FILE,
-> -                                   (ACPI_GHES_ERROR_SOURCE_COUNT + source_id)
-> -                                   * sizeof(uint64_t));
-> +                                   (num_sources + index) * sizeof(uint64_t));
->  
->      /*
->       * Read Ack Preserve field
-> @@ -368,22 +369,26 @@ static void build_ghes_v2(GArray *table_data,
->  void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
->                       GArray *hardware_errors,
->                       BIOSLinker *linker,
-> +                     const AcpiNotificationSourceId *notif_source,
-> +                     int num_sources,
->                       const char *oem_id, const char *oem_table_id)
->  {
->      AcpiTable table = { .sig = "HEST", .rev = 1,
->                          .oem_id = oem_id, .oem_table_id = oem_table_id };
->      uint32_t hest_offset;
-> +    int i;
->  
->      hest_offset = table_data->len;
->  
-> -    build_ghes_error_table(ags, hardware_errors, linker);
-> +    build_ghes_error_table(ags, hardware_errors, linker, num_sources);
->  
->      acpi_table_begin(&table, table_data);
->  
->      /* Error Source Count */
-> -    build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
-> -    build_ghes_v2(table_data, linker,
-> -                  ACPI_GHES_NOTIFY_SEA, ACPI_HEST_SRC_ID_SEA);
-> +    build_append_int_noprefix(table_data, num_sources, 4);
-> +    for (i = 0; i < num_sources; i++) {
-> +        build_ghes_v2_entry(table_data, linker, &notif_source[i], i, num_sources);
-> +    }
->  
->      acpi_table_end(linker, &table);
->  
-> @@ -515,8 +520,6 @@ void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
->          return;
->      }
->  
-> -    assert(ACPI_GHES_ERROR_SOURCE_COUNT == 1);
-> -
->      if (!ags->use_hest_addr) {
->          get_hw_error_offsets(le64_to_cpu(ags->hw_error_le),
->                               &cper_addr, &read_ack_register_addr);
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 040d875d4e83..ea9682ee2662 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -893,6 +893,10 @@ static void acpi_align_size(GArray *blob, unsigned align)
->      g_array_set_size(blob, ROUND_UP(acpi_data_len(blob), align));
->  }
->  
-> +static const AcpiNotificationSourceId hest_ghes_notify[] = {
-> +    { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
-> +};
-> +
->  static
->  void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->  {
-> @@ -954,7 +958,9 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->          if (ags) {
->              acpi_add_table(table_offsets, tables_blob);
->              acpi_build_hest(ags, tables_blob, tables->hardware_errors,
-> -                            tables->linker, vms->oem_id, vms->oem_table_id);
-> +                            tables->linker, hest_ghes_notify,
-> +                            ARRAY_SIZE(hest_ghes_notify),
-> +                            vms->oem_id, vms->oem_table_id);
+>      VubDev *vdev_blk =3D req->vdev_blk;
+>      ssize_t rc;
+
+Where is flags used?
+
+> @@ -271,12 +271,19 @@ static int vub_virtio_process_req(VubDev *vdev_blk,
+>      type =3D le32_to_cpu(req->out->type);
+>      switch (type & ~VIRTIO_BLK_T_BARRIER) {
+>      case VIRTIO_BLK_T_IN:
+> -    case VIRTIO_BLK_T_OUT: {
+> +    case VIRTIO_BLK_T_OUT:
+> +    case VIRTIO_BLK_T_OUT_FUA: {
+>          ssize_t ret =3D 0;
+>          bool is_write =3D type & VIRTIO_BLK_T_OUT;
+> +        int flags =3D 0;
+>          req->sector_num =3D le64_to_cpu(req->out->sector);
+>          if (is_write) {
+> -            ret  =3D vub_writev(req, &elem->out_sg[1], out_num);
+> +            #ifdef RWF_SYNC
+> +            if (type =3D=3D VIRTIO_BLK_T_OUT_FUA) {
+> +                flags |=3D RWF_SYNC;
+> +            }
+> +            #endif
+> +            ret  =3D vub_writev(req, &elem->out_sg[1], out_num, flags);
+>          } else {
+>              ret =3D vub_readv(req, &elem->in_sg[0], in_num);
 >          }
+> @@ -379,6 +386,9 @@ vub_get_features(VuDev *dev)
+>                 1ull << VIRTIO_BLK_F_DISCARD |
+>                 1ull << VIRTIO_BLK_F_WRITE_ZEROES |
+>                 #endif
+> +               #ifdef RWF_SYNC
+> +               1ull << VIRTIO_BLK_F_OUT_FUA |
+> +               #endif
+>                 1ull << VIRTIO_BLK_F_CONFIG_WCE;
+> =20
+>      if (vdev_blk->enable_ro) {
+> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+> index 4bb5ed299e7..988be625969 100644
+> --- a/hw/block/vhost-user-blk.c
+> +++ b/hw/block/vhost-user-blk.c
+> @@ -44,6 +44,7 @@ static const int user_feature_bits[] =3D {
+>      VIRTIO_BLK_F_CONFIG_WCE,
+>      VIRTIO_BLK_F_DISCARD,
+>      VIRTIO_BLK_F_WRITE_ZEROES,
+> +    VIRTIO_BLK_F_OUT_FUA,
+>      VIRTIO_F_VERSION_1,
+>      VIRTIO_RING_F_INDIRECT_DESC,
+>      VIRTIO_RING_F_EVENT_IDX,
+> @@ -581,6 +582,8 @@ static const Property vhost_user_blk_properties[] =3D=
+ {
+>                        VIRTIO_BLK_F_DISCARD, true),
+>      DEFINE_PROP_BIT64("write-zeroes", VHostUserBlk, parent_obj.host_feat=
+ures,
+>                        VIRTIO_BLK_F_WRITE_ZEROES, true),
+> +    DEFINE_PROP_BIT64("fua-write", VHostUserBlk, parent_obj.host_feature=
+s,
+> +                      VIRTIO_BLK_F_OUT_FUA, true),
+>  };
+> =20
+>  static void vhost_user_blk_class_init(ObjectClass *klass, const void *da=
+ta)
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 8439b094904..bcf4f3423cb 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -39,6 +39,7 @@
+> =20
+>  GlobalProperty hw_compat_10_0[] =3D {
+>      { "virtio-blk-device", "fua-write", "false" },
+> +    { "vhost-user-blk", "fua-write", "false" },
+>  };
+>  const size_t hw_compat_10_0_len =3D G_N_ELEMENTS(hw_compat_10_0);
+> =20
+> diff --git a/tests/qtest/vhost-user-blk-test.c b/tests/qtest/vhost-user-b=
+lk-test.c
+> index ea90d41232e..4c68702e0b0 100644
+> --- a/tests/qtest/vhost-user-blk-test.c
+> +++ b/tests/qtest/vhost-user-blk-test.c
+> @@ -72,6 +72,7 @@ static uint64_t virtio_blk_request(QGuestAllocator *all=
+oc, QVirtioDevice *d,
+>      switch (req->type) {
+>      case VIRTIO_BLK_T_IN:
+>      case VIRTIO_BLK_T_OUT:
+> +    case VIRTIO_BLK_T_OUT_FUA:
+>          g_assert_cmpuint(data_size % 512, =3D=3D, 0);
+>          break;
+>      case VIRTIO_BLK_T_DISCARD:
+> @@ -389,6 +390,61 @@ static QVirtQueue *test_basic(QVirtioDevice *dev, QG=
+uestAllocator *alloc)
+>                                            VIRTIO_BLK_T_DISCARD);
 >      }
->  
-> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> index 5265102ba51f..8c4b08433760 100644
-> --- a/include/hw/acpi/ghes.h
-> +++ b/include/hw/acpi/ghes.h
-> @@ -57,13 +57,18 @@ enum AcpiGhesNotifyType {
->      ACPI_GHES_NOTIFY_RESERVED = 12
->  };
->  
-> -enum {
-> -    ACPI_HEST_SRC_ID_SEA = 0,
-> -    /* future ids go here */
-> -
-> -    ACPI_GHES_ERROR_SOURCE_COUNT
-> +/*
-> + * ID numbers used to fill HEST source ID field
-> + */
-> +enum AcpiGhesSourceID {
-> +    ACPI_HEST_SRC_ID_SYNC,
->  };
->  
-> +typedef struct AcpiNotificationSourceId {
-> +    enum AcpiGhesSourceID source_id;
-> +    enum AcpiGhesNotifyType notify;
-> +} AcpiNotificationSourceId;
+> =20
+> +    if (features & (1u << VIRTIO_BLK_F_OUT_FUA)) {
+> +        /* FUA write and read with 3 descriptor layout */
+> +        /* FUA write request */
+> +        req.type =3D VIRTIO_BLK_T_OUT_FUA;
+> +        req.ioprio =3D 1;
+> +        req.sector =3D 0;
+> +        req.data =3D g_malloc0(512);
+> +        strcpy(req.data, "test");
 > +
->  /*
->   * AcpiGhesState stores GPA values that will be used to fill HEST entries.
->   *
-> @@ -84,6 +89,8 @@ typedef struct AcpiGhesState {
->  void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
->                       GArray *hardware_errors,
->                       BIOSLinker *linker,
-> +                     const AcpiNotificationSourceId * const notif_source,
-> +                     int num_sources,
->                       const char *oem_id, const char *oem_table_id);
->  void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
->                            GArray *hardware_errors);
-> -- 
-> 2.48.1
+> +        req_addr =3D virtio_blk_request(alloc, dev, &req, 512);
+> +
+> +        g_free(req.data);
+> +
+> +        free_head =3D qvirtqueue_add(qts, vq, req_addr, 16, false, true);
+> +        qvirtqueue_add(qts, vq, req_addr + 16, 512, false, true);
+> +        qvirtqueue_add(qts, vq, req_addr + 528, 1, true, false);
+> +
+> +        qvirtqueue_kick(qts, dev, vq, free_head);
+> +
+> +        qvirtio_wait_used_elem(qts, dev, vq, free_head, NULL,
+> +                            QVIRTIO_BLK_TIMEOUT_US);
+> +        status =3D readb(req_addr + 528);
+> +        g_assert_cmpint(status, =3D=3D, 0);
+> +
+> +        guest_free(alloc, req_addr);
+> +
+> +        /* Read request */
+> +        req.type =3D VIRTIO_BLK_T_IN;
+> +        req.ioprio =3D 1;
+> +        req.sector =3D 0;
+> +        req.data =3D g_malloc0(512);
+> +
+> +        req_addr =3D virtio_blk_request(alloc, dev, &req, 512);
+> +
+> +        g_free(req.data);
+> +
+> +        free_head =3D qvirtqueue_add(qts, vq, req_addr, 16, false, true);
+> +        qvirtqueue_add(qts, vq, req_addr + 16, 512, true, true);
+> +        qvirtqueue_add(qts, vq, req_addr + 528, 1, true, false);
+> +
+> +        qvirtqueue_kick(qts, dev, vq, free_head);
+> +
+> +        qvirtio_wait_used_elem(qts, dev, vq, free_head, NULL,
+> +                            QVIRTIO_BLK_TIMEOUT_US);
+> +        status =3D readb(req_addr + 528);
+> +        g_assert_cmpint(status, =3D=3D, 0);
+> +
+> +        data =3D g_malloc0(512);
+> +        qtest_memread(qts, req_addr + 16, data, 512);
+> +        g_assert_cmpstr(data, =3D=3D, "test");
+> +        g_free(data);
+> +
+> +        guest_free(alloc, req_addr);
+> +    }
+> +
+>      if (features & (1u << VIRTIO_F_ANY_LAYOUT)) {
+>          /* Write and read with 2 descriptor layout */
+>          /* Write request */
+> --=20
+> 2.49.0
+>=20
+
+--vfvJVVXch43AejIf
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgiT1AACgkQnKSrs4Gr
+c8jgmAf8DV/SXjoGd8MvuS7FtXKom0Bq3AULMtdHH4UJUK4lF7kmgFH7yNf0+l+d
+vv4JIK2HeZ2w4Io7XbiwgeUKqYjKwu94kqrK3egPevusrtpjFT/leOMTejPGIg7y
+xQul+KQlzSKWodPft6bA9UoiyXGdZAm+HlY7Z/P+C8L3JHOkT3fv0Psl0gg9lVis
+2QxkNIoeORn8Z98hm1gXFC7gT+pR5QKEmwWuIWjzlLhdLOgNq5w1eVHMH7ZkXfJK
+PFBNGcCJDeQyqZravYhDMjHcWkNMNYnxZmFP2dHarBZv+sTmI7kPrb3U69DDl4bX
+4cxV8XrA+BeakKsqTownoG+yGLKVLA==
+=Rn3g
+-----END PGP SIGNATURE-----
+
+--vfvJVVXch43AejIf--
 
 
