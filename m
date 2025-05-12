@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E0B7C3ABC3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7C10C3ABD2
 	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 03:20:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEJcP-0006s0-DE; Sun, 11 May 2025 23:14:17 -0400
+	id 1uEJcK-0006UV-Jo; Sun, 11 May 2025 23:14:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uEJcD-00060P-H1; Sun, 11 May 2025 23:14:05 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1uEJc9-0005Wf-Mc; Sun, 11 May 2025 23:14:02 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uEJcB-00075U-Sz; Sun, 11 May 2025 23:14:05 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-7376e311086so5554029b3a.3; 
- Sun, 11 May 2025 20:14:02 -0700 (PDT)
+ id 1uEJc7-00074g-RP; Sun, 11 May 2025 23:14:01 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-b1ffeda9363so3895672a12.1; 
+ Sun, 11 May 2025 20:13:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747019641; x=1747624441; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747019638; x=1747624438; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3aq6xHzxMbY76ahwW7NMoS3wuliK3baz43I33HUj9BE=;
- b=UNKusvHi5vO2Dr3KBWUsie/TD17/Cosc5wWLzEC36UNJFmIk1BZunCK2H4mFwZFTZt
- UGiIRAReke4iKr4peVqjCPSWXk7lfC01WLFp7k8kE/vUdDljJPAvXcwxQEJlc/N3NYZ8
- /iko9iKLFg0gt61tN/GHqU7ANZoqjOwGBpX62BsbuhmpkxKxwp9cNgB1RRlSAytxwz6c
- EIiqlKrVSta2BXDhSIGqyQzkIh2KTGzdVSg8zXr7ewFLVfkH9wV33VoiGTY0ZZz+lXWX
- 6afUbDA7vhVqTTd1NZ9RIGeeRinW2STNIoPn7F0jrPOfXvKcZmgeYgJACkyccmxOe5L6
- XPYA==
+ bh=g3Yo8lTw4jtFlIZ2vyBiwLe+Pag0yNjD5ZBBjQxnrzU=;
+ b=FAQUqFANnpc8oQ6kV3XpcUKhNXxauFxtWTJdAoKlwsIEesGfNnKADQFRZRupRXoLNu
+ rX3AfcVlpR+lAyLLPvUVs/6qQH/Ib6XxCyHFhIhlFO/6PkbBNls7ExHtWnVxtq0Utu1t
+ 82sq6Uzoo2tcyvXmVXMVscxcMIuh0/YkpiinJSJ5/4Vy+PVAOJ8EgzELpYhEzR82I0rz
+ qJhv+3MVza5Ii+3zIPVW0/OufY4PHNu+QAOjfxIXJjVdaCwVVtm0OnW3ChB2I7JhpN5j
+ bCqxYLrfHh5CZt9LhBExFPU2N8YlnbVWEUWDOEPqzPhqvTcxeXanPW+TJfsIV8DXSm+Y
+ 70Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747019641; x=1747624441;
+ d=1e100.net; s=20230601; t=1747019638; x=1747624438;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3aq6xHzxMbY76ahwW7NMoS3wuliK3baz43I33HUj9BE=;
- b=K9a3TtkDg/XqnRmbp7jCC5vewg8iMmDV6wm/uMCRXgMQ8nj+CZD9Og7v1/MC9YoZu8
- omz6MeHfodfFN1vdsLO11fQlVLUZYUx5WrFYKNCMTAODeFawoyCP/ct8pwEjTV2QvZns
- 3HvfEzDpLkUdi6KNC+4YDQ2KzFMC8ZdHZEgTU8g/NThTGbTMv+gbOw1CW6e0rezmu/rO
- KnSv/DQmr7W4FDokw2R/VoRWh2EoczdUYCaZIRFgK/zvpAcXNovl2WQ1bBPC0Y7U0a8x
- gjYz2xLDfHmtKBwmd4P01GZxFsgNcBm0XUq2FewUV+eZZuNyZhCVMJZ1UIHpjFk6JpEM
- ejuQ==
+ bh=g3Yo8lTw4jtFlIZ2vyBiwLe+Pag0yNjD5ZBBjQxnrzU=;
+ b=rlPXMhpfzlKe4hgfjTDO4KfwT0Y8iQlo6n0ORXinMiOSEjagwN+kzuzNsaY92CneVw
+ fZUP1kGel6UDaUi8q2coMmwjVgZaEUB91n6wDeo9bVRsC+YoHJcbnkuhSxNU80eHg5l+
+ jLSzatWkA010RqBq5vF7Vmiy0Zx62DmnuYQnBg37drrWS4l4Vo7DDTLcz7eMk2fHt9AR
+ 4ew4Z3y9DgJ24SGx9CmJz+x/TeaskZFOQRNARaC8foG5MtMVG+t35tJ3FwEsMr7WM3si
+ VTHyrIJE3gHnkvAIZEvtLMDaXeUMd+UU2/XKjGPgmf8xtRIXeaz+pzDHji4tL4oRrk5z
+ Lyvg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+WZFoI0HLuGFA1tTXiFp2QlOJDvRjP5xqIQLV1+Ri0rWOm/4JT5a0Z7a3XitAi75JRErbV4g9bAEq@nongnu.org
-X-Gm-Message-State: AOJu0Yw0PUiaAYJk/44ynfz2TzwectT8doCirMp0qV+Hg1h9DJ4baKfj
- 0Ep6qp+RMupMUraZWWoPvPAUhoJ9OKnHFPz2IQl6F81894STXVJFmxFRSw==
-X-Gm-Gg: ASbGncsNJEyWgxRrV74UbRe7+8N4qHYNRI1gUz7Mfn6Ip0Hrhx0lrmA604bOVyp6IXm
- TulP5FAZoJVrpnZ9P2QmGvDLrGMYJxNKqs032QGfFZkOk5i3AtHj951eiaBk+65Ono618uZe4St
- nn1bBpRp1cwm9b+qrbw3tmM/v6bqLt1WqDLavE6xqb54/t/P5Ie5VCoE2BKd/rcFgCI1N9/AvAw
- +ynI+jwQ99Aec+Vp4hGl24ezuD0L/VKnO94BS/vcLJCaQ7eNs1eB6Jxc/UfEhzH8DvL6JKBHVy5
- WhLpowaeXmkIz0QdCWyHDCwe6Rox9BHI8OlJbAkmlt7RXcdW8VUSfqI1uA==
-X-Google-Smtp-Source: AGHT+IHUhNS1jnJThKR55wIbiafTkUucHr+yBXA3/LBxoomIXmRrUpsA2TlZ+2EZ+oHe/28KWOpQFQ==
-X-Received: by 2002:a05:6a20:2450:b0:1f5:6c94:2cc9 with SMTP id
- adf61e73a8af0-215abc22f24mr17498125637.22.1747019641430; 
- Sun, 11 May 2025 20:14:01 -0700 (PDT)
+ AJvYcCWuonqTgg11pzNzDWn2tjivLWKbpm94wMP2NfRpCVYDH9TscdmcKQIL/1mTHgXiyEQvvQ/4FE9sRuT1@nongnu.org
+X-Gm-Message-State: AOJu0YzA1nIrpJi5T8vyO6HDZMUavelcJfdu7RvuozhLX2o0Q5IoTfch
+ zJHHgIZ4ttmWKhnCQx0nJ6BrpxZfeCiZMdkhhxDCcMr5jInrwrhx5XWlGQ==
+X-Gm-Gg: ASbGnctlocbOu0Pq8FBM87ks1PyDGzCUhnhJQhxkcdqj/6Ngh8Z1ZFSHwFaD7hv3hi6
+ /N/+XxWUQTBD34r+nU96rv87uEV4yKPYVRLawKmG3ZogjJJOHyX2ZTYt5FaTdmdrZ/E4N/eAB0i
+ BEUyP4MOf9pmsl35OY3J6GK/hPUweXM8U8pZFq3sq91j23bOsUKFXCmhKaiUAr483G4RAn6VTh/
+ sikxRVCBhHRxg0OWurz+VBbQrwwhrEsi6ioxEb7TBiPDRjwmcn/CranWzxwc/m+MvZd1Kd28CCF
+ Zp5NFuHV/Rmc/TW3aCv4lpgGTxqmy6ublh+jWHEs1k9X1azeKqbOLn6ILw==
+X-Google-Smtp-Source: AGHT+IHK3fdftqWgrG/YfaIHK7y0UEx4tW6xzZwJZU+Lhzk220Q+hVNlnJFdQOWi8CBL0jxiCrPQ8A==
+X-Received: by 2002:a17:902:c94f:b0:224:f12:3734 with SMTP id
+ d9443c01a7336-22fc8c8cbb7mr149809915ad.30.1747019637855; 
+ Sun, 11 May 2025 20:13:57 -0700 (PDT)
 Received: from wheely.local0.net ([118.209.229.237])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b234951024csm4750069a12.5.2025.05.11.20.13.58
+ 41be03b00d2f7-b234951024csm4750069a12.5.2025.05.11.20.13.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 20:14:01 -0700 (PDT)
+ Sun, 11 May 2025 20:13:57 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
  Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
  Caleb Schlossin <calebs@linux.vnet.ibm.com>
-Subject: [PATCH 47/50] ppc/xive2: Implement POOL LGS push TIMA op
-Date: Mon, 12 May 2025 13:10:56 +1000
-Message-ID: <20250512031100.439842-48-npiggin@gmail.com>
+Subject: [PATCH 46/50] ppc/xive2: Implement set_os_pending TIMA op
+Date: Mon, 12 May 2025 13:10:55 +1000
+Message-ID: <20250512031100.439842-47-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250512031100.439842-1-npiggin@gmail.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,39 +101,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement set LGS for the POOL ring.
+xive2 must take into account redistribution of group interrupts if
+the VP directed priority exceeds the group interrupt priority after
+this operation. The xive1 code is not group aware so implement this
+for xive2.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/intc/xive.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/intc/xive.c         |  2 ++
+ hw/intc/xive2.c        | 28 ++++++++++++++++++++++++++++
+ include/hw/ppc/xive2.h |  2 ++
+ 3 files changed, 32 insertions(+)
 
 diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index dc64edf13d..807a1c1c34 100644
+index 979031a587..dc64edf13d 100644
 --- a/hw/intc/xive.c
 +++ b/hw/intc/xive.c
-@@ -532,6 +532,12 @@ static void xive_tm_set_os_lgs(XivePresenter *xptr, XiveTCTX *tctx,
-     xive_tctx_set_lgs(tctx, TM_QW1_OS, value & 0xff);
+@@ -747,6 +747,8 @@ static const XiveTmOp xive2_tm_operations[] = {
+     /* MMIOs above 2K : special operations with side effects */
+     { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_REG,         2, true, false,
+       NULL, xive_tm_ack_os_reg },
++    { XIVE_TM_OS_PAGE, TM_SPC_SET_OS_PENDING,     1, true, false,
++      xive2_tm_set_os_pending, NULL },
+     { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX_G2,     4, true, false,
+       NULL, xive2_tm_pull_os_ctx },
+     { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        4, true, false,
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index 392ac6077e..de1ccad685 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -1323,6 +1323,34 @@ void xive2_tm_set_os_cppr(XivePresenter *xptr, XiveTCTX *tctx,
+     xive2_tctx_set_cppr(tctx, TM_QW1_OS, value & 0xff);
  }
  
-+static void xive_tm_set_pool_lgs(XivePresenter *xptr, XiveTCTX *tctx,
-+                          hwaddr offset, uint64_t value, unsigned size)
++/*
++ * Adjust the IPB to allow a CPU to process event queues of other
++ * priorities during one physical interrupt cycle.
++ */
++void xive2_tm_set_os_pending(XivePresenter *xptr, XiveTCTX *tctx,
++                             hwaddr offset, uint64_t value, unsigned size)
 +{
-+    xive_tctx_set_lgs(tctx, TM_QW2_HV_POOL, value & 0xff);
++    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
++    uint8_t ring = TM_QW1_OS;
++    uint8_t *regs = &tctx->regs[ring];
++    uint8_t priority = value & 0xff;
++
++    /*
++     * XXX: should this simply set a bit in IPB and wait for it to be picked
++     * up next cycle, or is it supposed to present it now? We implement the
++     * latter here.
++     */
++    regs[TM_IPB] |= xive_priority_to_ipb(priority);
++    if (xive_ipb_to_pipr(regs[TM_IPB]) >= regs[TM_PIPR]) {
++        return;
++    }
++    if (xive_nsr_indicates_group_exception(ring, regs[TM_NSR])) {
++        xive2_redistribute(xrtr, tctx, ring);
++    }
++
++    xive_tctx_pipr_present(tctx, ring, priority, 0);
 +}
 +
- /*
-  * Adjust the PIPR to allow a CPU to process event queues of other
-  * priorities during one physical interrupt cycle.
-@@ -737,6 +743,8 @@ static const XiveTmOp xive2_tm_operations[] = {
-       xive2_tm_push_pool_ctx, NULL },
-     { XIVE_TM_HV_PAGE, TM_QW2_HV_POOL + TM_WORD2, 8, true, true,
-       xive2_tm_push_pool_ctx, NULL },
-+    { XIVE_TM_HV_PAGE, TM_QW2_HV_POOL + TM_LGS,   1, true, true,
-+      xive_tm_set_pool_lgs, NULL },
-     { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, true, true,
-       xive2_tm_set_hv_cppr, NULL },
-     { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, true, true,
+ static void xive2_tctx_set_target(XiveTCTX *tctx, uint8_t ring, uint8_t target)
+ {
+     uint8_t *regs = &tctx->regs[ring];
+diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
+index c1ab06a55a..45266c2a8b 100644
+--- a/include/hw/ppc/xive2.h
++++ b/include/hw/ppc/xive2.h
+@@ -130,6 +130,8 @@ void xive2_tm_set_hv_cppr(XivePresenter *xptr, XiveTCTX *tctx,
+                           hwaddr offset, uint64_t value, unsigned size);
+ void xive2_tm_set_os_cppr(XivePresenter *xptr, XiveTCTX *tctx,
+                           hwaddr offset, uint64_t value, unsigned size);
++void xive2_tm_set_os_pending(XivePresenter *xptr, XiveTCTX *tctx,
++                             hwaddr offset, uint64_t value, unsigned size);
+ void xive2_tm_push_os_ctx(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
+                            uint64_t value, unsigned size);
+ uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
 -- 
 2.47.1
 
