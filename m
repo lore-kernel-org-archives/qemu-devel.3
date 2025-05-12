@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 408B4C3ABD7
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:36:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F5DC3ABD7
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEVBB-0007Gw-Fv; Mon, 12 May 2025 11:34:58 -0400
+	id 1uEVB2-0006Nr-JJ; Mon, 12 May 2025 11:34:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uEV9m-0004eu-Mu
+ id 1uEV9l-0004d0-T6
  for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:30 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uEV9i-0006k3-2T
- for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:30 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54CC9e1i029134;
- Mon, 12 May 2025 15:33:23 GMT
+ id 1uEV9h-0006h4-UB
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:29 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54CC9wpj027445;
+ Mon, 12 May 2025 15:33:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=457N7ybNax9/cGmjm0Z9j80VLHxXbfSo/qOxEtY0mCc=; b=
- dznZP2B0Xv4wn7I7bG1NdP68YsMvQjyE+rw8/IjecZiLyVBT6sI7+IGw+wJjlxxq
- P2osHFj7lMBwU//AGUGls8QABvepWwI7CL8Epjvx1SXnOedVceEPurJPTf7gjBpi
- AUboqVUYpxjzBXxp2KSphiAxCyPSbro0cjCCsotjqFmcq74L4Ta5GFcS+d+8lDC6
- bl3a0kMZC4pFokJbS4PkPwX+kmNbFaeZVzWL0lAO5qX0yT0h4Qctz5StTj4K3HqX
- d+bTJX0MRwMW4XmFujd+lWPRp6NJhhC1WsQZicwiUfb2QHDLKIMn31XsyrCSNRZg
- Eo+WjBK9ci+DesXc+A6Cqw==
+ corp-2025-04-25; bh=sqofRhHPlr72/w3KqGQb8KGaOdyEpNKi1Li9LctTVDY=; b=
+ ilOslqU2U9t6+exXieux86yFiJW9lsw9Zk6qBKTl8ee8kwnqs3Rr1DwCYDdNZlT6
+ cVT1bRNFCcOtW+MqWtiFrWCiAnd6gExarF/CpXHsPZgzViCI1vVkdq929rI0rC0K
+ GogfScaUxPRnPU1uTErG9TEV/rGV7tJLWo8ufuhOO4W5MFi8XtJUsaeqVVyFCj48
+ dkMWIxP0Vtm8VK3R9fkwXwipRV2FyDI4Rimz9DWfnMa/+mWHiFLrnWwERE96sJ1U
+ eMZ5RIrKhlamtMGbB58EAuav1aEQ6eJV+fcbHU8jVQRaOc1DFsEcGjjZZb3Ng3Oh
+ DkhQxs09MTN2XK44NgEufA==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46j0gwju7j-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46j1662usc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 May 2025 15:33:22 +0000 (GMT)
+ Mon, 12 May 2025 15:33:13 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54CE6vNN002823; Mon, 12 May 2025 15:33:22 GMT
+ with ESMTP id 54CEA3So002542; Mon, 12 May 2025 15:33:12 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46jwx366tj-1
+ 46jwx366ku-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 May 2025 15:33:21 +0000
+ Mon, 12 May 2025 15:33:12 +0000
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54CFWk5o030605;
- Mon, 12 May 2025 15:33:21 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54CFWk5O030605;
+ Mon, 12 May 2025 15:33:12 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 46jwx36627-37; Mon, 12 May 2025 15:33:21 +0000
+ ESMTP id 46jwx36627-24; Mon, 12 May 2025 15:33:11 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,9 +63,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V3 36/42] vfio/iommufd: preserve descriptors
-Date: Mon, 12 May 2025 08:32:47 -0700
-Message-Id: <1747063973-124548-37-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V3 23/42] vfio-pci: preserve INTx
+Date: Mon, 12 May 2025 08:32:34 -0700
+Message-Id: <1747063973-124548-24-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
 References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
@@ -77,20 +77,20 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  bulkscore=0 suspectscore=0 phishscore=0 mlxlogscore=999 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2504070000
  definitions=main-2505120161
-X-Authority-Analysis: v=2.4 cv=M8hNKzws c=1 sm=1 tr=0 ts=682214c2 b=1 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDE2MSBTYWx0ZWRfX7Z8T/DM9e/+G
+ GAyQ33LVeINTqmf+CFvp1/HxQLv49xq1nxGwnn/EHY2KQ9XHxX4C+KrHrRW9Ta4//Pr5kqnQpRv
+ 9vh7WbPIlsjYmilA01GwCpIUHGLmdQSelanRJ4zcbB414T7I31GEps+oyQ7p6PUkhDwQy7a1kj1
+ MNA6xskJpzXGf1gvN80I1Mx4NiEJCD7Etzb2QfKQnOgtq3tvmHxyfHm2ItZq+mvP/UyJkAPG79b
+ 07IZuMCDOOZF2nU2hO9AgRBP52+vatbBDjP+Uat2zNYk+zMg3W2faX6mRk5uN0ibY+ofkzJrEHK
+ LD62/vHaS+3gyzkx91L+XD/cRJpp82MN4g5rN23Y8rtUu/9tWMF44DIWUb/XXD5042tgCpGye4H
+ iBBYPbX/Gu5ZezsrNiYCV1Lfez12xoIHNx6+hAoUjsxpUwGxyK+WP10VIxg7fTXbQS4RmpqT
+X-Authority-Analysis: v=2.4 cv=VMDdn8PX c=1 sm=1 tr=0 ts=682214b9 b=1 cx=c_pps
  a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
- a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=28-vp7vVO8PgcjRJnlAA:9
-X-Proofpoint-GUID: 9tbdGRPuMdrSXJeHPMx2KsJPLKtC30F_
-X-Proofpoint-ORIG-GUID: 9tbdGRPuMdrSXJeHPMx2KsJPLKtC30F_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDE2MSBTYWx0ZWRfX3VbrAP70kygh
- TT/i5DbY/4oxM4yuAWqynKycl7Yg9CqfR5j5+bAEOqaN/qDsawzsYsVy2tpPPdRgzNtnuLD82FH
- g9o1asQ3D+1Nhj6M8bSSwr2OQJUDwtR+RGbtTUBsvpyZZXvI8sCDelW36RhPhXq1mzQd+rjYTDH
- tdpeg877NRRgymM8HUQb1vgJ8yM7qe2TBiIog8Va2XnDq39dz7TwzA6ACT6/PUtaG+Z7RhJfVwI
- SA10mLak182KVPEu/Z1vCqjwEyLeJypzIVsz7WE6SXI0gVgDgnBDLez2uvk3bo6X1S0aUETonqq
- seZ9e2sAzL+OSPsudSsTtmfaI+anT82yPmjQ1s3YNGgpx4IjnzCkfwKxvSxiI+nHhe3vtnn8KDJ
- BBwjS/btzI/Ztwdeoq93+T+NlOPNAcwlFH7HAh1E53TGIhrndHShgC50nQg+cjPC05AwMoac
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+ a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=aHyXveKDkG1ssMKnveQA:9
+X-Proofpoint-ORIG-GUID: j-oN6XwZCU18le2qGpQFy6SrMJJwRcAO
+X-Proofpoint-GUID: j-oN6XwZCU18le2qGpQFy6SrMJJwRcAO
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -32
 X-Spam_score: -3.3
 X-Spam_bar: ---
@@ -114,201 +114,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Save the iommu and vfio device fd in CPR state when it is created.
-After CPR, the fd number is found in CPR state and reused.  Remember
-the reused status for subsequent patches.  The reused status is cleared
-when vmstate load finishes.
+Preserve vfio INTx state across cpr-transfer.  Preserve VFIOINTx fields as
+follows:
+  pin : Recover this from the vfio config in kernel space
+  interrupt : Preserve its eventfd descriptor across exec.
+  unmask : Ditto
+  route.irq : This could perhaps be recovered in vfio_pci_post_load by
+    calling pci_device_route_intx_to_irq(pin), whose implementation reads
+    config space for a bridge device such as ich9.  However, there is no
+    guarantee that the bridge vmstate is read before vfio vmstate.  Rather
+    than fiddling with MigrationPriority for vmstate handlers, explicitly
+    save route.irq in vfio vmstate.
+  pending : save in vfio vmstate.
+  mmap_timeout, mmap_timer : Re-initialize
+  bool kvm_accel : Re-initialize
+
+In vfio_realize, defer calling vfio_intx_enable until the vmstate
+is available, in vfio_pci_post_load.  Modify vfio_intx_enable and
+vfio_intx_kvm_enable to skip vfio initialization, but still perform
+kvm initialization.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 ---
- backends/iommufd.c       | 19 ++++++++++---------
- hw/vfio/cpr-iommufd.c    | 16 ++++++++++++++++
- hw/vfio/device.c         | 10 ++--------
- hw/vfio/iommufd.c        | 13 +++++++++++--
- include/system/iommufd.h |  1 +
- 5 files changed, 40 insertions(+), 19 deletions(-)
+ hw/vfio/cpr.c | 27 ++++++++++++++++++++++++++-
+ hw/vfio/pci.c | 29 ++++++++++++++++++++++++++---
+ 2 files changed, 52 insertions(+), 4 deletions(-)
 
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 6fed1c1..492747c 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -16,12 +16,18 @@
- #include "qemu/module.h"
- #include "qom/object_interfaces.h"
- #include "qemu/error-report.h"
-+#include "migration/cpr.h"
- #include "monitor/monitor.h"
- #include "trace.h"
- #include "hw/vfio/vfio-device.h"
- #include <sys/ioctl.h>
- #include <linux/iommufd.h>
+diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+index be132fa..6081a89 100644
+--- a/hw/vfio/cpr.c
++++ b/hw/vfio/cpr.c
+@@ -140,12 +140,36 @@ static int vfio_cpr_pci_post_load(void *opaque, int version_id)
+         vfio_cpr_claim_vectors(vdev, nr_vectors, false);
  
-+static const char *iommufd_fd_name(IOMMUFDBackend *be)
-+{
-+    return object_get_canonical_path_component(OBJECT(be));
-+}
-+
- static void iommufd_backend_init(Object *obj)
- {
-     IOMMUFDBackend *be = IOMMUFD_BACKEND(obj);
-@@ -47,9 +53,8 @@ static void iommufd_backend_set_fd(Object *obj, const char *str, Error **errp)
-     IOMMUFDBackend *be = IOMMUFD_BACKEND(obj);
-     int fd = -1;
- 
--    fd = monitor_fd_param(monitor_cur(), str, errp);
-+    fd = cpr_get_fd_param(iommufd_fd_name(be), str, 0, &be->cpr_reused, errp);
-     if (fd == -1) {
--        error_prepend(errp, "Could not parse remote object fd %s:", str);
-         return;
-     }
-     be->fd = fd;
-@@ -95,14 +100,9 @@ bool iommufd_change_process(IOMMUFDBackend *be, Error **errp)
- 
- bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
- {
--    int fd;
--
-     if (be->owned && !be->users) {
--        fd = qemu_open("/dev/iommu", O_RDWR, errp);
--        if (fd < 0) {
--            return false;
--        }
--        be->fd = fd;
-+        be->fd = cpr_open_fd("/dev/iommu", O_RDWR, iommufd_fd_name(be), 0,
-+                             &be->cpr_reused, errp);
-     }
-     be->users++;
- 
-@@ -121,6 +121,7 @@ void iommufd_backend_disconnect(IOMMUFDBackend *be)
-         be->fd = -1;
-     }
- out:
-+    cpr_delete_fd(iommufd_fd_name(be), 0);
-     trace_iommufd_backend_disconnect(be->fd, be->users);
- }
- 
-diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
-index 46f2006..b760bd3 100644
---- a/hw/vfio/cpr-iommufd.c
-+++ b/hw/vfio/cpr-iommufd.c
-@@ -8,6 +8,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "hw/vfio/vfio-cpr.h"
-+#include "hw/vfio/vfio-device.h"
- #include "migration/blocker.h"
- #include "migration/cpr.h"
- #include "migration/migration.h"
-@@ -25,10 +26,25 @@ static bool vfio_cpr_supported(VFIOIOMMUFDContainer *container, Error **errp)
-     return true;
- }
- 
-+static int vfio_container_post_load(void *opaque, int version_id)
-+{
-+    VFIOIOMMUFDContainer *container = opaque;
-+    VFIOContainerBase *bcontainer = &container->bcontainer;
-+    VFIODevice *vbasedev;
-+
-+    QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
-+        vbasedev->cpr.reused = false;
-+    }
-+    container->be->cpr_reused = false;
-+
-+    return 0;
-+}
-+
- static const VMStateDescription vfio_container_vmstate = {
-     .name = "vfio-iommufd-container",
-     .version_id = 0,
-     .minimum_version_id = 0,
-+    .post_load = vfio_container_post_load,
-     .needed = cpr_needed_for_reuse,
-     .fields = (VMStateField[]) {
-         VMSTATE_END_OF_LIST()
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 8e9de68..02f384e 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -312,14 +312,8 @@ bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
- 
- void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
- {
--    ERRP_GUARD();
--    int fd = monitor_fd_param(monitor_cur(), str, errp);
--
--    if (fd < 0) {
--        error_prepend(errp, "Could not parse remote object fd %s:", str);
--        return;
--    }
--    vbasedev->fd = fd;
-+    vbasedev->fd = cpr_get_fd_param(vbasedev->dev->id, str, 0,
-+                                    &vbasedev->cpr.reused, errp);
- }
- 
- static VFIODeviceIOOps vfio_device_io_ops_ioctl;
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index dabb948..046f601 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -26,6 +26,7 @@
- #include "qemu/cutils.h"
- #include "qemu/chardev_open.h"
- #include "migration/blocker.h"
-+#include "migration/cpr.h"
- #include "pci.h"
- #include "vfio-iommufd.h"
- #include "vfio-helpers.h"
-@@ -530,13 +531,18 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
-         VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
- 
-     if (vbasedev->fd < 0) {
--        devfd = iommufd_cdev_getfd(vbasedev->sysfsdev, errp);
-+        devfd = cpr_find_fd(vbasedev->name, 0);
-+        vbasedev->cpr.reused = (devfd >= 0);
-+        if (!vbasedev->cpr.reused) {
-+            devfd = iommufd_cdev_getfd(vbasedev->sysfsdev, errp);
+     } else if (vfio_pci_read_config(pdev, PCI_INTERRUPT_PIN, 1)) {
+-        g_assert_not_reached();      /* completed in a subsequent patch */
++        Error *err = NULL;
++        if (!vfio_intx_enable(vdev, &err)) {
++            error_report_err(err);
++            return -1;
 +        }
-         if (devfd < 0) {
-             return false;
-         }
-         vbasedev->fd = devfd;
-     } else {
-         devfd = vbasedev->fd;
-+        /* reused was set in iommufd_backend_set_fd */
      }
  
-     if (!iommufd_cdev_connect_and_bind(vbasedev, errp)) {
-@@ -634,7 +640,9 @@ found_container:
- 
-     vfio_device_prepare(vbasedev, bcontainer, &dev_info);
-     vfio_iommufd_cpr_register_device(vbasedev);
--
-+    if (!vbasedev->cpr.reused) {
-+        cpr_save_fd(vbasedev->name, 0, vbasedev->fd);
-+    }
-     trace_iommufd_cdev_device_info(vbasedev->name, devfd, vbasedev->num_irqs,
-                                    vbasedev->num_regions, vbasedev->flags);
-     return true;
-@@ -673,6 +681,7 @@ static void iommufd_cdev_detach(VFIODevice *vbasedev)
- 
-     migrate_del_blocker(&vbasedev->cpr.id_blocker);
-     vfio_iommufd_cpr_unregister_device(vbasedev);
-+    cpr_delete_fd(vbasedev->name, 0);
-     iommufd_cdev_unbind_and_disconnect(vbasedev);
-     close(vbasedev->fd);
+     return 0;
  }
-diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-index db9ed53..5c17abd 100644
---- a/include/system/iommufd.h
-+++ b/include/system/iommufd.h
-@@ -32,6 +32,7 @@ struct IOMMUFDBackend {
-     /*< protected >*/
-     int fd;            /* /dev/iommu file descriptor */
-     bool owned;        /* is the /dev/iommu opened internally */
-+    bool cpr_reused;   /* fd is reused after CPR */
-     uint32_t users;
  
-     /*< public >*/
++static const VMStateDescription vfio_intx_vmstate = {
++    .name = "vfio-cpr-intx",
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .fields = (VMStateField[]) {
++        VMSTATE_BOOL(pending, VFIOINTx),
++        VMSTATE_UINT32(route.mode, VFIOINTx),
++        VMSTATE_INT32(route.irq, VFIOINTx),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++#define VMSTATE_VFIO_INTX(_field, _state) {                         \
++    .name       = (stringify(_field)),                              \
++    .size       = sizeof(VFIOINTx),                                 \
++    .vmsd       = &vfio_intx_vmstate,                               \
++    .flags      = VMS_STRUCT,                                       \
++    .offset     = vmstate_offset_value(_state, _field, VFIOINTx),   \
++}
++
+ const VMStateDescription vfio_cpr_pci_vmstate = {
+     .name = "vfio-cpr-pci",
+     .version_id = 0,
+@@ -156,6 +180,7 @@ const VMStateDescription vfio_cpr_pci_vmstate = {
+     .fields = (VMStateField[]) {
+         VMSTATE_PCI_DEVICE(pdev, VFIOPCIDevice),
+         VMSTATE_MSIX_TEST(pdev, VFIOPCIDevice, vfio_msix_present),
++        VMSTATE_VFIO_INTX(intx, VFIOPCIDevice),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index bfa72bc..84282c0 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -160,12 +160,17 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
+         return true;
+     }
+ 
++    if (vdev->vbasedev.cpr.reused) {
++        goto skip_state;
++    }
++
+     /* Get to a known interrupt state */
+     qemu_set_fd_handler(irq_fd, NULL, NULL, vdev);
+     vfio_device_irq_mask(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
+     vdev->intx.pending = false;
+     pci_irq_deassert(&vdev->pdev);
+ 
++skip_state:
+     /* Get an eventfd for resample/unmask */
+     if (!vfio_notifier_init(vdev, &vdev->intx.unmask, "intx-unmask", 0, errp)) {
+         goto fail;
+@@ -179,6 +184,10 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
+         goto fail_irqfd;
+     }
+ 
++    if (vdev->vbasedev.cpr.reused) {
++        goto skip_irq;
++    }
++
+     if (!vfio_device_irq_set_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
+                                        VFIO_IRQ_SET_ACTION_UNMASK,
+                                        event_notifier_get_fd(&vdev->intx.unmask),
+@@ -189,6 +198,7 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
+     /* Let'em rip */
+     vfio_device_irq_unmask(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
+ 
++skip_irq:
+     vdev->intx.kvm_accel = true;
+ 
+     trace_vfio_intx_enable_kvm(vdev->vbasedev.name);
+@@ -304,7 +314,13 @@ bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+         return true;
+     }
+ 
+-    vfio_disable_interrupts(vdev);
++    /*
++     * Do not alter interrupt state during vfio_realize and cpr load.  The
++     * reused flag is cleared thereafter.
++     */
++    if (!vdev->vbasedev.cpr.reused) {
++        vfio_disable_interrupts(vdev);
++    }
+ 
+     vdev->intx.pin = pin - 1; /* Pin A (1) -> irq[0] */
+     pci_config_set_interrupt_pin(vdev->pdev.config, pin);
+@@ -327,7 +343,8 @@ bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+     fd = event_notifier_get_fd(&vdev->intx.interrupt);
+     qemu_set_fd_handler(fd, vfio_intx_interrupt, NULL, vdev);
+ 
+-    if (!vfio_device_irq_set_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
++    if (!vdev->vbasedev.cpr.reused &&
++        !vfio_device_irq_set_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
+                                 VFIO_IRQ_SET_ACTION_TRIGGER, fd, errp)) {
+         qemu_set_fd_handler(fd, NULL, NULL, vdev);
+         vfio_notifier_cleanup(vdev, &vdev->intx.interrupt, "intx-interrupt", 0);
+@@ -3182,7 +3199,13 @@ static bool vfio_interrupt_setup(VFIOPCIDevice *vdev, Error **errp)
+                                              vfio_intx_routing_notifier);
+         vdev->irqchip_change_notifier.notify = vfio_irqchip_change;
+         kvm_irqchip_add_change_notifier(&vdev->irqchip_change_notifier);
+-        if (!vfio_intx_enable(vdev, errp)) {
++
++        /*
++         * During CPR, do not call vfio_intx_enable at this time.  Instead,
++         * call it from vfio_pci_post_load after the intx routing data has
++         * been loaded from vmstate.
++         */
++        if (!vdev->vbasedev.cpr.reused && !vfio_intx_enable(vdev, errp)) {
+             timer_free(vdev->intx.mmap_timer);
+             pci_device_set_intx_routing_notifier(&vdev->pdev, NULL);
+             kvm_irqchip_remove_change_notifier(&vdev->irqchip_change_notifier);
 -- 
 1.8.3.1
 
