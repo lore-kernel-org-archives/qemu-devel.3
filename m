@@ -4,100 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C468C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 08:09:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6391C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 08:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEODt-0004GD-6j; Mon, 12 May 2025 04:09:17 -0400
+	id 1uEOJD-0006Pf-QY; Mon, 12 May 2025 04:14:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ob0y=X4=kaod.org=clg@ozlabs.org>)
- id 1uEODk-0004Ei-SJ; Mon, 12 May 2025 04:09:09 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ob0y=X4=kaod.org=clg@ozlabs.org>)
- id 1uEODh-00076F-Ju; Mon, 12 May 2025 04:09:07 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Zwsgx23GMz4xN4;
- Mon, 12 May 2025 18:09:01 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Zwsgs2nBsz4wbr;
- Mon, 12 May 2025 18:08:57 +1000 (AEST)
-Message-ID: <cfb3ec2f-b9f0-4016-892c-bcdad95f548e@kaod.org>
-Date: Mon, 12 May 2025 10:08:55 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEOJC-0006PE-Hi
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 04:14:46 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEOJ9-0007Yg-Vj
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 04:14:46 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43cf3192f3bso44083415e9.1
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 01:14:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747037682; x=1747642482; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Mll3exlrXuuAdA7yJ27rstMprE+JfW+limRUrWGgwgs=;
+ b=CoBNuwnHiKpt9v77eypE0bay2Bi62lxquY2ASnAkcsVuYkScomBkHQ5wZJvFFtaM0f
+ 4UxT1D3wKYgDFZYPXosjIUmYAGi+Ljm+5xetyr49FnEjmv+ChssPEJhdGSumiHia8PNj
+ 8IO9WkLDOL48w24Lfigxr19Wjem+EDqqQGFMEcQTLygRiD5m1weFRkvtjhr+dOdUtUOw
+ ieqIzdQpEOD2fpU1JojeFlUTKwGN7S2Hlfkplv5jHhMrHMfbTAO+NIs10AEnDjzV6Uay
+ gft1XFGTLNj55b0Cdg8aVRFrYJ8i10vVvv9SWGerVOpWbmkCQ3lZFDjsdsCk0l4JyANt
+ HbxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747037682; x=1747642482;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Mll3exlrXuuAdA7yJ27rstMprE+JfW+limRUrWGgwgs=;
+ b=pre9SrAf7/bcZV0waH4SZq1nwhC7y/LYGB7tnX1ByOXVB/Wo1w85yDHhBHZR7zKuvg
+ AGXPd+IHBR1sODnXzsA9AB9zReItazj+JwTXwiwWnmOFNGDq2LliADPnxLOeZ4HNtT1R
+ aEnFuWYQabtq7mcVXwEAYgN6uYfsPghT2mykfm3yoUhcHgkp2+eeV4b9xy55OoM3XO3/
+ scUy+1sLZJ9ZSAQ59jCcgQrtLL6kWPgcthmNJeCRHghesUdJAqo1y5eECWWLseC7i4Fd
+ bHWehDlzoVXVb3LZ+e2+Uw7gsIrKKsWV2f0q4ydIr8Bn1FUj9NNo4msP/+ASdAMR4uz/
+ K0NQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXQBHKk9y0ejL6agrxnWQiNsYUAxKmHLIySzGuAKe58JZKg04g2X+u/yHWr1xTGspeeubgTiSywJ+XN@nongnu.org
+X-Gm-Message-State: AOJu0Yy9LjHnX81H3g9aNb3k67jt9s5yyCbFjk6Dq0pAD50l5yNO+pro
+ 6NkMuMoi197EhcNjnaoZKEM4BoB//t+kn41kITCrESxh8ZpMkQJ2QgXasR4f0v2Zo3W6bd+Jywy
+ 2iTih+Q==
+X-Gm-Gg: ASbGnct3I5j/BxkrowYCrwOxZ0RnRQts9pXvNac7FdJ8kzarEcbXWHdjUwaxK6gs/Hl
+ 03vpZ3xI51yEHVV4HX3sGsoILNXGXs4flsGiu8TVCg/fol67BwlEhrQlcxx6UOWUT5n5Cygkwe+
+ xeNwlZz/ZPVpRoruO/89Zb74i8UeG6lLbawYTg8DHMMMte3dD0hPAj12vLxekLN3qTv0ryAd2Zi
+ YcJstK3bQnbYgZfYKSFN1owyKl5vXsiDt1BJg88pOtOOQ5k+7szHeUvUb9hoRnugg6hMxRvv9yx
+ SSwy0g+foersHcWFlQsrEYbdrxkOX7mnvn3w6T5QZbg7py+WylFaXl6PJBXgAS4v3BTVsSyoYNb
+ miqmP9ii5tw5jr89VyBEjoz0OYuLaQFftiVG0nxxxU8SUdQ==
+X-Google-Smtp-Source: AGHT+IGwSeax9MK3+szqdQnNhXnJUfDr3088Irg2G41/NyvDV9chg+j2xSAon7PK0bMHDMv8PGqGgQ==
+X-Received: by 2002:a05:600c:c0c3:20b0:442:e0e0:250 with SMTP id
+ 5b1f17b1804b1-442e0e003famr30777745e9.29.1747037681993; 
+ Mon, 12 May 2025 01:14:41 -0700 (PDT)
+Received: from [172.19.170.213] (54.red-95-127-42.staticip.rima-tde.net.
+ [95.127.42.54]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-442d67df639sm116711395e9.13.2025.05.12.01.14.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 May 2025 01:14:41 -0700 (PDT)
+Message-ID: <b8f6eb5e-1a6b-4b53-aee3-f63276de6e0e@linaro.org>
+Date: Mon, 12 May 2025 10:14:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/3] hw/arm/aspeed_ast2700-fc: Fix null pointer
- dereference in ca35 init
-To: Steven Lee <steven_lee@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, longzl2@lenovo.com, yunlin.tang@aspeedtech.com
-References: <20250507101005.1474823-1-steven_lee@aspeedtech.com>
- <20250507101005.1474823-2-steven_lee@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250507101005.1474823-2-steven_lee@aspeedtech.com>
+Subject: Re: [PATCH v3 06/19] hw/net/e1000: Remove unused E1000_FLAG_MAC flag
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Fam Zheng <fam@euphon.net>, Hanna Reitz <hreitz@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, qemu-block@nongnu.org,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, John Snow <jsnow@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20250506143905.4961-1-philmd@linaro.org>
+ <20250506143905.4961-7-philmd@linaro.org>
+ <a47270aa-3de5-4474-80ea-bc2d126d6442@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <a47270aa-3de5-4474-80ea-bc2d126d6442@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=ob0y=X4=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,110 +115,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/7/25 12:10, Steven Lee wrote:
-> Clang's sanitizer reports a runtime error when booting with
-> '-net nic -net user', due to a null pointer being passed
-> to memory_region_find(), which subsequently triggers a crash in
-> flatview_lookup().
+On 12/5/25 08:00, Thomas Huth wrote:
+> On 06/05/2025 16.38, Philippe Mathieu-Daudé wrote:
+>> E1000_FLAG_MAC was only used by the hw_compat_2_4[] array,
+>> via the 'extra_mac_registers=off' property. We removed all
+>> machines using that array, lets remove all the code around
+>> E1000_FLAG_MAC, including the MAC_ACCESS_FLAG_NEEDED enum,
+>> similarly to commit fa4ec9ffda7 ("e1000: remove old
+>> compatibility code").
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+>> ---
+>>   hw/net/e1000.c | 72 ++++++++++----------------------------------------
+>>   1 file changed, 14 insertions(+), 58 deletions(-)
+>>
+>> diff --git a/hw/net/e1000.c b/hw/net/e1000.c
+>> index cba4999e6d0..e0310aef872 100644
+>> --- a/hw/net/e1000.c
+>> +++ b/hw/net/e1000.c
+>> @@ -127,10 +127,8 @@ struct E1000State_st {
+>>       QEMUTimer *flush_queue_timer;
+>>   /* Compatibility flags for migration to/from qemu 1.3.0 and older */
+>> -#define E1000_FLAG_MAC_BIT 2
+>>   #define E1000_FLAG_TSO_BIT 3
+>>   #define E1000_FLAG_VET_BIT 4
+>> -#define E1000_FLAG_MAC (1 << E1000_FLAG_MAC_BIT)
+>>   #define E1000_FLAG_TSO (1 << E1000_FLAG_TSO_BIT)
+>>   #define E1000_FLAG_VET (1 << E1000_FLAG_VET_BIT)
+>> @@ -1210,54 +1208,24 @@ static const writeops macreg_writeops[] = {
+>>   enum { NWRITEOPS = ARRAY_SIZE(macreg_writeops) };
+>> -enum { MAC_ACCESS_PARTIAL = 1, MAC_ACCESS_FLAG_NEEDED = 2 };
+>> +enum { MAC_ACCESS_PARTIAL = 1 };
+>> -#define markflag(x)    ((E1000_FLAG_##x << 2) | MAC_ACCESS_FLAG_NEEDED)
+>>   /* In the array below the meaning of the bits is: [f|f|f|f|f|f|n|p]
+>>    * f - flag bits (up to 6 possible flags)
+>>    * n - flag needed
+>>    * p - partially implenented */
+>>   static const uint8_t mac_reg_access[0x8000] = {
+>> -    [IPAV]    = markflag(MAC),    [WUC]     = markflag(MAC),
+>> -    [IP6AT]   = markflag(MAC),    [IP4AT]   = markflag(MAC),
+>> -    [FFVT]    = markflag(MAC),    [WUPM]    = markflag(MAC),
+>> -    [ECOL]    = markflag(MAC),    [MCC]     = markflag(MAC),
+>> -    [DC]      = markflag(MAC),    [TNCRS]   = markflag(MAC),
+>> -    [RLEC]    = markflag(MAC),    [XONRXC]  = markflag(MAC),
+>> -    [XOFFTXC] = markflag(MAC),    [RFC]     = markflag(MAC),
+>> -    [TSCTFC]  = markflag(MAC),    [MGTPRC]  = markflag(MAC),
+>> -    [WUS]     = markflag(MAC),    [AIT]     = markflag(MAC),
+>> -    [FFLT]    = markflag(MAC),    [FFMT]    = markflag(MAC),
+>> -    [SCC]     = markflag(MAC),    [FCRUC]   = markflag(MAC),
+>> -    [LATECOL] = markflag(MAC),    [COLC]    = markflag(MAC),
+>> -    [SEQEC]   = markflag(MAC),    [CEXTERR] = markflag(MAC),
+>> -    [XONTXC]  = markflag(MAC),    [XOFFRXC] = markflag(MAC),
+>> -    [RJC]     = markflag(MAC),    [RNBC]    = markflag(MAC),
+>> -    [MGTPDC]  = markflag(MAC),    [MGTPTC]  = markflag(MAC),
+>> -    [RUC]     = markflag(MAC),    [ROC]     = markflag(MAC),
+>> -    [GORCL]   = markflag(MAC),    [GORCH]   = markflag(MAC),
+>> -    [GOTCL]   = markflag(MAC),    [GOTCH]   = markflag(MAC),
+>> -    [BPRC]    = markflag(MAC),    [MPRC]    = markflag(MAC),
+>> -    [TSCTC]   = markflag(MAC),    [PRC64]   = markflag(MAC),
+>> -    [PRC127]  = markflag(MAC),    [PRC255]  = markflag(MAC),
+>> -    [PRC511]  = markflag(MAC),    [PRC1023] = markflag(MAC),
+>> -    [PRC1522] = markflag(MAC),    [PTC64]   = markflag(MAC),
+>> -    [PTC127]  = markflag(MAC),    [PTC255]  = markflag(MAC),
+>> -    [PTC511]  = markflag(MAC),    [PTC1023] = markflag(MAC),
+>> -    [PTC1522] = markflag(MAC),    [MPTC]    = markflag(MAC),
+>> -    [BPTC]    = markflag(MAC),
+>> -
+>> -    [TDFH]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
+>> -    [TDFT]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
+>> -    [TDFHS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
+>> -    [TDFTS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
+>> -    [TDFPC] = markflag(MAC) | MAC_ACCESS_PARTIAL,
+>> -    [RDFH]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
+>> -    [RDFT]  = markflag(MAC) | MAC_ACCESS_PARTIAL,
+>> -    [RDFHS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
+>> -    [RDFTS] = markflag(MAC) | MAC_ACCESS_PARTIAL,
+>> -    [RDFPC] = markflag(MAC) | MAC_ACCESS_PARTIAL,
+>> -    [PBM]   = markflag(MAC) | MAC_ACCESS_PARTIAL,
+>> +    [TDFH]  = MAC_ACCESS_PARTIAL,
+>> +    [TDFT]  = MAC_ACCESS_PARTIAL,
+>> +    [TDFHS] = MAC_ACCESS_PARTIAL,
+>> +    [TDFTS] = MAC_ACCESS_PARTIAL,
+>> +    [TDFPC] = MAC_ACCESS_PARTIAL,
+>> +    [RDFH]  = MAC_ACCESS_PARTIAL,
+>> +    [RDFT]  = MAC_ACCESS_PARTIAL,
+>> +    [RDFHS] = MAC_ACCESS_PARTIAL,
+>> +    [RDFTS] = MAC_ACCESS_PARTIAL,
+>> +    [RDFPC] = MAC_ACCESS_PARTIAL,
+>> +    [PBM]   = MAC_ACCESS_PARTIAL,
+>>   };
+>>   static void
+>> @@ -1268,8 +1236,7 @@ e1000_mmio_write(void *opaque, hwaddr addr, 
+>> uint64_t val,
+>>       unsigned int index = (addr & 0x1ffff) >> 2;
+>>       if (index < NWRITEOPS && macreg_writeops[index]) {
+>> -        if (!(mac_reg_access[index] & MAC_ACCESS_FLAG_NEEDED)
+>> -            || (s->compat_flags & (mac_reg_access[index] >> 2))) {
+>> +        if (s->compat_flags & (mac_reg_access[index] >> 2)) {
+>>               if (mac_reg_access[index] & MAC_ACCESS_PARTIAL) {
+>>                   DBGOUT(GENERAL, "Writing to register at offset: 
+>> 0x%08x. "
+>>                          "It is not fully implemented.\n", index<<2);
+>> @@ -1295,8 +1262,7 @@ e1000_mmio_read(void *opaque, hwaddr addr, 
+>> unsigned size)
+>>       unsigned int index = (addr & 0x1ffff) >> 2;
+>>       if (index < NREADOPS && macreg_readops[index]) {
+>> -        if (!(mac_reg_access[index] & MAC_ACCESS_FLAG_NEEDED)
+>> -            || (s->compat_flags & (mac_reg_access[index] >> 2))) {
+>> +        if (s->compat_flags & (mac_reg_access[index] >> 2)) {
+>>               if (mac_reg_access[index] & MAC_ACCESS_PARTIAL) {
+>>                   DBGOUT(GENERAL, "Reading register at offset: 0x%08x. "
+>>                          "It is not fully implemented.\n", index<<2);
 > 
-> The root cause is that CA35 memory region is not mapped to system
-> memory. In addition, unconfigured NICs (due to missing peers)
-> lead to a cascade of warnings and possibly misbehavior.
-> 
-> Fix by:
-> - Reduce ca35 ram size to 1GiB to match the ast2700a1-evb.
-> - Map ca35_memory into system memory
-> - Add nic configuration in ast2700fc's ca35 init function.
-> 
-> Signed-off-by: Steven Lee <steven_lee@aspeedtech.com>
-> Change-Id: Id9c0e6f16861c64a11f6299afb6ef02eb4086041
+> There still seems to be something wrong in this patch, tests/qtest/pxe- 
+> test is failing when this is applied ... could you please have another 
+> look?
 
-As said earlier, please try to remove these tags.
-
-> ---
->   hw/arm/aspeed_ast27x0-fc.c | 16 ++++++++++++++--
->   1 file changed, 14 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/arm/aspeed_ast27x0-fc.c b/hw/arm/aspeed_ast27x0-fc.c
-> index 125a3ade40..ccba5fc8a1 100644
-> --- a/hw/arm/aspeed_ast27x0-fc.c
-> +++ b/hw/arm/aspeed_ast27x0-fc.c
-> @@ -48,7 +48,7 @@ struct Ast2700FCState {
->       bool mmio_exec;
->   };
->   
-> -#define AST2700FC_BMC_RAM_SIZE (2 * GiB)
-> +#define AST2700FC_BMC_RAM_SIZE (1 * GiB)
-
-why ?
-
->   #define AST2700FC_CM4_DRAM_SIZE (32 * MiB)
->   
->   #define AST2700FC_HW_STRAP1 0x000000C0
-> @@ -59,6 +59,7 @@ struct Ast2700FCState {
->   static void ast2700fc_ca35_init(MachineState *machine)
->   {
->       Ast2700FCState *s = AST2700A1FC(machine);
-> +    AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(machine);
->       AspeedSoCState *soc;
->       AspeedSoCClass *sc;
->   
-> @@ -68,6 +69,7 @@ static void ast2700fc_ca35_init(MachineState *machine)
->   
->       memory_region_init(&s->ca35_memory, OBJECT(&s->ca35), "ca35-memory",
->                          UINT64_MAX);
-> +    memory_region_add_subregion(get_system_memory(), 0, &s->ca35_memory);
-
-I think this belongs to another patch. Please also modify the fby35
-machine which suffers from the same problem regarding the global
-system memory usage.
-
-
-Thanks,
-
-C.
-
-
-    
->       if (!memory_region_init_ram(&s->ca35_dram, OBJECT(&s->ca35), "ca35-dram",
->                                   AST2700FC_BMC_RAM_SIZE, &error_abort)) {
-> @@ -86,6 +88,14 @@ static void ast2700fc_ca35_init(MachineState *machine)
->                                    AST2700FC_BMC_RAM_SIZE, &error_abort)) {
->           return;
->       }
-> +
-> +    for (int i = 0; i < sc->macs_num; i++) {
-> +        if ((amc->macs_mask & (1 << i)) &&
-> +            !qemu_configure_nic_device(DEVICE(&soc->ftgmac100[i]),
-> +                                       true, NULL)) {
-> +            break;
-> +        }
-> +    }
->       if (!object_property_set_int(OBJECT(&s->ca35), "hw-strap1",
->                                    AST2700FC_HW_STRAP1, &error_abort)) {
->           return;
-> @@ -171,6 +181,7 @@ static void ast2700fc_init(MachineState *machine)
->   static void ast2700fc_class_init(ObjectClass *oc, const void *data)
->   {
->       MachineClass *mc = MACHINE_CLASS(oc);
-> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
->   
->       mc->alias = "ast2700fc";
->       mc->desc = "ast2700 full core support";
-> @@ -178,12 +189,13 @@ static void ast2700fc_class_init(ObjectClass *oc, const void *data)
->       mc->no_floppy = 1;
->       mc->no_cdrom = 1;
->       mc->min_cpus = mc->max_cpus = mc->default_cpus = 6;
-> +    amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
->   }
->   
->   static const TypeInfo ast2700fc_types[] = {
->       {
->           .name           = MACHINE_TYPE_NAME("ast2700fc"),
-> -        .parent         = TYPE_MACHINE,
-> +        .parent         = TYPE_ASPEED_MACHINE,
->           .class_init     = ast2700fc_class_init,
->           .instance_size  = sizeof(Ast2700FCState),
->       },
-
+Fixed by not removing MAC_ACCESS_FLAG_NEEDED, thanks.
 
