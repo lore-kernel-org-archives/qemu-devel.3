@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51711C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 18:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C9EFC3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 18:14:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEXbP-0002Z3-18; Mon, 12 May 2025 14:10:16 -0400
+	id 1uEXev-00075j-5S; Mon, 12 May 2025 14:13:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uEXX9-0002ea-Pg
- for qemu-devel@nongnu.org; Mon, 12 May 2025 14:05:48 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1uEXXC-0002rb-MY
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 14:05:50 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uEXX7-0000Cf-9N
- for qemu-devel@nongnu.org; Mon, 12 May 2025 14:05:47 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-22c336fcdaaso45085755ad.3
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 11:05:44 -0700 (PDT)
+ id 1uEXXA-0000EG-B3
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 14:05:50 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-afc857702d1so4125633a12.3
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 11:05:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747073144; x=1747677944; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747073146; x=1747677946; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HNwQBodHKU/YNnzJ0OLvvAjHAnJFIjZ/+9H8rnLNev8=;
- b=mivkbDM03jPBS9tx8s86KCaxsS9a2RISJXzpocThwpBE5piAqp4vQOymABQBTo3FWi
- pgLEwgraQDGVW5/Zhi4LsFQYN7VhS7ljFwP5cS5stFkdm/NOpP/hor+dgWRC93OgwLaL
- 4aYT8Yw7zpRqM8jzSpsG0vNIZenjVNHEplcP7TMf6AF53ggV+zXTK7ABeSRNq9NCEE9W
- lKJMuUic72LKQq/oFy180DmdjHy8ICTjQ+tBN/L3nsRk/WS1saU3YA3wXR79JU9pzsiK
- eO6dIyh+k8wAjhtUzJCtCdDS5jUmySk1oKewqAqcI01AGSp6cdoXdEaxi8+64eEZSCYq
- Qm5A==
+ bh=IO5E5SNmIeDx8PW0b+RfMLgVUuAcPfL8utSgWSmdyqA=;
+ b=I63TYeF2FUlULW+434kE+Cxkdwax93J9kI9rMWR3/W7s6jdALr/gTTjWmNOX78ziz3
+ 6g1haD/YDxwca4CB0KMUC08DP00nwxDH322tTCYtXVVQMBE1hdyaOfK5cnFhNi41A+8b
+ S2SkVQOIRN51z8JWzL2gGAkgbwWqbKAmS6SwOMV8NBSfK/TSwPdsN9qzoVCL0UTLQ0Jb
+ 9kAFJ+TxAMWyi/hvHcSzeA9Dg+1Q23B1i3QupBi9VEueSrw9HTeEW8LHQ4rVGjdU5FmV
+ m9z/gzQOqyjtwjv9fFHwIY3ZF/MvPvtOgJp4fbaTL+TifXiWia7r9qi8+O+IgZ9E41Vw
+ NrVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747073144; x=1747677944;
+ d=1e100.net; s=20230601; t=1747073146; x=1747677946;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HNwQBodHKU/YNnzJ0OLvvAjHAnJFIjZ/+9H8rnLNev8=;
- b=ifoyBUV3CjDIY/noOKwFalEC1sBwAlPDzMbCagMx+K2ErSy7QTX97V6y4Uloe3kFoK
- 7nHv+FLvPHQTY2mtD5oNFK3Ajo990KUi7FGspRSpGFGiCq3+4KxhH5M6M46cqwcYyZBZ
- zPF8BiJTrnmtNI89iclfbrU0cCNsS+s/91YHNmD4+eWYfLCyc5YEyLXuXs7hvTsExPZZ
- jsoM7njkqBQrrOCcJaInSqf4Zo+VwbUZA5Q3X33hkZflKIth7COVtlqH7K3U3Jh1/32y
- SnBxAI7iiWLdSOyuWnjJpJ24SberZ2L1K+fc30tCxhWtB6wheHblGkjL7KXZmfkLjdk/
- B8xg==
-X-Gm-Message-State: AOJu0YyEpJ6gME25gjDZ7GK0hYJRRvi6v3tAo2dK+lyHv5gSFlREXVJt
- MoinOoDhgyuI5iC7V+aEt7khIoulxbuhJP3xxldU9roYcGJV6kvh0II08T9f+63O/OuVlqAYE3p
- W
-X-Gm-Gg: ASbGncvWnmqQmjvO1o1cjjAiRuuVJOTqrQQ3eAzZjQDwFsaku5XgkSZGEPp5MkFjUyT
- 5ENJTr1uSGAnKYFVI+gVBLTVT2L/ePynAVhpqojpUV5l2ThMjHLJbi9DxiFzHtj3P7lVkJlmz1Y
- 6DMH/bkw1g+X5MfbQDRrHTDVGDddn0mu/5unpdNH/h407/Vs7FfkuZV2XX+cxrdU44E2HRi4zuH
- fiFLyaDqYKg1pno06zIZnY8aZS5kypoSQ3+/VAcYzHlbDj2RB4B478NW6GROreIn8qD1NG3lBS3
- S3D8oIFf9oZT0Cc8ulIWfUNyiJMlj61vNJUSr3VBEfFQmjMs4ZRrHWmDKJJaIg==
-X-Google-Smtp-Source: AGHT+IHsdPyvkI06Br8pyqXwcLuHQL+6O0ZNsb9aqM/OXtXPB4NrBUBCNdmarJacg2dltIYJwQG2/A==
-X-Received: by 2002:a17:902:e5cf:b0:223:5e54:c521 with SMTP id
- d9443c01a7336-22fc894f1f8mr197858765ad.0.1747073143901; 
- Mon, 12 May 2025 11:05:43 -0700 (PDT)
+ bh=IO5E5SNmIeDx8PW0b+RfMLgVUuAcPfL8utSgWSmdyqA=;
+ b=G4yVSilWRn1o54fLD2132xuC1YDT5wPU25OKRScjo3WxKb0n1VQZtk6vSmpnoNV7UZ
+ JofEis9XDitxrAalNaPx4gH93oTGlDf/VC5WCLCpaoi6b5Ii67nGNjZDfnSd2/vXhge/
+ 3Sdxwqro5rmVsOQIZAvO5SG3syvZ31ZV/brWVSJX2fIAEEsAl3AgDEBljTcAQa/2B3SH
+ mXwScn647oeaBILRiciGrK/5x9Dc5i8n3BDZmNPEY4Rz2Bmny/CzUi8iborGmJWvVIJO
+ T369shkin8M8TTWDwoG8C+nBBN2zKyt5jUUZD4wwYKEgOfCUMfDWVnyT9VysF+n8Z9ne
+ B2hQ==
+X-Gm-Message-State: AOJu0YyZWItUzKNo4Me4MibEezGo1Ez6ztxgkjz5nIPfywFr7xRS9Nix
+ BIsgCnz8m1MoHOWpJSemoodXuH9jzUl+t0u6jnOaXGxEDJ9k6LRULJdVzEoZJoNX7iztPyuieoS
+ Z
+X-Gm-Gg: ASbGncuRHNKBGXzOfeKFx/+2qVVTbXE1kXwFh+ShyLxEZBc+kFFNOacZYFaby/aFM7i
+ m3U/Hon2OM02EnAI54QqGqmdS3CWw4b9BY8+Hau45sOBfpTh0dlDH0Y2Khsj+kmBqK0UisXqYu2
+ uLwiRhFAbD/OLK3N4xI+unFyVkLkG+jJpti2MGPNCfwMu5J3YtfqNUjCWjKpP9j7WaTb8kRXlSN
+ sKGGk/I5s4Gk8Nu6UKAGV5dMhDfi/6LbHA5gBZRl3zyQzva9clOY5MlvLW+b5jYeu/iyd8RmGRA
+ D/hsAVbP6sWVq8ZE+ihKdJGopoVlr7O/TFT7su+eAytqldjQzPM=
+X-Google-Smtp-Source: AGHT+IHj+ksKGYhPnHifXirA+gi4i431YFqKs1JUn41Q6PWik4/CLP03qf1Wl3GK9Z24iyTARgkJLg==
+X-Received: by 2002:a17:903:2443:b0:22f:b6cc:421e with SMTP id
+ d9443c01a7336-22fc8b592bamr200772745ad.26.1747073146460; 
+ Mon, 12 May 2025 11:05:46 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc82a2e4fsm65792005ad.232.2025.05.12.11.05.43
+ d9443c01a7336-22fc82a2e4fsm65792005ad.232.2025.05.12.11.05.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 May 2025 11:05:43 -0700 (PDT)
+ Mon, 12 May 2025 11:05:46 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -71,17 +71,17 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v8 36/48] target/arm/machine: move cpu_post_load kvm bits to
- kvm_arm_cpu_post_load function
-Date: Mon, 12 May 2025 11:04:50 -0700
-Message-ID: <20250512180502.2395029-37-pierrick.bouvier@linaro.org>
+Subject: [PATCH v8 39/48] target/arm/tcg/vec_internal: use forward declaration
+ for CPUARMState
+Date: Mon, 12 May 2025 11:04:53 -0700
+Message-ID: <20250512180502.2395029-40-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250512180502.2395029-1-pierrick.bouvier@linaro.org>
 References: <20250512180502.2395029-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,81 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Needed so this header can be included without requiring cpu.h.
+
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/kvm_arm.h |  4 +++-
- target/arm/kvm.c     | 13 ++++++++++++-
- target/arm/machine.c |  8 +-------
- 3 files changed, 16 insertions(+), 9 deletions(-)
+ target/arm/tcg/vec_internal.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index b638e09a687..c4178d1327c 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -83,8 +83,10 @@ void kvm_arm_cpu_pre_save(ARMCPU *cpu);
-  * @cpu: ARMCPU
-  *
-  * Called from cpu_post_load() to update KVM CPU state from the cpreg list.
-+ *
-+ * Returns: true on success, or false if write_list_to_kvmstate failed.
-  */
--void kvm_arm_cpu_post_load(ARMCPU *cpu);
-+bool kvm_arm_cpu_post_load(ARMCPU *cpu);
+diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
+index 6b93b5aeb94..c02f9c37f83 100644
+--- a/target/arm/tcg/vec_internal.h
++++ b/target/arm/tcg/vec_internal.h
+@@ -22,6 +22,8 @@
  
- /**
-  * kvm_arm_reset_vcpu:
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index b6c39ca61fa..a08a269ad61 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -938,13 +938,24 @@ void kvm_arm_cpu_pre_save(ARMCPU *cpu)
-     }
- }
+ #include "fpu/softfloat.h"
  
--void kvm_arm_cpu_post_load(ARMCPU *cpu)
-+bool kvm_arm_cpu_post_load(ARMCPU *cpu)
- {
-+    if (!write_list_to_kvmstate(cpu, KVM_PUT_FULL_STATE)) {
-+        return false;
-+    }
-+    /* Note that it's OK for the TCG side not to know about
-+     * every register in the list; KVM is authoritative if
-+     * we're using it.
-+     */
-+    write_list_to_cpustate(cpu);
++typedef struct CPUArchState CPUARMState;
 +
-     /* KVM virtual time adjustment */
-     if (cpu->kvm_adjvtime) {
-         cpu->kvm_vtime = *kvm_arm_get_cpreg_ptr(cpu, KVM_REG_ARM_TIMER_CNT);
-         cpu->kvm_vtime_dirty = true;
-     }
-+
-+    return true;
- }
- 
- void kvm_arm_reset_vcpu(ARMCPU *cpu)
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index 868246a98c0..e442d485241 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -976,15 +976,9 @@ static int cpu_post_load(void *opaque, int version_id)
-     }
- 
-     if (kvm_enabled()) {
--        if (!write_list_to_kvmstate(cpu, KVM_PUT_FULL_STATE)) {
-+        if (!kvm_arm_cpu_post_load(cpu)) {
-             return -1;
-         }
--        /* Note that it's OK for the TCG side not to know about
--         * every register in the list; KVM is authoritative if
--         * we're using it.
--         */
--        write_list_to_cpustate(cpu);
--        kvm_arm_cpu_post_load(cpu);
-     } else {
-         if (!write_list_to_cpustate(cpu)) {
-             return -1;
+ /*
+  * Note that vector data is stored in host-endian 64-bit chunks,
+  * so addressing units smaller than that needs a host-endian fixup.
 -- 
 2.47.2
 
