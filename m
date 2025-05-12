@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8123DC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 19:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10AC9C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 19:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEYT0-0005LB-JN; Mon, 12 May 2025 15:05:34 -0400
+	id 1uEYTe-0005jp-Bk; Mon, 12 May 2025 15:06:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEYSz-0005L2-3T
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:05:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uEYTF-0005Tb-0T
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 15:05:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEYSw-0007TR-7g
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:05:32 -0400
+ id 1uEYTB-0007V9-Lr
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 15:05:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747076729;
+ s=mimecast20190719; t=1747076745;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=/lv1O+Ic+miCqVDpB+5Xdy095FdO5xc4IkFRnyXMrgQ=;
- b=gqzuX60cuzbBYqTK7otQOmNAUIY13PyMNmiK9dwhyeCEAkOHREG31Sf0IhZ3lMjo7l0cwo
- vsJAq7pyvfUCtYQLsStyB8SKJvsYyWGdawj1/pIE8yUm3ldH2cWiwDad2G1/SVT+DFFG9x
- GYo+NToHE8D1RQu+Hw1FC0nqhceOBrA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hkMjV1RCdSvZc3UqwgDRzKPR4GFZsy1t1ux2ynl8Z10=;
+ b=IeW4fZOZ+xeZgZTR1uNHcqKhqIwGbx1AzOaqH6JET5BEh9nESyxjZXKrxAOdZqp7nF5Brp
+ OETveJVZAKIRtRvyHSukSg160VbRUiMbdx2X8WalQenmYAtT5mR5u8kKukldbxDnA9rq79
+ qjfKZrBb8UlSlkggOhqqMtPyB0fcBQk=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-425-bm0qt9mjNymGn2FKCeUNfw-1; Mon, 12 May 2025 15:05:27 -0400
-X-MC-Unique: bm0qt9mjNymGn2FKCeUNfw-1
-X-Mimecast-MFC-AGG-ID: bm0qt9mjNymGn2FKCeUNfw_1747076727
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a205227595so675186f8f.3
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 12:05:27 -0700 (PDT)
+ us-mta-680-NtFOSWBbOHGThgW4o39Zhw-1; Mon, 12 May 2025 15:05:43 -0400
+X-MC-Unique: NtFOSWBbOHGThgW4o39Zhw-1
+X-Mimecast-MFC-AGG-ID: NtFOSWBbOHGThgW4o39Zhw_1747076742
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-326c70002d0so19829531fa.1
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 12:05:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747076726; x=1747681526;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/lv1O+Ic+miCqVDpB+5Xdy095FdO5xc4IkFRnyXMrgQ=;
- b=eo3rIh01xGkiRFNc2VHSSaNOmKXXKdSiq8teveuJ713fYa2+FJx3ETciHgMdrPLcjW
- MftkKBfp+iHYuCyUr/HWX14u0luIcFRx/hJ9XRq7PL19d9VB/QpQvBrO2MAtVqOQ7JiZ
- vbnAkoyAbcQJ2MCaiyaSzKVynrgU+xaI7ShBOXOLGugM95LBXuWMZxQUJwROX+Th4Q1d
- a0no5OSgzulEniNCw4X8EAdJaC8W+chFSFAD4NkQdK2t0O4E0G8lW4UMeiLocw3pFqOg
- YRc2ztc9lyU0p6sohjXgy5gGt43+ArrsgfH/FpheGZ0w5hZ5TEdv5RXmsWHzET5M1dCy
- icXQ==
-X-Gm-Message-State: AOJu0YwvGOH+O8ijNLXVydQticolcrPNP1jsgIAdJRQEBC4kvsEvXxF1
- PgT6X3Bos+EWgZxHNZc7o8+JeHRk161jp4vtp6WYFPrZz/u8stYbl+iBqsDIKCxpCl+zsnMTuBd
- rZUfkYtX3RA2vjFpIVrGPpaEbTQ161y/LSoQIWC4TctWc5Ovt3AyBNkSmCBlgHm5SFES86V5JFZ
- tX251au6NzA1OTKfDs3dyffGgVHdh4ywyXPFTh
-X-Gm-Gg: ASbGncut8PLvMFyPqNLR3eOYqooB7ll5yZ6RdG+KnHntwIw1hthdjycqRgoRYmKoh6e
- 9BX2tFXcNFJp5UgWyRJ9DqXtOLTfotF7VNQ8ddS4xAX+MTdouj802F+61KciqRiH5OjKrkjTfVC
- gkpM1kmIILAty3KAzfrr6WaYwu+8OxU49ks/gC1QC0s/RBGf0abX12BJT2chV4ZCAug7p/Pbywx
- Gn+xjtWjaAGdz4V+DBsuSFPiEfJEXrMsS5nNYZqf6r2S7kkLbaLj6JxBSmKMZ4xKl6aUGkV7ghA
- OiFJYxDsUUvz8gU=
-X-Received: by 2002:a05:6000:4304:b0:3a0:b294:ccf2 with SMTP id
- ffacd0b85a97d-3a1f649cc02mr12657075f8f.52.1747076725860; 
- Mon, 12 May 2025 12:05:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGdQGsBoAkKxXYBSTjmTkRuRT74mhDAvhFAnfrU5xT5odj4S2V59k4lx+HCw5aUU4g3/y3Xew==
-X-Received: by 2002:a05:6000:4304:b0:3a0:b294:ccf2 with SMTP id
- ffacd0b85a97d-3a1f649cc02mr12657054f8f.52.1747076725342; 
- Mon, 12 May 2025 12:05:25 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1747076741; x=1747681541;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hkMjV1RCdSvZc3UqwgDRzKPR4GFZsy1t1ux2ynl8Z10=;
+ b=ENr83XhD1Xk3uzObM3i4MHDeB8uawugJ+QEGen6PgN7UJbvtKQ8wdKZnkW01YehUEr
+ sZAxC6BUmeACA+cXkZpxglgPnAIBisrclrnuBd8v7jcA0wTCzyHCaQwYWO9j5EAAM3al
+ B1/lkd4qCHJVw/Rr8WfugAy9b1VKLunQ8Te01mzGJgdkyUsE/HrCeuCsAw0yuy0hfcUe
+ vgxEMRtD1FfJllVpXVt0P4KtUrEj4FYuL0TOR2nASnGUf1gnLhdit6TEl7tHLXMMO+dh
+ TOekDKroQpPxpCDukkmatjHo850y+wUnYdndwPJ9QvAr4sKLOo10i184fV13AWR/n8KN
+ 4nKA==
+X-Gm-Message-State: AOJu0YxT3Fo1td3xH5PCdECwK7n2X0GiuRgRDYQTvi9nm0E3bcotScgP
+ cflOozc6SKRaPrn5angpyVKVapS7poxacUxrvhYH9ojYiVa6pPSZ7QnDuN5hdz3300/NcrO11+7
+ NBnFQQGO/3XGP9keb1e/4SiPqaVRiyH1T8mf5yKO34UltYXzssZJlZsYQH2k5g9e0f90e3saCdk
+ 2/tIBDJPbyJkjT5SsWB2BkwCfmbK2jEGF/zUN6
+X-Gm-Gg: ASbGncvcnprJB0CLelzZfDltnE4ixC9DMAdzXkIF/zX/OE6+yc1JPjJJYFj5UxsNSfm
+ DWf9x4RUmhXj74vd6E5HOpIjU06ZIRkLeeK4S8K0Fnp/WX/FERRn9HZ9JNoVO+EhiNXqMPGo6I4
+ O5vQyv8THTOxYJPqqu5DGVgAJV3lNm1cZVsGv8VOmrY86RSHRtlRmUTdwVuj7EqPD0U85NDLGhR
+ XtuHq2IInMGepfFecZRNsFUiYsLY5CYyTlnOKoKtIHKMxgg8yRXgDsqVJptfsuKpr+V56ss2FVg
+ gslOxgMBvfny9bY=
+X-Received: by 2002:a05:651c:211b:b0:30b:b7c3:ea4d with SMTP id
+ 38308e7fff4ca-326c457b321mr53831271fa.12.1747076741265; 
+ Mon, 12 May 2025 12:05:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHBagYP3U/AIInxvHPx8D2AYQidcBM0jf/W6zRUqMq8SRfLNlWmpa80jPGA3ylh1981LtUiWw==
+X-Received: by 2002:a05:600c:5118:b0:43c:fcb1:528a with SMTP id
+ 5b1f17b1804b1-442d6cf30fbmr114230625e9.6.1747076730001; 
+ Mon, 12 May 2025 12:05:30 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.45.141])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f5a2d30asm13306247f8f.76.2025.05.12.12.05.24
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-442d67d5c35sm136078075e9.5.2025.05.12.12.05.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 May 2025 12:05:24 -0700 (PDT)
+ Mon, 12 May 2025 12:05:28 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/16] Meson, x86, Rust patches for 2025-05-12
-Date: Mon, 12 May 2025 21:05:08 +0200
-Message-ID: <20250512190524.179419-1-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 02/16] meson: do not check supported TCG architecture if no
+ emulators built
+Date: Mon, 12 May 2025 21:05:10 +0200
+Message-ID: <20250512190524.179419-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250512190524.179419-1-pbonzini@redhat.com>
+References: <20250512190524.179419-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -105,73 +111,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 7be29f2f1a3f5b037d27eedbd5df9f441e8c8c16:
+Errors about TCI are pointless if only tools are being built; suppress
+them even if the user did not specify --disable-tcg.
 
-  Merge tag 'pull-vfio-20250509' of https://github.com/legoater/qemu into staging (2025-05-09 12:04:35 -0400)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ meson.build           | 10 ++++++----
+ accel/tcg/meson.build |  2 +-
+ tcg/meson.build       |  2 +-
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to 74978391b2da0116b9109d52931f342118d5a122:
-
-  target/i386: Make ITS_NO available to guests (2025-05-12 21:02:51 +0200)
-
-----------------------------------------------------------------
-* meson: small old patches (one from 2022)
-* rust: pl011: forward port some changes from C version
-* target/i386: small improvements to TCG emulation
-* target/i386: HVF emulation cleanups
-* target/i386: add its_no feature
-* cs4231a: fix assertion failure
-* update Linux headers
-
-----------------------------------------------------------------
-Paolo Bonzini (14):
-      meson: drop --enable-avx* options
-      meson: do not check supported TCG architecture if no emulators built
-      meson: remove unnecessary dependencies from specific_ss
-      modinfo: lookup compile_commands.json by object
-      rust: pl011: Rename RX FIFO methods
-      rust: pl011: Really use RX FIFO depth
-      target/i386: ignore misplaced REX prefixes
-      target/i386: list TCG-supported features for CPUID[80000021h].EAX
-      target/i386: move push of error code to switch_tss_ra
-      target/i386: implement TSS trap bit
-      target/i386/emulate: stop overloading decode->op[N].ptr
-      target/i386/emulate: mostly rewrite flags handling
-      target/i386: remove lflags
-      linux-headers: update from 6.15 + kvm/next
-
-Pawan Gupta (1):
-      target/i386: Make ITS_NO available to guests
-
-Zheng Huang (1):
-      hw/audio/cs4231a: fix assertion error in isa_bus_get_irq
-
- docs/devel/rust.rst              |   2 +-
- meson.build                      |  54 ++++++-----
- linux-headers/asm-x86/kvm.h      |  71 ++++++++++++++
- linux-headers/linux/kvm.h        |   1 +
- target/i386/cpu.h                |   6 --
- target/i386/emulate/x86_decode.h |   9 +-
- target/i386/emulate/x86_emu.h    |   8 +-
- target/i386/emulate/x86_flags.h  |  12 +--
- hw/audio/cs4231a.c               |   4 +
- target/i386/cpu.c                |  21 ++++-
- target/i386/emulate/x86_decode.c |  74 +++++++--------
- target/i386/emulate/x86_emu.c    | 123 ++++++++++++------------
- target/i386/emulate/x86_flags.c  | 198 ++++++++++++++++-----------------------
- target/i386/tcg/seg_helper.c     |  81 +++++++++-------
- target/i386/tcg/decode-new.c.inc |  36 +++++--
- accel/tcg/meson.build            |   2 +-
- meson_options.txt                |   4 -
- rust/hw/char/pl011/src/device.rs |  25 +++--
- scripts/meson-buildoptions.sh    |   6 --
- scripts/modinfo-collect.py       |  23 +++--
- tcg/meson.build                  |   2 +-
- ui/meson.build                   |   3 -
- 22 files changed, 423 insertions(+), 342 deletions(-)
+diff --git a/meson.build b/meson.build
+index f20a172299b..a2cebd44656 100644
+--- a/meson.build
++++ b/meson.build
+@@ -247,6 +247,8 @@ have_vhost_net_vdpa = have_vhost_vdpa and get_option('vhost_net').allowed()
+ have_vhost_net_kernel = have_vhost_kernel and get_option('vhost_net').allowed()
+ have_vhost_net = have_vhost_net_kernel or have_vhost_net_user or have_vhost_net_vdpa
+ 
++have_tcg = get_option('tcg').allowed() and (have_system or have_user)
++
+ have_tools = get_option('tools') \
+   .disable_auto_if(not have_system) \
+   .allowed()
+@@ -863,7 +865,7 @@ elif host_os == 'haiku'
+             cc.find_library('network'),
+             cc.find_library('bsd')]
+ elif host_os == 'openbsd'
+-  if get_option('tcg').allowed() and target_dirs.length() > 0
++  if have_tcg
+     # Disable OpenBSD W^X if available
+     emulator_link_args = cc.get_supported_link_arguments('-Wl,-z,wxneeded')
+   endif
+@@ -904,7 +906,7 @@ if host_os == 'netbsd'
+ endif
+ 
+ tcg_arch = host_arch
+-if get_option('tcg').allowed()
++if have_tcg
+   if host_arch == 'unknown'
+     if not get_option('tcg_interpreter')
+       error('Unsupported CPU @0@, try --enable-tcg-interpreter'.format(cpu))
+@@ -2534,7 +2536,7 @@ config_host_data.set('CONFIG_PIXMAN', pixman.found())
+ config_host_data.set('CONFIG_SLIRP', slirp.found())
+ config_host_data.set('CONFIG_SNAPPY', snappy.found())
+ config_host_data.set('CONFIG_SOLARIS', host_os == 'sunos')
+-if get_option('tcg').allowed()
++if have_tcg
+   config_host_data.set('CONFIG_TCG', 1)
+   config_host_data.set('CONFIG_TCG_INTERPRETER', tcg_arch == 'tci')
+ endif
+@@ -4959,7 +4961,7 @@ if host_arch == 'unknown'
+   message('compile or work on this host CPU. You can help by volunteering')
+   message('to maintain it and providing a build host for our continuous')
+   message('integration setup.')
+-  if get_option('tcg').allowed() and target_dirs.length() > 0
++  if have_tcg
+     message()
+     message('configure has succeeded and you can continue to build, but')
+     message('QEMU will use a slow interpreter to emulate the target CPU.')
+diff --git a/accel/tcg/meson.build b/accel/tcg/meson.build
+index d6f533f9a1f..97d5e5a7112 100644
+--- a/accel/tcg/meson.build
++++ b/accel/tcg/meson.build
+@@ -1,4 +1,4 @@
+-if not get_option('tcg').allowed()
++if not have_tcg
+    subdir_done()
+ endif
+ 
+diff --git a/tcg/meson.build b/tcg/meson.build
+index 7df378d7735..bd2821e4b54 100644
+--- a/tcg/meson.build
++++ b/tcg/meson.build
+@@ -1,4 +1,4 @@
+-if not get_option('tcg').allowed()
++if not have_tcg
+    subdir_done()
+ endif
+ 
 -- 
 2.49.0
 
