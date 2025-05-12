@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BFF2C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 18:16:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 133DCC3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 18:17:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEXds-0005xk-J0; Mon, 12 May 2025 14:12:46 -0400
+	id 1uEXYx-0005qU-Jd; Mon, 12 May 2025 14:07:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uEXX5-0002Yq-3a
+ id 1uEXX2-0002Yj-RV
  for qemu-devel@nongnu.org; Mon, 12 May 2025 14:05:47 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uEXX0-00008d-Ja
- for qemu-devel@nongnu.org; Mon, 12 May 2025 14:05:42 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-22fa47d6578so48223815ad.2
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 11:05:37 -0700 (PDT)
+ id 1uEXWy-00008O-Ci
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 14:05:39 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-22e7eff58a0so47382575ad.3
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 11:05:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747073135; x=1747677935; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747073134; x=1747677934; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j3Dpv/gYklKxQ6NcaNjklM8os0pkN4N34WBJsdRDY08=;
- b=zzGKGoSkEFQH3BVIaiD/vsJ4rHtXgc7s/3OPSVCrdNUorMvF2urf7qLnVLAMbS6DmO
- 0UW+eHw5b8Yj664dKFjgMmVvJbs+i7cLMDelVwHRysXIsvOFimwzOJqwJ9b3hZcGGZVO
- +4paiy8lJvOlqiJnJVDwlvauFsLeoq0uM0GakO1nf5Y7yEy7FqXK6hmXiEfkROivG0rX
- XEUiz6VbT2kKgCL+iDttkeTtJDoyVimyCDOFsJuM0sF4tSjo0+6ONvyE9TeQXY3nMyUm
- 4Yp3meaAAKzbguukypU88y68K7qUmTclq/eSv6KjjEMRjXVy5j1XWirGVbAHrhJaXuBR
- JLGg==
+ bh=zqH0yuKEeNcEhgp08pnDlbJMJEZktVD9woNi3X9JPBk=;
+ b=DzlKTkuapdS2M0icbpeT1hv0TGuUhwos0Gj6uKo0PMYa0mgycuAAuj3y4Negw52k3Y
+ VD8t/ul04KLLLl+eZvVC8VvSLgLWMcX2YICJ0feMInC8GjGNjsAteKkiZ9C5f7Qq2I20
+ NUPJD9soJ68w2p2eNwjFG9gZqujwPVi6RBYF10u3LKAwLgqa0LAOncOMuIitK0+kDq70
+ MBTnK1/TZXYEoxHRhXOQGWEhrbhOJRnGBrE7JxzCV59BR7C5dD9WnfAfKLGMfrvuKUOW
+ UjKnnLNskTEw8UAVNXEtSJ1pYgRyuPjB0riD7y1GjZ9MjRhP6jtrZW0d6SS1qAZkII82
+ Z4Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747073135; x=1747677935;
+ d=1e100.net; s=20230601; t=1747073134; x=1747677934;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=j3Dpv/gYklKxQ6NcaNjklM8os0pkN4N34WBJsdRDY08=;
- b=H5rRBpjjQAR01N2bd8rop1KtR3aNfLHcksYXVWTMQMvStoohg2E6cWzJ1QIkaoP6M1
- gMOsU2I6FftktORWDwjI9oJblqMH+HwfFaSwI05hN0/p2JgiPb1gzBLVyWhgbxrYpi82
- Ea+2yOXqmFwVz6PfrR7iuAW5pU7/9ZjGOtworUt2VuJukJfz0iBDAl9GALl2SWbFhTZd
- W4Z/X//HuGYRA66GkEXcfLC/F7GMirZ8HXLQU2bFBCpZJ/eY44KqmXcmZ96aRI+TqzU9
- 1SQRDDNafAWNJHDDYcl9efYXjLREdXKlcmwG5YtlTAO6fA/+N2PFroM28eCcRBha2Rwk
- kH6A==
-X-Gm-Message-State: AOJu0Yxs28bRRDOWC7C7Hvty15j14U2ZjsO7grufMJ043X9CEsrErHx5
- fuJvzZzJgKsDtA3PVIAYHM7SfzS2dfEcaWYVYoV2Dy7q/csdo+DrB0H8L+hToAyGnxS0txG0k4d
- P
-X-Gm-Gg: ASbGncveVujJV5zgpPTogojy4toGVCbU136CDoSBF2NcVVYTk4fqk2mWkmFepwgWSCB
- RmA3lGDOzQm5yJHh/JEi75jOMsT1zfiMvS8Ni+vHqu++9zKRh8uwN1KU972y3cpZZXQ08/umdN/
- adbcCq+yGYX0w87OQL5Aim4vPWzO/MNftXTxyLUTXsNKx2+kiLpH4jtdt7xThISSoYAXa1Cq7yW
- RvMOD9RwxIue0GPUz1Y3y8Mk6zx1mp9vxvYILPeliGFk4MxUpAsEUP1Gt33of8JpJpKmf9aEbYS
- gC7fdQZ94sAiTxRcnfq34yUEwUkZZuUP8ixZhJZBR8ODfz54zkU=
-X-Google-Smtp-Source: AGHT+IFWkB6Mkaeg18gGVG6rVCrQjmce5SbsAO0IjrI+eadfe3VGrlqawH9YWYf9Z1SF5DVoMnYAtQ==
-X-Received: by 2002:a17:902:ecc2:b0:223:4537:65b1 with SMTP id
- d9443c01a7336-22fc9185f13mr185461285ad.36.1747073135057; 
- Mon, 12 May 2025 11:05:35 -0700 (PDT)
-Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc82a2e4fsm65792005ad.232.2025.05.12.11.05.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=zqH0yuKEeNcEhgp08pnDlbJMJEZktVD9woNi3X9JPBk=;
+ b=s364XDp8wRRoNV0TmJSCKZD0hZ/uwXI7tdoE86hqFm4xZVWHVo9r5hVffZnZoq0Sak
+ nKaheCVDOeIquhqzoYrbGbsY6K1+g5aQztG5U6uyUG8ItuQLQCsaf9l7ydzbLI3GVyCW
+ V/HDtnO3GYLXVQhbdwxPOHrdOtFSTTNubbQogMYXXPUaCm9K4jGbE9f/VNrCahYLKIbN
+ vQmDsZa5zAIryB9rncHYAKepk4ITxk5neTk2MwBtz/Hf/ZXjO+/r44fNg8RBuM3gkGNt
+ SR7we7XJpXoguVk9uWIL084OsjGeRmJ2w6dqrjmRPDvi3yGAkOpsi5RM058tOSpk2UMm
+ 7pxw==
+X-Gm-Message-State: AOJu0Yxci017BzS2tn4a+/e8aJygv7vaH0qgXaM5psJ3ETs46EG+kyTG
+ nypHQF+BG61Vf1tgJgsgS9CtM8D1zqw0XnhUJLYC3ybzLQ4F0ow7GTgoPGLGqUnq4H1JRRkLo9n
+ 9
+X-Gm-Gg: ASbGncuQ9U2hdtA8etHd3ZQuD9mc966FdxbWSF+dyBRqDNdWtwbFiwL6d00uat/3w2z
+ OKJvjFm1KnVSSwAvymUM+fVJGjmt77ZWxDhGjfdnHAHmSH/yQo7vh3tfCHYEt6ozNfYUqaaiopx
+ NPTZGC3iXfBfo9Wqa0m2W8447Nhwge9nV1aeXN1LbAydzDlIzOCihy1lb2lMfqVpqgNME2ClJqn
+ gjz/zcc0Cn+lpPKwHLon4kgiz1hqa8u20n7PRgPWscLkV+Q9dIIM53c121oIE5h0JCQQ5NalKQ/
+ 1UVktEuY0+UXL53Rtqpu/sCJGqqbzrLL9LVoZ1Jm/REzfeOpVTU=
+X-Google-Smtp-Source: AGHT+IHRbtBZKrpk84DwZT3SC9tiE9r4mdkW5j7HAsCCRKXXvOFwFcuCksCJ+/nzbAM4OOHTV0FO3w==
+X-Received: by 2002:a17:902:ccd1:b0:224:a74:28c2 with SMTP id
+ d9443c01a7336-22fc8b76a88mr210233865ad.29.1747073134177; 
  Mon, 12 May 2025 11:05:34 -0700 (PDT)
+Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-22fc82a2e4fsm65792005ad.232.2025.05.12.11.05.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 May 2025 11:05:33 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -71,16 +71,18 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v8 26/48] target/arm/arch_dump: compile file once (system)
-Date: Mon, 12 May 2025 11:04:40 -0700
-Message-ID: <20250512180502.2395029-27-pierrick.bouvier@linaro.org>
+Subject: [PATCH v8 25/48] target/arm/arch_dump: remove TARGET_AARCH64
+ conditionals
+Date: Mon, 12 May 2025 11:04:39 -0700
+Message-ID: <20250512180502.2395029-26-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250512180502.2395029-1-pierrick.bouvier@linaro.org>
 References: <20250512180502.2395029-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,32 +105,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Associated code is protected by cpu_isar_feature(aa64*)
+
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/arm/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/arch_dump.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 06d479570e2..95a2b077dd6 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -15,7 +15,6 @@ arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
- arm_system_ss = ss.source_set()
- arm_common_system_ss = ss.source_set()
- arm_system_ss.add(files(
--  'arch_dump.c',
-   'arm-powerctl.c',
-   'arm-qmp-cmds.c',
-   'cortex-regs.c',
-@@ -38,6 +37,7 @@ arm_common_system_ss.add(files('cpu.c'), capstone)
- arm_common_system_ss.add(when: 'TARGET_AARCH64', if_false: files(
-   'cpu32-stubs.c'))
- arm_common_system_ss.add(files(
-+  'arch_dump.c',
-   'debug_helper.c',
-   'helper.c',
-   'vfp_fpscr.c',
+diff --git a/target/arm/arch_dump.c b/target/arm/arch_dump.c
+index c40df4e7fd7..1dd79849c13 100644
+--- a/target/arm/arch_dump.c
++++ b/target/arm/arch_dump.c
+@@ -143,7 +143,6 @@ static int aarch64_write_elf64_prfpreg(WriteCoreDumpFunction f,
+     return 0;
+ }
+ 
+-#ifdef TARGET_AARCH64
+ static off_t sve_zreg_offset(uint32_t vq, int n)
+ {
+     off_t off = sizeof(struct aarch64_user_sve_header);
+@@ -231,7 +230,6 @@ static int aarch64_write_elf64_sve(WriteCoreDumpFunction f,
+ 
+     return 0;
+ }
+-#endif
+ 
+ int arm_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+                              int cpuid, DumpState *s)
+@@ -273,11 +271,9 @@ int arm_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+         return ret;
+     }
+ 
+-#ifdef TARGET_AARCH64
+     if (cpu_isar_feature(aa64_sve, cpu)) {
+         ret = aarch64_write_elf64_sve(f, env, cpuid, s);
+     }
+-#endif
+ 
+     return ret;
+ }
+@@ -451,11 +447,9 @@ ssize_t cpu_get_note_size(int class, int machine, int nr_cpus)
+     if (class == ELFCLASS64) {
+         note_size = AARCH64_PRSTATUS_NOTE_SIZE;
+         note_size += AARCH64_PRFPREG_NOTE_SIZE;
+-#ifdef TARGET_AARCH64
+         if (cpu_isar_feature(aa64_sve, cpu)) {
+             note_size += AARCH64_SVE_NOTE_SIZE(&cpu->env);
+         }
+-#endif
+     } else {
+         note_size = ARM_PRSTATUS_NOTE_SIZE;
+         if (cpu_isar_feature(aa32_vfp_simd, cpu)) {
 -- 
 2.47.2
 
