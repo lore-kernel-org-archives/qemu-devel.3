@@ -4,96 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A136AC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 13:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE7BC3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:08:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uETe1-0000aQ-JU; Mon, 12 May 2025 09:56:37 -0400
+	id 1uETp8-0004iW-RG; Mon, 12 May 2025 10:08:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uETe0-0000a8-GK
- for qemu-devel@nongnu.org; Mon, 12 May 2025 09:56:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uETdy-0003S2-GJ
- for qemu-devel@nongnu.org; Mon, 12 May 2025 09:56:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747058193;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=m2S8qbU+2NGgmIfRGiXccyMZ/bzzJTT6VcJFwaAJMvQ=;
- b=MmXEpnA+A6f7WWFqY+MReHZLJvfMrzXhe/cRadK+KZG9yGFNDdKTSY7Gc2gPY9Gupa+uP5
- lqcZL4JeTd4Ma4JFAGdVQM7iO3os9teDuCHM2EqCI9GIG3mCscjj3APk+Pg5fDG87ENX8l
- 7m5W2f308RCTaqU8XqImiysSMlWHurY=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-230-8oxFY7YYMOSZMBHHdPN8tw-1; Mon, 12 May 2025 09:56:32 -0400
-X-MC-Unique: 8oxFY7YYMOSZMBHHdPN8tw-1
-X-Mimecast-MFC-AGG-ID: 8oxFY7YYMOSZMBHHdPN8tw_1747058190
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-b115fb801bcso4902438a12.3
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 06:56:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uETp7-0004iI-AL
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 10:08:05 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uETp5-0004fS-JY
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 10:08:05 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3a206845eadso842947f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 07:08:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747058882; x=1747663682; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UYnm8QtxKb5zAwcVnPa2mfaA5wGsEYG81oTj7FUmXZc=;
+ b=kCRAOEbFUNv0G4WpnVAvxgOlQ26ZKIxq0GJriyYpBaZMFrVJebJZxZuEe4dKdFYh0Z
+ 4Sw7zFOzckb9G7DWoP38OQV4Tg53/CKdyGFLL1RvaYHHK3rKt5LM8RgTEhwxjn0pJJUv
+ NuaOp/FYdrIpBTz6I1D3kx5sf9MQq9Ifcpk0nbsfmYqp3pt9F80eQXNVFCUdtImx9hcp
+ Cuuph9Isk1SmaaWZX6FI8kyiUE5PfwiNxYyCPYtUvaE0efy2F7rO85vfsDjuSUNQV92+
+ Ch8KcSsBtaYY351K33I0XH8CR3ke6nXxjxAGlivPFdeNEuSgdPDunkeEqyoeLn6DRlnd
+ oizA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747058189; x=1747662989;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=m2S8qbU+2NGgmIfRGiXccyMZ/bzzJTT6VcJFwaAJMvQ=;
- b=UJ88qXshg4uirSJ6ucJfADOBIgdnEgilEAwtBU/MTd1s8XWmEIOCP3nvziTVsZWst3
- pet6hCBaoLUrmYMm8nalPtMu3WwE0/FRNYjKaw5CThOHXwJUL694QOSSRJwHHQ22HKso
- //x1TZXAHZHP6tlrgRj6p2Y+OpqEF1VkljQUHgekvMCEqfKFrlT0O1/i4ZMwqW0cuFtT
- L/LFWK+IYzF0DFQpuEtqMDnFyahb64DUO+nI2OyTwh0IUugVs82EZ8k8irlOcYZ3RFrO
- IBYRL/CHymNHzJFC+vvwIExtHosVHaYJPeWR6n19FOnKX5RFmaSpT0aGQ8GMD2a6MrZd
- zmYw==
+ d=1e100.net; s=20230601; t=1747058882; x=1747663682;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=UYnm8QtxKb5zAwcVnPa2mfaA5wGsEYG81oTj7FUmXZc=;
+ b=qM9iamEXEfu7RQnoxU7kooBnq1jxOZo8ylrc+AohS+gEXCvrJdf957IAgSqgIelCaT
+ wkmm+/9BgeudwAlfi1SsEWPHCm4CHDPIUb04J+wfZWNQC++RFMk3dXPourWoxsKftHfG
+ 3WyYC4aVgBIkLSNOuoIiRJkdneaKs9XbCAbvOoGkO1VSfGJaUWhNXCe9hBmIIm0Nns0T
+ kV6We5MpO24cj8ebUvV9xFKxaY8luI7Cv1Bi2uI0dZlmCZo4jtYTv40BGJOX5J/fHD99
+ cWxx75EANP7SimiVURf8m1V8Vn5vikoVSbGcRoSPQKloUrWZS2ziOE+g6rHViNYLD1al
+ WCsw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUjI73vRbv90uIX2O1/bujaTGeBynK8dqcH+o93se2sBkKGN7p1KKymcAeRwOvjQCXyiaIN2SjoeE3J@nongnu.org
-X-Gm-Message-State: AOJu0Yw9sjueuSAX24Mr02Szv6JoB4euh9y6wVlIA408GT7AWrM+N122
- dVs+Zy0JjEv9G5ZPEX/zRUrXFcH0R3bbYxQo25FwlB8QroLJyLU2ozB9f1JxGQEtASbbVwLr4K/
- TKzREfzC1PCPK03k4SnftcVsYfLhHe62+71y+SBJNbFV/MaTurSt9fk7Hm7k5
-X-Gm-Gg: ASbGncuYEVxcpIzulD3mhjfewKlRIWdTYmKW8q9ycMHxS7pmBmuTBFl704jzpFE7uXM
- cmnbbdYS4uryXyGKJaTWp8MKTShq7ifZfB+jdHUI+jDAYu0ouGBYwSYgZZG5NU1GcwOKCNaoP5+
- IKV1s+n7anDpNAeOuSga8/ydiCAZftGd4lhAVLq2/CXydobW5M2+Zt3NiWmA88bBS8nFbOKdeth
- m11n8w7cE3qIenAcovQncOarwFUe7RctGGPQyfs+FMTQQtTmlDPhVX3ApnEb5IZhXZV8XalV6jl
- Dr0=
-X-Received: by 2002:a17:902:f708:b0:22e:8456:b77d with SMTP id
- d9443c01a7336-22fc918c130mr220570485ad.44.1747058188616; 
- Mon, 12 May 2025 06:56:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGjYtzTrNzE2fXXce4XzwmaQP+ZJ+CrLyEFa3djqA0JfPSXD7GNhHT9ziQGku1hwfVydeHRbA==
-X-Received: by 2002:a05:620a:3715:b0:7c5:4001:3e9f with SMTP id
- af79cd13be357-7cd011189dcmr2379878185a.29.1747058177310; 
- Mon, 12 May 2025 06:56:17 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7cd00fe61edsm548440885a.106.2025.05.12.06.56.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 May 2025 06:56:16 -0700 (PDT)
-Date: Mon, 12 May 2025 09:56:13 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Li Zhijian <lizhijian@fujitsu.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Jack Wang <jinpu.wang@ionos.com>,
- "Michael R . Galaxy" <mrgalaxy@nvidia.com>, Yu Zhang <yu.zhang@ionos.com>
-Subject: Re: [PATCH v3] qtest/migration/rdma: Add test for rdma migration
- with ipv6
-Message-ID: <aCH9_RDIgLzEbeG6@x1.local>
-References: <20250512060135.2068282-1-lizhijian@fujitsu.com>
+ AJvYcCUUd+Fjd8xn8/oVgzSl5b/CxQXfLZrWgWTFz4LV7aI46xXq32AOy2i4qDTNTOrCovEwHPsU+3XGk1sW@nongnu.org
+X-Gm-Message-State: AOJu0Ywd5srjREr5KtJwMu+Su25RavnzCFLWkF1ai70UK5O4KXRoo37a
+ tjnsmOd29Pt2qt6iDPOrgoLnptrJDhny8KYhBtH0m0t1xEeWhEdGrOmOvKSnrvw=
+X-Gm-Gg: ASbGncuRM3xvQzjddZsvyz57QrIK3NsmtvPXj5ZV+usO4wzxetfR50qxc5HHH+1TzD6
+ dsbEL3eZcQ5n7nxDWYm2loi2awS4YYWUZsCkqFk0SAB64W3G4QpTAT/ndfHByfWb6K8yuzNDxor
+ U0iu8wS8VembHmC+w8TxN2i1i0VMWWIvefu7PEooURB5ezIbPCz6XAf6f71WHvUVJOPFhodL/Qw
+ 5RD2oQ9x8v0yeQsXXiPTwbM+TL3nDPC6TRjGiSGYdaBPyyY0TV5VDdwv7cdpfR+K/HgwY6Yf6B6
+ 5HOZc6Ym7/klzuFSoOnssjzwdR9KPcLRp75Zz8EoxlMh5OTPoPkaVjlU2gq2sJ2zdxmEZhbXYpw
+ u3gIHDzcT7SW9+qwFX6vPwSvfPeN/
+X-Google-Smtp-Source: AGHT+IHriF2ZLUkLI1e6xOfcSCyUFg5baHNuDV3x7bOwfw/vpkNlkp6U8kPIhyDNtM1tlaFQT7AWfw==
+X-Received: by 2002:adf:ed92:0:b0:3a1:fcd4:eada with SMTP id
+ ffacd0b85a97d-3a1fcd4ecdemr7149990f8f.4.1747058881297; 
+ Mon, 12 May 2025 07:08:01 -0700 (PDT)
+Received: from [172.19.170.213] (90.red-88-28-30.dynamicip.rima-tde.net.
+ [88.28.30.90]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a1f5a2d2d3sm12723325f8f.63.2025.05.12.07.07.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 May 2025 07:08:00 -0700 (PDT)
+Message-ID: <7a850346-8ae5-4dd2-b4ce-7ffb1cfeabd1@linaro.org>
+Date: Mon, 12 May 2025 16:07:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250512060135.2068282-1-lizhijian@fujitsu.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] s390x: Fix leak in machine_set_loadparm
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
+References: <20250509174938.25935-1-farosas@suse.de>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250509174938.25935-1-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,79 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 12, 2025 at 02:01:35PM +0800, Li Zhijian wrote:
-> Recently, we removed ipv6 restriction[0] from RDMA migration, add a
-> test for it.
+On 9/5/25 19:49, Fabiano Rosas wrote:
+> ASAN spotted a leaking string in machine_set_loadparm():
 > 
-> [0] https://lore.kernel.org/qemu-devel/20250326095224.9918-1-jinpu.wang@ionos.com/
+> Direct leak of 9 byte(s) in 1 object(s) allocated from:
+>      #0 0x560ffb5bb379 in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:69:3
+>      #1 0x7f1aca926518 in g_malloc ../glib/gmem.c:106
+>      #2 0x7f1aca94113e in g_strdup ../glib/gstrfuncs.c:364
+>      #3 0x560ffc8afbf9 in qobject_input_type_str ../qapi/qobject-input-visitor.c:542:12
+>      #4 0x560ffc8a80ff in visit_type_str ../qapi/qapi-visit-core.c:349:10
+>      #5 0x560ffbe6053a in machine_set_loadparm ../hw/s390x/s390-virtio-ccw.c:802:10
+>      #6 0x560ffc0c5e52 in object_property_set ../qom/object.c:1450:5
+>      #7 0x560ffc0d4175 in object_property_set_qobject ../qom/qom-qobject.c:28:10
+>      #8 0x560ffc0c6004 in object_property_set_str ../qom/object.c:1458:15
+>      #9 0x560ffbe2ae60 in update_machine_ipl_properties ../hw/s390x/ipl.c:569:9
+>      #10 0x560ffbe2aa65 in s390_ipl_update_diag308 ../hw/s390x/ipl.c:594:5
+>      #11 0x560ffbdee132 in handle_diag_308 ../target/s390x/diag.c:147:9
+>      #12 0x560ffbebb956 in helper_diag ../target/s390x/tcg/misc_helper.c:137:9
+>      #13 0x7f1a3c51c730  (/memfd:tcg-jit (deleted)+0x39730)
 > 
-> Cc: Jack Wang <jinpu.wang@ionos.com>
-> Cc: Michael R. Galaxy <mrgalaxy@nvidia.com>
-> Cc: Peter Xu <peterx@redhat.com>
-> Cc: Yu Zhang <yu.zhang@ionos.com>
-> Reviewed-by: Jack Wang <jinpu.wang@ionos.com>
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
-> V3:
->   - skip unsupported rxe interfaces: lo, tun, tap
->   - setup/reuse both ipv4 and ipv4 in one setup shot
+>   hw/s390x/s390-virtio-ccw.c | 1 +
+>   1 file changed, 1 insertion(+)
 
-It still fails the ipv6 test here...
-
-# Running /x86_64/migration/precopy/rdma/plain/ipv6
-# Using machine type: pc-q35-10.1
-# starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-334248.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-334248.qmp,id=char0 -mon char
-dev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-q35-10.1, -name source,debug-threads=on -m 150M  -serial file:/tmp/migration-
-test-2TUX62/src_serial -drive if=none,id=d0,file=/tmp/migration-test-2TUX62/bootsect,format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1    -accel qtest
-# starting QEMU: exec ./qemu-system-x86_64 -qtest unix:/tmp/qtest-334248.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-334248.qmp,id=char0 -mon char
-dev=char0,mode=control -display none -audio none -accel kvm -accel tcg -machine pc-q35-10.1, -name target,debug-threads=on -m 150M  -serial file:/tmp/migration-
-test-2TUX62/dest_serial -incoming rdma:[fdd3:4fdc:97c9:ca4e:2837:28dd:1ec4:6b5a%wlp0s20f3]:29200  -drive if=none,id=d0,file=/tmp/migration-test-2TUX62/bootsect,
-format=raw -device ide-hd,drive=d0,secs=1,cyls=1,heads=1    -accel qtest
-qemu-system-x86_64: -incoming rdma:[fdd3:4fdc:97c9:ca4e:2837:28dd:1ec4:6b5a%wlp0s20f3]:29200: RDMA ERROR: could not rdma_getaddrinfo address fdd3:4fdc:97c9:ca4e
-:2837:28dd:1ec4:6b5a%wlp0s20f3
-Broken pipe
-../tests/qtest/libqtest.c:199: kill_qemu() tried to terminate QEMU process but encountered exit status 1 (expected 0)
-Aborted
-
-Would below look right to you as a fix (I also adjusted a bool input):
-
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index 1a67a9e2e4..a62d3c5378 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -197,12 +197,12 @@ static void __test_precopy_rdma_plain(bool ipv6)
- 
- static void test_precopy_rdma_plain(void)
- {
--    __test_precopy_rdma_plain(0);
-+    __test_precopy_rdma_plain(false);
- }
- 
- static void test_precopy_rdma_plain_ipv6(void)
- {
--    __test_precopy_rdma_plain(1);
-+    __test_precopy_rdma_plain(true);
- }
- #endif
- 
-diff --git a/scripts/rdma-migration-helper.sh b/scripts/rdma-migration-helper.sh
-index 404ce63a90..6ef61b9917 100755
---- a/scripts/rdma-migration-helper.sh
-+++ b/scripts/rdma-migration-helper.sh
-@@ -14,7 +14,7 @@ get_ipv6_addr() {
-         head -1 | tr -d '\n')
- 
-     [ $? -eq 0 ] || return
--    echo -n "[$ipv6%$1]"
-+    echo -n "[$ipv6]"
- }
- 
-With that the test runs.  If it looks good to you I can queue it with that
-squashed.
-
-Thanks,
-
--- 
-Peter Xu
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
