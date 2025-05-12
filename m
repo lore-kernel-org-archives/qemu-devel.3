@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A4F8C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 10:55:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 021B4C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 11:17:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEQo2-0002jd-Gc; Mon, 12 May 2025 06:54:46 -0400
+	id 1uER9e-0003dv-LG; Mon, 12 May 2025 07:17:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uEQo0-0002iK-QP
- for qemu-devel@nongnu.org; Mon, 12 May 2025 06:54:44 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uER9c-0003df-U2
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 07:17:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uEQnx-0008Fl-Cp
- for qemu-devel@nongnu.org; Mon, 12 May 2025 06:54:44 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uER9a-0003Fv-HM
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 07:17:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747047279;
+ s=mimecast20190719; t=1747048620;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SrhwlyGHBUeZB9shLrDj8sqTvUNxSWhy6HB7k6LP93M=;
- b=iCChHwCgNuvlCMaK+o4+zvzUysqvfT54c6npibsqHDje1BOTBNRkg+FmXC1dmvfL++R79J
- C/dkjhOUFHRoy2bEOQoz9cLY/21dq9foVfogHa9BDc54BqiUJvJdfUcKIWI/oZk64WPHg8
- qmpKHgzHxMOsqL2dD2mMQN/HBbdeLUM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-44B2jiPpPf6gVRkeWUfX9g-1; Mon,
- 12 May 2025 06:54:36 -0400
-X-MC-Unique: 44B2jiPpPf6gVRkeWUfX9g-1
-X-Mimecast-MFC-AGG-ID: 44B2jiPpPf6gVRkeWUfX9g_1747047273
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4108E180045B; Mon, 12 May 2025 10:54:32 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1F165180049D; Mon, 12 May 2025 10:54:30 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 506DC21E66E3; Mon, 12 May 2025 12:54:27 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  Thomas Huth
- <thuth@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,  Xiaoyao Li
- <xiaoyao.li@intel.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel@nongnu.org,  Richard
- Henderson <richard.henderson@linaro.org>,  kvm@vger.kernel.org,  Gerd
- Hoffmann <kraxel@redhat.com>,  Laurent Vivier <lvivier@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,  Yi Liu <yi.l.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,  Daniel Henrique Barboza
- <dbarboza@ventanamicro.com>,  Marcelo Tosatti <mtosatti@redhat.com>,
- qemu-riscv@nongnu.org,  Weiwei Li <liwei1518@gmail.com>,  Amit Shah
- <amit@kernel.org>,  Yanan Wang <wangyanan55@huawei.com>,  Helge Deller
- <deller@gmx.de>,  Palmer Dabbelt <palmer@dabbelt.com>,  Ani Sinha
- <anisinha@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  Fabiano
- Rosas <farosas@suse.de>,  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- qemu-arm@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>,  Jason Wang <jasowang@redhat.com>
-Subject: Re: How to mark internal properties
-In-Reply-To: <aCG6MuDLrQpoTqpg@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Mon, 12 May 2025 10:06:58 +0100")
-References: <20250508133550.81391-1-philmd@linaro.org>
- <20250508133550.81391-13-philmd@linaro.org>
- <23260c74-01ba-45bc-bf2f-b3e19c28ec8a@intel.com>
- <aB2vjuT07EuO6JSQ@intel.com>
- <2f526570-7ab0-479c-967c-b3f95f9f19e3@redhat.com>
- <CAFEAcA-kuHvxjuV_cMh-Px3C-k2Gd51jFqhwndO52vm++M_jAA@mail.gmail.com>
- <aCG6MuDLrQpoTqpg@redhat.com>
-Date: Mon, 12 May 2025 12:54:26 +0200
-Message-ID: <87jz6mqeu5.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=R1kvcC3FsLKBAc9CN+yFiunK3h9AePkQN+lWwQY/DUs=;
+ b=I5DHyiqRNWiy0gXYsoCyPb8hLgMw0oUeZu0HnYOUg7YikExQ4CSmoZWJ/zl0griNYCqNct
+ P9KB+PVGAFPTIR6zSs+U4fHSKuA29PbQ35ktkl3Up6IhDjNKZyNrFpBeSD6J/s69+XnPkF
+ X1QOyZAtEyHh61B4BDAmDXN0ccWdAWI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-654-rn1gO14AMCW-cjVHKBYzFw-1; Mon, 12 May 2025 07:16:59 -0400
+X-MC-Unique: rn1gO14AMCW-cjVHKBYzFw-1
+X-Mimecast-MFC-AGG-ID: rn1gO14AMCW-cjVHKBYzFw_1747048618
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43d0a037f97so22462705e9.2
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 04:16:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747048618; x=1747653418;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=R1kvcC3FsLKBAc9CN+yFiunK3h9AePkQN+lWwQY/DUs=;
+ b=DqbnCmOslf/aRBczIjWH8MaT5bdyyqZx6llFzoCgXUQ//070W39vZh+uCUagyRNwtS
+ 10a5QV3r58z+W/oz/Xcg2+Tps3oAbsitfK8H4tbmdtaBu0rHS7Z6wewVivxhBODCDuYl
+ vi2AEVSBoqaKiNlD6pJrXOvNhIkdey1Bo0dwt+TOu2L1h56NkhWYtXw7Mqe6fYWGbN2/
+ cDGW+bhPu1Von8/irrb+pjIP5r7FngaBVujsaHIntF1bvn2bTTFwDnHa3tgnCPY84oOA
+ ebsmtD5b4eHw5JPnfEqm43d2qCqxCTKj5OrZwKNOyrinRCmmcKudSY/6sGZ+mfXn78Ld
+ tjhg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV3/x8BdFEdaBhEPX2A0ZgmBBBIEabQxZzIp/e0FozTLpHVfgQYRRv585pY4dOZgZxOSeuWLAIXgush@nongnu.org
+X-Gm-Message-State: AOJu0YwsfVZNXJ77Lrm7wr5QALRqbx+5CZhN6c7zQJsoRA67Sd0SmmF0
+ hDpWNttxog8uFowNMctHI2Se3psP7AMBCknFAnq9Iv7KsVWKOpavIJ+8Bpeq28cE+pmHGHex+S1
+ bjlZ8uBF1/yHSIVR9q0e8Z7QUf7TdRVSwlnkuLuPPeDYSHyuIf0KT
+X-Gm-Gg: ASbGncvubI4Tmq+9hYbfpCy7qhB/+CBogup3jJqBIRK1jhpLa6iWbsK+jgDKGif85M5
+ 1+EKrxi/RlZgGLtuj9Abh3qTOK1xhhBhm3W8yY+7yMJ/lFDpXPISg+0CXJeMmkKZokK5Jk9gfdG
+ vAy9R6R9ezdlyiUyAiNQtCssCrhSwGTkt7lyBnY0A5TUZSHEn5KSgHaGaqqMwyXOf0RV9WCRD5Q
+ 8v+tkZKxAPDet/VHEvNYtXfYFt77bMgP/L4C4kty/xxGbPXDNKOVf7fYyRhDdyRSue1To8BQnXY
+ nWyUvI9CmN6aCPXefyX1mW90HhfNGSOVw44O4xLr5BW4chdW4DwKstt+yXHVj3JD2deduWliXCe
+ E5qQQPct3kUALbmTd9IcyyqWowoxeqMBMuwxU7tCb
+X-Received: by 2002:a05:600c:8208:b0:43b:ca39:6c7d with SMTP id
+ 5b1f17b1804b1-442d6d19269mr123056315e9.3.1747048617845; 
+ Mon, 12 May 2025 04:16:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFi97I/9U6HybXKvmoABEn+06DEh9/UfrPfWc0lnQiUgRIE2J54r+5+mqM0W2OFB5cCUg9kFQ==
+X-Received: by 2002:a05:600c:8208:b0:43b:ca39:6c7d with SMTP id
+ 5b1f17b1804b1-442d6d19269mr123056115e9.3.1747048617483; 
+ Mon, 12 May 2025 04:16:57 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d728:a04f:9b31:367d:c7f0:219d?
+ (p200300cfd728a04f9b31367dc7f0219d.dip0.t-ipconnect.de.
+ [2003:cf:d728:a04f:9b31:367d:c7f0:219d])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-442cd34bc2fsm58996845e9.20.2025.05.12.04.16.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 May 2025 04:16:56 -0700 (PDT)
+Message-ID: <a1aa1173-5362-44f6-8b64-6d44f1b5eb82@redhat.com>
+Date: Mon, 12 May 2025 13:16:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] block: add for_commit option to measure
+To: Jean-Louis Dupond <jean-louis@dupond.be>, qemu-devel@nongnu.org
+Cc: Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+References: <20250416071654.978264-1-jean-louis@dupond.be>
+ <20250416071654.978264-2-jean-louis@dupond.be>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20250416071654.978264-2-jean-louis@dupond.be>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -46
 X-Spam_score: -4.7
@@ -97,7 +98,7 @@ X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.587,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,90 +114,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On 16.04.25 09:16, Jean-Louis Dupond wrote:
+> To specify we use measure call for commit size calculations, we add a
+> new 'for_commit' option to the measure call.
+> This will be used in following commit to do a different measurement.
 
-> On Mon, May 12, 2025 at 09:46:30AM +0100, Peter Maydell wrote:
->> On Fri, 9 May 2025 at 11:04, Thomas Huth <thuth@redhat.com> wrote:
->> > Thanks for your clarifications, Zhao! But I think this shows again the
->> > problem that we have hit a couple of times in the past already: Proper=
-ties
->> > are currently used for both, config knobs for the users and internal
->> > switches for configuration of the machine. We lack a proper way to say=
- "this
->> > property is usable for the user" and "this property is meant for inter=
-nal
->> > configuration only".
->> >
->> > I wonder whether we could maybe come up with a naming scheme to better
->> > distinguish the two sets, e.g. by using a prefix similar to the "x-" p=
-refix
->> > for experimental properties? We could e.g. say that all properties sta=
-rting
->> > with a "q-" are meant for QEMU-internal configuration only or something
->> > similar (and maybe even hide those from the default help output when r=
-unning
->> > "-device xyz,help" ?)? Anybody any opinions or better ideas on this?
->>=20
->> I think a q-prefix is potentially a bit clunky unless we also have
->> infrastructure to say eg DEFINE_INTERNAL_PROP_BOOL("foo", ...)
->> and have it auto-add the prefix, and to have the C APIs for
->> setting properties search for both "foo" and "q-foo" so you
->> don't have to write qdev_prop_set_bit(dev, "q-foo", ...).
+Why not allow specifying the node name (or filename) of the commit 
+target instead of this just being a boolean?
 
-If we make intent explicit with DEFINE_INTERNAL_PROP_FOO(), is repeating
-intent in the name useful?
+(That was my main problem with the original series, that it wasn’t 
+possible to specify the commit target (in an obvious way at least). I’m 
+not a fan of deferring to JSON parameters for this, although I’m aware 
+that to specify the node name of the commit target you would have to use 
+JSON again, unless qemu-img can do some translation on behalf of the 
+user: Looking at `commit -b`, that takes a filename; it could make sense 
+to have the internal QAPI parameter use a node name, and qemu-img 
+translating the filename parameter into a node name.  Actually, 
+`measure` could just accept the same `-b` option as `commit`, which it 
+would then translate into the QAPI `for-commit=<node-name>` option.)
 
-> I think it is also not obvious enough that a 'q-' prefix means private.
+Hanna
 
-Concur.
-
-> Perhaps borrow from the C world and declare that a leading underscore
-> indicates a private property. People are more likely to understand and
-> remember that, than 'q-'.
-
-This is fine for device properties now.  It's not fine for properties of
-user-creatable objects, because these are defined in QAPI, and QAPI
-prohibits names starting with a single underscore.  I append relevant
-parts of docs/devel/qapi-code-gen.rst for your convenience.
-
-Why does QAPI prohibit leading underscores?  Chiefly because such names
-are reserved identifiers in C.  Instead of complicating the mapping from
-QAPI name to C identifier, we restrict QAPI names and call it a day.
-
-The mapping between device property name and C identifiers is entirely
-manual.  When a property is backed by a member of the device state
-struct, naming the member exactly like the property makes sense.  Having
-to mentally strip / insert a leading underscore would hardly be
-terrible, just a bit of friction.  I'd prefer not to.
-
-
-
-
-Naming rules and reserved names
--------------------------------
-
-All names must begin with a letter, and contain only ASCII letters,
-digits, hyphen, and underscore.  There are two exceptions: enum values
-may start with a digit, and names that are downstream extensions (see
-section `Downstream extensions`_) start with underscore.
-
-Names beginning with ``q_`` are reserved for the generator, which uses
-them for munging QMP names that resemble C keywords or other
-problematic strings.  For example, a member named ``default`` in qapi
-becomes ``q_default`` in the generated C code.
-
-[...]
-
-Downstream extensions
----------------------
-
-QAPI schema names that are externally visible, say in the Client JSON
-Protocol, need to be managed with care.  Names starting with a
-downstream prefix of the form __RFQDN_ are reserved for the downstream
-who controls the valid, reverse fully qualified domain name RFQDN.
-RFQDN may only contain ASCII letters, digits, hyphen and period.
-
-Example: Red Hat, Inc. controls redhat.com, and may therefore add a
-downstream command ``__com.redhat_drive-mirror``.
+> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+> ---
+>   block/qcow2.c                    | 16 +++++++++++++
+>   include/block/block_int-common.h |  4 ++++
+>   qapi/block-core.json             | 28 ++++++++++++++++++++++
+>   qemu-img.c                       | 40 ++++++++++++++++++++++++++++----
+>   4 files changed, 83 insertions(+), 5 deletions(-)
 
 
