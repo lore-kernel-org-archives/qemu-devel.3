@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE71AC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 08:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EEC5C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 08:43:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEOk3-0001jc-Nm; Mon, 12 May 2025 04:42:32 -0400
+	id 1uEOkE-0002LT-LB; Mon, 12 May 2025 04:42:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEOip-0007rO-CI
- for qemu-devel@nongnu.org; Mon, 12 May 2025 04:41:23 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEOj4-00081U-BK
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 04:41:32 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEOig-0001lg-UP
- for qemu-devel@nongnu.org; Mon, 12 May 2025 04:41:09 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43d0782d787so28015605e9.0
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 01:41:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEOiz-0001my-61
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 04:41:27 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-441ab63a415so41134715e9.3
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 01:41:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747039265; x=1747644065; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747039281; x=1747644081; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vcBK5F9fX1ixcWZyQOGrUKdvI9t7kjvAceG3Q+c4oSA=;
- b=mEuDiEeHi7MWRqxJUUXRCPVdwui5iBIR+6m7aYiV52hcDB+Huze7fNYDyRyHS6fYDb
- 2q6CxhS4w3eDXJXS+csy/VtGMRR5Ahi9g6blGBEdSVQEJbG2DBx2BPeo4LBhl5eGv9eJ
- /1Ng/u3qmldrYSP0qVCAU42L7L8EpJOnCNPns39xUw3em1R/oE6ZM04RAgaDi8fwFnej
- OZ6yBnBl0mhXDPdoWWhF7ZFyCvpLMk0hSKyZ0yvKWw211n9/L1g/D7wi2+UHzK5hlU+Z
- e9D5WxPNHXXWjHSZHQ+A6WLogmYx9xKq5/CLjXiPq51VrTKOYep9PxL1nLYhgVj2Z6Dj
- cLQg==
+ bh=CG3XKTeWK0piQR2+smzX+3iwbFcRaTIDsL5MWdVVSjk=;
+ b=NgN58Vp0KK14rmsg8K/JzayyitXi+jDgEUKWK37Hl5s3U10Q1B3OvSCgQzYLHKs29W
+ WY3A97ktkH+Q1EFn63mPgnfGBLxnMSNvp84Tr2CZyQEiLFkpRaJV/xQ0YAvZl3iYqH+Z
+ ws6fYilPcHg0DedR6zchNwJFS4dIGNmsim0GuhR0wlMlm6CZQpRcfI7aaZgDK8VNkik0
+ Fo0+Dpbyp8j6YaijDsHQYatqNlal2B2viYpLRO99KgsgdzJEpKt1Y/mJsf5dO6km/OBV
+ ZiyOzWKfFqddsWCg0N2UVfAcjcpP+kMIHwVkB4S0QaIBLeMchT1PN4qnoeHl2WLcXm0i
+ Ygxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747039265; x=1747644065;
+ d=1e100.net; s=20230601; t=1747039281; x=1747644081;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vcBK5F9fX1ixcWZyQOGrUKdvI9t7kjvAceG3Q+c4oSA=;
- b=S0IZskqPb+HD8QwpCcn9w0OxXi48vxV0R4SXpRQjPq4VE3wg+YFdatqIKqroOkrini
- WGTgRuBLLW7avkD19GyJxzmoqhrlJyyJI80LT8fK4Vj274NhRIJ8rJMCn0eGF0xnwYbN
- 6HyIFh2II9I+ExTB4PtFT13ulK/64MR4FWBmBiHlYxSskhO5hanZ6ducQmqC5s6N+93w
- nQmjAyXdpqLz/TjHN7mVubXaJPnAtw4WHUEFWa4DBh3Sh6ORvHibEW2tuE65Ldlg+pRw
- j9H89/5WfWNmVv4wRPuQaYcNf3Qz5XnWWDipajr+sx3kt3gUZoJRqsTIBZvMoc5cixMQ
- A/4Q==
-X-Gm-Message-State: AOJu0YxEG7kJj9b3AxEDRCOZuMSdVlt8JU6p4wDHxqWlDYYGdAX8RJhA
- o83Ol96XupOE+gUyViriBkaentfNU2D23EGCr4lRwfd5QDizZRJDqbaj4/BMS4Is1z3KQQ7IAQ8
- L1r1iQg==
-X-Gm-Gg: ASbGnctHMXj9A1fFQcMz9hkv4VxgNDc4hAy24dACyNg5X/MNZFbOdOCREPbfCbVh7ZO
- HxqDiZMJn8KJLsTodltZGNjgSFKZnIDgg6AGfZS9+Rm+FaN1Mal1OeAiq10eM0XkPlCO/THah25
- XikO+XRbNZoUlJQeKo+4WEmFINzTbhKB0BSvJ8b5Raod0OdcSmSibzzAcfuraFAak/OZ7jD2cP5
- X0MMJJNH5IReMFABmMsjrAui7hbYAMlQcuihicJRvXfW9t7pgdvWjlcDh8PY1FPZ/E+MchueLrM
- OP4wPZ7PGI8VQzd2EhTpemsUe1LinGIymYfeZgBEV614V7KVoQEXj4LSS3qGVo8cLfDS7UBtf/l
- uRWBE1MeFZ9fdZtpjBUJxdW8=
-X-Google-Smtp-Source: AGHT+IH5E51ONDcA6ic6S7uvbrQbDba1vcCY6Ax9LhiADjB6LEgAJUQZ0mW9Dwy9f3FEBxHlOrpSjw==
-X-Received: by 2002:a05:600c:c0d2:10b0:43c:f895:cb4e with SMTP id
- 5b1f17b1804b1-442d9cac8b6mr60485795e9.17.1747039264864; 
- Mon, 12 May 2025 01:41:04 -0700 (PDT)
+ bh=CG3XKTeWK0piQR2+smzX+3iwbFcRaTIDsL5MWdVVSjk=;
+ b=ZTpmEkCBhETFm7XcQJWCDP4bwCcJdprohk9j6utDlKa0Tv99j9mcXuM85XTQ5goDem
+ WzuL91necxxoeT2WQltTY3mzX2AJOrrXTD2Zv3R3uWqkIRulr5qfswDvb8nrt6FERT3u
+ JFfoBSPfcGEamAaCGdCJ22ZZ8FNAcCxjJI9yh8Jmkm4ZZkwzIqyhlkbe1uuiUB4NNaAE
+ ewhUtmC+DFauxKfRtGvVYd9WYOgsSaJhAC9Ajr9lzDZAj3QU+QoOZGBWc8oZO0RgdAep
+ J5O1MZ5g6vGHpplDEeRF/0r7OZw89AtkwhBzIIDzGDekqBEwGd1elmn4d7braPeNSHh4
+ tBkQ==
+X-Gm-Message-State: AOJu0YyrnapRF4LNUg+Sj3cwsiZj85RSXXldSDV/huBGf3lMMJY4Yycn
+ +Dfxc6UQF0/6HDvUbSPlbBCBjqbRvz70T7t5afiWSJMOaSZZyr+lNYsRRtDV28KdcyWRISOYcVC
+ 7SXIwAw==
+X-Gm-Gg: ASbGncufjmw0bQAFgS4Tt/a82rk1qBUOemd03ayWF+b4RXUEPTQrYImMSHwK/3jmmPa
+ iyrfskwkvSiETM3srgKm1zpUzpl9YUrf+a9bsa2LmYEMUW9DLiNZ5i5wPZrkIL7c8Jcf8rdtnNL
+ fhs0bRpmLtgLvFwOq85/fCczu3aIhkiVNvdfNkwqgQ/C8oTDhTKHtsOi2fuJmevJz611xwlFV3+
+ fcqq6PHlWT1pylw6cna3hbvU5Cfu1CaNx+qvOnbbQTbcuLjb7QLUWOyj+0xHyLfs3CPlez5uuzl
+ 3GLeTmyFGh+1Y26b2Nm1Cwi8NVqhzKnktpLtgo+uj04x9OWoeEYlThnSLWrhNwLCCYp+v6YHe6w
+ NHSZpz9E4B8rkfr479iLJ1MM=
+X-Google-Smtp-Source: AGHT+IE9XmsM/v4yWMXYFciqcglmvn2szksPoXVqFdfTER40y3qoX1HDq+UNbSmntNIeLW3HYfeyqA==
+X-Received: by 2002:a05:600c:46c3:b0:43c:fc04:6d35 with SMTP id
+ 5b1f17b1804b1-442d6d0a9f6mr98072835e9.4.1747039281017; 
+ Mon, 12 May 2025 01:41:21 -0700 (PDT)
 Received: from localhost.localdomain (129.163.185.81.rev.sfr.net.
  [81.185.163.129]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442d67ee33bsm117390175e9.20.2025.05.12.01.41.01
+ 5b1f17b1804b1-442cd34bd84sm159345165e9.22.2025.05.12.01.41.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 12 May 2025 01:41:04 -0700 (PDT)
+ Mon, 12 May 2025 01:41:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
@@ -78,18 +78,18 @@ Cc: Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v4 08/19] hw/virtio/virtio-pci: Remove
- VIRTIO_PCI_FLAG_DISABLE_PCIE definition
-Date: Mon, 12 May 2025 10:39:37 +0200
-Message-ID: <20250512083948.39294-9-philmd@linaro.org>
+Subject: [PATCH v4 10/19] hw/i386/x86: Remove X86MachineClass::save_tsc_khz
+ field
+Date: Mon, 12 May 2025 10:39:39 +0200
+Message-ID: <20250512083948.39294-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250512083948.39294-1-philmd@linaro.org>
 References: <20250512083948.39294-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,66 +112,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VIRTIO_PCI_FLAG_DISABLE_PCIE was only used by the hw_compat_2_4[]
-array, via the 'x-disable-pcie=false' property. We removed all
-machines using that array, lets remove all the code around
-VIRTIO_PCI_FLAG_DISABLE_PCIE (see commit 9a4c0e220d8 for similar
-VIRTIO_PCI_FLAG_* enum removal).
+The X86MachineClass::save_tsc_khz boolean was only used
+by the pc-q35-2.5 and pc-i440fx-2.5 machines, which got
+removed. Remove it and simplify tsc_khz_needed().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- include/hw/virtio/virtio-pci.h | 4 ----
- hw/virtio/virtio-pci.c         | 5 +----
- 2 files changed, 1 insertion(+), 8 deletions(-)
+ include/hw/i386/x86.h | 5 -----
+ hw/i386/x86.c         | 1 -
+ target/i386/machine.c | 5 ++---
+ 3 files changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-index d39161766e0..f962c9116c1 100644
---- a/include/hw/virtio/virtio-pci.h
-+++ b/include/hw/virtio/virtio-pci.h
-@@ -33,7 +33,6 @@ enum {
-     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT,
-     VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT,
-     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT,
--    VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT,
-     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT,
-     VIRTIO_PCI_FLAG_ATS_BIT,
-     VIRTIO_PCI_FLAG_INIT_DEVERR_BIT,
-@@ -53,9 +52,6 @@ enum {
-  * vcpu thread using ioeventfd for some devices. */
- #define VIRTIO_PCI_FLAG_USE_IOEVENTFD   (1 << VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT)
+diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+index 258b1343a16..fc460b82f82 100644
+--- a/include/hw/i386/x86.h
++++ b/include/hw/i386/x86.h
+@@ -27,13 +27,8 @@
+ #include "qom/object.h"
  
--/* virtio version flags */
--#define VIRTIO_PCI_FLAG_DISABLE_PCIE (1 << VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT)
+ struct X86MachineClass {
+-    /*< private >*/
+     MachineClass parent;
+ 
+-    /*< public >*/
 -
- /* have pio notification for modern device ? */
- #define VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY \
-     (1 << VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT)
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index a3e2e007d6c..8d68e56641a 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2349,8 +2349,6 @@ static const Property virtio_pci_properties[] = {
-                     VIRTIO_PCI_FLAG_BUS_MASTER_BUG_MIGRATION_BIT, false),
-     DEFINE_PROP_BIT("modern-pio-notify", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY_BIT, false),
--    DEFINE_PROP_BIT("x-disable-pcie", VirtIOPCIProxy, flags,
--                    VIRTIO_PCI_FLAG_DISABLE_PCIE_BIT, false),
-     DEFINE_PROP_BIT("page-per-vq", VirtIOPCIProxy, flags,
-                     VIRTIO_PCI_FLAG_PAGE_PER_VQ_BIT, false),
-     DEFINE_PROP_BOOL("x-ignore-backend-features", VirtIOPCIProxy,
-@@ -2379,8 +2377,7 @@ static void virtio_pci_dc_realize(DeviceState *qdev, Error **errp)
-     VirtIOPCIProxy *proxy = VIRTIO_PCI(qdev);
-     PCIDevice *pci_dev = &proxy->pci_dev;
+-    /* TSC rate migration: */
+-    bool save_tsc_khz;
+     /* use DMA capable linuxboot option rom */
+     bool fwcfg_dma_enabled;
+     /* CPU and apic information: */
+diff --git a/hw/i386/x86.c b/hw/i386/x86.c
+index e2d04092992..f80533df1c5 100644
+--- a/hw/i386/x86.c
++++ b/hw/i386/x86.c
+@@ -382,7 +382,6 @@ static void x86_machine_class_init(ObjectClass *oc, const void *data)
+     mc->get_default_cpu_node_id = x86_get_default_cpu_node_id;
+     mc->possible_cpu_arch_ids = x86_possible_cpu_arch_ids;
+     mc->kvm_type = x86_kvm_type;
+-    x86mc->save_tsc_khz = true;
+     x86mc->fwcfg_dma_enabled = true;
+     nc->nmi_monitor_handler = x86_nmi;
  
--    if (!(proxy->flags & VIRTIO_PCI_FLAG_DISABLE_PCIE) &&
--        virtio_pci_modern(proxy)) {
-+    if (virtio_pci_modern(proxy)) {
-         pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
-     }
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index 6cb561c6322..dd2dac1d443 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -1060,9 +1060,8 @@ static bool tsc_khz_needed(void *opaque)
+ {
+     X86CPU *cpu = opaque;
+     CPUX86State *env = &cpu->env;
+-    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
+-    X86MachineClass *x86mc = X86_MACHINE_CLASS(mc);
+-    return env->tsc_khz && x86mc->save_tsc_khz;
++
++    return env->tsc_khz;
+ }
  
+ static const VMStateDescription vmstate_tsc_khz = {
 -- 
 2.47.1
 
