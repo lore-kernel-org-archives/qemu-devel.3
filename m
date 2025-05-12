@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C052AC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:13:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CFBEC3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:16:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uETuF-0006bY-4y; Mon, 12 May 2025 10:13:23 -0400
+	id 1uETwt-00084S-2C; Mon, 12 May 2025 10:16:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uETuD-0006ay-9j
- for qemu-devel@nongnu.org; Mon, 12 May 2025 10:13:21 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uETwm-00083F-TU
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 10:16:03 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uETuB-0005CN-2L
- for qemu-devel@nongnu.org; Mon, 12 May 2025 10:13:20 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43cfe63c592so47237215e9.2
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 07:13:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uETwj-0005cI-Ks
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 10:15:59 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43cfebc343dso30315115e9.2
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 07:15:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747059197; x=1747663997; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=BlKtln6YL8TAnbPPJhP85Er80ca3JBTlWVq9fmjfKbQ=;
- b=X02qNzzqUnrGagZ8coG4d6I/PAaavCzuXzB2eVWqmOIyumX7qzEH6jBk25uiIDsEyg
- MaMp6aE1JXF+w7j8MWgsJYOqGjCDCnrtCJAqqP8k+yjPuX8B6fCMgX2oAwtUn1UBCkq6
- HxuGQlP+xGGBEj8XwIxmuTYuwWyb0+qTdHMXF16un1No+LFy9GOaHUeDDH76biJx6R3+
- 543aUyzyU3jHDREa9N8nK2Y8CFsg2gJFN7s/2/O2TqyobSMtHWP7o9pRX2S+qlaatNLW
- LaNewkzbyTIGyHo9VETly9gdoaWOBeFIkGJ7JWS7jKS6bSxFLl+d8B08R3wR5gtynpxY
- nN3g==
+ d=linaro.org; s=google; t=1747059354; x=1747664154; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aTAGveobMVXL/UqyzsFhZ1pybaTAQ1fC0YSWIiTwOb4=;
+ b=ellKcAYJhidG9ZpphaOFEd0JSaKYDHC6Fe+rNHnx6FkGBsFTpaLlvle2HcQdD30Sna
+ P098t3QkrTPaOBGu3jobd/gdVCVzAVQFK4mHVugR/NwAFcAo7Rycim4xbj/b/ThUSgXW
+ InECpn6k7noYXNxjjiXEvonZsh94vt6N+S0Q7W7ECmFn6LDqbGW2cPG+PYKyvsmMwHV+
+ 8S+L9cd/YxpVSa2CwoPOPuX6nbjmMhiNArf2cRkzCWQww+iDI7MmCeL6sQ6nbXXFEo9+
+ KoMVLADG8hBy137mKZ/uAkos2wyVT6qwUeN7K0C9MW/t6z3D5WBO6KQm8T/js36QEUpX
+ PZUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747059197; x=1747663997;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1747059354; x=1747664154;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BlKtln6YL8TAnbPPJhP85Er80ca3JBTlWVq9fmjfKbQ=;
- b=c0xMrVP4wSPz6ENHof5zpPlsh1yaS2vMgJiv0UxBcVkJqr7ycnBFaTbG0vJc2FwAfr
- xB7/BChlpaKj3oWHyUDSu6wwQ1bYyfcRUvGqAUTOFzT+uGxFcGk2B5AJc7zBZ2t6hDw1
- pc+9ElcAbr5ShFDpprsghUB2V955et4LkO26zZQgYunEsHfaflnGa1xpYtd8jvhfY5wa
- XX61xKvm4/K9J9qnUKtcYUO8W7nhK+xAJOswAOIgQo80ANCOA68hF5/Ws9YfWG4lJZ5g
- OGSr+y3HBDltKQRdbwTDinSyQ49jYqdAI5dQ//CvsTVkaKMYuzD9ouVHYjFE6n7EiG+g
- yT3w==
+ bh=aTAGveobMVXL/UqyzsFhZ1pybaTAQ1fC0YSWIiTwOb4=;
+ b=XkcsDsZqfrTpIkDJZgtLJWiBK8tMfrLwqA0ImoxNLuLlOptvNKGoq1HVPg1Nl0zNYC
+ +qToh0CaDxFEokzKnA6+xIpE0qO+6rkNiiZtmc0Ero2lP8YAQxlz2lyIhekFkvmpWL2K
+ FfnxpGSUnyDKuZBg5ylXY6SEu8swnyLursoGRtrJhzpDRfzJxsoY4mjEsY9Y6X2QJipB
+ aPphoM4/BK9J10/zoRt/D7DJU4ZbpfvSXM7+OLa0pX9zfHaHDfPXQ96PKKFG7T1X4KVq
+ vsxoqxgv4vKem+RZ6PVxih94D3Mls+7ld9Y+/LR9Z7YYynBMLBnJqG3XXKD3yQ8iIoyF
+ SO5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWK8HoXHLL7QeOcfSR6TznUHYLWhq/kNJICCAw3i56EBU1ZWMVpJ3IUP/9xMMQW+tGZOE+lsvkdhk87@nongnu.org
-X-Gm-Message-State: AOJu0Yx+eWIKECSFplP6o7ZzONdTgciJUPFGZ9bUbd8JkOyT3N2YybwF
- P/d3pn4aZHv2sdrGAklRNxySBFKFTd+db3OEEecSH3NOZLl+YsEyEAhrCT2StVI=
-X-Gm-Gg: ASbGncvmZjxEO00NGAtG29srD+Ld4K0QPKCmyEFaoFIB7ALG6vF1eH3qEb/TGflaQi2
- FGRKWUpB6+fOXNKlt/U4trN4GQZLQ7G0TMfMusmxxrZGir0fuTcZSOPdVoJXqQgtQ1jMC0m5g+g
- LdHmZ17oLUbOYkwabl4zBp1Akr9auS/NIyx6WpZ+y1JanS80IqYJZ2rwfCtzfg5gg7EIhtxnCuh
- BT3QO7z5lBjnh7TGdyEft7v0KAZr8w4FqRK2ypKD9TH/joWncJ9Orh+JH4pIcLKZPnWSLdPUmg3
- 8p5ovKMdeE+USAUpHIrYa+dBvuhZ4TV/0d/JagQN5QNjRZVYl+LH9Zt4JuoYH2QUHwnzago36vo
- /WyFng/Kbgd5pgZqjJ9Bk2moqA+Xx
-X-Google-Smtp-Source: AGHT+IHk2HYN9h9QXFtZSK4+p61t5LSVAsp8l50WHK7VhhgyexOLSrzM5JTqKW2kAFEGGjWhOw1HdQ==
-X-Received: by 2002:a05:600c:8707:b0:442:ccfa:fa with SMTP id
- 5b1f17b1804b1-442d6dde8fcmr105865105e9.27.1747059197054; 
- Mon, 12 May 2025 07:13:17 -0700 (PDT)
+ AJvYcCXye/Bq//csBDYJeGSV09OdkSzKrH3xqt99uO3Aoqz2IFrNHbkXqqtQP+PpJq/edCEd8D39hH5UBAPR@nongnu.org
+X-Gm-Message-State: AOJu0Yy7qSVFuKdtR9KpcnI1xcPu6JOmoko5oRSqFjT5Gt5u6Hjs8RK4
+ uVObIjzTT0aMPGbaV1YPvA+oeXgQce3ioBJiB6uTS78CCrJVwtrXo0MVZuxRzY4=
+X-Gm-Gg: ASbGncu4stXcXRm2SMzm6Hm8gUPemWKH5Brh8XKO15T6P124gIeNKHAX6HVToAjE+5s
+ 6cbJ8tp8h5jMSVRW7E6tann5UQdN1QV003Jm4mEiivreLDOFcQEU/5yweSFiOpkB9eY2CiyDCpN
+ 24UggHiLo9Quu+CaejUcyNv6qqdj+ZGtvQoLvnV4nZxnWDOB/cteAvevgXzJJ3uke9XhMTMYQZ+
+ 7ArzJ0JPzuTrj+KGQvbTG0qtLRC4mSSlKeYqYTsKfCp4GnX1CnDuqfGvLOzQbwUke1XDYgxHv7o
+ fmYzQvNJIWBkScYm7hNNbBMKC7mOkFIkfjiINvYYCTgu1FsFl3OhQ6eE/+VnXbOCP/dZFfrl+nN
+ R2vbn9nghbFTsMlYzGjjnu0hcopLF
+X-Google-Smtp-Source: AGHT+IHLD+KR4eQadi3Gx4ZKSctbLcnOfa7f1NEAB/FxoDfcH+1qT9P3NQQULJv+WfRW14vaCSaNDA==
+X-Received: by 2002:a05:600c:528e:b0:43d:7413:cb3e with SMTP id
+ 5b1f17b1804b1-442d6d17f7cmr97859585e9.1.1747059353924; 
+ Mon, 12 May 2025 07:15:53 -0700 (PDT)
 Received: from [172.19.170.213] (90.red-88-28-30.dynamicip.rima-tde.net.
  [88.28.30.90]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f5a4c5b9sm12689007f8f.91.2025.05.12.07.13.15
+ 5b1f17b1804b1-442d67d5c2asm127762345e9.1.2025.05.12.07.15.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 May 2025 07:13:16 -0700 (PDT)
-Message-ID: <1cd816d0-5808-4caf-b38b-9e4ba10680b6@linaro.org>
-Date: Mon, 12 May 2025 16:13:13 +0200
+ Mon, 12 May 2025 07:15:53 -0700 (PDT)
+Message-ID: <3b7f61dc-8708-459c-b48b-db955ad462bf@linaro.org>
+Date: Mon, 12 May 2025 16:15:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] s390x: Fix leak in machine_set_loadparm
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20250509174938.25935-1-farosas@suse.de>
- <7a850346-8ae5-4dd2-b4ce-7ffb1cfeabd1@linaro.org>
+Subject: Re: [PATCH v2] tests/functional: Add PCI hotplug test for aarch64
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ thuth@redhat.com
+Cc: eric.auger@redhat.com, alex.bennee@linaro.org, peter.maydell@linaro.org
+References: <20250512123646.157447-1-gustavo.romero@linaro.org>
 Content-Language: en-US
-In-Reply-To: <7a850346-8ae5-4dd2-b4ce-7ffb1cfeabd1@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250512123646.157447-1-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,42 +102,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/25 16:07, Philippe Mathieu-Daudé wrote:
-> On 9/5/25 19:49, Fabiano Rosas wrote:
->> ASAN spotted a leaking string in machine_set_loadparm():
-
-What about ccw_device_set_loadparm() in hw/s390x/ccw-device.c?
-
->>
->> Direct leak of 9 byte(s) in 1 object(s) allocated from:
->>      #0 0x560ffb5bb379 in malloc ../projects/compiler-rt/lib/asan/ 
->> asan_malloc_linux.cpp:69:3
->>      #1 0x7f1aca926518 in g_malloc ../glib/gmem.c:106
->>      #2 0x7f1aca94113e in g_strdup ../glib/gstrfuncs.c:364
->>      #3 0x560ffc8afbf9 in qobject_input_type_str ../qapi/qobject- 
->> input-visitor.c:542:12
->>      #4 0x560ffc8a80ff in visit_type_str ../qapi/qapi-visit-core.c:349:10
->>      #5 0x560ffbe6053a in machine_set_loadparm ../hw/s390x/s390- 
->> virtio-ccw.c:802:10
->>      #6 0x560ffc0c5e52 in object_property_set ../qom/object.c:1450:5
->>      #7 0x560ffc0d4175 in object_property_set_qobject ../qom/qom- 
->> qobject.c:28:10
->>      #8 0x560ffc0c6004 in object_property_set_str ../qom/object.c:1458:15
->>      #9 0x560ffbe2ae60 in update_machine_ipl_properties ../hw/s390x/ 
->> ipl.c:569:9
->>      #10 0x560ffbe2aa65 in s390_ipl_update_diag308 ../hw/s390x/ 
->> ipl.c:594:5
->>      #11 0x560ffbdee132 in handle_diag_308 ../target/s390x/diag.c:147:9
->>      #12 0x560ffbebb956 in helper_diag ../target/s390x/tcg/ 
->> misc_helper.c:137:9
->>      #13 0x7f1a3c51c730  (/memfd:tcg-jit (deleted)+0x39730)
->>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>   hw/s390x/s390-virtio-ccw.c | 1 +
->>   1 file changed, 1 insertion(+)
+On 12/5/25 14:36, Gustavo Romero wrote:
+> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
+> hot-unplug on arm64. Currently, the aarch64 'virt' machine uses the PCIe
+> native controller and does not support ACPI-based hotplugging. However,
+> since support is planned, this test sets 'acpi=force' and specifies an
+> EDK2 firmware image in advance. This is harmless and prepares for future
+> ACPI support.
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>   MAINTAINERS                                  |  5 ++
+>   tests/functional/meson.build                 |  1 +
+>   tests/functional/test_aarch64_hotplug_pci.py | 73 ++++++++++++++++++++
+>   3 files changed, 79 insertions(+)
+>   create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
 > 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 23174b4ca7..9ebb768214 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2065,6 +2065,11 @@ S: Supported
+>   F: include/hw/pci/pcie_doe.h
+>   F: hw/pci/pcie_doe.c
+>   
+> +ARM PCI Hotplug
+> +M: Gustavo Romero <gustavo.romero@linaro.org>
 
+Cc: qemu-arm@?
+
+> +S: Supported
+> +F: tests/functional/test_aarch64_hotplug_pci.py
+> +
+>   ACPI/SMBIOS
+>   M: Michael S. Tsirkin <mst@redhat.com>
+>   M: Igor Mammedov <imammedo@redhat.com>
 
