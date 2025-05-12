@@ -4,88 +4,227 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38F6EC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2680C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEUQi-0006tn-RN; Mon, 12 May 2025 10:46:56 -0400
+	id 1uEUTG-0000U4-E8; Mon, 12 May 2025 10:49:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uEUQa-0006n3-Qk
- for qemu-devel@nongnu.org; Mon, 12 May 2025 10:46:51 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uEUQY-0000xp-Db
- for qemu-devel@nongnu.org; Mon, 12 May 2025 10:46:48 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-440685d6afcso51100215e9.0
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 07:46:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747061204; x=1747666004; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YdI+i4zev0OQ7/OBo6IO5PLh4ziQxP2ot1AsLf6mhbc=;
- b=JQi16qP1PYx9ASsCMR0/XO1FRVZdUwlwtNJwVthAxplWfRn1Sid5VyFwOMBFxcgwLf
- H4MwXMS92JgW9odbxRkCgs1KQBmgyFwa8MknOINVkDI5wPmMaTMI7X5sqO+qAGAudSK3
- MkxqCncOFYoz8sBU4fV/gZ2eRLVZGAwdVvQtDZd+fowsIUSpIprffrZsFlGal3aJ3r8D
- 8DdAXenhxlIMuMS/GgLkYpIseaZOKZTCffEjknKPMEUZWSS4Xs6pDNzuZU9UrdQhwBYg
- kSeHc6MRtdxPJkD2HIyBAA9JsU9LAaNVAt/cgaAvQEZBfzT8m5ptFG+qBGQxdagCNs7S
- 3/OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747061204; x=1747666004;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YdI+i4zev0OQ7/OBo6IO5PLh4ziQxP2ot1AsLf6mhbc=;
- b=fDefRHMm8fx8sBXwu6qayRDB9dfbkRyyAz5Rx/1cEueu4j3tFot0C+plMpUd4MfDX0
- OcqMSBAzbfgIsS2ipwlw5W/0PQ5KKZW8MY0lSRlDQCHeJl4tZkTDXYrQkTCkatu30VNe
- RgV3/y5FbssKZ0rm8NulwAAV4AsIrevKnHjnUmqmRQ+bQ2PU4J4uOu2Hkc5Wgskxm2BY
- sHQYrs3MXQqtV46t6XMsm63sKySRGFLXwvwHgoBEpxYdQ1S8BdzFLcpAa7rpmFGG87qH
- 8NHfiJENl6JtlHbbfTs/00Mg0DkeibVRmBHWsUHwq8udjczQhtzpvvZrRXbauUvgyjiY
- K/zQ==
-X-Gm-Message-State: AOJu0YzB4PTdn4oX0+x/4MdbqNDPRiWJkuiSADNpWs87wpoiifThGv8P
- ZRbUA5GFS3zXlXTIttH5boND2jjzLywh0CNVJBs98O5r75/ANrCySXvztAms7+BnCNULs9k016F
- 1
-X-Gm-Gg: ASbGncuP6ggnC4rWJdPZ2RTBE2qxo0izc7TeDWtYeJG4vbfwgu82IL3sQzl4r67m8ul
- Bqytjy7Rfykd42nYnN6KZli+JXkOfenyqw0l7eYZgvBkLJHwdf3u+mtYScAJAdykuQLTvaW0oBH
- Vkzpdtubq8TjLtCDfDlQAjekKDrsmiCIxUMRkBNdiZ2s+RSkXX9A/Ytj3OIk4s7OOjdlte2Pa6h
- /n4C5eibhESiVEmily9Y9LlCcSzIkTcRMPUma6z4STuZQaVebinPRiRpPHFbpA9apbUBFwk1r3k
- 4H3H+5CAsBVdK75vQC6AchuOTupySWmONwGvOF33dqLW/xaV582vpE/SH5t+AeXTynRi3k9N52B
- ubOamrsQzHflN6aT6v6eD1D4U5fZZq2k7
-X-Google-Smtp-Source: AGHT+IEJcNtepBTtSyidNPWfopTkNDkFWovfT5ZLmLhkGXOvIk00cQ0ltg5PYK7+UFqsTiggrnU14w==
-X-Received: by 2002:a05:600c:3b84:b0:43d:683:8cb2 with SMTP id
- 5b1f17b1804b1-442d6d44b30mr120675365e9.14.1747061204308; 
- Mon, 12 May 2025 07:46:44 -0700 (PDT)
-Received: from xps13.c.hoisthospitality.com (110.8.30.213.rev.vodafone.pt.
- [213.30.8.110]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442d68585d1sm129173445e9.31.2025.05.12.07.46.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 May 2025 07:46:43 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org,
-	thuth@redhat.com,
-	berrange@redhat.com
-Cc: gustavo.romero@linaro.org, eric.auger@redhat.com, alex.bennee@linaro.org,
- philmd@linaro.org, peter.maydell@linaro.org, qemu-arm@nongnu.org
-Subject: [PATCH v4] tests/functional: Add PCI hotplug test for aarch64
-Date: Mon, 12 May 2025 15:45:45 +0100
-Message-ID: <20250512144629.182340-1-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.43.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1uEUTE-0000TF-Na; Mon, 12 May 2025 10:49:32 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1uEUTB-0001A5-RU; Mon, 12 May 2025 10:49:32 -0400
+Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54CAj7Xl014637;
+ Mon, 12 May 2025 07:48:43 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=W4MWYK1txdvJ/vmja/muCN+/ufEyOGXGVMj9ddSVx
+ 8k=; b=QgIS7MlvcFK3MuAWHGpnSUwe+NNzmzWdRP7gTujcPdkv8Ppo5wGfw7Nub
+ T7vNl3HjMpzstEKwhH4C92jsKCYldCGwFlyXAZiPnJb111OQYoL9AnuHLTPkwZgz
+ EK061pomujXsifP+aKyCypVr7rkBI68Ji7Fwt7SpyQ9zDys9CP9bBT3Ia3waYm/+
+ MiJwOfbYjDt9IkRIhlexiuTW20cbsNCCfbbRrE/V8n3AmjxEHq8Yg5JyFbsgkYfT
+ hIgb0q3hU4fYbNE7OP4kreZLtlYUQbidNnsG7LHi3xQ7BC4TfUfLdofIg2t3Q/df
+ jpvW4GoF82czU6OSsGJC2FyI68pMA==
+Received: from bl2pr02cu003.outbound.protection.outlook.com
+ (mail-eastusazlp17010007.outbound.protection.outlook.com [40.93.11.7])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 46j4bb3gcg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 12 May 2025 07:48:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=kYeDqsNeBloh8c8qozjqa+mmpPK2QQdBneBva5AiI76iyknrzIZ+IZmFZ3PcEZsFCIimERgDWXa3Vmn07RUklF0Y6iynYkCq/vPY5IxzOyYskLu1b6yOSiDG/maC8JNyG+JYK+kL4ZfNLh41J+g6YpFiEEQim9ZVOpHqjqzIJVwpk/zEAAgcYseHjRnmpK6Sw06s+d+4gjAlWnazz5lXf7a3k7hOBY+dJHSnJT53RogFSIlheCWeagYLfXu0FgVq6ldWp/IUJnfgvV8AawbZOuTc1CSZ62KA+H/7Lis+pWxynuv5XHzDiGXiFK4tmpxtXNGLcam6T2fvlsOsC/41PA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=W4MWYK1txdvJ/vmja/muCN+/ufEyOGXGVMj9ddSVx8k=;
+ b=EzbMqxE2l9splL85QAxj5A/D1vxlkijNpNC8YkS0xi8CDHcXIyIlxDwXGBjmUuAFCPgp+tWGPZ/Z69JN5HazEazVBsJ1ediAcO8MIS8yo8d52ArDSbKKrlZle5omrOAG+B8CKGx0/12WWBLQ1UHXUpLqp9WPagP7HqBVD6LMarr5G8chEeIEgfRMLxk6wtZEIBvDfX4DvDD9ZtYoRzR4nqk2Jtv1j1udfmAUSqW3myjvLyHe50MMlfKsXz2oSmDR7a8J+OKgZjz5Xm3jUOAlaLru6WZUxeIT8cu5Ga4nbOzUNssirXih+Gz6TBnlSRwbT/99ehQnaWiS/nJDy3b1RA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=W4MWYK1txdvJ/vmja/muCN+/ufEyOGXGVMj9ddSVx8k=;
+ b=VbJWuykPZhtWRfuCf6WD6bm8Fc2bMfaMfAeE+F4+05cn7ysRMl1Wer03vNez7CEKXi/qtThr+Yqr+Jy1gPEJAJMyqVvNJCaciLqqhWOO/X1w6Aysn4BV1ENWuE7HRRiQ+rPch+mEHbPTihsvF1nqCGc4K+xkkqPvKGXpE4uPibH/T38FI20pJb2/TlNODIvJnu/WCaBHRM3D2fGLceCojmussNPZFbTN2ms9xN8OCAp6Y5/tffPoGnWMEiYE/qke8O/JeBeyPxCEBaTRcDdZDG6rJmLc82gCqSECBETua/PUJbyWcGE1eu49fp8yS/ktUtyoh/6QBDAqeg2tNFNdrg==
+Received: from BN8PR02MB5745.namprd02.prod.outlook.com (2603:10b6:408:bb::31)
+ by CYXPR02MB10227.namprd02.prod.outlook.com (2603:10b6:930:df::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.28; Mon, 12 May
+ 2025 14:48:41 +0000
+Received: from BN8PR02MB5745.namprd02.prod.outlook.com
+ ([fe80::13bb:c756:a495:74f1]) by BN8PR02MB5745.namprd02.prod.outlook.com
+ ([fe80::13bb:c756:a495:74f1%5]) with mapi id 15.20.8722.024; Mon, 12 May 2025
+ 14:48:40 +0000
+Message-ID: <eedd1fa2-5856-41b8-8e6b-38bd5c98ce8f@nutanix.com>
+Date: Mon, 12 May 2025 15:48:34 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: How to mark internal properties
+To: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>, kvm@vger.kernel.org,
+ Gerd Hoffmann <kraxel@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Yi Liu <yi.l.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-riscv@nongnu.org,
+ Weiwei Li <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha <anisinha@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ qemu-arm@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>
+References: <20250508133550.81391-1-philmd@linaro.org>
+ <20250508133550.81391-13-philmd@linaro.org>
+ <23260c74-01ba-45bc-bf2f-b3e19c28ec8a@intel.com> <aB2vjuT07EuO6JSQ@intel.com>
+ <2f526570-7ab0-479c-967c-b3f95f9f19e3@redhat.com>
+ <CAFEAcA-kuHvxjuV_cMh-Px3C-k2Gd51jFqhwndO52vm++M_jAA@mail.gmail.com>
+ <aCG6MuDLrQpoTqpg@redhat.com> <87jz6mqeu5.fsf@pond.sub.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <87jz6mqeu5.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=gustavo.romero@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-ClientProxiedBy: AM8P190CA0012.EURP190.PROD.OUTLOOK.COM
+ (2603:10a6:20b:219::17) To BN8PR02MB5745.namprd02.prod.outlook.com
+ (2603:10b6:408:bb::31)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN8PR02MB5745:EE_|CYXPR02MB10227:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6f74e079-8a46-48f8-ee9b-08dd916415df
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|366016|10070799003|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?MkQxbWd3eWM1c2Vyemtkc3FIWHZQa1RJWm1iTG5EcEY2dWNyK2JxSWZXRERV?=
+ =?utf-8?B?SlFXdU0xUzdBTHpCaDFIMFRqajdRSW5HVUR0K3dnZ0FsNmpWV3lza1NHRzdZ?=
+ =?utf-8?B?MDRTZlZna2lSYTR6OHh5a3JSNk1IWDBqMHZqS1dYV2wwbUZQbExxSEQvM3RC?=
+ =?utf-8?B?RWNqYjRQempkS3VmMGxxcUVZTFZjYVdiTUprSDZLZmpmVE5jSFpCWmtDVkU2?=
+ =?utf-8?B?OFA5NGl5cHB4SUN5TlNjWEtWSTI2NmI3cTNxREJVMXg1elVzVnJhRFQzNG9l?=
+ =?utf-8?B?UXRCOGdRQk8yNHl0dzQwZWJGWitCckhKQ3ZYZ0NMNDgrVStSVk5wUUFKS0Iv?=
+ =?utf-8?B?eE4yUXcwaDF2V29PbnZCYmdvUm5vbnQ1TEVLUXRWbjhBTzBrRjVMZEttNUov?=
+ =?utf-8?B?U1Jka2dweC9JY2JiaUlzd1pqalR5SERuZWFsWnMwMDc5UFFpelVlQlNSTzJz?=
+ =?utf-8?B?NFZpbkV3a1U1Z09PZGNtVTVGMmI2SGEwbnNPOHBudVFxb09IdHFiSHp0UzZM?=
+ =?utf-8?B?WE1jYWwxam5Hcm5kUHQweXdieTZZODhBZXVSaUovM0JXdlNtR0Fwc2ZrckJR?=
+ =?utf-8?B?V2JzdFZwWDhpb1QwaUdUbDYxbndvNmNySmVJd2g5WDFVUm5TSUNPZ0RFOEk4?=
+ =?utf-8?B?UDBnTHhDY21sZk56YWFCRXpFYnY3SEpPOWRoT25iclh1WTJQNHV5V2I3aFNv?=
+ =?utf-8?B?OWJsaTFxbmlMeHVFOUcyMy9WamxjRTZUUnpxR3Rjek9IZDFFa0lHUUdYNWtT?=
+ =?utf-8?B?Q2Fta3hLTVlMTGN3cWdZRjBKeWoxdGhjNmFwRWlveVhMVnA3WHVzZ1plK0tE?=
+ =?utf-8?B?ZVUrU0tpRXRFUVFpanJodDV2L0k4UGp4VXBpNUt5ZmRyMlBiVnRYdXlVck0v?=
+ =?utf-8?B?NFZSQnlhNTd3NnJ6Y2JRWGlnWk8vTjhSdGMzb3RFZUhMb2hOeVdNbGRjbENr?=
+ =?utf-8?B?NVd2NE94NFp1MCt2eXEzNC9GOEtmeHVHRVhpbGd2UG1DWTlxMmUvaG1yU3lN?=
+ =?utf-8?B?cllBNjU2U1lLclBrRVFZaDgxeFhxUHpMaWhZQW52M21XVE5wdVJmNlYxV1Br?=
+ =?utf-8?B?R1RxRzJpTXM2c2VadXF6MmZMVXU5UksxNFZjWDV3Z1FJNGI4a2hmNXJGVVJv?=
+ =?utf-8?B?Rno0RFlEZW5HS3ZoNkVLeWxaL21sRmFkQjZrMFFnWklZWEt5eWZSRXlobmFH?=
+ =?utf-8?B?TXdCR3E2bTB1SUFaWkZaOHFQbCt2eStjd3pjOG5sSWxjRHd1RmZmNkJoWlFN?=
+ =?utf-8?B?SERReTdVLy90WGhZRjZDQ3pEZGhzeUpKMFZ6WkZFZFZRMDRTUVROZDZsSUVq?=
+ =?utf-8?B?WnVxTGdHbmVLWVZlYzZxcU5NUm15dXB3VHl4NFhzaXFtMlUzdlpHUVRCQWhC?=
+ =?utf-8?B?MHpTa2doTWRlZDEzNmh0UDhMVC84U29PM25kOTRuT0NuR1ViWDZqSmRDd3Fv?=
+ =?utf-8?B?cVB5eWsrMGcya2o4aFpZOUcrb1l3Q1BRNEZnbG5hRjJkbGFXVG8xVWVNQUpM?=
+ =?utf-8?B?S0NQNHYxTndiSU9iWDAyNEt2Tk9USTNQQ0VNcW9VTjdybkM2Ky8xU0ZFd1Vv?=
+ =?utf-8?B?bG5EREpyV0FOZERjRTJxL3hhcTNlSUVqT3pxTndKd1ZvbDUxNUo5YVZYMm82?=
+ =?utf-8?B?WFJ3N0VycTJXQ3VVMUdncUhLUUpWR0M4aGZMSC9KTDRVNmgvN2hFRkI1UmFZ?=
+ =?utf-8?B?MDJRZ1R4bDZPYlRrNkJxb2E0NmxLSEZQVXdCSXAxR3Uxa091cldqSnRvM3JS?=
+ =?utf-8?B?cjFkbUxUQ1pDZ1RjUXhQQWl5MXdPYzZyb09uWmFxN005elFudUh0VWE5VEFp?=
+ =?utf-8?B?c0VndnJZVktOOFV6SFhCWmhsNWdiRFVUTEQzcEcwNW0vNGZYWDYzaXhSenI5?=
+ =?utf-8?B?aW00TXJpa1ZEdUh4YzRmTzdna3VUVVl0aEN6WVRib0laVUJlNm1OZzBEVDB2?=
+ =?utf-8?Q?75xy1Sn+dko=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BN8PR02MB5745.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(366016)(10070799003)(1800799024); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OUNJWUVEUk1TUWgxWUUrUE9iSGQyd3I4WmJLQXdXQ2w3Rm9zWTgzT2dhNDNp?=
+ =?utf-8?B?UUNOL1I1QVlEZndKd21aVGphSkpoVnFTRElyOGE0aVJaSmwwNnUyM2YyRnVp?=
+ =?utf-8?B?WVpKWUJQTmhYcE9YbHVhSzdWeWt0dUUzL212NlR2dXJZR0JYM01DU1k2dnA5?=
+ =?utf-8?B?b2hSaklQKzRLWHNPMDk1Q2lWc1pOR2RUeXQxdXpFaTFhMEZDUTF1OEJPTDBQ?=
+ =?utf-8?B?Z1J2K28xT1VWOHpOaVkzakVoTUttVVJTVHpNdTVGSEJ6SzlwV3J3bmFaZzZU?=
+ =?utf-8?B?L1E0cGZ3WmVEL25hUVRuTWZVYVdBejdWUTk3cWtSZjJqK0E5TFM5cjVXMHkx?=
+ =?utf-8?B?Z3hPUWcrRjNTc3loS3pONWpoUFZoYWxCaW13VGQ0MDlTOEd0elhYNjNhZW1v?=
+ =?utf-8?B?V21vOVJ2TVVtNWtPRlQzZzNUbGkrczh2aXh2a2ZUZ0p4d2hqdFZvamtFRmdD?=
+ =?utf-8?B?UWNsR1hXYWFKQmlmOU1RbzZRUjlRWjdWWnJTZk4zdXFDZzMvS2ZNUHVOR2I4?=
+ =?utf-8?B?c0YraHl5aGVGYWlQZlBVYkdSZkgxMlJ4Z2xUR0RTQkVlNC9iV2hHenoxS0pt?=
+ =?utf-8?B?bUJtODRuTEJxWCtGaE5kdlBhRjZBZXczY2tqQnV1NDl3REU5RHV2WUpMM2Vn?=
+ =?utf-8?B?OTJ0Qm44dmlKOXU5UlFKQ2VROVJocTEzL0QyOURlVUlqSVFxdnRFN3BUNi85?=
+ =?utf-8?B?VUdmWGh5N0JWR3lkQk1UMU4rbGl1Q1VweXRFTytwOWRUbVh0M2J6VElWQlA0?=
+ =?utf-8?B?QTBnNXNreitoekNEa29UdEdkVWxzS0pjOVVHdjZUaDQycURZZEs5cFN0ZHRa?=
+ =?utf-8?B?R1FvT2tnNkNsNEJ6eFpjVlZsS0RYdzR1UDFjbXZoNklmMk11cElucDIxc1pB?=
+ =?utf-8?B?RFhycngydVBtaFFIRGpCemdnN0JPSnBySzZOaWNYdlQyem50TGUvVk9TL1JT?=
+ =?utf-8?B?MnZ2bzNDZUdqT0VUcHM0cm1yUDFFR3Q1NlJXY2JLdm0xRHU5Z2pEZVY3KzZP?=
+ =?utf-8?B?ci8wWVlaUStBbFBScFl0VEsrcHZlaGZURkhHTUR4MUxRaTFkWjZld2MydjJM?=
+ =?utf-8?B?bzRJWW1NcGNXSVlhWitXUmtBZjRiKzYxWm1qYjNwY1JJRU83dmc1ZHJrYUJ6?=
+ =?utf-8?B?REM2dlFVNjMvMExuYVRTQWxUTmdoN0UrQ0FVUzNBR0JZV0NKb0tpREwzeDlT?=
+ =?utf-8?B?emg4OWN1QUZlZi9BcUVhMkp4V3ZJZjV2cnlLUTFYZGsyend1MDRNT1l6c1pt?=
+ =?utf-8?B?Zzh3bTkzcDJoVUFxcUc4VzFpaGZRdGVUa29ncTV1dVZQYldYS2lYMGhxTFBs?=
+ =?utf-8?B?U2NlamFRcDNCaDhDcEJIckFOeTJJVDNtaUpndWVZWGJLcGZDN0NtQXM0WkVY?=
+ =?utf-8?B?T2M2ZWZSa2VMODdmUVByaGRTck1LUWZTUkFmemN2RzFpbGNaQTBYWVZoNzFq?=
+ =?utf-8?B?Z1A0SXN2Z1Mzdk1hMHhrUmU4VldENXpaMGtFUm9MVHk3akoxMVdwUkY2cGRY?=
+ =?utf-8?B?VklLL2ZNZTh1dXpPdlQwK2R3K1N0T2NIUmdPNDdMTnhqQVVkR3hOSURuT3Rq?=
+ =?utf-8?B?eVdDVHFoZ0ltby9oc2VLN1Q4MS9FYlVMdGR4MXdYeFNVS3hGTVFKU0ZQVkNq?=
+ =?utf-8?B?ZlNKWGh6QmlIL1RWeStQN3hLTmVsVURVWURYVE5ERkRiRWxvY1ZUOG0vVmtQ?=
+ =?utf-8?B?MGYwcjE3RHJCNkRyVnRnakRvc2MrK0dzK3BxN1BKMTFBOXpDbDBMR1oyc2sy?=
+ =?utf-8?B?UzVtOERjUXNIcExOaXk0a05jZGdXSjc0WTVkd3FtOU5iSllNdjV4b0lRYXNZ?=
+ =?utf-8?B?bzFzZGIzOTBiOFNHVnQxVFhkY3ozdzFHc1FsNGRwMERDRHd6OE5aRFRCWHNw?=
+ =?utf-8?B?R3JHY3YyRTZCK09ZWHBYdVdlQjVKbDFLVmlKTnRlbzhPOSt0RGpTTmRSd25u?=
+ =?utf-8?B?Z3Vud1ZXUUR4ZkVjck51Sm8yTHNiakk5UWdYKzA1V1UxVWFKYjk3UnZMQzQ2?=
+ =?utf-8?B?S3V5aHpsN1FtV0hXLzdzY0twRVcwSmlIUnlCbGhCZVZDRXFucFdxZkNPZlVG?=
+ =?utf-8?B?Sk8yTXhzNEk4VmN0V0pOMW9sMndFQy90cDUxcjh1blZMQm93bXR4bDRYbGpw?=
+ =?utf-8?B?Z01KOEdOdE5iTVMrQVJIWDJzMkhQVThqMkVZVjlCMTNIQkZXVlZGS3gyU3Nj?=
+ =?utf-8?B?UzZDaml1amM0Y0V6bU9helJUV2RRQ2xoS1F0YWZuWjlOcGRJREl3UTl2bnFP?=
+ =?utf-8?B?TmozQU9mWmRYRWVvaDFoMEJyTXNnPT0=?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6f74e079-8a46-48f8-ee9b-08dd916415df
+X-MS-Exchange-CrossTenant-AuthSource: BN8PR02MB5745.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2025 14:48:40.8225 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: KeN/M993+2KwsIasaepmCneaslUSgK6nebJx+hzN0KlONGDSyjP8qmDlAwtRznEm+J+OHFaBO3ZnTs/yqnZFe5hIkiRB/1wUZ8ZaIxJboao=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYXPR02MB10227
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDE1NCBTYWx0ZWRfX4d6cbuHJPSyA
+ 5OwgYwYns8yjf2qG9TNNVQsp8F2XO/quZjmOrdWeCRaMx8sEemP0ap/WPWSOUELnpMTggnuBkqH
+ W5J65WxjJ7im2KvKOlwJeP7neghMQKqnNQx87XBpEk0YOATdd9uBfD6GDIr5U1AwG/uD0wP8W/G
+ ZkvN4WCRhQJC35Vo7xy8VaVbVp2v3+PQWn+VIgYedQuO0Tdyh4gXcqpRJQLRRW/iBG0HYjGjPOW
+ 4n8Cl3pxqfLtamNZaAbJhuhlDkS6LctSGggXDJgvvP/kbfWfTylS5CMSBWnE5W1E+8meK85Hooc
+ NgER/YwWOSFNkz5opbaLs9dQ0sBireJTnMH8q+r6ZS7yzd3XiHPHL3QPoVT8nBFt2VJLZk6pHRD
+ TjtYFTTaO4Bfaav9FmhAqG73gaXs/z8phkzlewJ0hC7OSiBAHAA3lU2a6KtW8CRUnnLvQFfF
+X-Proofpoint-ORIG-GUID: GHZzg7vjrpMi0v00RAEiuFEQ3dpXhKYZ
+X-Proofpoint-GUID: GHZzg7vjrpMi0v00RAEiuFEQ3dpXhKYZ
+X-Authority-Analysis: v=2.4 cv=B6K50PtM c=1 sm=1 tr=0 ts=68220a4b cx=c_pps
+ a=kylQlKNaLH8A8Uw3zR316Q==:117 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=dt9VzEwgFbYA:10 a=0kUYKlekyDsA:10 a=20KFwNOVAAAA:8 a=WfgW5GyQuDqSUKx2Bk0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-12_05,2025-05-09_01,2025-02-21_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,127 +240,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
-hot-unplug on arm64.
+On 12/05/2025 11:54, Markus Armbruster wrote:
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
----
- MAINTAINERS                                  |  5 ++
- tests/functional/meson.build                 |  1 +
- tests/functional/test_aarch64_hotplug_pci.py | 74 ++++++++++++++++++++
- 3 files changed, 80 insertions(+)
- create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+>> On Mon, May 12, 2025 at 09:46:30AM +0100, Peter Maydell wrote:
+>>> On Fri, 9 May 2025 at 11:04, Thomas Huth <thuth@redhat.com> wrote:
+>>>> Thanks for your clarifications, Zhao! But I think this shows again the
+>>>> problem that we have hit a couple of times in the past already: Properties
+>>>> are currently used for both, config knobs for the users and internal
+>>>> switches for configuration of the machine. We lack a proper way to say "this
+>>>> property is usable for the user" and "this property is meant for internal
+>>>> configuration only".
+>>>>
+>>>> I wonder whether we could maybe come up with a naming scheme to better
+>>>> distinguish the two sets, e.g. by using a prefix similar to the "x-" prefix
+>>>> for experimental properties? We could e.g. say that all properties starting
+>>>> with a "q-" are meant for QEMU-internal configuration only or something
+>>>> similar (and maybe even hide those from the default help output when running
+>>>> "-device xyz,help" ?)? Anybody any opinions or better ideas on this?
+>>>
+>>> I think a q-prefix is potentially a bit clunky unless we also have
+>>> infrastructure to say eg DEFINE_INTERNAL_PROP_BOOL("foo", ...)
+>>> and have it auto-add the prefix, and to have the C APIs for
+>>> setting properties search for both "foo" and "q-foo" so you
+>>> don't have to write qdev_prop_set_bit(dev, "q-foo", ...).
+> 
+> If we make intent explicit with DEFINE_INTERNAL_PROP_FOO(), is repeating
+> intent in the name useful?
+> 
+>> I think it is also not obvious enough that a 'q-' prefix means private.
+> 
+> Concur.
+> 
+>> Perhaps borrow from the C world and declare that a leading underscore
+>> indicates a private property. People are more likely to understand and
+>> remember that, than 'q-'.
+> 
+> This is fine for device properties now.  It's not fine for properties of
+> user-creatable objects, because these are defined in QAPI, and QAPI
+> prohibits names starting with a single underscore.  I append relevant
+> parts of docs/devel/qapi-code-gen.rst for your convenience.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 23174b4ca7..9ebb768214 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2065,6 +2065,11 @@ S: Supported
- F: include/hw/pci/pcie_doe.h
- F: hw/pci/pcie_doe.c
- 
-+ARM PCI Hotplug
-+M: Gustavo Romero <gustavo.romero@linaro.org>
-+S: Supported
-+F: tests/functional/test_aarch64_hotplug_pci.py
-+
- ACPI/SMBIOS
- M: Michael S. Tsirkin <mst@redhat.com>
- M: Igor Mammedov <imammedo@redhat.com>
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 52b4706cfe..2d68840fa2 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -83,6 +83,7 @@ tests_aarch64_system_quick = [
- tests_aarch64_system_thorough = [
-   'aarch64_aspeed_ast2700',
-   'aarch64_aspeed_ast2700fc',
-+  'aarch64_hotplug_pci',
-   'aarch64_imx8mp_evk',
-   'aarch64_raspi3',
-   'aarch64_raspi4',
-diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functional/test_aarch64_hotplug_pci.py
-new file mode 100755
-index 0000000000..fa1bb62c8f
---- /dev/null
-+++ b/tests/functional/test_aarch64_hotplug_pci.py
-@@ -0,0 +1,74 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# The test hotplugs a PCI device and checks it on a Linux guest.
-+#
-+# Copyright (c) 2025 Linaro Ltd.
-+#
-+# Author:
-+#  Gustavo Romero <gustavo.romero@linaro.org>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
-+from qemu_test import BUILD_DIR
-+
-+class HotplugPCI(LinuxKernelTest):
-+
-+    ASSET_KERNEL = Asset(
-+        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
-+         'current/images/netboot/debian-installer/arm64/linux'),
-+        '3821d4db56d42c6a4eac62f31846e35465940afd87746b4cfcdf5c9eca3117b2')
-+
-+    ASSET_INITRD = Asset(
-+        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
-+         'current/images/netboot/debian-installer/arm64/initrd.gz'),
-+        '2583ec22b45265ad69e82f198674f53d4cd85be124fe012eedc2fd91156bc4b4')
-+
-+    def test_hotplug_pci(self):
-+
-+        self.set_machine('virt')
-+        self.vm.add_args('-m', '512M')
-+        self.vm.add_args('-cpu', 'cortex-a57')
-+        self.vm.add_args('-append',
-+                         'console=ttyAMA0,115200 init=/bin/sh')
-+        self.vm.add_args('-device',
-+                         'pcie-root-port,bus=pcie.0,chassis=1,slot=1,id=pcie.1')
-+        self.vm.add_args('-bios', self.build_file('pc-bios',
-+                                                  'edk2-aarch64-code.fd'))
-+
-+        # BusyBox prompt
-+        prompt = "~ #"
-+        self.launch_kernel(self.ASSET_KERNEL.fetch(),
-+                           self.ASSET_INITRD.fetch(),
-+                           wait_for=prompt)
-+
-+        # Check for initial state: 2 network adapters, lo and enp0s1.
-+        exec_command_and_wait_for_pattern(self,
-+                                          'ls -l /sys/class/net | wc -l',
-+                                          '2')
-+
-+        # Hotplug one network adapter to the root port, i.e. pcie.1 bus.
-+        self.vm.cmd('device_add',
-+                    driver='virtio-net-pci',
-+                    bus='pcie.1',
-+                    addr=0,
-+                    id='na')
-+        # Wait for the kernel to recognize the new device.
-+        self.wait_for_console_pattern('virtio-pci')
-+        self.wait_for_console_pattern('virtio_net')
-+
-+        # Check if there is a new network adapter.
-+        exec_command_and_wait_for_pattern(self,
-+                                          'ls -l /sys/class/net | wc -l',
-+                                          '3')
-+
-+        self.vm.cmd('device_del', id='na')
-+        exec_command_and_wait_for_pattern(self,
-+                                          'ls -l /sys/class/net | wc -l',
-+                                          '2')
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
--- 
-2.43.0
+On a related note this also brings us back to the discussion as to the 
+relationship between qdev and QOM: at one point I was under the 
+impression that qdev properties were simply QOM properties that were 
+exposed externally, i.e on the commmand line for use with -device.
+
+Can you provide an update on what the current thinking is in this area, 
+in particular re: scoping of qdev vs QOM properties?
+
+
+ATB,
+
+Mark.
 
 
