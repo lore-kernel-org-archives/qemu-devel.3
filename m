@@ -4,89 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31FADC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 10:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A4F8C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 10:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEQf2-0006Pz-40; Mon, 12 May 2025 06:45:28 -0400
+	id 1uEQo2-0002jd-Gc; Mon, 12 May 2025 06:54:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uEQex-0006PE-9M
- for qemu-devel@nongnu.org; Mon, 12 May 2025 06:45:23 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uEQeu-0007Sg-5A
- for qemu-devel@nongnu.org; Mon, 12 May 2025 06:45:22 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-70b75ba2fb5so145447b3.3
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 03:45:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747046716; x=1747651516; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8ebroI3w1zYhH1qqjQsvXGvrCTExjEBC/y/BTDojvTc=;
- b=bXEGUDs0aBKFnED5K0C4T7cXN+1FBfizZftUC9foqfaLxhXVU96cbUAwtfUXIjJIfL
- g2WrcRmeyLeHgg+SiVuc0Gj3HPJAXBm8C6nrOMYRHc7JCLdmr83oP/5M1hRAVvJ1aIUy
- MQS3jRvqQv5ccQ6YdxO5vFZALun7sREhM32jnviQw3tSrPbDnIz5Lag6Wb4o+ItBXLoR
- Qf9ekH/WdEUe4Bb42mei9BrTn6bqAXr6iPJMCkH9Ho+e+l4vLy0TQXqbRFCoAt26LCHL
- CHgBpPeWklU4c9pk+TNuxQJH+y6pre5kfiNw1kjjr4Ccal0R3HGLx8DD1NaMbI3G0UFQ
- vywg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747046716; x=1747651516;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8ebroI3w1zYhH1qqjQsvXGvrCTExjEBC/y/BTDojvTc=;
- b=ms7cmtDWwBAZtdl8AhDwRtdQHEUHj8ey6MeJm1nVoc/jkqUdpyAEi1JHbJTsXMdZsg
- x1GmMtVjru7h6rvDU7+c2noIwbrIcg4JJJja0B2+jXaO1Y/mgYJ+SVJRp5oaQprHcBuc
- Qeyk+ZZStvlfG87+49U7xBIDdMhlZ5KEI1fJ9gIGLauiMS2TXHCvxApaW+TWyLiELlCU
- 7pYJt0Jp6k7oXZmz+BmsOCWw/KmuPrQ6hlz/zrtiuSbNZNReJ175i3KRE70zkJeB6JwR
- yo6e5jWNUwsL2oasU8gE8uTFBN0dFlrRDwWUC4RqHfrk9iiop06g0bRUudQxnzVNt1mt
- B/9g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX0oaXZoPYeIHZ61/3uI7Ig7Tib7LBRWDgvkg5GHRurBPUXOJ9SqrbvUr+pyv/vI2/B64YP6SCilfJv@nongnu.org
-X-Gm-Message-State: AOJu0YwuBGyJZhiziRjGV/fksucNSf8DS8lQ6oRrJW4YGfwUSC4WKDXl
- SZmlx0N5bxgn5Wv3c6TBc+c2wbqekSNVdYpXIOrbqaX0m4Eos8uy5gKk6KpohFJMPltuqLRKPz/
- RmeIMToCggcCwEolhUSwFkgEcyQKAAzn5YUSR1g==
-X-Gm-Gg: ASbGncu4jlZKZ6qj0XNfKZjQ3UOGAeUClVzzt3qf2M5vYwB7D5Wm3hRxtAu+EQeVIMX
- qaIH2WZAP+nPlh2xjoucBc3QHtrxlX6smXPbyPAPlMK0knKaane2Wkx9saSp0XJ/CKU7KiK5W4H
- 6W+iEetWaee9GQOhZdUbLA+I6iy2+BD1CSuN/x7Jv3OKgy
-X-Google-Smtp-Source: AGHT+IHI1npt/77n/KYpBczuKF4LNPFY42l+Z67FFudnuCWp8tIphO/R6Syu3GX9aBjQXH9Sdgt11t9hqiZzSpMl3l8=
-X-Received: by 2002:a05:690c:4886:b0:6f7:ae31:fdf with SMTP id
- 00721157ae682-70a3fa25325mr150802637b3.12.1747046716096; Mon, 12 May 2025
- 03:45:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uEQo0-0002iK-QP
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 06:54:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uEQnx-0008Fl-Cp
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 06:54:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747047279;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SrhwlyGHBUeZB9shLrDj8sqTvUNxSWhy6HB7k6LP93M=;
+ b=iCChHwCgNuvlCMaK+o4+zvzUysqvfT54c6npibsqHDje1BOTBNRkg+FmXC1dmvfL++R79J
+ C/dkjhOUFHRoy2bEOQoz9cLY/21dq9foVfogHa9BDc54BqiUJvJdfUcKIWI/oZk64WPHg8
+ qmpKHgzHxMOsqL2dD2mMQN/HBbdeLUM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-44B2jiPpPf6gVRkeWUfX9g-1; Mon,
+ 12 May 2025 06:54:36 -0400
+X-MC-Unique: 44B2jiPpPf6gVRkeWUfX9g-1
+X-Mimecast-MFC-AGG-ID: 44B2jiPpPf6gVRkeWUfX9g_1747047273
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4108E180045B; Mon, 12 May 2025 10:54:32 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.27])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1F165180049D; Mon, 12 May 2025 10:54:30 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 506DC21E66E3; Mon, 12 May 2025 12:54:27 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  Thomas Huth
+ <thuth@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,  Xiaoyao Li
+ <xiaoyao.li@intel.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel@nongnu.org,  Richard
+ Henderson <richard.henderson@linaro.org>,  kvm@vger.kernel.org,  Gerd
+ Hoffmann <kraxel@redhat.com>,  Laurent Vivier <lvivier@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,  Yi Liu <yi.l.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,  Daniel Henrique Barboza
+ <dbarboza@ventanamicro.com>,  Marcelo Tosatti <mtosatti@redhat.com>,
+ qemu-riscv@nongnu.org,  Weiwei Li <liwei1518@gmail.com>,  Amit Shah
+ <amit@kernel.org>,  Yanan Wang <wangyanan55@huawei.com>,  Helge Deller
+ <deller@gmx.de>,  Palmer Dabbelt <palmer@dabbelt.com>,  Ani Sinha
+ <anisinha@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  Fabiano
+ Rosas <farosas@suse.de>,  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ qemu-arm@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Huacai Chen <chenhuacai@kernel.org>,  Jason Wang <jasowang@redhat.com>
+Subject: Re: How to mark internal properties
+In-Reply-To: <aCG6MuDLrQpoTqpg@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Mon, 12 May 2025 10:06:58 +0100")
+References: <20250508133550.81391-1-philmd@linaro.org>
+ <20250508133550.81391-13-philmd@linaro.org>
+ <23260c74-01ba-45bc-bf2f-b3e19c28ec8a@intel.com>
+ <aB2vjuT07EuO6JSQ@intel.com>
+ <2f526570-7ab0-479c-967c-b3f95f9f19e3@redhat.com>
+ <CAFEAcA-kuHvxjuV_cMh-Px3C-k2Gd51jFqhwndO52vm++M_jAA@mail.gmail.com>
+ <aCG6MuDLrQpoTqpg@redhat.com>
+Date: Mon, 12 May 2025 12:54:26 +0200
+Message-ID: <87jz6mqeu5.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20250330205857.1615-1-shentey@gmail.com>
- <20250330205857.1615-3-shentey@gmail.com>
- <Z-pdzUBa4CrBourR@redhat.com> <318E2A13-A163-434B-B18A-8A260CD3BC27@gmail.com>
- <Z-07WTw4PHHKhfxU@redhat.com>
- <CAFEAcA-_eaPF16f5rBhPar_kHpW49JZ4fQNPGUtd3qbNs+ktJA@mail.gmail.com>
- <aBzmfKzxIfdtzdGI@redhat.com>
-In-Reply-To: <aBzmfKzxIfdtzdGI@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 May 2025 11:45:04 +0100
-X-Gm-Features: AX0GCFvox1OEHmdrqm8hzffF0ZKRZQ3ZzCye8NTwrcJwldOufUIAe47qxsl-Bn4
-Message-ID: <CAFEAcA-ukBLdZfJDQYV=BcYv2gFUqUt63pad9n6B4JSD1ZL2oQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] rust/hw/char/pl011/src/device: Implement logging
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.587,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,122 +113,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 8 May 2025 at 18:14, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
->
-> On Fri, May 02, 2025 at 05:48:02PM +0100, Peter Maydell wrote:
-> > On Wed, 2 Apr 2025 at 14:28, Daniel P. Berrang=C3=A9 <berrange@redhat.c=
-om> wrote:
-> > > On Wed, Apr 02, 2025 at 09:33:16AM +0000, Bernhard Beschow wrote:
-> > > > Am 31. M=C3=A4rz 2025 09:18:05 UTC schrieb "Daniel P. Berrang=C3=A9=
-" <berrange@redhat.com>:
-> > > > >General conceptual question .....  I've never understood what the =
-dividing
-> > > > >line is between use of 'qemu_log_mask' and trace points.
-> > > >
-> > > > I *think* it's the perspective: If you want to see any issues, rega=
-rdless
-> > > > of which device, use the -l option, i.e. qemu_log_mask(). If, howev=
-er,
-> > > > you want to see what a particular device does, use tracepoints.
-> > >
-> > > I guess I'd say that the latter ought to be capable of satisfying the
-> > > former use case too, given a suitable trace point selection. If it
-> > > can't, then perhaps that's telling us the way we select trace points
-> > > is insufficiently expressive ?
-> >
-> > Yeah; you can turn on and off a tracepoint, and you can select
-> > them by wildcard, but there's no categorization of them
-> > (into eg "this is basically the equivalent of a debug printf"
-> > vs "this is something that is a guest error you probably
-> > want to know about").
->
-> I wonder if there's any value in enhancing the trace support to
-> let us tag certain probes with some kind of "severity"/"level"
-> concept, such that when the 'log' trace backend is enabled we
-> can wire them through to the logging backend with useful
-> categorization ?
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-If we wanted to merge the two subsystems I think we'd need that;
-and also a "kind of log" tagging.
+> On Mon, May 12, 2025 at 09:46:30AM +0100, Peter Maydell wrote:
+>> On Fri, 9 May 2025 at 11:04, Thomas Huth <thuth@redhat.com> wrote:
+>> > Thanks for your clarifications, Zhao! But I think this shows again the
+>> > problem that we have hit a couple of times in the past already: Proper=
+ties
+>> > are currently used for both, config knobs for the users and internal
+>> > switches for configuration of the machine. We lack a proper way to say=
+ "this
+>> > property is usable for the user" and "this property is meant for inter=
+nal
+>> > configuration only".
+>> >
+>> > I wonder whether we could maybe come up with a naming scheme to better
+>> > distinguish the two sets, e.g. by using a prefix similar to the "x-" p=
+refix
+>> > for experimental properties? We could e.g. say that all properties sta=
+rting
+>> > with a "q-" are meant for QEMU-internal configuration only or something
+>> > similar (and maybe even hide those from the default help output when r=
+unning
+>> > "-device xyz,help" ?)? Anybody any opinions or better ideas on this?
+>>=20
+>> I think a q-prefix is potentially a bit clunky unless we also have
+>> infrastructure to say eg DEFINE_INTERNAL_PROP_BOOL("foo", ...)
+>> and have it auto-add the prefix, and to have the C APIs for
+>> setting properties search for both "foo" and "q-foo" so you
+>> don't have to write qdev_prop_set_bit(dev, "q-foo", ...).
 
-> >                        There's also no way to say "turn on
-> > this logging with one switch, and it will print multiple lines
-> > or more than one thing" (at least not in the spirit of what
-> > the tracepoint API expects; you could have a trace_in_asm
-> > tracepoint that took a "%s" and output whatever you liked as
-> > the string, of course). And debug-logging is more documented:
-> > '-d help' shows what you can turn on and off and has at least
-> > a brief description of what it is you're getting.
->
-> IMHO the documentation benefit of '-d help' is somewhat
-> inconsistent.
->
-> I tried a crude grep for different usage of logging
->
->       2 CPU_LOG_EXEC
->     122 CPU_LOG_INT
->     103 CPU_LOG_MMU
->       6 CPU_LOG_PAGE
->       1 CPU_LOG_PLUGIN
->       8 CPU_LOG_RESET
->      10 CPU_LOG_TB_IN_ASM
->       4 CPU_LOG_TB_OP
->    1715 LOG_GUEST_ERROR
->       4 LOG_INVALID_MEM
->     753 LOG_UNIMP
->
-> So the overwhealming majority of usage is accumulated under
-> two "catch all" categories - "guest error" and "unimplemented"
-> with no ability to filter - its all or nothing.
+If we make intent explicit with DEFINE_INTERNAL_PROP_FOO(), is repeating
+intent in the name useful?
 
-True, but both those categories are for log messages that
-are "in normal operation never happens". So it's not like
-the message you're interested in is buried under a ton of
-irrelevant logging.
+> I think it is also not obvious enough that a 'q-' prefix means private.
 
-> We ought to be able to do a better job at documentation the
-> trace events than we do today, given we have them in an
-> easily extractable format and can associate them with
-> particular files easily.
->
-> The 'qemu-trace-stap list' command can list all available
-> probes in a binary, but it only works for the systemtap
-> backend. We ought to do better with other backends.
+Concur.
 
-The '-d' backend also lets you list them all with
-  qemu-system-arm -d trace:help
+> Perhaps borrow from the C world and declare that a leading underscore
+> indicates a private property. People are more likely to understand and
+> remember that, than 'q-'.
 
-> >                                                   For tracepoints
-> > you're hoping that the name is vaguely descriptive and also
-> > hoping that the device/subsystem/etc named its tracepoints in
-> > a way that lets you usefully wildcard them.
->
-> Yep, we're somewhat inconsistent in our prefix naming
-> conventions. It would be nice to try to enforce some
-> greater standard there, but its hard to do programmatically.
->
-> > Also, the qemu_log() logging assumes "we're sending text to
-> > a logfile, we can format e.g. register dumps and disassembly
-> > as arbitrary laid out plaintext". That's fine if your tracepoint
-> > backend is also "we just send the text to a logfile/etc", but
-> > I don't know if all of the tracepoint backends would be so happy
-> > with that.
->
-> I think emitting multi-line blocks of text probably ought to be
-> considered out of scope for tracing. The 'log' backend is the
-> only one where that would be a reasonable semantic match.
+This is fine for device properties now.  It's not fine for properties of
+user-creatable objects, because these are defined in QAPI, and QAPI
+prohibits names starting with a single underscore.  I append relevant
+parts of docs/devel/qapi-code-gen.rst for your convenience.
 
-But it's one of the key things -d does: "-d in_asm" for listing
-the input guest instructions is a super common use case, for instance.
-If we want to merge qemu_log with tracepoint logs then we need
-to have some answer to this.
+Why does QAPI prohibit leading underscores?  Chiefly because such names
+are reserved identifiers in C.  Instead of complicating the mapping from
+QAPI name to C identifier, we restrict QAPI names and call it a day.
 
-(Of course, we could leave the two logging/tracing subsystems
-the way they are now: there's not really a super strong
-motivation for refactoring everything to be able to drop the
-qemu_log stuff.)
+The mapping between device property name and C identifiers is entirely
+manual.  When a property is backed by a member of the device state
+struct, naming the member exactly like the property makes sense.  Having
+to mentally strip / insert a leading underscore would hardly be
+terrible, just a bit of friction.  I'd prefer not to.
 
-thanks
--- PMM
+
+
+
+Naming rules and reserved names
+-------------------------------
+
+All names must begin with a letter, and contain only ASCII letters,
+digits, hyphen, and underscore.  There are two exceptions: enum values
+may start with a digit, and names that are downstream extensions (see
+section `Downstream extensions`_) start with underscore.
+
+Names beginning with ``q_`` are reserved for the generator, which uses
+them for munging QMP names that resemble C keywords or other
+problematic strings.  For example, a member named ``default`` in qapi
+becomes ``q_default`` in the generated C code.
+
+[...]
+
+Downstream extensions
+---------------------
+
+QAPI schema names that are externally visible, say in the Client JSON
+Protocol, need to be managed with care.  Names starting with a
+downstream prefix of the form __RFQDN_ are reserved for the downstream
+who controls the valid, reverse fully qualified domain name RFQDN.
+RFQDN may only contain ASCII letters, digits, hyphen and period.
+
+Example: Red Hat, Inc. controls redhat.com, and may therefore add a
+downstream command ``__com.redhat_drive-mirror``.
+
 
