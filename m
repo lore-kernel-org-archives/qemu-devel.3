@@ -4,62 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF94C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B139BC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:33:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEV6z-00016h-To; Mon, 12 May 2025 11:30:38 -0400
+	id 1uEV95-0003Zw-O9; Mon, 12 May 2025 11:32:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uEV6H-0000fb-NZ; Mon, 12 May 2025 11:29:54 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uEV91-0003Wq-6D
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:32:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uEV6D-00066D-T2; Mon, 12 May 2025 11:29:53 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c23:38c4:0:640:3b6a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 7E98160C84;
- Mon, 12 May 2025 18:29:43 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b504::1:8])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id fTHAn00FVCg0-6Ar38gLr; Mon, 12 May 2025 18:29:42 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1747063782;
- bh=chf03Ox//tfyKleijrldla86O6TVL2SLCnx4AMvAXEM=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=WUnAWUIJP9WLjD4pOHmx/sJ5W0+NC9As8pc0ywTm4tnem1eC9WBIvL5jmMdE2sola
- xDJ4Gs1sBwiahx9tRsUMrmc9qvtHIezPOe8edPM5VetMUwTkqxG9UAps7YL9HhRGE3
- 92CJFAceqIt85Mw3UhYwKQkiVDeUEkMcwXAUwOP8=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, vsementsov@yandex-team.ru, stefanha@gmail.com,
- Raman Dzehtsiar <raman.dzehtsiar@gmail.com>,
- Raman Dzehtsiar <Raman.Dzehtsiar@gmail.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL v3 8/8] blockdev-backup: Add error handling option for
- copy-before-write jobs
-Date: Mon, 12 May 2025 18:29:40 +0300
-Message-ID: <20250512152940.1294079-2-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250512152940.1294079-1-vsementsov@yandex-team.ru>
-References: <20250512152940.1294079-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uEV8z-0006cE-Ds
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:32:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747063960;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TV73wcNQFlOn9H+VGZko9zPxOzSyXvcFGEr4s16QJzM=;
+ b=f+Q07vVxVQbJF9CwKJU9g+27dl6Jm+i5HvceTYYEEYJupspJoThtZXMQpbrlJ0I2F+036A
+ J3l7EuGPIu5SYkwyPEsSCN+jUjHNe8wWvgCYtBDUIoj/Un6+qY9TAWBoxR+W83Lhg4axhC
+ RG1BNuhDnuNIesqtBvL6XeSMatpJjM0=
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
+ [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-511-XV6fso3TNyqnK3os5hdLxg-1; Mon, 12 May 2025 11:32:36 -0400
+X-MC-Unique: XV6fso3TNyqnK3os5hdLxg-1
+X-Mimecast-MFC-AGG-ID: XV6fso3TNyqnK3os5hdLxg_1747063955
+Received: by mail-oa1-f71.google.com with SMTP id
+ 586e51a60fabf-2c72e6e51ceso1447923fac.3
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 08:32:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747063953; x=1747668753;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TV73wcNQFlOn9H+VGZko9zPxOzSyXvcFGEr4s16QJzM=;
+ b=wIUY77+1RdiSn9Hj2fDnlC8pEYW8cz8TfKZYi38jw1ZQXBCCfRuxCwGzUo1KJaA03n
+ ebtnv4VcdnNQpnrMxc1XgsDaB2U+DhefI+EuTeuri5uA+RYQ83I1WQQvDUxhaIq5yn2F
+ 8j88HE6W/CqO1HClfoxxvbrpyNlpQ8coK6KWLl0BTILsJLBs0Fq28pyzlxAoSMOAb9N4
+ +kpBwJYYgthxKi609nxZA5K76h8NcPuB44+QDV2XNxrHOqdYspRLythh7Ho7KLvDDS3e
+ FK9O5cEIk++oWZ6KwYn7lS59QCJKqQFgPZTx6hXuzQOHCpcmbqsc5z3knyHZPEn+BX29
+ E5pg==
+X-Gm-Message-State: AOJu0YwS/J8KfgasZYEivpNVBehiM6Qd92WOiTgtKFIkIvhvTstkNDD9
+ pmLXi8Rc6m/nX9mlTl0NX6zxTo6PXiOJecgUoRVB73nXjqLmrgdbJ1CIR+7tykfPiOe94fm2OA9
+ DpJRV4XcOQGvU1rWHKHRxRyQYPKM5T90Yc5zoBgIFXio9NRAScmswwjRU7jrHCHbaFlXZMPhr8I
+ LVwV+w7gmeQDMEf7JrrVgkf+Yczh+FTZOUq7/3gw==
+X-Gm-Gg: ASbGncu5Vtrp9Pxapg+Is7bD8d3jrXmb0TduyGffuZKY6nTz8trmqayr8H5wmekn2FG
+ wSuqiva6dsJepWjpk6SrkmZVxGyiJaCga0TDuTc1EruMSI2dpB+MnoUlXzxa0yuVsYXsF
+X-Received: by 2002:a05:6870:b01f:b0:2c2:b9cc:afb8 with SMTP id
+ 586e51a60fabf-2dba420dca0mr6813476fac.7.1747063952494; 
+ Mon, 12 May 2025 08:32:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFUne/1srv24pUyqTUsq1t4n9Ymxk5oJ+OrDmlVNSdtiO/2Ad704sGNZSZ7QOmbpmrqjw4Nj7Pqnr03eyNL5Cg=
+X-Received: by 2002:a17:90b:4fd2:b0:30a:3e8e:492c with SMTP id
+ 98e67ed59e1d1-30c3d650661mr19906857a91.32.1747063941182; Mon, 12 May 2025
+ 08:32:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250330205857.1615-1-shentey@gmail.com>
+ <20250330205857.1615-2-shentey@gmail.com>
+ <340649cf-9348-458d-97e7-aee73c02217c@redhat.com>
+ <540905F9-7DF7-436F-905C-A7F225F5E156@gmail.com>
+ <CABC6E67-C4C7-481F-BB96-BF60957D7A84@gmail.com>
+In-Reply-To: <CABC6E67-C4C7-481F-BB96-BF60957D7A84@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 12 May 2025 17:32:08 +0200
+X-Gm-Features: AX0GCFtdPQrLMnjbXmXY9PO9w_MYLjuvu-yvzQ4zP88fiRLBQeslotB6kcCsMEU
+Message-ID: <CABgObfbD-yHee4TXKqQ2gw7N8dtuB1wKqPLD5jLKXtJ8hx2xSw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] rust/qemu-api: Add initial logging support based on C
+ API
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,312 +107,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Raman Dzehtsiar <raman.dzehtsiar@gmail.com>
+Hi, now that GSoC selection is over I'm back. Sorry for the delay;
+Tanish Desai will work mostly on tracing, so logging can remain yours.
 
-This patch extends the blockdev-backup QMP command to allow users to specify
-how to behave when IO errors occur during copy-before-write operations.
-Previously, the behavior was fixed and could not be controlled by the user.
+On Tue, Apr 8, 2025 at 10:59=E2=80=AFPM Bernhard Beschow <shentey@gmail.com=
+> wrote:
+> >Currently the #defines contain some holes for "private" mask bits. Turni=
+ng these into an
+> >enum without exposing all publicly, and changing the type of qemu_loglev=
+el for
+> >consistency, would result in undefined behavior. Or do you suggest to co=
+nvert just
+> >the public #defines into an enum to expose them to Rust, and keep the re=
+st of
+> >the C API including the type of qemu_loglevel as is?
 
-The new 'on-cbw-error' option can be set to one of two values:
-- 'break-guest-write': Forwards the IO error to the guest and triggers
-  the on-source-error policy. This preserves snapshot integrity at the
-  expense of guest IO operations.
-- 'break-snapshot': Allows the guest OS to continue running normally,
-  but invalidates the snapshot and aborts related jobs. This prioritizes
-  guest operation over backup consistency.
+Yes, only in Rust.
 
-This enhancement provides more flexibility for backup operations in different
-environments where requirements for guest availability versus backup
-consistency may vary.
+> >There are surely several tradeoffs and/or cleanups possible here, but th=
+at's way beyond for
+> >what I wanted to achieve -- which is closing a gap between C and Rust. M=
+y main goal is just
+> >to get my feet wet with Rust.
 
-The default behavior remains unchanged to maintain backward compatibility.
+I understand, however there is no point in defining an API and then changin=
+g it.
 
-Signed-off-by: Raman Dzehtsiar <Raman.Dzehtsiar@gmail.com>
-Message-ID: <20250414090025.828660-1-Raman.Dzehtsiar@gmail.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-[vsementsov: fix long lines]
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Tested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- block/backup.c                                |  3 +-
- block/copy-before-write.c                     |  2 +
- block/copy-before-write.h                     |  1 +
- block/replication.c                           |  4 +-
- blockdev.c                                    |  6 ++
- include/block/block_int-global-state.h        |  2 +
- qapi/block-core.json                          |  4 +
- tests/qemu-iotests/tests/copy-before-write    | 95 +++++++++++++++++++
- .../qemu-iotests/tests/copy-before-write.out  |  4 +-
- 9 files changed, 117 insertions(+), 4 deletions(-)
+So we need to answer the questions I wrote a few messages ago, namely:
 
-diff --git a/block/backup.c b/block/backup.c
-index 79652bf57b..0151e84395 100644
---- a/block/backup.c
-+++ b/block/backup.c
-@@ -361,6 +361,7 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
-                   BackupPerf *perf,
-                   BlockdevOnError on_source_error,
-                   BlockdevOnError on_target_error,
-+                  OnCbwError on_cbw_error,
-                   int creation_flags,
-                   BlockCompletionFunc *cb, void *opaque,
-                   JobTxn *txn, Error **errp)
-@@ -458,7 +459,7 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
-     }
- 
-     cbw = bdrv_cbw_append(bs, target, filter_node_name, discard_source,
--                          perf->min_cluster_size, &bcs, errp);
-+                          perf->min_cluster_size, &bcs, on_cbw_error, errp);
-     if (!cbw) {
-         goto error;
-     }
-diff --git a/block/copy-before-write.c b/block/copy-before-write.c
-index fd470f5f92..00af0b18ac 100644
---- a/block/copy-before-write.c
-+++ b/block/copy-before-write.c
-@@ -551,6 +551,7 @@ BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
-                                   bool discard_source,
-                                   uint64_t min_cluster_size,
-                                   BlockCopyState **bcs,
-+                                  OnCbwError on_cbw_error,
-                                   Error **errp)
- {
-     BDRVCopyBeforeWriteState *state;
-@@ -568,6 +569,7 @@ BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
-     }
-     qdict_put_str(opts, "file", bdrv_get_node_name(source));
-     qdict_put_str(opts, "target", bdrv_get_node_name(target));
-+    qdict_put_str(opts, "on-cbw-error", OnCbwError_str(on_cbw_error));
- 
-     if (min_cluster_size > INT64_MAX) {
-         error_setg(errp, "min-cluster-size too large: %" PRIu64 " > %" PRIi64,
-diff --git a/block/copy-before-write.h b/block/copy-before-write.h
-index 2a5d4ba693..eb93364e85 100644
---- a/block/copy-before-write.h
-+++ b/block/copy-before-write.h
-@@ -42,6 +42,7 @@ BlockDriverState *bdrv_cbw_append(BlockDriverState *source,
-                                   bool discard_source,
-                                   uint64_t min_cluster_size,
-                                   BlockCopyState **bcs,
-+                                  OnCbwError on_cbw_error,
-                                   Error **errp);
- void bdrv_cbw_drop(BlockDriverState *bs);
- 
-diff --git a/block/replication.c b/block/replication.c
-index d6625c51fe..07f274de9e 100644
---- a/block/replication.c
-+++ b/block/replication.c
-@@ -583,7 +583,9 @@ static void replication_start(ReplicationState *rs, ReplicationMode mode,
-                                 0, MIRROR_SYNC_MODE_NONE, NULL, 0, false, false,
-                                 NULL, &perf,
-                                 BLOCKDEV_ON_ERROR_REPORT,
--                                BLOCKDEV_ON_ERROR_REPORT, JOB_INTERNAL,
-+                                BLOCKDEV_ON_ERROR_REPORT,
-+                                ON_CBW_ERROR_BREAK_GUEST_WRITE,
-+                                JOB_INTERNAL,
-                                 backup_job_completed, bs, NULL, &local_err);
-         if (local_err) {
-             error_propagate(errp, local_err);
-diff --git a/blockdev.c b/blockdev.c
-index 1d1f27cfff..818ec42511 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -2641,6 +2641,7 @@ static BlockJob *do_backup_common(BackupCommon *backup,
-     BdrvDirtyBitmap *bmap = NULL;
-     BackupPerf perf = { .max_workers = 64 };
-     int job_flags = JOB_DEFAULT;
-+    OnCbwError on_cbw_error = ON_CBW_ERROR_BREAK_GUEST_WRITE;
- 
-     if (!backup->has_speed) {
-         backup->speed = 0;
-@@ -2745,6 +2746,10 @@ static BlockJob *do_backup_common(BackupCommon *backup,
-         job_flags |= JOB_MANUAL_DISMISS;
-     }
- 
-+    if (backup->has_on_cbw_error) {
-+        on_cbw_error = backup->on_cbw_error;
-+    }
-+
-     job = backup_job_create(backup->job_id, bs, target_bs, backup->speed,
-                             backup->sync, bmap, backup->bitmap_mode,
-                             backup->compress, backup->discard_source,
-@@ -2752,6 +2757,7 @@ static BlockJob *do_backup_common(BackupCommon *backup,
-                             &perf,
-                             backup->on_source_error,
-                             backup->on_target_error,
-+                            on_cbw_error,
-                             job_flags, NULL, NULL, txn, errp);
-     return job;
- }
-diff --git a/include/block/block_int-global-state.h b/include/block/block_int-global-state.h
-index eb2d92a226..0d93783763 100644
---- a/include/block/block_int-global-state.h
-+++ b/include/block/block_int-global-state.h
-@@ -179,6 +179,7 @@ void mirror_start(const char *job_id, BlockDriverState *bs,
-  *        all ".has_*" fields are ignored.
-  * @on_source_error: The action to take upon error reading from the source.
-  * @on_target_error: The action to take upon error writing to the target.
-+ * @on_cbw_error: The action to take upon error in copy-before-write operations.
-  * @creation_flags: Flags that control the behavior of the Job lifetime.
-  *                  See @BlockJobCreateFlags
-  * @cb: Completion function for the job.
-@@ -198,6 +199,7 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
-                             BackupPerf *perf,
-                             BlockdevOnError on_source_error,
-                             BlockdevOnError on_target_error,
-+                            OnCbwError on_cbw_error,
-                             int creation_flags,
-                             BlockCompletionFunc *cb, void *opaque,
-                             JobTxn *txn, Error **errp);
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 22061227ca..91c70e24a7 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -1602,6 +1602,9 @@
- #     default 'report' (no limitations, since this applies to a
- #     different block device than @device).
- #
-+# @on-cbw-error: policy defining behavior on I/O errors in
-+#     copy-before-write jobs; defaults to break-guest-write.  (Since 10.1)
-+#
- # @auto-finalize: When false, this job will wait in a PENDING state
- #     after it has finished its work, waiting for @block-job-finalize
- #     before making any block graph changes.  When true, this job will
-@@ -1641,6 +1644,7 @@
-             '*compress': 'bool',
-             '*on-source-error': 'BlockdevOnError',
-             '*on-target-error': 'BlockdevOnError',
-+            '*on-cbw-error': 'OnCbwError',
-             '*auto-finalize': 'bool', '*auto-dismiss': 'bool',
-             '*filter-node-name': 'str',
-             '*discard-source': 'bool',
-diff --git a/tests/qemu-iotests/tests/copy-before-write b/tests/qemu-iotests/tests/copy-before-write
-index 498c558008..236cb8ac37 100755
---- a/tests/qemu-iotests/tests/copy-before-write
-+++ b/tests/qemu-iotests/tests/copy-before-write
-@@ -99,6 +99,68 @@ class TestCbwError(iotests.QMPTestCase):
-         log = iotests.filter_qemu_io(log)
-         return log
- 
-+    def do_cbw_error_via_blockdev_backup(self, on_cbw_error=None):
-+        self.vm.cmd('blockdev-add', {
-+            'node-name': 'source',
-+            'driver': iotests.imgfmt,
-+            'file': {
-+                'driver': 'file',
-+                'filename': source_img
-+            }
-+        })
-+
-+        self.vm.cmd('blockdev-add', {
-+            'node-name': 'target',
-+            'driver': iotests.imgfmt,
-+            'file': {
-+                'driver': 'blkdebug',
-+                'image': {
-+                    'driver': 'file',
-+                    'filename': temp_img
-+                },
-+                'inject-error': [
-+                    {
-+                        'event': 'write_aio',
-+                        'errno': 5,
-+                        'immediately': False,
-+                        'once': True
-+                    }
-+                ]
-+            }
-+        })
-+
-+        blockdev_backup_options = {
-+            'device': 'source',
-+            'target': 'target',
-+            'sync': 'none',
-+            'job-id': 'job-id',
-+            'filter-node-name': 'cbw'
-+        }
-+
-+        if on_cbw_error:
-+            blockdev_backup_options['on-cbw-error'] = on_cbw_error
-+
-+        self.vm.cmd('blockdev-backup', blockdev_backup_options)
-+
-+        self.vm.cmd('blockdev-add', {
-+            'node-name': 'access',
-+            'driver': 'snapshot-access',
-+            'file': 'cbw'
-+        })
-+
-+        result = self.vm.qmp('human-monitor-command',
-+                             command_line='qemu-io cbw "write 0 1M"')
-+        self.assert_qmp(result, 'return', '')
-+
-+        result = self.vm.qmp('human-monitor-command',
-+                             command_line='qemu-io access "read 0 1M"')
-+        self.assert_qmp(result, 'return', '')
-+
-+        self.vm.shutdown()
-+        log = self.vm.get_log()
-+        log = iotests.filter_qemu_io(log)
-+        return log
-+
-     def test_break_snapshot_on_cbw_error(self):
-         """break-snapshot behavior:
-         Guest write succeed, but further snapshot-read fails, as snapshot is
-@@ -123,6 +185,39 @@ read failed: Permission denied
- write failed: Input/output error
- read 1048576/1048576 bytes at offset 0
- 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+""")
-+
-+    def test_break_snapshot_policy_forwarding(self):
-+        """Ensure CBW filter accepts break-snapshot policy
-+        specified in blockdev-backup QMP command.
-+        """
-+        log = self.do_cbw_error_via_blockdev_backup('break-snapshot')
-+        self.assertEqual(log, """\
-+wrote 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read failed: Permission denied
-+""")
-+
-+    def test_break_guest_write_policy_forwarding(self):
-+        """Ensure CBW filter accepts break-guest-write policy
-+        specified in blockdev-backup QMP command.
-+        """
-+        log = self.do_cbw_error_via_blockdev_backup('break-guest-write')
-+        self.assertEqual(log, """\
-+write failed: Input/output error
-+read 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+""")
-+
-+    def test_default_on_cbw_error_policy_forwarding(self):
-+        """Ensure break-guest-write policy is used by default when
-+        on-cbw-error is not explicitly specified.
-+        """
-+        log = self.do_cbw_error_via_blockdev_backup()
-+        self.assertEqual(log, """\
-+write failed: Input/output error
-+read 1048576/1048576 bytes at offset 0
-+1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- """)
- 
-     def do_cbw_timeout(self, on_cbw_error):
-diff --git a/tests/qemu-iotests/tests/copy-before-write.out b/tests/qemu-iotests/tests/copy-before-write.out
-index 89968f35d7..2f7d3902f2 100644
---- a/tests/qemu-iotests/tests/copy-before-write.out
-+++ b/tests/qemu-iotests/tests/copy-before-write.out
-@@ -1,5 +1,5 @@
--....
-+.......
- ----------------------------------------------------------------------
--Ran 4 tests
-+Ran 7 tests
- 
- OK
--- 
-2.48.1
+- the mapping the LOG_* constants into Rust (e.g. whether to keep the
+uppercase SNAKE_CASE or switch to something like Log::GuestError).
+
+- whether to keep the "qemu" prefix for the API (personal opinion: no)
+
+I agree with not having macros such as log_guest_error! for now, or
+not wrapping functions like qemu_log_trylock/qemu_log_unlock that
+would be implemented as RAII (i.e. returning a "guard" object) in
+Rust.
+
+> >>Also, while this is good for now, later on we probably want to reimplem=
+ent logging at a lower level via the std::fmt::Write trait.  But that's jus=
+t for efficiency and your macro is indeed good enough to define what the AP=
+I would look like.
+> >
+> >Can we live with an easy solution then for now? As you suggest below, fu=
+rther abstractions like log_guest_error! can be built on top which further =
+insulates client code from implementation details such as the representatio=
+n of the mask bits.
+
+Yes, of course.
+
+Paolo
 
 
