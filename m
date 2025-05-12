@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23BEBC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 06:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D13C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 06:52:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEMvL-0007I9-Pz; Mon, 12 May 2025 02:46:03 -0400
+	id 1uEN1Q-0008HY-Tx; Mon, 12 May 2025 02:52:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1uEMvK-0007I0-Ny
- for qemu-devel@nongnu.org; Mon, 12 May 2025 02:46:02 -0400
-Received: from mail-dm6nam10on2062f.outbound.protection.outlook.com
- ([2a01:111:f403:2413::62f]
- helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ id 1uEN1O-0008HO-ST
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 02:52:18 -0400
+Received: from mail-bn1nam02on2062e.outbound.protection.outlook.com
+ ([2a01:111:f403:2407::62e]
+ helo=NAM02-BN1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1uEMvH-0003yt-V6
- for qemu-devel@nongnu.org; Mon, 12 May 2025 02:46:02 -0400
+ id 1uEN1M-0004UQ-O2
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 02:52:18 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CSUqEJ8WsTF/LtcznSPBQrL8UXFRpM+T7y3BEZg2EJQxZx77RWxHhXF5fEWA42uiGxWhCbIadSl8udQFPyOXFqsVmJ7J5pRgFyR80gnuoQrYoSQPP/AFCLSRgR7QQo8HqiJtDpTSY/Rd0/XbMBBwk5dJL8j0BEqDuTmcImxa7smvMo6OCweqJczsLWM68GgEBgrB/YA/WIefgGAdMtLMYDq7j9Oes4UY8fB+/37ruTW+au1c2tIeN4MPhLnBpSv4qdTHQeWbgrVcmER8cGqyFUrwRvpvVKuAoMK9iRJ6MuiehjBcPIlj/gL56UmwatQq09C9oBgnKdrMLWgtLcrjvA==
+ b=JRD5b5wOKpc9nZLZmq3cMewrPPI4uz+6rgk559Edaa/W7XA/nblal8GqPV3QQUq06dH7XtDiwZFGV8WXLqi4Zv96qd8LYR3t6W4rKzsc4f9En6c8mXJsn8vOsrch09Psl7r/INblSQYvJtvqUpVR13B3MbrJ+aLUwFl4HbHAEre6owfUVnWQMe/L6Cp0X3L+CJPv/lNukCLSTkbfiTf1/mG+HENP6V5hg/nTF/+GsukUBzGdGjWVMulZzei+/IFSi4+JVJijfbuid7y9TQcUiLidHakYC3qAMPZvUdt2s1ZrgNr7Qx6In2xsLvTG9St7AGAoFQoV9+mJetSscNEXKQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=h7W+zGOtD4BXPUyB4cxVxpCumcr6fstN/hdqLxJgxBk=;
- b=OM18QbOBEHfyObcJoa1xtyMOOGf7L3vAYVl5yCXJGV7PoYZ2SuRtieA5nJ0bqAUOdgkawCXfE0VPX6Nzb8lEiDwaokSkCErJSkxKbzEzsgPYoU93ghwmhgDHFV6YGCHB8isn8qv75aKmdCoPJhoTVnmg1vvRwD9wa8lS1GtQDafaodXB8eLxFzvz8jKWxX1KpImxGgIr5uOFhqVMqBsA648v6CQrhyFMhAanicc92PLW0HOW85oHXVkuOBDT2BIB5RVpBWyAaKfKSHsA08zFk55Gt2EXIFVZ4+dq8Jw4uwtljyNGkD01QNYEXrfNBUZ61aJ79GYqpnLE8SKGlaKbyA==
+ bh=CPtwxyc96tASJS00YKuvsqdfEoPlwgkyAoSNpKHUbIo=;
+ b=BUIgIJYK1IfIOdY6NKkkD84f6nO7OgY2gz+fhUsKIzgpEVuNqDPojDY7EQQskXnu8JQySOxaUKGOGfplzgUiWuugKc7URq1ISGpXsH6gU3meElHCj9d3k91L9fnVLdyQFT9mB+Co+I9V6zRlhzuxlEOPaA4M0nFqKJJeUIuxHOzCQePPtKVh4Q6+/4MRHp6LH4PQt2T9wlDqYER6gMO1QfEquVqRK8BRD+Kf9+0LGGf6HB+vcr9uXZkwnLsNKaHpEGUHHVVM9/ZDNBJRRhU4dq0rZdbm0/jvsZAUCr1bxkn4Jk3gfvYCpSiNUX/3GP/X5ftiMdrfQiqafxJ2kyYNEg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=h7W+zGOtD4BXPUyB4cxVxpCumcr6fstN/hdqLxJgxBk=;
- b=nQHf/0BR6LOuvliph7u3WbwSprLexbPw7vMaZCgtafHPGI/N9IrU7UJ6mQTUofB3mr3u4bwtO3E0wdEj1v6kHxt94Mth/luRwyRhT4Gjm95boTBNkKEeQylniIM9kqHryXVfvAx+3horw0rpy+qsrm7PxmTZb2/ElhTapSDWDh0=
-Received: from MN2PR11CA0021.namprd11.prod.outlook.com (2603:10b6:208:23b::26)
- by DM4PR12MB5723.namprd12.prod.outlook.com (2603:10b6:8:5e::9) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8722.29; Mon, 12 May 2025 06:45:54 +0000
-Received: from BN1PEPF00005FFD.namprd05.prod.outlook.com
- (2603:10b6:208:23b:cafe::4) by MN2PR11CA0021.outlook.office365.com
- (2603:10b6:208:23b::26) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8722.21 via Frontend Transport; Mon,
- 12 May 2025 06:45:54 +0000
+ bh=CPtwxyc96tASJS00YKuvsqdfEoPlwgkyAoSNpKHUbIo=;
+ b=BpUR7hMkGa2AFr7dln52reJ0Zm4oibfvJrCj7yyKa1lWMeqv2d5oPqydd8g6RrP7Itp+qLbpD4y7A3rvI3xEbQv4nscg7h+jHgW8hzkEbbJouwIZapui6QLVXiFD8qLsmv3kRnXResbsFEpqiZTvQ89DGy/Yr0BacHHKg6SL1LI=
+Received: from BYAPR06CA0059.namprd06.prod.outlook.com (2603:10b6:a03:14b::36)
+ by PH8PR12MB7134.namprd12.prod.outlook.com (2603:10b6:510:22d::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.24; Mon, 12 May
+ 2025 06:52:12 +0000
+Received: from SN1PEPF000397B5.namprd05.prod.outlook.com
+ (2603:10b6:a03:14b:cafe::d7) by BYAPR06CA0059.outlook.office365.com
+ (2603:10b6:a03:14b::36) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8699.30 via Frontend Transport; Mon,
+ 12 May 2025 06:52:12 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,18 +54,19 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN1PEPF00005FFD.mail.protection.outlook.com (10.167.243.229) with Microsoft
+ SN1PEPF000397B5.mail.protection.outlook.com (10.167.248.59) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8722.18 via Frontend Transport; Mon, 12 May 2025 06:45:54 +0000
+ 15.20.8722.18 via Frontend Transport; Mon, 12 May 2025 06:52:12 +0000
 Received: from [10.252.206.76] (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 12 May
- 2025 01:45:49 -0500
-Message-ID: <89aa3b2f-092f-43a4-a96c-5755cf06efb9@amd.com>
-Date: Mon, 12 May 2025 12:15:46 +0530
+ 2025 01:52:06 -0500
+Message-ID: <b5b28ea2-3a53-4d13-813d-da40607d0e0a@amd.com>
+Date: Mon, 12 May 2025 12:22:04 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/20] amd_iommu: Add helper function to extract the DTE
+Subject: Re: [PATCH v2 09/20] amd_iommu: Add basic structure to support IOMMU
+ notifier updates
 To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, <qemu-devel@nongnu.org>
 CC: <pbonzini@redhat.com>, <richard.henderson@linaro.org>,
  <eduardo@habkost.net>, <peterx@redhat.com>, <david@redhat.com>,
@@ -76,10 +77,10 @@ CC: <pbonzini@redhat.com>, <richard.henderson@linaro.org>,
  <ethan.milon@eviden.com>, <joao.m.martins@oracle.com>,
  <boris.ostrovsky@oracle.com>
 References: <20250502021605.1795985-1-alejandro.j.jimenez@oracle.com>
- <20250502021605.1795985-6-alejandro.j.jimenez@oracle.com>
+ <20250502021605.1795985-10-alejandro.j.jimenez@oracle.com>
 Content-Language: en-US
 From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <20250502021605.1795985-6-alejandro.j.jimenez@oracle.com>
+In-Reply-To: <20250502021605.1795985-10-alejandro.j.jimenez@oracle.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.180.168.240]
@@ -87,64 +88,64 @@ X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
  (10.181.40.145)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00005FFD:EE_|DM4PR12MB5723:EE_
-X-MS-Office365-Filtering-Correlation-Id: 08cb4f58-1061-430c-3e40-08dd9120a4c9
+X-MS-TrafficTypeDiagnostic: SN1PEPF000397B5:EE_|PH8PR12MB7134:EE_
+X-MS-Office365-Filtering-Correlation-Id: a98eba1b-11d1-4074-c696-08dd912185d6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|376014|7416014|82310400026|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?S2pmYmJ5MTJjMFh6MkMwZ0p4a0pEZ0FYdHBzMVVmNHpvT3B2UTdabUdpc01p?=
- =?utf-8?B?eDg1Yms4cXNDYTQyR2s0TEdGNFlIVUIwTHY1a0NGVmx1T1hiMDQrdk9QZHBP?=
- =?utf-8?B?MmY4dTBEN01FbjNsMGtWYlpoUXJqMzVzbERJYXg5dCtRWHJ1NkpaR3JmQWRi?=
- =?utf-8?B?N2Q0eloxVUdPOWs0RXJ0RXdpOEdGa0hnYWthdVRDT29hUzNCa1FOZFpORDl4?=
- =?utf-8?B?clQvT0hiR29xSkpjeUQxQlEzVnZXQ2tseENCTG55aG5SN0s5YStGVHlydzJx?=
- =?utf-8?B?NlBIeEdCb3hXNUFkeUpUUjh4ZjdNTXRsMVBuZHRsWm5aUDkxdVJqbUZPTDNv?=
- =?utf-8?B?MjBtQklqcWJHamo5QzZwN1FZeklpL0R6dFltSXhhWVFHaWpPYktDRjZNRGpa?=
- =?utf-8?B?VnR6TC9BK256N1U4REV2ajlOUkFNWVFKKzNWd3RBU3pDeld5Y1dIWVcrZkYv?=
- =?utf-8?B?cUFYZmd1MWZCU0VQNG1JQS9tVEVNZkRCblQyRk9QWHRjR2RnNUVSbzZydUdm?=
- =?utf-8?B?clFtcGNUR1JjUDBBbmZtdSsxZEVmQkpFUlRydm13UTIxdHZxZ3VNZlc1ZS80?=
- =?utf-8?B?VElaekx2K3Zmd3lVUFlRSzVvanp0UHZEUnpKODJPUGJUYjJHd213bVhWQ0Y5?=
- =?utf-8?B?UVN5NVI1ZFBDV2lnKzZhaG5nNFNxbkhjWkJIWDlWQ29mcGhxTmo1T2lOcjFz?=
- =?utf-8?B?UG1kU1ZkMURkWDJjQ1d5akNwUStsQk1VdjhXWldsSEl0alFIRTcrRVhnZk41?=
- =?utf-8?B?eVhaU0FNdVNqTjNMdXRYWEp4TXFEa2tyUXN3aGhVODZrR3BGc0s3TXU0QVpX?=
- =?utf-8?B?UlpNK2FQR1NqaXFCejRHMHpzUFFqVElPMTFjZjFsNFJEM2FWWU9ZUHR2OWV5?=
- =?utf-8?B?TTMzUkxJUERsWFJUTEkzZXR6V1pxUllaaVFqS0Fvanh0WFN5dUVrQzdmaWt5?=
- =?utf-8?B?Q1krbHNNOFZPcmxrQzZOcHFaTzd2dFQvMjZQTjNNeXRTVWszQitIMHlxZlNk?=
- =?utf-8?B?aFVqbXJjUmY2QVJIS1AyYmlOMWRzT1ErM0FQM1A4bHcwNHRvaDRyeDJ5ZExo?=
- =?utf-8?B?VDNFV3BEV25GSnA1cXBDTU8wclVrb3VLS3lOMlFRZ1EwRkNxcTlIMXB2TlNY?=
- =?utf-8?B?Z3pETmkzSk9RWVBrd3hkM3RRQjFldU9xUmZUaDlqQmlLc3NVVzFoM2JSbFdS?=
- =?utf-8?B?dUUvWUFYRUlRZzJxTXNxclErVUV5dkQwUXQwZHpQcEVLWEVteWtyT0draFRS?=
- =?utf-8?B?KzUzQUp6dEdJQzVBVHNYSEoyTHZUWERyT1Jhc2w0RnlwWXdLbmxlUFNPZU05?=
- =?utf-8?B?YWNRUytNTDNlQXpFdVlNcW8xZDJoN1EwVk9KVXhudEtrSldOV2IvNWVvM2ZN?=
- =?utf-8?B?QTBJdUw0SnM2c0k1N09PdGVFbGNtYW9Jc3hRcUtuTXdoMVNBS3ZjNElCV0lR?=
- =?utf-8?B?VjJkSFdUQnBOYmlJeW1ray84OWlHNWtCY2NLVEs1U1pwdSs4L2pEQm1aTkl3?=
- =?utf-8?B?bHRyRFNMMHZLL3RiUEgwNG1ObGtyM1I4dnhweEcwTTVSbTI2a1dQL0NxUXhz?=
- =?utf-8?B?amErR2RNVmluZVdna3dOLzk2eG9hMnhCdVliM1hkSFdmb0VFZEloWExWSVQ2?=
- =?utf-8?B?eVRXdG0rQnlTM1c5UWFoS25aODRBdmNYS1pIbEwxQjY5TXZ6M1grUGJ0dHYr?=
- =?utf-8?B?L1lwYzRJYXJsWVZJenBpNzVHaUYvZ0ZBb3krS0M2S1J4VjNkaXg3bUtBbHJq?=
- =?utf-8?B?dHZwNjhaTzg5S3U1SnZJeXhEYnVITEdZWmY0T1JqWFlScmwxVHZ4OE1WUkpI?=
- =?utf-8?B?MWd6UlBITFd2ZEt2WnUwQXRwUmRtNmlrNnQwalRIdVZnOW03c0h0NE1nUTFs?=
- =?utf-8?B?UnBGbXhSNzkzb1pKS2FxQkRtNXFUaDNVY1BaNWNrdDBySXpPbmpzSjNWNWVl?=
- =?utf-8?B?QnJ1RU9LeXB2YUJPTWdlYkVvWEZzTjhxYkFITmozd1ppLzl2V1QyMlJNbzBY?=
- =?utf-8?B?UURXUi80bjUvVXlVRVFrMk1CeUxjaUNEa3FPV2hCTFBJbW5aaVlyUzZFOWYw?=
- =?utf-8?Q?fG2RU+?=
+ ARA:13230040|376014|7416014|82310400026|36860700013|1800799024|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?ak4vbFYzcHowTTRRaytpTHJmSEtURmoreG1VMXZwVUEyZFdvUXFxbFVYeW5s?=
+ =?utf-8?B?eXZDSHVYKzhLSVZuTndqV2M1ZndLOTRablh5WXRXVEMzRlNLS2lLMGtTVEpj?=
+ =?utf-8?B?ZEFoNUNzL3JWTmY4Uy8yUHhJUU0xaTdsT0xFKzZFdkVuSWxuaFBBdDdXOWZB?=
+ =?utf-8?B?MTNFbm16NWtaMHo2ZVVWSEQzVlpiRkd0S2JhNGVHcmtWWkMwWUtrZEFGTHVx?=
+ =?utf-8?B?b0lPZXdrdTFGRDBpVkx6dHlRMUJsdlM5SlQ5a2tsNndHWXR5WFJZdDdNeWxx?=
+ =?utf-8?B?TzRjTHc1TGtTSWtKTHl1QVB0NVpHRHZrMkNqMDMrZkpOQTJUL1FKOWV1a1F2?=
+ =?utf-8?B?S3RYMm55TDh6RE5SRk5qMmorZW0xYm1keXcxN3grMENwQ1NjTXM5bFJMa2Z6?=
+ =?utf-8?B?UFJIMVEraHRxdDJ3aW50UFZPblZaNFVhV1hxRmdTTVNIUjVKcVBpQ1hEa0R1?=
+ =?utf-8?B?TEszeDFPSlVOWHM3Mi9IUEFKS01Da3FwcTVOOHlHWFhDeVQ5MGlNdDM4Q3lZ?=
+ =?utf-8?B?YjJXTWpuYm9FTmZXdjNQRVM4b2xOQ2E2VGRyMGE2NDRIRDZJYUpYcEpqTjNR?=
+ =?utf-8?B?SW5UMU1JSC9hYk5jM2Q3SmFFVCtnY3RrYzJXa3RIdU1UdGpqM2I1bVl3bE5J?=
+ =?utf-8?B?eE52UForZVIweFpyUWhRZGxsOVNpSThlWERKMFZiU1p0TlBZUys1cW8yMzRz?=
+ =?utf-8?B?amRoNkc1TDJDTXNyOCtTaVUwY3NxQ0gwcU4wdVpqSGhMb1dWdEhuTEZudTNa?=
+ =?utf-8?B?NnduS2V3L3IveEVFV1ZwQU92U1hQZGt3b2trbDc1dzJ0Y05EWUcyVkQ0REZV?=
+ =?utf-8?B?TkRiVEtnRlhjSm5IM1JYcG9tZFVUNXFzM0Q2UU5FWXUwWi9uSEQzcHlsVjRH?=
+ =?utf-8?B?ZUl4QzFYUFhaUklMSUF3QWsydEJkalcrRzRXRVhmRW91TXpwY3VwVlU2alp4?=
+ =?utf-8?B?M0pjaHowY3o1VW9pdlhYMUVrd3MwRzdtTDY3UUpVcmw3TndiRCtmZ1RNaXZw?=
+ =?utf-8?B?aUN5UFIvK2c5L3FWaVFxajY2RzI2ZjZRWWlpd1FSWjNad0U2UG42Mnl6VkIx?=
+ =?utf-8?B?S2Z4UDZwNUl5MGw0TWFNc3RWZG9Wc1M1Q2xGM0V0NmhHUWpROXR1WW5EVWtP?=
+ =?utf-8?B?TTJOMmJFYjYrb3FzRXN1NlF6eHUxZXp5WU0xdkY1ZXd0ZStxMDlRQUFtVlNQ?=
+ =?utf-8?B?SUY3WEJyV1dzQ1pBMzhRekF2bnZaME5GUjRqeitJZzNlNkZLOFFjYW9wZEo3?=
+ =?utf-8?B?QXdEazR2RkpTK3FGL3VUUTYxSTFQSEdhNEVYdXJvK2xxaFFXQ0I0a3pmMHNr?=
+ =?utf-8?B?b0lRd0NNVEJUeHhncnJoenAzZFZTcnpYOTVVeDJkZmpMS2kySFpLUFhzd2RB?=
+ =?utf-8?B?dlpvV2h3YTBHZVlxZWRuZk4yaUpwRUdTL053R1BmWHNwempUenV0VlBmT1NI?=
+ =?utf-8?B?OTluNWIyaWJNemt5MzZtVEpQVmNLUk4rcHZnNnNGQ1BPRVlWajBJWXd2b09x?=
+ =?utf-8?B?a1JybHcvOWgyaWVBNk0yVUtWSWxzQU5aWkg0N3J2TG51aWVtZDc2ZUJwRzlv?=
+ =?utf-8?B?RmxhenBZZ1lDK2wvVi95YTNXUld2eVhHbkxjRWhrYmR6Tkhoa1Q5NUZwS0l1?=
+ =?utf-8?B?OGVnRndHTytzLzQrNVpWQXlGdGtEL2QrVWdFRW0vd2xIdnorWXJCZWF1d2ZD?=
+ =?utf-8?B?QzZxOG43Yk5ERkVEUEgzbDlVNXFhTi84OE1RRkZZVjFkejBjempVdUhkL3Ru?=
+ =?utf-8?B?OXdZc0VaQUh5bEJ3cDczWThmY2dyQmd4WTJONW5RcWlYbW92YVYvQ0ZrYWZY?=
+ =?utf-8?B?cWJGSjBtZkNRa0dtMlFDenErOHRZSnFEYjVwNkZHSU1PaHozblBmd0V6MUE5?=
+ =?utf-8?B?SlBXOWU2TUVzRmtQRzFDS0tvRFV3L3didDQ1TDN0NWdGczVmVVI3M2NHSUpV?=
+ =?utf-8?B?MXJDYVJSNTMrNHlnbmt6c2gxMFR6VnQwNVhETmtFRkFGQzRST0hYL2lHMERh?=
+ =?utf-8?B?Y2ZZT3FVSWFGZVl2UFBOcU43Vit4MUR1Qy9qcExOQXVPQTVzY3A3eE5lMzVt?=
+ =?utf-8?Q?EoF7K9?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(376014)(7416014)(82310400026)(7053199007);
+ SFS:(13230040)(376014)(7416014)(82310400026)(36860700013)(1800799024)(7053199007);
  DIR:OUT; SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2025 06:45:54.5697 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 08cb4f58-1061-430c-3e40-08dd9120a4c9
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2025 06:52:12.1222 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a98eba1b-11d1-4074-c696-08dd912185d6
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00005FFD.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF000397B5.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB5723
-Received-SPF: permerror client-ip=2a01:111:f403:2413::62f;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7134
+Received-SPF: permerror client-ip=2a01:111:f403:2407::62e;
  envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=NAM10-DM6-obe.outbound.protection.outlook.com
+ helo=NAM02-BN1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
@@ -169,101 +170,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 5/2/2025 7:45 AM, Alejandro Jimenez wrote:
-> Extracting the DTE from a given AMDVIAddressSpace pointer structure is a
-> common operation required for syncing the shadow page tables. Implement a
-> helper to do it and check for common error conditions.
+> Add the minimal data structures required to maintain a list of address
+> spaces (i.e. devices) with registered notifiers, and to update the type of
+> events that require notifications.
+> Note that the ability to register for MAP notifications is not available.
+> It will be unblocked by following changes that enable the synchronization of
+> guest I/O page tables with host IOMMU state, at which point an amd-iommu
+> device property will be introduced to control this capability.
 > 
 > Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 > ---
->   hw/i386/amd_iommu.c | 45 ++++++++++++++++++++++++++++++++++++++++-----
->   1 file changed, 40 insertions(+), 5 deletions(-)
+>   hw/i386/amd_iommu.c | 26 +++++++++++++++++++++++---
+>   hw/i386/amd_iommu.h |  3 +++
+>   2 files changed, 26 insertions(+), 3 deletions(-)
 > 
 > diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> index dff6f04c8651..5322a614f5d6 100644
+> index 6a2ba878dfa7..2f69459ab68d 100644
 > --- a/hw/i386/amd_iommu.c
 > +++ b/hw/i386/amd_iommu.c
-> @@ -77,6 +77,18 @@ typedef struct AMDVIIOTLBEntry {
->       uint64_t page_mask;         /* physical page size  */
->   } AMDVIIOTLBEntry;
->   
-> +/*
-> + * These 'fault' reasons have an overloaded meaning since they are not only
-> + * intended for describing reasons that generate an IO_PAGE_FAULT as per the AMD
-> + * IOMMU specification, but are also used to signal internal errors in the
-> + * emulation code.
-> + */
-> +typedef enum AMDVIFaultReason {
-> +    AMDVI_FR_DTE_RTR_ERR = 1,   /* Failure to retrieve DTE */
-> +    AMDVI_FR_DTE_V,             /* DTE[V] = 0 */
-> +    AMDVI_FR_DTE_TV,            /* DTE[TV] = 0 */
-> +} AMDVIFaultReason;
+> @@ -66,6 +66,11 @@ struct AMDVIAddressSpace {
+>       MemoryRegion iommu_nodma;   /* Alias of shared nodma memory region  */
+>       MemoryRegion iommu_ir;      /* Device's interrupt remapping region  */
+>       AddressSpace as;            /* device's corresponding address space */
 > +
->   uint64_t amdvi_extended_feature_register(AMDVIState *s)
->   {
->       uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
-> @@ -492,6 +504,28 @@ static inline uint64_t amdvi_get_pte_entry(AMDVIState *s, uint64_t pte_addr,
->       return pte;
->   }
+> +    /* DMA address translation support */
+> +    IOMMUNotifierFlag notifier_flags;
+> +    /* entry in list of Address spaces with registered notifiers */
+> +    QLIST_ENTRY(AMDVIAddressSpace) next;
+>   };
 >   
-> +static int amdvi_as_to_dte(AMDVIAddressSpace *as, uint64_t *dte)
-> +{
-> +    uint16_t devid = PCI_BUILD_BDF(as->bus_num, as->devfn);
+>   /* AMDVI cache entry */
+> @@ -1711,6 +1716,7 @@ static AddressSpace *amdvi_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
+>           iommu_as[devfn]->bus_num = (uint8_t)bus_num;
+>           iommu_as[devfn]->devfn = (uint8_t)devfn;
+>           iommu_as[devfn]->iommu_state = s;
+> +        iommu_as[devfn]->notifier_flags = IOMMU_NONE;
+>   
+>           amdvi_dev_as = iommu_as[devfn];
+>   
+> @@ -1791,14 +1797,28 @@ static int amdvi_iommu_notify_flag_changed(IOMMUMemoryRegion *iommu,
+>                                              Error **errp)
+>   {
+>       AMDVIAddressSpace *as = container_of(iommu, AMDVIAddressSpace, iommu);
 > +    AMDVIState *s = as->iommu_state;
-> +
-> +    if (!amdvi_get_dte(s, devid, dte)) {
-> +        /* Unable to retrieve DTE for devid */
-> +        return -AMDVI_FR_DTE_RTR_ERR;
-> +    }
-> +
-> +    if (!(dte[0] & AMDVI_DEV_VALID)) {
-> +        /* DTE[V] not set, address is passed untranslated for devid */
-> +        return -AMDVI_FR_DTE_V;
-> +    }
-> +
-> +    if (!(dte[0] & AMDVI_DEV_TRANSLATION_VALID)) {
-> +        /* DTE[TV] not set, host page table not valid for devid */
-> +        return -AMDVI_FR_DTE_TV;
-> +    }
-> +    return 0;
-> +}
-> +
->   /* log error without aborting since linux seems to be using reserved bits */
->   static void amdvi_inval_devtab_entry(AMDVIState *s, uint64_t *cmd)
->   {
-> @@ -1024,6 +1058,7 @@ static void amdvi_do_translate(AMDVIAddressSpace *as, hwaddr addr,
->       uint16_t devid = PCI_BUILD_BDF(as->bus_num, as->devfn);
->       AMDVIIOTLBEntry *iotlb_entry = amdvi_iotlb_lookup(s, addr, devid);
->       uint64_t entry[4];
-> +    int dte_ret;
 >   
->       if (iotlb_entry) {
->           trace_amdvi_iotlb_hit(PCI_BUS_NUM(devid), PCI_SLOT(devid),
-> @@ -1035,13 +1070,13 @@ static void amdvi_do_translate(AMDVIAddressSpace *as, hwaddr addr,
->           return;
->       }
->   
-> -    if (!amdvi_get_dte(s, devid, entry)) {
-> -        return;
-> -    }
-> +    dte_ret = amdvi_as_to_dte(as, entry);
->   
-> -    /* devices with V = 0 are not translated */
-> -    if (!(entry[0] & AMDVI_DEV_VALID)) {
-> +    if (dte_ret == -AMDVI_FR_DTE_V) {
-> +        /* DTE[V]=0, address is passed untranslated */
->           goto out;
-> +    } else if (dte_ret == -AMDVI_FR_DTE_TV) {
-> +        return;
->       }
->  
+>       if (new & IOMMU_NOTIFIER_MAP) {
+>           error_setg(errp,
+> -                   "device %02x.%02x.%x requires iommu notifier which is not "
+> -                   "currently supported", as->bus_num, PCI_SLOT(as->devfn),
+> -                   PCI_FUNC(as->devfn));
+> +                "device %02x.%02x.%x requires iommu notifier which is not "
+> +                "currently supported", as->bus_num, PCI_SLOT(as->devfn),
+> +                PCI_FUNC(as->devfn));
 
-Hi Alejandro,
-
-You missed to handle -AMDVI_FR_DTE_RTR_ERR.
+Redundant whitespace changes, please revert.
 
 Regards
 Sairaj Kodilkar
-
->       amdvi_page_walk(as, entry, ret,
 
 
