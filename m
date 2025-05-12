@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD37BC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 18:06:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DC07C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 18:07:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEXX9-0002Rh-1f; Mon, 12 May 2025 14:05:47 -0400
+	id 1uEXWk-0002IS-25; Mon, 12 May 2025 14:05:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uEXWh-0002DX-Qe
- for qemu-devel@nongnu.org; Mon, 12 May 2025 14:05:20 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1uEXWg-000279-1I
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 14:05:18 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uEXWf-0008RN-M3
- for qemu-devel@nongnu.org; Mon, 12 May 2025 14:05:19 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-22e76850b80so34266035ad.1
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 11:05:16 -0700 (PDT)
+ id 1uEXWc-0008QQ-7s
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 14:05:17 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-740b3a18e26so4015992b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 11:05:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747073115; x=1747677915; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8AlvH8T2wxvPoUN2cgh0nAAaoM8ETcHqqaWl8h2qra8=;
- b=mBqSufvhkQSFgGJv07J63ddFZaekeM9AP4brpuwccyUCr9KWeJ/zWhOWenccMRJeyc
- zJx18D2iC+C7eIlrXtvJDVX8x3BXwlJuiyHd0oYnrbJoEJxvE45GXRyKmlpJZHI1xuHi
- BLxkEAa8/uscd3uL2ikN+cypK1IpF1nCIlVUu252VloefIbhdb3w8fzzjVI1vyX5fD52
- AD+lJbhHdhm3eZdbCB0bJvdvx9b0QttSIaP0Xkn2CjrxX6lMjIEv/bv1riMu2tZqMePq
- 3WhxzqcYvAI+q4e0UqNaPHjSfNzDhNghYlCoYAdLwBZ8psDuijiUOCPunRS2sy05iJlh
- kmdg==
+ d=linaro.org; s=google; t=1747073112; x=1747677912; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4MW56a2N9JGW8XiFvlXolamnMWHQl+hL453c6R1PReI=;
+ b=GJtkrsRX0lL/t7pMXOKQ4tEKv7s07KSmJv3S5DHxm43CiaAE0VWOr3Ue6I1xigKMfV
+ A/SvWbtbLtvL+iSoKkO1Feskum8IdIckZnIERD3jHRYXvE4ohlZhmfk/hhgPKG7QrY40
+ br3R1IpJDL6e25Xa8zIZuIhYoC5HaVMJrFJh5N1ZSUm2AgIsUgeLZSztFkreYlSSmf/W
+ mVhHPFzj8k2SAX9b+VrFotv1rnLtkDFu5I1AEMCy+JBHe1AvckdRdOKPtTyos6ehuy5C
+ XN91Ng1jpmAoTWLtlhhXoZOvgKPIt6R8qOp+qsoyTesLtzs6HJQgHUi0+Pze1EAQr6KC
+ QvfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747073115; x=1747677915;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8AlvH8T2wxvPoUN2cgh0nAAaoM8ETcHqqaWl8h2qra8=;
- b=KgjfrgqKZa2jws5KsKocOTIzx2pJwHxIMx8DwXMyzXy8Pz/I/8CzbgGWFnyn935Qlt
- O2mv9HXwMpbBFUvW38Eysk8bcX4KG16f3EVYdpXQPgtpI9iVCyojvkF/zo3VLVGJJpk+
- 1uer5XhNOCDXhRek6WEThDG8oXPRvNbskWEeUnx+LJVaVCFcLhaunSC5UWY7H5bBiQjn
- gXwHCBxiIUSebOxoJUatLwqbIQYo7yRH8cWIMtb6M2TX14fcgqAdGcrMtcqkv2Kpf1rP
- y2oVN2on2NRYrCnmGetMmgnF3gL+QnorAxNqHhuTdiXuU8oOR2yXiArXTNwYoC974SGl
- rqKw==
-X-Gm-Message-State: AOJu0Yx0ioEKc183nEwM+6mIW1dG1vA12MY/1R25TDkQShcKY87r07h9
- cnbGumrKfTDfNYLgqRjI9K5vf9EexhOVEHo0aEMKmviFK2CsuoJdRJCKP4oOnEtDWrMh55DnUVK
- z
-X-Gm-Gg: ASbGncuQIxAPOCbbdrKkQe6ODqG+dF9Xh2wHy3GsWIanGb4oE8jt7XSsTkeb0gZemjc
- KinD6OTL4SRCyMKo+UqrsRj7DJh1O5RN06WClvcL6P57bVAiOGVF5vWYfXKmPRRL7e02jr3ory+
- e8JVNwazfn+1VhF203wZYpfKuvCXE9WJRn/dSnjqHDcWz7/N+dTYgUPTw1VYeQAPF7ICvzSgjKW
- KmEJKBgd7oLow0o2jCbRML0INvnHUgEUvm3vPHGlldKPSSNbP2SW/lgzAY5rqWo5VasZupSCYG7
- s5vecHPyAn9EuoyBKxSPfL9TJ91Khyj5DApk0mcMF82TzAtf13s=
-X-Google-Smtp-Source: AGHT+IEtCiZ7pWhfj+zvU+QjNZ6OJ+sx69sEdRwyVqIutBYFsRWs/EvFgb05ePx/aof8VSDvqJ8C0A==
-X-Received: by 2002:a17:902:dac5:b0:22e:5389:67fb with SMTP id
- d9443c01a7336-22fc8b0fab0mr193964295ad.7.1747073115383; 
- Mon, 12 May 2025 11:05:15 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1747073112; x=1747677912;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4MW56a2N9JGW8XiFvlXolamnMWHQl+hL453c6R1PReI=;
+ b=Si53+rK4A9oH3y2xVOPA35ql4v7kbrzOSJuIsxFk42MsW0MTH+4V5lBK4mju0YkPY9
+ 0g4onJbawHIzoaX0+suDNutanr6p+aPHlQnyN4hKnPMcCGhmQOBpBthOuAmK2OMXrWzN
+ Y9qnWRQhRZGbCbBpkxH/+zRZDjYMKvuU/Abouw3UiS7Mudgpgs9qr0+hvn7hbMAHE0LL
+ 0IKgeauyXjhzL3DUvQJdX8oWnM4tiBE3OuYyxXgPIm+VDIl0wszppBFnumaYzH39yDhh
+ dfOCMCifnR72bQ0nea+7Z3PHQae0zqdUWokxMaCUGwTQ1kDqQ847ha9IAtUbllTOyLLY
+ sJ9A==
+X-Gm-Message-State: AOJu0YwP15uJHvHJpOP5TWfQyOaQHkgdPO8WO71EWwoJUGILyY8rfPOb
+ 3S2DSiepJZQt1KDfunhIyOywbHZE9CP7KSfqG9KV7UHtxs/Ij84fSnxgh8FcoFZ9lkGFFSiOb+B
+ Z
+X-Gm-Gg: ASbGncuLjqOBnLiiX5zT/Dj4TVLmfViF+4kn8IZ+d+N7gAX7iSfCI6vNPlHJa1Bkidw
+ BPSAH5FufNOwQONHV8rQ13E7FmEzgS7CT9Bu4WVX3XKM9QmwSfqCY0blN7FDdHnOzYO3LtUBclO
+ NUV7vlyB6pKHcXe3BChMQN02Bj2uf1mMqLNJxj7KzAMcT6uPzDM6f7pib1T13CiB8IagiLg/25W
+ ymwIyIX/iebYhc8zo8mBOwagWFYzanBDxjog0sgWZNfrKoBMcQU4Ne6ijgkxXd50rNQsFhU5A6+
+ r4yYeharb0Q2T2QI0jpLlFxnOxZ+EN6u/808sHMWS7QudMuREGo=
+X-Google-Smtp-Source: AGHT+IHn+seSlUHxe/d++qBkY4dNL7LDRkrQjITqXqKQ+r5hF6/emBo0ZXMFZkXSOu8uzP134zkiFQ==
+X-Received: by 2002:a17:902:f68f:b0:223:66a1:4503 with SMTP id
+ d9443c01a7336-22fc8b73d0emr172327945ad.30.1747073111863; 
+ Mon, 12 May 2025 11:05:11 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-22fc82a2e4fsm65792005ad.232.2025.05.12.11.05.14
+ d9443c01a7336-22fc82a2e4fsm65792005ad.232.2025.05.12.11.05.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 May 2025 11:05:15 -0700 (PDT)
+ Mon, 12 May 2025 11:05:11 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -71,24 +70,22 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v8 04/48] target/arm: move kvm stubs and remove CONFIG_KVM
- from kvm_arm.h
-Date: Mon, 12 May 2025 11:04:18 -0700
-Message-ID: <20250512180502.2395029-5-pierrick.bouvier@linaro.org>
+Subject: [PATCH v8 00/48] single-binary: compile target/arm twice
+Date: Mon, 12 May 2025 11:04:14 -0700
+Message-ID: <20250512180502.2395029-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250512180502.2395029-1-pierrick.bouvier@linaro.org>
-References: <20250512180502.2395029-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,200 +101,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a forward decl for struct kvm_vcpu_init to avoid pulling all kvm
-headers.
+More work toward single-binary.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- target/arm/kvm_arm.h  | 83 +------------------------------------------
- target/arm/kvm-stub.c | 77 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 78 insertions(+), 82 deletions(-)
+Some files have external dependencies for the single-binary:
+- target/arm/gdbstub.c: gdbhelpers
+- target/arm/arm-qmp-cmds.c: qapi
+- target/arm/tcg/translate*: need deep cleanup in include/tcg
+- target/arm/tcg/cpu*: need TargetInfo implemented for arm/aarch64
+- target/arm/tcg/*-helper*: need deeper split between aarch64 and arm code
+They will not be ported in this series.
 
-diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-index 5f17fc2f3d5..5bf5d56648f 100644
---- a/target/arm/kvm_arm.h
-+++ b/target/arm/kvm_arm.h
-@@ -94,7 +94,7 @@ void kvm_arm_cpu_post_load(ARMCPU *cpu);
-  */
- void kvm_arm_reset_vcpu(ARMCPU *cpu);
- 
--#ifdef CONFIG_KVM
-+struct kvm_vcpu_init;
- /**
-  * kvm_arm_create_scratch_host_vcpu:
-  * @fdarray: filled in with kvmfd, vmfd, cpufd file descriptors in that order
-@@ -216,85 +216,4 @@ int kvm_arm_set_irq(int cpu, int irqtype, int irq, int level);
- 
- void kvm_arm_enable_mte(Object *cpuobj, Error **errp);
- 
--#else
--
--/*
-- * It's safe to call these functions without KVM support.
-- * They should either do nothing or return "not supported".
-- */
--static inline bool kvm_arm_aarch32_supported(void)
--{
--    return false;
--}
--
--static inline bool kvm_arm_pmu_supported(void)
--{
--    return false;
--}
--
--static inline bool kvm_arm_sve_supported(void)
--{
--    return false;
--}
--
--static inline bool kvm_arm_mte_supported(void)
--{
--    return false;
--}
--
--/*
-- * These functions should never actually be called without KVM support.
-- */
--static inline void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
--{
--    g_assert_not_reached();
--}
--
--static inline void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
--{
--    g_assert_not_reached();
--}
--
--static inline int kvm_arm_get_max_vm_ipa_size(MachineState *ms, bool *fixed_ipa)
--{
--    g_assert_not_reached();
--}
--
--static inline int kvm_arm_vgic_probe(void)
--{
--    g_assert_not_reached();
--}
--
--static inline void kvm_arm_pmu_set_irq(ARMCPU *cpu, int irq)
--{
--    g_assert_not_reached();
--}
--
--static inline void kvm_arm_pmu_init(ARMCPU *cpu)
--{
--    g_assert_not_reached();
--}
--
--static inline void kvm_arm_pvtime_init(ARMCPU *cpu, uint64_t ipa)
--{
--    g_assert_not_reached();
--}
--
--static inline void kvm_arm_steal_time_finalize(ARMCPU *cpu, Error **errp)
--{
--    g_assert_not_reached();
--}
--
--static inline uint32_t kvm_arm_sve_get_vls(ARMCPU *cpu)
--{
--    g_assert_not_reached();
--}
--
--static inline void kvm_arm_enable_mte(Object *cpuobj, Error **errp)
--{
--    g_assert_not_reached();
--}
--
--#endif
--
- #endif
-diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
-index 965a486b320..2b73d0598c1 100644
---- a/target/arm/kvm-stub.c
-+++ b/target/arm/kvm-stub.c
-@@ -22,3 +22,80 @@ bool write_list_to_kvmstate(ARMCPU *cpu, int level)
- {
-     g_assert_not_reached();
- }
-+
-+/*
-+ * It's safe to call these functions without KVM support.
-+ * They should either do nothing or return "not supported".
-+ */
-+bool kvm_arm_aarch32_supported(void)
-+{
-+    return false;
-+}
-+
-+bool kvm_arm_pmu_supported(void)
-+{
-+    return false;
-+}
-+
-+bool kvm_arm_sve_supported(void)
-+{
-+    return false;
-+}
-+
-+bool kvm_arm_mte_supported(void)
-+{
-+    return false;
-+}
-+
-+/*
-+ * These functions should never actually be called without KVM support.
-+ */
-+void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-+
-+int kvm_arm_get_max_vm_ipa_size(MachineState *ms, bool *fixed_ipa)
-+{
-+    g_assert_not_reached();
-+}
-+
-+int kvm_arm_vgic_probe(void)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_arm_pmu_set_irq(ARMCPU *cpu, int irq)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_arm_pmu_init(ARMCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_arm_pvtime_init(ARMCPU *cpu, uint64_t ipa)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_arm_steal_time_finalize(ARMCPU *cpu, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
-+
-+uint32_t kvm_arm_sve_get_vls(ARMCPU *cpu)
-+{
-+    g_assert_not_reached();
-+}
-+
-+void kvm_arm_enable_mte(Object *cpuobj, Error **errp)
-+{
-+    g_assert_not_reached();
-+}
+Built on {linux, windows, macos} x {x86_64, aarch64}
+Fully tested on linux x {x86_64, aarch64}
+
+Series is now tested and fully reviewed. Thanks for pulling it.
+
+v8
+--
+
+- rebase on top of master
+
+v7
+--
+
+- rebase on top of master
+- removed patch to apply target config for picking files in libsystem/libuser,
+  since it was the only one not reviewed.
+
+v6
+--
+
+CI: https://github.com/pbo-linaro/qemu/actions/runs/14844742069/job/41675865456
+- Replace target_ulong -> vaddr for HWBreakpoint (Philippe)
+- build target/arm/tcg/crypto_helper.c once (Richard)
+- build target/arm/tcg/tlb-insns for system only (Richard)
+- build target/arm/tcg/arith_helper once (Richard)
+
+v5
+--
+
+CI: https://github.com/pbo-linaro/qemu/actions/runs/14825451208/job/41617949501
+- Do not define a separate vaddr type in tcg, simply alias to i32/i64 (Richard)
+- target/arm/tcg/crypto_helper.c
+- target/arm/tcg/hflags.c
+- target/arm/tcg/iwmmxt_helper.c
+- target/arm/tcg/neon_helper.c
+- target/arm/tcg/tlb_helper.c
+- target/arm/tcg/tlb-insns.c
+- target/arm/tcg/arith_helper.c
+- target/arm/tcg/vfp_helper.c
+
+v4
+--
+
+CI: https://github.com/pbo-linaro/qemu/actions/runs/14816460393/job/41597560792
+- add patch to apply target config for picking files in libsystem/libuser
+  Useful for Philippe series for semihosting:
+  https://lore.kernel.org/qemu-devel/20250502220524.81548-1-philmd@linaro.org/T/#me750bbaeeba4d16791121fe98b44202afaec4068
+- update some patches description (Philippe & Richard)
+- tcg: introduce vaddr type (Richard)
+- modify concerned helpers to use vaddr instead of i64 (Richard)
+- use int64_t instead of uint64_t for top_bits in ptw.c (Philippe)
+- arm_casq_ptw: use CONFIG_ATOMIC64 instead of TARGET_AARCH64 and comment why
+  (Richard)
+- target/arm/machine.c
+
+v3
+--
+
+CI: https://github.com/pbo-linaro/qemu/actions/runs/14765763846/job/41456754153
+- Add missing license for new files (Richard)
+- target/arm/debug_helper.c
+- target/arm/helper.c
+- target/arm/vfp_fpscr.c
+- target/arm/arch_dump.c
+- target/arm/arm-powerctl.c
+- target/arm/cortex-regs.c
+- target/arm/ptw.c
+- target/arm/kvm-stub.c
+
+v2
+--
+
+- Remove duplication of kvm struct and constant (Alex)
+- Use target_big_endian() (Anton)
+
+v1
+--
+
+- target/arm/cpu.c
+
+Philippe Mathieu-Daudé (1):
+  target/arm: Replace target_ulong -> vaddr for HWBreakpoint
+
+Pierrick Bouvier (47):
+  include/system/hvf: missing vaddr include
+  meson: add common libs for target and target_system
+  target/arm: move kvm stubs and remove CONFIG_KVM from kvm_arm.h
+  target/arm/kvm-stub: add kvm_arm_reset_vcpu stub
+  target/arm/cpu: move arm_cpu_kvm_set_irq to kvm.c
+  target/arm/cpu: remove TARGET_BIG_ENDIAN dependency
+  target/arm/cpu: remove TARGET_AARCH64 around aarch64_cpu_dump_state
+    common
+  target/arm/cpu: remove TARGET_AARCH64 in arm_cpu_finalize_features
+  target/arm/cpu: compile file twice (user, system) only
+  target/arm/cpu32-stubs.c: compile file twice (user, system)
+  tcg: add vaddr type for helpers
+  target/arm/helper: use vaddr instead of target_ulong for
+    exception_pc_alignment
+  target/arm/helper: use vaddr instead of target_ulong for probe_access
+  target/arm/helper: extract common helpers
+  target/arm/debug_helper: only include common helpers
+  target/arm/debug_helper: remove target_ulong
+  target/arm/debug_helper: compile file twice (user, system)
+  target/arm/helper: restrict include to common helpers
+  target/arm/helper: replace target_ulong by vaddr
+  target/arm/helper: expose aarch64 cpu registration
+  target/arm/helper: remove remaining TARGET_AARCH64
+  target/arm/helper: compile file twice (user, system)
+  target/arm/vfp_fpscr: compile file twice (user, system)
+  target/arm/arch_dump: remove TARGET_AARCH64 conditionals
+  target/arm/arch_dump: compile file once (system)
+  target/arm/arm-powerctl: compile file once (system)
+  target/arm/cortex-regs: compile file once (system)
+  target/arm/ptw: replace target_ulong with int64_t
+  target/arm/ptw: replace TARGET_AARCH64 by CONFIG_ATOMIC64 from
+    arm_casq_ptw
+  target/arm/ptw: compile file once (system)
+  target/arm/meson: accelerator files are not needed in user mode
+  target/arm/kvm-stub: compile file once (system)
+  target/arm/machine: reduce migration include to avoid target specific
+    definitions
+  target/arm/machine: remove TARGET_AARCH64 from migration state
+  target/arm/machine: move cpu_post_load kvm bits to
+    kvm_arm_cpu_post_load function
+  target/arm/kvm-stub: add missing stubs
+  target/arm/machine: compile file once (system)
+  target/arm/tcg/vec_internal: use forward declaration for CPUARMState
+  target/arm/tcg/crypto_helper: compile file once
+  target/arm/tcg/hflags: compile file twice (system, user)
+  target/arm/tcg/iwmmxt_helper: compile file twice (system, user)
+  target/arm/tcg/neon_helper: compile file twice (system, user)
+  target/arm/tcg/tlb_helper: compile file twice (system, user)
+  target/arm/helper: restrict define_tlb_insn_regs to system target
+  target/arm/tcg/tlb-insns: compile file once (system)
+  target/arm/tcg/arith_helper: compile file once
+  target/arm/tcg/vfp_helper: compile file twice (system, user)
+
+ meson.build                    |   78 ++-
+ include/system/hvf.h           |    1 +
+ include/tcg/tcg-op-common.h    |    1 +
+ include/tcg/tcg.h              |   14 +
+ target/arm/helper.h            | 1152 +------------------------------
+ target/arm/internals.h         |    6 +-
+ target/arm/kvm_arm.h           |   87 +--
+ target/arm/tcg/helper.h        | 1153 ++++++++++++++++++++++++++++++++
+ target/arm/tcg/vec_internal.h  |    2 +
+ include/exec/helper-head.h.inc |   11 +
+ target/arm/arch_dump.c         |    6 -
+ target/arm/cpu.c               |   47 +-
+ target/arm/cpu32-stubs.c       |   26 +
+ target/arm/debug_helper.c      |    6 +-
+ target/arm/helper.c            |   24 +-
+ target/arm/hyp_gdbstub.c       |    6 +-
+ target/arm/kvm-stub.c          |   97 +++
+ target/arm/kvm.c               |   42 +-
+ target/arm/machine.c           |   15 +-
+ target/arm/ptw.c               |    6 +-
+ target/arm/tcg/arith_helper.c  |    5 +-
+ target/arm/tcg/crypto_helper.c |    6 +-
+ target/arm/tcg/hflags.c        |    4 +-
+ target/arm/tcg/iwmmxt_helper.c |    4 +-
+ target/arm/tcg/neon_helper.c   |    4 +-
+ target/arm/tcg/op_helper.c     |    2 +-
+ target/arm/tcg/tlb-insns.c     |    7 -
+ target/arm/tcg/tlb_helper.c    |    5 +-
+ target/arm/tcg/translate-a64.c |    2 +-
+ target/arm/tcg/translate.c     |    2 +-
+ target/arm/tcg/vfp_helper.c    |    4 +-
+ tcg/tcg.c                      |    5 +
+ target/arm/meson.build         |   41 +-
+ target/arm/tcg/meson.build     |   29 +-
+ 34 files changed, 1519 insertions(+), 1381 deletions(-)
+ create mode 100644 target/arm/tcg/helper.h
+ create mode 100644 target/arm/cpu32-stubs.c
+
 -- 
 2.47.2
 
