@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7973AC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 03:19:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6FE4C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 03:19:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEJbH-0000bv-OZ; Sun, 11 May 2025 23:13:09 -0400
+	id 1uEJcl-0007k9-HY; Sun, 11 May 2025 23:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uEJad-000889-EF; Sun, 11 May 2025 23:12:27 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1uEJc0-0004qG-QO; Sun, 11 May 2025 23:13:52 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uEJab-0006ql-OK; Sun, 11 May 2025 23:12:27 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-22fb33898bbso47266055ad.3; 
- Sun, 11 May 2025 20:12:24 -0700 (PDT)
+ id 1uEJbx-00072q-Fb; Sun, 11 May 2025 23:13:51 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-af6a315b491so3414131a12.1; 
+ Sun, 11 May 2025 20:13:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747019543; x=1747624343; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747019627; x=1747624427; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kDqoWuZwIRvGFlMJ4dv35HlEIf/ra31t+mGO69ly2tI=;
- b=kD5RNsCAIYjqvPx0A+xjjt98EShZDlkTF5BynNO0U8f5tcfZ0ay4oCihtCOt+5bK0i
- yKlQeG1942NwwPSIifcnQpVrYP0RfwkfgUj3imvbaySm0/hZcFN2Ba2c8b4WRO3NRxE6
- 8KLHUaiHdbhXjCG/sdK7safM7t8OIlFQ9qrQivg0w7F/7YhbR9mvJHxQKzVajdMjYYqE
- Ot3uGqXGV09hBhhsEJlXh+pgaeXypHQhfJIBjDrJFUNYnIKAQAah6N+7cnWrDSPI+lBL
- O21mOfGkhrTiDlJBIBAoWrTUf3GAXPYjY9+J2UtgbPGqeWYvwEaLjo0DlZrcipVNfZyz
- qWZA==
+ bh=PxfUtgSOc/GLqLegPYk6b/4JXLPnqPz0Npk/FPOwRoI=;
+ b=B00SBdQFSQvI8X6TNjfWm4C1CPgVhuqvaPTfPA1krj0QEaKQV9STTiW4ytGbQoLGKU
+ hO9i3chFM97d39JsJTDXcOfnhEzUcEyBcUU6k/CwQ2SmnYkDu8rOiClC2xiwweVRLp/p
+ M3KxY73mNSltVHnOhu3z48oNl4tkeUm3tn8pVtXWZAlkzqxaCv8UCNiAjnYlfD4YI4/n
+ wI2m8MaM+BmfKsuiZ6qF3j1CxCL7ZnNqMb2lIK2rcm2dj/43Ybo91NtBmacTHPv481R7
+ OtN11wCFKmXMe3FJPZZC4ASUcjzKQJrPnY9BorZi8zEAVbv5eBOrJzy1WY/EQlfEkbmD
+ qWgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747019543; x=1747624343;
+ d=1e100.net; s=20230601; t=1747019627; x=1747624427;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kDqoWuZwIRvGFlMJ4dv35HlEIf/ra31t+mGO69ly2tI=;
- b=FNt4/cfCGsUoXEUCD2PR+fkP9d7HVf8t5zwIUUGJOk2qwskl5/6HLloniKNKLAawQh
- zrbn+h3fUWUJI53DKcf4n+F85KSIfE2GVqX3/+5Rx8OCCQEgEgJOWSxdAOi1sb2dTz+8
- r6YNdEelf0jfXYcaSgHxNsO3O3Ya1YCkowHuYXmGlvYiyeYABw+QQial3rrrwTEbkhKL
- 887J/E6EWhOo4stZJldTiQOF9ouUSA2j07EYIcp7e8kY3N5VpWRU1K5JEIa/sqG5TA/X
- z13/04OPA5AULmrfvU0O8UYDwTNFpPbISp5Kjth/PexFScE9OdSlZwI8M+3CzWuHFc34
- 7p4w==
+ bh=PxfUtgSOc/GLqLegPYk6b/4JXLPnqPz0Npk/FPOwRoI=;
+ b=pGqtFp6yHCG6Q9U2si5/D9/ZQiWN1f4Xc3O1hVY8VMPcPCX+Zuav1p+fiJrQTpZbzj
+ UBP7zl7t+NBFRzr87ZbQzVm3pMt84hFRqngWDSXz2afNstbjIZE3jphGMEcnNJLA1o4q
+ adTDJv637g6jqFVMyfH38gUFopFJXcUn+x0oBbPxqBF50DI7qzR6stJvO7PQHJRogJzc
+ 0BKzOOOdXWAxDCoWfGOXfVhn/U0z5KmgUId4tzAXN2ZK86MPdb2yLkJFckptcwSQ1pL9
+ pUgNyMYhuV9fhyR/ro43It/+EKnV27b0RZlFR+D1AoeGDlWcV2ApdCy1zVbJuntOv6Hj
+ +KJg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXuA4Sfed3csQmiPZtBxbOQ/YEuXubNTC6ccl+PH06aMlW7Xs5fQehS7DLJpJNcLtdGDnOyXYO2Iffs@nongnu.org
-X-Gm-Message-State: AOJu0YzF1rVg8UUPoW9JD701ioxVWZnltk72ZaL+Iqs36B97DmCqdV98
- GA5tPYN+rP9LT+1ks7jd9QHb/iB1AtY/sKzNdNmJJUvtyZe2H2JYfeAGfw==
-X-Gm-Gg: ASbGncshfsPE+p5nVoUVvRs+kY/1OETPyppsS0kwEiUoAPxTxpoYThYL6Rkwt53HWhG
- JB/skmJ+1b9P3vODwolO8+V9aQCjajz4dnLH8L7deVWPuL5SuqG3vOTUh+gSsexR3gNCUm9URtH
- nXvOOGCM++FxLpdRMEIm/if9gY8MSr3/dZFdtzf99J4mlDR21R/kbnVvlqTsnoxC1253LRAg8D9
- nsT41ZPxtpCsAhkuZjkcFMiLnwY9hDrJLtf/OP50PkIsnnM3LM6AoW+wDs7Pabl+dW8K4namAZa
- QuiZJV6piQdC0N2I96ZcHWVLk9T/L8Lpa6XTeavaMu/zbG1M70oCHpVCsrMQnYSp1vX6
-X-Google-Smtp-Source: AGHT+IF1pZ1sGAYPbHdP1EgKQy/1oo/aC1LUr0zUbte5hf3oiq8UI5NE1jDF7FVs0GmFeKCO5qZVSg==
-X-Received: by 2002:a17:902:f706:b0:22e:6ea8:8a14 with SMTP id
- d9443c01a7336-22fc8b76adbmr210783205ad.24.1747019543184; 
- Sun, 11 May 2025 20:12:23 -0700 (PDT)
+ AJvYcCULyuNoZkVcXUitP2+c/WarOcz6SONGzxm2ij/phD7SgfPPdhU6b5Lb3LRjAYFYsjBFgbDtobD28Mjz@nongnu.org
+X-Gm-Message-State: AOJu0Yw9pHyvNcEKoB3mDPWp2I/kdnGOQPMvLkoPrrCX8Qx8Ju0Z9U9B
+ EFP01Htbq6KsSGhrU739lMjoO09wHmrQz0CzbMBlfiCq+ymZvbDRaQ2U5Q==
+X-Gm-Gg: ASbGncvI8NZImEhhnmXAcLEqpFsG6oirkMNzzx5FzKTLu5ypBGtt/DwRkgpPb4u9iS6
+ UQW8QO+jYf9fbOy1wLNc5x/VL7IsK7fWoqhJXWSzut88hNTQTDxhEOW+uaB6trCK7+WK5sk0WKL
+ rc0URTL2u7ew3clR37W0sh3JPjMT7y1r4tTEBdaDbo5TfqqMnHqudTraBTCtWKT/jTB6FsCCk3x
+ NRQQ3ZWDd7ICMiL+i1VbFlHi+t+Gt85WO/dyX7ftPPH40q/skOLCs0sf7VLh97133oBuEYorN4L
+ z2DT4atljskxefsM38EyHv7wp83RdSZ7NZ8nWARH7/remc/bdLp8hyVB6A==
+X-Google-Smtp-Source: AGHT+IF6jPVZoqb3BaiEdaME/kq0Krvj/fw23XexClrvTDneQfZQYjkKGHtiZOP5V1qo1ADUO5OVlg==
+X-Received: by 2002:a17:903:32ca:b0:223:f408:c3e2 with SMTP id
+ d9443c01a7336-22fc8b41541mr169182015ad.14.1747019627058; 
+ Sun, 11 May 2025 20:13:47 -0700 (PDT)
 Received: from wheely.local0.net ([118.209.229.237])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b234951024csm4750069a12.5.2025.05.11.20.12.19
+ 41be03b00d2f7-b234951024csm4750069a12.5.2025.05.11.20.13.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 20:12:22 -0700 (PDT)
+ Sun, 11 May 2025 20:13:46 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
  Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
  Caleb Schlossin <calebs@linux.vnet.ibm.com>
-Subject: [PATCH 20/50] pnv/xive2: Permit valid writes to VC/PC Flush Control
- registers
-Date: Mon, 12 May 2025 13:10:29 +1000
-Message-ID: <20250512031100.439842-21-npiggin@gmail.com>
+Subject: [PATCH 43/50] ppc/xive: Check TIMA operations validity
+Date: Mon, 12 May 2025 13:10:52 +1000
+Message-ID: <20250512031100.439842-44-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250512031100.439842-1-npiggin@gmail.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,85 +101,309 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Michael Kowal <kowal@linux.ibm.com>
+Certain TIMA operations should only be performed when a ring is valid,
+others when the ring is invalid, and they are considered undefined if
+used incorrectly. Add checks for this condition.
 
-Writes to the Flush Control registers were logged as invalid
-when they are allowed. Clearing the unsupported want_cache_disable
-feature is supported, so don't log an error in that case.
-
-Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/intc/pnv_xive2.c | 36 ++++++++++++++++++++++++++++++++----
- 1 file changed, 32 insertions(+), 4 deletions(-)
+ hw/intc/xive.c        | 196 +++++++++++++++++++++++++-----------------
+ include/hw/ppc/xive.h |   1 +
+ 2 files changed, 116 insertions(+), 81 deletions(-)
 
-diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-index 3c26cd6b77..c9374f0eee 100644
---- a/hw/intc/pnv_xive2.c
-+++ b/hw/intc/pnv_xive2.c
-@@ -1411,7 +1411,14 @@ static void pnv_xive2_ic_vc_write(void *opaque, hwaddr offset,
-     /*
-      * ESB cache updates (not modeled)
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index aeca66e56e..d5bbd8f4c6 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -25,6 +25,19 @@
+ /*
+  * XIVE Thread Interrupt Management context
+  */
++bool xive_ring_valid(XiveTCTX *tctx, uint8_t ring)
++{
++    uint8_t cur_ring;
++
++    for (cur_ring = ring; cur_ring <= TM_QW3_HV_PHYS;
++         cur_ring += XIVE_TM_RING_SIZE) {
++        if (!(tctx->regs[cur_ring + TM_WORD2] & 0x80)) {
++            return false;
++        }
++    }
++    return true;
++}
++
+ bool xive_nsr_indicates_exception(uint8_t ring, uint8_t nsr)
+ {
+     switch (ring) {
+@@ -663,6 +676,8 @@ typedef struct XiveTmOp {
+     uint8_t  page_offset;
+     uint32_t op_offset;
+     unsigned size;
++    bool     hw_ok;
++    bool     sw_ok;
+     void     (*write_handler)(XivePresenter *xptr, XiveTCTX *tctx,
+                               hwaddr offset,
+                               uint64_t value, unsigned size);
+@@ -675,34 +690,34 @@ static const XiveTmOp xive_tm_operations[] = {
+      * MMIOs below 2K : raw values and special operations without side
+      * effects
       */
--    /* case VC_ESBC_FLUSH_CTRL: */
-+    case VC_ESBC_FLUSH_CTRL:
-+        if (val & VC_ESBC_FLUSH_CTRL_WANT_CACHE_DISABLE) {
-+            xive2_error(xive, "VC: unsupported write @0x%"HWADDR_PRIx
-+                        " value 0x%"PRIx64" bit[2] poll_want_cache_disable",
-+                        offset, val);
-+            return;
-+        }
-+        break;
-     case VC_ESBC_FLUSH_POLL:
-         xive->vc_regs[VC_ESBC_FLUSH_CTRL >> 3] |= VC_ESBC_FLUSH_CTRL_POLL_VALID;
-         /* ESB update */
-@@ -1427,7 +1434,14 @@ static void pnv_xive2_ic_vc_write(void *opaque, hwaddr offset,
-     /*
-      * EAS cache updates (not modeled)
+-    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,       1, xive_tm_set_os_cppr,
+-                                                     NULL },
+-    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      4, xive_tm_push_os_ctx,
+-                                                     NULL },
+-    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, xive_tm_set_hv_cppr,
+-                                                     NULL },
+-    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push,
+-                                                     NULL },
+-    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, NULL,
+-                                                     xive_tm_vt_poll },
++    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,       1, true, true,
++      xive_tm_set_os_cppr, NULL },
++    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      4, true, true,
++      xive_tm_push_os_ctx, NULL },
++    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, true, true,
++      xive_tm_set_hv_cppr, NULL },
++    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, false, true,
++      xive_tm_vt_push, NULL },
++    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, true, true,
++      NULL, xive_tm_vt_poll },
+ 
+     /* MMIOs above 2K : special operations with side effects */
+-    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_REG,         2, NULL,
+-                                                     xive_tm_ack_os_reg },
+-    { XIVE_TM_OS_PAGE, TM_SPC_SET_OS_PENDING,     1, xive_tm_set_os_pending,
+-                                                     NULL },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        4, NULL,
+-                                                     xive_tm_pull_os_ctx },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        8, NULL,
+-                                                     xive_tm_pull_os_ctx },
+-    { XIVE_TM_HV_PAGE, TM_SPC_ACK_HV_REG,         2, NULL,
+-                                                     xive_tm_ack_hv_reg },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      4, NULL,
+-                                                     xive_tm_pull_pool_ctx },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      8, NULL,
+-                                                     xive_tm_pull_pool_ctx },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_PHYS_CTX,      1, NULL,
+-                                                     xive_tm_pull_phys_ctx },
++    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_REG,         2, true, false,
++      NULL, xive_tm_ack_os_reg },
++    { XIVE_TM_OS_PAGE, TM_SPC_SET_OS_PENDING,     1, true, false,
++      xive_tm_set_os_pending, NULL },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        4, true, false,
++      NULL, xive_tm_pull_os_ctx },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        8, true, false,
++      NULL, xive_tm_pull_os_ctx },
++    { XIVE_TM_HV_PAGE, TM_SPC_ACK_HV_REG,         2, true, false,
++      NULL, xive_tm_ack_hv_reg },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      4, true, false,
++      NULL, xive_tm_pull_pool_ctx },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      8, true, false,
++      NULL, xive_tm_pull_pool_ctx },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_PHYS_CTX,      1, true, false,
++      NULL, xive_tm_pull_phys_ctx },
+ };
+ 
+ static const XiveTmOp xive2_tm_operations[] = {
+@@ -710,52 +725,48 @@ static const XiveTmOp xive2_tm_operations[] = {
+      * MMIOs below 2K : raw values and special operations without side
+      * effects
       */
--    /* case VC_EASC_FLUSH_CTRL: */
-+    case VC_EASC_FLUSH_CTRL:
-+        if (val & VC_EASC_FLUSH_CTRL_WANT_CACHE_DISABLE) {
-+            xive2_error(xive, "VC: unsupported write @0x%"HWADDR_PRIx
-+                        " value 0x%"PRIx64" bit[2] poll_want_cache_disable",
-+                        offset, val);
-+            return;
-+        }
-+        break;
-     case VC_EASC_FLUSH_POLL:
-         xive->vc_regs[VC_EASC_FLUSH_CTRL >> 3] |= VC_EASC_FLUSH_CTRL_POLL_VALID;
-         /* EAS update */
-@@ -1466,7 +1480,14 @@ static void pnv_xive2_ic_vc_write(void *opaque, hwaddr offset,
-         break;
+-    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,       1, xive2_tm_set_os_cppr,
+-                                                     NULL },
+-    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      4, xive2_tm_push_os_ctx,
+-                                                     NULL },
+-    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      8, xive2_tm_push_os_ctx,
+-                                                     NULL },
+-    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_LGS,        1, xive_tm_set_os_lgs,
+-                                                     NULL },
+-    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, xive2_tm_set_hv_cppr,
+-                                                     NULL },
+-    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push,
+-                                                     NULL },
+-    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, NULL,
+-                                                     xive_tm_vt_poll },
+-    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_T,     1, xive2_tm_set_hv_target,
+-                                                     NULL },
++    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_CPPR,       1, true, true,
++      xive2_tm_set_os_cppr, NULL },
++    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      4, true, true,
++      xive2_tm_push_os_ctx, NULL },
++    { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      8, true, true,
++      xive2_tm_push_os_ctx, NULL },
++    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_LGS,        1, true, true,
++      xive_tm_set_os_lgs, NULL },
++    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, true, true,
++      xive2_tm_set_hv_cppr, NULL },
++    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, true, true,
++      NULL, xive_tm_vt_poll },
++    { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_T,     1, true, true,
++      xive2_tm_set_hv_target, NULL },
  
+     /* MMIOs above 2K : special operations with side effects */
+-    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_REG,         2, NULL,
+-                                                   xive_tm_ack_os_reg },
+-    { XIVE_TM_OS_PAGE, TM_SPC_SET_OS_PENDING,     1, xive_tm_set_os_pending,
+-                                                     NULL },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX_G2,     4, NULL,
+-                                                     xive2_tm_pull_os_ctx },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        4, NULL,
+-                                                     xive2_tm_pull_os_ctx },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        8, NULL,
+-                                                     xive2_tm_pull_os_ctx },
+-    { XIVE_TM_HV_PAGE, TM_SPC_ACK_HV_REG,         2, NULL,
+-                                                     xive_tm_ack_hv_reg },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX_G2,   4, NULL,
+-                                                     xive2_tm_pull_pool_ctx },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      4, NULL,
+-                                                     xive2_tm_pull_pool_ctx },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      8, NULL,
+-                                                     xive2_tm_pull_pool_ctx },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX_OL,     1, xive2_tm_pull_os_ctx_ol,
+-                                                     NULL },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_PHYS_CTX_G2,   4, NULL,
+-                                                     xive2_tm_pull_phys_ctx },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_PHYS_CTX,      1, NULL,
+-                                                     xive2_tm_pull_phys_ctx },
+-    { XIVE_TM_HV_PAGE, TM_SPC_PULL_PHYS_CTX_OL,   1, xive2_tm_pull_phys_ctx_ol,
+-                                                     NULL },
+-    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_EL,          1, xive2_tm_ack_os_el,
+-                                                     NULL },
++    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_REG,         2, true, false,
++      NULL, xive_tm_ack_os_reg },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX_G2,     4, true, false,
++      NULL, xive2_tm_pull_os_ctx },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        4, true, false,
++      NULL, xive2_tm_pull_os_ctx },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX,        8, true, false,
++      NULL, xive2_tm_pull_os_ctx },
++    { XIVE_TM_HV_PAGE, TM_SPC_ACK_HV_REG,         2, true, false,
++      NULL, xive_tm_ack_hv_reg },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX_G2,   4, true, false,
++      NULL, xive2_tm_pull_pool_ctx },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      4, true, false,
++      NULL, xive2_tm_pull_pool_ctx },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      8, true, false,
++      NULL, xive2_tm_pull_pool_ctx },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX_OL,     1, true, false,
++      xive2_tm_pull_os_ctx_ol, NULL },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_PHYS_CTX_G2,   4, true, false,
++      NULL, xive2_tm_pull_phys_ctx },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_PHYS_CTX,      1, true, false,
++      NULL, xive2_tm_pull_phys_ctx },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_PHYS_CTX_OL,   1, true, false,
++      xive2_tm_pull_phys_ctx_ol, NULL },
++    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_EL,          1, true, false,
++      xive2_tm_ack_os_el, NULL },
+ };
  
--    /* case VC_ENDC_FLUSH_CTRL: */
-+    case VC_ENDC_FLUSH_CTRL:
-+        if (val & VC_ENDC_FLUSH_CTRL_WANT_CACHE_DISABLE) {
-+            xive2_error(xive, "VC: unsupported write @0x%"HWADDR_PRIx
-+                        " value 0x%"PRIx64" bit[2] poll_want_cache_disable",
-+                        offset, val);
-+            return;
-+        }
-+        break;
-     case VC_ENDC_FLUSH_POLL:
-         xive->vc_regs[VC_ENDC_FLUSH_CTRL >> 3] |= VC_ENDC_FLUSH_CTRL_POLL_VALID;
-         break;
-@@ -1687,7 +1708,14 @@ static void pnv_xive2_ic_pc_write(void *opaque, hwaddr offset,
-         pnv_xive2_nxc_update(xive, watch_engine);
-         break;
+ static const XiveTmOp *xive_tm_find_op(XivePresenter *xptr, hwaddr offset,
+@@ -797,18 +808,28 @@ void xive_tctx_tm_write(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
+                         uint64_t value, unsigned size)
+ {
+     const XiveTmOp *xto;
++    uint8_t ring = offset & TM_RING_OFFSET;
++    bool is_valid = xive_ring_valid(tctx, ring);
++    bool hw_owned = is_valid;
  
--   /* case PC_NXC_FLUSH_CTRL: */
-+    case PC_NXC_FLUSH_CTRL:
-+        if (val & PC_NXC_FLUSH_CTRL_WANT_CACHE_DISABLE) {
-+            xive2_error(xive, "VC: unsupported write @0x%"HWADDR_PRIx
-+                        " value 0x%"PRIx64" bit[2] poll_want_cache_disable",
-+                        offset, val);
-+            return;
+     trace_xive_tctx_tm_write(tctx->cs->cpu_index, offset, size, value);
+ 
+-    /*
+-     * TODO: check V bit in Q[0-3]W2
+-     */
+-
+     /*
+      * First, check for special operations in the 2K region
+      */
++    xto = xive_tm_find_op(tctx->xptr, offset, size, true);
++    if (xto) {
++        if (hw_owned && !xto->hw_ok) {
++            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: undefined write to HW TIMA "
++                          "@%"HWADDR_PRIx" size %d\n", offset, size);
 +        }
-+        break;
-     case PC_NXC_FLUSH_POLL:
-         xive->pc_regs[PC_NXC_FLUSH_CTRL >> 3] |= PC_NXC_FLUSH_CTRL_POLL_VALID;
-         break;
++        if (!hw_owned && !xto->sw_ok) {
++            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: undefined write to SW TIMA "
++                          "@%"HWADDR_PRIx" size %d\n", offset, size);
++        }
++    }
++
+     if (offset & TM_SPECIAL_OP) {
+-        xto = xive_tm_find_op(tctx->xptr, offset, size, true);
+         if (!xto) {
+             qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid write access at TIMA "
+                           "@%"HWADDR_PRIx" size %d\n", offset, size);
+@@ -821,7 +842,6 @@ void xive_tctx_tm_write(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
+     /*
+      * Then, for special operations in the region below 2K.
+      */
+-    xto = xive_tm_find_op(tctx->xptr, offset, size, true);
+     if (xto) {
+         xto->write_handler(xptr, tctx, offset, value, size);
+         return;
+@@ -830,6 +850,11 @@ void xive_tctx_tm_write(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
+     /*
+      * Finish with raw access to the register values
+      */
++    if (hw_owned) {
++        /* Store context operations are dangerous when context is valid */
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: undefined write to HW TIMA "
++                      "@%"HWADDR_PRIx" size %d\n", offset, size);
++    }
+     xive_tm_raw_write(tctx, offset, value, size);
+ }
+ 
+@@ -837,17 +862,27 @@ uint64_t xive_tctx_tm_read(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
+                            unsigned size)
+ {
+     const XiveTmOp *xto;
++    uint8_t ring = offset & TM_RING_OFFSET;
++    bool is_valid = xive_ring_valid(tctx, ring);
++    bool hw_owned = is_valid;
+     uint64_t ret;
+ 
+-    /*
+-     * TODO: check V bit in Q[0-3]W2
+-     */
++    xto = xive_tm_find_op(tctx->xptr, offset, size, false);
++    if (xto) {
++        if (hw_owned && !xto->hw_ok) {
++            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: undefined read to HW TIMA "
++                          "@%"HWADDR_PRIx" size %d\n", offset, size);
++        }
++        if (!hw_owned && !xto->sw_ok) {
++            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: undefined read to SW TIMA "
++                          "@%"HWADDR_PRIx" size %d\n", offset, size);
++        }
++    }
+ 
+     /*
+      * First, check for special operations in the 2K region
+      */
+     if (offset & TM_SPECIAL_OP) {
+-        xto = xive_tm_find_op(tctx->xptr, offset, size, false);
+         if (!xto) {
+             qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid read access to TIMA"
+                           "@%"HWADDR_PRIx" size %d\n", offset, size);
+@@ -860,7 +895,6 @@ uint64_t xive_tctx_tm_read(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
+     /*
+      * Then, for special operations in the region below 2K.
+      */
+-    xto = xive_tm_find_op(tctx->xptr, offset, size, false);
+     if (xto) {
+         ret = xto->read_handler(xptr, tctx, offset, size);
+         goto out;
+diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
+index 2372d1014b..b7ca8544e4 100644
+--- a/include/hw/ppc/xive.h
++++ b/include/hw/ppc/xive.h
+@@ -365,6 +365,7 @@ static inline uint32_t xive_tctx_word2(uint8_t *ring)
+     return *((uint32_t *) &ring[TM_WORD2]);
+ }
+ 
++bool xive_ring_valid(XiveTCTX *tctx, uint8_t ring);
+ bool xive_nsr_indicates_exception(uint8_t ring, uint8_t nsr);
+ bool xive_nsr_indicates_group_exception(uint8_t ring, uint8_t nsr);
+ uint8_t xive_nsr_exception_ring(uint8_t ring, uint8_t nsr);
 -- 
 2.47.1
 
