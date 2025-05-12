@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E23EC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 17:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7546C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 17:06:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEWaU-0005TU-TL; Mon, 12 May 2025 13:05:10 -0400
+	id 1uEWb4-0005dK-NW; Mon, 12 May 2025 13:05:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uEWaS-0005SP-UD
- for qemu-devel@nongnu.org; Mon, 12 May 2025 13:05:09 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ id 1uEWb0-0005b5-OI
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 13:05:44 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uEWaQ-0001Zi-Us
- for qemu-devel@nongnu.org; Mon, 12 May 2025 13:05:08 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-70b51b9de1fso17676267b3.1
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 10:05:06 -0700 (PDT)
+ id 1uEWav-0001bx-QN
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 13:05:42 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-7082ad1355bso39874747b3.1
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 10:05:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747069505; x=1747674305; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747069536; x=1747674336; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=zvRx2YjYaLEAvjVNHgVkFrKkwlNHjH/BSNbHDUcFyqo=;
- b=sd8svAHXXonUh6xPk3zFxaaxGE7K5sH92wfBy4QqG5osNigs33vB/HlTwmP1s3wFvy
- b7HwUqmacvkgwK+lZh29nA+FaPjBzDnYykT1HleqvD5o6eqmLgroOth4DcBynYsD5Z/i
- XGQRXi4UwlQMErFN9cua1DMUf3yirnGP7D6zv6eCUnvoYkMrxmI3CZy0UzUuLLPxLaJv
- JN+W4QsB4VG/uGBIYfoPpjduLNMAVnlw1MiHHV5mhnvgT1AnI7Pp8UN6QW1eIdzfooGN
- wKLlbVF43WoJvRe1qGGwNJjZHfS5fDsOiWgBhOAVme73TDESWlNwlo24Szp0XSzBDZAj
- jGow==
+ bh=8HTNP+Dz9uUBMvSkat76DOjyJL5YwhYIaJa66H/oiLI=;
+ b=IjzfS+Iktd4qoOF2MVgiv8/K23WpT2k+MNuqlYddpKWm+dK6fH/qgWiaOxNXSy7ypE
+ 8RqMbEbqJpeBzSFo39EwMruL4fuhHhzyis/bCjPO7Fj89+LehmalI0ZTFEnhM4xzikft
+ 7bY+GRfVcNR+Ig5Jo3IHRyjQrQRPO8yax4iQyW1rpfUsDuohIP6L24W852ZLV+oqlAeq
+ E5R2vxtzx9lPmfJE+0TxRG7aR0GSnmJ/q0ENtykUi1kvylEzY4Nzzrs6NZATWcaGvhp/
+ DJTf2eBQpq3XeGaJ+TmJfA6hm5TnaZ/O+woSjdWEWp92DR69RdC5fEwy77JPPA7AQD7N
+ 0djw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747069505; x=1747674305;
+ d=1e100.net; s=20230601; t=1747069536; x=1747674336;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zvRx2YjYaLEAvjVNHgVkFrKkwlNHjH/BSNbHDUcFyqo=;
- b=AD14iHRL/THKQoR7LvYLYTvw4JgrfoQWZfk2o21e6P5drKh1HhLd2EQO/HLwaF5HpJ
- DC1taki050f4sulB6TYwcgW+WdzSRI06JoRrG0axyGhpWYf0vYzFbzNjtLIKSoVCXHj7
- wdA6LVDkSk6/KNwbNnS1ga/46Y83hATQSRvPDPndpm8WdBoqOGaArgg+p1dkquypzRK2
- sEw1uNsdw2jDx4BBLRhdYgUGPt+jY3QfypSlToum6R3Oakb+xsgasx0OC+KvY8gxjsvt
- Xps9iIQpaETDoAmskDUcXauLDoxLPIyCB9aPd1Ana/tiKxuKv61PU9asBfv77fDhnngl
- iecg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUHj/JP6i4MIeyL1mx98/QZPfoyrGecUOB2BpLJzS88V6XlKCNZG/vm2uI1R/ylUP8wtc3hbX+lY8Gl@nongnu.org
-X-Gm-Message-State: AOJu0YwVy5k6S3G2NrPN+jzq9zEEfWsERAaPma8m85m9lTbXHL+bOWkL
- CCk2MiwIIYNrAyh8wr+A0VqORtD0ckNeqgfMnPCt4WT+lk1MuiuEiGwFMgLLGNJki82vUNNc5zk
- rq0dSoUf2rQ8qib4EMlqcowYD3AF7bWRn77LeyA==
-X-Gm-Gg: ASbGncsTPExYvMYOSz1tZrjytHMIuzMQJgdFttHZZSadD2jSR1IweVFdPQxjSooJRcN
- yw++ruTsXjD2+OvL+jIg6CrQlDKdlAG7qzGKF8DV+OhDbCJcVOePA0UIRNISS5ux2MHVaLfayCp
- YGpR9XehIGL3ks/5SrA/EaP4kjhgav8rIhXHxxSIXmKiSn
-X-Google-Smtp-Source: AGHT+IGWZXEurE8O5P54U0n4JI6LClwFf259k9kGkbuj8V9/TUnFw2/PLMP2ZE+v1fghd/ZdGo9ftcCpy/pbgyyI6p4=
-X-Received: by 2002:a05:690c:25c3:b0:6fe:b701:6403 with SMTP id
- 00721157ae682-70a3fa21321mr220702057b3.11.1747069505232; Mon, 12 May 2025
- 10:05:05 -0700 (PDT)
+ bh=8HTNP+Dz9uUBMvSkat76DOjyJL5YwhYIaJa66H/oiLI=;
+ b=VbugXcY692ud1zom8+q58V8Jx+bdQkP7zNb0oghU0fN9s7xN5gLDuXjWT1E0IAgwID
+ HYU8qTgPuTBwzYlljt30rzs7Y24ZrdX89RV6SkAoFwDE3tBxqDmO7ftgv8FP2QYm4LKt
+ 2Hbf3vkmLScaUZl7JBbR+HOJ4pXvEUXokUBwF5h+7qg3lGBHr+7gxdwoVu/3eR0FpU+/
+ fHSA6zNDr2JmRBpn8VYbWOppEw9A9Fz9+37tTIIRFZkaiCsVnD/kZKOBg76ccXRzkOvo
+ fDw3OXjSYSwIr3yqtyIjXvrQLl1NAr3TUZwQGGc3lqAFCvCoLviUjvFyHE0v9w9yxIc+
+ yCLw==
+X-Gm-Message-State: AOJu0YwSULkn8gwBhlEc4MLjLNNJ09gHPskB55v5Yp+9YOfd00MjL2hV
+ ltWZ0NP2RC9qzl53aeBTTAELUxYbAB/Np+pnw6aOsOuLjJ1YUIk818pNFDWSSf9C7qwd48E+AMy
+ yu/0OMdWQM3JmTuhYHgjnBmccJ+knWcFCHEGebw==
+X-Gm-Gg: ASbGncuNpTJLcoCfJ2AN1AtbjSV0Os6PFF9zk6z1Oh3Ph7CIKVovjTwqsBlruxvVZMu
+ kQgHW+qRBmtshuY98RVG7kFLvSemr0ND/6JBEwvKYEuqZJgIxnWrIBngWe3IBeHgUUdVm0lnK5x
+ n50eoMisu/3wDik12rz68Wx5N3w5NtmZasew==
+X-Google-Smtp-Source: AGHT+IHJUGXvU7eSQD629soUCAbI1o1OOEKe//YGeeBupCFFNme9TLnTnur0ZOEMcwQ6PGCg+MVCB1198KhwGVBMoSE=
+X-Received: by 2002:a05:690c:6181:b0:709:966c:b648 with SMTP id
+ 00721157ae682-70a3fa1fb5bmr187347917b3.10.1747069536192; Mon, 12 May 2025
+ 10:05:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250508122522.73786-1-philmd@linaro.org>
- <20250510183552.GA116934@fedora>
-In-Reply-To: <20250510183552.GA116934@fedora>
+References: <20250507234241.957746-1-pierrick.bouvier@linaro.org>
+ <CAFEAcA_NgJw=eu+M5WJty0gsq240b8gK3-ZcJ1znwYZz5WC=wA@mail.gmail.com>
+ <726ecb14-fa2e-4692-93a2-5e6cc277c0c2@linaro.org>
+In-Reply-To: <726ecb14-fa2e-4692-93a2-5e6cc277c0c2@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 May 2025 18:04:53 +0100
-X-Gm-Features: AX0GCFssGz2nVMJ9xqBvywkgpJn-9LACjYeS_v-5zSTr_Ns2JBPNBbq0NH564-o
-Message-ID: <CAFEAcA9mav8B+u1-C47KZtc-cnUBGY-f7OZG0QAwtb0uGMdxPg@mail.gmail.com>
-Subject: Re: [PULL 00/19] Misc HW patches for 2025-05-08
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel@nongnu.org
+Date: Mon, 12 May 2025 18:05:25 +0100
+X-Gm-Features: AX0GCFvvctnEj9SSRF9WiDdOiktBdw5JBrK0houKTahMILYX6RROtZ1LUTlNoCA
+Message-ID: <CAFEAcA_WtAAba9QBS_zOPUPtjdeDv+0mDJiTEepHS2+61aZERA@mail.gmail.com>
+Subject: Re: [PATCH v7 00/49] single-binary: compile target/arm twice
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, anjo@rev.ng, 
+ Richard Henderson <richard.henderson@linaro.org>, alex.bennee@linaro.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,14 +96,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 10 May 2025 at 19:38, Stefan Hajnoczi <stefanha@redhat.com> wrote:
+On Mon, 12 May 2025 at 17:53, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
 >
-> Applied, thanks.
+> Hi Peter,
 >
-> Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
+> On 5/11/25 6:40 AM, Peter Maydell wrote:
+> > On Thu, 8 May 2025 at 00:42, Pierrick Bouvier
+> > <pierrick.bouvier@linaro.org> wrote:
+> >>
+> >> More work toward single-binary.
+> >>
+> >> Some files have external dependencies for the single-binary:
+> >> - target/arm/gdbstub.c: gdbhelpers
+> >> - target/arm/arm-qmp-cmds.c: qapi
+> >> - target/arm/tcg/translate*: need deep cleanup in include/tcg
+> >> - target/arm/tcg/cpu*: need TargetInfo implemented for arm/aarch64
+> >> - target/arm/tcg/*-helper*: need deeper split between aarch64 and arm code
+> >> They will not be ported in this series.
+> >>
+> >> Built on {linux, windows, macos} x {x86_64, aarch64}
+> >> Fully tested on linux x {x86_64, aarch64}
+> >>
+> >> Series is now tested and fully reviewed. Thanks for pulling it.
+> >
+> > Do you/Philippe have a plan for how you want this to go into
+> > the tree? I know Philippe has been taking a lot of the
+> > single-binary related patches. Let me know if you want me
+> > to pick it up via target-arm.
+> >
+>
+> During the release code freeze, we mostly used tcg-next.
+> However, now everything is back to normal, we simply work upstream, with
+> a simple "first pulled, first in" strategy, fixing the occasional
+> conflicts on our respective sides.
+>
+> So if you could pull this, that would be appreciated.
 
-This pullreq from Philippe doesn't seem to be in upstream git:
-did you forget to push it?
+I had a go, but it seems to depend on some other patch
+or series that isn't in upstream git yet. Specifically,
+the changes to include/system/hvf.h assume it has an
+include of "cpu.h": you can see it in the context in
+patch 2:
+https://lore.kernel.org/qemu-devel/20250507234241.957746-3-pierrick.bouvier@linaro.org/
+but that include isn't there in upstream git yet, so the
+patches touching that file eventually fail to apply cleanly.
+I assume that's "accel/hvf: Include missing 'hw/core/cpu.h' header",
+but is there anything else this series was based on?
 
 thanks
 -- PMM
