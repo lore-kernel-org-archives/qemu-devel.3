@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73D2FC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B570C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:36:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEV9n-0004cn-PQ; Mon, 12 May 2025 11:33:31 -0400
+	id 1uEV9Q-0003oW-Oc; Mon, 12 May 2025 11:33:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uEV9f-0004UK-Cr
- for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:23 -0400
+ id 1uEV9L-0003hP-Us
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:04 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uEV9d-0006gK-Dn
- for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:23 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54CC9x3V018773;
- Mon, 12 May 2025 15:33:08 GMT
+ id 1uEV9J-0006eF-Sq
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:03 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54CC9gSa027378;
+ Mon, 12 May 2025 15:32:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=7GXCEUBcui7dEk6h4En7eDvmF2/xAi/yupSvWW7uD4c=; b=
- Fd4k+rOQ57Eeyi9luPKPbq3zXD1cDnIQA6NCoHJbX2QVQdKj5376k7/WuvR4bSRI
- 8BvEPbpjiv5xd7gOSNguEtBJ3ch47Cx4+Jx97RCjmFSYaiMFCtg5a9Xw6vQFolIG
- Ur56mdZwoOUaXdvUmcwDxmdTOUhxKU8Fe+EOBgOBPs59wmznzIL1zXekiKMUygZ3
- apZ1iCnp/JCwCYVgwyrcEmjoN8NcxIuW9tmJbtL5dhuecY/3bGRS9gIYolfJAf9J
- 8pU2YoqeVpIm7KY1fWx0dQh/MrKbocb6o6ixGfqCkt0jMFYTe/P3foAwrBZ+ULCb
- +V8B29h6LCBCo+dIwKcsIA==
+ corp-2025-04-25; bh=FfGaPWkw5+fA+BbPzNjjZN7wkjCtFXBTDQqfy4/oqCU=; b=
+ ILO88azr/bppsDhU8NTJ1LY0zpsr1f+XwupL3PqcGsLC8LmbMKn/CD2jHbr2L5pI
+ 7zI5a1DX6ToJmzujAVHmF54cssYq8ZP2OyuV8n59Cy3eWPCeBllK/ewMngo4uo0W
+ RhR3dhSSw3JOwg09kw6LqqPj9VXTC9Rl0htsLZQpALwisLRc/ynMJ9DlB47TjF1J
+ wmMz6rP9AFP0OXrLxv93Eb2CFmiKjIrIaOwXWxUhMnjZeWLTXRRexkr//iVkEjpa
+ 67lz65XD0eZUaZDMt14oIGgYr05iaoSworK64tq2EDt3R8bXk6Arxa7s5nUZMoeB
+ phyzv/Cvdcl5kSJPDsvG0w==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46j13r2sdm-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46j1662ur2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 May 2025 15:33:08 +0000 (GMT)
+ Mon, 12 May 2025 15:32:58 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54CEI9FT002457; Mon, 12 May 2025 15:33:07 GMT
+ with ESMTP id 54CE0xHZ002520; Mon, 12 May 2025 15:32:57 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46jwx366eq-1
+ 46jwx3664w-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 May 2025 15:33:07 +0000
+ Mon, 12 May 2025 15:32:57 +0000
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54CFWk5C030605;
- Mon, 12 May 2025 15:33:07 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54CFWk4i030605;
+ Mon, 12 May 2025 15:32:57 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 46jwx36627-18; Mon, 12 May 2025 15:33:07 +0000
+ ESMTP id 46jwx36627-4; Mon, 12 May 2025 15:32:56 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,9 +63,9 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V3 17/42] vfio/pci: vfio_notifier_init
-Date: Mon, 12 May 2025 08:32:28 -0700
-Message-Id: <1747063973-124548-18-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V3 03/42] migration: lower handler priority
+Date: Mon, 12 May 2025 08:32:14 -0700
+Message-Id: <1747063973-124548-4-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
 References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
@@ -77,18 +77,18 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
  bulkscore=0 suspectscore=0 phishscore=0 mlxlogscore=999 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2504070000
  definitions=main-2505120161
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDE2MSBTYWx0ZWRfX/H2GRP8dSBfQ
- pOyVoI1aF4jgbQymZMNd+3Hs7r9CTWUAUk1fWvT6ym2cPR7f6n8gARNbdwP09oXL8sfqG/7Gidx
- d/uUno4ywljixx30QRxSBluq1mYRdFCPJjMB2G4vwi/AiRQlxf3tgeKp8HlMlOa7SYUHBslNd4M
- PoVcRLR5MPOtPwEgnivaXjCe0VsllhS43qsOpfHntm6DiP0yQQqe4+NmxTk06YT3u/vCQ8/gGuu
- phi9Avul+os6ZN1z/CwDJu5T8rZmw/N8TWWb/xd8KGDx8gT3BPj/kzygzZIiAMBR9bvfQGvkqVP
- EM/IkMI1L3AOqoavI3qAIySbZkE/eOtP2n4HsZTfJQr/znz7SyRPd46mMywE0sgHYP4+iJmVc/8
- aRKDREfkkesUlYsI5kYoAzn3Mq0GPFrrlHSzLvYeyuulWotB0m8uCYej6lsI0QViABMr70zX
-X-Proofpoint-GUID: kj6I7A6zpwzIeM0N4_mVrqnZgp7-7IlQ
-X-Proofpoint-ORIG-GUID: kj6I7A6zpwzIeM0N4_mVrqnZgp7-7IlQ
-X-Authority-Analysis: v=2.4 cv=M6hNKzws c=1 sm=1 tr=0 ts=682214b4 b=1 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDE2MSBTYWx0ZWRfX3xt/tISZiCso
+ Gsa4+iWX1leklgBUD+kPDM9BUJ5QI2snY8a/rPG6XX80uJ7lazubp5AdTcpknjxPyLQBKNltb8w
+ aqOuOij71wdFNNq9EsAMxKJOBlRMgymZJBsprcYioeYpk+7Z02HX5Db+dA/G8YHqGtmhwd3qLd0
+ k4G7WfVDHLCrGBJVNyBlnLGHHs1E6k/ENgNljce47MZms/mFgz/gvqjYRjzump74GnieBeXFCiZ
+ WUncBb5iu1m3c708UZDcgAIfV+O/I1Wlz6gDOMq7o8c/Z2VvLsjrSGRcdLi5KfYBiAxzavSGKon
+ fTs8wmakmkCLiNmIjzmwjW31cV6roZmCZat/K2EYRB+rWiBHCVzyoaudxTnhYjzMRlrl5JhlOO/
+ SNpXalfCyHff9L2D2MMwQoZ37TL2Hp5nMAc+2fYbEgAfhtROuy2F0RnTeiY5oH3DK97JmsKh
+X-Authority-Analysis: v=2.4 cv=VMDdn8PX c=1 sm=1 tr=0 ts=682214aa b=1 cx=c_pps
  a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
- a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=w3t5z44oxExOTv3jo9sA:9
+ a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8 a=AmUmXUaXWCDEmLEOI0wA:9
+X-Proofpoint-ORIG-GUID: Bacmh-tutYyaLDv0HrQKwXAtjyfAseTg
+X-Proofpoint-GUID: Bacmh-tutYyaLDv0HrQKwXAtjyfAseTg
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -32
@@ -114,134 +114,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move event_notifier_init calls to a helper vfio_notifier_init.
-This version is trivial, but it will be expanded to support CPR
-in subsequent patches.  No functional change.
+Define a vmstate priority that is lower than the default, so its handlers
+run after all default priority handlers.  Since 0 is no longer the default
+priority, translate an uninitialized priority of 0 to MIG_PRI_DEFAULT.
+
+CPR for vfio will use this to install handlers for containers that run
+after handlers for the devices that they contain.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- hw/vfio/pci.c | 40 +++++++++++++++++++++++++---------------
- 1 file changed, 25 insertions(+), 15 deletions(-)
+ include/migration/vmstate.h | 6 +++++-
+ migration/savevm.c          | 4 ++--
+ 2 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index b46c42e..4159deb 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -56,6 +56,16 @@ static void vfio_disable_interrupts(VFIOPCIDevice *vdev);
- static void vfio_mmap_set_enabled(VFIOPCIDevice *vdev, bool enabled);
- static void vfio_msi_disable_common(VFIOPCIDevice *vdev);
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index a1dfab4..1ff7bd9 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -155,7 +155,11 @@ enum VMStateFlags {
+ };
  
-+static bool vfio_notifier_init(EventNotifier *e, const char *name, Error **errp)
-+{
-+    int ret = event_notifier_init(e, 0);
+ typedef enum {
+-    MIG_PRI_DEFAULT = 0,
++    MIG_PRI_UNINITIALIZED = 0,  /* An uninitialized priority field maps to */
++                                /* MIG_PRI_DEFAULT in save_state_priority */
 +
-+    if (ret) {
-+        error_setg_errno(errp, -ret, "vfio_notifier_init %s failed", name);
-+    }
-+    return !ret;
-+}
-+
- /*
-  * Disabling BAR mmaping can be slow, but toggling it around INTx can
-  * also be a huge overhead.  We try to get the best of both worlds by
-@@ -136,8 +146,7 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
-     pci_irq_deassert(&vdev->pdev);
++    MIG_PRI_LOW,                /* Must happen after default */
++    MIG_PRI_DEFAULT,
+     MIG_PRI_IOMMU,              /* Must happen before PCI devices */
+     MIG_PRI_PCI_BUS,            /* Must happen before IOMMU */
+     MIG_PRI_VIRTIO_MEM,         /* Must happen before IOMMU */
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 006514c..7e87815 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -266,7 +266,7 @@ typedef struct SaveState {
  
-     /* Get an eventfd for resample/unmask */
--    if (event_notifier_init(&vdev->intx.unmask, 0)) {
--        error_setg(errp, "event_notifier_init failed eoi");
-+    if (!vfio_notifier_init(&vdev->intx.unmask, "intx-unmask", errp)) {
-         goto fail;
-     }
+ static SaveState savevm_state = {
+     .handlers = QTAILQ_HEAD_INITIALIZER(savevm_state.handlers),
+-    .handler_pri_head = { [MIG_PRI_DEFAULT ... MIG_PRI_MAX] = NULL },
++    .handler_pri_head = { [0 ... MIG_PRI_MAX] = NULL },
+     .global_section_id = 0,
+ };
  
-@@ -268,7 +277,6 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     uint8_t pin = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1);
-     Error *err = NULL;
-     int32_t fd;
--    int ret;
+@@ -737,7 +737,7 @@ static int calculate_compat_instance_id(const char *idstr)
  
- 
-     if (!pin) {
-@@ -291,9 +299,7 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     }
- #endif
- 
--    ret = event_notifier_init(&vdev->intx.interrupt, 0);
--    if (ret) {
--        error_setg_errno(errp, -ret, "event_notifier_init failed");
-+    if (!vfio_notifier_init(&vdev->intx.interrupt, "intx-interrupt", errp)) {
-         return false;
-     }
-     fd = event_notifier_get_fd(&vdev->intx.interrupt);
-@@ -473,11 +479,13 @@ static void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
- 
- static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector)
+ static inline MigrationPriority save_state_priority(SaveStateEntry *se)
  {
-+    const char *name = "kvm_interrupt";
-+
-     if (vector->virq < 0) {
-         return;
+-    if (se->vmsd) {
++    if (se->vmsd && se->vmsd->priority) {
+         return se->vmsd->priority;
      }
- 
--    if (event_notifier_init(&vector->kvm_interrupt, 0)) {
-+    if (!vfio_notifier_init(&vector->kvm_interrupt, name, NULL)) {
-         goto fail_notifier;
-     }
- 
-@@ -515,11 +523,12 @@ static void vfio_vector_init(VFIOPCIDevice *vdev, int nr)
- {
-     VFIOMSIVector *vector = &vdev->msi_vectors[nr];
-     PCIDevice *pdev = &vdev->pdev;
-+    Error *err = NULL;
- 
-     vector->vdev = vdev;
-     vector->virq = -1;
--    if (event_notifier_init(&vector->interrupt, 0)) {
--        error_report("vfio: Error: event_notifier_init failed");
-+    if (!vfio_notifier_init(&vector->interrupt, "interrupt", &err)) {
-+        error_report_err(err);
-     }
-     vector->use = true;
-     if (vdev->interrupt == VFIO_INT_MSIX) {
-@@ -749,13 +758,14 @@ retry:
- 
-     for (i = 0; i < vdev->nr_vectors; i++) {
-         VFIOMSIVector *vector = &vdev->msi_vectors[i];
-+        Error *err = NULL;
- 
-         vector->vdev = vdev;
-         vector->virq = -1;
-         vector->use = true;
- 
--        if (event_notifier_init(&vector->interrupt, 0)) {
--            error_report("vfio: Error: event_notifier_init failed");
-+        if (!vfio_notifier_init(&vector->interrupt, "interrupt", &err)) {
-+            error_report_err(err);
-         }
- 
-         qemu_set_fd_handler(event_notifier_get_fd(&vector->interrupt),
-@@ -2907,8 +2917,8 @@ static void vfio_register_err_notifier(VFIOPCIDevice *vdev)
-         return;
-     }
- 
--    if (event_notifier_init(&vdev->err_notifier, 0)) {
--        error_report("vfio: Unable to init event notifier for error detection");
-+    if (!vfio_notifier_init(&vdev->err_notifier, "err_notifier", &err)) {
-+        error_report_err(err);
-         vdev->pci_aer = false;
-         return;
-     }
-@@ -2974,8 +2984,8 @@ static void vfio_register_req_notifier(VFIOPCIDevice *vdev)
-         return;
-     }
- 
--    if (event_notifier_init(&vdev->req_notifier, 0)) {
--        error_report("vfio: Unable to init event notifier for device request");
-+    if (!vfio_notifier_init(&vdev->req_notifier, "req_notifier", &err)) {
-+        error_report_err(err);
-         return;
-     }
- 
+     return MIG_PRI_DEFAULT;
 -- 
 1.8.3.1
 
