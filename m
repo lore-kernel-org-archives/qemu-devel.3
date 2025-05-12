@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 838A3C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 19:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9011C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 19:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEYTs-0006lM-6W; Mon, 12 May 2025 15:06:28 -0400
+	id 1uEYTq-0006bn-5B; Mon, 12 May 2025 15:06:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEYTW-0005bF-8k
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:06:10 -0400
+ id 1uEYTU-0005ac-Ha
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 15:06:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEYTU-0007Wz-Fl
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:06:06 -0400
+ id 1uEYTQ-0007Wb-K3
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 15:06:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747076763;
+ s=mimecast20190719; t=1747076759;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PIOkXYxL2sKbGG6NEJXzvPXTFuLMkskmWg4bD0UDnoY=;
- b=dha9MiSz9jyRmqy1vjwP6IRikG7AGP/VaPf9CMCcWsRCRBtZD366sWrea534f+PSMRRSot
- Ih44O3zWhJWgYlOwfEN7qXHIQxJlpRNjeTOdue7aRNc6Hr2XXpP+/8Ez4wRw6vSpyrLul+
- Opt9eDqOAk4ZpwCOTRHr09K6oUJGTro=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uqI66moqQ1bOEvmuqDSAwlfJVoQnlMwJQqpqwMxFzQ0=;
+ b=UYne+xavuMFS+4eePZwclxtpz6kSODpYMv6Y4rtwZ9tJsm4k8bUO/lgQYny3RNkLgEnOMr
+ ikpcsaHbm+3vTW1hMhcAIohNkiICerhT0/0EX4LSvFCTduf8rftwEIBQazPrcXVhsSPj1+
+ paJbwiyUpdBCwyaim6o+eyEWET9QzPg=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-524-TL7QBh6aPcGnNfHDtUsKeQ-1; Mon, 12 May 2025 15:06:02 -0400
-X-MC-Unique: TL7QBh6aPcGnNfHDtUsKeQ-1
-X-Mimecast-MFC-AGG-ID: TL7QBh6aPcGnNfHDtUsKeQ_1747076761
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43d5ca7c86aso22698015e9.0
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 12:06:02 -0700 (PDT)
+ us-mta-182-5WZ2qRplOWSL6kvJOQXHGg-1; Mon, 12 May 2025 15:05:58 -0400
+X-MC-Unique: 5WZ2qRplOWSL6kvJOQXHGg-1
+X-Mimecast-MFC-AGG-ID: 5WZ2qRplOWSL6kvJOQXHGg_1747076757
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-acbbb0009aeso378939166b.1
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 12:05:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747076760; x=1747681560;
+ d=1e100.net; s=20230601; t=1747076756; x=1747681556;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PIOkXYxL2sKbGG6NEJXzvPXTFuLMkskmWg4bD0UDnoY=;
- b=Dzg4d1Z4J1xyiuT1UwuaAnLXbL9p1Fji4RgKMK2g6kf6fI4TPtcDMHuzOd64SVsica
- 6aZqjZn9kbgTCQfte6/tcA5hOmXzrit2AoJt+XYIJbTIjaBI44P05L3kDfmOF8OquriV
- ziGncvvaTPMU3WQr9blEc9xyJqzc0mHZljAAe6rY1xgww0Zu3DO0AdpczqamQ/DP6Z2+
- fWezclz6Tn4bLn1AeE5nSy6a1rmJGjdAb7qZjvWCjFJA8k/4lTIodoDl+GdLlsYQjJiY
- YJUem2lzRAkd6p/gW0baRN/CYW6G6JpBPkJbfEPLfWUxaZjz9cgkTy42iWMvaTiUg+CW
- SvUg==
-X-Gm-Message-State: AOJu0YxTEH4pF9B46hg77XuYheYdxqXu7NuBx6kdk00DkCEMqYlwBEiG
- KnrtthPCBUEWdTmiVFXQtVL05OnGi5pG1CdLM+FKtiWWBREyXve2nh8ghQniwRShLgMff3EeoYC
- xzqEbSFe8aa3/yhepBd+Zu4Ymzg7vzqDd57O7MoHxYZRmsb8tuM4I/FxWCVJLR2RhKXn2sRh8bm
- OD9ZjQYFkaIO82f+b/odvgIFqB+K5TqEtBqcuy
-X-Gm-Gg: ASbGncv+ORSYaGUn46rHdBX++PVqsrIcIQrba0qY7dvQq+kmTlK9uUM13jvpa2cHl9C
- g6ufoDXXMXgQHzzAK6S5QuxSJtsmJF4BULf8WGkQNMk/eAJdZKjnSnTV4hYc3r3yLzwabEl2Zh6
- jwIDqQu1kVgXGXM4E1hqytJbTIo3Xns5flex1MFlv3AyGD/fgRNyfud0DyL1xWKAio0fn1W7FkU
- gSWN5DOlF9afQnFBYAsoWqHFHLfVpPWDmFwGqgMkWGllzDKaxvpkMdFE02TwgC4lbiJCbdakagt
- 5DegHqn9Jxxy9D8=
-X-Received: by 2002:a05:600c:8211:b0:43b:c0fa:f9dd with SMTP id
- 5b1f17b1804b1-442d6dd22edmr102455475e9.25.1747076760449; 
- Mon, 12 May 2025 12:06:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGqDYoS4+yF2xInpWEdM+EQU848BdZDvOveeRScvKQD7pFfW2odX0m8DCQGlyXLMxwNwk0S5A==
-X-Received: by 2002:a05:600c:8211:b0:43b:c0fa:f9dd with SMTP id
- 5b1f17b1804b1-442d6dd22edmr102455295e9.25.1747076759832; 
- Mon, 12 May 2025 12:05:59 -0700 (PDT)
+ bh=uqI66moqQ1bOEvmuqDSAwlfJVoQnlMwJQqpqwMxFzQ0=;
+ b=dim6QgeERV/GIcuwx7DprZAQR5KbQAoawyFlsezhdZFvUGBgEyACOGp3hxu2pIHWAI
+ AVCRgO3eBUNFUWdVz7D/8yL1tKHbtEJYGvFAtMET3VRVlxsCWa1Ijzgai64Ono0UfEdo
+ 1fvDQqtDbdxBXl9lWy/EEWogwvMNgkZtXlgk5Gr3ymOi8hdQibuV8XB7E0/qypiUqq8G
+ +kD6GZgxXSGddYUvehGl1xfQpnKg8+A+1JZzGVYa9ngAydDWrse+GYRU4iqSgDvTjzIv
+ gkdT6Nw3lLav3k8yheqI5xkZkLTB8bDA1Rb0T9ilisBf4b6tMKA3PLT3WXOVkzLQc0r5
+ Y8IQ==
+X-Gm-Message-State: AOJu0YyhmYBV8InBiNx6jBppnsg+BjK7J6OGeOWqA7/1IbAJPIjzYTyg
+ rNN2t4IhzyBkmR5pQI6N303M2LL8Kg4HQaIuyAyf72MtaE1iN2mocHCNj5ACpNQR25vBPeO2s66
+ haOdV/6ZD+Gp25aJk/IPwkbHiLrl+JCCTSe12byFKql2Lbew2bkBxQlw5jXDgMVIgLAi+eRlQEB
+ T7fyglDD19TWaBj/KW3NPw9wK6lzpOHE4ZXnYd
+X-Gm-Gg: ASbGnctwsimmDszsMgxIKjplfBjah6+S9DEF+sWqVTQIDu5YxRDf9veyILXKLGT003p
+ C8bcBg7oiD8DFToyioQhKnA11OzLLDiUUnija+6WexmPc+yJky9L9s4ToxtRgwaCakInHxWfps4
+ TOP+V9OdG8/5EbXtHMMNOhlCqx5oT1AV4YRFLCrwKLUHuKrCNAesFdfqtxF9O8hxObggYcOGMyk
+ tanzPk4p+Pjg4uiAW5yVC43t4N635N5eJOPgt0MT1o9Kiozi7im7FiJ0ND70XgLVuLk4ZsBJ7dG
+ zzomO5AjXOQfjII=
+X-Received: by 2002:a17:907:1b03:b0:ace:c2d4:bf85 with SMTP id
+ a640c23a62f3a-ad21927cc55mr1483835966b.43.1747076756063; 
+ Mon, 12 May 2025 12:05:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+bAIGe8W5YGTjpiSsd7f5fIvUKHGN/WaHIFHmOmCnJKu76Ul/Rcx8GW4umIAjlYqdUWrMGg==
+X-Received: by 2002:a05:600c:a410:b0:442:dc6f:4a07 with SMTP id
+ 5b1f17b1804b1-442dc6f4b16mr71098745e9.4.1747076744886; 
+ Mon, 12 May 2025 12:05:44 -0700 (PDT)
 Received: from [192.168.122.1] ([151.95.45.141])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442d687adc0sm134770065e9.35.2025.05.12.12.05.57
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-442cd32f1eesm181240255e9.9.2025.05.12.12.05.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 May 2025 12:05:57 -0700 (PDT)
+ Mon, 12 May 2025 12:05:44 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/16] target/i386: remove lflags
-Date: Mon, 12 May 2025 21:05:21 +0200
-Message-ID: <20250512190524.179419-14-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 06/16] rust: pl011: Really use RX FIFO depth
+Date: Mon, 12 May 2025 21:05:14 +0200
+Message-ID: <20250512190524.179419-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512190524.179419-1-pbonzini@redhat.com>
 References: <20250512190524.179419-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -108,204 +110,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Just use cc_dst and cc_src for the same purpose.
+While we model a 16-elements RX FIFO since the PL011 model was
+introduced in commit cdbdb648b7c ("ARM Versatile Platform Baseboard
+emulation"), we only read 1 char at a time!
 
+Have can_receive() return how many elements are available, and use that
+in receive().
+
+This is the Rust version of commit 3e0f118f825 ("hw/char/pl011: Really
+use RX FIFO depth"); but it also adds back a comment that is present
+in commit f576e0733cc ("hw/char/pl011: Add support for loopback") and
+absent in the Rust code.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h               |  6 ----
- target/i386/emulate/x86_emu.c   |  4 +--
- target/i386/emulate/x86_flags.c | 55 ++++++++++++++++-----------------
- 3 files changed, 29 insertions(+), 36 deletions(-)
+ docs/devel/rust.rst              |  2 +-
+ rust/hw/char/pl011/src/device.rs | 19 +++++++++++++------
+ 2 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 4f8ed8868e9..c51e0a43d0b 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1805,11 +1805,6 @@ typedef struct CPUCaches {
-         CPUCacheInfo *l3_cache;
- } CPUCaches;
+diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
+index 4de86375021..171d908e0b0 100644
+--- a/docs/devel/rust.rst
++++ b/docs/devel/rust.rst
+@@ -119,7 +119,7 @@ QEMU includes four crates:
+   for the ``hw/char/pl011.c`` and ``hw/timer/hpet.c`` files.
  
--typedef struct X86LazyFlags {
--    target_ulong result;
--    target_ulong auxbits;
--} X86LazyFlags;
--
- typedef struct CPUArchState {
-     /* standard registers */
-     target_ulong regs[CPU_NB_REGS];
-@@ -2102,7 +2097,6 @@ typedef struct CPUArchState {
-     QemuMutex xen_timers_lock;
- #endif
- #if defined(CONFIG_HVF)
--    X86LazyFlags lflags;
-     void *emu_mmio_buf;
- #endif
+ .. [#issues] The ``pl011`` crate is synchronized with ``hw/char/pl011.c``
+-   as of commit 02b1f7f61928.  The ``hpet`` crate is synchronized as of
++   as of commit 3e0f118f82.  The ``hpet`` crate is synchronized as of
+    commit 1433e38cc8.  Both are lacking tracing functionality.
  
-diff --git a/target/i386/emulate/x86_emu.c b/target/i386/emulate/x86_emu.c
-index 61bd5af5bb1..4890e0a4e5e 100644
---- a/target/i386/emulate/x86_emu.c
-+++ b/target/i386/emulate/x86_emu.c
-@@ -474,10 +474,10 @@ static inline void string_rep(CPUX86State *env, struct x86_decode *decode,
-     while (rcx--) {
-         func(env, decode);
-         write_reg(env, R_ECX, rcx, decode->addressing_size);
--        if ((PREFIX_REP == rep) && !env->lflags.result) {
-+        if ((PREFIX_REP == rep) && !env->cc_dst) {
-             break;
-         }
--        if ((PREFIX_REPN == rep) && env->lflags.result) {
-+        if ((PREFIX_REPN == rep) && env->cc_dst) {
-             break;
-         }
+ This section explains how to work with them.
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 94b31659849..bde3be65c5b 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -580,19 +580,26 @@ fn write(&self, offset: hwaddr, value: u64, _size: u32) {
+     fn can_receive(&self) -> u32 {
+         let regs = self.regs.borrow();
+         // trace_pl011_can_receive(s->lcr, s->read_count, r);
+-        u32::from(regs.read_count < regs.fifo_depth())
++        regs.fifo_depth() - regs.read_count
      }
-diff --git a/target/i386/emulate/x86_flags.c b/target/i386/emulate/x86_flags.c
-index 42f11d7de16..47bc19778c2 100644
---- a/target/i386/emulate/x86_flags.c
-+++ b/target/i386/emulate/x86_flags.c
-@@ -31,10 +31,10 @@
  
- /*
-  * The algorithms here are similar to those in Bochs.  After an ALU
-- * operation, RESULT can be used to compute ZF, SF and PF, whereas
-- * AUXBITS is used to compute AF, CF and OF.  In reality, SF and PF are the
-- * XOR of the value computed from RESULT and the value found in bits 7 and 2
-- * of AUXBITS; this way the same logic can be used to compute the flags
-+ * operation, CC_DST can be used to compute ZF, SF and PF, whereas
-+ * CC_SRC is used to compute AF, CF and OF.  In reality, SF and PF are the
-+ * XOR of the value computed from CC_DST and the value found in bits 7 and 2
-+ * of CC_SRC; this way the same logic can be used to compute the flags
-  * both before and after an ALU operation.
-  *
-  * Compared to the TCG CC_OP codes, this avoids conditionals when converting
-@@ -65,14 +65,14 @@
-  * place PO and CF in the top two bits.
-  */
- #define SET_FLAGS_OSZAPC_SIZE(size, lf_carries, lf_result) { \
--    env->lflags.result = (target_ulong)(int##size##_t)(lf_result); \
-+    env->cc_dst = (target_ulong)(int##size##_t)(lf_result); \
-     target_ulong temp = (lf_carries); \
-     if ((size) == TARGET_LONG_BITS) { \
-         temp = temp & ~(LF_MASK_PD | LF_MASK_SD); \
-     } else { \
-         temp = (temp & LF_MASK_AF) | (temp << (TARGET_LONG_BITS - (size))); \
-     } \
--    env->lflags.auxbits = temp; \
-+    env->cc_src = temp; \
- }
- 
- /* carries, result */
-@@ -89,15 +89,15 @@
- /* same as setting OSZAPC, but preserve CF and flip PO if the old value of CF
-  * did not match the high bit of lf_carries. */
- #define SET_FLAGS_OSZAP_SIZE(size, lf_carries, lf_result) { \
--    env->lflags.result = (target_ulong)(int##size##_t)(lf_result); \
-+    env->cc_dst = (target_ulong)(int##size##_t)(lf_result); \
-     target_ulong temp = (lf_carries); \
-     if ((size) == TARGET_LONG_BITS) { \
-         temp = (temp & ~(LF_MASK_PD | LF_MASK_SD)); \
-     } else { \
-         temp = (temp & LF_MASK_AF) | (temp << (TARGET_LONG_BITS - (size))); \
-     } \
--    target_ulong cf_changed = ((target_long)(env->lflags.auxbits ^ temp)) < 0; \
--    env->lflags.auxbits = temp ^ (cf_changed * (LF_MASK_PO | LF_MASK_CF)); \
-+    target_ulong cf_changed = ((target_long)(env->cc_src ^ temp)) < 0; \
-+    env->cc_src = temp ^ (cf_changed * (LF_MASK_PO | LF_MASK_CF)); \
- }
- 
- /* carries, result */
-@@ -110,9 +110,9 @@
- 
- void SET_FLAGS_OxxxxC(CPUX86State *env, bool new_of, bool new_cf)
- {
--    env->lflags.auxbits &= ~(LF_MASK_PO | LF_MASK_CF);
--    env->lflags.auxbits |= (-(target_ulong)new_cf << LF_BIT_PO);
--    env->lflags.auxbits ^= ((target_ulong)new_of << LF_BIT_PO);
-+    env->cc_src &= ~(LF_MASK_PO | LF_MASK_CF);
-+    env->cc_src |= (-(target_ulong)new_cf << LF_BIT_PO);
-+    env->cc_src ^= ((target_ulong)new_of << LF_BIT_PO);
- }
- 
- void SET_FLAGS_OSZAPC_SUB32(CPUX86State *env, uint32_t v1, uint32_t v2,
-@@ -208,37 +208,36 @@ void SET_FLAGS_OSZAPC_LOGIC8(CPUX86State *env, uint8_t v1, uint8_t v2,
- 
- static inline uint32_t get_PF(CPUX86State *env)
- {
--    uint8_t temp = env->lflags.result;
--    return ((parity8(temp) - 1) ^ env->lflags.auxbits) & CC_P;
-+    return ((parity8(env->cc_dst) - 1) ^ env->cc_src) & CC_P;
- }
- 
- static inline uint32_t get_OF(CPUX86State *env)
- {
--    return ((env->lflags.auxbits >> (LF_BIT_CF - 11)) + CC_O / 2) & CC_O;
-+    return ((env->cc_src >> (LF_BIT_CF - 11)) + CC_O / 2) & CC_O;
- }
- 
- bool get_CF(CPUX86State *env)
- {
--    return ((target_long)env->lflags.auxbits) < 0;
-+    return ((target_long)env->cc_src) < 0;
- }
- 
- void set_CF(CPUX86State *env, bool val)
- {
-     /* If CF changes, flip PO and CF */
-     target_ulong temp = -(target_ulong)val;
--    target_ulong cf_changed = ((target_long)(env->lflags.auxbits ^ temp)) < 0;
--    env->lflags.auxbits ^= cf_changed * (LF_MASK_PO | LF_MASK_CF);
-+    target_ulong cf_changed = ((target_long)(env->cc_src ^ temp)) < 0;
-+    env->cc_src ^= cf_changed * (LF_MASK_PO | LF_MASK_CF);
- }
- 
- static inline uint32_t get_ZF(CPUX86State *env)
- {
--    return env->lflags.result ? 0 : CC_Z;
-+    return env->cc_dst ? 0 : CC_Z;
- }
- 
- static inline uint32_t get_SF(CPUX86State *env)
- {
--    return ((env->lflags.result >> (LF_SIGN_BIT - LF_BIT_SD)) ^
--            env->lflags.auxbits) & CC_S;
-+    return ((env->cc_dst >> (LF_SIGN_BIT - LF_BIT_SD)) ^
-+            env->cc_src) & CC_S;
- }
- 
- void lflags_to_rflags(CPUX86State *env)
-@@ -246,8 +245,8 @@ void lflags_to_rflags(CPUX86State *env)
-     env->eflags &= ~(CC_C|CC_P|CC_A|CC_Z|CC_S|CC_O);
-     /* rotate left by one to move carry-out bits into CF and AF */
-     env->eflags |= (
--        (env->lflags.auxbits << 1) |
--        (env->lflags.auxbits >> (TARGET_LONG_BITS - 1))) & (CC_C | CC_A);
-+        (env->cc_src << 1) |
-+        (env->cc_src >> (TARGET_LONG_BITS - 1))) & (CC_C | CC_A);
-     env->eflags |= get_SF(env);
-     env->eflags |= get_PF(env);
-     env->eflags |= get_ZF(env);
-@@ -258,17 +257,17 @@ void rflags_to_lflags(CPUX86State *env)
- {
-     target_ulong cf_xor_of;
- 
--    env->lflags.auxbits = CC_P;
--    env->lflags.auxbits ^= env->eflags & (CC_S | CC_P);
-+    env->cc_src = CC_P;
-+    env->cc_src ^= env->eflags & (CC_S | CC_P);
- 
-     /* rotate right by one to move CF and AF into the carry-out positions */
--    env->lflags.auxbits |= (
-+    env->cc_src |= (
-         (env->eflags >> 1) |
-         (env->eflags << (TARGET_LONG_BITS - 1))) & (CC_C | CC_A);
- 
-     cf_xor_of = (env->eflags & (CC_C | CC_O)) + (CC_O - CC_C);
--    env->lflags.auxbits |= -cf_xor_of & LF_MASK_PO;
-+    env->cc_src |= -cf_xor_of & LF_MASK_PO;
- 
-     /* Leave the low byte zero so that parity is not affected.  */
--    env->lflags.result = !(env->eflags & CC_Z) << 8;
-+    env->cc_dst = !(env->eflags & CC_Z) << 8;
- }
+     fn receive(&self, buf: &[u8]) {
+-        if buf.is_empty() {
++        let mut regs = self.regs.borrow_mut();
++        if regs.loopback_enabled() {
++            // In loopback mode, the RX input signal is internally disconnected
++            // from the entire receiving logics; thus, all inputs are ignored,
++            // and BREAK detection on RX input signal is also not performed.
+             return;
+         }
+-        let mut regs = self.regs.borrow_mut();
+-        let c: u32 = buf[0].into();
+-        let update_irq = !regs.loopback_enabled() && regs.fifo_rx_put(c.into());
++
++        let mut update_irq = false;
++        for &c in buf {
++            let c: u32 = c.into();
++            update_irq |= regs.fifo_rx_put(c.into());
++        }
++
+         // Release the BqlRefCell before calling self.update()
+         drop(regs);
+-
+         if update_irq {
+             self.update();
+         }
 -- 
 2.49.0
 
