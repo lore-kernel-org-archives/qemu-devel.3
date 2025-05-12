@@ -4,148 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5F0C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 06:10:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7429CC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 06:27:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEMNC-0004Ux-T4; Mon, 12 May 2025 02:10:46 -0400
+	id 1uEMcu-0000ot-9T; Mon, 12 May 2025 02:27:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1uEMNB-0004UN-Av
- for qemu-devel@nongnu.org; Mon, 12 May 2025 02:10:45 -0400
-Received: from mail-bn8nam11on20628.outbound.protection.outlook.com
- ([2a01:111:f403:2414::628]
- helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1uEMcq-0000oP-PL
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 02:26:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1uEMN9-0008Ju-C7
- for qemu-devel@nongnu.org; Mon, 12 May 2025 02:10:45 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qsaU2WG7ctwpXX37Csx3pB1h3wconXzI3ku5fsMFi7EERX9kC4p3XJUUtkkS/Yefe213EVMz9rPfIuXmHlexH1rGROuVj4s8MY+G3JvJZKFH861jolriPtRkqWlrmebx8FlzbtQZr0ODmrA0pvPyI/WChFST4nJhXxX3ca4gx5QyTb3nEduX64qn1tS3jRJPCXo/wjuRmN6HIff/oZMfiBa6cUwkwQidA1zqbFAZEDVf1R1Fy4Z2FcAuYeVQAsSWgORPUBIoVHtOGI4GvA+JKwtlz4kRaF1OcqhJ3X9dQNLw4iPc+7rYlv2m+bsMX8qxOyun6Bn08dFIeyO5jE0+Gw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yrN8luj/3TJADoCtOiE8NR8C3VgPxIB3ZWimxUKU2Ts=;
- b=cJgucG12ijjNuLJR7uu6/qxd5iOquuyW4laQ2zu7rRPqTD/sajQ0KyDvtIi7VPUMNW80hlCFKqQeB1dbtpAw5+DpdDbUUvA+iPUCFY60YmfLMLs5WDgTXBb9XwHITQnqc1X9QXz34wS/ptYUb2KIdH3E37sznz8ANSYIarV4D5cMdbwxHH/48DTCv0WU8Af2KG1+xcwXvi8Fhg7QUGVijDyu5XmDIfHx1tIpH5pDGYF1GlmrWYdhRrI58gWivjPS2kFyoCD28sCqfajr5UIFn0oMM5RvGmukETIVFyOoRxZJ01N6ApqZ8GqV2CgCNGGlH0BqFY8DdzEAwjlUrpJFrg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yrN8luj/3TJADoCtOiE8NR8C3VgPxIB3ZWimxUKU2Ts=;
- b=HnE2tBos52x9aa6MhzOqOuO/Ki5Wr2DXMgnUxi/eT04K7Ww6MVdNzKDYAkxyUU/GeskfqhRyQtyhuSUV8g06YzTNdklMV/NI3GP7vCltuDwKUW5hov0edyhjwEUikCR9RexgZ9OvFE9pwwYzdRQU+Hb+h/+1sxiTPnoOA0L+ClA=
-Received: from MN2PR14CA0009.namprd14.prod.outlook.com (2603:10b6:208:23e::14)
- by DS0PR12MB8319.namprd12.prod.outlook.com (2603:10b6:8:f7::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.23; Mon, 12 May
- 2025 06:10:36 +0000
-Received: from BN3PEPF0000B36E.namprd21.prod.outlook.com
- (2603:10b6:208:23e:cafe::aa) by MN2PR14CA0009.outlook.office365.com
- (2603:10b6:208:23e::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8699.27 via Frontend Transport; Mon,
- 12 May 2025 06:10:36 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN3PEPF0000B36E.mail.protection.outlook.com (10.167.243.165) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8769.1 via Frontend Transport; Mon, 12 May 2025 06:10:35 +0000
-Received: from [10.252.206.76] (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 12 May
- 2025 01:10:32 -0500
-Message-ID: <6a836252-1fe3-49d3-be96-fea32319deeb@amd.com>
-Date: Mon, 12 May 2025 11:40:30 +0530
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1uEMcn-0001j4-ET
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 02:26:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747031211;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xz1JhFHycslGjJ/EAn273Q8MY4qag1MA5qB6CFSNj1s=;
+ b=i+C5ddUYZAMmCOvB/Og4+s9yAhDwothJW86+l6dNFnKZbrz8uBKLyFj7JpGkZg6rhCNVF/
+ rOVnulUbZ566rHIpGGxGxRQPHWOHlAH6yDZxRoTdupZ+ex3g2KtbBpivhV1y+FmD+NxW4u
+ VvldhHB6s9xSMeteQJyob6iNxtM3Hb4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-590-VOgQ4iLFNWCtAibq4VU71g-1; Mon, 12 May 2025 02:26:49 -0400
+X-MC-Unique: VOgQ4iLFNWCtAibq4VU71g-1
+X-Mimecast-MFC-AGG-ID: VOgQ4iLFNWCtAibq4VU71g_1747031208
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43ea256f039so29875205e9.0
+ for <qemu-devel@nongnu.org>; Sun, 11 May 2025 23:26:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747031208; x=1747636008;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xz1JhFHycslGjJ/EAn273Q8MY4qag1MA5qB6CFSNj1s=;
+ b=xPs7P00YkTGLW6qswDBG0cXypdHuKzzN3KL33kE63zuOuGFtCHJl1DxnMSZ6sYTwBJ
+ qCjSMKKySGNcGZ2OdZ6vLQVwx+UwvpRrEqO5EUsnJ9dtutvf3sJG9vt2vISBeFCXfdKa
+ KVM6ibsAJ6Ok6Ofa7Wb7UJKcrWl9w3Ojcyg5udG1evEpbnk3gVi5xAdZMyrdjOW7WUnV
+ fiKTIPR378GMapPVqd3Lg3I1fUmLrw3RcFtfF/saivrq8I15+K4KjFGYrCZwl5OhUUqh
+ vxHEkO5sUOjClG8+rl+xPyGiQybnxjNmDdyMlJY6qEkAj/K/yz6ZEIBD/mI8LJz3nYp5
+ GTYQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVSTRidoEM2tKa+kl4UQxYPvOUgx2Y4wtIsF85loEG0pvfEb8ueo1CMmjnn+PRztBwAVnV9pgwdAmaz@nongnu.org
+X-Gm-Message-State: AOJu0Yzs694fi9Xo7M2GbMXWnQSaU4/VUegm1Z5F/skeNVKHAwW2GYj7
+ qtj8xSGzX7M5uptGt/9CbV5hYw2hyDY86RurOgcGkW60lCmb5jwuqsJGMk/av4LDKSJEACPNcKZ
+ FfFIHQZ6FFkiTo+lbgo5sZwRMwvYZ3h+aTlJm0yVqw7g37xABAMO5OUejDsNVtTV/vV/d5btDcz
+ NV1ptY5q3CHMWxaG/zBFdn6Qk7hgE=
+X-Gm-Gg: ASbGnctztxIIFtHEr6tvbbrScB6SBIcM7T57gkA64zz0fZIBsW2wMS7Q5TsDgd4RFRb
+ Y2ORE0/4Js1fu1TZ0SQHZP1iHrdoxhSlzOodmeFUp10mx/eDfRzEVjU3Rj/dz/JzN+2WgKw==
+X-Received: by 2002:a05:600c:3b97:b0:441:d2d8:bd8b with SMTP id
+ 5b1f17b1804b1-442d6d3e20cmr88649955e9.8.1747031208474; 
+ Sun, 11 May 2025 23:26:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFE+Pa7A7mr+Jd0YBvPxDJJyDT35l0DUlMlPum/zuyW87u6xw0FbBRLKR3Zs/aRFBzzMum4QxGXojjq5Gswzmw=
+X-Received: by 2002:a05:600c:3b97:b0:441:d2d8:bd8b with SMTP id
+ 5b1f17b1804b1-442d6d3e20cmr88649835e9.8.1747031208209; Sun, 11 May 2025
+ 23:26:48 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] amd_iommu: Fixes
-To: <qemu-devel@nongnu.org>
-CC: <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <pbonzini@redhat.com>,
- <richard.henderson@linaro.org>, <eduardo@habkost.net>,
- <suravee.suthikulpanit@amd.com>, <alejandro.j.jimenez@oracle.com>,
- <joao.m.martins@oracle.com>, <philmd@linaro.org>
-References: <20250509064526.15500-1-sarunkod@amd.com>
-Content-Language: en-US
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <20250509064526.15500-1-sarunkod@amd.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B36E:EE_|DS0PR12MB8319:EE_
-X-MS-Office365-Filtering-Correlation-Id: 13113153-ebce-48c6-bded-08dd911bb5f2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|376014|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?d29HNFNNUGVSOXVqQTZEaXhJZFNFbFpLMStraHdhbXI4dHB1N2hkSko1R1pN?=
- =?utf-8?B?U2syUG1sN0pyWXF5TFVLd3lEYXYvUitPblNRMkdPOVA4RTFTRWV4eHZpc3Ja?=
- =?utf-8?B?NmhQaWpjU1Q0SE5FelN2Z0ZkenJrNUZkRUF5aDVHY0p0UnVCSmhHU21vYjRE?=
- =?utf-8?B?WExNeWY3M1BWTEU0QmphWksrTTI1RG1VUmdRZDNLaVFzOGpnY1RXRHZOV0VB?=
- =?utf-8?B?clNaenBtaGw5Y3F3YzFUaktDcHNhNE9zMUlUcFRaWHNodk9QZDhrSWRlMWJu?=
- =?utf-8?B?aWpVdXRHc2FNekhMMjdWVmQwbEFhaUh4MjEvSktxaXJiVkIweHNybVRjWWxH?=
- =?utf-8?B?NTcveTY3TjRpMHBTOEhndTVFRC9uWUJkOFVTV1BxRWY4Y1B4NXppd1gzc3B0?=
- =?utf-8?B?ei9oNXdGMTVMbUtZTjJCV0Jjd0FsV0x1R2dQaHpBaEEvZ0RIVVVoSTRPNnU3?=
- =?utf-8?B?U2xtNytxRndEUm84Tk1rNytWTHVEZElZdFYwRjlBQ2djZGRuTVNkVU1HWlF2?=
- =?utf-8?B?N3lMVEF0d0h0eWRoVm9zK21ucVhhTmV5QUc5czczRGdudWpaeFVpd0hHelQr?=
- =?utf-8?B?WUk2R1R4c0Z1bkNoVmkwMGljaDZnOGx5M2FEdjN4VGo0eHFEK3pmU0RvS1Z2?=
- =?utf-8?B?QmtmbWYyUW44Z3JtYys4b3lYdndHZlREKy91QUNQaFZmTkxEQnIvNnMxM08z?=
- =?utf-8?B?UlV1QkRqcVNYaGZIblo4d0kyQnRyQTBVSUxQYUVsZ3lrSmpKaklwbThaQU5r?=
- =?utf-8?B?bWxWa0JMTDgwWWdHcDZTWC9hamtPcmRwcFp5RC9BajgrNzlwbzNnMWUyWkFY?=
- =?utf-8?B?Z016V21NRUMyT0FQeFFLVktSRmwxUGRGalZwS3UzZ3I2N0FPZGYvbTEzNFQ4?=
- =?utf-8?B?aUZobGNjbUowanoydmExNWRUWTZ1RWVadnJYRHNDT0hBTVVzV0hJK2ltdWZY?=
- =?utf-8?B?Z0xmMU9JcmRQQ0pWM1NmdTUxSWNaaHBOMzVMNVZuTDlxN0FSV2NoVGo4SFhN?=
- =?utf-8?B?RDhqOUpXSlNVWG9TRXdicXc2TnpjNFptVElqT3JXeXdTSFQzWTVmU0dFdUVQ?=
- =?utf-8?B?ZHF5QTA2SVFFY2JBbHdjeXRaTUNBZFFjWFc3cmtoZHVSMmg2a29wbk9DeGVZ?=
- =?utf-8?B?czRPbER3VnZseldPbnA4bTJMM3Rlb3ZYaWo2RTNwd0dYcnc4TGlFeWJYRnNn?=
- =?utf-8?B?b0NLcXUzZVd3UE9qb2VZUysxOENuSUVqd204WkFxeE04ZEFaRDlVR09WZDZU?=
- =?utf-8?B?SjNZOVF4UmhIMGJiVlgvQVVpMktWdmJxKzFDNWtYTEdzWUhQM25GV29KSTdM?=
- =?utf-8?B?YkpBdFRJcFd0Q2Y2U3ZyWWZTTVN0M3FYYlVKT1Q5VE83SERCLzFOT1JVa0M3?=
- =?utf-8?B?eUpzYmtSejdQbUs2Qy85cTRBMExHVjJUSXJSekdJR3kwWTdtTmpqT2ozU2k5?=
- =?utf-8?B?SDZlSXhIRTBUMXBINm9FOVJlUnpqUlZBQlNkUXRwaGxNV0IwTmMrc2RkbWNv?=
- =?utf-8?B?L0V5NzZzSHFwSGs5bWNxQzhPREFaenBXSVpET0gzZlFWbEtTdkw4Q0VkclJy?=
- =?utf-8?B?YW1vU1RzRVRiY1JrekVGbXJDUEhQOG9QdnhvaENoUUFHbDlTamRmTXdLZS9D?=
- =?utf-8?B?cG5yNDY4RzRjRGFLSkJuRzZlU0k0a0V2OVl0dThpdnZZTmY5eGZQNkRCQ0ZC?=
- =?utf-8?B?R2pLcW1tR3c4SzlpUjh4UjVNSmFUbzNxdXdKV0NBS3hIa01CMXpWVnlFem9o?=
- =?utf-8?B?Z1lkQzZiNC9PL0hRb3cvdEJDN3ZmMzFqRDBzRHR6MjNDc0cwck9tWmVjekNn?=
- =?utf-8?B?cHNIMjBMcUdxY0RhajRyU0RXZUhIMnBmTklOOHluVS92ZlpSamMrRkkyMGg1?=
- =?utf-8?B?ZXdLbGhsamN5RGdQSjJLN25jTWRmQzVlenJIVFdNVmVtSU5venJtREN1QUta?=
- =?utf-8?B?N3R2N0NYdW1aaVJrY2F6RUNlZk9vU3ZvQzdoNzZxcHkzQzY4UFpaVmFQQTJm?=
- =?utf-8?B?bDBMWVIvMFExOVRYR2ZVZndsY2FTMVhyNUgzdmdTbm84UVJXQW1RNnREdGZm?=
- =?utf-8?Q?EkxlhY?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(376014)(36860700013); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2025 06:10:35.8777 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 13113153-ebce-48c6-bded-08dd911bb5f2
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B36E.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8319
-Received-SPF: permerror client-ip=2a01:111:f403:2414::628;
- envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=NAM11-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.587,
+References: <20250508122849.207213-1-ppandit@redhat.com>
+ <20250508122849.207213-4-ppandit@redhat.com>
+ <87ecwzfbnk.fsf@suse.de> <aBzQYslYtUZgXjgO@x1.local>
+ <CAE8KmOzi8Zzy5hE2SMdTbMZJQD5_XH34rfEP_B85jstUF9E08g@mail.gmail.com>
+ <aB4bGYf-EuGES73h@x1.local>
+In-Reply-To: <aB4bGYf-EuGES73h@x1.local>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Mon, 12 May 2025 11:56:31 +0530
+X-Gm-Features: AX0GCFuqDmY1M5MO2HC551jzOLl71AZz44JuQktBnCcmjaGp9bFVfw8nMjDJi_w
+Message-ID: <CAE8KmOwFDJhFE6wJpTfDBAG4mJ-Xjsfh8VJwqVYLzT3gGZLZUA@mail.gmail.com>
+Subject: Re: [PATCH v10 3/3] migration: write zero pages when postcopy enabled
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, berrange@redhat.com,
+ Prasad Pandit <pjp@fedoraproject.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.587,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,41 +106,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-++ Philippe Mathieu-Daudé
+Hi,
 
-On 5/9/2025 12:15 PM, Sairaj Kodilkar wrote:
-> Fix following two issues in the amd viommu
-> 1. The guest fails to setup the passthrough device when for following setup
->     because amd iommu enables the no DMA memory region even when guest is
->     using DMA remapping mode.
-> 
->      -device amd-iommu,intremap=on,xtsup=on,pt=on \
->      -device vfio-pci,host=<DEVID> \
-> 
->      and guest forcing DMA remap mode e.g. 'iommu.passthrough=0'
-> 
->      which will cause failures from QEMU:
-> 
->      qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
->      qemu-system-x86_64: AHCI: Failed to start FIS receive engine: bad FIS receive buffer address
->      qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
->      qemu-system-x86_64: AHCI: Failed to start FIS receive engine: bad FIS receive buffer address
->      qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
-> 
-> 
-> 2. The guest fails to boot with xtsup=on and <= 255 vCPUs, because amd_iommu
->     does not enable x2apic mode.
-> 
-> base commit 56c6e249b6988c1b6edc2dd34ebb0f1e570a1365 (v10.0.0-rc3)
-> 
-> Sairaj Kodilkar (1):
->    hw/i386/amd_iommu: Fix device setup failure when PT is on.
-> 
-> Vasant Hegde (1):
->    hw/i386/amd_iommu: Fix xtsup when vcpus < 255
-> 
->   hw/i386/amd_iommu.c | 20 ++++++++++----------
->   1 file changed, 10 insertions(+), 10 deletions(-)
-> 
+On Fri, 9 May 2025 at 20:41, Peter Xu <peterx@redhat.com> wrote:
+> Isn't that what multifd is doing already?
+> typedef struct {
+>     ...
+>     /*
+>      * This array contains the pointers to:
+>      *  - normal pages (initial normal_pages entries)
+>      *  - zero pages (following zero_pages entries)
+>      */
+>     uint64_t offset[];
+> } __attribute__((packed)) MultiFDPacket_t;
+> Or maybe I missed what you meant.
+
+* Why are we memsetting zero pages on the receive side? What I'm
+trying to get at is, if destination memory is zero-initialised at the
+beginning of migration, we might be able to do away with this
+memset(3) call and this optimisation altogether. All zero page entries
+could point to the same zero page as well, if we don't want to
+preallocate all zero pages at start.
+
+Thank you.
+---
+  - Prasad
 
 
