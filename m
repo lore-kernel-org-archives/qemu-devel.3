@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B42AC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 12:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C71CC3ABCD
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 12:51:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uESYP-0004sl-Sc; Mon, 12 May 2025 08:46:46 -0400
+	id 1uESbr-0006O2-2c; Mon, 12 May 2025 08:50:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uESYA-0004s3-VR
- for qemu-devel@nongnu.org; Mon, 12 May 2025 08:46:32 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uESbD-000695-CF
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 08:49:42 -0400
+Received: from mail-vs1-xe34.google.com ([2607:f8b0:4864:20::e34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uESY5-000501-CR
- for qemu-devel@nongnu.org; Mon, 12 May 2025 08:46:30 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3a0be321968so2601992f8f.2
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 05:46:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uESb5-0005EW-3C
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 08:49:37 -0400
+Received: by mail-vs1-xe34.google.com with SMTP id
+ ada2fe7eead31-4c9cea30173so1679300137.3
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 05:49:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747053981; x=1747658781; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1747054167; x=1747658967; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nW08n49HQoqIa405hc1jxrcqgTRuQtBBfzOxsnvIePs=;
- b=L8GAsVREJ8FgB4xFWP+zZsPiOpSO3yYtCLYdYDqN3QIFo0W4SuI7+ykbnmVPrIZF//
- /37mdt11uBgoathtx/8t+X+a/ZHIhI2kaVgwiFYHgQ0r9pKoTXnqDZcJA6TEpPBDB3AK
- DGQ3+Qz5GZImYyJ4yOm116XMLOLpBOHY2tBjj6xaC8N29UyQJZDVeDBmBUj8miHUTbUS
- YrZHFM+h0V+kidMr5kFuBuo08jitD++m1PmBljTel50xfnN3FjwTWSxpMPxqRw0s0G2r
- mXRSDIP1gc4U86TVYiTu7KyAHTsg5ItbdM3fUU+g5MJOc69uTEVOvnDsM/VKDRa+frFP
- xA7Q==
+ bh=vF/ohKV4eqweLIx2Ark7Ixvx2S1UIg1AJFcUNH/hOyY=;
+ b=RmVv+EqBz9daOE+09LU4QLvSVBUbc+lm/ydSxHwDnf2cfPs123NTUV+XXD4eSHc3RD
+ pAXJh3OdPKYx39zMpY4SUUsg8lc+Ewgo7FRdDaCcCJ7oSjffwQTnLzZMBxWP7dQVuUyY
+ nUQWMILWP4SkOs6Betj2Tc9ECokm0iFsszLnk9gEJXFVF5mk4ChfVNxlBNR843sTX3Qi
+ OijlLxhmC/87JmB14NTkrBZ6RfvQE5EPRqaZn7C7fi2BL6qvUSiFZ2wTIAgpl+XaopGX
+ uhJlhAm3SDJRULpnu3w4fVRXx6IhQivWCS4gAZuW3yGI2yJ9XidTf6tXPEVEBPgVEnyj
+ rY6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747053981; x=1747658781;
+ d=1e100.net; s=20230601; t=1747054167; x=1747658967;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nW08n49HQoqIa405hc1jxrcqgTRuQtBBfzOxsnvIePs=;
- b=G1VKyD0x6eoFmYwwggssNGQcukrJv5eRX9FnovHRm9+gzEl7DvDtWSi7UNd/DYB4rd
- M6xiwrZZpiLIx/OlMvtonpiYfziXpR54nltgvRg7AGo+ZOsjaJYZt2x3IWlyJh0eltoX
- gDCBngYyDS+9ITypYNnMh3HGPLYRN4S9i7NlYlvLdtmR2jPRDoJ9BNT/3KoemE2EsrBd
- 746LkusMtket2voHNVwmcwfU32Rmxws7ejsuiOYSrewYIqEHk/dQrtO4CK68Xhfd1m0T
- cipabdTRILphT7z2csC/W1zZnvVLPDju+FHhkZgchJDOtlNNjEYjcCHAOZyLGKFLnFpi
- gj8g==
+ bh=vF/ohKV4eqweLIx2Ark7Ixvx2S1UIg1AJFcUNH/hOyY=;
+ b=R3tNWpQalRW+97+Ih8cA1CxA7ls9K4WBkmZnNoSOcUwPzh11nxaJ9rr2RgwrM24qgB
+ Bhfc5oV/BxykiIKDPXXC7+IgZVUDhw9MvrFOQlQXXcQF16RURmLnQ+wbS05Yr7aJVnpr
+ FdRcXZ4HQ3K5tDSxOsWt4EL2JAZt7L0JrtZM6W7jrGtxwwImCBT0s6GpDNAc+MS5K0mB
+ k88WhVIbk5ZhAv631MwbbEe0jhjifkfRC/GVXBuDHhmoyDwf2Fd5Ei/K78K3rlr20jsL
+ Vq1cwyxfBPINJlzij635TxYo9nePHm0IGyT7DTqGPsKSwusqNdvwkIuKlu2AgoLluHX6
+ RQbg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUWt0gkn+IY1cPMrKtnh8+ykqxEkseXoykKIw3PcpXslU8vomvQHOS9/ysH42p4260fx4LK2HdeEMbG@nongnu.org
-X-Gm-Message-State: AOJu0YyhX96ZctC0P65Cekr+A/xiXGd5bV7a9PpDZxjyN/rIG7gOJWZ9
- k9+o+G7ZxlqTi6uQS0P0Ke6zf/N35hH4Jm9cmBbSxabHgE2ygkC0/3BxM1vWcJU=
-X-Gm-Gg: ASbGncuzv4FUpnp53OIEXtojStuMcuiNVCVCFX16u7Rm+KbN1pYOXjHgdttoSzRglhf
- nUlm9xo7USplN/tz7Xkp08LcwU1t069/kanvx9FDMNbDd/97kVh0IuInfiwAe3qP/x/2OmtkPgQ
- wl4HaQCgy2TpAoMXQDgmUnp1iG6liMQsCk9BbQuGMeFIhqTXbTxPIvYC7NfUIf3UzxwPmUmbmbW
- RWODf5ZWbZET1BzG3qqGE/5FDwFF7C09z4Pz2AxU/gWPjqqWTUngcwq4dkHpIi0QkiW5PXscuip
- oQ3KaSNEi+U8v3Zrf4eCbWLDEpJIpoLVW1WSpaz4/T73GC9+2UP7Y26+ZH8yStxpRN1/XaxsKz6
- S6774xhJXe1zi
-X-Google-Smtp-Source: AGHT+IHm18lSrgFPC8qXX4uTrV/fGhgcjsTOZRfe/SSERSfjwur8kvPrpR+cML1mxrMWZXG+3y4sdQ==
-X-Received: by 2002:a05:6000:290f:b0:39a:c9c1:5453 with SMTP id
- ffacd0b85a97d-3a1f64b5e7amr10221081f8f.49.1747053981059; 
- Mon, 12 May 2025 05:46:21 -0700 (PDT)
-Received: from [10.93.5.179] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
+ AJvYcCVr8GeQ7b8wfT8Zj+GHl1NDY8tmxwLEl4njtuMACe4565fkA8Gw9EtKDtyJPYZpJDe03JewZl0s0yTv@nongnu.org
+X-Gm-Message-State: AOJu0YzoROdR2lQuMMfj9MalLcVZBmTddkdZ9V0SPF5fNtASwuKvhaK7
+ wjsUEiDZ5/Oo1kImFRrQY9pL56T3iGPzhUNNhTiQndb6W2jp/8hMqI2sHGrDrFw+4RZj73lKHCt
+ T
+X-Gm-Gg: ASbGncv0xhXHgFcfqIr4XTITj3EtE+OZNiV71G+MuuTSUeEuQkOmLaqP59zZxlEODnS
+ 4X8kQq6ZUzpnNNr8XHFRseZAQQoBgOMhIox1/ZdqArjqlOxheOtnTtUjpsJvSobU0aKoF6r4UcU
+ sl9FxVh7fYJjEatXYW1kpJ63hVKHvaZzoNPriwL3aXkkUBVTerkKZ5fouLM3aHu6EfdmyGPOMYQ
+ YjFuQ6WeweVIiWJWLnFOXBHFZMGmUvq4X/jiAsZHfYT3TUtgekOiFC3pzDf/cu8SERjcNo/Rhf0
+ AmCU/6yGi0vClRr0Oql2Fa8do+6LbeZYeHQGMcRqY3bmyQvjwov5KKqjzzEiFRSnXQ==
+X-Google-Smtp-Source: AGHT+IHJIY662gUj52i/lT9x/t3pf+k6j4ZQ6uVLXApHEA3nPgcKXReAb3+HtM6kHQ/6NlW/MOcL5g==
+X-Received: by 2002:a05:6102:4b8b:b0:4de:b205:dd57 with SMTP id
+ ada2fe7eead31-4deed406e69mr10723052137.25.1747054167241; 
+ Mon, 12 May 2025 05:49:27 -0700 (PDT)
+Received: from [192.168.68.110] ([152.234.125.33])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f5a2d2bdsm12401203f8f.74.2025.05.12.05.46.19
+ a1e0cc1a2514c-879f626c0casm4979184241.27.2025.05.12.05.49.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 May 2025 05:46:20 -0700 (PDT)
-Message-ID: <d6cf5356-4cac-448c-9078-f5bbe5d2de84@linaro.org>
-Date: Mon, 12 May 2025 13:46:18 +0100
+ Mon, 12 May 2025 05:49:26 -0700 (PDT)
+Message-ID: <64371020-0d72-4fbc-8fc3-d0f3554090db@ventanamicro.com>
+Date: Mon, 12 May 2025 09:49:22 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Add PCI hotplug test for aarch64
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, alex.bennee@linaro.org, philmd@linaro.org,
- peter.maydell@linaro.org
-References: <20250509232156.106465-1-gustavo.romero@linaro.org>
- <80e7eacc-0b71-4e1c-981e-607a4ce8a7bd@redhat.com>
- <e25812d6-cc1d-4727-b24e-208dbbe54afa@linaro.org>
- <b3c9413d-971e-4ac9-8314-93b88b349495@redhat.com>
+Subject: Re: [PATCH v4 16/23] target/riscv: call plugin trap callbacks
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
+References: <cover.1746968215.git.neither@nut.email>
+ <40c7216b842b7d06a0b947a7eee7cc11b9305b15.1746968215.git.neither@nut.email>
 Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <b3c9413d-971e-4ac9-8314-93b88b349495@redhat.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <40c7216b842b7d06a0b947a7eee7cc11b9305b15.1746968215.git.neither@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=gustavo.romero@linaro.org; helo=mail-wr1-x42d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e34;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-vs1-xe34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,49 +107,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas,
 
-On 5/12/25 09:37, Thomas Huth wrote:
-> On 12/05/2025 14.08, Gustavo Romero wrote:
->> Hi Thomas,
->>
->> Thanks for the review.
->>
->> On 5/12/25 04:59, Thomas Huth wrote:
->>>   Hi!
->>>
->>> On 10/05/2025 01.19, Gustavo Romero wrote:
->>>> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
->>>> hot-unplug on arm64. Currently, the aarch64 'virt' machine uses the PCIe
->>>> native controller and does not support ACPI-based hotplugging. However,
->>>> since support is planned, this test sets 'acpi=force' and specifies an
->>>> EDK2 firmware image in advance. This is harmless and prepares for future
->>>> ACPI support.
->>>>
->>>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->>>> ---
->>>>   tests/functional/meson.build                 |  1 +
->>>>   tests/functional/test_aarch64_hotplug_pci.py | 73 ++++++++++++++++++++
->>>>   2 files changed, 74 insertions(+)
->>>>   create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
->>>
->>> Could you also add the test file to one of the sections in the MAINTAINERS file, please?
->>
->> Any idea under which section I should add this test?
->>
->> Currently, it's only TCG, but in the future probably there will be
->> 1) a variant with --enable-kvm option and 2) it will have a variant
->> with ACPI enabled. Hence, currently it doesn't seem to fit neither
->> under "PCI" nor under "ARM ACPI Subsystem", I think I can create a
->> section tho? Maybe "ARM PCI Hotplug"? Could you please advise?
+
+On 5/11/25 10:14 AM, Julian Ganz wrote:
+> We recently introduced API for registering callbacks for trap related
+> events as well as the corresponding hook functions. Due to differences
+> between architectures, the latter need to be called from target specific
+> code.
 > 
-> A separate section likely only makes sense if there are other files that you could add there. Otherwise, simply add it to the arm "Virt" machine section?
+> This change places hooks for RISC-V targets.
+> 
+> Signed-off-by: Julian Ganz <neither@nut.email>
+> ---
 
-hm but in this case wouldn't I be kind "forcing" Peter to maintain
-this test? And, otoh, if I add me to "Virt" section then I'm saying that
-I'll maintain all the other tests as well?
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
+>   target/riscv/cpu_helper.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index d5039f69a9..dce7e34cba 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -36,6 +36,7 @@
+>   #include "cpu_bits.h"
+>   #include "debug.h"
+>   #include "pmp.h"
+> +#include "qemu/plugin.h"
+>   
+>   int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
+>   {
+> @@ -2173,6 +2174,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>       uint64_t hdeleg = async ? env->hideleg : env->hedeleg;
+>       const bool prev_virt = env->virt_enabled;
+>       const target_ulong prev_priv = env->priv;
+> +    uint64_t last_pc = env->pc;
+>       target_ulong tval = 0;
+>       target_ulong tinst = 0;
+>       target_ulong htval = 0;
+> @@ -2195,6 +2197,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>           case RISCV_EXCP_SEMIHOST:
+>               do_common_semihosting(cs);
+>               env->pc += 4;
+> +            qemu_plugin_vcpu_hostcall_cb(cs, last_pc);
+>               return;
+>   #endif
+>           case RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT:
+> @@ -2464,6 +2467,12 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+>                           prev_priv, prev_virt);
+>       }
+>   
+> +    if (async) {
+> +        qemu_plugin_vcpu_interrupt_cb(cs, last_pc);
+> +    } else {
+> +        qemu_plugin_vcpu_exception_cb(cs, last_pc);
+> +    }
+> +
+>       /*
+>        * Interrupt/exception/trap delivery is asynchronous event and as per
+>        * zicfilp spec CPU should clear up the ELP state. No harm in clearing
 
-Cheers,
-Gustavo
 
