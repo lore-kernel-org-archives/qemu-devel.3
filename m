@@ -4,77 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6606DC3ABC5
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 03:04:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DECFAC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 03:11:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEJSJ-0003aS-Ag; Sun, 11 May 2025 23:03:51 -0400
+	id 1uEJZa-0006tS-Se; Sun, 11 May 2025 23:11:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uEJSG-0003aF-Gd
- for qemu-devel@nongnu.org; Sun, 11 May 2025 23:03:48 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uEJSD-0005wL-Sh
- for qemu-devel@nongnu.org; Sun, 11 May 2025 23:03:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1747019026; x=1778555026;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Bj/tH68dQzsGdHRJBEGcFc/YadVXSQUdHnDga7hlP4w=;
- b=RaBHF8Lf0zY6lcMdGCyZMXxDT0FsKtemVb9m3RgAWybCfnJNVARLZVzQ
- 2SYpzBMKx5mqhINHPBgfxBECJNZv/J/+Qey1hsC7dIQQnTXbNesbYloB9
- ov8zGupYzRdmVEvgkVDP3I9RdjagwvXwayGvbh2NKhgj/U5IZSkA0G5SR
- +l200a0tWrZRvNTLZziz2sVHwVBhlThOmKvKwNgaKKy6WTj8abijIvVQy
- VsBXBUP7N4Sh3HT3WJlyGezcUU3AVYwGod2nXkFwOJNrompxT0vjpOfVN
- A+NLYLSND8FV39iT2pmkTQLIoApVLW4ZWUBXdZq0BLeEWyoJ8MFxNawKW A==;
-X-CSE-ConnectionGUID: TK7G+TzkT1O48HJzKEeuOw==
-X-CSE-MsgGUID: OLR702/3SdeRlfcdzWTDcA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11430"; a="48046374"
-X-IronPort-AV: E=Sophos;i="6.15,281,1739865600"; d="scan'208";a="48046374"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 May 2025 20:03:42 -0700
-X-CSE-ConnectionGUID: aPnosXKGSIyf29dDBkqrjA==
-X-CSE-MsgGUID: 5W4UljGCQ/amyVe+XVUeIg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,281,1739865600"; d="scan'208";a="137717132"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa010.fm.intel.com with ESMTP; 11 May 2025 20:03:39 -0700
-Date: Mon, 12 May 2025 11:24:42 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Chenyi Qiang <chenyi.qiang@intel.com>
-Cc: David Hildenbrand <david@redhat.com>,
- Alexey Kardashevskiy <aik@amd.com>, Peter Xu <peterx@redhat.com>,
- Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-Subject: Re: [PATCH v4 01/13] memory: Export a helper to get intersection of
- a MemoryRegionSection with a given range
-Message-ID: <aCFp+oLcypJEh71X@intel.com>
-References: <20250407074939.18657-1-chenyi.qiang@intel.com>
- <20250407074939.18657-2-chenyi.qiang@intel.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1uEJZY-0006t9-Nz; Sun, 11 May 2025 23:11:21 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1uEJZW-0006hz-IF; Sun, 11 May 2025 23:11:20 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-3081fe5987eso3600922a91.3; 
+ Sun, 11 May 2025 20:11:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1747019476; x=1747624276; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mjS7Caa/Jdkyu3/JbXJvHbWcGDcXF3XHk4HHHbK6yHc=;
+ b=nnSoWOiCTYWuJ08i+P0Mg6wbjDh7oxym+VS06TwIzX40SukcleXx6XtEiYRGObGXtF
+ nL+0qZsXXRbLpZ8cPVpmCB9/88cnvfpiqszfW/LaSswpxTcalu785cEdXAWJMx0kMtBz
+ C5jlCfj+4Xm4WGtXB+s3dJJ2aE0clMOohVA/ntlc1PHfni1j6yE18mEoMpK9Z2ST7iF3
+ AWsMCoDdu+v02xp1XxDs2lActH5d0Gr4m39Zi5xKAiz+PUxJcEBVytEiHxCO/obO+RFi
+ 4sIMhGjhCA6x8kX6Y5Z+x3hZGQCRdcfvlOzePyuu7oYjJ7WkZ8iVnwgFsoszeEVNAwSI
+ FCPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1747019476; x=1747624276;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mjS7Caa/Jdkyu3/JbXJvHbWcGDcXF3XHk4HHHbK6yHc=;
+ b=WgRdCalIbA6pZ9reB8/9mxby83OgEs3k86K2KLSydzWJx+2K+LAemIVauR45m31Ygu
+ dXggGSuff4gdiCkPkB51XxyrWHByj5AaqmpPqpW8ZYO6EpfioIfPs0ANPk9wpE6d53pY
+ wK1W/5F/oenFOGJOnUUkTC4yfATeF98BlJ+XwG4TzHTKgeqcbDvCeqqnTjLwQry/1k/S
+ VLNHJTO9QfYRpJnKutIJWLmZ0JsQGjJFh5+f1+Yfo+BEnMM7nL4olNUPZ34l2PTGz4Ll
+ IlUNz421dpZTEAnGM260RWcw7qCYLUTDrqu3upNBHXRnx7cxO6jUc6AC0n3zZ+Dv1Vmv
+ kJOA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXJlcxatJZ5SN1HDQDIeFHzFEJl1n18A7aajkLFo6mAg2edTcTdI8irTR0dBr08CUI2xKs229wZGoxd@nongnu.org
+X-Gm-Message-State: AOJu0Yx6o180Xbu3HcIABVYKtJzeUrST8C8Vdt52/1lQEnrcft0/cnIt
+ O+ukQYvrLM7bjtPvdpvi0SW7j3Q0jRSlW3PTrtq4l978nonvRlf1BIqlbQ==
+X-Gm-Gg: ASbGncubSNdfDpvFnvu8AewM/2BFxPI8hccdSqQRM9DriZWuAPRZAKVTUUeIngUolxg
+ miX8mEB1tgHhnyWCls93opbHnoNM9znVQyCm/S0TmBNWurn4g4JVQwS5IMilPcyBGeA7DoIfCeH
+ ob8JGBkcmInUSGj3ArITfd3WHGwqjUEXaxb40Qrpneyc2eexJneT/fJY0QCn0XVIIW8+C2Pc25E
+ J21RSNerk6++EmrBz21w/U9LRr+G+f+/i7lg+3HfSUWW+pVZ2AwGwfDCqqssk9/YaQp07WVhdvW
+ J8FlgH+CKKiLDap1/9rflJXmFNw/h6IuDVyNno4c6UIgTTjqpstiJ/DQaQ==
+X-Google-Smtp-Source: AGHT+IHtHEqoq7qJkXIQejW4V0ntUyBSIcKsd4acgabNCJ5rSVLYLAp5xu+Cx+zMbAcc+SErkFaUbA==
+X-Received: by 2002:a17:90b:3c0a:b0:2ee:f440:53ed with SMTP id
+ 98e67ed59e1d1-30c3d65e84dmr17991070a91.31.1747019476120; 
+ Sun, 11 May 2025 20:11:16 -0700 (PDT)
+Received: from wheely.local0.net ([118.209.229.237])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b234951024csm4750069a12.5.2025.05.11.20.11.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 11 May 2025 20:11:15 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
+ Caleb Schlossin <calebs@linux.vnet.ibm.com>
+Subject: [PATCH 02/50] ppc/xive: Report access size in XIVE TM operation error
+ logs
+Date: Mon, 12 May 2025 13:10:11 +1000
+Message-ID: <20250512031100.439842-3-npiggin@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250512031100.439842-1-npiggin@gmail.com>
+References: <20250512031100.439842-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250407074939.18657-2-chenyi.qiang@intel.com>
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -59
-X-Spam_score: -6.0
-X-Spam_bar: ------
-X-Spam_report: (-6.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.587,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,38 +102,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 07, 2025 at 03:49:21PM +0800, Chenyi Qiang wrote:
-> Date: Mon,  7 Apr 2025 15:49:21 +0800
-> From: Chenyi Qiang <chenyi.qiang@intel.com>
-> Subject: [PATCH v4 01/13] memory: Export a helper to get intersection of a
->  MemoryRegionSection with a given range
-> X-Mailer: git-send-email 2.43.5
-> 
-> Rename the helper to memory_region_section_intersect_range() to make it
-> more generic. Meanwhile, define the @end as Int128 and replace the
-> related operations with Int128_* format since the helper is exported as
-> a wider API.
-> 
-> Suggested-by: Alexey Kardashevskiy <aik@amd.com>
-> Reviewed-by: David Hildenbrand <david@redhat.com>
-> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> ---
-> Changes in v4:
->     - No change.
-> 
-> Changes in v3:
->     - No change
-> 
-> Changes in v2:
->     - Make memory_region_section_intersect_range() an inline function.
->     - Add Reviewed-by from David
->     - Define the @end as Int128 and use the related Int128_* ops as a wilder
->       API (Alexey)
-> ---
->  hw/virtio/virtio-mem.c | 32 +++++---------------------------
->  include/exec/memory.h  | 27 +++++++++++++++++++++++++++
->  2 files changed, 32 insertions(+), 27 deletions(-)
+Report access size in XIVE TM operation error logs.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ hw/intc/xive.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index 3eb28c2265..80b07a0afe 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -326,7 +326,7 @@ static void xive_tm_raw_write(XiveTCTX *tctx, hwaddr offset, uint64_t value,
+      */
+     if (size < 4 || !mask || ring_offset == TM_QW0_USER) {
+         qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid write access at TIMA @%"
+-                      HWADDR_PRIx"\n", offset);
++                      HWADDR_PRIx" size %d\n", offset, size);
+         return;
+     }
+ 
+@@ -357,7 +357,7 @@ static uint64_t xive_tm_raw_read(XiveTCTX *tctx, hwaddr offset, unsigned size)
+      */
+     if (size < 4 || !mask || ring_offset == TM_QW0_USER) {
+         qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid read access at TIMA @%"
+-                      HWADDR_PRIx"\n", offset);
++                      HWADDR_PRIx" size %d\n", offset, size);
+         return -1;
+     }
+ 
+@@ -688,7 +688,7 @@ void xive_tctx_tm_write(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
+         xto = xive_tm_find_op(tctx->xptr, offset, size, true);
+         if (!xto) {
+             qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid write access at TIMA "
+-                          "@%"HWADDR_PRIx"\n", offset);
++                          "@%"HWADDR_PRIx" size %d\n", offset, size);
+         } else {
+             xto->write_handler(xptr, tctx, offset, value, size);
+         }
+@@ -727,7 +727,7 @@ uint64_t xive_tctx_tm_read(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
+         xto = xive_tm_find_op(tctx->xptr, offset, size, false);
+         if (!xto) {
+             qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid read access to TIMA"
+-                          "@%"HWADDR_PRIx"\n", offset);
++                          "@%"HWADDR_PRIx" size %d\n", offset, size);
+             return -1;
+         }
+         ret = xto->read_handler(xptr, tctx, offset, size);
+-- 
+2.47.1
 
 
