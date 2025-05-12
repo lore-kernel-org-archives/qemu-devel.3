@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F224EC3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 03:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5B91C3ABC5
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 03:13:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEJbS-0001ZM-RD; Sun, 11 May 2025 23:13:19 -0400
+	id 1uEJaC-0007Rn-9i; Sun, 11 May 2025 23:12:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uEJaW-0007zi-EV; Sun, 11 May 2025 23:12:21 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1uEJaA-0007Ov-HM; Sun, 11 May 2025 23:11:58 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uEJaS-0006oo-5h; Sun, 11 May 2025 23:12:19 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-736c277331eso4294824b3a.1; 
- Sun, 11 May 2025 20:12:09 -0700 (PDT)
+ id 1uEJa8-0006mw-Nt; Sun, 11 May 2025 23:11:58 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-7418e182864so2901218b3a.1; 
+ Sun, 11 May 2025 20:11:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747019528; x=1747624328; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747019514; x=1747624314; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kEdXjDJ13RR/jJAKE74zIAL/Hxp1w/7NC/XsktyHuZg=;
- b=hnsMovcpRNUQoFnEPaVCrNcMhy2qaJCr1nc9OnK+/loq5cFJR26rjMoNf/rL37xYGj
- P4TSg4P38/vVNj72/Bd+xAUB4R9pa5TzIXhSYr5/vLiNWUlHBG6ElZxFl7Iv2nFUFHqz
- DtJVJVjaNLjhwYDwvBDdvQcAs/I7HdR2Sc4aVXgzB1Tpx4ULBrxEz09SfgGO41h9sSqp
- Fh0ctc8Xr0NTbv00Mk6bZ48lAeAIC1dX3CgtlNJnmyEotsjaXsNreWDlclPLUiP/+TM2
- 1aCM0ePdqBejaGALSq0mOdMn1hbIP3ZpFRoYvyoKeuDt2ucPrfg+jEKK+NK417K/i4YF
- 2/bg==
+ bh=/66Hz+19pOAn4jKgYHKfXn5ifeOLo43bO50HaUuUavI=;
+ b=PsjYbKT2zpYqmZRMMY+AP0JE0/bte+b+MKZhuyOMuPoo/4695dQkuHCqYrIwxYvT45
+ XxJllNTIZk7BH14j/NQDjAzC+q7ApPzDCWYO54uU5ysSckJ7YzSorZGs1fKDRaXaUZmt
+ 1rgPz1i8c5j/IpxIZjR8d9I2yqANHViL1YSE51Y/xVSi5j6jeXHi0v9mWgPKzNarUYNX
+ em/JH3NcVhMB5s81bubbDI+gvtlNlQhPlQTah9/6OVzOr9YwYBysqoMD9xgXiIpnb3TH
+ omF6dEFbdGBdRK70h1Q52VKgM6rdwl5Qw9JaX610w55I/txYXK7nJRjQ/zwXgHFZW9T3
+ SNqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747019528; x=1747624328;
+ d=1e100.net; s=20230601; t=1747019514; x=1747624314;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kEdXjDJ13RR/jJAKE74zIAL/Hxp1w/7NC/XsktyHuZg=;
- b=YgrDTtMn3+iQ3R9VZZx0SwxMQ50o1bfzByyScNjfRecssL3Co8zhbJq59f25xcOmr9
- vPTRxC81yW8cApDvJgXpgW+znlcYbaIjUMmy3gDs9p3wrdvbjYd9tRLP4vtS8eqlahlL
- EbP/rQO6gmcqNMYpbOc4IPGhvwIp/ZCmMnCWD/rkErSHOVRtWLzyNsS2LIfLRlBNWN1F
- BAV/c0SJ79lH8QxQo15c+poO06uVmfDSf1TTitJNNf4bjWM9dDQ6nBZ6x6XXuQvA5l0x
- JJ5+vZTuJmxsoj7MHdJkzzzbEfC6gtFvQy02PLjUhuIYj2z8bxNiFwJmyksr+Bgo5djZ
- tZ1w==
+ bh=/66Hz+19pOAn4jKgYHKfXn5ifeOLo43bO50HaUuUavI=;
+ b=vBPXJ6vTjx/gna/c17hP/6IVsktDm6bb0fCXDkP3GqjuDS8P82iXLWQ4X8IBZW8O6t
+ VCpVYH1WCZ6Mk3GtnfldnBj6B8vQJmFR4cig9Z2mvPx0LHoISrY9VreSkME5AiJ59dFJ
+ 71kO+KKX5tZvkwLvhbRxYIPJScQVKPmxJMDF7h88eWN/mr8e2pHlAi3+uEd3F4hnVTH9
+ Diet3C6zp5csCja8HycaBc8EOe38b/x+VlX63VtbalPnCHG9hJ/cN+vhraVFezrYpPwn
+ 4B0fdcLBRfVs7lvhxJehqv0Jyq6gj40Vxbh4dgs+a2nf+3r6TCW3Yizj8dG/iZyQqpHk
+ 5jHg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXqInnCF/Bys4CKMedIMen8rpvXOVL6UOI3I+1tz4wg/lbJAQAQHmXGyqcs5TRYZL/SWaYg6JYbwHFa@nongnu.org
-X-Gm-Message-State: AOJu0Yzm1FGQXTQjikfxecOMrwgHjJWlHIuvlOsGLHeLRFGqUx/a+wjg
- Zg7CGEzbGDfcMkpGuNalUmJCi+fxsiyE4euS7VCkTWrpccX9cgmyGKUWIA==
-X-Gm-Gg: ASbGnctH5rJSs8i+WVdbGg2rqQgjU2HaVBmQwGNygjduFhPH3QINC5IDu1AksMJEk/r
- rAO3Rn5dSf075r030VF6fdVZLMrM9kfHcR2RTW10yhktL7kQ2c/beAc3KFfg51bP3B/FrQe25iB
- lSSHVfU1RS1M8pPB/bsVS2FURs4vkSNsCavkD4MS88cNOKrBRs7YROr8TJIZCvv7KC2La3Uol7S
- C9A89evjXJ5Ndqe4Nk2D/l7gU3/m7rh5bV5y3Edbe9PAtPYwjKeO+ef8zpFXokKS7TG7QBB9+tW
- ZsIYVpq3gusPdTpcaeOOXarrJgNfqt3zvcVTShO7Cinn7PUJ2uXGj2QHDQ==
-X-Google-Smtp-Source: AGHT+IFW06RGD5Ij07IKRvxV8bo9Wx3LuLo6mLU4YhGmJvMjk3Kq62HWrqHa/ES5pBpZ+7DfDGhC6g==
-X-Received: by 2002:a05:6a20:6a2c:b0:1fe:61a4:7210 with SMTP id
- adf61e73a8af0-21599f766b2mr22670290637.2.1747019528176; 
- Sun, 11 May 2025 20:12:08 -0700 (PDT)
+ AJvYcCV8byc2WXeFBMbgyq2ZXTB5okXNnAWTFJ20FalCnxcU9UpZi+pN1hrXjp2LqNh7ZXwW2lUtGbzOIYc+@nongnu.org
+X-Gm-Message-State: AOJu0Yx+M7SL8iUCpnV2QgXOlLwIKjCKQPLBnVTC/BTsKqJNCPGOIPB7
+ Z7Ya6mzazGVSn7XlHrFwhPvzmwXze2rgsrjMl6JiiUw9lh+kn4x7n7E39w==
+X-Gm-Gg: ASbGnctbn3F9fA0VhIrEw6sjHpAxAqSoW0VP4WbeRf6lgnGblMShi87/a3ytD5L4NPc
+ 9HoSFGGWD6u3K8HPD+cSJj/kJXI3nkoinPwrH3hAV+qarOTedVmpdsYRRVMbf3vlMl8yGHDHGIb
+ aG4FROzPraHYx528lX3FOzX6NU3CHQ6N4btUGJESE9C/mSiqz+ApEM0SOWfq67hd95zQpFJzZNN
+ oxNh5aGPCxKePtfQwdstPPmVUMalqmNps1IKQEUI90MfryRG3rF3eDkGdyyunEK4jLfsTmcclxO
+ YQluKaTGnVSPTB3YWkius0yf+nrJmYy2jbwQsDJkOGsir5fpx6eZxzSs5Q==
+X-Google-Smtp-Source: AGHT+IHNbjRlaOUQ/fA0bq8aGRYXCHc8HzY3hqYVzpiYTaU4PuxXhkhKWGgns3UX/+AXtKlmhCNAqg==
+X-Received: by 2002:a05:6a00:4b01:b0:740:b5f9:90b4 with SMTP id
+ d2e1a72fcca58-7423bfe3a32mr15633658b3a.17.1747019513660; 
+ Sun, 11 May 2025 20:11:53 -0700 (PDT)
 Received: from wheely.local0.net ([118.209.229.237])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b234951024csm4750069a12.5.2025.05.11.20.12.04
+ 41be03b00d2f7-b234951024csm4750069a12.5.2025.05.11.20.11.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 20:12:07 -0700 (PDT)
+ Sun, 11 May 2025 20:11:53 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
  Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
  Caleb Schlossin <calebs@linux.vnet.ibm.com>
-Subject: [PATCH 16/50] ppc/xive: Fix pulling pool and phys contexts
-Date: Mon, 12 May 2025 13:10:25 +1000
-Message-ID: <20250512031100.439842-17-npiggin@gmail.com>
+Subject: [PATCH 12/50] ppc/xive2: Set CPPR delivery should account for group
+ priority
+Date: Mon, 12 May 2025 13:10:21 +1000
+Message-ID: <20250512031100.439842-13-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250512031100.439842-1-npiggin@gmail.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,113 +102,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This improves the implementation of pulling pool and phys contexts in
-XIVE1, by following closer the OS pulling code.
+The group interrupt delivery flow selects the group backlog scan if
+LSMFB < IPB, but that scan may find an interrupt with a priority >=
+IPB. In that case, the VP-direct interrupt should be chosen. This
+extends to selecting the lowest prio between POOL and PHYS rings.
 
-In particular, the old ring data is returned rather than the modified,
-and irq signals are reset on pull.
+Implement this just by re-starting the selection logic if the
+backlog irq was not found or priority did not match LSMFB (LSMFB
+is updated so next time around it would see the right value and
+not loop infinitely).
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/intc/xive.c | 66 ++++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 58 insertions(+), 8 deletions(-)
+ hw/intc/xive2.c | 32 ++++++++++++++++++++++----------
+ 1 file changed, 22 insertions(+), 10 deletions(-)
 
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index c2da23f9ea..1a94642c62 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -241,25 +241,75 @@ static uint64_t xive_tm_ack_hv_reg(XivePresenter *xptr, XiveTCTX *tctx,
-     return xive_tctx_accept(tctx, TM_QW3_HV_PHYS);
- }
- 
-+static void xive_pool_cam_decode(uint32_t cam, uint8_t *nvt_blk,
-+                                 uint32_t *nvt_idx, bool *vp)
-+{
-+    if (nvt_blk) {
-+        *nvt_blk = xive_nvt_blk(cam);
-+    }
-+    if (nvt_idx) {
-+        *nvt_idx = xive_nvt_idx(cam);
-+    }
-+    if (vp) {
-+        *vp = !!(cam & TM_QW2W2_VP);
-+    }
-+}
-+
-+static uint32_t xive_tctx_get_pool_cam(XiveTCTX *tctx, uint8_t *nvt_blk,
-+                                       uint32_t *nvt_idx, bool *vp)
-+{
-+    uint32_t qw2w2 = xive_tctx_word2(&tctx->regs[TM_QW2_HV_POOL]);
-+    uint32_t cam = be32_to_cpu(qw2w2);
-+
-+    xive_pool_cam_decode(cam, nvt_blk, nvt_idx, vp);
-+    return qw2w2;
-+}
-+
-+static void xive_tctx_set_pool_cam(XiveTCTX *tctx, uint32_t qw2w2)
-+{
-+    memcpy(&tctx->regs[TM_QW2_HV_POOL + TM_WORD2], &qw2w2, 4);
-+}
-+
- static uint64_t xive_tm_pull_pool_ctx(XivePresenter *xptr, XiveTCTX *tctx,
-                                       hwaddr offset, unsigned size)
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index 8ede95b671..de139dcfbf 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -939,7 +939,7 @@ static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
  {
--    uint32_t qw2w2_prev = xive_tctx_word2(&tctx->regs[TM_QW2_HV_POOL]);
-     uint32_t qw2w2;
-+    uint32_t qw2w2_new;
-+    uint8_t nvt_blk;
-+    uint32_t nvt_idx;
-+    bool vp;
+     uint8_t *regs = &tctx->regs[ring];
+     Xive2Router *xrtr = XIVE2_ROUTER(tctx->xptr);
+-    uint8_t old_cppr, backlog_prio, first_group, group_level = 0;
++    uint8_t old_cppr, backlog_prio, first_group, group_level;
+     uint8_t pipr_min, lsmfb_min, ring_min;
+     bool group_enabled;
+     uint32_t nvp_blk, nvp_idx;
+@@ -961,10 +961,12 @@ static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+      * Recompute the PIPR based on local pending interrupts. It will
+      * be adjusted below if needed in case of pending group interrupts.
+      */
++again:
+     pipr_min = xive_ipb_to_pipr(regs[TM_IPB]);
+     group_enabled = !!regs[TM_LGS];
+-    lsmfb_min = (group_enabled) ? regs[TM_LSMFB] : 0xff;
++    lsmfb_min = group_enabled ? regs[TM_LSMFB] : 0xff;
+     ring_min = ring;
++    group_level = 0;
  
--    qw2w2 = xive_set_field32(TM_QW2W2_VP, qw2w2_prev, 0);
--    memcpy(&tctx->regs[TM_QW2_HV_POOL + TM_WORD2], &qw2w2, 4);
-+    qw2w2 = xive_tctx_get_pool_cam(tctx, &nvt_blk, &nvt_idx, &vp);
-+
-+    if (!vp) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pull invalid POOL NVT %x/%x !?\n",
-+                      nvt_blk, nvt_idx);
-+    }
-+
-+    /* Invalidate CAM line */
-+    qw2w2_new = xive_set_field32(TM_QW2W2_VP, qw2w2, 0);
-+    xive_tctx_set_pool_cam(tctx, qw2w2_new);
-+
-+    xive_tctx_reset_signal(tctx, TM_QW1_OS);
-+    xive_tctx_reset_signal(tctx, TM_QW2_HV_POOL);
-     return qw2w2;
- }
- 
- static uint64_t xive_tm_pull_phys_ctx(XivePresenter *xptr, XiveTCTX *tctx,
-                                       hwaddr offset, unsigned size)
- {
--    uint8_t qw3b8_prev = tctx->regs[TM_QW3_HV_PHYS + TM_WORD2];
--    uint8_t qw3b8;
-+    uint8_t qw3b8 = tctx->regs[TM_QW3_HV_PHYS + TM_WORD2];
-+    uint8_t qw3b8_new;
-+
-+    qw3b8 = tctx->regs[TM_QW3_HV_PHYS + TM_WORD2];
-+    if (!(qw3b8 & TM_QW3B8_VT)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pulling invalid PHYS thread!?\n");
-+    }
-+    qw3b8_new = qw3b8 & ~TM_QW3B8_VT;
-+    tctx->regs[TM_QW3_HV_PHYS + TM_WORD2] = qw3b8_new;
- 
--    qw3b8 = qw3b8_prev & ~TM_QW3B8_VT;
--    tctx->regs[TM_QW3_HV_PHYS + TM_WORD2] = qw3b8;
-+    xive_tctx_reset_signal(tctx, TM_QW1_OS);
-+    xive_tctx_reset_signal(tctx, TM_QW3_HV_PHYS);
-     return qw3b8;
- }
- 
-@@ -489,7 +539,7 @@ static uint64_t xive_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
-     qw1w2 = xive_tctx_get_os_cam(tctx, &nvt_blk, &nvt_idx, &vo);
- 
-     if (!vo) {
--        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pulling invalid NVT %x/%x !?\n",
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: pull invalid OS NVT %x/%x !?\n",
-                       nvt_blk, nvt_idx);
+     /* PHYS updates also depend on POOL values */
+     if (ring == TM_QW3_HV_PHYS) {
+@@ -998,9 +1000,6 @@ static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+         }
      }
  
+-    /* PIPR should not be set to a value greater than CPPR */
+-    regs[TM_PIPR] = (pipr_min > cppr) ? cppr : pipr_min;
+-
+     rc = xive2_tctx_get_nvp_indexes(tctx, ring_min, &nvp_blk, &nvp_idx);
+     if (rc) {
+         qemu_log_mask(LOG_GUEST_ERROR, "XIVE: set CPPR on invalid context\n");
+@@ -1019,7 +1018,7 @@ static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+ 
+     if (group_enabled &&
+         lsmfb_min < cppr &&
+-        lsmfb_min < regs[TM_PIPR]) {
++        lsmfb_min < pipr_min) {
+         /*
+          * Thread has seen a group interrupt with a higher priority
+          * than the new cppr or pending local interrupt. Check the
+@@ -1048,12 +1047,25 @@ static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
+                                                     nvp_blk, nvp_idx,
+                                                     first_group, &group_level);
+         tctx->regs[ring_min + TM_LSMFB] = backlog_prio;
+-        if (backlog_prio != 0xFF) {
+-            xive2_presenter_backlog_decr(tctx->xptr, nvp_blk, nvp_idx,
+-                                         backlog_prio, group_level);
+-            regs[TM_PIPR] = backlog_prio;
++        if (backlog_prio != lsmfb_min) {
++            /*
++             * If the group backlog scan finds a less favored or no interrupt,
++             * then re-do the processing which may turn up a more favored
++             * interrupt from IPB or the other pool. Backlog should not
++             * find a priority < LSMFB.
++             */
++            g_assert(backlog_prio >= lsmfb_min);
++            goto again;
+         }
++
++        xive2_presenter_backlog_decr(tctx->xptr, nvp_blk, nvp_idx,
++                                     backlog_prio, group_level);
++        pipr_min = backlog_prio;
+     }
++
++    /* PIPR should not be set to a value greater than CPPR */
++    regs[TM_PIPR] = (pipr_min > cppr) ? cppr : pipr_min;
++
+     /* CPPR has changed, check if we need to raise a pending exception */
+     xive_tctx_notify(tctx, ring_min, group_level);
+ }
 -- 
 2.47.1
 
