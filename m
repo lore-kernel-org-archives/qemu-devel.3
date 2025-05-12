@@ -4,92 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70905C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 12:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97E15C3ABCD
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 12:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uERx8-00059Q-H7; Mon, 12 May 2025 08:08:14 -0400
+	id 1uES4M-00081H-Ry; Mon, 12 May 2025 08:15:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uERx5-00058d-KT
- for qemu-devel@nongnu.org; Mon, 12 May 2025 08:08:12 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uES3s-0007vJ-Cu
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 08:15:12 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uERx3-000146-1Y
- for qemu-devel@nongnu.org; Mon, 12 May 2025 08:08:11 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3a0b9625662so3553164f8f.3
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 05:08:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uES3p-0001rD-GH
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 08:15:12 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-707d3c12574so35100917b3.1
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 05:15:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747051686; x=1747656486; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=k9oSO6VvjoXDKhI2/KCGOYhfCGhHG5VKFyZNM70FjgA=;
- b=upKtmyiWikDF04gKPIWCxrIHi5fTbV6jWnafRCCd1su3xQnDap4VXPNVFGhnHXLGKe
- k1sinIsIREM+6CtvZFvAo+KGe2jo3MMUYzl26XT99/mWuxpkcBDc6md8dT4qvmYwqHCl
- MfJfeFTIGWP+C2TAWPEvB5VMTSPp8DiDu4SJVvMKcgNgybvQqfwspwJb6081xoQnN4UL
- WhstbTKX+sQX1WUGdaahZiw+I5ybEXAZnkCDkwDUiR0qzfz2EUnAH/R1xhO3oPDiTzG1
- 3cp2RoD+oMapFRzW4vudSjdt6XFHMygCZAbxwOAzGH3tGmZrdDMHZ71EOeicNjftoM1b
- xSBQ==
+ d=linaro.org; s=google; t=1747052106; x=1747656906; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=w3LoDMsjztJQ5/cbBs5QguRFNkq3R16LRxLV5XHiXu0=;
+ b=R0em0pD0XMvWNcfkkopHCN3+FwTeqEQ+0VJPTdFpbKT6jo2tGHWVlVIH0ZIpZfVG9L
+ iI2q8/42LWboxDLDqYSSj6czWYB1hyzYbDTkql21fCFVAOtJWodoZ5A/f0zXlREJbFy+
+ dD8V9EewDnTagaHHSYlgNCwBAUxAmf3K0G6/9FCPr1FMvJde18CNyhAuXlPlPtQGy80C
+ lCEqbc9Qqg5OIXfxuaG9eIuR+yry1Z519FPdd4O/NJr4ksXHYJLQ+WPwhQWm3IU7LcG0
+ hlBuQoaVYh3cgFfiY4me/oDVvNPDYX4Kx6hlE2qkEkxviSIjDImkt9Uo2l3iJtgQ+gN5
+ dn2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747051686; x=1747656486;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=k9oSO6VvjoXDKhI2/KCGOYhfCGhHG5VKFyZNM70FjgA=;
- b=rpki+0qlhiZY+A7LgS8/34aYsYkXrG5pYPuqXR6Lw0N+wvTTLYuBEHxV4BcD7JcagL
- MSi0qksCp5VXjPmhveoG+NLMWngTsyZHUWh8rObHK3qQHL5YTiqqhjlAqd0Z09c8bpqJ
- kbyf4F1FFwgnFuD6XCOIryFDiB31R5/KvP9DQZL5rA3giHITJs6HL9jS8E/6Htr82zSX
- sI5dMYiUQxqGmRxRVn6lu27FiYLZ0pvc5LsgnbqlucBKElImCozjzsN9aHjhSdiZA1mo
- jLhd8wDh9eq1i+pQGY5svC8uizS9BV/PasYY0WtJbak0EUlAj/aegCV5ctftN3uP6l3S
- 4zsg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXIQlh3jVVWK/jxSSbzvYDZk4uRRyGbSA39jxLKF5y1Sh/MC5//hf6iHLOY5CkbJUghhhERj8sctgeR@nongnu.org
-X-Gm-Message-State: AOJu0YyO4tj4qxXuq6avw42Mj9wMHT93ZicWmbNMs/MiaX6dtMAzuDXD
- T371Jx4Q1l4pQtNxdiJwPH7Us3j32dm//g4eH4/q5b2MpwyulMoivL9BisHHdtg=
-X-Gm-Gg: ASbGncu9/AXRxf/IHD66Z6ZXQ+ScT6H8Lpygyk08rU3/mZddYLGTDId4C8I7bng3b+F
- NhuPM9WmkM/nl5B5QMnA6gVP+bYFEcoGVJfL1daVEP+9A1m8dllnuxddeKMvDzMEvLCm2cWZfFM
- PcmGghCkLulKISspZCqjwVJfcsgVg0pUx6JC/rKrLvhvryEBvyM3lTzeed18Ha75QFq0qiNe4nI
- HWNYTdYyEHLxZ6OKJ8gKNnoj9xjNjIIgbIvTtzt4x3mji5I/kjUPDny6SNjtnKjrirG439wZZXa
- wPEHi/eCCe+ldvExN1NFnLT/qY88ycdqNhcALmrb1COq7Pi+YXmOJqafTcvSq6EkVtQ+Gfjzk0U
- REcv2hbRQgszI
-X-Google-Smtp-Source: AGHT+IFtQJKHD/8Mf3N4T537A+vTBCJedSX2E/+iEDuNXFgKrMe1rBR0CcAcF7Mfc7dGHoWk+Vn5jQ==
-X-Received: by 2002:a5d:64a8:0:b0:39c:f0d:9146 with SMTP id
- ffacd0b85a97d-3a1f64b5aefmr10518548f8f.45.1747051685842; 
- Mon, 12 May 2025 05:08:05 -0700 (PDT)
-Received: from [10.93.5.179] (110.8.30.213.rev.vodafone.pt. [213.30.8.110])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f58ec8f1sm12079454f8f.26.2025.05.12.05.08.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 May 2025 05:08:05 -0700 (PDT)
-Message-ID: <e25812d6-cc1d-4727-b24e-208dbbe54afa@linaro.org>
-Date: Mon, 12 May 2025 13:08:04 +0100
+ d=1e100.net; s=20230601; t=1747052106; x=1747656906;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=w3LoDMsjztJQ5/cbBs5QguRFNkq3R16LRxLV5XHiXu0=;
+ b=jpfNNrB8i1UwEkRDnRoqFSHA6V1jhBa98gXCtTO0O2gKFQ7yMB/GV5fFlfSFUU35Za
+ kEFPG5anFFLifW68SbtPUKsl7QDY2Aj3JjUs4v2X8uiwkvvyZS3yHlgtYGTqLuhDSojM
+ hanybkl16gGQxIqhC8yuynlPALog8Jl48hVyx/0uUGLDC8Y15x6vAboXC+gNhPIz4dPr
+ vlOJ/KRrebhpGFeKCewZH/ATrB/tnjGSHLc8yoiwosC59IoHTTqnGL+JuNyqZjRL8svv
+ 6dKEHx0bXeyYe//M+CFke/syL04ZDe8dOKhcRU8J0QCI5gBuMVwSISk4dDgxJh9EY8XX
+ 91og==
+X-Gm-Message-State: AOJu0YzRcmbcwG8StfNR8ueFl+ppOCH8eB5FIjvQlCp4NHywogIMLglp
+ mnARU35KNUu5oF9zMIZDFPdjYoclYJJ2QUn292gsuJ0PMDec1pNnpDupMdPWqZomj5laZ+HnpHh
+ 0Z/crJMfRiLC/5nIpA0IT7oLL/koOCdJ132fsGw==
+X-Gm-Gg: ASbGnct98jddILl74o+sYZrZhkmtKmgHVMQ/l3Lh20qJXg/u91iq+9LDp/rmXu2tHK6
+ MnG537Q0Kt2lmpfm1YiaZH5aJ/t79aL1RN2f3Zfq8dbejiW9uRULOBEaR019qlvaNo6mpiab/K3
+ vhCZ8o6o3UkzK5lTDJ2VSnn2TyQW7Z1SnDZA==
+X-Google-Smtp-Source: AGHT+IFT5YufhK9NvbvclRGW1kP3mN9hKIW0OQgkXvM+XjnFaedA9AEn31BsIZOxXRYEHOIr1MDlOisth9WnKTegI3E=
+X-Received: by 2002:a05:690c:9:b0:70b:6734:9f1 with SMTP id
+ 00721157ae682-70b67340a61mr28481487b3.15.1747052106557; Mon, 12 May 2025
+ 05:15:06 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Add PCI hotplug test for aarch64
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, alex.bennee@linaro.org, philmd@linaro.org,
- peter.maydell@linaro.org
-References: <20250509232156.106465-1-gustavo.romero@linaro.org>
- <80e7eacc-0b71-4e1c-981e-607a4ce8a7bd@redhat.com>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <80e7eacc-0b71-4e1c-981e-607a4ce8a7bd@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=gustavo.romero@linaro.org; helo=mail-wr1-x42e.google.com
+References: <20250508082943.446512-1-pbonzini@redhat.com>
+ <20250508082943.446512-3-pbonzini@redhat.com>
+In-Reply-To: <20250508082943.446512-3-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 12 May 2025 13:14:54 +0100
+X-Gm-Features: AX0GCFsRyecOZsmq92ahjQNhYnMRo0Po9kU14W4tCW1108R2BG8v5cg_C4xpC6c
+Message-ID: <CAFEAcA9JEC6+v79HJD9D10my-L7U+pfp-LwQEQM6ar9t-onsXg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] rust: pl011: Really use RX FIFO depth
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,83 +92,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas,
+On Thu, 8 May 2025 at 09:31, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> While we model a 16-elements RX FIFO since the PL011 model was
+> introduced in commit cdbdb648b7c ("ARM Versatile Platform Baseboard
+> emulation"), we only read 1 char at a time!
 
-Thanks for the review.
+We could say that this is the Rust version of the C implementation's
+commit 3e0f118f8259 ("hw/char/pl011: Really use RX FIFO depth").
 
-On 5/12/25 04:59, Thomas Huth wrote:
->   Hi!
-> 
-> On 10/05/2025 01.19, Gustavo Romero wrote:
->> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
->> hot-unplug on arm64. Currently, the aarch64 'virt' machine uses the PCIe
->> native controller and does not support ACPI-based hotplugging. However,
->> since support is planned, this test sets 'acpi=force' and specifies an
->> EDK2 firmware image in advance. This is harmless and prepares for future
->> ACPI support.
->>
->> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->> ---
->>   tests/functional/meson.build                 |  1 +
->>   tests/functional/test_aarch64_hotplug_pci.py | 73 ++++++++++++++++++++
->>   2 files changed, 74 insertions(+)
->>   create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
-> 
-> Could you also add the test file to one of the sections in the MAINTAINERS file, please?
+> Have the IOCanReadHandler handler return how many elements are
+> available, and use that in the IOReadHandler handler.
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  docs/devel/rust.rst              |  2 +-
+>  rust/hw/char/pl011/src/device.rs | 14 +++++++-------
+>  2 files changed, 8 insertions(+), 8 deletions(-)
+>
+> diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
+> index 4de86375021..171d908e0b0 100644
+> --- a/docs/devel/rust.rst
+> +++ b/docs/devel/rust.rst
+> @@ -119,7 +119,7 @@ QEMU includes four crates:
+>    for the ``hw/char/pl011.c`` and ``hw/timer/hpet.c`` files.
+>
+>  .. [#issues] The ``pl011`` crate is synchronized with ``hw/char/pl011.c``
+> -   as of commit 02b1f7f61928.  The ``hpet`` crate is synchronized as of
+> +   as of commit 3e0f118f82.  The ``hpet`` crate is synchronized as of
+>     commit 1433e38cc8.  Both are lacking tracing functionality.
+>
+>  This section explains how to work with them.
+> diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+> index 94b31659849..7f28bb25a9b 100644
+> --- a/rust/hw/char/pl011/src/device.rs
+> +++ b/rust/hw/char/pl011/src/device.rs
+> @@ -580,19 +580,19 @@ fn write(&self, offset: hwaddr, value: u64, _size: u32) {
+>      fn can_receive(&self) -> u32 {
+>          let regs = self.regs.borrow();
+>          // trace_pl011_can_receive(s->lcr, s->read_count, r);
 
-Any idea under which section I should add this test?
+This commented out tracepoint needs adjusting: the C version
+is now
+  trace_pl011_can_receive(s->lcr, s->read_count, fifo_depth, fifo_available)
+where fifo_available is what we here open-code as
+"regs.fifo_depth() - regs.read_count" in the return value.
 
-Currently, it's only TCG, but in the future probably there will be
-1) a variant with --enable-kvm option and 2) it will have a variant
-with ACPI enabled. Hence, currently it doesn't seem to fit neither
-under "PCI" nor under "ARM ACPI Subsystem", I think I can create a
-section tho? Maybe "ARM PCI Hotplug"? Could you please advise?
+I mention this because it affects whether you want to write
+this open-coded or with a local variable.
 
+> -        u32::from(regs.read_count < regs.fifo_depth())
+> +        regs.fifo_depth() - regs.read_count
+>      }
+>
+>      fn receive(&self, buf: &[u8]) {
+> -        if buf.is_empty() {
+> -            return;
+> -        }
+>          let mut regs = self.regs.borrow_mut();
+> -        let c: u32 = buf[0].into();
+> -        let update_irq = !regs.loopback_enabled() && regs.fifo_rx_put(c.into());
+> +        let mut update_irq = false;
+> +        for &c in buf {
+> +            let c: u32 = c.into();
+> +            update_irq |= !regs.loopback_enabled() && regs.fifo_rx_put(c.into());
+> +        }
 
->> diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functional/test_aarch64_hotplug_pci.py
->> new file mode 100755
->> index 0000000000..031540ba22
->> --- /dev/null
->> +++ b/tests/functional/test_aarch64_hotplug_pci.py
->> @@ -0,0 +1,73 @@
->> +#!/usr/bin/env python3
->> +#
->> +# The test hotplugs a PCI device and checks it on a Linux guest.
->> +#
->> +# Copyright (c) 2025 Linaro Ltd.
->> +#
->> +# Author:
->> +#  Gustavo Romero <gustavo.romero@linaro.org>
->> +#
->> +# This work is licensed under the terms of the GNU GPL, version 2 or
->> +# later.  See the COPYING file in the top-level directory.
->> +
->> +from os import path
->> +from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
->> +from qemu_test import BUILD_DIR
->> +
->> +class HotplugPCI(LinuxKernelTest):
->> +
->> +    ASSET_KERNEL = Asset(
->> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
->> +         'current/images/netboot/debian-installer/arm64/linux'),
->> +        '3821d4db56d42c6a4eac62f31846e35465940afd87746b4cfcdf5c9eca3117b2')
->> +
->> +    ASSET_INITRD = Asset(
->> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
->> +         'current/images/netboot/debian-installer/arm64/initrd.gz'),
->> +        '2583ec22b45265ad69e82f198674f53d4cd85be124fe012eedc2fd91156bc4b4')
->> +
->> +    def test_hotplug_pci(self):
->> +
->> +        self.vm.add_args('-m', '512M')
->> +        self.vm.add_args('-machine', 'type=virt')
-> 
-> Please use self.set_machine('virt') instead so that the test gets correctly skipped in case the machine has not been compiled into the binary.
+We're now checking loopback_enabled() on every iteration
+(admittedly we previously also checked it for every character
+but with the extra overhead of calling receive() too ;-))
 
-Sure!
+Could we write this the same way the C code does with an
+early-return before the for loop?
 
+Also, the C version has a helpful comment about that:
+    /*
+     * In loopback mode, the RX input signal is internally disconnected
+     * from the entire receiving logics; thus, all inputs are ignored,
+     * and BREAK detection on RX input signal is also not performed.
+     */
 
-Cheers,
-Gustavo
+that it would be good to have in the Rust implementation so
+we don't lose it as and when we drop the C impl.
+
+> +
+>          // Release the BqlRefCell before calling self.update()
+>          drop(regs);
+> -
+>          if update_irq {
+>              self.update();
+>          }
+
+thanks
+-- PMM
 
