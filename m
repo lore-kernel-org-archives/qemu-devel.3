@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF842C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 03:15:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A57BEC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 03:15:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEJbY-0002Dp-1b; Sun, 11 May 2025 23:13:24 -0400
+	id 1uEJZh-0006xf-HZ; Sun, 11 May 2025 23:11:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uEJay-0000OH-DK; Sun, 11 May 2025 23:12:49 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1uEJZf-0006wl-Nk; Sun, 11 May 2025 23:11:27 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uEJav-0006sc-KQ; Sun, 11 May 2025 23:12:47 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7426c44e014so243508b3a.3; 
- Sun, 11 May 2025 20:12:42 -0700 (PDT)
+ id 1uEJZd-0006im-Ov; Sun, 11 May 2025 23:11:27 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-30c35ac35dfso2838031a91.1; 
+ Sun, 11 May 2025 20:11:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747019561; x=1747624361; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747019484; x=1747624284; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/sM3Fcl2nkTcvJ+mZtD/bEzJ5psrvAWh+VjIf988ETM=;
- b=fAgsNEYlCi1ZpzPg5ROqCs378ocXhGt/Myiw+tegCH7b11Iqii2qQ0eTiV19+MxMs2
- BMhL2+80W7NSZVCe2jqzaE2HaTAc+di92C/vP9dcDolcKPzd85dOoLWfCFEkyFAXcFjO
- 1Sw/iPBa0nQ4TmZRt0ygbcTLsyB+Ko9MTEfHl/V3gNYfDrTcl6PIFeF2udkvqYwA3QWI
- XVsowU2ZNfwvhPM5bQYsoQojxP5ndlCSE9gl4sqKvXt0GzWBZuyzvYtvhsj6jO1dowxv
- IXsEnUWvmblc+w5yBqNUaxda3BA95FtKZTVXuSalPYigcUbVvpE+lfz5vfCmFv4oMQPr
- 5LXg==
+ bh=QoP5Rwmzwa91xzV/AyP+VdPUdzZjJco7/2dUQOhnjSA=;
+ b=e1xBUGGjNuTspZTQGgogPx2e1nGLstJA8v6hkz4oKmKvLh8itjXd3M0KDccdcOXeHo
+ Nk9zBpOUmKuwO6S4AI/AeCy4QAPSsGqt2GPijZJPPmcR8mlEODNmTg3beZ7VT++FaTVh
+ DtRwK2p/usIDmxoxF21qWWkD58XN0bCpzxIXLSaLLD10meNtZEqiYQmhoC6JNKwAWj07
+ kjTICjf8jpIY8XCLN570y3uZzt0O5U0hrhKXwEEJWOxefR7wqOTANTStTxP1LoROXMbR
+ 7DCDcTPxDVzqAI4wY49PuQPfkY7a6ZaLgC9ADnMfQXGnd9KFMa2ZzFsg00FCZF7o7tur
+ DQyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747019561; x=1747624361;
+ d=1e100.net; s=20230601; t=1747019484; x=1747624284;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/sM3Fcl2nkTcvJ+mZtD/bEzJ5psrvAWh+VjIf988ETM=;
- b=WQwCftdFGYGEvuAV9cyfQwq1i8CSZ+FI7DcAW9ANETdz0iNw7mUp7RaX/RISbEjB/3
- zkT+OUHcQqA2QJg+89nwpUbm4HiaBIVfgx6XLWHSes+p4Fqb8s1Ia/noaRCZBfO/pFky
- vsD4GfB45QPlH6Rb40w+2y/mBhbY+FGBQXtR6LNaXE+2+l/cF92e2y/14Juo3JugWTsU
- 4OkTiBLSYlj24uK2J6dwAG5ftDzpIAfjcBuiW0RqnKsO5YsoXIVNudajbzKVQdvbwJLD
- OolxB0RDOtljBgDYNxUqoj15Bz6zf7P18ocnZIe4o5JaquskEG6RxNY+i89MOojHUqSy
- Fd2Q==
+ bh=QoP5Rwmzwa91xzV/AyP+VdPUdzZjJco7/2dUQOhnjSA=;
+ b=fEP5ZQkIUWvD7xPFbDdEgTBvbrt303o19L32+eLD6gW2LDbLGBKetNhroJPN/82Nnb
+ pqDXSKLpUfMVIOfiI59e1kTmHDWFLZF5HJ6GTEsVtnyvuFyrBC+R6UYY1i9flstdbZUF
+ tu3fWJmCk9Kh2DVF/ArBj5foSemSrT4N/c5R2lOJPKLHGwCRtJpxXVtYR+EPUdjsB6dn
+ r2lF7UqiKfdwCRQ41BNVVFFm67dp6Dmo4+cWp1JouG9AtblCHLd9dV3N305NrpwhDQ3f
+ WImCL7cq865dCoqpNkXlMz49BZq5+zUDXT8cIcKVHJPhL3B6Ze90v62PcbHO1CuZ94kt
+ BxQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdtmJ86XBQuve8Kugtp93y9pVacZdzNGZKBSOnc/0h3ipHssckt34JJI2ANLdmBiX/Z/UPboKPTSOt@nongnu.org
-X-Gm-Message-State: AOJu0YyaHN5o68YOuOPmIQHPVXj1I3m+7v9WrnpIGf03DQ36hEjWCtF+
- Me0TMDud9JGkjrHxS193MsOaKThyU7TgN/3b2dXUvkVJW6RVxbJoB0g0HA==
-X-Gm-Gg: ASbGncvblPEvJRClkxjIom5GKgjHKXSMmK6nGJ4orU8a3dCBfCn5NU2GMbtQvz3Qiyr
- LfY6oL0aW3qmLODEipPmrz1yvLXZ8QJiw8Ync9Md543pcd2eKSLBediCNBKe7s/NXRVar0bg3bQ
- ci4aJKMrYCSzcqZxWZhI1hpts5qYOUPB19tddCFyXl02Xz/iXiL1cRdQVm9DoUz8H/e0r9HKzrr
- hlabGLnxM8HPByg3NDE66R35YawvlWj44MpmEaZRmm1bRsTtP3NXR3ziJBWSpfRaKgqgpfTugXf
- TLvfGtfs1xfP6whlRyGtv+jhohDQ2PpAhmAhNVGcIcf2VC7QS033a0EzfA==
-X-Google-Smtp-Source: AGHT+IEOWcnB8FYocwC3zPAT5I8DetE1vUc3Hrkkw4B0jbI+6J4qb16xOed3kNFp536hB5orXzhoRw==
-X-Received: by 2002:a05:6a21:158e:b0:1f5:8678:1820 with SMTP id
- adf61e73a8af0-215abb0b74dmr15938907637.12.1747019561394; 
- Sun, 11 May 2025 20:12:41 -0700 (PDT)
+ AJvYcCVleOcoPCaUgg77nt0uP6QgNbs41JUoHAZLgAekeAKMW5OgHKz6q+6zlTKfV8G+l8DCs0/Y3YD8T+AY@nongnu.org
+X-Gm-Message-State: AOJu0YwF2e5vOb0Ve9eE8U7giKWiGmzab8+QE7cjKphwR8oTwKfZWVPA
+ xhBVviopHz3y9zYPDgD+VABgoA2sVvB00GuDiA6hc+KSAP4SlgDjxJsPjg==
+X-Gm-Gg: ASbGncsKgbDrMNIkZru963hc+OItIvFmmYFpgXy+JJ24/Ev9ElddFzGIGgc1jy+SgUL
+ qbV6MXKWAkv4p4hTB6F28kPUazYLIuxWO/T7/CLqfH7RBD6rOWtWEz11IbZHFvGRzv/psLRMOzK
+ W376vkgujSKAr10+8UxtZ7xhnL9rCV0TxsMTGDFZZnKMZhXM/c26Y+KxOUbw5cLCKJXo6m+D7Tj
+ kLshcjAqzqIVRQismCAgLPwMhL/scLGRIKIJMsX9yVBTRrcmDvWhTrLkF/UynVE0WWntjZRUet5
+ ZDfjPYtYnjLXkdqJqfAY3pOOJsuhykDH9GpT3OXm4KPLRSY9DMAAjT8GLQ==
+X-Google-Smtp-Source: AGHT+IGfysmRXbbks6M79gdzJcq4ifce10xsyh7E79YzsC0KH78OsXG0yJdbWFV99skYBY5vn9I3+Q==
+X-Received: by 2002:a17:90b:554d:b0:2ff:698d:ef7c with SMTP id
+ 98e67ed59e1d1-30c3d64d8c9mr17322932a91.29.1747019483583; 
+ Sun, 11 May 2025 20:11:23 -0700 (PDT)
 Received: from wheely.local0.net ([118.209.229.237])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b234951024csm4750069a12.5.2025.05.11.20.12.38
+ 41be03b00d2f7-b234951024csm4750069a12.5.2025.05.11.20.11.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 20:12:41 -0700 (PDT)
+ Sun, 11 May 2025 20:11:23 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
  Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
  Caleb Schlossin <calebs@linux.vnet.ibm.com>
-Subject: [PATCH 25/50] ppc/xive2: Implement "Ack OS IRQ to even report line"
- TIMA op
-Date: Mon, 12 May 2025 13:10:34 +1000
-Message-ID: <20250512031100.439842-26-npiggin@gmail.com>
+Subject: [PATCH 04/50] ppc/xive2: Remote VSDs need to match on forwarding
+ address
+Date: Mon, 12 May 2025 13:10:13 +1000
+Message-ID: <20250512031100.439842-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250512031100.439842-1-npiggin@gmail.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1035.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,147 +102,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Glenn Miles <milesg@linux.ibm.com>
+From: Michael Kowal <kowal@linux.ibm.com>
 
-Booting AIX in a PowerVM partition requires the use of the "Acknowledge
-O/S Interrupt to even O/S reporting line" special operation provided by
-the IBM XIVE interrupt controller. This operation is invoked by writing
-a byte (data is irrelevant) to offset 0xC10 of the Thread Interrupt
-Management Area (TIMA). It can be used by software to notify the XIVE
-logic that the interrupt was received.
+In a multi chip environment there will be remote/forwarded VSDs.  The check
+to find a matching INT controller (XIVE) of the remote block number was
+checking the INTs chip number.  Block numbers are not tied to a chip number.
+The matching remote INT is the one that matches the forwarded VSD address
+with VSD types associated MMIO BAR.
 
-Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 ---
- hw/intc/xive.c         |  8 ++++---
- hw/intc/xive2.c        | 50 ++++++++++++++++++++++++++++++++++++++++++
- include/hw/ppc/xive.h  |  1 +
- include/hw/ppc/xive2.h |  3 ++-
- 4 files changed, 58 insertions(+), 4 deletions(-)
+ hw/intc/pnv_xive2.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index 7461dbecb8..9ec1193dfc 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -80,7 +80,7 @@ static qemu_irq xive_tctx_output(XiveTCTX *tctx, uint8_t ring)
-         }
+diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
+index d1713b406c..30b4ab2efe 100644
+--- a/hw/intc/pnv_xive2.c
++++ b/hw/intc/pnv_xive2.c
+@@ -102,12 +102,10 @@ static uint32_t pnv_xive2_block_id(PnvXive2 *xive)
  }
- 
--static uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring)
-+uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring)
- {
-     uint8_t *regs = &tctx->regs[ring];
-     uint8_t nsr = regs[TM_NSR];
-@@ -340,14 +340,14 @@ static uint64_t xive_tm_vt_poll(XivePresenter *xptr, XiveTCTX *tctx,
- 
- static const uint8_t xive_tm_hw_view[] = {
-     3, 0, 0, 0,   0, 0, 0, 0,   3, 3, 3, 3,   0, 0, 0, 0, /* QW-0 User */
--    3, 3, 3, 3,   3, 3, 0, 2,   3, 3, 3, 3,   0, 0, 0, 0, /* QW-1 OS   */
-+    3, 3, 3, 3,   3, 3, 0, 2,   3, 3, 3, 3,   0, 0, 0, 3, /* QW-1 OS   */
-     0, 0, 3, 3,   0, 3, 3, 0,   3, 3, 3, 3,   0, 0, 0, 0, /* QW-2 POOL */
-     3, 3, 3, 3,   0, 3, 0, 2,   3, 0, 0, 3,   3, 3, 3, 0, /* QW-3 PHYS */
- };
- 
- static const uint8_t xive_tm_hv_view[] = {
-     3, 0, 0, 0,   0, 0, 0, 0,   3, 3, 3, 3,   0, 0, 0, 0, /* QW-0 User */
--    3, 3, 3, 3,   3, 3, 0, 2,   3, 3, 3, 3,   0, 0, 0, 0, /* QW-1 OS   */
-+    3, 3, 3, 3,   3, 3, 0, 2,   3, 3, 3, 3,   0, 0, 0, 3, /* QW-1 OS   */
-     0, 0, 3, 3,   0, 3, 3, 0,   0, 3, 3, 3,   0, 0, 0, 0, /* QW-2 POOL */
-     3, 3, 3, 3,   0, 3, 0, 2,   3, 0, 0, 3,   0, 0, 0, 0, /* QW-3 PHYS */
- };
-@@ -718,6 +718,8 @@ static const XiveTmOp xive2_tm_operations[] = {
-                                                      xive_tm_pull_phys_ctx },
-     { XIVE_TM_HV_PAGE, TM_SPC_PULL_PHYS_CTX_OL,   1, xive2_tm_pull_phys_ctx_ol,
-                                                      NULL },
-+    { XIVE_TM_OS_PAGE, TM_SPC_ACK_OS_EL,          1, xive2_tm_ack_os_el,
-+                                                     NULL },
- };
- 
- static const XiveTmOp *xive_tm_find_op(XivePresenter *xptr, hwaddr offset,
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index ec4b9320b4..68be138335 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -1009,6 +1009,56 @@ static int xive2_tctx_get_nvp_indexes(XiveTCTX *tctx, uint8_t ring,
-     return 0;
- }
- 
-+static void xive2_tctx_accept_el(XivePresenter *xptr, XiveTCTX *tctx,
-+                                 uint8_t ring, uint8_t cl_ring)
-+{
-+    uint64_t rd;
-+    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
-+    uint32_t nvp_blk, nvp_idx, xive2_cfg;
-+    Xive2Nvp nvp;
-+    uint64_t phys_addr;
-+    uint8_t OGen = 0;
-+
-+    xive2_tctx_get_nvp_indexes(tctx, cl_ring, &nvp_blk, &nvp_idx);
-+
-+    if (xive2_router_get_nvp(xrtr, (uint8_t)nvp_blk, nvp_idx, &nvp)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVP %x/%x\n",
-+                      nvp_blk, nvp_idx);
-+        return;
-+    }
-+
-+    if (!xive2_nvp_is_valid(&nvp)) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid NVP %x/%x\n",
-+                      nvp_blk, nvp_idx);
-+        return;
-+    }
-+
-+
-+    rd = xive_tctx_accept(tctx, ring);
-+
-+    if (ring == TM_QW1_OS) {
-+        OGen = tctx->regs[ring + TM_OGEN];
-+    }
-+    xive2_cfg = xive2_router_get_config(xrtr);
-+    phys_addr = xive2_nvp_reporting_addr(&nvp);
-+    uint8_t report_data[REPORT_LINE_GEN1_SIZE];
-+    memset(report_data, 0xff, sizeof(report_data));
-+    if ((OGen == 1) || (xive2_cfg & XIVE2_GEN1_TIMA_OS)) {
-+        report_data[8] = (rd >> 8) & 0xff;
-+        report_data[9] = rd & 0xff;
-+    } else {
-+        report_data[0] = (rd >> 8) & 0xff;
-+        report_data[1] = rd & 0xff;
-+    }
-+    cpu_physical_memory_write(phys_addr, report_data, REPORT_LINE_GEN1_SIZE);
-+}
-+
-+void xive2_tm_ack_os_el(XivePresenter *xptr, XiveTCTX *tctx,
-+                        hwaddr offset, uint64_t value, unsigned size)
-+{
-+    xive2_tctx_accept_el(xptr, tctx, TM_QW1_OS, TM_QW1_OS);
-+}
-+
- static void xive2_tctx_set_cppr(XiveTCTX *tctx, uint8_t ring, uint8_t cppr)
- {
-     uint8_t *regs = &tctx->regs[ring];
-diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
-index 28f0f1b79a..46d05d74fb 100644
---- a/include/hw/ppc/xive.h
-+++ b/include/hw/ppc/xive.h
-@@ -561,6 +561,7 @@ void xive_tctx_pipr_update(XiveTCTX *tctx, uint8_t ring, uint8_t priority,
-                            uint8_t group_level);
- void xive_tctx_reset_signal(XiveTCTX *tctx, uint8_t ring);
- void xive_tctx_notify(XiveTCTX *tctx, uint8_t ring, uint8_t group_level);
-+uint64_t xive_tctx_accept(XiveTCTX *tctx, uint8_t ring);
  
  /*
-  * KVM XIVE device helpers
-diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
-index 760b94a962..ff02ce2549 100644
---- a/include/hw/ppc/xive2.h
-+++ b/include/hw/ppc/xive2.h
-@@ -142,5 +142,6 @@ void xive2_tm_set_hv_target(XivePresenter *xptr, XiveTCTX *tctx,
-                             hwaddr offset, uint64_t value, unsigned size);
- void xive2_tm_pull_phys_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
-                                hwaddr offset, uint64_t value, unsigned size);
+- * Remote access to controllers. HW uses MMIOs. For now, a simple scan
+- * of the chips is good enough.
+- *
+- * TODO: Block scope support
++ * Remote access to INT controllers. HW uses MMIOs(?). For now, a simple
++ * scan of all the chips INT controller is good enough.
+  */
+-static PnvXive2 *pnv_xive2_get_remote(uint8_t blk)
++static PnvXive2 *pnv_xive2_get_remote(uint32_t vsd_type, hwaddr fwd_addr)
+ {
+     PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
+     int i;
+@@ -116,10 +114,22 @@ static PnvXive2 *pnv_xive2_get_remote(uint8_t blk)
+         Pnv10Chip *chip10 = PNV10_CHIP(pnv->chips[i]);
+         PnvXive2 *xive = &chip10->xive;
+ 
+-        if (pnv_xive2_block_id(xive) == blk) {
++        /*
++         * Is this the XIVE matching the forwarded VSD address is for this
++         * VSD type
++         */
++        if ((vsd_type == VST_ESB   && fwd_addr == xive->esb_base) ||
++            (vsd_type == VST_END   && fwd_addr == xive->end_base)  ||
++            ((vsd_type == VST_NVP ||
++              vsd_type == VST_NVG) && fwd_addr == xive->nvpg_base) ||
++            (vsd_type == VST_NVC   && fwd_addr == xive->nvc_base)) {
+             return xive;
+         }
+     }
++
++    qemu_log_mask(LOG_GUEST_ERROR,
++                 "XIVE: >>>>> pnv_xive2_get_remote() vsd_type %u  fwd_addr 0x%lX NOT FOUND\n",
++                 vsd_type, fwd_addr);
+     return NULL;
+ }
+ 
+@@ -252,8 +262,7 @@ static uint64_t pnv_xive2_vst_addr(PnvXive2 *xive, uint32_t type, uint8_t blk,
+ 
+     /* Remote VST access */
+     if (GETFIELD(VSD_MODE, vsd) == VSD_MODE_FORWARD) {
+-        xive = pnv_xive2_get_remote(blk);
 -
-+void xive2_tm_ack_os_el(XivePresenter *xptr, XiveTCTX *tctx,
-+                        hwaddr offset, uint64_t value, unsigned size);
- #endif /* PPC_XIVE2_H */
++        xive = pnv_xive2_get_remote(type, (vsd & VSD_ADDRESS_MASK));
+         return xive ? pnv_xive2_vst_addr(xive, type, blk, idx) : 0;
+     }
+ 
 -- 
 2.47.1
 
