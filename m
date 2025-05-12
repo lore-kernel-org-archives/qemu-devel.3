@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0029AC3ABCD
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 13:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF87DC3ABCD
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 13:48:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uETVJ-0002EC-EN; Mon, 12 May 2025 09:47:37 -0400
+	id 1uETVM-0002FZ-Pw; Mon, 12 May 2025 09:47:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uETV9-0002CL-5y
- for qemu-devel@nongnu.org; Mon, 12 May 2025 09:47:28 -0400
+ id 1uETVB-0002CU-3A
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 09:47:30 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uETV5-0002SB-0G
- for qemu-devel@nongnu.org; Mon, 12 May 2025 09:47:26 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54CC9d2p027149;
- Mon, 12 May 2025 13:47:18 GMT
+ id 1uETV5-0002SG-0S
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 09:47:27 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54CC9fFW026121;
+ Mon, 12 May 2025 13:47:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:message-id:subject:to; s=corp-2025-04-25; bh=uk8O9Xsn
- Fnk4mEfeCRTjWhdUIbLrfGhFFZUv5J6qlZo=; b=XP8dqghrUrSerf0reC+Xoyib
- CjwKoYHEbiTyR9UxVteOkfeCdiO4NRZ5py1ozVQKOqVDgRQjhmrYWQ2FiHth4e2b
- LAd6av+O1szPOgFIJaV1gOJksKxZAL0cUARBhrtdsfNF2RL2SlWVVSkpq/yL1igg
- sEJ0MzgrLeQZKLwbPNWxUdoHQABpIHxyOnTnqxklOKVBiFi9n/hWGAR3xOzLiTU1
- KnqaOx3UxjRs3xEOUrHJFZ8ucEqMytnl1u1IjdldrpLKooLPX+nQgs0OQwuZjJM8
- O55tiWzyiVC5KIao/XZzv6dIJQLKngMIpc69ca6H0+cCrk/nbhGg2fQ6oMldOQ==
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2025-04-25; bh=RUXd8sXm1ExW6dupqzMcTbh3B/3KE7AHCs8DtD9iahQ=; b=
+ nRX/qepkKf8hlaTXtqL9HywgnXyPjMuiTtmyyF7BZmAkFMIXBEKJtdIqPQmwmVBf
+ OBjw9prhD2GZXe0hdl5/GIc9hxqGVypnNoQpGhcBNUvqaQeS7EvHw1xSEQsxAYi5
+ dS1/L7YyON/E7aOcrQymbJxRiE2lD6AIfeAhvctO5ix+BWRqC6q8M8q1AAffvfFE
+ cwYI1LinL53r0Fp0ZqzwXf/bwOGW/lQ/LMfrcoDneTJmKJD0XFCP6GTCiDiVNrER
+ HnffyWyTX7a2C0yslv438qe/+UOkE1rjcGMdT+ZRtqe8HQznQgwqo1n/7JpAlQ1s
+ RnFOYC696pi/6ReydglJfA==
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46j1jnjjap-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46j11c2gpd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 May 2025 13:47:18 +0000 (GMT)
+ Mon, 12 May 2025 13:47:20 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54CC3P8a033100; Mon, 12 May 2025 13:47:17 GMT
+ with ESMTP id 54CCM7IB033186; Mon, 12 May 2025 13:47:19 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 46hw8ddfa9-1
+ 46hw8ddfan-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 May 2025 13:47:17 +0000
+ Mon, 12 May 2025 13:47:19 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54CDlHVb001568;
- Mon, 12 May 2025 13:47:17 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54CDlHVd001568;
+ Mon, 12 May 2025 13:47:18 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 46hw8ddf9k-1; Mon, 12 May 2025 13:47:17 +0000
+ ESMTP id 46hw8ddf9k-2; Mon, 12 May 2025 13:47:18 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
@@ -61,30 +62,33 @@ Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V2 0/5] fast qom tree get
-Date: Mon, 12 May 2025 06:47:10 -0700
-Message-Id: <1747057635-124298-1-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V2 1/5] qom: qom-tree-get
+Date: Mon, 12 May 2025 06:47:11 -0700
+Message-Id: <1747057635-124298-2-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1747057635-124298-1-git-send-email-steven.sistare@oracle.com>
+References: <1747057635-124298-1-git-send-email-steven.sistare@oracle.com>
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-12_04,2025-05-09_01,2025-02-21_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- mlxlogscore=979
+ mlxlogscore=999
  malwarescore=0 phishscore=0 bulkscore=0 adultscore=0 mlxscore=0
  suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2504070000 definitions=main-2505120143
-X-Proofpoint-GUID: 53GHB2XSa_Dm-5S7ZDgBWcDZUFeXanZU
-X-Authority-Analysis: v=2.4 cv=PeH/hjhd c=1 sm=1 tr=0 ts=6821fbe6 b=1 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDE0NCBTYWx0ZWRfX1AxZElKFpXOy
+ D62rh30deLldcx3TwHynlr8//2ac9Mc7+B8kHjT5YQUdqVRQpej/khzscYVpra3Ru+Dj1tvOSzg
+ bb7SXve/Vat2wXZlfRdxniVEGxjI2Dm8vMEG4bT5o2WT0TnW5JHto+guXifo/M51cXzEeJZqAtt
+ XpLHAVFpwKBj/B1/x/MR7YRyV0bfeO8lhplaDjeIPh38xdGMxkuxJM2r03u2TkOrWfU6HCdS0J4
+ 1IBbziL3kQKz4VNYdIWvZtqvjFiTl3z+JcLsISO++b5Ie339psnZsSMNtR18s/xLP/Yxv3MsVo2
+ QHpGYr4MKxMxjeuE6h7GOHyWOVqvjKEgkVfGa2OMoNbL1zIW6hYiRFsMBFkfuQYZPkE28uFjdT3
+ jdFtrVxf+hFqQS+DHKsv2v6zA2EyoPAPWUqKBub11Pcv5AD7BR4eyxF5rdonvZzHqb6vz0Dp
+X-Authority-Analysis: v=2.4 cv=YJ2fyQGx c=1 sm=1 tr=0 ts=6821fbe8 b=1 cx=c_pps
  a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=dt9VzEwgFbYA:10 a=PaH2gP4kqpskryv8OzkA:9 cc=ntf awl=host:14694
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDE0NCBTYWx0ZWRfX6xdVxjdvwG6H
- BpBteGlfUOEuNG9sLj+ZBNScSznuUAnLoOd9JhgBPOMY66ppCGgnb+pTYfOAjW3ssqzVYTLzBhR
- qnKuDt7wwaYArwFzO5tcmoS4w7spF6etvE/0VHxhEKonKNOKpERkizPG7ux/sOFBB5YmKT20+QG
- Ssp4LIJoJ4BgwAHLJ+PlNl4kkQBInKKOZIcy+3NpyIyQdY4VJFjsEt9zNDGSq4MxiAZoq93iZKY
- AMY+wHJ8MEfIEgKnR/8Bu0W1Lfr5FUyCbXm6CdvQ1y2n/vEzgGyNY/uo87B+xMovUFJTUwJ3iON
- pcVlsC/PxRywECQNjRmbFhDcaahg/HuNYDuTrGAI8qjxd4DQjmr5RlVvxsS2ClIn8Jf+CEMhSsR
- pW0iE2UHsbkUV6iJKfEzvlQFhx54xZcZzTg+oFY2MlkHfzuWIMWoASsWjV49FqGZSivsNDI1
-X-Proofpoint-ORIG-GUID: 53GHB2XSa_Dm-5S7ZDgBWcDZUFeXanZU
+ a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=kNkG7qB_sMBJrWmNXDsA:9 cc=ntf
+ awl=host:14694
+X-Proofpoint-GUID: ZF2zJu7WG9tCBW1k3IAqgIKeDqsDiiTO
+X-Proofpoint-ORIG-GUID: ZF2zJu7WG9tCBW1k3IAqgIKeDqsDiiTO
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -32
@@ -110,72 +114,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Using qom-list and qom-get to get all the nodes and property values in a
-QOM tree can take multiple seconds because it requires 1000's of individual
-QOM requests.  Some managers fetch the entire tree or a large subset
-of it when starting a new VM, and this cost is a substantial fraction of
-start up time.
+Define the qom-tree-get QAPI command, which fetches an entire tree of
+properties and values with a single QAPI call.  This is much faster
+than using qom-list plus qom-get for every node and property of the
+tree.  See qom.json for details.
 
-To reduce this cost, consider QAPI calls that fetch more information in
-each call:
-  * qom-list-get: given a path, return a list of properties and values.
-  * qom-list-getv: given a list of paths, return a list of properties and
-    values for each path.
-  * qom-tree-get: given a path, return all descendant nodes rooted at that
-    path, with properties and values for each.
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ qapi/qom.json      | 56 ++++++++++++++++++++++++++++++++++++++++++
+ qom/qom-qmp-cmds.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 128 insertions(+)
 
-In all cases, a returned property is represented by ObjectPropertyValue,
-with fields name, type, and value.  If an error occurs when reading a value
-the value field is omitted.  Thus an error for one property will not cause a
-bulk fetch operation to fail.
-
-To evaluate each method, I modified scripts/qmp/qom-tree to use the method,
-verified all methods produce the same output, and timed each using:
-
-  qemu-system-x86_64 -display none \
-    -chardev socket,id=monitor0,path=/tmp/vm1.sock,server=on,wait=off \
-    -mon monitor0,mode=control &
-
-  time qom-tree -s /tmp/vm1.sock > /dev/null
-
-I only measured once per method, but the variation is low after a warm up run.
-The 'real - user - sys' column is a proxy for QEMU CPU time.
-
-method               real(s)   user(s)   sys(s)  (real - user - sys)(s)
-qom-list / qom-get   2.048     0.932     0.057   1.059
-qom-list-get         0.402     0.230     0.029   0.143
-qom-list-getv        0.200     0.132     0.015   0.053
-qom-tree-get         0.143     0.123     0.012   0.008
-
-qom-tree-get is the clear winner, reducing elapsed time by a factor of 14X,
-and reducing QEMU CPU time by 132X.
-
-qom-list-getv is slower when fetching the entire tree, but can beat
-qom-tree-get when only a subset of the tree needs to be fetched (not shown).
-qom-list-get is shown for comparison only, and is not included in this series.
-
-Changes in V2:
-  * removed "qom: qom_resolve_path", which was pulled separately
-  * dropped the error member
-  * fixed missing _list_tree in qom.py
-  * updated 10.0 to 10.1
-
-Steve Sistare (5):
-  qom: qom-tree-get
-  python: use qom-tree-get
-  tests/qtest/qom-test: unit test for qom-tree-get
-  qom: qom-list-getv
-  tests/qtest/qom-test: unit test for qom-list-getv
-
- python/qemu/utils/qom.py        |  36 ++++++-------
- python/qemu/utils/qom_common.py |  48 +++++++++++++++++
- qapi/qom.json                   |  90 ++++++++++++++++++++++++++++++++
- qom/qom-qmp-cmds.c              | 112 +++++++++++++++++++++++++++++++++++++++
- tests/qtest/qom-test.c          | 113 ++++++++++++++++++++++++++++++++++++++++
- 5 files changed, 381 insertions(+), 18 deletions(-)
-
-base-commit: 7be29f2f1a3f5b037d27eedbd5df9f441e8c8c16
-
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 28ce24c..94662ad 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -46,6 +46,38 @@
+             '*default-value': 'any' } }
+ 
+ ##
++# @ObjectPropertyValue:
++#
++# @name: the name of the property
++#
++# @type: the type of the property, as described in @ObjectPropertyInfo
++#
++# @value: the value of the property.  Omitted if cannot be read.
++#
++# Since 10.1
++##
++{ 'struct': 'ObjectPropertyValue',
++  'data': { 'name': 'str',
++            'type': 'str',
++            '*value': 'any' } }
++
++##
++# @ObjectNode:
++#
++# @name: the name of the node
++#
++# @children: child nodes
++#
++# @properties: properties of the node
++#
++# Since 10.1
++##
++{ 'struct': 'ObjectNode',
++  'data': { 'name': 'str',
++            'children': [ 'ObjectNode' ],
++            'properties': [ 'ObjectPropertyValue' ] }}
++
++##
+ # @qom-list:
+ #
+ # This command will list any properties of a object given a path in
+@@ -126,6 +158,30 @@
+   'allow-preconfig': true }
+ 
+ ##
++# @qom-tree-get:
++#
++# This command returns a tree of objects and their properties,
++# rooted at the specified path.
++#
++# @path: The absolute or partial path within the object model, as
++#     described in @qom-get
++#
++# Errors:
++#     - If path is not valid or is ambiguous, returns an error.
++#     - If a property cannot be read, the value field is omitted in
++#       the corresponding @ObjectPropertyValue.
++#
++# Returns: A tree of @ObjectNode.  Each node contains its name, list
++#     of properties, and list of child nodes.
++#
++# Since 10.1
++##
++{ 'command': 'qom-tree-get',
++  'data': { 'path': 'str' },
++  'returns': 'ObjectNode',
++  'allow-preconfig': true }
++
++##
+ # @qom-set:
+ #
+ # This command will set a property from a object model path.
+diff --git a/qom/qom-qmp-cmds.c b/qom/qom-qmp-cmds.c
+index 293755f..b876681 100644
+--- a/qom/qom-qmp-cmds.c
++++ b/qom/qom-qmp-cmds.c
+@@ -69,6 +69,78 @@ ObjectPropertyInfoList *qmp_qom_list(const char *path, Error **errp)
+     return props;
+ }
+ 
++static void qom_list_add_property_value(Object *obj, ObjectProperty *prop,
++                                        ObjectPropertyValueList **props)
++{
++    ObjectPropertyValue *item = g_new0(ObjectPropertyValue, 1);
++    Error *err = NULL;
++
++    QAPI_LIST_PREPEND(*props, item);
++
++    item->name = g_strdup(prop->name);
++    item->type = g_strdup(prop->type);
++    item->value = object_property_get_qobject(obj, prop->name, &err);
++
++    if (!item->value) {
++        /*
++         * For bulk get, the error message is dropped, but the value field
++         * is omitted so the caller knows this property could not be read.
++         */
++        error_free(err);
++    }
++}
++
++static ObjectNode *qom_tree_get(const char *path, Error **errp)
++{
++    Object *obj;
++    ObjectProperty *prop;
++    ObjectNode *result, *child;
++    ObjectPropertyIterator iter;
++
++    obj = qom_resolve_path(path, errp);
++    if (obj == NULL) {
++        return NULL;
++    }
++
++    result = g_new0(ObjectNode, 1);
++
++    object_property_iter_init(&iter, obj);
++    while ((prop = object_property_iter_next(&iter))) {
++        if (strstart(prop->type, "child<", NULL)) {
++            g_autofree char *child_path = g_strdup_printf("%s/%s",
++                                                          path, prop->name);
++            child = qom_tree_get(child_path, errp);
++            if (!child) {
++                qapi_free_ObjectNode(result);
++                return NULL;
++            }
++            child->name = g_strdup(prop->name);
++            QAPI_LIST_PREPEND(result->children, child);
++        } else {
++            qom_list_add_property_value(obj, prop, &result->properties);
++        }
++    }
++
++    return result;
++}
++
++ObjectNode *qmp_qom_tree_get(const char *path, Error **errp)
++{
++    ObjectNode *result = qom_tree_get(path, errp);
++
++    if (result) {
++        /* Strip the path prefix if any */
++        const char *basename = strrchr(path, '/');
++
++        if (!basename || !basename[1]) {
++            result->name = g_strdup(path);
++        } else {
++            result->name = g_strdup(basename + 1);
++        }
++    }
++    return result;
++}
++
+ void qmp_qom_set(const char *path, const char *property, QObject *value,
+                  Error **errp)
+ {
 -- 
 1.8.3.1
 
