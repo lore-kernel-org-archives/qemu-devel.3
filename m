@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CFBEC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:16:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8FDAC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:24:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uETwt-00084S-2C; Mon, 12 May 2025 10:16:07 -0400
+	id 1uEU4Z-0001vS-4w; Mon, 12 May 2025 10:24:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uETwm-00083F-TU
- for qemu-devel@nongnu.org; Mon, 12 May 2025 10:16:03 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEU4Q-0001u8-KW
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 10:23:54 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uETwj-0005cI-Ks
- for qemu-devel@nongnu.org; Mon, 12 May 2025 10:15:59 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-43cfebc343dso30315115e9.2
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 07:15:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uEU4O-0006TP-SS
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 10:23:54 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3a20257c815so1739588f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 07:23:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747059354; x=1747664154; darn=nongnu.org;
+ d=linaro.org; s=google; t=1747059830; x=1747664630; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=aTAGveobMVXL/UqyzsFhZ1pybaTAQ1fC0YSWIiTwOb4=;
- b=ellKcAYJhidG9ZpphaOFEd0JSaKYDHC6Fe+rNHnx6FkGBsFTpaLlvle2HcQdD30Sna
- P098t3QkrTPaOBGu3jobd/gdVCVzAVQFK4mHVugR/NwAFcAo7Rycim4xbj/b/ThUSgXW
- InECpn6k7noYXNxjjiXEvonZsh94vt6N+S0Q7W7ECmFn6LDqbGW2cPG+PYKyvsmMwHV+
- 8S+L9cd/YxpVSa2CwoPOPuX6nbjmMhiNArf2cRkzCWQww+iDI7MmCeL6sQ6nbXXFEo9+
- KoMVLADG8hBy137mKZ/uAkos2wyVT6qwUeN7K0C9MW/t6z3D5WBO6KQm8T/js36QEUpX
- PZUA==
+ bh=Mnm0wN8xrZwjJuPO6RBiswdxwHZWJnZCFCbrqWMXjdI=;
+ b=SXbQG22mRugyR/FbSH+GeQDBJ39b8+EqzyobLdQWhgrsQkUceHrxM5tghk7Tn6TBMG
+ WfIWNFkcCZRKbcugBkXpYCFxKn3p9pxQUGEfv/I4SNQjWLlYF3Aaw0H7xDTFdymI6I4N
+ Im1dzicYsLQUsVNe7k0RiS281DDTF2Qn88Rl8ae8h5z3AKWBwef3aZTAg3xOU0yaryyh
+ 9BhBSRzaI7v5bnbhEsL7O4iH2GnsGe7XUaF8ExpWZjaRsz9FoDToaE0pju6mOXzMWhu6
+ d0Cm2azfQwk7LMuTcECKLdTLJkaUO3zNw9KyuboKoUII/+ZbVkGuo7R64kRMHKPAFqWi
+ JuCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747059354; x=1747664154;
+ d=1e100.net; s=20230601; t=1747059830; x=1747664630;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aTAGveobMVXL/UqyzsFhZ1pybaTAQ1fC0YSWIiTwOb4=;
- b=XkcsDsZqfrTpIkDJZgtLJWiBK8tMfrLwqA0ImoxNLuLlOptvNKGoq1HVPg1Nl0zNYC
- +qToh0CaDxFEokzKnA6+xIpE0qO+6rkNiiZtmc0Ero2lP8YAQxlz2lyIhekFkvmpWL2K
- FfnxpGSUnyDKuZBg5ylXY6SEu8swnyLursoGRtrJhzpDRfzJxsoY4mjEsY9Y6X2QJipB
- aPphoM4/BK9J10/zoRt/D7DJU4ZbpfvSXM7+OLa0pX9zfHaHDfPXQ96PKKFG7T1X4KVq
- vsxoqxgv4vKem+RZ6PVxih94D3Mls+7ld9Y+/LR9Z7YYynBMLBnJqG3XXKD3yQ8iIoyF
- SO5g==
+ bh=Mnm0wN8xrZwjJuPO6RBiswdxwHZWJnZCFCbrqWMXjdI=;
+ b=QemH9R+jkPRczLQW6PJ6tIdIyt6sTYEFjz0tjgA5PnMBpPkrvsTwYrl4uzscFgtLcv
+ NfUsF6OCf3gaLTIkhPqPGxlJSS2Trc6iuyRhBrA1sT7eoqeTAuOqvHeJSb/OPRZvCsZo
+ 1zex84qztUelHilu3y80baYSf25Nz5Vpwi1jgY0hS+/PqGIZy6JN7kc5Mpswpt8L+VGP
+ x3ov4w1CBAg4XLrhZOifm8IqKY9+iZAlBoiFVtS1wMgTRVX2jf7Mizd4ZBhcCfVOZP+S
+ k1jh1FSvgXWbJoZBJ+fo+CAZ4kaGDLT8Phz0unwK9+vQlGlbYPU69L40KOkKdtwhZ1DB
+ USkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXye/Bq//csBDYJeGSV09OdkSzKrH3xqt99uO3Aoqz2IFrNHbkXqqtQP+PpJq/edCEd8D39hH5UBAPR@nongnu.org
-X-Gm-Message-State: AOJu0Yy7qSVFuKdtR9KpcnI1xcPu6JOmoko5oRSqFjT5Gt5u6Hjs8RK4
- uVObIjzTT0aMPGbaV1YPvA+oeXgQce3ioBJiB6uTS78CCrJVwtrXo0MVZuxRzY4=
-X-Gm-Gg: ASbGncu4stXcXRm2SMzm6Hm8gUPemWKH5Brh8XKO15T6P124gIeNKHAX6HVToAjE+5s
- 6cbJ8tp8h5jMSVRW7E6tann5UQdN1QV003Jm4mEiivreLDOFcQEU/5yweSFiOpkB9eY2CiyDCpN
- 24UggHiLo9Quu+CaejUcyNv6qqdj+ZGtvQoLvnV4nZxnWDOB/cteAvevgXzJJ3uke9XhMTMYQZ+
- 7ArzJ0JPzuTrj+KGQvbTG0qtLRC4mSSlKeYqYTsKfCp4GnX1CnDuqfGvLOzQbwUke1XDYgxHv7o
- fmYzQvNJIWBkScYm7hNNbBMKC7mOkFIkfjiINvYYCTgu1FsFl3OhQ6eE/+VnXbOCP/dZFfrl+nN
- R2vbn9nghbFTsMlYzGjjnu0hcopLF
-X-Google-Smtp-Source: AGHT+IHLD+KR4eQadi3Gx4ZKSctbLcnOfa7f1NEAB/FxoDfcH+1qT9P3NQQULJv+WfRW14vaCSaNDA==
-X-Received: by 2002:a05:600c:528e:b0:43d:7413:cb3e with SMTP id
- 5b1f17b1804b1-442d6d17f7cmr97859585e9.1.1747059353924; 
- Mon, 12 May 2025 07:15:53 -0700 (PDT)
+ AJvYcCWnyXhAFLBJfikZsAAp8AjSasx5D45/03geYzwsowiZLCGtHq5JNzUC0jr60X3p0WVo+ryfyHeXmg7s@nongnu.org
+X-Gm-Message-State: AOJu0YwD97jWC0M3wTswhMkOLBkIF0kDerLcRWku6XFvz45k1ORYs3ki
+ FYV3XtU/DCpqxsUJUwrcHIzVAWwMIWJHUoEKD/wEMAxeGRwn2xPR2l+DL3/YjOQ=
+X-Gm-Gg: ASbGnctD1+Od6ZnrkqDF5s7rmxD4aFqFRWfmQLfBd6NVvJyrcS0xEoHeom3sDU0ViQg
+ MSg5ZSPrIvifHtrkxXIerWaAEOkx82K4hnYn4T5olkztecvDqzM6yz8XlaSq/+JRBh/MlMIljJJ
+ dAff1cb0zMh34x9bCXXeQR/qT3z2Z7wWZzKvRnbjH/EJdD5mndX6q9B+l3sMVmPP/oig6N2d9Gn
+ TknZglkG4QmZjJxOONDGK/BGRagAiasaLpGmU5oJct6UXGF8ghnzu0YQ+UfI/pBZOI3cJciThcX
+ IcRSIZVT9zRyh2jvu7jo/4dSk5e8Q56kzaTZTIh4eUfZCm5whcR5ZdLIqF5rOKy9YNOYXZHZsfQ
+ v8aYV3fvkXQTVLTBDVLwjswOZC2Pi
+X-Google-Smtp-Source: AGHT+IEEFuCKwJXVAmg6+SzLiL6bJto0wLM8OgMOsJCQIzKw6re5dz1lV36aKI+saYxoHpzW6I4Z+Q==
+X-Received: by 2002:a5d:64ec:0:b0:3a0:b8b0:43ff with SMTP id
+ ffacd0b85a97d-3a1f64577bfmr11419296f8f.14.1747059830628; 
+ Mon, 12 May 2025 07:23:50 -0700 (PDT)
 Received: from [172.19.170.213] (90.red-88-28-30.dynamicip.rima-tde.net.
  [88.28.30.90]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442d67d5c2asm127762345e9.1.2025.05.12.07.15.52
+ ffacd0b85a97d-3a1f58f2ab2sm12424024f8f.46.2025.05.12.07.23.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 May 2025 07:15:53 -0700 (PDT)
-Message-ID: <3b7f61dc-8708-459c-b48b-db955ad462bf@linaro.org>
-Date: Mon, 12 May 2025 16:15:51 +0200
+ Mon, 12 May 2025 07:23:50 -0700 (PDT)
+Message-ID: <f9ec4839-abbe-4bba-bf40-42126e95fc70@linaro.org>
+Date: Mon, 12 May 2025 16:23:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/functional: Add PCI hotplug test for aarch64
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- thuth@redhat.com
-Cc: eric.auger@redhat.com, alex.bennee@linaro.org, peter.maydell@linaro.org
-References: <20250512123646.157447-1-gustavo.romero@linaro.org>
+Subject: Re: [PATCH v6 09/24] target/m68k: Use OS_UNSIZED in LEA, PEA, JMP
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: laurent@vivier.eu, schwab@linux-m68k.org
+References: <20250511203546.139788-1-richard.henderson@linaro.org>
+ <20250511203546.139788-10-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250512123646.157447-1-gustavo.romero@linaro.org>
+In-Reply-To: <20250511203546.139788-10-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,39 +102,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/25 14:36, Gustavo Romero wrote:
-> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
-> hot-unplug on arm64. Currently, the aarch64 'virt' machine uses the PCIe
-> native controller and does not support ACPI-based hotplugging. However,
-> since support is planned, this test sets 'acpi=force' and specifies an
-> EDK2 firmware image in advance. This is harmless and prepares for future
-> ACPI support.
+On 11/5/25 22:35, Richard Henderson wrote:
+> For LEA and PEA, while the manual says "size = (long)", it also says
+> that the pre-decrement and post-increment addressing modes are illegal.
+> For JMP, the manual says "unsized".  OS_UNSIZED is the way to signal
+> gen_lea_mode to reject those addressing modes.
 > 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   MAINTAINERS                                  |  5 ++
->   tests/functional/meson.build                 |  1 +
->   tests/functional/test_aarch64_hotplug_pci.py | 73 ++++++++++++++++++++
->   3 files changed, 79 insertions(+)
->   create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 23174b4ca7..9ebb768214 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2065,6 +2065,11 @@ S: Supported
->   F: include/hw/pci/pcie_doe.h
->   F: hw/pci/pcie_doe.c
->   
-> +ARM PCI Hotplug
-> +M: Gustavo Romero <gustavo.romero@linaro.org>
+>   target/m68k/translate.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
-Cc: qemu-arm@?
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> +S: Supported
-> +F: tests/functional/test_aarch64_hotplug_pci.py
-> +
->   ACPI/SMBIOS
->   M: Michael S. Tsirkin <mst@redhat.com>
->   M: Igor Mammedov <imammedo@redhat.com>
 
