@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DC1FC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62888C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:43:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEVBo-0000Mw-9d; Mon, 12 May 2025 11:35:36 -0400
+	id 1uEVBV-00089d-4S; Mon, 12 May 2025 11:35:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEVA3-0005LC-0X
- for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uEV9n-0004hz-LV
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:31 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEVA1-0006oI-0n
- for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747064024;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Sp5AOlAAcMe/731mdhhjEGgBdH68SBKAgsxg0jZtfC0=;
- b=ZLhV6s6TKppuRuLYenE6+nl3ZJI7631kcnglxmT27u0I7ikIxJVXOvoEyWfHjehpK6kF72
- uysOdzlHmW67hCINvihnemJbXGQ1t1Vool6SobguwgpRg+UGUKwsMeEA/EkOJ10gATQIKf
- vjSqedISiPrT+rWQfZ8VNN6ChyaQkSI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-ZVxMY9kaM3CA2JORIXWMew-1; Mon, 12 May 2025 11:33:43 -0400
-X-MC-Unique: ZVxMY9kaM3CA2JORIXWMew-1
-X-Mimecast-MFC-AGG-ID: ZVxMY9kaM3CA2JORIXWMew_1747064022
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43cec217977so22774215e9.0
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 08:33:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747064020; x=1747668820;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Sp5AOlAAcMe/731mdhhjEGgBdH68SBKAgsxg0jZtfC0=;
- b=sS9Q9SPzBu3Tq9EcDBxrrSw2htVCgEQdqOZm324SvC361jNlipmCYIk6dFi1lwjI+x
- nCqYoOvO34w09TEtVqMBk+BrxKx9xMKwgJS9pLYL1SVUh+57Akpi/wjmNBRyLCSAfh1O
- ewRd+0N0mdmcLEsAPjj45N+3LaBm+CXQ6ucSYJHcJkDNWErpcSb2PnbVSMqGKxbPmZ3B
- Wg+mCTnoFdK22DaU+BOpS9ZM/ey0cHvquMfh4kvRsqpvsiMccLp0k9948y+fmMxUO+iR
- ohd3AUj0GhzgxBs41qrmgpoI5O4eD3SrrcuxHvkbPjaJTcnuAPxSWEiEMjdPJ8qTWmOu
- 5KfQ==
-X-Gm-Message-State: AOJu0YyvSZoIh7wtIdLjfBuqLw/n4hmLMllwevuC3SsCcS7iPG19PMXW
- 3cEnwJm1eRvoFfu9iGcz45m9By39R9ROITCSsVqJNHyZUIAsQWeKhQBrt/I0dlAw753Py7w4VCZ
- 1yeUjz976zjULL3ClNL4CUu0O/Adq0XpZNHLS4VKAVuwmK6+KJFY63kJl57hrEpv0rc6etSd84f
- uBPsp+eoLxwg/yicPlUg4fyd74HDx2kE+y2jgK
-X-Gm-Gg: ASbGncvpE1TDMITrGkz3kdxGcaxpu74IzKzfBhsvZf/L7K4sHPEVGFRQWKGB8UAq3l5
- 7qmvC8M5TTE8eCEXugZbjl++v5YPoq0ikYNJBMijLLfc4prSxWG29h1DzfeEeMz1PigASzRmINU
- cSrXuV1FvYCo3iAf0sHrWySqFG2rKpzd8eD168DIz7wCibIqAJZSZknLZd5714uxv9z7fEygRx2
- Z6FERjtJOA1RnaEcOoFR/ZlYHiNzxs3k/ryF9uXIOqzCcwqbvv5pV4dNKqi56Fs3tn3YSnFnI/b
- ySH8qJLaMBICh4o=
-X-Received: by 2002:a05:600c:34d3:b0:43c:e2dd:98f3 with SMTP id
- 5b1f17b1804b1-442d6dd21b4mr99989825e9.21.1747064019941; 
- Mon, 12 May 2025 08:33:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFDIDSPNojxEA+YEREVIMoYzu/jSAWEdBb4SQz5359tn58loyctgmLk16cCw/EsEEHGpsY4fg==
-X-Received: by 2002:a05:600c:34d3:b0:43c:e2dd:98f3 with SMTP id
- 5b1f17b1804b1-442d6dd21b4mr99989545e9.21.1747064019520; 
- Mon, 12 May 2025 08:33:39 -0700 (PDT)
-Received: from [192.168.122.1] ([151.95.45.141])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442d68585d1sm130686745e9.31.2025.05.12.08.33.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 May 2025 08:33:38 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uEV9k-0006hd-2I
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:33:31 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54CC9ffN018643;
+ Mon, 12 May 2025 15:33:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2025-04-25; bh=B9/g46ZvoKRHHmAe7FwRk1gNIB+zt+riOUzNYBy00O8=; b=
+ OS0TpW5UqtkwpOXXD2mJi9AYlipG6+P7bC+AiRwCzk4MOMXfjkNUWcfpNoxSAiP/
+ GL6nWDWDPoSOYb54srKIvSKh9w6o4lb/kXpk/515b3DF2djMxs6TOIJAW4choLXo
+ J522ggsQNg2ys54nAihD7FuY7RPW0aIk4FYGim3sgwiw3m79HwBg4hErKksLVyKo
+ lJalaIrbsp0yxofKMkXLVjWUOyKHBUFQxga65Spyd8ba57z6pbnVxVkgzCD7WBcp
+ Nt+gzQ6SCj76lW97p18z6mgu0BLrLzPDO9sYtTsD+qu2XDBVFaE7Uiksph3eRHoq
+ 1nXefBvJ8h0uCXXu3L0+Gw==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46j13r2se9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 12 May 2025 15:33:14 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54CEBOeJ002837; Mon, 12 May 2025 15:33:14 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46jwx366n3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 12 May 2025 15:33:14 +0000
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54CFWk5S030605;
+ Mon, 12 May 2025 15:33:13 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 46jwx36627-26; Mon, 12 May 2025 15:33:13 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org,
-	peter.maydell@linaro.org
-Subject: [PATCH v2 0/2] rust: pl011: really use RX FIFO depth
-Date: Mon, 12 May 2025 17:33:35 +0200
-Message-ID: <20250512153337.153954-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.49.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V3 25/42] migration: cpr_get_fd_param helper
+Date: Mon, 12 May 2025 08:32:36 -0700
+Message-Id: <1747063973-124548-26-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+References: <1747063973-124548-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-12_05,2025-05-09_01,2025-02-21_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ mlxscore=0 spamscore=0
+ bulkscore=0 suspectscore=0 phishscore=0 mlxlogscore=999 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2504070000
+ definitions=main-2505120161
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTEyMDE2MSBTYWx0ZWRfX5BF3sVVOSPmQ
+ EDK25Od8jq0RaFNAtZfhYadyqStuIj/eSEO+xo6p0nm2yYzRo8trE3LKWplgjyt49gR/GMzSrLI
+ jt6vekZqqJcKO6yShsR2ao8uiXsrDEQyyBd20y9VxDFAScM75XSlWf96TLSJOi4uedZdmd/8ISH
+ XVlUMh0j9t1sz+B2Z7fy8xO0F3HM0RgrNqtWPyQV0HCIVAl/UXren5d8nsebULBZZ2t2KqzY4X7
+ 8xG+DEOcwR9EjS1qPFvHUXzp4onUdafaAiFMBCNt9JT0sGmjFWGKxnB/U1OaUpj1hXPt33Tkawj
+ DVGzQjItk0xk7eMwdlzuuTH8816TQ9dUB4P6EP00B9YxX4lnX295Gyuwazs15hznZU8jEO58wxk
+ KsvycMZxLGWAgbyTi+Uah2iHJj7bXbU2CEHQC68u+1vVrE6l8GVlr1HxXT7pAU9tkTI9yb1F
+X-Proofpoint-GUID: aiL65rtTnSE2jWr9U_BgEdFNfUbWE0dk
+X-Proofpoint-ORIG-GUID: aiL65rtTnSE2jWr9U_BgEdFNfUbWE0dk
+X-Authority-Analysis: v=2.4 cv=M6hNKzws c=1 sm=1 tr=0 ts=682214bb b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=xj5pLq7tU-gV2qsf3bMA:9
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -32
+X-Spam_score: -3.3
 X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.499,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,19 +114,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Forward port a couple more commits from the C version and reintroduce
-a comment that was lost.
+Add the helper function cpr_get_fd_param, to use when preserving
+a file descriptor that is opened externally and passed to QEMU.
+cpr_get_fd_param returns a descriptor number either from a QEMU
+command-line parameter, from a getfd command, or from CPR state.
 
-Paolo Bonzini (2):
-  migrate: allow smaller types
-  rust: ci: do not enable full lint groups
+When a descriptor is passed to new QEMU via SCM_RIGHTS, its number
+changes.  Hence, during CPR, the command-line parameter is ignored
+in new QEMU, and over-ridden by the value found in CPR state.
 
- meson.build               |   3 ++
- migration/vmstate-types.c | 103 +++++++++++++++++++++++++-------------
- rust/Cargo.toml           |  45 ++++++++++++++++-
- 3 files changed, 116 insertions(+), 35 deletions(-)
+Similarly, if the descriptor was originally specified by a getfd
+command in old QEMU, the fd number is not known outside of QEMU,
+and it changes when sent to new QEMU via SCM_RIGHTS.  Hence the
+user cannot send getfd to new QEMU, but when the user sends a
+hotplug command that references the fd, cpr_get_fd_param finds
+its value in CPR state.
 
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ include/migration/cpr.h |  2 ++
+ migration/cpr.c         | 40 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+)
+
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 5f1ff10..353fd34 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -32,6 +32,8 @@ struct QIOChannel *cpr_state_ioc(void);
+ 
+ bool cpr_needed_for_reuse(void *opaque);
+ void cpr_kvm_close(void);
++int cpr_get_fd_param(const char *name, const char *fdname, int index,
++                     bool *reused, Error **errp);
+ 
+ void cpr_transfer_init(void);
+ QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
+diff --git a/migration/cpr.c b/migration/cpr.c
+index 6102d04..179aed1 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -14,6 +14,7 @@
+ #include "migration/qemu-file.h"
+ #include "migration/savevm.h"
+ #include "migration/vmstate.h"
++#include "monitor/monitor.h"
+ #include "system/kvm.h"
+ #include "system/runstate.h"
+ #include "trace.h"
+@@ -260,3 +261,42 @@ void cpr_kvm_close(void)
+     kvm_close();
+     vfio_kvm_device_close();
+ }
++
++/*
++ * cpr_get_fd_param: find a descriptor and return its value.
++ *
++ * @name: CPR name for the descriptor
++ * @fdname: An integer-valued string, or a name passed to a getfd command
++ * @index: CPR index of the descriptor
++ * @reused: returns true if the fd is found in CPR state, else false.
++ * @errp: returned error message
++ *
++ * If CPR is not being performed, then use @fdname to find the fd.
++ * If CPR is being performed, then ignore @fdname, and look for @name
++ * and @index in CPR state.
++ *
++ * On success returns the fd value, else returns -1.
++ */
++int cpr_get_fd_param(const char *name, const char *fdname, int index,
++                     bool *reused, Error **errp)
++{
++    ERRP_GUARD();
++    int fd;
++
++    if (cpr_is_incoming()) {
++        fd = cpr_find_fd(name, index);
++        if (fd < 0) {
++            error_setg(errp, "cannot find saved value for fd %s", fdname);
++        }
++        *reused = true;
++    } else {
++        fd = monitor_fd_param(monitor_cur(), fdname, errp);
++        if (fd >= 0) {
++            cpr_save_fd(name, index, fd);
++        } else {
++            error_prepend(errp, "Could not parse object fd %s:", fdname);
++        }
++        *reused = false;
++    }
++    return fd;
++}
 -- 
-2.49.0
+1.8.3.1
 
 
