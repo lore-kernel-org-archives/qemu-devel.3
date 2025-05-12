@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61BAAC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 03:20:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35388C3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 03:20:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEJa8-0007Mw-IZ; Sun, 11 May 2025 23:11:56 -0400
+	id 1uEJbi-00032j-Fq; Sun, 11 May 2025 23:13:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uEJa6-0007L8-3J; Sun, 11 May 2025 23:11:54 -0400
+ id 1uEJbA-0000ct-8M; Sun, 11 May 2025 23:13:03 -0400
 Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1uEJa3-0006m8-R8; Sun, 11 May 2025 23:11:53 -0400
+ id 1uEJb8-0006vw-Jv; Sun, 11 May 2025 23:13:00 -0400
 Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7423fadbe77so2211259b3a.3; 
- Sun, 11 May 2025 20:11:51 -0700 (PDT)
+ d2e1a72fcca58-74237a74f15so3936239b3a.0; 
+ Sun, 11 May 2025 20:12:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1747019510; x=1747624310; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1747019576; x=1747624376; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ufxfyX82wxmlkRrtsHa/uskh1Et38MelMXdT7cJMY0s=;
- b=bbPwYd44kt6U0gHA08bmaBOb/O2B/+ZfIiwln6bL1KKwee96sNc18zrAE8XfWIt+ds
- mR0ESfB7Jd5FxK/NiEe18bkC2JN1DxkVuAzGHIPBa7SUJ7OKHMtkAQ7NzODWJOvwkJE7
- n+SWxYF9lELJTggho00CxSUs+mlk9V7w3CBoXSQwPuLuAqa76z8OZ2MG8I453OQ+y0nx
- bUSgaSRG6kn+G+gj9ADMcvRdNJ05rzRgge45Jndut4CRVoBBEo0DlzrEEVK4UdOtmKNz
- gosOg5cNx3c+nBPdvwmOZzraWGbUzKiP+ZOyonFGqvcZFL7d+isKMMPFkLsrR6DDWMGy
- 0p5Q==
+ bh=IjgLp/XAvt3iJXToOLL2Iq9gt2+chIsC7ctaM0YPsfs=;
+ b=QmJPXEL1ApOm1g5FayajnUiMyYU6ieJ1DHRS0sAtLWofziwzd5C2qzYow8Wx3GNbCP
+ sTm6fgoymI07AKGl7cJC4UZZRussTE8ufe6DxH2pphjDuXixTjRbzYrRl8VSMf+JXXij
+ wP5Rbe58CEOZr/pXc9zdo32LYzySUoQAoX0ShrFC2jIb3mGsvtzwSuV2Frrn2BylIHun
+ C6Lv9PMj90VgJT6Sec1hCO8Ou4qNI2erk+Ve9TV1yoyiwGesxKFohtKdjkpbwfJl9oeV
+ GqhaCdCOT8ICCZF3W7I9SCy+jgtBU5CwaMz/irzIWUZkKU7bdzTU+vzYntfAJJAVI1c7
+ 05nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747019510; x=1747624310;
+ d=1e100.net; s=20230601; t=1747019576; x=1747624376;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ufxfyX82wxmlkRrtsHa/uskh1Et38MelMXdT7cJMY0s=;
- b=ZKlGqgCWzBhhPB1riDckYz+3etv/nlJxjEn2kNBBuLkeQDjbtoCPWn4V6y7ULPWvJe
- XEB6+HPq7yWdYwfNJsvAHUXdXqXizHNAoK/M2c6Kq8eeHBsF9SxOAgLw/lErxgETwi6h
- 4MS0qY3HK87UZUnfU2eJwRVuhuv6eZLh4Nqg6WPgH7y9y9v4te4iMzck/dy1FxfohWzE
- spFv4QpIm+yH2IRhVSxygGJi6TWh1YTaALybuapxV7Df8zdATR3uoVOx+BsTSLZpPAtc
- osReQgkH+pqywmPels2fhCQACuaCfbrN5KfAuBeBk9PWjXgToKJZI2heODCtNKY1Ayiy
- BUjw==
+ bh=IjgLp/XAvt3iJXToOLL2Iq9gt2+chIsC7ctaM0YPsfs=;
+ b=rIpLZOsELkLnCzfQ9GaO0tHqvGfcd02OcHrv4S7hbLkdfKxFfS7RMvAmq4YjKBBfFF
+ X6MI8ut94JGbYAsyaO5BmoRYuzFMTx1OJ7dQig868FjRhAkIV/aji7uLQFLJ72JPxM2a
+ qBR5+9qAKAWMz2evOvhK2R7rQirzJxQzlqzYBhJpF/o84xsi9gTpFE8TgcpbiNqBGLUp
+ p4pRUCsLZQ/2PZ/5CGluBrbQlClQFbjUeRuIi9tc5XPfghx9tndhBAP1nMsnKnLVBtoB
+ XlbT5p2EnoH08884AbnIAJ3OPsBSBMIGHNC+NyYgM03I8VXzgLPctgvQflbyY++J1XR7
+ oVUQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWMBLVTqpV8KlusNuhlwo94APjoDl7+apZOWhzZ+cS1iCq9B/48rwdRCnm54MgWNMSwFtqzgm1QotLD@nongnu.org
-X-Gm-Message-State: AOJu0YxrxNaiUwlGivdsnXVWzExemOjFzmDBRG/uvguO1upM/D2L1/xZ
- UcJW94vfnQlMx7BHhOkZgtGkLTHieoJdAq9bJ48P2AkfDNVJrFlV+ImyVQ==
-X-Gm-Gg: ASbGncvLW0T3IunPFSxWJwWZK9vJwu2OYEhcU7z6xeOCa6cdOb0mzFMF6a1gFND200a
- n+sdu7fFriHk4UDQXiuXi4pdmoXqSMOG1pTqmmgTavpQPSdMC2HFDUh17LG9WiQ0NEA6Kv0ncBx
- 3IrcZv5lqrefFxOSceRGvukDMTTdrcQc4sNFy1az9QO6GgyN7iWlkCTc4mP9Jkevn8m9P9yiGPr
- HsrN+/ykTL/Q8GwrWSK/jsn8mEcSqFZHBJLGfgiL8XL8GpiXermcxjwe7cFXr9Yy0sPimBFlSPK
- qtRamXNVAq8RA3oxfLxsAVZHIyghKz2UhXh792DY8yA1NgJk3dmq0zz5DQ==
-X-Google-Smtp-Source: AGHT+IGcZc9NgtPlOzW0OwXgsgxuzgjOgd881Kf6i/X0WG2954Z5gXBWws4jVXuE5HtL4jzaHnXWOA==
-X-Received: by 2002:a05:6a20:6a03:b0:1f5:85f9:4ce6 with SMTP id
- adf61e73a8af0-215abb03a15mr16015411637.11.1747019509964; 
- Sun, 11 May 2025 20:11:49 -0700 (PDT)
+ AJvYcCXl9kqIZJbssRpmSDJ3KyugOganXdBygPYFXz+K6hoRx2C5+m0dVQPZAJPxKrcCJd7zbliN0jqXbmBU@nongnu.org
+X-Gm-Message-State: AOJu0Yxl9BqF/anxQnFQPkIOI3FCRsTZ8gawi6fCIUKa8IxcltCP8smE
+ aZmuoGYyRoJvuOUlpt8M0EpZ4lz3bc6L0Lt/qfdtl6vJZBtVQ7XZUEEDNQ==
+X-Gm-Gg: ASbGncumkKmUx7ISkRYmXJ1bZXHrQIknHjFeEDPxNkx03tOpbVBFpo6gJp/VHRGvJKP
+ UgZRd7kKLyGRJdRqL05o5vW3R0i6XxBCY9pdPaLmLeWE0TFqNWZ11+IeMxV0MFnHHbYw28c3oVX
+ 1K8Ydn0rj4MS/LxomA4AvYt2qwjzY/JnjbLgkRtrKvYDpWhWgEmZ9j06u+fI2fg0gYjHa4yn9fN
+ bd3xYH/9yxRQSWr0Ssf984vRzwUcoYZGpX/mJVCbfvfRCCUEfTUjSWbqCvxhoxr4CDULvKvSSoK
+ PMMB1REBxWZYmOt+X1LB6OXtBiSaO6ODQT0euIAv7vZW8i5OP56QpoabkA==
+X-Google-Smtp-Source: AGHT+IHMiiMhoHx1zZOYpEvxz+gdOgp4/pSakvj1wRSN3A6j9lg+rMc8GPWF+LDYexdm59qewhRo5A==
+X-Received: by 2002:a05:6a20:2450:b0:1f5:8748:76b0 with SMTP id
+ adf61e73a8af0-215abc2f9a5mr16438539637.29.1747019576072; 
+ Sun, 11 May 2025 20:12:56 -0700 (PDT)
 Received: from wheely.local0.net ([118.209.229.237])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b234951024csm4750069a12.5.2025.05.11.20.11.46
+ 41be03b00d2f7-b234951024csm4750069a12.5.2025.05.11.20.12.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 May 2025 20:11:49 -0700 (PDT)
+ Sun, 11 May 2025 20:12:55 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
  Glenn Miles <milesg@linux.ibm.com>, Michael Kowal <kowal@linux.ibm.com>,
  Caleb Schlossin <calebs@linux.vnet.ibm.com>
-Subject: [PATCH 11/50] ppc/xive2: Do not present group interrupt on OS-push if
- precluded by CPPR
-Date: Mon, 12 May 2025 13:10:20 +1000
-Message-ID: <20250512031100.439842-12-npiggin@gmail.com>
+Subject: [PATCH 29/50] ppc/xive2: Redistribute group interrupt preempted by
+ higher priority interrupt
+Date: Mon, 12 May 2025 13:10:38 +1000
+Message-ID: <20250512031100.439842-30-npiggin@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250512031100.439842-1-npiggin@gmail.com>
 References: <20250512031100.439842-1-npiggin@gmail.com>
@@ -102,30 +102,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Group interrupts should not be taken from the backlog and presented
-if they are precluded by CPPR.
+A group interrupt that gets preempted by a higher priority interrupt
+delivery must be redistributed otherwise it would get lost.
 
-Fixes: 855434b3b8 ("ppc/xive2: Process group backlog when pushing an OS context")
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/intc/xive2.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/intc/xive2.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index 1971c05fa1..8ede95b671 100644
+index 6e136ad2e2..cae4092198 100644
 --- a/hw/intc/xive2.c
 +++ b/hw/intc/xive2.c
-@@ -845,7 +845,9 @@ static void xive2_tctx_need_resend(Xive2Router *xrtr, XiveTCTX *tctx,
-         group_prio = xive2_presenter_backlog_scan(xptr, nvp_blk, nvp_idx,
-                                                   first_group, &group_level);
-         regs[TM_LSMFB] = group_prio;
--        if (regs[TM_LGS] && group_prio < backlog_prio) {
-+        if (regs[TM_LGS] && group_prio < backlog_prio &&
-+            group_prio < regs[TM_CPPR]) {
+@@ -1638,11 +1638,21 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
+                              crowd, cam_ignore, priority,
+                              xive_get_field32(END2_W7_F1_LOG_SERVER_ID, end.w7),
+                              &match)) {
++        XiveTCTX *tctx = match.tctx;
++        uint8_t ring = match.ring;
++        uint8_t alt_ring = (ring == TM_QW2_HV_POOL) ? TM_QW3_HV_PHYS : ring;
++        uint8_t *aregs = &tctx->regs[alt_ring];
++        uint8_t nsr = aregs[TM_NSR];
+         uint8_t group_level;
+ 
++        if (priority < aregs[TM_PIPR] &&
++            xive_nsr_indicates_group_exception(alt_ring, nsr)) {
++            xive2_redistribute(xrtr, tctx, alt_ring);
++        }
 +
-             /* VP can take a group interrupt */
-             xive2_presenter_backlog_decr(xptr, nvp_blk, nvp_idx,
-                                          group_prio, group_level);
+         group_level = xive_get_group_level(crowd, cam_ignore, nvx_blk, nvx_idx);
+-        trace_xive_presenter_notify(nvx_blk, nvx_idx, match.ring, group_level);
+-        xive_tctx_pipr_update(match.tctx, match.ring, priority, group_level);
++        trace_xive_presenter_notify(nvx_blk, nvx_idx, ring, group_level);
++        xive_tctx_pipr_update(tctx, ring, priority, group_level);
+         return;
+     }
+ 
 -- 
 2.47.1
 
