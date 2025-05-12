@@ -4,110 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C90CFC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 19:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1C4EC3ABCC
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 20:10:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEZDE-0004Yu-IA; Mon, 12 May 2025 15:53:21 -0400
+	id 1uEZTY-0002Gt-Ks; Mon, 12 May 2025 16:10:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uEZD0-0004Sq-4P
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:53:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uEZCx-0004gz-U0
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:53:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747079581;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5UrenP4Agfoh++bF/i+J1wWOORsFOlog6kuTv1ugFF0=;
- b=OVtIiglH++OFQi2SiwBIJymTcW9qjo7KnvMdMyO0Q+1h/o3hJg8zeUKTtv9TMxHJZ1QoCZ
- r5bxq3qfDaFrF8ULnC3v8XXoDwzAcuKBCAl+k3/zbmC29rjzG4yKxgoy3HwecmeukOEV8U
- KoT7D6Pm+ma7mHnHHVi+C0Smv2GjaEY=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-370-CSynEiw6OsKsfJ7NIMz76Q-1; Mon, 12 May 2025 15:52:59 -0400
-X-MC-Unique: CSynEiw6OsKsfJ7NIMz76Q-1
-X-Mimecast-MFC-AGG-ID: CSynEiw6OsKsfJ7NIMz76Q_1747079578
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a202744565so831038f8f.0
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 12:52:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uEZTO-00027w-5e
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 16:10:06 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uEZTK-0006zz-LS
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 16:10:01 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7425bd5a83aso1650027b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 13:09:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1747080596; x=1747685396; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fKupLSMdvHNinncztrPfg97RfswSna+7nchTWtqXlm4=;
+ b=asFxLz92lZrbz0f33RbH6woR0RfVlNK1w1xtHGNGFCj4g92W2UzC/nQDyf4W11Fr8d
+ dgRaJanpFhd57A0N/S3YL80lY/4sUtdPdclcmMg+07xCvOUo0u/ordwWZZ2tAKUDvUnQ
+ 7+72dQa953PHepmRQEZg4mfGcpu2r7rsi/PE8N9birrNIuVkpzrPNzrgmOxMcGsZ9McU
+ ymPL51J2r1bpWlAiLBL+nbJM2RgS0BeEWwRV2R+nAA/aaTMMOMUt8xPUXiFncvc2Azd2
+ 9coJH3vqWObKnrAFA2NLsFIGURqWmUGXnLtd+bRtoEcguWdxwUWyk2j1WKUbdgUJ2pm3
+ 8csw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747079578; x=1747684378;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5UrenP4Agfoh++bF/i+J1wWOORsFOlog6kuTv1ugFF0=;
- b=AfFviKti1Rsi472MP3mD1w53oMjQMixha2Qa3+JGu62WFfIq2rI+tg3//kFsN3IruR
- o6cx04NPwXoJrVE6J2XZQgHqIBpRVUaYNCmCFBXgaByiaKqWbWnmEWzpx22X+1T4E/7+
- o3JprwyXutTURMSoCvqWdnSXG4W3JlsEcarNnCcokjvGA5KdOCiKyHScPz1uW0hxHeP8
- C/h7Whjz5lsLTifEW48qnBUTv5y9O+amfFm3gu9L7E1r20w/RYX46a6saNO+l9TW1XJh
- sJzbq8Cp/IXekkyM66x05Vk9A090whIosxDJFroj5kd/vEkTHWKGAQXLgDcPyLq/OiYC
- FucA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV+HCIr97OQZuM4YeSQ3JdsDb6nYQ7G6VLjpYnB6nxb1q31C9bENI2JqvtXqHgZyl2K60KqZCRftJx8@nongnu.org
-X-Gm-Message-State: AOJu0YwA/VyPkb7aw7PsSZmczSnzBpXpcPAqMTn6+iMdNsHLox/JZ5VB
- /ioXQePDVg2Rizw8zovzVKmAo+7K+o/hSHtKjGI0YFEJaD3DbLXWQoWQcbyWtMfPYdIKBAP5puK
- 3rR/IDHF1RBBgAzJxmMVlru9fOTXyho0B8PNy9cX8IAUq9KNTPONE
-X-Gm-Gg: ASbGncufIY4bJpIwJg0gUsHO5rGM5RvpWLGXtg342hgJHrVyesFWmhBgMCU0Gg728fM
- Eda18zXX8smJIa5zTzjJIUYxarM4pYPI3DX2Bl2nEu36ugZlshxNuXZp+9+YNxYt2Hy0Y4rG3Vp
- o4esAkrL60FnMVzQzbWo9VN8vnwxaQZ4GdiEOLwfZhJsyV/3xrU/5FxZB6XdkWl91hze7B21kWL
- jUByEQ9ZtKZK59bJF8wzKo4khaDVjWjJOM/fH4MWZqLJwy+RPItIAce6gTyNMiD8qWizDRXv+TO
- +Ddncw==
-X-Received: by 2002:a5d:5889:0:b0:3a1:d06c:4e5c with SMTP id
- ffacd0b85a97d-3a340d345a8mr578175f8f.26.1747079577720; 
- Mon, 12 May 2025 12:52:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGpT6x0JFUakUymcWwi7EPVw6dFLEWPv1L/Gwy7V1rhysWPUEONrJFVnG60yoQ6ePdEdfkkJQ==
-X-Received: by 2002:a5d:5889:0:b0:3a1:d06c:4e5c with SMTP id
- ffacd0b85a97d-3a340d345a8mr578143f8f.26.1747079577275; 
- Mon, 12 May 2025 12:52:57 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ d=1e100.net; s=20230601; t=1747080596; x=1747685396;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fKupLSMdvHNinncztrPfg97RfswSna+7nchTWtqXlm4=;
+ b=JbsewTutdpc0ldEPjzxdjo1DJzG+H4wNmyxShr1UHn84PX9sBkQtU35MmqHHM3SxqF
+ PJ4PRGWTlFJW4UgRC6yo15eTotn+b93CnBsg4wO/YoKA50q8+0LF8h7I1WBIMDSh/Nqy
+ DKjfMOoXwF75KbGHrDxhnGnSJw0JzYnThvSOOfrB5LeoZoPnHsU3aeqiUAvx6J8v2OVo
+ FnLVvrSJhYLKoNr7hG+HizVTsnbXcXwo9pj5roXHe76joYDwMaZ4CYGWACqkojcf0txG
+ yUxTonUd0KMrQo+/+6AVyHHw0lIEPjPxisDbnn4MuoIkOps/V7iuPog8FC6VIbJFfi3m
+ eD1A==
+X-Gm-Message-State: AOJu0YxSBapEgxj2njS8iA3WXvKipFZ6R2KlPfiJSH/0hmLGusfVU3hd
+ m+EaGpCu6bDxmDVRfu+fZxsG5TPCf6pPC6bqDkrzn0tGoykaD1Pdm/QTSY5jCU8=
+X-Gm-Gg: ASbGnctXFJHpbi+ofLUOKjp/tgWqWMCE2Hq8mViO6d6/H/JAiOCSvCkqvK9OI/TKSh6
+ BiibxcutKi67OjO2g5/Cw4VbVTy0rx80QPAJk/kzrK+x6mHaLef+pYUoNPKCCRUHwudB2zjDWxz
+ 3pA8d4nohkeKi3Ohp7ku0XfoNoA2OQ06wxtEJmKD7NwdlMstDe2j1dBUs8sl7j1P/U3Bjt2L3E8
+ YKrERbiXHUgTaQndgx5+2v/jDY1X8UG1Uh1U0X7BH6LzPkQ2GHj7D1QgmPsEFplV5IGTurWb3Zq
+ tJEm5X9NiZTEjojLZPoUaw3HQjllAd64SGfmLfoN85InR4cCvUA3b+ufTArayMcVI53B2mhKDLQ
+ =
+X-Google-Smtp-Source: AGHT+IFkzZUpuRX3GIjNg36dvclmF+vfV+z7V6caN8e+VQy9zXKLwugCdI/0fVmAzk4tW8c89KKi3g==
+X-Received: by 2002:a05:6a00:893:b0:736:b9f5:47c6 with SMTP id
+ d2e1a72fcca58-7423c01deb4mr17634285b3a.16.1747080596542; 
+ Mon, 12 May 2025 13:09:56 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-442d687bdc0sm135461155e9.39.2025.05.12.12.52.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 May 2025 12:52:56 -0700 (PDT)
-Date: Mon, 12 May 2025 15:52:53 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: "Chaney, Ben" <bchaney@akamai.com>
-Cc: "yury-kotov@yandex-team.ru" <yury-kotov@yandex-team.ru>,
- "dgilbert@redhat.com" <dgilbert@redhat.com>,
- "beata.michalska@linaro.org" <beata.michalska@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "junyan.he@intel.com" <junyan.he@intel.com>,
- "stefanha@redhat.com" <stefanha@redhat.com>,
- "imammedo@redhat.com" <imammedo@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "peterx@redhat.com" <peterx@redhat.com>,
- "david@redhat.com" <david@redhat.com>,
- "philmd@linaro.org" <philmd@linaro.org>,
- "xiaoguangrong.eric@gmail.com" <xiaoguangrong.eric@gmail.com>,
- "Tottenham, Max" <mtottenh@akamai.com>, "Hunt, Joshua" <johunt@akamai.com>,
- "Glasgall, Anna" <aglasgal@akamai.com>,
- Haozhong Zhang <haozhong.zhang@intel.com>
-Subject: Re: live-migration performance regression when using pmem
-Message-ID: <20250512154715-mutt-send-email-mst@kernel.org>
-References: <1385969E-EC2D-4262-9072-29F520D0DF81@akamai.com>
+ d2e1a72fcca58-74237704ff3sm6422458b3a.1.2025.05.12.13.09.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 May 2025 13:09:56 -0700 (PDT)
+Message-ID: <26fb50ca-36fd-4aca-908c-272c5a109bac@linaro.org>
+Date: Mon, 12 May 2025 13:09:55 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1385969E-EC2D-4262-9072-29F520D0DF81@akamai.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 00/10] qapi: remove all TARGET_* conditionals from the
+ schema
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20250508135816.673087-1-berrange@redhat.com>
+ <87y0v4zuec.fsf@pond.sub.org> <aCJAaawKsNFAtSmy@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <aCJAaawKsNFAtSmy@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,76 +107,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 12, 2025 at 03:16:34PM +0000, Chaney, Ben wrote:
-> Hello,
+On 5/12/25 11:39 AM, Daniel P. Berrangé wrote:
+> On Sat, May 10, 2025 at 11:28:59AM +0200, Markus Armbruster wrote:
+>> PATCH 10 empties out and deletes qapi/machine-target.json.  PATCH 04
+>> empties out qapi/misc-target.json without deleting it.  Missing:
+>>
+>> * Delete qapi/misc-target.json
+>>
+>> * Delete entry F: qapi/machine-target.json in MAINTAINERS
+>>
+>> * Delete dead logic around qapi_specific_outputs in qapi/meson.build
+>>
+>> The latter deserves its own PATCH 11.  Whether to delete the
+>> qapi/*-target.json in the patch that empties the file or in PATCH 11 is
+>> a matter of taste.
 > 
->         When live migrating to a destination host with pmem there is a very long downtime where the guest is paused. In some cases, this can be as high as 5 minutes, compared to less than one second in the good case.
-> 
-> 
->         Profiling suggests very high activity in this code path:
-> 
-> 
-> ffffffffa2956de6 clean_cache_range+0x26 ([kernel.kallsyms])
-> ffffffffa2359b0f dax_writeback_mapping_range+0x1ef ([kernel.kallsyms])
-> ffffffffc0c6336d ext4_dax_writepages+0x7d ([kernel.kallsyms])
-> ffffffffa2242dac do_writepages+0xbc ([kernel.kallsyms])
-> ffffffffa2235ea6 filemap_fdatawrite_wbc+0x66 ([kernel.kallsyms])
-> ffffffffa223a896 __filemap_fdatawrite_range+0x46 ([kernel.kallsyms])
-> ffffffffa223af73 file_write_and_wait_range+0x43 ([kernel.kallsyms])
-> ffffffffc0c57ecb ext4_sync_file+0xfb ([kernel.kallsyms])
-> ffffffffa228a331 __do_sys_msync+0x1c1 ([kernel.kallsyms])
-> ffffffffa2997fe6 do_syscall_64+0x56 ([kernel.kallsyms])
-> ffffffffa2a00126 entry_SYSCALL_64_after_hwframe+0x6e ([kernel.kallsyms])
-> 11ec5f msync+0x4f (/usr/lib/x86_64-linux-gnu/libc.so.6)
-> 675ada qemu_ram_msync+0x8a (/usr/local/akamai/qemu/bin/qemu-system-x86_64)
-> 6873c7 xbzrle_load_cleanup+0x37 (inlined)
-> 6873c7 ram_load_cleanup+0x37 (/usr/local/akamai/qemu/bin/qemu-system-x86_64)
-> 4ff375 qemu_loadvm_state_cleanup+0x55 (/usr/local/akamai/qemu/bin/qemu-system-x86_64)
-> 500f0b qemu_loadvm_state+0x15b (/usr/local/akamai/qemu/bin/qemu-system-x86_64)
-> 4ecf85 process_incoming_migration_co+0x95 (/usr/local/akamai/qemu/bin/qemu-system-x86_64)
-> 8b6412 qemu_coroutine_self+0x2 (/usr/local/akamai/qemu/bin/qemu-system-x86_64)
-> ffffffffffffffff [unknown] ([unknown])
-> 
-> 
->         I was able to resolve the performance issue by removing the call to qemu_ram_block_writeback in ram_load_cleanup. This causes the performance to return to normal. It looks like this code path was initially added to ensure the memory was synchronized if the persistent memory region is backed by an NVDIMM device. Does it serve any purpose if pmem is instead backed by standard DRAM?
-> 
-> 
->         I'm also curious about the intended use of this code path in NVDIMM case. It seems like it would run into a few issues. This on its own seems insufficient to restore the VM state if the host crashes after a live migration. The memory region being synced is only the guest memory. It doesn't save the driver state on the host side. Also, once the migration completes, the guest can redirty the pages. If the host crashes after that point, the guest memory will still be in an inconsistent state unless the crash is exceptionally well timed. Does anyone have any insight into why this sync operation was introduced?
-> 
-> 
-> Thank you,
->         Ben Chaney
-> 
-> 
-> 
-> 
-> 
+> FYI, after discussing with Pierrick, I'm going to let him take over
+> work on this patch series to drive it forward to something viable
+> to submit as a non-RFC.
+>
 
-Was added here:
+Thanks for your work Daniel, I'll continue the effort based on your 
+approach.
 
-commit 56eb90af39abf66c0e80588a9f50c31e7df7320b
-Author: Junyan He <junyan.he@intel.com>
-Date:   Wed Jul 18 15:48:03 2018 +0800
+Just for information, I'll apply a Signed-off-by with my name to all 
+patches posted (including the ones I won't touch) simply because I use
+git rebase --signoff by default, and don't want to have to do this 
+manually and selectively, as I work with a single master, with stacked 
+branches and update-refs.
 
-    migration/ram: ensure write persistence on loading all data to PMEM.
-    
-    Because we need to make sure the pmem kind memory data is synced
-    after migration, we choose to call pmem_persist() when the migration
-    finish. This will make sure the data of pmem is safe and will not
-    lose if power is off.
-    
-    Signed-off-by: Junyan He <junyan.he@intel.com>
-    Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-    Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-    Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-    Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Regards,
+Pierrick
 
-
-it kind of sounded reasonable ... but I don't remember.
-
-Also CC Haozhong Zhang who worked in this area.
-
-> 
-> 
+> With regards,
+> Daniel
 
 
