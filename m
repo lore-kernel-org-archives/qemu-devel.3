@@ -4,86 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE7CC3ABCC
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 19:07:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F28CC3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 19:13:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEYTj-0006BL-Mh; Mon, 12 May 2025 15:06:20 -0400
+	id 1uEYZu-0001Lv-8R; Mon, 12 May 2025 15:12:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEYTY-0005bj-FM
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:06:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uEYZq-0001Kh-ED
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 15:12:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEYTW-0007XS-JZ
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:06:08 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uEYZo-0008CT-Gg
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 15:12:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747076766;
+ s=mimecast20190719; t=1747077154;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=cR7VRKsHk1LFUjL/CPvD6Ba0DjnC+4MB5W2eiGKedTs=;
- b=Mau/saVXmfTIVCSxQL6WMp6mMfXDeeO4zl1I2xz7pTyycybuWI2wDJY40HenB0A4Q9JCh1
- 0pFIZThzxc9ryMR/cuSxE+dGarIkPiq8HggYXeMx4E/8JHHx6QIFUswLmnFwxv9exutTfj
- 1Fio4I9z3NkedFp4qeaq0130FNUklkE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-66-jhY53pU9M-C6_M-wa611fQ-1; Mon, 12 May 2025 15:06:04 -0400
-X-MC-Unique: jhY53pU9M-C6_M-wa611fQ-1
-X-Mimecast-MFC-AGG-ID: jhY53pU9M-C6_M-wa611fQ_1747076763
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43d5ca7c86aso22698085e9.0
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 12:06:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747076762; x=1747681562;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cR7VRKsHk1LFUjL/CPvD6Ba0DjnC+4MB5W2eiGKedTs=;
- b=AAEZTs5UjdTDI6fmmvER6cp5Gfy+2DQaPdeotDF0P1l5Fujq73DMrzpQYm2CUld1LF
- oFgpNmN0AhgnFT7qszNYmu0OiooHxOyWV4AqPELsPVXJKg+DbNVtGK8386wp4K24j7WP
- 9sYmtYI/Tg46gTWSCRjTZN44pUuvYrd/Yy9j1sFQuZ4jQJBNggPdQJAtpqWSkzno2Ma2
- 9eWoST34QhJZ0StCbgWaFavvUYiew4msNPf5sL7Hu+n79nU9nrc7hdJIaOIyg4DcOCOP
- p5zkXSfRQ/K/K6Wo2MF1Ez5LwVyVnBp5lt5mHOZ0RiG6wRnDH5yLV5IH8kP/+bYC0vcj
- 0SIw==
-X-Gm-Message-State: AOJu0YzxG3AITm6eohTzOym7Y3XBbaF1OJpJ24VgpgjEUUikl/V/FHPH
- O8C5QzXJEjBlH0XZHAQH+LYRsYiUX9vWOhGGD7zZ/S8pKTcNQ3+Z0sTZ/nFgcxQz58Jz9Z4E3cf
- gCG7Cafg8udUr2d8+5yf0KPvs2OqI0JvZ1bBfA8kAw60aDffRR7WbigO4UWc/IdXw7yFIr+hr+q
- ASKX2853lOCRq6/+e8QFzXfgm22Nm3DIbr6Upe
-X-Gm-Gg: ASbGnctAwMC5JcYVBgAbzoTf3VE0tAeWisVwxPa47qxB+PC9o/KKVWR3fB3Qoxw5uaN
- ooPkSzaVIKA89smBzsUBpZfCsEcVkWvn5zSAvsNfZIWENFskW1Kn9S4eOCWFut86nEVyXxYwU5h
- n8PE9hcmU4IikAOPc0z1BU6AGu/hkmC53QxXvwAjJuaZfWYNfAK7gln32SDfyt+vLtN05Ti4BqD
- BnDyvqxgx3zJVQBqBAtViROIRslyY1BilsRQME08krVGfXrmdQE2h7dof+ArAGpYx13aeK6oGYo
- rp9hpmEnZ/bu4zY=
-X-Received: by 2002:a05:6000:4205:b0:3a0:8c45:d30e with SMTP id
- ffacd0b85a97d-3a1f6469589mr10456954f8f.35.1747076762332; 
- Mon, 12 May 2025 12:06:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGni/cwRNmpwKHVO8icBuN8dguPNC+hZ0jXxCUvop6UXHbGyM54Kizi0SGYRV/Up1Ejf7vloQ==
-X-Received: by 2002:a05:6000:4205:b0:3a0:8c45:d30e with SMTP id
- ffacd0b85a97d-3a1f6469589mr10456945f8f.35.1747076761850; 
- Mon, 12 May 2025 12:06:01 -0700 (PDT)
-Received: from [192.168.122.1] ([151.95.45.141])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f5a2d2ffsm13566379f8f.66.2025.05.12.12.06.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 May 2025 12:06:01 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 14/16] linux-headers: update from 6.15 + kvm/next
-Date: Mon, 12 May 2025 21:05:22 +0200
-Message-ID: <20250512190524.179419-15-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250512190524.179419-1-pbonzini@redhat.com>
-References: <20250512190524.179419-1-pbonzini@redhat.com>
+ bh=uMZlZOJSdEL7oQRWsosAE6o//xJoSeqU0y/rK4bTQQ4=;
+ b=FbGT5dDs6QyOvvGbt8bidsSOP57w2xh6GbeRsQdBWDkUeIhhheIVeFRJ7xVAa2PiqPKCte
+ 6MANjZZzdILrRo8YoTAsS6Xf5LtZHOyGQNuUcjWQGIcUr6PqGGR7Zi4q8Y2BM8BzTljSFh
+ 2MhFwCPuxjqXrMSpGQmphfASoUC9aDM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-675-k2R91MvLM8upWWsazpzzzg-1; Mon,
+ 12 May 2025 15:12:30 -0400
+X-MC-Unique: k2R91MvLM8upWWsazpzzzg-1
+X-Mimecast-MFC-AGG-ID: k2R91MvLM8upWWsazpzzzg_1747077149
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 65CB11954B0B; Mon, 12 May 2025 19:12:28 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.161])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8645B1956095; Mon, 12 May 2025 19:12:26 +0000 (UTC)
+Date: Mon, 12 May 2025 15:12:25 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alberto Faria <afaria@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Xie Yongji <xieyongji@bytedance.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Raphael Norwitz <raphael@enfabrica.net>, Cornelia Huck <cohuck@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Coiby Xu <Coiby.Xu@gmail.com>, Fabiano Rosas <farosas@suse.de>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: Re: [RFC v2 1/4] include: Add tentative virtio-blk FUA write
+ definitions
+Message-ID: <20250512191225.GK141177@fedora>
+References: <20250508162044.857655-1-afaria@redhat.com>
+ <20250508162044.857655-2-afaria@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="8I4Yj+iPz1zZRL+x"
+Content-Disposition: inline
+In-Reply-To: <20250508162044.857655-2-afaria@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -108,115 +97,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This brings in the userspace TDX API.
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- linux-headers/asm-x86/kvm.h | 71 +++++++++++++++++++++++++++++++++++++
- linux-headers/linux/kvm.h   |  1 +
- 2 files changed, 72 insertions(+)
+--8I4Yj+iPz1zZRL+x
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/linux-headers/asm-x86/kvm.h b/linux-headers/asm-x86/kvm.h
-index dc591fb17e5..7fb57ccb2a7 100644
---- a/linux-headers/asm-x86/kvm.h
-+++ b/linux-headers/asm-x86/kvm.h
-@@ -439,6 +439,7 @@ struct kvm_sync_regs {
- #define KVM_X86_QUIRK_MWAIT_NEVER_UD_FAULTS	(1 << 6)
- #define KVM_X86_QUIRK_SLOT_ZAP_ALL		(1 << 7)
- #define KVM_X86_QUIRK_STUFF_FEATURE_MSRS	(1 << 8)
-+#define KVM_X86_QUIRK_IGNORE_GUEST_PAT		(1 << 9)
- 
- #define KVM_STATE_NESTED_FORMAT_VMX	0
- #define KVM_STATE_NESTED_FORMAT_SVM	1
-@@ -928,4 +929,74 @@ struct kvm_hyperv_eventfd {
- #define KVM_X86_SNP_VM		4
- #define KVM_X86_TDX_VM		5
- 
-+/* Trust Domain eXtension sub-ioctl() commands. */
-+enum kvm_tdx_cmd_id {
-+	KVM_TDX_CAPABILITIES = 0,
-+	KVM_TDX_INIT_VM,
-+	KVM_TDX_INIT_VCPU,
-+	KVM_TDX_INIT_MEM_REGION,
-+	KVM_TDX_FINALIZE_VM,
-+	KVM_TDX_GET_CPUID,
-+
-+	KVM_TDX_CMD_NR_MAX,
-+};
-+
-+struct kvm_tdx_cmd {
-+	/* enum kvm_tdx_cmd_id */
-+	__u32 id;
-+	/* flags for sub-commend. If sub-command doesn't use this, set zero. */
-+	__u32 flags;
-+	/*
-+	 * data for each sub-command. An immediate or a pointer to the actual
-+	 * data in process virtual address.  If sub-command doesn't use it,
-+	 * set zero.
-+	 */
-+	__u64 data;
-+	/*
-+	 * Auxiliary error code.  The sub-command may return TDX SEAMCALL
-+	 * status code in addition to -Exxx.
-+	 */
-+	__u64 hw_error;
-+};
-+
-+struct kvm_tdx_capabilities {
-+	__u64 supported_attrs;
-+	__u64 supported_xfam;
-+	__u64 reserved[254];
-+
-+	/* Configurable CPUID bits for userspace */
-+	struct kvm_cpuid2 cpuid;
-+};
-+
-+struct kvm_tdx_init_vm {
-+	__u64 attributes;
-+	__u64 xfam;
-+	__u64 mrconfigid[6];	/* sha384 digest */
-+	__u64 mrowner[6];	/* sha384 digest */
-+	__u64 mrownerconfig[6];	/* sha384 digest */
-+
-+	/* The total space for TD_PARAMS before the CPUIDs is 256 bytes */
-+	__u64 reserved[12];
-+
-+	/*
-+	 * Call KVM_TDX_INIT_VM before vcpu creation, thus before
-+	 * KVM_SET_CPUID2.
-+	 * This configuration supersedes KVM_SET_CPUID2s for VCPUs because the
-+	 * TDX module directly virtualizes those CPUIDs without VMM.  The user
-+	 * space VMM, e.g. qemu, should make KVM_SET_CPUID2 consistent with
-+	 * those values.  If it doesn't, KVM may have wrong idea of vCPUIDs of
-+	 * the guest, and KVM may wrongly emulate CPUIDs or MSRs that the TDX
-+	 * module doesn't virtualize.
-+	 */
-+	struct kvm_cpuid2 cpuid;
-+};
-+
-+#define KVM_TDX_MEASURE_MEMORY_REGION   _BITULL(0)
-+
-+struct kvm_tdx_init_mem_region {
-+	__u64 source_addr;
-+	__u64 gpa;
-+	__u64 nr_pages;
-+};
-+
- #endif /* _ASM_X86_KVM_H */
-diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
-index e5f3e8b5a02..99cc82a275c 100644
---- a/linux-headers/linux/kvm.h
-+++ b/linux-headers/linux/kvm.h
-@@ -369,6 +369,7 @@ struct kvm_run {
- #define KVM_SYSTEM_EVENT_WAKEUP         4
- #define KVM_SYSTEM_EVENT_SUSPEND        5
- #define KVM_SYSTEM_EVENT_SEV_TERM       6
-+#define KVM_SYSTEM_EVENT_TDX_FATAL      7
- 			__u32 type;
- 			__u32 ndata;
- 			union {
--- 
-2.49.0
+On Thu, May 08, 2025 at 05:20:41PM +0100, Alberto Faria wrote:
+> Signed-off-by: Alberto Faria <afaria@redhat.com>
+> ---
+>  include/standard-headers/linux/virtio_blk.h | 4 ++++
+>  1 file changed, 4 insertions(+)
+
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+--8I4Yj+iPz1zZRL+x
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgiSBgACgkQnKSrs4Gr
+c8gRzwf/ZcqWBrIRjotLswzY5EqHgv2xdC4HPcJS9VkhfIndThiAcsOnzRMMij2L
+xnWjyz++xH2cHHfvV4++E6MUKN9OxI80wRvLywVPLH5AC/5/S4fAY4PWb732ZtwF
+6q2fpKZc4yfYs/hR33hLm74Bd4GQ9If0OnCpG2adzEeBVhRitR7svbxUh2DJcLS7
+jX3CvmiYoVHxSd8p7LEQHTxWwColjGMTAMv8D2OoJWyHiVEmu3stcbJBVU4RNlUC
+CiuH0N77DXCAJUDr3hnkSbj0o8j1nyFcJ05m367stlyJoktZhQ4RAf+tOwnJ3np+
+ef9O9Rp7r8IKfi06XSxtWfJcINa8dw==
+=7NOz
+-----END PGP SIGNATURE-----
+
+--8I4Yj+iPz1zZRL+x--
 
 
