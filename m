@@ -4,89 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09FBDC3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:29:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FDBCC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 15:29:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEV5g-00009Q-7F; Mon, 12 May 2025 11:29:16 -0400
+	id 1uEV5t-0000Bc-0z; Mon, 12 May 2025 11:29:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uEV5d-000085-SW
- for qemu-devel@nongnu.org; Mon, 12 May 2025 11:29:13 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uEV5b-00064F-JX
- for qemu-devel@nongnu.org; Mon, 12 May 2025 11:29:13 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-7082ad1355bso38690847b3.1
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 08:29:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747063750; x=1747668550; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=44XNLlIxFBoAvMqSmevtTi0tPsxuX64qwDKXegiq8IE=;
- b=r4CMRfBp6f4dNyuH6sxV6wyofuwrsgkXT4syjrQ0c8Svc3+0fU0tTroadyZ6EtJhXW
- uqjM+oGp5EruQC7G9ZgeL6lpMWtZG6g0HjfSMrZ2zVZORwbKfU/3RqF6dKkfT/TLTwOl
- Orw++n4D7kt3p0TNmUZG2xTZ6jG2lKzNxGvd6ljk/MPK8+NkmSlpXNpMplbU7YhLWU2G
- lpI6p9wEeD8Z9T4Zci5JYkFfqvbtbOPn+Jfjq9BO9Nfd8bl0G/hue9h5dyXusaaPVvi2
- UWBf0fpNwbVKpUZHYmlse7KXQLkFU/lIniVdTuZItk+G38WIKxZiXnE75HQWxMpdovyr
- 7mBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747063750; x=1747668550;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=44XNLlIxFBoAvMqSmevtTi0tPsxuX64qwDKXegiq8IE=;
- b=jf+LrRo0e2sI2a+dgRX1+7Jq/IiU3HEK8fgCDee0HyOJC8o4qZel7+nkOiHwvFLk3z
- wd30M7jguCRD755uENpjJQOzPs7WwKKSh+V7iPqXfr5sNBYUUhB4ihaFOXgFXwyS30bi
- pYaB4987llJPzXteedkankEh/bcUU2P/hCKIL9b47wEEsGn/XpsV96UyfSy3QJ2yt4sn
- +jfHO5RMQyWLp3d8SDKFu5mqrZMEEgrayDwy1WDArNFlUv76bhPO3rmpspaYoMU3xnlQ
- G6sbCMyuRDUn0ZB5pmIBUA1OmIyu8ZLCtp05wJNm4bbP914e6Iidx4SMKLpcliachg38
- Wonw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXLbh+M0nUOnQ5Yk/+Zb6ioZ2BmppSAArwmzrko5/9TZ+M9Ne7bNboZcwKhpAdsvgllgHbamaoC+0aX@nongnu.org
-X-Gm-Message-State: AOJu0YxUxU6v4eEk3wKUclqpaOIyuAAckTJ7sS8dpFMux3UX5/d/giMR
- qp+nQDmmHbjWk5Ce2S/AiE5A1RD2wKMnXNoyzL/JPMwfJAS929NmavnnhHNT2RvhuQtfkto1C7y
- 7dJ0AK5x8SwhW0ZjqUzyEGDsOnvOgjkUG39+U3A==
-X-Gm-Gg: ASbGncs0MEniVB8Qk3wlNo85xiAU76KgskAUpO0MQ56m4u4GDkPfPA2WmyhKjNJ4mid
- JelF9TNTiPwUPoj6SenR1jPYAR6LFmLaJGs7PaBfeRrt3Vel9pBVOzPs6HHJyfZst4lFyUXoyHp
- 8L2kKe3iWIr3RcLyRbQDA+wA4lIi9oOobmmw==
-X-Google-Smtp-Source: AGHT+IEGA5lJR9mR6TP8KGdodwfN1fNJ1/SmVui90fRzS6hkbSJ0q448HbOhujQ9j6hQY902IhtoxuSNDj/78bjUkDk=
-X-Received: by 2002:a05:690c:480a:b0:6fe:b88e:4d94 with SMTP id
- 00721157ae682-70a3fa411f6mr194578707b3.19.1747063750238; Mon, 12 May 2025
- 08:29:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=ob0y=X4=kaod.org=clg@ozlabs.org>)
+ id 1uEV5q-0000BR-Pb
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:29:26 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=ob0y=X4=kaod.org=clg@ozlabs.org>)
+ id 1uEV5o-00064k-1X
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 11:29:26 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Zx3Rz2sdgz4x07;
+ Tue, 13 May 2025 01:29:19 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Zx3Rv5CSpz4wnp;
+ Tue, 13 May 2025 01:29:15 +1000 (AEST)
+Message-ID: <bcd22d12-2009-474e-9321-c22c1aabee4e@kaod.org>
+Date: Mon, 12 May 2025 17:29:13 +0200
 MIME-Version: 1.0
-References: <20250228154450.3185564-1-berrange@redhat.com>
- <20250228154450.3185564-2-berrange@redhat.com>
- <CAFEAcA-vd0z_yi3O8EBqaxw2xSZFKmvDj3_npCJ8qjnycLJrcA@mail.gmail.com>
- <18396f87-ef13-4521-a62e-d80d36c3c7dd@kaod.org>
- <1a2786af-ffd4-4f51-ba71-11848fe65898@kaod.org>
-In-Reply-To: <1a2786af-ffd4-4f51-ba71-11848fe65898@kaod.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 May 2025 16:28:59 +0100
-X-Gm-Features: AX0GCFtc27pnmuaPOozN6caWozV5pFWJrryRtjLMG8ByjQpgrY5tEHUXG_daggs
-Message-ID: <CAFEAcA9h0Z_+hc_3zLnFMzOPY4mD4gmGC3YzxbmN1nSJ7_=OOw@mail.gmail.com>
-Subject: Re: [PULL 1/3] scripts: mandate that new files have
- SPDX-License-Identifier
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Brian Cain <bcain@quicinc.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/qtest/ast2700-smc-test: Fix leak
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20250509175047.26066-1-farosas@suse.de>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250509175047.26066-1-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=ob0y=X4=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,46 +112,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 12 May 2025 at 16:18, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
->
-> On 5/12/25 15:52, C=C3=A9dric Le Goater wrote:
-> > On 5/8/25 12:42, Peter Maydell wrote:
-> >> The logic goes:
-> >>   * when we see a "new file" line, we set expect_spdx to 1
-> >>   * when we see an SPDX tag we set expect_spdx to 0
-> >>   * at a later point, if we still have expect_spdx 1 we complain
-> >>
-> >> The problem is that the "later point" here is "we saw another
-> >> 'new file' line", not "we got to the end of all the parts of
-> >> the patch that touch this file". So if the patch adds two
-> >> new files then we'll warn for the first one (when we see the
-> >> "new file" line for the secand new file), but we won't warn
-> >> for a patch which adds only one new file (there's never a second
-> >> "new file" line) or for the last new file added in a patch
-> >> that adds multiple files.
-> >>
-> >> I'm not sure where the "complain if expect_spdx is 1" check
-> >> should go, but I don't think it should be here...
-> >
-> > yes. I just made the same observation on this patch :
-> >
-> >     https://lore.kernel.org/qemu-devel/20250509163645.33050-7-rreyes@li=
-nux.ibm.com/
-> >
->
-> This seems to work well enough.
+Jamin, could you check please ?
 
-Dan sent out a patchset that overhauls the spdx detection
-logic last week ("
-scripts/checkpatch: fix
-SPDX-License-Identifier
-detection"):
-https://www.mail-archive.com/qemu-devel@nongnu.org/msg1113638.html
 
-(Unfortunately lore.kernel.org seems to be missing it,
-and patchew was unsubscribed to qemu-devel emails over the
-weekend so it doesn't have it either.)
+Thanks,
 
-thanks
--- PMM
+C.
+
+
+On 5/9/25 19:50, Fabiano Rosas wrote:
+> ASAN spotted a leak of the memory used to hold the tmp_path:
+> 
+> Direct leak of 35 byte(s) in 1 object(s) allocated from:
+>      #0 0x55e29aa96da9 in malloc ../projects/compiler-rt/lib/asan/asan_malloc_linux.cpp:69:3
+>      #1 0x7fe0cfb26518 in g_malloc ../glib/gmem.c:106
+>      #2 0x7fe0cfb4146e in g_strconcat ../glib/gstrfuncs.c:629
+>      #3 0x7fe0cfb0a78f in g_get_tmp_name ../glib/gfileutils.c:1742
+>      #4 0x7fe0cfb0b00b in g_file_open_tmp ../glib/gfileutils.c:1802
+>      #5 0x55e29ab53961 in test_ast2700_evb ../tests/qtest/ast2700-smc-test.c:20:10
+>      #6 0x55e29ab53803 in main ../tests/qtest/ast2700-smc-test.c:65:5
+>      #7 0x7fe0cf7bd24c in __libc_start_main ../csu/libc-start.c:308
+>      #8 0x55e29a9f7759 in _start ../sysdeps/x86_64/start.S:120
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>   tests/qtest/ast2700-smc-test.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/tests/qtest/ast2700-smc-test.c b/tests/qtest/ast2700-smc-test.c
+> index d1c4856307..62d538d8a3 100644
+> --- a/tests/qtest/ast2700-smc-test.c
+> +++ b/tests/qtest/ast2700-smc-test.c
+> @@ -67,5 +67,6 @@ int main(int argc, char **argv)
+>   
+>       qtest_quit(ast2700_evb_data.s);
+>       unlink(ast2700_evb_data.tmp_path);
+> +    g_free(ast2700_evb_data.tmp_path);
+>       return ret;
+>   }
+
 
