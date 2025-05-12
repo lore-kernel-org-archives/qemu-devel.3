@@ -4,74 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A9E3C3ABCB
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 19:33:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AA50C3ABCB
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 19:34:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEYth-0001bS-MX; Mon, 12 May 2025 15:33:09 -0400
+	id 1uEYv8-0002sk-E1; Mon, 12 May 2025 15:34:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uEYte-0001an-Ur
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:33:07 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uEYuc-0002nN-Q2
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 15:34:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uEYtc-0002AO-Ux
- for qemu-devel@nongnu.org; Mon, 12 May 2025 15:33:06 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uEYub-0002HF-5V
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 15:34:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747078382;
+ s=mimecast20190719; t=1747078444;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=w/GuQfywWbFMZzMk0428+6epUiMFOALMkSPAznQsBBQ=;
- b=Cnt6PGQTwwiRIfZg7l5+M31+ZcJ3JfYxv4B818Q68MuB0npkKcEtUe5JrU8xWQqTS30AlJ
- SRY0++OUUUfXLnrMDDwK8Q/HOnsigBrvqkcxKwbYYhBjYnU6fdhmmVFuQE5HWsgC5MMuTn
- jK4/OtZns10UNb10umu35zfGvQXQ6aI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=4wO5s3chxF8LvztXv1U/8tNoXLah6STSHLdNbkIFDPQ=;
+ b=cesJ10TsBvuAhmlTGbo2vagoeQN3+Sf47JF1aPlIAu7OsQnkpyGzQTsoB/B1obJK5XyKOv
+ NqDRkON4Yu0uqpQqVa/gyugfoF36zSo//J4aU7HHz4RNBjlxa0WVtlH787BCU45Vx6vEXF
+ M4yxva99RKvsamV6DAwSOs/C6YcqEtI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-2jMMlajaM0qrhoXQErA4lg-1; Mon,
- 12 May 2025 15:32:58 -0400
-X-MC-Unique: 2jMMlajaM0qrhoXQErA4lg-1
-X-Mimecast-MFC-AGG-ID: 2jMMlajaM0qrhoXQErA4lg_1747078377
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-568-fvp8vpMYMiCpcSDE6Ql6rg-1; Mon,
+ 12 May 2025 15:34:00 -0400
+X-MC-Unique: fvp8vpMYMiCpcSDE6Ql6rg-1
+X-Mimecast-MFC-AGG-ID: fvp8vpMYMiCpcSDE6Ql6rg_1747078439
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B118E1800873; Mon, 12 May 2025 19:32:56 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.161])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0DBBF1944A82; Mon, 12 May 2025 19:32:54 +0000 (UTC)
-Date: Mon, 12 May 2025 15:32:53 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Alberto Faria <afaria@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Xie Yongji <xieyongji@bytedance.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Raphael Norwitz <raphael@enfabrica.net>, Cornelia Huck <cohuck@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Coiby Xu <Coiby.Xu@gmail.com>, Fabiano Rosas <farosas@suse.de>,
- Yanan Wang <wangyanan55@huawei.com>
-Subject: Re: [RFC v2 2/4] virtio-blk: Add VIRTIO_BLK_T_OUT_FUA command support
-Message-ID: <20250512193253.GL141177@fedora>
-References: <20250508162044.857655-1-afaria@redhat.com>
- <20250508162044.857655-3-afaria@redhat.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 84080195608D; Mon, 12 May 2025 19:33:59 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.82.199])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6DEA030002D4; Mon, 12 May 2025 19:33:58 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>, John Snow <jsnow@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>
+Subject: [PATCH v4 0/6] python: add QAPI and qapidoc et al to python tests
+Date: Mon, 12 May 2025 15:33:51 -0400
+Message-ID: <20250512193357.3388514-1-jsnow@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="ahYP1B4BNxJr2wOz"
-Content-Disposition: inline
-In-Reply-To: <20250508162044.857655-3-afaria@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -35
 X-Spam_score: -3.6
@@ -96,59 +81,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---ahYP1B4BNxJr2wOz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, May 08, 2025 at 05:20:42PM +0100, Alberto Faria wrote:
-> @@ -828,13 +832,16 @@ static int virtio_blk_handle_request(VirtIOBlockReq=
- *req, MultiReqBuffer *mrb)
-> =20
->      type =3D virtio_ldl_p(vdev, &req->out.type);
-> =20
-> -    /* VIRTIO_BLK_T_OUT defines the command direction. VIRTIO_BLK_T_BARR=
-IER
-> -     * is an optional flag. Although a guest should not send this flag if
-> -     * not negotiated we ignored it in the past. So keep ignoring it. */
-> -    switch (type & ~(VIRTIO_BLK_T_OUT | VIRTIO_BLK_T_BARRIER)) {
-> +    /* VIRTIO_BLK_T_BARRIER is an optional flag. Although a guest should=
- not
-> +     * send this flag if not negotiated we ignored it in the past. So ke=
-ep
-> +     * ignoring it. */
-> +    switch (type & ~VIRTIO_BLK_T_BARRIER) {
-
-This changes the behavior of the device. VIRTIO_BLK_T_FLUSH |
-VIRTIO_BLK_T_OUT is now treated as an unsupported command instead of a
-flush. The same is true for the other command types as well (like zoned
-devices, discard, etc).
-
-Buggy guest drivers might depend on this behavior. From a user
-perspective it's QEMU's fault if existing guests break, even if the
-guest driver violates the VIRTIO specification. I would treat this as a
-stable ABI that third-party virtio-blk drivers depend on unless there is
-a strong reason to change existing behavior.
-
-Can you add "case VIRTIO_BLK_T_OUT_FUA & ~VIRTIO_BLK_T_OUT:" instead of
-changing existing behavior?
-
---ahYP1B4BNxJr2wOz
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmgiTOUACgkQnKSrs4Gr
-c8iQcQf+Pl+e8QxbUtzMpGTAaxfwIpYJSGxT83CMISnkes9gnQMPg2WPjMC9A/tx
-/dAPG+BW65/V1RWGNAHP7rAiSpJPgDpPBBgIKb6PaK6y9v/4SC9lAhMOskpLolX0
-m3Y2vlplJHWrusAqTUtY4wkHvAb83VWXwbtqYU9CyG+N8/eAtEnS+lkWYb4Ne0ZI
-1oFuuCZKw64Nww+AaKIamdf/W0ycz0V7tB4wv7QCbbYE6Ss+aKoiPzysfVP0yd4q
-2Op5yVoKM6AxA2MxinH6KdUK7MUqbhjr54CPC+FjBXMGmlbxYuDG1NiqtthPUS3q
-krQq9pBEWtWort7zGcyEnhg1FF5BhA==
-=JE/u
------END PGP SIGNATURE-----
-
---ahYP1B4BNxJr2wOz--
+Hiya, this series turns on automated linting for scripts/qapi,=0D
+docs/sphinx/qapidoc.py and docs/sphinx/qapi_domain.py.=0D
+=0D
+This includes flake8/isort/pylint/mypy for scripts/qapi, but omits mypy=0D
+from the Sphinx plugins owing to my inability to strictly type the=0D
+extensions given the wide versions of Sphinx we actually support.=0D
+=0D
+[Maybe this will change soon, but it's not true just yet.]=0D
+=0D
+Though I have been using black in my own development, I have not yet=0D
+enabled it anywhere automatically. Maybe soon.=0D
+=0D
+V4:=0D
+ - Rebase and resend. Pull Request imminent.=0D
+=0D
+V3:=0D
+ - Folded in Markus's commit to clean up setup.cfg.=0D
+=0D
+V2:=0D
+ - Mostly commit message updates based on Markus's's's review.=0D
+=0D
+John Snow (5):=0D
+  qapi: Add some pylint ignores=0D
+  docs/qapidoc: linting fixes=0D
+  python: update missing dependencies from minreqs=0D
+  python: add qapi static analysis tests=0D
+  qapi: delete un-needed python static analysis configs=0D
+=0D
+Markus Armbruster (1):=0D
+  python: Drop redundant warn_unused_configs =3D True=0D
+=0D
+ docs/sphinx/qapi_domain.py  | 25 ++++++++++++++-----------=0D
+ docs/sphinx/qapidoc.py      |  5 +++--=0D
+ python/setup.cfg            |  2 +-=0D
+ python/tests/minreqs.txt    | 25 +++++++++++++++++++++++++=0D
+ python/tests/qapi-flake8.sh |  4 ++++=0D
+ python/tests/qapi-isort.sh  |  6 ++++++=0D
+ python/tests/qapi-mypy.sh   |  2 ++=0D
+ python/tests/qapi-pylint.sh |  6 ++++++=0D
+ scripts/qapi/.flake8        |  3 ---=0D
+ scripts/qapi/.isort.cfg     |  7 -------=0D
+ scripts/qapi/backend.py     |  2 ++=0D
+ scripts/qapi/mypy.ini       |  4 ----=0D
+ scripts/qapi/pylintrc       |  1 +=0D
+ 13 files changed, 64 insertions(+), 28 deletions(-)=0D
+ create mode 100755 python/tests/qapi-flake8.sh=0D
+ create mode 100755 python/tests/qapi-isort.sh=0D
+ create mode 100755 python/tests/qapi-mypy.sh=0D
+ create mode 100755 python/tests/qapi-pylint.sh=0D
+ delete mode 100644 scripts/qapi/.flake8=0D
+ delete mode 100644 scripts/qapi/.isort.cfg=0D
+ delete mode 100644 scripts/qapi/mypy.ini=0D
+=0D
+-- =0D
+2.48.1=0D
+=0D
 
 
