@@ -4,88 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81F6BC3ABCD
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 12:27:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09608C3ABCD
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 12:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uESEP-0002kW-MQ; Mon, 12 May 2025 08:26:05 -0400
+	id 1uESH8-00058l-DF; Mon, 12 May 2025 08:28:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uESEL-0002j8-GJ
- for qemu-devel@nongnu.org; Mon, 12 May 2025 08:26:01 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uESEH-00030b-Pn
- for qemu-devel@nongnu.org; Mon, 12 May 2025 08:26:01 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-7053f85f059so37501707b3.2
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 05:25:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747052753; x=1747657553; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1T2SnZt/Gi/wBk1n3wFUN8hbGXkVcClD7mk68AW6340=;
- b=BiBENz3+wzWKv+isqEyRK82XR5N4exKqNXx2SatOACQKu/BZILMcHMMu99RWC86/0G
- pzDUIj05lJ+5ToUD1r2nHQZj9Mm0Vs5tYMogT+64gS7pvPm72nGLI6ylGpcXCR/Bq3tb
- cK47KGdM6vZljeMIalUPoBbXHF6xBjA2vnH6YTkX7VsQNTc5Dq0U1bWJqXMv0QjGeiZO
- IAC5l3SPTFsWy7zvTYPQ/wpwDP2ZU0ghxzywuvuBHsWlUmWzhw+2wN60qwhuxXkffwX/
- lGV6jChZ63aRMJSEELbD8l/Ii1e5l5SDU/TPdSt22mqNMJfU2T4+Phr5OJ3Umk8fVgdU
- jSXg==
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uESH6-00057j-Ax
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 08:28:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uESH1-0003HN-16
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 08:28:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1747052925;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iY7ZjkohqZva9suGMx/+9g/tRlkH13kFNrIBPOKtMIU=;
+ b=TbWSV2t23i4v/4IWtyAatiYW9SNna4Mq2zUixm6H9zjClrHe3lZx8z5d/1yBSAL7c6waFV
+ stf/L21hl3fZrrgwIwNe/14jdjGfSq8LewE+LMOZ+Dq6INKjx3xesJSu+u9KXCnDzi2p5q
+ Ae1VAo6/RFhhK80oijix7W4O/Y9bq64=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-28-iKZTMF8_N_S_PQIcxxg_iw-1; Mon, 12 May 2025 08:28:44 -0400
+X-MC-Unique: iKZTMF8_N_S_PQIcxxg_iw-1
+X-Mimecast-MFC-AGG-ID: iKZTMF8_N_S_PQIcxxg_iw_1747052923
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a2046b5e75so361285f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 05:28:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747052753; x=1747657553;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1T2SnZt/Gi/wBk1n3wFUN8hbGXkVcClD7mk68AW6340=;
- b=WmgVihrRoAhq/yZCJ1bToB8SWPDC8NYJ4o8SLZUjMJYlP2vMb3Gwxkm6WqG830hImf
- ltC+q0nD+qOJGtEZxTyDVhLbnS4ps0PemnRz36dkt3pIeYTipLAku2vtT8ItFTeyq1BO
- j2z7TbXEfvBw8vU1XLiC1W26q8ngWsOVSgm6qA9NSsErECcHh9/2irzqpimo8bz6YPEK
- Zhe7vq8snqDnfy6cV2basRjjLOMbeAPjMR19EapV979x1cAsmm7VLDZgVaYO/NC1AetB
- E8mAJ/QWD0DZpp1w2m8vWvkdvtjYimXxPiDhW/2r2IUgICCtJ4mJ6VaXEoKSB96wmGr9
- 7WUQ==
+ d=1e100.net; s=20230601; t=1747052922; x=1747657722;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iY7ZjkohqZva9suGMx/+9g/tRlkH13kFNrIBPOKtMIU=;
+ b=FE9U6f5DQlPbMh16Rjxs09piJlGaZ+TFQ9wVENp8aIAHaTO8bvSne5iY1BDAwSFNks
+ Nnl3F8yfLk0kD+eDIS7V36HkR5MxCVCJkkWsM+08YO+iq7Bj6HBRWg4XaBLu2riW0b5k
+ Hr5h0ubLs2xFj80KaBSOdqrqPz0vEIfrHys03JphNrSkaZLuKnxhMPoo/MjvmRWU0eWj
+ BnB2lDU6D2JwNWDEfY3lUlaZhTVrVpxQXpzt9/YGJAdBS72U5pZlMLFGToL89LYKOiIA
+ 0RiRyfXfgd/vmjeGpVjEwbUFDuYvFY1Y1RkTj/S6vMjnLh/eb/inMqjcEdtn7xEMJpS/
+ IJgw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUZd/pDRi3+C0zfCHLnVxlhvXB7VkMAHEgOm7uDrqcVzvcamVfEkDJhavotv5G2QNWMMPE2H1HxvdF9@nongnu.org
-X-Gm-Message-State: AOJu0YyOfEvkHvDAWXmlMexMNHvmWSpq80bMNXKMQJawCTwj7mIoQkEJ
- 0izfL2N30ZdZ5zF/I48Plnk+uF3dpxqTpRMiOws15QXNAoVW4OhuPLLHrKWfLYUyS5OoH9wmbyY
- iEYRP6/yIWtiGdb/bkjz26RcnC9LBSWwO9fXoyg==
-X-Gm-Gg: ASbGncszB0hMZkFeslD1VYRgN19784/Cjc2iVEUr6IYg2b3gHweBEbw2ctxucxKZS9B
- R4x0R02nwdwTOv6YONw0FPuO6ddeNIeVh8mSREEzc5XNBzrtak89JCa4RFBeJe2ftMcwAZwqB0v
- Kq8Omry6x5QyCwAvkXFMgIaCZ8Po82/yxDpg==
-X-Google-Smtp-Source: AGHT+IGUupOOvls1aFofqONW6coAArv/WxNSSxStlqhid6mtQBV0l8vd45fjshPLnKtiD4XDjofcwieVQiWwBHiyNU8=
-X-Received: by 2002:a05:690c:2506:b0:702:5926:8609 with SMTP id
- 00721157ae682-70a3fa261acmr160720907b3.12.1747052753081; Mon, 12 May 2025
- 05:25:53 -0700 (PDT)
+ AJvYcCW0UPFjfhwZZslsUfxFgQjdSdH/IhoI+GStR8RYEa9X/C7gLgBOGly5WAWw9aVKx/Um3a567iFBhD8z@nongnu.org
+X-Gm-Message-State: AOJu0YyKrcEIJjAVhbF3r+1HSvLKCI+2nb6atCJmJxo7owWAIYmxg+vT
+ NajQlTrg7/n/zYPRu6ev9FL32AjC4F7ckHwERR+JQSxPHSww5TkcLa/EBvt+6odQAADOiPlel5J
+ V4opcHTJBzEl0Fk7oo+GXXvpOU48RyHctD7HsOttt65sgWn6169nxCqxJicYE
+X-Gm-Gg: ASbGncuxyBJEjLPXncEdgzUgUwzSnhLEilra/TCVWOPz/AqK4IDReqmJqsQkfbSVrdT
+ Cjp6rNy6/P0a8koxUSxZh315zuuLDMyVuZCeaK+CobRG0tfjrDfIrye/GBL8MRvukBTyTkIPuul
+ AEOj/jmRN3KpR0vSHaPNBVrVcg4DgJhtNdRz8bqc5FHQDDiOFqAF3M/LDRWkK5IeFWKgACe+8Mz
+ nGFRwbDfyY5JtUkYdE1tWelG1bzJ+CBrm8T8oNfCWH5+fl7fO+4pJ3AghpKV7uqUGC2KwwOFd9C
+ 0c3e4aeHwL9kAh8XkeiwOYFXJiHEnyZiW2SAOeMvAINbzgEXj1JnvAuKoaoyyPvzjQ0eSA8BLYU
+ NOnoh/N+oZfouFx5RM7OEB1xiFFYPTXi3eJIyqoiI
+X-Received: by 2002:a5d:5f96:0:b0:3a0:b797:c459 with SMTP id
+ ffacd0b85a97d-3a1f6499d05mr10202535f8f.47.1747052922072; 
+ Mon, 12 May 2025 05:28:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGnRontGVc11z6aQnJbMrk0MHJ+fHXpGRkvEbtQJNTOpXqASaMxNXTKtjyJX7RjOE11oJNbiA==
+X-Received: by 2002:a5d:5f96:0:b0:3a0:b797:c459 with SMTP id
+ ffacd0b85a97d-3a1f6499d05mr10202520f8f.47.1747052921724; 
+ Mon, 12 May 2025 05:28:41 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d728:a02c:cb23:ffbf:e605:f5f4?
+ (p200300cfd728a02ccb23ffbfe605f5f4.dip0.t-ipconnect.de.
+ [2003:cf:d728:a02c:cb23:ffbf:e605:f5f4])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a1f57dddebsm12166711f8f.3.2025.05.12.05.28.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 May 2025 05:28:40 -0700 (PDT)
+Message-ID: <c43d6a3b-ac4e-4cee-b034-7ddcdf7dedf8@redhat.com>
+Date: Mon, 12 May 2025 14:28:39 +0200
 MIME-Version: 1.0
-References: <20250502033047.102465-1-npiggin@gmail.com>
- <20250502033047.102465-2-npiggin@gmail.com>
-In-Reply-To: <20250502033047.102465-2-npiggin@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 May 2025 13:25:41 +0100
-X-Gm-Features: AX0GCFuCVPs3qMJBpToG-1G69TSD-nZ-9ZpOODp85IXcLyqFbG4ZMkYID6X3ViI
-Message-ID: <CAFEAcA_AJxm3iTMeNPJd-M1bU9D5b3kQr54CAqWutR_E8=Zqig@mail.gmail.com>
-Subject: Re: [PATCH v4 01/22] hw/usb/xhci: Move HCD constants to a header and
- add register constants
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Phil Dennis-Jordan <phil@philjordan.eu>, 
- Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] qcow2: put discards in discard queue when
+ discard-no-unref is enabled
+To: Jean-Louis Dupond <jean-louis@dupond.be>, qemu-devel@nongnu.org
+Cc: Alexander Ivanov <alexander.ivanov@virtuozzo.com>,
+ Kevin Wolf <kwolf@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-block@nongnu.org
+References: <20250429103110.761910-1-jean-louis@dupond.be>
+ <20250429103110.761910-3-jean-louis@dupond.be>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20250429103110.761910-3-jean-louis@dupond.be>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.551,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,35 +117,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2 May 2025 at 04:31, Nicholas Piggin <npiggin@gmail.com> wrote:
+On 29.04.25 12:31, Jean-Louis Dupond wrote:
+> When discard-no-unref is enabled, discards are not queued like it
+> should.
+> This was broken since discard-no-unref was added.
 >
-> Prepare to use some of these constants in xhci qtest code.
+> Add some helper function qcow2_discard_cluster which handles some common
+> checks and calls the queue_discards function if needed to add the
+> discard request to the queue.
+>
+> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+> ---
+>   block/qcow2-cluster.c  | 16 ++++++----------
+>   block/qcow2-refcount.c | 19 ++++++++++++++++++-
+>   block/qcow2.h          |  4 ++++
+>   3 files changed, 28 insertions(+), 11 deletions(-)
+>
+> diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
+> index ce8c0076b3..c655bf6df4 100644
+> --- a/block/qcow2-cluster.c
+> +++ b/block/qcow2-cluster.c
+> @@ -1978,12 +1978,10 @@ discard_in_l2_slice(BlockDriverState *bs, uint64_t offset, uint64_t nb_clusters,
+>           if (!keep_reference) {
+>               /* Then decrease the refcount */
+>               qcow2_free_any_cluster(bs, old_l2_entry, type);
+> -        } else if (s->discard_passthrough[type] &&
+> -                   (cluster_type == QCOW2_CLUSTER_NORMAL ||
+> -                    cluster_type == QCOW2_CLUSTER_ZERO_ALLOC)) {
+> +        } else {
+>               /* If we keep the reference, pass on the discard still */
+> -            bdrv_pdiscard(s->data_file, old_l2_entry & L2E_OFFSET_MASK,
+> -                          s->cluster_size);
+> +            qcow2_discard_cluster(bs, old_l2_entry & L2E_OFFSET_MASK,
+> +                                  s->cluster_size, cluster_type, type);
+>           }
+>       }
+>   
+> @@ -2092,12 +2090,10 @@ zero_in_l2_slice(BlockDriverState *bs, uint64_t offset,
+>               if (!keep_reference) {
+>                   /* Then decrease the refcount */
+>                   qcow2_free_any_cluster(bs, old_l2_entry, QCOW2_DISCARD_REQUEST);
+> -            } else if (s->discard_passthrough[QCOW2_DISCARD_REQUEST] &&
+> -                       (type == QCOW2_CLUSTER_NORMAL ||
+> -                        type == QCOW2_CLUSTER_ZERO_ALLOC)) {
+> +            } else {
+>                   /* If we keep the reference, pass on the discard still */
+> -                bdrv_pdiscard(s->data_file, old_l2_entry & L2E_OFFSET_MASK,
+> -                            s->cluster_size);
+> +                qcow2_discard_cluster(bs, old_l2_entry & L2E_OFFSET_MASK,
+> +                            s->cluster_size, type, QCOW2_DISCARD_REQUEST);
+>               }
+>           }
+>       }
+> diff --git a/block/qcow2-refcount.c b/block/qcow2-refcount.c
+> index d796018970..e1f830504d 100644
+> --- a/block/qcow2-refcount.c
+> +++ b/block/qcow2-refcount.c
+> @@ -1205,6 +1205,23 @@ void qcow2_free_any_cluster(BlockDriverState *bs, uint64_t l2_entry,
+>       }
+>   }
+>   
+> +void qcow2_discard_cluster(BlockDriverState *bs, uint64_t offset,
+> +                           uint64_t length, QCow2ClusterType ctype,
+> +                           enum qcow2_discard_type dtype) {
+> +
 
-This commit is doing more than it says in the commit message.
-It also:
- * renames some of the constants (mostly prepending XHCI_)
- * adds new constants, e.g. for the register offsets and
-   for some shift amounts, where the original code used
-   hardcoded values
- * makes at least one actual code logic change:
+QEMU coding style requires putting the { on a separate line.
 
-> -    case 0x10: /* HCCPARAMS */
-> -        if (sizeof(dma_addr_t) == 4) {
-> -            ret = 0x00080000 | (xhci->max_pstreams_mask << 12);
-> -        } else {
-> -            ret = 0x00080001 | (xhci->max_pstreams_mask << 12);
-> +    case XHCI_HCCAP_REG_HCCPARAMS1:
-> +        ret = (XHCI_HCCAP_EXTCAP_START / 4) << XHCI_HCCPARAMS1_XECP_SHIFT;
-> +        ret |= xhci->max_pstreams_mask << XHCI_HCCPARAMS1_MAXPSASIZE_SHIFT;
-> +        if (sizeof(dma_addr_t) == 8) {
-> +            ret |= XHCI_HCCPARAMS1_AC64;
->          }
->          break;
+> +    BDRVQcow2State *s = bs->opaque;
+> +
+> +    if (s->discard_passthrough[dtype] &&
+> +        (ctype == QCOW2_CLUSTER_NORMAL ||
+> +         ctype == QCOW2_CLUSTER_ZERO_ALLOC)) {
+> +        if (has_data_file(bs)) {
+> +            bdrv_pdiscard(s->data_file, offset, length);
+> +        } else {
+> +            queue_discard(bs, offset, length);
+> +        }
+> +    }
+> +}
+> +
+>   int qcow2_write_caches(BlockDriverState *bs)
+>   {
+>       BDRVQcow2State *s = bs->opaque;
+> @@ -3619,7 +3636,7 @@ qcow2_discard_refcount_block(BlockDriverState *bs, uint64_t discard_block_offs)
+>           /* discard refblock from the cache if refblock is cached */
+>           qcow2_cache_discard(s->refcount_block_cache, refblock);
+>       }
+> -    update_refcount_discard(bs, discard_block_offs, s->cluster_size);
+> +    queue_discard(bs, discard_block_offs, s->cluster_size);
+>   
+>       return 0;
+>   }
 
-It's really tricky to review when you have a single
-big patch like this that does more than a simple
-mechanical transformation. Could you split it up, please?
+This hunk should go into the previous patch.
 
-thanks
--- PMM
+> diff --git a/block/qcow2.h b/block/qcow2.h
+> index a9e3481c6e..547bb2b814 100644
+> --- a/block/qcow2.h
+> +++ b/block/qcow2.h
+> @@ -880,6 +880,10 @@ void GRAPH_RDLOCK qcow2_free_clusters(BlockDriverState *bs,
+>   void GRAPH_RDLOCK
+>   qcow2_free_any_cluster(BlockDriverState *bs, uint64_t l2_entry,
+>                          enum qcow2_discard_type type);
+> +void GRAPH_RDLOCK
+> +qcow2_discard_cluster(BlockDriverState *bs, uint64_t offset,
+> +                      uint64_t length, QCow2ClusterType ctype,
+> +                      enum qcow2_discard_type dtype);
+>   
+>   int GRAPH_RDLOCK
+>   qcow2_update_snapshot_refcount(BlockDriverState *bs, int64_t l1_table_offset,
+
+With the above done, for both patch 1 and 2:
+
+Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+
 
