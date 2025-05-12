@@ -4,131 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19623C3ABBC
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 08:00:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E37EBC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 08:02:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEO4m-0007HC-FS; Mon, 12 May 2025 03:59:52 -0400
+	id 1uEO7J-0008Qh-1g; Mon, 12 May 2025 04:02:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uEO4k-0007Gg-6T
- for qemu-devel@nongnu.org; Mon, 12 May 2025 03:59:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uEO7G-0008QH-Sp
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 04:02:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uEO4h-0006Bn-MF
- for qemu-devel@nongnu.org; Mon, 12 May 2025 03:59:49 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uEO7E-0006W6-Vt
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 04:02:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747036786;
+ s=mimecast20190719; t=1747036943;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QIK8nGQ0MEZFLKvoSSeOKf9NCIFZ/tj6SPwIdGOL6T4=;
- b=RMUpXrHxKMYIRn0PY+rIBJg/LQ5zxpguPdAcXbi5URiDeGKkkLgzsTUVjqnY1deU2lorHd
- fCRRDT0FgmHLnW2LmnYA9DOBlEhAyF0vPqykctQgZivj/rkrXeEqFHy/dHbRlblCLwFFa8
- YT3bpBYoznGrVM3Oq7ao+j5QeuInAoo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=P4dStATD9bImCtBYUMP2BjCOEqPoLTTdyFUtkPVvgOQ=;
+ b=dxnPqDjpYTrjsJSN/cP1c/J5Axjf3vMZBgzRTwqLt2x8Y40ZswBVOrRLY1dLFKcZNwp6sh
+ XmZHyUtLxcEZorIYTrdF3OVcVHZDozn9N1eel1XKeJHc7WontixNibgIsY3VFSryEFEWzL
+ c15XqLdymBFdqAIAkUKJAw6865VZEwQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-5-dz_VUxxDMiqP1WAFmLNJiA-1; Mon, 12 May 2025 03:59:44 -0400
-X-MC-Unique: dz_VUxxDMiqP1WAFmLNJiA-1
-X-Mimecast-MFC-AGG-ID: dz_VUxxDMiqP1WAFmLNJiA_1747036783
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a0bd786a53so1605288f8f.0
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 00:59:44 -0700 (PDT)
+ us-mta-364-lsKCSyMXNGe9CG3VdYBvvA-1; Mon, 12 May 2025 04:02:20 -0400
+X-MC-Unique: lsKCSyMXNGe9CG3VdYBvvA-1
+X-Mimecast-MFC-AGG-ID: lsKCSyMXNGe9CG3VdYBvvA_1747036939
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a0b2e56da1so1538064f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 01:02:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747036783; x=1747641583;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QIK8nGQ0MEZFLKvoSSeOKf9NCIFZ/tj6SPwIdGOL6T4=;
- b=fp5cScqtm12KBtPjzS7t62ssTEUb/I4Y9yb+Izi4b9aJMVWedIe/UzyEPX2zTslNbP
- L4L1N1v5xgPTy51Agj3jvczOAnSLQNi2MLaRz8C4OqfUDVQXqrmPLG1XvKcgt89hKmrr
- 8DsE1+iRwkWsl5UdktZOsHXBjAoVpR05YOb7GfSpH/3aflFWEvzc0zUqe+TGeeLAKenj
- 79HNHcTMCcVre9Oyu9+8DW7uxi4H5e9xWFVcou/uL+hQ7nLmYWv90lE/C/vsn8jf7W2w
- 3IHAiTw4Z4WvFpKL1I/KFAgCrfTTXfladIEscIOrusaCi3Q0082MgHSneQYsom0409hA
- 14Ug==
+ d=1e100.net; s=20230601; t=1747036939; x=1747641739;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=P4dStATD9bImCtBYUMP2BjCOEqPoLTTdyFUtkPVvgOQ=;
+ b=Bk7G51ftcIzkxqPC8HjG3vfaxQv7crEmMcwxYLmS/dfybl9YahpdO5dy3pQLKy1r70
+ 0GzifsEDhUyJejDwA8AIjB+XPJVeSts2Fnqa0Vo6dfS6U/9WRuxFVT0wpP438pa74UAx
+ 4IdhVf+4ouQhtRmHLszJ+xaZHthLeRJCPGD/KRHiAlIDm/m2C1aEK2md4fcF896UVVC4
+ YyBBt3hFqMjMH+h2O6qQ5by+Vm985+YU6BMvoBgwbBYZT6yXg35FpJ3q6c1pKTwAz6C3
+ pPonNnafihkPY3CK0iWF8Y1q6uz3N5HR2MlnJSTSwY6gM5qmAocnkSidIGPePh+C9nDp
+ 4WNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBs6H1N4AtJUoKFVNXbnfyWGD3lGRSCnLvBjoxqmWk6jtVUcfVGHsEaSchvaz2ZPZP1emKhjUh+zOk@nongnu.org
-X-Gm-Message-State: AOJu0YxgB2b2X04OCIo536KDXp14ACekBFzKOOmQN1YrjY1gPij+lGPB
- 6K+2jk46WnOmkuk32J94NP5QZp9G8/AQsc5v2/KMxQFLjevmGDfffPXaimtk8k+CiuRe+lelmiM
- nyK0lobcbyVFXHECYerlkIcOh1QU7oXF5z3DMEJpYElw7aukJiJgE
-X-Gm-Gg: ASbGncsd8qYFyWkNMCyGkTSzMF/ehpQ6fovwjK2Pk4zrpFCeATI4fph+fYp1vVCm24P
- a9qVUviH6oUrmmqpE7gGQBAXyTKwXcKyasGzRLycobsrhH+0RmQsl8WVJ5P0O7r02+zqh57v4RD
- aBvXLlX3XenyUZaDIYgoIIUkyi3ckTFTUBuHKsLMQZ6fkR1uRBUXkCfssbOzpnNCom8TX/U/CnP
- qRPojUVmjfJi1UtvikZSv5XVGuEofaic75rOBQR6OHaeRDXJvDS7dwjbuUG8A/hF2oBf1v5RX0a
- OT47Kk6/qUlYCObYmNIJIFbNdl+LVRxkxILXyMDA8b0VjBGFV0FV
-X-Received: by 2002:a05:6000:2ab:b0:3a1:f5c4:b81b with SMTP id
- ffacd0b85a97d-3a1f64376b5mr9799842f8f.23.1747036783366; 
- Mon, 12 May 2025 00:59:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEvG7zgv/+4Eotm8qSFV7LCV+SemdE7g0WQYq6ogd4+yfLoLgWGjA24CPx29+jsGoAajphwyg==
-X-Received: by 2002:a05:6000:2ab:b0:3a1:f5c4:b81b with SMTP id
- ffacd0b85a97d-3a1f64376b5mr9799824f8f.23.1747036783028; 
- Mon, 12 May 2025 00:59:43 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-115-173.pools.arcor-ip.net.
- [47.64.115.173]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f579aa5bsm11511227f8f.0.2025.05.12.00.59.42
+ AJvYcCV1y4Ruyd7xDSU7d/r0Ei+jbJBIhdKrBV+1ySljyIPm19BhveeWSp2IEfS9orDvGRacc6N226uaTHer@nongnu.org
+X-Gm-Message-State: AOJu0Yx1BGmf+oDCyDmiF6cKake42mmEFLE0+27IrsYgO2O9lHLVt27w
+ 9+8aeymJ+Jabpv6ryRUBEKMqFum20DZipQXIJOFxNKQtiL4afr6DrhPQswya8yYNsGlNRUFhOOV
+ 7jVKgxo+9OHRvQNioy4OipSHAYHU6/gKNCM2poJEYf1SRG7x7prbPumB0IeW7
+X-Gm-Gg: ASbGnctgE+W/WxACOv7g2Xo+GsNeihJVvJUiuAAfDk2Ovr7f/itRppVwvGNZQiX6hUP
+ yH4mx7GTcEEAntx9FjZfmDILi/j6+FiqmNiSBzgbk7y3WDneB+yGtuPHdR6gLy02oVj8QeDBjXN
+ ifINyilMm2uopWZ8ri0w/XJA/9n4Ee17m/tSoUeMeL2OnHf42J+eH9BCaa4osRspWm5MCQxWTtN
+ aW1i4Nxqk6NltrUFDGxBrQKUzJoka5hObTFwc8S1Uz299n1UrpZZTaAZb8b7AV16FAWel7mR9nS
+ eyt5bsAS39kNVQ7aZJlMVFdoj58oGLgdk7WUWIT4Q2XpjymzLC8Oa5Go88BAgbaUsocLWyAHvFi
+ fsXdUs4AG3yygblkyQk+/DCOqYvHbCJk4ZSNY/ZY=
+X-Received: by 2002:a05:6000:4383:b0:3a1:fd06:d1c with SMTP id
+ ffacd0b85a97d-3a1fd0610aamr5939231f8f.46.1747036938790; 
+ Mon, 12 May 2025 01:02:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFcVS1/z3ZJFICQ3nCIlb6ujxUMxgY/FOY1Q81lAH7Oh0gx0cBBifq8cqcrTL3uW5ghNuZp8g==
+X-Received: by 2002:a05:6000:4383:b0:3a1:fd06:d1c with SMTP id
+ ffacd0b85a97d-3a1fd0610aamr5939207f8f.46.1747036938387; 
+ Mon, 12 May 2025 01:02:18 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f4a:5800:f1ae:8e20:d7f4:51b0?
+ (p200300d82f4a5800f1ae8e20d7f451b0.dip0.t-ipconnect.de.
+ [2003:d8:2f4a:5800:f1ae:8e20:d7f4:51b0])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a1f579aa5bsm11518393f8f.0.2025.05.12.01.02.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 May 2025 00:59:42 -0700 (PDT)
-Message-ID: <80e7eacc-0b71-4e1c-981e-607a4ce8a7bd@redhat.com>
-Date: Mon, 12 May 2025 09:59:41 +0200
+ Mon, 12 May 2025 01:02:17 -0700 (PDT)
+Message-ID: <9880adf5-b1be-4311-a2b1-9e9a3cade213@redhat.com>
+Date: Mon, 12 May 2025 10:02:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Add PCI hotplug test for aarch64
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, alex.bennee@linaro.org, philmd@linaro.org,
- peter.maydell@linaro.org
-References: <20250509232156.106465-1-gustavo.romero@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v2 01/20] memory: Adjust event ranges to fit within
+ notifier boundaries
+To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ qemu-devel@nongnu.org, peterx@redhat.com
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
+ philmd@linaro.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ alex.williamson@redhat.com, vasant.hegde@amd.com,
+ suravee.suthikulpanit@amd.com, santosh.shukla@amd.com, sarunkod@amd.com,
+ Wei.Huang2@amd.com, clement.mathieu--drif@eviden.com,
+ ethan.milon@eviden.com, joao.m.martins@oracle.com, boris.ostrovsky@oracle.com
+References: <20250502021605.1795985-1-alejandro.j.jimenez@oracle.com>
+ <20250502021605.1795985-2-alejandro.j.jimenez@oracle.com>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250509232156.106465-1-gustavo.romero@linaro.org>
+Autocrypt: addr=david@redhat.com; keydata=
+ xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
+ dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
+ QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
+ XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
+ Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
+ PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
+ WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
+ UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
+ jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
+ B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
+ ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
+ 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
+ rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
+ wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
+ 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
+ pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
+ KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
+ BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
+ 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
+ 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
+ M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
+ Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
+ T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
+ 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
+ CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
+ NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
+ 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
+ 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
+ lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
+ AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
+ N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
+ AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
+ boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
+ 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
+ XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
+ a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
+ Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
+ 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
+ kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
+ th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
+ jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20250502021605.1795985-2-alejandro.j.jimenez@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -46
 X-Spam_score: -4.7
@@ -153,69 +166,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi!
-
-On 10/05/2025 01.19, Gustavo Romero wrote:
-> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
-> hot-unplug on arm64. Currently, the aarch64 'virt' machine uses the PCIe
-> native controller and does not support ACPI-based hotplugging. However,
-> since support is planned, this test sets 'acpi=force' and specifies an
-> EDK2 firmware image in advance. This is harmless and prepares for future
-> ACPI support.
+On 02.05.25 04:15, Alejandro Jimenez wrote:
+> Invalidating the entire address space (i.e. range of [0, ~0ULL]) is a
+> valid and required operation by vIOMMU implementations. However, such
+> invalidations currently trigger an assertion unless they originate from
+> device IOTLB invalidations.
 > 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->   tests/functional/meson.build                 |  1 +
->   tests/functional/test_aarch64_hotplug_pci.py | 73 ++++++++++++++++++++
->   2 files changed, 74 insertions(+)
->   create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
+> Although in recent Linux guests this case is not exercised by the VTD
+> implementation due to various optimizations, the assertion will be hit
+> by upcoming AMD vIOMMU changes to support DMA address translation. More
+> specifically, when running a Linux guest with VFIO passthrough device,
+> and a kernel that does not contain commmit 3f2571fed2fa ("iommu/amd:
+> Remove redundant domain flush from attach_device()").
+> 
+> Remove the assertion altogether and adjust the range to ensure it does
+> not cross notifier boundaries.
 
-Could you also add the test file to one of the sections in the MAINTAINERS 
-file, please?
+Looking at the history, we used to have the assert unconditionally, and
+made it specific to IOMMU_NOTIFIER_DEVIOTLB_UNMAP in
 
-> diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functional/test_aarch64_hotplug_pci.py
-> new file mode 100755
-> index 0000000000..031540ba22
-> --- /dev/null
-> +++ b/tests/functional/test_aarch64_hotplug_pci.py
-> @@ -0,0 +1,73 @@
-> +#!/usr/bin/env python3
-> +#
-> +# The test hotplugs a PCI device and checks it on a Linux guest.
-> +#
-> +# Copyright (c) 2025 Linaro Ltd.
-> +#
-> +# Author:
-> +#  Gustavo Romero <gustavo.romero@linaro.org>
-> +#
-> +# This work is licensed under the terms of the GNU GPL, version 2 or
-> +# later.  See the COPYING file in the top-level directory.
-> +
-> +from os import path
-> +from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
-> +from qemu_test import BUILD_DIR
-> +
-> +class HotplugPCI(LinuxKernelTest):
-> +
-> +    ASSET_KERNEL = Asset(
-> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
-> +         'current/images/netboot/debian-installer/arm64/linux'),
-> +        '3821d4db56d42c6a4eac62f31846e35465940afd87746b4cfcdf5c9eca3117b2')
-> +
-> +    ASSET_INITRD = Asset(
-> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
-> +         'current/images/netboot/debian-installer/arm64/initrd.gz'),
-> +        '2583ec22b45265ad69e82f198674f53d4cd85be124fe012eedc2fd91156bc4b4')
-> +
-> +    def test_hotplug_pci(self):
-> +
-> +        self.vm.add_args('-m', '512M')
-> +        self.vm.add_args('-machine', 'type=virt')
+commit 1804857f19f612f6907832e35599cdb51d4ec764
+Author: Eugenio Pérez <eperezma@redhat.com>
+Date:   Mon Nov 16 17:55:06 2020 +0100
 
-Please use self.set_machine('virt') instead so that the test gets correctly 
-skipped in case the machine has not been compiled into the binary.
+     memory: Skip bad range assertion if notifier is DEVIOTLB_UNMAP type
+     
+     Device IOTLB invalidations can unmap arbitrary ranges, eiter outside of
+     the memory region or even [0, ~0ULL] for all the space. The assertion
+     could be hit by a guest, and rhel7 guest effectively hit it.
+     
+     Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+     Reviewed-by: Peter Xu <peterx@redhat.com>
+     Reviewed-by: Juan Quintela <quintela@redhat.com>
+     Acked-by: Jason Wang <jasowang@redhat.com>
+     Message-Id: <20201116165506.31315-6-eperezma@redhat.com>
+     Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+     Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 
-  Thanks,
-   Thomas
+
+I think this change here is fine, but it would be good getting Pete Xu's opinion.
+
+Acked-by: David Hildenbrand <david@redhat.com>
+
+-- 
+Cheers,
+
+David / dhildenb
 
 
