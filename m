@@ -4,45 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C623DC3ABBC
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 09:36:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ED6AC3ABBC
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 09:41:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEPZj-0003oy-5M; Mon, 12 May 2025 05:35:55 -0400
+	id 1uEPeP-0004oV-2d; Mon, 12 May 2025 05:40:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uEPZX-0003oN-Td; Mon, 12 May 2025 05:35:45 -0400
+ id 1uEPeM-0004na-6b; Mon, 12 May 2025 05:40:42 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uEPZS-0007jc-OX; Mon, 12 May 2025 05:35:43 -0400
+ id 1uEPeK-00088S-Fm; Mon, 12 May 2025 05:40:41 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD096120D01;
- Mon, 12 May 2025 12:35:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E446C120D07;
+ Mon, 12 May 2025 12:40:31 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F03AD20995D;
- Mon, 12 May 2025 12:35:35 +0300 (MSK)
-Message-ID: <baafd30e-db22-4950-ad44-2b2b51cc8f6c@tls.msk.ru>
-Date: Mon, 12 May 2025 12:35:35 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2B03620996C;
+ Mon, 12 May 2025 12:40:38 +0300 (MSK)
+Message-ID: <47048276-0ef3-4c90-8969-6e58af644fc4@tls.msk.ru>
+Date: Mon, 12 May 2025 12:40:38 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/11 for v9.2?] i386/cpu: Mark avx10_version filtered
- when prefix is NULL
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Tao Su <tao1.su@linux.intel.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- qemu-stable@nongnu.org
-References: <20241106030728.553238-1-zhao1.liu@intel.com>
- <20241106030728.553238-2-zhao1.liu@intel.com>
- <c62b0d60-2815-41e1-9e56-7bec83640208@tls.msk.ru>
+Subject: Re: [PATCH v3 0/2] qapi/throttle: Fix qmp_block_set_io_throttle
+ blocked for too long
+To: zoudongjie <zoudongjie@huawei.com>, qemu-devel@nongnu.org
+Cc: stefanha@redhat.com, kwolf@redhat.com, fam@euphon.net, hreitz@redhat.com, 
+ alex.chen@huawei.com, chenjianfei3@huawei.com, eric.fangyi@huawei.com,
+ luolongmin@huawei.com, mujinsheng@huawei.com, qemu-block@nongnu.org,
+ qemu-stable@nongnu.org, renxuming@huawei.com, suxiaodong1@huawei.com,
+ wangjian161@huawei.com, wangyan122@huawei.com, yebiaoxiang@huawei.com,
+ zhuyangyang14@huawei.com
+References: <20250326092634.1691355-1-zoudongjie@huawei.com>
 Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -86,9 +83,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <c62b0d60-2815-41e1-9e56-7bec83640208@tls.msk.ru>
+In-Reply-To: <20250326092634.1691355-1-zoudongjie@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -112,55 +109,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.12.2024 00:04, Michael Tokarev wrote:
-> 06.11.2024 06:07, Zhao Liu wrote:
->> In x86_cpu_filter_features(), if host doesn't support AVX10, the
->> configured avx10_version should be marked as filtered regardless of
->> whether prefix is NULL or not.
->>
->> Check prefix before warn_report() instead of checking for
->> have_filtered_features.
->>
->> Cc: qemu-stable@nongnu.org
->> Fixes: commit bccfb846fd52 ("target/i386: add AVX10 feature and AVX10 
->> version property")
->> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+On 26.03.2025 12:26, zoudongjie via wrote:
+> From: Zhu Yangyang <zhuyangyang14@huawei.com>
 > 
-> Hi!
+> Calling qmp_block_set_io_throttle() will be blocked for a long time
+> when a network disk is configured and the network failure is just about
+> to occur.
 > 
-> Has this patch been forgotten?  9.2 is out already and I'm collecting 
-> fixes for it...
+> This series add a timeout parameter for qmp_block_set_io_throttle to control
+> its execution duration.
+> 
+> Changelog
+> v3 ---
+>    Unify AIO_WAIT_WHILE_{TIMEOUT/INTERNAL} by replacing AIO_WAIT_WHILE_INTERNAL() with
+>    AIO_WAIT_WHILE_TIMEOUT(..., 0).
+> 
+> v2 ----
+>    1. Support 0 in BDRV_POLL_WHILE_TIMEOUT(), 0 means infinite.
+>    2. Use uint64_t timeout_ns instead of int64 timeout to name variables.
+>    3. Use timer_pending() to check for expiry instead of explicitly checking
+>       against the deadline for BDRV_POLL_WHILE_TIMEOUT().
+>    4. Add documentation for bdrv_drained_begin_timeout(), note that bdrv_drained_end()
+>       must be called when -ETIMEDOUT is returned.
+>    5. Add a timeout parameter to the qmp_block_set_io_throttle() instead of hardcoding
+>       the timeout, and the default value is 0, mean an infinite timeout.
+> 
+> v1 patch link:
+> https://lore.kernel.org/qemu-devel/20250308101618.721954-1-zoudongjie@huawei.com/
+> 
+> Zhu Yangyang (2):
+>    io/block: Refactoring the bdrv_drained_begin() function and implement
+>      a timeout mechanism.
+>    qapi/throttle: add timeout parameter for qmp_block_set_io_throttle()
 
-Ping #2?  It's a 10.0.1 time already.. :)
+Hi!
+
+Is this series still relevant?  It's Cc'ed qemu-stable@, but not yet
+applied to master branch..
 
 Thanks,
 
 /mjt
-
->> ---
->> v5: new commit.
->> ---
->>   target/i386/cpu.c | 6 ++++--
->>   1 file changed, 4 insertions(+), 2 deletions(-)
->>
->> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->> index 3baa95481fbc..77c1233daa13 100644
->> --- a/target/i386/cpu.c
->> +++ b/target/i386/cpu.c
->> @@ -7711,8 +7711,10 @@ static bool x86_cpu_filter_features(X86CPU 
->> *cpu, bool verbose)
->>               env->avx10_version = version;
->>               have_filtered_features = true;
->>           }
->> -    } else if (env->avx10_version && prefix) {
->> -        warn_report("%s: avx10.%d.", prefix, env->avx10_version);
->> +    } else if (env->avx10_version) {
->> +        if (prefix) {
->> +            warn_report("%s: avx10.%d.", prefix, env->avx10_version);
->> +        }
->>           have_filtered_features = true;
->>       }
-> 
-> 
-
 
