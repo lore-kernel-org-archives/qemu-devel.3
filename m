@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68E77C3ABCD
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 09:58:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 033E4C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 09:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uEPrr-0000u0-SI; Mon, 12 May 2025 05:54:40 -0400
+	id 1uEPri-0000Hf-Rc; Mon, 12 May 2025 05:54:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEPrp-0000i9-D4
- for qemu-devel@nongnu.org; Mon, 12 May 2025 05:54:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uEPrW-00082t-Rg
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 05:54:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uEPrn-0000mF-N8
- for qemu-devel@nongnu.org; Mon, 12 May 2025 05:54:37 -0400
+ id 1uEPrU-0000kP-Jf
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 05:54:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747043674;
+ s=mimecast20190719; t=1747043655;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RqplIrCb5EnJ9kAZLfanr+2YlBchWhH8n9WVaqojsA8=;
- b=PHjAY5yEiGLH5VdChdiyw8gh6c2m3LMzuMvnEMXR5UL3qMQgkl8Lnd+Inz/s6Cxy4dpgyr
- iHW5uJ6DroZlQD53HMI69NZ7XYrVBik9xzOJwSikjVE3YNM8ZFyUWQOm2+BK9rykNY4nu/
- 4369cQPfDhtMwo4Bz+z7/Dr23wlJc+c=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5XJUJRnrTiscZ1lpipSP6/oXqKd/h2Mos+s1lv9QW+I=;
+ b=M0FdAfxmlnpxzz38ITjCZWHc2tdo+/N4+opQHxk3k/zmjyiLFOc1QYsn5utfKetJS+Pg2p
+ bZHoedzicjww3gkJRlFc8GXDA2FZyILpydYp0hNXc57bkw4xmrpQUIn4OIk+Pr2paCHToB
+ 85+JNJ9Gu/raUITJL0WiYsjQ+9AOWjg=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-468-h6WkjanWPkKY1QFP0c94sA-1; Mon, 12 May 2025 05:54:32 -0400
-X-MC-Unique: h6WkjanWPkKY1QFP0c94sA-1
-X-Mimecast-MFC-AGG-ID: h6WkjanWPkKY1QFP0c94sA_1747043671
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5fc8fca20f4so3234007a12.1
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 02:54:32 -0700 (PDT)
+ us-mta-447-aZ7zCe2KNaOXo4j-_zD9kg-1; Mon, 12 May 2025 05:54:13 -0400
+X-MC-Unique: aZ7zCe2KNaOXo4j-_zD9kg-1
+X-Mimecast-MFC-AGG-ID: aZ7zCe2KNaOXo4j-_zD9kg_1747043652
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-acb98b5b0bdso441475866b.1
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 02:54:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747043671; x=1747648471;
+ d=1e100.net; s=20230601; t=1747043651; x=1747648451;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RqplIrCb5EnJ9kAZLfanr+2YlBchWhH8n9WVaqojsA8=;
- b=JHfO+Umey6Bab+fb/0Sa0vM8vKzQi/Il2hpyScoNdtadMmj5aBs2AJSZMza/h7DQFZ
- V/6fTsm+4irsMcAJzi2LJg8ky+dBP181zEWbNOxW9/W+h6j7mdQi+4MVKnlk4NfNzPX+
- cYkzjTK1Gssv5cP2HGKE45z7kYg8hY1EsOArZy99ddvlrW49NIsYqgpaO2CVv+VBayC1
- fx8qvVzZn4USytJ4akfuiiONexeqdQT+Uhy+ypAUvNT1hvus0Ux9x1AvfY5t7ygYgwG8
- jtc/qbzYgJH4DKuQxUWVrdd3UidGZO69Joo9nGvQc0akll4hMPmOhU35heXHTiyMhPPJ
- CDlw==
-X-Gm-Message-State: AOJu0YyPe4MQY3F5c3o3gpWbq7FlOdea9i6ToKrCG5QtoBFJgmZv270x
- VuU2Tupb+VzfJI1CFQXcseS8WgOAk0mlm0tHLnQp3RLEUlofX9/zvmkRqqvqgTvfLZ702PNMI9r
- AMLZO20UJOoKdSqD6MRnxz4vrdKjYhNapMg6IUxcFDTaBZZEuzP2EvdswZvjIOO7z1vtnKyF2yV
- pZXs8Toqb2p/uWt/Py9YeSXdU1J/QRLlTJ+3Pd
-X-Gm-Gg: ASbGnct2s3XDQ7a3sIVq+WuFhWTqbnLGsIjt/c1qmUa1I6DPYLFZf2IyBtFyzZ8RLkD
- 2GGnvEOpm0SRYMUzijZ6jVNlM5wv2OD+pwLzJbZ6Gnw6iTKBSW4scSnWGK4F2mcJgZXgm+uwybf
- 8C434ntZ6PDEf+N02gNkkze8pLELf1iCc0hqEhcj/8cp0MCcbRZMJv609MSb4T/PXO9aYWVDSgr
- GneCRjYpQItOheCm+Vpcfsygcn6hmwDgNF2Hm6hTsMTKgtJyAe9CsNh92WszursJ5SjYs/qfRkm
- +K/bwmg3fIETjmm9LuKuZ/75Akd5Vp5n9CYUj69X5PLuOUc=
-X-Received: by 2002:a05:6402:210b:b0:5fd:ef5d:cfc9 with SMTP id
- 4fb4d7f45d1cf-5fdef5ddccdmr3135315a12.12.1747043670909; 
- Mon, 12 May 2025 02:54:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFuVqVVmUhSECyQHnkZf2vc6YESx3dBLbQA6KCVURpQr74B8m4g29Zf+Uriy0HQ1CB+WgnFYQ==
-X-Received: by 2002:a05:6402:210b:b0:5fd:ef5d:cfc9 with SMTP id
- 4fb4d7f45d1cf-5fdef5ddccdmr3135290a12.12.1747043670534; 
- Mon, 12 May 2025 02:54:30 -0700 (PDT)
+ bh=5XJUJRnrTiscZ1lpipSP6/oXqKd/h2Mos+s1lv9QW+I=;
+ b=sRNA2NCz6jPiqMgZJSZ1YI/9cgrXd9xApUqh50Ssotze4wiSe5AHNHYuWBhjVkQ247
+ 1UfvN/kzsOs5ZT9Xcv/KEX3jElqaMloCqzmQua5qbKZzn13dz29Eo2iJv81uTcLDiMFI
+ YvgoE2xxgC1X8Jdf4Mp/uDj3Il2Iuln42Vd+YSI1ZsDmd/cA3w46dXqrLvrrpGdGeCxO
+ c1+GoVLhE2ubnLEj14fi4DNDWXywn5B4wKx4HqcW43HuSHR7+uYgNFnkW3cuG/NlaPbB
+ d32GznaKfVOKocBOuFkuQQN4edlzqziPDQNu7bL9wpVZqTAHHblf991eh2PtYSZ7v2Pt
+ YQtA==
+X-Gm-Message-State: AOJu0YzgGcrsS8oG2Dlb8hNM8gT1xfyNATHjFiKUJPQaoKw0vFSwjBiO
+ sLwiKzS2hA4t6UmEBqTLM+h5vzz0AbRU9Oc1hFltXLMgkj/0K5t1bAiATxnEhc7W101NcKorUUp
+ ReG3+BJcyDbMcFsySXu4GOqPv1Zax0YZO31fpp7jVt7fg9g4i4slvWUMYgRoAmjHGm/bJfjQe8m
+ eML5Aq/hQ0RHK2sI1AIE5FlE+qYoByKIbhlwtH
+X-Gm-Gg: ASbGnctYqnrrMfEmhJziVwUzSukCmgeLtkQopvkDz44mJBhT3biafJn4/XJ64MaMFCd
+ MYnMLtptxpUpUdFuRprqc994K8xO41P13AHOGKtT6rnGhgnL/oNXoiXGlI2NXm1/ieug95pa6FY
+ pmrszitJMyI3W7DmllOgHWCtH5kkU9DWuNWoaJaK3nkjO05O64xUv5cCfmRWwKl9UrsTQEfsZds
+ ZFAjue8nlhr7jQs2C25dAFbUYZQp1u7ChvyYy+vM2HJwzNtUnwc7EH5kU9RquvSGrlh8k/Mya2s
+ 9i/eW8GzRzFOJxeBucP42M1nGvm8eEFZtwV3JPoKcVB/nMs=
+X-Received: by 2002:a17:907:948f:b0:ad2:4ac1:abe3 with SMTP id
+ a640c23a62f3a-ad24ac1b354mr485991266b.40.1747043651563; 
+ Mon, 12 May 2025 02:54:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGdC245fZAFpmHPHYbfAQso5gidLEms+OJIVR320hyx46oAT3IlF3m+W0+F7EoDJihuRJkoGQ==
+X-Received: by 2002:a17:907:948f:b0:ad2:4ac1:abe3 with SMTP id
+ a640c23a62f3a-ad24ac1b354mr485988766b.40.1747043651157; 
+ Mon, 12 May 2025 02:54:11 -0700 (PDT)
 Received: from [192.168.122.1] (93-40-56-213.ip37.fastwebnet.it.
  [93.40.56.213]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5fc9cc4e6ebsm5452677a12.37.2025.05.12.02.54.24
+ a640c23a62f3a-ad2197bd398sm590349066b.152.2025.05.12.02.54.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 May 2025 02:54:30 -0700 (PDT)
+ Mon, 12 May 2025 02:54:10 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: dbarboza@ventanamicro.com, alistair23@gmail.com,
  richard.henderson@linaro.org
-Subject: [PATCH 21/26] target/riscv: convert TT C906 to RISCVCPUDef
-Date: Mon, 12 May 2025 11:52:21 +0200
-Message-ID: <20250512095226.93621-22-pbonzini@redhat.com>
+Subject: [PATCH 19/26] target/riscv: th: make CSR insertion test a bit more
+ intuitive
+Date: Mon, 12 May 2025 11:52:19 +0200
+Message-ID: <20250512095226.93621-20-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250512095226.93621-1-pbonzini@redhat.com>
 References: <20250512095226.93621-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -46
 X-Spam_score: -4.7
@@ -109,90 +110,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+In preparation for generalizing the custom CSR functionality,
+make the test return bool instead of int.  Make the insertion_test
+optional, too.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/riscv/cpu.c | 61 +++++++++++++++++++++-------------------------
- 1 file changed, 28 insertions(+), 33 deletions(-)
+ target/riscv/th_csr.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index bc45815383d..dbfd8c7a348 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -499,38 +499,6 @@ static void riscv_register_custom_csrs(RISCVCPU *cpu, const RISCVCSR *csr_list)
- #endif
+diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
+index 6c970d4e813..969a9fe3c80 100644
+--- a/target/riscv/th_csr.c
++++ b/target/riscv/th_csr.c
+@@ -29,7 +29,7 @@
  
- #if defined(TARGET_RISCV64)
--static void rv64_thead_c906_cpu_init(Object *obj)
--{
--    CPURISCVState *env = &RISCV_CPU(obj)->env;
--    RISCVCPU *cpu = RISCV_CPU(obj);
--
--    riscv_cpu_set_misa_ext(env, RVG | RVC | RVS | RVU);
--    env->priv_ver = PRIV_VERSION_1_11_0;
--
--    cpu->cfg.ext_zfa = true;
--    cpu->cfg.ext_zfh = true;
--    cpu->cfg.mmu = true;
--    cpu->cfg.ext_xtheadba = true;
--    cpu->cfg.ext_xtheadbb = true;
--    cpu->cfg.ext_xtheadbs = true;
--    cpu->cfg.ext_xtheadcmo = true;
--    cpu->cfg.ext_xtheadcondmov = true;
--    cpu->cfg.ext_xtheadfmemidx = true;
--    cpu->cfg.ext_xtheadmac = true;
--    cpu->cfg.ext_xtheadmemidx = true;
--    cpu->cfg.ext_xtheadmempair = true;
--    cpu->cfg.ext_xtheadsync = true;
--
--    cpu->cfg.mvendorid = THEAD_VENDOR_ID;
--#ifndef CONFIG_USER_ONLY
--    set_satp_mode_max_supported(cpu, VM_1_10_SV39);
--    riscv_register_custom_csrs(cpu, th_csr_list);
--#endif
--
--    /* inherited from parent obj via riscv_cpu_init() */
--    cpu->cfg.pmp = true;
--}
--
- static void rv64_veyron_v1_cpu_init(Object *obj)
+ typedef struct {
+     int csrno;
+-    int (*insertion_test)(RISCVCPU *cpu);
++    bool (*insertion_test)(RISCVCPU *cpu);
+     riscv_csr_operations csr_ops;
+ } riscv_csr;
+ 
+@@ -42,13 +42,9 @@ static RISCVException smode(CPURISCVState *env, int csrno)
+     return RISCV_EXCP_ILLEGAL_INST;
+ }
+ 
+-static int test_thead_mvendorid(RISCVCPU *cpu)
++static bool test_thead_mvendorid(RISCVCPU *cpu)
  {
-     CPURISCVState *env = &RISCV_CPU(obj)->env;
-@@ -3217,7 +3185,34 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .misa_mxl_max = MXL_RV64,
-     ),
+-    if (cpu->cfg.mvendorid != THEAD_VENDOR_ID) {
+-        return -1;
+-    }
+-
+-    return 0;
++    return cpu->cfg.mvendorid == THEAD_VENDOR_ID;
+ }
  
--    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_THEAD_C906, MXL_RV64,  rv64_thead_c906_cpu_init),
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C906, TYPE_RISCV_VENDOR_CPU,
-+        .misa_mxl_max = MXL_RV64,
-+        .misa_ext = RVG | RVC | RVS | RVU,
-+        .priv_spec = PRIV_VERSION_1_11_0,
-+
-+        .cfg.ext_zfa = true,
-+        .cfg.ext_zfh = true,
-+        .cfg.mmu = true,
-+        .cfg.ext_xtheadba = true,
-+        .cfg.ext_xtheadbb = true,
-+        .cfg.ext_xtheadbs = true,
-+        .cfg.ext_xtheadcmo = true,
-+        .cfg.ext_xtheadcondmov = true,
-+        .cfg.ext_xtheadfmemidx = true,
-+        .cfg.ext_xtheadmac = true,
-+        .cfg.ext_xtheadmemidx = true,
-+        .cfg.ext_xtheadmempair = true,
-+        .cfg.ext_xtheadsync = true,
-+        .cfg.pmp = true,
-+
-+        .cfg.mvendorid = THEAD_VENDOR_ID,
-+
-+        .cfg.max_satp_mode = VM_1_10_SV39,
-+#ifndef CONFIG_USER_ONLY
-+        .custom_csrs = th_csr_list,
-+#endif
-+    ),
-+
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_TT_ASCALON, MXL_RV64,  rv64_tt_ascalon_cpu_init),
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_VEYRON_V1,  MXL_RV64,  rv64_veyron_v1_cpu_init),
-     DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU,
+ static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
+@@ -66,13 +62,12 @@ static riscv_csr th_csr_list[] = {
+         .csr_ops = { "th.sxstatus", smode, read_th_sxstatus }
+     }
+ };
+-
+ void th_register_custom_csrs(RISCVCPU *cpu)
+ {
+     for (size_t i = 0; i < ARRAY_SIZE(th_csr_list); i++) {
+         int csrno = th_csr_list[i].csrno;
+         riscv_csr_operations *csr_ops = &th_csr_list[i].csr_ops;
+-        if (!th_csr_list[i].insertion_test(cpu)) {
++        if (!th_csr_list[i].insertion_test || th_csr_list[i].insertion_test(cpu)) {
+             riscv_set_csr_ops(csrno, csr_ops);
+         }
+     }
 -- 
 2.49.0
 
