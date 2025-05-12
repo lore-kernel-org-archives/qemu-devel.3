@@ -4,144 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDFF0C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 07:54:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19623C3ABBC
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 08:00:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uENzU-00054P-R3; Mon, 12 May 2025 03:54:24 -0400
+	id 1uEO4m-0007HC-FS; Mon, 12 May 2025 03:59:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uENzQ-00053W-8U
- for qemu-devel@nongnu.org; Mon, 12 May 2025 03:54:21 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uEO4k-0007Gg-6T
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 03:59:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uENzM-0005mJ-HO
- for qemu-devel@nongnu.org; Mon, 12 May 2025 03:54:20 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uEO4h-0006Bn-MF
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 03:59:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1747036453;
+ s=mimecast20190719; t=1747036786;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=tejtTw+ujDY0fXNQwgGGe4XMZMbnZF0Fex+Sgc96/fk=;
- b=cZ4WqNdkSkuWjbgBaqD8xN/hDcQuCCgnUnBgQMqJ57IafVtrdbA/HmnRm7YAU+0hxhcDAd
- n9l8wKFxOTLnk3nO/KLv43asswiRjMZK0N8RjbizXntjFhQEdPyEXI5AUzGRXwQyhi4+D1
- DxHHmwy16Czb14IFaomM8SAebzTi1Ao=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QIK8nGQ0MEZFLKvoSSeOKf9NCIFZ/tj6SPwIdGOL6T4=;
+ b=RMUpXrHxKMYIRn0PY+rIBJg/LQ5zxpguPdAcXbi5URiDeGKkkLgzsTUVjqnY1deU2lorHd
+ fCRRDT0FgmHLnW2LmnYA9DOBlEhAyF0vPqykctQgZivj/rkrXeEqFHy/dHbRlblCLwFFa8
+ YT3bpBYoznGrVM3Oq7ao+j5QeuInAoo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-61-NZhxnfj5O4OtgYj0i5ReoA-1; Mon, 12 May 2025 03:54:11 -0400
-X-MC-Unique: NZhxnfj5O4OtgYj0i5ReoA-1
-X-Mimecast-MFC-AGG-ID: NZhxnfj5O4OtgYj0i5ReoA_1747036450
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a0b394504cso2054301f8f.1
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 00:54:11 -0700 (PDT)
+ us-mta-5-dz_VUxxDMiqP1WAFmLNJiA-1; Mon, 12 May 2025 03:59:44 -0400
+X-MC-Unique: dz_VUxxDMiqP1WAFmLNJiA-1
+X-Mimecast-MFC-AGG-ID: dz_VUxxDMiqP1WAFmLNJiA_1747036783
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a0bd786a53so1605288f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 00:59:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747036450; x=1747641250;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=tejtTw+ujDY0fXNQwgGGe4XMZMbnZF0Fex+Sgc96/fk=;
- b=Cl8s9B0VCtlaq27r3QjNy0K753pJyVMBzQ1zo523jBhcGGnIZZLbW84rro7+rQG6SM
- L3dfBGZuNevGVld7uVqT9LeszBxXBIevuXFu3+qQdE745PHFg0R2sKbi0bweDcCh4f+e
- 5Al6e1XwztVTj2YlNbXyB5xGJkicObXVpImVAmf3hZol9oDlVlveoTgSQkURX7vlrJpA
- M/QfUn50GyGy9gzzye1La3xrgLSG79JRHkEdaYcupOmG9z5tNXi0lam2fgkurM//un3S
- mSeib0uRAz8VGDdItJgsjjHho24SvBdq/1F2GNKRSFqGKWnrRtnCAgkHEVcwYjDwvEEU
- 9foQ==
-X-Gm-Message-State: AOJu0Yzf8yLqBngMSgS7xg8ub8dCaqvNcHQh9+5UwT/RYa+cTnC0zKdu
- sEaudD0WhKzysL8wPqIt2w+ddUrr6vZ2QMyRLwOnCaqsQjcYDOt40q4hAyGTZpmIOyLVZwY4T65
- dgwSakkxjA64RRtQgTSDXdba0O4X/B/JUX0wOUAspP4r6wYMVcQyC
-X-Gm-Gg: ASbGnctBsCm6OMhTq6/hNDTQMsgDtKfikaxcDX029Ox6mPkMXhk7zpE8bDDGZ6u+Ckq
- klcSpLgPKJZE/iWq6uoxWRWitz7ApVzGAsplsLGhIzmn1t5J3/sJ7RlbX7a3kYZN0EeHNw5g1JB
- LKHqKE/Eh8nFNi8/zxxZPEwgnj3L4RpztHFxDO14D3WHFYJ0ncUrSf94nLTDE4hYWC7oD13Z8Li
- /LPQjnkThfiAczGXx/hypw8cUfcv1k15We7DCHBsar2i7oyLjKuTb58u0F09FJybm8mX7GOSxdb
- 70WkbQDCGobtxRqZNCZcufmATKMYY8vnNmDcd54NlCI=
-X-Received: by 2002:a05:6000:144f:b0:39c:30f7:b6ad with SMTP id
- ffacd0b85a97d-3a1f6c984a1mr10687455f8f.18.1747036450299; 
- Mon, 12 May 2025 00:54:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGJhOje2oJq6znmxvPYbUk0BcriQBCtS8TcM/2GHT8GIwEPu6EwA7/uRqITP4TGEjjdEkmbMQ==
-X-Received: by 2002:a05:6000:144f:b0:39c:30f7:b6ad with SMTP id
- ffacd0b85a97d-3a1f6c984a1mr10687433f8f.18.1747036449963; 
- Mon, 12 May 2025 00:54:09 -0700 (PDT)
-Received: from [192.168.3.141] (p4fe0f9ab.dip0.t-ipconnect.de.
- [79.224.249.171]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a1f5a4cc2esm11798364f8f.90.2025.05.12.00.54.08
+ d=1e100.net; s=20230601; t=1747036783; x=1747641583;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QIK8nGQ0MEZFLKvoSSeOKf9NCIFZ/tj6SPwIdGOL6T4=;
+ b=fp5cScqtm12KBtPjzS7t62ssTEUb/I4Y9yb+Izi4b9aJMVWedIe/UzyEPX2zTslNbP
+ L4L1N1v5xgPTy51Agj3jvczOAnSLQNi2MLaRz8C4OqfUDVQXqrmPLG1XvKcgt89hKmrr
+ 8DsE1+iRwkWsl5UdktZOsHXBjAoVpR05YOb7GfSpH/3aflFWEvzc0zUqe+TGeeLAKenj
+ 79HNHcTMCcVre9Oyu9+8DW7uxi4H5e9xWFVcou/uL+hQ7nLmYWv90lE/C/vsn8jf7W2w
+ 3IHAiTw4Z4WvFpKL1I/KFAgCrfTTXfladIEscIOrusaCi3Q0082MgHSneQYsom0409hA
+ 14Ug==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUBs6H1N4AtJUoKFVNXbnfyWGD3lGRSCnLvBjoxqmWk6jtVUcfVGHsEaSchvaz2ZPZP1emKhjUh+zOk@nongnu.org
+X-Gm-Message-State: AOJu0YxgB2b2X04OCIo536KDXp14ACekBFzKOOmQN1YrjY1gPij+lGPB
+ 6K+2jk46WnOmkuk32J94NP5QZp9G8/AQsc5v2/KMxQFLjevmGDfffPXaimtk8k+CiuRe+lelmiM
+ nyK0lobcbyVFXHECYerlkIcOh1QU7oXF5z3DMEJpYElw7aukJiJgE
+X-Gm-Gg: ASbGncsd8qYFyWkNMCyGkTSzMF/ehpQ6fovwjK2Pk4zrpFCeATI4fph+fYp1vVCm24P
+ a9qVUviH6oUrmmqpE7gGQBAXyTKwXcKyasGzRLycobsrhH+0RmQsl8WVJ5P0O7r02+zqh57v4RD
+ aBvXLlX3XenyUZaDIYgoIIUkyi3ckTFTUBuHKsLMQZ6fkR1uRBUXkCfssbOzpnNCom8TX/U/CnP
+ qRPojUVmjfJi1UtvikZSv5XVGuEofaic75rOBQR6OHaeRDXJvDS7dwjbuUG8A/hF2oBf1v5RX0a
+ OT47Kk6/qUlYCObYmNIJIFbNdl+LVRxkxILXyMDA8b0VjBGFV0FV
+X-Received: by 2002:a05:6000:2ab:b0:3a1:f5c4:b81b with SMTP id
+ ffacd0b85a97d-3a1f64376b5mr9799842f8f.23.1747036783366; 
+ Mon, 12 May 2025 00:59:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEvG7zgv/+4Eotm8qSFV7LCV+SemdE7g0WQYq6ogd4+yfLoLgWGjA24CPx29+jsGoAajphwyg==
+X-Received: by 2002:a05:6000:2ab:b0:3a1:f5c4:b81b with SMTP id
+ ffacd0b85a97d-3a1f64376b5mr9799824f8f.23.1747036783028; 
+ Mon, 12 May 2025 00:59:43 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-115-173.pools.arcor-ip.net.
+ [47.64.115.173]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a1f579aa5bsm11511227f8f.0.2025.05.12.00.59.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 May 2025 00:54:09 -0700 (PDT)
-Message-ID: <fe236eaf-96b7-4b76-b2a8-f4e1935b4be7@redhat.com>
-Date: Mon, 12 May 2025 09:54:08 +0200
+ Mon, 12 May 2025 00:59:42 -0700 (PDT)
+Message-ID: <80e7eacc-0b71-4e1c-981e-607a4ce8a7bd@redhat.com>
+Date: Mon, 12 May 2025 09:59:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 10/13] memory: Change NotifyStateClear() definition to
- return the result
-To: Chenyi Qiang <chenyi.qiang@intel.com>, Baolu Lu
- <baolu.lu@linux.intel.com>, Alexey Kardashevskiy <aik@amd.com>,
- Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-References: <20250407074939.18657-1-chenyi.qiang@intel.com>
- <20250407074939.18657-11-chenyi.qiang@intel.com>
- <c7ee2562-5f66-44ed-b31f-db06916d3d7b@intel.com>
- <5fcf90b9-dff5-466c-9be5-2b6571a5de8a@linux.intel.com>
- <55547b18-be03-4684-9330-70fc2ba48954@intel.com>
-From: David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH] tests/functional: Add PCI hotplug test for aarch64
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org
+Cc: eric.auger@redhat.com, alex.bennee@linaro.org, philmd@linaro.org,
+ peter.maydell@linaro.org
+References: <20250509232156.106465-1-gustavo.romero@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <55547b18-be03-4684-9330-70fc2ba48954@intel.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20250509232156.106465-1-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -46
 X-Spam_score: -4.7
@@ -166,44 +153,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.05.25 12:04, Chenyi Qiang wrote:
+  Hi!
+
+On 10/05/2025 01.19, Gustavo Romero wrote:
+> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
+> hot-unplug on arm64. Currently, the aarch64 'virt' machine uses the PCIe
+> native controller and does not support ACPI-based hotplugging. However,
+> since support is planned, this test sets 'acpi=force' and specifies an
+> EDK2 firmware image in advance. This is harmless and prepares for future
+> ACPI support.
 > 
-> 
-> On 5/9/2025 4:22 PM, Baolu Lu wrote:
->> On 4/27/2025 10:26 AM, Chenyi Qiang wrote:
->>> Hi David,
->>>
->>> Any thought on patch 10-12, which is to move the change attribute into a
->>> priority listener. A problem is how to handle the error handling of
->>> private_to_shared failure. Previously, we thought it would never be able
->>> to fail, but right now, it is possible in corner cases (e.g. -ENOMEM) in
->>> set_attribute_private(). At present, I simply raise an assert instead of
->>> adding any rollback work (see patch 11).
->>
->> Do the pages need to be pinned when converting them to a shared state
->> and unpinned when converting to a private state? Or is this handled
->> within the vfio_state_change_notify callbacks?
-> 
-> I think it is handled in vfio_state_change_notify(). Just like the
-> device passthrough in legacy VM, the shared memory will be pinned during
-> vfio dma-map and unpin during unmap.
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>   tests/functional/meson.build                 |  1 +
+>   tests/functional/test_aarch64_hotplug_pci.py | 73 ++++++++++++++++++++
+>   2 files changed, 74 insertions(+)
+>   create mode 100755 tests/functional/test_aarch64_hotplug_pci.py
 
-We'll have to "unmap/unpin before shared->private" and "map/pin after 
-private->shared" conversion.
+Could you also add the test file to one of the sections in the MAINTAINERS 
+file, please?
 
+> diff --git a/tests/functional/test_aarch64_hotplug_pci.py b/tests/functional/test_aarch64_hotplug_pci.py
+> new file mode 100755
+> index 0000000000..031540ba22
+> --- /dev/null
+> +++ b/tests/functional/test_aarch64_hotplug_pci.py
+> @@ -0,0 +1,73 @@
+> +#!/usr/bin/env python3
+> +#
+> +# The test hotplugs a PCI device and checks it on a Linux guest.
+> +#
+> +# Copyright (c) 2025 Linaro Ltd.
+> +#
+> +# Author:
+> +#  Gustavo Romero <gustavo.romero@linaro.org>
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2 or
+> +# later.  See the COPYING file in the top-level directory.
+> +
+> +from os import path
+> +from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
+> +from qemu_test import BUILD_DIR
+> +
+> +class HotplugPCI(LinuxKernelTest):
+> +
+> +    ASSET_KERNEL = Asset(
+> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
+> +         'current/images/netboot/debian-installer/arm64/linux'),
+> +        '3821d4db56d42c6a4eac62f31846e35465940afd87746b4cfcdf5c9eca3117b2')
+> +
+> +    ASSET_INITRD = Asset(
+> +        ('https://ftp.debian.org/debian/dists/stable/main/installer-arm64/'
+> +         'current/images/netboot/debian-installer/arm64/initrd.gz'),
+> +        '2583ec22b45265ad69e82f198674f53d4cd85be124fe012eedc2fd91156bc4b4')
+> +
+> +    def test_hotplug_pci(self):
+> +
+> +        self.vm.add_args('-m', '512M')
+> +        self.vm.add_args('-machine', 'type=virt')
 
-vfio cannot fail unmap/unpin, but guest_memfd will be able to "easily" 
-fail shared->private. But in that case (temporary references) we'll 
-likely have to retry the conversion until it works.
+Please use self.set_machine('virt') instead so that the test gets correctly 
+skipped in case the machine has not been compiled into the binary.
 
-guest_memfd cannot "easily" fail private->shared conversion, but vfio 
-can fail map/pin, in which case we probably have to abort the conversion.
-
-Error handling/recovery will be a bit more tricky than it is today.
-
--- 
-Cheers,
-
-David / dhildenb
+  Thanks,
+   Thomas
 
 
