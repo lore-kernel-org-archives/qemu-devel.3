@@ -4,77 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 267D2C3ABC3
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C052AC3ABC3
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 May 2025 14:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uETrj-0005x2-Sw; Mon, 12 May 2025 10:10:47 -0400
+	id 1uETuF-0006bY-4y; Mon, 12 May 2025 10:13:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uETri-0005wn-DY
- for qemu-devel@nongnu.org; Mon, 12 May 2025 10:10:46 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uETuD-0006ay-9j
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 10:13:21 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uETrg-00053h-80
- for qemu-devel@nongnu.org; Mon, 12 May 2025 10:10:46 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-70b75ba2fb5so2266167b3.3
- for <qemu-devel@nongnu.org>; Mon, 12 May 2025 07:10:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uETuB-0005CN-2L
+ for qemu-devel@nongnu.org; Mon, 12 May 2025 10:13:20 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-43cfe63c592so47237215e9.2
+ for <qemu-devel@nongnu.org>; Mon, 12 May 2025 07:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1747059042; x=1747663842; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lCclfJmgA91UOJkeTHXtAriekx6u5wMn1ghIdAf+OxA=;
- b=gKCJYWEJtoOP+Yfbb6oTM9y5fRNAsug6HEunPQZIKYLsd//zX1vyCJFEERXnLVCvbS
- qgxehV9zOCqHXXIFgnQ5MXOAG7AbHNOxfMA7dGxRneZhFIs8zmPD4wBqkhrAMeRQe7FD
- M3KSCVxJpUc3OkK8W1IxDoMPc6wlE2g9dyKHxQi1MRbQrPCKddVhIGcWmQnBWQjFvwz3
- n2yuLfBZAC2vUnLCwBSZA9fEaCQL++alNG01lZo8dL3me1UyviliUtiDYXBpc/b56OT4
- nTJYQsagp09Ea2mJWM/X+9v+6G31V/gDy23rBRnrWxf2Y3/5u312WLs49lrF0AdUJBYR
- n2xw==
+ d=linaro.org; s=google; t=1747059197; x=1747663997; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=BlKtln6YL8TAnbPPJhP85Er80ca3JBTlWVq9fmjfKbQ=;
+ b=X02qNzzqUnrGagZ8coG4d6I/PAaavCzuXzB2eVWqmOIyumX7qzEH6jBk25uiIDsEyg
+ MaMp6aE1JXF+w7j8MWgsJYOqGjCDCnrtCJAqqP8k+yjPuX8B6fCMgX2oAwtUn1UBCkq6
+ HxuGQlP+xGGBEj8XwIxmuTYuwWyb0+qTdHMXF16un1No+LFy9GOaHUeDDH76biJx6R3+
+ 543aUyzyU3jHDREa9N8nK2Y8CFsg2gJFN7s/2/O2TqyobSMtHWP7o9pRX2S+qlaatNLW
+ LaNewkzbyTIGyHo9VETly9gdoaWOBeFIkGJ7JWS7jKS6bSxFLl+d8B08R3wR5gtynpxY
+ nN3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1747059042; x=1747663842;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lCclfJmgA91UOJkeTHXtAriekx6u5wMn1ghIdAf+OxA=;
- b=HBqTtB4NdjYkcRzyGjEse87AoqoIQXkLoGf7IMzMzw28oIXSVFF8ncbVfNBL6frxeG
- U6if2QPzwICjQBrVhEbf8IjOksEL4LhbU11mXhH6JgH2GO7ojxaF261ohBn9s+Omj3lb
- 662NhlEFmd4E9MXoBqABr7Qx2fWW41dn83Jq0/M/jZ/ADt6+DWWvveK/gkOmhusSV4Ov
- uJA4K+wfsJvG7Mvh0GnmW8lVJlYryURaSfj4f5uu15B0BSec+erMfI1C3BM+CEimx/eE
- FGStgXdcsYf34Vg4gn8miQcRHeH+Db+en2J+nYdbT8hxCJQWKc1J+3EUJuYKx3mc+PfI
- OneQ==
+ d=1e100.net; s=20230601; t=1747059197; x=1747663997;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BlKtln6YL8TAnbPPJhP85Er80ca3JBTlWVq9fmjfKbQ=;
+ b=c0xMrVP4wSPz6ENHof5zpPlsh1yaS2vMgJiv0UxBcVkJqr7ycnBFaTbG0vJc2FwAfr
+ xB7/BChlpaKj3oWHyUDSu6wwQ1bYyfcRUvGqAUTOFzT+uGxFcGk2B5AJc7zBZ2t6hDw1
+ pc+9ElcAbr5ShFDpprsghUB2V955et4LkO26zZQgYunEsHfaflnGa1xpYtd8jvhfY5wa
+ XX61xKvm4/K9J9qnUKtcYUO8W7nhK+xAJOswAOIgQo80ANCOA68hF5/Ws9YfWG4lJZ5g
+ OGSr+y3HBDltKQRdbwTDinSyQ49jYqdAI5dQ//CvsTVkaKMYuzD9ouVHYjFE6n7EiG+g
+ yT3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU5sY/04QL04E7UcsJxVDLLiIeI9+zv9NeSLVp3U6ehraPx9KuwxdTKEwfO47ydkL+GVCOrJsVrop2j@nongnu.org
-X-Gm-Message-State: AOJu0YxOiH4Vd1Tc1CebiG2MEDXl8PAhI8kvvDNS3EVkkRyZTXkSFNlB
- jvTMJOp8tSzpexPINJVfm42y1W1jf0/YGm4Hfn19YIv4kSLv+bGwwuQULCsZEPLKrusviDZbTvz
- FhXj6QdsorTK6ufeE/DUUXOPE6nyy7dOB0ssoCA==
-X-Gm-Gg: ASbGncuDz1keL9Z93b8x/ZaJSwdihWKzcrVFwZONlK2uks103AoKGvMZ/2KLDLCer41
- eWBPEJpa+DXf2FYLeAe8mlJr604QGTixJOxW7oAnk/syQyOxzOHKUmj41FOpcq/P4FZxPgY6FKL
- 2uXXhICAnfuLQrNj5+9tiAoa3c7piNXOcBAQ==
-X-Google-Smtp-Source: AGHT+IHjlE9Z8danLJclT/d9NRiml/9P/6mzykJpml07vpeK+a/d7toxEOTo7TJf2UlUoisOjitV8Bddnq9CHgJgnEE=
-X-Received: by 2002:a05:690c:6012:b0:708:5243:44d4 with SMTP id
- 00721157ae682-70a3fb75976mr184816767b3.31.1747059042263; Mon, 12 May 2025
- 07:10:42 -0700 (PDT)
+ AJvYcCWK8HoXHLL7QeOcfSR6TznUHYLWhq/kNJICCAw3i56EBU1ZWMVpJ3IUP/9xMMQW+tGZOE+lsvkdhk87@nongnu.org
+X-Gm-Message-State: AOJu0Yx+eWIKECSFplP6o7ZzONdTgciJUPFGZ9bUbd8JkOyT3N2YybwF
+ P/d3pn4aZHv2sdrGAklRNxySBFKFTd+db3OEEecSH3NOZLl+YsEyEAhrCT2StVI=
+X-Gm-Gg: ASbGncvmZjxEO00NGAtG29srD+Ld4K0QPKCmyEFaoFIB7ALG6vF1eH3qEb/TGflaQi2
+ FGRKWUpB6+fOXNKlt/U4trN4GQZLQ7G0TMfMusmxxrZGir0fuTcZSOPdVoJXqQgtQ1jMC0m5g+g
+ LdHmZ17oLUbOYkwabl4zBp1Akr9auS/NIyx6WpZ+y1JanS80IqYJZ2rwfCtzfg5gg7EIhtxnCuh
+ BT3QO7z5lBjnh7TGdyEft7v0KAZr8w4FqRK2ypKD9TH/joWncJ9Orh+JH4pIcLKZPnWSLdPUmg3
+ 8p5ovKMdeE+USAUpHIrYa+dBvuhZ4TV/0d/JagQN5QNjRZVYl+LH9Zt4JuoYH2QUHwnzago36vo
+ /WyFng/Kbgd5pgZqjJ9Bk2moqA+Xx
+X-Google-Smtp-Source: AGHT+IHk2HYN9h9QXFtZSK4+p61t5LSVAsp8l50WHK7VhhgyexOLSrzM5JTqKW2kAFEGGjWhOw1HdQ==
+X-Received: by 2002:a05:600c:8707:b0:442:ccfa:fa with SMTP id
+ 5b1f17b1804b1-442d6dde8fcmr105865105e9.27.1747059197054; 
+ Mon, 12 May 2025 07:13:17 -0700 (PDT)
+Received: from [172.19.170.213] (90.red-88-28-30.dynamicip.rima-tde.net.
+ [88.28.30.90]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a1f5a4c5b9sm12689007f8f.91.2025.05.12.07.13.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 May 2025 07:13:16 -0700 (PDT)
+Message-ID: <1cd816d0-5808-4caf-b38b-9e4ba10680b6@linaro.org>
+Date: Mon, 12 May 2025 16:13:13 +0200
 MIME-Version: 1.0
-References: <20250506164602.3897164-1-stgraber@stgraber.org>
- <aBsduLe2QDbr4Ol1@redhat.com>
-In-Reply-To: <aBsduLe2QDbr4Ol1@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 May 2025 15:10:31 +0100
-X-Gm-Features: AX0GCFsirUhim9ivzNUEz1blLww7d4EM8rYgs0D6i95rj1c2NLBAu1dKm6s6IL8
-Message-ID: <CAFEAcA-3kqoLWA3WRuL+Lwk_ozo2cYOh_A3_AsPB=Crxu1Zhgg@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/network: Remove hardcoded 0x40 prefix
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] s390x: Fix leak in machine_set_loadparm
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
+References: <20250509174938.25935-1-farosas@suse.de>
+ <7a850346-8ae5-4dd2-b4ce-7ffb1cfeabd1@linaro.org>
+Content-Language: en-US
+In-Reply-To: <7a850346-8ae5-4dd2-b4ce-7ffb1cfeabd1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,86 +106,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 7 May 2025 at 09:46, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
->
-> On Tue, May 06, 2025 at 12:45:53PM -0400, St=C3=A9phane Graber via wrote:
-> > USB NICs have a "40:" prefix hardcoded for all MAC addresses.
-> >
-> > This overrides user-provided configuration and leads to an inconsistent
-> > experience.
-> >
-> > I couldn't find any documented reason (comment or git commits) for this
-> > behavior. It seems like everyone is just expecting the MAC address to b=
-e
-> > fully passed through to the guest, but it isn't.
-> >
-> > This is also particularly problematic as the "40:" prefix isn't a
-> > reserved prefix for MAC addresses (IEEE OUI). There are a number of
-> > valid allocations out there which use this prefix, meaning that QEMU ma=
-y
-> > be causing MAC address conflicts.
-> >
-> > Signed-off-by: St=C3=A9phane Graber <stgraber@stgraber.org>
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2951
-> > ---
-> >  hw/usb/dev-network.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/hw/usb/dev-network.c b/hw/usb/dev-network.c
-> > index 81cc09dcac..1df2454181 100644
-> > --- a/hw/usb/dev-network.c
-> > +++ b/hw/usb/dev-network.c
-> > @@ -1383,7 +1383,7 @@ static void usb_net_realize(USBDevice *dev, Error=
- **errp)
-> >      qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a=
-);
-> >      snprintf(s->usbstring_mac, sizeof(s->usbstring_mac),
-> >               "%02x%02x%02x%02x%02x%02x",
-> > -             0x40,
-> > +             s->conf.macaddr.a[0],
-> >               s->conf.macaddr.a[1],
-> >               s->conf.macaddr.a[2],
-> >               s->conf.macaddr.a[3],
+On 12/5/25 16:07, Philippe Mathieu-Daudé wrote:
+> On 9/5/25 19:49, Fabiano Rosas wrote:
+>> ASAN spotted a leaking string in machine_set_loadparm():
 
-Note in particular that this string is used *only* for
-what we return to the guest if it queries the STRING_ETHADDR
-USB string property. It's not used for what we return for
-the OID_802_3_PERMANENT_ADDRESS or OID_802_3_CURRENT_ADDRESS OIDs
-for NDIS, or for the MAC address we actually use in the QEMU networking
-code to send/receive packets for this device, or in the NIC info
-string we print for users. In all those other places we directly
-use s->conf.macaddr.a, which is the full thing the user asks for.
+What about ccw_device_set_loadparm() in hw/s390x/ccw-device.c?
 
-> To repeat what I said in the ticket, the 0x40 byte originates from when
-> this was first committed to QEMU. We can see the finall accepted patch
->
->   https://lists.nongnu.org/archive/html/qemu-devel/2008-07/msg00385.html
->
-> but tracing the history back further, this was *not* in the version of
-> the patches submitted by the original author 2 years earlier:
->
->  https://lists.nongnu.org/archive/html/qemu-devel/2006-10/msg00339.html
->
-> There's no explanation of this difference. Could easily be a left-over
-> hack from some debugging attempt that no one noticed until now.
+>>
+>> Direct leak of 9 byte(s) in 1 object(s) allocated from:
+>>      #0 0x560ffb5bb379 in malloc ../projects/compiler-rt/lib/asan/ 
+>> asan_malloc_linux.cpp:69:3
+>>      #1 0x7f1aca926518 in g_malloc ../glib/gmem.c:106
+>>      #2 0x7f1aca94113e in g_strdup ../glib/gstrfuncs.c:364
+>>      #3 0x560ffc8afbf9 in qobject_input_type_str ../qapi/qobject- 
+>> input-visitor.c:542:12
+>>      #4 0x560ffc8a80ff in visit_type_str ../qapi/qapi-visit-core.c:349:10
+>>      #5 0x560ffbe6053a in machine_set_loadparm ../hw/s390x/s390- 
+>> virtio-ccw.c:802:10
+>>      #6 0x560ffc0c5e52 in object_property_set ../qom/object.c:1450:5
+>>      #7 0x560ffc0d4175 in object_property_set_qobject ../qom/qom- 
+>> qobject.c:28:10
+>>      #8 0x560ffc0c6004 in object_property_set_str ../qom/object.c:1458:15
+>>      #9 0x560ffbe2ae60 in update_machine_ipl_properties ../hw/s390x/ 
+>> ipl.c:569:9
+>>      #10 0x560ffbe2aa65 in s390_ipl_update_diag308 ../hw/s390x/ 
+>> ipl.c:594:5
+>>      #11 0x560ffbdee132 in handle_diag_308 ../target/s390x/diag.c:147:9
+>>      #12 0x560ffbebb956 in helper_diag ../target/s390x/tcg/ 
+>> misc_helper.c:137:9
+>>      #13 0x7f1a3c51c730  (/memfd:tcg-jit (deleted)+0x39730)
+>>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>   hw/s390x/s390-virtio-ccw.c | 1 +
+>>   1 file changed, 1 insertion(+)
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
 
-That original version of the patches is even odder, because it
-does this for the STRING_ETHADDR:
-
-+                       case STRING_ETHADDR:
-+                               ret =3D set_usb_string(data, "400102030405"=
-);
-+                               break;
-
-i.e. hardcodes it entirely.
-
-I think we should note in the commit message that the hardcoded
-0x40 is only used for STRING_ETHADDR and not for any of the
-other ways we use the MAC address. But otherwise
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
 
